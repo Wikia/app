@@ -12,18 +12,18 @@ $dir = dirname(__FILE__) . '/';
 /**
  * classes
  */
-$app->registerClass('UserPreferencesStats', $dir . 'UserPreferencesStats.class.php');
+$wgAutoloadClasses['UserPreferencesStats'] =  $dir . 'UserPreferencesStats.class.php';
 
 /**
  * controllers
  */
-$app->registerClass('UserPreferencesStatsController', $dir . 'UserPreferencesStatsController.class.php');
-$app->registerClass('UserPreferencesStatsSpecialController', $dir . 'UserPreferencesStatsSpecialController.class.php');
+$wgAutoloadClasses['UserPreferencesStatsController'] =  $dir . 'UserPreferencesStatsController.class.php';
+$wgAutoloadClasses['UserPreferencesStatsSpecialController'] =  $dir . 'UserPreferencesStatsSpecialController.class.php';
 
 /**
  * special pages
  */
-$app->registerSpecialPage('UserPreferencesStats', 'UserPreferencesStatsSpecialController');
+$wgSpecialPages['UserPreferencesStats'] = 'UserPreferencesStatsSpecialController';
 
 /**
  * message files

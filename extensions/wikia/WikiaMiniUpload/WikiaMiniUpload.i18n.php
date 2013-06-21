@@ -1718,6 +1718,7 @@ $messages['ko'] = array(
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
+ * @author Ghybu
  */
 $messages['ku-latn'] = array(
 	'wmu-upload-image' => 'Wêneyî bar bike',
@@ -1729,6 +1730,7 @@ $messages['ku-latn'] = array(
 	'wmu-find-btn' => 'Bibîne',
 	'wmu-rename' => 'Navê wêneya xwe biguherîne',
 	'wmu-existing' => 'Wêneyên hene bi kar bînê',
+	'wmu-insert' => 'Tevlî bike',
 	'wmu-name' => 'Nav',
 	'wmu-license' => 'Lîsans',
 	'wmu-thumbnail' => 'Thumbnail',
@@ -2537,9 +2539,24 @@ $messages['roa-tara'] = array(
 	'wmu-title' => "Careche 'a fote",
 	'wmu-upload' => 'Careche',
 	'wmu-find' => 'Cirche',
+	'wmu-thiswiki' => 'Sta uicchi',
 	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => 'Careche',
 	'wmu-find-btn' => 'Cirche',
+	'wmu-insert' => "'Nzerisce",
+	'wmu-name' => 'Nome',
+	'wmu-license' => 'Licenze',
+	'wmu-licensing' => 'Licenziate da',
+	'wmu-size' => 'Dimenzione',
+	'wmu-thumbnail' => 'Miniature',
+	'wmu-fullsize' => 'Dimenzione complete ($1x$2px)',
+	'wmu-width' => 'Larghezze',
+	'wmu-caption' => "'Ndestazione",
+	'wmu-link' => 'Collegamende',
+	'wmu-optional' => '(opzionale)',
+	'wmu-insert2' => "'Nzerisce 'nu file",
+	'wmu-prev' => 'Le 8 precedende',
+	'wmu-next' => 'Le prossime 8',
 );
 
 /** Russian (русский)

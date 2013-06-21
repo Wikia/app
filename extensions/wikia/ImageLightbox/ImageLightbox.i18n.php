@@ -955,3 +955,11 @@ $messages['zh-hans'] = array(
 	'lightbox-share-button-www' => '分享',
 	'lightbox-share-email-error-caption' => '错误',
 );
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Radish10cm
+ */
+$messages['zh-hant'] = array(
+	'lightbox_details_tooltip' => '查看圖片詳細資訊',
+	'lightbox-blog-link' => '部落格連結',
+);

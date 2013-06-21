@@ -37,7 +37,7 @@ class UserRollbackRequest {
 				$userName = User::isIP( $name ) ? $name : User::getCanonicalName( $name );
 				$user = null;
 				if ($userName !== false) {
-					$user = F::build('User',array($userName),'newFromName');
+					$user = User::newFromName($userName);
 					if (empty($user) || $user->getId() == 0) {
 						$user = null;
 					}

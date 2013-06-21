@@ -30,7 +30,7 @@ class WikiaSpecialPageController extends WikiaController {
 		if ($name == null) {
 			throw new WikiaException('First parameter of WikiaSpecialPage constructor must not be null');
 		}
-		$this->specialPage = F::build( 'SpecialPage', array( $name, $restriction, $listed, $function, $file, $includable ) );
+		$this->specialPage = new SpecialPage( $name, $restriction, $listed, $function, $file, $includable );
 		F::setInstance( get_class($this), $this);
 		parent::__construct();
 	}

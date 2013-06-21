@@ -90,7 +90,7 @@ abstract class WikiaSkin extends SkinTemplate {
 		wfProfileIn( __METHOD__ );
 
 		$scriptTags = $this->wg->out->getScriptsOnly() . $this->wg->out->getHeadItems();
-		$am = F::build( 'AssetsManager', array(), 'getInstance' );
+		$am = AssetsManager::getInstance();
 		$matches = array();
 		$res = array();
 
@@ -132,7 +132,7 @@ abstract class WikiaSkin extends SkinTemplate {
 
 		//there are a number of extension that use addScript to append link tags for stylesheets, need to include those too
 		$stylesTags = $this->wg->out->buildCssLinks(). $this->wg->out->getHeadItems() . $this->wg->out->getScriptsOnly();
-		$am = F::build( 'AssetsManager', array(), 'getInstance' );
+		$am = AssetsManager::getInstance();
 		$matches = array();
 		$res = array();
 
@@ -187,10 +187,10 @@ abstract class WikiaSkin extends SkinTemplate {
 			'wgJqueryUrl' => AssetsManager::getInstance()->getURL( 'jquery' ),
 		);
 
-		$this->wf->runHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
+		wfrunHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
 
 		$scriptModules = array( 'amd', 'wikia.tracker.stub' );
-		$this->wf->runHooks( 'WikiaSkinTopModules', array( &$scriptModules, $this ) );
+		wfrunHooks( 'WikiaSkinTopModules', array( &$scriptModules, $this ) );
 		if ( !empty($scriptModules) ) {
 			// Mocking mw.loader.state so the script can be loaded up high
 			// Whatever is passed to mw.loader.state is saved to window.preMwLdrSt

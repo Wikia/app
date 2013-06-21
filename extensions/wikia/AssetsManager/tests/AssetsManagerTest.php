@@ -12,7 +12,7 @@ class AssetsManagerTest extends WikiaBaseTest {
 		parent::setUp();
 
 		$this->cb = $this->app->wg->StyleVersion;
-		$this->instance = F::build('AssetsManager', array(), 'getInstance');
+		$this->instance = AssetsManager::getInstance();
 	}
 
 	public function testGetSassCommonURL() {
@@ -55,7 +55,7 @@ class AssetsManagerTest extends WikiaBaseTest {
 	public function duplicateAssetsDataProvider() {
 		$dataSets = array();
 
-		$config = F::build('AssetsConfig'); /* @var $config AssetsConfig */
+		$config = new AssetsConfig();
 		// single assets
 		$packages = $config->getGroupNames();
 		foreach ($packages as $name) {

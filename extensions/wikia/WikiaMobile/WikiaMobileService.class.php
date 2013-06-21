@@ -10,7 +10,6 @@ class WikiaMobileService extends WikiaService {
 	//const CACHE_MANIFEST_PATH = 'wikia.php?controller=WikiaMobileAppCache&method=serveManifest&format=html';
 	const LYRICSWIKI_ID = 43339;
 
-	static protected $initialized = false;
 	/**
 	* @var $skin WikiaSkin
 	*/
@@ -21,18 +20,8 @@ class WikiaMobileService extends WikiaService {
 	 */
 	private $templateObject;
 
-	function __construct(){
-		parent::__construct();
-
-		if ( !self::$initialized ) {
-			//singleton
-			F::setInstance( __CLASS__, $this );
-			self::$initialized = true;
-		}
-	}
-
 	function init(){
-		$this->wf->LoadExtensionMessages( 'WikiaMobile' );
+		wfLoadExtensionMessages( 'WikiaMobile' );
 		$this->skin = RequestContext::getMain()->getSkin();
 		$this->templateObject = $this->app->getSkinTemplateObj();
 	}
@@ -40,19 +29,21 @@ class WikiaMobileService extends WikiaService {
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
-		$jsHeadPackages = array( 'wikiamobile_js_head' );
-		$jsBodyPackages = array();
-		$scssPackages = array();
+		$jsHeadPackages = [ 'wikiamobile_js_head' ];
+		$jsBodyPackages = [];
+		$scssPackages = [];
 		$cssLinks = '';
 		$jsBodyFiles = '';
 		$jsHeadFiles = '';
 		$styles = null;
 		$scripts = null;
-		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
-		$advert = '';
+		$assetsManager = AssetsManager::getInstance();
+		$floatingAd = '';
+		//$topLeaderBoardAd = '';
+		//$inContentAd = '';
 		$globalVariables = [];
 
-		F::build( 'JSMessages' )->enqueuePackage( 'WkMbl', JSMessages::INLINE );
+		JSMessages::enqueuePackage( 'WkMbl', JSMessages::INLINE );
 
 		$jsBodyPackages[] = 'wikiamobile_js_body_full';
 		$scssPackages[] = 'wikiamobile_scss';
@@ -62,8 +53,11 @@ class WikiaMobileService extends WikiaService {
 		$mobileAdService = new WikiaMobileAdService();
 		if ($mobileAdService->shouldLoadAssets()) {
 			$jsBodyPackages[] = 'wikiamobile_js_ads';
+
 			if ($mobileAdService->shouldShowAds()) {
-				$advert = $this->app->renderView( 'WikiaMobileAdService', 'index' );
+				$floatingAd = $this->app->renderView( 'WikiaMobileAdService', 'floating' );
+				//$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
+				//$inContentAd = $this->app->renderView( 'WikiaMobileAdService', 'inContent' );
 				$globalVariables['wgShowAds'] = true;
 			}
 		}
@@ -79,11 +73,11 @@ class WikiaMobileService extends WikiaService {
 		//this is done to cut down the number or requests)
 		$this->app->runHook(
 			'WikiaMobileAssetsPackages',
-			array(
+			[
 				&$jsHeadPackages,
 				&$jsBodyPackages,
 				&$scssPackages
-			)
+			]
 		);
 
 		if ( is_array( $scssPackages ) ) {
@@ -155,7 +149,11 @@ class WikiaMobileService extends WikiaService {
 		$this->response->setVal( 'pageTitle', $this->wg->Out->getHTMLTitle() );
 		$this->response->setVal( 'bodyClasses', array( 'wkMobile', $this->templateObject->get( 'pageclass' ) ) );
 		$this->response->setVal( 'jsBodyFiles', $jsBodyFiles );
-		$this->response->setVal( 'advertisement', $advert );
+
+		$this->response->setVal( 'floatingAd', $floatingAd );
+		//$this->response->setVal( 'topLeaderBoardAd', $topLeaderBoardAd );
+		//$this->response->setVal( 'inContentAd', $inContentAd );
+
 		$this->response->setVal( 'wikiaNavigation', $nav );
 		$this->response->setVal( 'pageContent', $pageContent );
 		$this->response->setVal( 'wikiaFooter', $footer );

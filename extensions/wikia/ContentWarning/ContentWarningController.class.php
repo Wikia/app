@@ -11,7 +11,7 @@ class ContentWarningController extends WikiaController {
 	 */
 	public function index() {
 		$domain = str_replace('http://', '', $this->wg->Server );
-		$this->body = $this->wf->MsgExt( 'content-warning-body', array('parse'), $domain );
+		$this->body = wfMsgExt( 'content-warning-body', array('parse'), $domain );
 
 		$userLang = $this->wg->Lang->getCode();
 
@@ -35,7 +35,7 @@ class ContentWarningController extends WikiaController {
 		}
 
 		$userId = $this->wg->User->getId();
-		$this->wf->SetWikiaPageProp( WPP_CONTENT_WARNING, $userId, 1);
+		wfSetWikiaPageProp( WPP_CONTENT_WARNING, $userId, 1);
 
 		// clear cache
 		$memKey = $this->getMemKeyContentWarning( $userId );
@@ -57,7 +57,7 @@ class ContentWarningController extends WikiaController {
 			$memKey = $this->getMemKeyContentWarning( $userId );
 			$contentWarningApproved = $this->wg->Memc->get( $memKey );
 			if ( empty( $contentWarningApproved ) ) {
-				$contentWarningApproved = intval( $this->wf->GetWikiaPageProp( WPP_CONTENT_WARNING, $userId ) );
+				$contentWarningApproved = intval( wfGetWikiaPageProp( WPP_CONTENT_WARNING, $userId ) );
 
 				$this->wg->Memc->set( $memKey, $contentWarningApproved, 60*60*12 );
 			}
@@ -74,6 +74,6 @@ class ContentWarningController extends WikiaController {
 	 * @return type
 	 */
 	protected function getMemKeyContentWarning( $userId ) {
-		return $this->wf->MemcKey( 'content_warning_'.$userId, "v1" );
+		return wfMemcKey( 'content_warning_'.$userId, "v1" );
 	}
 }

@@ -8,7 +8,7 @@ class ConfigTest extends BaseTest {
 
 	public function setUp() {
 		$this->service = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
-		                        ->disableOriginalConstructor();
+		                       ->disableOriginalConstructor();
 		
 		$this->config = $this->getMockBuilder( '\\Wikia\Search\Config' )
 		                     ->disableOriginalConstructor();
@@ -219,7 +219,31 @@ class ConfigTest extends BaseTest {
 		$mockWikiMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
 		                      ->disableOriginalConstructor()
 		                      ->getMock();
-		$config = new \Wikia\Search\Config();
+
+		$mockWikiMatch
+			->expects( $this->exactly( 2 ) )
+			->method( 'getId' )
+			->will( $this->returnValue( 0 ) )
+		;
+		$wikiService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobalForWiki' ] );
+
+		$wikiService
+			->expects( $this->exactly( 2 ) )
+			->method( 'getGlobalForWiki' )
+			->with( 'wgLanguageCode', 0 )
+			->will( $this->returnValue( 'en' ) )
+		;
+
+		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getService' ] )
+			->getMock()
+		;
+		$config
+			->expects( $this->exactly( 2 ) )
+			->method( 'getService' )
+			->will( $this->returnValue( $wikiService ) )
+		;
 
 		$this->assertFalse(
 				$config->hasWikiMatch(),
@@ -229,6 +253,16 @@ class ConfigTest extends BaseTest {
 				$config->getWikiMatch(),
 				'\Wikia\Search\Config should return null when getting an uninitialized wiki match'
 		);
+
+		$config->setLanguageCode( 'pl' );
+		$config->setWikiMatch( $mockWikiMatch );
+		$this->assertNull(
+				$config->getWikiMatch(),
+				'\Wikia\Search\Config::setWikiMatch should not set match if lang is not correct'
+		);
+
+		$config->setLanguageCode( 'en' );
+
 		$this->assertEquals(
 				$config,
 				$config->setWikiMatch( $mockWikiMatch ),
@@ -430,7 +464,6 @@ class ConfigTest extends BaseTest {
 		;
 
 		$this->mockClass( 'SearchEngine', $searchEngineMock );
-		$this->mockApp();
 
 		$profiles = $config->getSearchProfiles();
 		$profileConstants = array( SEARCH_PROFILE_DEFAULT, SEARCH_PROFILE_IMAGES, SEARCH_PROFILE_USERS, SEARCH_PROFILE_ALL );
@@ -614,7 +647,6 @@ class ConfigTest extends BaseTest {
 			->method		( 'log' )
 		;
 		$this->mockClass( 'Wikia', $mockWikia );
-		$this->mockApp();
 		// this satisfies the above expectation
 		$config->setFilterQueryByCode( 'notacode' );
 
@@ -920,9 +952,8 @@ class ConfigTest extends BaseTest {
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getNamespaceId' ], [ 'foo' ] );
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', [ 'getNamespaces' ] );
 		
-		$this->proxyClass( 'Wikia\Search\Query\Select', $mockQuery );
-		$this->mockApp();
-		
+		$this->mockClass( 'Wikia\Search\Query\Select', $mockQuery );
+
 		$this->assertNull(
 				$mockConfig->getQuery()
 		);
@@ -935,8 +966,8 @@ class ConfigTest extends BaseTest {
 				$mockConfig,
 				$mockConfig->setQuery( 'foo' )
 		);
-		$this->assertInstanceOf(
-				$mockConfig->getQuery()->_mockClassName, // mockproxy hack
+		$this->assertEquals(
+				$mockConfig->getQuery(),
 				$mockQuery
 		);
 		$mockQuery
@@ -1066,6 +1097,58 @@ class ConfigTest extends BaseTest {
 				$config->getWikiId()
 		);
 	}
+
+	/**
+	 * @covers Wikia\Search\Config::getLanguageCode
+	 * @covers Wikia\Search\Config::setLanguageCode
+	 */
+	public function testSetAndGetLanguageCode() {
+		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+			->setMethods( [ 'getLanguageCode' ] )
+			->getMock();
+		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getService' ] )
+			->getMock();
+
+		$mockService
+			->expects( $this->once() )
+			->method( 'getLanguageCode' )
+			->will( $this->returnValue( 'en' ) )
+		;
+
+		$config
+			->expects( $this->once() )
+			->method( 'getService' )
+			->will( $this->returnValue( $mockService ) )
+		;
+
+		$this->assertAttributeEmpty(
+			'languageCode',
+			$config,
+			'At create languageCode field should be empty'
+		);
+
+		$this->assertEquals(
+			'en',
+			$config->getLanguageCode(),
+			'Default value should equals en.'
+		);
+
+		$config->setLanguageCode( 'pl' );
+
+		$this->assertAttributeEquals(
+			'pl',
+			'languageCode',
+			$config
+		);
+
+		$this->assertEquals(
+			'pl',
+			$config->getLanguageCode()
+		);
+
+	}
 	
 	/**
 	 * @covers Wikia\Search\Config::setLimit
@@ -1103,6 +1186,36 @@ class ConfigTest extends BaseTest {
 		);
 	}
 	
+	/**
+	 * @covers Wikia\Search\Config::getRank
+	 * @covers Wikia\Search\Config::setRank
+	 */
+	public function testGetSetRank() {
+		$config = new Config;
+		$this->assertAttributeEquals(
+				$config::RANK_DEFAULT,
+				'rank',
+				$config,
+				'Default rank should be default on instantiation'
+		);
+		$this->assertEquals(
+				$config::RANK_DEFAULT,
+				$config->getRank(),
+				'getRank should return value of rank property'
+		);
+		$this->assertEquals(
+				$config,
+				$config->setRank( $config::RANK_NEWEST ),
+				'setrank should provide a fluent interface'
+		);
+		$this->assertAttributeEquals(
+				$config::RANK_NEWEST,
+				'rank',
+				$config,
+				'setrank should mutate the rank attribute'
+		);
+	}
+
 	/**
 	 * @covers Wikia\Search\Config
 	 */
@@ -1350,20 +1463,6 @@ class ConfigTest extends BaseTest {
 	
 	/**
 	 * @covers Wikia\Search\Config::setRank
-	 */
-	public function testSetRankWithBadKey() {
-		$config = new Config;
-		try {
-		    $config->setRank( 'this will never be a rank' );
-		} catch ( \Exception $e ) {}
-		$this->assertInstanceOf(
-				'Exception',
-				$e
-		);
-	}
-	
-	/**
-	 * @covers Wikia\Search\Config::setRank
 	 * @covers Wikia\Search\Config::getRank
 	 * @covers Wikia\Search\Config::getSort
 	 */
@@ -1415,6 +1514,23 @@ class ConfigTest extends BaseTest {
 		);
 	}
 	
+	/**
+	 * @covers Wikia\Search\Config::setRank
+	 */
+	public function testSetRankBadRankName() {
+		$config = new Config;
+		$this->assertEquals(
+				$config,
+				$config->setRank( 'this is a totally fake rank' ),
+				'Setting an incorrect rank on config should fail gracefully'
+		);
+		$this->assertEquals(
+				$config::RANK_DEFAULT,
+				$config->getRank(),
+				'An incorrect rank value should not mutate the config rank propery'
+		);
+	}
+
 	/**
 	 * @covers Wikia\Search\Config::setHub
 	 * @covers Wikia\Search\Config::getHub
@@ -1511,7 +1627,7 @@ class ConfigTest extends BaseTest {
 		$meth = new ReflectionMethod( $config, 'setQueryService' );
 		$meth->setAccessible( true );
 		try {
-			$meth->invoke( $config, 'this will never be a class' );
+			$meth->invoke( $config, 'this will never be a class', true );
 		} catch ( \Exception $e ) { }
 		$this->assertInstanceOf(
 				'Exception',
@@ -1696,5 +1812,4 @@ class ConfigTest extends BaseTest {
 				$config
 		);
 	}
-	
 }

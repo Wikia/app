@@ -6,7 +6,7 @@ class WikiMapSpecialController extends WikiaSpecialPageController {
     }
 
     public function init() {
-        $this->businessLogic = F::build( 'WikiMapModel', array( 'currentTitle' => $this->app->wg->Title ) );
+        $this->businessLogic = new WikiMapModel( $this->app->wg->Title );
 
     }
 
@@ -20,29 +20,29 @@ class WikiMapSpecialController extends WikiaSpecialPageController {
         $parameter = $this->getPar();
         $parameterSpaces = str_replace('_', ' ', $parameter);
 
-        $this->wg->Out->setPageTitle( $this->wf->msg('wikiMap-specialpage-title'));
+        $this->wg->Out->setPageTitle( wfMsg('wikiMap-specialpage-title'));
         // setting response data
 
         $resultNodes = $this->businessLogic->getArticles($parameter);
 
         if (is_null($parameter)){
-            $this->setVal( 'header', $this->wf->msg('wikiMap-title-nonparam'));
+            $this->setVal( 'header', wfMsg('wikiMap-title-nonparam'));
             $this->setVal( 'artCount', null);
         }
         else {
-            $this->setVal( 'artCount', $this->wf->msg('wikiMap-articleCount', $resultNodes['length'], $resultNodes['all']));
+            $this->setVal( 'artCount', wfMsg('wikiMap-articleCount', $resultNodes['length'], $resultNodes['all']));
 
             $artPath = $this->app->wg->get('wgArticlePath');
             $path = str_replace('$1', 'Category:', $artPath);
             $path.= $parameter;
 
-            $output = '<a href="' . $path . '">' . $this->wf->msg('wikiMap-category') . $parameterSpaces . '</a>';
+            $output = '<a href="' . $path . '">' . wfMsg('wikiMap-category') . $parameterSpaces . '</a>';
             $this->setVal( 'header', $output);
 
         }
 
-        $this->setVal( 'categoriesHeader', $this->wf->msg('wikiMap-categoriesHeader'));
-        $this->setVal( 'animation', $this->wf->msg('wikiMap-animation'));
+        $this->setVal( 'categoriesHeader', wfMsg('wikiMap-categoriesHeader'));
+        $this->setVal( 'animation', wfMsg('wikiMap-animation'));
 
         $this->setVal( 'namespace', $this->businessLogic->getActualNamespace());
         $this->setVal( 'res', $resultNodes);

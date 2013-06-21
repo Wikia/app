@@ -427,7 +427,11 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'contentfeeds-firstfewarticles-tag-header' => 'Ccreje le prime pàggene tune!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Titole',
+	'contentfeeds-firstfewarticles-tag-next' => 'Prossime',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => "Errore: Jè richieste 'u titole d'a pàgene",
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => "Errore: Jè richieste 'u cuèrpe d'a pàgene",
 );
 
 /** Russian (русский)
@@ -560,4 +564,13 @@ $messages['zh-hans'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => '下一页',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => '错误：需要页面标题',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => '错误：需要页面内容',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Radish10cm
+ */
+$messages['zh-hant'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => '標題',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => '錯誤: 頁面標題是必要的',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => '錯誤: 頁面主體是必需的',
 );

@@ -29,7 +29,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 		$this->context = $context;
 		$this->id = $id;
 
-		$this->properties = F::build( 'SplObjectStorage' );
+		$this->properties = (new SplObjectStorage);
 	}
 
 	public function getId() {
@@ -176,7 +176,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 		}
 
 		/** @var $element SDElement */
-		$element = F::build( 'SDElement', array( $template->type, $context, $elementId ) );
+		$element = new SDElement( $template->type, $context, $elementId );
 
 		foreach($template as $propertyName => $propertyValue) {
 			if(isset($data->{"$propertyName"})) {
@@ -188,7 +188,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 					$propertyValue = $propertyValue->{"@value"};
 				}
 				/** @var $property SDElementProperty */
-				$property = F::build( 'SDElementProperty', array( $propertyName, $propertyValue ) );
+				$property = new SDElementProperty( $propertyName, $propertyValue );
 				$element->addProperty( $property );
 			}
 			elseif($propertyName == '@context') {
@@ -291,7 +291,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 			$url = $this->getUrl();
 			if ( !empty( $url ) ) {
 				if ( preg_match( '/^http(s)?:/', $url, $matches ) > 0 ) {
-					$title = F::build( 'Title', array( $url ), 'newFromText');
+					$title = Title::newFromText( $url );
 					if( $title instanceof Title ) {
 						return $title->getFullUrl();
 					}

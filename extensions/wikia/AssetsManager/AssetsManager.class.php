@@ -36,7 +36,7 @@ class AssetsManager {
 	 */
 	private function loadConfig() {
 		if(empty($this->mAssetsConfig)) {
-			$this->mAssetsConfig = F::build( 'AssetsConfig' );
+			$this->mAssetsConfig = (new AssetsConfig);
 		}
 	}
 
@@ -587,7 +587,7 @@ class AssetsManager {
 	 * @throws WikiaException in case of empty request
 	 *
 	 * @example
-	 * 	F::build( 'AssetsManager', array(), 'getInstance' )->getMultiTypePackageURL( array (
+	 * 	AssetsManager::getInstance()->getMultiTypePackageURL( array (
 	 *		'messages' => 'EditPageLayout',
 	 *		'scripts' => 'oasis_jquery,yui',
 	 *		'styles' => 'path/to/style/file',

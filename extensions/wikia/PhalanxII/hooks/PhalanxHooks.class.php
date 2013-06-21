@@ -65,7 +65,7 @@ class PhalanxHooks extends WikiaObject {
 		// pass matching block details
 		if ( $ret === false ) {
 			$blockData = (array) $model->getBlock();
-			$this->wf->Debug( __METHOD__ . ": spam check blocked '{$text}'\n" );
+			wfDebug( __METHOD__ . ": spam check blocked '{$text}'\n" );
 		}
 
 		wfProfileOut( __METHOD__ );

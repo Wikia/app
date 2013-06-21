@@ -7,7 +7,7 @@
 		<?= $toolbar ?>
 		<?php if(!empty($selectAll) && $selectAll === true): ?>
 			<div class="toolbar">
-				<label><input type="checkbox" name="select-all" class="select-all" value="all"><?= $wf->Msg('wikiastyleguide-dropdown-select-all') ?></label>
+				<label><input type="checkbox" name="select-all" class="select-all" value="all"><?= wfMsg('wikiastyleguide-dropdown-select-all') ?></label>
 			</div>
 		<?php endif; ?>
 		<ul class="dropdown-list">

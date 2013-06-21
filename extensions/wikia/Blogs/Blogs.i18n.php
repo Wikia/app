@@ -4858,8 +4858,10 @@ $messages['uk'] = array(
 
 /** Uzbek (oʻzbekcha)
  * @author CoderSI
+ * @author Sociologist
  */
 $messages['uz'] = array(
+	'create-blog-categories-textinput' => 'Yangi turkum qoʻshish',
 	'create-blog-preview' => 'Ko‘rib chiqish',
 );
 

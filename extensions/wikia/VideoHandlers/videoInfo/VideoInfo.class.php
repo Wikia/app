@@ -106,8 +106,8 @@ class VideoInfo extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$affected = false;
-		if ( !$this->wf->ReadOnly() && !empty($this->videoTitle) ) {
-			$db = $this->wf->GetDB( DB_MASTER );
+		if ( !wfReadOnly() && !empty($this->videoTitle) ) {
+			$db = wfGetDB( DB_MASTER );
 
 			$db->update(
 				'video_info',
@@ -146,8 +146,8 @@ class VideoInfo extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$affected = false;
-		if ( !$this->wf->ReadOnly() ) {
-			$db = $this->wf->GetDB( DB_MASTER );
+		if ( !wfReadOnly() ) {
+			$db = wfGetDB( DB_MASTER );
 
 			if ( empty($this->addedAt) ) {
 				$this->addedAt = $db->timestamp();
@@ -189,8 +189,8 @@ class VideoInfo extends WikiaModel {
 	protected function removeFromDatabase() {
 		wfProfileIn( __METHOD__ );
 
-		if ( !$this->wf->ReadOnly() ) {
-			$db = $this->wf->GetDB( DB_MASTER );
+		if ( !wfReadOnly() ) {
+			$db = wfGetDB( DB_MASTER );
 
 			$db->delete(
 				'video_info',
@@ -212,8 +212,8 @@ class VideoInfo extends WikiaModel {
 	public function createTableVideoInfo() {
 		wfProfileIn( __METHOD__ );
 
-		if ( !$this->wf->ReadOnly() ) {
-			$db = $this->wf->GetDB( DB_MASTER );
+		if ( !wfReadOnly() ) {
+			$db = wfGetDB( DB_MASTER );
 
 			$sql =<<<SQL
 				CREATE TABLE IF NOT EXISTS `video_info` (
@@ -248,8 +248,8 @@ SQL;
 	public function alterTableVideoInfoV1() {
 		wfProfileIn( __METHOD__ );
 
-		if ( !$this->wf->ReadOnly() ) {
-			$db = $this->wf->GetDB( DB_MASTER );
+		if ( !wfReadOnly() ) {
+			$db = wfGetDB( DB_MASTER );
 
 			if ( $db->tableExists( 'video_info' ) ) {
 				$sql =<<<SQL
@@ -283,7 +283,7 @@ SQL;
 		if ( is_array($videoData) ) {
 			$video = new self( $videoData );
 		} else {
-			$db = $app->wf->GetDB( DB_SLAVE );
+			$db = wfGetDB( DB_SLAVE );
 
 			$row = $db->selectRow(
 				'video_info',
@@ -321,7 +321,8 @@ SQL;
 			'featured' => $row->featured,
 		);
 
-		$video = F::build( __CLASS__, array($data) );
+		$class = get_class();
+		$video = new $class($data);
 
 		return $video;
 	}
@@ -343,7 +344,7 @@ SQL;
 	public function addPremiumVideo( $userId ) {
 		wfProfileIn( __METHOD__ );
 
-		$this->addedAt = $this->wf->Timestamp( TS_MW );
+		$this->addedAt = wfTimestamp( TS_MW );
 		if ( !empty($userId) ) {
 			$this->addedBy = $userId;
 		}
@@ -364,7 +365,7 @@ SQL;
 	 * @return boolean
 	 */
 	public function reuploadVideo() {
-		$addedAt = $this->wf->Timestamp( TS_MW );
+		$addedAt = wfTimestamp( TS_MW );
 		$this->setAddedAt( $addedAt );
 
 		return $this->updateDatabase();
@@ -403,7 +404,7 @@ SQL;
 	 * @return string
 	 */
 	protected static function getMemcKey( $videoTitle ) {
-		return F::app()->wf->MemcKey( 'video_info', 'v1', md5($videoTitle) );
+		return wfMemcKey( 'video_info', 'v1', md5($videoTitle) );
 	}
 
 	/**
