@@ -469,6 +469,8 @@ $messages['qqq'] = array(
 	'wall-message-deleted-reply-because' => 'Summary at the top of a deleted reply page. Parameters:
 * $1 is the user who deleted the reply (GENDER is supported in this message).',
 	'wall-message-closed-by' => 'message stating thread has been closed.  $1 is username, $2 is userpage title',
+	'wall-message-closed-by-because' => 'Summary at the top of a closed thread page. Parameters:
+* $1 is the user who closed the thread (GENDER is supported in this message).',
 	'wall-message-restore-reply' => 'Button to restore a reply on a removed reply page',
 	'wall-delete-reason' => 'default user/admin action',
 	'wall-user-talk-page-archive-anchor' => "Link on a Message Wall page to the user's old talk page archive",
@@ -487,6 +489,7 @@ See also:
 	'wall-action-all-confirm-notify' => 'Option to notify an admin on a remove or deleted reply modal box',
 	'wall-action-remove-reply-title' => 'Title of the modal box for removing a reply',
 	'wall-action-remove-thread-title' => 'Title of the modal box for removing a thread',
+	'wall-action-close-thread-title' => 'Title of the modal box for closing a thread',
 	'wall-confirm-monobook-remove' => "Explanation of the remove modal box for Monobook users, puts extra info in because Monobook users don't see the complete modal box",
 	'wall-confirm-monobook-admin' => "Explanation of the delete modal box for Monobook users, puts extra info in because Monobook users don't see the complete modal box",
 	'wall-confirm-monobook-restore' => 'Asks for a summary for restoring a message or reply for Monoboo users',
@@ -498,6 +501,9 @@ See also:
 	'wall-action-remove-thread-confirm-info' => 'Explanation in the remove modal box that the thread and summary will still appear in the history',
 	'wall-action-remove-reply-confirm-info' => 'Explanation in the remove modal box that the reply and summary will still appear in the history',
 	'wall-action-remove-confirm-ok' => 'Button in the remove modal box',
+	'wall-action-close-confirm' => 'Asks for summary in the close thread modal box',
+	'wall-action-close-thread-confirm-info' => 'Explanation in the close modal box that the thread and summary will still appear on the forum',
+	'wall-action-close-confirm-ok' => 'Button in the close modal box',
 	'wall-action-admin-thread-title' => 'Title of the delete thread modal box',
 	'wall-action-admin-reply-title' => 'Title of the delete reply modal box',
 	'wall-action-admin-confirm' => 'Asks for summary in the delete modal box',
