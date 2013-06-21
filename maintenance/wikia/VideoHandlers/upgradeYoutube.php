@@ -358,7 +358,7 @@ class UpgradeYoutube extends Maintenance {
 									 EDIT_MINOR | EDIT_FORCE_BOT | EDIT_AUTOSUMMARY | EDIT_SUPPRESS_RC );
 		} catch ( Exception $e ) {
 			echo "\t[Skip:$wgCityId,$wgCurPageID] Edit failed: ".$e->getMessage()."\n";
-			return = false;
+			return false;
 		}
 
 		$retval = true;
