@@ -300,9 +300,6 @@ $.fn.startThrobbing = function() {
 $.fn.stopThrobbing = function() {
 	return this.find('.wikiaThrobber').remove();
 };
-$.stopThrobbing = function() {
-	$('.wikiaThrobber').remove();
-}
 $.preloadThrobber = function() {
 	var img = new Image();
 	img.src = stylepath + '/common/images/ajax.gif';

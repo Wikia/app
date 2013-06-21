@@ -126,8 +126,7 @@ class ImagesServiceTest extends WikiaBaseTest {
 			->method('createThumb')
 			->will($this->returnValue($fileGetThumbUrlResult));
 
-		$this->mockGlobalFunction('findFile', $fileMock);
-		$this->mockApp();
+		$this->mockGlobalFunction('wfFindFile', $fileMock);
 
 		$expected = new stdClass();
 		$expected->width = $results['width'];

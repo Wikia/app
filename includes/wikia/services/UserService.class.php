@@ -174,7 +174,7 @@ class UserService extends Service {
 
 
 	private function getUserFromMemCacheById( $id ) {
-		$cacheIdKey = F::app()->wf->sharedMemcKey( "UserCache:".$id );
+		$cacheIdKey = wfSharedMemcKey( "UserCache:".$id );
 		if ( ( $value = F::app()->wg->memc->get( $cacheIdKey ) ) !== false ) {
 			//cache locally
 			$this->cacheLocalUser( $value );
@@ -184,7 +184,7 @@ class UserService extends Service {
 	}
 
 	private function getUserFromMemCacheByName( $name ) {
-		$cacheNameKey = F::app()->wf->sharedMemcKey( "UserCache:".$name );
+		$cacheNameKey = wfSharedMemcKey( "UserCache:".$name );
 		if ( ( $value = F::app()->wg->memc->get( $cacheNameKey ) ) !== false ) {
 			if ( ( $value = $this->getUserFromMemCacheById( $value ) ) !== false ) {
 				return $value;
@@ -211,8 +211,8 @@ class UserService extends Service {
 	 * @param $user User
 	 */
 	private function cacheUser( $user ) {
-		$cacheIdKey = F::app()->wf->sharedMemcKey( "UserCache:".$user->getId() );
-		$cacheNameKey = F::app()->wf->sharedMemcKey( "UserCache:".$user->getName() );
+		$cacheIdKey = wfSharedMemcKey( "UserCache:".$user->getId() );
+		$cacheNameKey = wfSharedMemcKey( "UserCache:".$user->getName() );
 		F::app()->wg->memc->set( $cacheIdKey, $user, static::CACHE_EXPIRATION );
 		F::app()->wg->memc->set( $cacheNameKey, $user->getId(), static::CACHE_EXPIRATION );
 

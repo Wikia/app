@@ -145,16 +145,18 @@ class LookupContribsCore {
 					'event_type' => array(1,2)
 				);
 
-				if( !empty( $excludedWikis ) && is_array( $excludedWikis ) ) {
+				if ( !empty( $excludedWikis ) && is_array( $excludedWikis ) ) {
 					$where[] = 'wiki_id NOT IN (' . $dbr->makeList( $excludedWikis ) . ')';
 				}
 
 				$options = array( 'GROUP BY' => 'wiki_id' );
 
-				if( $addEditCount === true ) {
+				if ( $addEditCount === true ) {
 					$wikisIds = array();
 					$wikiEdits = $this->getEditCount( $wikisIds );
-					$where['wiki_id'] = $wikisIds;
+					if ( !empty( $wikisIds ) ) {
+						$where['wiki_id'] = $wikisIds;
+					}
 				}
 
 				/* rows */

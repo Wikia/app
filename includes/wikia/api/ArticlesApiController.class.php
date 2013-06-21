@@ -471,7 +471,7 @@ class ArticlesApiController extends WikiaApiController {
 							'id' => $revId,
 							'user' => $rev->getUserText( Revision::FOR_PUBLIC ),
 							'user_id' => $rev->getUser( Revision::FOR_PUBLIC ),
-							'timestamp' => $this->wf->Timestamp( TS_UNIX, $rev->getTimestamp() )
+							'timestamp' => wfTimestamp( TS_UNIX, $rev->getTimestamp() )
 						]
 					];
 
@@ -599,7 +599,7 @@ class ArticlesApiController extends WikiaApiController {
 
 				if ( $n === false ) {
 					if ( $caller !== null ) {
-						F::app()->wf->profileOut( $caller );
+						wfProfileOut( $caller );
 					}
 
 					throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
@@ -615,7 +615,7 @@ class ArticlesApiController extends WikiaApiController {
 			$params = md5( implode( '|', $params ) );
 		}
 
-		return F::app()->wf->MemcKey( __CLASS__, self::CACHE_VERSION, $type, $name, $params );
+		return wfMemcKey( __CLASS__, self::CACHE_VERSION, $type, $name, $params );
 	}
 
 	/**

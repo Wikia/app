@@ -11,7 +11,7 @@
  */
 $app = F::app();
 $dir = dirname( __FILE__ );
-$app->registerClass( 'JWPlayer',		$dir . '/JWPlayer.class.php' );
+$wgAutoloadClasses[ 'JWPlayer'] = 		$dir . '/JWPlayer.class.php' ;
 
 /**
  * messages

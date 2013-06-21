@@ -16,7 +16,7 @@ $messages['en'] = array(
 	'manage-wikia-home-visualization-wikis' => 'Corporate wikis with visualization:',
 
 	'manage-wikia-home-wikis-in-slots-success' => 'Numbers slots has been changed.',
-	'manage-wikia-home-collections-success' => 'Collections has been saved.',
+	'manage-wikia-home-collections-success' => 'Collections have been saved.',
 
 	'manage-wikia-home-verticals-proportions' => 'Number of wikis per vertical',
 
@@ -48,7 +48,7 @@ $messages['en'] = array(
 	'manage-wikia-home-wiki-list-disabled-collection' => 'Disabled collection',
 	'manage-wikia-home-wiki-list-all-collections' => 'All collections',
 	'manage-wikia-home-wiki-list-all-verticals' => 'All verticals',
-	'manage-wikia-home-modal-title' => 'Change wiki status',
+	'manage-wikia-home-modal-title' => "Change wiki's status",
 	'manage-wikia-home-modal-title-collection' => 'Edit wiki in collection',
 
 	'manage-wikia-home-modal-content-add-blocked' => 'Do you want to exclude this wiki from appearing in the wiki visualization?',
@@ -57,10 +57,10 @@ $messages['en'] = array(
 	'manage-wikia-home-modal-content-remove-promoted' => 'Do you want to demote this wiki in the wiki visualization?',
 	'manage-wikia-home-modal-content-add-official' => 'Do you want to add official logo for this wiki in the wiki visualization?',
 	'manage-wikia-home-modal-content-remove-official' => 'Do you want to remove the official wiki logo for this wiki in the wiki visualization?',
-	'manage-wikia-home-modal-content-add-collection' => 'Do you want to add this wiki to collection?',
-	'manage-wikia-home-modal-content-remove-collection' => 'Do you want to remove this wiki from collection?',
+	'manage-wikia-home-modal-content-add-collection' => 'Do you want to add this wiki to the collection?',
+	'manage-wikia-home-modal-content-remove-collection' => 'Do you want to remove this wiki from the collection?',
 	'manage-wikia-home-modal-content-add-blocked-wiki-warning' => 'You cannot add blocked wikis to a collection',
-	'manage-wikia-home-modal-content-blocked-wiki-in-collection-warning' => 'This wiki shouldn\'t be in collection because it is blocked. It will be removed from collection',
+	'manage-wikia-home-modal-content-blocked-wiki-in-collection-warning' => 'This wiki shouldn\'t be in collection because it is blocked. It will be removed from the collection',
 	'manage-wikia-home-modal-content-blocked-wiki-title' => 'This wiki is blocked',
 	'manage-wikia-home-modal-content-removed-blocked-in-collection' => 'This wiki is currently part of a collection and cannot be blocked.',
 	'manage-wikia-home-modal-too-many-wikis-in-collection' => 'You can not add more wikis to this collection.',
@@ -76,8 +76,8 @@ $messages['en'] = array(
 	'manage-wikia-home-collections-sponsor-url-field-label' => 'Sponsor URL',
 	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Hero image',
 	'manage-wikia-home-collections-sponsor-image-field-label' => 'Sponsor image',
-	'manage-wikia-home-collections-wikis-in-collection' => 'Wikis: $1/$2',
-	'manage-wikia-home-collections-invalid-wikis-number' => 'This collection will not be visible on corporate main page until there are $1 wikis assigned to it.',
+	'manage-wikia-home-collections-wikis-in-collection' => 'Wikis: $1 of $2',
+	'manage-wikia-home-collections-invalid-wikis-number' => 'This collection will not be visible on the corporate main page until there are $1 wikis assigned to it.',
 
 	'manage-wikia-home-collection-hero-image-tooltip' => 'This image should be $1px × $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'This image should be $1px × $2px',
@@ -144,7 +144,11 @@ $messages['qqq'] = array(
 	'manage-wikia-home-modal-button-no' => '\'No\' button on blocking/unblocking modal',
 	'manage-wikia-home-modal-button-yes' => '\'Yes\' button on blocking/unblocking modal',
 	'manage-wikia-home-modal-button-okay' => '\'Okay\' button on modal, which inform that wiki can not be added to collection because is blocked',
-	'manage-wikia-home-collections-wikis-in-collection' => 'It says how many wikis are in the collections; $1 = actual number of wikis assigned to a collection; $2 = maximum number of wikis per collection',
+	'manage-wikia-home-collections-wikis-in-collection' => 'It says how many wikis are in the collections; 
+* $1 = actual number of wikis assigned to a collection
+* $2 = maximum number of wikis per collection
+
+Has plural support if needed in your language.',
 	'manage-wikia-home-collections-invalid-wikis-number' => 'Information about status of a collection; it appears only if the number of wikis assigned to a collection is invalid (it extends the maximum number of wikis per collection); $1 = maximum number of wikis per collection',
 
 	'manage-wikia-home-collections-setup-header' => 'A header above collections\' configuration',

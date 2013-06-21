@@ -72,10 +72,9 @@ class ArticleService extends WikiaObject {
 	 * @param integer $articleId A valid article ID from which
 	 * an Article instance will be constructed to be used as a
 	 * source of content
-	 * @return ArticleService fluent interface
 	 */
 	public function setArticleById( $articleId ) {
-		$this->article = F::build('Article',array($articleId), 'newFromID');
+		$this->article = Article::newFromID($articleId);
 		return $this;
 	}
 
@@ -188,7 +187,7 @@ class ArticleService extends WikiaObject {
 			);
 		}
 
-		$snippet = $this->wf->ShortenText( $text, $length, true /*use content language*/ );
+		$snippet = wfShortenText( $text, $length, true /*use content language*/ );
 
 		wfProfileOut( __METHOD__ );
 		return $snippet;
@@ -202,7 +201,7 @@ class ArticleService extends WikiaObject {
 	 * @return string The cache key associated to the article
 	 */
 	static public function getCacheKey( $articleId ) {
-		return F::app()->wf->MemcKey(
+		return wfMemcKey(
 			__CLASS__,
 			self::CACHE_VERSION,
 			$articleId

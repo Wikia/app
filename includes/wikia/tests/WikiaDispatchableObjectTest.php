@@ -35,7 +35,6 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 
 		$this->mockGlobalVariable( 'wgServer', $serverName );
 		$this->mockGlobalVariable( 'wgScriptPath', $scriptPath );
-		$this->mockApp();
 
 		$this->assertEquals( $requestURI, $className::getUrl( $methodName, $params ) );
 	}
@@ -51,11 +50,10 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 			->getMock();
 		$squidMock->expects( $this->exactly( 5 ) )
 			->method( 'doUpdate' );
-		$this->proxyClass( 'SquidUpdate', $squidMock);
+		$this->mockClass( 'SquidUpdate', $squidMock );
 
 		$this->mockGlobalVariable( 'wgServer', $serverName );
 		$this->mockGlobalVariable( 'wgScriptPath', $scriptPath );
-		$this->mockApp();
 
 		$this->assertEquals(
 			[$baseURI . 'test'],

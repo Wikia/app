@@ -18,7 +18,6 @@ $wgExtensionCredits['other'][] = array(
 );
 
 $dir = __DIR__ . '/';
-$app = F::app();
 
 $classes = array(
 	/* models */
@@ -39,7 +38,7 @@ $classes = array(
 );
 
 foreach ( $classes as $class_name => $class_path ) {
-	$app->registerClass( $class_name, $class_path );
+	$wgAutoloadClasses[ $class_name] =  $class_path ;
 }
 
 /*
@@ -88,7 +87,7 @@ $phalanxhooks = array(
 // don't bother initializing hooks if user is immune to Phalanx
 foreach ( $phalanxhooks as $class => $hooks ) {
 	foreach ( $hooks as $name => $method ) {
-		$app->registerHook( $name, $class, $method );
+		$wgHooks[$name][] = $class . '::' . $method;
 	}
 }
 
@@ -108,13 +107,13 @@ $fallback_classes = array(
 );
 
 foreach ( $fallback_classes as $class_name => $class_path ) {
-	$app->registerClass( $class_name, $class_path );
+	$wgAutoloadClasses[ $class_name] =  $class_path ;
 }
 
 /**
  * messages
  */
-$app->registerExtensionMessageFile('Phalanx', $dir . 'Phalanx.i18n.php');
+$wgExtensionMessagesFiles['Phalanx'] = $dir . 'Phalanx.i18n.php';
 
 /*
  * globals, rights etc

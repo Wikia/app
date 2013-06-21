@@ -12,6 +12,12 @@ class WikiaHomePageTest extends WikiaBaseTest {
 
 	protected $wgServerOrg = null;
 
+	protected function setUp() {
+		parent::setUp();
+
+		$this->mockStaticMethod( 'AvatarService', 'getAvatarUrl', null );
+	}
+
 	protected function setUpMock($cacheParams = null) {
 		// mock cache
 		$memcParams = array(
@@ -30,8 +36,6 @@ class WikiaHomePageTest extends WikiaBaseTest {
 			2 => array('Video_Games'),
 			3 => array('Entertainment')
 		));
-
-		$this->mockApp();
 	}
 
 	protected function setUpMockObject($objectName, $objectParams = null, $needSetInstance = false, $globalVarName = null, $callOriginalConstructor = true, $globalFunc = array()) {
@@ -87,29 +91,17 @@ class WikiaHomePageTest extends WikiaBaseTest {
 
 		// mock global function
 		if (!empty($globalFunc)) {
-			$this->mockGlobalFunction($globalFunc['name'], $mockObject, $globalFunc['time']);
+			$this->getGlobalFunctionMock( $globalFunc['name'] )
+				->expects( $this->exactly( $globalFunc['time'] ) )
+				->method( $globalFunc['name'] )
+				->will( $this->returnValue( $mockObject ) );
 		}
 
 		// set instance
 		if ($needSetInstance) {
-			$this->mockClass($objectName, $mockObject);
+			$this->mockClassEx($objectName, $mockObject);
 		}
 		return $mockObject;
-	}
-
-	protected function setUpGlobalVariables($params) {
-		foreach ($params as $key => $value) {
-			global ${$key}, ${$key . 'Org'};
-			${$key . 'Org'} = ${$key};
-			${$key} = $value;
-		}
-	}
-
-	protected function teardownGlobalVariables($params) {
-		foreach ($params as $key => $value) {
-			global ${$key}, ${$key . 'Org'};
-			${$key} = ${$key . 'Org'};
-		}
 	}
 
 	/**
@@ -124,10 +116,13 @@ class WikiaHomePageTest extends WikiaBaseTest {
 		$mockFile = $this->setUpMockObject('File', $mockFileParams, true, null, false);
 
 		if ($mockFileParams['exists']) {
-			$this->setUpMockObject('WikiaFunctionWrapper', array('FindFile' => $mockFile), true, null, false);
+			$mockFindFile = $this->getGlobalFunctionMock( 'wfFindFile' );
+			$mockFindFile->expects( $this->any() )
+				->method( 'wfFindFile' )
+				->will( $this->returnValue( $mockFile ) );
 		}
-
 		$this->setUpMock();
+
 		// test
 		$response = $this->app->sendRequest('WikiaHomePage', 'getHubImages');
 
@@ -430,15 +425,12 @@ TXT;
 	/**
 	 * @dataProvider getWikiAdminAvatarsDataProvider
 	 */
-	public function testGetWikiAdminAvatars($mockWikiId, $mockWikiServiceParam, $mockUserStatsServiceParam, $mockUserParam, $mockAvatarServiceParam, $expAdminAvatars) {
+	public function testGetWikiAdminAvatars($mockWikiId, $mockWikiServiceParam, $mockUserStatsServiceParam, $mockUserParam, $expAdminAvatars) {
 		// setup
-		$globalVarParams = array('wgServer' => self::TEST_URL);
-		$this->setUpGlobalVariables($globalVarParams);
+		$this->mockGlobalVariable('wgServer', self::TEST_URL);
 
 		$this->setUpMockObject('WikiService', $mockWikiServiceParam, true);
-		$this->setUpMockObject('UserStatsService', $mockUserStatsServiceParam, true);
 		$this->setUpMockObject('User', $mockUserParam, true);
-		$this->setUpMockObject('AvatarService', $mockAvatarServiceParam, true);
 
 		$mockUserStatsService = $this->getMock('UserStatsService', array('getStats','getEditCountWiki'), array(1));
 		$mockUserStatsService->expects($this->any())->method('getStats')
@@ -457,11 +449,10 @@ TXT;
 		$this->mockClass('UserStatsService',$mockUserStatsService);
 
 
-
-		$this->setUpMockObject('GlobalTitle', array(
-			'newFromText' => null,
+		$this->mockClass( 'GlobalTitle', $this->getMockWithMethods( 'GlobalTitle', array(
 			'getFullURL' => self::TEST_URL,
-		), true);
+		)), array( null, 'newFromText', 'newFromTextCached' ));
+
 		$this->setUpMockObject('WikiaHomePageHelper', array(
 			'formatMemberSinceDate' => self::TEST_MEMBER_DATE
 		), true);
@@ -469,13 +460,10 @@ TXT;
 		$this->setUpMock();
 
 		// test
-		$helper = F::build('WikiaHomePageHelper');
+		$helper = new WikiaHomePageHelper();
 		$adminAvatars = array_values($helper->getWikiAdminAvatars($mockWikiId));
 
 		$this->assertEquals($expAdminAvatars, $adminAvatars);
-
-		// teardown
-		$this->teardownGlobalVariables($globalVarParams);
 	}
 
 	public function getWikiAdminAvatarsDataProvider() {
@@ -484,7 +472,6 @@ TXT;
 		$mockWikiServiceParam1 = null;
 		$mockUserStatsServiceParam1 = null;
 		$mockUserParam1 = null;
-		$mockAvatarServiceParam1 = null;
 		$expAdminAvatars1 = array();
 
 		// 2 - no admins
@@ -515,6 +502,8 @@ TXT;
 		);
 		$mockUserParam4 = array(
 			'newFromId' => null,
+			'isBlocked' => false,
+			'isBlockedGlobally' => false,
 		);
 
 		// 5 - admins have avatar < LIMIT_ADMIN_AVATARS + user edits = 0
@@ -528,6 +517,8 @@ TXT;
 		$mockUserParam5 = array(
 			'newFromId' => null,
 			'getName' => 'TestName',
+			'isBlocked' => false,
+			'isBlockedGlobally' => false,
 		);
 		$mockAvatarServiceParam5 = array(
 			'getAvatarUrl' => null,
@@ -585,20 +576,20 @@ TXT;
 		);
 
 		return array(
-			// 1 - wikiId = 0
-			array($mockWikiId1, $mockWikiServiceParam1, $mockUserStatsServiceParam1, $mockUserParam1, $mockAvatarServiceParam1, $expAdminAvatars1),
-			// 2 - no admins
-			array($mockWikiId2, $mockWikiServiceParam2, $mockUserStatsServiceParam2, $mockUserParam1, $mockAvatarServiceParam1, $expAdminAvatars1),
-			// 3 - user not found
-			array($mockWikiId2, $mockWikiServiceParam3, $mockUserStatsServiceParam3, $mockUserParam3, $mockAvatarServiceParam1, $expAdminAvatars1),
-			// 4 - don't have avatar
-			array($mockWikiId2, $mockWikiServiceParam2, $mockUserStatsServiceParam2, $mockUserParam4, $mockAvatarServiceParam1, $expAdminAvatars1),
-			// 5 - admins have avatar < LIMIT_ADMIN_AVATARS + user edits = 0
-			array($mockWikiId2, $mockWikiServiceParam5, $mockUserStatsServiceParam5, $mockUserParam5, $mockAvatarServiceParam1, $expAdminAvatars5),
-			// 6 - admins have avatar = LIMIT_ADMIN_AVATARS + user edits != 0
-			array($mockWikiId2, $mockWikiServiceParam6, $mockUserStatsServiceParam6, $mockUserParam5, $mockAvatarServiceParam1, $expAdminAvatars6),
-			// 7 - admins have avatar > LIMIT_ADMIN_AVATARS + user edits != 0
-			array($mockWikiId2, $mockWikiServiceParam7, $mockUserStatsServiceParam7, $mockUserParam5, $mockAvatarServiceParam1, $expAdminAvatars7),
+			'1 - wikiId = 0' =>
+			array($mockWikiId1, $mockWikiServiceParam1, $mockUserStatsServiceParam1, $mockUserParam1, $expAdminAvatars1),
+			'2 - no admins' =>
+			array($mockWikiId2, $mockWikiServiceParam2, $mockUserStatsServiceParam2, $mockUserParam1, $expAdminAvatars1),
+			'3 - user not found' =>
+			array($mockWikiId2, $mockWikiServiceParam3, $mockUserStatsServiceParam3, $mockUserParam3, $expAdminAvatars1),
+			'4 - don\'t have avatar' =>
+			array($mockWikiId2, $mockWikiServiceParam2, $mockUserStatsServiceParam2, $mockUserParam4, $expAdminAvatars1),
+			'5 - admins have avatar < LIMIT_ADMIN_AVATARS + user edits = 0' =>
+			array($mockWikiId2, $mockWikiServiceParam5, $mockUserStatsServiceParam5, $mockUserParam5, $expAdminAvatars5),
+			'6 - admins have avatar = LIMIT_ADMIN_AVATARS + user edits != 0' =>
+			array($mockWikiId2, $mockWikiServiceParam6, $mockUserStatsServiceParam6, $mockUserParam5, $expAdminAvatars6),
+			'7 - admins have avatar > LIMIT_ADMIN_AVATARS + user edits != 0' =>
+			array($mockWikiId2, $mockWikiServiceParam7, $mockUserStatsServiceParam7, $mockUserParam5, $expAdminAvatars7),
 		);
 	}
 
@@ -606,17 +597,16 @@ TXT;
 	 * @dataProvider getWikiTopEditorAvatarsDataProvider
 	 */
 	public function testGetWikiTopEditorAvatars($mockWikiId, $mockWikiServiceParam, $mockUserParam, $mockAvatarServiceParam, $expTopEditorAvatars) {
-		// setup
-		$globalVarParams = array('wgServer' => self::TEST_URL);
-		$this->setUpGlobalVariables($globalVarParams);
-
+		$this->mockGlobalVariable('wgServer', self::TEST_URL);
 		$this->setUpMockObject('WikiService', $mockWikiServiceParam, true);
 		$this->setUpMockObject('User', $mockUserParam, true);
 		$this->setUpMockObject('AvatarService', $mockAvatarServiceParam, true);
-		$this->setUpMockObject('GlobalTitle', array(
-			'newFromText' => null,
+
+		$this->mockClass( 'GlobalTitle', $this->getMockWithMethods( 'GlobalTitle', array(
 			'getFullURL' => self::TEST_URL,
-		), true);
+		)), array( null, 'newFromText', 'newFromTextCached' ));
+
+
 		$this->setUpMockObject('WikiaHomePageHelper', array(
 			'formatMemberSinceDate' => self::TEST_MEMBER_DATE
 		), true);
@@ -624,13 +614,10 @@ TXT;
 		$this->setUpMock();
 
 		// test
-		$helper = F::build('WikiaHomePageHelper');
+		$helper = new WikiaHomePageHelper();
 		$topEditorAvatars = array_values($helper->getWikiTopEditorAvatars($mockWikiId));
 
 		$this->assertEquals($expTopEditorAvatars, $topEditorAvatars);
-
-		// teardown
-		$this->teardownGlobalVariables($globalVarParams);
 	}
 
 	public function getWikiTopEditorAvatarsDataProvider() {
@@ -655,6 +642,8 @@ TXT;
 		// 4 - don't have avatar
 		$mockUserParam4 = array(
 			'newFromId' => null,
+			'isBlocked' => false,
+			'isBlockedGlobally' => false,
 		);
 
 		// 5 - editors have avatar < LIMIT_ADMIN_AVATARS + user edits = 0
@@ -666,6 +655,8 @@ TXT;
 		$mockUserParam5 = array(
 			'newFromId' => null,
 			'getName' => 'TestName',
+			'isBlocked' => false,
+			'isBlockedGlobally' => false,
 		);
 		$expTopEditorAvatars5 = array(
 			array(
@@ -704,17 +695,17 @@ TXT;
 		);
 
 		return array(
-			// 1 - wikiId = 0
+			'1 - wikiId = 0' =>
 			array($mockWikiId1, $mockWikiServiceParam1, $mockUserParam1, $mockAvatarServiceParam1, $expTopEditorAvatars1),
-			// 2 - no editors
+			'2 - no editors' =>
 			array($mockWikiId2, $mockWikiServiceParam2, $mockUserParam1, $mockAvatarServiceParam1, $expTopEditorAvatars1),
-			// 3 - user not found
+			'3 - user not found' =>
 			array($mockWikiId2, $mockWikiServiceParam2, $mockUserParam3, $mockAvatarServiceParam1, $expTopEditorAvatars1),
-			// 4 - don't have avatar
+			'4 - don\'t have avatar' =>
 			array($mockWikiId2, $mockWikiServiceParam2, $mockUserParam4, $mockAvatarServiceParam1, $expTopEditorAvatars1),
-			// 5 - editors have avatar < LIMIT_ADMIN_AVATARS + user edits = 0
+			'5 - editors have avatar < LIMIT_ADMIN_AVATARS + user edits = 0' =>
 			array($mockWikiId2, $mockWikiServiceParam5, $mockUserParam5, $mockAvatarServiceParam1, $expTopEditorAvatars5),
-			// 6 - editors have avatar = LIMIT_ADMIN_AVATARS + user edits != 0
+			'6 - editors have avatar = LIMIT_ADMIN_AVATARS + user edits != 0' =>
 			array($mockWikiId2, $mockWikiServiceParam6, $mockUserParam5, $mockAvatarServiceParam1, $expTopEditorAvatars6),
 		);
 	}
@@ -723,7 +714,7 @@ TXT;
 	 * @dataProvider getProcessedWikisImgSizesDataProvider
 	 */
 	public function testGetProcessedWikisImgSizes($limit, $width, $height) {
-		$whh = F::build('WikiaHomePageHelper'); /** @var WikiaHomePageHelper $whh */
+		$whh = new WikiaHomePageHelper();
 		$size = $whh->getProcessedWikisImgSizes($limit);
 
 		$this->assertEquals($width, $size->width);
@@ -731,7 +722,7 @@ TXT;
 	}
 
 	public function getProcessedWikisImgSizesDataProvider() {
-		$whh = F::build('WikiaHomePageHelper'); /** @var WikiaHomePageHelper $whh */
+		$whh = new WikiaHomePageHelper();
 		return array(
 			array(WikiaHomePageHelper::SLOTS_BIG, $whh->getRemixBigImgWidth(), $whh->getRemixBigImgHeight()),
 			array(WikiaHomePageHelper::SLOTS_MEDIUM, $whh->getRemixMediumImgWidth(), $whh->getRemixMediumImgHeight()),

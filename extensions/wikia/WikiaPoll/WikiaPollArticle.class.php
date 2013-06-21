@@ -18,34 +18,35 @@ class WikiaPollArticle extends Article {
 	 * Render Poll namespace page
 	 */
 	public function view() {
-		global $wgOut, $wgTitle, $wgJsMimeType, $wgExtensionsPath;
 		wfProfileIn(__METHOD__);
 
 		// let MW handle basic stuff
 		parent::view();
 
+		$wg = F::app()->wg;
+
 		// poll doesn't exist
-		if (!$wgTitle->exists() || empty($this->mPoll)) {
+		if (!$wg->Title->exists() || empty($this->mPoll)) {
 			wfProfileOut(__METHOD__);
 			return;
 		}
 
 		// set page title
 		$question = wfMsg('wikiapoll-question', $this->mPoll->getTitle());
-		$wgOut->setPageTitle($question);
+		$wg->Out->setPageTitle($question);
 
 		// add CSS/JS
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaPoll/css/WikiaPoll.scss'));
-		$jsFile = F::build('JSSnippets')->addToStack(
+		$wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaPoll/css/WikiaPoll.scss'));
+		$jsFile = JSSnippets::addToStack(
 			array( '/extensions/wikia/WikiaPoll/js/WikiaPoll.js' ),
 			array(),
 			'WikiaPoll.init'
 		);
 
 		// render poll page
-		$wgOut->clearHTML();
-		$wgOut->addHTML($jsFile);
-		$wgOut->addHTML($this->mPoll->render());
+		$wg->Out->clearHTML();
+		$wg->Out->addHTML($jsFile);
+		$wg->Out->addHTML($this->mPoll->render());
 
 		wfProfileOut(__METHOD__);
 	}

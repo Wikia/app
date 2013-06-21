@@ -4,7 +4,7 @@ class RelatedVideosHookHandler {
 
 	const RELATED_VIDEOS_POSITION = 2;
 
-	public function onOutputPageBeforeHTML( OutputPage &$out, &$text ) {
+	static public function onOutputPageBeforeHTML( OutputPage &$out, &$text ) {
 		wfProfileIn(__METHOD__);
 
 		if( $out->isArticle() && F::app()->wg->request->getVal( 'diff' ) === null && ( F::app()->wg->title->getNamespace() == NS_MAIN ) ) {
@@ -15,12 +15,12 @@ class RelatedVideosHookHandler {
 		return true;
 	}
 
-	public function onBeforePageDisplay( OutputPage $out, $skin ) {
+	static public function onBeforePageDisplay( OutputPage $out, $skin ) {
 		wfProfileIn(__METHOD__);
 
 		// don't load it on edit pages (perf improvement)
 		if( F::app()->checkSkin( 'oasis', $skin ) && !BodyController::isEditPage() ) {
-			$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
+			$assetsManager = AssetsManager::getInstance();
 			$scssPackage = 'relatedvideos_scss';
 			$jsPackage = 'relatedvideos_js';
 
@@ -42,7 +42,7 @@ class RelatedVideosHookHandler {
 	  *
 	  * @param WikiPage $article
 	  */
-	public static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	static public function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		wfProfileIn(__METHOD__);
 
 		$title = $article->getTitle();
@@ -126,14 +126,14 @@ class RelatedVideosHookHandler {
 		return true;
 	}
 
-	public function onGetRailModuleList(&$modules) {
+	static public function onGetRailModuleList(&$modules) {
 		$app = F::App();
 		wfProfileIn(__METHOD__);
 
 		$title = $app->wg->Title;
 		$namespace = $title->getNamespace();
 
-		if( $this->isRailModuleWanted($title, $namespace) ) {
+		if( self::isRailModuleWanted($title, $namespace) ) {
 			$pos = $app->wg->User->isAnon() ? 1301 : 1281;
 			$modules[$pos] = array('RelatedVideosRail', 'index', null);
 		}
@@ -142,7 +142,7 @@ class RelatedVideosHookHandler {
 		return true;
 	}
 	
-	private function isRailModuleWanted($title, $namespace) {
+	static private function isRailModuleWanted($title, $namespace) {
 		$app = F::App();
 		
 		return !HubService::isCorporatePage()
@@ -164,7 +164,7 @@ class RelatedVideosHookHandler {
 	 * @param $reason
 	 * @return true
 	 */
-	public static function onFileDeleteComplete( &$file, $oldimage, $article, $user, $reason ) {
+	static public function onFileDeleteComplete( &$file, $oldimage, $article, $user, $reason ) {
 		RelatedVideosEmbededData::purgeEmbededArticles( $file->getTitle() );
 
 		return true;
@@ -178,7 +178,7 @@ class RelatedVideosHookHandler {
 	 * @param $comment
 	 * @return true
 	 */
-	public static function onFileUndeleteComplete( $title, $versions, $user, $comment ) {
+	static public function onFileUndeleteComplete( $title, $versions, $user, $comment ) {
 		RelatedVideosEmbededData::purgeEmbededArticles( $title );
 
 		return true;
@@ -191,7 +191,7 @@ class RelatedVideosHookHandler {
 	 * @param Title $newTitle
 	 * @return true
 	 */
-	public static function onFileRenameComplete( &$form , &$oldTitle , &$newTitle ) {
+	static public function onFileRenameComplete( &$form , &$oldTitle , &$newTitle ) {
 		if ( $oldTitle->getDBKey() != $newTitle->getDBKey() ) {
 			RelatedVideosEmbededData::purgeEmbededArticles( $oldTitle );
 		}
@@ -207,7 +207,7 @@ class RelatedVideosHookHandler {
 	 * @param integer $pageId
 	 * @return true
 	 */
-	public static function onArticleDeleteComplete( &$wikiPage, &$user, $reason, $pageId  ) {
+	static public function onArticleDeleteComplete( &$wikiPage, &$user, $reason, $pageId  ) {
 		$title = $wikiPage->getTitle();
 		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
 			$relatedVideos = RelatedVideosNamespaceData::newFromGeneralMessage();
@@ -231,7 +231,7 @@ class RelatedVideosHookHandler {
 	 * @param string $reason
 	 * @return true
 	 */
-	public static function onUndeleteComplete( &$title, &$user, $reason ) {
+	static public function onUndeleteComplete( &$title, &$user, $reason ) {
 		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
 			$relatedVideos = RelatedVideosNamespaceData::newFromGeneralMessage();
 			if( !empty($relatedVideos) ) {

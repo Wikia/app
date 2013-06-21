@@ -29,7 +29,7 @@ class ScavengerHuntMarkItemsAsFoundTest extends ScavengerHuntTest {
 			->method( 'exists' )
 			->will(  $this->returnValue( $exists ) );
 		
-		$this->mockClass( 'Title', $mockedTitle );
+		$this->mockClass( 'Title', $mockedTitle, 'newFromText' );
 		$this->mockDatabaseResponse( $emptyresponse );
 
 		// starting conditions

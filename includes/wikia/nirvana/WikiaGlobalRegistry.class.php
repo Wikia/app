@@ -39,16 +39,9 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 	);
 
 	public function get($propertyName) {
-		if($this->has($propertyName)) {
-			if ( $this->checkPropertyMapping( $propertyName ) ) {
-				$value = $this->processPropertyMapping( $propertyName );
-			} else {
-				$value = $GLOBALS[$propertyName];
-			}
-
-			return $value;
-		}
-
+		$this->validatePropertyName($propertyName);
+		if( isset($GLOBALS[$propertyName]) )
+			return $GLOBALS[$propertyName];
 		return null;
 	}
 
@@ -134,4 +127,5 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 		}
 		return null;
 	}
+
 }

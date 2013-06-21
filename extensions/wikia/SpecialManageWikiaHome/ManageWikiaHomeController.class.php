@@ -18,7 +18,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 	public function __construct() {
 		parent::__construct('ManageWikiaHome', 'managewikiahome', true);
-		$this->helper = F::build('WikiaHomePageHelper');
+		$this->helper = new WikiaHomePageHelper();
 	}
 
 	public function isRestricted() {
@@ -136,7 +136,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$this->response->addAsset('/extensions/wikia/SpecialManageWikiaHome/css/ManageWikiaHome.scss');
 		$this->response->addAsset('manage_wikia_home_js');
 
-		F::build('JSMessages')->enqueuePackage('ManageWikiaHome', JSMessages::EXTERNAL);
+		JSMessages::enqueuePackage('ManageWikiaHome', JSMessages::EXTERNAL);
 
 		$this->wg->Out->addJsConfigVars([
 			'wgWikisPerCollection' => $wikisPerCollection,
@@ -183,10 +183,11 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		$this->list = $this->helper->getWikisForStaffTool($options);
 		$this->collections = $this->getWikiaCollectionsModel()->getList($visualizationLang);
+		$this->verticals = $this->getWikiVerticals();
 
 		if( $count > self::WHST_WIKIS_PER_PAGE ) {
 			/** @var $paginator Paginator */
-			$paginator = F::build('Paginator', array(array_fill(0, $count, ''), self::WHST_WIKIS_PER_PAGE), 'newFromArray');
+			$paginator = Paginator::newFromArray(array_fill(0, $count, ''), self::WHST_WIKIS_PER_PAGE);
 
 			$paginator->setActivePage($currentPage - 1);
 
@@ -243,7 +244,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			Wikia::log(__METHOD__, false, "A problem with saving WikiFactory variable(s) occured. Status array: " . print_r($statusArr, true));
 			$this->errorMsg = wfMessage('manage-wikia-home-error-wikifactory-failure')->text();
 		} else {
-			$visualization = F::build('CityVisualization'); /** @var $visualization CityVisualization */
+			$visualization = new CityVisualization(); /** @var $visualization CityVisualization */
 			//todo: put purging those caches to CityVisualization class and fire here only one its method here
 			//purge verticals cache
 			foreach($visualization->getVerticalsIds() as $verticalId) {
@@ -285,7 +286,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			$this->status = false;
 		} else {
 			$wikiId = $this->request->getInt('wikiId', 0);
-
+			
 			$this->status = $this->getWikiaCollectionsModel()->isWikiInCollection($wikiId);
 		}
 
@@ -466,7 +467,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 	private function getUrlWithAllParams($lang, $filterParams) {
 		$url = '#';
-		$specialPage = F::build('Title', array('ManageWikiaHome', NS_SPECIAL), 'newFromText');
+		$specialPage = Title::newFromText('ManageWikiaHome', NS_SPECIAL);
 		if( $specialPage instanceof Title ) {
 			$params = [
 				'wiki-name-filer-input' => isset($filterParams['wiki-name-filer-input']) ? $filterParams['wiki-name-filer-input'] : '',

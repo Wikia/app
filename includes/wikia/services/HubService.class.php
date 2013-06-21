@@ -151,7 +151,7 @@ class HubService extends Service {
 		$baseText = F::app()->wg->Title->getBaseText();
 
 		/** @var $tmpTitle Title */
-		$tmpTitle = F::build('Title', array($baseText), 'newFromText');
+		$tmpTitle = Title::newFromText($baseText);
 
 		$hubsPages = F::app()->wg->WikiaHubsV2Pages;
 

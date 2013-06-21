@@ -12,9 +12,9 @@ $dir = dirname(__FILE__) . '/';
 /**
  * classes (controllers)
  */
-$app->registerClass('CacheToolController', $dir . 'CacheToolController.class.php');
+$wgAutoloadClasses['CacheToolController'] =  $dir . 'CacheToolController.class.php';
 
-$app->registerSpecialPage('CacheTool', 'CacheToolController');
+$wgSpecialPages['CacheTool'] = 'CacheToolController';
 
 $wgGroupPermissions['*']['cachetool'] = false;
 $wgGroupPermissions['staff']['cachetool'] = true;

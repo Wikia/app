@@ -27,7 +27,7 @@ class AbTestingData extends WikiaObject {
 	);
 
 	public function getDb( $db_type = DB_SLAVE ) {
-		return $this->wf->GetDB( $db_type, array(), $this->wg->ExternalDatawareDB );
+		return wfGetDB( $db_type, array(), $this->wg->ExternalDatawareDB );
 	}
 
 

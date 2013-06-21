@@ -34,7 +34,7 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleEdi
 				)
 			),
 			'moduleTitle' => array(
-				'label' => $this->wf->Msg('marketing-toolbox-hub-module-wikiaspicks-title'),
+				'label' => wfMsg('marketing-toolbox-hub-module-wikiaspicks-title'),
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
@@ -47,7 +47,7 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleEdi
 				)
 			),
 			'text' => array(
-				'label' => $this->wf->Msg('marketing-toolbox-hub-module-wikiaspicks-text'),
+				'label' => wfMsg('marketing-toolbox-hub-module-wikiaspicks-text'),
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
@@ -62,7 +62,7 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleEdi
 				)
 			),
 			'imageLink' => array(
-				'label' => $this->wf->Msg('marketing-toolbox-hub-module-wikiaspicks-link-url'),
+				'label' => wfMsg('marketing-toolbox-hub-module-wikiaspicks-link-url'),
 				'validator' => new WikiaValidatorToolboxUrl(
 					array(),
 					array(
