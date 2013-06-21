@@ -649,7 +649,7 @@ class MediaWikiService
 	) {
 		$width = (isset( $dimensions[ 'width' ] ) ) ? $dimensions[ 'width' ] : static::THUMB_DEFAULT_WIDTH;
 		$height = (isset( $dimensions[ 'height' ] ) ) ? $dimensions[ 'height' ] : static::THUMB_DEFAULT_HEIGHT;
-		$imgSource = $this->getImageServing( array( $pageId ), $width, $height );
+		$imgSource = $this->getImageServing( $pageId, $width, $height );
 		//get one image only
 		$img = $imgSource->getImages( 1 );
 		if ( !empty( $img ) ) {
