@@ -331,11 +331,12 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	}
 
 	/**
-	 * undelete page
+	 * undelete page (local file)
 	 * @param Title $title
+	 * @param boolean $removePremium
 	 * @return Status $status
 	 */
-	public function undeletePage( $title ) {
+	public function undeletePage( $title, $removePremium = false ) {
 		wfProfileIn( __METHOD__ );
 
 		// use Phalanx to check recovered page title
@@ -356,6 +357,11 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		if ( is_array( $status ) ) {
 			// Undeleted file count
 			if ( $status[1] ) {
+				// remove premium video from video_info table if swapping same video titles
+				if ( $removePremium ) {
+					wfRunHooks( 'RemovePremiumVideo', array( $title ) );
+				}
+
 				// clear file cache
 				RepoGroup::singleton()->clearCache( $title );
 

@@ -113,6 +113,7 @@ $wgHooks['AddPremiumVideo'][] = 'VideoInfoHooksHelper::onAddPremiumVideo';
 $wgHooks['ArticleDeleteComplete'][] = 'VideoInfoHooksHelper::onArticleDeleteComplete';
 $wgHooks['UndeleteComplete'][] = 'VideoInfoHooksHelper::onUndeleteComplete';
 $wgHooks['ForeignFileDeleted'][] = 'VideoInfoHooksHelper::onForeignFileDeleted';
+$wgHooks['RemovePremiumVideo'][] = 'VideoInfoHooksHelper::onRemovePremiumVideo';
 
 if(!empty($wgVideoHandlersVideosMigrated)) {
 	$wgHooks['ParserFirstCallInit'][] = 'VideoHandlerHooks::initParserHook';

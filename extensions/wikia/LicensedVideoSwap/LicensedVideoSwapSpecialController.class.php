@@ -340,7 +340,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		}
 
 		if ( $pageStatus == LicensedVideoSwapHelper::STATUS_SWAP_EXACT ) {
-			$status = $helper->undeletePage( $title );
+			$status = $helper->undeletePage( $title, true );
 		} else if ( $pageStatus == LicensedVideoSwapHelper::STATUS_SWAP_NORM ) {
 			$newTitle = $this->request->getVal( 'newTitle', '' );
 			$article = Article::newFromID( $title->getArticleID() );
