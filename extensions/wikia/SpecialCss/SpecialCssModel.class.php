@@ -76,18 +76,19 @@ class SpecialCssModel extends WikiaModel {
 
 	/**
 	 * @desc Returns url for Special:CSS page
-	 * 
+	 *
 	 * @param bool $full
+	 * @param array|null $params optional associative array with query parameters
 	 * @return string
 	 */
-	public function getSpecialCssUrl($full = false) {
+	public function getSpecialCssUrl($full = false, $params = null) {
 		wfProfileIn(__METHOD__);
 		
 		$title = $this->getSpecialCssTitle();
 		if( !$full ) {
-			$url = $title->getLocalURL();
+			$url = $title->getLocalURL( $params );
 		} else {
-			$url = $title->getFullUrl();
+			$url = $title->getFullUrl( $params );
 		}
 
 		wfProfileOut(__METHOD__);
