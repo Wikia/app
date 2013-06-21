@@ -36,7 +36,7 @@ class AbTesting extends WikiaObject {
 
 	// Keeping the response size (assets minification) and the number of external requests low (aggregation)
 	static public function onWikiaMobileAssetsPackages( Array &$jsHeadPackages, Array &$jsBodyPackages, Array &$scssPackages ) {
-		array_unshift( $jsHeadPackages, 'abtesting' );
+		array_unshift( $jsBodyPackages, 'abtesting' );
 		return true;
 	}
 
@@ -46,10 +46,21 @@ class AbTesting extends WikiaObject {
 	}
 
 	static public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
-		$wg = F::app()->wg;
-		if ( F::app()->checkSkin( 'oasis', $skin ) ) {
-			$scripts .= ResourceLoader::makeCustomLink($wg->Out, array( 'wikia.ext.abtesting' ), 'scripts') . "\n";
+		$app = F::app();
+		$wg = $app->wg;
+
+		if ( $app->checkSkin( 'wikiamobile', $skin ) ) {
+			//Add this mock as wikia.ext.abtesting relies on it and on WikiaMobile there is no mw object
+			//This will need some treatment if we add more abtesting to WikiaMobile
+			$scripts .= '<script>var mw = {loader: {state: function(){}}}</script>';
 		}
+
+		if ( $app->checkSkin( ['oasis', 'wikiamobile'], $skin ) ) {
+			$scripts .= ResourceLoader::makeCustomLink( $wg->out, array( 'wikia.ext.abtesting' ), 'scripts' ) . "\n";
+		}
+
+
+
 		return true;
 	}
 

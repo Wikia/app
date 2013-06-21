@@ -51,7 +51,7 @@ require(['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload'], funct
 			elm.className += ' active';
 			throbber.show(elm, {size: '30px'});
 
-			Wikia.ajax({
+			$.ajax({
 				url: ajaxUrl + '&page=' + ~~pageIndex,
 				dataType: 'json'
 			}).done(
@@ -135,7 +135,7 @@ require(['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload'], funct
 					data.parentId = parentId;
 				}
 
-				Wikia.ajax({
+				$.ajax({
 					url: wgScript,
 					data: data,
 					dataType: 'json',
