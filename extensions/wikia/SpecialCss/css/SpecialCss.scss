@@ -6,6 +6,10 @@
 @import "skins/oasis/css/mixins/gradient";
 @import "skins/oasis/css/mixins/opacity";
 
+.cssEditorForm {
+	padding-top: 5px;
+}
+
 .css-editor {
 	float: left;
 	width: 670px;
