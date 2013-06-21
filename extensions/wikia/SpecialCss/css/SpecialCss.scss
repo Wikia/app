@@ -15,6 +15,12 @@
 	}
 }
 
+.WikiaArticle {
+	.wikia-menu-button ul {
+		list-style: none outside none;
+	}
+}
+
 .css-side-bar {
 	float: right;
 	width: 300px;
@@ -29,9 +35,6 @@
 			font-size: 10px;
 		}
 		.css-publish-button {
-			background: none;
-			border: none;
-			height: 20px;
 			padding: 0 20px;
 		}
 		.css-publish-button:hover {
