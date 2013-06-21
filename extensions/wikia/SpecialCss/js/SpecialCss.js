@@ -9,9 +9,9 @@ $(function() {
 		editor.getSession().setMode("ace/mode/css");
 
 		var heightUpdateFunction = function() {
-			var editorContainer = $('#cssEditorContainer');
-			var newHeight = $('.css-side-bar').height()
-				- $('.editor-changes-info-wrapper').outerHeight()
+			var editorContainer = $('#cssEditorContainer'),
+			newHeight = $('.css-side-bar').height()
+				- $('.editor-changes-info-wrapper').children().outerHeight(true)
 				- EDITOR_BOTTOM_MARGIN;
 
 			editorContainer.outerHeight(newHeight);
