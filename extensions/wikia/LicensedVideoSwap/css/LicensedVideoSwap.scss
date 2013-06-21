@@ -112,6 +112,7 @@ $color-callout-text: $color-text-dark;
 			position: absolute;
 			top: 157px;
 			width: 49px;
+			z-index: 1; // needs to show above a playing video
 			&:before {
 				@include sprite-LicensedVideoSwap('big_' + $arrow-color + '_arrow');
 				content: "";
