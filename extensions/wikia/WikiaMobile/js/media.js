@@ -319,7 +319,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				cap = '';
 				currentMedia.caption = '';
 			}
-		} else
+		}
 
 		if(number >= 0 && length >= 0) {
 			cap += '<div class=wkStkFtr> ' + number + ' / ' + length + ' </div>';
