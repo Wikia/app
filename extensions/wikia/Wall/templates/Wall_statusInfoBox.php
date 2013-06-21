@@ -32,7 +32,7 @@
 					<? if ( isset($statusInfo['reason']) && mb_strlen($statusInfo['reason']) ): ?>
 						<?= wfMsgExt('wall-message-closed-by-because', array('parsemag'), array($statusInfo['user_displayname_linked'])) ?><br>
 						<div class="reason"><?php echo $statusInfo['reason']; ?></div>
-					<? //else: ?>
+					<? else: ?>
 						<?= wfMsgExt('wall-message-closed-by', array('parseinline'), array($statusInfo['user']->getName(), $statusInfo['user']->getUserPage()) ) ?><br>
 					<? endif; ?>
 					<div class="timestamp"><span><?php echo $statusInfo['fmttime']; ?></span></div>
