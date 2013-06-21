@@ -96,17 +96,17 @@ class Select
 		
 		// non-indexed number-string phrases issue workaround (RT #24790)
 		$query = preg_replace( '/(\d+)([a-zA-Z]+)/i', '$1 $2', $query );
-	
+
 		// escape all lucene special characters: + - && || ! ( ) { } [ ] ^ " ~ * ? : \ (RT #25482)
 		$query = (new Solarium_Query_Helper)->escapeTerm( $query,  ENT_COMPAT, 'UTF-8' );
-		
+
 		if (! empty( $wordLimit ) ) {
-			// this is actually a micro-optimization. 
+			// this is actually a micro-optimization.
 			// i could just as easily apply no preg_split limit and impose the limit on array_slice.
 			$split = preg_split( '/\s+/', $query, $wordLimit + 1 );
-			$query = implode( ' ', array_slice( $split, 0, -1 ) );
-		} 
-		
+			$query = implode( ' ', array_slice( $split, 0, $wordLimit ) );
+		}
+
 		return $query;
 	}
 	
