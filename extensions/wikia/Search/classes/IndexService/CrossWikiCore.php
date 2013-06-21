@@ -4,7 +4,7 @@
  */
 namespace Wikia\Search\IndexService;
 
-use Wikia\Search\Utilities, WikiFactory, WikiService, ApiService;
+use Wikia\Search\Utilities, WikiFactory, WikiService;
 
 class CrossWikiCore extends AbstractWikiService
 {
@@ -82,7 +82,7 @@ class CrossWikiCore extends AbstractWikiService
 	
 	protected function getTopArticles() {
 		$response = ['top_articles_txt' => []];
-		$apiResponse = ApiService::call( [ 'controller' => 'ArticlesApiController', 'method' => 'getTop' ] );
+		$apiResponse = \F::app()->sendRequest( 'ArticlesApiController', 'getTop' )->getData();
 		if ( $apiResponse ) {
 			foreach ( $apiResponse['items'] as $item ) {
 				$response['top_articles_txt'][] = $item['title'];
