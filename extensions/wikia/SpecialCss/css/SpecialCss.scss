@@ -2,6 +2,7 @@
 @import "skins/oasis/css/mixins/clearfix.scss";
 @import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/mixins/box-sizing";
 @import "skins/oasis/css/mixins/gradient";
 @import "skins/oasis/css/mixins/opacity";
 
@@ -10,6 +11,7 @@
 	width: 670px;
 
 	.css-editor-container {
+		@include box-sizing();
 		min-height: 250px;
 		font-size: 13px;
 		padding: 0;

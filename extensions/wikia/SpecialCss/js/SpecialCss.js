@@ -11,10 +11,10 @@ $(function() {
 		var heightUpdateFunction = function() {
 			var editorContainer = $('#cssEditorContainer');
 			var newHeight = $('.css-side-bar').height()
-				- $('.editor-changes-info-wrapper').height()
+				- $('.editor-changes-info-wrapper').outerHeight()
 				- EDITOR_BOTTOM_MARGIN;
 
-			editorContainer.height(newHeight);
+			editorContainer.outerHeight(newHeight);
 
 			// This call is required for the editor to fix all of
 			// its inner structure for adapting to a change in size
