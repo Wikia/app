@@ -407,6 +407,8 @@ var Wall = $.createClass(Object, {
 			return true;
 		}
 
+		var message_mandatory = mode == 'close' ? false : true;
+
 		var msg;
 		var title;
 		var cancelmsg;
@@ -450,18 +452,20 @@ var Wall = $.createClass(Object, {
 			})
 		});
 
-		if(mode != 'rev') {
-			$('#WikiaConfirmOk').attr('disabled', 'disabled');
-		}
-
-		$('textarea.wall-action-reason').bind('keydown keyup change', function(e) {
-			var target = $(e.target);
-			if(target.val().length > 0) {
-				$('#WikiaConfirmOk').removeAttr('disabled');
-			} else {
+		if ( message_mandatory ) {
+			if(mode != 'rev') {
 				$('#WikiaConfirmOk').attr('disabled', 'disabled');
 			}
-		});
+
+	 		$('textarea.wall-action-reason').bind('keydown keyup change', function(e) {
+				var target = $(e.target);
+				if(target.val().length > 0) {
+					$('#WikiaConfirmOk').removeAttr('disabled');
+				} else {
+					$('#WikiaConfirmOk').attr('disabled', 'disabled');
+				}
+			});
+	 	}
 	},
 
 	/*
