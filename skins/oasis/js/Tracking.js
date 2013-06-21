@@ -125,12 +125,12 @@ jQuery(function($){
 				});
 			}
 		}).on('mousedown', '.RelatedPagesModule a', {
-				category: category,
-				label: 'related-pages'
-			}, trackWithEventData).on('mousedown', '.editsection a', {
-				category: category,
-				label: 'section-edit'
-			}, trackWithEventData);
+			category: category,
+			label: 'related-pages'
+		}, trackWithEventData).on('mousedown', '.editsection a', {
+			category: category,
+			label: 'section-edit'
+		}, trackWithEventData);
 
 		$('#WikiaArticleCategories').on('mousedown', 'a', {
 			category: category,
@@ -138,7 +138,7 @@ jQuery(function($){
 		}, trackWithEventData).on('mousedown', '.add', {
 				category: category,
 				label: 'add-category'
-			}, trackWithEventData);
+		}, trackWithEventData);
 	})();
 
 	/** category **/
@@ -318,28 +318,28 @@ jQuery(function($){
 			category: category,
 			label: 'search-suggest'
 		}, trackWithEventData).on('mousedown', '.wikia-button', function(e) {
-				// Prevent tracking 'fake' form submission clicks
-				if (e.which === 1 && e.clientX > 0) {
-					track({
-						category: category,
-						label: 'search-button'
-					});
-				}
-			}).on('keypress', '[name=search]', function(e) {
-				if ( e.which === 13 && $(this).is(':focus') ) {
-					track({
-						category: category,
-						label: 'search-enter'
-					});
-				}
-			}).on('suggestEnter', {
-				category: category,
-				label: 'search-suggest-enter'
-			}, trackWithEventData).one('suggestShow', {
-				action: Wikia.Tracker.ACTIONS.VIEW,
-				category: category,
-				label: 'search-suggest-show'
-			}, trackWithEventData);
+			// Prevent tracking 'fake' form submission clicks
+			if (e.which === 1 && e.clientX > 0) {
+				track({
+					category: category,
+					label: 'search-button'
+				});
+			}
+		}).on('keypress', '[name=search]', function(e) {
+			if ( e.which === 13 && $(this).is(':focus') ) {
+				track({
+					category: category,
+					label: 'search-enter'
+				});
+			}
+		}).on('suggestEnter', {
+			category: category,
+			label: 'search-suggest-enter'
+		}, trackWithEventData).one('suggestShow', {
+			action: Wikia.Tracker.ACTIONS.VIEW,
+			category: category,
+			label: 'search-suggest-show'
+		}, trackWithEventData);
 
 		if ($body.hasClass('page-Special_Search')) {
 			category = 'special-' + category;
@@ -350,29 +350,29 @@ jQuery(function($){
 					label: 'sidebar-' + $(e.currentTarget).prop('className')
 				});
 			}).on('mousedown', '.Results .result-link', function(e) {
-					var el = $(e.currentTarget);
-					track({
-						browserEvent: e,
-						category: category,
-						label: 'result-' + (el.data('event') === 'search_click_match' ? 'push-top' : 'item-' + el.data('pos')),
-						trackingMethod: 'both'
-					});
-				}).on('mousedown',  '.Results .wiki-thumb-tracking', function(e){
-					var el = $(e.currentTarget);
-
-					track({
-						browserEvent: e,
-						category: category,
-						label: 'result-item-' + el.data('pos') + '-image' + (el.data('event') === 'search_click_wiki-no-thumb' ? '-placeholder' : ''),
-						trackingMethod: 'both'
-					});
-				}).on('mousedown', '.image', function(e) {
-					track({
-						browserEvent: e,
-						category: category,
-						label: 'result-' + ($(e.currentTarget).hasClass('video') ? 'video' : 'photo')
-					});
+				var el = $(e.currentTarget);
+				track({
+					browserEvent: e,
+					category: category,
+					label: 'result-' + (el.data('event') === 'search_click_match' ? 'push-top' : 'item-' + el.data('pos')),
+					trackingMethod: 'both'
 				});
+			}).on('mousedown',  '.Results .wiki-thumb-tracking', function(e){
+				var el = $(e.currentTarget);
+
+				track({
+					browserEvent: e,
+					category: category,
+					label: 'result-item-' + el.data('pos') + '-image' + (el.data('event') === 'search_click_wiki-no-thumb' ? '-placeholder' : ''),
+					trackingMethod: 'both'
+				});
+			}).on('mousedown', '.image', function(e) {
+				track({
+					browserEvent: e,
+					category: category,
+					label: 'result-' + ($(e.currentTarget).hasClass('video') ? 'video' : 'photo')
+				});
+			});
 		}
 	})();
 
