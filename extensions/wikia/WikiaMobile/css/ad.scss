@@ -84,15 +84,15 @@ $slotZIndex: 4000;
 .wkAdWrapper {
 	display: inline-block;
 
-	opacity: 0;
-
 	height: 250px;
 	width: 300px;
 
-	-webkit-transition: opacity .2s;
+	background: rgba(0,0,0,.3);
+
+	-webkit-transition: background .2s;
 
 	&.show {
-		opacity: 1;
+		background: transparent;
 	}
 }
 
