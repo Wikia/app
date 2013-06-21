@@ -1,7 +1,13 @@
 /**
- *
+ * Controls for swap button and keep button in LicensedVideoSwap
  */
-define( 'lvs.swapkeep', ['wikia.querystring', 'lvs.commonajax', 'lvs.videocontrols'], function( QueryString, commonAjax, videoControls ) {
+define( 'lvs.swapkeep', [
+	'wikia.querystring',
+	'lvs.commonajax',
+	'lvs.videocontrols',
+	'jquery',
+	'wikia.nirvana'
+], function( QueryString, commonAjax, videoControls, $, nirvana ) {
 	"use strict";
 
 	var $parent,
@@ -34,7 +40,7 @@ define( 'lvs.swapkeep', ['wikia.querystring', 'lvs.commonajax', 'lvs.videocontro
 			data.newTitle = newTitle;
 		}
 
-		$.nirvana.sendRequest({
+		nirvana.sendRequest({
 			controller: 'LicensedVideoSwapSpecialController',
 			method: isSwap ? 'swapVideo' : 'keepVideo',
 			data: data,

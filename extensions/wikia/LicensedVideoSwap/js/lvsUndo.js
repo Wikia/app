@@ -1,5 +1,5 @@
 
-define( 'lvs.undo', ['wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lvs.videocontrols'], function( QueryString, commonAjax, window, videoControls ) {
+define( 'lvs.undo', ['wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lvs.videocontrols', 'wikia.nirvana', 'jquery'], function( QueryString, commonAjax, window, videoControls, nirvana, $ ) {
 
 	var $container,
 		videoTitle,
@@ -13,7 +13,7 @@ define( 'lvs.undo', ['wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lvs
 	function doRequest() {
 		commonAjax.startLoadingGraphic();
 
-		$.nirvana.sendRequest({
+		nirvana.sendRequest({
 			controller: 'LicensedVideoSwapSpecialController',
 			method: 'restoreVideo',
 			data: {

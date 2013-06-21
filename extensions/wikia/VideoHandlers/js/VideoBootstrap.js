@@ -1,6 +1,7 @@
 /**
  * Initialize a new video instance
  * Important: If an init function is specified, it must handle it's own tracking
+ * This file doesn't require jQuery
  */
 
 define( 'wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana', 'wikia.log'], function videoBootstrap( loader, nirvana, log ) {
@@ -24,43 +25,50 @@ define( 'wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana', 'wikia.log'], 
 		this.title = json.title;
 		this.provider = json.provider;
 		this.width = json.width; // TODO: json.width doesn't exist yet.  It needs to be added to all video handlers.
+		this.height = json.height; // TODO: json.height doesn't exist yet.  It needs to be added to all video handlers.
 		this.thumbnailHtml = false;
 
 		// Insert html if it hasn't been inserted already
-		function instertHtml() {
+		function insertHtml() {
 			if ( html && !json.htmlPreloaded ) {
 				self.thumbnailHtml = element.innerHTML;
 				element.innerHTML = html;
 			}
 		}
 
-		// Load any scripts needed for the video player
-		if ( scripts ) {
+		// After all scripts are loaded
+		function loadFromScriptsCallback() {
+			// wait till all assets are loaded before overriding any loading images
+			insertHtml();
+			// execute the video handler's init function
+			if( init ) {
+				require( [init], function( init ) {
+					self.clearTimeoutTrack();
+					init( jsParams, self );
+				});
+			}
+		}
+
+		// Load all scripts
+		function loadFromScripts() {
 			var i,
 				args = [];
 
-			for ( i=0; i<scripts.length; i++ ) {
+			for ( i = 0; i < scripts.length; i++ ) {
 				args.push({
 					type: loader.JS,
 					resources: scripts[i]
 				});
 			}
 
-			loader
-			.apply( loader, args )
-			.done( function() {
-				// wait till all assets are loaded before overriding any loading images
-				instertHtml();
-				// execute the init function
-				if( init ) {
-					require( [init], function( init ) {
-						self.clearTimeoutTrack();
-						init( jsParams, self );
-					});
-				}
-			});
+			loader.apply( loader, args ).done( loadFromScriptsCallback );
+		}
+
+		// Load any scripts needed for the video player
+		if ( scripts ) {
+			loadFromScripts();
 		} else {
-			instertHtml();
+			insertHtml();
 		}
 
 		// If there's no init function, just send one tracking call so it counts as a view
