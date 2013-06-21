@@ -44,7 +44,6 @@ var Wall = $.createClass(Object, {
 			.on('click', '.follow', this.proxy(this.switchWatch))
 			.on('keydown', 'textarea', this.proxy(this.focusButton))
 			.on('click', '.edit-notifyeveryone', this.proxy(this.editNotifyEveryone))
-			//.on('click', '.close-thread, .reopen-thread', this.proxy(this.doThreadChange))
 			.on('click', '.close-thread', this.proxy(this.confirmAction))
 			.on('click', '.reopen-thread', this.proxy(this.doThreadChange))
 			.on('click', '.votes', this.proxy(this.showVotersModal))
