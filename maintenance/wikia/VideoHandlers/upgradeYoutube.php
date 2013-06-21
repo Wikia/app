@@ -201,10 +201,12 @@ class UpgradeYoutube extends Maintenance {
 	 * @param $editors - An associative array of editor to youtube tag
 	 */
 	public function convertTags ( Article $page, $editors ) {
-		global $wgCityId;
+		global $wgCityId, $wgCurPageID;
 
 		foreach ( $editors as $ytTag => $userText ) {
 			echo "\tAttributing YT tag ".trim($ytTag)." to '$userText'\n";
+
+			$wgCurPageID = $page->getID();
 			if ( ! $this->upgradeTag( $page, $ytTag, $userText ) ) {
 				echo "NoConvert: $wgCityId,".$page->getID()."\n";
 			}
@@ -220,7 +222,8 @@ class UpgradeYoutube extends Maintenance {
 	 * @return bool - Whether this upgrade was successful
 	 */
 	public function upgradeTag ( Article $page, $ytid, $userText ) {
-		global $wgUser, $wgTestMode;
+		global $wgUser;
+		global $wgTestMode, $wgCityId, $wgCurPageID, $wgChangeMade;
 
 /*
 		// Load the user who embedded this video
@@ -241,12 +244,14 @@ class UpgradeYoutube extends Maintenance {
 		}
 */
 
+		$wgChangeMade = 0;
+
 		$text = $page->getText();
 
 		$text = preg_replace_callback(
 			"/(<nowiki>.*?<\/nowiki>)|<youtube([^>]*)>(".preg_quote($ytid, '/').")<\/youtube>/i",
 			function ($matches) {
-				global $wgTestMode;
+				global $wgTestMode, $wgCityId, $wgCurPageID, $wgChangeMade;
 
 				// Some limits and defaults
 				$width_max  = 640;
@@ -292,7 +297,7 @@ class UpgradeYoutube extends Maintenance {
 
 				// If height is less than 30px they probably want this for audio.  Don't convert
 				if ( $params['height'] < 30 ) {
-					echo "\tIgnoring tag meant for audio (height = ".$params['height'].")\n";
+					echo "\t[Skip:$wgCityId,$wgCurPageID] Ignoring tag meant for audio (height = ".$params['height'].")\n";
 					return $matches[0];
 				}
 
@@ -309,13 +314,20 @@ class UpgradeYoutube extends Maintenance {
 						 "\t            with: $url\n";
 					return $matches[0];
 				} else {
-					$retval = $videoService->addVideo( $url );
+					try {
+						$retval = $videoService->addVideo( $url );
+					} catch (Exception $e) {
+						echo "\t[Skip:$wgCityId,$wgCurPageID] Call to addVideo failed: ".$e->getMessage()."\n";
+						return $matches[0];
+					}
 				}
 				if ( is_array($retval) ) {
 					list( $title, $videoPageId, $videoProvider ) = $retval;
 
+					$wgChangeMade++;
 					return "[[$title|".$params['width']."px]]";
 				} else {
+					echo "\t[Skip:$wgCityId,$wgCurPageID] Unable to upload video\n";
 					return $matches[0];
 				}
 			},
@@ -335,13 +347,23 @@ class UpgradeYoutube extends Maintenance {
 			return true;
 		}
 
-		# Do the edit
-		$status = $page->doEdit( $text, 'Automatically converting <youtube> tags and uploading video',
-								 EDIT_MINOR | EDIT_FORCE_BOT | EDIT_AUTOSUMMARY | EDIT_SUPPRESS_RC );
+		if ( $wgChangeMade == 0 ) {
+			echo "\tNo changes made, skipping edit\n";
+			return true;
+		}
+
+		try {
+			# Do the edit
+			$status = $page->doEdit( $text, 'Automatically converting <youtube> tags and uploading video',
+									 EDIT_MINOR | EDIT_FORCE_BOT | EDIT_AUTOSUMMARY | EDIT_SUPPRESS_RC );
+		} catch ( Exception $e ) {
+			echo "\t[Skip:$wgCityId,$wgCurPageID] Edit failed: ".$e->getMessage()."\n";
+			return = false;
+		}
 
 		$retval = true;
 		if ( !$status->isGood() ) {
-			echo "\t".$status->getWikiText()."\n";
+			echo "\t[Skip:$wgCityId,$wgCurPageID] Edit is not good: ".$status->getWikiText()."\n";
 			$retval = false;
 		}
 
