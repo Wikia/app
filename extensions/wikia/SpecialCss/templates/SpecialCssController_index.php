@@ -1,4 +1,4 @@
-<form method="post" id="cssEditorForm">
+<form method="post" id="cssEditorForm" class="cssEditorForm">
 	<div class="css-editor">
 		<div class="editor-changes-info-wrapper">
 			<?= $deletedArticle ?>
