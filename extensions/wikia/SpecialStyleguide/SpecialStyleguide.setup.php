@@ -12,22 +12,24 @@
 $dir = dirname( __FILE__ ) . '/';
 $app = F::app();
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'Special:Styleguide',
 	'description' => 'Extension to present a library of reusable components with usage examples',
 	'descriptionmsg' => 'styleguide-descriptionmsg',
-	'authors' => array(
+	'authors' => [
 		'Rafał Leszczyński',
 		'Sebastian Marzjan',
-	),
+	],
 	'version' => 1.0
-);
+];
 
 // classes
-$app->registerController( 'SpecialStyleguideController', $dir . 'SpecialStyleguideController.class.php' );
+$wgAutoloadClasses['SpecialStyleguideController'] = $dir . 'SpecialStyleguideController.class.php';
+$wgAutoloadClasses['SpecialStyleguideDataModel'] = $dir . 'models/SpecialStyleguideDataModel.class.php';
 
 // special page
-$app->registerSpecialPage( 'Styleguide', 'SpecialStyleguideController', 'wikia' );
+$wgSpecialPages['Styleguide'] = 'SpecialStyleguideController';
+$wgSpecialPageGroups['Styleguide'] = 'wikia';
 
 // message files
-$app->registerExtensionMessageFile( 'SpecialStyleguide', $dir . 'SpecialStyleguide.i18n.php' );
+$wgExtensionMessagesFiles['SpecialStyleguide'] = $dir . 'SpecialStyleguide.i18n.php';
