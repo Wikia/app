@@ -9,7 +9,8 @@
 		<div class="css-edit-box">
             <label for="minorEdit"><input id="minorEdit" type="checkbox" name="minorEdit"/><?= wfMessage('special-css-minor-edit-label')->plain(); ?></label>
             <label for="editSummary"><?= wfMessage('special-css-edit-summary')->plain() ?></label>
-			<textarea id="editSummary" name="editSummary" placeholder="<?= wfMessage('special-css-summary-placeholder')->plain(); ?>"></textarea>
+			<textarea id="editSummary" class="edit-summary" name="editSummary" placeholder="<?= wfMessage
+			('special-css-summary-placeholder')->plain(); ?>"></textarea>
             <nav class="wikia-menu-button primary">
 				<input class="css-publish-button" type="submit" value="<?= wfMessage('special-css-publish-button') ?>"/>
                 <span class="drop">
