@@ -899,8 +899,6 @@ class CityVisualization extends WikiaModel {
 		$results = $db->select($table, $fields, $conds, __METHOD__, $options, $joinConds);
 		$wikis = array();
 		while( $row = $db->fetchObject($results) ) {
-			$category = HubService::getComscoreCategory($row->city_id);
-			$row->city_vertical = $category->cat_name;
 			$wikis[] = $row;
 		}
 
