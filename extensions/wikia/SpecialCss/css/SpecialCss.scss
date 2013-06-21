@@ -19,6 +19,10 @@ $edit-box-color: mix($color-page, #000, 95%);
 	float: left;
 	width: 670px;
 
+	.editor-changes-info-wrapper > div:last-child {
+		margin-bottom: 10px;
+	}
+
 	.css-editor-container {
 		@include box-sizing();
 		min-height: 250px;
