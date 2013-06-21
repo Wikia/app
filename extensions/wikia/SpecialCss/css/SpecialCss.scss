@@ -6,9 +6,9 @@
 @import "skins/oasis/css/mixins/gradient";
 @import "skins/oasis/css/mixins/opacity";
 
-$edit-box-color: mix($color-page, #000,95%);
+$edit-box-color: mix($color-page, #000, 95%);
 @if $is-dark-wiki {
-	$edit-box-color: mix($color-page, #fff,95%);
+	$edit-box-color: mix($color-page, #fff, 95%);
 }
 
 .cssEditorForm {
@@ -52,12 +52,13 @@ $edit-box-color: mix($color-page, #000,95%);
 			border-left: 1px solid $color-buttons;
 		}
 
-		#editSummary {
-			border: 1px solid #dadbdb;
-			border-radius: 4px;
+		.edit-summary {
+			border: 1px solid $color-page-border;
+			@include border-radius(4px);
 			clear: both;
 			margin: 5px 0;
 			padding: 5px;
+			resize: none;
 			width: 290px;
 		}
 
