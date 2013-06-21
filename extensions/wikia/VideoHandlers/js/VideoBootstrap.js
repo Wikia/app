@@ -24,10 +24,12 @@ define( 'wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana', 'wikia.log'], 
 		this.title = json.title;
 		this.provider = json.provider;
 		this.width = json.width; // TODO: json.width doesn't exist yet.  It needs to be added to all video handlers.
+		this.thumbnailHtml = false;
 
 		// Insert html if it hasn't been inserted already
 		function instertHtml() {
 			if ( html && !json.htmlPreloaded ) {
+				self.thumbnailHtml = element.innerHTML;
 				element.innerHTML = html;
 			}
 		}
@@ -95,6 +97,13 @@ define( 'wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana', 'wikia.log'], 
 			).done( function( data ) {
 				new vb( element, data.embedCode, fileClickSource );
 			});
+		},
+		resetToThumb: function() {
+			if ( this.thumbnailHtml ){
+				this.element.innerHTML = this.thumbnailHtml;
+			} else {
+				throw "VideoBootstrap resetToThumb: There's no thumbnail html to reset to.";
+			}
 		},
 		track: function( action ) {
 			log( 'tracking ' + action, 3, 'VideoBootstrap' );

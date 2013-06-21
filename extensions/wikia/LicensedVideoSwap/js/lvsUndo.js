@@ -1,39 +1,43 @@
 
-define( 'lvs.undo', ['wikia.querystring', 'lvs.commonajax', 'wikia.window'], function( QueryString, commonAjax, window ) {
+define( 'lvs.undo', ['wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lvs.videocontrols'], function( QueryString, commonAjax, window, videoControls ) {
 
-	return function( $container ) {
-		var videoTitle,
-			newTitle,
-			title,
-			msg,
-			qs,
-			sort,
-			wasSwap;
+	var $container,
+		videoTitle,
+		newTitle,
+		title,
+		msg,
+		qs,
+		sort,
+		wasSwap;
 
-		function doRequest() {
-			commonAjax.startLoadingGraphic();
+	function doRequest() {
+		commonAjax.startLoadingGraphic();
 
-			$.nirvana.sendRequest({
-				controller: 'LicensedVideoSwapSpecialController',
-				method: 'restoreVideo',
-				data: {
-					videoTitle: videoTitle,
-					newTitle: newTitle,
-					sort: sort
-				},
-				callback: function( data ) {
-					commonAjax.success( $container, data);
-				},
-				onErrorCallback: function() {
-					commonAjax.failure();
-				}
-			});
-		}
+		$.nirvana.sendRequest({
+			controller: 'LicensedVideoSwapSpecialController',
+			method: 'restoreVideo',
+			data: {
+				videoTitle: videoTitle,
+				newTitle: newTitle,
+				sort: sort
+			},
+			callback: function( data ) {
+				commonAjax.success( $container, data);
+			},
+			onErrorCallback: function() {
+				commonAjax.failure();
+			}
+		});
+	}
 
+	function init( $elem ) {
+		$container = $elem;
+		
 		$( 'body' ).on( 'click', '.global-notification .undo', function( e ) {
 			e.preventDefault();
 
 			window.GlobalNotification.hide();
+			videoControls.reset();
 
 			var $this = $( this );
 
@@ -59,10 +63,12 @@ define( 'lvs.undo', ['wikia.querystring', 'lvs.commonajax', 'wikia.window'], fun
 				},
 				width: 700
 			});
-
 		});
 	}
 
+	return {
+		init: init
+	};
 });
 
 

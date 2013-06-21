@@ -1,78 +1,82 @@
 /**
  *
  */
-define( 'lvs.swapkeep', ['wikia.querystring', 'lvs.commonajax'], function( QueryString, commonAjax ) {
+define( 'lvs.swapkeep', ['wikia.querystring', 'lvs.commonajax', 'lvs.videocontrols'], function( QueryString, commonAjax, videoControls ) {
 	"use strict";
 
-	return function( $container ) {
-		var $parent,
-			$overlay,
-			$row,
-			$button,
-			isSwap,
-			currTitle,
-			newTitle,
-			qs,
-			sort,
-			page;
+	var $parent,
+		$overlay,
+		$row,
+		$button,
+		isSwap,
+		currTitle,
+		newTitle,
+		qs,
+		sort,
+		page,
+		$container;
 
-		function doRequest(){
-			// Add loading graphic
-			commonAjax.startLoadingGraphic();
+	function doRequest(){
+		// Add loading graphic
+		commonAjax.startLoadingGraphic();
 
-			qs = new QueryString();
-			sort = qs.getVal( 'sort', 'recent' );
-			page = qs.getVal( 'currentPage', 1);
+		qs = new QueryString();
+		sort = qs.getVal( 'sort', 'recent' );
+		page = qs.getVal( 'currentPage', 1);
 
-			var data = {
-				videoTitle: currTitle,
-				sort: sort,
-				currentPage: page
-			};
+		var data = {
+			videoTitle: currTitle,
+			sort: sort,
+			currentPage: page
+		};
 
-			if ( isSwap ) {
-				data.newTitle = newTitle;
-			}
-
-			$.nirvana.sendRequest({
-				controller: 'LicensedVideoSwapSpecialController',
-				method: isSwap ? 'swapVideo' : 'keepVideo',
-				data: data,
-				callback: function( data ) {
-					commonAjax.success( $container, data);
-				},
-				onErrorCallback: function() {
-					commonAjax.failure();
-				}
-			});
+		if ( isSwap ) {
+			data.newTitle = newTitle;
 		}
 
-		function confirmModal() {
-			var currTitleText =  currTitle.replace(/_/g, ' ' ),
-				newTitleText,
-				title,
-				msg;
-
-			if ( isSwap ) {
-				newTitleText = newTitle.replace(/_/g, ' ' );
-				title = $.msg( 'lvs-confirm-swap-title' );
-				msg = $.msg( 'lvs-confirm-swap-message', currTitleText, newTitleText );
-			} else {
-				title = $.msg( 'lvs-confirm-keep-title' );
-				msg = $.msg( 'lvs-confirm-keep-message', currTitleText );
+		$.nirvana.sendRequest({
+			controller: 'LicensedVideoSwapSpecialController',
+			method: isSwap ? 'swapVideo' : 'keepVideo',
+			data: data,
+			callback: function( data ) {
+				commonAjax.success( $container, data);
+			},
+			onErrorCallback: function() {
+				commonAjax.failure();
 			}
+		});
+	}
 
-			$.confirm({
-				title: title,
-				content: msg,
-				onOk: function() {
-					doRequest();
-				},
-				width: 700
-			});
+	function confirmModal() {
+		videoControls.reset();
+
+		var currTitleText =  currTitle.replace(/_/g, ' ' ),
+			newTitleText,
+			title,
+			msg;
+
+		if ( isSwap ) {
+			newTitleText = newTitle.replace(/_/g, ' ' );
+			title = $.msg( 'lvs-confirm-swap-title' );
+			msg = $.msg( 'lvs-confirm-swap-message', currTitleText, newTitleText );
+		} else {
+			title = $.msg( 'lvs-confirm-keep-title' );
+			msg = $.msg( 'lvs-confirm-keep-message', currTitleText );
 		}
 
+		$.confirm({
+			title: title,
+			content: msg,
+			onOk: function() {
+				doRequest();
+			},
+			width: 700
+		});
+	}
+
+	function init( $elem ) {
 		// Event listener for interacting with buttons
+		$container = $elem;
 		$container.on( 'mouseover mouseout click', '.swap-button, .keep-button', function( e ) {
 			$button = $( this );
 
@@ -102,5 +106,9 @@ define( 'lvs.swapkeep', ['wikia.querystring', 'lvs.commonajax'], function( Query
 				confirmModal();
 			}
 		});
+	}
+
+	return {
+		init: init
 	};
 });

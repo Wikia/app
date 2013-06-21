@@ -2,10 +2,12 @@
  * Handle clicks on play buttons so they play the video
  */
 
-define( 'lvs.playvideo', ['wikia.videoBootstrap'], function( VideoBootstrap ) {
+define( 'lvs.videocontrols', ['wikia.videoBootstrap'], function( VideoBootstrap ) {
 	"use strict";
 
-	return function( $container ) {
+	var videoInstances = [];
+
+	function init( $container ) {
 		var videoWidth = $container.find( '.grid-3' ).width();
 
 		$container.on( 'click', '.video', function(e) {
@@ -13,7 +15,6 @@ define( 'lvs.playvideo', ['wikia.videoBootstrap'], function( VideoBootstrap ) {
 
 			var $this = $( this ),
 				fileTitle = decodeURIComponent( $this.children( 'img' ).attr( 'data-video-key' ) ),
-				videoInstance,
 				$element,
 				$thumbList,
 				$row = $this.closest( '.row' );
@@ -42,12 +43,26 @@ define( 'lvs.playvideo', ['wikia.videoBootstrap'], function( VideoBootstrap ) {
 					autoplay: 1
 				},
 				callback: function( data ) {
-					videoInstance = new VideoBootstrap( $element[0], data.embedCode, 'licensedVideoSwap' );
+					videoInstances.push( new VideoBootstrap( $element[0], data.embedCode, 'licensedVideoSwap' ) );
 
 					// Update swap button so it contains the dbkey of the video to swap
 					$row.find( '.swap-button' ).attr( 'data-video-swap', fileTitle );
 				}
 			});
 		});
-	};
+	}
+
+	function reset() {
+		var i,
+			len = videoInstances.length;
+
+		for( i = 0; i < len; i++ ) {
+			videoInstances[i].resetToThumb();
+		}
+	}
+
+	return {
+		init: init,
+		reset: reset
+	}
 });

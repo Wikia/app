@@ -6,7 +6,7 @@
 define( 'lvs.callout', ['wikia.localStorage'], function( LocalStorage ) {
 	"use strict";
 
-	return function() {
+	function init() {
 
 		var $callout = $( '#WikiaArticle' ).find( '.lvs-callout' ),
 			$closeBtn = $callout.find( '.close' );
@@ -20,5 +20,9 @@ define( 'lvs.callout', ['wikia.localStorage'], function( LocalStorage ) {
 				LocalStorage.lvsCalloutClosed = true;
 			});
 		}
+	}
+
+	return {
+		init: init
 	};
 });

@@ -11,7 +11,7 @@ define( 'lvs.ellipses', [], function() {
 	/**
 	 * @param jQuery $container The wrapper element for the main body of this page
 	 */
-	return function( $container ) {
+	function init( $container ) {
 		var wrapperWidth,
 			ellipsesWidth,
 			truncatedWidth,
@@ -71,5 +71,10 @@ define( 'lvs.ellipses', [], function() {
 				initPopover( $ellipses );
 			}
 		});
+	}
+
+	return {
+		init: init
 	};
+
 });

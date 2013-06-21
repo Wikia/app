@@ -5,7 +5,7 @@
 define( 'lvs.dropdown', ['wikia.querystring'], function( QueryString ) {
 	"use strict";
 
-	return function() {
+	function init() {
 		$( '.WikiaDropdown' ).wikiaDropdown({
 			onChange: function( e, $target ) {
 				var sort = $target.data( 'sort' ),
@@ -13,5 +13,9 @@ define( 'lvs.dropdown', ['wikia.querystring'], function( QueryString ) {
 				qs.setVal( 'sort', sort ).goTo();
 			}
 		});
+	}
+
+	return {
+		init: init
 	};
 });

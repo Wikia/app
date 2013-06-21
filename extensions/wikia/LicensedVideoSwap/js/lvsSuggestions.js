@@ -7,7 +7,7 @@ define( 'lvs.suggestions', [], function() {
 
 	"use strict";
 
-	return function( $container ) {
+	function init( $container ) {
 		$container.on( 'click', '.more-link', function( e ) {
 			e.preventDefault();
 			var $this = $( this ),
@@ -22,5 +22,10 @@ define( 'lvs.suggestions', [], function() {
 			}
 
 		});
+	}
+
+	return {
+		init: init
 	};
+
 });

@@ -5,21 +5,21 @@ require( [
 	'lvs.ellipses',
 	'lvs.swapkeep',
 	'lvs.undo',
-	'lvs.playvideo',
+	'lvs.videocontrols',
 	'lvs.suggestions'
-], function( $, callout, dropdown, ellipses, swapkeep, undo, playvideo, suggestions ) {
+], function( $, callout, dropdown, ellipses, swapkeep, undo, videoControls, suggestions ) {
 
 	"use strict";
 
 	$(function() {
 		var $container = $( '#LVSGrid' );
 
-		callout();
-		dropdown();
-		ellipses( $container );
-		swapkeep( $container );
-		undo( $container );
-		playvideo( $container );
-		suggestions( $container );
+		callout.init();
+		dropdown.init();
+		ellipses.init( $container );
+		swapkeep.init( $container );
+		undo.init( $container );
+		videoControls.init( $container );
+		suggestions.init( $container );
 	});
 });
