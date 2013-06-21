@@ -12,7 +12,7 @@ $messages['en'] = [
 
 	'special-css-publish-button' => 'Publish',
 	'special-css-history-button' => 'History',
-	'special-css-compare-button' => 'Compare changes',
+	'special-css-compare-button' => 'Show changes',
 	'special-css-delete-button' => 'Delete',
 	'special-css-undelete-button' => 'Undelete',
 
