@@ -5,18 +5,21 @@ class SpecialCssModelTest extends WikiaBaseTest {
 	
 	protected function setUp () {
 		require_once( dirname(__FILE__) . '/../SpecialCssModel.class.php');
+		parent::setUp();
 	}
 
 	/**
 	 * @dataProvider testGetSpecialCssDataProvider
 	 */
-	public function testGetSpecialCssUrl($fullUrl, $expected) {
+	public function testGetSpecialCssUrl($fullUrl, $expected, $params) {
 		$titleMock = $this->getMock('Title', array('getLocalURL', 'getFullUrl'));
 		$titleMock->expects($this->any())
 			->method('getLocalURL')
+			->with($params, false)
 			->will($this->returnValue(self::LOCAL_URL_EXAMPLE));
 		$titleMock->expects($this->any())
 			->method('getFullUrl')
+			->with($params, false)
 			->will($this->returnValue(self::FULL_URL_EXAMPLE));
 		
 		$specialCssModelMock = $this->getMock('SpecialCssModel', array('getSpecialCssTitle'));
@@ -24,14 +27,16 @@ class SpecialCssModelTest extends WikiaBaseTest {
 			->method('getSpecialCssTitle')
 			->will($this->returnValue($titleMock));
 
-		$result = $specialCssModelMock->getSpecialCssUrl($fullUrl);
+		$result = $specialCssModelMock->getSpecialCssUrl($fullUrl, $params);
 		$this->assertEquals($expected, $result);
 	}
 
 	public function testGetSpecialCssDataProvider() {
 		return [
-			[true, self::FULL_URL_EXAMPLE],
-			[false, self::LOCAL_URL_EXAMPLE]
+			[true, self::FULL_URL_EXAMPLE, null],
+			[false, self::LOCAL_URL_EXAMPLE, null],
+			[true, self::FULL_URL_EXAMPLE, array( 'oldid' => 1)],
+			[false, self::LOCAL_URL_EXAMPLE, array( 'oldid' => 1)]
 		];
 	}
 
