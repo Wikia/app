@@ -38,10 +38,7 @@ class PlaceCategory {
 	public static function newFromTitle( $sTitle ) {
 		// include title to article ID logic
 
-		$instance = new PlaceCategory(
-				F::app(),
-				$sTitle
-		);
+		$instance = new PlaceCategory( $sTitle );
 
 		// read data from database
 		$instance->read();

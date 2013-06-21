@@ -12,7 +12,7 @@ class UpgradeYoutube extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Get old revisions of an article";
+		$this->mDescription = "Find <youtube> tags and convert them to video files";
 		$this->addOption('test', "Run this script without changing anything", false, false, 't');
 	}
 
@@ -317,7 +317,7 @@ class UpgradeYoutube extends Maintenance {
 		}
 
 		# Do the edit
-		$status = $page->doEdit( $text, 'Upgraded Youtube tag',
+		$status = $page->doEdit( $text, 'Automatically converting <youtube> tags and uploading video',
 								 EDIT_MINOR | EDIT_FORCE_BOT | EDIT_AUTOSUMMARY | EDIT_SUPPRESS_RC );
 
 		$retval = true;

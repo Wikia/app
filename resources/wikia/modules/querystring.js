@@ -121,6 +121,17 @@
 			return this.cache[name] || defVal;
 		};
 
+		/**
+		 * Get object with all parameters
+		 *
+		 * @public
+		 *
+		 * @return {{}}
+		 */
+		p.getVals = function () {
+			return this.cache;
+		}
+
 
 		/**
 		 * Sets a parameter by name

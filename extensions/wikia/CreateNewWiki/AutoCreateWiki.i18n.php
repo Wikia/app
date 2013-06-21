@@ -92,7 +92,7 @@ Please select proper from dropdown list.",
 	"autocreatewiki-step3-error" => "Cannot set default information in database!",
 	"autocreatewiki-step6-error" => "Cannot set default tables in database!",
 	"autocreatewiki-step7-error" => "Cannot copy starter database for language!",
-	"requestwiki-filter-language" => "kh,kp,mu,als,an,ast,de-form,de-weig,dk,en-gb,ia,ie,ksh,mwl,pdc,pfl,simple,tokipona,tp,zh-cn,zh-hans,zh-hant,zh-hk,zh-mo,zh-my,zh-sg,zh-tw",
+	"requestwiki-filter-language" => "als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue",
 // task
 	"autocreatewiki-protect-reason" => 'Part of the official interface',
 	"autocreatewiki-welcomesubject" => "$1 has been created!",
