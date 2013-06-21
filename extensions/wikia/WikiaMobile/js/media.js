@@ -16,6 +16,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		elements,
 		videoCache = {},
 		pager,
+		lastNum = 0,
 		currentNum = 0,
 		currentMedia,
 		currentWrapper,
@@ -476,12 +477,16 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		wrapper.removeEventListener('touchstart', onStart);
 	}
 
+	function toggleGallery(show){
+		document.getElementById('wkGalTgl').style.display = show ? 'block' : 'none';
+	}
+
 	function refresh(){
 		currentWrapper = wkMdlImages.getElementsByClassName('current')[0];
 		currentWrapperStyle = currentWrapper.style;
 
 		shareBtn.style.display = 'block';
-
+		toggleGallery(true);
 		setupImage();
 	}
 
@@ -612,6 +617,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 					zoomable = true;
 
 					currentMedia = image;
+					lastNum = currentNum;
 					currentNum = currentPageNum;
 
 					//make sure user changed page
@@ -718,6 +724,14 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			}
 
 		},
+		skip: function(){
+			if(currentNum - lastNum > 0) {
+				pager.next();
+			}else{
+				pager.prev();
+			}
+		},
+		toggleGallery: toggleGallery,
 		resetZoom: resetZoom
 	};
 });

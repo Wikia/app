@@ -36,6 +36,8 @@ if(Wikia.AbTest && ['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADS
 
 					media.hideShare();
 					media.resetZoom();
+					media.toggleGallery(false);
+					modal.showUI();
 					data.zoomable = false;
 
 					//Don't load ad if something is already there
@@ -52,6 +54,7 @@ if(Wikia.AbTest && ['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADS
 
 								}else{
 									ad.innerHTML = '';
+									media.skip();
 								}
 							}
 						});
