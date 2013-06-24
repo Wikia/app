@@ -23,5 +23,39 @@ $(function() {
 		};
 
 		heightUpdateFunction();
+
+		$('#cssEditorForm').submit(function() {
+			var hiddenInput = $('<input/>')
+				.attr('type', 'hidden')
+				.attr('name', 'cssContent')
+				.val(editor.getSession().getValue());
+			$(this).append(hiddenInput);
+		});
+
+		$('#showChanges').click(function() {
+			// use loading indicator before real content will be fetched
+			var content = $('#SpecialCssLoading').mustache({stylepath: stylepath});
+			var options = {
+				callback: function(modal) {
+					$.when(
+							$.nirvana.sendRequest({
+								controller: 'SpecialCss',
+								method: 'getDiff',
+								type: 'post',
+								data: {
+									wikitext: editor.getSession().getValue()
+								}
+							}),
+
+							// load CSS for diff
+							mw.loader.use('mediawiki.action.history.diff')
+						).done(function(ajaxData) {
+							modal.find('.modalContent').html(ajaxData[0].diff);
+						});
+				}
+			};
+			$.showModal($.msg('special-css-diff-modal-title'), content, options);
+			return false;
+		});
 	});
 });

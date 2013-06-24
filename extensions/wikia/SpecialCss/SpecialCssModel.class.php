@@ -76,18 +76,19 @@ class SpecialCssModel extends WikiaModel {
 
 	/**
 	 * @desc Returns url for Special:CSS page
-	 * 
+	 *
 	 * @param bool $full
+	 * @param array|null $params optional associative array with query parameters
 	 * @return string
 	 */
-	public function getSpecialCssUrl($full = false) {
+	public function getSpecialCssUrl($full = false, $params = null) {
 		wfProfileIn(__METHOD__);
 		
 		$title = $this->getSpecialCssTitle();
 		if( !$full ) {
-			$url = $title->getLocalURL();
+			$url = $title->getLocalURL( $params );
 		} else {
-			$url = $title->getFullUrl();
+			$url = $title->getFullUrl( $params );
 		}
 
 		wfProfileOut(__METHOD__);
@@ -101,5 +102,30 @@ class SpecialCssModel extends WikiaModel {
 	 */
 	public function getSpecialCssTitle() {
 		return SpecialPage::getTitleFor('CSS');
+	}
+
+	/**
+	 * @desc Saving CSS content
+	 *
+	 * @param string $content
+	 * @param string $summary
+	 * @param bool $isMinor
+	 * @param User $user
+	 * @return bool if saving was successful
+	 */
+	public function saveCssFileContent($content, $summary, $isMinor, $user) {
+		$cssTitle = $this->getCssFileTitle();
+		$flags = 0;
+		if ( $cssTitle instanceof Title) {
+			$aid = $cssTitle->getArticleID( Title::GAID_FOR_UPDATE );
+			$flags |= ( $aid == 0 ) ? EDIT_NEW : EDIT_UPDATE;
+			if ( $isMinor ) {
+				$flags |= EDIT_MINOR;
+			}
+			$article = new Article($cssTitle);
+			$status = $article->doEdit($content, $summary, $flags, false, $user);
+			return $status;
+		}
+		return Status::newFatal('special-css-saving-internal-error');
 	}
 }
