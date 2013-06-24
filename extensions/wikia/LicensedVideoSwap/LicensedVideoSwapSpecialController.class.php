@@ -171,7 +171,6 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		wfRunHooks( 'AddPremiumVideo', array( $newFile->getTitle() ) );
 
 		$title = Title::newFromText( $videoTitle, NS_FILE );
-		$newArticleId = $title->getArticleID();
 		if ( !$sameTitle ) {
 			// add redirect url
 			$status = $helper->addRedirectLink( $title, $newFile->getTitle() );
@@ -184,10 +183,10 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			}
 
 			// set swap status
-			$helper->setPageStatusSwap( $newArticleId, $swapValue );
+			$helper->setPageStatusSwap( $title->getArticleID(), $swapValue );
 		} else {
 			// set swap status
-			$helper->setPageStatusSwapExact( $newArticleId, $swapValue );
+			$helper->setPageStatusSwapExact( $title->getArticleID(), $swapValue );
 		}
 
 		// remove old page status
