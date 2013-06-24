@@ -6,9 +6,9 @@ if ( !$wgEnableWallExt ) {
 	include( $dirExt . '/../Wall/WallNamespaces.php' );
 }
 
-$app->registerClass( 'WallNotificationsPlugin', $dirPlugin . '/WallNotificationsPlugin.class.php' );
+$wgAutoloadClasses['WallNotificationsPlugin'] = $dirPlugin . '/WallNotificationsPlugin.class.php';
 
-$app->registerHook( 'NotificationGetNotificationMessage', 'WallNotificationsPlugin', 'onGetNotificationMessage' );
-$app->registerHook( 'NotificationGetMailNotificationMessage', 'WallNotificationsPlugin', 'onGetMailNotificationMessage' );
+$wgHooks['NotificationGetNotificationMessage'][] = 'WallNotificationsPlugin::onGetNotificationMessage';
+$wgHooks['NotificationGetMailNotificationMessage'][] = 'WallNotificationsPlugin::onGetMailNotificationMessage';
 
-$app->registerExtensionMessageFile( 'WallNotificationsPlugin', $dirPlugin . '/WallNotificationsPlugin.i18n.php' );
+$wgExtensionMessagesFiles['WallNotificationsPlugin'] = $dirPlugin . '/WallNotificationsPlugin.i18n.php';

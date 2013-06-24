@@ -2,7 +2,11 @@
 
 class WallNotificationsPlugin {
 
-	public function onGetNotificationMessage($nc, &$msg, $isMain, $data, $authors, $userCount, $myName) {
+	static public function onGetNotificationMessage($nc, &$msg, $isMain, $data, $authors, $userCount, $myName) {
+		if ( empty( $data->article_title_ns ) || MWNamespace::getSubject( $data->article_title_ns ) != NS_USER_WALL ) {
+			return true;
+		}
+
 		$params = array();
 		if(!$isMain) {
 			//$params[] = $data->msg_author_displayname;
@@ -54,7 +58,7 @@ class WallNotificationsPlugin {
 		return true;
 	}
 
-	public function onGetMailNotificationMessage($notification, &$data, $key, $watcherName, $author_signature, $textNoHtml, $text) {
+	static public function onGetMailNotificationMessage($notification, &$data, $key, $watcherName, $author_signature, $textNoHtml, $text) {
 		$data = array(
 			'$WATCHER' => $watcherName,
 			'$WIKI' => $notification->data->wikiname,

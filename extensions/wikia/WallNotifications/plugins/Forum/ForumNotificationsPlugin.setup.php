@@ -6,9 +6,9 @@ if ( !$wgEnableForumExt ) {
 	include( $dirExt . '/../Forum/Forum.namespace.setup.php' );
 }
 
-$app->registerClass( 'ForumNotificationsPlugin', $dirPlugin . '/ForumNotificationsPlugin.class.php' );
+$wgAutoloadClasses['ForumNotificationsPlugin'] = $dirPlugin . '/ForumNotificationsPlugin.class.php';
 
-$app->registerHook( 'NotificationGetNotificationMessage', 'ForumNotificationsPlugin', 'onGetNotificationMessage' );
-$app->registerHook( 'NotificationGetMailNotificationMessage', 'ForumNotificationsPlugin', 'onGetMailNotificationMessage' );
+$wgHooks['NotificationGetNotificationMessage'][] = 'ForumNotificationsPlugin::onGetNotificationMessage';
+$wgHooks['NotificationGetMailNotificationMessage'][] = 'ForumNotificationsPlugin::onGetMailNotificationMessage';
 
-$app->registerExtensionMessageFile( 'ForumNotificationsPlugin', $dirPlugin . '/ForumNotificationsPlugin.i18n.php' );
+$wgExtensionMessagesFiles['ForumNotificationsPlugin'] = $dirPlugin . '/ForumNotificationsPlugin.i18n.php';

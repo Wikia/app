@@ -6,8 +6,8 @@
 
 
 class ForumNotificationsPlugin {
-	static public function onGetNotificationMessage($nc, &$msg, $isMain, $data, $authors, $userCount, $myName) {
 
+	static public function onGetNotificationMessage($nc, &$msg, $isMain, $data, $authors, $userCount, $myName) {
 		if ( empty( $data->article_title_ns ) || MWNamespace::getSubject( $data->article_title_ns ) != NS_WIKIA_FORUM_BOARD ) {
 			return true;
 		}
