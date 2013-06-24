@@ -185,14 +185,12 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		$articleId = $titleObj->getArticleID();
 
 		// See if we've already cached suggestions for this video
-		$suggestProp = wfGetWikiaPageProp( WPP_LVS_SUGGEST, $articleId );
-		if ( !empty($suggestProp) ) {
-			$videoRows = json_decode( $suggestProp, true );
-		} else {
+		$videoRows = wfGetWikiaPageProp( WPP_LVS_SUGGEST, $articleId );
+		if ( empty($videoRows) ) {
 			$readableTitle = preg_replace( '/_/', ' ', $videoInfo['title'] );
 			$videoRows = $app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', array( 'title' => $readableTitle ) )
 							 ->getData();
-			wfSetWikiaPageProp( WPP_LVS_SUGGEST, $articleId, json_encode($videoRows) );
+			wfSetWikiaPageProp( WPP_LVS_SUGGEST, $articleId, $videoRows );
 			wfSetWikiaPageProp( WPP_LVS_SUGGEST_DATE, $articleId, time() );
 		}
 

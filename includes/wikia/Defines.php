@@ -65,3 +65,7 @@ define("WPP_WALL_ORDER_INDEX", 17);
 define( "WPP_LVS_STATUS", 18 );
 define( "WPP_LVS_SUGGEST", 19 );
 define( "WPP_LVS_SUGGEST_DATE", 20 );
+
+// Any types listed in this array will not have their values serialized
+// This should only be used for properties that are simple strings or integers
+$wgWPPNotSerialized = array( WPP_LVS_STATUS, WPP_LVS_SUGGEST_DATE );
