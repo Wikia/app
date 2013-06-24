@@ -25,7 +25,7 @@ class SpecialCssHooks {
 	 */
 	private function shouldRedirect($app, $model, $articleId) {
 		// currently special::css cannot handle undo mode
-		if ( $app->wg->Request->getInt( 'undo' ) > 0 && $app->wg->Request->getInt( 'undoafter' ) > 0 ) {
+		if ( $app->wg->Request->getInt( 'undo' ) > 0 || $app->wg->Request->getInt( 'undoafter' ) > 0 ) {
 			return false;
 		}
 

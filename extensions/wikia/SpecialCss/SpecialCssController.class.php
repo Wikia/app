@@ -33,7 +33,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 			
 			if ($status->isOk()) {
 				NotificationsController::addConfirmation( wfMessage('special-css-save-message')->plain() );
-				$this->wg->out->redirect($this->specialPage->getTitle()->getLocalURL());
+				$this->wg->Out->redirect($this->specialPage->getTitle()->getLocalURL());
 				return;
 			} else {
 				NotificationsController::addConfirmation(
@@ -74,7 +74,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 		$this->diff = $editPageService->getDiff($wikitext);
 	}
 	
-	public function notOasis() {
+	public function unsupportedSkinIndex() {
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->text() );
 	}
 
@@ -88,7 +88,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 		$aceUrlParts = parse_url($aceUrl);
 		$this->response->setJsVar('aceScriptsPath', $aceUrlParts['path']);
 
-		F::build('JSMessages')->enqueuePackage('SpecialCss', JSMessages::EXTERNAL);
+		(new JSMessages())->enqueuePackage('SpecialCss', JSMessages::EXTERNAL);
 	}
 
 	/**
@@ -103,14 +103,19 @@ class SpecialCssController extends WikiaSpecialPageController {
 				if ( $title->quickUserCan( 'delete', $this->wg->user ) ) {
 					$this->deleteUrl = $title->getLocalURL( 'action=delete' );
 				}
-			} else
-			{
+			} else {
 				// get message informing you that article is deleted and how you can restore it
-				LogEventsList::showLogExtract( $this->deletedArticle, array( 'delete', 'move' ), $title,
-					'', array( 'lim' => 10,
+				LogEventsList::showLogExtract(
+					$this->deletedArticle,
+					array( 'delete', 'move' ),
+					$title,
+					'',
+					[
+						'lim' => 10,
 						'conds' => array( "log_action != 'revision'" ),
 						'showIfEmpty' => false,
-						'msgKey' => array( 'recreate-moveddeleted-warn' ) )
+						'msgKey' => array( 'recreate-moveddeleted-warn' )
+					]
 				);
 				if ( $this->wg->user->isAllowed( 'deletedhistory' ) ) {
 					$undelTitle = SpecialPage::getTitleFor( 'Undelete' );
