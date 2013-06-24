@@ -26,6 +26,7 @@ $messages['en'] = [
 
 	'special-css-saving-internal-error' => 'Error while saving content.',
 	'special-css-save-message' => 'Your changes to wikia.css have been saved.',
+	'special-css-oldid-message' => 'You are editing an old version of this page. If you save it, any changes made since this version will be lost.',
 
 	'special-css-education-item-webinars-header' => 'CSS_ Wikia Webinars',
 	'special-css-education-item-webinars-link-title' => 'Wikia CSS Webinar',
@@ -92,6 +93,7 @@ $messages['qqq'] = [
 
 	'special-css-saving-internal-error' => 'Error message after publish button informing user that there were some problems while saving css file content',
 	'special-css-save-message' => 'Notification message at the top of page that says that Css content was saved',
+	'special-css-oldid-message' => 'Notification message at the top of page that says that you are editing old version of content and when you save it all changes made since that version will be lost.',
 
 	'special-css-education-item-webinars-header' => 'Header - link to Wikia Webinars',
 	'special-css-education-item-webinars-link-title' => 'Short message apearing next to the mouse cursor after hovering header which is a link to Wikia Webinars',
