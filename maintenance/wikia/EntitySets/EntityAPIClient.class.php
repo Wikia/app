@@ -6,11 +6,11 @@
 class EntityAPIClient {
 
 	protected $logLevel = 1;
-	protected $classifierEndpoint = "http://firefly.jacek.wikia-dev.com/wikia.php?controller=StructuredContent&method=testClassifier";
-	protected $saveEndpoint = "http://firefly.jacek.wikia-dev.com/wikia.php?controller=StructuredContent&method=testSave";
+	protected $classifierEndpoint = "http://db-sds-s1:8081/graph-0.3.1/classifications/";
+	protected $saveEndpoint = "http://db-sds-s1:8081/knowledge/entitycollections";
 
-	public function getClassifierEndpoint( $wikiUrl, $pageId ) {
-		return $this->classifierEndpoint ."&URL=".urldecode( $wikiUrl ).'/'.$pageId;
+	public function getClassifierEndpoint( $wikiUrl, $pageTitle ) {
+		return $this->classifierEndpoint .urldecode( $wikiUrl ).'/'.$pageTitle;
 	}
 
 	public function getSaveEndpoint() {

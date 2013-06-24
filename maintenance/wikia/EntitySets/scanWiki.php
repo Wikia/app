@@ -75,12 +75,12 @@ class ScanWiki extends Maintenance {
 
 	protected function queryPageForEntities( $pageData ) {
 		$this->output( 'Quering: ' . $pageData->page_title . " \n " );
-		$result = $this->scanPageWithEntityService( $pageData->page_id );
+		$result = $this->scanPageWithEntityService( $pageData->page_title );
 		$this->sendResultToDB( $result, $pageData );
 	}
 
-	protected function scanPageWithEntityService( $pageId ) {
-		$result = $this->apiClient->get( $this->apiClient->getClassifierEndpoint($this->getWikiDomain(), $pageId) );
+	protected function scanPageWithEntityService( $pageTitle ) {
+		$result = $this->apiClient->get( $this->apiClient->getClassifierEndpoint($this->getWikiDomain(), $pageTitle) );
 		return $result;
 	}
 
@@ -96,10 +96,14 @@ class ScanWiki extends Maintenance {
 		);
 
 		if ( count($postData['entities']) > 0 ) {
-			$this->output( 'Saving...'."\n" );
-			$this->output( json_encode( $postData ) );
-			$response = $this->apiClient->postJson( $this->apiClient->getSaveEndpoint() . "&TYPE=".$result['response']->class, json_encode( $postData ) );
-			print_r( $response );
+			if ( $postData['entities'][0]["type"] != "other"  ) {
+				$this->output( 'Saving...'."\n" );
+				$this->output( json_encode( $postData ) );
+				$response = $this->apiClient->postJson( $this->apiClient->getSaveEndpoint(), json_encode( $postData ) );
+				print_r( $response );
+			} else {
+				$this->output( 'Other found. Not saving.' ."\n" );
+			}
 		} else {
 			$this->output( 'Nothing found' ."\n" );
 			print_r( $result );
