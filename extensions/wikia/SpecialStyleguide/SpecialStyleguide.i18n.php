@@ -37,6 +37,10 @@ $messages['en'] = array(
 	'styleguide-home-team-pm' => 'Product manager',
 	'styleguide-home-team-engineer' => 'Engineer',
 	'styleguide-home-team-designer' => 'Product designer',
+	
+	// Components
+	'styleguide-components-header' => 'Components',
+	'styleguide-components-header-tagline' => 'Wikia UI styleguide re-usable elements',
 );
 
 $messages['pl'] = array(
@@ -76,6 +80,10 @@ $messages['pl'] = array(
 	'styleguide-home-team-pm' => 'Product manager',
 	'styleguide-home-team-engineer' => 'Inżynier',
 	'styleguide-home-team-designer' => 'Designer',
+	
+	// Components
+	'styleguide-components-header' => 'Komponenty',
+	'styleguide-components-header-tagline' => 'Elementy wielokrotnego użytku Wikia Styleguide',
 );
 
 /** Message documentation (Message documentation)
@@ -110,4 +118,7 @@ $messages['qqq'] = array(
 	'styleguide-home-team-engineer' => 'Job Title - Engineer',
 	'styleguide-home-team-designer' => 'Job Title - Designer',
 
+	// Components
+	'styleguide-components-header' => "Header for Styleguide's components page",
+	'styleguide-components-header-tagline' => "Tagline for Styleguide's components page",
 );
