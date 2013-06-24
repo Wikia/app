@@ -17,17 +17,24 @@ class FixYoutubeUpgrade extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgTestMode;
+		global $wgTestMode, $wgUser;
 		$wgTestMode = $this->getOption('test');
 
 		if ($wgTestMode) {
 			echo "=== TEST MODE ===\n";
 		}
 
+		// Load wikia user
+		$wgUser = User::newFromName( 'WikiaBot' );
+		if ( !$wgUser ) {
+			echo "WARN: Could not load WikiaBot user\n";
+			exit(1);
+		}
+
 		$pages = $this->getPages();
 
-		foreach ( $pages as $page ) {
-			$this->fixTags($page);
+		foreach ( $pages as $pageID ) {
+			$this->fixTags($pageID);
 		}
 
 		exit( 0 );
@@ -38,14 +45,21 @@ class FixYoutubeUpgrade extends Maintenance {
 	 * @return array
 	 */
 	public function getPages ( ) {
-		$line = trim(fgets(STDIN));
-		$pageKeys = explode("\t", $line);
+		// Find all pages in this wiki that have YouTube tags
+		$dbr = wfGetDB( DB_SLAVE );
+		$sql = "select il_from
+				from image, imagelinks
+				where il_to = img_name
+				  and img_major_mime = 'video'
+				  and img_minor_mime = 'youtube'
+				  and img_timestamp > '20130617000000'";
 
-		foreach ( $pageKeys as $dbKey ) {
-			$page = Article::newFromTitle( $dbKey, RequestContext::getMain() );
-			if ( !empty($page) ) {
-				$pages[] = $page;
-			}
+		$result = $dbr->query($sql);
+
+		// Get an array of pages that have YT tags on them
+		$pages = array();
+		foreach ($result as $row) {
+			$pages[] = $row->il_from;
 		}
 
 		return $pages;
@@ -54,18 +68,30 @@ class FixYoutubeUpgrade extends Maintenance {
 	/**
 	 * Fix broken [[File:...]] wiki tag
 	 *
-	 * @param Article $page - The page on which the tag exists
+	 * @param $pageID
 	 * @return bool - Whether this upgrade was successful
 	 */
-	public function fixTags ( Article $page ) {
+	public function fixTags ( $pageID ) {
 		global $wgUser, $wgTestMode;
+
+		$page = Article::newFromID( $pageID );
+		if ( empty($page) ) {
+			echo "\tERROR: Couldn't load page ID $pageID\n";
+			return false;
+		}
+
+		echo "Checking ".$page->getTitle()->getPrefixedDBkey()."\n";
 
 		$text = $page->getText();
 		$matchFile = 'File|'.wfMessage('nstab-image')->text();
 
+		global $wgTagFixes;
+		$wgTagFixes = 0;
+
 		$text = preg_replace_callback(
-			"/\[\[((?:$matchFile):[\|]+)\|([0-9]+)([^\|\]]*)\]\]/i",
+			"/\[\[((?:$matchFile):[^\|\]]+)\|([0-9]+)([^\|\]]*)\]\]/i",
 			function ($matches) {
+				global $wgTagFixes;
 
 				// Name the bits we're matching, for sanity
 				$original = $matches[0];
@@ -78,23 +104,22 @@ class FixYoutubeUpgrade extends Maintenance {
 
 				// See if our width is suffixed by 'px' or not.  If so
 				// leave it as is, unchanged.
-				if ( preg_match('/^ *px/', $suffix) ) {
-					echo "\t- Leaving unchanged";
-					return $original;
-				} else {
+				if ( preg_match('/^ *$/', $suffix) ) {
 					$rewrite = "[[$file|${width}px]]";
-					echo "\t- FIXING as '$rewrite\n";
+					echo "\t- FIX AS '$rewrite\n";
+					$wgTagFixes++;
 					return $rewrite;
+				} else {
+					echo "\t- Leaving unchanged\n";
+					return $original;
 				}
 			},
 			$text
 		);
 
-		// Load wikia user
-		$wgUser = User::newFromName( 'WikiaBot' );
-		if ( !$wgUser ) {
-			echo "WARN: Could not load WikiaBot user\n";
-			return false;
+		if ( $wgTagFixes == 0 ) {
+			echo "\tNo changes for this article\n";
+			return true;
 		}
 
 		if ( $wgTestMode ) {
@@ -103,7 +128,7 @@ class FixYoutubeUpgrade extends Maintenance {
 
 		# Do the edit
 		$status = $page->doEdit( $text, "Adding missing 'px' suffix to video pixel width",
-								 EDIT_MINOR | EDIT_FORCE_BOT | EDIT_AUTOSUMMARY | EDIT_SUPPRESS_RC );
+								 EDIT_MINOR | EDIT_FORCE_BOT | EDIT_SUPPRESS_RC );
 
 		$retval = true;
 		if ( !$status->isGood() ) {
