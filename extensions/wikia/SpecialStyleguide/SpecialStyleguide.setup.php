@@ -10,7 +10,6 @@
  */
 
 $dir = dirname( __FILE__ ) . '/';
-$app = F::app();
 
 $wgExtensionCredits['specialpage'][] = [
 	'name' => 'Special:Styleguide',
