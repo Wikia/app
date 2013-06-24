@@ -9,10 +9,13 @@
             <label for="editSummary"><?= wfMessage('special-css-edit-summary')->plain() ?></label>
             <textarea id="editSummary" class="edit-summary" name="editSummary" placeholder="<?= wfMessage
 			('special-css-summary-placeholder')->plain(); ?>"></textarea>
-			<?= F::app()->renderView('MenuButton',
+			<?= $app->renderView('MenuButton',
 				'Index',
 				array(
-					'action' => array("text" => wfMessage('special-css-publish-button'), 'class' => 'css-publish-button'),
+					'action' => array(
+						'text' => wfMessage('special-css-publish-button'),
+						'class' => 'css-publish-button'
+					),
 					'name' => 'submit',
 					'class' => 'primary',
 					'dropdown' => $dropdown
