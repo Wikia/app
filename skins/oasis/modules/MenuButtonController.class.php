@@ -148,6 +148,10 @@ class MenuButtonController extends WikiaController {
 			$this->class .= ' loginToEditProtectedPage';
 		}
 
+		if ( $this->actionName == 'submit' ) {
+			$data['class'] = 'wikia-menu-button-submit';
+		}
+
 		if(!empty($data['class'])) {
 			$this->class .= ' '.$data['class'];
 		}

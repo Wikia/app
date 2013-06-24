@@ -26,7 +26,7 @@ $app->registerClass('SpecialCssHooks', $dir . 'SpecialCssHooks.class.php');
 $app->registerController(
 	'SpecialCssController', 
 	$dir . 'SpecialCssController.class.php',
-	['index' => ["notSkin" => SpecialCssModel::$supportedSkins, "method" => "notOasis"]]
+	['index' => ["notSkin" => SpecialCssModel::$supportedSkins, "method" => "unsupportedSkinIndex"]]
 );
 
 // hooks
@@ -38,7 +38,7 @@ $app->registerSpecialPage('CSS', 'SpecialCssController', 'wikia');
 
 // message files
 $app->registerExtensionMessageFile('SpecialCss', $dir . 'SpecialCss.i18n.php');
-F::build('JSMessages')->registerPackage('SpecialCss', array('special-css-*'));
+(new JSMessages())->registerPackage('SpecialCss', array('special-css-*'));
 
 //user rights
 $wgGroupPermissions['*']['specialcss'] = false;

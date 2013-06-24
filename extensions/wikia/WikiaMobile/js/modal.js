@@ -89,6 +89,8 @@ define('modal', ['throbber', require.optional('ads')], function modal(throbber, 
 
 		!created && setup();
 
+		ads && ads.unfix();
+
 		var con = options.content,
 			tool = options.toolbar,
 			cap = options.caption,

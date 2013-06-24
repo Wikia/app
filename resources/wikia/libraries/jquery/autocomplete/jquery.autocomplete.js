@@ -151,6 +151,8 @@
             this.hide();
             return;
           }
+            //Wikia: fire event when enter was pressed on suggestion
+          this.el.trigger('suggestEnter');
           this.select(this.selectedIndex, /*wikia change*/ e /*end*/);
           if (e.keyCode === 9/* Event.KEY_TAB */) { return; }
           break;

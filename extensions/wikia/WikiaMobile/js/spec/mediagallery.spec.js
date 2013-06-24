@@ -3,7 +3,7 @@ describe("Media Gallery module", function () {
 	'use strict';
 
 	var mediaMock = {
-			getImages: function() {},
+			getMedia: function() {}
 		},
 		modalMock = {
 			getWrapper: function() {}

@@ -31,6 +31,12 @@ $edit-box-color: mix($color-page, #000, 95%);
 	}
 }
 
+.WikiaArticle {
+	.wikia-menu-button ul {
+		list-style: none outside none;
+	}
+}
+
 .css-side-bar {
 	float: right;
 	width: 330px;
@@ -41,7 +47,7 @@ $edit-box-color: mix($color-page, #000, 95%);
 		margin-bottom: 10px;
 		padding: 15px;
 
-		label[for=minorEdit] {
+		.css-minor-label {
 			float: right;
 			font-size: 10px;
 		}
@@ -49,7 +55,6 @@ $edit-box-color: mix($color-page, #000, 95%);
 		.css-publish-button {
 			border: none;
 			height: 20px;
-			padding: 0 20px;
 		}
 
 		.drop {
