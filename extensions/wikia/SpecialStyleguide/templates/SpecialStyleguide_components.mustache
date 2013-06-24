@@ -1,5 +1,12 @@
 <section>
-	{{# componentsList}}
-		<li>{{name}}</li>
+	<ul class="styleguide-subnav">
+	{{#componentsList}}
+		<li>
+			<a href="{{id}}" title="{{name}}">{{name}}</a>
+		</li>
 	{{/ componentsList}}
+	</ul>
+	<ul class="components">
+		{{{components}}}
+	</ul>
 </section>
