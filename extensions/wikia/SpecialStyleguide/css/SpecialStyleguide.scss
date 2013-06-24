@@ -103,13 +103,13 @@ h1 {
 	background: linear-gradient(30deg,  mix($color-header, #000, 30%) 0%,$color-header 46%); /* W3C */
 	color: $color-page;
 
+	&.home {
+		text-align: center;
+	}
+
 	hgroup {
 		margin: 0 auto;
 		width: $page-width;
-	}
-
-	.home {
-		text-align: center;
 	}
 
 	h1 {
@@ -153,7 +153,8 @@ h1 {
 	background-color: $alter-background-color;
 }
 
-.styleguide-home-page-body {
+.styleguide-home-page-body,
+.styleguide-components-page-body {
 	margin: 0 auto;
 	overflow: hidden;
 	width: $page-width;
