@@ -37,25 +37,12 @@ $wgExtensionMessagesFiles['ImagePlaceholder'] = $dir.'/ImagePlaceholder.i18n.php
 JSMessages::registerPackage('ImagePlaceholder', array('imgplc-*'));
 JSMessages::enqueuePackage('ImagePlaceholder', JSMessages::EXTERNAL);
 
-$wgHooks['Parser::FetchTemplateAndTitle'][] = 'ImagePlaceholderFetchTemplateAndTitle';
 $wgHooks['ImageBeforeProduceHTML'][] = 'ImagePlaceholderImageBeforeProduceHTML';
 $wgHooks['ParserBeforeStrip'][] = 'ImagePlaceholderParserBeforeStrip';
 
 // this is a custom hook defined in Parser.php, of course required for it to work
 $wgHooks['BeforeParserMakeImageLinkObjOptions'][] = 'ImagePlaceholderBeforeParserMakeImageLinkObjOptions';
 $wgHooks['ParserShouldAddTrackingCategory'][] = 'ImagePlaceholderParserShouldAddTrackingCategory';
-
-function ImagePlaceholderFetchTemplateAndTitle( &$text, &$finalTitle ) {
-        global $wgContLang, $wgWikiaImagesFoundInTemplates;
-        $img_tag = $wgContLang->getFormattedNsText( NS_FILE ) . ':' . wfMsg( 'imgplc-placeholder' );
-
-        if ($text !== false) {
-                $count = 0;
-                $text = str_replace( $img_tag, 'File:Template_Placeholder', $text, $count );
-                $wgWikiaImagesFoundInTemplates += $count;
-        }
-        return true;
-}
 
 function ImagePlaceholder_init() {
 	global $wgAutoloadClasses;
@@ -91,6 +78,11 @@ function ImagePlaceholderBeforeParserMakeImageLinkObjOptions( Parser $parser, Ti
 		return true;
 	}
 	global $wgContLang;
+
+	// TODO: This part of code, along with the ImagePlaceholderTranslateNsImage()
+	// function has to be refined once Video and Image namespaces
+	// are properly translated.
+
 	$plc_tag = $wgContLang->getFormattedNsText( NS_FILE ) . ':' . wfMsgForContent( 'imgplc-placeholder' );
 	$ns_img = ImagePlaceholderTranslateNsImage();
 	$img_tag = $ns_img . ':' . wfMsgForContent( 'imgplc-placeholder' );
