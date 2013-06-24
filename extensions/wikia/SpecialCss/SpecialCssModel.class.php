@@ -197,6 +197,21 @@ class SpecialCssModel extends WikiaModel {
 	}
 
 	/**
+	 * Get url to community wiki to page with all CSS updates
+	 *
+	 * @return string
+	 */
+	public function getCssUpdatesUrl() {
+		$title = GlobalTitle::newFromText(
+			self::UPDATES_CATEGORY,
+			NS_CATEGORY,
+			WikiFactory::DBtoId($this->getCommunityDbName())
+		);
+
+		return $title->getFullURL();
+	}
+
+	/**
 	 * @desc Returns an array with correct elements from given api results
 	 * 
 	 * @param array $cssRevisionsData results from API call with request of revision's info
@@ -391,6 +406,18 @@ class SpecialCssModel extends WikiaModel {
 	 * @return mixed
 	 */
 	private function getApiData($params) {
+		$dbName = $this->getCommunityDbName();
+		$data = ApiService::foreignCall($dbName, $params);
+
+		return $data;
+	}
+
+	/**
+	 * Get community wiki db name from which we'll take blog posts for css update
+	 *
+	 * @return string
+	 */
+	private function getCommunityDbName() {
 		global $wgDevelEnvironment;
 		$dbName = 'wikia';
 
@@ -398,10 +425,9 @@ class SpecialCssModel extends WikiaModel {
 			$dbName = 'community';
 		}
 
-		$data = ApiService::foreignCall($dbName, $params);
-
-		return $data;
+		return $dbName;
 	}
+
 
 	/**
 	 * @desc Returns array with page ids based on blog data from api

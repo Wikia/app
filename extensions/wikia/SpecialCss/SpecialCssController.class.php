@@ -52,6 +52,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 		}
 
 		$this->cssUpdates = $model->getCssUpdatesData();
+		$this->cssUpdatesUrl = $model->getCssUpdatesUrl();
 		$this->createDeleteLinks();
 		$this->handleAssets();
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->plain() );

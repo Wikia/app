@@ -53,7 +53,7 @@
 						</li>
 					<?php endforeach; ?>
 				</ul>
-				<a href="" title="<?= wfMessage('special-css-community-update-see-all')->text(); ?>" class="see-all-link"><?= wfMessage('special-css-community-update-see-all')->text(); ?></a>
+				<a href="<?= $cssUpdatesUrl; ?>" title="<?= wfMessage('special-css-community-update-see-all')->text(); ?>" class="see-all-link"><?= wfMessage('special-css-community-update-see-all')->text(); ?></a>
 			</div>
 		<?php endif; ?>
 
