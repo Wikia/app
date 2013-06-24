@@ -194,15 +194,16 @@ class WAMPageModel extends WikiaModel {
 	 * @desc Returns array with tab names and urls by default it's in English taken from global variable $wgWAMPageConfig['tabsNames']
 	 *
 	 * @param int $selectedIdx array index of selected tab
+	 * @params string $filterParamsQueryString filter params converted to query string ready to be concatenated
 	 */
-	public function getTabs($selectedIdx = 0) {
+	public function getTabs($selectedIdx = 0, $filterParamsQueryString = '') {
 		$tabs = [];
 		$pageName = $this->getWAMMainPageName();
 		$tabsNames = $this->getTabsNamesArray();
 		
 		foreach($tabsNames as $tabName) {
 			$tabTitle = $this->getTitleFromText($pageName . '/'. $tabName);
-			$tabUrl = $tabTitle->getLocalURL();
+			$tabUrl = $tabTitle->getLocalURL() . $filterParamsQueryString;
 			$tabs[] = ['name' => $tabName, 'url' => $tabUrl];
 		}
 

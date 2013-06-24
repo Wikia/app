@@ -2,7 +2,7 @@
 	<? foreach($tabs as $tab): ?>
 		<li>
 			<a 
-				href="<?= $tab['url'] ?><?= $filterParams ?>"
+				href="<?= $tab['url'] ?>"
 				<?php if( !empty($tab['selected']) ): ?>
 					class="selected"
 				<?php endif; ?>
