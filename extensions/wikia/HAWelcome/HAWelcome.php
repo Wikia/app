@@ -121,6 +121,7 @@ class HAWelcomeJob extends Job {
 		if ( is_null( $oRevision ) ) {
 			// if oRevision is null, that means we're dealing with a null edit (no content change)
 			// and therefore we don't have to welcome anybody
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
