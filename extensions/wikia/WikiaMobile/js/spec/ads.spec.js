@@ -64,6 +64,4 @@ describe("Ads module", function () {
 		ads.stop();
 		expect(ads.shouldRequestAd()).toBeFalsy();
 	});
-
-
 });

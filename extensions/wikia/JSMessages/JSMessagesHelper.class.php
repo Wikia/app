@@ -12,13 +12,6 @@ class JSMessagesHelper {
 	// cache revison IDs for a week
 	const TTL = 604800;
 
-	// application
-	private $app;
-
-	function __construct() {
-		$this->app = F::app();
-	}
-
 	/**
 	 * Get cache buster value for external package with messages
 	 *
@@ -29,13 +22,14 @@ class JSMessagesHelper {
 	 *
 	 * @return string - cache buster value
 	 */
-	public function getMessagesCacheBuster() {
+	static public function getMessagesCacheBuster() {
+		global $wgStyleVersion;
 		wfProfileIn(__METHOD__);
 
 		$parts = array(
-			$this->app->wg->StyleVersion,
-			$this->getWikiRevisionId(),
-			$this->getWikiRevisionId(self::MESSAGING),
+			$wgStyleVersion,
+			static::getWikiRevisionId(),
+			static::getWikiRevisionId(self::MESSAGING),
 		);
 
 		$ret = implode('.', $parts);
@@ -49,8 +43,9 @@ class JSMessagesHelper {
 	 *
 	 * @param integer $dbName - wiki database name (defaults to local wiki)
 	 */
-	private function getWikiRevisionId($dbName = null) {
-		return intval($this->app->wg->Memc->get($this->getMemcacheKey($dbName)));
+	static private function getWikiRevisionId($dbName = null) {
+		global $wgMemc;
+		return intval($wgMemc->get(static::getMemcacheKey($dbName)));
 	}
 
 	/**
@@ -58,8 +53,9 @@ class JSMessagesHelper {
 	 *
 	 * @param integer $revId - revision ID to be stored
 	 */
-	private function setWikiRevisionId($revId) {
-		$this->app->wg->Memc->set($this->getMemcacheKey(), $revId, self::TTL);
+	static private function setWikiRevisionId($revId) {
+		global $wgMemc;
+		$wgMemc->set(static::getMemcacheKey(), $revId, self::TTL);
 	}
 
 	/**
@@ -67,12 +63,13 @@ class JSMessagesHelper {
 	 *
 	 * @param integer $dbName - wiki database name (defaults to local wiki)
 	 */
-	private function getMemcacheKey($dbName = null) {
+	static private function getMemcacheKey($dbName = null) {
+		global $wgDBname;
 		if (is_null($dbName)) {
-			$dbName = $this->app->wg->DBname;
+			$dbName =$wgDBname;
 		}
 
-		$key = $this->app->wf->ForeignMemcKey($dbName /* $db */, null /* $prefix */, 'JSMessages', 'MWrevID');
+		$key = wfForeignMemcKey($dbName /* $db */, null /* $prefix */, 'JSMessages', 'MWrevID');
 
 		return $key;
 	}
@@ -84,11 +81,11 @@ class JSMessagesHelper {
 	 * @param string $text - message content
 	 * @return true - it's a hook
 	 */
-	public function onMessageCacheReplace($title, $text) {
-		$article = $this->app->wg->Article;
+	static public function onMessageCacheReplace($title, $text) {
+		global $wgArticle;
 
-		if (!empty($article)) {
-			$this->setWikiRevisionId(intval($article->getLatest()));
+		if (!empty($wgArticle)) {
+			static::setWikiRevisionId(intval($wgArticle->getLatest()));
 		}
 
 		return true;

@@ -218,7 +218,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 		wfProfileIn( __METHOD__ );
 
 		// check if still exists
-		$code = $status->errors[0]['params'][0];
+		$code = empty( $status->errors[0]['params'][0] ) ? null : $status->errors[0]['params'][0];
 		if( $code == 404 ) {
 
 			wfProfileOut( __METHOD__ );

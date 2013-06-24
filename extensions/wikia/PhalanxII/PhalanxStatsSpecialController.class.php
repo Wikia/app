@@ -13,7 +13,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 
 	public function index() {
 		wfProfileIn( __METHOD__ );
-		$this->wg->Out->setPageTitle( $this->wf->Msg('phalanx-stats-title') );
+		$this->wg->Out->setPageTitle( wfMsg('phalanx-stats-title') );
 
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
 			$this->displayRestrictionError();
@@ -39,7 +39,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function blockStats($blockId) {
-		$this->wg->Out->setPageTitle( sprintf( "%s #%s", $this->wf->Msg('phalanx-stats-title'), $blockId ) );
+		$this->wg->Out->setPageTitle( sprintf( "%s #%s", wfMsg('phalanx-stats-title'), $blockId ) );
 
 		$data = Phalanx::newFromId($blockId);
 
@@ -66,20 +66,20 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		/* pull these out of the array, so they dont get used in the top rows */
 		if ( $data['type'] & Phalanx::TYPE_EMAIL && !$this->wg->User->isAllowed( 'phalanxemailblock' ) ) {
 			/* hide email from non-privildged users */
-			$data['text'] = $this->wf->Msg( 'phalanx-email-filter-hidden' );
+			$data['text'] = wfMsg( 'phalanx-email-filter-hidden' );
 		}
 
 		/* stats table */
 		$headers = array(
-			$this->wf->Msg('phalanx-stats-table-id'),
-			$this->wf->Msg('phalanx-stats-table-user'),
-			$this->wf->Msg('phalanx-stats-table-type'),
-			$this->wf->Msg('phalanx-stats-table-create'),
-			$this->wf->Msg('phalanx-stats-table-expire'),
-			$this->wf->Msg('phalanx-stats-table-exact'),
-			$this->wf->Msg('phalanx-stats-table-regex'),
-			$this->wf->Msg('phalanx-stats-table-case'),
-			$this->wf->Msg('phalanx-stats-table-language'),
+			wfMsg('phalanx-stats-table-id'),
+			wfMsg('phalanx-stats-table-user'),
+			wfMsg('phalanx-stats-table-type'),
+			wfMsg('phalanx-stats-table-create'),
+			wfMsg('phalanx-stats-table-expire'),
+			wfMsg('phalanx-stats-table-exact'),
+			wfMsg('phalanx-stats-table-regex'),
+			wfMsg('phalanx-stats-table-case'),
+			wfMsg('phalanx-stats-table-language'),
 		);
 
 		$tableAttribs = array(
@@ -94,8 +94,8 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 
 		$table  = Xml::buildTable( array( $row ), $tableAttribs, $headers );
 		$table  = str_replace("</table>", "", $table);
-		$table .= "<tr><th>" . $this->wf->Msg('phalanx-stats-table-text') . "</th><td colspan='8'>" . htmlspecialchars( $data['text'] ) . "</td></tr>";
-		$table .= "<tr><th>" . $this->wf->Msg('phalanx-stats-table-reason')  ."</th><td colspan='8'>{$data['reason']}</td></tr>";
+		$table .= "<tr><th>" . wfMsg('phalanx-stats-table-text') . "</th><td colspan='8'>" . htmlspecialchars( $data['text'] ) . "</td></tr>";
+		$table .= "<tr><th>" . wfMsg('phalanx-stats-table-reason')  ."</th><td colspan='8'>{$data['reason']}</td></tr>";
 		$table .= "</table>";
 
 		$this->setVal('table', $table);
@@ -125,13 +125,13 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		);
 
 		// we have a valid id, change title to use it
-		$this->wg->Out->setPageTitle( $this->wf->Msg( 'phalanx-stats-title' ) . ': ' . $data['url'] );
+		$this->wg->Out->setPageTitle( wfMsg( 'phalanx-stats-title' ) . ': ' . $data['url'] );
 
 		$headers = array(
-			$this->wf->Msg('phalanx-stats-table-wiki-id'),
-			$this->wf->Msg('phalanx-stats-table-wiki-name'),
-			$this->wf->Msg('phalanx-stats-table-wiki-url'),
-			$this->wf->Msg('phalanx-stats-table-wiki-last-edited'),
+			wfMsg('phalanx-stats-table-wiki-id'),
+			wfMsg('phalanx-stats-table-wiki-name'),
+			wfMsg('phalanx-stats-table-wiki-url'),
+			wfMsg('phalanx-stats-table-wiki-last-edited'),
 		);
 
 		$tableAttribs = array(

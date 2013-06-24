@@ -23,7 +23,7 @@ class WikiaPollTest extends WikiaBaseTest {
 				->method('getTitle')
 				->will($this->returnValue($mockTitle));
 
-		$this->proxyClass('Article', $mockArticle);
+		$this->mockClass('Article', $mockArticle);
 
 		$wgRequest = $this->getMock('WebRequest', array('getVal', 'getArray'));
 		$wgRequest->expects($this->any())
@@ -32,16 +32,15 @@ class WikiaPollTest extends WikiaBaseTest {
 				->will($this->returnValue(array("One", "Two", "Three")));
 		$this->mockGlobalVariable('wgRequest', $wgRequest);
 
-		// message needs to be mocked before mockApp() is called
 		$this->mockMessage('wikiapoll-error-invalid-title', 'Question text is invalid');
-		$this->mockApp();
 
 		$result = $poll->create();
 
 		$this->assertEquals(true, $result["success"], "Create Poll failed. Error: " . (isset($result['error']) ? $result['error'] : 'unknown - error message not set'));
 
 		// Test code path for title==null (invalid question, etc)
-		$this->proxyClass('Title', null);
+		$this->mockClass('Title', null, 'newFromText');
+		$this->mockGlobalVariable('wgTitle',null);
 
 		$result = $poll->create();
 
@@ -66,16 +65,14 @@ class WikiaPollTest extends WikiaBaseTest {
 				->method('exists')
 				->will($this->returnValue(true));
 
-		$this->proxyClass('Title', $mockTitle, 'newFromText');
+		$this->mockClass('Title', $mockTitle, 'newFromText');
 
 		$mockArticle = $this->getMock('Article', array('getTitle'), array($mockTitle));
 		$mockArticle->expects($this->any())
 				->method('getTitle')
 				->will($this->returnValue($mockTitle));
 
-		$this->proxyClass('Article', $mockArticle, 'newFromID');
-
-		$this->mockApp();
+		$this->mockClass('Article', $mockArticle, 'newFromID');
 
 		$result = $poll->get();
 
@@ -102,7 +99,7 @@ class WikiaPollTest extends WikiaBaseTest {
 		$mockPoll->expects($this->once())
 				->method("exists")
 				->will($this->returnValue(true));
-		$this->proxyClass("WikiaPoll", $mockPoll, 'newFromId');
+		$this->mockClass("WikiaPoll", $mockPoll, 'newFromId');
 
 		$mockTitle = $this->getMock('Title');
 
@@ -115,10 +112,9 @@ class WikiaPollTest extends WikiaBaseTest {
 				->method('getTitle')
 				->will($this->returnValue($mockTitle));
 
-		$this->proxyClass('Article', $mockArticle, 'newFromID');
+		$this->mockClass('Article', $mockArticle, 'newFromID');
 
 
-		$this->mockApp();
 		$poll = new WikiaPollAjax;
 		$result = $poll->update();
 
@@ -152,7 +148,7 @@ class WikiaPollTest extends WikiaBaseTest {
 		$mockPoll->expects($this->once())
 				->method("hasVoted")
 				->will($this->returnValue(true));
-		$this->proxyClass("WikiaPoll", $mockPoll, 'newFromId');
+		$this->mockClass("WikiaPoll", $mockPoll, 'newFromId');
 
 		$mockTitle = $this->mockClassWithMethods('Title', array(
 			'getNamespace' => false
@@ -160,9 +156,8 @@ class WikiaPollTest extends WikiaBaseTest {
 		$this->mockGlobalVariable('wgTitle', $mockTitle);
 
 		$mockArticle = $this->getMock('Article', array(), array($mockTitle));
-		$this->proxyClass('Article', $mockArticle, 'newFromID');
+		$this->mockClass('Article', $mockArticle, 'newFromID');
 
-		$this->mockApp();
 		$poll = new WikiaPollAjax;
 
 		$result = $poll->vote();
@@ -184,8 +179,6 @@ class WikiaPollTest extends WikiaBaseTest {
 		$this->mockClassWithMethods('Title', array(
 			'exists' => true
 		), 'newFromText');
-
-		$this->mockApp();
 
 		// If the poll exists, it's a dupe
 		$result = $poll->create();

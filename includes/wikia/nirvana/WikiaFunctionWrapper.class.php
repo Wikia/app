@@ -32,6 +32,7 @@ class WikiaFunctionWrapper {
 	 * run function
 	 * @param string $funcName
 	 * @param array $funcArgs
+	 * @deprecated
 	 */
 	public function run( $funcName, $funcArgs ) {
 		if( is_callable( $funcName ) ) {
@@ -46,15 +47,17 @@ class WikiaFunctionWrapper {
 	 * @param $funcName
 	 * @param $funcArgs
 	 * @return mixed
+	 * @deprecated
 	 */
 	public function __call( $funcName, $funcArgs ) {
 		$funcName = ( 'wf' . ucfirst( $funcName ) );
-		return $this->run( $funcName, $funcArgs );
+		return call_user_func_array( $funcName, $funcArgs );
 	}
 
 	/**
 	 * wfProfileIn wrapper
 	 * @see wfProfileIn
+	 * @deprecated
 	 */
 	public function profileIn( $method ) {
 		wfProfileIn( $method );
@@ -63,6 +66,7 @@ class WikiaFunctionWrapper {
 	/**
 	 * wfProfileOut wrapper
 	 * @see wfProfileOut
+	 * @deprecated
 	 */
 	public function profileOut( $method ) {
 		wfProfileOut( $method );
@@ -72,6 +76,7 @@ class WikiaFunctionWrapper {
 	 * wfGetDB wrapper
 	 * @see wfGetDB
 	 * @return DatabaseMysql
+	 * @deprecated
 	 */
 	public function &getDB( $db, $groups = array(), $wiki = false ) {
 		return wfGetDB( $db, $groups, $wiki );
@@ -80,6 +85,7 @@ class WikiaFunctionWrapper {
 	/**
 	 * wfMsg wrapper
 	 * @see wfMsg
+	 * @deprecated
 	 */
 	public function msg( $key ) {
 		$args = func_get_args();
@@ -90,6 +96,7 @@ class WikiaFunctionWrapper {
 	/**
 	 * wfMsgExt
 	 * @see wfMsgExt
+	 * @deprecated
 	 */
 	public function msgExt( $key, $options ) {
 		$args = func_get_args();

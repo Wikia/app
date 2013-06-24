@@ -5,7 +5,7 @@
  *
  * @author macbre
  */
-class JSSnippets extends WikiaObject {
+class JSSnippets {
 	const resourceRegex = '/\.(css|scss|js)$/i';
 	const urlRegex = '/^http[s]?:\/\//i';
 	const cbRegex = '/\?cb=[0-9]+$/i';
@@ -21,7 +21,7 @@ class JSSnippets extends WikiaObject {
 	 * @return string JS snippet
 	 *
 	 * @description
-	 * F::build('JSSnippets')->addToStack(array(
+	 * ( new JSSnippets )->addToStack(array(
 	 *	'my_ext_js_package',
 	 *  '/extensions/wikia/Feature/js/Feature.js',
 	 *  '/extensions/wikia/Feature/css/Feature.css',
@@ -34,10 +34,10 @@ class JSSnippets extends WikiaObject {
 	 *
 	 */
 
-	public function addToStack( $dependencies, $loaders = array(), $callback = null, $options = null ) {
+	static public function addToStack( $dependencies, $loaders = array(), $callback = null, $options = null ) {
 		wfProfileIn( __METHOD__ );
 		$js = "";
-		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' ); /* @var $assetsManager AssetsManager */
+		$assetsManager = AssetsManager::getInstance();
 		$skin = RequestContext::getMain()->getSkin();
 		$isWikiaSkin = ( $skin instanceof WikiaSkin );
 
@@ -120,7 +120,7 @@ class JSSnippets extends WikiaObject {
 	 *
 	 * @param array $vars list of JS variables in <head> section
 	 */
-	public function onMakeGlobalVariablesScript(Array &$vars) {
+	static public function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['JSSnippetsStack'] = array();
 		return true;
 	}
@@ -130,7 +130,7 @@ class JSSnippets extends WikiaObject {
 	 *
 	 * @return string <script> tag
 	 */
-	private function getBottomScript() {
+	static private function getBottomScript() {
 		$src = AssetsManager::getInstance()->getOneCommonURL('extensions/wikia/JSSnippets/js/JSSnippets.js');
 		return Html::inlineScript("if (JSSnippetsStack.length) $.getScript('{$src}');");
 	}
@@ -141,8 +141,8 @@ class JSSnippets extends WikiaObject {
 	 * @param Skin $skin MW skin instance
 	 * @param string $text content of bottom scripts
 	 */
-	public function onSkinAfterBottomScripts($skin, &$text) {
-		$text .= $this->getBottomScript();
+	static public function onSkinAfterBottomScripts($skin, &$text) {
+		$text .= self::getBottomScript();
 		return true;
 	}
 
@@ -152,8 +152,8 @@ class JSSnippets extends WikiaObject {
 	 * @param Title $title article preview is generated for
 	 * @param string $html preview content
 	 */
-	public function onEditPageLayoutModifyPreview(Title $title, &$html) {
-		$html .= $this->getBottomScript();
+	static public function onEditPageLayoutModifyPreview(Title $title, &$html) {
+		$html .= self::getBottomScript();
 		return true;
 	}
 }

@@ -60,7 +60,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		$this->displaySpecialCss = !empty($this->wg->EnableSpecialCssExt);
 
 		// add messages package
-		F::build('JSMessages')->enqueuePackage('AdminDashboard', JSMessages::INLINE);
+		JSMessages::enqueuePackage('AdminDashboard', JSMessages::INLINE);
 	}
 
 	/**

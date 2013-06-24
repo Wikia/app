@@ -4,7 +4,7 @@ class WikiaHubsV2SuggestController extends WikiaController {
 	protected $model;
 
 	public function __construct() {
-		$this->model = F::build('WikiaHubsV2SuggestModel');
+		$this->model = new WikiaHubsV2SuggestModel();
 	}
 
 	public function suggestArticle() {

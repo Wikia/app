@@ -17,7 +17,7 @@ class GWTUserRepository {
 		if ( $db == null ) {
 			global $wgExternalSharedDB;
 			$app = F::app();
-			$db = $app->wf->getDB( DB_MASTER, array(), $wgExternalSharedDB);
+			$db = wfgetDB( DB_MASTER, array(), $wgExternalSharedDB);
 		}
 		$this->databaseConnection = $db;
 	}

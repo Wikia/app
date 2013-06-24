@@ -254,7 +254,7 @@
 $wgExtensionFunctions[]        = array( 'ExtDynamicPageList2', 'setup' );
                                  // this does not work using
                                  // array( 'ExtDynamicPageList2', 'languageGetMagic' )
-$wgHooks['ParserFirstCallInit'][] = array( 'ExtDynamicPageList2' , 'setupParser' );
+$wgHooks['ParserFirstCallInit'][] = 'ExtDynamicPageList2::setupParser';
 
 // changed back to global function due to trouble with older MW installations, g.s.
 //$wgHooks['LanguageGetMagic'][] = 'ExtDynamicPageList2::languageGetMagic';

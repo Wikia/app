@@ -267,7 +267,7 @@ class WallNotifications {
 	protected function groupEntity($list){
 		$grouped = array();
 		foreach(array_reverse($list) as $obj ) {
-			$notif = F::build('WallNotificationEntity', array($obj['entityKey']), 'getById');
+			$notif = WallNotificationEntity::getById($obj['entityKey']);
 			if(!empty($notif))
 				$grouped[] = $notif;
 		}
@@ -956,11 +956,13 @@ class WallNotifications {
 	}
 
 	protected function getCache($userId, $wikiId) {
-		return new MemcacheSync($this->app->wg->Memc, $this->getKey($userId, $wikiId));
+		global $wgMemc;
+		return new MemcacheSync($wgMemc, $this->getKey($userId, $wikiId));
 	}
 
 	public function getDB($master = false){
-		return wfGetDB( $master ? DB_MASTER:DB_SLAVE, array(), $this->app->wg->ExternalDatawareDB );
+		global $wgExternalDatawareDB;
+		return wfGetDB( $master ? DB_MASTER:DB_SLAVE, array(), $wgExternalDatawareDB );
 	}
 
 	public function getLocalDB($master = false){
@@ -968,7 +970,7 @@ class WallNotifications {
 	}
 
 	public function getKey( $userId, $wikiId ){
-		return $this->app->runFunction( 'wfSharedMemcKey', __CLASS__, $userId, $wikiId. 'v30' );
+		return wfSharedMemcKey( __CLASS__, $userId, $wikiId. 'v30' );
 	}
 
 	/**

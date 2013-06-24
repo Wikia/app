@@ -69,9 +69,7 @@ class Wall {
 	}
 	
 	public function getUrl() {
-		wfProfileIn(__METHOD__);
-		$title = F::build( 'title', array( $this->getUser()->getName(), NS_USER_WALL ), 'newFromText' );
-		wfProfileOut(__METHOD__);
+		$title = Title::newFromText( $this->getUser()->getName(), NS_USER_WALL );
 		return $title->getFullUrl();
 	}
 

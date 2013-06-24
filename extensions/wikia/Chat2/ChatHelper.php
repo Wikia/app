@@ -5,6 +5,13 @@ class ChatHelper {
 	private static $operationMode = "wgChatOperationMode";
 	private static $CentralCityId = 177;
 	private static $configFile = array();
+
+	// constants with config file sections
+	const CHAT_DEVBOX_ENV = 'dev';
+	const CHAT_PREVIEW_ENV = 'preview';
+	const CHAT_VERIFY_ENV = 'verify';
+	const CHAT_PRODUCTION_ENV = 'prod';
+
 	/**
 	 * Hooks into GetRailModuleList and adds the chat module to the side-bar when appropriate.
 	 */
@@ -68,12 +75,33 @@ class ChatHelper {
 	}
 
 	/**
+	 * Return the name of the current configuration. This should return a config name
+	 * that exists in ChatConfig.json file.
+	 * @return string
+	 */
+	static function getEnvironmentName() {
+		global $wgDevelEnvironment;
+		if ( !empty( $wgDevelEnvironment ) ) {
+			return self::CHAT_DEVBOX_ENV;
+		}
+
+		if ( Wikia::isPreviewServer() ) {
+			return self::CHAT_PREVIEW_ENV;
+		}
+		if ( Wikia::isVerifyServer() ) {
+			return self::CHAT_VERIFY_ENV;
+		}
+
+		return self::CHAT_PRODUCTION_ENV;
+	}
+
+	/**
 	 *
 	 * laod Config of chat from json file (we need to use jsone file becasue w)
 	 * @param string $name
 	 */
 	static function getChatConfig($name) {
-		global $wgWikiaLocalSettingsPath, $wgDevelEnvironment, $wgWikiaConfigDirectory;
+		global $wgWikiaConfigDirectory;
 		wfProfileIn(__METHOD__);
 
 		if(empty(self::$configFile)) {
@@ -82,9 +110,14 @@ class ChatHelper {
 			self::$configFile = json_decode($string, true);
 		}
 
-		if(isset(self::$configFile[empty($wgDevelEnvironment) ? 'prod':'dev'][$name])) {
+		if ( empty( self::$configFile ) ) {
 			wfProfileOut(__METHOD__);
-			return self::$configFile[empty($wgDevelEnvironment) ? 'prod':'dev'][$name];
+			return false;
+		}
+		$env = self::getEnvironmentName();
+		if(isset(self::$configFile[$env][$name])) {
+			wfProfileOut(__METHOD__);
+			return self::$configFile[$env][$name];
 		}
 
 		if(isset(self::$configFile[$name])) {
@@ -157,12 +190,12 @@ class ChatHelper {
 		foreach($sp as $value) {
 			if($wgTitle->isSpecial($value)) {
 				// For Chat2 (doesn't exist in Chat(1))
-				$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL('chat_ban_js', array());
+				$srcs = AssetsManager::getInstance()->getGroupCommonURL('chat_ban_js', array());
 
 				foreach($srcs as $val) {
 					$out->addScript('<script src="' .$val. '"></script>');
 				}
-				F::build('JSMessages')->enqueuePackage('ChatBanModal', JSMessages::EXTERNAL);
+				JSMessages::enqueuePackage('ChatBanModal', JSMessages::EXTERNAL);
 				$out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Chat2/css/ChatModal.scss'));
 				break;
 			}

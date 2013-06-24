@@ -772,12 +772,14 @@ $wgAutoloadLocalClasses = array(
 	# includes/specials
 	'ActiveUsersPager' => 'includes/specials/SpecialActiveusers.php',
 	'AllmessagesTablePager' => 'includes/specials/SpecialAllmessages.php',
+	'AncientpagesPage' => 'includes/specials/SpecialAncientpages.php',
 	'AncientPagesPage' => 'includes/specials/SpecialAncientpages.php',
 	'BlockListPager' => 'includes/specials/SpecialBlockList.php',
 	'BrokenRedirectsPage' => 'includes/specials/SpecialBrokenRedirects.php',
 	'ContribsPager' => 'includes/specials/SpecialContributions.php',
 	'DBLockForm' => 'includes/specials/SpecialLockdb.php',
 	'DBUnlockForm' => 'includes/specials/SpecialUnlockdb.php',
+	'DeadendpagesPage' => 'includes/specials/SpecialDeadendpages.php',
 	'DeadendPagesPage' => 'includes/specials/SpecialDeadendpages.php',
 	'DeletedContribsPager' => 'includes/specials/SpecialDeletedContributions.php',
 	'DeletedContributionsPage' => 'includes/specials/SpecialDeletedContributions.php',
@@ -793,7 +795,9 @@ $wgAutoloadLocalClasses = array(
 	'LinkSearchPage' => 'includes/specials/SpecialLinkSearch.php',
 	'ListredirectsPage' => 'includes/specials/SpecialListredirects.php',
 	'LoginForm' => 'includes/specials/SpecialUserlogin.php',
+	'LonelypagesPage' => 'includes/specials/SpecialLonelypages.php',
 	'LonelyPagesPage' => 'includes/specials/SpecialLonelypages.php',
+	'LongpagesPage' => 'includes/specials/SpecialLongpages.php',
 	'LongPagesPage' => 'includes/specials/SpecialLongpages.php',
 	'MIMEsearchPage' => 'includes/specials/SpecialMIMEsearch.php',
 	'MostcategoriesPage' => 'includes/specials/SpecialMostcategories.php',
@@ -806,6 +810,7 @@ $wgAutoloadLocalClasses = array(
 	'NewPagesPager' => 'includes/specials/SpecialNewpages.php',
 	'PageArchive' => 'includes/specials/SpecialUndelete.php',
 	'PopularPagesPage' => 'includes/specials/SpecialPopularpages.php',
+	'Randompage' => 'includes/specials/SpecialRandompage.php',
 	'RandomPage' => 'includes/specials/SpecialRandompage.php',
 	'ShortPagesPage' => 'includes/specials/SpecialShortpages.php',
 	'SpecialActiveUsers' => 'includes/specials/SpecialActiveusers.php',
@@ -859,10 +864,14 @@ $wgAutoloadLocalClasses = array(
 	'SpecialVersion' => 'includes/specials/SpecialVersion.php',
 	'SpecialWatchlist' => 'includes/specials/SpecialWatchlist.php',
 	'SpecialWhatlinkshere' => 'includes/specials/SpecialWhatlinkshere.php',
+	'UncategorizedcategoriesPage' => 'includes/specials/SpecialUncategorizedcategories.php',
 	'UncategorizedCategoriesPage' => 'includes/specials/SpecialUncategorizedcategories.php',
+	'UncategorizedimagesPage' => 'includes/specials/SpecialUncategorizedimages.php',
 	'UncategorizedImagesPage' => 'includes/specials/SpecialUncategorizedimages.php',
 	'UncategorizedPagesPage' => 'includes/specials/SpecialUncategorizedpages.php',
+	'UncategorizedtemplatesPage' => 'includes/specials/SpecialUncategorizedtemplates.php',
 	'UncategorizedTemplatesPage' => 'includes/specials/SpecialUncategorizedtemplates.php',
+	'UnusedcategoriesPage' => 'includes/specials/SpecialUnusedcategories.php',
 	'UnusedCategoriesPage' => 'includes/specials/SpecialUnusedcategories.php',
 	'UnusedimagesPage' => 'includes/specials/SpecialUnusedimages.php',
 	'UnusedtemplatesPage' => 'includes/specials/SpecialUnusedtemplates.php',
@@ -871,11 +880,14 @@ $wgAutoloadLocalClasses = array(
 	'UploadSourceField' => 'includes/specials/SpecialUpload.php',
 	'UserrightsPage' => 'includes/specials/SpecialUserrights.php',
 	'UsersPager' => 'includes/specials/SpecialListusers.php',
+	'WantedcategoriesPage' => 'includes/specials/SpecialWantedcategories.php',
 	'WantedCategoriesPage' => 'includes/specials/SpecialWantedcategories.php',
 	'WantedFilesPage' => 'includes/specials/SpecialWantedfiles.php',
 	'WantedPagesPage' => 'includes/specials/SpecialWantedpages.php',
+	'WantedtemplatesPage' => 'includes/specials/SpecialWantedtemplates.php',
 	'WantedTemplatesPage' => 'includes/specials/SpecialWantedtemplates.php',
 	'WatchlistEditor' => 'includes/specials/SpecialEditWatchlist.php',
+	'WithoutinterwikiPage' => 'includes/specials/SpecialWithoutinterwiki.php',
 	'WithoutInterwikiPage' => 'includes/specials/SpecialWithoutinterwiki.php',
 
 	# includes/templates
@@ -889,6 +901,7 @@ $wgAutoloadLocalClasses = array(
 
 	# includes/upload
 	'UploadBase' => 'includes/upload/UploadBase.php',
+	'UploadChunkVerificationException' => 'includes/upload/UploadFromChunks.php',
 	'UploadFromFile' => 'includes/upload/UploadFromFile.php',
 	'UploadFromChunks' => 'includes/upload/UploadFromChunks.php',
 	'UploadFromStash' => 'includes/upload/UploadFromStash.php',
@@ -985,6 +998,10 @@ class AutoLoader {
 		} elseif ( isset( $wgAutoloadClasses[$className] ) ) {
 			$filename = $wgAutoloadClasses[$className];
 		} else {
+			// can't do lookup on whole array!
+			// better to fail and find cases which don't have
+			// correct case then pay performance penalty
+			return false;
 			# Try a different capitalisation
 			# The case can sometimes be wrong when unserializing PHP 4 objects
 			$filename = false;

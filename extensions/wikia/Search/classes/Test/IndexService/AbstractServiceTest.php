@@ -12,6 +12,7 @@ use Wikia\Search\IndexService\AbstractService, Wikia\Search\MediaWikiService, \R
 class AbstractServiceTest extends BaseTest
 {
 	public function setUp() {
+		parent::setUp();
 		$this->service = $this->getMockBuilder( '\Wikia\Search\IndexService\AbstractService' );
 	}
 	
@@ -98,8 +99,8 @@ class AbstractServiceTest extends BaseTest
 	public function testGetResponseForPageIdsSuccess() {
 		$service = $this->service
 		                ->disableOriginalConstructor()
-		                ->setMethods( array( 'getJsonDocumentFromResponse', 'execute', 'getCurrentDocumentId' ) )
-		                ->getMock();
+		                ->setMethods( array( 'getJsonDocumentFromResponse', 'getResponse', 'getCurrentDocumentId' ) )
+		                ->getMockForAbstractClass();
 		
 		$mwservice = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                  ->disableOriginalConstructor()
@@ -122,7 +123,7 @@ class AbstractServiceTest extends BaseTest
 		;
 		$service
 		    ->expects( $this->any() )
-		    ->method ( 'execute' )
+		    ->method ( 'getResponse' )
 		    ->will   ( $this->returnValue( $executeResponse ) )
 		;
 		$service
@@ -149,8 +150,8 @@ class AbstractServiceTest extends BaseTest
 	public function testGetResponseForPageIdsSkipRepeats() {
 		$service = $this->service
 		                ->disableOriginalConstructor()
-		                ->setMethods( array( 'getJsonDocumentFromResponse', 'execute', 'getCurrentDocumentId' ) )
-		                ->getMock();
+		                ->setMethods( array( 'getJsonDocumentFromResponse', 'getResponse', 'getCurrentDocumentId' ) )
+		                ->getMockForAbstractClass();
 		
 		$mwservice = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                  ->disableOriginalConstructor()
@@ -176,7 +177,7 @@ class AbstractServiceTest extends BaseTest
 		;
 		$service
 		    ->expects( $this->never() )
-		    ->method ( 'execute' )
+		    ->method ( 'getResponse' )
 		;
 
 		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'service' );
@@ -197,8 +198,8 @@ class AbstractServiceTest extends BaseTest
 	public function testGetResponseForPageIdsError() {
 		$service = $this->service
 		                ->disableOriginalConstructor()
-		                ->setMethods( array( 'getJsonDocumentFromResponse', 'execute', 'getCurrentDocumentId' ) )
-		                ->getMock();
+		                ->setMethods( array( 'getJsonDocumentFromResponse', 'getResponse', 'getCurrentDocumentId' ) )
+		                ->getMockForAbstractClass();
 		
 		$mwservice = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                  ->disableOriginalConstructor()
@@ -219,7 +220,7 @@ class AbstractServiceTest extends BaseTest
 		;
 		$service
 		    ->expects( $this->any() )
-		    ->method ( 'execute' )
+		    ->method ( 'getResponse' )
 		    ->will   ( $this->throwException( $exception ) )
 		;
 		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'service' );
@@ -239,8 +240,8 @@ class AbstractServiceTest extends BaseTest
 	public function testGetResponseForPageIdsNotExists() {
 		$service = $this->service
 		                ->disableOriginalConstructor()
-		                ->setMethods( array( 'getJsonDocumentFromResponse', 'execute', 'getCurrentDocumentId' ) )
-		                ->getMock();
+		                ->setMethods( array( 'getJsonDocumentFromResponse', 'getResponse', 'getCurrentDocumentId' ) )
+		                ->getMockForAbstractClass();
 		
 		$mwservice = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                  ->disableOriginalConstructor()
@@ -296,5 +297,64 @@ class AbstractServiceTest extends BaseTest
 				$service
 		);
 		
+	}
+	
+	/**
+	 * @covers Wikia\Search\IndexService\AbstractService::getResponse
+	 */
+	public function testGetResponseWorks() {
+		$service = $this->service
+		                ->disableOriginalConstructor()
+		                ->setMethods( array( 'execute', 'reinitialize' ) )
+		                ->getMockForAbstractClass();
+		$get = new \ReflectionMethod( $service, 'getResponse' );
+		$get->setAccessible( true );
+		$response = [ 1, 2, 3, 4, 5 ];
+		$service
+		    ->expects( $this->once() )
+		    ->method ( "execute" )
+		    ->will   ( $this->returnValue( $response ) )
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'reinitialize' )
+		;
+		$this->assertEquals(
+				$response,
+				$get->invoke( $service )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\IndexService\AbstractService::getResponse
+	 */
+	public function testGetResponseBreaks() {
+		$service = $this->service
+		                ->disableOriginalConstructor()
+		                ->setMethods( array( 'execute', 'reinitialize' ) )
+		                ->getMockForAbstractClass();
+		$exception = $this->getMockBuilder( 'Exception' )
+		                  ->disableOriginalConstructor()
+		                  ->getMock();
+		$get = new \ReflectionMethod( $service, 'getResponse' );
+		$get->setAccessible( true );
+		$response = [ 1, 2, 3, 4, 5 ];
+		$service
+		    ->expects( $this->once() )
+		    ->method ( "execute" )
+		    ->will   ( $this->throwException( $exception ) )
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'reinitialize' )
+		;
+		try {
+			$get->invoke( $service );
+		} catch ( \Exception $e ) { }
+		$this->assertInstanceOf(
+				'Exception',
+				$e,
+				'A failed call to execute should re-throw the exception after reinitializing'
+		);
 	}
 }

@@ -125,7 +125,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 		}
 
 		// use video id for memcache key
-		$memcKey = F::app()->wf->memcKey( static::$CACHE_KEY, $this->videoId, static::$CACHE_KEY_VERSION );
+		$memcKey = wfMemcKey( static::$CACHE_KEY, $this->videoId, static::$CACHE_KEY_VERSION );
 		$processedResponse = F::app()->wg->memc->get( $memcKey );
 		if ( empty( $processedResponse ) ) {
 			$req = MWHttpRequest::factory( $apiUrl );
@@ -187,7 +187,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 		wfProfileIn( __METHOD__ );
 
 		$app = F::app();
-		$memcKey = $app->wf->memcKey( static::$CACHE_KEY, md5($url), static::$CACHE_KEY_VERSION );
+		$memcKey = wfmemcKey( static::$CACHE_KEY, md5($url), static::$CACHE_KEY_VERSION );
 		$redirectUrl = $app->wg->memc->get( $memcKey );
 		if ( empty($redirectUrl) ) {
 			$req = MWHttpRequest::factory( $url );

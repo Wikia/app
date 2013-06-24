@@ -19,12 +19,13 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 		i,
 		dotsPerWidth,
 		modalWrapper = mod.getWrapper(),
-		images = med.getImages(),
+		images = med.getMedia(['image', 'video']),
 		pagination,
 		paginationStyle,
 		paginationWidth,
 		current,
-		imgsPerPage = 9;
+		imgsPerPage = 9,
+		thisImg;
 
 	function init(){
 		modalWrapper.addEventListener('click', function (ev) {
@@ -40,14 +41,14 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 				updateDots();
 
 				//open specific image chosen from gallery
-			} else if (target.className.indexOf('galPlc img') > -1) {
+			} else if (target.className.indexOf('galPlc galMedia') > -1) {
 				goBackToImgModal(~~target.id.slice(3));
 				if(target.className.indexOf('video')) {track.event('video', track.CLICK, {label: 'gallery'});}
 				//open/close gallery
 			} else if (target.id === 'wkGalTgl') {
 				if(modalWrapper.className.indexOf('wkMedGal') > -1) {
 					track.event('gallery', track.CLICK, {label: 'close'});
-					goBackToImgModal(goToImg);
+					goBackToImgModal(thisImg);
 				} else {
 					open();
 				}
@@ -58,15 +59,15 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 	function loadImages(){
 		//this gives me a chance to first load current page then next and at the end prev
 
-		lazyload(modalWrapper.querySelectorAll('.current .img'), true);
+		lazyload(modalWrapper.querySelectorAll('.current .galMedia'), true);
 
 		setTimeout(function(){
-			lazyload(modalWrapper.querySelectorAll('.next .img'), true);
+			lazyload(modalWrapper.querySelectorAll('.next .galMedia'), true);
 
 			setTimeout(function(){
-				lazyload(modalWrapper.querySelectorAll('.prev .img'), true);
+				lazyload(modalWrapper.querySelectorAll('.prev .galMedia'), true);
 			}, 200);
-		}, 200);
+		}, 400);
 	}
 
 	function goBackToImgModal(img){
@@ -93,7 +94,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 			x = (Math.ceil(imgL / cols) * cols) - imgL,
 			img,
 			thumb,
-			isVideo;
+			type;
 
 		current *= imgsPerPage;
 		imgsPerPage = cols * ~~((gal.offsetHeight - 50) / imagesize);
@@ -104,26 +105,25 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 		pages.length = 0;
 		pages[pagesNum] = '<div class=gallery>';
 
-		for (i = 0;i < imgL; i++) {
-			if(i > 0 && (i%imgsPerPage) === 0){
+		for (i = 0; i < imgL; i++) {
+			if(i > 0 && i % imgsPerPage === 0){
 				pages[pagesNum++] += '</div>';
 				pages[pagesNum] = '<div class=gallery>';
 				dots += '<div class="dot'+ ((current === pagesNum) ? ' curr':'') + '" id=dot' + pagesNum + '><div></div></div>';
 			}
 
 			img = images[i];
-
-			isVideo = img.isVideo;
+			type = img.type;
 			thumb = img.thumb;
 
 			//no thumb available, generate one
 			if (!thumb) {
-				thumb = thumbnailer.getThumbURL(img.url, (isVideo ? 'video' : 'image'), MAX_THUMB_SIZE, MAX_THUMB_SIZE);
+				thumb = thumbnailer.getThumbURL(img.url, type, MAX_THUMB_SIZE, MAX_THUMB_SIZE);
 			}
 
-			pages[pagesNum] += '<div class="galPlc img' +
-				(isVideo ? ' video' : '') +
-				((goToImg === i) ? ' this' : '') + '" data-src="' + thumb + '" id=img' + i + '></div>';
+			pages[pagesNum] += '<div class="galPlc galMedia ' +
+				type +
+				((thisImg === i) ? ' this' : '') + '" data-src="' + thumb + '" id=img' + i + '></div>';
 		}
 
 		//add placeholders
@@ -156,11 +156,11 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 			curr.className += ' curr';
 			paginationStyle.webkitTransform = 'translate3d(' + Math.min(Math.max((~~(dotsPerWidth/2) - current) * 18, (-paginationWidth+width)), 0) + 'px,0,0)';
 		}
-
 	}
 
 	function open(){
 		goToImg = med.getCurrent();
+		thisImg = med.getCurrentDisplayable();
 
 		med.cleanup();
 		mod.open({
@@ -176,7 +176,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 		gal = d.getElementById('wkGal');
 		pagination = d.getElementById('wkGalPag');
 		paginationStyle = pagination.style;
-		current = ~~(goToImg/imgsPerPage);
+		current = ~~((goToImg - (goToImg - thisImg))/imgsPerPage);
 		prepareGallery();
 
 		pager = pag({
@@ -184,7 +184,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 			pages: pages,
 			pageNumber: current,
 			center: true,
-			onEnd: function(currPageNum){
+			onEnd: function(page, wrapper, currPageNum){
 				if(current !== currPageNum){
 					track.event('gallery', track.PAGINATE, {
 						label: (current < currPageNum ? 'next' : 'previous')

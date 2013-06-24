@@ -21,15 +21,13 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = dirname(__FILE__);
 
-$app = F::app();
+$wgAutoloadClasses['AutoLinker'] =  "$dir/AutoLinker.class.php";
+$wgAutoloadClasses['AutoLinkerController'] =  "$dir/AutoLinkerController.class.php";
 
-$app->registerClass('AutoLinker', "$dir/AutoLinker.class.php");
-$app->registerClass('AutoLinkerController', "$dir/AutoLinkerController.class.php");
-
-$app->registerHook('EditPageLayoutExecute', 'AutoLinker', 'onEditPageLayoutExecute');
+$wgHooks['EditPageLayoutExecute'][] = 'AutoLinker::onEditPageLayoutExecute';
 
 // register messages package
-$app->registerExtensionMessageFile('AutoLinker', $dir . '/AutoLinker.i18n.php');
-F::build('JSMessages')->registerPackage('AutoLinker', array(
+$wgExtensionMessagesFiles['AutoLinker'] = $dir . '/AutoLinker.i18n.php';
+JSMessages::registerPackage('AutoLinker', array(
 	'wikia-editor-modules-autolinker-*',
 ));

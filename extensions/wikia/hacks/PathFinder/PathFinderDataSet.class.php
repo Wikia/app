@@ -15,7 +15,7 @@ class PathFinderDataSet extends WikiaObject{
 	private $isLoaded = false;
 	
 	function __construct( $name ){
-		$this->logger = F::build( 'PathFinderLogger' );
+		$this->logger = (new PathFinderLogger);
 		$this->name = $name;
 	}
 	

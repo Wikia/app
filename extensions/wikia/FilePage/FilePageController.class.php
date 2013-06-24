@@ -198,7 +198,7 @@ class FilePageController extends WikiaController {
 		$expireDate = $this->getVal( 'expireDate', '' );
 		if ( !empty($expireDate) ) {
 			$date = $this->wg->Lang->date( $expireDate );
-			$expireDate = $this->wf->Message( 'video-page-expires', $date )->text();
+			$expireDate = wfMessage( 'video-page-expires', $date )->text();
 		}
 
 		$this->provider = ucwords($provider);
@@ -436,31 +436,18 @@ class FilePageController extends WikiaController {
 				// Eliminate the superfluous 'summary' key
 				$extraData = $extraData['summary'];
 
-				$whHelper = new WallHooksHelper;
-
 				// Loop with indexes so we can change $data in place
 				for ($i = 0; $i < count($articles); $i++) {
 					$info = $articles[$i];
 					$extraInfo = $extraData[$info['id']];
 
-					$ns = $info['namespace_id'];
+					// Let the wall code clean up any links to the user wall or forums
+					wfRunHooks( 'FormatForumLinks', array( &$extraInfo, $info['title'], $info['namespace_id']) );
 
-					// Handle message wall and forum board links
-					if ( isset($ns) && in_array($ns, array(NS_USER_WALL_MESSAGE, NS_WIKIA_FORUM_BOARD_THREAD)) ) {
-						$row['page_namespace'] = $info['namespace_id'];
-						$row['page_title'] = $info['title'];
-						$opts = $whHelper->getMessageOptions( null, (object)$row );
-
-						// Beautify the title
-						$extraInfo['titleText'] = $opts['articleTitleTxt'];
-						$extraInfo['url'] = $opts['articleFullUrl'];
-					}
 					// Clean up any type of comment on any article page
-					else {
-						$cleanedText = preg_replace('/\/@comment-.+-[0-9]+$/', '', $extraInfo['titleText']);
-						if ( !empty($cleanedText) ) {
-							$extraInfo['titleText'] = $cleanedText;
-						}
+					$cleanedText = preg_replace('/\/@comment-.+-[0-9]+$/', '', $extraInfo['titleText']);
+					if ( !empty($cleanedText) ) {
+						$extraInfo['titleText'] = $cleanedText;
 					}
 
 					$articles[$i] = array_merge($info, $extraInfo);

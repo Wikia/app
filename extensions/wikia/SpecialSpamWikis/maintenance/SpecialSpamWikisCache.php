@@ -133,7 +133,7 @@ class SpecialSpamWikiCache {
          * AND city_founding_user IN (SELECT user_id FROM wikicities.user
          * WHERE user_email_authenticated IS NULL);
          */
-        $tmpDbObj = F::app()->wf->getDb( DB_SLAVE, array(), 'wikicities' );
+        $tmpDbObj = wfGetDB( DB_SLAVE, array(), 'wikicities' );
         
         $res = $tmpDbObj->select(
                 'wikicities.user',
@@ -169,7 +169,7 @@ class SpecialSpamWikiCache {
 	    if ( in_array( $oRow->city_dbname, $exceptions ) ) {
 		continue;
 	    }
-            $tmpDbObj = F::app()->wf->getDb( DB_SLAVE, array(), $oRow->city_dbname );
+            $tmpDbObj = wfGetDB( DB_SLAVE, array(), $oRow->city_dbname );
 	
             $pages = $tmpDbObj->selectRow(
                 'page',
@@ -197,7 +197,7 @@ class SpecialSpamWikiCache {
 
 // the work...
 $d = new SpecialSpamWikiCache(
-        F::app()->wf->getDb( DB_MASTER, array(), 'stats' )
+        wfGetDB( DB_MASTER, array(), 'stats' )
 );
 $d->updateCache();
 exit( 0 );

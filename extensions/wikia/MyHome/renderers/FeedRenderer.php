@@ -561,7 +561,7 @@ class FeedRenderer {
 
 		// intro of new content
 		if (defined('NS_RELATED_VIDEOS') && isset( $row['ns'] ) && $row['ns'] == NS_RELATED_VIDEOS && isset( $row['relatedVideosDescription'] )) {
-			$RelatedVideosService = F::build('RelatedVideosService');
+			$RelatedVideosService = new RelatedVideosService();
 			$html .= $RelatedVideosService->formatRelatedVideosRow($row['relatedVideosDescription']);
 			$row['comment'] = false;
 		} else if (isset($row['intro'])) {
@@ -637,7 +637,7 @@ class FeedRenderer {
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
 	 */
 	public static function getAddedMediaRow($row, $type) {
-		global $wgLang;
+		$wg = F::app()->wg;
 
 		$key = "new_{$type}";
 
@@ -659,9 +659,9 @@ class FeedRenderer {
 			$thumb .= $item['html'];
 
 			// localised title for popup
-			$popupTitle = $wgLang->getNsText($namespace) . ':' . $item['name'];
+			$popupTitle = $wg->Lang->getNsText($namespace) . ':' . $item['name'];
 
-			$titleObj = F::build('Title', array($item['name'], NS_FILE), 'newFromText');
+			$titleObj = Title::newFromText($item['name'], NS_FILE);
 			$fileName = $titleObj->getText(); // Pass display version of title to Lightbox
 
 			// wrapper for thumbnail

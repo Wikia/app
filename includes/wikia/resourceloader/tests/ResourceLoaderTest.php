@@ -77,7 +77,7 @@ class ResourceLoaderTest extends WikiaBaseTest {
 		);
 	}
 
-	public function onResourceLoaderCacheControlHeaders($context, $maxage, $smaxage, $exp) {
+	public static function onResourceLoaderCacheControlHeaders($context, $maxage, $smaxage, $exp) {
 		self::$ttl = $maxage;
 		return true;
 	}

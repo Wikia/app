@@ -14,7 +14,7 @@
 
 		protected function setUpMock($cache_value=null) {
 			if(is_null($cache_value)) {
-				$mock_cache = $this->getMock('stdClass', array('delete'));
+				$mock_cache = $this->getMock('stdClass', array('get', 'set', 'delete'));
 			} else {
 				$mock_cache = $this->getMock('stdClass', array('get', 'set', 'delete'));
 				$mock_cache->expects($this->any())
@@ -28,8 +28,6 @@
 
 			$this->mockGlobalVariable('wgMemc', $mock_cache);
 			$this->mockGlobalVariable('wgCityId', self::TEST_CITY_ID);
-
-			$this->mockApp();
 		}
 
 		protected function setUpToggleFeature($is_allow) {
