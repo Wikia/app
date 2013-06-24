@@ -7,6 +7,8 @@
 	{{/ componentsList}}
 	</ul>
 	<ul class="components">
-		{{{components}}}
+		{{#componentsList}}
+			{{>SpecialStyleguide_componentItem}}
+		{{/ componentsList}}
 	</ul>
 </section>
