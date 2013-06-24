@@ -5,7 +5,7 @@
 	</div>
 	<aside class="css-side-bar">
 		<div class="css-edit-box">
-            <label for="minorEdit"><input id="minorEdit" type="checkbox" name="minorEdit"/><?= wfMessage('special-css-minor-edit-label')->plain(); ?></label>
+            <label for="minorEdit" class="css-minor-label"><input id="minorEdit" type="checkbox" name="minorEdit"/><?= wfMessage('special-css-minor-edit-label')->plain(); ?></label>
             <label for="editSummary"><?= wfMessage('special-css-edit-summary')->plain() ?></label>
             <textarea id="editSummary" class="edit-summary" name="editSummary" placeholder="<?= wfMessage
 			('special-css-summary-placeholder')->plain(); ?>"></textarea>
