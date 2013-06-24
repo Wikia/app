@@ -58,7 +58,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		}
 
 		// Do the outer join on the video_swap table
-		$joinCond['page_wikia_props'] = array( 'LEFT JOIN', array( 'page.page_id' => 'page_wikia_props.page_id', 'propname' => WPP_LVS_STATUS ) );
+		$joinCond['page_wikia_props'] = array( 'LEFT JOIN', array( 'page.page_id = page_wikia_props.page_id', 'propname' => WPP_LVS_STATUS ) );
 
 		// Select video info making sure to skip videos that have entries in the video_swap table
 		$result = $db->select(
@@ -108,7 +108,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		$sqlOptions = array( );
 
 		// Do the outer join on the video_swap table
-		$joinCond['page_wikia_props'] = array( 'LEFT JOIN', array( 'page.page_id' => 'page_wikia_props.page_id', 'propname' => WPP_LVS_STATUS ) );
+		$joinCond['page_wikia_props'] = array( 'LEFT JOIN', array( 'page.page_id = page_wikia_props.page_id', 'propname' => WPP_LVS_STATUS ) );
 
 		// Select video info making sure to skip videos that have entries in the video_swap table
 		$result = $db->select(
