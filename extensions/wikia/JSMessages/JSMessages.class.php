@@ -104,15 +104,15 @@ class JSMessages {
 		if($lang instanceof StubUserLang) {
 			$lang = $lang->_newObject();
 		}
-		$messageKeys = self::getAllMessageKeys($lang);
+		$messageKeys = self::getAllMessageKeys( $lang );
 
 		$ret = array();
-		foreach($messageKeys as $msg) {
+		foreach( $messageKeys as $msg ) {
 			if ( is_array( $msg ) ) {
-				var_dump($msg);
+				var_dump( $msg );
 			}
-			if (substr($msg, 0, $patternLen) === $pattern) {
-				$ret[$msg] = wfMessage($msg)->inLanguage($langCode)->parse();
+			if ( substr( $msg, 0, $patternLen ) === $pattern ) {
+				$ret[$msg] = wfMessage( $msg )->inLanguage( $langCode )->parse();
 			}
 		}
 
@@ -191,13 +191,13 @@ class JSMessages {
 				}
 				// single message
 				else {
-					$msg = wfMessage($message)->exists();
+					$msg = wfMessage( $message )->exists();
 
 					if ( $msg ) {
-						$msg = wfMessage($message)->parse();
+						$msg = wfMessage( $message )->parse();
 					}
 
-					$ret[$message] = $msg;
+					$ret[ $message ] = $msg;
 				}
 			}
 		}
