@@ -34,7 +34,7 @@ $(function() {
 
 		$('#showChanges').click(function() {
 			// use loading indicator before real content will be fetched
-			var content = '<div class="diffContent"><img src="' + stylepath + '/common/images/ajax.gif" class="loading"></div>';
+			var content = $('#SpecialCssLoading').mustache({stylepath: stylepath});
 			var options = {
 				callback: function(modal) {
 					$.when(

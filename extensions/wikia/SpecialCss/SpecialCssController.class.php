@@ -80,7 +80,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 
 	protected function handleAssets() {
 		$this->response->addAsset('/extensions/wikia/SpecialCss/css/SpecialCss.scss');
-		$this->response->addAsset('/extensions/wikia/SpecialCss/js/SpecialCss.js');
+		$this->response->addAsset('special_css_js');
 		// This shouldn't be moved to asset manager package because of Ace internal autoloader
 		$this->response->addAsset('/resources/Ace/ace.js');
 
