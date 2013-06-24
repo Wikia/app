@@ -123,7 +123,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		}
 
 		// set swap status
-		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, LicensedVideoSwapHelper::STATUS_SWAP_EXACT );
+		$helper->setPageStatusSwap( $articleId );
 
 		// check if the new file exists
 		$params = array(
@@ -134,7 +134,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		$response = ApiService::foreignCall( $this->wg->WikiaVideoRepoDBName, $params, ApiService::WIKIA );
 		if ( empty( $response['fileExists'] ) ) {
-			wfDeleteWikiaPageProp( WPP_LVS_STATUS, $articleId );
+			$helper->deletePageStatus( $articleId );
 			$this->html = '';
 			$this->result = 'error';
 			$this->msg = wfMessage( 'videohandler-error-video-no-exist' )->text();
@@ -145,27 +145,22 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$removeVideo = $this->sendRequest( 'VideoHandlerController', 'removeVideo', array( 'title' => $file->getName() ) );
 		$result = $removeVideo->getVal( 'result', '' );
 		if ( $result != 'ok' ) {
-			wfDeleteWikiaPageProp( WPP_LVS_STATUS, $articleId );
+			$helper->deletePageStatus( $articleId );
 			$this->html = '';
 			$this->result = 'error';
 			$this->msg = $removeVideo->getVal( 'msg', '' );
 			return;
 		}
 
-		if ( $videoTitle == $newTitle ) {
-			$sameTitle = true;
-			$swapStatus = LicensedVideoSwapHelper::STATUS_SWAP_EXACT;
-		} else {
-			$sameTitle = false;
-			$swapStatus = LicensedVideoSwapHelper::STATUS_SWAP_NORM;
-		}
+		$sameTitle = ( $videoTitle == $newTitle );
+		$swapValue['newTitle'] = $newTitle;
 
 		// force to get new file for same title
 		$newFile = $helper->getVideoFile( $newTitle, $sameTitle );
 
 		// check if new file exists
 		if ( empty( $newFile ) ) {
-			wfDeleteWikiaPageProp( WPP_LVS_STATUS, $articleId );
+			$helper->deletePageStatus( $articleId );
 			$this->html = '';
 			$this->result = 'error';
 			$this->msg = wfMessage( 'videohandler-error-video-no-exist' )->text();
@@ -176,23 +171,27 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		wfRunHooks( 'AddPremiumVideo', array( $newFile->getTitle() ) );
 
 		$title = Title::newFromText( $videoTitle, NS_FILE );
+		$newArticleId = $title->getArticleID();
 		if ( !$sameTitle ) {
 			// add redirect url
 			$status = $helper->addRedirectLink( $title, $newFile->getTitle() );
 			if ( !$status->isGood() ) {
-				wfDeleteWikiaPageProp( WPP_LVS_STATUS, $articleId );
+				$helper->deletePageStatus( $articleId );
 				$this->html = '';
 				$this->result = 'error';
 				$this->msg = $status->getMessage();
 				return;
 			}
+
+			// set swap status
+			$helper->setPageStatusSwap( $newArticleId, $swapValue );
+		} else {
+			// set swap status
+			$helper->setPageStatusSwapExact( $newArticleId, $swapValue );
 		}
 
-		// set swap status
-		wfSetWikiaPageProp( WPP_LVS_STATUS, $title->getArticleID(), $swapStatus );
-
 		// remove old page status
-		wfDeleteWikiaPageProp( WPP_LVS_STATUS, $articleId );
+		$helper->deletePageStatus( $articleId );
 
 		// add to log
 		$reason = wfMessage( 'lvs-log-swap', $file->getTitle()->getText(), $newFile->getTitle()->getText() )->text();
@@ -266,9 +265,13 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		// set the status of this file page
+		// set the LVS status of this file page
 		$articleId = $file->getTitle()->getArticleID();
-		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, LicensedVideoSwapHelper::STATUS_KEEP );
+		// TODO: get sugestions
+		$value = array(
+			'suggestions' => array(),
+		);
+		$helper->setPageStatusKeep( $articleId, $value );
 
 		$selectedSort = $this->getVal( 'sort', 'recent' );
 		$currentPage = $this->getVal( 'currentPage', 1 );
@@ -301,6 +304,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 */
 	public function restoreVideo() {
 		$videoTitle = $this->request->getVal( 'videoTitle', '' );
+
 		// validate action
 		$response = $this->sendRequest( 'LicensedVideoSwapSpecial', 'validateAction', array( 'videoTitle' => $videoTitle ) );
 		$msg = $response->getVal( 'msg', '' );
@@ -329,9 +333,9 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		// get the status of this file page
+		// get the LVS status of this file page
 		$articleId = $title->getArticleID();
-		$pageStatus = wfGetWikiaPageProp( WPP_LVS_STATUS, $articleId );
+		$pageStatus = $helper->getPageStatus( $articleId );
 		if ( empty( $pageStatus ) ) {
 			$this->html = '';
 			$this->result = 'error';
@@ -339,10 +343,11 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		if ( $pageStatus == LicensedVideoSwapHelper::STATUS_SWAP_EXACT ) {
+		if ( $pageStatus['status'] == LicensedVideoSwapHelper::STATUS_SWAP_EXACT ) {
 			$status = $helper->undeletePage( $title, true );
-		} else if ( $pageStatus == LicensedVideoSwapHelper::STATUS_SWAP_NORM ) {
+		} else if ( $pageStatus['status'] == LicensedVideoSwapHelper::STATUS_SWAP_NORM ) {
 			$newTitle = $this->request->getVal( 'newTitle', '' );
+
 			$article = Article::newFromID( $title->getArticleID() );
 			$redirect = $article->getRedirectTarget();
 			if ( $article->isRedirect() && !empty( $redirect ) && $redirect->getDBKey() == $newTitle ) {
@@ -364,11 +369,11 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			}
 		}
 
-		// delete the status of this file page
-		wfDeleteWikiaPageProp( WPP_LVS_STATUS, $articleId );
+		// delete the LVS status of this file page
+		$helper->deletePageStatus( $articleId );
 
 		// add log for undo swapping video only
-		if ( $pageStatus != LicensedVideoSwapHelper::STATUS_KEEP ) {
+		if ( $pageStatus['status'] != LicensedVideoSwapHelper::STATUS_KEEP ) {
 			$reason = wfMessage( 'lvs-log-restore', $file->getTitle()->getText() )->text();
 			$helper->addLog( $file->getTitle(), 'licensedvideoswap_restore', $reason );
 		}

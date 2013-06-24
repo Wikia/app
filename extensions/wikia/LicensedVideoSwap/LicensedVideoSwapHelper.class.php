@@ -108,7 +108,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		$sqlOptions = array( );
 
 		// Do the outer join on the video_swap table
-		$joinCond = array( 'page_wikia_props' => array( 'LEFT JOIN', 'page.page_id = page_wikia_props.page_id' ) );
+		$joinCond['page_wikia_props'] = array( 'LEFT JOIN', array( 'page.page_id' => 'page_wikia_props.page_id', 'propname' => WPP_LVS_STATUS ) );
 
 		// Select video info making sure to skip videos that have entries in the video_swap table
 		$result = $db->select(
@@ -255,19 +255,53 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	}
 
 	/**
-	 * Set the status of this file page to swapped
+	 * Set the LVS status of this file page to swapped
 	 * @param int|$articleId - The ID of a video's file page
+	 * @param array $value
 	 */
-	public function setSwapStatus( $articleId ) {
-		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, self::STATUS_SWAP_NORM );
+	public function setPageStatusSwap( $articleId, $value = array() ) {
+		$value['status'] =  self::STATUS_SWAP_NORM;
+		$value['created'] = time();
+		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, $value );
 	}
 
 	/**
-	 * Set the status of this file page to swapped with an exact match
+	 * Set the LVS status of this file page to swapped with an exact match
 	 * @param int|$articleId - The ID of a video's file page
+	 * @param array $value
 	 */
-	public function setSwapExactStatus( $articleId ) {
-		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, self::STATUS_SWAP_EXACT );
+	public function setPageStatusSwapExact( $articleId, $value = array() ) {
+		$value['status'] =  self::STATUS_SWAP_EXACT;
+		$value['created'] = time();
+		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, $value );
+	}
+
+	/**
+	 * Set the LVS status of this file page to kept
+	 * @param integer $articleId
+	 * @param array $value
+	 */
+	public function setPageStatusKeep( $articleId, $value = array() ) {
+		$value['status'] =  self::STATUS_KEEP;
+		$value['created'] = time();
+		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, $value );
+	}
+
+	/**
+	 * delete the LVS status of this file page
+	 * @param type $articleId
+	 */
+	public function deletePageStatus( $articleId ) {
+		wfDeleteWikiaPageProp( WPP_LVS_STATUS, $articleId );
+	}
+
+	/**
+	 * get the LVS status of this file page
+	 * @param integer $articleId
+	 * @return array|null
+	 */
+	public function getPageStatus( $articleId ) {
+		return  wfGetWikiaPageProp( WPP_LVS_STATUS, $articleId );
 	}
 
 	/**
@@ -282,8 +316,14 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	}
 
 	public function isSwapped( $articleId ) {
-		$status = wfGetWikiaPageProp( WPP_LVS_STATUS, $articleId );
-		return ( $status == self::STATUS_SWAP_EXACT || $status == self::STATUS_SWAP_NORM );
+		$status = false;
+
+		$pageStatus = $this->getPageStatus( $articleId );
+		if ( !empty( $pageStatus['status'] ) ) {
+			$status = ( $pageStatus['status'] == self::STATUS_SWAP_EXACT || $pageStatus['status'] == self::STATUS_SWAP_NORM );
+		}
+
+		return $status;
 	}
 
 	/**
