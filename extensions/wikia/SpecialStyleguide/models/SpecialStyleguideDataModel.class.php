@@ -18,6 +18,10 @@ class SpecialStyleguideDataModel {
 					'getStartedBtnLabel' => wfMessage( 'styleguide-get-started' )->plain(),
 					'version' => 'Version 1.0.0'
 				],
+				'components' => [
+					'sectionHeader' => wfMessage( 'styleguide-components-header' )->plain(),
+					'tagLine' => wfMessage( 'styleguide-components-header-tagline' )->plain(),
+				],
 				'tagLine' => wfMessage( 'styleguide-home-header-tagline' )->plain(),
 			],
 			'footer' => [
@@ -75,17 +79,41 @@ class SpecialStyleguideDataModel {
 						]
 					]
 				]
+			],
+			'components' => [
+				'componentsList' => UIFactory::getInstance()->getAllComponents()
 			]
 		];
 	}
 
 	/**
 	 * Returns data for section given as param
-	 * @param $sectionName string
+	 * 
+	 * @param array $sectionNames
+	 * 
 	 * @return array
 	 */
-	public function getSectionData($sectionName) {
-		return !empty($this->sectionData[$sectionName])?$this->sectionData[$sectionName]:[];
+	public function getSectionData( $sectionNames ) {
+		$results = [];
+		$data = $this->sectionData;
+		$itterations = count( $sectionNames );
+		
+		foreach( $sectionNames as $subSection ) {
+			if( $itterations === 1 ) {
+				$results = $data[$subSection];
+			} else {
+				$data = $data[$subSection];
+				$itterations--;
+			}
+		}
+		
+		return !empty( $results ) ? $results : [];
 	}
 
+	public function getStyleguidePageUrl( $subpage = false ) {
+		$title = SpecialPage::getTitleFor( 'Styleguide', $subpage );
+		
+		return ( $title instanceof Title ) ? $title->getFullUrl() : '#';
+	}
+	
 }
