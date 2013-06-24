@@ -47,17 +47,22 @@ class LicensedVideoSwapHelper extends WikiaModel {
 			default:        $order = 'added_at DESC';
 		}
 
-		$sql = "SELECT video_title, added_at, added_by
-				  FROM  `video_info`,
-	   					`page` LEFT JOIN
-						(select page_id from page_wikia_props where propname = $propName) props
-						ON (page.page_id = 'props.page_id')
-				 WHERE removed = '0'
-				   AND premium = '0'
-				   AND (video_title = page_title)
+		$sql = "SELECT video_title,
+					   added_at,
+					   added_by
+				  FROM video_info
+				  JOIN page
+				    ON video_title = page_title
 				   AND page_namespace = $pageNS
-				   AND (props.page_id IS NULL)
-				ORDER BY $order LIMIT $limit OFFSET $offset";
+				   AND NOT EXISTS (SELECT 1
+				   					 FROM page_wikia_props
+				   					WHERE page.page_id = page_wikia_props.page_id
+				   					  AND propname = $propName)
+				 WHERE removed = 0
+				   AND premium = 0
+			  ORDER BY $order
+				 LIMIT $limit
+				OFFSET $offset";
 
 		// Select video info making sure to skip videos that have entries in the video_swap table
 		$result = $db->query($sql);
@@ -88,32 +93,25 @@ class LicensedVideoSwapHelper extends WikiaModel {
 
 		// We want to make sure the video hasn't been removed, is not premium and does not exist
 		// in the video_swap table
-		$sqlWhere = array(
-			'removed' => 0,
-			'premium' => 0,
-			'video_title = page_title',
-			'page_namespace' => NS_FILE,
-			'page_wikia_props.page_id IS NULL'
-		);
+		$propName = WPP_LVS_STATUS;
+		$pageNS = NS_FILE;
 
-		// Give a name for clarity, but no options for this statement
-		$sqlOptions = array( );
-
-		// Do the outer join on the video_swap table
-		$joinCond = array( 'page_wikia_props' => array( 'LEFT JOIN', 'page.page_id = page_wikia_props.page_id' ) );
+		$sql = "SELECT count(*) as total
+				  FROM video_info
+				  JOIN page
+				    ON video_title = page_title
+				   AND page_namespace = $pageNS
+				   AND NOT EXISTS (SELECT 1
+				   					 FROM page_wikia_props
+				   					WHERE page.page_id = page_wikia_props.page_id
+				   					  AND propname = $propName)
+				 WHERE removed = 0
+				   AND premium = 0";
 
 		// Select video info making sure to skip videos that have entries in the video_swap table
-		$result = $db->select(
-			array( 'video_info', 'page', 'page_wikia_props' ),
-			array( 'count(*) as total' ),
-			$sqlWhere,
-			__METHOD__,
-			$sqlOptions,
-			$joinCond
-		);
+		$result = $db->query($sql);
 
-		// Get the result
-		$total = 0;
+		// Get the total count of relavent videos
 		while( $row = $db->fetchObject($result) ) {
 			$total = $row->total;
 
