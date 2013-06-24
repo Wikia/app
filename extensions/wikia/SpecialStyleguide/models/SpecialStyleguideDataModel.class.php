@@ -81,7 +81,7 @@ class SpecialStyleguideDataModel {
 				]
 			],
 			'components' => [
-				'componentsList' => UIFactory::getInstance()->getAllComponents()
+				'componentsList' => $this->sortComponents( UIFactory::getInstance()->getAllComponents() )
 			]
 		];
 	}
@@ -118,6 +118,27 @@ class SpecialStyleguideDataModel {
 		$title = SpecialPage::getTitleFor( 'Styleguide', $subpage );
 		
 		return ( $title instanceof Title ) ? $title->getFullUrl() : '#';
+	}
+
+	/**
+	 * @desc Sorts a given components array by the parameter passed in 2nd argument
+	 * 
+	 * @param array $components array of components
+	 * @param string $sortByParam by which component parameter should it be sorted; default = 'name'
+	 * 
+	 * @see UIFactory::getAllComponents()
+	 * 
+	 * @return array
+	 */
+	private function sortComponents( $components, $sortByParam = 'name' ) {
+		$sortedArr = [];
+		foreach( $components as $key => $component ) {
+			$sortedArr[$key] = $component[ $sortByParam ];
+		}
+		
+		array_multisort( $sortedArr, SORT_ASC, $components );
+		
+		return $components;
 	}
 	
 }

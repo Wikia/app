@@ -91,7 +91,7 @@ class UIFactory {
 		
 		if( !is_null( $configPath ) ) {
 			$configContent = file_get_contents($configPath);
-			$config = json_decode( $configContent );
+			$config = json_decode( $configContent, true );
 		}
 		
 		return $config;
