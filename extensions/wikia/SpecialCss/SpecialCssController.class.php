@@ -32,8 +32,9 @@ class SpecialCssController extends WikiaSpecialPageController {
 			);
 			
 			if ($status->isOk()) {
-				NotificationsController::addConfirmation( wfMessage('special-css-save-message')->text() );
+				NotificationsController::addConfirmation( wfMessage('special-css-save-message')->plain() );
 				$this->wg->out->redirect($this->specialPage->getTitle()->getLocalURL());
+				return;
 			} else {
 				NotificationsController::addConfirmation(
 					$status->getMessage(),
@@ -43,9 +44,16 @@ class SpecialCssController extends WikiaSpecialPageController {
 			}
 		}
 
+		if ($this->request->getVal('oldid', null) !== null) {
+			NotificationsController::addConfirmation(
+				wfMessage('special-css-oldid-message')->plain(),
+				NotificationsController::CONFIRMATION_WARN
+			);
+		}
+
 		$this->createDeleteLinks();
 		$this->handleAssets();
-		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->text() );
+		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->plain() );
 		
 		wfProfileOut(__METHOD__);
 	}
