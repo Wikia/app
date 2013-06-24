@@ -94,7 +94,12 @@ class UIFactory {
 			$config = json_decode( $configContent, true );
 		}
 		
-		return $config;
+		return $this->addComponentsId( $config );
+	}
+	
+	private function addComponentsId( $componentCfg ) {
+		$componentCfg['id'] = mb_strtolower( str_replace( ' ', '_', $componentCfg['name'] ) );
+		return $componentCfg;
 	}
 
 	/**
