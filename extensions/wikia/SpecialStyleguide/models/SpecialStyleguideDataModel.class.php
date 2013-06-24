@@ -85,6 +85,10 @@ class SpecialStyleguideDataModel {
 			]
 		];
 	}
+	
+	public function getSectionData() {
+		return $this->sectionData;
+	}
 
 	/**
 	 * Returns data for section given as param
@@ -93,21 +97,21 @@ class SpecialStyleguideDataModel {
 	 * 
 	 * @return array
 	 */
-	public function getSectionData( $sectionNames ) {
+	public function getPartOfSectionData( $sectionNames ) {
 		$results = [];
-		$data = $this->sectionData;
+		$data = $this->getSectionData();
 		$itterations = count( $sectionNames );
 		
 		foreach( $sectionNames as $subSection ) {
 			if( $itterations === 1 ) {
-				$results = $data[$subSection];
+				$results = isset( $data[$subSection] ) ? $data[$subSection] : [];
 			} else {
-				$data = $data[$subSection];
+				$data = isset( $data[$subSection] ) ? $data[$subSection] : [];
 				$itterations--;
 			}
 		}
 		
-		return !empty( $results ) ? $results : [];
+		return $results;
 	}
 
 	public function getStyleguidePageUrl( $subpage = false ) {

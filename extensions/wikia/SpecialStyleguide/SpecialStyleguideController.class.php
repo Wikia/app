@@ -85,7 +85,7 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 		
 		return ( new Wikia\Template\MustacheEngine )
 			->setPrefix( dirname( __FILE__ ) . '/templates' )
-			->setData( $this->model->getSectionData( $sectionArray ) )
+			->setData( $this->model->getPartOfSectionData( $sectionArray ) )
 			->render( 'SpecialStyleguide_' . $templateSectionName . '.mustache' );
 	}
 }
