@@ -73,14 +73,14 @@ class BodyController extends WikiaController {
 	}
 
 	/**
-	 * Pretty self explanitory.
+	 * Decide on which pages responsive / liquid layout should be turned on.
 	 * @return Boolean
 	 */
 	public static function isResponsiveLayoutEnabled() {
-		return !empty( F::app()->wg->OasisResponsive ) &&
-				WikiaPageType::isContentPage() &&
-				!WikiaPageType::isMainPage() &&
-				!WikiaPageType::isWikiaHub();
+		$app = F::app();
+		return !empty( $app->wg->OasisResponsive ) &&
+				// Block liquid layout for corporate pages (needed for devbox environment)
+				empty( $app->wg->EnableWikiaHomePageExt );
 	}
 
 	/**
