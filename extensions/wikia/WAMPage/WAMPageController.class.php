@@ -105,7 +105,7 @@ class WAMPageController extends WikiaController
 			'searchPhrase' => $this->searchPhrase,
 			'verticalId' => $this->selectedVerticalId,
 			'langCode' => $this->selectedLangCode,
-			'selectedDate' => $this->selectedDate,
+			'date' => $this->selectedDate,
 		);
 	}
 
