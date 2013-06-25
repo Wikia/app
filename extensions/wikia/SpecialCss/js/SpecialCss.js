@@ -6,7 +6,10 @@ $(function() {
 
 		var editor = ace.edit("cssEditorContainer");
 		editor.setTheme("ace/theme/geshi");
-		editor.getSession().setMode("ace/mode/css");
+		var editorSession = editor.getSession();
+		editorSession.setMode("ace/mode/css");
+
+		var editorInitContent = editorSession.getValue();
 
 		var heightUpdateFunction = function() {
 			var editorContainer = $('#cssEditorContainer'),
@@ -27,7 +30,7 @@ $(function() {
 			var hiddenInput = $('<input/>')
 				.attr('type', 'hidden')
 				.attr('name', 'cssContent')
-				.val(editor.getSession().getValue());
+				.val(editorSession.getValue());
 			$(this).append(hiddenInput);
 		});
 
@@ -55,6 +58,12 @@ $(function() {
 			};
 			$.showModal($.msg('special-css-diff-modal-title'), content, options);
 			return false;
+		});
+
+		$(window).bind('beforeunload', function(event) {
+			if (!$(event.target.activeElement).hasClass('css-publish-button') && editorInitContent != editorSession.getValue()) {
+				return $.msg('special-css-leaveconfirm-message');
+			}
 		});
 	});
 });

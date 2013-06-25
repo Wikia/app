@@ -36,7 +36,9 @@ $messages['en'] = [
 	'special-css-education-item-help-paragraph' => 'Guides and best practices for using custom CSS.',
 	'special-css-education-item-com-center-header' => 'Got questions?',
 	'special-css-education-item-com-center-link-title' => 'Got questions?',
-	'special-css-education-item-com-center-paragraph' => 'Get CSS help from other Wikia users.'
+	'special-css-education-item-com-center-paragraph' => 'Get CSS help from other Wikia users.',
+
+	'special-css-leaveconfirm-message' => 'You have made some unpublished edits. Are you sure you want to leave without publishing them?',
 ];
 
 $messages['pl'] = [
@@ -106,4 +108,6 @@ $messages['qqq'] = [
 	'special-css-education-item-com-center-link-title' => 'Short message apearing next to the mouse cursor after hovering header which is a link to Community Center',
 	'special-css-education-item-com-center-paragraph' => 'Short paragraph describing what is the link to Community
 	Center about',
+
+	'special-css-leaveconfirm-message' => 'Message that is displayed when you are leaving page with not saved changes. Message should ask if user is sure that he want to leave the page.',
 ];
