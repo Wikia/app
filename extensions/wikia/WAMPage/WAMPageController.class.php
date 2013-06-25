@@ -37,7 +37,7 @@ class WAMPageController extends WikiaController
 		}
 
 		$this->faqPage = !empty($faqPageName) ? $faqPageName : '#';
-		$this->tabs = $this->model->getTabs($currentTabIndex, $this->getFilterParamsAsQueryString());
+		$this->tabs = $this->model->getTabs($currentTabIndex, $this->filterParams);
 		$this->visualizationWikis = $this->model->getVisualizationWikis($currentTabIndex);
 
 		$this->indexWikis = $this->model->getIndexWikis($this->getIndexParams());
@@ -99,6 +99,14 @@ class WAMPageController extends WikiaController
 				}
 			}
 		}
+
+		// combine all filter params to array
+		$this->filterParams = array(
+			'searchPhrase' => $this->searchPhrase,
+			'verticalId' => $this->selectedVerticalId,
+			'langCode' => $this->selectedLangCode,
+			'selectedDate' => $this->selectedDate,
+		);
 	}
 
 	protected function getJsDateFormat() {
@@ -196,11 +204,10 @@ class WAMPageController extends WikiaController
 		// because this method is called after this check and isWAMPage() check
 
 		$isFirstTab = ($tabIndex === WAMPageModel::TAB_INDEX_TOP_WIKIS && !empty($subpageText));
-		$mainWAMPageUrl = $this->model->getWAMMainPageUrl();
+		$mainWAMPageUrl = $this->model->getWAMMainPageUrl($this->filterParams);
 
 		if( $isFirstTab && !empty($mainWAMPageUrl) ) {
-			$mainWAMPageUrlWithFilterParams = $mainWAMPageUrl.$this->getFilterParamsAsQueryString();
-			$this->wg->Out->redirect($mainWAMPageUrlWithFilterParams, HTTP_REDIRECT_PERM);
+			$this->wg->Out->redirect($mainWAMPageUrl, HTTP_REDIRECT_PERM);
 		}
 	}
 
@@ -221,25 +228,5 @@ class WAMPageController extends WikiaController
 	public function faq() {
 		$this->wamPageUrl = $this->model->getWAMMainPageUrl();
 	}
-	
-	/**
-	 * Return all currently available filter parameters as query string ready for concatenation.
-	 *
-	 * @return string
-	 */
-	private function getFilterParamsAsQueryString() {
-		// here is list of all params added by filter
-		$possibleParams = array( 'verticalId', 'date', 'langCode', 'searchPhrase' );
-		$filterParams = array();
-	
-		foreach ( $possibleParams as $key ) {
-			$value = $this->getVal($key, '');
-			
-			if ( mb_strlen($value) ) {
-				$filterParams[$key] = $value;
-			}
-		}
-	
-		return count($filterParams) ? '?'.http_build_query($filterParams) : '';
-	}
 }
+

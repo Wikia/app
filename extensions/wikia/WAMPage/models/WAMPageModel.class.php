@@ -137,10 +137,10 @@ class WAMPageModel extends WikiaModel {
 		return $config['pageName'];
 	}
 	
-	public function getWAMMainPageUrl() {
+	public function getWAMMainPageUrl($filterParams = array()) {
 		$title = $this->getTitleFromText($this->getWAMMainPageName());
 		
-		return ($title instanceof Title) ? $title->getFullUrl() : null;
+		return ($title instanceof Title) ? $title->getFullUrl().$this->getParamsAsQuery($filterParams) : null;
 	}
 
 	/**
@@ -194,12 +194,13 @@ class WAMPageModel extends WikiaModel {
 	 * @desc Returns array with tab names and urls by default it's in English taken from global variable $wgWAMPageConfig['tabsNames']
 	 *
 	 * @param int $selectedIdx array index of selected tab
-	 * @params string $filterParamsQueryString filter params converted to query string ready to be concatenated
+	 * @params array $filterParams filter params
 	 */
-	public function getTabs($selectedIdx = 0, $filterParamsQueryString = '') {
+	public function getTabs($selectedIdx = 0, $filterParams = array()) {
 		$tabs = [];
 		$pageName = $this->getWAMMainPageName();
 		$tabsNames = $this->getTabsNamesArray();
+		$filterParamsQueryString = $this->getParamsAsQuery($filterParams);
 		
 		foreach($tabsNames as $tabName) {
 			$tabTitle = $this->getTitleFromText($pageName . '/'. $tabName);
@@ -354,6 +355,25 @@ class WAMPageModel extends WikiaModel {
 		];
 
 		return $apiParams;
+	}
+
+	/**
+	 * Convert filter params to query params ready to be concatenated.
+	 * 
+	 * @param $filterParams - filter params passed from controller
+	 *
+	 * @return string
+	 */
+	private function getParamsAsQuery($filterParams) {
+		$queryParams = array();
+
+		foreach ( $filterParams as $key => $value ) {
+			if ( !empty($value) ) {
+				$queryParams[$key] = $value;
+			}
+		}
+
+		return count($queryParams) ? '?'.http_build_query($queryParams) : '';
 	}
 
 	public function isWAMPage($title) {
