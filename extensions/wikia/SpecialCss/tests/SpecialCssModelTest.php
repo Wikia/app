@@ -113,33 +113,68 @@ class SpecialCssModelTest extends WikiaBaseTest {
 			],
 		];
 	}
+	
+	public function testRemoveFirstH3() {
+		$removeFirstH3Method = new ReflectionMethod('SpecialCssModel', 'removeFirstH3');
+		$removeFirstH3Method->setAccessible(true);
 
-	public function testRemoveHeadline() {
-		$getRemoveHeadlineMethod = new ReflectionMethod('SpecialCssModel', 'removeHeadline');
-		$getRemoveHeadlineMethod->setAccessible(true);
-
-		$text = '===Headline===\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu 
+		$text = '= Headline 1=\nText text text\n==Headline 2==\nText text text\n==== Headline 4 ====\nText text text\n=== Headlin e   ===\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu 
 				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem. 
 				===Nam ullamcorper ===nibh at justo === lacinia mattis===. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.';
 		
-		$expected = '\nLorem ipsum dolor sit amet, consectetur adipiscing elit. , nisi eu 
+		$expected = '= Headline 1=\nText text text\n==Headline 2==\nText text text\n==== Headline 4 ====\nText text text\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu 
 				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem. 
-				nibh at justo . ==vulputate nulla at orci rhoncus, non eleifend ante porttitor.';
+				===Nam ullamcorper ===nibh at justo === lacinia mattis===. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.';
 		
-		$this->assertEquals( $expected, $getRemoveHeadlineMethod->invoke( new SpecialCssModel(), $text ) );
+		$this->assertEquals( $expected, $removeFirstH3Method->invoke( new SpecialCssModel(), $text ) );
+	}
+
+	/**
+	 * @dataProvider testAddAnchorToPostUrlDataProvider
+	 */
+	public function testAddAnchorToPostUrl( $wikitext, $expected ) {
+		$addAnchorToPostUrlMethod = new ReflectionMethod('SpecialCssModel', 'getAnchorFromWikitext');
+		$addAnchorToPostUrlMethod->setAccessible(true);
+		
+		$this->assertEquals( $expected, $addAnchorToPostUrlMethod->invoke( new SpecialCssModel(), $wikitext ) );
 	}
 	
-	public function testAddAnchorToPostUrl() {
-		$addAnchorToPostUrlMethod = new ReflectionMethod('SpecialCssModel', 'addAnchorToPostUrl');
-		$addAnchorToPostUrlMethod->setAccessible(true);
-
-		$text = '===Headline with more text===\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu 
+	public function testAddAnchorToPostUrlDataProvider() {
+		return [
+			// short headline
+			[
+				'wikitext' => '= Headline 1=\nText text text\n==Headline 2==\nText text text\n==== Headline 4 ====\nText text text\n=== Headlin e   ===\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu 
 				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem. 
-				===Nam ullamcorper ===nibh at justo === lacinia mattis===. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.';
-
-		$expected = '#Headline_with_more_text';
-		
-		$this->assertEquals( $expected, $addAnchorToPostUrlMethod->invoke( new SpecialCssModel(), $text ) );
+				===Nam ullamcorper ===nibh at justo === lacinia mattis===. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.',
+				'exptected' => '#_Headlin_e___'
+			],
+			// headline with spaces
+			[
+				'wikitext' => 'Consectetur adipiscing elit\n\n===Headline with more text===\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu 
+				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem. 
+				===Nam ullamcorper ===nibh at justo === lacinia mattis===. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.', 
+				'exptected' => '#Headline_with_more_text'
+			],
+			// headline at the begining of string
+			[
+				'wikitext' => '===Headline 1===\nText text text\n==Headline 2==\nText text text\n==== Headline 4 ====\nText text text\n=== Headlin e   ===\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu 
+				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem. 
+				===Nam ullamcorper ===nibh at justo === lacinia mattis===. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.',
+				'exptected' => '#Headline_1'
+			],
+			// headline at the end of string
+			[
+				'wikitext' => '= Headline 1=\nText text text\n==Headline 2==\nText text text\n==== Headline 4 ====\nText text text\n== Headlin e   ==\nLorem ipsum dolor sit amet, consectetur adipiscing elit. = Sed sodales =, nisi eu 
+				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem. 
+				==== Nam ullamcorper ====nibh at justo = lacinia mattis=. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.===Headline at the end===',
+				'exptected' => '#Headline_at_the_end'
+			],
+			// no h3 tag
+			[
+				'wikitext' => ' = Donec dapibus =\nMetus id mi sodales dictum. Donec nec condimentum ligula. Duis molestie sagittis leo, ut porttitor neque dapibus non.\n == Nulla vitae ==\nante eros. Maecenas in nisl a justo placerat dignissim. = Suspendisse ipsum =\nAnte, fermentum vel odio eget, euismod ultrices erat. == Nulla volutpat ==\nligula nec tortor aliquam, eu hendrerit mi egestas. Duis adipiscing odio sit amet enim porta sollicitudin. Nullam euismod massa vitae tellus fermentum ullamcorper. Donec at sagittis dolor. Phasellus ac malesuada tellus. Nunc at mauris et tortor suscipit aliquam. Nam eget ipsum cursus elit eleifend tempus eu iaculis leo. Nulla consectetur tellus ut imperdiet hendrerit. Nullam eu varius justo, in viverra justo. Proin pulvinar rhoncus odio ac bibendum. Curabitur pretium enim eget adipiscing malesuada. Fusce vehicula ligula libero, eget interdum massa laoreet eget. Aenean a ligula nec nunc dictum suscipit. Sed vel turpis mauris. ', 
+				'exptected' => ''
+			],
+		];
 	}
 
 	/**

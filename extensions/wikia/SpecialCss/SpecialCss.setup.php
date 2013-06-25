@@ -6,7 +6,6 @@
  * @author Łukasz Konieczny
  */
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'CSS Editor',
@@ -19,25 +18,36 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 // models
-$app->registerClass('SpecialCssModel', $dir . 'SpecialCssModel.class.php');
-$app->registerClass('SpecialCssHooks', $dir . 'SpecialCssHooks.class.php');
+$wgAutoloadClasses['SpecialCssModel'] =  $dir . 'SpecialCssModel.class.php';
+$wgAutoloadClasses['SpecialCssHooks'] =  $dir . 'SpecialCssHooks.class.php';
 
 // classes
-$app->registerController(
+F::app()->registerController(
 	'SpecialCssController', 
 	$dir . 'SpecialCssController.class.php',
 	['index' => ["notSkin" => SpecialCssModel::$supportedSkins, "method" => "unsupportedSkinIndex"]]
 );
 
-// hooks
-$app->registerHook('AlternateEdit', 'SpecialCssHooks', 'onAlternateEdit');
-$app->registerHook('ArticleSaveComplete', 'SpecialCssHooks', 'onArticleSaveComplete');
+/**
+ * @global Array The list of hooks.
+ * 
+ * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
+ * @see http://www.mediawiki.org/wiki/Manual:Hooks/AlternateEdit
+ * @see http://www.mediawiki.org/wiki/Manual:Hooks/ArticleSaveComplete
+ * @see http://www.mediawiki.org/wiki/Manual:Hooks/ArticleDelete
+ * @see http://www.mediawiki.org/wiki/Manual:Hooks/ArticleUndelete
+ */
+$wgHooks['AlternateEdit'][] = 'SpecialCssHooks::onAlternateEdit';
+$wgHooks['ArticleSaveComplete'][] = 'SpecialCssHooks::onArticleSaveComplete';
+$wgHooks['ArticleDelete'][] = 'SpecialCssHooks::onArticleDelete';
+$wgHooks['ArticleUndelete'][] = 'SpecialCssHooks::onArticleUndelete';
 
 // special page
-$app->registerSpecialPage('CSS', 'SpecialCssController', 'wikia');
+$wgSpecialPages['CSS'] = 'SpecialCssController';
+$wgSpecialPageGroups['CSS'] = 'wikia';
 
 // message files
-$app->registerExtensionMessageFile('SpecialCss', $dir . 'SpecialCss.i18n.php');
+$wgExtensionMessagesFiles['SpecialCss'] = $dir.'SpecialCss.i18n.php';
 (new JSMessages())->registerPackage('SpecialCss', array('special-css-*'));
 
 //user rights
