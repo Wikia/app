@@ -146,7 +146,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		// Go through each video and add additional detail needed to display the video
 		$videos = array();
 		foreach ( $videoList as $videoInfo ) {
-			$suggestions = $this->getVideoSuggestions( $videoInfo );
+			$suggestions = $this->getVideoSuggestions( $videoInfo['title'] );
 
 			$videoDetail = $helper->getVideoDetail( $videoInfo, self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT, self::POSTED_IN_ARTICLES );
 			if ( !empty($videoDetail) ) {
@@ -172,22 +172,22 @@ class LicensedVideoSwapHelper extends WikiaModel {
 
 	/**
 	 * get video suggestions
-	 * @param array $videoInfo
+	 * @param $title - The title of the video
 	 * @return array videos
 	 */
-	public function getVideoSuggestions( $videoInfo = array() ) {
+	public function getVideoSuggestions( $title ) {
 		wfProfileIn( __METHOD__ );
 
 		$app = F::App();
 
 		// Find the article ID for this title
-		$titleObj = Title::newFromText( $videoInfo['title'], NS_FILE );
+		$titleObj = Title::newFromText( $title, NS_FILE );
 		$articleId = $titleObj->getArticleID();
 
 		// See if we've already cached suggestions for this video
 		$videoRows = wfGetWikiaPageProp( WPP_LVS_SUGGEST, $articleId );
 		if ( empty($videoRows) ) {
-			$readableTitle = preg_replace( '/_/', ' ', $videoInfo['title'] );
+			$readableTitle = $titleObj->getFullText();
 			$videoRows = $app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', array( 'title' => $readableTitle ) )
 							 ->getData();
 			wfSetWikiaPageProp( WPP_LVS_SUGGEST, $articleId, $videoRows );
