@@ -45,7 +45,7 @@ $messages['en'] = array(
 	'lvs-log-swap' => 'Swapped video from [[{{ns:File}}:$1]] to [[{{ns:File}}:$2]]',
 	'lvs-log-restore' => 'Restored swapped video ([[{{ns:File}}:$1]])',
 	'lvs-log-removed-redirected-link' => 'Removed redirected link',
-	'lvs-zero-state' => "There are no unlicensed videos to review or we haven't found any matches for the unlicensed videos on this wiki.",
+	'lvs-zero-state' => "At this time we have no matching videos from Wikia Video for videos on your wiki. Check back again soon!",
 );
 
 $messages['qqq'] = array(
