@@ -187,7 +187,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		// See if we've already cached suggestions for this video
 		$videoRows = wfGetWikiaPageProp( WPP_LVS_SUGGEST, $articleId );
 		if ( empty($videoRows) ) {
-			$readableTitle = $titleObj->getFullText();
+			$readableTitle = $titleObj->getText();
 			$videoRows = $app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', array( 'title' => $readableTitle ) )
 							 ->getData();
 			wfSetWikiaPageProp( WPP_LVS_SUGGEST, $articleId, $videoRows );
