@@ -8,6 +8,7 @@ define( 'lvs.undo', ['wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lvs
 		msg,
 		qs,
 		sort,
+		page,
 		wasSwap;
 
 	function doRequest() {
@@ -19,7 +20,8 @@ define( 'lvs.undo', ['wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lvs
 			data: {
 				videoTitle: videoTitle,
 				newTitle: newTitle,
-				sort: sort
+				sort: sort,
+				page: page
 			},
 			callback: function( data ) {
 				commonAjax.success( $container, data);
@@ -45,6 +47,7 @@ define( 'lvs.undo', ['wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lvs
 			newTitle = $this.attr( 'data-new-title' ) || '';
 			qs = new QueryString();
 			sort = qs.getVal ( 'sort', 'recent' );
+			page = qs.getVal ( 'page', 1 );
 			wasSwap = !!newTitle;
 
 			if ( wasSwap ) {
