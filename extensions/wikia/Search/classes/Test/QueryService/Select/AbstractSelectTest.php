@@ -1087,6 +1087,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		$mockQuery
 		    ->expects( $this->once() )
 		    ->method ( 'getSolrQuery' )
+		    ->with   ( 10 )
 		    ->will   ( $this->returnValue( 'bar' ) )
 		;
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\OnWiki', 'getFormulatedQuery' );

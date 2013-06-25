@@ -31,7 +31,7 @@ class WikiaMobileAdService extends WikiaService {
 		return $this->shouldShowAds();
 	}
 
-	public function modelInterstitial() {
+	public function modalInterstitial() {
 		return $this->shouldShowAds();
 	}
 }

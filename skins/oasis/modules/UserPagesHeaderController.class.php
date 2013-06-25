@@ -14,6 +14,9 @@ class UserPagesHeaderController extends WikiaController {
 		$this->content_actions = $this->app->getSkinTemplateObj()->data['content_actions'];
 		$this->isUserProfilePageExt = false;
 		$this->actionMenu = array();
+		$this->likes = null;
+		$this->comments = null;
+		$this->editTimestamp = null;
 
 		$this->fbAccessRequestURL = '';
 	}

@@ -21,7 +21,6 @@ class WikiaMobileService extends WikiaService {
 	private $templateObject;
 
 	function init(){
-		wfLoadExtensionMessages( 'WikiaMobile' );
 		$this->skin = RequestContext::getMain()->getSkin();
 		$this->templateObject = $this->app->getSkinTemplateObj();
 	}
@@ -30,7 +29,7 @@ class WikiaMobileService extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		$jsHeadPackages = [ 'wikiamobile_js_head' ];
-		$jsBodyPackages = [];
+		$jsBodyPackages = [ 'wikiamobile_js_body_full' ];
 		$scssPackages = [];
 		$cssLinks = '';
 		$jsBodyFiles = '';
@@ -39,13 +38,13 @@ class WikiaMobileService extends WikiaService {
 		$scripts = null;
 		$assetsManager = AssetsManager::getInstance();
 		$floatingAd = '';
-		//$topLeaderBoardAd = '';
-		//$inContentAd = '';
+		$topLeaderBoardAd = '';
+		$inContentAd = '';
+		$modalInterstitial = '';
 		$globalVariables = [];
 
 		JSMessages::enqueuePackage( 'WkMbl', JSMessages::INLINE );
 
-		$jsBodyPackages[] = 'wikiamobile_js_body_full';
 		$scssPackages[] = 'wikiamobile_scss';
 		$styles = $this->skin->getStyles();
 		$scripts = $this->skin->getScripts();
@@ -56,8 +55,9 @@ class WikiaMobileService extends WikiaService {
 
 			if ($mobileAdService->shouldShowAds()) {
 				$floatingAd = $this->app->renderView( 'WikiaMobileAdService', 'floating' );
-				//$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
-				//$inContentAd = $this->app->renderView( 'WikiaMobileAdService', 'inContent' );
+				$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
+				$inContentAd = $this->app->renderView( 'WikiaMobileAdService', 'inContent' );
+				$modalInterstitial = $this->app->renderView( 'WikiaMobileAdService', 'modalInterstitial' );
 				$globalVariables['wgShowAds'] = true;
 			}
 		}
@@ -149,15 +149,15 @@ class WikiaMobileService extends WikiaService {
 		$this->response->setVal( 'pageTitle', $this->wg->Out->getHTMLTitle() );
 		$this->response->setVal( 'bodyClasses', array( 'wkMobile', $this->templateObject->get( 'pageclass' ) ) );
 		$this->response->setVal( 'jsBodyFiles', $jsBodyFiles );
-
-		$this->response->setVal( 'floatingAd', $floatingAd );
-		//$this->response->setVal( 'topLeaderBoardAd', $topLeaderBoardAd );
-		//$this->response->setVal( 'inContentAd', $inContentAd );
-
 		$this->response->setVal( 'wikiaNavigation', $nav );
 		$this->response->setVal( 'pageContent', $pageContent );
 		$this->response->setVal( 'wikiaFooter', $footer );
 		$this->response->setVal( 'globalVariablesScript', $this->skin->getTopScripts( $globalVariables ) );
+		//Ad units
+		$this->response->setVal( 'floatingAd', $floatingAd );
+		$this->response->setVal( 'topLeaderBoardAd', $topLeaderBoardAd );
+		$this->response->setVal( 'inContentAd', $inContentAd );
+		$this->response->setVal( 'modalInterstitial', $modalInterstitial );
 
 		//tracking
 		$trackingCode = '';

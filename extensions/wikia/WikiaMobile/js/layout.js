@@ -38,7 +38,7 @@ define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.l
 			}
 
 			require([require.optional('tables')], function(t){
-				t && t.process(Wikia.not('.artSec table, table table', tables));
+				t && t.process($.not('.artSec table, table table', tables));
 
 				//image Lazyloading	(load images outside any section)
 				//if there are tables to wrap this should be done after they are processed
@@ -55,7 +55,7 @@ define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.l
 		var index = ~~this.getAttribute('data-index');
 
 		if(tablesModule && !tablesProcessedSections[index]){
-			tablesModule.process(Wikia.not('table table', this.querySelectorAll(selector)));
+			tablesModule.process($.not('table table', this.querySelectorAll(selector)));
 
 			tablesProcessedSections[index] = true;
 		}
