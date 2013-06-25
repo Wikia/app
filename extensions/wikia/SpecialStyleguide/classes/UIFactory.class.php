@@ -114,6 +114,7 @@ class UIFactory {
 	 * @param $componentName
 	 */
 	public function init( $componentName ) {
+		// We're going to implement it (maybe slightly change) in DAR-809
 		// $componentConfig = $this->loadComponentConfig( $componentName );
 		// $this->addAssets( $componentConfig['dependencies'] );
 		// $component = new UIComponent();
