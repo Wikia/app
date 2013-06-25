@@ -17,6 +17,11 @@ $messages['en'] = array(
 
 	'manage-wikia-home-wikis-in-slots-success' => 'Numbers slots has been changed.',
 	'manage-wikia-home-collections-success' => 'Collections have been saved.',
+	'manage-wikia-home-collections-add-success' => 'Wiki added successfully to the collection.',
+	'manage-wikia-home-collections-add-failure-already-exists' => 'Wiki already exists in this collection',
+	'manage-wikia-home-collections-add-failure-image' => '$1 can\'t be added to this collection because its main image has been rejected.',
+	'manage-wikia-home-collections-remove-success' => 'Wiki removed successfully from the collection.',
+	'manage-wikia-home-collections-invalid-action' => 'That action does not exist.',
 
 	'manage-wikia-home-verticals-proportions' => 'Number of wikis per vertical',
 
@@ -94,6 +99,11 @@ $messages['qqq'] = array(
 
 	'manage-wikia-home-wikis-in-slots-success' => 'Success information after successful change in slots configuration',
 	'manage-wikia-home-collections-success' => 'Success information after successful change in collections configuration',
+	'manage-wikia-home-collections-add-success' => 'Message informing about wiki successfully being added to a collection (themed group of 17 wikis displayed on Home Page like www.wikia.com).',
+	'manage-wikia-home-collections-add-failure-already-exists' => 'Error message informing, that the given Wiki already exists in collection (themed group of 17 wikis displayed on Home Page like www.wikia.com) to which it is being added',
+	'manage-wikia-home-collections-add-failure-image' => 'Parametrized message informing, that the wiki cannot be added to collection (themed group of 17 wikis displayed on Home Page like www.wikia.com) because it has a rejected main image. Parameter $1 is the wiki name',
+	'manage-wikia-home-collections-remove-success' => 'Confirmation message that Wiki was removed successfully from a collection (themed group of 17 wikis displayed on Home Page like www.wikia.com).',
+	'manage-wikia-home-collections-invalid-action' => 'Error message informing that the requested action does not exist',
 
 	'manage-wikia-home-verticals-proportions' => 'Header above slots configuration\'s input fields; in the form below this header we can configure how many slots are assigned to a vertical; later we fill those slots with a wiki image from a specific vertical',
 
