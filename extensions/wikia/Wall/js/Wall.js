@@ -474,7 +474,7 @@ var Wall = $.createClass(Object, {
 	doAction: function(id, mode, msg, target, formdata){
 		switch(mode) {
 			case 'close':
-				this.doClose(id, msg, formdata);
+				this.doThreadChangeSendRequest(id, 'close', formdata);
 			break;
 			case 'restore':
 				this.doRestore(id, target, formdata);
@@ -512,14 +512,14 @@ var Wall = $.createClass(Object, {
 		});
 	},
 
-	doClose: function(id, msg, formdata){
+	doThreadChangeSendRequest: function(id, newState, formdata){
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
 			method: 'changeThreadStatus',
 			format: 'json',
 			data: {
 				msgid: id,
-				newState: 'close',
+				newState: newState,
 				formdata: formdata
 			},
 			callback: this.proxy(function(json) {
@@ -545,24 +545,7 @@ var Wall = $.createClass(Object, {
 			newState = 'close';
 		}
 		if (id && newState) {
-			$.nirvana.sendRequest({
-				controller: 'WallExternalController',
-				method: 'changeThreadStatus',
-				format: 'json',
-				data: {
-					msgid: id,
-					newState: newState
-				},
-				callback: this.proxy(function(json) {
-					if(json.status) {
-						if(UserLoginAjaxForm) {
-							UserLoginAjaxForm.prototype.reloadPage();
-						} else {
-							window.location.reload();
-						}
-					}
-				})
-			});
+			this.doThreadChangeSendRequest(id, newState, {});
 		}
 	},
 
