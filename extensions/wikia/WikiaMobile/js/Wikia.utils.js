@@ -164,7 +164,7 @@
 
 	//expose it to the world
 	//$ is forbackward compatability
-	w.$ = $;
+	if(!w.$) w.$ = $;
 
 	//AMD
 	if (w.define && w.define.amd) {
