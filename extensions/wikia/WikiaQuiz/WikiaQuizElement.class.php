@@ -156,7 +156,7 @@ class WikiaQuizElement {
 			// TODO: handle quizElement parameters (image / video for quizElement)
 			$params = array();
 
-			$this->mQuizTitleObject = F::build('Title', array($quizName, NS_WIKIA_QUIZ), 'newFromText');
+			$this->mQuizTitleObject = Title::newFromText($quizName, NS_WIKIA_QUIZ);
 
 			if ( !empty( $videoName ) ) {
 
@@ -312,7 +312,7 @@ class WikiaQuizElement {
 			$this->load();
 		}
 		if (!empty($this->mQuizTitleObject)) {
-			$quizArticle = F::build('WikiaQuizIndexArticle', array($this->mQuizTitleObject));
+			$quizArticle = new WikiaQuizIndexArticle($this->mQuizTitleObject);
 			$quizArticle->doPurge();
 		}
 		else {

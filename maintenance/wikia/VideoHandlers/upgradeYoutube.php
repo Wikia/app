@@ -3,22 +3,32 @@
  * @ingroup Maintenance
  */
 
-require_once( dirname( __FILE__ ) . '../../Maintenance.php' );
+ini_set('display_errors', 'stderr');
+ini_set('error_reporting', E_NOTICE);
+
+require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 
 class UpgradeYoutube extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Get old revisions of an article";
+		$this->mDescription = "Find <youtube> tags and convert them to video files";
 		$this->addOption('test', "Run this script without changing anything", false, false, 't');
 	}
 
 	public function execute() {
-		global $wgTestMode;
+		global $wgTestMode, $wgUser;
 		$wgTestMode = $this->getOption('test');
 
 		if ($wgTestMode) {
 			echo "=== TEST MODE ===\n";
+		}
+
+		// Load wikia user
+		$wgUser = User::newFromName( 'WikiaBot' );
+		if ( !$wgUser ) {
+			echo "WARN: Could not load WikiaBot user\n";
+			exit(1);
 		}
 
 		$pages = $this->getPages();
@@ -71,16 +81,30 @@ class UpgradeYoutube extends Maintenance {
 			echo "WARN: Could not find title '".$wgTitle->getDBkey()."'\n";
 			return null;
 		}
+		echo '-- Scanning '.$wgTitle->getDBkey()."'\n";
 
 		// Find all the youtube tags in the current version
 		$text = $page->getText();
-		if (preg_match_all('/<youtube[^>]*>([^>]+)<\/youtube>/i', $text, $matches)) {
-			$tagsToFind = $matches[1];
+		if (preg_match_all('/(<nowiki>.*?<\/nowiki>)|(<youtube([^>]*)>([^<]+)<\/youtube>)/i', $text, $matches)) {
+			$tagsToFind = array_filter($matches[4], 'trim');
+			echo "\tFound ".count($tagsToFind)." <youtube> tag(s)\n";
+
+			$noWiki = array_filter($matches[1], 'trim');
+			if ( count($noWiki) > 0 ) {
+				echo "\tFound ".count($noWiki)." <nowiki> tag(s)\n";
+			}
 		} else {
-			echo "This page no longer has any youtube tags\n";
+			echo "\tThis page no longer has any youtube tags\n";
 			return null;
 		}
 
+		$ownersFound = array();
+		foreach ($tagsToFind as $tag) {
+			$ownersFound[$tag] = 'WikiaBot';
+		}
+		return $ownersFound;
+
+/*
 		$ownersFound = array();
 		$limit = 100;
 		$offset = 0;
@@ -135,6 +159,7 @@ class UpgradeYoutube extends Maintenance {
 		}
 
 		return $ownersFound;
+*/
 	}
 
 	/**
@@ -176,10 +201,15 @@ class UpgradeYoutube extends Maintenance {
 	 * @param $editors - An associative array of editor to youtube tag
 	 */
 	public function convertTags ( Article $page, $editors ) {
+		global $wgCityId, $wgCurPageID;
 
 		foreach ( $editors as $ytTag => $userText ) {
-			echo "Attributing YT tag ".trim($ytTag)." to '$userText'\n";
-			$this->upgradeTag( $page, $ytTag, $userText );
+			echo "\tAttributing YT tag ".trim($ytTag)." to '$userText'\n";
+
+			$wgCurPageID = $page->getID();
+			if ( ! $this->upgradeTag( $page, $ytTag, $userText ) ) {
+				echo "NoConvert: $wgCityId,".$page->getID()."\n";
+			}
 		}
 	}
 
@@ -192,8 +222,10 @@ class UpgradeYoutube extends Maintenance {
 	 * @return bool - Whether this upgrade was successful
 	 */
 	public function upgradeTag ( Article $page, $ytid, $userText ) {
-		global $wgUser, $wgTestMode;
+		global $wgUser;
+		global $wgTestMode, $wgCityId, $wgCurPageID, $wgChangeMade;
 
+/*
 		// Load the user who embedded this video
 		$wgUser = User::newFromName( $userText );
 
@@ -210,13 +242,16 @@ class UpgradeYoutube extends Maintenance {
 		if ( $wgUser->isAnon() ) {
 			$wgUser->addToDatabase();
 		}
+*/
+
+		$wgChangeMade = 0;
 
 		$text = $page->getText();
 
 		$text = preg_replace_callback(
-			"/<youtube([^>]*)>(".preg_quote($ytid, '/').")<\/youtube>/i",
+			"/(<nowiki>.*?<\/nowiki>)|<youtube([^>]*)>(".preg_quote($ytid, '/').")<\/youtube>/i",
 			function ($matches) {
-				global $wgTestMode;
+				global $wgTestMode, $wgCityId, $wgCurPageID, $wgChangeMade;
 
 				// Some limits and defaults
 				$width_max  = 640;
@@ -224,9 +259,14 @@ class UpgradeYoutube extends Maintenance {
 				$width_def  = 425;
 				$height_def = 355;
 
+				// If this matched a <nowiki> tag (and thus no param or ytid, don't do anything
+				if ( empty( $matches[3] ) ) {
+					return $matches[0];
+				}
+
 				// Separate the Youtube ID and parameters
-				$paramText = trim($matches[1]);
-				$ytid   = $matches[2];
+				$paramText = trim($matches[2]);
+				$ytid      = $matches[3];
 
 				// Parse out the width and height parameters
 				$params = array();
@@ -255,6 +295,12 @@ class UpgradeYoutube extends Maintenance {
 					$params['width'] = $width_max;
 				}
 
+				// If height is less than 30px they probably want this for audio.  Don't convert
+				if ( $params['height'] < 30 ) {
+					echo "\t[Skip:$wgCityId,$wgCurPageID] Ignoring tag meant for audio (height = ".$params['height'].")\n";
+					return $matches[0];
+				}
+
 				if ( preg_match('/^http:\/\//', $ytid) ) {
 					$url = trim($ytid);
 				} else {
@@ -264,45 +310,60 @@ class UpgradeYoutube extends Maintenance {
 				$videoService = new VideoService();
 
 				if ( $wgTestMode ) {
-					echo "[TEST] Replacing: ".$matches[0]."\n" .
-						 "            with: $url\n";
+					echo "\t[TEST] Replacing: ".$matches[0]."\n" .
+						 "\t            with: $url\n";
 					return $matches[0];
 				} else {
-					$retval = $videoService->addVideo( $url );
+					try {
+						$retval = $videoService->addVideo( $url );
+					} catch (Exception $e) {
+						echo "\t[Skip:$wgCityId,$wgCurPageID] Call to addVideo failed: ".$e->getMessage()."\n";
+						return $matches[0];
+					}
 				}
 				if ( is_array($retval) ) {
 					list( $title, $videoPageId, $videoProvider ) = $retval;
 
-					return "[[$title|".$params['width']."]]";
+					$wgChangeMade++;
+					return "[[$title|".$params['width']."px]]";
 				} else {
+					echo "\t[Skip:$wgCityId,$wgCurPageID] Unable to upload video\n";
 					return $matches[0];
 				}
 			},
 			$text
 		);
 
+/*
 		// Load wikia user
 		$wgUser = User::newFromName( 'WikiaBot' );
 		if ( !$wgUser ) {
 			echo "WARN: Could not load WikiaBot user\n";
 			return false;
 		}
+*/
 
 		if ( $wgTestMode ) {
 			return true;
 		}
 
-		# Do the edit
-		$status = $page->doEdit( $text, 'Upgraded Youtube tag',
-								 EDIT_MINOR | EDIT_FORCE_BOT | EDIT_AUTOSUMMARY | EDIT_SUPPRESS_RC );
+		if ( $wgChangeMade == 0 ) {
+			echo "\tNo changes made, skipping edit\n";
+			return true;
+		}
+
+		try {
+			# Do the edit
+			$status = $page->doEdit( $text, 'Automatically converting <youtube> tags and uploading video',
+									 EDIT_MINOR | EDIT_FORCE_BOT | EDIT_AUTOSUMMARY | EDIT_SUPPRESS_RC );
+		} catch ( Exception $e ) {
+			echo "\t[Skip:$wgCityId,$wgCurPageID] Edit failed: ".$e->getMessage()."\n";
+			return false;
+		}
 
 		$retval = true;
-		if ( ! $status->isOK() ) {
-			echo "WARN: Page save failed\n";
-			$retval = false;
-		}
 		if ( !$status->isGood() ) {
-			echo "WARN: Edit was no good\n";
+			echo "\t[Skip:$wgCityId,$wgCurPageID] Edit is not good: ".$status->getWikiText()."\n";
 			$retval = false;
 		}
 

@@ -10,27 +10,27 @@ class WallNotificationEntity {
 
 
 	public function __construct() {
-		$this->helper = F::build('WallHelper', array());
+		$this->helper = new WallHelper();
 	}
 
 	/*
 	 *	Public Interface
 	 */
 
-	public static function createFromRev(Revision $rev, $wiki) {
-		$wn = F::build('WallNotificationEntity', array() ); /* @var $wn WallNotificationEntity */
-		if($wn->loadDataFromRev($rev, $wiki)) {
+	public static function createFromRev( Revision $rev, $wikiId, $master = false ) {
+		$wn = new WallNotificationEntity();
+		if( $wn->loadDataFromRev( $rev, $wikiId, $master ) ) {
 			$wn->save();
 			return $wn;
 		}
 	}
 
 	public static function getByWikiAndRevId($RevId, $wikiId) {
-		return F::build('WallNotificationEntity', array($RevId.'_'.$wikiId), 'getById');
+		return WallNotificationEntity::getById($RevId.'_'.$wikiId);
 	}
 
 	public static function getById($id) {
-		$wn = F::build('WallNotificationEntity', array() ); /* @var $wn WallNotificationEntity */
+		$wn = new WallNotificationEntity();
 
 		$wn->id = $id;
 		$wn->data = $wn->getCache()->get($wn->getMemcKey());
@@ -61,10 +61,10 @@ class WallNotificationEntity {
 		return $this->id;
 	}
 
-	public function loadDataFromRev(Revision $rev, $wiki) {
-		$this->id = $rev->getId(). '_' .  $wiki;
+	public function loadDataFromRev( Revision $rev, $wikiId, $master = false ) {
+		$this->id = $rev->getId(). '_' .  $wikiId;
 
-		$ac = F::build('WallMessage', array($rev->getTitle()), 'newFromTitle' ); /* @var $ac WallMessage */
+		$ac = WallMessage::newFromTitle($rev->getTitle()); /* @var $ac WallMessage */
 		$ac->load();
 
 		$app = F::app();
@@ -72,7 +72,7 @@ class WallNotificationEntity {
 		$this->data = new stdClass;
 		$this->data_noncached = new stdClass;
 
-		$walluser = $ac->getWallOwner();
+		$walluser = $ac->getWallOwner( $master );
 		$authoruser = User::newFromId($rev->getUser());
 
 		if(empty($walluser)) {
@@ -86,7 +86,7 @@ class WallNotificationEntity {
 		$this->data = new StdClass();
 		$this->data_non_cached = new StdClass();
 
-		$this->data->wiki = $wiki;
+		$this->data->wiki = $wikiId;
 		$this->data->wikiname = $app->wg->sitename;
 		$this->data->rev_id = $rev->getId();
 
@@ -115,11 +115,11 @@ class WallNotificationEntity {
 			if($authoruser->getId() > 0) {
 				$this->data->msg_author_displayname = $this->data->msg_author_username;
 			} else {
-				$this->data->msg_author_displayname = $app->wf->Msg('oasis-anon-user');
+				$this->data->msg_author_displayname = wfMsg('oasis-anon-user');
 			}
 		} else {
 		//annon
-			$this->data->msg_author_displayname = $app->wf->Msg('oasis-anon-user');
+			$this->data->msg_author_displayname = wfMsg('oasis-anon-user');
 			$this->data->msg_author_id = 0;
 		}
 
@@ -155,7 +155,7 @@ class WallNotificationEntity {
 				if($parentUser->getId() > 0) {
 					$this->data->parent_displayname = $this->data->parent_username;
 				} else {
-					$this->data->parent_displayname = $app->wf->Msg('oasis-anon-user');
+					$this->data->parent_displayname = wfMsg('oasis-anon-user');
 				}
 				$this->data->parent_user_id = $acParent->getUser()->getId();
 			} else {
@@ -164,7 +164,7 @@ class WallNotificationEntity {
 			//then I went to Special:Log/delete and restored only its reply
 			//an edge case but it needs to be handled
 			//--nAndy
-				$this->data->parent_username = $this->data->parent_displayname = $app->wf->Msg('oasis-anon-user');
+				$this->data->parent_username = $this->data->parent_displayname = wfMsg('oasis-anon-user');
 				$this->data->parent_user_id = 0;
 			}
 			$title = $acParent->getTitle();
@@ -217,13 +217,14 @@ class WallNotificationEntity {
 	 * Helper functions
 	 */
 	public function getMemcKey() {
-		return F::App()->runFunction( 'wfSharedMemcKey', __CLASS__, "v32", $this->id, 'notification' );
+		return wfSharedMemcKey( __CLASS__, "v32", $this->id, 'notification' );
 	}
 
 	/**
 	 * @return Memcache
 	 */
 	public function getCache() {
-		return F::App()->getGlobal('wgMemc');
+		global $wgMemc;
+		return $wgMemc;
 	}
 }

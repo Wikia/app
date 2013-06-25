@@ -9,7 +9,7 @@ class WikiaRssHelper {
 	 */
 	public function renderRssPlaceholder($input) {
 		$app = F::app();
-		$rss = F::build('WikiaRssModel', array($input)); /* @var $rss WikiaRssModel */
+		$rss = new WikiaRssModel($input);
 
 		// Kill parser cache
 		//$app->wg->Parser->disableCache();
@@ -35,7 +35,7 @@ class WikiaRssHelper {
 	 * @param Array $options passed to callback javascript function
 	 */
 	static private function getJSSnippet($options) {
-		$html = F::build('JSSnippets')->addToStack(
+		$html = JSSnippets::addToStack(
 			array(
 //				'/extensions/wikia/WikiaRSS/css/WikiaRss.scss', //it's empty; we don't need it here...
 				'/extensions/wikia/WikiaRSS/js/WikiaRss.js',

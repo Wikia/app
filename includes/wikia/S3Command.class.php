@@ -35,6 +35,8 @@ class S3Command extends WikiaObject{
 	private $parameters;
 	private $options;
 
+	private static $instance;
+
 	function __construct(){
 		$this->resetCommonOptions();
 	}
@@ -46,14 +48,12 @@ class S3Command extends WikiaObject{
 	 */
 	public static function getInstance(){
 		$class = get_called_class();
-		$instance = F::getInstance( $class );
-		
-		if ( empty( $instance ) ) {
-			$instance = F::build($class);
-			F::setInstance( $class, $instance );
+
+		if ( empty( static::$instance ) ) {
+			static::$instance = new $class;
 		}
 		
-		return $instance;
+		return static::$instance;
 	}
 
 	/**

@@ -307,7 +307,7 @@ class WAMPageModel extends WikiaModel {
 		/** @var WikiFactoryHub $wikiFactoryHub */
 		$wikiFactoryHub = WikiFactoryHub::getInstance();
 		$wikiaHub = $wikiFactoryHub->getCategory($verticalId);
-		return $this->wf->Message('wam-' . $wikiaHub['name'])->inContentLanguage()->text();
+		return wfMessage('wam-' . $wikiaHub['name'])->inContentLanguage()->text();
 	}
 
 	protected function getVisualizationParams($verticalId = null, $sortColumn = 'wam_index') {

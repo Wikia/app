@@ -3,7 +3,7 @@
 class WikiGetDataForVisualizationHelper implements WikiGetDataHelper {
 	public function getMemcKey($wikiId, $langCode) {
 		/** @var $visualization CityVisualization */
-		$visualization = F::build('CityVisualization');
+		$visualization = new CityVisualization();
 
 		return $visualization->getWikiDataCacheKey($visualization->getTargetWikiId($langCode), $wikiId, $langCode);
 	}

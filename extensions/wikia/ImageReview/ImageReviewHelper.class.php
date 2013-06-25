@@ -218,6 +218,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$imageList = array();
 		while( $row = $db->fetchObject($result) ) {
 			$img = ImagesService::getImageSrc( $row->wiki_id, $row->page_id );
+			$wikiRow = WikiFactory::getWikiByID( $row->wiki_id );
 			$tmp = array(
 				'wikiId' 	=> $row->wiki_id,
 				'pageId' 	=> $row->page_id,
@@ -226,7 +227,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				'priority' 	=> $row->priority,
 				'url' 		=> $img['page'],
 				'flags' 	=> $row->flags,
-				'wiki_url' 	=> '', // @TODO fill this with wiki url
+				'wiki_url' 	=> isset( $wikiRow->city_url ) ? $wikiRow->city_url : '',
 				'user_page' => '', // @TODO fill this with url to user page
 			);
 
@@ -342,6 +343,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 						$isThumb = false;
 					}
 
+					$wikiRow = WikiFactory::getWikiByID( $row->wiki_id );
+
 					$imageList[] = array(
 						'wikiId' => $row->wiki_id,
 						'pageId' => $row->page_id,
@@ -351,6 +354,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 						'priority' => $row->priority,
 						'flags' => $row->flags,
 						'isthumb' => $isThumb,
+						'wiki_url' => isset( $wikiRow->city_url ) ? $wikiRow->city_url : '',
 					);
 				}
 			} else {
@@ -600,7 +604,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	}
 
 	public function getUserTsKey() {
-		return $this->wf->MemcKey( 'ImageReviewSpecialController', 'userts', $this->wg->user->getId());
+		return wfMemcKey( 'ImageReviewSpecialController', 'userts', $this->wg->user->getId());
 	}
 
 	private function getImageStatesForStats() {
@@ -669,7 +673,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			$statesToUpdate = array(
 				ImageReviewStatuses::STATE_UNREVIEWED,
 				ImageReviewStatuses::STATE_REJECTED,
-				ImageReviewStatuses::STATE_QUESTIONABLE,	
+				ImageReviewStatuses::STATE_QUESTIONABLE,
 				ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW,
 				ImageReviewStatuses::STATE_REJECTED_IN_REVIEW,
 				ImageReviewStatuses::STATE_IN_REVIEW,

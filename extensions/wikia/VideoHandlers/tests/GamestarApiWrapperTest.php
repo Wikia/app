@@ -20,8 +20,6 @@
 
 			$this->mockGlobalVariable( 'wgMemc', $mock_cache );
 			$this->mockGlobalVariable( 'wgCityId', self::TEST_CITY_ID );
-
-			$this->mockApp();
 		}
 
 		/**
@@ -37,7 +35,7 @@
 			// test
 			$url = 'http://www.gamestar.de/videos/previews,18/arma-3,66620.html';
 
-			$apiWrapper = F::build( 'GamestarApiWrapper', array($url), 'newFromUrl' );
+			$apiWrapper = GamestarApiWrapper::newFromUrl($url);
 			$metaData = $apiWrapper->getMetadata();
 
 			// Video Id

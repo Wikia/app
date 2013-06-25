@@ -31,7 +31,7 @@ class GamingCalendarController extends WikiaController {
 		global $wgCityId;
 		
 		$catName = WikiFactoryHub::getInstance()->getCategoryName($wgCityId);
-		$this->setVal('calendarHeading', $this->wf->msgForContent( 'gamingcalendar-heading', $catName ));
+		$this->setVal('calendarHeading', wfMsgForContent( 'gamingcalendar-heading', $catName ));
 		$this->setVal('wgBlankImgUrl', $this->wg->BlankImgUrl );
 	}
 }

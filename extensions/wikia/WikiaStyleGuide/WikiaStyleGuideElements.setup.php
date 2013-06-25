@@ -7,16 +7,15 @@
  */
 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
 // classes
-$app->registerClass('WikiaStyleGuideDropdownController', $dir . 'WikiaStyleGuideDropdownController.class.php');
-$app->registerClass('WikiaStyleGuideFormController', $dir . 'WikiaStyleGuideFormController.class.php');
-$app->registerClass('WikiaStyleGuideTooltipIconController', $dir . 'WikiaStyleGuideTooltipIconController.class.php');
-$app->registerClass('WikiaStyleGuideFormHelper', $dir . 'WikiaStyleGuideFormHelper.class.php');
+$wgAutoloadClasses['WikiaStyleGuideDropdownController'] =  $dir . 'WikiaStyleGuideDropdownController.class.php';
+$wgAutoloadClasses['WikiaStyleGuideFormController'] =  $dir . 'WikiaStyleGuideFormController.class.php';
+$wgAutoloadClasses['WikiaStyleGuideTooltipIconController'] =  $dir . 'WikiaStyleGuideTooltipIconController.class.php';
+$wgAutoloadClasses['WikiaStyleGuideFormHelper'] =  $dir . 'WikiaStyleGuideFormHelper.class.php';
 
 // i18n
-$app->registerExtensionMessageFile('WikiaStyleGuideElements', $dir . 'WikiaStyleGuideElements.i18n.php');
+$wgExtensionMessagesFiles['WikiaStyleGuideElements'] = $dir . 'WikiaStyleGuideElements.i18n.php';
 
 // js messages registration
-F::build('JSMessages')->registerPackage('WikiaStyleGuideDropdown', array('wikiastyleguide-dropdown-*'));
+JSMessages::registerPackage('WikiaStyleGuideDropdown', array('wikiastyleguide-dropdown-*'));

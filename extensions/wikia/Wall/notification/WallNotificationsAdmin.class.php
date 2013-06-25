@@ -122,11 +122,12 @@ class WallNotificationsAdmin {
 	 */
 	
 	protected function getCache() {
-		return $this->app->wg->Memc;
+		global $wgMemc;
+		return $wgMemc;
 	}
 	
 	public function getKey( $wikiId ){
-		return $this->app->runFunction( 'wfSharedMemcKey', __CLASS__, $wikiId. 'v11' );
+		return wfSharedMemcKey( __CLASS__, $wikiId. 'v11' );
 	}
 	
 	

@@ -27,7 +27,7 @@ class FogBugzDiagramsSpecialController extends WikiaSpecialPageController {
 		$data_send = $report->getPreparedData();
 		$this->response->setData( $data_send );
 
-		$this->wg->Out->setPageTitle( $this->wf->msg( 'fog-bugz-diagrams-special-page' ) );
+		$this->wg->Out->setPageTitle( wfMsg( 'fog-bugz-diagrams-special-page' ) );
 		wfProfileOut( __METHOD__ );
 	}
 }

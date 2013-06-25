@@ -29,7 +29,7 @@ class SpecialSpamWikisData {
      * The constructor.
      */
     public function __construct() {
-        $this->db = F::app()->wf->getDb( DB_MASTER, array(), self::DATABASE );
+        $this->db = wfGetDB( DB_MASTER, array(), self::DATABASE );
     }
     /**
      * Returns the list of criteria (to render as a form, etc.)

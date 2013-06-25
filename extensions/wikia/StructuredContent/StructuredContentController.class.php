@@ -11,7 +11,7 @@ class StructuredContentController extends WikiaController {
 	protected $helper = null;
 
 	public function __construct() {
-		$this->helper = F::build('StructuredContentHelper');
+		$this->helper = new StructuredContentHelper();
 	}
 
 

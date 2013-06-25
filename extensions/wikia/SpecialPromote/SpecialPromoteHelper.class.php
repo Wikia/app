@@ -27,7 +27,7 @@ class SpecialPromoteHelper extends WikiaObject {
 
 	public function __construct() {
 		parent::__construct();
-		$this->homePageHelper = F::build('WikiaHomePageHelper');
+		$this->homePageHelper = new WikiaHomePageHelper();
 	}
 
 	public function getMinHeaderLength() {
@@ -222,10 +222,10 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	public function removeImage($imageName) {
-		$title = F::build('Title', array($imageName, NS_FILE), 'newFromText');
-		$file = F::build('LocalFile', array($title, RepoGroup::singleton()->getLocalRepo()));
+		$title = Title::newFromText($imageName, NS_FILE);
+		$file = new LocalFile($title, RepoGroup::singleton()->getLocalRepo());
 
-		$visualization = F::build('CityVisualization');
+		$visualization = new CityVisualization();
 		$visualization->removeImageFromReview($this->wg->cityId, $title->getArticleId(), $this->wg->contLang->getCode());
 
 		if ($file->exists()) {
@@ -241,7 +241,7 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	public function isVisualizationFile($imageName) {
-		$uploader = F::build('UploadVisualizationImageFromFile');
+		$uploader = new UploadVisualizationImageFromFile();
 		if ($uploader->isVisualizationImageName($imageName)) {
 			return true;
 		}
@@ -254,7 +254,7 @@ class SpecialPromoteHelper extends WikiaObject {
 		$contentLang = $this->wg->contLang->getCode();
 		$files = array('additionalImages' => array());
 
-		$visualizationModel = F::build('CityVisualization');
+		$visualizationModel = new CityVisualization();
 
 		foreach ($data as $fileType => $dataContent) {
 			switch ($fileType) {
@@ -320,7 +320,7 @@ class SpecialPromoteHelper extends WikiaObject {
 		$visualizationModel->updateWikiPromoteDataCache($cityId, $langCode, $updateData);
 
 		/** @var $helper WikiGetDataForVisualizationHelper */
-		$helper = F::build('WikiGetDataForVisualizationHelper');
+		$helper = new WikiGetDataForVisualizationHelper();
 		$this->wg->memc->set($helper->getMemcKey($cityId, $langCode),null);
 		$visualizationModel->regenerateBatches($visualizationModel->getTargetWikiId($langCode), $langCode);
 
@@ -403,11 +403,11 @@ class SpecialPromoteHelper extends WikiaObject {
 
 
 	protected function moveTmpFile($fileName, $dstFileName) {
-		$temp_file_title = F::build('Title', array($fileName, NS_FILE), 'newFromText'); /** @var $temp_file_title Title */
-		$dst_file_title = F::build('Title', array($dstFileName, NS_FILE), 'newFromText'); /** @var $dst_file_title Title */
+		$temp_file_title = Title::newFromText($fileName, NS_FILE);
+		$dst_file_title = Title::newFromText($dstFileName, NS_FILE);
 
-		$temp_file = F::build('LocalFile', array($temp_file_title, RepoGroup::singleton()->getLocalRepo())); /** @var $temp_file LocalFile */
-		$file = F::build('LocalFile', array($dst_file_title, RepoGroup::singleton()->getLocalRepo())); /** @var $file LocalFile */
+		$temp_file = new LocalFile($temp_file_title, RepoGroup::singleton()->getLocalRepo());
+		$file = new LocalFile($dst_file_title, RepoGroup::singleton()->getLocalRepo());
 
 		$file->upload($temp_file->getPath(), '', '');
 		$temp_file->delete('');
@@ -437,7 +437,7 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	protected function checkWikiStatus($WikiId, $langCode) {
-		$visualization = F::build('CityVisualization');
+		$visualization = new CityVisualization();
 		$wikiDataVisualization = $visualization->getWikiDataForVisualization($WikiId, $langCode);
 		$wikiDataPromote = $visualization->getWikiDataForPromote($WikiId, $langCode);
 		$mainImage = $this->getMainImage();

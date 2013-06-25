@@ -1,18 +1,13 @@
 <?php
-class PlacesHooks extends WikiaObject{
+class PlacesHooks {
 
 	private static $modelToSave;
 
-	function __construct(){
-			parent::__construct();
-			F::setInstance( __CLASS__, $this );
-	}
-
-	public function setModelToSave( PlaceModel $model ){
+	static public function setModelToSave( PlaceModel $model ){
 		self::$modelToSave = $model;
 	}
 
-	public function onPageHeaderIndexExtraButtons( $response ){
+	static public function onPageHeaderIndexExtraButtons( $response ){
 		$app = F::app();
 		$extraButtons = $response->getVal('extraButtons');
 
@@ -20,11 +15,7 @@ class PlacesHooks extends WikiaObject{
 			$app->wg->user->isAllowed('places-enable-category-geolocation') ){
 
 			$isGeotaggingEnabled =
-				F::build(
-					'PlaceCategory',
-					array( $app->wg->title->getFullText() ),
-					'newFromTitle'
-				)->isGeoTaggingEnabled();
+				PlaceCategory::newFromTitle($app->wg->title->getFullText() )->isGeoTaggingEnabled();
 
 			$commonClasses = 'secondary geoEnableButton';
 			$extraButtons[] = F::app()->renderView( 'MenuButton',
@@ -55,20 +46,20 @@ class PlacesHooks extends WikiaObject{
 		return true;
 	}
 
-	public function onParserFirstCallInit( Parser $parser ){
+	static public function onParserFirstCallInit( Parser $parser ){
 		$parser->setHook( 'place', 'PlacesParserHookHandler::renderPlaceTag' );
 		$parser->setHook( 'places', 'PlacesParserHookHandler::renderPlacesTag' );
 
 		return true;
 	}
 
-	public function onBeforePageDisplay( OutputPage $out, Skin $sk ){
+	static public function onBeforePageDisplay( OutputPage $out, Skin $sk ){
 		wfProfileIn( __METHOD__ );
 
 		$title = $out->getTitle();
 
 		if ($title instanceof Title && $title->isContentPage()) {
-			$storage = F::build('PlaceStorage', array($out->getTitle()), 'newFromTitle'); /* @var $storage PlaceStorage */
+			$storage = PlaceStorage::newFromTitle($out->getTitle());
 			$model = $storage->getModel(); /* @var $model PlaceModel */
 
 			if ($model instanceof PlaceModel && !$model->isEmpty()) {
@@ -85,13 +76,13 @@ class PlacesHooks extends WikiaObject{
 		return true;
 	}
 
-	public function onArticleSaveComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ){
+	static public function onArticleSaveComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ){
  		wfProfileIn( __METHOD__ );
 
-		$this->wf->Debug( __METHOD__ . "\n" );
+		wfDebug( __METHOD__ . "\n" );
 
 		// store queued model or clear data for the article (if no model was passed)
-		$storage = F::build( 'PlaceStorage', array( $article ), 'newFromArticle' ); /* @var $storage PlaceStorage */
+		$storage = PlaceStorage::newFromArticle( $article );
 
 		if ( self::$modelToSave instanceof PlaceModel ) {
 			// use model from parser hook
@@ -100,7 +91,7 @@ class PlacesHooks extends WikiaObject{
 		}
 		else {
 			// no geo data fround - use an empty model
-			$storage->setModel( F::build('PlaceModel') );
+			$storage->setModel( (new PlaceModel) );
 		}
 
 		$storage->store();
@@ -112,7 +103,7 @@ class PlacesHooks extends WikiaObject{
 		return true;
  	}
 
-	public function onRTEUseDefaultPlaceholder( $name, $params, $frame, $wikitextIdx ) {
+	static public function onRTEUseDefaultPlaceholder( $name, $params, $frame, $wikitextIdx ) {
 		if ( $name !== 'place' ) {
 			return true;
 		} else {
@@ -128,24 +119,25 @@ class PlacesHooks extends WikiaObject{
 	 * @param EditPage $editpage edit page instance
 	 * @return bool true it's a hook
 	 */
-	public function onShowEditForm( EditPage $editpage ){
+	static public function onShowEditForm( EditPage $editpage ){
+		global $wgJsMimeType;
 		// add edit toolbar button for adding places
 		$src = AssetsManager::getInstance()->getOneCommonURL( 'extensions/wikia/Places/js/PlacesEditPage.js' );
-		$this->wg->Out->addScript( "<script type=\"{$this->app->wg->JsMimeType}\" src=\"{$src}\"></script>" );
+		F::app()->wg->Out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>" );
 
 		// load JS messages
-		F::build('JSMessages')->enqueuePackage('Places', JSMessages::EXTERNAL);
-		F::build('JSMessages')->enqueuePackage('PlacesEditPageButton', JSMessages::INLINE);
+		JSMessages::enqueuePackage('Places', JSMessages::EXTERNAL);
+		JSMessages::enqueuePackage('PlacesEditPageButton', JSMessages::INLINE);
 		return true;
 	}
 
 	/**
 	 * Prepends the geolocation button for adding coordinates to a page
 	 */
-	public function onOutputPageBeforeHTML( &$out, &$text ){
-
-		if ( $this->app->wg->request->getVal('action', 'view') == true ) {
-			$text = $this->app->sendRequest( 'Places', 'getGeolocationButton' )->toString() . $text;
+	static public function onOutputPageBeforeHTML( &$out, &$text ){
+		$app = F::app();
+		if ( $app->wg->request->getVal('action', 'view') == true ) {
+			$text = $app->sendRequest( 'Places', 'getGeolocationButton' )->toString() . $text;
 		}
 		return $out;
 	}

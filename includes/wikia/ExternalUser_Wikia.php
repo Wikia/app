@@ -324,14 +324,6 @@ class ExternalUser_Wikia extends ExternalUser {
 		} else {
 			wfDebug( __METHOD__ . ": update central user data \n" );
 
-                        /**
-                         * @author Michał Roszka (Mix)
-                         * trap for BugId:17012
-                         */
-                        if ( 'Lancer1289' == $this->mUser->mName ) {
-                            $oTo = $oFrom = new MailAddress( 'mix@wikia-inc.com' );
-                            UserMailer::send( $oTo, $oFrom, 'BugId:17012 Occurrence Report', serialize( wfDebugBacktrace() ) );
-                        }
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$this->mUser->mTouched = User::newTouchedTimestamp();
 			$dbw->update( '`user`',

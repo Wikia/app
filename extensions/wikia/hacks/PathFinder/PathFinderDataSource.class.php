@@ -17,7 +17,7 @@ class PathFinderDataSource extends WikiaObject{
 	const OPTION_BUCKET_NAME = 'bucketName';
 	const OPTION_CONFIG_FILE_PATH = 'configFilePath';
 
-	private $instance;
+	static private $instance;
 	private $logger;
 	private $options;
 	private $s3Cmd;
@@ -36,14 +36,12 @@ class PathFinderDataSource extends WikiaObject{
 	 */
 	public static function getInstance(){
 		$class = get_called_class();
-		$instance = F::getInstance( $class );
 
-		if ( empty( $instance ) ) {
-			$instance = F::build($class);
-			F::setInstance( $class, $instance );
+		if ( empty( static::$instance ) ) {
+			static::$instance = new $class;
 		}
 
-		return $instance;
+		return static::$instance;
 	}
 
 	/**
@@ -106,7 +104,7 @@ class PathFinderDataSource extends WikiaObject{
 		wfProfileOut( __METHOD__ );
 
 		if ( !empty( $item ) ) {
-			return F::build( 'PathFinderDataSet', array( $item ) );
+			return new PathFinderDataSet( $item );
 		} else {
 			throw new PathFinderDataSourceNoDataException( "No dataset corresponding to '{$indexOrName}'" );
 		}

@@ -26,8 +26,7 @@ class SelectTest extends BaseTest
 	public function testGetSanitizedQuery()
 	{
 		$sanitizer = $this->getMock( 'Sanitizer', array( 'StripAllTags' ) );
-		$this->proxyClass( 'Sanitizer', $sanitizer );
-		$this->mockApp();
+		$this->mockClass( 'Sanitizer', $sanitizer );
 		$rawQuery = "crime &amp; <b>punishment</b>";
 		$expected = "crime & punishment";
 		$query = new Query( $rawQuery );
@@ -151,6 +150,26 @@ class SelectTest extends BaseTest
 		$this->assertEquals(
 				'\"foo\:bar\&&baz\"',
 				$query->getSolrQuery()
+		);
+	}
+	
+	public function testGetSolrQueryWithWordLimit() {
+		$query = <<<YEEZY
+Uh:my mind move like a Tron bike
+Uh, pop a wheelie on the Zeitgeist
+Uh, I'm finna start a new movement
+YEEZY;
+		$q = new Query( $query );
+		$this->assertEquals(
+				'Uh\:my mind move like a Tron bike Uh, pop a',
+				$q->getSolrQuery( 10 )
+		);
+
+		$sQuery = 'test';
+		$q = new Query( $sQuery );
+		$this->assertEquals(
+			$sQuery,
+			$q->getSolrQuery( 10 )
 		);
 	}
 }

@@ -265,8 +265,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		    ->method ( 'getMainPageIdForWikiId' )
 		    ->will   ( $this->returnValue( 5 ) )
 		;
-		$this->proxyClass( 'DataMartService', $mockDmService );
-		$this->mockApp();
+		$this->mockClass( 'DataMartService', $mockDmService );
 		$this->assertEquals(
 				$topPages,
 				$this->resultSet->getTopPages()

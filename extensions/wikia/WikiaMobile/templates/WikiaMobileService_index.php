@@ -15,7 +15,8 @@
  * @var $headItems String
  * @var $bodyClasses String[]
  * @var $trackingCode String
- * @var $advertisement String
+ * @var $floatingTopLeaderBoard String
+ * @var $topLeaderBoard String
  * @var $wikiaNavigation String
  * @var $pageContent String
  * @var $wikiaFooter String
@@ -46,12 +47,15 @@
 	<?= $headItems ;?>
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>">
-	<?= $trackingCode ;?>
 	<?= $wikiaNavigation ;?>
+	<?= $topLeaderBoardAd ;?>
 	<?= $pageContent ;?>
 	<?= $wikiaFooter ;?>
 	<div id=wkCurtain>&nbsp;</div>
 	<?= $jsBodyFiles ;?>
-	<?= $advertisement ;?>
+	<?= $inContentAd ;?>
+	<?= $modalInterstitial ;?>
+	<?= $floatingAd ;?>
+	<?= $trackingCode ;?>
 </body>
 </html>

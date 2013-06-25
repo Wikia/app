@@ -46,7 +46,7 @@ class PromoteImageReviewTask extends BatchTask {
 
 	function execute($params = null) {
 		$this->mTaskID = $params->task_id;
-		$oUser = F::build('User', array($params->task_user_id), 'newFromId');
+		$oUser = User::newFromId($params->task_user_id);
 
 		if( $oUser instanceof User ) {
 			$oUser->load();
@@ -54,7 +54,7 @@ class PromoteImageReviewTask extends BatchTask {
 		} else {
 		//if task was added by import script it has WikiaBot user's id passed
 			$this->log(__CLASS__ . ' / ' . __METHOD__ . ": Invalid user #1 - task_user_id: " . $params->task_user_id);
-			$oUser = F::build('User', array('WikiaBot'), 'newFromName');
+			$oUser = User::newFromName('WikiaBot');
 
 			if( $oUser instanceof User ) {
 				$oUser->load();
@@ -67,9 +67,9 @@ class PromoteImageReviewTask extends BatchTask {
 		}
 
 		/** @var WikiGetDataForVisualizationHelper $this->helper  */
-		$this->helper = F::build('WikiGetDataForVisualizationHelper');
+		$this->helper = new WikiGetDataForVisualizationHelper();
 		/** @var WikiGetDataForVisualizationHelper $this->model  */
-		$this->model = F::build('CityVisualization');
+		$this->model = new CityVisualization();
 		$this->corporatePagesIds = $this->model->getVisualizationWikisIds();
 
 		$data = unserialize($params->task_arguments);
@@ -158,7 +158,7 @@ class PromoteImageReviewTask extends BatchTask {
 		$retval = "";
 
 		$dbname = WikiFactory::IDtoDB($sourceWikiId);
-		$imageTitle = F::build('GlobalTitle', array($imageId, $sourceWikiId), 'newFromId');
+		$imageTitle = GlobalTitle::newFromId($imageId, $sourceWikiId);
 
 		$sourceImageUrl = null;
 		if($imageTitle instanceof GlobalTitle) {
