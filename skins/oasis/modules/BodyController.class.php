@@ -80,7 +80,7 @@ class BodyController extends WikiaController {
 		$app = F::app();
 		return !empty( $app->wg->OasisResponsive ) &&
 				// Block liquid layout for corporate pages (needed for devbox environment)
-				!$app->wg->EnableWikiaHomePageExt;
+				empty($app->wg->EnableWikiaHomePageExt);
 	}
 
 	/**
