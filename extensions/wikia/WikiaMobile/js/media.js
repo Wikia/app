@@ -181,7 +181,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		}
 
 		if(currentMedia.type == Media.types.VIDEO) {
-			var imgTitle = currentWrapper.name;
+			var imgTitle = currentMedia.name;
 
 			zoomable = false;
 
