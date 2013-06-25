@@ -79,7 +79,9 @@ if(Math.random()<0.01){
 
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>"<?= $itemType ?>>
-
+<div class="wikia-background-image-left"></div>
+<div class="wikia-background-image-right"></div>
+<div class="wikia-background-gradient"></div>
 <?= $comScore ?>
 <?= $quantServe ?>
 <?= $googleAnalytics ?>

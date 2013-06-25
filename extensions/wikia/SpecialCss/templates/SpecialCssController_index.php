@@ -11,7 +11,7 @@
 			<label for="editSummary"><?= wfMessage('special-css-edit-summary')->plain() ?></label>
 			<textarea id="editSummary" class="edit-summary" name="editSummary" placeholder="<?= wfMessage
 			('special-css-summary-placeholder')->plain(); ?>"></textarea>
-			<?= $app->renderView('MenuButton',
+			<?= F::app()->renderView('MenuButton',
 				'Index',
 				array(
 					'action' => array(
