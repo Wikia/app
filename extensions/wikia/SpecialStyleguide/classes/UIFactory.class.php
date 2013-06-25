@@ -1,6 +1,14 @@
 <?php
 class UIFactory {
 	/**
+	 * @desc Component's configuration file suffix
+	 * Example buttons component config file should be named buttons_config.json
+	 * 
+	 * @var String
+	 */
+	const CONFIG_FILE_SUFFIX = '_config.json';
+	
+	/**
 	 * @var UIFactory
 	 */
 	private static $instance = null;
@@ -45,7 +53,7 @@ class UIFactory {
 	static public function getInstance() {
 		if( is_null(static::$instance) ) {
 			static::$instance = new self();
-			static::$instance->setComponentsDir( realpath( dirname( __FILE__ ) . '/../../../../resources/wikia/ui_components/' ) );
+			static::$instance->setComponentsDir( F::app()->wg->SpecialStyleguideUiCompontentsPath );
 		}
 		
 		return static::$instance;
@@ -57,22 +65,26 @@ class UIFactory {
 	 * @return array
 	 */
 	public function getAllComponents() {
-		$directory = new DirectoryIterator( $this->getComponentsDir() );
 		$components = [];
 		
-		while( $directory->valid() ) {
-			if( !$directory->isDot() && $directory->isDir() ) {
-				$componentName = $directory->getFilename();
-				$componentCfg = $this->loadComponentConfig( $componentName );
-				
-				if( !empty($componentCfg) ) {
-					$components[] = $componentCfg;
-				} else {
-					wfDebugLog( __CLASS__, 'Component unavailable: ' . $componentName );
+		try {
+			$directory = new DirectoryIterator( $this->getComponentsDir() );
+
+			while( $directory->valid() ) {
+				if( !$directory->isDot() && $directory->isDir() ) {
+					$componentName = $directory->getFilename();
+					$componentCfg = $this->loadComponentConfig( $componentName );
+					
+					if( !empty($componentCfg) ) {
+						$components[] = $componentCfg;
+					} else {
+						wfDebugLog( __CLASS__, 'Component unavailable: ' . $componentName );
+					}
 				}
-				 
+				$directory->next();
 			}
-			$directory->next();
+		} catch( Exception $e ) {
+			wfDebugLog( __CLASS__, 'Invalid Styleguide components\' directory: (' . $e->getCode() . ') ' . $e->getMessage() . ' [check $wgSpecialStyleguideUiCompontentsPath variable]');
 		}
 		
 		return $components;
@@ -81,20 +93,31 @@ class UIFactory {
 	/**
 	 * @desc Gets configuration file contents, decodes it to array and returns it
 	 * 
+	 * @todo add caching layer: planned and will be done in DAR-809
+	 * 
 	 * @param String $componentName
 	 * @return array|null
 	 */
 	private function loadComponentConfig( $componentName ) {
-		$configPath = realpath( $this->getComponentsDir() . '/' . $componentName . '/' . $componentName . '_config.json' );
-
+		$configPath = $this->getComponentsDir() . $componentName . '/' . $componentName . self::CONFIG_FILE_SUFFIX;
 		$config = null;
 		
-		if( !is_null( $configPath ) ) {
-			$configContent = file_get_contents($configPath);
+		if( file_exists( $configPath ) && ( $configContent = file_get_contents( $configPath ) ) ) {
 			$config = json_decode( $configContent, true );
+			
+			if( !is_null( $config )) {
+				$this->addComponentsId( $config );
+			} else {
+				wfDebugLog( __CLASS__, "Invalid JSON in config file: " . $configPath );
+				$config = [];
+			}
+			
+		} else {
+			wfDebugLog( __CLASS__, "Invalid component's config file: " . $configPath );
+			$config = [];
 		}
 		
-		return $this->addComponentsId( $config );
+		return $config;
 	}
 	
 	private function addComponentsId( $componentCfg ) {
@@ -114,6 +137,7 @@ class UIFactory {
 	 * @param $componentName
 	 */
 	public function init( $componentName ) {
+		// We're going to implement it (maybe slightly change) in DAR-809
 		// $componentConfig = $this->loadComponentConfig( $componentName );
 		// $this->addAssets( $componentConfig['dependencies'] );
 		// $component = new UIComponent();
