@@ -106,7 +106,7 @@ class UIFactory {
 			$config = json_decode( $configContent, true );
 			
 			if( !is_null( $config )) {
-				$this->addComponentsId( $config );
+				$config = $this->addComponentsId( $config );
 			} else {
 				wfDebugLog( __CLASS__, "Invalid JSON in config file: " . $configPath );
 				$config = [];
@@ -119,7 +119,13 @@ class UIFactory {
 		
 		return $config;
 	}
-	
+
+	/**
+	 * @desc Adds id element to the component's config array
+	 * 
+	 * @param Array $componentCfg
+	 * @return array
+	 */
 	private function addComponentsId( $componentCfg ) {
 		$componentCfg['id'] = mb_strtolower( str_replace( ' ', '_', $componentCfg['name'] ) );
 		return $componentCfg;
