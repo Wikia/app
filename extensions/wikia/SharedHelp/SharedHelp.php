@@ -452,8 +452,7 @@ function SharedHelpWantedPagesSql( &$page, &$sql ) {
 				'page',
 				'page_title, page_namespace',
 				array(
-					'page_namespace' => NS_HELP,
-					'page_is_redirect' => 0,
+					'page_namespace' => NS_HELP
 				),
 				__METHOD__
 			);
