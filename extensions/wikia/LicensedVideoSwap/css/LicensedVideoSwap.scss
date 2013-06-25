@@ -268,3 +268,12 @@ body.lvs-loading {
 	border-top: 1px solid $color-page-border-subtle;
 	padding-top: 10px;
 }
+
+.lvs-instructions {
+	h2 {
+		border-bottom: none;
+		font-size: 16px;
+		margin-bottom: 0;
+		padding-bottom: 0;
+	}
+}

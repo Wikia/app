@@ -15,8 +15,10 @@
 	</section>
 <? endif; ?>
 
-<p><?= wfMessage( 'lvs-instructions-header' )->parse() ?></p>
-<p><?= wfMessage( 'lvs-instructions' )->plain() ?></p>
+<div class="lvs-instructions">
+	<h2><?= wfMessage( 'lvs-instructions-header' )->parse() ?></h2>
+	<p><?= wfMessage( 'lvs-instructions' )->plain() ?></p>
+</div>
 
 <? if ( !empty( $videoList ) ): ?>
 
