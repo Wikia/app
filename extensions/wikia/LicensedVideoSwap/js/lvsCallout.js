@@ -3,7 +3,7 @@
  * When the "x" is clicked, a local storage entry is set so the
  * callout won't show again.
  */
-define( 'lvs.callout', ['wikia.localStorage'], function( LocalStorage ) {
+define( 'lvs.callout', ['wikia.localStorage', 'jquery'], function( LocalStorage, $ ) {
 	"use strict";
 
 	function init() {

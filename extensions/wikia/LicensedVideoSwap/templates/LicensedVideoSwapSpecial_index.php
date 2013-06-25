@@ -4,22 +4,23 @@
 	<button class="close wikia-chiclet-button">
 		<img src="<?= $wgStylePath ?>/oasis/images/icon_close.png">
 	</button>
-	<h1><?= wfMessage('lvs-callout-header')->plain() ?></h1>
+	<h1><?= wfMessage( 'lvs-callout-header' )->plain() ?></h1>
 	<ul>
-		<li>- <?= wfMessage('lvs-callout-reason-licensed')->parse() ?></li>
-		<li>- <?= wfMessage('lvs-callout-reason-quality')->parse() ?></li>
-		<li>- <?= wfMessage('lvs-callout-reason-collaborative')->parse() ?></li>
-		<li>- <?= wfMessage('lvs-callout-reason-more')->plain() ?></li>
+		<li>- <?= wfMessage( 'lvs-callout-reason-licensed' )->parse() ?></li>
+		<li>- <?= wfMessage( 'lvs-callout-reason-quality' )->parse() ?></li>
+		<li>- <?= wfMessage( 'lvs-callout-reason-collaborative' )->parse() ?></li>
+		<li>- <?= wfMessage( 'lvs-callout-reason-more' )->plain() ?></li>
 	</ul>
 </section>
 
-<p><?= wfMessage('lvs-instructions')->plain() ?></p>
+<p><?= wfMessage( 'lvs-instructions-header' ) ?></p>
+<p><?= wfMessage( 'lvs-instructions' )->plain() ?></p>
 
-<?= $app->renderView('LicensedVideoSwapSpecialController', 'contentHeaderSort', $contentHeaderSortOptions ) ?>
+<?= $app->renderView( 'LicensedVideoSwapSpecialController', 'contentHeaderSort', $contentHeaderSortOptions ) ?>
 
 <div class="WikiaGrid LVSGrid" id="LVSGrid">
 
-	<?= $app->renderPartial('LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList, 'thumbWidth' => $thumbWidth, 'thumbHeight' => $thumbHeight ) ) ?>
+	<?= $app->renderPartial( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList, 'thumbWidth' => $thumbWidth, 'thumbHeight' => $thumbHeight ) ) ?>
 	<?= $pagination ?>
 
 </div>

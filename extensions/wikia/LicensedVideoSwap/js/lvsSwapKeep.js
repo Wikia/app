@@ -1,20 +1,26 @@
 /**
- *
+ * Controls for swap button and keep button in LicensedVideoSwap
  */
-define( 'lvs.swapkeep', ['wikia.querystring', 'lvs.commonajax', 'lvs.videocontrols'], function( QueryString, commonAjax, videoControls ) {
+define( 'lvs.swapkeep', [
+	'wikia.querystring',
+	'lvs.commonajax',
+	'lvs.videocontrols',
+	'jquery',
+	'wikia.nirvana'
+], function( QueryString, commonAjax, videoControls, $, nirvana ) {
 	"use strict";
 
 	var $parent,
 		$overlay,
 		$row,
 		$button,
+		$container,
 		isSwap,
 		currTitle,
 		newTitle,
 		qs,
 		sort,
-		page,
-		$container;
+		page;
 
 	function doRequest(){
 		// Add loading graphic
@@ -34,7 +40,7 @@ define( 'lvs.swapkeep', ['wikia.querystring', 'lvs.commonajax', 'lvs.videocontro
 			data.newTitle = newTitle;
 		}
 
-		$.nirvana.sendRequest({
+		nirvana.sendRequest({
 			controller: 'LicensedVideoSwapSpecialController',
 			method: isSwap ? 'swapVideo' : 'keepVideo',
 			data: data,
@@ -58,7 +64,11 @@ define( 'lvs.swapkeep', ['wikia.querystring', 'lvs.commonajax', 'lvs.videocontro
 		if ( isSwap ) {
 			newTitleText = newTitle.replace(/_/g, ' ' );
 			title = $.msg( 'lvs-confirm-swap-title' );
-			msg = $.msg( 'lvs-confirm-swap-message', currTitleText, newTitleText );
+			if ( currTitleText == newTitleText ) {
+				msg = $.msg( 'lvs-confirm-swap-message-same-title', currTitleText );
+			} else {
+				msg = $.msg( 'lvs-confirm-swap-message-different-title', currTitleText, newTitleText );
+			}
 		} else {
 			title = $.msg( 'lvs-confirm-keep-title' );
 			msg = $.msg( 'lvs-confirm-keep-message', currTitleText );

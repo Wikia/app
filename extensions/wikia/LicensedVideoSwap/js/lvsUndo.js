@@ -1,5 +1,5 @@
 
-define( 'lvs.undo', ['wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lvs.videocontrols'], function( QueryString, commonAjax, window, videoControls ) {
+define( 'lvs.undo', ['wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lvs.videocontrols', 'wikia.nirvana', 'jquery'], function( QueryString, commonAjax, window, videoControls, nirvana, $ ) {
 
 	var $container,
 		videoTitle,
@@ -8,18 +8,20 @@ define( 'lvs.undo', ['wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lvs
 		msg,
 		qs,
 		sort,
+		page,
 		wasSwap;
 
 	function doRequest() {
 		commonAjax.startLoadingGraphic();
 
-		$.nirvana.sendRequest({
+		nirvana.sendRequest({
 			controller: 'LicensedVideoSwapSpecialController',
 			method: 'restoreVideo',
 			data: {
 				videoTitle: videoTitle,
 				newTitle: newTitle,
-				sort: sort
+				sort: sort,
+				page: page
 			},
 			callback: function( data ) {
 				commonAjax.success( $container, data);
@@ -45,6 +47,7 @@ define( 'lvs.undo', ['wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lvs
 			newTitle = $this.attr( 'data-new-title' ) || '';
 			qs = new QueryString();
 			sort = qs.getVal ( 'sort', 'recent' );
+			page = qs.getVal ( 'page', 1 );
 			wasSwap = !!newTitle;
 
 			if ( wasSwap ) {

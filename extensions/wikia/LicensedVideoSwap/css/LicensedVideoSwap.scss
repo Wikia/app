@@ -112,6 +112,7 @@ $color-callout-text: $color-text-dark;
 			position: absolute;
 			top: 157px;
 			width: 49px;
+			z-index: 1; // needs to show above a playing video
 			&:before {
 				@include sprite-LicensedVideoSwap('big_' + $arrow-color + '_arrow');
 				content: "";
@@ -145,8 +146,9 @@ $color-callout-text: $color-text-dark;
 		height: 395px;
 	}
 	.video-wrapper {
-		padding-bottom: 8px;
-		height: 310px;
+		background-color: #000;
+		height: 309px;
+		margin-bottom: 9px;
 	}
 	.more-videos {
 		@include clearfix;

@@ -2,10 +2,28 @@
  * Handle clicks on play buttons so they play the video
  */
 
-define( 'lvs.videocontrols', ['wikia.videoBootstrap'], function( VideoBootstrap ) {
+define( 'lvs.videocontrols', ['wikia.videoBootstrap', 'wikia.nirvana', 'jquery'], function( VideoBootstrap, nirvana, $ ) {
 	"use strict";
 
 	var videoInstances = [];
+
+	function setVerticalAlign( $element, video ) {
+return; // TODO: once height is set dynamically, let this function run.
+		var videoHeight = video.height,
+			wrapperHeight = $element.height(),
+			topMargin = ( wrapperHeight - videoHeight ) / 2;
+
+		$element.data( 'height', wrapperHeight ).height( wrapperHeight - topMargin ).css( 'padding-top', topMargin );
+	}
+
+	// remove vertical alignment css
+	function removeVerticalAlign( $element ) {
+return; // TODO: once height is set dynamically, let this function run.
+		var height = $element.data( 'height' );
+		if ( height ) {
+			$element.height( height ).css( 'padding-top', 0 );
+		}
+	}
 
 	function init( $container ) {
 		var videoWidth = $container.find( '.grid-3' ).width();
@@ -34,7 +52,8 @@ define( 'lvs.videocontrols', ['wikia.videoBootstrap'], function( VideoBootstrap 
 				$element = $this.parent();
 			}
 
-			$.nirvana.sendRequest({
+
+			nirvana.sendRequest({
 				controller: 'VideoHandler',
 				method: 'getEmbedCode',
 				data: {
@@ -43,10 +62,17 @@ define( 'lvs.videocontrols', ['wikia.videoBootstrap'], function( VideoBootstrap 
 					autoplay: 1
 				},
 				callback: function( data ) {
-					videoInstances.push( new VideoBootstrap( $element[0], data.embedCode, 'licensedVideoSwap' ) );
+					// Remove styles of previous video
+					removeVerticalAlign( $element );
+
+					var videoInstance = new VideoBootstrap( $element[0], data.embedCode, 'licensedVideoSwap' );
+
+					setVerticalAlign( $element, videoInstance );
 
 					// Update swap button so it contains the dbkey of the video to swap
 					$row.find( '.swap-button' ).attr( 'data-video-swap', fileTitle );
+
+					videoInstances.push( videoInstance );
 				}
 			});
 		});
@@ -59,10 +85,16 @@ define( 'lvs.videocontrols', ['wikia.videoBootstrap'], function( VideoBootstrap 
 
 	function reset() {
 		var i,
-			len = videoInstances.length;
+			len = videoInstances.length,
+			vb;
 
-		for( i = 0; i < len; i++ ) {
-			videoInstances[i].resetToThumb();
+		for ( i = 0; i < len; i++ ) {
+			vb = videoInstances[ i ];
+
+			// revert to original html
+			removeVerticalAlign( $( vb.element ) );
+			vb.resetToThumb();
+
 		}
 	}
 
