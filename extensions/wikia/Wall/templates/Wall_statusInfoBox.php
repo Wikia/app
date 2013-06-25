@@ -6,9 +6,9 @@
 				<div class="avatar"><?= AvatarService::renderAvatar($statusInfo['user']->getName(), 20) ?></div>
 				<div class="message">
 					<? if($isreply): ?>
-						<?= wfMessage('wall-message-'.$statusInfo['status'].'-reply-because',array( 'parsemag'), array($statusInfo['user_displayname_linked']))->text(); ?><br />
+						<?= wfMessage('wall-message-'.$statusInfo['status'].'-reply-because', array($statusInfo['user_displayname_linked']))->text(); ?><br />
 					<? else: ?>
-						<?= wfMessage('wall-message-'.$statusInfo['status'].'-thread-because',array( 'parsemag'), array($statusInfo['user_displayname_linked']))->text(); ?><br />
+						<?= wfMessage('wall-message-'.$statusInfo['status'].'-thread-because', array($statusInfo['user_displayname_linked']))->text(); ?><br />
 					<? endif; ?>
 					<div class="reason"><?php echo $statusInfo['reason']; ?></div>
 					<div class="timestamp"><span><?php echo $statusInfo['fmttime']; ?></span></div>
@@ -30,10 +30,10 @@
 				<div class="avatar"><?= AvatarService::renderAvatar($statusInfo['user']->getName(), 20) ?></div>
 				<div class="message">
 					<? if ( isset($statusInfo['reason']) && mb_strlen($statusInfo['reason']) ): ?>
-						<?= wfMessage('wall-message-closed-by-because', array('parsemag'), array($statusInfo['user_displayname_linked']))->text(); ?><br>
+						<?= wfMessage('wall-message-closed-by-because', array($statusInfo['user_displayname_linked']))->text(); ?><br>
 						<div class="reason"><?php echo $statusInfo['reason']; ?></div>
 					<? else: ?>
-						<?= wfMessage('wall-message-closed-by', array('parseinline'), array($statusInfo['user']->getName(), $statusInfo['user']->getUserPage()) )->text(); ?><br>
+						<?= wfMessage('wall-message-closed-by', array($statusInfo['user']->getName(), $statusInfo['user']->getUserPage()))->text(); ?><br>
 					<? endif; ?>
 					<div class="timestamp"><span><?php echo $statusInfo['fmttime']; ?></span></div>
 				</div>
