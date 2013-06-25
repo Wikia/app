@@ -59,8 +59,10 @@ class CrossWikiCore extends AbstractWikiService
 		$service = $this->getService();
 		$data = $service->getApiStatsForWiki();
 		$response = [];
-		foreach ( $data['query']['statistics'] as $key => $val ) {
-			$response[$key . '_i'] = $val;
+		if ( (! empty( $data['query'] ) ) && (! isset( $data['query']['statistics'] ) ) ) {
+			foreach ( $data['query']['statistics'] as $key => $val ) {
+				$response[$key . '_i'] = $val;
+			}
 		}
 		$response['videos_i'] = (new WikiService)->getTotalVideos( $this->wikiId );
 		return $response;
