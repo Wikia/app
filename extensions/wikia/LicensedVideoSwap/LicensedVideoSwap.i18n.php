@@ -45,6 +45,7 @@ $messages['en'] = array(
 	'lvs-log-swap' => 'Swapped video from [[{{ns:File}}:$1]] to [[{{ns:File}}:$2]]',
 	'lvs-log-restore' => 'Restored swapped video ([[{{ns:File}}:$1]])',
 	'lvs-log-removed-redirected-link' => 'Removed redirected link',
+	'lvs-zero-state' => "There are no unlicensed videos to review or we haven't found any matches for the unlicensed videos on this wiki.",
 );
 
 $messages['qqq'] = array(
@@ -86,4 +87,5 @@ $messages['qqq'] = array(
 	'lvs-no-matching-videos' => 'Message shown when no video can be found that matches the title of the youtube video we intend to swap',
 	'lvs-log-swap' => 'log message shown in Special:RecentChanges for swapping video.',
 	'lvs-log-restore' => 'log message shown in Special:RecentChanges for restoring swapped video.',
+	'lvs-zero-state' => 'This message is displayed if there are no unlicenced videos to review on the licensed video swap page.',
 );

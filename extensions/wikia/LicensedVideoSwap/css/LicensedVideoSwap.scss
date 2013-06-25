@@ -263,3 +263,8 @@ $color-callout-text: $color-text-dark;
 body.lvs-loading {
 	overflow: hidden;
 }
+
+.lvs-zero-state {
+	border-top: 1px solid $color-page-border-subtle;
+	padding-top: 10px;
+}
