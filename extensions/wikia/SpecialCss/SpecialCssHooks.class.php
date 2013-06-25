@@ -49,10 +49,10 @@ class SpecialCssHooks {
 	 */
 	static public function onArticleSaveComplete( $article, $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, $status, $baseRevId ) {
 		if( self::titleHasCssUpdatesCat( $article->getTitle() ) ) {
-			// purging "Wikia CSS Updates" cache because a new post was added to the category
+			wfDebugLog( __CLASS__, __METHOD__ .' - purging "Wikia CSS Updates" cache because a new post was added to the category' );
 			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
 		} else if( self::prevRevisionHasCssUpdatesCat($revision) ) {
-			// purging "Wikia CSS Updates" cache because a post within the category was removed from the category
+			wfDebugLog( __CLASS__, __METHOD__ . ' - purging "Wikia CSS Updates" cache because a post within the category was removed from the category' );
 			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
 		}
 		
@@ -150,6 +150,7 @@ class SpecialCssHooks {
 	 */
 	static public function onArticleDelete( &$article, &$user, &$reason, &$error ) {
 		if( self::titleHasCssUpdatesCat( $article->getTitle() ) ) {
+			wfDebugLog( __CLASS__, __METHOD__ . ' - purging "Wikia CSS Updates" cache because a post within the category was deleted' );
 			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
 		}
 		
@@ -167,7 +168,7 @@ class SpecialCssHooks {
 	 */
 	static public function onArticleUndelete( $title, $created, $comment ) {
 		if( self::titleHasCssUpdatesCat($title) ) {
-			// purging "Wikia CSS Updates" cache because a post from its category was removed
+			wfDebugLog( __CLASS__, __METHOD__ . ' - purging "Wikia CSS Updates" cache because a post from its category was restored' );
 			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
 		}
 		
