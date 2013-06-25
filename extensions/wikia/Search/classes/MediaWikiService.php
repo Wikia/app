@@ -669,6 +669,27 @@ class MediaWikiService
 		return new \ImageServing( array( $pageId ), $width, $height );
 	}
 
+	public function getThumbnailHtml(
+		$pageId,
+		$transformParams = array( 'width' => 160 ), // WikiaGrid 1 column width
+		$htmlParams = array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true)
+	) {
+		$html = '';
+		$img = $this->getFileForPageId( $pageId );
+		if (! empty( $img ) ) {
+			$thumb = $img->transform( $transformParams );
+			$html = $thumb->toHtml( $htmlParams );
+		}
+		return $html;
+	}
+
+	protected function getFileForPageId( $pageId ) {
+		if (! isset( self::$pageIdsToFiles[$pageId] ) ) {
+			self::$pageIdsToFiles[$pageId] = $this->app->wf->FindFile( $this->getTitleFromPageId( $pageId ) );
+		}
+		return self::$pageIdsToFiles[$pageId];
+	}
+
 	/**
 	 * Returns the number of video views for a page ID.
 	 * @param int $pageId
