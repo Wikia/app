@@ -15,7 +15,7 @@
 		// render edit button with dropdown
 		else {
 ?>
-<nav class="<?= $class ?><?= isset($action['href']) ? '' : ' combined' ?>" <?= empty($id) ? '' : 'id="'.$id.'"'?>>
+<nav class="<?= $class ?><?= (isset($action['href']) || $actionName == 'submit') ? '' : ' combined' ?>" <?= empty($id) ? '' : 'id="'.$id.'"'?>>
 <?php
 			// render edit menu
 			if (isset($action['href'])) {
@@ -25,7 +25,7 @@
 	</a>
 <?php
 			}
-			else if (isset($actionName) && $actionName == 'submit') { ?>
+			else if ($actionName == 'submit') { ?>
 				<input class="<?= $action['class'] ?>" type="submit" value="<?= $action['text'] ?>"/>
 <?php
 			}
