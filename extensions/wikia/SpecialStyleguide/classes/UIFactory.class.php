@@ -81,6 +81,8 @@ class UIFactory {
 	/**
 	 * @desc Gets configuration file contents, decodes it to array and returns it
 	 * 
+	 * @todo add caching layer: planned and will be done in DAR-809
+	 * 
 	 * @param String $componentName
 	 * @return array|null
 	 */
