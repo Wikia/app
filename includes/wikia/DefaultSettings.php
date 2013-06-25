@@ -1154,3 +1154,8 @@ $app->registerHook( 'IsTrustedProxy', 'TrustedProxyService', 'onIsTrustedProxy' 
  */
 //$wgChatDebugEnabled = true;
 
+/**
+ * @name $wgSpecialStyleguideUiCompontentsPath
+ * Path to configuration of UI Styleguide components
+ */
+$wgSpecialStyleguideUiCompontentsPath = "$IP/resources/wikia/ui_components/";

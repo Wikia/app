@@ -45,7 +45,7 @@ class UIFactory {
 	static public function getInstance() {
 		if( is_null(static::$instance) ) {
 			static::$instance = new self();
-			static::$instance->setComponentsDir( realpath( dirname( __FILE__ ) . '/../../../../resources/wikia/ui_components/' ) );
+			static::$instance->setComponentsDir( F::app()->wg->SpecialStyleguideUiCompontentsPath );
 		}
 		
 		return static::$instance;
@@ -57,22 +57,26 @@ class UIFactory {
 	 * @return array
 	 */
 	public function getAllComponents() {
-		$directory = new DirectoryIterator( $this->getComponentsDir() );
 		$components = [];
 		
-		while( $directory->valid() ) {
-			if( !$directory->isDot() && $directory->isDir() ) {
-				$componentName = $directory->getFilename();
-				$componentCfg = $this->loadComponentConfig( $componentName );
-				
-				if( !empty($componentCfg) ) {
-					$components[] = $componentCfg;
-				} else {
-					wfDebugLog( __CLASS__, 'Component unavailable: ' . $componentName );
+		try {
+			$directory = new DirectoryIterator( $this->getComponentsDir() );
+
+			while( $directory->valid() ) {
+				if( !$directory->isDot() && $directory->isDir() ) {
+					$componentName = $directory->getFilename();
+					$componentCfg = $this->loadComponentConfig( $componentName );
+					
+					if( !empty($componentCfg) ) {
+						$components[] = $componentCfg;
+					} else {
+						wfDebugLog( __CLASS__, 'Component unavailable: ' . $componentName );
+					}
 				}
-				 
+				$directory->next();
 			}
-			$directory->next();
+		} catch( Exception $e ) {
+			wfDebugLog( __CLASS__, 'Invalid Styleguide components\' directory: (' . $e->getCode() . ') ' . $e->getMessage() . ' [check $wgSpecialStyleguideUiCompontentsPath variable]');
 		}
 		
 		return $components;
@@ -88,7 +92,6 @@ class UIFactory {
 	 */
 	private function loadComponentConfig( $componentName ) {
 		$configPath = realpath( $this->getComponentsDir() . '/' . $componentName . '/' . $componentName . '_config.json' );
-
 		$config = null;
 		
 		if( !is_null( $configPath ) ) {
