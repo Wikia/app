@@ -53,7 +53,6 @@ class SpecialCssController extends WikiaSpecialPageController {
 
 		$this->cssUpdates = $model->getCssUpdatesData();
 		$this->cssUpdatesUrl = $model->getCssUpdatesUrl();
-		$this->createDeleteLinks();
 		$this->dropdown = $this->createButtonLinks();
 		$this->handleAssets();
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->plain() );
@@ -82,7 +81,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 
 	protected function handleAssets() {
 		$this->response->addAsset('/extensions/wikia/SpecialCss/css/SpecialCss.scss');
-		$this->response->addAsset('/extensions/wikia/SpecialCss/js/SpecialCss.js');
+		$this->response->addAsset('special_css_js');
 		// This shouldn't be moved to asset manager package because of Ace internal autoloader
 		$this->response->addAsset('/resources/Ace/ace.js');
 
@@ -96,14 +95,14 @@ class SpecialCssController extends WikiaSpecialPageController {
 	/**
 	 * Pass delete, undelete links and information about deletion into view
 	 */
-	protected function createDeleteLinks() {
+	protected function getDeleteLinks() {
 		$this->deletedArticle = '';
 		$title = $this->getModel()->getCssFileTitle();
 		if ( !empty( $title ) ) {
 			if ( !$title->isDeleted() || $title->getArticleID() ) {
-				$this->historyUrl = $title->getLocalURL( 'action=history' );
+				$historyUrl = $title->getLocalURL( 'action=history' );
 				if ( $title->quickUserCan( 'delete', $this->wg->user ) ) {
-					$this->deleteUrl = $title->getLocalURL( 'action=delete' );
+					$deleteUrl = $title->getLocalURL( 'action=delete' );
 				}
 			} else {
 				// get message informing you that article is deleted and how you can restore it
@@ -121,10 +120,17 @@ class SpecialCssController extends WikiaSpecialPageController {
 				);
 				if ( $this->wg->user->isAllowed( 'deletedhistory' ) ) {
 					$undelTitle = SpecialPage::getTitleFor( 'Undelete' );
-					$this->undeleteUrl = $undelTitle->getLocalURL( array( 'target' => $title->getPrefixedDBkey() ) );
+					$undeleteUrl = $undelTitle->getLocalURL( array( 'target' => $title->getPrefixedDBkey() ) );
 				}
 			}
 		}
+
+		$out = [
+			'historyUrl' => isset($historyUrl) ? $historyUrl : null,
+			'deleteUrl' => isset($deleteUrl) ? $deleteUrl : null,
+			'undeleteUrl' => isset($undeleteUrl) ? $undeleteUrl : null,
+		];
+		return $out;
 	}
 
 	/**
@@ -139,11 +145,13 @@ class SpecialCssController extends WikiaSpecialPageController {
 	}
 
 	protected function createButtonLinks() {
+		$deleteLinks = $this->getDeleteLinks();
+
 		$dropdown = [];
-		if ( isset( $this->historyUrl ) ) {
+		if ( isset( $deleteLinks['historyUrl'] ) ) {
 			$dropdown[] = array(
 				'text' => wfMessage('special-css-history-button')->plain(),
-				'href' => $this->historyUrl
+				'href' => $deleteLinks['historyUrl']
 			);
 		}
 
@@ -153,16 +161,16 @@ class SpecialCssController extends WikiaSpecialPageController {
 			'text' 	=> wfMessage('special-css-compare-button')->plain()
 		);
 
-		if ( isset( $this->deleteUrl ) ) {
+		if ( isset( $deleteLinks['deleteUrl'] ) ) {
 			$dropdown[] = array(
-				'href'	=> $this->deleteUrl,
+				'href'	=> $deleteLinks['deleteUrl'],
 				'text' 	=> wfMessage('special-css-delete-button')->plain()
 			);
 		}
 
-		if ( isset( $this->undeleteUrl ) ) {
+		if ( isset( $deleteLinks['undeleteUrl'] ) ) {
 			$dropdown[] = array(
-				'href'	=> $this->undeleteUrl,
+				'href'	=> $deleteLinks['undeleteUrl'],
 				'text'	=> wfMessage('special-css-undelete-button')->plain()
 			);
 		}

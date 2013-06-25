@@ -73,3 +73,8 @@
 	<footer class="css-footer">
 	</footer>
 </form>
+<script type="text/template" id="SpecialCssLoading">
+	<div class="diffContent">
+		<img src="{{stylepath}}/common/images/ajax.gif" class="loading">
+	</div>
+</script>
