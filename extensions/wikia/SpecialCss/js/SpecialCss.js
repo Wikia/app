@@ -1,5 +1,6 @@
 $(function() {
 	require(['ace/ace'], function(ace) {
+		var disableBeforeUnload = false;
 		var EDITOR_BOTTOM_MARGIN = 10;
 
 		ace.config.set("workerPath", aceScriptsPath);
@@ -27,6 +28,7 @@ $(function() {
 		heightUpdateFunction();
 
 		$('#cssEditorForm').submit(function() {
+			disableBeforeUnload = true;
 			var hiddenInput = $('<input/>')
 				.attr('type', 'hidden')
 				.attr('name', 'cssContent')
@@ -61,7 +63,7 @@ $(function() {
 		});
 
 		$(window).bind('beforeunload', function(event) {
-			if (!$(event.target.activeElement).hasClass('css-publish-button') && editorInitContent != editorSession.getValue()) {
+			if (!disableBeforeUnload && editorInitContent != editorSession.getValue()) {
 				return $.msg('special-css-leaveconfirm-message');
 			}
 		});
