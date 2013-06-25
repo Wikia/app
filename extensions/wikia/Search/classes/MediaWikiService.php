@@ -671,23 +671,18 @@ class MediaWikiService
 
 	public function getThumbnailHtml(
 		$pageId,
-		$transformParams = array( 'width' => 160 ), // WikiaGrid 1 column width
+		$transformParams = null, // WikiaGrid 1 column width
 		$htmlParams = array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true)
 	) {
 		$html = '';
 		$img = $this->getFileForPageId( $pageId );
 		if (! empty( $img ) ) {
+			$transformParams[ 'width' ] = (isset( $transformParams[ 'width' ] ) ) ? $transformParams[ 'width' ] : static::THUMB_DEFAULT_WIDTH;
+			$transformParams[ 'height' ] = (isset( $transformParams[ 'height' ] ) ) ? $transformParams[ 'height' ] : static::THUMB_DEFAULT_HEIGHT;
 			$thumb = $img->transform( $transformParams );
 			$html = $thumb->toHtml( $htmlParams );
 		}
 		return $html;
-	}
-
-	protected function getFileForPageId( $pageId ) {
-		if (! isset( self::$pageIdsToFiles[$pageId] ) ) {
-			self::$pageIdsToFiles[$pageId] = $this->app->wf->FindFile( $this->getTitleFromPageId( $pageId ) );
-		}
-		return self::$pageIdsToFiles[$pageId];
 	}
 
 	/**

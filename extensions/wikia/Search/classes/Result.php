@@ -186,6 +186,19 @@ class Result extends ReadWrite {
 		return $this['thumbnail'];
 	}
 
+	public function getThumbnailHtml() {
+		wfProfileIn( __METHOD__ );
+		if (! isset( $this['thumbnail'] ) ) {
+			try {
+				$this['thumbnail'] = $this->service->getThumbnailHtml( $this['pageid'] );
+			} catch ( \Exception $e ) {
+				$this['thumbnail'] = '';
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		return $this['thumbnail'];
+	}
+
 	/**
 	 * get video views
 	 * @return string $videoViews
