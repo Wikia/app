@@ -17,6 +17,10 @@ h1 {
 	font-size: 2.75rem;
 	line-height: 60px;
 }
+h2 {
+	font-size: 2.25rem;
+	line-height: 44px;
+}
 
 .light-font {
 	font-weight: 200;
@@ -153,11 +157,18 @@ h1 {
 	background-color: $alter-background-color;
 }
 
+.styleguide-components-page-body {
+	padding-top: 60px;
+}
+
 .styleguide-home-page-body,
 .styleguide-components-page-body {
 	margin: 0 auto;
 	overflow: hidden;
 	width: $page-width;
+}
+
+.styleguide-home-page-body {
 
 	section {
 		@include box-sizing();
@@ -229,7 +240,7 @@ h1 {
 .styleguide-subnav {
 	border: 1px solid $color-page-border;
 	float: left;
-	margin-right: 30px;
+	margin-right: 60px;
 	width: 270px;
 	@include box-sizing();
 
@@ -254,5 +265,20 @@ h1 {
 			text-decoration: none;
 		}
 
+	}
+}
+.components {
+	float: left;
+	width: 694px
+}
+.component-item {
+	padding-bottom: 30px;
+
+	strong {
+		font-weight: bold;
+	}
+
+	p {
+		padding: 15px 0;
 	}
 }
