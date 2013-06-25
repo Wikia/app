@@ -32,12 +32,6 @@ $color-callout-text: $color-text-dark;
 	$color-callout-text: $color-text-light;
 }
 
-
-.wikinav2 .WikiaPageHeader {
-	border-bottom: none;
-	padding-bottom: 0;
-}
-
 // For now, this callout style will be specific to lvs, but we may want to make it global in the future
 .lvs-callout {
 	background: $color-buttons;
@@ -63,8 +57,8 @@ $color-callout-text: $color-text-dark;
 
 .ContentHeader {
   @include clearfix;
-  border-bottom: 1px solid $color-page-border-subtle;
-  border-top: 1px solid $color-page-border-subtle;
+  border-bottom: 1px solid $color-page-border;
+  border-top: 1px solid $color-page-border;
   margin-bottom: 18px;
   padding: 18px 0;
   > label {
@@ -269,11 +263,16 @@ body.lvs-loading {
 	padding-top: 10px;
 }
 
-.lvs-instructions {
+
+.WikiaArticle .lvs-instructions {
+	padding: 4px 0 14px;
 	h2 {
 		border-bottom: none;
 		font-size: 16px;
-		margin-bottom: 0;
+		margin: 0;
 		padding-bottom: 0;
+	}
+	p {
+		margin: 0;
 	}
 }
