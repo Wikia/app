@@ -225,3 +225,34 @@ h1 {
 		}
 	}
 }
+
+.styleguide-subnav {
+	border: 1px solid $color-page-border;
+	float: left;
+	margin-right: 30px;
+	width: 270px;
+	@include box-sizing();
+
+	li {
+		border-top: 1px solid $color-page-border;
+		padding: 15px;
+
+		&:first-child {
+			border-top: none;
+		}
+
+		&:hover {
+			background-color: $color-header;
+
+			a {
+				color: $color-header-text;
+			}
+		}
+
+		a {
+			display: block;
+			text-decoration: none;
+		}
+
+	}
+}
