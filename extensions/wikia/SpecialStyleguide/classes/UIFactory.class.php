@@ -1,6 +1,14 @@
 <?php
 class UIFactory {
 	/**
+	 * @desc Component's configuration file suffix
+	 * Example buttons component config file should be named buttons_config.json
+	 * 
+	 * @var String
+	 */
+	const CONFIG_FILE_SUFFIX = '_config.json';
+	
+	/**
 	 * @var UIFactory
 	 */
 	private static $instance = null;
@@ -91,15 +99,25 @@ class UIFactory {
 	 * @return array|null
 	 */
 	private function loadComponentConfig( $componentName ) {
-		$configPath = realpath( $this->getComponentsDir() . '/' . $componentName . '/' . $componentName . '_config.json' );
+		$configPath = $this->getComponentsDir() . $componentName . '/' . $componentName . self::CONFIG_FILE_SUFFIX;
 		$config = null;
 		
-		if( !is_null( $configPath ) ) {
-			$configContent = file_get_contents($configPath);
+		if( file_exists( $configPath ) && ( $configContent = file_get_contents( $configPath ) ) ) {
 			$config = json_decode( $configContent, true );
+			
+			if( !is_null( $config )) {
+				$this->addComponentsId( $config );
+			} else {
+				wfDebugLog( __CLASS__, "Invalid JSON in config file: " . $configPath );
+				$config = [];
+			}
+			
+		} else {
+			wfDebugLog( __CLASS__, "Invalid component's config file: " . $configPath );
+			$config = [];
 		}
 		
-		return $this->addComponentsId( $config );
+		return $config;
 	}
 	
 	private function addComponentsId( $componentCfg ) {
