@@ -516,4 +516,46 @@ abstract class VideoFeedIngester {
 		}
 	}
 
+	/**
+	 * get industry rating
+	 * @param string $rating
+	 * @return string $stdRating
+	 */
+	protected function getIndustryRating( $rating ) {
+		$name = trim( strtolower( $rating ) );
+		switch( $name ) {
+			case 'everyone':
+			case 'early childhood':
+				$stdRating = 'EC';
+				break;
+			case 'everyone 10 or older':
+				$stdRating = 'E10+';
+				break;
+			case 'little or no violence':
+				$stdRating = 'E';
+				break;
+			case 'teen':
+			case 'some violence':
+				$stdRating = 'T';
+				break;
+			case 'mature':
+			case 'extreme or graphic violence':
+				$stdRating = 'M';
+				break;
+			case 'adults only':
+				$stdRating = 'AO';
+				break;
+			case 'pending':
+			case 'rating pending':
+				$stdRating = '';
+				break;
+			case 'not rated':
+				$stdRating = 'NR';
+				break;
+			default: $stdRating = $rating;
+		}
+
+		return $stdRating;
+	}
+
 }
