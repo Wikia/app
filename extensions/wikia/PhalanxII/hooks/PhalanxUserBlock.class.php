@@ -37,31 +37,67 @@ class PhalanxUserBlock extends WikiaObject {
 		return $ret;
 	}
 
-	public function userCanSendEmail( &$user, &$canSend ) {
-		$canSend = $this->blockCheck( $user );
+	/**
+	 * setter
+	 * @param string $type -- type of block
+	 */
+	public function setTypeBlock( $type ) {
+		$this->typeBlock = $type;
+	}
+
+	/**
+	 * getter
+	 */
+	public function getTypeBlock( $type ) {
+		return $this->typeBlock;
+	}
+
+	/**
+	 * hook
+	 *
+	 * @static
+	 */
+	static public function userCanSendEmail( &$user, &$canSend ) {
+		$userBlock = new PhalanxUserBlock();
+		$canSend = $userBlock->blockCheck( $user );
 		return true;
 	}
 
-	public function abortNewAccount( $user, &$abortError ) {
+	/**
+	 * hook
+	 * 
+	 * @static
+	 */
+	static public function abortNewAccount( $user, &$abortError ) {
 		wfProfileIn( __METHOD__ );
-		$ret = $this->blockCheck( $user );
+		$userBlock = new PhalanxUserBlock();
+
+		$ret = $userBlock->blockCheck( $user );
 
 		if ( $ret === false ) {
-			$abortError = wfMsg( ( $this->typeBlock == 'email' ) ? 'phalanx-email-block-new-account' :
-																	 'phalanx-user-block-new-account' );
+			$abortError = wfMsg( ( $userBlock->getTypeBlock() == 'email' )
+				? 'phalanx-email-block-new-account'
+				: 'phalanx-user-block-new-account'
+			);
 		}
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 
-	public function validateUserName( $userName, &$abortError ) {
+	/**
+	 * hook
+	 * 
+	 * @static
+	 */
+	static public function validateUserName( $userName, &$abortError ) {
 		wfProfileIn( __METHOD__ );
 
 		$user = User::newFromName( $userName );
 		if ( $user instanceof User ) {
-			$ret = $this->abortNewAccount( $user, $abortError );
-		} else { 
+			$ret = PhalanxUserBlock::abortNewAccount( $user, $abortError );
+		}
+		else {
 			$ret = false;
 		}
 
