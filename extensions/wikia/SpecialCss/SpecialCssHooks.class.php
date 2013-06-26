@@ -48,12 +48,15 @@ class SpecialCssHooks {
 	 * @return true because it's a hook
 	 */
 	static public function onArticleSaveComplete( $article, $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, $status, $baseRevId ) {
-		if( self::titleHasCssUpdatesCat( $article->getTitle() ) ) {
-			wfDebugLog( __CLASS__, __METHOD__ .' - purging "Wikia CSS Updates" cache because a new post was added to the category' );
-			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
-		} else if( self::prevRevisionHasCssUpdatesCat($revision) ) {
-			wfDebugLog( __CLASS__, __METHOD__ . ' - purging "Wikia CSS Updates" cache because a post within the category was removed from the category' );
-			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
+		global $wgDBname, $wgCssUpdatesLangMap;
+		if ( in_array($wgDBname, $wgCssUpdatesLangMap) ) {
+			if( self::titleHasCssUpdatesCat( $article->getTitle() ) ) {
+				// purging "Wikia CSS Updates" cache because a new post was added to the category
+				WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY, $wgDBname ) );
+			} else if( self::prevRevisionHasCssUpdatesCat($revision) ) {
+				// purging "Wikia CSS Updates" cache because a post within the category was removed from the category
+				WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY, $wgDBname ) );
+			}
 		}
 		
 		return true;
@@ -149,9 +152,9 @@ class SpecialCssHooks {
 	 * @return true because it's a hook
 	 */
 	static public function onArticleDelete( &$article, &$user, &$reason, &$error ) {
-		if( self::titleHasCssUpdatesCat( $article->getTitle() ) ) {
-			wfDebugLog( __CLASS__, __METHOD__ . ' - purging "Wikia CSS Updates" cache because a post within the category was deleted' );
-			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
+		global $wgDBname, $wgCssUpdatesLangMap;
+		if( in_array($wgDBname, $wgCssUpdatesLangMap) && self::titleHasCssUpdatesCat( $article->getTitle() ) ) {
+				WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY, $wgDBname ) );
 		}
 		
 		return true;
@@ -167,9 +170,10 @@ class SpecialCssHooks {
 	 * @return bool
 	 */
 	static public function onArticleUndelete( $title, $created, $comment ) {
-		if( self::titleHasCssUpdatesCat($title) ) {
-			wfDebugLog( __CLASS__, __METHOD__ . ' - purging "Wikia CSS Updates" cache because a post from its category was restored' );
-			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
+		global $wgDBname, $wgCssUpdatesLangMap;
+		if( in_array($wgDBname, $wgCssUpdatesLangMap) && self::titleHasCssUpdatesCat($title) ) {
+			// purging "Wikia CSS Updates" cache because a post from its category was removed
+			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY, $wgDBname ) );
 		}
 		
 		return true;

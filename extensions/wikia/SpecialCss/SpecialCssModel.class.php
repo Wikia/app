@@ -43,7 +43,7 @@ class SpecialCssModel extends WikiaModel {
 	 */
 	const MEMC_KEY = 'css-chrome-updates';
 
-	protected $langCode;
+	protected $dbName;
 	
 	/**
 	 * @var array List of skins for which we would like to use SpecialCss for editing css file
@@ -180,11 +180,11 @@ class SpecialCssModel extends WikiaModel {
 	 * @return array
 	 */
 	public function getCssUpdatesData($postsParams = [], $revisionsParams = []) {
-		$lang = $this->getUserLang();
+		$dbName = $this->getCommunityDbName();
 		$cssUpdatesPosts = WikiaDataAccess::cache(
 			wfSharedMemcKey(
 				self::MEMC_KEY,
-				$lang
+				$dbName
 			),
 			60 * 60 * 24,
 			function () use ($postsParams, $revisionsParams) {
@@ -456,14 +456,16 @@ class SpecialCssModel extends WikiaModel {
 	private function getCommunityDbName() {
 		global $wgDevelEnvironment;
 
-		$lang = $this->getUserLang();
-		$dbName = $this->getDbNameByLang($lang);
+		if ( empty($this->dbName) ) {
+			$lang = $this->getCssUpdateLang();
+			$this->dbName = $this->getDbNameByLang($lang);
 
-		if ( $wgDevelEnvironment  ) {
-			$dbName = $this->getMockedDbNameByLang($lang);
+			if ( $wgDevelEnvironment  ) {
+				$this->dbName = $this->getMockedDbNameByLang($lang);
+			}
 		}
 
-		return $dbName;
+		return $this->dbName;
 	}
 
 	/**
@@ -472,18 +474,16 @@ class SpecialCssModel extends WikiaModel {
 	 *
 	 * @return string language code
 	 */
-	private function getUserLang() {
+	private function getCssUpdateLang() {
 		global $wgLang, $wgCssUpdatesLangMap;
 
-		if ( empty($this->langCode) ) {
-			$this->langCode = $wgLang->getCode();
+		$langCode = $wgLang->getCode();
 
-			if ( !array_key_exists($this->langCode, $wgCssUpdatesLangMap) ) {
-				$this->langCode = self::CSS_DEFAULT_LANG;
-			}
+		if ( !array_key_exists($langCode, $wgCssUpdatesLangMap) ) {
+			$langCode = self::CSS_DEFAULT_LANG;
 		}
 
-		return $this->langCode;
+		return $langCode;
 	}
 
 	/**
@@ -495,7 +495,9 @@ class SpecialCssModel extends WikiaModel {
 	private function getDbNameByLang($lang) {
 		global $wgCssUpdatesLangMap;
 
-		return $wgCssUpdatesLangMap[$lang];
+		$dbName = isset($wgCssUpdatesLangMap[$lang]) ? $wgCssUpdatesLangMap[$lang] : $wgCssUpdatesLangMap[self::CSS_DEFAULT_LANG];
+
+		return $dbName;
 	}
 
 	/**
