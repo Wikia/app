@@ -126,4 +126,18 @@ class OnWiki extends AbstractSelect
 		$queryClauses[] = "({$nsQuery})";
 		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
 	}
+	
+	/**
+	 * Builds the string used with filter queries based on search config
+	 * @return string
+	 */
+	protected function getFilterQueryString()
+	{
+		return '';
+		$namespaces = [];
+		foreach ( $this->config->getNamespaces() as $ns ) {
+			$namespaces[] = Utilities::valueForField( 'ns', $ns );
+		}
+		return implode( ' AND ', [ sprintf( '(%s)', implode( ' OR ', $namespaces ) ), Utilities::valueForField( 'wid', $this->config->getCityId() ) ] );
+	}
 }
