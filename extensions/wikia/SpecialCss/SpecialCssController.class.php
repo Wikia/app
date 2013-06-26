@@ -12,7 +12,6 @@ class SpecialCssController extends WikiaSpecialPageController {
 	 * @return bool
 	 */
 	public function index() {
-		global $wgCssUpdatesLangMap;
 		wfProfileIn(__METHOD__);
 		
 		if( $this->checkPermissions() ) {
