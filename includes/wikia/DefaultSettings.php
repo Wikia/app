@@ -1153,9 +1153,3 @@ $app->registerHook( 'IsTrustedProxy', 'TrustedProxyService', 'onIsTrustedProxy' 
  * Enables verbose logging from chat
  */
 //$wgChatDebugEnabled = true;
-
-/**
- * @name $wgSpecialStyleguideUiCompontentsPath
- * Path to configuration of UI Styleguide components
- */
-$wgSpecialStyleguideUiCompontentsPath = "$IP/resources/wikia/ui_components/";
