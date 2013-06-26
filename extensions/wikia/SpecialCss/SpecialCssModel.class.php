@@ -4,7 +4,12 @@ class SpecialCssModel extends WikiaModel {
 	 * @desc The article page name of CSS file of which content we display in the editor
 	 */
 	const CSS_FILE_NAME = 'Wikia.css';
-	
+
+	/**
+	 * @desc Default language for CSS Updates
+	 */
+	const CSS_DEFAULT_LANG = 'en';
+
 	/**
 	 * @desc User avatar size
 	 */
@@ -37,6 +42,8 @@ class SpecialCssModel extends WikiaModel {
 	 * @desc Memcache key for CSS Updates
 	 */
 	const MEMC_KEY = 'css-chrome-updates';
+
+	protected $langCode;
 	
 	/**
 	 * @var array List of skins for which we would like to use SpecialCss for editing css file
@@ -173,8 +180,12 @@ class SpecialCssModel extends WikiaModel {
 	 * @return array
 	 */
 	public function getCssUpdatesData($postsParams = [], $revisionsParams = []) {
+		$lang = $this->getUserLang();
 		$cssUpdatesPosts = WikiaDataAccess::cache(
-			wfSharedMemcKey(self::MEMC_KEY),
+			wfSharedMemcKey(
+				self::MEMC_KEY,
+				$lang
+			),
 			60 * 60 * 24,
 			function () use ($postsParams, $revisionsParams) {
 				$cssUpdatesPosts = [];
@@ -444,13 +455,59 @@ class SpecialCssModel extends WikiaModel {
 	 */
 	private function getCommunityDbName() {
 		global $wgDevelEnvironment;
-		$dbName = 'wikia';
 
-		if ( $wgDevelEnvironment ) {
-			$dbName = 'community';
+		$lang = $this->getUserLang();
+		$dbName = $this->getDbNameByLang($lang);
+
+		if ( $wgDevelEnvironment  ) {
+			$dbName = $this->getMockedDbNameByLang($lang);
 		}
 
 		return $dbName;
+	}
+
+	/**
+	 * @desc Returns language code for CSS updates.
+	 * If user preferred language is not supported, then is set to default (english)
+	 *
+	 * @return string language code
+	 */
+	private function getUserLang() {
+		global $wgLang, $wgCssUpdatesLangMap;
+
+		if ( empty($this->langCode) ) {
+			$this->langCode = $wgLang->getCode();
+
+			if ( !array_key_exists($this->langCode, $wgCssUpdatesLangMap) ) {
+				$this->langCode = self::CSS_DEFAULT_LANG;
+			}
+		}
+
+		return $this->langCode;
+	}
+
+	/**
+	 * @desc Returns database name for getting CSS updates in selected language
+	 *
+	 * @param $lang language code
+	 * @return string database name
+	 */
+	private function getDbNameByLang($lang) {
+		global $wgCssUpdatesLangMap;
+
+		return $wgCssUpdatesLangMap[$lang];
+	}
+
+	/**
+	 * @desc Returns mocked database name for getting CSS updates in selected language
+	 *
+	 * @param $lang language code
+	 * @return string database name
+	 */
+	private function getMockedDbNameByLang($lang) {
+		$wgCssUpdatesLangMap = $this->getMockedLangMap();
+
+		return $wgCssUpdatesLangMap[$lang];
 	}
 
 
@@ -502,5 +559,23 @@ class SpecialCssModel extends WikiaModel {
 			'rvsection' => self::UPDATE_SECTION_IN_BLOGPOST,
 			'pageids' => $ids
 		];
+	}
+
+	/**
+	 * @desc Mapping language to database name for devboxes
+	 *
+	 * @return array
+	 */
+	private function getMockedLangMap() {
+		// There is no database copy for FR, RU and IT on devboxes
+		return array (
+			'en' => 'community',
+			'pl' => 'pl.community',
+			'de' => 'de.community',
+			'fr' => 'frfr',
+			'es' => 'es.community',
+			'ru' => 'ruwikia',
+			'it' => 'it',
+		);
 	}
 }

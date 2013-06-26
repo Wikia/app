@@ -57,3 +57,14 @@ $wgGroupPermissions['util']['specialcss'] = true;
 $wgGroupPermissions['vstf']['specialcss'] = false;
 $wgGroupPermissions['helper']['specialcss'] = false;
 $wgGroupPermissions['sysop']['specialcss'] = true;
+
+//mapping community central language to it's database name
+$wgCssUpdatesLangMap = array (
+	'en' => 'wikia',
+	'pl' => 'plwikia',
+	'de' => 'de',
+	'fr' => 'frfr',
+	'es' => 'es',
+	'ru' => 'ruwikia',
+	'it' => 'it',
+);
