@@ -43,13 +43,27 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// list of videos
 		$helper = new LicensedVideoSwapHelper();
-		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage );
+		$videoList = array();
+
+		// Keep calling getRegularVideoList until we get back enough videos
+		while ( count($videoList) < LicensedVideoSwapHelper::VIDEOS_PER_PAGE ) {
+
+			// Get the list of videos that have suggestions
+			$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage );
+
+			// If we don't have enough videos and there aren't more videos available, break
+			if ( ( count($videoList) < LicensedVideoSwapHelper::VIDEOS_PER_PAGE ) &&
+				 ( count($videoList) >= $helper->getUnswappedVideoTotal() ) ) {
+				break;
+			}
+		}
+
 		$this->videoList = $videoList;
 		$this->thumbWidth = LicensedVideoSwapHelper::THUMBNAIL_WIDTH;
 		$this->thumbHeight = LicensedVideoSwapHelper::THUMBNAIL_HEIGHT;
 
 		// Set up pagination
-		$this->pagination = $helper->getPagination( $currentPage, $selectedSort );
+		$this->pagination = ''; //$helper->getPagination( $currentPage, $selectedSort );
 
 		// sort options
 		$videoHelper = new VideoHandlerHelper();
