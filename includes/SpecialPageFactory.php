@@ -44,7 +44,7 @@ class SpecialPageFactory {
 		'Withoutinterwiki'          => 'WithoutinterwikiPage',
 		'Protectedpages'            => 'SpecialProtectedpages',
 		'Protectedtitles'           => 'SpecialProtectedtitles',
-		'Shortpages'                => 'ShortpagesPage',
+		'Shortpages'                => 'ShortPagesPage',
 		'Uncategorizedcategories'   => 'UncategorizedcategoriesPage',
 		'Uncategorizedimages'       => 'UncategorizedimagesPage',
 		'Uncategorizedpages'        => 'UncategorizedPagesPage',
