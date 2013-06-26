@@ -218,7 +218,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage );
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
-		$this->html .= $helper->getPagination( $currentPage, $selectedSort );
+		//$this->html .= $helper->getPagination( $currentPage, $selectedSort );
 		$this->result = 'ok';
 
 		$fileOptions = array(
@@ -292,7 +292,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage );
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
-		$this->html .= $helper->getPagination( $currentPage, $selectedSort );
+		//$this->html .= $helper->getPagination( $currentPage, $selectedSort );
 		$this->result = 'ok';
 
 		$undoOptions = array(
@@ -397,7 +397,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage );
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
-		$this->html .= $helper->getPagination( $currentPage, $selectedSort );
+		//$this->html .= $helper->getPagination( $currentPage, $selectedSort );
 		$this->result = 'ok';
 		$this->msg = wfMessage( 'lvs-restore-video-success' )->text();
 	}
