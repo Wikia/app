@@ -2031,7 +2031,7 @@ class MediaWikiServiceTest extends BaseTest
 		$service
 			->expects( $this->at( 0 ) )
 			->method ( 'getImageServing' )
-			->with	 ( [0], 100, 100 )
+			->with	 ( 0, 100, 100 )
 			->will	 ( $this->returnValue( $mockImgServing ) )
 		;
 
@@ -2043,7 +2043,7 @@ class MediaWikiServiceTest extends BaseTest
 		$service
 			->expects( $this->at( 0 ) )
 			->method ( 'getImageServing' )
-			->with	 ( [0], 100, MediaWikiService::THUMB_DEFAULT_HEIGHT )
+			->with	 ( 0, 100, MediaWikiService::THUMB_DEFAULT_HEIGHT )
 			->will	 ( $this->returnValue( $mockImgServing ) )
 		;
 
@@ -2055,7 +2055,7 @@ class MediaWikiServiceTest extends BaseTest
 		$service
 			->expects( $this->at( 0 ) )
 			->method ( 'getImageServing' )
-			->with	 ( [0], MediaWikiService::THUMB_DEFAULT_WIDTH, 100 )
+			->with	 ( 0, MediaWikiService::THUMB_DEFAULT_WIDTH, 100 )
 			->will	 ( $this->returnValue( $mockImgServing ) )
 		;
 
@@ -2067,7 +2067,7 @@ class MediaWikiServiceTest extends BaseTest
 		$service
 			->expects( $this->at( 0 ) )
 			->method ( 'getImageServing' )
-			->with	 ( [0], MediaWikiService::THUMB_DEFAULT_WIDTH, MediaWikiService::THUMB_DEFAULT_HEIGHT )
+			->with	 ( 0, MediaWikiService::THUMB_DEFAULT_WIDTH, MediaWikiService::THUMB_DEFAULT_HEIGHT )
 			->will	 ( $this->returnValue( $mockImgServing ) )
 		;
 
@@ -2077,6 +2077,9 @@ class MediaWikiServiceTest extends BaseTest
 		);
 	}
 
+	/**
+	 * @covers Wikia\Search\MediaWikiService::getThumbnailUrl
+	 */
 	public function testGetThumbnailUrlNoResults() {
 		$mockImgServing = $this->getMockBuilder( 'ImageServing' )
 			->disableOriginalConstructor()
@@ -2087,7 +2090,7 @@ class MediaWikiServiceTest extends BaseTest
 		$service
 			->expects( $this->once() )
 			->method ( 'getImageServing' )
-			->with	 ( [0], MediaWikiService::THUMB_DEFAULT_WIDTH, MediaWikiService::THUMB_DEFAULT_HEIGHT )
+			->with	 ( 0, MediaWikiService::THUMB_DEFAULT_WIDTH, MediaWikiService::THUMB_DEFAULT_HEIGHT )
 			->will	 ( $this->returnValue( $mockImgServing ) )
 		;
 
@@ -2102,147 +2105,124 @@ class MediaWikiServiceTest extends BaseTest
 			$service->getThumbnailUrl( 0 )
 		);
 	}
-	
-//	/**
-//	 * @covers Wikia\Search\MediaWikiService::getThumbnailHtmlFromFilePageId
-//	 */
-//	public function testGetThumbnailHtmlFromFilePageId() {
-//		$service = $this->service->setMethods( array( 'getFileForPageId' ) )->getMock();
-//		$mockFile = $this->getMockBuilder( 'File' )
-//		                 ->disableOriginalConstructor()
-//		                 ->setMethods( array( 'transform' ) )
-//		                 ->getMock();
-//		$mockTransform = $this->getMockBuilder( 'MediaTransformOutput' )
-//		                      ->disableOriginalConstructor()
-//		                      ->setMethods( array( 'toHtml' ) )
-//		                      ->getMock();
-//		$html = 'this value does not matter';
-//		$service
-//		    ->expects( $this->once() )
-//		    ->method ( 'getFileForPageId' )
-//		    ->with   ( $this->pageId )
-//		    ->will   ( $this->returnValue( $mockFile ) )
-//		;
-//		$mockFile
-//		    ->expects( $this->once() )
-//		    ->method ( 'transform' )
-//		    ->with   ( array( 'width' => 160, 'height' => 100 ) )
-//		    ->will   ( $this->returnValue( $mockTransform ) )
-//		;
-//		$mockTransform
-//		    ->expects( $this->once() )
-//		    ->method ( 'toHtml' )
-//		    ->with   ( array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) )
-//		    ->will   ( $this->returnValue( $html ) )
-//		;
-//		$get = new ReflectionMethod( $service, 'getThumbnailHtmlFromFilePageId' );
-//		$get->setAccessible( true );
-//		$this->assertEquals(
-//				$html,
-//				$get->invoke( $service, $this->pageId )
-//		);
-//	}
-//
-//	/**
-//	 * @covers Wikia\Search\MediaWikiService::getThumbnailHtmlForPageId
-//	 */
-//	public function testGetThumbnailHtmlWithFilePageId() {
-//		$service = $this->service->setMethods( [ 'getThumbnailHtmlFromFilePageId', 'getThumbnailHtmlFromArticlePageId' ] )->getMock();
-//		$expectedHtml = 'this value does not really matter';
-//		$service
-//		    ->expects( $this->once() )
-//		    ->method ( 'getThumbnailHtmlFromFilePageId' )
-//		    ->with   ( $this->pageId )
-//		    ->will   ( $this->returnValue( $expectedHtml ) )
-//		;
-//		$service
-//		    ->expects( $this->never() )
-//		    ->method ( 'getThumbnailHtmlFromArticlePageId' )
-//		    ->will   ( $this->returnValue( $expectedHtml ) )
-//		;
-//		$this->assertEquals(
-//				$expectedHtml,
-//				$service->getThumbnailHtmlForPageId( $this->pageId )
-//		);
-//	}
-//
-//	/**
-//	 * @covers Wikia\Search\MediaWikiService::getThumbnailHtmlForPageId
-//	 */
-//	public function testGetThumbnailHtmlWithArticlePageId() {
-//		$service = $this->service->setMethods( [ 'getThumbnailHtmlFromFilePageId', 'getThumbnailHtmlFromArticlePageId' ] )->getMock();
-//		$expectedHtml = 'this value does not really matter';
-//		$service
-//		    ->expects( $this->once() )
-//		    ->method ( 'getThumbnailHtmlFromFilePageId' )
-//		    ->with   ( $this->pageId )
-//		    ->will   ( $this->returnValue( '' ) )
-//		;
-//		$service
-//		    ->expects( $this->once() )
-//		    ->method ( 'getThumbnailHtmlFromArticlePageId' )
-//		    ->with   ( $this->pageId )
-//		    ->will   ( $this->returnValue( $expectedHtml ) )
-//		;
-//		$this->assertEquals(
-//				$expectedHtml,
-//				$service->getThumbnailHtmlForPageId( $this->pageId )
-//		);
-//	}
-//
-//	/**
-//	 * @covers Wikia\Search\MediaWikiService::getThumbnailHtmlFromArticlePageId
-//	 * look at how little we have to test here because imageserving has so much constructor logic. blech.
-//	 */
-//	public function testGetThumbnailHtmlFromArticlePage() {
-//		$service = $this->service->setMethods( null )->getMock();
-//		$imageService = $this->getMockBuilder( 'ImageServing' )
-//		                     ->disableOriginalConstructor()
-//		                     ->setMethods( [ 'getImages' ] )
-//		                     ->getMock();
-//
-//		$imageResult = [ $this->pageId => [ [ 'url' => 'http://imageurl.com/', 'name' => 'spitting image' ] ] ];
-//
-//		$imageService
-//		    ->expects( $this->once() )
-//		    ->method ( 'getImages' )
-//		    ->with   ( 1 )
-//		    ->will   ( $this->returnValue( $imageResult ) )
-//		;
-//		$get = new ReflectionMethod( $service, 'getThumbnailHtmlFromArticlePageId' );
-//		$get->setAccessible( true );
-//		$this->proxyClass( 'ImageServing', $imageService );
-//		$this->mockApp();
-//		$this->assertEquals(
-//				sprintf( '<img src="%s", alt="%s">', $imageResult[$this->pageId][0]['url'], $imageResult[$this->pageId][0]['name'] ),
-//				$get->invoke( $service, $this->pageId )
-//		);
-//	}
-//
-//	/**
-//	 * @covers Wikia\Search\MediaWikiService::getThumbnailHtmlFromArticlePageId
-//	 */
-//	public function testGetThumbnailHtmlFromArticlePageNoResult() {
-//		$service = $this->service->setMethods( null )->getMock();
-//		$imageService = $this->getMockBuilder( 'ImageServing' )
-//		                     ->disableOriginalConstructor()
-//		                     ->setMethods( [ 'getImages' ] )
-//		                     ->getMock();
-//		$imageService
-//		    ->expects( $this->once() )
-//		    ->method ( 'getImages' )
-//		    ->with   ( 1 )
-//		    ->will   ( $this->returnValue( [] ) )
-//		;
-//		$get = new ReflectionMethod( $service, 'getThumbnailHtmlFromArticlePageId' );
-//		$get->setAccessible( true );
-//		$this->proxyClass( 'ImageServing', $imageService );
-//		$this->mockApp();
-//		$this->assertEquals(
-//				'',
-//				$get->invoke( $service, $this->pageId )
-//		);
-//	}
+
+	/**
+	 * @covers Wikia\Search\MediaWikiService::getThumbnailHtml
+	 */
+	public function testGetThumbnailHtml() {
+		$service = $this->service->setMethods( array( 'getImageServing', 'getFileForPageId' ) )->getMock();
+		$imgObj = $this->getMockBuilder( 'WikiaLocalFile' )
+			->disableOriginalConstructor()
+			->setMethods( array( 'transform' ) )
+			->getMock();
+		//	ThumbnailImage
+		$thumbObj = $this->getMockBuilder( 'ThumbnailVideo' )
+			->disableOriginalConstructor()
+			->setMethods( array( 'toHtml' ) )
+			->getMock();
+		//default value return ''
+		$service
+			->expects	( $this->at( 0 ) )
+			->method	( 'getFileForPageId' )
+			->with		( 0 )
+			->will		( $this->returnValue( false ) )
+		;
+		$this->assertEmpty(
+			$service->getThumbnailHtml( 0 )
+		);
+		//something returned
+		$service
+			->expects	( $this->at( 0 ) )
+			->method	( 'getFileForPageId' )
+			->with		( 0 )
+			->will		( $this->returnValue( $imgObj ) )
+		;
+		$imgObj
+			->expects	( $this->at( 0 ) )
+			->method	( 'transform' )
+			->with		( array( 'width' => MediaWikiService::THUMB_DEFAULT_WIDTH, 'height' => MediaWikiService::THUMB_DEFAULT_HEIGHT ) )
+			->will		( $this->returnValue( $thumbObj ) )
+		;
+		$thumbObj
+			->expects	( $this->at( 0 ) )
+			->method	( 'toHtml' )
+			->with		( array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) )
+			->will		( $this->returnValue( '<html></html>' ) )
+		;
+		$this->assertEquals(
+			'<html></html>',
+			$service->getThumbnailHtml( 0 )
+		);
+
+		$service
+			->expects	( $this->at( 0 ) )
+			->method	( 'getFileForPageId' )
+			->with		( 0 )
+			->will		( $this->returnValue( $imgObj ) )
+		;
+		$imgObj
+			->expects	( $this->at( 0 ) )
+			->method	( 'transform' )
+			->with		( array( 'width' => MediaWikiService::THUMB_DEFAULT_WIDTH, 'height' => 100 ) )
+			->will		( $this->returnValue( $thumbObj ) )
+		;
+		$thumbObj
+			->expects	( $this->at( 0 ) )
+			->method	( 'toHtml' )
+			->with		( array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) )
+			->will		( $this->returnValue( '<html></html>' ) )
+		;
+		$this->assertEquals(
+			'<html></html>',
+			$service->getThumbnailHtml( 0, array( 'height' => 100 ) )
+		);
+
+		$service
+			->expects	( $this->at( 0 ) )
+			->method	( 'getFileForPageId' )
+			->with		( 0 )
+			->will		( $this->returnValue( $imgObj ) )
+		;
+		$imgObj
+			->expects	( $this->at( 0 ) )
+			->method	( 'transform' )
+			->with		( array( 'width' => 100, 'height' => MediaWikiService::THUMB_DEFAULT_HEIGHT ) )
+			->will		( $this->returnValue( $thumbObj ) )
+		;
+		$thumbObj
+			->expects	( $this->at( 0 ) )
+			->method	( 'toHtml' )
+			->with		( array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) )
+			->will		( $this->returnValue( '<html></html>' ) )
+		;
+		$this->assertEquals(
+			'<html></html>',
+			$service->getThumbnailHtml( 0, array( 'width' => 100 ) )
+		);
+
+		$service
+			->expects	( $this->at( 0 ) )
+			->method	( 'getFileForPageId' )
+			->with		( 0 )
+			->will		( $this->returnValue( $imgObj ) )
+		;
+		$imgObj
+			->expects	( $this->at( 0 ) )
+			->method	( 'transform' )
+			->with		( array( 'width' => 1, 'height' => 1 ) )
+			->will		( $this->returnValue( $thumbObj ) )
+		;
+		$thumbObj
+			->expects	( $this->at( 0 ) )
+			->method	( 'toHtml' )
+			->with		( array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) )
+			->will		( $this->returnValue( '<html></html>' ) )
+		;
+		$this->assertEquals(
+			'<html></html>',
+			$service->getThumbnailHtml( 0, array( 'width' => 1, 'height' => 1 ) )
+		);
+	}
 	
 	/**
 	 * @covers Wikia\Search\MediaWikiService::getVideoViewsForPageId
