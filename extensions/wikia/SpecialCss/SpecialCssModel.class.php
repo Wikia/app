@@ -4,7 +4,12 @@ class SpecialCssModel extends WikiaModel {
 	 * @desc The article page name of CSS file of which content we display in the editor
 	 */
 	const CSS_FILE_NAME = 'Wikia.css';
-	
+
+	/**
+	 * @desc Default language for CSS Updates
+	 */
+	const CSS_DEFAULT_LANG = 'en';
+
 	/**
 	 * @desc User avatar size
 	 */
@@ -37,6 +42,8 @@ class SpecialCssModel extends WikiaModel {
 	 * @desc Memcache key for CSS Updates
 	 */
 	const MEMC_KEY = 'css-chrome-updates';
+
+	protected $langCode;
 	
 	/**
 	 * @var array List of skins for which we would like to use SpecialCss for editing css file
@@ -173,8 +180,12 @@ class SpecialCssModel extends WikiaModel {
 	 * @return array
 	 */
 	public function getCssUpdatesData($postsParams = [], $revisionsParams = []) {
+		$lang = $this->getUserLang();
 		$cssUpdatesPosts = WikiaDataAccess::cache(
-			wfSharedMemcKey(self::MEMC_KEY),
+			wfSharedMemcKey(
+				self::MEMC_KEY,
+				$lang
+			),
 			60 * 60 * 24,
 			function () use ($postsParams, $revisionsParams) {
 				$cssUpdatesPosts = [];
@@ -444,13 +455,35 @@ class SpecialCssModel extends WikiaModel {
 	 */
 	private function getCommunityDbName() {
 		global $wgDevelEnvironment;
-		$dbName = 'wikia';
 
-		if ( $wgDevelEnvironment ) {
+		$lang = $this->getUserLang();
+		$dbName = $this->getDbNameByLang($lang);
+
+		if ( $wgDevelEnvironment && $lang == 'en' ) {
 			$dbName = 'community';
 		}
 
 		return $dbName;
+	}
+
+	private function getUserLang() {
+		global $wgLang, $wgCssUpdatesLangMap;
+
+		if ( empty($this->langCode) ) {
+			$this->langCode = $wgLang->getCode();
+
+			if ( !array_key_exists($this->langCode, $wgCssUpdatesLangMap) ) {
+				$this->langCode = self::CSS_DEFAULT_LANG;
+			}
+		}
+
+		return $this->langCode;
+	}
+
+	private function getDbNameByLang($lang) {
+		global $wgCssUpdatesLangMap;
+
+		return $wgCssUpdatesLangMap[$lang];
 	}
 
 
