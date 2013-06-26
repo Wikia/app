@@ -9,9 +9,9 @@ jQuery(function($) {
 
 			this.dropdown = new Wikia.MultiSelectDropdown(this.$dropdown);
 			this.dropdown.on('change', $.proxy(this.onChange, this));
-			
+
 		},
-		
+
 		saveFilters: function(event) {
 			var self = this;
 
@@ -19,16 +19,17 @@ jQuery(function($) {
 
 			self.dropdown.disable();
 			self.$submit.attr('disabled', 'disabled');
-			
+
 			if(self.dropdown.getSelectedValues().length == 0) {
 				self.dropdown.doSelectAll(true);
 			}
-			
+
 			$.nirvana.sendRequest({
 				controller: 'RecentChangesController',
 				method: 'saveFilters',
 				data: {
-					filters: self.dropdown.getSelectedValues()
+					filters: self.dropdown.getSelectedValues(),
+					all: self.dropdown.everythingSelected() ? 1 : 0
 				},
 				type: 'POST',
 				format: 'json',

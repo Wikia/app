@@ -17,12 +17,15 @@ class RecentChangesController extends WikiaController {
 			return true;
 		}
 
-		$rcfs = new RecentChangesFiltersStorage($this->wg->User);
-		$rcfs->set($this->request->getVal('filters'));
+		$filters = $this->request->getVal( 'filters' );
+		$setToAll = $this->request->getBool( 'all' );
 
-		$this->response->setVal('status', "ok"); 
+		$rcfs = new RecentChangesFiltersStorage($this->wg->User);
+		$rcfs->set( $filters, $setToAll );
+
+		$this->response->setVal('status', "ok");
 	}
-	
+
 	public function dropdownNamespaces() {
 		$selected = $this->getVal( 'selected', array() );
 		$namespaces = wfGetNamespaces();
@@ -47,11 +50,11 @@ class RecentChangesController extends WikiaController {
 			$rcfs = new RecentChangesFiltersStorage($this->wg->User);
 			$selected = $rcfs->get();
 		}
-		
+
 		$this->html = $this->app->renderView( 'WikiaStyleGuideDropdownController', 'multiSelect', array(
 			'options' => $options,
 			'selected' => $selected,
 			'selectAll' => true
-		));		
+		));
 	}
 }
