@@ -522,7 +522,8 @@ abstract class VideoFeedIngester {
 	 * @return string $stdRating
 	 */
 	protected function getIndustryRating( $rating ) {
-		$name = trim( strtolower( $rating ) );
+		$rating = trim( $rating );
+		$name = strtolower( $rating );
 		switch( $name ) {
 			case 'everyone':
 			case 'early childhood':
