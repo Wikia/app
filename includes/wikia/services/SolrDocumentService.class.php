@@ -30,6 +30,12 @@ class SolrDocumentService
 	protected $articleId;
 	
 	/**
+	 * Whether we're doing a cross-wiki search on a different core.
+	 * @var bool
+	 */
+	protected $crossWiki = false;
+	
+	/**
 	 * @var array
 	 */
 	protected $requestedFields;
@@ -38,13 +44,25 @@ class SolrDocumentService
 	 * Returns an array version of our search result object
 	 * @return array
 	 */
-	public function getDocument()
-	{
+	public function getDocument() {
+		return $this->getResult()->toArray( $this->requestedFields );
+	}
+	
+	/**
+	 * Returns the result object
+	 * @return Wikia\Search\Result;
+	 */
+	public function getResult() {
 		$config = $this->getConfig();
 		$config->setQuery( Wikia\Search\Utilities::valueForField( 'id', $this->getDocumentId() ) );
 		$queryService = $this->getFactory()->getFromConfig( $config );
-		$resultSet = $queryService->search()->toArray( $this->requestedFields );
-		return array_shift( $resultSet );
+		if ( $this->getCrossWiki() ) {
+			// technical debt -- config should dyanmically handle cross-wiki fields
+			$queryService->setCore( Wikia\Search\QueryService\Select\AbstractSelect::SOLR_CORE_CROSSWIKI );
+		}
+		$resultSet = $queryService->search();
+		$this->requestedFields = $config->getRequestedFields(); // @todo technical debt
+		return $resultSet[$this->getDocumentId()];
 	}
 	
 	/**
@@ -108,7 +126,12 @@ class SolrDocumentService
 	 * @return string
 	 */
 	protected function getDocumentId() {
-		return sprintf( '%s_%s', $this->getWikiId(), $this->getArticleId() );
+		if ( $this->getCrossWiki() ) {
+			$id = $this->getWikiId();
+		} else {
+			$id = sprintf( '%s_%s', $this->getWikiId(), $this->getArticleId() );
+		}
+		return $id;
 	}
 	
 	/**
@@ -135,6 +158,24 @@ class SolrDocumentService
 			$this->factory = new Wikia\Search\QueryService\Factory();
 		}
 		return $this->factory;
+	}
+	
+	/**
+	 * This refers to cross-wiki or on-wiki.
+	 * @param bool $crossWiki
+	 * @return SolrDocumentService
+	 */
+	public function setCrossWiki( $crossWiki ) {
+		$this->crossWiki = $crossWiki;
+		return $this;
+	}
+	
+	/**
+	 * Whether this is a cross-wiki search
+	 * @return string
+	 */
+	public function getCrossWiki() {
+		return $this->crossWiki;
 	}
 	
 }

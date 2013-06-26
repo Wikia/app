@@ -21,7 +21,12 @@ class Lucene extends AbstractSelect
 	}
 	
 	protected function registerComponents( \Solarium_Query_Select $select ) {
-		return $this->registerQueryParams( $select );
+		if ( $this->getCore() == AbstractSelect::SOLR_CORE_CROSSWIKI ) {
+			// @todo more technical debt
+			$this->getConfig()->setRequestedFields( [ 'id', 'headline_txt', 'wam_i', 'description', 'sitename_txt', 'url', 'videos_i', 'images_i', 'image_s', 'hot_b', 'promoted_b', 'new_b', 'official_b', 'hub_s', 'lang_s' ] );
+		}
+		$this->registerQueryParams( $select );
+		return $this;
 	}
 	
 	/**

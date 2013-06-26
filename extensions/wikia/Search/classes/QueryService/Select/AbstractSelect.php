@@ -50,10 +50,28 @@ abstract class AbstractSelect
 	const SPELLING_RESULT_COUNT = 20;
 	
 	/**
+	 * This is the core path for articles as documents
+	 * @var string
+	 */
+	const SOLR_CORE_MAIN = 'main';
+	
+	/**
+	 * This is the core path for cross-wiki, or wikis as documents
+	 * @var string
+	 */
+	const SOLR_CORE_CROSSWIKI = 'xwiki';
+	
+	/**
 	 * Used for tracking
 	 * @var string
 	 */
 	protected $searchType;
+	
+	/**
+	 * Which "core" we're using in Solr -- xwiki or main
+	 * @var string
+	 */
+	protected $core = 'main';
 	
 	/**
 	 * Boost functions, used by child classes to increase a document's score based on specific document values
@@ -405,5 +423,28 @@ abstract class AbstractSelect
 			$config->setWikiMatch( $wikiMatch );
 		}
 		return $config->getWikiMatch();
+	}
+	
+	/**
+	 * Allows us to set the search core on the query service. This should be refactored out somehow.
+	 * @param string $core
+	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
+	 */
+	public function setCore( $core ) {
+		$oldCore = $this->core;
+		$this->core = $core;
+		if ( $this->core !== $oldCore ) {
+			global $wgSolrProxy;
+			$this->client->setOptions( [ 'adapteroptions' => [ 'path' => '/solr/'.$this->core, 'host' => 'dev-search.prod.wikia.net', 'port' => 8983] ], false );
+		}
+		return $this;
+	}
+	
+	/**
+	 * Returns the currently assigned core
+	 * @return string
+	 */
+	public function getCore() {
+		return $this->core;
 	}
 }

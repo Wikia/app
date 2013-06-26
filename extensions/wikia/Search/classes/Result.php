@@ -50,12 +50,15 @@ class Result extends ReadWrite {
 	}
 	
 	/**
-	 * Get the text found via highlighting fields
+	 * Get the string value of a given field. If it's multi-valued, we implode it on whitespace.
+	 * Defaults to "text", which we set from highlighting for certain searches.
 	 * @see    WikiaSearchResultTest::testTextFieldMethods
+	 * @param string|null $field allows us to assert the value must be text, not an array
 	 * @return string
 	 */
-	public function getText() {
-		return isset( $this->_fields['text'] ) ? $this->_fields['text'] : ''; 
+	public function getText( $field = 'text' ) {
+		$text = isset( $this->_fields[$field] ) ? $this->_fields[$field] : '';
+		return is_array( $text ) ? implode( " ", $text ) : $text; 
 	}
 
 	/**
