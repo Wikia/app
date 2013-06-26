@@ -42,7 +42,7 @@ class RecentChangesController extends WikiaController {
 
 			$options[] = array(
 				'value' => $index,
-				'label' => $index === 0 ? wfMsg( 'blanknamespace' ) : $name
+				'label' => $index === 0 ? wfMessage( 'blanknamespace' )->escaped() : $name
 			);
 		}
 
