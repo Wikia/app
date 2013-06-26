@@ -23,12 +23,12 @@ class Wiki extends AbstractMatch
 	{
 		$title = $this->service->getGlobalForWiki( 'wgSitename', $this->id );
 		$fields = array(
-				'wid' => $this->id,
-				'title' => $title,
+				'id' => $this->id,
+				'sitename_txt' => $title,
 				'isWikiMatch' => true,
 				'url' => $this->service->getMainPageUrlForWikiId( $this->id ),
-				'hub' => $this->service->getHubForWikiId( $this->id ),
-				'lang' => $this->service->getGlobalForWiki( 'wgLanguageCode', $this->id ),
+				'hub_s' => $this->service->getHubForWikiId( $this->id ),
+				'lang_s' => $this->service->getGlobalForWiki( 'wgLanguageCode', $this->id ),
 				);
 		$fields = array_merge( $fields, $this->service->getVisualizationInfoForWikiId( $this->id ), $this->service->getStatsInfoForWikiId( $this->id ) );
 		if ( empty($fields['desc']) ) {

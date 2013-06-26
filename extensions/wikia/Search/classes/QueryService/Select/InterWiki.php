@@ -15,30 +15,6 @@ use \Solarium_Query_Select, \Wikia\Search\Utilities;
 class InterWiki extends AbstractSelect
 {
 	/**
-	 * Number of result groupings we want on a grouped search
-	 * @var int
-	 */
-	const GROUP_RESULTS_GROUPINGS_LIMIT		= 20;
-	
-	/**
-	 * Number of results per grouping we want in a grouped search
-	 * @var int
-	 */
-	const GROUP_RESULTS_GROUPING_ROW_LIMIT = 1;
-	
-	/**
-	 * The field to group over.
-	 * @var string
-	 */
-	const GROUP_RESULTS_GROUPING_FIELD = 'host';
-	
-	/**
-	 * Time to cache grouped results, in seconds -- 15 minutes.
-	 * @var int
-	 */
-	const GROUP_RESULTS_CACHE_TTL = 900;
-	
-	/**
 	 * Used for tracking
 	 * @var string
 	 */
@@ -49,7 +25,7 @@ class InterWiki extends AbstractSelect
 	 * @var array
 	 */
 	protected $boostFunctions = array(
-		'log(wam)^10',
+		'wam_i^100',
 	);
 	
 	/**
@@ -74,28 +50,12 @@ class InterWiki extends AbstractSelect
 	 * @return InterWiki
 	 */
 	protected function registerComponents( Solarium_Query_Select $query ) {
-		return $this->configureQueryFields()
-		            ->registerQueryParams   ( $query )
+		return $this->registerQueryParams   ( $query )
 		            ->registerFilterQueries ( $query )
-		            ->registerGrouping      ( $query )
 		            ->registerDismax        ( $query )
 		;
 	}
 	
-	/**
-	 * Sets grouping params given a configuration
-	 * @param Solarium_Query_Select $query
-	 * @return Wikia\Search\QueryService\Select\InterWiki
-	 */
-	protected function registerGrouping( Solarium_Query_Select $query ) {
-		$grouping = $query->getGrouping();
-		$grouping->setLimit( self::GROUP_RESULTS_GROUPING_ROW_LIMIT )
-		         ->setOffset( 0 )
-		         ->setNumberOfGroups( true )
-		         ->setFields( array( self::GROUP_RESULTS_GROUPING_FIELD ) )
-		;
-		return $this;
-	}
 
 	/**
 	 * Registers a filter query for documents matching the wiki ID of a match, if available.
@@ -104,7 +64,7 @@ class InterWiki extends AbstractSelect
 	 */
 	protected function registerFilterQueryForMatch() {
 		if ( $this->config->hasWikiMatch() ) {
-			$noPtt = Utilities::valueForField( 'wid', $this->config->getWikiMatch()->getId(), array( 'negate' => true ) );
+			$noPtt = Utilities::valueForField( 'id', $this->config->getWikiMatch()->getId(), array( 'negate' => true ) );
 			$this->config->setFilterQuery( $noPtt, 'wikiptt' );
 		}
 		return $this;
@@ -119,16 +79,9 @@ class InterWiki extends AbstractSelect
 		if ( $this->config->getPage() > 1 ) {
 			$this->config->setStart( ( $this->config->getPage() - 1 ) * $this->config->getLength() );
 		}
-		return $this;
-	}
-
-	/**
-	 * Adds wikititle to query fields before querying.
-	 * @return \Wikia\Search\QueryService\Select\InterWiki
-	 */
-	protected function configureQueryFields() {
-		$this->config->setQueryField( 'wikititle', 200 )
-		             ->setQueryField( 'wiki_description_txt', 150 );
+		global $wgSolrProxy;
+		$this->client->setOptions( [ 'adapteroptions' => [ 'path' => '/solr/xwiki', 'host' => 'dev-search.prod.wikia.net', 'port' => 8983] ], false );
+		$this->config->setRequestedFields( [ 'id', 'headline_txt', 'wam_i', 'description', 'sitename_txt', 'url', 'videos_i', 'images_i', 'image_s', 'hot_b', 'promoted_b', 'new_b', 'official_b', 'hub_s', 'lang_s' ] );
 		return $this;
 	}
 	
@@ -137,10 +90,10 @@ class InterWiki extends AbstractSelect
 	 * @return string
 	 */
 	protected function getFilterQueryString() {
-		$filterQueries = [ Utilities::valueForField( 'iscontent', 'true'), '-wikiarticles:[0 TO 50]' ];
+		$filterQueries = [ '-articles_i:[0 TO 50]' ];
 		$hub = $this->config->getHub();
 		if (! empty( $hub ) ) {
-			$filterQueries[] = Utilities::valueForField( 'hub', $hub );
+			$filterQueries[] = Utilities::valueForField( 'hub_s', $hub );
 		}
 		return implode( ' AND ', $filterQueries );
 	}
@@ -158,16 +111,14 @@ class InterWiki extends AbstractSelect
 			$widQueries[] = Utilities::valueForField( 'wid',  $excludedWikiId, array( 'negate' => true ) );
 		}
 		$queryClauses= array(
-				implode( ' AND ', $widQueries ),
-				Utilities::valueForField( 'lang', $this->config->getLanguageCode() ),
-				Utilities::valueForField( 'iscontent', 'true' )
+				'lang_s:'.$this->config->getLanguageCode()
 		);
 
 		$hub = $this->config->getHub();
 		if (! empty( $hub ) ) {
 		    $queryClauses[] = Utilities::valueForField( 'hub', $hub );
 		}
-		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
+		return sprintf( '%s', implode( ' AND ', $queryClauses ) );
 	}
 
 	/**
@@ -177,7 +128,8 @@ class InterWiki extends AbstractSelect
 	 */
 	protected function getQueryFieldsString() {
 		$queryFieldsString = '';
-		foreach ( $this->config->getQueryFieldsToBoosts()  as $field => $boost ) {
+		$qf = [ 'headline_txt' => 300, 'description' => 250, 'categories' => 50, 'articles' => 75, 'top_categories' => 150, 'top_articles' => 200, 'sitename_txt' => 500 ];
+		foreach ( $qf as $field => $boost ) {
 			$queryFieldsString .= sprintf( '%s^%s ', Utilities::field( $field ), $boost );
 		}
 		return trim( $queryFieldsString );

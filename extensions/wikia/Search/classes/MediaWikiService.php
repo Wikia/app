@@ -472,6 +472,7 @@ class MediaWikiService
 	
 	/**
 	 * Provided a prepped domain string, (e.g. 'runescape'), return a wiki match.
+	 * @todo use solr document service instead?
 	 * @param string $domain
 	 * @return \Wikia\Search\Match\Wiki|NULL
 	 */

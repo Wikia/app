@@ -35,7 +35,7 @@ class Base extends EmptySet
 		$this->service           = $container->getService();
 		$this->results             = new ArrayIterator( array() );
 		$this->resultsFound        = $this->searchResultObject->getNumFound();
-		$this->prependArticleMatchIfExists()
+		$this->prependMatchIfExists()
 		     ->setResults( $this->searchResultObject->getDocuments() )
 		;
 	}
@@ -82,10 +82,10 @@ class Base extends EmptySet
 	 * Subroutine for optionally prepending article match to result array.
 	 * @return Base provides fluent interface
 	 */
-	protected function prependArticleMatchIfExists() {
-		if ( $this->searchConfig->hasArticleMatch() ) {
+	protected function prependMatchIfExists() {
+		if ( $this->searchConfig->hasMatch() ) {
 			if ( $this->getResultsStart() == 0 ) {
-				$this->addResult( $this->searchConfig->getArticleMatch()->getResult() );
+				$this->addResult( $this->searchConfig->getMatch()->getResult() );
 			}
 			$this->resultsFound++;
 		}

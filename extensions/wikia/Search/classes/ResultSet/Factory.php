@@ -34,12 +34,6 @@ class Factory
 		$terminal = 'Base';
 		if ( $result === null || $result instanceof Solarium_Result_Select_Empty ) {
 			$terminal = 'EmptySet';
-		} else if ( $parent === null && $searchConfig->getInterWiki() ) {
-			$terminal = 'GroupingSet';
-		} else if ( $parent !== null && $metaposition !== null ) {
-			$terminal = 'Grouping';
-		} else if ( $parent !== null && $wikiMatch !== null ) {
-			$terminal = 'MatchGrouping';
 		}
 		return (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\\Search\\ResultSet\\' . $terminal, [ $container ] );
 	}

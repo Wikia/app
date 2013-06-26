@@ -173,7 +173,11 @@ abstract class AbstractSelect
 	 * @return string
 	 */
 	protected function getFormulatedQuery() {
-		return sprintf( '+(%s) AND (%s)', $this->getQueryClausesString(), $this->config->getQuery()->getSolrQuery( 10 ) );
+		$queryClauses = $this->getQueryClausesString();
+		if ( substr_count( $queryClauses, " " ) > 0 ) {
+			$queryClauses = "({$queryClauses})"; // hell yeah i need to do this wtf
+		}
+		return sprintf( '+%s AND (%s)', $queryClauses, $this->config->getQuery()->getSolrQuery( 10 ) );
 	}
 	
 	/**
@@ -262,7 +266,6 @@ abstract class AbstractSelect
 				$this->config->setError( $e );
 				return new \Solarium_Result_Select_Empty();
 			} else {
-				
 				$this->config->setSkipBoostFunctions( true )
 				             ->setError( $e );
 
@@ -367,7 +370,7 @@ abstract class AbstractSelect
 		foreach ( $this->config->getNamespaces() as $ns ) {
 			$namespaces[] = Utilities::valueForField( 'ns', $ns );
 		}
-		return implode( ' AND ', [ sprintf( '(%s)', implode( ' OR ', $namespaces ) ), Utilities::valueForField( 'wid', $this->config->getCityId() ) ] );
+		return [];//implode( ' AND ', [ sprintf( '(%s)', implode( ' OR ', $namespaces ) ), Utilities::valueForField( 'wid', $this->config->getCityId() ) ] );
 	}
 	
 	/**
