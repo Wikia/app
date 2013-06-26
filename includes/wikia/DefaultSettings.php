@@ -338,7 +338,7 @@ $wgAutoloadClasses['LeftMenuController'] = $IP.'/skins/oasis/modules/LeftMenuCon
 $wgAutoloadClasses['SassService']              = $IP.'/includes/wikia/services/sass/SassService.class.php';
 
 // Wikia Style Guide
-$wgAutoloadClasses['UIFactory'] = $IP . '/extensions/wikia/SpecialStyleguide/classes/UIFactory.class.php';
+$wgAutoloadClasses['UIFactory'] = $IP . '/includes/wikia/ui/UIFactory.class.php';
 
 // Register \Wikia\Sass namespace
 spl_autoload_register( function( $class ) {
