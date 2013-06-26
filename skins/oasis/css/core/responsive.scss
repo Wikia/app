@@ -6,13 +6,10 @@ $width-padding: $width-gutter / 2;
 $width-adskin: 170px;
 $width-outside-min: 768px;
 $width-outside-max: 1600px;
-$bg-gradient-width: 40px;
-$responsive-breakpoint: $width-outside + ($width-adskin * 2) + 2;
-$bg-margin: $responsive-breakpoint / 2;
 
-body.mediawiki {
-	background-image: none;
-}
+// These will need to come in as a Sass variables; hardcoded for now.
+$height-background-image: 1200px;
+$width-background-image: 1700px;
 
 body {
 	min-width: $width-outside-min;
@@ -283,12 +280,46 @@ body > .global-notification,
 	}
 }
 
-@media screen and (min-width: $responsive-breakpoint) {
-	body > .global-notification,
-	.WikiaHeader .page-width-container,
-	.WikiaPage {
-		margin: 0 $width-adskin;
-		width: auto;
+@media screen and (min-width: $width-outside + ($width-adskin * 2) + 2) {
+	body {
+		> .global-notification,
+		.WikiaHeader .page-width-container,
+		.WikiaPage {
+			margin: 0 $width-adskin;
+			width: auto;
+		}
+
+		// Doesn't apply to tiled backgrounds
+		@if $background-tiled == false {
+			background: none;
+
+			&:after,
+			&:before {
+				background: $color-body url($background-image) 0 0 repeat; /* $wgCdnStylePath */
+
+				@if $background-fixed == true {
+					background-attachment: fixed;
+				}
+
+				content: "";
+				display: block;
+				height: $height-background-image;
+				position: absolute;
+				top: 0;
+				width: ( $width-background-image / 2 - $width-adskin );
+				z-index: -1;
+			}
+
+			&:after {
+				background-position: $width-background-image / 2 0;
+				right: 0;
+			}
+
+			&:before {
+				background-position: -#{ $width-adskin } 0;
+				left: 0;
+			}
+		}
 	}
 }
 
