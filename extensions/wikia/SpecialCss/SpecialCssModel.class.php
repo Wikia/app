@@ -453,7 +453,7 @@ class SpecialCssModel extends WikiaModel {
 	 *
 	 * @return string
 	 */
-	private function getCommunityDbName() {
+	public function getCommunityDbName() {
 		global $wgDevelEnvironment;
 
 		if ( empty($this->dbName) ) {
@@ -474,7 +474,7 @@ class SpecialCssModel extends WikiaModel {
 	 *
 	 * @return string language code
 	 */
-	private function getCssUpdateLang() {
+	public function getCssUpdateLang() {
 		global $wgLang, $wgCssUpdatesLangMap;
 
 		$langCode = $wgLang->getCode();

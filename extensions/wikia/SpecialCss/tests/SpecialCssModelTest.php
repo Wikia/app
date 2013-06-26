@@ -230,4 +230,110 @@ class SpecialCssModelTest extends WikiaBaseTest {
 			],
 		];
 	}
+
+	/**
+	 * @param $langCode
+	 * @param $expectedDbName
+	 *
+	 * @dataProvider testGetCommunityDbNameDataProvider
+	 */
+	public function testGetCommunityDbName($langCode, $expectedDbName) {
+		$this->mockGlobalVariable('wgCssUpdatesLangMap', $this->getCssUpdateLangMap());
+		$this->mockGlobalVariable('wgDevelEnvironment', false);
+		$specialCssModelMock = $this->getMock('SpecialCssModel', array('getCssUpdateLang'));
+		$specialCssModelMock->expects($this->any())
+			->method('getCssUpdateLang')
+			->will($this->returnValue($langCode));
+
+		$dbName = $specialCssModelMock->getCommunityDbName();
+		$this->assertEquals($expectedDbName, $dbName);
+	}
+
+
+	public function testGetCommunityDbNameDataProvider() {
+		return [
+			[
+				'langCode' => 'en',
+				'dbName' => 'wikia'
+			],
+			[
+				'langCode' => 'pl',
+				'dbName' => 'plwikia'
+			],
+			[
+				'langCode' => 'es',
+				'dbName' => 'es'
+			],
+			[
+				'langCode' => 'fr',
+				'dbName' => 'frfr'
+			],
+			[
+				'langCode' => 'it',
+				'dbName' => 'it'
+			],
+			[
+				'langCode' => 'de',
+				'dbName' => 'de'
+			],
+			[
+				'langCode' => 'ru',
+				'dbName' => 'ruwikia'
+			],
+		];
+	}
+
+
+	/**
+	 * @param $userLang
+	 * @param $expectedLang
+	 *
+	 * @dataProvider testGetCssUpdateLangDataProvider
+	 */
+	public function testGetCssUpdateLang($userLang, $expectedLang) {
+		$this->mockGlobalVariable('wgCssUpdatesLangMap', $this->getCssUpdateLangMap());
+		$langMock = $this->getMock('Language', array('getCode'));
+		$langMock->expects($this->any())
+			->method('getCode')
+			->will($this->returnValue($userLang));
+		$specialCssModelMock = $this->getMock('SpecialCssModel', null);
+		$this->mockGlobalVariable('wgLang', $langMock);
+
+		$cssLang = $specialCssModelMock->getCssUpdateLang();
+		$this->assertEquals($expectedLang, $cssLang);
+	}
+
+	public function testGetCssUpdateLangDataProvider() {
+		return [
+			[
+				'userLang' => 'de',
+				'expectedLang' => 'de'
+			],
+			[
+				'userLang' => 'pl',
+				'expectedLang' => 'pl'
+			],
+			[
+				'userLang' => 'lt',
+				'expectedLang' => 'en'
+			],
+			[
+				'userLang' => 'en',
+				'expectedLang' => 'en'
+			],
+			[
+				'userLang' => 'cs',
+				'expectedLang' => 'en'
+			],
+			[
+				'userLang' => 'fr',
+				'expectedLang' => 'fr'
+			]
+		];
+	}
+
+	private function getCssUpdateLangMap() {
+		require( dirname(__FILE__) . '/../SpecialCss.setup.php');
+		return $wgCssUpdatesLangMap;
+	}
 }
