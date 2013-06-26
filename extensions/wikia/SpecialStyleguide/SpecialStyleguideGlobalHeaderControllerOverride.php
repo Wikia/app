@@ -9,6 +9,32 @@
  * TODO: when next changes to Global Header are made, modularize it and remove this override
  */
 class GlobalHeaderController extends WikiaController {
+	
+	/**
+	 * @desc Array item in global header connected to Special:Styleguide/Home page
+	 */
+	const HOME_NODE = 1;
+	
+	/**
+	 * @desc Array item in global header connected to Special:Styleguide/Get_started page
+	 */
+	const GET_STARTED_NODE = 2;
+
+	/**
+	 * @desc Array item in global header connected to Special:Styleguide/Base_styles page
+	 */
+	const BASE_STYLES_NODE = 3;
+
+	/**
+	 * @desc Array item in global header connected to Special:Styleguide/Components page
+	 */
+	const COMPONENTS_NODE = 4;
+
+	/**
+	 * @desc Array item in global header connected to Special:Styleguide/Design page
+	 */
+	const DESIGN_NODE = 5;
+
 
 	public function index() {
 		$this->response->setVal( 'centralUrl', $this->getCentralUrl() );
@@ -17,7 +43,7 @@ class GlobalHeaderController extends WikiaController {
 		
 		switch( $subpage ) {
 			case 'components':
-				$this->response->setVal( 'menuNodes', $this->getMenuNodes( 4 ) );
+				$this->response->setVal( 'menuNodes', $this->getMenuNodes( self::COMPONENTS_NODE ) );
 				break;
 			default:
 				$this->response->setVal( 'menuNodes', $this->getMenuNodes() );
@@ -32,14 +58,15 @@ class GlobalHeaderController extends WikiaController {
 	 * Generates array of nodes for styleguide top menu bar
 	 * @return array
 	 */
-	private function getMenuNodes($activeElement = 1) {
+	private function getMenuNodes( $activeElement = self::HOME_NODE ) {
 		$menuNodes = [
 			0 => [ 'children' => [ 1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5 ] ],
-			1 => [ 'original' => '#', 'text' => wfMessage( 'styleguide-home' )->plain(), 'href' => $this->getLink(), 'specialAttr' => null, 'parentIndex' => 0, 'depth' => 0, 'children' => [ ] ],
-			2 => [ 'original' => '#', 'text' => wfMessage( 'styleguide-get-started' )->plain(), 'href' => $this->getLink( 'Get started' ), 'specialAttr' => null, 'parentIndex' => 0, 'depth' => 0, 'children' => [ ] ],
-			3 => [ 'original' => '#', 'text' => wfMessage( 'styleguide-base-styles' )->plain(), 'href' => $this->getLink( 'Base Styles' ), 'specialAttr' => null, 'parentIndex' => 0, 'depth' => 0, 'children' => [ ] ],
-			4 => [ 'original' => '#', 'text' => wfMessage( 'styleguide-components' )->plain(), 'href' => $this->getLink( 'Components' ), 'specialAttr' => null, 'parentIndex' => 0, 'depth' => 0, 'children' => [ ] ],
-			5 => [ 'original' => '#', 'text' => wfMessage( 'styleguide-design' )->plain(), 'href' => $this->getLink( 'Design' ), 'specialAttr' => null, 'parentIndex' => 0, 'depth' => 0, 'children' => [ ] ] ];
+			self::HOME_NODE => [ 'original' => '#', 'text' => wfMessage( 'styleguide-home' )->plain(), 'href' => $this->getLink(), 'specialAttr' => null, 'parentIndex' => 0, 'depth' => 0, 'children' => [ ] ],
+			self::GET_STARTED_NODE => [ 'original' => '#', 'text' => wfMessage( 'styleguide-get-started' )->plain(), 'href' => $this->getLink( 'Get started' ), 'specialAttr' => null, 'parentIndex' => 0, 'depth' => 0, 'children' => [ ] ],
+			self::BASE_STYLES_NODE => [ 'original' => '#', 'text' => wfMessage( 'styleguide-base-styles' )->plain(), 'href' => $this->getLink( 'Base Styles' ), 'specialAttr' => null, 'parentIndex' => 0, 'depth' => 0, 'children' => [ ] ],
+			self::COMPONENTS_NODE => [ 'original' => '#', 'text' => wfMessage( 'styleguide-components' )->plain(), 'href' => $this->getLink( 'Components' ), 'specialAttr' => null, 'parentIndex' => 0, 'depth' => 0, 'children' => [ ] ],
+			self::DESIGN_NODE => [ 'original' => '#', 'text' => wfMessage( 'styleguide-design' )->plain(), 'href' => $this->getLink( 'Design' ), 'specialAttr' => null, 'parentIndex' => 0, 'depth' => 0, 'children' => [ ] ] 
+		];
 
 		$menuNodes[$activeElement]['specialAttr'] = 'active';
 		
