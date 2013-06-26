@@ -281,14 +281,14 @@ body > .global-notification,
 }
 
 @media screen and (min-width: $width-outside + ($width-adskin * 2) + 2) {
-	body {
-		> .global-notification,
-		.WikiaHeader .page-width-container,
-		.WikiaPage {
-			margin: 0 $width-adskin;
-			width: auto;
-		}
+	body > .global-notification,
+	.WikiaHeader .page-width-container,
+	.WikiaPage {
+		margin: 0 $width-adskin;
+		width: auto;
+	}
 
+	body {
 		// Doesn't apply to tiled backgrounds
 		@if $background-tiled == false {
 			background: none;
