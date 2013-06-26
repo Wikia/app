@@ -47,7 +47,7 @@ class SpecialPageFactory {
 		'Shortpages'                => 'ShortpagesPage',
 		'Uncategorizedcategories'   => 'UncategorizedcategoriesPage',
 		'Uncategorizedimages'       => 'UncategorizedimagesPage',
-		'Uncategorizedpages'        => 'UncategorizedpagesPage',
+		'Uncategorizedpages'        => 'UncategorizedPagesPage',
 		'Uncategorizedtemplates'    => 'UncategorizedtemplatesPage',
 		'Unusedcategories'          => 'UnusedcategoriesPage',
 		'Unusedimages'              => 'UnusedimagesPage',
