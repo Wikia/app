@@ -605,7 +605,7 @@ class WikiaHomePageHelper extends WikiaModel {
 
 			if (!empty($originalHeight) && !empty($originalWidth)) {
 				$imageServingParams = $this->getImageServingParamsForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight);
-				$imageServing = new ImageServing($imageServingParams);
+				$imageServing = $this->getImageServingWithParams($imageServingParams);
 				$imageUrl = $imageServing->getUrl($file, $originalWidth, $originalHeight);
 			} else {
 				$imageUrl = $this->wg->blankImgUrl;
@@ -645,6 +645,10 @@ class WikiaHomePageHelper extends WikiaModel {
 
 		wfProfileOut(__METHOD__);
 		return $imageId;
+	}
+
+	public function getImageServingWithParams($params) {
+		return new ImageServing($params[0], $params[1], $params[2]);
 	}
 
 	public function getImageServingParamsForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight) {
