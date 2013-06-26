@@ -7,6 +7,11 @@ class UIFactory {
 	 * @var String
 	 */
 	const CONFIG_FILE_SUFFIX = '_config.json';
+
+	/**
+	 * @desc Component's directory path from docroot
+	 */
+	const DEFAULT_COMPONENTS_PATH = "/resources/wikia/ui_components/";
 	
 	/**
 	 * @var UIFactory
@@ -28,13 +33,16 @@ class UIFactory {
 	/**
 	 * @desc Private constructor because it's a singleton
 	 */
-	private function __constructor() {}
+	private function __construct() {
+		global $IP;
+		$this->componentsDir = $IP . self::DEFAULT_COMPONENTS_PATH;
+	}
 
 	/**
 	 * @desc Sets the path to components' directory
 	 * @param String $path
 	 */
-	private function setComponentsDir( $path ) {
+	public function setComponentsDir( $path ) {
 		$this->componentsDir = $path;
 	}
 
@@ -42,7 +50,7 @@ class UIFactory {
 	 * @desc Returns the path to component's directory
 	 * @return null|String
 	 */
-	private function getComponentsDir() {
+	public function getComponentsDir() {
 		return $this->componentsDir;
 	}
 
@@ -53,7 +61,6 @@ class UIFactory {
 	static public function getInstance() {
 		if( is_null(static::$instance) ) {
 			static::$instance = new self();
-			static::$instance->setComponentsDir( F::app()->wg->SpecialStyleguideUiCompontentsPath );
 		}
 		
 		return static::$instance;
