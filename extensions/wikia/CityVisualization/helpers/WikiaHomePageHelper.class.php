@@ -604,8 +604,7 @@ class WikiaHomePageHelper extends WikiaModel {
 			}
 
 			if (!empty($originalHeight) && !empty($originalWidth)) {
-				$imageServingParams = $this->getImageServingParamsForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight);
-				$imageServing = $this->getImageServingWithParams($imageServingParams);
+				$imageServing = $this->getImageServingForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight);
 				$imageUrl = $imageServing->getUrl($file, $originalWidth, $originalHeight);
 			} else {
 				$imageUrl = $this->wg->blankImgUrl;
@@ -647,7 +646,8 @@ class WikiaHomePageHelper extends WikiaModel {
 		return $imageId;
 	}
 
-	public function getImageServingWithParams($params) {
+	public function getImageServingForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight) {
+		$params = $this->getImageServingParamsForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight);
 		return new ImageServing($params[0], $params[1], $params[2]);
 	}
 
