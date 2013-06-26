@@ -1,6 +1,6 @@
 define('SearchAbTest.DomUpdater' ,['jquery', 'wikia.log'], function( $, log ) {
 	'use strict';
-	var searchPaginationLinksSelector = '.wikia-paginator a.paginator-page, .search-tabs a'
+	var searchPaginationLinksSelector = '.wikia-paginator a.paginator-page, .search-tabs a, a.paginator-next, a.paginator-prev'
 		,searchFormsSelector = 'form.WikiaSearch';
 
 	return {
@@ -17,9 +17,11 @@ define('SearchAbTest.DomUpdater' ,['jquery', 'wikia.log'], function( $, log ) {
 				var self = this;
 				$(searchPaginationLinksSelector).each(function() {
 					var originalLink = $(this).attr('href');
-					var modifiedLink = self.modifyLink(originalLink, params);
-					log('Modifying link: "' + originalLink + '" to "' + modifiedLink + '"', log.levels.debug, 'search');
-					$(this).attr('href', modifiedLink);
+					if ( !!originalLink ) {
+						var modifiedLink = self.modifyLink(originalLink, params);
+						log('Modifying link: "' + originalLink + '" to "' + modifiedLink + '"', log.levels.debug, 'search');
+						$(this).attr('href', modifiedLink);
+					}
 				});
 			},
 
