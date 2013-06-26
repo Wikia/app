@@ -269,7 +269,11 @@ class VideoHandlerHelper extends WikiaModel {
 					'timestamp' => empty($videoInfo['addedAt']) ? '' : $videoInfo['addedAt'],
 					'embedUrl' => $file->getHandler()->getEmbedUrl(),
 				);
+			} else {
+				error_log("No file found for '".$videoInfo['title']."'");
 			}
+		} else {
+			error_log("No title object found for '".$videoInfo['title']."'");
 		}
 
 		wfProfileOut( __METHOD__ );

@@ -18,6 +18,9 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	const POSTED_IN_ARTICLES = 100;
 	const NUM_SUGGESTIONS = 5;
 
+	// TTL of 604800 is 7 days.  Expire suggestion cache after this
+	const SUGGESTIONS_TTL = 604800;
+
 	/**
 	 * Gets a list of videos that have not yet been swapped (e.g., no decision to keep or not keep the
 	 * original video has been made)
@@ -34,7 +37,8 @@ class LicensedVideoSwapHelper extends WikiaModel {
 
 		// We want to make sure the video hasn't been removed, is not premium and does not exist
 		// in the video_swap table
-		$propName = WPP_LVS_STATUS;
+		$statusProp = WPP_LVS_STATUS;
+		$emptyProp = WPP_LVS_EMPTY_SUGGEST;
 		$pageNS = NS_FILE;
 		$offset = ( $page - 1 ) * $limit;
 
@@ -57,7 +61,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 				   AND NOT EXISTS (SELECT 1
 				   					 FROM page_wikia_props
 				   					WHERE page.page_id = page_wikia_props.page_id
-				   					  AND propname = $propName)
+				   					  AND propname in ( $statusProp, $emptyProp ))
 				 WHERE removed = 0
 				   AND premium = 0
 			  ORDER BY $order
@@ -93,7 +97,8 @@ class LicensedVideoSwapHelper extends WikiaModel {
 
 		// We want to make sure the video hasn't been removed, is not premium and does not exist
 		// in the video_swap table
-		$propName = WPP_LVS_STATUS;
+		$statusProp = WPP_LVS_STATUS;
+		$emptyProp = WPP_LVS_EMPTY_SUGGEST;
 		$pageNS = NS_FILE;
 
 		$sql = "SELECT count(*) as total
@@ -104,7 +109,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 				   AND NOT EXISTS (SELECT 1
 				   					 FROM page_wikia_props
 				   					WHERE page.page_id = page_wikia_props.page_id
-				   					  AND propname = $propName)
+				   					  AND propname in ( $statusProp, $emptyProp ))
 				 WHERE removed = 0
 				   AND premium = 0";
 
@@ -148,6 +153,11 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		foreach ( $videoList as $videoInfo ) {
 			$suggestions = $this->getVideoSuggestions( $videoInfo['title'] );
 
+			// Leave out this video if it has no suggestions
+			if ( empty($suggestions) ) {
+				continue;
+			}
+
 			$videoDetail = $helper->getVideoDetail( $videoInfo, self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT, self::POSTED_IN_ARTICLES );
 			if ( !empty($videoDetail) ) {
 				$videoOverlay =  WikiaFileHelper::videoInfoOverlay( self::THUMBNAIL_WIDTH, $videoDetail['fileTitle'] );
@@ -162,6 +172,14 @@ class LicensedVideoSwapHelper extends WikiaModel {
 				$videoDetail['seeMoreLink'] = $seeMoreLink;
 
 				$videos[] = $videoDetail;
+			} else {
+				// Something is wrong with the existing video.  Mark this as having no suggestions
+				// to hide it here.  Could mark it as skipped but then it would show up on the
+				// history page and that would be confusing.
+				$titleObj = Title::newFromText( $videoInfo['title'], NS_FILE );
+				$articleId = $titleObj->getArticleID();
+
+				wfSetWikiaPageProp( WPP_LVS_EMPTY_SUGGEST, $articleId, 1 );
 			}
 		}
 
@@ -185,14 +203,23 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		$articleId = $titleObj->getArticleID();
 
 		// See if we've already cached suggestions for this video
-		$videoRows = wfGetWikiaPageProp( WPP_LVS_SUGGEST, $articleId );
-		if ( empty($videoRows) ) {
-			$readableTitle = $titleObj->getText();
-			$videoRows = $app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', array( 'title' => $readableTitle ) )
-							 ->getData();
-			wfSetWikiaPageProp( WPP_LVS_SUGGEST, $articleId, $videoRows );
-			wfSetWikiaPageProp( WPP_LVS_SUGGEST_DATE, $articleId, time() );
+		$videos = wfGetWikiaPageProp( WPP_LVS_SUGGEST, $articleId );
+		if ( !empty($videos) ) {
+			$age = wfGetWikiaPageProp( WPP_LVS_SUGGEST_DATE, $articleId);
+
+			// If we're under the TTL then return these results, otherwise
+			// fall through and generate some new ones
+			if ( time() - $age < self::SUGGESTIONS_TTL ) {
+				wfProfileOut( __METHOD__ );
+				return $videos;
+			}
 		}
+
+		$readableTitle = $titleObj->getText();
+		$videoRows = $app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', array( 'title' => $readableTitle ) )
+						 ->getData();
+
+		wfSetWikiaPageProp( WPP_LVS_SUGGEST_DATE, $articleId, time() );
 
 		// Reuse code from VideoHandlerHelper
 		$helper = new VideoHandlerHelper();
@@ -207,8 +234,9 @@ class LicensedVideoSwapHelper extends WikiaModel {
 													self::THUMBNAIL_WIDTH,
 													self::THUMBNAIL_HEIGHT,
 													self::POSTED_IN_ARTICLES );
+			// Go to the next suggestion if we can't get any details for this one
 			if ( empty($videoDetail) ) {
-				break;
+				continue;
 			}
 
 			$videoOverlay =  WikiaFileHelper::videoInfoOverlay( self::THUMBNAIL_WIDTH, $videoDetail['fileTitle'] );
@@ -221,6 +249,15 @@ class LicensedVideoSwapHelper extends WikiaModel {
 			if ( $count >= self::NUM_SUGGESTIONS ) {
 				break;
 			}
+		}
+
+		// Cache these suggestions
+		if ( empty($videos) ) {
+			wfSetWikiaPageProp( WPP_LVS_EMPTY_SUGGEST, $articleId, 1 );
+			wfProfileOut( __METHOD__ );
+			return;
+		} else {
+			wfSetWikiaPageProp( WPP_LVS_SUGGEST, $articleId, $videos );
 		}
 
 		wfProfileOut( __METHOD__ );
