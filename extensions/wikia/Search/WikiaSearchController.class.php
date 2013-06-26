@@ -402,7 +402,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	protected function handleLayoutAbTest( $abGroup, $ns = null ) {
 		//check if template for ab test exists
-		if( $abGroup !== null && $this->templateExists( $abGroup ) && in_array( '0', $ns ) ) {
+		if( $abGroup !== null && $this->templateExists( $abGroup ) ) {
 			//set name depending on abGroup
 			$this->setVal( 'resultView', $abGroup );
 		} else {
