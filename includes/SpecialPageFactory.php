@@ -45,7 +45,7 @@ class SpecialPageFactory {
 		'Protectedpages'            => 'SpecialProtectedpages',
 		'Protectedtitles'           => 'SpecialProtectedtitles',
 		'Shortpages'                => 'ShortPagesPage',
-		'Uncategorizedcategories'   => 'UncategorizedcategoriesPage',
+		'Uncategorizedcategories'   => 'UncategorizedCategoriesPage',
 		'Uncategorizedimages'       => 'UncategorizedImagesPage',
 		'Uncategorizedpages'        => 'UncategorizedPagesPage',
 		'Uncategorizedtemplates'    => 'UncategorizedTemplatesPage',
