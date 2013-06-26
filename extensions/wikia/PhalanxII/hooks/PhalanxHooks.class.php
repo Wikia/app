@@ -17,7 +17,9 @@ class PhalanxHooks extends WikiaObject {
 	public function loadLinks( $id, $nt, &$links ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( $this->wg->User->isAllowed( 'phalanx' ) ) {
+		$user = RequestContext::getMain()->getUser();
+
+		if ( $user->isAllowed( 'phalanx' ) ) {
 			$links[] = Linker::makeKnownLinkObj(
 				GlobalTitle::newFromText( 'Phalanx', NS_SPECIAL, WikiFactory::COMMUNITY_CENTRAL ),
 				'PhalanxBlock',
