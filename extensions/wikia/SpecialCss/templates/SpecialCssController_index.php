@@ -3,10 +3,14 @@
 		<div class="editor-changes-info-wrapper">
 			<?= $deletedArticle ?>
 		</div>
-		<pre class="css-editor-container" id="cssEditorContainer"><?= htmlspecialchars($cssContent); ?></pre>
+		<? if (!empty($diff)): ?>
+			<?= $diff; ?>
+		<? endif ?>
+		<pre class="css-editor-container" id="cssEditorContainer"><?= htmlspecialchars($cssFileInfo['content']); ?></pre>
 	</div>
 	<aside class="css-side-bar">
 		<div class="css-edit-box">
+			<input type="hidden" name="lastEditTimestamp" value="<?= $cssFileInfo['lastEditTimestamp'] ?>" />
 			<label for="minorEdit" class="css-minor-label"><input id="minorEdit" type="checkbox" name="minorEdit"/><?= wfMessage('special-css-minor-edit-label')->plain(); ?></label>
 			<label for="editSummary"><?= wfMessage('special-css-edit-summary')->plain() ?></label>
 			<textarea id="editSummary" class="edit-summary" name="editSummary" placeholder="<?= wfMessage

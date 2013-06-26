@@ -57,9 +57,16 @@ class SpecialCssModel extends WikiaModel {
 	 * 
 	 * @return Return|string
 	 */
-	public function getCssFileContent() {
+	public function getCssFileInfo() {
+		$out = false;
 		$cssArticle = $this->getCssFileArticle( $this->getCssFileArticleId() );
-		return ($cssArticle instanceof Article) ? $cssArticle->getContent() : '';
+		if ($cssArticle instanceof Article) {
+			$out = [
+				'content' => $cssArticle->getContent(),
+				'lastEditTimestamp' => $cssArticle->getTimestamp()
+			];
+		}
+		return $out;
 	}
 
 	/**
@@ -149,7 +156,7 @@ class SpecialCssModel extends WikiaModel {
 	 * @param User $user
 	 * @return bool if saving was successful
 	 */
-	public function saveCssFileContent($content, $summary, $isMinor, $user) {
+	public function saveCssFileContent($content, $summary, $isMinor, $editTime, $user) {
 		$cssTitle = $this->getCssFileTitle();
 		$flags = 0;
 		if ( $cssTitle instanceof Title) {
@@ -159,6 +166,29 @@ class SpecialCssModel extends WikiaModel {
 				$flags |= EDIT_MINOR;
 			}
 			$article = new Article($cssTitle);
+
+			// handle conflict
+			if ($editTime && $editTime != $article->getTimestamp()) {
+				$result = '';
+				$currentText = $article->getText();
+
+				$baseText = Revision::loadFromTimestamp(
+					wfGetDB(DB_SLAVE),
+					$this->getCssFileTitle(),
+					$editTime
+				)->getText();
+
+				// TODO check how to avoid this hax
+				$content = str_replace("\r", "", $content);
+
+				if (wfMerge( $baseText, $content, $currentText, $result )) {
+					// This conflict can be resolved
+					$content = $result;
+				} else {
+					// We have real conflict here
+					return false;
+				}
+			}
 			$status = $article->doEdit($content, $summary, $flags, false, $user);
 			return $status;
 		}
