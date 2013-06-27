@@ -49,8 +49,7 @@ class SpecialCssHooks {
 	 */
 	static public function onArticleSaveComplete( $page, $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, $status, $baseRevId ) {
 		$title = $page->getTitle();
-		$categories = self::getCategoriesFromTitle($title);
-		$purged = static::purgeCacheDependingOnCats( $categories, $title, 'because a new post was added to the category' );
+		$purged = static::purgeCacheDependingOnCats( $title, 'because a new post was added to the category' );
 		
 		if( !$purged && self::prevRevisionHasCssUpdatesCat( $revision ) ) {
 			wfDebugLog( __CLASS__, __METHOD__ . ' - purging "Wikia CSS Updates" cache because a post within the category was removed from the category' );
@@ -154,8 +153,7 @@ class SpecialCssHooks {
 	 */
 	static public function onArticleDelete( &$page, &$user, &$reason, &$error ) {
 		$title = $page->getTitle();
-		$categories = static::getCategoriesFromTitle( $title );
-		static::purgeCacheDependingOnCats( $categories, $title, 'because a post within the category was deleted' );
+		static::purgeCacheDependingOnCats( $title, 'because a post within the category was deleted' );
 		
 		return true;
 	}
@@ -170,36 +168,23 @@ class SpecialCssHooks {
 	 * @return bool
 	 */
 	static public function onArticleUndelete( $title, $created, $comment ) {
-		$categories = static::getCategoriesFromTitle( $title );
-		static::purgeCacheDependingOnCats( $categories, $title, 'because a post from its category was restored' );
+		static::purgeCacheDependingOnCats( $title, 'because a post from its category was restored' );
 		
 		return true;
 	}
 	
-	static private function purgeCacheDependingOnCats( $categories, $title, $reason = null ) {
+	static private function purgeCacheDependingOnCats( $title, $reason = null ) {
 		$purged = false;
-		$debugText = ' - purging "Wikia CSS Updates" cache';
-		if( !is_null( $reason ) ) {
-			$debugText .= ' ' . $reason;
-		}
 		
-		if( self::hasCssUpdatesCat( $categories ) ) {
-			wfDebugLog( __CLASS__, __METHOD__ . $debugText );
+		wfDebugLog( __CLASS__, __METHOD__ . ' - empty categories; fetching them from DB_MASTER' );
+		$categories = self::getCategoriesFromTitle( $title, true );
+
+		if( self::hasCssUpdatesCat( $categories) ) {
+			wfDebugLog( __CLASS__, __METHOD__ . $reason );
 			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
 			$purged = true;
 		}
-		
-		if( !$purged && empty( $categories ) ) {
-			wfDebugLog( __CLASS__, __METHOD__ . ' - empty categories; fetching them from DB_MASTER' );
-			$categories = self::getCategoriesFromTitle( $title, true );
 
-			if( self::hasCssUpdatesCat( $categories) ) {
-				wfDebugLog( __CLASS__, __METHOD__ . $reason );
-				WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
-				$purged = true;
-			}
-		}
-		
 		return $purged;
 	}
 }
