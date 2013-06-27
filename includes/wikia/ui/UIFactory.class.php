@@ -27,6 +27,11 @@ class UIFactory {
 	 * @desc Asset prefix (for AssetsManager / ResourceLoader)
 	 */
 	const ASSET_PREFIX = "ui_component_";
+
+	/**
+	 * @desc How long are components memcached? Both specific and all (different memc keys)
+	 */
+	const MEMCACHE_EXPIRATION = 900; // 15 minutes
 	
 	/**
 	 * @var UIFactory
@@ -92,29 +97,43 @@ class UIFactory {
 	 * @return array
 	 */
 	public function getAllComponents() {
-		$components = [];
-		
-		try {
-			$directory = new DirectoryIterator( $this->getComponentsDir() );
+		global $wgMemc;
 
-			while( $directory->valid() ) {
-				if( !$directory->isDot() && $directory->isDir() ) {
-					$componentName = $directory->getFilename();
-					$componentCfg = $this->loadComponentConfig( $componentName );
+		$memcKey = wfMemcKey( __CLASS__, 'all_components' );
+		$data = $wgMemc->get( $memcKey );
+
+		if ( !empty($data) ) {
+
+			return $data;
+
+		} else {
+
+			$components = [];
+
+			try {
+				$directory = new DirectoryIterator( $this->getComponentsDir() );
+
+				while( $directory->valid() ) {
+					if( !$directory->isDot() && $directory->isDir() ) {
+						$componentName = $directory->getFilename();
+						$componentCfg = $this->loadComponentConfig( $componentName );
 					
-					if( !empty($componentCfg) ) {
-						$components[] = $componentCfg;
-					} else {
-						wfDebugLog( __CLASS__, 'Component config unavailable: ' . $componentName );
+						if( !empty($componentCfg) ) {
+							$components[] = $componentCfg;
+						} else {
+							wfDebugLog( __CLASS__, 'Component config unavailable: ' . $componentName );
+						}
 					}
+					$directory->next();
 				}
-				$directory->next();
+			} catch( Exception $e ) {
+				wfDebugLog( __CLASS__, 'Invalid Styleguide components\' directory: (' . $e->getCode() . ') ' . $e->getMessage() . ' [check $wgSpecialStyleguideUiCompontentsPath variable]');
 			}
-		} catch( Exception $e ) {
-			wfDebugLog( __CLASS__, 'Invalid Styleguide components\' directory: (' . $e->getCode() . ') ' . $e->getMessage() . ' [check $wgSpecialStyleguideUiCompontentsPath variable]');
+
+			$wgMemc->set( $memcKey, $components, self::MEMCACHE_EXPIRATION );
+
+			return $components;
 		}
-		
-		return $components;
 	}
 
 	/**
@@ -128,27 +147,41 @@ class UIFactory {
 	private function loadComponentConfig( $componentName ) {
 		wfProfileIn( __METHOD__ );
 
-		$configPath = $this->getComponentsDir() . $componentName . '/' . $componentName . self::CONFIG_FILE_SUFFIX;
-		$config = null;
+		global $wgMemc;
 		
-		if( file_exists( $configPath ) && ( $configContent = file_get_contents( $configPath ) ) ) {
-			$config = json_decode( $configContent, true );
-			
-			if( !is_null( $config )) {
-				$config = $this->addComponentsId( $config );
+		$memcKey = wfMemcKey( __CLASS__, 'component', $componentName);
+		$data = $wgMemc->get( $memcKey );
+
+		if ( !empty($data) ) {
+
+			return $data;
+
+		} else {
+
+			$configPath = $this->getComponentsDir() . $componentName . '/' . $componentName . self::CONFIG_FILE_SUFFIX;
+			$config = null;
+
+			if( file_exists( $configPath ) && ( $configContent = file_get_contents( $configPath ) ) ) {
+				$config = json_decode( $configContent, true );
+
+				if( !is_null( $config )) {
+					$config = $this->addComponentsId( $config );
+				} else {
+					wfDebugLog( __CLASS__, "Invalid JSON in config file: " . $configPath );
+					$config = [];
+				}
+
 			} else {
-				wfDebugLog( __CLASS__, "Invalid JSON in config file: " . $configPath );
+				wfDebugLog( __CLASS__, "Invalid component's config file: " . $configPath );
 				$config = [];
 			}
-			
-		} else {
-			wfDebugLog( __CLASS__, "Invalid component's config file: " . $configPath );
-			$config = [];
+
+			$wgMemc->set( $memcKey, $components, self::MEMCACHE_EXPIRATION );
+
+			wfProfileOut( __METHOD__ );
+
+			return $config;
 		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $config;
 	}
 
 	/**
