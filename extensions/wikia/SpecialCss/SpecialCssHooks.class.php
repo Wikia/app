@@ -176,7 +176,7 @@ class SpecialCssHooks {
 	static private function purgeCacheDependingOnCats( $title, $reason = null ) {
 		$purged = false;
 		
-		wfDebugLog( __CLASS__, __METHOD__ . ' - empty categories; fetching them from DB_MASTER' );
+		wfDebugLog( __CLASS__, __METHOD__ . 'fetching categories from MASTER' );
 		$categories = self::getCategoriesFromTitle( $title, true );
 
 		if( self::hasCssUpdatesCat( $categories) ) {
