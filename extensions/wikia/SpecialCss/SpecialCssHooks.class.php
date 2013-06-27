@@ -42,18 +42,32 @@ class SpecialCssHooks {
 	/**
 	 * @desc Checks if CSS Update post was added/changed and purges cache with CSS Updates list
 	 * 
-	 * @param Article $article
+	 * @param Article $page
 	 * @param Revision $revision
 	 * 
 	 * @return true because it's a hook
 	 */
-	static public function onArticleSaveComplete( $article, $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, $status, $baseRevId ) {
-		if( self::titleHasCssUpdatesCat( $article->getTitle() ) ) {
+	static public function onArticleSaveComplete( $page, $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, $status, $baseRevId ) {
+		$title = $page->getTitle();
+		$categories = ( $title instanceof Title ) ? self::removeNamespace( array_keys( $title->getParentCategories() ) ) : [];
+		
+		if( self::hasCssUpdatesCat( $categories ) ) {
 			wfDebugLog( __CLASS__, __METHOD__ .' - purging "Wikia CSS Updates" cache because a new post was added to the category' );
 			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
-		} else if( self::prevRevisionHasCssUpdatesCat($revision) ) {
+		} else if( self::prevRevisionHasCssUpdatesCat( $revision ) ) {
 			wfDebugLog( __CLASS__, __METHOD__ . ' - purging "Wikia CSS Updates" cache because a post within the category was removed from the category' );
 			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
+		}
+		
+		if( empty( $categories ) ) {
+			$categories = ( $title instanceof Title ) ? self::removeNamespace( array_keys( $title->getParentCategories( true ) ) ) : [];
+
+			wfDebugLog( __CLASS__, __METHOD__ . ' - empty categories' );
+			
+			if( self::hasCssUpdatesCat( $categories) ) {
+				wfDebugLog( __CLASS__, __METHOD__ . ' - purging "Wikia CSS Updates" cache because a new post within the category was created' );
+				WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
+			}
 		}
 		
 		return true;
@@ -66,8 +80,7 @@ class SpecialCssHooks {
 	 * 
 	 * @return boolean
 	 */
-	static private function titleHasCssUpdatesCat($title) {
-		$categories = ( $title instanceof Title ) ? self::removeNamespace( array_keys( $title->getParentCategories() ) ) : [];
+	static private function hasCssUpdatesCat( $categories ) {
 		return in_array( SpecialCssModel::UPDATES_CATEGORY, $categories );
 	}
 
@@ -149,7 +162,10 @@ class SpecialCssHooks {
 	 * @return true because it's a hook
 	 */
 	static public function onArticleDelete( &$article, &$user, &$reason, &$error ) {
-		if( self::titleHasCssUpdatesCat( $article->getTitle() ) ) {
+		$title = $article->getTitle();
+		$categories = ( $title instanceof Title ) ? self::removeNamespace( array_keys( $title->getParentCategories() ) ) : [];
+		
+		if( self::hasCssUpdatesCat( $categories ) ) {
 			wfDebugLog( __CLASS__, __METHOD__ . ' - purging "Wikia CSS Updates" cache because a post within the category was deleted' );
 			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
 		}
@@ -167,7 +183,9 @@ class SpecialCssHooks {
 	 * @return bool
 	 */
 	static public function onArticleUndelete( $title, $created, $comment ) {
-		if( self::titleHasCssUpdatesCat($title) ) {
+		$categories = ( $title instanceof Title ) ? self::removeNamespace( array_keys( $title->getParentCategories() ) ) : [];
+		
+		if( self::hasCssUpdatesCat( $categories ) ) {
 			wfDebugLog( __CLASS__, __METHOD__ . ' - purging "Wikia CSS Updates" cache because a post from its category was restored' );
 			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
 		}
