@@ -200,9 +200,12 @@ class UIFactory {
 	 * @param $componentDependencies
 	 */
 	private function addAssetDependencies( $componentDependencies ) {
-		foreach ( $componentDependencies as $dependency ) {
-			$this->addAsset( $dependency );
+		foreach ( $componentDependencies as $dependencyType => $dependencyList )
+			foreach ( $dependencyList as $dependency) {
+				$this->addAsset( $dependency );
 		}
+
+		foreach
 	}
 
 	/**
