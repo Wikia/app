@@ -1,7 +1,7 @@
 {
 	"name":"Thumbnails",
 	"description": "Nunc at ligula et diam iaculis tincidunt et et lacus. Vestibulum elementum, ligula sit amet luctus vehicula, tellus nisi pharetra sapien, id pulvinar orci leo eget augue. Aliquam elementum dui vitae neque adipiscing, eget feugiat lacus ullamcorper. Vivamus consectetur elementum libero. Etiam dictum nulla nec odio varius, non pharetra ligula lacinia. Suspendisse feugiat luctus nulla eget malesuada. Donec quam quam, aliquam sed hendrerit eu, tempor a urna. Suspendisse est nisi, feugiat non malesuada eget, adipiscing nec nulla. Aliquam erat volutpat. Pellentesque interdum metus hendrerit sapien ultrices, vitae sagittis leo tristique. Nullam auctor et tellus ac malesuada. Morbi gravida posuere dui at congue. Quisque id euismod sem.",
-	"templateData": {
+	"templateValues": {
 		"required": [],
 		"optional": []
 	},

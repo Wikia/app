@@ -9,11 +9,6 @@ class UIFactory {
 	const CONFIG_FILE_SUFFIX = '_config.json';
 
 	/**
-	 * @desc Component's default templates' directory name
-	 */
-	const COMPONENT_DEFAULT_TPL_DIR_NAME = 'templates';
-
-	/**
 	 * @desc Component's directory path from docroot
 	 */
 	const DEFAULT_COMPONENTS_PATH = "/resources/wikia/ui_components/";
@@ -118,8 +113,7 @@ class UIFactory {
 			$config = json_decode( $configContent, true );
 			
 			if( !is_null( $config )) {
-				$this->addComponentsId( $config );
-				$this->addComponentsTplPath( $config );
+				$config = $this->addComponentsId( $config );
 			} else {
 				wfDebugLog( __CLASS__, "Invalid JSON in config file: " . $configPath );
 				$config = [];
@@ -139,25 +133,9 @@ class UIFactory {
 	 * @param Array $componentCfg
 	 * @return array
 	 */
-	private function addComponentsId( &$componentCfg ) {
+	private function addComponentsId( $componentCfg ) {
 		$componentCfg['id'] = mb_strtolower( str_replace( ' ', '_', $componentCfg['name'] ) );
-	}
-
-	/**
-	 * @desc Adds template path the component's config array
-	 *
-	 * @param Array $componentCfg
-	 * @return array
-	 */
-	private function addComponentsTplPath( &$componentCfg ) {
-		$componentsId = $componentCfg['id'];
-		$componentCfg['templateData']['templatePath'] = 
-			$this->getComponentsDir() .
-			$componentsId .
-			DIRECTORY_SEPARATOR .
-			'templates' .
-			DIRECTORY_SEPARATOR .
-			$componentsId;
+		return $componentCfg;
 	}
 
 	/**
@@ -172,11 +150,12 @@ class UIFactory {
 	 * @param $componentName
 	 */
 	public function init( $componentName ) {
-		$componentConfig = $this->loadComponentConfig( $componentName );
-		$this->addAssets( $componentConfig['dependencies'] );
-		$component = new UIComponent();
-		$component->setTemplateVarsConfig( $componentConfig['templateData'] );
-		return $component;
+		// We're going to implement it (maybe slightly change) in DAR-809
+		// $componentConfig = $this->loadComponentConfig( $componentName );
+		// $this->addAssets( $componentConfig['dependencies'] );
+		// $component = new UIComponent();
+		// $component->setTemplateVarsConfig($componentConfig['templateVars']);
+		// return $component;
 	}
 
 	/**
