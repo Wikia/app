@@ -559,4 +559,26 @@ abstract class VideoFeedIngester {
 		return $stdRating;
 	}
 
+	/**
+	 * get age gate
+	 * @param string $rating
+	 * @return int $ageGate
+	 */
+	protected function getAgeGate( $rating ) {
+		switch( $rating ) {
+			case 'M':
+			case 'R':
+			case 'TV-MA':
+				$ageGate = 17;
+				break;
+			case 'AO':
+			case 'NC-17':
+				$ageGate = 18;
+				break;
+			default: $ageGate = 0;
+		}
+
+		return $ageGate;
+	}
+
 }

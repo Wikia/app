@@ -266,7 +266,7 @@ class OoyalaAsset extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$params = array();
-		if ( !empty( $data['agegate'] ) && !empty( $this->wg->OoyalaApiConfig['LabelAgeGate'] ) ) {
+		if ( !empty( $data['ageGate'] ) && !empty( $this->wg->OoyalaApiConfig['LabelAgeGate'] ) ) {
 			$params[] = $this->wg->OoyalaApiConfig['LabelAgeGate'];
 		}
 

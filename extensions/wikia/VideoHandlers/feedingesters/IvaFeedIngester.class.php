@@ -185,8 +185,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 						$clipData['industryRating'] = $this->getIndustryRating( $video['EntertainmentProgram']['GameWarning']['Warning'] );
 					}
 
-					$ageGateList = array( 'M', 'AO', 'TV-MA', 'NC-17', 'R' );
-					$clipData['ageGate'] = in_array( $clipData['industryRating'], $ageGateList );
+					$clipData['ageGate'] = $this->getAgeGate( $clipData['industryRating'] );
 
 					$clipData['genres'] = '';
 					if ( !empty( $video['EntertainmentProgram']['MovieCategory']['Category'] ) ) {
@@ -295,7 +294,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 			'hd' => $data['hd'],
 			'duration' => $data['duration'],
 			'published' => $data['published'],
-			'ageGate' => intval( $data['ageGate'] ),
+			'ageGate' => $data['ageGate'],
 			'thumbnail' => $data['thumbnail'],
 			'category' => $data['category'],
 			'description' => $data['description'],
