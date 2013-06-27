@@ -26,7 +26,7 @@ class PhalanxTitleBlock extends WikiaObject {
 	 *
 	 * @return true -- pass hook further
 	 */
-	public function beforeMove( &$move ) {
+	static public function beforeMove( &$move ) {
 		wfProfileIn( __METHOD__ );
 
 		/* title object */
