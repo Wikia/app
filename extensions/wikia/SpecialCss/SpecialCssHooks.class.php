@@ -42,32 +42,19 @@ class SpecialCssHooks {
 	/**
 	 * @desc Checks if CSS Update post was added/changed and purges cache with CSS Updates list
 	 * 
-	 * @param Article $page
+	 * @param WikiPage $page
 	 * @param Revision $revision
 	 * 
 	 * @return true because it's a hook
 	 */
 	static public function onArticleSaveComplete( $page, $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, $status, $baseRevId ) {
 		$title = $page->getTitle();
-		$categories = ( $title instanceof Title ) ? self::removeNamespace( array_keys( $title->getParentCategories() ) ) : [];
+		$categories = self::getCategoriesFromTitle($title);
+		$purged = static::purgeCacheDependingOnCats( $categories, $title, 'because a new post was added to the category' );
 		
-		if( self::hasCssUpdatesCat( $categories ) ) {
-			wfDebugLog( __CLASS__, __METHOD__ .' - purging "Wikia CSS Updates" cache because a new post was added to the category' );
-			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
-		} else if( self::prevRevisionHasCssUpdatesCat( $revision ) ) {
+		if( !$purged && self::prevRevisionHasCssUpdatesCat( $revision ) ) {
 			wfDebugLog( __CLASS__, __METHOD__ . ' - purging "Wikia CSS Updates" cache because a post within the category was removed from the category' );
 			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
-		}
-		
-		if( empty( $categories ) ) {
-			$categories = ( $title instanceof Title ) ? self::removeNamespace( array_keys( $title->getParentCategories( true ) ) ) : [];
-
-			wfDebugLog( __CLASS__, __METHOD__ . ' - empty categories' );
-			
-			if( self::hasCssUpdatesCat( $categories) ) {
-				wfDebugLog( __CLASS__, __METHOD__ . ' - purging "Wikia CSS Updates" cache because a new post within the category was created' );
-				WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
-			}
 		}
 		
 		return true;
@@ -84,6 +71,10 @@ class SpecialCssHooks {
 		return in_array( SpecialCssModel::UPDATES_CATEGORY, $categories );
 	}
 
+	static private function getCategoriesFromTitle( $title, $useMaster = false ) {
+		return ( $title instanceof Title ) ? self::removeNamespace( array_keys( $title->getParentCategories( $useMaster ) ) ) : [];
+	}
+	
 	/**
 	 * @desc Removes category namespace name in content language i.e. 'Category:Abc' will result with 'Abc'
 	 * 
@@ -110,8 +101,8 @@ class SpecialCssHooks {
 	 * 
 	 * @return bool
 	 */
-	static private function prevRevisionHasCssUpdatesCat( $rev ) {
-		return ( $rev instanceof Revision && ( $prevRev = $rev->getPrevious() ) instanceof Revision ) &&
+	static private function prevRevisionHasCssUpdatesCat( Revision $rev ) {
+		return ( ( $prevRev = $rev->getPrevious() ) instanceof Revision ) &&
 			in_array( SpecialCssModel::UPDATES_CATEGORY, self::getCategoriesFromWikitext( $prevRev->getRawText() ) );
 	}
 
@@ -154,21 +145,17 @@ class SpecialCssHooks {
 	/**
 	 * @desc Purges cache once a post within category is requested for deletion
 	 * 
-	 * @param Article $article
+	 * @param WikiPage $page
 	 * @param User $user
 	 * @param String $reason
 	 * @param $error
 	 * 
 	 * @return true because it's a hook
 	 */
-	static public function onArticleDelete( &$article, &$user, &$reason, &$error ) {
-		$title = $article->getTitle();
-		$categories = ( $title instanceof Title ) ? self::removeNamespace( array_keys( $title->getParentCategories() ) ) : [];
-		
-		if( self::hasCssUpdatesCat( $categories ) ) {
-			wfDebugLog( __CLASS__, __METHOD__ . ' - purging "Wikia CSS Updates" cache because a post within the category was deleted' );
-			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
-		}
+	static public function onArticleDelete( &$page, &$user, &$reason, &$error ) {
+		$title = $page->getTitle();
+		$categories = static::getCategoriesFromTitle( $title );
+		static::purgeCacheDependingOnCats( $categories, $title, 'because a post within the category was deleted' );
 		
 		return true;
 	}
@@ -183,13 +170,36 @@ class SpecialCssHooks {
 	 * @return bool
 	 */
 	static public function onArticleUndelete( $title, $created, $comment ) {
-		$categories = ( $title instanceof Title ) ? self::removeNamespace( array_keys( $title->getParentCategories() ) ) : [];
-		
-		if( self::hasCssUpdatesCat( $categories ) ) {
-			wfDebugLog( __CLASS__, __METHOD__ . ' - purging "Wikia CSS Updates" cache because a post from its category was restored' );
-			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
-		}
+		$categories = static::getCategoriesFromTitle( $title );
+		static::purgeCacheDependingOnCats( $categories, $title, 'because a post from its category was restored' );
 		
 		return true;
+	}
+	
+	static private function purgeCacheDependingOnCats( $categories, $title, $reason = null ) {
+		$purged = false;
+		$debugText = ' - purging "Wikia CSS Updates" cache';
+		if( !is_null( $reason ) ) {
+			$debugText .= ' ' . $reason;
+		}
+		
+		if( self::hasCssUpdatesCat( $categories ) ) {
+			wfDebugLog( __CLASS__, __METHOD__ . $debugText );
+			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
+			$purged = true;
+		}
+		
+		if( !$purged && empty( $categories ) ) {
+			wfDebugLog( __CLASS__, __METHOD__ . ' - empty categories; fetching them from DB_MASTER' );
+			$categories = self::getCategoriesFromTitle( $title, true );
+
+			if( self::hasCssUpdatesCat( $categories) ) {
+				wfDebugLog( __CLASS__, __METHOD__ . $reason );
+				WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
+				$purged = true;
+			}
+		}
+		
+		return $purged;
 	}
 }
