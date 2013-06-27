@@ -2,6 +2,11 @@
 @import "layout";
 @import "../mixins/box-sizing";
 
+// These will need to come in as a Sass variables; hardcoded for now.
+// These values are for planetside2 wiki.
+$height-background-image: 1200px;
+$width-background-image: 1700px;
+
 $background-position: absolute;
 @if $background-fixed == true {
 	$background-position: fixed;
@@ -13,10 +18,13 @@ $width-adskins: $width-adskin * 2;
 $width-outside-min: 768px;
 $width-outside-max: 1600px;
 
-// These will need to come in as a Sass variables; hardcoded for now.
-// These values are for planetside2 wiki.
-$height-background-image: 1200px;
-$width-background-image: 1700px;
+$width-background-image-half: $width-background-image / 2;
+$width-outside-half: $width-outside / 2;
+$width-outside-max-half: $width-outside-max / 2;
+
+// This is the offset, from the center of the viewport, that the images need
+// to align correctly to the side of the skin after max width has been set.
+$width-background-offset-max: $width-outside-max-half + ( $width-background-image-half - $width-outside-half );
 
 body {
 	min-width: $width-outside-min;
@@ -304,16 +312,15 @@ body > .global-notification,
 				background-image: url($background-image); /* $wgCdnStylePath */
 				background-repeat: no-repeat;
 				content: "";
-				display: block;
 				height: $height-background-image;
 				position: $background-position;
 				top: 0;
-				width: ( $width-background-image / 2 ) - $width-adskin;
+				width: $width-background-image-half - $width-adskin;
 				z-index: -1;
 			}
 
 			&:after {
-				background-position: -#{ $width-background-image / 2 } 0;
+				background-position: -#{ $width-background-image-half } 0;
 				right: 0;
 			}
 
@@ -330,5 +337,28 @@ body > .global-notification,
 	.WikiaHeader .page-width-container,
 	.WikiaPage {
 		margin: 0 auto;
+	}
+
+	@if $background-tiled == false {
+		body {
+			overflow-x: hidden;
+
+			&:after,
+			&:before {
+				width: $width-background-image-half;
+			}
+
+			&:after {
+				background-position: -#{ $width-background-image-half } 0;
+				right: 50%;
+				margin-right: -#{ $width-background-offset-max };
+			}
+
+			&:before {
+				background-position: 0;
+				left: 50%;
+				margin-left: -#{ $width-background-offset-max };
+			}
+		}
 	}
 }
