@@ -48,13 +48,16 @@ class SpecialCssHooks {
 	 * @return true because it's a hook
 	 */
 	static public function onArticleSaveComplete( $page, $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, $status, $baseRevId ) {
-		$title = $page->getTitle();
-		$categories = self::getCategoriesFromTitle($title);
-		$purged = static::purgeCacheDependingOnCats( $categories, $title, 'because a new post was added to the category' );
-		
-		if( !$purged && self::prevRevisionHasCssUpdatesCat( $revision ) ) {
-			wfDebugLog( __CLASS__, __METHOD__ . ' - purging "Wikia CSS Updates" cache because a post within the category was removed from the category' );
-			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
+		$app = F::app();
+		if ( in_array( $app->wg->DBname, $app->wg->CssUpdatesLangMap ) ) {
+			$title = $page->getTitle();
+			$categories = self::getCategoriesFromTitle($title);
+			$purged = static::purgeCacheDependingOnCats( $categories, $title, 'because a new post was added to the category' );
+			
+			if( !$purged && self::prevRevisionHasCssUpdatesCat( $revision ) ) {
+				wfDebugLog( __CLASS__, __METHOD__ . ' - purging "Wikia CSS Updates" cache because a post within the category was removed from the category' );
+				WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
+			}
 		}
 
 		return true;
@@ -153,9 +156,12 @@ class SpecialCssHooks {
 	 * @return true because it's a hook
 	 */
 	static public function onArticleDelete( &$page, &$user, &$reason, &$error ) {
-		$title = $page->getTitle();
-		$categories = static::getCategoriesFromTitle( $title );
-		static::purgeCacheDependingOnCats( $categories, $title, 'because a post within the category was deleted' );
+		$app = F::app();
+                if ( in_array( $app->wg->DBname, $app->wg->CssUpdatesLangMap ) ) {
+			$title = $page->getTitle();
+			$categories = static::getCategoriesFromTitle( $title );
+			static::purgeCacheDependingOnCats( $categories, $title, 'because a post within the category was deleted' );
+		}
 		
 		return true;
 	}
@@ -170,9 +176,12 @@ class SpecialCssHooks {
 	 * @return bool
 	 */
 	static public function onArticleUndelete( $title, $created, $comment ) {
-		$categories = static::getCategoriesFromTitle( $title );
-		static::purgeCacheDependingOnCats( $categories, $title, 'because a post from its category was restored' );
-		
+		$app = F::app();
+		if ( in_array( $app->wg->DBname, $app->wg->CssUpdatesLangMap ) ) {
+			$categories = static::getCategoriesFromTitle( $title );
+			static::purgeCacheDependingOnCats( $categories, $title, 'because a post from its category was restored' );
+		}
+			
 		return true;
 	}
 	
