@@ -2,11 +2,19 @@
 @import "layout";
 @import "../mixins/box-sizing";
 
+$background-position: absolute;
+@if $background-fixed == true {
+	$background-position: fixed;
+}
+
 $width-padding: $width-gutter / 2;
 $width-adskin: 170px;
+$width-adskins: $width-adskin * 2;
 $width-outside-min: 768px;
 $width-outside-max: 1600px;
+
 // These will need to come in as a Sass variables; hardcoded for now.
+// These values are for planetside2 wiki.
 $height-background-image: 1200px;
 $width-background-image: 1700px;
 
@@ -279,7 +287,7 @@ body > .global-notification,
 	}
 }
 
-@media screen and (min-width: $width-outside + ($width-adskin * 2) + 2) {
+@media screen and (min-width: $width-outside + $width-adskins) {
 	body > .global-notification,
 	.WikiaHeader .page-width-container,
 	.WikiaPage {
@@ -287,30 +295,25 @@ body > .global-notification,
 		width: auto;
 	}
 
-	body {
-		// Doesn't apply to tiled backgrounds
-		@if $background-tiled == false {
-			background: none;
+	@if $background-tiled == false {
+		body {
+			background: $color-body;
 
 			&:after,
 			&:before {
-				background: $color-body url($background-image) 0 0 repeat; /* $wgCdnStylePath */
-
-				@if $background-fixed == true {
-					background-attachment: fixed;
-				}
-
+				background-image: url($background-image); /* $wgCdnStylePath */
+				background-repeat: no-repeat;
 				content: "";
 				display: block;
 				height: $height-background-image;
-				position: absolute;
+				position: $background-position;
 				top: 0;
-				width: ( $width-background-image / 2 - $width-adskin );
+				width: ( $width-background-image / 2 ) - $width-adskin;
 				z-index: -1;
 			}
 
 			&:after {
-				background-position: $width-background-image / 2 0;
+				background-position: -#{ $width-background-image / 2 } 0;
 				right: 0;
 			}
 
@@ -322,7 +325,7 @@ body > .global-notification,
 	}
 }
 
-@media screen and (min-width: $width-outside-max + ($width-adskin * 2) + 2) {
+@media screen and (min-width: $width-outside-max + $width-adskins) {
 	body > .global-notification,
 	.WikiaHeader .page-width-container,
 	.WikiaPage {
