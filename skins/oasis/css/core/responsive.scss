@@ -32,6 +32,35 @@ $width-background-offset-max: $width-outside-max-half + ( $width-background-imag
 
 body {
 	min-width: $width-outside-min;
+
+	@if $background-tiled == false {
+		background: $color-body;
+		overflow-x: hidden;
+
+		&:after,
+		&:before {
+			background-image: url( $background-image ); /* $wgCdnStylePath */
+			background-repeat: no-repeat;
+			content: "";
+			height: $height-background-image;
+			position: $background-position;
+			top: 0;
+			width: $width-background-image-half;
+			z-index: -1;
+		}
+
+		&:after {
+			background-position: -#{ $width-background-image-half } 0;
+			right: 50%;
+			margin-right: -#{ $width-background-image-half };
+		}
+
+		&:before {
+			background-position: 0;
+			left: 50%;
+			margin-left: -#{ $width-background-image-half };
+		}
+	}
 }
 
 body > .global-notification,
@@ -309,27 +338,20 @@ body > .global-notification,
 
 	@if $background-tiled == false {
 		body {
-			background: $color-body;
-
 			&:after,
 			&:before {
-				background-image: url( $background-image ); /* $wgCdnStylePath */
-				background-repeat: no-repeat;
-				content: "";
-				height: $height-background-image;
-				position: $background-position;
-				top: 0;
 				width: $width-background-image-half - $width-background-offset;
-				z-index: -1;
 			}
 
 			&:after {
 				background-position: -#{ $width-background-image-half } 0;
+				margin-right: 0;
 				right: 0;
 			}
 
 			&:before {
 				background-position: -#{ $width-background-offset } 0;
+				margin-left: 0;
 				left: 0;
 			}
 		}
@@ -345,8 +367,6 @@ body > .global-notification,
 
 	@if $background-tiled == false {
 		body {
-			overflow-x: hidden;
-
 			&:after,
 			&:before {
 				width: $width-background-image-half;
