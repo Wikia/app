@@ -1,12 +1,7 @@
 <?php
 
-namespace Wikia\UI;
-
-use Wikia\UI\Exception;
-use Wikia\UI\Component;
-
 /**
- * UI:Factory handles building component which means loading
+ * UIFactory handles building component which means loading
  * assets and component configuration file
  *
  * @author Andrzej Łukaszewski <nandy@wikia-inc.com>
@@ -14,7 +9,7 @@ use Wikia\UI\Component;
  *
  */
 
-class Factory {
+class UIFactory {
 	/**
 	 * @desc Component's configuration file suffix
 	 * Example buttons component config file should be named buttons_config.json
@@ -57,7 +52,7 @@ class Factory {
 		global $IP;
 		$this->componentsDir = $IP . self::DEFAULT_COMPONENTS_PATH;
 
-		$this->loaderService = new \AssetsManager::getInstance();
+		$this->loaderService = new AssetsManager::getInstance();
 	}
 
 	/**
@@ -81,7 +76,7 @@ class Factory {
 	/**
 	 * @desc Returns the only instnace of the class; singleton
 	 *
-	 * @return Wikia\UI\Factory
+	 * @return UIFactory
 	 */
 	static public function getInstance() {
 		if( is_null(static::$instance) ) {
@@ -256,14 +251,14 @@ class Factory {
 	}
 
 	/**
-	 * @throws \Wikia\UI\Exception
+	 * @throws Exception
 	 */
 	public function __clone() {
 		throw new Exception( 'Cloning instances of this class is forbidden.' );
 	}
 
 	/**
-	 * @throws \Wikia\UI\Exception
+	 * @throws Exception
 	 */
 	public function __wakeup() {
 		throw new Exception( 'Unserializing instances of this class is forbidden.' );
