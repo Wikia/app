@@ -7,17 +7,21 @@
  */
 
 class PhalanxUserBlock extends WikiaObject {
-	private $typeBlock = null;
+	private static $typeBlock = null;
 	function __construct(){
 		parent::__construct();
 		F::setInstance( __CLASS__, $this );
 	}
 	
 	/**
+	 * handler for hook blockCheck
+	 *
+	 * @static
+	 *
 	 * @desc blockCheck() will return false if user is blocked. The reason why it was
 	 * written in such way is below when you look at method UserBlock::onUserCanSendEmail().
 	 */
-	public function blockCheck( User $user ) {
+	static public function blockCheck( User $user ) {
 		wfProfileIn( __METHOD__ );
 
 		$phalanxModel = new PhalanxUserModel( $user );
@@ -25,31 +29,16 @@ class PhalanxUserBlock extends WikiaObject {
 		if ( $ret !== false ){
 			$ret = $phalanxModel->match_email();
 			if ( $ret === false ) {
-				$this->typeBlock = 'email';
+				self::$typeBlock = 'email';
 			}
 		}
 		
 		if ( $ret === false ) {
 			$user = $phalanxModel->userBlock( $user->isAnon() ? 'ip' : 'exact' )->getUser();
-			$this->typeBlock = (empty( $this->typeBlock ) ) ? 'user' : $this->typeBlock;
+			self::$typeBlock = (empty( self::$typeBlock ) ) ? 'user' : self::$typeBlock;
 		}
 		wfProfileOut( __METHOD__ );
 		return $ret;
-	}
-
-	/**
-	 * setter
-	 * @param string $type -- type of block
-	 */
-	public function setTypeBlock( $type ) {
-		$this->typeBlock = $type;
-	}
-
-	/**
-	 * getter
-	 */
-	public function getTypeBlock( $type ) {
-		return $this->typeBlock;
 	}
 
 	/**
@@ -58,8 +47,7 @@ class PhalanxUserBlock extends WikiaObject {
 	 * @static
 	 */
 	static public function userCanSendEmail( &$user, &$canSend ) {
-		$userBlock = new PhalanxUserBlock();
-		$canSend = $userBlock->blockCheck( $user );
+		$canSend = self::blockCheck( $user );
 		return true;
 	}
 
@@ -70,12 +58,11 @@ class PhalanxUserBlock extends WikiaObject {
 	 */
 	static public function abortNewAccount( $user, &$abortError ) {
 		wfProfileIn( __METHOD__ );
-		$userBlock = new PhalanxUserBlock();
 
-		$ret = $userBlock->blockCheck( $user );
+		$ret = self::blockCheck( $user );
 
 		if ( $ret === false ) {
-			$abortError = wfMsg( ( $userBlock->getTypeBlock() == 'email' )
+			$abortError = wfMsg( ( self::$typeBlock == 'email' )
 				? 'phalanx-email-block-new-account'
 				: 'phalanx-user-block-new-account'
 			);
@@ -95,7 +82,7 @@ class PhalanxUserBlock extends WikiaObject {
 
 		$user = User::newFromName( $userName );
 		if ( $user instanceof User ) {
-			$ret = PhalanxUserBlock::abortNewAccount( $user, $abortError );
+			$ret = self::abortNewAccount( $user, $abortError );
 		}
 		else {
 			$ret = false;
