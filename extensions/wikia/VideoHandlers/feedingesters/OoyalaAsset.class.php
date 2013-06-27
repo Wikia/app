@@ -42,6 +42,10 @@ class OoyalaAsset extends WikiaModel {
 				if ( $resp ) {
 					// set primary thumbnail
 					$resp = $this->setPrimaryThumbnail( $asset['embed_code'] );
+					if ( $resp ) {
+						// set labels
+						$resp = $this->setLabels( $asset['embed_code'], $data );
+					}
 				}
 			}
 		} else {
@@ -154,7 +158,7 @@ class OoyalaAsset extends WikiaModel {
 			$metadata['industryrating'] = $data['industryrating'];
 		}
 		if ( !empty( $data['genres'] ) ) {
-			$metadata['genres'] = $data['genres'];
+			$metadata['genres'] = is_array( $data['genres'] ) ? implode( ', ', $data['genres'] ) : $data['genres'];
 		}
 		if ( !empty( $data['expirationdate'] ) ) {
 			$metadata['expirationdate'] = $data['expirationdate'];
@@ -246,6 +250,40 @@ class OoyalaAsset extends WikiaModel {
 		$params = array( 'type' => 'remote_url' );
 
 		$resp = $this->sendRequest( $method, $reqPath, $params );
+
+		wfProfileOut( __METHOD__ );
+
+		return $resp;
+	}
+
+	/**
+	 * set label
+	 * @param string $videoId
+	 * @param array $data
+	 * @return boolean $resp
+	 */
+	public function setLabels( $videoId, $data ) {
+		wfProfileIn( __METHOD__ );
+
+		$params = array();
+		if ( !empty( $data['ageGate'] ) && !empty( $this->wg->OoyalaApiConfig['LabelAgeGate'] ) ) {
+			$params[] = $this->wg->OoyalaApiConfig['LabelAgeGate'];
+		}
+
+		$provider = 'Label'.ucfirst( strtolower( $data['provider'] ) );
+		if ( !empty( $this->wg->OoyalaApiConfig[$provider] ) ) {
+			$params[] = $this->wg->OoyalaApiConfig[$provider];
+		}
+
+		if ( empty( $params ) ) {
+			$resp = true;
+			print( "WARNING: Cannot set label for $data[name] (Label not found).\n" );
+		} else {
+			$method = 'POST';
+			$reqPath = '/v2/assets/'.$videoId.'/labels';
+
+			$resp = $this->sendRequest( $method, $reqPath, $params );
+		}
 
 		wfProfileOut( __METHOD__ );
 
