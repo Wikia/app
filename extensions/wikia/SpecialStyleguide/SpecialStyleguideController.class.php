@@ -54,7 +54,7 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 				];
 				break;
 		}
-
+		
 		$this->wg->Out->clearHTML();
 		$this->wg->Out->addHtml( ( new Wikia\Template\MustacheEngine )
 			->setPrefix( dirname( __FILE__ ) . '/templates' )
