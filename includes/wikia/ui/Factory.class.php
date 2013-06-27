@@ -62,6 +62,7 @@ class Factory {
 
 	/**
 	 * @desc Sets the path to components' directory
+	 *
 	 * @param String $path
 	 */
 	public function setComponentsDir( $path ) {
@@ -70,6 +71,7 @@ class Factory {
 
 	/**
 	 * @desc Returns the path to component's directory
+	 *
 	 * @return null|String
 	 */
 	public function getComponentsDir() {
@@ -78,6 +80,7 @@ class Factory {
 
 	/**
 	 * @desc Returns the only instnace of the class; singleton
+	 *
 	 * @return Wikia\UI\Factory
 	 */
 	static public function getInstance() {
@@ -166,6 +169,7 @@ class Factory {
 
 	/**
 	 * @desc Adds asset to load
+	 *
 	 * @param $assetName
 	 */
 	private function addAsset( $assetName ) {
@@ -197,6 +201,7 @@ class Factory {
 
 	/**
 	 * @desc Adds dependency assets to load
+	 *
 	 * @param $componentDependencies
 	 */
 	private function addAssetDependencies( $componentDependencies ) {
@@ -207,9 +212,31 @@ class Factory {
 
 	/**
 	 * @desc Loads JS/CSS dependencies, creates and configurates an instance of UIComponent object which is returned
-	 * @param $componentName
+	 *
+	 * @param string|array
 	 */
-	public function init( $componentName ) {
+	public function init( $componentNameOrNames ) {
+		if ( is_array($componentNameOrNames) ) {
+			// load multiple components
+			$components = [];
+
+			foreach ( $componentNameOrNames as $componentName ) {
+				$components[] = $this->initSingle( $componentName );
+			}
+
+			return $components;
+		} else {
+			// load single component
+			return $this->initSingle( $componentNameOrNames );
+		}
+	}
+
+	/**
+	 * @desc Loads JS/CSS dependencies, creates and configurates an instance of UIComponent object which is returned
+	 *
+	 * @param string $componentName
+	 */
+	private function initSingle( $componentName ) {
 		// We're going to implement it (maybe slightly change) in DAR-809
 		$componentConfig = $this->loadComponentConfig( $componentName );
 
