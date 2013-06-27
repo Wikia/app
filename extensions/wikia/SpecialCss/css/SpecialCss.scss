@@ -23,6 +23,14 @@ $edit-box-color: mix($color-page, #000, 95%);
 		margin-bottom: 10px;
 	}
 
+	.css-diff {
+		border: 1px solid $color-page-border;
+		max-height: 400px;
+		overflow: auto;
+		padding: 10px;
+		@include box-sizing();
+	}
+
 	.css-editor-container {
 		@include box-sizing();
 		min-height: 250px;
