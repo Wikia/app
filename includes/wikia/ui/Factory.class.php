@@ -57,7 +57,7 @@ class Factory {
 		global $IP;
 		$this->componentsDir = $IP . self::DEFAULT_COMPONENTS_PATH;
 
-		$this->loaderService = \Assetsmanager::getInstance();
+		$this->loaderService = new \AssetsManager::getInstance();
 	}
 
 	/**
