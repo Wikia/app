@@ -70,13 +70,21 @@ define('wikia.videohandler.ooyala', ['wikia.window', require.optional('ext.wikia
 		 */
 		delete window.OO;
 
-		loader({
-			type: loader.JS,
-			resources: params.jsFile
-		}).done(function() {
+		var i,
+			args = [];
+
+		for(i=0; i<params.jsFile.length; i++){
+			args.push({
+				type: loader.JS,
+				resources: params.jsFile[i]
+			});
+		}
+
+		loader
+		.apply(loader, args)
+		.done(function() {
 			window.OO.Player.create(containerId, params.videoId, createParams);
 		});
-
 
 	};
 });

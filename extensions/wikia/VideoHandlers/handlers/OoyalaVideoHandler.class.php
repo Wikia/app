@@ -12,8 +12,7 @@ class OoyalaVideoHandler extends VideoHandler {
 
 	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload=false ) {
 		$height = $this->getHeight($width);
-		//$url = $this->getEmbedUrl();
-		$playerId = 'ooyalaplayer-'.$this->videoId.'-'.intval($isAjax).'-';
+		$playerId = 'ooyalaplayer-'.$this->videoId.'-'.intval($isAjax);
 
 		$ooyalaPlayerId = $this->getVideoPlayerId();
 		$jsFile = 'http://player.ooyala.com/v3/'.$ooyalaPlayerId;
@@ -33,7 +32,9 @@ EOT;
 				'height'=> $height,
 				'autoPlay'=> $autoPlayStr,
 				'title'=> $this->title,
-				'jsFile' => $jsFile,
+				'jsFile' => array(
+					$jsFile,
+				),
 			),
 			'init' => 'wikia.videohandler.ooyala',
 			'scripts' => array(
