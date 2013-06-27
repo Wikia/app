@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikia\UI\Factory;
+namespace Wikia\UI;
 
 use Wikia\UI\Exception;
 use Wikia\UI\Component;
