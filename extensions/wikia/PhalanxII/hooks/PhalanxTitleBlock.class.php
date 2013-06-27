@@ -17,6 +17,15 @@ class PhalanxTitleBlock extends WikiaObject {
 		F::setInstance( __CLASS__, $this );
 	}
 
+	/**
+	 * handler for beforeMove hook
+	 *
+	 * @static
+	 *
+	 * @param SpecialPage $move -- Special::Move class instance
+	 *
+	 * @return true -- pass hook further
+	 */
 	public function beforeMove( &$move ) {
 		wfProfileIn( __METHOD__ );
 
@@ -24,13 +33,18 @@ class PhalanxTitleBlock extends WikiaObject {
 		$title = Title::newFromURL( $move->newTitle );
 
 		/* check title */
-		$ret = $this->checkTitle( $title );
+		$ret = PhalanxTitleBlock::checkTitle( $title );
 		
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 
-	public function editFilter( $editPage, $text, $section, &$hookError, $summary ) {
+	/**
+	 * handler for editFilter hook
+	 *
+	 * @static
+	 */
+	static public function editFilter( $editPage, $text, $section, &$hookError, $summary ) {
 		wfProfileIn( __METHOD__ );
 
 		$title = $editPage->getTitle();
@@ -38,19 +52,31 @@ class PhalanxTitleBlock extends WikiaObject {
 		 * Hook is called for both page creations and edits. We should only check
 		 * if the page is created = page does not exist (RT#61104)
 		 */
-		if ( $title->exists() ) {
+		if( $title->exists() ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 		
-		/* check title */
-		$ret = $this->checkTitle( $title );
+		/**
+		 * pass to check title method
+		 */
+		$ret = PhalanxTitleBlock::checkTitle( $title );
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 
-	public function checkTitle( $title, $displayBlock = true ) {
+	/**
+	 * handler for checkTitle hook
+	 *
+	 * @static
+	 *
+	 * @param Title $title -- title instance
+	 * @param Bool $displayBlock -- shoould block be displayed or not
+	 *
+	 * @return true -- pass hook further
+	 */
+	static public function checkTitle( $title, $displayBlock = true ) {
 		wfProfileIn( __METHOD__ );
 
 		$phalanxModel = new PhalanxContentModel( $title );
@@ -64,6 +90,16 @@ class PhalanxTitleBlock extends WikiaObject {
 		return $ret;
 	}
 	
+	/**
+	 * handler for pageTitleFilter hook
+	 *
+	 * @static
+	 *
+	 * @param Title $title -- title for checking
+	 * @param String $error_msg -- returned message, by reference
+	 *
+	 * @return true -- pass hook further
+	 */
 	public function pageTitleFilter( $title, &$error_msg ) {
 		wfProfileIn( __METHOD__ );
 
