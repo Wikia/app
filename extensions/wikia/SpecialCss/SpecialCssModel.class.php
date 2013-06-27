@@ -149,12 +149,15 @@ class SpecialCssModel extends WikiaModel {
 
 	/**
 	 * @desc Saving CSS content
+	 * If there is more recent edit it will try to merge text and save.
+	 * Returns false when conflict is found and cannot be resolved
 	 *
 	 * @param string $content
 	 * @param string $summary
 	 * @param bool $isMinor
+	 * @param int $editTime timestamp
 	 * @param User $user
-	 * @return bool if saving was successful
+	 * @return Status|bool
 	 */
 	public function saveCssFileContent($content, $summary, $isMinor, $editTime, $user) {
 		$cssTitle = $this->getCssFileTitle();
@@ -173,12 +176,12 @@ class SpecialCssModel extends WikiaModel {
 				$currentText = $article->getText();
 
 				$baseText = Revision::loadFromTimestamp(
-					wfGetDB(DB_SLAVE),
+					wfGetDB(DB_MASTER),
 					$this->getCssFileTitle(),
 					$editTime
 				)->getText();
 
-				// TODO check how to avoid this hax
+				// remove windows endlines from input before merging texts
 				$content = str_replace("\r", "", $content);
 
 				if (wfMerge( $baseText, $content, $currentText, $result )) {
