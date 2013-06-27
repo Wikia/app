@@ -22,6 +22,10 @@ $width-background-image-half: $width-background-image / 2;
 $width-outside-half: $width-outside / 2;
 $width-outside-max-half: $width-outside-max / 2;
 
+// This is the offset, from the left and right sides of the viewport, that
+// the images need to align correctly to the sides of the skin before max width has been set.
+$width-background-offset: ( ( $width-background-image-half - $width-adskin ) * 2 - $width-outside ) / 2;
+
 // This is the offset, from the center of the viewport, that the images need
 // to align correctly to the side of the skin after max width has been set.
 $width-background-offset-max: $width-outside-max-half + ( $width-background-image-half - $width-outside-half );
@@ -33,11 +37,11 @@ body {
 body > .global-notification,
 .WikiaHeader .page-width-container,
 .WikiaPage {
-	margin: 0 auto;
 	max-width: $width-outside-max;
 }
 
-.global-notification {
+.global-notification,
+.WikiaHeader .page-width-container {
 	@include box-sizing( border-box );
 	width: $width-outside;
 }
@@ -263,7 +267,7 @@ body > .global-notification,
 	}
 }
 
-@media screen and (max-width: 1030px) {
+@media screen and (max-width: $width-outside) {
 	body {
 		background: $color-page;
 	}
@@ -309,13 +313,13 @@ body > .global-notification,
 
 			&:after,
 			&:before {
-				background-image: url($background-image); /* $wgCdnStylePath */
+				background-image: url( $background-image ); /* $wgCdnStylePath */
 				background-repeat: no-repeat;
 				content: "";
 				height: $height-background-image;
 				position: $background-position;
 				top: 0;
-				width: $width-background-image-half - $width-adskin;
+				width: $width-background-image-half - $width-background-offset;
 				z-index: -1;
 			}
 
@@ -325,7 +329,7 @@ body > .global-notification,
 			}
 
 			&:before {
-				background-position: -#{ $width-adskin } 0;
+				background-position: -#{ $width-background-offset } 0;
 				left: 0;
 			}
 		}
