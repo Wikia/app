@@ -1,5 +1,5 @@
 
-define( 'lvs.undo', ['wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lvs.videocontrols', 'wikia.nirvana', 'jquery'], function( QueryString, commonAjax, window, videoControls, nirvana, $ ) {
+define( 'lvs.undo', [ 'wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lvs.videocontrols', 'wikia.nirvana', 'jquery', 'lvs.tracker' ], function( QueryString, commonAjax, window, videoControls, nirvana, $, tracker ) {
 
 	var $container,
 		videoTitle,
@@ -10,6 +10,7 @@ define( 'lvs.undo', ['wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lvs
 		sort,
 		page,
 		wasSwap;
+
 
 	function doRequest() {
 		commonAjax.startLoadingGraphic();
@@ -24,7 +25,8 @@ define( 'lvs.undo', ['wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lvs
 				page: page
 			},
 			callback: function( data ) {
-				commonAjax.success( $container, data);
+				// send info to common success method: response data and tracking label
+				commonAjax.success( data, tracker.UNDO);
 			},
 			onErrorCallback: function() {
 				commonAjax.failure();
@@ -65,6 +67,11 @@ define( 'lvs.undo', ['wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lvs
 					doRequest();
 				},
 				width: 700
+			});
+
+			tracker.track( {
+				action: tracker.CLICK,
+				label: tracker.UNDO
 			});
 		});
 	}

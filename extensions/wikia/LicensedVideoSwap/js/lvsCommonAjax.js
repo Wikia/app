@@ -2,14 +2,16 @@
  * These are generic functions having to do with loading graphics
  * and ajax responses for LVS
  */
-define( 'lvs.commonajax', ['wikia.window'], function( window ) {
+define( 'lvs.commonajax', ['wikia.window', 'lvs.tracker'], function( window, tracker ) {
 	"use strict";
 
-	var $body;
+	var $body,
+		$container;
 
-	$(function() {
+	function init( $elem ) {
 		$body = $( 'body' );
-	});
+		$container = $elem;
+	};
 
 	// add loading graphic
 	function startLoadingGraphic() {
@@ -24,7 +26,7 @@ define( 'lvs.commonajax', ['wikia.window'], function( window ) {
 	}
 
 	// ajax success callback
-	function success( $container, data ) {
+	function success( data, trackingLabel ) {
 		if( data.result == 'error' ) {
 			window.GlobalNotification.show( data.msg, 'error' );
 			stopLoadingGraphic();
@@ -33,6 +35,11 @@ define( 'lvs.commonajax', ['wikia.window'], function( window ) {
 			// update the grid and trigger the reset event for JS garbage collection
 			$container.html( data.html ).trigger( 'contentReset' );
 			stopLoadingGraphic();
+
+			tracker.track({
+				action: tracker.SUCCESS,
+				label: trackingLabel
+			});
 		}
 	}
 
@@ -42,6 +49,7 @@ define( 'lvs.commonajax', ['wikia.window'], function( window ) {
 	}
 
 	return {
+		init: init,
 		startLoadingGraphic: startLoadingGraphic,
 		success: success,
 		failure: failure
