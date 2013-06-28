@@ -82,7 +82,7 @@ else {
 foreach ($providersVideoFeed as $provider) {
 	print("Starting import for provider $provider...\n");
 
-	$feedIngester = VideoFeedIngester::getInstance($provider); /* @var $feedIngester VideoFeedIngester */
+	$feedIngester = VideoFeedIngester::getInstance( $provider );
 	$feedIngester->reupload = $reupload;
 
 	// get WikiFactory data
@@ -121,6 +121,7 @@ foreach ($providersVideoFeed as $provider) {
 			// no file needed
 			$startDate = date('Y-m-d', $startDateTS);
 			$endDate = date('Y-m-d', $endDateTS);
+			$remoteAsset = true;
 			break;
 		default:
 	}
