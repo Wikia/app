@@ -45,7 +45,7 @@ class PlaceStorage {
 	 * @return PlaceStorage model object
 	 */
 	public static function newFromId($pageId) {
-		$instance = new PlaceStorage(F::app(), $pageId);
+		$instance = new PlaceStorage($pageId);
 
 		// read data from database
 		$instance->read();

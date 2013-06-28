@@ -1178,7 +1178,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					'data-image-name' => $img->getTitle()->getText(),
 					'data-image-key' => $img->getTitle()->getDBKey(),
 				);
-				if ( $this->mData['images'][$p]['data-caption'] != '' ) {
+				if ( !empty( $this->mData['images'][$p]['data-caption'] ) ) {
 					$thumbAttribs['data-caption'] = $this->mData['images'][$p]['data-caption'];
 				}
 				$thumbHtml = Xml::element('img', $thumbAttribs);

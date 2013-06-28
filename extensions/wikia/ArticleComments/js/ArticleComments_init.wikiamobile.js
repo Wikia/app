@@ -93,7 +93,7 @@ require(['throbber', 'wikia.querystring', 'wikia.loader', 'wikia.nirvana'], func
 		);
 	}
 
-	Wikia(function(){
+	$(function(){
 		wkArtCom = document.getElementById('wkArtCom');
 		collSec = wkArtCom.getElementsByClassName('collSec')[0];
 		wkComm = document.getElementById('wkComm');

@@ -225,6 +225,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 
 		// check if still exists
 		$code = empty( $status->errors[0]['params'][0] ) ? null : $status->errors[0]['params'][0];
+
 		if ( $code == 404 ) {
 			wfProfileOut( __METHOD__ );
 			throw new VideoNotFoundException($status, $content, $apiUrl);
