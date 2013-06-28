@@ -13,6 +13,7 @@ class WikisApiController extends WikiaApiController {
 	const PARAMETER_WIKI_IDS = 'ids';
 	const CACHE_VALIDITY = 86400;//1 day
 	const MEMC_NAME = 'SharedWikiApiData:';
+	const LANGUAGES_LIMIT = 10;
 	const DEFAULT_TOP_EDITORS_NUMBER = 10;
 	const DEFAULT_WIDTH = 250;
 	const DEFAULT_HEIGHT = null;
@@ -97,6 +98,10 @@ class WikisApiController extends WikiaApiController {
 
 		if ( empty( $keyword ) ) {
 			throw new MissingParameterApiException( self::PARAMETER_KEYWORD );
+		}
+
+		if ( !empty( $langs ) &&  count($langs) > self::LANGUAGES_LIMIT) {
+			throw new LimitExceededApiException( self::PARAMETER_KEYWORD, self::LANGUAGES_LIMIT );
 		}
 
 		$results = self::$model->getByString($keyword, $langs, $hub, $includeDomain );
