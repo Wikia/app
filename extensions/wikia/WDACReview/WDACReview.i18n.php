@@ -3,6 +3,8 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wdacreview-tool-name' => 'WDAC Review',
+	'action-wdacreview' => 'access WDAC Review tool',
 	'wdacreview-noresults' => 'There are no wikis flagged by users for review.',
 	'wdacreview-approve' => 'Yes',
 	'wdacreview-disapprove' => 'No',
@@ -14,7 +16,9 @@ $messages['en'] = array(
 	'wdacreview-confirm-update' => "Flags for selected wikis were updated",
 );
 
-$messages['qqx'] = array(
+$messages['qqq'] = array(
+	'wdacreview-tool-name' => 'Name of tool',
+	'action-wdacreview' => 'Used on access error to describe prevented action',
 	'wdacreview-noresults' => 'Information to display when there are no results found.',
 	'wdacreview-approve' => 'An option in from approving WDAC flag for wiki',
 	'wdacreview-disapprove' => 'An option in from disapproving WDAC flag for wiki',
@@ -27,6 +31,7 @@ $messages['qqx'] = array(
 );
 
 $messages['pl'] = array(
+	'action-wdacreview' => 'dostępu do narzędzia WDAC Review',
 	'wdacreview-noresults' => 'Nie znaleziono żadnych wiki oznaczonych przez użytkowników do sprawdzenia.',
 	'wdacreview-approve' => 'Tak',
 	'wdacreview-disapprove' => 'Nie',

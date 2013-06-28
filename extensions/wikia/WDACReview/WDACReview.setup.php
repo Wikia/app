@@ -9,7 +9,7 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'WDAC Review',
-	'desc' => 'Internal tool to help marking wikis directed at children suggested by founders of wiki',
+	'descriptionmsg' => 'wdacreview-tool-description',
 	'authors' => array(
 		"[http://community.wikia.com/wiki/User:R-Frank Kamil 'R-Frank' Koterba]"
 	),
@@ -29,8 +29,8 @@ $wgAvailableRights[] = 'wdacreview';
 $wgGroupPermissions['util']['wdacreview'] = true;
 $wgGroupPermissions['vstf']['wdacreview'] = true;
 
-$wgGroupPermissions['reviewer']['wdacreview'] = true;
-$wgGroupPermissions['reviewer']['edit'] = false;
+$wgGroupPermissions['wdacreviewer']['wdacreview'] = true;
+$wgGroupPermissions['wdacreviewer']['edit'] = false;
 
 // i18n
 $wgExtensionMessagesFiles['WDACReview'] = $dir . 'WDACReview.i18n.php';

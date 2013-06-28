@@ -18,7 +18,7 @@ class WDACReviewSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressPageHeader = true;
 		$this->wg->SuppressFooter = true;
 
-		$this->wg->Out->setPageTitle($this->getPageTitle());
+		$this->wg->Out->setPageTitle($this->getToolName());
 
 		$this->wg->Out->enableClientCache( false );
 	}
@@ -38,7 +38,7 @@ class WDACReviewSpecialController extends WikiaSpecialPageController {
 		$helper = $this->getHelper();
 
 		$this->fullUrl = $this->wg->Title->getFullUrl( );
-		$this->baseUrl = $this->getBaseUrl();
+		$this->baseUrl = $this->specialPage->getTitle()->getFullUrl();
 		$this->toolName = $this->getToolName();
 		$this->submitUrl = $this->baseUrl;
 
@@ -58,27 +58,19 @@ class WDACReviewSpecialController extends WikiaSpecialPageController {
 	}
 
 
-	protected function getPageTitle() {
-		return 'Wikis Ditected at Children Review tool';
-	}
-
 	protected function getHelper() {
 		return new WDACReviewHelper();
 	}
 
-	protected function getBaseUrl() {
-		return Title::newFromText('WDACReview', NS_SPECIAL)->getFullURL();
-	}
-
 	protected function getToolName() {
-		return 'WDAC Review';
+		return wfMessage('wdacreview-tool-name')->escaped();
 	}
 
 	protected function parseData($data) {
 		$cities = array();
 
 		foreach( $data as $name => $value ) {
-			if (preg_match('/city-(\d*)/', $name, $matches)) {
+			if (preg_match('/city-(\d+)/', $name, $matches)) {
 				if ( !empty($matches[1]) ) {
 					$cities[$matches[1]] = $value;
 				}
