@@ -3,6 +3,13 @@
 </header>
 
 <form action="<?= $submitUrl ?>" method="post" id="WDACReviewForm">
+	<fieldset>
+		<legend>Bulk choice change</legend>
+		<span>Set following option for each item below</span>
+		<input type="button" value="<?= wfMessage('wdacreview-approve')->plain() ?>" id="wdac-approve-all"/>
+		<input type="button" value="<?= wfMessage('wdacreview-disapprove')->plain() ?>" id="wdac-disapprove-all"/>
+		<input type="button" value="<?= wfMessage('wdacreview-undetermined')->plain() ?>" id="wdac-undetermined-all"/>
+	</fieldset>
 
 	<ul class="wdac-review-list">
 	<?php
@@ -15,9 +22,12 @@
 
 			<li class="state-">
 				<h3><?= $city['t'] ?></h3>
-				<a href="$city['u']"><?= $city['u'] ?></a>
-				<label for="">Yes</label><input type="radio" name="<?= $name ?>" value="1" id="<?= $name ?>-true"/>
-				<label for="">No</label><input type="radio" name="<?= $name ?>" value="0" id="<?= $name ?>-false"/>
+				<a href="<?= $city['u']?>"><?= $city['u'] ?></a>
+				<input type="radio" name="<?= $name ?>" value="<?= WDACReviewSpecialController::FLAG_APPROVE ?>" id="<?= $name ?>-true"/><label for="<?= $name ?>-true"><?= wfMessage('wdacreview-approve')->plain() ?></label>
+
+				<input type="radio" name="<?= $name ?>" value="<?= WDACReviewSpecialController::FLAG_DISAPPROVE ?>" id="<?= $name ?>-false"/><label for="<?= $name ?>-false"><?= wfMessage('wdacreview-disapprove')->plain() ?></label>
+
+				<input type="radio" name="<?= $name ?>" value="<?= WDACReviewSpecialController::FLAG_UNDETERMINED ?>" id="<?= $name ?>-undetermined"/><label for="<?= $name ?>-undetermined"><?= wfMessage('wdacreview-undetermined')->plain() ?></label>
 			</li>
 
 		<?php

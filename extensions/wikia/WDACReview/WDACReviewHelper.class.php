@@ -27,16 +27,19 @@ class WDACReviewHelper {
 
 	/**
 	 * Update variables in WikiFactory
-	 * @param array cities list
+	 * @param array $cities List of wikis to update flags
+	 * containg wikis IDs and values: True - is WDAC, False - is not WDAC
+	 * Struncture of param
+	 * $city = array( $cityId => $isDirectedAtCh )
 	 */
 	public function updateWDACFlags( $cities ) {
 		wfProfileIn( __METHOD__ );
 
 		foreach ( $cities as $cityId => $isDirectedAtCh) {
-			if ( !empty($isDirectedAtCh) ) {
+			if ( $isDirectedAtCh == WDACReviewSpecialController::FLAG_APPROVE ) {
 				WikiFactory::setVarByName( 'wgWikiDirectedAtChildrenByStaff', $cityId, true, self::UPDATE_REASON );
 				WikiFactory::removeVarByName( 'wgWikiDirectedAtChildrenByFounder', $cityId, self::UPDATE_REASON );
-			} else {
+			} elseif ( $isDirectedAtCh == WDACReviewSpecialController::FLAG_DISAPPROVE ) {
 				WikiFactory::setVarByName( 'wgWikiDirectedAtChildrenByStaff', $cityId, false, self::UPDATE_REASON );
 				WikiFactory::removeVarByName( 'wgWikiDirectedAtChildrenByFounder', $cityId, self::UPDATE_REASON );
 			}

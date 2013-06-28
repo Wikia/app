@@ -15,6 +15,9 @@
 #WDACReviewForm {
 	margin: 1em 20px;
 	clear: both;
+	legend {
+		font-weight:bold;
+	}
 	.wdac-review-list {
 		@include clearfix;
 		list-style: none;

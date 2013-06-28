@@ -2,6 +2,10 @@
 
 class WDACReviewSpecialController extends WikiaSpecialPageController {
 
+	const FLAG_APPROVE = 1;
+	const FLAG_DISAPPROVE = -1;
+	const FLAG_UNDETERMINED = 0;
+
 	public function __construct() {
 		parent::__construct('WDACReview', 'wdacreview', false /* $listed */);
 	}
@@ -28,6 +32,7 @@ class WDACReviewSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
+		$this->response->addAsset( 'extensions/wikia/WDACReview/js/WDACReview.js' );
 		$this->response->addAsset( 'extensions/wikia/WDACReview/css/WDACReview.scss' );
 
 		$helper = $this->getHelper();
