@@ -52,7 +52,7 @@ class UIFactory {
 		global $IP;
 		$this->componentsDir = $IP . self::DEFAULT_COMPONENTS_PATH;
 
-		$this->loaderService = new AssetsManager::getInstance();
+		$this->loaderService = AssetsManager::getInstance();
 	}
 
 	/**
@@ -226,7 +226,7 @@ class UIFactory {
 	 * @param string|array
 	 */
 	public function init( $componentNames ) {
-		if ( !is_array($componentNames ) {
+		if ( !is_array($componentNames ) ) {
 			$componentNames = (array)$componentNames;
 		}
 		
@@ -240,7 +240,7 @@ class UIFactory {
 
 			// if there are some components, put them in the $assets
 			if ( !empty( $componentsConfig['dependencies'] ) ) {
-				if ( !empty( $componentsConfig['dependencies']['js'] ) {
+				if ( !empty( $componentsConfig['dependencies']['js'] ) ) {
 					$assets = array_merge( $assets, $componentsConfig['dependencies']['js'] );
 				}
 				if ( !empty( $componentsConfig['dependencies']['css'] ) ) {
