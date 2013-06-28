@@ -230,7 +230,7 @@ class DataMartService extends Service {
 	 *
 	 * @return array $topWikis [ array( wikiId => pageviews ) ]
 	 */
-	public static function getTopWikisByPageviews ($periodId, $limit = 200, $lang = null, $hub = null, $public = null) {
+	public static function getTopWikisByPageviews ($periodId, $limit = 200, Array $langs = null, $hub = null, $public = null) {
 		$app = F::app();
 		wfProfileIn(__METHOD__);
 
@@ -251,8 +251,8 @@ class DataMartService extends Service {
 				break;
 		}
 
-		$memKey = wfSharedMemcKey('datamart', 'topwikis', $cacheVersion, $field, $limitUsed, $lang, $hub, $public);
-		$getData = function () use ($app, $limitUsed, $lang, $hub, $public, $field) {
+		$memKey = wfSharedMemcKey('datamart', 'topwikis', $cacheVersion, $field, $limitUsed, implode( ',', $langs ), $hub, $public);
+		$getData = function () use ($app, $limitUsed, $langs, $hub, $public, $field) {
 			wfProfileIn(__CLASS__ . '::TopWikisQuery');
 			$topWikis = array();
 
@@ -262,9 +262,11 @@ class DataMartService extends Service {
 				$tables = array('report_wiki_recent_pageviews as r');
 				$where = array();
 
-				if (!empty($lang)) {
-					$lang = $db->addQuotes($lang);
-					$where[] = "r.lang = {$lang}";
+				if (!empty($langs)) {
+					foreach ( $langs as $index => $lang ) {
+						$langs[$index] = $db->addQuotes( "{$lang}" );
+					}
+					$where[] = 'r.lang IN (' . implode( ',', $langs ) . ')';
 				}
 
 				if (!empty($hub)) {

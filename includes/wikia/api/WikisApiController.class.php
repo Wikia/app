@@ -5,6 +5,7 @@
  * Available only on the www.wikia.com main domain.
  *
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+ * @author Artur Klajnerok <arturk@wikia-inc.com>
  */
 
 class WikisApiController extends WikiaApiController {
@@ -47,10 +48,10 @@ class WikisApiController extends WikiaApiController {
 	 */
 	public function getList() {
 		$hub = trim( $this->request->getVal( 'hub', null ) );
-		$lang = trim( $this->getVal( self::PARAMETER_LANGUAGES, null ) );
+		$langs = $this->request->getArray( self::PARAMETER_LANGUAGES );
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
 		$batch = $this->request->getInt( 'batch', 1 );
-		$results = self::$model->getTop( $lang, $hub );
+		$results = self::$model->getTop( $langs, $hub );
 		$batches = wfPaginateArray( $results, $limit, $batch );
 
 		foreach ( $batches as $name => $value ) {
@@ -58,8 +59,8 @@ class WikisApiController extends WikiaApiController {
 		}
 
 		$this->response->setCacheValidity(
-			604800 /* 1 week */,
-			604800 /* 1 week */,
+			1 /* 604800 1 week */,
+			1 /* 604800 1 week */,
 			array(
 				WikiaResponse::CACHE_TARGET_BROWSER,
 				WikiaResponse::CACHE_TARGET_VARNISH

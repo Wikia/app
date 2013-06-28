@@ -63,15 +63,15 @@ class WikisModel extends WikiaModel {
 	 *
 	 * @return array A collection of results with id, name, hub, language, topic and domain
 	 */
-	public function getTop( $lang = null, $hub = null ) {
+	public function getTop( Array $langs = null, $hub = null ) {
 		wfProfileIn( __METHOD__ );
 
-		$cacheKey = wfSharedMemcKey( __METHOD__, self::CACHE_VERSION, $lang, $hub );
+		$cacheKey = wfSharedMemcKey( __METHOD__, self::CACHE_VERSION, implode( ',', $langs ), $hub );
 		$results = $this->wg->Memc->get( $cacheKey );
 
 		if ( !is_array( $results ) ) {
 			$results = array();
-			$wikis = DataMartService::getTopWikisByPageviews( DataMartService::PERIOD_ID_WEEKLY, self::MAX_RESULTS, $lang, $hub, 1 /* only pubic */ );
+			$wikis = DataMartService::getTopWikisByPageviews( DataMartService::PERIOD_ID_WEEKLY, self::MAX_RESULTS, $langs, $hub, 1 /* only pubic */ );
 
 			foreach ( $wikis as $wikiId => $wiki ) {
 				//fetching data from WikiFactory
