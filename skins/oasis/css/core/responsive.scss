@@ -69,6 +69,7 @@ body {
 }
 
 .gradient-background {
+	// TODO: play with this some more. It doesn't look very nice when it gets stretched very far.
 	@include background-image(
 		linear-gradient( to left, rgba( $color-body, 0 ) 0%, $color-body $width-background-image-gradient, $color-body 50%, rgba( $color-body, 0 ) 51% ),
 		linear-gradient( to right, rgba( $color-body, 0 ) 0%, $color-body $width-background-image-gradient, $color-body 50%, rgba( $color-body, 0 ) 51% )
