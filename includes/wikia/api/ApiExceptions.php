@@ -25,7 +25,7 @@ class InvalidParameterApiException extends BadRequestException {
 }
 
 class LimitExceededApiException extends BadRequestException {
-	function __construct( $paramNamem, $limit ) {
+	function __construct( $paramName, $limit ) {
 		parent::__construct( "Parameter '{$paramName}' exceeds limit of {$limit}" );
 	}
 }
