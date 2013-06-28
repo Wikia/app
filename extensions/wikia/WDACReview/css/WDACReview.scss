@@ -1,29 +1,19 @@
 @import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/core/color";
 
 #WDACReviewSpecialPageHeader {
-  h2 {
-    border-bottom: 4px solid #D8E3E9;
-    font-size: 30px;
-    font-weight: normal;
-    line-height: 23px;
-    margin: 20px 0;
-    padding-bottom: 5px;
-  }
+	border-bottom: solid 1px $color-page-border;
 }
 
 #WDACReviewForm {
-	margin: 1em 20px;
-	clear: both;
-	legend {
-		font-weight:bold;
-	}
+	margin: 1em 20px 3em;
 	.wdac-review-list {
 		@include clearfix;
 		list-style: none;
 		margin: 20px 0;
 		li {
-			border-bottom: solid 1px #ccc;
+			border-bottom: solid 1px $color-page-border;
 			margin: 0 2px 2px 0;
 			list-style:none;
 		}
