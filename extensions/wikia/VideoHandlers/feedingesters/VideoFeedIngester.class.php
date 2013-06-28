@@ -20,6 +20,7 @@ abstract class VideoFeedIngester {
 		self::PROVIDER_IGN,
 		self::PROVIDER_REALGRAVITY,
 		self::PROVIDER_OOYALA,
+		self::PROVIDER_IVA,
 	);
 	protected static $API_WRAPPER;
 	protected static $PROVIDER;
