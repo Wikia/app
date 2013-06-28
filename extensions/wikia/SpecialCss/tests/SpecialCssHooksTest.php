@@ -24,9 +24,9 @@ class SpecialCssHooksTest extends WikiaBaseTest {
 
 		$this->mockGlobalVariable( 'wgEnableSpecialCssExt', $isExtensionEnabled );
 		$this->mockGlobalVariable( 'wgUser', $userMock );
-		$this->mockApp( array('checkSkin') );
 
-		$this->app->expects( $this->any() )
+		$appMock = $this->getMock( 'WikiaApp', array( 'checkSkin' ) );
+		$appMock->expects( $this->any() )
 			->method( 'checkSkin' )
 			->will( $this->returnValue( $isSkinRight ) );
 
@@ -35,10 +35,10 @@ class SpecialCssHooksTest extends WikiaBaseTest {
 		$method->setAccessible( true );
 
 		$specialCssHooks = new SpecialCssHooks();
-		$result = $method->invokeArgs( $specialCssHooks, array( $this->app, $specialCssModelMock, 1 ) );
+		$result = $method->invokeArgs( $specialCssHooks, array( $appMock, $specialCssModelMock, 1 ) );
 		$this->assertEquals( $result, $isRedirectExpected );
 	}
-	
+
 	public function testShouldRedirectDataProvider() {
 		return [
 			// the Special:CSS extension is enabled, user is allowed to use it and she visits Wikia.css article's edit page in oasis skin -- redirection should happen
@@ -84,7 +84,7 @@ class SpecialCssHooksTest extends WikiaBaseTest {
 
 		];
 	}
-	
+
 	public function testRemoveNamespace() {
 		$removeNamespaceMethod = new ReflectionMethod('SpecialCssHooks', 'removeNamespace');
 		$removeNamespaceMethod->setAccessible(true);
@@ -95,7 +95,6 @@ class SpecialCssHooksTest extends WikiaBaseTest {
 			->will( $this->returnValue( 'Category' ) );
 
 		$this->mockGlobalVariable( 'wgContLang', $langMock );
-		$this->mockApp();
 
 		$categories = ['Category:Abc', 'Category:Def', 'Category:123', 'Category:1 a 2 b 3 c', 'Kategoria:Raz', 'Something'];
 		$expected = ['Abc', 'Def', '123', '1 a 2 b 3 c', 'Kategoria:Raz', 'Something'];
@@ -111,19 +110,18 @@ class SpecialCssHooksTest extends WikiaBaseTest {
 		$specialCssHooksMock::staticExpects( $this->any() )
 			->method( 'getCategoriesFromCategorySelect' )
 			->will( $this->returnValue( $mockedResultsFromCategorySelect ) );
-		
+
 		$this->mockGlobalVariable( 'wgEnableCategorySelectExt', $categorySelectEnabled );
-		$this->mockApp();
-		
+
 		$this->assertEquals( $expected, $specialCssHooksMock::getCategoriesFromWikitext( 'wikitext' ) );
 	}
-	
+
 	public function testGetCategoriesFromWikitextDataProvider() {
 		return [
 			// all fine
 			[
-				'mockedResultsFromCategorySelect' => [ 'categories' => [ ['name' => 'CSS Updates' ], [ 'name' => 'Test' ] ] ], 
-				'categorySelectEnabled' => true, 
+				'mockedResultsFromCategorySelect' => [ 'categories' => [ ['name' => 'CSS Updates' ], [ 'name' => 'Test' ] ] ],
+				'categorySelectEnabled' => true,
 				'expected' => ['CSS_Updates', 'Test']
 			],
 			// CategorySelect disabled
@@ -140,5 +138,5 @@ class SpecialCssHooksTest extends WikiaBaseTest {
 			]
 		];
 	}
-	
+
 }
