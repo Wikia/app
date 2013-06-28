@@ -161,6 +161,8 @@ class ThemeSettings {
 
 			$settings['background-image'] = $file->getURL();
 			$settings['background-image-name'] = $file->getName();
+			$settings['background-image-width'] = $file->getWidth();
+			$settings['background-image-height'] = $file->getHeight();
 
 			$imageServing = new ImageServing(null, 120, array("w"=>"120", "h"=>"100"));
 			$settings['user-background-image'] = $file->getURL();
