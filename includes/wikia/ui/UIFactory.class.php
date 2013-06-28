@@ -51,7 +51,6 @@ class UIFactory {
 	private function __construct() {
 		global $IP;
 		$this->componentsDir = $IP . self::DEFAULT_COMPONENTS_PATH;
-
 		$this->loaderService = AssetsManager::getInstance();
 	}
 
@@ -96,33 +95,17 @@ class UIFactory {
 
 		$memcKey = wfMemcKey( __CLASS__, 'all_components' );
 		$data = $wgMemc->get( $memcKey );
-
 		if ( !empty($data) ) {
-
 			return $data;
-
 		} else {
-
 			$components = [];
 
-			try {
-				$directory = new DirectoryIterator( $this->getComponentsDir() );
-
-				while( $directory->valid() ) {
-					if( !$directory->isDot() && $directory->isDir() ) {
-						$componentName = $directory->getFilename();
-						$componentCfg = $this->loadComponentConfig( $componentName );
-					
-						if( !empty($componentCfg) ) {
-							$components[] = $componentCfg;
-						} else {
-							wfDebugLog( __CLASS__, 'Component config unavailable: ' . $componentName );
-						}
-					}
-					$directory->next();
+			$directory = new DirectoryIterator( $this->getComponentsDir() );
+			while( $directory->valid() ) {
+				if( !$directory->isDot() && $directory->isDir() ) {
+					$components[] = $this->loadComponentConfigFromFile( $directory->getFilename() );
 				}
-			} catch( Exception $e ) {
-				wfDebugLog( __CLASS__, 'Invalid Styleguide components\' directory: (' . $e->getCode() . ') ' . $e->getMessage() . ' [check $wgSpecialStyleguideUiCompontentsPath variable]');
+				$directory->next();
 			}
 
 			$wgMemc->set( $memcKey, $components, self::MEMCACHE_EXPIRATION );
@@ -155,13 +138,9 @@ class UIFactory {
 		$config = json_decode( $configContent, true );
 
 		if ( !is_null( $config ) ) {
-
 			return $this->addComponentsId( $config );
-
 		} else {
-
 			throw new Exception( 'Invalid JSON.' );
-
 		}
 	}
 
@@ -186,7 +165,7 @@ class UIFactory {
 	 * @desc Gets configuration file contents, decodes it to array and returns it
 	 * 
 	 * @param String $componentName
-	 * @return array|null
+	 * @return string
 	 */
 	private function loadComponentConfig( $componentName ) {
 		wfProfileIn( __METHOD__ );
