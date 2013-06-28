@@ -163,7 +163,6 @@ class IvaFeedIngester extends VideoFeedIngester {
 					}
 
 					$clipData['category'] = trim( $video['MediaType']['Media'] );
-					$clipData['keywords'] = $videoSet;
 					$clipData['description'] = trim( $video['Descriptions']['ItemDescription'] );
 					$clipData['hd'] = ( $video['HdSource'] == 'true' ) ? 1 : 0;
 					$clipData['tags'] = trim( $video['EntertainmentProgram']['Tagline'] );
@@ -186,15 +185,22 @@ class IvaFeedIngester extends VideoFeedIngester {
 					}
 
 					$clipData['ageGate'] = $this->getAgeGate( $clipData['industryRating'] );
+					$clipData['ageRequired'] = $clipData['ageGate'];
 
 					$clipData['genres'] = '';
+					$keywords = array( $videoSet );
 					if ( !empty( $video['EntertainmentProgram']['MovieCategory']['Category'] ) ) {
 						$clipData['genres'] = $video['EntertainmentProgram']['MovieCategory']['Category'];
+						$keywords[] = 'Movies';
 					} else if ( !empty( $video['EntertainmentProgram']['TvCategory']['Category'] ) ) {
 						$clipData['genres'] = $video['EntertainmentProgram']['TvCategory']['Category'];
+						$keywords[] = 'TV';
 					} else if ( !empty( $video['EntertainmentProgram']['GameCategory']['Category'] ) ) {
 						$clipData['genres'] = $video['EntertainmentProgram']['GameCategory']['Category'];
+						$keywords[] = 'Gaming';
 					}
+
+					$clipData['keywords'] = implode( ', ', $keywords );
 
 					$actors = array();
 					if ( !empty( $video['EntertainmentProgram']['ProgramToPerformerMaps']['results'] ) ) {
@@ -305,6 +311,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 			'language' => $data['language'],
 			'genres' => $data['genres'],
 			'actors' => $data['actors'],
+			'ageRequired' => $data['ageRequired'],
 		);
 
 		return $metadata;

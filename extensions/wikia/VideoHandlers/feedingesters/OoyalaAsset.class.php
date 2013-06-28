@@ -134,7 +134,7 @@ class OoyalaAsset extends WikiaModel {
 			$metadata['category'] = $data['category'];
 		}
 		if ( !empty( $data['actors'] ) ) {
-			$metadata['actors'] = is_array( $data['actors'] ) ? implode( ', ', $data['actors'] ) : $data['actors'];
+			$metadata['actors'] = $data['actors'];
 		}
 		if ( !empty( $data['published'] ) ) {
 			$metadata['published'] = $data['published'];
@@ -158,13 +158,16 @@ class OoyalaAsset extends WikiaModel {
 			$metadata['industryrating'] = $data['industryrating'];
 		}
 		if ( !empty( $data['genres'] ) ) {
-			$metadata['genres'] = is_array( $data['genres'] ) ? implode( ', ', $data['genres'] ) : $data['genres'];
+			$metadata['genres'] = $data['genres'];
 		}
 		if ( !empty( $data['expirationdate'] ) ) {
 			$metadata['expirationdate'] = $data['expirationdate'];
 		}
 		if ( !empty( $data['keywords'] ) ) {
 			$metadata['keywords'] = $data['keywords'];
+		}
+		if ( !empty( $data['ageRequired'] ) ) {
+			$metadata['age_required'] = $data['ageRequired'];
 		}
 
 		return $metadata;
