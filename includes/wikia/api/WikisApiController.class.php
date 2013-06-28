@@ -71,7 +71,7 @@ class WikisApiController extends WikiaApiController {
 	 *
 	 * @requestParam string $keyword search term
 	 * @requestParam string $hub [OPTIONAL] The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) to use as a filter
-	 * @requestParam string $lang [OPTIONAL] The language code (e.g. en, de, fr, es, it, etc.) to use as a filter
+	 * @requestParam string $lang [OPTIONAL] The comma-separated list of language codes (e.g. en,de,fr,es,it, etc.) to use as a filter
 	 * @requestParam integer $limit [OPTIONAL] The number of items per each batch/page, defaults to 25
 	 * @requestParam integer $batch [OPTIONAL] The batch/page index to retrieve, defaults to 1
 	 * @requestParam bool $includeDomain [OPTIONAL] Wheter to include wikis' domains as search targets or not,
@@ -90,7 +90,7 @@ class WikisApiController extends WikiaApiController {
 
 		$keyword = trim( $this->request->getVal( self::PARAMETER_KEYWORD, null ) );
 		$hub = trim( $this->request->getVal( 'hub', null ) );
-		$lang = trim( $this->getVal( 'lang', null ) );
+		$langs = $this->request->getArray( 'lang' );
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
 		$batch = $this->request->getInt( 'batch', 1 );
 		$includeDomain = $this->request->getBool( 'includeDomain', false );
@@ -99,7 +99,7 @@ class WikisApiController extends WikiaApiController {
 			throw new MissingParameterApiException( self::PARAMETER_KEYWORD );
 		}
 
-		$results = self::$model->getByString($keyword, $lang, $hub, $includeDomain );
+		$results = self::$model->getByString($keyword, $langs, $hub, $includeDomain );
 
 		if( is_array( $results ) ) {
 			$batches = wfPaginateArray( $results, $limit, $batch );

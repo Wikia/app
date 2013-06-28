@@ -3,6 +3,7 @@
  * Model for Wikia-specific information about wikis
  *
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+ * @author Artur Klajnerok <arturk@wikia-inc.com>
  */
 
 class WikisModel extends WikiaModel {
@@ -113,7 +114,7 @@ class WikisModel extends WikiaModel {
 	 *
 	 * @return array A collection of results with id, name, hub, language, topic, domain
 	 */
-	public function getByString( $string, $lang = null, $hub = null, $includeDomain = false ) {
+	public function getByString( $string, Array $langs = null, $hub = null, $includeDomain = false ) {
 		wfProfileIn( __METHOD__ );
 
 		$wikis = [];
@@ -135,7 +136,7 @@ class WikisModel extends WikiaModel {
 			}
 
 			if ( empty( $hub ) || ( !empty( $hub ) && is_integer( $hubId ) ) ) {
-				$cacheKey = wfSharedMemcKey( __METHOD__, self::CACHE_VERSION,  md5( strtolower( $string ) ), $hubId, $lang, ( ( !empty( $includeDomain ) ? 'includeDomain' : null ) ) );
+				$cacheKey = wfSharedMemcKey( __METHOD__, self::CACHE_VERSION,  md5( strtolower( $string ) ), $hubId, implode( ',', $langs ), ( ( !empty( $includeDomain ) ? 'includeDomain' : null ) ) );
 				$wikis = $this->app->wg->Memc->get( $cacheKey );
 
 				if ( !is_array( $wikis ) ) {
@@ -168,8 +169,11 @@ class WikisModel extends WikiaModel {
 						)
 					);
 
-					if ( !empty( $lang ) ) {
-						$where['city_list.city_lang'] = $lang;
+					if ( !empty( $langs ) ) {
+						foreach ( $langs as $index => $lang ) {
+							$langs[$index] = $db->addQuotes( "{$lang}" );
+						}
+						$where[] = 'city_list.city_lang IN (' . implode( ',', $langs ) . ')';
 					}
 
 					if ( is_integer( $hubId ) ) {
