@@ -69,8 +69,8 @@ class SearchApiController extends WikiaApiController {
 		$items = array();
 		foreach( $resultSet->getResults() as $result ) {
 			$items[] = array(
-				'id' => (int) $result->getHeader( 'wid' ),
-				'language' => $result->getHeader( 'lang' ),
+				'id' => (int) $result['id'],
+				'language' => $result['lang_s'],
 			);
 		}
 
