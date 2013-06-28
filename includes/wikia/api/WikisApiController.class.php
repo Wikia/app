@@ -10,6 +10,7 @@
 class WikisApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
 	const PARAMETER_KEYWORD = 'string';
+	const PARAMETER_LANGUAGES = 'lang';
 	const PARAMETER_WIKI_IDS = 'ids';
 	const CACHE_VALIDITY = 86400;//1 day
 	const MEMC_NAME = 'SharedWikiApiData:';
@@ -46,7 +47,7 @@ class WikisApiController extends WikiaApiController {
 	 */
 	public function getList() {
 		$hub = trim( $this->request->getVal( 'hub', null ) );
-		$lang = trim( $this->getVal( 'lang', null ) );
+		$lang = trim( $this->getVal( self::PARAMETER_LANGUAGES, null ) );
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
 		$batch = $this->request->getInt( 'batch', 1 );
 		$results = self::$model->getTop( $lang, $hub );
@@ -91,7 +92,7 @@ class WikisApiController extends WikiaApiController {
 
 		$keyword = trim( $this->request->getVal( self::PARAMETER_KEYWORD, null ) );
 		$hub = trim( $this->request->getVal( 'hub', null ) );
-		$langs = $this->request->getArray( 'lang' );
+		$langs = $this->request->getArray( self::PARAMETER_LANGUAGES );
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
 		$batch = $this->request->getInt( 'batch', 1 );
 		$includeDomain = $this->request->getBool( 'includeDomain', false );
@@ -101,7 +102,7 @@ class WikisApiController extends WikiaApiController {
 		}
 
 		if ( !empty( $langs ) &&  count($langs) > self::LANGUAGES_LIMIT) {
-			throw new LimitExceededApiException( self::PARAMETER_KEYWORD, self::LANGUAGES_LIMIT );
+			throw new LimitExceededApiException( self::PARAMETER_LANGUAGES, self::LANGUAGES_LIMIT );
 		}
 
 		$results = self::$model->getByString($keyword, $langs, $hub, $includeDomain );
