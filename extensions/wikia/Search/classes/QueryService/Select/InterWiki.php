@@ -79,8 +79,7 @@ class InterWiki extends AbstractSelect
 		if ( $this->config->getPage() > 1 ) {
 			$this->config->setStart( ( $this->config->getPage() - 1 ) * $this->config->getLength() );
 		}
-		global $wgSolrProxy;
-		$this->client->setOptions( [ 'adapteroptions' => [ 'path' => '/solr/xwiki', 'host' => 'dev-search.prod.wikia.net', 'port' => 8983] ], false );
+		// @todo config needs requested fields set dynamically
 		$this->config->setRequestedFields( [ 'id', 'headline_txt', 'wam_i', 'description', 'sitename_txt', 'url', 'videos_i', 'images_i', 'image_s', 'hot_b', 'promoted_b', 'new_b', 'official_b', 'hub_s', 'lang_s' ] );
 		return $this;
 	}

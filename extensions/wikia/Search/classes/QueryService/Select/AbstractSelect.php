@@ -431,7 +431,9 @@ abstract class AbstractSelect
 		$this->core = $core;
 		if ( $this->core !== $oldCore ) {
 			global $wgSolrProxy;
-			$this->client->setOptions( [ 'adapteroptions' => [ 'path' => '/solr/'.$this->core, 'host' => 'dev-search.prod.wikia.net', 'port' => 8983] ], false );
+			$options = $this->client->getOptions();
+			$options['adapteroptions']['path'] = '/solr/'.$this->core;
+			$this->client->setOptions( [ 'adapteroptions' => $options['adapteroptions'], false );
 		}
 		return $this;
 	}
