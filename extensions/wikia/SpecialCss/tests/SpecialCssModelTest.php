@@ -253,31 +253,51 @@ class SpecialCssModelTest extends WikiaBaseTest {
 		return [
 			[
 				'langCode' => 'en',
-				'dbName' => 'wikia'
+				'dbName' => 'wikia',
 			],
 			[
 				'langCode' => 'pl',
-				'dbName' => 'plwikia'
-			],
-			[
-				'langCode' => 'es',
-				'dbName' => 'es'
-			],
-			[
-				'langCode' => 'fr',
-				'dbName' => 'frfr'
-			],
-			[
-				'langCode' => 'it',
-				'dbName' => 'it'
+				'dbName' => 'plwikia',
 			],
 			[
 				'langCode' => 'de',
-				'dbName' => 'de'
+				'dbName' => 'de',
+			],
+			[
+				'langCode' => 'fr',
+				'dbName' => 'frfr',
+			],
+			[
+				'langCode' => 'es',
+				'dbName' => 'es',
 			],
 			[
 				'langCode' => 'ru',
-				'dbName' => 'ruwikia'
+				'dbName' => 'ruwikia',
+			],
+			[
+				'langCode' => 'it',
+				'dbName' => 'it',
+			],
+			[
+				'langCode' => 'zh-hans',
+				'dbName' => 'wikia',
+			],
+			[
+				'langCode' => 'hi',
+				'dbName' => 'wikia',
+			],
+			[
+				'langCode' => 'ar',
+				'dbName' => 'wikia',
+			],
+			[
+				'langCode' => 'pt',
+				'dbName' => 'wikia',
+			],
+			[
+				'langCode' => 'ja',
+				'dbName' => 'wikia',
 			],
 		];
 	}
@@ -305,29 +325,53 @@ class SpecialCssModelTest extends WikiaBaseTest {
 	public function testGetCssUpdateLangDataProvider() {
 		return [
 			[
-				'userLang' => 'de',
-				'expectedLang' => 'de'
+				'userLang' => 'en',
+				'expectedLang' => 'en',
 			],
 			[
 				'userLang' => 'pl',
-				'expectedLang' => 'pl'
+				'expectedLang' => 'pl',
 			],
 			[
-				'userLang' => 'lt',
-				'expectedLang' => 'en'
-			],
-			[
-				'userLang' => 'en',
-				'expectedLang' => 'en'
-			],
-			[
-				'userLang' => 'cs',
-				'expectedLang' => 'en'
+				'userLang' => 'de',
+				'expectedLang' => 'de',
 			],
 			[
 				'userLang' => 'fr',
-				'expectedLang' => 'fr'
-			]
+				'expectedLang' => 'fr',
+			],
+			[
+				'userLang' => 'es',
+				'expectedLang' => 'es',
+			],
+			[
+				'userLang' => 'ru',
+				'expectedLang' => 'ru',
+			],
+			[
+				'userLang' => 'it',
+				'expectedLang' => 'it',
+			],
+			[
+				'userLang' => 'zh-hans',
+				'expectedLang' => 'en',
+			],
+			[
+				'userLang' => 'hi',
+				'expectedLang' => 'en',
+			],
+			[
+				'userLang' => 'ar',
+				'expectedLang' => 'en',
+			],
+			[
+				'userLang' => 'pt',
+				'expectedLang' => 'en',
+			],
+			[
+				'userLang' => 'ja',
+				'expectedLang' => 'en',
+			],
 		];
 	}
 
