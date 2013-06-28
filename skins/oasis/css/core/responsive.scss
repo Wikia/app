@@ -23,17 +23,24 @@ $width-outside-max: 1600px;
 $width-outside-max-half: $width-outside-max / 2;
 $width-padding: $width-gutter / 2;
 
-// This is the offset, from the left and right sides of the viewport, that
-// the images need to align correctly to the sides of the skin before max width has been set.
-$width-background-offset: ( ( $width-background-image-half - $width-adskin ) * 2 - $width-outside ) / 2;
+// The offset, from the left and right sides of the viewport, that the images need
+// to align correctly to the sides of the skin before the max width has been set.
+$offset-background-image: ( ( $width-background-image-half - $width-adskin ) * 2 - $width-outside ) / 2;
 
-// This is the offset, from the center of the viewport, that the images need
-// to align correctly to the side of the skin after max width has been set.
-$width-background-offset-max: $width-outside-max-half + ( $width-background-image-half - $width-outside-half );
+// The width of each "slice" of the background image while the offset above is applied.
+$width-background-image-slice: $width-background-image-half - $offset-background-image;
 
-// The offset, from the left and right sides of the viewport, that the
-// image background gradients will start and stop at.
-$width-background-image-gradient-offset: $width-background-image-half - $width-adskin - $width-background-image-gradient;
+// The offset, from the left and right sides of the viewport, that the image background
+// gradient needs to align correctly to the inner edges of the slices of background images
+$offset-background-image-gradient: $width-background-image-slice - $width-background-image-gradient;
+
+// The offset, from the center of the viewport, that the images need to align correctly
+// to the side of the skin after max width has been set.
+$offset-background-image-max: $width-outside-max-half + ( $width-background-image-half - $width-outside-half );
+
+// The offset, from the center of the viewport, that the image background gradient needs to align
+// correctly to the inner edges of the slices of background images after max width has been set.
+$offset-background-image-gradient-max: $offset-background-image-max - $width-background-image-half + $width-background-image-gradient;
 
 body {
 	min-width: $width-outside-min;
@@ -51,7 +58,7 @@ body {
 			position: $background-position;
 			top: 0;
 			width: $width-background-image-half;
-			z-index: -1;
+			z-index: -2;
 		}
 
 		&:after {
@@ -66,10 +73,6 @@ body {
 			margin-left: -#{ $width-background-image-half };
 		}
 	}
-}
-
-.background-image-gradient {
-	display: none;
 }
 
 body > .global-notification,
@@ -354,7 +357,7 @@ body > .global-notification,
 		body {
 			&:after,
 			&:before {
-				width: $width-background-image-half - $width-background-offset;
+				width: $width-background-image-slice;
 			}
 
 			&:after {
@@ -364,23 +367,32 @@ body > .global-notification,
 			}
 
 			&:before {
-				background-position: -#{ $width-background-offset } 0;
+				background-position: -#{ $offset-background-image } 0;
 				margin-left: 0;
 				left: 0;
 			}
 		}
 
 		.background-image-gradient {
-			// TODO: play with this some more. It doesn't look very nice when it gets stretched very far.
-			@include background-image(
-				linear-gradient( to left, rgba( $color-body, 0 ) 0%, $color-body $width-background-image-gradient, $color-body 50%, rgba( $color-body, 0 ) 51% ),
-				linear-gradient( to right, rgba( $color-body, 0 ) 0%, $color-body $width-background-image-gradient, $color-body 50%, rgba( $color-body, 0 ) 51% )
-			);
-			display: block;
-			height: 100%;
-			left: $width-background-image-gradient-offset;
-			position: fixed;
-			right: $width-background-image-gradient-offset;
+			&:after,
+			&:before {
+				content: "";
+				height: 100%;
+				position: fixed;
+				top: 0;
+				width: $width-background-image-gradient;
+				z-index: -1;
+			}
+
+			&:after {
+				@include linear-gradient( to left, rgba( $color-body, 0 ) 0%, $color-body 100% );
+				right: $offset-background-image-gradient;
+			}
+
+			&:before {
+				@include linear-gradient( to right, rgba( $color-body, 0 ) 0%, $color-body 100% );
+				left: $offset-background-image-gradient;
+			}
 		}
 
 	}
@@ -403,13 +415,25 @@ body > .global-notification,
 			&:after {
 				background-position: -#{ $width-background-image-half } 0;
 				right: 50%;
-				margin-right: -#{ $width-background-offset-max };
+				margin-right: -#{ $offset-background-image-max };
 			}
 
 			&:before {
 				background-position: 0;
 				left: 50%;
-				margin-left: -#{ $width-background-offset-max };
+				margin-left: -#{ $offset-background-image-max };
+			}
+		}
+
+		.background-image-gradient {
+			&:after {
+				margin-right: -#{ $offset-background-image-gradient-max };
+				right: 50%;
+			}
+
+			&:before {
+				left: 50%;
+				margin-left: -#{ $offset-background-image-gradient-max };
 			}
 		}
 	}
