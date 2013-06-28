@@ -350,7 +350,9 @@ class RTEParser extends Parser {
 		$ret = $thumb->toHtml( array('img-class' => implode(' ', $imgClass)) );
 
 		$mediaType = "image";
-		if ( WikiaFileHelper::isTitleVideo( $title ) ) {
+
+		$file = wfFindFile( $title );
+		if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
 			$mediaType = "video";
 		}
 

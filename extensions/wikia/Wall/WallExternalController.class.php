@@ -314,10 +314,13 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 
+		$formassoc = $this->processModalForm($this->request);
+		$reason = isset($formassoc['reason']) ? $formassoc['reason'] : '';
+
 		switch($newState) {
 			case 'close':
 				if($mw->canArchive($this->wg->User)) {
-					$result = $mw->archive($this->wg->User);
+					$result = $mw->archive($this->wg->User, $reason);
 				}
 				break;
 			case 'open':
