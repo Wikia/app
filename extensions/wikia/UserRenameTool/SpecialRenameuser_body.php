@@ -86,7 +86,7 @@ class SpecialRenameuser extends SpecialPage {
 			if ( $olduser->getOption( 'wasRenamed', 0 ) ) {
 				$errors[] = wfMsg( 'userrenametool-previously-renamed', $oldusername );
 			}
-			$phalanxMatches = PhalanxHelper::testBlock( $oldusername );
+			$phalanxMatches = RenameUserHelper::testBlock( $oldusername );
 			if ( $phalanxMatches !== 'No matches found.' ) {
 				$errors[] = Xml::tags(
 					'p',
@@ -96,7 +96,7 @@ class SpecialRenameuser extends SpecialPage {
 			}
 		}
 		if ( !empty( $newusername ) ) {
-			$phalanxMatches = PhalanxHelper::testBlock( $newusername );
+			$phalanxMatches = RenameUserHelper::testBlock( $newusername );
 			if ( $phalanxMatches !== 'No matches found.' ) {
 				$errors[] = Xml::tags(
 					'p',
