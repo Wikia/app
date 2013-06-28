@@ -73,9 +73,9 @@ class SassUtil {
 			$oasisSettings["background-image"] = wfReplaceImageServer($settings['background-image'], self::getCacheBuster());
 
 			// sending width and height of background image to SASS
-			if ( isset($settings['background-image-width']) && isset($settings['background-image-height']) ) {
-				$oasisSettings["background-image-width"] = $settings['background-image-width'] . 'px';
-				$oasisSettings["background-image-height"] = $settings['background-image-height'] . 'px';
+			if ( isset($settings["background-image-width"]) && isset($settings["background-image-height"]) ) {
+				$oasisSettings["background-image-width"] = $settings["background-image-width"] . 'px';
+				$oasisSettings["background-image-height"] = $settings["background-image-height"] . 'px';
 			} else {
 				// if not ceched in theme settings
 				$bgImage = wfFindFile(ThemeSettings::BackgroundImageName);
