@@ -132,9 +132,58 @@ class UIFactory {
 	}
 
 	/**
+	 * @desc Returns full file path
+	 *
+	 * @param string component's name
+	 *
+	 * @returns full file path
+	 */
+	private function getComponentConfigFileFullPath( $name ) {
+		return $this->getComponentsDir() . $name . '/' . $name . self::CONFIG_FILE_SUFFIX;
+	}
+
+	/**
+	 * @desc Loads UIComponent from given string
+	 *
+	 * @param string JSON String
+	 *
+	 * @return UIComponent
+	 *
+	 * @throws Exception
+	 */
+	private function loadComponentConfigFromString( $configContent ) {
+		$config = json_decode( $configContent, true );
+
+		if ( !is_null( $config ) ) {
+
+			return $this->addComponentsId( $config );
+
+		} else {
+
+			throw new Exception( 'Invalid JSON.' );
+
+		}
+	}
+
+	/**
+	 * @desc Loads UIComponent from file
+	 *
+	 * @param string Path to file
+	 *
+	 * @return UIComponent
+	 *
+	 * @throws Exception
+	 */
+	private function loadComponentConfigFromFile( $configFilePath ) {
+		if ( false === $configString = file_get_contents( $configFilePath ) ) {
+			throw new Exception( 'Component\'s config file not found.' );
+		} else {
+			return $this->loadSpecialConfigFromString( $configString );
+		}
+	}
+
+	/**
 	 * @desc Gets configuration file contents, decodes it to array and returns it
-	 * 
-	 * @todo add caching layer: planned and will be done in DAR-809
 	 * 
 	 * @param String $componentName
 	 * @return array|null
@@ -148,33 +197,14 @@ class UIFactory {
 		$data = $wgMemc->get( $memcKey );
 
 		if ( !empty($data) ) {
-
+			wfProfileOut( __METHOD__ );
 			return $data;
-
 		} else {
-
-			$configPath = $this->getComponentsDir() . $componentName . '/' . $componentName . self::CONFIG_FILE_SUFFIX;
-			$config = null;
-
-			if( file_exists( $configPath ) && ( $configContent = file_get_contents( $configPath ) ) ) {
-				$config = json_decode( $configContent, true );
-
-				if( !is_null( $config )) {
-					$config = $this->addComponentsId( $config );
-				} else {
-					wfDebugLog( __CLASS__, "Invalid JSON in config file: " . $configPath );
-					$config = [];
-				}
-
-			} else {
-				wfDebugLog( __CLASS__, "Invalid component's config file: " . $configPath );
-				$config = [];
-			}
-
-			$wgMemc->set( $memcKey, $components, self::MEMCACHE_EXPIRATION );
+			$configFile = $this->getComponentConfigFileFullPath( $componentName );
+			$config = $this->loadComponentConfigFromFile( $configFile );
+			$wgMemc->set( $memcKey, $config, self::MEMCACHE_EXPIRATION );
 
 			wfProfileOut( __METHOD__ );
-
 			return $config;
 		}
 	}

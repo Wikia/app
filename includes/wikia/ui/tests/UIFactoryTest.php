@@ -17,17 +17,12 @@ class UIFactoryTest extends WikiaBaseTest {
 		$this->assertEquals($instanceA, $instanceB);
 	}
 
-	public function testLoadingComponentsDirectory() {
-	}
-
-	public function testInitializeSingleObject() {
+	public function testInitalizingComponents() {
 		$component = UIFactory::getInstance()->init( $this->findOneComponentName() );
-
-		var_dump($component);
-		die;
 	}
 
 	private function findOneComponentName() {
+		
 	}
 
 }
