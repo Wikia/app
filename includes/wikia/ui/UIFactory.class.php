@@ -24,11 +24,6 @@ class UIFactory {
 	const DEFAULT_COMPONENTS_PATH = "/resources/wikia/ui_components/";
 
 	/**
-	 * @desc Asset prefix (for AssetsManager / ResourceLoader)
-	 */
-	const ASSET_PREFIX = "ui_component_";
-
-	/**
 	 * @desc How long are components memcached? Both specific and all (different memc keys)
 	 */
 	const MEMCACHE_EXPIRATION = 900; // 15 minutes
@@ -203,14 +198,12 @@ class UIFactory {
 	private function addAsset( $assetName ) {
 		wfProfileIn( __METHOD__ );
 
-		$fullAssetName = self::ASSET_PREFIX . $assetName;
-
 		$app = F::app();
 		$jsMimeType = $app->wg->JsMimeType;
 
 		$type = false;
 
-		$sources = $this->loaderService->getURL( $fullAssetName, $type, false );
+		$sources = $this->loaderService->getURL( $fullName, $type, false );
 
 		foreach ( $sources as $source ) {
 			switch ( $type ) {
@@ -228,62 +221,51 @@ class UIFactory {
 	}
 
 	/**
-	 * @desc Adds dependency assets to load
-	 *
-	 * @param $componentDependencies
-	 */
-	private function addAssetDependencies( $componentDependencies ) {
-		foreach ( $componentDependencies as $dependencyType => $dependencyList )
-			foreach ( $dependencyList as $dependency) {
-				$this->addAsset( $dependency );
-		}
-
-		foreach
-	}
-
-	/**
 	 * @desc Loads JS/CSS dependencies, creates and configurates an instance of UIComponent object which is returned
 	 *
 	 * @param string|array
 	 */
-	public function init( $componentNameOrNames ) {
-		if ( is_array($componentNameOrNames) ) {
-			// load multiple components
-			$components = [];
+	public function init( $componentNames ) {
+		if ( !is_array($componentNames ) {
+			$componentNames = (array)$componentNames;
+		}
+		
+		$components = [];  
+		$assets = [];
 
-			foreach ( $componentNameOrNames as $componentName ) {
-				$components[] = $this->initSingle( $componentName );
+		// iterate $componentNames, read configs, write down dependencies
+
+		foreach ( $componentNames as $name ) {
+			$componentConfig = $this->loadComponentConfig( $name );
+
+			// if there are some components, put them in the $assets
+			if ( !empty( $componentsConfig['dependencies'] ) ) {
+				if ( !empty( $componentsConfig['dependencies']['js'] ) {
+					$assets = array_merge( $assets, $componentsConfig['dependencies']['js'] );
+				}
+				if ( !empty( $componentsConfig['dependencies']['css'] ) ) {
+					$assets = array_merge( $assets, $componentsConfig['dependencies']['css'] );
+				}
 			}
 
-			return $components;
-		} else {
-			// load single component
-			return $this->initSingle( $componentNameOrNames );
-		}
-	}
+			// init component and put config inside
+			$component = new UIComponent();
+			if ( !empty($componentConfig['templateVars']) ) {
+				$component->setTemplateVarsConfig($componentConfig['templateVars']);
+			}
 
-	/**
-	 * @desc Loads JS/CSS dependencies, creates and configurates an instance of UIComponent object which is returned
-	 *
-	 * @param string $componentName
-	 */
-	private function initSingle( $componentName ) {
-		// We're going to implement it (maybe slightly change) in DAR-809
-		$componentConfig = $this->loadComponentConfig( $componentName );
-
-		$this->addAsset( $componentName );
-
-		if ( !empty($componentsConfig['dependencies']) ) {
-			$this->addAssetDependencies( $componentConfig['dependencies'] );
+			//
+			$components[] = $component;
 		}
 
-		$component = new Component();
-
-		if ( !empty($componentsConfig['templateVars']) ) {
-			$component->setTemplateVarsConfig($componentConfig['templateVars']);
+		// add merged assets
+		foreach ( array_unique( $assets ) as $asset ) {
+			$this->addAsset( $asset );
 		}
 
-		return $component;
+		// return components
+		return (sizeof($components) == 1) ? $components[0] : $components;
+
 	}
 
 	/**
