@@ -308,6 +308,11 @@ body > .global-notification,
 @media screen and (max-width: $width-outside) {
 	body {
 		background: $color-page;
+
+		&:after,
+		&:before {
+			display: none;
+		}
 	}
 
 	.WikiHeader .WikiNav {
