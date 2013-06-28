@@ -77,7 +77,7 @@ class SassUtil {
 				$oasisSettings["background-image-width"] = $settings["background-image-width"] . 'px';
 				$oasisSettings["background-image-height"] = $settings["background-image-height"] . 'px';
 			} else {
-				// if not ceched in theme settings
+				// if not cached in theme settings
 				$bgImage = wfFindFile(ThemeSettings::BackgroundImageName);
 				if ( !empty($bgImage) ) {
 					$oasisSettings["background-image-width"] = $bgImage->getWidth() . 'px';
