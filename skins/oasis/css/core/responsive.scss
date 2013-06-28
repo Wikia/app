@@ -3,15 +3,13 @@
 @import "../mixins/box-sizing";
 @import "resources/wikia/libraries/bourbon/bourbon";
 
-// These will need to come in as a Sass variables; hardcoded for now.
-// These values are for planetside2 wiki.
-$height-background-image: get_command_line_param("background-image-height", 0);
-$width-background-image: get_command_line_param("background-image-width", 0);
+$height-background-image: get_command_line_param( "background-image-height", 0 );
+$width-background-image: get_command_line_param( "background-image-width", 0 );
 $width-background-image-gradient: 40px;
 $width-background-image-half: $width-background-image / 2;
 
 $background-position: absolute;
-@if $background-fixed == true {
+@if ( $background-fixed == true ) {
 	$background-position: fixed;
 }
 
@@ -42,10 +40,18 @@ $offset-background-image-max: $width-outside-max-half + ( $width-background-imag
 // correctly to the inner edges of the slices of background images after max width has been set.
 $offset-background-image-gradient-max: $offset-background-image-max - $width-background-image-half + $width-background-image-gradient;
 
+// The fluid background will be disabled if:
+// - There is no background image (height or width are zero).
+// - The background image is tiled
+$is-fluid-width-background-enabled: true;
+@if ( $background-tiled == true or $height-background-image == 0 or $width-background-image == 0 ) {
+	$is-fluid-width-background-enabled: false;
+}
+
 body {
 	min-width: $width-outside-min;
 
-	@if $background-tiled == false {
+	@if ( $is-fluid-width-background-enabled ) {
 		background: $color-body;
 		overflow-x: hidden;
 
@@ -353,7 +359,7 @@ body > .global-notification,
 		width: auto;
 	}
 
-	@if $background-tiled == false {
+	@if ( $is-fluid-width-background-enabled ) {
 		body {
 			&:after,
 			&:before {
@@ -394,7 +400,6 @@ body > .global-notification,
 				left: $offset-background-image-gradient;
 			}
 		}
-
 	}
 }
 
@@ -405,7 +410,7 @@ body > .global-notification,
 		margin: 0 auto;
 	}
 
-	@if $background-tiled == false {
+	@if ( $is-fluid-width-background-enabled ) {
 		body {
 			&:after,
 			&:before {
