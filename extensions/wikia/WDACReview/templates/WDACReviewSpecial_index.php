@@ -1,11 +1,12 @@
 <header id="WDACReviewSpecialPageHeader">
-	<h2><?= $toolName ?></h2>
+	<h1><?= $toolName ?></h1>
+	<p><?= wfMessage('wdacreview-tool-description')->plain() ?></p>
 </header>
 
 <form action="<?= $submitUrl ?>" method="post" id="WDACReviewForm">
 	<fieldset>
-		<legend>Bulk choice change</legend>
-		<span>Set following option for each item below</span>
+		<legend><?= wfMessage('wdacreview-filter-change-title')->plain() ?></legend>
+		<span><?= wfMessage('wdacreview-filter-change-description')->plain() ?></span>
 		<input type="button" value="<?= wfMessage('wdacreview-approve')->plain() ?>" id="wdac-approve-all"/>
 		<input type="button" value="<?= wfMessage('wdacreview-disapprove')->plain() ?>" id="wdac-disapprove-all"/>
 		<input type="button" value="<?= wfMessage('wdacreview-undetermined')->plain() ?>" id="wdac-undetermined-all"/>
@@ -35,7 +36,7 @@
 		?>
 	</ul>
 
-	<input id="nextButton"  type="submit" class="wikia-button" value="Review selected" />
+	<input id="nextButton"  type="submit" class="wikia-button" value="<?= wfMessage('wdacreview-confirm-review')->plain() ?>" />
 
 	<?php
 	} else {

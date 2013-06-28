@@ -49,6 +49,7 @@ class WDACReviewSpecialController extends WikiaSpecialPageController {
 
 				if ( count($cities) > 0 ) {
 					$helper->updateWDACFlags( $cities );
+					NotificationsController::addConfirmation( wfMessage('wdacreview-confirm-update')->plain() );
 				}
 			}
 		}
