@@ -2,10 +2,12 @@
 	<div class="css-editor">
 		<div class="editor-changes-info-wrapper">
 			<?= $deletedArticle ?>
+				<? if (!empty($diff)): ?>
+				<div class="css-diff">
+					<?= $diff; ?>
+				</div>
+				<? endif ?>
 		</div>
-		<? if (!empty($diff)): ?>
-			<?= $diff; ?>
-		<? endif ?>
 		<pre class="css-editor-container" id="cssEditorContainer"><?= htmlspecialchars($cssFileInfo['content']); ?></pre>
 	</div>
 	<aside class="css-side-bar">
