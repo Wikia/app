@@ -101,7 +101,7 @@ class SpecialCssHooks {
 	 * @return bool
 	 */
 	static private function prevRevisionHasCssUpdatesCat( Revision $rev ) {
-		return ( ( $prevRev = $rev->getPrevious() ) instanceof Revision ) &&
+		return ( ( $prevRev = $rev->getPrevious( true ) ) instanceof Revision ) &&
 			in_array( SpecialCssModel::UPDATES_CATEGORY, self::getCategoriesFromWikitext( $prevRev->getRawText() ) );
 	}
 

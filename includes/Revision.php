@@ -526,11 +526,16 @@ class Revision {
 	 *
 	 * @return Title
 	 */
-	public function getTitle() {
+	/* Wikia changes start */
+	/* Wikia added possibility to use master */
+	public function getTitle( $useMaster = false ) {
+	/* Wikia changes end */
 		if( isset( $this->mTitle ) ) {
 			return $this->mTitle;
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		/* Wikia changes start */
+		$dbr = ( !$useMaster ? wfGetDB( DB_SLAVE ) : wfGetDB( DB_MASTER ) );
+		/* Wikia changes end */
 		$row = $dbr->selectRow(
 			array( 'page', 'revision' ),
 			self::selectPageFields(),
@@ -777,9 +782,18 @@ class Revision {
 	 *
 	 * @return Revision or null
 	 */
-	public function getPrevious() {
-		if( $this->getTitle() ) {
-			$prev = $this->getTitle()->getPreviousRevisionID( $this->getId() );
+	/* Wikia changes start */
+	/* Wikia added possibility to use master */
+	public function getPrevious( $useMaster = false ) {
+	/* Wikia changes end */
+		$title = $this->getTitle( $useMaster );
+		if( $title ) {
+			$prev = ( 
+				$useMaster === false ? 
+					$title->getPreviousRevisionID( $this->getId() ) : 
+					$title->getPreviousRevisionID( $this->getId(), Title::GAID_FOR_UPDATE ) 
+			);
+	/* Wikia changes end */
 			if( $prev ) {
 				return Revision::newFromTitle( $this->getTitle(), $prev );
 			}
