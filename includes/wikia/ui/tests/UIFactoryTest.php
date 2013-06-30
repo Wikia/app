@@ -33,19 +33,27 @@ class UIFactoryTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider getSampleComponentConfigJSON
 	 */
-	public function testLoadingComponentsFromString( $stringJSON ) {
+	public function testLoadingComponentsFromString( $json, $expected ) {
 		// test private method
-		$method = new ReflectionMethod( 'UIFactory', 'loadComponentConfigFromString' );
-		$method->setAccessible( true );
+		$loadComponentConfigFromStringMethod = new ReflectionMethod( 'UIFactory', 'loadComponentConfigFromString' );
+		$loadComponentConfigFromStringMethod->setAccessible( true );
 
-		$component = $method->invoke( $this->instance, $stringJSON );
+		$component = $loadComponentConfigFromStringMethod->invoke( $this->instance, $json );
+		$this->assertEquals( $expected, $component );
 	}
 
 	public function getSampleComponentConfigJSON() {
 		return [
 			// empty, sample JSON
 			[
-				'json' => '{ "name":"Sample", "desc": "Sample component", "templateValues": { "required": [], "optional": [] }, "dependencies": { "js": [], "css": [] } }'
+				'json' => '{ "name":"Sample", "desc": "Sample component", "templateValues": { "required": [], "optional": [] }, "dependencies": { "js": [], "css": [] } }',
+				'expected' => [
+					'name' => 'Sample',
+					'desc' => 'Sample component',
+					'templateValues' => [ 'required' => [], 'optional' => [] ],
+					'dependencies' => [ 'js' => [], 'css' => [] ],
+					'id' => 'sample',
+				]
 			]
 		];
 	}
