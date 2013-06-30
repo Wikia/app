@@ -103,7 +103,7 @@ class UIFactory {
 			$directory = new DirectoryIterator( $this->getComponentsDir() );
 			while( $directory->valid() ) {
 				if( !$directory->isDot() && $directory->isDir() ) {
-					$components[] = $this->loadComponentConfigFromFile( $directory->getFilename() );
+					$components[] = $this->loadComponentConfigFromFile( $configFile = $this->getComponentConfigFileFullPath( $directory->getFilename() ) );
 				}
 				$directory->next();
 			}
@@ -157,7 +157,7 @@ class UIFactory {
 		if ( false === $configString = file_get_contents( $configFilePath ) ) {
 			throw new Exception( 'Component\'s config file not found.' );
 		} else {
-			return $this->loadSpecialConfigFromString( $configString );
+			return $this->loadComponentConfigFromString( $configString );
 		}
 	}
 
@@ -212,8 +212,8 @@ class UIFactory {
 
 		$type = false;
 
-		$sources = $this->loaderService->getURL( $fullName, $type, false );
-
+		$sources = $this->loaderService->getURL( $assetName, $type, false );
+		
 		foreach ( $sources as $source ) {
 			switch ( $type ) {
 				case AssetsManager::TYPE_CSS:
