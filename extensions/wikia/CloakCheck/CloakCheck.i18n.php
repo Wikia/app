@@ -313,6 +313,14 @@ $messages['ia'] = array(
 	'cloakcheck-process-edits-no' => 'Le usator non ha facite satis de modificationes.',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'cloakcheck-form-username' => 'Nama pengguna:',
+	'cloakcheck-process-edits-yes' => 'Pengguna memiliki suntingan cukup.',
+);
+
 /** Italian (italiano)
  * @author Lexaeus 94
  * @author Minerva Titani

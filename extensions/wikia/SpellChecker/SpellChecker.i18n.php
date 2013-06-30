@@ -437,6 +437,11 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'spellchecker-desc' => "Dèje 'n'inderfacce de verifiche d'a pronunge pe le module PHP 'ngandate",
+	'enablespellchecker' => "Abbilite 'u verificatore de pronunge jndr'à 'nu mode visuale",
+	'spellchecker-info' => "'Mbormaziune d'u verificatore de pronunge",
+	'spellchecker-info-languages' => 'Lènghe disponibbile ($1)',
+	'spellchecker-info-provider' => 'Fornitore',
 	'spellchecker-info-dictionaries' => 'Dizionarie disponibbile',
 	'spellchecker-info-spellcheck-text' => 'Teste da verificà',
 	'spellchecker-info-spellcheck-languages' => 'Lènghe',

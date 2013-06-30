@@ -162,6 +162,10 @@ $messages['qqq'] = array(
 	'rte-ck-templateEditor-editor-previewButton' => '{{Identical|Preview}}',
 	'rte-ck-templateEditor-editor-previewTitle' => '{{Identical|Preview}}',
 	'rte-ck-video-video' => '{{Identical|Video}}',
+	'rte-ck-format-tag_h2' => '{{Identical|Heading}}',
+	'rte-ck-format-tag_h3' => '{{Identical|Heading}}',
+	'rte-ck-format-tag_h4' => '{{Identical|Heading}}',
+	'rte-ck-format-tag_h5' => '{{Identical|Heading}}',
 );
 
 /** Afrikaans (Afrikaans)

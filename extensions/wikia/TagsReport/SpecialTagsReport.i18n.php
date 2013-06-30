@@ -18,10 +18,12 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author LWChris
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
 	'tagsreportgo' => '{{Identical|Show}}',
+	'tagsreportmainnspace' => '{{Identical|Main}}',
 	'tagsreportgenerated' => 'Parameters:
 * $1 is a date.
 * $2 is a time.',

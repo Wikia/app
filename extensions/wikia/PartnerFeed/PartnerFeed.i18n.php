@@ -90,6 +90,14 @@ $messages['br'] = array(
 	'feed-title-recentchanges' => 'Kemmoù graet nevez zo',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'partner-feed-recent-changes' => 'Керла нисдарш',
+	'feed-title-recentchanges' => 'Керла нисдарш',
+);
+
 /** Czech (česky)
  * @author Chmee2
  */
