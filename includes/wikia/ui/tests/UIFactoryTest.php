@@ -57,4 +57,23 @@ class UIFactoryTest extends WikiaBaseTest {
 			]
 		];
 	}
+	
+	public function testAddAsset() {
+		// test private method
+		$addAssetMethod = new ReflectionMethod( 'UIFactory', 'addAsset' );
+		$addAssetMethod->setAccessible( true );
+		
+		// mock wgOutput
+		/*
+		
+		// I'd like to check here the parameters passed to $wgOut
+		
+		$wgOutMock = $this->mockClass( 'OutputPage', ['AddStyle', 'AddScript'] );
+		$wgOutMock->expects( $this->any() )
+			->method( 'AddStyle' )
+			->with();
+		*/
+		
+		$addAssetMethod->invoke( $this->instance, 'component' );
+	}
 }

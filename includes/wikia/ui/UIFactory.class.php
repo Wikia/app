@@ -213,7 +213,7 @@ class UIFactory {
 		$type = false;
 
 		$sources = $this->loaderService->getURL( $assetName, $type, false );
-
+		
 		foreach ( $sources as $source ) {
 			switch ( $type ) {
 				case AssetsManager::TYPE_CSS:
