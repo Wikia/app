@@ -9,7 +9,7 @@ class UIFactoryTest extends WikiaBaseTest {
 
 		global $IP;
 
-		include_once $IP.'/includes/wikia/ui/UIFactory.class.php';
+		include_once $IP . '/includes/wikia/ui/UIFactory.class.php';
 
 		$this->instance = UIFactory::getInstance();
 	}
@@ -17,17 +17,17 @@ class UIFactoryTest extends WikiaBaseTest {
 	public function testInitalizationAndSingleton() {
 		$instanceB = UIFactory::getInstance();
 
-		$this->assertEquals($this->instance, $instanceB);
+		$this->assertEquals( $this->instance, $instanceB );
 	}
 
 	public function testGettingFileFullPath() {
 		// test private method
 		$method = new ReflectionMethod( 'UIFactory', 'getComponentConfigFileFullPath' );
-		$method->setAccessible(true);
+		$method->setAccessible( true );
 
 		$fullPath = $method->invoke( $this->instance, 'component' );
 
-		$this->assertEquals($fullPath, '/usr/wikia/source/wiki/resources/wikia/ui_components/component/component_config.json');
+		$this->assertEquals( $fullPath, '/usr/wikia/source/wiki/resources/wikia/ui_components/component/component_config.json' );
 	}
 
 	/**
@@ -36,7 +36,7 @@ class UIFactoryTest extends WikiaBaseTest {
 	public function testLoadingComponentsFromString( $stringJSON ) {
 		// test private method
 		$method = new ReflectionMethod( 'UIFactory', 'loadComponentConfigFromString' );
-		$method->setAccessible(true);
+		$method->setAccessible( true );
 
 		$component = $method->invoke( $this->instance, $stringJSON );
 	}
