@@ -251,6 +251,13 @@ $messages['ia'] = array(
 	'imgplc-notinhistory' => 'Non es possibile adder imagines in modo de historia.',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'imgplc-add-video' => 'Tambahkan Video',
+);
+
 /** Italian (italiano)
  * @author Pietrodn
  */

@@ -275,6 +275,18 @@ $messages['hu'] = array(
 	'file-page-more-links' => 'Teljes lista megtekintése',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'video-page-global-file-list-header' => 'Muncul pada wiki ini',
+	'video-page-from-provider' => 'Dari $1',
+	'video-page-add-description-link-text' => 'Tambahkan deskripsi.',
+	'video-page-default-description-header-and-text' => '==Deskripsi==
+Masukkan deskripsi di sini.',
+	'video-page-file-list-pagination' => '$1 dari $2',
+);
+
 /** Italian (italiano)
  * @author Luckas
  */
@@ -393,6 +405,7 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Luckas
  * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
@@ -406,6 +419,7 @@ $messages['pt-br'] = array(
 	'video-page-see-less-info' => 'Mostrar menos informações',
 	'video-page-description-heading' => 'Descrição',
 	'video-page-description-zero-state' => 'Ainda não há uma descrição.',
+	'video-page-add-description-link-text' => 'Adicionar uma descrição.',
 	'video-page-file-list-pagination' => '$1 de $2',
 	'file-page-replace-button' => 'Substituir',
 	'file-page-tab-about' => 'Sobre',

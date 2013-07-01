@@ -134,7 +134,7 @@ $messages['qqq'] = array(
 	'multidelete' => '{{Identical|Delete batch of pages}}',
 	'multidelete_button' => '{{Identical|Delete}}',
 	'multidelete_select_all' => '{{Identical|Select all}}',
-	'multidelete_reason' => '{{Identical|Reason for deletion}}',
+	'multidelete_reason' => 'none',
 	'multidelete_success_subtitle' => '{{Identical|For $1}}',
 	'multidelete_split_results' => 'If number of articles to run the script on exceeds a maximum number, user receives a message informing them that the script will be split up into a number of tasks. 
 Parameters:
@@ -1457,12 +1457,17 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
  * @author Irwangatot
  */
 $messages['id'] = array(
 	'multitasks-link-back-label' => 'di sini',
+	'multiwikiedit_button' => 'SUNTING',
 	'multiwikiedit_caption' => 'Daftar halaman',
+	'multiwikiedit_both_modes' => 'Silakan pilih satu halaman tertentu atau suatu daftar halaman.',
 	'multiwikiedit_or' => '<b>ATAU</b>',
+	'multiwikiedit_list_caption' => 'Daftar wiki',
+	'multiwikiedit_norecentchanges_caption' => 'Jangan tampilkan perubahan ini di perubahan terbaru',
 	'multiwikiedit_from_form' => 'Formulir dari',
 	'multiwikiedit_success_subtitle' => 'untuk $1',
 	'multiwikiedit_select_yourself' => 'Anda',

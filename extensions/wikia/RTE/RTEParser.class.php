@@ -69,9 +69,9 @@ class RTEParser extends Parser {
 
 		wfProfileOut(__METHOD__);
 	}
-	
+
 	/**
-	 * Registers the wikitext as an edge case with RTE stack for cases where 
+	 * Registers the wikitext as an edge case with RTE stack for cases where
 	 * line-initial HTML tags interfere with wikitext that must be line-initial
 	 * @param string $line
 	 */
@@ -83,7 +83,7 @@ class RTEParser extends Parser {
 				'# ',
 				'=',
 		);
-		
+
 		foreach ( $tokens as $token ) {
 			if ( preg_match( '/^<[^>]+>' . $token . '/is', $line ) ) {
 				RTE::$edgeCases[] = 'CONTEXT_SENSITIVE_TOKEN_FOLLOWING_HTML_TAG';
@@ -349,8 +349,15 @@ class RTEParser extends Parser {
 
 		$ret = $thumb->toHtml( array('img-class' => implode(' ', $imgClass)) );
 
+		$mediaType = "image";
+
+		$file = wfFindFile( $title );
+		if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
+			$mediaType = "video";
+		}
+
 		// add type attribute
-		$ret = substr($ret, 0, -2). ' type="image" />';
+		$ret = substr($ret, 0, -2). ' type="' . $mediaType .'" />';
 
 		RTE::log(__METHOD__, $ret);
 
@@ -701,11 +708,11 @@ class RTEParser extends Parser {
 
 		return $ret;
 	}
-	
+
 	/**
 	 * Correctly splits out pipe-separated image arguments (solves bugid: 2240)
 	 * @param  string $wikiText
-	 * @return array 
+	 * @return array
 	 */
 	public static function explodeImageArgs( $wikiText ) {
 		wfProfileIn(__METHOD__);
@@ -714,10 +721,10 @@ class RTEParser extends Parser {
 		$results		= array();
 		$length			= strlen( $wikiText );
 		$substr			= '';
-		
+
 		while ( $counter < $length ) {
 			$char = $wikiText[$counter++];
-			
+
 			switch ( $char ) {
 				case ']':
 				    $bracketContext = false;
@@ -735,7 +742,7 @@ class RTEParser extends Parser {
 					$substr .= $char;
 			}
 		}
-		
+
 		if ( ! empty( $substr ) ) {
 			$results[]  = $substr;
 		}

@@ -104,6 +104,8 @@ $messages['qqq'] = array(
 	'wmu-insert2' => 'Text of a submit button.',
 	'wmu-prev' => '{{Identical|Previous}}',
 	'wmu-next' => '{{Identical|Next}}',
+	'wmu-success' => '{{Identical|Success}}',
+	'wmu-success-placeholder' => '{{Identical|Success}}',
 	'wmu-back' => 'Select a different photo from the one already chosen.',
 	'wmu-gallery' => '{{Identical|Gallery}}',
 	'wmu-column' => '{{Identical|Column}}',
@@ -618,9 +620,11 @@ $messages['ca'] = array(
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
 	'wmu-find' => 'Лаха',
+	'wmu-insert2' => 'Файл чуйиллар',
 );
 
 /** Czech (česky)

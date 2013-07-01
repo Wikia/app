@@ -17,10 +17,11 @@ $wgExtensionCredits['other'][] = array(
 // users immune to Phalanx
 $wgAvailableRights[] = 'phalanxexempt';
 
+define( "PHALANX_VERSION",  1 );
+
 $dir = dirname(__FILE__) . '/';
 
 $wgAutoloadClasses['Phalanx'] = $dir.'Phalanx.class.php';
-
 $wgAutoloadClasses['UserBlock'] = $dir.'blocks/UserBlock.class.php';
 $wgAutoloadClasses['UserCookieBlock'] = $dir.'blocks/UserCookieBlock.class.php';
 $wgAutoloadClasses['ContentBlock'] = $dir.'blocks/ContentBlock.class.php';

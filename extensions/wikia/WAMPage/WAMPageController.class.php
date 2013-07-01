@@ -34,6 +34,8 @@ class WAMPageController extends WikiaController
 
 			$this->redirectIfUnknownTab($currentTabIndex, $title);
 			$this->redirectIfFirstTab($currentTabIndex, $this->subpageText);
+
+			$this->subpageText = $this->model->getSubpageTextByIndex($currentTabIndex, $this->subpageText);
 		}
 
 		$this->faqPage = !empty($faqPageName) ? $faqPageName : '#';

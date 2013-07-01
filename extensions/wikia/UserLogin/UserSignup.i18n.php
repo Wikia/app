@@ -335,7 +335,8 @@ Tooltip letting user know they can change their email.  Tooltip is on the same l
 	'usersignup-marketing-creativity' => 'Third marketing blurb on right side of Special:UserSignup.',
 	'usersignup-createaccount-byemail' => 'Button label on signup form for Special:UserSignup?byemail=1 to create account for others.',
 	'usersignup-error-captcha' => 'Error message for captcha failure.',
-	'usersignup-account-creation-heading' => 'Page heading for confirm page when byemail=1 is used.',
+	'usersignup-account-creation-heading' => 'Page heading for confirm page when byemail=1 is used.
+{{Identical|Success}}',
 	'usersignup-account-creation-subheading' => 'Page subheading for confirm page when byemail=1 is used. Parameters:
 * $1 is an e-mail address.',
 	'usersignup-account-creation-email-sent' => '{{doc-singularthey}}

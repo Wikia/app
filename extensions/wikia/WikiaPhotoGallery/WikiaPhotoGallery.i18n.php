@@ -221,6 +221,7 @@ $messages['qqq'] = array(
 	'wikiaPhotoGallery-photooptions-done' => '{{Identical|Done}}',
 	'wikiaPhotoGallery-preview-hover-modify' => '{{Identical|Modify}}',
 	'wikiaPhotoGallery-preview-hover-delete' => '{{Identical|Delete}}',
+	'wikiaPhotoGallery-preview-add-photo' => '{{Identical|Add photo}}',
 	'wikiaPhotoGallery-preview-add-link' => '{{Identical|Add link}}',
 	'wikiaPhotoGallery-preview-tab-layout' => '{{Identical|Layout}}',
 	'wikiaPhotoGallery-preview-position-left' => '{{Identical|Left}}',
@@ -244,11 +245,15 @@ $messages['qqq'] = array(
 	'wikiaPhotoGallery-preview-captions-left' => '{{Identical|Left}}',
 	'wikiaPhotoGallery-preview-captions-center' => '{{Identical|Center}}',
 	'wikiaPhotoGallery-preview-captions-right' => '{{Identical|Right}}',
+	'wikiaPhotoGallery-slideshow-view-addphoto' => '{{Identical|Add photo}}',
 	'wikiaPhotoGallery-slideshow-view-title' => '{{Identical|Slideshow}}',
+	'wikiaPhotoGallery-slideshowpreview-addphoto' => '{{Identical|Add photo}}',
 	'wikiaPhotoGallery-slideshowpreview-position-left' => '{{Identical|Left}}',
 	'wikiaPhotoGallery-slideshowpreview-position-center' => '{{Identical|Center}}',
 	'wikiaPhotoGallery-slideshowpreview-position-right' => '{{Identical|Right}}',
+	'wikiaPhotoGallery-sliderpreview-addphoto' => '{{Identical|Add photo}}',
 	'wikiaPhotoGallery-upload-uploadtitle' => '{{Identical|Upload}}',
+	'wikiaPhotoGallery-upload-existingtext-onarticle' => '{{Identical|This page}}',
 	'wikiaPhotoGallery-upload-selectbutton' => '{{Identical|Select}}',
 );
 
