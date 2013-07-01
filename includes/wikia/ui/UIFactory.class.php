@@ -213,15 +213,15 @@ class UIFactory {
 		$type = false;
 
 		$sources = $this->loaderService->getURL( $assetName, $type, false );
-		
+
 		foreach ( $sources as $source ) {
 			switch ( $type ) {
 				case AssetsManager::TYPE_CSS:
 				case AssetsManager::TYPE_SCSS:
-					$app->wg->Out->AddStyle( $source );
+					$app->wg->Out->addStyle( $source );
 					break;
 				case AssetsManager::TYPE_JS:
-					$app->wg->Out->AddScript( "<script src=\"{$jsMimeType}\" src=\"{$source}\"></script>" );
+					$app->wg->Out->addScript( "<script type=\"{$jsMimeType}\" src=\"{$source}\"></script>" );
 					break;
 			}
 		}

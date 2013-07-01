@@ -57,23 +57,86 @@ class UIFactoryTest extends WikiaBaseTest {
 			]
 		];
 	}
-	
-	public function testAddAsset() {
+
+	/**
+	 * @dataProvider testAddAssetDataProvider
+	 */
+	public function testAddAsset($asset, $type) {
 		// test private method
 		$addAssetMethod = new ReflectionMethod( 'UIFactory', 'addAsset' );
 		$addAssetMethod->setAccessible( true );
-		
-		// mock wgOutput
+
+		$wgOutMock = $this->getMock( 'stdclass', ['addStyle', 'addScript'] );
+
+		switch ( $type ) {
+			case 'scss':
+			case  'css':
+				$wgOutMock->expects( $this->once() )
+					->method( 'addStyle' );
+				$wgOutMock->expects( $this->never() )
+					->method( 'addScript' );
+				break;
+			case 'js':
+				$wgOutMock->expects( $this->never() )
+					->method( 'addStyle' );
+				$wgOutMock->expects( $this->once() )
+					->method( 'addScript' );
+				break;
+		}
+
+		$this->mockGlobalVariable('wgOut',$wgOutMock);
+		$this->mockApp();
+
+		$addAssetMethod->invoke( $this->instance, $asset );
+	}
+
+	public function testAddAssetDataProvider() {
+		return [
+			[
+				'assetName' => 'testAsset.css',
+				'assetType' => 'css'
+			],
+			[
+				'assetName' => 'testAsset.scss',
+				'assetType' => 'scss'
+			],
+			[
+				'assetName' => 'testAsset.js',
+				'assetType' => 'js'
+			]
+		];
+	}
+
+	/**
+	 * @dataProvider testInitDataProvider
+	 */
+	public function testInit($config, $expected) {
 		/*
-		
-		// I'd like to check here the parameters passed to $wgOut
-		
-		$wgOutMock = $this->mockClass( 'OutputPage', ['AddStyle', 'AddScript'] );
-		$wgOutMock->expects( $this->any() )
-			->method( 'AddStyle' )
-			->with();
+		$assets = [];
+
+		$loadConfigMethod = new ReflectionMethod( 'UIFactory', 'loadComponentConfig' );
+		$loadConfigMethod->setAccessible( true );
+
+		$loadConfigMethod->invoke( $this->instance, $config );
 		*/
-		
-		$addAssetMethod->invoke( $this->instance, 'component' );
+	}
+
+	public function testInitDataProvider() {
+		return [
+			[
+				'config' => [
+					'dependencies' => [
+						'js'  => 'jsAsset',
+						'css' => 'cssAsset'
+					],
+					'templateVars' => 'tmpVars'
+				],
+				'expected' => [
+					'jsAsset',
+					'cssAsset',
+					'tmpVars'
+				]
+			]
+		];
 	}
 }
