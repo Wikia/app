@@ -91,11 +91,13 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'editaccount-desc' => '{{desc}}',
 	'editaccount-title' => 'Name of the "EditAccount" extension. This message is displayed as the H1 page title of the special page.',
-	'editaccount-frame-usage' => 'Label for note field. In this context, "note" refers to extra information about the extension and its functionality',
+	'editaccount-frame-usage' => 'Label for note field. In this context, "note" refers to extra information about the extension and its functionality.
+{{Identical|Note}}',
 	'editaccount-label-toggleadopt' => 'Label for option to toggle whether or not the user is allowed to automatically adopt a wiki.',
 	'editaccount-label-toggleadopt-prevent' => 'Label for option to prevent user from automatically adopting a wiki.',
 	'editaccount-label-toggleadopt-allow' => 'Label for option to allow user to automatically adopting a wiki.',
-	'editaccount-label-reason' => 'Label for reason field.',
+	'editaccount-label-reason' => 'Label for reason field.
+{{Identical|Reason}}',
 	'editaccount-submit-button' => 'Text of the submission button.
 {{Identical|Save}}',
 	'editaccount-success-disable' => 'Parameters:
@@ -1007,6 +1009,7 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
+ * @author C5st4wr6ch
  * @author Irwangatot
  */
 $messages['id'] = array(
@@ -1024,6 +1027,7 @@ $messages['id'] = array(
 	'editaccount-label-pass' => 'Mengatur kata sandi baru',
 	'editaccount-label-realname' => 'Menetapkan nama baru',
 	'editaccount-label-clearunsub' => 'Berhenti berlangganan',
+	'editaccount-label-reason' => 'Alasan:',
 	'editaccount-submit-email' => 'Simpan alamat e-mail',
 	'editaccount-submit-pass' => 'Simpan kata sandi',
 	'editaccount-submit-realname' => 'Simpan nama asli',
@@ -1047,6 +1051,10 @@ $messages['id'] = array(
 	'editaccount-invalid-email' => '" $1 " bukanlah alamat e-mail yang valid!',
 	'editaccount-nouser' => 'Akun " $1 "tidak ada!',
 	'editaccount-remove-avatar-fail' => 'Masalah dalam hapus otomatis avatar.',
+	'editaccount-not-requested' => 'PERHATIAN: Pengguna tidak meminta penutupan akun.',
+	'editaccount-labal-email-status' => 'Status surel',
+	'editaccount-status-tempuser' => 'Pengguna Sementara',
+	'editaccount-error-tempuser-email' => 'Pengguna sementara tidak dapat memiliki field alamat surel yang kosong, silakan masukkan alamat surel.',
 	'editaccount-log' => 'Catatan akun pengguna',
 	'editaccount-log-header' => 'Halaman ini berisi daftar perubahan yang dibuat untuk informasi pengguna oleh staf Wikia.',
 	'editaccount-log-entry-email' => 'mengubah alamat e-mail untuk pengguna $2',
@@ -1869,8 +1877,11 @@ $messages['roa-tara'] = array(
 	'editaccount-submit-account' => "Gestisce 'u cunde",
 	'editaccount-frame-account' => "Stoche a cange 'u cunde utende: $1",
 	'editaccount-frame-close' => "Disabbilite 'u cunde utende: $1",
+	'editaccount-label-clearunsub' => 'Scangellate',
 	'editaccount-label-reason' => 'Mutive:',
 	'editaccount-submit-button' => 'Reggìstre',
+	'editaccount-status' => "State d'u messàgge",
+	'editaccount-success-close' => 'Cunde disabbilitate cu successe $1.',
 );
 
 /** Russian (русский)

@@ -980,9 +980,9 @@ Klicke den folgenden Link, um dich von allen Wikia-Mails abzumelden: $UNSUBSCRIB
 Es sieht so aus, als ob sich $EDITORNAME in deinem Wiki registriert hat! Warum besuchst du nicht seine <a href="$EDITORTALKPAGEURL">Diskussionsseite</a>, um Hallo zu sagen?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia-Team</div>',
 	'founderemails-email-0-days-passed-subject' => 'Willkommen bei Wikia!',
-	'founderemails-email-0-days-passed-body' => 'Schön dich kennen zu lernen, $USERNAME!
+	'founderemails-email-0-days-passed-body' => 'Schön, dich kennen zu lernen, $USERNAME!
 
-...und herzlichen Glückwunsch zur Erstellung von $WIKINAME, $WIKIURL!
+... und herzlichen Glückwunsch zur Erstellung von $WIKINAME, $WIKIURL!
 
 Hier ein paar hilfreiche Tipps zum Start:
 
@@ -990,18 +990,18 @@ Erstelle neue Artikel. Ein Wiki ist dafür da, Informationen über dein Thema mi
 
 Füge Bilder hinzu. Texte sehen immer besser aus, wenn sie bebildert sind. Du solltest also Fotos zu deinen Artikeln und der Hauptseite hinzufügen.
 
-Pass dein Design an. Du kannst ganz einfach das Design und das Logo deines Wikis anpassen um es unverkennbar zu machen! Benutze dazu einfach den Theme-Designer und spiele mit den verschiedenen Möglichkeiten herum, bis es dir gefällt.
+Pass dein Design an. Du kannst ganz einfach das Design und das Logo deines Wikis anpassen, um es unverkennbar zu machen! Benutze dazu einfach den Themen-Designer und spiele mit den verschiedenen Möglichkeiten herum, bis es dir gefällt.
 
-Wir lassen dich nicht alleine. Wir wollen dir dabei helfen, dass das $WIKINAME erfolgreich wird. Besuche das Community-Wiki unter http://de.community.wikia.com für weitere Informationen und um Hilfe bei Fragen zu finden!
+Wir lassen dich nicht alleine. Wir wollen dir dabei helfen, dass das $WIKINAME erfolgreich wird. Besuche das Community-Wiki unter http://de.community.wikia.com, wo du Foren, weitere Informationen und Hilfe bei Fragen finden kannst!
 
 Viel Spaß beim Aufbau deines Wikis,
-Das Wikia-Team
+das Wikia-Team
 
 ___________________________________________
 
 Um die aktuellsten Informationen zu Wikia zu lesen, besuche http://de.community.wikia.com
 Du möchtest anpassen, welche E-Mails du bekommst? Rufe http://de.community.wikia.com/wiki/Special:Preferences auf.
-Klicke den folgenden Link um dich von allen Wikia-Mails abzumelden: $UNSUBSCRIBEURL',
+Klicke den folgenden Link, um dich von allen Wikia-Mails abzumelden: $UNSUBSCRIBEURL',
 	'founderemails-email-0-days-passed-body-HTML' => 'Herzlichen Glückwunsch zum Erstellen von <strong>$WIKINAME</strong> - du bist nun Teil der Wikia-Gemeinschaft!<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia-Team</div>',
 	'founderemails-email-3-days-passed-subject' => "Wie geht's voran mit deinem Wiki?",
@@ -1340,9 +1340,28 @@ Es sieht so aus als ob sich $EDITORNAME bei Ihrem Wiki registriert hat! Warum be
 	'founderemails-email-user-registered-body-HTML' => 'Hallo $USERNAME,<br /><br />
 Es sieht so aus als ob sich $EDITORNAME bei Ihrem Wiki registriert hat! Warum besuchen Sie nicht seine <a href="$EDITORTALKPAGEURL">Diskussionsseite</a> um Hallo zu sagen?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
-	'founderemails-email-0-days-passed-body' => 'Herzlichen Glückwunsch zum Erstellen von $WIKINAME - Sie sind nun Teil der Wikia-Gemeinschaft!
+	'founderemails-email-0-days-passed-body' => 'Schön, Sie kennen zu lernen, $USERNAME!
 
--- Das Wikia Team', # Fuzzy
+... und herzlichen Glückwunsch zur Erstellung von $WIKINAME, $WIKIURL!
+
+Hier ein paar hilfreiche Tipps zum Start:
+
+Erstellen Sie neue Artikel. Ein Wiki ist dafür da, Informationen über Ihr Thema mit anderen zu teilen.
+
+Fügen Sie Bilder hinzu. Texte sehen immer besser aus, wenn sie bebildert sind. Sie sollten also Fotos zu Ihren Artikeln und der Hauptseite hinzufügen.
+
+Passen Sie Ihr Design an. Sie können ganz einfach das Design und das Logo Ihres Wikis anpassen, um es unverkennbar zu machen! Benutzen Sie dazu einfach den Themen-Designer und spielen mit den verschiedenen Möglichkeiten herum, bis es Ihnen gefällt.
+
+Wir lassen Sie nicht alleine. Wir wollen Ihnen dabei helfen, dass das $WIKINAME erfolgreich wird. Besuchen Sie das Community-Wiki unter http://de.community.wikia.com, wo Sie Foren, weitere Informationen und Hilfe bei Fragen finden können!
+
+Viel Spaß beim Aufbau Ihres Wikis,
+das Wikia-Team
+
+___________________________________________
+
+Um die aktuellsten Informationen zu Wikia zu lesen, besuchen Sie http://de.community.wikia.com
+Sie möchten anpassen, welche E-Mails Sie bekommen? Rufen Sie http://de.community.wikia.com/wiki/Special:Preferences auf.
+Klicken Sie den folgenden Link, um sich von allen Wikia-Mails abzumelden: $UNSUBSCRIBEURL',
 	'founderemails-email-0-days-passed-body-HTML' => 'Herzlichen Glückwunsch zum Erstellen von <strong>$WIKINAME</strong> - Sie sind nun Teil der Wikia-Gemeinschaft!<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
 	'founderemails-email-3-days-passed-body' => 'Hallo $USERNAME,
@@ -3117,14 +3136,100 @@ Tu pote sempre visitar Wiki Activitate pro vider tote le modificationes que es f
 
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
+ * @author C5st4wr6ch
  */
 $messages['id'] = array(
 	'founderemails-desc' => 'Membantu memberikan informasi kepada pendiri tentang perubahan di wiki mereka',
 	'tog-founderemailsenabled' => 'Beritahukan saya melalui surel tentang kegiatan orang lain. (hanya pendiri)',
 	'founderemails-email-user-registered-subject' => 'Orang yang baru saja bergabung dengan $WIKINAME',
+	'founderemails-email-user-registered-body' => 'Hai $USERNAME,
+
+Selamat! $EDITORNAME baru saja bergabung di $WIKINAME.
+
+Ambil kesempatan ini untuk menyambut mereka ke wiki Anda dan mendorong mereka untuk membantu menyunting. Semakin meriah, dan semakin cepat wiki Anda akan tumbuh.
+
+$EDITORPAGEURL
+
+Tim Wikia',
 	'founderemails-email-user-registered-content' => 'Gunakan kesempatan ini untuk menyambut mereka di wiki Anda dan memotivasi mereka untuk membantu menyunting. Lebih rame lebih menyenangkan, dan semakin cepat wiki anda akan berkembang',
 	'founderemails-email-user-registered-signature' => 'Tim wikia',
 	'founderemails-email-user-registered-button' => 'Sambut mereka',
+	'founderemails-email-0-days-passed-body' => 'Senang bertemu dengan Anda $USERNAME,
+
+Selamat telah membuat $WIKINAME, $WIKIURL.
+
+Ini adalah sedikit tips yang membantu Anda untuk memulai:
+
+Tambahkan halaman. Semua wiki adalah tentang berbagi informasi tentang topik unik Anda.
+
+Tambahkan foto. Halaman selalu lebih baik saat memiliki visuali! Tambahkan foto ke halaman Anda dan halaman utama wiki Anda.
+
+Aturlah tema Anda. Kustomisasi tema dan penanda kata wiki Anda untuk membuat wiki Anda terlihat lebih! Gunakan Perancang Tema untuk menambahkan warna kustom ke wiki Anda dan membuatnya unik ke topik Anda.
+
+Kami tidak akan meninggalkan Anda dalam dingin. Kami berada di sini untuk membantu Anda membuat $WIKINAME berhasil dalam setiap langkahnya. Kunjungi http://community.wikia.com untuk forum, saran dan bantuan, atau untuk mengirim surel pertanyaan Anda!
+
+Selamat membangun wiki! Tim Wikia
+
+
+___________________________________________
+
+Untuk memeriksa kejadian terakhir di Wikia, kunjungi http://community.wikia.com
+Ingin mengendalikan surel yang mana yang Anda terima? Pergi ke http://messaging.wikia.com/wiki/Special:Preferences.
+Klik pranala berikut untuk berhenti berlangganan dari semua email Wikia: $UNSUBSCRIBEURL',
+	'founderemails-email-3-days-passed-subject' => 'Apa yang sedang terjadi di wiki Anda',
+	'founderemails-email-3-days-passed-body-HTML' => 'Hai di sana $USERNAME,<br /><br />
+Kini setelah Anda berada beberaoa hari di dalam wiki Anda, kami berpikir Anda mungkin ingin melihat beberapa hal lain yang dapat Anda lakukan.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Tim Wikia</div>',
+	'founderemails-email-page-edited-reg-user-first-edit-subject' => '$WIKINAME memiliki suntingan baru!',
+	'founderemails-email-page-edited-reg-user-first-edit-body' => 'Hai $USERNAME,
+
+Baiklah! $EDITORNAME baru saja membuat suntingan awalnya pada $WIKINAME.
+
+Tujulah $PAGETITLE untuk memeriksa apa yang mereka tambahkan.
+
+$PAGEURL
+
+Tim Wikia',
+	'founderemails-email-first-edit-greeting' => 'Hai $USERNAME,',
+	'founderemails-email-first-edit-headline' => 'Baiklah! $EDITORNAME baru saja membuat suntingan sangat pertama pada $WIKINAME.',
+	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => 'Hai $USERNAME,<br /><br />
+Kelihatannya pengguna terdaftar $EDITORNAME telah menyunting wiki Anda pertama kali! Mengapa Anda tidak mengunjungi <a href="$EDITORTALKPAGEURL">halaman pembicaraannya</a> untuk menyapa?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Tim Wikia</div>',
+	'founderemails-email-general-edit-greeting' => 'Hai $USERNAME,',
+	'founderemails-email-general-edit-signature' => 'Tim Wikia',
+	'founderemails-email-page-edited-reg-user-body-HTML' => 'Hai $USERNAME,<br /><br />
+Kelihatannya pengguna terdaftar $EDITORNAME telah menyunting wiki Anda! Mengapa Anda tidak mengunjungi <a href="$EDITORTALKPAGEURL">halaman pembicaraannya</a> untuk menyapa?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Tim Wikia</div>',
+	'founderemails-email-page-edited-anon-subject' => 'Seorang teman misterius menyunting $WIKINAME',
+	'founderemails-email-page-edited-anon-body' => 'Hai $USERNAME,
+
+Kontributor Wikia telah membuat sebuah suntingan pada $PAGETITLE di $WIKINAME.
+
+Kontributor Wikia adalah orang-orang yang menyunting tanpa masuk log ke akun Wikia. Pergi dan lihatlah apakah yang telah ditambahkan teman misterius ini!
+
+$PAGEURL
+
+Tim Wikia',
+	'founderemails-email-anon-edit-content' => 'Kontributor Wikia adalah orang-orang yang membuat suntingan tanpa masuk log ke akun Wikia. Pergi dan lihatlah apa yang ditambahkan teman misterius ini!',
+	'founderemails-answers-email-user-registered-subject' => 'Seseorang mendaftar sebuah akun di QA wiki Anda!',
+	'founderemails-answers-email-user-registered-body-HTML' => 'Hai $USERNAME,<br /><br />
+Kelihatannya pengguna terdaftar $EDITORNAME telah mendaftar di wiki Anda! Mengapa Anda tidak mengunjungi <a href="$EDITORTALKPAGEURL">halaman pembicaraannya</a> untuk menyapa?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Tim Wikia</div>',
+	'founderemails-answers-email-0-days-passed-body' => 'Selamat atas pembuatan $WIKINAME - Anda sekarang menjadi bagian dari komunitas Wikia!
+
+-- Tim Wikia',
+	'founderemails-answers-email-0-days-passed-body-HTML' => 'Selamat atas pembuatan <strong>$WIKINAME</strong> - Anda sekarang adalah bagian dari komunitas Wikia!<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Tim Wikia</div>',
+	'founderemails-answers-email-10-days-passed-body' => 'Hai $USERNAME,
+
+Sudah beberapa waktu lamanya sejak Anda memulai sebuah wiki di Wikia - kami berharap ini akan menjadi hebat! Kami ingin membagikan sedikit hal menarik akhir untuk membantu membuat wiki Anda lebih seperti rumah.
+
+-- Tim Wikia',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-body' => 'Hai $USERNAME,
+
+Kelihatannya $EDITORNAME telah menyunting wiki Anda untuk pertama kali! Mengapa Anda tidak mengunjungi halaman pembicaraannya ($EDITORTALKPAGEURL) untuk menyapa?
+
+--Tim Wikia',
 );
 
 /** Italian (italiano)

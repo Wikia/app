@@ -16,6 +16,10 @@ class PhalanxContentBlock extends WikiaObject {
 	}
 
 	/**
+	 * @static
+	 *
+	 * hook
+	 *
 	 * @param EditPage $editPage
 	 * @param $text
 	 * @param $section
@@ -23,11 +27,13 @@ class PhalanxContentBlock extends WikiaObject {
 	 * @param $summary
 	 * @return bool
 	 */
-	public function editFilter( $editPage, $text, $section, &$hookError, $summary ) {
+	static public function editFilter( $editPage, $text, $section, &$hookError, $summary ) {
 		wfProfileIn( __METHOD__ );
 
+		$title = RequestContext::getMain()->getTitle();
+
 		/* @var PhalanxContentModel $phalanxModel */
-		$phalanxModel = new PhalanxContentModel( $this->wg->Title );
+		$phalanxModel = new PhalanxContentModel( $title );
 
 		$summary = $editPage->summary;
 		$textbox = $editPage->textbox1;
@@ -46,7 +52,7 @@ class PhalanxContentBlock extends WikiaObject {
 		$ret = $phalanxModel->match_summary( $summary );
 		if ( $ret !== false ) {
 			/* check content */
-			$ret = $this->editContent( $textbox, $error_msg, $phalanxModel );
+			$ret = PhalanxContentBlock::editContent( $textbox, $error_msg, $phalanxModel );
 		} else {
 			$error_msg = $phalanxModel->contentBlock();
 		}
@@ -93,11 +99,18 @@ class PhalanxContentBlock extends WikiaObject {
 		return true;
 	}
 
-	public function editContent( $textbox, &$error_msg, $phalanxModel = null ) {
+	/**
+	 * @static
+	 *
+	 * hook 
+	 */
+	static public function editContent( $textbox, &$error_msg, $phalanxModel = null ) {
 		wfProfileIn( __METHOD__ );
 
+		$title = RequestContext::getMain()->getTitle();
+
 		if ( is_null( $phalanxModel ) ) {
-			$phalanxModel = new PhalanxContentModel( $this->wg->Title );
+			$phalanxModel = new PhalanxContentModel( $title );
 		}
 		
 		/* compare summary with spam-whitelist */
@@ -121,12 +134,22 @@ class PhalanxContentBlock extends WikiaObject {
 		return $ret;
 	}
 	
-	public function checkContent( $textbox, &$msg ) {
+	/**
+	 * @static
+	 *
+	 * hook
+	 */
+	static public function checkContent( $textbox, &$msg ) {
 		wfProfileIn( __METHOD__ );
 
-		$phalanxModel = new PhalanxContentModel( $this->wg->Title );
+		$title = RequestContext::getMain()->getTitle();
+
+		$phalanxModel = new PhalanxContentModel( $title );
 		
-		$ret = $this->editContent( $textbox, $msg, $phalanxModel );
+		/**
+		 * @todo $this in static method
+		 */
+		$ret = PhalanxContentBlock::editContent( $textbox, $msg, $phalanxModel );
 		
 		if ( $ret === false ) {
 			$msg = $phalanxModel->textBlock();

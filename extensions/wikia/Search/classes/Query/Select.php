@@ -77,9 +77,14 @@ class Select
 	
 	/**
 	 * Returns the value we use when querying Solr, with the appropriate special characters escaped.
+	 * Word limit allows us to optionally set a maximum number of words in a query
+	 * @TODO applying word limit here is clumsy at best and suggests it's about time we implement some class abstraction
+	 * and hierarchy around what kinds of queries we're using where. this would be good for an actual edismax query, not so 
+	 * great for video suggest or direct solr queries, for instance.
+	 * @param null|int $wordLimit
 	 * @return string
 	 */
-	public function getSolrQuery() {
+	public function getSolrQuery( $wordLimit = null ) {
 		$query = $this->getSanitizedQuery();
 		if (! $this->namespaceChecked ) {
 			$this->initializeNamespaceData();
@@ -91,9 +96,18 @@ class Select
 		
 		// non-indexed number-string phrases issue workaround (RT #24790)
 		$query = preg_replace( '/(\d+)([a-zA-Z]+)/i', '$1 $2', $query );
-	
+
 		// escape all lucene special characters: + - && || ! ( ) { } [ ] ^ " ~ * ? : \ (RT #25482)
-		return (new Solarium_Query_Helper)->escapeTerm( $query,  ENT_COMPAT, 'UTF-8' );
+		$query = (new Solarium_Query_Helper)->escapeTerm( $query,  ENT_COMPAT, 'UTF-8' );
+
+		if (! empty( $wordLimit ) ) {
+			// this is actually a micro-optimization.
+			// i could just as easily apply no preg_split limit and impose the limit on array_slice.
+			$split = preg_split( '/\s+/', $query, $wordLimit + 1 );
+			$query = implode( ' ', array_slice( $split, 0, $wordLimit ) );
+		}
+
+		return $query;
 	}
 	
 	/**

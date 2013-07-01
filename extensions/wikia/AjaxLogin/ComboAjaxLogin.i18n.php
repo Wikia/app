@@ -290,7 +290,9 @@ Prøv igen eller [[Special: Contact|rapportér dette]].', # Fuzzy
 
 /** German (Deutsch)
  * @author Avatar
+ * @author Das Schäfchen
  * @author Diebuche
+ * @author Inkowik
  * @author LWChris
  * @author SVG
  * @author The Evil IP address
@@ -298,7 +300,7 @@ Prøv igen eller [[Special: Contact|rapportér dette]].', # Fuzzy
 $messages['de'] = array(
 	'comboajaxlogin-desc' => 'Dynamische Box, die es Benutzern ermöglicht, sich anzumelden, Passwörter zu merken und Benutzer zu registrieren',
 	'comboajaxlogin-createlog' => 'Anmelden oder Benutzerkonto erstellen',
-	'comboajaxlogin-actionmsg' => 'Um diese Aktion auszuführen musst du dich zuerst anmelden oder ein Benutzerkonto erstellen',
+	'comboajaxlogin-actionmsg' => 'Um diese Aktion auszuführen, musst du dich zuerst anmelden oder ein Benutzerkonto erstellen',
 	'comboajaxlogin-actionmsg-protected' => 'Um diese geschützten Seite zu bearbeiten, musst du dich zunächst anmelden oder ein Konto anlegen.',
 	'comboajaxlogin-connectmarketing' => '<h1>Verbinde deine Benutzerkonten</h1>
 <ul>
@@ -314,13 +316,13 @@ $messages['de'] = array(
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '« Zurück',
 	'comboajaxlogin-connectmarketing-forward' => 'Anfangen »',
-	'comboajaxlogin-connectdirections' => 'Gib deinen Wikia-Benutzernamen und das Passwort hier ein - wir werden dann magisch dein Wikia und Facebook-Benutzerkonto im Hintergrund verknüpfen.
+	'comboajaxlogin-connectdirections' => 'Gib deinen Wikia-Benutzernamen und das Passwort hier ein - wir werden dann dein Wikia- und Facebook-Benutzerkonto im Hintergrund verknüpfen.
 
 Sobald du fertig bist, kannst du dich einfach über den Facebook-Connect-Knopf anmelden.',
 	'comboajaxlogin-post-not-understood' => 'Es gab einen Fehler beim Aufbau dieses Formulars.
 Bitte versuche es erneut oder [[Special:Contact|melde es]].',
 	'comboajaxlogin-readonlytext' => '<h2>Entschuldige!</h2>
-<p>Du kannst momentan kein Benutzerkonto erstellen - wir sollten in Kürze wieder erreichbar sein. Sieh nach was los ist:<br /><em>$1</em></p>
+<p>Du kannst momentan kein Benutzerkonto erstellen - wir sollten in Kürze wieder erreichbar sein. Sieh nach, was los ist:<br /><em>$1</em></p>
 <p>Bitte schau bei <a href="http://twitter.com/wikia">Twitter</a> oder <a href="http://facebook.com/wikia">Facebook</a> für weitere Informationen. 
 <br />
  (Wenn du bereits ein Benutzerkonto hast, kannst du dich <a href="#">einloggen</a> wie sonst auch, wirst aber nichts bearbeiten können.)</p>',
@@ -627,14 +629,23 @@ Per favor tenta lo de novo o [[Special:Contact|reporta isto]].',
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
  * @author Irwangatot
  */
 $messages['id'] = array(
 	'comboajaxlogin-desc' => 'kotak dinamis yang memungkinkan pengguna untuk masuk log, mengingatkan password dan pengguna mendaftar',
 	'comboajaxlogin-createlog' => 'Masuk log atau buat akun',
 	'comboajaxlogin-actionmsg' => 'Untuk melakukan tindakan ini pertama Anda harus masuk log atau membuat account',
+	'comboajaxlogin-actionmsg-protected' => 'Untuk melakukan tindakan ini pertama Anda harus masuk log atau membuat akun.',
+	'comboajaxlogin-connectmarketing' => '<h1>Hubungkan akun-akun Anda</h1>
+<ul>
+<li>Nama pengguna saat ini, riwayat, dan suntingan tetap tersimpan... tidak ada yang berubah kecuali cara Anda masuk log</li>
+<li>Bagikan kegiatan Anda di Wikia dengan teman-teman Anda di Facebook</li>
+<li>Kendali penuh akan apa yang dipublikasikan</li>
+</ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Kembali',
 	'comboajaxlogin-connectmarketing-forward' => 'Persiapan &raquo;',
+	'comboajaxlogin-ajaxerror' => 'Wikia tidak menanggapi. Mohon periksa koneksi jaringan Anda.',
 );
 
 /** Italian (italiano)

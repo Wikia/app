@@ -150,6 +150,13 @@ $messages['ia'] = array(
 	'minieditor-placeholder-reply' => 'Responde al message hic',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'minieditor-reply' => 'Balas',
+);
+
 /** Italian (italiano)
  * @author Minerva Titani
  */

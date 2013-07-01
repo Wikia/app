@@ -436,6 +436,8 @@ $messages['roa-tara'] = array(
 	'piggybac-desc' => "Permette de trasè sus a 'n'otre utende",
 	'piggyback' => 'Piggyback',
 	'piggyback-otherusername' => 'Otre nome utende:',
+	'piggyback-wronguser' => "$1 non g'è 'u nome utende tune",
+	'piggyback-itisyou' => 'Non ge te puè piggybeccà.',
 	'log-name-piggyback' => 'Archivije de piggyback',
 );
 

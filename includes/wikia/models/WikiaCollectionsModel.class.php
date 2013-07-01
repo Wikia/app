@@ -14,7 +14,7 @@ class WikiaCollectionsModel extends WikiaModel {
 	}
 	
 	private function getWikiInCollectionCacheKey($cityId) {
-		return $this->wf->SharedMemcKey('wiki_in_collection', self::COLLECTIONS_MEMC_VERSION, $cityId, __METHOD__);
+		return wfSharedMemcKey('wiki_in_collection', self::COLLECTIONS_MEMC_VERSION, $cityId, __METHOD__);
 	}
 
 	private function clearCache($langCode) {
@@ -181,7 +181,16 @@ class WikiaCollectionsModel extends WikiaModel {
 	 * @param $collectionId
 	 */
 	public function addWikiToCollection($collectionId, $cityId) {
-		if ( !$this->checkWikiCollectionExists($collectionId, $cityId) ) {
+		$collection = $this->getById($collectionId);
+		$cityVisualization = new CityVisualization();
+		$wikiData = $cityVisualization->getWikiDataForVisualization($cityId, $collection['lang_code']);
+
+		if(empty($wikiData['main_image'])) {
+			$status = [
+				'value' => false,
+				'message' => wfMessage('manage-wikia-home-collections-add-failure-image', $wikiData['name'])->text()
+			];
+		} else if ( !$this->checkWikiCollectionExists($collectionId, $cityId) ) {
 			$db = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
 			$insertData = [
@@ -193,10 +202,20 @@ class WikiaCollectionsModel extends WikiaModel {
 
 			$db->commit();
 
-			$collection = $this->getById($collectionId);
 			$this->clearCache($collection['lang_code']);
 			$this->clearWikiCache($cityId);
+
+			$status = [
+				'value' => true,
+				'message' => wfMessage('manage-wikia-home-collections-add-success')->plain()
+			];
+		} else {
+			$status = [
+				'value' => false,
+				'message' => wfMessage('manage-wikia-home-collections-add-failure-already-exists')->plain()
+			];
 		}
+		return $status;
 	}
 
 	/**
@@ -220,6 +239,11 @@ class WikiaCollectionsModel extends WikiaModel {
 		$collection = $this->getById($collectionId);
 		$this->clearCache($collection['lang_code']);
 		$this->clearWikiCache($cityId);
+
+		return [
+			'value' => true,
+			'message' => wfMessage('manage-wikia-home-collections-remove-success')->plain()
+		];
 	}
 
 	/**

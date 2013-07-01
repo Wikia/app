@@ -183,6 +183,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		$this->list = $this->helper->getWikisForStaffTool($options);
 		$this->collections = $this->getWikiaCollectionsModel()->getList($visualizationLang);
+		$this->verticals = $this->getWikiVerticals();
 
 		if( $count > self::WHST_WIKIS_PER_PAGE ) {
 			/** @var $paginator Paginator */
@@ -243,7 +244,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			Wikia::log(__METHOD__, false, "A problem with saving WikiFactory variable(s) occured. Status array: " . print_r($statusArr, true));
 			$this->errorMsg = wfMessage('manage-wikia-home-error-wikifactory-failure')->text();
 		} else {
-			$visualization = new CityVisualization(); /** @var $visualization CityVisualization */
+			$visualization = new CityVisualization();
 			//todo: put purging those caches to CityVisualization class and fire here only one its method here
 			//purge verticals cache
 			foreach($visualization->getVerticalsIds() as $verticalId) {
@@ -327,7 +328,10 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 	public function switchCollection() {
 		if( !$this->checkAccess() ) {
-			$this->status = false;
+			$status = [
+				'value' => false,
+				'message' => wfMessage('manage-wikia-home-wrong-rights')->plain()
+			];
 		} else {
 			$wikiId = $this->request->getInt('wikiId', 0);
 			$collectionId = $this->request->getVal('collectionId', 0);
@@ -336,18 +340,21 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			$collectionsModel = $this->getWikiaCollectionsModel();
 			switch($type) {
 				case self::CHANGE_FLAG_ADD:
-					$collectionsModel->addWikiToCollection($collectionId, $wikiId);
-					$this->status = true;
+					$status = $collectionsModel->addWikiToCollection($collectionId, $wikiId);
 					break;
 				case self::CHANGE_FLAG_REMOVE:
-					$collectionsModel->removeWikiFromCollection($collectionId, $wikiId);
-					$this->status = true;
+					$status = $collectionsModel->removeWikiFromCollection($collectionId, $wikiId);
 					break;
 				default:
-					$this->status = false;
+					$status = [
+						'value' => false,
+						'message' => wfMessage('manage-wikia-home-collections-invalid-action')->plain()
+					];
 					break;
 			}
 		}
+		$this->status = $status['value'];
+		$this->message = $status['message'];
 	}
 
 	/**

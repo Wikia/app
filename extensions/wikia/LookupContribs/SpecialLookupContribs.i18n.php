@@ -68,7 +68,10 @@ Check given username for possible typos.</p>',
  */
 $messages['qqq'] = array(
 	'lookupcontribsgo' => '{{Identical|Go}}',
+	'lookupcontribswikititle' => '{{Identical|Title}}',
 	'lookupcontribsnext' => '{{Identical|Next}}',
+	'lookupcontribspageremoved' => '{{Identical|Removed}}',
+	'lookupcontribsrestore' => '{{Identical|Restore}}',
 	'right-lookupcontribs' => '{{doc-right|lookupcontribs|ns=Wikia}}',
 	'lookupcontribsshowpages' => '',
 	'lookupcontribscontent' => '{{Identical|Content}}',
@@ -747,9 +750,13 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
  * @author Irwangatot
  */
 $messages['id'] = array(
+	'lookupcontribshelp' => 'Halaman khusus ini dapat digunakan untuk menampilkan kontribusi pengguna pada beberapa Wikia. Untuk menampilkan daftar, berikan nama pengguna di bawah ini.',
+	'lookupcontribsselectmodefinal' => 'kontribusi terakhir dari pengguna tersebut',
+	'lookupcontribsinvaliduser' => '<p class="error">Pengguna "<b>$1</b>" tidak ada. Periksa nama pengguna tersebut untuk kemungkinan kesalahan ketik.</p>',
 	'lookupcontribswiki' => 'Wiki',
 	'lookupcontribswikititle' => 'Judul',
 	'lookupcontribsnext' => 'selanjutnya',

@@ -252,10 +252,12 @@ class CityVisualization extends WikiaModel {
 			$isPromoted = $wikiData['wikipromoted'];
 			$isBlocked = $wikiData['wikiblocked'];
 
-			if( !$isBlocked && !$isPromoted ) {
-				$verticalWikis[self::DEMOTED_ARRAY_KEY][] = $wikiData;
-			} else if( $isPromoted && !$isBlocked ) {
-				$verticalWikis[self::PROMOTED_ARRAY_KEY][] = $wikiData;
+			if ( ! $isBlocked ) {
+				if ( $conditioner->getPromotionCondition( $isPromoted ) ) {
+					$verticalWikis[self::PROMOTED_ARRAY_KEY][] = $wikiData;
+				} else {
+					$verticalWikis[self::DEMOTED_ARRAY_KEY][] = $wikiData;
+				}
 			}
 		}
 
@@ -268,7 +270,7 @@ class CityVisualization extends WikiaModel {
 			'wikiid' => $row->city_id,
 			'wikiname' => $row->city_title,
 			'wikiheadline' => $row->city_headline,
-			'wikiurl' => $row->city_url . '?redirect=no',
+			'wikiurl' => $row->city_url,
 			'wikidesc' => $row->city_description,
 			'main_image' => $row->city_main_image,
 			'wikinew' => $this->isNewWiki($row->city_flags),
@@ -435,7 +437,7 @@ class CityVisualization extends WikiaModel {
 	}
 
 	public function getVisualizationElementMemcKey($prefix, $wikiId, $langCode) {
-		return wfmemcKey($prefix, self::CITY_VISUALIZATION_MEMC_VERSION, $wikiId, $langCode);
+		return wfMemcKey($prefix, self::CITY_VISUALIZATION_MEMC_VERSION, $wikiId, $langCode);
 	}
 
 	public function getCollectionCacheKey($collectionId) {
@@ -899,8 +901,6 @@ class CityVisualization extends WikiaModel {
 		$results = $db->select($table, $fields, $conds, __METHOD__, $options, $joinConds);
 		$wikis = array();
 		while( $row = $db->fetchObject($results) ) {
-			$category = HubService::getComscoreCategory($row->city_id);
-			$row->city_vertical = $category->cat_name;
 			$wikis[] = $row;
 		}
 

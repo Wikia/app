@@ -123,6 +123,7 @@ Zbývající část stránky bude možné spustit tak, že lze snadno zobrazit, 
 );
 
 /** German (Deutsch)
+ * @author Das Schäfchen
  * @author LWChris
  * @author Quedel
  * @author SVG
@@ -140,7 +141,7 @@ Bitte wende dich an einen Systemadministrator, falls du andere Gruppen für das 
 	'batchuserrights-userload-error' => "Konnte den Benutzer „'''$1'''“ nicht laden.",
 	'batchuserrights-no-groups' => 'Du hast keine Gruppen ausgewählt.
 Dies wird nichts verändern.
-Der Rest der Seite wird nur geladen, sodass du einfach sehen kannst ob einer der Benutzer nicht geladen werden konnte.',
+Der Rest der Seite wird nur geladen, sodass du einfach sehen kannst, ob einer der Benutzer nicht geladen werden konnte.',
 );
 
 /** Zazaki (Zazaki)
@@ -252,6 +253,13 @@ Per favor demanda lo a un administrator de systema si tu ha besonio de permitter
 	'batchuserrights-no-groups' => 'Tu non seligeva alcun gruppo.
 Isto va complir nihil.
 Le resto del pagina essera executate solmente a fin que tu pote vider facilemente si alcun del nomines de usator non poteva esser cargate.',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'batchuserrights-desc' => 'Memperbolehkan menambahkan satu atau beberapa pengguna ke grup dalam satu tindakan',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

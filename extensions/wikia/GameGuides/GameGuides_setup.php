@@ -11,7 +11,7 @@ $dir = dirname( __FILE__ );
  */
 $wgAutoloadClasses['GameGuidesController'] = "{$dir}/GameGuidesController.class.php";
 $wgAutoloadClasses['GameGuidesWrongAPIVersionException'] = "{$dir}/GameGuidesController.class.php";
-$wgAutoloadClasses[ 'GameGuidesModel'] =  "{$dir}/GameGuidesModel.class.php" ;
+$wgAutoloadClasses['GameGuidesModel'] =  "{$dir}/GameGuidesModel.class.php" ;
 
 /**
  * message files
@@ -20,8 +20,8 @@ $wgExtensionMessagesFiles['GameGuides'] = "{$dir}/GameGuides.i18n.php";
 
 
 //Special Page to preview page in GameGuide style
-$wgAutoloadClasses[ 'GameGuidesSpecialPreviewController'] =  "{$dir}/GameGuidesSpecialPreviewController.class.php" ;
-$wgSpecialPages[ 'GameGuidesSpecialPreviewController' ] =  'GameGuidesPreview';
+$wgAutoloadClasses['GameGuidesSpecialPreviewController'] =  "{$dir}/GameGuidesSpecialPreviewController.class.php" ;
+$wgSpecialPages['GameGuidesPreview'] = 'GameGuidesSpecialPreviewController';
 
 $wgGroupPermissions['*']['gameguidespreview'] = false;
 $wgGroupPermissions['staff']['gameguidespreview'] = true;

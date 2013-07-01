@@ -259,7 +259,8 @@ Please [[Special:UserLogin|log in or create an account]] if you do not already h
 $messages['qqq'] = array(
 	'wikistats_info' => '"Show statistics" refers to {{msg-wikia|wikistats_showstats_btn}}.',
 	'wikistats_showstats_btn' => 'Button text, also referenced in {{msg-wikia|wikistats_info}}.',
-	'wikistats_panel_close_btn' => 'Button text. Translate as verb.',
+	'wikistats_panel_close_btn' => 'Button text. Translate as verb.
+{{Identical|Close}}',
 	'wikistats_daterange_from' => '{{Identical|From}}',
 	'wikistats_daterange_to' => '{{Identical|To}}',
 	'wikistats_latest_pageviews_subtitle' => '',
@@ -274,10 +275,12 @@ $messages['qqq'] = array(
 	'wikistats_namespace' => '{{Identical|Namespace}}',
 	'wikistats_hide' => '{{Identical|Hide}}',
 	'wikistats_wikicategory' => '{{Identical|Category}}',
+	'wikistats_username' => '{{Identical|User}}',
 	'wikistats_size' => '{{Identical|Size}}',
 	'wikistats_image' => '{{Identical|Image}}',
 	'wikistats_namespaces' => '{{Identical|Namespace}}',
 	'wikistats_main_namespace' => 'Name of the main namespace (ns:0)',
+	'wikistats_official' => '{{Identical|Official}}',
 	'wikistats_more_200_ch' => 'What does this mean? "characters"?',
 	'wikistats_rank' => '{{Identical|Rank}}',
 	'wikistats_total' => '{{Identical|Total}}',
@@ -288,6 +291,7 @@ $messages['qqq'] = array(
 	'wikistats_prev_rank' => '{{Optional}}',
 	'wikistats_prev_rank_xls' => '{{Optional}}',
 	'wikistats_days_ago' => '',
+	'wikistats_wikicreated' => '{{Identical|Created}}',
 	'wikistats_wikilang' => '{{Identical|Language}}',
 	'wikistats_back_to_prevpage' => '{{Identical|Back}}',
 	'wikistats_trend_ordered' => 'Typo: wiki -> wikis',
@@ -299,8 +303,10 @@ $messages['qqq'] = array(
 	'wikistats_date_of_generate' => 'If $1 is a time stamp, split date and time',
 	'wikistats_show_nbr_wikis_check' => 'Should support plural for $1',
 	'wikistats_content' => '{{Identical|Content}}',
+	'wikistats_userns' => '{{Identical|User}}',
 	'wikistats_nbr_format' => '{{Identical|Number format}}',
 	'wikistats_language_toplist' => '{{Optional}}',
+	'wikistats_title' => '{{Identical|Title}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -1684,6 +1690,7 @@ $messages['cs'] = array(
 	'wikistats_unregister' => 'Nereg.',
 	'wikistats_more_txt' => 'více',
 	'wikistats_now' => 'nyní',
+	'wikistats_days_ago' => 'dny nazpět',
 	'wikistats_wikiurl' => 'URL:',
 	'wikistats_wikicreated' => 'Vytvořeno:',
 	'wikistats_wikilang' => 'Jazyk:',

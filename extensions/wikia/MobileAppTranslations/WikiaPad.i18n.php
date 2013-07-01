@@ -36,6 +36,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'main-tab-offline' => '{{Identical|Offline}}',
+	'tab-discover-loading-message' => '{{Identical|Loading}}',
 );
 
 /** Arabic (العربية)
@@ -259,6 +260,13 @@ $messages['ia'] = array(
 	'browser-loading-message' => 'Cargamento…',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'tab-discover-no-network-dialog-title' => 'Jaringan tidak tersedia',
+);
+
 /** Ingush (ГӀалгӀай)
  * @author Sapral Mikail
  */
@@ -438,7 +446,9 @@ $messages['pt'] = array(
  */
 $messages['pt-br'] = array(
 	'main-tab-search' => 'Pesquisar',
+	'main-tab-offline' => 'Desconectado',
 	'tab-discover-loading-message' => 'Carregando...',
+	'tab-discover-no-network-dialog-title' => 'Rede não disponível',
 	'tab-discover-no-network-dialog-close-button' => 'OK',
 	'tab-search-loading-message' => 'Pesquisando...',
 	'browser-loading-message' => 'Carregando...',
