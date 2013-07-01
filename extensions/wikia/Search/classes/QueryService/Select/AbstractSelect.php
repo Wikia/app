@@ -439,7 +439,7 @@ abstract class AbstractSelect
 			global $wgSolrProxy;
 			$options = $this->client->getOptions();
 			$options['adapteroptions']['path'] = '/solr/'.$this->core;
-			$this->client->setOptions( [ 'adapteroptions' => $options['adapteroptions'], false );
+			$this->client->setOptions( [ 'adapteroptions' => $options['adapteroptions'] ], false );
 		}
 		return $this;
 	}
