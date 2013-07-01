@@ -18,7 +18,7 @@ $messages['en'] = array(
 
 $messages['qqq'] = array(
 	'wdacreview-tool-name' => 'Name of tool',
-	'action-wdacreview' => 'Used on access error to describe prevented action',
+	'action-wdacreview' => '{{doc-action|wdacreview}}',
 	'wdacreview-noresults' => 'Information to display when there are no results found.',
 	'wdacreview-approve' => 'An option in from approving WDAC flag for wiki',
 	'wdacreview-disapprove' => 'An option in from disapproving WDAC flag for wiki',
