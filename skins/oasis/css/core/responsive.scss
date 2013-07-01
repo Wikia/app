@@ -21,31 +21,34 @@ $width-outside-max: 1600px;
 $width-outside-max-half: $width-outside-max / 2;
 $width-padding: $width-gutter / 2;
 
-// The offset, from the left and right sides of the viewport, that the images need
-// to align correctly to the sides of the skin before the max width has been set.
-$offset-background-image: ( ( $width-background-image-half - $width-adskin ) * 2 - $width-outside ) / 2;
-
-// The width of each "slice" of the background image while the offset above is applied.
-$width-background-image-slice: $width-background-image-half - $offset-background-image;
-
-// The offset, from the left and right sides of the viewport, that the image background
-// gradient needs to align correctly to the inner edges of the slices of background images
-$offset-background-image-gradient: $width-background-image-slice - $width-background-image-gradient;
-
-// The offset, from the center of the viewport, that the images need to align correctly
-// to the side of the skin after max width has been set.
-$offset-background-image-max: $width-outside-max-half + ( $width-background-image-half - $width-outside-half );
-
-// The offset, from the center of the viewport, that the image background gradient needs to align
-// correctly to the inner edges of the slices of background images after max width has been set.
-$offset-background-image-gradient-max: $offset-background-image-max - $width-background-image-half + $width-background-image-gradient;
-
 // The fluid background will be disabled if:
-// - There is no background image (height or width are zero).
-// - The background image is tiled
+// - The background image is tiled.
+// - The background image height is zero.
+// - The background image width is less than the default skin width.
 $is-fluid-width-background-enabled: true;
-@if ( $background-tiled == true or $height-background-image == 0 or $width-background-image == 0 ) {
+@if ( $background-tiled == true or $height-background-image == 0 or $width-background-image < $width-outside ) {
 	$is-fluid-width-background-enabled: false;
+
+} @else {
+
+	// The offset, from the left and right sides of the viewport, that the images need
+	// to align correctly to the sides of the skin before the max width has been set.
+	$offset-background-image: ( ( $width-background-image-half - $width-adskin ) * 2 - $width-outside ) / 2;
+
+	// The width of each "slice" of the background image while the offset above is applied.
+	$width-background-image-slice: $width-background-image-half - $offset-background-image;
+
+	// The offset, from the left and right sides of the viewport, that the image background
+	// gradient needs to align correctly to the inner edges of the slices of background images
+	$offset-background-image-gradient: $width-background-image-slice - $width-background-image-gradient;
+
+	// The offset, from the center of the viewport, that the images need to align correctly
+	// to the side of the skin after max width has been set.
+	$offset-background-image-max: $width-outside-max-half + ( $width-background-image-half - $width-outside-half );
+
+	// The offset, from the center of the viewport, that the image background gradient needs to align
+	// correctly to the inner edges of the slices of background images after max width has been set.
+	$offset-background-image-gradient-max: $offset-background-image-max - $width-background-image-half + $width-background-image-gradient;
 }
 
 body {
