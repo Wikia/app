@@ -124,7 +124,7 @@ class RenameUserHelper {
 		$link_stats = wfMsg('phalanx-link-stats');
 
 		foreach ( $aModules as $module => $name ) {
-			$filters = Phalanx::getFromFilter( $module );
+			$filters = PhalanxFallback::getFromFilter( $module );
 			$data[$module] = array();
 
 			if ( empty( $filters ) ) {
@@ -169,5 +169,4 @@ class RenameUserHelper {
 		}
 		return $output;
 	}
-
 }
