@@ -102,6 +102,7 @@ class AdminDashboardLogic {
 				"UserSignup",
 				"Version",
 				"Videos",
+				"WDACReview",
 				"WhereIsExtension",
 				"WikiActivity",
 				"WikiaHubsV2",
