@@ -19,7 +19,7 @@
 
 <li class="result">
 	<?php
-	$suffix = $result['exactMatch'] ? "match" : "wiki";
+	$suffix = $result['exactWikiMatch'] ? "match" : "wiki";
 	$trackingData = 'class="result-link" data-pos="' . $pos . '" data-event="search_click_' . $suffix . '"';
 	?>
 	<a href="<?= $url ?>" title="<?= $title ?>" <?=
@@ -34,7 +34,7 @@
 		</h1>
 
 		<p class="hub subtle"><?= strtoupper( $result->getText( 'hub_s' ) ); ?></p>
-		<p class="description"><?= $result->getText( Wikia\Search\Utilities::field( 'description' ), 60 ) ; ?></p>
+		<p class="description"><?= $result->getText( Wikia\Search\Utilities::field( 'description' ), 60 ); ?></p>
 
 		<ul class="wiki-statistics subtle">
 			<li><?= $pagesMsg ?></li>

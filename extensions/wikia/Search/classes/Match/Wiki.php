@@ -25,7 +25,7 @@ class Wiki extends AbstractMatch
 		$service->setCrossWiki( true );
 		$service->setWikiId( $this->getId() );
 		$result = $service->getResult();
-		$result['exactMatch'] = true;
+		$result['exactWikiMatch'] = true;
 		return $result;
 	}
 }
