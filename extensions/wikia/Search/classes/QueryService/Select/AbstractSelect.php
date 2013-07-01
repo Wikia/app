@@ -32,6 +32,12 @@ abstract class AbstractSelect
 	const HL_MATCH_POSTFIX = '</span>';
 	
 	/**
+	 * Maximum number of words to use when querying solr
+	 * @var int
+	 */
+	const MAX_QUERY_WORDS = 10;
+	
+	/**
 	 * Sets max collation tries when spellchecking
 	 * @var int
 	 */
@@ -195,7 +201,7 @@ abstract class AbstractSelect
 		if ( substr_count( $queryClauses, " " ) > 0 ) {
 			$queryClauses = "({$queryClauses})"; // hell yeah i need to do this wtf
 		}
-		return sprintf( '+%s AND (%s)', $queryClauses, $this->config->getQuery()->getSolrQuery( 10 ) );
+		return sprintf( '+%s AND (%s)', $queryClauses, $this->config->getQuery()->getSolrQuery( self::MAX_QUERY_WORDS ) );
 	}
 	
 	/**
