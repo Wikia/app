@@ -27,7 +27,6 @@ $wgSpecialPages['WDACReview'] = 'WDACReviewSpecialController';
 // rights
 $wgAvailableRights[] = 'wdacreview';
 $wgGroupPermissions['util']['wdacreview'] = true;
-$wgGroupPermissions['vstf']['wdacreview'] = true;
 
 $wgGroupPermissions['wdacreviewer']['wdacreview'] = true;
 $wgGroupPermissions['wdacreviewer']['edit'] = false;
