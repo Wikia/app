@@ -1,4 +1,3 @@
-alert('loaded');
 require( ['wikia.window', 'wikia.tracker'], function( window, tracker ) {
 	var wikia = window.Wikia = window.Wikia || {};
 
