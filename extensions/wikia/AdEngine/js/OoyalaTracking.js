@@ -9,16 +9,16 @@ require( ['wikia.window', 'wikia.tracker'], function( window, tracker ) {
 	 * Call like this from flite:
 	 * window.Wikia.fliteOoyalaTracker( 'video-identifier' );
 	 *
-	 * @param {String} video Identifier for video, either title or id
+	 * @param {String} id Identifier for video, either title or id
 	 */
 
-	wikia.fliteOoyalaTracker = function( video ) {
+	wikia.fliteOoyalaTracker = function( id ) {
 		tracker.track({
 			action: 'content-begin',
 			category: 'video-player-stats',
 			label: 'ooyala',
 			trackingMethod: 'internal',
-			title: video,
+			title: id,
 			clickSource: 'ad'
 		});
 	};
