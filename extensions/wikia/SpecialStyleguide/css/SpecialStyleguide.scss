@@ -2,6 +2,7 @@
 @import "./skins/oasis/css/mixins/box-sizing";
 
 $alter-background-color: mix($color-page, #000, 90%);
+$page-width: 1024px;
 
 body {
 	background-image: none;
@@ -15,6 +16,10 @@ body {
 h1 {
 	font-size: 2.75rem;
 	line-height: 60px;
+}
+h2 {
+	font-size: 2.25rem;
+	line-height: 44px;
 }
 
 .light-font {
@@ -101,12 +106,26 @@ h1 {
 	background: -ms-linear-gradient(30deg,  mix($color-header, #000, 30%) 0%,$color-header 46%); /* IE10+ */
 	background: linear-gradient(30deg,  mix($color-header, #000, 30%) 0%,$color-header 46%); /* W3C */
 	color: $color-page;
-	text-align: center;
+
+	&.home {
+		text-align: center;
+	}
+
+	hgroup {
+		margin: 0 auto;
+		width: $page-width;
+	}
 
 	h1 {
 		font-size: 100px;
 		font-weight: bold;
 		line-height: 110px;
+		padding:80px 0 40px;
+	}
+
+	h2 {
+		font-size: 60px;
+		font-weight: bold;
 		padding:80px 0 40px;
 	}
 
@@ -138,10 +157,18 @@ h1 {
 	background-color: $alter-background-color;
 }
 
-.styleguide-home-page-body {
+.styleguide-components-page-body {
+	padding-top: 60px;
+}
+
+.styleguide-home-page-body,
+.styleguide-components-page-body {
 	margin: 0 auto;
 	overflow: hidden;
-	width: 1024px;
+	width: $page-width;
+}
+
+.styleguide-home-page-body {
 
 	section {
 		@include box-sizing();
@@ -207,5 +234,51 @@ h1 {
 		&:first-child:before {
 			content: '';
 		}
+	}
+}
+
+.styleguide-subnav {
+	border: 1px solid $color-page-border;
+	float: left;
+	margin-right: 60px;
+	width: 270px;
+	@include box-sizing();
+
+	li {
+		border-top: 1px solid $color-page-border;
+		padding: 15px;
+
+		&:first-child {
+			border-top: none;
+		}
+
+		&:hover {
+			background-color: $color-header;
+
+			a {
+				color: $color-header-text;
+			}
+		}
+
+		a {
+			display: block;
+			text-decoration: none;
+		}
+
+	}
+}
+.components {
+	float: left;
+	width: 694px
+}
+.component-item {
+	padding-bottom: 30px;
+
+	strong {
+		font-weight: bold;
+	}
+
+	p {
+		padding: 15px 0;
 	}
 }

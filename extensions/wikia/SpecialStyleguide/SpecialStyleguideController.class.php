@@ -27,7 +27,6 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 
 		$wgAutoloadClasses['GlobalHeaderController'] = dirname( __FILE__ ) . '/SpecialStyleguideGlobalHeaderControllerOverride.php';
 
-
 		$this->response->setCacheValidity(
 			86400,
 			86400,
@@ -37,13 +36,29 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 			]
 		);
 
+		$subpage = mb_strtolower( $this->getFirstTextAfterSlash( $this->wg->Title->getSubpageText() ) );
+
+		switch( $subpage ) {
+			case 'components':
+				$data = [
+					'header' => $this->getSectionContent( 'header/components' ),
+					'body' => $this->getSectionContent( 'components' ),
+					'footer' => $this->getSectionContent( 'footer' ),
+				];
+				break;
+			default:
+				$data = [
+					'header' => $this->getSectionContent( 'header' ),
+					'body' => $this->getSectionContent( 'home' ),
+					'footer' => $this->getSectionContent( 'footer' ), 
+				];
+				break;
+		}
+
 		$this->wg->Out->clearHTML();
 		$this->wg->Out->addHtml( ( new Wikia\Template\MustacheEngine )
 			->setPrefix( dirname( __FILE__ ) . '/templates' )
-			->setData( [
-				'header' => $this->getSectionContent( 'header' ),
-				'body' => $this->getSectionContent( 'home' ),
-				'footer' => $this->getSectionContent( 'footer' ), ] )
+			->setData( $data )
 			->render( 'SpecialStyleguide_index.mustache' )
 		);
 
@@ -53,6 +68,11 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 		$this->skipRendering();
 	}
 
+	private function getFirstTextAfterSlash( $subpageText ) {
+		$supageArr = explode( '/', $subpageText );
+		return ( !empty($supageArr[1]) ) ? $supageArr[1] : '';
+	}
+
 	/**
 	 * Returns rendered content of section given as param
 	 *
@@ -60,9 +80,12 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 	 * @return string
 	 */
 	public function getSectionContent( $sectionName ) {
+		$sectionArray = explode( '/', $sectionName );
+		$templateSectionName = $sectionArray[0];
+		
 		return ( new Wikia\Template\MustacheEngine )
 			->setPrefix( dirname( __FILE__ ) . '/templates' )
-			->setData( $this->model->getSectionData( $sectionName ) )
-			->render( 'SpecialStyleguide_' . $sectionName . '.mustache' );
+			->setData( $this->model->getPartOfSectionData( $sectionArray ) )
+			->render( 'SpecialStyleguide_' . $templateSectionName . '.mustache' );
 	}
 }
