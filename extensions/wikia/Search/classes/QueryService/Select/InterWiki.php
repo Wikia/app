@@ -29,10 +29,16 @@ class InterWiki extends AbstractSelect
 	);
 	
 	/**
+	 * Uses the xwiki core, where a wiki is a document.
+	 * @var string
+	 */
+	protected $core = 'xwiki';
+	
+	/**
 	 * Default time allowed for a query.
 	 * @var int
 	 */
-	protected $timeAllowed = 7500;
+	protected $timeAllowed = 1000;
 	
 	/**
 	 * Reuses AbstractSelect's extractWikiMatch as the primary match method

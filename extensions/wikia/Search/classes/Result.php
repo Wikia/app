@@ -54,11 +54,20 @@ class Result extends ReadWrite {
 	 * Defaults to "text", which we set from highlighting for certain searches.
 	 * @see    WikiaSearchResultTest::testTextFieldMethods
 	 * @param string|null $field allows us to assert the value must be text, not an array
+	 * @param int|null $wordLimit allows us to ellipsize
 	 * @return string
 	 */
-	public function getText( $field = 'text' ) {
+	public function getText( $field = 'text', $wordLimit = null ) {
 		$text = isset( $this->_fields[$field] ) ? $this->_fields[$field] : '';
-		return is_array( $text ) ? implode( " ", $text ) : $text; 
+		$textAsString = is_array( $text ) ? implode( " ", $text ) : $text;
+		if ( $wordLimit !== null ) {
+			$wordsExploded = explode( ' ', $textAsString );
+			$textAsString = implode( ' ', array_slice( $wordsExploded, 0, $wordLimit ) );
+			if ( count( $wordsExploded ) > $wordLimit ) {
+				$textAsString .= "&hellip;";
+			} 
+		}
+		return $textAsString;
 	}
 
 	/**

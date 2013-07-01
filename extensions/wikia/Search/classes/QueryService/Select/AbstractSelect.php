@@ -115,6 +115,8 @@ abstract class AbstractSelect
 	 */
 	public function __construct( DependencyContainer $container ) {
 		$this->client = $container->getClient();
+		// this initializes the core assigned to the queryservice by default
+		$this->setCore( $this->core );
 		$this->config = $container->getConfig();
 		$this->resultSetFactory = $container->getResultSetFactory();
 		$this->service = $container->getService();
@@ -428,19 +430,16 @@ abstract class AbstractSelect
 	}
 	
 	/**
-	 * Allows us to set the search core on the query service. This should be refactored out somehow.
+	 * This allows both internal and external manipulation of the specific core being queried by this service.
+	 * There is probably a better way to do this, but this is the least disruptive way to handle this somewhat circular dependency.
 	 * @param string $core
 	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	public function setCore( $core ) {
-		$oldCore = $this->core;
 		$this->core = $core;
-		if ( $this->core !== $oldCore ) {
-			global $wgSolrProxy;
-			$options = $this->client->getOptions();
-			$options['adapteroptions']['path'] = '/solr/'.$this->core;
-			$this->client->setOptions( [ 'adapteroptions' => $options['adapteroptions'] ], false );
-		}
+		$options = $this->client->getOptions();
+		$options['adapteroptions']['path'] = '/solr/'.$this->core;
+		$this->client->setOptions( $options, true );
 		return $this;
 	}
 	
