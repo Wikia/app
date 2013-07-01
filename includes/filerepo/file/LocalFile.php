@@ -227,7 +227,16 @@ class LocalFile extends File {
 			}
 		}
 
-		$wgMemc->set( $key, $cache, 60 * 60 * 24 * 7 ); // A week
+		/* Wikia Change Start @author garthwebb
+		   Limit the amount of time we cache non-existent files
+		*/
+		if ( $cache['fileExists'] ) {
+			$ttl = 60 * 60 * 24 * 7; // A week
+		} else {
+			$ttl = 60; // 1 minute
+		}
+		$wgMemc->set( $key, $cache, $ttl );
+		/* Wikia Change End */
 	}
 
 	/**
@@ -277,6 +286,9 @@ class LocalFile extends File {
 		if ( $row ) {
 			$this->loadFromRow( $row );
 		} else {
+			/* Wikia Change Start @author garthwebb */
+			Wikia::Log(__METHOD__, false, "Setting fileExists to false for '".$this->getName()."'");
+			/* Wikia Change End */
 			$this->fileExists = false;
 		}
 
@@ -466,6 +478,7 @@ class LocalFile extends File {
 		if ( $this->missing === null ) {
 			/* Wikia Change Start @author marzjan */
 			$fileExists = $this->repo->fileExists( $this->getVirtualUrl(), FileRepo::FILES_ONLY );
+			Wikia::Log(__METHOD__, false, "Setting fileExists to false for '".$this->getVirtualUrl()."'");
 			/* Wikia Change End */
 			$this->missing = !$fileExists;
 		}
