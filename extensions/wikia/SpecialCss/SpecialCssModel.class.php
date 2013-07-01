@@ -57,9 +57,16 @@ class SpecialCssModel extends WikiaModel {
 	 * 
 	 * @return Return|string
 	 */
-	public function getCssFileContent() {
+	public function getCssFileInfo() {
+		$out = false;
 		$cssArticle = $this->getCssFileArticle( $this->getCssFileArticleId() );
-		return ($cssArticle instanceof Article) ? $cssArticle->getContent() : '';
+		if ($cssArticle instanceof Article) {
+			$out = [
+				'content' => $cssArticle->getContent(),
+				'lastEditTimestamp' => $cssArticle->getTimestamp()
+			];
+		}
+		return $out;
 	}
 
 	/**
@@ -142,14 +149,17 @@ class SpecialCssModel extends WikiaModel {
 
 	/**
 	 * @desc Saving CSS content
+	 * If there is more recent edit it will try to merge text and save.
+	 * Returns false when conflict is found and cannot be resolved
 	 *
 	 * @param string $content
 	 * @param string $summary
 	 * @param bool $isMinor
+	 * @param int $editTime timestamp
 	 * @param User $user
-	 * @return bool if saving was successful
+	 * @return Status|bool
 	 */
-	public function saveCssFileContent($content, $summary, $isMinor, $user) {
+	public function saveCssFileContent($content, $summary, $isMinor, $editTime, $user) {
 		$cssTitle = $this->getCssFileTitle();
 		$flags = 0;
 		if ( $cssTitle instanceof Title) {
@@ -158,7 +168,39 @@ class SpecialCssModel extends WikiaModel {
 			if ( $isMinor ) {
 				$flags |= EDIT_MINOR;
 			}
-			$article = new Article($cssTitle);
+
+			$db = wfGetDB( DB_MASTER );
+			$currentRevision = Revision::loadFromTitle( $db, $cssTitle );
+
+			// we handle both - edit and creation conflicts below
+			if ( !empty( $currentRevision ) && ( $editTime != $currentRevision->getTimestamp() ) ) {
+				$result = '';
+				$currentText = $currentRevision->getText();
+
+				if ( !$editTime ) {
+					// the css did not exist when the editor was started, so the base revision for
+					// parallel edits is an empty file
+					$baseText = '';
+				} else {
+					$baseText = Revision::loadFromTimestamp(
+						$db,
+						$this->getCssFileTitle(),
+						$editTime
+					)->getText();
+				}
+
+				// remove windows endlines from input before merging texts
+				$content = str_replace("\r", "", $content);
+
+				if (wfMerge( $baseText, $content, $currentText, $result )) {
+					// This conflict can be resolved
+					$content = $result;
+				} else {
+					// We have real conflict here
+					return false;
+				}
+			}
+			$article = new Article( $cssTitle );
 			$status = $article->doEdit($content, $summary, $flags, false, $user);
 			return $status;
 		}

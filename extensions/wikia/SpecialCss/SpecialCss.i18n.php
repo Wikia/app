@@ -25,6 +25,7 @@ $messages['en'] = [
 	'special-css-diff-modal-title' => 'Changes',
 
 	'special-css-saving-internal-error' => 'Error while saving content.',
+	'special-css-merge-error' => "'''Warning!''' Someone else has changed this page since you started editing it!",
 	'special-css-save-message' => 'Your changes to wikia.css have been saved.',
 	'special-css-oldid-message' => 'You are editing an old version of this page. If you save it, any changes made since this version will be lost.',
 
@@ -36,7 +37,9 @@ $messages['en'] = [
 	'special-css-education-item-help-paragraph' => 'Guides and best practices for using custom CSS.',
 	'special-css-education-item-com-center-header' => 'Got questions?',
 	'special-css-education-item-com-center-link-title' => 'Got questions?',
-	'special-css-education-item-com-center-paragraph' => 'Get CSS help from other Wikia users.'
+	'special-css-education-item-com-center-paragraph' => 'Get CSS help from other Wikia users.',
+
+	'special-css-leaveconfirm-message' => 'You have made some unpublished edits. Are you sure you want to leave without publishing them?',
 ];
 
 $messages['pl'] = [
@@ -93,6 +96,7 @@ $messages['qqq'] = [
 	'special-css-diff-modal-title' => 'Title for modal with actual changes in css file',
 
 	'special-css-saving-internal-error' => 'Error message after publish button informing user that there were some problems while saving css file content',
+	'special-css-merge-error' => "Error message after publish button informing user that some else edited this article and there is a conflict.",
 	'special-css-save-message' => 'Notification message at the top of page that says that Css content was saved',
 	'special-css-oldid-message' => 'Notification message at the top of page that says that you are editing old version of content and when you save it all changes made since that version will be lost.',
 
@@ -106,4 +110,6 @@ $messages['qqq'] = [
 	'special-css-education-item-com-center-link-title' => 'Short message apearing next to the mouse cursor after hovering header which is a link to Community Center',
 	'special-css-education-item-com-center-paragraph' => 'Short paragraph describing what is the link to Community
 	Center about',
+
+	'special-css-leaveconfirm-message' => 'Message that is displayed when you are leaving page with not saved changes. Message should ask if user is sure that he want to leave the page.',
 ];

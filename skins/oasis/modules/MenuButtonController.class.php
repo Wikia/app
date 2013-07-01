@@ -150,6 +150,9 @@ class MenuButtonController extends WikiaController {
 
 		if ( $this->actionName == 'submit' ) {
 			$data['class'] = 'wikia-menu-button-submit';
+			if ( empty($action['class']) ) {
+				$action['class'] = '';
+			}
 		}
 
 		if(!empty($data['class'])) {

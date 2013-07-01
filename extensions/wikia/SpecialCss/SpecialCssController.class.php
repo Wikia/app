@@ -16,32 +16,41 @@ class SpecialCssController extends WikiaSpecialPageController {
 		
 		if( $this->checkPermissions() ) {
 			$this->displayRestrictionError();
+			wfProfileOut(__METHOD__);
 			return false; // skip rendering
 		}
 
 		$model = $this->getModel();
-		$this->cssContent = $model->getCssFileContent();
+		$this->cssFileInfo = $model->getCssFileInfo();
 
 		if ($this->request->wasPosted()) {
-			$content = $this->request->getVal('cssContent', '');
-			$status = $model->saveCssFileContent(
-				$content,
-				$this->request->getVal('editSummary', ''),
-				$this->request->getVal('minorEdit', '') != '',
-				$this->wg->user
-			);
-			
-			if ($status->isOk()) {
-				NotificationsController::addConfirmation( wfMessage('special-css-save-message')->plain() );
-				$this->wg->Out->redirect($this->specialPage->getTitle()->getLocalURL());
-				return;
-			} else {
-				NotificationsController::addConfirmation(
-					$status->getMessage(),
-					NotificationsController::CONFIRMATION_ERROR
+				$content = $this->request->getVal('cssContent', '');
+				$status = $model->saveCssFileContent(
+					$content,
+					$this->request->getVal('editSummary', ''),
+					$this->request->getVal('minorEdit', '') != '',
+					$this->request->getVal('lastEditTimestamp', false),
+					$this->wg->user
 				);
-				$this->cssContent = $content;
-			}
+
+				if (!$status) {
+					NotificationsController::addConfirmation(
+						wfMessage('special-css-merge-error')->plain(),
+						NotificationsController::CONFIRMATION_ERROR
+					);
+					$this->diff = $this->app->sendRequest(__CLASS__, 'getDiff', ['wikitext' => $content])->getVal('diff');
+				} else if ($status->isOk()) {
+					NotificationsController::addConfirmation( wfMessage('special-css-save-message')->plain() );
+					$this->wg->Out->redirect($this->specialPage->getTitle()->getLocalURL());
+					wfProfileOut(__METHOD__);
+					return;
+				} else {
+					NotificationsController::addConfirmation(
+						$status->getMessage(),
+						NotificationsController::CONFIRMATION_ERROR
+					);
+					$this->cssContent = $content;
+				}
 		}
 
 		if ($this->request->getVal('oldid', null) !== null) {

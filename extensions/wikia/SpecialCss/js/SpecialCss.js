@@ -1,12 +1,16 @@
 $(function() {
 	require(['ace/ace'], function(ace) {
+		var disableBeforeUnload = false;
 		var EDITOR_BOTTOM_MARGIN = 10;
 
 		ace.config.set("workerPath", aceScriptsPath);
 
 		var editor = ace.edit("cssEditorContainer");
 		editor.setTheme("ace/theme/geshi");
-		editor.getSession().setMode("ace/mode/css");
+		var editorSession = editor.getSession();
+		editorSession.setMode("ace/mode/css");
+
+		var editorInitContent = editorSession.getValue();
 
 		var heightUpdateFunction = function() {
 			var editorContainer = $('#cssEditorContainer'),
@@ -24,10 +28,11 @@ $(function() {
 		heightUpdateFunction();
 
 		$('#cssEditorForm').submit(function() {
+			disableBeforeUnload = true;
 			var hiddenInput = $('<input/>')
 				.attr('type', 'hidden')
 				.attr('name', 'cssContent')
-				.val(editor.getSession().getValue());
+				.val(editorSession.getValue());
 			$(this).append(hiddenInput);
 		});
 
@@ -55,6 +60,12 @@ $(function() {
 			};
 			$.showModal($.msg('special-css-diff-modal-title'), content, options);
 			return false;
+		});
+
+		$(window).bind('beforeunload', function(event) {
+			if (!disableBeforeUnload && editorInitContent != editorSession.getValue()) {
+				return $.msg('special-css-leaveconfirm-message');
+			}
 		});
 	});
 });
