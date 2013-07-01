@@ -227,16 +227,7 @@ class LocalFile extends File {
 			}
 		}
 
-		/* Wikia Change Start @author garthwebb
-		   Limit the amount of time we cache non-existent files
-		*/
-		if ( $cache['fileExists'] ) {
-			$ttl = 60 * 60 * 24 * 7; // A week
-		} else {
-			$ttl = 60; // 1 minute
-		}
-		$wgMemc->set( $key, $cache, $ttl );
-		/* Wikia Change End */
+		$wgMemc->set( $key, $cache, 60 * 60 * 24 * 7 ); // A week
 	}
 
 	/**
@@ -478,7 +469,8 @@ class LocalFile extends File {
 		if ( $this->missing === null ) {
 			/* Wikia Change Start @author marzjan */
 			$fileExists = $this->repo->fileExists( $this->getVirtualUrl(), FileRepo::FILES_ONLY );
-			Wikia::Log(__METHOD__, false, "Setting fileExists to false for '".$this->getVirtualUrl()."'");
+
+			Wikia::Log(__METHOD__, false, "Setting fileExists to ".($fileExists ? 'true' : 'false')." for '".$this->getVirtualUrl()."'");
 			/* Wikia Change End */
 			$this->missing = !$fileExists;
 		}
