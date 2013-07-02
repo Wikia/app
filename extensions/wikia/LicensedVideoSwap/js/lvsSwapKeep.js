@@ -76,6 +76,13 @@ define( 'lvs.swapkeep', [
 			content: msg,
 			onOk: function() {
 				doRequest();
+
+				// Track click on okay button
+				tracker.track( {
+					action: tracker.CONFIRM,
+					label: isSwap ? tracker.SWAP : tracker.KEEP
+				} );
+
 			},
 			width: 700
 		});

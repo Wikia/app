@@ -65,6 +65,12 @@ define( 'lvs.undo', [ 'wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lv
 				content: msg,
 				onOk: function() {
 					doRequest();
+
+					// Track click on okay button
+					tracker.track( {
+						action: tracker.CONFIRM,
+						label: tracker.UNDO
+					} );
 				},
 				width: 700
 			});

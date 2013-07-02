@@ -17,7 +17,8 @@ define( 'lvs.tracker', [ 'wikia.tracker' ], function( tracker ) {
 		SUGGESTIONS: 'more-suggestions',
 		PLAY: tracker.ACTIONS.PLAY_VIDEO,
 		SUCCESS: tracker.ACTIONS.SUCCESS,
-		CLICK: tracker.ACTIONS.CLICK
+		CLICK: tracker.ACTIONS.CLICK,
+		CONFIRM: tracker.ACTIONS.CONFIRM
 	};
 
 } );
