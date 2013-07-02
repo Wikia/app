@@ -278,7 +278,8 @@ class LocalFile extends File {
 			$this->loadFromRow( $row );
 		} else {
 			/* Wikia Change Start @author garthwebb */
-			Wikia::Log(__METHOD__, false, "Setting fileExists to false for '".$this->getName()."'");
+			$info = 'URI: '.$_SERVER["REQUEST_URI"].' - REF: '.$_SERVER['HTTP_REFERER'];
+			Wikia::Log(__METHOD__, false, "[$info] Setting fileExists to false for '".$this->getName()."'");
 			/* Wikia Change End */
 			$this->fileExists = false;
 		}
@@ -470,7 +471,8 @@ class LocalFile extends File {
 			/* Wikia Change Start @author marzjan */
 			$fileExists = $this->repo->fileExists( $this->getVirtualUrl(), FileRepo::FILES_ONLY );
 
-			Wikia::Log(__METHOD__, false, "Setting fileExists to ".($fileExists ? 'true' : 'false')." for '".$this->getVirtualUrl()."'");
+			$info = 'URI: '.$_SERVER["REQUEST_URI"].' - REF: '.$_SERVER['HTTP_REFERER'];
+			Wikia::Log(__METHOD__, false, "[$info] Setting fileExists to ".($fileExists ? 'true' : 'false')." for '".$this->getVirtualUrl()."'");
 			/* Wikia Change End */
 			$this->missing = !$fileExists;
 		}
