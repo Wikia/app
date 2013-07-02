@@ -22,8 +22,8 @@ define( 'lvs.suggestions', [ 'lvs.tracker' ], function( tracker ) {
 				$this.addClass( 'expanded' );
 				$toggleDiv.slideDown();
 				tracker.track({
-					action: tracker.CLICK,
-					label: tracker.SUGGESTIONS
+					action: tracker.actions.CLICK,
+					label: tracker.labels.SUGGESTIONS
 				});
 			}
 

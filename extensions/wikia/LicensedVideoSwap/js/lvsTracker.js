@@ -9,16 +9,20 @@ define( 'lvs.tracker', [ 'wikia.tracker' ], function( tracker ) {
 			trackingMethod: 'ga',
 			value: 0
 		}),
-		KEEP: 'keep',
-		SWAP: 'swap',
-		UNDO: 'undo',
-		PREMIUM: 'premium',
-		NON_PREMIUM: 'non-premium',
-		SUGGESTIONS: 'more-suggestions',
-		PLAY: tracker.ACTIONS.PLAY_VIDEO,
-		SUCCESS: tracker.ACTIONS.SUCCESS,
-		CLICK: tracker.ACTIONS.CLICK,
-		CONFIRM: tracker.ACTIONS.CONFIRM
+		labels: {
+			KEEP: 'keep',
+			SWAP: 'swap',
+			UNDO: 'undo',
+			PREMIUM: 'premium',
+			NON_PREMIUM: 'non-premium',
+			SUGGESTIONS: 'more-suggestions'
+		},
+		actions: {
+			PLAY: tracker.ACTIONS.PLAY_VIDEO,
+			SUCCESS: tracker.ACTIONS.SUCCESS,
+			CLICK: tracker.ACTIONS.CLICK,
+			CONFIRM: tracker.ACTIONS.CONFIRM
+		}
 	};
 
 } );

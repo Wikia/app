@@ -30,11 +30,11 @@ define( 'lvs.swapkeep', [
 				sort: qs.getVal( 'sort', 'recent' ),
 				currentPage: qs.getVal( 'currentPage', 1 )
 			},
-			trackingLabel = tracker.KEEP;
+			trackingLabel = tracker.labels.KEEP;
 
 		if ( isSwap ) {
 			data.newTitle = newTitle;
-			trackingLabel = tracker.SWAP;
+			trackingLabel = tracker.labels.SWAP;
 		}
 
 		nirvana.sendRequest({
@@ -79,10 +79,9 @@ define( 'lvs.swapkeep', [
 
 				// Track click on okay button
 				tracker.track({
-					action: tracker.CONFIRM,
-					label: isSwap ? tracker.SWAP : tracker.KEEP
+					action: tracker.actions.CONFIRM,
+					label: isSwap ? tracker.labels.SWAP : tracker.labels.KEEP
 				});
-
 			},
 			width: 700
 		});
@@ -115,8 +114,8 @@ define( 'lvs.swapkeep', [
 
 					// Track click action
 					tracker.track({
-						action: tracker.CLICK,
-						label: tracker.SWAP
+						action: tracker.actions.CLICK,
+						label: tracker.labels.SWAP
 					});
 				}
 				// Keep button clicked
@@ -128,8 +127,8 @@ define( 'lvs.swapkeep', [
 
 				// Track click action
 				tracker.track({
-					action: tracker.CLICK,
-					label: tracker.KEEP
+					action: tracker.actions.CLICK,
+					label: tracker.labels.KEEP
 				});
 			}
 		});

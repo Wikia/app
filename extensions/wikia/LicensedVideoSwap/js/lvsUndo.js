@@ -26,7 +26,7 @@ define( 'lvs.undo', [ 'wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lv
 			},
 			callback: function( data ) {
 				// send info to common success method: response data and tracking label
-				commonAjax.success( data, tracker.UNDO );
+				commonAjax.success( data, tracker.labels.UNDO );
 			},
 			onErrorCallback: function() {
 				commonAjax.failure();
@@ -68,16 +68,16 @@ define( 'lvs.undo', [ 'wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lv
 
 					// Track click on okay button
 					tracker.track({
-						action: tracker.CONFIRM,
-						label: tracker.UNDO
+						action: tracker.actions.CONFIRM,
+						label: tracker.labels.UNDO
 					});
 				},
 				width: 700
 			});
 
 			tracker.track({
-				action: tracker.CLICK,
-				label: tracker.UNDO
+				action: tracker.actions.CLICK,
+				label: tracker.labels.UNDO
 			});
 		});
 	}

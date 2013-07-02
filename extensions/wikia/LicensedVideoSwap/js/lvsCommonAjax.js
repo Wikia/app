@@ -37,7 +37,7 @@ define( 'lvs.commonajax', ['wikia.window', 'lvs.tracker'], function( window, tra
 			stopLoadingGraphic();
 
 			tracker.track({
-				action: tracker.SUCCESS,
+				action: tracker.actions.SUCCESS,
 				label: trackingLabel
 			});
 		}
