@@ -38,6 +38,9 @@
 				// Generic close
 				CLOSE: 'close',
 
+				// Clicking okay in a confirmation modal
+				CONFIRM: 'confirm',
+
 				// Generic hover
 				HOVER: 'hover',
 
@@ -64,6 +67,9 @@
 
 				// Form submit, usually a post method
 				SUBMIT: 'submit',
+
+				// Successful ajax response
+				SUCCESS: 'success',
 
 				// General swipe event
 				SWIPE: 'swipe',

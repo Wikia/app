@@ -6,8 +6,9 @@ define( 'lvs.swapkeep', [
 	'lvs.commonajax',
 	'lvs.videocontrols',
 	'jquery',
-	'wikia.nirvana'
-], function( QueryString, commonAjax, videoControls, $, nirvana ) {
+	'wikia.nirvana',
+	'lvs.tracker'
+], function( QueryString, commonAjax, videoControls, $, nirvana, tracker ) {
 	"use strict";
 
 	var $parent,
@@ -17,27 +18,23 @@ define( 'lvs.swapkeep', [
 		$container,
 		isSwap,
 		currTitle,
-		newTitle,
-		qs,
-		sort,
-		page;
+		newTitle;
 
 	function doRequest(){
 		// Add loading graphic
 		commonAjax.startLoadingGraphic();
 
-		qs = new QueryString();
-		sort = qs.getVal( 'sort', 'recent' );
-		page = qs.getVal( 'currentPage', 1);
-
-		var data = {
-			videoTitle: currTitle,
-			sort: sort,
-			currentPage: page
-		};
+		var qs = new QueryString(),
+			data = {
+				videoTitle: currTitle,
+				sort: qs.getVal( 'sort', 'recent' ),
+				currentPage: qs.getVal( 'currentPage', 1 )
+			},
+			trackingLabel = tracker.labels.KEEP;
 
 		if ( isSwap ) {
 			data.newTitle = newTitle;
+			trackingLabel = tracker.labels.SWAP;
 		}
 
 		nirvana.sendRequest({
@@ -45,7 +42,7 @@ define( 'lvs.swapkeep', [
 			method: isSwap ? 'swapVideo' : 'keepVideo',
 			data: data,
 			callback: function( data ) {
-				commonAjax.success( $container, data);
+				commonAjax.success( data, trackingLabel );
 			},
 			onErrorCallback: function() {
 				commonAjax.failure();
@@ -79,14 +76,21 @@ define( 'lvs.swapkeep', [
 			content: msg,
 			onOk: function() {
 				doRequest();
+
+				// Track click on okay button
+				tracker.track({
+					action: tracker.actions.CONFIRM,
+					label: isSwap ? tracker.labels.SWAP : tracker.labels.KEEP
+				});
 			},
 			width: 700
 		});
 	}
 
 	function init( $elem ) {
-		// Event listener for interacting with buttons
 		$container = $elem;
+
+		// Event listener for interacting with buttons
 		$container.on( 'mouseover mouseout click', '.swap-button, .keep-button', function( e ) {
 			$button = $( this );
 
@@ -107,6 +111,12 @@ define( 'lvs.swapkeep', [
 					newTitle = decodeURIComponent( $button.attr( 'data-video-swap' ) );
 					currTitle = decodeURIComponent( $row.find( '.keep-button' ).attr( 'data-video-keep' ) );
 					confirmModal();
+
+					// Track click action
+					tracker.track({
+						action: tracker.actions.CLICK,
+						label: tracker.labels.SWAP
+					});
 				}
 				// Keep button clicked
 			} else if ( e.type == 'click' ) {
@@ -114,6 +124,12 @@ define( 'lvs.swapkeep', [
 				// no new title b/c we're keeping the current video
 				newTitle = '';
 				confirmModal();
+
+				// Track click action
+				tracker.track({
+					action: tracker.actions.CLICK,
+					label: tracker.labels.KEEP
+				});
 			}
 		});
 	}
