@@ -12,7 +12,6 @@
 class PhalanxAnswersBlock extends WikiaObject {
 	function __construct() {
 		parent::__construct();
-		F::setInstance( __CLASS__, $this );
 	}
 	
 	/**
