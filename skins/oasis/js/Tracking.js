@@ -312,6 +312,7 @@ jQuery(function($){
 
 	(function() {
 		var category = 'search',
+			suggestionShowed = false,
 			$wikiaSearch = $('.WikiaSearch');
 
 		$wikiaSearch.on('mousedown', '.autocomplete', {
@@ -327,9 +328,10 @@ jQuery(function($){
 			}
 		}).on('keypress', '[name=search]', function(e) {
 			if ( e.which === 13 && $(this).is(':focus') ) {
+				var label = (!suggestionShowed) ? 'search-enter' : 'search-after-suggestion-enter';
 				track({
 					category: category,
-					label: 'search-enter'
+					label: label
 				});
 			}
 		}).on('suggestEnter', {
@@ -339,7 +341,11 @@ jQuery(function($){
 			action: Wikia.Tracker.ACTIONS.VIEW,
 			category: category,
 			label: 'search-suggest-show'
-		}, trackWithEventData);
+		}, function(e) {
+				suggestionShowed = true;
+				trackWithEventData(e);
+			}
+		);
 
 		if ($body.hasClass('page-Special_Search')) {
 			category = 'special-' + category;
