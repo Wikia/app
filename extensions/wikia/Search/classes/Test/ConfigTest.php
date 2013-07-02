@@ -1556,7 +1556,7 @@ class ConfigTest extends BaseTest {
 		$config
 		    ->expects( $this->once() )
 		    ->method ( 'getWikiId' )
-		    ->will   ( $this->returnValue( \Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID ) )
+		    ->will   ( $this->returnValue( \Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID ) )
 		;
 		$config
 		    ->expects( $this->once() )
@@ -1570,7 +1570,7 @@ class ConfigTest extends BaseTest {
 		    ->will   ( $this->returnValue( false ) )
 		;
 		$this->assertEquals(
-				'Select\\Video',
+				'Select\\Dismax\\Video',
 				$bs->invoke( $config )
 		);
 	}
