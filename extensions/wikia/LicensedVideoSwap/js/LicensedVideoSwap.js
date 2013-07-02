@@ -1,13 +1,14 @@
 require( [
 	'jquery',
 	'lvs.callout',
+	'lvs.commonajax',
 	'lvs.dropdown',
 	'lvs.ellipses',
 	'lvs.swapkeep',
 	'lvs.undo',
 	'lvs.videocontrols',
 	'lvs.suggestions'
-], function( $, callout, dropdown, ellipses, swapkeep, undo, videoControls, suggestions ) {
+], function( $, callout, commonAjax, dropdown, ellipses, swapKeep, undo, videoControls, suggestions ) {
 
 	"use strict";
 
@@ -16,8 +17,9 @@ require( [
 
 		callout.init();
 		dropdown.init();
+		commonAjax.init( $container );
 		ellipses.init( $container );
-		swapkeep.init( $container );
+		swapKeep.init( $container );
 		undo.init( $container );
 		videoControls.init( $container );
 		suggestions.init( $container );
