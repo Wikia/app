@@ -4,7 +4,7 @@ define( 'lvs.tracker', [ 'wikia.tracker' ], function( tracker ) {
 
 	// LVS constants.  Note: we may want to make this its own module.
 	return {
-		track: Wikia.Tracker.buildTrackingFunction({
+		track: tracker.buildTrackingFunction({
 			category: 'lvs',
 			trackingMethod: 'ga',
 			value: 0
@@ -12,12 +12,12 @@ define( 'lvs.tracker', [ 'wikia.tracker' ], function( tracker ) {
 		KEEP: 'keep',
 		SWAP: 'swap',
 		UNDO: 'undo',
-		PLAY: 'play-video',
-		SUCCESS: 'success',
-		CLICK: 'click',
 		PREMIUM: 'premium',
 		NON_PREMIUM: 'non-premium',
-		SUGGESTIONS: 'more-suggestions'
+		SUGGESTIONS: 'more-suggestions',
+		PLAY: tracker.ACTIONS.PLAY_VIDEO,
+		SUCCESS: tracker.ACTIONS.SUCCESS,
+		CLICK: tracker.ACTIONS.CLICK
 	};
 
 } );
