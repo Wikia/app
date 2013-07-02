@@ -294,12 +294,14 @@ class SpecialCssModel extends WikiaModel {
 		];
 
 		$pageId = $postData['pageid'];
-		$blogTitle = GlobalTitle::newFromText( $postData['title'], NS_MAIN, WikiFactory::COMMUNITY_CENTRAL );
+		$communityWikiId = WikiFactory::DBtoID( $this->getCommunityDbName() );
+		
+		$blogTitle = GlobalTitle::newFromText( $postData['title'], NS_MAIN, $communityWikiId );
 		$blogTitleText = $blogTitle->getText();
 
 		$lastRevisionUser = $cssRevisionsData[$pageId]['revisions'][0]['user'];
 		$blogUser = $this->getUserFromTitleText( $blogTitleText, $lastRevisionUser);
-		$userPage = GlobalTitle::newFromText( $blogUser, NS_USER, WikiFactory::COMMUNITY_CENTRAL );
+		$userPage = GlobalTitle::newFromText( $blogUser, NS_USER, $communityWikiId );
 
 		if( $blogTitle instanceof GlobalTitle && $userPage instanceof GlobalTitle ) {
 			$timestamp = $cssRevisionsData[$pageId]['revisions'][0]['timestamp'];
