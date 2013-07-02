@@ -34,7 +34,7 @@ class WikisApiController extends WikiaApiController {
 	 * Get the top wikis by pageviews optionally filtering by vertical (hub) and/or language
 	 *
 	 * @requestParam string $hub [OPTIONAL] The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) to use as a filter
-	 * @requestParam string $lang [OPTIONAL] The language code (e.g. en, de, fr, es, it, etc.) to use as a filter
+	 * @requestParam string $lang [OPTIONAL] The comma-separated list of language codes (e.g. en,de,fr,es,it, etc.) to use as a filter
 	 * @requestParam integer $limit [OPTIONAL] The maximum number of results to fetch, defaults to 25
 	 * @requestParam integer $batch [OPTIONAL] The batch/page index to retrieve, defaults to 1
 	 *
