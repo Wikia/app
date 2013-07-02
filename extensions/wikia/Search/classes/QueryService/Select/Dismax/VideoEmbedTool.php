@@ -13,7 +13,7 @@ class VideoEmbedTool extends Video
 	 * Here, we overwrite the normal behavior of getFormulatedQuery to search for wiki TOPIC instead of the query
 	 * @return string
 	 */
-	protected function getFormulatedQuery() {
+	protected function getQuery() {
 	  return sprintf( '+(%s) AND ( +(%s)^1000 AND +(%s)^2000 )', $this->getQueryClausesString(), $this->getTopicsAsQuery(), $this->getTransformedQuery() );
 	}
 	

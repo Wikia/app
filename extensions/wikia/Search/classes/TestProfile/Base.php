@@ -55,7 +55,10 @@ class Base
 			'backlinks_txt'         => 25,
 			'title_en'              => 100,
 			'html_en'               => 5,
-			'redirect_titles_mv_en' => 50
+			'redirect_titles_mv_en' => 50,
+			'video_actors_txt'      => 100,
+			'video_genres_txt'      => 50,
+			'html_media_extras_txt' => 80
 			];
 	
 	/**

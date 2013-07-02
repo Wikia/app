@@ -46,26 +46,4 @@ class Video extends OnWiki
 	
 	// skipping boost functions
 	protected $boostFunctions = array();
-	
-	/**
-	 * Video wiki requires english field search
-	 * @see \Wikia\Search\QueryService\Select\OnWiki::configureQueryFields()
-	 */
-	protected function configureQueryFields() {
-		if ( $this->service->getLanguageCode() !== 'en' ) {
-			$this->config->addQueryFields( array(
-					Utilities::field( 'title', 'en' )           => 100, 
-					Utilities::field( 'html', 'en' )            => 5, 
-					Utilities::field( 'redirect_titles', 'en' ) => 50
-					));
-		}
-		$this->config->addQueryFields( 
-				[ 'video_actors_txt' => 100, 'video_genres_txt' => 50, 'html_media_extras_txt' => 80 ]
-		);
-		return $this;
-	}
-	
-	protected function getBoostQueryString() {
-		return '';
-	}
 }

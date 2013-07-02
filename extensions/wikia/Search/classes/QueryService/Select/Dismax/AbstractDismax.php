@@ -43,8 +43,8 @@ class AbstractDismax extends AbstractSelect
 				->setPhraseSlop			( 3 )
 				->setTie				( 0.01 )
 			;
-			if (! $this->config->getSkipBoostFunctions()  ) {
-			    $dismax->setBoostFunctions( implode(' ', $this->boostFunctions ) );
+			if ( (! $this->config->getSkipBoostFunctions() ) && (! empty( $this->boostFunctions ) ) ) {
+				$dismax->setBoostFunctions( implode(' ', $this->boostFunctions ) );
 			}
 		}
 		return $this;
