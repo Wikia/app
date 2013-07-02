@@ -11,7 +11,6 @@ class PhalanxUserBlock extends WikiaObject {
 	private static $checkEmail = false;
 	function __construct(){
 		parent::__construct();
-		F::setInstance( __CLASS__, $this );
 	}
 	
 	/**

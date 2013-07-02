@@ -14,7 +14,6 @@
 class PhalanxTitleBlock extends WikiaObject {
 	function __construct() {
 		parent::__construct();
-		F::setInstance( __CLASS__, $this );
 	}
 
 	/**
@@ -100,7 +99,7 @@ class PhalanxTitleBlock extends WikiaObject {
 	 *
 	 * @return true -- pass hook further
 	 */
-	public function pageTitleFilter( $title, &$error_msg ) {
+	static public function pageTitleFilter( $title, &$error_msg ) {
 		wfProfileIn( __METHOD__ );
 
 		$phalanxModel = new PhalanxContentModel( $title );
