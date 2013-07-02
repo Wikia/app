@@ -56,6 +56,11 @@ class ImageServingIndexerTest extends WikiaBaseTest {
 				'wikitext' => '<gallery>Wiki-wordmark.png</gallery>',
 				'expectedImages' => ['Wiki-wordmark.png']
 			],
+			// tabber
+			[
+				'wikitext' => "<tabber>\n 1 = [[File:Wiki-wordmark.png|250px]]\n|-|\n 2 = [[File:FireflyLogo-NoBackground.png|250px]]\n</tabber>",
+				'expectedImages' => ['Wiki-wordmark.png', 'FireflyLogo-NoBackground.png']
+			],
 			// more images
 			[
 				'wikitext' => '[[File:Wiki-wordmark.png|thumb]][[File:FireflyLogo-NoBackground.png|thumb]]',
