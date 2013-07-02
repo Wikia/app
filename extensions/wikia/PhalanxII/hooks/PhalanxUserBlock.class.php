@@ -8,6 +8,7 @@
 
 class PhalanxUserBlock extends WikiaObject {
 	private static $typeBlock = null;
+	private static $checkEmail = false;
 	function __construct(){
 		parent::__construct();
 		F::setInstance( __CLASS__, $this );
@@ -27,9 +28,11 @@ class PhalanxUserBlock extends WikiaObject {
 		$phalanxModel = new PhalanxUserModel( $user );
 		$ret = $phalanxModel->match_user();
 		if ( $ret !== false ){
-			$ret = $phalanxModel->match_email();
-			if ( $ret === false ) {
-				self::$typeBlock = 'email';
+			if ( self::$checkEmail === true ) {
+				$ret = $phalanxModel->match_email();
+				if ( $ret === false ) {
+					self::$typeBlock = 'email';
+				}
 			}
 		}
 		
@@ -59,6 +62,7 @@ class PhalanxUserBlock extends WikiaObject {
 	static public function abortNewAccount( $user, &$abortError ) {
 		wfProfileIn( __METHOD__ );
 
+		self::$checkEmail = true;
 		$ret = self::blockCheck( $user );
 
 		if ( $ret === false ) {
@@ -82,7 +86,11 @@ class PhalanxUserBlock extends WikiaObject {
 
 		$user = User::newFromName( $userName );
 		if ( $user instanceof User ) {
-			$ret = self::abortNewAccount( $user, $abortError );
+			$ret = self::blockCheck( $user );
+
+			if ( $ret === false ) {
+				$abortError = wfMsg( 'phalanx-user-block-new-account' );
+			}
 		}
 		else {
 			$ret = false;
