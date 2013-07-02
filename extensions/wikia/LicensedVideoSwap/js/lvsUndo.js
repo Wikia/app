@@ -40,7 +40,6 @@ define( 'lvs.undo', [ 'wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lv
 		$( 'body' ).on( 'click', '.global-notification .undo', function( e ) {
 			e.preventDefault();
 
-			window.GlobalNotification.hide();
 			videoControls.reset();
 
 			var $this = $( this );
