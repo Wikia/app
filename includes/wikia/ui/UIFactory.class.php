@@ -51,7 +51,6 @@ class UIFactory {
 	private function __construct() {
 		global $IP;
 		$this->componentsDir = $IP . self::DEFAULT_COMPONENTS_PATH;
-
 		$this->loaderService = AssetsManager::getInstance();
 	}
 
@@ -96,33 +95,17 @@ class UIFactory {
 
 		$memcKey = wfMemcKey( __CLASS__, 'all_components' );
 		$data = $wgMemc->get( $memcKey );
-
 		if ( !empty($data) ) {
-
 			return $data;
-
 		} else {
-
 			$components = [];
 
-			try {
-				$directory = new DirectoryIterator( $this->getComponentsDir() );
-
-				while( $directory->valid() ) {
-					if( !$directory->isDot() && $directory->isDir() ) {
-						$componentName = $directory->getFilename();
-						$componentCfg = $this->loadComponentConfig( $componentName );
-					
-						if( !empty($componentCfg) ) {
-							$components[] = $componentCfg;
-						} else {
-							wfDebugLog( __CLASS__, 'Component config unavailable: ' . $componentName );
-						}
-					}
-					$directory->next();
+			$directory = new DirectoryIterator( $this->getComponentsDir() );
+			while( $directory->valid() ) {
+				if( !$directory->isDot() && $directory->isDir() ) {
+					$components[] = $this->loadComponentConfigFromFile( $configFile = $this->getComponentConfigFileFullPath( $directory->getFilename() ) );
 				}
-			} catch( Exception $e ) {
-				wfDebugLog( __CLASS__, 'Invalid Styleguide components\' directory: (' . $e->getCode() . ') ' . $e->getMessage() . ' [check $wgSpecialStyleguideUiCompontentsPath variable]');
+				$directory->next();
 			}
 
 			$wgMemc->set( $memcKey, $components, self::MEMCACHE_EXPIRATION );
@@ -132,12 +115,57 @@ class UIFactory {
 	}
 
 	/**
+	 * @desc Returns full file path
+	 *
+	 * @param string component's name
+	 *
+	 * @returns full file path
+	 */
+	private function getComponentConfigFileFullPath( $name ) {
+		return $this->getComponentsDir() . $name . '/' . $name . self::CONFIG_FILE_SUFFIX;
+	}
+
+	/**
+	 * @desc Loads UIComponent from given string
+	 *
+	 * @param string JSON String
+	 *
+	 * @return UIComponent
+	 *
+	 * @throws Exception
+	 */
+	private function loadComponentConfigFromJSON( $configContent ) {
+		$config = json_decode( $configContent, true );
+
+		if ( !is_null( $config ) ) {
+			return $this->addComponentsId( $config );
+		} else {
+			throw new Exception( 'Invalid JSON.' );
+		}
+	}
+
+	/**
+	 * @desc Loads UIComponent from file
+	 *
+	 * @param string Path to file
+	 *
+	 * @return UIComponent
+	 *
+	 * @throws Exception
+	 */
+	private function loadComponentConfigFromFile( $configFilePath ) {
+		if ( false === $configString = file_get_contents( $configFilePath ) ) {
+			throw new Exception( 'Component\'s config file not found.' );
+		} else {
+			return $this->loadComponentConfigFromJSON( $configString );
+		}
+	}
+
+	/**
 	 * @desc Gets configuration file contents, decodes it to array and returns it
 	 * 
-	 * @todo add caching layer: planned and will be done in DAR-809
-	 * 
 	 * @param String $componentName
-	 * @return array|null
+	 * @return string
 	 */
 	private function loadComponentConfig( $componentName ) {
 		wfProfileIn( __METHOD__ );
@@ -148,33 +176,14 @@ class UIFactory {
 		$data = $wgMemc->get( $memcKey );
 
 		if ( !empty($data) ) {
-
+			wfProfileOut( __METHOD__ );
 			return $data;
-
 		} else {
-
-			$configPath = $this->getComponentsDir() . $componentName . '/' . $componentName . self::CONFIG_FILE_SUFFIX;
-			$config = null;
-
-			if( file_exists( $configPath ) && ( $configContent = file_get_contents( $configPath ) ) ) {
-				$config = json_decode( $configContent, true );
-
-				if( !is_null( $config )) {
-					$config = $this->addComponentsId( $config );
-				} else {
-					wfDebugLog( __CLASS__, "Invalid JSON in config file: " . $configPath );
-					$config = [];
-				}
-
-			} else {
-				wfDebugLog( __CLASS__, "Invalid component's config file: " . $configPath );
-				$config = [];
-			}
-
-			$wgMemc->set( $memcKey, $components, self::MEMCACHE_EXPIRATION );
+			$configFile = $this->getComponentConfigFileFullPath( $componentName );
+			$config = $this->loadComponentConfigFromFile( $configFile );
+			$wgMemc->set( $memcKey, $config, self::MEMCACHE_EXPIRATION );
 
 			wfProfileOut( __METHOD__ );
-
 			return $config;
 		}
 	}
@@ -195,6 +204,8 @@ class UIFactory {
 	 *
 	 * @param $assetName
 	 */
+	// TODO think how we can use WikiaResponse addAsset method
+	// TODO during work on UIComponent in darwin sprint 13
 	private function addAsset( $assetName ) {
 		wfProfileIn( __METHOD__ );
 
@@ -203,16 +214,16 @@ class UIFactory {
 
 		$type = false;
 
-		$sources = $this->loaderService->getURL( $fullName, $type, false );
+		$sources = $this->loaderService->getURL( $assetName, $type, false );
 
 		foreach ( $sources as $source ) {
 			switch ( $type ) {
 				case AssetsManager::TYPE_CSS:
 				case AssetsManager::TYPE_SCSS:
-					$app->wg->Out->AddStyle( $source );
+					$app->wg->Out->addStyle( $source );
 					break;
 				case AssetsManager::TYPE_JS:
-					$app->wg->Out->AddScript( "<script src=\"{$jsMimeType}\" src=\"{$source}\"></script>" );
+					$app->wg->Out->addScript( "<script type=\"{$jsMimeType}\" src=\"{$source}\"></script>" );
 					break;
 			}
 		}
