@@ -185,18 +185,26 @@ class SpecialCssModel extends WikiaModel {
 			if ( $isMinor ) {
 				$flags |= EDIT_MINOR;
 			}
-			$article = new Article($cssTitle);
 
-			// handle conflict
-			if ($editTime && $editTime != $article->getTimestamp()) {
+			$db = wfGetDB( DB_MASTER );
+			$currentRevision = Revision::loadFromTitle( $db, $cssTitle );
+
+			// we handle both - edit and creation conflicts below
+			if ( !empty( $currentRevision ) && ( $editTime != $currentRevision->getTimestamp() ) ) {
 				$result = '';
-				$currentText = $article->getText();
+				$currentText = $currentRevision->getText();
 
-				$baseText = Revision::loadFromTimestamp(
-					wfGetDB(DB_MASTER),
-					$this->getCssFileTitle(),
-					$editTime
-				)->getText();
+				if ( !$editTime ) {
+					// the css did not exist when the editor was started, so the base revision for
+					// parallel edits is an empty file
+					$baseText = '';
+				} else {
+					$baseText = Revision::loadFromTimestamp(
+						$db,
+						$this->getCssFileTitle(),
+						$editTime
+					)->getText();
+				}
 
 				// remove windows endlines from input before merging texts
 				$content = str_replace("\r", "", $content);
@@ -209,6 +217,7 @@ class SpecialCssModel extends WikiaModel {
 					return false;
 				}
 			}
+			$article = new Article( $cssTitle );
 			$status = $article->doEdit($content, $summary, $flags, false, $user);
 			return $status;
 		}

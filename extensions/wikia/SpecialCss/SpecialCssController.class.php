@@ -16,6 +16,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 		
 		if( $this->checkPermissions() ) {
 			$this->displayRestrictionError();
+			wfProfileOut(__METHOD__);
 			return false; // skip rendering
 		}
 
@@ -41,6 +42,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 				} else if ($status->isOk()) {
 					NotificationsController::addConfirmation( wfMessage('special-css-save-message')->plain() );
 					$this->wg->Out->redirect($this->specialPage->getTitle()->getLocalURL());
+					wfProfileOut(__METHOD__);
 					return;
 				} else {
 					NotificationsController::addConfirmation(
