@@ -21,7 +21,8 @@ define( 'lvs.tracker', [ 'wikia.tracker' ], function( tracker ) {
 			PLAY: tracker.ACTIONS.PLAY_VIDEO,
 			SUCCESS: tracker.ACTIONS.SUCCESS,
 			CLICK: tracker.ACTIONS.CLICK,
-			CONFIRM: tracker.ACTIONS.CONFIRM
+			CONFIRM: tracker.ACTIONS.CONFIRM,
+			IMPRESSION: tracker.ACTIONS.IMPRESSION
 		}
 	};
 

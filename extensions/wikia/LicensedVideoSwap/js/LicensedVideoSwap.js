@@ -7,13 +7,19 @@ require( [
 	'lvs.swapkeep',
 	'lvs.undo',
 	'lvs.videocontrols',
-	'lvs.suggestions'
-], function( $, callout, commonAjax, dropdown, ellipses, swapKeep, undo, videoControls, suggestions ) {
+	'lvs.suggestions',
+	'lvs.tracker'
+], function( $, callout, commonAjax, dropdown, ellipses, swapKeep, undo, videoControls, suggestions, tracker ) {
 
 	"use strict";
 
 	$(function() {
 		var $container = $( '#LVSGrid' );
+
+		// track impression
+		tracker.track({
+			action: tracker.actions.IMPRESSION
+		});
 
 		callout.init();
 		dropdown.init();
