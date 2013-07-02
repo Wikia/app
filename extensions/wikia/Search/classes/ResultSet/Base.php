@@ -85,7 +85,10 @@ class Base extends EmptySet
 	protected function prependMatchIfExists() {
 		if ( $this->searchConfig->hasMatch() ) {
 			if ( $this->getResultsStart() == 0 ) {
-				$this->addResult( $this->searchConfig->getMatch()->getResult() );
+				$result = $this->searchConfig->getMatch()->getResult();
+				if ( $result ) {
+					$this->addResult( $result );
+				}
 			}
 			$this->resultsFound++;
 		}

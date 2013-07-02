@@ -52,7 +52,8 @@ class SolrDocumentService
 		$config->setQuery( Wikia\Search\Utilities::valueForField( 'id', $this->getDocumentId() ) );
 		$queryService = $this->getFactory()->getFromConfig( $config );
 		$resultSet = $queryService->search();
-		return $resultSet[$this->getDocumentId()];
+		$docId = $this->getDocumentId();
+		return isset( $resultSet[$docId] ) ? $resultSet[$docId] : null;
 	}
 	
 	/**
