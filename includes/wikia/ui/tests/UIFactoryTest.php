@@ -35,10 +35,10 @@ class UIFactoryTest extends WikiaBaseTest {
 	 */
 	public function testLoadingComponentsFromString( $json, $expected ) {
 		// test private method
-		$loadComponentConfigFromStringMethod = new ReflectionMethod( 'UIFactory', 'loadComponentConfigFromString' );
-		$loadComponentConfigFromStringMethod->setAccessible( true );
+		$loadComponentConfigFromJSONMethod = new ReflectionMethod( 'UIFactory', 'loadComponentConfigFromJSON' );
+		$loadComponentConfigFromJSONMethod->setAccessible( true );
 
-		$component = $loadComponentConfigFromStringMethod->invoke( $this->instance, $json );
+		$component = $loadComponentConfigFromJSONMethod->invoke( $this->instance, $json );
 		$this->assertEquals( $expected, $component );
 	}
 
@@ -103,39 +103,6 @@ class UIFactoryTest extends WikiaBaseTest {
 			[
 				'assetName' => 'testAsset.js',
 				'assetType' => 'js'
-			]
-		];
-	}
-
-	/**
-	 * @dataProvider testInitDataProvider
-	 */
-	public function testInit($config, $expected) {
-		/*
-		$assets = [];
-
-		$loadConfigMethod = new ReflectionMethod( 'UIFactory', 'loadComponentConfig' );
-		$loadConfigMethod->setAccessible( true );
-
-		$loadConfigMethod->invoke( $this->instance, $config );
-		*/
-	}
-
-	public function testInitDataProvider() {
-		return [
-			[
-				'config' => [
-					'dependencies' => [
-						'js'  => 'jsAsset',
-						'css' => 'cssAsset'
-					],
-					'templateVars' => 'tmpVars'
-				],
-				'expected' => [
-					'jsAsset',
-					'cssAsset',
-					'tmpVars'
-				]
 			]
 		];
 	}

@@ -134,7 +134,7 @@ class UIFactory {
 	 *
 	 * @throws Exception
 	 */
-	private function loadComponentConfigFromString( $configContent ) {
+	private function loadComponentConfigFromJSON( $configContent ) {
 		$config = json_decode( $configContent, true );
 
 		if ( !is_null( $config ) ) {
@@ -157,7 +157,7 @@ class UIFactory {
 		if ( false === $configString = file_get_contents( $configFilePath ) ) {
 			throw new Exception( 'Component\'s config file not found.' );
 		} else {
-			return $this->loadComponentConfigFromString( $configString );
+			return $this->loadComponentConfigFromJSON( $configString );
 		}
 	}
 
@@ -204,6 +204,8 @@ class UIFactory {
 	 *
 	 * @param $assetName
 	 */
+	// TODO think how we can use WikiaResponse addAsset method
+	// TODO during work on UIComponent in darwin sprint 13
 	private function addAsset( $assetName ) {
 		wfProfileIn( __METHOD__ );
 
