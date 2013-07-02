@@ -1,8 +1,8 @@
 <?php
 /**
- * Class definition for Wikia\Search\QueryService\Select\Lucene
+ * Class definition for Wikia\Search\QueryService\Select\Lucene\Lucene
  */
-namespace Wikia\Search\QueryService\Select\Lucene\Lucene;
+namespace Wikia\Search\QueryService\Select\Lucene;
 use Wikia\Search\QueryService\Select\AbstractSelect;
 use Wikia\Search\TestProfile\Base as BaseProfile;
 /**

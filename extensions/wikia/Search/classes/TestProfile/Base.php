@@ -64,10 +64,10 @@ class Base
 	 */
 	public function getQueryFieldsToBoosts( $queryService = null ) {
 		switch ( $queryService ) {
-		    case 'Wikia\\Search\\QueryService\\Select\\InterWiki':
-		    case 'Wikia\\Search\\QueryService\\Select\\LuceneInterWiki':
+		    case 'Wikia\\Search\\QueryService\\Select\\Dismax\\InterWiki':
+		    case 'Wikia\\Search\\QueryService\\Select\\Lucene\\CrossWikiLucene':
 		    	return self::$interWikiQueryFields;
-		    case 'Wikia\\Search\\QueryService\\Select\\Video':
+		    case 'Wikia\\Search\\QueryService\\Select\\Dismax\\Video':
 		    	return self::$videoQueryFields;
 		}
 		return self::$defaultQueryFields;
