@@ -18,7 +18,7 @@ require( ['wikia.window', 'wikia.tracker'], function( window, tracker ) {
 			category: 'video-player-stats',
 			label: 'ooyala',
 			trackingMethod: 'internal',
-			title: id,
+			title: id || 'no id given',
 			clickSource: 'ad'
 		});
 	};
