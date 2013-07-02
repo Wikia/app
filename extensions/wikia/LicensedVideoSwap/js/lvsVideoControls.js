@@ -10,21 +10,25 @@ define( 'lvs.videocontrols', [ 'wikia.videoBootstrap', 'wikia.nirvana', 'jquery'
 	function setVerticalAlign( $element, video ) {
 		// TODO: once height is set dynamically, let this function run.
 
-		/*var videoHeight = video.height,
+		/*
+		var videoHeight = video.height,
 			wrapperHeight = $element.height(),
 			topMargin = ( wrapperHeight - videoHeight ) / 2;
 
-		$element.data( 'height', wrapperHeight ).height( wrapperHeight - topMargin ).css( 'padding-top', topMargin );*/
+		$element.data( 'height', wrapperHeight ).height( wrapperHeight - topMargin ).css( 'padding-top', topMargin );
+		 */
 	}
 
 	// remove vertical alignment css
 	function removeVerticalAlign( $element ) {
 		// TODO: once height is set dynamically, let this function run.
 
-		/*var height = $element.data( 'height' );
+		/*
+		var height = $element.data( 'height' );
 		if ( height ) {
 			$element.height( height ).css( 'padding-top', 0 );
-		}*/
+		}
+		*/
 	}
 
 	function init( $container ) {
