@@ -60,7 +60,7 @@ class AbstractDismax extends AbstractSelect
 		if ( substr_count( $queryClauses, " " ) > 0 ) {
 			$queryClauses = "({$queryClauses})"; // hell yeah i need to do this wtf
 		}
-		return sprintf( '+%s AND (%s)', $queryClauses, $this->getConfig()->getQuery()->getSolrQuery( self::MAX_QUERY_WORDS ) );
+		return sprintf( '+%s AND +(%s)', $queryClauses, $this->getConfig()->getQuery()->getSolrQuery( self::MAX_QUERY_WORDS ) );
 	}
 	
 	/**
