@@ -2,7 +2,7 @@
 class SpecialCssHooks {
 	/**
 	 * @desc Redirects to Special:CSS if this is a try of edition of Wikia.css
-	 * 
+	 *
 	 * @param EditPage $editPage
 	 * @return bool
 	 */
@@ -24,7 +24,7 @@ class SpecialCssHooks {
 	 * @param $app
 	 * @param $model SpecialCssModel
 	 * @param integer $articleId
-	 * 
+	 *
 	 * @return boolean
 	 */
 	static private function shouldRedirect( $app, $model, $articleId ) {
@@ -38,32 +38,39 @@ class SpecialCssHooks {
 			&& $app->checkSkin( $model::$supportedSkins )
 			&& $app->wg->User->isAllowed( 'specialcss' );
 	}
-	
+
 	/**
 	 * @desc Checks if CSS Update post was added/changed and purges cache with CSS Updates list
-	 * 
+	 *
 	 * @param WikiPage $page
 	 * @param Revision $revision
-	 * 
+	 *
 	 * @return true because it's a hook
 	 */
 	static public function onArticleSaveComplete( $page, $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, $status, $baseRevId ) {
-		$title = $page->getTitle();
-		$purged = static::purgeCacheDependingOnCats( $title, 'because a new post was added to the category' );
+		$app = F::app();
 		
-		if( !$purged && self::prevRevisionHasCssUpdatesCat( $revision ) ) {
-			wfDebugLog( __CLASS__, __METHOD__ . ' - purging "Wikia CSS Updates" cache because a post within the category was removed from the category' );
-			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
+		if ( in_array( $app->wg->DBname, $app->wg->CssUpdatesLangMap ) ) {
+			$title = $page->getTitle();
+			$purged = static::purgeCacheDependingOnCats( $title, 'because a new post was added to the category' );
+			
+			// sometimes $revision parameter passed to this hook is null; it's because of master-slave lag
+			$revision = is_null($revision) ? Revision::newFromTitle($title) : $revision;
+			
+			if( !$purged && self::prevRevisionHasCssUpdatesCat( $revision ) ) {
+				wfDebugLog( __CLASS__, __METHOD__ . ' - purging "Wikia CSS Updates" cache because a post within the category was removed from the category' );
+				WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY, $app->wg->DBname ) );
+			}
 		}
-		
+
 		return true;
 	}
 
 	/**
 	 * @desc Returns true if given title has "CSS Updates" category
-	 * 
+	 *
 	 * @param $title
-	 * 
+	 *
 	 * @return boolean
 	 */
 	static private function hasCssUpdatesCat( $categories ) {
@@ -73,31 +80,31 @@ class SpecialCssHooks {
 	static private function getCategoriesFromTitle( $title, $useMaster = false ) {
 		return ( $title instanceof Title ) ? self::removeNamespace( array_keys( $title->getParentCategories( $useMaster ) ) ) : [];
 	}
-	
+
 	/**
 	 * @desc Removes category namespace name in content language i.e. 'Category:Abc' will result with 'Abc'
-	 * 
+	 *
 	 * @param Array $categories an array of categories with the namespace i.e. ['Category:Abc', 'Category:Def', 'Category:Ghi'] or ['Kategoria:Abc', 'Kategoria:Def', 'Kategoria:Ghi']
-	 * 
+	 *
 	 * @return array
 	 */
 	static private function removeNamespace( $categories ) {
 		$app = F::app();
 		$results = [];
-		$categoryNamespace = $app->wg->ContLang->getNsText(NS_CATEGORY);
-		
-		foreach( $categories as $category ) {
-			$results[] = str_replace($categoryNamespace . ':', '', $category);
+		$categoryNamespace = $app->wg->ContLang->getNsText( NS_CATEGORY );
+
+		foreach ( $categories as $category ) {
+			$results[] = str_replace( $categoryNamespace . ':', '', $category );
 		}
-		
+
 		return $results;
 	}
 
 	/**
-	 * @desc Retrives categories list from previous revision's text and if there is "CSS Updates" category returns true 
-	 * 
+	 * @desc Retrives categories list from previous revision's text and if there is "CSS Updates" category returns true
+	 *
 	 * @param Revision $rev
-	 * 
+	 *
 	 * @return bool
 	 */
 	static private function prevRevisionHasCssUpdatesCat( Revision $rev ) {
@@ -106,34 +113,34 @@ class SpecialCssHooks {
 	}
 
 	/**
-	 * @desc Using CategorySelect::extractCategoriesFromWikitext() retrives categories' data array 
+	 * @desc Using CategorySelect::extractCategoriesFromWikitext() retrives categories' data array
 	 * which then is being flattern to categories' names with replaces spacebar to _
-	 * 
+	 *
 	 * @param String $wikitext
-	 * 
+	 *
 	 * @see CategorySelect::extractCategoriesFromWikitext
-	 * 
+	 *
 	 * @return array
 	 */
 	static public function getCategoriesFromWikitext( $wikitext ) {
 		$app = F::app();
 		$categories = [];
-		
-		if( !empty( $app->wg->EnableCategorySelectExt ) && 
-			( $results = static::getCategoriesFromCategorySelect( $wikitext ) ) && 
-			!empty( $results['categories'] ) 
+
+		if( !empty( $app->wg->EnableCategorySelectExt ) &&
+			( $results = static::getCategoriesFromCategorySelect( $wikitext ) ) &&
+			!empty( $results['categories'] )
 		) {
 			foreach( $results['categories'] as $category ) {
-				$categories[] = str_replace(' ', '_', $category['name']);
+				$categories[] = str_replace( ' ', '_', $category['name'] );
 			}
 		}
-		
+
 		return $categories;
 	}
 
 	/**
 	 * @desc Alias to CategorySelect::extractCategoriesFromWikitext helpful for unit tests
-	 * 
+	 *
 	 * @param $wikitext
 	 * @return Array
 	 */
@@ -143,37 +150,46 @@ class SpecialCssHooks {
 
 	/**
 	 * @desc Purges cache once a post within category is requested for deletion
-	 * 
+	 *
 	 * @param WikiPage $page
 	 * @param User $user
 	 * @param String $reason
 	 * @param $error
-	 * 
+	 *
 	 * @return true because it's a hook
 	 */
 	static public function onArticleDelete( &$page, &$user, &$reason, &$error ) {
-		$title = $page->getTitle();
-		static::purgeCacheDependingOnCats( $title, 'because a post within the category was deleted' );
-		
+		$app = F::app();
+		if ( in_array( $app->wg->DBname, $app->wg->CssUpdatesLangMap ) ) {
+			$title = $page->getTitle();
+			$categories = static::getCategoriesFromTitle( $title );
+			static::purgeCacheDependingOnCats( $title, 'because a post within the category was deleted' );
+		}
+
 		return true;
 	}
 
 	/**
 	 * @desc Purges cache once a post within category is restored
-	 * 
+	 *
 	 * @param Title $title
 	 * @param $created
 	 * @param String $comment
-	 * 
+	 *
 	 * @return bool
 	 */
 	static public function onArticleUndelete( $title, $created, $comment ) {
-		static::purgeCacheDependingOnCats( $title, 'because a post from its category was restored' );
-		
+		$app = F::app();
+		if ( in_array( $app->wg->DBname, $app->wg->CssUpdatesLangMap ) ) {
+			$categories = static::getCategoriesFromTitle( $title );
+			static::purgeCacheDependingOnCats( $title, 'because a post from its category was restored' );
+		}
+
 		return true;
 	}
-	
+
 	static private function purgeCacheDependingOnCats( $title, $reason = null ) {
+		$app = F::app();
 		$purged = false;
 		
 		wfDebugLog( __CLASS__, __METHOD__ . 'fetching categories from MASTER' );
@@ -181,7 +197,7 @@ class SpecialCssHooks {
 
 		if( self::hasCssUpdatesCat( $categories) ) {
 			wfDebugLog( __CLASS__, __METHOD__ . $reason );
-			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
+			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY, $app->wg->DBname ) );
 			$purged = true;
 		}
 
