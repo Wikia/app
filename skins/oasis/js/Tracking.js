@@ -328,7 +328,7 @@ jQuery(function($){
 			}
 		}).on('keypress', '[name=search]', function(e) {
 			if ( e.which === 13 && $(this).is(':focus') ) {
-				var label = (!suggestionShowed) ? 'search-enter' : 'search-after-suggestion-enter';
+				var label = (!suggestionShowed) ? 'search-enter' : 'search-after-suggest-enter';
 				track({
 					category: category,
 					label: label
