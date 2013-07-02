@@ -58,7 +58,7 @@ class AbstractDismax extends AbstractSelect
 	protected function getQuery() {
 		$queryClauses = $this->getQueryClausesString();
 		if ( substr_count( $queryClauses, " " ) > 0 ) {
-			$queryClauses = "({$queryClauses})"; // hell yeah i need to do this wtf
+			$queryClauses = "({$queryClauses})"; // this is just a lucene query syntax nuance
 		}
 		return sprintf( '+%s AND +(%s)', $queryClauses, $this->getConfig()->getQuery()->getSolrQuery( self::MAX_QUERY_WORDS ) );
 	}
