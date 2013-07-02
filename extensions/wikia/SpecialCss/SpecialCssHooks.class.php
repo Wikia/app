@@ -49,14 +49,17 @@ class SpecialCssHooks {
 	 */
 	static public function onArticleSaveComplete( $page, $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, $status, $baseRevId ) {
 		$app = F::app();
+		
 		if ( in_array( $app->wg->DBname, $app->wg->CssUpdatesLangMap ) ) {
 			$title = $page->getTitle();
-			$categories = self::getCategoriesFromTitle($title);
-			$purged = static::purgeCacheDependingOnCats( $categories, $title, 'because a new post was added to the category' );
-
+			$purged = static::purgeCacheDependingOnCats( $title, 'because a new post was added to the category' );
+			
+			// sometimes $revision parameter passed to this hook is null; it's because of master-slave lag
+			$revision = is_null($revision) ? Revision::newFromTitle($title) : $revision;
+			
 			if( !$purged && self::prevRevisionHasCssUpdatesCat( $revision ) ) {
 				wfDebugLog( __CLASS__, __METHOD__ . ' - purging "Wikia CSS Updates" cache because a post within the category was removed from the category' );
-				WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
+				WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY, $app->wg->DBname ) );
 			}
 		}
 
@@ -160,7 +163,7 @@ class SpecialCssHooks {
 		if ( in_array( $app->wg->DBname, $app->wg->CssUpdatesLangMap ) ) {
 			$title = $page->getTitle();
 			$categories = static::getCategoriesFromTitle( $title );
-			static::purgeCacheDependingOnCats( $categories, $title, 'because a post within the category was deleted' );
+			static::purgeCacheDependingOnCats( $title, 'because a post within the category was deleted' );
 		}
 
 		return true;
@@ -179,21 +182,22 @@ class SpecialCssHooks {
 		$app = F::app();
 		if ( in_array( $app->wg->DBname, $app->wg->CssUpdatesLangMap ) ) {
 			$categories = static::getCategoriesFromTitle( $title );
-			static::purgeCacheDependingOnCats( $categories, $title, 'because a post from its category was restored' );
+			static::purgeCacheDependingOnCats( $title, 'because a post from its category was restored' );
 		}
 
 		return true;
 	}
 
 	static private function purgeCacheDependingOnCats( $title, $reason = null ) {
+		$app = F::app();
 		$purged = false;
-
+		
 		wfDebugLog( __CLASS__, __METHOD__ . 'fetching categories from MASTER' );
 		$categories = self::getCategoriesFromTitle( $title, true );
 
 		if( self::hasCssUpdatesCat( $categories) ) {
 			wfDebugLog( __CLASS__, __METHOD__ . $reason );
-			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
+			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY, $app->wg->DBname ) );
 			$purged = true;
 		}
 
