@@ -5,7 +5,7 @@ class WDACReviewSpecialController extends WikiaSpecialPageController {
 	const FLAG_APPROVE = 1;
 	const FLAG_DISAPPROVE = -1;
 	const FLAG_UNDETERMINED = 0;
-	const WIKIS_PER_PAGE_LIMIT = 5;
+	const WIKIS_PER_PAGE_LIMIT = 10;
 
 	public function __construct() {
 		parent::__construct('WDACReview', 'wdacreview', false /* $listed */);
