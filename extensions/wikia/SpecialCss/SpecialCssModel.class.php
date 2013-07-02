@@ -497,14 +497,9 @@ class SpecialCssModel extends WikiaModel {
 	 * @return string
 	 */
 	public function getCommunityDbName() {
-		global $wgDevelEnvironment;
 		if ( empty($this->dbName) ) {
 			$lang = $this->getCssUpdateLang();
 			$this->dbName = $this->getDbNameByLang($lang);
-
-			if ( $wgDevelEnvironment  ) {
-				$this->dbName = $this->getMockedDbNameByLang($lang);
-			}
 		}
 
 		return $this->dbName;
@@ -540,17 +535,6 @@ class SpecialCssModel extends WikiaModel {
 		$dbName = isset($wgCssUpdatesLangMap[$lang]) ? $wgCssUpdatesLangMap[$lang] : $wgCssUpdatesLangMap[self::CSS_DEFAULT_LANG];
 
 		return $dbName;
-	}
-
-	/**
-	* @desc Returns mocked database name for getting CSS updates in selected language
-	*
-	* @param $lang language code
-	* @return string database name
-	*/
-	private function getMockedDbNameByLang($lang) {
-		$wgCssUpdatesLangMap = $this->getMockedLangMap();
-		return $wgCssUpdatesLangMap[$lang];
 	}
 
 	/**
@@ -602,23 +586,4 @@ class SpecialCssModel extends WikiaModel {
 			'pageids' => $ids
 		];
 	}
-
-	/**
-	* @desc Mapping language to database name for devboxes
-	*
-	* @return array
-	*/
-	private function getMockedLangMap() {
-		// There is no database copy for FR, RU and IT on devboxes
-		return array (
-			'en' => 'community',
-			'pl' => 'pl.community',
-			'de' => 'de.community',
-			'fr' => 'frfr',
-			'es' => 'es.community',
-			'ru' => 'ruwikia',
-			'it' => 'it',
-		);
-	}
-
 }
