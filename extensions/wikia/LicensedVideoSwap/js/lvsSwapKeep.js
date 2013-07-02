@@ -78,10 +78,10 @@ define( 'lvs.swapkeep', [
 				doRequest();
 
 				// Track click on okay button
-				tracker.track( {
+				tracker.track({
 					action: tracker.CONFIRM,
 					label: isSwap ? tracker.SWAP : tracker.KEEP
-				} );
+				});
 
 			},
 			width: 700
@@ -114,10 +114,10 @@ define( 'lvs.swapkeep', [
 					confirmModal();
 
 					// Track click action
-					tracker.track( {
+					tracker.track({
 						action: tracker.CLICK,
 						label: tracker.SWAP
-					} );
+					});
 				}
 				// Keep button clicked
 			} else if ( e.type == 'click' ) {
@@ -127,10 +127,10 @@ define( 'lvs.swapkeep', [
 				confirmModal();
 
 				// Track click action
-				tracker.track( {
+				tracker.track({
 					action: tracker.CLICK,
 					label: tracker.KEEP
-				} );
+				});
 			}
 		});
 	}
