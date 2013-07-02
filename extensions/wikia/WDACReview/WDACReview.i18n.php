@@ -14,6 +14,7 @@ $messages['en'] = array(
 	'wdacreview-filter-change-description' => "Set following option for each item below",
 	'wdacreview-tool-description' => "Staff tool for reviewing Wikis suggested as Directed At Children",
 	'wdacreview-confirm-update' => "Flags for selected wikis were updated",
+	'wdacreview-refresh-page' => 'Refresh page',
 );
 
 $messages['qqq'] = array(
@@ -28,6 +29,7 @@ $messages['qqq'] = array(
 	'wdacreview-filter-change-description' => "Description of how works buttons that changes selected options for all items in list",
 	'wdacreview-tool-description' => "Description of WDAC Review tool displayed below title",
 	'wdacreview-confirm-update' => "Confirm notification on submiting WDAC review form",
+	'wdacreview-refresh-page' => 'Text to be displayed on a button reloading the page',
 );
 
 $messages['pl'] = array(
@@ -41,4 +43,5 @@ $messages['pl'] = array(
 	'wdacreview-filter-change-description' => "Ustaw wybraną opcję dla każdej pozycji z listy",
 	'wdacreview-tool-description' => "Narzędzie do inspekcji wiki kierowanych do dzieci",
 	'wdacreview-confirm-update' => "Flagi dla wybranych wiki zostały zmienione.",
+	'wdacreview-refresh-page' => 'Odśwież stronę',
 );
