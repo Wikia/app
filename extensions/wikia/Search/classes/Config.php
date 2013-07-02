@@ -645,12 +645,12 @@ class Config
 	 * @return string
 	 */
 	protected function bootstrapQueryService() {
-		$service = 'Select\\OnWiki';
-		if ( $this->getWikiId() == \Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID ) {
-			$service = 'Select\\Video';
+		$service = 'Select\\Dismax\\OnWiki';
+		if ( $this->getWikiId() == \Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID ) {
+			$service = 'Select\\Dismax\\Video';
 		}
 		if ( $this->getService()->getGlobal( 'EnableWikiaHomePageExt' ) ) { 
-			$service = 'Select\\InterWiki';
+			$service = 'Select\\Dismax\\InterWiki';
 		}
 		return $service;
 	}
@@ -673,7 +673,7 @@ class Config
 		if ( $this->queryService === null ) {
 			$this->queryService = $this->bootstrapQueryService();
 		}
-		return $this->queryService == 'Select\\InterWiki';
+		return $this->queryService == 'Select\\Dismax\\InterWiki';
 	}
 	
 	/**
@@ -682,7 +682,7 @@ class Config
 	 * @return Wikia\Search\Config provides fluent interface
 	 */
 	public function setInterWiki( $apply ) {
-		return $this->setQueryService( 'Select\\InterWiki', $apply );
+		return $this->setQueryService( 'Select\\Dismax\\InterWiki', $apply );
 	}
 	
 	/**
@@ -691,7 +691,7 @@ class Config
 	 * @return Wikia\Search\Config
 	 */
 	public function setVideoSearch( $apply ) {
-		return $this->setQueryService( 'Select\\Video', $apply );
+		return $this->setQueryService( 'Select\\Dismax\\Video', $apply );
 	}
 
 	/**
@@ -700,7 +700,7 @@ class Config
 	 * @param Wikia\Search\Config
      */
 	public function setVideoEmbedToolSearch( $apply ) {
-		return $this->setQueryService( 'Select\\VideoEmbedTool', $apply );
+		return $this->setQueryService( 'Select\\Dismax\\VideoEmbedTool', $apply );
 	}
 	
 	/**
@@ -709,7 +709,11 @@ class Config
 	 * @return Wikia\Search\Config
 	 */
 	public function setDirectLuceneQuery( $value ) {
-		return $this->setQueryService( 'Select\\Lucene', $value );
+		return $this->setQueryService( 'Select\\Lucene\\Lucene', $value );
+	}
+	
+	public function setCrossWikiLuceneQuery( $value ) {
+		return $this->setQueryService( 'Select\\Lucene\\CrossWikiLucene', $value );
 	}
 	
 	/**

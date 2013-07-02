@@ -51,10 +51,6 @@ class SolrDocumentService
 		$config = $this->getConfig();
 		$config->setQuery( Wikia\Search\Utilities::valueForField( 'id', $this->getDocumentId() ) );
 		$queryService = $this->getFactory()->getFromConfig( $config );
-		if ( $this->getCrossWiki() ) {
-			// technical debt -- config should dyanmically handle cross-wiki fields
-			$queryService->setCore( Wikia\Search\QueryService\Select\AbstractSelect::SOLR_CORE_CROSSWIKI );
-		}
 		$resultSet = $queryService->search();
 		return $resultSet[$this->getDocumentId()];
 	}
@@ -122,10 +118,14 @@ class SolrDocumentService
 	 */
 	protected function getConfig() {
 		if ( $this->config === null ) {
-			$this->config = new Wikia\Search\Config;
-			$this->config->setDirectLuceneQuery( true )
-			             ->setLimit( 1 )
-			;
+			$config = new Wikia\Search\Config;
+			$config->setLimit( 1 );
+			if ( $this->getCrossWiki() ) {
+				$config->setCrossWikiLuceneQuery( true );
+			} else {
+				$config->setDirectLuceneQuery( true );
+			}
+			$this->config = $config;
 		}
 		return $this->config;
 	}

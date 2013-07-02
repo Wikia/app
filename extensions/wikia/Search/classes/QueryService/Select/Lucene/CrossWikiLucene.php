@@ -11,5 +11,27 @@ namespace Wikia\Search\QueryService\Select\Lucene;
  */
 class CrossWikiLucene extends Lucene
 {
+	/**
+	 * Because this service uses a different core, we need different requested fields.
+	 * @var array
+	 */
+	protected $requestedFields = [
+				'id',
+				'headline_txt',
+				'wam_i',
+				'description',
+				'sitename_txt',
+				'url',
+				'videos_i',
+				'images_i',
+				'image_s',
+				'hot_b',
+				'promoted_b',
+				'new_b',
+				'official_b',
+				'hub_s',
+				'lang_s'
+			];
+	
 	protected $core = 'xwiki';
 }

@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\QueryService\Select\Dismax\AbstractDismax
  */
 namespace Wikia\Search\QueryService\Select\Dismax;
-use Wikia\Search\QueryService\Select\AbstractSelect;
+use Wikia\Search\QueryService\Select\AbstractSelect, Solarium_Query_Select, Wikia\Search\Utilities;
 /**
  * Specifies behavior applicable only to query services that use the DisMax Query Parser
  * @author relwell

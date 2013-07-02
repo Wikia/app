@@ -230,7 +230,7 @@ abstract class AbstractSelect
 	 * This is abstract because the dismax and lucene query services behave differently here.
 	 * @return string
 	 */
-	abstract function getQuery();
+	abstract protected function getQuery();
 	
 	/**
 	 * Allows us to configure components in child instances.
