@@ -23,6 +23,7 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Erdemaslancan
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'stafflog-desc' => '{{desc}}',
@@ -48,7 +49,8 @@ $messages['qqq'] = array(
 * $2 is the name of the wiki of which the status was changed,
 * $3 is the new status of the wiki,
 * $4 is the reason of the change.',
-	'stafflog-filter-user' => '',
+	'stafflog-filter-label' => '{{Identical|Filter}}',
+	'stafflog-filter-user' => '{{Identical|User}}',
 	'action-stafflog' => '{{doc-action|stafflog}}',
 );
 
@@ -188,9 +190,11 @@ $messages['es'] = array(
 	'stafflog-filter-type-piggyback' => 'Personificar',
 	'stafflog-filter-type-renameuser' => 'Cambiar nombre de usuario',
 	'stafflog-filter-type-wikifactory' => 'Estado del wiki',
+	'action-stafflog' => 'ver el registro del staff centralizado',
 );
 
 /** French (français)
+ * @author Gomoko
  * @author Peter17
  * @author Wyz
  */
@@ -210,6 +214,7 @@ $messages['fr'] = array(
 	'stafflog-filter-type-piggyback' => 'Accès superposé',
 	'stafflog-filter-type-renameuser' => 'Renommages d’utilisateur',
 	'stafflog-filter-type-wikifactory' => 'Statut du wiki',
+	'action-stafflog' => 'voir le journal d’équipe centralisé',
 );
 
 /** Galician (galego)
@@ -231,6 +236,7 @@ $messages['gl'] = array(
 	'stafflog-filter-type-piggyback' => 'Acceso non autorizado',
 	'stafflog-filter-type-renameuser' => 'Cambios no nome de usuario',
 	'stafflog-filter-type-wikifactory' => 'Estado do wiki',
+	'action-stafflog' => 'ver o rexistro centralizado do persoal',
 );
 
 /** Hungarian (magyar)
@@ -331,6 +337,7 @@ $messages['ms'] = array(
 	'stafflog-filter-type-piggyback' => 'Gendong',
 	'stafflog-filter-type-renameuser' => 'Penukaran nama pengguna',
 	'stafflog-filter-type-wikifactory' => 'Status wiki',
+	'action-stafflog' => 'melihat log kakitangan terpusat',
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -475,12 +482,22 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'stafflog-desc' => 'Trasute cendralizzate pe staff',
 	'stafflog' => 'StaffLog',
+	'stafflog-blockmsg' => "$1 $2 ha pruvate a bloccà l'utende d'u staff $3 sus a uicchi $4. Mutive: $5",
+	'stafflog-piggybackloginmsg' => '$1 Piggyback - utende $2 trase cumme a $3',
+	'stafflog-piggybacklogoutmsg' => "$1 Piggyback - utene $2 iesse da 'u cunde $3",
+	'right-stafflog' => "Puè 'ndrucà l'archivije d'u staff",
+	'stafflog-wiki-status-change' => "$1 cangiate 'u state de $2 jndr'à $3. Mutive: $4",
 	'stafflog-filter-label' => 'Filtre',
 	'stafflog-filter-user' => 'Utende:',
 	'stafflog-filter-type' => 'Tipe:',
 	'stafflog-filter-apply' => "Appleche 'u filtre",
 	'stafflog-filter-type-block' => 'Blocche',
+	'stafflog-filter-type-piggyback' => 'Piggyback',
+	'stafflog-filter-type-renameuser' => "Renomene l'utende",
+	'stafflog-filter-type-wikifactory' => "State d'a uicchi",
+	'action-stafflog' => "'mdruche l'archivije cendralizzate d'u staff",
 );
 
 /** Russian (русский)
@@ -526,6 +543,7 @@ $messages['sv'] = array(
 	'stafflog-filter-type-piggyback' => 'Ryggridning',
 	'stafflog-filter-type-renameuser' => 'Användarnamnbyten',
 	'stafflog-filter-type-wikifactory' => 'Wiki-status',
+	'action-stafflog' => 'visa centraliserade personalloggen',
 );
 
 /** Tagalog (Tagalog)

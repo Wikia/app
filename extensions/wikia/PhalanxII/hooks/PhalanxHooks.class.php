@@ -3,7 +3,6 @@
 class PhalanxHooks extends WikiaObject {
 	function __construct() {
 		parent::__construct();
-		F::setInstance( __CLASS__, $this );
 	}
 
 	/**
@@ -14,10 +13,12 @@ class PhalanxHooks extends WikiaObject {
 	 * @param $links Array: tool links
 	 * @return boolean true
 	 */
-	public function loadLinks( $id, $nt, &$links ) {
+	static public function loadLinks( $id, $nt, &$links ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( $this->wg->User->isAllowed( 'phalanx' ) ) {
+		$user = RequestContext::getMain()->getUser();
+
+		if ( $user->isAllowed( 'phalanx' ) ) {
 			$links[] = Linker::makeKnownLinkObj(
 				GlobalTitle::newFromText( 'Phalanx', NS_SPECIAL, WikiFactory::COMMUNITY_CENTRAL ),
 				'PhalanxBlock',
@@ -44,7 +45,7 @@ class PhalanxHooks extends WikiaObject {
 	 *
 	 * @author macbre
 	 */
-	public function onSpamFilterCheck($text, $typeId, &$blockData) {
+	static public function onSpamFilterCheck($text, $typeId, &$blockData) {
 		wfProfileIn( __METHOD__ );
 
 		if ($text === '') {
@@ -80,7 +81,7 @@ class PhalanxHooks extends WikiaObject {
 	 *
 	 * @author moli
 	 */
-	public function onEditPhalanxBlock( &$data ) {
+	static public function onEditPhalanxBlock( &$data ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !isset( $data['id'] ) ) {
@@ -121,11 +122,10 @@ class PhalanxHooks extends WikiaObject {
 			$phalanx['lang'] = null;
 		}
 
-		if ( $phalanx['expire'] === '' ) {
+		if ( $phalanx['expire'] === '' || is_null( $phalanx['expire'] ) ) {
 			// don't change expire
 			unset($phalanx['expire']);
-		}
-		else if ( $phalanx['expire'] != 'infinite' ) {
+		} else if ( $phalanx['expire'] != 'infinite' ) {
 			$expire = strtotime( $phalanx['expire'] );
 			if ( $expire < 0 || $expire === false ) {
 				wfProfileOut( __METHOD__ );
@@ -182,7 +182,7 @@ class PhalanxHooks extends WikiaObject {
 	 *
 	 * @author moli
 	 */
-	public function onDeletePhalanxBlock( $id ) {
+	static public function onDeletePhalanxBlock( $id ) {
 		wfProfileIn( __METHOD__ );
 
 		$phalanx = Phalanx::newFromId($id);

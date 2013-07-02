@@ -155,7 +155,8 @@ $messages['qqq'] = array(
 	'swm-expire-info' => '',
 	'swm-list-table-wiki' => '{{Identical|Wiki}}',
 	'swm-list-table-group' => '{{Identical|Group}}',
-	'swm-list-table-removed' => 'Column heading of a table with one message per line. The column contains either yes or no if the message was removed or not.',
+	'swm-list-table-removed' => 'Column heading of a table with one message per line. The column contains either yes or no if the message was removed or not.
+{{Identical|Removed}}',
 	'swm-list-table-content' => '{{Identical|Content}}',
 	'swm-list-table-tools' => '{{Identical|Tools}}',
 	'swm-list-table-lang' => '{{Identical|Language}}',
@@ -604,9 +605,11 @@ $messages['bs'] = array(
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
 	'swm-label-mode-users-active' => 'Жигар декъашхой',
+	'swm-list-table-expire' => 'Чекхйолу',
 );
 
 /** Czech (česky)

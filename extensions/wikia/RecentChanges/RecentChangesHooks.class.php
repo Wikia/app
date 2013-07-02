@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class RecentChangesHooks {
 
@@ -14,7 +14,7 @@ class RecentChangesHooks {
 		}
 
 		$selectedArray = empty( $selected ) ? array() : array($selected);
-		
+
 		$response = $app->sendRequest( 'RecentChangesController', 'dropdownNamespaces', array( 'all' => $all, 'selected' => $selectedArray ) );
 		$html = $response->getVal( 'html', '' );
 		return true;
@@ -38,14 +38,14 @@ class RecentChangesHooks {
 		if ( (! isset( $opts['namespace'] ) ) || empty( $opts['namespace'] ) ) {
 			$rcfs = new RecentChangesFiltersStorage($app->wg->User);
 			$selected = $rcfs->get();
-			
+
 			if ( empty($selected) ) {
 			    return true;
 			}
-			
+
 			$db = wfGetDB( DB_SLAVE );
 			$cond = 'rc_namespace IN ('.$db->makeList( $selected ).')';
-			
+
 			$flag = true;
 			foreach( $conds as $key => &$value ) {
 			    if ( strpos($value, 'rc_namespace') !== false ) {
@@ -54,7 +54,7 @@ class RecentChangesHooks {
 			        break;
 			    }
 			}
-			
+
 			if ( $flag ) {
 			    $conds[] = $cond;
 			}

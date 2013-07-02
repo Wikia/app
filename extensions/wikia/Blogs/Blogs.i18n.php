@@ -153,6 +153,7 @@ Parameters:
 	'create-blog-invalid-title-error' => '{{Identical|Invalid title}}',
 	'create-blog-no-login' => '{{Identical|Not logged in}}',
 	'create-blog-categories-textinput' => '{{Identical|Add new category}}',
+	'create-blog-categories-submit' => '{{Identical|Submit}}',
 	'create-blog-save' => '{{Identical|Save page}}',
 	'create-blog-preview' => '{{Identical|Show preview}}',
 	'create-blog-listing-preview' => 'This is an H2 level header above a preview.
@@ -178,7 +179,10 @@ Parameters:
 Parameters:
 
 $1 - Username of blog author. GENDER is supported.',
-	'blog-fromsitename' => 'Prints the name of the wiki the blog is from into an RSS feed. The $1 parameter is <nowiki>{{SITENAME}}</nowiki>.',
+	'blog-fromsitename' => 'Prints the name of the wiki the blog is from into an RSS feed.
+
+Parameters:
+* $1 - <nowiki>{{SITENAME}}</nowiki>',
 	'blogs-comment-hidden' => 'If a tool like RevisionDelete has made the text of a comment inaccessible to the public, this message informs the reader the comment has been hidden',
 	'right-blog-comments-toggle' => '{{doc-right|blog-comments-toggle}}',
 	'right-blog-comments-delete' => '{{doc-right|blog-comments-delete}}',
@@ -853,6 +857,7 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author Avatar
+ * @author Das Schäfchen
  * @author Kghbln
  * @author LWChris
  * @author Metalhead64
@@ -883,7 +888,7 @@ $messages['de'] = array(
 	'create-blog-invalid-title-error' => 'Ungültiger Titel',
 	'create-listing-confirm-info' => 'Kopiere den folgenden Code:',
 	'create-blog-no-login' => 'Du bist nicht angemeldet',
-	'create-blog-login-required' => 'Du musst [{{fullurl:Special:Signup|$1}} angemeldet sein] um einen Blogeintrag oder eine Blogliste zu erstellen.',
+	'create-blog-login-required' => 'Du musst [{{fullurl:Special:Signup|$1}} angemeldet sein], um einen Blogeintrag oder eine Blogliste zu erstellen.',
 	'create-blog-categories-title' => 'Füge diesen Beitrag den folgenden Kategorien hinzu (anklicken)',
 	'create-blog-categories-textinput' => 'Neue Kategorie hinzufügen',
 	'create-blog-categories-submit' => 'Hinzufügen',
@@ -894,7 +899,7 @@ $messages['de'] = array(
 	'create-blog-article-already-exists' => 'Es gibt schon einen Blogbeitrag mit diesem Namen, bitte wähle einen anderen',
 	'create-blog-listing-title' => 'Neue Blog-Aggregationsseite erstellen',
 	'create-blog-listing-form-title' => 'Was ist eine Blog-Aggregationsseite?',
-	'create-blog-listing-form-info' => 'Mit Blog-Aggregationsseiten kann man Blogeinträge von verschiedenen Autoren auf einer einzelnen Seite zusammenfassen. So kannst du z.B. Themenseiten über „Barack Obama“, „Buchvorstellungen“ oder auch über mehrere verschiedene Kategorien erstellen.',
+	'create-blog-listing-form-info' => 'Mit Blog-Aggregationsseiten kann man Blogeinträge von verschiedenen Autoren auf einer einzelnen Seite zusammenfassen. So kannst du z. B. Themenseiten über „Barack Obama“, „Buchvorstellungen“ oder auch über mehrere verschiedene Kategorien erstellen.',
 	'create-blog-listing-page-title' => 'Blog-Aggregationsseiten-Titel',
 	'create-blog-listing-preview' => 'Vorschau',
 	'create-blog-listing-authors' => 'Zeige Blogbeiträge von diesen Autoren (getrennt durch Komma)',

@@ -1121,6 +1121,25 @@ $messages['ia'] = array(
 	'cnw-error-bot-header' => 'Tu ha essite detegite como robot',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'cnw-or' => 'atau',
+	'cnw-name-wiki-headline' => 'Memulai sebuah Wiki',
+	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-login' => 'Masuk Log',
+	'cnw-userauth-marketing-heading' => 'Belum memiliki akun?',
+	'cnw-desc-creative' => 'Gambarkan topik Anda',
+	'cnw-desc-select-one' => 'Pilih salah satu',
+	'cnw-desc-lang' => 'Bahasa',
+	'cnw-welcome-headline' => 'Selamat! $1 telah dibuat',
+	'cnw-welcome-instruction1' => 'Klik tombol di bawah untuk memulai menambahkan halaman ke wiki Anda.',
+	'cnw-error-general' => 'Ups, ada sesuatu yang salah di pihak kami! Silakan coba lagi, atau <a href="/Special:Contact">hubungi kami</a> untuk bantuan.',
+	'cnw-error-wiki-limit-header' => 'Wiki telah mencapai batas',
+	'cnw-error-blocked-header' => 'Akun diblokir',
+);
+
 /** Ingush (ГӀалгӀай)
  * @author Sapral Mikail
  */

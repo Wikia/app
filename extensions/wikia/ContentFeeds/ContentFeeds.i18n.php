@@ -14,11 +14,13 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'contentfeeds-desc' => "Description of extension as listed on [[Special:Version]].
 For an explanation of 'rich information' see [[:w:en:Media richness theory|Wikipedia]].",
 	'contentfeeds-newimages-rss-desc' => 'Outputs information about the source of the feed entry for attribution reasons. $1 is the URL of the page',
+	'contentfeeds-firstfewarticles-tag-title' => '{{Identical|Title}}',
 );
 
 /** Afrikaans (Afrikaans)

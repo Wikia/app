@@ -833,6 +833,18 @@ $messages['ia'] = array(
 	'founderprogressbar-browse-page-name' => 'Foliar',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'founderprogressbar-category-edit-label' => 'Sunting halaman kategori',
+	'founderprogressbar-category-add5-description' => 'Kini setelah Anda menambahkan lebih banyak halaman ke wiki Anda, Anda mungkin akan memerlukan lebih banyak kategori untuk menjaga semuanya terorganisasi.',
+	'founderprogressbar-commcorner-edit-description' => 'Menyunting Sudut Komunitas akan membuat pemberitahuan untuk orang-orang yang mengunjungi wiki Anda. Ini adalah tempat yang bagus untuk mengizinkan orang tahu tipe komunitas apakah Anda, bagaimana mereka dapat membantu, dan untuk membuat pengumuman.',
+	'founderprogressbar-mostvisited-visit-label' => 'Lihat halaman yang tersering Anda kunjungi',
+	'founderprogressbar-uncategorized-visit-description' => 'Saat wiki Anda memiliki lebih banyak konten, mudah untuk kehilangan jalur organisasi. Tetap berada di atasnya dengan melacak halaman yang tidak memiliki kategori, dan tambahkan kategori ke halaman-halaman untuk menjaganya tetap dapat diakses dan terorganisasi.',
+	'founderprogressbar-browse-page-name' => 'Jelajahi',
+);
+
 /** Japanese (日本語)
  * @author Shirayuki
  * @author Tommy6
@@ -1420,6 +1432,7 @@ $messages['pt-br'] = array(
 	'founderprogressbar-list-task-label' => 'Tarefas',
 	'founderprogressbar-category-edit-label' => 'Editar uma página de categoria',
 	'founderprogressbar-wikialabs-visit-label' => 'Visitar Wikia Labs',
+	'founderprogressbar-gallery-add-label' => 'Adicionar uma galeria de fotos',
 	'founderprogressbar-topnav-edit-label' => 'Personalizar sua navegação',
 	'founderprogressbar-video-add-label' => 'Adicionar um vídeo',
 );
@@ -1438,6 +1451,10 @@ $messages['roa-tara'] = array(
 	'founderprogressbar-list-task-label' => 'Combite',
 	'founderprogressbar-list-skipped-task-label' => 'Combite Zumbate',
 	'founderprogressbar-list-skipped-task-desc' => 'Tu puè combletà chiste ogne vote.',
+	'founderprogressbar-task-call-to-action' => "Vèje a 'u combite",
+	'founderprogressbar-themedesigner-visit-label' => "Personalizze 'u teme tune",
+	'founderprogressbar-fb-connect-label' => 'Collegate a Feisbuk',
+	'founderprogressbar-gallery-add-label' => "Aggiunge 'na gallerie fotografeche",
 	'founderprogressbar-browse-page-name' => 'Sfoglie',
 );
 

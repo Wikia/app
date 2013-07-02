@@ -64,6 +64,7 @@ $messages['en'] = array(
 	'wall-message-removed-reply-because' => "$1 removed this reply because:",
 	'wall-message-deleted-reply-because' => "$1 deleted this reply because:",
 	'wall-message-closed-by' => "[[$2|$1]] closed this thread",
+	'wall-message-closed-by-because' => "$1 closed this thread because:",
 	'wall-message-restore-reply' => "Restore Reply",
 	'wall-delete-reason' => "User/admin action",
 	'wall-user-talk-page-archive-anchor' => 'See archived talk page',
@@ -92,6 +93,11 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-action-remove-thread-confirm-info' => "This thread and your summary will still appear in the wiki's history.",
 	'wall-action-remove-reply-confirm-info' => "This reply and your summary will still appear in the wiki's history.",
 	'wall-action-remove-confirm-ok' => 'Remove',
+
+	'wall-action-close-thread-title' => 'Close this thread',
+	'wall-action-close-confirm' => 'Please tell us why you would like to close this:',
+	'wall-action-close-thread-confirm-info' => "This thread will still be visible.",
+	'wall-action-close-confirm-ok' => 'Close',
 
 	'wall-action-admin-thread-title' => 'Delete this thread',
 	'wall-action-admin-reply-title' => 'Delete this reply',
@@ -422,7 +428,8 @@ $messages['qqq'] = array(
 	'wall-message-elseswall' => "Link to a user's wall. Parameters:
 * $1 is the username (GENDER is supported)",
 	'wall-message-no-permission' => 'Error message when a non-admin or staff tries to delete or revision-delete a message',
-	'wall-thread-removed' => 'In parentheses at the top of a removed thread page, next to the title',
+	'wall-thread-removed' => 'In parentheses at the top of a removed thread page, next to the title.
+{{Identical|Removed}}',
 	'wall-thread-isnotifyeveryone' => 'In parentheses at the top of a highlighted thread page, next to the title',
 	'wall-thread-deleted' => 'In parentheses at the top of a deleted thread page, next to the title',
 	'wall-thread-closed' => 'Label stating the thread is closed.
@@ -463,6 +470,8 @@ $messages['qqq'] = array(
 	'wall-message-deleted-reply-because' => 'Summary at the top of a deleted reply page. Parameters:
 * $1 is the user who deleted the reply (GENDER is supported in this message).',
 	'wall-message-closed-by' => 'message stating thread has been closed.  $1 is username, $2 is userpage title',
+	'wall-message-closed-by-because' => 'Summary at the top of a closed thread page. Parameters:
+* $1 is the user who closed the thread (GENDER is supported in this message).',
 	'wall-message-restore-reply' => 'Button to restore a reply on a removed reply page',
 	'wall-delete-reason' => 'default user/admin action',
 	'wall-user-talk-page-archive-anchor' => "Link on a Message Wall page to the user's old talk page archive",
@@ -492,6 +501,10 @@ See also:
 	'wall-action-remove-thread-confirm-info' => 'Explanation in the remove modal box that the thread and summary will still appear in the history',
 	'wall-action-remove-reply-confirm-info' => 'Explanation in the remove modal box that the reply and summary will still appear in the history',
 	'wall-action-remove-confirm-ok' => 'Button in the remove modal box',
+	'wall-action-close-thread-title' => 'Title of the modal box for closing a thread',
+	'wall-action-close-confirm' => 'Asks for summary in the close thread modal box',
+	'wall-action-close-thread-confirm-info' => 'Explanation in the close modal box that the thread and summary will still appear on the forum',
+	'wall-action-close-confirm-ok' => 'Button in the close modal box',
 	'wall-action-admin-thread-title' => 'Title of the delete thread modal box',
 	'wall-action-admin-reply-title' => 'Title of the delete reply modal box',
 	'wall-action-admin-confirm' => 'Asks for summary in the delete modal box',
@@ -502,7 +515,8 @@ See also:
 	'wall-action-restore-thread-title' => 'Button to restore a thread',
 	'wall-action-restore-reply-title' => 'Button to restore a reply',
 	'wall-action-restore-confirm' => 'Asks for summary in the restore modal box',
-	'wall-action-restore-confirm-ok' => 'Button in the restore modal box',
+	'wall-action-restore-confirm-ok' => 'Button in the restore modal box.
+{{Identical|Restore}}',
 	'wall-action-rev-thread-title' => 'Title of revision delete thread modal box',
 	'wall-action-rev-reply-title' => 'Title of revision delete reply moal box',
 	'wall-action-rev-reply-confirm' => 'Confirmation for revision delete reply modal',
@@ -710,7 +724,8 @@ checkbox on Special:Block',
 	'wall-history-rail-block' => "wall history page, who's involved box - link for admins to block user.
 {{Identical|Block}}",
 	'wall-history-action-view' => 'wall history page, link to view removed thread',
-	'wall-history-action-restore' => 'wall history page, link to restore removed thread',
+	'wall-history-action-restore' => 'wall history page, link to restore removed thread.
+{{Identical|Restore}}',
 	'wall-history-action-thread-history' => 'wall history page, link to view thread history',
 	'wall-thread-history-title' => 'heading on thread history page',
 	'wall-thread-history-thread-created' => 'thread history page. GENDER is supported in this message. Parameters:
