@@ -26,7 +26,7 @@ define( 'lvs.undo', [ 'wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lv
 			},
 			callback: function( data ) {
 				// send info to common success method: response data and tracking label
-				commonAjax.success( data, tracker.UNDO);
+				commonAjax.success( data, tracker.UNDO );
 			},
 			onErrorCallback: function() {
 				commonAjax.failure();

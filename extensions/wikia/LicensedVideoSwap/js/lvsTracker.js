@@ -2,7 +2,7 @@ define( 'lvs.tracker', [ 'wikia.tracker' ], function( tracker ) {
 
 	"use strict";
 
-	// LVS constants.  Note: we may want to make this its own module.
+	// LVS constants
 	return {
 		track: tracker.buildTrackingFunction({
 			category: 'lvs',

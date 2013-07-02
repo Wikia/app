@@ -28,7 +28,7 @@ define( 'lvs.swapkeep', [
 			data = {
 				videoTitle: currTitle,
 				sort: qs.getVal( 'sort', 'recent' ),
-				currentPage: qs.getVal( 'currentPage', 1)
+				currentPage: qs.getVal( 'currentPage', 1 )
 			},
 			trackingLabel = tracker.KEEP;
 
@@ -42,7 +42,7 @@ define( 'lvs.swapkeep', [
 			method: isSwap ? 'swapVideo' : 'keepVideo',
 			data: data,
 			callback: function( data ) {
-				commonAjax.success( data, trackingLabel);
+				commonAjax.success( data, trackingLabel );
 			},
 			onErrorCallback: function() {
 				commonAjax.failure();
