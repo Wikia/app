@@ -1,6 +1,6 @@
 <?php
 /**
- * Class definition for Wikia\Search\QueryService\Select\OnWiki
+ * Class definition for Wikia\Search\QueryService\Select\Dismax\OnWiki
  */
 namespace Wikia\Search\QueryService\Select\Dismax;
 use \Wikia\Search\Utilities, \Solarium_Query_Select as Select;

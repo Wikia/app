@@ -1,6 +1,6 @@
 <?php
 /**
- * Class definition for Wikia\Search\QueryService\Select\VideoEmbedTool
+ * Class definition for Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool
  */
 namespace Wikia\Search\QueryService\Select\Dismax;
 use Wikia\Search\Utilities;

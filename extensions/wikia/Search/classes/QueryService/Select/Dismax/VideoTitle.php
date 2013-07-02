@@ -1,6 +1,6 @@
 <?php
 /**
- * Class definition for Wikia\Search\QueryService\Select\VideoTitle
+ * Class definition for Wikia\Search\QueryService\Select\Dismax\VideoTitle
  */
 namespace Wikia\Search\QueryService\Select\Dismax;
 use Solarium_Query_Select;
