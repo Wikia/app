@@ -36,16 +36,11 @@ class SolrDocumentService
 	protected $crossWiki = false;
 	
 	/**
-	 * @var array
-	 */
-	protected $requestedFields;
-	
-	/**
 	 * Returns an array version of our search result object
 	 * @return array
 	 */
 	public function getDocument() {
-		return $this->getResult()->toArray( $this->requestedFields );
+		return (array) $this->getResult();
 	}
 	
 	/**
@@ -61,7 +56,6 @@ class SolrDocumentService
 			$queryService->setCore( Wikia\Search\QueryService\Select\AbstractSelect::SOLR_CORE_CROSSWIKI );
 		}
 		$resultSet = $queryService->search();
-		$this->requestedFields = $config->getRequestedFields(); // @todo technical debt
 		return $resultSet[$this->getDocumentId()];
 	}
 	
@@ -110,18 +104,6 @@ class SolrDocumentService
 	}
 	
 	/**
-	 * Allows client code to specify those fields we want from Solr.
-	 * @param array $fields
-	 * @return SolrDocumentService
-	 */
-	public function setRequestedFields( array $fields = [] )
-	{
-		$this->getConfig()->setRequestedFields( $fields );
-		$this->requestedFields = $fields;
-		return $this;
-	}
-	
-	/**
 	 * Returns the document ID for querying as expected by Solr.
 	 * @return string
 	 */
@@ -144,7 +126,6 @@ class SolrDocumentService
 			$this->config->setDirectLuceneQuery( true )
 			             ->setLimit( 1 )
 			;
-			$this->requestedFields = $this->config->getRequestedFields();
 		}
 		return $this->config;
 	}

@@ -2,7 +2,7 @@
 /**
  * Class definition for Wikia\Search\QueryService\Select\InterWiki
  */
-namespace Wikia\Search\QueryService\Select;
+namespace Wikia\Search\QueryService\Select\Dismax;
 use \Solarium_Query_Select, \Wikia\Search\Utilities;
 /**
  * This class is responsible for performing interwiki search queries.
@@ -12,13 +12,35 @@ use \Solarium_Query_Select, \Wikia\Search\Utilities;
  * @package Search
  * @subpackage QueryService
  */
-class InterWiki extends AbstractSelect
+class InterWiki extends AbstractDismax
 {
 	/**
 	 * Used for tracking
 	 * @var string
 	 */
 	protected $searchType = 'inter';
+	
+	/**
+	 * Because this service uses a different core, we need different requested fields.
+	 * @var array
+	 */
+	protected $requestedFields = [
+				'id',
+				'headline_txt',
+				'wam_i',
+				'description',
+				'sitename_txt',
+				'url',
+				'videos_i',
+				'images_i',
+				'image_s',
+				'hot_b',
+				'promoted_b',
+				'new_b',
+				'official_b',
+				'hub_s',
+				'lang_s'
+			];
 	
 	/** 
 	 * Boost functions used in interwiki search

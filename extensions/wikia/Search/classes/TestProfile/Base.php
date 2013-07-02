@@ -19,7 +19,7 @@ class Base
 	 * Query fields to boosts for the main core
 	 * @var array
 	 */
-	const QUERYFIELDS_DEFAULT = [
+	public static $defaultQueryFields = [
 			'title'             => 100,
 			'html'              => 5,
 			'redirect_titles'   => 50,
@@ -32,7 +32,7 @@ class Base
 	 * Query fields to boost for the cross-wiki core
 	 * @var unknown_type
 	 */
-	const QUERYFIELDS_INTERWIKI = [
+	public static $interwikiQueryFields = [
 			'headline_txt' => 300,
 			'description' => 250,
 			'categories' => 50,
@@ -43,14 +43,19 @@ class Base
 			];
 	
 	/**
-	 * Used to be in the config.
-	 * Allows us to configure boosts for the provided fields.
-	 * Use the non-translated version.
-	 * @var array
+	 * Language-specific fields added for i18n
+	 * @var unknown_type
 	 */
-	protected $queryFieldsToBoostsSelector = [
-			'default' => static::QUERYFIELDS_DEFAULT,
-			'Wikia\\Search\\QueryService\\Select\\InterWiki' => static::QUERYFIELDS_INTERWIKI,
+	public static $videoQueryFields = [
+			'title'                 => 100,
+			'html'                  => 5,
+			'redirect_titles'       => 50,
+			'categories'            => 25,
+			'nolang_txt'            => 10,
+			'backlinks_txt'         => 25,
+			'title_en'              => 100,
+			'html_en'               => 5,
+			'redirect_titles_mv_en' => 50
 			];
 	
 	/**
@@ -58,10 +63,14 @@ class Base
 	 * @return array
 	 */
 	public function getQueryFieldsToBoosts( $queryService = null ) {
-		if ( $queryService !== null && isset( $this->queryFieldsToBoostsSelector[$queryService] ) ) {
-			return $this->queryFieldsToBoostsSelector[$queryService];
+		switch ( $queryService ) {
+		    case 'Wikia\\Search\\QueryService\\Select\\InterWiki':
+		    case 'Wikia\\Search\\QueryService\\Select\\LuceneInterWiki':
+		    	return self::$interWikiQueryFields;
+		    case 'Wikia\\Search\\QueryService\\Select\\Video':
+		    	return self::$videoQueryFields;
 		}
-		return $this->queryFieldsToBoostsSelector['default'];
+		return self::$defaultQueryFields;
 	}
 	
 }

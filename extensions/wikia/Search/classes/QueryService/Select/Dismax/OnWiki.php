@@ -2,7 +2,7 @@
 /**
  * Class definition for Wikia\Search\QueryService\Select\OnWiki
  */
-namespace Wikia\Search\QueryService\Select;
+namespace Wikia\Search\QueryService\Select\Dismax;
 use \Wikia\Search\Utilities, \Solarium_Query_Select as Select;
 /**
  * This class is responsible for the default behavior of search.
@@ -11,7 +11,7 @@ use \Wikia\Search\Utilities, \Solarium_Query_Select as Select;
  * @package Search
  * @subpackage QueryService
  */
-class OnWiki extends AbstractSelect
+class OnWiki extends AbstractDismax
 {
 	/**
 	 * Used for tracking

@@ -49,79 +49,6 @@ class Config
 	const RANK_LONGEST              = 'longest';
 
 	/**
-	 * Requested fields used for page-based documents.
-	 * @var array
-	 */
-	const REQUESTED_FIELDS_DEFAULT = [
-				'id',
-				'pageid',
-				'wikiarticles',
-				'wikititle',
-				'url',
-				'wid',
-				'canonical',
-				'host',
-				'ns',
-				'indexed',
-				'backlinks',
-				'title',
-				'score',
-				'created',
-				'views',
-				'categories',
-				'hub',
-				'lang',
-			];
-	
-	/**
-	 * Because the video wiki is English, we need to explicitly request English fields to support int'l video search.
-	 * @var array
-	 */
-	const REQUESTED_FIELDS_VIDEO = [
-				'id',
-				'pageid',
-				'wikiarticles',
-				'wikititle',
-				'url',
-				'wid',
-				'canonical',
-				'host',
-				'ns',
-				'indexed',
-				'backlinks',
-				'title',
-				'score',
-				'created',
-				'views',
-				'categories',
-				'hub',
-				'lang',
-				'title_en',
-			];
-	
-	/**
-	 * These requested fields reflect the separate cross-wiki core.
-	 * @var array
-	 */
-	const REQUESTED_FIELDS_INTERWIKI = [
-				'id',
-				'headline_txt',
-				'wam_i',
-				'description',
-				'sitename_txt',
-				'url',
-				'videos_i',
-				'images_i',
-				'image_s',
-				'hot_b',
-				'promoted_b',
-				'new_b',
-				'official_b',
-				'hub_s',
-				'lang_s'
-			];
-	
-	/**
 	 * The value we use for pagination
 	 * @var int
 	 */
@@ -202,35 +129,11 @@ class Config
 	protected $ABTestGroup;
 	
 	/**
-	 * This dynamically supports specific requested fields based on the desired QueryService.
-	 * @var array
-	 */
-	protected $requestedFieldSelector = [
-			'default' => self::REQUESTED_FIELDS_DEFAULT,
-			'Wikia\\Search\\QueryService\\Select\\Video' => self::REQUESTED_FIELDS_VIDEO,
-			'Wikia\\Search\\QueryService\\Select\\VideoEmbedTool' => self::REQUESTED_FIELDS_VIDEO,
-			'Wikia\\Search\\QueryService\\Select\\InterWiki' => self::REQUESTED_FIELDS_INTERWIKI,
-	];
-	
-	/**
-	 * Storage for requested fields
+	 * Storage for client-configured requested fields
 	 * @array
 	 */
-	protected $requestedFields;
+	protected $requestedFields = [];
 	
-	/**
-	 * Allows us to configure boosts for the provided fields.
-	 * Use the non-translated version.
-	 * @var array
-	 */
-	protected $queryFieldsToBoosts = [];
-	
-	/**
-	 * Tells us whether or not we have imported query fields from the test profile yet.
-	 * @var bool
-	 */
-	protected $queryFieldsWereImported = false;
-
 	/**
 	 * Stores field and direction as a two-value array
 	 * @var array
@@ -628,33 +531,6 @@ class Config
 	}
 	
 	/**
-	 * Provides the requested fields with respect to dynamic language fields
-	 * @return array
-	 */
-	public function getRequestedFields()
-	{
-		if ( $this->requestedFields === null ) {
-			$queryService = $this->getQueryService();
-			if ( isset( $this->requestedFieldSelector[$queryService] ) ) {
-				$this->requestedFields = $this->requestedFieldSelector[$queryService];
-			} else {
-				$this->requestedFields = $this->requestedFieldSelector['default'];
-			}
-		}
-		
-		$fieldsPrepped = array();
-		foreach ( $this->requestedFields as $field ) {
-			$fieldsPrepped[] = Utilities::field( $field );
-		}
-		
-		if (! ( in_array( 'id', $fieldsPrepped ) || in_array( '*', $fieldsPrepped ) ) ) {
-			$fieldsPrepped[] = 'id';
-		} 
-		
-		return $fieldsPrepped;
-	}
-	
-	/**
 	 * Allows us to set the fields we want to get back from Solr for each document.
 	 * You can provide either dynamic fields or base fields that are then language-ified.
 	 * 
@@ -664,6 +540,14 @@ class Config
 	public function setRequestedFields( array $fields ) {
 		$this->requestedFields = $fields;
 		return $this;
+	}
+	
+	/**
+	 * Returns the requested fields, usually to the query service, to _append_ to default requested fields.
+	 * @return array
+	 */
+	public function getRequestedFields() {
+		return $this->requestedFields;
 	}
 	
 	/**
@@ -1154,64 +1038,13 @@ class Config
 		}
 		return $this->testProfile;
 	}
-	
-	/**
-	 * Allows us to add additional query fields, with a given boost.
-	 * @param string $field
-	 * @param int $boost
-	 * @return Wikia\Search\Config
-	 */
-	public function setQueryField( $field, $boost = 1 ) {
-		$this->importQueryFieldBoosts();
-		$this->queryFieldsToBoosts[$field] = $boost;
-		return $this;
-	}
-	
-	/**
-	 * Lets us add multiple fields. Can handle both associative with boosts as value and flat.
-	 * @param array $fields
-	 * @return Wikia\Search\Config
-	 */
-	public function addQueryFields( array $fields ) {
-		if ( array_values( $fields ) === $fields ) {
-			foreach ( $fields as $field ) {
-				$this->setQueryField( $field );
-			}
-		} else {
-			foreach ( $fields as $field => $boost ) {
-				$this->setQueryField( $field, $boost );
-			}
-		}
-		return $this;
-	}
-	
+
 	/**
 	 * Returns the associative array of query fields to boosts.
 	 * @return array
 	 */
 	public function getQueryFieldsToBoosts() {
-		$this->importQueryFieldBoosts();
-		return $this->queryFieldsToBoosts;
-	}
-	
-	/**
-	 * Allows us to manually set query fields externally. Supports flat and associative.
-	 * @param array $fields
-	 * @return Wikia\Search\Config
-	 */
-	public function setQueryFields( array $fields ) {
-		$this->importQueryFieldBoosts();
-		if ( array_values( $fields ) === $fields ) {
-			$this->queryFieldsToBoosts = array();
-			foreach ( $fields as $field ) {
-				$this->setQueryField( $field );
-			}
-		} else {
-			foreach ( $fields as $field => $boost ) {
-				$this->setQueryField( $field, $boost ); 
-			}
-		}
-		return $this;
+		return $this->getTestProfile()->getQueryFieldsToBoosts( $this->getQueryService() );
 	}
 	
 	/**
@@ -1219,8 +1052,7 @@ class Config
 	 * @return array
 	 */
 	public function getQueryFields() {
-		$this->importQueryFieldBoosts();
-		return array_keys( $this->queryFieldsToBoosts );
+		return array_keys( $this->getQueryFieldsToBoosts() );
 	}
 
 	/**
@@ -1243,19 +1075,6 @@ class Config
 			$this->languageCode = $this->getService()->getLanguageCode();
 		}
 		return $this->languageCode;
-	}
-	
-	/**
-	 * Imports defaults for query fields to boosts from search profile.
-	 * Lazily run on first mutate or access of query fields.
-	 * @return Wikia\Search\Config
-	 */
-	protected function importQueryFieldBoosts() {
-		if (! $this->queryFieldsWereImported ) {
-			$this->queryFieldsToBoosts = $this->getTestProfile()->getQueryFieldsToBoosts();
-			$this->queryFieldsWereImported = true;
-		}
-		return $this;
 	}
 	
 	/**

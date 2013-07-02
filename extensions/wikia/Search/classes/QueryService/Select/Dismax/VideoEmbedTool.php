@@ -2,7 +2,7 @@
 /**
  * Class definition for Wikia\Search\QueryService\Select\VideoEmbedTool
  */
-namespace Wikia\Search\QueryService\Select;
+namespace Wikia\Search\QueryService\Select\Dismax;
 use Wikia\Search\Utilities;
 /**
  * This class is responsible for handling Video Embed Tool search logic.

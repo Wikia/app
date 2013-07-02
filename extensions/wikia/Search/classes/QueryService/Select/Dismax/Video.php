@@ -2,7 +2,7 @@
 /**
  * Class definition for Wikia\Search\QueryService\Select\VideoSearch
  */
-namespace Wikia\Search\QueryService\Select;
+namespace Wikia\Search\QueryService\Select\Dismax;
 use Wikia\Search\Utilities;
 /**
  * Class responsible for video search. Not totally sure we're using this for video search presently.
@@ -17,6 +17,32 @@ class Video extends OnWiki
 	 * @var int
 	 */
 	const VIDEO_WIKI_ID = 298117;
+	
+	/**
+	 * Adding English title to requested fields for i18n 
+	 * @var array
+	 */
+	protected $requstedFields = [
+				'id',
+				'pageid',
+				'wikiarticles',
+				'wikititle',
+				'url',
+				'wid',
+				'canonical',
+				'host',
+				'ns',
+				'indexed',
+				'backlinks',
+				'title',
+				'score',
+				'created',
+				'views',
+				'categories',
+				'hub',
+				'lang',
+				'title_en',
+			];
 	
 	// skipping boost functions
 	protected $boostFunctions = array();
