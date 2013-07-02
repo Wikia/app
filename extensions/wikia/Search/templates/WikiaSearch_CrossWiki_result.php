@@ -4,7 +4,8 @@
 	if (! empty( $image ) ) {
 		$imageURL = ImagesService::getImageSrcByTitle( (new CityVisualization)->getTargetWikiId( $result['lang_s'] ), $result['image_s'], 180, 120 );
 		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-thumb"';
-	} else {
+	}
+	if ( empty( $imageURL ) ) {
 		// display placeholder image if no thumbnail
 		$imageURL = $wgExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png';
 		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-no-thumb"';

@@ -265,7 +265,11 @@ abstract class AbstractSelect
 	 * @return array
 	 */
 	protected function getRequestedFields() {
-		return array_merge( $this->requestedFields, $this->getConfig()->getRequestedFields() );
+		$fields = [];
+		foreach ( $this->requestedFields as $field ) {
+			$fields[] = Utilities::field( $field );
+		}
+		return array_merge( $fields, $this->getConfig()->getRequestedFields() );
 	}
 	
 	/**

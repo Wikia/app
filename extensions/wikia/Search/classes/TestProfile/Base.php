@@ -19,7 +19,7 @@ class Base
 	 * Query fields to boosts for the main core
 	 * @var array
 	 */
-	public static $defaultQueryFields = [
+	protected $defaultQueryFields = [
 			'title'             => 100,
 			'html'              => 5,
 			'redirect_titles'   => 50,
@@ -32,7 +32,7 @@ class Base
 	 * Query fields to boost for the cross-wiki core
 	 * @var unknown_type
 	 */
-	public static $interwikiQueryFields = [
+	protected $interWikiQueryFields = [
 			'headline_txt' => 300,
 			'description' => 250,
 			'categories' => 50,
@@ -46,7 +46,7 @@ class Base
 	 * Language-specific fields added for i18n
 	 * @var unknown_type
 	 */
-	public static $videoQueryFields = [
+	protected $videoQueryFields = [
 			'title'                 => 100,
 			'html'                  => 5,
 			'redirect_titles'       => 50,
@@ -64,13 +64,13 @@ class Base
 	 */
 	public function getQueryFieldsToBoosts( $queryService = null ) {
 		switch ( $queryService ) {
-		    case 'Wikia\\Search\\QueryService\\Select\\Dismax\\InterWiki':
-		    case 'Wikia\\Search\\QueryService\\Select\\Lucene\\CrossWikiLucene':
-		    	return self::$interWikiQueryFields;
+		    case '\\Wikia\\Search\\QueryService\\Select\\Dismax\\InterWiki':
+		    case '\\Wikia\\Search\\QueryService\\Select\\Lucene\\CrossWikiLucene':
+		    	return $this->interWikiQueryFields;
 		    case 'Wikia\\Search\\QueryService\\Select\\Dismax\\Video':
-		    	return self::$videoQueryFields;
+		    	return $this->videoQueryFields;
 		}
-		return self::$defaultQueryFields;
+		return $this->defaultQueryFields;
 	}
 	
 }
