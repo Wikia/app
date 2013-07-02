@@ -85,8 +85,6 @@ class InterWiki extends AbstractSelect
 		if ( $this->config->getPage() > 1 ) {
 			$this->config->setStart( ( $this->config->getPage() - 1 ) * $this->config->getLength() );
 		}
-		// @todo config needs requested fields set dynamically
-		$this->config->setRequestedFields( [ 'id', 'headline_txt', 'wam_i', 'description', 'sitename_txt', 'url', 'videos_i', 'images_i', 'image_s', 'hot_b', 'promoted_b', 'new_b', 'official_b', 'hub_s', 'lang_s' ] );
 		return $this;
 	}
 	
@@ -125,19 +123,4 @@ class InterWiki extends AbstractSelect
 		}
 		return sprintf( '%s', implode( ' AND ', $queryClauses ) );
 	}
-
-	/**
-	 * Return a string of query fields based on configuration
-	 * @todo since this gets repeated across OnWiki as well, this is an another indicator that we need additional class layers
-	 * @return string
-	 */
-	protected function getQueryFieldsString() {
-		$queryFieldsString = '';
-		$qf = [ 'headline_txt' => 300, 'description' => 250, 'categories' => 50, 'articles' => 75, 'top_categories' => 150, 'top_articles' => 200, 'sitename_txt' => 500 ];
-		foreach ( $qf as $field => $boost ) {
-			$queryFieldsString .= sprintf( '%s^%s ', Utilities::field( $field ), $boost );
-		}
-		return trim( $queryFieldsString );
-	}
-	
 }

@@ -16,12 +16,10 @@ namespace Wikia\Search\TestProfile;
 class Base
 {
 	/**
-	 * Used to be in the config.
-	 * Allows us to configure boosts for the provided fields.
-	 * Use the non-translated version.
+	 * Query fields to boosts for the main core
 	 * @var array
 	 */
-	protected $queryFieldsToBoosts = [
+	const QUERYFIELDS_DEFAULT = [
 			'title'             => 100,
 			'html'              => 5,
 			'redirect_titles'   => 50,
@@ -31,11 +29,39 @@ class Base
 			];
 	
 	/**
+	 * Query fields to boost for the cross-wiki core
+	 * @var unknown_type
+	 */
+	const QUERYFIELDS_INTERWIKI = [
+			'headline_txt' => 300,
+			'description' => 250,
+			'categories' => 50,
+			'articles' => 75,
+			'top_categories' => 150,
+			'top_articles' => 200,
+			'sitename_txt' => 500
+			];
+	
+	/**
+	 * Used to be in the config.
+	 * Allows us to configure boosts for the provided fields.
+	 * Use the non-translated version.
+	 * @var array
+	 */
+	protected $queryFieldsToBoostsSelector = [
+			'default' => static::QUERYFIELDS_DEFAULT,
+			'Wikia\\Search\\QueryService\\Select\\InterWiki' => static::QUERYFIELDS_INTERWIKI,
+			];
+	
+	/**
 	 * Returns query fields to be injected into the config.
 	 * @return array
 	 */
-	public function getQueryFieldsToBoosts() {
-		return $this->queryFieldsToBoosts;
+	public function getQueryFieldsToBoosts( $queryService = null ) {
+		if ( $queryService !== null && isset( $this->queryFieldsToBoostsSelector[$queryService] ) ) {
+			return $this->queryFieldsToBoostsSelector[$queryService];
+		}
+		return $this->queryFieldsToBoostsSelector['default'];
 	}
 	
 }

@@ -354,10 +354,16 @@ abstract class AbstractSelect
 	}
 	
 	/**
-	 * Returns the fields that should be queried
-	 * @return string 
+	 * Return a string of query fields based on configuration
+	 * @return string
 	 */
-	abstract protected function getQueryFieldsString();
+	protected function getQueryFieldsString() {
+		$queryFieldsString = '';
+		foreach ( $this->config->getQueryFieldsToBoosts()  as $field => $boost ) {
+			$queryFieldsString .= sprintf( '%s^%s ', Utilities::field( $field ), $boost );
+		}
+		return trim( $queryFieldsString );
+	}
 	
 	/**
 	 * Registers our query as an extended dismax query.

@@ -102,18 +102,6 @@ class OnWiki extends AbstractSelect
 	}
 	
 	/**
-	 * Return a string of query fields based on configuration
-	 * @return string
-	 */
-	protected function getQueryFieldsString() {
-		$queryFieldsString = '';
-		foreach ( $this->config->getQueryFieldsToBoosts()  as $field => $boost ) {
-			$queryFieldsString .= sprintf( '%s^%s ', Utilities::field( $field ), $boost );
-		}
-		return trim( $queryFieldsString );
-	}
-	
-	/**
 	 * Require the wiki ID we're on, and that everything is in the provided namespaces
 	 * @return string
 	 */

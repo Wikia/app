@@ -49,6 +49,79 @@ class Config
 	const RANK_LONGEST              = 'longest';
 
 	/**
+	 * Requested fields used for page-based documents.
+	 * @var array
+	 */
+	const REQUESTED_FIELDS_DEFAULT = [
+				'id',
+				'pageid',
+				'wikiarticles',
+				'wikititle',
+				'url',
+				'wid',
+				'canonical',
+				'host',
+				'ns',
+				'indexed',
+				'backlinks',
+				'title',
+				'score',
+				'created',
+				'views',
+				'categories',
+				'hub',
+				'lang',
+			];
+	
+	/**
+	 * Because the video wiki is English, we need to explicitly request English fields to support int'l video search.
+	 * @var array
+	 */
+	const REQUESTED_FIELDS_VIDEO = [
+				'id',
+				'pageid',
+				'wikiarticles',
+				'wikititle',
+				'url',
+				'wid',
+				'canonical',
+				'host',
+				'ns',
+				'indexed',
+				'backlinks',
+				'title',
+				'score',
+				'created',
+				'views',
+				'categories',
+				'hub',
+				'lang',
+				'title_en',
+			];
+	
+	/**
+	 * These requested fields reflect the separate cross-wiki core.
+	 * @var array
+	 */
+	const REQUESTED_FIELDS_INTERWIKI = [
+				'id',
+				'headline_txt',
+				'wam_i',
+				'description',
+				'sitename_txt',
+				'url',
+				'videos_i',
+				'images_i',
+				'image_s',
+				'hot_b',
+				'promoted_b',
+				'new_b',
+				'official_b',
+				'hub_s',
+				'lang_s'
+			];
+	
+	/**
 	 * The value we use for pagination
 	 * @var int
 	 */
@@ -129,29 +202,21 @@ class Config
 	protected $ABTestGroup;
 	
 	/**
-	 * The usual requested fields
+	 * This dynamically supports specific requested fields based on the desired QueryService.
 	 * @var array
 	 */
-	protected $requestedFields = [
-			'id',
-			'pageid',
-			'wikiarticles',
-			'wikititle',
-			'url',
-			'wid',
-			'canonical',
-			'host',
-			'ns',
-			'indexed',
-			'backlinks',
-			'title',
-			'score',
-			'created',
-			'views',
-			'categories',
-			'hub',
-			'lang',
+	protected $requestedFieldSelector = [
+			'default' => self::REQUESTED_FIELDS_DEFAULT,
+			'Wikia\\Search\\QueryService\\Select\\Video' => self::REQUESTED_FIELDS_VIDEO,
+			'Wikia\\Search\\QueryService\\Select\\VideoEmbedTool' => self::REQUESTED_FIELDS_VIDEO,
+			'Wikia\\Search\\QueryService\\Select\\InterWiki' => self::REQUESTED_FIELDS_INTERWIKI,
 	];
+	
+	/**
+	 * Storage for requested fields
+	 * @array
+	 */
+	protected $requestedFields;
 	
 	/**
 	 * Allows us to configure boosts for the provided fields.
@@ -568,6 +633,15 @@ class Config
 	 */
 	public function getRequestedFields()
 	{
+		if ( $this->requestedFields === null ) {
+			$queryService = $this->getQueryService();
+			if ( isset( $this->requestedFieldSelector[$queryService] ) ) {
+				$this->requestedFields = $this->requestedFieldSelector[$queryService];
+			} else {
+				$this->requestedFields = $this->requestedFieldSelector['default'];
+			}
+		}
+		
 		$fieldsPrepped = array();
 		foreach ( $this->requestedFields as $field ) {
 			$fieldsPrepped[] = Utilities::field( $field );
@@ -576,9 +650,6 @@ class Config
 		if (! ( in_array( 'id', $fieldsPrepped ) || in_array( '*', $fieldsPrepped ) ) ) {
 			$fieldsPrepped[] = 'id';
 		} 
-		if ( $this->getQueryService() == '\\Wikia\Search\\QueryService\\Select\\Video' ) {
-			$fieldsPrepped[] = 'title_en'; 
-		}
 		
 		return $fieldsPrepped;
 	}
