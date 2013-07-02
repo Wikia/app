@@ -21,14 +21,22 @@ $width-outside-max: 1600px;
 $width-outside-max-half: $width-outside-max / 2;
 $width-padding: $width-gutter / 2;
 
-// The fluid background will be disabled if:
-// - The background image is tiled.
-// - The background image height is zero.
-// - The background image width is less than the default skin width.
+// Default values so Sass doesn't puke all over itself
+$offset-background-image: 0;
+$offset-background-image-gradient: 0;
+$offset-background-image-gradient-max: 0;
+$offset-background-image-max: 0;
+$width-background-image-slice: 0;
+
 $is-fluid-width-background-enabled: true;
-@if ( $background-tiled == true or $height-background-image == 0 or $width-background-image < $width-outside ) {
+@if (
+	$background-tiled == true or
+	$height-background-image == 0 or
+	$width-background-image <= $width-outside
+) {
 	$is-fluid-width-background-enabled: false;
 
+// This saves some processing time if we don't actually need these values
 } @else {
 
 	// The offset, from the left and right sides of the viewport, that the images need
