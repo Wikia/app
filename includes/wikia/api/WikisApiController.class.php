@@ -64,8 +64,8 @@ class WikisApiController extends WikiaApiController {
 		}
 
 		$this->response->setCacheValidity(
-			604800 /* 604800 1 week */,
-			604800 /* 604800 1 week */,
+			604800 /* 1 week */,
+			604800 /* 1 week */,
 			array(
 				WikiaResponse::CACHE_TARGET_BROWSER,
 				WikiaResponse::CACHE_TARGET_VARNISH
