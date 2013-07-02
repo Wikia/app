@@ -51,6 +51,11 @@ class WikisApiController extends WikiaApiController {
 		$langs = $this->request->getArray( self::PARAMETER_LANGUAGES );
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
 		$batch = $this->request->getInt( 'batch', 1 );
+
+		if ( !empty( $langs ) &&  count($langs) > self::LANGUAGES_LIMIT) {
+			throw new LimitExceededApiException( self::PARAMETER_LANGUAGES, self::LANGUAGES_LIMIT );
+		}
+
 		$results = self::$model->getTop( $langs, $hub );
 		$batches = wfPaginateArray( $results, $limit, $batch );
 
