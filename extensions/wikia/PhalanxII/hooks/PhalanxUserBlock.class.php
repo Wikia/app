@@ -10,7 +10,6 @@ class PhalanxUserBlock extends WikiaObject {
 	private static $typeBlock = null;
 	function __construct(){
 		parent::__construct();
-		F::setInstance( __CLASS__, $this );
 	}
 	
 	/**
