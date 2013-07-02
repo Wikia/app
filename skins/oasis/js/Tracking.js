@@ -321,9 +321,10 @@ jQuery(function($){
 		}, trackWithEventData).on('mousedown', '.wikia-button', function(e) {
 			// Prevent tracking 'fake' form submission clicks
 			if (e.which === 1 && e.clientX > 0) {
+				var label = (!suggestionShowed) ? 'search-button' : 'search-after-suggest-button';
 				track({
 					category: category,
-					label: 'search-button'
+					label: label
 				});
 			}
 		}).on('keypress', '[name=search]', function(e) {
