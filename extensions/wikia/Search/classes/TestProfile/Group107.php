@@ -15,7 +15,7 @@ class Group107 extends Base
 	 * Use the non-translated version.
 	 * @var array
 	 */
-	const QUERYFIELDS_DEFAULT = [
+	protected $defaultQueryFields = [
 			'title'             => 5,
 			'html'              => 5,
 			'redirect_titles'   => 50,
