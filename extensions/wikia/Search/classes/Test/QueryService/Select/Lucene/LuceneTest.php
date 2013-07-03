@@ -10,7 +10,7 @@ use Wikia, ReflectionProperty, ReflectionMethod;
 class LuceneTest extends Wikia\Search\Test\BaseTest {
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\Lucene\Lucene::getFormulatedQuery
+	 * @covers Wikia\Search\QueryService\Select\Lucene\Lucene::getQuery
 	 */
 	public function testGetQuery() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery' ) );
