@@ -269,5 +269,38 @@ class AbstractDismaxTest extends BaseTest
 		);
 	}
 	
+	/**
+	 * @covers Wikia\Search\QueryService\Select\Dismax\AbstractDismax::registerNonDismaxComponents
+	 */
+	public function testRegisterNonDismaxComponents() {
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\AbstractDismax' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( [ null ] )
+		                   ->getMockForAbstractClass();
+		$mockQuery = $this->getMockBuilder( 'Solarium_Query_Select' )
+		                  ->disableOriginalConstructor()
+		                  ->getMock();
+		$register = new ReflectionMethod( $mockSelect, 'registerNonDismaxComponents' );
+		$register->setAccessible( true );
+		$this->assertEquals(
+				$mockSelect,
+				$register->invoke( $mockSelect, $mockQuery )
+		);
+	}
 	
+	/**
+	 * @covers Wikia\Search\QueryService\Select\Dismax\AbstractDismax::getBoostQueryString
+	 */
+	public function testGetBoostQueryString() {
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\AbstractDismax' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( [ null ] )
+		                   ->getMockForAbstractClass();
+		$get = new ReflectionMethod( $mockSelect, 'getBoostQueryString' );
+		$get->setAccessible( true );
+		$this->assertEquals(
+				'',
+				$get->invoke( $mockSelect )
+		);
+	}
 }

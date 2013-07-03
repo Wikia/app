@@ -112,7 +112,6 @@ class OnWiki extends AbstractDismax
 	 */
 	protected function getFilterQueryString()
 	{
-		return '';
 		$namespaces = [];
 		foreach ( $this->config->getNamespaces() as $ns ) {
 			$namespaces[] = Utilities::valueForField( 'ns', $ns );
