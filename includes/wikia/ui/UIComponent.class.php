@@ -64,18 +64,38 @@ class UIComponent {
 		}
 	}
 
+	/**
+	 * @desc Returns template path
+	 * @return String
+	 */
 	public function getTemplate() {
 		return $this->templatePath;
 	}
 
+	/**
+	 * @desc Sets template variables and theri values
+	 * 
+	 * @param array $varsArray an array with key=>value structure; 
+	 * key is the template variable name and the second is its value
+	 */
 	public function setValues( Array $varsArray ) {
 		$this->templateData = $varsArray;
 	}
 
+	/**
+	 * @desc Gets template variables and their values
+	 * 
+	 * @return Array
+	 */
 	public function getValues() {
 		return $this->templateData;
 	}
 
+	/**
+	 * @desc Checks if all required variables are set; throws an exception if not
+	 * 
+	 * @throws WikiaUIDataException
+	 */
 	private function validateTemplateVars() {
 		foreach ( $this->templateVarsConfig['required'] as $templateRequiredVarName ) {
 			if ( ! isset( $this->templateData[ $templateRequiredVarName ] ) ) {
