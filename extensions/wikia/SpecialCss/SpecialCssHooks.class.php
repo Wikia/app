@@ -21,8 +21,8 @@ class SpecialCssHooks {
 	}
 
 	/**
-	 * @param $app
-	 * @param $model SpecialCssModel
+	 * @param WikiaApp $app
+	 * @param SpecialCssModel $model 
 	 * @param integer $articleId
 	 *
 	 * @return boolean
@@ -33,6 +33,9 @@ class SpecialCssHooks {
 			return false;
 		}
 
+		/** @noinspection PhpUndefinedVariableInspection 
+		 * SpecialCssModel::$suppoertedSkins is defined -- lint has issues with it 
+		 */
 		return $app->wg->EnableSpecialCssExt
 			&& $model->isWikiaCssArticle( $articleId )
 			&& $app->checkSkin( $model::$supportedSkins )
@@ -45,7 +48,7 @@ class SpecialCssHooks {
 	 * @param WikiPage $page
 	 * @param Revision $revision
 	 *
-	 * @return true because it's a hook
+	 * @return boolean true because it's a hook
 	 */
 	static public function onArticleSaveComplete( $page, $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, $status, $baseRevId ) {
 		$app = F::app();
@@ -78,6 +81,7 @@ class SpecialCssHooks {
 	}
 
 	static private function getCategoriesFromTitle( $title, $useMaster = false ) {
+		/** @var $title Title */
 		return ( $title instanceof Title ) ? self::removeNamespace( array_keys( $title->getParentCategories( $useMaster ) ) ) : [];
 	}
 
@@ -156,13 +160,12 @@ class SpecialCssHooks {
 	 * @param String $reason
 	 * @param $error
 	 *
-	 * @return true because it's a hook
+	 * @return boolean true because it's a hook
 	 */
 	static public function onArticleDelete( &$page, &$user, &$reason, &$error ) {
 		$app = F::app();
 		if ( in_array( $app->wg->DBname, $app->wg->CssUpdatesLangMap ) ) {
 			$title = $page->getTitle();
-			$categories = static::getCategoriesFromTitle( $title );
 			static::purgeCacheDependingOnCats( $title, 'because a post within the category was deleted' );
 		}
 
@@ -181,7 +184,6 @@ class SpecialCssHooks {
 	static public function onArticleUndelete( $title, $created, $comment ) {
 		$app = F::app();
 		if ( in_array( $app->wg->DBname, $app->wg->CssUpdatesLangMap ) ) {
-			$categories = static::getCategoriesFromTitle( $title );
 			static::purgeCacheDependingOnCats( $title, 'because a post from its category was restored' );
 		}
 
