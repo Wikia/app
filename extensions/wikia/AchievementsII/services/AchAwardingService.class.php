@@ -14,18 +14,18 @@ class AchAwardingService {
 	var $mNewBadges = array();
 	var $mCounters;
 	var $mUserCountersService;
-        private $mCityId;
+	private $mCityId;
 
 	private static $mDone = false;
 
-        public function __construct( $city_id = null ) {
-            if ( is_null( $city_id ) ) {
-                global $wgCityId;
-                $this->mCityId = $wgCityId;
-            } else {
-                $this->mCityId = $city_id;
-            }
-        }
+	public function __construct( $city_id = null ) {
+		if ( is_null( $city_id ) ) {
+			global $wgCityId;
+			$this->mCityId = $wgCityId;
+		} else {
+			$this->mCityId = $city_id;
+		}
+	}
 
 	public function migration($user_id)  {
 		wfProfileIn(__METHOD__);
@@ -397,24 +397,24 @@ class AchAwardingService {
 							$imageUsageCount = 0;
 							$imageUsageLimit = 10;
 							$params = array(
-							        'action' => 'query',
-							        'list' => 'imageusage',
-							        'iutitle' => "File:{$inserted_image['il_to']}",
-							        'iulimit' => $imageUsageLimit,
+								'action' => 'query',
+								'list' => 'imageusage',
+								'iutitle' => "File:{$inserted_image['il_to']}",
+								'iulimit' => $imageUsageLimit,
 							);
 
 							try {
-							        wfProfileIn(__METHOD__ . '::apiCall');
+								wfProfileIn(__METHOD__ . '::apiCall');
 
-							        $api = new ApiMain(new FauxRequest($params));
-							        $api->execute();
-							        $res = $api->getResultData();
+								$api = new ApiMain(new FauxRequest($params));
+								$api->execute();
+								$res = $api->getResultData();
 
-							        wfProfileOut(__METHOD__ . '::apiCall');
+								wfProfileOut(__METHOD__ . '::apiCall');
 
-							        if (is_array($res['query']['imageusage'])) {
-							              $imageUsageCount = count($res['query']['imageusage']);
-							        }
+								if (is_array($res['query']['imageusage'])) {
+									$imageUsageCount = count($res['query']['imageusage']);
+								}
 							}
 							catch(Exception $e) {};
 
