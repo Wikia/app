@@ -22,11 +22,13 @@ class SpecialCssModelTest extends WikiaBaseTest {
 			->with($params, false)
 			->will($this->returnValue(self::FULL_URL_EXAMPLE));
 
+		/** @var $specialCssModelMock PHPUnit_Framework_MockObject_MockObject */
 		$specialCssModelMock = $this->getMock('SpecialCssModel', array('getSpecialCssTitle'));
 		$specialCssModelMock->expects($this->once())
 			->method('getSpecialCssTitle')
 			->will($this->returnValue($titleMock));
 
+		/** @var $specialCssModelMock SpecialCssModel */
 		$result = $specialCssModelMock->getSpecialCssUrl($fullUrl, $params);
 		$this->assertEquals($expected, $result);
 	}
@@ -45,6 +47,7 @@ class SpecialCssModelTest extends WikiaBaseTest {
 	 */
 	public function testGetCssFileContent($expected, $articleContent) {
 		if (isset($articleContent)) {
+			/** @var $fileArticle PHPUnit_Framework_MockObject_MockObject */
 			$fileArticle = $this->getMock('Article', array('getContent'), [new Title()]);
 			$fileArticle->expects($this->any())
 				->method('getContent')
@@ -53,11 +56,13 @@ class SpecialCssModelTest extends WikiaBaseTest {
 			$fileArticle = null;
 		}
 
+		/** @var $specialCssModelMock PHPUnit_Framework_MockObject_MockObject */
 		$specialCssModelMock = $this->getMock('SpecialCssModel', array('getCssFileArticle'));
 		$specialCssModelMock->expects($this->any())
 			->method('getCssFileArticle')
 			->will($this->returnValue($fileArticle));
 
+		/** @var $specialCssModelMock SpecialCssModel */
 		$this->assertEquals($expected, $specialCssModelMock->getCssFileContent());
 	}
 
@@ -239,11 +244,13 @@ class SpecialCssModelTest extends WikiaBaseTest {
 	 */
 	public function testGetCommunityDbName($langCode, $expectedDbName) {
 		$this->mockGlobalVariable('wgCssUpdatesLangMap', $this->getCssUpdateLangMap());
+		/** @var $specialCssModelMock PHPUnit_Framework_MockObject_MockObject */
 		$specialCssModelMock = $this->getMock('SpecialCssModel', array('getCssUpdateLang'));
 		$specialCssModelMock->expects($this->any())
 			->method('getCssUpdateLang')
 			->will($this->returnValue($langCode));
 
+		/** @var $specialCssModelMock SpecialCssModel */
 		$dbName = $specialCssModelMock->getCommunityDbName();
 		$this->assertEquals($expectedDbName, $dbName);
 	}
@@ -318,6 +325,7 @@ class SpecialCssModelTest extends WikiaBaseTest {
 		$specialCssModelMock = $this->getMock('SpecialCssModel', null);
 		$this->mockGlobalVariable('wgLang', $langMock);
 
+		/** @var $specialCssModelMock SpecialCssModel */
 		$cssLang = $specialCssModelMock->getCssUpdateLang();
 		$this->assertEquals($expectedLang, $cssLang);
 	}
@@ -377,6 +385,7 @@ class SpecialCssModelTest extends WikiaBaseTest {
 
 	private function getCssUpdateLangMap() {
 		require( dirname(__FILE__) . '/../SpecialCss.setup.php');
+		global $wgCssUpdatesLangMap;
 		return $wgCssUpdatesLangMap;
 	}
 }

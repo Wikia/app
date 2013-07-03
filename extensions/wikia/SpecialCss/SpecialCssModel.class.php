@@ -62,10 +62,11 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Returns Wikia.css article's content
 	 *
-	 * @return Return|string
+	 * @return string
 	 */
 	public function getCssFileInfo() {
 		$out = false;
+		/** @var $cssArticle Article */
 		$cssArticle = $this->getCssFileArticle( $this->getCssFileArticleId() );
 		if ($cssArticle instanceof Article) {
 			$out = [
@@ -79,7 +80,7 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Returns Wikia.css article's content
 	 *
-	 * @return Return|string
+	 * @return string
 	 */
 	public function getCssFileContent() {
 		$cssArticle = $this->getCssFileArticle( $this->getCssFileArticleId() );
@@ -217,8 +218,8 @@ class SpecialCssModel extends WikiaModel {
 					return false;
 				}
 			}
-			$article = new Article( $cssTitle );
-			$status = $article->doEdit($content, $summary, $flags, false, $user);
+			$page = new WikiPage( $cssTitle );
+			$status = $page->doEdit($content, $summary, $flags, false, $user);
 			return $status;
 		}
 		return Status::newFatal('special-css-saving-internal-error');
@@ -512,6 +513,7 @@ class SpecialCssModel extends WikiaModel {
 	 * @return string language code
 	 */
 	public function getCssUpdateLang() {
+		/** @var $wgLang Language */
 		global $wgLang, $wgCssUpdatesLangMap;
 
 		$langCode = $wgLang->getCode();
@@ -526,7 +528,7 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Returns database name for getting CSS updates in selected language
 	 *
-	 * @param $lang language code
+	 * @param string $lang language code
 	 * @return string database name
 	 */
 	private function getDbNameByLang($lang) {
