@@ -22,6 +22,7 @@ $wgAutoloadClasses['SpecialCssModel'] =  $dir . 'SpecialCssModel.class.php';
 $wgAutoloadClasses['SpecialCssHooks'] =  $dir . 'SpecialCssHooks.class.php';
 
 // classes
+/** @noinspection PhpDeprecationInspection */
 F::app()->registerController(
 	'SpecialCssController', 
 	$dir . 'SpecialCssController.class.php',
@@ -29,7 +30,7 @@ F::app()->registerController(
 );
 
 /**
- * @global Array The list of hooks.
+ * @global Array $wgHooks The list of hooks.
  * 
  * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
  * @see http://www.mediawiki.org/wiki/Manual:Hooks/AlternateEdit
@@ -57,3 +58,14 @@ $wgGroupPermissions['util']['specialcss'] = true;
 $wgGroupPermissions['vstf']['specialcss'] = false;
 $wgGroupPermissions['helper']['specialcss'] = false;
 $wgGroupPermissions['sysop']['specialcss'] = true;
+
+//mapping community central language to it's database name
+$wgCssUpdatesLangMap = array (
+	'en' => 'wikia',
+	'pl' => 'plwikia',
+	'de' => 'de',
+	'fr' => 'frfr',
+	'es' => 'es',
+	'ru' => 'ruwikia',
+	'it' => 'it',
+);

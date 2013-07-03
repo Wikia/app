@@ -1037,7 +1037,7 @@ class WikiFactory {
 
 	static public function getLocalEnvURL( $url ) {
 		// first - normalize URL
-		$regexp = '/^http:\/\/([^\/]+)\/(.*)$/';
+		$regexp = '/^http:\/\/([^\/]+)\/?(.*)?$/';
 		if(preg_match( $regexp, $url, $groups ) === 0) {
 			// on fail at least return original url
 			return $url;
@@ -1045,6 +1045,10 @@ class WikiFactory {
 		$server = $groups[1];
 		$address = $groups[2];
 		$devbox = '';
+
+		if ( !empty($address) ) {
+			$address = '/' . $address;
+		}
 
 		// what do we use?
 		//  en.wikiname.wikia.com
@@ -1054,7 +1058,7 @@ class WikiFactory {
 		//  en.wikiname.developer.wikia-dev.com
 		//  wikiname.developer.wikia-dev.com
 
-		$servers = array( 'preview.', 'sandboxs1.', 'verify.' );
+		$servers = array( 'preview.', 'sandbox-s1.', 'verify.' );
 		foreach( $servers as $serv ) {
 			if( strpos( $server, $serv ) === 0 ) {
 				$server = substr( $server, strlen( $serv ) );
@@ -1082,26 +1086,26 @@ class WikiFactory {
 			$domains = WikiFactory::getDomains($wgCityId);
 			$domains[] = "localhost";
 			if(empty($wgDevelEnvironment)) {
-				return 'http://' . $domains[0] . '/'.$address;
+				return 'http://' . $domains[0] . $address;
 			} else {
 				$hostname = str_replace('dev-','',gethostname()) . '.wikia-dev.com';
 				$domain = str_replace( 'wikia.com', $hostname, $domains[0] );
-				return 'http://' . $domain .  '/'.$address;
+				return 'http://' . $domain . $address;
 			}
 		}
 
 		$servername = $_SERVER['SERVER_NAME'];
 		if( strpos( $servername, 'preview.' ) !== false ) {
-			return 'http://preview. ' . $server . '.wikia.com/'.$address;
+			return 'http://preview.' . $server . '.wikia.com'.$address;
 		}
 		if( strpos( $servername, 'verify.' ) !== false ) {
-			return 'http://verify. ' . $server . '.wikia.com/'.$address;
+			return 'http://verify.' . $server . '.wikia.com'.$address;
 		}
-		if( strpos( $servername, 'sandboxs1.' ) !== false ) {
-			return 'http://sandbox. ' . $server . '.wikia.com/'.$address;
+		if( strpos( $servername, 'sandbox-s1.' ) !== false ) {
+			return 'http://sandbox-s1.' . $server . '.wikia.com'.$address;
 		}
 		if( preg_match( $regexp, $servername, $groups ) === 1 ) {
-			return 'http://' . $server . '.' . $groups[1] . '.wikia-dev.com/'.$address;
+			return 'http://' . $server . '.' . $groups[1] . '.wikia-dev.com'.$address;
 		}
 
 		// by default return original address

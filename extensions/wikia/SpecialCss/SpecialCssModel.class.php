@@ -4,40 +4,47 @@ class SpecialCssModel extends WikiaModel {
 	 * @desc The article page name of CSS file of which content we display in the editor
 	 */
 	const CSS_FILE_NAME = 'Wikia.css';
-	
+
+	/**
+	 * @desc Default language for CSS Updates
+	 */
+	const CSS_DEFAULT_LANG = 'en';
+
 	/**
 	 * @desc User avatar size
 	 */
 	const USER_AVATAR_SIZE = 25;
-	
+
 	/**
 	 * @desc The category of blogposts we pull data from
 	 */
 	const UPDATES_CATEGORY = 'CSS_Updates';
-	
+
 	/**
 	 * @desc The section number we pull content from
 	 */
 	const UPDATE_SECTION_IN_BLOGPOST = 2;
-	
+
 	/**
 	 * @desc Regex pattern used to extract h3 tags
-	 * 
-	 * @see SpecialCssModel::removeHeadline(removeFirstH3 
+	 *
+	 * @see SpecialCssModel::removeHeadline(removeFirstH3
 	 * @see SpecialCssModel::addAnchorToPostUrl(getAnchorFromWikitext
 	 */
 	const WIKITEXT_H3_PATTERN = '/([^=]|^)={3}([^=]+)={3}([^=]|$)/';
-	
+
 	/**
 	 * @desc Limit of characters per one post snippet
 	 */
 	const SNIPPET_CHAR_LIMIT = 150;
-	
+
 	/**
 	 * @desc Memcache key for CSS Updates
 	 */
 	const MEMC_KEY = 'css-chrome-updates';
-	
+
+	protected $dbName;
+
 	/**
 	 * @var array List of skins for which we would like to use SpecialCss for editing css file
 	 */
@@ -45,7 +52,7 @@ class SpecialCssModel extends WikiaModel {
 
 	/**
 	 * @desc Retruns css file name
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getCssFileName() {
@@ -54,11 +61,12 @@ class SpecialCssModel extends WikiaModel {
 
 	/**
 	 * @desc Returns Wikia.css article's content
-	 * 
-	 * @return Return|string
+	 *
+	 * @return string
 	 */
 	public function getCssFileInfo() {
 		$out = false;
+		/** @var $cssArticle Article */
 		$cssArticle = $this->getCssFileArticle( $this->getCssFileArticleId() );
 		if ($cssArticle instanceof Article) {
 			$out = [
@@ -70,8 +78,18 @@ class SpecialCssModel extends WikiaModel {
 	}
 
 	/**
+	 * @desc Returns Wikia.css article's content
+	 *
+	 * @return string
+	 */
+	public function getCssFileContent() {
+		$cssArticle = $this->getCssFileArticle( $this->getCssFileArticleId() );
+		return ($cssArticle instanceof Article) ? $cssArticle->getContent() : '';
+	}
+
+	/**
 	 * @desc Returns Title instance for Wikia.css article or null
-	 * 
+	 *
 	 * @return null|Title
 	 */
 	public function getCssFileTitle() {
@@ -80,15 +98,15 @@ class SpecialCssModel extends WikiaModel {
 
 	/**
 	 * @desc Returns article id of Wikia.css or null
-	 * 
+	 *
 	 * @return int|null
 	 */
 	public function getCssFileArticleId() {
 		wfProfileIn(__METHOD__);
-		
+
 		$title = $this->getCssFileTitle();
 		$articleId = null;
-		
+
 		if( $title instanceof Title ) {
 			$articleId = $this->getCssFileTitle()->getArticleId();
 		}
@@ -99,7 +117,7 @@ class SpecialCssModel extends WikiaModel {
 
 	/**
 	 * @desc Returns an article instance from given article id
-	 * 
+	 *
 	 * @param $articleId
 	 * @return Article|null
 	 */
@@ -109,7 +127,7 @@ class SpecialCssModel extends WikiaModel {
 
 	/**
 	 * @desc Compares passed article id with Wikia.css article id
-	 * 
+	 *
 	 * @param $articleId
 	 * @return bool
 	 */
@@ -126,7 +144,7 @@ class SpecialCssModel extends WikiaModel {
 	 */
 	public function getSpecialCssUrl($full = false, $params = null) {
 		wfProfileIn(__METHOD__);
-		
+
 		$title = $this->getSpecialCssTitle();
 		if( !$full ) {
 			$url = $title->getLocalURL( $params );
@@ -140,7 +158,7 @@ class SpecialCssModel extends WikiaModel {
 
 	/**
 	 * @desc Returns Title instance for Special:CSS page
-	 * 
+	 *
 	 * @return Title
 	 */
 	public function getSpecialCssTitle() {
@@ -200,8 +218,8 @@ class SpecialCssModel extends WikiaModel {
 					return false;
 				}
 			}
-			$article = new Article( $cssTitle );
-			$status = $article->doEdit($content, $summary, $flags, false, $user);
+			$page = new WikiPage( $cssTitle );
+			$status = $page->doEdit($content, $summary, $flags, false, $user);
 			return $status;
 		}
 		return Status::newFatal('special-css-saving-internal-error');
@@ -215,8 +233,12 @@ class SpecialCssModel extends WikiaModel {
 	 * @return array
 	 */
 	public function getCssUpdatesData($postsParams = [], $revisionsParams = []) {
+		$dbName = $this->getCommunityDbName();
 		$cssUpdatesPosts = WikiaDataAccess::cache(
-			wfSharedMemcKey(self::MEMC_KEY),
+			wfSharedMemcKey(
+				self::MEMC_KEY,
+				$dbName
+			),
 			60 * 60 * 24,
 			function () use ($postsParams, $revisionsParams) {
 				$cssUpdatesPosts = [];
@@ -230,7 +252,7 @@ class SpecialCssModel extends WikiaModel {
 						$cssUpdatesPosts[] = $this->prepareCssUpdateData($cssRevisionsData, $postData);
 					}
 				}
-				
+
 				return $cssUpdatesPosts;
 			}
 		);
@@ -255,10 +277,10 @@ class SpecialCssModel extends WikiaModel {
 
 	/**
 	 * @desc Returns an array with correct elements from given api results
-	 * 
+	 *
 	 * @param array $cssRevisionsData results from API call with request of revision's info
 	 * @param array $postData results from API call with request of posts (articles) list in a category
-	 * 
+	 *
 	 * @return array
 	 */
 	private function prepareCssUpdateData($cssRevisionsData, $postData) {
@@ -271,14 +293,16 @@ class SpecialCssModel extends WikiaModel {
 			'timestamp' => '',
 			'text' => '',
 		];
-		
+
 		$pageId = $postData['pageid'];
-		$blogTitle = GlobalTitle::newFromText( $postData['title'], NS_MAIN, WikiFactory::COMMUNITY_CENTRAL );
+		$communityWikiId = WikiFactory::DBtoID( $this->getCommunityDbName() );
+		
+		$blogTitle = GlobalTitle::newFromText( $postData['title'], NS_MAIN, $communityWikiId );
 		$blogTitleText = $blogTitle->getText();
 
 		$lastRevisionUser = $cssRevisionsData[$pageId]['revisions'][0]['user'];
 		$blogUser = $this->getUserFromTitleText( $blogTitleText, $lastRevisionUser);
-		$userPage = GlobalTitle::newFromText( $blogUser, NS_USER, WikiFactory::COMMUNITY_CENTRAL );
+		$userPage = GlobalTitle::newFromText( $blogUser, NS_USER, $communityWikiId );
 
 		if( $blogTitle instanceof GlobalTitle && $userPage instanceof GlobalTitle ) {
 			$timestamp = $cssRevisionsData[$pageId]['revisions'][0]['timestamp'];
@@ -286,7 +310,7 @@ class SpecialCssModel extends WikiaModel {
 
 			$cssUpdatePost = [
 				'title' => $this->getAfterLastSlashText( $blogTitleText ),
-				'url' => trim( $this->getFormattedUrl($blogTitle->getFullURL()) . $this->getAnchorFromWikitext( $sectionText ) ),
+				'url' => trim( $blogTitle->getFullURL() . $this->getAnchorFromWikitext( $sectionText ) ),
 				'userAvatar' => AvatarService::renderAvatar( $blogUser, 25 ),
 				'userUrl' => $userPage->getFullUrl(),
 				'userName' => $blogUser,
@@ -294,66 +318,66 @@ class SpecialCssModel extends WikiaModel {
 				'text' => $this->getPostSnippet($blogTitle, $sectionText),
 			];
 		}
-		
+
 		return $cssUpdatePost;
 	}
 
 	/**
 	 * @desc Removes wikitext H3, truncates $sectionText and parse wikitext
-	 * 
+	 *
 	 * @param Title $blogTitle
 	 * @param String $sectionText
-	 * 
+	 *
 	 * @return String
 	 */
 	private function getPostSnippet($blogTitle, $sectionText) {
 		$output = $this->removeFirstH3( $sectionText );
 		$output = $this->wg->Lang->truncate( $output, self::SNIPPET_CHAR_LIMIT, wfMessage( 'ellipsis' )->text() );
 		$output = $this->getParsedText($output, $blogTitle);
-		
+
 		return $output;
 	}
 
 	/**
 	 * @desc Gets first H3 tag content and makes an anchor of it if found
-	 * 
+	 *
 	 * @param String $sectionText
-	 * 
+	 *
 	 * @return string
 	 */
 	private function getAnchorFromWikitext( $sectionText ) {
 		$anchor = '';
 		$firstH3Tag = $this->getFirstH3Tag( $sectionText );
-		
+
 		if( !empty( $firstH3Tag ) ) {
 			$anchor .= '#' . str_replace(' ', '_', $firstH3Tag);
 		}
-		
+
 		return $anchor;
 	}
 
 	/**
 	 * @desc Removes wikitext's H3 tags from given text
-	 * 
+	 *
 	 * @param String $text
 	 * @return mixed
 	 */
 	private function removeFirstH3($text) {
 		$firstH3Tag = $this->getFirstH3Tag( $text );
-		
+
 		if( !empty( $firstH3Tag ) ) {
 			$wikitextFirstH3Tag = '===' . $firstH3Tag . '===';
 			$text = str_replace( $wikitextFirstH3Tag, '', $text );
 		}
-		
+
 		return $text;
 	}
 
 	/**
 	 * @desc Uses regural expression to find first wikitext h3 tag (i.e. "=== this is a wikitext h3 tag ===") and returns it if found
-	 * 
+	 *
 	 * @param String $wikitext
-	 * 
+	 *
 	 * @return string
 	 */
 	private function getFirstH3Tag($wikitext) {
@@ -369,10 +393,10 @@ class SpecialCssModel extends WikiaModel {
 
 	/**
 	 * @desc Parse given wiki text and returns the HTML output
-	 * 
+	 *
 	 * @param String $text
 	 * @param Title $title
-	 * 
+	 *
 	 * @return mixed
 	 */
 	private function getParsedText( $text, $title ) {
@@ -382,7 +406,7 @@ class SpecialCssModel extends WikiaModel {
 
 	/**
 	 * @desc Removes from given string first slash and the string before it
-	 * 
+	 *
 	 * @param String $titleText
 	 *
 	 * @return string
@@ -390,21 +414,21 @@ class SpecialCssModel extends WikiaModel {
 	private function getAfterLastSlashText($titleText) {
 		$result = $titleText;
 		$slashPosition = mb_strrpos($titleText, '/');
-		
+
 		if( $slashPosition !== false ) {
 			$slashPosition++;
 			$result = mb_strcut( $titleText, $slashPosition );
 		}
-		
+
 		return trim( $result, '/' );
 	}
 
 	/**
 	 * @desc Gets username from title's text
-	 * 
+	 *
 	 * @param String $titleText Title::getText() result moslty
-	 * @param String $fallbackUser 
-	 * 
+	 * @param String $fallbackUser
+	 *
 	 * @return string
 	 */
 	private function getUserFromTitleText($titleText, $fallbackUser) {
@@ -412,27 +436,16 @@ class SpecialCssModel extends WikiaModel {
 		$userName = trim( $userName, '/' );
 		$userName = $this->getAfterLastSlashText($userName);
 		$userArray = explode(':', $userName);
-		
+
 		if( count($userArray) > 1 ) {
 			$userName = $userArray[1];
-		} 
-		
+		}
+
 		if( empty($userName) ) {
 			$userName = $fallbackUser;
 		}
-		
-		return $userName;
-	}
 
-	/**
-	 * @desc Only for devboxes - change url to community central
-	 */
-	private function getFormattedUrl($url) {
-		global $wgDevelEnvironment;
-		if ( $wgDevelEnvironment ) {
-			$url = str_replace('http://wikia.', 'http://community.', $url);
-		}
-		return $url;
+		return $userName;
 	}
 
 	/**
@@ -453,8 +466,8 @@ class SpecialCssModel extends WikiaModel {
 	 * @desc Returns information about 20 last revisions of CSS updates (user name, timestamp, post content)
 	 *
 	 * @param array $ids array of integers which are page ids
-	 * @param array $params: action, prop, rvprop, rvsection, pageids which are send to MW API: http://en.wikipedia.org/w/api.php 
-	 * 
+	 * @param array $params: action, prop, rvprop, rvsection, pageids which are send to MW API: http://en.wikipedia.org/w/api.php
+	 *
 	 * @return array
 	 */
 	private function getCssRevisionsApiData($ids, $params) {
@@ -469,7 +482,7 @@ class SpecialCssModel extends WikiaModel {
 	 * @desc Returns data from API based on parameters
 	 *
 	 * @param array $params more documentation: http://en.wikipedia.org/w/api.php
-	 * 
+	 *
 	 * @return mixed
 	 */
 	private function getApiData($params) {
@@ -484,17 +497,47 @@ class SpecialCssModel extends WikiaModel {
 	 *
 	 * @return string
 	 */
-	private function getCommunityDbName() {
-		global $wgDevelEnvironment;
-		$dbName = 'wikia';
-
-		if ( $wgDevelEnvironment ) {
-			$dbName = 'community';
+	public function getCommunityDbName() {
+		if ( empty($this->dbName) ) {
+			$lang = $this->getCssUpdateLang();
+			$this->dbName = $this->getDbNameByLang($lang);
 		}
+
+		return $this->dbName;
+	}
+
+	/**
+	 * @desc Returns language code for CSS updates.
+	 * If user preferred language is not supported, then is set to default (english)
+	 *
+	 * @return string language code
+	 */
+	public function getCssUpdateLang() {
+		/** @var $wgLang Language */
+		global $wgLang, $wgCssUpdatesLangMap;
+
+		$langCode = $wgLang->getCode();
+
+		if ( !array_key_exists($langCode, $wgCssUpdatesLangMap) ) {
+			$langCode = self::CSS_DEFAULT_LANG;
+		}
+
+		return $langCode;
+	}
+
+	/**
+	 * @desc Returns database name for getting CSS updates in selected language
+	 *
+	 * @param string $lang language code
+	 * @return string database name
+	 */
+	private function getDbNameByLang($lang) {
+		global $wgCssUpdatesLangMap;
+
+		$dbName = isset($wgCssUpdatesLangMap[$lang]) ? $wgCssUpdatesLangMap[$lang] : $wgCssUpdatesLangMap[self::CSS_DEFAULT_LANG];
 
 		return $dbName;
 	}
-
 
 	/**
 	 * @desc Returns array with page ids based on blog data from api
