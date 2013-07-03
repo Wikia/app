@@ -142,7 +142,7 @@ class EmailTemplatesHooksHelper {
 			'user_page_url' => $editor->getUserPage()->getFullURL(),
 			'avatar_url' => AvatarService::renderAvatar($username, self::EMAIL_AVATAR_DEFAULT_WIDTH),
 			'date' => $date,
-			'short_text' => $this->getArticleSnippet($oPostTitle->getArticleId(), 200)."..."
+			'short_text' => $this->getArticleSnippet($oPostTitle->getArticleId(), 300)
 		);
 		$postInfoHTML = $this->app->renderView( "EmailTemplates", "PostInfo", $post_info_params );
 		$keys['$POST_INFO'] = $postInfoHTML;
