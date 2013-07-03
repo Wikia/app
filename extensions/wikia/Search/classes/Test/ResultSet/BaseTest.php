@@ -47,7 +47,7 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	public function testConfigure() {
 		$mockSet = $this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
 		                ->disableOriginalConstructor()
-		                ->setMethods( array( 'prependArticleMatchIfExists', 'setResults' ) )
+		                ->setMethods( array( 'prependMatchIfExists', 'setResults' ) )
 		                ->getMock();
 		$mockResult = $this->getMockBuilder( '\Solarium_Result_Select' )
 		                   ->disableOriginalConstructor()
@@ -69,7 +69,7 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		;
 		$mockSet
 		    ->expects( $this->once() )
-		    ->method ( 'prependArticleMatchIfExists' )
+		    ->method ( 'prependMatchIfExists' )
 		    ->will   ( $this->returnValue( $mockSet ) )
 		;
 		$mockSet
