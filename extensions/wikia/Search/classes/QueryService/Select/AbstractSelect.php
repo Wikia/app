@@ -149,7 +149,6 @@ abstract class AbstractSelect
 		// this initializes the core assigned to the queryservice by default
 		$this->setCoreInClient( $this->core );
 		$this->config = $container->getConfig();
-		$this->resultSetFactory = $container->getResultSetFactory();
 		$this->service = $container->getService();
 	}
 	
@@ -166,7 +165,7 @@ abstract class AbstractSelect
 		$this->prepareRequest()
 		     ->prepareResponse( $this->sendSearchRequestToClient() )
 		;
-		return $this->config->getResults();
+		return $this->getConfig()->getResults();
 	}
 	
 	/**
@@ -176,15 +175,16 @@ abstract class AbstractSelect
 	 */
 	public function searchAsApi( $fields = null, $metadata = false ) {
 		$resultSet = $this->search();
+		$config = $this->getConfig();
 		if ( $metadata ) {
-			$total = $this->getconfig()->getResultsFound();
-			$numPages = $this->getConfig()->getNumPages();
-			$limit = $this->getConfig()->getLimit();
+			$total = $config->getResultsFound();
+			$numPages = $config->getNumPages();
+			$limit = $config->getLimit();
 			$response = [
 					'total' => $total,
 					'batches' => $total > 0 ? $numPages : 0,
-					'currentBatch' => $total > 0 ? $this->getConfig()->getPage() : 0,
-					'next' => $total > 0 ? min( [ $numPages * $limit, $this->getConfig()->getStart() + $limit ] ) : 0,
+					'currentBatch' => $total > 0 ? $config->getPage() : 0,
+					'next' => $total > 0 ? min( [ $numPages * $limit, $config->getStart() + $limit ] ) : 0,
 					'items' => $resultSet->toArray( $fields )
 					];
 		} else if ( $fields ) {
@@ -247,11 +247,12 @@ abstract class AbstractSelect
 	 * @return Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerQueryParams( Solarium_Query_Select $query ) {
-		$sort = $this->config->getSort();
+		$config = $this->getConfig();
+		$sort = $config->getSort();
 		$query->addFields      ( $this->getRequestedFields() )
 		      ->removeField    ('*')
-		      ->setStart       ( $this->config->getStart() )
-		      ->setRows        ( $this->config->getLength() )
+		      ->setStart       ( $config->getStart() )
+		      ->setRows        ( $config->getLength() )
 		      ->addSort        ( $sort[0], $sort[1] )
 		      ->addParam       ( 'timeAllowed', $this->timeAllowed )
 		;
@@ -278,9 +279,10 @@ abstract class AbstractSelect
 	 * @return Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerFilterQueries( Solarium_Query_Select $query ) {
-		$this->config->setFilterQuery( $this->getFilterQueryString() );
+		$config = $this->getConfig();
+		$config->setFilterQuery( $this->getFilterQueryString() );
 		$this->registerFilterQueryForMatch();
-		$query->addFilterQueries( $this->config->getFilterQueries() );
+		$query->addFilterQueries( $config->getFilterQueries() );
 		return $this;
 	}
 	
@@ -337,8 +339,9 @@ abstract class AbstractSelect
 	 * @return AbstractSelect
 	 */
 	protected function prepareRequest() {
-		if ( $this->config->getPage() > 1 ) {
-			$this->config->setStart( ( $this->config->getPage() - 1 ) * $this->config->getLength() );
+		$config = $this->getConfig();
+		if ( $config->getPage() > 1 ) {
+			$config->setStart( ( $config->getPage() - 1 ) * $config->getLength() );
 		}
 		return $this;
 	}
@@ -350,11 +353,13 @@ abstract class AbstractSelect
 	 */
 	protected function spellcheckResult( Solarium_Result_Select $result ) {
 		// re-search for spellchecked phrase in the absence of results
-		if ( $this->service->getGlobal( 'WikiaSearchSpellcheckActivated' ) 
+		$service = $this->getService();
+		$config = $this->getConfig();
+		if ( $service->getGlobal( 'WikiaSearchSpellcheckActivated' ) 
 				&& $result->getNumFound() == 0
-				&& !$this->config->hasMatch() ) {
+				&& !$config->hasMatch() ) {
 			if ( $collation = $result->getSpellcheck()->getCollation() ) {
-				$this->config->setQuery( $collation->getQuery() );
+				$config->setQuery( $collation->getQuery() );
 				$result = $this->sendSearchRequestToClient();
 			}
 		}
@@ -369,17 +374,17 @@ abstract class AbstractSelect
 	 */
 	protected function prepareResponse( Solarium_Result_Select $result ) {
 		$this->spellcheckResult( $result );
-		$container = new ResultSet\DependencyContainer( array( 'result' => $result, 'config' => $this->config ) );
-		$results = $this->resultSetFactory->get( $container );
+		$config = $this->getConfig();
+		$container = new ResultSet\DependencyContainer( array( 'result' => $result, 'config' => $config ) );
+		$results = (new ResultSet\Factory)->get( $container );
+		$config->setResults( $results );
 		
-		$this->config->setResults( $results );
-		
-		if( $this->config->getPage() == 1 ) {
+		if( $config->getPage() == 1 ) {
 			\Track::event(
 					( $results->getResultsFound() > 0 ? 'search_start' : 'search_start_nomatch' ),
 					array(
-							'sterm'	=> $this->getConfig()->getQuery()->getSanitizedQuery(), 
-							'stype'	=> $this->searchType 
+							'sterm' => $config->getQuery()->getSanitizedQuery(), 
+							'stype' => $this->searchType 
 							)
 					);
 		}
