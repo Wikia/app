@@ -55,9 +55,9 @@
 								?></span>
 								<?php endif; ?>
 								<select name="wpPhalanxExpire" id="wpPhalanxExpire" class="blue" >
-									<? foreach ($expiries as $k => $v) { ?>
+									<? if ( !empty( $expiries ) ) { foreach ($expiries as $k => $v) { ?>
 									<option value="<?=$k?>"><?=$v?></option>
-									<? } ?>
+									<? } } ?>
 								</select>
 							</label>
 						</div>
