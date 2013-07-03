@@ -32,15 +32,17 @@ class OnWiki extends AbstractDismax
 	 * @return Wikia\Search\Match\Article|null
 	 */
 	public function extractMatch() {
-		$query = $this->config->getQuery()->getSanitizedQuery();
-		$match = $this->service->getArticleMatchForTermAndNamespaces( $query, $this->config->getNamespaces() );
+		$config = $this->getConfig();
+		$service = $this->getService();
+		$query = $config->getQuery()->getSanitizedQuery();
+		$match = $service->getArticleMatchForTermAndNamespaces( $query, $config->getNamespaces() );
 		if (! empty( $match ) ) {
-			$this->config->setArticleMatch( $match );
+			$config->setArticleMatch( $match );
 		}
-		if ( $this->service->getGlobal( 'OnWikiSearchIncludesWikiMatch' ) ) {
+		if ( $service->getGlobal( 'OnWikiSearchIncludesWikiMatch' ) ) {
 			$this->extractWikiMatch();
 		}
-		return $this->config->getMatch();
+		return $config->getMatch();
 	}
 	
 	/**
@@ -64,9 +66,10 @@ class OnWiki extends AbstractDismax
 	 * @return OnWiki
 	 */
 	protected function registerFilterQueryForMatch() {
-		if ( $this->config->hasArticleMatch() ) {
-			$noPtt = Utilities::valueForField( 'id', $this->config->getArticleMatch()->getResult()->getVar( 'id' ), array( 'negate' => true ) ) ;
-			$this->config->setFilterQuery( $noPtt, 'ptt' );
+		$config = $this->getConfig();
+		if ( $config->hasArticleMatch() ) {
+			$noPtt = Utilities::valueForField( 'id', $config->getArticleMatch()->getResult()->getVar( 'id' ), array( 'negate' => true ) ) ;
+			$config->setFilterQuery( $noPtt, 'ptt' );
 		}
 		return $this;
 	}

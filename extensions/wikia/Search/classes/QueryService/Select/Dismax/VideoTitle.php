@@ -34,15 +34,6 @@ class VideoTitle extends AbstractDismax
 		return $query;
 	}
 	
-	/**
-	 * To heck with it, we need to get rid of this anyway.
-	 * (non-PHPdoc)
-	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::getFormulatedQuery()
-	 */
-	public function getFormulatedQuery() {
-		return '';
-	}
-	
 	protected function getQueryFieldsString() {
 		return 'title_en^5 nolang_txt';
 	}

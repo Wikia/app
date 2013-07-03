@@ -91,9 +91,10 @@ class InterWiki extends AbstractDismax
 	 * @return Wikia\Search\QueryService\Select\InterWiki
 	 */
 	protected function registerFilterQueryForMatch() {
-		if ( $this->config->hasWikiMatch() ) {
-			$noPtt = Utilities::valueForField( 'id', $this->config->getWikiMatch()->getId(), array( 'negate' => true ) );
-			$this->config->setFilterQuery( $noPtt, 'wikiptt' );
+		$config = $this->getConfig();
+		if ( $config->hasWikiMatch() ) {
+			$noPtt = Utilities::valueForField( 'id', $config->getWikiMatch()->getId(), array( 'negate' => true ) );
+			$config->setFilterQuery( $noPtt, 'wikiptt' );
 		}
 		return $this;
 	}
@@ -104,8 +105,9 @@ class InterWiki extends AbstractDismax
 	 * @return Wikia\Search\QueryService\Select\InterWiki
 	 */
 	protected function prepareRequest() {
-		if ( $this->config->getPage() > 1 ) {
-			$this->config->setStart( ( $this->config->getPage() - 1 ) * $this->config->getLength() );
+		$config = $this->getConfig();
+		if ( $config->getPage() > 1 ) {
+			$config->setStart( ( $config->getPage() - 1 ) * $config->getLength() );
 		}
 		return $this;
 	}
@@ -116,7 +118,7 @@ class InterWiki extends AbstractDismax
 	 */
 	protected function getFilterQueryString() {
 		$filterQueries = [ '-articles_i:[0 TO 50]' ];
-		$hub = $this->config->getHub();
+		$hub = $this->getConfig()->getHub();
 		if (! empty( $hub ) ) {
 			$filterQueries[] = Utilities::valueForField( 'hub_s', $hub );
 		}

@@ -1,22 +1,22 @@
 <?php
 /**
- * Class definition for Wikia\Search\Test\QueryService\Select\LuceneTest
+ * Class definition for Wikia\Search\Test\QueryService\Select\Lucene\LuceneTest
  */
-namespace Wikia\Search\Test\QueryService\Select;
+namespace Wikia\Search\Test\QueryService\Select\Lucene;
 use Wikia, ReflectionProperty, ReflectionMethod;
 /**
- * Tests functionality of Wikia\Search\QueryService\Select\Lucene
+ * Tests functionality of Wikia\Search\QueryService\Select\Lucene\Lucene
  */
 class LuceneTest extends Wikia\Search\Test\BaseTest {
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\Lucene::getFormulatedQuery
+	 * @covers Wikia\Search\QueryService\Select\Lucene\Lucene::getFormulatedQuery
 	 */
 	public function testGetFormulatedQuery() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery' ) );
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSanitizedQuery' ), array( 'foo' ) );
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
-		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Lucene' )
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Lucene\Lucene' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( null )
 		                   ->getMock();
@@ -31,7 +31,7 @@ class LuceneTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getSanitizedQuery' )
 		    ->will   ( $this->returnValue( 'foo:bar' ) )
 		;
-		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Lucene', 'getFormulatedQuery' );
+		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Lucene\Lucene', 'getFormulatedQuery' );
 		$method->setAccessible( true );
 		$this->assertEquals(
 				'foo:bar',
@@ -40,15 +40,15 @@ class LuceneTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\Lucene::getQueryFieldsString
+	 * @covers Wikia\Search\QueryService\Select\Lucene\Lucene::getQueryFieldsString
 	 * @todo this violates LSP so we need to not have this here
 	 */
 	public function testGetQueryFieldsString() {
-		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Lucene' )
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Lucene\Lucene' )
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( null )
 		                   ->getMock();
-		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Lucene', 'getQueryFieldsString' );
+		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Lucene\Lucene', 'getQueryFieldsString' );
 		$method->setAccessible( true );
 		$this->assertEquals(
 				'',

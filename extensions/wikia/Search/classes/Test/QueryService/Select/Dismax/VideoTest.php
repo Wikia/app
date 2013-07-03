@@ -1,6 +1,6 @@
 <?php
 /**
- * Class definition for Wikia\Search\Test\QueryService\Select\VideoTest
+ * Class definition for Wikia\Search\Test\QueryService\Select\Dismax\VideoTest
  */
 namespace Wikia\Search\Test\QueryService\Select;
 use Wikia, ReflectionProperty, ReflectionMethod;
@@ -10,7 +10,7 @@ use Wikia, ReflectionProperty, ReflectionMethod;
 class VideoTest extends Wikia\Search\Test\BaseTest {
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\Video::configureQueryFields
+	 * @covers Wikia\Search\QueryService\Select\Dismax\Video::configureQueryFields
 	 */
 	public function testConfigureQueryFields() {
 		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
@@ -21,7 +21,7 @@ class VideoTest extends Wikia\Search\Test\BaseTest {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'addQueryFields' ) );
 		
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'service' => $mockService ) );
-		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Video' )
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\Video' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( null )
 		                   ->getMock();
@@ -46,7 +46,7 @@ class VideoTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'addQueryFields' )
 		    ->with   ( [ 'video_actors_txt' => 100, 'video_genres_txt' => 50, 'html_media_extras_txt' => 80 ] )
 		;
-		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Video', 'configureQueryFields' );
+		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\Video', 'configureQueryFields' );
 		$method->setAccessible( true );
 		$this->assertEquals(
 				$mockSelect,
@@ -55,12 +55,12 @@ class VideoTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\VideoEmbedTool::getQueryClausesString
+	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::getQueryClausesString
 	 */
 	public function testGetQueryClausesString() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getWikiId', 'getNamespaces' ) );
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
-		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\VideoEmbedTool' )
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( null )
 		                   ->getMock();
@@ -70,7 +70,7 @@ class VideoTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getWikiId' )
 		    ->will   ( $this->returnValue( 123 ) )
 		;
-		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\VideoEmbedTool', 'getQueryClausesString' );
+		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool', 'getQueryClausesString' );
 		$method->setAccessible( true );
 		$this->assertEquals(
 				'((wid:123) AND (is_video:true) AND (ns:6))',

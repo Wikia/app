@@ -116,6 +116,12 @@ abstract class AbstractSelect
 	protected $client;
 	
 	/**
+	 * A little pre-processing since the client needs to know the core before it's properly configured.
+	 * @var bool
+	 */
+	protected $coreSetInClient = false;
+	
+	/**
 	 * Default requested fields for a main-core search service. 
 	 * @var array
 	 */
@@ -147,7 +153,6 @@ abstract class AbstractSelect
 	public function __construct( DependencyContainer $container ) {
 		$this->client = $container->getClient();
 		// this initializes the core assigned to the queryservice by default
-		$this->setCoreInClient( $this->core );
 		$this->config = $container->getConfig();
 		$this->service = $container->getService();
 	}
@@ -320,7 +325,7 @@ abstract class AbstractSelect
 	 */
 	protected function sendSearchRequestToClient() {
 		try {
-			return $this->client->select( $this->getSelectQuery() );
+			return $this->getClient()->select( $this->getSelectQuery() );
 		} catch ( \Exception $e ) {
 			if ( $this->config->getError() !== null ) {
 				$this->config->setError( $e );
@@ -436,22 +441,24 @@ abstract class AbstractSelect
 	/**
 	 * This allows internal manipulation of the specific core being queried by this service.
 	 * There is probably a better way to do this, but this is the least disruptive way to handle this somewhat circular dependency.
-	 * @param string $core
 	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
 	 */
-	protected function setCoreInClient( $core ) {
-		$this->core = $core;
-		$options = $this->getClient()->getOptions();
+	protected function setCoreInClient() {
+		$options = $this->client->getOptions();
 		$options['adapteroptions']['path'] = '/solr/'.$this->core;
 		$this->client->setOptions( $options, true );
+		$this->coreSetInClient = true;
 		return $this;
 	}
 	
 	/**
-	 * Allows internal configuration through accessor method
+	 * Allows lazy loading of internal configuration through accessor method
 	 * @return Solarium_Client
 	 */
 	protected function getClient() {
+		if (! $this->coreSetInClient ) {
+			$this->setCoreInClient();
+		}
 		return $this->client;
 	}
 }

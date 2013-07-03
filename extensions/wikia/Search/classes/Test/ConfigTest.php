@@ -743,48 +743,6 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
-	 * @covers \Wikia\Search\Config::importQueryFieldBoosts
-	 */
-	public function testImportQueryFieldBoostsFirstTime() {
-		$config = $this->getMockBuilder( '\Wikia\Search\Config' )
-		               ->disableOriginalConstructor()
-		               ->setMethods( array( 'getTestProfile' ) )
-		               ->getMock();
-		
-		$testProfile = $this->getMockbuilder( 'Wikia\Search\TestProfile\Base' )
-		                    ->disableOriginalConstructor()
-		                    ->setMethods( [ 'getQueryFieldsToBoosts' ] )
-		                    ->getMock();
-		$fields = [ 'html' => 100 ];
-		$config
-		    ->expects( $this->once() )
-		    ->method ( 'getTestProfile' )
-		    ->will   ( $this->returnValue( $testProfile ) )
-		;
-		$testProfile
-		    ->expects( $this->once() )
-		    ->method ( "getQueryFieldsToBoosts" )
-		    ->will   ( $this->returnValue( $fields ) )
-		;
-		
-		$methodrefl = new ReflectionMethod( '\Wikia\Search\Config', 'importQueryFieldBoosts' );
-		$methodrefl->setAccessible( true );
-		$this->assertEquals(
-				$config,
-				$methodrefl->invoke( $config )
-		);
-		$this->assertAttributeEquals(
-				$fields,
-				'queryFieldsToBoosts',
-				$config
-		);
-		$this->assertAttributeEquals(
-				true,
-				'queryFieldsWereImported',
-				$config
-		);
-	}
-	/**
 	 * @covers \Wikia\Search\Config::setQuery
 	 * @covers \Wikia\Search\Config::getQuery
 	 */
@@ -1484,21 +1442,21 @@ class ConfigTest extends BaseTest {
 		$meth->setAccessible( true );
 		$this->assertEquals(
 				$config,
-				$meth->invoke( $config, 'Select\\OnWiki', true )
+				$meth->invoke( $config, 'Select\\Dismax\\OnWiki', true )
 		);
 		$this->assertAttributeEquals(
-				'Select\\OnWiki',
+				'Select\\Dismax\\OnWiki',
 				'queryService',
 				$config
 		);
-		$meth->invoke( $config, 'Select\\Video', false );
+		$meth->invoke( $config, 'Select\\Dismax\\Video', false );
 		$this->assertAttributeEquals(
 				'Select\\OnWiki',
 				'queryService',
 				$config,
 				'We should be able to vacuously "unapply" unregistered query services'
 		);
-		$meth->invoke( $config, 'Select\\OnWiki', false );
+		$meth->invoke( $config, 'Select\\Dismax\\OnWiki', false );
 		$this->assertAttributeEquals(
 				null,
 				'queryService',
@@ -1536,7 +1494,7 @@ class ConfigTest extends BaseTest {
 		    ->will   ( $this->returnValue( false ) )
 		;
 		$this->assertEquals(
-				'Select\\OnWiki',
+				'Select\\Dismax\\OnWiki',
 				$bs->invoke( $config )
 		);
 	}

@@ -1,8 +1,8 @@
 <?php
 /**
- * Class definition for Wikia\Search\Test\QueryService\Select\VideoEmbedToolTest
+ * Class definition for Wikia\Search\Test\QueryService\Select\Dismax\VideoEmbedToolTest
  */
-namespace Wikia\Search\Test\QueryService\Select;
+namespace Wikia\Search\Test\QueryService\Select\Dismax;
 use Wikia\Search\Test\BaseTest, ReflectionMethod, Wikia\Search\Utilities;
 /**
  * Responsible for testing VideoEmbedTool query service.
@@ -10,7 +10,7 @@ use Wikia\Search\Test\BaseTest, ReflectionMethod, Wikia\Search\Utilities;
  */
 class VideoEmbedToolTest extends BaseTest
 {
-	const CLASSNAME = 'Wikia\Search\QueryService\Select\VideoEmbedTool';
+	const CLASSNAME = 'Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool';
 	
 	/**
 	 * @covers Wikia\Search\QueryService\Select\VideoEmbedTool::getFormulatedQuery
