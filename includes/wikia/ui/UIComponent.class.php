@@ -38,13 +38,13 @@ class UIComponent {
 	 * @throws WikiaUIDataException
 	 */
 	public function render( $params ) {
-		$this->setTemplate( $params['type'] ); // set template for rendering
+		$this->setTemplatePath( $params['type'] ); // set template for rendering
 		$this->setValues( $params['params'] ); // set mustache variables
 		$this->validateTemplateVars(); // check if required vars are set
 
 		return $this->getTemplateEngine()
 			->setData( $this->getValues() )
-			->render( $this->getTemplate() );
+			->render( $this->getTemplatePath() );
 	}
 
 	/**
@@ -54,7 +54,7 @@ class UIComponent {
 	 * 
 	 * @throws Exception
 	 */
-	private function setTemplate( $template ) {
+	private function setTemplatePath( $template ) {
 		$mustacheTplPath = $this->templateVarsConfig['templatePath'] . '_' . $template . '.mustache';
 
 		if ( file_exists( $mustacheTplPath ) ) {
@@ -68,7 +68,7 @@ class UIComponent {
 	 * @desc Returns template path
 	 * @return String
 	 */
-	public function getTemplate() {
+	public function getTemplatePath() {
 		return $this->templatePath;
 	}
 
