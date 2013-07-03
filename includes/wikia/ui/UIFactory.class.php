@@ -1,4 +1,14 @@
 <?php
+
+/**
+ * UIFactory handles building component which means loading
+ * assets and component configuration file
+ *
+ * @author Andrzej Łukaszewski <nandy@wikia-inc.com>
+ * @author Bartosz Bentkowski <bartosz.bentkowski@wikia-inc.com>
+ *
+ */
+
 class UIFactory {
 	/**
 	 * @desc Component's configuration file suffix
@@ -12,6 +22,11 @@ class UIFactory {
 	 * @desc Component's directory path from docroot
 	 */
 	const DEFAULT_COMPONENTS_PATH = "/resources/wikia/ui_components/";
+
+	/**
+	 * @desc How long are components memcached? Both specific and all (different memc keys)
+	 */
+	const MEMCACHE_EXPIRATION = 900; // 15 minutes
 	
 	/**
 	 * @var UIFactory
@@ -36,10 +51,12 @@ class UIFactory {
 	private function __construct() {
 		global $IP;
 		$this->componentsDir = $IP . self::DEFAULT_COMPONENTS_PATH;
+		$this->loaderService = AssetsManager::getInstance();
 	}
 
 	/**
 	 * @desc Sets the path to components' directory
+	 *
 	 * @param String $path
 	 */
 	public function setComponentsDir( $path ) {
@@ -48,6 +65,7 @@ class UIFactory {
 
 	/**
 	 * @desc Returns the path to component's directory
+	 *
 	 * @return null|String
 	 */
 	public function getComponentsDir() {
@@ -56,6 +74,7 @@ class UIFactory {
 
 	/**
 	 * @desc Returns the only instnace of the class; singleton
+	 *
 	 * @return UIFactory
 	 */
 	static public function getInstance() {
@@ -72,59 +91,101 @@ class UIFactory {
 	 * @return array
 	 */
 	public function getAllComponents() {
-		$components = [];
-		
-		try {
-			$directory = new DirectoryIterator( $this->getComponentsDir() );
+		global $wgMemc;
 
+		$memcKey = wfMemcKey( __CLASS__, 'all_components' );
+		$data = $wgMemc->get( $memcKey );
+		if ( !empty($data) ) {
+			return $data;
+		} else {
+			$components = [];
+
+			$directory = new DirectoryIterator( $this->getComponentsDir() );
 			while( $directory->valid() ) {
 				if( !$directory->isDot() && $directory->isDir() ) {
-					$componentName = $directory->getFilename();
-					$componentCfg = $this->loadComponentConfig( $componentName );
-					
-					if( !empty($componentCfg) ) {
-						$components[] = $componentCfg;
-					} else {
-						wfDebugLog( __CLASS__, 'Component unavailable: ' . $componentName );
-					}
+					$components[] = $this->loadComponentConfigFromFile( $configFile = $this->getComponentConfigFileFullPath( $directory->getFilename() ) );
 				}
 				$directory->next();
 			}
-		} catch( Exception $e ) {
-			wfDebugLog( __CLASS__, 'Invalid Styleguide components\' directory: (' . $e->getCode() . ') ' . $e->getMessage() . ' [check $wgSpecialStyleguideUiCompontentsPath variable]');
+
+			$wgMemc->set( $memcKey, $components, self::MEMCACHE_EXPIRATION );
+
+			return $components;
 		}
-		
-		return $components;
+	}
+
+	/**
+	 * @desc Returns full file path
+	 *
+	 * @param string component's name
+	 *
+	 * @returns full file path
+	 */
+	private function getComponentConfigFileFullPath( $name ) {
+		return $this->getComponentsDir() . $name . '/' . $name . self::CONFIG_FILE_SUFFIX;
+	}
+
+	/**
+	 * @desc Loads UIComponent from given string
+	 *
+	 * @param string JSON String
+	 *
+	 * @return UIComponent
+	 *
+	 * @throws Exception
+	 */
+	private function loadComponentConfigFromJSON( $configContent ) {
+		$config = json_decode( $configContent, true );
+
+		if ( !is_null( $config ) ) {
+			return $this->addComponentsId( $config );
+		} else {
+			throw new Exception( 'Invalid JSON.' );
+		}
+	}
+
+	/**
+	 * @desc Loads UIComponent from file
+	 *
+	 * @param string Path to file
+	 *
+	 * @return UIComponent
+	 *
+	 * @throws Exception
+	 */
+	private function loadComponentConfigFromFile( $configFilePath ) {
+		if ( false === $configString = file_get_contents( $configFilePath ) ) {
+			throw new Exception( 'Component\'s config file not found.' );
+		} else {
+			return $this->loadComponentConfigFromJSON( $configString );
+		}
 	}
 
 	/**
 	 * @desc Gets configuration file contents, decodes it to array and returns it
 	 * 
-	 * @todo add caching layer: planned and will be done in DAR-809
-	 * 
 	 * @param String $componentName
-	 * @return array|null
+	 * @return string
 	 */
 	private function loadComponentConfig( $componentName ) {
-		$configPath = $this->getComponentsDir() . $componentName . '/' . $componentName . self::CONFIG_FILE_SUFFIX;
-		$config = null;
+		wfProfileIn( __METHOD__ );
+
+		global $wgMemc;
 		
-		if( file_exists( $configPath ) && ( $configContent = file_get_contents( $configPath ) ) ) {
-			$config = json_decode( $configContent, true );
-			
-			if( !is_null( $config )) {
-				$config = $this->addComponentsId( $config );
-			} else {
-				wfDebugLog( __CLASS__, "Invalid JSON in config file: " . $configPath );
-				$config = [];
-			}
-			
+		$memcKey = wfMemcKey( __CLASS__, 'component', $componentName);
+		$data = $wgMemc->get( $memcKey );
+
+		if ( !empty($data) ) {
+			wfProfileOut( __METHOD__ );
+			return $data;
 		} else {
-			wfDebugLog( __CLASS__, "Invalid component's config file: " . $configPath );
-			$config = [];
+			$configFile = $this->getComponentConfigFileFullPath( $componentName );
+			$config = $this->loadComponentConfigFromFile( $configFile );
+			$wgMemc->set( $memcKey, $config, self::MEMCACHE_EXPIRATION );
+
+			wfProfileOut( __METHOD__ );
+			return $config;
 		}
-		
-		return $config;
 	}
 
 	/**
@@ -139,23 +200,83 @@ class UIFactory {
 	}
 
 	/**
-	 * @desc Adds assets to load
-	 * @param $componentDependencies
+	 * @desc Adds asset to load
+	 *
+	 * @param $assetName
 	 */
-	private function addAssets( $componentDependencies ) {
+	// TODO think how we can use WikiaResponse addAsset method
+	// TODO during work on UIComponent in darwin sprint 13
+	private function addAsset( $assetName ) {
+		wfProfileIn( __METHOD__ );
+
+		$app = F::app();
+		$jsMimeType = $app->wg->JsMimeType;
+
+		$type = false;
+
+		$sources = $this->loaderService->getURL( $assetName, $type, false );
+
+		foreach ( $sources as $source ) {
+			switch ( $type ) {
+				case AssetsManager::TYPE_CSS:
+				case AssetsManager::TYPE_SCSS:
+					$app->wg->Out->addStyle( $source );
+					break;
+				case AssetsManager::TYPE_JS:
+					$app->wg->Out->addScript( "<script type=\"{$jsMimeType}\" src=\"{$source}\"></script>" );
+					break;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 * @desc Loads JS/CSS dependencies, creates and configurates an instance of UIComponent object which is returned
-	 * @param $componentName
+	 *
+	 * @param string|array
 	 */
-	public function init( $componentName ) {
-		// We're going to implement it (maybe slightly change) in DAR-809
-		// $componentConfig = $this->loadComponentConfig( $componentName );
-		// $this->addAssets( $componentConfig['dependencies'] );
-		// $component = new UIComponent();
-		// $component->setTemplateVarsConfig($componentConfig['templateVars']);
-		// return $component;
+	public function init( $componentNames ) {
+		if ( !is_array($componentNames ) ) {
+			$componentNames = (array)$componentNames;
+		}
+		
+		$components = [];  
+		$assets = [];
+
+		// iterate $componentNames, read configs, write down dependencies
+
+		foreach ( $componentNames as $name ) {
+			$componentConfig = $this->loadComponentConfig( $name );
+
+			// if there are some components, put them in the $assets
+			if ( !empty( $componentsConfig['dependencies'] ) ) {
+				if ( !empty( $componentsConfig['dependencies']['js'] ) ) {
+					$assets = array_merge( $assets, $componentsConfig['dependencies']['js'] );
+				}
+				if ( !empty( $componentsConfig['dependencies']['css'] ) ) {
+					$assets = array_merge( $assets, $componentsConfig['dependencies']['css'] );
+				}
+			}
+
+			// init component and put config inside
+			$component = new UIComponent();
+			if ( !empty($componentConfig['templateVars']) ) {
+				$component->setTemplateVarsConfig($componentConfig['templateVars']);
+			}
+
+			//
+			$components[] = $component;
+		}
+
+		// add merged assets
+		foreach ( array_unique( $assets ) as $asset ) {
+			$this->addAsset( $asset );
+		}
+
+		// return components
+		return (sizeof($components) == 1) ? $components[0] : $components;
+
 	}
 
 	/**
@@ -172,3 +293,4 @@ class UIFactory {
 		throw new Exception( 'Unserializing instances of this class is forbidden.' );
 	}
 }
+

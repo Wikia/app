@@ -25,7 +25,7 @@ $messages['en'] = array(
 	'styleguide-home-welcome-message' => 'Meet Wikia Styleguide.',
 	'styleguide-home-welcome-tagline' => 'Easy, and useful tool for the rapid developement at Wikia.',
 	'styleguide-home-stakeholders-header' => 'Who is it for?',
-	'styleguide-home-stakeholders-paragraph' => 'Wikia Styleguide was build with engineers,
+	'styleguide-home-stakeholders-paragraph' => 'Wikia Styleguide was built with engineers,
 	and designers in mind. This is the place where we keep track of
 	all components we use accross Wiki platform. You can easily find all of the current UI elements here,
 	and grab usable code on the future product projects you might be involved in. It’s also designed with newbies at
