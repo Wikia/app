@@ -18,6 +18,10 @@ class SpecialStyleguideDataModel {
 					'getStartedBtnLabel' => wfMessage( 'styleguide-get-started' )->plain(),
 					'version' => 'Version 1.0.0'
 				],
+				'components' => [
+					'sectionHeader' => wfMessage( 'styleguide-components-header' )->plain(),
+					'tagLine' => wfMessage( 'styleguide-components-header-tagline' )->plain(),
+				],
 				'tagLine' => wfMessage( 'styleguide-home-header-tagline' )->plain(),
 			],
 			'footer' => [
@@ -75,17 +79,66 @@ class SpecialStyleguideDataModel {
 						]
 					]
 				]
+			],
+			'components' => [
+				'componentsList' => $this->sortComponents( UIFactory::getInstance()->getAllComponents() )
 			]
 		];
+	}
+	
+	public function getSectionData() {
+		return $this->sectionData;
 	}
 
 	/**
 	 * Returns data for section given as param
-	 * @param $sectionName string
+	 * 
+	 * @param array $sectionNames
+	 * 
 	 * @return array
 	 */
-	public function getSectionData($sectionName) {
-		return !empty($this->sectionData[$sectionName])?$this->sectionData[$sectionName]:[];
+	public function getPartOfSectionData( $sectionNames ) {
+		$results = [];
+		$data = $this->getSectionData();
+		$itterations = count( $sectionNames );
+		
+		foreach( $sectionNames as $subSection ) {
+			if( $itterations === 1 ) {
+				$results = isset( $data[$subSection] ) ? $data[$subSection] : [];
+			} else {
+				$data = isset( $data[$subSection] ) ? $data[$subSection] : [];
+				$itterations--;
+			}
+		}
+		
+		return $results;
 	}
 
+	public function getStyleguidePageUrl( $subpage = false ) {
+		$title = SpecialPage::getTitleFor( 'Styleguide', $subpage );
+		
+		return ( $title instanceof Title ) ? $title->getFullUrl() : '#';
+	}
+
+	/**
+	 * @desc Sorts a given components array by the parameter passed in 2nd argument
+	 * 
+	 * @param array $components array of components
+	 * @param string $sortByParam by which component parameter should it be sorted; default = 'name'
+	 * 
+	 * @see UIFactory::getAllComponents()
+	 * 
+	 * @return array
+	 */
+	private function sortComponents( $components, $sortByParam = 'name' ) {
+		$sortedArr = [];
+		foreach( $components as $key => $component ) {
+			$sortedArr[$key] = $component[ $sortByParam ];
+		}
+		
+		array_multisort( $sortedArr, SORT_ASC, $components );
+		
+		return $components;
+	}
+	
 }
