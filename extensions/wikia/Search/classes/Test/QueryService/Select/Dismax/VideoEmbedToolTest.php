@@ -13,7 +13,7 @@ class VideoEmbedToolTest extends BaseTest
 	const CLASSNAME = 'Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool';
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool:::getQuery
+	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::getQuery
 	 */
 	public function testGetQuery() {
 		$service = $this->getMockBuilder( self::CLASSNAME )
@@ -56,7 +56,7 @@ class VideoEmbedToolTest extends BaseTest
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool:::getTransformedQuery
+	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::getTransformedQuery
 	 * @dataProvider queryProvider
 	 */
 	public function testGetTransformedQuery( $queryString, $expected ) {
@@ -91,7 +91,7 @@ class VideoEmbedToolTest extends BaseTest
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool:::getTopicsAsQuery
+	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::getTopicsAsQuery
 	 */
 	public function testGetTopicsAsQueryWithTopics() {
 		$service = $this->getMockBuilder( self::CLASSNAME )
@@ -122,7 +122,7 @@ class VideoEmbedToolTest extends BaseTest
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool:::getTopicsAsQuery
+	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::getTopicsAsQuery
 	 */
 	public function testGetTopicsAsQueryNoTopics() {
 		$service = $this->getMockBuilder( self::CLASSNAME )
@@ -158,7 +158,7 @@ class VideoEmbedToolTest extends BaseTest
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool:::getQueryClausesString
+	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::getQueryClausesString
 	 */
 	public function testGetQueryClausesString() {
 		$service = $this->getMockBuilder( self::CLASSNAME )
@@ -188,7 +188,7 @@ class VideoEmbedToolTest extends BaseTest
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool:::getBoostQueryString
+	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::getBoostQueryString
 	 */
 	public function testGetBoostQueryString() {
 		$service = $this->getMockBuilder( self::CLASSNAME )
