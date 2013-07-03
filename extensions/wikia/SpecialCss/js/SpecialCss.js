@@ -3,7 +3,8 @@ $(function() {
 		var disableBeforeUnload = false;
 		var EDITOR_BOTTOM_MARGIN = 10;
 
-		ace.config.set("workerPath", aceScriptsPath);
+		// aceScriptsPath is set in PHP controller SpecialCssController.class.php:99
+		ace.config.set("workerPath", aceScriptsPath); /* JSlint ignore */
 
 		var editor = ace.edit("cssEditorContainer");
 		editor.setTheme("ace/theme/geshi");
@@ -62,7 +63,8 @@ $(function() {
 			return false;
 		});
 
-		$(window).bind('beforeunload', function(event) {
+		//noinspection FunctionWithInconsistentReturnsJS,JSUnusedLocalSymbols
+		$(window).bind('beforeunload', function(e) {
 			if (!disableBeforeUnload && editorInitContent != editorSession.getValue()) {
 				return $.msg('special-css-leaveconfirm-message');
 			}
