@@ -22,9 +22,4 @@ class Lucene extends AbstractSelect
 	protected function getQuery() {
 		return $this->config->getQuery()->getSanitizedQuery();
 	}
-	
-	protected function registerComponents( \Solarium_Query_Select $select ) {
-		$this->registerQueryParams( $select );
-		return $this;
-	}
 }

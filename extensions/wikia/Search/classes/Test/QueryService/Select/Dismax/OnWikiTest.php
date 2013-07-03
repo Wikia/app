@@ -104,26 +104,12 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
 		
-		$selectMethods = array( 
-				'registerQueryParams', 'registerHighlighting', 'registerFilterQueries', 
-				'registerSpellcheck', 'configureQueryFields', 'registerDismax'
-				);
+		$selectMethods = array( 'registerHighlighting', 'registerFilterQueries', 'registerSpellcheck', 'registerDismax' );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\OnWiki' )
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( $selectMethods )
 		                   ->getMock();
 		
-		$mockSelect
-		    ->expects( $this->once() )
-		    ->method ( 'configureQueryFields' )
-		    ->will   ( $this->returnValue( $mockSelect ) )
-		;
-		$mockSelect
-		    ->expects( $this->once() )
-		    ->method ( 'registerQueryParams' )
-		    ->with   ( $mockQuery )
-		    ->will   ( $this->returnValue( $mockSelect ) )
-		;
 		$mockSelect
 		    ->expects( $this->once() )
 		    ->method ( 'registerHighlighting' )

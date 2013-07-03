@@ -8,6 +8,7 @@ use Wikia, ReflectionMethod, ReflectionProperty;
  * Tests interwiki search functionality
  */
 class InterWikiTest extends Wikia\Search\Test\BaseTest {
+	public function setUp() { parent::setUp();var_dump($this->getName()); }
 	/**
 	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::extractMatch
 	 */
@@ -36,7 +37,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	
 	/**
 	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::registerComponents
-	 *
+	 */
 	public function testRegisterComponents() {
 		$mockQuery = $this->getMockBuilder( '\Solarium_Query_Select' )
 		                  ->disableOriginalConstructor()
@@ -44,29 +45,12 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\InterWiki' )
 		                   ->disableOriginalConstructor()
-		                   ->setMethods( array( 'registerQueryParams', 'registerFilterQueries', 'registerGrouping', 'configureQueryFields' ) )
+		                   ->setMethods( array( 'registerFilterQueries', ) )
 		                   ->getMock();
 		
 		$mockSelect
 		    ->expects( $this->once() )
-		    ->method ( 'configureQueryFields' )
-		    ->will   ( $this->returnValue( $mockSelect ) )
-		;
-		$mockSelect
-		    ->expects( $this->once() )
-		    ->method ( 'registerQueryParams' )
-		    ->with   ( $mockQuery )
-		    ->will   ( $this->returnValue( $mockSelect ) )
-		;
-		$mockSelect
-		    ->expects( $this->once() )
 		    ->method ( 'registerFilterQueries' )
-		    ->with   ( $mockQuery )
-		    ->will   ( $this->returnValue( $mockSelect ) )
-		;
-		$mockSelect
-		    ->expects( $this->once() )
-		    ->method ( 'registerGrouping' )
 		    ->with   ( $mockQuery )
 		    ->will   ( $this->returnValue( $mockSelect ) )
 		;
@@ -76,7 +60,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 				$mockSelect,
 				$register->invoke( $mockSelect, $mockQuery )
 		);
-	} */
+	}
 	
 	
 	/**
@@ -238,29 +222,5 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 				'lang_s:en AND (hub:Entertainment)',
 				$method->invoke( $mockSelect )
 		);
-	}
-	
-	/**
-	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::getQueryFieldsString 
-	 */
-	public function testGetQueryFieldsString() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQueryFieldsToBoosts' ) );
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
-		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\InterWiki' )
-		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( array() )
-		                   ->getMock();
-		
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getQueryFieldsToBoosts' )
-		    ->will   ( $this->returnValue( array( 'foo' => 5, 'bar' => 10 ) ) )
-		;
-		$get = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\InterWiki', 'getQueryFieldsString' );
-		$get->setAccessible( true );
-		$this->assertEquals(
-				'foo^5 bar^10',
-				$get->invoke( $mockSelect )
-		);
-	}
+	}	
 }

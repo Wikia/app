@@ -227,7 +227,8 @@ abstract class AbstractSelect
 	protected function getSelectQuery() {
 		$query = $this->getClient()->createSelect();
 		$query->setDocumentClass( '\Wikia\Search\Result' );
-		$this->registerComponents( $query );
+		$this->registerQueryParams( $query )
+		     ->registerComponents( $query );
 		return $query->setQuery( $this->getQuery() );
 	}
 	

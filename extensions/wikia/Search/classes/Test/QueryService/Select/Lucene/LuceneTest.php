@@ -37,5 +37,5 @@ class LuceneTest extends Wikia\Search\Test\BaseTest {
 				'foo:bar',
 				$method->invoke( $mockSelect )
 		);
-	}	
+	}
 }

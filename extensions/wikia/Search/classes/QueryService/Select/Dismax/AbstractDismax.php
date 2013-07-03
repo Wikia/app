@@ -50,6 +50,25 @@ class AbstractDismax extends AbstractSelect
 		return $this;
 	}
 	
+	/**
+	 * Dismax-specific implementation -- registers the dismax component for child components.
+	 * @param Solarium_Query_Select $query
+	 * @return Wikia\Search\QueryService\Select\Dismax\AbstractDismax
+	 */
+	protected function registerComponents( Solarium_Query_Select $select ) {
+		return $this->registerDismax( $select )
+		            ->registerNonDismaxComponents( $select );
+	}
+	
+	/**
+	 * This is a hook for child components to provide their own specific component registry.
+	 * @param Solarium_Query_Select $query
+	 * @return Wikia\Search\QueryService\Select\Dismax\AbstractDismax
+	 */
+	protected function registerNonDismaxComponents( Solarium_Query_Select $select ) {
+		return $this;
+	}
+	
 
 	/**
 	 * As an edismax query, gives the required query in the first clause of the conjunction, and then the parseable query stuff in the second clause.

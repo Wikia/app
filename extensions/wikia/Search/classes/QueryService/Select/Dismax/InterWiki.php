@@ -78,8 +78,7 @@ class InterWiki extends AbstractDismax
 	 * @return InterWiki
 	 */
 	protected function registerComponents( Solarium_Query_Select $query ) {
-		return $this->registerQueryParams   ( $query )
-		            ->registerFilterQueries ( $query )
+		return $this->registerFilterQueries ( $query )
 		            ->registerDismax        ( $query )
 		;
 	}

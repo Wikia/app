@@ -188,7 +188,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'client' => $mockClient ) );
 		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\AbstractSelect' )
 		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( array( 'registerComponents', 'getQuery' ) )
+		                   ->setMethods( array( 'registerComponents', 'getQuery', 'registerQueryParams' ) )
 		                   ->getMockForAbstractClass();
 		$mockQuery = $this->getMockBuilder( '\Solarium_Query_Select' )
 		                  ->disableOriginalConstructor()
@@ -206,11 +206,18 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		;
 		$mockSelect
 		    ->expects( $this->at( 0 ) )
-		    ->method ( 'registerComponents' )
+		    ->method ( 'registerQueryParams' )
 		    ->with   ( $mockQuery )
+		    ->will   ( $this->returnValue( $mockSelect ) )
 		;
 		$mockSelect
 		    ->expects( $this->at( 1 ) )
+		    ->method ( 'registerComponents' )
+		    ->with   ( $mockQuery )
+		    ->will   ( $this->returnValue( $mockSelect ) )
+		;
+		$mockSelect
+		    ->expects( $this->at( 2 ) )
 		    ->method ( 'getQuery' )
 		    ->will   ( $this->returnValue( 'foo:bar' ) )
 		;

@@ -51,9 +51,7 @@ class OnWiki extends AbstractDismax
 	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::registerComponents()
 	 */
 	protected function registerComponents( Select $query ) {
-		return $this->configureQueryFields()
-		            ->registerQueryParams   ( $query )
-		            ->registerHighlighting  ( $query )
+		return $this->registerHighlighting  ( $query )
 		            ->registerFilterQueries ( $query )
 		            ->registerSpellcheck    ( $query )
 		            ->registerDismax        ( $query )
@@ -94,14 +92,6 @@ class OnWiki extends AbstractDismax
 			;
 		}
 		return $this;
-	}
-	
-	/**
-	 * This is a hook called if we need to modify the basic query fields as a part the class's basic functionality.
-	 * @return OnWiki
-	 */
-	protected function configureQueryFields() {
-	    return $this;
 	}
 	
 	/**
