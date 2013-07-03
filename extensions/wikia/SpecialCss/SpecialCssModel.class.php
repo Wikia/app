@@ -309,7 +309,7 @@ class SpecialCssModel extends WikiaModel {
 
 			$cssUpdatePost = [
 				'title' => $this->getAfterLastSlashText( $blogTitleText ),
-				'url' => trim( $this->getFormattedUrl($blogTitle->getFullURL()) . $this->getAnchorFromWikitext( $sectionText ) ),
+				'url' => trim( $blogTitle->getFullURL() . $this->getAnchorFromWikitext( $sectionText ) ),
 				'userAvatar' => AvatarService::renderAvatar( $blogUser, 25 ),
 				'userUrl' => $userPage->getFullUrl(),
 				'userName' => $blogUser,
@@ -445,17 +445,6 @@ class SpecialCssModel extends WikiaModel {
 		}
 
 		return $userName;
-	}
-
-	/**
-	 * @desc Only for devboxes - change url to community central
-	 */
-	private function getFormattedUrl($url) {
-		global $wgDevelEnvironment;
-		if ( $wgDevelEnvironment ) {
-			$url = str_replace('http://wikia.', 'http://community.', $url);
-		}
-		return $url;
 	}
 
 	/**
