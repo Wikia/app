@@ -42,10 +42,49 @@ class AbstractDismaxTest extends BaseTest
 		    ->with   ( 10 )
 		    ->will   ( $this->returnValue( 'bar' ) )
 		;
-		$method = new ReflectionMethod( $mockSelect, 'getFormulatedQuery' );
+		$method = new ReflectionMethod( $mockSelect, 'getQuery' );
 		$method->setAccessible( true );
 		$this->assertEquals(
-				'+(foo) AND (bar)',
+				'+foo AND +(bar)',
+				$method->invoke( $mockSelect )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\QueryService\Select\Dismax\AbstractDismax::getQuery
+	 */
+	public function testGetQueryMultipleQueryClauses() {
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', [ 'getQuery' ] );
+		
+		$dc = new \Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
+		
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\OnWiki' )
+		                   ->setConstructorArgs( [ $dc ] )
+		                   ->setMethods( array( 'getQueryClausesString' ) )
+		                   ->getMock();
+		
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getSolrQuery' ], [ 'foo' ] );
+		
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'getQueryClausesString' )
+		    ->will   ( $this->returnValue( 'foo bar' ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getQuery' )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+		;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'getSolrQuery' )
+		    ->with   ( 10 )
+		    ->will   ( $this->returnValue( 'bar' ) )
+		;
+		$method = new ReflectionMethod( $mockSelect, 'getQuery' );
+		$method->setAccessible( true );
+		$this->assertEquals(
+				'+(foo bar) AND +(bar)',
 				$method->invoke( $mockSelect )
 		);
 	}

@@ -718,6 +718,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'setResults', 'setResultsFound', 'getPage', 'getQuery' ) );
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSanitizedQuery' ), array( 'foo' ) );
 		
+		$mockResultSetFactory = $this->getMock( 'Wikia\Search\ResultSet\Factory', [ 'get' ] );
+		
 		$mockResult = $this->getMockBuilder( 'Solarium_Result_Select' )
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( array( 'getNumFound', 'getSpellcheck' ) )
@@ -732,6 +734,12 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( array( 'spellcheckResult', 'getConfig' ) )
 		                   ->getMockForAbstractClass();
+		
+		$mockResultSetFactory
+		    ->expects( $this->once() )
+		    ->method ( 'get' )
+		    ->will   ( $this->returnValue( $mockResultSet ) )
+		;
 		$mockSelect
 		    ->expects( $this->once() )
 		    ->method ( 'spellcheckResult' )
@@ -767,6 +775,10 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getSanitizedQuery' )
 		    ->will   ( $this->returnValue( 'foo' ) )
 		;
+		
+		$this->proxyClass( 'Wikia\Search\ResultSet\Factory', $mockResultSetFactory );
+		$this->mockApp();
+		
 		$reflspell = new ReflectionMethod( $mockSelect, 'prepareResponse' );
 		$reflspell->setAccessible( true );
 		$reflspell->invoke( $mockSelect, $mockResult ); // weirdness
