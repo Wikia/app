@@ -2,6 +2,11 @@
 class UIComponent {
 
 	/**
+	 * @desc Mustache file extension ;)
+	 */
+	const MUSTACHE_FILE_EXTENSION = 'mustache';
+	
+	/**
 	 * @var $templateEngine \Wikia\Template\Engine
 	 */
 	private $templateEngine;
@@ -31,6 +36,15 @@ class UIComponent {
 	}
 
 	/**
+	 * @desc Gets template variables set from configuration
+	 *
+	 * @return array
+	 */
+	public function getTemplateVarsConfig() {
+		return $this->templateVarsConfig;
+	}
+
+	/**
 	 * @desc Validates if required values are set and renders component
 	 *
 	 * @param $params
@@ -55,9 +69,10 @@ class UIComponent {
 	 * @throws WikiaUITemplateException
 	 */
 	private function setTemplatePath( $template ) {
-		$mustacheTplPath = $this->templateVarsConfig['templatePath'] . '_' . $template . '.mustache';
-
-		if ( file_exists( $mustacheTplPath ) ) {
+		$templateVarsConfig = $this->getTemplateVarsConfig();
+		$mustacheTplPath = $templateVarsConfig['templatePath'] . '_' . $template . '.' . self::MUSTACHE_FILE_EXTENSION;
+		
+		if ( $this->fileExists( $mustacheTplPath ) ) {
 			$this->templatePath = $mustacheTplPath;
 		} else {
 			throw new WikiaUITemplateException();
@@ -114,6 +129,16 @@ class UIComponent {
 		}
 
 		return $this->templateEngine;
+	}
+
+	/**
+	 * @desc Method using built-in PHP function; created because of unit tests
+	 * 
+	 * @param string $file path to a file
+	 * @return bool
+	 */
+	public function fileExists($file) {
+		return file_exists($file);
 	}
 
 }
