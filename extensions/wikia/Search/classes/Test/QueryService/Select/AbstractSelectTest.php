@@ -188,7 +188,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'client' => $mockClient ) );
 		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\AbstractSelect' )
 		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( array( 'registerComponents', 'getFormulatedQuery' ) )
+		                   ->setMethods( array( 'registerComponents', 'getQuery' ) )
 		                   ->getMockForAbstractClass();
 		$mockQuery = $this->getMockBuilder( '\Solarium_Query_Select' )
 		                  ->disableOriginalConstructor()
@@ -211,7 +211,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		;
 		$mockSelect
 		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getFormulatedQuery' )
+		    ->method ( 'getQuery' )
 		    ->will   ( $this->returnValue( 'foo:bar' ) )
 		;
 		$mockQuery
@@ -258,7 +258,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		$config = new Wikia\Search\Config();
 		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\AbstractSelect' )
 		                   ->disableOriginalConstructor()
-		                   ->setMethods( array( 'getConfig' ) )
+		                   ->setMethods( array( 'getConfig', 'getRequestedFields' ) )
 		                   ->getMockForAbstractClass();
 		
 		$mockSelect
@@ -269,10 +269,16 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		
 		// we'll just use default values.
 		$sort = $config->getSort();
-		$fields = $config->getRequestedFields();
 		$start = $config->getStart();
 		$length = $config->getLength();
 		
+		$fields = [ 'foo', 'bar', 'baz' ];
+		
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'getRequestedFields' )
+		    ->will   ( $this->returnValue( $fields ) )
+		;
 		$mockQuery
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'addFields' )
