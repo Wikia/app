@@ -8,8 +8,8 @@ class SpecialCssController extends WikiaSpecialPageController {
 
 	/**
 	 * Main page for Special:Css page
-	 *
-	 * @return bool
+	 * 
+	 * @return boolean
 	 */
 	public function index() {
 		wfProfileIn(__METHOD__);
@@ -25,6 +25,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 
 		if ($this->request->wasPosted()) {
 				$content = $this->request->getVal('cssContent', '');
+				/** @var $status Status */
 				$status = $model->saveCssFileContent(
 					$content,
 					$this->request->getVal('editSummary', ''),
@@ -43,7 +44,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 					NotificationsController::addConfirmation( wfMessage('special-css-save-message')->plain() );
 					$this->wg->Out->redirect($this->specialPage->getTitle()->getLocalURL());
 					wfProfileOut(__METHOD__);
-					return;
+					return false; // skip rendering
 				} else {
 					NotificationsController::addConfirmation(
 						$status->getMessage(),
@@ -67,12 +68,12 @@ class SpecialCssController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->plain() );
 		
 		wfProfileOut(__METHOD__);
+		return true;
 	}
 
 	/**
-	 * Method for getting diff between actual Wikia.css file and text given in request parameter
-	 * @param string wikitext - request param in which you can provide text to create a diff
-	 *
+	 * @desc Method for getting diff between actual Wikia.css file and text given in request parameter
+	 * @paramRequest string wikitext - request param in which you can provide text to create a diff
 	 */
 	public function getDiff() {
 		$wikitext = $this->request->getVal('wikitext', '');
