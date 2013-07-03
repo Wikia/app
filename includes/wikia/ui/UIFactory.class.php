@@ -36,7 +36,7 @@ class UIFactory {
 
 	/**
 	 * @desc AssetsManager/ResourceLoader
-	 * @var Loader
+	 * @var $loaderService
 	 */
 	private $loaderService;
 
@@ -118,9 +118,9 @@ class UIFactory {
 	/**
 	 * @desc Returns full file path
 	 *
-	 * @param string component's name
+	 * @param string $name component's name
 	 *
-	 * @returns full file path
+	 * @returns string full file path
 	 */
 	private function getComponentConfigFileFullPath( $name ) {
 		return $this->getComponentsDir() . $name . '/' . $name . self::CONFIG_FILE_SUFFIX;
@@ -129,7 +129,7 @@ class UIFactory {
 	/**
 	 * @desc Loads UIComponent from given string
 	 *
-	 * @param string JSON String
+	 * @param string $configContent JSON String
 	 *
 	 * @return UIComponent
 	 *
@@ -148,7 +148,7 @@ class UIFactory {
 	/**
 	 * @desc Loads UIComponent from file
 	 *
-	 * @param string Path to file
+	 * @param string $configFilePath Path to file
 	 *
 	 * @return UIComponent
 	 *

@@ -51,8 +51,8 @@ class UIComponent {
 	 * @param String $template "sub template" name of the component (i.e. a button component can have three
 	 * "sub templates": button_input.mustache, button_link.mustache and button_button.mustache the part between _ and .
 	 * is a "sub template" name
-	 * 
-	 * @throws Exception
+	 *
+	 * @throws WikiaUITemplateException
 	 */
 	private function setTemplatePath( $template ) {
 		$mustacheTplPath = $this->templateVarsConfig['templatePath'] . '_' . $template . '.mustache';
@@ -73,7 +73,7 @@ class UIComponent {
 	}
 
 	/**
-	 * @desc Sets template variables and theri values
+	 * @desc Sets template variables and their values
 	 * 
 	 * @param array $varsArray an array with key=>value structure; 
 	 * key is the template variable name and the second is its value

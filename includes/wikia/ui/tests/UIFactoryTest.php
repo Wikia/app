@@ -2,6 +2,9 @@
 
 class UIFactoryTest extends WikiaBaseTest {
 
+	/**
+	 * @var UIFactory
+	 */
 	private $instance = null;
 
 	public function setUp() {
