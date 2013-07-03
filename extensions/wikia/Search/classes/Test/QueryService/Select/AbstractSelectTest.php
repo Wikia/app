@@ -769,7 +769,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		;
 		$reflspell = new ReflectionMethod( $mockSelect, 'prepareResponse' );
 		$reflspell->setAccessible( true );
-		#$reflspell->invoke( $mockSelect, $mockResult ); // weirdness
+		$reflspell->invoke( $mockSelect, $mockResult ); // weirdness
 	}
 	
 	/**
