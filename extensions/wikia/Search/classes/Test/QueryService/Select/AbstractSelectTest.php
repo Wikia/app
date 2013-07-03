@@ -251,7 +251,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerQueryParams 
 	 */
 	public function testRegisterQueryParams() {
-		$mockQuery = $this->getMockBuilder( '\Solarium_Query_select' )
+		$mockQuery = $this->getMockBuilder( '\Solarium_Query_Select' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'addFields', 'removeField', 'setStart', 'setRows', 'addSort', 'addParam' ) )
 		                  ->getMock();
@@ -262,7 +262,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		                   ->getMockForAbstractClass();
 		
 		$mockSelect
-		    ->expects( $this->once() )
+		    ->expects( $this->any() )
 		    ->method ( 'getConfig' )
 		    ->will   ( $this->returnValue( $config ) )
 		;
