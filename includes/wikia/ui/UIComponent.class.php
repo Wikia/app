@@ -40,11 +40,7 @@ class UIComponent {
 	public function render( $params ) {
 		$this->setTemplate( $params['type'] ); // set template for rendering
 		$this->setValues( $params['params'] ); // set mustache variables
-
-		if(!$this->validateTemplateVars()) {
-			// check if required vars are set
-			throw new WikiaUIDataException();
-		}
+		$this->validateTemplateVars(); // check if required vars are set
 
 		return $this->getTemplateEngine()
 			->setData( $this->getValues() )
@@ -80,8 +76,12 @@ class UIComponent {
 	}
 
 	private function validateTemplateVars() {
-		// TODO: this method will be implemented during work on DAR-935
-		return true;
+		foreach ( $this->templateVarsConfig['required'] as $templateRequiredVarName ) {
+			if ( ! isset( $this->templateData[ $templateRequiredVarName ] ) ) {
+				// @todo: think about getting that message in a different way
+				throw new WikiaUIDataException( 'Mandatory variable ' . $templateRequiredVarName . ' not set' );
+			}
+		}
 	}
 
 	/**
@@ -92,7 +92,7 @@ class UIComponent {
 			$this->templateEngine = new Wikia\Template\MustacheEngine;
 		}
 
- 		return $this->templateEngine;
+		return $this->templateEngine;
 	}
 
 }
