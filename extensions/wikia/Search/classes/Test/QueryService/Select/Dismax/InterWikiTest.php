@@ -117,7 +117,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'setFilterQuery' )
-		    ->with   ( '-(wid:123)', 'wikiptt' )
+		    ->with   ( '-(id:123)', 'wikiptt' )
 		;
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\InterWiki', 'registerFilterQueryForMatch' );
 		$method->setAccessible( true );
@@ -221,17 +221,10 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getHub' )
 		    ->will   ( $this->returnValue( 'Entertainment' ) )
 		;
-		
-		$queries = array(
-				Wikia\Search\Utilities::valueForField( 'iscontent', 'true' ),
-				'-wikiarticles:[0 TO 50]',
-				Wikia\Search\Utilities::valueForField( 'hub', 'Entertainment' )
-				);
-		
 		$reflspell = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\InterWiki', 'getFilterQueryString' );
 		$reflspell->setAccessible( true );
 		$this->assertEquals(
-				implode( ' AND ', $queries ),
+				'-articles_i:[0 TO 50] AND (hub_s:Entertainment)',
 				$reflspell->invoke( $mockSelect )
 		);
 	}
@@ -275,7 +268,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\InterWiki', 'getQueryClausesString' );
 		$method->setAccessible( true );
 		$this->assertEquals(
-				'(-(wid:123) AND -(wid:321) AND -(wid:456) AND (lang:en) AND (iscontent:true) AND (hub:Entertainment))',
+				'lang_s:en AND (hub:Entertainment)',
 				$method->invoke( $mockSelect )
 		);
 	}

@@ -309,7 +309,7 @@ class ConfigTest extends BaseTest {
 				$config->getInterWiki()
 		);
 		$this->assertAttributeEquals(
-				'Select\\InterWiki',
+				'Select\\Dismax\\InterWiki',
 				'queryService',
 				$config
 		);
@@ -678,40 +678,11 @@ class ConfigTest extends BaseTest {
 		$fields = $config->getRequestedFields();
 
 		$this->assertContains(
-				Utilities::field( 'html' ),
-				$fields,
-				'\Wikia\Search\Config::getRequestedFields() should perform language field transformation'
-		);
-		$this->assertContains(
-				'id',
-				$fields,
-				'\Wikia\Search\Config::getRequestedFields() should always include an id'
+				'html',
+				$fields
 		);
 	}
 	
-	/**
-	 * @covers \Wikia\Search\Config::getRequestedFields
-	 */
-	public function testGetRequestedFieldsWithVideo() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', [ 'getQueryService' ] );
-		$mockConfig->setRequestedFields( [ 'id' ] );
-		$this->assertAttributeEquals(
-				[ 'id' ],
-				'requestedFields',
-				$mockConfig
-		);
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getQueryService' )
-		    ->will   ( $this->returnValue( '\\Wikia\Search\\QueryService\\Select\\Video' ) )
-		;
-		$this->assertContains(
-				'title_en',
-				$mockConfig->getRequestedFields(),
-				'A video search should always include title_en as a requested field'
-		);
-	}
-
 	/**
 	 * @covers \Wikia\Search\Config::getPublicFilterKeys
 	 */
@@ -1451,7 +1422,7 @@ class ConfigTest extends BaseTest {
 		);
 		$meth->invoke( $config, 'Select\\Dismax\\Video', false );
 		$this->assertAttributeEquals(
-				'Select\\OnWiki',
+				'Select\\Dismax\\OnWiki',
 				'queryService',
 				$config,
 				'We should be able to vacuously "unapply" unregistered query services'
@@ -1562,7 +1533,7 @@ class ConfigTest extends BaseTest {
 		    ->will   ( $this->returnValue( true ) )
 		;
 		$this->assertEquals(
-				'Select\\InterWiki',
+				'Select\\Dismax\\InterWiki',
 				$bs->invoke( $config )
 		);
 	}
@@ -1579,14 +1550,14 @@ class ConfigTest extends BaseTest {
 		$config
 		    ->expects( $this->once() )
 		    ->method ( "bootstrapQueryService" )
-		    ->will   ( $this->returnValue( 'Select\\OnWiki' ) )
+		    ->will   ( $this->returnValue( 'Select\\Dismax\\OnWiki' ) )
 		;
 		$this->assertEquals(
-				'\\Wikia\\Search\\QueryService\\Select\\OnWiki',
+				'\\Wikia\\Search\\QueryService\\Select\\Dismax\\OnWiki',
 				$config->getQueryService()
 		);
 		$this->assertEquals(
-				'\\Wikia\\Search\\QueryService\\Select\\OnWiki',
+				'\\Wikia\\Search\\QueryService\\Select\\Dismax\\OnWiki',
 				$config->getQueryService(),
 				"Run a second time to ensure we only call bootstrapQueryService once"
 		);
