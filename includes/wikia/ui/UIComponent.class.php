@@ -51,6 +51,7 @@ class UIComponent {
 	 * @param String $template "sub template" name of the component (i.e. a button component can have three
 	 * "sub templates": button_input.mustache, button_link.mustache and button_button.mustache the part between _ and .
 	 * is a "sub template" name
+	 * 
 	 * @throws Exception
 	 */
 	private function setTemplate( $template ) {
@@ -78,8 +79,8 @@ class UIComponent {
 	private function validateTemplateVars() {
 		foreach ( $this->templateVarsConfig['required'] as $templateRequiredVarName ) {
 			if ( ! isset( $this->templateData[ $templateRequiredVarName ] ) ) {
-				// @todo: think about getting that message in a different way
-				throw new WikiaUIDataException( 'Mandatory variable ' . $templateRequiredVarName . ' not set' );
+				$exceptionMessage = sprintf( WikiaUIDataException::EXCEPTION_MSG_INVALID_DATA_FOR_PARAMETER, $templateRequiredVarName );
+				throw new WikiaUIDataException( $exceptionMessage );
 			}
 		}
 	}
