@@ -142,7 +142,7 @@ class EmailTemplatesHooksHelper {
 			'user_page_url' => $editor->getUserPage()->getFullURL(),
 			'avatar_url' => AvatarService::renderAvatar($username, self::EMAIL_AVATAR_DEFAULT_WIDTH),
 			'date' => $date,
-			'short_text' => BlogTemplateClass::getShortText($oPostTitle->getArticleId(), $oRevision)
+			'short_text' => $this->getArticleSnippet($oPostTitle->getArticleId(), 200)."..."
 		);
 		$postInfoHTML = $this->app->renderView( "EmailTemplates", "PostInfo", $post_info_params );
 		$keys['$POST_INFO'] = $postInfoHTML;
@@ -166,6 +166,16 @@ class EmailTemplatesHooksHelper {
 		$bodyHTML = $this->app->renderView( "EmailTemplates", "NewBlogPostMail", $body_params );
 		wfProfileOut( __METHOD__ );
 		return true;
+	}
+
+	/**
+	 * get a snippet of article text
+	 * @param int $articleId Article ID
+	 * @param int $length snippet length (in characters)
+	 */
+	public function getArticleSnippet( $articleId, $length = 100 ) {
+		$service = new ArticleService( $articleId );
+		return $service->getTextSnippet( $length );
 	}
 
 }
