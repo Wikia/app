@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\Test\QueryService\Select\AbstractSelect
  */
 namespace Wikia\Search\Test\QueryService\Select;
-use Wikia, ReflectionProperty, ReflectionMethod;
+use Wikia, ReflectionProperty, ReflectionMethod, Wikia\Search\Utilities;
 /**
  * Tests core functionality shared by other Select instances
  */
@@ -1251,5 +1251,177 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		);
 	}
 
+	/**
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getRequestedFields
+	 */
+	public function testGetRequestedFields() {
+		$mockService = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( [ 'getConfig' ] )
+		                    ->getMockForAbstractClass();
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', [ 'getRequestedFields' ] );
+		$attr = new ReflectionProperty( $mockService, 'requestedFields' );
+		$attr->setAccessible( true );
+		$attr->setValue( $mockService, [ 'html' ] );
+		$get = new ReflectionMethod( $mockService, 'getRequestedFields' );
+		$get->setAccessible( true );
+		$mockService
+		    ->expects( $this->once() )
+		    ->method ( 'getConfig' )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getRequestedFields' )
+		    ->will   ( $this->returnValue( [ 'title' ] ) )
+		;
+		$this->assertEquals(
+				[ Utilities::field( 'html' ), Utilities::field( 'title' ) ],
+				$get->invoke( $mockService )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getFilterQueryString
+	 */
+	public function testGetFilterQueryString() {
+		$mockService = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( [ null ] )
+		                    ->getMockForAbstractClass();
+		$fqs = new ReflectionMethod( $mockService, 'getFilterQueryString' );
+		$fqs->setAccessible( true );
+		$this->assertEquals(
+				'',
+				$fqs->invoke( $mockService )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getConfig
+	 */
+	public function testGetConfig() {
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( [ null ] )
+		                    ->getMockForAbstractClass();
+		$config = new Wikia\Search\Config;
+		$cnf = new ReflectionProperty( $mockSelect, 'config' );
+		$cnf->setAccessible( true );
+		$cnf->setValue( $mockSelect, $config );
+		$get = new ReflectionMethod( $mockSelect, 'getConfig' );
+		$get->setAccessible( true );
+		$this->assertEquals(
+				$config,
+				$get->invoke( $mockSelect )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getService
+	 */
+	public function testGetService() {
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( [ null ] )
+		                    ->getMockForAbstractClass();
+		$service = new Wikia\Search\MediaWikiService;
+		$svc = new ReflectionProperty( $mockSelect, 'service' );
+		$svc->setAccessible( true );
+		$svc->setValue( $mockSelect, $service );
+		$get = new ReflectionMethod( $mockSelect, 'getService' );
+		$get->setAccessible( true );
+		$this->assertEquals(
+				$service,
+				$get->invoke( $mockSelect )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getClient
+	 */
+	public function testGetClient() {
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( [ 'setCoreInClient' ] )
+		                   ->getMockForAbstractClass();
+		
+		$mockClient = $this->getMockBuilder( '\Solarium_Client' )
+		                   ->disableOriginalConstructor()
+		                   ->getMock();
+		
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'setCoreInClient' )
+		;
+		
+		$attr = new ReflectionProperty( $mockSelect, 'client' );
+		$attr->setAccessible( true );
+		$attr->setValue( $mockSelect, $mockClient );
+		
+		$get = new ReflectionMethod( $mockSelect, 'getClient' );
+		$get->setAccessible( true );
+		
+		$this->assertAttributeEmpty(
+				'coreSetInClient',
+				$mockSelect
+		);
+		$this->assertEquals(
+				$mockClient,
+				$get->invoke( $mockSelect )
+		);
+		$set = new ReflectionProperty( $mockSelect, 'coreSetInClient' );
+		$set->setAccessible( true );
+		$set->setValue( $mockSelect, true );
+		$this->assertEquals(
+				$mockClient,
+				$get->invoke( $mockSelect )
+		); 
+	}
+	
+	/**
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::setCoreInClient
+	 */
+	public function testSetCoreInClient() {
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( [ null ] )
+		                   ->getMockForAbstractClass();
+		
+		$mockClient = $this->getMockBuilder( '\Solarium_Client' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( [ 'getOptions', 'setOptions' ] )
+		                   ->getMock();
+		
+		$before = [ 'foo' => 'bar', 'adapteroptions' => [ 'path' => 'whatever', 'baz' => 'qux' ] ];
+		$after = [ 'foo' => 'bar', 'adapteroptions' => [ 'path' => '/solr/main', 'baz' => 'qux' ] ];
+		
+		$mockClient
+		    ->expects( $this->once() )
+		    ->method ( 'getOptions' )
+		    ->will   ( $this->returnValue( $before ) )
+		;
+		$mockClient
+		    ->expects( $this->once() )
+		    ->method ( 'setOptions' )
+		    ->with   ( $after, true )
+		;
+		
+		$client = new ReflectionProperty( $mockSelect, 'client' );
+		$client->setAccessible( true );
+		$client->setValue( $mockSelect, $mockClient );
+		
+		$set = new ReflectionMethod( $mockSelect, 'setCoreInClient' );
+		$set->setAccessible( true );
+		$this->assertEquals(
+				$mockSelect,
+				$set->invoke( $mockSelect )
+		);
+		$this->assertAttributeEquals(
+				true,
+				'coreSetInClient',
+				$mockSelect
+		);
+	}
 	
 }
