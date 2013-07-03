@@ -73,14 +73,11 @@ class InterWiki extends AbstractDismax
 	
 	/**
 	 * Registers grouping, query parameters, and filters.
-	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::registerComponents()
 	 * @param Solarium_Query_Select $query
 	 * @return InterWiki
 	 */
-	protected function registerComponents( Solarium_Query_Select $query ) {
-		return $this->registerFilterQueries ( $query )
-		            ->registerDismax        ( $query )
-		;
+	protected function registerNonDismaxComponents( Solarium_Query_Select $query ) {
+		return $this->registerFilterQueries( $query );
 	}
 	
 

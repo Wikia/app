@@ -94,12 +94,16 @@ class AbstractDismaxTest extends BaseTest
 	 */
 	public function testGetQueryFieldsString() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQueryFieldsToBoosts' ) );
-		$dc = new DependencyContainer( array( 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\AbstractDismax' )
-		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( [ null ] )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( [ 'getConfig' ] )
 		                   ->getMockForAbstractClass();
 		
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'getConfig' )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'getQueryFieldsToBoosts' )
@@ -119,12 +123,33 @@ class AbstractDismaxTest extends BaseTest
 	public function testRegisterComponents() {
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\AbstractDismax' )
 		                   ->disableOriginalConstructor()
-		                   ->setMethods( array() )
+		                   ->setMethods( array( 'registerDismax', 'registerNonDismaxComponents' ) )
 		                   ->getMockForAbstractClass();
+		$mockQuery = $this->getMockBuilder( 'Solarium_Query_Select' )
+		                  ->disableOriginalConstructor()
+		                  ->getMock();
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'registerDismax' )
+		    ->with   ( $mockQuery )
+		    ->will   ( $this->returnValue ( $mockSelect ) )
+		;
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'registerNonDismaxComponents' )
+		    ->with   ( $mockQuery )
+		    ->will   ( $this->returnValue ( $mockSelect ) )
+		;
+		$register = new ReflectionMethod( $mockSelect, 'registerComponents' );
+		$register->setAccessible( true );
+		$this->assertEquals(
+				$mockSelect,
+				$register->invoke( $mockSelect, $mockQuery )
+		);
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerDismax
+	 * @covers Wikia\Search\QueryService\Select\Dismax\AbstractDismax::registerDismax
 	 */
 	public function testRegisterDismax() {
 		$mockQuery = $this->getMockBuilder( 'Solarium_Query_Select' )

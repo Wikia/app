@@ -97,9 +97,9 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::registerComponents
+	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::registerNonDismaxComponents
 	 */
-	public function testRegisterComponents() {
+	public function testRegisterNonDismaxComponents() {
 		$mockQuery = $this->getMockBuilder( '\Solarium_Query_Select' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
@@ -128,13 +128,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->with   ( $mockQuery )
 		    ->will   ( $this->returnValue( $mockSelect ) )
 		;
-		$mockSelect
-		    ->expects( $this->once() )
-		    ->method ( 'registerDismax' )
-		    ->with   ( $mockQuery )
-		    ->will   ( $this->returnValue( $mockSelect ) )
-		;
-		$register = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\OnWiki', 'registerComponents' );
+		$register = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\OnWiki', 'registerNonDismaxComponents' );
 		$register->setAccessible( true );
 		$this->assertEquals(
 				$mockSelect,
@@ -309,22 +303,6 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		$this->assertEquals(
 				$mockSelect,
 				$register->invoke( $mockSelect, $mockQuery )
-		);
-	}
-	
-	/**
-	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::configureQueryFields 
-	 */
-	public function testConfigureQueryFields() {
-		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\Dismax\OnWiki' )
-		                   ->disableOriginalConstructor()
-		                   ->setMethods( array() )
-		                   ->getMockForAbstractClass();
-		$get = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\OnWiki', 'configureQueryFields' );
-		$get->setAccessible( true );
-		$this->assertEquals(
-				$mockSelect,
-				$get->invoke( $mockSelect )
 		);
 	}
 	

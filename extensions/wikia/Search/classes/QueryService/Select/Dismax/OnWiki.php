@@ -48,13 +48,11 @@ class OnWiki extends AbstractDismax
 	/**
 	 * Registers different components in Solarium. We also use this spot to update query fields for the video search child class.
 	 * @param \Solarium_Query_Select $query
-	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::registerComponents()
 	 */
-	protected function registerComponents( Select $query ) {
+	protected function registerNonDismaxComponents( Select $query ) {
 		return $this->registerHighlighting  ( $query )
 		            ->registerFilterQueries ( $query )
 		            ->registerSpellcheck    ( $query )
-		            ->registerDismax        ( $query )
 		;
 	}
 	

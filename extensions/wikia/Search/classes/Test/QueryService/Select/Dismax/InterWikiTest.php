@@ -8,7 +8,7 @@ use Wikia, ReflectionMethod, ReflectionProperty;
  * Tests interwiki search functionality
  */
 class InterWikiTest extends Wikia\Search\Test\BaseTest {
-	public function setUp() { parent::setUp();var_dump($this->getName()); }
+	
 	/**
 	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::extractMatch
 	 */
@@ -36,9 +36,9 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::registerComponents
+	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::registerNonDismaxComponents
 	 */
-	public function testRegisterComponents() {
+	public function testRegisterNonDismaxComponents() {
 		$mockQuery = $this->getMockBuilder( '\Solarium_Query_Select' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
@@ -54,7 +54,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->with   ( $mockQuery )
 		    ->will   ( $this->returnValue( $mockSelect ) )
 		;
-		$register = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\InterWiki', 'registerComponents' );
+		$register = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\InterWiki', 'registerNonDismaxComponents' );
 		$register->setAccessible( true );
 		$this->assertEquals(
 				$mockSelect,
