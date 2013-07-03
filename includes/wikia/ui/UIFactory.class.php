@@ -10,10 +10,11 @@
  */
 
 class UIFactory {
+
 	/**
 	 * @desc Component's configuration file suffix
 	 * Example buttons component config file should be named buttons_config.json
-	 * 
+	 *
 	 * @var String
 	 */
 	const CONFIG_FILE_SUFFIX = '_config.json';
@@ -32,7 +33,7 @@ class UIFactory {
 	 * @var UIFactory
 	 */
 	private static $instance = null;
-	
+
 	/**
 	 * @desc AssetsManager/ResourceLoader
 	 * @var Loader
@@ -190,12 +191,13 @@ class UIFactory {
 
 	/**
 	 * @desc Adds id element to the component's config array
-	 * 
+	 *
 	 * @param Array $componentCfg
 	 * @return array
 	 */
 	private function addComponentsId( $componentCfg ) {
 		$componentCfg['id'] = mb_strtolower( str_replace( ' ', '_', $componentCfg['name'] ) );
+
 		return $componentCfg;
 	}
 

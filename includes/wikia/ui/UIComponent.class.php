@@ -1,8 +1,6 @@
 <?php
 class UIComponent {
 
-	const EXCEPTION_MSG_INVALID_TEMPLATE = 'Invalid template';
-
 	/**
 	 * @var $templateEngine \Wikia\Template\Engine
 	 */
@@ -37,11 +35,16 @@ class UIComponent {
 	 *
 	 * @param $params
 	 * @return string
+	 * @throws WikiaUIDataException
 	 */
 	public function render( $params ) {
 		$this->setTemplate( $params['type'] ); // set template for rendering
 		$this->setValues( $params['params'] ); // set mustache variables
-		$this->validateTemplateVars(); // check if required vars are set
+
+		if(!$this->validateTemplateVars()) {
+			// check if required vars are set
+			throw new WikiaUIDataException();
+		}
 
 		return $this->getTemplateEngine()
 			->setData( $this->getValues() )
@@ -60,7 +63,7 @@ class UIComponent {
 		if ( file_exists( $mustacheTplPath ) ) {
 			$this->templatePath = $mustacheTplPath;
 		} else {
-			throw new Exception( self::EXCEPTION_MSG_INVALID_TEMPLATE );
+			throw new WikiaUITemplateException();
 		}
 	}
 
@@ -89,7 +92,7 @@ class UIComponent {
 			$this->templateEngine = new Wikia\Template\MustacheEngine;
 		}
 
-		return $this->templateEngine;
+ 		return $this->templateEngine;
 	}
 
 }
