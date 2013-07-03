@@ -249,10 +249,10 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers \Wikia\Search\ResultSet\Base::prependArticleMatchIfExists
+	 * @covers \Wikia\Search\ResultSet\Base::prependMatchIfExists
 	 */
-	public function testPrependArticleMatchIfExistsWithMatchAndStartAt0() {
-		$this->prepareMocks( array( 'getResultsStart', 'addResult' ), array( 'hasArticleMatch', 'getArticleMatch' ) );
+	public function testPrependMatchIfExistsWithMatchAndStartAt0() {
+		$this->prepareMocks( array( 'getResultsStart', 'addResult' ), array( 'hasMatch', 'getMatch' ) );
 		
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
 		                  ->disableOriginalConstructor()
@@ -265,7 +265,7 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		
 		$this->config
 			->expects( $this->at( 0 ) )
-			->method ( 'hasArticleMatch' )
+			->method ( 'hasMatch' )
 			->will   ( $this->returnValue( true ) )
 		;
 		$this->resultSet
@@ -275,7 +275,7 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		;
 		$this->config
 		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getArticleMatch' )
+		    ->method ( 'getMatch' )
 		    ->will   ( $this->returnValue( $mockMatch ) )
 		;
 		$mockMatch
@@ -293,13 +293,13 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		$found->setAccessible( true );
 		$oldFound = $found->getValue( $this->resultSet );
 		
-		$prepend = new ReflectionMethod( '\Wikia\Search\ResultSet\Base', 'prependArticleMatchIfExists' );
+		$prepend = new ReflectionMethod( '\Wikia\Search\ResultSet\Base', 'prependMatchIfExists' );
 		$prepend->setAccessible( true );
 		
 		$this->assertEquals(
 				$this->resultSet,
 				$prepend->invoke( $this->resultSet ),
-				'\Wikia\Search\ResultSet\Base::prependArticleMatchIfExists should provide a fluent interface'
+				'\Wikia\Search\ResultSet\Base::prependMatchIfExists should provide a fluent interface'
 		);
 		$this->assertEquals(
 				$oldFound + 1,
@@ -308,10 +308,10 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers \Wikia\Search\ResultSet\Base::prependArticleMatchIfExists
+	 * @covers \Wikia\Search\ResultSet\Base::prependMatchIfExists
 	 */
-	public function testPrependArticleMatchIfExistsWithMatchAndStartNotAt0() {
-		$this->prepareMocks( array( 'getResultsStart', 'addResult' ), array( 'hasArticleMatch', 'getArticleMatch' ) );
+	public function testPrependMatchIfExistsWithMatchAndStartNotAt0() {
+		$this->prepareMocks( array( 'getResultsStart', 'addResult' ), array( 'hasMatch', 'getMatch' ) );
 		
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
 		                  ->disableOriginalConstructor()
@@ -324,7 +324,7 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		
 		$this->config
 			->expects( $this->at( 0 ) )
-			->method ( 'hasArticleMatch' )
+			->method ( 'hasMatch' )
 			->will   ( $this->returnValue( true ) )
 		;
 		$this->resultSet
@@ -341,13 +341,13 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		$found->setAccessible( true );
 		$oldFound = $found->getValue( $this->resultSet );
 		
-		$prepend = new ReflectionMethod( '\Wikia\Search\ResultSet\Base', 'prependArticleMatchIfExists' );
+		$prepend = new ReflectionMethod( '\Wikia\Search\ResultSet\Base', 'prependMatchIfExists' );
 		$prepend->setAccessible( true );
 		
 		$this->assertEquals(
 				$this->resultSet,
 				$prepend->invoke( $this->resultSet ),
-				'\Wikia\Search\ResultSet\Base::prependArticleMatchIfExists should provide a fluent interface'
+				'\Wikia\Search\ResultSet\Base::prependMatchIfExists should provide a fluent interface'
 		);
 		$this->assertEquals(
 				$oldFound + 1,
@@ -356,14 +356,14 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers \Wikia\Search\ResultSet\Base::prependArticleMatchIfExists
+	 * @covers \Wikia\Search\ResultSet\Base::prependMatchIfExists
 	 */
-	public function testPrependArticleMatchIfExistsNoMatch() {
-		$this->prepareMocks( array( 'getResultsStart', 'addResult' ), array( 'hasArticleMatch', 'getArticleMatch' ) );
+	public function testprependMatchIfExistsNoMatch() {
+		$this->prepareMocks( array( 'getResultsStart', 'addResult' ), array( 'hasMatch', 'getMatch' ) );
 		
 		$this->config
 			->expects	( $this->at( 0 ) )
-			->method	( 'hasArticleMatch' )
+			->method	( 'hasMatch' )
 			->will		( $this->returnValue( false ) )
 		;
 		$this->resultSet
@@ -371,25 +371,25 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 			->method	( 'getResultsStart' )
 		;
 		
-		$prepend = new ReflectionMethod( '\Wikia\Search\ResultSet\Base', 'prependArticleMatchIfExists' );
+		$prepend = new ReflectionMethod( '\Wikia\Search\ResultSet\Base', 'prependMatchIfExists' );
 		$prepend->setAccessible( true );
 		
 		$this->assertEquals(
 				$this->resultSet,
 				$prepend->invoke( $this->resultSet ),
-				'\Wikia\Search\ResultSet\Base::prependArticleMatchIfExists should provide a fluent interface'
+				'\Wikia\Search\ResultSet\Base::prependMatchIfExists should provide a fluent interface'
 		);
 	}
 	
 	/**
-	 * @covers \Wikia\Search\ResultSet\Base::prependArticleMatchIfExists
+	 * @covers \Wikia\Search\ResultSet\Base::prependMatchIfExists
 	 */
-	public function testPrependArticleMatchIfExistsMatchWithPagination() {
-		$this->prepareMocks( array( 'getResultsStart', 'addResult' ), array( 'hasArticleMatch', 'getArticleMatch' ) );
+	public function testprependMatchIfExistsMatchWithPagination() {
+		$this->prepareMocks( array( 'getResultsStart', 'addResult' ), array( 'hasMatch', 'getMatch' ) );
 		
 		$this->config
 			->expects	( $this->at( 0 ) )
-			->method	( 'hasArticleMatch' )
+			->method	( 'hasMatch' )
 			->will		( $this->returnValue( true ) )
 		;
 		$this->resultSet
@@ -399,16 +399,16 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		;
 		$this->config
 			->expects	( $this->never() )
-			->method	( 'getArticleMatch' )
+			->method	( 'getMatch' )
 		;
 		
-		$prepend = new ReflectionMethod( '\Wikia\Search\ResultSet\Base', 'prependArticleMatchIfExists' );
+		$prepend = new ReflectionMethod( '\Wikia\Search\ResultSet\Base', 'prependMatchIfExists' );
 		$prepend->setAccessible( true );
 		
 		$this->assertEquals(
 				$this->resultSet,
 				$prepend->invoke( $this->resultSet ),
-				'\Wikia\Search\ResultSet\Base::prependArticleMatchIfExists should provide a fluent interface'
+				'\Wikia\Search\ResultSet\Base::prependMatchIfExists should provide a fluent interface'
 		);
 	}
 	

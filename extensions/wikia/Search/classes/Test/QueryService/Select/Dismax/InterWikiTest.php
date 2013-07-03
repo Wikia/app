@@ -174,39 +174,6 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::configureQueryFields
-	 */
-	public function testConfigureQueryFields() {
-		
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'setQueryField' ) );
-		
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
-		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\InterWiki' )
-		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( null )
-		                   ->getMock();
-		
-		
-		$mockConfig
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'setQueryField' )
-		    ->with   ( 'wikititle', 200 )
-		    ->will   ( $this->returnValue( $mockConfig ) )
-		;
-		$mockConfig
-		    ->expects( $this->at( 1 ) )
-		    ->method ( 'setQueryField' )
-		    ->with   ( 'wiki_description_txt', 150 )
-		;
-		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\InterWiki', 'configureQueryFields' );
-		$method->setAccessible( true );
-		$this->assertEquals(
-				$mockSelect,
-				$method->invoke( $mockSelect )
-		);
-	}
-	
-	/**
 	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::getFilterQueryString
 	 */
 	public function testGetFilterQueryString() {

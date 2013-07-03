@@ -13,9 +13,9 @@ class VideoEmbedToolTest extends BaseTest
 	const CLASSNAME = 'Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool';
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\VideoEmbedTool::getFormulatedQuery
+	 * @covers Wikia\Search\QueryService\Select\VideoEmbedTool::getQuery
 	 */
-	public function testGetFormulatedQuery() {
+	public function testGetQuery() {
 		$service = $this->getMockBuilder( self::CLASSNAME )
 		                ->disableOriginalConstructor()
 		                ->setMethods( [ 'getQueryClausesString', 'getTopicsAsQuery', 'getTransformedQuery' ] )
@@ -40,7 +40,7 @@ class VideoEmbedToolTest extends BaseTest
 		    ->method ( 'getTransformedQuery' )
 		    ->will   ( $this->returnValue( $transq ) )
 		;
-		$get = new ReflectionMethod( self::CLASSNAME, 'getFormulatedQuery' );
+		$get = new ReflectionMethod( self::CLASSNAME, 'getQuery' );
 		$get->setAccessible( true );
 		$this->assertEquals(
 				sprintf( '+(%s) AND ( +(%s)^1000 AND +(%s)^2000 )', $qc, $topicq, $transq ),
