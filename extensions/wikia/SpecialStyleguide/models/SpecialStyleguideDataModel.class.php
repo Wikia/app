@@ -16,7 +16,7 @@ class SpecialStyleguideDataModel {
 					'getStartedBtn' => UIFactory::getInstance()->init('buttons')->render([
 						'type' => 'input',
 						'params' => [
-							'type' => 'link',
+							'name' => 'get-started',
 							'class' => 'button',
 							'value' => wfMessage( 'styleguide-get-started' )->plain(),
 						],

@@ -5,6 +5,11 @@ class UIComponent {
 	 * @desc Mustache file extension ;)
 	 */
 	const MUSTACHE_FILE_EXTENSION = 'mustache';
+
+	/**
+	 * @desc default type of a component i.e. buttons have three types: input, button and link
+	 */
+	const COMPONENT_DEFAULT_TYPE = 'default';
 	
 	/**
 	 * @var $templateEngine \Wikia\Template\Engine
@@ -32,6 +37,11 @@ class UIComponent {
 	private $templateData;
 
 	/**
+	 * @var String a type of the component i.e. buttons have three types: input, button and link
+	 */
+	private $type;
+
+	/**
 	 * @desc Sets template variables from configuration
 	 *
 	 * @param $templateVarsConfig
@@ -57,7 +67,8 @@ class UIComponent {
 	 * @throws WikiaUIDataException
 	 */
 	public function render( $params ) {
-		$this->setTemplatePath( $params['type'] ); // set template for rendering
+		$this->setType( $params['type'] );
+		$this->setTemplatePath( $this->getType() ); // set template for rendering
 		$this->setValues( $params['params'] ); // set mustache variables
 		$this->validateTemplateVars(); // check if required vars are set
 
@@ -99,6 +110,14 @@ class UIComponent {
 	public function getTemplatePath() {
 		return $this->templatePath;
 	}
+	
+	public function setType( $type ) {
+		$this->type = $type;
+	}
+
+	public function getType() {
+		return $this->type;
+	}
 
 	/**
 	 * @desc Sets template variables and their values
@@ -125,7 +144,8 @@ class UIComponent {
 	 * @throws WikiaUIDataException
 	 */
 	private function validateTemplateVars() {
-		foreach ( $this->templateVarsConfig['required'] as $templateRequiredVarName ) {
+		$config = $this->getTemplateVarsConfig();
+		foreach ( $config[ $this->getType() ][ 'required' ] as $templateRequiredVarName ) {
 			if ( ! isset( $this->templateData[ $templateRequiredVarName ] ) ) {
 				$exceptionMessage = sprintf( WikiaUIDataException::EXCEPTION_MSG_INVALID_DATA_FOR_PARAMETER, $templateRequiredVarName );
 				throw new WikiaUIDataException( $exceptionMessage );

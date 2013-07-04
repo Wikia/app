@@ -258,7 +258,7 @@ class UIFactory {
 			$componentNames = (array)$componentNames;
 		}
 		
-		$components = [];  
+		$components = [];
 		$assets = [];
 
 		// iterate $componentNames, read configs, write down dependencies
