@@ -80,12 +80,12 @@ class Wall extends WikiaModel {
 	 *
 	 * @return string parsed description
 	 */
-	public function getDescriptionWithoutTemplates() {
+	public function getDescriptionWithoutTemplates( $bParse = true ) {
 		$title = $this->getTitle();
 		$memcKey = wfMemcKey(__METHOD__, $title->getArticleID(), $title->getTouchedCached(), 'without_template');
 		$res = $this->wg->memc->get($memcKey);
 		if ( !is_string($res) ) {
-			$res = $this->getDescriptionParsed(true, true);
+			$res = $this->getDescriptionParsed($bParse, true);
 
 			$this->wg->memc->set($memcKey, $res, self::DESCRIPTION_CACHE_TTL);
 		}
