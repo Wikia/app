@@ -15,10 +15,10 @@ class UIComponentTest extends WikiaBaseTest {
 		$setTemplatePathMethod = new ReflectionMethod( 'UIComponent', 'setTemplatePath' );
 		$setTemplatePathMethod->setAccessible( true );
 		
-		$UIComponentMock = $this->getMock('UIComponent', ['getTemplateVarsConfig', 'fileExists']);
+		$UIComponentMock = $this->getMock('UIComponent', ['getBaseTemplatePath', 'fileExists']);
 		$UIComponentMock->expects( $this->once() )
-			->method( 'getTemplateVarsConfig' )
-			->will( $this->returnValue( [ 'templatePath' => $templatePath ] ) );
+			->method( 'getBaseTemplatePath' )
+			->will( $this->returnValue( $templatePath ) );
 
 		$UIComponentMock->expects( $this->once() )
 			->method( 'fileExists' )
