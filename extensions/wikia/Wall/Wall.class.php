@@ -66,7 +66,7 @@ class Wall extends WikiaModel {
 	/**
 	 * @desc Returns raw (unparsed) wikitext.
 	 *
-	 * @return sttring raw wikitext
+	 * @return string raw wikitext
 	 */
 	public function  getRawDescription() {
 		$oArticle = new Article( $this->getTitle() );
