@@ -79,6 +79,9 @@ if(Math.random()<0.01){
 
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>"<?= $itemType ?>>
+<? if ( BodyController::isResponsiveLayoutEnabled() ): ?>
+	<div class="background-image-gradient"></div>
+<? endif ?>
 
 <?= $comScore ?>
 <?= $quantServe ?>

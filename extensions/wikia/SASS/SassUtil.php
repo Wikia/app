@@ -71,6 +71,21 @@ class SassUtil {
 			$oasisSettings["color-links"] = self::sanitizeColor($settings["color-links"]);
 			$oasisSettings["color-header"] = self::sanitizeColor($settings["color-header"]);
 			$oasisSettings["background-image"] = wfReplaceImageServer($settings['background-image'], self::getCacheBuster());
+
+			// sending width and height of background image to SASS
+			if ( isset($settings["background-image-width"]) && isset($settings["background-image-height"]) ) {
+				$oasisSettings["background-image-width"] = $settings["background-image-width"] . 'px';
+				$oasisSettings["background-image-height"] = $settings["background-image-height"] . 'px';
+			} else {
+				// if not cached in theme settings
+				$bgImage = wfFindFile(ThemeSettings::BackgroundImageName);
+				if ( !empty($bgImage) ) {
+					$oasisSettings["background-image-width"] = $bgImage->getWidth() . 'px';
+					$oasisSettings["background-image-height"] = $bgImage->getHeight() . 'px';
+				}
+
+			}
+
 			$oasisSettings["background-align"] = $settings["background-align"];
 			$oasisSettings["background-tiled"] = $settings["background-tiled"];
 			$oasisSettings["background-fixed"] = $settings["background-fixed"];
@@ -83,12 +98,12 @@ class SassUtil {
 			if($wgContLang && $wgContLang->isRTL()){
 				$oasisSettings['rtl'] = 'true';
 			}
-		}
 
-		// RT:70673
-		foreach ($oasisSettings as $key => $val) {
-			if(!empty($val)) {
-				$oasisSettings[$key] = trim($val);
+			// RT:70673
+			foreach ($oasisSettings as $key => $val) {
+				if(!empty($val)) {
+					$oasisSettings[$key] = trim($val);
+				}
 			}
 		}
 
