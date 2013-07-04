@@ -331,7 +331,7 @@ div#userloginErrorBox3 {
 	}
 	textarea {
 		font-size: 17px;
-		height: 220px;
+		height: 170px;
 		padding: 0;
 		resize: none;
 		width: 425px;
@@ -339,9 +339,24 @@ div#userloginErrorBox3 {
 			color: #aaa;
 		}
 	}
+	select {
+		margin-bottom:15px;
+	}
 	label {
 		margin-top: 10px;
 		display: block;
+	}
+	.checkbox {
+		input {
+			vertical-align:middle;
+		}
+		label {
+			font-size:12px!important;
+			display:inline
+		}
+	}
+	.qmark img {
+		vertical-align:top;
 	}
 }
 
