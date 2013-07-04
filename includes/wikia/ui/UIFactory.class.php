@@ -33,6 +33,11 @@ class UIFactory {
 	 * @desc How long are components memcached? Both specific and all (different memc keys)
 	 */
 	const MEMCACHE_EXPIRATION = 900; // 15 minutes
+
+	/**
+	 * @desc Version passed to memcache key
+	 */
+	const MEMCACHE_VERSION = '1.0';
 	
 	/**
 	 * @var UIFactory
@@ -178,7 +183,7 @@ class UIFactory {
 
 		global $wgMemc;
 		
-		$memcKey = wfMemcKey( __CLASS__, 'component', $componentName);
+		$memcKey = wfMemcKey( __CLASS__, 'component', $componentName, static::MEMCACHE_VERSION);
 		$data = $wgMemc->get( $memcKey );
 
 		if ( !empty($data) ) {
