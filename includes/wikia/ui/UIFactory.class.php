@@ -178,9 +178,9 @@ class UIFactory {
 	 * @param String $componentName
 	 * @return string
 	 */
-	private function loadComponentConfig( $componentName ) {
+	protected function loadComponentConfig( $componentName ) {
 		wfProfileIn( __METHOD__ );
-
+		
 		global $wgMemc;
 		
 		$memcKey = wfMemcKey( __CLASS__, 'component', $componentName, static::MEMCACHE_VERSION);
@@ -269,7 +269,7 @@ class UIFactory {
 		// iterate $componentNames, read configs, write down dependencies
 		foreach ( $componentNames as $name ) {
 			$componentConfig = $this->loadComponentConfig( $name );
-
+			
 			// if there are some components, put them in the $assets
 			if ( !empty( $componentsConfig['dependencies'] ) ) {
 				if ( !empty( $componentsConfig['dependencies']['js'] ) ) {
@@ -281,9 +281,9 @@ class UIFactory {
 			}
 
 			// init component, put config inside and set base template path
-			$component = new UIComponent();
+			$component = $this->getComponentInstance();
 			if ( !empty($componentConfig['templateVars']) ) {
-				$component->setTemplateVarsConfig( $componentConfig['templateVars']);
+				$component->setTemplateVarsConfig( $componentConfig['templateVars'] );
 			}
 			$component->setBaseTemplatePath( $this->getComponentsBaseTemplatePath( $name ) );
 
@@ -297,6 +297,10 @@ class UIFactory {
 
 		// return components
 		return (sizeof($components) == 1) ? $components[0] : $components;
+	}
+	
+	protected function getComponentInstance() {
+		return new UIComponent();
 	}
 	
 	public static function sanitize( $string ) {

@@ -7,6 +7,27 @@ class UIFactoryTest extends WikiaBaseTest {
 	 */
 	private $instance = null;
 
+	/**
+	 * @var array
+	 */
+	private $tplVarsCfg = [
+		'name' => 'Component',
+		'templateVars' => [
+			'type1' => [
+				'required' => [ 'href', 'class', 'value' ],
+				'optional' => [ 'label', 'target' ],
+			],
+			'type2' => [
+				'required' => [ 'name', 'class', 'value' ],
+				'optional' => [ 'label' ],
+			]
+		],
+		'dependencies' => [
+			'js' => [],
+			'css' => [],
+		]
+	];
+
 	public function setUp() {
 		parent::setUp();
 
@@ -87,7 +108,7 @@ class UIFactoryTest extends WikiaBaseTest {
 				break;
 		}
 
-		$this->mockGlobalVariable('wgOut',$wgOutMock);
+		$this->mockGlobalVariable( 'wgOut', $wgOutMock );
 		$this->mockApp();
 
 		$addAssetMethod->invoke( $this->instance, $asset );
@@ -108,5 +129,29 @@ class UIFactoryTest extends WikiaBaseTest {
 				'assetType' => 'js'
 			]
 		];
+	}
+
+	public function testInitForOneComponent() {
+		$UIComponentMock = $this->getMock('UIComponent', [ 'setTemplateVarsConfig', 'addAsset' ]);
+		$UIComponentMock->expects( $this->once() )->method( 'setTemplateVarsConfig' );
+		$UIComponentMock->expects( $this->never() )->method( 'addAsset' );
+		
+		$UIFactoryMock = $this->getMock( 'UIFactory', [ 
+			'getComponentInstance', 
+			'loadComponentConfig', 
+			'getComponentsBaseTemplatePath', 
+			'__wakeup' 
+		], [], '', false );
+		
+		$UIFactoryMock->expects( $this->once() )->method( 'getComponentInstance' )
+			->will( $this->returnValue( $UIComponentMock ) );
+		
+		$UIFactoryMock->expects( $this->once() )->method( 'loadComponentConfig' )
+			->will( $this->returnValue( $this->tplVarsCfg ) );
+		
+		$UIFactoryMock->expects( $this->once() )->method( 'getComponentsBaseTemplatePath' );
+		
+		/** @var $UIFactoryMock UIFactory */
+		$UIFactoryMock->init( 'component' );
 	}
 }
