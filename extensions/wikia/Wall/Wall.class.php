@@ -128,11 +128,11 @@ class Wall extends WikiaModel {
 		$title = $this->getTitle();
 		$memcKey = wfMemcKey(__METHOD__, $title->getArticleID(), $title->getTouchedCached());
 		$res = $this->wg->memc->get($memcKey);
-		//if ( !is_string($res) ) {
+		if ( !is_string($res) ) {
 			$res = $this->getDescriptionParsed( $bParse );
 
 			$this->wg->memc->set($memcKey, $res, self::DESCRIPTION_CACHE_TTL);
-		//}
+		}
 		return $res;
 	}
 
