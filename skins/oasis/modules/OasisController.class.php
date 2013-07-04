@@ -188,6 +188,11 @@ class OasisController extends WikiaController {
 		$this->cssLinks = '';
 		$this->cssPrintLinks = '';
 
+		// macbre: get the list of SASS files - they will be fetched with a single request
+		$sassFiles = [
+			'skins/oasis/css/oasis.scss'
+		];
+
 		foreach ( $skin->getStyles() as $s ) {
 			if ( !empty($s['url']) ) {
 				$tag = $s['tag'];
@@ -203,11 +208,24 @@ class OasisController extends WikiaController {
 					$this->cssPrintLinks .= $tag;
 
 				} else {
-					$this->cssLinks .= $tag;
+					if (strpos($s['url'], '/sass/') !== false) {
+						$parts = explode('/', $s['url'], 8);
+						$sassFiles[] = end($parts);
+					}
+					else {
+						$this->cssLinks .= $tag;
+					}
 				}
 			} else {
 				$this->cssLinks .= $s['tag'];
 			}
+		}
+
+		if (!empty($sassFiles)) {
+			$sassFilesUrl = $this->assetsManager->getSassCommonURL(implode(',', $sassFiles));
+			$sassFilesUrl = str_replace('/sass/', '/sasses/', $sassFilesUrl);
+
+			$this->cssLinks = Html::linkedStyle($sassFilesUrl) . $this->cssLinks;
 		}
 
 		$this->headLinks = $wgOut->getHeadLinks();
@@ -267,7 +285,6 @@ class OasisController extends WikiaController {
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
 
-		$this->mainSassFile = 'skins/oasis/css/oasis.scss';
 
 		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
 			$this->displayAdminDashboard = true;
