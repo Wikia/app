@@ -3,66 +3,150 @@
 @import "../mixins/box-sizing";
 @import "resources/wikia/libraries/bourbon/bourbon";
 
-$height-background-image: get_command_line_param( "background-image-height", 0 );
-$width-background-image: get_command_line_param( "background-image-width", 0 );
-$width-background-image-gradient: 40px;
-$width-background-image-half: $width-background-image / 2;
-
-$background-position: absolute;
-@if ( $background-fixed == true ) {
-	$background-position: fixed;
-}
-
+// Layout
 $width-adskin: 170px;
 $width-adskins: $width-adskin * 2;
+$width-gradient: 40px;
 $width-outside-half: $width-outside / 2;
 $width-outside-min: 768px;
 $width-outside-max: 1600px;
 $width-outside-max-half: $width-outside-max / 2;
 $width-padding: $width-gutter / 2;
 
-// Default values so Sass doesn't puke all over itself
-$offset-background-image: 0;
-$offset-background-image-gradient: 0;
-$offset-background-image-gradient-max: 0;
-$offset-background-image-max: 0;
-$width-background-image-slice: 0;
+// Breakpoints
+$breakpoint-fluid: $width-outside + $width-adskins;
+$breakpoint-max: $width-outside-max + $width-adskins;
 
-$is-fluid-width-background-enabled: true;
-@if (
-	$background-tiled == true or
-	$height-background-image == 0 or
-	$width-background-image <= $width-outside
-) {
-	$is-fluid-width-background-enabled: false;
+// Background
+// TODO: we might want to consider pre-calculating all of the background
+// positioning stuff in PHP and then passing it in here, it would be much
+// more performant. However, before we do that, we should come up with a
+// better way of passing parameters into Sass (like using a hash), otherwise
+// the URLs generated for Sass files will be even more ridiculously long.
+$background-height: get_command_line_param( "background-image-height", 0 );
+$background-width: get_command_line_param( "background-image-width", 0 );
+$background-width-half: $background-width / 2;
+$background-position: if( $background-fixed, fixed, absolute );
+$background-is-dynamic: if( not $background-tiled and $background-height > 0 and $background-width > $width-outside, true, false );
+$background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 
-// This saves some processing time if we don't actually need these values
-} @else {
+// This mixin positions the background images and gradients while the skin is
+// in fluid width mode. Positioning is based on the left and right edges of
+// the viewport.
+@mixin background-fluid() {
+	$background-offset-left: 0;
+	$background-offset-right: 0;
+	$background-position-after: -$background-width-half;
+	$background-position-before: 0;
+	$background-width-both: $background-width-half;
+	$gradient-offset: 0;
 
-	// The offset, from the left and right sides of the viewport, that the images need
-	// to align correctly to the sides of the skin before the max width has been set.
-	$offset-background-image: ( ( $width-background-image-half - $width-adskin ) * 2 - $width-outside ) / 2;
+	@if ( $background-is-wide ) {
+		$background-offset: ( $width-outside - ( $background-width-half - $width-adskin ) * 2 ) / 2;
+		$background-width-both: $background-width-half + $background-offset;
+		$background-position-before: $background-offset;
+		$gradient-offset: $background-width-both - $width-gradient;
 
-	// The width of each "slice" of the background image while the offset above is applied.
-	$width-background-image-slice: $width-background-image-half - $offset-background-image;
+	} @else {
+		$background-offset: ( $breakpoint-fluid - $background-width ) / 2;
+		$background-offset-left: $background-offset;
+		$background-offset-right: $background-offset;
+		$gradient-offset: ( $background-width-both + $background-offset ) - $width-gradient;
+	}
 
-	// The offset, from the left and right sides of the viewport, that the image background
-	// gradient needs to align correctly to the inner edges of the slices of background images
-	$offset-background-image-gradient: $width-background-image-slice - $width-background-image-gradient;
+	body {
+		&:after,
+		&:before {
+			width: $background-width-both;
+		}
 
-	// The offset, from the center of the viewport, that the images need to align correctly
-	// to the side of the skin after max width has been set.
-	$offset-background-image-max: $width-outside-max-half + ( $width-background-image-half - $width-outside-half );
+		&:after {
+			background-position: $background-position-after 0;
+			margin-right: 0;
+			right: $background-offset-right;
+		}
 
-	// The offset, from the center of the viewport, that the image background gradient needs to align
-	// correctly to the inner edges of the slices of background images after max width has been set.
-	$offset-background-image-gradient-max: $offset-background-image-max - $width-background-image-half + $width-background-image-gradient;
+		&:before {
+			background-position: $background-position-before 0;
+			margin-left: 0;
+			left: $background-offset-left;
+		}
+	}
+
+	.background-image-gradient {
+		&:after,
+		&:before {
+			content: "";
+			height: 100%;
+			position: fixed;
+			top: 0;
+			width: $width-gradient;
+			z-index: -1;
+		}
+
+		&:after {
+			@include linear-gradient( to left, rgba( $color-body, 0 ) 0%, $color-body 100% );
+			right: $gradient-offset;
+		}
+
+		&:before {
+			@include linear-gradient( to right, rgba( $color-body, 0 ) 0%, $color-body 100% );
+			left: $gradient-offset;
+		}
+	}
+}
+
+// This mixin positions the background images and gradients once the max width
+// has been hit and the skin goes back into static mode. Positioning is done
+// relative to the center of the viewport.
+@mixin background-max() {
+	$background-margin: $width-outside-half - ( $width-outside-max-half + $background-width-half );
+	$background-position-after: -$background-width-half;
+	$gradient-offset: 0;
+
+	@if ( $background-is-wide ) {
+		$gradient-offset: abs( $background-margin + $background-width-half + $width-gradient );
+
+	} @else {
+		$gradient-offset: $background-margin + ( $background-width-half - $width-gradient );
+	}
+
+	body {
+		&:after,
+		&:before {
+			width: $background-width-half;
+		}
+
+		&:after {
+			background-position: $background-position-after 0;
+			right: 50%;
+			margin-right: $background-margin;
+		}
+
+		&:before {
+			background-position: 0;
+			left: 50%;
+			margin-left: $background-margin;
+		}
+	}
+
+	.background-image-gradient {
+		&:after {
+			margin-right: $gradient-offset;
+			right: 50%;
+		}
+
+		&:before {
+			left: 50%;
+			margin-left: $gradient-offset;
+		}
+	}
 }
 
 body {
 	min-width: $width-outside-min;
 
-	@if ( $is-fluid-width-background-enabled ) {
+	@if ( $background-is-dynamic ) {
 		background: $color-body;
 		overflow-x: hidden;
 
@@ -71,24 +155,24 @@ body {
 			background-image: url( $background-image ); /* $wgCdnStylePath */
 			background-repeat: no-repeat;
 			content: "";
-			height: $height-background-image;
+			height: $background-height;
 			position: $background-position;
 			top: 0;
-			width: $width-background-image-half;
+			width: $background-width-half;
 			z-index: -2;
 		}
 
 		&:after {
-			background-position: -#{ $width-background-image-half } 0;
+			background-position: -$background-width-half 0;
 			right: 50%;
-			margin-right: -#{ $width-background-image-half };
+			margin-right: -$background-width-half;
 		}
 
 		&:before {
 			background-position: 0;
 			// The extra 0.1% fixes sub-pixel rendering issues in Safari (DAR-1052)
 			left: 50.1%;
-			margin-left: -#{ $width-background-image-half };
+			margin-left: -$background-width-half;
 		}
 	}
 }
@@ -212,7 +296,7 @@ body > .global-notification,
 }
 
 .WikiaMainContent {
-	margin-right: -#{ $width-rail + $width-gutter };
+	margin-right: -( $width-rail + $width-gutter );
 	position: static;
 	width: 100%;
 }
@@ -363,95 +447,27 @@ body > .global-notification,
 	}
 }
 
-@media screen and (min-width: $width-outside + $width-adskins) {
+@media screen and (min-width: $breakpoint-fluid) {
+	@if ( $background-is-dynamic ) {
+		@include background-fluid;
+	}
+
 	body > .global-notification,
 	.WikiaHeader .page-width-container,
 	.WikiaPage {
 		margin: 0 $width-adskin;
 		width: auto;
 	}
-
-	@if ( $is-fluid-width-background-enabled ) {
-		body {
-			&:after,
-			&:before {
-				width: $width-background-image-slice;
-			}
-
-			&:after {
-				background-position: -#{ $width-background-image-half } 0;
-				margin-right: 0;
-				right: 0;
-			}
-
-			&:before {
-				background-position: -#{ $offset-background-image } 0;
-				margin-left: 0;
-				left: 0;
-			}
-		}
-
-		.background-image-gradient {
-			&:after,
-			&:before {
-				content: "";
-				height: 100%;
-				position: fixed;
-				top: 0;
-				width: $width-background-image-gradient;
-				z-index: -1;
-			}
-
-			&:after {
-				@include linear-gradient( to left, rgba( $color-body, 0 ) 0%, $color-body 100% );
-				right: $offset-background-image-gradient;
-			}
-
-			&:before {
-				@include linear-gradient( to right, rgba( $color-body, 0 ) 0%, $color-body 100% );
-				left: $offset-background-image-gradient;
-			}
-		}
-	}
 }
 
-@media screen and (min-width: $width-outside-max + $width-adskins) {
+@media screen and (min-width: $breakpoint-max) {
+	@if ( $background-is-dynamic ) {
+		@include background-max;
+	}
+
 	body > .global-notification,
 	.WikiaHeader .page-width-container,
 	.WikiaPage {
 		margin: 0 auto;
-	}
-
-	@if ( $is-fluid-width-background-enabled ) {
-		body {
-			&:after,
-			&:before {
-				width: $width-background-image-half;
-			}
-
-			&:after {
-				background-position: -#{ $width-background-image-half } 0;
-				right: 50%;
-				margin-right: -#{ $offset-background-image-max };
-			}
-
-			&:before {
-				background-position: 0;
-				left: 50%;
-				margin-left: -#{ $offset-background-image-max };
-			}
-		}
-
-		.background-image-gradient {
-			&:after {
-				margin-right: -#{ $offset-background-image-gradient-max };
-				right: 50%;
-			}
-
-			&:before {
-				left: 50%;
-				margin-left: -#{ $offset-background-image-gradient-max };
-			}
-		}
 	}
 }
