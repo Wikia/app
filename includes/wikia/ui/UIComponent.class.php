@@ -93,7 +93,7 @@ class UIComponent {
 	 * @throws WikiaUITemplateException
 	 */
 	private function setTemplatePath( $template ) {
-		$template = str_replace( ' ', '_', mb_strtolower( $template ) );
+		$template = UIFactory::sanitize( $template );
 		$mustacheTplPath = $this->getBaseTemplatePath() . '_' . $template . '.' . self::MUSTACHE_FILE_EXTENSION;
 		
 		if ( $this->fileExists( $mustacheTplPath ) ) {

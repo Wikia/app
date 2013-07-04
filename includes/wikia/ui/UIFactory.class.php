@@ -201,7 +201,7 @@ class UIFactory {
 	 * @return array
 	 */
 	private function addComponentsId( $componentCfg ) {
-		$componentCfg['id'] = mb_strtolower( str_replace( ' ', '_', $componentCfg['name'] ) );
+		$componentCfg['id'] = static::sanitize( $componentCfg['name'] );
 
 		return $componentCfg;
 	}
@@ -239,7 +239,7 @@ class UIFactory {
 	}
 
 	public function getComponentsBaseTemplatePath( $name ) {
-		$name = str_replace( ' ', '_', mb_strtolower( $name ) );
+		$name = static::sanitize( $name );
 		return $this->getComponentsDir() .
 			$name .
 			DIRECTORY_SEPARATOR .
@@ -292,7 +292,10 @@ class UIFactory {
 
 		// return components
 		return (sizeof($components) == 1) ? $components[0] : $components;
-
+	}
+	
+	public static function sanitize( $string ) {
+		return str_replace( ' ', '_', mb_strtolower( $string ) );
 	}
 
 	/**
