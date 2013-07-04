@@ -73,28 +73,66 @@ class Wall extends WikiaModel {
 
 		return $oArticle->getRawText();
 	}
+
+
+	/**
+	 * @desc Returns wikitext without parsed templates (removes templates from wikitext).
+	 *
+	 * @return string parsed description
+	 */
+	public function getDescriptionWithoutTemplates() {
+		return $this->getDescriptionParsed(true, true);
+	}
+
+
+	/**
+	 * @desc Returns parsed description.
+	 *
+	 * @param boolean $bParse True if text should be parsed.
+	 * @param boolean $bStripTemplates Parse templates as empty strings.
+	 *
+	 * @return string Parsed description.
+	 */
+	private function getDescriptionParsed( $bParse = true, $bStripTemplates = false) {
+		$oArticle = new Article( $this->getTitle() );
+		if ( !$bParse ) {
+			return $oArticle->getText();
+		}
+		$oApp = F::App();
+		$oParserOptions = $oApp->wg->Out->parserOptions();
+
+		if ( $bStripTemplates ) {
+			// empty template callback function based on Parser::statelessFetchTemplate function
+			$oParserOptions->setTemplateCallback(function($title, $parser = false) {
+				return array(
+					'text' => '', // <-- important: return empty string instead of template's name (if the value is false)
+					'finalTitle' => $title,
+					'deps' => array()
+				);
+			}); // temporary remove template callback function
+		}
+
+		$oParserOut = $oApp->wg->Parser->parse( $oArticle->getText(), $oApp->wg->Title, $oParserOptions );
+		$aOutput = array();
+		// Take the content out of an HTML P element and strip whitespace from the beginning and end.
+		$res = '';
+		if ( preg_match( '/^<p>\\s*(.*)\\s*<\/p>$/su', $oParserOut->getText(), $aOutput ) ) {
+			$res = $aOutput[1];
+		}
+
+		return $res;
+	}
 	
 	public function getDescription ( $bParse = true ) {
 		/** @var $title Title */
 		$title = $this->getTitle();
-		$memcKey = wfmemcKey(__METHOD__,$title->getArticleID(),$title->getTouchedCached());
+		$memcKey = wfMemcKey(__METHOD__, $title->getArticleID(), $title->getTouchedCached());
 		$res = $this->wg->memc->get($memcKey);
-		if ( !is_string($res) ) {
-			$oArticle = new Article( $this->getTitle() );
-			if ( !$bParse ) {
-				return $oArticle->getText();
-			}
-			$oApp = F::App();
-			$oParserOptions = $oApp->wg->Out->parserOptions();
-			$oParserOut = $oApp->wg->Parser->parse( $oArticle->getText(), $oApp->wg->Title, $oParserOptions );
-			$aOutput = array();
-			// Take the content out of an HTML P element and strip whitespace from the beginning and end.
-			$res = '';
-			if ( preg_match( '/^<p>\\s*(.*)\\s*<\/p>$/su', $oParserOut->getText(), $aOutput ) ) {
-				$res = $aOutput[1];
-			}
-			$this->wg->memc->set($memcKey,$res,self::DESCRIPTION_CACHE_TTL);
-		}
+		//if ( !is_string($res) ) {
+			$res = $this->getDescriptionParsed( $bParse );
+
+			$this->wg->memc->set($memcKey, $res, self::DESCRIPTION_CACHE_TTL);
+		//}
 		return $res;
 	}
 
