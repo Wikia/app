@@ -17,6 +17,11 @@ class UIComponent {
 	private $templateVarsConfig;
 
 	/**
+	 * @var String base path to templates (a prefix for full $templatePath)
+	 */
+	private $templateBasePath;
+
+	/**
 	 * @var String path to the template file
 	 */
 	private $templatePath;
@@ -61,6 +66,14 @@ class UIComponent {
 			->render( $this->getTemplatePath() );
 	}
 
+	public function getBaseTemplatePath() {
+		return $this->templateBasePath;
+	}
+
+	public function setBaseTemplatePath( $path ) {
+		return $this->templateBasePath = $path;
+	}
+	
 	/**
 	 * @param String $template "sub template" name of the component (i.e. a button component can have three
 	 * "sub templates": button_input.mustache, button_link.mustache and button_button.mustache the part between _ and .
@@ -70,8 +83,7 @@ class UIComponent {
 	 */
 	private function setTemplatePath( $template ) {
 		$template = str_replace( ' ', '_', mb_strtolower( $template ) );
-		$templateVarsConfig = $this->getTemplateVarsConfig();
-		$mustacheTplPath = $templateVarsConfig['templatePath'] . '_' . $template . '.' . self::MUSTACHE_FILE_EXTENSION;
+		$mustacheTplPath = $this->getBaseTemplatePath() . '_' . $template . '.' . self::MUSTACHE_FILE_EXTENSION;
 		
 		if ( $this->fileExists( $mustacheTplPath ) ) {
 			$this->templatePath = $mustacheTplPath;

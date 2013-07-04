@@ -25,6 +25,11 @@ class UIFactory {
 	const DEFAULT_COMPONENTS_PATH = "/resources/wikia/ui_components/";
 
 	/**
+	 * @desc Component's template directory's name
+	 */
+	const TEMPLATES_DIR_NAME = 'templates';
+
+	/**
 	 * @desc How long are components memcached? Both specific and all (different memc keys)
 	 */
 	const MEMCACHE_EXPIRATION = 900; // 15 minutes
@@ -233,6 +238,16 @@ class UIFactory {
 		wfProfileOut( __METHOD__ );
 	}
 
+	public function getComponentsBaseTemplatePath( $name ) {
+		$name = str_replace( ' ', '_', mb_strtolower( $name ) );
+		return $this->getComponentsDir() .
+			$name .
+			DIRECTORY_SEPARATOR .
+			self::TEMPLATES_DIR_NAME .
+			DIRECTORY_SEPARATOR .
+			$name;
+	}
+	
 	/**
 	 * @desc Loads JS/CSS dependencies, creates and configurates an instance of UIComponent object which is returned
 	 *
@@ -247,7 +262,6 @@ class UIFactory {
 		$assets = [];
 
 		// iterate $componentNames, read configs, write down dependencies
-
 		foreach ( $componentNames as $name ) {
 			$componentConfig = $this->loadComponentConfig( $name );
 
@@ -261,13 +275,13 @@ class UIFactory {
 				}
 			}
 
-			// init component and put config inside
+			// init component, put config inside and set base template path
 			$component = new UIComponent();
 			if ( !empty($componentConfig['templateVars']) ) {
-				$component->setTemplateVarsConfig($componentConfig['templateVars']);
+				$component->setTemplateVarsConfig( $componentConfig['templateVars']);
 			}
+			$component->setBaseTemplatePath( $this->getComponentsBaseTemplatePath( $name ) );
 
-			//
 			$components[] = $component;
 		}
 
