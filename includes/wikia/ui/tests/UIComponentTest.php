@@ -58,4 +58,67 @@ class UIComponentTest extends WikiaBaseTest {
 			],
 		];
 	}
+
+	/**
+	 * @dataProvider testValidateTemplateVarsDataProvider
+	 */
+	public function testValidateTemplateVars( $tplVarsCfg, $tplValues, $componentType, $expectedException ) {
+		// test private method
+		$validateTemplateVarsMethod = new ReflectionMethod( 'UIComponent', 'validateTemplateVars' );
+		$validateTemplateVarsMethod->setAccessible( true );
+
+		$UIComponentMock = $this->getMock('UIComponent', ['getTemplateVarsConfig', 'getValues', 'getType']);
+		$UIComponentMock->expects( $this->once() )
+			->method( 'getTemplateVarsConfig' )
+			->will( $this->returnValue( $tplVarsCfg ) );
+
+		$UIComponentMock->expects( $this->once() )
+			->method( 'getValues' )
+			->will( $this->returnValue( $tplValues ) );
+
+		$UIComponentMock->expects( $this->once() )
+			->method( 'getType' )
+			->will( $this->returnValue( $componentType ) );
+		
+		if( !is_null( $expectedException ) ) {
+			$this->setExpectedException( $expectedException );
+		}
+		
+		$validateTemplateVarsMethod->invoke( $UIComponentMock );
+	}
+	
+	public function testValidateTemplateVarsDataProvider() {
+		return [
+			[
+				'tplVarsCfg' => [
+					'input' => [
+						'required' => [ 'name', 'class', 'value' ],
+						'optional' => [ 'label' ],
+					],
+					'link' => [
+						'required' => [ 'href', 'class', 'value' ],
+						'optional' => [ 'label' ],
+					]
+				],
+				'tplValues' => [ 'name' => 'sample-component-name', 'class' => 'sample-component-class', 'value' => 'Sample component value' ],
+				'componentType' => 'input',
+				'expectedException' => null,
+			],
+			[
+				'tplVarsCfg' => [
+					'input' => [
+						'required' => [ 'name', 'class', 'value' ],
+						'optional' => [ 'label' ],
+					],
+					'link' => [
+						'required' => [ 'href', 'class', 'value' ],
+						'optional' => [ 'label' ],
+					]
+				],
+				'tplValues' => [ 'class' => 'sample-component-class', 'value' => 'Sample component value' ],
+				'componentType' => 'link',
+				'expectedException' => 'WikiaUIDataException',
+			]
+		];
+	}
 }
