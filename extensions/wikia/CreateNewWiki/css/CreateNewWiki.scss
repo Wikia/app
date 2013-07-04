@@ -7,6 +7,7 @@ $color-borders: #CECECE;
 @import "../../../../skins/oasis/css/mixins/opacity";
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/core/layout";
+@import "../../UserLogin/mixins/tooltip-icon";
 
 @import "../../ThemeDesigner/css/ThemeTab";
 
@@ -350,18 +351,12 @@ div#userloginErrorBox3 {
 		input {
 			vertical-align:middle;
 		}
-		label {
-			/* following !important is used because the existing template has inline styles */
-			font-size:12px!important;
-			display:inline
-		}
 	}
-	.qmark {
-		background-image: url("/extensions/wikia/CreateNewWiki/images/qmark.png"); /* base64 */
-		background-repeat:no-repeat;
-		display:inline-block;
-		width:11px;
-		height:15px;
+	.tooltip-icon-wrapper {
+		position: relative;
+		.tooltip-icon {
+			@include tooltip-icon;
+		}
 	}
 }
 

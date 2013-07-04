@@ -156,9 +156,18 @@
 					<option value="3"><?=wfMsg('autocreatewiki-category-other')?></option>
 				</select>
 				<div class="checkbox">
-					<input type="checkbox" name="all-ages" value="1"><label for="all-ages"><?= wfMessage( 'cnw-desc-all-ages' )->escaped() ?></label>
-					<span class="qmark" title="<?= wfMessage( 'cnw-desc-tip-all-ages' )->escaped() ?>"></span>
+					<input type="checkbox" name="all-ages" value="1">
+					<?= $app->sendRequest(
+						'WikiaStyleGuideTooltipIconController',
+						'index',
+						array(
+							'text' => wfMsg('cnw-desc-all-ages'),
+							'tooltipIconTitle' => wfMsg('cnw-desc-tip-all-ages'),
+						)
+					);
+					?>
 				</div>
+
 				<nav class="back-controls">
 					<input type="button" value="<?= wfMsg('cnw-back') ?>" class="secondary back">
 				</nav>

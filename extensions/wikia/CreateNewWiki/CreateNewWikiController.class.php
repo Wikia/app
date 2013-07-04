@@ -195,7 +195,7 @@ class CreateNewWikiController extends WikiaController {
 				$this->statusHeader = wfMsg('cnw-error-general-heading');
 				trigger_error("Failed to create new wiki: $error_code " . $params['wName'] . " " . $params['wLanguage'] . " " . $wgRequest->getIP(), E_USER_WARNING);
 			} else {
-				if ( isset($params['wAllAges']) && !empty( $params['wAllAges'] ) ) {
+				if ( !isset($params['wAllAges']) || empty( $params['wAllAges'] ) ) {
 					WikiFactory::setVarByName( self::WF_WDAC_REVIEW_FLAG_NAME, $cityId, true, __METHOD__ );
 				}
 				$this->status = 'ok';

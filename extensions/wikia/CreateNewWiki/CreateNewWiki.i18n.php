@@ -136,6 +136,8 @@ Be carefull to keep it short as there are 3 successive balloon tips to display i
 Be carefull to keep it short as there are 3 successive balloon tips to display in a small space',
 	'cnw-desc-choose' => 'Label for category',
 	'cnw-desc-select-one' => 'Default empty label for category',
+	'cnw-desc-all-ages' => 'Label for checkbox defining wiki as directed to all ages',
+	'cnw-desc-tip-all-ages' => 'Detailed description of all ages checkbox',
 	'cnw-desc-default-lang' => 'Letting user know which language this wiki will be in.  $1 will be wiki language',
 	'cnw-desc-change-lang' => 'Call to action to change the language',
 	'cnw-desc-lang' => 'Label for language.
@@ -1825,6 +1827,8 @@ $messages['pl'] = array(
 	'cnw-desc-tip3-creative' => 'Daj innym znać, że mogą pomóc tej wiki rosnąć poprzez edytowanie i dodawanie stron',
 	'cnw-desc-choose' => 'Wybierz kategorię',
 	'cnw-desc-select-one' => 'Wybierz',
+	'cnw-desc-all-ages' => 'Każdy wiek',
+	'cnw-desc-tip-all-ages' => 'Czy to jest wiki o tematyce, którą dzieci będą zainteresowane? W celu zgodności z prawem Stanów Zjednoczonych obserwujemy wiki o tematyce keirowanej bezpośrednio do dzieci w wieku 12 lat i mniej.',
 	'cnw-desc-default-lang' => 'Twoja wiki będzie w języku: $1',
 	'cnw-desc-change-lang' => 'zmień',
 	'cnw-desc-lang' => 'Język',

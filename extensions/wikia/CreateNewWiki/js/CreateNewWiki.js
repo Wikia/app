@@ -194,7 +194,7 @@ var WikiBuilder = {
 			pane.show();
 		}
 
-		$('.qmark').tooltip();
+		$('.tooltip-icon').tooltip();
 
 		// onload stuff
 		this.wikiName.focus();
