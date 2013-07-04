@@ -137,7 +137,6 @@ class CreateWikiLocalJob extends Job {
 			$this->queueReminderMail();
 		}
 		$this->sendRevisionToScribe();
-		$this->addStarterImagesToUploadLog();
 
 		/**
 		 * different things for different types
