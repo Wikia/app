@@ -157,7 +157,7 @@
 				</select>
 				<div class="checkbox">
 					<input type="checkbox" name="all-ages" value="1"><label for="all-ages"><?= wfMessage( 'cnw-desc-all-ages' )->escaped() ?></label>
-					<span class="qmark" title="<?= wfMessage( 'cnw-desc-tip-all-ages' )->escaped() ?>"><img src="<?= $wg->ExtensionsPath ?>/wikia/CreateNewWiki/images/qmark.png"/></span>
+					<span class="qmark" title="<?= wfMessage( 'cnw-desc-tip-all-ages' )->escaped() ?>"></span>
 				</div>
 				<nav class="back-controls">
 					<input type="button" value="<?= wfMsg('cnw-back') ?>" class="secondary back">

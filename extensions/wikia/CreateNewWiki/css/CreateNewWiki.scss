@@ -351,12 +351,17 @@ div#userloginErrorBox3 {
 			vertical-align:middle;
 		}
 		label {
+			/* following !important is used because the existing template has inline styles */
 			font-size:12px!important;
 			display:inline
 		}
 	}
-	.qmark img {
-		vertical-align:top;
+	.qmark {
+		background-image: url("/extensions/wikia/CreateNewWiki/images/qmark.png"); /* base64 */
+		background-repeat:no-repeat;
+		display:inline-block;
+		width:11px;
+		height:15px;
 	}
 }
 
