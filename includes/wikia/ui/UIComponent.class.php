@@ -69,6 +69,7 @@ class UIComponent {
 	 * @throws WikiaUITemplateException
 	 */
 	private function setTemplatePath( $template ) {
+		$template = str_replace( ' ', '_', mb_strtolower( $template ) );
 		$templateVarsConfig = $this->getTemplateVarsConfig();
 		$mustacheTplPath = $templateVarsConfig['templatePath'] . '_' . $template . '.' . self::MUSTACHE_FILE_EXTENSION;
 		
