@@ -61,6 +61,18 @@ class Wall extends WikiaModel {
 	public function getTitle() {
 		return $this->mTitle;
 	}
+
+
+	/**
+	 * @desc Returns raw (unparsed) wikitext.
+	 *
+	 * @return sttring raw wikitext
+	 */
+	public function  getRawDescription() {
+		$oArticle = new Article( $this->getTitle() );
+
+		return $oArticle->getRawText();
+	}
 	
 	public function getDescription ( $bParse = true ) {
 		/** @var $title Title */
