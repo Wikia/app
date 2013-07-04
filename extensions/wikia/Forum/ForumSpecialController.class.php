@@ -127,7 +127,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		/* backend magic here */
 
 		$this->boardTitle = $board->getTitle()->getText();
-		$this->boardDescription = $board->getDescription(false);
+		$this->boardDescription = $board->getRawDescription();
 
 		wfProfileOut( __METHOD__ );
 	}
