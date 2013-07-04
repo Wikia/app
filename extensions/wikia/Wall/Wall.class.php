@@ -81,7 +81,15 @@ class Wall extends WikiaModel {
 	 * @return string parsed description
 	 */
 	public function getDescriptionWithoutTemplates() {
-		return $this->getDescriptionParsed(true, true);
+		$title = $this->getTitle();
+		$memcKey = wfMemcKey(__METHOD__, $title->getArticleID(), $title->getTouchedCached(), 'without_template');
+		$res = $this->wg->memc->get($memcKey);
+		if ( !is_string($res) ) {
+			$res = $this->getDescriptionParsed(true, true);
+
+			$this->wg->memc->set($memcKey, $res, self::DESCRIPTION_CACHE_TTL);
+		}
+		return $res;
 	}
 
 
@@ -102,17 +110,29 @@ class Wall extends WikiaModel {
 		$oParserOptions = $oApp->wg->Out->parserOptions();
 
 		if ( $bStripTemplates ) {
+			// save old template callback
+			$oldcallback = $oParserOptions->getTemplateCallback();
+
 			// empty template callback function based on Parser::statelessFetchTemplate function
-			$oParserOptions->setTemplateCallback(function($title, $parser = false) {
+			$oParserOptions->setTemplateCallback( function( $title, $parser = false ) {
 				return array(
 					'text' => '', // <-- important: return empty string instead of template's name (if the value is false)
 					'finalTitle' => $title,
 					'deps' => array()
 				);
 			}); // temporary remove template callback function
+
+			//parse
+			$oParserOut = $oApp->wg->Parser->parse( $oArticle->getText(), $oApp->wg->Title, $oParserOptions );
+
+			// restore old callback
+			$oParserOptions->setTemplateCallback( $oldcallback );
+
+		} else {
+			// just parse
+			$oParserOut = $oApp->wg->Parser->parse( $oArticle->getText(), $oApp->wg->Title, $oParserOptions );
 		}
 
-		$oParserOut = $oApp->wg->Parser->parse( $oArticle->getText(), $oApp->wg->Title, $oParserOptions );
 		$aOutput = array();
 		// Take the content out of an HTML P element and strip whitespace from the beginning and end.
 		$res = '';
@@ -126,7 +146,7 @@ class Wall extends WikiaModel {
 	public function getDescription ( $bParse = true ) {
 		/** @var $title Title */
 		$title = $this->getTitle();
-		$memcKey = wfMemcKey(__METHOD__, $title->getArticleID(), $title->getTouchedCached());
+		$memcKey = wfMemcKey(__METHOD__, $title->getArticleID(), $title->getTouchedCached(), 'parsed');
 		$res = $this->wg->memc->get($memcKey);
 		if ( !is_string($res) ) {
 			$res = $this->getDescriptionParsed( $bParse );
