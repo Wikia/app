@@ -20,7 +20,7 @@ class AssetsManagerSassesBuilder extends AssetsManagerBaseBuilder {
 
 			$builder = new AssetsManagerSassBuilder($sassRequest);
 
-			$this->mContent .= $builder->getContent();
+			$this->mContent .= "\n\n<!-- $file -->\n" . $builder->getContent();
 		}
 
 		$this->mContentType = AssetsManager::TYPE_CSS;
