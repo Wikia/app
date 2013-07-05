@@ -14,12 +14,12 @@ class SpecialStyleguideDataModel {
 			'header' => [
 				'home' => [
 					'mainHeader' => wfMessage( 'styleguide-home-header' )->plain(),
-					'getStartedBtn' => UIFactory::getInstance()->init('buttons')->render([
+					'getStartedBtn' => UIFactory::getInstance()->init('button')->render([
 						'type' => 'input',
 						'params' => [
 							'type' => 'submit',
 							'name' => 'get-started',
-							'class' => 'button',
+							'classes' => 'button',
 							'value' => wfMessage( 'styleguide-get-started' )->plain(),
 						],
 					]),
