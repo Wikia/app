@@ -9,8 +9,6 @@ Primary & Secondary Wikia Buttons
 These buttons are used everywhere on our wikis.
 ******************************/
 a.wikia-button,
-.wikia-single-button a,
-.wikia-menu-button,
 input[type="submit"],
 input[type="reset"],
 input[type="button"],
@@ -76,14 +74,6 @@ button {
 		height: 40px;
 	}
 }
-
-.wikia-menu-button-submit {
-	input[type=submit] {
-		border: none;
-		height: 100%;
-	}
-}
-
 
 // Border-box model: Inputs and buttons count border as part of height. Increase height. //
 input[type="submit"],
