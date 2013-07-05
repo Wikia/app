@@ -177,7 +177,7 @@ class UIFactory {
 	 * @return array
 	 */
 	private function addComponentsId( $componentCfg ) {
-		$componentCfg['id'] = static::sanitize( $componentCfg['name'] );
+		$componentCfg['id'] = static::sanitize( wfMessage($componentCfg['name-msg-key'])->plain() );
 
 		return $componentCfg;
 	}

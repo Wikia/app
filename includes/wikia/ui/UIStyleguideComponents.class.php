@@ -35,6 +35,7 @@ class UIStyleguideComponents
 				if( !$directory->isDot() && $directory->isDir() ) {
 					$filename = $directory->getFilename();
 					$components[$k] = $this->uiFactory->loadComponentConfigFromFile( $this->uiFactory->getComponentConfigFileFullPath( $filename ) );
+					$components[$k] = $this->prepareMessages($components[$k]);
 					if ( isset($components[$k]['templateVars']) ) {
 						$components[$k]['mustacheVars'] = $this->prepareComponents($components[$k]['templateVars'], $filename);
 					}
@@ -63,6 +64,11 @@ class UIStyleguideComponents
 
 		foreach ( $templateVars as $name => $var ) {
 			$renderedExample = isset($example[$name]) ? UIFactory::getInstance()->init($filename)->render($example[$name]) : '';
+
+			if ( isset($var['name-var-msg-key']) ) {
+				$var['name'] = $this->prepareMessage($var['name-var-msg-key']);
+			}
+
 			$mustacheVars[] = [
 				'type' => $name,
 				'fields' => $var,
@@ -71,6 +77,29 @@ class UIStyleguideComponents
 		}
 
 		return $mustacheVars;
+	}
+
+	/**
+	 * @desc Return component with i18n name and description
+	 *
+	 * @param $component
+	 * @return mixed
+	 */
+	private function prepareMessages($component) {
+		$component['name'] = $this->prepareMessage($component['name-msg-key']);
+		$component['description'] = $this->prepareMessage($component['description-msg-key']);
+
+		return $component;
+	}
+
+	/**
+	 * @desc Returns i18n message by key
+	 *
+	 * @param $key
+	 * @return String
+	 */
+	private function prepareMessage($key) {
+		return wfMessage($key)->plain();
 	}
 
 	/**

@@ -41,6 +41,24 @@ $messages['en'] = array(
 	// Components
 	'styleguide-components-header' => 'Components',
 	'styleguide-components-header-tagline' => 'Wikia UI styleguide re-usable elements',
+
+	'styleguide-name-buttons' => 'Buttons',
+	'styleguide-description-button' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+	'styleguide-description-link-button' => 'Link Button',
+	'styleguide-description-input-button' => 'Input Button',
+	'styleguide-description-simple-button' => 'Simple Button',
+
+	'styleguide-name-dropdown' => 'Dropdowns',
+	'styleguide-description-dropdown' => 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.',
+
+	'styleguide-name-modal' => 'Modals',
+	'styleguide-description-modal' => 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur',
+
+	'styleguide-name-thumbnail' => 'Thumbnails',
+	'styleguide-description-thumbnail' => 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.',
+
+	'styleguide-name-tooltip' => 'Tooltips',
+	'styleguide-description-tooltip' => 'Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.',
 );
 
 $messages['pl'] = array(
@@ -84,6 +102,24 @@ $messages['pl'] = array(
 	// Components
 	'styleguide-components-header' => 'Komponenty',
 	'styleguide-components-header-tagline' => 'Elementy wielokrotnego użytku Wikia Styleguide',
+
+	'styleguide-name-buttons' => 'Przyciski',
+	'styleguide-description-button' => 'POLSKI Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+	'styleguide-description-link-button' => 'Link',
+	'styleguide-description-input-button' => 'Przycisk Input',
+	'styleguide-description-simple-button' => 'Przycisk',
+
+	'styleguide-name-dropdown' => 'Listy rozwijane',
+	'styleguide-description-dropdown' => 'POLSKI Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.',
+
+	'styleguide-name-modal' => 'Modale',
+	'styleguide-description-modal' => 'POLSKI Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur',
+
+	'styleguide-name-thumbnail' => 'Miniaturki',
+	'styleguide-description-thumbnail' => 'POLSKI At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.',
+
+	'styleguide-name-tooltip' => 'Podpowiedzi',
+	'styleguide-description-tooltip' => 'POLSKI Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.',
 );
 
 /** Message documentation (Message documentation)
@@ -121,4 +157,22 @@ $messages['qqq'] = array(
 	// Components
 	'styleguide-components-header' => "Header for Styleguide's components page",
 	'styleguide-components-header-tagline' => "Tagline for Styleguide's components page",
+
+	'styleguide-name-buttons' => 'name of buttons component section',
+	'styleguide-description-button' => 'description of buttons components',
+	'styleguide-description-link-button' => 'description of button component made from anchor',
+	'styleguide-description-input-button' => 'description of button component made from input selector',
+	'styleguide-description-simple-button' => 'description of button component made from button selector',
+
+	'styleguide-name-dropdown' => 'name of dropdowns section',
+	'styleguide-description-dropdown' => 'description of dropdowns components',
+
+	'styleguide-name-modal' => 'name of modals section',
+	'styleguide-description-modal' => 'description of modals components',
+
+	'styleguide-name-thumbnail' => 'name of thumbnails section',
+	'styleguide-description-thumbnail' => 'description of thumbnails components',
+
+	'styleguide-name-tooltip' => 'name of tooltips section',
+	'styleguide-description-tooltip' => 'description of tooltips components',
 );
