@@ -2007,6 +2007,25 @@ class Title {
 				$blockExpiry = $wgLang->timeanddate( wfTimestamp( TS_MW, $blockExpiry ), true );
 			}
 
+			# Wikia change - begin
+			# @author macbre (BAC-535)
+			$blocker = $block->getBlocker();
+			if ($blocker instanceof User) {
+				// user groups to be displayed instead of user name
+				$groups = [
+					'staff',
+					'vstf',
+				];
+				$blockerGroups = $blocker->getEffectiveGroups();
+
+				foreach($groups as $group) {
+					if (in_array($group, $blockerGroups)) {
+						$link = wfMessage("group-$group")->plain();
+					}
+				}
+			}
+			# Wikia change - end
+
 			$intended = strval( $user->mBlock->getTarget() );
 
 			$errors[] = array( ( $block->mAuto ? 'autoblockedtext' : 'blockedtext' ), $link, $reason, $ip, $name,
