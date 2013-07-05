@@ -9,6 +9,7 @@ class SpecialStyleguideDataModel {
 	private $sectionData;
 
 	public function __construct() {
+		$uiStyleguide = new UIStyleguideComponents();
 		$this->sectionData = [
 			'header' => [
 				'home' => [
@@ -16,6 +17,7 @@ class SpecialStyleguideDataModel {
 					'getStartedBtn' => UIFactory::getInstance()->init('buttons')->render([
 						'type' => 'input',
 						'params' => [
+							'type' => 'submit',
 							'name' => 'get-started',
 							'class' => 'button',
 							'value' => wfMessage( 'styleguide-get-started' )->plain(),
@@ -86,7 +88,7 @@ class SpecialStyleguideDataModel {
 				]
 			],
 			'components' => [
-				'componentsList' => $this->sortComponents( UIFactory::getInstance()->getAllComponents() )
+				'componentsList' => $this->sortComponents( $uiStyleguide->getAllComponents() )
 			]
 		];
 	}

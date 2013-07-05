@@ -59,7 +59,7 @@ class UIFactory {
 	/**
 	 * @desc Private constructor because it's a singleton
 	 */
-	private function __construct() {
+	public function __construct() {
 		global $IP;
 		$this->componentsDir = $IP . self::DEFAULT_COMPONENTS_PATH;
 		$this->loaderService = AssetsManager::getInstance();
@@ -97,42 +97,13 @@ class UIFactory {
 	}
 
 	/**
-	 * @desc Returns an array with all available components configuration
-	 * 
-	 * @return array
-	 */
-	public function getAllComponents() {
-		global $wgMemc;
-
-		$memcKey = wfMemcKey( __CLASS__, 'all_components' );
-		$data = $wgMemc->get( $memcKey );
-		if ( !empty($data) ) {
-			return $data;
-		} else {
-			$components = [];
-
-			$directory = new DirectoryIterator( $this->getComponentsDir() );
-			while( $directory->valid() ) {
-				if( !$directory->isDot() && $directory->isDir() ) {
-					$components[] = $this->loadComponentConfigFromFile( $configFile = $this->getComponentConfigFileFullPath( $directory->getFilename() ) );
-				}
-				$directory->next();
-			}
-
-			$wgMemc->set( $memcKey, $components, self::MEMCACHE_EXPIRATION );
-
-			return $components;
-		}
-	}
-
-	/**
 	 * @desc Returns full file path
 	 *
 	 * @param string $name component's name
 	 *
 	 * @returns string full file path
 	 */
-	private function getComponentConfigFileFullPath( $name ) {
+	public function getComponentConfigFileFullPath( $name ) {
 		return $this->getComponentsDir() . $name . '/' . $name . self::CONFIG_FILE_SUFFIX;
 	}
 
@@ -164,7 +135,7 @@ class UIFactory {
 	 *
 	 * @throws Exception
 	 */
-	private function loadComponentConfigFromFile( $configFilePath ) {
+	public function loadComponentConfigFromFile( $configFilePath ) {
 		if ( false === $configString = file_get_contents( $configFilePath ) ) {
 			throw new Exception( 'Component\'s config file not found.' );
 		} else {
@@ -271,12 +242,12 @@ class UIFactory {
 			$componentConfig = $this->loadComponentConfig( $name );
 			
 			// if there are some components, put them in the $assets
-			if ( !empty( $componentsConfig['dependencies'] ) ) {
-				if ( !empty( $componentsConfig['dependencies']['js'] ) ) {
-					$assets = array_merge( $assets, $componentsConfig['dependencies']['js'] );
+			if ( !empty( $componentConfig['dependencies'] ) ) {
+				if ( !empty( $componentConfig['dependencies']['js'] ) ) {
+					$assets = array_merge( $assets, $componentConfig['dependencies']['js'] );
 				}
-				if ( !empty( $componentsConfig['dependencies']['css'] ) ) {
-					$assets = array_merge( $assets, $componentsConfig['dependencies']['css'] );
+				if ( !empty( $componentConfig['dependencies']['css'] ) ) {
+					$assets = array_merge( $assets, $componentConfig['dependencies']['css'] );
 				}
 			}
 

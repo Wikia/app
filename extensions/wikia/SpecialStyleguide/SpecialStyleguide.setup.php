@@ -25,6 +25,7 @@ $wgExtensionCredits['specialpage'][] = [
 // classes
 $wgAutoloadClasses['SpecialStyleguideController'] = $dir . 'SpecialStyleguideController.class.php';
 $wgAutoloadClasses['SpecialStyleguideDataModel'] = $dir . 'models/SpecialStyleguideDataModel.class.php';
+$wgAutoloadClasses['UIStyleguideComponents'] = $dir . '../../../includes/wikia/ui/UIStyleguideComponents.class.php';
 
 // special page
 $wgSpecialPages['Styleguide'] = 'SpecialStyleguideController';
