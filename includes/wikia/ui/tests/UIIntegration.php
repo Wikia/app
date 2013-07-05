@@ -20,25 +20,25 @@ class UIIntegration extends PHPUnit_Framework_TestCase {
 	public function testRenderingOneComponent() {
 		// only required parameters given
 		$this->assertEquals(
-			'<a href="http://www.wikia.com" class="button" target="">Just a button in form of a link</a>',
+			'<input type="submit" class="button" name="just-a-button" value="Just a button in form of a link" />',
 			$this->uiFactory->init( 'button' )->render([
-				'type' => 'link',
+				'type' => 'input',
 				'params' => [
-					'href' => 'http://www.wikia.com',
+					'name' => 'just-a-button',
 					'classes' => ['button'],
 					'value' => 'Just a button in form of a link',
 				]
 			])
 		);
-
+		
 		// required parameters and optional given
 		$this->assertEquals(
-			'A button: <a href="http://www.wikia.com" class="button" target="_blank">Just a button in form of a link</a>',
+			'A button: <a href="http://www.wikia.com" class="button big " target="_blank">Just a button in form of a link</a>',
 			$this->uiFactory->init( 'button' )->render([
 				'type' => 'link',
 				'params' => [
 					'href' => 'http://www.wikia.com',
-					'classes' => ['button'],
+					'classes' => ['button', 'big'],
 					'value' => 'Just a button in form of a link',
 					'label' => 'A button: ',
 					'target' => '_blank',
@@ -48,15 +48,14 @@ class UIIntegration extends PHPUnit_Framework_TestCase {
 
 		// required parameters and optional given + data attributes
 		$this->assertEquals(
-			'A button: <a href="http://www.wikia.com" class="button" target="_blank" data-id="123" data-name="button">Just a button in form of a link</a>',
+			'A button: <button type="submit" class="button" data-id="123" data-name="button">Just a button in form of a link</button>',
 			$this->uiFactory->init( 'button' )->render([
-				'type' => 'link',
+				'type' => 'button',
 				'params' => [
-					'href' => 'http://www.wikia.com',
+					'type' => 'submit',
 					'classes' => ['button'],
 					'value' => 'Just a button in form of a link',
 					'label' => 'A button: ',
-					'target' => '_blank',
 					'data' => [
 						[ 'key' => 'id', 'value' => 123 ],
 						[ 'key' => 'name', 'value' => 'button' ]
@@ -67,7 +66,7 @@ class UIIntegration extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testRenderingMoreThanOneComponent() {
-		list($a, $b) = $this->uiFactory->init( [ 'button', 'button' ] );
+		list($a, $b, $c) = $this->uiFactory->init( [ 'button', 'button', 'button' ] );
 		
 		$aMarkup = $a->render([
 			'type' => 'link',
@@ -79,28 +78,42 @@ class UIIntegration extends PHPUnit_Framework_TestCase {
 		]);
 		
 		$bMarkup = $b->render([
-			'type' => 'link',
+			'type' => 'button',
 			'params' => [
-				'href' => 'http://www.wikia.com',
+				'type' => 'submit',
 				'classes' => ['button'],
 				'value' => 'Just a button in form of a link',
 				'label' => 'A button: ',
-				'target' => '_blank',
 				'data' => [
 					[ 'key' => 'id', 'value' => 123 ],
 					[ 'key' => 'name', 'value' => 'button' ]
 				],
 			]
 		]);
+
+		$cMarkup = $b->render([
+			'type' => 'input',
+			'params' => [
+				'name' => 'just-a-button',
+				'classes' => ['button'],
+				'value' => 'Just a button in form of a link',
+				'label' => 'An input: ',
+			]
+		]);
 		
 		$this->assertEquals(
-			'<a href="http://www.wikia.com" class="button" target="">Just a button in form of a link</a>',
+			'<a href="http://www.wikia.com" class="button " target="">Just a button in form of a link</a>',
 			$aMarkup
 		);
 
 		$this->assertEquals(
-			'A button: <a href="http://www.wikia.com" class="button" target="_blank" data-id="123" data-name="button">Just a button in form of a link</a>',
+			'A button: <button type="submit" class="button" data-id="123" data-name="button">Just a button in form of a link</button>',
 			$bMarkup
+		);
+
+		$this->assertEquals(
+			'An input: <input type="submit" class="button" name="just-a-button" value="Just a button in form of a link" />',
+			$cMarkup
 		);
 	}
 }
