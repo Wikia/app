@@ -30,6 +30,7 @@
 						<div>
 							<span id="validateMessage"></span>
 						</div>
+						<!-- Format -->
 						<div class="clearfix">
 							<div class="left-spacer">&nbsp;</div>
 							<?= Xml::check( 'wpPhalanxFormatRegex', !empty( $data['regex'] ), array( 'id' => 'wpPhalanxFormatRegex' ) ) ?>
@@ -41,6 +42,7 @@
 							<?= Xml::check( 'wpPhalanxFormatExact', !empty( $data['exact'] ), array( 'id' => 'wpPhalanxFormatExact' ) ) ?>
 							<label for="wpPhalanxFormatExact"><?php echo wfMsg( 'phalanx-format-exact' ) ?></label>
 						</div>
+						<!-- Expiry-->
 						<div class="clearfix">
 							<label>
 								<strong><?= wfMsg( 'phalanx-label-expiry' ) ?></strong>
