@@ -136,8 +136,8 @@ Be carefull to keep it short as there are 3 successive balloon tips to display i
 Be carefull to keep it short as there are 3 successive balloon tips to display in a small space',
 	'cnw-desc-choose' => 'Label for category',
 	'cnw-desc-select-one' => 'Default empty label for category',
-	'cnw-desc-all-ages' => 'Label for checkbox defining wiki as directed to all ages',
-	'cnw-desc-tip-all-ages' => 'Detailed description of all ages checkbox',
+	'cnw-desc-all-ages' => "Label for checkbox defining wiki as directed to all ages. It's imposed by US law regulations [[Wikipedia:Children's_Online_Privacy_Protection_Act]].",
+	'cnw-desc-tip-all-ages' => 'Detailed description of checkbox defining wiki as directed to all ages. Extension of message cnw-desc-all-ages.',
 	'cnw-desc-default-lang' => 'Letting user know which language this wiki will be in.  $1 will be wiki language',
 	'cnw-desc-change-lang' => 'Call to action to change the language',
 	'cnw-desc-lang' => 'Label for language.

@@ -157,8 +157,8 @@
 				</select>
 				<div class="checkbox">
 					<input type="checkbox" name="all-ages" value="1">
-					<?= $app->sendRequest(
-						'WikiaStyleGuideTooltipIconController',
+					<?= $app->renderView(
+						'WikiaStyleGuideTooltipIcon',
 						'index',
 						array(
 							'text' => wfMsg('cnw-desc-all-ages'),
