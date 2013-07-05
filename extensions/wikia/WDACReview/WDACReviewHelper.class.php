@@ -7,7 +7,7 @@ class WDACReviewHelper {
 
 	const UPDATE_REASON = 'WDAC Review by Wikia Staff';
 	const WDAC_BY_FOUNDER_NAME = 'wgWikiDirectedAtChildrenByFounder';
-	const WDAC_BY_STAFF_NAME = 'wgWikiDirectedAtChildrenByFounder';
+	const WDAC_BY_STAFF_NAME = 'wgWikiDirectedAtChildrenByStaff';
 
 	private $byFounderVarId = NULL;
 	private $byStaffVarId = NULL;
