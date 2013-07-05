@@ -20,6 +20,6 @@
 	},
 	"dependencies": {
 		"js": [],
-		"css": [ "resources/wikia/ui_components/buttons/css/buttons_default.scss" ]
+		"css": [ "resources/wikia/ui_components/buttons/css/button_default.scss" ]
 	}
 }
