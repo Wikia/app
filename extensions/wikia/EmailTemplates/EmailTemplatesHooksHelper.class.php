@@ -142,6 +142,7 @@ class EmailTemplatesHooksHelper {
 			'user_page_url' => $editor->getUserPage()->getFullURL(),
 			'avatar_url' => AvatarService::renderAvatar($username, self::EMAIL_AVATAR_DEFAULT_WIDTH),
 			'date' => $date,
+			/* Warning: retrieving a short_text fails sometimes, probably due to SLAVE lag. Email is send anyway, but short_text stays empty then */
 			'short_text' => BlogTemplateClass::getShortText($oPostTitle->getArticleId(), $oRevision)
 		);
 		$postInfoHTML = $this->app->renderView( "EmailTemplates", "PostInfo", $post_info_params );
