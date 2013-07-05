@@ -12,10 +12,16 @@ if( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $wgHooks['ParserFirstCallInit'][] = 'wfMainPageTag';
-/// Set to "true" once the right column parser tag has run. Used to establish the order in which the column tags were called.
+
+// Set to "true" once the right column parser tag has run. Used to establish the order in which the column tags were called.
 $wfMainPageTag_rcs_called = false;
-/// Set to "true" once the left column parser tag has run. Used to establish the order in which the column tags were called.
+
+// Set to "true" once the left column parser tag has run. Used to establish the order in which the column tags were called.
 $wfMainPageTag_lcs_called = false;
+
+// Open tag count
+$wgMainPageTag_count = 0;
+
 
 /**
  * Set hooks for each of the three parser tags
@@ -36,11 +42,16 @@ function wfMainPageTag( &$parser ) {
  * @param Parser $parser The parent parser (a Parser object); more advanced extensions use this to obtain the contextual Title, parse wiki text, expand braces, register link relationships and dependencies, etc.
  */
 function wfMainPageTag_rcs( $input, $args, $parser ) {
-	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called, $wgOasisGrid;
-	if(!$wfMainPageTag_lcs_called) {
+	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called, $wgMainPageTag_count, $wgOasisGrid;
+
+	if ( ! $wfMainPageTag_lcs_called ) {
 		$wfMainPageTag_rcs_called = true;
 	}
-	$html = '<div class="main-page-tag-rcs'.(empty($wgOasisGrid) ? '' : ' grid-2').'"><div>';
+
+	$wgMainPageTag_count ++;
+
+	$html = '<div class="main-page-tag-rcs' . ( empty( $wgOasisGrid ) ? '' : ' grid-2' ) . '"><div>';
+
 	return $html;
 }
 
@@ -52,8 +63,10 @@ function wfMainPageTag_rcs( $input, $args, $parser ) {
  * @param array $parser The parent parser (a Parser object); more advanced extensions use this to obtain the contextual Title, parse wiki text, expand braces, register link relationships and dependencies, etc.
  */
 function wfMainPageTag_lcs( $input, $args, $parser ) {
-	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called, $wgOasisGrid;
+	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called, $wgMainPageTag_count, $wgOasisGrid;
+
 	$wfMainPageTag_lcs_called = true;
+	$wgMainPageTag_count++;
 
 	if ( !isset( $args['gutter'] ) ) {
 		$args['gutter'] = '10';
@@ -82,8 +95,16 @@ function wfMainPageTag_lcs( $input, $args, $parser ) {
 
 /**
  * Inserts the necessary HTML to end either left or right column
+ * only if there was a column start tag parsed
  */
 function wfMainPageTag_ec( $input, $args, $parser ) {
-	$html = '</div></div>';
+	global $wgMainPageTag_count;
+
+	$html = '';
+	if ( $wgMainPageTag_count > 0 ) {
+		$html .= '</div></div>';
+		$wgMainPageTag_count--;
+	}
+
 	return $html;
 }
