@@ -2,7 +2,7 @@
 	"input" : {
 		"type": "input",
 		"params": {
-			"class": [ "input" ],
+			"class": [ "input", "secondary" ],
 			"value": "Test Input",
 			"name": "test-input",
 			"type": "submit"
@@ -23,7 +23,7 @@
 	"button" : {
 		"type": "button",
 		"params": {
-			"class": [ "button" ],
+			"class": [ "button", "big" ],
 			"value": "Test Button",
 			"type": "submit"
 		}
