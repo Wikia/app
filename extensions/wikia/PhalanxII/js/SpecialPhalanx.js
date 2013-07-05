@@ -62,5 +62,23 @@ require(['jquery', 'mw', 'phalanx'], function($, mw, phalanx) {
 				fail(function() {
 					buttonNode.attr('disabled', false);
 				});
-		});
+		}).
+
+        // handle clicks on type checkboxes - exclude mutually exclusive options (BAC-331)
+        on('change', '#phalanx-block-texts input[type="checkbox"]', function(ev) {
+            var checkbox = $(ev.target),
+                excludes = checkbox.attr('data-excludes'),
+                isChecked,
+                excluded;
+
+            if (excludes) {
+                excluded = $('#' + excludes);
+                isChecked = !!checkbox.prop('checked');
+
+                excluded.prop('disabled', isChecked);
+                if (isChecked) {
+                    excluded.prop('checked', false);
+                }
+            }
+        });
 });
