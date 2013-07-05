@@ -20,7 +20,7 @@ class UIIntegration extends PHPUnit_Framework_TestCase {
 	public function testRenderingOneComponent() {
 		// only required parameters given
 		$this->assertEquals(
-			'<input type="submit" class="button" name="just-a-button" value="Just a button in form of a link" />',
+			'<input type="submit" class="button " name="just-a-button" value="Just a button in form of a link" />',
 			$this->uiFactory->init( 'button' )->render([
 				'type' => 'input',
 				'params' => [
@@ -48,7 +48,7 @@ class UIIntegration extends PHPUnit_Framework_TestCase {
 
 		// required parameters and optional given + data attributes
 		$this->assertEquals(
-			'A button: <button type="submit" class="button" data-id="123" data-name="button">Just a button in form of a link</button>',
+			'A button: <button type="submit" class="button " data-id="123" data-name="button">Just a button in form of a link</button>',
 			$this->uiFactory->init( 'button' )->render([
 				'type' => 'button',
 				'params' => [
@@ -110,12 +110,12 @@ class UIIntegration extends PHPUnit_Framework_TestCase {
 		);
 
 		$this->assertEquals(
-			'A button: <button type="submit" class="button" data-id="123" data-name="button">Just a button in form of a link</button>',
+			'A button: <button type="submit" class="button " data-id="123" data-name="button">Just a button in form of a link</button>',
 			$bMarkup
 		);
 
 		$this->assertEquals(
-			'An input: <input type="submit" class="button" name="just-a-button" value="Just a button in form of a link" />',
+			'An input: <input type="submit" class="button " name="just-a-button" value="Just a button in form of a link" />',
 			$cMarkup
 		);
 	}
