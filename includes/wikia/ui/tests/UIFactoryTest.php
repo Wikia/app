@@ -70,11 +70,11 @@ class UIFactoryTest extends WikiaBaseTest {
 		return [
 			// empty, sample JSON
 			[
-				'json' => '{ "name":"Sample", "desc": "Sample component", "templateValues": { "required": [], "optional": [] }, "dependencies": { "js": [], "css": [] } }',
+				'json' => '{ "name":"Sample", "desc": "Sample component", "templateVars": { "required": [], "optional": [] }, "dependencies": { "js": [], "css": [] } }',
 				'expected' => [
 					'name' => 'Sample',
 					'desc' => 'Sample component',
-					'templateValues' => [ 'required' => [], 'optional' => [] ],
+					'templateVars' => [ 'required' => [], 'optional' => [] ],
 					'dependencies' => [ 'js' => [], 'css' => [] ],
 					'id' => 'sample',
 				]

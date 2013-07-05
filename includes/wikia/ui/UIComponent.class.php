@@ -95,7 +95,6 @@ class UIComponent {
 	private function setTemplatePath( $template ) {
 		$template = UIFactory::sanitize( $template );
 		$mustacheTplPath = $this->getBaseTemplatePath() . '_' . $template . '.' . self::MUSTACHE_FILE_EXTENSION;
-		
 		if ( $this->fileExists( $mustacheTplPath ) ) {
 			$this->templatePath = $mustacheTplPath;
 		} else {

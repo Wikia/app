@@ -4,6 +4,7 @@
 	{{! the <dl> is temporary it will be replaced with rendered components and live preview after UI repo
 	implementation}}
 	{{#mustacheVars}}
+		{{#fields.description}}{{fields.description}}{{/fields.description}}
 		<dl>
 			<dt><strong>Required params: </strong></dt>
 			<dd><pre>{{#fields.required}}{{ . }}, {{/fields.required}}</pre></dd>

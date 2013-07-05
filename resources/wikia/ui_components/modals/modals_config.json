@@ -1,9 +1,11 @@
 {
 	"name":"Modals",
 	"description": "Aenean odio felis, venenatis et eros ac, feugiat volutpat orci. Nullam ac neque sed dolor egestas congue at sed orci. Pellentesque dictum et nisl vel egestas. Maecenas vel est ut nibh vulputate volutpat. Ut aliquam diam ac odio dictum, a fermentum nisl auctor. Nulla malesuada purus ut dolor tristique pulvinar. Aenean id tempus augue, vel vestibulum erat. Vivamus ullamcorper, leo et laoreet auctor, leo tellus cursus diam, id mattis felis ipsum sed ligula. Suspendisse placerat leo eget vulputate sagittis. Cras in elit pharetra, facilisis velit vitae, cursus ante. Vestibulum feugiat eros a dictum fermentum. Pellentesque quis tortor eget tellus tristique dapibus sed vestibulum augue. Maecenas eu massa tristique, fermentum tellus a, suscipit nulla. Ut tincidunt nunc et lacus fermentum, eu mattis libero dignissim.",
-	"templateValues": {
-		"required": [],
-		"optional": []
+	"templateVars": {
+		"default": {
+			"required": [],
+			"optional": []
+		}
 	},
 	"dependencies": {
 		"js": [],
