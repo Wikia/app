@@ -1,0 +1,31 @@
+{
+	"input" : {
+		"type": "input",
+		"params": {
+			"class": [ "input" ],
+			"value": "Test Input",
+			"name": "test-input",
+			"type": "submit"
+		}
+	},
+	"link" : {
+		"type": "link",
+		"params": {
+			"class": [ "wikia-button", "link" ],
+			"value": "Test Link",
+			"href": "http://wikia.com",
+			"data" : [
+						{ "key" : "id", "value" : "5" },
+						{ "key" : "lang", "value" : "en" }
+					]
+		}
+	},
+	"button" : {
+		"type": "button",
+		"params": {
+			"class": [ "button" ],
+			"value": "Test Button",
+			"type": "submit"
+		}
+	}
+}
