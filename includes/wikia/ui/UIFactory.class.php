@@ -101,7 +101,7 @@ class UIFactory {
 	 *
 	 * @param string $name component's name
 	 *
-	 * @returns string full file path
+	 * @return string full file path
 	 */
 	public function getComponentConfigFileFullPath( $name ) {
 		return $this->getComponentsDir() . $name . '/' . $name . self::CONFIG_FILE_SUFFIX;
@@ -228,6 +228,8 @@ class UIFactory {
 	 * @desc Loads JS/CSS dependencies, creates and configurates an instance of UIComponent object which is returned
 	 *
 	 * @param string|array
+	 * 
+	 * @return array
 	 */
 	public function init( $componentNames ) {
 		if ( !is_array($componentNames ) ) {

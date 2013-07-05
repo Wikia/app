@@ -68,6 +68,7 @@ class SpecialStyleguideDataModelTest extends WikiaBaseTest {
 			->method( 'getSectionData' )
 			->will( $this->returnValue( $this->mockedSectionData ) );
 		
+		/** @var SpecialStyleguideDataModel $modelMock */
 		$this->assertEquals( $expectedResults, $modelMock->getPartOfSectionData( $sectionNamesArray ) );
 	}
 	

@@ -68,6 +68,7 @@ class UIIntegration extends PHPUnit_Framework_TestCase {
 	public function testRenderingMoreThanOneComponent() {
 		list($a, $b, $c) = $this->uiFactory->init( [ 'button', 'button', 'button' ] );
 		
+		/** @var UIComponent $a */
 		$aMarkup = $a->render([
 			'type' => 'link',
 			'params' => [
@@ -76,7 +77,8 @@ class UIIntegration extends PHPUnit_Framework_TestCase {
 				'value' => 'Just a button in form of a link',
 			]
 		]);
-		
+
+		/** @var UIComponent $b */
 		$bMarkup = $b->render([
 			'type' => 'button',
 			'params' => [
@@ -91,7 +93,8 @@ class UIIntegration extends PHPUnit_Framework_TestCase {
 			]
 		]);
 
-		$cMarkup = $b->render([
+		/** @var UIComponent $c */
+		$cMarkup = $c->render([
 			'type' => 'input',
 			'params' => [
 				'name' => 'just-a-button',

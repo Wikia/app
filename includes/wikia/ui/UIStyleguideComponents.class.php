@@ -76,7 +76,7 @@ class UIStyleguideComponents
 	/**
 	 * @desc Checks if example file exists and returns array with example attributes or empty array
 	 *
-	 * @param $filename example json file name
+	 * @param String $filename example json file name
 	 * @return Array
 	 */
 	private function loadExampleFile($filename) {
