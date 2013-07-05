@@ -6,6 +6,9 @@
 class WDACReviewHelper {
 
 	const UPDATE_REASON = 'WDAC Review by Wikia Staff';
+	const WDAC_BY_FOUNDER_NAME = 'wgWikiDirectedAtChildrenByFounder';
+	const WDAC_BY_STAFF_NAME = 'wgWikiDirectedAtChildrenByFounder';
+
 	private $byFounderVarId = NULL;
 	private $byStaffVarId = NULL;
 
@@ -13,10 +16,8 @@ class WDACReviewHelper {
 		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 
-		$byFounderVar = WikiFactory::getVarByName( 'wgWikiDirectedAtChildrenByFounder', $wgCityId );
-		$this->byFounderVarId = $byFounderVar->cv_id;
-		$byStaffVar = WikiFactory::getVarByName( 'wgWikiDirectedAtChildrenByStaff', $wgCityId );
-		$this->byStaffVarId = $byStaffVar->cv_id;
+		$this->byFounderVarId = WikiFactory::getVarIdByName( self::WDAC_BY_FOUNDER_NAME, $wgCityId );
+		$this->byStaffVarId = WikiFactory::getVarIdByName( self::WDAC_BY_STAFF_NAME, $wgCityId );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -69,7 +70,7 @@ class WDACReviewHelper {
 		foreach ( $cities as $cityId => $isDirectedAtCh) {
 			if ( $isDirectedAtCh == WDACReviewSpecialController::FLAG_APPROVE ) {
 				WikiFactory::setVarById( $this->byStaffVarId, $cityId, true, self::UPDATE_REASON );
-				WikiFactory::removeVarByName( $this->byFounderVarId, $cityId, self::UPDATE_REASON );
+				WikiFactory::removeVarById ( $this->byFounderVarId, $cityId, self::UPDATE_REASON );
 			} elseif ( $isDirectedAtCh == WDACReviewSpecialController::FLAG_DISAPPROVE ) {
 				WikiFactory::setVarById( $this->byStaffVarId, $cityId, false, self::UPDATE_REASON );
 				WikiFactory::removeVarById( $this->byFounderVarId, $cityId, self::UPDATE_REASON );
