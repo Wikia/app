@@ -263,10 +263,8 @@ class DataMartService extends Service {
 				$where = array();
 
 				if (!empty($langs)) {
-					foreach ( $langs as $index => $lang ) {
-						$langs[$index] = $db->addQuotes( "{$lang}" );
-					}
-					$where[] = 'r.lang IN (' . implode( ',', $langs ) . ')';
+					$langs = $db->makeList($langs);
+					$where[] = 'r.lang IN (' . $langs . ')';
 				}
 
 				if (!empty($hub)) {

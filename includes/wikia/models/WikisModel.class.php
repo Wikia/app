@@ -170,10 +170,8 @@ class WikisModel extends WikiaModel {
 					);
 
 					if ( !empty( $langs ) ) {
-						foreach ( $langs as $index => $lang ) {
-							$langs[$index] = $db->addQuotes( "{$lang}" );
-						}
-						$where[] = 'city_list.city_lang IN (' . implode( ',', $langs ) . ')';
+						$langs = $db->makeList($langs);
+						$where[] = 'city_list.city_lang IN (' . $langs . ')';
 					}
 
 					if ( is_integer( $hubId ) ) {
