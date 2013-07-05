@@ -186,7 +186,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-admin-create-new-board-modal-heading' => 'Create a new board',
 	'forum-admin-create-new-board-title' => 'Board Title',
 	'forum-admin-create-new-board-description' => 'Board Description',
-	'forum-admin-page-editmode-templates-included' => '<strong>Notice</strong>: For easier editing, you can see included templates\' contents in the respective board description.',
+	'forum-admin-page-editmode-templates-included' => 'Notice: For easier editing, you can see included templates\' contents in the respective board description.',
 
 	'forum-admin-edit-board-modal-heading' => 'Edit Board: $1',
 	'forum-admin-edit-board-title' => 'Board Title',

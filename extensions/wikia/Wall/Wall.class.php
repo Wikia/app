@@ -78,6 +78,8 @@ class Wall extends WikiaModel {
 	/**
 	 * @desc Returns wikitext without parsed templates (removes templates from wikitext).
 	 *
+	 * @param boolean $bParse True if text should be parsed.
+	 *
 	 * @return string parsed description
 	 */
 	public function getDescriptionWithoutTemplates( $bParse = true ) {
@@ -109,6 +111,7 @@ class Wall extends WikiaModel {
 		$oApp = F::App();
 		$oParserOptions = $oApp->wg->Out->parserOptions();
 
+		// Functionality based on request https://wikia-inc.atlassian.net/browse/DAR-330
 		if ( $bStripTemplates ) {
 			// save old template callback
 			$oldcallback = $oParserOptions->getTemplateCallback();
