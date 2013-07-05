@@ -3,36 +3,36 @@
 ?>
 <section id="CreateNewWiki">
 	<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
-	<h1><?= wfMsg('cnw-title') ?></h1>
+	<h1><?= wfMessage('cnw-title')->text() ?></h1>
 	<ol class="steps">
 		<li id="NameWiki" class="step">
-			<h2><?= wfMsg('cnw-name-wiki-headline') ?></h2>
-			<p class="creative"><?= wfMsg('cnw-name-wiki-creative') ?></p>
+			<h2><?= wfMessage('cnw-name-wiki-headline')->text() ?></h2>
+			<p class="creative"><?= wfMessage('cnw-name-wiki-creative')->text() ?></p>
 			<form name="label-wiki-form">
-				<label for="wiki-name"><?= wfMsg('cnw-name-wiki-label') ?></label>
+				<label for="wiki-name"><?= wfMessage('cnw-name-wiki-label')->text() ?></label>
 				<span class="wiki-name-status-icon status-icon"></span>
-				<input type="text" name="wiki-name" value="<?= empty($params['wikiName']) ? '' : $params['wikiName'] ?>"> <?= wfMsg('cnw-name-wiki-wiki') ?>
+				<input type="text" name="wiki-name" value="<?= empty($params['wikiName']) ? '' : $params['wikiName'] ?>"> <?= wfMessage('cnw-name-wiki-wiki')->text() ?>
 				<div class="wiki-name-error error-msg"></div>
-				<label for="wiki-domain" dir="ltr"><?= wfMsg('cnw-name-wiki-domain-label') ?></label>
+				<label for="wiki-domain" dir="ltr"><?= wfMessage('cnw-name-wiki-domain-label')->text() ?></label>
 				<div class="wiki-domain-container">
 					<span class="domain-status-icon status-icon"></span>
 					<span class="domain-country"><?= empty($selectedLang) || $selectedLang === 'en' ? '' : $selectedLang.'.' ?></span>
-					<?= wfMsg('cnw-name-wiki-language') ?>
-					<input type="text" name="wiki-domain" value="<?= empty($params['wikiDomain']) ? '' : $params['wikiDomain'] ?>"> <?= wfMsg('cnw-name-wiki-domain') ?>
+					<?= wfMessage('cnw-name-wiki-language')->text() ?>
+					<input type="text" name="wiki-domain" value="<?= empty($params['wikiDomain']) ? '' : $params['wikiDomain'] ?>"> <?= wfMessage('cnw-name-wiki-domain')->text() ?>
 				</div>
 				<div class="wiki-domain-error error-msg"></div>
 				<div class="language-default">
-					<?= wfMsg('cnw-desc-default-lang', Language::getLanguageName($selectedLang) ) ?> - <a href="#" id="ChangeLang"><?= wfMsg('cnw-desc-change-lang') ?></a>
+					<?= wfMessage('cnw-desc-default-lang', Language::getLanguageName($selectedLang) )->text() ?> - <a href="#" id="ChangeLang"><?= wfMessage('cnw-desc-change-lang')->text() ?></a>
 				</div>
 				<div class="language-choice">
-					<label for="wiki-language"><?= wfMsg('cnw-desc-lang') ?></label>
+					<label for="wiki-language"><?= wfMessage('cnw-desc-lang')->text() ?></label>
 					<select name="wiki-language">
 
 					<?php
 		$isSelected = false;
 		if (!empty($aTopLanguages) && is_array($aTopLanguages)) :
 	?>
-					<optgroup label="<?= wfMsg('autocreatewiki-language-top', count($aTopLanguages)) ?>">
+					<optgroup label="<?= wfMessage('autocreatewiki-language-top', count($aTopLanguages))->text() ?>">
 	<?php foreach ($aTopLanguages as $sLang) :
 			$selected = '';
 			if ( empty($isSelected) && $sLang == $selectedLang ) {
@@ -44,7 +44,7 @@
 	<?php endforeach ?>
 					</optgroup>
 	<?php endif ?>
-					<optgroup label="<?= wfMsg('autocreatewiki-language-all') ?>">
+					<optgroup label="<?= wfMessage('autocreatewiki-language-all')->text() ?>">
 	<?php if (!empty($aLanguages) && is_array($aLanguages)) : ?>
 	<?php
 		ksort($aLanguages);
@@ -64,7 +64,7 @@
 				</div>
 				<nav class="next-controls">
 					<span class="submit-error error-msg"></span>
-					<input type="button" value="<?= wfMsg('cnw-next') ?>" class="next">
+					<input type="button" value="<?= wfMessage('cnw-next')->text() ?>" class="next">
 				</nav>
 			</form>
 		</li>
@@ -73,29 +73,29 @@
 		if($wg->ComboAjaxLogin) {
 ?>
 		<li id="Auth" class="step">
-			<h2 class="headline login"><?= wfMsg('cnw-auth-headline') ?></h2>
-			<h2 class="headline signup"><?= wfMsg('cnw-auth-headline2') ?></h2>
-			<p class="creative login"><?= wfMsg('cnw-auth-creative') ?></p>
-			<p class="creative signup"><?= wfMsg('cnw-auth-signup-creative') ?></p>
+			<h2 class="headline login"><?= wfMessage('cnw-auth-headline')->text() ?></h2>
+			<h2 class="headline signup"><?= wfMessage('cnw-auth-headline2')->text() ?></h2>
+			<p class="creative login"><?= wfMessage('cnw-auth-creative')->text() ?></p>
+			<p class="creative signup"><?= wfMessage('cnw-auth-signup-creative')->text() ?></p>
 			<?= AjaxLoginForm::getTemplateForCombinedForms()->render('ComboAjaxLogin') ?>
 			<p class="signup-msg">
-				<?= wfMsg('cnw-signup-prompt') ?> <a href="#"><?= wfMsg('cnw-call-to-signup') ?></a>
+				<?= wfMessage('cnw-signup-prompt')->text() ?> <a href="#"><?= wfMessage('cnw-call-to-signup')->text() ?></a>
 			</p>
 			<p class="login-msg">
-				<?= wfMsg('cnw-login-prompt') ?> <a href="#"><?= wfMsg('cnw-call-to-login') ?></a>
+				<?= wfMessage('cnw-login-prompt')->text() ?> <a href="#"><?= wfMessage('cnw-call-to-login')->text() ?></a>
 				<br>
-				<?php print '<fb:login-button id="fbAjaxSignupConnect" size="large" length="short"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'>'.wfMsg('cnw-auth-facebook-signup').'</fb:login-button>'; ?>
+				<?php print '<fb:login-button id="fbAjaxSignupConnect" size="large" length="short"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'>'.wfMessage('cnw-auth-facebook-signup')->text().'</fb:login-button>'; ?>
 			</p>
 			<div class="facebook login">
-				<span>- <?= wfMsg('cnw-or') ?> -</span>
-				<?php print '<fb:login-button id="fbAjaxLoginConnect" size="large" length="short"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'>'.wfMsg('cnw-auth-facebook-login').'</fb:login-button>'; ?>
+				<span>- <?= wfMessage('cnw-or')->text() ?> -</span>
+				<?php print '<fb:login-button id="fbAjaxLoginConnect" size="large" length="short"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'>'.wfMessage('cnw-auth-facebook-login')->text().'</fb:login-button>'; ?>
 			</div>
 			<nav class="back-controls">
-				<input type="button" value="<?= wfMsg('cnw-back') ?>" class="secondary back">
+				<input type="button" value="<?= wfMessage('cnw-back')->text() ?>" class="secondary back">
 			</nav>
 			<nav class="next-controls">
-				<input type="button" value="<?= wfMsg('cnw-login') ?>" class="login">
-				<input type="button" value="<?= wfMsg('cnw-signup') ?>" class="signup">
+				<input type="button" value="<?= wfMessage('cnw-login')->text() ?>" class="login">
+				<input type="button" value="<?= wfMessage('cnw-signup')->text() ?>" class="signup">
 			</nav>
 		</li>
 <?php
@@ -103,17 +103,17 @@
 		else if($wg->EnableUserLoginExt){
 ?>
 	<li id="UserAuth" class="step">
-		<h2 class="headline"><?= wfMsg('cnw-userauth-headline') ?></h2>
-		<p class="creative"><?= wfMsg('cnw-userauth-creative') ?></p>
+		<h2 class="headline"><?= wfMessage('cnw-userauth-headline')->text() ?></h2>
+		<p class="creative"><?= wfMessage('cnw-userauth-creative')->text() ?></p>
 		<div class="signup-loginmodal"><?= F::app()->sendRequest('UserLoginSpecial', 'modal') ?></div>
 		<div class="signup-marketing">
-			<h3><?= wfMsg('cnw-userauth-marketing-heading') ?></h3>
-			<p><?= wfMsgExt('cnw-userauth-marketing-body', array('parse')) ?></p>
+			<h3><?= wfMessage('cnw-userauth-marketing-heading')->text() ?></h3>
+			<p><?= wfMessage('cnw-userauth-marketing-body')->parse() ?></p>
 			<form method="post" action="<?= $signupUrl ?>" id="SignupRedirect">
 				<input type="hidden" name="returnto" value="">
 				<input type="hidden" name="redirected" value="true">
 				<input type="hidden" name="uselang" value="<?= $params['wikiLanguage'] ?>">
-				<input type="submit" value="<?= wfMsg('cnw-userauth-signup-button') ?>">
+				<input type="submit" value="<?= wfMessage('cnw-userauth-signup-button')->text() ?>">
 			</form>
 		</div>
 	</li>
@@ -122,27 +122,27 @@
 	} // if isLoggedIn
 ?>
 		<li id="DescWiki" class="step">
-			<h2><?= wfMsg('cnw-desc-headline') ?></h2>
-			<p class="creative"><?= wfMsg('cnw-desc-creative') ?></p>
+			<h2><?= wfMessage('cnw-desc-headline') ?></h2>
+			<p class="creative"><?= wfMessage('cnw-desc-creative')->text() ?></p>
 			<form name="desc-form">
-				<textarea id="Description" placeholder="<?= wfMsg('cnw-desc-placeholder') ?>"></textarea>
+				<textarea id="Description" placeholder="<?= wfMessage('cnw-desc-placeholder')->text() ?>"></textarea>
 				<ol>
 					<li>
-						<?= wfMsg('cnw-desc-tip1') ?>
-						<div class="tip-creative"><?= wfMsg('cnw-desc-tip1-creative') ?></div>
+						<?= wfMessage('cnw-desc-tip1')->text() ?>
+						<div class="tip-creative"><?= wfMessage('cnw-desc-tip1-creative')->text() ?></div>
 					</li>
 					<li>
-						<?= wfMsg('cnw-desc-tip2') ?>
-						<div class="tip-creative"><?= wfMsg('cnw-desc-tip2-creative') ?></div>
+						<?= wfMessage('cnw-desc-tip2')->text() ?>
+						<div class="tip-creative"><?= wfMessage('cnw-desc-tip2-creative')->text() ?></div>
 					</li>
 					<li>
-						<?= wfMsg('cnw-desc-tip3') ?>
-						<div class="tip-creative"><?= wfMsg('cnw-desc-tip3-creative') ?></div>
+						<?= wfMessage('cnw-desc-tip3')->text() ?>
+						<div class="tip-creative"><?= wfMessage('cnw-desc-tip3-creative')->text() ?></div>
 					</li>
 				</ol>
-				<label for="wiki-category"><?= wfMsg('cnw-desc-choose') ?></label>
+				<label for="wiki-category"><?= wfMessage('cnw-desc-choose')->text() ?></label>
 				<select name="wiki-category">
-					<option value=""><?=wfMsg('cnw-desc-select-one')?></option>
+					<option value=""><?= wfMessage('cnw-desc-select-one')->text() ?></option>
 	<?php
 		foreach ($aCategories as $iCat => $catData) {
 			$sCatName = $catData["name"];
@@ -153,7 +153,7 @@
 	<?php
 		}
 	?>
-					<option value="3"><?=wfMsg('autocreatewiki-category-other')?></option>
+					<option value="3"><?= wfMessage('autocreatewiki-category-other')->text() ?></option>
 				</select>
 				<div class="checkbox">
 					<input type="checkbox" name="all-ages" value="1">
@@ -161,30 +161,30 @@
 						'WikiaStyleGuideTooltipIcon',
 						'index',
 						array(
-							'text' => wfMsg('cnw-desc-all-ages'),
-							'tooltipIconTitle' => wfMsg('cnw-desc-tip-all-ages'),
+							'text' => wfMessage('cnw-desc-all-ages')->text(),
+							'tooltipIconTitle' => wfMessage('cnw-desc-tip-all-ages')->text(),
 						)
 					);
 					?>
 				</div>
 
 				<nav class="back-controls">
-					<input type="button" value="<?= wfMsg('cnw-back') ?>" class="secondary back">
+					<input type="button" value="<?= wfMessage('cnw-back')->text() ?>" class="secondary back">
 				</nav>
 				<nav class="next-controls">
 					<span class="submit-error error-msg"></span>
-					<input type="button" value="<?= wfMsg('cnw-next') ?>" class="next">
+					<input type="button" value="<?= wfMessage('cnw-next')->text() ?>" class="next">
 				</nav>
 			</form>
 		</li>
 		<li id="ThemeWiki" class="step">
-			<h2><?= wfMsg('cnw-theme-headline') ?></h2>
-			<p class="creative"><?= wfMsg('cnw-theme-creative') ?></p>
+			<h2><?= wfMessage('cnw-theme-headline')->text() ?></h2>
+			<p class="creative"><?= wfMessage('cnw-theme-creative')->text() ?></p>
 			<?= F::app()->renderView('ThemeDesigner', 'ThemeTab') ?>
-			<p class="instruction creative"><?= wfMsg('cnw-theme-instruction') ?></p>
+			<p class="instruction creative"><?= wfMessage('cnw-theme-instruction')->text() ?></p>
 			<nav class="next-controls">
 				<span class="submit-error finish-status"></span>
-				<input type="button" value="<?= wfMsg('cnw-next') ?>" class="next" disabled>
+				<input type="button" value="<?= wfMessage('cnw-next')->text() ?>" class="next" disabled>
 			</nav>
 		</li>
 	</ol>
@@ -204,13 +204,13 @@
 </section>
 <script>
 	WikiBuilderCfg = {
-		'name-wiki-submit-error':'<?= wfMsg('cnw-name-wiki-submit-error') ?>',
-		'desc-wiki-submit-error':'<?= wfMsg('cnw-desc-wiki-submit-error') ?>',
+		'name-wiki-submit-error':'<?= wfMessage('cnw-name-wiki-submit-error')->text() ?>',
+		'desc-wiki-submit-error':'<?= wfMessage('cnw-desc-wiki-submit-error')->text() ?>',
 		'currentstep':'<?= $currentStep ?>',
 		'skipwikiaplus':'<?= $skipWikiaPlus ?>',
-		'descriptionplaceholder':'<?= wfMsg('cnw-desc-placeholder') ?>',
-		'cnw-error-general':'<?= wfMsg('cnw-error-general') ?>',
-		'cnw-error-general-heading':'<?= wfMsg('cnw-error-general-heading') ?>',
+		'descriptionplaceholder':'<?= wfMessage('cnw-desc-placeholder')->text() ?>',
+		'cnw-error-general':'<?= wfMessage('cnw-error-general')->text() ?>',
+		'cnw-error-general-heading':'<?= wfMessage('cnw-error-general-heading')->text() ?>',
 		'cnw-keys': <?= json_encode($keys) ?>
 	};
 	var themes = <?= json_encode($wg->OasisThemes) ?>;
