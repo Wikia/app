@@ -15,9 +15,7 @@
 	<tr>
 		<td colspan="2" style="padding:0 10px">
 
-			<p>
 			<?= $short_text ?>
-			</p>
 
 		</td>
 	</tr>
