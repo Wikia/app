@@ -18,7 +18,7 @@ $messages['en'] = array(
 	'manage-wikia-home-wikis-in-slots-success' => 'Numbers slots has been changed.',
 	'manage-wikia-home-collections-success' => 'Collections have been saved.',
 	'manage-wikia-home-collections-add-success' => 'Wiki added successfully to the collection.',
-	'manage-wikia-home-collections-add-failure-already-exists' => 'Wiki already exists in this collection',
+	'manage-wikia-home-collections-add-failure-already-exists' => 'Wiki already exists in this collection.',
 	'manage-wikia-home-collections-add-failure-image' => '$1 can\'t be added to this collection because its main image has been rejected.',
 	'manage-wikia-home-collections-remove-success' => 'Wiki removed successfully from the collection.',
 	'manage-wikia-home-collections-invalid-action' => 'That action does not exist.',
@@ -60,12 +60,12 @@ $messages['en'] = array(
 	'manage-wikia-home-modal-content-remove-blocked' => 'Do you want to include this wiki in the wiki visualization?',
 	'manage-wikia-home-modal-content-add-promoted' => 'Do you want to promote this wiki in the wiki visualization?',
 	'manage-wikia-home-modal-content-remove-promoted' => 'Do you want to demote this wiki in the wiki visualization?',
-	'manage-wikia-home-modal-content-add-official' => 'Do you want to add official logo for this wiki in the wiki visualization?',
+	'manage-wikia-home-modal-content-add-official' => 'Do you want to add an official logo for this wiki in the wiki visualization?',
 	'manage-wikia-home-modal-content-remove-official' => 'Do you want to remove the official wiki logo for this wiki in the wiki visualization?',
 	'manage-wikia-home-modal-content-add-collection' => 'Do you want to add this wiki to the collection?',
 	'manage-wikia-home-modal-content-remove-collection' => 'Do you want to remove this wiki from the collection?',
-	'manage-wikia-home-modal-content-add-blocked-wiki-warning' => 'You cannot add blocked wikis to a collection',
-	'manage-wikia-home-modal-content-blocked-wiki-in-collection-warning' => 'This wiki shouldn\'t be in collection because it is blocked. It will be removed from the collection',
+	'manage-wikia-home-modal-content-add-blocked-wiki-warning' => 'You cannot add blocked wikis to a collection.',
+	'manage-wikia-home-modal-content-blocked-wiki-in-collection-warning' => 'This wiki shouldn\'t be in collection because it is blocked. It will be removed from the collection.',
 	'manage-wikia-home-modal-content-blocked-wiki-title' => 'This wiki is blocked',
 	'manage-wikia-home-modal-content-removed-blocked-in-collection' => 'This wiki is currently part of a collection and cannot be blocked.',
 	'manage-wikia-home-modal-too-many-wikis-in-collection' => 'You can not add more wikis to this collection.',
@@ -82,7 +82,7 @@ $messages['en'] = array(
 	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Hero image',
 	'manage-wikia-home-collections-sponsor-image-field-label' => 'Sponsor image',
 	'manage-wikia-home-collections-wikis-in-collection' => 'Wikis: $1 of $2',
-	'manage-wikia-home-collections-invalid-wikis-number' => 'This collection will not be visible on the corporate main page until there are $1 wikis assigned to it.',
+	'manage-wikia-home-collections-invalid-wikis-number' => 'This collection will not be visible on the corporate main page until there {{PLURAL:$1|is one wiki|are $1 wikis}} assigned to it.',
 
 	'manage-wikia-home-collection-hero-image-tooltip' => 'This image should be $1px × $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'This image should be $1px × $2px',
@@ -186,10 +186,10 @@ Parameters:
 * $2 = maximum number of wikis per collection
 
 Has plural support if needed in your language.',
-	'manage-wikia-home-collections-invalid-wikis-number' => 'Information about status of a collection; it appears only if the number of wikis assigned to a collection is invalid (it extends the maximum number of wikis per collection).
+	'manage-wikia-home-collections-invalid-wikis-number' => 'Information about status of a collection; it appears only if the number of wikis assigned to a collection is invalid.
 
 Parameters:
-* $1 - maximum number of wikis per collection',
+* $1 - integer value. Supports {{PLURAL}}',
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Image size information under the big image field; the big image covers all wikis images on corporate main page.
 
 Parameters:
