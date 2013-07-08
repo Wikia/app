@@ -1,5 +1,5 @@
 <?php
-class UIIntegration extends PHPUnit_Framework_TestCase {
+class UIIntegration extends WikiaBaseTest {
 	/**
 	 * @var String $path
 	 */
@@ -24,6 +24,7 @@ class UIIntegration extends PHPUnit_Framework_TestCase {
 			$this->uiFactory->init( 'button' )->render([
 				'type' => 'input',
 				'params' => [
+					'type' => 'submit',
 					'name' => 'just-a-button',
 					'classes' => ['button'],
 					'value' => 'Just a button in form of a link',
@@ -97,6 +98,7 @@ class UIIntegration extends PHPUnit_Framework_TestCase {
 		$cMarkup = $c->render([
 			'type' => 'input',
 			'params' => [
+				'type' => 'submit',
 				'name' => 'just-a-button',
 				'classes' => ['button'],
 				'value' => 'Just a button in form of a link',

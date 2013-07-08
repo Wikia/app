@@ -170,7 +170,7 @@ class UIComponent {
 		
 		foreach ( $config[ $this->getType() ][ 'required' ] as $templateRequiredVarName ) {
 			if ( ! isset( $data[ $templateRequiredVarName ] ) ) {
-				$exceptionMessage = sprintf( WikiaUIDataException::EXCEPTION_MSG_INVALID_DATA_FOR_PARAMETER, $templateRequiredVarName );
+				$exceptionMessage = WikiaUIDataException::getInvalidParamDataMsg($templateRequiredVarName);
 				throw new WikiaUIDataException( $exceptionMessage );
 			}
 		}

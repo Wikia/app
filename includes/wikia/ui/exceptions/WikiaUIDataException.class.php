@@ -15,4 +15,8 @@ class WikiaUIDataException extends WikiaException {
 	public function __construct( $message = self::EXCEPTION_MSG_INVALID_DATA, $code = 0, Exception $previous = null ) {
 		parent::__construct( $message, $code, $previous );
 	}
+
+	public static function getInvalidParamDataMsg( $args) {
+		return sprintf( self::EXCEPTION_MSG_INVALID_DATA_FOR_PARAMETER, $args );
+	}
 }
