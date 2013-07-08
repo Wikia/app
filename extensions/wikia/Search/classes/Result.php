@@ -64,7 +64,7 @@ class Result extends ReadWrite {
 			$wordsExploded = explode( ' ', $textAsString );
 			$textAsString = implode( ' ', array_slice( $wordsExploded, 0, $wordLimit ) );
 			if ( count( $wordsExploded ) > $wordLimit ) {
-				$textAsString .= "&hellip;";
+				$textAsString = $this->fixSnippeting( $textAsString, true );
 			} 
 		}
 		return $textAsString;
