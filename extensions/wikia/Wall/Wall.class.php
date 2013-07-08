@@ -77,11 +77,9 @@ class Wall extends WikiaModel {
 	/**
 	 * @desc Returns wikitext without parsed templates (removes templates from wikitext).
 	 *
-	 * @param boolean $bParse True if text should be parsed.
-	 *
 	 * @return string parsed description
 	 */
-	public function getDescriptionWithoutTemplates( $bParse = true ) {
+	public function getDescriptionWithoutTemplates() {
 		$title = $this->getTitle();
 		$memcKey = wfMemcKey(__METHOD__, $title->getArticleID(), $title->getTouchedCached(), 'without_template');
 		$res = $this->wg->memc->get($memcKey);
@@ -97,16 +95,11 @@ class Wall extends WikiaModel {
 	/**
 	 * @desc Returns parsed description.
 	 *
-	 * @param boolean $bParse True if text should be parsed.
 	 * @param boolean $bStripTemplates Parse templates as empty strings.
 	 *
 	 * @return string Parsed description.
 	 */
-	private function getDescriptionParsed( $bParse = true, $bStripTemplates = false) {
-		$oArticle = new Article( $this->getTitle() );
-		if ( !$bParse ) {
-			return $oArticle->getText();
-		}
+	private function getDescriptionParsed( $bStripTemplates = false) {
 		$oApp = F::App();
 		$oParserOptions = $oApp->wg->Out->parserOptions();
 
@@ -151,6 +144,12 @@ class Wall extends WikiaModel {
 		$memcKey = wfmemcKey(__METHOD__,$title->getArticleID(),$title->getTouchedCached(), 'parsed');
 		$res = $this->wg->memc->get($memcKey);
 		if ( !is_string($res) ) {
+
+			if ( !$bParse ) {
+				$oArticle = new Article( $title );
+				return $oArticle->getText();
+			}
+
 			$res = $this->getDescriptionParsed( $bParse );
 
 			$this->wg->memc->set($memcKey,$res,self::DESCRIPTION_CACHE_TTL);

@@ -29,7 +29,7 @@ class Forum extends Walls {
 			$boardInfo = $board->getBoardInfo();
 			$boardInfo['id'] = $title->getArticleID();
 			$boardInfo['name'] = $title->getText();
-			$boardInfo['description'] = $bEditMode ? $board->getDescription() : $board->getDescriptionWithoutTemplate();
+			$boardInfo['description'] = $bEditMode ? $board->getDescription() : $board->getDescriptionWithoutTemplates();
 			$boardInfo['url'] = $title->getFullURL();
 			$orderIndex = $orderIndexes[$id];
 			$boards[$orderIndex] = $boardInfo;
