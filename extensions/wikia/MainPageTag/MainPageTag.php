@@ -19,7 +19,8 @@ $wfMainPageTag_rcs_called = false;
 // Set to "true" once the left column parser tag has run. Used to establish the order in which the column tags were called.
 $wfMainPageTag_lcs_called = false;
 
-// Open tag count
+// Open tag count; Counts mainpage tag openings to avoid more closing tags than opening tags
+// Note: this does not check the order of the tags
 $wgMainPageTag_count = 0;
 
 
@@ -44,11 +45,11 @@ function wfMainPageTag( &$parser ) {
 function wfMainPageTag_rcs( $input, $args, $parser ) {
 	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called, $wgMainPageTag_count, $wgOasisGrid;
 
-	if ( ! $wfMainPageTag_lcs_called ) {
+	if ( !$wfMainPageTag_lcs_called ) {
 		$wfMainPageTag_rcs_called = true;
 	}
 
-	$wgMainPageTag_count ++;
+	$wgMainPageTag_count++;
 
 	$html = '<div class="main-page-tag-rcs' . ( empty( $wgOasisGrid ) ? '' : ' grid-2' ) . '"><div>';
 
