@@ -33,8 +33,8 @@ class UIComponentTest extends WikiaBaseTest {
 		return [
 			[ 
 				'templateType' => 'input', 
-				'templatePath' => '/resources/wikia/ui_compontens/sample_component/tempaltes/sample_component',
-				'expected' => '/resources/wikia/ui_compontens/sample_component/tempaltes/sample_component_input.mustache',
+				'templatePath' => '/resources/wikia/ui_compontens/sample_component/templates/sample_component',
+				'expected' => '/resources/wikia/ui_compontens/sample_component/templates/sample_component_input.mustache',
 			],
 			[ 
 				'templateType' => 'anchor', 

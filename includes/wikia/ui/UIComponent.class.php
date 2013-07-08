@@ -17,6 +17,7 @@ class UIComponent {
 	private $templateEngine;
 
 	/**
+	 * @desc Array with required and optional attributes for component
 	 * @var Array $templateVarsConfig
 	 */
 	private $templateVarsConfig;
@@ -77,10 +78,21 @@ class UIComponent {
 			->render( $this->getTemplatePath() );
 	}
 
+	/**
+	 * @desc Returns base path for template
+	 *
+	 * @return String
+	 */
 	public function getBaseTemplatePath() {
 		return $this->templateBasePath;
 	}
 
+	/**
+	 * @desc Sets base path for template
+	 *
+	 * @param $path
+	 * @return mixed
+	 */
 	public function setBaseTemplatePath( $path ) {
 		return $this->templateBasePath = $path;
 	}
@@ -109,11 +121,21 @@ class UIComponent {
 	public function getTemplatePath() {
 		return $this->templatePath;
 	}
-	
+
+	/**
+	 * @desc Sets type for a component
+	 *
+	 * @param $type
+	 */
 	public function setType( $type ) {
 		$this->type = $type;
 	}
 
+	/**
+	 * @desc Returns type of component
+	 *
+	 * @return String
+	 */
 	public function getType() {
 		return $this->type;
 	}

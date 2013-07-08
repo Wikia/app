@@ -59,7 +59,7 @@ class UIFactory {
 	/**
 	 * @desc Private constructor because it's a singleton
 	 */
-	public function __construct() {
+	private function __construct() {
 		global $IP;
 		$this->componentsDir = $IP . self::DEFAULT_COMPONENTS_PATH;
 		$this->loaderService = AssetsManager::getInstance();
@@ -244,12 +244,20 @@ class UIFactory {
 			$componentConfig = $this->loadComponentConfig( $name );
 			
 			// if there are some components, put them in the $assets
-			if ( !empty( $componentConfig['dependencies'] ) ) {
-				if ( !empty( $componentConfig['dependencies']['js'] ) ) {
+			if ( !empty( $componentConfig['dependencies']['js'] ) ) {
+				if ( is_array($componentConfig['dependencies']['js']) ) {
 					$assets = array_merge( $assets, $componentConfig['dependencies']['js'] );
+				} else {
+					$exceptionMessage = sprintf( WikiaUIDataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE );
+					throw new WikiaUIDataException( $exceptionMessage, 'js' );
 				}
-				if ( !empty( $componentConfig['dependencies']['css'] ) ) {
+			}
+			if ( !empty( $componentConfig['dependencies']['css'] ) ) {
+				if ( is_array($componentConfig['dependencies']['css']) ) {
 					$assets = array_merge( $assets, $componentConfig['dependencies']['css'] );
+				} else {
+					$exceptionMessage = sprintf( WikiaUIDataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE );
+					throw new WikiaUIDataException( $exceptionMessage, 'css' );
 				}
 			}
 

@@ -12,7 +12,7 @@ class UIStyleguideComponents
 	private $uiFactory;
 
 	public function __construct() {
-		$this->uiFactory = new UIFactory();
+		$this->uiFactory = UIFactory::getInstance();
 	}
 
 	/**
@@ -21,33 +21,34 @@ class UIStyleguideComponents
 	 * @return array
 	 */
 	public function getAllComponents() {
-		global $wgMemc;
-
-		$memcKey = wfMemcKey( __CLASS__, 'all_components' );
-		$wgMemc->get( $memcKey );
-		if ( !empty($data) ) {
-			return $data;
-		} else {
-			$components = [];
-			$k = 0;
-			$directory = new DirectoryIterator( $this->uiFactory->getComponentsDir() );
-			while( $directory->valid() ) {
-				if( !$directory->isDot() && $directory->isDir() ) {
-					$filename = $directory->getFilename();
-					$components[$k] = $this->uiFactory->loadComponentConfigFromFile( $this->uiFactory->getComponentConfigFileFullPath( $filename ) );
-					$components[$k] = $this->prepareMessages($components[$k]);
-					if ( isset($components[$k]['templateVars']) ) {
-						$components[$k]['mustacheVars'] = $this->prepareComponents($components[$k]['templateVars'], $filename);
+		$components = WikiaDataAccess::cache(
+			wfSharedMemcKey (
+				__CLASS__, 'all_components'
+			),
+			UIFactory::MEMCACHE_EXPIRATION,
+			function() {
+				$components = [];
+				$k = 0;
+				$directory = new DirectoryIterator( $this->uiFactory->getComponentsDir() );
+				while( $directory->valid() ) {
+					if( !$directory->isDot() && $directory->isDir() ) {
+						$filename = $directory->getFilename();
+						$components[$k] = $this->uiFactory->loadComponentConfigFromFile(
+								$this->uiFactory->getComponentConfigFileFullPath( $filename )
+						);
+						$components[$k] = $this->prepareMessages($components[$k]);
+						if ( isset($components[$k]['templateVars']) ) {
+							$components[$k]['mustacheVars'] = $this->prepareComponents($components[$k]['templateVars'], $filename);
+						}
+						$k++;
 					}
-					$k++;
+					$directory->next();
 				}
-				$directory->next();
+				return $components;
 			}
+		);
 
-			$wgMemc->set( $memcKey, $components, UIFactory::MEMCACHE_EXPIRATION );
-
-			return $components;
-		}
+		return $components;
 	}
 
 	/**
@@ -60,10 +61,12 @@ class UIStyleguideComponents
 	private function prepareComponents($templateVars, $filename) {
 		$mustacheVars = [];
 
-		$example = $this->loadExampleFile($filename);
+		$exampleData = $this->loadExampleFile($filename);
 
 		foreach ( $templateVars as $name => $var ) {
-			$renderedExample = isset($example[$name]) ? UIFactory::getInstance()->init($filename)->render($example[$name]) : '';
+			$renderedExample = isset($exampleData[$name])
+							   ? UIFactory::getInstance()->init($filename)->render($exampleData[$name])
+							   : null;
 
 			if ( isset($var['name-var-msg-key']) ) {
 				$var['name'] = $this->prepareMessage($var['name-var-msg-key']);
@@ -123,7 +126,8 @@ class UIStyleguideComponents
 	 * @return Array
 	 */
 	private function loadComponentExampleFromFile( $exampleFilePath ) {
-		if ( false === $exampleString = file_get_contents( $exampleFilePath ) ) {
+		$exampleString = file_get_contents( $exampleFilePath );
+		if ( false === $exampleString ) {
 			return false;
 		} else {
 			return json_decode( $exampleString, true );
