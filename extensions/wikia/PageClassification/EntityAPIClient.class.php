@@ -6,8 +6,9 @@
 class EntityAPIClient {
 
 	protected $logLevel = 1;
-	protected $classifierEndpoint = "http://db-sds-s1:8081/graph-0.3.1/classifications/";
-	protected $saveEndpoint = "http://db-sds-s1:8081/knowledge/entitycollections";
+	protected $classifierEndpoint = "http://db-sds-s2:8081/graph-0.3.1/classifications/";
+	protected $saveEndpoint = "http://db-sds-s2:8081/knowledge-0.2.1/entitycollections";
+	protected $decisionsEndpoint = "http://db-sds-s2:8081/knowledge-0.2.1/decisions/";
 
 	public function getClassifierEndpoint( $wikiUrl, $pageTitle ) {
 		return $this->classifierEndpoint .urldecode( $wikiUrl ).'/'.$pageTitle;
@@ -15,6 +16,10 @@ class EntityAPIClient {
 
 	public function getSaveEndpoint() {
 		return $this->saveEndpoint;
+	}
+
+	public function getDecisionsEndpoint( $wikiId, $articleId = 0 ) {
+		return $this->decisionsEndpoint . $wikiId . ( $articleId == 0 ? '' : '/'.$articleId );
 	}
 
 	protected function log( $text, $level = 1 ) {
@@ -49,7 +54,7 @@ class EntityAPIClient {
 		$this->log( "Connect: $url ", 1);
 		$options = array( 'followRedirects' => true,
 			'noProxy' => true,
-			'timeout' => 120
+			'timeout' => 220
 		);
 
 		if ( $postData !== false ) {
@@ -64,6 +69,7 @@ class EntityAPIClient {
 
 		if( $status->isOK() ) {
 			$response = $req->getContent();
+			$response = iconv('UTF-8', 'UTF-8//IGNORE', utf8_encode($response));
 			$responseCode = $req->getStatus();
 			$decodedResponse = json_decode ( $response );
 		}
@@ -74,5 +80,21 @@ class EntityAPIClient {
 	public function post( $url, $data ) {
 
 	}
+
+	/**
+	 * @param int $logLevel
+	 */
+	public function setLogLevel( $logLevel ) {
+		$this->logLevel = $logLevel;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getLogLevel() {
+		return $this->logLevel;
+	}
+
+
 
 }

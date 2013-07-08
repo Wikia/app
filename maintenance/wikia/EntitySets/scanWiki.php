@@ -13,7 +13,7 @@ define('CLASSIFIER_NAME', '1');
 ini_set('display_errors', 'stderr');
 ini_set('error_reporting', E_NOTICE);
 
-require_once( 'EntityAPIClient.class.php' );
+require_once( dirname( __FILE__ ) . '/../../../extensions/wikia/PageClassification/EntityAPIClient.class.php' );
 require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 require_once( dirname( __FILE__ ) . '/../../../includes/HttpFunctions.php' );
 
