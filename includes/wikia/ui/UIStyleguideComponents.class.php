@@ -26,9 +26,7 @@ class UIStyleguideComponents
 				__CLASS__, 'all_components'
 			),
 			UIFactory::MEMCACHE_EXPIRATION,
-			function() {
-				return $this->getAllComponentsFromDirectories();
-			}
+			[ $this, 'getAllComponentsFromDirectories' ]
 		);
 
 		return $components;
@@ -39,7 +37,7 @@ class UIStyleguideComponents
 	 *
 	 * @return array
 	 */
-	private function getAllComponentsFromDirectories() {
+	public function getAllComponentsFromDirectories() {
 		$components = [];
 
 		$directory = new DirectoryIterator( $this->uiFactory->getComponentsDir() );
