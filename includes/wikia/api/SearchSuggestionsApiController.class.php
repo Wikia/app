@@ -8,6 +8,15 @@
 class SearchSuggestionsApiController extends WikiaApiController {
 	const PARAMETER_QUERY = 'query';
 
+	/**
+	 * Finds search suggestions phrases for chosen query
+	 *
+	 * @requestParam string $query search term fro
+	 *
+	 * @responseParam array $items The list of phrases matching the query
+	 *
+	 * @example http://gta..wikia.com/wikia.php?controller=SearchSuggestionsApi&method=getList&query=los
+	 */
 	public function getList() {
 		global $wgRequest;
 		wfProfileIn(__METHOD__);
