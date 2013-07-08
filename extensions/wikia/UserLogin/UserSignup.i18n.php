@@ -282,7 +282,8 @@ $messages['qqq'] = array(
 	'usersignup-confirm-email-change-email-content' => 'Change email heading.',
 	'usersignup-confirm-email-change-email' => 'Action link to open a dialog to change email.',
 	'usersignup-confirm-email-new-email-label' => 'Label for email input.',
-	'usersignup-confirm-email-update' => 'Button to submit e-mail address update form.',
+	'usersignup-confirm-email-update' => 'Button to submit email address update form.
+{{Identical|Update}}',
 	'usersignup-confirm-email-tooltip' => '{{doc-singularthey}}
 Tooltip letting user know they can change their email.  Tooltip is on the same line as {{msg-w|usersignup-confirm-email-change-email-content}}',
 	'usersignup-resend-email-heading-success' => 'Validation message telling the user the email has been re-sent.',

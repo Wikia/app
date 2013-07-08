@@ -65,6 +65,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'app-loading' => '{{Identical|Loading}}',
+	'app-tab-search' => '{{Identical|Search}}',
 	'app-tab-sotd' => 'SotD = Song of the Day',
 	'app-async-error-title' => '{{Identical|Oops}}',
 );

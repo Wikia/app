@@ -354,6 +354,19 @@ $messages['el'] = array(
 	'founderprogressbar-toptenlist-add-label' => 'Προσθέστε έναν κατάλογο των δέκα κορυφαίων',
 );
 
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'founderprogressbar-themedesigner-visit-label' => 'Customise your theme',
+	'founderprogressbar-category-add3-description' => "Categories are one of the best ways to organise your wiki and help people find the pages they're looking for. Keep it simple though, too many categories can make things confusing.",
+	'founderprogressbar-fb-connect-description' => "Share all the work you're doing! Facebook Connect allows you to share actions you take on your wiki with your Facebook friends. You can customise which actions you'd like to post to Facebook. Only one admin needs to turn this on to complete the task.",
+	'founderprogressbar-category-add5-description' => "Now that you've added more pages to your wiki, you'll probably need more categories to keep it all organised.",
+	'founderprogressbar-topnav-edit-label' => 'Customise your navigation',
+	'founderprogressbar-uncategorized-visit-label' => 'See uncategorised pages',
+	'founderprogressbar-uncategorized-visit-description' => "When your wiki has more content it can be easy to lose track of organisation. Stay on top of it by tracking pages that don't have categories, and adding categories to those pages to keep them accessible and organised.",
+);
+
 /** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
@@ -835,13 +848,25 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author Iwan Novirion
  */
 $messages['id'] = array(
+	'founderprogressbar-widget-label' => 'Perkembangan $SITENAME',
+	'founderprogressbar-list-description1' => 'Siap untuk mendorong wiki Anda pada jalan kesuksesan? Selesaikan semua tugas yang terdaftar di bawah ini untuk mendapatkan balok perkembangan ke 100%! Semua orang pada wiki Anda dapat membantu dan setiap kontribusi mereka akan dihitung terhadap tugas pada daftar.',
+	'founderprogressbar-completion-message' => 'Selamat! Anda telah melakukan pekerjaan yang luar biasa dan menyelesaikan semua tugas sampai 100%. Wiki Anda sedang di jalan untuk berhasil, atau bahkan telah berada di sana. Jagalah kinerja yang menakjubkan ini!',
+	'founderprogressbar-mainpage-edit-description' => 'Ketika orang mengunjungi wikii Anda halaman utama adalah hal pertama yang akan mereka lihat. Pastikan ini memberi tahu mereka tentang apa wiki Anda, cara mereka dapat membantu, dan menyorot beberapa konten terbaik wiki.',
+	'founderprogressbar-category-add3-description' => 'Kategori adalah satu dari cara terbaik untuk mengatur wiki Anda dan membantu orang menemukan halaman-halaman yang mereka cari. Namun jagalah tetap sederhana, terlalu banyak kategori dapat membuat hal membingungkan.',
 	'founderprogressbar-category-edit-label' => 'Sunting halaman kategori',
 	'founderprogressbar-category-add5-description' => 'Kini setelah Anda menambahkan lebih banyak halaman ke wiki Anda, Anda mungkin akan memerlukan lebih banyak kategori untuk menjaga semuanya terorganisasi.',
+	'founderprogressbar-gallery-add-description' => 'Galeri foto adalah cara yang bagus untuk memamerkan beberapa foto dalam satu wilayah halaman. Tambahan, ini seru untuk mencampur cara Anda menampilkan foto pada wiki Anda untuk menjaganya tetap menarik bagi orang yang berkunjung.',
+	'founderprogressbar-commcorner-edit-label' => 'Sunting Pojok Komunitas',
 	'founderprogressbar-commcorner-edit-description' => 'Menyunting Sudut Komunitas akan membuat pemberitahuan untuk orang-orang yang mengunjungi wiki Anda. Ini adalah tempat yang bagus untuk mengizinkan orang tahu tipe komunitas apakah Anda, bagaimana mereka dapat membantu, dan untuk membuat pengumuman.',
+	'founderprogressbar-recentchanges-visit-description' => 'Perubahan terbaru adalah versi yang lebih maju dari aktivitas wiki. Anda dapat melihat "diffs" yang merincikan perubahan secara tepat yang dibuat pada sebuah halaman, membuat perubahan pengembalian revisi, dan melihat lebih rinci daripada yang dapat Anda lihat di aktivitas wiki. Ini adalah alat manajemen yang bagus ketika Anda membutuhkan lebih banyak informasi.',
 	'founderprogressbar-mostvisited-visit-label' => 'Lihat halaman yang tersering Anda kunjungi',
+	'founderprogressbar-toptenlist-add-description' => 'Daftar sepuluh teratas mendorong pengunjung yang mungkin malu untuk menyunting untuk berpartisipasi di wiki Anda. Hal ini adalah pembangun komunitas yang bagus dan mudah bagi orang untuk memilih item naik dan turun dan menambahkannya ke daftar.',
 	'founderprogressbar-uncategorized-visit-description' => 'Saat wiki Anda memiliki lebih banyak konten, mudah untuk kehilangan jalur organisasi. Tetap berada di atasnya dengan melacak halaman yang tidak memiliki kategori, dan tambahkan kategori ke halaman-halaman untuk menjaganya tetap dapat diakses dan terorganisasi.',
+	'founderprogressbar-total-edit300-description' => 'Suntingan $1 adalah tonggak yang mengagumkan, dan dengan perubahan yang banyak dibuat dan konten yang ditambahkan wiki Anda akan berjalan meraih keberhasilan!',
+	'founderprogressbar-bonus-page-add5-description' => 'Wiki apa yang tidak mendapat keuntungan dengan lebih banyak konten? Tambahkan lima halaman lagi untuk mendapatkan penghargaan untuk satu tugas bonus.',
 	'founderprogressbar-browse-page-name' => 'Jelajahi',
 );
 

@@ -248,3 +248,12 @@ $messages['zh-hans'] = array(
 	'confirmemailprompt-desc' => '当用户电子邮件地址未被确认时显示警告信息',
 	'confirmemailprompt-error' => '您的电子邮件地址是：<strong>$1</strong>么？[[$2|确认地址]]或[[$3|变更地址]].',
 );
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Justincheng12345
+ * @author StephDC
+ */
+$messages['zh-hant'] = array(
+	'confirmemailprompt-desc' => '當用戶的電郵地址尚未確認時顯示警告',
+	'confirmemailprompt-error' => '<strong>$1</strong>是否是您的電子郵箱地址？ [[$2|是]]或[[$3|不是，請修改]]。',
+);

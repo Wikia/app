@@ -31,12 +31,13 @@ $messages['es'] = array(
 
 /** French (français)
  * @author Gomoko
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'adengine-exitstitial-title-template' => 'Vous êtes en train de quitter $1…',
 	'adengine-exitstitial-redirecting' => 'Votre navigateur vous redirigera vers la page demandée dans quelques secondes.',
 	'adengine-exitstitial-go-back' => 'Vous voulez revenir en arrière ?',
-	'adengine-exitstitial-button' => 'Sauter cette publicité',
+	'adengine-exitstitial-button' => 'Passer cette publicité',
 );
 
 /** Galician (galego)
@@ -59,6 +60,14 @@ $messages['id'] = array(
 	'adengine-exitstitial-button' => 'Lewati Iklan ini',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'adengine-exitstitial-title-template' => 'Dir verloosst $1...',
+	'adengine-exitstitial-button' => 'Dës Reklamm iwwersprangen',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -67,6 +76,13 @@ $messages['ms'] = array(
 	'adengine-exitstitial-redirecting' => 'Pelayar anda akan membawa anda ke halaman yang anda minta dalam beberapa saat.',
 	'adengine-exitstitial-go-back' => 'Ingin kembali?',
 	'adengine-exitstitial-button' => 'Langkau iklan ini',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'adengine-exitstitial-button' => 'له دې خبرتيا تېرېدل',
 );
 
 /** Swedish (svenska)

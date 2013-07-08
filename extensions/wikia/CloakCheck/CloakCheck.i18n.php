@@ -31,11 +31,13 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
 	'cloakcheck' => "An \"''IRC cloak''\" is a technical measure on an IRC network to hide the IP address of a user.",
 	'cloakcheck-desc' => "An \"''IRC cloak''\" is a technical measure on an IRC network to hide the IP address of a user.",
+	'right-cloakcheck' => '{{doc-right|cloakcheck}}',
 	'cloakcheck-form-check-self' => "An \"''IRC cloak''\" is a technical measure on an IRC network to hide the IP address of a user.",
 );
 
@@ -381,6 +383,7 @@ $messages['lb'] = array(
 	'cloakcheck-process-accountage-yes' => 'De Benotzerkont ass al genuch.',
 	'cloakcheck-process-accountage-no' => 'De Benotzerkont ass ze nei.',
 	'cloakcheck-process-edits-yes' => 'De Benotzer huet genuch Ännerungen.',
+	'cloakcheck-process-edits-no' => 'De Benotzer huet net genuch Ännerungen.',
 );
 
 /** Lithuanian (lietuvių)

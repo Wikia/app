@@ -2569,6 +2569,7 @@ $messages['ps'] = array(
 	'multiwikiedit_select_yourself' => 'تاسې',
 	'multidelete_button' => 'ړنګول',
 	'multidelete_caption' => 'د مخ لړليک',
+	'multidelete_or' => '<b>يا</b>',
 	'multidelete_select_all' => 'ټول ټاکل',
 	'multidelete_reason' => 'د ړنګولو سبب',
 	'multidelete_this_wiki' => 'همدا ويکي',
@@ -2578,6 +2579,8 @@ $messages['ps'] = array(
 	'multidelete_brazilian_portuguese_wikis' => 'ټولې برازيلۍ پارتوګالي ويکي ګانې',
 	'multidelete_hebrew_wikis' => 'ټولې عبري ويکي ګانې',
 	'multidelete_chinese_wikis' => 'ټولې چينايي ويکي ګانې',
+	'multidelete_polish_wikis' => 'ټول پولنډي ويکي ګان',
+	'multidelete_czech_wikis' => 'ټول چېکي ويکي ګان',
 	'multidelete_german_wikis' => 'ټولې جرمنۍ ويکي ګانې',
 	'multiwikifindpagenames' => 'د مخ نوم موندل',
 );

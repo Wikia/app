@@ -126,6 +126,10 @@ Head to Wikia to check out the changes! $1
  */
 $messages['qqq'] = array(
 	'toplists-desc' => '{{desc}}',
+	'right-toplists-create-edit-list' => '{{doc-right|toplists-create-edit-list}}',
+	'right-toplists-create-item' => '{{doc-right|toplists-create-item}}',
+	'right-toplists-edit-item' => '{{doc-right|toplists-edit-item}}',
+	'right-toplists-delete-item' => '{{doc-right|toplists-delete-item}}',
 	'toplists-category' => 'The name for the category that lists all the Top 10 Lists on a wiki',
 	'action-toplists-create-edit-list' => '{{doc-action|toplists-create-edit}}',
 	'toplists-editor-remove-item-tooltip' => '{{Identical|Remove item}}',
@@ -544,6 +548,13 @@ $messages['diq'] = array(
 	'toplists-days' => '($1 {{PLURAL:$1|roce|roci}})',
 	'toplists-weeks' => '$1 {{PLURAL: $1|hefte|heftey}}',
 	'toplists-create-button-msg' => 'Liste vırazê',
+);
+
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'toplists-error-title-spam' => 'The supplied text contains some words recognised as spam.',
 );
 
 /** Spanish (español)
