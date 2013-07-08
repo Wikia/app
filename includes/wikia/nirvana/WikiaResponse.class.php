@@ -472,24 +472,11 @@ class WikiaResponse {
 	 * please note that this parameter has no effect on SASS assets, those will always produce shared host URL's.
 	 */
 	public function addAsset( $assetName, $local = false ){
-		$app = F::app();
 		wfProfileIn( __METHOD__ );
 		$type = false;
 
 		if ( $this->format == 'html' ) {
-			$sources = F::build( 'AssetsManager', array(), 'getInstance' )->getURL( $assetName, $type, $local );
-
-			foreach($sources as $src){
-				switch ( $type ) {
-					case AssetsManager::TYPE_CSS:
-					case AssetsManager::TYPE_SCSS:
-						$app->wg->Out->addStyle( $src );
-						break;
-					case AssetsManager::TYPE_JS:
-						$app->wg->Out->addScript( "<script type=\"{$app->wg->JsMimeType}\" src=\"{$src}\"></script>" );
-						break;
-				}
-			}
+			Wikia::addAssetsToAssetsManager( $assetName, $type, $local );
 		}
 
 		wfProfileOut( __METHOD__ );

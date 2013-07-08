@@ -1998,4 +1998,29 @@ class Wikia {
 
 		return true;
 	}
+
+	/**
+	 * @desc Add assets to AssetsManager depending on asset type
+	 *
+	 * @param $assetName
+	 * @param $type
+	 * @param bool $local
+	 */
+	public static function addAssetsToAssetsManager( $assetName, $type, $local = false ) {
+		$app = F::app();
+
+		$sources = AssetsManager::getInstance()->getURL( $assetName, $type, $local );
+
+		foreach($sources as $src){
+			switch ( $type ) {
+				case AssetsManager::TYPE_CSS:
+				case AssetsManager::TYPE_SCSS:
+					$app->wg->Out->addStyle( $src );
+					break;
+				case AssetsManager::TYPE_JS:
+					$app->wg->Out->addScript( "<script type=\"{$app->wg->JsMimeType}\" src=\"{$src}\"></script>" );
+					break;
+			}
+		}
+	}
 }
