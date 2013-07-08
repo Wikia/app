@@ -317,6 +317,23 @@ class WikiaFileHelper extends Service {
 	}
 
 	/**
+	 * Get a new instance of the file page based on skin and if wgEnableVideoPageRedesign is enabled
+	 *
+	 * @param Title $fileTitle
+	 * @return FilePageMobile|FilePageTabbed|WikiaFilePage
+	 */
+	public static function getMediaPage( $fileTitle ) {
+		if ( F::app()->checkSkin( 'oasis' ) && !empty( $wgEnableVideoPageRedesign ) ) {
+			$mediaPage = new FilePageTabbed( $fileTitle );
+		} else if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+			$mediaPage = new FilePageMobile( $fileTitle );
+		} else {
+			$mediaPage = new WikiaFilePage( $fileTitle );
+		}
+		return $mediaPage;
+	}
+
+	/**
 	 * @static
 	 * @param Title $fileTitle
 	 * @param array $config ( contextWidth, contextHeight, imageMaxWidth, userAvatarWidth )
@@ -369,11 +386,7 @@ class WikiaFileHelper extends Service {
 					$data['playerAsset'] = $file->getPlayerAssetUrl();
 					$data['videoViews'] = MediaQueryService::getTotalVideoViewsByTitle( $fileTitle->getDBKey() );
 					$data['providerName'] = $file->getProviderName();
-					if ( F::app()->checkSkin( 'oasis' ) && !empty( $wgEnableVideoPageRedesign ) ) {
-						$mediaPage = new FilePageTabbed($fileTitle);
-					} else {
-						$mediaPage = new FilePageFlat($fileTitle);
-					}
+					$mediaPage = self::getMediaPage( $fileTitle );
 				} else {
 					$width = $width > $config['imageMaxWidth'] ? $config['imageMaxWidth'] : $width;
 					$mediaPage = new ImagePage($fileTitle);

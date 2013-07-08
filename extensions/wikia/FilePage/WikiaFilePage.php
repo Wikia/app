@@ -10,7 +10,7 @@
  * @author Garth Webb
  * @author Saipetch
  */
-abstract class WikiaFilePage extends ImagePage {
+class WikiaFilePage extends ImagePage {
 
 	const VIDEO_WIDTH = 670;
 

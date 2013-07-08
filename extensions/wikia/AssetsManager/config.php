@@ -742,6 +742,24 @@ $config['articlecomments_scss_wikiamobile'] = array(
 	)
 );
 
+$config['filepage_js_wikiamobile'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/FilePage/js/FilePage.wikiamobile.js'
+	)
+);
+
+$config['filepage_scss_wikiamobile'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/FilePage/css/FilePage.wikiamobile.scss'
+	)
+);
+
+
+
 /** EditPageLayout **/
 $config['rte'] = array(
 	'type' => AssetsManager::TYPE_JS,
