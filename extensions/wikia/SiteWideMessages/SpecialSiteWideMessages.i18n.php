@@ -155,7 +155,8 @@ $messages['qqq'] = array(
 	'swm-expire-info' => '',
 	'swm-list-table-wiki' => '{{Identical|Wiki}}',
 	'swm-list-table-group' => '{{Identical|Group}}',
-	'swm-list-table-removed' => 'Column heading of a table with one message per line. The column contains either yes or no if the message was removed or not.',
+	'swm-list-table-removed' => 'Column heading of a table with one message per line. The column contains either yes or no if the message was removed or not.
+{{Identical|Removed}}',
 	'swm-list-table-content' => '{{Identical|Content}}',
 	'swm-list-table-tools' => '{{Identical|Tools}}',
 	'swm-list-table-lang' => '{{Identical|Language}}',
@@ -163,6 +164,7 @@ $messages['qqq'] = array(
 	'swm-yes' => '{{Identical|Yes}}',
 	'swm-no' => '{{Identical|No}}',
 	'swm-error-no-wiki-list' => 'Error message to display when no wikis where entered into the list of wikis box.',
+	'action-messagetool' => '{{doc-action|messagetool}}',
 	'swm-label-mode-users-registration' => 'Label for option to select users by registration date.',
 	'swm-mode-users-registration-after' => 'Option to select if user wants to send message to users who registered after the given date.',
 	'swm-mode-users-registration-before' => 'Option to select if user wants to send message to users who registered before the given date.',
@@ -604,9 +606,11 @@ $messages['bs'] = array(
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
 	'swm-label-mode-users-active' => 'Жигар декъашхой',
+	'swm-list-table-expire' => 'Чекхйолу',
 );
 
 /** Czech (česky)
@@ -2477,6 +2481,7 @@ $messages['ps'] = array(
 	'swm-label-mode-users-all' => 'ټول کارنان',
 	'swm-label-mode-users-active' => 'فعاله کارنان',
 	'swm-label-mode-users-user' => 'ټاکلی کارن',
+	'swm-label-mode-users-user-multi' => 'د کارنانو لړليک',
 	'swm-label-content' => 'منځپانګه',
 	'swm-label-comment' => 'تبصره',
 	'swm-label-language' => 'ژبه',

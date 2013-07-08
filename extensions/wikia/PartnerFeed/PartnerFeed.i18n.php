@@ -36,15 +36,18 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'partner-feed-hotcontent' => 'Both terms "Hub" and "verticals" have the same meaning in this context. The meaning is "Portals", i.e. the grouping of wikis by their theme. Examples of portals are "Gaming", "Entertainment", "Education", "Music", etc.',
+	'partner-feed-recent-changes' => '{{Identical|Recent changes}}',
 	'blog-posts-from-listing' => 'Parameters:
 * $1 is a link to a listing with the listing page title as link description.',
 	'feed-title-hot-content' => 'Parameters:
 * $1 is a hub title.',
 	'feed-title-blogcomments' => 'Parameters:
 * $1 is a blog post title.',
+	'feed-title-recentchanges' => '{{Identical|Recent changes}}',
 );
 
 /** Arabic (العربية)
@@ -88,6 +91,14 @@ $messages['br'] = array(
 	'blog-posts-from-listing' => 'eus ar roll : $1',
 	'feed-title-blogcomments' => 'Evezhiadenn da $1',
 	'feed-title-recentchanges' => 'Kemmoù graet nevez zo',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'partner-feed-recent-changes' => 'Керла нисдарш',
+	'feed-title-recentchanges' => 'Керла нисдарш',
 );
 
 /** Czech (česky)

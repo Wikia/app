@@ -157,9 +157,11 @@ $messages['ia'] = array(
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
  * @author Bennylin
+ * @author C5st4wr6ch
  */
 $messages['id'] = array(
 	'tog-disablelinksuggest' => 'Jangan menampilkan saran pranala',
+	'tog-redirected-from' => '&ndash; dialihkan dari $1',
 );
 
 /** Italian (italiano)

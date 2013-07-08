@@ -21,7 +21,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Default results per page for inter wiki search
 	 * @var int
 	 */
-	const INTERWIKI_RESULTS_PER_PAGE = 7;
+	const INTERWIKI_RESULTS_PER_PAGE = 10;
 
 	/**
 	 * Default pages per window

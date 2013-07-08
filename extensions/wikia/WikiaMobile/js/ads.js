@@ -18,8 +18,8 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobile
 
 	var STOP_COOKIE_NAME = 'wkStopAd',
 		ID_COOKIE_NAME = 'wikia_mobile_id',
-		fix,
-		unfix;
+		fix = function(){},
+		unfix = function(){};
 
 	/**
 	 * Stops ads requests from being made for a specific amount of time
@@ -74,7 +74,7 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobile
 						size: options.size,
 						uniqueId: getUniqueId()
 					}) +
-				'"></script>',
+					'"></script>',
 				findAd(options.wrapper, options.init)
 			);
 
@@ -83,7 +83,6 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobile
 				fix = options.functions.fix;
 				unfix = options.functions.unfix;
 			}
-
 		}
 	}
 
@@ -144,10 +143,8 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobile
 					}
 				}
 
-				if (found && typeof init == 'function') {
-					//if the slot was not initialized and Ads where found
-					//then force the default, i.e. a footer Ad
-					init();
+				if(typeof init == 'function') {
+					init(found)
 				}
 			}
 		}

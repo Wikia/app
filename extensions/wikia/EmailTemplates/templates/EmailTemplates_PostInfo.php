@@ -12,12 +12,5 @@
 			</span>
 		</td>
 	</tr>
-	<tr>
-		<td colspan="2" style="padding:0 10px">
-
-			<?= $short_text ?>
-
-		</td>
-	</tr>
 	</tbody>
 </table>

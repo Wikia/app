@@ -47,6 +47,15 @@ $messages['en'] = array(
 	'error-json-parse' => 'There was a problem with the data returned from our servers, sorry.\\nPlease try again.'
 );
 
+/** Message documentation (Message documentation)
+ * @author Shirayuki
+ */
+$messages['qqq'] = array(
+	'activityindicator-message' => '{{Identical|Loading}}',
+	'window-article-button-close' => '{{Identical|Close}}',
+	'window-article-menu-search-label' => '{{Identical|Search}}',
+);
+
 /** Arabic (العربية)
  * @author Mutarjem horr
  */
@@ -343,6 +352,15 @@ $messages['ia'] = array(
 	'error-no-connection' => 'Nulle connexion a internet disponibile.\\nPer favor reproba.',
 	'error-server' => 'Nostre servitores respondeva con un error.\\nPer favor reproba.',
 	'error-json-parse' => 'Un problema occurreva con le datos retornate ab nostre servitores.\\nPer favor reproba.',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'window-wikis-wikilist-search-hint' => 'Cari Permainan Teratas kami',
+	'searchview-no-results' => 'Tidak ada hasil untuk "%s"',
+	'error-update-required' => 'Pembaruan untuk aplikasi ini telah tersedia dan diperlukan.',
 );
 
 /** Italian (italiano)

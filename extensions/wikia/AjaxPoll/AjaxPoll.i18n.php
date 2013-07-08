@@ -391,6 +391,7 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
  * @author Irwangatot
  */
 $messages['id'] = array(
@@ -400,7 +401,7 @@ $messages['id'] = array(
 	'ajaxpoll-summary' => 'Jajak pendapat telah dibuat sejak $1 pada $2, dan sejauh ini  $3 orang memilih.',
 	'ajaxpoll-submit' => 'Pilih!',
 	'ajaxpoll-closed' => 'Jajak pendapat telah ditutup. Nikmati hasilnya.',
-	'ajaxpoll-submitting' => 'Silakan tunggu, pengiriman suara Anda ...',
+	'ajaxpoll-submitting' => 'Silakan tunggu, mengirim suara Anda...',
 );
 
 /** Italian (italiano)

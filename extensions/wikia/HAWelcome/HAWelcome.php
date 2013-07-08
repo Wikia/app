@@ -117,6 +117,14 @@ class HAWelcomeJob extends Job {
 	 */
 	public static function onArticleSaveComplete( &$oArticle, &$oUser, $sText, $sSummary, $iMinorEdit, $nWatchThis, $nSectionAnchor, &$iFlags, $oRevision, $oStatus, $iBaseRevId ) {
 		wfProfileIn( __METHOD__ );
+
+		if ( is_null( $oRevision ) ) {
+			// if oRevision is null, that means we're dealing with a null edit (no content change)
+			// and therefore we don't have to welcome anybody
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+
 		/** @global Boolean Show PHP Notices. Set via WikiFactory. */
 		global $wgHAWelcomeNotices;
 		/** @type Interget Store the original error reporting level. */

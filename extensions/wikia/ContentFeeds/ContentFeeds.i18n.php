@@ -14,11 +14,13 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'contentfeeds-desc' => "Description of extension as listed on [[Special:Version]].
 For an explanation of 'rich information' see [[:w:en:Media richness theory|Wikipedia]].",
 	'contentfeeds-newimages-rss-desc' => 'Outputs information about the source of the feed entry for attribution reasons. $1 is the URL of the page',
+	'contentfeeds-firstfewarticles-tag-title' => '{{Identical|Title}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -226,6 +228,13 @@ $messages['ia'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Sequente',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Error: Titulo de pagina es requirite',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error: Texto de pagina es requirite',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Judul',
 );
 
 /** Italian (italiano)

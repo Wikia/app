@@ -191,6 +191,22 @@ class WAMPageModel extends WikiaModel {
 	}
 
 	/**
+	 * @desc Return proper string for subtitleText - it's same as in tabs.
+	 *
+	 * @param int $tabIndex tab index
+	 * @param string $defaultTitle fallback title
+	 *
+	 * @return string
+	 */
+	public function getSubpageTextByIndex($tabIndex, $defaultTitle) {
+		$tabs = $this->getTabs();
+		$tabIndex = (int)$tabIndex; // first tab has 'false' as tabIndex
+		
+		// we don't have that index - return default title
+		return isset($tabs[$tabIndex]['name']) ? $tabs[$tabIndex]['name'] : $defaultTitle;
+	}
+
+	/**
 	 * @desc Returns array with tab names and urls by default it's in English taken from global variable $wgWAMPageConfig['tabsNames']
 	 *
 	 * @param int $selectedIdx array index of selected tab

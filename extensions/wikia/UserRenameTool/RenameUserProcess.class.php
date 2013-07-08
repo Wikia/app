@@ -474,7 +474,8 @@ class RenameUserProcess {
 				'reason' => $this->mReason,
                                 'tasks' => array()
 			),
-			TASK_STARTED
+			TASK_STARTED,
+			BatchTask::PRIORITY_HIGH	
 		);
 
 		$this->addLogDestination(self::LOG_BATCH_TASK, $this->mGlobalTask);
@@ -651,7 +652,8 @@ class RenameUserProcess {
 					'rename_new_name' => $this->mNewUsername,
 					'tasks'           => array()
 				),
-				TASK_QUEUED
+				TASK_QUEUED,
+				BatchTask::PRIORITY_HIGH
 		);
 		$this->addLog("Task created with ID " . $task->getID());
 		$this->addLog("Setting up a task for processing local DB's");
@@ -670,7 +672,8 @@ class RenameUserProcess {
 				'reason' => $this->mReason,
 				'global_task_id' => $this->mGlobalTask->getID()
 			),
-			TASK_QUEUED
+			TASK_QUEUED,
+			BatchTask::PRIORITY_HIGH
 		);
 
 		$this->addLog("Task created with ID " . $task->getID());
