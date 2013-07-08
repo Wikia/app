@@ -128,9 +128,9 @@ var WikiaWideTables = {
 			height: $(window).height() - 150
 		});
 		$sortableTable = $( '#ModalTable' ).find( 'table.sortable' );
-		//remove all sorting arrows as tablesorter() inserts them again
-		$sortableTable.find( '.headerSort div').remove();
 		if ( $sortableTable.length ) {
+			//remove all sorting arrows as tablesorter() inserts them again
+			$sortableTable.find( '.headerSort div' ).remove();
 			$sortableTable.tablesorter();
 		}
 	},
