@@ -2031,7 +2031,7 @@ class MediaWikiServiceTest extends BaseTest
 		$service
 			->expects( $this->at( 0 ) )
 			->method ( 'getImageServing' )
-			->with	 ( [0], 100, 100 )
+			->with	 ( 0, 100, 100 )
 			->will	 ( $this->returnValue( $mockImgServing ) )
 		;
 
@@ -2043,7 +2043,7 @@ class MediaWikiServiceTest extends BaseTest
 		$service
 			->expects( $this->at( 0 ) )
 			->method ( 'getImageServing' )
-			->with	 ( [0], 100, MediaWikiService::THUMB_DEFAULT_HEIGHT )
+			->with	 ( 0, 100, MediaWikiService::THUMB_DEFAULT_HEIGHT )
 			->will	 ( $this->returnValue( $mockImgServing ) )
 		;
 
@@ -2055,7 +2055,7 @@ class MediaWikiServiceTest extends BaseTest
 		$service
 			->expects( $this->at( 0 ) )
 			->method ( 'getImageServing' )
-			->with	 ( [0], MediaWikiService::THUMB_DEFAULT_WIDTH, 100 )
+			->with	 ( 0, MediaWikiService::THUMB_DEFAULT_WIDTH, 100 )
 			->will	 ( $this->returnValue( $mockImgServing ) )
 		;
 
@@ -2067,7 +2067,7 @@ class MediaWikiServiceTest extends BaseTest
 		$service
 			->expects( $this->at( 0 ) )
 			->method ( 'getImageServing' )
-			->with	 ( [0], MediaWikiService::THUMB_DEFAULT_WIDTH, MediaWikiService::THUMB_DEFAULT_HEIGHT )
+			->with	 ( 0, MediaWikiService::THUMB_DEFAULT_WIDTH, MediaWikiService::THUMB_DEFAULT_HEIGHT )
 			->will	 ( $this->returnValue( $mockImgServing ) )
 		;
 
@@ -2087,7 +2087,7 @@ class MediaWikiServiceTest extends BaseTest
 		$service
 			->expects( $this->once() )
 			->method ( 'getImageServing' )
-			->with	 ( [0], MediaWikiService::THUMB_DEFAULT_WIDTH, MediaWikiService::THUMB_DEFAULT_HEIGHT )
+			->with	 ( 0, MediaWikiService::THUMB_DEFAULT_WIDTH, MediaWikiService::THUMB_DEFAULT_HEIGHT )
 			->will	 ( $this->returnValue( $mockImgServing ) )
 		;
 
