@@ -100,6 +100,7 @@ class Wall extends WikiaModel {
 	 * @return string Parsed description.
 	 */
 	private function getDescriptionParsed( $bStripTemplates = false) {
+		wfProfileIn( __METHOD__ );
 		$oApp = F::App();
 		$oParserOptions = $oApp->wg->Out->parserOptions();
 
@@ -135,6 +136,7 @@ class Wall extends WikiaModel {
 			$res = $aOutput[1];
 		}
 
+		wfProfileOut( __METHOD__ );
 		return $res;
 	}
 
@@ -150,7 +152,7 @@ class Wall extends WikiaModel {
 				return $oArticle->getText();
 			}
 
-			$res = $this->getDescriptionParsed( $bParse );
+			$res = $this->getDescriptionParsed();
 
 			$this->wg->memc->set($memcKey,$res,self::DESCRIPTION_CACHE_TTL);
 		}
