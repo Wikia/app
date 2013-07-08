@@ -9,8 +9,5 @@
 			<?= wfMessage('forum-admin-page-breadcrumb')->text() ?>
 		</div>
 	</header>
-	<div>
-		<?= wfMessage('forum-admin-page-editmode-templates-included')->text() ?>
-	</div>
 	<?= $app->renderPartial('ForumSpecial', 'boards', array('boards' => $boards, 'isEditMode' => true ) ) ?>
 </section>

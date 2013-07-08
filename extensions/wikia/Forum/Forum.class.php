@@ -13,7 +13,7 @@ class Forum extends Walls {
 	static $allowToEditBoard = false;
 
 
-	public function getBoardList($db = DB_SLAVE, $bEditMode = false) {
+	public function getBoardList($db = DB_SLAVE) {
 		$boardTitles = $this->getListTitles( $db, NS_WIKIA_FORUM_BOARD );
 		$titlesBatch = new TitleBatch($boardTitles);
 		$orderIndexes = $titlesBatch->getWikiaProperties(WPP_WALL_ORDER_INDEX,$db);
@@ -29,7 +29,7 @@ class Forum extends Walls {
 			$boardInfo = $board->getBoardInfo();
 			$boardInfo['id'] = $title->getArticleID();
 			$boardInfo['name'] = $title->getText();
-			$boardInfo['description'] = $bEditMode ? $board->getDescription() : $board->getDescriptionWithoutTemplates();
+			$boardInfo['description'] = $board->getDescriptionWithoutTemplates();
 			$boardInfo['url'] = $title->getFullURL();
 			$orderIndex = $orderIndexes[$id];
 			$boards[$orderIndex] = $boardInfo;
