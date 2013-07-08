@@ -158,21 +158,21 @@ $messages['qqq'] = array(
 	'styleguide-components-header' => "Header for Styleguide's components page",
 	'styleguide-components-header-tagline' => "Tagline for Styleguide's components page",
 
-	'styleguide-name-buttons' => 'name of section which describes Wikia button component, which code is reusable and configurable and may be use by developers.',
-	'styleguide-description-button' => 'description for Wikia button component, which code is reusable and configurable and may be use by developers.',
-	'styleguide-description-link-button' => 'description for Wikia button component made from anchor, which code is reusable and configurable and may be use by developers.',
-	'styleguide-description-input-button' => 'description for Wikia button component made from input selector, which code is reusable and configurable and may be use by developers.',
-	'styleguide-description-simple-button' => 'description for Wikia button component made from input selector, which code is reusable and configurable and may be use by developers.',
+	'styleguide-name-buttons' => 'Name of section which describes Wikia button component, which code is reusable and configurable and may be use by developers.',
+	'styleguide-description-button' => 'Description for Wikia button component, which code is reusable and configurable and may be use by developers.',
+	'styleguide-description-link-button' => 'Description for Wikia button component made from anchor, which code is reusable and configurable and may be use by developers.',
+	'styleguide-description-input-button' => 'Description for Wikia button component made from input selector, which code is reusable and configurable and may be use by developers.',
+	'styleguide-description-simple-button' => 'Description for Wikia button component made from input selector, which code is reusable and configurable and may be use by developers.',
 
-	'styleguide-name-dropdown' => 'name of section which describes Wikia dropdown component, which code is reusable and configurable and may be use by developers.',
-	'styleguide-description-dropdown' => 'description for Wikia dropdown component, which code is reusable and configurable and may be use by developers.',
+	'styleguide-name-dropdown' => 'Name of section which describes Wikia dropdown component, which code is reusable and configurable and may be use by developers.',
+	'styleguide-description-dropdown' => 'Description for Wikia dropdown component, which code is reusable and configurable and may be use by developers.',
 
-	'styleguide-name-modal' => 'name of section which describes Wikia modal component, which code is reusable and configurable and may be use by developers.',
-	'styleguide-description-modal' => 'description for Wikia modal component, which code is reusable and configurable and may be use by developers.',
+	'styleguide-name-modal' => 'Name of section which describes Wikia modal component, which code is reusable and configurable and may be use by developers.',
+	'styleguide-description-modal' => 'Description for Wikia modal component, which code is reusable and configurable and may be use by developers.',
 
-	'styleguide-name-thumbnail' => 'name of section which describes Wikia thumbnail component, which code is reusable and configurable and may be use by developers.',
-	'styleguide-description-thumbnail' => 'description for Wikia thumbnail component, which code is reusable and configurable and may be use by developers.',
+	'styleguide-name-thumbnail' => 'Name of section which describes Wikia thumbnail component, which code is reusable and configurable and may be use by developers.',
+	'styleguide-description-thumbnail' => 'Description for Wikia thumbnail component, which code is reusable and configurable and may be use by developers.',
 
-	'styleguide-name-tooltip' => 'name of section which describes Wikia tooltip component, which code is reusable and configurable and may be use by developers.',
-	'styleguide-description-tooltip' => 'description for Wikia tooltip component, which code is reusable and configurable and may be use by developers.',
+	'styleguide-name-tooltip' => 'Name of section which describes Wikia tooltip component, which code is reusable and configurable and may be use by developers.',
+	'styleguide-description-tooltip' => 'Description for Wikia tooltip component, which code is reusable and configurable and may be use by developers.',
 );

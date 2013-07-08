@@ -38,23 +38,23 @@ class UIComponentTest extends WikiaBaseTest {
 			],
 			[ 
 				'templateType' => 'anchor', 
-				'templatePath' => '/resources/wikia/ui_compontens/sample_component/tempaltes/sample_component',
-				'expected' => '/resources/wikia/ui_compontens/sample_component/tempaltes/sample_component_anchor.mustache',
+				'templatePath' => '/resources/wikia/ui_compontens/sample_component/templates/sample_component',
+				'expected' => '/resources/wikia/ui_compontens/sample_component/templates/sample_component_anchor.mustache',
 			],
 			[ 
 				'templateType' => 'button', 
-				'templatePath' => '/resources/wikia/ui_compontens/sample_component/tempaltes/sample_component',
-				'expected' => '/resources/wikia/ui_compontens/sample_component/tempaltes/sample_component_button.mustache',
+				'templatePath' => '/resources/wikia/ui_compontens/sample_component/templates/sample_component',
+				'expected' => '/resources/wikia/ui_compontens/sample_component/templates/sample_component_button.mustache',
 			],
 			[ 
 				'templateType' => 'big button', 
-				'templatePath' => '/resources/wikia/ui_compontens/sample_component/tempaltes/sample_component',
-				'expected' => '/resources/wikia/ui_compontens/sample_component/tempaltes/sample_component_big_button.mustache',
+				'templatePath' => '/resources/wikia/ui_compontens/sample_component/templates/sample_component',
+				'expected' => '/resources/wikia/ui_compontens/sample_component/templates/sample_component_big_button.mustache',
 			],
 			[
 				'templateType' => 'AWESOME BuTtOn',
-				'templatePath' => '/resources/wikia/ui_compontens/sample_component/tempaltes/sample_component',
-				'expected' => '/resources/wikia/ui_compontens/sample_component/tempaltes/sample_component_awesome_button.mustache',
+				'templatePath' => '/resources/wikia/ui_compontens/sample_component/templates/sample_component',
+				'expected' => '/resources/wikia/ui_compontens/sample_component/templates/sample_component_awesome_button.mustache',
 			],
 		];
 	}
