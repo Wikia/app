@@ -27,27 +27,36 @@ class UIStyleguideComponents
 			),
 			UIFactory::MEMCACHE_EXPIRATION,
 			function() {
-				$components = [];
-				$k = 0;
-				$directory = new DirectoryIterator( $this->uiFactory->getComponentsDir() );
-				while( $directory->valid() ) {
-					if( !$directory->isDot() && $directory->isDir() ) {
-						$filename = $directory->getFilename();
-						$components[$k] = $this->uiFactory->loadComponentConfigFromFile(
-								$this->uiFactory->getComponentConfigFileFullPath( $filename )
-						);
-						$components[$k] = $this->prepareMessages($components[$k]);
-						if ( isset($components[$k]['templateVars']) ) {
-							$components[$k]['mustacheVars'] = $this->prepareComponents($components[$k]['templateVars'], $filename);
-						}
-						$k++;
-					}
-					$directory->next();
-				}
-				return $components;
+				return $this->getAllComponentsFromDirectories();
 			}
 		);
 
+		return $components;
+	}
+
+	/**
+	 * @desc Returns all components by iterating on components directory
+	 *
+	 * @return array
+	 */
+	private function getAllComponentsFromDirectories() {
+		$components = [];
+
+		$directory = new DirectoryIterator( $this->uiFactory->getComponentsDir() );
+		while( $directory->valid() ) {
+			if( !$directory->isDot() && $directory->isDir() ) {
+				$filename = $directory->getFilename();
+				$component = $this->uiFactory->loadComponentConfigFromFile(
+					$this->uiFactory->getComponentConfigFileFullPath( $filename )
+				);
+				$component = $this->prepareMessages($component);
+				if ( isset($component['templateVars']) ) {
+					$component['mustacheVars'] = $this->prepareComponents($component['templateVars'], $filename);
+				}
+				$components[] = $component;
+			}
+			$directory->next();
+		}
 		return $components;
 	}
 
