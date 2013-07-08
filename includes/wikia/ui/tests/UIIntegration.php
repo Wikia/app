@@ -21,7 +21,7 @@ class UIIntegration extends WikiaBaseTest {
 		// only required parameters given
 		$this->assertEquals(
 			'<input type="submit" class="button " name="just-a-button" value="Just a button in form of a link" />',
-			$this->uiFactory->init( 'button' )->render([
+			trim($this->uiFactory->init( 'button' )->render([
 				'type' => 'input',
 				'params' => [
 					'type' => 'submit',
@@ -29,13 +29,13 @@ class UIIntegration extends WikiaBaseTest {
 					'classes' => ['button'],
 					'value' => 'Just a button in form of a link',
 				]
-			])
+			]))
 		);
 		
 		// required parameters and optional given
 		$this->assertEquals(
 			'A button: <a href="http://www.wikia.com" class="button big " target="_blank">Just a button in form of a link</a>',
-			$this->uiFactory->init( 'button' )->render([
+			trim($this->uiFactory->init( 'button' )->render([
 				'type' => 'link',
 				'params' => [
 					'href' => 'http://www.wikia.com',
@@ -44,13 +44,13 @@ class UIIntegration extends WikiaBaseTest {
 					'label' => 'A button: ',
 					'target' => '_blank',
 				]
-			])
+			]))
 		);
 
 		// required parameters and optional given + data attributes
 		$this->assertEquals(
 			'A button: <button type="submit" class="button " data-id="123" data-name="button">Just a button in form of a link</button>',
-			$this->uiFactory->init( 'button' )->render([
+			trim($this->uiFactory->init( 'button' )->render([
 				'type' => 'button',
 				'params' => [
 					'type' => 'submit',
@@ -62,7 +62,7 @@ class UIIntegration extends WikiaBaseTest {
 						[ 'key' => 'name', 'value' => 'button' ]
 					],
 				]
-			])
+			]))
 		);
 	}
 
@@ -108,17 +108,17 @@ class UIIntegration extends WikiaBaseTest {
 		
 		$this->assertEquals(
 			'<a href="http://www.wikia.com" class="button " target="">Just a button in form of a link</a>',
-			$aMarkup
+			trim($aMarkup)
 		);
 
 		$this->assertEquals(
 			'A button: <button type="submit" class="button " data-id="123" data-name="button">Just a button in form of a link</button>',
-			$bMarkup
+			trim($bMarkup)
 		);
 
 		$this->assertEquals(
 			'An input: <input type="submit" class="button " name="just-a-button" value="Just a button in form of a link" />',
-			$cMarkup
+			trim($cMarkup)
 		);
 	}
 }
