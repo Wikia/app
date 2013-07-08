@@ -212,7 +212,7 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
         // In this example, we use the parameter to update duration
         onContentReady: function (event, content) {
             this.content = content;
-            this.embedIdentifier = this.content.embed_code;
+            this.embedIdentifier = this.content.embed_code || this.content.embedCode;
             this.duration = content.duration / 1000;
 
             this.ageGateRoot.find('.title').html(this.content.title);
