@@ -61,26 +61,98 @@ class Wall extends WikiaModel {
 	public function getTitle() {
 		return $this->mTitle;
 	}
-	
+
+	/**
+	 * @desc Returns raw (unparsed) wikitext.
+	 *
+	 * @return string raw wikitext
+	 */
+	public function getRawDescription() {
+		$oArticle = new Article( $this->getTitle() );
+
+		return $oArticle->getRawText();
+	}
+
+
+	/**
+	 * @desc Returns wikitext without parsed templates (removes templates from wikitext).
+	 *
+	 * @param boolean $bParse True if text should be parsed.
+	 *
+	 * @return string parsed description
+	 */
+	public function getDescriptionWithoutTemplates( $bParse = true ) {
+		$title = $this->getTitle();
+		$memcKey = wfMemcKey(__METHOD__, $title->getArticleID(), $title->getTouchedCached(), 'without_template');
+		$res = $this->wg->memc->get($memcKey);
+		if ( !is_string($res) ) {
+			$res = $this->getDescriptionParsed($bParse, true);
+
+			$this->wg->memc->set($memcKey, $res, self::DESCRIPTION_CACHE_TTL);
+		}
+		return $res;
+	}
+
+
+	/**
+	 * @desc Returns parsed description.
+	 *
+	 * @param boolean $bParse True if text should be parsed.
+	 * @param boolean $bStripTemplates Parse templates as empty strings.
+	 *
+	 * @return string Parsed description.
+	 */
+	private function getDescriptionParsed( $bParse = true, $bStripTemplates = false) {
+		$oArticle = new Article( $this->getTitle() );
+		if ( !$bParse ) {
+			return $oArticle->getText();
+		}
+		$oApp = F::App();
+		$oParserOptions = $oApp->wg->Out->parserOptions();
+
+		// Functionality based on request https://wikia-inc.atlassian.net/browse/DAR-330
+		if ( $bStripTemplates ) {
+			// save old template callback
+			$oldcallback = $oParserOptions->getTemplateCallback();
+
+			// empty template callback function based on Parser::statelessFetchTemplate function
+			$oParserOptions->setTemplateCallback( function( $title, $parser = false ) {
+				return array(
+					'text' => '', // <-- important: return empty string instead of template's name (if the value is false)
+					'finalTitle' => $title,
+					'deps' => array()
+				);
+			}); // temporary remove template callback function
+
+			//parse
+			$oParserOut = $oApp->wg->Parser->parse( $oArticle->getText(), $oApp->wg->Title, $oParserOptions );
+
+			// restore old callback
+			$oParserOptions->setTemplateCallback( $oldcallback );
+
+		} else {
+			// just parse
+			$oParserOut = $oApp->wg->Parser->parse( $oArticle->getText(), $oApp->wg->Title, $oParserOptions );
+		}
+
+		$aOutput = array();
+		// Take the content out of an HTML P element and strip whitespace from the beginning and end.
+		$res = '';
+		if ( preg_match( '/^<p>\\s*(.*)\\s*<\/p>$/su', $oParserOut->getText(), $aOutput ) ) {
+			$res = $aOutput[1];
+		}
+
+		return $res;
+	}
+
 	public function getDescription ( $bParse = true ) {
 		/** @var $title Title */
 		$title = $this->getTitle();
-		$memcKey = wfmemcKey(__METHOD__,$title->getArticleID(),$title->getTouchedCached());
+		$memcKey = wfmemcKey(__METHOD__,$title->getArticleID(),$title->getTouchedCached(), 'parsed');
 		$res = $this->wg->memc->get($memcKey);
 		if ( !is_string($res) ) {
-			$oArticle = new Article( $this->getTitle() );
-			if ( !$bParse ) {
-				return $oArticle->getText();
-			}
-			$oApp = F::App();
-			$oParserOptions = $oApp->wg->Out->parserOptions();
-			$oParserOut = $oApp->wg->Parser->parse( $oArticle->getText(), $oApp->wg->Title, $oParserOptions );
-			$aOutput = array();
-			// Take the content out of an HTML P element and strip whitespace from the beginning and end.
-			$res = '';
-			if ( preg_match( '/^<p>\\s*(.*)\\s*<\/p>$/su', $oParserOut->getText(), $aOutput ) ) {
-				$res = $aOutput[1];
-			}
+			$res = $this->getDescriptionParsed( $bParse );
+
 			$this->wg->memc->set($memcKey,$res,self::DESCRIPTION_CACHE_TTL);
 		}
 		return $res;
