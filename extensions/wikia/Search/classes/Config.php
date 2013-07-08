@@ -464,9 +464,7 @@ class Config
 						in_array( \Wikia\Search\Config::FILTER_IMAGE, $filterKeys )
 						&&
 						$isVideoFile
-				) 
-				||
-				( // We have a file that is not a video, but we only want videos.
+				) || ( // We have a file that is not a video, but we only want videos.
 						$result['ns'] == NS_FILE
 						&& 
 						in_array( \Wikia\Search\Config::FILTER_VIDEO, $filterKeys )
@@ -722,7 +720,7 @@ class Config
 	 * @return Wikia\Search\Config
 	 */
 	public function setVideoTitleSearch( $value ) {
-		return $this->setQueryService( 'Select\\VideoTitle', $value );
+		return $this->setQueryService( 'Select\\Dismax\\VideoTitle', $value );
 	}
 	
 	/**
@@ -908,7 +906,8 @@ class Config
 	 * @return int
 	 */
 	public function getResultsFound() {
-		return $this->getResults() === null ? 0 : $this->results->getResultsFound();
+		$results = $this->getResults();
+		return $results === null ? 0 : $results->getResultsFound();
 	}
 	
 	/**

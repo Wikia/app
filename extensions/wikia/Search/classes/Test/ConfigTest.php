@@ -38,12 +38,12 @@ class ConfigTest extends BaseTest {
 
 	/**
 	 * @covers \Wikia\Search\Config::getSort
-	 * @todo fix
+	 * @covers \Wikia\Search\Config::setSort
 	 */
-	public function testGetSort() {return;
+	public function testGetSort() {
 		$config = new \Wikia\Search\Config;
 
-		$defaultRank = array( 'score',		Solarium_Query_Select::SORT_DESC );
+		$defaultRank = array( 'score', Solarium_Query_Select::SORT_DESC );
 
 		$this->assertEquals(
 				$defaultRank,
@@ -67,7 +67,9 @@ class ConfigTest extends BaseTest {
 				'A well-formed rank key should return the appropriate sort array.'
 		);
 
-		$config->setSort( array( 'created', 'asc' ) );
+		$set = new ReflectionMethod( $config, 'setSort' );
+		$set->setAccessible( true );
+		$set->invoke( $config, 'created', 'asc' );
 
 		$this->assertEquals(
 				array( 'created', 'asc' ),
@@ -209,6 +211,48 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @covers Wikia\Search\Config::articleMatchPassesFilters
+	 */
+	public function testArticleMatchPassesFiltersVideoInImageFilter() {
+		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
+		               ->disableOriginalConstructor()
+		               ->setMethods( [ 'getPublicFilterKeys', 'getService' ] )
+		               ->getMock();
+		$match = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
+		              ->disableOriginalConstructor()
+		              ->setMethods( [ 'getResult' ] )
+		              ->getMock();
+		$service = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'pageIdIsVideoFile' ] );
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'getPublicFilterKeys' )
+		    ->will   ( $this->returnValue( [ \Wikia\Search\Config::FILTER_VIDEO] ) )
+		;
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'getService' )
+		    ->will   ( $this->returnValue( $service ) )
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'pageIdIsVideoFile' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$match
+		    ->expects( $this->once() )
+		    ->method ( 'getResult' )
+		    ->will   ( $this->returnValue( [ 'pageid' => 123, 'ns' => NS_FILE ] ) )
+		;
+		$method = new \ReflectionMethod( 'Wikia\Search\Config', 'articleMatchPassesFilters' );
+		$method->setAccessible( true );
+		$this->assertFalse(
+				$method->invoke( $config, $match )
+		);
+	}
+	
+	
+	/**
 	 * @covers \Wikia\Search\Config::hasWikiMatch
 	 * @covers \Wikia\Search\Config::setWikiMatch
 	 * @covers \Wikia\Search\Config::getWikiMatch
@@ -286,8 +330,13 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @covers \Wikia\Search\Config::getInterWiki
 	 * @covers \Wikia\Search\Config::setInterWiki
+	 * @covers \Wikia\Search\Config::setVideoSearch
+	 * @covers \Wikia\Search\Config::setVideoEmbedToolSearch
+	 * @covers \Wikia\Search\Config::setVideoTitleSearch
+	 * @covers \Wikia\Search\Config::setDirectLuceneQuery
+	 * @covers \Wikia\Search\Config::setCrossWikiLuceneQuery
 	 */
-	public function testInterWiki() {
+	public function testSearchTypes() {
 		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
 		               ->disableOriginalConstructor()
 		               ->setMethods( [ 'bootstrapQueryService' ] )
@@ -296,36 +345,62 @@ class ConfigTest extends BaseTest {
 		$config
 		    ->expects( $this->once() )
 		    ->method ( 'bootstrapQueryService' )
-		    ->will   ( $this->returnValue( 'Select\\OnWiki' ) )
+		    ->will   ( $this->returnValue( 'Select\\Dismax\\OnWiki' ) )
 		;
-		$this->assertFalse(
-				$config->getInterWiki()
-		);
-		$this->assertEquals(
-				$config,
-				$config->setInterWiki( true )
-		);
-		$this->assertTrue(
-				$config->getInterWiki()
-		);
-		$this->assertAttributeEquals(
-				'Select\\Dismax\\InterWiki',
-				'queryService',
-				$config
-		);
-
+		
+		$types = [ 
+				'InterWiki' => 'Select\\Dismax\\InterWiki', 
+				'VideoSearch' => 'Select\\Dismax\\Video', 
+				'VideoEmbedToolSearch' => 'Select\\Dismax\\VideoEmbedTool', 
+				'VideoTitleSearch' => 'Select\\Dismax\\VideoTitle', 
+				'DirectLuceneQuery' => 'Select\\Lucene\\Lucene', 
+				'CrossWikiLuceneQuery' => 'Select\\Lucene\\CrossWikiLucene' 
+		];
+		
+		foreach ( $types as $type => $service ) {
+			$set = new ReflectionMethod( $config, 'set' . $type );
+			if ( $type == 'InterWiki' ) {
+				$get = new ReflectionMethod( $config, 'get' . $type );
+				$this->assertFalse(
+						$get->invoke( $config )
+				);
+			}
+			$this->assertAttributeNotEquals(
+					$service,
+					'queryService',
+					$config
+			);
+			$this->assertEquals(
+					$config,
+					$set->invoke( $config, true )
+			);
+			if ( $type == 'InterWiki' ) {
+				$this->assertTrue(
+						$get->invoke( $config )
+				);
+			}
+			$this->assertAttributeEquals(
+					$service,
+					'queryService',
+					$config
+			);
+		}
 	}
-
+	
 	/**
 	 * @covers \Wikia\Search\Config::getTruncatedResultsNum
-	 * @todo mock this better now that we directly grab this val from resultset
 	 */
-	public function testGetTruncatedResultsNum() {return;
-		$config	= new \Wikia\Search\Config;
+	public function testGetTruncatedResultsNum() {
+		$config = $this->getMock( 'Wikia\\Search\\Config', [ 'getResultsFound', 'getService' ] );
 
 		$singleDigit = 9;
 
-		$config->setResultsFound( $singleDigit );
+		$config
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getResultsFound' )
+		    ->will   ( $this->returnValue( $singleDigit ) )
+		;
+		
 
 		$this->assertEquals(
 				$singleDigit,
@@ -334,8 +409,12 @@ class ConfigTest extends BaseTest {
 		);
 
 		$doubleDigit = 26;
-
-		$config->setResultsFound( $doubleDigit );
+		
+		$config
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getResultsFound' )
+		    ->will   ( $this->returnValue( $doubleDigit ) )
+		;
 
 		$this->assertEquals(
 				30,
@@ -344,8 +423,12 @@ class ConfigTest extends BaseTest {
 		);
 
 		$tripleDigit = 492;
-
-		$config->setResultsFound( $tripleDigit );
+		
+		$config
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getResultsFound' )
+		    ->will   ( $this->returnValue( $tripleDigit ) )
+		;
 
 		$this->assertEquals(
 				500,
@@ -355,7 +438,11 @@ class ConfigTest extends BaseTest {
 
 		$bigDigit = 55555;
 
-		$config->setResultsFound( $bigDigit );
+		$config
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getResultsFound' )
+		    ->will   ( $this->returnValue( $bigDigit ) )
+		;
 
 		$this->assertEquals(
 				56000,
@@ -370,7 +457,16 @@ class ConfigTest extends BaseTest {
 		    ->with   (56000)
 		    ->will   ( $this->returnValue( '56,000' ) )
 	    ;
-		$this->setService( $config, $service );
+		$config
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getResultsFound' )
+		    ->will   ( $this->returnValue( $bigDigit ) )
+		;
+		$config
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getService' )
+		    ->will   ( $this->returnValue( $service ) )
+		;
 		$this->assertEquals(
 				'56,000',
 				$config->getTruncatedResultsNum( true )
@@ -380,63 +476,69 @@ class ConfigTest extends BaseTest {
 
 	/**
 	 * @covers \Wikia\Search\Config::getNumPages
-	 * @todo mock better
 	 */
-	public function testGetNumPages() { return;
-		$config = new \Wikia\Search\Config;
-
+	public function testGetNumPagesNoResults() {
+		$config = $this->getMock( '\\Wikia\\Search\\Config', [ 'getResultsFound', 'getLimit' ] );
+		$config
+		    ->expects( $this->any() )
+		    ->method ( 'getResultsFound' )
+		    ->will   ( $this->returnValue( 0 ) )
+		;
 		$this->assertEquals(
 				0,
 				$config->getNumPages(),
 				'Number of pages should default to zero.'
 		);
-
+	}
+	
+	/**
+	 * @covers \Wikia\Search\Config::getNumPages
+	 */
+	public function testGetNumPagesWithResults() {
+		$config = $this->getMock( '\\Wikia\\Search\\Config', [ 'getResultsFound', 'getLimit' ] );
 		$numFound = 50;
-		$config->setResultsFound( $numFound );
-
+		$config
+		    ->expects( $this->any() )
+		    ->method ( 'getResultsFound' )
+		    ->will   ( $this->returnValue( $numFound ) )
+		;
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'getLimit' )
+		    ->will   ( $this->returnValue( Config::RESULTS_PER_PAGE ) )
+		;
 		$this->assertEquals(
 				ceil( $numFound / \Wikia\Search\Config::RESULTS_PER_PAGE ),
 				$config->getNumPages(),
 				'Number of pages should be divided by default number of results per page by if no limit is set.'
-		);
-
-		$newLimit = 20;
-		$config->setLimit( $newLimit );
-
-		$this->assertEquals(
-		        ceil( $numFound / $newLimit ),
-		        $config->getNumPages(),
-		        'Number of pages should be informed by limit set by user.'
 		);
 	}
 
 	/**
 	 * @covers \Wikia\Search\Config::getCityId
 	 * @covers \Wikia\Search\Config::setCityID
-	 * @todo fix
 	 */
-	public function testGetCityId() {return;
-		$config = new Config;
-
-		$mockCityId = 123;
-		global $wgCityId;
-
-		$config->setInterWiki( true );
+	public function testSetGetCityId() {
+		$config = $this->getMock( '\\Wikia\\Search\\Config', [ 'setWikiId', 'getWikiId' ] );
+		
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiId' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
 		$this->assertEquals(
-				0,
-				$config->getCityId(),
-				'City ID should be zero by default, but only when interwiki.'
+				123,
+				$config->getCityId()
 		);
-
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'setWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( $config ) )
+		;
 		$this->assertEquals(
-				$wgCityId,
-				$config->setIsInterWiki( false )->getCityId(),
-				'City ID should default to wgCityId if the config is not interwiki.'
-		);
-		$this->assertEquals(
-				456,
-				$config->setCityID( 456 )->getCityId(),
-				'If we set a different city ID, we should get a different city ID.'
+				$config,
+				$config->setCityId( 123 )
 		);
 	}
 
@@ -952,6 +1054,32 @@ class ConfigTest extends BaseTest {
 		$this->assertEquals(
 				200,
 				$config->getLimit()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::setPage
+	 * @covers Wikia\Search\Config::getPage
+	 */
+	public function testSetGetPage() {
+		$config = new Config;
+		$this->assertAttributeEquals(
+				1,
+				'page',
+				$config
+		);
+		$this->assertEquals(
+				$config,
+				$config->setPage( 2 )
+		);
+		$this->assertAttributeEquals(
+				2,
+				'page',
+				$config
+		);
+		$this->assertEquals(
+				2,
+				$config->getPage()
 		);
 	}
 	
@@ -1563,6 +1691,9 @@ class ConfigTest extends BaseTest {
 		);
 	}
 	
+	/**
+	 * @covers Wikia\Search\Config::getService
+	 */
 	public function testGetService() {
 		$config = new Config;
 		$meth = new ReflectionMethod( $config, 'getService' );
@@ -1580,5 +1711,104 @@ class ConfigTest extends BaseTest {
 				'service',
 				$config
 		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::getQueryFieldsToBoosts
+	 */
+	public function testGetQueryFieldsToBoosts() {
+		$testProfile = $this->getMock( 'Wikia\\Search\\TestProfile\\Base', [ 'getQueryFieldsToBoosts' ] );
+		$config = $this->getMock( 'Wikia\\Search\\Config', [ 'getTestProfile' ] );
+		$qf2b = [ 'foo_txt' => 100 ];
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'getTestProfile' )
+		    ->will   ( $this->returnValue( $testProfile ) )
+		;
+		$testProfile
+		    ->expects( $this->once() )
+		    ->method ( 'getQueryFieldsToBoosts' )
+		    ->will   ( $this->returnValue( $qf2b ) )
+		;
+		$this->assertEquals(
+				$qf2b,
+				$config->getQueryFieldsToBoosts()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::getQueryFields
+	 */
+	public function testGetQueryFields() {
+		$config = $this->getMock( 'Wikia\\Search\\Config', [ 'getQueryFieldsToBoosts' ] );
+		$qf2b = [ 'foo_txt' => 100 ];
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'getQueryFieldsToBoosts' )
+		    ->will   ( $this->returnValue( $qf2b ) )
+		;
+		$this->assertEquals(
+				[ 'foo_txt' ],
+				$config->getQueryFields()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::setResults
+	 * @covers Wikia\Search\Config::getResults
+	 */
+	public function testSetGetResults() {
+		$config = new Config;
+		$this->assertAttributeEmpty(
+				'results',
+				$config
+		);
+		$results = $this->getMockBuilder( 'Wikia\\Search\\ResultSet\\Base' )
+		                ->disableOriginalConstructor()
+		                ->getMock();
+		$this->assertEquals(
+				$config,
+				$config->setResults( $results )
+		);
+		$this->assertAttributeEquals(
+				$results,
+				'results',
+				$config
+		);
+		$this->assertEquals(
+				$results,
+				$config->getResults()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::getResultsFound
+	 */
+	public function testGetResultsFound() {
+		$config = new Config;
+		
+		$this->assertEquals(
+				0,
+				$config->getResultsFound(),
+				'With no result set, config should say results found is zero'
+		);
+		
+		$results = $this->getMockBuilder( 'Wikia\\Search\\ResultSet\\Base' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( [ 'getResultsFound' ] )
+		                ->getMock();
+		
+		$results
+		    ->expects( $this->once() )
+		    ->method ( 'getResultsFound' )
+		    ->will   ( $this->returnValue( 100 ) )
+		;
+		
+		$config->setResults( $results );
+		
+		$this->assertEquals(
+				100,
+				$config->getResultsFound() 
+		);		
 	}
 }
