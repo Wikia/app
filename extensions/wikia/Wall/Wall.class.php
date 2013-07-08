@@ -101,6 +101,9 @@ class Wall extends WikiaModel {
 	 */
 	private function getDescriptionParsed( $bStripTemplates = false) {
 		wfProfileIn( __METHOD__ );
+
+		$oArticle = new Article( $this->getTitle() );
+
 		$oApp = F::App();
 		$oParserOptions = $oApp->wg->Out->parserOptions();
 
