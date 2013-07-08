@@ -1531,6 +1531,7 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author Bennylin
+ * @author C5st4wr6ch
  * @author Irwangatot
  * @author Kenrick95
  */
@@ -1570,7 +1571,7 @@ $messages['id'] = array(
 	'wmu-success' => '<h1>Berhasil</h1> Gambar Anda telah disisipkan.',
 	'wmu-success-placeholder' => '<h1>Berhasil</h1>',
 	'wmu-return' => 'Kembali menyunting',
-	'wmu-back' => 'kembali', # Fuzzy
+	'wmu-back' => 'Pilih foto yang lain',
 	'wmu-warn1' => 'Anda perlu menentukan permintaan terlebih dahulu!',
 	'wmu-warn2' => 'Anda perlu memilih berkas terlebih dahulu!',
 	'wmu-warn3' => 'Anda perlu menentukan nama berkas terlebih dahulu!',

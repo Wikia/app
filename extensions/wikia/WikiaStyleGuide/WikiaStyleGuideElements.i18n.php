@@ -24,6 +24,16 @@ This is for a custom multiple choice dropdown (essentially a more powerful and m
 	'wikiastyleguide-tooltip-icon-question-mark' => 'An icon indicating a tooltip. When you hover over it a tooltip is shown. Translate this message only if the symbol commonly used to convey "help" in your language is different than a question mark (?).',
 );
 
+/** French (français)
+ * @author Gomoko
+ * @author Wyz
+ */
+$messages['fr'] = array(
+	'wikiastyleguide-dropdown-all' => 'Tous',
+	'wikiastyleguide-dropdown-select-all' => 'Tout sélectionner',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 et $2 restants',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */

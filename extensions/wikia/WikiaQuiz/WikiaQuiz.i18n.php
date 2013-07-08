@@ -112,6 +112,7 @@ $messages['qqq'] = array(
 	'wikiaquiz-game-cadence-3' => 'First part of "Ready - Set - Go!" (sports countdown)',
 	'wikiaquiz-game-cadence-2' => 'Second part of "Ready - Set - Go!" (sports countdown)',
 	'wikiaquiz-game-cadence-1' => 'Third part of "Ready - Set - Go!" (sports countdown)',
+	'wikiaquiz-game-question-label' => '{{Identical|Question}}',
 	'wikiaquiz-game-finish-button' => '{{Identical|Finish}}',
 	'wikiaquiz-game-continue-button' => '{{Identical|Continue}}',
 	'wikiaquiz-game-thanks' => '$1 is the name of wiki main page',

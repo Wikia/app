@@ -172,6 +172,7 @@ $messages['qqq'] = array(
 	'chat-user-menu-contribs' => '{{Identical|Contribution}}',
 	'chat-user-menu-give-chat-mod' => 'ChatMod = chat moderator',
 	'chat-user-menu-ban' => 'Click here to ban a user (from the user dropdown menu).',
+	'right-chatmoderator' => '{{doc-right|chatmoderator}}',
 	'grouppage-chatmoderator' => '{{Optional}}',
 	'grouppage-bannedfromchat' => '{{Optional}}',
 	'chat-ban-option-list' => 'This is used for setting the options for expiration time when banning a user from chat. The value before the colon (:) is what the user will see.  The value after the color will translate to the amount of time the user is banned.  Do not change the value after the colon unless you actually want to change the options presented for expiring a ban. Another way of writing this would be: "The banned user will be banned for 2 hours:2 hours; The banned user will be banned for 3 days:3 days;" So, as you can see, it is very important that the time values on either side of the colon match up.
@@ -1697,6 +1698,7 @@ $messages['ky'] = array(
 $messages['lb'] = array(
 	'chat' => 'Chat',
 	'chat-default-topic' => 'Wëllkomm am $1-Chat',
+	'chat-private-messages' => 'Privat Messagen',
 	'chat-user-blocked' => '$1 huet $2 gespaart.',
 	'chat-ban-modal-label-reason' => 'Grond',
 	'chat-ban-modal-button-cancel' => 'Ofbriechen',
@@ -1708,6 +1710,9 @@ $messages['lb'] = array(
 	'chat-edit-count' => '{{PLURAL:$1|Eng Ännerung|$1 Ännerungen}}',
 	'chat-member-since' => 'Member zënter $1',
 	'chat-user-menu-talk-page' => 'Diskussiounssäit',
+	'chat-user-menu-private' => 'Private Message',
+	'chat-user-menu-private-block' => 'Privat Message spären',
+	'chat-user-menu-private-allow' => 'Privat Messagen erlaben',
 );
 
 /** Lithuanian (lietuvių)
