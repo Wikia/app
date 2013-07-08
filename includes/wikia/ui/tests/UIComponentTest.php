@@ -122,3 +122,4 @@ class UIComponentTest extends WikiaBaseTest {
 		];
 	}
 }
+
