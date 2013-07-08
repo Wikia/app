@@ -433,7 +433,7 @@ class ArticlesApiController extends WikiaApiController {
 				//data is cached on a per-article basis
 				//to avoid one article requiring purging
 				//the whole collection
-//				$cache = $this->wg->Memc->get( self::getCacheKey( $i, self::DETAILS_CACHE_ID ) );
+				$cache = $this->wg->Memc->get( self::getCacheKey( $i, self::DETAILS_CACHE_ID ) );
 
 				if ( !is_array( $cache ) ) {
 					$ids[] = $i;
