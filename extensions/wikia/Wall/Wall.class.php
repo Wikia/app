@@ -84,7 +84,7 @@ class Wall extends WikiaModel {
 		$memcKey = wfMemcKey(__METHOD__, $title->getArticleID(), $title->getTouchedCached(), 'without_template');
 		$res = $this->wg->memc->get($memcKey);
 		if ( !is_string($res) ) {
-			$res = $this->getDescriptionParsed($bParse, true);
+			$res = $this->getDescriptionParsed( true );
 
 			$this->wg->memc->set($memcKey, $res, self::DESCRIPTION_CACHE_TTL);
 		}
@@ -152,7 +152,7 @@ class Wall extends WikiaModel {
 				return $oArticle->getText();
 			}
 
-			$res = $this->getDescriptionParsed();
+			$res = $this->getDescriptionParsed( false );
 
 			$this->wg->memc->set($memcKey,$res,self::DESCRIPTION_CACHE_TTL);
 		}
