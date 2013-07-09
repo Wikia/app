@@ -142,6 +142,7 @@ $messages['qqq'] = array(
 	'phalanx-add-block' => 'This message is used as a button label (like "Save", "Show preview" and "Show changes" in <code>action=edit</code>). Clicking on the button adds a new block to the Phalanx database. ([[Thread:Support/About_Wikia:Phalanx-add-block/fi/reply|documentation]] by [[User:Jack Phoenix|Jack Phoenix]])',
 	'phalanx-label-filter' => '{{Identical|Filter}}',
 	'phalanx-label-reason' => '{{Identical|Reason}}',
+	'phalanx-label-expiry' => '{{Identical|Expiry}}',
 	'phalanx-label-type' => '{{Identical|Type}}',
 	'phalanx-label-lang' => '{{Identical|Language}}',
 	'phalanx-test-submit' => '{{Identical|Test}}',
@@ -156,6 +157,9 @@ $messages['qqq'] = array(
 	'phalanx-stats-row-per-wiki' => '$1 is a type of block (e.g. user or title), $2 is a user (name or IP), $3 is a filter ID, $4 is the URL of a wiki, $4 is a time and date, $5 is a link to stats for that filter ID',
 	'phalanx-stats-table-wiki-name' => '{{Identical|Wiki name}}',
 	'action-phalanx' => '{{doc-action|phalanx}}',
+	'right-phalanx' => '{{doc-right|phalanx}}',
+	'right-phalanxexempt' => '{{doc-right|phalanxexempt}}',
+	'right-phalanxemailblock' => '{{doc-right|phalanxemailblock}}',
 );
 
 /** Arabic (العربية)
@@ -2093,7 +2097,10 @@ $messages['ps'] = array(
 	'phalanx-label-lang' => 'ژبه:',
 	'phalanx-test-submit' => 'آزمېښت',
 	'phalanx-test-results-legend' => 'آزمېښت پايلې',
+	'phalanx-stats-table-user' => 'ورګډونکی',
+	'phalanx-stats-table-type' => 'ډول',
 	'phalanx-stats-table-create' => 'جوړ شو',
+	'phalanx-stats-table-expire' => 'پای نېټه',
 	'phalanx-stats-table-exact' => 'کټ مټ',
 	'phalanx-stats-table-language' => 'ژبه',
 	'phalanx-stats-table-text' => 'متن',

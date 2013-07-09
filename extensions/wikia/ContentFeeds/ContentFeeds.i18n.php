@@ -230,6 +230,13 @@ $messages['ia'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error: Texto de pagina es requirite',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Judul',
+);
+
 /** Italian (italiano)
  * @author Rippitippi
  */

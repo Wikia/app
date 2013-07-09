@@ -20,8 +20,10 @@ Check your spelling.',
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'action-piggyback' => '{{doc-action|piggyback}}',
 	'log-name-piggyback' => '{{doc-logpage}}',
 	'log-description-piggyback' => 'Appears on top of Special:Log/piggyback.',
 );

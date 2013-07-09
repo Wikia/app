@@ -995,6 +995,7 @@ $messages['lb'] = array(
 	'wikiadoption-adopt-inquiry' => 'Fir méi ze wëssen!',
 	'wikiadoption-know-more-header' => 'Wann Dir méi wësse wëllt.',
 	'wikiadoption-mail-first-subject' => 'Mir hunn Iech schonn eng Zäit net méi gesinn.',
+	'wikiadoption-mail-adoption-subject' => '#WIKINAME gouf adoptéiert',
 );
 
 /** Lithuanian (lietuvių)
