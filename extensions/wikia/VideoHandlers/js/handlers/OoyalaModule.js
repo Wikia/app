@@ -79,6 +79,7 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
                                 padding:4px 12px; \
                                 text-decoration:none; \
                                 text-shadow:0px 1px 0px #86ae47; \
+                                height: 31px; \
                             } \
                             .ageGate.noCustomSizing button { \
                                 padding: 1px 10px; \
@@ -193,7 +194,9 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
             ag.css('height', this.playerHeight);
             ag.css('position', 'absolute');
             ag.css('z-index', '100000');
-            ag.children('.innerElement').css('margin', ((this.playerHeight - ag.children('.innerElement').height()) / 2) + ' ' + ((this.playerWidth - ag.children('.innerElement').width()) / 2));
+            // wikia change begin
+            ag.children('.innerElement').css('margin', ((this.playerHeight - ag.children('.innerElement').height()) / 2) + 'px ' + ((this.playerWidth - ag.children('.innerElement').width()) / 2) + 'px');
+            // wikia change end
 
             $.each(months, function (index, value){
                 ag.find('#month').append('<option value="' + (index + 1) + '">' + value + '</option>');
@@ -239,8 +242,8 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
                     this.seek(0);
                     this.pause();
                     this.ageGateRoot.show();
-                    
-                    // If this is the HTML5 player, it may well be in full-screen (e.g. iPhone), 
+
+                    // If this is the HTML5 player, it may well be in full-screen (e.g. iPhone),
                     // and we have to exit
                     if(this.isMobile) {
                         this.playerRoot.find('video')[0].webkitExitFullScreen();
@@ -255,7 +258,7 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
 
                         return false;
                     } else if(action == 'check') {
-                        
+
                         return false;
                     }
                 }
