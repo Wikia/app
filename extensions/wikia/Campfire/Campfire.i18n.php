@@ -139,6 +139,13 @@ $messages['ia'] = array(
 	'campfire-licensed-under' => 'Sub licentia $1',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'campfire-page-header' => '$1 dari $2',
+);
+
 /** Italian (italiano)
  * @author Leviathan 89
  */

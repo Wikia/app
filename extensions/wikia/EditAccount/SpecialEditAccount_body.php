@@ -368,16 +368,14 @@ class EditAccount extends SpecialPage {
 			}
 		}
 
-		// Remove e-mail address and passwor
+		// Remove e-mail address and password
 		$this->mUser->setEmail( '' );
 		$this->mUser->setPassword( $newpass = $this->generateRandomScrambledPassword() );
 		// Save the new settings
 		$this->mUser->saveSettings();
 
+		// get User ID
 		$id = $this->mUser->getId();
-
-		// Reload user
-		$this->mUser = User::newFromId( $id );
 
 		if ( $this->mUser->getEmail() == ''  ) {
 			global $wgUser, $wgTitle;

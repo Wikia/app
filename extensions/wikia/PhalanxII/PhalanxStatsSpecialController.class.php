@@ -49,7 +49,6 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		}
 
 		$data['author_id'] = User::newFromId($data['author_id'])->getName();
-		$data['type'] = implode( ', ', Phalanx::getTypeNames( $data['type'] ) );
 		$data['timestamp'] = $this->wg->Lang->timeanddate( $data['timestamp'] );
 
 		if ( $data['expire'] == null ) {
@@ -63,11 +62,12 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		$data['exact'] = $data['exact'] ? 'Yes' : 'No';
 		$data['lang'] = empty( $data['lang'] ) ? 'All' : $data['lang'];
 
-		/* pull these out of the array, so they dont get used in the top rows */
 		if ( $data['type'] & Phalanx::TYPE_EMAIL && !$this->wg->User->isAllowed( 'phalanxemailblock' ) ) {
 			/* hide email from non-privildged users */
 			$data['text'] = wfMsg( 'phalanx-email-filter-hidden' );
 		}
+
+		$data['type'] = implode( ', ', Phalanx::getTypeNames( $data['type'] ) );
 
 		/* stats table */
 		$headers = array(
@@ -87,6 +87,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 			'width' => '100%',
 		);
 
+		/* pull these out of the array, so they dont get used in the top rows */
 		$row = $data->toArray();
 		unset($row['text']);
 		unset($row['reason']);

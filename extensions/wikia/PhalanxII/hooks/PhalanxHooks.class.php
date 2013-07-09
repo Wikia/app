@@ -97,8 +97,9 @@ class PhalanxHooks extends WikiaObject {
 			$phalanx[ $key ] = $val;
 		}
 
-		$typemask = 0;
+		$typemask = $phalanx['type'];
 		if ( is_array( $phalanx['type'] ) ) {
+			$typemask = 0;
 			foreach ( $phalanx['type'] as $type ) {
 				$typemask |= $type;
 			}

@@ -93,15 +93,22 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$expiries = array_merge(array('' => wfMsg('phalanx-expiries-select')), $expiries);
 		}
 
+		// VSTF should not be allowed to block emails in Phalanx
+		$showEmailBlock = $this->wg->User->isAllowed('phalanxemailblock');
+		$blockTypes  = Phalanx::getAllTypeNames();
+
+		if (!$showEmailBlock) {
+			unset($blockTypes[Phalanx::TYPE_EMAIL]);
+		}
+
 		$this->setVal( 'expiries', $expiries );
 		$this->setVal( 'languages', $this->wg->PhalanxSupportedLanguages );
 		$this->setVal( 'listing', $listing );
 		$this->setVal( 'data',  $data);
 		$this->setVal( 'editMode',  $editMode);
 		$this->setVal( 'action', $this->title->getLocalURL() );
-		$this->setVal( 'showEmail', $this->wg->User->isAllowed( 'phalanxemailblock' ) );
 		$this->setVal( 'typeFilter', $pager->getSearchFilter() );
-		$this->setVal( 'blockTypes', Phalanx::getAllTypeNames() );
+		$this->setVal( 'blockTypes', $blockTypes );
 		$this->setVal( 'type', $this->wg->Request->getInt('type') );
 
 		wfProfileOut( __METHOD__ );
@@ -144,22 +151,30 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		if ( $id > 0 ) {
 			// block edit
 			$data = Phalanx::newFromId($id);
-			$data['type'] = Phalanx::getTypeNames( $data['type'] );
-			$data['checkId'] = $id;
-			$data['checkBlocker'] = '';
-			$data['typeFilter'] = array();
+
+			if ( ( $data['type'] & Phalanx::TYPE_EMAIL ) && !$this->app->wg->User->isAllowed( 'phalanxemailblock' ) ) {
+				// VSTF members should not be able to view email blocks
+				$data = [];
+			}
+			else {
+				$data['type'] = Phalanx::getTypeNames( $data['type'] );
+				$data['checkId'] = $id;
+				$data['checkBlocker'] = '';
+				$data['typeFilter'] = array();
+
+				return $data;
+			}
 		}
-		else {
-			// block creation
-			$data['checkBlocker'] = $this->wg->Request->getText( 'wpPhalanxCheckBlocker' , '');
-			$data['checkId'] = $this->wg->Request->getIntOrNull( 'id' );
-			$data['type'] = $this->wg->Request->getArray( 'wpPhalanxType' );
-			$data['typeFilter'] = $this->wg->Request->getArray( 'wpPhalanxTypeFilter' );
-			$data['text'] = $this->wg->Request->getText('target' , ''); // prefill the filter content using target URL parameter
-			$data['lang'] = '';
-			$data['expire'] = '';
-			$data['reason'] = '';
-		}
+
+		// block creation
+		$data['checkBlocker'] = $this->wg->Request->getText( 'wpPhalanxCheckBlocker' , '');
+		$data['checkId'] = $this->wg->Request->getIntOrNull( 'id' );
+		$data['type'] = $this->wg->Request->getArray( 'wpPhalanxType' );
+		$data['typeFilter'] = $this->wg->Request->getArray( 'wpPhalanxTypeFilter' );
+		$data['text'] = $this->wg->Request->getText('target' , ''); // prefill the filter content using target URL parameter
+		$data['lang'] = '';
+		$data['expire'] = '';
+		$data['reason'] = '';
 
 		return $data;
 	}

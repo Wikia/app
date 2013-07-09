@@ -8,7 +8,7 @@ class MarketingToolboxHooks {
 			$vars['wgMarketingToolboxConstants'] = $toolboxModel->getAvailableStatuses();
 			$vars['wgMarketingToolboxThumbnailSize'] = $toolboxModel->getThumbnailSize();
 			$vars['wgMarketingToolboxUrlRegex'] = trim(WikiaValidatorToolboxUrl::URL_RESTRICTIVE_REGEX, 'i/');
-			$vars['wgEditHubUrl'] = SpecialPage::getTitleFor('MarketingToolbox','editHub')->getLocalURL();
+			$vars['wgEditHubUrl'] = SpecialPage::getTitleFor('MarketingToolbox','editHub')->getFullURL();
 		}
 
 		return true;
