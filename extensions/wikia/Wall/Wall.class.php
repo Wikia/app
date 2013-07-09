@@ -110,7 +110,7 @@ class Wall extends WikiaModel {
 		// Functionality based on request https://wikia-inc.atlassian.net/browse/DAR-330
 		if ( $bStripTemplates ) {
 
-			$sSourceWithoutTemplates = trim( preg_replace( '/({{\w+}})/', '', $oArticle->getText() ) );
+			$sSourceWithoutTemplates = trim( preg_replace( '/({{[^}]+}})/', '', $oArticle->getText() ) );
 
 			$oParserOut = $oApp->wg->Parser->parse( $sSourceWithoutTemplates, $oApp->wg->Title, $oParserOptions );
 
@@ -121,8 +121,8 @@ class Wall extends WikiaModel {
 
 		$aOutput = array();
 		// Take the content out of an HTML P element and strip whitespace from the beginning and end.
-		$res = '';
-		if ( preg_match( '/^<p>\\s*(.*)\\s*<\/p>$/su', $oParserOut->getText(), $aOutput ) ) {
+		$res = $oParserOut->getText();
+		if ( preg_match( '/^<p>\\s*(.*)\\s*<\/p>$/su', $res, $aOutput ) ) {
 			$res = $aOutput[1];
 		}
 
