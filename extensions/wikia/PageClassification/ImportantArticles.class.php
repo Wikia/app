@@ -15,7 +15,7 @@ class ImportantArticles extends WikiaModel {
 			$wikiInfo = WikiFactory::getWikiByID( $wikiId );
 			$dbName = $wikiInfo->city_dbname;
 		}
-		$this->db = $this->getDB( DB_SLAVE, $dbName );
+		$this->db = $this->getWikiDB( DB_SLAVE, $dbName );
 		$this->wikiId = $wikiId;
 		$this->api = new EntityAPIClient();
 		$this->api->setLogLevel( 5 );
@@ -28,6 +28,8 @@ class ImportantArticles extends WikiaModel {
 
 	public function getImportantPhrasesByInterlinks() {
 
+		$topLinks = $this->getTopLinks();
+		return $topLinks;
 	}
 
 	public function getImportantPhrasesByDomainNames() {
@@ -111,5 +113,17 @@ class ImportantArticles extends WikiaModel {
 
 	protected function getTopLinks() {
 
+		$result = $this->db->select(	array( "pagelinks" ),
+										array( "count(pl_from) as cnt", "pl_title"),
+										array(),
+										__METHOD__,
+										array(	"GROUP BY"=> array( "pl_title" ),
+												"LIMIT" => self::MAX_ELEM_IN_RANK,
+												"ORDER BY" => array ("cnt DESC" ) ) );
+		$topLinks = array();
+		while ( $row = $result->fetchObject() ) {
+			$topLinks[] = array( "title"=> $row->pl_title, "cnt" => $row->cnt );
+		}
+		return $topLinks;
 	}
 }
