@@ -109,23 +109,10 @@ class Wall extends WikiaModel {
 
 		// Functionality based on request https://wikia-inc.atlassian.net/browse/DAR-330
 		if ( $bStripTemplates ) {
-			// save old template callback
-			$oldcallback = $oParserOptions->getTemplateCallback();
 
-			// empty template callback function based on Parser::statelessFetchTemplate function
-			$oParserOptions->setTemplateCallback( function( $title, $parser = false ) {
-				return array(
-					'text' => '', // <-- important: return empty string instead of template's name (if the value is false)
-					'finalTitle' => $title,
-					'deps' => array()
-				);
-			}); // temporary remove template callback function
+			$sSourceWithoutTemplates = trim( preg_replace( '/({{\w+}})/', '', $oArticle->getText() ) );
 
-			//parse
-			$oParserOut = $oApp->wg->Parser->parse( $oArticle->getText(), $oApp->wg->Title, $oParserOptions );
-
-			// restore old callback
-			$oParserOptions->setTemplateCallback( $oldcallback );
+			$oParserOut = $oApp->wg->Parser->parse( $sSourceWithoutTemplates, $oApp->wg->Title, $oParserOptions );
 
 		} else {
 			// just parse
