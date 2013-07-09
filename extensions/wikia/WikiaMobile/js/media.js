@@ -56,7 +56,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		clickSource,
 		videoInstance,
 		events = {},
-		skip = [];
+		skip = [],
+		MIN_MEDIA_WIDTH = 30;
 
 	function trigger(event, data){
 		if(events[event]){
@@ -78,6 +79,12 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 		//loop that gets all media from a page
 		while(element = elements[i++]) {
+
+			// exclude super small images from modal
+			if ( element.width < MIN_MEDIA_WIDTH ) {
+				continue;
+			}
+
 			var params = element.getAttribute('data-params') || false;
 
 			data = JSON.parse(params);
@@ -139,8 +146,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			var t = event.target,
 				className = t.className;
 
-			//if this image is a linked image don't open modal
-			if(className.indexOf('media') > -1){
+			//if this image is a linked image or super small don't open modal
+			if(className.indexOf('media') > -1 && t.width > MIN_MEDIA_WIDTH ){
 				event.preventDefault();
 				event.stopPropagation();
 
