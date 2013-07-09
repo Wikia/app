@@ -13,7 +13,7 @@
 		"params": {
 			"classes": [ "wikia-button", "link" ],
 			"value": "Test Link",
-			"href": "http://wikia.com",
+			"href": "#",
 			"data" : [
 						{ "key" : "id", "value" : "5" },
 						{ "key" : "lang", "value" : "en" }
