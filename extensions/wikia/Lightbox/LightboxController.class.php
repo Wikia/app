@@ -91,7 +91,7 @@ class LightboxController extends WikiaController {
 		$thumbs = array();
 		foreach ($mediaTable as $entry) {
 			$thumb = $this->createCarouselThumb($entry);
-			if ( empty($thumb)) {
+			if ( !empty($thumb) ) {
 				$thumbs[] = $thumb;
 			}
 		}
@@ -106,7 +106,7 @@ class LightboxController extends WikiaController {
 	private function createCarouselThumb($entry) {
 		$thumb = '';
 		$is = $this->carouselImageServingInstance();
-		if ( is_string($entry['title'])) {
+		if ( is_string($entry['title']) ) {
 			$media = Title::newFromText($entry['title'], NS_FILE);
 		} else {
 			$media = $entry['title'];
@@ -286,7 +286,7 @@ class LightboxController extends WikiaController {
 				'reddit',
 				'plusone',
 			) );
-			foreach($shareNetworks as $network) {
+			foreach ($shareNetworks as $network) {
 				$networks[] = array(
 					'id' => $network->getId(),
 					'url' => $network->getUrl($shareUrl, $linkDescription)
@@ -484,7 +484,7 @@ class LightboxController extends WikiaController {
 
 			$latestPhotos = array();
 			if ( !empty($thumbUrls) && is_array($thumbUrls) ) {
-				foreach( $thumbUrls as $thumb ) {
+				foreach ( $thumbUrls as $thumb ) {
 					if ( !$thumb['isVideoThumb'] ) {
 						$title = Title::newFromText( $thumb['image_filename'] );
 						$latestPhotos[] = array(
@@ -515,7 +515,7 @@ class LightboxController extends WikiaController {
 
 		$timestamp = wfTimestamp( TS_MW );
 		if ( !empty($latestPhotos) && is_array($latestPhotos) ) {
-			foreach( $latestPhotos as $photo ) {
+			foreach ( $latestPhotos as $photo ) {
 				if ( !$photo['isVideoThumb'] ) {
 					$photoTimestamp = wfTimestamp( TS_MW, $photo['date'] );
 					if ( $photoTimestamp < $timestamp ) {
