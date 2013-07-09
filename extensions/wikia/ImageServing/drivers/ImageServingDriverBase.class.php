@@ -130,9 +130,16 @@ abstract class ImageServingDriverBase {
 			if( isset($dbOut[ $key ]) ) {
 				foreach($value as $key2 => $value2) {
 					if (empty($out[$key2]) || count($out[$key2]) < $limit) {
+						$file_title = Title::newFromText( $key, NS_FILE );
+						$img = wfFindFile( $file_title );
 						$out[$key2][] = array(
 							"name" => $key,
-							"url" => $this->imageServing->getUrl($key, $dbOut[$key]['img_width'], $dbOut[$key]['img_height']));
+							"original_dimensions" => array(
+								"width"	=> !empty( $img ) ? $img->getWidth() : 0,
+								"height"=> !empty( $img ) ? $img->getHeight() : 0
+							),
+							"url" => !empty( $img ) ? $this->imageServing->getUrl($img, $dbOut[$key]['img_width'], $dbOut[$key]['img_height']) : ''
+						);
 					}
 				}
 			}
