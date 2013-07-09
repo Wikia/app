@@ -83,7 +83,7 @@ $phalanxhooks = array(
 			'SpamFilterCheck'                 => 'onSpamFilterCheck',
 			'EditPhalanxBlock'                => 'onEditPhalanxBlock',
 			'DeletePhalanxBlock'              => 'onDeletePhalanxBlock',
-			'AfterEditPermissionErrors'       => 'onAfterEditPermissionErrors',
+			'AfterFormatPermissionsErrorMessage' => 'onAfterFormatPermissionsErrorMessage',
 		)
 );
 
