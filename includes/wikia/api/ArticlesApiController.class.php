@@ -528,6 +528,7 @@ class ArticlesApiController extends WikiaApiController {
 
 			$details['abstract'] = $snippet;
 			$details['thumbnail'] = ( array_key_exists( $id, $thumbnails ) ) ? $thumbnails[$id][0]['url'] : null;
+			$details['original_dimensions'] = ( array_key_exists( $id, $thumbnails ) && isset( $thumbnails[$id][0]['original_dimensions'] ) ) ? $thumbnails[$id][0]['original_dimensions'] : null;
 		}
 
 		$thumbnails = null;
@@ -546,34 +547,28 @@ class ArticlesApiController extends WikiaApiController {
 
 	protected function getFromFile( $title ) {
 		$file = wfFindFile( $title );
-		if ( !$file ) {
-			$file = wfLocalFile( $title );
-		}
-		//media type: photo, video
-		$typeInfo = explode( '/', $file->getMimeType() );
-		if ( isset( $typeInfo[ 0 ] ) ) {
-			//if video: title, description. length, thumbnail, provider
-			if ( $typeInfo[ 0 ] == static::VIDEO_TYPE ) {
-				$metadata = unserialize( $file->getMetadata() );
-				var_dump( $metadata );
-				return [
-					'type' => static::VIDEO_TYPE,
-					'provider' => $typeInfo[1],
-					'provider_data' => [
-						'title' => $metadata[ 'title' ],
-						'description' => $metadata[ 'description' ],
-						'duration' => $metadata[ 'duration' ]
-					]
-				];
-			//if image: orignal img height and width
-			} elseif ( $typeInfo[ 0 ] == static::IMAGE_TYPE ) {
-				return [
-					'type' => static::IMAGE_TYPE,
-					'dimensions' => [
-						'width' => $file->getWidth(),
-						'height' => $file->getHeight()
-					]
-				];
+		if ( $file instanceof WikiaLocalFile ) {
+			//media type: photo, video
+			$typeInfo = explode( '/', $file->getMimeType() );
+			if ( isset( $typeInfo[ 0 ] ) ) {
+				//if video: title, description. length, thumbnail, provider
+				if ( $typeInfo[ 0 ] == static::VIDEO_TYPE ) {
+					$metadata = unserialize( $file->getMetadata() );
+					return [
+						'type' => static::VIDEO_TYPE,
+						'provider' => $typeInfo[1],
+						'metadata' => [
+							'title' => $metadata[ 'title' ],
+							'description' => $metadata[ 'description' ],
+							'duration' => $metadata[ 'duration' ]
+						]
+					];
+				//if image: orignal img height and width
+				} elseif ( $typeInfo[ 0 ] == static::IMAGE_TYPE ) {
+					return [
+						'type' => static::IMAGE_TYPE
+					];
+				}
 			}
 		}
 		return [];
