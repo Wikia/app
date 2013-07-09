@@ -1,0 +1,32 @@
+{
+	"input" : {
+		"type": "input",
+		"params": {
+			"classes": [ "input", "secondary" ],
+			"value": "Test Input",
+			"name": "test-input",
+			"type": "submit"
+		}
+	},
+	"link" : {
+		"type": "link",
+		"params": {
+			"classes": [ "wikia-button", "link" ],
+			"value": "Test Link",
+			"href": "#",
+			"data" : [
+						{ "key" : "id", "value" : "5" },
+						{ "key" : "lang", "value" : "en" }
+					]
+		}
+	},
+	"button" : {
+		"type": "button",
+		"params": {
+			"classes": [ "button", "big" ],
+			"value": "Test Button",
+			"type": "submit"
+		}
+	}
+}
+

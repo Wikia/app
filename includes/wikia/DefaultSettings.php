@@ -339,6 +339,10 @@ $wgAutoloadClasses['SassService']              = $IP.'/includes/wikia/services/s
 
 // Wikia Style Guide
 $wgAutoloadClasses['UIFactory'] = $IP . '/includes/wikia/ui/UIFactory.class.php';
+$wgAutoloadClasses['UIComponent'] = $IP . '/includes/wikia/ui/UIComponent.class.php';
+$wgAutoloadClasses['WikiaUITemplateException'] = $IP . '/includes/wikia/ui/exceptions/WikiaUITemplateException.class.php';
+$wgAutoloadClasses['WikiaUIDataException'] = $IP . '/includes/wikia/ui/exceptions/WikiaUIDataException.class.php';
+
 
 // Register \Wikia\Sass namespace
 spl_autoload_register( function( $class ) {

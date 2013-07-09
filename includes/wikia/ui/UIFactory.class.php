@@ -9,11 +9,13 @@
  *
  */
 
+// TODO use namespace \Wikia\UI\Factory when work will be done
 class UIFactory {
+
 	/**
 	 * @desc Component's configuration file suffix
 	 * Example buttons component config file should be named buttons_config.json
-	 * 
+	 *
 	 * @var String
 	 */
 	const CONFIG_FILE_SUFFIX = '_config.json';
@@ -24,18 +26,28 @@ class UIFactory {
 	const DEFAULT_COMPONENTS_PATH = "/resources/wikia/ui_components/";
 
 	/**
+	 * @desc Component's template directory's name
+	 */
+	const TEMPLATES_DIR_NAME = 'templates';
+
+	/**
 	 * @desc How long are components memcached? Both specific and all (different memc keys)
 	 */
 	const MEMCACHE_EXPIRATION = 900; // 15 minutes
+
+	/**
+	 * @desc Version passed to memcache key
+	 */
+	const MEMCACHE_VERSION = '1.0';
 	
 	/**
 	 * @var UIFactory
 	 */
 	private static $instance = null;
-	
+
 	/**
 	 * @desc AssetsManager/ResourceLoader
-	 * @var Loader
+	 * @var $loaderService
 	 */
 	private $loaderService;
 
@@ -86,49 +98,20 @@ class UIFactory {
 	}
 
 	/**
-	 * @desc Returns an array with all available components configuration
-	 * 
-	 * @return array
-	 */
-	public function getAllComponents() {
-		global $wgMemc;
-
-		$memcKey = wfMemcKey( __CLASS__, 'all_components' );
-		$data = $wgMemc->get( $memcKey );
-		if ( !empty($data) ) {
-			return $data;
-		} else {
-			$components = [];
-
-			$directory = new DirectoryIterator( $this->getComponentsDir() );
-			while( $directory->valid() ) {
-				if( !$directory->isDot() && $directory->isDir() ) {
-					$components[] = $this->loadComponentConfigFromFile( $configFile = $this->getComponentConfigFileFullPath( $directory->getFilename() ) );
-				}
-				$directory->next();
-			}
-
-			$wgMemc->set( $memcKey, $components, self::MEMCACHE_EXPIRATION );
-
-			return $components;
-		}
-	}
-
-	/**
 	 * @desc Returns full file path
 	 *
-	 * @param string component's name
+	 * @param string $name component's name
 	 *
-	 * @returns full file path
+	 * @return string full file path
 	 */
-	private function getComponentConfigFileFullPath( $name ) {
+	public function getComponentConfigFileFullPath( $name ) {
 		return $this->getComponentsDir() . $name . '/' . $name . self::CONFIG_FILE_SUFFIX;
 	}
 
 	/**
 	 * @desc Loads UIComponent from given string
 	 *
-	 * @param string JSON String
+	 * @param string $configContent JSON String
 	 *
 	 * @return UIComponent
 	 *
@@ -147,13 +130,13 @@ class UIFactory {
 	/**
 	 * @desc Loads UIComponent from file
 	 *
-	 * @param string Path to file
+	 * @param string $configFilePath Path to file
 	 *
 	 * @return UIComponent
 	 *
 	 * @throws Exception
 	 */
-	private function loadComponentConfigFromFile( $configFilePath ) {
+	public function loadComponentConfigFromFile( $configFilePath ) {
 		if ( false === $configString = file_get_contents( $configFilePath ) ) {
 			throw new Exception( 'Component\'s config file not found.' );
 		} else {
@@ -167,12 +150,12 @@ class UIFactory {
 	 * @param String $componentName
 	 * @return string
 	 */
-	private function loadComponentConfig( $componentName ) {
+	protected function loadComponentConfig( $componentName ) {
 		wfProfileIn( __METHOD__ );
-
+		
 		global $wgMemc;
 		
-		$memcKey = wfMemcKey( __CLASS__, 'component', $componentName);
+		$memcKey = wfMemcKey( __CLASS__, 'component', $componentName, static::MEMCACHE_VERSION);
 		$data = $wgMemc->get( $memcKey );
 
 		if ( !empty($data) ) {
@@ -190,12 +173,13 @@ class UIFactory {
 
 	/**
 	 * @desc Adds id element to the component's config array
-	 * 
+	 *
 	 * @param Array $componentCfg
 	 * @return array
 	 */
 	private function addComponentsId( $componentCfg ) {
-		$componentCfg['id'] = mb_strtolower( str_replace( ' ', '_', $componentCfg['name'] ) );
+		$componentCfg[ 'id' ] = static::sanitize( $componentCfg[ 'name-msg-key' ] );
+
 		return $componentCfg;
 	}
 
@@ -204,68 +188,68 @@ class UIFactory {
 	 *
 	 * @param $assetName
 	 */
-	// TODO think how we can use WikiaResponse addAsset method
-	// TODO during work on UIComponent in darwin sprint 13
 	private function addAsset( $assetName ) {
 		wfProfileIn( __METHOD__ );
 
-		$app = F::app();
-		$jsMimeType = $app->wg->JsMimeType;
-
-		$type = false;
-
-		$sources = $this->loaderService->getURL( $assetName, $type, false );
-
-		foreach ( $sources as $source ) {
-			switch ( $type ) {
-				case AssetsManager::TYPE_CSS:
-				case AssetsManager::TYPE_SCSS:
-					$app->wg->Out->addStyle( $source );
-					break;
-				case AssetsManager::TYPE_JS:
-					$app->wg->Out->addScript( "<script type=\"{$jsMimeType}\" src=\"{$source}\"></script>" );
-					break;
-			}
-		}
+		Wikia::addAssetsToOutput($assetName);
 
 		wfProfileOut( __METHOD__ );
 	}
 
+	public function getComponentsBaseTemplatePath( $name ) {
+		$name = static::sanitize( $name );
+		return $this->getComponentsDir() .
+			$name .
+			DIRECTORY_SEPARATOR .
+			self::TEMPLATES_DIR_NAME .
+			DIRECTORY_SEPARATOR .
+			$name;
+	}
+	
 	/**
 	 * @desc Loads JS/CSS dependencies, creates and configurates an instance of UIComponent object which is returned
 	 *
 	 * @param string|array
+	 * 
+	 * @return array
 	 */
 	public function init( $componentNames ) {
 		if ( !is_array($componentNames ) ) {
 			$componentNames = (array)$componentNames;
 		}
 		
-		$components = [];  
+		$components = [];
 		$assets = [];
 
 		// iterate $componentNames, read configs, write down dependencies
-
 		foreach ( $componentNames as $name ) {
 			$componentConfig = $this->loadComponentConfig( $name );
-
+			
 			// if there are some components, put them in the $assets
-			if ( !empty( $componentsConfig['dependencies'] ) ) {
-				if ( !empty( $componentsConfig['dependencies']['js'] ) ) {
-					$assets = array_merge( $assets, $componentsConfig['dependencies']['js'] );
+			if ( !empty( $componentConfig['dependencies']['js'] ) ) {
+				if ( is_array($componentConfig['dependencies']['js']) ) {
+					$assets = array_merge( $assets, $componentConfig['dependencies']['js'] );
+				} else {
+					$exceptionMessage = sprintf( WikiaUIDataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE );
+					throw new WikiaUIDataException( $exceptionMessage, 'js' );
 				}
-				if ( !empty( $componentsConfig['dependencies']['css'] ) ) {
-					$assets = array_merge( $assets, $componentsConfig['dependencies']['css'] );
+			}
+			if ( !empty( $componentConfig['dependencies']['css'] ) ) {
+				if ( is_array($componentConfig['dependencies']['css']) ) {
+					$assets = array_merge( $assets, $componentConfig['dependencies']['css'] );
+				} else {
+					$exceptionMessage = sprintf( WikiaUIDataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE );
+					throw new WikiaUIDataException( $exceptionMessage, 'css' );
 				}
 			}
 
-			// init component and put config inside
-			$component = new UIComponent();
+			// init component, put config inside and set base template path
+			$component = $this->getComponentInstance();
 			if ( !empty($componentConfig['templateVars']) ) {
-				$component->setTemplateVarsConfig($componentConfig['templateVars']);
+				$component->setTemplateVarsConfig( $componentConfig['templateVars'] );
 			}
+			$component->setBaseTemplatePath( $this->getComponentsBaseTemplatePath( $name ) );
 
-			//
 			$components[] = $component;
 		}
 
@@ -276,7 +260,14 @@ class UIFactory {
 
 		// return components
 		return (sizeof($components) == 1) ? $components[0] : $components;
-
+	}
+	
+	protected function getComponentInstance() {
+		return new UIComponent();
+	}
+	
+	public static function sanitize( $string ) {
+		return str_replace( ' ', '_', mb_strtolower( $string ) );
 	}
 
 	/**
