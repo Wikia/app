@@ -28,13 +28,13 @@ class SearchSuggestionsApiController extends WikiaApiController {
 				throw new MissingParameterApiException( self::PARAMETER_QUERY );
 			}
 
+			$this->wg->Request->setVal( 'format', 'array' );
+
 			$linkSuggestions = LinkSuggest::getLinkSuggest( $this->wg->Request );
 
 			if ( !empty( $linkSuggestions ) ) {
 
-				$linkSuggestions = explode("\n", $linkSuggestions);
-
-				foreach($linkSuggestions as $suggestion){
+				foreach( $linkSuggestions as $suggestion ){
 					$searchSuggestions[]['title'] = $suggestion;
 				}
 
