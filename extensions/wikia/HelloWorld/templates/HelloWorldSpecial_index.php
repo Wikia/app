@@ -3,8 +3,8 @@
 <br />
 Wiki data: <br />
 <ul>
-  <li><strong>Title:</strong><?= $wikiData['title'] ?></li>
-  <li><strong>Url:</strong>
-  <a href="<?= $wikiData['url'] ?>"><?= $wikiData['url'] ?></a>
-  </li>
+	<li><strong>Title:</strong><?= $wikiData['title'] ?></li>
+	<li><strong>Url:</strong>
+	<a href="<?= $wikiData['url'] ?>"><?= $wikiData['url'] ?></a>
+	</li>
 </ul>
