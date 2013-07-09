@@ -36,19 +36,17 @@ class PageClassificationController extends WikiaSpecialPageController {
 
 		/* TEST */
 		$important = new ImportantArticles( $wikiId );
-		$art = $important->getWikiTopics();
-		foreach ( $art as $a ) {
-			//var_dump( $a );
-		}
-		echo "<Pre>";
-		print_r( $important->getImportantPhrasesByTopPages() );
-		die("<HR>");
-		/* TEST */
+		$wikiTopics = $important->getWikiTopics();
+		$importantByTopPages = $important->getImportantPhrasesByTopPages();
+		$importantByLinks = $important->getImportantPhrasesByInterlinks();
+		$commonPrefix = $important->getCommonPrefix();
+		$merged = $important->getMostImportantTopics();
 
-		$classificationData = new PageClassificationData();
-		$pagelist = $classificationData->getClassifiedArticles();
-		$this->setVal( 'pagelist', $pagelist );
-
+		$this->setVal( 'wikiTopics', $wikiTopics );
+		$this->setVal( 'importantByTopPages', $importantByTopPages );
+		$this->setVal( 'importantByLinks', $importantByLinks );
+		$this->setVal( 'commonPrefix', $commonPrefix );
+		$this->setVal( 'merged', $merged );
 
 		$this->overrideTemplate('pageList');
 	}

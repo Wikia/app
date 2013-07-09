@@ -2,7 +2,7 @@
 
 class CommonPrefix {
 
-	public function longest( $titles ) {
+	public function longest( $titles, $minLength = 5 ) {
 		// build index array
 		$prefixArray = array();
 		foreach ( $titles as $i => $title ) {
@@ -19,8 +19,10 @@ class CommonPrefix {
 		$mostCommonLongest = array("phrase" => "", "cnt" => 0);
 		foreach ( $prefixArray as $phrase => $cnt ) {
 			if ( $cnt >= $mostCommonLongest[ "cnt" ] && strlen( $phrase ) >= strlen( $mostCommonLongest[ "phrase" ] ) ) {
-				$mostCommonLongest[ "phrase" ] = $phrase;
-				$mostCommonLongest[ "cnt" ] = $cnt;
+				if ( strlen( $phrase ) > $minLength ) {
+					$mostCommonLongest[ "phrase" ] = $phrase;
+					$mostCommonLongest[ "cnt" ] = $cnt;
+				}
 			}
 		}
 		// if phrase exists more than once
