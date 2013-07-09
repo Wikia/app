@@ -1,4 +1,5 @@
 <?php
+// TODO use namespace \Wikia\UI\Component when work will be done
 class UIComponent {
 
 	/**

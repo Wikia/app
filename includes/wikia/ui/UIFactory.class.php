@@ -9,6 +9,7 @@
  *
  */
 
+// TODO use namespace \Wikia\UI\Factory when work will be done
 class UIFactory {
 
 	/**
