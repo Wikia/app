@@ -52,7 +52,7 @@
 					<?php foreach( $results as $result ): ?>
 						<?php
 							$pos++;
-							echo $app->getView( 'WikiaSearch', 'result', array(
+							echo $app->getView( 'WikiaSearch', $resultView, array(
 							  'result' => $result,
 							  'gpos' => 0,
 							  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),

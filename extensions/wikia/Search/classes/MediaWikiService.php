@@ -20,6 +20,12 @@ class MediaWikiService
 	const WIKI_DEFAULT_LANG_CODE = 'en';
 
 	/**
+	 * Thumbnails default size, used for getting article images
+	 */
+	const THUMB_DEFAULT_WIDTH = 160;
+	const THUMB_DEFAULT_HEIGHT = 100;
+
+	/**
 	 * Application interface
 	 * @var \WikiaApp
 	 */
@@ -636,28 +642,33 @@ class MediaWikiService
 	public function searchSupportsLanguageCode( $languageCode ) {
 		return in_array( $languageCode, $this->getGlobal( 'WikiaSearchSupportedLanguages' ) );
 	}
-	
-	/**
-	 * Returns the HTML needed to get a thumbnail provided a page ID
-	 * @param int $pageId
-	 * @param array $transformParams
-	 * @param array $htmlParams
-	 * @return string
-	 */
-	public function getThumbnailHtmlForPageId(
-			$pageId, 
-			$transformParams = array( 'width' => 160 ), // WikiaGrid 1 column width
-			$htmlParams = array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true)
-			) {
-		$html = '';
-		$img = $this->getFileForPageId( $pageId );
-		if (! empty( $img ) ) {
-			$thumb = $img->transform( $transformParams );
-			$html = $thumb->toHtml( $htmlParams );
+
+	public function getThumbnailUrl(
+		$pageId,
+		$dimensions = null
+	) {
+		$width = (isset( $dimensions[ 'width' ] ) ) ? $dimensions[ 'width' ] : static::THUMB_DEFAULT_WIDTH;
+		$height = (isset( $dimensions[ 'height' ] ) ) ? $dimensions[ 'height' ] : static::THUMB_DEFAULT_HEIGHT;
+		$imgSource = $this->getImageServing( $pageId, $width, $height );
+		//get one image only
+		$img = $imgSource->getImages( 1 );
+		if ( !empty( $img ) ) {
+			return $img[ $pageId ][ 0 ][ 'url' ];
 		}
-		return $html;
+		return false;
 	}
-	
+
+	/**
+	 * Gets image serving for page, moved to external method for easier testing
+	 * @param $pageId
+	 * @param $width
+	 * @param $height
+	 * @return \ImageServing
+	 */
+	protected function getImageServing( $pageId, $width, $height ) {
+		return new \ImageServing( array( $pageId ), $width, $height );
+	}
+
 	/**
 	 * Returns the number of video views for a page ID.
 	 * @param int $pageId

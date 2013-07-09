@@ -173,18 +173,16 @@ class Result extends ReadWrite {
 		return $text;
 	}
 
-	/**
-	 * Returns the thumbnail html
-	 * @return string
-	 */
-	public function getThumbnailHtml() {
+	public function getThumbnailUrl() {
+		wfProfileIn( __METHOD__ );
 		if (! isset( $this['thumbnail'] ) ) {
 			try {
-				$this['thumbnail'] = $this->service->getThumbnailHtmlForPageId( $this['pageid'] );
+				$this['thumbnail'] = $this->service->getThumbnailUrl( $this['pageid'] );
 			} catch ( \Exception $e ) {
 				$this['thumbnail'] = '';
 			}
 		}
+		wfProfileOut( __METHOD__ );
 		return $this['thumbnail'];
 	}
 
