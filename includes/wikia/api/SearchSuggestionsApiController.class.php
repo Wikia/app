@@ -11,14 +11,13 @@ class SearchSuggestionsApiController extends WikiaApiController {
 	/**
 	 * Finds search suggestions phrases for chosen query
 	 *
-	 * @requestParam string $query search term fro
+	 * @requestParam string $query search term for suggestions
 	 *
 	 * @responseParam array $items The list of phrases matching the query
 	 *
-	 * @example http://gta.wikia.com/wikia.php?controller=SearchSuggestionsApi&method=getList&query=los
+	 * @example &query=los
 	 */
 	public function getList() {
-		global $wgRequest;
 		wfProfileIn(__METHOD__);
 
 		if ( !empty( $this->wg->EnableLinkSuggestExt ) ) {
@@ -29,7 +28,7 @@ class SearchSuggestionsApiController extends WikiaApiController {
 				throw new MissingParameterApiException( self::PARAMETER_QUERY );
 			}
 
-			$linkSuggestions = LinkSuggest::getLinkSuggest($wgRequest);
+			$linkSuggestions = LinkSuggest::getLinkSuggest( $this->wg->Request );
 
 			if ( !empty( $linkSuggestions ) ) {
 
