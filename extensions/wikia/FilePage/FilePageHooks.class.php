@@ -173,5 +173,4 @@ class FilePageHooks extends WikiaObject{
 
 		return true;
 	}
-
 }
