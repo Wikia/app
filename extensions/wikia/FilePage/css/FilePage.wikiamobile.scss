@@ -1,6 +1,14 @@
+.video-page-caption {
+
+}
 .fullImageLink {
 	margin-top: 10px;
 }
-.filehistory .videoInfo {
-	display: none;
+.filehistory {
+	.videoInfo {
+		display: none;
+	}
+	.video {
+		width: 120px;
+	}
 }
