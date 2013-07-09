@@ -643,10 +643,7 @@ class MediaWikiService
 		return in_array( $languageCode, $this->getGlobal( 'WikiaSearchSupportedLanguages' ) );
 	}
 
-	public function getThumbnailUrl(
-		$pageId,
-		$dimensions = null
-	) {
+	public function getThumbnailUrl( $pageId, $dimensions = null ) {
 		$width = (isset( $dimensions[ 'width' ] ) ) ? $dimensions[ 'width' ] : static::THUMB_DEFAULT_WIDTH;
 		$height = (isset( $dimensions[ 'height' ] ) ) ? $dimensions[ 'height' ] : static::THUMB_DEFAULT_HEIGHT;
 		$imgSource = $this->getImageServing( $pageId, $width, $height );
@@ -669,11 +666,7 @@ class MediaWikiService
 		return new \ImageServing( array( $pageId ), $width, $height );
 	}
 
-	public function getThumbnailHtml(
-		$pageId,
-		$transformParams = null, // WikiaGrid 1 column width
-		$htmlParams = array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true)
-	) {
+	public function getThumbnailHtml( $pageId, $transformParams = null, /* WikiaGrid 1 column width */ $htmlParams = array( 'desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true ) ) {
 		$html = '';
 		$img = $this->getFileForPageId( $pageId );
 		if (! empty( $img ) ) {
