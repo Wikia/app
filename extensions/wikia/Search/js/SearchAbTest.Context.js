@@ -34,9 +34,10 @@ define( 'SearchAbTest.Context' ,[
 		var searchExperiments = [];
 		var experiments = AbTest.getExperiments();
 		for( var i = 0; i < experiments.length; i++ ) {
-			if( experiments[i] && experiments[i].name && experiments[i].name.toUpperCase().indexOf('SEARCH') === 0 ) {
+			var experiment = experiments[i];
+			if( experiment && experiment.name && experiment.name.toUpperCase().indexOf('SEARCH') === 0 ) {
 				// all experiments with name starting with search are considered search related
-				searchExperiments.push(experiments[i]);
+				searchExperiments.push(experiment);
 			}
 		}
 		return searchExperiments;
