@@ -234,7 +234,8 @@ class ImageTweaksHooks {
 					( (!empty( $imageAttribs['width'] ) && $imageAttribs['width'] > 64 ) || empty( $imageAttribs['width'] ) )
 					&& $file instanceof File
 				) {
-					$size = WikiaMobileMediaService::calculateMediaSize( $file->getWidth(), $file->getHeight() );
+					// TODO: test this image sizing change before releasing
+					$size = WikiaMobileMediaService::calculateMediaSize( $imageAttribs['width'], $imageAttribs['height'] );
 					$thumb = $file->transform( $size );
 					$imageAttribs['src'] = wfReplaceImageServer( $thumb->getUrl(), $file->getTimestamp() );
 					$imageAttribs['width'] = $size['width'];
@@ -272,7 +273,6 @@ class ImageTweaksHooks {
 			return true;
 		}
 
-
 		wfProfileIn( __METHOD__ );
 		if ( is_null(self::$isWikiaMobile) ) {
 			self::init();
@@ -305,7 +305,8 @@ class ImageTweaksHooks {
 			}
 
 			if ( $file instanceof File ) {
-				$size = WikiaMobileMediaService::calculateMediaSize( $file->getWidth(), $file->getHeight() );
+				// TODO: test this image sizing change before releasing
+				$size = WikiaMobileMediaService::calculateMediaSize( $imageAttribs['width'], $imageAttribs['height'] );
 				$thumb = $file->transform( $size );
 				$imageAttribs['src'] = wfReplaceImageServer( $thumb->getUrl(), $file->getTimestamp() );
 				$imageAttribs['width'] = $size['width'];

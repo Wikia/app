@@ -24,7 +24,7 @@ require( ['track', 'sections'], function( track, sections ) {
 				track.event.apply( track, options );
 				break;
 			case 'filelinks':
-				options.push( { label: 'usage' } );
+				options.push( { label: 'wiki-usage' } );
 				track.event.apply( track, options );
 				break;
 			case 'metadata':
