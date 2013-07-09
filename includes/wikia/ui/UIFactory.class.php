@@ -188,29 +188,10 @@ class UIFactory {
 	 *
 	 * @param $assetName
 	 */
-	// TODO think how we can use WikiaResponse addAsset method
-	// TODO during work on UIComponent in darwin sprint 13
 	private function addAsset( $assetName ) {
 		wfProfileIn( __METHOD__ );
 
-		$app = F::app();
-		$jsMimeType = $app->wg->JsMimeType;
-
-		$type = false;
-
-		$sources = $this->loaderService->getURL( $assetName, $type, false );
-
-		foreach ( $sources as $source ) {
-			switch ( $type ) {
-				case AssetsManager::TYPE_CSS:
-				case AssetsManager::TYPE_SCSS:
-					$app->wg->Out->addStyle( $source );
-					break;
-				case AssetsManager::TYPE_JS:
-					$app->wg->Out->addScript( "<script type=\"{$jsMimeType}\" src=\"{$source}\"></script>" );
-					break;
-			}
-		}
+		Wikia::addAssetsToOutput($assetName);
 
 		wfProfileOut( __METHOD__ );
 	}
