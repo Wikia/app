@@ -12,28 +12,66 @@ use Solarium_Query_Select;
 class VideoTitle extends AbstractSelect
 {
 	/**
+	 * Minimum duration in seconds
+	 * @var int
+	 */
+	protected $minDuration;
+	
+	/**
+	 * Maximum duration in seconds
+	 * @var unknown_type
+	 */
+	protected $maxDuration;
+	
+	/**
 	 * Totally short-circuits how we do select queries
 	 * @return \Solarium_Query_Select
 	 */
 	protected function getSelectQuery() {
 		$query = $this->client->createSelect();
 		$query->setDocumentClass( '\Wikia\Search\Result' );
-		
-		$dismax = $query->getDisMax();
-		$dismax->setQueryParser( 'edismax' )
-		       ->setQueryFields( $this->getQueryFieldsString() )
-		       ->setMinimumMatch( $this->config->getMinimumMatch() )
-		;
-		$query->setQuery( "(wid:%1% AND is_video:true AND categories_mv_en:%2%) AND (%3%)", 
-				[
-						Video::VIDEO_WIKI_ID,
-						$this->service->getHubForWikiId( $this->service->getWikiId() ),
-						$this->config->getQuery()->getSanitizedQuery()
-				] );
-		
+		$queryString = "(wid:%1% AND is_video:true AND categories_mv_en:%2%) AND title_en:\"%3%\"~2";
+		$params = [
+					Video::VIDEO_WIKI_ID,
+					$this->service->getHubForWikiId( $this->service->getWikiId() ),
+					$this->config->getQuery()->getSanitizedQuery(),
+				];
+		if ( $this->getMinDuration() && $this->getMaxDuration() ) {
+			$queryString .= " AND video_duration_i:[%3% TO %4%]";
+			$params = array_merge( $params, [ $this->getMinDuration(), $this->getMaxDuration() ] );
+		}
+		$query->setQuery( $queryString, $params );
 		return $query;
 	}
 	
+	/**
+	 * @return the $minDuration
+	 */
+	public function getMinDuration() {
+		return $this->minDuration;
+	}
+
+	/**
+	 * @param number $minDuration
+	 */
+	public function setMinDuration($minDuration) {
+		$this->minDuration = $minDuration;
+	}
+
+	/**
+	 * @return the $maxDuration
+	 */
+	public function getMaxDuration() {
+		return $this->maxDuration;
+	}
+
+	/**
+	 * @param \Wikia\Search\QueryService\Select\unknown_type $maxDuration
+	 */
+	public function setMaxDuration($maxDuration) {
+		$this->maxDuration = $maxDuration;
+	}
+
 	/**
 	 * To heck with it, we need to get rid of this anyway.
 	 * (non-PHPdoc)
@@ -44,6 +82,6 @@ class VideoTitle extends AbstractSelect
 	}
 	
 	protected function getQueryFieldsString() {
-		return 'title_en^100';
+		return '';
 	}
 }

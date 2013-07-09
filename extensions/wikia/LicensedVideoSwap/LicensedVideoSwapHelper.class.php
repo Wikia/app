@@ -203,6 +203,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		$articleId = $titleObj->getArticleID();
 
 		// See if we've already cached suggestions for this video
+		/*
 		$videos = wfGetWikiaPageProp( WPP_LVS_SUGGEST, $articleId );
 		if ( !empty($videos) ) {
 			$age = wfGetWikiaPageProp( WPP_LVS_SUGGEST_DATE, $articleId);
@@ -214,9 +215,14 @@ class LicensedVideoSwapHelper extends WikiaModel {
 				return $videos;
 			}
 		}
+		*/
 
 		$readableTitle = $titleObj->getText();
-		$videoRows = $app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', array( 'title' => $readableTitle ) )
+		$params = array( 'title' => $readableTitle );
+		
+		// @todo add minseconds and maxseconds here
+		
+		$videoRows = $app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', $params )
 						 ->getData();
 
 		wfSetWikiaPageProp( WPP_LVS_SUGGEST_DATE, $articleId, time() );
