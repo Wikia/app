@@ -144,6 +144,12 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 	'right-phalanx' => 'Can manage global blocks and spam filters',
 	'right-phalanxexempt' => 'Exempt from Phalanx rules',
 	'right-phalanxemailblock' => 'Can file, view and manage e-mail based blocks',
+
+	# groups of block types
+	'phalanx-section-type-page-edition' => 'Page edition',
+	'phalanx-section-type-account-creation' => 'Account creation',
+	'phalanx-section-type-wiki-creation' => 'Wiki creation',
+	'phalanx-section-type-questions' => 'Questions',
 );
 
 /** Message documentation (Message documentation)
@@ -160,6 +166,10 @@ $messages['qqq'] = array(
 	'phalanx-stats-row' => '$1 is a type of block (e.g. user or title), $2 is a user (name or IP), $3 is the URL of a wiki, $4 is a time and date',
 	'phalanx-stats-row-per-wiki' => '$1 is a type of block (e.g. user or title), $2 is a user (name or IP), $3 is a filter ID, $4 is the URL of a wiki, $4 is a time and date, $5 is a link to stats for that filter ID',
 	'action-phalanx' => '{{doc-action|phalanx}}',
+	'phalanx-section-type-page-edition' => 'Legend for fieldset grouping blocks related to page edition',
+	'phalanx-section-type-account-creation' => 'Legend for fieldset grouping blocks related to user account creation',
+	'phalanx-section-type-wiki-creation' => 'Legend for fieldset grouping blocks related to Wiki creation',
+	'phalanx-section-type-questions' => 'Legend for fieldset grouping blocks related to Answers wiki',
 );
 
 /** Arabic (العربية)
@@ -1846,6 +1856,10 @@ Prosimy [[Special:Contact|skontaktuj się z nami]] w sprawie problemu.<br />Blok
 	'right-phalanx' => 'Zarządzenie globalnymi blokadami i filtrami spamu',
 	'right-phalanxexempt' => 'Wyłączony z reguł Phalanx',
 	'right-phalanxemailblock' => 'Umożliwia włączanie, przeglądanie i zarządzanie blokadami opartymi o e-mail',
+	'phalanx-section-type-page-edition' => 'Tworzenie strony',
+	'phalanx-section-type-account-creation' => 'Zakładanie kont',
+	'phalanx-section-type-wiki-creation' => 'Tworzenie wiki',
+	'phalanx-section-type-questions' => 'Wiki Answers',
 );
 
 /** Piedmontese (Piemontèis)

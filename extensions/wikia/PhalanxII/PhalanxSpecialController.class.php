@@ -110,6 +110,24 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->setVal( 'typeFilter', $pager->getSearchFilter() );
 		$this->setVal( 'blockTypes', $blockTypes );
 		$this->setVal( 'type', $this->wg->Request->getInt('type') );
+		$this->setVal( 'typeSections', [
+			'page-edition' => [
+				Phalanx::TYPE_CONTENT,
+				Phalanx::TYPE_SUMMARY,
+				Phalanx::TYPE_TITLE,
+				Phalanx::TYPE_USER,
+			],
+			'account-creation' => [
+				Phalanx::TYPE_EMAIL,
+			],
+			'wiki-creation' => [
+				Phalanx::TYPE_WIKI_CREATION,
+			],
+			'questions' => [
+				Phalanx::TYPE_ANSWERS_QUESTION_TITLE,
+				Phalanx::TYPE_ANSWERS_RECENT_QUESTIONS,
+			]
+		]);
 
 		wfProfileOut( __METHOD__ );
 	}
