@@ -242,14 +242,13 @@ class LinkSuggest {
 			} else {
 				$out = json_encode(array('query' => $request->getText('query'), 'suggestions' => $result_values, 'redirects' => $redirects));
 			}
+		} elseif ($format == 'array') {
+			self::replaceResultIfRedirected($results, $redirects);
+			$out = $results;
 		} else {
 			// legacy: LinkSuggest.js uses plain text
 			// Overwrite canonical title with redirect title
-			for($i = 0; $i < count($results); $i++) {
-				if (isset($redirects[$results[$i]])) {
-					$results[$i] = $redirects[$results[$i]];
-				}
-			}
+			self::replaceResultIfRedirected($results, $redirects);
 
 			$out = implode("\n", $results);
 		}
@@ -277,6 +276,26 @@ class LinkSuggest {
 		return $format == 'json' ? json_encode(array('suggestions'=>array(),'redirects'=>array())) : '';
 	}
 
+	/**
+	 *
+	 * Helper function for replacing results if redirections are available
+	 *
+	 * @param Array $results
+	 * @param Array $redirects
+	 *
+	 * @return Array
+	 *
+	 * @author Artur Klajnerok <arturk@wikia-inc.com>
+	 *
+	 */
+
+	static private function replaceResultIfRedirected(&$results, &$redirects) {
+		for($i = 0; $i < count($results); $i++) {
+			if (isset($redirects[$results[$i]])) {
+				$results[$i] = $redirects[$results[$i]];
+			}
+		}
+	}
 
 	/**
 	 * @param DatabaseBase $db
