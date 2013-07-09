@@ -1,8 +1,7 @@
 /**
- * Questions for Stanely:
- * - where to track?  ga / internal / both
- *
- * @todo find a global usage instance and track it - there's a bug where global usage is not showing up
+ * Any mobile-specific js for file page goes here.
+ * @author Liz Lee
+ * @todo once VID-555 is fixed, look into adding tracking for the global usage section
  */
 
 require( ['track', 'sections'], function( track, sections ) {
@@ -10,7 +9,6 @@ require( ['track', 'sections'], function( track, sections ) {
 	/**
 	 * Tracking
 	 */
-
 	sections.addEventListener( 'open', function() {
 		var id = this.previousElementSibling.id,
 			options = [
@@ -33,20 +31,4 @@ require( ['track', 'sections'], function( track, sections ) {
 				break;
 		}
 	});
-
-
-
-	/*document.getElementById( 'mw-content-text' ).addEventListener( 'click', function( event ) {
-		var t = event.target,
-			id = t.id;
-
-		switch( id ) {
-			case 'filehistory':
-				if ( sections.isOpen( t ) ) {
-					console.log('history');
-				}
-			break;
-		}
-
-	})*/
 } );

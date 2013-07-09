@@ -90,7 +90,7 @@ class WikiaFilePage extends ImagePage {
 	}
 
 	/**
-	 * Display info about the video below the video player
+	 * Display info about the video below the video player: provider, views, expiration date (if any)
 	 */
 	public function getVideoInfoLine( $file ) {
 		wfProfileIn( __METHOD__ );
