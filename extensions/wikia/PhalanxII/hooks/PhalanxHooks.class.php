@@ -200,4 +200,22 @@ class PhalanxHooks extends WikiaObject {
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
+
+	/**
+	 * Make block ID more visible in user block message
+	 *
+	 * @param array $permErrors
+	 * @param Title $title
+	 * @param bool $remove
+	 * @return bool true
+	 */
+	static public function onAfterEditPermissionErrors( Array &$permErrors, $title, $remove) {
+		foreach($permErrors as &$error) {
+			if (is_numeric($error[5])) {
+				$error[5] = "<big><strong>$error[5]</strong></big>";
+			}
+		}
+
+		return true;
+	}
 }
