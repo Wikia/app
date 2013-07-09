@@ -280,18 +280,22 @@
 			this.order = 0;
 			this.count = 0;
 
-			if ( $( this ).is( '.unsortable' ) ) {
+			var thisCached = $( this );
+
+			if ( thisCached.is( '.unsortable' ) ) {
 				this.sortDisabled = true;
 			}
 
 			if ( !this.sortDisabled ) {
 
-				var $th = $( this ).addClass( table.config.cssHeader ).attr( 'title', msg[1])
+				var $th = thisCached.addClass( table.config.cssHeader ).attr( 'title', msg[1] )
+					/* Wikia change */
 					.each( function() {
-						if( !$( this ).find( "div span.chevron" ).length ) {
-							$( this ).append( '<div><span class="chevron"></span><span class="chevron"></span></div>' );
+						if( !thisCached.find( "div .chevron" ).length ) {
+							thisCached.append( '<div><span class="chevron"></span><span class="chevron"></span></div>' );
 						}
 					} );
+					/* Wikia change end */
 
 			}
 
