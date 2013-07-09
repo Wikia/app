@@ -3,10 +3,14 @@
 	<p>{{description}}</p>
 	{{! the <dl> is temporary it will be replaced with rendered components and live preview after UI repo
 	implementation}}
-	<dl>
-		<dt><strong>Required params:</strong></dt>
-		<dd><pre>{{#templateValues.required}}{{ . }}, {{/templateValues.required}}</pre></dd>
-		<dt><strong>Optional params:</strong></dt>
-        <dd><pre>{{#templateValues.optional}}{{ . }}, {{/templateValues.optional}}</pre></dd>
-	</dl>
+	{{#mustacheVars}}
+		{{#fields.name}}{{fields.name}}{{/fields.name}}
+		<dl>
+			<dt><strong>Required params: </strong></dt>
+			<dd><pre>{{#fields.required}}{{ . }}, {{/fields.required}}</pre></dd>
+			<dt><strong>Optional params:</strong></dt>
+			<dd><pre>{{#fields.optional}}{{ . }}, {{/fields.optional}}</pre></dd>
+		</dl>
+		{{#example}}<p>{{{example}}}</p>{{/example}}
+	{{/mustacheVars}}
 </li>

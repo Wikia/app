@@ -9,13 +9,20 @@ class SpecialStyleguideDataModel {
 	private $sectionData;
 
 	public function __construct() {
+		$uiStyleguide = new UIStyleguideComponents();
 		$this->sectionData = [
 			'header' => [
 				'home' => [
 					'mainHeader' => wfMessage( 'styleguide-home-header' )->plain(),
-					'getStartedBtnLink' => '',
-					'getStartedBtnTitle' => wfMessage( 'styleguide-get-started' )->plain(),
-					'getStartedBtnLabel' => wfMessage( 'styleguide-get-started' )->plain(),
+					'getStartedBtn' => UIFactory::getInstance()->init('button')->render([
+						'type' => 'input',
+						'params' => [
+							'type' => 'submit',
+							'name' => 'get-started',
+							'classes' => 'button',
+							'value' => wfMessage( 'styleguide-get-started' )->plain(),
+						],
+					]),
 					'version' => 'Version 1.0.0'
 				],
 				'components' => [
@@ -81,7 +88,7 @@ class SpecialStyleguideDataModel {
 				]
 			],
 			'components' => [
-				'componentsList' => $this->sortComponents( UIFactory::getInstance()->getAllComponents() )
+				'componentsList' => $this->sortComponents( $uiStyleguide->getAllComponents() )
 			]
 		];
 	}

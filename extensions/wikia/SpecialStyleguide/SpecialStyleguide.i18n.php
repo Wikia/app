@@ -41,6 +41,24 @@ $messages['en'] = array(
 	// Components
 	'styleguide-components-header' => 'Components',
 	'styleguide-components-header-tagline' => 'Wikia UI styleguide re-usable elements',
+
+	'styleguide-name-buttons' => 'Buttons',
+	'styleguide-description-button' => 'Description for Button component in Styleguide.',
+	'styleguide-description-link-button' => 'Link Button',
+	'styleguide-description-input-button' => 'Input Button',
+	'styleguide-description-simple-button' => 'Simple Button',
+
+	'styleguide-name-dropdown' => 'Dropdowns',
+	'styleguide-description-dropdown' => 'Description for Dropdown component in Styleguide.',
+
+	'styleguide-name-modal' => 'Modals',
+	'styleguide-description-modal' => 'Description for Modal component in Styleguide.',
+
+	'styleguide-name-thumbnail' => 'Thumbnails',
+	'styleguide-description-thumbnail' => 'Description for Thumbnail component in Styleguide.',
+
+	'styleguide-name-tooltip' => 'Tooltips',
+	'styleguide-description-tooltip' => 'Description for Tooltip component in Styleguide.',
 );
 
 $messages['pl'] = array(
@@ -84,6 +102,24 @@ $messages['pl'] = array(
 	// Components
 	'styleguide-components-header' => 'Komponenty',
 	'styleguide-components-header-tagline' => 'Elementy wielokrotnego użytku Wikia Styleguide',
+
+	'styleguide-name-buttons' => 'Przyciski',
+	'styleguide-description-button' => 'Opis komponentu Przycisk w Wikia Styleguide',
+	'styleguide-description-link-button' => 'Link',
+	'styleguide-description-input-button' => 'Przycisk Input',
+	'styleguide-description-simple-button' => 'Przycisk',
+
+	'styleguide-name-dropdown' => 'Listy rozwijane',
+	'styleguide-description-dropdown' => 'Opis komponentu Lista rozwijana w Wikia Styleguide',
+
+	'styleguide-name-modal' => 'Modale',
+	'styleguide-description-modal' => 'Opis komponentu Modal w Wikia Styleguide',
+
+	'styleguide-name-thumbnail' => 'Miniaturki',
+	'styleguide-description-thumbnail' => 'Opis komponentu Miniaturka w Wikia Styleguide',
+
+	'styleguide-name-tooltip' => 'Podpowiedzi',
+	'styleguide-description-tooltip' => 'Opis komponentu Podpowiedz w Wikia Styleguide',
 );
 
 /** Message documentation (Message documentation)
@@ -121,4 +157,22 @@ $messages['qqq'] = array(
 	// Components
 	'styleguide-components-header' => "Header for Styleguide's components page",
 	'styleguide-components-header-tagline' => "Tagline for Styleguide's components page",
+
+	'styleguide-name-buttons' => 'Name of section which describes Wikia button component, which code is reusable and configurable and may be use by developers.',
+	'styleguide-description-button' => 'Description for Wikia button component, which code is reusable and configurable and may be use by developers.',
+	'styleguide-description-link-button' => 'Description for Wikia button component made from anchor, which code is reusable and configurable and may be use by developers.',
+	'styleguide-description-input-button' => 'Description for Wikia button component made from input selector, which code is reusable and configurable and may be use by developers.',
+	'styleguide-description-simple-button' => 'Description for Wikia button component made from input selector, which code is reusable and configurable and may be use by developers.',
+
+	'styleguide-name-dropdown' => 'Name of section which describes Wikia dropdown component, which code is reusable and configurable and may be use by developers.',
+	'styleguide-description-dropdown' => 'Description for Wikia dropdown component, which code is reusable and configurable and may be use by developers.',
+
+	'styleguide-name-modal' => 'Name of section which describes Wikia modal component, which code is reusable and configurable and may be use by developers.',
+	'styleguide-description-modal' => 'Description for Wikia modal component, which code is reusable and configurable and may be use by developers.',
+
+	'styleguide-name-thumbnail' => 'Name of section which describes Wikia thumbnail component, which code is reusable and configurable and may be use by developers.',
+	'styleguide-description-thumbnail' => 'Description for Wikia thumbnail component, which code is reusable and configurable and may be use by developers.',
+
+	'styleguide-name-tooltip' => 'Name of section which describes Wikia tooltip component, which code is reusable and configurable and may be use by developers.',
+	'styleguide-description-tooltip' => 'Description for Wikia tooltip component, which code is reusable and configurable and may be use by developers.',
 );

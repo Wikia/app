@@ -56,6 +56,7 @@ class GlobalHeaderController extends WikiaController {
 
 	/**
 	 * Generates array of nodes for styleguide top menu bar
+	 * @param int $activeElement
 	 * @return array
 	 */
 	private function getMenuNodes( $activeElement = self::HOME_NODE ) {
