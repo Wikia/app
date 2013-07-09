@@ -188,8 +188,8 @@ describe("Querystring", function () {
 			test1: 'test1',
 			prefixA: 'a',
 			prefixB: 'b',
-			'0': 'val1',
-			'1': 'val2'
+			0: 'val1',
+			1: 'val2'
 		});
 
 
@@ -203,8 +203,8 @@ describe("Querystring", function () {
 			test1: 'test1',
 			prefixA: 'a',
 			prefixB: 'b',
-			'0': 'val1',
-			'1': 'val2',
+			0: 'val1',
+			1: 'val2',
 			prefix0: 'val1',
 			prefix1: 'val2'
 		});
@@ -218,8 +218,8 @@ describe("Querystring", function () {
 			test1: 'test1',
 			prefixA: 'a',
 			prefixB: 'b',
-			'0': 'val1',
-			'1': 'val2',
+			0: 'val1',
+			1: 'val2',
 			prefix0: 'val1',
 			prefix1: 'val2',
 			val: 'val%26val'
@@ -232,8 +232,8 @@ describe("Querystring", function () {
 			test1: 'test1',
 			prefixA: 'a',
 			prefixB: 'b',
-			'0': 'val1',
-			'1': 'val2',
+			0: 'val1',
+			1: 'val2',
 			prefix0: 'val1',
 			prefix1: 'val2',
 			val: 'val%26val'
