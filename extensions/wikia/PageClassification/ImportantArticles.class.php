@@ -28,64 +28,10 @@ class ImportantArticles extends WikiaModel {
 		return $totalCnt/$position;
 	}
 
-	public function getCommonPrefix() {
-		$wikiTopics = $this->getMostImportantTopics();
-		$names = array();
-		foreach ( $wikiTopics as $topic ) {
-						$names[] = $topic['name'];
-		}
-
-		$commonPrefix = new CommonPrefix();
-		$prefix = $commonPrefix->longest( $names );
-
-		return $prefix;
-	}
-
 	public function getImportantPhrasesByInterlinks() {
 
 		$topLinks = $this->getTopLinks();
-		$wikiTopics = $this->getWikiTopics();
-		$topLinksSanitized = array();
-		foreach ( $topLinks as $link ) {
-			$topLinksSanitized[] = str_replace( "_", " ", $link['title'] );
-		}
-		unset( $topLinks );
-
-		$result = $this->fetchCommon( $wikiTopics, $topLinksSanitized, "name" );
-		return $result;
-	}
-
-	private function fetchCommon( &$wikiTopics, &$searchArray, $searchKey = "name" ) {
-
-		$searchArrayCnt = count( $searchArray );
-		$result = array();
-		foreach ( $wikiTopics as $topic ) {
-			$entry = array(
-				"pageId" => $topic->pageId
-			);
-			foreach ( $topic->entities as $entity ) {
-				if ( in_array( $entity->type, array('movie', 'game', 'book') ) ) {
-					$entry["name"] = $entity->name;
-					$entry["type"] = $entity->type;
-					$names[] = $entity->name;
-				}
-			}
-			$entry["score"] = 0;
-			if ( isset( $entry['name'] ) ) {
-				$poz = array_search( $entry[ $searchKey ], $searchArray );
-			} else {
-				$poz = false;
-			}
-			if ( $poz !== false ) {
-				$entry["score"] += $this->getScoreFromPosition( $poz+1, $searchArrayCnt );
-			}
-			if ( isset( $entry["name"]) && $entry["score"] > 0 ) {
-				$result[] = $entry;
-			}
-		}
-		$this->sortResult( $result );
-
-		return $result;
+		return $topLinks;
 	}
 
 	public function getImportantPhrasesByDomainNames() {
@@ -98,49 +44,53 @@ class ImportantArticles extends WikiaModel {
 
 	public function getMostImportantTopics() {
 		// ByTopPages + ByRedirect + ByInterlinks() + DomainNames()
-		$topPages = $this->getImportantPhrasesByTopPages();
-		$pageLinks = $this->getImportantPhrasesByInterlinks();
-		$merged = array();
-		foreach ( $topPages as $r ) {
-			$merged[ $r['name'] ] = $r;
-		}
-		foreach ( $pageLinks as $r ) {
-			if ( isset( $merged[ $r['name'] ] ) ) {
-				$merged[ $r['name'] ]['score'] += $r['score'];
-			} else {
-				$merged[ $r['name'] ] = $r;
-			}
-		}
-		$values = array_values( $merged );
-		unset( $merged );
-		$this->sortResult( $values );
-		return array_slice( $values, 0, 15 );
 	}
 
 	public function getImportantPhrasesByTopPages() {
 
 		$wikiTopics = $this->getWikiTopics();
 		$topArticles = $this->getTopWikiArticles();
-		$result = $this->fetchCommon( $wikiTopics, $topArticles, "pageId" );
+		$topArticlesCnt = count( $topArticles );
+		$result = array();
+		$names = array();
+		foreach ( $wikiTopics as $topic ) {
+			$entry = array(
+				"pageId" => $topic->pageId
+			);
+			foreach ( $topic->entities as $entity ) {
+				//var_dump( $entity );
+				if ( in_array( $entity->type, array('movie', 'game', 'book') ) ) {
+					$entry["name"] = $entity->name;
+					$entry["type"] = $entity->type;
+					$names[] = $entity->name;
+				}
+			}
+			$entry["score"] = 0;
+			$poz = array_search( $topic->pageId, $topArticles );
+			if ( $poz !== false ) {
+				$entry["score"] += $this->getScoreFromPosition( $poz+1, $topArticlesCnt );
+			}
+			if ( isset( $entry["name"]) ) {
+				$result[] = $entry;
+			}
+		}
+		$this->sortResult( $result );
+		$commonPrefix = new CommonPrefix();
+		$result["common"] = $commonPrefix->longest( $names );
 		return $result;
 	}
 
 	protected function sortResult( &$result ) {
 		$scores = array();
-		if ( is_array( $result ) ) {
-			foreach ( $result as $k => $r ) {
-				$scores[ $k ] = $r["score"];
-			}
-			array_multisort( $scores, SORT_DESC, $result );
+		foreach ( $result as $k => $r ) {
+			$scores[ $k ] = $r["score"];
 		}
+		array_multisort( $scores, SORT_DESC, $result );
 	}
 
 	public function getWikiTopics() {
-		if ( empty( $this->wikiTopics ) ) {
-			$topics = $this->api->get( $this->api->getDecisionsEndpoint( $this->wikiId ) );
-			$this->wikiTopics = $topics['response'];
-		}
-		return $this->wikiTopics;
+		$topics = $this->api->get( $this->api->getDecisionsEndpoint( $this->wikiId ) );
+		return $topics['response'];
 	}
 
 	public function getTopWikiArticles() {
@@ -160,7 +110,6 @@ class ImportantArticles extends WikiaModel {
 		foreach ( $articles as $id => $a ) {
 			$articleId[] = $id;
 		}
-
 		return $articleId;
 	}
 
