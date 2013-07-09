@@ -30,9 +30,10 @@ class CommonPrefix {
 	}
 
 	protected function sanitizeString( $str ) {
-		//$str = strtolower( $str );
+		$str = strtolower( $str );
 		$str = preg_replace("/[^a-z0-9]/i", " ", $str );
 		$str = preg_replace("/[ ]{2,}/", " ", $str );
+		$str = preg_replace("/^the /", "", $str );
 		return $str;
 	}
 }

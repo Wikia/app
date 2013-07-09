@@ -13,13 +13,19 @@ class PageClassificationData extends WikiaModel {
 	 */
 	public function getWikiList() {
 
-		//TODO: STUB
-		$wikis = array(
-			array( 'domain' => 'callofduty.wikia.com', 'wikiId' => 123 ),
-			array( 'domain' => 'harrypotter.wikia.com', 'wikiId' => 122 ),
-		);
+		$api = new EntityAPIClient();
+		$api->setLogLevel( 5 );	
+		$response = $api->get( $api->getIndexedWikisEndpoint() );
+		$list = array();
 
-		return $wikis;
+		if ( is_array( $response['response'] ) ) {
+			$wikis = WikiFactory::getWikisByID( $response['response'] );
+			foreach ( $wikis as $wiki ) {
+				$list[] = array( 'domain' => $wiki->city_url, 'wikiId' => $wiki->city_id );
+			}
+		}
+
+		return $list;
 	}
 
 	public function getClassifiedArticles() {
