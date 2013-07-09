@@ -4,10 +4,8 @@
 @import "skins/oasis/css/mixins/gradient";
 @import "skins/oasis/css/mixins/opacity";
 
-/*****************************
-Primary & Secondary Wikia Buttons
-These buttons are used everywhere on our wikis.
-******************************/
+// Primary & Secondary Wikia Buttons
+// These buttons are used everywhere on our wikis.
 a.wikia-button,
 input[type="submit"],
 input[type="reset"],
@@ -75,7 +73,7 @@ button {
 	}
 }
 
-// Border-box model: Inputs and buttons count border as part of height. Increase height. //
+// Border-box model: Inputs and buttons count border as part of height. Increase height.
 input[type="submit"],
 input[type="reset"],
 input[type="button"],
@@ -84,7 +82,7 @@ button {
 }
 
 
-// Fix Mozilla Button Sizing //
+// Fix Mozilla Button Sizing
 input[type="submit"]::-moz-focus-inner,
 input[type="reset"]::-moz-focus-inner,
 input[type="button"]::-moz-focus-inner,
