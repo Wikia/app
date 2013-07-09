@@ -289,7 +289,7 @@
 			if ( !this.sortDisabled ) {
 
 				var $th = thisCached.addClass( table.config.cssHeader ).attr( 'title', msg[1] )
-					/* Wikia change */
+					/* Wikia change - check whether arrows already exists before appending */
 					.each( function() {
 						if( !thisCached.find( "div .chevron" ).length ) {
 							thisCached.append( '<div><span class="chevron"></span><span class="chevron"></span></div>' );
