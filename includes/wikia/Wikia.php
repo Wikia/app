@@ -2000,14 +2000,25 @@ class Wikia {
 	}
 
 	/**
-	 * @desc Add assets to AssetsManager depending on asset type
+	 * @desc Adds assets to OutputPage depending on asset type
 	 *
-	 * @param $assetName
-	 * @param $type
-	 * @param bool $local
+	 * @param mixed $assetName the name of a configured package or path to an asset file or an array of them
+	 * @param bool $local [OPTIONAL] whether to fetch per-wiki local URLs,
+	 * (false by default, i.e. the method returns a shared host URL's for our network);
+	 * please note that this parameter has no effect on SASS assets, those will always produce shared host URL's.
+	 *
+	 * @example Wikia::addAssetsToOutput('path/to/asset/file/assetName.scss')
+	 * @example Wikia::addAssetsToOutput('assetName')
+	 * (assetName should be set in includes/wikia/AssetsManager/config.php)
+	 * @example	Wikia::addAssetsToOutput([
+	 * 		'path/to/asset/file/assetName.scss',
+	 * 		'path/to/other/asset/file/assetJS.js'
+	 * ])
 	 */
-	public static function addAssetsToAssetsManager( $assetName, $type, $local = false ) {
+	public static function addAssetsToOutput( $assetName, $local = false ) {
 		$app = F::app();
+
+		$type = false;
 
 		$sources = AssetsManager::getInstance()->getURL( $assetName, $type, $local );
 

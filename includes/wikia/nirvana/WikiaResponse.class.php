@@ -464,19 +464,15 @@ class WikiaResponse {
 	}
 
 	/**
-	 * Add an asset to the current response
+	 * @desc Adds an asset to the current response
 	 *
-	 * @param mixed $assetName the name of a configured package or path to an asset file or an array of them
-	 * @param bool $local [OPTIONAL] whether to fetch per-wiki local URLs,
-	 * (false by default, i.e. the method returns a shared host URL's for our network);
-	 * please note that this parameter has no effect on SASS assets, those will always produce shared host URL's.
+	 * @see Wikia::addAssetsToOutput
 	 */
 	public function addAsset( $assetName, $local = false ){
 		wfProfileIn( __METHOD__ );
-		$type = false;
 
 		if ( $this->format == 'html' ) {
-			Wikia::addAssetsToAssetsManager( $assetName, $type, $local );
+			Wikia::addAssetsToOutput( $assetName, $local );
 		}
 
 		wfProfileOut( __METHOD__ );
