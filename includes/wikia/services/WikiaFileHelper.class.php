@@ -323,6 +323,7 @@ class WikiaFileHelper extends Service {
 	 * @return FilePageMobile|FilePageTabbed|WikiaFilePage
 	 */
 	public static function getMediaPage( $fileTitle ) {
+		global $wgEnableVideoPageRedesign;
 		if ( F::app()->checkSkin( 'oasis' ) && !empty( $wgEnableVideoPageRedesign ) ) {
 			$mediaPage = new FilePageTabbed( $fileTitle );
 		} else if ( F::app()->checkSkin( 'wikiamobile' ) ) {
