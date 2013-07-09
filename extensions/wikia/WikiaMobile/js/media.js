@@ -57,7 +57,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		videoInstance,
 		events = {},
 		skip = [],
-		MIN_MEDIA_WIDTH = 30;
+		MIN_MEDIA_WIDTH = 30,
+		mediaTitles = [];
 
 	function trigger(event, data){
 		if(events[event]){
@@ -98,6 +99,12 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 				while(imageData = data[j++]){
 					name = imageData.name;
+
+					// De-dupe
+					if ( mediaTitles.indexOf( name ) > -1 ) {
+						continue;
+					}
+					mediaTitles.push( name );
 
 					if (name === shrImg) {shrImg = imagesLength;}
 
