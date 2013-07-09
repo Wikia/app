@@ -396,7 +396,7 @@ class ArticlesApiController extends WikiaApiController {
 	 * @requestParam integer $width [OPTIONAL] The desired width for the thumbnail, defaults to 200, 0 for no thumbnail
 	 * @requestParam integer $height [OPTIONAL] The desired height for the thumbnail, defaults to 200, 0 for no thumbnail
 	 *
-	 * @responseParam array $items A list of results with the article ID as the index, each item has a title, url, revision, namespace ID, comments (if ArticleComments is enabled on the wiki), abstract (if available), thumbnail (if available), type property and type depending properties, for images its dimension array with width and height, for videos it provider_data which consist title, description and duration
+	 * @responseParam array $items A list of results with the article ID as the index, each item has a title, url, revision, namespace ID, comments (if ArticleComments is enabled on the wiki), abstract (if available), thumbnail (if available), original_dimensions and type property, for videos it also includes metadata which consist title, description and duration
 	 * @responseParam string $basepath domain of a wiki to create a url for an article
 	 *
 	 * @example &ids=2187,23478&abstract=200&width=300&height=150
