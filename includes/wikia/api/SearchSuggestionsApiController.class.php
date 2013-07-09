@@ -28,7 +28,8 @@ class SearchSuggestionsApiController extends WikiaApiController {
 				throw new MissingParameterApiException( self::PARAMETER_QUERY );
 			}
 
-			$request = new DerivativeRequest($this->wg->Request, ['format' => 'array']);
+			$request = new WebRequest();
+			$request->setVal('format', 'array');
 
 			$linkSuggestions = LinkSuggest::getLinkSuggest( $request );
 
