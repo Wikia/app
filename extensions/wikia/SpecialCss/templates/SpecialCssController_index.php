@@ -29,6 +29,14 @@
 					'dropdown' => $dropdown
 				)
 			) ?>
+			<?= F::app()->renderView('CommentsLikes',
+				'Index',
+				array(
+					'title' => $cssFileTitle,
+					'comments' => $cssFileCommentsCount
+				)
+			); ?>
+
 		</div>
 
 		<?php if( !empty($cssUpdates) ): ?>

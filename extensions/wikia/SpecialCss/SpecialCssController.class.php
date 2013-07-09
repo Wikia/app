@@ -61,6 +61,11 @@ class SpecialCssController extends WikiaSpecialPageController {
 			);
 		}
 
+		// get url and number of comments for Talk button
+		$service = new PageStatsService($model->getCssFileArticleId());
+		$this->cssFileTitle = $model->getCssFileTitle();
+		$this->cssFileCommentsCount = $service->getCommentsCount();
+
 		$this->cssUpdates = $model->getCssUpdatesData();
 		$this->cssUpdatesUrl = $model->getCssUpdatesUrl();
 		$this->dropdown = $this->createButtonLinks();
