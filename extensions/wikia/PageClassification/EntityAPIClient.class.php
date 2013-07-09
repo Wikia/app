@@ -9,6 +9,12 @@ class EntityAPIClient {
 	protected $classifierEndpoint = "http://db-sds-s2:8081/graph-0.3.1/classifications/";
 	protected $saveEndpoint = "http://db-sds-s2:8081/knowledge-0.2.1/entitycollections";
 	protected $decisionsEndpoint = "http://db-sds-s2:8081/knowledge-0.2.1/decisions/";
+	protected $indexedWikisEndpoint = "http://db-sds-s2:8081/knowledge-0.2.1/wikis/";
+
+
+	public function getIndexedWikisEndpoint() {
+		return $this->indexedWikisEndpoint;
+	}
 
 	public function getClassifierEndpoint( $wikiUrl, $pageTitle ) {
 		return $this->classifierEndpoint .urldecode( $wikiUrl ).'/'.$pageTitle;
