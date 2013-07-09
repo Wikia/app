@@ -3,6 +3,7 @@
 class WikiService extends WikiaModel {
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	const IMAGE_HEIGHT_KEEP_ASPECT_RATIO = -1;
+	const TOPUSER_CACHE_VALID = 10800;
 
 	static $botGroups = array('bot', 'bot-global');
 	protected $cityVisualizationObject = null;
@@ -192,33 +193,51 @@ class WikiService extends WikiaModel {
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 
+		$key = wfSharedMemcKey( 'wiki_top_editors', $wikiId, $excludeBots );
 		$topEditors = WikiaDataAccess::cache(
-			wfSharedMemcKey( 'wiki_top_editors', $wikiId, $excludeBots ),
-			60 * 60 * 3,
-			function() use ($wikiId, $limit, $excludeBots) {
-				$topEditors = array();
-
-				$db = wfGetDB( DB_SLAVE, array(), 'specials' );
-
-				$result = $db->select(
-					array( 'events_local_users' ),
-					array( 'user_id', 'edits', 'all_groups' ),
-					array( 'wiki_id' => $wikiId, 'edits != 0' ),
-					__METHOD__,
-					array( 'ORDER BY' => 'edits desc', 'LIMIT' => $limit )
-				);
-
-				while( $row = $db->fetchObject($result) ) {
-					if (!($excludeBots && $this->isBotGroup($row->all_groups))) {
-						$topEditors[$row->user_id] = intval( $row->edits );
-					}
-				}
-
-				return $topEditors;
+			$key,
+			static::TOPUSER_CACHE_VALID,
+			function() use ( $wikiId, $limit, $excludeBots ) {
+				return $this->getTopEditorsFromDB( $wikiId, $limit, $excludeBots );
 			}
 		);
 
+		if ( count( $topEditors ) >= $limit ) {
+			return array_slice( $topEditors, 0, $limit, true );
+		} else {
+			$topEditors = WikiaDataAccess::cache(
+				$key,
+				static::TOPUSER_CACHE_VALID,
+				function() use ( $wikiId, $limit, $excludeBots ) {
+					return $this->getTopEditorsFromDB( $wikiId, $limit, $excludeBots );
+				},
+				WikiaDataAccess::REFRESH_CACHE
+			);
+		}
+
 		wfProfileOut( __METHOD__ );
+
+		return $topEditors;
+	}
+
+	protected function getTopEditorsFromDB( $wikiId, $limit, $excludeBots ) {
+		$topEditors = array();
+
+		$db = wfGetDB( DB_SLAVE, array(), 'specials' );
+
+		$result = $db->select(
+			array( 'events_local_users' ),
+			array( 'user_id', 'edits', 'all_groups' ),
+			array( 'wiki_id' => $wikiId, 'edits != 0' ),
+			__METHOD__,
+			array( 'ORDER BY' => 'edits desc', 'LIMIT' => $limit )
+		);
+
+		while( $row = $db->fetchObject($result) ) {
+			if (!($excludeBots && $this->isBotGroup($row->all_groups))) {
+				$topEditors[$row->user_id] = intval( $row->edits );
+			}
+		}
 
 		return $topEditors;
 	}
