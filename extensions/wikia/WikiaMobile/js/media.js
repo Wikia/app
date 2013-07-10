@@ -82,7 +82,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		while(element = elements[i++]) {
 
 			// exclude super small images from modal
-			if ( element.offsetWidth < MIN_MEDIA_WIDTH ) {
+			if ( element.width < MIN_MEDIA_WIDTH ) {
 				continue;
 			}
 
@@ -159,7 +159,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				event.stopPropagation();
 
 				// if the image is super small, do nothing when it's clicked
-				if ( t.offsetWidth < MIN_MEDIA_WIDTH ) {
+				if ( t.width < MIN_MEDIA_WIDTH ) {
 					return false;
 				}
 
