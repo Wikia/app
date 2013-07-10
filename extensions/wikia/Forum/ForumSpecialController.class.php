@@ -92,7 +92,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumBoardEdit.scss' );
 		$this->response->addAsset( 'extensions/wikia/Forum/js/ForumBoardEdit.js' );
 
-		$this->boards = (new Forum)->getBoardList( DB_SLAVE, true );
+		$this->boards = (new Forum)->getBoardList( DB_SLAVE );
 
 		wfProfileOut( __METHOD__ );
 	}
