@@ -22,7 +22,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 * Threshold used with duration to constrain matches
 	 * @var float
 	 */
-	const MIN_JACCARD_SIMILARITY = 0.4;
+	const MIN_JACCARD_SIMILARITY = 0.7;
 	
 	const VIDEOS_PER_PAGE = 10;
 	const THUMBNAIL_WIDTH = 500;
