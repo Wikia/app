@@ -4,6 +4,7 @@ class WikiService extends WikiaModel {
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	const IMAGE_HEIGHT_KEEP_ASPECT_RATIO = -1;
 	const TOPUSER_CACHE_VALID = 10800;
+	const TOPUSER_LIMIT = 150;
 
 	static $botGroups = array('bot', 'bot-global');
 	protected $cityVisualizationObject = null;
@@ -198,26 +199,12 @@ class WikiService extends WikiaModel {
 			$key,
 			static::TOPUSER_CACHE_VALID,
 			function() use ( $wikiId, $limit, $excludeBots ) {
-				return $this->getTopEditorsFromDB( $wikiId, $limit, $excludeBots );
+				return $this->getTopEditorsFromDB( $wikiId, static::TOPUSER_LIMIT, $excludeBots );
 			}
 		);
 
-		if ( count( $topEditors ) >= $limit ) {
-			return array_slice( $topEditors, 0, $limit, true );
-		} else {
-			$topEditors = WikiaDataAccess::cache(
-				$key,
-				static::TOPUSER_CACHE_VALID,
-				function() use ( $wikiId, $limit, $excludeBots ) {
-					return $this->getTopEditorsFromDB( $wikiId, $limit, $excludeBots );
-				},
-				WikiaDataAccess::REFRESH_CACHE
-			);
-		}
-
 		wfProfileOut( __METHOD__ );
-
-		return $topEditors;
+		return array_slice( $topEditors, 0, $limit, true );
 	}
 
 	protected function getTopEditorsFromDB( $wikiId, $limit, $excludeBots ) {
