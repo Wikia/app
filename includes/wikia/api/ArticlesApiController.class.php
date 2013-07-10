@@ -26,6 +26,11 @@ class ArticlesApiController extends WikiaApiController {
 	const DETAILS_CACHE_ID = 'details';
 	const PAGE_CACHE_ID = 'page';
 
+	const ARTICLE_TYPE = 'article';
+	const VIDEO_TYPE = 'video';
+	const IMAGE_TYPE = 'image';
+	const CATEGORY_TYPE = 'category';
+
 	/**
 	 * Get the top articles by pageviews optionally filtering by category and/or namespaces
 	 *
@@ -391,7 +396,7 @@ class ArticlesApiController extends WikiaApiController {
 	 * @requestParam integer $width [OPTIONAL] The desired width for the thumbnail, defaults to 200, 0 for no thumbnail
 	 * @requestParam integer $height [OPTIONAL] The desired height for the thumbnail, defaults to 200, 0 for no thumbnail
 	 *
-	 * @responseParam array $items A list of results with the article ID as the index, each item has a title, url, revision, namespace ID, comments (if ArticleComments is enabled on the wiki), abstract (if available), thumbnail (if available) property
+	 * @responseParam array $items A list of results with the article ID as the index, each item has a title, url, revision, namespace ID, comments (if ArticleComments is enabled on the wiki), abstract (if available), thumbnail (if available), original_dimensions and type property, for videos it also includes metadata which consist title, description and duration
 	 * @responseParam string $basepath domain of a wiki to create a url for an article
 	 *
 	 * @example &ids=2187,23478&abstract=200&width=300&height=150
@@ -455,9 +460,16 @@ class ArticlesApiController extends WikiaApiController {
 				}
 			}
 		}
-
 		if ( !empty( $titles ) ) {
 			foreach ( $titles as $t ) {
+				$fileData = [];
+				if ( $t->getNamespace() == 6 ) {
+					$fileData = $this->getFromFile( $t->getText() );
+				} elseif ( $t->getNamespace() == 0 ) {
+					$fileData = [ 'type' => static::ARTICLE_TYPE ];
+				} elseif ( $t->getNamespace() == 14 ) {
+					$fileData = [ 'type' => static::CATEGORY_TYPE ];
+				}
 				$id = $t->getArticleID();
 				$revId = $t->getLatestRevID();
 				$rev = Revision::newFromId( $revId );
@@ -476,6 +488,8 @@ class ArticlesApiController extends WikiaApiController {
 					];
 
 					$collection[$id]['comments'] = ( class_exists( 'ArticleCommentList' ) ) ? ArticleCommentList::newFromTitle( $t )->getCountAllNested() : false;
+					//add file data
+					$collection[$id] = array_merge( $collection[ $id ], $fileData );
 
 					$this->wg->Memc->set( self::getCacheKey( $id, self::DETAILS_CACHE_ID ), $collection[$id], 86400 );
 				}
@@ -514,6 +528,7 @@ class ArticlesApiController extends WikiaApiController {
 
 			$details['abstract'] = $snippet;
 			$details['thumbnail'] = ( array_key_exists( $id, $thumbnails ) ) ? $thumbnails[$id][0]['url'] : null;
+			$details['original_dimensions'] = ( array_key_exists( $id, $thumbnails ) && isset( $thumbnails[$id][0]['original_dimensions'] ) ) ? $thumbnails[$id][0]['original_dimensions'] : null;
 		}
 
 		$thumbnails = null;
@@ -528,6 +543,35 @@ class ArticlesApiController extends WikiaApiController {
 
 		$collection = null;
 		wfProfileOut( __METHOD__ );
+	}
+
+	protected function getFromFile( $title ) {
+		$file = wfFindFile( $title );
+		if ( $file instanceof WikiaLocalFile ) {
+			//media type: photo, video
+			$typeInfo = explode( '/', $file->getMimeType() );
+			if ( isset( $typeInfo[ 0 ] ) ) {
+				//if video: title, description. length, thumbnail, provider
+				if ( $typeInfo[ 0 ] == static::VIDEO_TYPE ) {
+					$metadata = unserialize( $file->getMetadata() );
+					return [
+						'type' => static::VIDEO_TYPE,
+						'provider' => $typeInfo[1],
+						'metadata' => [
+							'title' => $metadata[ 'title' ],
+							'description' => $metadata[ 'description' ],
+							'duration' => $metadata[ 'duration' ]
+						]
+					];
+				//if image: orignal img height and width
+				} elseif ( $typeInfo[ 0 ] == static::IMAGE_TYPE ) {
+					return [
+						'type' => static::IMAGE_TYPE
+					];
+				}
+			}
+		}
+		return [];
 	}
 
 	/**
