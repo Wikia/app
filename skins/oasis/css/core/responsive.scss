@@ -301,10 +301,20 @@ body > .global-notification,
 	width: 100%;
 }
 
+.oasis-one-column .WikiaMainContent {
+	margin-right: -$width-gutter;
+	width: 100%;
+}
+
 .WikiaMainContentContainer {
 	background-color: $color-page;
 	margin-right: $width-rail + $width-padding;
 	padding: 0 $width-padding;
+}
+
+.oasis-one-column .WikiaMainContentContainer {
+	margin-right: 0;
+	position: relative;
 }
 
 .WikiaPageHeader,
@@ -401,6 +411,10 @@ body > .global-notification,
 
 	.WikiNav li.nav-item:first-child {
 		margin-left: 10px;
+	}
+
+	.WikiaMainContentContainer .WikiaSearch {
+		display: none;
 	}
 
 	.WikiHeaderSearch {

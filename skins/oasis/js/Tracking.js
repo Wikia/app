@@ -312,6 +312,7 @@ jQuery(function($){
 
 	(function() {
 		var category = 'search',
+			suggestionShowed = false,
 			$wikiaSearch = $('.WikiaSearch');
 
 		$wikiaSearch.on('mousedown', '.autocomplete', {
@@ -320,16 +321,18 @@ jQuery(function($){
 		}, trackWithEventData).on('mousedown', '.wikia-button', function(e) {
 			// Prevent tracking 'fake' form submission clicks
 			if (e.which === 1 && e.clientX > 0) {
+				var label = !suggestionShowed ? 'search-button' : 'search-after-suggest-button';
 				track({
 					category: category,
-					label: 'search-button'
+					label: label
 				});
 			}
 		}).on('keypress', '[name=search]', function(e) {
 			if ( e.which === 13 && $(this).is(':focus') ) {
+				var label = !suggestionShowed ? 'search-enter' : 'search-after-suggest-enter';
 				track({
 					category: category,
-					label: 'search-enter'
+					label: label
 				});
 			}
 		}).on('suggestEnter', {
@@ -339,7 +342,11 @@ jQuery(function($){
 			action: Wikia.Tracker.ACTIONS.VIEW,
 			category: category,
 			label: 'search-suggest-show'
-		}, trackWithEventData);
+		}, function(e) {
+				suggestionShowed = true;
+				trackWithEventData(e);
+			}
+		);
 
 		if ($body.hasClass('page-Special_Search')) {
 			category = 'special-' + category;

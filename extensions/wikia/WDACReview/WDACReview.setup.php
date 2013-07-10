@@ -10,7 +10,7 @@
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'WDAC Review',
 	'descriptionmsg' => 'wdacreview-tool-description',
-	'authors' => array(
+	'author' => array(
 		"[http://community.wikia.com/wiki/User:R-Frank Kamil 'R-Frank' Koterba]"
 	),
 );
@@ -27,7 +27,6 @@ $wgSpecialPages['WDACReview'] = 'WDACReviewSpecialController';
 // rights
 $wgAvailableRights[] = 'wdacreview';
 $wgGroupPermissions['util']['wdacreview'] = true;
-$wgGroupPermissions['vstf']['wdacreview'] = true;
 
 $wgGroupPermissions['wdacreviewer']['wdacreview'] = true;
 $wgGroupPermissions['wdacreviewer']['edit'] = false;

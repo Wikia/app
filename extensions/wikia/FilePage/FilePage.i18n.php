@@ -281,6 +281,7 @@ $messages['hu'] = array(
 $messages['id'] = array(
 	'video-page-global-file-list-header' => 'Muncul pada wiki ini',
 	'video-page-from-provider' => 'Dari $1',
+	'video-page-description-heading' => 'Deskripsi',
 	'video-page-add-description-link-text' => 'Tambahkan deskripsi.',
 	'video-page-default-description-header-and-text' => '==Deskripsi==
 Masukkan deskripsi di sini.',
@@ -292,6 +293,22 @@ Masukkan deskripsi di sini.',
  */
 $messages['it'] = array(
 	'video-page-description-heading' => 'Descrizione',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'video-page-from-provider' => 'Vu(n) $1',
+	'video-page-description-heading' => 'Beschreiwung',
+	'video-page-description-zero-state' => 'Et ass nach keng Beschreiwung do.',
+	'video-page-add-description-link-text' => 'Eng Beschreiwung derbäisetzen.',
+	'video-page-default-description-header-and-text' => "== Beschreiwung ==
+Gitt d'Beschreiwung hei an.",
+	'video-page-file-list-pagination' => '$1 vu(n) $2',
+	'file-page-replace-button' => 'Ersetzen',
+	'file-page-tab-about' => 'Iwwer',
+	'file-page-more-links' => 'Ganz Lëscht weisen',
 );
 
 /** Macedonian (македонски)

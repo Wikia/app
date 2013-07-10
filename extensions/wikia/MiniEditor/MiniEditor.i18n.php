@@ -12,13 +12,15 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'minieditor-specialpage-title' => 'Browser title for the page',
 	'minieditor-new-heading' => 'Heading of a form area',
 	'minieditor-placeholder-new' => 'Placeholder text, showin in an input field, disappears when clicked',
 	'minieditor-message-edit' => 'Notification text shown when a message is being edited (as opposed to created)',
-	'minieditor-reply' => 'Button text for replying to a message',
+	'minieditor-reply' => 'Button text for replying to a message.
+{{Identical|Reply}}',
 	'minieditor-placeholder-reply' => 'Placeholder text, showin in an input field, disappears when clicked',
 );
 

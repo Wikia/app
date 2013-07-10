@@ -330,6 +330,13 @@ $messages['el'] = array(
 	'categoryselect-tooltip-add' => 'Πατήστε Enter όταν γίνει', # Fuzzy
 );
 
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'categoryselect-modal-category-sortkey' => 'Optionally, you may alphabetise this page on the "$1" category page under the name:',
+);
+
 /** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
