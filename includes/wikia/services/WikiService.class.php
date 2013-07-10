@@ -194,39 +194,34 @@ class WikiService extends WikiaModel {
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 
-		$key = wfSharedMemcKey( 'wiki_top_editors', $wikiId, $excludeBots );
 		$topEditors = WikiaDataAccess::cache(
-			$key,
+			wfSharedMemcKey( 'wiki_top_editors', $wikiId, $excludeBots ),
 			static::TOPUSER_CACHE_VALID,
 			function() use ( $wikiId, $limit, $excludeBots ) {
-				return $this->getTopEditorsFromDB( $wikiId, static::TOPUSER_LIMIT, $excludeBots );
+				$topEditors = array();
+
+				$db = wfGetDB( DB_SLAVE, array(), 'specials' );
+
+				$result = $db->select(
+					array( 'events_local_users' ),
+					array( 'user_id', 'edits', 'all_groups' ),
+					array( 'wiki_id' => $wikiId, 'edits != 0' ),
+					__METHOD__,
+					array( 'ORDER BY' => 'edits desc', 'LIMIT' => $limit )
+				);
+
+				while( $row = $db->fetchObject($result) ) {
+					if (!($excludeBots && $this->isBotGroup($row->all_groups))) {
+						$topEditors[$row->user_id] = intval( $row->edits );
+					}
+				}
+
+				return $topEditors;
 			}
 		);
 
 		wfProfileOut( __METHOD__ );
 		return array_slice( $topEditors, 0, $limit, true );
-	}
-
-	protected function getTopEditorsFromDB( $wikiId, $limit, $excludeBots ) {
-		$topEditors = array();
-
-		$db = wfGetDB( DB_SLAVE, array(), 'specials' );
-
-		$result = $db->select(
-			array( 'events_local_users' ),
-			array( 'user_id', 'edits', 'all_groups' ),
-			array( 'wiki_id' => $wikiId, 'edits != 0' ),
-			__METHOD__,
-			array( 'ORDER BY' => 'edits desc', 'LIMIT' => $limit )
-		);
-
-		while( $row = $db->fetchObject($result) ) {
-			if (!($excludeBots && $this->isBotGroup($row->all_groups))) {
-				$topEditors[$row->user_id] = intval( $row->edits );
-			}
-		}
-
-		return $topEditors;
 	}
 
 	public function isBotGroup($groups) {
