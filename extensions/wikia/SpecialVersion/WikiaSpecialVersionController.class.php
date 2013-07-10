@@ -44,7 +44,7 @@ class WikiaSpecialVersionController extends WikiaSpecialPageController
 		$this->setVal( 'wikiaConfigMessage', wfMessage( 'wikia-version-config' )->text() );
 		$this->setVal( 'wikiaConfigVersion', $this->version->getWikiaConfigVersion() );
 		$this->setVal( 'versionLicenseMessage', wfMessage( 'version-license' )->text() );
-		$this->setVal( 'versionLicenseInfoMessage', wfMessage( 'version-license-info' )->text() );
+		$this->setVal( 'versionLicenseInfoMessage', wfMessage( 'version-license-info' )->parse() );
 		$this->setVal( 'versionSoftwareMessage', wfMessage( 'version-software' )->text() );
 		$this->setVal( 'versionSoftwareProductMessage', wfMessage( 'version-software-product' )->text() );
 		$this->setVal( 'versionSoftwareVersionMessage', wfMessage( 'version-software-version' )->text() );
