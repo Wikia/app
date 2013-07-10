@@ -1,15 +1,25 @@
 /**
  * Provides ids of search related A/B test groups.
  */
-define('SearchAbTest.Context' ,['wikia.window', 'wikia.log', 'wikia.querystring'], function( window, log, querystring ) {
+define( 'SearchAbTest.Context' ,[
+		'wikia.window',
+		'wikia.log',
+		'wikia.querystring'
+	], function( window, log, querystring ) {
 	'use strict';
 	// IF AbTests are absent THEN return dummy
 	if ( !window || !window.Wikia || !window.Wikia.AbTest ) {
-		log('AbTest is not present. Fallback to dummy SearchAbTest.GroupProvider', log.levels.debug, 'search');
+		log( 'AbTest is not present. Fallback to dummy SearchAbTest.GroupProvider', log.levels.debug, 'search' );
 		return {
-			getAbTestGroups: function() { return []; },
-			getAbTestParameters: function() { return {}; },
-			getQueryParameters: function() { return {}; }
+			getAbTestGroups: function() {
+				return [];
+			},
+			getAbTestParameters: function() {
+				return {};
+			},
+			getQueryParameters: function() {
+				return {};
+			}
 		};
 	}
 	var AbTest = window.Wikia.AbTest;
@@ -24,9 +34,10 @@ define('SearchAbTest.Context' ,['wikia.window', 'wikia.log', 'wikia.querystring'
 		var searchExperiments = [];
 		var experiments = AbTest.getExperiments();
 		for( var i = 0; i < experiments.length; i++ ) {
-			if( experiments[i] && experiments[i].name && experiments[i].name.toUpperCase().indexOf('SEARCH') === 0 ) {
+			var experiment = experiments[i];
+			if( experiment && experiment.name && experiment.name.toUpperCase().indexOf('SEARCH') === 0 ) {
 				// all experiments with name starting with search are considered search related
-				searchExperiments.push(experiments[i]);
+				searchExperiments.push(experiment);
 			}
 		}
 		return searchExperiments;
@@ -61,7 +72,7 @@ define('SearchAbTest.Context' ,['wikia.window', 'wikia.log', 'wikia.querystring'
 		/**
 		 * Returns parameters related to A/B testing.
 		 * That is all parameters that starts with AbTest.* and ab parameter
-		 * @returns {{}}
+		 * @returns {Object}
 		 */
 		getAbTestParameters: function() {
 			var parameters = {};

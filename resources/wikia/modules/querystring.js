@@ -129,11 +129,15 @@
 		 *
 		 * @public
 		 *
-		 * @return {{}}
+		 * @return {Object}
 		 */
 		p.getVals = function () {
-			return this.cache;
-		}
+			var cacheCopy = {};
+			for( var param in this.cache ) {
+				cacheCopy[param] = this.cache[param];
+			}
+			return cacheCopy;
+		};
 
 
 		/**
@@ -191,7 +195,7 @@
 		p.clearVals = function() {
 			this.cache = {};
 			return this;
-		}
+		};
 
 		/**
 		 * @return {String} a hash from URL

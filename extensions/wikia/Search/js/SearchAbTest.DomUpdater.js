@@ -1,7 +1,7 @@
-define('SearchAbTest.DomUpdater' ,['jquery', 'wikia.log'], function( $, log ) {
+define( 'SearchAbTest.DomUpdater', ['jquery', 'wikia.log'], function( $, log ) {
 	'use strict';
-	var searchPaginationLinksSelector = '.wikia-paginator a.paginator-page, .search-tabs a, a.paginator-next, a.paginator-prev'
-		,searchFormsSelector = 'form.WikiaSearch';
+	var searchPaginationLinksSelector = '.wikia-paginator a.paginator-page, .search-tabs a, a.paginator-next, a.paginator-prev',
+		searchFormsSelector = 'form.WikiaSearch';
 
 	return {
 		/**
@@ -12,8 +12,10 @@ define('SearchAbTest.DomUpdater' ,['jquery', 'wikia.log'], function( $, log ) {
 			 * Perform dom update
 			 * @param params
 			 */
-			update: function(params) {
-				if( !params ) return;
+			update: function( params ) {
+				if( !params ) {
+					return;
+				}
 				var self = this;
 				$(searchPaginationLinksSelector).each(function() {
 					var originalLink = $(this).attr('href');
@@ -59,8 +61,10 @@ define('SearchAbTest.DomUpdater' ,['jquery', 'wikia.log'], function( $, log ) {
 			 * perform dom update.
 			 * @param params
 			 */
-			update: function(params) {
-				if( !params ) return;
+			update: function( params ) {
+				if( !params ) {
+					return;
+				}
 				var $searchForms = $(searchFormsSelector);
 				for( var paramName in params ) {
 					var newInput = '<input type="hidden" name="' + paramName + '" value="' + params[paramName] + '">';

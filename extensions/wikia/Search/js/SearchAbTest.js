@@ -3,8 +3,12 @@
  * This file contains modules responsible for passing A/B testing related parameters to php backend.
  * We do that by modifying dom. We add some parameters to search related forms and links.
  */
-require(['wikia.window', 'SearchAbTest.Context', 'SearchAbTest.DomUpdater', 'wikia.log']
-	, function( window, context, domUpdater, log )  {
+require([
+		'wikia.window',
+		'SearchAbTest.Context',
+		'SearchAbTest.DomUpdater',
+		'wikia.log'
+	], function( window, context, domUpdater, log )  {
 	'use strict';
 	var abGroupParameterName = 'ab';
 
@@ -36,7 +40,7 @@ require(['wikia.window', 'SearchAbTest.Context', 'SearchAbTest.DomUpdater', 'wik
 		/**
 		 * use all updaters to enforce parameters
 		 */
-		for( var i in updaters ) {
+		for( var i = 0; i < updaters.size(); i++ ) {
 			updaters[i].update(parametersToEnforce);
 		}
 	}
