@@ -7,6 +7,7 @@
 		<th>Wiki Topics by top pages</th>
 		<th>Wiki Topics by links</th>
 		<th>Wiki Topics by redirects</th>
+		<th>Wiki Topics by domains</th>
 		<th>Wiki Topics merged</th>
 	</tr>
 		<td valign="top">
@@ -27,6 +28,15 @@
 		</td>
 		<td valign="top">
 
+		</td>
+
+		<td valign="top">
+			<ul>
+				<?php 	foreach ( $importantByDomainNames as $imp ) {
+					echo '<li>'	. $imp . '</li>';
+				}
+				?>
+			</ul>
 		</td>
 		<td valign="top">
 			<ul>

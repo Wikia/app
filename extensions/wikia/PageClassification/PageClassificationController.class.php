@@ -40,12 +40,14 @@ class PageClassificationController extends WikiaSpecialPageController {
 		$importantByTopPages = $important->getImportantPhrasesByTopPages();
 		$importantByLinks = $important->getImportantPhrasesByInterlinks();
 		$commonPrefix = $important->getCommonPrefix();
+		$importantByDomainNames = $important->getImportantPhrasesByDomainNames();
 		$merged = $important->getMostImportantTopics();
 
 		$this->setVal( 'wikiTopics', $wikiTopics );
 		$this->setVal( 'importantByTopPages', $importantByTopPages );
 		$this->setVal( 'importantByLinks', $importantByLinks );
 		$this->setVal( 'commonPrefix', $commonPrefix );
+		$this->setVal( 'importantByDomainNames', $importantByDomainNames);
 		$this->setVal( 'merged', $merged );
 
 		$this->overrideTemplate('pageList');
