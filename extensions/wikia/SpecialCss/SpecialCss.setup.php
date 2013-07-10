@@ -20,14 +20,10 @@ $wgExtensionCredits['specialpage'][] = array(
 // models
 $wgAutoloadClasses['SpecialCssModel'] =  $dir . 'SpecialCssModel.class.php';
 $wgAutoloadClasses['SpecialCssHooks'] =  $dir . 'SpecialCssHooks.class.php';
+$wgAutoloadClasses['SpecialCssController'] =  $dir . 'SpecialCssController.class.php';
 
-// classes
-/** @noinspection PhpDeprecationInspection */
-F::app()->registerController(
-	'SpecialCssController', 
-	$dir . 'SpecialCssController.class.php',
-	['index' => ["notSkin" => SpecialCssModel::$supportedSkins, "method" => "unsupportedSkinIndex"]]
-);
+// additional routing
+F::app()->getDispatcher()->addRouting( 'SpecialCssController', ['index' => ["notSkin" => SpecialCssModel::$supportedSkins, "method" => "unsupportedSkinIndex"]] );
 
 /**
  * @global Array $wgHooks The list of hooks.
