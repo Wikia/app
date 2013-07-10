@@ -40,7 +40,7 @@ require([
 		/**
 		 * use all updaters to enforce parameters
 		 */
-		for( var i = 0; i < updaters.size(); i++ ) {
+		for( var i = 0; i < updaters.length; i++ ) {
 			updaters[i].update(parametersToEnforce);
 		}
 	}
