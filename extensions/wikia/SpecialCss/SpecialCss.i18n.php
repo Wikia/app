@@ -46,7 +46,7 @@ $messages['es'] = [
 ];
 
 $messages['de'] = [
-	'special-css-community-update-headline' => 'Aktualizacje CSS',
+	'special-css-community-update-headline' => 'Neuigkeiten zu CSS',
 ];
 
 $messages['fr'] = [
