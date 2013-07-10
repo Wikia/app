@@ -156,16 +156,16 @@ class ImportantArticles extends WikiaModel {
 					$match = $this->matchDomainAndTopic($domainPart, $name);
 					if( $match ) {
 						// var_dump($match . " -- " . $domainPart);
-						$matches[] = [ "name" => $match, "score" => 10 ];
+						$matches[] = [ "name" => $match, "score" => 10 + 5/sizeof($domainParts) ];
 						$foundMatchForDomain = true;
 						break;
 					}
 				}
 				if( $foundMatchForDomain ) { break; }
 			}
-		}
-		foreach( $domainParts as $domainPart ) {
-			$matches[] = [ "name" => $domainPart, "score" => 15/sizeof($domainParts) ];
+			if ( !$foundMatchForDomain ) {
+				$matches[] = [ "name" => $domainPart, "score" => 15/sizeof($domainParts) ];
+			}
 		}
 
 		return $matches;
