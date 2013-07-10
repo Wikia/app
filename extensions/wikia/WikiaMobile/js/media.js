@@ -153,10 +153,15 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			var t = event.target,
 				className = t.className;
 
-			//if this image is a linked image or super small don't open modal
-			if(className.indexOf('media') > -1 && t.width > MIN_MEDIA_WIDTH ){
+			//if this image is a linked image don't open modal
+			if(className.indexOf('media') > -1 ){
 				event.preventDefault();
 				event.stopPropagation();
+
+				// if the image is super small, do nothing when it's clicked
+				if ( t.width < MIN_MEDIA_WIDTH ) {
+					return false;
+				}
 
 				!inited && setup();
 
