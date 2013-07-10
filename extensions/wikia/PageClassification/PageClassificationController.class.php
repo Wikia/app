@@ -50,6 +50,9 @@ class PageClassificationController extends WikiaSpecialPageController {
 		$this->setVal( 'importantByDomainNames', $importantByDomainNames);
 		$this->setVal( 'merged', $merged );
 
+		$wiki = WikiFactory::getWikiByID( $wikiId );
+		$this->setVal( 'domain_name', $wiki->city_url );
+
 		$this->overrideTemplate('pageList');
 	}
 }

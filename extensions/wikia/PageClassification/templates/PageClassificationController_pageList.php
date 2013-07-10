@@ -1,4 +1,4 @@
-<h3>Classification of [wiki]</h3>
+<h3>Classification of [<a href="<?=$domain_name?>"><?=$domain_name?></a>]</h3>
 
 <p>Common prefix: <b><?=$commonPrefix?></b> </p>
 
