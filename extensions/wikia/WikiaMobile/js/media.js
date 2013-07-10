@@ -154,7 +154,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				className = t.className;
 
 			//if this image is a linked image don't open modal
-			if(className.indexOf('media') > -1 ){
+			if(className.indexOf('media') > -1){
 				event.preventDefault();
 				event.stopPropagation();
 
