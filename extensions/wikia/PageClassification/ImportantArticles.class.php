@@ -64,7 +64,7 @@ class ImportantArticles extends WikiaModel {
 				"pageId" => $topic->pageId
 			);
 			foreach ( $topic->entities as $entity ) {
-				if ( in_array( $entity->type, array('movie', 'game', 'book') ) ) {
+				if ( in_array( $entity->type, array('movie', 'game', 'book', 'tv_series') ) ) {
 					$entry["name"] = $entity->name;
 					$entry["type"] = $entity->type;
 					$names[] = $entity->name;
@@ -187,6 +187,19 @@ class ImportantArticles extends WikiaModel {
 				$merged[ $r['name'] ] = $r;
 			}
 		}
+
+		$byDomain = $this->getImportantPhrasesByDomainNames();
+		foreach ( $byDomain as $r ) {
+			if ( strlen( trim( $r ) ) ) {
+				if ( isset( $merged[ $r ] ) ) {
+					$merged[ $r ]['score'] += 5;
+				} else {
+					$merged[ $r ]['score'] = 5;
+					$merged[ $r ]['name'] = $r;
+				}
+			}
+		}
+
 		$values = array_values( $merged );
 		unset( $merged );
 		$this->sortResult( $values );
