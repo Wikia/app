@@ -43,18 +43,17 @@ class OasisController extends WikiaController {
 		$this->amazonDirectTargetedBuy = null;
 		$this->dynamicYield = null;
 
-		$this->app->registerHook('MakeGlobalVariablesScript', 'OasisController', 'onMakeGlobalVariablesScript');
 		wfProfileOut(__METHOD__);
 	}
 
 	/**
-	 * Add global JS variables with wgJsAtBottom
+	 * Add global JS variables
 	 *
 	 * @param array $vars global variables list
 	 * @return boolean return true
 	 */
 	public function onMakeGlobalVariablesScript(Array &$vars) {
-		$vars['wgJsAtBottom'] = self::JsAtBottom();
+		$vars['wgIsResponsiveLayoutEnabled'] = BodyController::isResponsiveLayoutEnabled();
 		return true;
 	}
 
