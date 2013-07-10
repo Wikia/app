@@ -30,7 +30,13 @@ class VideoTitle extends AbstractSelect
 	protected function getSelectQuery() {
 		$query = $this->client->createSelect();
 		$query->setDocumentClass( '\Wikia\Search\Result' );
-		$queryString = "(wid:%1% AND is_video:true AND categories_mv_en:%2%) AND title_en:\"%3%\"~2";
+		$dismax = $query->getDismax();
+		$dismax->setQueryParser( 'edismax' )
+		       ->setMinimumMatch( $this->getConfig()->getMinimumMatch() )
+		       ->setQueryFields( 'title_en' )
+		       ->setPhraseFields( 'title_en' )
+		       ->setPhraseSlop( 4 );
+		$queryString = "+(wid:%1% AND is_video:true AND categories_mv_en:%2%) AND +(%3%)";
 		$params = [
 					Video::VIDEO_WIKI_ID,
 					$this->service->getHubForWikiId( $this->service->getWikiId() ),
