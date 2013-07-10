@@ -152,7 +152,7 @@ class WikisApiController extends WikiaApiController {
 	}
 
 	/**
-	 * Get details about one or more wikis.
+	 * Get details about one or more wikis. [DEPRECATED]
 	 *
 	 * @requestParam string $ids A string with a comma-separated list of wiki ID's
 	 *
@@ -236,7 +236,7 @@ class WikisApiController extends WikiaApiController {
 	 * @example &ids=159,831,3125&width=100
 	 * @example &ids=159,831,3125&height=100&width=100&snippet=25
 	 */
-	public function getWikiData() {
+	public function getDetailsV2() {
 		wfProfileIn( __METHOD__ );
 		$ids = $this->request->getVal( self::PARAMETER_WIKI_IDS, null );
 		if ( !empty( $ids ) ) {
