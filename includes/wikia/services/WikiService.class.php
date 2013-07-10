@@ -197,7 +197,7 @@ class WikiService extends WikiaModel {
 		$topEditors = WikiaDataAccess::cache(
 			wfSharedMemcKey( 'wiki_top_editors', $wikiId, $excludeBots ),
 			static::TOPUSER_CACHE_VALID,
-			function() use ( $wikiId, $limit, $excludeBots ) {
+			function() use ( $wikiId, $excludeBots ) {
 				$topEditors = array();
 
 				$db = wfGetDB( DB_SLAVE, array(), 'specials' );
@@ -207,7 +207,7 @@ class WikiService extends WikiaModel {
 					array( 'user_id', 'edits', 'all_groups' ),
 					array( 'wiki_id' => $wikiId, 'edits != 0' ),
 					__METHOD__,
-					array( 'ORDER BY' => 'edits desc', 'LIMIT' => $limit )
+					array( 'ORDER BY' => 'edits desc', 'LIMIT' => static::TOPUSER_LIMIT )
 				);
 
 				while( $row = $db->fetchObject($result) ) {
