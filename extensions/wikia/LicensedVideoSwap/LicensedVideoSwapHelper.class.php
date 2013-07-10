@@ -18,6 +18,12 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 */
 	const DURATION_DELTA = 10;
 	
+	/**
+	 * Threshold used with duration to constrain matches
+	 * @var float
+	 */
+	const MIN_JACCARD_SIMILARITY = 0.4;
+	
 	const VIDEOS_PER_PAGE = 10;
 	const THUMBNAIL_WIDTH = 500;
 	const THUMBNAIL_HEIGHT = 309;
@@ -222,8 +228,10 @@ class LicensedVideoSwapHelper extends WikiaModel {
 			}
 		}
 		*/
+		
 
 		$readableTitle = $titleObj->getText();
+		
 		$params = array( 'title' => $readableTitle );
 		
 		$file = wfFindFile( $titleObj );
@@ -252,7 +260,20 @@ class LicensedVideoSwapHelper extends WikiaModel {
 
 		$videos = array();
 		$count = 0;
+		$dropPunct = function( $val ) { return preg_match( '/[[:punct:]]/', $val ) == 0; };
+		$tokenizer = new NlpTools\Tokenizers\WhitespaceAndPunctuationTokenizer;
+		$stemmer = new NlpTools\Stemmers\PorterStemmer();
+		$titleTokenized = array_filter( $stemmer->stemAll( $tokenizer->tokenize( $readableTitle ) ), $dropPunct );
+		$jaccard = new NlpTools\Similarity\JaccardIndex();
+
 		foreach ($videoRows as $videoInfo) {
+			
+			$videoRowTitle = preg_replace( '/^File:/', '',  $videoInfo['title'] );
+			$videoRowTitleTokenized = array_filter( $stemmer->stemAll( $tokenizer->tokenize( $videoRowTitle ) ), $dropPunct );
+			if ( $jaccard->similarity( $titleTokenized, $videoRowTitleTokenized ) < self::MIN_JACCARD_SIMILARITY ) {
+				continue;
+			}
+			
 			$videoDetail = $helper->getVideoDetail( $videoInfo,
 													self::THUMBNAIL_WIDTH,
 													self::THUMBNAIL_HEIGHT,
