@@ -13,7 +13,8 @@ class WikisApiController extends WikiaApiController {
 	const PARAMETER_KEYWORD = 'string';
 	const PARAMETER_LANGUAGES = 'lang';
 	const PARAMETER_WIKI_IDS = 'ids';
-	const CACHE_VALIDITY = 86400;//1 day
+	const CACHE_1_DAY = 86400;//1 day
+	const CACHE_1_WEEK = 604800;//1 day
 	const MEMC_NAME = 'SharedWikiApiData:';
 	const LANGUAGES_LIMIT = 10;
 	const DEFAULT_TOP_EDITORS_NUMBER = 10;
@@ -45,6 +46,7 @@ class WikisApiController extends WikiaApiController {
 	 * @responseParam integer $currentBatch The index of the current batch/page
 	 * @responseParam integer $batches The total number of batches/pages
 	 * @responseParam integer $next The amount of items in the next batch/page
+	 * @responseParam bool $extended States if data should be extended with wiki details
 	 *
 	 * @example http://www.wikia.com/wikia.php?controller=WikisApi&method=getList&hub=Gaming&lang=en
 	 */
@@ -53,6 +55,7 @@ class WikisApiController extends WikiaApiController {
 		$langs = $this->request->getArray( self::PARAMETER_LANGUAGES );
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
 		$batch = $this->request->getInt( 'batch', 1 );
+		$extended = $this->request->getBool( 'extended', false );
 
 		if ( !empty( $langs ) &&  count($langs) > self::LANGUAGES_LIMIT) {
 			throw new LimitExceededApiException( self::PARAMETER_LANGUAGES, self::LANGUAGES_LIMIT );
@@ -61,13 +64,21 @@ class WikisApiController extends WikiaApiController {
 		$results = self::$model->getTop( $langs, $hub );
 		$batches = wfPaginateArray( $results, $limit, $batch );
 
+		//extend results
+		if ( $extended ) {
+			foreach ( $batches[ 'items' ] as $item ) {
+				$result[] = array_merge( $item, $this->getWikiDetails( $item[ 'id' ] ) );
+			}
+			if ( !empty( $result ) ) {
+				$batches[ 'items' ] = $result;
+			}
+		}
 		foreach ( $batches as $name => $value ) {
 			$this->response->setVal( $name, $value );
 		}
-
 		$this->response->setCacheValidity(
-			604800 /* 1 week */,
-			604800 /* 1 week */,
+			static::CACHE_1_WEEK,
+			static::CACHE_1_WEEK,
 			array(
 				WikiaResponse::CACHE_TARGET_BROWSER,
 				WikiaResponse::CACHE_TARGET_VARNISH
@@ -129,8 +140,8 @@ class WikisApiController extends WikiaApiController {
 		//to appear in a reasonable amount of time in the search
 		//results
 		$this->response->setCacheValidity(
-			86400 /* 24h */,
-			86400 /* 24h */,
+			static::CACHE_1_DAY,
+			static::CACHE_1_DAY,
 			array(
 				WikiaResponse::CACHE_TARGET_BROWSER,
 				WikiaResponse::CACHE_TARGET_VARNISH
@@ -200,8 +211,8 @@ class WikisApiController extends WikiaApiController {
 		//to appear in a reasonable amount of time in the search
 		//results
 		$this->response->setCacheValidity(
-			86400 /* 24h */,
-			86400 /* 24h */,
+			static::CACHE_1_DAY,
+			static::CACHE_1_DAY,
 			array(
 				WikiaResponse::CACHE_TARGET_BROWSER,
 				WikiaResponse::CACHE_TARGET_VARNISH
@@ -239,56 +250,67 @@ class WikisApiController extends WikiaApiController {
 
 		$items = array();
 		foreach ( $ids as $wikiId ) {
-//			if ( ( $cached = $this->getFromCacheWiki( $wikiId ) ) !== false ) {
-				if( false ) {
-				//get from cache
-				$wikiInfo = $cached;
-			} else {
-				//get data providers
-				$wikiInfo = array_merge(
-					[ 'id' => $wikiId ],
-					$this->getFromWikiFactory( $wikiId ),
-					$this->getFromService( $wikiId ),
-					$this->getFromModel( $wikiId, $imageWidth, $imageHeight )
-				);
-				$this->cacheWikiData( $wikiInfo );
-			}
-			//post process thumbnails and snippet
-			$wikiInfo = array_merge(
-				$wikiInfo,
-				$this->getImageData( $wikiInfo[ 'image' ], $imageWidth, $imageHeight )
-			);
-			//set snippet
-			$wikiInfo[ 'desc' ] = $this->getSnippet( $wikiInfo[ 'desc' ], $length );
-			//add to result
-			$items[ $wikiId ] = $wikiInfo;
+			$items[ $wikiId ] = $this->getWikiDetails( $wikiId, $imageWidth, $imageHeight, $length );
 		}
 		$this->response->setVal( 'items', $items );
+
+		//set varnish caching
+		$this->response->setCacheValidity(
+			static::CACHE_1_DAY,
+			static::CACHE_1_DAY,
+			array(
+				WikiaResponse::CACHE_TARGET_BROWSER,
+				WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
 		wfProfileOut( __METHOD__ );
 	}
 
-	protected function getImageData( $imageName, $width = null, $height = null  ) {
-		if ( $width === null && $height === null ) {
-			//take img from findfile
-			$img = wffindFile( $imageName );
-			$width = $img->getWidth();
-			$height = $img->getHeight();
-			$imgUrl = $img->getFullUrl();
+	protected function getWikiDetails( $wikiId, $width = null, $height = null, $snippet = null ) {
+		if ( ( $cached = $this->getFromCacheWiki( $wikiId ) ) !== false ) {
+			$wikiInfo = $cached;
 		} else {
-			//take form image serving
-			$width = ( $width !== null ) ? $width : static::DEFAULT_WIDTH;
-			$height = ( $height !== null ) ? $height : static::DEFAULT_HEIGHT;
-			$imageServing = new ImageServing(null, $width, $height);
-			$imgUrl = $imageServing->getUrl( $imageName, $width, $height );
+			//get data providers
+			$wikiInfo = array_merge(
+				[ 'id' => $wikiId ],
+				$this->getFromWikiFactory( $wikiId ),
+				$this->getFromService( $wikiId ),
+				$this->getFromModel( $wikiId )
+			);
+			$this->cacheWikiData( $wikiInfo );
 		}
+		//post process thumbnails
+		$wikiInfo = array_merge(
+			$wikiInfo,
+			$this->getImageData( $wikiInfo[ 'image' ], $width, $height )
+		);
+		//set snippet
+		$length = ( $snippet !== null ) ? $snippet : static::DEFAULT_SNIPPET_LENGTH;
+		$wikiInfo[ 'desc' ] = $this->getSnippet( $wikiInfo[ 'desc' ], $length );
+		return $wikiInfo;
+	}
 
-		return [
-			'image' => $imgUrl,
-			'dimensions' => [
-				'width' => $width,
-				'height' => $height
-			]
-		];
+	protected function getImageData( $imageName, $width = null, $height = null  ) {
+		$img = wfFindFile( $imageName );
+		if ( $img instanceof WikiaLocalFile ) {
+			if ( $width == null && $height == null ) {
+				//get original image if no cropping
+				$imgUrl = $img->getFullUrl();
+			} else {
+				$width = ( $width !== null ) ? $width : static::DEFAULT_WIDTH;
+				$height = ( $height !== null ) ? $height : static::DEFAULT_HEIGHT;
+				$imageServing = new ImageServing( null, $width, $height );
+				$imgUrl = $imageServing->getUrl( $img, $width, $height );
+			}
+			return [
+				'image' => $imgUrl,
+				'original_dimensions' => [
+					'width' => $img->getWidth(),
+					'height' => $img->getHeight()
+				]
+			];
+		}
+		return [];
 	}
 
 	protected function getFromModel( $id ) {
@@ -359,7 +381,7 @@ class WikisApiController extends WikiaApiController {
 	protected function cacheWikiData( $wikiInfo ) {
 		global $wgMemc;
 		$key = $this->getMemCacheKey( $wikiInfo[ 'id' ] );
-		$wgMemc->set( $key, $wikiInfo, static::CACHE_VALIDITY );
+		$wgMemc->set( $key, $wikiInfo, static::CACHE_1_DAY );
 	}
 
 	protected function getFromCacheWiki( $wikiId ) {
