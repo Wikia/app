@@ -1,5 +1,7 @@
 <?php
 
+use NlpTools\Tokenizers\WhitespaceAndPunctuationTokenizer, NlpTools\Stemmers\PorterStemmer, NlpTools\Similarity\JaccardIndex;
+
 /**
  * LicensedVideoSwap Helper
  * @author Garth Webb
@@ -32,6 +34,24 @@ class LicensedVideoSwapHelper extends WikiaModel {
 
 	// TTL of 604800 is 7 days.  Expire suggestion cache after this
 	const SUGGESTIONS_TTL = 604800;
+	
+	/**
+	 * Tokenizer for text processing
+	 * @var NlpTools\Tokenizers\WhitespaceAndPunctuationTokenizer
+	 */
+	protected $tokenizer;
+	
+	/**
+	 * Stemmer for text processing
+	 * @var NlpTools\Stemmers\PorterStemmer
+	 */
+	protected $stemmer;
+	
+	/**
+	 * Used to compute Jaccard similarity
+	 * @var NlpTools\Similarity\JaccardIndex
+	 */
+	protected $jaccard;
 
 	/**
 	 * Gets a list of videos that have not yet been swapped (e.g., no decision to keep or not keep the
@@ -257,17 +277,13 @@ class LicensedVideoSwapHelper extends WikiaModel {
 
 		$videos = array();
 		$count = 0;
-		$dropPunct = function( $val ) { return preg_match( '/[[:punct:]]/', $val ) == 0; };
-		$tokenizer = new NlpTools\Tokenizers\WhitespaceAndPunctuationTokenizer;
-		$stemmer = new NlpTools\Stemmers\PorterStemmer();
-		$titleTokenized = array_filter( $stemmer->stemAll( $tokenizer->tokenize( $readableTitle ) ), $dropPunct );
-		$jaccard = new NlpTools\Similarity\JaccardIndex();
+		
+		$titleTokenized = $this->getNormalizedTokens( $readableTitle );
 
 		foreach ($videoRows as $videoInfo) {
 			
-			$videoRowTitle = preg_replace( '/^File:/', '',  $videoInfo['title'] );
-			$videoRowTitleTokenized = array_filter( $stemmer->stemAll( $tokenizer->tokenize( $videoRowTitle ) ), $dropPunct );
-			if ( $jaccard->similarity( $titleTokenized, $videoRowTitleTokenized ) < self::MIN_JACCARD_SIMILARITY ) {
+			$videoRowTitleTokenized = $this->getNormalizedTokens( preg_replace( '/^File:/', '',  $videoInfo['title'] ) );
+			if ( $this->getJaccard()->similarity( $titleTokenized, $videoRowTitleTokenized ) < self::MIN_JACCARD_SIMILARITY ) {
 				continue;
 			}
 			
@@ -516,4 +532,47 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		return $pagination;
 	}
 
+	/**
+	 * Lazy-loads dependency
+	 * @return \NlpTools\Stemmers\PorterStemmer
+	 */
+	protected function getStemmer() {
+		if ( $this->stemmer === null ) {
+			$this->stemmer = new PorterStemmer;
+		}
+		return $this->stemmer;
+	}
+	
+	/**
+	 * Lazy-loads dependency
+	 * @return \NlpTools\Tokenizers\WhitespaceAndPunctuationTokenizer
+	 */
+	protected function getTokenizer() {
+		if ( $this->tokenizer === null ) {
+			$this->tokenizer = new WhitespaceAndPunctuationTokenizer;
+		}
+		return $this->tokenizer;
+	}
+	
+	/**
+	 * Lazy-loads dependency
+	 * @return \NlpTools\Similarity\JaccardIndex
+	 */
+	protected function getJaccard() {
+		if ( $this->jaccard === null ) {
+			$this->jaccard = new JaccardIndex;
+		}
+		return $this->jaccard;
+	}
+	
+	/**
+	 * This gets all important tokens by tokenizing, stemming, and then stripping punctuation tokens
+	 * @param string $str
+	 * @return array
+	 */
+	protected function getNormalizedTokens( $str ) {
+		return array_filter( $this->getStemmer()->stemAll( $this->getTokenizer()->tokenize( $str ) ), 
+				function( $val ) { return preg_match( '/[[:punct:]]/', $val ) == 0; } );
+	}
+	
 }
