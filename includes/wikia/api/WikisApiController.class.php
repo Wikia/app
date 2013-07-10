@@ -160,7 +160,7 @@ class WikisApiController extends WikiaApiController {
 	 *
 	 * @example http://www.wikia.com/wikia.php?controller=WikisApi&method=getDetails&ids=3125,490
 	 */
-	public function getDetails() {
+	public function getDetails_old() {
 		wfProfileIn( __METHOD__ );
 
 		$ids = $this->request->getVal( self::PARAMETER_WIKI_IDS, null );
@@ -236,7 +236,7 @@ class WikisApiController extends WikiaApiController {
 	 * @example &ids=159,831,3125&width=100
 	 * @example &ids=159,831,3125&height=100&width=100&snippet=25
 	 */
-	public function getDetailsV2() {
+	public function getDetails() {
 		wfProfileIn( __METHOD__ );
 		$ids = $this->request->getVal( self::PARAMETER_WIKI_IDS, null );
 		if ( !empty( $ids ) ) {
