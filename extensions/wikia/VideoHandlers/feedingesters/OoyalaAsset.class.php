@@ -42,6 +42,10 @@ class OoyalaAsset extends WikiaModel {
 				if ( $resp ) {
 					// set primary thumbnail
 					$resp = $this->setPrimaryThumbnail( $asset['embed_code'] );
+					if ( $resp ) {
+						// set labels
+						$resp = $this->setLabels( $asset['embed_code'], $data );
+					}
 				}
 			}
 		} else {
@@ -130,7 +134,7 @@ class OoyalaAsset extends WikiaModel {
 			$metadata['category'] = $data['category'];
 		}
 		if ( !empty( $data['actors'] ) ) {
-			$metadata['actors'] = is_array( $data['actors'] ) ? implode( ', ', $data['actors'] ) : $data['actors'];
+			$metadata['actors'] = $data['actors'];
 		}
 		if ( !empty( $data['published'] ) ) {
 			$metadata['published'] = $data['published'];
@@ -161,6 +165,9 @@ class OoyalaAsset extends WikiaModel {
 		}
 		if ( !empty( $data['keywords'] ) ) {
 			$metadata['keywords'] = $data['keywords'];
+		}
+		if ( !empty( $data['ageRequired'] ) ) {
+			$metadata['age_required'] = $data['ageRequired'];
 		}
 
 		return $metadata;
@@ -246,6 +253,40 @@ class OoyalaAsset extends WikiaModel {
 		$params = array( 'type' => 'remote_url' );
 
 		$resp = $this->sendRequest( $method, $reqPath, $params );
+
+		wfProfileOut( __METHOD__ );
+
+		return $resp;
+	}
+
+	/**
+	 * set label
+	 * @param string $videoId
+	 * @param array $data
+	 * @return boolean $resp
+	 */
+	public function setLabels( $videoId, $data ) {
+		wfProfileIn( __METHOD__ );
+
+		$params = array();
+		if ( !empty( $data['ageGate'] ) && !empty( $this->wg->OoyalaApiConfig['LabelAgeGate'] ) ) {
+			$params[] = $this->wg->OoyalaApiConfig['LabelAgeGate'];
+		}
+
+		$provider = 'Label'.ucfirst( strtolower( $data['provider'] ) );
+		if ( !empty( $this->wg->OoyalaApiConfig[$provider] ) ) {
+			$params[] = $this->wg->OoyalaApiConfig[$provider];
+		}
+
+		if ( empty( $params ) ) {
+			$resp = true;
+			print( "WARNING: Cannot set label for $data[name] (Label not found).\n" );
+		} else {
+			$method = 'POST';
+			$reqPath = '/v2/assets/'.$videoId.'/labels';
+
+			$resp = $this->sendRequest( $method, $reqPath, $params );
+		}
 
 		wfProfileOut( __METHOD__ );
 

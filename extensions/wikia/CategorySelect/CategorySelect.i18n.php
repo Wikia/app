@@ -330,6 +330,13 @@ $messages['el'] = array(
 	'categoryselect-tooltip-add' => 'Πατήστε Enter όταν γίνει', # Fuzzy
 );
 
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'categoryselect-modal-category-sortkey' => 'Optionally, you may alphabetise this page on the "$1" category page under the name:',
+);
+
 /** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
@@ -532,6 +539,7 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
+ * @author C5st4wr6ch
  * @author Irwangatot
  */
 $messages['id'] = array(
@@ -541,12 +549,14 @@ $messages['id'] = array(
 	'categoryselect-button-save' => 'Simpan',
 	'categoryselect-category-add' => 'Menambahkan kategori', # Fuzzy
 	'categoryselect-category-edit' => 'Pilihan kategori', # Fuzzy
+	'categoryselect-category-remove' => 'Menghapus kategori',
 	'categoryselect-edit-summary' => 'Menambahkan kategori',
-	'categoryselect-error-article-doesnt-exist' => 'Artikel [id=$1] tidak ada.', # Fuzzy
+	'categoryselect-error-article-doesnt-exist' => 'Halaman [id=$1] tidak ada.',
 	'categoryselect-error-db-locked' => 'Basis data dikunci.',
+	'categoryselect-error-duplicate-category-name' => 'Kategori "$1" sudah ada.',
 	'categoryselect-error-edit-abort' => 'Perubahan yang coba Anda lakukan dibatalkan oleh suatu ekstensi kaitan.', # Fuzzy
-	'categoryselect-error-empty-category-name' => 'Membutuhkan nama kategori (bagian sebelum |)', # Fuzzy
-	'categoryselect-error-user-rights' => 'Kesalahan hak pengguna.', # Fuzzy
+	'categoryselect-error-empty-category-name' => 'Silakan berikan nama kategori.',
+	'categoryselect-error-user-rights' => 'Pengguna tidak memiliki izin untuk melakukan aksi ini.',
 	'categoryselect-modal-category-name' => 'Memberikan nama kategori:', # Fuzzy
 	'categoryselect-modal-category-sortkey' => 'Penyusunan artikel ini menurut abjad pada kategori "$1" dengan nama:', # Fuzzy
 	'categoryselect-tooltip-add' => 'Tekan Enter jika sudah selesai', # Fuzzy

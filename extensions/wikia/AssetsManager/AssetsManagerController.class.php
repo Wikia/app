@@ -132,7 +132,7 @@ class AssetsManagerController extends WikiaController {
 
 			$messagePackages = explode( ',', $messages );
 
-			$this->response->setVal( 'messages', F::getInstance( 'JSMessages' )->getPackages( $messagePackages ) );
+			$this->response->setVal( 'messages', JSMessages::getPackages( $messagePackages ) );
 			wfProfileOut( $profileId );
 		}
 
@@ -203,7 +203,7 @@ class AssetsManagerController extends WikiaController {
 	 *
 	 * @param array String relative paths to mustache templates
 	 * @return array templates content
-	 * @throws WikiaException 
+	 * @throws WikiaException
 	 */
 	private function getMustacheTemplates($mustacheTemplates) {
 		wfProfileIn(__METHOD__);

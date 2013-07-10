@@ -64,6 +64,8 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'app-loading' => '{{Identical|Loading}}',
+	'app-tab-search' => '{{Identical|Search}}',
 	'app-tab-sotd' => 'SotD = Song of the Day',
 	'app-async-error-title' => '{{Identical|Oops}}',
 );
@@ -515,6 +517,14 @@ $messages['ia'] = array(
 	'gracenote-takedown' => 'Guai! Nos non ha le licentia pro monstrar le texto complete de iste cantion al momento (isto eveni pro minus de 1% de nostre cantiones). Per favor proba lo de novo le proxime septimana.',
 	'lyrics-artist-byline' => 'per %s',
 	'ringtone-matcher-by-song' => 'Inviar le tono de appello %s a tu telephono',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'about-tips-1' => 'Gambar pada layar utama adalah lagu 9 Teratas di iTunes saat ini.',
+	'gracenote-takedown' => 'Aduh! Sayang sekali, kami tidak diberi izin untuk menampilkan seluruh lirik untuk lagu ini pada saat ini (ini terjadi pada kurang dari 1% dari lagu-lagu kami). Mohon coba lagi minggu depan.',
 );
 
 /** Ingush (ГӀалгӀай)

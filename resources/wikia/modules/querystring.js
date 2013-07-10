@@ -75,7 +75,10 @@
 			this.cache = cache;
 			this.protocol = loc.protocol;
 			this.link = loc.host;
-			this.path = loc.pathname;
+			// found in DAR-744: IE returns bad pathname (no initial '/')
+			// when <a> element is screated in javascript
+			this.path = (loc.pathname.charAt(0) != '/' ? '/' : '') + loc.pathname;
+
 			this.hash = loc.hash.substr(1);
 		}
 

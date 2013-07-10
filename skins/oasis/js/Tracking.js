@@ -312,6 +312,7 @@ jQuery(function($){
 
 	(function() {
 		var category = 'search',
+			suggestionShowed = false,
 			$wikiaSearch = $('.WikiaSearch');
 
 		$wikiaSearch.on('mousedown', '.autocomplete', {
@@ -320,19 +321,32 @@ jQuery(function($){
 		}, trackWithEventData).on('mousedown', '.wikia-button', function(e) {
 			// Prevent tracking 'fake' form submission clicks
 			if (e.which === 1 && e.clientX > 0) {
+				var label = !suggestionShowed ? 'search-button' : 'search-after-suggest-button';
 				track({
 					category: category,
-					label: 'search-button'
+					label: label
 				});
 			}
-		}).on('keypress', function(e) {
-			if (e.which === 13) {
+		}).on('keypress', '[name=search]', function(e) {
+			if ( e.which === 13 && $(this).is(':focus') ) {
+				var label = !suggestionShowed ? 'search-enter' : 'search-after-suggest-enter';
 				track({
 					category: category,
-					label: 'search-enter'
+					label: label
 				});
 			}
-		});
+		}).on('suggestEnter', {
+			category: category,
+			label: 'search-suggest-enter'
+		}, trackWithEventData).one('suggestShow', {
+			action: Wikia.Tracker.ACTIONS.VIEW,
+			category: category,
+			label: 'search-suggest-show'
+		}, function(e) {
+				suggestionShowed = true;
+				trackWithEventData(e);
+			}
+		);
 
 		if ($body.hasClass('page-Special_Search')) {
 			category = 'special-' + category;
@@ -344,7 +358,6 @@ jQuery(function($){
 				});
 			}).on('mousedown', '.Results .result-link', function(e) {
 				var el = $(e.currentTarget);
-
 				track({
 					browserEvent: e,
 					category: category,
@@ -354,7 +367,7 @@ jQuery(function($){
 			}).on('mousedown',  '.Results .wiki-thumb-tracking', function(e){
 				var el = $(e.currentTarget);
 
-					track({
+				track({
 					browserEvent: e,
 					category: category,
 					label: 'result-item-' + el.data('pos') + '-image' + (el.data('event') === 'search_click_wiki-no-thumb' ? '-placeholder' : ''),
@@ -567,7 +580,7 @@ jQuery(function($){
 				el.hasClass('real-name') ||
 				parent.hasClass('wall-owner') ||
 				parent.hasClass('subtle')
-			) {
+				) {
 				label = 'username';
 			} else if (parent.hasClass('activityfeed-diff')) {
 				label = 'diff';

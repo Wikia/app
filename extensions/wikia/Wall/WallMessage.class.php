@@ -879,11 +879,11 @@ class WallMessage {
 		$wh->add( $history, $wnae, $user );
 	}
 
-	public function archive($user) {
+	public function archive($user, $reason = '') {
 		$status = $this->markInProps(WPP_WALL_ARCHIVE);
-		$this->recordAdminHistory($user, '', WH_ARCHIVE);
-		$this->saveReason($user, '');
-		$this->customActionNotifyRC($user, 'wall_archive', '');
+		$this->recordAdminHistory($user, $reason, WH_ARCHIVE);
+		$this->saveReason($user, $reason);
+		$this->customActionNotifyRC($user, 'wall_archive', $reason);
 		return $status;
 	}
 

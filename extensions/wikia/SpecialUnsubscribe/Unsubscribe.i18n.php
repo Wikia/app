@@ -41,8 +41,10 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author HvW
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'unsubscribe-working-done' => '{{Identical|Complete}}',
 	'unsubscribe-preferences-toggle' => 'zugehörige Adresse: http://de.wikia.com/Spezial:Einstellungen',
 );
 

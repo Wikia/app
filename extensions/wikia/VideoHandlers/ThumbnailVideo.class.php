@@ -82,7 +82,6 @@ class ThumbnailVideo extends ThumbnailImage {
 
 			$options['img-class'] = "video";
 		}
-
 		return $thumb->toHtml( array('img-class' => $options['img-class']) );
 	}
 

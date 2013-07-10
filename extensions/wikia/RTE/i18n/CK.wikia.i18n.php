@@ -162,6 +162,10 @@ $messages['qqq'] = array(
 	'rte-ck-templateEditor-editor-previewButton' => '{{Identical|Preview}}',
 	'rte-ck-templateEditor-editor-previewTitle' => '{{Identical|Preview}}',
 	'rte-ck-video-video' => '{{Identical|Video}}',
+	'rte-ck-format-tag_h2' => '{{Identical|Heading}}',
+	'rte-ck-format-tag_h3' => '{{Identical|Heading}}',
+	'rte-ck-format-tag_h4' => '{{Identical|Heading}}',
+	'rte-ck-format-tag_h5' => '{{Identical|Heading}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -2785,6 +2789,7 @@ $messages['ps'] = array(
 	'rte-ck-modeSwitch-toSource' => 'سرچينه',
 	'rte-ck-photoGallery-gallery' => 'انځورتون',
 	'rte-ck-photoGallery-addGallery' => 'يو انځورتون ورګډول',
+	'rte-ck-photoGallery-confirmDeleteTitle' => 'دا انځورتون ليرې کوۍ؟',
 	'rte-ck-photoGallery-tooltip' => 'دا يو انځورتون دی.',
 	'rte-ck-signature-add' => 'خپل لاسليک ورګډول',
 	'rte-ck-signature-label' => 'لاسليک',
@@ -2798,6 +2803,7 @@ $messages['ps'] = array(
 	'rte-ck-video-add' => 'يوه ويډيو ورګډول',
 	'rte-ck-video-video' => 'ويډيو',
 	'rte-ck-mut-mut' => 'ويډيو (بيټا)',
+	'rte-ck-format-tag_p' => 'نورماله متن',
 	'rte-ck-format-tag_h2' => 'سرليک 2',
 	'rte-ck-format-tag_h3' => 'سرليک 3',
 	'rte-ck-format-tag_h4' => 'سرليک 4',

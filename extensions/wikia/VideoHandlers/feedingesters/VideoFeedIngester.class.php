@@ -20,6 +20,7 @@ abstract class VideoFeedIngester {
 		self::PROVIDER_IGN,
 		self::PROVIDER_REALGRAVITY,
 		self::PROVIDER_OOYALA,
+		self::PROVIDER_IVA,
 	);
 	protected static $API_WRAPPER;
 	protected static $PROVIDER;
@@ -514,6 +515,71 @@ abstract class VideoFeedIngester {
 				$keywords = implode( ',', $new );
 			}
 		}
+	}
+
+	/**
+	 * get industry rating
+	 * @param string $rating
+	 * @return string $stdRating
+	 */
+	protected function getIndustryRating( $rating ) {
+		$rating = trim( $rating );
+		$name = strtolower( $rating );
+		switch( $name ) {
+			case 'everyone':
+			case 'early childhood':
+				$stdRating = 'EC';
+				break;
+			case 'everyone 10 or older':
+				$stdRating = 'E10+';
+				break;
+			case 'little or no violence':
+				$stdRating = 'E';
+				break;
+			case 'teen':
+			case 'some violence':
+				$stdRating = 'T';
+				break;
+			case 'mature':
+			case 'extreme or graphic violence':
+				$stdRating = 'M';
+				break;
+			case 'adults only':
+				$stdRating = 'AO';
+				break;
+			case 'pending':
+			case 'rating pending':
+				$stdRating = '';
+				break;
+			case 'not rated':
+				$stdRating = 'NR';
+				break;
+			default: $stdRating = $rating;
+		}
+
+		return $stdRating;
+	}
+
+	/**
+	 * get age gate
+	 * @param string $rating
+	 * @return int $ageGate
+	 */
+	protected function getAgeGate( $rating ) {
+		switch( $rating ) {
+			case 'M':
+			case 'R':
+			case 'TV-MA':
+				$ageGate = 17;
+				break;
+			case 'AO':
+			case 'NC-17':
+				$ageGate = 18;
+				break;
+			default: $ageGate = 0;
+		}
+
+		return $ageGate;
 	}
 
 }

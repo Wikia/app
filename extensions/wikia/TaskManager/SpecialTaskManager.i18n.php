@@ -19,9 +19,12 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'right-taskmanager' => '{{doc-right|taskmanager}}',
+	'right-taskmanager-action' => '{{doc-right|taskmanager-action}}',
 	'action-taskmanager' => '{{doc-action|taskmanager}}',
 );
 

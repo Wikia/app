@@ -101,6 +101,13 @@ $messages['ia'] = array(
 	'globalnotification-general-ajax-failure' => 'Le navigator non poteva connecter a Wikia. Reproba plus tarde.',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'globalnotification-desc' => 'Tampilkan pemberitahuan sistem untuk kejadian-kejadian seperti kegagalan AJAX',
+);
+
 /** Italian (italiano)
  * @author Leviathan 89
  */

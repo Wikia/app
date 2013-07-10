@@ -78,6 +78,7 @@
 
 		if($canClose) {
 			$dropdown[] = array(
+				'attr' => 'data-mode="close"',
 				'class' => 'close-thread',
 				'href' => '#',
 				'text' => wfMsg('wall-message-close-thread'),

@@ -2,6 +2,7 @@
 class CreateNewWikiController extends WikiaController {
 
 	const DAILY_USER_LIMIT = 2;
+	const WF_WDAC_REVIEW_FLAG_NAME = 'wgWikiDirectedAtChildrenByFounder';
 
 	public function index() {
 		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds, $wgSuppressToolbar, $fbOnLoginJsOverride, $wgRequest, $wgUser;
@@ -33,14 +34,17 @@ class CreateNewWikiController extends WikiaController {
 
 		// form field values
 		$hubs = WikiFactoryHub::getInstance();
-        $this->aCategories = $hubs->getCategories();
+		$this->aCategories = $hubs->getCategories();
 
-        $this->aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
-        $languages = wfGetFixedLanguageNames();
+		$this->aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
+		$languages = wfGetFixedLanguageNames();
 		asort( $languages );
 		$this->aLanguages = $languages;
 
 		$useLang = $wgRequest->getVal('uselang', $wgUser->getOption( 'language' ));
+
+		// squash language dialects (same wiki language for different dialects)
+		$useLang = $this->squashLanguageDialects($useLang);
 
 		// falling back to english (BugId:3538)
 		if ( !array_key_exists($useLang, $this->aLanguages) ) {
@@ -191,6 +195,9 @@ class CreateNewWikiController extends WikiaController {
 				$this->statusHeader = wfMsg('cnw-error-general-heading');
 				trigger_error("Failed to create new wiki: $error_code " . $params['wName'] . " " . $params['wLanguage'] . " " . $wgRequest->getIP(), E_USER_WARNING);
 			} else {
+				if ( isset($params['wAllAges']) && !empty( $params['wAllAges'] ) ) {
+					WikiFactory::setVarByName( self::WF_WDAC_REVIEW_FLAG_NAME, $cityId, true, __METHOD__ );
+				}
 				$this->status = 'ok';
 				$this->siteName = $createWiki->getWikiInfo('sitename');
 				$this->cityId = $cityId;
@@ -268,4 +275,26 @@ class CreateNewWikiController extends WikiaController {
 		return intval($oRow->count);
 	}
 
+	/**
+	 * Return proper wiki language for for languages that have different dialects.
+	 */
+	private function squashLanguageDialects($useLang) {
+		$squashLanguageData = array(
+			'zh-tw' => 'zh',
+			'zh-hk' => 'zh',
+			'zh-clas' => 'zh',
+			'zh-class' => 'zh',
+			'zh-classical' => 'zh',
+			'zh-cn' => 'zh',
+			'zh-hans' => 'zh',
+			'zh-hant' => 'zh',
+			'zh-min-' => 'zh',
+			'zh-min-n' => 'zh',
+			'zh-mo' => 'zh',
+			'zh-sg' => 'zh',
+			'zh-yue' => 'zh',
+		);
+
+		return array_key_exists($useLang, $squashLanguageData) ? $squashLanguageData[$useLang] : $useLang;
+	}
 }
