@@ -346,6 +346,31 @@ body > .global-notification,
 	}
 }
 
+// START - edit page fixes
+.editor .WikiaMainContent {
+	float: none;
+	width: 100%;
+}
+
+.editpage-sourcewidemode.mode-source .editpage-widemode-trigger {
+	right: $width-rail;
+}
+
+.EditPageMain {
+	margin-right: -$width-rail;
+	padding: 0;
+	width: 100%;
+}
+
+.EditPageMainContainer {
+	margin-right: $width-rail;
+}
+
+.EditPageRail {
+	width: $width-rail;
+}
+// END - edit page fixes
+
 @media screen and (max-width: 1023px) {
 	.WikiaArticle {
 		min-height: auto;
