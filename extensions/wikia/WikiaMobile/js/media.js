@@ -57,8 +57,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		videoInstance,
 		events = {},
 		skip = [],
-		MIN_MEDIA_WIDTH = 30,
-		mediaTitles = [];
+		MIN_MEDIA_WIDTH = 30;
 
 	function trigger(event, data){
 		if(events[event]){
@@ -76,13 +75,14 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			imageData,
 			j,
 			l,
-			data;
+			data,
+			mediaTitles = [];
 
 		//loop that gets all media from a page
 		while(element = elements[i++]) {
 
 			// exclude super small images from modal
-			if ( element.width < MIN_MEDIA_WIDTH ) {
+			if ( element.offsetWidth < MIN_MEDIA_WIDTH ) {
 				continue;
 			}
 
@@ -159,7 +159,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				event.stopPropagation();
 
 				// if the image is super small, do nothing when it's clicked
-				if ( t.width < MIN_MEDIA_WIDTH ) {
+				if ( t.offsetWidth < MIN_MEDIA_WIDTH ) {
 					return false;
 				}
 
