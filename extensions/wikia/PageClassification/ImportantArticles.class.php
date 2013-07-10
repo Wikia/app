@@ -156,13 +156,16 @@ class ImportantArticles extends WikiaModel {
 					$match = $this->matchDomainAndTopic($domainPart, $name);
 					if( $match ) {
 						// var_dump($match . " -- " . $domainPart);
-						$matches[] = $match;
+						$matches[] = [ "name" => $match, "score" => 30 ];
 						$foundMatchForDomain = true;
 						break;
 					}
 				}
 				if( $foundMatchForDomain ) { break; }
 			}
+		}
+		foreach( $domainParts as $domainPart ) {
+			$matches[] = [ "name" => $domainPart, "score" => 30/sizeof($domainParts) ];
 		}
 
 		return $matches;
@@ -190,13 +193,10 @@ class ImportantArticles extends WikiaModel {
 
 		$byDomain = $this->getImportantPhrasesByDomainNames();
 		foreach ( $byDomain as $r ) {
-			if ( strlen( trim( $r ) ) ) {
-				if ( isset( $merged[ $r ] ) ) {
-					$merged[ $r ]['score'] += 5;
-				} else {
-					$merged[ $r ]['score'] = 5;
-					$merged[ $r ]['name'] = $r;
-				}
+			if ( isset( $merged[ $r['name'] ] ) ) {
+				$merged[ $r['name'] ]['score'] += $r['score'];
+			} else {
+				$merged[ $r['name'] ] = $r;
 			}
 		}
 

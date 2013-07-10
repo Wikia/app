@@ -33,7 +33,7 @@
 		<td valign="top">
 			<ul>
 				<?php 	foreach ( $importantByDomainNames as $imp ) {
-					echo '<li>'	. $imp . '</li>';
+					echo '<li>'	. $imp['name']	.'<br/>[score: '.$imp['score']. ']</li>';
 				}
 				?>
 			</ul>
