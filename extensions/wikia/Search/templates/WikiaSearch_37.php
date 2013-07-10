@@ -6,7 +6,7 @@
 		?>
 			<?php if(! empty( $thumbnailHtml ) ): ?>
 
-				<a class="grid-1 alpha thumb-tracking" href="<?= $result->getUrl(); ?>" title="<?= $result->getTitle(); ?>" <?=
+				<a class="grid-1 alpha thumb-tracking" href="<?= $result->getUrl() ?>" title="<?= $result->getTitle() ?>" <?=
 					$thumbTracking ?>>
 					<img src="<?= $thumbnailHtml ?>" class="thumbimage"/>
 				</a>
@@ -20,7 +20,7 @@
 				$trackingData = 'class="result-link" data-pos="'.$pos.'"' . ( $result->getVar('isArticleMatch') ? 'data-event="search_click_match"' : '' );
 				?>
 
-				<a href="<?= $result->getUrl(); ?>" <?=$trackingData;?> ><?= $title ?></a>
+				<a href="<?= $result->getUrl() ?>" <?= $trackingData ?> ><?= $title ?></a>
 			</h1>
 			<? if ($redirectTitle = $result->getVar('redirectTitle')): ?>
 				<p class="redirect-title">&mdash; <?= wfMessage( 'wikiasearch2-results-redirected-from' )->text() ?> <a href="<?=$result->getVar('redirectUrl')?>" <?=$trackingData?>><?= $result->getVar('redirectTitle') ?></a></p>
@@ -40,11 +40,11 @@
 					?>
 				</p>
 			<? endif; ?>
-			<?= $result->getText(); ?>
+			<?= $result->getText() ?>
 
 			<?php if(empty($inGroup)): ?>
 				<ul>
-					<li><a href="<?= $result->getUrl(); ?>" <?=$trackingData;?> ><?=Language::factory($wg->ContentLanguage)->truncate($result->getTextUrl(), 90);?></a></li>
+					<li><a href="<?= $result->getUrl() ?>" <?=$trackingData?> ><?=Language::factory($wg->ContentLanguage)->truncate($result->getTextUrl(), 90)?></a></li>
 				</ul>
 			<?php endif; ?>
 
