@@ -269,7 +269,7 @@ class SpecialCssModel extends WikiaModel {
 						$cssUpdatesPosts[] = $this->prepareCssUpdateData( $postData );
 					}
 				}
-
+				
 				return $cssUpdatesPosts;
 			}
 		);
@@ -404,7 +404,10 @@ class SpecialCssModel extends WikiaModel {
 	}
 	
 	private function getCssUpdateHeadline() {
-		return wfMessage( 'special-css-community-update-headline' )->text();
+		return $this->wg->Lang->getMessageFor( 
+			'special-css-community-update-headline', 
+			$this->getCssUpdateLang()
+		);
 	}
 
 	/**
@@ -529,12 +532,9 @@ class SpecialCssModel extends WikiaModel {
 	 * @return string language code
 	 */
 	public function getCssUpdateLang() {
-		/** @var $wgLang Language */
-		global $wgLang, $wgCssUpdatesLangMap;
+		$langCode = $this->wg->Lang->getCode();
 
-		$langCode = $wgLang->getCode();
-
-		if ( !array_key_exists($langCode, $wgCssUpdatesLangMap) ) {
+		if ( !array_key_exists($langCode, $this->wg->CssUpdatesLangMap) ) {
 			$langCode = self::CSS_DEFAULT_LANG;
 		}
 
