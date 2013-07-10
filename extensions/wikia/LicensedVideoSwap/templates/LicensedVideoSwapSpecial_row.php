@@ -42,7 +42,7 @@ foreach ($videoList as $video):
 				</a>
 			</div>
 			<? if ( $numMoreSuggestions > 0 ): ?>
-				<a class="more-link" href="#"><?= wfMessage('lvs-more-suggestions')->numParams($numMoreSuggestions)->text() ?></a>
+				<a class="more-link" href="#"><?= wfMessage('lvs-more-suggestions')->plain() ?></a>
 			<? endif; ?>
 			<button class="swap-button lvs-sprite" data-video-swap="<?= htmlspecialchars($best['title']) ?>"> <?= wfMessage('lvs-button-swap')->plain() ?></button>
 		<? else: ?>
