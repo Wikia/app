@@ -35,6 +35,7 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'main-tab-search' => '{{Identical|Search}}',
 	'main-tab-offline' => '{{Identical|Offline}}',
 	'tab-discover-loading-message' => '{{Identical|Loading}}',
 );

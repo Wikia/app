@@ -939,6 +939,29 @@ $messages['el'] = array(
 	'activityfeed' => 'πρόσφατη δραστηριότητα',
 );
 
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'myhome-feed-categorization' => 'categorisation',
+	'community-corner' => "'''Welcome to My Home!'''
+
+This page helps you stay up to date with what's happening on the wiki.
+
+If you're the founder or an admin on this wiki, you can change this message to talk to the community about important things happening on the site.
+For example, you could:
+
+* Organise a project to build up an area of the wiki
+
+* Show off some new pages that everyone should see
+
+* Get people involved in a discussion that's happening on the site
+
+* Give a shout-out to a contributor who's added something special to the wiki
+
+* Or just post some words of encouragement!",
+);
+
 /** Spanish (español)
  * @author Absay
  * @author Benfutbol10

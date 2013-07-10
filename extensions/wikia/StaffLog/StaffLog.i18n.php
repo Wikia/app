@@ -44,6 +44,7 @@ $messages['qqq'] = array(
 * $2 is the user name of the acting user
 * $3 is the user ID of the "victim"
 * $4 is the user name of the "victim".',
+	'right-stafflog' => '{{doc-right|stafflog}}',
 	'stafflog-wiki-status-change' => 'Log entry. Parameters:
 * $1 is the name of the acting user,
 * $2 is the name of the wiki of which the status was changed,
@@ -171,6 +172,13 @@ $messages['diq'] = array(
 	'stafflog-filter-type-wikifactory' => 'Wiki weziyet',
 );
 
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'action-stafflog' => 'view the centralised staff log',
+);
+
 /** Spanish (español)
  * @author VegaDark
  */
@@ -214,7 +222,7 @@ $messages['fr'] = array(
 	'stafflog-filter-type-piggyback' => 'Accès superposé',
 	'stafflog-filter-type-renameuser' => 'Renommages d’utilisateur',
 	'stafflog-filter-type-wikifactory' => 'Statut du wiki',
-	'action-stafflog' => 'voir le journal d’équipe centralisé',
+	'action-stafflog' => 'voir le journal de l’équipe d’administration',
 );
 
 /** Galician (galego)
@@ -582,9 +590,11 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author StephDC
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'stafflog-blockmsg' => '$1 $2 试图封禁在维基系统 $4 上面的员工用户 $3，理由为 $5',
 	'stafflog-filter-label' => '过滤器',
 	'stafflog-filter-user' => '用户：',
 	'stafflog-filter-type' => '类型：',

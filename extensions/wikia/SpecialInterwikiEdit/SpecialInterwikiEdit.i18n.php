@@ -302,6 +302,14 @@ $messages['ja'] = array(
 	'iwedit-success' => '<p>リンクの作成に成功しました。</p>',
 );
 
+/** Kazakh (Cyrillic script) (қазақша (кирил)‎)
+ * @author Arystanbek
+ */
+$messages['kk-cyrl'] = array(
+	'interwikiedit' => 'Интеруики өңдеуші',
+	'iwedit-title' => 'Интеруики өңдеуші',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */

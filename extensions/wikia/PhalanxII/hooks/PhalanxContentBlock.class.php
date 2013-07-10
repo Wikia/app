@@ -12,7 +12,6 @@ class PhalanxContentBlock extends WikiaObject {
 
 	function __construct() {
 		parent::__construct();
-		F::setInstance( __CLASS__, $this );
 	}
 
 	/**
@@ -72,7 +71,7 @@ class PhalanxContentBlock extends WikiaObject {
 	 * Aborts a page move if the summary given matches
 	 * any blacklisted phrase.
 	 */
-	public function abortMove( $oldTitle, $newTitle, $user, &$error, $reason ) {
+	static public function abortMove( $oldTitle, $newTitle, $user, &$error, $reason ) {
 		wfProfileIn( __METHOD__ );
 
 		$phalanxModel = new PhalanxContentModel( $newTitle );

@@ -1132,6 +1132,13 @@ $messages['el'] = array(
 	'right-blog-articles-move' => 'Μετακίνηση άρθρων του blog',
 );
 
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'create-blog-listing-tag-format-not-recognized-on-page' => 'Blog listing tag not recognised on page',
+);
+
 /** Esperanto (Esperanto)
  * @author Objectivesea
  */
@@ -2603,6 +2610,7 @@ $messages['lb'] = array(
 	'blog-added' => 'derbäigesat',
 	'blog-edited' => 'geännert',
 	'blog-page' => 'Blog',
+	'blog-zero-comments' => 'Nach keng Bemierkungen!',
 	'blog-comments' => 'Bemierkungen',
 	'blog-comments-dsc' => "Neist fir d'éischt",
 	'blog-comments-anonymous' => 'Anonyme Benotzer',
@@ -2615,6 +2623,8 @@ $messages['lb'] = array(
 	'blog-refresh-label' => 'Aktualiséieren',
 	'blog-fromsitename' => 'Vu(n) $1',
 	'blogs-comment-hidden' => 'Bemierkung verstoppt.',
+	'blog-comment-sending' => 'Schécken...',
+	'blog-by' => '$1 vum $2',
 );
 
 /** Lithuanian (lietuvių)

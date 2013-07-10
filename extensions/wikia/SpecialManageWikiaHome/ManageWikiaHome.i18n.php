@@ -18,7 +18,7 @@ $messages['en'] = array(
 	'manage-wikia-home-wikis-in-slots-success' => 'Numbers slots has been changed.',
 	'manage-wikia-home-collections-success' => 'Collections have been saved.',
 	'manage-wikia-home-collections-add-success' => 'Wiki added successfully to the collection.',
-	'manage-wikia-home-collections-add-failure-already-exists' => 'Wiki already exists in this collection',
+	'manage-wikia-home-collections-add-failure-already-exists' => 'Wiki already exists in this collection.',
 	'manage-wikia-home-collections-add-failure-image' => '$1 can\'t be added to this collection because its main image has been rejected.',
 	'manage-wikia-home-collections-remove-success' => 'Wiki removed successfully from the collection.',
 	'manage-wikia-home-collections-invalid-action' => 'That action does not exist.',
@@ -60,12 +60,12 @@ $messages['en'] = array(
 	'manage-wikia-home-modal-content-remove-blocked' => 'Do you want to include this wiki in the wiki visualization?',
 	'manage-wikia-home-modal-content-add-promoted' => 'Do you want to promote this wiki in the wiki visualization?',
 	'manage-wikia-home-modal-content-remove-promoted' => 'Do you want to demote this wiki in the wiki visualization?',
-	'manage-wikia-home-modal-content-add-official' => 'Do you want to add official logo for this wiki in the wiki visualization?',
+	'manage-wikia-home-modal-content-add-official' => 'Do you want to add an official logo for this wiki in the wiki visualization?',
 	'manage-wikia-home-modal-content-remove-official' => 'Do you want to remove the official wiki logo for this wiki in the wiki visualization?',
 	'manage-wikia-home-modal-content-add-collection' => 'Do you want to add this wiki to the collection?',
 	'manage-wikia-home-modal-content-remove-collection' => 'Do you want to remove this wiki from the collection?',
-	'manage-wikia-home-modal-content-add-blocked-wiki-warning' => 'You cannot add blocked wikis to a collection',
-	'manage-wikia-home-modal-content-blocked-wiki-in-collection-warning' => 'This wiki shouldn\'t be in collection because it is blocked. It will be removed from the collection',
+	'manage-wikia-home-modal-content-add-blocked-wiki-warning' => 'You cannot add blocked wikis to a collection.',
+	'manage-wikia-home-modal-content-blocked-wiki-in-collection-warning' => 'This wiki shouldn\'t be in collection because it is blocked. It will be removed from the collection.',
 	'manage-wikia-home-modal-content-blocked-wiki-title' => 'This wiki is blocked',
 	'manage-wikia-home-modal-content-removed-blocked-in-collection' => 'This wiki is currently part of a collection and cannot be blocked.',
 	'manage-wikia-home-modal-too-many-wikis-in-collection' => 'You can not add more wikis to this collection.',
@@ -82,7 +82,7 @@ $messages['en'] = array(
 	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Hero image',
 	'manage-wikia-home-collections-sponsor-image-field-label' => 'Sponsor image',
 	'manage-wikia-home-collections-wikis-in-collection' => 'Wikis: $1 of $2',
-	'manage-wikia-home-collections-invalid-wikis-number' => 'This collection will not be visible on the corporate main page until there are $1 wikis assigned to it.',
+	'manage-wikia-home-collections-invalid-wikis-number' => 'This collection will not be visible on the corporate main page until there {{PLURAL:$1|is one wiki|are $1 wikis}} assigned to it.',
 
 	'manage-wikia-home-collection-hero-image-tooltip' => 'This image should be $1px × $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'This image should be $1px × $2px',
@@ -91,6 +91,7 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Shirayuki
+ * @author Siebrand
  */
 $messages['qqq'] = array(
 	'managewikiahome' => "Page title visible as browser window's title; Content of <title /> tag in HTML",
@@ -105,7 +106,8 @@ Parameters:
 	'manage-wikia-home-collections-success' => 'Success information after successful change in collections configuration',
 	'manage-wikia-home-collections-add-success' => 'Message informing about wiki successfully being added to a collection (themed group of 17 wikis displayed on Home Page like www.wikia.com).',
 	'manage-wikia-home-collections-add-failure-already-exists' => 'Error message informing, that the given Wiki already exists in collection (themed group of 17 wikis displayed on Home Page like www.wikia.com) to which it is being added',
-	'manage-wikia-home-collections-add-failure-image' => 'Parametrized message informing, that the wiki cannot be added to collection (themed group of 17 wikis displayed on Home Page like www.wikia.com) because it has a rejected main image. Parameter $1 is the wiki name',
+	'manage-wikia-home-collections-add-failure-image' => 'Parametrized message informing, that the wiki cannot be added to collection (themed group of 17 wikis displayed on Home Page like www.wikia.com) because it has a rejected main image. Parameters:
+* $1 is a wiki name.',
 	'manage-wikia-home-collections-remove-success' => 'Confirmation message that Wiki was removed successfully from a collection (themed group of 17 wikis displayed on Home Page like www.wikia.com).',
 	'manage-wikia-home-collections-invalid-action' => 'Error message informing that the requested action does not exist',
 	'manage-wikia-home-verticals-proportions' => "Header above slots configuration's input fields; in the form below this header we can configure how many slots are assigned to a vertical; later we fill those slots with a wiki image from a specific vertical",
@@ -179,17 +181,19 @@ Parameters:
 	'manage-wikia-home-collections-name-field-label' => "A label next to a collection's name field; in this field you put a collection's name.
 {{Identical|Collection name}}",
 	'manage-wikia-home-collections-sponsor-url-field-label' => "A label next to collection's sponsor URL field; in the field you put the sponsor URL address",
-	'manage-wikia-home-collections-sponsor-hero-image-field-label' => "A label next to collection's bigger image field (the big image covers all wikis images on corporate main page for some time then it fades out); in the field you put an image name",
+	'manage-wikia-home-collections-sponsor-hero-image-field-label' => "A label next to collection's bigger image field (the big image covers all wikis images on corporate main page for some time then it fades out); in the field you put an image name.
+
+Hero graphic is a term used in web design for a specific type of banner image. A hero graphic is large banner image, prominently placed on a web page, generally front and center.",
 	'manage-wikia-home-collections-sponsor-image-field-label' => "A label next to collection's smaller image field (the smaller image covers statistic section on corporate main page for a specific wikis' set); in the field you put an image name",
 	'manage-wikia-home-collections-wikis-in-collection' => 'It says how many wikis are in the collections; 
 * $1 = actual number of wikis assigned to a collection
 * $2 = maximum number of wikis per collection
 
 Has plural support if needed in your language.',
-	'manage-wikia-home-collections-invalid-wikis-number' => 'Information about status of a collection; it appears only if the number of wikis assigned to a collection is invalid (it extends the maximum number of wikis per collection).
+	'manage-wikia-home-collections-invalid-wikis-number' => 'Information about status of a collection; it appears only if the number of wikis assigned to a collection is invalid.
 
 Parameters:
-* $1 - maximum number of wikis per collection',
+* $1 - number of wikis (integer). Supports PLURAL.',
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Image size information under the big image field; the big image covers all wikis images on corporate main page.
 
 Parameters:
@@ -202,12 +206,111 @@ Parameters:
 {{Identical|Add photo}}',
 );
 
+/** Bosnian (bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'manage-wikia-home-collections-add-success' => 'Wiki uspješno dodata u kolekciju.',
+	'manage-wikia-home-collections-add-failure-already-exists' => 'Wiki već postoji u ovoj kolekciji',
+	'manage-wikia-home-collections-add-failure-image' => '$1 ne može biti dodato u ovu kolekciju jer je njena osnovna slika odbijena.',
+	'manage-wikia-home-collections-remove-success' => 'Wiki uspješno uklonjena iz kolekcije.',
+	'manage-wikia-home-collections-invalid-action' => 'Ova akcija ne postoji.',
+);
+
+/** German (Deutsch)
+ * @author Metalhead64
+ */
+$messages['de'] = array(
+	'managewikiahome' => 'Wikia Home verwalten',
+	'manage-wikia-home-wrong-rights' => 'Du bist vermutlich abgemeldet oder hast keine Berechtigung, diese Spezialseite zu verwenden.',
+	'manage-wikia-home-wikis-in-slots-heading' => 'Slotkonfiguration',
+	'manage-wikia-home-wikis-in-slots-total' => 'Gesamtsumme der Slots: $1',
+	'manage-wikia-home-visualization-wikis' => 'Unternehmenswikis mit Visualisierung:',
+	'manage-wikia-home-wikis-in-slots-success' => 'Die Anzahl der Slots wurde geändert.',
+	'manage-wikia-home-collections-success' => 'Die Sammlungen wurden gespeichert.',
+	'manage-wikia-home-collections-add-success' => 'Das Wiki wurde erfolgreich zur Sammlung hinzugefügt.',
+	'manage-wikia-home-collections-add-failure-already-exists' => 'Das Wiki ist bereits in dieser Sammlung vorhanden',
+	'manage-wikia-home-collections-add-failure-image' => '$1 konnte nicht zu dieser Sammlung hinzugefügt werden, da das Hauptbild abgelehnt wurde.',
+	'manage-wikia-home-collections-remove-success' => 'Das Wiki wurde erfolgreich aus der Sammlung entfernt.',
+	'manage-wikia-home-collections-invalid-action' => 'Diese Aktion ist nicht vorhanden.',
+	'manage-wikia-home-verticals-proportions' => 'Anzahl der Wikis pro Vertikale',
+	'manage-wikia-home-error-invalid-total-no-of-slots' => 'Ungültige Slotgesamtsumme ($1). Bitte stelle sicher, dass die Summe jedes Hubslots der Gesamtsumme der Slots entspricht ($2).',
+	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'Es sind keine negativen Slotanzahlen erlaubt',
+	'manage-wikia-home-error-wikifactory-failure' => 'Beim Speichern der Variablen ist etwas schief gelaufen. Bitte erneut versuchen.',
+	'manage-wikia-home-collections-validation-error' => 'Beim Speichern gab es einen Fehler. Bitte die Eingabe überprüfen.',
+	'manage-wikia-home-change-button' => 'Ändern',
+	'manage-wikia-home-wikis-in-visualization-heading' => 'Liste der Wikis in der Visualisierung',
+	'manage-wikia-home-wiki-name-filter' => 'Fang an, den Namen des Wikis einzugeben und die Liste wird kürzer:',
+	'manage-wikia-home-wiki-filter' => 'Filtern',
+	'manage-wikia-home-wiki-filter-reset' => 'Löschen',
+	'manage-wikia-home-wiki-list-id' => 'Kennung',
+	'manage-wikia-home-wiki-list-vertical' => 'Vertikal',
+	'manage-wikia-home-wiki-list-headline' => 'Name des Wikis',
+	'manage-wikia-home-wiki-list-blocked' => 'Gesperrt',
+	'manage-wikia-home-wiki-list-promoted' => 'Gefördert',
+	'manage-wikia-home-wiki-list-official' => 'Offiziell',
+	'manage-wikia-home-wiki-list-collection' => 'Sammlungen',
+	'manage-wikia-home-wiki-list-blocked-no' => 'Nein',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Ja',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Nein',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Ja',
+	'manage-wikia-home-wiki-list-official-no' => 'Nein',
+	'manage-wikia-home-wiki-list-official-yes' => 'Ja',
+	'manage-wikia-home-wiki-list-disabled-collection' => 'Deaktivierte Sammlung',
+	'manage-wikia-home-wiki-list-all-collections' => 'Alle Sammlungen',
+	'manage-wikia-home-wiki-list-all-verticals' => 'Alle vertikalen',
+	'manage-wikia-home-modal-title' => 'Wikistatus ändern',
+	'manage-wikia-home-modal-title-collection' => 'Wiki in der Sammlung bearbeiten',
+	'manage-wikia-home-modal-content-add-blocked' => 'Willst du dieses Wiki von der Anzeige in der Wikivisualisierung ausschließen?',
+	'manage-wikia-home-modal-content-remove-blocked' => 'Willst du dieses Wiki in der Wikivisualisierung einschließen?',
+	'manage-wikia-home-modal-content-add-promoted' => 'Willst du dieses Wiki in der Wikivisualisierung fördern?',
+	'manage-wikia-home-modal-content-remove-promoted' => 'Willst du dieses Wiki in der Wikivisualisierung nicht mehr fördern?',
+	'manage-wikia-home-modal-content-add-official' => 'Willst du das offizielle Wikilogo der Wikivisualisierung hinzufügen?',
+	'manage-wikia-home-modal-content-remove-official' => 'Willst du das offizielle Wikilogo aus der Wikivisualisierung entfernen?',
+	'manage-wikia-home-modal-content-add-collection' => 'Willst du dieses Wiki zur Sammlung hinzufügen?',
+	'manage-wikia-home-modal-content-remove-collection' => 'Willst du dieses Wiki aus der Sammlung entfernen?',
+	'manage-wikia-home-modal-content-add-blocked-wiki-warning' => 'Du kannst keine gesperrten Wikis zu einer Sammlung hinzufügen',
+	'manage-wikia-home-modal-content-blocked-wiki-in-collection-warning' => 'Dieses Wiki sollte nicht in der Sammlung sein, da es gesperrt ist. Es wird aus der Sammlung entfernt.',
+	'manage-wikia-home-modal-content-blocked-wiki-title' => 'Dieses Wiki ist gesperrt',
+	'manage-wikia-home-modal-content-removed-blocked-in-collection' => 'Dieses Wiki ist derzeit Teil einer Sammlung und kann nicht gesperrt werden.',
+	'manage-wikia-home-modal-too-many-wikis-in-collection' => 'Du kannst keine weiteren Wikis dieser Sammlung hinzufügen.',
+	'manage-wikia-home-modal-button-no' => 'Nein',
+	'manage-wikia-home-modal-button-yes' => 'Ja',
+	'manage-wikia-home-modal-button-okay' => 'Okay',
+	'manage-wikia-home-collections-setup-header' => 'Sammlungskonfiguration',
+	'manage-wikia-home-collections-setup-save-button' => 'Speichern',
+	'manage-wikia-home-collections-enabled-field-label' => 'Aktiviert',
+	'manage-wikia-home-collections-name-field-label' => 'Name der Sammlung',
+	'manage-wikia-home-collections-sponsor-url-field-label' => 'Sponsor-URL',
+	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Heldenbild',
+	'manage-wikia-home-collections-sponsor-image-field-label' => 'Sponsorbild',
+	'manage-wikia-home-collections-wikis-in-collection' => 'Wikis: $1 von $2',
+	'manage-wikia-home-collections-invalid-wikis-number' => 'Diese Sammlung wird auf der Unternehmenshauptseite nicht sichtbar sein, bis {{PLURAL:$1|ein Wiki zugewiesen ist|$1 Wikis zugewiesen sind}}.',
+	'manage-wikia-home-collection-hero-image-tooltip' => 'Dieses Bild soll $1 × $2 Pixel groß sein',
+	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Dieses Bild soll $1 × $2 Pixel groß sein',
+	'manage-wikia-home-collection-add-file-button' => 'Ein Foto hinzufügen',
+);
+
 /** Greek (Ελληνικά)
  * @author Nikosguard
  */
 $messages['el'] = array(
 	'manage-wikia-home-modal-title' => 'Αλλαγή κατάστασης του wiki',
 	'manage-wikia-home-modal-content-remove-collection' => 'Θέλετε να καταργήσετε αυτό το wiki από τη συλλογή;',
+);
+
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'manage-wikia-home-visualization-wikis' => 'Corporate wikis with visualisation:',
+	'manage-wikia-home-wikis-in-visualization-heading' => 'List of wikis in visualisation',
+	'manage-wikia-home-modal-content-add-blocked' => 'Do you want to exclude this wiki from appearing in the wiki visualisation?',
+	'manage-wikia-home-modal-content-remove-blocked' => 'Do you want to include this wiki in the wiki visualisation?',
+	'manage-wikia-home-modal-content-add-promoted' => 'Do you want to promote this wiki in the wiki visualisation?',
+	'manage-wikia-home-modal-content-remove-promoted' => 'Do you want to demote this wiki in the wiki visualisation?',
+	'manage-wikia-home-modal-content-add-official' => 'Do you want to add an official logo for this wiki in the wiki visualisation?',
+	'manage-wikia-home-modal-content-remove-official' => 'Do you want to remove the official wiki logo for this wiki in the wiki visualisation?',
 );
 
 /** Spanish (español)
@@ -221,6 +324,11 @@ $messages['es'] = array(
 	'manage-wikia-home-visualization-wikis' => 'Wikis corporativos con visualización:',
 	'manage-wikia-home-wikis-in-slots-success' => 'Números de espacios han sido cambiados.',
 	'manage-wikia-home-collections-success' => 'Las colecciones han sido guardadas.',
+	'manage-wikia-home-collections-add-success' => 'Se agregó satisfactoriamente el wiki a la colección.',
+	'manage-wikia-home-collections-add-failure-already-exists' => 'El wiki ya existe en esta colección.',
+	'manage-wikia-home-collections-add-failure-image' => '$1 no puede ser añadido a esta colección porque su imagen principal ha sido denegada.',
+	'manage-wikia-home-collections-remove-success' => 'Se borró satisfactoriamente el wiki de esta colección.',
+	'manage-wikia-home-collections-invalid-action' => 'Esa acción no existe.',
 	'manage-wikia-home-verticals-proportions' => 'Número de wikis en vertical',
 	'manage-wikia-home-error-invalid-total-no-of-slots' => 'Cantidad de espacios inválidos en total ($1). Por favor asegúrate de que la suma de cada espacio de los hubs es igual al total de espacios ($2).',
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'No se permiten números negativos de espacios',
@@ -270,9 +378,10 @@ $messages['es'] = array(
 	'manage-wikia-home-collections-enabled-field-label' => 'Habilitado',
 	'manage-wikia-home-collections-name-field-label' => 'Nombre de la colección',
 	'manage-wikia-home-collections-sponsor-url-field-label' => 'URL del patrocinador',
+	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Imagen de héroe',
 	'manage-wikia-home-collections-sponsor-image-field-label' => 'Imagen del patrocinador',
 	'manage-wikia-home-collections-wikis-in-collection' => 'Wikis: $1 de $2',
-	'manage-wikia-home-collections-invalid-wikis-number' => 'Esta colección no será visible en la portada corporativa hasta que hayan $1 wikis asignadas a ella.',
+	'manage-wikia-home-collections-invalid-wikis-number' => 'Esta colección no será visible en la portada corporativa hasta que hayan $1 wikis asignadas a ella.', # Fuzzy
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Esta imagen debe ser $1px x $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Esta imagen debe ser $1px × $2px',
 	'manage-wikia-home-collection-add-file-button' => 'Añadir una imagen',
@@ -280,15 +389,21 @@ $messages['es'] = array(
 
 /** French (français)
  * @author Gomoko
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'managewikiahome' => 'Gérer l’accueil de Wikia',
 	'manage-wikia-home-wrong-rights' => 'Vous êtes sans doute déconnecté ou n’avez pas les droits pour utiliser cette page spéciale.',
 	'manage-wikia-home-wikis-in-slots-heading' => 'Paramétrage des emplacements',
 	'manage-wikia-home-wikis-in-slots-total' => 'Nombre total d’emplacements : $1',
-	'manage-wikia-home-visualization-wikis' => 'Wikis d’entreprise avec visualisation :',
+	'manage-wikia-home-visualization-wikis' => "Wikis ''corporate'' avec visualisation :",
 	'manage-wikia-home-wikis-in-slots-success' => 'Le nombre d’emplacements a été modifié.',
 	'manage-wikia-home-collections-success' => 'Les collections ont été enregistrées.',
+	'manage-wikia-home-collections-add-success' => 'Wiki ajouté à la collection avec succès.',
+	'manage-wikia-home-collections-add-failure-already-exists' => 'Le wiki existe déjà dans cette collection',
+	'manage-wikia-home-collections-add-failure-image' => '$1 ne peut pas être ajouté à cette collection parce que son image principale a été refusée.',
+	'manage-wikia-home-collections-remove-success' => 'Le wiki a été supprimé de cette collection avec succès.',
+	'manage-wikia-home-collections-invalid-action' => "Cette action n'existe pas.",
 	'manage-wikia-home-verticals-proportions' => 'Nombre de wikis par colonne',
 	'manage-wikia-home-error-invalid-total-no-of-slots' => 'Nombre d’emplacements non valide au total ($1). Assurez-vous que la somme de chaque groupe d’emplacements équivaut au nombre total d’emplacements ($2).',
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'Un nombre négatif d’emplacements est interdit',
@@ -300,7 +415,7 @@ $messages['fr'] = array(
 	'manage-wikia-home-wiki-filter' => 'Filtre',
 	'manage-wikia-home-wiki-filter-reset' => 'Effacer',
 	'manage-wikia-home-wiki-list-id' => 'Id',
-	'manage-wikia-home-wiki-list-vertical' => 'Colonne',
+	'manage-wikia-home-wiki-list-vertical' => 'Thème',
 	'manage-wikia-home-wiki-list-headline' => 'Nom du wiki',
 	'manage-wikia-home-wiki-list-blocked' => 'Bloqué',
 	'manage-wikia-home-wiki-list-promoted' => 'Promu',
@@ -314,13 +429,13 @@ $messages['fr'] = array(
 	'manage-wikia-home-wiki-list-official-yes' => 'Oui',
 	'manage-wikia-home-wiki-list-disabled-collection' => 'Collection désactivée',
 	'manage-wikia-home-wiki-list-all-collections' => 'Toutes les collections',
-	'manage-wikia-home-wiki-list-all-verticals' => 'Toutes les colonnes',
+	'manage-wikia-home-wiki-list-all-verticals' => 'Tous les thèmes',
 	'manage-wikia-home-modal-title' => 'Modifier l’état du wiki',
 	'manage-wikia-home-modal-title-collection' => 'Modifier le wiki dans la collection',
 	'manage-wikia-home-modal-content-add-blocked' => 'Voulez-vous exclure ce wiki de l’affichage dans la visualisation des wikis ?',
 	'manage-wikia-home-modal-content-remove-blocked' => 'Voulez-vous inclure ce wiki dans la visualisation des wikis ?',
 	'manage-wikia-home-modal-content-add-promoted' => 'Voulez-vous promouvoir ce wiki dans la visualisation des wikis ?',
-	'manage-wikia-home-modal-content-remove-promoted' => 'Voulez-vous déchoir ce wiki dans la visualisation des wikis ?',
+	'manage-wikia-home-modal-content-remove-promoted' => 'Voulez-vous retirer ce wiki de la visualisation des wikis ?',
 	'manage-wikia-home-modal-content-add-official' => 'Voulez-vous ajouter un logo officiel pour ce wiki dans la visualisation des wikis ?',
 	'manage-wikia-home-modal-content-remove-official' => 'Voulez-vous supprimer le logo officiel de ce wiki dans la visualisation des wikis ?',
 	'manage-wikia-home-modal-content-add-collection' => 'Voulez-vous ajouter ce wiki à la collection ?',
@@ -329,22 +444,22 @@ $messages['fr'] = array(
 	'manage-wikia-home-modal-content-blocked-wiki-in-collection-warning' => 'Ce wiki ne devrait pas être dans une collection car il est bloqué. Il sera supprimé de la collection',
 	'manage-wikia-home-modal-content-blocked-wiki-title' => 'Ce wiki est bloqué',
 	'manage-wikia-home-modal-content-removed-blocked-in-collection' => 'Ce wiki fait actuellement partie d’une collection et ne peut pas être bloqué.',
-	'manage-wikia-home-modal-too-many-wikis-in-collection' => 'Vous ne pouvez pas ajouter plus de wikis à cette collection.',
+	'manage-wikia-home-modal-too-many-wikis-in-collection' => 'Vous ne pouvez plus ajouter de wikis à cette collection.',
 	'manage-wikia-home-modal-button-no' => 'Non',
 	'manage-wikia-home-modal-button-yes' => 'Oui',
 	'manage-wikia-home-modal-button-okay' => 'Ok',
 	'manage-wikia-home-collections-setup-header' => 'Paramétrage des collections',
 	'manage-wikia-home-collections-setup-save-button' => 'Enregistrer',
-	'manage-wikia-home-collections-enabled-field-label' => 'Activé',
+	'manage-wikia-home-collections-enabled-field-label' => 'Activée',
 	'manage-wikia-home-collections-name-field-label' => 'Nom de la collection',
 	'manage-wikia-home-collections-sponsor-url-field-label' => 'URL du sponsor',
-	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Image du héros',
+	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Image mega-bannière',
 	'manage-wikia-home-collections-sponsor-image-field-label' => 'Image du sponsor',
 	'manage-wikia-home-collections-wikis-in-collection' => 'Wikis : $1 sur $2',
-	'manage-wikia-home-collections-invalid-wikis-number' => 'Cette collection ne sera pas visible sur la page d’accueil de l’entreprise jusqu’à ce que $1 wikis lui soient affectés.',
+	'manage-wikia-home-collections-invalid-wikis-number' => 'Cette collection ne sera pas visible sur la page d’accueil du portail jusqu’à ce que $1 wikis lui soient affectés.', # Fuzzy
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Cette image devrait faire $1px x $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Cette image devrait faire $1px x $2px',
-	'manage-wikia-home-collection-add-file-button' => 'Ajouter une photo',
+	'manage-wikia-home-collection-add-file-button' => 'Ajouter une image',
 );
 
 /** Galician (galego)
@@ -358,6 +473,11 @@ $messages['gl'] = array(
 	'manage-wikia-home-visualization-wikis' => 'Wikis corporativos con visualización:',
 	'manage-wikia-home-wikis-in-slots-success' => 'Modificouse o número de espazos.',
 	'manage-wikia-home-collections-success' => 'Gardáronse as coleccións.',
+	'manage-wikia-home-collections-add-success' => 'O wiki engadiuse correctamente á colección.',
+	'manage-wikia-home-collections-add-failure-already-exists' => 'O wiki xa existe nesta colección',
+	'manage-wikia-home-collections-add-failure-image' => 'Non se pode engadir $1 a esta colección porque a súa imaxe principal foi rexeitada.',
+	'manage-wikia-home-collections-remove-success' => 'O wiki eliminouse correctamente da colección.',
+	'manage-wikia-home-collections-invalid-action' => 'Esa acción non existe.',
 	'manage-wikia-home-verticals-proportions' => 'Número de wikis por columna',
 	'manage-wikia-home-error-invalid-total-no-of-slots' => 'O número de espazos totais non é válido ($1). Asegúrese de que a suma de espazos de cada centro de actividade é igual ao número total de espazos ($2).',
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'Non está permitido un número negativo de espazos',
@@ -410,7 +530,7 @@ $messages['gl'] = array(
 	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Imaxe central',
 	'manage-wikia-home-collections-sponsor-image-field-label' => 'Imaxe do patrocinador',
 	'manage-wikia-home-collections-wikis-in-collection' => 'Wikis: $1 de $2',
-	'manage-wikia-home-collections-invalid-wikis-number' => 'Esta colección non será visible na páxina principal corporativa ata que haxa $1 wikis asignados a ela.',
+	'manage-wikia-home-collections-invalid-wikis-number' => 'Esta colección non será visible na páxina principal corporativa ata que haxa $1 wikis asignados a ela.', # Fuzzy
 	'manage-wikia-home-collection-hero-image-tooltip' => 'A imaxe debería ser $1px × $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'A imaxe debería ser $1px × $2px',
 	'manage-wikia-home-collection-add-file-button' => 'Engadir unha foto',
@@ -441,6 +561,11 @@ $messages['ms'] = array(
 	'manage-wikia-home-visualization-wikis' => 'Wiki korporat dengan visualisasi:',
 	'manage-wikia-home-wikis-in-slots-success' => 'Slot nombor telah diubah.',
 	'manage-wikia-home-collections-success' => 'Koleksi telah disimpan.',
+	'manage-wikia-home-collections-add-success' => 'Wiki ini berjaya ditambahkan ke dalam koleksi.',
+	'manage-wikia-home-collections-add-failure-already-exists' => 'Wiki ini sudah wujud dalam koleksi ini.',
+	'manage-wikia-home-collections-add-failure-image' => '$1 tidak boleh ditambahkan ke dalam koleksi ini kerana gambar utamanya telah ditolak.',
+	'manage-wikia-home-collections-remove-success' => 'Wiki ini berjaya digugurkan dari koleksi.',
+	'manage-wikia-home-collections-invalid-action' => 'Tindakan itu tidak wujud.',
 	'manage-wikia-home-verticals-proportions' => 'Bilangan wiki severtikal',
 	'manage-wikia-home-error-invalid-total-no-of-slots' => 'Jumlah slot tidak sah ($1). Sila pastikan jumlah slot dalam setiap hab bersamaan dengan jumlah slot ($2).',
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'Jumlah slot negatif tidak dibenarkan',
@@ -493,7 +618,7 @@ $messages['ms'] = array(
 	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Gambar hero',
 	'manage-wikia-home-collections-sponsor-image-field-label' => 'Gambar penaja',
 	'manage-wikia-home-collections-wikis-in-collection' => 'Wiki: $1 daripada $2',
-	'manage-wikia-home-collections-invalid-wikis-number' => 'Koleksi ini tidak akan disiarkan pada halaman utama korporat selagi bilangan wiki yang dicakupinya kurang daripada $1 buah.',
+	'manage-wikia-home-collections-invalid-wikis-number' => 'Koleksi ini tidak akan disiarkan pada halaman utama korporat hinggalah terdapat {{PLURAL:$1|satu|$1}} wiki yang diperuntukkan kepadanya.',
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Gambar ini seharusnya berukuran $1px × $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Gambar ini seharusnya berukuran $1px × $2px',
 	'manage-wikia-home-collection-add-file-button' => 'Tambah gambar',
@@ -511,10 +636,19 @@ $messages['nl'] = array(
 	'manage-wikia-home-visualization-wikis' => "Bedrijfswiki's met visualisatie:",
 	'manage-wikia-home-wikis-in-slots-success' => 'Het aantal slots werd gewijzigd.',
 	'manage-wikia-home-collections-success' => 'Collecties werden opgeslagen.',
+	'manage-wikia-home-collections-add-success' => 'De wiki is toegevoegd aan de verzameling.',
+	'manage-wikia-home-collections-add-failure-already-exists' => 'De wiki is al onderdeel van deze verzameling.',
+	'manage-wikia-home-collections-add-failure-image' => '$1 kan niet toegevoegd worden aan deze verzameling omdat de hoofdafbeelding is geweigerd.',
+	'manage-wikia-home-collections-remove-success' => 'De wiki is verwijderd uit de verzameling.',
+	'manage-wikia-home-collections-invalid-action' => 'Die handeling bestaat niet.',
 	'manage-wikia-home-verticals-proportions' => "Aantal wiki's per verticaal",
 	'manage-wikia-home-error-invalid-total-no-of-slots' => 'Ongeldige plaatsen in totaal ($1). Zorg ervoor dat het totaal aantal plaatsen voor iedere hub gelijk is aan het totale aantal plaatsen ($2).',
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'Een negatief aantal plaatsen is niet toegestaan',
+	'manage-wikia-home-error-wikifactory-failure' => 'Er is iets misgegaan tijdens het opslaan van de variabelen. Probeer het opnieuw.',
+	'manage-wikia-home-collections-validation-error' => 'Er is iets misgegaan tijdens het opslaan. Controleer uw invoer.',
 	'manage-wikia-home-change-button' => 'Wijzigen',
+	'manage-wikia-home-wikis-in-visualization-heading' => "Let met wiki's in visualisatie",
+	'manage-wikia-home-wiki-name-filter' => 'Begin met het invoeren van een wikinaam en de lijst wordt korter:',
 	'manage-wikia-home-wiki-filter' => 'Filteren',
 	'manage-wikia-home-wiki-filter-reset' => 'Wissen',
 	'manage-wikia-home-wiki-list-id' => 'ID',
@@ -536,8 +670,18 @@ $messages['nl'] = array(
 	'manage-wikia-home-modal-title' => 'Wikistatus wijzigen',
 	'manage-wikia-home-modal-title-collection' => 'Wiki in verzameling bewerken',
 	'manage-wikia-home-modal-content-add-blocked' => 'Wilt u deze wiki uitsluiten uit de wiki visualisatie?',
-	'manage-wikia-home-modal-content-remove-collection' => 'Wilt u deze wiki verwijderen uit de collectie?',
+	'manage-wikia-home-modal-content-remove-blocked' => 'Wilt u deze wiki in de wikivisualisatie opnemen?',
+	'manage-wikia-home-modal-content-add-promoted' => 'Wilt u deze wiki aanprijzen in de wikivisualisatie?',
+	'manage-wikia-home-modal-content-remove-promoted' => 'Wilt u deze wiki niet langer aanprijzen in de wikivisualisatie?',
+	'manage-wikia-home-modal-content-add-official' => 'Wilt u een officieel logo voor deze wiki toevoegen in de wikivisualisatie?',
+	'manage-wikia-home-modal-content-remove-official' => 'Wilt u het officiële wikilogo voor deze wiki verwijderen in de wikivisualisatie?',
+	'manage-wikia-home-modal-content-add-collection' => 'Wilt u deze wiki verwijderen uit de verzameling?',
+	'manage-wikia-home-modal-content-remove-collection' => 'Wilt u deze wiki verwijderen uit de verzameling?',
+	'manage-wikia-home-modal-content-add-blocked-wiki-warning' => "U kunt geblokeerde wiki's niet toevoegen aan een verzameling.",
+	'manage-wikia-home-modal-content-blocked-wiki-in-collection-warning' => 'Deze wiki hoort geen onderdeel uit te maken van een verzameling omdat die is geblokkeerd. De wiki wordt uit de verzameling verwijderd.',
 	'manage-wikia-home-modal-content-blocked-wiki-title' => 'Deze wiki is geblokkeerd',
+	'manage-wikia-home-modal-content-removed-blocked-in-collection' => 'Deze wiki maakt onderdeel uit van een verzameling en kan niet geblokkeerd worden.',
+	'manage-wikia-home-modal-too-many-wikis-in-collection' => "U kunt niet meer wiki's toevoegen aan deze verzameling.",
 	'manage-wikia-home-modal-button-no' => 'Nee',
 	'manage-wikia-home-modal-button-yes' => 'Ja',
 	'manage-wikia-home-modal-button-okay' => 'OK',
@@ -546,11 +690,108 @@ $messages['nl'] = array(
 	'manage-wikia-home-collections-enabled-field-label' => 'Ingeschakeld',
 	'manage-wikia-home-collections-name-field-label' => 'Naam van de verzameling',
 	'manage-wikia-home-collections-sponsor-url-field-label' => 'Sponsor-URL',
+	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Herobanner',
 	'manage-wikia-home-collections-sponsor-image-field-label' => 'Sponsorafbeelding',
 	'manage-wikia-home-collections-wikis-in-collection' => "Wiki's: $1 van $2",
+	'manage-wikia-home-collections-invalid-wikis-number' => "Deze verzameling is niet zichtbaar op de startpagina vna het bedrijf totdat er $1 wiki's aan zijn toegewezen.", # Fuzzy
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Deze afbeelding hoort de volgende afmetingen te hebben: $1×$2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Deze afbeelding hoort de volgende afmetingen te hebben: $1×$2px',
 	'manage-wikia-home-collection-add-file-button' => 'Afbeelding toevoegen',
+);
+
+/** Polish (polski)
+ * @author Sovq
+ */
+$messages['pl'] = array(
+	'managewikiahome' => 'Zarządzenie Wikia Home',
+	'manage-wikia-home-wrong-rights' => 'Jesteś wylogowany lub nie masz uprawnień aby edytować tą stronę.',
+	'manage-wikia-home-wikis-in-slots-heading' => 'Ustawienie slotów',
+	'manage-wikia-home-wikis-in-slots-total' => 'Ilość slotów: $1',
+	'manage-wikia-home-visualization-wikis' => 'Wiki z włączonymi wizualizacjami:',
+	'manage-wikia-home-wikis-in-slots-success' => 'Ustawienia slotów zostały zmienione.',
+	'manage-wikia-home-collections-success' => 'Ustawienia kolekcji zostały zmienione.',
+	'manage-wikia-home-collections-add-success' => 'Wiki pomyślnie dodane do kolekcji',
+	'manage-wikia-home-collections-add-failure-already-exists' => 'Wiki już istnieje w tej kolekcji',
+	'manage-wikia-home-collections-add-failure-image' => '$1 nie może zostać dodana do kolekcji, ponieważ jej główny obraz został odrzucony.',
+	'manage-wikia-home-collections-remove-success' => 'Wiki pomyślnie usunięta z kolekcji.',
+	'manage-wikia-home-collections-invalid-action' => 'Ta opcja nie istnieje.',
+	'manage-wikia-home-verticals-proportions' => 'Liczba wiki na vertical',
+	'manage-wikia-home-error-invalid-total-no-of-slots' => 'Niewłaściwa liczba slotów ($1). Upewnij się, ze suma slotów we wszystkich hubach równa się łącznej liczbie slotów ($2).',
+	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'Ujemna ilość slotów nie jest dozwolona',
+	'manage-wikia-home-error-wikifactory-failure' => 'Wystąpił błąd podczas zapisywania zmiennych. Spróbuj ponownie później.',
+	'manage-wikia-home-collections-validation-error' => 'Wystąpił błąd podczas zapisu, sprawdź ponownie wprowadzone dane.',
+	'manage-wikia-home-change-button' => 'Zmień',
+	'manage-wikia-home-wikis-in-visualization-heading' => 'Lista wiki z wizualizacjami',
+	'manage-wikia-home-wiki-name-filter' => 'Zacznij wpisywać nazwę wiki a lista się skróci',
+	'manage-wikia-home-wiki-filter' => 'Filtr',
+	'manage-wikia-home-wiki-filter-reset' => 'Wyczyść',
+	'manage-wikia-home-wiki-list-id' => 'ID',
+	'manage-wikia-home-wiki-list-vertical' => 'Vertical',
+	'manage-wikia-home-wiki-list-headline' => 'Nazwa wiki',
+	'manage-wikia-home-wiki-list-blocked' => 'Zablokowana',
+	'manage-wikia-home-wiki-list-promoted' => 'Promowana',
+	'manage-wikia-home-wiki-list-official' => 'Oficjalna',
+	'manage-wikia-home-wiki-list-collection' => 'Kolekcje',
+	'manage-wikia-home-wiki-list-blocked-no' => 'Nie',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Tak',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Nie',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Tak',
+	'manage-wikia-home-wiki-list-official-no' => 'Nie',
+	'manage-wikia-home-wiki-list-official-yes' => 'Tak',
+	'manage-wikia-home-wiki-list-disabled-collection' => 'Kolekcja wyłączona',
+	'manage-wikia-home-wiki-list-all-collections' => 'Wszystkie kolekcje',
+	'manage-wikia-home-wiki-list-all-verticals' => 'Wszystkie verticale',
+	'manage-wikia-home-modal-title' => 'Zmiana statusu wiki',
+	'manage-wikia-home-modal-title-collection' => 'Edytuj wiki w kolekcji',
+	'manage-wikia-home-modal-content-add-blocked' => 'Czy chcesz uniemożliwić tej wiki pojawienie się w wizualizacji?',
+	'manage-wikia-home-modal-content-remove-blocked' => 'Czy chcesz umożliwić tej wiki pojawienie się w wizualizacji?',
+	'manage-wikia-home-modal-content-add-promoted' => 'Czy chcesz promować wiki w wizualizacji?',
+	'manage-wikia-home-modal-content-remove-promoted' => 'Czy chcesz wyłączyć promowanie wiki w wizualizacji?',
+	'manage-wikia-home-modal-content-add-official' => 'Czy chcesz dodać oficjalne logo dla tej wiki w wizualizacji?',
+	'manage-wikia-home-modal-content-remove-official' => 'Czy chcesz usunąć oficjalne logo dla tej wiki w wizualizacji?',
+	'manage-wikia-home-modal-content-add-collection' => 'Czy chcesz dodać tą wiki do kolekcji?',
+	'manage-wikia-home-modal-content-remove-collection' => 'Czy chcesz usunąć tą wiki z kolekcji?',
+	'manage-wikia-home-modal-content-add-blocked-wiki-warning' => 'Nie możesz dodawać zablokowanych wiki do kolekcji',
+	'manage-wikia-home-modal-content-blocked-wiki-in-collection-warning' => 'Ta wiki nie powinna znaleźć się w kolekcji ponieważ jest zablokowana. Zostanie z niej usunięta.',
+	'manage-wikia-home-modal-content-blocked-wiki-title' => 'Ta wiki jest zablokowana',
+	'manage-wikia-home-modal-content-removed-blocked-in-collection' => 'Ta wiki jest obecnie w kolekcji i nie może zostać zablokowana.',
+	'manage-wikia-home-modal-too-many-wikis-in-collection' => 'Nie możesz dodać więcej wiki do tej kolekcji.',
+	'manage-wikia-home-modal-button-no' => 'Nie',
+	'manage-wikia-home-modal-button-yes' => 'Tak',
+	'manage-wikia-home-modal-button-okay' => 'Ok',
+	'manage-wikia-home-collections-setup-header' => 'Ustawienia kolekcji',
+	'manage-wikia-home-collections-setup-save-button' => 'Zapisz',
+	'manage-wikia-home-collections-enabled-field-label' => 'Włączona',
+	'manage-wikia-home-collections-name-field-label' => 'Nazwa kolekcji',
+	'manage-wikia-home-collections-sponsor-url-field-label' => 'URL sponsora',
+	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Duży obraz sponsora',
+	'manage-wikia-home-collections-sponsor-image-field-label' => 'Mały obraz sponsora',
+	'manage-wikia-home-collections-wikis-in-collection' => 'Wiki: $1 z $2',
+	'manage-wikia-home-collections-invalid-wikis-number' => 'Ta kolekcja nie będzie widzialna na stronie głównej dopóki nie znajdzie się w niej $1 wiki.', # Fuzzy
+	'manage-wikia-home-collection-hero-image-tooltip' => 'Obraz powinien mieć wymiary $1px × $2px',
+	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Obraz powinien mieć wymiary $1px × $2px',
+	'manage-wikia-home-collection-add-file-button' => 'Dodaj obraz',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'manage-wikia-home-change-button' => 'بدلول',
+	'manage-wikia-home-wiki-filter' => 'چاڼګر',
+	'manage-wikia-home-wiki-filter-reset' => 'سپينول',
+	'manage-wikia-home-wiki-list-id' => 'پېژند',
+	'manage-wikia-home-wiki-list-blocked-no' => 'نه',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'هو',
+	'manage-wikia-home-wiki-list-promoted-no' => 'نه',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'هو',
+	'manage-wikia-home-wiki-list-official-no' => 'نه',
+	'manage-wikia-home-wiki-list-official-yes' => 'هو',
+	'manage-wikia-home-wiki-list-all-collections' => 'ټولې ټولګې',
+	'manage-wikia-home-modal-button-no' => 'نه',
+	'manage-wikia-home-modal-button-yes' => 'هو',
+	'manage-wikia-home-collections-setup-save-button' => 'خوندي کول',
+	'manage-wikia-home-collection-add-file-button' => 'يو انځور ورګډول',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -590,8 +831,14 @@ $messages['sv'] = array(
 	'manage-wikia-home-wrong-rights' => 'Du är förmodligen utloggad eller så har du inte behörighet att använda denna speciella sida.',
 	'manage-wikia-home-wikis-in-slots-heading' => 'Platskonfigurering',
 	'manage-wikia-home-wikis-in-slots-total' => 'Totalt antal platser: $1',
+	'manage-wikia-home-visualization-wikis' => 'Kollektiva wikis med visualisering:',
 	'manage-wikia-home-wikis-in-slots-success' => 'Antalet platser har ändrats.',
 	'manage-wikia-home-collections-success' => 'Samlingar har sparats.',
+	'manage-wikia-home-collections-add-success' => 'Wiki lades till i samlingen.',
+	'manage-wikia-home-collections-add-failure-already-exists' => 'Wiki finns redan i denna samling',
+	'manage-wikia-home-collections-add-failure-image' => '$1 kan inte läggas till i denna samling eftersom dess huvudbild har avvisats.',
+	'manage-wikia-home-collections-remove-success' => 'Wiki togs bort från samlingen.',
+	'manage-wikia-home-collections-invalid-action' => 'Denna åtgärd finns inte.',
 	'manage-wikia-home-verticals-proportions' => 'Antal wikis per vertikalplan',
 	'manage-wikia-home-error-invalid-total-no-of-slots' => 'Ogiltig totalt antal platser ($1). Se till att summan av varje navigationsplats är lika med totala antalet platser ($2).',
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'Negativt antal platser tillåts inte',
@@ -644,6 +891,7 @@ $messages['sv'] = array(
 	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Hjältebild',
 	'manage-wikia-home-collections-sponsor-image-field-label' => 'Sponsorbild',
 	'manage-wikia-home-collections-wikis-in-collection' => 'Wikis: $1 av $2',
+	'manage-wikia-home-collections-invalid-wikis-number' => 'Denna samling kommer inte att synas på den kollektiva huvudsidan förrän $1 wikis har tilldelats på den.', # Fuzzy
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Denna bild ska vara $1px × $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Denna bild ska vara $1px × $2px',
 	'manage-wikia-home-collection-add-file-button' => 'Lägg till ett foto',

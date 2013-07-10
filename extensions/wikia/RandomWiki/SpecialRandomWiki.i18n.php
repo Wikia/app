@@ -259,6 +259,13 @@ $messages['pms'] = array(
 	'randomwiki' => "Wiki a l'asar",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'randomwiki' => 'ناټاکلې ويکي',
+);
+
 /** Portuguese (português)
  * @author Hamilton Abreu
  */

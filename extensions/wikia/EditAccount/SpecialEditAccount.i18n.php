@@ -1051,6 +1051,7 @@ $messages['id'] = array(
 	'editaccount-invalid-email' => '" $1 " bukanlah alamat e-mail yang valid!',
 	'editaccount-nouser' => 'Akun " $1 "tidak ada!',
 	'editaccount-remove-avatar-fail' => 'Masalah dalam hapus otomatis avatar.',
+	'editaccount-requested' => 'Catatan: Pengguna telah meminta penutupan akun',
 	'editaccount-not-requested' => 'PERHATIAN: Pengguna tidak meminta penutupan akun.',
 	'editaccount-labal-email-status' => 'Status surel',
 	'editaccount-status-tempuser' => 'Pengguna Sementara',
@@ -1063,6 +1064,7 @@ $messages['id'] = array(
 	'editaccount-log-entry-close' => 'menonaktifkan akun $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;"> Akun ini telah dinonaktifkan secara global oleh Wikia. </div>',
 	'right-editaccount' => 'Menyunting informasi pengguna lain',
+	'action-editaccount' => 'sunting informasi pengguna lain',
 );
 
 /** Italian (italiano)

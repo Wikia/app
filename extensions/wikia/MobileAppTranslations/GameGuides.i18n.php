@@ -53,6 +53,7 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'activityindicator-message' => '{{Identical|Loading}}',
 	'window-article-button-close' => '{{Identical|Close}}',
+	'window-article-menu-search-label' => '{{Identical|Search}}',
 );
 
 /** Arabic (العربية)
