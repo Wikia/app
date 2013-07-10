@@ -34,8 +34,76 @@ class ImportantArticles extends WikiaModel {
 		return $topLinks;
 	}
 
-	public function getImportantPhrasesByDomainNames() {
+	public function matchDomainAndTopicOld( $domainPart, $wikiTopic ) {
+		$a = preg_replace("/[\\s-_\\.:]/i", "", $domainPart);
+		$a = strtolower($a);
+		$b = preg_replace("/[\\s-_\\.:]/i", "", $wikiTopic);
+		$b = strtolower($b);
+		if( $a == $b ) {
+			return $wikiTopic;
+		}
+		return false;
+	}
 
+	public function matchDomainAndTopic( $domainPart, $wikiTopic ) {
+
+		$skipChars = [' ', '_'. '-', ':' ];
+		$a = preg_replace("/[\\s-_\\.:]/i", "", $domainPart);
+		$a = strtolower($a);
+		$b = preg_replace("/[\\s-_\\.:]/i", "", $wikiTopic);
+		$b = strtolower($b);
+		if( strpos($b, $a) === false ) {
+			return false;
+		}
+
+		for( $i = 0; $i < strlen($wikiTopic); $i++ ) {
+			$domainPos = 0;
+			$str = '';
+			for( $j = $i; $j < strlen($wikiTopic); $j++ ) {
+				while( ($domainPos < strlen($domainPart)) && in_array($domainPart[$domainPos], $skipChars) ) {
+					$domainPos++;
+				}
+				if( $domainPos == strlen($domainPart) ) { break; }
+				if( strtolower($domainPart[$domainPos]) == strtolower($wikiTopic[$j]) ) {
+					$domainPos++;
+					$str .= $wikiTopic[$j];
+				} else if ( in_array($wikiTopic[$j], $skipChars) ) {
+					$str .= $wikiTopic[$j];
+				}
+				//var_dump("PART: " . $domainPart . " :: " . $wikiTopic . " :-: " . $str);
+			}
+
+			var_dump($domainPart . " :: " . $wikiTopic . " :-: " . $str);
+			if( $domainPos == strlen($domainPart) ) { return $str; }
+		}
+		return false;
+	}
+
+	public function getImportantPhrasesByDomainNames() {
+		$domains = WikiFactory::getdomains($this->wikiId);
+		$domainParts = [];
+		foreach( $domains as $i => $domain ) {
+			$domainPart = preg_replace("/(\\.wikia.com|\\.com|\\.org)$/", "", $domain);
+			$domainPart = preg_replace("/^www\./", "", $domainPart);
+			$domainParts[] = $domainPart;
+		}
+		$domainParts = array_unique($domainParts);
+		$matches = [];
+		foreach( $domainParts as $domainPart ) {
+			$topics = $this->getWikiTopics();
+			foreach( $topics as $topic ) {
+				foreach( $topic->entities as $entity ) {
+					$name = $entity->name;
+					$match = $this->matchDomainAndTopic($domainPart, $name);
+					if( $match ) {
+						var_dump($match . " -- " . $domainPart);
+						$matches[] = $match;
+					}
+				}
+			}
+		}
+
+		return $matches;
 	}
 
 	public function getImportantPhrasesByRedirects() {
