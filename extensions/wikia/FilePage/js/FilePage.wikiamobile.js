@@ -29,6 +29,10 @@ require( ['track', 'sections'], function( track, sections ) {
 				options.push( { label: 'metadata' } );
 				track.event.apply( track, options );
 				break;
+			case 'globalusage':
+				options.push( { label: 'global-usage' } );
+				track.event.apply( track, options );
+				break;
 		}
 	});
 } );
