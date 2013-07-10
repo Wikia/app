@@ -37,7 +37,7 @@ class VideoTitle extends AbstractSelect
 					$this->config->getQuery()->getSanitizedQuery(),
 				];
 		if ( $this->getMinDuration() && $this->getMaxDuration() ) {
-			$queryString .= " AND video_duration_i:[%3% TO %4%]";
+			$queryString .= " AND video_duration_i:[%4% TO %5%]";
 			$params = array_merge( $params, [ $this->getMinDuration(), $this->getMaxDuration() ] );
 		}
 		$query->setQuery( $queryString, $params );
@@ -53,9 +53,11 @@ class VideoTitle extends AbstractSelect
 
 	/**
 	 * @param number $minDuration
+	 * @return Wikia\Search\QueryService\Select\VideoTitle
 	 */
 	public function setMinDuration($minDuration) {
 		$this->minDuration = $minDuration;
+		return $this;
 	}
 
 	/**
@@ -67,9 +69,11 @@ class VideoTitle extends AbstractSelect
 
 	/**
 	 * @param \Wikia\Search\QueryService\Select\unknown_type $maxDuration
+	 * @return Wikia\Search\QueryService\Select\VideoTitle
 	 */
 	public function setMaxDuration($maxDuration) {
 		$this->maxDuration = $maxDuration;
+		return $this;
 	}
 
 	/**

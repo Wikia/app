@@ -12,6 +12,12 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	const STATUS_SWAP_NORM = 2;
 	const STATUS_SWAP_EXACT = 3;
 
+	/**
+	 * Duration variation in seconds
+	 * @var int
+	 */
+	const DURATION_DELTA = 10;
+	
 	const VIDEOS_PER_PAGE = 10;
 	const THUMBNAIL_WIDTH = 500;
 	const THUMBNAIL_HEIGHT = 309;
@@ -220,7 +226,18 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		$readableTitle = $titleObj->getText();
 		$params = array( 'title' => $readableTitle );
 		
-		// @todo add minseconds and maxseconds here
+		$file = wfFindFile( $titleObj );
+		if (! empty( $file ) ) {
+			$serializedMetadata = $file->getMetadata();
+			if (! empty( $serializedMetadata ) ) {
+				$metadata = unserialize( $serializedMetadata );
+				if ( (! empty( $metadata ) ) && ( isset( $metadata['duration'] ) && ( $metadata['duration'] > 0 ) ) ) {
+					$duration = $metadata['duration'];
+					$params['minseconds'] = $duration - min( [ $duration, self::DURATION_DELTA ] );
+					$params['maxseconds'] = $duration + min( [ $duration, self::DURATION_DELTA ] );  
+				}
+			}
+		}
 		
 		$videoRows = $app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', $params )
 						 ->getData();
