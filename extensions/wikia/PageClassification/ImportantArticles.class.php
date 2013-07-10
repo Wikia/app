@@ -156,7 +156,7 @@ class ImportantArticles extends WikiaModel {
 					$match = $this->matchDomainAndTopic($domainPart, $name);
 					if( $match ) {
 						// var_dump($match . " -- " . $domainPart);
-						$matches[] = [ "name" => $match, "score" => 30 ];
+						$matches[] = [ "name" => $match, "score" => 10 ];
 						$foundMatchForDomain = true;
 						break;
 					}
@@ -165,7 +165,7 @@ class ImportantArticles extends WikiaModel {
 			}
 		}
 		foreach( $domainParts as $domainPart ) {
-			$matches[] = [ "name" => $domainPart, "score" => 30/sizeof($domainParts) ];
+			$matches[] = [ "name" => $domainPart, "score" => 15/sizeof($domainParts) ];
 		}
 
 		return $matches;
