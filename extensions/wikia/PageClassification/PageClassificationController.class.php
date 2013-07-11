@@ -37,6 +37,7 @@ class PageClassificationController extends WikiaSpecialPageController {
 		/* TEST */
 		$important = new ImportantArticles( $wikiId );
 		$wikiTopics = $important->getWikiTopics();
+		$importantByRedirects  = $important->getImportantPhrasesByRedirects();
 		$importantByTopPages = $important->getImportantPhrasesByTopPages();
 		$importantByLinks = $important->getImportantPhrasesByInterlinks();
 		$commonPrefix = $important->getCommonPrefix();
@@ -47,7 +48,8 @@ class PageClassificationController extends WikiaSpecialPageController {
 		$this->setVal( 'importantByTopPages', $importantByTopPages );
 		$this->setVal( 'importantByLinks', $importantByLinks );
 		$this->setVal( 'commonPrefix', $commonPrefix );
-		$this->setVal( 'importantByDomainNames', $importantByDomainNames);
+		$this->setVal( 'importantByDomainNames', $importantByDomainNames );
+		$this->setVal( 'importantByRedirects', $importantByRedirects );
 		$this->setVal( 'merged', $merged );
 
 		$wiki = WikiFactory::getWikiByID( $wikiId );

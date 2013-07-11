@@ -27,7 +27,12 @@
 			</ul>
 		</td>
 		<td valign="top">
-
+			<ul>
+				<?php 	foreach ( $importantByRedirects as $imp ) {
+					echo '<li>'	. $imp['name']	.'<br/>[score: '.$imp['score']. ']</li>';
+				}
+				?>
+			</ul>
 		</td>
 
 		<td valign="top">

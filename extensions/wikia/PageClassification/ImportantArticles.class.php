@@ -8,6 +8,8 @@ class ImportantArticles extends WikiaModel {
 	protected $app;
 	protected $wikiTopics;
 
+	protected $cachedResult = array();
+
 	const MAX_ELEM_IN_RANK = 150;
 
 	public function __construct( $wikiId ) {
@@ -25,7 +27,12 @@ class ImportantArticles extends WikiaModel {
 	}
 
 	protected function getScoreFromPosition( $position, $totalCnt ) {
-		return $totalCnt/$position;
+
+		$score = $totalCnt/$position;
+		if ( $score > 10 ) {
+			$score = 10 + $score/10;
+		}
+		return $score;
 	}
 
 	public function getCommonPrefix() {
@@ -43,6 +50,10 @@ class ImportantArticles extends WikiaModel {
 
 	public function getImportantPhrasesByInterlinks() {
 
+		if ( !empty( $this->cachedResult[ __METHOD__ ] ) ) {
+			return $this->cachedResult[ __METHOD__ ];
+		}
+
 		$topLinks = $this->getTopLinks();
 		$wikiTopics = $this->getWikiTopics();
 		$topLinksSanitized = array();
@@ -52,6 +63,7 @@ class ImportantArticles extends WikiaModel {
 		unset( $topLinks );
 
 		$result = $this->fetchCommon( $wikiTopics, $topLinksSanitized, "name" );
+		$this->cachedResult[ __METHOD__ ] = $result;
 		return $result;
 	}
 
@@ -138,6 +150,11 @@ class ImportantArticles extends WikiaModel {
 	}
 
 	public function getImportantPhrasesByDomainNames() {
+
+		if ( !empty( $this->cachedResult[ __METHOD__ ] ) ) {
+			return $this->cachedResult[ __METHOD__ ];
+		}
+
 		$domains = WikiFactory::getdomains($this->wikiId);
 		$domainParts = [];
 		foreach( $domains as $i => $domain ) {
@@ -181,11 +198,64 @@ class ImportantArticles extends WikiaModel {
 				}
 			}
 		}
-
+		$this->cachedResult[ __METHOD__ ] = $matches;
 		return $matches;
 	}
 
 	public function getImportantPhrasesByRedirects() {
+
+		if ( !empty( $this->cachedResult[ __METHOD__ ] ) ) {
+			return $this->cachedResult[ __METHOD__ ];
+		}
+
+		$topArticles = $this->getImportantPhrasesByTopPages();
+		$topByLinks = $this->getImportantPhrasesByInterlinks();
+		$topByDomains = $this->getImportantPhrasesByDomainNames();
+		$topArticles = array_merge( (array)$topArticles, (array)$topByLinks, (array)$topByDomains );
+		$this->sortResult( $topArticles );
+		$topArticleTitles = array();
+		$firstLettersFromTopArticles = array();
+		foreach ( $topArticles as $top ) {
+			$short = preg_replace('/[^a-z0-9]/', ' ', strtolower( $top['name']));
+			$short = preg_replace('/[ ]{2,}/', ' ', $short);
+			$shortA = explode(' ', $short);
+			$letters = '';
+			foreach ( $shortA as $word ) {
+				$letters .= substr( $word, 0, 1 );
+			}
+			$firstLettersFromTopArticles[] = $letters;
+
+			$topArticleTitles[] = str_replace( " ", "_", $top['name'] );
+		}
+
+		$result = $this->db->query("
+			SELECT page_id, page_title
+			FROM redirect LEFT JOIN page ON rd_from = page_id
+			WHERE rd_title IN ( ".'"'.implode('", "', $topArticleTitles).'"'.")
+		", __METHOD__);
+
+		$redirects = array();
+		$redirectsV = array();
+		while ( $row = $result->fetchObject() ) {
+			$short = preg_replace( '/[^a-z0-9]/', '', strtolower( $row->page_title ) );
+			if ( in_array( $short, $firstLettersFromTopArticles ) ) {
+				$redirectsV[] = $row->page_title;
+			}
+			$redirects[] = $row->page_title;
+		}
+
+		$sanitizedTitlesTable = array();
+		$finalResult = array();
+		$redVCnt = count( $redirectsV );
+		foreach ( $redirectsV as $i => $redV ) {
+			$sanitizedVersion = preg_replace( '/[^a-z0-9]/', '', strtolower( $redV ) );
+			if ( !in_array( $sanitizedVersion, $sanitizedTitlesTable  ) ) {
+				$finalResult[] = array( "name" => str_replace("_", " ", $redV), "score" => $this->getScoreFromPosition( $i+1, $redVCnt) );
+				$sanitizedTitlesTable[] = $sanitizedVersion;
+			}
+		}
+		$this->cachedResult[ __METHOD__ ] = $finalResult;
+		return $finalResult;
 	}
 
 	public function getMostImportantTopics() {
@@ -221,9 +291,13 @@ class ImportantArticles extends WikiaModel {
 
 	public function getImportantPhrasesByTopPages() {
 
+		if ( !empty( $this->cachedResult[ __METHOD__ ] ) ) {
+			return $this->cachedResult[ __METHOD__ ];
+		}
 		$wikiTopics = $this->getWikiTopics();
 		$topArticles = $this->getTopWikiArticles();
 		$result = $this->fetchCommon( $wikiTopics, $topArticles, "pageId" );
+		$this->cachedResult[ __METHOD__ ] = $result;
 		return $result;
 	}
 
