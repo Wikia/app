@@ -352,8 +352,21 @@ body > .global-notification,
 	width: 100%;
 }
 
-.editpage-sourcewidemode.mode-source .editpage-widemode-trigger {
-	right: $width-rail;
+.editpage-sourcewidemode.mode-source {
+	&.editpage-sourcewidemode-on {
+		.EditPageMain {
+			margin-right: 0;
+			width: 100%;
+		}
+
+		.EditPageMainContainer {
+			margin-right: 0;
+		}
+	}
+
+	.editpage-widemode-trigger {
+		right: $width-rail;
+	}
 }
 
 .EditPageMain {
