@@ -394,7 +394,7 @@ class SpecialCssModel extends WikiaModel {
 	 * @desc Truncates given wiki text, added ellipsis at the end, parses truncated text and returns it
 	 * 
 	 * @param GlobalTitle|Title $title mediawiki article's title
-	 * @param $wikitext wikitext which is going to be truncated
+	 * @param String $wikitext wikitext which is going to be truncated
 	 * 
 	 * @return String
 	 */
