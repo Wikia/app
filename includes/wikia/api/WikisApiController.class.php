@@ -46,7 +46,6 @@ class WikisApiController extends WikiaApiController {
 	 * @responseParam integer $currentBatch The index of the current batch/page
 	 * @responseParam integer $batches The total number of batches/pages
 	 * @responseParam integer $next The amount of items in the next batch/page
-	 * @responseParam bool $extended States if data should be extended with wiki details
 	 *
 	 * @example http://www.wikia.com/wikia.php?controller=WikisApi&method=getList&hub=Gaming&lang=en
 	 */
@@ -64,15 +63,6 @@ class WikisApiController extends WikiaApiController {
 		$results = self::$model->getTop( $langs, $hub );
 		$batches = wfPaginateArray( $results, $limit, $batch );
 
-		//extend results
-		if ( $extended ) {
-			foreach ( $batches[ 'items' ] as $item ) {
-				$result[] = array_merge( $item, $this->getWikiDetails( $item[ 'id' ] ) );
-			}
-			if ( !empty( $result ) ) {
-				$batches[ 'items' ] = $result;
-			}
-		}
 		foreach ( $batches as $name => $value ) {
 			$this->response->setVal( $name, $value );
 		}
@@ -266,6 +256,64 @@ class WikisApiController extends WikiaApiController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * Gets the information about wikis [DEPRECATED]
+	 *
+	 * @requestParam array $ids The list of wiki ids that will be fetched
+	 * @requestParam int $height [OPTIONAL] Thumbnail height in pixels
+	 * @requestParam int $width [OPTIONAL] Thumbnail width in pixels
+	 * @requestParam int $snippet [OPTIONAL] Maximum number of words returned in description
+	 *
+	 * @responseParam array $items The list of wikis, each containing: title, url, description, thumbnail, no. of articles, no. of photos, list of top contributors, no. of videos
+	 *
+	 * @example &ids=159,831,3125
+	 * @example &ids=159,831,3125&width=100
+	 * @example &ids=159,831,3125&height=100&width=100&snippet=25
+	 */
+	public function getWikiData() {
+		wfProfileIn( __METHOD__ );
+		$ids = $this->request->getArray( 'ids' );
+		$imageWidth = $this->request->getInt( 'width', static::DEFAULT_WIDTH );
+		$imageHeight = $this->request->getInt( 'height', static::DEFAULT_HEIGHT );
+		$length = $this->request->getVal( 'snippet', static::DEFAULT_SNIPPET_LENGTH );
+
+		$items = array();
+		$service = new WikiService();
+		foreach ( $ids as $wikiId ) {
+			if ( ( $cached = $this->getFromCacheWiki( $wikiId ) ) !== false ) {
+				//get from cache
+				$wikiInfo = $cached;
+			} else {
+				//get data providers
+				$wikiObj = WikiFactory::getWikiByID( $wikiId );
+				$wikiStats = $service->getSiteStats( $wikiId );
+				$topUsers = $service->getTopEditors( $wikiId, static::DEFAULT_TOP_EDITORS_NUMBER, true );
+
+				$wikiInfo = array(
+					'wikiId' => (int) $wikiId,
+					'articles' => (int) $wikiStats[ 'articles' ],
+					'images' => (int) $wikiStats[ 'images' ],
+					'videos' => (int) $service->getTotalVideos( $wikiId ),
+					'topUsers' => array_keys( $topUsers ),
+					'title' => $wikiObj->city_title,
+					'url' => $wikiObj->city_url
+				);
+				//cache data
+				$this->cacheWikiData( $wikiInfo );
+			}
+			$wikiDesc = $service->getWikiDescription( [ $wikiId ], $imageWidth, $imageHeight );
+			//set snippet
+			$wikiInfo[ 'description' ] = $this->getSnippet( isset( $wikiDesc[ $wikiId ] ) ? $wikiDesc[ $wikiId ]['desc'] : '', $length );
+			//add image, its cached on different level
+			$wikiInfo[ 'thumbnail' ] = isset( $wikiDesc[ $wikiId ] ) ? $wikiDesc[ $wikiId ]['image_url'] : '';
+			//add to result
+			$items[] = $wikiInfo;
+		}
+
+		$this->response->setVal( 'items', $items );
+		wfProfileOut( __METHOD__ );
+	}
+
 	protected function getWikiDetails( $wikiId, $width = null, $height = null, $snippet = null ) {
 		if ( ( $cached = $this->getFromCacheWiki( $wikiId ) ) !== false ) {
 			$wikiInfo = $cached;
@@ -280,13 +328,21 @@ class WikisApiController extends WikiaApiController {
 			$this->cacheWikiData( $wikiInfo );
 		}
 		//post process thumbnails
-		$wikiInfo = array_merge(
-			$wikiInfo,
-			$this->getImageData( $wikiInfo[ 'image' ], $width, $height )
-		);
+		if ( isset( $wikiInfo[ 'image' ] ) ) {
+			$wikiInfo = array_merge(
+				$wikiInfo,
+				$this->getImageData( $wikiInfo[ 'image' ], $width, $height )
+			);
+		} else {
+			$wikiInfo[ 'image' ] = '';
+		}
 		//set snippet
-		$length = ( $snippet !== null ) ? $snippet : static::DEFAULT_SNIPPET_LENGTH;
-		$wikiInfo[ 'desc' ] = $this->getSnippet( $wikiInfo[ 'desc' ], $length );
+		if ( isset( $wikiInfo[ 'desc' ] ) ) {
+			$length = ( $snippet !== null ) ? $snippet : static::DEFAULT_SNIPPET_LENGTH;
+			$wikiInfo[ 'desc' ] = $this->getSnippet( $wikiInfo[ 'desc' ], $length );
+		} else {
+			$wikiInfo[ 'desc' ] = '';
+		}
 		return $wikiInfo;
 	}
 
