@@ -176,7 +176,7 @@ class ImportantArticles extends WikiaModel {
 						break;
 					}
 				}
-				if( $foundMatchForDomain ) {
+				if( !$foundMatchForDomain ) {
 					$matches[] = [ "name" => $domainPart, "score" => 15/sizeof($domainParts) ];
 				}
 			}
