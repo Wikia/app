@@ -18,6 +18,7 @@
 			'InsertGallery',
 			'InsertSlideshow',
 			'InsertSlider',
+			// add video button
 			'InsertVideo',
 			'InsertMedia',
 			'Poll',

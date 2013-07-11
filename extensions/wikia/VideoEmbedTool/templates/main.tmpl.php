@@ -65,6 +65,7 @@
 			<div id="VET-preview-close" class="VET-preview-close">
 				<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" class="sprite close" alt="Close">
 			</div>
+			<!-- add video button -->
 			<a id="VET-add-from-preview" href="" class="wikia-button VET-add-from-preview"><?= wfMsg('vet-add-from-preview') ?></a>
 			<div id="VET-video-wrapper" class="VET-video-wrapper"></div>
 		</div>

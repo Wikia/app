@@ -105,6 +105,7 @@ function wfCreatePageSetupVars(Array &$vars ) {
 
 function wfCreatePageLoadPreformattedContent( $editpage ) {
 	global $wgRequest, $wgEnableVideoToolExt;
+	// add video button
 
 	if( !$editpage->textbox1 ) {
 		if ( $wgRequest->getCheck( 'useFormat' ) ) {

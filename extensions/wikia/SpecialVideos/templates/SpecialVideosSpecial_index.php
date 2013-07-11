@@ -52,9 +52,9 @@
 		<?php $alpha = $counter % 3 == 0 ? 'alpha' : ''; ?>
 		<div class="grid-2 <?= $alpha ?>">
 			<div class="add-video-placeholder addVideo"></div>
+			<!-- add video button -->
 			<p><a href="#" class="addVideo"><?= wfMsg('special-videos-add-video') ?></a></p>
 		</div>
-	<?php endif; ?>
 </div>
 <?= $pagination ?>
 <div class="errorWhileLoading messageHolder"><?=wfMsg('videos-error-while-loading');?></div>

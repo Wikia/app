@@ -5,6 +5,7 @@
 	WE.modules.InsertMiniEditor = $.createClass(WE.modules.Insert, {
 		items: [
 			'InsertImage',
+			// add video button
 			'InsertVideo'
 		],
 		init: function() {

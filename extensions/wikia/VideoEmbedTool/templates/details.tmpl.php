@@ -81,6 +81,7 @@ global $wgExtensionsPath;
 	</div>
 	<? if( $screenType == 'details' ): ?>
 		<div class="input-group button-group addVideoDetailsFormControls">
+			<!-- add video button -->
 			<input class="wikia-button v-float-right" type="submit" value="<?= wfMessage('vet-insert2') ?>" />
 		</div>
 		<input id="VideoEmbedId" type="hidden" value="<?= isset($props['id']) ? urlencode($props['id']) : '' ?>" />
@@ -88,6 +89,7 @@ global $wgExtensionsPath;
 		<input id="VideoEmbedMetadata" type="hidden" value="<?= isset($props['metadata']) ? urlencode($props['metadata']) : '' ?>" />
 	<? else: // $screenType == 'edit' ?>
 		<div class="input-group button-group">
+			<!-- add video button (actually an update one, sould this be treated the same?) -->
 			<input class="wikia-button v-float-right" type="submit" value="<?= wfMessage('vet-update') ?>"/>
 		</div>
 		<div id="VideoReplaceLink" class="VideoReplaceLink"><?= wfMessage('vet-video-replace-link', $props['href'])->parse(); ?></div>
