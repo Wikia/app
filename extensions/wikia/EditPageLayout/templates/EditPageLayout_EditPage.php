@@ -13,26 +13,16 @@
 					<?php endif ?>
 				</a>
 			</span>
-			<!-- "Editing" -->
-			<h2>
-				<?= $editing ?>
-			</h2>
-			<!-- edited page title -->
+			<h2><?= $editing ?></h2>
 			<h1>
 				<a href="<?= htmlspecialchars($title->getLocalUrl()) ?>" class="<?= $hideTitle ? 'hiddenTitle' : '' ?>" title="<?= htmlspecialchars($titleText) ?>"><?= htmlspecialchars($titleText) ?></a>
 			</h1>
-			<!-- pencil icon -->
-			<a id="EditPageTitle" title="<?= wfMsg('editpagelayout-edit-title') ?>">
+			<a id="EditPageTitle" class="EditPageTitle" title="<?= wfMsg('editpagelayout-edit-title') ?>">
 				<img class="sprite edit-pencil-small" src="<?= $wg->BlankImgUrl ?>">
 			</a>
-			<!-- mode switching tabs -->
-			<nav id="EditPageTabs" class="editpage-tabs" data-space-type="tabs" data-space-autoshow="true" style="display:none"></nav>
-
-			<!-- help link -->
-			<aside id="HelpLink"><?= $helpLink ?></aside>
-
-			<!-- notifications link -->
-			<aside id="NotificationsLink"><a href="#"><?= $notificationsLink ?></a></aside>
+			<nav id="EditPageTabs" class="EditPageTabs editpage-tabs" data-space-type="tabs" data-space-autoshow="true"></nav>
+			<aside id="HelpLink" class="HelpLink"><?= $helpLink ?></aside>
+			<aside id="NotificationsLink" class="NotificationsLink"><a href="#"><?= $notificationsLink ?></a></aside>
 		</header>
 
 		<form id="editform" class="editform" name="editform" method="post" action="<?= htmlspecialchars($editFormAction) ?>" enctype="multipart/form-data">
@@ -54,8 +44,6 @@
 										}
 									</style>
 								</noscript>
-
-								<!-- notifications -->
 								<div class="editpage-notices" data-space-type="notices-short">
 									<span class="splotch"><?= count($notices) ?></span>
 									<ul>
@@ -65,8 +53,6 @@
 									</ul>
 								</div>
 								<div class="editpage-notices-html" data-space-type="notices-html" style="display:none"><?= $noticesHtml?></div>
-
-								<!-- preloads -->
 								<?php if ( !empty( $editPagePreloads ) ): ?>
 									<?php foreach( $editPagePreloads as $preloadId => $preload ): ?>
 										<div id="<?= $preloadId ?>" class="editpage-intro">
@@ -82,19 +68,16 @@
 										</div>
 									<?php endforeach ?>
 								<?php endif ?>
-
 								<!-- edit form content -->
 								<?= $bodytext ?>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- Collapse bar for widescreen source mode -->
 				<div class="editpage-widemode-trigger">
 					<span class="arrow"></span>
 				</div>
 				<div id="EditPageRail" class="EditPageRail editpage-rail" data-space-type="rail">
-					<!-- Page Controls module -->
 					<noscript>
 						<style>
 							.module_page_controls .wikia-menu-button {
