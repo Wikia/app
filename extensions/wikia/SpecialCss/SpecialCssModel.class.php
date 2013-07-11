@@ -26,14 +26,6 @@ class SpecialCssModel extends WikiaModel {
 	const UPDATE_SECTION_IN_BLOGPOST = 2;
 
 	/**
-	 * @desc Regex pattern used to extract h3 tags
-	 *
-	 * @see SpecialCssModel::removeHeadline(removeFirstH3
-	 * @see SpecialCssModel::addAnchorToPostUrl(getAnchorFromWikitext
-	 */
-	const WIKITEXT_H3_PATTERN = '/([^=]|^)={3}([^=]+)={3}([^=]|$)/';
-
-	/**
 	 * @desc Regex pattern used to extract "CSS Updates" headline
 	 * 
 	 * @see SpecialCssModel::filterRevisionsData()
@@ -42,12 +34,17 @@ class SpecialCssModel extends WikiaModel {
 
 	/**
 	 * @desc Regex pattern used to extract "CSS Updates" section
-	 *
-	 * @todo This pattern can be better: can pull the text with h4, h5 and so on right now it can not; let's fix it soon
+	 * 
+	 * @see SpecialCssModel::getCssUpdateSection()
+	 */
+	const WIKITEXT_SECTION_PATTERN = '/===\s*%s\s*===\s*$(.+)/ms';
+
+	/**
+	 * @desc Regex pattern used to extract H1-H3 headlines
 	 *
 	 * @see SpecialCssModel::getCssUpdateSection()
 	 */
-	const WIKITEXT_SECTION_PATTERN = '/===\s*%s\s*===([^=]+)/s';
+	const WIKITEXT_H3_TO_H1_PATTERN = '/(^===[^$=]+===\\s*$)|(^==[^$=]+==\\s*$)|(^=[^$=]+=\\s*$)/m';
 
 	/**
 	 * @desc Limit of characters per one post snippet
@@ -326,7 +323,7 @@ class SpecialCssModel extends WikiaModel {
 		if( $blogTitle instanceof GlobalTitle && $userPage instanceof GlobalTitle ) {
 			$timestamp = $postData['revisions'][0]['timestamp'];
 			$sectionText = $postData['revisions'][0]['*'];
-			$cssUpdateText = $this->getCssUpdateSection( $blogTitle, $sectionText );
+			$cssUpdateText = $this->truncateAndParse( $blogTitle, $this->getCssUpdateSection( $sectionText ) );
 			
 			if( !empty( $cssUpdateText ) ) {
 				$cssUpdatePost = [
@@ -368,29 +365,47 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Retrives part of the blog post's content and returns it
 	 * 
-	 * @param GlobalTitle|Title $blogPostTitle blog post title instance
-	 * @param String $blogPostText content of a blog post
+	 * @param String $blogPostWikitext content of a blog post
 	 * 
-	 * @return string
+	 * @return String
 	 */
-	private function getCssUpdateSection( $blogPostTitle, $blogPostText ) {
-		$headline = $this->getCssUpdateHeadline();
-		$pattern = sprintf( self::WIKITEXT_SECTION_PATTERN, $headline );
+	private function getCssUpdateSection( $blogPostWikitext ) {
+		wfProfileIn( __METHOD__ );
 		$output = '';
-		
-		if( preg_match( $pattern, $blogPostText, $results ) && !empty( $results[1] ) ) {
-			$output = $results[1];
+		$pattern = sprintf( self::WIKITEXT_SECTION_PATTERN, $this->getCssUpdateHeadline() ); 
 
-			if( !empty($output) ) {
-				$output = $this->wg->Lang->truncate( $output, self::SNIPPET_CHAR_LIMIT, wfMessage( 'ellipsis' )->text() );
-				$output = $this->getParsedText( $output, $blogPostTitle );
+		preg_match( $pattern, $blogPostWikitext, $matches, PREG_OFFSET_CAPTURE );
+		if( count( $matches ) > 1 ) {
+			$output = substr( $blogPostWikitext, $matches[1][1] );
+			preg_match( self::WIKITEXT_H3_TO_H1_PATTERN, $output, $matches, PREG_OFFSET_CAPTURE );
+			
+			if( count( $matches ) > 0 ) {
+				$output = substr( $output, 0, $matches[0][1] );
 			}
+			
+			$output = trim( $output );
 		}
 		
+		wfProfileOut( __METHOD__ );
 		return $output;
 	}
+
+	/**
+	 * @desc Truncates given wiki text, added ellipsis at the end, parses truncated text and returns it
+	 * 
+	 * @param GlobalTitle|Title $title mediawiki article's title
+	 * @param $wikitext wikitext which is going to be truncated
+	 * 
+	 * @return String
+	 */
+	private function truncateAndParse( $title, $wikitext ) {
+		$wikitext = $this->wg->Lang->truncate( $wikitext, self::SNIPPET_CHAR_LIMIT, wfMessage( 'ellipsis' )->text() );
+		$wikitext = $this->getParsedText( $wikitext, $title );
+		
+		return $wikitext;
+	}
 	
-	private function getCssUpdateHeadline() {
+	protected function getCssUpdateHeadline() {
 		return $this->wg->Lang->getMessageFor( 
 			'special-css-community-update-headline', 
 			$this->getCssUpdateLang()

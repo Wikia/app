@@ -328,4 +328,124 @@ class SpecialCssModelTest extends WikiaBaseTest {
 			],
 		];
 	}
+
+	/**
+	 * @dataProvider testGetCssUpdateSectionDataProvider
+	 */
+	public function testGetCssUpdateSection( $blogPostWikitext, $expected ) {
+		$getCssUpdateSectionMethod = new ReflectionMethod('SpecialCssModel', 'getCssUpdateSection');
+		$getCssUpdateSectionMethod->setAccessible(true);
+		
+		$specialCssModelMock = $this->getMock( 'SpecialCssModel', ['getCssUpdateHeadline'] );
+		$specialCssModelMock->expects( $this->once() )
+			->method( 'getCssUpdateHeadline' )
+			->will( $this->returnValue( 'CSS Updates') );
+
+		$this->assertEquals( $expected, $getCssUpdateSectionMethod->invoke( $specialCssModelMock, $blogPostWikitext ) );
+	}
+	
+	public function testGetCssUpdateSectionDataProvider() {
+		return [
+			'CSS Updates section in the middle' => 
+			[
+				'blogPostWikitext' => '===one===
+da da da
+=== CSS Updates===
+* point one,
+* point two,
+* new with=100
+* point three.
+==== Secondary headline for this section #1 ====
+* 1a,
+* 1b.
+=== two ===
+asdasdasd
+asdasdasd
+asdasdasd
+', 
+				'expected' => '* point one,
+* point two,
+* new with=100
+* point three.
+==== Secondary headline for this section #1 ====
+* 1a,
+* 1b.'
+			],
+			'CSS Updates section at the beginning' =>
+			[
+				'blogPostWikitext' => '=== CSS Updates===
+* point one,
+* point two,
+* new with=100
+* point three.
+==== Secondary headline for this section #1 ====
+* 1a,
+* 1b.
+===one===
+da da da
+=== two ===
+asdasdasd
+asdasdasd
+asdasdasd
+',
+				'expected' => '* point one,
+* point two,
+* new with=100
+* point three.
+==== Secondary headline for this section #1 ====
+* 1a,
+* 1b.'
+			],
+			'CSS Updates section at the end' => 
+			[
+				'blogPostWikitext' => '===one===
+da da da
+=== two ===
+asdasdasd
+asdasdasd
+asdasdasd
+=== CSS Updates===
+* point one,
+* point two,
+==== Secondary headline for this section #1 ====
+* 1a,
+* 1b.',
+				'expected' => '* point one,
+* point two,
+==== Secondary headline for this section #1 ====
+* 1a,
+* 1b.'
+			],
+			// H2 before and after our CSS Updates section
+			[
+				'blogPostWikitext' => '===one===
+da da da
+== first h2  ==
+asdasdasd
+asdasdasd
+asdasdasd
+=== CSS Updates===
+* point one,
+* point two,
+==== Secondary headline for this section #1 ====
+* 1a,
+* 1b.
+Paragraph text, text, sample text.
+== second h2 ==
+* new with=100
+* point three.
+=== two ===
+More sample text in paragraph. What to write here?
+I don\'t really know. Any ideas?
+=== three===
+This is the last one.',
+				'expected' => '* point one,
+* point two,
+==== Secondary headline for this section #1 ====
+* 1a,
+* 1b.
+Paragraph text, text, sample text.'
+			]
+		];
+	}
 }
