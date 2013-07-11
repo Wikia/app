@@ -320,18 +320,19 @@ class WikiaFileHelper extends Service {
 	 * Get a new instance of the file page based on skin and if wgEnableVideoPageRedesign is enabled
 	 *
 	 * @param Title $fileTitle
-	 * @return FilePageMobile|FilePageTabbed|WikiaFilePage
+	 * @return WikiaMobileFilePage|FilePageTabbed|WikiaFilePage
 	 */
 	public static function getMediaPage( $fileTitle ) {
-		global $wgEnableVideoPageRedesign;
-		if ( F::app()->checkSkin( 'oasis' ) && !empty( $wgEnableVideoPageRedesign ) ) {
-			$mediaPage = new FilePageTabbed( $fileTitle );
-		} else if ( F::app()->checkSkin( 'wikiamobile' ) ) {
-			$mediaPage = new FilePageMobile( $fileTitle );
+		$app = F::app();
+
+		if ( $app->checkSkin( 'oasis' ) && !empty( $app->wg->EnableVideoPageRedesign ) ) {
+			$cls = 'FilePageTabbed';
+		} else if ( $app->checkSkin( 'wikiamobile' ) ) {
+			$cls = 'WikiaMobileFilePage';
 		} else {
-			$mediaPage = new WikiaFilePage( $fileTitle );
+			$cls = 'WikiaFilePage';
 		}
-		return $mediaPage;
+		return new $cls( $fileTitle );
 	}
 
 	/**

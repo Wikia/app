@@ -9,7 +9,7 @@ class FilePageHooks extends WikiaObject{
 	 *
 	 * @param Title $oTitle
 	 * @param Article $oArticle
-	 * @return Bool true
+	 * @return bool true
 	 */
 	static public function onArticleFromTitle( &$oTitle, &$oArticle ){
 		if ( ( $oTitle instanceof Title ) && ( $oTitle->getNamespace() == NS_FILE ) ){
@@ -130,7 +130,7 @@ class FilePageHooks extends WikiaObject{
 	 * @param array $item
 	 * @param string $page
 	 * @param string|false $link
-	 * @return Bool true
+	 * @return bool true
 	 */
 	static public function onGlobalUsageFormatItemWikiLink( $item, $page, &$link ) {
 		$link = WikiFactory::DBtoUrl( $item['wiki'] );
@@ -145,7 +145,7 @@ class FilePageHooks extends WikiaObject{
 	/**
 	 * Hook: get wiki link for GlobalUsage
 	 * @param string $wikiName
-	 * @return Bool true
+	 * @return bool true
 	 */
 	static public function onGlobalUsageImagePageWikiLink( &$wikiName ) {
 		$wiki = WikiFactory::getWikiByDB( $wikiName );
@@ -159,7 +159,7 @@ class FilePageHooks extends WikiaObject{
 	/**
 	 * Hook: check for video files
 	 * @param array $images
-	 * @return Bool true
+	 * @return bool true
 	 */
 	static public function onGlobalUsageLinksUpdateComplete( &$images ) {
 		$videoFiles = array();

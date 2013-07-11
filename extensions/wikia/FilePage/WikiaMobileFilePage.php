@@ -5,7 +5,7 @@
  * @author Liz Lee
  */
 
-class FilePageMobile extends WikiaFilePage {
+class WikiaMobileFilePage extends WikiaFilePage {
 	/**
 	 * TOC override so Wikia File Page does not return any TOC
 	 *

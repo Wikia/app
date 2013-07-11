@@ -11,28 +11,23 @@ require( ['track', 'sections'], function( track, sections ) {
 	 */
 	sections.addEventListener( 'open', function() {
 		var id = this.previousElementSibling.id,
-			options = [
-				'file-page',
-				track.CLICK
-			];
+			label;
 
 		switch( id ) {
 			case 'filehistory':
-				options.push( { label: 'history' } );
-				track.event.apply( track, options );
+				label = 'history';
 				break;
 			case 'filelinks':
-				options.push( { label: 'wiki-usage' } );
-				track.event.apply( track, options );
+				label = 'wiki-usage';
 				break;
 			case 'metadata':
-				options.push( { label: 'metadata' } );
-				track.event.apply( track, options );
+				label = 'metadata';
 				break;
 			case 'globalusage':
-				options.push( { label: 'global-usage' } );
-				track.event.apply( track, options );
+				label = 'global-usage';
 				break;
 		}
+
+		track.event( 'file-page', track.CLICK, { label: label } );
 	});
 } );

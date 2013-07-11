@@ -22,7 +22,7 @@ $dir = dirname( __FILE__ ) . '/';
 
 // classes
 $wgAutoloadClasses[ 'WikiaFilePage' ] = $dir . 'WikiaFilePage.php';
-$wgAutoloadClasses[ 'FilePageMobile' ] = $dir . 'FilePageMobile.php';
+$wgAutoloadClasses[ 'WikiaMobileFilePage' ] = $dir . 'WikiaMobileFilePage.php';
 $wgAutoloadClasses[ 'FilePageTabbed' ] = $dir . 'FilePageTabbed.php';
 $wgAutoloadClasses[ 'WikiaWikiFilePage'] = $dir . 'WikiaWikiFilePage.php'; // Override for WikiFilePage
 
