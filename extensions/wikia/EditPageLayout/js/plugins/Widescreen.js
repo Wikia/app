@@ -36,13 +36,7 @@
 				this.loadState(true);
 
 				// adjust the height when changing modes
-				this.editor.on('mode', function() {
-					// give some time for toolbar to be fully switched (BugId:5328)
-					setTimeout($.proxy(this.modeChanged, this), 100);
-				}, this);
-
-				// Initial height needs to be set after toolbars are rendered
-				this.editor.on('toolbarsRendered', function() {
+				this.editor.on('mediawikiToolbarRendered', function() {
 					this.modeChanged();
 				}, this);
 			}

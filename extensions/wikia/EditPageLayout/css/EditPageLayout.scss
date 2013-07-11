@@ -90,8 +90,9 @@ body {
 	width: $width-rail-epl;
 
 	// Make sure the box shadow of #EditPageRail is layered on top of #EditPageMain
+	// and the loading status indicator (z-index: 100)
 	position: relative;
-	z-index: 2;
+	z-index: 101;
 
 	.rail-auto-height {
 		position: relative; // IE 7 needs this
@@ -256,7 +257,8 @@ body {
 			z-index: 100;
 			display: block;
 			left: 0;
-			right: 0;
+			// Don't overlap wide mode toggle left border
+			right: 1px;
 			top: 0;
 			bottom: 0;
 		}
