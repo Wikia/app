@@ -35,10 +35,10 @@
 				// load the saved state (if any)
 				this.loadState(true);
 
-				// adjust the height when changing modes
-				this.editor.on('mediawikiToolbarRendered', function() {
-					this.modeChanged();
-				}, this);
+				this.editor.on('ck-sourceModeReady', this.modeChanged, this);
+
+				// needed on initial load
+				this.editor.on('toolbarsRendered', this.modeChanged, this);
 			}
 		},
 
