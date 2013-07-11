@@ -77,7 +77,7 @@
 			display: none;
 		}
 		label[for="wpSummary"] {
-			display: none !important; // Yeah, this is lame, but the #EditPage selectors need to be refactored to .EditPage as to not clobber specificity.
+			display: none;
 		}
 	}
 
