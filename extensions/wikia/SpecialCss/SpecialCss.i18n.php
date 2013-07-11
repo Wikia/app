@@ -4,8 +4,6 @@ $messages['en'] = [
 	'action-specialcss' => 'edit CSS',
 	'special-css-title' => 'CSS Editor',
 
-	'special-css-current-version' => 'Current Version $1',
-
 	'special-css-minor-edit-label' => 'Minor edit',
 	'special-css-summary-placeholder' => 'Add a summary of your edit',
 	'special-css-edit-summary' => 'Edit summary',
