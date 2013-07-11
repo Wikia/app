@@ -89,10 +89,10 @@
 					viewportHeight: viewportHeight
 				};
 
-			if( window.wgEnableWikiaBarExt && typeof(window.WikiaBar) === 'object' ) {
-			//old admin tool bar had position relative and was always at the bottom
-			//with the admin tool bar in WikiaBar container we want it to be at the bottom but
-			//to have the page hight fit viewportHeight
+			if ( window.wgEnableWikiaBarExt && typeof window.WikiaBar === 'object' ) {
+				//old admin tool bar had position relative and was always at the bottom
+				//with the admin tool bar in WikiaBar container we want it to be at the bottom but
+				//to have the page hight fit viewportHeight
 				dimensions.nodeHeight = this.getDimensionsWithWikiaBar(dimensions.nodeHeight);
 			}
 
