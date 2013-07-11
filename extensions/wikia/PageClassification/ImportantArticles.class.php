@@ -160,6 +160,11 @@ class ImportantArticles extends WikiaModel {
 		foreach( $domains as $i => $domain ) {
 			$domainPart = preg_replace("/(\\.wikia.com|\\.com|\\.org)$/", "", $domain);
 			$domainPart = preg_replace("/^www\./", "", $domainPart);
+			$domainPart = preg_replace("/\.answers$/i", "", $domainPart);
+			$domainPart = preg_replace("/\.wikicity$/i", "", $domainPart);
+			$domainPart = preg_replace("/\.wikicities$/i", "", $domainPart);
+			$domainPart = preg_replace("/wiki$/i", "", $domainPart);
+			$domainPart = preg_replace("/^(pl|jp|en|de)\./i", "", $domainPart);
 			$domainParts[] = $domainPart;
 		}
 		$domainParts = array_unique($domainParts);
@@ -194,6 +199,7 @@ class ImportantArticles extends WikiaModel {
 					}
 				}
 				if( !$foundMatchForDomain ) {
+
 					$matches[] = [ "name" => $domainPart, "score" => 15/sizeof($domainParts) ];
 				}
 			}
