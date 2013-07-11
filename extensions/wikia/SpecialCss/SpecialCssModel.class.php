@@ -320,13 +320,13 @@ class SpecialCssModel extends WikiaModel {
 		$blogTitleText = $blogTitle->getText();
 		
 		$lastRevisionUser = $postData['revisions'][0]['user'];
-		$blogUser = $this->getUserFromTitleText( $blogTitleText, $lastRevisionUser);
+		$blogUser = $this->getUserFromTitleText( $blogTitleText, $lastRevisionUser );
 		$userPage = GlobalTitle::newFromText( $blogUser, NS_USER, $communityWikiId );
 
 		if( $blogTitle instanceof GlobalTitle && $userPage instanceof GlobalTitle ) {
 			$timestamp = $postData['revisions'][0]['timestamp'];
 			$sectionText = $postData['revisions'][0]['*'];
-			$cssUpdateText = $this->getPostSnippet($blogTitle, $sectionText);
+			$cssUpdateText = $this->getCssUpdateSection( $blogTitle, $sectionText );
 			
 			if( !empty( $cssUpdateText ) ) {
 				$cssUpdatePost = [
@@ -342,25 +342,6 @@ class SpecialCssModel extends WikiaModel {
 		}
 
 		return $cssUpdatePost;
-	}
-
-	/**
-	 * @desc Pulles only a part of blog post snippet and returns it or empty string if the right headline wasn't found
-	 *
-	 * @param GlobalTitle $blogPostTitle
-	 * @param String $blogPostText full content of blog post
-	 *
-	 * @return String
-	 */
-	private function getPostSnippet( $blogPostTitle, $blogPostText ) {
-		$output = $this->getCssUpdateSection( $blogPostText );
-		
-		if( !empty($output) ) {
-			$output = $this->wg->Lang->truncate( $output, self::SNIPPET_CHAR_LIMIT, wfMessage( 'ellipsis' )->text() );
-			$output = $this->getParsedText($output, $blogPostTitle);
-		}
-
-		return $output;
 	}
 	
 	private function isCssHeadlineIn( $wikitext ) {
@@ -387,17 +368,23 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Retrives part of the blog post's content and returns it
 	 * 
+	 * @param GlobalTitle|Title $blogPostTitle blog post title instance
 	 * @param String $blogPostText content of a blog post
 	 * 
 	 * @return string
 	 */
-	private function getCssUpdateSection( $blogPostText ) {
+	private function getCssUpdateSection( $blogPostTitle, $blogPostText ) {
 		$headline = $this->getCssUpdateHeadline();
 		$pattern = sprintf( self::WIKITEXT_SECTION_PATTERN, $headline );
 		$output = '';
 		
 		if( preg_match( $pattern, $blogPostText, $results ) && !empty( $results[1] ) ) {
 			$output = $results[1];
+
+			if( !empty($output) ) {
+				$output = $this->wg->Lang->truncate( $output, self::SNIPPET_CHAR_LIMIT, wfMessage( 'ellipsis' )->text() );
+				$output = $this->getParsedText( $output, $blogPostTitle );
+			}
 		}
 		
 		return $output;
