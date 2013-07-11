@@ -3,6 +3,16 @@ class SpecialCssModelTest extends WikiaBaseTest {
 	const FULL_URL_EXAMPLE = 'http://www.wikia.com/wiki/Special:CSS';
 	const LOCAL_URL_EXAMPLE = '/wiki/Special:CSS';
 
+	private $wgCssUpdatesLangMapMock = [
+		'en' => 'wikia',
+		'pl' => 'plwikia',
+		'de' => 'de',
+		'fr' => 'frfr',
+		'es' => 'es',
+		'ru' => 'ruwikia',
+		'it' => 'it',
+	];
+	
 	protected function setUp () {
 		require_once( dirname(__FILE__) . '/../SpecialCssModel.class.php');
 		parent::setUp();
@@ -146,36 +156,31 @@ class SpecialCssModelTest extends WikiaBaseTest {
 
 	public function testAddAnchorToPostUrlDataProvider() {
 		return [
-			// short headline
-			[
+			'short headline' => [
 				'wikitext' => '= Headline 1=\nText text text\n==Headline 2==\nText text text\n==== Headline 4 ====\nText text text\n=== Headlin e   ===\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu
 				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem.
 				===Nam ullamcorper ===nibh at justo === lacinia mattis===. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.',
 				'exptected' => '#_Headlin_e___'
 			],
-			// headline with spaces
-			[
+			'headline with spaces' => [
 				'wikitext' => 'Consectetur adipiscing elit\n\n===Headline with more text===\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu
 				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem.
 				===Nam ullamcorper ===nibh at justo === lacinia mattis===. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.',
 				'exptected' => '#Headline_with_more_text'
 			],
-			// headline at the begining of string
-			[
+			'headline at the begining of string' => [
 				'wikitext' => '===Headline 1===\nText text text\n==Headline 2==\nText text text\n==== Headline 4 ====\nText text text\n=== Headlin e   ===\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu
 				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem.
 				===Nam ullamcorper ===nibh at justo === lacinia mattis===. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.',
 				'exptected' => '#Headline_1'
 			],
-			// headline at the end of string
-			[
+			'headline at the end of string' => [
 				'wikitext' => '= Headline 1=\nText text text\n==Headline 2==\nText text text\n==== Headline 4 ====\nText text text\n== Headlin e   ==\nLorem ipsum dolor sit amet, consectetur adipiscing elit. = Sed sodales =, nisi eu
 				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem.
 				==== Nam ullamcorper ====nibh at justo = lacinia mattis=. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.===Headline at the end===',
 				'exptected' => '#Headline_at_the_end'
 			],
-			// no h3 tag
-			[
+			'no h3 tag' => [
 				'wikitext' => ' = Donec dapibus =\nMetus id mi sodales dictum. Donec nec condimentum ligula. Duis molestie sagittis leo, ut porttitor neque dapibus non.\n == Nulla vitae ==\nante eros. Maecenas in nisl a justo placerat dignissim. = Suspendisse ipsum =\nAnte, fermentum vel odio eget, euismod ultrices erat. == Nulla volutpat ==\nligula nec tortor aliquam, eu hendrerit mi egestas. Duis adipiscing odio sit amet enim porta sollicitudin. Nullam euismod massa vitae tellus fermentum ullamcorper. Donec at sagittis dolor. Phasellus ac malesuada tellus. Nunc at mauris et tortor suscipit aliquam. Nam eget ipsum cursus elit eleifend tempus eu iaculis leo. Nulla consectetur tellus ut imperdiet hendrerit. Nullam eu varius justo, in viverra justo. Proin pulvinar rhoncus odio ac bibendum. Curabitur pretium enim eget adipiscing malesuada. Fusce vehicula ligula libero, eget interdum massa laoreet eget. Aenean a ligula nec nunc dictum suscipit. Sed vel turpis mauris. ',
 				'exptected' => ''
 			],
@@ -243,7 +248,7 @@ class SpecialCssModelTest extends WikiaBaseTest {
 	 * @dataProvider testGetCommunityDbNameDataProvider
 	 */
 	public function testGetCommunityDbName($langCode, $expectedDbName) {
-		$this->mockGlobalVariable('wgCssUpdatesLangMap', $this->getCssUpdateLangMap());
+		$this->mockGlobalVariable('wgCssUpdatesLangMap', $this->wgCssUpdatesLangMapMock);
 		/** @var $specialCssModelMock PHPUnit_Framework_MockObject_MockObject */
 		$specialCssModelMock = $this->getMock('SpecialCssModel', array('getCssUpdateLang'));
 		$specialCssModelMock->expects($this->any())
@@ -309,7 +314,6 @@ class SpecialCssModelTest extends WikiaBaseTest {
 		];
 	}
 
-
 	/**
 	 * @param $userLang
 	 * @param $expectedLang
@@ -317,7 +321,7 @@ class SpecialCssModelTest extends WikiaBaseTest {
 	 * @dataProvider testGetCssUpdateLangDataProvider
 	 */
 	public function testGetCssUpdateLang($userLang, $expectedLang) {
-		$this->mockGlobalVariable('wgCssUpdatesLangMap', $this->getCssUpdateLangMap());
+		$this->mockGlobalVariable('wgCssUpdatesLangMap', $this->wgCssUpdatesLangMapMock);
 		$langMock = $this->getMock('Language', array('getCode'));
 		$langMock->expects($this->any())
 			->method('getCode')
@@ -381,11 +385,5 @@ class SpecialCssModelTest extends WikiaBaseTest {
 				'expectedLang' => 'en',
 			],
 		];
-	}
-
-	private function getCssUpdateLangMap() {
-		require( dirname(__FILE__) . '/../SpecialCss.setup.php');
-		global $wgCssUpdatesLangMap;
-		return $wgCssUpdatesLangMap;
 	}
 }
