@@ -1081,6 +1081,14 @@ class Config
 	}
 	
 	/**
+	 * Returns the tie param as configured with our AB testing plugin
+	 * @return int
+	 */
+	public function getTie() {
+		return $this->getTestProfile()->getTieParam( $this->getQueryService() );
+	}
+	
+	/**
 	 * Dependency lazy-loading.
 	 * @return Wikia\Search\MediaWikiService
 	 */
