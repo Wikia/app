@@ -175,6 +175,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$data['lang'] = '';
 		$data['expire'] = '';
 		$data['reason'] = '';
+		$data['comment'] = '';
 
 		return $data;
 	}
@@ -198,6 +199,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			'timestamp'  => wfTimestampNow(),
 			'author_id'  => $this->wg->User->getId(),
 			'reason'     => $this->wg->Request->getText( 'wpPhalanxReason' ),
+			'comment'    => $this->wg->Request->getText( 'wpPhalanxComment' ),
 			'lang'       => $this->wg->Request->getVal( 'wpPhalanxLanguages', null ),
 			'type'       => $this->wg->Request->getArray( 'wpPhalanxType' ),
 			'multitext'  => $this->wg->Request->getText( 'wpPhalanxFilterBulk' ),
