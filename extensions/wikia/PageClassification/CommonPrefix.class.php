@@ -27,7 +27,25 @@ class CommonPrefix {
 			}
 		}
 		// if phrase exists more than once
-		return $mostCommonLongest[ "cnt" ] > 1 ? $mostCommonLongest[ "phrase" ] : false;
+		if ( $mostCommonLongest[ "cnt" ] > 1 || count( $titles ) == 1 ) {
+			return $this->sanitizeFinal( $mostCommonLongest[ "phrase" ] );
+		}
+		return false;
+	}
+
+	protected function sanitizeFinal( $str ) {
+		$stopWords = array( "and", "or", "the", "part" );
+		$words = explode( " ", trim($str) );
+		$cnt = count( $words )-1;
+
+		for ($i = $cnt; $i >= 0; $i--) {
+			if ( in_array( $words[$i], $stopWords ) ) {
+				unset( $words[$i] );
+			} else {
+				return implode( " ", $words );
+			}
+		}
+		return implode( " ", $words );
 	}
 
 	protected function sanitizeString( $str ) {
