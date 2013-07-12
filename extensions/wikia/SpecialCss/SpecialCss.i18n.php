@@ -6,7 +6,6 @@ $messages['en'] = [
 
 	'special-css-minor-edit-label' => 'Minor edit',
 	'special-css-summary-placeholder' => 'Add a summary of your edit',
-	'special-css-edit-summary' => 'Edit summary',
 
 	'special-css-publish-button' => 'Publish',
 	'special-css-history-button' => 'History',

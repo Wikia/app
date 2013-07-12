@@ -14,7 +14,7 @@
 		<div class="css-edit-box">
 			<input type="hidden" name="lastEditTimestamp" value="<?= $cssFileInfo['lastEditTimestamp'] ?>" />
 			<label for="minorEdit" class="css-minor-label"><input id="minorEdit" type="checkbox" name="minorEdit"/><?= wfMessage('special-css-minor-edit-label')->plain(); ?></label>
-			<label for="editSummary"><?= wfMessage('special-css-edit-summary')->plain() ?></label>
+			<label for="editSummary"><?= wfMessage( 'edit-summary' )->plain() ?></label>
 			<textarea id="editSummary" class="edit-summary" name="editSummary" placeholder="<?= wfMessage
 			('special-css-summary-placeholder')->plain(); ?>"></textarea>
 			<?= F::app()->renderView('MenuButton',
