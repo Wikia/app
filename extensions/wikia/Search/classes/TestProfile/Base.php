@@ -64,6 +64,11 @@ class Base
 			'video_tags_txt'        => 40,
 			];
 	
+	protected $tieParams = [
+			'default' => 0.01,
+			];
+	
+	
 	/**
 	 * Returns query fields to be injected into the config.
 	 * @return array
@@ -77,6 +82,18 @@ class Base
 		    	return $this->videoQueryFields;
 		}
 		return $this->defaultQueryFields;
+	}
+	
+	/**
+	 * Provides a tie param configured for the provided query service, with a default back-off
+	 * @return int
+	 */
+	public function getTieParam( $queryService = null ) {
+		$key = 'default';
+		if ( ( $queryService !== null ) && isset( $this->tieParams[$queryService] ) ) {
+			$key = $queryService;
+		}
+		return $this->tieParams[$key];
 	}
 	
 }
