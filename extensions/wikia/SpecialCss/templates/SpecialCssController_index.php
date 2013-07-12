@@ -14,7 +14,7 @@
 		<div class="css-edit-box">
 			<input type="hidden" name="lastEditTimestamp" value="<?= $cssFileInfo['lastEditTimestamp'] ?>" />
 			<label for="minorEdit" class="css-minor-label"><input id="minorEdit" type="checkbox" name="minorEdit"/><?= wfMessage('special-css-minor-edit-label')->plain(); ?></label>
-			<label for="editSummary"><?= wfMessage('special-css-edit-summary')->plain() ?></label>
+			<label for="editSummary"><?= wfMessage( 'edit-summary' )->plain() ?></label>
 			<textarea id="editSummary" class="edit-summary" name="editSummary" placeholder="<?= wfMessage
 			('special-css-summary-placeholder')->plain(); ?>"></textarea>
 			<?= F::app()->renderView('MenuButton',
@@ -49,7 +49,7 @@
 							<h4><a href="<?= $cssUpdate['url']; ?>"><?= $cssUpdate['title']; ?></a></h4>
 							<span><?= wfMessage('special-css-community-update-by')->params([$cssUpdate['timestamp'], $cssUpdate['userUrl'], $cssUpdate['userName']])->parse(); ?></span>
 							<blockquote><?= $cssUpdate['text']; ?></blockquote>
-							<?= wfMessage('special-css-community-read-more')->params([$cssUpdate['url']])->parse(); ?>
+							<a href="<?= $cssUpdate['url']; ?>"><?= wfMessage('special-css-community-read-more')->plain(); ?></a>
 						</li>
 					<?php endforeach; ?>
 				</ul>

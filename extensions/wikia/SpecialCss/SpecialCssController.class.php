@@ -165,7 +165,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 		$dropdown = [];
 		if ( isset( $deleteLinks['historyUrl'] ) ) {
 			$dropdown[] = array(
-				'text' => wfMessage('special-css-history-button')->plain(),
+				'text' => wfMessage('history')->plain(),
 				'href' => $deleteLinks['historyUrl']
 			);
 		}
@@ -179,14 +179,14 @@ class SpecialCssController extends WikiaSpecialPageController {
 		if ( isset( $deleteLinks['deleteUrl'] ) ) {
 			$dropdown[] = array(
 				'href'	=> $deleteLinks['deleteUrl'],
-				'text' 	=> wfMessage('special-css-delete-button')->plain()
+				'text' 	=> wfMessage('delete')->plain()
 			);
 		}
 
 		if ( isset( $deleteLinks['undeleteUrl'] ) ) {
 			$dropdown[] = array(
 				'href'	=> $deleteLinks['undeleteUrl'],
-				'text'	=> wfMessage('special-css-undelete-button')->plain()
+				'text'	=> wfMessage('undelete')->plain()
 			);
 		}
 		return $dropdown;
