@@ -91,6 +91,12 @@ class VideoEmbedTool {
 			return wfMessage( 'videos-error-blocked-user' );
 		}
 
+		if ( !$wgUser->isAllowed('videouploadgroup') ) {
+			header('X-screen-type: error');
+			wfProfileOut( __METHOD__ );
+			return wfMessage( 'videos-error-admin-only' )->plain();
+		}
+
 		$url = $wgRequest->getVal( 'url' );
 
 		$tempname = 'Temp_video_'.$wgUser->getID().'_'.rand(0, 1000);
