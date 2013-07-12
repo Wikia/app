@@ -42,8 +42,6 @@ $messages['pl'] = [
 
 	'special-css-title' => 'CSS Edytor',
 
-	'special-css-current-version' => 'Wersja $1',
-
 	'special-css-publish-button' => 'Publikuj',
 
 	'special-css-community-update-headline' => 'Aktualizacje na temat CSS od Wikii',
@@ -67,8 +65,6 @@ $messages['qqq'] = [
 	'css' => 'Name of the link to Special:CSS page on Special:SpacialPages list; more about CSS: https://en.wikipedia.org/wiki/Cascading_Style_Sheets',
 	'action-specialcss' => 'Action name displayed in MW permission error message',
 	'special-css-title' => 'Page title visible in the title bar of a browser or on the browser tab',
-
-	'special-css-current-version' => 'Messages describes current version of CSS file; $1 = version name i.e. 1.0.17',
 
 	'special-css-summary-placeholder' => 'Placeholder text for summary field. Disappears when user starts typing',
 	'special-css-minor-edit-label' => 'Label describes minor edit checkbox input',
