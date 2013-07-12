@@ -7,7 +7,7 @@
 */
 
 /**
- * get api for assets
+ * Constructs a URL to get assets from Ooyala API
  * @param integer $apiPageSize
  * @param integer $nextPage
  * @return string $url
@@ -36,7 +36,7 @@ function getApiAssets( $apiPageSize, $nextPage ) {
 }
 
 /**
- * update metadata
+ * Send request to Ooyala to update metadata
  * @param string $videoId
  * @param array $metadata
  * @return boolean $resp
@@ -92,7 +92,7 @@ $dryRun = isset( $options['dry-run'] );
 if ( !empty( $options['age'] ) && is_numeric( $options['age'] ) ) {
 	$ageRequired = $options['age'];
 } else {
-	die( "Invalid age required.\n" );
+	die( "Invalid age.\n" );
 }
 
 $apiPageSize = 100;
