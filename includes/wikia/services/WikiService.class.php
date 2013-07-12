@@ -8,6 +8,7 @@ class WikiService extends WikiaModel {
 
 	static $botGroups = array('bot', 'bot-global');
 	protected $cityVisualizationObject = null;
+	protected $wikisModel;
 
 	/**
 	 * get list of wiki founder/admin/bureaucrat id
@@ -370,7 +371,7 @@ class WikiService extends WikiaModel {
 
 	public function getWikiDescription( Array $wikiIds, $imgWidth = 250, $imgHeight = null ) {
 
-		$wikiDetails = $this->getWikiDetails( $wikiIds );
+		$wikiDetails = $this->getWikiModelDetails( $wikiIds );
 
 		foreach ( $wikiDetails as $wikiId => $wikiData ) {
 			if ( empty( $wikiData['desc']) ) {
@@ -401,8 +402,20 @@ class WikiService extends WikiaModel {
 		return $this->cityVisualizationObject;
 	}
 
-	protected function getWikiDetails( $wikiIds ) {
-		return ( new WikisModel )->getDetails( $wikiIds );
+	public function getWikiModelDetails( $wikiIds ) {
+		if ( !empty( $wikiIds ) ) {
+			//check if array
+			$wikiIds = is_array( $wikiIds ) ? $wikiIds : [ (int) $wikiIds ];
+			return $this->getWikisModel()->getDetails( $wikiIds );
+		}
+		return [];
+	}
+
+	protected function getWikisModel() {
+		if ( !isset( $this->wikisModel ) ) {
+			$this->wikisModel = new WikisModel();
+		}
+		return $this->wikisModel;
 	}
 
 	protected function getImageSrcByTitle( $wikiId, $imageTitle, $imgWidth, $imgHeight ) {
