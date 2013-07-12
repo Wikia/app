@@ -888,7 +888,7 @@ class WikiFactory {
 	 *
 	 * return only value of variable not whole data for it, this value will be:
 	 * - unserialized
-	 * - all internal variables will be replace by their values
+	 * - all internal variables will be replaced by their values
 	 *
 	 * @access public
 	 * @author Krzysztof Krzyżaniak (eloy)
@@ -901,6 +901,12 @@ class WikiFactory {
 	 * @return mixed value for variable or null otherwise
 	 */
 	static public function getVarValueByName( $cv_name, $city_id, $master = false ) {
+		// don't hit memcache (or make DB query) when getting values for a current wiki (BAC-552)
+		global $wgCityId;
+		if ($city_id == $wgCityId) {
+			return isset($GLOBALS[$cv_name]) ? $GLOBALS[$cv_name] : null;
+		}
+
 		wfProfileIn( __METHOD__ );
 
 		$value = null;
@@ -925,7 +931,6 @@ class WikiFactory {
 		}
 
 		wfProfileOut( __METHOD__ );
-
 		return $value;
 	}
 
@@ -1946,11 +1951,6 @@ class WikiFactory {
 			$oRow->cv_city_id = null;
 			$oRow->cv_variable_id = $oRow->cv_id;
 			$oRow->cv_value = null;
-		}
-
-		global $wgCityId;
-		if ($city_id == $wgCityId) {
-			Wikia::logBacktrace(__METHOD__ . '::forLocalWiki');
 		}
 
 		wfProfileOut( __METHOD__ );
