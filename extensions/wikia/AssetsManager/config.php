@@ -1325,5 +1325,7 @@ $config['special_css_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/SpecialCss/js/SpecialCss.js',
+		'//resources/wikia/libraries/mustache/mustache.js',
+		'//resources/wikia/libraries/mustache/jquery.mustache.js'
 	)
 );
