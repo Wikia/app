@@ -231,6 +231,7 @@ class LocalFile extends File {
 		// If there's no timestamp with this file don't cache it, its a soon
 		// to be uploaded file that hasn't been fully saved yet.
 		if ( empty($cache['timestamp']) ) {
+			$wgMemc->delete( $key );
 			return;
 		}
 		/* Wikia change end */
