@@ -49,7 +49,7 @@
 							<h4><a href="<?= $cssUpdate['url']; ?>"><?= $cssUpdate['title']; ?></a></h4>
 							<span><?= wfMessage('special-css-community-update-by')->params([$cssUpdate['timestamp'], $cssUpdate['userUrl'], $cssUpdate['userName']])->parse(); ?></span>
 							<blockquote><?= $cssUpdate['text']; ?></blockquote>
-							<?= wfMessage('special-css-community-read-more')->params([$cssUpdate['url']])->parse(); ?>
+							<a href="<?= $cssUpdate['url']; ?>"><?= wfMessage('special-css-community-read-more')->plain(); ?></a>
 						</li>
 					<?php endforeach; ?>
 				</ul>
