@@ -334,7 +334,7 @@ class LinkSuggest {
 
 				$redirTitleFormatted = self::formatTitle($row->page_namespace, $row->rd_title);
 
-				if (!in_array($redirTitleFormatted, $results)) {
+				if (!in_array($redirTitleFormatted, $results) && Title::newFromText( $redirTitleFormatted )->exists() ) {
 
 					$results[] = $redirTitleFormatted;
 					$redirects[$redirTitleFormatted] = $titleFormatted;
