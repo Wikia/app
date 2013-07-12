@@ -9,7 +9,6 @@ $messages['en'] = [
 
 	'special-css-publish-button' => 'Publish',
 	'special-css-compare-button' => 'Show changes',
-	'special-css-undelete-button' => 'Undelete',
 
 	'special-css-community-update-headline' => 'Wikia CSS Updates',
 	'special-css-community-update-by' => '$1 by [$2 $3]',
