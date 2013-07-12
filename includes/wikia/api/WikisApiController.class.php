@@ -21,6 +21,7 @@ class WikisApiController extends WikiaApiController {
 	const DEFAULT_WIDTH = 250;
 	const DEFAULT_HEIGHT = null;
 	const DEFAULT_SNIPPET_LENGTH = null;
+	const CACHE_VERSION = 1;
 	private static $flagsBlacklist = array( 'blocked', 'promoted' );
 
 	private $keys;
@@ -47,6 +48,7 @@ class WikisApiController extends WikiaApiController {
 		$langs = $this->request->getArray( self::PARAMETER_LANGUAGES );
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
 		$batch = $this->request->getInt( 'batch', 1 );
+		$expand = $this->request->getBool( 'expand', false );
 
 		if ( !empty( $langs ) &&  count($langs) > self::LANGUAGES_LIMIT) {
 			throw new LimitExceededApiException( self::PARAMETER_LANGUAGES, self::LANGUAGES_LIMIT );
@@ -54,6 +56,10 @@ class WikisApiController extends WikiaApiController {
 
 		$results = $this->getWikiService()->getTop( $langs, $hub );
 		$batches = wfPaginateArray( $results, $limit, $batch );
+
+		if ( $expand ) {
+			$batches = $this->expandBatches( $batches );
+		}
 
 		foreach ( $batches as $name => $value ) {
 			$this->response->setVal( $name, $value );
@@ -97,6 +103,7 @@ class WikisApiController extends WikiaApiController {
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
 		$batch = $this->request->getInt( 'batch', 1 );
 		$includeDomain = $this->request->getBool( 'includeDomain', false );
+		$expand = $this->request->getBool( 'expand', false );
 
 		if ( empty( $keyword ) ) {
 			throw new MissingParameterApiException( self::PARAMETER_KEYWORD );
@@ -110,6 +117,10 @@ class WikisApiController extends WikiaApiController {
 
 		if( is_array( $results ) ) {
 			$batches = wfPaginateArray( $results, $limit, $batch );
+
+			if ( $expand ) {
+				$batches = $this->expandBatches( $batches );
+			}
 
 			foreach ( $batches as $name => $value ) {
 				$this->response->setVal( $name, $value );
@@ -234,6 +245,19 @@ class WikisApiController extends WikiaApiController {
 
 		$this->response->setVal( 'items', $items );
 		wfProfileOut( __METHOD__ );
+	}
+
+	protected function expandBatches( $batches ) {
+		if ( isset( $batches[ 'items' ] ) ) {
+			$expanded = [];
+			$params = $this->getDetailsParams();
+			foreach( $batches[ 'items' ] as $item ) {
+				$details = $this->getWikiDetails( $item[ 'id' ], $params[ 'imageWidth' ], $params[ 'imageHeight' ], $params[ 'length' ] );
+				$expanded[] = array_merge( $item, $details );
+			}
+			$batches[ 'items' ] = $expanded;
+		}
+		return $batches;
 	}
 
 	protected function getDetailsParams() {
@@ -372,11 +396,11 @@ class WikisApiController extends WikiaApiController {
 		return $text;
 	}
 
-	protected function getMemCacheKey( $wikiId ) {
-		if ( !isset( $this->keys[ $wikiId ] ) ) {
-			$this->keys[ $wikiId ] =  wfsharedMemcKey( static::MEMC_NAME.$wikiId );
+	protected function getMemCacheKey( $seed ) {
+		if ( !isset( $this->keys[ $seed ] ) ) {
+			$this->keys[ $seed ] =  wfsharedMemcKey( static::MEMC_NAME.static::CACHE_VERSION.':'.$seed );
 		}
-		return $this->keys[ $wikiId ];
+		return $this->keys[ $seed ];
 	}
 
 	protected function cacheWikiData( $wikiInfo, $method = null ) {
