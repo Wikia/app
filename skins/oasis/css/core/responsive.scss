@@ -369,6 +369,25 @@ body > .global-notification,
 	}
 }
 
+.editpage-visualwidemode {
+	.EditPageMain {
+		margin-right: 0;
+		width: 100%;
+	}
+
+	.EditPageMainContainer {
+		margin-right: 0;
+	}
+
+	.EditPageToolbar {
+		padding-right: $width-rail;
+
+		.cke_toolbar_expand > a {
+			right: $width-rail + $width-padding;
+		}
+	}
+}
+
 .EditPageMain {
 	margin-right: -$width-rail;
 	padding: 0;
