@@ -179,7 +179,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 		if ( isset( $deleteLinks['deleteUrl'] ) ) {
 			$dropdown[] = array(
 				'href'	=> $deleteLinks['deleteUrl'],
-				'text' 	=> wfMessage('special-css-delete-button')->plain()
+				'text' 	=> wfMessage('delete')->plain()
 			);
 		}
 
