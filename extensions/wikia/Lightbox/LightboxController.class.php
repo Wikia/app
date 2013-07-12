@@ -169,8 +169,7 @@ class LightboxController extends WikiaController {
 			return;
 		}
 
-		global $wgUser;
-		if ( !$wgUser->isAllowed( 'read' ) ) {
+		if ( !$this->wg->User->isAllowed( 'read' ) ) {
 			return;
 		}
 
