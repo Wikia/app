@@ -214,7 +214,19 @@ class WallHistory extends WikiaModel {
 				`comment_id`,
 				`action`,
 				`event_date`,
-				`last_title`.`metatitle`,
+				(
+					SELECT `metatitle`
+					FROM `wall_history` AS `last_title`
+					WHERE
+						`parent_comment_id` = `wall_history`.`parent_comment_id`
+						AND `event_date` = (
+							SELECT MAX(`event_date`)
+							FROM `wall_history`
+							WHERE
+								`action` IN (' . WH_EDIT . ', ' . WH_NEW . ')
+								AND `parent_comment_id` = `last_title`.`parent_comment_id`
+						)
+				) AS `metatitle`,
 				`reason`,
 				`revision_id`
 			FROM `wall_history`
@@ -230,39 +242,20 @@ class WallHistory extends WikiaModel {
 							FROM `wall_history`
 							WHERE
 								`action` = ' . WH_NEW . '
-								AND `is_reply` = 0
 								AND `deleted_or_removed` = 0
+								AND `post_ns` = ' . $ns . '
+								AND `is_reply` = 0
 						) AS `not_removed_parents`
 						USING (`parent_comment_id`)
 					WHERE
 						`action` = ' . WH_NEW . '
 						AND `deleted_or_removed` = 0
+						AND `post_ns` = ' . $ns . '
 					GROUP BY `parent_comment_id`
+					ORDER BY `event_date` DESC
+					LIMIT ' . $count . '
 				) AS `last_new_post_date`
-				USING (`parent_comment_id`, `event_date`)
-			RIGHT JOIN
-				(
-					SELECT
-						`parent_comment_id`,
-						`metatitle`
-					FROM `wall_history`
-					RIGHT JOIN
-						(
-							SELECT
-								`parent_comment_id`,
-								MAX(`event_date`) AS `event_date`
-							FROM `wall_history`
-							WHERE `action` IN (' . WH_EDIT . ', ' . WH_NEW . ')
-							GROUP BY `parent_comment_id`
-						) AS `last_edit_date`
-						USING (`parent_comment_id`, `event_date`)
-				) AS `last_title`
-				USING (`parent_comment_id`)
-			WHERE
-				`action` = ' . WH_NEW . '
-				AND `post_ns` = ' . $ns . '
-			ORDER BY `event_date` DESC
-			LIMIT ' . $count,
+				USING (`parent_comment_id`, `event_date`)',
 			__METHOD__
 		);
 
