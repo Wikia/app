@@ -14,7 +14,7 @@ $messages['en'] = [
 	'special-css-community-update-by' => '$1 by [$2 $3]',
 	'special-css-community-read-more' => 'Read more',
 	'special-css-community-update-see-all' => 'See all',
-	'special-css-oasis-only' => 'Special:CSS is available only in Wikia skin. If you would like to use this feature please switch your preference to the Wikia skin.',
+	'special-css-wikia-skin-only' => 'Special:CSS is available only in Wikia skin. If you would like to use this feature please switch your preference to the Wikia skin.',
 
 	'special-css-diff-modal-title' => 'Changes',
 
@@ -50,7 +50,7 @@ $messages['pl'] = [
 	'special-css-community-update-by' => '$1 przez [$2 $3]',
 	'special-css-community-read-more' => 'Czytaj więcej',
 	'special-css-community-update-see-all' => 'Zobacz wszystko',
-	'special-css-oasis-only' => 'Special:CSS jest stroną dostępną tylko w skórce Wikia. Jeśli chcesz używać tej strony zmień ustawienia skórki w swoich preferencjach na Wikia.',
+	'special-css-wikia-skin-only' => 'Special:CSS jest stroną dostępną tylko w skórce Wikia. Jeśli chcesz używać tej strony zmień ustawienia skórki w swoich preferencjach na Wikia.',
 	'special-css-education-item-webinars-header' => 'CSS_ Wikia Webinars',
 	'special-css-education-item-webinars-link-title' => 'Wikia CSS Webinar',
 	'special-css-education-item-webinars-paragraph' => 'Istrukcje dotyczące używania własnych reguł CSS w Wikii.',
@@ -85,7 +85,7 @@ $messages['qqq'] = [
 	'special-css-community-read-more' => "Link label below post snippet leading to the full post page; The post page includes information regarding markup and CSS changes",
 	'special-css-community-update-see-all' => 'Link to blog listing with contains all CSS updates',
 
-	'special-css-oasis-only' => 'Message displayed to users who use skin different than "Wikia Skin" (i.e. Monobook). This feature is enabled only for "Wikia Skin".',
+	'special-css-wikia-skin-only' => 'Message displayed to users who use skin different than "Wikia Skin" (i.e. Monobook). This feature is enabled only for "Wikia Skin".',
 
 	'special-css-diff-modal-title' => 'Title for modal with actual changes in css file',
 
