@@ -415,6 +415,11 @@
 				width += config.extraPageWidth;
 			}
 
+			// make preview width same as edit box width on responsive layout
+			if ( wgIsResponsiveLayoutEnabled ) {
+				width = this.editor.getEditbox().width() + 32 /* modal padding */ ;
+			}
+
 			// add width of scrollbar (BugId:35767)
 			width += this.scrollbarWidth;
 
