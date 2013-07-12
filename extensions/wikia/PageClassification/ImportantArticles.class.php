@@ -113,7 +113,7 @@ class ImportantArticles extends WikiaModel {
 
 	public function matchDomainAndTopic( $domainPart, $wikiTopic ) {
 
-		$skipChars = [' ', '_'. '-', ':' ];
+		$skipChars = [ ' ', '_', '-', ':' ];
 		$a = preg_replace("/[\\s-_\\.:]/i", "", $domainPart);
 		$a = strtolower($a);
 		$b = preg_replace("/[\\s-_\\.:]/i", "", $wikiTopic);
@@ -131,6 +131,7 @@ class ImportantArticles extends WikiaModel {
 						$domainPos++;
 					}
 					if( $domainPos == strlen($domainPart) ) { break; }
+
 					if( strtolower($domainPart[$domainPos]) == strtolower($wikiTopic[$j]) ) {
 						$domainPos++;
 						$str .= $wikiTopic[$j];
@@ -286,6 +287,32 @@ class ImportantArticles extends WikiaModel {
 				$merged[ $r['name'] ]['score'] += $r['score'];
 			} else {
 				$merged[ $r['name'] ] = $r;
+			}
+		}
+
+		// remove the numbers at the end of entity
+		$mergedOld = $merged;
+		$merged = [];
+		foreach( $mergedOld as $r ) {
+			$name = $r['name'];
+			$name = trim($name);
+			if( preg_match("/\\s[0-9]$/", $name ) ) {
+				$name = substr_replace( $name, "", -2 );
+			}
+			else if( preg_match("/\\sIII$/", $name ) ) {
+				$name = substr_replace( $name, "", -4 );
+			}
+			else if( preg_match("/\\sII$/", $name ) ) {
+				$name = substr_replace( $name, "", -3 );
+			}
+			else if( preg_match("/\\sI$/", $name ) ) {
+				$name = substr_replace( $name, "", -2 );
+			}
+			//var_dump($name . " - " . $r['name']);
+			if ( isset( $merged[ $name ] ) ) {
+				$merged[ $name ]['score'] += $r['score'];
+			} else {
+				$merged[ $name ] = [ 'name' => $name, 'score' => $r['score'] ];
 			}
 		}
 

@@ -18,10 +18,11 @@ class CommonPrefix {
 		// choose most common phrase from index
 		$mostCommonLongest = array("phrase" => "", "cnt" => 0);
 		foreach ( $prefixArray as $phrase => $cnt ) {
-			if ( $cnt >= $mostCommonLongest[ "cnt" ] && strlen( $phrase ) >= strlen( $mostCommonLongest[ "phrase" ] ) ) {
+			$score = $cnt * strlen( $phrase );
+			if ( $score >= $mostCommonLongest[ "cnt" ] ) {
 				if ( strlen( $phrase ) > $minLength ) {
 					$mostCommonLongest[ "phrase" ] = $phrase;
-					$mostCommonLongest[ "cnt" ] = $cnt;
+					$mostCommonLongest[ "cnt" ] = $score;
 				}
 			}
 		}
