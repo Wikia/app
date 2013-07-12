@@ -8,7 +8,6 @@ $messages['en'] = [
 	'special-css-summary-placeholder' => 'Add a summary of your edit',
 
 	'special-css-publish-button' => 'Publish',
-	'special-css-history-button' => 'History',
 	'special-css-compare-button' => 'Show changes',
 	'special-css-delete-button' => 'Delete',
 	'special-css-undelete-button' => 'Undelete',

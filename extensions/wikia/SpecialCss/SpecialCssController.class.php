@@ -165,7 +165,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 		$dropdown = [];
 		if ( isset( $deleteLinks['historyUrl'] ) ) {
 			$dropdown[] = array(
-				'text' => wfMessage('special-css-history-button')->plain(),
+				'text' => wfMessage('history')->plain(),
 				'href' => $deleteLinks['historyUrl']
 			);
 		}
