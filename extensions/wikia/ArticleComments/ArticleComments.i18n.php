@@ -109,11 +109,22 @@ Parameters:
 	'article-comments-next-page' => '{{Identical|Next}}',
 	'wikiamobile-article-comments-header' => "The header of the Comments section shown in Wikia's mobile skin. Parameters:
 * $1 is the number of the comments.",
+	'wikiamobile-article-comments-more' => 'Label on a button to load next page of comments',
+	'wikiamobile-article-comments-prev' => 'Label on a button to load previous page of comments',
+	'wikiamobile-article-comments-none' => 'Message displayed to user if there are no comments on a page after opening a section with comments',
 	'wikiamobile-article-comments-view' => 'Message to open all replies to a comment. Parameters:
 * $1 - the number of comments',
-	'wikiamobile-article-comments-replies' => 'Messege in Top Bar in a modal with all replies to comment.
+	'wikiamobile-article-comments-replies' => 'Message in Top Bar in a modal with all replies to comment.
 {{Identical|Reply}}',
+	'wikiamobile-article-comments-post-reply' => 'Label on a button to post a reply to comment',
+	'wikiamobile-article-comments-post' => 'Label on a button to post a comment',
+	'wikiamobile-article-comments-placeholder' => 'This is an input placeholder displayed when no text is in given input',
 	'wikiamobile-article-comments-show' => 'Label for the link that will reveal the list of comments, keep it as short as possible',
+	'wikiamobile-article-comments-login-post' => 'Message shown to a user if he tries to post a comment on a wiki where login is obligatory to edit.
+This is shown in small pop up message in red.',
+	'wikiamobile-article-comments-post-fail' => 'Message shown to a user when saving his comment failed.
+This is shown in small pop up message in red.',
+
 	'enotif_body_article_comment' => '{{doc-singularthey}}
 This is an email sent to inform a user that a page they are following has a new comment posted.',
 );
