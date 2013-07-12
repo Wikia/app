@@ -46,7 +46,7 @@ $messages['pl'] = [
 
 	'special-css-publish-button' => 'Publikuj',
 
-	'special-css-community-update-headline' => 'Aktualizacje na temat CSS od Wikii ',
+	'special-css-community-update-headline' => 'Aktualizacje na temat CSS od Wikii',
 	'special-css-community-update-by' => '$1 przez [$2 $3]',
 	'special-css-community-read-more' => 'Czytaj więcej',
 	'special-css-community-update-see-all' => 'Zobacz wszystko',
