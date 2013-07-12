@@ -50,11 +50,6 @@ class BodyController extends WikiaController {
 	public static function isGridLayoutEnabled() {
 		$app = F::app();
 
-		// Don't enable when responsive layout is enabled
-		if ( self::isResponsiveLayoutEnabled() ) {
-			return false;
-		}
-
 		if( !empty($app->wg->OasisGrid) ) {
 			return true;
 		}
@@ -70,17 +65,6 @@ class BodyController extends WikiaController {
 		}
 
 		return false;
-	}
-
-	/**
-	 * Pretty self explanitory.
-	 * @return Boolean
-	 */
-	public static function isResponsiveLayoutEnabled() {
-		return !empty( F::app()->wg->OasisResponsive ) &&
-				WikiaPageType::isContentPage() &&
-				!WikiaPageType::isMainPage() &&
-				!WikiaPageType::isWikiaHub();
 	}
 
 	/**
@@ -364,7 +348,7 @@ class BodyController extends WikiaController {
 		// show corporate header on this page?
 		} else if( HubService::isCorporatePage() ) {
 			$this->headerModuleName = 'PageHeader';
-
+			
 			if( self::isEditPage() ) {
 				$this->headerModuleAction = 'EditPage';
 			} else {
