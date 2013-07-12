@@ -83,7 +83,7 @@ $messages['qqq'] = [
 
 	'special-css-wikia-skin-only' => 'Message displayed to users who use skin different than "Wikia Skin" (i.e. Monobook). This feature is enabled only for "Wikia Skin".',
 
-	'special-css-diff-modal-title' => 'Title for modal with actual changes in css file',
+	'special-css-diff-modal-title' => 'Title for modal with actual changes in CSS file',
 
 	'special-css-saving-internal-error' => 'Error message after publish button informing user that there were some problems while saving css file content',
 	'special-css-merge-error' => "Error message after publish button informing user that some else edited this article and there is a conflict.",
