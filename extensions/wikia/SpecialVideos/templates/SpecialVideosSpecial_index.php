@@ -55,6 +55,7 @@
 			<!-- add video button -->
 			<p><a href="#" class="addVideo"><?= wfMsg('special-videos-add-video') ?></a></p>
 		</div>
+	<?php endif; ?>
 </div>
 <?= $pagination ?>
 <div class="errorWhileLoading messageHolder"><?=wfMsg('videos-error-while-loading');?></div>
