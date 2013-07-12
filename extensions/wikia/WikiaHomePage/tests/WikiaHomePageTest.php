@@ -306,6 +306,7 @@ TXT;
 
 	/**
 	 * @dataProvider getWikiAdminAvatarsDataProvider
+	 * @group Infrastructure
 	 */
 	public function testGetWikiAdminAvatars($mockWikiId, $mockWikiServiceParam, $mockUserStatsServiceParam, $mockUserParam, $expAdminAvatars) {
 		// setup
