@@ -22,8 +22,8 @@ require_once( "commandLine.inc" );
 
 if ( isset( $options['help'] ) ) {
 	die( "Usage: php deleteVideo.php [--help] [--dry-run] [--quiet] [--provider=xyz] [--extra=xyz] [--limit=123]
-	--provider                     specify provider
-	--extra                        extra condition for where clause in sql
+	--provider                     specify provider (required)
+	--extra                        extra condition for where clause in sql. Pass 'none' if not needed. (required)
 	--limit                        number of limit in sql
 	--dry-run                      dry run
 	--quiet                        show summary result only
@@ -48,6 +48,12 @@ if ( empty( $provider ) ) {
 
 echo "Provider: $provider\n";
 
+if ( empty( $extra ) ) {
+	die( "Error: Invalid extra condition.");
+}
+
+echo "Extra condition: $extra\n";
+
 $wgUser = User::newFromName( 'WikiaBot' );
 $wgUser->load();
 
@@ -59,8 +65,7 @@ $sqlWhere = array(
 	'img_minor_mime' => $provider,
 );
 
-if ( !empty( $extra ) ) {
-	echo "Extra condition: $extra\n";
+if ( $extra != 'none' ) {
 	$sqlWhere[] = $extra;
 }
 
