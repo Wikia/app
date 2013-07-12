@@ -26,13 +26,6 @@ class WikisApiController extends WikiaApiController {
 	private $keys;
 	private $service;
 
-	private static $model = null;
-
-	public function __construct() {
-		parent::__construct();
-		self::$model = new WikisModel();
-	}
-
 	/**
 	 * Get the top wikis by pageviews optionally filtering by vertical (hub) and/or language
 	 *
@@ -59,7 +52,7 @@ class WikisApiController extends WikiaApiController {
 			throw new LimitExceededApiException( self::PARAMETER_LANGUAGES, self::LANGUAGES_LIMIT );
 		}
 
-		$results = self::$model->getTop( $langs, $hub );
+		$results = $this->getWikiService()->getTop( $langs, $hub );
 		$batches = wfPaginateArray( $results, $limit, $batch );
 
 		foreach ( $batches as $name => $value ) {
@@ -113,7 +106,7 @@ class WikisApiController extends WikiaApiController {
 			throw new LimitExceededApiException( self::PARAMETER_LANGUAGES, self::LANGUAGES_LIMIT );
 		}
 
-		$results = self::$model->getByString($keyword, $langs, $hub, $includeDomain );
+		$results = $this->getWikiService()->getByString( $keyword, $langs, $hub, $includeDomain );
 
 		if( is_array( $results ) ) {
 			$batches = wfPaginateArray( $results, $limit, $batch );
@@ -162,13 +155,11 @@ class WikisApiController extends WikiaApiController {
 		} else {
 			throw new MissingParameterApiException( self::PARAMETER_WIKI_IDS );
 		}
-		$imageWidth = $this->request->getVal( 'width', null );
-		$imageHeight = $this->request->getVal( 'height', null );
-		$length = $this->request->getVal( 'snippet', static::DEFAULT_SNIPPET_LENGTH );
 
+		$params = $this->getDetailsParams();
 		$items = array();
 		foreach ( $ids as $wikiId ) {
-			$details = $this->getWikiDetails( $wikiId, $imageWidth, $imageHeight, $length );
+			$details = $this->getWikiDetails( $wikiId, $params[ 'imageWidth' ], $params[ 'imageHeight' ], $params[ 'length' ] );
 			if ( !empty( $details ) ) {
 				$items[ (int) $wikiId ] = $details;
 			}
@@ -243,6 +234,14 @@ class WikisApiController extends WikiaApiController {
 
 		$this->response->setVal( 'items', $items );
 		wfProfileOut( __METHOD__ );
+	}
+
+	protected function getDetailsParams() {
+		return [
+			'imageWidth' => $this->request->getVal( 'width', null ),
+			'imageHeight' => $this->request->getVal( 'height', null ),
+			'length' => $this->request->getVal( 'snippet', static::DEFAULT_SNIPPET_LENGTH )
+		];
 	}
 
 	protected function getWikiDetails( $wikiId, $width = null, $height = null, $snippet = null ) {
@@ -328,7 +327,7 @@ class WikisApiController extends WikiaApiController {
 		$service = $this->getWikiService();
 		$wikiStats = $service->getSiteStats( $id );
 		$topUsers = $service->getTopEditors( $id, static::DEFAULT_TOP_EDITORS_NUMBER, true );
-		$modelData = $service->getWikiModelDetails( $id );
+		$modelData = $service->getDetails( [ $id ] );
 
 		//filter out flags
 		$flags = [];
