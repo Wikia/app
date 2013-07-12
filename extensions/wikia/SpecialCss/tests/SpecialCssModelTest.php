@@ -126,6 +126,14 @@ class SpecialCssModelTest extends WikiaBaseTest {
 				'title' => 'Test page/Rappy 4187/Technical_Update:_November_22,_2012',
 				'expected' => 'Technical_Update:_November_22,_2012',
 			],
+			[
+				'title' => 'Blog_użytkownika:Andrzej_Łukaszewski/Test_on_dev_2013-07-12',
+				'expected' => 'Test_on_dev_2013-07-12',
+			],
+			[
+				'title' => '由于管理员不活跃:由于管理员不活跃/由于管理员不活跃，数据库已经被自动锁定',
+				'expected' => '由于管理员不活跃，数据库已经被自动锁定',
+			],
 		];
 	}
 
