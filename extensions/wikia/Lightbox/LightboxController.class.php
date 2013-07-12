@@ -28,9 +28,8 @@ class LightboxController extends WikiaController {
 	}
 
 	public function lightboxModalContentError() {
-		global $wgUser;
-		if ( $wgUser->isAllowed( 'read' ) ) {
-			$this->error = wfMessage('lightbox-no-media-error')->text();
+		if ( $this->wg->User->isAllowed( 'read' ) ) {
+			$this->error = wfMessage('lightbox-no-media-error', $this->wg->Sitename)->parse();
 		} else {
 			$this->error = wfMessage('lightbox-no-permission-error')->text();
 		}
