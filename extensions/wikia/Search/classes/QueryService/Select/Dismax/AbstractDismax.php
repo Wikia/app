@@ -10,6 +10,12 @@ use Wikia\Search\QueryService\Select\AbstractSelect, Solarium_Query_Select, Wiki
  */
 class AbstractDismax extends AbstractSelect
 {
+	
+	/**
+	 * Boost functions, used by child classes to increase a document's score based on specific document values
+	 * @var array
+	 */
+	protected $boostFunctions = array();
 
 	/**
 	 * Return a string of query fields based on configuration
@@ -29,6 +35,7 @@ class AbstractDismax extends AbstractSelect
 	 */
 	protected function registerDismax( Solarium_Query_Select $select ) {
 		
+		$config = $this->getConfig();
 		$queryFieldsString = $this->getQueryFieldsString();
 		$dismax = $select->getDismax()
 		                 ->setQueryFields( $queryFieldsString )
@@ -36,14 +43,13 @@ class AbstractDismax extends AbstractSelect
 		;
 		
 		if ( $this->service->isOnDbCluster() ) {
-			$dismax
-				->setPhraseFields		( $queryFieldsString )
-				->setBoostQuery			( $this->getBoostQueryString() )
-				->setMinimumMatch		( $this->config->getMinimumMatch() )
-				->setPhraseSlop			( 3 )
-				->setTie				( 0.01 )
+			$dismax->setPhraseFields ( $queryFieldsString )
+			       ->setBoostQuery   ( $this->getBoostQueryString() )
+			       ->setMinimumMatch ( $config->getMinimumMatch() )
+			       ->setPhraseSlop   ( 3 )
+				   ->setTie          ( $config->getTie() )
 			;
-			if ( (! $this->config->getSkipBoostFunctions() ) && (! empty( $this->boostFunctions ) ) ) {
+			if ( (! $config->getSkipBoostFunctions() ) && (! empty( $this->boostFunctions ) ) ) {
 				$dismax->setBoostFunctions( implode(' ', $this->boostFunctions ) );
 			}
 		}
@@ -83,11 +89,18 @@ class AbstractDismax extends AbstractSelect
 	}
 	
 	/**
+	 * Returns boost functions
+	 * @return array
+	 */
+	protected function getBoostFunctions() {
+		return $this->boostFunctions;
+	}
+	
+	/**
 	 * Prepare boost queries based on the provided instance.
 	 * @return string
 	 */
 	protected function getBoostQueryString() {
 		return '';
 	}
-	
 }
