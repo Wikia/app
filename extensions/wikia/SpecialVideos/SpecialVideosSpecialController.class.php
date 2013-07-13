@@ -131,6 +131,19 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 
 		// permission checking for video removal
 		$this->isRemovalAllowed = ( $this->wg->User->isAllowed( 'specialvideosdelete' ) && $this->app->checkSkin( 'oasis' ) );
+
+		/*
+		 * Check to see if user is part of videouploadgroup
+		 * For the purpose of hiding the appropriate UI elements
+		 * Current elements affected: last page of results in Special:Videos
+		 */
+		
+
+		global $wgAllVideosAdminOnly;
+
+		if ($wgAllVideosAdminOnly) {
+			$this->showAddVideoBtn = $this->wg->User->isAllowed('videouploadgroup');
+		}
 	}
 }
 
