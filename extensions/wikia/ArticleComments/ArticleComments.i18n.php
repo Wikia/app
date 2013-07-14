@@ -124,7 +124,6 @@ Parameters:
 This is shown in small pop up message in red.',
 	'wikiamobile-article-comments-post-fail' => 'Message shown to a user when saving his comment failed.
 This is shown in small pop up message in red.',
-
 	'enotif_body_article_comment' => '{{doc-singularthey}}
 This is an email sent to inform a user that a page they are following has a new comment posted.',
 );
@@ -365,6 +364,19 @@ $messages['bg'] = array(
 	'article-comments-toc-item' => 'Коментари',
 	'article-comments-reply' => 'Отговор',
 	'article-comments-show-all' => 'Показване на всички коментари',
+);
+
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'article-comments-edit' => 'সম্পাদনা',
+	'article-comments-history' => 'ইতিহাস',
+	'article-comments-reply' => 'উত্তর',
+	'article-comments-show-all' => 'সকল মন্তব্য দেখাও',
+	'article-comments-prev-page' => 'পূর্ব',
+	'article-comments-next-page' => 'পর',
+	'article-comments-page-spacer' => '&#160...&#160',
 );
 
 /** Tibetan (བོད་ཡིག)
@@ -1511,11 +1523,14 @@ $messages['id'] = array(
 	'article-comments-prev-page' => 'Sebelumnya',
 	'article-comments-next-page' => 'Selanjutnya',
 	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'Artikel induk / komentar induk telah dihapus.',
 	'article-comments-empty-comment' => "Anda tidak dapat mengirim komentar kosong. <a href='$1'>Hapus saja?</a>",
 	'wikiamobile-article-comments-view' => 'Lihat balasan',
 	'wikiamobile-article-comments-replies' => 'balasan',
+	'wikiamobile-article-comments-post-reply' => 'Kirimkan balassan',
 	'wikiamobile-article-comments-post' => 'Kirim',
 	'wikiamobile-article-comments-show' => 'Tampilkan',
+	'enotif_subject_article_comment' => '$PAGEEDITOR telah berkomentar pada "$PAGETITLE" pada {{SITENAME}}',
 	'enotif_body_article_comment' => 'Hai $WATCHINGUSERNAME,
 
 Ada komentar baru pada $PAGETITLE di {{SITENAME}}. Gunakan pranala ini untuk melihat semua komentar: $PAGETITLE_URL#WikiaArticleComments

@@ -361,6 +361,7 @@ $messages['id'] = array(
 	'window-wikis-wikilist-search-hint' => 'Cari Permainan Teratas kami',
 	'searchview-no-results' => 'Tidak ada hasil untuk "%s"',
 	'error-update-required' => 'Pembaruan untuk aplikasi ini telah tersedia dan diperlukan.',
+	'error-json-parse' => 'Ada masalah dengan data yang dikembalikan dari server kami, maaf.\\nSilakan coba lagi.',
 );
 
 /** Italian (italiano)
