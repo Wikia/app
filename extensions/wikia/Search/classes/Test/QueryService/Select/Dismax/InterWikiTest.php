@@ -175,7 +175,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		$reflspell = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\InterWiki', 'getFilterQueryString' );
 		$reflspell->setAccessible( true );
 		$this->assertEquals(
-				'-articles_i:[0 TO 50] AND (hub_s:Entertainment)',
+				'articles_i:[50 TO *] AND (hub_s:Entertainment)',
 				$reflspell->invoke( $mockSelect )
 		);
 	}
