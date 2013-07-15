@@ -19,6 +19,14 @@ $messages['qqq'] = array(
 	'adengine-exitstitial-button' => 'Text of the link/button that you can close the box with and get directly to the link target',
 );
 
+/** Breton (brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'adengine-exitstitial-title-template' => "Emaoc'h o kuitaat $1...",
+	'adengine-exitstitial-go-back' => "Ha fellout a ra deoc'h mont war-gil ?",
+);
+
 /** Spanish (español)
  * @author VegaDark
  */
@@ -83,6 +91,16 @@ $messages['ms'] = array(
  */
 $messages['ps'] = array(
 	'adengine-exitstitial-button' => 'له دې خبرتيا تېرېدل',
+);
+
+/** Brazilian Portuguese (português do Brasil)
+ * @author TheGabrielZaum
+ */
+$messages['pt-br'] = array(
+	'adengine-exitstitial-title-template' => 'Você está deixando a $1...',
+	'adengine-exitstitial-redirecting' => 'Seu navegador irá redirecioná-lo à página que você requisitou em alguns segundos.',
+	'adengine-exitstitial-go-back' => 'Deseja voltar?',
+	'adengine-exitstitial-button' => 'Pular este anúncio',
 );
 
 /** Swedish (svenska)

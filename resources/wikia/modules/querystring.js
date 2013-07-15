@@ -124,6 +124,21 @@
 			return this.cache[name] || defVal;
 		};
 
+		/**
+		 * Get object with all parameters
+		 *
+		 * @public
+		 *
+		 * @return {Object}
+		 */
+		p.getVals = function () {
+			var cacheCopy = {};
+			for( var param in this.cache ) {
+				cacheCopy[param] = this.cache[param];
+			}
+			return cacheCopy;
+		};
+
 
 		/**
 		 * Sets a parameter by name
@@ -180,7 +195,7 @@
 		p.clearVals = function() {
 			this.cache = {};
 			return this;
-		}
+		};
 
 		/**
 		 * @return {String} a hash from URL

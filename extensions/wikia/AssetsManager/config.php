@@ -196,8 +196,10 @@ $config['oasis_jquery'] = array(
 		// jQuery/Oasis specific code
 		'//skins/oasis/js/tables.js',
 
-		// Search ab testing
-		'//extensions/wikia/Search/js/AbTest.js',
+		// Search A/B testing
+		'//extensions/wikia/Search/js/SearchAbTest.DomUpdater.js',
+		'//extensions/wikia/Search/js/SearchAbTest.Context.js',
+		'//extensions/wikia/Search/js/SearchAbTest.js',
 	)
 );
 
@@ -1314,5 +1316,16 @@ $config['manage_wikia_home_js'] = array(
 		'//extensions/wikia/SpecialManageWikiaHome/js/ManageWikiaHome.js',
 		'//extensions/wikia/SpecialManageWikiaHome/js/CollectionsSetup.js',
 		'//extensions/wikia/SpecialManageWikiaHome/js/CollectionsNavigation.js',
+	)
+);
+
+
+/* SpecialCSS */
+$config['special_css_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/SpecialCss/js/SpecialCss.js',
+		'//resources/wikia/libraries/mustache/mustache.js',
+		'//resources/wikia/libraries/mustache/jquery.mustache.js'
 	)
 );

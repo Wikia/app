@@ -205,6 +205,11 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	private function handleBlockPost() {
 		wfProfileIn( __METHOD__ );
 
+		$expire = $this->wg->Request->getText('wpPhalanxExpire');
+		if ($expire === 'custom') {
+			$expire = $this->wg->Request->getText('wpPhalanxExpireCustom');
+		}
+
 		$id = $this->wg->Request->getInt( 'id', 0 );
 		$isBlockUpdate = ($id !== 0);
 		$data = array(
@@ -219,7 +224,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			'lang'       => $this->wg->Request->getVal( 'wpPhalanxLanguages', null ),
 			'type'       => $this->wg->Request->getArray( 'wpPhalanxType' ),
 			'multitext'  => $this->wg->Request->getText( 'wpPhalanxFilterBulk' ),
-			'expire'     => $this->wg->Request->getText('wpPhalanxExpire')
+			'expire'     => $expire
 		);
 		if ( !wfRunHooks( "EditPhalanxBlock", array( &$data ) ) ) {
 			$ret = self::RESULT_ERROR;

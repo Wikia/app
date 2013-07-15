@@ -30,6 +30,8 @@ $messages['en'] = array(
 	'phalanx-view-id' => 'Get filter by ID:',
 	'phalanx-view-id-submit' => 'Get filter',
 	'phalanx-expire-durations' => '1 hour,2 hours,4 hours,6 hours,1 day,3 days,1 week,2 weeks,1 month,3 months,6 months,1 year,infinite', // FIXME: no L10n possible; see core block/protect implementations for proper solution.
+	'phalanx-expire-custom' => 'Custom',
+	'phalanx-expire-custom-tooltip' => '3 hours, 4 months, ...',
 	'phalanx-format-text' => 'plain text',
 	'phalanx-format-regex' => 'regex',
 	'phalanx-format-case' => 'case sensitive',
@@ -170,6 +172,8 @@ $messages['qqq'] = array(
 	'phalanx-section-type-account-creation' => 'Legend for fieldset grouping blocks related to user account creation',
 	'phalanx-section-type-wiki-creation' => 'Legend for fieldset grouping blocks related to Wiki creation',
 	'phalanx-section-type-questions' => 'Legend for fieldset grouping blocks related to Answers wiki',
+	'phalanx-expire-custom' => 'Dropdown option for choosing custom expiry time',
+	'phalanx-expire-custom-tooltip' => 'Placeholder for custom expiry time input box with value examples'
 );
 
 /** Arabic (العربية)
