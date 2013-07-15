@@ -12,7 +12,6 @@ class WikiaMobileMediaService extends WikiaService {
 	const GROUP = 2;
 	const RIBBON_SIZE = 50;
 	const SMALL_IMAGE_SIZE = 64;
-	const EXTRA_SMALL_IMGAGE_SIZE = 30;
 
 	static public function calculateMediaSize( $width, $height ) {
 		if ( $width > self::THUMB_WIDTH ) {
@@ -58,7 +57,7 @@ class WikiaMobileMediaService extends WikiaService {
 		/**
 		 * This is a parser from ImageGallery
 		 * @var $parser Parser
-		*/
+		 */
 		$parser = $this->request->getVal( 'parser', $this->wg->Parser );
 		$first = null;
 		$wikiText = '';
@@ -74,8 +73,15 @@ class WikiaMobileMediaService extends WikiaService {
 			$file = wfFindFile( $item['title'] );
 
 			if ( $file instanceof File ) {
-				if ( !empty( $item['link'] ) || $file->getWidth() < self::EXTRA_SMALL_IMGAGE_SIZE ) {
-					$wikiText .= self::renderOutsideGallery( $item );
+				if ( !empty( $item['link'] ) ) {
+					//build wikitext for linked images to render separately
+					$wikiText .= "[[" . $item['title']->getPrefixedDBkey() . "|link=" . $item['link'];
+
+					if ( !empty( $item['caption'] ) ) {
+						$wikiText .= "|{$item['caption']}";
+					}
+
+					$wikiText .= "]]\n";
 				} else {
 					if ( empty( $first ) ) {
 						$first = [ 'data' => $item, 'file' => $file ];
@@ -275,26 +281,5 @@ class WikiaMobileMediaService extends WikiaService {
 
 		wfProfileOut( __METHOD__ );
 		return $result;
-	}
-
-	/**
-	 * Build wikitext for images to render separately
-	 * @param $item
-	 * @return string
-	 */
-	private function renderOutsideGallery( $item ) {
-		$wikiText = "[[" . $item['title']->getPrefixedDBkey();
-
-		if ( !empty( $item['link'] ) ) {
-			$wikiText .= "|link=" . $item['link'];
-		}
-
-		if ( !empty( $item['caption'] ) ) {
-			$wikiText .= "|" . $item['caption'];
-		}
-
-		$wikiText .= "]]\n";
-
-		return $wikiText;
 	}
 }
