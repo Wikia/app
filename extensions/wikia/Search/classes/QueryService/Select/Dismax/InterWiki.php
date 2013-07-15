@@ -31,6 +31,7 @@ class InterWiki extends AbstractDismax
 				'description',
 				'sitename_txt',
 				'url',
+				'articles_i',
 				'videos_i',
 				'images_i',
 				'image_s',
