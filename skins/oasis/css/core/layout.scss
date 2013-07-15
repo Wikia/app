@@ -18,6 +18,7 @@ $wikia-search-base-width: 200px;
 
 // $wgOasisResponsive
 @if $oasisWidthType == 2 {
+	$responsive-layout-enabled: true;
 	$width-gutter: 20px;
 	$width-outside: 1030px;
 }

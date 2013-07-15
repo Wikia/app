@@ -1,7 +1,7 @@
 /**
  * This file is used for styling the edit area of CKeditor
  */
-@import "../../../../skins/oasis/css/oasis";
+@import "skins/oasis/css/oasis";
 
 head {
 	// fb#5654 Editor reskin: Firefox loading effect issue
@@ -14,8 +14,13 @@ head {
 #bodyContent {
 	background: $color-page;
 	color: $color-text;
-	padding-left: 10px;
-	padding-right: 24px;
+	padding-left: 6px;
+
+	@if ( $responsive-layout-enabled ) {
+		padding-left: 10px;
+		padding-right: 24px;
+	}
+
 	overflow-y: auto;
 	margin-bottom: 35px;
 
