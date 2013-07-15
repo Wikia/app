@@ -11,9 +11,11 @@
 		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-no-thumb"';
 	}
 
-	$pagesMsg = $result['articles_i'];
-	$imgMsg = $result['images_i'];
-	$videoMsg = $result['videos_i'];
+	$service = new Wikia\Search\MediaWikiService();
+
+	$pagesMsg = $service->shortnumForMsg( $result['articles_i']?:0, 'wikiasearch2-pages' );
+	$imgMsg = $service->shortnumForMsg( $result['images_i']?:0, 'wikiasearch2-images' );
+	$videoMsg = $service->shortnumForMsg( $result['videos_i']?:0, 'wikiasearch2-images' );
 	$title = ( $hl = $result->getText( 'headline_txt' ) ) ? $hl : $result->getText( 'sitename_txt' );
 	$url = $result->getText( 'url' );
 ?>
