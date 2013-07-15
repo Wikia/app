@@ -34,7 +34,7 @@ class CrossWikiCore extends AbstractWikiService
 				$this->getWikiViews(),
 				$this->getWam(),
 				$this->getCategories(),
-			        $this->getVisualizationInfo(),
+				$this->getVisualizationInfo(),
 				$this->getTopArticles()
 				);
 	}
@@ -59,7 +59,7 @@ class CrossWikiCore extends AbstractWikiService
 		$service = $this->getService();
 		$data = $service->getApiStatsForWiki();
 		$response = [];
-		if ( (! empty( $data['query'] ) ) && (! isset( $data['query']['statistics'] ) ) ) {
+		if ( (! empty( $data['query'] ) ) && ( isset( $data['query']['statistics'] ) ) ) {
 			foreach ( $data['query']['statistics'] as $key => $val ) {
 				$response[$key . '_i'] = $val;
 			}
@@ -93,12 +93,14 @@ class CrossWikiCore extends AbstractWikiService
 	
 	protected function getTopArticles() {
 		$response = ['top_articles_txt' => []];
-		$apiResponse = \F::app()->sendRequest( 'ArticlesApiController', 'getTop' )->getData();
-		if ( $apiResponse ) {
-			foreach ( $apiResponse['items'] as $item ) {
-				$response['top_articles_txt'][] = $item['title'];
+		try {
+			$apiResponse = \F::app()->sendRequest( 'ArticlesApiController', 'getTop' )->getData();
+			if ( $apiResponse ) {
+				foreach ( $apiResponse['items'] as $item ) {
+					$response['top_articles_txt'][] = $item['title'];
+				}
 			}
-		}
+		} catch ( \Exception $e ) {}
 		$ta = Utilities::field( 'top_articles' );
 		$ta = $ta == 'top_articles' ? 'top_articles_txt' : $ta;
 		$response[$ta] = $response['top_articles_txt'];
