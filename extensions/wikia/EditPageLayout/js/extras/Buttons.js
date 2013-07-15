@@ -81,7 +81,6 @@
 		precondition: checkGallery
 	};
 
-	// add video button
 	if( window.wgEnableVideoToolExt ) {
 		buttons['InsertVideo'] = {
 			type: 'button',
