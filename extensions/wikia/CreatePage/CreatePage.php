@@ -110,7 +110,7 @@ function wfCreatePageLoadPreformattedContent( $editpage ) {
 		if ( $wgRequest->getCheck( 'useFormat' ) ) {
 			if ( $wgEnableVideoToolExt ) {
 				// if flag is falsey or if true and user has proper permissions, show Create Page with Video panel
-				if ( !$wgAllVideosAdminOnly || $wgAllVideosAdminOnly && $wgUser->isAllowed('videouploadgroup') ) {
+				if ( empty($wgAllVideosAdminOnly) || $wgAllVideosAdminOnly && $wgUser->isAllowed('videouploadgroup') ) {
 					$editpage->textbox1 = wfMsgForContentNoTrans( 'createpage-with-video' );
 				} 
 			} else {

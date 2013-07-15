@@ -82,7 +82,9 @@ global $wgExtensionsPath;
 	<? if( $screenType == 'details' ): ?>
 		<div class="input-group button-group addVideoDetailsFormControls">
 			<!-- add video button -->
-			<input class="wikia-button v-float-right" type="submit" value="<?= wfMessage('vet-insert2') ?>" />
+			<? if ($showAddVideoBtn): ?>
+				<input class="wikia-button v-float-right" type="submit" value="<?= wfMessage('vet-insert2') ?>" />
+			<? endif; ?>
 		</div>
 		<input id="VideoEmbedId" type="hidden" value="<?= isset($props['id']) ? urlencode($props['id']) : '' ?>" />
 		<input id="VideoEmbedProvider" type="hidden" value="<?= urlencode($props['provider']) ?>" />
@@ -90,7 +92,9 @@ global $wgExtensionsPath;
 	<? else: // $screenType == 'edit' ?>
 		<div class="input-group button-group">
 			<!-- add video button (actually an update one, sould this be treated the same?) -->
-			<input class="wikia-button v-float-right" type="submit" value="<?= wfMessage('vet-update') ?>"/>
+			<? if ($showAddVideoBtn): ?>
+				<input class="wikia-button v-float-right" type="submit" value="<?= wfMessage('vet-update') ?>"/>
+			<? endif; ?>
 		</div>
 		<div id="VideoReplaceLink" class="VideoReplaceLink"><?= wfMessage('vet-video-replace-link', $props['href'])->parse(); ?></div>
 		<input id="VideoEmbedHref" type="hidden" value="<?= htmlspecialchars($props['href']) ?>" />

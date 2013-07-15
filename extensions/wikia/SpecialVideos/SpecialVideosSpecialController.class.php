@@ -137,13 +137,13 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		 * For the purpose of hiding the appropriate UI elements
 		 * Current elements affected: last page of results in Special:Videos
 		 */
-		
-
 		global $wgAllVideosAdminOnly;
 
-		if ($wgAllVideosAdminOnly) {
+		if (!empty($wgAllVideosAdminOnly))  {
 			$this->showAddVideoBtn = $this->wg->User->isAllowed('videouploadgroup');
-		}
+		} elseif ( empty($wgAllVideosAdminOnly) ) {
+			$this->showAddVideoBtn = true;
+		} 
 	}
 }
 
