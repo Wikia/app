@@ -127,7 +127,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 		elements = elementList;
 
-		//if url contains image=imageName - setup and find the image
+		//if url contains file=fileName - setup and find the image/video
 		if(shrImg) {
 			setTimeout(function(){
 				!inited && setup();
