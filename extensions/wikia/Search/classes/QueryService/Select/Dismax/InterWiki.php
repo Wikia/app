@@ -114,7 +114,7 @@ class InterWiki extends AbstractDismax
 	 * @return string
 	 */
 	protected function getFilterQueryString() {
-		$filterQueries = [ '-articles_i:[0 TO 50]' ];
+		$filterQueries = [ 'articles_i:[50 TO *]' ];
 		$hub = $this->getConfig()->getHub();
 		if (! empty( $hub ) ) {
 			$filterQueries[] = Utilities::valueForField( 'hub_s', $hub );
