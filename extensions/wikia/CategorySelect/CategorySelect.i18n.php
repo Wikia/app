@@ -180,6 +180,18 @@ $messages['bg'] = array(
 	'categoryselect-edit-summary' => 'Добавяне на категории',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'categoryselect-button-add' => 'বিষয়শ্রেণী যোগ',
+	'categoryselect-button-cancel' => 'বাতিল',
+	'categoryselect-button-save' => 'সংরক্ষণ',
+	'categoryselect-category-add' => 'বিষয়শ্রেণী যোগ...',
+	'categoryselect-category-edit' => 'বিষয়শ্রেণী সম্পাদনা',
+	'categoryselect-category-remove' => 'বিষয়শ্রেণী অপসারণ',
+);
+
 /** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
@@ -557,9 +569,9 @@ $messages['id'] = array(
 	'categoryselect-error-edit-abort' => 'Perubahan yang coba Anda lakukan dibatalkan oleh suatu ekstensi kaitan.', # Fuzzy
 	'categoryselect-error-empty-category-name' => 'Silakan berikan nama kategori.',
 	'categoryselect-error-user-rights' => 'Pengguna tidak memiliki izin untuk melakukan aksi ini.',
-	'categoryselect-modal-category-name' => 'Memberikan nama kategori:', # Fuzzy
+	'categoryselect-modal-category-name' => 'Menyediakan nama kategori:',
 	'categoryselect-modal-category-sortkey' => 'Penyusunan artikel ini menurut abjad pada kategori "$1" dengan nama:', # Fuzzy
-	'categoryselect-tooltip-add' => 'Tekan Enter jika sudah selesai', # Fuzzy
+	'categoryselect-tooltip-add' => 'Tekan tombol Masuk atau Kembali ketika sudah selesai.',
 	'tog-disablecategoryselect' => 'Nonaktifkan Kategori Tagging( hanya berlaku jika modus visual telah dinonaktifkan)',
 );
 

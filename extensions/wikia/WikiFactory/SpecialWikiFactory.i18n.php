@@ -1099,9 +1099,12 @@ $messages['ca'] = array(
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
+	'wf_city_lang' => 'Мотт',
 	'wikifactory-label-findtags' => 'Лаха къастам',
+	'awc-metrics-all-languages' => 'Берриге меттанаш',
 	'closed-reason' => 'Бахьан:',
 );
 

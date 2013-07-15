@@ -29,6 +29,13 @@ $messages['az'] = array(
 	'centralhelpsearch-placeholder' => 'Arayış üzrə axtarış...',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'centralhelpsearch-placeholder' => 'সাহায্য অনুসন্ধান করুন...',
+);
+
 /** Breton (brezhoneg)
  * @author Gwenn-Ael
  */

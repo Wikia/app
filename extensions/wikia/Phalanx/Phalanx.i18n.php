@@ -321,7 +321,9 @@ $messages['br'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'phalanx-label-lang' => 'Мотт:',
 	'phalanx-stats-table-expire' => 'Чекхйолу',
+	'phalanx-stats-table-language' => 'Мотт',
 );
 
 /** Czech (česky)
@@ -1183,7 +1185,12 @@ $messages['id'] = array(
 
 	Ini tidak menghalangi halaman yang sudah ada dari penyuntingan.',
 	'phalanx-help-type-user-email' => 'Filter ini mencegah pembuatan akun menggunakan alamat surel yang diblokir.',
+	'phalanx-user-block-reason-similar' => 'Nama pengguna ini dicegah dari menyunting di seluruh jaringan Wikia karena vandalisme atau gangguan lainnya oleh pengguna dengan nama yang mirip.
+Silakan [[Special:Contact|hubungi Wikia]] mengenai masalah ini.',
+	'phalanx-user-block-withreason-exact' => 'Nama pengguna atau IP ini dicegah dari menyunting di seluruh jaringan Wikia karena vandalisme atau gangguan lainnya.
+Jika Anda yakin ini adalah sebuah kesalahan, silakan [[Special:Contact|hubungi Wikia]].<br />Pemblokir juga memberikan alasan tambahan ini: $1.',
 	'phalanx-content-spam-summary' => 'Teks ini ditemukan dalam ringkasan halaman.',
+	'phalanx-stats-table-user' => 'Ditambahkan oleh',
 );
 
 /** Icelandic (íslenska)

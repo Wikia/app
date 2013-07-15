@@ -256,6 +256,8 @@ $messages['ia'] = array(
  */
 $messages['id'] = array(
 	'imgplc-add-video' => 'Tambahkan Video',
+	'imgplc-notinhistory' => 'Anda tidak dapat menambahkan sebuah gambar pada mode riwayat.',
+	'imgplc-notinhistory-video' => 'Anda tidak dapat menambahkan sebuah video pada mode riwayat.',
 );
 
 /** Italian (italiano)

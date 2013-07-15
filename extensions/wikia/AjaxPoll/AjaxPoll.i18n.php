@@ -89,6 +89,13 @@ $messages['bg'] = array(
 	'ajaxpoll-submit' => 'Гласуване!',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'ajaxpoll-submit' => 'ভোট!',
+);
+
 /** Tibetan (བོད་ཡིག)
  * @author YeshiTuhden
  */
