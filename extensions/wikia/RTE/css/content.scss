@@ -17,6 +17,8 @@ head {
 	padding-left: 6px;
 
 	@if ( $responsive-layout-enabled ) {
+		font-size: 14px;
+		line-height: 22px;
 		padding-left: 10px;
 		padding-right: 24px;
 	}

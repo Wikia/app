@@ -3,6 +3,7 @@ $zTop: 20000000;
 
 // Dimension Variables
 $oasisWidthType: get_command_line_param("widthType", 0);
+$responsive-layout-enabled: false;
 
 // We often use this amount of padding or margin to separate elements in our layout.
 $width-gutter: 10px;
