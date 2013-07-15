@@ -45,6 +45,7 @@ $messages['en'] = array(
 	'userlogin-error-mail-error' => 'Oops, there was a problem sending your email. Please [[Special:Contact/general|contact us]].',
 	'userlogin-password-email-sent' => 'We\'ve sent a new password to the email address for $1.',
 	'userlogin-error-unconfirmed-user' => 'Sorry, you have not confirmed your email. Please confirm your email first.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'Confirmation reminder email already sent.',
 
 	// change password page
 	'userlogin-password-page-title' => 'Change your password',
@@ -158,6 +159,7 @@ $messages['qqq'] = array(
 	'userlogin-password-email-sent' => 'Validation message stating that email has been to the user. Parameters:
 * $1 contains the user name in plain text',
 	'userlogin-error-unconfirmed-user' => 'Error message stating that user needs to be confirmed first.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'Error message stating that confirmation email was already sent. This message is only used by maintenance scripts.',
 	'userlogin-password-page-title' => 'Heading for change password page.',
 	'userlogin-oldpassword' => 'Label for old password field',
 	'userlogin-newpassword' => 'Label for new password field.
