@@ -79,7 +79,6 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 		//loop that gets all media from a page
 		while(element = elements[i++]) {
-
 			var params = element.getAttribute('data-params') || false;
 
 			data = JSON.parse(params);
