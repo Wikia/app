@@ -403,7 +403,8 @@
 		renderPreview: function(extraData) {
 			var self = this,
 				articleWidth = mw.config.values.sassParams.widthType == 1 ? 850 : 660,
-				width = articleWidth + 32 /* modal padding */ + (this.isGridLayout ? 30 : 0),
+				modalPadding = 20,
+				width = articleWidth + modalPadding + (this.isGridLayout ? 30 : 0),
 				config = this.editor.config;
 
 			if (config.isWidePage) {
@@ -415,9 +416,15 @@
 				width += config.extraPageWidth;
 			}
 
-			// make preview width same as edit box width on responsive layout
+			// make preview width same as article content width for responsive layout
 			if ( wgIsResponsiveLayoutEnabled ) {
-				width = this.editor.getEditbox().width() + 32 /* modal padding */ ;
+				var widthLayout = $( '#WikiaPage' ).outerWidth(),
+					widthRail = $( '#EditPageRail' ).outerWidth( true ),
+					// TODO: would be nice if this wasn't hardcoded
+					// 20px article padding + 10px right rail padding
+					widthArticlePadding = 30;
+
+				width = ( widthLayout - widthRail ) - widthArticlePadding;
 			}
 
 			// add width of scrollbar (BugId:35767)
