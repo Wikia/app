@@ -80,12 +80,6 @@ abstract class AbstractSelect
 	protected $core = 'main';
 	
 	/**
-	 * Boost functions, used by child classes to increase a document's score based on specific document values
-	 * @var array
-	 */
-	protected $boostFunctions = array();
-	
-	/**
 	 * Default time allowed for a query.
 	 * @var int
 	 */
