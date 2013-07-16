@@ -10,8 +10,9 @@ require_once( "commandLine.inc" );
 
 $options = getopt( 'i:s::fc::', [ 'id:', 'service::', 'force', 'conf::' ] );
 
-global $wgEnableParserCache;
+global $wgEnableParserCache, $wgAllowMemcacheReads;
 $wgEnableParserCache = false;
+$wgAllowMemcacheReads = false;
 
 $articleId = $options['id'];
 $mws = new Wikia\Search\MediaWikiService();
