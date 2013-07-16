@@ -133,7 +133,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$this->isRemovalAllowed = ( $this->wg->User->isAllowed( 'specialvideosdelete' ) && $this->app->checkSkin( 'oasis' ) );
 
 		/*
-		 * Check to see if user is part of videouploadgroup
+		 * Check to see if user is part of videoupload
 		 * For the purpose of hiding the appropriate UI elements
 		 * Current elements affected: last page of results in Special:Videos
 		 */

@@ -36,7 +36,7 @@ class EditPageLayoutHooks {
 		}
 
 		// Export JS Variable to check to see if Admin Only Video Upload is enabled for this wiki
-		if ( !$wgUser->isAllowed('videouploadgroup') ) {
+		if ( !$wgUser->isAllowed('videoupload') ) {
 			$vars['hideAddVideoBtn'] = true;
 		}
 

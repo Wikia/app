@@ -3,7 +3,7 @@
 class ContributeMenuController extends WikiaController {
 
 	public function executeIndex() {
-		global $wgAllVideosAdminOnly, $wgUser;
+		global $wgUser;
 		// add "edit this page" item
 		$dropdownItems = array();
 		$content_actions = $this->app->getSkinTemplateObj()->data['content_actions'];
@@ -33,27 +33,14 @@ class ContributeMenuController extends WikiaController {
 		
 		// check if Special:Videos is enabled before showing 'add video' link
 		// add video button
-		if( !empty( $this->wg->EnableSpecialVideosExt ) ) {
+		if( !empty( $this->wg->EnableSpecialVideosExt) && $this->wg->User->isAllowed('videoupload' ) ) {
 			$addVideoLink = array(
 				'WikiaVideoAdd' => array(
 					'label' => 'oasis-navigation-v2-add-video'			
 				)
 			);
 
-			$showAddVideoBtn;
-
-			/*
-			 * Check to see if Admin only video is turned on
-			 * Then check to see if user has admin privileges
-			 */
-			if (!empty($wgAllVideosAdminOnly))  {
-				$showAddVideoBtn = $wgUser->isAllowed('videouploadgroup');
-			} elseif ( empty($wgAllVideosAdminOnly) ) {
-				// if not set at all, we allow videos show the add video button
-				$showAddVideoBtn = true;
-			} 
-
-			$specialPagesLinks = $showAddVideoBtn ? array_merge($addVideoLink, $specialPagesLinks) : $specialPagesLinks;
+			$specialPagesLinks = array_merge($addVideoLink, $specialPagesLinks);
 		}
 
 		foreach ($specialPagesLinks as $specialPageName => $link) {

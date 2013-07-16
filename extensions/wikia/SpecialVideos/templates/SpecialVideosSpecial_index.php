@@ -55,7 +55,7 @@
 		<? if ($showAddVideoBtn): ?>
 			<div class="grid-2 <?= $alpha ?>">
 				<div class="add-video-placeholder addVideo"></div>
-					<p><a href="#" class="addVideo"><?= wfMsg('special-videos-add-video') ?></a></p>
+					<p><a href="#" class="addVideo"><?= wfMessage('special-videos-add-video')->text(); ?></a></p>
 			</div>
 		<? endif; ?>
 		<?php endif; ?>

@@ -28,15 +28,10 @@ class VideoEmbedTool {
 	}
 
 	function loadMain( $error = false ) {
-		global $wgContLanguageCode, $wgVETNonEnglishPremiumSearch, $wgAllVideosAdminOnly, $wgUser;
+		global $wgContLanguageCode, $wgVETNonEnglishPremiumSearch, $wgUser;
 
-		$showAddVideoBtn;
 
-		if ( !empty($wgAllVideosAdminOnly) )  {
-			$showAddVideoBtn = $wgUser->isAllowed('videouploadgroup');
-		} elseif ( empty($wgAllVideosAdminOnly) ) {
-			$showAddVideoBtn = true;
-		} 
+		$showAddVideoBtn = $wgUser->isAllowed('videoupload');
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 		$tmpl->set_vars(array(
@@ -200,17 +195,12 @@ class VideoEmbedTool {
 	}
 
 	function detailsPage($props) {
-		global $wgAllVideosAdminOnly, $wgUser;
+		global $wgUser;
 
-		$showAddVideoBtn;
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 
-		if ( !empty($wgAllVideosAdminOnly) )  {
-			$showAddVideoBtn = $wgUser->isAllowed('videouploadgroup');
-		} elseif ( empty($wgAllVideosAdminOnly) ) {
-			$showAddVideoBtn = true;
-		} 
+		$showAddVideoBtn = $wgUser->isAllowed('videoupload');
 
 		$tmpl->set_vars(
 			array('props' => $props,
