@@ -26,11 +26,18 @@ class EditPageLayoutHooks {
 	 * Add wgIsEditPage global JS variable on edit pages
 	 */
 	static function onMakeGlobalVariablesScript(Array &$vars) {
+		global $wgUser;
+
 		wfRunHooks('EditPageMakeGlobalVariablesScript', array(&$vars));
 		$helper = EditPageLayoutHelper::getInstance();
 		$js = $helper->getJsVars();
 		foreach( $js as $key => $value ) {
 			$vars[$key] = $value;
+		}
+
+		// Export JS Variable to check to see if Admin Only Video Upload is enabled for this wiki
+		if ( !$wgUser->isAllowed('videoupload') ) {
+			$vars['hideAddVideoBtn'] = true;
 		}
 
 		return true;

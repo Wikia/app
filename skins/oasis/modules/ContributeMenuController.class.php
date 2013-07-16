@@ -31,7 +31,8 @@ class ContributeMenuController extends WikiaController {
 		);
 		
 		// check if Special:Videos is enabled before showing 'add video' link
-		if( !empty( $this->wg->EnableSpecialVideosExt ) ) {
+		// add video button
+		if( !empty( $this->wg->EnableSpecialVideosExt) && $this->wg->User->isAllowed('videoupload' ) ) {
 			$addVideoLink = array(
 				'WikiaVideoAdd' => array(
 					'label' => 'oasis-navigation-v2-add-video'			
