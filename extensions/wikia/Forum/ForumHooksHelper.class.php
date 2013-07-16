@@ -209,7 +209,16 @@ class ForumHooksHelper {
 			$parentPageId = $commentsIndex->getParentPageId();
 
 			$board = ForumBoard::newFromId( $parentPageId );
-			$board->clearCacheBoardInfo();
+			if ( $board instanceof ForumBoard ) {
+				$board->clearCacheBoardInfo();
+			} else {
+				Wikia::log(
+					__METHOD__,
+					'',
+					'Board doesn\'t exist: PageId: ' . $parentPageId .
+					' Title: ' . $title->getText()
+				);
+			}
 		}
 
 		return true;
