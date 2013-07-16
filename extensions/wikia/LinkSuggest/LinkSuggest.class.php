@@ -176,6 +176,20 @@ class LinkSuggest {
 
 			self::formatResults($db, $res, $query, $redirects, $results, $exactMatchRow);
 		}
+		//check if redirect pages exists
+		if ( !empty( $redirects ) ) {
+			foreach( $redirects as $redirect => $page ) {
+				$quoted = $db->addQuotes( $redirect );
+				$list = ( empty( $list ) ) ? $quoted : $list.', '.$quoted;
+			}
+			$sql = $db->select(
+				'page',
+				array( 'page_id', 'page_title' ),
+				"page_title IN ({$list})"
+			);
+
+			static::formatRedirects( $db, $sql, $redirects, $results, $exactMatchRow );
+		}
 
 		if ($exactMatchRow !== null) {
 
@@ -232,6 +246,9 @@ class LinkSuggest {
 			}
 		}
 
+		// Overwrite canonical title with redirect title for all formats
+		self::replaceResultIfRedirected($results, $redirects);
+
 		$format = $request->getText('format');
 
 		if ($format == 'json') {
@@ -243,13 +260,9 @@ class LinkSuggest {
 				$out = json_encode(array('query' => $request->getText('query'), 'suggestions' => $result_values, 'redirects' => $redirects));
 			}
 		} elseif ($format == 'array') {
-			self::replaceResultIfRedirected($results, $redirects);
 			$out = $results;
 		} else {
 			// legacy: LinkSuggest.js uses plain text
-			// Overwrite canonical title with redirect title
-			self::replaceResultIfRedirected($results, $redirects);
-
 			$out = implode("\n", $results);
 		}
 
@@ -334,7 +347,7 @@ class LinkSuggest {
 
 				$redirTitleFormatted = self::formatTitle($row->page_namespace, $row->rd_title);
 
-				if (!in_array($redirTitleFormatted, $results) && Title::newFromText( $redirTitleFormatted )->exists() ) {
+				if ( !in_array( $redirTitleFormatted, $results ) ) {
 
 					$results[] = $redirTitleFormatted;
 					$redirects[$redirTitleFormatted] = $titleFormatted;
@@ -363,5 +376,30 @@ class LinkSuggest {
 		}
 
 		return str_replace('_', ' ', $title);
+	}
+
+	/**
+	 * Validate redirected results, ensuring pages exists, depending on provided result
+	 *
+	 * @param $db
+	 * @param $res
+	 * @param $redirects
+	 * @param $results
+	 */
+	static private function formatRedirects( $db, $res, &$redirects, &$results ) {
+		while( ( $row = $db->fetchObject( $res ) ) ) {
+			$title = $row->page_title;
+			//if row exists keep redirect
+			if( isset( $redirects[ $title ] ) ) {
+				$newRedirects[ $title ] = $redirects[ $title ];
+			}
+		}
+		//remove empty redirects from result set
+		foreach( $results as $key => $page ) {
+			if ( isset( $redirects[ $page ] ) && !isset( $newRedirects[ $page ] ) ) {
+				unset( $results[ $key ] );
+			}
+		}
+		$redirects = isset( $newRedirects ) ? $newRedirects : [];
 	}
 }
