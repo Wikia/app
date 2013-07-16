@@ -30,7 +30,7 @@ class VideoHandlerHelper extends WikiaModel {
 			$content = '[['.WikiaFileHelper::getVideosCategory().']]';
 
 			$article = new Article( $title );
-			$status = $article->doEdit( $content, 'created video', $flags, false, $user );
+			$status = $article->doEdit( $content, wfMessage('videohandler-rc-add-video')->plain(), $flags, false, $user );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -109,7 +109,7 @@ class VideoHandlerHelper extends WikiaModel {
 		// Insert description header
 		$text = $this->replaceDescriptionSection( $text, $description );
 
-		$summary = 'Adding video description';
+		$summary = wfMessage('videohandler-rc-add-description')->plain();
 		$status = $page->doEdit( $text, $summary );
 
 		if ( $status->isOK() ) {

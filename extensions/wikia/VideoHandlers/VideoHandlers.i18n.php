@@ -26,6 +26,8 @@ $messages['en'] = array(
 	'videohandler-remove-video-modal-success' => 'File:$1 has been removed from this wiki',
 	'videohandler-remove-video-modal-cancel' => 'Cancel',
 	'videohandler-remove-error-unknow' => 'We are sorry, but something went wrong with the deletion.',
+	'videohandler-rc-add-description' => 'Adding video description',
+	'videohandler-rc-add-video' => 'created video',
 	'videos-error-empty-title' => 'Empty title.',
 	'videos-error-blocked-user' => 'Blocked user.',
 	'videos-error-readonly' => 'Read only mode.',
@@ -62,6 +64,8 @@ $messages['qqq'] = array(
 	'videohandler-remove-video-modal-ok' => 'This is the button text to confirm removing a video from a wiki',
 	'videohandler-remove-video-modal-success' => 'This is the confirmation message that a video has been removed from a wiki',
 	'videohandler-remove-video-modal-cancel' => 'This is the button text to cancel removal of a video from a wiki',
+	'videohandler-rc-add-description' => 'Notification message that shows up in recent changes when a video description is added',
+	'videohandler-rc-add-video' => 'Notification message that shows up in recent changes when a video has been added',
 
 	'videos-add-video' => 'Button text to click to add a video to the wiki',
 	'videos-add-video-to-this-wiki' => 'Tooltip text for the button to add a video to this wiki',
