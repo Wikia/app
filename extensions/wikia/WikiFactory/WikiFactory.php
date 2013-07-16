@@ -1948,11 +1948,6 @@ class WikiFactory {
 			$oRow->cv_value = null;
 		}
 
-		global $wgCityId;
-		if ($city_id == $wgCityId) {
-			Wikia::logBacktrace(__METHOD__ . '::forLocalWiki');
-		}
-
 		wfProfileOut( __METHOD__ );
 		return $oRow;
 	}
