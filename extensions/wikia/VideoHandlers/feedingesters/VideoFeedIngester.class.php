@@ -26,6 +26,7 @@ abstract class VideoFeedIngester {
 	protected static $PROVIDER;
 	protected static $FEED_URL;
 	protected static $CLIP_TYPE_BLACKLIST = array();
+	protected static $TITLE_FILTER = array();
 	private static $instances = array();
 	protected $filterByProviderVideoId = array();
 
@@ -66,17 +67,16 @@ abstract class VideoFeedIngester {
 	 * @return null
 	 */
 	public static function getInstance($provider='') {
-		if (empty($provider)) {
+		if ( empty($provider) ) {
 			$className = __CLASS__;
-		}
-		else {
+		} else {
 			$className = ucfirst($provider) . 'FeedIngester';
-			if (!class_exists($className)) {
+			if ( !class_exists($className) ) {
 				return null;
 			}
 		}
 
-		if (empty(self::$instances[$className])) {
+		if ( empty(self::$instances[$className]) ) {
 			self::$instances[$className] = new $className();
 		}
 
@@ -105,7 +105,7 @@ abstract class VideoFeedIngester {
 		$ignoreRecent = !empty($params['ignorerecent']) ? $params['ignorerecent'] : 0;
 		if ( $debug ) {
 			print "data after initial processing: \n";
-			foreach( explode("\n", var_export($data, 1)) as $line ) {
+			foreach ( explode("\n", var_export($data, 1)) as $line ) {
 				print ":: $line\n";
 			}
 		}
@@ -114,7 +114,7 @@ abstract class VideoFeedIngester {
 		$id = $data['videoId'];
 		$name = $this->generateName($data);
 		$metadata = $this->generateMetadata($data, $msg);
-		if (!empty($msg)) {
+		if ( !empty($msg) ) {
 			print "Error when generating metadata\n";
 			var_dump($msg);
 			wfProfileOut( __METHOD__ );
@@ -168,7 +168,7 @@ abstract class VideoFeedIngester {
 		$categoryStr = '';
 		foreach ( $categories as $categoryName ) {
 			$category = Category::newFromName($categoryName);
-			if ($category instanceof Category) {
+			if ( $category instanceof Category ) {
 				$categoryStr .= '[[' . $category->getTitle()->getFullText() . ']]';
 			}
 		}
@@ -190,12 +190,12 @@ abstract class VideoFeedIngester {
 			print "name:        $name\n";
 			print "categories:  " . implode(',', $categories) . "\n";
 			print "metadata:\n";
-			foreach(explode("\n",var_export($metadata,1)) as $line) {
+			foreach ( explode("\n",var_export($metadata,1)) as $line ) {
 				print ":: $line\n";
 			}
 
 			print "body:\n";
-			foreach(explode("\n",$body) as $line) {
+			foreach ( explode("\n",$body) as $line ) {
 				print ":: $line\n";
 			}
 
@@ -208,7 +208,7 @@ abstract class VideoFeedIngester {
 				$time = $revision->getTimestamp();
 				$timeUnix = intval(wfTimestamp( TS_UNIX, $time ) );
 				$timeNow = intval(wfTimestamp( TS_UNIX, time() ) );
-				if($timeUnix + $ignoreRecent >= $timeNow) {
+				if ( $timeUnix + $ignoreRecent >= $timeNow ) {
 					print "Recently uploaded, ignoring\n";
 					wfProfileOut( __METHOD__ );
 					return 0;
@@ -257,7 +257,7 @@ abstract class VideoFeedIngester {
 			print "id:          $id\n";
 			print "name:        $name\n";
 			print "assetdata:\n";
-			foreach( explode("\n", var_export( $assetData, TRUE ) ) as $line ) {
+			foreach ( explode("\n", var_export( $assetData, TRUE ) ) as $line ) {
 				print ":: $line\n";
 			}
 		} else {
@@ -351,15 +351,14 @@ abstract class VideoFeedIngester {
 		// partner API search keywords. Value is an array of categories
 		// relevant to wikis
 		$rawData = $this->getWikiIngestionDataFromSource();
-		foreach ($rawData as $cityId=>$cityData) {
+		foreach ( $rawData as $cityId=>$cityData ) {
 			if ( is_array($cityData) ) {
-				foreach (self::$WIKI_INGESTION_DATA_FIELDS as $field) {
+				foreach ( self::$WIKI_INGESTION_DATA_FIELDS as $field ) {
 					if ( !empty($cityData[$field]) && is_array($cityData[$field]) ) {
-						foreach ($cityData[$field] as $fieldVal) {
+						foreach ( $cityData[$field] as $fieldVal ) {
 							if ( !empty($data[$field][$fieldVal]) && is_array($data[$field][$fieldVal]) ) {
 								$data[$field][$fieldVal] = array_merge($data[$field][$fieldVal], $cityData['categories']);
-							}
-							else {
+							} else {
 								$data[$field][$fieldVal] = $cityData['categories'];
 							}
 						}
@@ -448,13 +447,13 @@ abstract class VideoFeedIngester {
 		$keyphraseFound = false;
 		$keywords = explode(' ', $keyphrase);
 		$keywordMissing = false;
-		foreach ($keywords as $keyword) {
-			if (stripos($subject, $keyword) === false) {
+		foreach ( $keywords as $keyword ) {
+			if ( stripos($subject, $keyword) === false ) {
 				$keywordMissing = true;
 				break;
 			}
 		}
-		if (!$keywordMissing) {
+		if ( !$keywordMissing ) {
 			$keyphraseFound = true;
 		}
 
@@ -470,9 +469,9 @@ abstract class VideoFeedIngester {
 		// values should not be imported. This assumption will have to
 		// change if we consider values that fall into a range, such as
 		// duration < MIN_VALUE
-		if (is_array(static::$CLIP_TYPE_BLACKLIST)) {
+		if ( is_array(static::$CLIP_TYPE_BLACKLIST) ) {
 			$arrayIntersect = array_intersect(static::$CLIP_TYPE_BLACKLIST, $clipData);
-			if (!empty($arrayIntersect) && $arrayIntersect == static::$CLIP_TYPE_BLACKLIST) {
+			if ( !empty($arrayIntersect) && $arrayIntersect == static::$CLIP_TYPE_BLACKLIST ) {
 				return true;
 			}
 		}
@@ -490,7 +489,7 @@ abstract class VideoFeedIngester {
 		if ( $keywords ) {
 			$keywords = explode( ',', $keywords );
 			$blacklist = array();
-			foreach( $keywords as $word ) {
+			foreach ( $keywords as $word ) {
 				$word = preg_replace( "/[^A-Za-z0-9' ]/", "", trim($word) );
 				if ( $word ) {
 					$blacklist[] = $word;
@@ -511,6 +510,16 @@ abstract class VideoFeedIngester {
 	 * @return boolean
 	 */
 	public function isBlacklistVideo( $data ) {
+
+		// Filter by title match first
+		foreach ( static::$TITLE_FILTER as $filter ) {
+			if ( preg_match( $filter, $data['titleName'] ) ) {
+				echo "Blacklisting video: ".$data['titleName'].", videoId ".$data['videoId']." (reason titleName: ".$data['titleName'].")\n";
+				return true;
+			}
+		}
+
+		// General filter on all keywords
 		$regex = $this->getBlacklistRegex( F::app()->wg->VideoBlacklist );
 		if ( !empty($regex) ) {
 			$keys = array( 'titleName', 'description' );
@@ -520,7 +529,7 @@ abstract class VideoFeedIngester {
 			if ( array_key_exists('tags', $data) ) {
 				$keys[] = 'tags';
 			}
-			foreach( $keys as $key ) {
+			foreach ( $keys as $key ) {
 				if ( preg_match($regex, str_replace('-', ' ', $data[$key])) ) {
 					echo "Blacklisting video: ".$data['titleName'].", videoId ".$data['videoId']." (reason $key: ".$data[$key].")\n";
 					return true;
@@ -541,7 +550,7 @@ abstract class VideoFeedIngester {
 			$new = array();
 			if ( !empty($regex) ) {
 				$old = explode( ',', $keywords );
-				foreach( $old as $word ) {
+				foreach ( $old as $word ) {
 					if ( preg_match($regex, str_replace('-', ' ', $word)) ) {
 						echo "Skip: blacklisted keyword $word.\n";
 						continue;

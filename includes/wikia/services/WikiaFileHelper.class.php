@@ -403,18 +403,13 @@ class WikiaFileHelper extends Service {
 
 	// truncate article list
 	public static function truncateArticleList( $articles, $limit = 2 ) {
-		$app = F::app();
-
 		$isTruncated = 0;
 		$truncatedList = array();
-		if( !empty($articles) ) {
+		if( !empty( $articles ) ) {
 			foreach( $articles as $article ) {
 				// Create truncated list
-				if ( count($truncatedList) < $limit ) {
-					if ( $article['ns'] == NS_MAIN
-						|| ( (!empty($app->wg->ContentNamespace)) && in_array($article['ns'], $app->wg->ContentNamespace) ) ) {
-							$truncatedList[] = $article;
-					}
+				if ( count( $truncatedList ) < $limit ) {
+					$truncatedList[] = $article;
 				} else {
 					$isTruncated = 1;
 					break;

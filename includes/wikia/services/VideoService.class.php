@@ -13,6 +13,11 @@ class VideoService extends WikiaModel {
 	public function addVideo( $url ) {
 		wfProfileIn( __METHOD__ );
 
+		if ( !$this->wg->User->isAllowed('videoupload') ) {
+			wfProfileOut( __METHOD__ );
+			return wfMessage('videos-error-admin-only')->plain();
+		}
+
 		if ( empty( $url ) ) {
 			wfProfileOut( __METHOD__ );
 			return wfMessage('videos-error-no-video-url')->text();
@@ -42,7 +47,7 @@ class VideoService extends WikiaModel {
 					$videoProvider = '';
 					wfRunHooks( 'AddPremiumVideo', array( $title ) );
 				} else {
-					if ( empty( F::app()->wg->allowNonPremiumVideos ) ) {
+					if ( empty( $this->wg->allowNonPremiumVideos ) ) {
 						wfProfileOut( __METHOD__ );
 						return wfMessage( 'videohandler-non-premium' )->parse();
 					}

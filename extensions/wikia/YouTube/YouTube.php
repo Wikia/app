@@ -55,9 +55,13 @@ $wgExtensionCredits['parserhook'][] = array
 
 // Register the magic word "youtube" so that it can be used as a parser-function.
 function wfParserFunction_magic( &$magicWords, $langCode ) {
-	global $wgAllowNonPremiumVideos;
+	global $wgAllowNonPremiumVideos, $wgUser;
 
 	if ( !$wgAllowNonPremiumVideos ) {
+		return true;
+	}
+
+	if ( !$wgUser->isAllowed('videoupload') ) {
 		return true;
 	}
 
