@@ -200,8 +200,15 @@ class ImportantArticles extends WikiaModel {
 					}
 				}
 				if( !$foundMatchForDomain ) {
-
-					$matches[] = [ "name" => $domainPart, "score" => 15/sizeof($domainParts) ];
+					$multiplier = 1.0;
+					if( strpos($domainPart, "pedia") !== false ) {
+						$domainPart = substr_replace( $domainPart, "", -5 );
+						$multiplier *= 0.2;
+					}
+					if( preg_match("/\\swiki$/", $domainPart ) ) {
+						$domainPart = substr_replace( $domainPart, "", -5 );
+					}
+					$matches[] = [ "name" => $domainPart, "score" => 15/sizeof($domainParts) * $multiplier ];
 				}
 			}
 		}
@@ -307,6 +314,9 @@ class ImportantArticles extends WikiaModel {
 			}
 			else if( preg_match("/\\sI$/", $name ) ) {
 				$name = substr_replace( $name, "", -2 );
+			}
+			if( preg_match("/\\spart$/i", $name ) ) {
+				$name = substr_replace( $name, "", -5 );
 			}
 			//var_dump($name . " - " . $r['name']);
 			if ( isset( $merged[ $name ] ) ) {

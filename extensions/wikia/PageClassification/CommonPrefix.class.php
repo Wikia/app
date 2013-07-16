@@ -12,7 +12,7 @@ class CommonPrefix {
 				if ( !isset( $prefixArray[ substr( $title, 0, $ii ) ] ) ) {
 					$prefixArray[ substr( $title, 0, $ii ) ] = 0;
 				}
-				$prefixArray[ substr( $title, 0, $ii ) ] += 1 ;
+				$prefixArray[ substr( $title, 0, $ii ) ] += 1;
 			}
 		}
 		// choose most common phrase from index
