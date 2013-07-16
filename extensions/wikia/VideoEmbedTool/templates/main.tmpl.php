@@ -67,7 +67,7 @@
 			</div>
 			<!-- add video button -->
 			<?php if($showAddVideoBtn): ?>
-				<a id="VET-add-from-preview" href="" class="wikia-button VET-add-from-preview"><?= wfMsg('vet-add-from-preview') ?></a>
+				<a id="VET-add-from-preview" href="" class="wikia-button VET-add-from-preview"><?= wfMessage('vet-add-from-preview')->text() ?></a>
 			<?php endif; ?>
 			<div id="VET-video-wrapper" class="VET-video-wrapper"></div>
 		</div>

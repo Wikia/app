@@ -30,7 +30,7 @@ class WikiaVideoAddForm extends SpecialPage {
 		}
 
 		if ( !$this->getUser()->isAllowed( 'videoupload' ) ) {
-			$wgOut->addHTML( wfMessage( 'wva-notallowed' )->text() );
+			$wgOut->addHTML( wfMessage( 'videos-error-admin-only' )->plain() );
 			return;
 		}
 
