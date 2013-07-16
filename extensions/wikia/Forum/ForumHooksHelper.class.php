@@ -212,7 +212,6 @@ class ForumHooksHelper {
 			if ( $board instanceof ForumBoard ) {
 				$board->clearCacheBoardInfo();
 			} else {
-				global $wgCityId;
 				Wikia::log(
 					__METHOD__,
 					'',
