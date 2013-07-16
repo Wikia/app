@@ -209,7 +209,9 @@ class ForumHooksHelper {
 			$parentPageId = $commentsIndex->getParentPageId();
 
 			$board = ForumBoard::newFromId( $parentPageId );
-			$board->clearCacheBoardInfo();
+			if ( $board instanceof ForumBoard ) {
+				$board->clearCacheBoardInfo();
+			}
 		}
 
 		return true;
