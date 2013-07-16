@@ -6,8 +6,8 @@ class IgnFeedIngester extends VideoFeedIngester {
 	protected static $FEED_URL = 'http://apis.ign.com/partners/v3/wikia?fromDate=$1&toDate=$2';
 	protected static $CLIP_TYPE_BLACKLIST = array();
 	protected static $TITLE_FILTER = array(
-		'/^IGN Daily/',
-		'/^IGN Weekly/',
+		'/^IGN Daily/i',
+		'/^IGN Weekly/i',
 	);
 
 	/*
