@@ -67,7 +67,7 @@ class VideoFileUploader {
 	 * Start the upload.  Note that this method always returns an object, even when it fails.
 	 * Make sure to check that the return value with:
 	 *
-	 *   $statis->isOK()
+	 *   $status->isOK()
 	 *
 	 * @param $oTitle - A title object that will be set if this call is successful
 	 * @return FileRepoStatus|Status - A status object representing the result of this call
@@ -362,10 +362,12 @@ class VideoFileUploader {
 	}
 
 	/**
-	 * Translate URL to Title object
-	 * can transparently upload new video if it doesn't exist
-	 * @param $requestedTitle if new Video will be created you can optionally request
+	 * Translate URL to Title object.  Can transparently upload new video if it doesn't exist
+	 * @param string $url
+	 * @param string $sTitle - if $requestedTitle new Video will be created you can optionally request
 	 *  it's title (otherwise Video name from provider is used)
+	 * @param string $sDescription
+	 * @return null|Title
 	 */
 	public static function URLtoTitle( $url, $sTitle = '', $sDescription = '' ) {
 
