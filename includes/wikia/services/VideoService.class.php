@@ -13,7 +13,7 @@ class VideoService extends WikiaModel {
 	public function addVideo( $url ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( !$this->wg->User->isAllowed('videouploadgroup') ) {
+		if ( !$this->wg->User->isAllowed('videoupload') ) {
 			wfProfileOut( __METHOD__ );
 			return wfMessage('videos-error-admin-only')->plain();
 		}

@@ -100,7 +100,7 @@ class VideoEmbedTool {
 			return wfMessage( 'videos-error-blocked-user' );
 		}
 
-		if ( !$wgUser->isAllowed('videouploadgroup') ) {
+		if ( !$wgUser->isAllowed('videoupload') ) {
 			header('X-screen-type: error');
 			wfProfileOut( __METHOD__ );
 			return wfMessage( 'videos-error-admin-only' )->plain();

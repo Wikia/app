@@ -29,7 +29,7 @@ class WikiaVideoAddForm extends SpecialPage {
 			return;
 		}
 
-		if ( !$this->getUser()->isAllowed( 'videouploadgroup' ) ) {
+		if ( !$this->getUser()->isAllowed( 'videoupload' ) ) {
 			$wgOut->addHTML( wfMessage( 'wva-notallowed' )->text() );
 			return;
 		}

@@ -61,7 +61,7 @@ function wfParserFunction_magic( &$magicWords, $langCode ) {
 		return true;
 	}
 
-	if ( !$wgUser->isAllowed('videouploadgroup') ) {
+	if ( !$wgUser->isAllowed('videoupload') ) {
 		return true;
 	}
 
