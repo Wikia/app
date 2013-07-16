@@ -421,8 +421,9 @@ class SpecialCssModel extends WikiaModel {
 	 * @return String
 	 */
 	private function truncateAndParse( $title, $wikitext ) {
+		global $wgLang;
 		$wikitext = $this->wg->Lang->truncate( $wikitext, self::SNIPPET_CHAR_LIMIT, wfMessage( 'ellipsis' )->text() );
-		$extractedWikitext = CategorySelect::extractCategoriesFromWikitext($wikitext);
+		$extractedWikitext = CategorySelect::extractCategoriesFromWikitext($wikitext, true, $wgLang);
 
 		if ( isset($extractedWikitext['wikitext']) ) {
 			$wikitext = $extractedWikitext['wikitext'];

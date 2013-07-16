@@ -76,8 +76,11 @@ class CategorySelect {
 	 * tags removed.
 	 * @return Array
 	 */
-	public static function extractCategoriesFromWikitext( $wikitext, $force = false ) {
+	public static function extractCategoriesFromWikitext( $wikitext, $force = false, $lang = null ) {
+		global $wgContLang;
 		wfProfileIn( __METHOD__ );
+
+		$oldLang = null;
 
 		if ( !$force && is_array( self::$data ) ) {
 			wfProfileOut( __METHOD__ );
@@ -91,6 +94,11 @@ class CategorySelect {
 
 		// prepare Parser
 		$app->wg->Parser->startExternalParse( $app->wg->Title, new ParserOptions, OT_WIKI );
+
+		if ( $lang ) {
+			$oldLang = $wgContLang;
+			$wgContLang = $lang;
+		}
 
 		// get DOM tree [PPNode_DOM class] as an XML string
 		$xml = $app->wg->Parser->preprocessToDom( $wikitext )->__toString();
@@ -132,6 +140,10 @@ class CategorySelect {
 			'categories' => $categories,
 			'wikitext' => rtrim( $modifiedWikitext ),
 		);
+
+		if ( $oldLang ) {
+			$wgContLang = $oldLang;
+		}
 
 		wfProfileOut( __METHOD__ );
 
