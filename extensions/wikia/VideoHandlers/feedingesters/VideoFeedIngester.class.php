@@ -50,9 +50,10 @@ abstract class VideoFeedIngester {
 	abstract protected function generateMetadata(array $data, &$errorMsg);
 	abstract protected function generateCategories(array $data, $addlCategories);
 
-	/*
+	/**
 	 *  If  $this->filterByProviderVideoId  is not empty, the ingestion script will only upload the videos
 	 *  that are in the array
+	 * @param $id
 	 */
 	public function setFilter( $id ) {
 
@@ -61,6 +62,10 @@ abstract class VideoFeedIngester {
 		}
 	}
 
+	/**
+	 * @param string $provider
+	 * @return null
+	 */
 	public static function getInstance($provider='') {
 		if ( empty($provider) ) {
 			$className = __CLASS__;
@@ -78,6 +83,12 @@ abstract class VideoFeedIngester {
 		return self::$instances[$className];
 	}
 
+	/**
+	 * @param array $data
+	 * @param $msg
+	 * @param array $params
+	 * @return int
+	 */
 	public function createVideo(array $data, &$msg, $params=array()) {
 		wfProfileIn( __METHOD__ );
 
@@ -152,7 +163,7 @@ abstract class VideoFeedIngester {
 
 		// prepare wiki categories string (eg [[Category:MyCategory]] )
 		$categories = $this->generateCategories($data, $addlCategories);
-		$categories[] = wfMsgForContent( 'videohandler-category' );
+		$categories[] = wfMessage( 'videohandler-category' )->inContentLanguage()->text();
 		$categories = array_unique( $categories );
 		$categoryStr = '';
 		foreach ( $categories as $categoryName ) {
@@ -218,7 +229,7 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
-	 * create remote asset
+	 * Create remote asset
 	 * @param string $id
 	 * @param string $name
 	 * @param array $metadata
@@ -270,7 +281,7 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
-	 * generate remote asset data
+	 * Generate remote asset data
 	 * @param string $name
 	 * @param array $data
 	 * @return array $data
@@ -281,6 +292,10 @@ abstract class VideoFeedIngester {
 		return $data;
 	}
 
+	/**
+	 * @param $name
+	 * @return string
+	 */
 	protected function getUniqueName( $name ) {
 		$name_final = $name;
 		$i = 2;
@@ -294,6 +309,13 @@ abstract class VideoFeedIngester {
 		return $name_final;
 	}
 
+	/**
+	 * @param $videoId
+	 * @param $name
+	 * @param $msg
+	 * @param $isDebug
+	 * @return int
+	 */
 	protected function validateTitle($videoId, $name, &$msg, $isDebug) {
 
 		wfProfileIn( __METHOD__ );
@@ -308,10 +330,17 @@ abstract class VideoFeedIngester {
 		return 1;
 	}
 
+	/**
+	 * @param $name
+	 * @return Title
+	 */
 	protected function titleFromText($name) {
 		return Title::newFromText($name, NS_FILE);
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getWikiIngestionData() {
 
 		wfProfileIn( __METHOD__ );
@@ -343,6 +372,9 @@ abstract class VideoFeedIngester {
 		return $data;
 	}
 
+	/**
+	 * @return array|bool|Object
+	 */
 	protected function getWikiIngestionDataFromSource() {
 		global $wgExternalSharedDB, $wgMemc;
 
@@ -395,6 +427,10 @@ abstract class VideoFeedIngester {
 		return $aWikis;
 	}
 
+	/**
+	 * @param $url
+	 * @return string
+	 */
 	protected function getUrlContent($url) {
 		return Http::get($url);
 	}
@@ -424,6 +460,10 @@ abstract class VideoFeedIngester {
 		return $keyphraseFound;
 	}
 
+	/**
+	 * @param array $clipData
+	 * @return bool
+	 */
 	protected function isClipTypeBlacklisted(array $clipData) {
 		// assume that a clip with properties that match exactly undesired
 		// values should not be imported. This assumption will have to
@@ -527,7 +567,7 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
-	 * get industry rating
+	 * Get industry rating
 	 * @param string $rating
 	 * @return string $stdRating
 	 */
@@ -570,7 +610,7 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
-	 * get age gate
+	 * Get age gate
 	 * @param string $rating
 	 * @return int $ageGate
 	 */
@@ -590,5 +630,4 @@ abstract class VideoFeedIngester {
 
 		return $ageGate;
 	}
-
 }
