@@ -13,7 +13,7 @@
 	}
 
 	// "Add a photo" button
-	if (!empty($isSpecialVideos) && !empty($wg->EnableUploads)) { ?>
+	if (!empty($isSpecialVideos) && !empty($wg->EnableUploads) && $wg->User->isAllowed('videogroup')) { ?>
         <a class="button addVideo" href="#" rel="tooltip" title="<?=wfMsg('related-videos-tooltip-add');?>"><img src="<?=wfBlankImgUrl();?>" class="sprite addRelatedVideo" /> <?=wfMsg('videos-add-video')?></a>
 		<? }
 
