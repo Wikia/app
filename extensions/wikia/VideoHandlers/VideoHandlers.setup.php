@@ -250,17 +250,3 @@ $wgVideoMigrationProviderMap = array(
 	29 => 'Iva',
 	30 => 'Snappytv',
 );
-
-
-/*
- * After migration
- */
-if(!empty($wgVideoHandlersVideosMigrated)) {
-
-	/**
-	 * SpecialPages
-	 */
-	//$wgAutoloadClasses[ 'VideoHandlerSpecialController'] =  $dir . '/VideoHandlerSpecialController.class.php' ;
-	//$wgSpecialPages['VideoHandler'] = 'VideoHandlerSpecialController';
-
-}
