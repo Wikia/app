@@ -14,7 +14,6 @@ $messages['en'] = [
 	'special-css-delete-button' => 'Delete',
 	'special-css-undelete-button' => 'Undelete',
 
-	'special-css-community-update-headline' => 'Wikia CSS Updates',
 	'special-css-community-update-by' => '$1 by [$2 $3]',
 	'special-css-community-read-more' => '[$1 Read more]',
 	'special-css-community-update-see-all' => 'See all',

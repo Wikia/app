@@ -258,10 +258,14 @@ class SpecialCssModel extends WikiaModel {
 				$cssUpdatesPostsData = $this->getCssPostsApiData($postsParams);
 
 				if ( !empty( $cssUpdatesPostsData ) ) {
-					$ids = $this->getBlogsIds( $cssUpdatesPostsData );
+					$pageIds = $this->getBlogsIds( $cssUpdatesPostsData );
+					$ids = $this->implodeBlogsIds($pageIds);
 					$cssRevisionsData = $this->getCssRevisionsApiData( $ids, $revisionsParams );
+					// we got revisions data as a associative array with page id as a key
+					// but we need this array ordered by timestamp
+					$cssRevisionsData = $this->getCssRevisionsInOrder($cssRevisionsData, $pageIds);
 					$filteredRevisionData = $this->filterRevisionsData( $cssRevisionsData );
-					
+
 					foreach ( $filteredRevisionData as $postData ) {
 						$cssUpdatesPosts[] = $this->prepareCssUpdateData( $postData );
 					}
@@ -324,7 +328,6 @@ class SpecialCssModel extends WikiaModel {
 			$timestamp = $postData['revisions'][0]['timestamp'];
 			$sectionText = $postData['revisions'][0]['*'];
 			$cssUpdateText = $this->truncateAndParse( $blogTitle, $this->getCssUpdateSection( $sectionText ) );
-			
 			if( !empty( $cssUpdateText ) ) {
 				$cssUpdatePost = [
 					'title' => $this->getAfterLastSlashText( $blogTitleText ),
@@ -391,6 +394,25 @@ class SpecialCssModel extends WikiaModel {
 	}
 
 	/**
+	 * @desc Returns array with CSS Updates order by timestamp
+	 *
+	 * @param $cssUpdates Array with CSS Updates in order by page id
+	 * @param $pageIds Array with page ids in order by timestamp
+	 * @return array
+	 */
+	private function getCssRevisionsInOrder($cssUpdates, $pageIds) {
+		$cssUpdatesInOrder = [];
+
+		foreach ($pageIds as $id) {
+			if(isset($cssUpdates[$id])) {
+				$cssUpdatesInOrder[] = $cssUpdates[$id];
+			}
+		}
+
+		return $cssUpdatesInOrder;
+	}
+
+	/**
 	 * @desc Truncates given wiki text, added ellipsis at the end, parses truncated text and returns it
 	 * 
 	 * @param GlobalTitle|Title $title mediawiki article's title
@@ -400,6 +422,12 @@ class SpecialCssModel extends WikiaModel {
 	 */
 	private function truncateAndParse( $title, $wikitext ) {
 		$wikitext = $this->wg->Lang->truncate( $wikitext, self::SNIPPET_CHAR_LIMIT, wfMessage( 'ellipsis' )->text() );
+		$extractedWikitext = CategorySelect::extractCategoriesFromWikitext($wikitext);
+
+		if ( isset($extractedWikitext['wikitext']) ) {
+			$wikitext = $extractedWikitext['wikitext'];
+		}
+
 		$wikitext = $this->getParsedText( $wikitext, $title );
 		
 		return $wikitext;
@@ -570,8 +598,17 @@ class SpecialCssModel extends WikiaModel {
 			$pageIds[] = $blog['pageid'];
 		}
 
-		$ids = implode('|', $pageIds);
+		return $pageIds;
+	}
 
+	/**
+	 * @desc Returns page ids concatenated with '|' char
+	 *
+	 * @param $pageIds Array with page ids
+	 * @return string
+	 */
+	private function implodeBlogsIds($pageIds) {
+		$ids = implode('|', $pageIds);
 		return $ids;
 	}
 
