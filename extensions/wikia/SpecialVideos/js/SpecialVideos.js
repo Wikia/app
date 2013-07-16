@@ -82,6 +82,8 @@ var SpecialVideos = {
 					title: $.msg('specialvideos-remove-modal-title'),
 					content: $.msg('specialvideos-remove-modal-message'),
 					width: 600,
+					okMsg: $.msg('ok'),
+					cancelMsg: $.msg('cancel'),
 					onOk: function() {
 						$.nirvana.sendRequest({
 							controller: 'VideoHandler',
