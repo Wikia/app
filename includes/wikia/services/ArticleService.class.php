@@ -224,8 +224,8 @@ class ArticleService extends WikiaObject {
 		}
 		$htmlField = Wikia\Search\Utilities::field( 'html' );
 		
-		$document = $service->setRequestedFields( [ $htmlField ] )
-		                    ->getDocument();
+		$document = $service->getResult();
+		
 		$text = '';
 		if (! empty( $document ) ) {
 			$text = $document[$htmlField];

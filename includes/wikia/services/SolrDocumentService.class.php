@@ -5,6 +5,8 @@
  * This can be configured to alter by page ID or wiki ID, but the default behavior is
  * to use the current article ID and wiki ID.
  */
+use Wikia\Search\MediaWikiService;
+
 class SolrDocumentService
 {
 	/**
@@ -34,14 +36,6 @@ class SolrDocumentService
 	 * @var bool
 	 */
 	protected $crossWiki = false;
-	
-	/**
-	 * Returns an array version of our search result object
-	 * @return array
-	 */
-	public function getDocument() {
-		return (array) $this->getResult();
-	}
 	
 	/**
 	 * Returns the result object
