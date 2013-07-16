@@ -19,8 +19,7 @@ head {
 	@if ( $responsive-layout-enabled ) {
 		font-size: 14px;
 		line-height: 22px;
-		padding-left: 10px;
-		padding-right: 24px;
+		padding: 0 9px;
 	}
 
 	overflow-y: auto;
