@@ -211,6 +211,14 @@ class ForumHooksHelper {
 			$board = ForumBoard::newFromId( $parentPageId );
 			if ( $board instanceof ForumBoard ) {
 				$board->clearCacheBoardInfo();
+			} else {
+				global $wgCityId;
+				Wikia::log(
+					__METHOD__,
+					'',
+					'Board doesn\'t exist: PageId: ' . $parentPageId .
+					' Title: ' . $title->getText()
+				);
 			}
 		}
 
