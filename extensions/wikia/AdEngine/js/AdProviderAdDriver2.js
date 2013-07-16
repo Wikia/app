@@ -149,7 +149,7 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 				if (!dontCallDart) {
 					// Track hop time
 					hopTime = new Date().getTime() - hopTimer;
-					log('slotTimer2 end for ' + slotname + ' after ' + hopTime + ' ms', 7, logGroup);
+					log('slotTimer2 end for ' + slotname + ' after ' + hopTime + ' ms (hop)', 7, logGroup);
 					tracker.track({
 						eventName: 'liftium.hop2',
 						ga_category: 'hop2/addriver2',
@@ -168,6 +168,20 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 				slotTweaker.removeDefaultHeight(slotname);
 				slotTweaker.removeTopButtonIfNeeded(slotname);
 				slotTweaker.adjustLeaderboardSize(slotname);
+
+				// experimental hack: track LB success time
+				if (slotname.search('LEADERBOARD') > -1) {
+					// Track hop time
+					hopTime = new Date().getTime() - hopTimer;
+					log('slotTimer2 end for ' + slotname + ' after ' + hopTime + ' ms (success)', 7, logGroup);
+					tracker.track({
+						eventName: 'liftium.hop2',
+						ga_category: 'success2/addriver2',
+						ga_action: 'slot ' + slotname,
+						ga_label: formatTrackTime(hopTime, 5),
+						trackingMethod: 'ad'
+					});
+				}
 			},
 
 			inLeaderboardTest = abTest && abTest.getGroup('LEADERBOARD_TESTS'),
