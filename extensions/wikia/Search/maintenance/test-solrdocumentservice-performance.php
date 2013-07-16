@@ -18,7 +18,7 @@ $articleId = $options['id'];
 $mws = new Wikia\Search\MediaWikiService();
 $service = new ArticleService( $mws->getCanonicalPageIdFromPageId( $articleId ) );
 
-$start = microtime();
+$start = microtime( true );
 $type = 'default';
 if ( isset( $options['service'] ) && $options['service'] == 'solr' ) {
 	$type = 'solr';
@@ -26,4 +26,4 @@ if ( isset( $options['service'] ) && $options['service'] == 'solr' ) {
 } else {
 	$response = $service->getTextSnippet();
 }
-echo sprintf( "%.2f (%s) %s\n", microtime() - $start, $type, $response );
+echo sprintf( "%.2f (%s) %s\n", microtime( true ) - $start, $type, $response );
