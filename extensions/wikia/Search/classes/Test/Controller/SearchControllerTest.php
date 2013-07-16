@@ -26,7 +26,8 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	public function testIndex() {
 		
 		$methods = array( 'handleSkinSettings', 'getSearchConfigFromRequest', 
-				'handleArticleMatchTracking', 'setPageTitle', 'setResponseValuesFromConfig' );
+				'handleArticleMatchTracking', 'setPageTitle', 'setResponseValuesFromConfig',
+				'getVal', 'handleLayoutAbTest' );
 		$mockController = $this->searchController->setMethods( $methods )->getMock();
 		
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery' ) );
@@ -45,6 +46,14 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$mockController
 		    ->expects( $this->once() )
 		    ->method ( 'handleSkinSettings' )
+		;
+		$mockController
+			->expects( $this->once() )
+			->method ( 'getVal' )
+		;
+		$mockController
+			->expects( $this->once() )
+			->method ( 'handleLayoutAbTest' )
 		;
 		$mockController
 		    ->expects( $this->once() )
@@ -111,6 +120,56 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 				"WikiaSearchController::handleArticleMatchTracking should return false if not on page 1"
 				);
 		
+	}
+
+	public function testHandleLayoutAbTest() {
+		$mockController = $this->searchController->setMethods( array( 'templateExists', 'setVal' ) )->getMock();
+
+		$method = new ReflectionMethod( 'WikiaSearchController', 'handleLayoutAbTest' );
+		$method->setAccessible( true );
+
+		$mockController
+			->expects( $this->at( 0 ) )
+			->method ( 'setVal' )
+			->with	 ( 'resultView', WikiaSearchController::WIKIA_DEFAULT_RESULT )
+		;
+
+		$this->assertTrue(
+			$method->invoke( $mockController, null )
+		);
+
+		$mockController
+			->expects( $this->at( 0 ) )
+			->method ( 'templateExists' )
+			->will	 ( $this->returnValue( false ) )
+		;
+
+		$mockController
+			->expects( $this->at( 1 ) )
+			->method ( 'setVal' )
+			->with	 ( 'resultView', WikiaSearchController::WIKIA_DEFAULT_RESULT )
+		;
+
+		$this->assertTrue(
+			$method->invoke( $mockController, 'Atest' )
+		);
+
+		$mockController
+			->expects( $this->at( 0 ) )
+			->method ( 'templateExists' )
+			->will	 ( $this->returnValue( true ) )
+		;
+
+		$mockController
+			->expects( $this->at( 1 ) )
+			->method ( 'setVal' )
+			->with	 ( 'resultView', 'Btest' )
+		;
+
+		$this->assertTrue(
+			$method->invoke( $mockController, 'Btest' )
+		);
+
 	}
 
 	/**

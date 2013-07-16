@@ -889,7 +889,7 @@ class WikiFactory {
 	 *
 	 * return only value of variable not whole data for it, this value will be:
 	 * - unserialized
-	 * - all internal variables will be replace by their values
+	 * - all internal variables will be replaced by their values
 	 *
 	 * @access public
 	 * @author Krzysztof Krzyżaniak (eloy)
@@ -902,6 +902,12 @@ class WikiFactory {
 	 * @return mixed value for variable or null otherwise
 	 */
 	static public function getVarValueByName( $cv_name, $city_id, $master = false ) {
+		// don't hit memcache (or make DB query) when getting values for a current wiki (BAC-552)
+		global $wgCityId;
+		if ($city_id == $wgCityId) {
+			return isset($GLOBALS[$cv_name]) ? $GLOBALS[$cv_name] : null;
+		}
+
 		wfProfileIn( __METHOD__ );
 
 		$value = null;
@@ -926,7 +932,6 @@ class WikiFactory {
 		}
 
 		wfProfileOut( __METHOD__ );
-
 		return $value;
 	}
 
@@ -1038,7 +1043,7 @@ class WikiFactory {
 
 	static public function getLocalEnvURL( $url ) {
 		// first - normalize URL
-		$regexp = '/^http:\/\/([^\/]+)\/(.*)$/';
+		$regexp = '/^http:\/\/([^\/]+)\/?(.*)?$/';
 		if(preg_match( $regexp, $url, $groups ) === 0) {
 			// on fail at least return original url
 			return $url;
@@ -1046,6 +1051,10 @@ class WikiFactory {
 		$server = $groups[1];
 		$address = $groups[2];
 		$devbox = '';
+
+		if ( !empty($address) ) {
+			$address = '/' . $address;
+		}
 
 		// what do we use?
 		//  en.wikiname.wikia.com
@@ -1055,7 +1064,7 @@ class WikiFactory {
 		//  en.wikiname.developer.wikia-dev.com
 		//  wikiname.developer.wikia-dev.com
 
-		$servers = array( 'preview.', 'sandboxs1.', 'verify.' );
+		$servers = array( 'preview.', 'sandbox-s1.', 'verify.' );
 		foreach( $servers as $serv ) {
 			if( strpos( $server, $serv ) === 0 ) {
 				$server = substr( $server, strlen( $serv ) );
@@ -1083,26 +1092,26 @@ class WikiFactory {
 			$domains = WikiFactory::getDomains($wgCityId);
 			$domains[] = "localhost";
 			if(empty($wgDevelEnvironment)) {
-				return 'http://' . $domains[0] . '/'.$address;
+				return 'http://' . $domains[0] . $address;
 			} else {
 				$hostname = str_replace('dev-','',gethostname()) . '.wikia-dev.com';
 				$domain = str_replace( 'wikia.com', $hostname, $domains[0] );
-				return 'http://' . $domain .  '/'.$address;
+				return 'http://' . $domain . $address;
 			}
 		}
 
 		$servername = $_SERVER['SERVER_NAME'];
 		if( strpos( $servername, 'preview.' ) !== false ) {
-			return 'http://preview. ' . $server . '.wikia.com/'.$address;
+			return 'http://preview.' . $server . '.wikia.com'.$address;
 		}
 		if( strpos( $servername, 'verify.' ) !== false ) {
-			return 'http://verify. ' . $server . '.wikia.com/'.$address;
+			return 'http://verify.' . $server . '.wikia.com'.$address;
 		}
-		if( strpos( $servername, 'sandboxs1.' ) !== false ) {
-			return 'http://sandbox. ' . $server . '.wikia.com/'.$address;
+		if( strpos( $servername, 'sandbox-s1.' ) !== false ) {
+			return 'http://sandbox-s1.' . $server . '.wikia.com'.$address;
 		}
 		if( preg_match( $regexp, $servername, $groups ) === 1 ) {
-			return 'http://' . $server . '.' . $groups[1] . '.wikia-dev.com/'.$address;
+			return 'http://' . $server . '.' . $groups[1] . '.wikia-dev.com'.$address;
 		}
 
 		// by default return original address
@@ -1947,11 +1956,6 @@ class WikiFactory {
 			$oRow->cv_city_id = null;
 			$oRow->cv_variable_id = $oRow->cv_id;
 			$oRow->cv_value = null;
-		}
-
-		global $wgCityId;
-		if ($city_id == $wgCityId) {
-			Wikia::logBacktrace(__METHOD__ . '::forLocalWiki');
 		}
 
 		wfProfileOut( __METHOD__ );

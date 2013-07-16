@@ -396,6 +396,13 @@ $messages['ca'] = array(
 	'themedesigner-wodmark-preview' => 'Previsualització',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'themedesigner-font' => 'шрифт',
+);
+
 /** Czech (česky)
  * @author Chmee2
  * @author Dontlietome7

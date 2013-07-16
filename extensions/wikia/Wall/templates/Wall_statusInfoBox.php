@@ -33,7 +33,7 @@
 						<?= wfMessage('wall-message-closed-by-because', array($statusInfo['user_displayname_linked']))->text(); ?><br>
 						<div class="reason"><?php echo $statusInfo['reason']; ?></div>
 					<? else: ?>
-						<?= wfMessage('wall-message-closed-by', array($statusInfo['user']->getName(), $statusInfo['user']->getUserPage()))->text(); ?><br>
+						<?= wfMessage('wall-message-closed-by', array($statusInfo['user']->getName(), $statusInfo['user']->getUserPage()))->parse(); ?><br>
 					<? endif; ?>
 					<div class="timestamp"><span><?php echo $statusInfo['fmttime']; ?></span></div>
 				</div>
