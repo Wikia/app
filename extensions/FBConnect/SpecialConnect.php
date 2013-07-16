@@ -911,7 +911,8 @@ class SpecialConnect extends SpecialPage {
 			// Outputs the canonical name of the special page at the top of the page
 			$this->outputHeader();
 
-			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/FBConnect/facebook.js\"></script>\n");
+			// mech: I don't think this file ever existed in this extension, commenting this out
+			//$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/FBConnect/facebook.js\"></script>\n");
 
 			// Render a humble Facebook Connect button
 			$wgOut->addHTML('<div>'.wfMsgExt( 'fbconnect-intro', array('parse', 'content')) . '<br/>' . wfMsg( 'fbconnect-click-to-login', $wgSitename ) .'
