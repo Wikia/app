@@ -178,17 +178,17 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 				$data['type'] = Phalanx::getTypeNames( $data['type'] );
 				$data['checkId'] = $id;
 				$data['checkBlocker'] = '';
-				$data['typeFilter'] = array();
 
 				return $data;
 			}
 		}
 
 		// block creation
+		$pager = new PhalanxPager();
+
 		$data['checkBlocker'] = $this->wg->Request->getText( 'wpPhalanxCheckBlocker' , '');
 		$data['checkId'] = $this->wg->Request->getIntOrNull( 'id' );
-		$data['type'] = $this->wg->Request->getArray( 'wpPhalanxType' );
-		$data['typeFilter'] = $this->wg->Request->getArray( 'wpPhalanxTypeFilter' );
+		$data['type'] = $pager->getSearchFilter();
 		$data['text'] = $this->wg->Request->getText('target' , ''); // prefill the filter content using target URL parameter
 		$data['lang'] = '';
 		$data['expire'] = '';
