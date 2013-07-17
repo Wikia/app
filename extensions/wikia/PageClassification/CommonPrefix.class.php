@@ -28,21 +28,24 @@ class CommonPrefix {
 		}
 		// if phrase exists more than once
 		if ( $mostCommonLongest[ "cnt" ] > 1 || count( $titles ) == 1 ) {
-			return $this->sanitizeFinal( $mostCommonLongest[ "phrase" ] );
+			return self::sanitizeTitle( $mostCommonLongest[ "phrase" ] );
 		}
 		return false;
 	}
 
-	protected function sanitizeFinal( $str ) {
-		$stopWords = array( "and", "or", "the", "part", "(film)", "(book)", "(movie)", "(game)" );
+	public static function sanitizeTitle( $str ) {
+		$toRemove = array("(film)", "(book)", "(movie)", "(game)", "(video game)" );
+		foreach ( $toRemove as $removeStr ) {
+			$str = str_replace( $removeStr, "", $str );
+		}
+		$stopWords = array( "and", "or", "the", "part" );
 		$words = explode( " ", strtolower( trim($str) ) );
 		$cnt = count( $words )-1;
-
 		for ($i = $cnt; $i >= 0; $i--) {
 			if ( in_array( $words[$i], $stopWords ) ) {
 				unset( $words[$i] );
 			} else {
-				return implode( " ", $words );
+				return trim( implode( " ", $words ), " :,.?()[]{}!" );
 			}
 		}
 		return trim( implode( " ", $words ), " :,.?()[]{}!" );

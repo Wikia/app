@@ -328,8 +328,36 @@ class ImportantArticles extends WikiaModel {
 
 		$values = array_values( $merged );
 		unset( $merged );
+		$values = $this->filterResults( $values );
 		$this->sortResult( $values );
 		return array_slice( $values, 0, 15 );
+	}
+
+	protected function filterResults( $resultArray ) {
+
+		$nameIndex = array();
+		foreach ( $resultArray as $i => $item ) {
+			$name = CommonPrefix::sanitizeTitle( $item['name'] );
+			$resultArray[ $i ][ 'name' ] = $name;
+			$nameIndex[ $name ][] = $resultArray[ $i ];
+		}
+		$finalList = array();
+		foreach ( $nameIndex as $i => $names ) {
+			$cnt = count($names);
+			if (  $cnt > 1 ) {
+				$merged = array("name"=>$names[0]['name'], "score"=>$names[0]['score']);
+				foreach ( $names as $ind => $name ) {
+					if ( $ind > 0 ) {
+						$merged['score'] += $name['score'] / $cnt;
+					}
+				}
+				$finalList[] = $merged;
+			} else {
+				$finalList[] = $names[0];
+			}
+		}
+
+		return $finalList;
 	}
 
 	public function getImportantPhrasesByTopPages() {
