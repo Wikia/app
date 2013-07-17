@@ -34,7 +34,7 @@ class CommonPrefix {
 	}
 
 	protected function sanitizeFinal( $str ) {
-		$stopWords = array( "and", "or", "the", "part" );
+		$stopWords = array( "and", "or", "the", "part", "(film)", "(book)", "(movie)", "(game)" );
 		$words = explode( " ", strtolower( trim($str) ) );
 		$cnt = count( $words )-1;
 
@@ -45,7 +45,7 @@ class CommonPrefix {
 				return implode( " ", $words );
 			}
 		}
-		return implode( " ", $words );
+		return trim( implode( " ", $words ), " :,.?()[]{}!" );
 	}
 
 	protected function sanitizeString( $str ) {
