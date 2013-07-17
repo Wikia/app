@@ -178,10 +178,7 @@ class LinkSuggest {
 		}
 		//check if redirect pages exists
 		if ( !empty( $redirects ) ) {
-			foreach( $redirects as $redirect => $page ) {
-				$quoted = $db->addQuotes( $redirect );
-				$list = ( empty( $list ) ) ? $quoted : $list.', '.$quoted;
-			}
+			$list = $db->makeList( array_keys( $redirects ) );
 			$sql = $db->select(
 				'page',
 				array( 'page_id', 'page_title' ),
