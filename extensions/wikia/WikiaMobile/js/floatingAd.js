@@ -77,7 +77,7 @@ window.addEventListener('load', function(){
 			}
 
 			ads.setupSlot({
-				name: 'MOBILE_TOP_LEADERBOARD',
+				name: 'MOBILE_FLOATING_FOOTER',
 				size: '320x50',
 				wrapper: wrapper,
 				init: function(){
