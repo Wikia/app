@@ -162,14 +162,14 @@ class LinkSuggest {
 			$commaJoinedNamespaces = count($namespaces) > 1 ?  array_shift($namespaces) . ', ' . implode(', ', $namespaces) : $namespaces[0];
 		}
 
-		$pageNamespaceClause = isset($commaJoinedNamespaces) ?  'page_namespace IN (' . $commaJoinedNamespaces . ') AND ' : '';
+		$pageNamespaceClause = isset($commaJoinedNamespaces) ?  'page_namespace IN (' . $commaJoinedNamespaces . ')' : '';
 		if( count($results) < $wgLinkSuggestLimit ) {
 
 			// TODO: use $db->select helper method
 			$sql = "SELECT page_len, page_id, page_title, rd_title, page_namespace, page_is_redirect
 						FROM page IGNORE INDEX (`name_title`)
 						LEFT JOIN redirect ON page_is_redirect = 1 AND page_id = rd_from
-						WHERE {$pageNamespaceClause} (page_title LIKE '{$query}%' or LOWER(page_title) LIKE '{$queryLower}%')
+						WHERE {$pageNamespaceClause} AND (page_title LIKE '{$query}%' or LOWER(page_title) LIKE '{$queryLower}%')
 						LIMIT ".($wgLinkSuggestLimit * 3);
 
 			$res = $db->query($sql, __METHOD__);
@@ -178,11 +178,20 @@ class LinkSuggest {
 		}
 		//check if redirect pages exists
 		if ( !empty( $redirects ) ) {
-			$list = $db->makeList( array_keys( $redirects ) );
+			$pages = array_keys( $redirects );
+
+			$list = $db->makeList( array_map( function( $item ) {
+				if( strpos( $item, ':' ) !== false ) {
+					$unformatted = explode( ':', $item );
+					return $unformatted[ 1 ];
+				}
+				return $item;
+			}, $pages ) );
 			$sql = $db->select(
 				'page',
 				array( 'page_id', 'page_title' ),
-				"page_title IN ({$list})"
+				array( $pageNamespaceClause, "page_title IN ({$list})" ),
+				__METHOD__
 			);
 
 			static::formatRedirects( $db, $sql, $redirects, $results, $exactMatchRow );
