@@ -145,6 +145,10 @@ class IvaFeedIngester extends VideoFeedIngester {
 			} while ( $numVideos == self::API_PAGE_SIZE );
 		}
 
+		/* 2013-07-16 : VideoSprint28 : VID-536
+		   Content didn't really want all TV content
+		   Delete these lines on or after VideoSprint30 in case they change their minds
+
 		// Ingest ALL TV content
 		$page = 0;
 		do {
@@ -159,6 +163,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 				return 0;
 			}
 		} while ( $numVideos == self::API_PAGE_SIZE );
+		*/
 
 		wfProfileOut( __METHOD__ );
 
