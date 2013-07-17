@@ -136,6 +136,14 @@ $messages['bg'] = array(
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Връщане',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'comboajaxlogin-connectmarketing-back' => '« পিছনে',
+	'comboajaxlogin-connectmarketing-forward' => 'শুরু করুন »',
+);
+
 /** Tibetan (བོད་ཡིག)
  * @author YeshiTuhden
  */
@@ -647,8 +655,20 @@ $messages['id'] = array(
 <li>Bagikan kegiatan Anda di Wikia dengan teman-teman Anda di Facebook</li>
 <li>Kendali penuh akan apa yang dipublikasikan</li>
 </ul>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Hubungkan akun Wikia Anda dengan Facebook</h1>
+<ul>
+<li>Menjaga nama pengguna saat ini, riwayat, suntingan... tidak ada yang berubah kecuali cara Anda masuk log</li>
+<li>Bagikan aktivitas Anda di Wikia dengan teman-teman Anda di Facebook, dengan kendali penuh atas apa yang dipublikasikan</li>
+</ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Kembali',
 	'comboajaxlogin-connectmarketing-forward' => 'Persiapan &raquo;',
+	'comboajaxlogin-post-not-understood' => 'Ada kesalahan dalam cara formulir ini dibangun.
+Silakan coba lagi atau [[Special:Contact|laporkan ini]].',
+	'comboajaxlogin-readonlytext' => '<h2>Maaf!</h2>
+<p>Anda tidak dapat membuat akun saat ini - kami sebaiknya kembali berdiri dan berjalan segera. Ini adalah hal yang terjadi:<br /><em>$1</em></p>
+<p>Silakan periksa <a href="http://twitter.com/wikia">Twitter</a> atau <a href="http://facebook.com/wikia">Facebook</a> untuk informasi lebih lanjut.
+<br />
+(Jika Anda telah mempunyai akun, Anda dapat <a href="#">masuk log</a> secara normal, namun Anda tidak akan bisa menyunting.)</p>',
 	'comboajaxlogin-ajaxerror' => 'Wikia tidak menanggapi. Mohon periksa koneksi jaringan Anda.',
 );
 

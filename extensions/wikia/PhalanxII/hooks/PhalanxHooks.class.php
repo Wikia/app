@@ -8,6 +8,7 @@ class PhalanxHooks extends WikiaObject {
 	/**
 	 * Add a link to central:Special:Phalanx from Special:Contributions/USERNAME
 	 * if the user has 'phalanx' permission
+	 *
 	 * @param $id Integer: user ID
 	 * @param $nt Title: user page title
 	 * @param $links Array: tool links
@@ -23,10 +24,11 @@ class PhalanxHooks extends WikiaObject {
 				GlobalTitle::newFromText( 'Phalanx', NS_SPECIAL, WikiFactory::COMMUNITY_CENTRAL ),
 				'PhalanxBlock',
 				wfArrayToCGI(
-					array(
-						'wpPhalanxTypeFilter[]' => '8',
-						'wpPhalanxCheckBlocker' => $nt->getText()
-					)
+					[
+						'type' => Phalanx::TYPE_USER,
+						'wpPhalanxCheckBlocker' => $nt->getText(),
+						'target' => $nt->getText(),
+					]
 				)
 			);
 		}
@@ -199,5 +201,22 @@ class PhalanxHooks extends WikiaObject {
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
+	}
+
+	/**
+	 * Make block ID more visible in user block message (BAC-536)
+	 *
+	 * @param array $permErrors
+	 * @param string $action
+	 * @return bool true
+	 */
+	static public function onAfterFormatPermissionsErrorMessage( Array &$permErrors, $action) {
+		foreach($permErrors as &$error) {
+			if (isset($error[5]) && is_numeric($error[5])) {
+				$error[5] = "<big><strong>$error[5]</strong></big>";
+			}
+		}
+
+		return true;
 	}
 }

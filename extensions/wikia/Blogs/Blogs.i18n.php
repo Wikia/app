@@ -513,6 +513,16 @@ $messages['bg'] = array(
 	'blog-by' => '$1 от $2',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'create-blog-save' => 'পাতা সংরক্ষণ',
+	'create-blog-preview' => 'প্রাকদর্শন দেখাও',
+	'create-blog-listing-preview' => 'প্রাকদর্শন',
+	'blog-defaulttitle' => 'ব্লগসমূহ',
+);
+
 /** Breton (brezhoneg)
  * @author Fulup
  * @author Gwendal
@@ -3150,9 +3160,17 @@ Opprett bloggoppføringssider for å kategorier som «Barack Obama», «Fan Fict
 );
 
 /** Nepali (नेपाली)
+ * @author Bhawani Gautam
  * @author RajeshPandey
  */
 $messages['ne'] = array(
+	'createblogpage' => 'ब्लग बनाउने',
+	'createbloglistingpage' => 'ब्लग सूची बनाउने',
+	'create-blog-spam' => 'स्याम जस्तो देखिन्छ',
+	'create-blog-cant-edit' => 'सम्पादन गर्न सकिएन',
+	'create-blog-post-category' => 'ब्लोग पोस्ट',
+	'create-blog-post-category-body' => 'यो ब्लग पोस्टको एक स्वत: उत्पन्न सूची हो',
+	'create-blog-post-category-log' => 'ब्लग पोस्टको लागि श्रेणी लेख बनाइएको',
 	'blog-comments' => 'टिप्पणीहरु',
 );
 

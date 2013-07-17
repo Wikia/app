@@ -399,6 +399,26 @@ $messages['bg'] = array(
 	'chat-ban-modal-button-cancel' => 'Отказване',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'chat' => 'আড্ডা',
+	'chat-desc' => '[[Special:Chat|সরাসরি আড্ডা]]',
+	'chat-log-reason-undo' => 'পূর্বাবস্থায় আনো',
+	'chat-ban-undolink' => 'পূর্বাবস্থায় আনো',
+	'chat-ban-modal-button-cancel' => 'বাতিল',
+	'chat-log-reason-banchange' => 'কোনো কারণ দেওয়া হয়নি',
+	'chat-log-reason-banremove' => 'কোনো কারণ দেওয়া হয়নি',
+	'chat-live2' => 'সরাসরি! আড্ডা',
+	'chat-start-a-chat' => 'একটি আড্ডা শুরু করুন',
+	'chat-join-the-chat' => 'আড্ডায় যোগ দিন',
+	'chat-edit-count' => '{{PLURAL:$1|$1টি সম্পাদনা}}',
+	'chat-member-since' => '$1 থেকে সদস্য',
+	'chat-user-menu-talk-page' => 'আলাপ পাতা',
+	'chat-user-menu-contribs' => 'অবদান',
+);
+
 /** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
@@ -449,7 +469,7 @@ Kit e darempred ganto da c'houzout hiroc'h.",
 	'chat-live2' => 'Flap war-eeun !',
 	'chat-start-a-chat' => 'Kregiñ gant ar Flap',
 	'chat-join-the-chat' => 'Mont er Flap',
-	'chat-edit-count' => '{{PLURAL:$1|$1 edit|$1 edits}}',
+	'chat-edit-count' => '$1 {{PLURAL:$1|kemm}}',
 	'chat-member-since' => 'Ezel adalek an $1',
 	'chat-great-youre-logged-in' => "Dreist ! Kevreet oc'h.",
 	'chat-user-menu-message-wall' => "Moger ar c'homzoù",
@@ -589,6 +609,7 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'chat-ban-modal-label-expires' => 'Чекхйолу',
+	'chat-user-menu-talk-page' => 'Декъашхон дийцаре',
 	'chat-ban-option-list' => '2 сахьат:2 hours,1 де:1 day,3 де:3 days,1 кӀиран:1 week,2 кӀиран:2 weeks,1 бутт:1 month,3 бутт:3 months,6 бутт:6 months,1 шо:1 year,цlкъа:infinite',
 );
 
@@ -1452,6 +1473,7 @@ $messages['id'] = array(
 	'chat-log-reason-undo' => 'balikkan',
 	'chat-ban-undolink' => 'balikkan',
 	'chat-ban-modal-button-cancel' => 'Batal',
+	'chat-log-reason-banremove' => 'Tidak ada alasan yang diberikan',
 	'chat-ban-cant-ban-moderator' => 'Anda tidak bisa menendang/ban Moderator chatting yang lain.',
 	'chat-ban-already-banned' => '$1sudah dilarang dari chatting di wiki ini.',
 	'chat-ban-you-need-permission' => 'Anda tidak memiliki  $1  izin yang diperlukan untuk menendang/ban pengguna.',
@@ -1461,6 +1483,7 @@ $messages['id'] = array(
 	'chat-you-are-banned' => 'Kesalahan hak akses.',
 	'chat-user-menu-message-wall' => 'Dinding Pesan',
 	'chat-user-menu-talk-page' => 'Halaman Pembicaraan',
+	'group-bannedfromchat' => 'Disekat dari chat',
 );
 
 /** Italian (italiano)

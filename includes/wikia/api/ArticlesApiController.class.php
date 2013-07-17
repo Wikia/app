@@ -12,6 +12,7 @@ class ArticlesApiController extends WikiaApiController {
 	const MAX_ITEMS = 250;
 	const ITEMS_PER_BATCH = 25;
 	const TOP_WIKIS_FOR_HUB = 10;
+	const LANGUAGES_LIMIT = 10;
 
 	const PARAMETER_ARTICLES = 'ids';
 	const PARAMETER_TITLES = 'titles';
@@ -22,6 +23,7 @@ class ArticlesApiController extends WikiaApiController {
 	const PARAMETER_WIDTH = 'width';
 	const PARAMETER_HEIGHT = 'height';
 	const PARAMETER_EXPAND = 'expand';
+	const PARAMETER_LANGUAGES = 'lang';
 
 	const DEFAULT_WIDTH = 200;
 	const DEFAULT_HEIGHT = 200;
@@ -183,7 +185,7 @@ class ArticlesApiController extends WikiaApiController {
 
 		if ( $this->wg->DBname == 'wikiaglobal' ) {
 			$hub = trim( $this->request->getVal( self::PARAMETER_HUB, null ) );
-			$lang = trim( $this->request->getVal( 'lang', null ) );
+			$langs = $this->request->getArray( self::PARAMETER_LANGUAGES );
 			$namespaces = self::processNamespaces( $this->request->getArray( self::PARAMETER_NAMESPACES, null ), __METHOD__ );
 
 			if ( empty( $hub ) ) {
@@ -191,18 +193,28 @@ class ArticlesApiController extends WikiaApiController {
 				throw new MissingParameterApiException( self::PARAMETER_HUB );
 			}
 
+			if ( !empty( $langs ) &&  count($langs) > self::LANGUAGES_LIMIT) {
+				throw new LimitExceededApiException( self::PARAMETER_LANGUAGES, self::LANGUAGES_LIMIT );
+			}
+
 			//fetch the top 10 wikis on a weekly pageviews basis
 			//this has it's own cache
 			$wikis = DataMartService::getTopWikisByPageviews(
 				DataMartService::PERIOD_ID_WEEKLY,
 				self::TOP_WIKIS_FOR_HUB,
-				$lang,
+				$langs,
 				$hub,
 				1 /* only pubic */
 			);
 
+			$wikisCount = count( $wikis );
+
+			if ( $wikisCount < 1 ) {
+				throw new NotFoundApiException();
+			}
+
 			$found = 0;
-			$articlesPerWiki = ceil( self::MAX_ITEMS / count( $wikis ) );
+			$articlesPerWiki = ceil( self::MAX_ITEMS / $wikisCount );
 			$res = array();
 
 			//fetch $articlesPerWiki articles from each wiki
