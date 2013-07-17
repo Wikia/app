@@ -39,15 +39,12 @@
 		}
 		input[type=submit] {
 			margin: 10px 0 0;
-			width: 125px;
 		}
 		.general-errors {
 			display: none;
 		}
 	}
 	> .sso-login {
-		text-align: center;
-
 		> .sso-login-divider {
 			@include divider;
 			line-height: 12px;
