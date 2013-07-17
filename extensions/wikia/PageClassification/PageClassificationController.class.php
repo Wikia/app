@@ -48,6 +48,7 @@ class PageClassificationController extends WikiaSpecialPageController {
 		$this->setVal( 'importantByTopPages', $importantByTopPages );
 		$this->setVal( 'importantByLinks', $importantByLinks );
 		$this->setVal( 'commonPrefix', $commonPrefix );
+		$this->setVal( 'phrases', $important->getImportantPhrasesAsList() );
 		$this->setVal( 'importantByDomainNames', $importantByDomainNames );
 		$this->setVal( 'importantByRedirects', $importantByRedirects );
 		$this->setVal( 'merged', $merged );

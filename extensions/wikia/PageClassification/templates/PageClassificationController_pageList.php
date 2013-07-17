@@ -1,6 +1,6 @@
 <h3>Classification of [<a href="<?=$domain_name?>"><?=$domain_name?></a>]</h3>
 
-<p>Common prefix: <b><?=$commonPrefix?></b> </p>
+<p>Common prefix: <b><?=$commonPrefix?></b> | Search phrases: <b><?=$phrases?></b></p>
 
 <table border="1" cellpadding="5">
 	<tr>

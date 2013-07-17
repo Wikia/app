@@ -272,6 +272,28 @@ class ImportantArticles extends WikiaModel {
 		return $finalResult;
 	}
 
+	public function getImportantPhrasesAsListCached() {
+		$memcKey = wfSharedMemcKey( 'wiki-topics-',$this->wikiId );
+
+		$str = $this->app->wg->Memc->get( $memcKey );
+		if ( empty( $str ) ) {
+			$str = $this->getImportantPhrasesAsList( 3 );
+			$this->app->wg->Memc->set( $memcKey, $str );
+		}
+		return $str;
+	}
+
+	public function getImportantPhrasesAsList( $limit = 3 ) {
+		$mostImportant = $this->getMostImportantTopics();
+		$list = array();
+		foreach ( $mostImportant as $i => $topic ) {
+			if ( $i < $limit ) {
+				$list[] = str_replace(",", "", $topic['name'] );
+			}
+		}
+		return implode(", ", $list);
+	}
+
 	public function getMostImportantTopics() {
 		// ByTopPages + ByRedirect + ByInterlinks() + DomainNames()
 		$topPages = $this->getImportantPhrasesByTopPages();
