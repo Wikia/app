@@ -314,7 +314,7 @@ class PageHeaderController extends WikiaController {
 		$this->pageSubject = $skin->subPageSubtitle();
 
 		if ( in_array($wgTitle->getNamespace(), BodyController::getUserPagesNamespaces() ) ) {
-			$title = explode(':', $this->title);
+			$title = explode(':', $this->title, 2); // User:Foo/World_Of_Warcraft:_Residers_in_Shadows (BAC-494)
 			if(count($title) >= 2 && $wgTitle->getNsText() == str_replace(' ', '_', $title[0]) ) // in case of error page (showErrorPage) $title is just a string (cannot explode it)
 				$this->title = $title[1];
 		}
