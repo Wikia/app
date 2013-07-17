@@ -34,7 +34,7 @@ class CommonPrefix {
 	}
 
 	public static function sanitizeTitle( $str ) {
-		$toRemove = array("(film)", "(book)", "(movie)", "(game)", "(video game)" );
+		$toRemove = array("(film)", "(book)", "(movie)", "(game)", "(video game)", "(tv story)" );
 		foreach ( $toRemove as $removeStr ) {
 			$str = str_replace( $removeStr, "", $str );
 		}
