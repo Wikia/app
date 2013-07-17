@@ -36,6 +36,12 @@ class ArticleService extends WikiaObject {
 		'/\s+/' => ' '
 	);
 	private static $localCache = array();
+	
+	/**
+	 * Using SolrDocumentService to access preprocessed article content
+	 * @var SolrDocumentService
+	 */
+	protected $solrDocumentService;
 
 	/**
 	 * ArticleService constructor
@@ -138,47 +144,17 @@ class ArticleService extends WikiaObject {
 			$text = self::$localCache[$id];
 		} else {
 			$key = self::getCacheKey( $id );
-			$app = $this->app;
-			$article = $this->article;
-			$tags = $this->tags;
-			$pats = $this->patterns;
+			$service = $this;
 			$text = self::$localCache[$id] = WikiaDataAccess::cache(
 				$key,
 				86400 /*24h*/,
-				function() use ( $app, $article, $tags, $pats, $fname ){
+				function() use ( $service, $fname ){
 					wfProfileIn( $fname . '::CacheMiss' );
-
-					//get standard parser cache for anons,
-					//99% of the times it will be available but
-					//generate it in case is not
-					$page = $article->getPage();
-					$opts = $page->makeParserOptions( new User() );
-					$content = $page->getParserOutput( $opts )->getText();
-
-					//Run hook to allow wikis to modify the content (ie: customize their snippets) before the stripping and length limitations are done.
-					wfRunHooks( 'ArticleService::getTextSnippet::beforeStripping', array( &$article, &$content, ArticleService::MAX_LENGTH ) );
-
-					if ( mb_strlen( $content ) > 0 ) {
-						//remove all unwanted tag pairs and their contents
-						foreach ( $tags as $tag ) {
-							$content = preg_replace( "/<{$tag}\b[^>]*>.*<\/{$tag}>/imsU", '', $content );
-						}
-
-						//cleanup remaining tags
-						$content = strip_tags( $content );
-
-						//apply some replacements
-						foreach ( $pats as $reg => $rep ) {
-							$content = preg_replace( $reg, $rep, $content );
-						}
-
-						//decode entities
-						$content = html_entity_decode( $content );
-						$content = trim( $content );
-
-						if ( mb_strlen( $content ) > ArticleService::MAX_LENGTH ) {
-							$content = mb_substr( $content, 0, ArticleService::MAX_LENGTH );
-						}
+					
+					$content = $service->getTextFromSolr();
+					if ( $content === '' ) {
+						// back-off is to use mediawiki
+						$content = $service->getUncachedSnippetFromArticle();
 					}
 
 					wfProfileOut( $fname . '::CacheMiss' );
@@ -194,29 +170,51 @@ class ArticleService extends WikiaObject {
 	}
 	
 	/**
-	 * Gets a plain text snippet from an article using Solr
-	 * 
-	 * @TODO implement WikiaDataAccess::cache
-	 *
-	 * @param integer $length [OPTIONAL] The maximum snippet length, defaults to 100
-	 *
-	 * @return string The plain text snippet, it includes SUFFIX at the end of the string
-	 * if the length of the article's content is longer than $length, the text will be cut
-	 * respecting the integrity of the words
-	 *
-	 * @throws WikiaException If $length is bigger than MAX_LENGTH
-	 *
-	 * @example
-	 * $service = new ArticleService( $article );
-	 * $snippet = $service->getTextSnippet( 250 );
-	 *
-	 * $service->setArticleById( $title->getArticleID() );
-	 * $snippet = $service->getTextSnippet( 50 );
-	 *
-	 * $service->setArticle( $anotherArticle );
-	 * $snippet = $service->getTextSnippet();
+	 * Accesses a snippet from MediaWiki.
+	 * @return string
 	 */
-	public function getTextSnippetFromSolr( $length = 100 ) {
+	public function getUncachedSnippetFromArticle() {
+		//get standard parser cache for anons,
+		//99% of the times it will be available but
+		//generate it in case is not
+		$page = $this->article->getPage();
+		$opts = $page->makeParserOptions( new User() );
+		$content = $page->getParserOutput( $opts )->getText();
+
+		//Run hook to allow wikis to modify the content (ie: customize their snippets) before the stripping and length limitations are done.
+		wfRunHooks( 'ArticleService::getTextSnippet::beforeStripping', array( &$this->article, &$content, ArticleService::MAX_LENGTH ) );
+
+		if ( mb_strlen( $content ) > 0 ) {
+			//remove all unwanted tag pairs and their contents
+			foreach ( $this->tags as $tag ) {
+				$content = preg_replace( "/<{$tag}\b[^>]*>.*<\/{$tag}>/imsU", '', $content );
+			}
+
+			//cleanup remaining tags
+			$content = strip_tags( $content );
+
+			//apply some replacements
+			foreach ( $this->patterns as $reg => $rep ) {
+				$content = preg_replace( $reg, $rep, $content );
+			}
+
+			//decode entities
+			$content = html_entity_decode( $content );
+			$content = trim( $content );
+
+			if ( mb_strlen( $content ) > ArticleService::MAX_LENGTH ) {
+				$content = mb_substr( $content, 0, ArticleService::MAX_LENGTH );
+			}
+		}
+		return $content;
+	}
+	
+	/**
+	 * Gets a plain text of an article using Solr.
+	 *
+	 * @return string The plain text as stored in solr. Will be empty if we don't have a result.
+	 */
+	public function getTextFromSolr() {
 		$service = new SolrDocumentService();
 		// note that this will use wgArticleId without an article
 		if ( $this->article ) {
@@ -230,7 +228,31 @@ class ArticleService extends WikiaObject {
 		if (! empty( $document ) ) {
 			$text = $document[$htmlField];
 		}
-		return $this->wf->ShortenText( $text, $length, true );
+		return $text;
+	}
+	
+	/**
+	 * Used to access a solr document in advance of snippeting. 
+	 * If we somehow don't have a document for the article we care about, returns null. 
+	 * @return \Wikia\Search\Result|null
+	 */
+	protected function getSolrDocument() {
+		$service = $this->getSolrDocumentService();
+		if ( $this->article ) {
+			$service->setArticleId( $this->article->getId() );
+		}
+		return $service->getResult();
+	}
+	
+	/**
+	 * Lazy initialization of solrDocumentService dependency
+	 * @return SolrDocumentService
+	 */
+	protected function getSolrDocumentService() {
+		if ( $this->solrDocumentService === null ) {
+			$this->solrDocumentService = new SolrDocumentService;
+		}
+		return $this->solrDocumentService;
 	}
 
 	/**
