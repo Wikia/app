@@ -136,14 +136,15 @@ class IvaFeedIngester extends VideoFeedIngester {
 				$url = $this->makeSetFeedURL( $videoSet, $startDate, $endDate, $page++ );
 
 				// Try to ingest the videos from this URL
-				$numVideos = $this->ingestVideoURL( $url, $createParams, $videoSet );
+				$result = $this->ingestVideoURL( $url, $createParams, $videoSet );
 
 				// If we get back 'false' (different than zero) then we've hit an error
-				if ( $numVideos === false ) {
+				if ( $result === false ) {
 					return 0;
 				}
-			} while ( $numVideos == self::API_PAGE_SIZE );
+			} while ( $result['found'] == self::API_PAGE_SIZE );
 		}
+		$articlesCreated += $result['created'];
 
 		/* 2013-07-16 : VideoSprint28 : VID-536
 		   Content didn't really want all TV content
@@ -163,6 +164,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 				return 0;
 			}
 		} while ( $numVideos == self::API_PAGE_SIZE );
+		$articlesCreated += $result['created'];
 		*/
 
 		wfProfileOut( __METHOD__ );
@@ -344,7 +346,8 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 		wfProfileOut( __METHOD__ );
 
-		return $articlesCreated;
+		return array("created" => $articlesCreated,
+					 "found"   => $numVideos);
 	}
 
 	/**
