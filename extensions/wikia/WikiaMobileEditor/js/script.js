@@ -152,7 +152,7 @@ define('menu', ['config', 'editor'], function(config, editor){
             lists[i].dataset.position = 'in';
         }
         parent.getElementsByClassName('master')[0].dataset.expanded = 'false';
-    }
+    };
 
     this.hideAll = function(){
         var parents = document.getElementsByClassName('menuWrapper');
@@ -169,7 +169,6 @@ define('menu', ['config', 'editor'], function(config, editor){
             element.classList.add('className');
         }
     };
-
     this.touchStartProxy = function(target){
         switch(target.className){
             case 'master': //main button touched
@@ -389,5 +388,4 @@ document.addEventListener('DOMContentLoaded', function(){
     require(['menu'], function(menu){
         menu.init(document.getElementsByClassName('menuWrapper'));
     });
-
-})
+});
