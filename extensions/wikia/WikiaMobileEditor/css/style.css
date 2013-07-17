@@ -1,0 +1,90 @@
+html {
+    font-family: Helvetica,Roboto,"Lucida Grande",arial,sans-serif;
+}
+
+body{
+    margin: 0px auto;
+}
+
+#topBar{
+    background-color:#222;
+    background-image: -webkit-linear-gradient(#222222,#4e4e4e);
+    height:40px;
+    color:#fff;
+    font-weight:bold;
+}
+
+#topBar p{
+    margin:0px;
+    padding:10px 0 0 2.5%;
+}
+
+#artTitle{
+    padding:2.5%;
+    font-weight:bold;
+    font-size:20px;
+}
+
+#buttonWrapper{
+    position:fixed;
+    bottom:-100px;
+    width:100%;
+    z-index:1;
+}
+#mainButtonLeft, #mainButtonRight{
+    position:absolute;
+    width:30%;
+    height:30%;
+    border-radius:100%;
+    z-index:12;
+}
+#circleWrapperLeft, #circleWrapperRight{
+    position:relative;
+    margin:3%;
+    width:300px;
+    height:300px;
+    border-radius:100%;
+    display:inline-block;
+}
+
+#circleWrapperLeft{
+    float:left;
+    z-index:9;
+    margin-left:0;
+}
+
+#circleWrapperRight{
+    float:right;
+    z-index:9;
+    margin-right:0;
+}
+
+.expandable, .expandableOnShift{
+    position:absolute;
+    width:25%;
+    height:25%;
+    border-radius:100%;
+    z-index:11;
+}
+
+.rollOut{
+    transition-property: left, top;
+    transition-duration: 0.8s, 0.8s;
+    transition-timing-function:cubic-bezier(.95,.22,.41,1.41);
+}
+
+.rollIn{
+    transition-property: left, top;
+    transition-duration: 0.8s, 0.8s;
+    transition-timing-function:ease-in-out;
+}
+
+#editArea{
+    width:95%;
+    margin-left:2.5%;
+    z-index:10;
+}
+
+#pageActions{
+    padding-left:2.5%;
+}
