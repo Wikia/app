@@ -78,7 +78,7 @@ class CrossWikiCoreTest extends BaseTest
 		                ->setMethods( [ 'getService' ] )
 		                ->getMock();
 		
-		$mwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getWikiId', 'getGlobal', 'getLanguageCode', 'getHubForWikiId', 'getHostName' ] );
+		$mwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getWikiId', 'getGlobal', 'getLanguageCode', 'getHubForWikiId', 'getHostName', 'getDomainsForWikiId' ] );
 		
 		$mockWiki = (object) [ 
 				'city_created' => '11:11:11 2013-01-01', 
@@ -119,10 +119,16 @@ class CrossWikiCoreTest extends BaseTest
 		    ->method ( 'getHostName' )
 		    ->will   ( $this->returnValue( 'hostname' ) )
 		;
+		$mwService
+		    ->expects( $this->at( 5 ) )
+		    ->method ( 'getDomainsForWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( [ 'bar.wikia.com', 'baz.wikia.com', 'foo.wikia.com' ] ) )
+		;
 		$expected = [ 
 				'id' => 123, 'sitename_txt' => 'foo wiki', 'lang_s' => 'en', 'hub_s' => 'Gaming', 
 				'created_dt' => '11:11:11T2013-01-01Z', 'touched_dt' => '11:11:11T2013-01-01Z', 'url' => 'http://foo.wikia.com/', 'dbname_s' => 'foo',
-				'hostname_s' => 'hostname', 'hostname_txt' => 'hostname'
+				'hostname_s' => 'hostname', 'hostname_txt' => 'hostname', 'domains_txt' => [ 'bar.wikia.com', 'baz.wikia.com', 'foo.wikia.com' ],
 				];
 		$this->proxyClass( 'WikiFactory', $mockWiki, 'getWikiById' );
 		$ref = new ReflectionMethod( $service, 'getWikiBasics' );
