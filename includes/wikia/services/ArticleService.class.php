@@ -225,36 +225,12 @@ class ArticleService extends WikiaObject {
 		$document = $service->getResult();
 		
 		$text = '';
-		if (! empty( $document ) ) {
+		if ( ( $document !== null ) && ( isset( $document[$htmlField] ) ) ) {
 			$text = $document[$htmlField];
 		}
 		return $text;
 	}
 	
-	/**
-	 * Used to access a solr document in advance of snippeting. 
-	 * If we somehow don't have a document for the article we care about, returns null. 
-	 * @return \Wikia\Search\Result|null
-	 */
-	protected function getSolrDocument() {
-		$service = $this->getSolrDocumentService();
-		if ( $this->article ) {
-			$service->setArticleId( $this->article->getId() );
-		}
-		return $service->getResult();
-	}
-	
-	/**
-	 * Lazy initialization of solrDocumentService dependency
-	 * @return SolrDocumentService
-	 */
-	protected function getSolrDocumentService() {
-		if ( $this->solrDocumentService === null ) {
-			$this->solrDocumentService = new SolrDocumentService;
-		}
-		return $this->solrDocumentService;
-	}
-
 	/**
 	 * Gets the cache key associated to an article
 	 *
