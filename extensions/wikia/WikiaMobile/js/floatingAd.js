@@ -2,7 +2,7 @@ window.addEventListener('load', function(){
 	'use strict';
 
 	if(!Wikia.AbTest || ['E', undefined].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS")) != -1){
-		require(['ads', 'wikia.window'], function (ads, window) {
+		require(['ads', 'wikia.window', 'wikia.utils'], function (ads, window, $) {
 			var wrapper = document.getElementById('wkFloatingAd'),
 				wrapperStyle = wrapper.style,
 				positionfixed = window.Features.positionfixed,
