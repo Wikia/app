@@ -33,21 +33,35 @@ class SolrDocumentService
 	
 	/**
 	 * Whether we're doing a cross-wiki search on a different core.
-	 * @var bool
+	 * @var boolhttps://wikia-inc.atlassian.net/secure/RapidBoard.jspa?rapidView=30&view=planning&selectedIssue=PLA-467#
 	 */
 	protected $crossWiki = false;
+	
+	/**
+	 * Memoization cache to reduce the number of requests
+	 * @var array
+	 */
+	public static $documentCache = [];
 	
 	/**
 	 * Returns the result object, or null if it doesn't exist
 	 * @return Wikia\Search\Result|null;
 	 */
 	public function getResult() {
-		$config = $this->getConfig();
 		$docId = $this->getDocumentId();
-		$config->setQuery( Wikia\Search\Utilities::valueForField( 'id', $docId ) );
-		$queryService = $this->getFactory()->getFromConfig( $config );
-		$resultSet = $queryService->search();
-		return isset( $resultSet[$docId] ) ? $resultSet[$docId] : null;
+		if ( isset( self::$documentCache[$docId] ) ) {
+			$result = self::$documentCache[$docId];
+		} else {
+			$config = $this->getConfig();
+			$config->setQuery( Wikia\Search\Utilities::valueForField( 'id', $docId ) );
+			$queryService = $this->getFactory()->getFromConfig( $config );
+			$resultSet = $queryService->search();
+			$result = isset( $resultSet[$docId] ) ? $resultSet[$docId] : null;
+			if ( $result !== null ) {
+				self::$documentCache[$docId] = $result;
+			}
+		}
+		return $result;
 	}
 	
 	/**

@@ -55,6 +55,10 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 		$this->assertNull(
 				$service->getResult()
 		);
+		$this->assertArrayNotHasKey(
+				'123_456',
+				SolrDocumentService::$documentCache
+		);
 	}
 	
 	/**
@@ -116,6 +120,36 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 		;
 		$this->assertEquals(
 				$result,
+				$service->getResult()
+		);
+		$this->assertArrayHasKey(
+				'123_456',
+				SolrDocumentService::$documentCache
+		);
+	}
+	
+	/**
+	 * @covers SolrDocumentService::getDocument
+	 */
+	public function testGetDocumentWithCachedResult() {
+		$service = $this->getMock( 'SolrDocumentService', [ 'getConfig', 'getFactory', 'getDocumentId' ] );
+		$config = $this->getMock( 'Wikia\Search\Config', [ 'setQuery' ] );
+		$this->assertArrayHasKey(
+				'123_456',
+				SolrDocumentService::$documentCache
+		);
+		$service
+		    ->expects( $this->never() )
+		    ->method ( 'getConfig' )
+		    ->will   ( $this->returnValue( $config ) )
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getDocumentId' )
+		    ->will   ( $this->returnValue( '123_456' ) )
+		;
+		$this->assertInstanceOf(
+				'Wikia\Search\Result',
 				$service->getResult()
 		);
 	}
