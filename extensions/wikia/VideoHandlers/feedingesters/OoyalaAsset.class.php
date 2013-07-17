@@ -276,9 +276,8 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['ageGate'] ) ) {
 			$method = 'PUT';
 			$reqPath = '/v2/assets/'.$videoId.'/player/'.OoyalaVideoHandler::OOYALA_PLAYER_ID_AGEGATE;
-			$params = array();
 
-			$resp = $this->sendRequest( $method, $reqPath, $params );
+			$resp = $this->sendRequest( $method, $reqPath );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -327,10 +326,10 @@ class OoyalaAsset extends WikiaModel {
 	 * @param array $params
 	 * @return boolean $result
 	 */
-	protected function sendRequest( $method, $reqPath, $params ) {
+	protected function sendRequest( $method, $reqPath, $params = array() ) {
 		wfProfileIn( __METHOD__ );
 
-		$reqBody = json_encode( $params );
+		$reqBody = empty( $params ) ? '' : json_encode( $params );
 
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
 		//print( "Connecting to $url...\n" );
@@ -361,6 +360,19 @@ class OoyalaAsset extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $result;
+	}
+
+	/**
+	 * Send request to Ooyala to delete video
+	 * @param string $videoId
+	 * @return boolean $resp
+	 */
+	public function deleteAsset( $videoId ) {
+		$method = 'DELETE';
+		$reqPath = '/v2/assets/'.$videoId;
+		$resp = $this->sendRequest( $method, $reqPath );
+
+		return $resp;
 	}
 
 }

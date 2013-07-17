@@ -40,37 +40,6 @@ function getApiAssets( $apiPageSize, $page, $provider, $keyword ) {
 	return $url;
 }
 
-/**
- * Send request to Ooyala to delete video
- * @param string $videoId
- * @param array $metadata
- * @return boolean $resp
- */
-function deleteAsset( $videoId ) {
-	$method = 'DELETE';
-	$reqPath = '/v2/assets/'.$videoId;
-
-
-	$url = OoyalaApiWrapper::getApi( $method, $reqPath );
-	echo "\tRequest to delete asset: $url\n";
-
-	$options = array(
-		'method' => $method,
-	);
-
-	$req = MWHttpRequest::factory( $url, $options );
-	$status = $req->execute();
-	if ( $status->isGood() ) {
-		$resp = true;
-		echo "\tDeleted Video for $videoId: \n";
-	} else {
-		$resp = false;
-		echo "\tERROR: problem deleting video (".$status->getMessage().").\n";
-	}
-
-	return $resp;
-}
-
 // ----------------------------- Main ------------------------------------
 
 ini_set( "include_path", dirname( __FILE__ )."/../../" );
@@ -104,6 +73,8 @@ $page = 1;
 $total = 0;
 $failed = 0;
 $skipped = 0;
+
+$ooyala = new OoyalaAsset();
 
 do {
 	// connect to provider API
@@ -162,7 +133,7 @@ do {
 		}
 
 		if ( !$dryRun ) {
-			$resp = deleteAsset( $video['embed_code'] );
+			$resp = $ooyala->deleteAsset( $video['embed_code'] );
 			if ( !$resp ) {
 				$failed++;
 			}
