@@ -330,18 +330,25 @@ $color-highlight-column: rgba($color-page, 0);
 .WikiaArticle {
 	@include box-shadow(1px, 1px, 1px, $color-admin-article-box-shadow);
 	border-bottom: 1px solid $color-admin-article-border;
+	border-right: 1px solid $color-admin-article-border;
 	float: left;
 	padding: 20px 0 0 0;
 	position: relative;
+	width: $admin-dashboard-content-width;
 	z-index: $base-z;
 	&.AdminDashboardChromedArticle {
 		@include box-shadow(0, 0, 0, $color-body);
 		float: none;
 		padding: 0 12px 0 5px;
+		width: $width-outside - 18px;
 	}
 	fieldset {
 		border: solid 1px $color-links;
 	}
+}
+
+.oasis-one-column .WikiaMainContent {
+	width: 690px;
 }
 
 .WikiaGrid {
@@ -366,8 +373,24 @@ $color-highlight-column: rgba($color-page, 0);
 	>nav {
 		bottom: 0;
 	}
+	>.buttons {
+		bottom: auto;
+		top: 15px;
+	}
+	.WikiaSearch {
+		bottom: 0;
+		position: absolute;
+		right: 10px;
+		input[type=text] {
+			width: 250px;
+		}
+	}
 	h1:before {
 		display: none;
+	}
+	.wordmark {
+		bottom: 0;
+		position: absolute;
 	}
 }
 
@@ -456,11 +479,5 @@ $color-highlight-column: rgba($color-page, 0);
 		background: linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* W3C */
 		display: block;
 		padding: 10px 10px 7px 0;
-	}
-}
-// TODO: To be changed when final proposal for new search placement for small screens layout will be decided
-@media screen and (max-width: 1023px) {
-	.adm-dash-search {
-		display: none;
 	}
 }
