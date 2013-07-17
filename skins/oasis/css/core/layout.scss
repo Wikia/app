@@ -2,8 +2,10 @@
 $zTop: 20000000;
 
 // Dimension Variables
+// TODO: get rid of the 'widthType' parameter when the responsive layout
+// styles are refactored back into oasis core.
 $oasisWidthType: get_command_line_param("widthType", 0);
-$responsive-layout-enabled: false;
+$responsive-layout-enabled: if( $oasisWidthType == 2, true, false );
 
 // We often use this amount of padding or margin to separate elements in our layout.
 $width-gutter: 10px;
@@ -18,8 +20,7 @@ $wikia-search-base-width: 200px;
 }
 
 // $wgOasisResponsive
-@if $oasisWidthType == 2 {
-	$responsive-layout-enabled: true;
+@if $responsive-layout-enabled {
 	$width-gutter: 20px;
 	$width-outside: 1030px;
 }
