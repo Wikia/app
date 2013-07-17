@@ -38,15 +38,15 @@ class SolrDocumentService
 	protected $crossWiki = false;
 	
 	/**
-	 * Returns the result object
-	 * @return Wikia\Search\Result;
+	 * Returns the result object, or null if it doesn't exist
+	 * @return Wikia\Search\Result|null;
 	 */
 	public function getResult() {
 		$config = $this->getConfig();
-		$config->setQuery( Wikia\Search\Utilities::valueForField( 'id', $this->getDocumentId() ) );
+		$docId = $this->getDocumentId();
+		$config->setQuery( Wikia\Search\Utilities::valueForField( 'id', $docId ) );
 		$queryService = $this->getFactory()->getFromConfig( $config );
 		$resultSet = $queryService->search();
-		$docId = $this->getDocumentId();
 		return isset( $resultSet[$docId] ) ? $resultSet[$docId] : null;
 	}
 	
