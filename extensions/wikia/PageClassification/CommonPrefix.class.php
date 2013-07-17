@@ -35,7 +35,7 @@ class CommonPrefix {
 
 	protected function sanitizeFinal( $str ) {
 		$stopWords = array( "and", "or", "the", "part" );
-		$words = explode( " ", trim($str) );
+		$words = explode( " ", strtolower( trim($str) ) );
 		$cnt = count( $words )-1;
 
 		for ($i = $cnt; $i >= 0; $i--) {
