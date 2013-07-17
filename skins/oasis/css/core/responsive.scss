@@ -305,6 +305,22 @@ body > .global-notification,
 	background-color: $color-page;
 	margin-right: $width-rail + $width-padding;
 	padding: 0 $width-padding;
+
+	.WikiaSearch {
+		display: none;
+	}
+}
+
+.oasis-one-column {
+	.WikiaMainContent {
+		margin-right: -$width-gutter;
+		width: 100%
+	}
+
+	.WikiaMainContentContainer {
+		margin-right: 0;
+		position: relative;
+	}
 }
 
 .WikiaPageHeader,
