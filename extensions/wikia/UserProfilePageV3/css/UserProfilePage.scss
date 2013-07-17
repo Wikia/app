@@ -286,13 +286,3 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 .WikiaRail.grid-2 {	/* keep this after transition, but not this comment itself */
 	padding-top: 10px;
 }
-
-// TODO: To be changed when final proposal for new search placement for small screens layout will be decided
-@media screen and (max-width: 1023px) {
-	.UserProfileMastheadSearch {
-		display: none;
-	}
-	.UserProfileMasthead {
-		padding-top: 10px;
-	}
-}
