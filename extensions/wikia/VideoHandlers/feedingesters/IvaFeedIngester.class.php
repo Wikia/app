@@ -140,11 +140,13 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 				// If we get back 'false' (different than zero) then we've hit an error
 				if ( $result === false ) {
+					wfProfileOut( __METHOD__ );
 					return 0;
 				}
+
+				$articlesCreated += $result['created'];
 			} while ( $result['found'] == self::API_PAGE_SIZE );
 		}
-		$articlesCreated += $result['created'];
 
 		/* 2013-07-16 : VideoSprint28 : VID-536
 		   Content didn't really want all TV content
@@ -161,10 +163,12 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 			// If we get back 'false' (different than zero) then we've hit an error
 			if ( $numVideos === false ) {
+				wfProfileOut( __METHOD__ );
 				return 0;
 			}
+
+			$articlesCreated += $result['created'];
 		} while ( $numVideos == self::API_PAGE_SIZE );
-		$articlesCreated += $result['created'];
 		*/
 
 		wfProfileOut( __METHOD__ );
@@ -259,6 +263,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 		// Retrieve the video data from IVA
 		$videos = $this->requestData( $url );
 		if ( $videos === false ) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -356,6 +361,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 	 * @return array|bool
 	 */
 	private function requestData( $url ) {
+		wfProfileIn( __METHOD__ );
 
 		print( "Connecting to $url...\n" );
 
@@ -372,6 +378,8 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 		// parse response
 		$response = json_decode( $response, true );
+
+		wfProfileOut( __METHOD__ );
 		return ( empty($response['d']['results']) ) ? array() : $response['d']['results'];
 	}
 
