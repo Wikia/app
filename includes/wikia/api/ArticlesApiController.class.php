@@ -7,7 +7,7 @@
 
 class ArticlesApiController extends WikiaApiController {
 
-	const CACHE_VERSION = 14;
+	const CACHE_VERSION = 15;
 
 	const MAX_ITEMS = 250;
 	const ITEMS_PER_BATCH = 25;
@@ -59,6 +59,7 @@ class ArticlesApiController extends WikiaApiController {
 
 		$namespaces = self::processNamespaces( $this->request->getArray( self::PARAMETER_NAMESPACES, null ), __METHOD__ );
 		$category = $this->request->getVal( self::PARAMETER_CATEGORY, null );
+		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
 		$ids = null;
 
 		if ( !empty( $category )) {
@@ -94,51 +95,60 @@ class ArticlesApiController extends WikiaApiController {
 		$collection = [];
 
 		if ( !empty( $articles ) ) {
-			$ids = [];
-
 			$mainPageId = Title::newMainPage()->getArticleID();
-
-			foreach ( array_keys( $articles ) as $i ) {
-
-				if ( $i == $mainPageId ) {
-					continue;
+			if ( $expand ) {
+				$params = $this->getDetailsParams();
+				if ( isset( $articles[ $mainPageId ] ) ) {
+					unset( $articles[ $mainPageId ] );
 				}
+				$articleIds = array_keys( $articles );
 
-				//data is cached on a per-article basis
-				//to avoid one article requiring purging
-				//the whole collection
-				$cache = $this->wg->Memc->get( self::getCacheKey( $i, self::ARTICLE_CACHE_ID ) );
+				$collection = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
+			} else {
+				$ids = [];
 
-				if ( !is_array( $cache ) ) {
-					$ids[] = $i;
-				} else {
-					$collection[] = $cache;
-				}
-			}
+				foreach ( array_keys( $articles ) as $i ) {
 
-			$articles = null;
+					if ( $i == $mainPageId ) {
+						continue;
+					}
 
-			if ( count( $ids ) > 0 ) {
-				$titles = Title::newFromIDs( $ids );
+					//data is cached on a per-article basis
+					//to avoid one article requiring purging
+					//the whole collection
+					$cache = $this->wg->Memc->get( self::getCacheKey( $i, self::ARTICLE_CACHE_ID ) );
 
-				if ( !empty( $titles ) ) {
-					foreach ( $titles as $t ) {
-						$id = $t->getArticleID();
-
-						$article = [
-							'id' => $id,
-							'title' => $t->getText(),
-							'url' => $t->getLocalURL(),
-							'ns' => $t->getNamespace()
-						];
-
-						$collection[] = $article;
-
-						$this->wg->Memc->set( self::getCacheKey( $id, self::ARTICLE_CACHE_ID ), $article, 86400 );
+					if ( !is_array( $cache ) ) {
+						$ids[] = $i;
+					} else {
+						$collection[] = $cache;
 					}
 				}
 
-				$titles = null;
+				$articles = null;
+
+				if ( count( $ids ) > 0 ) {
+					$titles = Title::newFromIDs( $ids );
+
+					if ( !empty( $titles ) ) {
+						foreach ( $titles as $t ) {
+							$id = $t->getArticleID();
+
+							$article = [
+								'id' => $id,
+								'title' => $t->getText(),
+								'url' => $t->getLocalURL(),
+								'ns' => $t->getNamespace()
+							];
+
+							$collection[] = $article;
+
+							$this->wg->Memc->set( self::getCacheKey( $id, self::ARTICLE_CACHE_ID ), $article, 86400 );
+						}
+					}
+
+					$titles = null;
+				}
 			}
 		} else {
 			wfProfileOut( __METHOD__ );
@@ -187,6 +197,7 @@ class ArticlesApiController extends WikiaApiController {
 			$hub = trim( $this->request->getVal( self::PARAMETER_HUB, null ) );
 			$langs = $this->request->getArray( self::PARAMETER_LANGUAGES );
 			$namespaces = self::processNamespaces( $this->request->getArray( self::PARAMETER_NAMESPACES, null ), __METHOD__ );
+//			$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
 
 			if ( empty( $hub ) ) {
 				wfProfileOut( __METHOD__ );
@@ -244,6 +255,11 @@ class ArticlesApiController extends WikiaApiController {
 					'articles' => []
 				];
 
+//				if ( $expand ) {
+//					$params = $this->getDetailsParams();
+//					$item[ 'articles' ] = $this->getArticlesDetails( array_keys( $articles ), $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
+//					$found = count( $item[ 'articles' ] );
+//				} else {
 				foreach ( $articles as $articleId => $article ) {
 					$found++;
 					$item['articles'][] = [
@@ -251,6 +267,7 @@ class ArticlesApiController extends WikiaApiController {
 						'ns' => $article['namespace_id']
 					];
 				}
+//				}
 
 				$res[] = $item;
 				$articles = null;
@@ -473,7 +490,7 @@ class ArticlesApiController extends WikiaApiController {
 		];
 	}
 
-	protected function getArticlesDetails( $articleIds, $articleKeys = null, $width = 0, $height = 0, $abstract = 0 ) {
+	protected function getArticlesDetails( $articleIds, $articleKeys = null, $width = 0, $height = 0, $abstract = 0, $strict = false ) {
 		$articles = is_array( $articleIds ) ? $articleIds : [ $articleIds ];
 		$ids = [];
 		$collection = [];
@@ -579,6 +596,14 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		$thumbnails = null;
+
+		//if strict return to original ids order
+		if ( $strict ) {
+			foreach( $articleIds as $id ) {
+				$result[] = $collection[ $id ];
+			}
+			return $result;
+		}
 
 		return $collection;
 	}
