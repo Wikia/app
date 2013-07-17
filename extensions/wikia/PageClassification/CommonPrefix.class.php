@@ -34,12 +34,14 @@ class CommonPrefix {
 	}
 
 	public static function sanitizeTitle( $str ) {
-		$toRemove = array("(film)", "(book)", "(movie)", "(game)", "(video game)", "(tv story)" );
+		$toRemove = array("(film)", "(book)", "(movie)", "(game)", "(video game)", "(tv story)", "(novel)" );
+		$str = trim( strtolower( $str ) );
 		foreach ( $toRemove as $removeStr ) {
 			$str = str_replace( $removeStr, "", $str );
 		}
+		$str = preg_replace( '/\([0-9]{4}\)/', '', $str );
 		$stopWords = array( "and", "or", "the", "part" );
-		$words = explode( " ", strtolower( trim($str) ) );
+		$words = explode( " ", $str );
 		$cnt = count( $words )-1;
 		for ($i = $cnt; $i >= 0; $i--) {
 			if ( in_array( $words[$i], $stopWords ) ) {
