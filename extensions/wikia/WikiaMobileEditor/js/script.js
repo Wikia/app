@@ -28,10 +28,11 @@ define('editor', function(){
         cursorPos = endPos+phrase.length - distFromEnd;
         editArea.focus();
         editArea.setSelectionRange(cursorPos, cursorPos);
-    }
+    };
+
     return{
         insertTags: insertTags
-    }
+    };
 });
 
 define ('config', function(){
@@ -44,7 +45,7 @@ define ('config', function(){
             }
         }
         return activeTags;
-    }
+    };
 });
 
 define('menu', ['config', 'editor'], function(config, editor){
@@ -62,16 +63,17 @@ define('menu', ['config', 'editor'], function(config, editor){
 
             }
         }
-    }
+    };
 
     this.expand = function (list) { //takes a <ul> element of children to be written drawn on circle
         //quarter can be top-left, top-right, bottom-left, bottom-right
         var wrapper = list.parentElement;
+        var master = wrapper.getElementsByClassName('master')[0];
         if(!wrapper.classList.contains('expanded')){ //expanding the wrapper size in css to make place for the buttons
             wrapper.classList.add('expanded');
         }
         var radius = wrapper.offsetWidth / 2,
-            elemArray = list.getElementsByTagsName('li'),
+            elemArray = list.getElementsByTagName('li'),
             quarter = wrapper.dataset.direction,
             marginTop,
             marginLeft;
@@ -103,7 +105,10 @@ define('menu', ['config', 'editor'], function(config, editor){
             elemArray[i].style.top = marginTop + 'px';
             elemArray[i].style.left = marginLeft + 'px';
         }
-    }
+        if(master.dataset.expanded == 'false'){
+            master.dataset.expanded = 'true';
+        }
+    };
 
     this.fold = function(list){ //takes an array of elements and moves them to the center of a parent element
         var wrapper = list.parentElement;
@@ -115,12 +120,16 @@ define('menu', ['config', 'editor'], function(config, editor){
             elemArray[i].style.top = radius - elemArray[i].offsetHeight / 2 + 'px';
             elemArray[i].style.left = radius - elemArray[i].offsetWidth / 2 + 'px';
         }
-    }
+    };
 
     this.switchButtons = function(parent){ //switches between groups of buttons in menu
-        var lists = parent.getElementByTagsName('ul');
+        var lists = parent.getElementsByTagName('ul');
         var masterButton = parent.getElementsByClassName('master')[0];
-        if(parent.getElementsByClassName('master')[0].dataset.expanded){
+        if(masterButton.dataset.expanded = 'false'){
+            parent.style.height = '40%';
+            parent.style.width = '40%';
+        }
+        if(parent.getElementsByClassName('master')[0].dataset.expanded = 'true'){
             for(var i = 0; i < lists.length; i++){
                 if(lists[i].dataset.position == 'out'){
                     this.fold(lists[i]);
@@ -134,7 +143,7 @@ define('menu', ['config', 'editor'], function(config, editor){
             this.expand(lists[0]);
             masterButton.dataset.expanded = 'true';
         }
-    }
+    };
 
     this.hideMenu = function(parent){
         var lists = parent.getElementsByTagName('ul');
@@ -142,7 +151,7 @@ define('menu', ['config', 'editor'], function(config, editor){
             this.fold(lists[i]);
             lists[i].dataset.position = 'in';
         }
-        parent.getElementsByClassName('master').dataset.expanded = 'false';
+        parent.getElementsByClassName('master')[0].dataset.expanded = 'false';
     }
 
     this.hideAll = function(){
@@ -150,7 +159,7 @@ define('menu', ['config', 'editor'], function(config, editor){
         for(var i = 0; i < parents.length; i++){
             this.hideMenu(parents[i]);
         }
-    }
+    };
 
     this.changeTransClass = function(element, className){
         if(element.classList.contains(className)){
@@ -159,27 +168,26 @@ define('menu', ['config', 'editor'], function(config, editor){
         else{
             element.classList.add('className');
         }
-    }
+    };
 
     this.touchStartProxy = function(target){
         switch(target.className){
             case 'master': //main button touched
-                if(!target.dataset.expanded){ //if second menu is expanded, switch its options (shift)
+                if(target.dataset.expanded == 'false'){ //if second menu is expanded, switch its options (shift)
                     var menuParents = document.getElementsByClassName('menuWrapper');
                     for(var i = 0; i < menuParents.length; i++){
-                        if(menuParents[i].id != target.parentElement.id && menuParents[i].master.expanded){
+                        if(menuParents[i].id != target.parentElement.id && menuParents[i].getElementsByClassName('master')[0].dataset.expanded == 'true'){
                             this.switchButtons(menuParents[i]);
-                        }
-                        else{ //if second menu not expanded, expand menu attached to touched master
-                            this.expand(target.parentElement, 'primaryButtons');
+                            break;
                         }
                     }
+                    this.switchButtons(target.parentElement);
                 }
                 break;
             default:
                 break;
         }
-    }
+    };
 
     this.touchEndProxy = function (target){
         var parents = document.getElementsByClassName('menuWrapper');
@@ -191,7 +199,7 @@ define('menu', ['config', 'editor'], function(config, editor){
 
             this.hideAll();
         }
-    }
+    };
 
     this.init = function(menuWrappers){ //initalization of events for the menu & menu itself
         for(var i = 0; i < menuWrappers.length; i++){
@@ -202,7 +210,7 @@ define('menu', ['config', 'editor'], function(config, editor){
                 self.touchEndProxy(event.target);
             });
         }
-    }
+    };
 
     return{
         init:init,
@@ -215,7 +223,7 @@ define('menu', ['config', 'editor'], function(config, editor){
         fold:fold,
         expand:expand,
         updateButtons:updateButtons
-    }
+    };
 });
 
 //------------------------------------------------------------------------------Circle Menu Handlers
