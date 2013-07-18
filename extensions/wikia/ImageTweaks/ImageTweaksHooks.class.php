@@ -234,8 +234,6 @@ class ImageTweaksHooks {
 					( (!empty( $imageAttribs['width'] ) && $imageAttribs['width'] > 64 ) || empty( $imageAttribs['width'] ) )
 					&& $file instanceof File
 				) {
-					// TODO: this resizes every image with a width over 64px regardless of where it appears.
-					// We may want to add the ability to allow custom image widths (like on the file page history table for example)
 					$size = WikiaMobileMediaService::calculateMediaSize( $file->getWidth(), $file->getHeight() );
 					$thumb = $file->transform( $size );
 					$imageAttribs['src'] = wfReplaceImageServer( $thumb->getUrl(), $file->getTimestamp() );
@@ -274,6 +272,7 @@ class ImageTweaksHooks {
 			return true;
 		}
 
+
 		wfProfileIn( __METHOD__ );
 		if ( is_null(self::$isWikiaMobile) ) {
 			self::init();
@@ -306,8 +305,6 @@ class ImageTweaksHooks {
 			}
 
 			if ( $file instanceof File ) {
-				// TODO: this resizes every video thumbnail with a width over 64px regardless of where it appears.
-				// We may want to add the ability to allow custom image widths (like on the file page history table for example)
 				$size = WikiaMobileMediaService::calculateMediaSize( $file->getWidth(), $file->getHeight() );
 				$thumb = $file->transform( $size );
 				$imageAttribs['src'] = wfReplaceImageServer( $thumb->getUrl(), $file->getTimestamp() );

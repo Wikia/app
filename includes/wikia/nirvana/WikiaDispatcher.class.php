@@ -41,8 +41,7 @@ class WikiaDispatcher {
 		}
 
 		// skin routing, also allows possibility to override template
-		if ( ( isset( $route['notSkin'] ) && !$app->checkSkin( $route['notSkin'] ) ) ||
-			( isset( $route['skin'] ) && $app->checkSkin( $route['skin'] ) ) ){
+		if ( isset( $route['skin'] ) && $app->checkSkin( $route['skin']) ) {
 			if ( isset( $route['controller'] ) ) $response->setControllerName( $route['controller'] );
 			if ( isset( $route['method'] ) ) $response->setMethodName( $route['method'] );
 			if ( isset( $route['template'] ) ) $response->getView()->setTemplate( $className, $route['template'] );

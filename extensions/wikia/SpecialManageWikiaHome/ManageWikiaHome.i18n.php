@@ -314,7 +314,6 @@ $messages['en-gb'] = array(
 );
 
 /** Spanish (español)
- * @author Benfutbol10
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -382,7 +381,7 @@ $messages['es'] = array(
 	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Imagen de héroe',
 	'manage-wikia-home-collections-sponsor-image-field-label' => 'Imagen del patrocinador',
 	'manage-wikia-home-collections-wikis-in-collection' => 'Wikis: $1 de $2',
-	'manage-wikia-home-collections-invalid-wikis-number' => 'Esta colección no será visible en la portada corporativa hasta que haya{{PLURAL:$1||n}} $1 wiki{{PLURAL:$1||s}} asignada{{PLURAL:$1||s}} a ella.',
+	'manage-wikia-home-collections-invalid-wikis-number' => 'Esta colección no será visible en la portada corporativa hasta que hayan $1 wikis asignadas a ella.', # Fuzzy
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Esta imagen debe ser $1px x $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Esta imagen debe ser $1px × $2px',
 	'manage-wikia-home-collection-add-file-button' => 'Añadir una imagen',
@@ -457,7 +456,7 @@ $messages['fr'] = array(
 	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Image mega-bannière',
 	'manage-wikia-home-collections-sponsor-image-field-label' => 'Image du sponsor',
 	'manage-wikia-home-collections-wikis-in-collection' => 'Wikis : $1 sur $2',
-	'manage-wikia-home-collections-invalid-wikis-number' => 'Cette collection ne sera pas visible sur la page d’accueil du portail jusqu’à ce {{PLURAL:$1|qu’un wiki lui soit affecté|que $1 wikis lui soient affectés}}.',
+	'manage-wikia-home-collections-invalid-wikis-number' => 'Cette collection ne sera pas visible sur la page d’accueil du portail jusqu’à ce que $1 wikis lui soient affectés.', # Fuzzy
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Cette image devrait faire $1px x $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Cette image devrait faire $1px x $2px',
 	'manage-wikia-home-collection-add-file-button' => 'Ajouter une image',
@@ -531,7 +530,7 @@ $messages['gl'] = array(
 	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Imaxe central',
 	'manage-wikia-home-collections-sponsor-image-field-label' => 'Imaxe do patrocinador',
 	'manage-wikia-home-collections-wikis-in-collection' => 'Wikis: $1 de $2',
-	'manage-wikia-home-collections-invalid-wikis-number' => 'Esta colección non será visible na páxina principal corporativa ata que haxa {{PLURAL:$1|un wiki asignado|$1 wikis asignados}} a ela.',
+	'manage-wikia-home-collections-invalid-wikis-number' => 'Esta colección non será visible na páxina principal corporativa ata que haxa $1 wikis asignados a ela.', # Fuzzy
 	'manage-wikia-home-collection-hero-image-tooltip' => 'A imaxe debería ser $1px × $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'A imaxe debería ser $1px × $2px',
 	'manage-wikia-home-collection-add-file-button' => 'Engadir unha foto',
@@ -541,14 +540,8 @@ $messages['gl'] = array(
  * @author C5st4wr6ch
  */
 $messages['id'] = array(
-	'manage-wikia-home-wrong-rights' => 'Anda mungkin telah keluar log atau Anda tidak memiliki izin untuk menggunakan halaman khusus ini.',
-	'manage-wikia-home-collections-success' => 'Koleksi telah disimpan.',
-	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'Jumlah petak negatif tidak diizinkan.',
-	'manage-wikia-home-collections-validation-error' => 'Ada kesalahan saat menyimpan, silakan memeriksa apa yang Anda masukkan.',
-	'manage-wikia-home-wiki-list-headline' => 'Nama wiki',
 	'manage-wikia-home-wiki-list-official' => 'Resmi',
 	'manage-wikia-home-wiki-list-all-collections' => 'Semua koleksi',
-	'manage-wikia-home-modal-content-remove-blocked' => 'Apakah Anda ingin menyertakan wiki ini dalam visualisasi wiki?',
 	'manage-wikia-home-modal-content-add-official' => 'Apakah Anda ingin menambahkan logo resmi untuk wiki ini dalam visualisasi wiki?',
 	'manage-wikia-home-modal-content-blocked-wiki-title' => 'Wiki ini diblokir',
 	'manage-wikia-home-collections-setup-save-button' => 'Simpan',
@@ -700,14 +693,13 @@ $messages['nl'] = array(
 	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Herobanner',
 	'manage-wikia-home-collections-sponsor-image-field-label' => 'Sponsorafbeelding',
 	'manage-wikia-home-collections-wikis-in-collection' => "Wiki's: $1 van $2",
-	'manage-wikia-home-collections-invalid-wikis-number' => "Deze verzameling is niet zichtbaar op de startpagina van het bedrijf totdat er {{PLURAL:$1|$1 wiki aan is|$1 wiki's aan zijn}} toegewezen.",
+	'manage-wikia-home-collections-invalid-wikis-number' => "Deze verzameling is niet zichtbaar op de startpagina vna het bedrijf totdat er $1 wiki's aan zijn toegewezen.", # Fuzzy
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Deze afbeelding hoort de volgende afmetingen te hebben: $1×$2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Deze afbeelding hoort de volgende afmetingen te hebben: $1×$2px',
 	'manage-wikia-home-collection-add-file-button' => 'Afbeelding toevoegen',
 );
 
 /** Polish (polski)
- * @author Chrumps
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -775,7 +767,7 @@ $messages['pl'] = array(
 	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Duży obraz sponsora',
 	'manage-wikia-home-collections-sponsor-image-field-label' => 'Mały obraz sponsora',
 	'manage-wikia-home-collections-wikis-in-collection' => 'Wiki: $1 z $2',
-	'manage-wikia-home-collections-invalid-wikis-number' => 'Ta kolekcja nie będzie widoczna na stronie głównej, dopóki {{PLURAL:$1|jedna wiki nie zostanie do niej przypisana|$1 wiki nie zostaną do niej przypisane}}',
+	'manage-wikia-home-collections-invalid-wikis-number' => 'Ta kolekcja nie będzie widzialna na stronie głównej dopóki nie znajdzie się w niej $1 wiki.', # Fuzzy
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Obraz powinien mieć wymiary $1px × $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Obraz powinien mieć wymiary $1px × $2px',
 	'manage-wikia-home-collection-add-file-button' => 'Dodaj obraz',
@@ -899,7 +891,7 @@ $messages['sv'] = array(
 	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Hjältebild',
 	'manage-wikia-home-collections-sponsor-image-field-label' => 'Sponsorbild',
 	'manage-wikia-home-collections-wikis-in-collection' => 'Wikis: $1 av $2',
-	'manage-wikia-home-collections-invalid-wikis-number' => 'Denna samling kommer inte att synas på den kollektiva huvudsidan förrän {{PLURAL:$1|$1 wiki|$1 wikis}} har tilldelats på den.',
+	'manage-wikia-home-collections-invalid-wikis-number' => 'Denna samling kommer inte att synas på den kollektiva huvudsidan förrän $1 wikis har tilldelats på den.', # Fuzzy
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Denna bild ska vara $1px × $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Denna bild ska vara $1px × $2px',
 	'manage-wikia-home-collection-add-file-button' => 'Lägg till ett foto',

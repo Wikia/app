@@ -6,6 +6,27 @@
 
 class VideoEmbedTool {
 
+	function getMsgVars() {
+
+
+		$vars = array(
+			'vet-back',
+			'vet-imagebutton',
+			'vet-close',
+			'vet-warn1',
+			'vet-warn2',
+			'vet-warn3',
+		);
+
+		$ret = array();
+
+		foreach($vars as $var) {
+			$ret[$var] = wfMsg($var);
+		}
+
+		return json_encode($ret);
+	}
+
 	function loadMain( $error = false ) {
 		global $wgContLanguageCode, $wgVETNonEnglishPremiumSearch;
 

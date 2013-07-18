@@ -21,7 +21,7 @@ class WikiaAppMock {
 		$this->testCase = $testCase;
 	}
 
-	public function init($mockedMethods = array()) {
+	public function init() {
 		$wikiaAppArgs = array();
 
 		$globalRegistryMock = null;
@@ -49,8 +49,7 @@ class WikiaAppMock {
 		$wikiaAppArgs[] = null; // WikiaHookDispatcher
 		$wikiaAppArgs[] = $functionWrapperMock;
 
-		$mockedMethods[] = 'ajax'; /* we just have to have something to prevent mocking everything */
-		$this->mock = $this->testCase->getMock( 'WikiaApp', $mockedMethods, $wikiaAppArgs, '' );
+		$this->mock = $this->testCase->getMock( 'WikiaApp', array( 'ajax' /* we just have to have something to prevent mocking everything */), $wikiaAppArgs, '' );
 		F::setInstance('App', $this->mock);
 	}
 

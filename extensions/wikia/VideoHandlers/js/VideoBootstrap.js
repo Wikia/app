@@ -117,16 +117,15 @@ define( 'wikia.videoBootstrap', [ 'wikia.loader', 'wikia.nirvana', 'wikia.log', 
 		 * one instance of the same video on a page.
 		 */
 		timeStampId: function(id) {
-			var container = document.getElementById( id),
-				newId = id + "-" + new Date().getTime();
+			var time = new Date().getTime(),
+				container = document.getElementById( id ),
+				newId = id + "-" + time;
 
-			if(container) {
-				container.id = newId;
-			}
+			container.id = newId;
 
 			return newId;
 		}
-	};
+	}
 
 	return VideoBootstrap;
 });

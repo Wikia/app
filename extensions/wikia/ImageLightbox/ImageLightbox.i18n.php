@@ -101,7 +101,6 @@ $messages['az'] = array(
 $messages['br'] = array(
 	'lightbox_details_tooltip' => 'Gwelet munudoù ar skeudenn',
 	'lightbox-forum' => 'Forom',
-	'lightbox-standard-link' => 'Liamm standart',
 	'lightbox-send' => 'Kas',
 	'lightbox-share-description' => 'Skeudenn $1 war $2',
 	'lightbox-share-email-subject' => "$1 en deus kaset deoc'h ur skeudenn war Wikia",
@@ -484,17 +483,6 @@ Detalios: $2',
  * @author C5st4wr6ch
  */
 $messages['id'] = array(
-	'lightbox-standard-link' => 'Pranala standar',
-	'lightbox-send' => 'Kirim',
-	'lightbox-share-description' => 'Foto dalam $1 pada $2',
-	'lightbox-share-email-body' => 'Hai,
-
-Seseorang ingin menunjukkan sebuah foto kepada Anda pada Wikia. Lihatlah:
-
-$1
-
-- Tim Wikia',
-	'lightbox-share-email-page-label-address' => 'Alamat surel',
 	'lightbox-share-email-error-login' => 'Untuk mengirim surel Anda perlu masuk log',
 );
 

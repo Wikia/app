@@ -6,7 +6,7 @@ class ChatController extends WikiaController {
 	const CHAT_AVATAR_DIMENSION = 41;
 
 	public function executeIndex() {
-		global $wgUser, $wgDevelEnvironment, $wgRequest, $wgCityId, $wgFavicon, $wgOut, $wgHooks;
+		global $wgUser, $wgDevelEnvironment, $wgRequest, $wgCityId, $wgFavicon, $wgOut;
 		wfProfileIn( __METHOD__ );
 
 		// String replacement logic taken from includes/Skin.php
@@ -54,8 +54,7 @@ class ChatController extends WikiaController {
 			$this->bodyClasses .= ' can-give-chat-mod ';
 		}
 
-		// set up global js variables just for the chat page
-		$wgHooks['MakeGlobalVariablesScript'][] = array($this, 'onMakeGlobalVariablesScript');
+		$this->app->registerHook('MakeGlobalVariablesScript', 'ChatController', 'onMakeGlobalVariablesScript', array(), false, $this);
 
 		$wgOut->getResourceLoader()->getModule( 'mediawiki' );
 

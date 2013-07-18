@@ -18,7 +18,7 @@
 		<div class="input-group">
 			<label for="VideoEmbedUrl" class="with-info-p"><?= wfMsg('vet-url-label') ?></label>
 			<div>
-				<p><?= wfMessage('vet-description')->parse(); ?></p>
+				<p><?= wfMsg( 'vet-description' ) ?> <a id="vet-see-all" href="http://help.wikia.com/wiki/Help:Video_Embed_Tool" target="_blank"><?= wfMsg( 'vet-see-all' ) ?></a></p>
 				<input id="VideoEmbedUrl" class="VideoEmbedUrl" name="wpVideoEmbedUrl" type="text" />
 			</div>
 		</div>

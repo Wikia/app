@@ -22,7 +22,7 @@ $dir = dirname( __FILE__ ) . '/';
 
 // classes
 $wgAutoloadClasses[ 'WikiaFilePage' ] = $dir . 'WikiaFilePage.php';
-$wgAutoloadClasses[ 'WikiaMobileFilePage' ] = $dir . 'WikiaMobileFilePage.php';
+$wgAutoloadClasses[ 'FilePageFlat' ] = $dir . 'FilePageFlat.php';
 $wgAutoloadClasses[ 'FilePageTabbed' ] = $dir . 'FilePageTabbed.php';
 $wgAutoloadClasses[ 'WikiaWikiFilePage'] = $dir . 'WikiaWikiFilePage.php'; // Override for WikiFilePage
 
@@ -42,4 +42,3 @@ $wgHooks['GlobalUsageFormatItemWikiLink'][] = 'FilePageHooks::onGlobalUsageForma
 $wgHooks['GlobalUsageImagePageWikiLink'][] = 'FilePageHooks::onGlobalUsageImagePageWikiLink';
 $wgHooks['GlobalUsageLinksUpdateComplete'][] = 'FilePageHooks::onGlobalUsageLinksUpdateComplete';
 $wgHooks['BeforePageDisplay'][] = 'FilePageHooks::onBeforePageDisplay';
-$wgHooks['WikiaMobileAssetsPackages'][] = 'FilePageHooks::onWikiaMobileAssetsPackages';

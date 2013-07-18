@@ -83,11 +83,6 @@ files = [
 	'extensions/wikia/WikiaHomePage/js/spec/WikiaHomePage.mocks.js',
 	'extensions/wikia/WikiaHomePage/js/WikiaHomePage.js',
 	'extensions/wikia/WikiaHomePage/js/spec/WikiaHomePage.spec.js',
-
-	//Search
-	'extensions/wikia/Search/js/SearchAbTest.js',
-	'extensions/wikia/Search/js/SearchAbTest.*.js',
-	'extensions/wikia/Search/js/spec/*.spec.js'
 ];
 
 notCovered = [

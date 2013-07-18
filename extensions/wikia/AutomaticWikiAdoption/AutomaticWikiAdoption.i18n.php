@@ -958,38 +958,9 @@ Instrumentos utile:
 $messages['id'] = array(
 	'wikiadoption-adopt-inquiry' => 'Cari tahu lebih lanjut!',
 	'wikiadoption-know-more-header' => 'Ingin mengetahui lebih banyak?',
-	'wikiadoption-know-more-description' => 'Periksalah pranala ini untuk informasi lebih lanjut. Dan tentu saja, silakan hubungi kami jika Anda memiliki pertanyaan!',
 	'wikiadoption-adoption-successed' => 'Selamat! Anda sekarang adalah pengurus di wiki ini!',
-	'wikiadoption-adoption-failed' => 'Kami mohon maaf. Kami telah mencoba untuk menjadikan Anda pengurus, tetapi ini tidak berjalan. Silakan [http://community.wikia.com/Special:Contact hubungi kami], dan kami akan mencoba untuk membantu Anda.',
-	'wikiadoption-log-reason' => 'Adopsi Wiki Otomatis',
 	'wikiadoption-mail-first-subject' => 'Kami belum melihat Anda di sini selama beberapa waktu',
-	'wikiadoption-mail-second-content-HTML' => 'Hai $1,<br /><br />
-Oh, tidak! Sudah hampir 60 hari sejak adanya pengurus aktif pada #WIKINAME. Penting bahwa pengurus secara teratur muncul dan berkontribusi sehingga wiki dapat berlanjut untuk berjalan dengan mulus.<br /><br />
-
-Karena sudah begitu banyak hari sejak kemunculan pengurus saat ini, #WIKINAME kini akan ditawarkan untuk diadopsi ke penyunting lain.<br /><br />
-
-Tim Wikia<br /><br />
-
-Anda dapat <a href="$3">berhenti berlangganan</a> dari perubahan dalam daftar ini.',
-	'wikiadoption-mail-adoption-content-HTML' => 'Hai $1,<br /><br />
-
-#WIKINAME telah diadopsi. Wiki tersedia untuk diadopsi ketika tidak ada pengurus saat ini yang aktif hingga 60 hari atau lebih.<br /><br />
-
-Pengguna pengadopsi #WIKINAME kini akan memiliki status birokrat dan pengurus. Jangan khawatir, Anda juga akan mendapatkan kembali status pengurus pada wiki ini dan disambut untuk kembali dan melanjutkan berkontribusi kapanpun!<br /><br />
-
-Tim Wikia<br /><br />
-
-Anda dapat <a href="$3">berhenti berlangganan</a> dari perubahan pada daftar ini.',
 	'wikiadoption-pref-label' => 'Mengubah preferensi ini hanya akan mempengaruhi surel dari $1.',
-	'wikiadoption-welcome-body' => 'Anda sekarang adalah birokrat di wiki ini. Dengan status baru Anda sekarang Anda memiliki akses ke seluruh peralatan yang akan membantu Anda mengelola {{SITENAME}}.
-<br /><br />
-Hal paling penting yang dapat Anda lakukan untuk membantu {{SITENAME}} tumbuh adalah terus menyunting.
-<br /><br />
-Jika tidak ada pengurus aktif pada sebuah wiki, wiki dapat diambil untuk diangkat / diadopsi, jadi pastikan untuk memeriksa wiki secara berkala.
-<br /><br />
-Peralatan yang Membantu:
-<br /><br />
-[[Special:ThemeDesigner|ThemeDesigner]] <br /> [[Special:LayoutBuilder|Page Layout Builder]] <br /> [[Special:ListUsers|Daftar Pengguna]] <br /> [[Special:UserRights|Kelola Hak]]',
 );
 
 /** Italian (italiano)

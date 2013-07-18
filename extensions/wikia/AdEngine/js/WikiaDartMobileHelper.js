@@ -7,20 +7,7 @@ var WikiaDartMobileHelper = function (log, window, adLogicPageLevelParams, dartU
 		features = window.Features, // TODO: AMD
 		ord = Math.round(Math.random() * 23456787654),
 		tile = 0,
-		categoryStrMaxLength = 300,
-		experiments,
-		experimentsNumber,
-		i = 0,
-		ab = [];
-
-	if (window.Wikia && window.Wikia.AbTest) {
-		experiments = window.Wikia.AbTest.getExperiments();
-		experimentsNumber = experiments.length;
-
-		for (; i < experimentsNumber; i += 1) {
-			ab.push(experiments[i].id + '_' + experiments[i].group.id);
-		}
-	}
+		categoryStrMaxLength = 300;
 
 	function getMobileUrl(params) {
 		var slotname = params.slotname,
@@ -61,7 +48,6 @@ var WikiaDartMobileHelper = function (log, window, adLogicPageLevelParams, dartU
 		url.addParam('loc', params.loc);
 		url.addParam('dcopt', params.dcopt);
 		url.addParam('sz', params.size);
-		url.addParam('ab', ab);
 
 		// sync params
 		url.addParam('tile', tile);

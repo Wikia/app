@@ -11,7 +11,6 @@ class AdminDashboardLogic {
 			'Categories' => true,
 			'CreateBlogPage' => true,
 			'CreatePage' => true,
-			'CSS' => true,
 			'Listusers' => true,
 			'ListUsers' => true,
 			'MultipleUpload' => true,

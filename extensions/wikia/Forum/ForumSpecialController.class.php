@@ -60,9 +60,9 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$forum = new Forum();
 
 		if ( $forum->createDefaultBoard() ) {
-			$this->boards = $forum->getBoardList( DB_MASTER );
+			$this->boards = $forum->getBoardList( DB_MASTER, NS_WIKIA_FORUM_BOARD );
 		} else {
-			$this->boards = $forum->getBoardList( DB_SLAVE );
+			$this->boards = $forum->getBoardList( DB_SLAVE, NS_WIKIA_FORUM_BOARD );
 		}
 
 		if ( $forum->haveOldForums() ) {
@@ -92,7 +92,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumBoardEdit.scss' );
 		$this->response->addAsset( 'extensions/wikia/Forum/js/ForumBoardEdit.js' );
 
-		$this->boards = (new Forum)->getBoardList( DB_SLAVE );
+		$this->boards = (new Forum)->getBoardList();
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -127,7 +127,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		/* backend magic here */
 
 		$this->boardTitle = $board->getTitle()->getText();
-		$this->boardDescription = $board->getRawDescription();
+		$this->boardDescription = $board->getDescription(false);
 
 		wfProfileOut( __METHOD__ );
 	}

@@ -34,12 +34,7 @@ class Video extends OnWiki
 					));
 		}
 		$this->config->addQueryFields( 
-				[ 'video_actors_txt' => 100, 
-				'video_genres_txt' => 50, 
-				'html_media_extras_txt' => 20, 
-				'video_description_txt' => 100, 
-				'video_keywords_txt' => 60, 
-				'video_tags_txt' => 40 ]
+				[ 'video_actors_txt' => 100, 'video_genres_txt' => 50, 'html_media_extras_txt' => 80 ]
 		);
 		return $this;
 	}
