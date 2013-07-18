@@ -136,8 +136,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		    ->setVideoTitleSearch( true )
 		    ->setQuery( $title )
 		    ->setMinimumMatch( $mm );
+		$queryService = $this->queryServiceFactory->getFromConfig( $searchConfig );
+		if ( ( $minDuration = $this->getVal( 'minseconds' ) ) && ( $maxDuration = $this->getVal( 'maxseconds' ) ) ) {
+			$queryService->setMinDuration( $minDuration)->setMaxDuration( $maxDuration );
+		} 
 		$this->getResponse()->setFormat( 'json' );
-		$this->getResponse()->setData( $this->queryServiceFactory->getFromConfig( $searchConfig )->searchAsApi() );
+		$this->getResponse()->setData( $queryService->searchAsApi() );
 	}
 	
 	/**
