@@ -162,14 +162,14 @@ class LinkSuggest {
 			$commaJoinedNamespaces = count($namespaces) > 1 ?  array_shift($namespaces) . ', ' . implode(', ', $namespaces) : $namespaces[0];
 		}
 
-		$pageNamespaceClause = isset($commaJoinedNamespaces) ?  'page_namespace IN (' . $commaJoinedNamespaces . ')' : '';
+		$pageNamespaceClause = isset($commaJoinedNamespaces) ?  'page_namespace IN (' . $commaJoinedNamespaces . ') AND ' : '';
 		if( count($results) < $wgLinkSuggestLimit ) {
 
 			// TODO: use $db->select helper method
 			$sql = "SELECT page_len, page_id, page_title, rd_title, page_namespace, page_is_redirect
 						FROM page IGNORE INDEX (`name_title`)
 						LEFT JOIN redirect ON page_is_redirect = 1 AND page_id = rd_from
-						WHERE {$pageNamespaceClause} AND (page_title LIKE '{$query}%' or LOWER(page_title) LIKE '{$queryLower}%')
+						WHERE {$pageNamespaceClause} (page_title LIKE '{$query}%' or LOWER(page_title) LIKE '{$queryLower}%')
 						LIMIT ".($wgLinkSuggestLimit * 3);
 
 			$res = $db->query($sql, __METHOD__);
@@ -190,7 +190,7 @@ class LinkSuggest {
 			$sql = $db->select(
 				'page',
 				array( 'page_id', 'page_title' ),
-				array( $pageNamespaceClause, "page_title IN ({$list})" ),
+				"{$pageNamespaceClause} page_title IN ({$list})",
 				__METHOD__
 			);
 
