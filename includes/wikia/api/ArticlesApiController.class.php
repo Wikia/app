@@ -45,6 +45,7 @@ class ArticlesApiController extends WikiaApiController {
 	 *
 	 * @requestParam array $namespaces [OPTIONAL] The ID's of the namespaces (e.g. 0, 14, 6, etc.) to use as a filter, comma separated
 	 * @requestParam string $category [OPTIONAL] The name of a category (e.g. Characters) to use as a filter
+	 * @requestParam string $expand [OPTIONAL] if set will expand result with getDetails data
 	 *
 	 * @responseParam array $items The list of top articles by pageviews matching the optional filtering
 	 * @responseParam string $basepath domain of a wiki to create a url for an article
@@ -197,7 +198,6 @@ class ArticlesApiController extends WikiaApiController {
 			$hub = trim( $this->request->getVal( self::PARAMETER_HUB, null ) );
 			$langs = $this->request->getArray( self::PARAMETER_LANGUAGES );
 			$namespaces = self::processNamespaces( $this->request->getArray( self::PARAMETER_NAMESPACES, null ), __METHOD__ );
-//			$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
 
 			if ( empty( $hub ) ) {
 				wfProfileOut( __METHOD__ );
@@ -255,11 +255,6 @@ class ArticlesApiController extends WikiaApiController {
 					'articles' => []
 				];
 
-//				if ( $expand ) {
-//					$params = $this->getDetailsParams();
-//					$item[ 'articles' ] = $this->getArticlesDetails( array_keys( $articles ), $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
-//					$found = count( $item[ 'articles' ] );
-//				} else {
 				foreach ( $articles as $articleId => $article ) {
 					$found++;
 					$item['articles'][] = [
@@ -267,7 +262,6 @@ class ArticlesApiController extends WikiaApiController {
 						'ns' => $article['namespace_id']
 					];
 				}
-//				}
 
 				$res[] = $item;
 				$articles = null;
@@ -294,6 +288,7 @@ class ArticlesApiController extends WikiaApiController {
 	 * @requestParam array $namespaces [OPTIONAL] The name of the namespaces (e.g. 0, 14, 5, etc.) to use as a filter, comma separated
 	 * @requestParam integer $limit [OPTIONAL] The maximum number of results to fetch, defaults to 25
 	 * @requestParam integer $offset [OPTIONAL] Offset to start fetching data from
+	 * @requestParam string $expand [OPTIONAL] if set will expand result with getDetails data
 	 *
 	 * @responseParam array $items The list of top articles by pageviews matching the optional filtering
 	 * @responseParam array $basepath domain of a wiki to create a url for an article
@@ -394,7 +389,7 @@ class ArticlesApiController extends WikiaApiController {
 					}
 				}, $articles[ 0 ] );
 				$params = $this->getDetailsParams();
-				$ret = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ] );
+				$ret = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
 			} else {
 				foreach( $articles[0] as $article ) {
 					$title = Title::newFromText( $article['title'] );

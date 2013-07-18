@@ -34,6 +34,7 @@ class WikisApiController extends WikiaApiController {
 	 * @requestParam string $lang [OPTIONAL] The comma-separated list of language codes (e.g. en,de,fr,es,it, etc.) to use as a filter
 	 * @requestParam integer $limit [OPTIONAL] The maximum number of results to fetch, defaults to 25
 	 * @requestParam integer $batch [OPTIONAL] The batch/page index to retrieve, defaults to 1
+	 * @requestParam string $expand [OPTIONAL] if set will expand result with getDetails data
 	 *
 	 * @responseParam array $items The list of top wikis by pageviews matching the optional filtering
 	 * @responseParam integer $total The total number of results
@@ -85,6 +86,7 @@ class WikisApiController extends WikiaApiController {
 	 * @requestParam integer $batch [OPTIONAL] The batch/page index to retrieve, defaults to 1
 	 * @requestParam bool $includeDomain [OPTIONAL] Wheter to include wikis' domains as search targets or not,
 	 * defaults to false
+	 * @requestParam string $expand [OPTIONAL] if set will expand result with getDetails data
 	 *
 	 * @responseParam array $items The list of wikis matching the keyword and the optional filtering
 	 * @responseParam integer $total The total number of results
