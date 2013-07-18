@@ -42,6 +42,9 @@ class WikiaSpecialPageController extends WikiaController {
 
 		if( $response->getFormat() == WikiaResponse::FORMAT_HTML ) {
 			try {
+				if ( $response->isCaching() ) {
+					Wikia::log( $this->specialPage->getName() . ' is an HTML-formatted special page with caching set through the response. Use WikiaSpecialPageController::setVarnishCacheTime instead.' )
+				}
 				$this->wg->Out->addHTML( $response->toString() );
 			} catch( Exception $exception ) {
 				// in case of exception thrown by WikiaView, just render standard error controller response
