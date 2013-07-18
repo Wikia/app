@@ -89,6 +89,13 @@ class ArticleCommentsController extends WikiaController {
 			$title = $this->wg->title;
 		}
 
+		// If articleId is invalid, don't trigger a fatal error, just return nothing.
+		if ( $title === null ) {
+			$this->skipRendering();
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+
 		$this->getCommentsData( $title, $page );
 		$this->isMiniEditorEnabled = ArticleComment::isMiniEditorEnabled();
 
