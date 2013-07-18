@@ -129,7 +129,7 @@ define('menu', ['config', 'editor'], function(config, editor){
             parent.style.height = '40%';
             parent.style.width = '40%';
         }
-        if(parent.getElementsByClassName('master')[0].dataset.expanded = 'true'){
+        if(parent.getElementsByClassName('master')[0].dataset.expanded == 'true'){
             for(var i = 0; i < lists.length; i++){
                 if(lists[i].dataset.position == 'out'){
                     this.fold(lists[i]);
@@ -174,14 +174,22 @@ define('menu', ['config', 'editor'], function(config, editor){
         switch(target.className){
             case 'master': //main button touched
                 if(target.dataset.expanded == 'false'){ //if second menu is expanded, switch its options (shift)
-                    var menuParents = document.getElementsByClassName('menuWrapper');
+                    var menuParents = document.getElementsByClassName('menuWrapper'),
+                        shift = false;
                     for(var i = 0; i < menuParents.length; i++){
                         if(menuParents[i].id != target.parentElement.id && menuParents[i].getElementsByClassName('master')[0].dataset.expanded == 'true'){
                             this.switchButtons(menuParents[i]);
+                            shift = true;
                             break;
                         }
                     }
-                    this.switchButtons(target.parentElement);
+
+                    if(!shift){
+                        this.switchButtons(target.parentElement);
+                    }
+                    else{
+                        shift = false;
+                    }
                 }
                 break;
             default:
@@ -190,14 +198,16 @@ define('menu', ['config', 'editor'], function(config, editor){
     };
 
     this.touchEndProxy = function (target){
-        var parents = document.getElementsByClassName('menuWrapper');
-        if(target.className == 'menuOption'){ //if touch ended on option insert text into textarea
+        if(target.classList.contains('menuOption')){ //if touch ended on option insert text into textarea
             editor.insertTags(target.dataset.tags);
             this.hideAll();
         }
         else{ //if touch ended on anything else just fold the menu
-
-            this.hideAll();
+            var parent = target;
+            while(!parent.classList.contains('menuWrapper')){
+                parent = parent.parentElement;
+            }
+            this.hideMenu(parent);
         }
     };
 
