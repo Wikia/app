@@ -61,6 +61,15 @@ class WikiaSpecialPageController extends WikiaController {
 	}
 
 	/**
+	 * This method is used to manually set varnish caching on special pages.
+	 * Special pages are sent through OutputPage, and headers set in the request are ignored.
+	 * @param int $seconds
+	 */
+	protected function setVarnishCacheTime( $seconds ) {
+		$this->wg->Out->mSquidMaxage = $seconds;
+	}
+
+	/**
 	 * Any functions that we do not implement, call directly on our specialPage object
 	 * @param String $method
 	 * @param String $args
