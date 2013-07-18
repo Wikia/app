@@ -256,7 +256,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 			$serializedMetadata = $file->getMetadata();
 			if (! empty( $serializedMetadata ) ) {
 				$metadata = unserialize( $serializedMetadata );
-				if ( (! empty( $metadata ) ) && ( isset( $metadata['duration'] ) && ( $metadata['duration'] > 0 ) ) ) {
+				if (! empty( $metadata['duration'] ) ) {
 					$duration = $metadata['duration'];
 					$params['minseconds'] = $duration - min( [ $duration, self::DURATION_DELTA ] );
 					$params['maxseconds'] = $duration + min( [ $duration, self::DURATION_DELTA ] );  
