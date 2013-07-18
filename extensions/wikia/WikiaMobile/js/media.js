@@ -4,8 +4,8 @@
  *
  * @author Jakub "Student" Olek
  */
-define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require.optional('popover'), 'track', require.optional('share'), require.optional('wikia.cache'), 'wikia.loader', 'wikia.nirvana', 'wikia.videoBootstrap', 'wikia.media.class'],
-	function(msg, modal, throbber, qs, popover, track, share, cache, loader, nirvana, VideoBootstrap, Media){
+define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require.optional('popover'), 'track', require.optional('share'), require.optional('wikia.cache'), 'wikia.loader', 'wikia.nirvana', 'wikia.videoBootstrap', 'wikia.media.class', 'toast'],
+	function(msg, modal, throbber, qs, popover, track, share, cache, loader, nirvana, VideoBootstrap, Media, toast){
 	'use strict';
 	/** @private **/
 
@@ -52,8 +52,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		startD,
 		galleryInited = false,
 		inited,
-		// Video view click source tracking. Possible values are "embed" and "lightbox" for consistancy with Oasis
-		clickSource,
+		// Video view click source tracking. Default, before lightbox is opened, is "embed".  Other possible values are "share" and "lightbox".
+		clickSource = "embed",
 		videoInstance,
 		events = {},
 		skip = [];
@@ -131,7 +131,14 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		if(shrImg) {
 			setTimeout(function(){
 				!inited && setup();
-				openModal(shrImg);
+				if ( isNaN(shrImg) ) {
+					// file specified in querystring doesn't exist on the page
+					toast.show( msg('wikiamobile-shared-file-not-available') );
+					qs().removeVal('file' ).replaceState();
+				} else {
+					clickSource = "share";
+					openModal(shrImg);
+				}
 			}, 2000);
 		}
 
@@ -162,14 +169,17 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		currentWrapper.className += ' imgPlcHld';
 	}
 
-	function embedVideo(image, data) {
-		videoInstance = new VideoBootstrap(image, data, clickSource);
+	function embedVideo(image, data, cs) {
+		videoInstance = new VideoBootstrap(image, data, cs);
 		// Future video/image views will come from modal
 		clickSource = 'lightbox';
 	}
 
 	function setupImage(){
-		var video;
+		var video,
+			imgTitle,
+			// cache value for clickSource to prevent race conditions
+			cs = clickSource;
 
 		throbber.remove(currentWrapper);
 
@@ -181,12 +191,12 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		}
 
 		if(currentMedia.type == Media.types.VIDEO) {
-			var imgTitle = currentMedia.name;
+			imgTitle = currentMedia.name;
 
 			zoomable = false;
 
 			if(videoCache[imgTitle]){
-				embedVideo(currentWrapper, videoCache[imgTitle]);
+				embedVideo(currentMedia, videoCache[imgTitle], cs);
 			}else{
 				if(currentMedia.supported) {
 					currentWrapper.innerHTML = '';
@@ -218,7 +228,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 								videoCache[imgTitle] = videoData;
 
-								embedVideo(currentWrapper, videoData);
+								embedVideo(currentWrapper, videoData, cs);
 							}
 						}
 					);
@@ -236,9 +246,13 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 					currentWrapper.innerHTML = html;
 				}
 			}
+			// update url for sharing
+			qs().setVal('file', imgTitle, true ).replaceState();
 		}else if(currentMedia.type == Media.types.IMAGE){
 			var img = new Image();
 			img.src = currentMedia.url;
+
+			imgTitle = currentMedia.name;
 
 			zoomable = true;
 
@@ -271,7 +285,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				origW = img.width;
 				origH = img.height;
 			}
-
+			// update url for sharing
+			qs().setVal('file', imgTitle, true ).replaceState();
 		} else if(currentMedia.type){//custom
 			var data = {
 					currentNum: currentNum,
@@ -286,6 +301,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			if(data.zoomable != zoomable){
 				zoomable = data.zoomable
 			}
+			// We're showing an ad or other custom media type.  Don't support sharing.
+			qs().removeVal('file' ).replaceState();
 		}
 
 		// Future video/image views will come from modal
@@ -523,9 +540,6 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			galleryData,
 			ttl = 604800; //7days
 
-		// Video/image view was initiated from article
-		clickSource = "embed";
-
 		currentNum = getMediaNumber(~~num);
 		currentMedia = images[currentNum];
 
@@ -536,6 +550,10 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			onClose: function(){
 				pager.cleanup();
 				removeZoom();
+				// remove file=title from URL
+				qs().removeVal('file' ).replaceState();
+				// reset tracking clickSource
+				clickSource = "embed";
 			},
 			onResize: function(ev){
 				resetZoom();
