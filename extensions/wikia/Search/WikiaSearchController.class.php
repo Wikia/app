@@ -31,8 +31,16 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * Default sufix for result template
+	 * @var string
 	 */
 	const WIKIA_DEFAULT_RESULT = 'result';
+
+	/**
+	 * Default varnish cache time for a search result
+	 * Currently 12 hours.
+	 * @var int
+	 */
+	const VARNISH_CACHE_TIME = 43200;
 	
 	/**
 	 * Responsible for instantiating query services based on config.
@@ -73,6 +81,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		
 		$this->setPageTitle( $searchConfig );
 		$this->setResponseValuesFromConfig( $searchConfig );
+		$this->setVarnishCacheTime( self::VARNISH_CACHE_TIME );
 	}
 
 	/**
