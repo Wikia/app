@@ -428,7 +428,12 @@
 					widthRail = $( '#EditPageRail' ).outerWidth( true ),
 					widthRailMargin = 10;
 
-				width = ( widthLayout - widthArticlePadding ) - ( widthRail + widthRailMargin );
+				width = ( widthLayout - widthArticlePadding );
+
+				// Pages without a right rail (like main pages)
+				if ( !config.isWidePage ) {
+					width -= ( widthRail + widthRailMargin )
+				}
 
 				// For Webkit browsers, when the responsive layout kicks in
 				// we have to subtract the width of the scrollbar. For more
