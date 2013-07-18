@@ -463,11 +463,11 @@ class ArticlesApiController extends WikiaApiController {
 		if ( !empty( $titles ) ) {
 			foreach ( $titles as $t ) {
 				$fileData = [];
-				if ( $t->getNamespace() == 6 ) {
+				if ( $t->getNamespace() == NS_FILE ) {
 					$fileData = $this->getFromFile( $t->getText() );
-				} elseif ( $t->getNamespace() == 0 ) {
+				} elseif ( $t->getNamespace() == NS_MAIN ) {
 					$fileData = [ 'type' => static::ARTICLE_TYPE ];
-				} elseif ( $t->getNamespace() == 14 ) {
+				} elseif ( $t->getNamespace() == NS_CATEGORY ) {
 					$fileData = [ 'type' => static::CATEGORY_TYPE ];
 				}
 				$id = $t->getArticleID();
