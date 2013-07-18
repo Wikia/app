@@ -2219,11 +2219,6 @@ class OutputPage extends ContextSource {
 			)->plain() . "\n\n";
 		}
 
-		# Wikia change - begin
-		# @author macbre
-		wfRunHooks( 'AfterFormatPermissionsErrorMessage', array( &$errors, $action ) );
-		# Wikia change - end
-
 		if ( count( $errors ) > 1 ) {
 			$text .= '<ul class="permissions-errors">' . "\n";
 

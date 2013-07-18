@@ -1,4 +1,4 @@
-#EditPage {
+.EditPage {
 	.module {
 		@include box-shadow(0, 2px, 2px, $color-epl-gradient-shadow, false, 0);
 
@@ -50,12 +50,12 @@
 
 	// page controls
 	.module_page_controls {
-		#wpSummaryLabel { 
+		#wpSummaryLabel {
 			clear: both;
 		}
 		label[for="wpSummary"] {
 			clear: right;
-			display: block; 
+			display: block;
 			float: left;
 			margin: 0 0 7px 0;
 			&.wpSummary_canMinorEdit {

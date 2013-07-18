@@ -80,23 +80,18 @@
 	margin: 10px 0;
 	padding-bottom: 15px;
 
-	p {
-		line-height: 20px;
-		margin: 0;
-	}
 	.video-provider {
-		float: left;
+		font-size: 11px;
+		line-height: 11px;
 	}
 	.video-views {
 		float: right;
 		font-size: 18px;
 		margin: 0;
 	}
-	.expire-date {
-		clear: both;
-		font-size: 11px;
-		line-height: 11px;
-		padding-top: 10px;
+	p {
+		line-height: 20px;
+		margin: 0;
 	}
 }
 

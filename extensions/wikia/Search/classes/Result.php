@@ -173,29 +173,18 @@ class Result extends ReadWrite {
 		return $text;
 	}
 
-	public function getThumbnailUrl() {
-		wfProfileIn( __METHOD__ );
-		if (! isset( $this['thumbnail'] ) ) {
-			try {
-				$this['thumbnail'] = $this->service->getThumbnailUrl( $this['pageid'] );
-			} catch ( \Exception $e ) {
-				$this['thumbnail'] = '';
-			}
-		}
-		wfProfileOut( __METHOD__ );
-		return $this['thumbnail'];
-	}
-
+	/**
+	 * Returns the thumbnail html
+	 * @return string
+	 */
 	public function getThumbnailHtml() {
-		wfProfileIn( __METHOD__ );
 		if (! isset( $this['thumbnail'] ) ) {
 			try {
-				$this['thumbnail'] = $this->service->getThumbnailHtml( $this['pageid'] );
+				$this['thumbnail'] = $this->service->getThumbnailHtmlForPageId( $this['pageid'] );
 			} catch ( \Exception $e ) {
 				$this['thumbnail'] = '';
 			}
 		}
-		wfProfileOut( __METHOD__ );
 		return $this['thumbnail'];
 	}
 

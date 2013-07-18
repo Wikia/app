@@ -1463,7 +1463,6 @@ $messages['ia'] = array(
 $messages['id'] = array(
 	'multitasks-link-back-label' => 'di sini',
 	'multiwikiedit_button' => 'SUNTING',
-	'multiwikiedit_help' => 'Menghapus sekelompok halaman. Anda dapat menyunting halaman-halaman yang terdaftar dalam kotak teks. Pilihlah pengguna yang akan ditampilkan pada log penghapusan. Berkas yang diunggah harus mengandung nama halaman dan alasan opsional, dipisahkan dengan suatu tanda "|" pada setiap barisnya.',
 	'multiwikiedit_caption' => 'Daftar halaman',
 	'multiwikiedit_both_modes' => 'Silakan pilih satu halaman tertentu atau suatu daftar halaman.',
 	'multiwikiedit_or' => '<b>ATAU</b>',

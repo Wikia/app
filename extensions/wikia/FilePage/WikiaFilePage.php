@@ -10,7 +10,7 @@
  * @author Garth Webb
  * @author Saipetch
  */
-class WikiaFilePage extends ImagePage {
+abstract class WikiaFilePage extends ImagePage {
 
 	const VIDEO_WIDTH = 670;
 
@@ -90,27 +90,9 @@ class WikiaFilePage extends ImagePage {
 	}
 
 	/**
-	 * Display info about the video below the video player: provider, views, expiration date (if any)
+	 * Display info about the video below the video player
 	 */
-	public function getVideoInfoLine( $file ) {
-		wfProfileIn( __METHOD__ );
-
-		$app = F::app();
-
-		$captionDetails = array(
-			'expireDate' => $file->getExpirationDate(),
-			'provider' => $file->getProviderName(),
-			'providerUrl' => $file->getProviderHomeUrl(),
-			'detailUrl' => $file->getProviderDetailUrl(),
-			'views' => MediaQueryService::getTotalVideoViewsByTitle( $file->getTitle()->getDBKey() ),
-		);
-
-		$caption = $app->renderView( 'FilePageController', 'videoCaption', $captionDetails );
-
-		wfProfileOut( __METHOD__ );
-
-		return $caption;
-	}
+	abstract function getVideoInfoLine( $file );
 
 	/**
 	 * @return String Url where user can re-upload the file

@@ -411,29 +411,6 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Nulle pagina de blog trovate.',
 );
 
-/** Indonesian (Bahasa Indonesia)
- * @author C5st4wr6ch
- */
-$messages['id'] = array(
-	'globalwatchlist-digest-email-body' => 'Halo $1,
-
-Ini adalah daftar halaman pada pantauan Wikia Anda yang telah disunting sejak Anda terkhir mengunjunginya.
-
-$2
-
-
-Ini adalah daftar halaman blog pada pantauan Wikia Anda yang telah disunting sejak Anda terkhir mengunjunginya.
-
-$3
-
-Silakan berkunjung dan sering menyunting...
-
-Wikia
-
-* Untuk mengubah preferensi untuk pemberitahuan pantauan, silakan kunjungi http://www.wikia.com/wiki/Special:Preferences
-* Untuk menandai seluruh halaman dari Weekly Digest ini sebagai telah dikunjungi, lihat pilihan dalam tab "Pantauan" dari halaman preferensi Anda',
-);
-
 /** Italian (italiano)
  * @author Beta16
  */

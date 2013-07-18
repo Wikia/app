@@ -400,20 +400,57 @@
 		},
 
 		// render "Preview" modal
+		// TODO: it would be nice if there weren't any hardcoded values in here.
+		// Any changes to the article page or modal will break here. Also, get rid
+		// of any widthType/gridLayout settings when the responsive layout goes out
+		// for a global release.
 		renderPreview: function(extraData) {
 			var self = this,
+				previewPadding = 22, // + 2px for borders
 				articleWidth = mw.config.values.sassParams.widthType == 1 ? 850 : 660,
-				width = articleWidth + 32 /* modal padding */ + (this.isGridLayout ? 30 : 0),
+				width = articleWidth + (this.isGridLayout ? 30 : 0),
 				config = this.editor.config;
 
 			if (config.isWidePage) {
 				// 980 px of content width on main pages / pages without right rail
 				width += 320 + (this.isGridLayout ? 20 : 0);
 			}
+
 			if (config.extraPageWidth) {
 				// wide wikis
 				width += config.extraPageWidth;
 			}
+
+			if ( wgIsResponsiveLayoutEnabled ) {
+				var $wikiaPage = $( '#WikiaPage' ),
+					widthArticlePadding = 20,
+					widthLayout = $wikiaPage.width(),
+					widthRail = $( '#EditPageRail' ).outerWidth( true ),
+					widthRailMargin = 10;
+
+				width = ( widthLayout - widthArticlePadding );
+
+				// Pages without a right rail (like main pages)
+				if ( !config.isWidePage ) {
+					width -= ( widthRail + widthRailMargin )
+				}
+
+				// For Webkit browsers, when the responsive layout kicks in
+				// we have to subtract the width of the scrollbar. For more
+				// information, read: http://bit.ly/hhJpJg
+				// PS: this doesn't work between 1370-1384px because at that point
+				// the article page has a scrollbar and the edit page doesn't.
+				// Luckily, those screen resolutions are kind of an edge case.
+				// PSS: fuck scrollbars.
+				// TODO: we should have access to breakpoints and such in JavaScript
+				// as variables instead of hardcoded values.
+				if ( CKEDITOR.env.webkit && $wikiaPage.width() >= 1370 ) {
+					width -= this.scrollbarWidth;
+				}
+			}
+
+			// add article preview padding width
+			width += previewPadding;
 
 			// add width of scrollbar (BugId:35767)
 			width += this.scrollbarWidth;

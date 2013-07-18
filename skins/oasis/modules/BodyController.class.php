@@ -50,6 +50,11 @@ class BodyController extends WikiaController {
 	public static function isGridLayoutEnabled() {
 		$app = F::app();
 
+		// Don't enable when responsive layout is enabled
+		if ( self::isResponsiveLayoutEnabled() ) {
+			return false;
+		}
+
 		if( !empty($app->wg->OasisGrid) ) {
 			return true;
 		}
@@ -65,6 +70,17 @@ class BodyController extends WikiaController {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Decide on which pages responsive / liquid layout should be turned on.
+	 * @return Boolean
+	 */
+	public static function isResponsiveLayoutEnabled() {
+		$app = F::app();
+		return !empty( $app->wg->OasisResponsive ) &&
+				// Block liquid layout for corporate pages (needed for devbox environment)
+				empty( $app->wg->EnableWikiaHomePageExt );
 	}
 
 	/**
@@ -348,7 +364,7 @@ class BodyController extends WikiaController {
 		// show corporate header on this page?
 		} else if( HubService::isCorporatePage() ) {
 			$this->headerModuleName = 'PageHeader';
-			
+
 			if( self::isEditPage() ) {
 				$this->headerModuleAction = 'EditPage';
 			} else {

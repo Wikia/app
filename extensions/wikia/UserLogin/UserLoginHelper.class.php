@@ -329,7 +329,7 @@ class UserLoginHelper extends WikiaModel {
 	 */
 	public function sendConfirmationReminderEmail( &$user ) {
 		if( ($user->getOption("cr_mailed", 0) == 1) ) {
-			return Status::newFatal( 'userlogin-error-confirmation-reminder-already-sent' );
+			return false;
 		}
 		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array('language' => $user->getOption('language'), 'type' => 'confirmation-reminder-email') );
 		$user->setOption( "cr_mailed","1" );

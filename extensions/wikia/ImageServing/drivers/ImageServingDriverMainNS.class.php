@@ -72,7 +72,7 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 				$sql[] = "(select il_to from {$imageLinksTable} where il_to = {$this->db->addQuotes($imageName)} limit {$sqlCount} )";
 			}
 			$sql = implode(' UNION ALL ',$sql);
-			$batchResult = $this->db->query($sql, __METHOD__);
+			$batchResult = $this->db->query($sql);
 
 			// do a "group by" on PHP side
 			$batchResponse = array();

@@ -594,22 +594,24 @@ class GlobalTitle extends Title {
 			return $this->mServer;
 		}
 
-		$server = WikiFactory::getVarValueByName( "wgServer", $this->mCityId );
-
 		/**
 		 * special handling for dev boxes
 		 *
 		 * @author macbre
 		 */
-		global $wgDevelEnvironment;
+		global $wgDevelEnvironment, $wgDevelEnvironmentName;
 		if (!empty($wgDevelEnvironment)) {
-			$this->mServer = WikiFactory::getLocalEnvURL($server);
-			return $this->mServer;
+			$dbname = WikiFactory::IDtoDB( $this->mCityId );
+			if ($dbname !== false) {
+				$this->mServer = "http://{$dbname}.{$wgDevelEnvironmentName}.wikia-dev.com";
+				return $this->mServer;
+			}
 		}
 
 		/**
 		 * get value from city_variables
 		 */
+		$server = WikiFactory::getVarValueByName( "wgServer", $this->mCityId );
 		if( $server ) {
 			$this->mServer = $server;
 			return $server;

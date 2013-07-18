@@ -1,15 +1,15 @@
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/forms";
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/menus";
-@import "../../../../skins/oasis/css/mixins/opacity";
-@import "../../../../skins/oasis/css/mixins/transition";
-@import "../../../../skins/oasis/css/mixins/wordmark";
-@import "../../../../skins/oasis/css/core/layout";
-@import "../../../../skins/oasis/css/core/color";
-@import "../../Listusers/css/table";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/forms";
+@import "skins/oasis/css/mixins/gradient";
+@import "skins/oasis/css/mixins/menus";
+@import "skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/mixins/transition";
+@import "skins/oasis/css/mixins/wordmark";
+@import "skins/oasis/css/core/layout";
+@import "skins/oasis/css/core/color";
+@import "extensions/wikia/Listusers/css/table";
 
 $admin-dashboard-content-width: 690px;
 $admin-dashboard-header-height: 40px;
@@ -219,9 +219,6 @@ $color-highlight-column: rgba($color-page, 0);
 							&.userrights {
 								background-position: -300px 0;
 							}
-							&.specialcsstool {
-								background-position: -900px 0;
-							}
 
 							&.communitycorner {
 								background-position: -350px 0;
@@ -330,25 +327,34 @@ $color-highlight-column: rgba($color-page, 0);
 .WikiaArticle {
 	@include box-shadow(1px, 1px, 1px, $color-admin-article-box-shadow);
 	border-bottom: 1px solid $color-admin-article-border;
-	border-right: 1px solid $color-admin-article-border;
 	float: left;
 	padding: 20px 0 0 0;
 	position: relative;
-	width: $admin-dashboard-content-width;
 	z-index: $base-z;
+
+	@if ( not $responsive-layout-enabled ) {
+		border-right: 1px solid $color-admin-article-border;
+		width: $admin-dashboard-content-width;
+	}
+
 	&.AdminDashboardChromedArticle {
 		@include box-shadow(0, 0, 0, $color-body);
 		float: none;
 		padding: 0 12px 0 5px;
-		width: $width-outside - 18px;
+
+		@if ( not $responsive-layout-enabled ) {
+			width: $width-outside - 18px;
+		}
 	}
 	fieldset {
 		border: solid 1px $color-links;
 	}
 }
 
-.oasis-one-column .WikiaMainContent {
-	width: 690px;
+@if ( not $responsive-layout-enabled ) {
+	.oasis-one-column .WikiaMainContent {
+		width: 690px;
+	}
 }
 
 .WikiaGrid {
@@ -367,30 +373,32 @@ $color-highlight-column: rgba($color-page, 0);
 	height: 75px;
 	margin-bottom: 10px;
 	padding-bottom: 0;
-	.shadow-mask {
-		display: none;
-	}
-	>nav {
-		bottom: 0;
-	}
-	>.buttons {
-		bottom: auto;
-		top: 15px;
-	}
-	.WikiaSearch {
-		bottom: 0;
-		position: absolute;
-		right: 10px;
-		input[type=text] {
-			width: 250px;
-		}
-	}
 	h1:before {
 		display: none;
 	}
-	.wordmark {
+	.shadow-mask {
+		display: none;
+	}
+	> nav {
 		bottom: 0;
-		position: absolute;
+	}
+	@if ( not $responsive-layout-enabled ) {
+		>.buttons {
+			bottom: auto;
+			top: 15px;
+		}
+		.WikiaSearch {
+			bottom: 0;
+			position: absolute;
+			right: 10px;
+			input[type=text] {
+				width: 250px;
+			}
+		}
+		.wordmark {
+			bottom: 0;
+			position: absolute;
+		}
 	}
 }
 
@@ -479,5 +487,14 @@ $color-highlight-column: rgba($color-page, 0);
 		background: linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* W3C */
 		display: block;
 		padding: 10px 10px 7px 0;
+	}
+}
+
+@if ( $responsive-layout-enabled ) {
+	// TODO: To be changed when final proposal for new search placement for small screens layout will be decided
+	@media screen and (max-width: 1023px) {
+		.adm-dash-search {
+			display: none;
+		}
 	}
 }

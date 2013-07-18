@@ -373,14 +373,6 @@ jQuery(function($){
 					label: 'result-item-' + el.data('pos') + '-image' + (el.data('event') === 'search_click_wiki-no-thumb' ? '-placeholder' : ''),
 					trackingMethod: 'both'
 				});
-			}).on('mousedown', '.thumb-tracking', function(e){
-				var el = $(e.currentTarget);
-				track({
-					browserEvent: e,
-					category: category,
-					label: 'result-item-' + 'image-' + (el.data('event') === 'search_click_match' ? 'push-top' : el.data('pos') ),
-					trackingMethod: 'both'
-				});
 			}).on('mousedown', '.image', function(e) {
 				track({
 					browserEvent: e,
@@ -580,7 +572,7 @@ jQuery(function($){
 				el.hasClass('real-name') ||
 				parent.hasClass('wall-owner') ||
 				parent.hasClass('subtle')
-			) {
+				) {
 				label = 'username';
 			} else if (parent.hasClass('activityfeed-diff')) {
 				label = 'diff';

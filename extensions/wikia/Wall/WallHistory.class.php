@@ -38,8 +38,6 @@ class WallHistory extends WikiaModel {
 				$this->addStatChangeAction( $type, $feed, $user );
 			break;
 		}
-
-		WikiaDataAccess::cacheWithLockPurge( $this->getLastPostsMemcKey() );
 	}
 
 	public function remove($pageId) {
@@ -157,7 +155,7 @@ class WallHistory extends WikiaModel {
 	}
 
 	/**
-	 * Gets data for Forum Activity Module with a cache layer.
+	 * Gets data for Forum Activity Module.
 	 *
 	 * @param int $ns    The namespace (this should theoretically work for Forum and Wall)
 	 * @param int $count The number of activities to get
@@ -165,40 +163,6 @@ class WallHistory extends WikiaModel {
 	 * @return array Formatted data that gets passed to the view
 	 */
 	public function  getLastPosts( $ns, $count = self::DEFAULT_LAST_POSTS_COUNT ) {
-		wfProfileIn( __METHOD__ );
-
-		$key = $this->getLastPostsMemcKey();
-		$cacheTime = 86400; // Cache for a day unless explicitly purged by `WallHistory::add()`.
-
-		$data = WikiaDataAccess::cacheWithLock( $key, $cacheTime, function () use ( $ns, $count ) {
-			return $this->getLastPostsFromDB( $ns, $count );
-		} );
-
-		wfProfileOut( __METHOD__ );
-
-		return $data;
-	}
-
-	/**
-	 * Get a wiki-specific memcache key to use in the `getLastPosts()` method.
-	 *
-	 * @return string
-	 */
-	public function getLastPostsMemcKey() {
-		return wfMemcKey( 'WallHistory::getLastPosts' );
-	}
-
-	/**
-	 * Gets data for Forum Activity Module directly from the DB.
-	 *
-	 * @param int $ns    The namespace (this should theoretically work for Forum and Wall)
-	 * @param int $count The number of activities to get
-	 *
-	 * @return array Formatted data that gets passed to the view
-	 */
-	public function  getLastPostsFromDB( $ns, $count = self::DEFAULT_LAST_POSTS_COUNT ) {
-		wfProfileIn( __METHOD__ );
-
 		$ns    = (int)MWNamespace::getSubject( $ns );
 		$count = (int)$count;
 		$db    = $this->getDB( DB_SLAVE );
@@ -214,19 +178,7 @@ class WallHistory extends WikiaModel {
 				`comment_id`,
 				`action`,
 				`event_date`,
-				(
-					SELECT `metatitle`
-					FROM `wall_history` AS `last_title`
-					WHERE
-						`parent_comment_id` = `wall_history`.`parent_comment_id`
-						AND `event_date` = (
-							SELECT MAX(`event_date`)
-							FROM `wall_history`
-							WHERE
-								`action` IN (' . WH_EDIT . ', ' . WH_NEW . ')
-								AND `parent_comment_id` = `last_title`.`parent_comment_id`
-						)
-				) AS `metatitle`,
+				`last_title`.`metatitle`,
 				`reason`,
 				`revision_id`
 			FROM `wall_history`
@@ -242,20 +194,39 @@ class WallHistory extends WikiaModel {
 							FROM `wall_history`
 							WHERE
 								`action` = ' . WH_NEW . '
-								AND `deleted_or_removed` = 0
-								AND `post_ns` = ' . $ns . '
 								AND `is_reply` = 0
+								AND `deleted_or_removed` = 0
 						) AS `not_removed_parents`
 						USING (`parent_comment_id`)
 					WHERE
 						`action` = ' . WH_NEW . '
 						AND `deleted_or_removed` = 0
-						AND `post_ns` = ' . $ns . '
 					GROUP BY `parent_comment_id`
-					ORDER BY `event_date` DESC
-					LIMIT ' . $count . '
 				) AS `last_new_post_date`
-				USING (`parent_comment_id`, `event_date`)',
+				USING (`parent_comment_id`, `event_date`)
+			RIGHT JOIN
+				(
+					SELECT
+						`parent_comment_id`,
+						`metatitle`
+					FROM `wall_history`
+					RIGHT JOIN
+						(
+							SELECT
+								`parent_comment_id`,
+								MAX(`event_date`) AS `event_date`
+							FROM `wall_history`
+							WHERE `action` IN (' . WH_EDIT . ', ' . WH_NEW . ')
+							GROUP BY `parent_comment_id`
+						) AS `last_edit_date`
+						USING (`parent_comment_id`, `event_date`)
+				) AS `last_title`
+				USING (`parent_comment_id`)
+			WHERE
+				`action` = ' . WH_NEW . '
+				AND `post_ns` = ' . $ns . '
+			ORDER BY `event_date` DESC
+			LIMIT ' . $count,
 			__METHOD__
 		);
 
@@ -266,8 +237,6 @@ class WallHistory extends WikiaModel {
 				$out[] = $data;
 			}
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return $out;
 	}

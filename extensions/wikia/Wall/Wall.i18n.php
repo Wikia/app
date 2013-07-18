@@ -1343,7 +1343,6 @@ $messages['bs'] = array(
 /** Catalan (català)
  * @author BroOk
  * @author Erdemaslancan
- * @author Marcmpujol
  */
 $messages['ca'] = array(
 	'wall-no-title' => 'Sense títol',
@@ -1398,7 +1397,6 @@ $messages['ca'] = array(
 	'wall-message-removed-reply-because' => '$1 ha retirat aquesta resposta perquè:',
 	'wall-message-deleted-reply-because' => '$1 ha eliminat aquesta resposta perquè:',
 	'wall-message-closed-by' => '[[$2|$1]] ha tancat aquest tema',
-	'wall-message-closed-by-because' => '$1 ha tancat aquest tema per:',
 	'wall-message-restore-reply' => 'Restaurar resposta',
 	'wall-delete-reason' => "Acció d'usuari/admin",
 	'wall-user-talk-page-archive-anchor' => 'Veure la pàgina de discussió arxivada',
@@ -1422,10 +1420,6 @@ El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'wall-action-remove-thread-confirm-info' => "El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'wall-action-remove-reply-confirm-info' => "El missatge original i el teu resum continuaran apareixent a l'historial del wiki.",
 	'wall-action-remove-confirm-ok' => 'Retirar',
-	'wall-action-close-thread-title' => 'Tancar aquest tema',
-	'wall-action-close-confirm' => 'Per què vols tancar el tema:',
-	'wall-action-close-thread-confirm-info' => 'Aquest tema seguirà sent visible.',
-	'wall-action-close-confirm-ok' => 'Tancar',
 	'wall-action-admin-thread-title' => 'Esborrar aquest tema',
 	'wall-action-admin-reply-title' => 'Esborrar aquesta resposta',
 	'wall-action-admin-confirm' => "Si us plau, diga'ns per què vols esborrar això:",
@@ -1513,7 +1507,6 @@ El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'wall-recentchanges-closed-thread' => 'ha tancat el tema "[[$1|$2]] en el mur de [[$3|$4]]"',
 	'wall-recentchanges-reopened-thread' => 'ha restaurat el tema "[[$1|$2]] en el mur de [[$3|$4]]"',
 	'wall-recentchanges-deleted-reply-title' => 'Una resposta en el mur de missatges',
-	'wall-recentchanges-wall-created-title' => "S'ha creat un mur de missatges",
 	'wall-recentchanges-namespace-selector-message-wall' => 'Mur de missatges',
 	'wall-recentchanges-thread-group' => '$1 en el <a href="$2">Mur de $3</a>',
 	'wall-recentchanges-history-link' => 'Historial del mur',
@@ -1613,7 +1606,7 @@ ___________________________________________<br />
 	'wall-notifications-notifyeveryone' => 'Destacat per $1',
 	'wall-message-notifyeveryone' => 'Destacar aquest tema',
 	'wall-message-unnotifyeveryone' => 'Deixar de destacar aquest tema',
-	'wall-message-notifyeveryone-tooltip' => 'Tot usuari que ha iniciat sessió en el wiki serà notificat sobre aquest tema',
+	'wall-message-notifyeveryone-tooltip' => 'Tot usuari que ha iniciat sessió en el wiki serà notificat sobre aquest tema', # Fuzzy
 	'wall-votes-modal-showmore' => 'Veure altres que estan a favor',
 	'wall-votes-modal-title' => 'A favor',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Una persona ha donat|$1 persones han donat}} "a favor" a aquest missatge',
@@ -1634,15 +1627,6 @@ ___________________________________________<br />
 	'wall-topic-edit' => 'Editar temes',
 	'wall-topic-edit-save' => 'Desa',
 	'wall-topic-edit-cancel' => 'Cancel·lar',
-);
-
-/** Chechen (нохчийн)
- * @author Умар
- */
-$messages['ce'] = array(
-	'wall-message-wall' => 'Декъашхойн дийцаре',
-	'wall-message-wall-shorten' => 'дийцаре',
-	'mail-notification-html-button' => 'Хьажа дийцаре',
 );
 
 /** Czech (česky)
@@ -5414,7 +5398,7 @@ $messages['nl'] = array(
 	'wall-button-to-preview-comment' => 'Voorvertoning',
 	'wall-button-to-cancel-preview' => 'Bewerken',
 	'wall-button-to-submit-comment' => 'Opslaan',
-	'wall-button-to-submit-reply' => 'Antwoorden',
+	'wall-button-to-submit-reply' => 'Beantwoorden',
 	'wall-button-to-submit-comment-no-topic' => 'Bericht plaatsen zonder koptekst',
 	'wall-button-save-changes' => 'Wijzigingen opslaan',
 	'wall-button-cancel-changes' => 'Annuleren',
@@ -8100,7 +8084,6 @@ Li messaedje d' oridjinne eyet vosse rascourti seront todi veyåves dins l' istw
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
- * @author Liuxinyu970226
  * @author Sam Wang
  * @author Yfdyh000
  * @author 乌拉跨氪
@@ -8115,21 +8098,12 @@ $messages['zh-hans'] = array(
 	'wall-message-edited' => '<a href="$3" >编辑者</a> <a class="username" href="$1">$2</a>',
 	'wall-message-edited-summary' => '<a href="$4" >$1 由 </a><a class="username" href="$2">$3</a>',
 	'wall-message-update-topics-summary' => '更改主题',
-	'wall-message-update-highlight-summary' => '突出显示',
-	'wall-message-update-removed-highlight-summary' => '删除突出显示',
-	'wall-message-mywall' => '我的墙',
 	'wall-toolbar-history' => '历史',
 	'wall-message-notify' => '通知管理员',
 	'wall-message-remove' => '移除',
 	'wall-message-rev-delete' => '修订版本删除',
-	'wall-message-fast-admin-delete-message' => 'VSTF 删除',
 	'wall-message-quote-button' => '引用',
 	'wall-message-elseswall' => '$1的留言墙',
-	'wall-message-no-permission' => '您没有权限执行此操作的消息',
-	'wall-thread-removed' => '已移除',
-	'wall-thread-isnotifyeveryone' => '突出显示',
-	'wall-thread-deleted' => '已删除',
-	'wall-thread-closed' => '已关闭',
 	'wall-default-title' => '来自$1的信息',
 	'wall-placeholder-topic' => '这是什么？',
 	'wall-placeholder-reply' => '发表回复',
@@ -8141,15 +8115,11 @@ $messages['zh-hans'] = array(
 	'wall-button-cancel-changes' => '取消',
 	'wall-button-done-source' => '完成',
 	'wall-message-edit' => '编辑',
-	'wall-message-more' => '更多',
 	'wall-message-delete' => '删除',
-	'wall-message-close-thread' => '关闭这个标题',
-	'wall-message-reopen-thread' => '重启这个标题',
 	'wall-action-all-confirm-cancel' => '取消',
 	'wall-action-remove-reply-title' => '删除此回复',
 	'wall-delete-error-title' => '错误',
 	'wall-action-remove-confirm-ok' => '删除',
-	'wall-action-close-confirm-ok' => '关闭',
 	'wall-action-admin-reply-title' => '删除本条回复',
 	'wall-action-admin-confirm-ok' => '删除',
 	'wall-notifications' => '通知',

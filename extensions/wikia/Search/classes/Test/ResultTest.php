@@ -330,6 +330,68 @@ class ResultTest extends BaseTest {
 		);
 
 	}
+	
+	/**
+	 * @covers Wikia\Search\Result::getThumbnailHtml
+	 */
+	public function testGetThumbnailHtmlNoHtml() {
+		$mockResult = $this->getMockBuilder( 'Wikia\Search\Result' )
+		                   ->setConstructorArgs( array( array( 'pageid' => 123 ) ) )
+		                   ->setMethods( null )
+		                   ->getMock();
+		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array( 'getThumbnailHtmlForPageId' ) )
+		                      ->getMock();
+		$mockException = $this->getMockBuilder( '\Exception' )
+		                      ->disableOriginalConstructor()
+		                      ->getMock();
+		
+		$reflService = new ReflectionProperty( 'Wikia\Search\Result', 'service' );
+		$reflService->setAccessible( true );
+		$reflService->setValue( $mockResult, $mockService );
+		
+		$mockService
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getThumbnailHtmlForPageId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->throwException( $mockException ) )
+		;
+		$this->assertEquals(
+				'',
+				$mockResult->getThumbnailHtml()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Result::getThumbnailHtml
+	 */
+	public function testGetThumbnailHtmlWithHtml() {
+		$mockResult = $this->getMockBuilder( 'Wikia\Search\Result' )
+		                   ->setConstructorArgs( array( array( 'pageid' => 123 ) ) )
+		                   ->setMethods( null )
+		                   ->getMock();
+		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array( 'getThumbnailHtmlForPageId' ) )
+		                      ->getMock();
+		
+		$reflService = new ReflectionProperty( 'Wikia\Search\Result', 'service' );
+		$reflService->setAccessible( true );
+		$reflService->setValue( $mockResult, $mockService );
+		
+		$img = "<img src='foo.jpg' />";
+		$mockService
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getThumbnailHtmlForPageId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( $img ) )
+		;
+		$this->assertEquals(
+				$img,
+				$mockResult->getThumbnailHtml()
+		);
+	}
 
 	/**
 	 * @covers Wikia\Search\Result::getVideoViews

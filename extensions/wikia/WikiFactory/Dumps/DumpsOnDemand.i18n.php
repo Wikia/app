@@ -676,8 +676,6 @@ $messages['ro'] = array(
 $messages['roa-tara'] = array(
 	'dump-database-curr-pages' => 'Pàggene de mò',
 	'dump-database-full-pages' => 'Pàggene de mò e cunde lore',
-	'dump-database-request' => "Cirche 'n'aggiornamende",
-	'dump-database-request-submit' => "Manne 'a richieste",
 );
 
 /** Russian (русский)

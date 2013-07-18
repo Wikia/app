@@ -43,18 +43,17 @@ class OasisController extends WikiaController {
 		$this->amazonDirectTargetedBuy = null;
 		$this->dynamicYield = null;
 
-		$this->app->registerHook('MakeGlobalVariablesScript', 'OasisController', 'onMakeGlobalVariablesScript');
 		wfProfileOut(__METHOD__);
 	}
 
 	/**
-	 * Add global JS variables with wgJsAtBottom
+	 * Add global JS variables
 	 *
 	 * @param array $vars global variables list
 	 * @return boolean return true
 	 */
 	public function onMakeGlobalVariablesScript(Array &$vars) {
-		$vars['wgJsAtBottom'] = self::JsAtBottom();
+		$vars['wgIsResponsiveLayoutEnabled'] = BodyController::isResponsiveLayoutEnabled();
 		return true;
 	}
 
@@ -89,20 +88,13 @@ class OasisController extends WikiaController {
 
 		wfProfileIn(__METHOD__);
 
-		/* set the grid or full width if passed in, otherwise, respect the default */
+		/* set the grid if passed in, otherwise, respect the default */
 		$grid = $wgRequest->getVal('wikiagrid', '');
-		$fullhead = $wgRequest->getVal('wikiafullheader', '');
 
 		if ( '1' === $grid ) {
 			$this->wg->OasisGrid = true;
 		} else if ( '0' === $grid ) {
 			$this->wg->OasisGrid = false;
-		}
-
-		if ( '1' === $fullhead ) {
-			$this->wg->GlobalHeaderFullWidth = true;
-		} else if ( '0' === $fullhead ) {
-			$this->wg->GlobalHeaderFullWidth = false;
 		}
 		/* end grid or full width */
 
@@ -125,6 +117,10 @@ class OasisController extends WikiaController {
 		if(!empty($wikiWelcome)) {
 			$wgOut->addStyle( $this->assetsManager->getSassCommonURL( 'extensions/wikia/CreateNewWiki/css/WikiWelcome.scss' ) );
 			$wgOut->addScript( '<script src="' . $this->wg->ExtensionsPath . '/wikia/CreateNewWiki/js/WikiWelcome.js"></script>' );
+		}
+
+		if ( BodyController::isResponsiveLayoutEnabled() ) {
+			$wgOut->addStyle( $this->assetsManager->getSassCommonURL( 'skins/oasis/css/core/responsive.scss' ) );
 		}
 
 		$renderContentOnly = false;
@@ -169,11 +165,6 @@ class OasisController extends WikiaController {
 		// mark dark themes
 		if (SassUtil::isThemeDark()) {
 			$bodyClasses[] = 'oasis-dark-theme';
-		}
-
-		// support for oasis split skin
-		if (!empty($this->wg->GlobalHeaderFullWidth)) {
-			$bodyClasses[] = 'oasis-split-skin';
 		}
 
 		$this->bodyClasses = $bodyClasses;

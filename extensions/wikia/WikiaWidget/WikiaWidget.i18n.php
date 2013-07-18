@@ -376,13 +376,6 @@ $messages['tl'] = array(
 	'wikiawidget' => 'Mga widyet ng Wikia',
 );
 
-/** Turkish (Türkçe)
- * @author Incelemeelemani
- */
-$messages['tr'] = array(
-	'wikiawidget' => 'Wikia ekran uygulamaları',
-);
-
 /** Tatar (Cyrillic script) (татарча)
  * @author Ильнар
  */

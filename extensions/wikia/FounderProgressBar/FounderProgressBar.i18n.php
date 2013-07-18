@@ -189,7 +189,6 @@ $messages['br'] = array(
 	'founderprogressbar-user-add5-label' => 'Tizhout 5 profil implijer',
 	'founderprogressbar-recentchanges-visit-label' => 'Gweladenniñ Kemmoù Diwezhañ',
 	'founderprogressbar-wordmark-edit-label' => 'Enporzhiañ ul logo',
-	'founderprogressbar-uncategorized-visit-label' => 'Gwelet ar pajennoù dirumm',
 	'founderprogressbar-total-edit300-label' => "Tizhout {{PLURAL:$1|ur c'hemm|$1 kemm}}",
 	'founderprogressbar-bonus-photo-add10-label' => 'Lakaat $1 skeudenn ouzhpenn',
 	'founderprogressbar-bonus-page-add5-label' => 'Ouzhpennañ $1 {{PLURAL:$1|pajenn}} all',

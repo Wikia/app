@@ -3900,23 +3900,18 @@ class Title {
 	 * @return Array of parents in the form:
 	 *	  $parent => $currentarticle
 	 */
-	/* Wikia changes start */
-	/* Wikia added possibility to use master */
-	public function getParentCategories( $useMaster = false ) {
-	/* Wikia changes end */
+	public function getParentCategories() {
 		global $wgContLang;
 
 		$data = array();
 
 		$titleKey = $this->getArticleId();
-		
+
 		if ( $titleKey === 0 ) {
 			return $data;
 		}
 
-		/* Wikia changes start */
-		$dbr = $useMaster === false ? wfGetDB( DB_SLAVE ) : wfGetDB( DB_MASTER );
-		/* Wikia changes end */
+		$dbr = wfGetDB( DB_SLAVE );
 
 		$res = $dbr->select( 'categorylinks', '*',
 			array(
