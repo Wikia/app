@@ -4,7 +4,7 @@
  * @group Integration
  */
 
-class ImageServingIndexerTest extends WikiaBaseTest {
+class ImageServingDriverBaseTest extends WikiaBaseTest {
 
 
 	/**
