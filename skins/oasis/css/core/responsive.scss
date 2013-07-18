@@ -1,5 +1,6 @@
 @import "color";
 @import "layout";
+@import "responsive-font-sizing";
 @import "../mixins/box-sizing";
 @import "resources/wikia/libraries/bourbon/bourbon";
 
@@ -189,87 +190,9 @@ body > .global-notification,
 	width: $width-outside;
 }
 
-.WikiaActivityModule {
-	li em {
-		font-size: 15px;
-		line-height: 18px;
-		width: auto;
-	}
-
-	.edited-by {
-		font-size: 12px;
-	}
-}
-
-.WikiaArticle {
-	font-size: 14px;
-	line-height: 22px;
-
-	h2 {
-		font-size: 20px;
-	}
-
-	h3 {
-		font-size: 17px;
-	}
-
-	h4 {
-		font-size: 15px;
-	}
-
-	li {
-		line-height: 22px;
-	}
-
-	.editsection {
-		font-size: 14px;
-
-		img {
-			margin-right: 1px;
-		}
-	}
-
-	.thumbcaption {
-		line-height: 20px;
-	}
-}
-
-.WikiaPageHeader {
-	h1 {
-		font-size: 28px;
-		line-height: 28px;
-	}
-}
-
 .WikiaArticle,
 .WikiaArticleFooter {
 	padding: 0;
-}
-
-.WikiaArticle .toc {
-	#toctitle {
-		h2 {
-			font-size: 16px;
-		}
-
-		.toctoggle {
-			font-size: 13px;
-		}
-	}
-
-	ul li {
-		line-height: 20px;
-	}
-}
-
-.tally {
-	font-size: 9px;
-	line-height: 1.5em;
-
-	em {
-		font-size: 28px;
-		margin-right: 3px;
-	}
 }
 
 .WikiHeader {
@@ -351,6 +274,63 @@ body > .global-notification,
 		font-size: 11px;
 	}
 }
+
+// START - edit page fixes
+.editor .WikiaMainContent {
+	float: none;
+	width: 100%;
+}
+
+.editpage-sourcewidemode.mode-source {
+	&.editpage-sourcewidemode-on {
+		.EditPageMain {
+			margin-right: 0;
+			width: 100%;
+		}
+
+		.EditPageMainContainer {
+			margin-right: 0;
+		}
+	}
+
+	.editpage-widemode-trigger {
+		right: $width-rail;
+	}
+}
+
+.editpage-visualwidemode {
+	.EditPageMain {
+		margin-right: 0;
+		width: 100%;
+	}
+
+	.EditPageMainContainer {
+		margin-right: 0;
+	}
+
+	.EditPageToolbar {
+		padding-right: $width-rail;
+
+		.cke_toolbar_expand > a {
+			right: $width-rail + $width-padding;
+		}
+	}
+}
+
+.EditPageMain {
+	margin-right: -$width-rail;
+	padding: 0;
+	width: 100%;
+}
+
+.EditPageMainContainer {
+	margin-right: $width-rail;
+}
+
+.EditPageRail {
+	width: $width-rail;
+}
+// END - edit page fixes
 
 @media screen and (max-width: 1023px) {
 	.WikiaArticle {
