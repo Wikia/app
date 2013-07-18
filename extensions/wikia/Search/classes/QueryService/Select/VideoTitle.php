@@ -19,7 +19,7 @@ class VideoTitle extends AbstractSelect
 	
 	/**
 	 * Maximum duration in seconds
-	 * @var unknown_type
+	 * @var int
 	 */
 	protected $maxDuration;
 	
@@ -51,14 +51,14 @@ class VideoTitle extends AbstractSelect
 	}
 	
 	/**
-	 * @return the $minDuration
+	 * @return int $minDuration
 	 */
 	public function getMinDuration() {
 		return $this->minDuration;
 	}
 
 	/**
-	 * @param number $minDuration
+	 * @param int $minDuration
 	 * @return Wikia\Search\QueryService\Select\VideoTitle
 	 */
 	public function setMinDuration($minDuration) {
@@ -67,14 +67,15 @@ class VideoTitle extends AbstractSelect
 	}
 
 	/**
-	 * @return the $maxDuration
+	 * Returns max duration as set by client code
+	 * @return int $maxDuration
 	 */
 	public function getMaxDuration() {
 		return $this->maxDuration;
 	}
 
 	/**
-	 * @param \Wikia\Search\QueryService\Select\unknown_type $maxDuration
+	 * @param int $maxDuration
 	 * @return Wikia\Search\QueryService\Select\VideoTitle
 	 */
 	public function setMaxDuration($maxDuration) {
