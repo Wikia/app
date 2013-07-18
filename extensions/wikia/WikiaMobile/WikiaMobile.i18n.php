@@ -60,6 +60,7 @@ you should definitely check this out:
 
 	//modal
 	'wikiamobile-image-not-loaded' => 'Image is not available',
+	'wikiamobile-shared-file-not-available' => "Oops, this item is no longer available, but now that you're here, explore the wiki!",
 
 	//404 page
 	'wikiamobile-page-not-found' => "Oops! <b>$1</b> does not exist.",

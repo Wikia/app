@@ -214,7 +214,7 @@ class ImageTweaksHooks {
 				}
 
 				if ( !empty( $imageAttribs['data-image-name'] ) ) {
-					$imageParams['name'] = $imageAttribs['data-image-name'];
+					$imageParams['name'] = htmlspecialchars( $imageAttribs['data-image-key'] );
 				}
 
 				if ( !empty( $fullImageUrl ) ) {
@@ -298,7 +298,7 @@ class ImageTweaksHooks {
 			);
 
 			if ( !empty($imageAttribs['data-video-name'] ) ) {
-				$imageParams['name'] = $imageAttribs['data-video-name'];
+				$imageParams['name'] = htmlspecialchars( $imageAttribs['data-video-key'] );
 			}
 
 			if ( !empty( $options['caption'] ) ) {
