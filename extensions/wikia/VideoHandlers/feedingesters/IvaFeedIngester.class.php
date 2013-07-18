@@ -100,11 +100,12 @@ class IvaFeedIngester extends VideoFeedIngester {
 		'Veggie Tales',
 		'The Following',
 		'Twilight',
-		'The Hunger Games',
+		'Hunger Games',
 	);
 
 	// These are for a Series, TV Show, Season and Episode
 	private static $TV_MEDIA_IDS = array( 24, 25, 26, 27 );
+	private static $EXCLUDE_MEDIA_IDS = array( 3, 12, 14, 15, 33, 36 );	// exclude song types
 
 	const API_PAGE_SIZE = 100;
 
@@ -117,14 +118,16 @@ class IvaFeedIngester extends VideoFeedIngester {
 	public function import( $content = '', $params = array() ) {
 		wfProfileIn( __METHOD__ );
 
-		include_once( dirname( __FILE__ ).'/../../../cldr/CldrNames/CldrNamesEn.php' );
-
-		$debug          = !empty( $params['debug'] );
-		$startDate      = !empty( $params['startDate'] )      ? $params['startDate'] : '';
-		$endDate        = !empty( $params['endDate'] )        ? $params['endDate'] : '';
-		$addlCategories = !empty( $params['addlCategories'] ) ? $params['addlCategories'] : array();
-		$remoteAsset    = !empty( $params['remoteAsset'] );
-		$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug, 'remoteAsset' => $remoteAsset );
+		$debug = !empty( $params['debug'] );
+		$remoteAsset = !empty( $params['remoteAsset'] );
+		$startDate = empty( $params['startDate'] ) ? '' : $params['startDate'];
+		$endDate = empty( $params['endDate'] ) ? '' : $params['endDate'];
+		$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
+		$createParams = array(
+			'addlCategories' => $addlCategories,
+			'debug' => $debug,
+			'remoteAsset' => $remoteAsset
+		);
 
 		$articlesCreated = 0;
 
@@ -189,6 +192,10 @@ class IvaFeedIngester extends VideoFeedIngester {
 			"and (DateModified le datetime'$endDate') ".
 			"and (substringof('$videoSet', Title) eq true)";
 
+		foreach ( self::$EXCLUDE_MEDIA_IDS as $id ) {
+			$filter .= " and (MediaId ne $id) ";
+		}
+
 		return $this->initFeedUrl( $filter, $page );
 	}
 
@@ -241,6 +248,8 @@ class IvaFeedIngester extends VideoFeedIngester {
 			'EntertainmentProgram/TvCategory',
 			'EntertainmentProgram/ProgramToPerformerMaps/Performer',
 			'LanguageSpoken',
+			'LanguageSubtitled',
+			'CountryTarget',
 			'EntertainmentProgram/GameWarning',
 		);
 
@@ -259,6 +268,9 @@ class IvaFeedIngester extends VideoFeedIngester {
 	 */
 	private function ingestVideoURL( $url, $createParams, $defaultKeyword = null ) {
 		wfProfileIn( __METHOD__ );
+
+		// include cldr extension for language, subtitle, target country
+		include( dirname( __FILE__ ).'/../../../cldr/CldrNames/CldrNamesEn.php' );
 
 		// Retrieve the video data from IVA
 		$videos = $this->requestData( $url );
@@ -281,11 +293,6 @@ class IvaFeedIngester extends VideoFeedIngester {
 				continue;
 			}
 
-			if ( !empty($video['TargetCountryId']) && $video['TargetCountryId'] != -1 ) {
-				print "Skip: {$clipData['titleName']} (Id:{$clipData['videoId']}) has regional restrictions.\n";
-				continue;
-			}
-
 			$clipData['thumbnail'] = $video['VideoAssetScreenCapture']['URL'];
 			$clipData['duration'] = $video['StreamLengthinseconds'];
 
@@ -301,10 +308,27 @@ class IvaFeedIngester extends VideoFeedIngester {
 			$clipData['provider'] = 'iva';
 
 			$clipData['language'] = '';
+			$clipData['subtitle'] = '';
 			// $languageNames comes from cldr extension
-			if ( !empty( $video['LanguageSpoken']['LanguageName'] ) && !empty( $languageNames ) ) {
-				$lang = trim( $video['LanguageSpoken']['LanguageName'] );
-				$clipData['language'] =  array_search( $lang, $languageNames );
+			if ( !empty( $languageNames ) ) {
+				// get language
+				if ( !empty( $video['LanguageSpoken']['LanguageName'] ) ) {
+					$lang = trim( $video['LanguageSpoken']['LanguageName'] );
+					$clipData['language'] =  array_search( $lang, $languageNames );
+				}
+
+				// get subtitle
+				if ( !empty( $video['LanguageSubtitled']['LanguageName'] ) ) {
+					$subtitle = trim( $video['LanguageSubtitled']['LanguageName'] );
+					$clipData['subtitle'] =  array_search( $subtitle, $languageNames );
+				}
+			}
+
+			$clipData['targetCountry'] = '';
+			// $countryNames comes from cldr extension
+			if ( !empty( $countryNames ) && !empty( $video['CountryTarget']['CountryName'] ) ) {
+				$targetCountry = trim( $video['CountryTarget']['CountryName'] );
+				$clipData['targetCountry'] =  array_search( $targetCountry, $countryNames );
 			}
 
 			$clipData['industryRating'] = '';
@@ -330,6 +354,12 @@ class IvaFeedIngester extends VideoFeedIngester {
 			} else if ( !empty( $video['EntertainmentProgram']['GameCategory']['Category'] ) ) {
 				$clipData['genres'] = $video['EntertainmentProgram']['GameCategory']['Category'];
 				$keywords[] = 'Gaming';
+			}
+
+			// add to keywords to be used in page category
+			if ( ( !empty( $clipData['language'] ) && $clipData['language'] != 'en' )
+				|| ( !empty( $clipData['subtitle'] ) && $clipData['subtitle'] != 'en' ) ) {
+				$keywords[] = 'Foreign';
 			}
 
 			$clipData['keywords'] = implode( ', ', $keywords );
@@ -456,9 +486,11 @@ class IvaFeedIngester extends VideoFeedIngester {
 			'industryRating' => $data['industryRating'],
 			'provider'       => $data['provider'],
 			'language'       => $data['language'],
+			'subtitle'       => $data['subtitle'],
 			'genres'         => $data['genres'],
 			'actors'         => $data['actors'],
 			'ageRequired'    => $data['ageRequired'],
+			'targetCountry'  => $data['targetCountry'],
 		);
 
 		return $metadata;

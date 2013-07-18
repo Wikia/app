@@ -305,14 +305,23 @@ abstract class ApiWrapper {
 		if ( !isset($metadata['ageGate']) ) {
 			$metadata['ageGate'] = $this->isAgeGate();
 		}
+		if ( !isset( $metadata['ageRequired'] ) ) {
+			$metadata['ageRequired'] = $this->getAgeRequired();
+		}
 		if ( !isset($metadata['language']) ) {
 			$metadata['language'] = $this->getLanguage();
+		}
+		if ( !isset( $metadata['subtitle'] ) ) {
+			$metadata['subtitle'] = $this->getSubtitle();
 		}
 		if ( !isset($metadata['tags']) ) {
 			$metadata['tags'] = $this->getVideoTags();
 		}
 		if ( !isset($metadata['provider']) ) {
 			$metadata['provider'] = $this->getProvider();
+		}
+		if ( !isset( $metadata['targetCountry'] ) ) {
+			$metadata['targetCountry'] = $this->getTargetCountry();
 		}
 
 		$this->metadata = $metadata;
@@ -386,7 +395,23 @@ abstract class ApiWrapper {
 		return false;
 	}
 
+	/**
+	 * get age required
+	 * @return integer
+	 */
+	protected function getAgeRequired() {
+		return 0;
+	}
+
 	protected function getLanguage() {
+		return '';
+	}
+
+	/**
+	 * get subtitle
+	 * @return string
+	 */
+	protected function getSubtitle() {
 		return '';
 	}
 
@@ -405,6 +430,15 @@ abstract class ApiWrapper {
 	protected function getVideoExpirationDate() {
 		return '';
 	}
+
+	/**
+	 * get target country
+	 * @return string
+	 */
+	protected function getTargetCountry() {
+		return '';
+	}
+
 }
 
 class EmptyResponseException extends Exception {
