@@ -1,0 +1,23 @@
+/**
+ * Styles specific to file page on mobile
+ * @author Liz Lee
+ */
+.video-page-caption {
+	p {
+		display: inline;
+	}
+	.video-provider:after {
+		content: ", ";
+	}
+}
+.fullImageLink {
+	margin-top: 10px;
+}
+.filehistory {
+	.videoInfo {
+		display: none;
+	}
+	img {
+		width: 120px;
+	}
+}

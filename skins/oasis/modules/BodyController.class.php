@@ -50,11 +50,6 @@ class BodyController extends WikiaController {
 	public static function isGridLayoutEnabled() {
 		$app = F::app();
 
-		// Don't enable when responsive layout is enabled
-		if ( self::isResponsiveLayoutEnabled() ) {
-			return false;
-		}
-
 		if( !empty($app->wg->OasisGrid) ) {
 			return true;
 		}

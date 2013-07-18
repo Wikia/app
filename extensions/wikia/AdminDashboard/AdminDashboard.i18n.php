@@ -28,6 +28,8 @@ $messages['en'] = array(
 	'admindashboard-control-page-layout-builder-tooltip' => 'Page Layout Builder allows you to create page outlines for users to choose from and use to create new pages.',
 	'admindashboard-control-admin-upload-tool-label' => 'Promote',
 	'admindashboard-control-admin-upload-tool-tooltip' => 'This page allows you to promote your wiki by making it eligible to appear on wikia.com!',
+	'admindashboard-control-special-css-label' => 'CSS',
+	'admindashboard-control-special-css-tooltip' => 'Customize your wiki with local CSS.',
 // Community Controls
 	'admindashboard-controls-community-header' => 'Community',
 	'admindashboard-control-user-list-label' => 'User List',
@@ -105,6 +107,8 @@ $messages['qqq'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'tooltip/hover describing special:createblogpost',
 	'admindashboard-control-multiple-upload-label' => 'label for link to special:MultipleUpload',
 	'admindashboard-control-multiple-upload-tooltip' => 'tooltip/hover describing special:multipleupload',
+	'admindashboard-control-special-css-label' => 'Label for link to Special:CSS page',
+	'admindashboard-control-special-css-tooltip' => 'Tooltip/hover describing Special:CSS',
 );
 
 /** Magyar (magázó) (Magyar (magázó))

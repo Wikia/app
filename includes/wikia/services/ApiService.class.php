@@ -83,13 +83,13 @@ class ApiService extends Service {
 	 * @return string HTTP domain
 	 */
 	private static function getHostByDbName($dbname) {
-		global $wgDevelEnvironment, $wgDevelEnvironmentName;
+		global $wgDevelEnvironment;
+
+		$cityId = WikiFactory::DBtoID($dbname);
+		$hostName = WikiFactory::getVarValueByName('wgServer', $cityId);
+
 		if (!empty($wgDevelEnvironment)) {
-			$hostName = "http://{$dbname}.{$wgDevelEnvironmentName}.wikia-dev.com";
-		}
-		else {
-			$cityId = WikiFactory::DBtoID($dbname);
-			$hostName = WikiFactory::getVarValueByName('wgServer', $cityId);
+			$hostName = WikiFactory::getLocalEnvURL($hostName);
 		}
 
 		return rtrim($hostName, '/');

@@ -47,10 +47,13 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Marcmpujol
  * @author Paucabot
  */
 $messages['ca'] = array(
-	'tog-disablelinksuggest' => "No mostris suggeriments d'enllaços", # Fuzzy
+	'linksuggest-desc' => "Suggereix enllaços als editors en mode d'edició",
+	'tog-disablelinksuggest' => "No mostris suggeriments d'enllaços en mode font",
+	'tog-redirected-from' => '&ndash; redirigit des de $1',
 );
 
 /** Czech (česky)

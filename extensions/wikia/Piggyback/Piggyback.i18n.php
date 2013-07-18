@@ -203,6 +203,15 @@ Verifica le orthographia.',
 	'log-description-piggyback' => 'Iste registro es un historia de personificationes autorisate per le Portacontos.',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'piggyback-nosuchuser' => 'Tidak ada pengguna dengan nama "$1".
+Nama pengguna adalah case sensitive.
+Periksa ejaan Anda.',
+);
+
 /** Italian (italiano)
  * @author Nemo bis
  * @author Sannita

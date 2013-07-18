@@ -202,4 +202,21 @@ class PhalanxHooks extends WikiaObject {
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
+
+	/**
+	 * Make block ID more visible in user block message (BAC-536)
+	 *
+	 * @param array $permErrors
+	 * @param string $action
+	 * @return bool true
+	 */
+	static public function onAfterFormatPermissionsErrorMessage( Array &$permErrors, $action) {
+		foreach($permErrors as &$error) {
+			if (isset($error[5]) && is_numeric($error[5])) {
+				$error[5] = "<big><strong>$error[5]</strong></big>";
+			}
+		}
+
+		return true;
+	}
 }

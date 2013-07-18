@@ -15,7 +15,7 @@
 		// render edit button with dropdown
 		else {
 ?>
-<nav class="<?= $class ?><?= isset($action['href']) ? '' : ' combined' ?>" <?= empty($id) ? '' : 'id="'.$id.'"'?>>
+<nav class="<?= $class ?><?= (isset($action['href']) || $actionName == 'submit') ? '' : ' combined' ?>" <?= empty($id) ? '' : 'id="'.$id.'"'?>>
 <?php
 			// render edit menu
 			if (isset($action['href'])) {
@@ -23,6 +23,10 @@
 	<a <?= !empty($actionAccessKey) ? "accesskey=\"{$actionAccessKey}\"" : '' ?> <?= !empty($data['action']['tabindex']) ? "tabindex=\"{$data['action']['tabindex']}\"" : '' ?> href="<?= empty($action['href']) ? '' : htmlspecialchars($action['href']) ?>" data-id="<?= $actionName ?>" <?= empty($action['id']) ? '' : 'id="'.$action['id'].'"'?>>
 		<?= $icon ?> <?= htmlspecialchars($action['text']) ?>
 	</a>
+<?php
+			}
+			else if ($actionName == 'submit') { ?>
+				<input class="<?= $action['class'] ?>" type="submit" value="<?= $action['text'] ?>"/>
 <?php
 			}
 			// render menu without URL defined for a button
@@ -50,7 +54,7 @@
 				$href = isset($item['href']) ? htmlspecialchars($item['href']) : '#';
 ?>
 		<li>
-			<a href="<?= $href ?>" <?= $accesskey ?> data-id="<?= $key ?>" <?= empty($item['title']) ? '' : ' title="'.$item['title'].'"'; ?> <?= empty($item['id']) ? '' : ' id="'.$item['id'].'"' ?><?= empty($item['class']) ? '' : ' class="'.$item['class'].'"' ?><?= empty($item['attr']) ? '' : ' '.$item['attr'] ?><?= empty($item['class']) ? '' : ' class="'.$item['class'].'"' ?>><?=htmlspecialchars($item['text']) ?></a>
+			<a href="<?= $href ?>" <?= $accesskey ?> data-id="<?= $key ?>" <?= empty($item['title']) ? '' : ' title="'.$item['title'].'"'; ?> <?= empty($item['id']) ? '' : ' id="'.$item['id'].'"' ?><?= empty($item['class']) ? '' : ' class="'.$item['class'].'"' ?><?= empty($item['attr']) ? '' : ' '.$item['attr'] ?>><?=htmlspecialchars($item['text']) ?></a>
 		</li>
 <?php
 			}

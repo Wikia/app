@@ -90,6 +90,14 @@ $messages['br'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Kinnigoù reizhskrivañ evit "$1" : $2',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'spellchecker-info-languages' => 'Лелолуш долу меттанаш ($1)',
+	'spellchecker-info-spellcheck-languages' => 'Мотт',
+);
+
 /** Czech (česky)
  * @author Darth Daron
  */

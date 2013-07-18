@@ -131,6 +131,14 @@ $messages['bg'] = array(
 	'quickstats-number-shortening-billions' => '$1B',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'quickstats-header-date' => 'তারিখ',
+	'quickstats-totals-label' => 'মোট',
+);
+
 /** Tibetan (བོད་ཡིག)
  * @author YeshiTuhden
  */
@@ -688,12 +696,16 @@ $messages['nb'] = array(
 );
 
 /** Nepali (नेपाली)
+ * @author Bhawani Gautam
  * @author सरोज कुमार ढकाल
  */
 $messages['ne'] = array(
 	'quickstats-header-date' => 'मिति',
 	'quickstats-header-views' => 'अवलोकनहरू',
 	'quickstats-header-edits' => 'सम्पादनहरु',
+	'quickstats-header-photos' => 'चित्र',
+	'quickstats-header-likes' => 'मनपर्दो',
+	'quickstats-totals-label' => 'कुल',
 );
 
 /** Dutch (Nederlands)

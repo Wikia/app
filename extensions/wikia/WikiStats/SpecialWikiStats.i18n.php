@@ -1582,10 +1582,14 @@ Si us plau, [[especial: UserLogin|log en o crear un compte]] si vostè no té un
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
 	'wikistats_active_year' => 'шо',
 	'wikistats_username' => 'Декъашхо',
+	'wikistats_wikilang' => 'Мотт:',
+	'wikistats_article_talk' => 'Яззам:Дийцаре',
+	'wikistats_language_all' => 'Берриге меттанаш',
 );
 
 /** Sorani Kurdish (کوردی)
