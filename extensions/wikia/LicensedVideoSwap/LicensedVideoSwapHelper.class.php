@@ -1,5 +1,7 @@
 <?php
 
+use NlpTools\Tokenizers\WhitespaceAndPunctuationTokenizer, NlpTools\Stemmers\PorterStemmer, NlpTools\Similarity\JaccardIndex;
+
 /**
  * LicensedVideoSwap Helper
  * @author Garth Webb
@@ -12,6 +14,18 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	const STATUS_SWAP_NORM = 2;
 	const STATUS_SWAP_EXACT = 3;
 
+	/**
+	 * Duration variation in seconds
+	 * @var int
+	 */
+	const DURATION_DELTA = 10;
+	
+	/**
+	 * Threshold used with duration to constrain matches
+	 * @var float
+	 */
+	const MIN_JACCARD_SIMILARITY = 0.7;
+	
 	const VIDEOS_PER_PAGE = 10;
 	const THUMBNAIL_WIDTH = 500;
 	const THUMBNAIL_HEIGHT = 309;
@@ -20,6 +34,24 @@ class LicensedVideoSwapHelper extends WikiaModel {
 
 	// TTL of 604800 is 7 days.  Expire suggestion cache after this
 	const SUGGESTIONS_TTL = 604800;
+	
+	/**
+	 * Tokenizer for text processing
+	 * @var NlpTools\Tokenizers\WhitespaceAndPunctuationTokenizer
+	 */
+	protected $tokenizer;
+	
+	/**
+	 * Stemmer for text processing
+	 * @var NlpTools\Stemmers\PorterStemmer
+	 */
+	protected $stemmer;
+	
+	/**
+	 * Used to compute Jaccard similarity
+	 * @var NlpTools\Similarity\JaccardIndex
+	 */
+	protected $jaccard;
 
 	/**
 	 * Gets a list of videos that have not yet been swapped (e.g., no decision to keep or not keep the
@@ -216,7 +248,23 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		}
 
 		$readableTitle = $titleObj->getText();
-		$videoRows = $app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', array( 'title' => $readableTitle ) )
+		
+		$params = array( 'title' => $readableTitle );
+		
+		$file = wfFindFile( $titleObj );
+		if (! empty( $file ) ) {
+			$serializedMetadata = $file->getMetadata();
+			if (! empty( $serializedMetadata ) ) {
+				$metadata = unserialize( $serializedMetadata );
+				if (! empty( $metadata['duration'] ) ) {
+					$duration = $metadata['duration'];
+					$params['minseconds'] = $duration - min( [ $duration, self::DURATION_DELTA ] );
+					$params['maxseconds'] = $duration + min( [ $duration, self::DURATION_DELTA ] );  
+				}
+			}
+		}
+		
+		$videoRows = $app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', $params )
 						 ->getData();
 
 		wfSetWikiaPageProp( WPP_LVS_SUGGEST_DATE, $articleId, time() );
@@ -229,7 +277,16 @@ class LicensedVideoSwapHelper extends WikiaModel {
 
 		$videos = array();
 		$count = 0;
+		
+		$titleTokenized = $this->getNormalizedTokens( $readableTitle );
+
 		foreach ($videoRows as $videoInfo) {
+			
+			$videoRowTitleTokenized = $this->getNormalizedTokens( preg_replace( '/^File:/', '',  $videoInfo['title'] ) );
+			if ( $this->getJaccard()->similarity( $titleTokenized, $videoRowTitleTokenized ) < self::MIN_JACCARD_SIMILARITY ) {
+				continue;
+			}
+			
 			$videoDetail = $helper->getVideoDetail( $videoInfo,
 													self::THUMBNAIL_WIDTH,
 													self::THUMBNAIL_HEIGHT,
@@ -475,4 +532,47 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		return $pagination;
 	}
 
+	/**
+	 * Lazy-loads dependency
+	 * @return \NlpTools\Stemmers\PorterStemmer
+	 */
+	protected function getStemmer() {
+		if ( $this->stemmer === null ) {
+			$this->stemmer = new PorterStemmer;
+		}
+		return $this->stemmer;
+	}
+	
+	/**
+	 * Lazy-loads dependency
+	 * @return \NlpTools\Tokenizers\WhitespaceAndPunctuationTokenizer
+	 */
+	protected function getTokenizer() {
+		if ( $this->tokenizer === null ) {
+			$this->tokenizer = new WhitespaceAndPunctuationTokenizer;
+		}
+		return $this->tokenizer;
+	}
+	
+	/**
+	 * Lazy-loads dependency
+	 * @return \NlpTools\Similarity\JaccardIndex
+	 */
+	protected function getJaccard() {
+		if ( $this->jaccard === null ) {
+			$this->jaccard = new JaccardIndex;
+		}
+		return $this->jaccard;
+	}
+	
+	/**
+	 * This gets all important tokens by tokenizing, stemming, and then stripping punctuation tokens
+	 * @param string $str
+	 * @return array
+	 */
+	protected function getNormalizedTokens( $str ) {
+		return array_filter( $this->getStemmer()->stemAll( $this->getTokenizer()->tokenize( $str ) ), 
+				function( $val ) { return preg_match( '/[[:punct:]]/', $val ) == 0; } );
+	}
+	
 }
