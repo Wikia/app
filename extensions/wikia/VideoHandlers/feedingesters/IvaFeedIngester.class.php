@@ -293,6 +293,11 @@ class IvaFeedIngester extends VideoFeedIngester {
 				continue;
 			}
 
+			if ( isset( $video['EntertainmentProgram']['OkToEncodeAndServe'] ) && $video['EntertainmentProgram']['OkToEncodeAndServe'] == false ) {
+				print "Skip: {$clipData['titleName']} (Id:{$clipData['videoId']}) has OkToEncodeAndServe set to false.\n";
+				continue;
+			}
+
 			$clipData['thumbnail'] = $video['VideoAssetScreenCapture']['URL'];
 			$clipData['duration'] = $video['StreamLengthinseconds'];
 
