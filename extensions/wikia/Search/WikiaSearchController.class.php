@@ -306,7 +306,19 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $this->wg->OnWikiSearchIncludesWikiMatch && $searchConfig->hasWikiMatch() ) {
 			$this->registerWikiMatch( $searchConfig );
 		}
-		$this->setVal( 'topWikiArticles', ( $searchConfig->getInterWiki() ) ? '' : $this->sendSelfRequest( 'topWikiArticles' ) ); 
+		$topWikiArticlesHtml = '';
+		if (! $searchConfig->getInterWiki() ) {
+			$dbname = $this->wg->DBName;
+			$cacheKey = wfMemcKey( __CLASS__, 'WikiaSearch', 'topWikiArticles', $this->wg->CityId );
+			$topWikiArticlesHtml = WikiaDataAccess::cache( 
+				$cacheKey,
+				86400 * 5, // 5 days, one business week
+				function () {
+					return F::app()->renderView( 'WikiaSearchController', 'topWikiArticles' );
+				}
+			);
+		}
+		$this->setVal( 'topWikiArticles', $topWikiArticlesHtml ); 
 	}
 	
 	/**
