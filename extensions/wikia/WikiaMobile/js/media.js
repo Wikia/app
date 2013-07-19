@@ -490,7 +490,9 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		currentWrapper = wkMdlImages.getElementsByClassName('current')[0];
 		currentWrapperStyle = currentWrapper.style;
 
-		shareBtn.style.display = 'block';
+		if( shareBtn ) {
+			shareBtn.style.display = 'block';
+		}
 		toggleGallery(true);
 		setupImage();
 	}
