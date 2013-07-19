@@ -76,22 +76,27 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	public function topWikiArticles() {
-		$pageData = $this->app->sendRequest( 'ArticlesApiController', 'getTop', [ 'namespaces' => 0 ] )->getData();
-		$ids = [];
-		$counter = 0;
-		foreach ( $pageData['items'] as $pageDatum ) {
-			$ids[] = $pageDatum['id'];
-			if ( $counter++ > 12 ) {
-				break;
-			}
-		}
-		$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', [ 'ids' => implode( ',', $ids ), 'height' => 200, 'width' => 200 ] )->getData();
 		$pages = [];
-		foreach ( $detailResponse['items'] as $item ) {
-			if (! empty( $item['thumbnail'] ) ) {
-				$pages[] = $item;
+		try {
+			$pageData = $this->app->sendRequest( 'ArticlesApiController', 'getTop', [ 'namespaces' => 0 ] )->getData();
+			$ids = [];
+			$counter = 0;
+			foreach ( $pageData['items'] as $pageDatum ) {
+				$ids[] = $pageDatum['id'];
+				if ( $counter++ > 12 ) {
+					break;
+				}
 			}
-		}
+			if (! empty( $ids ) ) { 
+				$params = [ 'ids' => implode( ',', $ids ), 'height' => 200, 'width' => 200 ];
+				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
+				foreach ( $detailResponse['items'] as $item ) {
+					if (! empty( $item['thumbnail'] ) ) {
+						$pages[] = $item;
+					}
+				}
+			}
+		} catch ( Exception $e ) { } // ignoring API exceptions for gracefulness
 		$this->setVal( 'pages', $pages );
 	}
 
