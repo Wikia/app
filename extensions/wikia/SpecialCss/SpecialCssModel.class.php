@@ -394,17 +394,18 @@ class SpecialCssModel extends WikiaModel {
 	}
 
 	/**
-	 * @desc Returns array with CSS Updates order by timestamp
+	 * @desc Returns array with CSS Updates ordered by timestamp
 	 *
 	 * @param $cssUpdates Array with CSS Updates in order by page id
 	 * @param $pageIds Array with page ids in order by timestamp
+     *
 	 * @return array
 	 */
-	private function getCssRevisionsInOrder($cssUpdates, $pageIds) {
+	private function getCssRevisionsInOrder( $cssUpdates, $pageIds ) {
 		$cssUpdatesInOrder = [];
 
-		foreach ($pageIds as $id) {
-			if(isset($cssUpdates[$id])) {
+		foreach( $pageIds as $id ) {
+			if( isset( $cssUpdates[$id] ) ) {
 				$cssUpdatesInOrder[] = $cssUpdates[$id];
 			}
 		}

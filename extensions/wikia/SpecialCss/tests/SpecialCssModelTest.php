@@ -2,7 +2,7 @@
 class SpecialCssModelTest extends WikiaBaseTest {
 	const FULL_URL_EXAMPLE = 'http://www.wikia.com/wiki/Special:CSS';
 	const LOCAL_URL_EXAMPLE = '/wiki/Special:CSS';
-	
+
 	private $wgCssUpdatesLangMapMock = [
 		'en' => 'wikia',
 		'pl' => 'plwikia',
@@ -335,7 +335,7 @@ class SpecialCssModelTest extends WikiaBaseTest {
 	public function testGetCssUpdateSection( $blogPostWikitext, $expected ) {
 		$getCssUpdateSectionMethod = new ReflectionMethod('SpecialCssModel', 'getCssUpdateSection');
 		$getCssUpdateSectionMethod->setAccessible(true);
-		
+
 		$specialCssModelMock = $this->getMock( 'SpecialCssModel', ['getCssUpdateHeadline'] );
 		$specialCssModelMock->expects( $this->once() )
 			->method( 'getCssUpdateHeadline' )
@@ -343,10 +343,10 @@ class SpecialCssModelTest extends WikiaBaseTest {
 
 		$this->assertEquals( $expected, $getCssUpdateSectionMethod->invoke( $specialCssModelMock, $blogPostWikitext ) );
 	}
-	
+
 	public function testGetCssUpdateSectionDataProvider() {
 		return [
-			'CSS Updates section in the middle' => 
+			'CSS Updates section in the middle' =>
 			[
 				'blogPostWikitext' => '===one===
 da da da
@@ -362,7 +362,7 @@ da da da
 asdasdasd
 asdasdasd
 asdasdasd
-', 
+',
 				'expected' => '* point one,
 * point two,
 * new with=100
@@ -396,7 +396,7 @@ asdasdasd
 * 1a,
 * 1b.'
 			],
-			'CSS Updates section at the end' => 
+			'CSS Updates section at the end' =>
 			[
 				'blogPostWikitext' => '===one===
 da da da
@@ -446,6 +446,80 @@ This is the last one.',
 * 1b.
 Paragraph text, text, sample text.'
 			]
+		];
+	}
+
+	/**
+	 * @dataProvider testGetCssRevisionsInOrderDataProvider
+	 *
+	 * @param Array $cssUpdatesMock Mock of an array returned from MW API with revisions data of given pages
+	 * @param Array $pageIdsMock Mock of an array with pages' ids in the correct order
+	 *
+	 * @param Array $expected
+	 */
+	public function testGetCssRevisionsInOrder( $cssUpdatesMock, $pageIdsMock, $expected ) {
+		$getCssRevisionsInOrderMethod = new ReflectionMethod('SpecialCssModel', 'getCssRevisionsInOrder');
+		$getCssRevisionsInOrderMethod->setAccessible(true);
+
+		$this->assertEquals( $expected, $getCssRevisionsInOrderMethod->invoke( new SpecialCssModel(), $cssUpdatesMock, $pageIdsMock ) );
+	}
+
+	public function testGetCssRevisionsInOrderDataProvider() {
+		return [
+			'empty data' => [
+				'$cssUpdatesMock' => [],
+				'$pageIdsMock' => [],
+				'$expected' => []
+			],
+			'page_ids order is the same as timestamp order' => [
+				'$cssUpdatesMock' => [
+					1 => [ 'page #1 data' ],
+					2 => [ 'page #2 data' ],
+					3 => [ 'page #3 data' ],
+					4 => [ 'page #4 data' ],
+					5 => [ 'page #5 data' ]
+				],
+				'$pageIdsMock' => [ 1, 2, 3, 4, 5 ],
+				'$expected' => [
+					0 => [ 'page #1 data' ],
+					1 => [ 'page #2 data' ],
+					2 => [ 'page #3 data' ],
+					3 => [ 'page #4 data' ],
+					4 => [ 'page #5 data' ]
+				]
+			],
+			'page_ids order is different from timestamp order' => [
+				'$cssUpdatesMock' => [
+					1 => [ 'page #1 data' ],
+					2 => [ 'page #2 data' ],
+					3 => [ 'page #3 data' ],
+					4 => [ 'page #4 data' ],
+					5 => [ 'page #5 data' ]
+				],
+				'$pageIdsMock' => [ 4, 2, 1, 3, 5 ],
+				'$expected' => [
+					0 => [ 'page #4 data' ],
+					1 => [ 'page #2 data' ],
+					2 => [ 'page #1 data' ],
+					3 => [ 'page #3 data' ],
+					4 => [ 'page #5 data' ]
+				]
+			],
+			'page_ids are more than returned revisions data' => [
+				'$cssUpdatesMock' => [
+					1 => [ 'page #1 data' ],
+					2 => [ 'page #2 data' ],
+					3 => [ 'page #3 data' ],
+					4 => [ 'page #5 data' ],
+				],
+				'$pageIdsMock' => [ 1, 2, 3, 4, 5 ],
+				'$expected' => [
+					0 => [ 'page #1 data' ],
+					1 => [ 'page #2 data' ],
+					2 => [ 'page #3 data' ],
+					3 => [ 'page #5 data' ],
+				]
+			],
 		];
 	}
 }
