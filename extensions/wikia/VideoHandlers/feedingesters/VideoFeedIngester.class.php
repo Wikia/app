@@ -26,7 +26,7 @@ abstract class VideoFeedIngester {
 	protected static $PROVIDER;
 	protected static $FEED_URL;
 	protected static $CLIP_TYPE_BLACKLIST = array();
-	protected static $TITLE_FILTER = array();
+	protected static $CLIP_FILTER = array();
 	private static $instances = array();
 	protected $filterByProviderVideoId = array();
 
@@ -92,8 +92,16 @@ abstract class VideoFeedIngester {
 	public function createVideo(array $data, &$msg, $params=array()) {
 		wfProfileIn( __METHOD__ );
 
-		// blacklist video
+		// See if this video is blacklisted (exact match against any data)
 		if ( $this->isBlacklistVideo($data) ) {
+			print "Skipping (due to \$CLIP_TYPE_BLACKLIST) '{$data['titleName']}' - {$data['description']}\n";
+			wfProfileOut( __METHOD__ );
+			return 0;
+		}
+
+		// See if this video should be filtered (regex match against specific fields)
+		if ( $this->isFilteredVideo($data) ) {
+			print "Skipping (due to \$CLIP_FILTER) '{$data['titleName']}' - {$data['description']}\n";
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -480,6 +488,48 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
+	 * Tests whether this video should be filtered out because of a string in its metadata.
+	 *
+	 * Set the $CLIP_FILTER static associative array in the child class to match a particular key or
+	 * use '*' to match any key, e.g.:
+	 *
+	 *     $CLIP_FILTER = array( '*'        => '/Daily/',
+	 *                           'keywords' => '/Adult/i',
+	 *                         )
+	 *
+	 * This would filter out videos where any data contained the word 'Daily' and any video where the
+	 * keywords contained the case insensitive string 'adult'
+	 *
+	 * @param array $clipData - The video data
+	 * @return bool - Returns true if the video should be filtered out, false otherwise
+	 */
+	protected function isFilteredVideo( array $clipData ) {
+		if ( is_array( static::$CLIP_FILTER ) ) {
+			foreach ( $clipData as $key => $value ) {
+				// See if we match key explicitly or by the catchall '*'
+				$regex_list = empty( static::$CLIP_FILTER['*'] ) ? '' : static::$CLIP_FILTER['*'];
+				$regex_list = empty( static::$CLIP_FILTER[$key] ) ? $regex_list : static::$CLIP_FILTER[$key];
+
+				// If we don't have  regex at this point, skip this bit of clip data
+				if ( empty( $regex_list ) ) {
+					continue;
+				}
+
+				// This can be a single regex or a list of regexes
+				$regex_list = is_array($regex_list) ? $regex_list : array( $regex_list );
+
+				foreach ( $regex_list as $regex ) {
+					if ( preg_match( $regex, $value ) ) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * get regex
 	 * @param $keywords string with comma-separated keywords
 	 * @return string regexp or null if no valid keywords were specified
@@ -510,14 +560,6 @@ abstract class VideoFeedIngester {
 	 * @return boolean
 	 */
 	public function isBlacklistVideo( $data ) {
-
-		// Filter by title match first
-		foreach ( static::$TITLE_FILTER as $filter ) {
-			if ( preg_match( $filter, $data['titleName'] ) ) {
-				echo "Blacklisting video: ".$data['titleName'].", videoId ".$data['videoId']." (reason titleName: ".$data['titleName'].")\n";
-				return true;
-			}
-		}
 
 		// General filter on all keywords
 		$regex = $this->getBlacklistRegex( F::app()->wg->VideoBlacklist );
