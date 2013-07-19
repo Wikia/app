@@ -70,9 +70,9 @@ class SpecialCssHooks {
 	}
 
 	/**
-	 * @desc Returns true if given title has "CSS Updates" category
+	 * @desc Returns true if in given categories "CSS Updates" is present
 	 *
-	 * @param $title
+	 * @param Array $categories
 	 *
 	 * @return boolean
 	 */

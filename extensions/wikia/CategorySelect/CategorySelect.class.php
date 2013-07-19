@@ -194,7 +194,7 @@ class CategorySelect {
 	public static function getDefaultNamespaces( $lang = null ) {
 		if ( !isset( self::$namespaces ) ) {
 
-			if ( is_null($lang) ) {
+			if ( is_null($lang) || !( $lang instanceof Language ) ) {
 				$lang = F::app()->wg->ContLang;
 			}
 
