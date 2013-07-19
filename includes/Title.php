@@ -4283,7 +4283,9 @@ class Title {
 		}
 
 		list( $name, $lang ) = MessageCache::singleton()->figureMessage( $wgContLang->lcfirst( $this->getText() ) );
-		$message = wfMessage( $name )->inLanguage( $lang )->useDatabase( false );
+		/* Wikia change - skip fixing whitespaces, want to preserve nbsp's */
+		$message = wfMessage( $name )->inLanguage( $lang )->useDatabase( false )->fixWhitespace( false );
+		/* Wikia change end */
 
 		if ( $message->exists() ) {
 			return $message->plain();
