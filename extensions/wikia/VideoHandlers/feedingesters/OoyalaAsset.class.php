@@ -155,6 +155,9 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['language'] ) ) {
 			$metadata['lang'] = $data['language'];
 		}
+		if ( !empty( $data['subtitle'] ) ) {
+			$metadata['subtitle'] = $data['subtitle'];
+		}
 		if ( !empty( $data['trailerRating'] ) ) {
 			$metadata['trailerrating'] = $data['trailerRating'];
 		}
@@ -172,6 +175,9 @@ class OoyalaAsset extends WikiaModel {
 		}
 		if ( !empty( $data['ageRequired'] ) ) {
 			$metadata['age_required'] = $data['ageRequired'];
+		}
+		if ( !empty( $data['targetCountry'] ) ) {
+			$metadata['targetcountry'] = $data['targetCountry'];
 		}
 
 		return $metadata;
