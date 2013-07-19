@@ -127,7 +127,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 		elements = elementList;
 
-		//if url contains image=imageName - setup and find the image
+		//if url contains file=fileName - setup and find the image/video
 		if(shrImg) {
 			setTimeout(function(){
 				!inited && setup();
@@ -186,7 +186,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			zoomable = false;
 
 			if(videoCache[imgTitle]){
-				embedVideo(currentMedia, videoCache[imgTitle]);
+				embedVideo(currentWrapper, videoCache[imgTitle]);
 			}else{
 				if(currentMedia.supported) {
 					currentWrapper.innerHTML = '';
@@ -479,7 +479,11 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 	}
 
 	function toggleGallery(show){
-		document.getElementById('wkGalTgl').style.display = show ? 'block' : 'none';
+		var gallery = document.getElementById('wkGalTgl');
+
+		if(gallery) {
+			gallery.style.display = show ? 'block' : 'none';
+		}
 	}
 
 	function refresh(){

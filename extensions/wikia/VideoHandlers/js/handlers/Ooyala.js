@@ -16,6 +16,7 @@ define('wikia.videohandler.ooyala', ['wikia.window', require.optional('ext.wikia
 	 */
 	return function(params, vb) {
 		var containerId = vb.timeStampId( params.playerId ),
+			started = false,
 			createParams = { width: params.width + 'px', height: params.height + 'px', autoplay: params.autoPlay };
 
 		function onCreate(player) {
@@ -28,7 +29,10 @@ define('wikia.videohandler.ooyala', ['wikia.window', require.optional('ext.wikia
 
 			// Actual content starts playing (past any ads or age-gates)
 			messageBus.subscribe(window.OO.EVENTS.PLAYING, 'tracking', function() {
-				vb.track('content-begin');
+				if ( !started ) {
+					vb.track('content-begin');
+					started = true;
+				}
 
 			});
 

@@ -153,6 +153,7 @@ Parameters:
 	'create-blog-invalid-title-error' => '{{Identical|Invalid title}}',
 	'create-blog-no-login' => '{{Identical|Not logged in}}',
 	'create-blog-categories-textinput' => '{{Identical|Add new category}}',
+	'create-blog-categories-submit' => '{{Identical|Submit}}',
 	'create-blog-save' => '{{Identical|Save page}}',
 	'create-blog-preview' => '{{Identical|Show preview}}',
 	'create-blog-listing-preview' => 'This is an H2 level header above a preview.
@@ -178,7 +179,10 @@ Parameters:
 Parameters:
 
 $1 - Username of blog author. GENDER is supported.',
-	'blog-fromsitename' => 'Prints the name of the wiki the blog is from into an RSS feed. The $1 parameter is <nowiki>{{SITENAME}}</nowiki>.',
+	'blog-fromsitename' => 'Prints the name of the wiki the blog is from into an RSS feed.
+
+Parameters:
+* $1 - <nowiki>{{SITENAME}}</nowiki>',
 	'blogs-comment-hidden' => 'If a tool like RevisionDelete has made the text of a comment inaccessible to the public, this message informs the reader the comment has been hidden',
 	'right-blog-comments-toggle' => '{{doc-right|blog-comments-toggle}}',
 	'right-blog-comments-delete' => '{{doc-right|blog-comments-delete}}',
@@ -507,6 +511,16 @@ $messages['bg'] = array(
 	'blogs-reportproblem' => 'Съобщаване за проблем',
 	'blog-comment-sending' => 'Изпращане...',
 	'blog-by' => '$1 от $2',
+);
+
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'create-blog-save' => 'পাতা সংরক্ষণ',
+	'create-blog-preview' => 'প্রাকদর্শন দেখাও',
+	'create-blog-listing-preview' => 'প্রাকদর্শন',
+	'blog-defaulttitle' => 'ব্লগসমূহ',
 );
 
 /** Breton (brezhoneg)
@@ -853,6 +867,7 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author Avatar
+ * @author Das Schäfchen
  * @author Kghbln
  * @author LWChris
  * @author Metalhead64
@@ -883,7 +898,7 @@ $messages['de'] = array(
 	'create-blog-invalid-title-error' => 'Ungültiger Titel',
 	'create-listing-confirm-info' => 'Kopiere den folgenden Code:',
 	'create-blog-no-login' => 'Du bist nicht angemeldet',
-	'create-blog-login-required' => 'Du musst [{{fullurl:Special:Signup|$1}} angemeldet sein] um einen Blogeintrag oder eine Blogliste zu erstellen.',
+	'create-blog-login-required' => 'Du musst [{{fullurl:Special:Signup|$1}} angemeldet sein], um einen Blogeintrag oder eine Blogliste zu erstellen.',
 	'create-blog-categories-title' => 'Füge diesen Beitrag den folgenden Kategorien hinzu (anklicken)',
 	'create-blog-categories-textinput' => 'Neue Kategorie hinzufügen',
 	'create-blog-categories-submit' => 'Hinzufügen',
@@ -894,7 +909,7 @@ $messages['de'] = array(
 	'create-blog-article-already-exists' => 'Es gibt schon einen Blogbeitrag mit diesem Namen, bitte wähle einen anderen',
 	'create-blog-listing-title' => 'Neue Blog-Aggregationsseite erstellen',
 	'create-blog-listing-form-title' => 'Was ist eine Blog-Aggregationsseite?',
-	'create-blog-listing-form-info' => 'Mit Blog-Aggregationsseiten kann man Blogeinträge von verschiedenen Autoren auf einer einzelnen Seite zusammenfassen. So kannst du z.B. Themenseiten über „Barack Obama“, „Buchvorstellungen“ oder auch über mehrere verschiedene Kategorien erstellen.',
+	'create-blog-listing-form-info' => 'Mit Blog-Aggregationsseiten kann man Blogeinträge von verschiedenen Autoren auf einer einzelnen Seite zusammenfassen. So kannst du z. B. Themenseiten über „Barack Obama“, „Buchvorstellungen“ oder auch über mehrere verschiedene Kategorien erstellen.',
 	'create-blog-listing-page-title' => 'Blog-Aggregationsseiten-Titel',
 	'create-blog-listing-preview' => 'Vorschau',
 	'create-blog-listing-authors' => 'Zeige Blogbeiträge von diesen Autoren (getrennt durch Komma)',
@@ -1125,6 +1140,13 @@ $messages['el'] = array(
 	'blogs-reportproblem' => 'Αναφορά του προβλήματος',
 	'right-blog-articles-edit' => 'Επεξεργασία άρθρων στο blog',
 	'right-blog-articles-move' => 'Μετακίνηση άρθρων του blog',
+);
+
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'create-blog-listing-tag-format-not-recognized-on-page' => 'Blog listing tag not recognised on page',
 );
 
 /** Esperanto (Esperanto)
@@ -2598,6 +2620,7 @@ $messages['lb'] = array(
 	'blog-added' => 'derbäigesat',
 	'blog-edited' => 'geännert',
 	'blog-page' => 'Blog',
+	'blog-zero-comments' => 'Nach keng Bemierkungen!',
 	'blog-comments' => 'Bemierkungen',
 	'blog-comments-dsc' => "Neist fir d'éischt",
 	'blog-comments-anonymous' => 'Anonyme Benotzer',
@@ -2610,6 +2633,8 @@ $messages['lb'] = array(
 	'blog-refresh-label' => 'Aktualiséieren',
 	'blog-fromsitename' => 'Vu(n) $1',
 	'blogs-comment-hidden' => 'Bemierkung verstoppt.',
+	'blog-comment-sending' => 'Schécken...',
+	'blog-by' => '$1 vum $2',
 );
 
 /** Lithuanian (lietuvių)
@@ -3135,9 +3160,17 @@ Opprett bloggoppføringssider for å kategorier som «Barack Obama», «Fan Fict
 );
 
 /** Nepali (नेपाली)
+ * @author Bhawani Gautam
  * @author RajeshPandey
  */
 $messages['ne'] = array(
+	'createblogpage' => 'ब्लग बनाउने',
+	'createbloglistingpage' => 'ब्लग सूची बनाउने',
+	'create-blog-spam' => 'स्याम जस्तो देखिन्छ',
+	'create-blog-cant-edit' => 'सम्पादन गर्न सकिएन',
+	'create-blog-post-category' => 'ब्लोग पोस्ट',
+	'create-blog-post-category-body' => 'यो ब्लग पोस्टको एक स्वत: उत्पन्न सूची हो',
+	'create-blog-post-category-log' => 'ब्लग पोस्टको लागि श्रेणी लेख बनाइएको',
 	'blog-comments' => 'टिप्पणीहरु',
 );
 

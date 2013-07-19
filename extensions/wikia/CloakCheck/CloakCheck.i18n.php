@@ -31,11 +31,13 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
 	'cloakcheck' => "An \"''IRC cloak''\" is a technical measure on an IRC network to hide the IP address of a user.",
 	'cloakcheck-desc' => "An \"''IRC cloak''\" is a technical measure on an IRC network to hide the IP address of a user.",
+	'right-cloakcheck' => '{{doc-right|cloakcheck}}',
 	'cloakcheck-form-check-self' => "An \"''IRC cloak''\" is a technical measure on an IRC network to hide the IP address of a user.",
 );
 
@@ -313,6 +315,14 @@ $messages['ia'] = array(
 	'cloakcheck-process-edits-no' => 'Le usator non ha facite satis de modificationes.',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'cloakcheck-form-username' => 'Nama pengguna:',
+	'cloakcheck-process-edits-yes' => 'Pengguna memiliki suntingan cukup.',
+);
+
 /** Italian (italiano)
  * @author Lexaeus 94
  * @author Minerva Titani
@@ -373,6 +383,7 @@ $messages['lb'] = array(
 	'cloakcheck-process-accountage-yes' => 'De Benotzerkont ass al genuch.',
 	'cloakcheck-process-accountage-no' => 'De Benotzerkont ass ze nei.',
 	'cloakcheck-process-edits-yes' => 'De Benotzer huet genuch Ännerungen.',
+	'cloakcheck-process-edits-no' => 'De Benotzer huet net genuch Ännerungen.',
 );
 
 /** Lithuanian (lietuvių)
@@ -600,13 +611,21 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'cloakcheck' => "Condrolle de l'ammissibbilità d'u mandelle de IRC",
+	'cloakcheck-desc' => "Dèje 'n'inderfacce tutte-jndr'à-une pe condrollà le richieste pe 'nu mandelle de IRC",
+	'right-cloakcheck' => "Puè condrollà le 'mbormaziune sus a 'u mandelle de IRC sus a otre utinde",
 	'cloakcheck-form-username' => 'Nome utende:',
 	'cloakcheck-form-check' => "Verifiche 'u nome utende",
+	'cloakcheck-form-check-self' => "Condrolle de l'ammissibbilità d'u mandelle de IRC",
+	'cloakcheck-process-empty' => "'U nome de l'utende non g'adda essere vacande.",
+	'cloakcheck-process-notexist' => "'U nome utende non g'esiste.",
 	'cloakcheck-process-username' => 'Nome utende: $1',
 	'cloakcheck-process-accountage-yes' => "'U cunde jè vecchie abbastanze.",
 	'cloakcheck-process-accountage-no' => "'U cunde jè troppe nuève.",
 	'cloakcheck-process-emailconf-yes' => 'Indirizze email confermate.',
 	'cloakcheck-process-emailconf-no' => 'Indirizze email non confermate.',
+	'cloakcheck-process-edits-yes' => "L'utende non ge tène abbastanze cangiaminde.",
+	'cloakcheck-process-edits-no' => "L'utende non ge tène abbastanza cangiaminde.",
 );
 
 /** Russian (русский)

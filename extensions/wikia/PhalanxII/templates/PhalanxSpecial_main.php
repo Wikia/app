@@ -30,6 +30,7 @@
 						<div>
 							<span id="validateMessage"></span>
 						</div>
+						<!-- Format -->
 						<div class="clearfix">
 							<div class="left-spacer">&nbsp;</div>
 							<?= Xml::check( 'wpPhalanxFormatRegex', !empty( $data['regex'] ), array( 'id' => 'wpPhalanxFormatRegex' ) ) ?>
@@ -41,6 +42,7 @@
 							<?= Xml::check( 'wpPhalanxFormatExact', !empty( $data['exact'] ), array( 'id' => 'wpPhalanxFormatExact' ) ) ?>
 							<label for="wpPhalanxFormatExact"><?php echo wfMsg( 'phalanx-format-exact' ) ?></label>
 						</div>
+						<!-- Expiry-->
 						<div class="clearfix">
 							<label>
 								<strong><?= wfMsg( 'phalanx-label-expiry' ) ?></strong>
@@ -55,11 +57,15 @@
 								?></span>
 								<?php endif; ?>
 								<select name="wpPhalanxExpire" id="wpPhalanxExpire" class="blue" >
-									<? foreach ($expiries as $k => $v) { ?>
+									<?php if ( !empty( $expiries ) ): ?>
+									<?php foreach ($expiries as $k => $v): ?>
 									<option value="<?=$k?>"><?=$v?></option>
-									<? } ?>
+									<?php endforeach; ?>
+									<option value="custom" data-is-custom="true"><?= wfMessage('phalanx-expire-custom')->plain() ?></option>
+									<?php endif; ?>
 								</select>
 							</label>
+							<input type="text" id="wpPhalanxExpireCustom" name="wpPhalanxExpireCustom" size="20" placeholder="<?= wfMessage('phalanx-expire-custom-tooltip')->plain() ?>" style="display: none">
 						</div>
 					</div>
 					<!-- Type -->
@@ -83,7 +89,11 @@
 					<div id="phalanx-block-optionals" class="clearfix">
 						<div class="clearfix">
 							<label for="wpPhalanxReason" class="left"><?php echo wfMsg( 'phalanx-label-reason' ) ?></label>
-							<input type="text" id="wpPhalanxReason" name="wpPhalanxReason" class="blue" size="40" value="<?= $data['reason'] ?>" />
+							<input type="text" id="wpPhalanxReason" name="wpPhalanxReason" class="blue" size="40" value="<?= htmlspecialchars($data['reason']) ?>" />
+						</div>
+						<div class="clearfix">
+							<label for="wpPhalanxComment" class="left"><?php echo wfMsg( 'phalanx-label-comment' ) ?></label>
+							<input type="text" id="wpPhalanxComment" name="wpPhalanxComment" size="40" value="<?= htmlspecialchars($data['comment']) ?>" />
 						</div>
 						<div class="clearfix">
 							<label for="wpPhalanxLanguages" class="left"><?php echo wfMsg( 'phalanx-label-lang' ) ?></label>

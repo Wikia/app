@@ -101,6 +101,7 @@ $messages['az'] = array(
 $messages['br'] = array(
 	'lightbox_details_tooltip' => 'Gwelet munudoù ar skeudenn',
 	'lightbox-forum' => 'Forom',
+	'lightbox-standard-link' => 'Liamm standart',
 	'lightbox-send' => 'Kas',
 	'lightbox-share-description' => 'Skeudenn $1 war $2',
 	'lightbox-share-email-subject' => "$1 en deus kaset deoc'h ur skeudenn war Wikia",
@@ -479,6 +480,24 @@ Detalios: $2',
 	'lightbox-visit-the-wiki' => 'Visita le wiki:',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'lightbox-standard-link' => 'Pranala standar',
+	'lightbox-send' => 'Kirim',
+	'lightbox-share-description' => 'Foto dalam $1 pada $2',
+	'lightbox-share-email-body' => 'Hai,
+
+Seseorang ingin menunjukkan sebuah foto kepada Anda pada Wikia. Lihatlah:
+
+$1
+
+- Tim Wikia',
+	'lightbox-share-email-page-label-address' => 'Alamat surel',
+	'lightbox-share-email-error-login' => 'Untuk mengirim surel Anda perlu masuk log',
+);
+
 /** Japanese (日本語)
  * @author Shirayuki
  * @author Tommy6
@@ -762,6 +781,8 @@ $messages['ps'] = array(
 	'lightbox-send' => 'لېږل',
 	'lightbox-share-button-email' => 'برېښليک',
 	'lightbox-share-button-www' => 'شريکول',
+	'lightbox-share-email-label' => 'دا انځور يو ملګري ته برېښليکول',
+	'lightbox-share-email-page-label' => 'دا مخ يو ملګري ته برېښليکول',
 	'lightbox-share-email-page-label-address' => 'برېښليک پته',
 	'lightbox-share-email-error-caption' => 'تېروتنه',
 );
@@ -800,11 +821,33 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'lightbox_details_tooltip' => "'Ndruche le dettaglie d'a fote",
 	'lightbox-forum' => 'Forum',
+	'lightbox-standard-link' => 'Collegamende standàrd',
+	'lightbox-blog-link' => "Collegamende d'u blog",
+	'lightbox-send' => 'Manne',
+	'lightbox-share-description' => "Fote jndr'à $1 sus a $2",
+	'lightbox-share-email-subject' => "$1 t'ha mannate sent 'na fote sus a Uicchia",
+	'lightbox-share-email-body' => "cià,
+
+quacchedune vuleve farte vedè 'na fote sus a Uicchia. Condrolle:
+
+$1
+
+- 'A squadre de Uicchia",
 	'lightbox-share-button-email' => 'E-mail',
 	'lightbox-share-button-www' => 'Condivide',
+	'lightbox-share-button-embed' => "'Ngapsule",
+	'lightbox-share-email-label' => "Manne st'immaggine cu l'email a 'n'amiche tune",
+	'lightbox-share-email-page-label' => "Manne sta pàgene cu l'email a 'n'amiche tune",
 	'lightbox-share-email-page-label-address' => 'Indirizze e-mail',
+	'lightbox-share-email-ok-caption' => 'Conferme',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Email ha stae|Email honne state}} mannate.',
 	'lightbox-share-email-error-caption' => 'Errore',
+	'lightbox-share-email-error-content' => "Errore mannanne {{PLURAL:$1|l'email}}.
+Dettaglie: $2",
+	'lightbox-share-email-error-login' => "Pe mannà l'email tu è abbesògne de trasè",
+	'lightbox-share-email-error-noaddress' => 'Nisciune indirizze ha state specificate.',
 	'lightbox-visit-the-wiki' => "Visite 'a uicchi:",
 );
 

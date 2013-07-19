@@ -84,6 +84,7 @@ $messages['ar'] = array(
 
 /** Breton (brezhoneg)
  * @author Gwenn-Ael
+ * @author Y-M D
  */
 $messages['br'] = array(
 	'filepage-desc' => 'Kemmañ ar bajenn restr standard MediaWiki evit ar skor video',
@@ -96,6 +97,9 @@ $messages['br'] = array(
 	'video-page-see-less-info' => "Diskwel nebeutoc'h a ditouroù",
 	'video-page-description-heading' => 'Deskrivadur',
 	'video-page-description-zero-state' => "N'eus ket a zeskrivadur c'hoazh.",
+	'video-page-add-description-link-text' => 'Ouzhpennañ un deskrivadur.',
+	'video-page-default-description-header-and-text' => '==Deskrivadur==
+Skrivit amañ an deskrivadur.',
 	'video-page-file-list-pagination' => '$1 diwar $2',
 	'file-page-replace-button' => "Erlec'hiañ",
 	'file-page-tab-about' => 'Diwar-benn',
@@ -194,6 +198,7 @@ Lisää kuvaus tähän.',
 /** French (français)
  * @author Metroitendo
  * @author Wyz
+ * @author Y-M D
  */
 $messages['fr'] = array(
 	'filepage-desc' => 'Modification de la page de fichier standard de MediaWiki pour le support des vidéos',
@@ -206,7 +211,7 @@ $messages['fr'] = array(
 	'video-page-see-less-info' => "Afficher moins d'informations",
 	'video-page-description-heading' => 'Description',
 	'video-page-description-zero-state' => "Il n'y a pas encore de description.",
-	'video-page-add-description-link-text' => 'Ajouter une description',
+	'video-page-add-description-link-text' => 'Ajouter une description.',
 	'video-page-default-description-header-and-text' => '==Description==
 Saisissez la description ici.',
 	'video-page-file-list-pagination' => '$1 sur $2',
@@ -275,11 +280,41 @@ $messages['hu'] = array(
 	'file-page-more-links' => 'Teljes lista megtekintése',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'video-page-file-list-header' => 'Muncul pada halaman-halaman ini',
+	'video-page-global-file-list-header' => 'Muncul pada wiki ini',
+	'video-page-from-provider' => 'Dari $1',
+	'video-page-description-heading' => 'Deskripsi',
+	'video-page-add-description-link-text' => 'Tambahkan deskripsi.',
+	'video-page-default-description-header-and-text' => '==Deskripsi==
+Masukkan deskripsi di sini.',
+	'video-page-file-list-pagination' => '$1 dari $2',
+);
+
 /** Italian (italiano)
  * @author Luckas
  */
 $messages['it'] = array(
 	'video-page-description-heading' => 'Descrizione',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'video-page-from-provider' => 'Vu(n) $1',
+	'video-page-description-heading' => 'Beschreiwung',
+	'video-page-description-zero-state' => 'Et ass nach keng Beschreiwung do.',
+	'video-page-add-description-link-text' => 'Eng Beschreiwung derbäisetzen.',
+	'video-page-default-description-header-and-text' => "== Beschreiwung ==
+Gitt d'Beschreiwung hei an.",
+	'video-page-file-list-pagination' => '$1 vu(n) $2',
+	'file-page-replace-button' => 'Ersetzen',
+	'file-page-tab-about' => 'Iwwer',
+	'file-page-more-links' => 'Ganz Lëscht weisen',
 );
 
 /** Macedonian (македонски)
@@ -393,6 +428,7 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Luckas
  * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
@@ -406,6 +442,9 @@ $messages['pt-br'] = array(
 	'video-page-see-less-info' => 'Mostrar menos informações',
 	'video-page-description-heading' => 'Descrição',
 	'video-page-description-zero-state' => 'Ainda não há uma descrição.',
+	'video-page-add-description-link-text' => 'Adicionar uma descrição.',
+	'video-page-default-description-header-and-text' => '==Descrição==
+Insira a descrição aqui.',
 	'video-page-file-list-pagination' => '$1 de $2',
 	'file-page-replace-button' => 'Substituir',
 	'file-page-tab-about' => 'Sobre',
@@ -510,8 +549,21 @@ $messages['ur'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Kuailong
+ * @author Qiyue2001
  */
 $messages['zh-hans'] = array(
+	'video-page-views' => '$1次浏览',
+	'video-page-see-more-info' => '显示更多信息',
+	'video-page-see-less-info' => '显示较少信息',
+	'video-page-description-heading' => '描述',
+	'video-page-description-zero-state' => '现在还没有描述。',
+	'video-page-add-description-link-text' => '添加说明。',
+	'video-page-default-description-header-and-text' => '==说明==
+在这里输入说明。',
+	'file-page-replace-button' => '取代',
+	'file-page-tab-about' => '关于',
+	'file-page-tab-history' => '文件历史',
+	'file-page-tab-metadata' => '元数据',
 	'file-page-more-links' => '查看完整列表',
 );
 

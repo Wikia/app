@@ -134,7 +134,7 @@ $messages['qqq'] = array(
 	'multidelete' => '{{Identical|Delete batch of pages}}',
 	'multidelete_button' => '{{Identical|Delete}}',
 	'multidelete_select_all' => '{{Identical|Select all}}',
-	'multidelete_reason' => '{{Identical|Reason for deletion}}',
+	'multidelete_reason' => 'none',
 	'multidelete_success_subtitle' => '{{Identical|For $1}}',
 	'multidelete_split_results' => 'If number of articles to run the script on exceeds a maximum number, user receives a message informing them that the script will be split up into a number of tasks. 
 Parameters:
@@ -1457,12 +1457,18 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
  * @author Irwangatot
  */
 $messages['id'] = array(
 	'multitasks-link-back-label' => 'di sini',
+	'multiwikiedit_button' => 'SUNTING',
+	'multiwikiedit_help' => 'Menghapus sekelompok halaman. Anda dapat menyunting halaman-halaman yang terdaftar dalam kotak teks. Pilihlah pengguna yang akan ditampilkan pada log penghapusan. Berkas yang diunggah harus mengandung nama halaman dan alasan opsional, dipisahkan dengan suatu tanda "|" pada setiap barisnya.',
 	'multiwikiedit_caption' => 'Daftar halaman',
+	'multiwikiedit_both_modes' => 'Silakan pilih satu halaman tertentu atau suatu daftar halaman.',
 	'multiwikiedit_or' => '<b>ATAU</b>',
+	'multiwikiedit_list_caption' => 'Daftar wiki',
+	'multiwikiedit_norecentchanges_caption' => 'Jangan tampilkan perubahan ini di perubahan terbaru',
 	'multiwikiedit_from_form' => 'Formulir dari',
 	'multiwikiedit_success_subtitle' => 'untuk $1',
 	'multiwikiedit_select_yourself' => 'Anda',
@@ -2564,6 +2570,7 @@ $messages['ps'] = array(
 	'multiwikiedit_select_yourself' => 'تاسې',
 	'multidelete_button' => 'ړنګول',
 	'multidelete_caption' => 'د مخ لړليک',
+	'multidelete_or' => '<b>يا</b>',
 	'multidelete_select_all' => 'ټول ټاکل',
 	'multidelete_reason' => 'د ړنګولو سبب',
 	'multidelete_this_wiki' => 'همدا ويکي',
@@ -2573,6 +2580,8 @@ $messages['ps'] = array(
 	'multidelete_brazilian_portuguese_wikis' => 'ټولې برازيلۍ پارتوګالي ويکي ګانې',
 	'multidelete_hebrew_wikis' => 'ټولې عبري ويکي ګانې',
 	'multidelete_chinese_wikis' => 'ټولې چينايي ويکي ګانې',
+	'multidelete_polish_wikis' => 'ټول پولنډي ويکي ګان',
+	'multidelete_czech_wikis' => 'ټول چېکي ويکي ګان',
 	'multidelete_german_wikis' => 'ټولې جرمنۍ ويکي ګانې',
 	'multiwikifindpagenames' => 'د مخ نوم موندل',
 );

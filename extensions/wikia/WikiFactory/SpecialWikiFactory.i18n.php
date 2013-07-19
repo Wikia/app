@@ -153,6 +153,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'wf_city_url' => '{{Identical|Address}}',
+	'wf_city_id' => '{{Identical|ID}}',
 	'wf_city_title' => '{{Identical|Title}}',
 	'wf_city_created' => '{{Identical|Created}}',
 	'wf_city_founding_user' => '{{Identical|Founder}}',
@@ -176,8 +177,10 @@ $messages['qqq'] = array(
 	'wikifactory-public-status-change-default-reason' => 'WikiFactory is a staff tool that allows Wikia to manage per-wiki settings across their network. The "public status" setting determines whether a wiki is available for users or closed and assigned for removal. Staff members usually justify a change of the status of a wiki by filling in the "Reason" field in the form. If no reason is provided, the wikifactory-public-status-change-default-reason is used automatically so it can be deduced where the change had been requested from.',
 	'awc-metrics-nbr-result' => '{{Identical|Result}}',
 	'awc-metrics-close' => '{{Identical|Close}}',
+	'awc-metrics-close-action' => '{{Identical|Close}}',
 	'awc-metrics-active' => '{{Identical|Active}}',
 	'awc-metrics-closed' => '{{Identical|Closed}}',
+	'awc-metrics-removed' => '{{Identical|Removed}}',
 	'awc-metrics-fewer-than' => 'Form text. Explains that the script will look for values fewer than the numeric input data. http://images.wikia.com/mixtestwiki/images/9/90/2013-01-TWN_WikiFactory_Metrics.png',
 	'awc-metrics-edits-label' => 'Label for input box. User puts in a number next to this label to match the number of edits the tool will use as a maximum threshold. For a visual explanation, please see: http://images.wikia.com/mixtestwiki/images/9/90/2013-01-TWN_WikiFactory_Metrics.png',
 	'awc-metrics-pageviews-label' => 'Form label. For a visual explanation: http://images.wikia.com/mixtestwiki/images/9/90/2013-01-TWN_WikiFactory_Metrics.png .
@@ -1096,9 +1099,12 @@ $messages['ca'] = array(
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
+	'wf_city_lang' => 'Мотт',
 	'wikifactory-label-findtags' => 'Лаха къастам',
+	'awc-metrics-all-languages' => 'Берриге меттанаш',
 	'closed-reason' => 'Бахьан:',
 );
 

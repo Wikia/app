@@ -190,11 +190,12 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
  * @author Farras
  */
 $messages['id'] = array(
 	'communitymessages-desc' => 'Ekstensi pembantu untuk Pesan Komunitas',
-	'communitymessages-notice-msg' => '[[Special:WikiActivity|Community Messages has been updated]].', # Fuzzy
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|Pesan komunitas telah diperbarui]].',
 );
 
 /** Italian (italiano)

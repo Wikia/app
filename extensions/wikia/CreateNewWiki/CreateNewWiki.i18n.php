@@ -54,6 +54,8 @@ $messages['en'] = array(
 	'cnw-desc-tip3-creative' => 'Let people know they can help your wiki grow by editing and adding pages',
 	'cnw-desc-choose' => 'Choose a category',
 	'cnw-desc-select-one' => 'Select one',
+	'cnw-desc-all-ages' => 'All ages',
+	'cnw-desc-tip-all-ages' => 'Is this wiki about a topic that children are interested in? In order to help us comply with US law we keep track of wikis about topics that directly appeal to children 12 and under.',
 	'cnw-desc-default-lang' => 'Your wiki will be in $1',
 	'cnw-desc-change-lang' => 'change',
 	'cnw-desc-lang' => 'Language',
@@ -134,8 +136,11 @@ Be carefull to keep it short as there are 3 successive balloon tips to display i
 Be carefull to keep it short as there are 3 successive balloon tips to display in a small space',
 	'cnw-desc-choose' => 'Label for category',
 	'cnw-desc-select-one' => 'Default empty label for category',
+	'cnw-desc-all-ages' => "Label for checkbox defining wiki as directed to all ages. It's imposed by US law regulations [[Wikipedia:Children's_Online_Privacy_Protection_Act]].",
+	'cnw-desc-tip-all-ages' => 'Detailed description of checkbox defining wiki as directed to all ages. Extension of message cnw-desc-all-ages.',
 	'cnw-desc-default-lang' => 'Letting user know which language this wiki will be in.  $1 will be wiki language',
-	'cnw-desc-change-lang' => 'Call to action to change the language',
+	'cnw-desc-change-lang' => 'Call to action to change the language.
+{{Identical|Change}}',
 	'cnw-desc-lang' => 'Label for language.
 {{Identical|Language}}',
 	'cnw-desc-wiki-submit-error' => 'General error message for not selecting category',
@@ -440,6 +445,7 @@ $messages['br'] = array(
 	'cnw-desc-tip3-creative' => "Kelaouiñ an dud e c'hellont dont evit sikour da greskiñ ho wiki en ur gemmañ pe en ur ouzhpennañ pajennoù",
 	'cnw-desc-choose' => 'Dibabit ur rummad',
 	'cnw-desc-select-one' => 'Diuzañ unan',
+	'cnw-desc-all-ages' => 'An holl oadoù',
 	'cnw-desc-default-lang' => 'E $1 e vo ho wiki',
 	'cnw-desc-change-lang' => 'kemmañ',
 	'cnw-desc-lang' => 'Yezh',
@@ -457,6 +463,13 @@ $messages['br'] = array(
 	'cnw-error-wiki-limit-header' => 'Bevenn ar wikioù bet tizhet',
 	'cnw-error-wiki-limit' => "Ac'hanta, bevennet eo ar c'hrouiñ wikioù da $1 wiki dre zen ha dre zevezh. Gortozit 24 eurvezh a-benn gellout krouiñ unan all.", # Fuzzy
 	'cnw-error-blocked-header' => 'Kont stanket',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'cnw-desc-lang' => 'Мотт',
 );
 
 /** Czech (česky)
@@ -561,6 +574,8 @@ $messages['de'] = array(
 	'cnw-desc-tip3-creative' => 'Lass die Leute wissen, dass sie deinem Wiki durch Bearbeiten und Hinzufügen von Seiten dabei helfen können zu wachsen',
 	'cnw-desc-choose' => 'Eine Kategorie auswählen',
 	'cnw-desc-select-one' => 'Bitte wählen',
+	'cnw-desc-all-ages' => 'Alle Alter',
+	'cnw-desc-tip-all-ages' => 'Ist dieses Wiki über ein Thema, das Kinder interessiert? Um US-Recht einzuhalten, verfolgen wir Wikis über Themen, die Kinder unter 12 Jahren direkt ansprechen.',
 	'cnw-desc-default-lang' => 'Die Sprache deines Wikis wird $1',
 	'cnw-desc-change-lang' => 'ändern',
 	'cnw-desc-lang' => 'Sprache',
@@ -678,6 +693,8 @@ $messages['es'] = array(
 	'cnw-desc-tip3-creative' => 'Invita a la gente para que ayude a editar',
 	'cnw-desc-choose' => 'Elige una categoría',
 	'cnw-desc-select-one' => 'Selecciona una',
+	'cnw-desc-all-ages' => 'Todas las edades',
+	'cnw-desc-tip-all-ages' => '¿Este wiki es acerca de un tema para niños? Para ayudarnos a cumplir con una ley de Estados Unidos mantenemos un seguimiento constante de aquellos wikis sobre temas interesantes para niños.',
 	'cnw-desc-default-lang' => 'Tu wiki será en $1',
 	'cnw-desc-change-lang' => 'cambiar',
 	'cnw-desc-lang' => 'Idioma',
@@ -842,6 +859,8 @@ $messages['fr'] = array(
 	'cnw-desc-tip3-creative' => 'Faites savoir aux gens qu’ils peuvent aider à faire grandir votre wiki en modifiant ou en ajoutant des pages',
 	'cnw-desc-choose' => 'Choisissez une catégorie',
 	'cnw-desc-select-one' => 'Sélectionnez-en une',
+	'cnw-desc-all-ages' => 'Tous les âges',
+	'cnw-desc-tip-all-ages' => 'Ce wiki concerne-t-il un sujet pour lequel les enfants pourraient être intéressés ? Afin de nous aider à respecter les lois des États-Unis, nous gardons la trace des wikis sur des sujets qui s’adressent directement à des enfants de 12 ans et moins.',
 	'cnw-desc-default-lang' => 'Votre wiki sera en $1',
 	'cnw-desc-change-lang' => 'modifier',
 	'cnw-desc-lang' => 'Langue',
@@ -909,6 +928,8 @@ $messages['gl'] = array(
 	'cnw-desc-tip3-creative' => 'Faga saber á xente que poden axudar a que medre o wiki editando e engadindo páxinas',
 	'cnw-desc-choose' => 'Seleccione unha categoría',
 	'cnw-desc-select-one' => 'Seleccione unha',
+	'cnw-desc-all-ages' => 'Todas as idades',
+	'cnw-desc-tip-all-ages' => 'Este wiki trata un tema de interese para os nenos? Para axudarnos a cumprir coa lei dos EUA, levamos un seguimento dos wikis sobre temas dirixidos directamente a cativos de 12 anos ou menos.',
 	'cnw-desc-default-lang' => 'O seu wiki será en $1',
 	'cnw-desc-change-lang' => 'cambiar',
 	'cnw-desc-lang' => 'Lingua',
@@ -1119,6 +1140,25 @@ $messages['ia'] = array(
 	'cnw-error-torblock' => 'Le creation de wikis via le rete Tor non es permittite.',
 	'cnw-error-bot' => 'Nos ha detegite que tu pote esser un robot. Si nos ha facite un error, per favor contacta nos indicante que tu ha essite detegite falsemente como robot, e nos te adjutara a crear tu wiki: [http://www.wikia.com/Special:Contact/general Contactar nos]',
 	'cnw-error-bot-header' => 'Tu ha essite detegite como robot',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'cnw-or' => 'atau',
+	'cnw-name-wiki-headline' => 'Memulai sebuah Wiki',
+	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-login' => 'Masuk Log',
+	'cnw-userauth-marketing-heading' => 'Belum memiliki akun?',
+	'cnw-desc-creative' => 'Gambarkan topik Anda',
+	'cnw-desc-select-one' => 'Pilih salah satu',
+	'cnw-desc-lang' => 'Bahasa',
+	'cnw-welcome-headline' => 'Selamat! $1 telah dibuat',
+	'cnw-welcome-instruction1' => 'Klik tombol di bawah untuk memulai menambahkan halaman ke wiki Anda.',
+	'cnw-error-general' => 'Ups, ada sesuatu yang salah di pihak kami! Silakan coba lagi, atau <a href="/Special:Contact">hubungi kami</a> untuk bantuan.',
+	'cnw-error-wiki-limit-header' => 'Wiki telah mencapai batas',
+	'cnw-error-blocked-header' => 'Akun diblokir',
 );
 
 /** Ingush (ГӀалгӀай)
@@ -1566,6 +1606,8 @@ $messages['ms'] = array(
 	'cnw-desc-tip3-creative' => 'Jemput orang ramai untuk menyunting dan menambahkan laman supaya wiki anda berkembang',
 	'cnw-desc-choose' => 'Pilih kategori',
 	'cnw-desc-select-one' => 'Pilih satu',
+	'cnw-desc-all-ages' => 'Semua peringkat umur',
+	'cnw-desc-tip-all-ages' => 'Adakah wiki ini mengenai topik yang diminati oleh kanak-kanak? Demi membantu kita untuk mematuhi undang-undang Amerika Syarikat, kami mengawasi wiki-wiki yang mengenai topik yang ditujukan secara langsung kepada kanak-kanak berumur 12 tahun ke bawah.',
 	'cnw-desc-default-lang' => 'Wiki anda adalah dalam $1',
 	'cnw-desc-change-lang' => 'ubah',
 	'cnw-desc-lang' => 'Bahasa',
@@ -1701,6 +1743,8 @@ $messages['nl'] = array(
 	'cnw-desc-tip3-creative' => "Laat mensen weten dat ze kunnen helpen om uw wiki te bewerken en pagina's toe te voegen",
 	'cnw-desc-choose' => 'Kies een categorie',
 	'cnw-desc-select-one' => 'Maak een keuze',
+	'cnw-desc-all-ages' => 'Alle leeftijden',
+	'cnw-desc-tip-all-ages' => "Gaat deze wiki over een onderwerp waar kinderen interesse in hebben? Om ons aan de Amerikaanse wetgeving te houden, houden we bij welke wiki's over onderwerpen gaan waar kinderen van 12 jaar en jonger interesse in hebben.",
 	'cnw-desc-default-lang' => 'De hoofdtaal van uw wiki is: $1',
 	'cnw-desc-change-lang' => 'wijzigen',
 	'cnw-desc-lang' => 'Taal',
@@ -1804,6 +1848,8 @@ $messages['pl'] = array(
 	'cnw-desc-tip3-creative' => 'Daj innym znać, że mogą pomóc tej wiki rosnąć poprzez edytowanie i dodawanie stron',
 	'cnw-desc-choose' => 'Wybierz kategorię',
 	'cnw-desc-select-one' => 'Wybierz',
+	'cnw-desc-all-ages' => 'Każdy wiek',
+	'cnw-desc-tip-all-ages' => 'Czy to jest wiki o tematyce, którą dzieci będą zainteresowane? W celu zgodności z prawem Stanów Zjednoczonych obserwujemy wiki o tematyce kierowanej bezpośrednio do dzieci w wieku 12 lat i mniej.',
 	'cnw-desc-default-lang' => 'Twoja wiki będzie w języku: $1',
 	'cnw-desc-change-lang' => 'zmień',
 	'cnw-desc-lang' => 'Język',
@@ -2025,7 +2071,7 @@ $messages['pt-br'] = array(
 	'cnw-name-wiki-domain-label' => 'Dê um endereço à sua wiki',
 	'cnw-name-wiki-submit-error' => 'Para continuar tem de preencher ambas as caixas acima.',
 	'cnw-login' => 'Iniciar Sessão',
-	'cnw-signup' => 'Criar Conta',
+	'cnw-signup' => 'Criar conta',
 	'cnw-signup-prompt' => 'Precisa de uma conta?',
 	'cnw-call-to-signup' => 'Registe-se aqui',
 	'cnw-login-prompt' => 'Já tem uma conta?',
@@ -2052,6 +2098,8 @@ $messages['pt-br'] = array(
 	'cnw-desc-tip3-creative' => 'Informe as pessoas de que podem ajudar a desenvolver a wiki editando e acrescentando páginas',
 	'cnw-desc-choose' => 'Escolher uma categoria',
 	'cnw-desc-select-one' => 'Selecione uma',
+	'cnw-desc-all-ages' => 'Todas as idades',
+	'cnw-desc-tip-all-ages' => 'Esta wiki é sobre um tema o qual crianças estariam interessadas? Para ajudar-nos a obedecer a lei estadunidense, nós seguimos as wikis com temas os quais crianças de 12 anos ou menos estariam interessadas.',
 	'cnw-desc-default-lang' => 'A sua wiki será em $1',
 	'cnw-desc-change-lang' => 'alterar',
 	'cnw-desc-lang' => 'Língua',
@@ -2320,6 +2368,8 @@ $messages['sv'] = array(
 	'cnw-desc-tip3-creative' => 'Låt folk vet att de kan hjälpa din wiki växa genom att redigera och lägga till sidor',
 	'cnw-desc-choose' => 'Välj en kategori',
 	'cnw-desc-select-one' => 'Välj en',
+	'cnw-desc-all-ages' => 'Alla åldrar',
+	'cnw-desc-tip-all-ages' => 'Handlar denna wiki om ett ämne som barnen är intresserade i? För att vi ska kunna följa USA:s lagstiftning måste vi hålla reda på wikis med ämnen som riktar sig mot barn som är 12 och under.',
 	'cnw-desc-default-lang' => 'Din wiki kommer att vara på $1',
 	'cnw-desc-change-lang' => 'ändra',
 	'cnw-desc-lang' => 'Språk',

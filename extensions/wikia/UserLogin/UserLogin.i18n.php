@@ -45,6 +45,7 @@ $messages['en'] = array(
 	'userlogin-error-mail-error' => 'Oops, there was a problem sending your email. Please [[Special:Contact/general|contact us]].',
 	'userlogin-password-email-sent' => 'We\'ve sent a new password to the email address for $1.',
 	'userlogin-error-unconfirmed-user' => 'Sorry, you have not confirmed your email. Please confirm your email first.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'Confirmation reminder email already sent.',
 
 	// change password page
 	'userlogin-password-page-title' => 'Change your password',
@@ -158,6 +159,7 @@ $messages['qqq'] = array(
 	'userlogin-password-email-sent' => 'Validation message stating that email has been to the user. Parameters:
 * $1 contains the user name in plain text',
 	'userlogin-error-unconfirmed-user' => 'Error message stating that user needs to be confirmed first.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'Error message stating that confirmation email was already sent. This message is only used by maintenance scripts.',
 	'userlogin-password-page-title' => 'Heading for change password page.',
 	'userlogin-oldpassword' => 'Label for old password field',
 	'userlogin-newpassword' => 'Label for new password field.
@@ -341,7 +343,7 @@ $messages['ca'] = array(
 	'userlogin-forgot-password' => 'Has oblidat la teva contrasenya?',
 	'userlogin-forgot-password-button' => 'Continuar',
 	'userlogin-forgot-password-go-to-login' => "Ja tens la teva contrasenya? [[Special:UserLogin|Identifica't]]",
-	'userlogin-remembermypassword' => 'Continuar connectat', # Fuzzy
+	'userlogin-remembermypassword' => 'Continua connectat',
 	'userlogin-error-noname' => "Si us plau, omple el camp del nom d'usuari.",
 	'userlogin-error-sessionfailure' => 'El registre de la sessió ha caducat. Si us plau, inicia sessió un altre cop.',
 	'userlogin-error-nosuchuser' => "No reconeixem aquest nom. No oblidis que els noms d'usuari distingeixen les majúscules de les minúscules.",
@@ -531,6 +533,13 @@ $messages['diq'] = array(
 	'userlogin-password-email-greeting' => 'Merheba Bırayo $USERNAME,',
 	'userlogin-provider-or' => 'Ya na',
 	'userlogin-loginreqlink' => 'Deqewtış',
+);
+
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'userlogin-error-nosuchuser' => "Hm, we don't recognise this name. Don't forget usernames are case sensitive.",
 );
 
 /** Spanish (español)
@@ -1079,6 +1088,13 @@ $messages['lb'] = array(
 	'userlogin-retypenew' => 'Neit Passwuert nach eemol antippen',
 	'userlogin-provider-or' => 'Oder',
 	'wikiamobile-sendpassword-label' => 'Neit Passwuert schécken',
+);
+
+/** Literary Chinese (文言)
+ * @author StephDC
+ */
+$messages['lzh'] = array(
+	'userlogin-login-heading' => '登簿',
 );
 
 /** Macedonian (македонски)
@@ -2352,6 +2368,7 @@ _______________________________________
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author Simon Shek
+ * @author StephDC
  */
 $messages['zh-hant'] = array(
 	'userlogin-login-heading' => '登入',
@@ -2381,11 +2398,37 @@ $messages['zh-hant'] = array(
 	'userlogin-error-noemailtitle' => '請輸入有效的電子郵件地址。',
 	'userlogin-error-acct_creation_throttle_hit' => '抱歉，此 IP 地址今天已創建了太多帳戶。請稍後再試。',
 	'userlogin-error-resetpass_forbidden' => '無法更改密碼',
+	'userlogin-error-blocked-mailpassword' => '由於您的IP位址已經被Wikia封禁，您不可以請求一個新密碼。',
+	'userlogin-error-throttled-mailpassword' => '我們已經在{{PLURAL:$1|1小時|$1小時}}前發送了此帳戶的密碼提示。請檢查您的電子郵件。',
+	'userlogin-error-mail-error' => '哎呀，在向您發送電子郵件的時候我們遇到了個問題。請[[Special:Contact/general|聯繫我們]]。',
+	'userlogin-password-email-sent' => '我們已經向帳戶 $1 發送了一封包含有該帳戶的新密碼的電子郵件。',
+	'userlogin-error-unconfirmed-user' => '抱歉，您尚未確認您的電子郵件地址。請先去確認您的電子郵件地址。',
 	'userlogin-password-page-title' => '更改您的密碼',
 	'userlogin-oldpassword' => '舊密碼',
 	'userlogin-newpassword' => '新密碼',
 	'userlogin-retypenew' => '重新輸入新密碼',
+	'userlogin-password-email-subject' => '忘記密碼',
 	'userlogin-password-email-greeting' => '$USERNAME：',
+	'userlogin-password-email-content' => '請使用下列臨時密碼登陸Wikia："$NEWPASSWORD"
+<br /><br />
+如果您並未請求一個新密碼，請不要擔心。您的帳戶仍然安全可靠。您可以忽略這封電子郵件，並且繼續使用您的舊密碼登陸Wikia。
+<br /><br />
+仍然有問題？請隨時<a href="http://community.wikia.com/wiki/Special:Contact/account-issue">聯繫我們</a>。',
+	'userlogin-password-email-signature' => 'Wikia社區支援',
+	'userlogin-password-email-body' => '$2 您好，
+
+請使用下列臨時密碼登陸Wikia："$3"
+
+如果您並未請求一個新密碼，請不要擔心。您的帳戶仍然安全可靠。您可以忽略這封電子郵件，並且繼續使用您的舊密碼登陸Wikia。
+
+仍然有問題？請隨時聯繫我們：http://community.wikia.com/wiki/Special:Contact/account-issue
+
+Wikia社區支援
+
+___________________________________________
+
+要瞭解Wikia的最新動態，請訪問 http://community.wikia.com 。
+希望調整您將會收到的電子郵件的類型嗎？請訪問：{{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-provider-or' => '或',
 	'userlogin-facebook-show-preferences' => '顯示 Facebook 選項',
 	'userlogin-facebook-hide-preferences' => '隱藏 Facebook 選項',

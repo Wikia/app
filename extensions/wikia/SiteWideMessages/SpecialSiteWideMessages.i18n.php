@@ -155,7 +155,8 @@ $messages['qqq'] = array(
 	'swm-expire-info' => '',
 	'swm-list-table-wiki' => '{{Identical|Wiki}}',
 	'swm-list-table-group' => '{{Identical|Group}}',
-	'swm-list-table-removed' => 'Column heading of a table with one message per line. The column contains either yes or no if the message was removed or not.',
+	'swm-list-table-removed' => 'Column heading of a table with one message per line. The column contains either yes or no if the message was removed or not.
+{{Identical|Removed}}',
 	'swm-list-table-content' => '{{Identical|Content}}',
 	'swm-list-table-tools' => '{{Identical|Tools}}',
 	'swm-list-table-lang' => '{{Identical|Language}}',
@@ -163,6 +164,7 @@ $messages['qqq'] = array(
 	'swm-yes' => '{{Identical|Yes}}',
 	'swm-no' => '{{Identical|No}}',
 	'swm-error-no-wiki-list' => 'Error message to display when no wikis where entered into the list of wikis box.',
+	'action-messagetool' => '{{doc-action|messagetool}}',
 	'swm-label-mode-users-registration' => 'Label for option to select users by registration date.',
 	'swm-mode-users-registration-after' => 'Option to select if user wants to send message to users who registered after the given date.',
 	'swm-mode-users-registration-before' => 'Option to select if user wants to send message to users who registered before the given date.',
@@ -602,11 +604,91 @@ $messages['bs'] = array(
 	'swm-no' => 'Ne',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'swm-label-preview' => 'Previsualització',
+	'swm-label-edit' => 'Editar',
+	'swm-label-remove' => 'Eliminar',
+	'swm-label-sent' => 'Enviat',
+	'swm-label-list' => 'Llista',
+	'swm-label-recipient' => 'Destinatari',
+	'swm-label-recipient-wikis' => 'Wikis',
+	'swm-label-recipient-users' => 'Usuaris',
+	'swm-label-expiration' => "Temps d'expiració",
+	'swm-label-mode-wikis-all' => 'Tots els wikis',
+	'swm-label-mode-wikis-cluster' => 'Grup seleccionat',
+	'swm-label-mode-wikis-wiki' => 'Wiki seleccionat',
+	'swm-label-mode-wikis-wiki-multi' => 'Llista de wikis',
+	'swm-label-mode-wikis-wiki-multi-hint' => '<i>Introdueix un wiki per línia.</i>',
+	'swm-label-mode-users-all' => 'Tots els usuaris',
+	'swm-label-mode-users-active' => 'Usuaris actius',
+	'swm-label-mode-users-group' => 'Usuaris pertanyents al grup',
+	'swm-label-mode-users-user' => 'Usuari seleccionat',
+	'swm-label-mode-users-user-multi' => "Llista d'usuaris",
+	'swm-label-mode-users-anon' => 'Tots els usuaris anònims',
+	'swm-label-content' => 'Contingut',
+	'swm-label-comment' => 'Comentari',
+	'swm-label-dismissed' => 'Descartat',
+	'swm-label-language' => 'Llengua',
+	'swm-button-lang-checkall' => '[ Verificar tots ]',
+	'swm-button-preview' => '[ Previsualitzar ]',
+	'swm-button-send' => '[ Enviar ]',
+	'swm-button-save' => '[ Guardar ]',
+	'swm-button-new' => '[ Nou ]',
+	'swm-msg-sent-ok' => "<h3>S'ha enviat el missatge.</h3>",
+	'swm-msg-sent-err' => "<h3>El missatge no s'ha enviat.</h3>Veure el registre d'errors per a més informació.",
+	'swm-msg-remove' => 'Estàs segur que vols eliminar aquest missatge? Això no es pot desfer!',
+	'swm-expire-info' => 'Aquest missatge expirarà en $1.',
+	'swm-link-dismiss' => 'descartar aquest missatge',
+	'swm-dismiss-content' => '<p>El missatge ha estat descartat.</p><p>%s</p>',
+	'swm-list-no-messages' => 'No hi ha missatges.',
+	'swm-list-table-id' => 'ID',
+	'swm-list-table-sender' => 'Remitent',
+	'swm-list-table-wiki' => 'Wiki',
+	'swm-list-table-recipient' => 'Destinatari',
+	'swm-list-table-group' => 'Grup',
+	'swm-list-table-expire' => 'Expira',
+	'swm-list-table-date' => "Data d'enviament",
+	'swm-list-table-removed' => 'Eliminat',
+	'swm-list-table-content' => 'Contingut',
+	'swm-list-table-tools' => 'Eines',
+	'swm-list-table-lang' => 'Llengües',
+	'swm-list-table-hub' => 'Hub',
+	'swm-yes' => 'Sí',
+	'swm-no' => 'No',
+	'swm-error-no-wiki-list' => 'Cal especificar com a mínim un wiki',
+	'swm-error-no-such-user' => "L'usuari especificat no existeix.",
+	'swm-error-no-user-list' => "Com a mínim has d'especificar un usuari",
+	'swm-error-empty-message' => 'Introdueix el contingut del missatge.',
+	'swm-error-long-message' => 'Els missatges són limitats a 500 caràcters.',
+	'swm-error-empty-group' => 'Introdueix el nom del grup.',
+	'swm-lang-other' => 'totes les llengües restants',
+	'swm-mode-users-registration-after' => 'Després',
+	'swm-mode-users-registration-before' => 'Abans',
+	'swm-mode-users-registration-between' => 'Entre',
+	'swm-label-mode-users-registration-hint' => '<i>Les dates han de ser en forma 2012-04-01 00:00:00</i>',
+	'swm-label-mode-users-editcount' => "Comptador d'edicions",
+	'swm-mode-users-editcount-more' => 'Més',
+	'swm-mode-users-editcount-less' => 'Menys',
+	'swm-mode-users-editcount-between' => 'Entre',
+	'swm-label-mode-wikis-created' => 'Data de creació del wiki',
+	'swm-mode-wikis-created-after' => 'Després',
+	'swm-mode-wikis-created-before' => 'Abans',
+	'swm-mode-wikis-created-between' => 'Entre',
+	'swm-label-mode-wikis-created-hint' => '<i>Les dates han de ser en forma 2012-04-01 00:00:00</i>',
+);
+
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
 	'swm-label-mode-users-active' => 'Жигар декъашхой',
+	'swm-label-language' => 'Мотт',
+	'swm-list-table-expire' => 'Чекхйолу',
+	'swm-list-table-lang' => 'Меттанаш',
 );
 
 /** Czech (česky)
@@ -713,7 +795,7 @@ $messages['cs'] = array(
  * @author ОйЛ
  */
 $messages['cu'] = array(
-	'swm-no' => 'нѣ́тъ',
+	'swm-no' => 'нѣтъ',
 );
 
 /** Welsh (Cymraeg)
@@ -1687,6 +1769,13 @@ $messages['ko'] = array(
 	'swm-button-save' => '[ 저장 ]',
 );
 
+/** Karachay-Balkar (къарачай-малкъар)
+ * @author Iltever
+ */
+$messages['krc'] = array(
+	'swm-list-table-lang' => 'Тилле',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -2477,6 +2566,7 @@ $messages['ps'] = array(
 	'swm-label-mode-users-all' => 'ټول کارنان',
 	'swm-label-mode-users-active' => 'فعاله کارنان',
 	'swm-label-mode-users-user' => 'ټاکلی کارن',
+	'swm-label-mode-users-user-multi' => 'د کارنانو لړليک',
 	'swm-label-content' => 'منځپانګه',
 	'swm-label-comment' => 'تبصره',
 	'swm-label-language' => 'ژبه',

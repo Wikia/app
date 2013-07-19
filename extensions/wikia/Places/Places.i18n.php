@@ -521,6 +521,8 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'places-editor-search' => 'پلټل',
+	'places-geolocation-button-label' => 'ځای ورګډول',
+	'places-geolocation-modal-add-title' => 'ځای ورګډول',
 	'places-geolocation-modal-error-title' => 'تېروتنه',
 );
 

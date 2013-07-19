@@ -118,13 +118,13 @@ class RenameUserHelper {
 		$data = array();
 		$output = '';
 
-		$aModules = Phalanx::$typeNames;
+		$aModules = Phalanx::getAllTypeNames();
 		$link_unblock = wfMsg('phalanx-link-unblock');
 		$link_modify = wfMsg('phalanx-link-modify');
 		$link_stats = wfMsg('phalanx-link-stats');
 
 		foreach ( $aModules as $module => $name ) {
-			$filters = Phalanx::getFromFilter( $module );
+			$filters = PhalanxFallback::getFromFilter( $module );
 			$data[$module] = array();
 
 			if ( empty( $filters ) ) {
@@ -169,5 +169,4 @@ class RenameUserHelper {
 		}
 		return $output;
 	}
-
 }

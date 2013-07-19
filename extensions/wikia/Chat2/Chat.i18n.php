@@ -151,8 +151,10 @@ $messages['qqq'] = array(
 	'chat-inlinealert-a-made-b-chatmod' => '$1 is user name when "he" make other user ($2) to become moderator. (account upgrade)',
 	'chat-ban-contributions-heading' => 'shown in contributions under the list of actions',
 	'chat-ban-modal-heading' => 'This is the <nowiki><h2></nowiki> (heading) tag at the top of the modal for banning a user from chat.',
-	'chat-ban-modal-label-expires' => 'form label inside modal for banning users.  "Expires" refers to the time at which the banned user can return to chat.',
-	'chat-ban-modal-label-reason' => 'form label inside modal for banning users.  "Reason" is the reason for banning a user from chat.',
+	'chat-ban-modal-label-expires' => 'form label inside modal for banning users.  "Expires" refers to the time at which the banned user can return to chat.
+{{Identical|Expire}}',
+	'chat-ban-modal-label-reason' => 'form label inside modal for banning users.  "Reason" is the reason for banning a user from chat.
+{{Identical|Reason}}',
 	'chat-log-reason-banadd' => 'Placeholder text for the "reason" input inside the ban user from chat modal.',
 	'chat-log-reason-undo' => '{{Identical|Undo}}',
 	'chat-ban-undolink' => '{{Identical|Undo}}',
@@ -170,6 +172,7 @@ $messages['qqq'] = array(
 	'chat-user-menu-contribs' => '{{Identical|Contribution}}',
 	'chat-user-menu-give-chat-mod' => 'ChatMod = chat moderator',
 	'chat-user-menu-ban' => 'Click here to ban a user (from the user dropdown menu).',
+	'right-chatmoderator' => '{{doc-right|chatmoderator}}',
 	'grouppage-chatmoderator' => '{{Optional}}',
 	'grouppage-bannedfromchat' => '{{Optional}}',
 	'chat-ban-option-list' => 'This is used for setting the options for expiration time when banning a user from chat. The value before the colon (:) is what the user will see.  The value after the color will translate to the amount of time the user is banned.  Do not change the value after the colon unless you actually want to change the options presented for expiring a ban. Another way of writing this would be: "The banned user will be banned for 2 hours:2 hours; The banned user will be banned for 3 days:3 days;" So, as you can see, it is very important that the time values on either side of the colon match up.
@@ -396,6 +399,26 @@ $messages['bg'] = array(
 	'chat-ban-modal-button-cancel' => 'Отказване',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'chat' => 'আড্ডা',
+	'chat-desc' => '[[Special:Chat|সরাসরি আড্ডা]]',
+	'chat-log-reason-undo' => 'পূর্বাবস্থায় আনো',
+	'chat-ban-undolink' => 'পূর্বাবস্থায় আনো',
+	'chat-ban-modal-button-cancel' => 'বাতিল',
+	'chat-log-reason-banchange' => 'কোনো কারণ দেওয়া হয়নি',
+	'chat-log-reason-banremove' => 'কোনো কারণ দেওয়া হয়নি',
+	'chat-live2' => 'সরাসরি! আড্ডা',
+	'chat-start-a-chat' => 'একটি আড্ডা শুরু করুন',
+	'chat-join-the-chat' => 'আড্ডায় যোগ দিন',
+	'chat-edit-count' => '{{PLURAL:$1|$1টি সম্পাদনা}}',
+	'chat-member-since' => '$1 থেকে সদস্য',
+	'chat-user-menu-talk-page' => 'আলাপ পাতা',
+	'chat-user-menu-contribs' => 'অবদান',
+);
+
 /** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
@@ -446,7 +469,7 @@ Kit e darempred ganto da c'houzout hiroc'h.",
 	'chat-live2' => 'Flap war-eeun !',
 	'chat-start-a-chat' => 'Kregiñ gant ar Flap',
 	'chat-join-the-chat' => 'Mont er Flap',
-	'chat-edit-count' => '{{PLURAL:$1|$1 edit|$1 edits}}',
+	'chat-edit-count' => '$1 {{PLURAL:$1|kemm}}',
 	'chat-member-since' => 'Ezel adalek an $1',
 	'chat-great-youre-logged-in' => "Dreist ! Kevreet oc'h.",
 	'chat-user-menu-message-wall' => "Moger ar c'homzoù",
@@ -581,6 +604,15 @@ $messages['ca'] = array(
 	'chat-status-away' => 'Absent',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'chat-ban-modal-label-expires' => 'Чекхйолу',
+	'chat-user-menu-talk-page' => 'Декъашхон дийцаре',
+	'chat-ban-option-list' => '2 сахьат:2 hours,1 де:1 day,3 де:3 days,1 кӀиран:1 week,2 кӀиран:2 weeks,1 бутт:1 month,3 бутт:3 months,6 бутт:6 months,1 шо:1 year,цlкъа:infinite',
+);
+
 /** Czech (česky)
  * @author Chmee2
  * @author Macinosak
@@ -654,6 +686,7 @@ $messages['cs'] = array(
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author DaSch
+ * @author Das Schäfchen
  * @author Dennis07
  * @author Geitost
  * @author Jan Luca
@@ -688,7 +721,7 @@ $messages['de'] = array(
 	'chat-user-permanently-disconnected' => 'Die Verbindung wurde getrennt. Überprüfe deine Internet-Verbindung und aktualisiere das Browser-Fenster.',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 hat <strong>$2</strong> zum Chat-Moderator gemacht.',
 	'chat-err-connected-from-another-browser' => 'Du hast dich mit einem anderen Browser verbunden. Diese Verbindung wird geschlossen.',
-	'chat-err-communicating-with-mediawiki' => 'Fehler bei Kommunikation mit MediaWiki Server.',
+	'chat-err-communicating-with-mediawiki' => 'Fehler bei Kommunikation mit MediaWiki-Server.',
 	'chat-ban-contributions-heading' => 'Aus dem Chat verbannen',
 	'chat-ban-modal-heading' => 'Benutzer aus dem Chat verbannen',
 	'chat-ban-modal-label-expires' => 'Gültig bis',
@@ -1420,6 +1453,7 @@ Per favor contacta le pro plus informationes.',
 
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
+ * @author C5st4wr6ch
  * @author Kenrick95
  */
 $messages['id'] = array(
@@ -1430,15 +1464,26 @@ $messages['id'] = array(
 	'chat-user-parted' => '$1 telah meninggalkan obrolan.',
 	'chat-user-blocked' => '$1 telah memblokir  $2 .',
 	'chat-user-allow' => '$1 telah memperbolehkan $2 .',
+	'chat-you-were-kicked' => 'Anda telah ditendang oleh $1.',
 	'chat-user-permanently-disconnected' => 'Koneksi Anda terputus, periksa koneksi internet anda dan refresh jendela browser Anda',
 	'chat-inlinealert-a-made-b-chatmod' => '$1telah <strong> $2 </strong> moderator chatting.',
 	'chat-err-connected-from-another-browser' => 'Anda telah terhubung dari browser lain. Hubungan ini akan ditutup.',
 	'chat-err-communicating-with-mediawiki' => 'Kesalahan terjadi saat terhubung dengan MediaWiki server.',
+	'chat-ban-modal-label-reason' => 'Alasan',
 	'chat-log-reason-undo' => 'balikkan',
 	'chat-ban-undolink' => 'balikkan',
+	'chat-ban-modal-button-cancel' => 'Batal',
+	'chat-log-reason-banremove' => 'Tidak ada alasan yang diberikan',
 	'chat-ban-cant-ban-moderator' => 'Anda tidak bisa menendang/ban Moderator chatting yang lain.',
 	'chat-ban-already-banned' => '$1sudah dilarang dari chatting di wiki ini.',
 	'chat-ban-you-need-permission' => 'Anda tidak memiliki  $1  izin yang diperlukan untuk menendang/ban pengguna.',
+	'chat-err-already-chatmod' => 'Kesalahan: "$1" telah berada dalam kelompok "$2".',
+	'chat-err-no-permission-to-add-chatmod' => 'Kesalahan: Anda tidak memiliki izin untuk menambahkan grup "$1" kepada pengguna ini.',
+	'chat-err-invalid-username-chatmod' => 'Kesalahan: Tidak dapat menemukan pengguna "$1"',
+	'chat-you-are-banned' => 'Kesalahan hak akses.',
+	'chat-user-menu-message-wall' => 'Dinding Pesan',
+	'chat-user-menu-talk-page' => 'Halaman Pembicaraan',
+	'group-bannedfromchat' => 'Disekat dari chat',
 );
 
 /** Italian (italiano)
@@ -1676,6 +1721,7 @@ $messages['ky'] = array(
 $messages['lb'] = array(
 	'chat' => 'Chat',
 	'chat-default-topic' => 'Wëllkomm am $1-Chat',
+	'chat-private-messages' => 'Privat Messagen',
 	'chat-user-blocked' => '$1 huet $2 gespaart.',
 	'chat-ban-modal-label-reason' => 'Grond',
 	'chat-ban-modal-button-cancel' => 'Ofbriechen',
@@ -1687,6 +1733,9 @@ $messages['lb'] = array(
 	'chat-edit-count' => '{{PLURAL:$1|Eng Ännerung|$1 Ännerungen}}',
 	'chat-member-since' => 'Member zënter $1',
 	'chat-user-menu-talk-page' => 'Diskussiounssäit',
+	'chat-user-menu-private' => 'Private Message',
+	'chat-user-menu-private-block' => 'Privat Message spären',
+	'chat-user-menu-private-allow' => 'Privat Messagen erlaben',
 );
 
 /** Lithuanian (lietuvių)
