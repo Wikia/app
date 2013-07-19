@@ -122,7 +122,7 @@ abstract class ImageServingDriverBase {
 		return array( 'data' => $out, 'rest' => $articlesRest ) ;
 	}
 
-	function formatResult($imageList ,$dbOut, $limit) {
+	protected function formatResult($imageList ,$dbOut, $limit) {
 		wfProfileIn( __METHOD__ );
 
 		$out = array();
@@ -130,8 +130,7 @@ abstract class ImageServingDriverBase {
 			if( isset($dbOut[ $key ]) ) {
 				foreach($value as $key2 => $value2) {
 					if (empty($out[$key2]) || count($out[$key2]) < $limit) {
-						$file_title = Title::newFromText( $key, NS_FILE );
-						$img = wfFindFile( $file_title );
+						$img = $this->getImageFile( $key );
 						$out[$key2][] = array(
 							"name" => $key,
 							"original_dimensions" => array(
@@ -147,6 +146,12 @@ abstract class ImageServingDriverBase {
 
 		wfProfileOut( __METHOD__ );
 		return $out;
+	}
+
+	protected function getImageFile( $text ) {
+		$file_title = Title::newFromText( $text, NS_FILE );
+		$img = wfFindFile( $file_title );
+		return $img;
 	}
 
 	protected function storeInCache($dbOut) {
