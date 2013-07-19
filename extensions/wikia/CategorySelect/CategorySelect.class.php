@@ -77,10 +77,7 @@ class CategorySelect {
 	 * @return Array
 	 */
 	public static function extractCategoriesFromWikitext( $wikitext, $force = false, $lang = null ) {
-		global $wgContLang;
 		wfProfileIn( __METHOD__ );
-
-		$oldLang = null;
 
 		if ( !$force && is_array( self::$data ) ) {
 			wfProfileOut( __METHOD__ );
@@ -95,11 +92,6 @@ class CategorySelect {
 		// prepare Parser
 		$app->wg->Parser->startExternalParse( $app->wg->Title, new ParserOptions, OT_WIKI );
 
-		if ( $lang ) {
-			$oldLang = $wgContLang;
-			$wgContLang = $lang;
-		}
-
 		// get DOM tree [PPNode_DOM class] as an XML string
 		$xml = $app->wg->Parser->preprocessToDom( $wikitext )->__toString();
 
@@ -111,7 +103,7 @@ class CategorySelect {
 
 		//init variables
 		self::$nodeLevel = 0;
-		self::getDefaultNamespaces();
+		self::getDefaultNamespaces( $lang );
 
 		// we will ignore categories added inside following list of tags (BugId:8208)
 		self::$tagsWhiteList = array_keys( $app->wg->Parser->mTagHooks );
@@ -140,10 +132,6 @@ class CategorySelect {
 			'categories' => $categories,
 			'wikitext' => rtrim( $modifiedWikitext ),
 		);
-
-		if ( $oldLang ) {
-			$wgContLang = $oldLang;
-		}
 
 		wfProfileOut( __METHOD__ );
 
@@ -203,9 +191,14 @@ class CategorySelect {
 	 * Gets the default namespaces for a wiki and content language.
 	 * @return String
 	 */
-	public static function getDefaultNamespaces() {
+	public static function getDefaultNamespaces( $lang = null ) {
 		if ( !isset( self::$namespaces ) ) {
-			$namespaces = F::app()->wg->ContLang->getNsText( NS_CATEGORY );
+
+			if ( is_null($lang) ) {
+				$lang = F::app()->wg->ContLang;
+			}
+
+			$namespaces = $lang->getNsText( NS_CATEGORY );
 
 			if ( strpos( $namespaces, 'Category' ) === false ) {
 				$namespaces = 'Category|' . $namespaces;
