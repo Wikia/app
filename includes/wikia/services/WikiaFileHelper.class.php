@@ -424,6 +424,7 @@ class WikiaFileHelper extends Service {
 			foreach( $articles as $article ) {
 				// Create truncated list
 				if ( count( $truncatedList ) < $limit ) {
+					$article['titleText'] = preg_replace( '/\/@comment-.*/', '', $article['titleText'] );
 					$truncatedList[] = $article;
 				} else {
 					$isTruncated = 1;
