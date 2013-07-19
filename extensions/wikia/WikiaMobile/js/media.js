@@ -298,7 +298,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				zoomable = data.zoomable
 			}
 			// We're showing an ad or other custom media type.  Don't support sharing.
-			qs().removeVal('file' ).replaceState();
+			qs().removeVal( 'file' ).replaceState();
 		}
 
 		// Future video/image views will come from modal
