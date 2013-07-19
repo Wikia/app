@@ -29,6 +29,11 @@ class WikiaVideoAddForm extends SpecialPage {
 			return;
 		}
 
+		if ( !$this->getUser()->isAllowed( 'videoupload' ) ) {
+			$wgOut->addHTML( wfMessage( 'videos-error-admin-only' )->plain() );
+			return;
+		}
+
 		// Add css for form
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoEmbedTool/css/WikiaVideoAdd.scss'));
 

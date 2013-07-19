@@ -7,12 +7,16 @@
 class VideoEmbedTool {
 
 	function loadMain( $error = false ) {
-		global $wgContLanguageCode, $wgVETNonEnglishPremiumSearch;
+		global $wgContLanguageCode, $wgVETNonEnglishPremiumSearch, $wgUser;
+
+
+		$showAddVideoBtn = $wgUser->isAllowed('videoupload');
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 		$tmpl->set_vars(array(
 				'error'  => $error,
-				'vet_premium_videos_search_enabled' => ($wgContLanguageCode == 'en') || $wgVETNonEnglishPremiumSearch
+				'vet_premium_videos_search_enabled' => ($wgContLanguageCode == 'en') || $wgVETNonEnglishPremiumSearch,
+				'showAddVideoBtn' => $showAddVideoBtn
 				)
 		);
 		return $tmpl->render("main");
@@ -68,6 +72,12 @@ class VideoEmbedTool {
 			header('X-screen-type: error');
 			wfProfileOut( __METHOD__ );
 			return wfMessage( 'videos-error-blocked-user' );
+		}
+
+		if ( !$wgUser->isAllowed('videoupload') ) {
+			header('X-screen-type: error');
+			wfProfileOut( __METHOD__ );
+			return wfMessage( 'videos-error-admin-only' )->plain();
 		}
 
 		$url = $wgRequest->getVal( 'url' );
@@ -164,9 +174,19 @@ class VideoEmbedTool {
 	}
 
 	function detailsPage($props) {
+		global $wgUser;
+
+
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 
-		$tmpl->set_vars(array('props' => $props, 'screenType' => 'details'));
+		$showAddVideoBtn = $wgUser->isAllowed('videoupload');
+
+		$tmpl->set_vars(
+			array('props' => $props,
+			'screenType' => 'details',
+			'showAddVideoBtn' => $showAddVideoBtn
+		));
+
 		return $tmpl->render('details');
 	}
 

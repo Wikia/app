@@ -1,15 +1,16 @@
 <?php
 
 /**
+ * Class VideoHandlerSpecialController
  * @author Jakub
  */
 class VideoHandlerSpecialController extends WikiaSpecialPageController {
 
-	public function __construct() {
+	public function __construct( ) {
 		parent::__construct( 'VideoHandler' );
 	}
 
-	public function index() {
+	public function index( ) {
 
 		if ( $this->wg->user->isBlocked() ) {
 			$this->wg->out->blockedPage();
@@ -31,13 +32,13 @@ class VideoHandlerSpecialController extends WikiaSpecialPageController {
 		
 		if ( $videoId && $provider ) {
 			$overrideMetadata = array();
-			if (!empty($videoTitle)) {
+			if ( !empty($videoTitle) ) {
 				$overrideMetadata['title'] = $videoTitle;
 			}
 			try {
 				$result = VideoFileUploader::uploadVideo($provider, $videoId, $title, null, $undercover, $overrideMetadata);
 			}
-			catch (Exception $e) {
+			catch ( Exception $e ) {
 				$result = (object) array('ok'=>null, 'value'=>null);
 			}
         

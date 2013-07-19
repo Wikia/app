@@ -290,6 +290,22 @@ class OoyalaApiWrapper extends ApiWrapper {
 		return '';
 	}
 
+	/**
+	 * get subtitle
+	 * @return string
+	 */
+	protected function getSubtitle() {
+		if ( !empty( $this->metadata['subtitle'] ) ) {
+			return $this->metadata['subtitle'];
+		}
+
+		if ( !empty( $this->interfaceObj['metadata']['subtitle'] ) ) {
+			return $this->interfaceObj['metadata']['subtitle'];
+		}
+
+		return '';
+	}
+
 	protected function isHdAvailable() {
 		if ( !empty($this->metadata['hd']) ) {
 			return $this->metadata['hd'];
@@ -333,6 +349,22 @@ class OoyalaApiWrapper extends ApiWrapper {
 
 		if ( !empty($this->interfaceObj['metadata']['agegate']) ) {
 			return 1;
+		}
+
+		return 0;
+	}
+
+	/**
+	 * get age required
+	 * @return int
+	 */
+	protected function getAgeRequired() {
+		if ( !empty( $this->metadata['ageRequired'] ) ) {
+			return $this->metadata['ageRequired'];
+		}
+
+		if ( !empty( $this->interfaceObj['metadata']['age_required'] ) ) {
+			return $this->interfaceObj['metadata']['age_required'];
 		}
 
 		return 0;
@@ -409,4 +441,21 @@ class OoyalaApiWrapper extends ApiWrapper {
 
 		return '';
 	}
+
+	/**
+	 * get target country
+	 * @return string
+	 */
+	protected function getTargetCountry() {
+		if ( !empty( $this->metadata['targetCountry'] ) ) {
+			return $this->metadata['targetCountry'];
+		}
+
+		if ( !empty( $this->interfaceObj['metadata']['targetcountry'] ) ) {
+			return $this->interfaceObj['metadata']['targetcountry'];
+		}
+
+		return '';
+	}
+
 }
