@@ -84,6 +84,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVarnishCacheTime( self::VARNISH_CACHE_TIME );
 	}
 
+	/**
+	 * Accesses top wiki articles for right rail, see PLA-466
+	 */
 	public function topWikiArticles() {
 		$pages = [];
 		try {
@@ -92,12 +95,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$counter = 0;
 			foreach ( $pageData['items'] as $pageDatum ) {
 				$ids[] = $pageDatum['id'];
-				if ( $counter++ > 12 ) {
+				if ( $counter++ >= 12 ) {
 					break;
 				}
 			}
 			if (! empty( $ids ) ) { 
-				$params = [ 'ids' => implode( ',', $ids ), 'height' => 200, 'width' => 200 ];
+				$params = [ 'ids' => implode( ',', $ids ), 'height' => 80, 'width' => 100 ];
 				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
 				foreach ( $detailResponse['items'] as $item ) {
 					if (! empty( $item['thumbnail'] ) ) {
@@ -304,6 +307,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $this->wg->OnWikiSearchIncludesWikiMatch && $searchConfig->hasWikiMatch() ) {
 			$this->registerWikiMatch( $searchConfig );
 		}
+		$this->setVal( 'topWikiArticles', ( $searchConfig->getInterWiki() ) ? '' : $this->sendSelfRequest( 'topWikiArticles' ) ); 
 	}
 	
 	/**
