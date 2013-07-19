@@ -79,6 +79,7 @@
 				<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')); ?>
 				<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2')); ?>
 				<div id="WikiaAdInContentPlaceHolder"></div>
+				<?= $topWikiArticles ?>
 			</div>
 	</form>
 </section>
