@@ -5,6 +5,10 @@ class IgnFeedIngester extends VideoFeedIngester {
 	protected static $PROVIDER = 'ign';
 	protected static $FEED_URL = 'http://apis.ign.com/partners/v3/wikia?fromDate=$1&toDate=$2';
 	protected static $CLIP_TYPE_BLACKLIST = array();
+	protected static $TITLE_FILTER = array(
+		'/^IGN Daily/i',
+		'/^IGN Weekly/i',
+	);
 
 	/*
 	 * Public functions
@@ -19,7 +23,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 		$content = $this->getUrlContent($url);
 
-		if (!$content) {
+		if ( !$content ) {
 			print("ERROR: problem downloading content!\n");
 			wfProfileOut( __METHOD__ );
 			return 0;
@@ -39,14 +43,14 @@ class IgnFeedIngester extends VideoFeedIngester {
 		$articlesCreated = 0;
 
 		$content = json_decode($content, true);
-		if(empty($content)) $content = array();
+		if ( empty($content) ) $content = array();
 
 		$i = 0;
-		foreach($content as $video) {
+		foreach ( $content as $video ) {
 			$i++;
 			$addlCategories = !empty($params['addlCategories']) ? $params['addlCategories'] : array();
 
-			if($debug) {
+			if ( $debug ) {
 				print "\nraw data: \n";
 				foreach( explode("\n", var_export($video, 1)) as $line ) {
 					print ":: $line\n";
@@ -71,7 +75,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$clipData['videoUrl'] =  $video['metadata']['url'];
 			$clipData['classification'] = $video['metadata']['classification'];
 			$clipData['gameContent'] = $video['metadata']['gameContent'];
-			if( isset($video['metadata']['ageGate']) ) {
+			if ( isset($video['metadata']['ageGate']) ) {
 				$clipData['ageGate'] = $video['metadata']['ageGate'];
 			} else {
 				$clipData['ageGate'] = 0;
@@ -79,7 +83,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$clipData['highDefinition'] = $video['metadata']['highDefinition'];
 
 			$keywords = array();
-			foreach( $video['objectRelations'] as $obj ) {
+			foreach ( $video['objectRelations'] as $obj ) {
 				$keywords[$obj['objectName']] = true;
 			}
 			$keywords = array_keys( $keywords );
@@ -87,7 +91,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$clipData['keywords'] = implode(", ", $keywords );
 
 			$tags = array();
-			foreach( $video['tags'] as $obj ) {
+			foreach ( $video['tags'] as $obj ) {
 				if ( array_key_exists('slug', $obj) ) {
 					$tags[$obj['slug']] = true;
 				}
@@ -114,7 +118,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 		$categories = !empty($addlCategories) ? $addlCategories : array();
 		$categories[] = 'IGN';
 
-		if(!empty($data['gameContent'])) {
+		if ( !empty($data['gameContent']) ) {
 			$categories[] = 'IGN_games';
 			$categories[] = 'Games';
 		} else {
@@ -143,7 +147,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 	protected function generateMetadata(array $data, &$errorMsg) {
 		//error checking
-		if (empty($data['videoId'])) {
+		if ( empty($data['videoId']) ) {
 			$errorMsg = 'no video id exists';
 			return 0;
 		}
@@ -180,7 +184,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 		curl_setopt($req, CURLOPT_VERBOSE, 1);
 		curl_setopt($req, CURLOPT_STDERR, STDOUT);
 		$ret = curl_exec($req);
-		if(!curl_errno($req)){
+		if ( !curl_errno($req) ) {
 			$info = curl_getinfo($req);
 			echo 'Took ' . $info['total_time'] . ' seconds to send a request to ' . $info['url'] . "\n";
 		} else {
@@ -189,26 +193,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 		curl_close($req);
 		return $ret;
-		/*
-		$options = array(
-			'timeout'=>'default'
-		);
-		$req = HttpRequest::factory( $url, $options );
-		$req->setHeader('X-App-Id',$wgIgnApiConfig['AppId']);
-		$req->setHeader('X-App-Key', $wgIgnApiConfig['AppKey']);
-		echo("Executing\n");
-		$status = $req->execute();
-		if ( $status->isOK() ) {
-			echo("Got content\n");
-			$ret = $req->getContent();
-		} else {
-			$errMsg = "Requested URL was: " . $req->getFinalUrl();
-			$errMsg .= " (err: " . json_encode($req->status->errors) . ')';
-			Wikia::log(__METHOD__, 'error', $errMsg);
-			echo("No content\n".$errMsg);
-			$ret = false;
-		}
-		return $ret;*/
 	}
 
 	/*
@@ -221,6 +205,4 @@ class IgnFeedIngester extends VideoFeedIngester {
 		$url = str_replace('$2', $endDate, $url);
 		return $url;
 	}
-
-
 }

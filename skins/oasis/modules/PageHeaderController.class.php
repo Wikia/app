@@ -141,6 +141,9 @@ class PageHeaderController extends WikiaController {
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
+		// check for video add button permissions
+		$this->showAddVideoBtn = $wgUser->isAllowed('videoupload');
+
 		// page namespace
 		$ns = $wgTitle->getNamespace();
 

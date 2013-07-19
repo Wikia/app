@@ -50,11 +50,15 @@
 	<?php endforeach; ?>
 	<?php if (!empty($addVideo)): ?>
 		<?php $alpha = $counter % 3 == 0 ? 'alpha' : ''; ?>
-		<div class="grid-2 <?= $alpha ?>">
-			<div class="add-video-placeholder addVideo"></div>
-			<p><a href="#" class="addVideo"><?= wfMsg('special-videos-add-video') ?></a></p>
-		</div>
-	<?php endif; ?>
+
+		<!-- Check user permissions, only admins may upload videos, hide element for non-admins -->
+		<? if ($showAddVideoBtn): ?>
+			<div class="grid-2 <?= $alpha ?>">
+				<div class="add-video-placeholder addVideo"></div>
+					<p><a href="#" class="addVideo"><?= wfMessage('special-videos-add-video')->text(); ?></a></p>
+			</div>
+		<? endif; ?>
+		<?php endif; ?>
 </div>
 <?= $pagination ?>
 <div class="errorWhileLoading messageHolder"><?=wfMsg('videos-error-while-loading');?></div>
