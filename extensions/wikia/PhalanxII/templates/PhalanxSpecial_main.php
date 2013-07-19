@@ -89,7 +89,11 @@
 					<div id="phalanx-block-optionals" class="clearfix">
 						<div class="clearfix">
 							<label for="wpPhalanxReason" class="left"><?php echo wfMsg( 'phalanx-label-reason' ) ?></label>
-							<input type="text" id="wpPhalanxReason" name="wpPhalanxReason" class="blue" size="40" value="<?= $data['reason'] ?>" />
+							<input type="text" id="wpPhalanxReason" name="wpPhalanxReason" class="blue" size="40" value="<?= htmlspecialchars($data['reason']) ?>" />
+						</div>
+						<div class="clearfix">
+							<label for="wpPhalanxComment" class="left"><?php echo wfMsg( 'phalanx-label-comment' ) ?></label>
+							<input type="text" id="wpPhalanxComment" name="wpPhalanxComment" size="40" value="<?= htmlspecialchars($data['comment']) ?>" />
 						</div>
 						<div class="clearfix">
 							<label for="wpPhalanxLanguages" class="left"><?php echo wfMsg( 'phalanx-label-lang' ) ?></label>
