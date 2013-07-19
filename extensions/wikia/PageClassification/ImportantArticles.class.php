@@ -1,6 +1,6 @@
 <?php
 
-class ImportantArticles extends WikiaModel {
+class ImportantArticles {
 
 	protected $db;
 	protected $wikiId;
@@ -19,11 +19,11 @@ class ImportantArticles extends WikiaModel {
 			$wikiInfo = WikiFactory::getWikiByID( $wikiId );
 			$dbName = $wikiInfo->city_dbname;
 		}
-		$this->db = $this->getWikiDB( DB_SLAVE, $dbName );
+		$this->app = F::app();
+		$this->db = wfGetDB( DB_SLAVE, array(), $dbName );
 		$this->wikiId = $wikiId;
 		$this->api = new EntityAPIClient();
 		$this->api->setLogLevel( 5 );
-		$this->app = F::app();
 	}
 
 	protected function getScoreFromPosition( $position, $totalCnt ) {
