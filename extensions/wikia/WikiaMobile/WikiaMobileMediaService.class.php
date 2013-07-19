@@ -12,7 +12,6 @@ class WikiaMobileMediaService extends WikiaService {
 	const GROUP = 2;
 	const RIBBON_SIZE = 50;
 	const SMALL_IMAGE_SIZE = 64;
-	const EXTRA_SMALL_IMGAGE_SIZE = 30;
 
 	static public function calculateMediaSize( $width, $height ) {
 		if ( $width > self::THUMB_WIDTH ) {
@@ -74,7 +73,7 @@ class WikiaMobileMediaService extends WikiaService {
 			$file = wfFindFile( $item['title'] );
 
 			if ( $file instanceof File ) {
-				if ( !empty( $item['link'] ) || $file->getWidth() < self::EXTRA_SMALL_IMGAGE_SIZE ) {
+				if ( !empty( $item['link'] ) || $file->getWidth() < self::SMALL_IMAGE_SIZE ) {
 					$wikiText .= self::renderOutsideGallery( $item );
 				} else {
 					if ( empty( $first ) ) {
@@ -178,10 +177,13 @@ class WikiaMobileMediaService extends WikiaService {
 		$noscript = $this->request->getVal( 'noscript', null );
 		$linked = $this->request->getBool( 'linked', false );
 		$content = $this->request->getVal( 'content' );
+		$width = $attribs['width'];
+		// Don't include small or linked images in the mobile lightbox
+		$includeInModal = !$linked && $width > self::SMALL_IMAGE_SIZE;
 
 		$attribs['data-src'] = $attribs['src'];
 		$attribs['src'] = wfBlankImgUrl();
-		$attribs['class'] = ( ( !empty( $attribs['class'] ) ) ? "{$attribs['class']} " : '' ) . self::CLASS_LAZYLOAD . ( !$linked  ? ' ' . self::CLASS_MEDIA : '' );
+		$attribs['class'] = ( ( !empty( $attribs['class'] ) ) ? "{$attribs['class']} " : '' ) . self::CLASS_LAZYLOAD . ( $includeInModal  ? ' ' . self::CLASS_MEDIA : '' );
 
 		if ( !empty( $params ) ) {
 			$attribs['data-params'] = htmlentities( json_encode( $params ) , ENT_QUOTES );
@@ -191,7 +193,7 @@ class WikiaMobileMediaService extends WikiaService {
 		$this->response->setVal( 'anchorAttributes', $linkAttribs );
 		$this->response->setVal( 'noscript', $noscript );
 		$this->response->setVal( 'content', $content );
-		$this->response->setVal( 'width', $attribs['width'] );
+		$this->response->setVal( 'width', $width );
 
 		wfProfileOut( __METHOD__ );
 	}
