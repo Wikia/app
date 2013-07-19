@@ -30,6 +30,7 @@ class ArticlesApiController extends WikiaApiController {
 	const VIDEO_TYPE = 'video';
 	const IMAGE_TYPE = 'image';
 	const CATEGORY_TYPE = 'category';
+	const UNKNOWN_PROVIDER = 'unknown';
 
 	/**
 	 * Get the top articles by pageviews optionally filtering by category and/or namespaces
@@ -549,26 +550,23 @@ class ArticlesApiController extends WikiaApiController {
 		$file = wfFindFile( $title );
 		if ( $file instanceof WikiaLocalFile ) {
 			//media type: photo, video
-			$typeInfo = explode( '/', $file->getMimeType() );
-			if ( isset( $typeInfo[ 0 ] ) ) {
-				//if video: title, description. length, thumbnail, provider
-				if ( $typeInfo[ 0 ] == static::VIDEO_TYPE ) {
-					$metadata = unserialize( $file->getMetadata() );
-					return [
-						'type' => static::VIDEO_TYPE,
-						'provider' => $typeInfo[1],
-						'metadata' => [
-							'title' => $metadata[ 'title' ],
-							'description' => $metadata[ 'description' ],
-							'duration' => $metadata[ 'duration' ]
-						]
-					];
-				//if image: orignal img height and width
-				} elseif ( $typeInfo[ 0 ] == static::IMAGE_TYPE ) {
-					return [
-						'type' => static::IMAGE_TYPE
-					];
-				}
+			if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
+				$handler = VideoHandler::getHandler( $file->getMimeType() );
+				$typeInfo = explode( '/', $file->getMimeType() );
+				$metadata = ( $handler ) ? unserialize( $handler->getMetadata() ) : null;
+				return [
+					'type' => static::VIDEO_TYPE,
+					'provider' => isset( $typeInfo[1] ) ? $typeInfo[1] : static::UNKNOWN_PROVIDER,
+					'metadata' => [
+						'title' => isset( $metadata[ 'title' ] ) ? $metadata[ 'title' ] : '',
+						'description' => isset( $metadata[ 'description' ] ) ? $metadata[ 'description' ] : '',
+						'duration' => isset( $metadata[ 'duration' ] ) ? (int) $metadata[ 'duration' ] : 0
+					]
+				];
+			} else {
+				return [
+					'type' => static::IMAGE_TYPE
+				];
 			}
 		}
 		return [];
