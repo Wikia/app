@@ -69,7 +69,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			else {
 				NotificationsController::addConfirmation(
 					wfMsg( $res === self::RESULT_BLOCK_ADDED ?  'phalanx-block-success' :  'phalanx-modify-success'),
-					NotificationsController::CONFIRMATION_NOTIFY
+					NotificationsController::CONFIRMATION_CONFIRM
 				);
 			}
 
