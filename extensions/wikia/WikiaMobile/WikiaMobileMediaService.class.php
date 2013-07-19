@@ -57,7 +57,7 @@ class WikiaMobileMediaService extends WikiaService {
 		/**
 		 * This is a parser from ImageGallery
 		 * @var $parser Parser
-		*/
+		 */
 		$parser = $this->request->getVal( 'parser', $this->wg->Parser );
 		$first = null;
 		$wikiText = '';

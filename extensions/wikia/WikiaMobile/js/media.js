@@ -74,7 +74,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			imageData,
 			j,
 			l,
-			data;
+			data,
+			mediaTitles = [];
 
 		//loop that gets all media from a page
 		while(element = elements[i++]) {
@@ -91,6 +92,12 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 				while(imageData = data[j++]){
 					name = imageData.name;
+
+					// De-dupe
+					if ( mediaTitles.indexOf( name ) > -1 ) {
+						continue;
+					}
+					mediaTitles.push( name );
 
 					if (name === shrImg) {shrImg = imagesLength;}
 
