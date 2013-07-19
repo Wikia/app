@@ -27,14 +27,14 @@ class SpecialCssModel extends WikiaModel {
 
 	/**
 	 * @desc Regex pattern used to extract "CSS Updates" headline
-	 * 
+	 *
 	 * @see SpecialCssModel::filterRevisionsData()
 	 */
 	const WIKITEXT_HEADLINE_PATTERN = '/===\s*%s\s*===/s';
 
 	/**
 	 * @desc Regex pattern used to extract "CSS Updates" section
-	 * 
+	 *
 	 * @see SpecialCssModel::getCssUpdateSection()
 	 */
 	const WIKITEXT_SECTION_PATTERN = '/===\s*%s\s*===\s*$(.+)/ms';
@@ -270,7 +270,7 @@ class SpecialCssModel extends WikiaModel {
 						$cssUpdatesPosts[] = $this->prepareCssUpdateData( $postData );
 					}
 				}
-				
+
 				return $cssUpdatesPosts;
 			}
 		);
@@ -292,17 +292,17 @@ class SpecialCssModel extends WikiaModel {
 
 		return $title->getFullURL();
 	}
-	
+
 	private function filterRevisionsData( $cssRevisionsData ) {
 		$filtered = [];
-		
+
 		foreach( $cssRevisionsData as $revisionData ) {
 			$content = $revisionData['revisions'][0]['*'];
 			if( $this->isCssHeadlineIn( $content ) ) {
 				$filtered[] = $revisionData;
 			}
 		}
-		
+
 		return $filtered;
 	}
 
@@ -316,10 +316,10 @@ class SpecialCssModel extends WikiaModel {
 	private function prepareCssUpdateData( $postData ) {
 		$cssUpdatePost = [];
 		$communityWikiId = WikiFactory::DBtoID( $this->getCommunityDbName() );
-		
+
 		$blogTitle = GlobalTitle::newFromText( $postData['title'], NS_MAIN, $communityWikiId );
 		$blogTitleText = $blogTitle->getText();
-		
+
 		$lastRevisionUser = $postData['revisions'][0]['user'];
 		$blogUser = $this->getUserFromTitleText( $blogTitleText, $lastRevisionUser );
 		$userPage = GlobalTitle::newFromText( $blogUser, NS_USER, $communityWikiId );
@@ -343,11 +343,11 @@ class SpecialCssModel extends WikiaModel {
 
 		return $cssUpdatePost;
 	}
-	
+
 	private function isCssHeadlineIn( $wikitext ) {
 		$headline = $this->getCssUpdateHeadline();
 		$pattern = sprintf( self::WIKITEXT_HEADLINE_PATTERN, $headline );
-		
+
 		return preg_match( $pattern, $wikitext );
 	}
 
@@ -367,28 +367,28 @@ class SpecialCssModel extends WikiaModel {
 
 	/**
 	 * @desc Retrives part of the blog post's content and returns it
-	 * 
+	 *
 	 * @param String $blogPostWikitext content of a blog post
-	 * 
+	 *
 	 * @return String
 	 */
 	private function getCssUpdateSection( $blogPostWikitext ) {
 		wfProfileIn( __METHOD__ );
 		$output = '';
-		$pattern = sprintf( self::WIKITEXT_SECTION_PATTERN, $this->getCssUpdateHeadline() ); 
+		$pattern = sprintf( self::WIKITEXT_SECTION_PATTERN, $this->getCssUpdateHeadline() );
 
 		preg_match( $pattern, $blogPostWikitext, $matches, PREG_OFFSET_CAPTURE );
 		if( count( $matches ) > 1 ) {
 			$output = substr( $blogPostWikitext, $matches[1][1] );
 			preg_match( self::WIKITEXT_H3_TO_H1_PATTERN, $output, $matches, PREG_OFFSET_CAPTURE );
-			
+
 			if( count( $matches ) > 0 ) {
 				$output = substr( $output, 0, $matches[0][1] );
 			}
-			
+
 			$output = trim( $output );
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $output;
 	}
@@ -398,7 +398,7 @@ class SpecialCssModel extends WikiaModel {
 	 *
 	 * @param $cssUpdates Array with CSS Updates in order by page id
 	 * @param $pageIds Array with page ids in order by timestamp
-     *
+	 *
 	 * @return array
 	 */
 	private function getCssRevisionsInOrder( $cssUpdates, $pageIds ) {
@@ -415,10 +415,10 @@ class SpecialCssModel extends WikiaModel {
 
 	/**
 	 * @desc Truncates given wiki text, added ellipsis at the end, parses truncated text and returns it
-	 * 
+	 *
 	 * @param GlobalTitle|Title $title mediawiki article's title
 	 * @param String $wikitext wikitext which is going to be truncated
-	 * 
+	 *
 	 * @return String
 	 */
 	private function truncateAndParse( $title, $wikitext ) {
@@ -431,13 +431,13 @@ class SpecialCssModel extends WikiaModel {
 		}
 
 		$wikitext = $this->getParsedText( $wikitext, $title );
-		
+
 		return $wikitext;
 	}
-	
+
 	protected function getCssUpdateHeadline() {
-		return $this->wg->Lang->getMessageFor( 
-			'special-css-community-update-headline', 
+		return $this->wg->Lang->getMessageFor(
+			'special-css-community-update-headline',
 			$this->getCssUpdateLang()
 		);
 	}
