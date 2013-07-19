@@ -58,7 +58,7 @@ define('AUDIO_ONLY_HEIGHT', 30);
 
 // Register the magic word "youtube" so that it can be used as a parser-function.
 function wfParserFunction_magic( &$magicWords, $langCode ) {
-	global $wgAllowNonPremiumVideos, $wgUser;
+	global $wgAllowNonPremiumVideos;
 
 	if ( !$wgAllowNonPremiumVideos ) {
 		return true;
@@ -69,7 +69,6 @@ function wfParserFunction_magic( &$magicWords, $langCode ) {
 }
 
 function upgradeYouTubeTag( $editpage, $request ) {
-	global $wgUser;
 	$app = F::app();
 
 	// Don't convert <youtube> tags if the user is not logged in or is blocked.
@@ -81,7 +80,7 @@ function upgradeYouTubeTag( $editpage, $request ) {
 		return true;
 	}
 
-	if ( !$wgUser->isAllowed('videoupload') ) {
+	if ( !$app->wg->User->isAllowed('videoupload') ) {
 		return true;
 	}
 
