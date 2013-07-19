@@ -1,0 +1,301 @@
+@import "color";
+@import "layout";
+@import "../mixins/box-sizing";
+
+$width-padding: $width-gutter / 2;
+$width-adskin: 170px;
+$width-outside-min: 768px;
+$width-outside-max: 1600px;
+$bg-gradient-width: 40px;
+$responsive-breakpoint: $width-outside + ($width-adskin * 2) + 2;
+$bg-margin: $responsive-breakpoint / 2;
+
+body.mediawiki {
+	background-image: none;
+}
+
+body {
+	min-width: $width-outside-min;
+}
+
+body > .global-notification,
+.WikiaHeader .page-width-container,
+.WikiaPage {
+	margin: 0 auto;
+	max-width: $width-outside-max;
+}
+
+.global-notification {
+	@include box-sizing( border-box );
+	width: $width-outside;
+}
+
+.WikiaActivityModule {
+	li em {
+		font-size: 15px;
+		line-height: 18px;
+		width: auto;
+	}
+
+	.edited-by {
+		font-size: 12px;
+	}
+}
+
+.WikiaArticle {
+	font-size: 14px;
+	line-height: 22px;
+
+	h2 {
+		font-size: 20px;
+	}
+
+	h3 {
+		font-size: 17px;
+	}
+
+	h4 {
+		font-size: 15px;
+	}
+
+	li {
+		line-height: 22px;
+	}
+
+	.editsection {
+		font-size: 14px;
+
+		img {
+			margin-right: 1px;
+		}
+	}
+
+	.thumbcaption {
+		line-height: 20px;
+	}
+}
+
+.WikiaPageHeader {
+	h1 {
+		font-size: 28px;
+		line-height: 28px;
+	}
+}
+
+.WikiaArticle,
+.WikiaArticleFooter {
+	padding: 0;
+}
+
+.WikiaArticle .toc {
+	#toctitle {
+		h2 {
+			font-size: 16px;
+		}
+
+		.toctoggle {
+			font-size: 13px;
+		}
+	}
+
+	ul li {
+		line-height: 20px;
+	}
+}
+
+.tally {
+	font-size: 9px;
+	line-height: 1.5em;
+
+	em {
+		font-size: 28px;
+		margin-right: 3px;
+	}
+}
+
+.WikiHeader {
+	.navbackground {
+		width: 100%;
+	}
+
+	.WikiNav {
+		right: -4px;
+		width: auto;
+
+		.subnav-2 {
+			width: auto;
+		}
+	}
+}
+
+.WikiHeaderSearch {
+	display: none;
+}
+
+.WikiaHeader {
+	min-width: 0;
+}
+
+.WikiaMainContent {
+	margin-right: -#{ $width-rail + $width-gutter };
+	position: static;
+	width: 100%;
+}
+
+.WikiaMainContentContainer {
+	background-color: $color-page;
+	margin-right: $width-rail + $width-padding;
+	padding: 0 $width-padding;
+}
+
+.WikiaPageHeader,
+.wikinav2 .WikiaPageHeader {
+	margin: 0 0 $width-padding 0;
+	padding-bottom: $width-padding / 2;
+
+	.wikia-menu-button,
+	> .comments {
+		margin-top: 3px;
+	}
+}
+
+.WikiaRail {
+	overflow: hidden;
+	padding: 0 10px 0 0;
+
+	.module h1,
+	#RIGHT_SKYSCRAPER h1,
+	.module h2,
+	#RIGHT_SKYSCRAPER h2 {
+		font-size: 20px;
+		font-weight: normal;
+		padding-left: 0;
+	}
+
+	.module .more {
+		font-size: 11px;
+	}
+}
+
+@media screen and (max-width: 1023px) {
+	.WikiaArticle {
+		min-height: auto;
+	}
+
+	.WikiaMainContent {
+		float: none;
+		margin-right: 0;
+	}
+
+	.WikiaMainContentContainer {
+		margin-right: 0;
+	}
+
+	.WikiaRail {
+		float: none;
+		padding: 0 10px;
+		width: auto;
+	}
+
+	.WikiaHeader li.start-a-wiki {
+		display: none;
+	}
+
+	.WikiHeader {
+		min-height: 154px;
+		padding-top: 0;
+
+		> nav {
+			left: 0;
+			top: 85px;
+		}
+
+		.buttons {
+			top: 87px;
+		}
+	}
+
+	.WikiNav li.nav-item:first-child {
+		margin-left: 10px;
+	}
+
+	.WikiHeaderSearch {
+		display: block;
+		left: 280px;
+		position: absolute;
+		right: 10px;
+		top: 12px;
+		width: auto;
+
+		input[type="text"] {
+			@include box-sizing( border-box );
+			font-size: 15pt;
+			height: 40px !important;
+			left: 0;
+			margin-right: 0;
+			position: absolute;
+			right: 53px;
+			width: auto;
+			width: calc(100% - 53px); // <-- CSS3!
+		}
+
+		.wikia-button {
+			height: 40px !important;
+			position: absolute;
+			right: 0;
+		}
+	}
+
+	.WikiaRail .WikiaSearch {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 1030px) {
+	body {
+		background: $color-page;
+	}
+
+	.WikiHeader .WikiNav {
+		right: 0;
+
+		.navbackground img {
+			display: none;
+		}
+	}
+
+	.global-notification,
+	.WikiaHeader .page-width-container {
+		width: auto;
+	}
+
+	.WikiaPage {
+		border: 0;
+		width: auto;
+	}
+
+	.WikiaPageBackground {
+		display: none;
+	}
+
+	.WikiaTopAds {
+		width: 100%;
+	}
+}
+
+@media screen and (min-width: $responsive-breakpoint) {
+	body > .global-notification,
+	.WikiaHeader .page-width-container,
+	.WikiaPage {
+		margin: 0 $width-adskin;
+		width: auto;
+	}
+}
+
+@media screen and (min-width: $width-outside-max + ($width-adskin * 2) + 2) {
+	body > .global-notification,
+	.WikiaHeader .page-width-container,
+	.WikiaPage {
+		margin: 0 auto;
+	}
+}
