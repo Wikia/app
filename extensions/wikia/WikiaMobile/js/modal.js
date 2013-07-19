@@ -108,6 +108,7 @@ define('modal', ['throbber', require.optional('ads')], function modal(throbber, 
 				wd = ~~(ev && ev.x - (screen.width / 2)) || 0;
 
 			wrapper.className = '';
+			wrapper.style.display = 'block';
 			wrapper.style.webkitTransform = 'translate(' + wd + 'px,' + ht + 'px) scale(.1)';
 
 			//browser needs time to move whole modal around
@@ -188,6 +189,7 @@ define('modal', ['throbber', require.optional('ads')], function modal(throbber, 
 				wrapper.className = 'zoomer';
 
 				setTimeout(function(){
+					wrapper.style.display = 'none';
 					wrapper.style.top = 0;
 
 					content.innerHTML = '';

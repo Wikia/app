@@ -89,7 +89,7 @@ class ImageServing {
 
 			$this->articlesByNS = array();
 			foreach($articles as $key => $value) {
-				$mcValue = $this->memc->get( $this->makeKey($key) , null );
+				$mcValue = $this->memc->get( $this->makeKey($key) );
 
 				if(!empty($mcValue)) {
 					unset($articles[$key]);
@@ -117,6 +117,7 @@ class ImageServing {
 			if(empty($driver)) {
 				foreach($this->imageServingDrivers as $key => $value ){
 					if(!empty($this->articlesByNS[$key])) {
+						/* @var ImageServingDriverBase $driver */
 						$driver = new $value($db, $this, $this->proportionString);
 						$driver->setArticlesList($this->articlesByNS[$key]);
 						unset($this->articlesByNS[$key]);

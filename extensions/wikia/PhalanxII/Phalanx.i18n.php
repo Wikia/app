@@ -31,6 +31,8 @@ $messages['en'] = array(
 	'phalanx-view-id' => 'Get filter by ID:',
 	'phalanx-view-id-submit' => 'Get filter',
 	'phalanx-expire-durations' => '1 hour,2 hours,4 hours,6 hours,1 day,3 days,1 week,2 weeks,1 month,3 months,6 months,1 year,infinite', // FIXME: no L10n possible; see core block/protect implementations for proper solution.
+	'phalanx-expire-custom' => 'Custom',
+	'phalanx-expire-custom-tooltip' => '3 hours, 4 months, ...',
 	'phalanx-format-text' => 'plain text',
 	'phalanx-format-regex' => 'regex',
 	'phalanx-format-case' => 'case sensitive',
@@ -119,8 +121,8 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 	'phalanx-stats-table-text' => 'Text',
 	'phalanx-stats-table-reason' => 'Reason',
 	'phalanx-stats-table-comment' => 'Comment',
-	'phalanx-stats-row' => "at $4, filter type '''$1''' blocked '''$2''' on $3",
-	'phalanx-stats-row-per-wiki' => "user '''$2''' was blocked on '''$4''' by filter ID '''$3''' ($5) (type: '''$1''')",
+	'phalanx-stats-row' => "at $4, block type '''$1''' blocked '''$2''' at $3",
+	'phalanx-stats-row-per-wiki' => "user '''$2''' was blocked at '''$4''' by filter ID '''$3''' ($5) (type: '''$1''', referrer: '''$6''')",
 	'phalanx-stats-not-implemented' => 'This feature is not yet implemented',
 	'phalanx-stats-results' => 'Block log',
 
@@ -162,6 +164,8 @@ $messages['qqq'] = array(
 	'phalanx-stats-row' => '$1 is a type of block (e.g. user or title), $2 is a user (name or IP), $3 is the URL of a wiki, $4 is a time and date',
 	'phalanx-stats-row-per-wiki' => '$1 is a type of block (e.g. user or title), $2 is a user (name or IP), $3 is a filter ID, $4 is the URL of a wiki, $4 is a time and date, $5 is a link to stats for that filter ID',
 	'action-phalanx' => '{{doc-action|phalanx}}',
+	'phalanx-expire-custom' => 'Dropdown option for choosing custom expiry time',
+	'phalanx-expire-custom-tooltip' => 'Placeholder for custom expiry time input box with value examples'
 );
 
 /** Arabic (العربية)
@@ -1829,8 +1833,8 @@ Prosimy [[Special:Contact|skontaktuj się z nami]] w sprawie problemu.<br />Blok
 	'phalanx-stats-table-text' => 'Tekst',
 	'phalanx-stats-table-reason' => 'Powód',
 	'phalanx-stats-table-comment' => 'Komentarz',
-	'phalanx-stats-row' => "w $4, typ filtru '''$1''' zablokowano '''$2''' na $3",
-	'phalanx-stats-row-per-wiki' => "użytkownik '''$2''' zablokował na '''$4''' wedle ID filtru '''$3''' ($5) (typ: '''$1''')",
+	'phalanx-stats-row' => "w $4, filtr '''$1''' zablokował '''$2''' na $3",
+	'phalanx-stats-row-per-wiki' => "użytkownik '''$2''' zablokował na '''$4''' wedle ID filtru '''$3''' ($5) (typ: '''$1''', referrer: '''$6''')",
 	'phalanx-stats-not-implemented' => 'Ta funkcjonalnośc nie została jeszcze zaimplementowana',
 	'phalanx-stats-results' => 'Log dla blokady',
 	'phalanx-rule-log-name' => 'Rejestr Phalanx',

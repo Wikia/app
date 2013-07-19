@@ -744,6 +744,24 @@ $config['articlecomments_scss_wikiamobile'] = array(
 	)
 );
 
+$config['filepage_js_wikiamobile'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/FilePage/js/FilePage.wikiamobile.js'
+	)
+);
+
+$config['filepage_scss_wikiamobile'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/FilePage/css/FilePage.wikiamobile.scss'
+	)
+);
+
+
+
 /** EditPageLayout **/
 $config['rte'] = array(
 	'type' => AssetsManager::TYPE_JS,
@@ -1316,5 +1334,16 @@ $config['manage_wikia_home_js'] = array(
 		'//extensions/wikia/SpecialManageWikiaHome/js/ManageWikiaHome.js',
 		'//extensions/wikia/SpecialManageWikiaHome/js/CollectionsSetup.js',
 		'//extensions/wikia/SpecialManageWikiaHome/js/CollectionsNavigation.js',
+	)
+);
+
+
+/* SpecialCSS */
+$config['special_css_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/SpecialCss/js/SpecialCss.js',
+		'//resources/wikia/libraries/mustache/mustache.js',
+		'//resources/wikia/libraries/mustache/jquery.mustache.js'
 	)
 );

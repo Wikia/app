@@ -57,11 +57,15 @@
 								?></span>
 								<?php endif; ?>
 								<select name="wpPhalanxExpire" id="wpPhalanxExpire" class="blue" >
-									<? if ( !empty( $expiries ) ) { foreach ($expiries as $k => $v) { ?>
+									<?php if ( !empty( $expiries ) ): ?>
+									<?php foreach ($expiries as $k => $v): ?>
 									<option value="<?=$k?>"><?=$v?></option>
-									<? } } ?>
+									<?php endforeach; ?>
+									<option value="custom" data-is-custom="true"><?= wfMessage('phalanx-expire-custom')->plain() ?></option>
+									<?php endif; ?>
 								</select>
 							</label>
+							<input type="text" id="wpPhalanxExpireCustom" name="wpPhalanxExpireCustom" size="20" placeholder="<?= wfMessage('phalanx-expire-custom-tooltip')->plain() ?>" style="display: none">
 						</div>
 					</div>
 					<!-- Type -->

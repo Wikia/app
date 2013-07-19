@@ -121,6 +121,19 @@ $messages['br'] = array(
 	'iwedit-success' => '<p>Liamm krouet gant berzh.</p>',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'interwikiedit' => "Editor d'interwikis",
+	'iwedit-title' => "Editor d'Interwiki",
+	'iwedit-language-interwikis' => 'només interwikis de llengua',
+	'iwedit-all-interwikis' => 'tots els interwikis',
+	'iwedit-update' => 'Actualitzar',
+	'iwedit-error' => "<p>S'ha produït un error.</p>",
+	'iwedit-success' => "<p>Creació d'enllaç amb èxit.</p>",
+);
+
 /** Chechen (нохчийн)
  * @author Умар
  */
