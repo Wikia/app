@@ -84,6 +84,26 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVarnishCacheTime( self::VARNISH_CACHE_TIME );
 	}
 
+	public function topWikiArticles() {
+		$pageData = $this->app->sendRequest( 'ArticlesApiController', 'getTop', [ 'namespaces' => 0 ] )->getData();
+		$ids = [];
+		$counter = 0;
+		foreach ( $pageData['items'] as $pageDatum ) {
+			$ids[] = $pageDatum['id'];
+			if ( $counter++ > 12 ) {
+				break;
+			}
+		}
+		$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', [ 'ids' => implode( ',', $ids ), 'height' => 200, 'width' => 200 ] )->getData();
+		$pages = [];
+		foreach ( $detailResponse['items'] as $item ) {
+			if (! empty( $item['thumbnail'] ) ) {
+				$pages[] = $item;
+			}
+		}
+		$this->setVal( 'pages', $pages );
+	}
+
 	/**
 	 * Deprecated functionality for indexing.
 	 */
