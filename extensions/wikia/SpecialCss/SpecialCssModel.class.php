@@ -328,17 +328,15 @@ class SpecialCssModel extends WikiaModel {
 			$timestamp = $postData['revisions'][0]['timestamp'];
 			$sectionText = $postData['revisions'][0]['*'];
 			$cssUpdateText = $this->truncateAndParse( $blogTitle, $this->getCssUpdateSection( $sectionText ) );
-			if( !empty( $cssUpdateText ) ) {
-				$cssUpdatePost = [
-					'title' => $this->getAfterLastSlashText( $blogTitleText ),
-					'url' => $this->getUrlWithAnchor( $blogTitle->getFullURL() ),
-					'userAvatar' => AvatarService::renderAvatar( $blogUser, 25 ),
-					'userUrl' => $userPage->getFullUrl(),
-					'userName' => $blogUser,
-					'timestamp' => $this->wg->Lang->date( wfTimestamp( TS_MW, $timestamp ) ),
-					'text' => $cssUpdateText,
-				];
-			}
+			$cssUpdatePost = [
+				'title' => $this->getAfterLastSlashText( $blogTitleText ),
+				'url' => $this->getUrlWithAnchor( $blogTitle->getFullURL() ),
+				'userAvatar' => AvatarService::renderAvatar( $blogUser, 25 ),
+				'userUrl' => $userPage->getFullUrl(),
+				'userName' => $blogUser,
+				'timestamp' => $this->wg->Lang->date( wfTimestamp( TS_MW, $timestamp ) ),
+				'text' => $cssUpdateText,
+			];
 		}
 
 		return $cssUpdatePost;
