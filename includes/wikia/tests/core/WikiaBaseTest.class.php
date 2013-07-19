@@ -134,7 +134,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @see WikiaBaseTest::$alternativeConstructors
 	 *
 	 * @param $className string Class name
-	 * @param $mock object Mocked object
+	 * @param $mock PHPUnit_Framework_MockObject_MockObject Mocked object
 	 */
 	protected function mockClassEx( $className, $mock ) {
 		$alternativeConstructors = isset( self::$alternativeConstructors[$className] )
