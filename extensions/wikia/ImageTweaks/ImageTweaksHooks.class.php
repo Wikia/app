@@ -213,7 +213,7 @@ class ImageTweaksHooks {
 					$linkAttribs['class'] = 'image';
 				}
 
-				if ( !empty( $imageAttribs['data-image-name'] ) ) {
+				if ( !empty( $imageAttribs['data-image-key'] ) ) {
 					$imageParams['name'] = htmlspecialchars( $imageAttribs['data-image-key'] );
 				}
 
@@ -297,7 +297,7 @@ class ImageTweaksHooks {
 				'full' => $imageAttribs['src']
 			);
 
-			if ( !empty($imageAttribs['data-video-name'] ) ) {
+			if ( !empty($imageAttribs['data-video-key'] ) ) {
 				$imageParams['name'] = htmlspecialchars( $imageAttribs['data-video-key'] );
 			}
 
