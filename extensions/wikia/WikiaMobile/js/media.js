@@ -177,7 +177,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 	function setupImage(){
 		var video,
-			imgTitle,
+			imgTitle = currentMedia.name,
 			// cache value for clickSource to prevent race conditions
 			cs = clickSource;
 
@@ -191,12 +191,10 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		}
 
 		if(currentMedia.type == Media.types.VIDEO) {
-			imgTitle = currentMedia.name;
-
 			zoomable = false;
 
 			if(videoCache[imgTitle]){
-				embedVideo(currentMedia, videoCache[imgTitle], cs);
+				embedVideo(currentWrapper, videoCache[imgTitle], cs);
 			}else{
 				if(currentMedia.supported) {
 					currentWrapper.innerHTML = '';
@@ -247,12 +245,10 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				}
 			}
 			// update url for sharing
-			qs().setVal('file', imgTitle, true ).replaceState();
+			qs().setVal( 'file', imgTitle, true ).replaceState();
 		}else if(currentMedia.type == Media.types.IMAGE){
 			var img = new Image();
 			img.src = currentMedia.url;
-
-			imgTitle = currentMedia.name;
 
 			zoomable = true;
 
@@ -286,7 +282,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				origH = img.height;
 			}
 			// update url for sharing
-			qs().setVal('file', imgTitle, true ).replaceState();
+			qs().setVal( 'file', imgTitle, true ).replaceState();
 		} else if(currentMedia.type){//custom
 			var data = {
 					currentNum: currentNum,
