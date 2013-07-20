@@ -13,6 +13,7 @@
 
 $admin-dashboard-content-width: 690px;
 $admin-dashboard-header-height: 40px;
+$admin-dashboard-rail-width: $width-rail + 40px;
 $base-z: 5;
 
 // What mix color should be used to "darken" and "lighten"?
@@ -92,7 +93,7 @@ $color-highlight-column: rgba($color-page, 0);
 	border: 0;
 	padding: 10px 0 0 0;
 	position: absolute;
-	right: $width-outside - $admin-dashboard-content-width;
+	right: if( $responsive-layout-enabled, $admin-dashboard-rail-width, $width-outside - $admin-dashboard-content-width );
 	top: $admin-dashboard-header-height - $nav-height - 11px;
 	z-index: $base-z - 	1;
 	&.expanded {
@@ -138,12 +139,17 @@ $color-highlight-column: rgba($color-page, 0);
 
 .AdminDashboard {
 	position: relative;
+
+	@if ( $responsive-layout-enabled ) {
+		overflow: hidden;
+	}
+
 	ul, ol {
 		margin: 0;
 		list-style: none;
 	}
-	.admin-dashboard-content {
 
+	.admin-dashboard-content {
 		.control-section {
 			header {
 				@include clearfix;
@@ -154,7 +160,7 @@ $color-highlight-column: rgba($color-page, 0);
 				font-style: italic;
 				padding: 5px 20px 0;
 				position: absolute;
-				width: $admin-dashboard-content-width - 40px;
+				width: if( $responsive-layout-enabled, 100%, $admin-dashboard-content-width - 40px );
 				h1 {
 					color: $color-admin-header-text;
 					float: left;
@@ -167,13 +173,13 @@ $color-highlight-column: rgba($color-page, 0);
 				@include linear-gradient($color-admin-content-highlight, top, $color-admin-content-highlight, 10%, $color-admin-content-shadow, 100%);
 				font-size: 11px;
 				line-height: 13px;
-				padding: 3.2em 15px 0; /* note: keep top padding relative to font size, change this if font-size changes for two-line control description */
+				padding: 3.2em 15px 0; // note: keep top padding relative to font size, change this if font-size changes for two-line control description
 				text-align: center;
 				@include clearfix;
 				.control {
 					cursor: pointer;
 					float: left;
-				/* 115px visual height */
+				// 115px visual height
 					height: 95px;
 					line-height: 12px;
 					padding: 20px 3px 0;
@@ -187,7 +193,7 @@ $color-highlight-column: rgba($color-page, 0);
 						margin: 0px auto 5px;
 						width: 50px;
 						.icon {
-							background-image: url(/extensions/wikia/AdminDashboard/images/icons.png); /* $wgCdnStylePath */
+							background-image: url(/extensions/wikia/AdminDashboard/images/icons.png); // $wgCdnStylePath
 							background-repeat: no-repeat;
 							display: block;
 							height: 50px;
@@ -300,11 +306,11 @@ $color-highlight-column: rgba($color-page, 0);
 		font-size: 12px;
 		font-style: italic;
 		margin: 0 -12px 7px -5px;
-		/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+		// temp transition code until grid is fully rolled out, remove and integrate after transition
 		.WikiaGrid & {
 			margin: 0 -10px 7px -10px;
 		}
-		/* end temp transistion code */
+		// end temp transistion code
 	}
 }
 
@@ -330,24 +336,21 @@ $color-highlight-column: rgba($color-page, 0);
 .WikiaArticle {
 	@include box-shadow(1px, 1px, 1px, $color-admin-article-box-shadow);
 	border-bottom: 1px solid $color-admin-article-border;
-	float: left;
+	border-right: 1px solid $color-admin-article-border;
+	@if ( not $responsive-layout-enabled ) {
+		float: left;
+	}
 	padding: 20px 0 0 0;
 	position: relative;
 	z-index: $base-z;
-
-	@if ( not $responsive-layout-enabled ) {
-		border-right: 1px solid $color-admin-article-border;
-		width: $admin-dashboard-content-width;
-	}
+	width: if( $responsive-layout-enabled, 100%, $admin-dashboard-content-width );
 
 	&.AdminDashboardChromedArticle {
 		@include box-shadow(0, 0, 0, $color-body);
+		border-right: 0;
 		float: none;
 		padding: 0 12px 0 5px;
-
-		@if ( not $responsive-layout-enabled ) {
-			width: $width-outside - 18px;
-		}
+		width: if( $responsive-layout-enabled, auto, $width-outside - 18px );
 	}
 	fieldset {
 		border: solid 1px $color-links;
@@ -355,7 +358,7 @@ $color-highlight-column: rgba($color-page, 0);
 }
 
 @if ( not $responsive-layout-enabled ) {
-	.oasis-one-column .WikiaMainContent {
+	.WikiaMainContent {
 		width: 690px;
 	}
 }
@@ -367,7 +370,8 @@ $color-highlight-column: rgba($color-page, 0);
 		width: $width-outside - 20px;
 	}
 }
-.oasis-one-column .WikiaGrid .WikiaMainContent.grid-6 {
+
+.WikiaGrid .WikiaMainContent.grid-6 {
 	margin-left: 0;
 	width: inherit;
 }
@@ -405,35 +409,35 @@ $color-highlight-column: rgba($color-page, 0);
 	}
 }
 
-/* Module overwrites */
-/* ListUser overwrite */
+// Module overwrites
+// ListUser overwrite
 .WikiaArticle .lu_fieldset {
 	white-space: normal;
 }
 
-/* Upload overwrite */
+// Upload overwrite
 #wpUploadDescription {
 	width: 100%;
 }
 
 .QuickStatsWidget {
-/* make this reusable later */
-/* ng -> not global */
+// make this reusable later
+// ng -> not global
 	.WikiaDataTable {
-		@include linear-gradient($color-admin-header-shadow, top, $color-admin-header-highlight, 40%, $color-admin-header-shadow, 100%); /* ng */
-		border: 1px solid $color-admin-rail-border; /* ng */
+		@include linear-gradient($color-admin-header-shadow, top, $color-admin-header-highlight, 40%, $color-admin-header-shadow, 100%); // ng
+		border: 1px solid $color-admin-rail-border; // ng
 		th, td {
 			&:first-child {
-				color: $color-alternate-text; /* ng */
+				color: $color-alternate-text; // ng
 			}
 			&:nth-child(2) {
-				color: $color-alternate-text; /* ng */
+				color: $color-alternate-text; // ng
 				@include linear-gradient($color-page, left, $color-admin-header-shadow, 0%, $color-admin-header-highlight, 15%, $color-admin-header-highlight, 85%, $color-admin-header-shadow, 100%);
 			}
 		}
 		thead {
 			th {
-				color: $color-text; /* ng */
+				color: $color-text; // ng
 				&:nth-child(2) {
 					padding: 0;
 				}
@@ -441,19 +445,19 @@ $color-highlight-column: rgba($color-page, 0);
 		}
 		.totals {
 			td {
-				background: $color-page; /* ng */
-				color: $color-text; /* ng */
+				background: $color-page; // ng
+				color: $color-text; // ng
 				&:first-child {
 					.pointer {
-						background: $color-totals; /* ng */
-						color: $color-totals-text; /* ng */
+						background: $color-totals; // ng
+						color: $color-totals-text; // ng
 						&:before {
-							border-left: 10px solid $color-alternate-text; /* ng */
+							border-left: 10px solid $color-alternate-text; // ng
 						}
 					}
 				}
 				&:nth-child(2) {
-					color: $color-alternate-text; /* ng */
+					color: $color-alternate-text; // ng
 					border-color: transparent;
 					@include linear-gradient($color-page, left, $color-admin-header-shadow, 0%, $color-admin-header-highlight, 15%, $color-admin-header-highlight, 85%, $color-admin-header-shadow, 100%);
 					padding: 0;
@@ -463,7 +467,7 @@ $color-highlight-column: rgba($color-page, 0);
 		tbody {
 			tr {
 				td {
-					border-top: 1px solid $color-admin-rail-border; /* ng */
+					border-top: 1px solid $color-admin-rail-border; // ng
 					&:nth-child(2) {
 						border-color: transparent;
 					}
@@ -472,22 +476,22 @@ $color-highlight-column: rgba($color-page, 0);
 		}
 	}
 	.highlight-top {
-		background: -moz-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* FF3.6+ */
-		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $color-admin-header-shadow), color-stop(25%, $color-highlight-column)); /* Chrome,Safari4+ */
-		background: -webkit-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* Chrome10+,Safari5.1+ */
-		background: -o-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* Opera 11.10+ */
-		background: -ms-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* IE10+ */
-		background: linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* W3C */
+		background: -moz-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); // FF3.6+
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $color-admin-header-shadow), color-stop(25%, $color-highlight-column)); // Chrome,Safari4+
+		background: -webkit-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); // Chrome10+,Safari5.1+
+		background: -o-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); // Opera 11.10+
+		background: -ms-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); // IE10+
+		background: linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); // W3C
 		display: block;
 		padding: 10px 10px 7px 0;
 	}
 	.highlight-bottom {
-		background: -moz-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* FF3.6+ */
-		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $color-admin-header-shadow), color-stop(25%, $color-highlight-column)); /* Chrome,Safari4+ */
-		background: -webkit-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* Chrome10+,Safari5.1+ */
-		background: -o-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* Opera 11.10+ */
-		background: -ms-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* IE10+ */
-		background: linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* W3C */
+		background: -moz-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); // FF3.6+
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $color-admin-header-shadow), color-stop(25%, $color-highlight-column)); // Chrome,Safari4+
+		background: -webkit-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); // Chrome10+,Safari5.1+
+		background: -o-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); // Opera 11.10+
+		background: -ms-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); // IE10+
+		background: linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); // W3C
 		display: block;
 		padding: 10px 10px 7px 0;
 	}
@@ -499,5 +503,10 @@ $color-highlight-column: rgba($color-page, 0);
 		.adm-dash-search {
 			display: none;
 		}
+	}
+
+	.page-Special_AdminDashboard .WikiaMainContentContainer {
+		margin-right: $admin-dashboard-rail-width;
+		padding: 0;
 	}
 }
