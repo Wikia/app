@@ -117,8 +117,8 @@ class SpecialCssHooks {
 	}
 
 	/**
-	 * @desc Using CategoryHelper::extractCategoriesFromWikitext() retrives categories' data array
-	 * which then is being flattern to categories' names with replaces spacebar to _
+	 * @desc Using CategoryHelper::extractCategoriesFromWikitext() retrieves categories' data array
+	 * which then is being flatten to categories' names with replaces spacebar to _
 	 *
 	 * @param String $wikitext
 	 *

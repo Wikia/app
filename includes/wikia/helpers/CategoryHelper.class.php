@@ -24,7 +24,7 @@ class CategoryHelper {
 	 * Change format of categories metadata. Supports:
 	 * array -> json, array -> wikitext, json -> wikitext, json -> array
 	 *
-	 * @param Array | String $categories list of categories in array or as a JSON
+	 * @param Array | String $categories list of categories in array or as JSON
 	 * @param String $fromFormat the format of given categories; supported 'json', 'wikitext', 'array'
 	 * @param String $toFormat the format of result
 	 *
