@@ -1,6 +1,6 @@
 <?php
 /**
- * ivsUpdateSuggestions
+ * lvsUpdateSuggestions
  *
  * This script examines all non-premium videos in a wiki and updates their LicensedVideoSwap (LVS) suggestions
  * if they don't have any or if the existing suggestions have expired.
@@ -23,7 +23,7 @@ class LVSUpdateSuggestions extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Add the description header";
+		$this->mDescription = "Pre-populate LVS suggestions";
 		$this->addOption( 'test', 'Test', false, false, 't' );
 		$this->addOption( 'verbose', 'Verbose', false, false, 'v' );
 		$this->addOption( 'force', 'Force', false, false, 'f' );
@@ -43,7 +43,7 @@ class LVSUpdateSuggestions extends Maintenance {
 
 		$stats = $this->processVideoList( );
 
-		$delta = $this->formatSeconds(time() - $startTime);
+		$delta = $this->formatDuration(time() - $startTime);
 		$this->debug("Found suggestions for {$stats['vidsWithSuggestions']} of {$stats['vidsFound']} video(s) in $delta\n");
 	}
 
@@ -131,7 +131,7 @@ class LVSUpdateSuggestions extends Maintenance {
 	 * @param int $sec - A number in seconds
 	 * @return string - A friendlier version of seconds expressed in hours, minutes and seconds
 	 */
-	private function formatSeconds( $sec ) {
+	private function formatDuration( $sec ) {
 		$output = '';
 
 		$min = $sec >= 60 ? $sec/60 : 0;

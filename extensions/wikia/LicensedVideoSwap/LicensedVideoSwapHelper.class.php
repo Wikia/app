@@ -254,7 +254,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 
 	/**
 	 * Search for related video titles
-	 * @param $title - Either a Title object or title text
+	 * @param Title|string $title - Either a Title object or title text
 	 * @param bool $test - Operate in test mode.  Allows commandline scripts to implement --test
 	 * @return array - A list of suggested videos
 	 */
