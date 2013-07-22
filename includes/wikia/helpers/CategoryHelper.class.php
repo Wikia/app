@@ -1,16 +1,14 @@
 <?php
 
 /**
- * CategorySelect
+ * CategoryHelper
  *
- * A CategorySelect extension for MediaWiki
- * Provides an interface for managing categories in article without editing whole article
+ * @desc CategoryHelper provides an interface for managing categories in article without editing whole article
  *
  * @author Maciej Błaszkowski (Marooned) <marooned@wikia-inc.com>
  * @author Kyle Florence <kflorence@wikia-inc.com>
  */
-
-class CategorySelect {
+class CategoryHelper {
 	private static $categories;
 	private static $categoriesService;
 	private static $data;

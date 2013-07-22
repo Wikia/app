@@ -23,7 +23,6 @@ $wgExtensionCredits[ 'other' ][] = array(
 $dir = dirname( __FILE__ ) . '/';
 
 // Classes
-$wgAutoloadClasses[ 'CategorySelect'] =  $dir . 'CategorySelect.class.php' ;
 $wgAutoloadClasses[ 'CategorySelectController'] =  $dir . 'CategorySelectController.class.php' ;
 $wgAutoloadClasses[ 'CategorySelectHooksHelper'] =  $dir . 'CategorySelectHooksHelper.class.php' ;
 
