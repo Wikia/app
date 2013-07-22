@@ -2,7 +2,6 @@
 @import "layout";
 @import "responsive-font-sizing";
 @import "../mixins/box-sizing";
-@import "resources/wikia/libraries/bourbon/bourbon";
 
 // Layout
 $width-adskin: 170px;
@@ -86,12 +85,18 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 		}
 
 		&:after {
-			@include linear-gradient( to left, rgba( $color-body, 0 ) 0%, $color-body 100% );
+			// TODO: replace this with a proper linear-gradient mixin
+			background-color: rgba( $color-body, 0 );
+			background-image: -webkit-linear-gradient(right, rgba( $color-body, 0 ) 0%, $color-body 100%);
+			background-image: linear-gradient(to left, rgba( $color-body, 0 ) 0%, $color-body 100%);
 			right: $gradient-offset;
 		}
 
 		&:before {
-			@include linear-gradient( to right, rgba( $color-body, 0 ) 0%, $color-body 100% );
+			// TODO: replace this with a proper linear-gradient mixin
+			background-color: rgba( $color-body, 0 );
+			background-image: -webkit-linear-gradient(left, rgba( $color-body, 0 ) 0%, $color-body 100%);
+			background-image: linear-gradient(to right, rgba( $color-body, 0 ) 0%, $color-body 100%);
 			left: $gradient-offset;
 		}
 	}
