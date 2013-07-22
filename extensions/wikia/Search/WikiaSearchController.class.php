@@ -170,6 +170,50 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$response->setFormat( 'json' );
 		$response->setData( $entityResponse );
 	}
+	
+	/**
+	 * Powers the category page view
+	 */
+	public function categoryTopArticles() {
+		$pages = [];
+		$result = $this->getVal( 'result' );
+		if (! empty( $result ) ) {
+			try {
+				$category = $result['title'];
+				$colonSploded = explode( ':', $category );
+				$namespace = (new Wikia\Search\MediaWikiService)->getNamespaceIdForString( $colonSploded[0] );
+				// remove "Category:", since it doesn't work with ArticlesApiController
+				$category = ( is_int( $namespace ) && $namespace == NS_CATEGORY ) 
+				         ? implode( ':', array_slice( $colonSploded, 1 ) ) 
+				         : $category; 
+				//@todo use single API call here when expansion is released
+				$pageData = $this->app->sendRequest( 'ArticlesApiController', 'getTop', [ 'namespaces' => 0, 'category' => $category ] )->getData();
+				$ids = [];
+				$counter = 0;
+				foreach ( $pageData['items'] as $pageDatum ) {
+					$ids[] = $pageDatum['id'];
+					if ( $counter++ >= 12 ) {
+						break;
+					}
+				}
+				if (! empty( $ids ) ) {
+					$params = [ 'ids' => implode( ',', $ids ), 'height' => 80, 'width' => 100 ];
+					$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
+					foreach ( $detailResponse['items'] as $item ) {
+						if (! empty( $item['thumbnail'] ) ) {
+							$pages[] = $item;
+						}
+					}
+				}
+			} catch ( Exception $e ) { echo $e; die; } // ignoring api errors for gracefulness
+		}
+		var_dump($pages); die;
+		$this->setVal( 'pages', $pages );
+		$this->setVal( 'result', $result );
+		$this->setVal( 'gpos', $this->getVal( 'gpos' ) );
+		$this->setVal( 'pos', $this->getVal( 'pos' ) );
+		$this->setVal( 'query', $this->getVal( 'query' ) );
+	}
 
 	/**
 	 * Controller Helper Methods
