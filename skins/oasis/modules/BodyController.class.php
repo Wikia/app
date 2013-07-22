@@ -79,7 +79,9 @@ class BodyController extends WikiaController {
 	public static function isResponsiveLayoutEnabled() {
 		$app = F::app();
 		return !empty( $app->wg->OasisResponsive ) &&
-				// Block liquid layout for corporate pages (needed for devbox environment)
+				// Prevent the responsive layout from being enabled on the
+				// corporate wiki as it will break styling on it.
+				// TODO: remove this check when it's safe to enable there.
 				empty( $app->wg->EnableWikiaHomePageExt );
 	}
 
