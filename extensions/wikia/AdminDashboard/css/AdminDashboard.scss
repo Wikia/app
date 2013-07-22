@@ -347,6 +347,7 @@ $color-highlight-column: rgba($color-page, 0);
 
 	&.AdminDashboardChromedArticle {
 		@include box-shadow(0, 0, 0, $color-body);
+		border-bottom: 0;
 		border-right: 0;
 		float: none;
 		padding: 0 12px 0 5px;
@@ -369,11 +370,11 @@ $color-highlight-column: rgba($color-page, 0);
 		margin: 0 10px;
 		width: $width-outside - 20px;
 	}
-}
 
-.WikiaGrid .WikiaMainContent.grid-6 {
-	margin-left: 0;
-	width: inherit;
+	.WikiaMainContent.grid-6 {
+		margin-left: 0;
+		width: inherit;
+	}
 }
 
 .WikiHeader {
@@ -502,5 +503,13 @@ $color-highlight-column: rgba($color-page, 0);
 	.page-Special_AdminDashboard .WikiaMainContentContainer {
 		margin-right: $admin-dashboard-rail-width;
 		padding: 0;
+	}
+
+	.AdminDashboardGeneralHeader.AdminDashboardArticleHeader {
+		margin: 0 -10px 10px -10px;
+	}
+
+	.WikiaArticle.AdminDashboardChromedArticle {
+		padding: 0 10px;
 	}
 }
