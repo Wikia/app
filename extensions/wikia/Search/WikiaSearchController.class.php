@@ -94,10 +94,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				//try getting first one bigger
 				$params = [ 'ids' => implode( ',', $ids ), 'height' => 150, 'width' => 300 ];
 				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
-				foreach ( $ids as $id ) {
-					if (isset( $detailResponse['items'][ $id ] ) && ! empty( $item['thumbnail'] ) ) {
-						$pages[] = $item;
-						unset( $ids[ $id ] );
+				foreach ( $ids as $key => $id ) {
+					if (isset( $detailResponse['items'][ $id ] ) && ! empty( $detailResponse['items'][ $id ]['thumbnail'] ) ) {
+						$pages[] = $detailResponse['items'][ $id ];
+						unset( $ids[ $key ] );
 						break;
 					}
 				}
