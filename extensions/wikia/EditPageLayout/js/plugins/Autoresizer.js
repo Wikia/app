@@ -23,11 +23,11 @@
 		minPageHeight: 300,
 		rightrail: false,
 		widemode: false,
-		wikiaBar: false,
+		wikiaBarEnabled: false,
 
 		beforeInit: function() {
 			this.mode = this.editor.config.autoResizeMode;
-			this.wikiaBar = window.wgEnableWikiaBarExt && typeof window.WikiaBar === 'object';
+			this.wikiaBarEnabled = window.wgEnableWikiaBarExt && typeof window.WikiaBar === 'object';
 			if (this.mode !== false) {
 				this.editor.on('editboxReady',this.proxy(this.editboxReady));
 				this.editor.on('mode',this.proxy(this.delayedResize));
@@ -97,7 +97,7 @@
 					viewportHeight: viewportHeight
 				};
 
-			if ( this.wikiaBar && !this.wikiaBarWrapper.hasClass('hidden') ) {
+			if ( this.wikiaBarEnabled && !this.wikiaBarWrapper.hasClass('hidden') ) {
 				dimensions.nodeHeight -= this.wikiaBarWrapper.outerHeight(true);
 			}
 
