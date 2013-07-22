@@ -32,6 +32,7 @@ class CategoryHelper {
 	 */
 	public static function changeFormat( $categories, $fromFormat, $toFormat ) {
 		wfProfileIn( __METHOD__ );
+		$changed = null;
 
 		if ( $fromFormat == 'json' ) {
 			$categories = $categories == '' ? array() : json_decode( $categories, true );
@@ -67,7 +68,6 @@ class CategoryHelper {
 		}
 
 		wfProfileOut( __METHOD__ );
-		/** @noinspection PhpUndefinedVariableInspection */
 		return $changed;
 	}
 
