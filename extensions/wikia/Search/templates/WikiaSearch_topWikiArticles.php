@@ -3,7 +3,7 @@
 $counter = 0;
 ?>
 <div id="top-wiki-articles">
-    <h2>Top Articles</h2>
+    <h2>What's hot now</h2>
     <?php foreach ( $pages as $page ) : ?>
     <?php if ( $counter == 0 ): ?>
     <div class="top-wiki-article" id="hot-article">
