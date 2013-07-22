@@ -8,7 +8,7 @@
 <header id="WikiaHeader" class="WikiaHeader<?= (empty($wg->WikiaSeasonsGlobalHeader) ? '' : ' WikiaSeasonsGlobalHeader') ?>">
 	<div class="wikia-header-mask">
 		<div class="page-width-container">
-			<? if ( !empty($isGameStarLogoEnabled )) echo F::app()->renderView('GameStarLogo', 'Index'); ?>
+			<? if ( !empty($isGameStarLogoEnabled )) echo $app->renderView('GameStarLogo', 'Index'); ?>
 			<nav>
 				<? if ( $displayHeader ): ?>
 				<h1><?= wfMsgHtml('oasis-global-nav-header'); ?></h1>
@@ -33,13 +33,11 @@
 							<? endif ?>
 						</ul>
 					</li>
-					<?= (empty($wg->WikiaSeasonsGlobalHeader) ? '' : F::app()->renderView('WikiaSeasons', 'globalHeaderLights', array())); ?>
+					<?= (empty($wg->WikiaSeasonsGlobalHeader) ? '' : $app->renderView('WikiaSeasons', 'globalHeaderLights', array())); ?>
 				</ul>
 			</nav>
-			<?= F::app()->renderView('AccountNavigation', 'Index') ?>
-			<?= F::app()->renderView('WallNotifications', 'Index'); ?>
-			<img src="<?= $wg->BlankImgUrl ?>" class="banner-corner-left" width="0" height="0">
-			<img src="<?= $wg->BlankImgUrl ?>" class="banner-corner-right" width="0" height="0">
+			<?= $app->renderView('AccountNavigation', 'Index') ?>
+			<?= $app->renderView('WallNotifications', 'Index') ?>
 		</div>
 	</div>
 </header>
