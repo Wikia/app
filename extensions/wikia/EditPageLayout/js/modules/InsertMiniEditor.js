@@ -4,14 +4,13 @@
 				items;
 
 		items = [
-			'InsertImage',
-			'InsertVideo'
+			'InsertImage'
 		];
 
 		// hide add video button if is true and user does not have apppropriate rights
-		if (window.hideAddVideoBtn) {
+		if (window.showAddVideoBtn) {
 			// using ES5 Array.indexOf -- current browser support includes ES5 support, but be aware for future bug reports
-			items.splice( items.indexOf('InsertVideo'), 1 );
+			items.splice( 1, 0, "InsertVideo" );
 		}
 
 
