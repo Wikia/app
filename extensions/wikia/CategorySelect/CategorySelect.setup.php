@@ -24,6 +24,7 @@ $dir = dirname( __FILE__ ) . '/';
 
 // Classes
 $wgAutoloadClasses[ 'CategorySelectController'] =  $dir . 'CategorySelectController.class.php' ;
+$wgAutoloadClasses[ 'CategorySelectHelper'] =  $dir . 'CategorySelectHelper.class.php' ;
 $wgAutoloadClasses[ 'CategorySelectHooksHelper'] =  $dir . 'CategorySelectHooksHelper.class.php' ;
 
 // Hooks

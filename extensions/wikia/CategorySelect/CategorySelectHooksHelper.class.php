@@ -150,7 +150,7 @@ class CategorySelectHooksHelper {
 
 		wfProfileIn( __METHOD__ );
 
-		if ( $force || CategoryHelper::isEnabled() ) {
+		if ( $force || CategorySelectHelper::isEnabled() ) {
 			$app = F::app();
 			$action = $app->wg->Request->getVal( 'action', 'view' );
 

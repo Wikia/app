@@ -27,7 +27,7 @@ class CategorySelectController extends WikiaController {
 
 		$categories = $this->wg->out->getCategories();
 		$showHidden = $this->wg->User->getBoolOption( 'showhiddencats' );
-		$userCanEdit = $this->request->getVal( 'userCanEdit', CategoryHelper::isEditable() );
+		$userCanEdit = $this->request->getVal( 'userCanEdit', CategorySelectHelper::isEditable() );
 
 		// There are no categories present and user can't edit, skip rendering
 		if ( !$userCanEdit && !count( $categories ) ) {
