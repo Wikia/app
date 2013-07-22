@@ -252,6 +252,17 @@ RTE.overlay = {
 	add: function(node, items) {
 		var self = this.plugin;
 
+		/*
+		 * If admin-only video upload/edit is enabled for this wiki,
+		 * then we don't show overlay for video items in the visual editor,
+		 * preventing non-admins from editing video descriptions
+		 *
+		 * window.hideAddVideoBtn comes from EditPageLayout/EditPageLayoutHooks.class.php
+		 */
+		if ( node.hasClass('video') && window.hideAddVideoBtn ) {
+			return;
+		}
+
 		// store items
 		node.data('items', items);
 
