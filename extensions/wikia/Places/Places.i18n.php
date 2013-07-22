@@ -107,6 +107,13 @@ $messages['ca'] = array(
 	'places-category-switch-off' => 'Activar les geoetiquetes',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'places-editor-search' => 'Лаха',
+);
+
 /** Czech (česky)
  * @author Chmee2
  */

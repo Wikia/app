@@ -69,6 +69,7 @@ Check given username for possible typos.</p>',
 $messages['qqq'] = array(
 	'lookupcontribsgo' => '{{Identical|Go}}',
 	'lookupcontribswiki' => '{{Identical|Wiki}}',
+	'lookupcontribswikiurl' => '{{Identical|URL}}',
 	'lookupcontribswikititle' => '{{Identical|Title}}',
 	'lookupcontribsnext' => '{{Identical|Next}}',
 	'lookupcontribspageremoved' => '{{Identical|Removed}}',
@@ -257,10 +258,13 @@ $messages['br'] = array(
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
 	'lookupcontribs' => 'Къинхьегаме хьажа',
 	'lookupcontribslinks' => 'къинхьегаме хьажориг',
+	'lookupcontribsnoresultfound' => 'ХӀума ца карийна!',
+	'lookupcontribswikititle' => 'ЦӀе',
 	'lookupcontribscontribslink' => 'Къинхьегаме хьажориг',
 	'lookupcontribscontribs' => 'къинхьегам',
 );

@@ -382,6 +382,14 @@ $messages['ms'] = array(
 	'feed-title-recentchanges' => 'Perubahan terkini',
 );
 
+/** Mazanderani (مازِرونی)
+ * @author محک
+ */
+$messages['mzn'] = array(
+	'partner-feed-recent-changes' => 'تازه دگاردسته‌ئون',
+	'feed-title-recentchanges' => 'تازه دگاردسته‌ئون',
+);
+
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */

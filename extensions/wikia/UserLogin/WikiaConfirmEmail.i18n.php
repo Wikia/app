@@ -69,6 +69,13 @@ $messages['ca'] = array(
 	'wikiaconfirmemail-username' => "Nom d'usuari",
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'wikiaconfirmemail-username' => 'Декъашхочун цӀе',
+);
+
 /** Czech (česky)
  * @author Jezevec
  */
