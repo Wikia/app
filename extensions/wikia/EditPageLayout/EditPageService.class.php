@@ -52,8 +52,11 @@ class EditPageService extends Service {
 
 		$originalWikitext = $wikitext;
 
-		$categories = $wg->Request->getVal( 'categories', '' );
-		$wikitext .= CategoryHelper::changeFormat( $categories, 'json', 'wikitext' );
+		if ( !empty( $wg->EnableCategorySelectExt ) ) {
+		// if CategorySelect is enabled, add categories to wikitext
+			$categories = $wg->Request->getVal( 'categories', '' );
+			$wikitext .= CategoryHelper::changeFormat( $categories, 'json', 'wikitext' );
+		}
 
 		// call preSaveTransform so signatures, {{subst:foo}}, etc. will work
 		$wikitext = $wgParser->preSaveTransform($wikitext, $this->mTitle, $this->app->getGlobal('wgUser'), $parserOptions);
