@@ -1,6 +1,7 @@
 var AchievementsThing = {
 	init: function() {
 		AchievementsThing.page = 0;
+		AchievementsThing.windowObj = $(window);
 		AchievementsThing.module = $(".AchievementsModule, .WikiaLatestEarnedBadgesModule");
 
 		var data = AchievementsThing.module.find(".data");
@@ -12,6 +13,7 @@ var AchievementsThing = {
 		AchievementsThing.badgesUl = AchievementsThing.module.find(".badges-icons");
 		AchievementsThing.next = AchievementsThing.module.find(".badges-next");
 		AchievementsThing.prev = AchievementsThing.module.find(".badges-prev");
+		AchievementsThing.badgeDescWidth = 400; // this width is based on bootstrap popover max-width from popover.scss
 
 		if(AchievementsThing.next && AchievementsThing.prev){
 			AchievementsThing.next.click(AchievementsThing.loadBadges);
@@ -23,16 +25,44 @@ var AchievementsThing = {
 
 		//Track sponsored badges
 		AchievementsThing.trackSponsoredBadges();
+
+		//TODO: var wgIsResponsiveLayoutEnabled may be changed after
+		// code review for https://github.com/Wikia/app/pull/1140
+		if ( window.wgIsResponsiveLayoutEnabled ) {
+			AchievementsThing.addResizeEvent();
+		}
+	},
+
+	addResizeEvent: function() {
+		AchievementsThing.windowObj.on( 'resize', this.resizeBadgesDescription );
+	},
+
+	prepareBadgesDescription: function(badge) {
+		var placement = 'left';
+		var html = badge.prevAll(".profile-hover").clone().wrap('<div>').parent().html();
+
+		if ( badge.offset().left + badge.width() - AchievementsThing.badgeDescWidth < 0 ) {
+			placement = 'right';
+		}
+
+		badge.popover({
+			content: html,
+			placement: placement
+		});
+	},
+
+	resizeBadgesDescription: function() {
+		AchievementsThing.module.find('.badges li > img').each(function(){
+			var badge = $(this);
+			badge.popover('destroy');
+			AchievementsThing.prepareBadgesDescription(badge);
+		});
 	},
 
 	showBadgesDescription: function(){
 		AchievementsThing.module.find('.badges li > img, .badges .sponsored-link').add("#LeaderboardTable .badge-icon").each(function(){
 			var badge = $(this);
-			var html = badge.prevAll(".profile-hover").clone().wrap('<div>').parent().html();
-			badge.popover({
-				content: html,
-				placement: 'left'
-			});
+			AchievementsThing.prepareBadgesDescription(badge);
 		});
 	},
 
