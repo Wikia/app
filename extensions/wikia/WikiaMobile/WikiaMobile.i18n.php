@@ -17,7 +17,6 @@ $messages['en'] = array(
 	'wikiamobile-password' => 'Password',
 	'wikiamobile-login-submit' => 'Login',
 	'wikiamobile-menu' => 'Menu',
-	'wikiamobile-explore' => 'Explore',
 	'wikiamobile-article-categories' => 'Categories',
 	'wikiamobile-feedback' => 'Feedback',
 	'wikiamobile-back' => 'Back',
@@ -74,6 +73,11 @@ you should definitely check this out:
 
 /** Message documentation (Message documentation) */
 $messages['qqq'] = array(
+	'wikiamobile-search-wiki' => 'Text indicating that scope for a search will be current wiki',
+	'wikiamobile-search-wikia' => 'Text indicating that scope for a search will be whole wikia network',
+	'wikiamobile-login' => 'Placeholder on input asking for password',
+	'wikiamobile-password' => 'Placeholder on input asking for password',
+	'wikiamobile-login-submit' => 'Label on a blue button prompting user to log in',
 	'wikiamobile-search' => 'Label on a search button placed in Mobile skin top bar',
 	'wikiamobile-search-this-wiki' => 'Placeholder in input on search field',
 	'wikiamobile-menu' => 'Header on wiki menu',

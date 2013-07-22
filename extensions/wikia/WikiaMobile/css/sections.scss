@@ -19,9 +19,8 @@ h1, h2, h3{
 }
 
 .artSec {
-	position: relative;
-	padding-bottom: 30px;
 	overflow: hidden;
+	width: 100%;
 
 	&.open {
 		display: block;
@@ -45,18 +44,13 @@ h1, h2, h3{
 .goBck {
 	color: $page-text-alternate-color;
 	float: right;
-	padding: 5px;
-	position: absolute;
-	bottom: 0;
-	right: 0;
 }
 
 .collSec {
 	border-top: 1px solid $border-color;
 	color: $section-text-color;
 	min-height: $section-title-font-size;
-	padding: $page-padding 27px 0 0;
-	position: relative;
+	padding: $page-padding 5px 0 0;
 	//lest make our sections a little bit more sexy
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Roboto, "Lucida Grande", arial, sans-serif;
 
@@ -67,11 +61,9 @@ h1, h2, h3{
 
 		display: none; //hidden by default, will be revealed via JS
 		width: 22px;
-		height: 22px;
+		height: 1.3em;
 		background-size: 75%;
-		position: absolute;
-		right: 0;
-		top: 13px;
+		float: right;
     }
 
 	//TODO:Find it in core and do not print it out in mobile skin

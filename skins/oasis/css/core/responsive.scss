@@ -2,7 +2,6 @@
 @import "layout";
 @import "responsive-font-sizing";
 @import "../mixins/box-sizing";
-@import "resources/wikia/libraries/bourbon/bourbon";
 
 // Layout
 $width-adskin: 170px;
@@ -86,12 +85,18 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 		}
 
 		&:after {
-			@include linear-gradient( to left, rgba( $color-body, 0 ) 0%, $color-body 100% );
+			// TODO: replace this with a proper linear-gradient mixin
+			background-color: rgba( $color-body, 0 );
+			background-image: -webkit-linear-gradient(right, rgba( $color-body, 0 ) 0%, $color-body 100%);
+			background-image: linear-gradient(to left, rgba( $color-body, 0 ) 0%, $color-body 100%);
 			right: $gradient-offset;
 		}
 
 		&:before {
-			@include linear-gradient( to right, rgba( $color-body, 0 ) 0%, $color-body 100% );
+			// TODO: replace this with a proper linear-gradient mixin
+			background-color: rgba( $color-body, 0 );
+			background-image: -webkit-linear-gradient(left, rgba( $color-body, 0 ) 0%, $color-body 100%);
+			background-image: linear-gradient(to right, rgba( $color-body, 0 ) 0%, $color-body 100%);
 			left: $gradient-offset;
 		}
 	}
@@ -103,14 +108,7 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 @mixin background-max() {
 	$background-margin: $width-outside-half - ( $width-outside-max-half + $background-width-half );
 	$background-position-after: -$background-width-half;
-	$gradient-offset: 0;
-
-	@if ( $background-is-wide ) {
-		$gradient-offset: abs( $background-margin + $background-width-half + $width-gradient );
-
-	} @else {
-		$gradient-offset: $background-margin + ( $background-width-half - $width-gradient );
-	}
+	$gradient-offset: $background-margin + ( $background-width-half - $width-gradient );
 
 	body {
 		&:after,
@@ -228,15 +226,11 @@ body > .global-notification,
 	background-color: $color-page;
 	margin-right: $width-rail + $width-padding;
 	padding: 0 $width-padding;
-
-	.WikiaSearch {
-		display: none;
-	}
 }
 
 .oasis-one-column {
 	.WikiaMainContent {
-		margin-right: -$width-gutter;
+		margin-right: 0;
 		width: 100%
 	}
 
@@ -244,6 +238,11 @@ body > .global-notification,
 		margin-right: 0;
 		position: relative;
 	}
+}
+
+.WikiaPage #WikiaArticleBottomAd {
+	clear: both;
+	margin: 0;
 }
 
 .WikiaPageHeader,
@@ -260,19 +259,6 @@ body > .global-notification,
 .WikiaRail {
 	overflow: hidden;
 	padding: 0 10px 0 0;
-
-	.module h1,
-	#RIGHT_SKYSCRAPER h1,
-	.module h2,
-	#RIGHT_SKYSCRAPER h2 {
-		font-size: 20px;
-		font-weight: normal;
-		padding-left: 0;
-	}
-
-	.module .more {
-		font-size: 11px;
-	}
 }
 
 // START - edit page fixes
@@ -401,6 +387,16 @@ body > .global-notification,
 		}
 	}
 
+	// TODO: clean up all the wikinav2/oasis-one-column styles...
+	.wikinav2.oasis-one-column .WikiaPageHeader {
+		padding-right: 0;
+
+		.tally {
+			right: 0;
+		}
+	}
+
+	.WikiaSearchHeader .WikiaSearch,
 	.WikiaRail .WikiaSearch {
 		display: none;
 	}

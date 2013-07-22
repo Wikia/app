@@ -45,6 +45,22 @@
 		.thumbcaption {
 			line-height: 20px;
 		}
+
+		.toc {
+			#toctitle {
+				h2 {
+					font-size: 16px;
+				}
+
+				.toctoggle {
+					font-size: 13px;
+				}
+			}
+
+			ul li {
+				line-height: 20px;
+			}
+		}
 	}
 
 	.WikiaPageHeader {
@@ -54,19 +70,18 @@
 		}
 	}
 
-	.WikiaArticle .toc {
-		#toctitle {
-			h2 {
-				font-size: 16px;
-			}
-
-			.toctoggle {
-				font-size: 13px;
-			}
+	.WikiaRail {
+		.module h1,
+		#RIGHT_SKYSCRAPER h1,
+		.module h2,
+		#RIGHT_SKYSCRAPER h2 {
+			font-size: 20px;
+			font-weight: normal;
+			padding-left: 0;
 		}
 
-		ul li {
-			line-height: 20px;
+		.module .more {
+			font-size: 11px;
 		}
 	}
 

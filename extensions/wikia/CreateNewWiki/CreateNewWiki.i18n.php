@@ -1634,6 +1634,7 @@ $messages['ms'] = array(
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
+ * @author Laaknor
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -1663,7 +1664,7 @@ $messages['nb'] = array(
 	'cnw-userauth-headline' => 'Har du en konto?',
 	'cnw-userauth-creative' => 'Logg inn',
 	'cnw-userauth-marketing-heading' => 'Har du ikke en konto?',
-	'cnw-userauth-marketing-body' => 'Du trenger en konto for å opprette en wiki hos Wikia. Det tar bare et minutt å registrere deg!', # Fuzzy
+	'cnw-userauth-marketing-body' => 'Du trenger en konto for å opprette en wiki hos Wikia. Det tar bare et minutt å registrere deg!',
 	'cnw-userauth-signup-button' => 'Registrer deg',
 	'cnw-desc-headline' => 'Hva handler wikien din om?',
 	'cnw-desc-creative' => 'Beskriv emnet ditt',
@@ -1676,6 +1677,7 @@ $messages['nb'] = array(
 	'cnw-desc-tip3-creative' => 'La folk få vite at de kan hjelpe wikien din med å vokse ved å redigere og legge til sider',
 	'cnw-desc-choose' => 'Velg kategori',
 	'cnw-desc-select-one' => 'Velg en',
+	'cnw-desc-all-ages' => 'Alle aldere',
 	'cnw-desc-default-lang' => 'Wikien din vil være på $1',
 	'cnw-desc-change-lang' => 'endre',
 	'cnw-desc-lang' => 'Språk',
@@ -1687,8 +1689,8 @@ $messages['nb'] = array(
 	'cnw-welcome-instruction1' => 'Trykk på knappen under for å begynne å legge til siden på wikien din.',
 	'cnw-welcome-instruction2' => 'Du vil se denne knappen på wikien din, bruk den når du vil legge til en ny side.',
 	'cnw-welcome-help' => 'Finn svar, råd, og mer på <a href="http://community.wikia.com">Community Central</a>.',
-	'cnw-error-general' => 'Noe gikk galt under opprettning av wikien din. Vennligst prøv igjen senere.', # Fuzzy
-	'cnw-error-general-heading' => 'Opprett ny wiki-feil', # Fuzzy
+	'cnw-error-general' => 'Noe gikk galt under opprettning av wikien din. Vennligst prøv igjen, eller <a href="/Special:Contact">kontakt oss</a> for hjelp.',
+	'cnw-error-general-heading' => 'Våre unnskyldninger',
 	'cnw-badword-header' => 'Hei der',
 	'cnw-badword-msg' => 'Hei, vennligst unngå å bruke disse grove eller forbudte ordene i beskrivelsen av wikien: $1',
 	'cnw-error-wiki-limit-header' => 'Wikigrense nådd',

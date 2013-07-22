@@ -765,7 +765,8 @@ Seràs notificat per correu electrònic quan s'hagi completat.",
  * @author Умар
  */
 $messages['ce'] = array(
-	'renameuser' => 'Декъашхочуьна цlе хийца',
+	'renameuser' => 'Декъашхочун цӀе хийца',
+	'userrenametool-submit' => 'Кхочушдé',
 	'userrenametool-page-exists' => 'Агӏо $1 йолуш ю цундела и ша юху дӏаязъян йиш яц.',
 );
 
@@ -3339,7 +3340,7 @@ Pode ver os registos no [[Special:Stafflog|Registo da equipa]].',
 	'userrenametool-errorexists' => 'Já existe um utilizador "<nowiki>$1</nowiki>".',
 	'userrenametool-errorinvalid' => 'O nome de utilizador "<nowiki>$1</nowiki>" é inválido.',
 	'userrenametool-errorinvalidnew' => '"<nowiki>$1</nowiki>" não é um nome de utilizador válido.',
-	'userrenametool-errortoomany' => 'O utilizador "<nowiki>$1</nowiki>" tem $2 {{PLURAL:$2|contribuição|contribuições}}. Alterar o nome de um utilizador com mais de $3 {{PLURAL:$3|contribuição|contribuições}} pode afectar o desempenho do site.',
+	'userrenametool-errortoomany' => 'O utilizador "<nowiki>$1</nowiki>" tem $2 {{PLURAL:$2|contribuição|contribuições}}. Alterar o nome de um utilizador com mais de $3 {{PLURAL:$3|contribuição|contribuições}} pode afetar o desempenho do site.',
 	'userrenametool-errorprocessing' => 'O processo de alteração do nome do utilizador <nowiki>$1</nowiki> para <nowiki>$2</nowiki> já está em progresso.',
 	'userrenametool-errorblocked' => 'O utilizador <nowiki>$1</nowiki> está bloqueado por <nowiki>$2</nowiki> por $3.',
 	'userrenametool-errorlocked' => 'O utilizador <nowiki>$1</nowiki> está bloqueado.',

@@ -27,6 +27,14 @@ $messages['ar'] = array(
 	'globalnotification-general-ajax-failure' => 'تعذر على المتصفح الدخول إلى ويكيا.  حاول مرة أخرى لاحقاً.',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'globalnotification-desc' => 'ইভেন্টের জন্য সিস্টেম বিজ্ঞপ্তি প্রদর্শন যেমন AJAX (এজেএএক্স) ব্যর্থতা হিসেবে',
+	'globalnotification-general-ajax-failure' => 'ব্রাউজার উইকিয়ার সাথে সংযোগ করতে পারে নি। দয়া করে পরে আবার চেষ্টা করুন।',
+);
+
 /** Catalan (català)
  * @author Marcmpujol
  */
