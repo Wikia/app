@@ -359,7 +359,7 @@ class FilePageController extends WikiaController {
 	 * Figure out what articles include this file from any wiki
 	 */
 	public function getGlobalUsage () {
-		if ( empty( $wgEnableGlobalUsageExt ) ) {
+		if ( empty( $this->wg->EnableGlobalUsageExt ) ) {
 			$this->summary = array();
 			return;
 		}
@@ -421,6 +421,9 @@ class FilePageController extends WikiaController {
 	}
 
 	private function addSummary ( $data, $summaryFunc ) {
+		// Copy results into a new array to make sure we only return
+		// wikis that gave full summaries
+		$fullData = array();
 
 		// Iterate through each wiki DB name in the data
 		foreach ($data as $dbName => $articles) {
@@ -453,10 +456,10 @@ class FilePageController extends WikiaController {
 					$articles[$i] = array_merge($info, $extraInfo);
 				}
 
-				$data[$dbName] = $articles;
+				$fullData[$dbName] = $articles;
 			}
 		}
 
-		return $data;
+		return $fullData;
 	}
 }

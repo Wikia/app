@@ -262,6 +262,7 @@ class AttributionCache {
 			$conditions[] = 'page_id=rev_page';
 			$conditions['page_id'] = $pageId;
 		}
+		/* @TODO FIXME: respect your DB resources, never count on MASTER */
 		$edits = $dbs->selectRow( $tables, array( 'min(rev_timestamp) AS date, count(rev_id) AS count' ), $conditions, __METHOD__ );
 
 		$editCount = !empty($edits->count) ? $edits->count : 0;

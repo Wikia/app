@@ -337,7 +337,7 @@ class MarketingToolboxModel extends WikiaModel {
 	 * @return array
 	 */
 	protected function getModuleList($langCode, $sectionId, $verticalId, $timestamp) {
-		$lastPublishTimestamp = $this->getLastPublishedTimestamp($langCode, $sectionId, $verticalId);
+		$lastPublishTimestamp = $this->getLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp);
 
 		if ($lastPublishTimestamp) {
 			$out = $this->getModulesDataFromDb($langCode, $sectionId, $verticalId, $lastPublishTimestamp);

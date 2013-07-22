@@ -421,7 +421,7 @@
 				width += config.extraPageWidth;
 			}
 
-			if ( wgIsResponsiveLayoutEnabled ) {
+			if ( wgOasisResponsive ) {
 				var $wikiaPage = $( '#WikiaPage' ),
 					widthArticlePadding = 20,
 					widthLayout = $wikiaPage.width(),

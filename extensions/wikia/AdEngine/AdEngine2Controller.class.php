@@ -546,7 +546,9 @@ class AdEngine2Controller extends WikiaController {
 			}
 		}
 
-		$attribs['class'] .= ' exitstitial';
+		if (isset($attribs['class'])) {
+			$attribs['class'] .= ' exitstitial';
+		}
 	}
 
 	static private function getExitstitialUrlsWhiteList() {

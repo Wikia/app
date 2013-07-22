@@ -112,7 +112,7 @@ $wgHooks['ArticleDeleteComplete'][] = 'VideoInfoHooksHelper::onArticleDeleteComp
 $wgHooks['UndeleteComplete'][] = 'VideoInfoHooksHelper::onUndeleteComplete';
 $wgHooks['ForeignFileDeleted'][] = 'VideoInfoHooksHelper::onForeignFileDeleted';
 
-if(!empty($wgVideoHandlersVideosMigrated)) {
+if ( !empty($wgVideoHandlersVideosMigrated) ) {
 	$wgHooks['ParserFirstCallInit'][] = 'VideoHandlerHooks::initParserHook';
 }
 
@@ -250,17 +250,3 @@ $wgVideoMigrationProviderMap = array(
 	29 => 'Iva',
 	30 => 'Snappytv',
 );
-
-
-/*
- * After migration
- */
-if(!empty($wgVideoHandlersVideosMigrated)) {
-
-	/**
-	 * SpecialPages
-	 */
-	//$wgAutoloadClasses[ 'VideoHandlerSpecialController'] =  $dir . '/VideoHandlerSpecialController.class.php' ;
-	//$wgSpecialPages['VideoHandler'] = 'VideoHandlerSpecialController';
-
-}

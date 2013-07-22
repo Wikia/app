@@ -587,10 +587,13 @@ class MessageCache {
 	 *                  fallback).
 	 * @param $isFullKey Boolean: specifies whether $key is a two part key
 	 *                   "msg/lang".
+	 * Wikia change
+	 * @param $fixWhitespace Boolean: specifies whether code for whitespace
+	 *                       should be replaced
 	 *
 	 * @return string|false
 	 */
-	function get( $key, $useDB = true, $langcode = true, $isFullKey = false ) {
+	function get( $key, $useDB = true, $langcode = true, $isFullKey = false, $fixWhitespace = true ) {
 		global $wgLanguageCode, $wgContLang;
 
 		if ( is_int( $key ) ) {
@@ -689,14 +692,18 @@ class MessageCache {
 		}
 
 		# Fix whitespace
-		$message = strtr( $message,
-			array(
-				# Fix for trailing whitespace, removed by textarea
-				'&#32;' => ' ',
-				# Fix for NBSP, converted to space by firefox
-				'&nbsp;' => "\xc2\xa0",
-				'&#160;' => "\xc2\xa0",
-			) );
+		/* Wikia change added condition $fixWhitespace */
+		if ( $fixWhitespace ) {
+			$message = strtr( $message,
+				array(
+					# Fix for trailing whitespace, removed by textarea
+					'&#32;' => ' ',
+					# Fix for NBSP, converted to space by firefox
+					'&nbsp;' => "\xc2\xa0",
+					'&#160;' => "\xc2\xa0",
+				)
+			);
+		}
 
 		return $message;
 	}
