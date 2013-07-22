@@ -44,7 +44,6 @@
 			this.editPage = $('#EditPage');
 			this.editPageEditorWrapper = $('#EditPageEditorWrapper');
 			this.editPageMain = $('#EditPageMain');
-			this.editPageToolbar = $('#EditPageToolbar');
 			this.wikiaBarWrapper = $('#WikiaBarWrapper');
 
 			// keep right rail within browser's viewport (BugId:7498)
