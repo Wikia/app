@@ -456,12 +456,10 @@ class SpecialCustomEditPage extends SpecialPage {
 				$wikitext = $this->getWikitextFromField('content');
 
 				// Add categories to wikitext for preview and diff
-				if ( !empty( $this->app->wg->EnableCategorySelectExt ) ) {
-					$categories = $this->request->getVal( 'categories', '' );
+				$categories = $this->request->getVal( 'categories', '' );
 
-					if ( !empty( $categories ) ) {
-						$wikitext .= CategorySelect::changeFormat( $categories, 'json', 'wikitext' );
-					}
+				if ( !empty( $categories ) ) {
+					$wikitext .= CategoryHelper::changeFormat( $categories, 'json', 'wikitext' );
 				}
 
 			// "wpTextbox1" field used when submitting editpage

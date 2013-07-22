@@ -38,7 +38,7 @@ class CategorySelectHooksHelper {
 	 */
 	public static function onEditPageGetContentEnd( $editPage, &$wikitext ) {
 		if ( !$editPage->isConflict ) {
-			$data = CategorySelect::extractCategoriesFromWikitext( $wikitext );
+			$data = CategoryHelper::extractCategoriesFromWikitext( $wikitext );
 			$wikitext = $data[ 'wikitext' ];
 		}
 
@@ -57,7 +57,7 @@ class CategorySelectHooksHelper {
 
 		if ( $request->wasPosted() ) {
 			$categories = $editPage->safeUnicodeInput( $request, 'categories' );
-			$categories = CategorySelect::changeFormat( $categories, 'json', 'array' );
+			$categories = CategoryHelper::changeFormat( $categories, 'json', 'array' );
 
 			// Concatenate categories to article wikitext (if there are any).
 			if ( !empty( $categories ) ) {
@@ -79,9 +79,9 @@ class CategorySelectHooksHelper {
 
 				// Extract categories from the article, merge them with those passed in, weed out
 				// duplicates and finally append them back to the article (BugId:99348).
-				$data = CategorySelect::extractCategoriesFromWikitext( $editPage->textbox1, true );
-				$categories = CategorySelect::getUniqueCategories( $data[ 'categories' ], $categories );
-				$categories = CategorySelect::changeFormat( $categories, 'array', 'wikitext' );
+				$data = CategoryHelper::extractCategoriesFromWikitext( $editPage->textbox1, true );
+				$categories = CategoryHelper::getUniqueCategories( $data[ 'categories' ], $categories );
+				$categories = CategoryHelper::changeFormat( $categories, 'array', 'wikitext' );
 
 				// Remove trailing whitespace (BugId:11238)
 				$editPage->textbox1 = $data[ 'wikitext' ] . rtrim( $categories );
@@ -134,7 +134,7 @@ class CategorySelectHooksHelper {
 
 		$vars[ 'wgCategorySelect' ] = array(
 			'defaultNamespace' => $wg->ContLang->getNsText( NS_CATEGORY ),
-			'defaultNamespaces' => CategorySelect::getDefaultNamespaces(),
+			'defaultNamespaces' => CategoryHelper::getDefaultNamespaces(),
 			'defaultSeparator' => trim( wfMessage( 'colon-separator' )->escaped() ),
 			'defaultSortKey' => $wg->Parser->getDefaultSort() ?: $wg->Title->getText()
 		);
@@ -150,7 +150,7 @@ class CategorySelectHooksHelper {
 
 		wfProfileIn( __METHOD__ );
 
-		if ( $force || CategorySelect::isEnabled() ) {
+		if ( $force || CategoryHelper::isEnabled() ) {
 			$app = F::app();
 			$action = $app->wg->Request->getVal( 'action', 'view' );
 
