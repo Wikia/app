@@ -1163,3 +1163,12 @@ $wgHooks['IsTrustedProxy'][] = 'TrustedProxyService::onIsTrustedProxy';
  */
 //$wgChatDebugEnabled = true;
 
+
+/**
+ * Set to an array of log group that should be logged using Wikia::log.
+ * If set, wfDebugLog() output for that group will go to datalog-s1 machine
+ */
+$wgWikiaLogGroups = [
+	'connect' => true,
+	'replication' => true
+];

@@ -831,6 +831,12 @@ class MWMemcached {
 			return false;
 		}
 
+		# Wikia change - begin
+		# @author macbre
+		Wikia::log(__METHOD__, 'connected', $host, true);
+		Wikia::logBacktrace(__METHOD__);
+		# Wikia change - end
+
 		// Initialise timeout
 		stream_set_timeout( $sock, $this->_timeout_seconds, $this->_timeout_microseconds );
 
