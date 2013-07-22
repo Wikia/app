@@ -49,7 +49,7 @@ window.addEventListener('load', function(){
 					}
 
 					$.addClass(wrapper, classes);
-					$.addClass(ftr, ['ads']);
+					$.addClass(ftr || window.document.body, ['ads']);
 				}
 			}
 
@@ -72,7 +72,7 @@ window.addEventListener('load', function(){
 					}
 
 					$.removeClass(wrapper, classes);
-					$.removeClass(ftr, ['ads']);
+					$.removeClass(ftr || window.document.body, ['ads']);
 				}
 			}
 
