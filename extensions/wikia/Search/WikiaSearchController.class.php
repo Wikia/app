@@ -176,6 +176,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	public function categoryTopArticles() {
 		$pages = [];
+		$category = '';
 		$result = $this->getVal( 'result' );
 		if (! empty( $result ) ) {
 			try {
@@ -205,9 +206,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 						}
 					}
 				}
-			} catch ( Exception $e ) { echo $e; die; } // ignoring api errors for gracefulness
+			} catch ( Exception $e ) { } // ignoring api errors for gracefulness
 		}
-		var_dump($pages); die;
+		$this->setVal( 'category', $category );
 		$this->setVal( 'pages', $pages );
 		$this->setVal( 'result', $result );
 		$this->setVal( 'gpos', $this->getVal( 'gpos' ) );
