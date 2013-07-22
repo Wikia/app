@@ -553,7 +553,7 @@ class ArticlesApiController extends WikiaApiController {
 			if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
 				$handler = VideoHandler::getHandler( $file->getMimeType() );
 				$typeInfo = explode( '/', $file->getMimeType() );
-				$metadata = ( $handler ) ? unserialize( $handler->getMetadata() ) : null;
+				$metadata = ( $handler ) ? $handler->getMetadata( true ) : null;
 				return [
 					'type' => static::VIDEO_TYPE,
 					'provider' => isset( $typeInfo[1] ) ? $typeInfo[1] : static::UNKNOWN_PROVIDER,
