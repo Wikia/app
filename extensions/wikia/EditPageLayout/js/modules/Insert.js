@@ -8,16 +8,15 @@
 			'InsertGallery',
 			'InsertSlideshow',
 			'InsertSlider',
-			'InsertVideo',
 			'InsertMedia',
 			'Poll',
 			'Table'
 		];
 
 		// hide add video button if user does not have apppropriate rights
-		if (window.hideAddVideoBtn) {
+		if (window.showAddVideoBtn) {
 			// using ES5 Array.indexOf -- current browser support includes ES5 support, but be aware for future bug reports
-			items.splice( items.indexOf('InsertVideo'), 1 );
+			items.splice( 4, 0, 'InsertVideo' ); 
 		}
 
 		WE.modules.Insert = $.createClass(WE.modules.ButtonsList,{
