@@ -128,7 +128,7 @@
 													"text" => wfMsg('showdiff')
 												));
 											?>
-											<?= F::app()->renderView( 'MenuButton', 'Index', array(
+											<?= $app->renderView( 'MenuButton', 'Index', array(
 												'action' => array(
 													'href' => '#',
 													'text' => wfMsg( 'preview' ),
@@ -157,7 +157,7 @@
 			<footer id="WikiaFooter" class="WikiaFooter">
 				<div class="toolbar">
 					<ul class="tools">
-						<?= F::app()->renderView('Footer','Toolbar') ?>
+						<?= $app->renderView('Footer','Toolbar') ?>
 					</ul>
 					<img src="<?= $wg->BlankImgUrl; ?>" class="banner-corner-left" height="0" width="0">
 					<img src="<?= $wg->BlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
@@ -168,5 +168,5 @@
 </section>
 
 <?php if( $wg->EnableWikiaBarExt ): ?>
-	<?= F::app()->renderView('WikiaBar', 'Index') ?>
+	<?= $app->renderView('WikiaBar', 'Index') ?>
 <?php endif ?>
