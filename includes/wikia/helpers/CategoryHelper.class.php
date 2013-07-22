@@ -23,6 +23,11 @@ class CategoryHelper {
 	/**
 	 * Change format of categories metadata. Supports:
 	 * array -> json, array -> wikitext, json -> wikitext, json -> array
+	 *
+	 * @param Array | String $categories list of categories in array or as a JSON
+	 * @param String $fromFormat the format of given categories; supported 'json', 'wikitext', 'array'
+	 * @param String $toFormat the format of result
+	 *
 	 * @return Array | String
 	 */
 	public static function changeFormat( $categories, $fromFormat, $toFormat ) {
@@ -57,12 +62,12 @@ class CategoryHelper {
 			}
 		} else if ( $toFormat == 'array' ) {
 			$changed = $categories;
-
 		} else if ( $toFormat == 'json' ) {
 			$changed = json_encode( $categories );
 		}
 
 		wfProfileOut( __METHOD__ );
+		/** @noinspection PhpUndefinedVariableInspection */
 		return $changed;
 	}
 
@@ -70,6 +75,10 @@ class CategoryHelper {
 	 * Extracts category tags from wikitext and returns a hash with an array
 	 * of categories data and a modified version of the wikitext with the category
 	 * tags removed.
+	 *
+	 * @param String $wikitext
+	 * @param Boolean $force default === false to skip cache set it to true
+	 *
 	 * @return Array
 	 */
 	public static function extractCategoriesFromWikitext( $wikitext, $force = false ) {
@@ -136,6 +145,9 @@ class CategoryHelper {
 
 	/**
 	 * Gets an array of links for the given categories.
+	 *
+	 * @param Array $categories
+	 *
 	 * @return Array
 	 */
 	public static function getCategoryLinks( $categories ) {
@@ -162,6 +174,9 @@ class CategoryHelper {
 
 	/**
 	 * Gets the type of a category (either "hidden" or "normal").
+	 *
+	 * @param String $category
+	 *
 	 * @return String
 	 */
 	public static function getCategoryType( $category ) {
@@ -205,6 +220,10 @@ class CategoryHelper {
 	 * Extracts category tags from wikitext and returns a hash of the categories
 	 * and the wikitext with categories removed. If wikitext is not provided, it will
 	 * attempt to pull it from the current article.
+	 *
+	 * @param String $wikitext
+	 * @param Boolean $force by default === false; set it to true if you want to skip cache
+	 *
 	 * @return Array
 	 */
 	public static function getExtractedCategoryData( $wikitext = '', $force = false ) {
@@ -212,6 +231,7 @@ class CategoryHelper {
 
 			// Try to extract wikitext from the article
 			if ( empty( $wikitext ) ) {
+				/** @var Article $article */
 				$article = F::app()->wg->Article;
 
 				if ( isset( $article ) ) {
@@ -229,6 +249,9 @@ class CategoryHelper {
 
 	/**
 	 * Gets the category names from an array of category arrays.
+	 *
+	 * @param Array $categories
+	 *
 	 * @return Array
 	 */
 	public static function getCategoryNames( $categories ) {
@@ -247,6 +270,9 @@ class CategoryHelper {
 
 	/**
 	 * Gets the normalized category name from a category array.
+	 *
+	 * @param Array | String $category
+	 *
 	 * @return Title | Null
 	 */
 	public static function getCategoryTitle( $category ) {

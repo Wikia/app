@@ -51,6 +51,7 @@ class CategorySelectHooksHelper {
 	 * @param EditPage $editPage
 	 * @param WebRequest $request
 	 *
+	 * @return Boolean because it's a hook
 	 */
 	public static function onEditPageImportFormData( $editPage, $request ) {
 		$app = F::app();
@@ -96,6 +97,8 @@ class CategorySelectHooksHelper {
 	 *
 	 * @param EditPage $editPage
 	 * @param OutputPage $out
+	 *
+	 * @return Boolean because it's a hook
 	 */
 	public static function onEditPageShowEditFormFields( $editPage, $out ) {
 		$out->addHTML( F::app()->renderView( 'CategorySelect', 'editPageMetadata' ) );
