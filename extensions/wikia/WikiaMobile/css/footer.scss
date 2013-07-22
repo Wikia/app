@@ -8,13 +8,6 @@
 	text-align: center;
 	color: $footerTextColor;
 
-	//when ads are loaded and "floating" at the bottom
-	//then make sure there's enough space to host them
-	//without getting the adslot overlaying the links
-	&.ads {
-		padding-bottom: 50px;
-	}
-
 	ul {
 		margin: 10px;
 		padding: 0;
