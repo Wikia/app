@@ -90,8 +90,18 @@ class WikiaSearchController extends WikiaSpecialPageController {
 					break;
 				}
 			}
-			if (! empty( $ids ) ) { 
-				$params = [ 'ids' => implode( ',', $ids ), 'height' => 80, 'width' => 100 ];
+			if (! empty( $ids ) ) {
+				//try getting first one bigger
+				$params = [ 'ids' => implode( ',', $ids ), 'height' => 150, 'width' => 300 ];
+				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
+				foreach ( $ids as $id ) {
+					if (isset( $detailResponse['items'][ $id ] ) && ! empty( $item['thumbnail'] ) ) {
+						$pages[] = $item;
+						unset( $ids[ $id ] );
+						break;
+					}
+				}
+				$params = [ 'ids' => implode( ',', $ids ), 'height' => 80, 'width' => 80 ];
 				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
 				foreach ( $detailResponse['items'] as $item ) {
 					if (! empty( $item['thumbnail'] ) ) {
@@ -310,13 +320,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if (! $searchConfig->getInterWiki() ) {
 			$dbname = $this->wg->DBName;
 			$cacheKey = wfMemcKey( __CLASS__, 'WikiaSearch', 'topWikiArticles', $this->wg->CityId );
-			$topWikiArticlesHtml = WikiaDataAccess::cache( 
-				$cacheKey,
-				86400 * 5, // 5 days, one business week
-				function () {
-					return F::app()->renderView( 'WikiaSearchController', 'topWikiArticles' );
-				}
-			);
+			$topWikiArticlesHtml = F::app()->renderView( 'WikiaSearchController', 'topWikiArticles' );
+//			$topWikiArticlesHtml = WikiaDataAccess::cache(
+//				$cacheKey,
+//				86400 * 5, // 5 days, one business week
+//				function () {
+//					return F::app()->renderView( 'WikiaSearchController', 'topWikiArticles' );
+//				}
+//			);
 		}
 		$this->setVal( 'topWikiArticles', $topWikiArticlesHtml ); 
 	}
