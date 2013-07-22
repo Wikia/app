@@ -32,7 +32,10 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	const POSTED_IN_ARTICLES = 100;
 	const NUM_SUGGESTIONS = 5;
 
-	// TTL of 604800 is 7 days.  Expire suggestion cache after this
+	/**
+	 * TTL of 604800 is 7 days.  Expire suggestion cache after this
+	 * @var int
+	 */
 	const SUGGESTIONS_TTL = 604800;
 	
 	/**
@@ -228,8 +231,6 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	public function getVideoSuggestions( $title ) {
 		wfProfileIn( __METHOD__ );
 
-		$app = F::App();
-
 		// Find the article ID for this title
 		$titleObj = Title::newFromText( $title, NS_FILE );
 		$articleId = $titleObj->getArticleID();
@@ -246,6 +247,23 @@ class LicensedVideoSwapHelper extends WikiaModel {
 				return $videos;
 			}
 		}
+
+		wfProfileOut( __METHOD__ );
+		return $this->suggestionSearch( $titleObj );
+	}
+
+	/**
+	 * Search for related video titles
+	 * @param Title|string $title - Either a Title object or title text
+	 * @param bool $test - Operate in test mode.  Allows commandline scripts to implement --test
+	 * @return array - A list of suggested videos
+	 */
+	public function suggestionSearch( $title, $test = false ) {
+		$app = F::app();
+
+		// Accept either a title string or title object here
+		$titleObj = is_object( $title ) ? $title : Title::newFromText( $title, NS_FILE );
+		$articleId = $titleObj->getArticleID();
 
 		$readableTitle = $titleObj->getText();
 		
@@ -267,7 +285,9 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		$videoRows = $app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', $params )
 						 ->getData();
 
-		wfSetWikiaPageProp( WPP_LVS_SUGGEST_DATE, $articleId, time() );
+		if ( empty($test) ) {
+			wfSetWikiaPageProp( WPP_LVS_SUGGEST_DATE, $articleId, time() );
+		}
 
 		// Reuse code from VideoHandlerHelper
 		$helper = new VideoHandlerHelper();
@@ -308,12 +328,19 @@ class LicensedVideoSwapHelper extends WikiaModel {
 			}
 		}
 
+		// If we're just testing don't set any page props
+		if ( $test ) {
+			wfProfileOut( __METHOD__ );
+			return empty($videos) ? null : $videos;
+		}
+
 		// Cache these suggestions
 		if ( empty($videos) ) {
 			wfSetWikiaPageProp( WPP_LVS_EMPTY_SUGGEST, $articleId, 1 );
 			wfProfileOut( __METHOD__ );
-			return;
+			return null;
 		} else {
+			wfDeleteWikiaPageProp( WPP_LVS_EMPTY_SUGGEST, $articleId );
 			wfSetWikiaPageProp( WPP_LVS_SUGGEST, $articleId, $videos );
 		}
 
@@ -322,7 +349,6 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		// The first video in the array is the top choice.
 		return $videos;
 	}
-
 
 	/**
 	 * get file object (video only)
