@@ -226,10 +226,6 @@ body > .global-notification,
 	background-color: $color-page;
 	margin-right: $width-rail + $width-padding;
 	padding: 0 $width-padding;
-
-	.WikiaSearch {
-		display: none;
-	}
 }
 
 .oasis-one-column {
@@ -240,7 +236,6 @@ body > .global-notification,
 
 	.WikiaMainContentContainer {
 		margin-right: 0;
-		padding: 0;
 		position: relative;
 	}
 }
@@ -392,6 +387,16 @@ body > .global-notification,
 		}
 	}
 
+	// TODO: clean up all the wikinav2/oasis-one-column styles...
+	.wikinav2.oasis-one-column .WikiaPageHeader {
+		padding-right: 0;
+
+		.tally {
+			right: 0;
+		}
+	}
+
+	.WikiaSearchHeader .WikiaSearch,
 	.WikiaRail .WikiaSearch {
 		display: none;
 	}
