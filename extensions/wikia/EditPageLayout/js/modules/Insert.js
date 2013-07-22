@@ -13,9 +13,8 @@
 			'Table'
 		];
 
-		// hide add video button if user does not have apppropriate rights
+		// show add video button if user has rights (wgAllVideosAdminOnly)
 		if (window.showAddVideoBtn) {
-			// using ES5 Array.indexOf -- current browser support includes ES5 support, but be aware for future bug reports
 			items.splice( 4, 0, 'InsertVideo' ); 
 		}
 
