@@ -41,7 +41,7 @@ var AchievementsThing = {
 		var placement = 'left';
 		var html = badge.prevAll(".profile-hover").clone().wrap('<div>').parent().html();
 
-		if ( badge.offset().left + badge.width() - AchievementsThing.badgeDescWidth < 0 ) {
+		if ( badge.offset().left - AchievementsThing.badgeDescWidth < 0 ) {
 			placement = 'right';
 		}
 
