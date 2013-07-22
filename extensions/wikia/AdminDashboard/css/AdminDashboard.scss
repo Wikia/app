@@ -115,7 +115,7 @@ $color-highlight-column: rgba($color-page, 0);
 		text-decoration: none;
 		&.active {
 			background: $color-admin-tab-active;
-			top: 0px;
+			top: 0;
 		}
 		&:hover {
 			cursor: pointer;
@@ -190,7 +190,7 @@ $color-highlight-column: rgba($color-page, 0);
 						border: 1px solid $color-admin-icon-border;
 						display: block;
 						height: 50px;
-						margin: 0px auto 5px;
+						margin: 0 auto 5px;
 						width: 50px;
 						.icon {
 							background-image: url(/extensions/wikia/AdminDashboard/images/icons.png); // $wgCdnStylePath
@@ -476,22 +476,16 @@ $color-highlight-column: rgba($color-page, 0);
 		}
 	}
 	.highlight-top {
-		background: -moz-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); // FF3.6+
-		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $color-admin-header-shadow), color-stop(25%, $color-highlight-column)); // Chrome,Safari4+
-		background: -webkit-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); // Chrome10+,Safari5.1+
-		background: -o-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); // Opera 11.10+
-		background: -ms-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); // IE10+
-		background: linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); // W3C
+		// TODO: replace this with a proper linear-gradient mixin
+		background: -webkit-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%);
+		background: linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%);
 		display: block;
 		padding: 10px 10px 7px 0;
 	}
 	.highlight-bottom {
-		background: -moz-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); // FF3.6+
-		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $color-admin-header-shadow), color-stop(25%, $color-highlight-column)); // Chrome,Safari4+
-		background: -webkit-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); // Chrome10+,Safari5.1+
-		background: -o-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); // Opera 11.10+
-		background: -ms-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); // IE10+
-		background: linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); // W3C
+		// TODO: replace this with a proper linear-gradient mixin
+		background: -webkit-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%);
+		background: linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%);
 		display: block;
 		padding: 10px 10px 7px 0;
 	}
