@@ -1820,6 +1820,7 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author GTNS
  * @author Hamilton Abreu
+ * @author Luckas
  * @author SandroHc
  * @author Waldir
  */
@@ -1833,7 +1834,7 @@ $messages['pt'] = array(
 	'edittoplist' => 'Editar lista Top 10',
 	'toplists-category' => 'Listas Top 10',
 	'toplists-error-invalid-title' => 'O texto fornecido não é válido.',
-	'toplists-error-invalid-picture' => 'A imagem seleccionada não é válida.',
+	'toplists-error-invalid-picture' => 'A imagem selecionada não é válida.',
 	'toplists-error-title-exists' => 'Esta página já existe. Pode ir para <a href="$2" target="_blank">$1</a> ou fornecer um nome diferente.',
 	'toplists-error-title-spam' => 'O texto introduzido contém algumas palavras identificadas como spam.',
 	'toplists-error-article-blocked' => 'Não pode criar uma página com este nome. Desculpe.',
@@ -1862,11 +1863,11 @@ $messages['pt'] = array(
 	'toplists-cancel-button' => 'Cancelar',
 	'toplists-items-removed' => '$1 {{PLURAL:$1|elemento removido|elementos removidos}}',
 	'toplists-items-created' => '$1 {{PLURAL:$1|elemento criado|elementos criados}}',
-	'toplists-items-updated' => '$1 {{PLURAL:$1|elemento actualizado|elementos actualizados}}',
+	'toplists-items-updated' => '$1 {{PLURAL:$1|elemento atualizado|elementos atualizados}}',
 	'toplists-items-nochange' => 'Não foi alterado nenhum elemento',
-	'toplits-image-browser-no-picture-selected' => 'Não foi seleccionada nenhuma imagem',
+	'toplits-image-browser-no-picture-selected' => 'Não foi selecionada nenhuma imagem',
 	'toplits-image-browser-clear-picture' => 'Limpar imagem',
-	'toplits-image-browser-selected-picture' => 'Seleccionada neste momento: $1',
+	'toplits-image-browser-selected-picture' => 'Selecionada neste momento: $1',
 	'toplists-image-browser-upload-btn' => 'Escolher',
 	'toplists-image-browser-upload-label' => 'Faça o upload de uma',
 	'toplists-list-creation-summary' => 'A criar uma lista, $1',

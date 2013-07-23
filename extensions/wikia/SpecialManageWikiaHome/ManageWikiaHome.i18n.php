@@ -631,6 +631,30 @@ $messages['ms'] = array(
 	'manage-wikia-home-collection-add-file-button' => 'Tambah gambar',
 );
 
+/** Norwegian Bokmål (norsk bokmål)
+ * @author Laaknor
+ */
+$messages['nb'] = array(
+	'manage-wikia-home-wrong-rights' => 'Du er sannsynligvis utlogget eller du har ikke rettigheter for å bruke denne spesialsiden.',
+	'manage-wikia-home-wiki-filter' => 'Filter',
+	'manage-wikia-home-wiki-filter-reset' => 'Tøm',
+	'manage-wikia-home-wiki-list-id' => 'ID',
+	'manage-wikia-home-wiki-list-vertical' => 'Vertikal',
+	'manage-wikia-home-wiki-list-headline' => 'Wikinavn',
+	'manage-wikia-home-wiki-list-blocked' => 'Blokkert',
+	'manage-wikia-home-wiki-list-official' => 'Offisiell',
+	'manage-wikia-home-wiki-list-collection' => 'Samlinger',
+	'manage-wikia-home-wiki-list-blocked-no' => 'Nei',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Ja',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Nei',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Ja',
+	'manage-wikia-home-wiki-list-official-no' => 'Nei',
+	'manage-wikia-home-wiki-list-official-yes' => 'Ja',
+	'manage-wikia-home-wiki-list-disabled-collection' => 'Deaktivert samling',
+	'manage-wikia-home-wiki-list-all-collections' => 'Alle samlinger',
+	'manage-wikia-home-wiki-list-all-verticals' => 'Alle vertikale',
+);
+
 /** Dutch (Nederlands)
  * @author Bluyten
  * @author Siebrand
@@ -831,6 +855,7 @@ $messages['pt-br'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Jopparn
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -842,10 +867,10 @@ $messages['sv'] = array(
 	'manage-wikia-home-visualization-wikis' => 'Kollektiva wikis med visualisering:',
 	'manage-wikia-home-wikis-in-slots-success' => 'Antalet platser har ändrats.',
 	'manage-wikia-home-collections-success' => 'Samlingar har sparats.',
-	'manage-wikia-home-collections-add-success' => 'Wiki lades till i samlingen.',
+	'manage-wikia-home-collections-add-success' => 'Wiki lades framgångsrikt till i samlingen.',
 	'manage-wikia-home-collections-add-failure-already-exists' => 'Wiki finns redan i denna samling',
 	'manage-wikia-home-collections-add-failure-image' => '$1 kan inte läggas till i denna samling eftersom dess huvudbild har avvisats.',
-	'manage-wikia-home-collections-remove-success' => 'Wiki togs bort från samlingen.',
+	'manage-wikia-home-collections-remove-success' => 'Wiki togs framgångsrikt bort från samlingen.',
 	'manage-wikia-home-collections-invalid-action' => 'Denna åtgärd finns inte.',
 	'manage-wikia-home-verticals-proportions' => 'Antal wikis per vertikalplan',
 	'manage-wikia-home-error-invalid-total-no-of-slots' => 'Ogiltig totalt antal platser ($1). Se till att summan av varje navigationsplats är lika med totala antalet platser ($2).',
