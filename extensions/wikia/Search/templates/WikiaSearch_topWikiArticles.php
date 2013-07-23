@@ -8,28 +8,28 @@ $counter = 0;
     <?php foreach ( $pages as $page ) : ?>
     <?php if ( $counter == 0 ): ?>
     <div class="top-wiki-article" id="hot-article">
-        <div class="top-wiki-article-thumbnail">
+        <div class="top-wiki-article-thumbnail" data-pos="<?= $counter ?>">
             <? if ( isset( $page['thumbnail'] ) ) : ?>
             <a href="<?=$page['url']?>">
                 <img src="<?= $page['thumbnail'] ?>" />
             </a>
             <? endif; ?>
         </div>
-        <div class="top-wiki-article-text">
+        <div class="top-wiki-article-text" data-pos="<?= $counter ?>">
             <h3><a href="<?= $page['url'] ?>"><?= $page['title'] ?></a></h3>
             <p class="top-wiki-article-text-synopsis subtle"><?= wfShortenText( $page['abstract'], 50 ) ?></p>
         </div>
     </div>
     <?php else: ?>
     <div class="top-wiki-article">
-        <div class="top-wiki-article-thumbnail">
+        <div class="top-wiki-article-thumbnail" data-pos="<?= $counter ?>">
             <? if ( isset( $page['thumbnail'] ) ) : ?>
             <a href="<?=$page['url']?>">
                 <img src="<?= $page['thumbnail'] ?>" />
             </a>
             <? endif; ?>
         </div>
-        <div class="top-wiki-article-text">
+        <div class="top-wiki-article-text" data-pos="<?= $counter ?>">
             <h3><a href="<?= $page['url'] ?>"><?= $page['title'] ?></a></h3>
             <p class="top-wiki-article-text-synopsis subtle"><?= wfShortenText( $page['abstract'], 50 ) ?></p>
         </div>
