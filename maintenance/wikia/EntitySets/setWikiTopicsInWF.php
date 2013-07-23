@@ -105,10 +105,10 @@ class SetWikiTopicsInWF extends Maintenance {
 					$wfWikiTopics[] = $phrase;
 				}
 			}
-			WikiFactory::setVarByName( self::WF_VARIABLE_NAME, $this->wikiId, $wfWikiTopics, 'PageClassification' );
+			WikiFactory::setVarByName( self::WF_VARIABLE_NAME, $wikiId, $wfWikiTopics, 'PageClassification' );
 		}
 		if ( $this->mode == "overwrite" ) {
-			WikiFactory::setVarByName( self::WF_VARIABLE_NAME, $this->wikiId, $phrases );
+			WikiFactory::setVarByName( self::WF_VARIABLE_NAME, $wikiId, $phrases );
 		}
 	}
 
