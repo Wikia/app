@@ -77,12 +77,12 @@
 		},
 
 		trackSponsored: function( url ) {
+			var cb, i;
+
 			if ( typeof url != 'undefined' ) {
-				var cb = Math.floor( Math.random() * 1000000 );
-
+				cb = Math.floor( Math.random() * 1000000 );
 				url = url.replace( '[timestamp]', cb );
-
-				var i = new Image( 1, 1 );
+				i = new Image( 1, 1 );
 
 				i.src = url;
 			}
