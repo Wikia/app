@@ -1,6 +1,9 @@
 <?php
 
-/* Wikia wrapper on ForeignDBFile.
+/**
+ * Class WikiaForeignDBFile
+ *
+ * Wikia wrapper on ForeignDBFile.
  * Alter some functionality allow using thumbnails as a representative of videos in file structure.
  * Works as interface, logic should go to WikiaLocalFileShared
  */
@@ -24,11 +27,12 @@ class WikiaForeignDBFile extends ForeignDBFile {
 		return $file;
 	}
 
-	/* Composite/Leaf interface
-	 * 
-	 * if no method of var found in current object tries to get it from $this->oLocalFileLogic
+	/**
+	 * Composite/Leaf interface
+	 * If no method of var found in current object tries to get it from $this->oLocalFileLogic
+	 * @param false|string|Title $title
+	 * @param false|FileRepo $repo
 	 */
-
 	function __construct( $title, $repo ){
 		parent::__construct( $title, $repo );
 		
@@ -65,8 +69,37 @@ class WikiaForeignDBFile extends ForeignDBFile {
 		return $this->oLocalFileLogic;
 	}
 
-	// No everything can be transparent, because __CALL skips already defined methods.
+	// Not everything can be transparent, because __call skips already defined methods.
 	// These methods work as a layer of communication between this class and SharedLogic
+
+	/**
+	 * Override the getUser method for foreign files to return the user that originally added the
+	 * video rather than the one who uploaded it to the foreign repo
+	 * @param string $type
+	 * @return int|string
+	 */
+	public function getUser( $type = 'text' ) {
+		// Try to get video info for this file
+		$info = VideoInfo::newFromTitle( $this->getName() );
+		if ( !empty($info) ) {
+			$addedBy = $info->getAddedBy();
+		}
+
+		// If we didn't get an addedBy user ID, fall back to the parent otherwise
+		// return the name or ID we've found as appropriate
+		if ( empty($addedBy) ) {
+			parent::getUser( $type );
+		} else {
+			if ( $type == 'text' ) {
+				$user = User::newFromId( $addedBy );
+				if ( !empty($user) && is_object($user) ) {
+					return $user->getName();
+				}
+			} else {
+				return $addedBy;
+			}
+		}
+	}
 
 	function getHandler(){
 		wfProfileIn( __METHOD__ );
