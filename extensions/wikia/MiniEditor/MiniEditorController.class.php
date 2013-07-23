@@ -125,6 +125,8 @@ class MiniEditorController extends WikiaController {
 			WMUSetupVars($vars);  // pass by reference
 		}
 
+		$vars['hideAddVideoBtn'] = !$app->wg->User->isAllowed('videoupload');
+
 		$this->response->setData($vars);
 	}
 }

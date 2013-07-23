@@ -10,7 +10,7 @@ class SpecialCssHooksTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider testShouldRedirectDataProvider
 	 */
-	public function testShouldRedirect( $isExtensionEnabled, $isCssWikiaArticle, $isSkinRight, $isUserAllowed, $isRedirectExpected ) {
+	public function testShouldRedirect( $isExtensionEnabled, $isCssWikiaArticle, $isSkinRight, $isUserAllowed, $isRedirectExpected, $assertionMessage ) {
 
 		$specialCssModelMock = $this->getMock( 'SpecialCssModel', array( 'isWikiaCssArticle' ) );
 		$specialCssModelMock->expects( $this->any() )
@@ -36,50 +36,50 @@ class SpecialCssHooksTest extends WikiaBaseTest {
 
 		$specialCssHooks = new SpecialCssHooks();
 		$result = $method->invokeArgs( $specialCssHooks, array( $appMock, $specialCssModelMock, 1 ) );
-		$this->assertEquals( $result, $isRedirectExpected );
+		$this->assertEquals( $isRedirectExpected, $result, $assertionMessage );
 	}
 
 	public function testShouldRedirectDataProvider() {
 		return [
-			// the Special:CSS extension is enabled, user is allowed to use it and she visits Wikia.css article's edit page in oasis skin -- redirection should happen
 			[
 				'isExtensionEnabled' => true,
 				'isCssWikiaArticle' => true,
 				'isSkinRight' => true,
 				'isUserAllowed' => true,
 				'isRedirectExpected' => true,
+				'assertionMessage' => "The Special:CSS extension is enabled, user is allowed to use it and she visits Wikia.css article's edit page in oasis skin -- redirection should happen"
 			],
-			// the Special:CSS extension is disabled despite other factors are correct the redirection should NOT happen
 			[
 				'isExtensionEnabled' => false,
 				'isCssWikiaArticle' => true,
 				'isSkinRight' => true,
 				'isUserAllowed' => true,
 				'isRedirectExpected' => false,
+				'assertionMessage' => 'The Special:CSS extension is disabled despite other factors are correct the redirection should NOT happen'
 			],
-			// the current article is not wikia css - the redirection should NOT happen
 			[
 				'isExtensionEnabled' => true,
 				'isCssWikiaArticle' => false,
 				'isSkinRight' => true,
 				'isUserAllowed' => true,
 				'isRedirectExpected' => false,
+				'assertionMessage' => 'The current article is not wikia css - the redirection should NOT happen'
 			],
-			// the current skin is not oasis - the redirection should NOT happen
 			[
 				'isExtensionEnabled' => true,
 				'isCssWikiaArticle' => true,
 				'isSkinRight' => false,
 				'isUserAllowed' => true,
 				'isRedirectExpected' => false,
+				'assertionMessage' => 'The current skin is not oasis - the redirection should NOT happen'
 			],
-			// the current user is not allowed to edit css - the redirection should NOT happen
 			[
 				'isExtensionEnabled' => true,
 				'isCssWikiaArticle' => true,
 				'isSkinRight' => true,
 				'isUserAllowed' => false,
 				'isRedirectExpected' => false,
+				'assertionMessage' => 'The current user is not allowed to edit css - the redirection should NOT happen'
 			],
 
 		];
@@ -105,7 +105,7 @@ class SpecialCssHooksTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider testGetCategoriesFromWikitextDataProvider
 	 */
-	public function testGetCategoriesFromWikitext($mockedResultsFromCategorySelect, $categorySelectEnabled, $expected) {
+	public function testGetCategoriesFromWikitext($mockedResultsFromCategorySelect, $categorySelectEnabled, $expected, $assertionMessage) {
 		/** @var $specialCssHooksMock PHPUnit_Framework_MockObject_MockObject */
 		$specialCssHooksMock = $this->getMockClass( 'SpecialCssHooks', [ 'getCategoriesFromCategorySelect' ] );
 		$specialCssHooksMock::staticExpects( $this->any() )
@@ -115,28 +115,28 @@ class SpecialCssHooksTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgEnableCategorySelectExt', $categorySelectEnabled );
 
 		/** @var $specialCssHooksMock SpecialCssHooks */
-		$this->assertEquals( $expected, $specialCssHooksMock::getCategoriesFromWikitext( 'wikitext' ) );
+		$this->assertEquals( $expected, $specialCssHooksMock::getCategoriesFromWikitext( 'wikitext' ), $assertionMessage );
 	}
 
 	public function testGetCategoriesFromWikitextDataProvider() {
 		return [
-			// all fine
 			[
 				'mockedResultsFromCategorySelect' => [ 'categories' => [ ['name' => 'CSS Updates' ], [ 'name' => 'Test' ] ] ],
 				'categorySelectEnabled' => true,
-				'expected' => ['CSS_Updates', 'Test']
+				'expected' => ['CSS_Updates', 'Test'],
+				'assertionMessage' => 'All fine'
 			],
-			// CategorySelect disabled
 			[
 				'mockedResultsFromCategorySelect' => [ 'categories' => [ ['name' => 'CSS Updates' ], [ 'name' => 'Test' ] ] ],
 				'categorySelectEnabled' => false,
-				'expected' => []
+				'expected' => [],
+				'assertionMessage' => 'CategorySelect disabled'
 			],
-			// invalid CategorySelect results
 			[
 				'mockedResultsFromCategorySelect' => [ 'cats' => [ ['name' => 'CSS Updates' ], [ 'name' => 'Test' ] ] ],
 				'categorySelectEnabled' => true,
-				'expected' => []
+				'expected' => [],
+				'assertionMessage' => 'Invalid CategorySelect results'
 			]
 		];
 	}

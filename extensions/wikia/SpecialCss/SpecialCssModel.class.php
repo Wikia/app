@@ -465,11 +465,10 @@ class SpecialCssModel extends WikiaModel {
 	 */
 	private function getAfterLastSlashText($titleText) {
 		$result = $titleText;
-		$slashPosition = mb_strrpos($titleText, '/');
+		$slashPosition = strrpos($titleText, '/');
 
 		if( $slashPosition !== false ) {
-			$slashPosition++;
-			$result = mb_strcut( $titleText, $slashPosition );
+			$result = substr( $titleText, $slashPosition );
 		}
 
 		return trim( $result, '/' );

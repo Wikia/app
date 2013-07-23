@@ -131,6 +131,14 @@ $messages['bg'] = array(
 	'quickstats-number-shortening-billions' => '$1B',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'quickstats-header-date' => 'তারিখ',
+	'quickstats-totals-label' => 'মোট',
+);
+
 /** Tibetan (བོད་ཡིག)
  * @author YeshiTuhden
  */
@@ -509,6 +517,7 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
+ * @author C5st4wr6ch
  */
 $messages['id'] = array(
 	'quickstats-header-label' => 'Statistik Cepat',
@@ -518,7 +527,7 @@ $messages['id'] = array(
 	'quickstats-header-photos' => 'Foto',
 	'quickstats-header-likes' => 'Suka',
 	'quickstats-totals-label' => 'Total',
-	'quickstats-see-more-stats-link' => '[[Special:WikiStats|See more stats]]',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Lihat lebih banyak statistik]]',
 	'quickstats-number-shortening' => '$1K',
 );
 
@@ -687,12 +696,16 @@ $messages['nb'] = array(
 );
 
 /** Nepali (नेपाली)
+ * @author Bhawani Gautam
  * @author सरोज कुमार ढकाल
  */
 $messages['ne'] = array(
 	'quickstats-header-date' => 'मिति',
 	'quickstats-header-views' => 'अवलोकनहरू',
 	'quickstats-header-edits' => 'सम्पादनहरु',
+	'quickstats-header-photos' => 'चित्र',
+	'quickstats-header-likes' => 'मनपर्दो',
+	'quickstats-totals-label' => 'कुल',
 );
 
 /** Dutch (Nederlands)
@@ -1015,6 +1028,23 @@ $messages['tly'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
+/** Turkish (Türkçe)
+ * @author Sabri Vatansever
+ */
+$messages['tr'] = array(
+	'quickstats-header-label' => 'Hızlı istatistik',
+	'quickstats-header-date' => 'Tarih',
+	'quickstats-header-views' => 'Görüntülenme',
+	'quickstats-header-edits' => 'Değişiklikler',
+	'quickstats-header-photos' => 'Fotoğraflar',
+	'quickstats-header-likes' => 'Beğeniler',
+	'quickstats-totals-label' => 'Toplam',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Daha fazla istatislik gör]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
+);
+
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
@@ -1091,6 +1121,18 @@ $messages['vi'] = array(
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1B',
+);
+
+/** Chinese (中文)
+ * @author Shangkuanlc
+ */
+$messages['zh'] = array(
+	'quickstats-header-label' => '統計快訊',
+	'quickstats-header-date' => '日期',
+	'quickstats-header-views' => '點閱數',
+	'quickstats-header-edits' => '編輯數',
+	'quickstats-header-photos' => '照片',
+	'quickstats-header-likes' => '按讚',
 );
 
 /** Simplified Chinese (中文（简体）‎)

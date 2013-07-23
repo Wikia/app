@@ -6,20 +6,15 @@ $messages['en'] = [
 
 	'special-css-minor-edit-label' => 'Minor edit',
 	'special-css-summary-placeholder' => 'Add a summary of your edit',
-	'special-css-edit-summary' => 'Edit summary',
 
 	'special-css-publish-button' => 'Publish',
-	'special-css-history-button' => 'History',
 	'special-css-compare-button' => 'Show changes',
-	'special-css-delete-button' => 'Delete',
-	'special-css-undelete-button' => 'Undelete',
 
 	'special-css-community-update-by' => '$1 by [$2 $3]',
-	'special-css-community-read-more' => '[$1 Read more]',
+	'special-css-community-read-more' => 'Read more',
 	'special-css-community-update-see-all' => 'See all',
 	'special-css-community-update-headline' => 'CSS Updates',
-	'special-css-oasis-only' => 'Special:CSS is available only in Wikia skin. If you would like to use this feature please switch your preference to the Wikia skin.',
-
+	'special-css-wikia-skin-only' => 'Special:CSS is available only in Wikia skin. If you would like to use this feature please switch your preference to the Wikia skin.',
 	'special-css-diff-modal-title' => 'Changes',
 
 	'special-css-saving-internal-error' => 'Error while saving content.',
@@ -69,11 +64,10 @@ $messages['pl'] = [
 	'special-css-publish-button' => 'Publikuj',
 
 	'special-css-community-update-by' => '$1 przez [$2 $3]',
-	'special-css-community-read-more' => '[$1 Czytaj więcej]',
+	'special-css-community-read-more' => 'Czytaj więcej',
 	'special-css-community-update-see-all' => 'Zobacz wszystko',
 	'special-css-community-update-headline' => 'Aktualizacje CSS',
 	'special-css-oasis-only' => 'Special:CSS jest stroną dostępną tylko w skórce Wikia. Jeśli chcesz używać tej strony zmień ustawienia skórki w swoich preferencjach na Wikia.',
-	
 	'special-css-education-item-webinars-header' => 'CSS_ Wikia Webinars',
 	'special-css-education-item-webinars-link-title' => 'Wikia CSS Webinar',
 	'special-css-education-item-webinars-paragraph' => 'Istrukcje dotyczące używania własnych reguł CSS w Wikii.',
@@ -103,15 +97,15 @@ $messages['qqq'] = [
 
 	'special-css-community-update-headline' => 'Headline above container with blog posts feed. The feed contains blog posts from a category with posts regarding markup and CSS changes since previous release.',
 	'special-css-community-update-by' => "Post (regarding markup and CSS changes since previous release) detailed informations text: $1 = post's creation time, $2 = link to post's author profile page on community.wikia.com, $3 = post's author username",
-	'special-css-community-read-more' => "Link below post snippet leading to the full post page; The post page includes information regarding markup and CSS changes; $1 = link to the post's page on community.wikia.com",
+	'special-css-community-read-more' => "Link label below post snippet leading to the full post page; The post page includes information regarding markup and CSS changes",
 	'special-css-community-update-see-all' => 'Link to blog listing with contains all CSS updates',
 	'special-css-community-update-headline' => 'Headline in community blog post which starts the CSS updates section; the final CSS update text will be a part of the blog post and the beginning of this part is this headline',
 
-	'special-css-oasis-only' => 'Message displayed to users who use skin different than "Wikia Skin" (i.e. Monobook). This feature is enabled only for "Wikia Skin".',
+	'special-css-wikia-skin-only' => 'Message displayed to users who use skin different than "Wikia Skin" (i.e. Monobook). This feature is enabled only for "Wikia Skin".',
 
-	'special-css-diff-modal-title' => 'Title for modal with actual changes in css file',
+	'special-css-diff-modal-title' => 'Title for modal with actual changes in CSS file',
 
-	'special-css-saving-internal-error' => 'Error message after publish button informing user that there were some problems while saving css file content',
+	'special-css-saving-internal-error' => 'Error message after publish button informing user that there were some problems while saving CSS file content',
 	'special-css-merge-error' => "Error message after publish button informing user that some else edited this article and there is a conflict.",
 	'special-css-save-message' => 'Notification message at the top of page that says that Css content was saved',
 	'special-css-oldid-message' => 'Notification message at the top of page that says that you are editing old version of content and when you save it all changes made since that version will be lost.',

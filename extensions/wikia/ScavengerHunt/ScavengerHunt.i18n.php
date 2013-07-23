@@ -352,6 +352,13 @@ $messages['br'] = array(
 	'scavengerhunt-label-article-congrats' => "Kemennadenn gourc'hemennoù",
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'scavengerhunt-label-entry-form-username' => 'Декъашхочун цӀе',
+);
+
 /** Czech (česky)
  * @author Chmee2
  * @author Vks
@@ -1231,6 +1238,17 @@ $messages['ia'] = array(
 	'scavengerhunt-editor-tip-facebook-description' => 'Texto que essera monstrate in le message dividite',
 	'scavengerhunt-facebook-image' => 'Imagine de Facebook pro divider',
 	'scavengerhunt-facebook-description' => 'Texto de Facebook pro divider',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'scavengerhunt-game-more-to-go' => 'Hanya # lebih banyak untuk pergi.',
+	'scavengerhunt-label-entry-form-username' => 'Nama Pengguna',
+	'scavengerhunt-label-clue-color' => 'Warna font',
+	'scavengerhunt-editor-tip-landing-button-text' => 'Ini adalah label teks pada tombol \'mulai\' (misalnya, "Klik di sini untuk mulai berburu!")',
+	'scavengerhunt-editor-tip-starting-clue-button-target' => 'Ini adalah alamat dari halaman dengan item pertama.',
 );
 
 /** Italian (italiano)
@@ -2162,8 +2180,8 @@ $messages['pt'] = array(
 	'scavengerhunt-form-error-finishPopupSprite-sprite-empty' => 'Adeus, dimensões de sprite de pop-up é inválido',
 	'scavengerhunt-game-has-been-created' => 'Foi criado um jogo novo de Caça ao Tesouro.',
 	'scavengerhunt-game-has-been-saved' => 'O jogo da Caça ao Tesouro foi gravado.',
-	'scavengerhunt-game-has-been-enabled' => 'O jogo seleccionado de Caça ao Tesouro foi activado.',
-	'scavengerhunt-game-has-been-disabled' => 'O jogo seleccionado de Caça ao Tesouro foi desactivado.',
+	'scavengerhunt-game-has-been-enabled' => 'O jogo selecionado de Caça ao Tesouro foi ativado.',
+	'scavengerhunt-game-has-been-disabled' => 'O jogo selecionado de Caça ao Tesouro foi desativado.',
 	'scavengerhunt-game-has-not-been-saved' => 'O jogo da Caça ao Tesouro não foi gravado.',
 	'scavengerhunt-edit-token-mismatch' => 'Foi detectada uma incompatibilidade nas etiquetas de edição - tente novamente, por favor.',
 	'scavengerhunt-entry-form-name' => 'O seu nome:',

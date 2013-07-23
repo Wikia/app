@@ -17,6 +17,8 @@ $wgExtensionCredits['other'][] = array(
 	)
 );
 
+define( "PHALANX_VERSION",  2 );
+
 $dir = __DIR__ . '/';
 
 $classes = array(
@@ -81,6 +83,7 @@ $phalanxhooks = array(
 			'SpamFilterCheck'                 => 'onSpamFilterCheck',
 			'EditPhalanxBlock'                => 'onEditPhalanxBlock',
 			'DeletePhalanxBlock'              => 'onDeletePhalanxBlock',
+			'AfterFormatPermissionsErrorMessage' => 'onAfterFormatPermissionsErrorMessage',
 		)
 );
 

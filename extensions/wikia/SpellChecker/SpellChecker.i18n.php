@@ -90,6 +90,14 @@ $messages['br'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Kinnigoù reizhskrivañ evit "$1" : $2',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'spellchecker-info-languages' => 'Лелолуш долу меттанаш ($1)',
+	'spellchecker-info-spellcheck-languages' => 'Мотт',
+);
+
 /** Czech (česky)
  * @author Darth Daron
  */
@@ -399,11 +407,12 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
  * @author Waldir
  */
 $messages['pt'] = array(
 	'spellchecker-desc' => 'Fornece uma interface de verificação ortográfica para o módulo PHP enchant',
-	'enablespellchecker' => 'Activar o corretor ortográfico no modo visual',
+	'enablespellchecker' => 'Ativar o corretor ortográfico no modo visual',
 	'spellchecker-info' => 'Informação do corretor ortográfico',
 	'spellchecker-info-languages' => 'Línguas disponíveis ($1)',
 	'spellchecker-info-provider' => 'Fornecedor',
@@ -437,6 +446,11 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'spellchecker-desc' => "Dèje 'n'inderfacce de verifiche d'a pronunge pe le module PHP 'ngandate",
+	'enablespellchecker' => "Abbilite 'u verificatore de pronunge jndr'à 'nu mode visuale",
+	'spellchecker-info' => "'Mbormaziune d'u verificatore de pronunge",
+	'spellchecker-info-languages' => 'Lènghe disponibbile ($1)',
+	'spellchecker-info-provider' => 'Fornitore',
 	'spellchecker-info-dictionaries' => 'Dizionarie disponibbile',
 	'spellchecker-info-spellcheck-text' => 'Teste da verificà',
 	'spellchecker-info-spellcheck-languages' => 'Lènghe',

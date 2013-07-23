@@ -132,10 +132,33 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 			noAdStorageKey = 'dart_noad_' + slotname,
 			numCallForSlotStorageKey = 'dart_calls_' + slotname,
 
+			noAdLastTime = cacheStorage.get(noAdStorageKey, now) || false,
+			numCallForSlot = cacheStorage.get(numCallForSlotStorageKey, now) || 0,
+			url,
+			dontCallDart = false,
+
+			hopTimer,
+			hopTime,
+
 			// Do this when DART hops or doesn't handle
 			error = function () {
 				log(slotname + ' was not filled by DART', 2, logGroup);
 				cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, now);
+
+				// don't track hop if not high value country
+				// don't track hop if dart was not called but rather skipped
+				if (isHighValueCountry && !dontCallDart) {
+					// Track hop time
+					hopTime = new Date().getTime() - hopTimer;
+					log('slotTimer2 end for ' + slotname + ' after ' + hopTime + ' ms (hop)', 7, logGroup);
+					tracker.track({
+						eventName: 'liftium.hop2',
+						ga_category: 'hop2/addriver2',
+						ga_action: 'slot ' + slotname,
+						ga_label: formatTrackTime(hopTime, 5),
+						trackingMethod: 'ad'
+					});
+				}
 
 				slot[2] = 'Liftium2';
 				window.adslots2.push(slot);
@@ -146,15 +169,22 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 				slotTweaker.removeDefaultHeight(slotname);
 				slotTweaker.removeTopButtonIfNeeded(slotname);
 				slotTweaker.adjustLeaderboardSize(slotname);
+
+				// experimental hack: track LB success time
+				if (slotname.search('LEADERBOARD') > -1) {
+					// Track hop time
+					hopTime = new Date().getTime() - hopTimer;
+					log('slotTimer2 end for ' + slotname + ' after ' + hopTime + ' ms (success)', 7, logGroup);
+					tracker.track({
+						eventName: 'liftium.hop2',
+						ga_category: 'success2/addriver2',
+						ga_action: 'slot ' + slotname,
+						ga_label: formatTrackTime(hopTime, 5),
+						trackingMethod: 'ad'
+					});
+				}
 			},
 
-			noAdLastTime = cacheStorage.get(noAdStorageKey, now) || false,
-			numCallForSlot = cacheStorage.get(numCallForSlotStorageKey, now) || 0,
-			url,
-			dontCallDart = false,
-
-			hopTimer,
-			hopTime,
 			inLeaderboardTest = abTest && abTest.getGroup('LEADERBOARD_TESTS'),
 			inMedRecTest = abTest && abTest.getGroup('MEDREC_TESTS'),
 			inSkinTest = abTest && abTest.getGroup('SKIN_TESTS');
@@ -266,17 +296,6 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 				 * We're handling this here.
 				 */
 				if (window.adDriverLastDARTCallNoAds && window.adDriverLastDARTCallNoAds[slotname]) {
-					// Track hop time
-					hopTime = new Date().getTime() - hopTimer;
-					log('slotTimer2 end for ' + slotname + ' after ' + hopTime + ' ms', 7, logGroup);
-					tracker.track({
-						eventName: 'liftium.hop2',
-						ga_category: 'hop2/addriver2',
-						ga_action: 'slot ' + slotname,
-						ga_label: formatTrackTime(hopTime, 5),
-						trackingMethod: 'ad'
-					});
-
 					error();
 				} else {
 					log(slotname + ' was filled by DART', 5, logGroup);

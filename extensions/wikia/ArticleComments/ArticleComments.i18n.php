@@ -109,9 +109,21 @@ Parameters:
 	'article-comments-next-page' => '{{Identical|Next}}',
 	'wikiamobile-article-comments-header' => "The header of the Comments section shown in Wikia's mobile skin. Parameters:
 * $1 is the number of the comments.",
-	'wikiamobile-article-comments-view' => 'Message to open all replies to a comment. Parameters: $1 is the number of comments.',
-	'wikiamobile-article-comments-replies' => 'Messege in Top Bar in a modal with all replies to comment',
+	'wikiamobile-article-comments-more' => 'Label on a button to load next page of comments',
+	'wikiamobile-article-comments-prev' => 'Label on a button to load previous page of comments',
+	'wikiamobile-article-comments-none' => 'Message displayed to user if there are no comments on a page after opening a section with comments',
+	'wikiamobile-article-comments-view' => 'Message to open all replies to a comment. Parameters:
+* $1 - the number of comments',
+	'wikiamobile-article-comments-replies' => 'Message in Top Bar in a modal with all replies to comment.
+{{Identical|Reply}}',
+	'wikiamobile-article-comments-post-reply' => 'Label on a button to post a reply to comment',
+	'wikiamobile-article-comments-post' => 'Label on a button to post a comment',
+	'wikiamobile-article-comments-placeholder' => 'This is an input placeholder displayed when no text is in given input',
 	'wikiamobile-article-comments-show' => 'Label for the link that will reveal the list of comments, keep it as short as possible',
+	'wikiamobile-article-comments-login-post' => 'Message shown to a user if he tries to post a comment on a wiki where login is obligatory to edit.
+This is shown in small pop up message in red.',
+	'wikiamobile-article-comments-post-fail' => 'Message shown to a user when saving his comment failed.
+This is shown in small pop up message in red.',
 	'enotif_body_article_comment' => '{{doc-singularthey}}
 This is an email sent to inform a user that a page they are following has a new comment posted.',
 );
@@ -354,6 +366,19 @@ $messages['bg'] = array(
 	'article-comments-show-all' => 'Показване на всички коментари',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'article-comments-edit' => 'সম্পাদনা',
+	'article-comments-history' => 'ইতিহাস',
+	'article-comments-reply' => 'উত্তর',
+	'article-comments-show-all' => 'সকল মন্তব্য দেখাও',
+	'article-comments-prev-page' => 'পূর্ব',
+	'article-comments-next-page' => 'পর',
+	'article-comments-page-spacer' => '&#160...&#160',
+);
+
 /** Tibetan (བོད་ཡིག)
  * @author YeshiTuhden
  */
@@ -508,6 +533,14 @@ ___________________________________________
 <li>Vols rebre pocs missatges de nosaltres? Pots donar-te de baixa o canviar les teves preferències d\'adreça electrònica aquí: <a href="http://ca.wikia.com/Especial:Preferències">http://ca.wikia.com/wiki/Especial:Preferències</a></li>
 </ul>
 </p>',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'article-comments-cancel' => 'Цаоьшу',
+	'article-comments-delete' => 'дӀаяккха',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -676,6 +709,7 @@ $messages['da'] = array(
 /** German (Deutsch)
  * @author Avatar
  * @author Claudia Hattitten
+ * @author Das Schäfchen
  * @author Geitost
  * @author Inkowik
  * @author LWChris
@@ -722,12 +756,12 @@ $messages['de'] = array(
 	'wikiamobile-article-comments-post' => 'Abschicken',
 	'wikiamobile-article-comments-placeholder' => 'Kommentieren',
 	'wikiamobile-article-comments-show' => 'Zeigen',
-	'wikiamobile-article-comments-login-post' => 'Bitte melde dich zum Kommentieren an.',
+	'wikiamobile-article-comments-login-post' => 'Bitte melde dich an, um Kommentare zu schreiben.',
 	'wikiamobile-article-comments-post-fail' => 'Der Kommentar konnte nicht gespeichert werden. Bitte später erneut versuchen.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR hat "$PAGETITLE" auf {{SITENAME}} kommentiert',
 	'enotif_body_article_comment' => 'Hallo $WATCHINGUSERNAME,
 
-Es gibt zu $PAGETITLE auf {{SITENAME}} einen neuen Kommentar. Verwende diesen Link, um alle Kommentare anzusehen: $PAGETITLE_URL#WikiaArticleComments
+es gibt zu $PAGETITLE auf {{SITENAME}} einen neuen Kommentar. Verwende diesen Link, um alle Kommentare anzusehen: $PAGETITLE_URL#WikiaArticleComments
 
 – Wikia Community Team
 
@@ -736,7 +770,7 @@ ___________________________________________
 * Willst du weniger Nachrichten von uns erhalten? Du kannst die Benachrichtigung abbestellen oder deine E-Mail-Einstellungen hier ändern: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Hallo $WATCHINGUSERNAME,
 <br /><br />
-Es gibt zu $PAGETITLE auf {{SITENAME}} einen neuen Kommentar. Verwende diesen Link, um alle Kommentare anzusehen: $PAGETITLE_URL#WikiaArticleComments
+es gibt zu $PAGETITLE auf {{SITENAME}} einen neuen Kommentar. Verwende diesen Link, um alle Kommentare anzusehen: $PAGETITLE_URL#WikiaArticleComments
 <br /><br />
 – Wikia Community Team
 <br /><br />
@@ -845,6 +879,7 @@ $messages['el'] = array(
 	'article-comments-prev-page' => 'Προηγούμενο',
 	'article-comments-next-page' => 'Επόμενο',
 	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'Το κύριο άρθρο/κύριο σχόλιο έχει διαγραφεί.',
 	'article-comments-empty-comment' => "Δεν μπορείτε να δημοσιεύσετε ένα κενό σχόλιο. <a href='$1'>Αντ'αυτού να το διαγράψετε;</a>",
 	'wikiamobile-article-comments-header' => 'σχόλια <span class=cnt id=wkArtCnt>$1</span>',
 	'wikiamobile-article-comments-more' => 'Φορτώστε περισσότερα',
@@ -1471,8 +1506,10 @@ Wikia
 
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
+ * @author C5st4wr6ch
  */
 $messages['id'] = array(
+	'article-comments-file-page' => "<a href='$1'>Komentar dari $2</a> pada <a href='$3'>$4</a>",
 	'article-comments-anonymous' => 'Pengguna anonim',
 	'article-comments-comments' => 'Komentar ($1)',
 	'article-comments-post' => 'Kirim komentar',
@@ -1482,6 +1519,10 @@ $messages['id'] = array(
 	'article-comments-history' => 'versi',
 	'article-comments-error' => 'Komentar tidak dapat disimpan',
 	'article-comments-undeleted-comment' => 'Batalkan hapus komentar untuk halaman blog $1',
+	'article-comments-rc-comments' => 'Komentar artikel ([[$1]])',
+	'article-comments-fblogin' => 'Silakan <a href="$1" rel="nofollow">masuk log dan terhubung dengan Facebook</a> untuk mengirim komentar pada wiki ini!',
+	'article-comments-rc-blog-comment' => 'Komentar blog (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-blog-comments' => 'Komentar blog ([[$1]])',
 	'article-comments-toc-item' => 'Komentar',
 	'article-comments-comment-cannot-add' => 'Anda tidak dapat menambahkan komentar ke artikel',
 	'article-comments-vote' => 'Memberikan suara',
@@ -1489,6 +1530,36 @@ $messages['id'] = array(
 	'article-comments-show-all' => 'Perlihatkan semua komentar',
 	'article-comments-prev-page' => 'Sebelumnya',
 	'article-comments-next-page' => 'Selanjutnya',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'Artikel induk / komentar induk telah dihapus.',
+	'article-comments-empty-comment' => "Anda tidak dapat mengirim komentar kosong. <a href='$1'>Hapus saja?</a>",
+	'wikiamobile-article-comments-view' => 'Lihat balasan',
+	'wikiamobile-article-comments-replies' => 'balasan',
+	'wikiamobile-article-comments-post-reply' => 'Kirimkan balassan',
+	'wikiamobile-article-comments-post' => 'Kirim',
+	'wikiamobile-article-comments-show' => 'Tampilkan',
+	'enotif_subject_article_comment' => '$PAGEEDITOR telah berkomentar pada "$PAGETITLE" pada {{SITENAME}}',
+	'enotif_body_article_comment' => 'Hai $WATCHINGUSERNAME,
+
+Ada komentar baru pada $PAGETITLE di {{SITENAME}}. Gunakan pranala ini untuk melihat semua komentar: $PAGETITLE_URL#WikiaArticleComments
+
+-Komunitas Dukungan Wikia
+
+___________________________________________
+ * Temukan bantuan dan saran di Pusat Komunitas: http://community.wikia.com
+* Ingin menerima lebih sedikit pesan dari kami? Anda dapat berhenti berlangganan atau mengubah preferensi surel Anda di sini: http://community.wikia.com/Special:Preferences',
+	'enotif_body_article_comment-HTML' => '<p>Hai $WATCHINGUSERNAME,
+<br /><br />
+Ada komentar baru di $PAGETITLE pada {{SITENAME}}. Gunakan pranala ini untuk melihat semua komentar: $PAGETITLE_URL#WikiaArticleComments
+<br /><br />
+- Dukungan Komunitas Wikia
+<br /><br />
+___________________________________________
+<ul>
+<li>Menemukan bantuan dan saran di Pusat Komunitas: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
+<li>Ingin menerima lebih sedikit pesan dari kami? Anda dapat berhenti berlangganan atau mengubah pengaturan email Anda di sini: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+</ul>
+</p>',
 );
 
 /** Ingush (ГӀалгӀай)
@@ -1735,6 +1806,9 @@ $messages['lb'] = array(
 	'article-comments-show-all' => 'All Bemierkunge weisen',
 	'article-comments-prev-page' => 'Vireg',
 	'article-comments-next-page' => 'Nächst',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'wikiamobile-article-comments-more' => 'Méi lueden',
+	'wikiamobile-article-comments-prev' => 'Virege lueden',
 	'wikiamobile-article-comments-none' => 'Keng Bemierkungen',
 	'wikiamobile-article-comments-view' => 'Äntwerte kucken',
 	'wikiamobile-article-comments-replies' => 'Äntwerten',
@@ -1999,8 +2073,10 @@ $messages['mzn'] = array(
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
+ * @author Laaknor
  */
 $messages['nb'] = array(
+	'article-comments-file-page' => "<a href='$1'>Kommentarer fra $2</a> på <a href='$3'>$4</a>",
 	'article-comments-anonymous' => 'Anonym bruker',
 	'article-comments-comments' => 'Kommentarer ($1)',
 	'article-comments-post' => 'Post kommentar',
@@ -2038,6 +2114,7 @@ $messages['nb'] = array(
 	'wikiamobile-article-comments-placeholder' => 'Post en kommentar',
 	'wikiamobile-article-comments-show' => 'Vis',
 	'wikiamobile-article-comments-login-post' => 'Vennligst logg inn for å poste en kommentar.',
+	'wikiamobile-article-comments-post-fail' => 'Feilet lagring av kommentar, prøv igjen senere',
 	'enotif_subject_article_comment' => '$PAGEEDITOR har kommentert «$PAGETITLE» på {{SITENAME}}',
 	'enotif_body_article_comment' => 'Hei $WATCHINGUSERNAME,
 

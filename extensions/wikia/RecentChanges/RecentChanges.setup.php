@@ -10,7 +10,7 @@ $wgExtensionCredits['other'][] = array(
 	'author' => array( 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' )
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = __DIR__ . '/';
 
 //classes
 $wgAutoloadClasses['RecentChangesController'] =  $dir . 'RecentChangesController.class.php';

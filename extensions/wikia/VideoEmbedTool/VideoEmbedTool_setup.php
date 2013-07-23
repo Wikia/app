@@ -39,7 +39,12 @@ extAddSpecialPage( dirname(__FILE__) . '/WikiaVideoAdd_body.php', 'WikiaVideoAdd
 $wgExtensionMessagesFiles['VideoEmbedTool'] = $dir.'/VideoEmbedTool.i18n.php';
 $wgHooks['EditPage::showEditForm:initial2'][] = 'VETSetup';
 
-JSMessages::registerPackage('VideoEmbedTool', array('vet-*'));
+JSMessages::registerPackage('VideoEmbedTool', array(
+	'vet-warn2',
+	'vet-warn3',
+	'vet-insert-error',
+	'vet-imagebutton',
+));
 JSMessages::enqueuePackage('VideoEmbedTool', JSMessages::EXTERNAL);
 
 

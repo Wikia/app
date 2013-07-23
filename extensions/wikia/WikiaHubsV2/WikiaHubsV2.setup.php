@@ -24,7 +24,6 @@ $wgAutoloadClasses['WikiaHubsV2Controller'] =  $dir . 'WikiaHubsV2Controller.cla
 $wgAutoloadClasses['WikiaHubsV2SuggestController'] =  $dir . 'WikiaHubsV2SuggestController.class.php';
 
 // hook classes
-$wgAutoloadClasses['WikiaHubsV2Mobile'] =  $dir . 'hooks/WikiaHubsV2MobileHooks.php';
 $wgAutoloadClasses['WikiaHubsV2Hooks'] =  $dir . 'hooks/WikiaHubsV2Hooks.php';
 
 // model classes
@@ -40,7 +39,6 @@ $wgAutoloadClasses['WikiaHubsParserHelper'] =  $dir . 'WikiaHubsParserHelper.cla
 $wgExtensionMessagesFiles['WikiaHubsV2'] = $dir.'WikiaHubsV2.i18n.php';
 
 // hooks
-$wgHooks['WikiaMobileAssetsPackages'][] = 'WikiaHubsV2Mobile::onWikiaMobileAssetsPackages';
 $wgHooks['ArticleFromTitle'][] = 'WikiaHubsV2Hooks::onArticleFromTitle';
 $wgHooks['WikiaCanonicalHref'][] = 'WikiaHubsV2Hooks::onWikiaCanonicalHref';
 $wgHooks['ParserFirstCallInit'][] = 'WikiaHubsV2Hooks::onParserFirstCallInit';

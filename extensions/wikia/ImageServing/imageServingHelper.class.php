@@ -128,6 +128,8 @@ class ImageServingHelper {
 			return $images;
 		}
 
+		wfDebug(__METHOD__ . ' - ' . json_encode($images). "\n");
+
 		$dbw = wfGetDB(DB_MASTER, array());
 
 		if( count($images) < 1 ) {

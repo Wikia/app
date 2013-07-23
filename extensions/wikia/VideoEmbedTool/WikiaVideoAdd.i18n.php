@@ -820,6 +820,17 @@ $messages['tly'] = array(
 	'wva-add' => 'Зијод кардеј',
 );
 
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'wva-add' => 'Ekle',
+	'wva-title' => "URL'den hızlıca video ekle",
+	'wva-notlogged' => 'Video eklemek için kayıt olmanız veya giriş yapmanız gerekli.',
+	'wva-notallowed' => 'Bu wikiye video ekleyemezsiniz.',
+	'wva-protected' => 'Bu video korunmaktadır.',
+);
+
 /** Ukrainian (українська)
  * @author Ast
  * @author Prima klasy4na

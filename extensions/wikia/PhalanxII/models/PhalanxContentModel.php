@@ -68,7 +68,7 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 	
 	public function contentBlock() {
-		$msg = wfMessage('spamprotectionmatch', "{$this->block->text} (Block #{$this->block->id})")->text();
+		$msg = "{$this->block->text} (Block #{$this->block->id})";
 		$this->logBlock();
 		return $msg;
 	}

@@ -142,6 +142,7 @@ $messages['qqq'] = array(
 	'rte-ck-link-add' => '{{Identical|Add link}}',
 	'rte-ck-link-error-title' => '{{Identical|Error}}',
 	'rte-ck-link-external-tab' => '{{Identical|External link}}',
+	'rte-ck-link-external-url' => '{{Identical|URL}}',
 	'rte-ck-link-internal-pageName' => '{{Identical|Page name}}',
 	'rte-ck-link-internal-tab' => '{{Identical|Internal link}}',
 	'rte-ck-link-status-external' => '{{Identical|External link}}',
@@ -162,6 +163,10 @@ $messages['qqq'] = array(
 	'rte-ck-templateEditor-editor-previewButton' => '{{Identical|Preview}}',
 	'rte-ck-templateEditor-editor-previewTitle' => '{{Identical|Preview}}',
 	'rte-ck-video-video' => '{{Identical|Video}}',
+	'rte-ck-format-tag_h2' => '{{Identical|Heading}}',
+	'rte-ck-format-tag_h3' => '{{Identical|Heading}}',
+	'rte-ck-format-tag_h4' => '{{Identical|Heading}}',
+	'rte-ck-format-tag_h5' => '{{Identical|Heading}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -673,6 +678,7 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'rte-ck-media-delete' => 'дӀаяккха',
 	'rte-ck-templateDropDown-label' => 'Кеп',
 );
 
@@ -987,6 +993,13 @@ $messages['diq'] = array(
 	'rte-ck-format-tag_h3' => 'Sername 3',
 	'rte-ck-format-tag_h4' => 'Sername 4',
 	'rte-ck-format-tag_h5' => 'Sername 5',
+);
+
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'rte-ck-link-error-badUrl' => 'We do not recognise that URL - please check it is correct.',
 );
 
 /** Spanish (español)
@@ -1897,6 +1910,7 @@ $messages['ksh'] = array(
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
+ * @author Ghybu
  */
 $messages['ku-latn'] = array(
 	'rte-ck-errorPopupTitle' => 'Çewtî!',
@@ -1912,7 +1926,7 @@ $messages['ku-latn'] = array(
 	'rte-ck-link-external-tab' => 'Lînka derve',
 	'rte-ck-link-external-url' => 'URL',
 	'rte-ck-link-internal-pageName' => 'Navê rûpelê',
-	'rte-ck-link-internal-tab' => 'Lînka hundir',
+	'rte-ck-link-internal-tab' => 'Girêdana hundir',
 	'rte-ck-link-status-exists' => 'Rûpel heye',
 	'rte-ck-link-status-notexists' => 'Rûpel tune ye',
 	'rte-ck-link-status-external' => 'Lînka derve',
@@ -2430,7 +2444,7 @@ $messages['nl'] = array(
 	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Naar de visuele modus schakelen',
 	'rte-ck-modeSwitch-error' => 'Er is een fout opgetreden tijdens het wisselen van modus. Probeer het opnieuw.',
 	'rte-ck-photoGallery-gallery' => 'Galerij',
-	'rte-ck-photoGallery-slideshow' => 'Diapresentatie',
+	'rte-ck-photoGallery-slideshow' => 'Diavoorstelling',
 	'rte-ck-photoGallery-slider' => 'Afbeeldingenschuiver',
 	'rte-ck-photoGallery-addGallery' => 'Afbeeldingengalerij toevoegen',
 	'rte-ck-photoGallery-addSlideshow' => 'Diavoorstelling toevoegen',
@@ -2785,6 +2799,7 @@ $messages['ps'] = array(
 	'rte-ck-modeSwitch-toSource' => 'سرچينه',
 	'rte-ck-photoGallery-gallery' => 'انځورتون',
 	'rte-ck-photoGallery-addGallery' => 'يو انځورتون ورګډول',
+	'rte-ck-photoGallery-confirmDeleteTitle' => 'دا انځورتون ليرې کوۍ؟',
 	'rte-ck-photoGallery-tooltip' => 'دا يو انځورتون دی.',
 	'rte-ck-signature-add' => 'خپل لاسليک ورګډول',
 	'rte-ck-signature-label' => 'لاسليک',
@@ -2798,6 +2813,7 @@ $messages['ps'] = array(
 	'rte-ck-video-add' => 'يوه ويډيو ورګډول',
 	'rte-ck-video-video' => 'ويډيو',
 	'rte-ck-mut-mut' => 'ويډيو (بيټا)',
+	'rte-ck-format-tag_p' => 'نورماله متن',
 	'rte-ck-format-tag_h2' => 'سرليک 2',
 	'rte-ck-format-tag_h3' => 'سرليک 3',
 	'rte-ck-format-tag_h4' => 'سرليک 4',
@@ -2907,7 +2923,7 @@ $messages['pt'] = array(
 	'rte-ck-videoPlaceholder-tooltip' => 'Este é um espaço reservado para um vídeo.',
 	'rte-ck-mut-add' => 'Adicionar um vídeo (beta)',
 	'rte-ck-mut-mut' => 'Vídeo (beta)',
-	'rte-ck-widescreen-toggle' => 'Activar ou desactivar o modo panorâmico',
+	'rte-ck-widescreen-toggle' => 'Ativar ou desativar o modo panorâmico',
 	'rte-ck-poll-confirmDelete' => 'Tem a certeza de que pretende remover a votação desta página?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Remover esta votação?',
 	'rte-ck-spellchecker-moreSuggestions' => 'Mais sugestões',

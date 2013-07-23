@@ -21,13 +21,26 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Default results per page for inter wiki search
 	 * @var int
 	 */
-	const INTERWIKI_RESULTS_PER_PAGE = 7;
+	const INTERWIKI_RESULTS_PER_PAGE = 10;
 
 	/**
 	 * Default pages per window
 	 * @var int
 	 */
 	const PAGES_PER_WINDOW = 5;
+
+	/**
+	 * Default sufix for result template
+	 * @var string
+	 */
+	const WIKIA_DEFAULT_RESULT = 'result';
+
+	/**
+	 * Default varnish cache time for a search result
+	 * Currently 12 hours.
+	 * @var int
+	 */
+	const VARNISH_CACHE_TIME = 43200;
 	
 	/**
 	 * Responsible for instantiating query services based on config.
@@ -55,7 +68,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	public function index() {
 		$this->handleSkinSettings();
+		//will change template depending on passed ab group
 		$searchConfig = $this->getSearchConfigFromRequest();
+		$this->handleLayoutAbTest( $this->getVal( 'ab', null ), $searchConfig->getNamespaces() );
 		if ( $searchConfig->getQuery()->hasTerms() ) {
 			$search = $this->queryServiceFactory->getFromConfig( $searchConfig);
 			// explicity called to accommodate go-search
@@ -66,6 +81,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		
 		$this->setPageTitle( $searchConfig );
 		$this->setResponseValuesFromConfig( $searchConfig );
+		$this->setVarnishCacheTime( self::VARNISH_CACHE_TIME );
 	}
 
 	/**
@@ -388,6 +404,32 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Called in index action to handle overriding template for different abTests
+	 */
+	protected function handleLayoutAbTest( $abGroup, $ns = null ) {
+		//check if template for ab test exists
+		if( $abGroup !== null && $this->templateExists( $abGroup ) ) {
+			//set name depending on abGroup
+			$this->setVal( 'resultView', $abGroup );
+		} else {
+			//defaults to result
+			$this->setVal( 'resultView', static::WIKIA_DEFAULT_RESULT );
+		}
+		return true;
+	}
+
+	/**
+	 * Checks if template with given sufix exists
+	 * @param $name string Template sufix
+	 * @return bool
+	 */
+	protected function templateExists( $name ) {
+		//build path to templates dir
+		$path = __DIR__ . '/templates';
+		return file_exists( "{$path}/WikiaSearch_{$name}.php" );
 	}
 
 	/**

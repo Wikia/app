@@ -91,11 +91,13 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'editaccount-desc' => '{{desc}}',
 	'editaccount-title' => 'Name of the "EditAccount" extension. This message is displayed as the H1 page title of the special page.',
-	'editaccount-frame-usage' => 'Label for note field. In this context, "note" refers to extra information about the extension and its functionality',
+	'editaccount-frame-usage' => 'Label for note field. In this context, "note" refers to extra information about the extension and its functionality.
+{{Identical|Note}}',
 	'editaccount-label-toggleadopt' => 'Label for option to toggle whether or not the user is allowed to automatically adopt a wiki.',
 	'editaccount-label-toggleadopt-prevent' => 'Label for option to prevent user from automatically adopting a wiki.',
 	'editaccount-label-toggleadopt-allow' => 'Label for option to allow user to automatically adopting a wiki.',
-	'editaccount-label-reason' => 'Label for reason field.',
+	'editaccount-label-reason' => 'Label for reason field.
+{{Identical|Reason}}',
 	'editaccount-submit-button' => 'Text of the submission button.
 {{Identical|Save}}',
 	'editaccount-success-disable' => 'Parameters:
@@ -1007,6 +1009,7 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
+ * @author C5st4wr6ch
  * @author Irwangatot
  */
 $messages['id'] = array(
@@ -1024,6 +1027,7 @@ $messages['id'] = array(
 	'editaccount-label-pass' => 'Mengatur kata sandi baru',
 	'editaccount-label-realname' => 'Menetapkan nama baru',
 	'editaccount-label-clearunsub' => 'Berhenti berlangganan',
+	'editaccount-label-reason' => 'Alasan:',
 	'editaccount-submit-email' => 'Simpan alamat e-mail',
 	'editaccount-submit-pass' => 'Simpan kata sandi',
 	'editaccount-submit-realname' => 'Simpan nama asli',
@@ -1047,6 +1051,11 @@ $messages['id'] = array(
 	'editaccount-invalid-email' => '" $1 " bukanlah alamat e-mail yang valid!',
 	'editaccount-nouser' => 'Akun " $1 "tidak ada!',
 	'editaccount-remove-avatar-fail' => 'Masalah dalam hapus otomatis avatar.',
+	'editaccount-requested' => 'Catatan: Pengguna telah meminta penutupan akun',
+	'editaccount-not-requested' => 'PERHATIAN: Pengguna tidak meminta penutupan akun.',
+	'editaccount-labal-email-status' => 'Status surel',
+	'editaccount-status-tempuser' => 'Pengguna Sementara',
+	'editaccount-error-tempuser-email' => 'Pengguna sementara tidak dapat memiliki field alamat surel yang kosong, silakan masukkan alamat surel.',
 	'editaccount-log' => 'Catatan akun pengguna',
 	'editaccount-log-header' => 'Halaman ini berisi daftar perubahan yang dibuat untuk informasi pengguna oleh staf Wikia.',
 	'editaccount-log-entry-email' => 'mengubah alamat e-mail untuk pengguna $2',
@@ -1055,6 +1064,7 @@ $messages['id'] = array(
 	'editaccount-log-entry-close' => 'menonaktifkan akun $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;"> Akun ini telah dinonaktifkan secara global oleh Wikia. </div>',
 	'right-editaccount' => 'Menyunting informasi pengguna lain',
+	'action-editaccount' => 'sunting informasi pengguna lain',
 );
 
 /** Italian (italiano)
@@ -1365,6 +1375,7 @@ $messages['ms'] = array(
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
+ * @author Laaknor
  * @author Nghtwlkr
  * @author Wouterkoch
  */
@@ -1408,6 +1419,7 @@ $messages['nb'] = array(
 	'editaccount-error-close' => 'Et problem oppsto under lukking av kontoen. Prøv igjen eller kontakt Tech Team.',
 	'editaccount-invalid-email' => '«$1» er ikke en gyldig e-postadresse!',
 	'editaccount-nouser' => 'Kontoen «$1» finnes ikke!',
+	'editaccount-not-loaded' => 'Feil: Brukerdata ble ikke lastet ordentlig, vennligst forsøk å laste siden på nytt.',
 	'editaccount-remove-avatar-fail' => 'Problem med automatisk fjerning av avatar.',
 	'editaccount-requested' => 'Merk: Brukeren har søkt om å få kontoen sin stengt',
 	'editaccount-not-requested' => 'FORSIKTIG: Brukeren har ikke søkt om å få kontoen sin stengt',
@@ -1427,6 +1439,7 @@ $messages['nb'] = array(
 	'editaccount-log-entry-close' => 'deaktiverte konto $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Denne kontoen har blitt deaktivert globalt av Wikia.</div>',
 	'right-editaccount' => 'Rediger andre brukeres innstillinger',
+	'action-editaccount' => 'rediger andre brukeres informasjon',
 );
 
 /** Dutch (Nederlands)
@@ -1711,6 +1724,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
  * @author Pttraduc
  * @author SandroHc
  */
@@ -1724,7 +1738,7 @@ $messages['pt'] = array(
 	'editaccount-label-select' => 'Seleccione uma conta de utilizador',
 	'editaccount-submit-account' => 'Administrar Conta',
 	'editaccount-frame-account' => 'A editar a conta: $1',
-	'editaccount-frame-close' => 'Desactivar a conta: $1',
+	'editaccount-frame-close' => 'Desativar a conta: $1',
 	'editaccount-label-email' => 'Definir endereço de correio electrónico novo',
 	'editaccount-label-pass' => 'Definir palavra-chave nova',
 	'editaccount-label-realname' => 'Definir nome verdadeiro novo',
@@ -1737,8 +1751,8 @@ $messages['pt'] = array(
 	'editaccount-submit-cleardisable' => 'Limpar marca de desativação',
 	'editaccount-submit-close' => 'Fechar Conta',
 	'editaccount-submit-button' => 'Guardar',
-	'editaccount-usage-close' => 'Também pode desactivar uma conta de utilizador misturando a palavra-chave e removendo o endereço electrónico. Note que estes dados serão perdidos e não podem ser recuperados.',
-	'editaccount-warning-close' => '<b>Cuidado!</b> Está prestes a desactivar definitivamente a conta do utilizador <b>$1</b>. Esta operação não pode ser desfeita. Tem a certeza de que pretende fazê-lo?',
+	'editaccount-usage-close' => 'Também pode desativar uma conta de utilizador misturando a palavra-chave e removendo o endereço eletrónico. Note que estes dados serão perdidos e não podem ser recuperados.',
+	'editaccount-warning-close' => '<b>Cuidado!</b> Está prestes a desativar definitivamente a conta do utilizador <b>$1</b>. Esta operação não pode ser desfeita. Tem a certeza de que pretende fazê-lo?',
 	'editaccount-status' => 'Estado',
 	'editaccount-success-email' => 'Alterou com sucesso o endereço electrónico da conta $1 para $2.',
 	'editaccount-success-email-blank' => 'Removeu com sucesso o endereço electrónico da conta $1.',
@@ -1766,7 +1780,7 @@ $messages['pt'] = array(
 	'editaccount-log-entry-pass' => 'alterou a palavra-chave do utilizador $2',
 	'editaccount-log-entry-realname' => 'alterou o nome verdadeiro do utilizador $2',
 	'editaccount-log-entry-close' => 'desactivou a conta $2',
-	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Esta conta foi globalmente desactivada pela Wikia.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Esta conta foi globalmente desativada pela Wikia.</div>',
 	'right-editaccount' => 'Editar as preferências de outros utilizadores',
 );
 
@@ -1869,8 +1883,11 @@ $messages['roa-tara'] = array(
 	'editaccount-submit-account' => "Gestisce 'u cunde",
 	'editaccount-frame-account' => "Stoche a cange 'u cunde utende: $1",
 	'editaccount-frame-close' => "Disabbilite 'u cunde utende: $1",
+	'editaccount-label-clearunsub' => 'Scangellate',
 	'editaccount-label-reason' => 'Mutive:',
 	'editaccount-submit-button' => 'Reggìstre',
+	'editaccount-status' => "State d'u messàgge",
+	'editaccount-success-close' => 'Cunde disabbilitate cu successe $1.',
 );
 
 /** Russian (русский)
@@ -2358,6 +2375,7 @@ $messages['vi'] = array(
  * @author Dimension
  * @author Hydra
  * @author Hzy980512
+ * @author Liuxinyu970226
  * @author Yfdyh000
  * @author 乌拉跨氪
  */
@@ -2376,6 +2394,7 @@ $messages['zh-hans'] = array(
 	'editaccount-label-pass' => '设置新密码',
 	'editaccount-label-realname' => '设置新真实姓名',
 	'editaccount-label-clearunsub' => '已取消关注',
+	'editaccount-label-toggleadopt' => '修改采用者状态（为自动化维基采用器提供）：',
 	'editaccount-label-toggleadopt-prevent' => '禁止自动认领',
 	'editaccount-label-toggleadopt-allow' => '允许自动认领',
 	'editaccount-label-reason' => '原因：',
@@ -2401,6 +2420,7 @@ $messages['zh-hans'] = array(
 	'editaccount-invalid-email' => '"$1"不是有效的电子邮件地址！',
 	'editaccount-nouser' => '帐户“$1”不存在！',
 	'editaccount-not-loaded' => '错误：用户数据无法正确加载，请尝试重新加载页面。',
+	'editaccount-remove-avatar-fail' => '自动移除头像时遇到问题。',
 	'editaccount-requested' => '注：用户已要求关闭帐户',
 	'editaccount-not-requested' => '注意：用户并没有要求关闭帐户',
 	'editaccount-labal-account-status' => '帐户状态',

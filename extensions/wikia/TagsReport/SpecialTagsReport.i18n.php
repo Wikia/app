@@ -18,10 +18,12 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author LWChris
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
 	'tagsreportgo' => '{{Identical|Show}}',
+	'tagsreportmainnspace' => '{{Identical|Main}}',
 	'tagsreportgenerated' => 'Parameters:
 * $1 is a date.
 * $2 is a time.',
@@ -122,6 +124,13 @@ $messages['ca'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pàgina|pàgines}})',
 	'tagsreportpagesfound' => '<strong>$1</strong> {{PLURAL:$1|pàgina trobada|pàgines trobades}}, que continguin alguna etiqueta especial (dpl, youtube, etc.)',
 	'tagsreportgenerated' => 'Generat el $1 a les $2',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'tagsreportnoresults' => 'ХӀума ца карийна',
 );
 
 /** Czech (česky)
@@ -498,13 +507,14 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Giro720
  * @author Hamilton Abreu
+ * @author Luckas
  */
 $messages['pt'] = array(
 	'tagsreport' => "Relatório de elementos ''(tags)''",
 	'tagsreporttitle' => "Relatório de elementos ''(tags)''",
 	'tagsreportselecttag' => 'Seleccione o elemento:',
 	'tagsreportgo' => 'Apresentar',
-	'tagsreportnotspecify' => 'Ainda não seleccionou nenhum elemento especial',
+	'tagsreportnotspecify' => 'Ainda não selecionou nenhum elemento especial',
 	'tagsreportnoresults' => 'Não foi encontrado nenhum resultado',
 	'tagsreportmainnspace' => 'Principal',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|página|páginas}})',

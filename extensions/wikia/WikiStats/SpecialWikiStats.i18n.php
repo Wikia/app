@@ -259,7 +259,8 @@ Please [[Special:UserLogin|log in or create an account]] if you do not already h
 $messages['qqq'] = array(
 	'wikistats_info' => '"Show statistics" refers to {{msg-wikia|wikistats_showstats_btn}}.',
 	'wikistats_showstats_btn' => 'Button text, also referenced in {{msg-wikia|wikistats_info}}.',
-	'wikistats_panel_close_btn' => 'Button text. Translate as verb.',
+	'wikistats_panel_close_btn' => 'Button text. Translate as verb.
+{{Identical|Close}}',
 	'wikistats_daterange_from' => '{{Identical|From}}',
 	'wikistats_daterange_to' => '{{Identical|To}}',
 	'wikistats_latest_pageviews_subtitle' => '',
@@ -274,10 +275,13 @@ $messages['qqq'] = array(
 	'wikistats_namespace' => '{{Identical|Namespace}}',
 	'wikistats_hide' => '{{Identical|Hide}}',
 	'wikistats_wikicategory' => '{{Identical|Category}}',
+	'wikistats_username' => '{{Identical|User}}',
 	'wikistats_size' => '{{Identical|Size}}',
 	'wikistats_image' => '{{Identical|Image}}',
 	'wikistats_namespaces' => '{{Identical|Namespace}}',
-	'wikistats_main_namespace' => 'Name of the main namespace (ns:0)',
+	'wikistats_main_namespace' => 'Name of the main namespace (ns:0).
+{{Identical|Main}}',
+	'wikistats_official' => '{{Identical|Official}}',
 	'wikistats_more_200_ch' => 'What does this mean? "characters"?',
 	'wikistats_rank' => '{{Identical|Rank}}',
 	'wikistats_total' => '{{Identical|Total}}',
@@ -288,7 +292,10 @@ $messages['qqq'] = array(
 	'wikistats_prev_rank' => '{{Optional}}',
 	'wikistats_prev_rank_xls' => '{{Optional}}',
 	'wikistats_days_ago' => '',
+	'wikistats_wikiurl' => '{{Identical|URL}}',
+	'wikistats_wikicreated' => '{{Identical|Created}}',
 	'wikistats_wikilang' => '{{Identical|Language}}',
+	'wikistats_tables' => '{{Identical|Table}}',
 	'wikistats_back_to_prevpage' => '{{Identical|Back}}',
 	'wikistats_trend_ordered' => 'Typo: wiki -> wikis',
 	'wikistats_current_dump_stats' => '{{Identical|Current}}',
@@ -297,10 +304,13 @@ $messages['qqq'] = array(
 	'wikistats_dbdump_generated' => '{{Identical|Modified}}',
 	'wikistats_ns_statistics_legend' => '{{Identical|Namespaces}}',
 	'wikistats_date_of_generate' => 'If $1 is a time stamp, split date and time',
+	'wikistats_search_text' => '{{Identical|Search}}',
 	'wikistats_show_nbr_wikis_check' => 'Should support plural for $1',
 	'wikistats_content' => '{{Identical|Content}}',
+	'wikistats_userns' => '{{Identical|User}}',
 	'wikistats_nbr_format' => '{{Identical|Number format}}',
 	'wikistats_language_toplist' => '{{Optional}}',
+	'wikistats_title' => '{{Identical|Title}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -1573,10 +1583,17 @@ Si us plau, [[especial: UserLogin|log en o crear un compte]] si vostè no té un
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
 	'wikistats_active_year' => 'шо',
 	'wikistats_username' => 'Декъашхо',
+	'wikistats_wikilang' => 'Мотт:',
+	'wikistats_xls_cancel' => 'Цаоьшу',
+	'wikistats_language_stats' => 'Меттан статистика',
+	'wikistats_article_talk' => 'Яззам:Дийцаре',
+	'wikistats_language_all' => 'Берриге меттанаш',
+	'wikistats_title' => 'Корта',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -1684,6 +1701,7 @@ $messages['cs'] = array(
 	'wikistats_unregister' => 'Nereg.',
 	'wikistats_more_txt' => 'více',
 	'wikistats_now' => 'nyní',
+	'wikistats_days_ago' => 'dny nazpět',
 	'wikistats_wikiurl' => 'URL:',
 	'wikistats_wikicreated' => 'Vytvořeno:',
 	'wikistats_wikilang' => 'Jazyk:',
@@ -7109,7 +7127,7 @@ $messages['pt'] = array(
 	'wikistats_panel_close_btn' => 'Fechar',
 	'wikistats_daterange_from' => 'Desde:',
 	'wikistats_daterange_to' => 'Até:',
-	'wikistats_nostats_found' => 'Não foram encontrados dados estatísticos para a Wikia seleccionada',
+	'wikistats_nostats_found' => 'Não foram encontrados dados estatísticos para a Wikia selecionada',
 	'wikistats_pviews_notfound' => 'Não foram encontradas visualizações de páginas',
 	'wikistats_invalid_date' => 'Intervalo de datas inválido',
 	'wikistats_distrib_article' => 'Distribuição da actividade dos editores',
@@ -7236,10 +7254,10 @@ $messages['pt'] = array(
 	'wikistats_trend_growth_info' => 'Crescimento = média do crescimento mensal durante os meses apresentados',
 	'wikistats_trend_value' => 'valor',
 	'wikistats_trend_formula' => 'Fórmula',
-	'wikistats_trend_ordered' => 'Todas as wikis são ordenadas pelo número de artigos.<br />Seleccionar uma parte dessas estatísticas:',
+	'wikistats_trend_ordered' => 'Todas as wikis são ordenadas pelo número de artigos.<br />Selecionar uma parte dessas estatísticas:',
 	'wikistats_trend_where_text' => 'onde:',
 	'wikistats_trend_all_wikia_text' => 'Todas as wikis',
-	'wikistats_always_selected' => '(seleccionada sempre)',
+	'wikistats_always_selected' => '(selecionada sempre)',
 	'wikistats_creation_wikia_text' => 'Histórico de criações / Realizações',
 	'wikistats_creation_wikia_filename' => 'Creation_history',
 	'wikistats_creation_panel_header' => '"{{int:wikiastats_creation_wikia_filename}}": estatísticas foram geradas',

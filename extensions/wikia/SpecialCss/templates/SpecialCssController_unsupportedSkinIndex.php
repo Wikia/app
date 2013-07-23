@@ -1,3 +1,3 @@
 <p class="oasis-only-warning">
-	<?= wfMessage( 'special-css-oasis-only' )->text(); ?>
+	<?= wfMessage( 'special-css-wikia-skin-only' )->text(); ?>
 </p>

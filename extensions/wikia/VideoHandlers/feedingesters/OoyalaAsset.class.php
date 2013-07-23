@@ -42,6 +42,14 @@ class OoyalaAsset extends WikiaModel {
 				if ( $resp ) {
 					// set primary thumbnail
 					$resp = $this->setPrimaryThumbnail( $asset['embed_code'] );
+					if ( $resp ) {
+						// set age gate player
+						$resp = $this->setAgeGatePlayer( $asset['embed_code'], $data );
+						if ( $resp ) {
+							// set labels
+							$resp = $this->setLabels( $asset['embed_code'], $data );
+						}
+					}
 				}
 			}
 		} else {
@@ -130,7 +138,7 @@ class OoyalaAsset extends WikiaModel {
 			$metadata['category'] = $data['category'];
 		}
 		if ( !empty( $data['actors'] ) ) {
-			$metadata['actors'] = is_array( $data['actors'] ) ? implode( ', ', $data['actors'] ) : $data['actors'];
+			$metadata['actors'] = $data['actors'];
 		}
 		if ( !empty( $data['published'] ) ) {
 			$metadata['published'] = $data['published'];
@@ -147,20 +155,29 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['language'] ) ) {
 			$metadata['lang'] = $data['language'];
 		}
-		if ( !empty( $data['trailerrating'] ) ) {
-			$metadata['trailerrating'] = $data['trailerrating'];
+		if ( !empty( $data['subtitle'] ) ) {
+			$metadata['subtitle'] = $data['subtitle'];
 		}
-		if ( !empty( $data['industryrating'] ) ) {
-			$metadata['industryrating'] = $data['industryrating'];
+		if ( !empty( $data['trailerRating'] ) ) {
+			$metadata['trailerrating'] = $data['trailerRating'];
+		}
+		if ( !empty( $data['industryRating'] ) ) {
+			$metadata['industryrating'] = $data['industryRating'];
 		}
 		if ( !empty( $data['genres'] ) ) {
 			$metadata['genres'] = $data['genres'];
 		}
-		if ( !empty( $data['expirationdate'] ) ) {
-			$metadata['expirationdate'] = $data['expirationdate'];
+		if ( !empty( $data['expirationDate'] ) ) {
+			$metadata['expirationdate'] = $data['expirationDate'];
 		}
 		if ( !empty( $data['keywords'] ) ) {
 			$metadata['keywords'] = $data['keywords'];
+		}
+		if ( !empty( $data['ageRequired'] ) ) {
+			$metadata['age_required'] = $data['ageRequired'];
+		}
+		if ( !empty( $data['targetCountry'] ) ) {
+			$metadata['targetcountry'] = $data['targetCountry'];
 		}
 
 		return $metadata;
@@ -253,6 +270,63 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
+	 * set age gate player
+	 * @param string $videoId
+	 * @param array $data
+	 * @return boolean $resp
+	 */
+	public function setAgeGatePlayer( $videoId, $data ) {
+		wfProfileIn( __METHOD__ );
+
+		$resp = true;
+		if ( !empty( $data['ageGate'] ) ) {
+			$method = 'PUT';
+			$reqPath = '/v2/assets/'.$videoId.'/player/'.OoyalaVideoHandler::OOYALA_PLAYER_ID_AGEGATE;
+			$params = array();
+
+			$resp = $this->sendRequest( $method, $reqPath, $params );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $resp;
+	}
+
+	/**
+	 * set label
+	 * @param string $videoId
+	 * @param array $data
+	 * @return boolean $resp
+	 */
+	public function setLabels( $videoId, $data ) {
+		wfProfileIn( __METHOD__ );
+
+		$params = array();
+		if ( !empty( $data['ageGate'] ) && !empty( $this->wg->OoyalaApiConfig['LabelAgeGate'] ) ) {
+			$params[] = $this->wg->OoyalaApiConfig['LabelAgeGate'];
+		}
+
+		$provider = 'Label'.ucfirst( strtolower( $data['provider'] ) );
+		if ( !empty( $this->wg->OoyalaApiConfig[$provider] ) ) {
+			$params[] = $this->wg->OoyalaApiConfig[$provider];
+		}
+
+		if ( empty( $params ) ) {
+			$resp = true;
+			print( "WARNING: Cannot set label for $data[name] (Label not found).\n" );
+		} else {
+			$method = 'POST';
+			$reqPath = '/v2/assets/'.$videoId.'/labels';
+
+			$resp = $this->sendRequest( $method, $reqPath, $params );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $resp;
+	}
+
+	/**
 	 * send request
 	 * @param string $method
 	 * @param string $reqPath
@@ -275,13 +349,16 @@ class OoyalaAsset extends WikiaModel {
 		$req = MWHttpRequest::factory( $url, $options );
 		$status = $req->execute();
 		if ( $status->isGood() ) {
-			$resp = json_decode( $req->getContent(), true );
 			$result = true;
-
 			print( "Ooyala: sent $reqPath request: \n" );
-			foreach( explode( "\n", var_export( $resp, TRUE ) ) as $line ) {
-				print ":: $line\n";
-			}
+
+			// for debugging
+			//$resp = json_decode( $req->getContent(), true );
+			//if ( !empty( $resp ) ) {
+			//	foreach( explode( "\n", var_export( $resp, TRUE ) ) as $line ) {
+			//		print ":: $line\n";
+			//	}
+			//}
 		} else {
 			$result = false;
 			print( "ERROR: problem sending $reqPath request (".$status->getMessage().").\n" );
