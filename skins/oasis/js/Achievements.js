@@ -1,8 +1,7 @@
-( function( window, $ ) {
+(function( window, $ ) {
 	var AchievementsModule = {
 		init: function() {
 			this.page = 0;
-			this.windowObj = $( window );
 			this.module = $( '.AchievementsModule, .WikiaLatestEarnedBadgesModule' );
 
 			var data = this.module.find( '.data' );
@@ -10,7 +9,7 @@
 			this.user = data.attr( 'data-user' );
 			this.badgesCount = ~~data.attr( 'data-badges-count' );
 			this.badgesPerPage = ~~data.attr( 'data-badges-per-page' );
-			this.pageCount = Math.floor( this.badgesCount/this.badgesPerPage );
+			this.pageCount = Math.floor( this.badgesCount / this.badgesPerPage );
 			this.badgesUl = this.module.find( '.badges-icons' );
 			this.next = this.module.find( '.badges-next' );
 			this.prev = this.module.find( '.badges-prev' );
@@ -19,23 +18,19 @@
 			this.badgeDescWidth = 400;
 
 			if ( this.next && this.prev ) {
-				this.next.click( $.proxy( this.loadBadges, this ));
-				this.prev.click( $.proxy( this.loadBadges, this ));
+				this.next.click( $.proxy( this.loadBadges, this ) );
+				this.prev.click( $.proxy( this.loadBadges, this ) );
 			}
 
-			//Show badge description when hovering over the badge
+			// Show badge description when hovering over the badge
 			this.showBadgesDescription();
 
-			//Track sponsored badges
+			// Track sponsored badges
 			this.trackSponsoredBadges();
 
 			if ( wgOasisResponsive ) {
-				this.addResizeEvent();
+				$( window ).on( 'resize', this.resizeBadgesDescription );
 			}
-		},
-
-		addResizeEvent: function() {
-			this.windowObj.on( 'resize', this.resizeBadgesDescription );
 		},
 
 		prepareBadgesDescription: function( badge ) {
@@ -54,7 +49,7 @@
 
 		resizeBadgesDescription: function() {
 			var self = this;
-			self.module.find( '.badges li > img' ).each( function() {
+			self.module.find( '.badges li > img' ).each(function() {
 				var badge = $( this );
 				badge.popover( 'destroy' );
 				self.prepareBadgesDescription( badge );
@@ -63,7 +58,7 @@
 
 		showBadgesDescription: function() {
 			var self = this;
-			self.module.find( '.badges li > img, .badges .sponsored-link' ).add( '#LeaderboardTable .badge-icon' ).each( function() {
+			self.module.find( '.badges li > img, .badges .sponsored-link' ).add( '#LeaderboardTable .badge-icon' ).each(function() {
 				var badge = $( this );
 				self.prepareBadgesDescription( badge );
 			});
@@ -71,8 +66,8 @@
 
 		trackSponsoredBadges: function() {
 			var self = this;
-			self.module.find( '.sponsored-link img' ).each( function() {
-				self.trackSponsored( $( this ).parent().attr( 'data-badgetrackurl' ));
+			self.module.find( '.sponsored-link img' ).each(function() {
+				self.trackSponsored( $( this ).parent().attr( 'data-badgetrackurl' ) );
 			});
 		},
 
@@ -109,7 +104,7 @@
 					self.showBadgesDescription();
 					self.trackSponsoredBadges();
 
-					if ( Math.floor( self.page >= self.pageCount )) {
+					if ( Math.floor( self.page >= self.pageCount ) ) {
 						self.next.hide();
 					} else if ( self.page <= 0 ) {
 						self.prev.hide();
@@ -124,7 +119,7 @@
 		}
 	};
 
-	$( function() {
+	$(function() {
 		AchievementsModule.init();
 	});
 })( this, jQuery );
