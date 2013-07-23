@@ -264,7 +264,10 @@ class SpecialWhatLinksHere extends SpecialPage {
 		foreach ( $rows as $row ) {
 			/** Start of Wikia change @author nAndy (1.19 MoLi) */
 			wfRunHooks( 'SpecialWhatlinkshere::renderWhatLinksHereRow', array(&$row, &$level, &$defaultRendering) );
-			if( ! $defaultRendering ) continue;
+			if( ! $defaultRendering ) {
+				$defaultRendering = true; # reset the flag (BAC-476)
+				continue;
+			}
 			/** End of Wikia change */
 				
 			$nt = Title::makeTitle( $row->page_namespace, $row->page_title );
@@ -277,7 +280,7 @@ class SpecialWhatLinksHere extends SpecialPage {
 				$out->addHTML( $this->listItem( $row, $nt ) );
 			}
 		}
-		
+
 		$out->addHTML( $this->listEnd() );
 
 		if( $level == 0 ) {
