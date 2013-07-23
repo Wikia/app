@@ -103,8 +103,6 @@ class IvaFeedIngester extends VideoFeedIngester {
 		'Hunger Games',
 	);
 
-	// These are for a Series, TV Show, Season and Episode
-	private static $TV_MEDIA_IDS = array( 24, 25, 26, 27 );
 	private static $EXCLUDE_MEDIA_IDS = array( 3, 12, 14, 15, 33, 36 );	// exclude song types
 
 	const API_PAGE_SIZE = 100;
@@ -151,29 +149,6 @@ class IvaFeedIngester extends VideoFeedIngester {
 			} while ( $result['found'] == self::API_PAGE_SIZE );
 		}
 
-		/* 2013-07-16 : VideoSprint28 : VID-536
-		   Content didn't really want all TV content
-		   Delete these lines on or after VideoSprint30 in case they change their minds
-
-		// Ingest ALL TV content
-		$page = 0;
-		do {
-			// Get the URL that selects video in any of the TV categories
-			$url = $this->makeTVFeedURL( $startDate, $endDate, $page++ );
-
-			// Try to ingest the videos from this URL
-			$numVideos = $this->ingestVideoURL( $url, $createParams, 'TV' );
-
-			// If we get back 'false' (different than zero) then we've hit an error
-			if ( $numVideos === false ) {
-				wfProfileOut( __METHOD__ );
-				return 0;
-			}
-
-			$articlesCreated += $result['created'];
-		} while ( $numVideos == self::API_PAGE_SIZE );
-		*/
-
 		wfProfileOut( __METHOD__ );
 
 		return $articlesCreated;
@@ -195,33 +170,6 @@ class IvaFeedIngester extends VideoFeedIngester {
 		foreach ( self::$EXCLUDE_MEDIA_IDS as $id ) {
 			$filter .= " and (MediaId ne $id) ";
 		}
-
-		return $this->initFeedUrl( $filter, $page );
-	}
-
-	/**
-	 * Craete the feed URL for TV resources
-	 * @param $startDate - Unixtime for beginning of modified-on date range
-	 * @param $endDate - Unixtime for ending of modified-on date range
-	 * @param $page - The page of results to fetch
-	 * @return string - A feed URL
-	 */
-	private function makeTVFeedURL( $startDate, $endDate, $page ) {
-
-		// The example query shows this kind of nesting so just do it ...
-		// http://www.internetvideoarchive.com/IVA/support/documentation/data/iva-odata-api/example-queries
-		$matchTV = '';
-		foreach ( self::$TV_MEDIA_IDS as $id ) {
-			if ( empty($matchTV) ) {
-				$matchTV = "(MediaId eq $id)";
-			} else {
-				$matchTV = "($matchTV or (MediaId eq $id))";
-			}
-		}
-
-		$filter = "(DateModified gt datetime'$startDate') " .
-			"and (DateModified le datetime'$endDate') ".
-			"and $matchTV";
 
 		return $this->initFeedUrl( $filter, $page );
 	}
