@@ -5,6 +5,8 @@
  *
  * @author jacek@wikia-inc.com
  * @ingroup Maintenance
+ * Usage: SERVER_ID=159 php setWikiTopicsInWF.php  --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php --mode=add // for singe wiki
+ * Usage: SERVER_ID=159 php setWikiTopicsInWF.php  --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php --mode=add --multi=true // for all categorized wikis
  */
 
 ini_set('display_errors', 'stderr');
@@ -38,9 +40,11 @@ class SetWikiTopicsInWF extends Maintenance {
 
 
 	function __construct() {
+		parent::__construct();
 		$this->apiClient = new EntityAPIClient();
 		$this->wikiId = $_SERVER['SERVER_ID'];
-		return parent::__construct();
+		$this->addOption("mode", "[add] - add new values, dont remove old ones, [remove] - clear WF variable, [overwrite] - remove old, add new", true );
+		$this->addOption("multi", "if true, script apply changes to all categorized wikis", false );
 	}
 
 	public function execute() {
