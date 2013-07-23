@@ -101,11 +101,12 @@
 
 				</div>
 
-			<? if ( empty( $wg->SuppressArticleCategories ) ): ?>
-				<? if ( !empty( $wg->EnableCategorySelectExt ) && CategorySelectHelper::isEnabled() ): ?>
-					<?= $app->renderView( 'CategorySelect', 'articlePage' ) ?>
-				<? else: ?>
-					<?= $app->renderView( 'ArticleCategories', 'Index' ) ?>
+				<? if ( empty( $wg->SuppressArticleCategories ) ): ?>
+					<? if ( !empty( $wg->EnableCategorySelectExt ) && CategorySelectHelper::isEnabled() ): ?>
+						<?= $app->renderView( 'CategorySelect', 'articlePage' ) ?>
+					<? else: ?>
+						<?= $app->renderView( 'ArticleCategories', 'Index' ) ?>
+					<? endif ?>
 				<? endif ?>
 
 				<?php
