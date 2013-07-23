@@ -519,35 +519,35 @@ div.linkEditorDialog .cke_browser_ie8 .cke_dialog_title {
 }
 
 /* image / video toolbar items */
-#editform .RTEImageButton .cke_icon {
-	background-position: 0 -1247px;
-}
+.editform {
+	.RTEImageButton .cke_icon {
+		background-position: 0 -1247px;
+	}
 
-#editform .RTEGalleryButton .cke_icon {
-	background-position: 0 -1311px;
-}
+	.RTEGalleryButton .cke_icon {
+		background-position: 0 -1311px;
+	}
 
-#editform .RTEVideoButton .cke_icon {
-	background-position: 0 -1232px;
-}
+	.RTEVideoButton .cke_icon {
+		background-position: 0 -1232px;
+	}
 
-#editform .RTEMUTButton .cke_icon {
-	background-position: 0 -1232px;
-}
+	.RTEMUTButton .cke_icon {
+		background-position: 0 -1232px;
+	}
 
-#editform .RTESignatureButton .cke_icon {
-	background-position: 0 -1216px;
-}
+	.RTESignatureButton .cke_icon {
+		background-position: 0 -1216px;
+	}
 
-#editform .RTEWidescreenButton .cke_icon {
-	background-position: 0 -1264px;
-}
+	.RTEWidescreenButton .cke_icon {
+		background-position: 0 -1264px;
+	}
 
-/* poll icon */
-#editform .RTEPollButton .cke_icon {
-	background-position: 0 -1328px;
+	.RTEPollButton .cke_icon {
+		background-position: 0 -1328px;
+	}
 }
-
 
 /* link suggest - RT #37690 */
 .RTEloading .link-suggest-container,
