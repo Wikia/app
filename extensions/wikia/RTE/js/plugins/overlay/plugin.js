@@ -259,7 +259,7 @@ RTE.overlay = {
 		 *
 		 * window.showAddVideoBtn comes from EditPageLayout/EditPageLayoutHooks.class.php
 		 */
-		if ( node.hasClass('video') && (window.showAddVideoBtn !== true) ) {
+		if ( node.hasClass('video') && !window.showAddVideoBtn ) {
 			return;
 		}
 
