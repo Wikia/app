@@ -1,5 +1,6 @@
-(function(window,$){
+(function(window, $) {
 
+	var $window = $( window );
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
 	/**
@@ -22,9 +23,11 @@
 		minPageHeight: 300,
 		rightrail: false,
 		widemode: false,
+		wikiaBarEnabled: false,
 
 		beforeInit: function() {
 			this.mode = this.editor.config.autoResizeMode;
+			this.wikiaBarEnabled = window.wgEnableWikiaBarExt && typeof window.WikiaBar === 'object';
 			if (this.mode !== false) {
 				this.editor.on('editboxReady',this.proxy(this.editboxReady));
 				this.editor.on('mode',this.proxy(this.delayedResize));
@@ -34,11 +37,15 @@
 					this.widemode = true;
 				}));
 			}
-
-			this.editarea = $('#EditPageEditor');
 		},
 
 		initDom: function() {
+			this.editarea = $('#EditPageEditor');
+			this.editPage = $('#EditPage');
+			this.editPageEditorWrapper = $('#EditPageEditorWrapper');
+			this.editPageMain = $('#EditPageMain');
+			this.wikiaBarWrapper = $('#WikiaBarWrapper');
+
 			// keep right rail within browser's viewport (BugId:7498)
 			if (this.widemode === false) {
 				this.rightrail = this.editor.getSpace('rail');
@@ -62,7 +69,7 @@
 			}
 
 			// travel all the way up to the editor wrapper and remove any heights from margins/padding/borders
-			this.editbox.parentsUntil("#EditPageEditorWrapper").andSelf().each(function() {
+			this.editbox.parentsUntil(this.editPageEditorWrapper).andSelf().each(function() {
 				node = $(this);
 				offsetHeight += (node.outerHeight(true) - node.height());
 			});
@@ -83,42 +90,31 @@
 		// get height needed to fit given node into browser's viewport height
 		getHeightToFit: function(node) {
 			var topOffset = node.offset().top,
-				viewportHeight = $(window).height(),
+				viewportHeight = $window.height(),
 				dimensions = {
-					nodeHeight: parseInt(viewportHeight - topOffset),
+					nodeHeight: parseInt(viewportHeight - topOffset - this.editboxOffsetHeight),
 					viewportHeight: viewportHeight
 				};
 
-			if( window.wgEnableWikiaBarExt && typeof(window.WikiaBar) === 'object' ) {
-			//old admin tool bar had position relative and was always at the bottom
-			//with the admin tool bar in WikiaBar container we want it to be at the bottom but
-			//to have the page hight fit viewportHeight
-				dimensions.nodeHeight = this.getDimensionsWithWikiaBar(dimensions.nodeHeight);
+			if ( this.wikiaBarEnabled && !this.wikiaBarWrapper.hasClass('hidden') ) {
+				dimensions.nodeHeight -= this.wikiaBarWrapper.outerHeight(true);
+			}
+
+			if ( dimensions.nodeHeight < this.minPageHeight ) {
+				dimensions.nodeHeight = this.minPageHeight;
 			}
 
 			return dimensions;
-		},
-
-		getDimensionsWithWikiaBar: function(nodeHeight) {
-			var editorHeight = $('#EditPage').outerHeight(true) || 0,
-				editorToolbarHeight = $('#EditPageToolbar').height() || 0,
-				editPageEditorWrapperHeight = $('#EditPageEditorWrapper').outerHeight(true) || 0,
-				editorBottomBorder = editorHeight - editorToolbarHeight - editPageEditorWrapperHeight,
-				wikiaBarOffset = window.WikiaBar.getWikiaBarOffset(),
-				newEditAreaHeight = parseInt( (nodeHeight - editorBottomBorder - wikiaBarOffset), 10);
-
-			//bugId:49405 & 51876; quick fix for edit page with diffs
-			return (newEditAreaHeight <= this.minPageHeight) ? this.minPageHeight : newEditAreaHeight;
 		},
 
 		resize: function() {
 			switch(this.mode) {
 				// resize editor area
 				case 'editarea':
-					if( this.editbox ) {
-						var cachedDimensions = this.getHeightToFit(this.editbox);
-						if( cachedDimensions.viewportHeight > this.minPageHeight ) {
-							this.editbox.height(cachedDimensions.nodeHeight);
+					if ( this.editbox ) {
+						var dimensions = this.getHeightToFit(this.editbox);
+						if ( dimensions.viewportHeight > this.minPageHeight ) {
+							this.editbox.height( dimensions.nodeHeight );
 						}
 					}
 					break;
@@ -132,9 +128,8 @@
 			// set height of right rail (BugId:7498)
 			// make sure it's the same height as #EditPageMain (BugId:16542)
 			if (this.rightrail) {
-				this.rightrail.height($('#EditPageMain').height());
+				this.rightrail.height(this.editPageMain.height());
 			}
 		}
 	});
-
-})(this,jQuery);
+})(this, jQuery);
