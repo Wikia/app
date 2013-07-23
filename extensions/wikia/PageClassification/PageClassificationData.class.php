@@ -5,7 +5,7 @@
  *
  */
 
-class PageClassificationData extends WikiaModel {
+class PageClassificationData {
 
 
 	/**
