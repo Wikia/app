@@ -72,8 +72,6 @@ if(Math.random()<0.01){
 <? endif ?>
 
 <?= $headItems ?>
-
-<meta name="apple-itunes-app" content="app-id=623705389">
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>"<?= $itemType ?>>
 
