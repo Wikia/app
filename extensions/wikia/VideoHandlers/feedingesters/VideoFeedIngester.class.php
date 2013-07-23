@@ -630,4 +630,38 @@ abstract class VideoFeedIngester {
 
 		return $ageGate;
 	}
+
+	/**
+	 * map category
+	 * @param string $cate
+	 * @return string $category
+	 */
+	protected function mapCategory( $cate ) {
+		switch( $cate ) {
+			case 'Movie':
+			case 'Movies':
+			case 'Movie Interview':
+			case 'Movie Behind the Scenes':
+			case 'Movie SceneOrSample':
+			case 'Movie Alternate Version':
+				$category = 'Movies';
+				break;
+			case 'TV':
+			case 'Series':
+			case 'Season':
+			case 'Episode':
+			case 'TV Show':
+				$category = 'TV';
+				break;
+			case 'Game':
+			case 'Games':
+			case 'Games SceneOrSample':
+				$category = 'Games';
+				break;
+			default: $category = 'Others';
+		}
+
+		return $category;
+	}
+
 }
