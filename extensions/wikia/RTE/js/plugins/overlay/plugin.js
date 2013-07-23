@@ -14,7 +14,10 @@ CKEDITOR.plugins.add('rte-overlay',
 
 		// add node in which overlays will be stored
 		editor.on('instanceReady', function() {
-			self.overlays = $('<div>', {id : 'RTEMediaOverlays'}).appendTo(RTE.overlayNode);
+			self.overlays = $('<div>', {
+				id : 'RTEMediaOverlays',
+				'class' : 'rte-media-overlays'
+			}).appendTo(RTE.overlayNode);
 		});
 
 		// clean overlays when switching from source to wysiwyg mode
