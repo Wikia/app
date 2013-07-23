@@ -393,9 +393,19 @@ jQuery(function($){
 		if ($body.has('#top-wiki-articles')) {
 			category = 'special-' + category;
 			$topModule.on('mousedown', '.top-wiki-article-thumbnail', function(e){
-				console.info( 'thumb clicked' );
+				var el = $(e.currentTarget);
+				track({
+					browserEvent: e,
+					category: category,
+					label: 'top-module-thumb-' + el.data('pos')
+				});
 			}).on('mousedown', '.top-wiki-article-text', function(e) {
-				console.info( 'article clicked' );
+				var el = $(e.currentTarget);
+				track({
+					browserEvent: e,
+					category: category,
+					label: 'top-module-title-' + el.data('pos')
+				});
 			});
 		}
 	})();
