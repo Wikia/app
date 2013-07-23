@@ -400,6 +400,7 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'themedesigner-header' => 'корта',
 	'themedesigner-font' => 'шрифт',
 );
 

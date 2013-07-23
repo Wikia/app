@@ -104,6 +104,14 @@ $messages['br'] = array(
 	'cloakcheck-process-edits-no' => "N'eus ket trawalc'h a zegasadennoù gant an implijer-mañ.",
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'cloakcheck-form-username' => 'Декъашхочун цӀе:',
+	'cloakcheck-process-username' => 'Декъашхочун цӀе: $1',
+);
+
 /** Czech (česky)
  * @author Chmee2
  */
@@ -320,6 +328,7 @@ $messages['ia'] = array(
  */
 $messages['id'] = array(
 	'cloakcheck-form-username' => 'Nama pengguna:',
+	'cloakcheck-process-notexist' => 'Nama pengguna tidak ada.',
 	'cloakcheck-process-edits-yes' => 'Pengguna memiliki suntingan cukup.',
 );
 

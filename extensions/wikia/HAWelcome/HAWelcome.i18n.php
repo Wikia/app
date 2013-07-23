@@ -1058,6 +1058,7 @@ Jika anda memerlukan bantuan, sila baca [[Help:Contents|halaman bantuan]] kami t
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
+ * @author Laaknor
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -1118,6 +1119,7 @@ Vennligst legg igjen en beskjed hvis jeg kan hjelpe deg med noe!",
 '''[[Special:Userlogin|Vennligst logg inn og opprett et brukernavn]]'''. Det er en enkel måte å holde oversikt over bidragene dine og hjelper deg med å kommunisere med resten av fellesskapet.
 
 Vennligst legg igjen en beskjed hvis jeg kan hjelpe deg med noe!", # Fuzzy
+	'welcome-description' => 'Sender en velkomstbeskjed til brukere etter deres første redigering',
 );
 
 /** Dutch (Nederlands)
