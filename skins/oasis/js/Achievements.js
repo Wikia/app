@@ -14,7 +14,9 @@
 			this.badgesUl = this.module.find( '.badges-icons' );
 			this.next = this.module.find( '.badges-next' );
 			this.prev = this.module.find( '.badges-prev' );
-			this.badgeDescWidth = 400; // this width is based on bootstrap popover max-width from popover.scss
+
+			// this width is based on bootstrap popover max-width from popover.scss
+			this.badgeDescWidth = 400;
 
 			if ( this.next && this.prev ) {
 				this.next.click( $.proxy( this.loadBadges, this ));
