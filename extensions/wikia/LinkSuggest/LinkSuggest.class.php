@@ -169,32 +169,14 @@ class LinkSuggest {
 			$sql = "SELECT page_len, page_id, page_title, rd_title, page_namespace, page_is_redirect
 						FROM page IGNORE INDEX (`name_title`)
 						LEFT JOIN redirect ON page_is_redirect = 1 AND page_id = rd_from
+						LEFT JOIN querycache ON qc_title = page_title
 						WHERE {$pageNamespaceClause} (page_title LIKE '{$query}%' or LOWER(page_title) LIKE '{$queryLower}%')
+							AND ( qc_type != 'BrokenRedirects' OR qc_type IS NULL )
 						LIMIT ".($wgLinkSuggestLimit * 3);
 
 			$res = $db->query($sql, __METHOD__);
 
 			self::formatResults($db, $res, $query, $redirects, $results, $exactMatchRow);
-		}
-		//check if redirect pages exists
-		if ( !empty( $redirects ) ) {
-			$pages = array_keys( $redirects );
-
-			$list = $db->makeList( array_map( function( $item ) {
-				if( strpos( $item, ':' ) !== false ) {
-					$unformatted = explode( ':', $item );
-					return $unformatted[ 1 ];
-				}
-				return $item;
-			}, $pages ) );
-			$sql = $db->select(
-				'page',
-				array( 'page_id', 'page_title' ),
-				"{$pageNamespaceClause} page_title IN ({$list})",
-				__METHOD__
-			);
-
-			static::formatRedirects( $db, $sql, $redirects, $results, $exactMatchRow );
 		}
 
 		if ($exactMatchRow !== null) {
@@ -382,30 +364,5 @@ class LinkSuggest {
 		}
 
 		return str_replace('_', ' ', $title);
-	}
-
-	/**
-	 * Validate redirected results, ensuring pages exists, depending on provided result
-	 *
-	 * @param $db
-	 * @param $res
-	 * @param $redirects
-	 * @param $results
-	 */
-	static private function formatRedirects( $db, $res, &$redirects, &$results ) {
-		while( ( $row = $db->fetchObject( $res ) ) ) {
-			$title = $row->page_title;
-			//if row exists keep redirect
-			if( isset( $redirects[ $title ] ) ) {
-				$newRedirects[ $title ] = $redirects[ $title ];
-			}
-		}
-		//remove empty redirects from result set
-		foreach( $results as $key => $page ) {
-			if ( isset( $redirects[ $page ] ) && !isset( $newRedirects[ $page ] ) ) {
-				unset( $results[ $key ] );
-			}
-		}
-		$redirects = isset( $newRedirects ) ? $newRedirects : [];
 	}
 }
