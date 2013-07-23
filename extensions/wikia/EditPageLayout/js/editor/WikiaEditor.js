@@ -879,7 +879,6 @@
 			'mode',
 			'modeSwitch',
 			'modeSwitchCancelled',
-			'sourceModeReady',
 			'themeLoaded',
 			'wysiwygModeReady'
 		],

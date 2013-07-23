@@ -1,4 +1,4 @@
-.EditPageToolbar {
+#EditPageToolbar {
 	@include box-shadow(0, 4px, 2px, $color-epl-gradient-shadow, false, 0);
 	@include linear-gradient($color-epl-gradient, top, $color-epl-gradient-light, 50%, $color-epl-gradient-dark, 100%);
 	@include clearfix;

@@ -85,7 +85,7 @@ $.fn.extend({
 
 				// or use width provided
 				if (typeof options.width != 'undefined') {
-					modalWidth = options.width + 40 /* padding */;
+					modalWidth = options.width + 30 /* padding */;
 				}
 			} else {
 				modalWidth = 'auto';

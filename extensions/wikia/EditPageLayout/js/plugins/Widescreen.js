@@ -28,6 +28,7 @@
 				// set up the trigger
 				this.trigger = this.editor.element.find('.'+this.triggerClassName);
 				this.trigger.click(this.proxy(this.toggle));
+				this.trigger.css('display','');
 
 				// set up the editor body
 				this.editor.element.addClass(this.className);
@@ -35,10 +36,11 @@
 				// load the saved state (if any)
 				this.loadState(true);
 
-				this.editor.on('ck-sourceModeReady', this.modeChanged, this);
-
-				// needed on initial load
-				this.editor.on('toolbarsRendered', this.modeChanged, this);
+				// adjust the height when changing modes
+				this.editor.on('mode',function() {
+					// give some time for toolbar to be fully switched (BugId:5328)
+					setTimeout($.proxy(this.modeChanged, this), 100);
+				},this);
 			}
 		},
 

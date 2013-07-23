@@ -1,10 +1,5 @@
 <header id="WikiHeader" class="WikiHeader">
 	<?= $app->renderView( 'WikiHeader', 'Wordmark' ) ?>
-    <?php if ( BodyController::isResponsiveLayoutEnabled() ) : ?>
-    <div class="WikiHeaderSearch">
-        <?= $app->renderView( 'Search', 'Index' ) ?>
-    </div>
-    <?php endif ?>
     <nav class="WikiNav">
     	<? if ( $displayHeader ): ?>
         <h1><?= wfMsg( 'oasis-wiki-navigation', $wordmarkText ) ?></h1>
