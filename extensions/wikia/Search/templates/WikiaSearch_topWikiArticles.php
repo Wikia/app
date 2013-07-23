@@ -2,6 +2,7 @@
 // this is just a placeholder, please feel free to blow away all markup
 $counter = 0;
 ?>
+<?php if ( !empty( $pages ) ) : ?>
 <div id="top-wiki-articles">
     <h2>What's hot now</h2>
     <?php foreach ( $pages as $page ) : ?>
@@ -37,3 +38,4 @@ $counter = 0;
     <?php if ( $counter++ >= 6 ) { break; } ?>
     <?php endforeach; ?>
 </div>
+<?php endif; ?>
