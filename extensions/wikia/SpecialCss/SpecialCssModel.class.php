@@ -270,10 +270,7 @@ class SpecialCssModel extends WikiaModel {
 					// but we need this array ordered by timestamp
 					$cssRevisionsData = $this->getCssRevisionsInOrder($cssRevisionsData, $pageIds);
 					$filteredRevisionData = $this->filterRevisionsData( $cssRevisionsData );
-
-					foreach ( $filteredRevisionData as $postData ) {
-						$cssUpdatesPosts[] = $this->prepareCssUpdateData( $postData );
-					}
+					$cssUpdatesPosts = array_map( [ $this, 'prepareCssUpdateData' ], $filteredRevisionData );
 				}
 
 				return $cssUpdatesPosts;
