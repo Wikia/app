@@ -22,7 +22,7 @@ class VideoEmbedToolSearchService
 	 * Fields required for preprocessing to work when searching as API 
 	 * @var array
 	 */
-	protected $expectedFields = [ 'pageid', 'wid', 'title' ];
+	protected $expectedFields = [ 'pageid', 'wid', 'title_en' ];
 	
 	/**
 	 * Height of video
@@ -110,11 +110,11 @@ class VideoEmbedToolSearchService
 		$service = $this->getMwService();
 		$config = $this->getConfig()->setWikiId( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID )
 		                            ->setQuery( $query )
+									->setRequestedFields( $this->getExpectedFields() )
 		                            ->setFilterQuery( "+(title_en:({$query}) OR video_actors_txt:({$query}) OR nolang_txt:({$query}) OR html_media_extras_txt:({$query}))" )
 		                            ->setVideoEmbedToolSearch( true )
 		  
 		  ;
-		
 		return $this->postProcessSearchResponse( $this->getFactory()->getFromConfig( $config )->searchAsApi( $this->getExpectedFields(), true ) );
 	}
 	
@@ -173,14 +173,14 @@ class VideoEmbedToolSearchService
 		foreach ( $searchResponse['items'] as $singleVideoData ) {
 			(new WikiaFileHelper)->inflateArrayWithVideoData( 
 					$singleVideoData, 
-					Title::newFromText($singleVideoData['title'], NS_FILE ),
+					Title::newFromText($singleVideoData['title_en'], NS_FILE ),
 					$this->getWidth(),
 					$this->getHeight(),
 					true
 			);
 			$trimTitle = $this->getTrimTitle();
 			if (! empty( $trimTitle ) ) {
-				$singleVideoData['title'] = mb_substr( $singleVideoData['title'], 0, $trimTitle );
+				$singleVideoData['title_en'] = mb_substr( $singleVideoData['title_en'], 0, $trimTitle );
 			}
 			$singleVideoData['pos'] = $pos++;
 			$data[] = $singleVideoData;
