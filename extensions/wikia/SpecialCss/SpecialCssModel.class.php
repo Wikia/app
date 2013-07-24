@@ -56,6 +56,11 @@ class SpecialCssModel extends WikiaModel {
 	 */
 	const MEMC_KEY = 'css-chrome-updates-v2.0';
 
+	/**
+	 * @desc Memcache key suffix for CSS Updates headline
+	 */
+	const MEMC_KEY_HEADLINE_SUFFIX = 'css-updates-headline';
+
 	protected $dbName;
 
 	/**
@@ -423,12 +428,10 @@ class SpecialCssModel extends WikiaModel {
 		$userLang = $this->wg->Lang;
 		$wikitext = $userLang->truncate( $wikitext, self::SNIPPET_CHAR_LIMIT, wfMessage( 'ellipsis' )->text() );
 
-		if( !empty( $this->wg->EnableCategorySelectExt ) ) {
-			$extractedWikitext = CategorySelect::extractCategoriesFromWikitext( $wikitext, true, $userLang );
+		$extractedWikitext = CategoryHelper::extractCategoriesFromWikitext( $wikitext, true, $userLang );
 
-			if ( isset($extractedWikitext['wikitext']) ) {
-				$wikitext = $extractedWikitext['wikitext'];
-			}
+		if ( isset($extractedWikitext['wikitext']) ) {
+			$wikitext = $extractedWikitext['wikitext'];
 		}
 
 		$wikitext = $this->getParsedText( $wikitext, $title );
@@ -436,11 +439,31 @@ class SpecialCssModel extends WikiaModel {
 		return $wikitext;
 	}
 
+	/**
+	 * @desc Returns "CSS Updates" headline for selected language
+	 *
+	 * @return String | null
+	 */
 	protected function getCssUpdateHeadline() {
-		return $this->wg->Lang->getMessageFor(
-			'special-css-community-update-headline',
-			$this->getCssUpdateLang()
+		$lang = $this->getCssUpdateLang();
+
+		$headline = WikiaDataAccess::cache( wfSharedMemcKey(
+				self::MEMC_KEY,
+				self::MEMC_KEY_HEADLINE_SUFFIX,
+				$lang
+			),
+			60 * 60 * 24,
+			function() use ( $lang ) {
+				$headline = $this->wg->Lang->getMessageFor(
+					'special-css-community-update-headline',
+					$lang
+				);
+
+				return $headline;
+			}
 		);
+
+		return $headline;
 	}
 
 	/**
