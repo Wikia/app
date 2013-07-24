@@ -88,10 +88,10 @@ $messages['qqq'] = array(
 	'wikiamobile-profile' => 'Link to a profile page in a top wiki navigation',
 
 	//footer
-	'wikiamobile-footer-link-licencing' => 'label for the link pointing to content licensing information',
-	'wikiamobile-footer-link-lifestyle' => 'interwiki link, please translate only the last parameter after the last "|" if that makes sense',
-	'wikiamobile-footer-link-entertainment' => 'interwiki link, please translate only the last parameter after the last "|" if that makes sense',
-	'wikiamobile-footer-link-videogames' => 'interwiki link, please translate only the last parameter after the last "|" if that makes sense',
+	'wikiamobile-footer-link-licencing' => 'Label for the link pointing to content licensing information',
+	'wikiamobile-footer-link-lifestyle' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',
+	'wikiamobile-footer-link-entertainment' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',
+	'wikiamobile-footer-link-videogames' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',
 	'mobile-full-site' => 'Link to reload a page and load desktop skin',
 
 	//categories
@@ -109,9 +109,9 @@ $messages['qqq'] = array(
 	'wikiamobile-sharing-email-text' => '$1 is the result of wikiamobile-sharing-modal-text or wikiamobile-sharing-page-text, please keep the empty space before $1',
 
 	//media
-	'wikiamobile-media-group-footer' => 'the caption under a media-group/gallery, $1 contains the total amount of images/videos in the group',
-	'wikiamobile-unsupported-video-download' => 'feedback message for browsers not supporting html5 videos with link to play the video in a native app (the video URL is in $1)',
-	'wikiamobile-video-views-counter' => 'counter for the number of views for a video, $1 is an integer number, minimum 0; possibly it should be no more than 1 or 2 words',
+	'wikiamobile-media-group-footer' => 'Caption under a media-group/gallery, $1 contains the total amount of images/videos in the group',
+	'wikiamobile-unsupported-video-download' => 'Feedback message for browsers not supporting html5 videos with link to play the video in a native app (the video URL is in $1)',
+	'wikiamobile-video-views-counter' => 'Counter for the number of views for a video, $1 is an integer number, minimum 0; possibly it should be no more than 1 or 2 words',
 	'wikiamobile-video-not-friendly-header' => 'Friendly message on a screen with a not supported video',
 	'wikiamobile-video-not-friendly' => 'Message displayed in modal - to indicate that this video won\'t be loaded in mobile skin',
 
