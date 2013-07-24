@@ -111,14 +111,17 @@ define('menu', ['config', 'editor'], function(config, editor){
     };
 
     this.fold = function(list){ //takes an array of elements and moves them to the center of a parent element
-        var wrapper = list.parentElement;
-        var radius = wrapper.offsetWidth / 2,
+        var wrapper = list.parentElement,
+            radius = wrapper.offsetWidth / 2,
         elemArray = list.getElementsByTagName('li');
+
+        //marginTop = radius - elemArray[0].offsetHeight / 2 + 'px';
+        //marginLeft = radius - elemArray[0].offsetWidth / 2 + 'px';
 
         for(var i = 0; i < elemArray.length; i++){
             elemArray[i].classList.add('rollIn');
-            elemArray[i].style.top = radius - elemArray[i].offsetHeight / 2 + 'px';
-            elemArray[i].style.left = radius - elemArray[i].offsetWidth / 2 + 'px';
+            elemArray[i].style.top = '40%';
+            elemArray[i].style.left = '40%';
         }
     };
 

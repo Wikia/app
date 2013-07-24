@@ -1,3 +1,11 @@
+/*
+--------------------------------- To Do ------------------------------------
+1) classes for circle & fold
+2) switching animation class
+3) swipe / gestures order
+4) checkboxes list with multiple columns
+*/
+
 html {
     font-family: Helvetica,Roboto,"Lucida Grande",arial,sans-serif;
 }
@@ -6,23 +14,90 @@ body{
     margin: 0px auto;
 }
 
-#circleWrapperLeft, #circleWrapperRight{
+body > div{
+
+}
+
+#menuLeft li, #menuRight li{
+
+}
+
+.onCircle1{
+    -webkit-transform:translate(2.72px, 100.7px);
+    /*left:2.72px;
+    top:100.7px;*/
+}
+
+.onCircle2{
+    /*left:2.72px;
+    top:59.29px;*/
+    -webkit-transform:translate(2.72px, 59.29px);
+}
+
+.onCircle3{
+    /*left:23.43px;
+    top:23.43px;*/
+    -webkit-transform:translate(23.43px, 23.43px);
+}
+
+.onCircle4{
+    /*left:59.29px;
+    top:2.72px;*/
+    -webkit-transform:translate(59.29px, 2.72px);
+}
+
+.onCircle5{
+    /*left:100.7px;
+    top:2.72px;*/
+    -webkit-transform:translate(100.7px, 2.72px);
+}
+
+.fold{
+    -webkit-transform:translate(60px, 60px);
+}
+
+.tagListWrapper{
+    width:95%;
+    margin-left:2.5%;
+}
+
+.tagsSection ul{
+    list-style:none;
+    padding: 0;
+    margin-left: 0;
+}
+
+.tagsSection>ul>li{
+    min-height:40px;
+    padding-top:5px;
+    padding-left:10px;
     display:inline-block;
-    width:40%;
-    height:40%;
+    width:32%;
+    min-width:200px;
+}
+
+.tagsSection>ul>li:nth-child(2n){
+    background-color:#f0f0ea;
+}
+
+#menuLeft, #menuRight{
+    display:inline-block;
+    width:160px;
+    height:160px;
+    border-radius:100%;
     position:fixed;
     bottom:0px;
 }
 
-#circleWrapperLeft{
+#menuLeft{
     left:0px;
 }
 
-#circleWrapperRight{
+#menuRight{
     right:0px;
 }
 
-.menuWrapper .master{
+.master{
     width:40%;
     height:40%;
     min-height:75px;
@@ -34,24 +109,25 @@ body{
     z-index:11;
 }
 
-.menuWrapper ul{
+#menuLeft ul, #menuRight ul{
     list-style-type:none;
+    margin:0;
+    padding:0;
     width:100%;
     height:100%;
 }
 
-.menuWrapper li{
+#menuLeft li, #menuRight li{
     width:30%;
     height:30%;
     position:absolute;
-    left:40%;
-    top:40%;
     z-index:10;
     min-height:50px;
     min-width:50px;
 }
 
-.menuWrapper li > button{
+
+li > button{
     border-radius:100%;
     width:100%;
     height:100%;
@@ -78,15 +154,11 @@ body{
 }
 
 .rollOut{
-    -webkit-transition-property: left, top;
-    -webkit-transition-duration: 0.6s, 0.6s;
-    -webkit-transition-timing-function:cubic-bezier(.95,.22,.41,1.41);
+    -webkit-transition: all 0.6s cubic-bezier(.95,.22,.41,1.41);
 }
 
 .rollIn{
-    -webkit-transition-property: left, top;
-    -webkit-transition-duration: 0.6s, 0.6s;
-    -webkit-transition-timing-function:ease-in-out;
+    -webkit-transition: all 0.6s ease-in-out;
 }
 
 #editArea{
