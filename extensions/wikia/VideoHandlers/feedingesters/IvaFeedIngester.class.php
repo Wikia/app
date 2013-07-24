@@ -187,8 +187,9 @@ class IvaFeedIngester extends VideoFeedIngester {
 				$clipData = array();
 
 				// get series
+				$program['title'] = empty( $program['DisplayTitle'] ) ? trim( $program['Title'] ) : trim( $program['DisplayTitle'] );
 				if ( empty( $videoParams['series'] ) ) {
-					$clipData['series'] = empty( $program['DisplayTitle'] ) ? trim( $program['Title'] ) : trim( $program['DisplayTitle'] );
+					$clipData['series'] = $program['title'];
 				} else {
 					$clipData['series'] = $videoParams['series'];
 				}
@@ -204,7 +205,6 @@ class IvaFeedIngester extends VideoFeedIngester {
 					 $clipData['season'] = empty( $program['DisplayTitle'] ) ? trim( $program['Title'] ) : trim( $program['DisplayTitle'] );
 				}
 
-				$clipData['promotesPublishedId'] = empty( $program['Publishedid'] ) ? 0 : $program['Publishedid'];
 				$clipData['tags'] = trim( $program['Tagline'] );
 
 				$clipData['industryRating'] = '';
@@ -237,7 +237,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 				$videoAssets = $program['VideoAssets']['results'];
 				$numVideos = count( $videoAssets );
-				print( "{$clipData['series']}: {$program['DisplayTitle']} : Found $numVideos videos...\n" );
+				print( "{$program['title']} (Series:{$clipData['series']}): Found $numVideos videos...\n" );
 
 				// add video assets
 				foreach ( $videoAssets as $videoAsset ) {
@@ -331,7 +331,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 	}
 
 	/**
-	 * Create the feed URL for a specific $videoSet (basically a match on title
+	 * Create the feed URL for a specific $videoSet
 	 * @param array $videoParams
 	 * @param integer $startDate - Unixtime for beginning of modified-on date range
 	 * @param integer $endDate - Unixtime for ending of modified-on date range
@@ -343,11 +343,13 @@ class IvaFeedIngester extends VideoFeedIngester {
 			"and (DateModified le datetime'$endDate') ";
 
 		$videoSet = $videoParams['videoSet'];
+		// check if it is PromotesPublishedId
 		if ( empty( $videoParams['isPromotesPublishedId'] ) ) {
-			if ( is_numeric( $videoSet ) ) {
-				$filter .= "and (Publishedid eq $videoSet) ";
-			} else {
+			// check if $videoSet is publish id or keyword
+			if ( empty( $videoParams['isPublishedId'] ) ) {
 				$filter .= "and (substringof('$videoSet', Title) eq true) ";
+			} else {
+				$filter .= "and (Publishedid eq $videoSet) ";
 			}
 		} else {
 			$filter .= "and (PromotesPublishedId eq $videoSet) ";
