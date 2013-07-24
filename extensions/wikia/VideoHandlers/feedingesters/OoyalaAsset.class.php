@@ -179,6 +179,12 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['targetCountry'] ) ) {
 			$metadata['targetcountry'] = $data['targetCountry'];
 		}
+		if ( !empty( $data['series'] ) ) {
+			$metadata['series'] = $data['series'];
+		}
+		if ( !empty( $data['season'] ) ) {
+			$metadata['season'] = $data['season'];
+		}
 
 		return $metadata;
 	}
