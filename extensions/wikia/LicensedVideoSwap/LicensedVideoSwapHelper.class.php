@@ -63,7 +63,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 * @param string $sort - The sort order for the video list (options: recent, popular, trend)
 	 * @param int $limit - The number of videos to return
 	 * @param int $page - Which page of video to return
-	 * @param bool $use_master
+	 * @param bool $use_master - Whether to use the master DB to do this query
 	 * @return array - An array of video metadata
 	 */
 	public function getUnswappedVideoList ( $sort = 'popular', $limit = 10, $page = 1, $use_master = false ) {
