@@ -1,13 +1,10 @@
-<?php
-// this is just a placeholder, please feel free to blow away all markup
-$counter = 0;
-?>
+<?php $counter = 0; ?>
 <?php if ( !empty( $pages ) ) : ?>
-<div id="top-wiki-articles">
+<div class="top-wiki-articles">
     <h2>What's hot now</h2>
     <?php foreach ( $pages as $page ) : ?>
     <?php if ( $counter == 0 ): ?>
-    <div class="top-wiki-article" id="hot-article">
+    <div class="top-wiki-article hot-article">
         <div class="top-wiki-article-thumbnail" data-pos="<?= $counter ?>">
             <? if ( isset( $page['thumbnail'] ) ) : ?>
             <a href="<?=$page['url']?>">
