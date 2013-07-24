@@ -109,57 +109,46 @@ $form-negative-side-padding: $form-side-padding*-1;
 	}
 
 	// Top articles module
-	.WikiaSearch {
-		#top-wiki-articles {
-			padding: 15px 15px 0 15px;
-			margin: 0;
-			border: 1px solid lightgray;
+	.WikiaSearch .top-wiki-articles {
+		border: 1px solid lightgray;
+		font-size: 16px;
+		margin: 0;
+		padding: 15px 15px 0 15px;
+		h2 {
+			border: none;
 			font-size: 16px;
-			h2 {
-				margin: 0 0 15px 0;
-				text-transform: uppercase;
-				font-size: 16px;
-				border: none;
-			}
+			margin: 0 0 15px 0;
+			text-transform: uppercase;
+		}
+		p {
+			margin: 0;
+		}
 
-			#hot-article {
-				margin: 0 0 20px 0;
-				.top-wiki-article-thumbnail a img {
-					width: 300px;
-					height: 150px;
-					display: block;
-				}
-				.top-wiki-article-text {
-					h3 {
-						margin: 0;
-					}
-					h3 a {
-						margin: 10px 0 10px 0;
-						display: inline-block;
-					}
-					p {
-						margin: 0;
-					}
-				}
+		.top-wiki-article {
+			margin: 0 0 10px 0;
+			min-height: 80px;
+			.top-wiki-article-text {
+				font-size: 13px;
+				margin-bottom: 0;
 			}
-			.top-wiki-article {
-				min-height: 80px;
-				margin: 0 0 10px 0;
-				.top-wiki-article-thumbnail a {
-					img {
-						width: 80px;
-						height: 80px;
-						float: left;
-						margin: 0 10px 0 0;
-					}
-				}
-
-				.top-wiki-article-text {
-					font-size: 13px;
-					h3 {
-						margin-bottom: 0;
-					}
-				}
+			.top-wiki-article-thumbnail {
+				float: left;
+				height: 80px;
+				margin: 0 10px 0 0;
+				width: 80px;
+			}
+		}
+		//top 1 article looks differently
+		.hot-article {
+			margin: 0;
+			.top-wiki-article-text {
+				display: inline-block;
+				margin: 10px 0 10px 0;
+			}
+			.top-wiki-article-thumbnail {
+				display: block;
+				height: 150px;
+				width: 300px;
 			}
 		}
 	}
