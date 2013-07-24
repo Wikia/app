@@ -22,7 +22,7 @@ class VideoEmbedToolSearchService
 	 * Fields required for preprocessing to work when searching as API 
 	 * @var array
 	 */
-	protected $expectedFields = [ 'pageid', 'wid', 'title_en' ];
+	protected $expectedFields = [ 'pageid', 'wid', 'title', 'title_en' ];
 	
 	/**
 	 * Height of video
@@ -108,14 +108,15 @@ class VideoEmbedToolSearchService
 		$this->setSuggestionQueryByArticleId( $articleId );
 		$query = $this->getSuggestionQuery();
 		$service = $this->getMwService();
+		$expectedFields = $this->getExpectedFields();
 		$config = $this->getConfig()->setWikiId( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID )
 		                            ->setQuery( $query )
-									->setRequestedFields( $this->getExpectedFields() )
+									->setRequestedFields( $expectedFields )
 		                            ->setFilterQuery( "+(title_en:({$query}) OR video_actors_txt:({$query}) OR nolang_txt:({$query}) OR html_media_extras_txt:({$query}))" )
 		                            ->setVideoEmbedToolSearch( true )
 		  
 		  ;
-		return $this->postProcessSearchResponse( $this->getFactory()->getFromConfig( $config )->searchAsApi( $this->getExpectedFields(), true ) );
+		return $this->postProcessSearchResponse( $this->getFactory()->getFromConfig( $config )->searchAsApi( $expectedFields, true ) );
 	}
 	
 	/**
@@ -124,8 +125,9 @@ class VideoEmbedToolSearchService
 	 * @return array
 	 */
 	public function videoSearch( $query ) {
-		$config = $this->getConfig()->setVideoSearch( true )->setQuery( $query );
-		return $this->postProcessSearchResponse( $this->getFactory()->getFromConfig( $config )->searchAsApi( $this->getExpectedFields(), true ) );
+		$expectedFields = $this->getExpectedFields();
+		$config = $this->getConfig()->setVideoSearch( true )->setQuery( $query )->setRequestedFields( $expectedFields );
+		return $this->postProcessSearchResponse( $this->getFactory()->getFromConfig( $config )->searchAsApi( $expectedFields, true ) );
 	}
 	
 	/**
