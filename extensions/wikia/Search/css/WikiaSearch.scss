@@ -112,13 +112,17 @@ $form-negative-side-padding: $form-side-padding*-1;
 	// Top articles module
 	.WikiaSearch .top-wiki-articles {
 		border: 1px solid lightgray;
+		float: left;
 		font-size: 16px;
 		margin: 0;
-		padding: 15px 15px 0 15px;
+		padding: 14px 14px 4px 14px;
+		width: 300px;
+		word-break: break-all;
 		h2 {
 			border: none;
 			font-size: 16px;
 			margin: 0 0 15px 0;
+			padding: 0;
 			text-transform: uppercase;
 		}
 		p {
@@ -126,11 +130,14 @@ $form-negative-side-padding: $form-side-padding*-1;
 		}
 
 		.top-wiki-article {
+			float: left;
 			margin: 0 0 10px 0;
 			min-height: 80px;
 			.top-wiki-article-text {
+				float: left;
 				font-size: 13px;
 				margin-bottom: 0;
+				width: 205px;
 			}
 			.top-wiki-article-thumbnail {
 				float: left;
@@ -142,13 +149,16 @@ $form-negative-side-padding: $form-side-padding*-1;
 		//top 1 article looks differently
 		.hot-article {
 			margin: 0;
+			width: 300px;
 			.top-wiki-article-text {
 				display: inline-block;
 				margin: 10px 0 10px 0;
+				width: 300px;
 			}
 			.top-wiki-article-thumbnail {
 				display: block;
 				height: 150px;
+				margin: 0;
 				width: 300px;
 			}
 		}
