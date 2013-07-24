@@ -46,6 +46,10 @@ body {
 	z-index: auto;
 }
 
+.WikiaMainContent {
+	float: none;
+}
+
 // remove global header shadow
 .WikiaHeader {
 	nav:before {
