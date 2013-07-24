@@ -96,7 +96,7 @@ $messages['qqq'] = array(
 
 	//categories
 	'wikiamobile-categories-tagline' => 'Tagline that appears next to the category page title, please keep it really short',
-	'wikiamobile-categories-items-total' => '$1 is the total number of articles in the category',
+	'wikiamobile-categories-items-total' => 'Message above list of articles in a category. $1 is the total number of articles in the category',
 	'wikiamobile-category-items-more' => 'Label on a button to load more articles under given letter on category page',
 	'wikiamobile-category-items-prev' => 'Label on a button to load previous articles under given letter on category page',
 	'wikiamobile-categories-expand' => 'Label on a button to expand/collapse all articles on category',
@@ -104,9 +104,9 @@ $messages['qqq'] = array(
 
 	//sharing
 	'wikiamobile-sharing-media-image' => 'This is a message that becomes part of wikiamobile-sharing-modal-text indicating type of media shared',
-	'wikiamobile-sharing-page-text' => '$1 is the title of the article, $2 is the name of the wiki',
-	'wikiamobile-sharing-modal-text' => '$1 is the type of media, $2 is the title of the article, $3 is the name of the wiki',
-	'wikiamobile-sharing-email-text' => '$1 is the result of wikiamobile-sharing-modal-text or wikiamobile-sharing-page-text, please keep the empty space before $1',
+	'wikiamobile-sharing-page-text' => 'Message feed into email that have links to wiki and article that is being shared. $1 is the title of the article, $2 is the name of the wiki',
+	'wikiamobile-sharing-modal-text' => 'Message feed into email that have links to wiki and media that is being shared. $1 is the type of media, $2 is the title of the article, $3 is the name of the wiki',
+	'wikiamobile-sharing-email-text' => 'Email message with a shared page or media. $1 is the result of wikiamobile-sharing-modal-text or wikiamobile-sharing-page-text, please keep the empty space before $1',
 
 	//media
 	'wikiamobile-media-group-footer' => 'Caption under a media-group/gallery, $1 contains the total amount of images/videos in the group',
