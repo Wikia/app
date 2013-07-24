@@ -85,11 +85,8 @@ class WikiaForeignDBFile extends ForeignDBFile {
 			$addedBy = $info->getAddedBy();
 		}
 
-		// If we didn't get an addedBy user ID, fall back to the parent otherwise
-		// return the name or ID we've found as appropriate
-		if ( empty($addedBy) ) {
-			parent::getUser( $type );
-		} else {
+		// If we got an addedBy user ID, use that otherwise fall back to the parent method
+		if ( !empty($addedBy) ) {
 			if ( $type == 'text' ) {
 				$user = User::newFromId( $addedBy );
 				if ( !empty($user) && is_object($user) ) {
@@ -99,6 +96,8 @@ class WikiaForeignDBFile extends ForeignDBFile {
 				return $addedBy;
 			}
 		}
+
+		return parent::getUser( $type );
 	}
 
 	function getHandler(){
