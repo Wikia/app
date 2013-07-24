@@ -322,12 +322,18 @@ class SpecialCssModel extends WikiaModel {
 		$blogTitle = GlobalTitle::newFromText( $postData['title'], NS_MAIN, $communityWikiId );
 		$blogTitleText = $blogTitle->getText();
 
-		$lastRevisionUser = $postData['revisions'][0]['user'];
+		$lastRevisionUser = isset( $postData['revisions'][0]['user'] ) ? $postData['revisions'][0]['user'] : null;
+		$timestamp = isset( $postData['revisions'][0]['timestamp'] ) ? $postData['revisions'][0]['timestamp'] : null;
 		$blogUser = $this->getUserFromTitleText( $blogTitleText, $lastRevisionUser );
 		$userPage = GlobalTitle::newFromText( $blogUser, NS_USER, $communityWikiId );
 
-		if( $blogTitle instanceof GlobalTitle && $userPage instanceof GlobalTitle ) {
-			$timestamp = $postData['revisions'][0]['timestamp'];
+		if( !is_null( $lastRevisionUser ) &&
+			!is_null( $timestamp ) &&
+			$blogTitle instanceof GlobalTitle &&
+			$userPage instanceof GlobalTitle
+		) {
+			// $postData['revisions'][0]['*'] is being checked in SpecialCssModel::filterRevisionsData()
+			// which is called before this method
 			$sectionText = $postData['revisions'][0]['*'];
 			$cssUpdateText = $this->truncateAndParse( $blogTitle, $this->getCssUpdateSection( $sectionText ) );
 			$cssUpdatePost = [
