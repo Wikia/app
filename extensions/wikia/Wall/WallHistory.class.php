@@ -39,7 +39,7 @@ class WallHistory extends WikiaModel {
 			break;
 		}
 
-		WikiaDataAccess::cacheWithLockPurge( $this->getLastPostsMemcKey() );
+		WikiaDataAccess::cachePurge( $this->getLastPostsMemcKey() );
 	}
 
 	public function remove($pageId) {
@@ -170,7 +170,7 @@ class WallHistory extends WikiaModel {
 		$key = $this->getLastPostsMemcKey();
 		$cacheTime = 86400; // Cache for a day unless explicitly purged by `WallHistory::add()`.
 
-		$data = WikiaDataAccess::cacheWithLock( $key, $cacheTime, function () use ( $ns, $count ) {
+		$data = WikiaDataAccess::cache( $key, $cacheTime, function () use ( $ns, $count ) {
 			return $this->getLastPostsFromDB( $ns, $count );
 		} );
 
