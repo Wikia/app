@@ -79,6 +79,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Accesses top wiki articles for right rail, see PLA-466
 	 */
 	public function topWikiArticles() {
+		global $wgLang;
 		$pages = [];
 		try {
 			$pageData = $this->app->sendRequest( 'ArticlesApiController', 'getTop', [ 'namespaces' => 0 ] )->getData();
@@ -96,6 +97,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
 				foreach ( $ids as $key => $id ) {
 					if (isset( $detailResponse['items'][ $id ] ) && ! empty( $detailResponse['items'][ $id ]['thumbnail'] ) ) {
+						$detailResponse['items'][ $id ][ 'date' ] = $wgLang->date( $detailResponse['items'][ $id ][ 'revision' ][ 'timestamp' ] );
 						$pages[] = $detailResponse['items'][ $id ];
 						unset( $ids[ $key ] );
 						break;
@@ -105,6 +107,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
 				foreach ( $detailResponse['items'] as $item ) {
 					if (! empty( $item['thumbnail'] ) ) {
+						//render date
+						$item[ 'date' ] = $wgLang->date( $item[ 'revision' ][ 'timestamp' ] );
 						$pages[] = $item;
 					}
 				}
