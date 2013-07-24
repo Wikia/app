@@ -360,7 +360,7 @@ class SpecialCssModel extends WikiaModel {
 	 */
 	private function getUrlWithAnchor( $url ) {
 		$headline = $this->getCssUpdateHeadline();
-		$url .= '#' . str_replace(' ', '_', $headline);
+		$url .= '#' . Sanitizer::escapeId( $headline, 'noninitial' );
 
 		return $url;
 	}
