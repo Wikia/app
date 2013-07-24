@@ -338,7 +338,7 @@ class SpecialCssModel extends WikiaModel {
 			$cssUpdateText = $this->truncateAndParse( $blogTitle, $this->getCssUpdateSection( $sectionText ) );
 			$cssUpdatePost = [
 				'title' => $this->getAfterLastSlashText( $blogTitleText ),
-				'url' => $this->getUrlWithAnchor( $blogTitle->getFullURL() ),
+				'url' => $this->appendHeadlineAnchor( $blogTitle->getFullURL() ),
 				'userAvatar' => AvatarService::renderAvatar( $blogUser, 25 ),
 				'userUrl' => $userPage->getFullUrl(),
 				'userName' => $blogUser,
@@ -364,7 +364,7 @@ class SpecialCssModel extends WikiaModel {
 	 *
 	 * @return string
 	 */
-	private function getUrlWithAnchor( $url ) {
+	private function appendHeadlineAnchor( $url ) {
 		$headline = $this->getCssUpdateHeadline();
 		$url .= '#' . Sanitizer::escapeId( $headline, 'noninitial' );
 
