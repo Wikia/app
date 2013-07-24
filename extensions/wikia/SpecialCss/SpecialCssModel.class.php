@@ -299,7 +299,7 @@ class SpecialCssModel extends WikiaModel {
 		$filtered = [];
 
 		foreach( $cssRevisionsData as $revisionData ) {
-			$content = $revisionData['revisions'][0]['*'];
+			$content = isset( $revisionData['revisions'][0]['*'] ) ? $revisionData['revisions'][0]['*'] : '';
 			if( $this->isCssHeadlineIn( $content ) ) {
 				$filtered[] = $revisionData;
 			}
