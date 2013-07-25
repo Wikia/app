@@ -264,8 +264,7 @@ class SpecialCssModel extends WikiaModel {
 
 				if ( !empty( $cssUpdatesPostsData ) ) {
 					$pageIds = $this->getBlogsIds( $cssUpdatesPostsData );
-					$ids = $this->implodeBlogsIds($pageIds);
-					$cssRevisionsData = $this->getCssRevisionsApiData( $ids, $revisionsParams );
+					$cssRevisionsData = $this->getCssRevisionsApiData( $pageIds, $revisionsParams );
 					// we got revisions data as a associative array with page id as a key
 					// but we need this array ordered by timestamp
 					$cssRevisionsData = $this->getCssRevisionsInOrder($cssRevisionsData, $pageIds);
@@ -659,15 +658,16 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Returns default parameters for fetching revision data
 	 *
-	 * @param string $ids page ids separated by '|'
+	 * @param array $ids an array with page ids
+	 *
 	 * @return array
 	 */
-	private function getDefaultRevisionParams($ids = '') {
+	private function getDefaultRevisionParams( $ids = [] ) {
 		return [
 			'action' => 'query',
 			'prop' => 'revisions',
 			'rvprop' => 'content|user|timestamp',
-			'pageids' => $ids
+			'pageids' => $this->implodeBlogsIds( $ids )
 		];
 	}
 }
