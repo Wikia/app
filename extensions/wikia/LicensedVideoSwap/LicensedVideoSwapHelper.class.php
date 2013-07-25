@@ -63,12 +63,17 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 * @param string $sort - The sort order for the video list (options: recent, popular, trend)
 	 * @param int $limit - The number of videos to return
 	 * @param int $page - Which page of video to return
+	 * @param bool $use_master - Whether to use the master DB to do this query
 	 * @return array - An array of video metadata
 	 */
-	public function getUnswappedVideoList ( $sort = 'popular', $limit = 10, $page = 1 ) {
+	public function getUnswappedVideoList ( $sort = 'popular', $limit = 10, $page = 1, $use_master = false ) {
 		wfProfileIn( __METHOD__ );
 
-		$db = wfGetDB( DB_SLAVE );
+		if ( $use_master ) {
+			$db = wfGetDB( DB_MASTER );
+		} else {
+			$db = wfGetDB( DB_SLAVE );
+		}
 
 		// We want to make sure the video hasn't been removed, is not premium and does not exist
 		// in the video_swap table
@@ -169,16 +174,17 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 *
 	 * @param string $sort - The sort order for the video list (options: recent, popular, trend)
 	 * @param int $page - Which page to display. Each page contains self::VIDEOS_PER_PAGE videos
+	 * @param bool $use_master
 	 * @return array - Returns a list of video metadata
 	 */
-	public function getRegularVideoList ( $sort, $page ) {
+	public function getRegularVideoList ( $sort, $page, $use_master = false ) {
 		wfProfileIn( __METHOD__ );
 
 		// Get the play button image to overlay on the video
 		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
 
 		// Get the list of videos that haven't been swapped yet
-		$videoList = $this->getUnswappedVideoList( $sort, self::VIDEOS_PER_PAGE, $page );
+		$videoList = $this->getUnswappedVideoList( $sort, self::VIDEOS_PER_PAGE, $page, $use_master );
 
 		// Reuse code from VideoHandlerHelper
 		$helper = new VideoHandlerHelper();

@@ -215,7 +215,8 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
 		// get video list
-		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage );
+		$use_master = true;
+		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage, $use_master );
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
 		//$this->html .= $helper->getPagination( $currentPage, $selectedSort );
@@ -288,8 +289,9 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$selectedSort = $this->getVal( 'sort', 'recent' );
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
-		// get video list
-		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage );
+		// Get list video of non-premium videos available to swap
+		$use_master = true;
+		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage, $use_master );
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
 		//$this->html .= $helper->getPagination( $currentPage, $selectedSort );
@@ -394,7 +396,8 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
 		// get video list
-		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage );
+		$use_master = true;
+		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage, $use_master );
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
 		//$this->html .= $helper->getPagination( $currentPage, $selectedSort );
