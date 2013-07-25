@@ -99,7 +99,6 @@ $messages['qqq'] = [
 	'special-css-community-update-by' => "Post (regarding markup and CSS changes since previous release) detailed informations text: $1 = post's creation time, $2 = link to post's author profile page on community.wikia.com, $3 = post's author username",
 	'special-css-community-read-more' => "Link label below post snippet leading to the full post page; The post page includes information regarding markup and CSS changes",
 	'special-css-community-update-see-all' => 'Link to blog listing with contains all CSS updates',
-	'special-css-community-update-headline' => 'Headline in community blog post which starts the CSS updates section; the final CSS update text will be a part of the blog post and the beginning of this part is this headline',
 
 	'special-css-wikia-skin-only' => 'Message displayed to users who use skin different than "Wikia Skin" (i.e. Monobook). This feature is enabled only for "Wikia Skin".',
 
