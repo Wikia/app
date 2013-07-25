@@ -598,7 +598,7 @@ class MarketingToolboxModel extends WikiaModel {
 
 		if ($timestamp == strtotime('00:00')) {
 			$lastPublishedTimestamp = WikiaDataAccess::cache(
-				$this->getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId),
+				$this->getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp),
 				6 * 60 * 60,
 				function () use ($langCode, $sectionId, $verticalId, $timestamp, $useMaster) {
 					return $this->getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp, $useMaster);
@@ -612,7 +612,7 @@ class MarketingToolboxModel extends WikiaModel {
 	}
 
 	protected function purgeLastPublishedTimestampCache($langCode, $sectionId, $verticalId) {
-		$this->wg->Memc->delete($this->getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId));
+		$this->wg->Memc->delete($this->getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId, strtotime('00:00')));
 	}
 
 	public function getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp, $useMaster = false) {
@@ -702,12 +702,13 @@ class MarketingToolboxModel extends WikiaModel {
 		return $table;
 	}
 
-	protected function getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId) {
+	protected function getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp) {
 		return wfSharedMemcKey(
 			self::CACHE_KEY,
 			$langCode,
 			$sectionId,
 			$verticalId,
+			$timestamp,
 			self::CACHE_KEY_LAST_PUBLISHED_TIMESTAMP
 		);
 	}
