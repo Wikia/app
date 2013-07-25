@@ -1352,6 +1352,7 @@ $config['licensed_video_swap_js'] = array(
 		'//extensions/wikia/LicensedVideoSwap/js/lvsUndo.js',
 		'//extensions/wikia/LicensedVideoSwap/js/LicensedVideoSwap.js',
 	),
+);
 
 /* SpecialCSS */
 $config['special_css_js'] = array(
