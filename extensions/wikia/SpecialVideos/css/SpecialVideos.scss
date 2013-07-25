@@ -5,8 +5,6 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/opacity";
-// Needed to check if liquied layout is turned on ($responsive-layout-enabled variable)
-@import "skins/oasis/css/core/layout";
 
 $placeholder-bg-img: url(/extensions/wikia/SpecialVideos/images/AddVideoIcons_Dark.png);  /* base64 */
 $placeholder-bg-color: darken($color-page, 10%);
@@ -74,19 +72,6 @@ $placeholder-bg-color: darken($color-page, 10%);
 	.grid-2, .grid-2.alpha {
 		margin-bottom: 18px;
 	}
-
-	//TODO: Special videos layout needs redesign for liquid layout (liquid layout no longer support WikiaGrid)
-	//      This is temporary solution that should be removed after redesing
-	@if ( $responsive-layout-enabled ) {
-		.grid-2 {
-			margin-left: 10px;
-			width: 330px;
-			&.alpha {
-				margin-left: 0;
-			}
-		}
-	}
-
 	.alpha {
 		clear: both;
 	}
