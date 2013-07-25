@@ -178,6 +178,12 @@ class Message {
 	protected $useDatabase = true;
 
 	/**
+	 * Wikia change
+	 * Whether to replace whitespaces.
+	 */
+	protected $fixWhitespace = true;
+
+	/**
 	 * Title object to use as context
 	 */
 	protected $title = null;
@@ -348,6 +354,17 @@ class Message {
 	 */
 	public function useDatabase( $value ) {
 		$this->useDatabase = (bool) $value;
+		return $this;
+	}
+
+	/**
+	 * Wikia change
+	 * Enable or disable fixWhitespace option in message cache.
+	 * @param $value Boolean
+	 * @return Message: $this
+	 */
+	public function fixWhitespace( $value ) {
+		$this->fixWhitespace = (bool) $value;
 		return $this;
 	}
 
@@ -578,14 +595,14 @@ class Message {
 					throw new MWException( "Given empty message key array." );
 				}
 				foreach ( $this->key as $key ) {
-					$message = $cache->get( $key, $this->useDatabase, $this->language );
+					$message = $cache->get( $key, $this->useDatabase, $this->language, false, $this->fixWhitespace );
 					if ( $message !== false && $message !== '' ) {
 						break;
 					}
 				}
 				$this->message = $message;
 			} else {
-				$this->message = $cache->get( $this->key, $this->useDatabase, $this->language );
+				$this->message = $cache->get( $this->key, $this->useDatabase, $this->language, false, $this->fixWhitespace );
 			}
 		}
 		return $this->message;

@@ -334,6 +334,25 @@ class WikiaFileHelper extends Service {
 	}
 
 	/**
+	 * Get a new instance of the file page based on skin and if wgEnableVideoPageRedesign is enabled
+	 *
+	 * @param Title $fileTitle
+	 * @return WikiaMobileFilePage|FilePageTabbed|WikiaFilePage
+	 */
+	public static function getMediaPage( $fileTitle ) {
+		$app = F::app();
+
+		if ( $app->checkSkin( 'oasis' ) && !empty( $app->wg->EnableVideoPageRedesign ) ) {
+			$cls = 'FilePageTabbed';
+		} else if ( $app->checkSkin( 'wikiamobile' ) ) {
+			$cls = 'WikiaMobileFilePage';
+		} else {
+			$cls = 'WikiaFilePage';
+		}
+		return new $cls( $fileTitle );
+	}
+
+	/**
 	 * @static
 	 * @param Title $fileTitle
 	 * @param array $config ( contextWidth, contextHeight, imageMaxWidth, userAvatarWidth )
@@ -387,11 +406,7 @@ class WikiaFileHelper extends Service {
 					$data['playerAsset'] = $file->getPlayerAssetUrl();
 					$data['videoViews'] = MediaQueryService::getTotalVideoViewsByTitle( $fileTitle->getDBKey() );
 					$data['providerName'] = $file->getProviderName();
-					if ( F::app()->checkSkin( 'oasis' ) && !empty( $wgEnableVideoPageRedesign ) ) {
-						$mediaPage = new FilePageTabbed($fileTitle);
-					} else {
-						$mediaPage = new FilePageFlat($fileTitle);
-					}
+					$mediaPage = self::getMediaPage( $fileTitle );
 				} else {
 					$width = $width > $config['imageMaxWidth'] ? $config['imageMaxWidth'] : $width;
 					$mediaPage = new ImagePage($fileTitle);
@@ -421,18 +436,14 @@ class WikiaFileHelper extends Service {
 
 	// truncate article list
 	public static function truncateArticleList( $articles, $limit = 2 ) {
-		$app = F::app();
-
 		$isTruncated = 0;
 		$truncatedList = array();
-		if( !empty($articles) ) {
+		if( !empty( $articles ) ) {
 			foreach( $articles as $article ) {
 				// Create truncated list
-				if ( count($truncatedList) < $limit ) {
-					if ( $article['ns'] == NS_MAIN
-						|| ( (!empty($app->wg->ContentNamespace)) && in_array($article['ns'], $app->wg->ContentNamespace) ) ) {
-							$truncatedList[] = $article;
-					}
+				if ( count( $truncatedList ) < $limit ) {
+					$article['titleText'] = preg_replace( '/\/@comment-.*/', '', $article['titleText'] );
+					$truncatedList[] = $article;
 				} else {
 					$isTruncated = 1;
 					break;

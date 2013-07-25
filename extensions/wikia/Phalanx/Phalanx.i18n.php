@@ -142,13 +142,16 @@ $messages['qqq'] = array(
 	'phalanx-add-block' => 'This message is used as a button label (like "Save", "Show preview" and "Show changes" in <code>action=edit</code>). Clicking on the button adds a new block to the Phalanx database. ([[Thread:Support/About_Wikia:Phalanx-add-block/fi/reply|documentation]] by [[User:Jack Phoenix|Jack Phoenix]])',
 	'phalanx-label-filter' => '{{Identical|Filter}}',
 	'phalanx-label-reason' => '{{Identical|Reason}}',
+	'phalanx-label-expiry' => '{{Identical|Expiry}}',
 	'phalanx-label-type' => '{{Identical|Type}}',
 	'phalanx-label-lang' => '{{Identical|Language}}',
+	'phalanx-format-regex' => '{{Identical|Regex}}',
 	'phalanx-test-submit' => '{{Identical|Test}}',
 	'phalanx-link-unblock' => '{{Identical|Unblock}}',
 	'phalanx-unblock-message' => '$1 is the ID of the block removed.',
 	'phalanx-stats-table-create' => '{{Identical|Created}}',
 	'phalanx-stats-table-expire' => '{{Identical|Expire}}',
+	'phalanx-stats-table-regex' => '{{Identical|Regex}}',
 	'phalanx-stats-table-language' => '{{Identical|Language}}',
 	'phalanx-stats-table-text' => '{{Identical|Text}}',
 	'phalanx-stats-table-reason' => '{{Identical|Reason}}',
@@ -156,6 +159,9 @@ $messages['qqq'] = array(
 	'phalanx-stats-row-per-wiki' => '$1 is a type of block (e.g. user or title), $2 is a user (name or IP), $3 is a filter ID, $4 is the URL of a wiki, $4 is a time and date, $5 is a link to stats for that filter ID',
 	'phalanx-stats-table-wiki-name' => '{{Identical|Wiki name}}',
 	'action-phalanx' => '{{doc-action|phalanx}}',
+	'right-phalanx' => '{{doc-right|phalanx}}',
+	'right-phalanxexempt' => '{{doc-right|phalanxexempt}}',
+	'right-phalanxemailblock' => '{{doc-right|phalanxemailblock}}',
 );
 
 /** Arabic (العربية)
@@ -317,7 +323,9 @@ $messages['br'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'phalanx-label-lang' => 'Мотт:',
 	'phalanx-stats-table-expire' => 'Чекхйолу',
+	'phalanx-stats-table-language' => 'Мотт',
 );
 
 /** Czech (česky)
@@ -1179,7 +1187,12 @@ $messages['id'] = array(
 
 	Ini tidak menghalangi halaman yang sudah ada dari penyuntingan.',
 	'phalanx-help-type-user-email' => 'Filter ini mencegah pembuatan akun menggunakan alamat surel yang diblokir.',
+	'phalanx-user-block-reason-similar' => 'Nama pengguna ini dicegah dari menyunting di seluruh jaringan Wikia karena vandalisme atau gangguan lainnya oleh pengguna dengan nama yang mirip.
+Silakan [[Special:Contact|hubungi Wikia]] mengenai masalah ini.',
+	'phalanx-user-block-withreason-exact' => 'Nama pengguna atau IP ini dicegah dari menyunting di seluruh jaringan Wikia karena vandalisme atau gangguan lainnya.
+Jika Anda yakin ini adalah sebuah kesalahan, silakan [[Special:Contact|hubungi Wikia]].<br />Pemblokir juga memberikan alasan tambahan ini: $1.',
 	'phalanx-content-spam-summary' => 'Teks ini ditemukan dalam ringkasan halaman.',
+	'phalanx-stats-table-user' => 'Ditambahkan oleh',
 );
 
 /** Icelandic (íslenska)
@@ -2093,7 +2106,10 @@ $messages['ps'] = array(
 	'phalanx-label-lang' => 'ژبه:',
 	'phalanx-test-submit' => 'آزمېښت',
 	'phalanx-test-results-legend' => 'آزمېښت پايلې',
+	'phalanx-stats-table-user' => 'ورګډونکی',
+	'phalanx-stats-table-type' => 'ډول',
 	'phalanx-stats-table-create' => 'جوړ شو',
+	'phalanx-stats-table-expire' => 'پای نېټه',
 	'phalanx-stats-table-exact' => 'کټ مټ',
 	'phalanx-stats-table-language' => 'ژبه',
 	'phalanx-stats-table-text' => 'متن',

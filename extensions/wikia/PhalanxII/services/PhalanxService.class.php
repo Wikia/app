@@ -70,6 +70,9 @@ class PhalanxService extends Service {
 	 */
 	public function match( $type, $content, $lang = "" ) {
 		wfProfileIn( __METHOD__  );
+		if (is_array($content)) {
+			$content = array_unique($content);
+		}
 		$result =  $this->sendToPhalanxDaemon( "match", array( "type" => $type, "content" => $content, "lang" => $lang ) );
 		wfProfileOut( __METHOD__  );
 		return $result;

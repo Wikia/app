@@ -45,6 +45,7 @@ $messages['en'] = array(
 	'userlogin-error-mail-error' => 'Oops, there was a problem sending your email. Please [[Special:Contact/general|contact us]].',
 	'userlogin-password-email-sent' => 'We\'ve sent a new password to the email address for $1.',
 	'userlogin-error-unconfirmed-user' => 'Sorry, you have not confirmed your email. Please confirm your email first.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'Confirmation reminder email already sent.',
 
 	// change password page
 	'userlogin-password-page-title' => 'Change your password',
@@ -158,6 +159,7 @@ $messages['qqq'] = array(
 	'userlogin-password-email-sent' => 'Validation message stating that email has been to the user. Parameters:
 * $1 contains the user name in plain text',
 	'userlogin-error-unconfirmed-user' => 'Error message stating that user needs to be confirmed first.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'Error message stating that confirmation email was already sent. This message is only used by maintenance scripts.',
 	'userlogin-password-page-title' => 'Heading for change password page.',
 	'userlogin-oldpassword' => 'Label for old password field',
 	'userlogin-newpassword' => 'Label for new password field.
@@ -341,7 +343,7 @@ $messages['ca'] = array(
 	'userlogin-forgot-password' => 'Has oblidat la teva contrasenya?',
 	'userlogin-forgot-password-button' => 'Continuar',
 	'userlogin-forgot-password-go-to-login' => "Ja tens la teva contrasenya? [[Special:UserLogin|Identifica't]]",
-	'userlogin-remembermypassword' => 'Continuar connectat', # Fuzzy
+	'userlogin-remembermypassword' => 'Continua connectat',
 	'userlogin-error-noname' => "Si us plau, omple el camp del nom d'usuari.",
 	'userlogin-error-sessionfailure' => 'El registre de la sessió ha caducat. Si us plau, inicia sessió un altre cop.',
 	'userlogin-error-nosuchuser' => "No reconeixem aquest nom. No oblidis que els noms d'usuari distingeixen les majúscules de les minúscules.",
@@ -480,6 +482,7 @@ $messages['de'] = array(
 	'userlogin-error-mail-error' => 'Wir konnten dir diese E-Mail nicht zustellen. Bitte [[Special:Contact/general|kontaktiere uns]].',
 	'userlogin-password-email-sent' => 'Wir haben ein neues Passwort an $1 geschickt.',
 	'userlogin-error-unconfirmed-user' => 'Entschuldige, du hast deine E-Mail-Adresse nicht bestätigt. Bitte bestätige deine E-Mail-Adresse zuerst.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'Eine Bestätigungs-Erinnerungs-E-Mail wurde bereits versandt.',
 	'userlogin-password-page-title' => 'Passwort ändern',
 	'userlogin-oldpassword' => 'Alte Passwort',
 	'userlogin-newpassword' => 'Neues Passwort',
@@ -533,6 +536,13 @@ $messages['diq'] = array(
 	'userlogin-loginreqlink' => 'Deqewtış',
 );
 
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'userlogin-error-nosuchuser' => "Hm, we don't recognise this name. Don't forget usernames are case sensitive.",
+);
+
 /** Spanish (español)
  * @author Armando-Martin
  * @author Invadinado
@@ -571,6 +581,7 @@ $messages['es'] = array(
 	'userlogin-error-mail-error' => 'Perdón, hubo un problema al enviar tu correo electrónico. Por favor, [[Special:Contact/general|contáctanos]].',
 	'userlogin-password-email-sent' => 'Hemos enviado una nueva contraseña a la dirección de correo electrónico $1.',
 	'userlogin-error-unconfirmed-user' => 'No has confirmado tu dirección de correo electrónico. Confirma tu dirección de correo electrónico primero.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'Ya se envió un recordatorio de confirmación al correo electrónico.',
 	'userlogin-password-page-title' => 'Cambia tu contraseña',
 	'userlogin-oldpassword' => 'Contraseña antigua',
 	'userlogin-newpassword' => 'Nueva contraseña',
@@ -649,6 +660,7 @@ $messages['fr'] = array(
 	'userlogin-error-mail-error' => "Oups, il y a eu un problème d'envoi du courriel. Veuillez [[Special:Contact/general|nous contacter]].",
 	'userlogin-password-email-sent' => "Nous avons envoyé un nouveau mot de passe à l'adresse courriel pour $1.",
 	'userlogin-error-unconfirmed-user' => "Désolé, vous n'avez pas confirmé votre adresse de courriel. Veuillez confirmer d'abord celle-ci.",
+	'userlogin-error-confirmation-reminder-already-sent' => 'Le courriel de rappel de confirmation a déjà été envoyée.',
 	'userlogin-password-page-title' => 'Modifier votre mot de passe',
 	'userlogin-oldpassword' => 'Ancien mot de passe',
 	'userlogin-newpassword' => 'Nouveau mot de passe',
@@ -725,6 +737,7 @@ $messages['gl'] = array(
 	'userlogin-error-mail-error' => 'Vaites! Houbo un problema ao enviar o correo electrónico. Por favor, [[Special:Contact/general|póñase en contacto con nós]].',
 	'userlogin-password-email-sent' => 'Enviamos un novo contrasinal ao enderezo de correo electrónico $1.',
 	'userlogin-error-unconfirmed-user' => 'Aínda non confirmou o seu enderezo de correo electrónico. Confirme o enderezo primeiro.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'Xa se enviou o recordatorio de confirmación por correo electrónico.',
 	'userlogin-password-page-title' => 'Cambiar o seu contrasinal',
 	'userlogin-oldpassword' => 'Contrasinal antigo',
 	'userlogin-newpassword' => 'Contrasinal novo',
@@ -1081,6 +1094,13 @@ $messages['lb'] = array(
 	'wikiamobile-sendpassword-label' => 'Neit Passwuert schécken',
 );
 
+/** Literary Chinese (文言)
+ * @author StephDC
+ */
+$messages['lzh'] = array(
+	'userlogin-login-heading' => '登簿',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -1193,6 +1213,7 @@ $messages['ms'] = array(
 	'userlogin-error-mail-error' => 'Maaf, timbulnya masalah ketika menghantar e-mel kepada anda.Sila [[Special:Contact/general|hubungi kami]].',
 	'userlogin-password-email-sent' => 'Kami telah menghantar kata laluan baru kepada alamat e-mel $1.',
 	'userlogin-error-unconfirmed-user' => 'Maaf, anda belum mengesahkan alamat e-mel anda. Sila sahkan alamat e-mel anda terlebih dahulu.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'E-mel peringatan pengesahan sudah dihantar.',
 	'userlogin-password-page-title' => 'Tukar kata laluan anda',
 	'userlogin-oldpassword' => 'Kata laluan lama',
 	'userlogin-newpassword' => 'Kata laluan baru',
@@ -1342,6 +1363,7 @@ $messages['nl'] = array(
 	'userlogin-error-mail-error' => 'Het was niet mogelijk een e-mail aan u te verzenden. [[Special:Contact/general|Neem contact met ons op]].',
 	'userlogin-password-email-sent' => 'Er is een nieuw wachtwoord verzonden naar het e-mailadres $1.',
 	'userlogin-error-unconfirmed-user' => 'Uw e-mailadres is niet bevestigd. Bevestig eerst uw e-mailadres.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'De bevestigingse-mail is al verzonden.',
 	'userlogin-password-page-title' => 'Uw wachtwoord wijzigen',
 	'userlogin-oldpassword' => 'Huidige wachtwoord',
 	'userlogin-newpassword' => 'Nieuw wachtwoord',
@@ -1424,6 +1446,7 @@ $messages['pl'] = array(
 	'userlogin-error-mail-error' => 'Ups, wystąpił problem z wysyłką Twojej wiadomości e-mail. Prosimy [[Special:Contact/general|skontaktuj się z nami]].',
 	'userlogin-password-email-sent' => 'Hasło zostało wysłane na adres e-mail $1.',
 	'userlogin-error-unconfirmed-user' => 'Przepraszamy, nie potwierdziłeś swojego adresu e-mail. Proszę potwierdź go najpierw.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'E-mail z potwierdzeniem został już wysłany.',
 	'userlogin-password-page-title' => 'Zmień hasło',
 	'userlogin-oldpassword' => 'Poprzednie hasło',
 	'userlogin-newpassword' => 'Nowe hasło',
@@ -1874,6 +1897,7 @@ $messages['sv'] = array(
 	'userlogin-error-mail-error' => 'Hoppsan, ett fel uppstod när det skulle skickas till din e-post. Var god [[Special:Contact/general|kontakta oss]].',
 	'userlogin-password-email-sent' => 'Vi har skickat ett nytt lösenord till e-postadressen för $1.',
 	'userlogin-error-unconfirmed-user' => 'Tyvärr, du har inte bekräftat din e-postadress. Var god bekräfta din e-postadress först.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'Bekräftelsepåminnelse har redan skickats via e-post.',
 	'userlogin-password-page-title' => 'Ändra ditt lösenord',
 	'userlogin-oldpassword' => 'Gammalt lösenord',
 	'userlogin-newpassword' => 'Nytt lösenord',
@@ -2352,6 +2376,7 @@ _______________________________________
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author Simon Shek
+ * @author StephDC
  */
 $messages['zh-hant'] = array(
 	'userlogin-login-heading' => '登入',
@@ -2381,11 +2406,37 @@ $messages['zh-hant'] = array(
 	'userlogin-error-noemailtitle' => '請輸入有效的電子郵件地址。',
 	'userlogin-error-acct_creation_throttle_hit' => '抱歉，此 IP 地址今天已創建了太多帳戶。請稍後再試。',
 	'userlogin-error-resetpass_forbidden' => '無法更改密碼',
+	'userlogin-error-blocked-mailpassword' => '由於您的IP位址已經被Wikia封禁，您不可以請求一個新密碼。',
+	'userlogin-error-throttled-mailpassword' => '我們已經在{{PLURAL:$1|1小時|$1小時}}前發送了此帳戶的密碼提示。請檢查您的電子郵件。',
+	'userlogin-error-mail-error' => '哎呀，在向您發送電子郵件的時候我們遇到了個問題。請[[Special:Contact/general|聯繫我們]]。',
+	'userlogin-password-email-sent' => '我們已經向帳戶 $1 發送了一封包含有該帳戶的新密碼的電子郵件。',
+	'userlogin-error-unconfirmed-user' => '抱歉，您尚未確認您的電子郵件地址。請先去確認您的電子郵件地址。',
 	'userlogin-password-page-title' => '更改您的密碼',
 	'userlogin-oldpassword' => '舊密碼',
 	'userlogin-newpassword' => '新密碼',
 	'userlogin-retypenew' => '重新輸入新密碼',
+	'userlogin-password-email-subject' => '忘記密碼',
 	'userlogin-password-email-greeting' => '$USERNAME：',
+	'userlogin-password-email-content' => '請使用下列臨時密碼登陸Wikia："$NEWPASSWORD"
+<br /><br />
+如果您並未請求一個新密碼，請不要擔心。您的帳戶仍然安全可靠。您可以忽略這封電子郵件，並且繼續使用您的舊密碼登陸Wikia。
+<br /><br />
+仍然有問題？請隨時<a href="http://community.wikia.com/wiki/Special:Contact/account-issue">聯繫我們</a>。',
+	'userlogin-password-email-signature' => 'Wikia社區支援',
+	'userlogin-password-email-body' => '$2 您好，
+
+請使用下列臨時密碼登陸Wikia："$3"
+
+如果您並未請求一個新密碼，請不要擔心。您的帳戶仍然安全可靠。您可以忽略這封電子郵件，並且繼續使用您的舊密碼登陸Wikia。
+
+仍然有問題？請隨時聯繫我們：http://community.wikia.com/wiki/Special:Contact/account-issue
+
+Wikia社區支援
+
+___________________________________________
+
+要瞭解Wikia的最新動態，請訪問 http://community.wikia.com 。
+希望調整您將會收到的電子郵件的類型嗎？請訪問：{{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-provider-or' => '或',
 	'userlogin-facebook-show-preferences' => '顯示 Facebook 選項',
 	'userlogin-facebook-hide-preferences' => '隱藏 Facebook 選項',

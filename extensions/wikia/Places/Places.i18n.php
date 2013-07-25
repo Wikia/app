@@ -107,6 +107,13 @@ $messages['ca'] = array(
 	'places-category-switch-off' => 'Activar les geoetiquetes',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'places-editor-search' => 'Лаха',
+);
+
 /** Czech (česky)
  * @author Chmee2
  */
@@ -521,6 +528,8 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'places-editor-search' => 'پلټل',
+	'places-geolocation-button-label' => 'ځای ورګډول',
+	'places-geolocation-modal-add-title' => 'ځای ورګډول',
 	'places-geolocation-modal-error-title' => 'تېروتنه',
 );
 

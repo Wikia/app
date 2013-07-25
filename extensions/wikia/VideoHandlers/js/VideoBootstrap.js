@@ -138,16 +138,17 @@ define( 'wikia.videoBootstrap', [ 'wikia.loader', 'wikia.nirvana', 'wikia.log', 
 		 * videos. Timestamping DOM id's makes it so you can create more than
 		 * one instance of the same video on a page.
 		 */
-		timeStampId: function( id ) {
-			var time = new Date().getTime(),
-				container = document.getElementById( id ),
-				newId = id + "-" + time;
+		timeStampId: function(id) {
+			var container = document.getElementById( id),
+				newId = id + "-" + new Date().getTime();
 
-			container.id = newId;
+			if(container) {
+				container.id = newId;
+			}
 
 			return newId;
 		}
-	}
+	};
 
 	return VideoBootstrap;
 });

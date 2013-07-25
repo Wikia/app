@@ -65,6 +65,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'app-loading' => '{{Identical|Loading}}',
+	'app-tab-search' => '{{Identical|Search}}',
 	'app-tab-sotd' => 'SotD = Song of the Day',
 	'app-async-error-title' => '{{Identical|Oops}}',
 );
@@ -170,6 +171,13 @@ $messages['br'] = array(
 	'about-heading-rate' => 'Priziit ar poellad mar plij !',
 	'about-rate-0-android' => "Ma blij deoc'h ar poellad-mañ, roit dezhañ 5 steredenn war an ''Android Market'' !",
 	'lyrics-artist-byline' => 'gant %s',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'login-username-hint' => 'Декъашхочун цӀе',
 );
 
 /** Czech (česky)
@@ -522,7 +530,12 @@ $messages['ia'] = array(
  * @author C5st4wr6ch
  */
 $messages['id'] = array(
+	'app-loading' => 'Memuat...',
+	'app-nonetwork-dialog-title' => 'Jaringan tidak tersedia',
+	'search-results-title' => 'Hasil pencarian untuk: %s',
 	'about-tips-1' => 'Gambar pada layar utama adalah lagu 9 Teratas di iTunes saat ini.',
+	'about-licensing-0' => 'Aplikasi ini adalah 100% sah. Royalti dibayarkan kepada pemegang hak lagu melalui Gracenote - seperti pada situs web LyricWiki.',
+	'about-rate-0-android' => 'Jika Anda menyukai aplikasi ini, silakan menilai ini 5 bintang di Android Market!',
 	'gracenote-takedown' => 'Aduh! Sayang sekali, kami tidak diberi izin untuk menampilkan seluruh lirik untuk lagu ini pada saat ini (ini terjadi pada kurang dari 1% dari lagu-lagu kami). Mohon coba lagi minggu depan.',
 );
 

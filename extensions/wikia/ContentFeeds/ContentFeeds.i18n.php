@@ -230,6 +230,14 @@ $messages['ia'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error: Texto de pagina es requirite',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Judul',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Kesalahan: Judul halaman disyaratkan',
+);
+
 /** Italian (italiano)
  * @author Rippitippi
  */
@@ -392,9 +400,10 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Luckas
  */
 $messages['pt'] = array(
-	'contentfeeds-desc' => 'Fornece informação actualizada através de vários elementos ou "feeds"',
+	'contentfeeds-desc' => 'Fornece informação atualizada através de vários elementos ou "feeds"',
 	'contentfeeds-newimages-rss-title' => 'Feed RSS para {{#Special:NewFiles}}',
 	'contentfeeds-newimages-rss-desc' => 'Feed de $1',
 	'contentfeeds-firstfewarticles-tag-header' => 'Crie as suas primeiras páginas!',

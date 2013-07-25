@@ -29,7 +29,7 @@ class Forum extends Walls {
 			$boardInfo = $board->getBoardInfo();
 			$boardInfo['id'] = $title->getArticleID();
 			$boardInfo['name'] = $title->getText();
-			$boardInfo['description'] = $board->getDescription();
+			$boardInfo['description'] = $board->getDescriptionWithoutTemplates();
 			$boardInfo['url'] = $title->getFullURL();
 			$orderIndex = $orderIndexes[$id];
 			$boards[$orderIndex] = $boardInfo;
@@ -137,7 +137,6 @@ class Forum extends Walls {
 		wfProfileIn( __METHOD__ );
 
 		$out = WikiaDataAccess::cache( wfMemcKey( 'Forum_hasAtLeast', $ns, $count ), 24 * 60 * 60/* one day */, function() use ( $ns, $count ) {
-			$app = F::App();
 			$db = wfGetDB( DB_MASTER );
 			// check if there is more then 5 forum pages (5 is number of forum pages from starter)
 			// limit 6 is faster solution then count(*) and the compare in php

@@ -90,6 +90,14 @@ $messages['br'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Kinnigoù reizhskrivañ evit "$1" : $2',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'spellchecker-info-languages' => 'Лелолуш долу меттанаш ($1)',
+	'spellchecker-info-spellcheck-languages' => 'Мотт',
+);
+
 /** Czech (česky)
  * @author Darth Daron
  */
@@ -399,11 +407,12 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
  * @author Waldir
  */
 $messages['pt'] = array(
 	'spellchecker-desc' => 'Fornece uma interface de verificação ortográfica para o módulo PHP enchant',
-	'enablespellchecker' => 'Activar o corretor ortográfico no modo visual',
+	'enablespellchecker' => 'Ativar o corretor ortográfico no modo visual',
 	'spellchecker-info' => 'Informação do corretor ortográfico',
 	'spellchecker-info-languages' => 'Línguas disponíveis ($1)',
 	'spellchecker-info-provider' => 'Fornecedor',

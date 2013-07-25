@@ -89,6 +89,13 @@ $messages['bg'] = array(
 	'ajaxpoll-submit' => 'Гласуване!',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'ajaxpoll-submit' => 'ভোট!',
+);
+
 /** Tibetan (བོད་ཡིག)
  * @author YeshiTuhden
  */
@@ -815,6 +822,14 @@ $messages['vi'] = array(
 	'ajaxpoll-submit' => 'Bình chọn!',
 	'ajaxpoll-closed' => 'Bảng thăm dò đã đóng. Hãy xem các kết quả.',
 	'ajaxpoll-submitting' => 'Xin vui lòng chờ, đang gửi bình chọn của bạn...',
+);
+
+/** Chinese (中文)
+ * @author Shangkuanlc
+ */
+$messages['zh'] = array(
+	'ajaxpoll-thankyou' => '感謝你的投票',
+	'ajaxpoll-error' => '投票過程發生問題，請再試一次',
 );
 
 /** Simplified Chinese (中文（简体）‎)

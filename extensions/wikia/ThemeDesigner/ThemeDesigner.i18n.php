@@ -396,6 +396,14 @@ $messages['ca'] = array(
 	'themedesigner-wodmark-preview' => 'Previsualització',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'themedesigner-header' => 'корта',
+	'themedesigner-font' => 'шрифт',
+);
+
 /** Czech (česky)
  * @author Chmee2
  * @author Dontlietome7
@@ -565,9 +573,11 @@ $messages['diq'] = array(
 );
 
 /** British English (British English)
+ * @author Shirayuki
  */
 $messages['en-gb'] = array(
 	'themedesigner-color' => 'colour',
+	'themedesigner-tab-customize' => 'Customise',
 	'themedesigner-color-name-or-hex-code' => 'Colour name or hex code',
 );
 
@@ -1102,7 +1112,7 @@ $messages['ko'] = array(
 	'themedesigner-medium' => '보통',
 	'themedesigner-large' => '크게',
 	'themedesigner-tile-background' => '바둑판식',
-	'themedesigner-fix-background' => '고정',
+	'themedesigner-fix-background' => '고치기',
 	'themedesigner-transparency' => '투명도',
 	'themedesigner-tab-theme' => '테마',
 	'themedesigner-tab-customize' => '사용자 설정',
