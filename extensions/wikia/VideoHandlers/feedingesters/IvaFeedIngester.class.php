@@ -302,7 +302,9 @@ class IvaFeedIngester extends VideoFeedIngester {
 						$keywords[] = 'Foreign';
 					}
 
-					$clipData['keywords'] = implode( ', ', array_unique( $keywords ) );
+					$keywordsLower = array_map( 'strtolower', $keywords );
+					$keywordsUniq = array_intersect_key( $keywords, array_unique( $keywordsLower ) );
+					$clipData['keywords'] = implode( ', ', $keywordsUniq );
 
 					$msg = '';
 					$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
