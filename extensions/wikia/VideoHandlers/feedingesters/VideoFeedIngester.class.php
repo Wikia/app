@@ -656,7 +656,7 @@ abstract class VideoFeedIngester {
 			case 'Game':
 			case 'Games':
 			case 'Games SceneOrSample':
-				$category = 'Games';
+				$category = 'Gaming';
 				break;
 			default: $category = 'Others';
 		}

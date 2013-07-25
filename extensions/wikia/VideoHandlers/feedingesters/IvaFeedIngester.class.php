@@ -201,8 +201,14 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 				// get season
 				$clipData['season'] = empty( $videoParams['season'] ) ? '' : $videoParams['season'];
-				if ( empty( $clipData['season'] ) && $program['MediaId'] == 26 ) {	// media type = season
+				if ( empty( $clipData['season'] ) && $program['MediaId'] == 26 ) {	// media type = season (26)
 					 $clipData['season'] = empty( $program['DisplayTitle'] ) ? trim( $program['Title'] ) : trim( $program['DisplayTitle'] );
+				}
+
+				// get episode
+				$clipData['episode'] = empty( $videoParams['episode'] ) ? '' : $videoParams['episode'];
+				if ( empty( $clipData['episode'] ) && $program['MediaId'] == 27 ) {	// media type = episode (27)
+					 $clipData['episode'] = empty( $program['DisplayTitle'] ) ? trim( $program['Title'] ) : trim( $program['DisplayTitle'] );
 				}
 
 				$clipData['tags'] = trim( $program['Tagline'] );
@@ -311,6 +317,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 					$params = $videoParams;
 					$params['series'] = $clipData['series'];
 					$params['season'] = $clipData['season'];
+					$params['episode'] = $clipData['episode'];
 					$params['videoSet'] = $program['Publishedid'];
 					$params['isPromotesPublishedId'] = true;
 
@@ -504,6 +511,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 			'targetCountry'  => $data['targetCountry'],
 			'series'         => $data['series'],
 			'season'         => $data['season'],
+			'episode'        => $data['episode'],
 		);
 
 		return $metadata;

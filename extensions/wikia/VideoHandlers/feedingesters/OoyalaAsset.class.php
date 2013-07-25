@@ -185,6 +185,9 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['season'] ) ) {
 			$metadata['season'] = $data['season'];
 		}
+		if ( !empty( $data['episode'] ) ) {
+			$metadata['episode'] = $data['episode'];
+		}
 
 		return $metadata;
 	}
