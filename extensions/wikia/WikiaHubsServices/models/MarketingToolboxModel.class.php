@@ -11,6 +11,8 @@ class MarketingToolboxModel extends WikiaModel {
 	const CACHE_KEY = 'HubsV2v1.00';
 	const CACHE_KEY_LAST_PUBLISHED_TIMESTAMP = 'lastPublishedTimestamp';
 
+	const STRTOTIME_MIDNIGHT = '00:00';
+
 	protected $statuses = array();
 	protected $modules = array();
 	protected $editableModules = array();
@@ -594,9 +596,9 @@ class MarketingToolboxModel extends WikiaModel {
 		if ($timestamp === null) {
 			$timestamp = time();
 		}
-		$timestamp = strtotime('00:00', $timestamp);
+		$timestamp = strtotime(self::STRTOTIME_MIDNIGHT, $timestamp);
 
-		if ($timestamp == strtotime('00:00')) {
+		if ($timestamp == strtotime(self::STRTOTIME_MIDNIGHT)) {
 			$lastPublishedTimestamp = WikiaDataAccess::cache(
 				$this->getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp),
 				6 * 60 * 60,
@@ -612,7 +614,7 @@ class MarketingToolboxModel extends WikiaModel {
 	}
 
 	protected function purgeLastPublishedTimestampCache($langCode, $sectionId, $verticalId) {
-		$this->wg->Memc->delete($this->getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId, strtotime('00:00')));
+		$this->wg->Memc->delete($this->getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId, strtotime(self::STRTOTIME_MIDNIGHT)));
 	}
 
 	public function getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp, $useMaster = false) {
