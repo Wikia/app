@@ -22,7 +22,7 @@ class Video extends OnWiki
 	 * Adding English title to requested fields for i18n 
 	 * @var array
 	 */
-	protected $requstedFields = [
+	protected $requestedFields = [
 				'id',
 				'pageid',
 				'wikiarticles',
