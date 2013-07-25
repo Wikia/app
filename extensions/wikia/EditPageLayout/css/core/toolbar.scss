@@ -62,6 +62,13 @@
 
 	.cke_toolbar_format {
 		margin-right: 30px;
+		padding-top: 0;
+
+		.cke_button a,
+		.cke_rcombo a,
+		.cke_separator {
+			margin-top: 5px;
+		}
 	}
 
 	.cke_toolbar_widescreen {
@@ -95,7 +102,7 @@
 		@include linear-gradient($color-epl-separator, top, $color-epl-separator-tips, 0%, $color-epl-separator, 10%, $color-epl-separator, 90%, $color-epl-separator-tips, 100%);
 		display: inline-block;
 		float: left;
-		height: 30px;
+		height: 29px;
 		margin: -1px 5px;
 		width: 1px;
 	}
