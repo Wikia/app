@@ -147,6 +147,7 @@ body {
 
 	@if ( $background-is-dynamic ) {
 		background: $color-body;
+		overflow-x: hidden;
 
 		&:after,
 		&:before {
@@ -154,7 +155,6 @@ body {
 			background-repeat: no-repeat;
 			content: "";
 			height: $background-height;
-			overflow-x: hidden;
 			position: $background-position;
 			top: 0;
 			width: $background-width-half;
