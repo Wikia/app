@@ -10,12 +10,11 @@ $messages['en'] = [
 	'special-css-publish-button' => 'Publish',
 	'special-css-compare-button' => 'Show changes',
 
-	'special-css-community-update-headline' => 'Wikia CSS Updates',
 	'special-css-community-update-by' => '$1 by [$2 $3]',
 	'special-css-community-read-more' => 'Read more',
 	'special-css-community-update-see-all' => 'See all',
+	'special-css-community-update-headline' => 'CSS Updates',
 	'special-css-wikia-skin-only' => 'Special:CSS is available only in Wikia skin. If you would like to use this feature please switch your preference to the Wikia skin.',
-
 	'special-css-diff-modal-title' => 'Changes',
 
 	'special-css-saving-internal-error' => 'Error while saving content.',
@@ -36,6 +35,26 @@ $messages['en'] = [
 	'special-css-leaveconfirm-message' => 'You have made some unpublished edits. Are you sure you want to leave without publishing them?',
 ];
 
+$messages['es'] = [
+	'special-css-community-update-headline' => 'Actualizaciones sobre CSS',
+];
+
+$messages['de'] = [
+	'special-css-community-update-headline' => 'Neuigkeiten zu CSS',
+];
+
+$messages['fr'] = [
+	'special-css-community-update-headline' => 'Informations liées au CSS',
+];
+
+$messages['it'] = [
+	'special-css-community-update-headline' => 'Aggiornamenti sul CSS',
+];
+
+$messages['ru'] = [
+	'special-css-community-update-headline' => 'Обновления CSS',
+];
+
 $messages['pl'] = [
 	'css' => 'Kaskadowe arkusze stylów',
 	'action-specialcss' => 'edycja CSS',
@@ -44,11 +63,11 @@ $messages['pl'] = [
 
 	'special-css-publish-button' => 'Publikuj',
 
-	'special-css-community-update-headline' => 'Aktualizacje na temat CSS od Wikii',
 	'special-css-community-update-by' => '$1 przez [$2 $3]',
 	'special-css-community-read-more' => 'Czytaj więcej',
 	'special-css-community-update-see-all' => 'Zobacz wszystko',
-	'special-css-wikia-skin-only' => 'Special:CSS jest stroną dostępną tylko w skórce Wikia. Jeśli chcesz używać tej strony zmień ustawienia skórki w swoich preferencjach na Wikia.',
+	'special-css-community-update-headline' => 'Aktualizacje CSS',
+	'special-css-oasis-only' => 'Special:CSS jest stroną dostępną tylko w skórce Wikia. Jeśli chcesz używać tej strony zmień ustawienia skórki w swoich preferencjach na Wikia.',
 	'special-css-education-item-webinars-header' => 'CSS_ Wikia Webinars',
 	'special-css-education-item-webinars-link-title' => 'Wikia CSS Webinar',
 	'special-css-education-item-webinars-paragraph' => 'Istrukcje dotyczące używania własnych reguł CSS w Wikii.',
