@@ -28,10 +28,11 @@ class VideoInfoHelper extends WikiaModel {
 	}
 
 	/**
-	 * get video data from file
-	 * @param File $file
-	 * @param boolean $premiumOnly
-	 * @return array|null  $video
+	 * This method pulls the data needed for a VideoInfo object from an existing file when the data does not exist
+	 * in the video_info table.  This is used in the case where video_info data wasn't created when the video uploaded.
+	 * @param File $file - The file object to get video info for
+	 * @param boolean $premiumOnly - If true will exit immediately if $file is a local file
+	 * @return array|null - An array of data suitable for passing to the VideoInfo constructor
 	 */
 	public function getVideoDataFromFile( $file, $premiumOnly = false ) {
 		wfProfileIn( __METHOD__ );
@@ -104,7 +105,6 @@ class VideoInfoHelper extends WikiaModel {
 	 * @return array $videoList
 	 */
 	public static function getTotalViewsFromDB() {
-		$app = F::app();
 
 		wfProfileIn( __METHOD__ );
 
