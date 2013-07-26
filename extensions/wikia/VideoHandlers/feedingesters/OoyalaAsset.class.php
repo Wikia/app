@@ -94,8 +94,11 @@ class OoyalaAsset extends WikiaModel {
 		$reqPath = '/v2/assets/'.$videoId.'/metadata';
 
 		$assetData = $this->getAssetMetadata( $metadata );
+
+		// source and sourceid are required. They are used for tracking the video.
 		$assetData['source'] = $metadata['provider'];
 		$assetData['sourceid'] = $metadata['videoId'];
+
 		$reqBody = json_encode( $assetData );
 
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
@@ -179,25 +182,60 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['targetCountry'] ) ) {
 			$metadata['targetcountry'] = $data['targetCountry'];
 		}
+		if ( !empty( $data['series'] ) ) {
+			$metadata['series'] = $data['series'];
+		}
+		if ( !empty( $data['season'] ) ) {
+			$metadata['season'] = $data['season'];
+		}
+		if ( !empty( $data['episode'] ) ) {
+			$metadata['episode'] = $data['episode'];
+		}
 
 		return $metadata;
 	}
 
 	/**
-	 * check if video exists
+	 * check if video title exists
 	 * @param string $name
 	 * @param string $source
 	 * @param string $assetType [remote_asset]
 	 * @return boolean
 	 */
-	public function isExist( $name, $source, $assetType = 'remote_asset' ) {
-		wfProfileIn( __METHOD__ );
-
+	public function isTitleExist( $name, $source, $assetType = 'remote_asset' ) {
 		$cond = array(
 			"asset_type='$assetType'",
 			"name='".addslashes($name)."'",
+			//"metadata.source='$source'",
+		);
+
+		return $this->isExist( $cond );
+	}
+
+	/**
+	 * check if video id exists (match sourceid in metadata)
+	 * @param string $sourceId
+	 * @param string $source
+	 * @param string $assetType [remote_asset]
+	 * @return boolean
+	 */
+	public function isSourceIdExist( $videoId, $source, $assetType = 'remote_asset' ) {
+		$cond = array(
+			"asset_type='$assetType'",
+			"metadata.sourceid='$videoId'",
 			"metadata.source='$source'",
 		);
+
+		return $this->isExist( $cond );
+	}
+
+	/**
+	 * check if video exists
+	 * @param array $cond
+	 * @return boolean
+	 */
+	public function isExist( $cond ) {
+		wfProfileIn( __METHOD__ );
 
 		$params = array(
 			'limit' => 1,
