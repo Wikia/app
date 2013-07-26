@@ -33,21 +33,21 @@ class WikiaForeignDBFile extends ForeignDBFile {
 	 * @param false|string|Title $title
 	 * @param false|FileRepo $repo
 	 */
-	function __construct( $title, $repo ){
+	function __construct( $title, $repo ) {
 		parent::__construct( $title, $repo );
 		
 	}
 
-	function  __call( $name, $arguments ){
-		if ( method_exists( $this->getLocalFileLogic(), $name ) ){
+	function  __call( $name, $arguments ) {
+		if ( method_exists( $this->getLocalFileLogic(), $name ) ) {
 			return call_user_func_array( array( $this->getLocalFileLogic(), $name ), $arguments );
 		} else {
 			throw new Exception( 'Method ' .get_class( $this->getLocalFileLogic() ).'::' . $name . ' does not extist' );
 		}
 	}
 
-	function __set( $name, $value ){
-		if ( !isset( $this->$name ) && isset( $this->getLocalFileLogic()->$name ) ){
+	function __set( $name, $value ) {
+		if ( !isset( $this->$name ) && isset( $this->getLocalFileLogic()->$name ) ) {
 			$this->getLocalFileLogic()->$name = $value;
 		} else {
 			$this->$name = $value;
@@ -63,7 +63,7 @@ class WikiaForeignDBFile extends ForeignDBFile {
 	}
 
 	protected function getLocalFileLogic() {
-		if ( empty( $this->oLocalFileLogic ) ){
+		if ( empty( $this->oLocalFileLogic ) ) {
 			$this->oLocalFileLogic = new WikiaLocalFileShared( $this );
 		}
 		return $this->oLocalFileLogic;
@@ -89,7 +89,7 @@ class WikiaForeignDBFile extends ForeignDBFile {
 		if ( !empty($addedBy) ) {
 			if ( $type == 'text' ) {
 				$user = User::newFromId( $addedBy );
-				if ( !empty($user) && is_object($user) ) {
+				if ( $user instanceof User ) {
 					return $user->getName();
 				}
 			} else {
@@ -100,7 +100,7 @@ class WikiaForeignDBFile extends ForeignDBFile {
 		return parent::getUser( $type );
 	}
 
-	function getHandler(){
+	function getHandler() {
 		wfProfileIn( __METHOD__ );
 		if ( !isset( $this->handler ) ) {
 			parent::getHandler();
