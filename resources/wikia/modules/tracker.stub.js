@@ -141,7 +141,7 @@
 	}
 
 	// Exports
-	window.Wikia = window.Wikia || {};
+	window.Wikia = Wikia || {};
 	window.Wikia.Tracker = tracker( window );
 
 	if ( window.define && window.define.amd ) {
