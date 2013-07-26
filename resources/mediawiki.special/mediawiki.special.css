@@ -30,11 +30,6 @@ td.mw-allpages-alphaindexline {
 table.mw-allpages-table-form tr {
 	vertical-align: top;
 }
-/* Wikia change - start (@author macbre) */
-table.mw-allpages-table-chunk a {
-	word-break: break-word;
-}
-/* Wikia change - end */
 
 /**** Special:Block ****/
 tr.mw-block-hideuser {
