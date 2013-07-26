@@ -72,7 +72,6 @@ if(Math.random()<0.01){
 <? endif ?>
 
 <?= $headItems ?>
-
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>"<?= $itemType ?>>
 
