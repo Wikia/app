@@ -218,7 +218,7 @@ class VideoEmbedToolSearchService
 			             ->setRank( $this->getRank() );
 			$this->config->setFilterQueryByCode( Wikia\Search\Config::FILTER_VIDEO );
 			if ( $this->getSearchType() == 'premium' ) {
-				$this->config->setWikiId( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID );
+				$this->config->setWikiId( Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID );
 			}
 			
 		}
