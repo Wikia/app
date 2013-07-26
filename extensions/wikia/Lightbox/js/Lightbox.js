@@ -653,7 +653,7 @@ var Lightbox = {
 		var overlay = Lightbox.openModal;
 
 		// If an interstitial ad is being shown, do not hideOverlay
-		if (window.Lightbox.ads.adIsShowing) return;
+		if (Lightbox.ads.adIsShowing) return;
 
 		if(!overlay.hasClass('overlay-hidden') && overlay.data('overlayactive')) {
 			clearTimeout(Lightbox.eventTimers.overlay);
