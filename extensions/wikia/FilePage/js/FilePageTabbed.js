@@ -8,7 +8,7 @@ var Paginator,
 // alias global tracker
 globalTracker = window.Wikia.Tracker || {};
 
-track = globalTracker.buildTrackingFunction( globalTracker.trackEditorComponent, {
+track = globalTracker.buildTrackingFunction({
 		action: globalTracker.ACTIONS.CLICK,
 		category: 'filepage',
 		trackingMethod: 'both'
@@ -43,9 +43,9 @@ Paginator.prototype = {
 				if ( !$target.hasClass('disabled') ) {
 
 					track({
-						label: 'paginator'
-					, action: 'CLICK'
-					, value: $target.hasClass('right') ? 'right' : 'left'
+							label: 'paginator',
+							action: globalTracker.ACTIONS.CLICK,
+							value: $target.hasClass('right') ? 'right' : 'left'
 					});
 
 					
@@ -232,9 +232,9 @@ FilePageTabbed = {
 					, url = node.href;
 
 				track({
-						label: 'page-listing-link'
-					, action: 'CLICK'
-					, value: url
+						label: 'page-listing-link', 
+						action: globalTracker.ACTIONS.CLICK,
+						value: url
 				});
 
 				window.location = url;
