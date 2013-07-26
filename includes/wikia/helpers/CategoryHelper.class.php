@@ -81,7 +81,7 @@ class CategoryHelper {
 	 *
 	 * @return Array
 	 */
-	public static function extractCategoriesFromWikitext( $wikitext, $force = false ) {
+	public static function extractCategoriesFromWikitext( $wikitext, $force = false, $lang = null ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !$force && is_array( self::$data ) ) {
@@ -108,7 +108,7 @@ class CategoryHelper {
 
 		//init variables
 		self::$nodeLevel = 0;
-		self::getDefaultNamespaces();
+		self::getDefaultNamespaces( $lang );
 
 		// we will ignore categories added inside following list of tags (BugId:8208)
 		self::$tagsWhiteList = array_keys( $app->wg->Parser->mTagHooks );
@@ -202,9 +202,14 @@ class CategoryHelper {
 	 * Gets the default namespaces for a wiki and content language.
 	 * @return String
 	 */
-	public static function getDefaultNamespaces() {
+	public static function getDefaultNamespaces( $lang = null ) {
 		if ( !isset( self::$namespaces ) ) {
-			$namespaces = F::app()->wg->ContLang->getNsText( NS_CATEGORY );
+
+			if ( is_null($lang) || !( $lang instanceof Language ) ) {
+				$lang = F::app()->wg->ContLang;
+			}
+
+			$namespaces = $lang->getNsText( NS_CATEGORY );
 
 			if ( strpos( $namespaces, 'Category' ) === false ) {
 				$namespaces = 'Category|' . $namespaces;
