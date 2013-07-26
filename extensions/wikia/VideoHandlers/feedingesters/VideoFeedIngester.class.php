@@ -123,7 +123,18 @@ abstract class VideoFeedIngester {
 
 		$provider = empty($params['provider']) ? static::$PROVIDER : $params['provider'];
 
-		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $id );
+		// check if the video id exists in Ooyala.
+		if ( $remoteAsset ) {
+			$ooyalaAsset = new OoyalaAsset();
+			$isExist = $ooyalaAsset->isSourceIdExist( $id, $provider );
+			if ( $isExist ) {
+				print "Not uploading - video already exists in remote assets.\n";
+				wfProfileOut( __METHOD__ );
+				return 0;
+			}
+		}
+
+		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $id, $remoteAsset );
 		$dup_count = count($duplicates);
 		$previousFile = null;
 		if ( $dup_count > 0 ) {
@@ -262,7 +273,7 @@ abstract class VideoFeedIngester {
 			}
 		} else {
 			$ooyalaAsset = new OoyalaAsset();
-			$isExist = $ooyalaAsset->isExist( $assetData['name'], $assetData['provider'] );
+			$isExist = $ooyalaAsset->isTitleExist( $assetData['name'], $assetData['provider'] );
 			if ( $isExist ) {
 				print( "Skip (Uploading Asset): $name ($assetData[provider]): Video already exists.\n" );
 				wfProfileOut( __METHOD__ );
@@ -651,6 +662,10 @@ abstract class VideoFeedIngester {
 			case 'Season':
 			case 'Episode':
 			case 'TV Show':
+			case 'Episodic Interview':
+			case 'Episodic Behind the Scenes':
+			case 'Episodic SceneOrSample':
+			case 'Episodic Alternate Version':
 				$category = 'TV';
 				break;
 			case 'Game':
