@@ -7,11 +7,11 @@
  * @author Hyun Lim <hyun@wikia-inc.com>
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
-(function( context ) {
+(function( window ) {
 	'use strict';
 
 	// Depends on tracker.stub.js
-	var trackerStub = context.Wikia.Tracker,
+	var trackerStub = window.Wikia.Tracker,
 			Wikia = window.Wikia || {};
 
 	// Adds the info from the second hash into the first.
@@ -341,11 +341,11 @@
 	}
 
 	// UMD
-	extend( trackerStub, tracker( context ) );
+	extend( trackerStub, tracker( window ) );
 
 	// AMD
 	require( [ 'wikia.tracker' ], function( trackerStub ) {
-		extend( trackerStub, tracker( context ) );
+		extend( trackerStub, tracker( window ) );
 	});
 
-}(this));
+}(window, undefined));
