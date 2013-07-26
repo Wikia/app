@@ -14,13 +14,28 @@ abstract class ImageServingDriverBase {
 	 */
 	var $db;
 
+	protected $imagesList;
+	protected $articleCountList;
+	protected $filterdOut;
+
+	protected $minWidth;
+	protected $minHeight;
+
+	/**
+	 * @param $db
+	 * @param $imageServing ImageServing
+	 * @param $proportion
+	 */
 	function __construct($db, $imageServing, $proportion) {
 		$this->app = F::app();
 		$this->db = $db;
 		$this->proportion = $proportion;
 		//TODO: remove it
 		$this->imageServing = $imageServing;
-		$this->memc =  $this->app->getGlobal( 'wgMemc' );
+		$this->memc =  $this->app->wg->Memc;
+
+		$this->minHeight = $this->imageServing->getRequestedHeight();
+		$this->minWidth = $this->imageServing->getRequestedWidth();
 	}
 
 	abstract protected function getImagesFromDB($articles = array());
@@ -170,6 +185,6 @@ abstract class ImageServingDriverBase {
 	 * @author Federico "Lox" Lucignano
 	 */
 	protected function makeKey( $key  ) {
-		return wfMemcKey("imageserving-images-data", $key, $this->proportion);
+		return wfMemcKey("imageserving-images-data", $key, $this->minWidth, $this->minHeight);
 	}
 }
