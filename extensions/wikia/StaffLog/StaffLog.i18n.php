@@ -176,6 +176,7 @@ $messages['diq'] = array(
  * @author Shirayuki
  */
 $messages['en-gb'] = array(
+	'stafflog-desc' => 'Centralised logging for staff',
 	'action-stafflog' => 'view the centralised staff log',
 );
 

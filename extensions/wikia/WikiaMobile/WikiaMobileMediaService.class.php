@@ -73,15 +73,8 @@ class WikiaMobileMediaService extends WikiaService {
 			$file = wfFindFile( $item['title'] );
 
 			if ( $file instanceof File ) {
-				if ( !empty( $item['link'] ) ) {
-					//build wikitext for linked images to render separately
-					$wikiText .= "[[" . $item['title']->getPrefixedDBkey() . "|link=" . $item['link'];
-
-					if ( !empty( $item['caption'] ) ) {
-						$wikiText .= "|{$item['caption']}";
-					}
-
-					$wikiText .= "]]\n";
+				if ( !empty( $item['link'] ) || $file->getWidth() < self::SMALL_IMAGE_SIZE ) {
+					$wikiText .= self::renderOutsideGallery( $item );
 				} else {
 					if ( empty( $first ) ) {
 						$first = [ 'data' => $item, 'file' => $file ];
@@ -184,10 +177,13 @@ class WikiaMobileMediaService extends WikiaService {
 		$noscript = $this->request->getVal( 'noscript', null );
 		$linked = $this->request->getBool( 'linked', false );
 		$content = $this->request->getVal( 'content' );
+		$width = $attribs['width'];
+		// Don't include small or linked images in the mobile lightbox
+		$includeInModal = !$linked && $width > self::SMALL_IMAGE_SIZE;
 
 		$attribs['data-src'] = $attribs['src'];
 		$attribs['src'] = wfBlankImgUrl();
-		$attribs['class'] = ( ( !empty( $attribs['class'] ) ) ? "{$attribs['class']} " : '' ) . self::CLASS_LAZYLOAD . ( !$linked  ? ' ' . self::CLASS_MEDIA : '' );
+		$attribs['class'] = ( ( !empty( $attribs['class'] ) ) ? "{$attribs['class']} " : '' ) . self::CLASS_LAZYLOAD . ( $includeInModal  ? ' ' . self::CLASS_MEDIA : '' );
 
 		if ( !empty( $params ) ) {
 			$attribs['data-params'] = htmlentities( json_encode( $params ) , ENT_QUOTES );
@@ -197,7 +193,7 @@ class WikiaMobileMediaService extends WikiaService {
 		$this->response->setVal( 'anchorAttributes', $linkAttribs );
 		$this->response->setVal( 'noscript', $noscript );
 		$this->response->setVal( 'content', $content );
-		$this->response->setVal( 'width', $attribs['width'] );
+		$this->response->setVal( 'width', $width );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -281,5 +277,26 @@ class WikiaMobileMediaService extends WikiaService {
 
 		wfProfileOut( __METHOD__ );
 		return $result;
+	}
+
+	/**
+	 * Build wikitext for images to render separately
+	 * @param $item
+	 * @return string
+	 */
+	private function renderOutsideGallery( $item ) {
+		$wikiText = "[[" . $item['title']->getPrefixedDBkey();
+
+		if ( !empty( $item['link'] ) ) {
+			$wikiText .= "|link=" . $item['link'];
+		}
+
+		if ( !empty( $item['caption'] ) ) {
+			$wikiText .= "|" . $item['caption'];
+		}
+
+		$wikiText .= "]]\n";
+
+		return $wikiText;
 	}
 }

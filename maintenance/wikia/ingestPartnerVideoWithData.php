@@ -14,7 +14,8 @@ $optionsWithArgs = array( 'u', 's', 'e', 'i' );
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( 'commandLine.inc' );
 
-if ( isset( $options['h'] ) ) {
+// commandLine.inc transforms -h and --help into 'help'
+if ( isset( $options['help'] ) ) {
 	print <<<EOT
 Import video from a partner
 

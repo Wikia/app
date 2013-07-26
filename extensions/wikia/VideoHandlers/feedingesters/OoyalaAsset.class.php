@@ -308,6 +308,54 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
+	 * get player info
+	 * @param string $videoId
+	 * @return array|false $response
+	 */
+	public function getPlayer( $videoId ) {
+		wfProfileIn( __METHOD__ );
+
+		$method = 'GET';
+		$reqPath = '/v2/assets/'.$videoId.'/player/';
+
+		$url = OoyalaApiWrapper::getApi( $method, $reqPath );
+		//print( "Connecting to $url...\n" );
+
+		$req = MWHttpRequest::factory( $url );
+		$status = $req->execute();
+		if ( $status->isGood() ) {
+			$response = json_decode( $req->getContent(), true );
+		} else {
+			$response = false;
+			print( "Error: problem getting player (".$status->getMessage().").\n" );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $response;
+	}
+
+	/**
+	 * set player
+	 * @param string $videoId
+	 * @param string $playerId (new player id)
+	 * @return boolean $resp
+	 */
+	public function setPlayer( $videoId, $playerId ) {
+		wfProfileIn( __METHOD__ );
+
+		$method = 'PUT';
+		$reqPath = '/v2/assets/'.$videoId.'/player/'.$playerId;
+		$params = array();
+
+		$resp = $this->sendRequest( $method, $reqPath, $params );
+
+		wfProfileOut( __METHOD__ );
+
+		return $resp;
+	}
+
+	/**
 	 * set age gate player
 	 * @param string $videoId
 	 * @param array $data
@@ -318,11 +366,7 @@ class OoyalaAsset extends WikiaModel {
 
 		$resp = true;
 		if ( !empty( $data['ageGate'] ) ) {
-			$method = 'PUT';
-			$reqPath = '/v2/assets/'.$videoId.'/player/'.OoyalaVideoHandler::OOYALA_PLAYER_ID_AGEGATE;
-			$params = array();
-
-			$resp = $this->sendRequest( $method, $reqPath, $params );
+			$resp = $this->setPlayer( $videoId, OoyalaVideoHandler::OOYALA_PLAYER_ID_AGEGATE );
 		}
 
 		wfProfileOut( __METHOD__ );

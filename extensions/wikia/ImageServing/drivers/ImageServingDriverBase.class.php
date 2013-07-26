@@ -14,13 +14,28 @@ abstract class ImageServingDriverBase {
 	 */
 	var $db;
 
+	protected $imagesList;
+	protected $articleCountList;
+	protected $filterdOut;
+
+	protected $minWidth;
+	protected $minHeight;
+
+	/**
+	 * @param $db
+	 * @param $imageServing ImageServing
+	 * @param $proportion
+	 */
 	function __construct($db, $imageServing, $proportion) {
 		$this->app = F::app();
 		$this->db = $db;
 		$this->proportion = $proportion;
 		//TODO: remove it
 		$this->imageServing = $imageServing;
-		$this->memc =  $this->app->getGlobal( 'wgMemc' );
+		$this->memc =  $this->app->wg->Memc;
+
+		$this->minHeight = $this->imageServing->getRequestedHeight();
+		$this->minWidth = $this->imageServing->getRequestedWidth();
 	}
 
 	abstract protected function getImagesFromDB($articles = array());
@@ -122,7 +137,7 @@ abstract class ImageServingDriverBase {
 		return array( 'data' => $out, 'rest' => $articlesRest ) ;
 	}
 
-	function formatResult($imageList ,$dbOut, $limit) {
+	protected function formatResult($imageList ,$dbOut, $limit) {
 		wfProfileIn( __METHOD__ );
 
 		$out = array();
@@ -130,9 +145,15 @@ abstract class ImageServingDriverBase {
 			if( isset($dbOut[ $key ]) ) {
 				foreach($value as $key2 => $value2) {
 					if (empty($out[$key2]) || count($out[$key2]) < $limit) {
+						$img = $this->getImageFile( $key );
 						$out[$key2][] = array(
 							"name" => $key,
-							"url" => $this->imageServing->getUrl($key, $dbOut[$key]['img_width'], $dbOut[$key]['img_height']));
+							"original_dimensions" => array(
+								"width"	=> !empty( $img ) ? $img->getWidth() : 0,
+								"height"=> !empty( $img ) ? $img->getHeight() : 0
+							),
+							"url" => !empty( $img ) ? $this->imageServing->getUrl($img, $dbOut[$key]['img_width'], $dbOut[$key]['img_height']) : ''
+						);
 					}
 				}
 			}
@@ -140,6 +161,12 @@ abstract class ImageServingDriverBase {
 
 		wfProfileOut( __METHOD__ );
 		return $out;
+	}
+
+	protected function getImageFile( $text ) {
+		$file_title = Title::newFromText( $text, NS_FILE );
+		$img = wfFindFile( $file_title );
+		return $img;
 	}
 
 	protected function storeInCache($dbOut) {
@@ -158,6 +185,6 @@ abstract class ImageServingDriverBase {
 	 * @author Federico "Lox" Lucignano
 	 */
 	protected function makeKey( $key  ) {
-		return wfMemcKey("imageserving-images-data", $key, $this->proportion);
+		return wfMemcKey("imageserving-images-data", $key, $this->minWidth, $this->minHeight);
 	}
 }

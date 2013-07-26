@@ -15,7 +15,7 @@ class Group106 extends Base
 	 * Use the non-translated version.
 	 * @var array
 	 */
-	protected $queryFieldsToBoosts = [
+	protected $defaultQueryFields = [
 			'title'             => 100,
 			'html'              => 5,
 			'redirect_titles'   => 50,
