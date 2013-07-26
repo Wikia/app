@@ -263,6 +263,15 @@ abstract class VideoFeedIngester {
 			return 0;
 		}
 
+		// check if video title exists
+		$ooyalaAsset = new OoyalaAsset();
+		$isExist = $ooyalaAsset->isTitleExist( $assetData['name'], $assetData['provider'] );
+		if ( $isExist ) {
+			print( "Skip (Uploading Asset): $name ($assetData[provider]): video already exists in remote assets.\n" );
+			wfProfileOut( __METHOD__ );
+			return 0;
+		}
+
 		if ( $debug ) {
 			print "Ready to create remote asset\n";
 			print "id:          $id\n";
@@ -272,14 +281,6 @@ abstract class VideoFeedIngester {
 				print ":: $line\n";
 			}
 		} else {
-			$ooyalaAsset = new OoyalaAsset();
-			$isExist = $ooyalaAsset->isTitleExist( $assetData['name'], $assetData['provider'] );
-			if ( $isExist ) {
-				print( "Skip (Uploading Asset): $name ($assetData[provider]): Video already exists.\n" );
-				wfProfileOut( __METHOD__ );
-				return 0;
-			}
-
 			$result = $ooyalaAsset->addRemoteAsset( $assetData );
 			if ( !$result ) {
 				wfProfileOut( __METHOD__ );

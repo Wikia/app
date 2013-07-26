@@ -206,7 +206,7 @@ class OoyalaAsset extends WikiaModel {
 		$cond = array(
 			"asset_type='$assetType'",
 			"name='".addslashes($name)."'",
-			"metadata.source='$source'",
+			//"metadata.source='$source'",
 		);
 
 		return $this->isExist( $cond );
