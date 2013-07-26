@@ -325,12 +325,13 @@ class ImageTweaksHooks {
 			if ( $file instanceof File ) {
 				$title = $file->getTitle()->getDBKey();
 				$titleText = $file->getTitle()->getText();
+				$views = MediaQueryService::getTotalVideoViewsByTitle( $title );
 
 				$data['content'] = Xml::element(
 					'span',
 					array( 'class' => 'videoInfo' ),
 					"{$titleText} (" . $file->getHandler()->getFormattedDuration() .
-						", " . wfMsgForContent( 'wikiamobile-video-views-counter', MediaQueryService::getTotalVideoViewsByTitle( $title ) ) .
+						", " . wfMessage( 'wikiamobile-video-views-counter', $views )->inContentLanguage()->text() .
 						')'
 				);
 			}
@@ -372,7 +373,7 @@ class ImageTweaksHooks {
 
 			$html .= Xml::openElement( 'div', array( 'class' => 'picture-attribution' ) ) .
 				$avatar .
-				wfMsgExt('oasis-content-picture-added-by', array( 'parsemag' ), $link, $attributeTo ) .
+				wfMessage('oasis-content-picture-added-by', $link, $attributeTo )->text() .
 				Xml::closeElement( 'div' );
 
 			wfProfileOut( __METHOD__ . '::PictureAttribution' );

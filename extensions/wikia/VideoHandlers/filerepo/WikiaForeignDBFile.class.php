@@ -1,6 +1,9 @@
 <?php
 
-/* Wikia wrapper on ForeignDBFile.
+/**
+ * Class WikiaForeignDBFile
+ *
+ * Wikia wrapper on ForeignDBFile.
  * Alter some functionality allow using thumbnails as a representative of videos in file structure.
  * Works as interface, logic should go to WikiaLocalFileShared
  */
@@ -24,26 +27,27 @@ class WikiaForeignDBFile extends ForeignDBFile {
 		return $file;
 	}
 
-	/* Composite/Leaf interface
-	 * 
-	 * if no method of var found in current object tries to get it from $this->oLocalFileLogic
+	/**
+	 * Composite/Leaf interface
+	 * If no method of var found in current object tries to get it from $this->oLocalFileLogic
+	 * @param false|string|Title $title
+	 * @param false|FileRepo $repo
 	 */
-
-	function __construct( $title, $repo ){
+	function __construct( $title, $repo ) {
 		parent::__construct( $title, $repo );
 		
 	}
 
-	function  __call( $name, $arguments ){
-		if ( method_exists( $this->getLocalFileLogic(), $name ) ){
+	function  __call( $name, $arguments ) {
+		if ( method_exists( $this->getLocalFileLogic(), $name ) ) {
 			return call_user_func_array( array( $this->getLocalFileLogic(), $name ), $arguments );
 		} else {
 			throw new Exception( 'Method ' .get_class( $this->getLocalFileLogic() ).'::' . $name . ' does not extist' );
 		}
 	}
 
-	function __set( $name, $value ){
-		if ( !isset( $this->$name ) && isset( $this->getLocalFileLogic()->$name ) ){
+	function __set( $name, $value ) {
+		if ( !isset( $this->$name ) && isset( $this->getLocalFileLogic()->$name ) ) {
 			$this->getLocalFileLogic()->$name = $value;
 		} else {
 			$this->$name = $value;
@@ -59,16 +63,44 @@ class WikiaForeignDBFile extends ForeignDBFile {
 	}
 
 	protected function getLocalFileLogic() {
-		if ( empty( $this->oLocalFileLogic ) ){
+		if ( empty( $this->oLocalFileLogic ) ) {
 			$this->oLocalFileLogic = new WikiaLocalFileShared( $this );
 		}
 		return $this->oLocalFileLogic;
 	}
 
-	// No everything can be transparent, because __CALL skips already defined methods.
+	// Not everything can be transparent, because __call skips already defined methods.
 	// These methods work as a layer of communication between this class and SharedLogic
 
-	function getHandler(){
+	/**
+	 * Override the getUser method for foreign files to return the user that originally added the
+	 * video rather than the one who uploaded it to the foreign repo
+	 * @param string $type
+	 * @return int|string
+	 */
+	public function getUser( $type = 'text' ) {
+		// Try to get video info for this file
+		$info = VideoInfo::newFromTitle( $this->getName() );
+		if ( !empty($info) ) {
+			$addedBy = $info->getAddedBy();
+		}
+
+		// If we got an addedBy user ID, use that otherwise fall back to the parent method
+		if ( !empty($addedBy) ) {
+			if ( $type == 'text' ) {
+				$user = User::newFromId( $addedBy );
+				if ( $user instanceof User ) {
+					return $user->getName();
+				}
+			} else {
+				return $addedBy;
+			}
+		}
+
+		return parent::getUser( $type );
+	}
+
+	function getHandler() {
 		wfProfileIn( __METHOD__ );
 		if ( !isset( $this->handler ) ) {
 			parent::getHandler();
