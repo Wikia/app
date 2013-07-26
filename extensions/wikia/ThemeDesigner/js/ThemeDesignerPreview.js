@@ -1,6 +1,4 @@
 var ThemeDesignerPreview = {
-	links: null,
-
 	init: function() {
 		$("#WikiaArticle .thumbinner")
 			.first()
