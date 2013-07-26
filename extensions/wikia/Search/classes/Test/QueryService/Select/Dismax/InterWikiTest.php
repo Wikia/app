@@ -165,17 +165,28 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) ); 
 		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\Dismax\InterWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( array( null ) )
+		                   ->setMethods( array( 'getService' ) )
 		                   ->getMockForAbstractClass();
+		$mockService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getWikiId' ] );
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'getHub' )
 		    ->will   ( $this->returnValue( 'Entertainment' ) )
 		;
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( "getService" )
+		    ->will   ( $this->returnValue( $mockService ) )
+		;
+		$mockService
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiId' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
 		$reflspell = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\InterWiki', 'getFilterQueryString' );
 		$reflspell->setAccessible( true );
 		$this->assertEquals(
-				'articles_i:[50 TO *] AND (hub_s:Entertainment)',
+				'articles_i:[50 TO *] AND -id:123 AND (hub_s:Entertainment)',
 				$reflspell->invoke( $mockSelect )
 		);
 	}
