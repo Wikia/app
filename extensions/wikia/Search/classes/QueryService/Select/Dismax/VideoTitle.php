@@ -1,15 +1,15 @@
 <?php
 /**
- * Class definition for Wikia\Search\QueryService\Select\VideoTitle
+ * Class definition for Wikia\Search\QueryService\Select\Dismax\VideoTitle
  */
-namespace Wikia\Search\QueryService\Select;
+namespace Wikia\Search\QueryService\Select\Dismax;
 use Solarium_Query_Select;
 /**
  * This class is designed to provide search results based on the title of a video.
  * @see WikiaSearchController::searchVideosByTitle for example usage.
  * @author relwell
  */
-class VideoTitle extends AbstractSelect
+class VideoTitle extends AbstractDismax
 {
 	/**
 	 * Totally short-circuits how we do select queries
@@ -32,15 +32,6 @@ class VideoTitle extends AbstractSelect
 				] );
 		
 		return $query;
-	}
-	
-	/**
-	 * To heck with it, we need to get rid of this anyway.
-	 * (non-PHPdoc)
-	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::getFormulatedQuery()
-	 */
-	public function getFormulatedQuery() {
-		return '';
 	}
 	
 	protected function getQueryFieldsString() {
