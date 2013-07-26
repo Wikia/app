@@ -109,7 +109,8 @@ class WikiaFileHelper extends Service {
 		$conds = array( 'img_media_type' => 'VIDEO' );
 		if ( $isRemoteAsset ) {
 			$providerStr = 's:6:"source";s:'.strlen($provider).':"'.$provider.'";';
-			$conds[] = "img_metadata LIKE '%$providerStr%s:8:\"sourceId\";".$videoStr.";%'";
+			$conds[] = "img_metadata LIKE '%$providerStr%'";
+			$conds[] = "img_metadata LIKE '%s:8:\"sourceId\";".$videoStr.";%'";
 		} else {
 			$conds['img_minor_mime'] = $provider;
 			$conds[] = "img_metadata LIKE '%s:7:\"videoId\";".$videoStr.";%'";

@@ -184,13 +184,10 @@ class IvaFeedIngester extends VideoFeedIngester {
 			foreach( $programs as $program ) {
 				$clipData = array();
 
-				// get series
 				$program['title'] = empty( $program['DisplayTitle'] ) ? trim( $program['Title'] ) : trim( $program['DisplayTitle'] );
-				if ( empty( $videoParams['series'] ) ) {
-					$clipData['series'] = $program['title'];
-				} else {
-					$clipData['series'] = $videoParams['series'];
-				}
+
+				// get series
+				$clipData['series'] = empty( $videoParams['series'] ) ? $program['title'] : $videoParams['series'];
 
 				if ( isset( $program['OkToEncodeAndServe'] ) && $program['OkToEncodeAndServe'] == false ) {
 					print "Skip: {$clipData['series']} (Publishedid:{$program['Publishedid']}) has OkToEncodeAndServe set to false.\n";
