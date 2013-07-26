@@ -11,7 +11,7 @@ var ThemeDesigner = {
 
 		// settings history
 		this.history = window.themeHistory;
-		
+
 		$().log(this.history);
 
 		// themes
@@ -545,9 +545,9 @@ var ThemeDesigner = {
 		event.preventDefault();
 		event.stopPropagation();
 		ThemeDesigner.settings = ThemeDesigner.history[$(this).index()]['settings'];
-		
+
 		$().log(ThemeDesigner.settings);
-		
+
 		ThemeDesigner.applySettings(true, true);
 	},
 
@@ -693,8 +693,12 @@ var ThemeDesigner = {
 
 			var settingsToLoad = $.extend({}, ThemeDesigner.settings, window.applicationThemeSettings);
 
-			var sassUrl = $.getSassCommonURL('/skins/oasis/css/oasis.scss', settingsToLoad);
-			document.getElementById('PreviewFrame').contentWindow.ThemeDesignerPreview.loadSASS(sassUrl);
+			var sassUrls = [
+				$.getSassCommonURL('/skins/oasis/css/oasis.scss', settingsToLoad),
+				$.getSassCommonURL('/skins/oasis/css/core/responsive.scss', settingsToLoad)
+			];
+
+			document.getElementById('PreviewFrame').contentWindow.ThemeDesignerPreview.loadSASS(sassUrls);
 		}
 
 		if(updateSkinPreview) {
