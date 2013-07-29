@@ -58,10 +58,14 @@ $share-background-color: transparentize($color-page, 0.65);
 		.SharingToolbar {
 			right: 8px;
 			left: initial;
-			top: 116px;
+			top: 52px;
 			z-index: 3;
 			width: 56px;
 			background-color: rgba(255,255,255,0.7);
+
+			@media screen and (max-width: 1023px) {
+				top: 116px;
+			}
 		}
 	}
 }
