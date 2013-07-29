@@ -82,7 +82,7 @@ class WikiaMobileMediaService extends WikiaService {
 
 					//prepare data for media collection
 					$info = [
-						'name' => $item['title']->getText(),
+						'name' => htmlspecialchars( urlencode( $item['title']->getDBKey() ) ),
 						'full' => wfReplaceImageServer( $file->getFullUrl(), $file->getTimestamp() )
 					];
 
