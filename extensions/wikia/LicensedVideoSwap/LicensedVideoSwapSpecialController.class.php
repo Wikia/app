@@ -38,6 +38,12 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		// update h1 text
 		$this->getContext()->getOutput()->setPageTitle( wfMessage('lvs-page-title')->text() );
 
+		$history = $this->getVal( 'history', '' );
+		if ( !empty( $history ) ) {
+			$this->forward( __CLASS__, 'history' );
+			return true;
+		}
+
 		$selectedSort = $this->getVal( 'sort', 'recent' );
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
@@ -62,6 +68,14 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			'sortMsg' => $options[$selectedSort],
 			'containerId' => 'sorting-dropdown',
 		);
+	}
+
+	/**
+	 * History page
+	 */
+	public function history() {
+		$helper = new LicensedVideoSwapHelper();
+		$this->videos = $helper->getUndoList();
 	}
 
 	/**

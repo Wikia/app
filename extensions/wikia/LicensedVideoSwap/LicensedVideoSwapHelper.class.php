@@ -19,13 +19,13 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 * @var int
 	 */
 	const DURATION_DELTA = 10;
-	
+
 	/**
 	 * Threshold used with duration to constrain matches
 	 * @var float
 	 */
 	const MIN_JACCARD_SIMILARITY = 0.7;
-	
+
 	const VIDEOS_PER_PAGE = 10;
 	const THUMBNAIL_WIDTH = 500;
 	const THUMBNAIL_HEIGHT = 309;
@@ -37,19 +37,19 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 * @var int
 	 */
 	const SUGGESTIONS_TTL = 604800;
-	
+
 	/**
 	 * Tokenizer for text processing
 	 * @var NlpTools\Tokenizers\WhitespaceAndPunctuationTokenizer
 	 */
 	protected $tokenizer;
-	
+
 	/**
 	 * Stemmer for text processing
 	 * @var NlpTools\Stemmers\PorterStemmer
 	 */
 	protected $stemmer;
-	
+
 	/**
 	 * Used to compute Jaccard similarity
 	 * @var NlpTools\Similarity\JaccardIndex
@@ -272,9 +272,9 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		$articleId = $titleObj->getArticleID();
 
 		$readableTitle = $titleObj->getText();
-		
+
 		$params = array( 'title' => $readableTitle );
-		
+
 		$file = wfFindFile( $titleObj );
 		if (! empty( $file ) ) {
 			$serializedMetadata = $file->getMetadata();
@@ -283,11 +283,11 @@ class LicensedVideoSwapHelper extends WikiaModel {
 				if (! empty( $metadata['duration'] ) ) {
 					$duration = $metadata['duration'];
 					$params['minseconds'] = $duration - min( [ $duration, self::DURATION_DELTA ] );
-					$params['maxseconds'] = $duration + min( [ $duration, self::DURATION_DELTA ] );  
+					$params['maxseconds'] = $duration + min( [ $duration, self::DURATION_DELTA ] );
 				}
 			}
 		}
-		
+
 		$videoRows = $app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', $params )
 						 ->getData();
 
@@ -303,16 +303,16 @@ class LicensedVideoSwapHelper extends WikiaModel {
 
 		$videos = array();
 		$count = 0;
-		
+
 		$titleTokenized = $this->getNormalizedTokens( $readableTitle );
 
 		foreach ($videoRows as $videoInfo) {
-			
+
 			$videoRowTitleTokenized = $this->getNormalizedTokens( preg_replace( '/^File:/', '',  $videoInfo['title'] ) );
 			if ( $this->getJaccard()->similarity( $titleTokenized, $videoRowTitleTokenized ) < self::MIN_JACCARD_SIMILARITY ) {
 				continue;
 			}
-			
+
 			$videoDetail = $helper->getVideoDetail( $videoInfo,
 													self::THUMBNAIL_WIDTH,
 													self::THUMBNAIL_HEIGHT,
@@ -389,6 +389,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	public function setPageStatusSwap( $articleId, $value = array() ) {
 		$value['status'] =  self::STATUS_SWAP_NORM;
 		$value['created'] = time();
+		$value['userid'] = $this->wg->User->getId();
 		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, $value );
 	}
 
@@ -400,6 +401,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	public function setPageStatusSwapExact( $articleId, $value = array() ) {
 		$value['status'] =  self::STATUS_SWAP_EXACT;
 		$value['created'] = time();
+		$value['userid'] = $this->wg->User->getId();
 		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, $value );
 	}
 
@@ -411,6 +413,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	public function setPageStatusKeep( $articleId, $value = array() ) {
 		$value['status'] =  self::STATUS_KEEP;
 		$value['created'] = time();
+		$value['userid'] = $this->wg->User->getId();
 		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, $value );
 	}
 
@@ -574,7 +577,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		}
 		return $this->stemmer;
 	}
-	
+
 	/**
 	 * Lazy-loads dependency
 	 * @return \NlpTools\Tokenizers\WhitespaceAndPunctuationTokenizer
@@ -585,7 +588,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		}
 		return $this->tokenizer;
 	}
-	
+
 	/**
 	 * Lazy-loads dependency
 	 * @return \NlpTools\Similarity\JaccardIndex
@@ -596,15 +599,59 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		}
 		return $this->jaccard;
 	}
-	
+
 	/**
 	 * This gets all important tokens by tokenizing, stemming, and then stripping punctuation tokens
 	 * @param string $str
 	 * @return array
 	 */
 	protected function getNormalizedTokens( $str ) {
-		return array_filter( $this->getStemmer()->stemAll( $this->getTokenizer()->tokenize( $str ) ), 
+		return array_filter( $this->getStemmer()->stemAll( $this->getTokenizer()->tokenize( $str ) ),
 				function( $val ) { return preg_match( '/[[:punct:]]/', $val ) == 0; } );
 	}
-	
+
+	/**
+	 * get undo list
+	 * @return array $videoList
+	 */
+	public function getUndoList() {
+		$db = wfGetDB( DB_SLAVE );
+		$result = $db->select(
+			array( 'page_wikia_props' ),
+			array( '*' ),
+			array( 'propname' => WPP_LVS_STATUS ),
+			__METHOD__
+		);
+
+		$videoList = array();
+		while( $row = $db->fetchObject($result) ) {
+			$props = unserialize( $row->props );
+			if ( is_numeric( $props ) ) {
+				$pageStatus['status'] = $props;
+			} else {
+				$pageStatus = $props;
+			}
+
+			$article = Article::newFromID( $row->page_id );
+			if ( empty( $article ) ) {
+				continue;
+			}
+
+			$redirect = $article->getRedirectTarget();
+			if ( $article->isRedirect() && !empty( $redirect ) ) {
+				$title = urlencode( $article->getTitle()->getDBKey() );
+				$newTitle = urlencode( $redirect->getDBKey() );
+				$videoList[] = array(
+					'pageId' => $row->page_id,
+					'title' => $article->getTitle()->getDBKey(),
+					'newTitle' => $redirect->getDBKey(),
+					'pageStatus' => $pageStatus,
+					'undo' => $this->wg->Server."/wikia.php?controller=LicensedVideoSwapSpecial&method=restoreVideo&format=json&videoTitle={$title}&newTitle={$newTitle}",
+				);
+			}
+		}
+
+		return $videoList;
+	}
+
 }
