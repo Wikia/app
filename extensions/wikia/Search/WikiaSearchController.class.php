@@ -94,13 +94,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			if (! empty( $ids ) ) {
 				$params = [ 'ids' => implode( ',', $ids ), 'height' => 80, 'width' => 80 ];
 				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
-				foreach ( $detailResponse['items'] as $item ) {
+				foreach ( $detailResponse['items'] as $id => $item ) {
 					if (! empty( $item['thumbnail'] ) ) {
 						//get the first one image from imageServing as it needs other size
 						if ( empty( $pages ) ) {
-							$is = new ImageServing( [ $item[ 'id' ] ], 300, 150 );
+							$is = new ImageServing( [ $id ], 300, 150 );
 							$result = $is->getImages( 1 );
-							$item[ 'thumbnail' ] = $result[ $item[ 'id' ] ][ 0 ];
+							$item[ 'thumbnail' ] = $result[ $id ][ 0 ][ 'url' ];
 						}
 						//render date
 						$item[ 'date' ] = $wgLang->date( $item[ 'revision' ][ 'timestamp' ] );
