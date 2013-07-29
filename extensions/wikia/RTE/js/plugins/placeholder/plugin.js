@@ -7,7 +7,10 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 		editor.on('instanceReady', function() {
 			// add node in which template previews will be stored
-			self.previews = $('<div>', {id: 'RTEPlaceholderPreviews'}).appendTo(RTE.overlayNode);
+			self.previews = $('<div>', {
+				id: 'RTEPlaceholderPreviews',
+				'class': 'rte-placeholder-previews'
+			}).appendTo(RTE.overlayNode);
 		});
 
 		editor.on('wysiwygModeReady', function() {
