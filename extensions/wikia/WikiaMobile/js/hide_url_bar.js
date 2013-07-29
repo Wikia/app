@@ -14,11 +14,10 @@
  */
 /*global window, define, setTimeout, setInterval, clearInterval*/
 
-require([require.optional('ads')], function (ads) {
+require([require.optional('ads'), 'wikia.window'], function (ads, w) {
 	'use strict';
 
-	var w = window,
-		doc = w.document;
+	var doc = w.document;
 
 	// If there's a hash, or addEventListener is undefined, stop here
 	if(!location.hash && w.addEventListener){

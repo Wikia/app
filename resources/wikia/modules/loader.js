@@ -6,7 +6,7 @@
  * @author Jakub Olek <jolek@wikia-inc.com>
  *
  */
-define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana', 'wikia.deferred', 'wikia.log'], function loader(window, mw, nirvana, Deferred, log){
+define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana', 'jquery', 'wikia.log'], function loader(window, mw, nirvana, $, log){
 	'use strict';
 
 	var loader,
@@ -382,7 +382,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 			var assetsLength = remaining = arguments.length,
 				matches,
 				remaining,
-				dfd = new Deferred(),
+				dfd = $.Deferred(),
 				failed = [],
 				func,
 				result,

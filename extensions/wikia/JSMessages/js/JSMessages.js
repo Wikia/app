@@ -32,7 +32,7 @@
 	 * ...
 	 * @return string - localised message
 	 */
-	function JSMessages(nirvana, deferred, window) {
+	function JSMessages(nirvana, $, window) {
 		var JSMessages = function(){
 			// get the first function parameter
 			// then the rest are parameters to a message
@@ -64,7 +64,7 @@
 		 */
 		JSMessages.get = function(packages, callback, language) {
 			// set up deferred object
-			var dfd = new deferred();
+			var dfd = $.Deferred();
 
 			// list of packages was given
 			if (typeof packages != 'string') {
@@ -125,6 +125,6 @@
 
 	if (context.define && context.define.amd) {
 		//AMD
-		context.define('JSMessages', ['wikia.nirvana', 'wikia.deferred', 'wikia.window'], JSMessages);
+		context.define('JSMessages', ['wikia.nirvana', 'jquery', 'wikia.window'], JSMessages);
 	}
 })(this, this.jQuery, this.Wikia);

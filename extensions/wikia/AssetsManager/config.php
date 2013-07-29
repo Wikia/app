@@ -428,11 +428,12 @@ $config['wikiamobile_js_body_minimal'] = array(
 	'assets' => array(
 		//libraries/frameworks
 		'//resources/wikia/libraries/modil/modil.js',
-		'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
+		//'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
+		'//resources/jquery/jquery-2.0.3.js',
 
 		// deferred.js - jQuery-free implementation (BugId:34943)
-		'//resources/wikia/libraries/deferred/deferred.js',
-		'//resources/wikia/libraries/deferred/deferred.api.js',
+		//'//resources/wikia/libraries/deferred/deferred.js',
+		//'//resources/wikia/libraries/deferred/deferred.api.js',
 
 		//core modules
 		'//resources/wikia/modules/window.js',
@@ -450,8 +451,8 @@ $config['wikiamobile_js_body_minimal'] = array(
 		'#group_tracker_js',
 
 		//modules
-		'//resources/wikia/modules/deferred.js',
-		'//resources/wikia/modules/ajax.js',
+		//'//resources/wikia/modules/deferred.js',
+		//'//resources/wikia/modules/ajax.js',
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/loader.js',
 		'//resources/wikia/modules/cache.js',
