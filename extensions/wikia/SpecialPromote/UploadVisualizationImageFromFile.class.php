@@ -36,6 +36,7 @@ class UploadVisualizationImageFromFile extends UploadFromFile {
 
 	public function performUpload() {
 		global $wgUser;
+		$this->mFileProps['timestamp'] = time();
 		return parent::performUpload('', '', false, $wgUser);
 	}
 
