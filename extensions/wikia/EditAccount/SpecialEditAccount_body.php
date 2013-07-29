@@ -371,39 +371,13 @@ class EditAccount extends SpecialPage {
 			}
 		}
 
-		// Remove e-mail address and password
-		$user->setEmail( '' );
-		$user->setPassword( $newpass = EditAccount::generateRandomScrambledPassword() );
-		// Save the new settings
-		$user->saveSettings();
-
-		// get User ID
-		$id = $user->getId();
+		# close account and invalidate cache + cluster data
+		Wikia::invalidateUser( $user, true, true );
 
 		if ( $user->getEmail() == ''  ) {
-			global $wgUser, $wgTitle;
-			// Mark as disabled in a more real way, that doesnt depend on the real_name text
-			$user->setOption( 'disabled', 1 );
-			$user->setOption( 'disabled_date', wfTimestamp( TS_DB ) );
-			// BugId:18085 - setting a new token causes the user to be logged out.
-			$user->setToken( md5( microtime() . mt_rand( 0, 0x7fffffff ) ) );
-
-			// BugID:95369 This forces saveSettings() to commit the transaction
-			// FIXME: this is a total hack, we should add a commit=true flag to saveSettings
-			global $wgRequest;
-			$wgRequest->setVal('action', 'ajax');
-
-			// Need to save these additional changes
-			$user->saveSettings();
-
 			// Log what was done
 			$log = new LogPage( 'editaccnt' );
 			$log->addEntry( 'closeaccnt', $title, $changeReason, array( $user->getUserPage() ) );
-
-			// delete the record from all the secondary clusters
-			if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
-				ExternalUser_Wikia::removeFromSecondaryClusters( $id );
-			}
 
 			// All clear!
 
