@@ -1,8 +1,8 @@
 <?php
 /**
- * Class definition for Wikia\Search\Test\QueryService\Select\OnWiki
+ * Class definition for Wikia\Search\Test\QueryService\Select\Dismax\OnWiki
  */
-namespace Wikia\Search\QueryService\Select;
+namespace Wikia\Search\QueryService\Select\Dismax;
 use Wikia, ReflectionProperty, ReflectionMethod;
 /**
  * Tests on-wiki search functionality
@@ -10,7 +10,7 @@ use Wikia, ReflectionProperty, ReflectionMethod;
 class OnWikiTest extends Wikia\Search\Test\BaseTest { 
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\OnWiki::extractMatch
+	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::extractMatch
 	 */
 	public function testExtractMatch() {
 		
@@ -25,10 +25,9 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSanitizedQuery' ), array( 'foo' ) );
 		
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'service' => $mockService, 'config' => $mockConfig ) );
-		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
-		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods(  [ 'extractWikiMatch' ] )
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\OnWiki' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods(  [ 'extractWikiMatch', 'getConfig', 'getService' ] )
 		                   ->getMock();
 		
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
@@ -39,6 +38,16 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		                      ->disableOriginalConstructor()
 		                      ->getMock();
 		
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'getConfig' )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'getService' )
+		    ->will   ( $this->returnValue( $mockService ) )
+		;
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'getQuery' )
@@ -88,33 +97,19 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\OnWiki::registerComponents
+	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::registerNonDismaxComponents
 	 */
-	public function testRegisterComponents() {
+	public function testRegisterNonDismaxComponents() {
 		$mockQuery = $this->getMockBuilder( '\Solarium_Query_Select' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
 		
-		$selectMethods = array( 
-				'registerQueryParams', 'registerHighlighting', 'registerFilterQueries', 
-				'registerSpellcheck', 'configureQueryFields', 'registerDismax'
-				);
-		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
+		$selectMethods = array( 'registerHighlighting', 'registerFilterQueries', 'registerSpellcheck', 'registerDismax' );
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\OnWiki' )
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( $selectMethods )
 		                   ->getMock();
 		
-		$mockSelect
-		    ->expects( $this->once() )
-		    ->method ( 'configureQueryFields' )
-		    ->will   ( $this->returnValue( $mockSelect ) )
-		;
-		$mockSelect
-		    ->expects( $this->once() )
-		    ->method ( 'registerQueryParams' )
-		    ->with   ( $mockQuery )
-		    ->will   ( $this->returnValue( $mockSelect ) )
-		;
 		$mockSelect
 		    ->expects( $this->once() )
 		    ->method ( 'registerHighlighting' )
@@ -133,13 +128,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->with   ( $mockQuery )
 		    ->will   ( $this->returnValue( $mockSelect ) )
 		;
-		$mockSelect
-		    ->expects( $this->once() )
-		    ->method ( 'registerDismax' )
-		    ->with   ( $mockQuery )
-		    ->will   ( $this->returnValue( $mockSelect ) )
-		;
-		$register = new ReflectionMethod( 'Wikia\Search\QueryService\Select\OnWiki', 'registerComponents' );
+		$register = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\OnWiki', 'registerNonDismaxComponents' );
 		$register->setAccessible( true );
 		$this->assertEquals(
 				$mockSelect,
@@ -148,7 +137,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\OnWiki::registerFilterQueryForMatch
+	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::registerFilterQueryForMatch
 	 */
 	public function testRegisterFilterQueryForMatch() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'hasArticleMatch', 'getArticleMatch', 'setFilterQuery' ) );
@@ -161,7 +150,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		                   ->getMock();
 		
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
-		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\OnWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( null )
 		                   ->getMock();
@@ -192,7 +181,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'setFilterQuery' )
 		    ->with   ( Wikia\Search\Utilities::valueForField( 'id', 123, array( 'negate' => true ) ), 'ptt' )
 		;
-		$register = new ReflectionMethod( 'Wikia\Search\QueryService\Select\OnWiki', 'registerFilterQueryForMatch' );
+		$register = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\OnWiki', 'registerFilterQueryForMatch' );
 		$register->setAccessible( true );
 		$this->assertEquals(
 				$mockSelect,
@@ -201,7 +190,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\OnWiki::registerSpellcheck
+	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::registerSpellcheck
 	 */
 	public function testRegisterSpellcheck() {
 		$mockQuery = $this->getMockBuilder( '\Solarium_Query_Select' )
@@ -224,7 +213,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		$mockQueryWrapper = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSanitizedQuery' ), array( 'foo' ) );
 		
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'service' => $mockService, 'config' => $mockConfig ) );
-		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\OnWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( null )
 		                   ->getMock();
@@ -265,19 +254,19 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		$mockSpellcheck
 		    ->expects( $this->once() )
 		    ->method ( 'setCount' )
-		    ->with   ( Wikia\Search\QueryService\Select\OnWiki::SPELLING_RESULT_COUNT )
+		    ->with   ( Wikia\Search\QueryService\Select\Dismax\OnWiki::SPELLING_RESULT_COUNT )
 		    ->will   ( $this->returnValue( $mockSpellcheck ) )
 		;
 		$mockSpellcheck
 		    ->expects( $this->once() )
 		    ->method ( 'setMaxCollationTries' )
-		    ->with   ( Wikia\Search\QueryService\Select\OnWiki::SPELLING_MAX_COLLATION_TRIES )
+		    ->with   ( Wikia\Search\QueryService\Select\Dismax\OnWiki::SPELLING_MAX_COLLATION_TRIES )
 		    ->will   ( $this->returnValue( $mockSpellcheck ) )
 		;
 		$mockSpellcheck
 		    ->expects( $this->once() )
 		    ->method ( 'setMaxCollations' )
-		    ->with   ( Wikia\Search\QueryService\Select\OnWiki::SPELLING_MAX_COLLATIONS )
+		    ->with   ( Wikia\Search\QueryService\Select\Dismax\OnWiki::SPELLING_MAX_COLLATIONS )
 		    ->will   ( $this->returnValue( $mockSpellcheck ) )
 		;
 		$mockSpellcheck
@@ -309,7 +298,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->with   ( true )
 		    ->will   ( $this->returnValue( $mockSpellcheck ) )
 		;
-		$register = new ReflectionMethod( 'Wikia\Search\QueryService\Select\OnWiki', 'registerSpellcheck' );
+		$register = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\OnWiki', 'registerSpellcheck' );
 		$register->setAccessible( true );
 		$this->assertEquals(
 				$mockSelect,
@@ -318,28 +307,12 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\OnWiki::configureQueryFields 
-	 */
-	public function testConfigureQueryFields() {
-		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\OnWiki' )
-		                   ->disableOriginalConstructor()
-		                   ->setMethods( array() )
-		                   ->getMockForAbstractClass();
-		$get = new ReflectionMethod( 'Wikia\Search\QueryService\Select\OnWiki', 'configureQueryFields' );
-		$get->setAccessible( true );
-		$this->assertEquals(
-				$mockSelect,
-				$get->invoke( $mockSelect )
-		);
-	}
-	
-	/**
-	 * @covers Wikia\Search\QueryService\Select\OnWiki::getQueryFieldsString 
+	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::getQueryFieldsString 
 	 */
 	public function testGetQueryFieldsString() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQueryFieldsToBoosts' ) );
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
-		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\OnWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( array() )
 		                   ->getMock();
@@ -349,7 +322,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getQueryFieldsToBoosts' )
 		    ->will   ( $this->returnValue( array( 'foo' => 5, 'bar' => 10 ) ) )
 		;
-		$get = new ReflectionMethod( 'Wikia\Search\QueryService\Select\OnWiki', 'getQueryFieldsString' );
+		$get = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\OnWiki', 'getQueryFieldsString' );
 		$get->setAccessible( true );
 		$this->assertEquals(
 				'foo^5 bar^10',
@@ -358,12 +331,12 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\OnWiki::getQueryClausesString
+	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::getQueryClausesString
 	 */
 	public function testGetQueryClausesString() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCityId', 'getNamespaces' ) );
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
-		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\OnWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( null )
 		                   ->getMock();
@@ -378,11 +351,39 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getNamespaces' )
 		    ->will   ( $this->returnValue( array( 0, 14 ) ) )
 		;
-		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\OnWiki', 'getQueryClausesString' );
+		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\OnWiki', 'getQueryClausesString' );
 		$method->setAccessible( true );
 		$this->assertEquals(
 				'((wid:123) AND ((ns:0) OR (ns:14)))',
 				$method->invoke( $mockSelect )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::getFilterQueryString
+	 */
+	public function testGetFilterQueryString() {
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCityId', 'getNamespaces' ) );
+		$dc = new \Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) ); 
+		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\Dismax\OnWiki' )
+		                   ->setConstructorArgs( array( $dc ) )
+		                   ->setMethods( array( null ) )
+		                   ->getMockForAbstractClass();
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getCityId' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getNamespaces' )
+		    ->will   ( $this->returnValue( [ 0, 14 ] ) )
+		;
+		$reflspell = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\OnWiki', 'getFilterQueryString' );
+		$reflspell->setAccessible( true );
+		$this->assertEquals(
+				'((ns:0) OR (ns:14)) AND (wid:123)',
+				$reflspell->invoke( $mockSelect )
 		);
 	}
 }

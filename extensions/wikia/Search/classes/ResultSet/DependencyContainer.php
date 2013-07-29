@@ -31,24 +31,6 @@ class DependencyContainer
 	 * @var MediaWikiService
 	 */
 	protected $service;
-	
-	/**
-	 * Metaposition is for Groupings
-	 * @var int
-	 */
-	protected $metaposition;
-	
-	/**
-	 * Parent is also for Groupings
-	 * @var GroupingSet
-	 */
-	protected $parent;
-	
-	/**
-	 * Wiki match, lets us know if we need to use the "match" grouping wrapper.
-	 *@var Match
-	 */
-	protected $wikiMatch;
 
 	/**
 	 * Constructor class. Basically allows us to pre-populate the $service property and configure by array rather than separate invocations.
@@ -84,22 +66,6 @@ class DependencyContainer
 	}
 
 	/**
-	 * Accessor method for metaposition.
-	 * @return number
-	 */
-	public function getMetaposition() {
-		return $this->metaposition;
-	}
-
-	/**
-	 * Accessor method for parent.
-	 * @return \Wikia\Search\ResultSet\GroupingSet
-	 */
-	public function getParent() {
-		return $this->parent;
-	}
-
-	/**
 	 * Mutator for config.
 	 * @param Config $config
 	 * @return DependencyContainer
@@ -128,43 +94,4 @@ class DependencyContainer
 		$this->service = $service;
 		return $this;
 	}
-
-	/**
-	 * Mutator for metaposition.
-	 * @param int $metaposition
-	 * @return DependencyContainer
-	 */
-	public function setMetaposition( $metaposition ) {
-		$this->metaposition = $metaposition;
-		return $this;
-	}
-
-	/**
-	 * Mutator for parent.
-	 * @param GroupingSet $parent
-	 * @return DependencyContainer
-	 */
-	public function setParent( GroupingSet $parent ) {
-		$this->parent = $parent;
-		return $this;
-	}
-	
-	
-	/**
-	 * Accessor for WikiMatch
-	 * @return the $wikiMatch
-	 */
-	public function getWikiMatch() {
-		return $this->wikiMatch;
-	}
-
-	/**
-	 * Mutator for WikiMatch
-	 * @param Wiki $wikiMatch
-	 */
-	public function setWikiMatch( Wiki $wikiMatch ) {
-		$this->wikiMatch = $wikiMatch;
-		return $this;
-	}
-	
 }

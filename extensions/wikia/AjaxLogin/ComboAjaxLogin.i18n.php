@@ -1290,6 +1290,35 @@ Pakisubukan uli o [[Special:Contact|iulat ito]].',
 	'comboajaxlogin-ajaxerror' => 'Hindi tumutugon ang Wikia. Paki suriin ang pagkakabit ng iyong lambat na panggawain.',
 );
 
+/** Turkish (Türkçe)
+ * @author Sabri Vatansever
+ */
+$messages['tr'] = array(
+	'comboajaxlogin-desc' => 'Kullanıcılara girişi sağlayan dinamik kutu şifreyi hatırlar ve kullanıcıyı kaydeder',
+	'comboajaxlogin-createlog' => 'Oturum açın ya da yeni hesap oluşturun',
+	'comboajaxlogin-actionmsg' => 'Bu eylemi gerçekleştirmek için öncelikle oturumun açmanız veya hesap oluşturmanız gerekir',
+	'comboajaxlogin-actionmsg-protected' => 'Bu eylemi gerçekleştirmek için öncelikle oturumun açmanız veya hesap oluşturmanız gerekir',
+	'comboajaxlogin-connectmarketing' => "<h1>Hesaplarınızı bağlanın</h1>
+<ul>
+<li>Geçerli kullanıcı adınızı, tarihi, düzenlenenleri saklayın... giriş yapmanız dışında hiçbir şey değişmez</li>
+<li>Wikia'daki etkinliklerinizi Facebook üzerinden arkadaşlarınızla paylaşın</li>
+<li>Yayınların kontrolünü tamamlayın</li>
+</ul>",
+	'comboajaxlogin-log-in-with-facebook-oasis' => "<h1>Facebook'a Bağlan ile oturum aç</h1>",
+	'comboajaxlogin-connectmarketing-oasis' => "<h1>Facebook ile Wikia hesabınıza bağlanın</h1>
+<ul>
+<li>Geçerli kullanıcı adınızı, tarihi, düzenlenenleri saklayın... giriş yapmanız dışında hiçbir şey değişmez</li>
+<li>Yayınların kontrolünü tamamlayarak Wikia'daki etkinliklerinizi Facebook üzerinden arkadaşlarınızla paylaşın</li>
+</ul>",
+	'comboajaxlogin-connectmarketing-back' => '« Geri',
+	'comboajaxlogin-connectmarketing-forward' => 'Başla »',
+	'comboajaxlogin-connectdirections' => "Wikia kullanıcı adınızı ve parolayı buraya girin - sihirli bir şekilde arka planda Wikia ve Facebook hesaplarınıza bağlanılacak.
+
+Bir kez yaptığınızda kolayca herhangi bir Facebook'a Bağlan düğmesini kullanarak oturum açabilirsiniz.",
+	'comboajaxlogin-post-not-understood' => 'Bu formun düzenlenmesinde bir hata oldu.
+Lütfen yeniden deneyin veya [[Special:Contact|bunu rapor edin]].',
+);
+
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */

@@ -1,8 +1,8 @@
 <?php
 /**
- * Class definition for Wikia\Search\Test\QueryService\Select\VideoEmbedToolTest
+ * Class definition for Wikia\Search\Test\QueryService\Select\Dismax\VideoEmbedToolTest
  */
-namespace Wikia\Search\Test\QueryService\Select;
+namespace Wikia\Search\Test\QueryService\Select\Dismax;
 use Wikia\Search\Test\BaseTest, ReflectionMethod, Wikia\Search\Utilities;
 /**
  * Responsible for testing VideoEmbedTool query service.
@@ -10,12 +10,12 @@ use Wikia\Search\Test\BaseTest, ReflectionMethod, Wikia\Search\Utilities;
  */
 class VideoEmbedToolTest extends BaseTest
 {
-	const CLASSNAME = 'Wikia\Search\QueryService\Select\VideoEmbedTool';
+	const CLASSNAME = 'Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool';
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\VideoEmbedTool::getFormulatedQuery
+	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::getQuery
 	 */
-	public function testGetFormulatedQuery() {
+	public function testGetQuery() {
 		$service = $this->getMockBuilder( self::CLASSNAME )
 		                ->disableOriginalConstructor()
 		                ->setMethods( [ 'getQueryClausesString', 'getTopicsAsQuery', 'getTransformedQuery' ] )
@@ -40,7 +40,7 @@ class VideoEmbedToolTest extends BaseTest
 		    ->method ( 'getTransformedQuery' )
 		    ->will   ( $this->returnValue( $transq ) )
 		;
-		$get = new ReflectionMethod( self::CLASSNAME, 'getFormulatedQuery' );
+		$get = new ReflectionMethod( self::CLASSNAME, 'getQuery' );
 		$get->setAccessible( true );
 		$this->assertEquals(
 				sprintf( '+(%s) AND ( +(%s)^1000 AND +(%s)^2000 )', $qc, $topicq, $transq ),
@@ -56,7 +56,7 @@ class VideoEmbedToolTest extends BaseTest
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\VideoEmbedTool::getTransformedQuery
+	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::getTransformedQuery
 	 * @dataProvider queryProvider
 	 */
 	public function testGetTransformedQuery( $queryString, $expected ) {
@@ -91,7 +91,7 @@ class VideoEmbedToolTest extends BaseTest
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\VideoEmbedTool::getTopicsAsQuery
+	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::getTopicsAsQuery
 	 */
 	public function testGetTopicsAsQueryWithTopics() {
 		$service = $this->getMockBuilder( self::CLASSNAME )
@@ -122,7 +122,7 @@ class VideoEmbedToolTest extends BaseTest
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\VideoEmbedTool::getTopicsAsQuery
+	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::getTopicsAsQuery
 	 */
 	public function testGetTopicsAsQueryNoTopics() {
 		$service = $this->getMockBuilder( self::CLASSNAME )
@@ -158,7 +158,7 @@ class VideoEmbedToolTest extends BaseTest
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\VideoEmbedTool::getQueryClausesString
+	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::getQueryClausesString
 	 */
 	public function testGetQueryClausesString() {
 		$service = $this->getMockBuilder( self::CLASSNAME )
@@ -188,7 +188,7 @@ class VideoEmbedToolTest extends BaseTest
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\VideoEmbedTool::getBoostQueryString
+	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::getBoostQueryString
 	 */
 	public function testGetBoostQueryString() {
 		$service = $this->getMockBuilder( self::CLASSNAME )
