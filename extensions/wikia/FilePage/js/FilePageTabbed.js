@@ -10,7 +10,7 @@ globalTracker = window.Wikia.Tracker || {};
 
 track = globalTracker.buildTrackingFunction({
 		action: globalTracker.ACTIONS.CLICK,
-		category: 'filepage',
+		category: 'file-page',
 		trackingMethod: 'both'
 });
 
@@ -35,17 +35,18 @@ Paginator.prototype = {
 				wiki;
 
 		this.$el.on('click', '.arrow', function(e) {
-				var $target;
+				var prefix, $target;
 
 				$target = $(e.target);
 
 
 				if ( !$target.hasClass('disabled') ) {
 
+					prefix = __determineClickContext(self.$root);
+
 					track({
-							label: 'paginator',
-							action: globalTracker.ACTIONS.CLICK,
-							value: $target.hasClass('right') ? 'right' : 'left'
+							label: prefix + '-usage-pagination',
+							action: globalTracker.ACTIONS.CLICK
 					});
 
 					
@@ -217,30 +218,63 @@ FilePageTabbed = {
 		 * Sets up click tracking for the "Appears in xxx" listings
 		 */
 		var elements,
-				$pageListings;
+				$pageListings,
+				$parent;
 
 		elements = [
 			'.page-listing-title a',
-			'.page-listing-image'
+			'.page-listing-image',
+			'.page-listing-wiki',
+			'.see-more-link'
 		];
 
 		$pageListings = $('.page-listings');
 
+
 		$pageListings.on('click', elements.join(', '), function( evt ) {
 				evt.preventDefault();
-				var node = evt.target
-					, url = node.href;
+				var node = evt.target,
+						$node = $(node),
+						url = node.href;
 
-				track({
-						label: 'page-listing-link', 
-						action: globalTracker.ACTIONS.CLICK,
-						value: url
-				});
+				$parent = $node.closest('.page-listings');
+
+				prefix = __determineClickContext($parent);
+
+				if ($node.hasClass('see-more-link') ) {
+					track({
+							label: 'see-more',
+							action: globalTracker.ACTIONS.CLICK,
+					});
+				} else {
+					track({
+							label: prefix + '-usage',
+							action: globalTracker.ACTIONS.CLICK,
+					});
+				}
 
 				window.location = url;
 		});
 	}
 };
+
+/**
+ * @name __determineClickContext
+ * @private function
+ *
+ * @description Checks node for data-attr 'listingType' value
+ * @param jQuery object containing node with data-attr 'listingType'
+ * @returns String
+ */
+function __determineClickContext( $node ) {
+	var data = $node.data('listingType');
+
+	if ( !data ) {
+		return '';
+	}
+
+	return data === 'local' ? 'wiki' : 'global';
+}
 
 FilePageTabbed.init();
 });
