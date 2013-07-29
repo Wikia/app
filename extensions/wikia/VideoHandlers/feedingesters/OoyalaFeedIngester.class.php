@@ -172,16 +172,6 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 		return $categories;
 	}
 
-	protected function generateName( array $data ) {
-		wfProfileIn( __METHOD__ );
-
-		$name = $data['titleName'];
-
-		wfProfileOut( __METHOD__ );
-
-		return $name;
-	}
-
 	protected function generateMetadata( array $data, &$errorMsg ) {
 		if ( empty( $data['videoId'] ) ) {
 			$errorMsg = 'no video id exists';

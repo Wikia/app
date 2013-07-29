@@ -151,24 +151,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 		return $categories;
 	}
 
-	/*
-	 * Protected functions
-	*/
-
-	/**
-	 * Returns the title of the video for the given metadata
-	 * @param array $data - Video metadata
-	 * @return string - The video title
-	 */
-	protected function generateName(array $data) {
-
-		wfProfileIn( __METHOD__ );
-		$name = $data['titleName'];
-
-		wfProfileOut( __METHOD__ );
-		return $name;
-	}
-
 	/**
 	 * Map the provider metadata onto our supported metadata fields
 	 * @param array $data - Video metadata

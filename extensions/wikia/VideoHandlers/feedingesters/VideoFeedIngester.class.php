@@ -40,13 +40,23 @@ abstract class VideoFeedIngester {
 	public $reupload = false;
 
 	abstract public function import($content='', $params=array());
+
 	/**
 	 * Generate name for video.
 	 * Note: The name is not sanitized for use as filename or article title.
 	 * @param array $data video data
 	 * @return string video name
 	 */
-	abstract protected function generateName(array $data);
+	protected function generateName( $data ) {
+		wfProfileIn( __METHOD__ );
+
+		$name = $data['titleName'];
+
+		wfProfileOut( __METHOD__ );
+
+		return $name;
+	}
+
 	abstract protected function generateMetadata(array $data, &$errorMsg);
 	abstract protected function generateCategories(array $data, $addlCategories);
 
@@ -657,6 +667,12 @@ abstract class VideoFeedIngester {
 			case 'not rated':
 				$stdRating = 'NR';
 				break;
+			case 'red band':
+				$stdRating = 'red band';
+				break;
+			case 'green band':
+				$stdRating = 'green band';
+				break;
 			default: $stdRating = $rating;
 		}
 
@@ -673,6 +689,7 @@ abstract class VideoFeedIngester {
 			case 'M':
 			case 'R':
 			case 'TV-MA':
+			case 'red band':
 				$ageGate = 17;
 				break;
 			case 'AO':

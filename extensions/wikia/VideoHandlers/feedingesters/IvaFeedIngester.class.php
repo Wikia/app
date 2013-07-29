@@ -461,21 +461,6 @@ class IvaFeedIngester extends VideoFeedIngester {
 	}
 
 	/**
-	 * Grab the 'titleName' element of the video data
-	 * @param array $data - Video data
-	 * @return string - The video title
-	 */
-	protected function generateName( array $data ) {
-		wfProfileIn( __METHOD__ );
-
-		$name = $data['titleName'];
-
-		wfProfileOut( __METHOD__ );
-
-		return $name;
-	}
-
-	/**
 	 * Pull out all the metadata we consider interesting for this video
 	 * @param array $data - Video data
 	 * @param $errorMsg - Store any error we encounter
