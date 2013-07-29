@@ -11,7 +11,9 @@
 			<? foreach ($aRows as $id => $pageId) { ?>
 				<? $oTitle = Title::newFromID($pageId); ?>
 				<? if ($oTitle instanceof Title) { ?>
-<li><?=$skin->makeLinkObj($oTitle);?></li>			
+<li><?=$skin->makeLinkObj($oTitle);?></li>
+				<? } else { ?>
+<li><?= wfMsg('tagsreportpageremoved', $pageId) ?></li>
 				<? } ?>
 			<? } ?>
 		<? } ?>
@@ -19,4 +21,3 @@
 	<? } ?>
 <? } ?>
 <!-- e:<?= __FILE__ ?> -->
-	
