@@ -1,10 +1,10 @@
 <?php $counter = 0; ?>
 <?php if ( !empty( $pages ) ) : ?>
-<div class="top-wiki-articles">
-    <h2><?= wfMessage( 'wikiasearch2-top-module-title' )->plain() ?></h2>
+<div class="top-wiki-articles RailModule">
+    <h1 class="top-wiki-main"><?= wfMessage( 'wikiasearch2-top-module-title' )->plain() ?></h1>
     <?php foreach ( $pages as $page ) : ?>
     <?php if ( $counter == 0 ): ?>
-    <div class="top-wiki-article hot-article">
+    <div class="top-wiki-article hot-article result">
         <div class="top-wiki-article-thumbnail" data-pos="<?= $counter ?>">
             <? if ( isset( $page['thumbnail'] ) ) : ?>
             <a href="<?=$page['url']?>">
@@ -13,12 +13,12 @@
             <? endif; ?>
         </div>
         <div class="top-wiki-article-text" data-pos="<?= $counter ?>">
-            <h3><a href="<?= $page['url'] ?>"><?= $page['title'] ?></a></h3>
+            <h1><a href="<?= $page['url'] ?>"><?= $page['title'] ?></a></h1>
             <p class="top-wiki-article-text-synopsis subtle"><?= wfMessage( 'wikiasearch2-top-module-edit', $page['date'] )->plain() ?></p>
         </div>
     </div>
     <?php else: ?>
-    <div class="top-wiki-article">
+    <div class="top-wiki-article result">
         <div class="top-wiki-article-thumbnail" data-pos="<?= $counter ?>">
             <? if ( isset( $page['thumbnail'] ) ) : ?>
             <a href="<?=$page['url']?>">
@@ -27,7 +27,7 @@
             <? endif; ?>
         </div>
         <div class="top-wiki-article-text" data-pos="<?= $counter ?>">
-            <h3><a href="<?= $page['url'] ?>"><?= $page['title'] ?></a></h3>
+            <h1><a href="<?= $page['url'] ?>"><?= $page['title'] ?></a></h1>
             <p class="top-wiki-article-text-synopsis subtle"><?= wfMessage( 'wikiasearch2-top-module-edit', $page['date'] )->plain() ?></p>
         </div>
     </div>

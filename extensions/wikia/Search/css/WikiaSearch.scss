@@ -1,4 +1,5 @@
 @import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/mixins/bodytext";
 @import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/clearfix";
@@ -345,18 +346,98 @@ $form-negative-side-padding: $form-side-padding*-1;
 	}
 }
 
+//rail module style
+.RailModule {
+	@include clearfix;
+	background: $color-page;
+	border: 1px solid $color-page-border;
+	@if lightness($color-page) < 50 {
+		background: $color-module-background;
+		border: 1px solid $color-page-border;
+	}
+	margin-bottom: 10px;
+	padding: 20px 15px 15px;
+	position: relative;
+	word-wrap: break-word;
+
+	header {
+		left: -3px;
+		font-size: 15px;
+		padding: 8px;
+		position: absolute;
+		width: $width-rail - 12px;
+	}
+	details {
+		em {
+			float: left;
+		}
+	}
+	.wikia-button {
+		float: right;
+	}
+	.more {
+		float: right;
+		font-size: 10px;
+		font-weight: bold;
+	}
+	p {
+		line-height: 21px;
+		margin: 0;
+		padding: 0;
+	}
+
+	.wikia-button {
+		font-weight: normal;
+	}
+
+	h1 {
+		font: {
+			size: 18px;
+			weight: bold;
+		}
+		margin: {
+			top: 0px;
+			bottom: 25px;
+		}
+		padding-left: 2px;
+	}
+
+	h2 {
+		@extend h1;
+		clear: both;
+
+		margin: {
+			top: 0;
+			bottom: 10px;
+		}
+		padding-top: 15px;
+		/*border-top: 1px solid $color-page-border;*/
+	}
+
+	b {
+		font-weight: bold;
+	}
+	i {
+		font-style: italic;
+	}
+
+	.line-top {
+		border-top: solid 1px $color-page-border;
+	}
+
+	.chevron {
+		border-top-color: $color-text;
+	}
+}
+
 // Top articles module
 .top-wiki-articles {
-	border: 1px solid lightgray;
-	float: left;
-	font-size: 16px;
 	margin: 0;
+	overflow: hidden;
 	padding: 14px 14px 4px 14px;
 	width: 300px;
-	word-break: break-all;
-	h2 {
+	.top-wiki-main {
 		border: none;
-		font-size: 16px;
 		margin: 0 0 15px 0;
 		padding: 0;
 		text-transform: uppercase;
@@ -371,7 +452,6 @@ $form-negative-side-padding: $form-side-padding*-1;
 		min-height: 80px;
 		.top-wiki-article-text {
 			float: left;
-			font-size: 13px;
 			margin-bottom: 0;
 			width: 205px;
 		}
