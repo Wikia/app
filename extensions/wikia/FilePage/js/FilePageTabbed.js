@@ -39,7 +39,6 @@ Paginator.prototype = {
 
 				$target = $(e.target);
 
-
 				if ( !$target.hasClass('disabled') ) {
 
 					prefix = __determineClickContext(self.$root);
@@ -48,7 +47,6 @@ Paginator.prototype = {
 							label: prefix + '-usage-pagination',
 							action: globalTracker.ACTIONS.CLICK
 					});
-
 					
 					if ( $target.hasClass('right') ) {
 						self.currentPage++;
@@ -230,11 +228,11 @@ FilePageTabbed = {
 
 		$pageListings = $('.page-listings');
 
-
 		$pageListings.on('click', elements.join(', '), function( evt ) {
 				evt.preventDefault();
 				var node = evt.target,
 						$node = $(node),
+						prefix,
 						url = node.href;
 
 				$parent = $node.closest('.page-listings');
