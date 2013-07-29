@@ -53,6 +53,7 @@ class Wikia {
 	const VARNISH_STAGING_HEADER = 'X-Staging';
 	const VARNISH_STAGING_PREVIEW = 'preview';
 	const VARNISH_STAGING_VERIFY = 'verify';
+	const HEX_CHARS = '0123456789abcdef';
 
 	private static $vars = array();
 	private static $cachedLinker;
@@ -2027,6 +2028,35 @@ class Wikia {
 			}
 		}
 
+		return true;
+	}
+	
+	/**
+	 * @param $user User 
+	 */
+	public static function invalidateUser( $user, $disabled = false, $ajax = false ) {
+		global $wgExternalAuthType;
+		
+		if ( $disabled ) {
+			$user->setEmail( '' );
+			$user->setPassword( wfGenerateToken() . self::HEX_CHARS );
+			$user->setOption( 'disabled', 1 );
+			$user->setOption( 'disabled_date', wfTimestamp( TS_DB ) );
+			$user->mToken = null;
+			$user->invalidateEmail();
+			if ( $ajax ) {
+				global $wgRequest;
+				$wgRequest->setVal('action', 'ajax');
+			}
+			$user->saveSettings();
+		}
+		$id = $user->getId();
+		// delete the record from all the secondary clusters
+		if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
+			ExternalUser_Wikia::removeFromSecondaryClusters( $id );
+		}
+		$user->invalidateCache();
+		
 		return true;
 	}
 }

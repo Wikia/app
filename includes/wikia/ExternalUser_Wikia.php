@@ -95,7 +95,7 @@ class ExternalUser_Wikia extends ExternalUser {
 				wfDebug ( __METHOD__ . ": user touched is different on central and $wgDBcluster \n" );
 				wfDebug ( __METHOD__ . ": clear $_key \n" );
 				$wgMemc->set( $memkey, $this->getUserTouched() );
-				$wgMemc->delete( $_key );
+				$wgMemc->set( $_key, false, 1 );
 			} else {
 				$User = $this->getLocalUser();
 			}
@@ -260,6 +260,11 @@ class ExternalUser_Wikia extends ExternalUser {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
+		
+		if ( ( '' == $this->getToken() ) && ( '' == $this->getEmail() ) && ( ! $this->getEmailToken() ) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
 
 		wfDebug( __METHOD__ . ": update local user table: $id \n" );
 
@@ -298,20 +303,32 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	public function getLocalUser( $obj = true ) {
-		$uid = $this->getId();
-		wfDebug( __METHOD__ . ": get local user: $uid \n" );
-
-		$dbr = wfGetDb( DB_MASTER );
-		$row = $dbr->selectRow(
-			'user',
-			'*',
-			array( 'user_id' => $uid )
-		);
-		if ( $obj ) {
-			$res = $row ? User::newFromId( $row->user_id ) : null;
-		} else {
-			$res = $row;
+		wfProfileIn( __METHOD__ );
+		
+		if ( empty( $this->mRow ) ) {
+			wfProfileOut( __METHOD__ );
+			return null;
 		}
+
+		if ( $obj ) {
+			$uid = $this->getId();
+			wfDebug( __METHOD__ . ": get local user: $uid \n" );
+			$dbr = wfGetDb( DB_MASTER );
+			$row = $dbr->selectRow(
+				'user',
+				'*',
+				array( 'user_id' => $uid )
+			);
+			if ( $obj ) {
+				$res = $row ? User::newFromId( $uid ) : null;
+			} else {
+				$res = $row;
+			}
+		} else {
+			$res = $this->mRow;
+		}
+
+		wfProfileOut( __METHOD__ );
 		return $res;
 	}
 

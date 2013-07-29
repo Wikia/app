@@ -368,40 +368,14 @@ class EditAccount extends SpecialPage {
 			}
 		}
 
-		// Remove e-mail address and password
-		$this->mUser->setEmail( '' );
-		$this->mUser->setPassword( $newpass = $this->generateRandomScrambledPassword() );
-		// Save the new settings
-		$this->mUser->saveSettings();
-
-		// get User ID
-		$id = $this->mUser->getId();
+		# close account and invalidate cache + cluster data
+		Wikia::invalidateUser( $this->mUser, true, true );
 
 		if ( $this->mUser->getEmail() == ''  ) {
 			global $wgUser, $wgTitle;
-			// Mark as disabled in a more real way, that doesnt depend on the real_name text
-			$this->mUser->setOption( 'disabled', 1 );
-			$this->mUser->setOption( 'disabled_date', wfTimestamp( TS_DB ) );
-			// BugId:18085 - setting a new token causes the user to be logged out.
-			$this->mUser->setToken( md5( microtime() . mt_rand( 0, 0x7fffffff ) ) );
-
-			// BugID:95369 This forces saveSettings() to commit the transaction
-			// FIXME: this is a total hack, we should add a commit=true flag to saveSettings
-			global $wgRequest;
-			$wgRequest->setVal('action', 'ajax');
-
-			// Need to save these additional changes
-			$this->mUser->saveSettings();
-
-
 			// Log what was done
 			$log = new LogPage( 'editaccnt' );
 			$log->addEntry( 'closeaccnt', $wgTitle, $changeReason, array( $this->mUser->getUserPage() ) );
-
-			// delete the record from all the secondary clusters
-			if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
-				ExternalUser_Wikia::removeFromSecondaryClusters( $id );
-			}
 
 			// All clear!
 			$this->mStatusMsg = wfMsg( 'editaccount-success-close', $this->mUser->mName );
