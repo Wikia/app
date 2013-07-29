@@ -42,8 +42,10 @@ h1, h2, h3{
 }
 
 .goBck {
+	display: block;
+
 	color: $page-text-alternate-color;
-	float: right;
+	text-align: right;
 }
 
 .collSec {
