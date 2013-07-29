@@ -824,6 +824,14 @@ $messages['vi'] = array(
 	'ajaxpoll-submitting' => 'Xin vui lòng chờ, đang gửi bình chọn của bạn...',
 );
 
+/** Chinese (中文)
+ * @author Shangkuanlc
+ */
+$messages['zh'] = array(
+	'ajaxpoll-thankyou' => '感謝你的投票',
+	'ajaxpoll-error' => '投票過程發生問題，請再試一次',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Wilsonmess

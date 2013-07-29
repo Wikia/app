@@ -90,6 +90,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['keywords'] = empty($video['metadata']['keywords']) ? '' : $video['metadata']['keywords'];
 				$clipData['description'] = trim($video['description']);
 				$clipData['ageGate'] = empty($video['metadata']['agegate']) ? 0 : 1;
+				$clipData['ageRequired'] = empty( $video['metadata']['age_required'] ) ? 0 : $video['metadata']['age_required'];
 				$clipData['hd'] = empty($video['metadata']['hd']) ? 0 : 1;
 				$clipData['tags'] = empty($video['metadata']['tags']) ? '' : $video['metadata']['tags'];
 				$clipData['industryRating'] = empty($video['metadata']['industryrating']) ? '' : $video['metadata']['industryrating'];
@@ -104,11 +105,18 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['provider'] = OoyalaApiWrapper::formatProviderName( $clipData['categoryName'] );
 
 				$clipData['language'] =  empty($video['metadata']['lang']) ? '' : $video['metadata']['lang'];
+				$clipData['subtitle'] =  empty( $video['metadata']['subtitle'] ) ? '' : $video['metadata']['subtitle'];
 				$clipData['genres'] = empty($video['metadata']['genres']) ? '' : $video['metadata']['genres'];
 				$clipData['actors'] = empty($video['metadata']['actors']) ? '' : $video['metadata']['actors'];
 				$clipData['startDate'] = empty($video['time_restrictions']['start_date']) ? '' : $video['time_restrictions']['start_date'];
 				$clipData['expirationDate'] = empty($video['metadata']['expirationdate']) ? '' : $video['metadata']['expirationdate'];
 				$clipData['playerId'] = OoyalaApiWrapper::getPlayerId( $clipData['videoId'] );
+				$clipData['targetCountry'] = empty( $video['metadata']['targetcountry'] ) ? '' : $video['metadata']['targetcountry'];
+				$clipData['source'] = empty( $video['metadata']['source'] ) ? '' : $video['metadata']['source'];
+				$clipData['sourceId'] = empty( $video['metadata']['sourceid'] ) ? '' : $video['metadata']['sourceid'];
+				$clipData['series'] = empty( $video['metadata']['series'] ) ? '' : $video['metadata']['series'];
+				$clipData['season'] = empty( $video['metadata']['season'] ) ? '' : $video['metadata']['season'];
+				$clipData['episode'] = empty( $video['metadata']['episode'] ) ? '' : $video['metadata']['episode'];
 
 				$msg = '';
 				$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug, 'provider' => $clipData['provider'] );
@@ -175,31 +183,39 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 	}
 
 	protected function generateMetadata( array $data, &$errorMsg ) {
-		if ( empty($data['videoId']) ) {
+		if ( empty( $data['videoId'] ) ) {
 			$errorMsg = 'no video id exists';
 			return 0;
 		}
 
 		$metadata = array(
-			'videoId' => $data['videoId'],
-			'hd' => $data['hd'],
-			'duration' => $data['duration'],
-			'published' => empty($data['published']) ? $data['published'] : strtotime($data['published']),
-			'ageGate' => $data['ageGate'],
+			'videoId'        => $data['videoId'],
+			'hd'             => $data['hd'],
+			'duration'       => $data['duration'],
+			'published'      => empty( $data['published'] ) ? $data['published'] : strtotime( $data['published'] ),
+			'ageGate'        => $data['ageGate'],
+			'ageRequired'    => $data['ageRequired'],
 			'industryRating' => $data['industryRating'],
-			'trailerRating' => $data['trailerRating'],
-			'thumbnail' => $data['thumbnail'],
-			'category' => $data['category'],
-			'description' => $data['description'],
-			'keywords' => $data['keywords'],
-			'tags' => $data['tags'],
-			'provider' => $data['provider'],
-			'language' => $data['language'],
-			'genres' => $data['genres'],
-			'actors' => $data['actors'],
-			'startDate' => empty($data['startDate']) ? $data['startDate'] : strtotime($data['startDate']),
-			'expirationDate' => empty($data['expirationDate']) ? $data['expirationDate'] : strtotime($data['expirationDate']),
-			'playerId' => $data['playerId'],
+			'trailerRating'  => $data['trailerRating'],
+			'thumbnail'      => $data['thumbnail'],
+			'category'       => $data['category'],
+			'description'    => $data['description'],
+			'keywords'       => $data['keywords'],
+			'tags'           => $data['tags'],
+			'provider'       => $data['provider'],
+			'language'       => $data['language'],
+			'subtitle'       => $data['subtitle'],
+			'genres'         => $data['genres'],
+			'actors'         => $data['actors'],
+			'startDate'      => empty( $data['startDate'] ) ? $data['startDate'] : strtotime( $data['startDate'] ),
+			'expirationDate' => empty( $data['expirationDate'] ) ? $data['expirationDate'] : strtotime( $data['expirationDate'] ),
+			'playerId'       => $data['playerId'],
+			'targetCountry'  => $data['targetCountry'],
+			'source'         => $data['source'],
+			'sourceId'       => $data['sourceId'],
+			'series'         => $data['series'],
+			'season'         => $data['season'],
+			'episode'        => $data['episode'],
 		);
 
 		return $metadata;

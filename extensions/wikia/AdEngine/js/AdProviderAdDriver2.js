@@ -145,8 +145,9 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 				log(slotname + ' was not filled by DART', 2, logGroup);
 				cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, now);
 
+				// don't track hop if not high value country
 				// don't track hop if dart was not called but rather skipped
-				if (!dontCallDart) {
+				if (isHighValueCountry && !dontCallDart) {
 					// Track hop time
 					hopTime = new Date().getTime() - hopTimer;
 					log('slotTimer2 end for ' + slotname + ' after ' + hopTime + ' ms (hop)', 7, logGroup);

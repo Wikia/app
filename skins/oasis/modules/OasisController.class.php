@@ -89,6 +89,10 @@ class OasisController extends WikiaController {
 
 		wfProfileIn(__METHOD__);
 
+		//Add Smart banner for My Wikia App
+		//See: https://wikia-inc.atlassian.net/browse/MOB-167
+		$wgOut->addHeadItem('My Wikia Smart Banner', '<meta name="apple-itunes-app" content="app-id=623705389">');
+
 		/* set the grid or full width if passed in, otherwise, respect the default */
 		$grid = $wgRequest->getVal('wikiagrid', '');
 		$fullhead = $wgRequest->getVal('wikiafullheader', '');

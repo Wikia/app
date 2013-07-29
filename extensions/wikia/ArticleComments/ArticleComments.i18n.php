@@ -535,6 +535,14 @@ ___________________________________________
 </p>',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'article-comments-cancel' => 'Цаоьшу',
+	'article-comments-delete' => 'дӀаяккха',
+);
+
 /** Sorani Kurdish (کوردی)
  * @author Calak
  */
@@ -2065,8 +2073,10 @@ $messages['mzn'] = array(
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
+ * @author Laaknor
  */
 $messages['nb'] = array(
+	'article-comments-file-page' => "<a href='$1'>Kommentarer fra $2</a> på <a href='$3'>$4</a>",
 	'article-comments-anonymous' => 'Anonym bruker',
 	'article-comments-comments' => 'Kommentarer ($1)',
 	'article-comments-post' => 'Post kommentar',
@@ -2104,6 +2114,7 @@ $messages['nb'] = array(
 	'wikiamobile-article-comments-placeholder' => 'Post en kommentar',
 	'wikiamobile-article-comments-show' => 'Vis',
 	'wikiamobile-article-comments-login-post' => 'Vennligst logg inn for å poste en kommentar.',
+	'wikiamobile-article-comments-post-fail' => 'Feilet lagring av kommentar, prøv igjen senere',
 	'enotif_subject_article_comment' => '$PAGEEDITOR har kommentert «$PAGETITLE» på {{SITENAME}}',
 	'enotif_body_article_comment' => 'Hei $WATCHINGUSERNAME,
 

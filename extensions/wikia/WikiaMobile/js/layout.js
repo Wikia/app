@@ -6,7 +6,7 @@
  * Layout handling of WikiaMobile
  * ie. Sections, Images, Galleries etc.
  */
-define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.loader', 'lazyload'], function(sections, media, cache, loader, lazyload) {
+define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.loader', 'lazyload', 'wikia.utils'], function(sections, media, cache, loader, lazyload, $) {
 	'use strict';
 
 	//init sections

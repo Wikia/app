@@ -9,7 +9,7 @@ class PhalanxStatsWikiaPager extends PhalanxStatsPager {
 	}
 	
 	function formatRow( $row ) {
-		$type = implode( ", ", Phalanx::getTypeNames( $row->ps_blocker_hit ) );
+		$type = implode( ", ", Phalanx::getTypeNames( ( isset( $row->ps_blocker_hit ) ) ? $row->ps_blocker_hit : $row->ps_blocker_type ) );
 		$username = $row->ps_blocked_user;
 		$timestamp = $this->app->wg->Lang->timeanddate( $row->ps_timestamp );
 		$url = $row->ps_referrer;

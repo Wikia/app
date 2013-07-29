@@ -1,22 +1,18 @@
 <?php
 
 /**
- * CategorySelect
+ * CategoryHelper
  *
- * A CategorySelect extension for MediaWiki
- * Provides an interface for managing categories in article without editing whole article
+ * @desc CategoryHelper provides an interface for managing categories in article without editing whole article
  *
  * @author Maciej Błaszkowski (Marooned) <marooned@wikia-inc.com>
  * @author Kyle Florence <kflorence@wikia-inc.com>
  */
-
-class CategorySelect {
+class CategoryHelper {
 	private static $categories;
 	private static $categoriesService;
 	private static $data;
 	private static $frame;
-	private static $isEditable;
-	private static $isEnabled;
 	private static $maybeCategory;
 	private static $maybeCategoryBegin;
 	private static $namespaces;
@@ -27,10 +23,16 @@ class CategorySelect {
 	/**
 	 * Change format of categories metadata. Supports:
 	 * array -> json, array -> wikitext, json -> wikitext, json -> array
+	 *
+	 * @param Array | String $categories list of categories in array or as JSON
+	 * @param String $fromFormat the format of given categories; supported 'json', 'wikitext', 'array'
+	 * @param String $toFormat the format of result
+	 *
 	 * @return Array | String
 	 */
 	public static function changeFormat( $categories, $fromFormat, $toFormat ) {
 		wfProfileIn( __METHOD__ );
+		$changed = null;
 
 		if ( $fromFormat == 'json' ) {
 			$categories = $categories == '' ? array() : json_decode( $categories, true );
@@ -61,7 +63,6 @@ class CategorySelect {
 			}
 		} else if ( $toFormat == 'array' ) {
 			$changed = $categories;
-
 		} else if ( $toFormat == 'json' ) {
 			$changed = json_encode( $categories );
 		}
@@ -74,9 +75,13 @@ class CategorySelect {
 	 * Extracts category tags from wikitext and returns a hash with an array
 	 * of categories data and a modified version of the wikitext with the category
 	 * tags removed.
+	 *
+	 * @param String $wikitext
+	 * @param Boolean $force default === false to skip cache set it to true
+	 *
 	 * @return Array
 	 */
-	public static function extractCategoriesFromWikitext( $wikitext, $force = false ) {
+	public static function extractCategoriesFromWikitext( $wikitext, $force = false, $lang = null ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !$force && is_array( self::$data ) ) {
@@ -103,7 +108,7 @@ class CategorySelect {
 
 		//init variables
 		self::$nodeLevel = 0;
-		self::getDefaultNamespaces();
+		self::getDefaultNamespaces( $lang );
 
 		// we will ignore categories added inside following list of tags (BugId:8208)
 		self::$tagsWhiteList = array_keys( $app->wg->Parser->mTagHooks );
@@ -140,6 +145,9 @@ class CategorySelect {
 
 	/**
 	 * Gets an array of links for the given categories.
+	 *
+	 * @param Array $categories
+	 *
 	 * @return Array
 	 */
 	public static function getCategoryLinks( $categories ) {
@@ -166,6 +174,9 @@ class CategorySelect {
 
 	/**
 	 * Gets the type of a category (either "hidden" or "normal").
+	 *
+	 * @param String $category
+	 *
 	 * @return String
 	 */
 	public static function getCategoryType( $category ) {
@@ -191,9 +202,14 @@ class CategorySelect {
 	 * Gets the default namespaces for a wiki and content language.
 	 * @return String
 	 */
-	public static function getDefaultNamespaces() {
+	public static function getDefaultNamespaces( $lang = null ) {
 		if ( !isset( self::$namespaces ) ) {
-			$namespaces = F::app()->wg->ContLang->getNsText( NS_CATEGORY );
+
+			if ( is_null($lang) || !( $lang instanceof Language ) ) {
+				$lang = F::app()->wg->ContLang;
+			}
+
+			$namespaces = $lang->getNsText( NS_CATEGORY );
 
 			if ( strpos( $namespaces, 'Category' ) === false ) {
 				$namespaces = 'Category|' . $namespaces;
@@ -209,6 +225,10 @@ class CategorySelect {
 	 * Extracts category tags from wikitext and returns a hash of the categories
 	 * and the wikitext with categories removed. If wikitext is not provided, it will
 	 * attempt to pull it from the current article.
+	 *
+	 * @param String $wikitext
+	 * @param Boolean $force by default === false; set it to true if you want to skip cache
+	 *
 	 * @return Array
 	 */
 	public static function getExtractedCategoryData( $wikitext = '', $force = false ) {
@@ -216,6 +236,7 @@ class CategorySelect {
 
 			// Try to extract wikitext from the article
 			if ( empty( $wikitext ) ) {
+				/** @var Article $article */
 				$article = F::app()->wg->Article;
 
 				if ( isset( $article ) ) {
@@ -233,6 +254,9 @@ class CategorySelect {
 
 	/**
 	 * Gets the category names from an array of category arrays.
+	 *
+	 * @param Array $categories
+	 *
 	 * @return Array
 	 */
 	public static function getCategoryNames( $categories ) {
@@ -251,6 +275,9 @@ class CategorySelect {
 
 	/**
 	 * Gets the normalized category name from a category array.
+	 *
+	 * @param Array | String $category
+	 *
 	 * @return Title | Null
 	 */
 	public static function getCategoryTitle( $category ) {
@@ -331,108 +358,6 @@ class CategorySelect {
 		wfProfileOut( __METHOD__ );
 
 		return $diff;
-	}
-
-	/**
-	 * Whether the current user can edit categories for the current request.
-	 * @return Boolean
-	 */
-	public static function isEditable() {
-		wfProfileIn( __METHOD__ );
-
-		if ( !isset( self::$isEditable ) ) {
-			$app = F::app();
-
-			$request = $app->wg->Request;
-			$title = $app->wg->Title;
-			$user = $app->wg->User;
-
-			$isEditable = true;
-
-			if (
-				// Disabled if user is not allowed to edit
-				!$user->isAllowed( 'edit' )
-				// Disabled on pages the user can't edit, see RT#25246
-				|| ( $title->mNamespace != NS_SPECIAL && !$title->quickUserCan( 'edit' ) )
-				// Disabled for diff pages
-				|| $request->getVal( 'diff' )
-				// Disabled for older revisions of articles
-				|| $request->getVal( 'oldid' )
-			) {
-				$isEditable = false;
-			}
-
-			self::$isEditable = $isEditable;
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return self::$isEditable;
-	}
-
-	/**
-	 * Whether CategorySelect should be used for the current request.
-	 * @return Boolean
-	 */
-	public static function isEnabled() {
-		wfProfileIn( __METHOD__ );
-
-		if ( !isset( self::$isEnabled ) ) {
-			$app = F::app();
-
-			$request = $app->wg->Request;
-			$title = $app->wg->Title;
-			$user = $app->wg->User;
-
-			$action = $request->getVal( 'action', 'view' );
-			$undo = $request->getVal( 'undo' );
-			$undoafter = $request->getVal( 'undoafter' );
-
-			$viewModeActions = array( 'view', 'purge' );
-			$editModeActions = array( 'edit', 'submit' );
-			$supportedActions = array_merge( $viewModeActions, $editModeActions );
-			$supportedSkins = array( 'SkinAnswers', 'SkinOasis' );
-
-			$isViewMode = in_array( $action, $viewModeActions );
-			$isEditMode = in_array( $action, $editModeActions );
-			$extraNamespacesOnView = array( NS_FILE, NS_CATEGORY, NS_VIDEO );
-			$extraNamespacesOnEdit = array( NS_FILE, NS_CATEGORY, NS_VIDEO, NS_USER, NS_SPECIAL );
-
-			$isEnabled = true;
-
-			if (
-				// Disabled if usecatsel=no is present
-				$request->getVal( 'usecatsel', '' ) == 'no'
-				// Disabled by user preferences
-				|| $user->getOption( 'disablecategoryselect' )
-				// Disabled for unsupported skin
-				|| !in_array( get_class( RequestContext::getMain()->getSkin() ), $supportedSkins )
-				// Disabled for unsupported action
-				|| !in_array( $action, $supportedActions )
-				// Disabled on CSS or JavaScript pages
-				|| $title->isCssJsSubpage()
-				// Disabled on non-existent article pages
-				|| ( $action == 'view' && !$title->exists() )
-				// Disabled on 'confirm purge' page for anon users
-				|| ( $action == 'purge' && $user->isAnon() && !$request->wasPosted() )
-				// Disabled for undo edits
-				|| ( $undo > 0 && $undoafter > 0 )
-				// Disabled for unsupported namespaces
-				|| ( $title->mNamespace == NS_TEMPLATE )
-				// Disabled for unsupported namespaces in view mode
-				|| ( $isViewMode && !in_array( $title->mNamespace, array_merge( $app->wg->ContentNamespaces, $extraNamespacesOnView ) ) )
-				// Disabled for unsupported namespaces in edit mode
-				|| ( $isEditMode && !in_array( $title->mNamespace, array_merge( $app->wg->ContentNamespaces, $extraNamespacesOnEdit ) ) )
-			) {
-				$isEnabled = false;
-			}
-
-			self::$isEnabled = $isEnabled;
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return self::$isEnabled;
 	}
 
 	private static function parseNode(&$root, $outerTag = '') {

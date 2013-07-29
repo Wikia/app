@@ -1,8 +1,8 @@
 <?php
 /**
- * Class definition for Wikia\Search\QueryService\Select\OnWiki
+ * Class definition for Wikia\Search\QueryService\Select\Dismax\OnWiki
  */
-namespace Wikia\Search\QueryService\Select;
+namespace Wikia\Search\QueryService\Select\Dismax;
 use \Wikia\Search\Utilities, \Solarium_Query_Select as Select;
 /**
  * This class is responsible for the default behavior of search.
@@ -11,7 +11,7 @@ use \Wikia\Search\Utilities, \Solarium_Query_Select as Select;
  * @package Search
  * @subpackage QueryService
  */
-class OnWiki extends AbstractSelect
+class OnWiki extends AbstractDismax
 {
 	/**
 	 * Used for tracking
@@ -32,29 +32,27 @@ class OnWiki extends AbstractSelect
 	 * @return Wikia\Search\Match\Article|null
 	 */
 	public function extractMatch() {
-		$query = $this->config->getQuery()->getSanitizedQuery();
-		$match = $this->service->getArticleMatchForTermAndNamespaces( $query, $this->config->getNamespaces() );
+		$config = $this->getConfig();
+		$service = $this->getService();
+		$query = $config->getQuery()->getSanitizedQuery();
+		$match = $service->getArticleMatchForTermAndNamespaces( $query, $config->getNamespaces() );
 		if (! empty( $match ) ) {
-			$this->config->setArticleMatch( $match );
+			$config->setArticleMatch( $match );
 		}
-		if ( $this->service->getGlobal( 'OnWikiSearchIncludesWikiMatch' ) ) {
+		if ( $service->getGlobal( 'OnWikiSearchIncludesWikiMatch' ) ) {
 			$this->extractWikiMatch();
 		}
-		return $this->config->getMatch();
+		return $config->getMatch();
 	}
 	
 	/**
 	 * Registers different components in Solarium. We also use this spot to update query fields for the video search child class.
 	 * @param \Solarium_Query_Select $query
-	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::registerComponents()
 	 */
-	protected function registerComponents( Select $query ) {
-		return $this->configureQueryFields()
-		            ->registerQueryParams   ( $query )
-		            ->registerHighlighting  ( $query )
+	protected function registerNonDismaxComponents( Select $query ) {
+		return $this->registerHighlighting  ( $query )
 		            ->registerFilterQueries ( $query )
 		            ->registerSpellcheck    ( $query )
-		            ->registerDismax        ( $query )
 		;
 	}
 	
@@ -64,9 +62,10 @@ class OnWiki extends AbstractSelect
 	 * @return OnWiki
 	 */
 	protected function registerFilterQueryForMatch() {
-		if ( $this->config->hasArticleMatch() ) {
-			$noPtt = Utilities::valueForField( 'id', $this->config->getArticleMatch()->getResult()->getVar( 'id' ), array( 'negate' => true ) ) ;
-			$this->config->setFilterQuery( $noPtt, 'ptt' );
+		$config = $this->getConfig();
+		if ( $config->hasArticleMatch() ) {
+			$noPtt = Utilities::valueForField( 'id', $config->getArticleMatch()->getResult()->getVar( 'id' ), array( 'negate' => true ) ) ;
+			$config->setFilterQuery( $noPtt, 'ptt' );
 		}
 		return $this;
 	}
@@ -94,26 +93,6 @@ class OnWiki extends AbstractSelect
 	}
 	
 	/**
-	 * This is a hook called if we need to modify the basic query fields as a part the class's basic functionality.
-	 * @return OnWiki
-	 */
-	protected function configureQueryFields() {
-	    return $this;
-	}
-	
-	/**
-	 * Return a string of query fields based on configuration
-	 * @return string
-	 */
-	protected function getQueryFieldsString() {
-		$queryFieldsString = '';
-		foreach ( $this->config->getQueryFieldsToBoosts()  as $field => $boost ) {
-			$queryFieldsString .= sprintf( '%s^%s ', Utilities::field( $field ), $boost );
-		}
-		return trim( $queryFieldsString );
-	}
-	
-	/**
 	 * Require the wiki ID we're on, and that everything is in the provided namespaces
 	 * @return string
 	 */
@@ -125,5 +104,18 @@ class OnWiki extends AbstractSelect
 		}
 		$queryClauses[] = "({$nsQuery})";
 		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
+	}
+	
+	/**
+	 * Builds the string used with filter queries based on search config
+	 * @return string
+	 */
+	protected function getFilterQueryString()
+	{
+		$namespaces = [];
+		foreach ( $this->config->getNamespaces() as $ns ) {
+			$namespaces[] = Utilities::valueForField( 'ns', $ns );
+		}
+		return implode( ' AND ', [ sprintf( '(%s)', implode( ' OR ', $namespaces ) ), Utilities::valueForField( 'wid', $this->config->getCityId() ) ] );
 	}
 }

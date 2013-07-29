@@ -464,7 +464,7 @@ class SpecialConnect extends SpecialPage {
 			// This must be done up here so that the data is in the database before copy-to-local is done for sharded setups.
 			FBConnectDB::addFacebookID($user, $fb_id);
 
-			wfRunHooks( 'AddNewAccount', array( $user ) );
+			wfRunHooks( 'AddNewAccount', array( $user, false ) );
 
 			// Mark that the user is a Facebook user
 			$user->addGroup('fb-user');

@@ -10,6 +10,8 @@
  * Constructs a URL to get live remote assets from Ooyala API
  * @param integer $apiPageSize
  * @param integer $page
+ * @param string $provider
+ * @param string $keyword
  * @return string $url
  */
 function getApiAssets( $apiPageSize, $page, $provider, $keyword ) {

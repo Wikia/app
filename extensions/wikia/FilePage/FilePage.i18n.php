@@ -188,11 +188,19 @@ $messages['et'] = array(
 
 /** Finnish (suomi)
  * @author Nike
+ * @author Ville96
  */
 $messages['fi'] = array(
+	'video-page-description-heading' => 'Kuvaus',
+	'video-page-description-zero-state' => 'Kuvausta ei ole vielä.',
 	'video-page-add-description-link-text' => 'Lisää kuvaus.',
 	'video-page-default-description-header-and-text' => '== Kuvaus ==
 Lisää kuvaus tähän.',
+	'file-page-replace-button' => 'Korvaa',
+	'file-page-tab-about' => 'Tietoja',
+	'file-page-tab-history' => 'Tiedoston historia',
+	'file-page-tab-metadata' => 'Sisältökuvaukset',
+	'file-page-more-links' => 'Katso koko lista',
 );
 
 /** French (français)
@@ -350,6 +358,30 @@ Berikan keterangan di sini.',
 	'file-page-tab-history' => 'Sejarah Fail',
 	'file-page-tab-metadata' => 'Metadata',
 	'file-page-more-links' => 'Lihat senarai penuh',
+);
+
+/** Norwegian Bokmål (norsk bokmål)
+ * @author Laaknor
+ */
+$messages['nb'] = array(
+	'video-page-file-list-header' => 'Vises på disse sidene',
+	'video-page-global-file-list-header' => 'Vises på disse wikiene',
+	'video-page-from-provider' => 'Fra $1',
+	'video-page-expires' => 'Innhold går ut på $1',
+	'video-page-views' => '$1 {{PLURAL:$1|visning|visninger}}',
+	'video-page-see-more-info' => 'Vis mer informasjon',
+	'video-page-see-less-info' => 'Vis mindre informasjon',
+	'video-page-description-heading' => 'Beskrivelse',
+	'video-page-description-zero-state' => 'Det er ingen beskrivelse ennå.',
+	'video-page-add-description-link-text' => 'Legg til en beskrivelse.',
+	'video-page-default-description-header-and-text' => '== Beskrivelse ==
+Legg inn beskrivelse her.',
+	'video-page-file-list-pagination' => '$1 av $2',
+	'file-page-replace-button' => 'Erstatt',
+	'file-page-tab-about' => 'Om',
+	'file-page-tab-history' => 'Filhistorikk',
+	'file-page-tab-metadata' => 'Metadata',
+	'file-page-more-links' => 'Se fullstendig liste',
 );
 
 /** Dutch (Nederlands)
@@ -549,9 +581,11 @@ $messages['ur'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Kuailong
+ * @author Liuxinyu970226
  * @author Qiyue2001
  */
 $messages['zh-hans'] = array(
+	'video-page-from-provider' => '来自$1',
 	'video-page-views' => '$1次浏览',
 	'video-page-see-more-info' => '显示更多信息',
 	'video-page-see-less-info' => '显示较少信息',
@@ -560,6 +594,7 @@ $messages['zh-hans'] = array(
 	'video-page-add-description-link-text' => '添加说明。',
 	'video-page-default-description-header-and-text' => '==说明==
 在这里输入说明。',
+	'video-page-file-list-pagination' => '$2的$1',
 	'file-page-replace-button' => '取代',
 	'file-page-tab-about' => '关于',
 	'file-page-tab-history' => '文件历史',
