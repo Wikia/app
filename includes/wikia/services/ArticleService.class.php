@@ -36,7 +36,7 @@ class ArticleService extends WikiaObject {
 		'/\s+/' => ' '
 	);
 	private static $localCache = array();
-	
+
 	/**
 	 * Using SolrDocumentService to access preprocessed article content
 	 * @var SolrDocumentService
@@ -150,8 +150,12 @@ class ArticleService extends WikiaObject {
 				86400 /*24h*/,
 				function() use ( $service, $fname ){
 					wfProfileIn( $fname . '::CacheMiss' );
-					
-					$content = $service->getTextFromSolr();
+
+					$content = '';
+					if ( !empty( $this->wg->SolrIsMaster ) ) {
+						$content = $service->getTextFromSolr();
+					}
+
 					if ( $content === '' ) {
 						// back-off is to use mediawiki
 						$content = $service->getUncachedSnippetFromArticle();
@@ -168,7 +172,7 @@ class ArticleService extends WikiaObject {
 		wfProfileOut( __METHOD__ );
 		return $snippet;
 	}
-	
+
 	/**
 	 * Accesses a snippet from MediaWiki.
 	 * @return string
@@ -208,7 +212,7 @@ class ArticleService extends WikiaObject {
 		}
 		return $content;
 	}
-	
+
 	/**
 	 * Gets a plain text of an article using Solr.
 	 *
@@ -221,16 +225,16 @@ class ArticleService extends WikiaObject {
 			$service->setArticleId( $this->article->getId() );
 		}
 		$htmlField = Wikia\Search\Utilities::field( 'html' );
-		
+
 		$document = $service->getResult();
-		
+
 		$text = '';
 		if ( ( $document !== null ) && ( isset( $document[$htmlField] ) ) ) {
 			$text = $document[$htmlField];
 		}
 		return $text;
 	}
-	
+
 	/**
 	 * Gets the cache key associated to an article
 	 *
