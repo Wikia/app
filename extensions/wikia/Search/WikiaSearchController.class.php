@@ -92,21 +92,16 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				}
 			}
 			if (! empty( $ids ) ) {
-				//try getting first one bigger
-				$params = [ 'ids' => implode( ',', $ids ), 'height' => 150, 'width' => 300 ];
-				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
-				foreach ( $ids as $key => $id ) {
-					if (isset( $detailResponse['items'][ $id ] ) && ! empty( $detailResponse['items'][ $id ]['thumbnail'] ) ) {
-						$detailResponse['items'][ $id ][ 'date' ] = $wgLang->date( $detailResponse['items'][ $id ][ 'revision' ][ 'timestamp' ] );
-						$pages[] = $detailResponse['items'][ $id ];
-						unset( $ids[ $key ] );
-						break;
-					}
-				}
 				$params = [ 'ids' => implode( ',', $ids ), 'height' => 80, 'width' => 80 ];
 				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
 				foreach ( $detailResponse['items'] as $item ) {
 					if (! empty( $item['thumbnail'] ) ) {
+						//get the first one image from imageServing as it needs other size
+						if ( empty( $pages ) ) {
+							$is = new ImageServing( [ $item[ 'id' ] ], 300, 150 );
+							$result = $is->getImages( 1 );
+							$item[ 'thumbnail' ] = $result[ $item[ 'id' ] ][ 0 ];
+						}
 						//render date
 						$item[ 'date' ] = $wgLang->date( $item[ 'revision' ][ 'timestamp' ] );
 						$pages[] = $item;
