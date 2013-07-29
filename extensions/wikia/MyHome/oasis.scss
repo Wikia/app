@@ -82,10 +82,18 @@
 			a {
 				cursor: pointer;
 				display: table-cell;
-				height: 160px;
 				text-align: center;
 				vertical-align: middle;
 				width: 160px;
+				padding: 5px 0;
+
+				// Using the wildcard attribute selector here in case we end up appending query strings or anything else to these hrefs
+				&[href*=".gif"], &[href*=".GIF"],
+				&[href*=".jpg"], &[href*=".JPG"],
+			  &[href*=".png"], &[href*=".PNG"]	{
+					height: 160px;
+					padding: 0;
+				}
 			}
 		}
 	}
