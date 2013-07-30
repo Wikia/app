@@ -13,6 +13,7 @@ $messages['en'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|page|pages}})',
 	'tagsreportpagesfound' => 'Found <strong>$1</strong> {{PLURAL:$1|page|pages}}, which contain special tag (DPL, YouTube, etc.)',
 	'tagsreportgenerated' => 'Generated on $1 at $2',
+	'tagsreportpageremoved' => 'Page #$1 has been removed'
 );
 
 /** Message documentation (Message documentation)
@@ -27,6 +28,9 @@ $messages['qqq'] = array(
 	'tagsreportgenerated' => 'Parameters:
 * $1 is a date.
 * $2 is a time.',
+	'tagsreportpageremoved' => 'Shown when page can not be listed because it has been removed.
+* $1 is page id
+'
 );
 
 /** Afrikaans (Afrikaans)

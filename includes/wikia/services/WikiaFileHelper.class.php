@@ -80,16 +80,21 @@ class WikiaFileHelper extends Service {
 		return $mTitle;
 	}
 
-	/*
+	/**
 	 * Looks up videos with same provider and videoId
 	 * as specified inside currently uploaded videos on wiki
 	 * (searches Image table)
+	 * @param string $provider
+	 * @param string $videoId
+	 * @param boolean $isRemoteAsset
+	 * @return array $result
 	 */
-	public static function findVideoDuplicates( $provider, $videoId ) {
+	public static function findVideoDuplicates( $provider, $videoId, $isRemoteAsset = false ) {
 		//print "Looking for duplicaes of $provider $videoId\n";
 		$dbr = wfGetDB(DB_MASTER); // has to be master otherwise there's a chance of getting duplicates
 
-		if ( is_numeric($videoId) ) {
+		// for remote asset, $videoId is string even if it is numeric
+		if ( is_numeric( $videoId ) && !$isRemoteAsset ) {
 			$videoStr = 'i:'.$videoId;
 		} else {
 			$videoId = (string) $videoId;
@@ -101,14 +106,21 @@ class WikiaFileHelper extends Service {
 			$provider = $providers[0];
 		}
 
+		$conds = array( 'img_media_type' => 'VIDEO' );
+		if ( $isRemoteAsset ) {
+			$providerStr = 's:6:"source";s:'.strlen($provider).':"'.$provider.'";';
+			$conds[] = "img_metadata LIKE '%$providerStr%'";
+			$conds[] = "img_metadata LIKE '%s:8:\"sourceId\";".$videoStr.";%'";
+		} else {
+			$conds['img_minor_mime'] = $provider;
+			$conds[] = "img_metadata LIKE '%s:7:\"videoId\";".$videoStr.";%'";
+		}
+
 		$rows = $dbr->select(
 			'image',
 			'*',
-			array(
-				'img_media_type' => 'VIDEO',
-				'img_minor_mime' => $provider,
-				"img_metadata LIKE '%s:7:\"videoId\";".$videoStr.";%'",
-			)
+			$conds,
+			__METHOD__
 		);
 
 		$result = array();

@@ -109,7 +109,7 @@ class VideoEmbedToolSearchService
 		$query = $this->getSuggestionQuery();
 		$service = $this->getMwService();
 		$expectedFields = $this->getExpectedFields();
-		$config = $this->getConfig()->setWikiId( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID )
+		$config = $this->getConfig()->setWikiId( Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID )
 		                            ->setQuery( $query )
 									->setRequestedFields( $expectedFields )
 		                            ->setFilterQuery( "+(title_en:({$query}) OR video_actors_txt:({$query}) OR nolang_txt:({$query}) OR html_media_extras_txt:({$query}))" )
@@ -218,7 +218,7 @@ class VideoEmbedToolSearchService
 			             ->setRank( $this->getRank() );
 			$this->config->setFilterQueryByCode( Wikia\Search\Config::FILTER_VIDEO );
 			if ( $this->getSearchType() == 'premium' ) {
-				$this->config->setWikiId( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID );
+				$this->config->setWikiId( Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID );
 			}
 			
 		}
