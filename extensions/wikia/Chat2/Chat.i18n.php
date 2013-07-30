@@ -166,6 +166,7 @@ $messages['qqq'] = array(
 	'chat-ban-modal-end-ban' => "Option inside a select menu.  Choose this option if you want the end a user's ban.",
 	'chat-log-reason-banchange' => '{{Identical|No reason given}}',
 	'chat-log-reason-banremove' => '{{Identical|No reason given}}',
+	'chat-you-are-banned' => '{{Identical|Permission error}}',
 	'chat-kick-log-reason' => '{{doc-singularthey}}',
 	'chat-edit-count' => '$1 is the number of edits made by the user',
 	'chat-member-since' => '$1 tells both the month and the year, month abbreviated. E.g. "Apr 2008".',
@@ -399,6 +400,26 @@ $messages['bg'] = array(
 	'chat-ban-modal-button-cancel' => 'Отказване',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'chat' => 'আড্ডা',
+	'chat-desc' => '[[Special:Chat|সরাসরি আড্ডা]]',
+	'chat-log-reason-undo' => 'পূর্বাবস্থায় আনো',
+	'chat-ban-undolink' => 'পূর্বাবস্থায় আনো',
+	'chat-ban-modal-button-cancel' => 'বাতিল',
+	'chat-log-reason-banchange' => 'কোনো কারণ দেওয়া হয়নি',
+	'chat-log-reason-banremove' => 'কোনো কারণ দেওয়া হয়নি',
+	'chat-live2' => 'সরাসরি! আড্ডা',
+	'chat-start-a-chat' => 'একটি আড্ডা শুরু করুন',
+	'chat-join-the-chat' => 'আড্ডায় যোগ দিন',
+	'chat-edit-count' => '{{PLURAL:$1|$1টি সম্পাদনা}}',
+	'chat-member-since' => '$1 থেকে সদস্য',
+	'chat-user-menu-talk-page' => 'আলাপ পাতা',
+	'chat-user-menu-contribs' => 'অবদান',
+);
+
 /** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
@@ -449,7 +470,7 @@ Kit e darempred ganto da c'houzout hiroc'h.",
 	'chat-live2' => 'Flap war-eeun !',
 	'chat-start-a-chat' => 'Kregiñ gant ar Flap',
 	'chat-join-the-chat' => 'Mont er Flap',
-	'chat-edit-count' => '{{PLURAL:$1|$1 edit|$1 edits}}',
+	'chat-edit-count' => '$1 {{PLURAL:$1|kemm}}',
 	'chat-member-since' => 'Ezel adalek an $1',
 	'chat-great-youre-logged-in' => "Dreist ! Kevreet oc'h.",
 	'chat-user-menu-message-wall' => "Moger ar c'homzoù",
@@ -589,6 +610,7 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'chat-ban-modal-label-expires' => 'Чекхйолу',
+	'chat-user-menu-talk-page' => 'Декъашхочун дийцаре',
 	'chat-ban-option-list' => '2 сахьат:2 hours,1 де:1 day,3 де:3 days,1 кӀиран:1 week,2 кӀиран:2 weeks,1 бутт:1 month,3 бутт:3 months,6 бутт:6 months,1 шо:1 year,цlкъа:infinite',
 );
 
@@ -1452,6 +1474,7 @@ $messages['id'] = array(
 	'chat-log-reason-undo' => 'balikkan',
 	'chat-ban-undolink' => 'balikkan',
 	'chat-ban-modal-button-cancel' => 'Batal',
+	'chat-log-reason-banremove' => 'Tidak ada alasan yang diberikan',
 	'chat-ban-cant-ban-moderator' => 'Anda tidak bisa menendang/ban Moderator chatting yang lain.',
 	'chat-ban-already-banned' => '$1sudah dilarang dari chatting di wiki ini.',
 	'chat-ban-you-need-permission' => 'Anda tidak memiliki  $1  izin yang diperlukan untuk menendang/ban pengguna.',
@@ -1461,6 +1484,9 @@ $messages['id'] = array(
 	'chat-you-are-banned' => 'Kesalahan hak akses.',
 	'chat-user-menu-message-wall' => 'Dinding Pesan',
 	'chat-user-menu-talk-page' => 'Halaman Pembicaraan',
+	'group-bannedfromchat' => 'Disekat dari chat',
+	'chat-ban-option-list' => '2 jam:2 jam, 1 hari:1 hari, 3 hari:3 hari, 2 minggu:2 minggu, 1 bulan:1 bulan, 3 bulan:3 bulan, 6 bulan:6 bulan, 1 tahun:1 tahun, tak terbatas:tak terbatas',
+	'chat-contributions-ban-notice' => '{{GENDER:$1|Pengguna ini}} saat ini disekat dari chat. Entri log sekat chat terakhir disediakan di bawah ini untuk referensi:',
 );
 
 /** Italian (italiano)
@@ -1971,6 +1997,7 @@ Sila hubungi mereka untuk penjelasan lanjut.',
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
+ * @author Laaknor
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -2057,7 +2084,7 @@ $messages['nb'] = array(
 	'chat-chatbanadd-log-entry' => 'utestengte $1 fra chatten med en varighet på $2, oppheves $3',
 	'chat-chatbanremove-log-entry' => 'opphevet utestengelsen til $1 fra chatten',
 	'chat-chatbanchange-log-entry' => 'endret utestengningsinnstillinger for $1 med en varighet på $2, oppheves $3',
-	'chat-contributions-ban-notice' => 'Denne brukeren er for øyeblikket utestengt fra chatten. Den siste oppføringen i loggen over chatutestengninger oppgis nedenfor for referanse:', # Fuzzy
+	'chat-contributions-ban-notice' => '{{GENDER:$1|Denne brukeren}} er for øyeblikket utestengt fra chatten. Den siste oppføringen i loggen over chatutestengninger oppgis nedenfor for referanse:',
 	'chat-browser-is-notsupported' => 'Nettleseren din støttes ikke. For en best mulig opplevelse, bruk en <a href="http://community.wikia.com/wiki/Help:Supported_browsers">nyere nettleser</a>.',
 	'chat-checkuser-join-action' => 'Ble med i chatten',
 	'chat-status-away' => 'Borte',

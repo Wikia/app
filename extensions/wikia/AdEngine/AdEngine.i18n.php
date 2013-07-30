@@ -19,6 +19,14 @@ $messages['qqq'] = array(
 	'adengine-exitstitial-button' => 'Text of the link/button that you can close the box with and get directly to the link target',
 );
 
+/** Breton (brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'adengine-exitstitial-title-template' => "Emaoc'h o kuitaat $1...",
+	'adengine-exitstitial-go-back' => "Ha fellout a ra deoc'h mont war-gil ?",
+);
+
 /** Spanish (español)
  * @author VegaDark
  */
@@ -78,11 +86,33 @@ $messages['ms'] = array(
 	'adengine-exitstitial-button' => 'Langkau iklan ini',
 );
 
+/** Norwegian Bokmål (norsk bokmål)
+ * @author Laaknor
+ */
+$messages['nb'] = array(
+	'adengine-exitstitial-title-template' => 'Du forlater $1...',
+	'adengine-exitstitial-redirecting' => 'Din nettleser vil om nøn sekunder omdirigere deg til siden du ba om.',
+	'adengine-exitstitial-go-back' => 'Vil du gå tilbake?',
+	'adengine-exitstitial-button' => 'Hopp over denne annonsen',
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'adengine-exitstitial-title-template' => 'تاسې له $1 څخه وځۍ...',
+	'adengine-exitstitial-go-back' => 'بېرته ورستنېدل غواړۍ؟',
 	'adengine-exitstitial-button' => 'له دې خبرتيا تېرېدل',
+);
+
+/** Brazilian Portuguese (português do Brasil)
+ * @author TheGabrielZaum
+ */
+$messages['pt-br'] = array(
+	'adengine-exitstitial-title-template' => 'Você está deixando a $1...',
+	'adengine-exitstitial-redirecting' => 'Seu navegador irá redirecioná-lo à página que você requisitou em alguns segundos.',
+	'adengine-exitstitial-go-back' => 'Deseja voltar?',
+	'adengine-exitstitial-button' => 'Pular este anúncio',
 );
 
 /** Swedish (svenska)
@@ -93,4 +123,21 @@ $messages['sv'] = array(
 	'adengine-exitstitial-redirecting' => 'Din webbläsare kommer att omdirigera dig till den sida du begärt inom några sekunder.',
 	'adengine-exitstitial-go-back' => 'Vill du gå tillbaka?',
 	'adengine-exitstitial-button' => 'Hoppa över denna annons',
+);
+
+/** Turkish (Türkçe)
+ * @author Sabri Vatansever
+ */
+$messages['tr'] = array(
+	'adengine-exitstitial-title-template' => '$1 bırakıyorsun ...',
+	'adengine-exitstitial-redirecting' => 'Tarayıcınız için birkaç saniye içinde istediğiniz sayfa yönlendirme yapar.',
+	'adengine-exitstitial-go-back' => 'Geri dönmek ister misin?',
+	'adengine-exitstitial-button' => 'Reklamı geç',
+);
+
+/** Chinese (中文)
+ * @author Shangkuanlc
+ */
+$messages['zh'] = array(
+	'adengine-exitstitial-button' => '跳過廣告',
 );

@@ -105,6 +105,13 @@ $messages['ia'] = array(
 	'confirmemailprompt-error' => 'Es iste le adresse de e-mail tue: <strong>$1</strong>? [[$2|Confirma lo]] o [[$3|cambia lo]].',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'confirmemailprompt-desc' => 'Tampilkan pesan peringatan jika seorang pengguna memiliki alamat email yang belum dikonfirmasi',
+);
+
 /** Italian (italiano)
  * @author Leviathan 89
  */

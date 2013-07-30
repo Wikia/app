@@ -124,15 +124,7 @@ class WikiaDataAccess {
 		$keyLock = $key . ':lock';
 		$key .= '-withDate';
 
-		$tryCache = function( $key ) use ( $app ) {
-			$result = $app->wg->Memc->get( $key );
-			if( !is_array($result) || $result === false || !isset($result['data']) || !isset($result['time'])) {
-				$result = null;
-			}
-			return $result;
-		};
-
-		$result = ($command == self::USE_CACHE) ? $tryCache($key) : null;
+		$result = ($command == self::USE_CACHE) ? static::getDataAndVerify($app, $key) : null;
 
 		if ( is_null( $result ) ) {
 
@@ -141,7 +133,7 @@ class WikiaDataAccess {
 			if( $wasLocked && $gotLock ) {
 				self::unlock( $keyLock );
 				$gotLock = false;
-				$result = ($command == self::USE_CACHE) ? $tryCache($key) : null;
+				$result = ($command == self::USE_CACHE) ? static::getDataAndVerify($app, $key) : null;
 			}
 
 			if( is_null( $result ) ) {
@@ -162,7 +154,7 @@ class WikiaDataAccess {
 				// we could use the data, but maybe we should regenerate
 				list($gotLock, $wasLocked) = self::lock( $keyLock, false );
 
-				if( !$wasLocked && $gotLock ) {
+				if( $gotLock && !$wasLocked ) {
 					// we are the first thread to find that data older than $cacheTime but fresher than $oldCacheTime
 					// let's try to get new data
 					// because we hold the lock other threads won't try to generate it in the same time
@@ -171,10 +163,12 @@ class WikiaDataAccess {
 						'time' => wfTimestamp( TS_UNIX )
 					);
 					self::setCache( $key, $result, $cacheTime * 2, $command );
-					self::unlock( $keyLock );
 				} else {
 					// what we already have in $result is good enough
 					// and another thread is generating that data anyway for future requests
+				}
+				if( $gotLock ) {
+					self::unlock( $keyLock );
 				}
 			}
 		}
@@ -216,6 +210,17 @@ class WikiaDataAccess {
 
 	static private function unlock( $key ) {
 		F::app()->wg->Memc->delete( $key );
+	}
+
+	/*
+	 * Internal use by cacheWithLock code-path
+	 */
+	static private function getDataAndVerify( $app, $key ) {
+		$result = $app->wg->Memc->get( $key );
+		if( !is_array($result) || $result === false || !isset($result['data']) || !isset($result['time'])) {
+			$result = null;
+		}
+		return $result;
 	}
 
 }

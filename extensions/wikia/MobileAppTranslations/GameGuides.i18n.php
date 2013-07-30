@@ -361,6 +361,7 @@ $messages['id'] = array(
 	'window-wikis-wikilist-search-hint' => 'Cari Permainan Teratas kami',
 	'searchview-no-results' => 'Tidak ada hasil untuk "%s"',
 	'error-update-required' => 'Pembaruan untuk aplikasi ini telah tersedia dan diperlukan.',
+	'error-json-parse' => 'Ada masalah dengan data yang dikembalikan dari server kami, maaf.\\nSilakan coba lagi.',
 );
 
 /** Italian (italiano)
@@ -627,6 +628,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
  */
 $messages['pt'] = array(
 	'activityindicator-message' => 'A carregar…',
@@ -642,9 +644,9 @@ $messages['pt'] = array(
 	'searchview-button-back-list' => 'Voltar à lista',
 	'searchview-button-back-article' => 'Voltar ao artigo',
 	'searchbar-hint' => 'Pesquisar %s...',
-	'alert-download-updated-wikis-message' => 'A lista de guias disponíveis será actualizada.',
+	'alert-download-updated-wikis-message' => 'A lista de guias disponíveis será atualizada.',
 	'alert-download-updated-wikis-button-ok' => 'Ok',
-	'error-update-required' => 'Está disponível uma actualização necessária para esta aplicação.',
+	'error-update-required' => 'Está disponível uma atualização necessária para esta aplicação.',
 	'error-no-connection' => 'Não está disponível nenhuma ligação à internet.\\nTente novamente, por favor.',
 	'error-server' => 'Desculpe, os nossos servidores responderam com um erro.\\nTente novamente, por favor.',
 	'error-json-parse' => 'Desculpe, houve um problema com os dados recebidos dos nossos servidores.\\nTente novamente, por favor.',

@@ -110,6 +110,13 @@ $messages['ca'] = array(
 	'mostvisitedpagesalllink' => 'Veure les pàgines més visitades',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'mostvisitedpagessearchbtn' => 'лаха',
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  * @author Reaperman

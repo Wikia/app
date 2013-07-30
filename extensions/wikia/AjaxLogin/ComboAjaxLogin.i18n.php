@@ -136,6 +136,14 @@ $messages['bg'] = array(
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Връщане',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'comboajaxlogin-connectmarketing-back' => '« পিছনে',
+	'comboajaxlogin-connectmarketing-forward' => 'শুরু করুন »',
+);
+
 /** Tibetan (བོད་ཡིག)
  * @author YeshiTuhden
  */
@@ -647,8 +655,20 @@ $messages['id'] = array(
 <li>Bagikan kegiatan Anda di Wikia dengan teman-teman Anda di Facebook</li>
 <li>Kendali penuh akan apa yang dipublikasikan</li>
 </ul>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Hubungkan akun Wikia Anda dengan Facebook</h1>
+<ul>
+<li>Menjaga nama pengguna saat ini, riwayat, suntingan... tidak ada yang berubah kecuali cara Anda masuk log</li>
+<li>Bagikan aktivitas Anda di Wikia dengan teman-teman Anda di Facebook, dengan kendali penuh atas apa yang dipublikasikan</li>
+</ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Kembali',
 	'comboajaxlogin-connectmarketing-forward' => 'Persiapan &raquo;',
+	'comboajaxlogin-post-not-understood' => 'Ada kesalahan dalam cara formulir ini dibangun.
+Silakan coba lagi atau [[Special:Contact|laporkan ini]].',
+	'comboajaxlogin-readonlytext' => '<h2>Maaf!</h2>
+<p>Anda tidak dapat membuat akun saat ini - kami sebaiknya kembali berdiri dan berjalan segera. Ini adalah hal yang terjadi:<br /><em>$1</em></p>
+<p>Silakan periksa <a href="http://twitter.com/wikia">Twitter</a> atau <a href="http://facebook.com/wikia">Facebook</a> untuk informasi lebih lanjut.
+<br />
+(Jika Anda telah mempunyai akun, Anda dapat <a href="#">masuk log</a> secara normal, namun Anda tidak akan bisa menyunting.)</p>',
 	'comboajaxlogin-ajaxerror' => 'Wikia tidak menanggapi. Mohon periksa koneksi jaringan Anda.',
 );
 
@@ -1268,6 +1288,35 @@ Pakisubukan uli o [[Special:Contact|iulat ito]].',
 <br />
 (Kung mayroon ka nang isang akawnt, maaari kang <a href="#">lumagdang papasok</a> ayon sa pangkaraniwan, subalit hindi mo magagawang makapamatnugot.)</p>',
 	'comboajaxlogin-ajaxerror' => 'Hindi tumutugon ang Wikia. Paki suriin ang pagkakabit ng iyong lambat na panggawain.',
+);
+
+/** Turkish (Türkçe)
+ * @author Sabri Vatansever
+ */
+$messages['tr'] = array(
+	'comboajaxlogin-desc' => 'Kullanıcılara girişi sağlayan dinamik kutu şifreyi hatırlar ve kullanıcıyı kaydeder',
+	'comboajaxlogin-createlog' => 'Oturum açın ya da yeni hesap oluşturun',
+	'comboajaxlogin-actionmsg' => 'Bu eylemi gerçekleştirmek için öncelikle oturumun açmanız veya hesap oluşturmanız gerekir',
+	'comboajaxlogin-actionmsg-protected' => 'Bu eylemi gerçekleştirmek için öncelikle oturumun açmanız veya hesap oluşturmanız gerekir',
+	'comboajaxlogin-connectmarketing' => "<h1>Hesaplarınızı bağlanın</h1>
+<ul>
+<li>Geçerli kullanıcı adınızı, tarihi, düzenlenenleri saklayın... giriş yapmanız dışında hiçbir şey değişmez</li>
+<li>Wikia'daki etkinliklerinizi Facebook üzerinden arkadaşlarınızla paylaşın</li>
+<li>Yayınların kontrolünü tamamlayın</li>
+</ul>",
+	'comboajaxlogin-log-in-with-facebook-oasis' => "<h1>Facebook'a Bağlan ile oturum aç</h1>",
+	'comboajaxlogin-connectmarketing-oasis' => "<h1>Facebook ile Wikia hesabınıza bağlanın</h1>
+<ul>
+<li>Geçerli kullanıcı adınızı, tarihi, düzenlenenleri saklayın... giriş yapmanız dışında hiçbir şey değişmez</li>
+<li>Yayınların kontrolünü tamamlayarak Wikia'daki etkinliklerinizi Facebook üzerinden arkadaşlarınızla paylaşın</li>
+</ul>",
+	'comboajaxlogin-connectmarketing-back' => '« Geri',
+	'comboajaxlogin-connectmarketing-forward' => 'Başla »',
+	'comboajaxlogin-connectdirections' => "Wikia kullanıcı adınızı ve parolayı buraya girin - sihirli bir şekilde arka planda Wikia ve Facebook hesaplarınıza bağlanılacak.
+
+Bir kez yaptığınızda kolayca herhangi bir Facebook'a Bağlan düğmesini kullanarak oturum açabilirsiniz.",
+	'comboajaxlogin-post-not-understood' => 'Bu formun düzenlenmesinde bir hata oldu.
+Lütfen yeniden deneyin veya [[Special:Contact|bunu rapor edin]].',
 );
 
 /** Tatar (Cyrillic script) (татарча)

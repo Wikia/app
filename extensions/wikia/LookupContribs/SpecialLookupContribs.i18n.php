@@ -68,6 +68,8 @@ Check given username for possible typos.</p>',
  */
 $messages['qqq'] = array(
 	'lookupcontribsgo' => '{{Identical|Go}}',
+	'lookupcontribswiki' => '{{Identical|Wiki}}',
+	'lookupcontribswikiurl' => '{{Identical|URL}}',
 	'lookupcontribswikititle' => '{{Identical|Title}}',
 	'lookupcontribsnext' => '{{Identical|Next}}',
 	'lookupcontribspageremoved' => '{{Identical|Removed}}',
@@ -256,10 +258,13 @@ $messages['br'] = array(
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
 	'lookupcontribs' => 'Къинхьегаме хьажа',
 	'lookupcontribslinks' => 'къинхьегаме хьажориг',
+	'lookupcontribsnoresultfound' => 'ХӀума ца карийна!',
+	'lookupcontribswikititle' => 'ЦӀе',
 	'lookupcontribscontribslink' => 'Къинхьегаме хьажориг',
 	'lookupcontribscontribs' => 'къинхьегам',
 );
@@ -757,8 +762,11 @@ $messages['id'] = array(
 	'lookupcontribshelp' => 'Halaman khusus ini dapat digunakan untuk menampilkan kontribusi pengguna pada beberapa Wikia. Untuk menampilkan daftar, berikan nama pengguna di bawah ini.',
 	'lookupcontribsselectmodefinal' => 'kontribusi terakhir dari pengguna tersebut',
 	'lookupcontribsinvaliduser' => '<p class="error">Pengguna "<b>$1</b>" tidak ada. Periksa nama pengguna tersebut untuk kemungkinan kesalahan ketik.</p>',
+	'lookupcontribslistwikiainfo' => 'Daftar wiki yang artikelnya telah disunting oleh <b>$1</b>',
 	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Judul',
+	'lookupcontribsrecordspager' => "Menampilkan '''$1''' sampai '''$2''' dari '''$3''' catatan.",
 	'lookupcontribsnext' => 'selanjutnya',
 	'lookupcontribsdiff' => 'beda',
 	'lookupcontribscontent' => 'isi',

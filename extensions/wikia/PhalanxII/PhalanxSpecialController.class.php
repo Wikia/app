@@ -69,7 +69,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			else {
 				NotificationsController::addConfirmation(
 					wfMsg( $res === self::RESULT_BLOCK_ADDED ?  'phalanx-block-success' :  'phalanx-modify-success'),
-					NotificationsController::CONFIRMATION_NOTIFY
+					NotificationsController::CONFIRMATION_CONFIRM
 				);
 			}
 
@@ -110,6 +110,24 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->setVal( 'typeFilter', $pager->getSearchFilter() );
 		$this->setVal( 'blockTypes', $blockTypes );
 		$this->setVal( 'type', $this->wg->Request->getInt('type') );
+		$this->setVal( 'typeSections', [
+			'page-edition' => [
+				Phalanx::TYPE_CONTENT,
+				Phalanx::TYPE_SUMMARY,
+				Phalanx::TYPE_TITLE,
+				Phalanx::TYPE_USER,
+			],
+			'account-creation' => [
+				Phalanx::TYPE_EMAIL,
+			],
+			'wiki-creation' => [
+				Phalanx::TYPE_WIKI_CREATION,
+			],
+			'questions' => [
+				Phalanx::TYPE_ANSWERS_QUESTION_TITLE,
+				Phalanx::TYPE_ANSWERS_RECENT_QUESTIONS,
+			]
+		]);
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -160,21 +178,22 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 				$data['type'] = Phalanx::getTypeNames( $data['type'] );
 				$data['checkId'] = $id;
 				$data['checkBlocker'] = '';
-				$data['typeFilter'] = array();
 
 				return $data;
 			}
 		}
 
 		// block creation
+		$pager = new PhalanxPager();
+
 		$data['checkBlocker'] = $this->wg->Request->getText( 'wpPhalanxCheckBlocker' , '');
 		$data['checkId'] = $this->wg->Request->getIntOrNull( 'id' );
-		$data['type'] = $this->wg->Request->getArray( 'wpPhalanxType' );
-		$data['typeFilter'] = $this->wg->Request->getArray( 'wpPhalanxTypeFilter' );
+		$data['type'] = $pager->getSearchFilter();
 		$data['text'] = $this->wg->Request->getText('target' , ''); // prefill the filter content using target URL parameter
 		$data['lang'] = '';
 		$data['expire'] = '';
 		$data['reason'] = '';
+		$data['comment'] = '';
 
 		return $data;
 	}
@@ -187,6 +206,11 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	private function handleBlockPost() {
 		wfProfileIn( __METHOD__ );
 
+		$expire = $this->wg->Request->getText('wpPhalanxExpire');
+		if ($expire === 'custom') {
+			$expire = $this->wg->Request->getText('wpPhalanxExpireCustom');
+		}
+
 		$id = $this->wg->Request->getInt( 'id', 0 );
 		$isBlockUpdate = ($id !== 0);
 		$data = array(
@@ -198,10 +222,11 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			'timestamp'  => wfTimestampNow(),
 			'author_id'  => $this->wg->User->getId(),
 			'reason'     => $this->wg->Request->getText( 'wpPhalanxReason' ),
+			'comment'    => $this->wg->Request->getText( 'wpPhalanxComment' ),
 			'lang'       => $this->wg->Request->getVal( 'wpPhalanxLanguages', null ),
 			'type'       => $this->wg->Request->getArray( 'wpPhalanxType' ),
 			'multitext'  => $this->wg->Request->getText( 'wpPhalanxFilterBulk' ),
-			'expire'     => $this->wg->Request->getText('wpPhalanxExpire')
+			'expire'     => $expire
 		);
 		if ( !wfRunHooks( "EditPhalanxBlock", array( &$data ) ) ) {
 			$ret = self::RESULT_ERROR;

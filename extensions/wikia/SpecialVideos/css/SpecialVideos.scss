@@ -62,6 +62,9 @@ $placeholder-bg-color: darken($color-page, 10%);
 	// Override article p styles
 	p, p + p {
 		margin: 0;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
 	}
 	.video {
 		margin-bottom: 8px;

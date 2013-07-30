@@ -364,6 +364,7 @@ You can always head over to wiki activity to view all of the exciting changes be
 );
 
 /** Message documentation (Message documentation)
+ * @author C5st4wr6ch
  * @author McDutchie
  * @author Nemo bis
  * @author Shirayuki
@@ -391,6 +392,10 @@ $messages['qqq'] = array(
 	'founderemails-email-0-day-addphotos-button' => '{{Identical|Add photo}}',
 	'founderemails-email-0-day-customizetheme-button' => '{{Identical|Customize}}',
 	'founderemails-email-views-digest-subject' => '"views" means site views/visits.',
+	'founderemails-email-complete-digest-body' => 'Documentation for id (Indonesian):
+* No specific singular or plural word in id.
+* Satu dan lebih dari satu tidak dibedakan.',
+	'founderemails-email-complete-digest-greeting' => '',
 	'founderemails-pref-views-digest' => 'Parameters:
 * $1 is a wiki name',
 	'founderemails-pref-complete-digest' => 'Parameters:
@@ -3187,6 +3192,7 @@ Tim Wikia',
 	'founderemails-email-user-registered-content' => 'Gunakan kesempatan ini untuk menyambut mereka di wiki Anda dan memotivasi mereka untuk membantu menyunting. Lebih rame lebih menyenangkan, dan semakin cepat wiki anda akan berkembang',
 	'founderemails-email-user-registered-signature' => 'Tim wikia',
 	'founderemails-email-user-registered-button' => 'Sambut mereka',
+	'founderemails-email-0-days-passed-subject' => 'Selamat datang di Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Senang bertemu dengan Anda $USERNAME,
 
 Selamat telah membuat $WIKINAME, $WIKIURL.
@@ -3210,6 +3216,25 @@ Untuk memeriksa kejadian terakhir di Wikia, kunjungi http://community.wikia.com
 Ingin mengendalikan surel yang mana yang Anda terima? Pergi ke http://messaging.wikia.com/wiki/Special:Preferences.
 Klik pranala berikut untuk berhenti berlangganan dari semua email Wikia: $UNSUBSCRIBEURL',
 	'founderemails-email-3-days-passed-subject' => 'Apa yang sedang terjadi di wiki Anda',
+	'founderemails-email-3-days-passed-body' => 'Hai di sana $USERNAME,
+
+Kami ingin untuk memeriksa dan melihat bagaimana hal-hal terjadi pada $WIKINAME, $WIKIURL.
+
+Sudah 3 hari sejak Anda mulai dan kami berpikir kami akan mampir untuk menawarkan beberapa tips tambahan dalam membangun wiki Anda:
+
+Dandanilah halaman utama Anda. Halaman utama adalah satu dari hal pertama yang orang lihat ketika mereka mengunjungi $WIKINAME. Buatlah kesan pertama yang baik dengan menulis rangkuman yang rinci tentang apa topik Anda dan menambahkan sebuah slideshow, galeri, atau \'\'photo slider\'\'.
+
+Tambahkan foto lebih banyak lagi. Satu dari cara terbaik untuk membuat halaman Anda berbunyi, memercik, dan menyembul adalah dengan "menambahkan beberapa foto".
+
+Temukan ispirasi. Jangan takut untuk memeriksa wiki lain untuk melihat cara yang mereka kerjakan pada halaman utama, halaman artikel dan lebih banyak lagi. Berikut ini adalah beberapa kesukaan kami: Muppet Wiki, Pop Tarts Wiki, Monster High Wiki.
+
+Butuh bantuan memahami bagaimana sesuatu bekerja? Kami selalu ada di sini untuk Anda! Datang dan tanyakan kepada kami untuk bantuan dan masukan di http://community.wikia.com.
+
+Pertahankan kerja bagus ini!
+Tim Wikia
+
+Untuk memeriksa kejadian terakhir pada Wikia, kunjungi community.wikia.com
+Ingin mengendalikan email mana yang Anda terima? Pergi ke http://community.wikia.com/wiki/Special:Preferences Anda.',
 	'founderemails-email-3-days-passed-body-HTML' => 'Hai di sana $USERNAME,<br /><br />
 Kini setelah Anda berada beberaoa hari di dalam wiki Anda, kami berpikir Anda mungkin ingin melihat beberapa hal lain yang dapat Anda lakukan.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Tim Wikia</div>',
@@ -3263,6 +3288,7 @@ $PAGEURL
 
 Tim Wikia',
 	'founderemails-email-general-edit-greeting' => 'Hai $USERNAME,',
+	'founderemails-email-general-edit-headline' => '$EDITORNAME baru saja membuat suntingan lain pada $WIKINAME pada $PAGETITLE.',
 	'founderemails-email-general-edit-signature' => 'Tim Wikia',
 	'founderemails-email-page-edited-reg-user-body-HTML' => 'Hai $USERNAME,<br /><br />
 Kelihatannya pengguna terdaftar $EDITORNAME telah menyunting wiki Anda! Mengapa Anda tidak mengunjungi <a href="$EDITORTALKPAGEURL">halaman pembicaraannya</a> untuk menyapa?<br /><br />
@@ -3293,6 +3319,9 @@ Kelihatannya pengguna terdaftar $EDITORNAME telah mendaftar di wiki Anda! Mengap
 Kini setelah Anda berada beberapa hari di dalam wiki Anda, kami berpikir Anda mungkin ingin mengetahui beberapa hal lain yang dapat Anda lakukan.
 
 -- Tim Wikia',
+	'founderemails-answers-email-3-days-passed-body-HTML' => 'Hai di sana $USERNAME,<br /><br />
+Kini setelah Anda berada beberapa hari di dalam wiki Anda, kami berpikir Anda mungkin ingin melihat sedikit hal lain yang dapat Anda lakukan.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Tim Wikia</div>',
 	'founderemails-answers-email-10-days-passed-body' => 'Hai $USERNAME,
 
 Sudah beberapa waktu lamanya sejak Anda memulai sebuah wiki di Wikia - kami berharap ini akan menjadi hebat! Kami ingin membagikan sedikit hal menarik akhir untuk membantu membuat wiki Anda lebih seperti rumah.
@@ -3303,9 +3332,45 @@ Sudah beberapa waktu lamanya sejak Anda memulai sebuah wiki di Wikia - kami berh
 Kelihatannya $EDITORNAME telah menyunting wiki Anda untuk pertama kali! Mengapa Anda tidak mengunjungi halaman pembicaraannya ($EDITORTALKPAGEURL) untuk menyapa?
 
 --Tim Wikia',
+	'founderemails-answers-email-page-edited-reg-user-body' => 'Hai $USERNAME,
+
+Kelihatannya $EDITORNAME telah menyunting wiki Anda! Mengapa Anda tidak mampir ke halaman pembicaraannya ($EDITORTALKPAGEURL) untuk menyapa?
+
+--Tim Wikia',
+	'founderemails-answers-email-page-edited-anon-subject' => 'Seseorang mengubah situs Anda!',
+	'founderemails-lot-happening-body-HTML' => 'Hai $USERNAME,<br /><br />
+Ada banyak yang terjadi pada wiki Anda hari ini! Kunjungi $MYHOMEURL untuk melihat apa yang sedang terjadi.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Tim Wikia</div>',
 	'founderemails-email-lot-happening-headline' => 'Selamat ada banyak hal yang sedang terjadi di $WIKINAME hari ini!',
+	'founderemails-email-footer-line1' => 'Untuk memeriksa kejadian terakhir pada Wikia, kunjungi <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'founderemails-email-0-day-congratulations' => 'Selamat atas dibuatnya $HDWIKINAME!',
 	'founderemails-email-0-day-tips-heading' => 'Ini adalah beberapa tips yang membantu Anda untuk memulai:',
+	'founderemails-email-0-day-customizetheme-button' => 'Sesuaikan',
+	'founderemails-email-3-day-tips-heading' => 'Sudah 3 hari sejak Anda memulai dan kami berpikir kami akan mampir untuk menawarkan beberapa tips lebih banyak tentang membangun wiki Anda:',
+	'founderemails-email-views-digest-subject' => 'Dilihat hari ini pada $WIKINAME',
+	'founderemails-email-complete-digest-body' => 'Hai $USERNAME,
+
+Ini saatnya untuk dosis kegiatan harian Anda dari $WIKINAME, $WIKIURL.
+
+$1 orang melihat wiki Anda.
+
+Jagalah terus kerja bagus dalam menambahkan konten menarik untuk orang untuk dibaca!
+
+$2 suntingan telah dibuat.
+
+Penyunting bahagia membuat orang-orang bahagia. Pastikan untuk berterima kasih pada penyunting Anda dan masuk bersama dengan mereka dari waktu ke waktu.
+
+$3 orang bergabung di wiki Anda.
+
+Sambutlah orang baru pada wiki Anda dengan sebuah pesan halaman pengguna.
+
+Anda dapat selalu menuju ke aktivitas wiki untuk melihat seluruh perubahan menarik yang dibuat pada $WIKINAME. Periksalah sering, karena sebagai perintis komunitas Anda mencari Anda untuk membantu menuntun dan menjalankan wiki.
+
+Tim Wikia',
 	'founderemails-email-complete-digest-content2' => 'Penyunting bahagia membuat wiki bahagia. Pastikan untuk berterima kasih pada penyunting Anda dan berada bersama dari waktu ke waktu.',
+	'founderemails-email-complete-digest-content3' => 'Sambutlah orang baru pada wiki Anda dengan pesan halaman pembicaraan.
+<br /><br />
+Anda selalu dapat menuju ke aktivitas wiki untuk melihat seluruh perubahan menarik yang telah dibuat pada $WIKINAME. Periksalah sering, karena sebagai perintis komunitas Anda melihat Anda untuk membantu membimbing dan menjalankan wiki.',
 	'founderemails-pref-views-digest' => 'Kirimkan saya email harian yang memberitahu berapa kali $1 telah dilihat',
 );
 
@@ -6173,9 +6238,18 @@ $PAGEURL
 A Equipe Wikia',
 	'founderemails-email-anon-edit-greeting' => 'Olá $USERNAME,',
 	'founderemails-email-anon-edit-headline' => 'Um Contribuidor da Wikia acaba de fazer uma edição em $PAGETITLE na $WIKINAME.',
+	'founderemails-email-anon-edit-content' => 'Contribuidores da Wikia são pessoas que editam sem se logar à uma conta da Wikia. Veja o que esse amigo misterioso colocou!',
 	'founderemails-email-anon-edit-signature' => 'A Equipe Wikia',
 	'founderemails-email-anon-edit-button' => 'Confira só!',
+	'founderemails-email-page-edited-anon-body-HTML' => 'Ei $USERNAME,<br /><br />
+Parece que alguém editou sua wiki! Por que você não <a href="$MYHOMEURL">vê isso</a> para ver o que ele mudou?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- A Equipe Wikia</div>',
 	'founderemails-answers-email-user-registered-subject' => 'Alguém registrou-se na sua WikiRespostas!',
+	'founderemails-answers-email-user-registered-body' => 'Ei $USERNAME,
+
+Parece que $EDITORNAME se registrou em sua wiki! Por que você não vai à sua página de discussão $EDITORTALKPAGEURL para saudá-lo?
+
+-- A Equipe Wikia',
 	'founderemails-email-lot-happening-greeting' => 'Olá $USERNAME,',
 	'founderemails-email-lot-happening-button' => 'Ver atividades',
 	'founderemails-email-0-day-heading' => 'Prazer em te conhecer $USERNAME,',
@@ -7724,6 +7798,7 @@ Bạn luôn luôn có thể ghé qua hoạt động của wiki để xem tất c
  * @author Dimension
  * @author Hydra
  * @author Hzy980512
+ * @author Qiyue2001
  * @author Sam Wang
  * @author Yfdyh000
  */
@@ -7850,6 +7925,7 @@ Wikia团队',
 	'founderemails-email-0-day-customizetheme-button' => '自定义',
 	'founderemails-email-0-day-wikiahelps-signature' => '祝维基建设愉快！<br />Wikia团队',
 	'founderemails-email-3-day-heading' => '你好，$USERNAME，',
+	'founderemails-email-3-day-editmainpage-heading' => '美化您的主页。',
 	'founderemails-email-3-day-addphotos-heading' => '添加更多图片。',
 	'founderemails-email-3-day-addphotos-button' => '添加照片',
 	'founderemails-email-3-day-explore-heading' => '寻找灵感。',
