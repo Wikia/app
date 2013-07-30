@@ -1,6 +1,6 @@
 Swap History
 
-<ul>
+<ul class="lvs-undo-list">
 <? foreach ( $videos as $video ): ?>
 	<li>
 		<?= $video['createDate'] ?>
@@ -10,7 +10,7 @@ Swap History
 		<? else: ?>
 			<?= wfMessage( 'lvs-history-kept', $video['titleLink'] )->plain() ?>
 		<? endif; ?>
-		(<a href="<?= $video['undo'] ?>">undo</a>)
+		(<a class="undo-link" href="<?= $video['undo'] ?>">undo</a>)
 	</li>
 <? endforeach; ?>
 </ul>

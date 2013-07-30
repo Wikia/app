@@ -75,6 +75,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * History page
 	 */
 	public function history() {
+		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/js/lvsHistoryPage.js' );
 		$helper = new LicensedVideoSwapHelper();
 		$this->videos = $helper->getUndoList();
 	}
