@@ -78,11 +78,20 @@
 							<fieldset>
 								<legend><?= wfMessage("phalanx-section-type-{$section}")->plain() ?></legend>
 <?php
-							foreach($types as $typeId) {
+							foreach($types as $typeId => $enabled) {
 								$typeName = str_replace('_', '-', $blockTypes[$typeId]);
+
+								$attrs = [
+									'value' => $typeId
+								];
+
+								if (!$enabled) {
+									$attrs['disabled'] = true;
+								}
 ?>
 								<label title="<?= wfMsg("phalanx-help-type-{$typeName}"); ?>">
-									<?= Xml::check('wpPhalanxType[]', isset($data['type'][$typeId]), array('value' => $typeId)); ?>
+									<?= Xml::check('wpPhalanxType[]', isset($data['type'][$typeId]), $attrs); ?>
+
 									<?= wfMsg("phalanx-type-{$typeName}"); ?>
 
 								</label>

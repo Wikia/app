@@ -97,10 +97,6 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$showEmailBlock = $this->wg->User->isAllowed('phalanxemailblock');
 		$blockTypes  = Phalanx::getAllTypeNames();
 
-		if (!$showEmailBlock) {
-			unset($blockTypes[Phalanx::TYPE_EMAIL]);
-		}
-
 		$this->setVal( 'expiries', $expiries );
 		$this->setVal( 'languages', $this->wg->PhalanxSupportedLanguages );
 		$this->setVal( 'listing', $listing );
@@ -112,20 +108,20 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->setVal( 'type', $this->wg->Request->getInt('type') );
 		$this->setVal( 'typeSections', [
 			'page-edition' => [
-				Phalanx::TYPE_CONTENT,
-				Phalanx::TYPE_SUMMARY,
-				Phalanx::TYPE_TITLE,
-				Phalanx::TYPE_USER,
+				Phalanx::TYPE_CONTENT => 1,
+				Phalanx::TYPE_SUMMARY => 1,
+				Phalanx::TYPE_TITLE => 1,
+				Phalanx::TYPE_USER => 1,
 			],
 			'account-creation' => [
-				Phalanx::TYPE_EMAIL,
+				Phalanx::TYPE_EMAIL => $showEmailBlock, // BAC-518: VSTF members will have disabled "email" checkbox
 			],
 			'wiki-creation' => [
-				Phalanx::TYPE_WIKI_CREATION,
+				Phalanx::TYPE_WIKI_CREATION => 1,
 			],
 			'questions' => [
-				Phalanx::TYPE_ANSWERS_QUESTION_TITLE,
-				Phalanx::TYPE_ANSWERS_RECENT_QUESTIONS,
+				Phalanx::TYPE_ANSWERS_QUESTION_TITLE => 1,
+				Phalanx::TYPE_ANSWERS_RECENT_QUESTIONS => 1,
 			]
 		]);
 
