@@ -1,7 +1,6 @@
-(function(context, jQuery, Wikia){
+(function(context){
 	var shift = Array.prototype.shift,
-		join = Array.prototype.join,
-		deferred = (Wikia && Wikia.Deferred /* Mobile */) || jQuery.Deferred /* Oasis */;
+		join = Array.prototype.join;
 
 	/**
 	 * JS version of wfMsg()
@@ -115,7 +114,7 @@
 
 	//UMD inclusive
 	if(jQuery){
-		var msg = JSMessages(jQuery.nirvana, deferred, window);
+		var msg = JSMessages(jQuery.nirvana, jQuery.Deferred, window);
 		jQuery.extend(jQuery, {
 			msg: msg,
 			getMessages: msg.get,
@@ -127,4 +126,4 @@
 		//AMD
 		context.define('JSMessages', ['wikia.nirvana', 'jquery', 'wikia.window'], JSMessages);
 	}
-})(this, this.jQuery, this.Wikia);
+})(this);
