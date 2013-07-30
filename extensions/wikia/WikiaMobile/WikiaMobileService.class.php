@@ -99,13 +99,15 @@ class WikiaMobileService extends WikiaService {
 			}
 		}
 
-		if ( is_array( $jsHeadPackages ) ) {
-			//core JS in the head section, definitely safe
-			foreach ( $assetsManager->getURL( $jsHeadPackages ) as $src ) {
-				//HTML5 standard, no type attribute required == smaller output
-				$jsHeadFiles .= "<script src=\"{$src}\"></script>";
-			}
-		}
+//		if ( is_array( $jsHeadPackages ) ) {
+//			//core JS in the head section, definitely safe
+//			foreach ( $assetsManager->getURL( $jsHeadPackages ) as $src ) {
+//				//HTML5 standard, no type attribute required == smaller output
+//				$jsHeadFiles .= "<script src=\"{$src}\"></script>";
+//			}
+//		}
+
+		$jsHeadFiles .= '<script>document.documentElement.className += " js";</script>';
 
 		if ( is_array( $jsBodyPackages ) ) {
 			foreach ( $assetsManager->getURL( $jsBodyPackages ) as $s ) {
