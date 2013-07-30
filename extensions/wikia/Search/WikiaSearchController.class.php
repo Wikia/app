@@ -317,7 +317,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->registerWikiMatch( $searchConfig );
 		}
 		$topWikiArticlesHtml = '';
-		if (! $searchConfig->getInterWiki() ) {
+		if (! $searchConfig->getInterWiki() && $wgLanguageCode == 'en' ) {
 			$dbname = $this->wg->DBName;
 			$cacheKey = wfMemcKey( __CLASS__, 'WikiaSearch', 'topWikiArticles', $this->wg->CityId );
 			$topWikiArticlesHtml = WikiaDataAccess::cache(
@@ -328,11 +328,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				}
 			);
 		}
-		//set empty for non english wikis
-		if ( $wgLanguageCode != 'en' ) {
-			$topWikiArticlesHtml = '';
-		}
-		$this->setVal( 'topWikiArticles', $topWikiArticlesHtml ); 
+		$this->setVal( 'topWikiArticles', $topWikiArticlesHtml );
 	}
 	
 	/**
