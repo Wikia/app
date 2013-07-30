@@ -635,7 +635,7 @@ abstract class VideoFeedIngester {
 	 * @param string $rating
 	 * @return string $stdRating
 	 */
-	protected function getIndustryRating( $rating ) {
+	public function getIndustryRating( $rating ) {
 		$rating = trim( $rating );
 		$name = strtolower( $rating );
 		switch( $name ) {
@@ -667,9 +667,11 @@ abstract class VideoFeedIngester {
 			case 'not rated':
 				$stdRating = 'NR';
 				break;
+			case 'redband':
 			case 'red band':
 				$stdRating = 'red band';
 				break;
+			case 'greenband':
 			case 'green band':
 				$stdRating = 'green band';
 				break;
@@ -680,34 +682,34 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
-	 * Get age gate
+	 * Get age required from industry rating
 	 * @param string $rating
 	 * @return int $ageGate
 	 */
-	protected function getAgeGate( $rating ) {
+	public function getAgeRequired( $rating ) {
 		switch( $rating ) {
 			case 'M':
 			case 'R':
 			case 'TV-MA':
 			case 'red band':
-				$ageGate = 17;
+				$ageRequired = 17;
 				break;
 			case 'AO':
 			case 'NC-17':
-				$ageGate = 18;
+				$ageRequired = 18;
 				break;
-			default: $ageGate = 0;
+			default: $ageRequired = 0;
 		}
 
-		return $ageGate;
+		return $ageRequired;
 	}
 
 	/**
-	 * map category
+	 * get standard category
 	 * @param string $cate
 	 * @return string $category
 	 */
-	protected function mapCategory( $cate ) {
+	public function getCategory( $cate ) {
 		switch( $cate ) {
 			case 'Movie':
 			case 'Movies':

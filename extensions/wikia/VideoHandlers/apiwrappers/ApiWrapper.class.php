@@ -338,6 +338,9 @@ abstract class ApiWrapper {
 		if ( !isset( $metadata['episode'] ) ) {
 			$metadata['episode'] = $this->getEpisode();
 		}
+		if ( !isset( $metadata['resolution'] ) ) {
+			$metadata['resolution'] = $this->getResolution();
+		}
 
 		$this->metadata = $metadata;
 
@@ -491,6 +494,14 @@ abstract class ApiWrapper {
 	 * @return string
 	 */
 	protected function getEpisode() {
+		return '';
+	}
+
+	/**
+	 * get resolution
+	 * @return string
+	 */
+	protected function getResolution() {
 		return '';
 	}
 

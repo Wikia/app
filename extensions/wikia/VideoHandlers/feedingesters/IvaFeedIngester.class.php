@@ -216,7 +216,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 				} else if ( !empty( $program['GameWarning']['Warning'] ) ) {
 					$clipData['industryRating'] = $this->getIndustryRating( $program['GameWarning']['Warning'] );
 				}
-				$clipData['ageGate'] = $this->getAgeGate( $clipData['industryRating'] );
+				$clipData['ageGate'] = $this->getAgeRequired( $clipData['industryRating'] );
 				$clipData['ageRequired'] = $clipData['ageGate'];
 
 				$clipData['genres'] = '';
@@ -258,10 +258,17 @@ class IvaFeedIngester extends VideoFeedIngester {
 						$clipData['published'] = $matches[1]/1000;
 					}
 
-					$clipData['category'] = $this->mapCategory( trim( $videoAsset['MediaType']['Media'] ) );
+					$clipData['category'] = $this->getCategory( trim( $videoAsset['MediaType']['Media'] ) );
 					$clipData['description'] = trim( $videoAsset['Descriptions']['ItemDescription'] );
 					$clipData['hd'] = ( $videoAsset['HdSource'] == 'true' ) ? 1 : 0;
 					$clipData['provider'] = 'iva';
+
+					$clipData['resolution'] = '';
+					$clipData['aspectRatio'] = '';
+					if ( !empty( $videoAsset['SourceWidth'] ) && !empty( $videoAsset['SourceHeight'] ) ) {
+						$clipData['resolution'] = $videoAsset['SourceWidth'].'x'.$videoAsset['SourceHeight'];
+						$clipData['aspectRatio'] = $videoAsset['SourceWidth'] / $videoAsset['SourceHeight'];
+					}
 
 					$clipData['language'] = '';
 					$clipData['subtitle'] = '';
@@ -425,7 +432,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 		$response = json_decode( $response, true );
 
 		wfProfileOut( __METHOD__ );
-		return ( empty($response['d']['results']) ) ? array() : $response['d']['results'];
+		return empty( $response['d']['results'] ) ? array() : $response['d']['results'];
 	}
 
 	/**
@@ -437,17 +444,17 @@ class IvaFeedIngester extends VideoFeedIngester {
 	public function generateCategories( array $data, $addlCategories ) {
 		wfProfileIn( __METHOD__ );
 
-		$categories = !empty($addlCategories) ? $addlCategories : array();
+		$categories = !empty( $addlCategories ) ? $addlCategories : array();
 
-		if ( !empty($data['keywords']) ) {
+		if ( !empty( $data['keywords'] ) ) {
 			$keywords = explode( ',', $data['keywords'] );
 
-			foreach( $keywords as $keyword ) {
+			foreach ( $keywords as $keyword ) {
 				$categories[] = trim( $keyword );
 			}
 		}
 
-		if ( !empty($data['categoryName']) ) {
+		if ( !empty( $data['categoryName'] ) ) {
 			$categories[] = $data['categoryName'];
 		}
 
@@ -494,6 +501,8 @@ class IvaFeedIngester extends VideoFeedIngester {
 			'series'         => $data['series'],
 			'season'         => $data['season'],
 			'episode'        => $data['episode'],
+			'resolution'     => $data['resolution'],
+			'aspectRatio'    => $data['aspectRatio'],
 		);
 
 		return $metadata;

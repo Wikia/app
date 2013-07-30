@@ -191,6 +191,12 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['episode'] ) ) {
 			$metadata['episode'] = $data['episode'];
 		}
+		if ( !empty( $data['resolution'] ) ) {
+			$metadata['resolution'] = $data['resolution'];
+		}
+		if ( !empty( $data['aspectRatio'] ) ) {
+			$metadata['aspectRatio'] = $data['aspectRatio'];
+		}
 
 		return $metadata;
 	}
