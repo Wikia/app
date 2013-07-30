@@ -278,7 +278,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	protected function setResponseValuesFromConfig( Wikia\Search\Config $searchConfig ) {
 
-		global $wgExtensionsPath;
+		global $wgExtensionsPath, $wgLanguageCode;
 
 		$response = $this->getResponse();
 		$format = $response->getFormat();
@@ -320,14 +320,17 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if (! $searchConfig->getInterWiki() ) {
 			$dbname = $this->wg->DBName;
 			$cacheKey = wfMemcKey( __CLASS__, 'WikiaSearch', 'topWikiArticles', $this->wg->CityId );
-			$topWikiArticlesHtml = F::app()->renderView( 'WikiaSearchController', 'topWikiArticles' );
-//			$topWikiArticlesHtml = WikiaDataAccess::cache(
-//				$cacheKey,
-//				86400 * 5, // 5 days, one business week
-//				function () {
-//					return F::app()->renderView( 'WikiaSearchController', 'topWikiArticles' );
-//				}
-//			);
+			$topWikiArticlesHtml = WikiaDataAccess::cache(
+				$cacheKey,
+				86400 * 5, // 5 days, one business week
+				function () {
+					return F::app()->renderView( 'WikiaSearchController', 'topWikiArticles' );
+				}
+			);
+		}
+		//set empty for non english wikis
+		if ( $wgLanguageCode != 'en' ) {
+			$topWikiArticlesHtml = '';
 		}
 		$this->setVal( 'topWikiArticles', $topWikiArticlesHtml ); 
 	}
