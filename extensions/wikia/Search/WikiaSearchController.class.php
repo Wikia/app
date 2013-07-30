@@ -230,15 +230,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
 		if ( substr( $this->getResponse()->getFormat(), 0, 4 ) == 'json' ) {
 			$requestedFields = $searchConfig->getRequestedFields();
-			$jsonFields = $this->getVal( 'jsonfields' );
-			if (! empty( $jsonFields ) ) {
-				foreach ( explode( ',', $jsonFields ) as $field ) {
-					if (! in_array( $field, $requestedFields ) ) {
-						$requestedFields[] = $field;
-					}
-				}
-				$searchConfig->setRequestedFields( $requestedFields );
-			}
+			$searchConfig->setRequestedFields( explode( ',', $this->getVal( 'jsonfields', '' ) ) );
 		}
 		return $searchConfig;
 	}
@@ -290,43 +282,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 	
 	/**
-	 * Sets wiki match view script variable in view
+	 * Includes wiki match partial for non cross-wiki searches
 	 * @param Wikia\Search\Config $searchConfig
 	 */
 	protected function registerWikiMatch( Wikia\Search\Config $searchConfig ) {
-		$resultSet = new Wikia\Search\ResultSet\MatchGrouping( new Wikia\Search\ResultSet\DependencyContainer( ['config' => $searchConfig, 'wikiMatch' => $searchConfig->getWikiMatch() ] ) );
-
-		$image = $resultSet->getHeader( 'image' );
-		$lang = $resultSet->getHeader( 'lang' );
-		$globalWikiId = (new CityVisualization())->getTargetWikiId( $lang );
-
-		if ( !empty( $image) && $globalWikiId !== false ) {
-			$imageUrl = ImagesService::getImageSrcByTitle( $globalWikiId, $image, 180, 120 );
-		}
-		//default image if not set or missing
-		if ( empty( $imageUrl ) ) {
-			$imageUrl = $this->wg->ExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png';
-		}
-		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="-1" data-event="search_click_wiki-';
-		$thumbTracking .= empty( $image ) ? 'no-thumb"' : 'thumb"';
-
-		//use default exacteResult template
-		$template = 'exactResult';
-		if ( $this->isCorporateWiki() ) {
-			$template = 'CrossWiki_exactResult';
-		}
+		$matchResult = $searchConfig->getWikiMatch()->getResult();
 		$this->setVal(
 				'wikiMatch',
-				$this->getApp()->getView( 'WikiaSearch', $template,
-						[ 'pos' => -1, 
-						'resultSet' => $resultSet, 
-						'pagesMsg' => $resultSet->getArticlesCountMsg(), 
-						'imgMsg' => $resultSet->getImagesCountMsg(), 
-						'videoMsg' => $resultSet->getVideosCountMsg(), 
-						'imageURL' => $imageUrl,
-						'thumbTracking' => $thumbTracking
-						]
-						) 
+				$this->getApp()->getView( 'WikiaSearch', 'CrossWiki_result', [ 'result' => $matchResult, 'pos' => -1 ] ) 
 				);
 	}
 	
@@ -480,7 +443,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$filters = $config->getFilterQueries();
 		$rank = $config->getRank();
-		$is_video_wiki = $this->wg->CityId == Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID;
+		$is_video_wiki = $this->wg->CityId == Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID;
 
 		$form = array(
 				'by_category' =>        $this->getVal('by_category', false),

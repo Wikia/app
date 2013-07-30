@@ -39,7 +39,7 @@ class WallHistory extends WikiaModel {
 			break;
 		}
 
-		WikiaDataAccess::cacheWithLockPurge( $this->getLastPostsMemcKey() );
+		WikiaDataAccess::cachePurge( $this->getLastPostsMemcKey() );
 	}
 
 	public function remove($pageId) {
@@ -170,7 +170,7 @@ class WallHistory extends WikiaModel {
 		$key = $this->getLastPostsMemcKey();
 		$cacheTime = 86400; // Cache for a day unless explicitly purged by `WallHistory::add()`.
 
-		$data = WikiaDataAccess::cacheWithLock( $key, $cacheTime, function () use ( $ns, $count ) {
+		$data = WikiaDataAccess::cache( $key, $cacheTime, function () use ( $ns, $count ) {
 			return $this->getLastPostsFromDB( $ns, $count );
 		} );
 
@@ -219,8 +219,8 @@ class WallHistory extends WikiaModel {
 					FROM `wall_history` AS `last_title`
 					WHERE
 						`parent_comment_id` = `wall_history`.`parent_comment_id`
-						AND `event_date` = (
-							SELECT MAX(`event_date`)
+						AND (`event_date`, `revision_id`) = (
+							SELECT MAX(`event_date`), MAX(`revision_id`)
 							FROM `wall_history`
 							WHERE
 								`action` IN (' . WH_EDIT . ', ' . WH_NEW . ')
@@ -234,7 +234,8 @@ class WallHistory extends WikiaModel {
 				(
 					SELECT
 						`parent_comment_id`,
-						MAX(`event_date`) AS `event_date`
+						MAX(`event_date`) AS `event_date`,
+						MAX(`revision_id`) AS `revision_id`
 					FROM `wall_history`
 					RIGHT JOIN
 						(
@@ -255,7 +256,7 @@ class WallHistory extends WikiaModel {
 					ORDER BY `event_date` DESC
 					LIMIT ' . $count . '
 				) AS `last_new_post_date`
-				USING (`parent_comment_id`, `event_date`)',
+				USING (`parent_comment_id`, `event_date`, `revision_id`)',
 			__METHOD__
 		);
 

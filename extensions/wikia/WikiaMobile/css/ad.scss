@@ -56,8 +56,8 @@ $slotZIndex: 4000;
 	&.show {
 		visibility: visible;
 
-		width: 320px;
-		height: 50px;
+		width: $slotFooterWidthMax;
+		height: $slotFooterHeight;
 
 		margin: 0 auto;
 		text-align: center;
