@@ -6,7 +6,7 @@
  * Layout handling of WikiaMobile
  * ie. Sections, Images, Galleries etc.
  */
-define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.loader', 'lazyload'], function(sections, media, cache, loader, lazyload) {
+define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.loader', 'lazyload', 'jquery'], function(sections, media, cache, loader, lazyload, $) {
 	'use strict';
 
 	//init sections
@@ -38,7 +38,7 @@ define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.l
 			}
 
 			require([require.optional('tables')], function(t){
-				t && t.process($.not('.artSec table, table table', tables));
+				t && t.process($(selector).not('.artSec table, table table'));
 
 				//image Lazyloading	(load images outside any section)
 				//if there are tables to wrap this should be done after they are processed
@@ -55,7 +55,8 @@ define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.l
 		var index = ~~this.getAttribute('data-index');
 
 		if(tablesModule && !tablesProcessedSections[index]){
-			tablesModule.process($.not('table table', this.querySelectorAll(selector)));
+			//without fake I get DOM Exception 12
+			tablesModule.process($(this).find(selector).not('table table,fake'));
 
 			tablesProcessedSections[index] = true;
 		}
