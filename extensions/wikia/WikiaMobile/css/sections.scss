@@ -52,7 +52,7 @@ h1, h2, h3{
 	border-top: 1px solid $border-color;
 	color: $section-text-color;
 	min-height: $section-title-font-size;
-	padding: $page-padding 5px 0 0;
+	padding: $page-padding 27px 0 0;
 	//lest make our sections a little bit more sexy
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Roboto, "Lucida Grande", arial, sans-serif;
 
@@ -65,9 +65,11 @@ h1, h2, h3{
 
 		display: none; //hidden by default, will be revealed via JS
 		width: 22px;
-		height: 1.3em;
+		height: 22px;
 		background-size: 75%;
-		float: right;
+		position: absolute;
+		right: 0;
+		top: 13px;
     }
 
 	//TODO:Find it in core and do not print it out in mobile skin
