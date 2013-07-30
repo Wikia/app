@@ -188,7 +188,7 @@ class VideoEmbedToolSearchService
 			$data[] = $singleVideoData;
 		}
 		return [
-				'totalItemCount' => count( $data ),
+				'totalItemCount' => $searchResponse['total'],
 				'nextStartFrom' => $start + $config->getLimit(),
 				'items' => $data
 		];
