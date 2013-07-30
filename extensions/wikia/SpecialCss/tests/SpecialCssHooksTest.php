@@ -4,6 +4,7 @@ class SpecialCssHooksTest extends WikiaBaseTest {
 	protected function setUp () {
 		require_once( dirname(__FILE__) . '/../SpecialCssHooks.class.php');
 		require_once( dirname(__FILE__) . '/../SpecialCssModel.class.php');
+		require_once( dirname(__FILE__) . '/../SpecialCssController.class.php');
 		parent::setUp();
 	}
 
