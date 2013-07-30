@@ -145,6 +145,13 @@ $messages['ca'] = array(
 	'prefs-rte' => 'Editor de text enriquit',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'prefs-rte' => 'Визуальни йозан тадар (RTE)',
+);
+
 /** Czech (česky)
  * @author Darth Daron
  */

@@ -1347,6 +1347,7 @@ $messages['km'] = array(
 /** Korean (한국어)
  * @author Wrightbus
  * @author 아라
+ * @author 한글화담당
  */
 $messages['ko'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|위키 만들기 마법사]]',
@@ -1375,7 +1376,7 @@ $messages['ko'] = array(
 	'cnw-desc-headline' => '어떤 위키를 만들겠습니까?',
 	'cnw-desc-creative' => '주제에 대한 설명',
 	'cnw-desc-tip1' => '힌트',
-	'cnw-desc-tip2' => '약간의 보충',
+	'cnw-desc-tip2' => '잠깐',
 	'cnw-desc-tip3' => '전문 팁',
 	'cnw-desc-choose' => '분류를 선택하세요',
 	'cnw-desc-select-one' => '1개 선택',
@@ -1509,6 +1510,8 @@ $messages['mk'] = array(
 	'cnw-desc-tip3-creative' => 'Соопштете им на луѓето дека можат да уредуваат страници на викито и така да помогнат во неговиот развој',
 	'cnw-desc-choose' => 'Одберете категорија',
 	'cnw-desc-select-one' => 'Одберете една категорија',
+	'cnw-desc-all-ages' => 'Сите возрасти',
+	'cnw-desc-tip-all-ages' => 'Дали викито е на тема што ги интересира децата? Законите на САД ни налагаат да водиме евиденција за темите од непосреден интерес за деца на возраст до 12 години.',
 	'cnw-desc-default-lang' => 'Викито ќе биде на $1',
 	'cnw-desc-change-lang' => 'измени',
 	'cnw-desc-lang' => 'Јазик',

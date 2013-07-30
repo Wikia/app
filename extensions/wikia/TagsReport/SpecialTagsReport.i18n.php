@@ -29,8 +29,7 @@ $messages['qqq'] = array(
 * $1 is a date.
 * $2 is a time.',
 	'tagsreportpageremoved' => 'Shown when page can not be listed because it has been removed.
-* $1 is page id
-'
+* $1 is page id',
 );
 
 /** Afrikaans (Afrikaans)
@@ -155,6 +154,7 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author Metalhead64
  */
 $messages['de'] = array(
 	'tagsreport' => 'Verwendung von Tags',
@@ -167,6 +167,7 @@ $messages['de'] = array(
 	'tagsreportpages' => '(<strong>$1</strong>  {{PLURAL:$1|Seite|Seiten}})',
 	'tagsreportpagesfound' => '<strong>$1</strong> {{PLURAL:$1|Seite|Seiten}} gefunden, die einen besonderen Tag enthalten (DPL, YouTube, usw.)',
 	'tagsreportgenerated' => 'Erstellt am $1 um $2',
+	'tagsreportpageremoved' => 'Die Seite #$1 wurde entfernt',
 );
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
@@ -222,6 +223,7 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author IAlex
  */
 $messages['fr'] = array(
@@ -235,6 +237,7 @@ $messages['fr'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|page|pages}})',
 	'tagsreportpagesfound' => 'Trouvé <strong>$1</strong> {{PLURAL:$1|page|pages}}, qui {{PLURAL:$1|contient|contiennent}} une balise spéciale (dpl, youtube, ...)',
 	'tagsreportgenerated' => 'Généré le $1 à $2',
+	'tagsreportpageremoved' => 'La page #$1 a été supprimée',
 );
 
 /** Galician (galego)

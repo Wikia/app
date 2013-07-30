@@ -1726,13 +1726,27 @@ $messages['km'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author 아라
+ * @author 한글화담당
  */
 $messages['ko'] = array(
 	'article-comments-anonymous' => '익명 사용자',
+	'article-comments-comments' => '덧글 ($1)',
+	'article-comments-post' => '덧글 남기기',
 	'article-comments-cancel' => '취소',
 	'article-comments-delete' => '삭제',
 	'article-comments-edit' => '편집',
 	'article-comments-history' => '역사',
+	'article-comments-error' => '덧글을 저장할 수 없습니다',
+	'article-comments-rc-comment' => '문서 덧글 (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-toc-item' => '덧글',
+	'article-comments-comment-cannot-add' => '문서에 덧글을 추가할 수 없습니다.',
+	'article-comments-vote' => '추천',
+	'article-comments-reply' => '답글',
+	'article-comments-show-all' => '모든 덧글 보기',
+	'article-comments-prev-page' => '이전',
+	'article-comments-next-page' => '다음',
+	'article-comments-page-spacer' => '&#160...&#160',
 );
 
 /** Colognian (Ripoarisch)
@@ -2214,7 +2228,7 @@ ___________________________________________
  */
 $messages['nl-informal'] = array(
 	'article-comments-comment-cannot-add' => 'Je kunt geen opmerkingen bij de pagina plaatsen.',
-	'article-comments-empty-comment' => "Je kunt geen opmerking zonder inhoud plaatsen. <a href='$1'>In plaats daarvan verwijderen?</a>",
+	'article-comments-empty-comment' => "Je kunt geen reactie zonder inhoud plaatsen. <a href='$1'>In plaats daarvan verwijderen?</a>",
 	'enotif_body_article_comment-HTML' => '<p>Hoi $WATCHINGUSERNAME,
 <br /><br />
 Er is een nieuwe reactie bij $PAGETITLE op {{SITENAME}}. Gebruik de volgende koppeling om alle reacties te bekijken: $PAGETITLE_URL#WikiaArticleComments
@@ -2386,6 +2400,7 @@ $messages['pms'] = array(
 	'wikiamobile-article-comments-placeholder' => 'Manda un coment',
 	'wikiamobile-article-comments-show' => 'Smon',
 	'wikiamobile-article-comments-login-post' => "Për piasì, ch'a intra ant ël sistema për mandé un coment.",
+	'wikiamobile-article-comments-post-fail' => 'Falì a salvé un coment, për piasì preuva torna pi tard',
 	'enotif_subject_article_comment' => '$PAGEEDITOR a l\'ha comentà dzor "$PAGETITLE" dzor {{SITENAME}}',
 	'enotif_body_article_comment' => "Cerea \$WATCHINGUSERNAME,
 
