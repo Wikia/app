@@ -46,6 +46,8 @@ $messages['en'] = array(
 	'lvs-log-restore' => 'Restored swapped video ([[{{ns:File}}:$1]])',
 	'lvs-log-removed-redirected-link' => 'Removed redirected link',
 	'lvs-zero-state' => "At this time we have no matching videos from Wikia Video for videos on your wiki. Check back again soon!",
+	'lvs-history-swapped' => "Swapped $1 with $2",
+	'lvs-history-kept' => "Kept $1",
 );
 
 $messages['qqq'] = array(
@@ -88,4 +90,6 @@ $messages['qqq'] = array(
 	'lvs-log-swap' => 'log message shown in Special:RecentChanges for swapping video.',
 	'lvs-log-restore' => 'log message shown in Special:RecentChanges for restoring swapped video.',
 	'lvs-zero-state' => 'This message is displayed if there are no unlicenced videos to review on the licensed video swap page.',
+	'lvs-history-swapped' => "Message shown on the LVS history page for a video that had been swapped for a premium video",
+	'lvs-history-kept' => "Message shown on the LVS history page for a video that was kept as is and not swapped",
 );

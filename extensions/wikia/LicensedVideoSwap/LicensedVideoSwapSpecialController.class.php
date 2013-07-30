@@ -38,9 +38,10 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		// update h1 text
 		$this->getContext()->getOutput()->setPageTitle( wfMessage('lvs-page-title')->text() );
 
-		$history = $this->getVal( 'history', '' );
-		if ( !empty( $history ) ) {
-			$this->forward( __CLASS__, 'history' );
+		// See if there is a subpage request to handle
+		$subpage = $this->getSubpage();
+		if ( $subpage ) {
+			$this->forward( __CLASS__, $subpage );
 			return true;
 		}
 
@@ -76,6 +77,26 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	public function history() {
 		$helper = new LicensedVideoSwapHelper();
 		$this->videos = $helper->getUndoList();
+	}
+
+	/**
+	 * See if a subpage is requested and return its name, otherwise return null
+	 * @return null|string
+	 */
+	protected function getSubpage() {
+		wfProfileIn(__METHOD__);
+
+		$path = $this->getPar();
+		$path_parts = explode('/', $path);
+
+		if ( !empty($path_parts[0]) ) {
+			$subpage = strtolower( $path_parts[0] );
+			if ( method_exists($this, $subpage) ) {
+				return $subpage;
+			}
+		}
+
+		return null;
 	}
 
 	/**

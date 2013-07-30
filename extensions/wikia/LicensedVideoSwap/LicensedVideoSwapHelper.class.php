@@ -611,7 +611,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	}
 
 	/**
-	 * get undo list
+	 * Get list of swapped or kept videos that we can undo
 	 * @return array $videoList
 	 */
 	public function getUndoList() {
@@ -625,32 +625,65 @@ class LicensedVideoSwapHelper extends WikiaModel {
 
 		$videoList = array();
 		while( $row = $db->fetchObject($result) ) {
+			// The props hold all the information about the swap/keep
 			$props = unserialize( $row->props );
-			if ( is_numeric( $props ) ) {
-				$pageStatus['status'] = $props;
-			} else {
-				$pageStatus = $props;
+
+			$userName = $userLink = '';
+			if ( !empty($props['userid']) ) {
+				$userObj = User::newFromId( $props['userid'] );
+				if ( $userObj ) {
+					$userName = $userObj->getName();
+					$userLink = $userObj->getUserPage()->getLocalURL();
+				}
 			}
+
+			// Time w/ leading zeros, full month, non-leading zero days, year, e.g. 02:34, March 3, 2013
+			$createDate = empty($props['created']) ? '' :  date('H:i, F j, Y', $props['created']);
 
 			$article = Article::newFromID( $row->page_id );
 			if ( empty( $article ) ) {
 				continue;
 			}
 
-			$redirect = $article->getRedirectTarget();
-			if ( $article->isRedirect() && !empty( $redirect ) ) {
-				$title = urlencode( $article->getTitle()->getDBKey() );
-				$newTitle = urlencode( $redirect->getDBKey() );
-				$videoList[] = array(
-					'pageId' => $row->page_id,
-					'title' => $article->getTitle()->getDBKey(),
-					'newTitle' => $redirect->getDBKey(),
-					'pageStatus' => $pageStatus,
-					'undo' => $this->wg->Server."/wikia.php?controller=LicensedVideoSwapSpecial&method=restoreVideo&format=json&videoTitle={$title}&newTitle={$newTitle}",
-				);
+			$titleObj = $article->getTitle();
+
+			$dbKey = urlencode( $titleObj->getDBKey() );
+			$titleURL = $titleObj->getLocalURL();
+
+			// Define swap as NOT keep since there are two different swap statuses
+			$statusSwap = $props['status'] != self::STATUS_KEEP ? true : false;
+
+			$video = array('pageId'     => $row->page_id,
+						   'titleLink'  => '<a href="'.$titleURL.'">'.$titleObj->getText().'</a>',
+						   'userName'   => $userName,
+						   'userLink'   => $userLink,
+						   'created'    =>  empty($props['created']) ? '' : $props['created'],
+						   'createDate' => $createDate,
+						   'statusSwap' => $statusSwap,
+						   'undo'       => $this->wg->Server."/wikia.php?controller=LicensedVideoSwapSpecial&method=restoreVideo&format=json&videoTitle={$dbKey}",
+			);
+
+			// If we swapped, we should have a redirect page pointing to the current video page
+			if ( $statusSwap ) {
+				$redirect = $article->getRedirectTarget();
+
+				// Make sure we have a redirect and that something didn't go wrong
+				if ( empty($redirect) ) {
+					$video['newTitleLink'] = '--';
+					$video['undo'] = '';
+				} else {
+					$newDbKey = urlencode( $redirect->getDBKey() );
+					$redirectURL = $redirect->getLocalURL();
+
+					$video['newTitleLink'] = '<a href="'.$redirectURL.'">'.$redirect->getText().'</a>';
+					$video['undo'] .= "&newTitle=".$newDbKey;
+				}
 			}
+
+			$videoList[] = $video;
 		}
 
+		usort($videoList, function ($a, $b) { return strcmp($a['created'], $b['created']); });
 		return $videoList;
 	}
 
