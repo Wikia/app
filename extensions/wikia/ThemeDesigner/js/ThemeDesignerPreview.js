@@ -19,11 +19,35 @@ var ThemeDesignerPreview = {
 		$("body").append('<div id="clickmask" class="clickmask"></div>');
 	},
 
-	loadSASS: function(urls) {
+	loadSASS: function(settings) {
+		var paths = [
+				'/skins/oasis/css/oasis.scss',
+				'/skins/oasis/css/core/responsive.scss'
+			],
+			urls = [];
+
+		$.each(paths, function(i, path) {
+			urls.push($.getSassCommonURL(path, settings));
+		});
+
 		//fade out
 		$("#clickmask").animate({"opacity": 0.65}, "fast", function() {
+			var styleSheetsToRemove = [];
+
+			// Find duplicate existing stylesheets and queue them for removal
+			$.each(document.styleSheets, function(i, styleSheet) {
+				if (styleSheet) {
+					$.each(paths, function(j, path) {
+						if (styleSheet.href && ~styleSheet.href.indexOf(path)) {
+							styleSheetsToRemove.push(styleSheet.ownerNode);
+						}
+					});
+				}
+			});
+
+			// Load and inject the new stylesheets
 			$.getResources(urls, function() {
-				//fade in
+				$(styleSheetsToRemove).remove();
 				$("#clickmask").animate({"opacity": 0}, "fast");
 			});
 		});

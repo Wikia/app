@@ -522,6 +522,10 @@ var ThemeDesigner = {
 				ThemeDesigner.set("theme", "custom");
 				ThemeDesigner.set("background-align", response.backgroundImageAlign);
 				ThemeDesigner.set("background-image-name", response.backgroundImageName);
+				ThemeDesigner.set("background-image-width", response.backgroundImageWidth);
+				ThemeDesigner.set("background-image-height", response.backgroundImageHeight);
+
+				// This should be last, it triggers a CSS reload
 				ThemeDesigner.set("background-image", response.backgroundImageUrl);
 			}
 		}
@@ -693,12 +697,7 @@ var ThemeDesigner = {
 
 			var settingsToLoad = $.extend({}, ThemeDesigner.settings, window.applicationThemeSettings);
 
-			var sassUrls = [
-				$.getSassCommonURL('/skins/oasis/css/oasis.scss', settingsToLoad),
-				$.getSassCommonURL('/skins/oasis/css/core/responsive.scss', settingsToLoad)
-			];
-
-			document.getElementById('PreviewFrame').contentWindow.ThemeDesignerPreview.loadSASS(sassUrls);
+			document.getElementById('PreviewFrame').contentWindow.ThemeDesignerPreview.loadSASS(settingsToLoad);
 		}
 
 		if(updateSkinPreview) {
