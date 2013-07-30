@@ -8,7 +8,7 @@ require([
 ], function($, commonAjax) {
 
 	function LVSHistoryPage(opts) {
-		this.location = window.location;
+		this.location = window.location.href;
 
 		this.el = opts.el;
 		this.$el = $(this.el);
@@ -24,7 +24,7 @@ require([
 		},
 		buildRedirectUrl: function() {
 			// redirect back to main LVS page
-			return this.location.href.replace('/History', '');
+			return this.location.replace('/History', '');
 		},
 		bindUndoEvents: function() {
 			var that = this;
