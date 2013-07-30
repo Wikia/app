@@ -3579,7 +3579,10 @@ function &wfGetLBFactory() {
  * @return File, or false if the file does not exist
  */
 function wfFindFile( $title, $options = array() ) {
-	return RepoGroup::singleton()->findFile( $title, $options );
+	wfProfileIn(__METHOD__);
+	$file = RepoGroup::singleton()->findFile( $title, $options );
+	wfProfileOut(__METHOD__);
+	return $file;
 }
 
 /**
