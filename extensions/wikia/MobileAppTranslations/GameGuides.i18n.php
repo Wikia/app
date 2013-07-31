@@ -47,6 +47,15 @@ $messages['en'] = array(
 	'error-json-parse' => 'There was a problem with the data returned from our servers, sorry.\\nPlease try again.'
 );
 
+/** Message documentation (Message documentation)
+ * @author Shirayuki
+ */
+$messages['qqq'] = array(
+	'activityindicator-message' => '{{Identical|Loading}}',
+	'window-article-button-close' => '{{Identical|Close}}',
+	'window-article-menu-search-label' => '{{Identical|Search}}',
+);
+
 /** Arabic (العربية)
  * @author Mutarjem horr
  */
@@ -100,6 +109,13 @@ $messages['br'] = array(
 	'searchbar-hint' => 'Klask %s...',
 	'alert-download-updated-wikis-message' => 'Hizivaet e vo roll ar sturlevrioù dieub.',
 	'alert-download-updated-wikis-button-ok' => 'Mat eo',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'window-article-button-close' => 'ДӀачӀагӀа',
 );
 
 /** Czech (česky)
@@ -343,6 +359,16 @@ $messages['ia'] = array(
 	'error-no-connection' => 'Nulle connexion a internet disponibile.\\nPer favor reproba.',
 	'error-server' => 'Nostre servitores respondeva con un error.\\nPer favor reproba.',
 	'error-json-parse' => 'Un problema occurreva con le datos retornate ab nostre servitores.\\nPer favor reproba.',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'window-wikis-wikilist-search-hint' => 'Cari Permainan Teratas kami',
+	'searchview-no-results' => 'Tidak ada hasil untuk "%s"',
+	'error-update-required' => 'Pembaruan untuk aplikasi ini telah tersedia dan diperlukan.',
+	'error-json-parse' => 'Ada masalah dengan data yang dikembalikan dari server kami, maaf.\\nSilakan coba lagi.',
 );
 
 /** Italian (italiano)
@@ -609,6 +635,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
  */
 $messages['pt'] = array(
 	'activityindicator-message' => 'A carregar…',
@@ -624,9 +651,9 @@ $messages['pt'] = array(
 	'searchview-button-back-list' => 'Voltar à lista',
 	'searchview-button-back-article' => 'Voltar ao artigo',
 	'searchbar-hint' => 'Pesquisar %s...',
-	'alert-download-updated-wikis-message' => 'A lista de guias disponíveis será actualizada.',
+	'alert-download-updated-wikis-message' => 'A lista de guias disponíveis será atualizada.',
 	'alert-download-updated-wikis-button-ok' => 'Ok',
-	'error-update-required' => 'Está disponível uma actualização necessária para esta aplicação.',
+	'error-update-required' => 'Está disponível uma atualização necessária para esta aplicação.',
 	'error-no-connection' => 'Não está disponível nenhuma ligação à internet.\\nTente novamente, por favor.',
 	'error-server' => 'Desculpe, os nossos servidores responderam com um erro.\\nTente novamente, por favor.',
 	'error-json-parse' => 'Desculpe, houve um problema com os dados recebidos dos nossos servidores.\\nTente novamente, por favor.',

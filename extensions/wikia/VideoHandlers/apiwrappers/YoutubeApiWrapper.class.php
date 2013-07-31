@@ -26,19 +26,19 @@ class YoutubeApiWrapper extends ApiWrapper {
 			$id = $aData['v'];
 		}
 
-		if( empty( $id ) ){
+		if ( empty( $id ) ){
 			$parsedUrl = parse_url( $url );
 
 			$aExploded = explode( '/', $parsedUrl['path'] );
 			$id = array_pop( $aExploded );
 		}
 
-		if( false !== strpos( $id, "&" ) ){
+		if ( false !== strpos( $id, "&" ) ){
 			$parsedId = explode("&",$id);
 			$id = $parsedId[0];
 		}
 
-		if ($id) {
+		if ( $id ) {
 			wfProfileOut( __METHOD__ );
 			return new static( $id );
 		}
@@ -90,7 +90,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return array
 	 */
 	protected function getVideoThumbnails() {
-		if (!empty($this->interfaceObj['entry']['media$group']['media$thumbnail'])) {
+		if ( !empty($this->interfaceObj['entry']['media$group']['media$thumbnail']) ) {
 
 			return $this->interfaceObj['entry']['media$group']['media$thumbnail'];
 		}
@@ -103,7 +103,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return string
 	 */
 	protected function getVideoTitle() {
-		if (!empty($this->interfaceObj['entry']['title']['$t'])) {
+		if ( !empty($this->interfaceObj['entry']['title']['$t']) ) {
 			
 			return $this->interfaceObj['entry']['title']['$t'];
 		}
@@ -116,7 +116,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return string
 	 */
 	protected function getOriginalDescription() {
-		if (!empty($this->interfaceObj['entry']['media$group']['media$description']['$t'])) {
+		if ( !empty($this->interfaceObj['entry']['media$group']['media$description']['$t']) ) {
 			
 			return $this->interfaceObj['entry']['media$group']['media$description']['$t'];
 		}
@@ -129,7 +129,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return array
 	 */
 	protected function getVideoKeywords() {
-		if (!empty($this->interfaceObj['entry']['media$group']['media$keywords']['$t'])) {
+		if ( !empty($this->interfaceObj['entry']['media$group']['media$keywords']['$t']) ) {
 			
 			return $this->interfaceObj['entry']['media$group']['media$keywords']['$t'];
 		}
@@ -142,7 +142,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return string
 	 */
 	protected function getVideoCategory() {
-		if (!empty($this->interfaceObj['entry']['media$group']['media$category'][0]['$t'])) {
+		if ( !empty($this->interfaceObj['entry']['media$group']['media$category'][0]['$t']) ) {
 			
 			return $this->interfaceObj['entry']['media$group']['media$category'][0]['$t'];
 		}
@@ -155,7 +155,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return string
 	 */
 	protected function getVideoPublished() {
-		if (!empty($this->interfaceObj['entry']['published']['$t'])) {
+		if ( !empty($this->interfaceObj['entry']['published']['$t']) ) {
 			
 			return strtotime($this->interfaceObj['entry']['published']['$t']);
 		}
@@ -168,7 +168,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return int
 	 */
 	protected function getVideoDuration() {
-		if (!empty($this->interfaceObj['entry']['media$group']['yt$duration']['seconds'])) {
+		if ( !empty($this->interfaceObj['entry']['media$group']['yt$duration']['seconds']) ) {
 			
 			return $this->interfaceObj['entry']['media$group']['yt$duration']['seconds'];
 		}
@@ -189,7 +189,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return boolean
 	 */
 	protected function canEmbed() {
-		if (!empty($this->interfaceObj['entry']['yt$accessControl'])) {
+		if ( !empty($this->interfaceObj['entry']['yt$accessControl']) ) {
 			foreach ($this->interfaceObj['entry']['yt$accessControl'] as $accessControl) {
 				if ($accessControl['action'] == 'embed') {
 					return $accessControl['permission'] == 'allowed';
@@ -201,26 +201,32 @@ class YoutubeApiWrapper extends ApiWrapper {
 	}
 	
 	protected function sanitizeVideoId( $videoId ) {
-		if( ($pos = strpos( $videoId, '?' )) !== false ) {
+		if ( ($pos = strpos( $videoId, '?' )) !== false ) {
 			$videoId = substr( $videoId, 0, $pos );
 		}
-		if( ($pos = strpos( $videoId, '&' )) !== false ) {
+		if ( ($pos = strpos( $videoId, '&' )) !== false ) {
 			$videoId = substr( $videoId, 0, $pos );
 		}
 		return $videoId;
 	}
 
-	/*
+	/**
 	 * Handle response errors
+	 * @param $status - The response status object
+	 * @param $content - XML content from the provider
+	 * @param $apiUrl - The URL for the providers API
+	 * @throws VideoNotFoundException - Video cannot be found
+	 * @throws VideoIsPrivateException - Video is private and cannot be viewed
+	 * @throws VideoQuotaExceededException - The quota for video owner has been exceeded
 	 */
-	protected function checkForResponseErrors( $status, $content, $apiUrl ){
+	protected function checkForResponseErrors( $status, $content, $apiUrl ) {
 
 		wfProfileIn( __METHOD__ );
 
 		// check if still exists
-		$code = $status->errors[0]['params'][0];
-		if( $code == 404 ) {
+		$code = empty( $status->errors[0]['params'][0] ) ? null : $status->errors[0]['params'][0];
 
+		if ( $code == 404 ) {
 			wfProfileOut( __METHOD__ );
 			throw new VideoNotFoundException($status, $content, $apiUrl);
 		}
@@ -232,7 +238,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 
 		// check if private
 		$googleShemas ='http://schemas.google.com/g/2005';
-		if( isset( $sp->data['child'][$googleShemas] ) ) {
+		if ( isset( $sp->data['child'][$googleShemas] ) ) {
 			$err = $sp->data['child'][$googleShemas]['errors'][0]['child'][$googleShemas]['error'][0]['child'][$googleShemas]['internalReason'][0]['data'];
 			if( $err == 'Private video' ) {
 				wfProfileOut( __METHOD__ );
@@ -254,6 +260,4 @@ class YoutubeApiWrapper extends ApiWrapper {
 		// return default
 		parent::checkForResponseErrors($status, $content, $apiUrl);
 	}
-
-	
 }

@@ -18,9 +18,11 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'mostvisitedpagessearchbtn' => '{{Identical|Search}}',
 	'mostvisitedpageslatest' => '',
 );
 
@@ -106,6 +108,13 @@ $messages['ca'] = array(
 	'mostvisitedpageslatest' => 'en els darrers $1 minuts',
 	'mostvisitedpageslatestlink' => 'Veure les últimes pàgines visitades',
 	'mostvisitedpagesalllink' => 'Veure les pàgines més visitades',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'mostvisitedpagessearchbtn' => 'лаха',
 );
 
 /** Czech (česky)

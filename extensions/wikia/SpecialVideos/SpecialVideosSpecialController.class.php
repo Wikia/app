@@ -31,11 +31,11 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$this->wg->SupressPageSubtitle = true;
 
 		// enqueue i18n message for javascript
-		F::build('JSMessages')->enqueuePackage('SpecialVideos', JSMessages::INLINE);
+		JSMessages::enqueuePackage('SpecialVideos', JSMessages::INLINE);
 
 		// Change the <title> attribute and the <h1> for the page
-		$this->getContext()->getOutput()->setPageTitle( $this->wf->Msg('specialvideos-page-title') );
-		$this->getContext()->getOutput()->setHTMLTitle( $this->wf->Msg('specialvideos-html-title') );
+		$this->getContext()->getOutput()->setPageTitle( wfMsg('specialvideos-page-title') );
+		$this->getContext()->getOutput()->setHTMLTitle( wfMsg('specialvideos-html-title') );
 
 		// For search engines
 		$this->getContext()->getOutput()->setRobotPolicy( "index,follow" );
@@ -60,7 +60,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 				break;
 		}
 
-		$this->getContext()->getOutput()->addMeta( 'description', $this->wf->Msg($descriptionKey, $this->wg->Sitename) );
+		$this->getContext()->getOutput()->addMeta( 'description', wfMsg($descriptionKey, $this->wg->Sitename) );
 
 		// Sorting/filtering dropdown values
 		$sort = $this->request->getVal( 'sort', 'trend' );
@@ -131,6 +131,14 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 
 		// permission checking for video removal
 		$this->isRemovalAllowed = ( $this->wg->User->isAllowed( 'specialvideosdelete' ) && $this->app->checkSkin( 'oasis' ) );
+
+		/*
+		 * Check to see if user is part of videoupload
+		 * For the purpose of hiding the appropriate UI elements
+		 * Current elements affected: last page of results in Special:Videos
+		 */
+
+		$this->showAddVideoBtn = $this->wg->User->isAllowed('videoupload');
 	}
 }
 

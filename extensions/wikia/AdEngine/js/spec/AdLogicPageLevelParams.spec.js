@@ -398,4 +398,28 @@ describe('AdLogicPageLevelParams', function(){
 		expect(params.lang).toBe('en');
 		expect(params.hasp).toBe('yes');
 	});
+
+	it('getPageLevelParams Krux segments on regular and on COPPA wiki', function() {
+		var logMock = function() {},
+			kruxMockFew = {segments: ['kxsgmntA', 'kxsgmntB', 'kxsgmntC', 'kxsgmntD']},
+			windowMockRegular = {
+				location: {hostname: 'an.example.org'}
+			},
+			windowMockCOPPA = {
+				location: {hostname: 'an.example.org'},
+				wgWikiDirectedAtChildren: true
+			},
+			adLogicShortPageMock,
+			abTestMock,
+			adLogicPageLevelParams,
+			params;
+
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMockRegular, kruxMockFew, adLogicShortPageMock, abTestMock);
+		params = adLogicPageLevelParams.getPageLevelParams();
+		expect(params.ksgmnt).toEqual(kruxMockFew.segments, 'Krux on regular wiki');
+
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMockCOPPA, kruxMockFew, adLogicShortPageMock, abTestMock);
+		params = adLogicPageLevelParams.getPageLevelParams();
+		expect(params.ksgmnt).toBeUndefined('No Krux on COPPA wiki');
+	});
 });

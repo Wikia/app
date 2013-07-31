@@ -66,12 +66,18 @@ class WikiaResponse {
 	protected $exception = null;
 
 	/**
+	 * Flag for whether we're caching
+	 * @var bool
+	 */
+	protected $isCaching = false;
+
+	/**
 	 * constructor
 	 * @param string $format
 	 */
 	public function __construct( $format, $request = null ) {
 		$this->setFormat( $format );
-		$this->setView( F::build( 'WikiaView', array( $this ) ) );
+		$this->setView( new WikiaView( $this ) );
 		$this->setRequest( $request );
 	}
 
@@ -276,6 +282,7 @@ class WikiaResponse {
 	 * WikiaResponse::CACHE_TARGET_BROWSER and WikiaResponse::CACHE_TARGET_VARNISH
 	 */
 	public function setCacheValidity( $expiryTime = null, $maxAge = null, Array $targets = array() ){
+		$this->isCaching = true;
 		$targetBrowser = ( in_array( self::CACHE_TARGET_BROWSER, $targets ) );
 		$targetVarnish = ( in_array( self::CACHE_TARGET_VARNISH, $targets ) );
 
@@ -304,6 +311,14 @@ class WikiaResponse {
 				$this->setHeader( 'Cache-Control', $cacheControl, true );
 			}
 		}
+	}
+
+	/**
+	 * Tells you if the request has cache validity set
+	 * @return bool
+	 */
+	public function isCaching() {
+		return $this->isCaching;
 	}
 
 	public function getHeader( $name ) {

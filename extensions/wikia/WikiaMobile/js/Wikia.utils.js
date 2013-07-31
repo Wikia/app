@@ -29,11 +29,22 @@
 		fired = true;
 	});
 
-	var Wikia = function(func){
+	var $ = function(func){
 		fired ? func() : w.addEventListener('DOMContentLoaded', func);
 	};
 
-	Wikia.not = function(selector, elements){
+	$.findPos = function(obj) {
+		var curtop = 0;
+
+		if (obj.offsetParent) {
+			do {
+				curtop += obj.offsetTop;
+			} while (obj = obj.offsetParent)
+			return curtop;
+		}
+	};
+
+	$.not = function(selector, elements){
 		var ret = [];
 
 		if(elements && selector){
@@ -49,7 +60,7 @@
 		return ret;
 	};
 
-	Wikia.param = function(params){
+	$.param = function(params){
 		var ret = [];
 
 		if(params) {
@@ -63,7 +74,7 @@
 		return ret.join('&');
 	};
 
-	Wikia.ajax = function(attr){
+	$.ajax = function(attr){
 		var dfd = new Wikia.Deferred(),
 			type = (attr.type && attr.type.toUpperCase()) || 'GET',
 			dataType = (attr.dataType && attr.dataType.toLowerCase()) || 'json',
@@ -73,7 +84,7 @@
 			req = new XMLHttpRequest();
 
 		if(type === 'GET' && data){
-			url += (url.indexOf('?') > -1 ? '&' : '?') + Wikia.param(data);
+			url += (url.indexOf('?') > -1 ? '&' : '?') + $.param(data);
 			data = null;
 		}
 
@@ -111,12 +122,12 @@
 			}
 		};
 		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-		req.send(data ? Wikia.param(data) : null);
+		req.send(data ? $.param(data) : null);
 
 		return dfd.promise();
 	};
 
-	Wikia.extend = function(target){
+	$.extend = function(target){
 		var args = slice.call(arguments, 1),
 			l = args.length,
 			i = 0,
@@ -131,15 +142,34 @@
 		return target;
 	};
 
+	/**
+	 * @param {HTMLElement} el
+	 * @param {Array} cls
+	 */
+	$.addClass = function(el, cls) {
+		el.className += ((el.className !== '') ? ' ' : '') + cls.join(' ');
+	};
+
+	/**
+	 * @param {HTMLElement} el
+	 * @param {Array} cls
+	 */
+	$.removeClass = function(el, cls) {
+		el.className = el.className
+			.replace(new RegExp('\\b(?:' + cls.join('|') + ')\\b', 'g'), '')
+			//trim is supported starting from IE9
+			//and that's the least version on WP7
+			.trim();
+	};
+
 	//expose it to the world
 	//$ is forbackward compatability
-	w.Wikia = Wikia;
-	w.$ = w.$ || Wikia;
+	if(!w.$) w.$ = $;
 
 	//AMD
 	if (w.define && w.define.amd) {
 		w.define('wikia.utils', function() {
-			return Wikia;
+			return $;
 		});
 	}
 })(this);

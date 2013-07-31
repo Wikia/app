@@ -12,7 +12,7 @@ class AssetsManagerTest extends WikiaBaseTest {
 		parent::setUp();
 
 		$this->cb = $this->app->wg->StyleVersion;
-		$this->instance = F::build('AssetsManager', array(), 'getInstance');
+		$this->instance = AssetsManager::getInstance();
 	}
 
 	public function testGetSassCommonURL() {
@@ -55,7 +55,7 @@ class AssetsManagerTest extends WikiaBaseTest {
 	public function duplicateAssetsDataProvider() {
 		$dataSets = array();
 
-		$config = F::build('AssetsConfig'); /* @var $config AssetsConfig */
+		$config = new AssetsConfig();
 		// single assets
 		$packages = $config->getGroupNames();
 		foreach ($packages as $name) {
@@ -64,5 +64,56 @@ class AssetsManagerTest extends WikiaBaseTest {
 		}
 
 		return $dataSets;
+	}
+
+	/**
+	 * @dataProvider getMultiTypePackageURLDataProvider
+	 */
+	public function testgetMultiTypePackageURL($expectedUrl, $options) {
+		$expectedUrl = '/wikia.php?controller=AssetsManager&method=getMultiTypePackage&format=json&' .
+			$expectedUrl .
+			"&cb={$this->cb}";
+
+		$this->assertEquals($expectedUrl, AssetsManager::getInstance()->getMultiTypePackageURL($options, true /* $local */));
+	}
+
+	public function getMultiTypePackageURLDataProvider() {
+		return [
+			// support cooma-separated string
+			[
+				'url' => 'messages=foo%2Cbar',
+				'options' => [
+					'messages' => 'foo,bar'
+				]
+			],
+			// support array
+			[
+				'url' => 'messages=foo%2Cbar',
+				'options' => [
+					'messages' => ['foo', 'bar']
+				]
+			],
+			// order should be maintained
+			[
+				'url' => 'styles=foo%2Cbar&messages=foo%2Cbar&mustache=abc',
+				'options' => [
+					'messages' => 'foo,bar',
+					'styles' => ['foo', 'bar'],
+					'mustache' => 'abc'
+				]
+			],
+			// order should be maintained
+			[
+				'url' => 'templates=%5B%7B%22controller%22%3A%22FooController%22%2C%22method%22%3A%22index%22%7D%5D',
+				'options' => [
+					'templates' => [
+						[
+							'controller' => 'FooController',
+							'method' => 'index',
+						]
+					]
+				]
+			],
+		];
 	}
 }

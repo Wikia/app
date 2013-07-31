@@ -51,6 +51,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 
 		// high prio
+		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
@@ -154,6 +155,7 @@ $config['oasis_blocking'] = array(
 );
 $config['abtesting'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis', 'wikiamobile' ],
 	'assets' => array(
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 	)
@@ -193,6 +195,11 @@ $config['oasis_jquery'] = array(
 
 		// jQuery/Oasis specific code
 		'//skins/oasis/js/tables.js',
+
+		// Search A/B testing
+		'//extensions/wikia/Search/js/SearchAbTest.DomUpdater.js',
+		'//extensions/wikia/Search/js/SearchAbTest.Context.js',
+		'//extensions/wikia/Search/js/SearchAbTest.js',
 	)
 );
 
@@ -263,7 +270,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/LatestPhotos.js',
 		'//skins/oasis/js/Interlang.js',
 		'//skins/oasis/js/WikiaNotifications.js',
-		'//skins/oasis/js/Spotlights.js',
 		'//skins/oasis/js/FirefoxFindFix.js',
 		'//skins/oasis/js/isTouchScreen.js',
 		'//skins/oasis/js/tabs.js',
@@ -364,6 +370,7 @@ $config['gameguides_js'] = array(
 		'//extensions/wikia/WikiaMobile/js/toast.js',
 		'//extensions/wikia/WikiaMobile/js/pager.js',
 		'//extensions/wikia/WikiaMobile/js/modal.js',
+		'//extensions/wikia/WikiaMobile/js/media.class.js',
 		'//extensions/wikia/WikiaMobile/js/media.js',
 		'//extensions/wikia/WikiaMobile/js/sections.js',
 		'//extensions/wikia/WikiaMobile/js/layout.js',
@@ -473,6 +480,7 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 
 		//modules
+		'//resources/wikia/libraries/sloth/sloth.js',
 		'//extensions/wikia/WikiaMobile/js/lazyload.js',
 		'//extensions/wikia/WikiaMobile/js/track.js',
 		'//extensions/wikia/WikiaMobile/js/events.js',
@@ -481,6 +489,7 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/toast.js',
 		'//extensions/wikia/WikiaMobile/js/pager.js',
 		'//extensions/wikia/WikiaMobile/js/modal.js',
+		'//extensions/wikia/WikiaMobile/js/media.class.js',
 		'//extensions/wikia/WikiaMobile/js/media.js',
 		'//extensions/wikia/WikiaMobile/js/sections.js',
 		'//extensions/wikia/WikiaMobile/js/layout.js',
@@ -527,8 +536,7 @@ $config['wikiamobile_relatedpages_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		'//resources/wikia/libraries/sloth/sloth.js',
-		'//extensions/wikia/RelatedPages/js/RelatedPages.wikiamobile.js',
+		'//extensions/wikia/RelatedPages/js/RelatedPages.wikiamobile.js'
 	)
 );
 
@@ -545,7 +553,9 @@ $config['wikiamobile_js_ads'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		//libraries
-		'//resources/wikia/libraries/DOMwriter/domwriter.js',
+		//I wan't to minimize how much data we have to transfer
+		//We currently don't have JS minimizer so I used minified version of it
+		'//resources/wikia/libraries/postscribe/postscribe.min.js',
 
 		//advertisement "core"
 		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
@@ -556,6 +566,7 @@ $config['wikiamobile_js_ads'] = array(
 		//modules
 		'//resources/wikia/modules/geo.js',
 		'//extensions/wikia/WikiaMobile/js/ads.js',
+		'//extensions/wikia/WikiaMobile/js/floatingAd.js'
 	)
 );
 
@@ -731,6 +742,24 @@ $config['articlecomments_scss_wikiamobile'] = array(
 		'//extensions/wikia/ArticleComments/css/ArticleComments.wikiamobile.scss'
 	)
 );
+
+$config['filepage_js_wikiamobile'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/FilePage/js/FilePage.wikiamobile.js'
+	)
+);
+
+$config['filepage_scss_wikiamobile'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/FilePage/css/FilePage.wikiamobile.scss'
+	)
+);
+
+
 
 /** EditPageLayout **/
 $config['rte'] = array(
@@ -1041,15 +1070,6 @@ $config['wikiahomepage_scss_wikiamobile'] = array(
 	)
 );
 
-/** WikiaHubs **/
-$config['wikiahubs_scss_wikiamobile'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
-		'//extensions/wikia/WikiaHubs/css/WikiaHubs.wikiamobile.scss'
-	)
-);
-
 /** WikiaHubsV2 **/
 $config['wikiahubs_v2'] = array(
 	'type' => AssetsManager::TYPE_JS,
@@ -1313,5 +1333,16 @@ $config['manage_wikia_home_js'] = array(
 		'//extensions/wikia/SpecialManageWikiaHome/js/ManageWikiaHome.js',
 		'//extensions/wikia/SpecialManageWikiaHome/js/CollectionsSetup.js',
 		'//extensions/wikia/SpecialManageWikiaHome/js/CollectionsNavigation.js',
+	)
+);
+
+
+/* SpecialCSS */
+$config['special_css_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/SpecialCss/js/SpecialCss.js',
+		'//resources/wikia/libraries/mustache/mustache.js',
+		'//resources/wikia/libraries/mustache/jquery.mustache.js'
 	)
 );

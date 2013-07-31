@@ -23,7 +23,7 @@ class WikiaDispatcherTest extends WikiaBaseTest {
 		    ->method( 'runFunction' )
 		    ->will( $this->returnValue( true ) );
 
-		$response = $this->object->dispatch( $app, F::build('WikiaRequest', array($_POST + $_GET)) );
+		$response = $this->object->dispatch( $app, new WikiaRequest($_POST + $_GET) );
 
 		$this->assertTrue($response->hasException());
 		$this->assertInstanceOf( 'WikiaException', $response->getException());
@@ -85,6 +85,21 @@ class WikiaDispatcherTest extends WikiaBaseTest {
 		$this->object->addRouting("TestController", array("index" => array( "after" => "AnotherTestController::hello::false", "skin" => "Test" )));
 		$response = $this->object->dispatch( $app, new WikiaRequest( array( 'controller' => 'Test', 'method' => 'index' ) ) );
 		$this->assertEquals("hello", $response->getVal("wasCalled"));
+
+		// skinRouting override controller
+		$this->object->addRouting("TestController", array("*" => array("controller" => "AnotherTestController", "notSkin" => "Test")));
+		$response = $this->object->dispatch( $app, new WikiaRequest ( array( 'controller' => 'Test', 'method' => 'index' ) ) );
+		$this->assertEquals("index", $response->getVal('wasCalled'));
+
+		$app = $this->getMock( 'WikiaApp', array ('checkSkin'));
+		$app->expects( $this->any() )
+			->method( 'checkSkin' )
+			->will ( $this->returnValue( false ) );
+
+		// skinRouting override controller
+		$this->object->addRouting("TestController", array("*" => array("controller" => "AnotherTestController", "notSkin" => "Test")));
+		$response = $this->object->dispatch( $app, new WikiaRequest ( array( 'controller' => 'Test', 'method' => 'index' ) ) );
+		$this->assertEquals("controllerRouting", $response->getVal('wasCalled'));
 
 	}
 }

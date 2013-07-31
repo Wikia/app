@@ -68,10 +68,10 @@ class ImageDropController extends WikiaController {
 	}
 
 	protected function renderImage ( $filename, $orientation = self::RIGHT ){
-		$parser = F::build( 'Parser' );
+		$parser = (new Parser);
 		$parser->setOutputType( OT_HTML );
-		$parserOptions = F::build( 'ParserOptions' );
-		$fakeTitle = F::build( 'FakeTitle', array( ''));
+		$parserOptions = (new ParserOptions);
+		$fakeTitle = new FakeTitle( '');
 
 		return $parser->parse(
 				$this->getWikiText( $filename, $orientation ),

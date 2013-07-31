@@ -3,29 +3,32 @@
 class PhalanxHooks extends WikiaObject {
 	function __construct() {
 		parent::__construct();
-		F::setInstance( __CLASS__, $this );
 	}
 
 	/**
 	 * Add a link to central:Special:Phalanx from Special:Contributions/USERNAME
 	 * if the user has 'phalanx' permission
+	 *
 	 * @param $id Integer: user ID
 	 * @param $nt Title: user page title
 	 * @param $links Array: tool links
 	 * @return boolean true
 	 */
-	public function loadLinks( $id, $nt, &$links ) {
+	static public function loadLinks( $id, $nt, &$links ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( $this->wg->User->isAllowed( 'phalanx' ) ) {
+		$user = RequestContext::getMain()->getUser();
+
+		if ( $user->isAllowed( 'phalanx' ) ) {
 			$links[] = Linker::makeKnownLinkObj(
 				GlobalTitle::newFromText( 'Phalanx', NS_SPECIAL, WikiFactory::COMMUNITY_CENTRAL ),
 				'PhalanxBlock',
 				wfArrayToCGI(
-					array(
-						'wpPhalanxTypeFilter[]' => '8',
-						'wpPhalanxCheckBlocker' => $nt->getText()
-					)
+					[
+						'type' => Phalanx::TYPE_USER,
+						'wpPhalanxCheckBlocker' => $nt->getText(),
+						'target' => $nt->getText(),
+					]
 				)
 			);
 		}
@@ -44,7 +47,7 @@ class PhalanxHooks extends WikiaObject {
 	 *
 	 * @author macbre
 	 */
-	public function onSpamFilterCheck($text, $typeId, &$blockData) {
+	static public function onSpamFilterCheck($text, $typeId, &$blockData) {
 		wfProfileIn( __METHOD__ );
 
 		if ($text === '') {
@@ -65,7 +68,7 @@ class PhalanxHooks extends WikiaObject {
 		// pass matching block details
 		if ( $ret === false ) {
 			$blockData = (array) $model->getBlock();
-			$this->wf->Debug( __METHOD__ . ": spam check blocked '{$text}'\n" );
+			wfDebug( __METHOD__ . ": spam check blocked '{$text}'\n" );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -80,7 +83,7 @@ class PhalanxHooks extends WikiaObject {
 	 *
 	 * @author moli
 	 */
-	public function onEditPhalanxBlock( &$data ) {
+	static public function onEditPhalanxBlock( &$data ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !isset( $data['id'] ) ) {
@@ -96,8 +99,9 @@ class PhalanxHooks extends WikiaObject {
 			$phalanx[ $key ] = $val;
 		}
 
-		$typemask = 0;
+		$typemask = $phalanx['type'];
 		if ( is_array( $phalanx['type'] ) ) {
+			$typemask = 0;
 			foreach ( $phalanx['type'] as $type ) {
 				$typemask |= $type;
 			}
@@ -121,11 +125,10 @@ class PhalanxHooks extends WikiaObject {
 			$phalanx['lang'] = null;
 		}
 
-		if ( $phalanx['expire'] === '' ) {
+		if ( $phalanx['expire'] === '' || is_null( $phalanx['expire'] ) ) {
 			// don't change expire
 			unset($phalanx['expire']);
-		}
-		else if ( $phalanx['expire'] != 'infinite' ) {
+		} else if ( $phalanx['expire'] != 'infinite' ) {
 			$expire = strtotime( $phalanx['expire'] );
 			if ( $expire < 0 || $expire === false ) {
 				wfProfileOut( __METHOD__ );
@@ -182,7 +185,7 @@ class PhalanxHooks extends WikiaObject {
 	 *
 	 * @author moli
 	 */
-	public function onDeletePhalanxBlock( $id ) {
+	static public function onDeletePhalanxBlock( $id ) {
 		wfProfileIn( __METHOD__ );
 
 		$phalanx = Phalanx::newFromId($id);
@@ -198,5 +201,22 @@ class PhalanxHooks extends WikiaObject {
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
+	}
+
+	/**
+	 * Make block ID more visible in user block message (BAC-536)
+	 *
+	 * @param array $permErrors
+	 * @param string $action
+	 * @return bool true
+	 */
+	static public function onAfterFormatPermissionsErrorMessage( Array &$permErrors, $action) {
+		foreach($permErrors as &$error) {
+			if (isset($error[5]) && is_numeric($error[5])) {
+				$error[5] = "<big><strong>$error[5]</strong></big>";
+			}
+		}
+
+		return true;
 	}
 }

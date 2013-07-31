@@ -10,21 +10,24 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com
  */
 class SocialSharingService{
-	static private $instanciated = false;
 	private $networks;
+	static $instance;
 
-	function __construct(){
-		if ( empty( self::$instanciated ) ){
-			self::$instanciated = true;
-			F::setInstance( __CLASS__, $this );
-			
-			$this->register( 'FacebookSharing');
-			$this->register( 'TwitterSharing' );
-			$this->register( 'PlusoneSharing' );
-			$this->register( 'StumbleuponSharing' );
-			$this->register( 'RedditSharing' );
-			$this->register( 'EmailSharing' );
+	// private constructor - class only accessible through getInstance
+	private function __construct() {
+		$this->register( 'FacebookSharing');
+		$this->register( 'TwitterSharing' );
+		$this->register( 'PlusoneSharing' );
+		$this->register( 'StumbleuponSharing' );
+		$this->register( 'RedditSharing' );
+		$this->register( 'EmailSharing' );
+	}
+
+	static function getInstance() {
+		if(empty(self::$instance)) {
+			self::$instance = new SocialSharingService();
 		}
+		return self::$instance;
 	}
 
 	/**
@@ -45,7 +48,7 @@ class SocialSharingService{
 			$className = ucfirst( $n ) . 'Sharing';
 
 			if ( in_array( $className, $this->networks ) ) {
-				$ret[] = F::build( $className );
+				$ret[] = new $className;
 			}
 		}
 

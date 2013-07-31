@@ -17,13 +17,13 @@ class PathFinderSpecialController extends WikiaSpecialPageController {
 	
 	public function init() {
 		wfProfileIn( __METHOD__ );
-		$this->model = F::build( 'PathFinderModel' );
+		$this->model = (new PathFinderModel);
 		wfProfileOut( __METHOD__ );
 	}
 	
 	public function index() {
 		wfProfileIn( __METHOD__ );
-		$this->wg->Out->setPageTitle( $this->wf->Msg( 'pathfinder-special-header' ) );
+		$this->wg->Out->setPageTitle( wfMsg( 'pathfinder-special-header' ) );
 		$this->response->addAsset( 'extensions/wikia/hacks/PathFinder/css/PathFinder.scss' );
 		$this->response->addAsset( 'extensions/wikia/hacks/PathFinder/js/PathFinder.js' );
 		$this->forward( 'PathFinderSpecial', 'PathFinder' );
@@ -46,7 +46,7 @@ class PathFinderSpecialController extends WikiaSpecialPageController {
 		$thumbnailURLs = array();
 		//TODO move to PathFinderController
 		if ( $this->getVal( 'selectby' ) == 'byTitle' ) {
-			$title = F::build( 'Title', array( $this->getVal( 'article' ) ), 'newFromText' );
+			$title = Title::newFromText( $this->getVal( 'article' ) );
 			$articleId = $title->getArticleID();
 			
 		} else {
@@ -61,7 +61,7 @@ class PathFinderSpecialController extends WikiaSpecialPageController {
 				
 				foreach ( $nodes as $node ) {
 
-					$targetTitle = F::build( 'Title', array( $node->target_id ), 'newFromID' );
+					$targetTitle = Title::newFromID( $node->target_id );
 					
 					if( $targetTitle != NULL ) {
 
@@ -104,7 +104,7 @@ class PathFinderSpecialController extends WikiaSpecialPageController {
 		
 		//TODO move to PathFinderController
 		if ( $this->getVal( 'selectby' ) == 'byTitle' ) {
-			$title = F::build( 'Title', array( $this->getVal( 'article' ) ), 'newFromText' );
+			$title = Title::newFromText( $this->getVal( 'article' ) );
 			$articleId = $title->getArticleID();
 		} else {
 			$articleId = $this->getVal( 'article' );
@@ -114,7 +114,7 @@ class PathFinderSpecialController extends WikiaSpecialPageController {
 		
 		if ( count( $nodes ) > 0 ) {
 			foreach ( $nodes as $node ) {
-				$targetTitle = F::build( 'Title', array( $node->target_id ), 'newFromID' );
+				$targetTitle = Title::newFromID( $node->target_id );
 				
 				if($targetTitle != NULL) {
 					$targetURL = $targetTitle->getLocalURL();

@@ -68,10 +68,12 @@ If you need help, check out our [[Help:Contents|help pages]] first and then visi
 /** Message documentation (Message documentation)
  * @author Lloffiwr
  * @author PtM
+ * @author Shirayuki
  * @author TK-999
  */
 $messages['qqq'] = array(
-	'welcome-user-page' => '$1 is the name of the user whose page the base layout is being added to.',
+	'welcome-user-page' => 'Parameters:
+* $1 - the name of the user whose page the base layout is being added to',
 	'welcome-message-user-staff' => 'Please translate the link texts but leave the link addresses untranslated. Wikia administrators will localise the link addresses when the localized hubs of the wikis are available.',
 	'welcome-message-anon-staff' => 'Please translate the link texts but leave the link addresses untranslated. Wikia administrators will localise the link addresses when the localized hubs of the wikis are available.',
 	'welcome-message-wall-user' => '$1 is the name of the page the user edited that tirggered the welcome',
@@ -208,6 +210,7 @@ Si us plau, deixa un missatge al meu mur si et puc ajudar en alguna cosa!",
 Per què no et '''[[Special:Userlogin|crees un compte i t'identifiques?]]''' D'aquesta manera serà molt més fàcil saber quines pàgines has editat i se t'atribuirà la teva feina; a més, et serà molt més fàcil comunicar-te amb la resta de la comunitat.
 
 Si us plau, deixa un missatge al meu mur si et puc ajudar en qualsevol cosa!", # Fuzzy
+	'welcome-description' => 'Envia un missatge de benvinguda als usuaris després de la seva primera edició',
 );
 
 /** Czech (česky)
@@ -789,6 +792,7 @@ Non hesita de lassar un message si io pote adjutar te con alcun cosa!", # Fuzzy
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
  * @author Irwangatot
  */
 $messages['id'] = array(
@@ -798,16 +802,37 @@ $messages['id'] = array(
 
 == Kontribusi saya ==
 
-* [[Special:Contributions/{{PAGENAME}}|Kontribusi pengguna]] 
+* [[Istimewa:Kontribusi pengguna/$1|Kontribusi pengguna]] 
 
 == Halaman kesukaan saya == 
 
-* Tambahkan pranala ke halaman kesukaan anda pada wiki di sini! 
+* Tambahkan pranala ke halaman kesukaan Anda pada wiki di sini! 
 * Halaman kesukaan # 2 
 * Halaman kesukaan # 3", # Fuzzy
 	'welcome-message-user' => 'Hi, selamat datang di {{SITENAME}}! Terima kasih untuk suntingan anda dihalaman [[:$1]]. 
 
 Silakan tinggalkan pesan di [[$2|Pembicaraan halaman saya]] jika saya dapat membantu! $3',
+	'welcome-message-anon' => "Hai, selamat datang di {{SITENAME}}! Terima kasih atas suntingan Anda pada halaman [[:1]].
+
+'''[[Special:Userlogin|Silakan masuk log dan membuat nama pengguna]]'''.
+Ini adalah cara yang mudah untuk melacak kontribusi Anda dan membantu Anda berkomunikasi dengan komunitas.
+
+Silakan tinggalkan pesan pada [[$2|halaman pembicaraan saya]] jika saya dapat membantu dengan hal apapun! $3", # Fuzzy
+	'welcome-message-anon-staff' => '==Selamat datang==
+
+Hai,
+
+Selamat datang ke {{SITENAME}} dan terima kasih atas suntingan Anda pada halaman [[:$1]]. Kami mendorong semua kontributor untuk [[Special:UserLogin|membuat nama pengguna]], sehingga Anda dapat melacak kontribusi Anda, mengakses lebih banyak fitur Wikia, dan dapat mengetahui seluruh komunitas {{SITENAME}}.
+
+Jika Anda membutuhkan bantuan, pertama lihatlah [[Help:Contents|halaman bantuan]] kami dan kemudian mengunjungi [[w:c:community|Pusat Komunitas]] untuk mempelajari lebih lanjut. Selamat menyunting! $3',
+	'welcome-message-wall-user' => 'Hai, selamat datang di {{SITENAME}}! Terima kasih atas suntingan Anda pada halaman [[:$1]].
+
+Silakan meninggalkan pesan jika saya dapat membantu dalam hal apapun!',
+	'welcome-message-wall-anon-staff' => 'Hai,
+
+Selamat datang ke {{SITENAME}} dan terima kasih atas suntingan Anda pada halaman [[:$1]]. Kami mendorong semua kontributor untuk [[Special:UserLogin|membuat nama pengguna]], sehingga Anda dapat melacak kontribusi Anda, mengakses lebih banyak fitur Wikia, dan dapat mengetahui seluruh komunitas {{SITENAME}}.
+
+Jika Anda membutuhkan bantuan, pertama lihatlah [[Help:Contents|halaman bantuan]] kami dan kemudian mengunjungi [[w:c:community|Pusat Komunitas]] untuk mempelajari lebih lanjut. Selamat menyunting!',
 );
 
 /** Italian (italiano)
@@ -1033,6 +1058,7 @@ Jika anda memerlukan bantuan, sila baca [[Help:Contents|halaman bantuan]] kami t
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
+ * @author Laaknor
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -1093,6 +1119,7 @@ Vennligst legg igjen en beskjed hvis jeg kan hjelpe deg med noe!",
 '''[[Special:Userlogin|Vennligst logg inn og opprett et brukernavn]]'''. Det er en enkel måte å holde oversikt over bidragene dine og hjelper deg med å kommunisere med resten av fellesskapet.
 
 Vennligst legg igjen en beskjed hvis jeg kan hjelpe deg med noe!", # Fuzzy
+	'welcome-description' => 'Sender en velkomstbeskjed til brukere etter deres første redigering',
 );
 
 /** Dutch (Nederlands)
@@ -1897,6 +1924,7 @@ Xin vui lòng để lại tin nhắn cho tôi nếu bạn cần sự trợ giúp
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Liuxinyu970226
  */
 $messages['zh-hans'] = array(
 	'welcome-user-page' => "==关于我==
@@ -1912,6 +1940,15 @@ $messages['zh-hans'] = array(
 * 在此为您喜爱的页面添加链接！
 * 喜爱的页面 #2
 * 喜爱的页面 #3",
+	'welcome-message-user' => '嗨，欢迎来到{{SITENAME}}！ 感谢您对[[:$1]]页面的编辑。
+
+请在[[$2|我的讨论页]]处留言，如果我能帮助您什么事情的话！$3',
+	'welcome-message-anon' => "您好，欢迎来到{{SITENAME}} ！感谢您编辑[[:$1]]页面。
+
+'''[[Special:Userlogin|请登录并定义一个用户名]]'''。
+这是很容易的方法来跟踪您的贡献和帮助您与社会其他成员进行沟通。
+
+请在[[$2|我的讨论页]]留言如果可以帮忙！$3",
 	'welcome-message-log' => '欢迎新贡献者',
 	'welcome-message-wall-user' => '嗨，欢迎来到{{SITENAME}}！ 感谢您协助编辑[[:$1]]页。
 

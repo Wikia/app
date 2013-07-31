@@ -94,6 +94,7 @@ $messages['qqq'] = array(
 {{Identical|Insert}}',
 	'wmu-name' => '{{Identical|Name}}',
 	'wmu-license' => '{{Identical|License}}',
+	'wmu-licensing' => '{{Identical|Licensing}}',
 	'wmu-size' => '{{Identical|Size}}',
 	'wmu-thumbnail' => '{{Identical|Thumbnail}}',
 	'wmu-width' => '{{Identical|Width}}',
@@ -104,6 +105,8 @@ $messages['qqq'] = array(
 	'wmu-insert2' => 'Text of a submit button.',
 	'wmu-prev' => '{{Identical|Previous}}',
 	'wmu-next' => '{{Identical|Next}}',
+	'wmu-success' => '{{Identical|Success}}',
+	'wmu-success-placeholder' => '{{Identical|Success}}',
 	'wmu-back' => 'Select a different photo from the one already chosen.',
 	'wmu-gallery' => '{{Identical|Gallery}}',
 	'wmu-column' => '{{Identical|Column}}',
@@ -618,9 +621,12 @@ $messages['ca'] = array(
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
 	'wmu-find' => 'Лаха',
+	'wmu-find-btn' => 'Каро',
+	'wmu-insert2' => 'Файл чуйиллар',
 );
 
 /** Czech (česky)
@@ -966,6 +972,14 @@ $messages['diq'] = array(
 	'wmu-column' => 'Estûni',
 	'wmu-gallery-btn1' => 'Ju na dosya deke',
 	'wmu-alignment' => 'Hiza fi',
+);
+
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'wmu-license' => 'Licence',
+	'wmu-licensing' => 'Licencing',
 );
 
 /** Esperanto (Esperanto)
@@ -1527,6 +1541,7 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author Bennylin
+ * @author C5st4wr6ch
  * @author Irwangatot
  * @author Kenrick95
  */
@@ -1566,7 +1581,7 @@ $messages['id'] = array(
 	'wmu-success' => '<h1>Berhasil</h1> Gambar Anda telah disisipkan.',
 	'wmu-success-placeholder' => '<h1>Berhasil</h1>',
 	'wmu-return' => 'Kembali menyunting',
-	'wmu-back' => 'kembali', # Fuzzy
+	'wmu-back' => 'Pilih foto yang lain',
 	'wmu-warn1' => 'Anda perlu menentukan permintaan terlebih dahulu!',
 	'wmu-warn2' => 'Anda perlu memilih berkas terlebih dahulu!',
 	'wmu-warn3' => 'Anda perlu menentukan nama berkas terlebih dahulu!',
@@ -1718,6 +1733,7 @@ $messages['ko'] = array(
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
+ * @author Ghybu
  */
 $messages['ku-latn'] = array(
 	'wmu-upload-image' => 'Wêneyî bar bike',
@@ -1729,6 +1745,7 @@ $messages['ku-latn'] = array(
 	'wmu-find-btn' => 'Bibîne',
 	'wmu-rename' => 'Navê wêneya xwe biguherîne',
 	'wmu-existing' => 'Wêneyên hene bi kar bînê',
+	'wmu-insert' => 'Tevlî bike',
 	'wmu-name' => 'Nav',
 	'wmu-license' => 'Lîsans',
 	'wmu-thumbnail' => 'Thumbnail',
@@ -2370,6 +2387,7 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Giro720
  * @author Hamilton Abreu
+ * @author Luckas
  * @author Malafaya
  */
 $messages['pt'] = array(
@@ -2413,14 +2431,14 @@ $messages['pt'] = array(
 	'wmu-return' => 'Voltar à edição',
 	'wmu-back' => 'Selecionar outra foto',
 	'wmu-warn1' => 'Antes tem de especificar a consulta!',
-	'wmu-warn2' => 'Antes tem de seleccionar o ficheiro!',
+	'wmu-warn2' => 'Antes tem de selecionar o ficheiro!',
 	'wmu-warn3' => 'Antes tem de especificar o nome do ficheiro!',
 	'wmu-imagelink' => '<b>Novo!</b> Adicionar imagens',
 	'wmu-imagebutton' => 'Adicionar imagens',
 	'wmu-license-cc' => 'Sujeito aos termos da licença Creative Commons - Atribuição - Partilha nos Mesmos Termos 3.0',
 	'wmu-bad-extension' => 'Tentou importar um tipo de ficheiro não permitido. Tente novamente, por favor.',
 	'wmu-filetype-missing' => 'Falta a extensão do ficheiro neste upload',
-	'wmu-filetype-incorrect' => 'Este upload tem uma extensão de ficheiro incorrecta',
+	'wmu-filetype-incorrect' => 'Este upload tem uma extensão de ficheiro incorreta',
 	'wmu-hide-license-msg' => 'esconder texto da licença',
 	'wmu-show-license-msg' => 'mostrar texto da licença',
 	'wmu-max-thumb' => 'foi excedido o tamanho máximo para miniaturas; a reverter para o original',
@@ -2513,7 +2531,7 @@ $messages['pt-br'] = array(
 	'wmu-columns' => '$1 {{PLURAL:$1|coluna|colunas}}',
 	'wmu-column' => 'Colunas',
 	'wmu-added-from-plc' => 'Arquivo adicionado via uma reserva de espaço para imagem',
-	'wmu-uploaddisabled' => 'A importação de ficheiros foi impossibilitada nesta wiki',
+	'wmu-uploaddisabled' => 'O carregamento de arquivos está desabilitado nesta wiki',
 	'wmu-gallery-success' => 'Adicionou uma imagem a uma galeria nova. Clique abaixo para adicionar mais imagens ou inserir a galeria',
 	'wmu-gallery-btn1' => 'Adicionar outra imagem',
 	'wmu-gallery-btn2' => 'Inserir galeria no artigo',
@@ -2537,9 +2555,24 @@ $messages['roa-tara'] = array(
 	'wmu-title' => "Careche 'a fote",
 	'wmu-upload' => 'Careche',
 	'wmu-find' => 'Cirche',
+	'wmu-thiswiki' => 'Sta uicchi',
 	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => 'Careche',
 	'wmu-find-btn' => 'Cirche',
+	'wmu-insert' => "'Nzerisce",
+	'wmu-name' => 'Nome',
+	'wmu-license' => 'Licenze',
+	'wmu-licensing' => 'Licenziate da',
+	'wmu-size' => 'Dimenzione',
+	'wmu-thumbnail' => 'Miniature',
+	'wmu-fullsize' => 'Dimenzione complete ($1x$2px)',
+	'wmu-width' => 'Larghezze',
+	'wmu-caption' => "'Ndestazione",
+	'wmu-link' => 'Collegamende',
+	'wmu-optional' => '(opzionale)',
+	'wmu-insert2' => "'Nzerisce 'nu file",
+	'wmu-prev' => 'Le 8 precedende',
+	'wmu-next' => 'Le prossime 8',
 );
 
 /** Russian (русский)
@@ -2749,8 +2782,8 @@ $messages['sv'] = array(
 	'wmu-insert3' => 'Infoga den här bilden',
 	'wmu-recent-inf' => 'Nyligen uppladdade bilder',
 	'wmu-thiswiki2' => 'Bilder på denna wiki ($1 {{PLURAL:$1|resultat|resultat}})',
-	'wmu-success' => '<h1>Succé</h1>Dina bilder har lagts till.',
-	'wmu-success-placeholder' => '<h1>Succé</h1>',
+	'wmu-success' => '<h1>Åtgärden genomfördes</h1>Dina bilder har lagts till.',
+	'wmu-success-placeholder' => '<h1>Åtgärden genomfördes</h1>',
 	'wmu-return' => 'Återgå till redigering',
 	'wmu-back' => 'Välj ett annat foto',
 	'wmu-warn1' => 'Du måste ange en fråga först!',
@@ -2911,6 +2944,62 @@ $messages['tl'] = array(
 $messages['tr'] = array(
 	'wmu-optional' => '(isteğe bağlı)',
 	'wmu-alignment' => 'Hizalama',
+);
+
+/** Tatar (Cyrillic script) (татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'wmu-upload-image' => 'Рәсемнәр йөкләү',
+	'wmu-title' => 'Рәсемне йөкләү',
+	'wmu-upload' => 'Йөкләү',
+	'wmu-notlogged' => 'Санактан рәсемнәр йөкләр өчен системага керегез яки теркәлегез.',
+	'wmu-find' => 'Эзләү',
+	'wmu-thiswiki' => 'Бу вики',
+	'wmu-flickr' => 'Flickr',
+	'wmu-upload-btn' => 'Йөкләү',
+	'wmu-find-btn' => 'Табу',
+	'wmu-flickr-inf' => "Flickr'дан лицензияле ирекле фото табып аны үзегезнең викигә күчерегез.",
+	'wmu-conflict-inf' => '<h1>Кызганыч, ләкин бу исемдә файл бар инде.</h1><b>$1</b> белән нишләргә телисез?',
+	'wmu-rename' => 'Рәсемнең исемен алыштырырга',
+	'wmu-existing' => 'Инде булган рәсемне кулланырга',
+	'wmu-overwrite' => 'Инде булган рәсемне сезнеке белән алмаштырырга',
+	'wmu-insert' => 'Өстәү',
+	'wmu-details-inf' => '<h1>Файл исеме</h1>Файлның исемен күрсәтегез. Исем аша файлның эчтәлеген тасвирларга тырышыгыз.',
+	'wmu-name' => 'Исем',
+	'wmu-license' => 'Лицензия',
+	'wmu-licensing' => 'Лицензиясе',
+	'wmu-details-inf2' => '<h1>Мәкалә көйләнмәләре</h1>Файлның сезнең мәкаләдә күрсәтеләчәк рәвешен сайлагыз.',
+	'wmu-size' => 'Үлчәм',
+	'wmu-thumbnail' => 'Миниатюра',
+	'wmu-fullsize' => 'Тулы үлчәм ($1x$2 пикс.)',
+	'wmu-width' => 'Киңлек',
+	'wmu-layout' => 'Тигезләү',
+	'wmu-caption' => 'Имза',
+	'wmu-link' => 'Сылтама',
+	'wmu-optional' => '(мәҗбүри түгел)',
+	'wmu-insert2' => 'Файлны өстәү',
+	'wmu-prev' => 'Алдагы 8',
+	'wmu-next' => 'Киләсе 8',
+	'wmu-flickr2' => 'Flickr рәсемнәре($1 {{PLURAL:$1|табыш}})',
+	'wmu-insert3' => 'Бу рәсемне өстәргә',
+	'wmu-recent-inf' => 'Күптән түгел йөкләнгән рәсемнәр',
+	'wmu-thiswiki2' => 'Бу вики рәсемнәре ($1 {{PLURAL:$1|табыш}})',
+	'wmu-success' => '<h1>Эш уңды</h1>Сезнең рәсемнәр өстәлде.',
+	'wmu-success-placeholder' => '<h1>Эш уңды</h1>',
+	'wmu-return' => 'Үзгәртүгә кире кайту',
+	'wmu-back' => 'Башка фото сайлагыз',
+	'wmu-warn1' => 'Башта сорауны билгеләргә кирәк!',
+	'wmu-warn2' => 'Башта файлны сайларга кирәк!',
+	'wmu-warn3' => 'Башта файлның исемен күрсәтергә кирәк!',
+	'wmu-imagelink' => '<b>Яңа!</b> Рәсемнәр өстәргә',
+	'wmu-imagebutton' => 'Рәсемнәр өстәү',
+	'wmu-license-cc' => 'Creative Commons Attribution-Share Alike 3.0 шартларында лицензия бирелгән.',
+	'wmu-bad-extension' => 'Сез ярамаган типтагы файлны йөкләмәкче булдыгыз. Зинһар, тагын эшләп карагыз.',
+	'wmu-filetype-missing' => 'Бу йөкләмәнең файл киңәйтелмәсе юк.',
+	'wmu-filetype-incorrect' => 'Бу йөкләмәнең файл киңәйтелмәсе дөрес түгел.',
+	'wmu-hide-license-msg' => 'лицензия текстын күрсәтергә',
+	'wmu-show-license-msg' => 'лицензия текстын яшерергә',
 );
 
 /** Ukrainian (українська)

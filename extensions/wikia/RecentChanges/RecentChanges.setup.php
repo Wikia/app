@@ -10,14 +10,13 @@ $wgExtensionCredits['other'][] = array(
 	'author' => array( 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' )
 );
 
-$dir = dirname(__FILE__) . '/';
-$app = F::app();
+$dir = __DIR__ . '/';
 
 //classes
-$app->registerClass('RecentChangesController', $dir . 'RecentChangesController.class.php');
-$app->registerClass('RecentChangesHooks', $dir . 'RecentChangesHooks.class.php');
-$app->registerClass('RecentChangesFiltersStorage', $dir . 'RecentChangesFiltersStorage.class.php');
+$wgAutoloadClasses['RecentChangesController'] =  $dir . 'RecentChangesController.class.php';
+$wgAutoloadClasses['RecentChangesHooks'] =  $dir . 'RecentChangesHooks.class.php';
+$wgAutoloadClasses['RecentChangesFiltersStorage'] =  $dir . 'RecentChangesFiltersStorage.class.php';
 
 // Hooks
-$app->registerHook('onGetNamespaceCheckbox', 'RecentChangesHooks', 'onGetNamespaceCheckbox');
-$app->registerHook('SpecialRecentChangesQuery', 'RecentChangesHooks', 'onGetRecentChangeQuery');
+$wgHooks['onGetNamespaceCheckbox'][] = 'RecentChangesHooks::onGetNamespaceCheckbox';
+$wgHooks['SpecialRecentChangesQuery'][] = 'RecentChangesHooks::onGetRecentChangeQuery';

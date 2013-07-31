@@ -9,11 +9,11 @@ class ScavengerHuntGetActiveGameTest extends ScavengerHuntTest {
 		$game = $this->getFakeGame();
 		$this->assertNotEmpty( $game );
 
-		$this->assertEquals($fakeRow->game_id, $game->getId());
-		$this->assertEquals($fakeRow->wiki_id, $game->getWikiId());
-		$this->assertEquals($fakeRow->game_name, $game->getName());
-		$this->assertEquals($fakeRow->game_is_enabled, $game->isEnabled());
-		$this->assertEquals(unserialize($fakeRow->game_data), $game->getData());
+		$this->assertEquals($fakeRow->game_id, $game->getId(),'game_id');
+		$this->assertEquals($fakeRow->wiki_id, $game->getWikiId(),'wiki_id');
+		$this->assertEquals($fakeRow->game_name, $game->getName(),'game_name');
+		$this->assertEquals($fakeRow->game_is_enabled, $game->isEnabled(),'game_is_enabled');
+		$this->assertEquals(unserialize($fakeRow->game_data), $game->getData(),'game_data');
 	}
 
 	// getActiveGame
@@ -21,7 +21,7 @@ class ScavengerHuntGetActiveGameTest extends ScavengerHuntTest {
 	public function testGameAlreadyLoaded() {
 
 		// starting conditions
-		$scavengerHunt = F::build('ScavengerHunt');
+		$scavengerHunt = new ScavengerHunt();
 		$oFakeGame = $this->getFakeGame();
 		$scavengerHunt->setGame( $oFakeGame );
 
@@ -46,7 +46,7 @@ class ScavengerHuntGetActiveGameTest extends ScavengerHuntTest {
 	public function testGameNotLoaded( $isUserAnon, $cookieValue ) {
 
 		// starting conditions
-		$scavengerHunt = F::build('ScavengerHunt');
+		$scavengerHunt = new ScavengerHunt();
 		$scavengerHunt->setGame( null );
 
 		$mockedUser = $this->getMock( 'User', array('isAnon', 'getName') );

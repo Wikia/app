@@ -23,7 +23,6 @@ function wfQuickCreate( &$parser ) {
 }
 
 function wfQuickCreateButton( $input, $argv, $parser ) {
-	global $wgRequest, $wgScript;
 
 	$title = Title::makeTitle( NS_SPECIAL, "CreatePage");
 	$link = $title->getFullUrl();

@@ -12,7 +12,7 @@ class NewWikisGraphSpecialPageController extends WikiaSpecialPageController {
 	public function execute( $param ) {
             $this->setHeaders();
 
-            $oOutput = F::build( 'SpecialNewWikisGraphOutput' );
+            $oOutput = (new SpecialNewWikisGraphOutput);
 
             $endDate = new DateTime( date( 'Y-m-d' ) );
             $endDate->sub( new DateInterval( 'P1D' ) );
@@ -28,7 +28,7 @@ class NewWikisGraphSpecialPageController extends WikiaSpecialPageController {
 
             $sReturnChart = $oOutput->getHTML();
 
-            $oTmpl = F::build( 'EasyTemplate', array( dirname( __FILE__ ) . "/templates/" ) ); /** @var $oTmpl EasyTemplate */
+            $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
             $oTmpl->set_vars(
                     array(
@@ -44,7 +44,7 @@ class NewWikisGraphSpecialPageController extends WikiaSpecialPageController {
 	}
 
         private function getReport( $startDate, $endDate, $param ) {
-            $oReport = F::build( 'SponsorshipDashboardReport' );
+            $oReport = (new SponsorshipDashboardReport);
             $oReport->name = wfMsg( 'newwikisgraph-report-title' );
             $oReport->frequency = SponsorshipDashboardDateProvider::SD_FREQUENCY_DAY;
             $oReport->tmpSource = $this->getSource( $startDate, $endDate, $param );
@@ -59,7 +59,7 @@ class NewWikisGraphSpecialPageController extends WikiaSpecialPageController {
             $aAllOptions = array_merge( $this->aAvailableLanguages, $this->aAvailableOtherOptions );
             $param = ( in_array( $param, $aAllOptions ) ? $param : '' );
 
-            $oSource = F::build( 'SpecialNewWikisGraphSourceDatabase', array( 'wikicreations' . $param ) );
+            $oSource = new SpecialNewWikisGraphSourceDatabase( 'wikicreations' . $param );
             $oSource->serieName = wfMsg( 'newwikisgraph-wikis-created' );
             $oSource->setDatabase( wfGetDB( DB_SLAVE, array(), F::app()->wg->externalSharedDB ) );
 
@@ -112,7 +112,7 @@ class NewWikisGraphSpecialPageController extends WikiaSpecialPageController {
                 $startDate->sub( new DateInterval( 'P1M' ) );
             }
 
-            $oOutput = F::build( 'SpecialNewWikisGraphOutput' );
+            $oOutput = (new SpecialNewWikisGraphOutput);
             $oOutput->set( $this->getReport( $startDate, $endDate, $inParam ) );
 
             $mOut = $oOutput->getRaw();

@@ -12,8 +12,16 @@ class StructuredData {
 	 */
 	private $context = null;
 
-	public function __construct( StructuredDataAPIClient $apiClient ) {
-		$this->context = F::build( 'SDContext', array( 'apiClient' => $apiClient ) );
+	public function __construct( StructuredDataAPIClient $apiClient = null) {
+		global $wgStructuredDataConfig;
+		if( is_null($apiClient ) ) {
+			$apiClient = (new StructuredDataAPIClient(
+				$wgStructuredDataConfig['baseUrl'],
+				$wgStructuredDataConfig['apiPath'],
+				$wgStructuredDataConfig['schemaPath']
+			));
+		}
+		$this->context = new SDContext( $apiClient );
 		$this->APIClient = $apiClient;
 	}
 
@@ -60,7 +68,7 @@ class StructuredData {
 			$template = $this->APIClient->getTemplate( $elementType );
 		}
 
-		return F::build( 'SDElement', array( 'template' => $template, 'context' => $this->context, 'data' => null, 'depth' => 0 ), 'newFromTemplate' );
+		return SDElement::newFromTemplate( $template, $this->context, null, 0 );
 	}
 
 	public function createSDElement( $elementType, array $params = array() ) {
@@ -71,7 +79,7 @@ class StructuredData {
 			return $result;
 		}
 		else {
-			return F::build( 'SDElement', array( 'template' => $template, 'context' => $this->context, 'data' => $result ), 'newFromTemplate' );
+			return SDElement::newFromTemplate( $template, $this->context, $result );
 		}
 	}
 
@@ -103,7 +111,7 @@ class StructuredData {
 	private function getSDElement(stdClass $element) {
 		$template = $this->APIClient->getTemplate( $element->type );
 
-		$SDElement = F::build( 'SDElement', array( 'template' => $template, 'context' => $this->context, 'data' => $element ), 'newFromTemplate');
+		$SDElement = SDElement::newFromTemplate( $template, $this->context, $element );
 
 		return $SDElement;
 	}

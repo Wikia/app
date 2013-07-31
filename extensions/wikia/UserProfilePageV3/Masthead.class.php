@@ -711,6 +711,7 @@ class Masthead {
 
 	static public function getUserStatsData( $userName, $useMasterDb = false ) {
 		global $wgLang, $wgCityId, $wgExternalDatawareDB;
+		wfProfileIn( __METHOD__ );
 
 		$result = array( 'editCount' => 0, 'firstDate' => 0 );
 
@@ -735,6 +736,7 @@ class Masthead {
 				if(empty($mastheadDataEditCount) || empty($mastheadDataEditDate)) {
 					$dbr = wfGetDB( $useMasterDb ? DB_MASTER : DB_SLAVE );
 
+					/* @TODO FIXME: respect your DB resources, never count on MASTER */
 					$dbResult = $dbr->select(
 						'revision',
 						array('min(rev_timestamp) AS date, count(*) AS edits'),
@@ -759,6 +761,7 @@ class Masthead {
 			$result['editCount'] = $editCount;
 			$result['firstDate'] = $firstDate;
 		}
+		wfProfileOut( __METHOD__ );
 		return $result;
 	}
 
@@ -776,7 +779,7 @@ class Masthead {
 	 * @param $baseRevId
 	 * @return bool
 	 */
-	public function userMastheadInvalidateCache(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	static public function userMastheadInvalidateCache(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		if (!$user->isAnon()) {
 			if(count($status->errors) == 0) {
 				global $wgMemc;

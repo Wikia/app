@@ -14,11 +14,13 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'contentfeeds-desc' => "Description of extension as listed on [[Special:Version]].
 For an explanation of 'rich information' see [[:w:en:Media richness theory|Wikipedia]].",
 	'contentfeeds-newimages-rss-desc' => 'Outputs information about the source of the feed entry for attribution reasons. $1 is the URL of the page',
+	'contentfeeds-firstfewarticles-tag-title' => '{{Identical|Title}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -228,6 +230,14 @@ $messages['ia'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error: Texto de pagina es requirite',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Judul',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Kesalahan: Judul halaman disyaratkan',
+);
+
 /** Italian (italiano)
  * @author Rippitippi
  */
@@ -390,9 +400,10 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Luckas
  */
 $messages['pt'] = array(
-	'contentfeeds-desc' => 'Fornece informação actualizada através de vários elementos ou "feeds"',
+	'contentfeeds-desc' => 'Fornece informação atualizada através de vários elementos ou "feeds"',
 	'contentfeeds-newimages-rss-title' => 'Feed RSS para {{#Special:NewFiles}}',
 	'contentfeeds-newimages-rss-desc' => 'Feed de $1',
 	'contentfeeds-firstfewarticles-tag-header' => 'Crie as suas primeiras páginas!',
@@ -427,7 +438,11 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'contentfeeds-firstfewarticles-tag-header' => 'Ccreje le prime pàggene tune!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Titole',
+	'contentfeeds-firstfewarticles-tag-next' => 'Prossime',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => "Errore: Jè richieste 'u titole d'a pàgene",
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => "Errore: Jè richieste 'u cuèrpe d'a pàgene",
 );
 
 /** Russian (русский)
@@ -560,4 +575,13 @@ $messages['zh-hans'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => '下一页',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => '错误：需要页面标题',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => '错误：需要页面内容',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Radish10cm
+ */
+$messages['zh-hant'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => '標題',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => '錯誤: 頁面標題是必要的',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => '錯誤: 頁面主體是必需的',
 );

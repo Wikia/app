@@ -153,6 +153,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'wf_city_url' => '{{Identical|Address}}',
+	'wf_city_id' => '{{Identical|ID}}',
 	'wf_city_title' => '{{Identical|Title}}',
 	'wf_city_created' => '{{Identical|Created}}',
 	'wf_city_founding_user' => '{{Identical|Founder}}',
@@ -176,8 +177,10 @@ $messages['qqq'] = array(
 	'wikifactory-public-status-change-default-reason' => 'WikiFactory is a staff tool that allows Wikia to manage per-wiki settings across their network. The "public status" setting determines whether a wiki is available for users or closed and assigned for removal. Staff members usually justify a change of the status of a wiki by filling in the "Reason" field in the form. If no reason is provided, the wikifactory-public-status-change-default-reason is used automatically so it can be deduced where the change had been requested from.',
 	'awc-metrics-nbr-result' => '{{Identical|Result}}',
 	'awc-metrics-close' => '{{Identical|Close}}',
+	'awc-metrics-close-action' => '{{Identical|Close}}',
 	'awc-metrics-active' => '{{Identical|Active}}',
 	'awc-metrics-closed' => '{{Identical|Closed}}',
+	'awc-metrics-removed' => '{{Identical|Removed}}',
 	'awc-metrics-fewer-than' => 'Form text. Explains that the script will look for values fewer than the numeric input data. http://images.wikia.com/mixtestwiki/images/9/90/2013-01-TWN_WikiFactory_Metrics.png',
 	'awc-metrics-edits-label' => 'Label for input box. User puts in a number next to this label to match the number of edits the tool will use as a maximum threshold. For a visual explanation, please see: http://images.wikia.com/mixtestwiki/images/9/90/2013-01-TWN_WikiFactory_Metrics.png',
 	'awc-metrics-pageviews-label' => 'Form label. For a visual explanation: http://images.wikia.com/mixtestwiki/images/9/90/2013-01-TWN_WikiFactory_Metrics.png .
@@ -1096,9 +1099,21 @@ $messages['ca'] = array(
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
+	'closewiki' => 'ДӀачӀагӀа вики',
+	'wf_city_created' => 'Кхоьллина',
+	'wf_city_lang' => 'Мотт',
+	'wikifactory-label-variables' => 'Хийцаме',
+	'wikifactory-label-google' => 'Google гӀирсаш',
+	'wikifactory-label-close' => 'ДӀачӀагӀа',
 	'wikifactory-label-findtags' => 'Лаха къастам',
+	'wikifactory-label-compare' => 'Муха ю хьажа',
+	'awc-metrics-all-languages' => 'Берриге меттанаш',
+	'awc-metrics-close' => 'ДӀачӀагӀа',
+	'awc-metrics-close-action' => 'дӀачӀагӀа',
+	'awc-metrics-close-checked' => 'ДӀачӀагӀа билгал йинарш',
 	'closed-reason' => 'Бахьан:',
 );
 
@@ -4166,7 +4181,7 @@ regist.',
 	'awc-metrics-recordspager' => "A apresentar os registos '''$1''' a '''$2''' de '''$3'''",
 	'closed-wiki' => 'Wiki fechada',
 	'closed-wiki-info' => 'Esta wiki foi fechada',
-	'disabled-wiki-info' => 'Esta wiki foi desactivada',
+	'disabled-wiki-info' => 'Esta wiki foi desativada',
 	'closed-wiki-dump-exists' => 'Por favor, clique em [$1 aqui] se você quiser recuperar o seu conteúdo. <br /> (Se você wiki foi recentemente fechado, fazer exame curto período de tempo para os arquivos a serem gerados)',
 	'closed-wiki-dump-noexists' => 'Esta wiki foi fechada. A cópia do conteúdo em ficheiro estará disponível nas próximas 24 horas. Verifique novamente mais tarde.',
 	'closed-wiki-create-wiki' => 'Criar uma wiki nova',
@@ -4391,6 +4406,8 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'wikifactorypagetitle' => 'Configuratore de Uicchi Factory',
+	'wikifactory' => 'Configuratore de Uicchi Factory',
 	'closewiki' => "Achiude 'a uicchi",
 	'wf_city_url' => 'Indirizze',
 	'wf_city_id' => 'id',
@@ -4401,10 +4418,14 @@ $messages['roa-tara'] = array(
 	'wf_city_public' => 'State',
 	'wf_city_lang' => 'Lènghe',
 	'wf_cc_name' => 'Categorije',
+	'wikifactory_removevariable' => "Live le date de uicchi da 'a cache",
+	'wikifactory_removeconfirm' => "Date de uicchi luate da 'a cache!",
 	'wikifactory-label-info' => "'Mbormazione",
 	'wikifactory-label-variables' => 'Variabbile',
 	'wikifactory-label-variables2' => 'Generale',
 	'wikifactory-label-domains' => 'Dominie',
+	'wikifactory-label-return' => "Tuèrne a l'elenghe",
+	'wikifactory-label-clog' => 'Registre de le cangiaminde',
 	'wikifactory-label-actions' => 'Aziune',
 	'wikifactory-label-google' => 'Struminde de Google',
 	'wikifactory-label-close' => 'Achiude',
@@ -4414,6 +4435,11 @@ $messages['roa-tara'] = array(
 	'wikifactory-label-findtags' => 'FindTag',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'wikifactory-label-compare' => 'Combronde',
+	'right-wikifactory' => "Cange le 'mbostaziune de jndre pe le uicchi",
+	'action-wikifactory' => "cange le 'mbostaziune de jndre pe le uicchi",
+	'wikifactory-domain-edit' => 'cange sta URL',
+	'wikifactory-domain-remove' => "live sta URL da 'a uicchi",
+	'wikifactory-domain-setmain' => "mitte sta URL jndr'à wgServer",
 	'closewiki-nbr-wiki' => '$1 Uicchi',
 	'closed-reason' => 'Mutive:',
 	'newwikisgraph-wikis-created' => 'uicchi ccrejate',

@@ -145,6 +145,13 @@ $messages['ca'] = array(
 	'prefs-rte' => 'Editor de text enriquit',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'prefs-rte' => 'Визуальни йозан тадар (RTE)',
+);
+
 /** Czech (česky)
  * @author Darth Daron
  */
@@ -580,9 +587,9 @@ $messages['pms'] = array(
  */
 $messages['pt'] = array(
 	'rte-desc' => 'Integração do CKeditor no MediaWiki',
-	'rte-no-js-fallback' => 'O editor de texto enriquecido não funciona com o JavaScript desactivado. Active-o nas opções do browser, ou mude as suas [[Special:Preferences|preferências]] para o editor antigo do MediaWiki.',
+	'rte-no-js-fallback' => 'O editor de texto enriquecido não funciona com o JavaScript desativado. Ative-o nas opções do browser, ou mude as suas [[Special:Preferences|preferências]] para o editor antigo do MediaWiki.',
 	'rte-edgecase-info-title' => 'É necessário o modo de código fonte',
-	'rte-edgecase-info' => 'A edição de texto enriquecido foi desactivada porque a página contém código complexo.',
+	'rte-edgecase-info' => 'A edição de texto enriquecido foi desativada porque a página contém código complexo.',
 	'rte-edgecase-comment' => 'comentários HTML',
 	'rte-edgecase-triplecurls' => 'parâmetros de predefinições',
 	'rte-edgecase-nowysiwyg' => 'o comando "sem WYSIWYG"',

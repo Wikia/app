@@ -44,7 +44,7 @@ class ScavengerHunt {
 	 *
 	 * @author Marooned
 	 */
-	public function onBeforePageDisplay( OutputPage $out, $skin ) {
+	static public function onBeforePageDisplay( OutputPage $out, $skin ) {
 		global $wgExtensionsPath;
 
 		wfProfileIn(__METHOD__);
@@ -70,7 +70,7 @@ class ScavengerHunt {
 			if ( empty( $huntId ) ) {
 				return 0;
 			}
-			$games = F::build('ScavengerHuntGames'); /* @var $games ScavengerHuntGames */
+			$games = new ScavengerHuntGames();
 			$this->game = $games->findEnabledById((int)$huntId);
 		}
 		return $this->game;
@@ -91,10 +91,10 @@ class ScavengerHunt {
 	}
 
 	public function markItemAsFound( $articleTitle ){
-		$oTitle = F::build( 'Title', array( $articleTitle ), 'newFromText' );
+		$oTitle = Title::newFromText( $articleTitle );
 		$huntId = $this->getHuntId();
 		if ( $oTitle->exists() && !empty( $huntId ) ){
-			$games = F::build('ScavengerHuntGames'); /* @var $games ScavengerHuntGames */
+			$games = new ScavengerHuntGames();
 			$game = $games->findEnabledById((int)$huntId);
 			if ( empty($game) ){
 				return false;
@@ -186,7 +186,7 @@ class ScavengerHunt {
 			$aArticle['articleTitle'] = $article->getTitle();
 			$aArticle['articleClue'] = $article->getClueText();
 			$aArticle['articleName'] = $article->getArticleName();
-			$aArticle['congrats'] = $article->getCongrats().' '.$this->app->wf->msg( 'scavengerhunt-game-more-to-go' );;
+			$aArticle['congrats'] = $article->getCongrats().' '.wfMsg( 'scavengerhunt-game-more-to-go' );;
 			$aJSData['articles'][] = $aArticle;
 		}
 		$aJSData['closeBox'] = array(
@@ -210,7 +210,7 @@ class ScavengerHunt {
 		$game = $this->getActiveGame();
 
 		if ( $this->isGameCompleated() ){
-			$template = F::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/')); /** @var $template EasyTemplate  */
+			$template = new EasyTemplate(dirname( __FILE__ ) . '/templates/');
 			$template->set_vars( array(
 				'game' => $game
 			));
@@ -237,7 +237,7 @@ class ScavengerHunt {
 		if ( empty( $game ) ){
 			return -1;
 		}
-		$oTitle = F::build( 'Title', array( $articleId ), 'newFromId' );
+		$oTitle = Title::newFromId( $articleId );
 		if ( (!$oTitle instanceof Title) || !$oTitle->exists() ) {
 			return -1;
 		}
@@ -286,10 +286,10 @@ class ScavengerHunt {
 	 *
 	 * @author Marooned
 	 */
-	public function onMakeGlobalVariablesScript( Array &$vars ) {
+	static public function onMakeGlobalVariablesScript( Array &$vars ) {
 		wfProfileIn(__METHOD__);
 
-		$games = F::build( 'ScavengerHuntGames' ); /** @var $games ScavengerHuntGames  */
+		$games = new ScavengerHuntGames();
 
 		$params = $games->getJSParamsForCurrent();
 		if( !empty( $params ) ){
@@ -362,7 +362,7 @@ class ScavengerHunt {
 	}
 
 	public function pushEntry( $name, $email, $answer ){
-		$games = F::build( 'ScavengerHuntGames' );
+		$games = (new ScavengerHuntGames);
 		$game = $this->getActiveGame();
 		if ( !empty( $game ) ) {
 			if ( $this->isGameCompleated() ) {
@@ -374,7 +374,7 @@ class ScavengerHunt {
 					( !empty( $email ) || empty( $reqEmail ) ) &&
 					( !empty( $answer ) || empty( $reqQuestion ) )
 				) {
-					$entry = F::build('EmailsStorage')->newEntry(EmailsStorage::SCAVENGER_HUNT);
+					$entry = (new EmailsStorage)->newEntry(EmailsStorage::SCAVENGER_HUNT);
 					$entry->setPageId($game->getId());
 					$entry->setEmail($email);
 					$entry->setFeedback($answer);
@@ -431,10 +431,10 @@ class ScavengerHunt {
 
 	public function parse( $text ) {
 		if (empty($this->parser)) {
-			$this->parser = F::build('Parser');
+			$this->parser = new Parser();
 			$this->parser->setOutputType(OT_HTML);
-			$this->parserOptions = F::build('ParserOptions');
-			$this->fakeTitle = F::build('Title', array('FakeTitle'));
+			$this->parserOptions = new ParserOptions();
+			$this->fakeTitle = new Title('FakeTitle');
 		}
 		return $this->parser->parse($text, $this->fakeTitle, $this->parserOptions, false)->getText();
 	}
@@ -453,7 +453,7 @@ class ScavengerHunt {
 
 	public function getGoodbyeHtml( ScavengerHuntGame $game ) {
 		// build entry form html
-		$template = F::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/')); /* @var $template EasyTemplate */
+		$template = new EasyTemplate(dirname( __FILE__ ) . '/templates/');
 		$template->set_vars(array(
 			'title' => $game->getGoodbyeTitle(),
 			'text' => $this->parseCached( $game->getGoodbyeText() ),
@@ -468,8 +468,8 @@ class ScavengerHunt {
 		return ( $cityId.'|'.urldecode( $articleName ) );
 	}
 
-	public function onOpenGraphMetaBeforeCustomFields( $articleId, &$titleImage, &$titleDescription) {
-		$games = F::build( 'ScavengerHuntGames' ); /* @var $games ScavengerHuntGames */
+	static public function onOpenGraphMetaBeforeCustomFields( $articleId, &$titleImage, &$titleDescription) {
+		$games = (new ScavengerHuntGames); /* @var $games ScavengerHuntGames */
 		$elements = $games->getOpenGraphMetaElements();
 		if (
 			!empty( $elements ) &&

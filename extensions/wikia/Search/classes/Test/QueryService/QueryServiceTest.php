@@ -17,8 +17,6 @@ class QueryServiceTest extends Search\Test\BaseTest {
 	 * @covers Wikia\Search\QueryService\DependencyContainer::setConfig
 	 * @covers Wikia\Search\QueryService\DependencyContainer::getClient
 	 * @covers Wikia\Search\QueryService\DependencyContainer::setClient
-	 * @covers Wikia\Search\QueryService\DependencyContainer::getResultSetFactory
-	 * @covers Wikia\Search\QueryService\DependencyContainer::setResultSetFactory
 	 */
 	public function testDependencyContainer() {
 		$mockClient = $this->getMockBuilder( '\Solarium_Client' )
@@ -30,7 +28,6 @@ class QueryServiceTest extends Search\Test\BaseTest {
 		$factory = new Search\ResultSet\Factory;
 		$dc = new Search\QueryService\DependencyContainer( array() );
 		$dc->setService( $service )
-		   ->setResultSetFactory( $factory )
 		   ->setConfig( $config )
 		   ->setClient( $mockClient );
 		$this->assertEquals(
@@ -44,10 +41,6 @@ class QueryServiceTest extends Search\Test\BaseTest {
 		$this->assertEquals(
 				$service,
 				$dc->getService()
-		);
-		$this->assertEquals(
-				$factory,
-				$dc->getResultSetFactory()
 		);
 	}
 	

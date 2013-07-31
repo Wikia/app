@@ -6,17 +6,22 @@ $app = F::app();
 $dir = __DIR__ . "/";
 
 // classes
-$app->registerClass( 'GWTException', $dir . 'GWTException.php' );
-$app->registerClass( 'GWTAuthenticationException', $dir . 'GWTAuthenticationException.php' );
-$app->registerClass( 'GWTClient', $dir . 'GWTClient.php' );
-$app->registerClass( 'GWTLocalCache', $dir . 'GWTLocalCache.php' );
-$app->registerClass( 'GWTUser', $dir . 'GWTUser.php' );
-$app->registerClass( 'GWTUserRepository', $dir . 'GWTUserRepository.php' );
-$app->registerClass( 'GWTWiki', $dir . 'GWTWiki.php' );
-$app->registerClass( 'GWTWikiRepository', $dir . 'GWTWikiRepository.php' );
-$app->registerClass( 'WebmasterToolsUtil', $dir . 'WebmasterToolsUtil.php' );
-$app->registerClass( 'GWTService', $dir . 'GWTService.php' );
-$app->registerClass( 'GWTSiteSyncStatus', $dir . 'GWTSiteSyncStatus.php' );
-$app->registerClass( 'IGoogleCredentials', $dir . 'IGoogleCredentials.php' );
-$app->registerClass( 'GWTLogHelper', $dir . 'GWTLogHelper.php' );
+$wgAutoloadClasses['GWTException'] =                $dir . 'GWTException.php';
+$wgAutoloadClasses['GWTAuthenticationException'] =  $dir . 'GWTAuthenticationException.php';
+$wgAutoloadClasses['GWTClient'] =                   $dir . 'GWTClient.php';
+$wgAutoloadClasses['GWTUser'] =                     $dir . 'GWTUser.php';
+$wgAutoloadClasses['GWTUserRepository'] =           $dir . 'GWTUserRepository.php';
+$wgAutoloadClasses['GWTWiki'] =                     $dir . 'GWTWiki.php';
+$wgAutoloadClasses['GWTWikiRepository'] =           $dir . 'GWTWikiRepository.php';
+$wgAutoloadClasses['WebmasterToolsUtil'] =          $dir . 'WebmasterToolsUtil.php';
+$wgAutoloadClasses['GWTService'] =                  $dir . 'GWTService.php';
+$wgAutoloadClasses['GWTSiteSyncStatus'] =           $dir . 'GWTSiteSyncStatus.php';
+$wgAutoloadClasses['IGoogleCredentials'] =          $dir . 'IGoogleCredentials.php';
+$wgAutoloadClasses['GWTLogHelper'] =                $dir . 'GWTLogHelper.php';
 
+$wgAutoloadClasses['WikiPageCountService'] =        $dir . 'WikiPageCount/WikiPageCountService.php';
+$wgAutoloadClasses['WikiPageCountServiceFactory'] = $dir . 'WikiPageCount/WikiPageCountServiceFactory.php';
+$wgAutoloadClasses['WikiPageCountModel'] =          $dir . 'WikiPageCount/WikiPageCountModel.php';
+
+$wgAutoloadClasses['Iterators'] =                   $dir . 'util/Iterators.php';
+$wgAutoloadClasses['GroupingIterator'] =            $dir . 'util/GroupingIterator.php';

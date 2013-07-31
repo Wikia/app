@@ -65,13 +65,14 @@ function wfOasisSetup() {
 	$wgHooks['ArticlePurge'][] = 'ArticleService::onArticlePurge';
 	$wgHooks['ArticleSaveComplete'][] = 'ArticleService::onArticleSaveComplete';
 	$wgHooks['SkinCopyrightFooter'][] = 'CorporateFooterController::onSkinCopyrightFooter';
+	$wgHooks['MakeGlobalVariablesScript'][] = 'OasisController::onMakeGlobalVariablesScript';
 
 	// support "noexternals" URL param
 	global $wgNoExternals, $wgRequest;
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
 	//Oasis-navigation-v2 messages
-	$jsMessages = F::build('JSMessages');
+	$jsMessages = new JSMessages();
 	$jsMessages->registerPackage('Oasis-navigation-v2', array(
 		'oasis-navigation-v2-*'
 	));

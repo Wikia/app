@@ -28,14 +28,12 @@
 					->method('getDailyLikes')
 					->will($this->returnValue(false));
 
-			F::setInstance('QuickStatsController', $mock);
+			$this->mockClass('QuickStatsController', $mock);
 
 			$this->mockGlobalVariable('wgCityId', self::TEST_CITY_ID);
 			$this->mockGlobalVariable('wgMemc', $mock_cache, 0);
 
-			$this->mockGlobalFunction('wfMemcKey', null, 0);
-
-			$this->mockApp();
+			$this->mockGlobalFunction('wfMemcKey', null);
 		}
 
 		protected function setMockDb($fetch_obj) {
@@ -49,13 +47,12 @@
 					->method('fetchObject')
 					->will($this->onConsecutiveCalls($fetch_obj[0], $fetch_obj[1], $fetch_obj[2], $fetch_obj[3], $fetch_obj[4], $fetch_obj[5], $fetch_obj[6], $fetch_obj[7], $fetch_obj[8], $fetch_obj[9], $fetch_obj[10], $fetch_obj[11], $fetch_obj[12], $fetch_obj[13], $fetch_obj[14]));
 
-			$this->mockGlobalFunction('getDB', $mock_db, 3);
+			$this->getGlobalFunctionMock( 'wfGetDB' )
+				->expects( $this->exactly( 3 ) )
+				->method( 'wfGetDB' )
+				->will( $this->returnValue( $mock_db ) );
+
 			$this->mockGlobalVariable('wgStatsDB', '', 2);
-
-		}
-
-		protected function tearDownGetStatsMock() {
-			F::unsetInstance('QuickStatsController');
 		}
 
 		/**
@@ -71,8 +68,6 @@
 
 			$response_data = $response->getVal('totals');
 			$this->assertEquals($expected_total, $response_data);
-
-			$this->tearDownGetStatsMock();
 		}
 
 		public function getStatsDataProvider() {

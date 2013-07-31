@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class VideoFileUploader
+ */
 class VideoFileUploader {
 	
 	protected static $ILLEGAL_TITLE_CHARS = array( '/', ':', '#' );
@@ -17,17 +20,17 @@ class VideoFileUploader {
 	protected $sProvider;
 	protected $oApiWrapper;
 
-	public function setTargetTitle( $sTitle ){			
+	public function setTargetTitle( $sTitle ) {			
 		$this->sTargetTitle = $sTitle;
 	}
-	public function setDescription( $sDescription ){		$this->sDescription = $sDescription; }
-	public function hideAction(){					$this->bUndercover = true; }
-	public function overrideMetadata( $aMetadata = array() ){	$this->aOverrideMetadata = $aMetadata; }
-	public function setExternalUrl ( $sUrl ){			$this->sExternalUrl = $sUrl; }
-	public function setProvider( $sProvider ){			$this->sProvider = $sProvider; }
-	public function setVideoId( $sVideoId ){			$this->sVideoId = $sVideoId; }
+	public function setDescription( $sDescription )          { $this->sDescription = $sDescription; }
+	public function hideAction( )                            { $this->bUndercover = true; }
+	public function overrideMetadata( $aMetadata = array() ) { $this->aOverrideMetadata = $aMetadata; }
+	public function setExternalUrl( $sUrl )                  { $this->sExternalUrl = $sUrl; }
+	public function setProvider( $sProvider )                { $this->sProvider = $sProvider; }
+	public function setVideoId( $sVideoId )                  { $this->sVideoId = $sVideoId; }
 
-	public function setProviderFromId( $iProviderId ){
+	public function setProviderFromId( $iProviderId ) {
 		wfProfileIn( __METHOD__ );
 		$sProvider = ApiWrapperFactory::getInstance()->getProviderNameFromId( $iProviderId );
 		if ( empty( $sProvider ) ) {
@@ -38,7 +41,7 @@ class VideoFileUploader {
 		$this->sProvider = $sProvider;
 	}
 
-	public function  __construct() {
+	public function __construct( ) {
 		$this->sTargetTitle = '';
 		$this->sDescription = '';
 		$this->bUndercover = false;
@@ -49,7 +52,7 @@ class VideoFileUploader {
 		$this->oApiWrapper = null;
 	}
 
-	protected function tmpUpload ( $urlFrom ){
+	protected function tmpUpload( $urlFrom ) {
 		wfProfileIn( __METHOD__ );
 		$data = array(
 			'wpUpload' => 1,
@@ -57,8 +60,8 @@ class VideoFileUploader {
 			'wpUploadFileURL' => $urlFrom
 		);
 
-		$upload = F::build( 'UploadFromUrl' ); /* @var $upload UploadFromUrl */
-		$upload->initializeFromRequest( F::build( 'FauxRequest', array( $data, true ) ) );
+		$upload = (new UploadFromUrl); /* @var $upload UploadFromUrl */
+		$upload->initializeFromRequest( new FauxRequest( $data, true ) );
 		wfProfileOut( __METHOD__ );
 		return $upload;
 	}
@@ -67,7 +70,7 @@ class VideoFileUploader {
 	 * Start the upload.  Note that this method always returns an object, even when it fails.
 	 * Make sure to check that the return value with:
 	 *
-	 *   $statis->isOK()
+	 *   $status->isOK()
 	 *
 	 * @param $oTitle - A title object that will be set if this call is successful
 	 * @return FileRepoStatus|Status - A status object representing the result of this call
@@ -87,7 +90,7 @@ class VideoFileUploader {
 			Wikia::Log(__METHOD__, false, $e->getMessage());
 		}
 
-		if( !$wrapper ) {
+		if ( !$wrapper ) {
 			/* can't upload without proper ApiWrapper */
 			wfProfileOut(__METHOD__);
 			return Status::newFatal("Can't get ApiWrapper");
@@ -100,9 +103,9 @@ class VideoFileUploader {
 			/* prepare temporary file */
 			$upload = $this->tmpUpload( $this->getApiWrapper()->getThumbnailUrl() );
 			$fetchStatus = $upload->fetchFile();
-			if ($fetchStatus->isGood()) {
+			if ( $fetchStatus->isGood() ) {
 				$status = $upload->verifyUpload();
-				if ( isset( $status['status'] ) && ( $status['status'] != UploadBase::EMPTY_FILE ) ){
+				if ( isset( $status['status'] ) && ( $status['status'] != UploadBase::EMPTY_FILE ) ) {
 					break;
 				}
 			}
@@ -114,7 +117,7 @@ class VideoFileUploader {
 				/* prepare temporary file with default thumbnail */
 				$upload = $this->tmpUpload( LegacyVideoApiWrapper::$THUMBNAIL_URL );
 				$fetchStatus = $upload->fetchFile();
-				if ($fetchStatus->isGood()) {
+				if ( $fetchStatus->isGood() ) {
 					break;
 				}
 			}
@@ -125,7 +128,7 @@ class VideoFileUploader {
 			}
 
 			$status = $upload->verifyUpload();
-			if ( isset( $status['status'] ) && ( $status['status'] == UploadBase::EMPTY_FILE ) ){
+			if ( isset( $status['status'] ) && ( $status['status'] == UploadBase::EMPTY_FILE ) ) {
 				wfProfileOut(__METHOD__);
 				return Status::newFatal('');
 			};
@@ -135,7 +138,7 @@ class VideoFileUploader {
 
 		/* create a reference to article that will contain uploaded file */
 		$titleText =  $this->getDestinationTitle();
-		if( !($this->getApiWrapper()->isIngestion() ) ) {
+		if ( !($this->getApiWrapper()->isIngestion() ) ) {
 			// only sanitize name for external uploads
 			// video ingestion handles sanitization by itself
 			$titleText = self::sanitizeTitle( $titleText );
@@ -149,25 +152,23 @@ class VideoFileUploader {
 			$article = Article::newFromID( $oTitle->getArticleID() );
 			$content = $article->getContent();
 			$newcontent = $this->getDescription();
-			if( $content != $newcontent ) {
+			if ( $content != $newcontent ) {
 				$article->doEdit( $newcontent, 'update' );
 			}
 		}
 
-		$file = F::build(
-			!empty( $this->bUndercover ) ? 'WikiaNoArticleLocalFile' : 'WikiaLocalFile',
-			array(
+		$class = !empty( $this->bUndercover ) ? 'WikiaNoArticleLocalFile' : 'WikiaLocalFile';
+		$file = new $class(
 				$oTitle,
 				RepoGroup::singleton()->getLocalRepo()
-			)
-		); /* @var $file WikiaLocalFile */
+		);
 
 		/* override thumbnail metadata with video metadata */
 		$file->forceMime( $this->getApiWrapper()->getMimeType() );
 		$file->setVideoId( $this->getVideoId() );
 
 		/* ingestion video won't be able to load anything so we need to spoon feed it the correct data */
-		if( $this->getApiWrapper()->isIngestion() ) {
+		if ( $this->getApiWrapper()->isIngestion() ) {
 			$meta = $this->getApiWrapper()->getNonemptyMetadata();
 			$file->forceMetadata( serialize($meta) );
 		}
@@ -186,7 +187,7 @@ class VideoFileUploader {
 		return $result;
 	}
 
-	protected function adjustThumbnailToVideoRatio( $upload ){
+	protected function adjustThumbnailToVideoRatio( $upload ) {
 
 		wfProfileIn( __METHOD__ );
 		
@@ -198,7 +199,7 @@ class VideoFileUploader {
 		$finalWidth = $props[0];
 		$finalHeight = $finalWidth / $this->getApiWrapper()->getAspectRatio();
 		
-		if ($orgHeight == $finalHeight) {
+		if ( $orgHeight == $finalHeight ) {
 			// no need to resize, we're lucky :)
 			wfProfileOut( __METHOD__ );
 			return;
@@ -222,14 +223,14 @@ class VideoFileUploader {
 		
 	}
 
-	protected function getApiWrapper(){
+	protected function getApiWrapper( ) {
 		wfProfileIn( __METHOD__ );
-		if( !empty( $this->oApiWrapper ) ) {
+		if ( !empty( $this->oApiWrapper ) ) {
 			wfProfileOut( __METHOD__ );
 			return $this->oApiWrapper;
 		}
 
-		if( !empty( $this->sExternalUrl ) ){
+		if ( !empty( $this->sExternalUrl ) ) {
 			$apiWF = ApiWrapperFactory::getInstance();
 			$this->oApiWrapper = $apiWF->getApiWrapper( $this->sExternalUrl );
 
@@ -247,19 +248,17 @@ class VideoFileUploader {
 				$apiWrapperPrefix = $this->sProvider;
 			}
 
-			$this->oApiWrapper = F::build(
-				ucfirst( $apiWrapperPrefix ) . 'ApiWrapper',
-				array(
+			$class = ucfirst( $apiWrapperPrefix ) . 'ApiWrapper';
+			$this->oApiWrapper = new $class(
 					$this->sVideoId,
 					$this->aOverrideMetadata
-				)
 			);
 		}
 		wfProfileOut( __METHOD__ );
 		return $this->oApiWrapper;
 	}
 
-	protected function getDestinationTitle(){
+	protected function getDestinationTitle( ) {
 
 		if ( empty( $this->sTargetTitle ) ) {
 			$this->sTargetTitle = $this->getApiWrapper()->getTitle();
@@ -268,11 +267,11 @@ class VideoFileUploader {
 		return $this->sTargetTitle;
 	}
 
-	protected function getDescription(){
+	protected function getDescription( ) {
 
 		wfProfileIn( __METHOD__ );
 		if ( empty( $this->sDescription ) ) {
-			$headerText = F::App()->wf->Message( 'videohandler-description' );
+			$headerText = wfMessage( 'videohandler-description' );
 			$this->sDescription = "\n== $headerText ==\n" .
 								  $this->getApiWrapper()->getDescription() . "\n" .
 								  $this->getCategoryVideosWikitext();
@@ -287,12 +286,12 @@ class VideoFileUploader {
 	 * wikis: [[Category:Videos]]. i18n-compatible
 	 * @return string
 	 */
-	public function getCategoryVideosWikitext() {
+	public function getCategoryVideosWikitext( ) {
 		$cat = F::app()->wg->ContLang->getFormattedNsText( NS_CATEGORY );
-		return '[[' . $cat . ':' . wfMsgForContent( 'videohandler-category' ) . ']]';		
+		return '[[' . $cat . ':' . wfMessage( 'videohandler-category' )->inContentLanguage()->text() . ']]';
 	}
 	
-	public function getVideoId(){
+	public function getVideoId( ) {
 		wfProfileIn( __METHOD__ );
 		if ( empty( $this->sVideoId ) ) {
 			$this->sVideoId = $this->getApiWrapper()->getVideoId();
@@ -301,11 +300,11 @@ class VideoFileUploader {
 		return $this->sVideoId;
 	}
 
-	/*
+	/**
 	 * Generates unique Title for new video
-	 * the function checks if given title exists
-	 * and if so, it's adding a postfix
+	 * The function checks if given title exists and if so, it's adding a postfix
 	 * @param string $title
+	 * @param int $level
 	 * @return Title $oTitle
 	 */
 	public function getUniqueTitle( $title, $level=0 ) {
@@ -349,14 +348,14 @@ class VideoFileUploader {
 	 * @return FileRepoStatus On success, the value member contains the
 	 *     archive name, or an empty string if it was a new file. 
 	 */
-	public static function uploadVideo( $provider, $videoId, &$title, $description=null, $undercover=false, $overrideMetadata=array()) {
+	public static function uploadVideo( $provider, $videoId, &$title, $description=null, $undercover=false, $overrideMetadata=array() ) {
 
 		wfProfileIn( __METHOD__ );
 		$oUploader = new self();
 		$oUploader->setProvider( $provider );
 		$oUploader->setVideoId( $videoId );
 		$oUploader->setDescription( $description );
-		if( !empty( $undercover ) ) $oUploader->hideAction();
+		if ( !empty( $undercover ) ) $oUploader->hideAction();
 		$oUploader->overrideMetadata( $overrideMetadata );
 
 		$r = $oUploader->upload( $title );
@@ -366,10 +365,12 @@ class VideoFileUploader {
 	}
 
 	/**
-	 * Translate URL to Title object
-	 * can transparently upload new video if it doesn't exist
-	 * @param $requestedTitle if new Video will be created you can optionally request
+	 * Translate URL to Title object.  Can transparently upload new video if it doesn't exist
+	 * @param string $url
+	 * @param string $sTitle - if $requestedTitle new Video will be created you can optionally request
 	 *  it's title (otherwise Video name from provider is used)
+	 * @param string $sDescription
+	 * @return null|Title
 	 */
 	public static function URLtoTitle( $url, $sTitle = '', $sDescription = '' ) {
 
@@ -405,7 +406,7 @@ class VideoFileUploader {
 
 		wfProfileIn( __METHOD__ );
 		
-		foreach (self::$ILLEGAL_TITLE_CHARS as $illegalChar) {
+		foreach ( self::$ILLEGAL_TITLE_CHARS as $illegalChar ) {
 			$titleText = str_replace( $illegalChar, $replaceChar, $titleText );
 		}
 		
@@ -430,8 +431,8 @@ class VideoFileUploader {
 	}
 	
 	public static function hasForbiddenCharacters( $text ) {
-		foreach (self::$ILLEGAL_TITLE_CHARS as $illegalChar) {
-			if (strpos($text, $illegalChar) !== FALSE) {
+		foreach ( self::$ILLEGAL_TITLE_CHARS as $illegalChar ) {
+			if ( strpos($text, $illegalChar) !== FALSE ) {
 				return true;
 			}
 		}

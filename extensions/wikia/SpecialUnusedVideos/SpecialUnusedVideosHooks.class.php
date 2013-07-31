@@ -11,7 +11,7 @@ class SpecialUnusedVideosHooks {
 	 * @param array $wgQueryPages
 	 * @return true
 	 */
-	function registerUnusedVideos( &$wgQueryPages ) {
+	public static function registerUnusedVideos( &$wgQueryPages ) {
 		$wgQueryPages[] = array( 'UnusedVideos', 'UnusedVideos' );
 		return true;
 	}

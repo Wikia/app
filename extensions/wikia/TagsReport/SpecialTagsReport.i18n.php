@@ -13,18 +13,23 @@ $messages['en'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|page|pages}})',
 	'tagsreportpagesfound' => 'Found <strong>$1</strong> {{PLURAL:$1|page|pages}}, which contain special tag (DPL, YouTube, etc.)',
 	'tagsreportgenerated' => 'Generated on $1 at $2',
+	'tagsreportpageremoved' => 'Page #$1 has been removed'
 );
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author LWChris
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
 	'tagsreportgo' => '{{Identical|Show}}',
+	'tagsreportmainnspace' => '{{Identical|Main}}',
 	'tagsreportgenerated' => 'Parameters:
 * $1 is a date.
 * $2 is a time.',
+	'tagsreportpageremoved' => 'Shown when page can not be listed because it has been removed.
+* $1 is page id',
 );
 
 /** Afrikaans (Afrikaans)
@@ -124,6 +129,13 @@ $messages['ca'] = array(
 	'tagsreportgenerated' => 'Generat el $1 a les $2',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'tagsreportnoresults' => 'ХӀума ца карийна',
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  */
@@ -142,6 +154,7 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author Metalhead64
  */
 $messages['de'] = array(
 	'tagsreport' => 'Verwendung von Tags',
@@ -154,6 +167,7 @@ $messages['de'] = array(
 	'tagsreportpages' => '(<strong>$1</strong>  {{PLURAL:$1|Seite|Seiten}})',
 	'tagsreportpagesfound' => '<strong>$1</strong> {{PLURAL:$1|Seite|Seiten}} gefunden, die einen besonderen Tag enthalten (DPL, YouTube, usw.)',
 	'tagsreportgenerated' => 'Erstellt am $1 um $2',
+	'tagsreportpageremoved' => 'Die Seite #$1 wurde entfernt',
 );
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
@@ -209,6 +223,7 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author IAlex
  */
 $messages['fr'] = array(
@@ -222,6 +237,7 @@ $messages['fr'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|page|pages}})',
 	'tagsreportpagesfound' => 'Trouvé <strong>$1</strong> {{PLURAL:$1|page|pages}}, qui {{PLURAL:$1|contient|contiennent}} une balise spéciale (dpl, youtube, ...)',
 	'tagsreportgenerated' => 'Généré le $1 à $2',
+	'tagsreportpageremoved' => 'La page #$1 a été supprimée',
 );
 
 /** Galician (galego)
@@ -498,13 +514,14 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Giro720
  * @author Hamilton Abreu
+ * @author Luckas
  */
 $messages['pt'] = array(
 	'tagsreport' => "Relatório de elementos ''(tags)''",
 	'tagsreporttitle' => "Relatório de elementos ''(tags)''",
 	'tagsreportselecttag' => 'Seleccione o elemento:',
 	'tagsreportgo' => 'Apresentar',
-	'tagsreportnotspecify' => 'Ainda não seleccionou nenhum elemento especial',
+	'tagsreportnotspecify' => 'Ainda não selecionou nenhum elemento especial',
 	'tagsreportnoresults' => 'Não foi encontrado nenhum resultado',
 	'tagsreportmainnspace' => 'Principal',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|página|páginas}})',

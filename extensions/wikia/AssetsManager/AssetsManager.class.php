@@ -36,7 +36,7 @@ class AssetsManager {
 	 */
 	private function loadConfig() {
 		if(empty($this->mAssetsConfig)) {
-			$this->mAssetsConfig = F::build( 'AssetsConfig' );
+			$this->mAssetsConfig = (new AssetsConfig);
 		}
 	}
 
@@ -587,7 +587,7 @@ class AssetsManager {
 	 * @throws WikiaException in case of empty request
 	 *
 	 * @example
-	 * 	F::build( 'AssetsManager', array(), 'getInstance' )->getMultiTypePackageURL( array (
+	 * 	AssetsManager::getInstance()->getMultiTypePackageURL( array (
 	 *		'messages' => 'EditPageLayout',
 	 *		'scripts' => 'oasis_jquery,yui',
 	 *		'styles' => 'path/to/style/file',
@@ -607,23 +607,23 @@ class AssetsManager {
 		wfProfileIn( __METHOD__ );
 
 		global $wgServer, $wgStyleVersion;
-		$request = array();
+		$request = [];
 
 		//WARNING: the following code  MUST mirror the order of properties as in AssetsManager.js!!!
 		if ( !empty( $options['styles'] ) ) {
-			$request['styles'] = $options['styles'];
+			$request['styles'] = is_array($options['styles']) ? join(',', $options['styles']) : $options['styles'];
 		}
 
 		if ( !empty( $options['scripts'] ) ) {
-			$request['scripts'] = $options['scripts'];
+			$request['scripts'] = is_array($options['scripts']) ? join(',', $options['scripts']) : $options['scripts'];
 		}
 
 		if ( !empty( $options['messages'] ) ) {
-			$request['messages'] = $options['messages'];
+			$request['messages'] = is_array($options['messages']) ? join(',', $options['messages']) : $options['messages'];
 		}
 
 		if ( !empty( $options['mustache'] ) ) {
-			$request['mustache'] = $options['mustache'];
+			$request['mustache'] = is_array($options['mustache']) ? join(',', $options['mustache']) : $options['mustache'];
 		}
 
 		if ( !empty( $options['templates'] ) ) {

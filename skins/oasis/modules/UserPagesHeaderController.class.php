@@ -14,6 +14,9 @@ class UserPagesHeaderController extends WikiaController {
 		$this->content_actions = $this->app->getSkinTemplateObj()->data['content_actions'];
 		$this->isUserProfilePageExt = false;
 		$this->actionMenu = array();
+		$this->likes = null;
+		$this->comments = null;
+		$this->editTimestamp = null;
 
 		$this->fbAccessRequestURL = '';
 	}
@@ -125,7 +128,7 @@ class UserPagesHeaderController extends WikiaController {
 					);
 		}
 
-		$this->wf->RunHooks( 'UserPagesHeaderModuleAfterGetTabs', array(&$tabs, $namespace, $userName) );
+		wfRunHooks( 'UserPagesHeaderModuleAfterGetTabs', array(&$tabs, $namespace, $userName) );
 
 		wfProfileOut(__METHOD__);
 		return $tabs;
@@ -287,7 +290,7 @@ class UserPagesHeaderController extends WikiaController {
 	 * @param bool $arg Users has granted access (true or false)*
 	 */
 	public function executeFacebookConnect($arg) {
-		global $wgRequest, $wgCityId, $wgFacebookSyncAppID, $wgFacebookSyncAppSecret, $IP, $wgTitle;
+		global $wgRequest, $wgFacebookSyncAppID, $wgFacebookSyncAppSecret, $IP, $wgTitle, $wgSitename;
 		wfProfileIn(__METHOD__);
 
 		if ($arg['fbAccess'] == true) {
@@ -316,9 +319,7 @@ class UserPagesHeaderController extends WikiaController {
 			$this->fbUserInterests = $interests;
 			$this->fbAccess = true;
 
-			$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wgCityId );
-			$this->fbUserNameWiki = $this->getUserURL() . "|Wiki:'" .$wikiName ."'";
-
+			$this->fbUserNameWiki = $this->getUserURL() . "|Wiki:'" .$wgSitename ."'";
 		}
 		else {
 			// error message - no access granted
@@ -436,7 +437,7 @@ class UserPagesHeaderController extends WikiaController {
 			$this->userBlogPage = AvatarService::getUrl( $this->userName, NS_BLOG_ARTICLE );
 
 			// user blog page message
-			$this->userBlogPageMessage = $this->wf->Message( 'user-blog-url-link', $this->userName )->inContentLanguage()->parse();
+			$this->userBlogPageMessage = wfMessage( 'user-blog-url-link', $this->userName )->inContentLanguage()->parse();
 		}
 		if ( !empty( $this->wg->EnableGoogleAuthorInfo )
 			&& !empty( $this->wg->GoogleAuthorLinks )

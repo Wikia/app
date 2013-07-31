@@ -3,17 +3,10 @@
 
 #wkFtr {
 	//the height will be manipulated later by ads.js
-	height: 157px;
+	min-height: 157px;
 	@include box-shadow(inset 0 30px 20px -20px rgba(0,0,0,.4));
 	text-align: center;
 	color: $footerTextColor;
-
-	//when ads are loaded and "floating" at the bottom
-	//then make sure there's enough space to host them
-	//without getting the adslot overlaying the links
-	&.ads {
-		height: 210px;
-	}
 
 	ul {
 		margin: 10px;

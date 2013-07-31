@@ -80,22 +80,19 @@ class WikiaApp {
 	public function __construct(WikiaGlobalRegistry $globalRegistry = null, WikiaLocalRegistry $localRegistry = null, WikiaHookDispatcher $hookDispatcher = null, WikiaFunctionWrapper $functionWrapper = null) {
 
 		if(!is_object($globalRegistry)) {
-			F::setInstance('WikiaGlobalRegistry', new WikiaGlobalRegistry());
-			$globalRegistry = F::build( 'WikiaGlobalRegistry' );
+			$globalRegistry = (new WikiaGlobalRegistry);
 		}
 
 		if(!is_object($localRegistry)) {
-			F::setInstance('WikiaLocalRegistry', new WikiaLocalRegistry());
-			$localRegistry = F::build( 'WikiaLocalRegistry' );
+			$localRegistry = (new WikiaLocalRegistry);
 		}
 
 		if(!is_object($hookDispatcher)) {
-			F::setInstance('WikiaHookDispatcher', new WikiaHookDispatcher());
-			$hookDispatcher = F::build( 'WikiaHookDispatcher' );
+			$hookDispatcher = (new WikiaHookDispatcher);
 		}
 
 		if(!is_object($functionWrapper)) {
-			$functionWrapper = F::build( 'WikiaFunctionWrapper' );
+			$functionWrapper = (new WikiaFunctionWrapper);
 		}
 
 		$this->localRegistry = $localRegistry;
@@ -341,7 +338,7 @@ class WikiaApp {
 	 */
 	public function getDispatcher() {
 		if( $this->dispatcher == null ) {
-			$this->dispatcher = F::build( 'WikiaDispatcher' );
+			$this->dispatcher = (new WikiaDispatcher);
 		}
 		return $this->dispatcher;
 	}
@@ -377,6 +374,7 @@ class WikiaApp {
 	 * @param string $className
 	 * @param string $methodName
 	 * @param string $exists - Controler will be only executed if wgTitle exists
+	 * @deprecated
 	 */
 
 	public function registerNamespaceControler( $namespace, $className, $methodName, $exists ) {
@@ -396,6 +394,7 @@ class WikiaApp {
 	 *
 	 * @param string $className The name of the class contained in the file
 	 * @param string $path The path to the file
+	 * @deprecated
 	 */
 	public function registerApiController( $className, $path ) {
 		//register class for autoloading
@@ -432,6 +431,7 @@ class WikiaApp {
 	 * register class
 	 * @param mixed $className the name of the class or a list of classes contained in the same file passed as an array
 	 * @param string $filePath
+	 * @deprecated
 	 */
 	public function registerClass($className, $filePath) {
 		//checking if $className is an array should be faster than creating a 1 element array and then use the same foreach loop
@@ -454,20 +454,26 @@ class WikiaApp {
 	 * $routing contains an array of methods => conditions
 	 * This is used to invoke a different controller method depending on skin or global variable true/false
 	 * The dispatcher can also invoke a before/after method passing the same request/response object
+	 * You can also use a condition 'notSkin' - in this case the call will be redirected if the current skin is not listed
 	 *
 	 * F::app()->registerController("FooController", "/path", array(
 	 * "performActionA" => array(
 	 *		"global" => "wgEnableNewFoo",
-	 *		"skin"=>"mobile"
+	 *		"skin" => array( "mobile" )
 	 *	),
 	 *	"performActionB" => array(
-	 *		"skin" => "oasis",
+	 *		"skin" => array( "oasis" ),
 	 *		"before" => "calledBeforeActionB",
 	 *		"after" => "calledAfterActionB"
+	 *	),
+	 *	"performActionC" => array(
+	 *		"notSkin" => array( "oasis" ),
+	 *		"method" => "notOasis"
 	 *	),
 	 *	// default is "any skin"
 	 *
 	 *  $options is left unused for now, with the potential for future features (async controllers, memcache pre-fetching)
+	 * @deprecated
 	 */
 
 	public function registerController($className, $filePath, $routing = null, $options = null) {
@@ -481,6 +487,7 @@ class WikiaApp {
 	/**
 	 * register extension init function
 	 * @param string $functionName
+	 * @deprecated
 	 */
 	public function registerExtensionFunction( $functionName ) {
 		$this->wg->append( 'wgExtensionFunctions', $functionName );
@@ -490,6 +497,7 @@ class WikiaApp {
 	 * register extension message file
 	 * @param string $name
 	 * @param string $filePath
+	 * @deprecated
 	 */
 	public function registerExtensionMessageFile( $name, $filePath ) {
 		$this->wg->set( 'wgExtensionMessagesFiles', $filePath, $name );
@@ -499,6 +507,7 @@ class WikiaApp {
 	 * register extension alias file
 	 * @param string $name
 	 * @param string $filePath
+	 * @deprecated
 	 */
 	public function registerExtensionAliasFile( $name, $filePath ) {
 		$this->wg->set( 'wgExtensionAliasesFiles', $filePath, $name );
@@ -509,6 +518,7 @@ class WikiaApp {
 	 * @param string $name special page name
 	 * @param string $className class name
 	 * @param string $group special page group
+	 * @deprecated
 	 */
 	public function registerSpecialPage( $name, $className, $group = null ) {
 		$this->wg->set( 'wgSpecialPages', $className, $name );
@@ -531,6 +541,7 @@ class WikiaApp {
 	 * @param string $globalVarName variable name
 	 * @param mixed $value value
 	 * @param string $key key (optional)
+	 * @deprecated
 	 */
 	public function setGlobal( $globalVarName, $value, $key = null ) {
 		return $this->wg->set( $globalVarName, $value, $key );
@@ -544,6 +555,7 @@ class WikiaApp {
 	 *
 	 * @params list of global's names, comma separated
 	 * @return array
+	 * @deprecated
 	 */
 	public function getGlobals() {
 		$globals = array();
@@ -583,7 +595,7 @@ class WikiaApp {
 			$params = array_merge( $params, $_POST, $_GET );
 		}
 
-		$request = F::build('WikiaRequest', array($params) );
+		$request = new WikiaRequest($params);
 
 		$request->setInternal( $internal );
 
@@ -600,7 +612,7 @@ class WikiaApp {
 	public function runFunction() {
 		$funcArgs = func_get_args();
 		$funcName = array_shift( $funcArgs );
-		return $this->wf->run( $funcName, $funcArgs );
+		return call_user_func_array( $funcName, $funcArgs );
 	}
 
 	/**
@@ -621,7 +633,7 @@ class WikiaApp {
 	 * @return WikiaView
 	 */
 	public function getView( $controllerName, $method, Array $params = array() ) {
-		return F::build( 'WikiaView', array( $controllerName, $method, $params ), 'newFromControllerAndMethodName' );
+		return WikiaView::newFromControllerAndMethodName( $controllerName, $method, $params );
 	}
 
 	/**
@@ -710,7 +722,7 @@ class WikiaApp {
 			/**
 			 * @var $factory LBFactory
 			 */
-			$factory = $this->wf->GetLBFactory();
+			$factory = wfGetLBFactory();
 			$factory->commitMasterChanges();  // commits only if writes were done on connection
 		}
 	}

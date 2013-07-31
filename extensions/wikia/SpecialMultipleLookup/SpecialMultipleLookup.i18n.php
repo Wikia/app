@@ -47,6 +47,8 @@ $messages['qqq'] = array(
 	'multilookupnext' => '{{Identical|Next}}',
 	'multilookupprevious' => '{{Identical|Previous}}',
 	'multilookupwiki' => '{{Identical|Wiki}}',
+	'multilookupwikiurl' => '{{Identical|URL}}',
+	'multilookupwikititle' => '{{Identical|Title}}',
 	'right-multilookup' => '{{doc-right|multilookup|ns=Wikia}}',
 	'action-multilookup' => '{{doc-action|multilookup}}',
 );
@@ -197,9 +199,12 @@ $messages['ca'] = array(
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
+	'multilookupnoresultfound' => 'ХӀума ца карийна',
 	'multilookuplink' => 'Къинхьегаме хьажориг',
+	'multilookupwikititle' => 'Корта',
 );
 
 /** Czech (česky)

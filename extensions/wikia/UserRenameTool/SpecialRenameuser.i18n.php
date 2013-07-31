@@ -42,6 +42,7 @@ Please go back and try again.',
 	'userrenametool-error-extension-abort' => 'An extension prevented the rename process.',
 	'userrenametool-error-cannot-rename-account' => 'Renaming the user account on the shared global database failed.',
 	'userrenametool-error-cannot-create-block' => 'Creation of Phalanx block failed.',
+	'userrenametool-error-cannot-rename-unexpected' => 'Unexpected error occurred, check logs or try again.',
 	'userrenametool-warn-repeat' => 'Attention! The user "<nowiki>$1</nowiki>" has already been renamed to "<nowiki>$2</nowiki>".
 Continue processing only if you need to update some missing information.',
 	'userrenametool-warn-table-missing' => 'Table "<nowiki>$2</nowiki>" does not exist in database "<nowiki>$1</nowiki>."',
@@ -80,6 +81,7 @@ Reason: $2',
 	'userrenametool-move-log' => 'Automatically moved page while renaming the user "[[User:$1|$1]]" to "[[User:$2|$2]]"',
 
 	'right-renameuser' => 'Rename users',
+	'action-renameuser' => 'rename users',
 );
 
 /** Message documentation (Message documentation)
@@ -91,18 +93,23 @@ Reason: $2',
  * @author Тест
  */
 $messages['qqq'] = array(
+	'renameuser' => '{{Identical|Rename user}}',
 	'userrenametool-desc' => 'Short description of the Renameuser extension, shown on [[Special:Version]]. Do not translate or change links.',
 	'userrenametool-reserve' => 'Option to block the old username (after it has been renamed) from being used again.',
 	'userrenametool-warnings' => '{{Identical|Warning}}',
 	'userrenametool-submit' => '{{Identical|Submit}}',
 	'userrenametool-error-cannot-create-block' => 'When this user rename tool is running, a block is supposed to be put in place to prevent the user from being able to edit to prevent data corruption. This message appears as a warning that the block was not able to be added automatically and that the user will need to be blocked manually.',
+	'userrenametool-error-cannot-rename-unexpected' => 'Process failed on some point, detailed info with path to file and number of line can be found in logs',
 	'userrenametool-info-wiki-finished' => '',
 	'userrenametool-confirm-yes' => '{{Identical|Yes}}',
 	'userrenametool-confirm-no' => '{{Identical|No}}',
 	'userrenametool-logentry' => 'Used in [[Special:Log/renameuser]].
 * Parameter $1 is the original username
 * Parameter $2 is the new username',
-	'right-renameuser' => '{{doc-right}}',
+	'right-renameuser' => '{{doc-right|renameuser}}
+{{Identical|Rename user}}',
+	'action-renameuser' => '{{doc-action|renameuser}}
+{{Identical|Rename user}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -717,6 +724,7 @@ Torneu enrere i torneu-ho a intentar.",
 	'userrenametool-error-extension-abort' => 'Una extensió va impedir el procés de canvi de nom.',
 	'userrenametool-error-cannot-rename-account' => "El canvi de nom d'usuari en la base de dades global compartida ha fallat.",
 	'userrenametool-error-cannot-create-block' => "La creació d'un filtre de bloqueig en Phalanx ha fallat.",
+	'userrenametool-error-cannot-rename-unexpected' => "S'ha produït un error inesperat, comprova els registres o prova un altre cop.",
 	'userrenametool-warn-repeat' => 'Atenció! L\'usuari "<nowiki>$1</nowiki>" ja ha sigut reanomenat a "<nowiki>$2</nowiki>".
 Continua amb el procés sol si necessites actualitzar alguna informació que falta.',
 	'userrenametool-warn-table-missing' => 'La taula "<nowiki>$2</nowiki>" no existeix en la base de dades "<nowiki>$1</nowiki>."',
@@ -749,6 +757,7 @@ Seràs notificat per correu electrònic quan s'hagi completat.",
 	'userrenametool-log' => '{{PLURAL:$1|Una contribució|$1 contribucions}}. Motiu: $2',
 	'userrenametool-move-log' => "S'ha reanomenat automàticament la pàgina mentre es reanomenava l'usuari «[[User:$1|$1]]» com «[[User:$2|$2]]»",
 	'right-renameuser' => 'Reanomenar usuaris',
+	'action-renameuser' => 'reanomenar usuaris',
 );
 
 /** Chechen (нохчийн)
@@ -756,7 +765,8 @@ Seràs notificat per correu electrònic quan s'hagi completat.",
  * @author Умар
  */
 $messages['ce'] = array(
-	'renameuser' => 'Декъашхочуьна цlе хийца',
+	'renameuser' => 'Декъашхочун цӀе хийца',
+	'userrenametool-submit' => 'Кхочушдé',
 	'userrenametool-page-exists' => 'Агӏо $1 йолуш ю цундела и ша юху дӏаязъян йиш яц.',
 );
 
@@ -972,7 +982,7 @@ Siehe [[Special:Stafflog|Mitarbeiterlog]] für Logs.',
 	'userrenametool-error-extension-abort' => 'Eine Erweiterung verhinderte den Umbenennungsprozess.',
 	'userrenametool-error-cannot-rename-account' => 'Die Umbenennung des Benutzerkontos in der gemeinsamen globalen Datenbank ist fehlgeschlagen.',
 	'userrenametool-error-cannot-create-block' => 'Fehler bei der Erstellung des Phalanx-Blocks',
-	'userrenametool-warn-repeat' => 'Achtung! Der Benutzer "<nowiki> $1 </nowiki>" wurde bereits umbenannt in "<nowiki> $2 </nowiki>". 
+	'userrenametool-warn-repeat' => 'Achtung! Der Benutzer "<nowiki> $1 </nowiki>" wurde bereits umbenannt in "<nowiki> $2 </nowiki>".
 Setze den Prozess nur fort, wenn du fehlende Informationen hinzufügen musst.',
 	'userrenametool-warn-table-missing' => 'Die Tabelle "<nowiki>$2</nowiki>" existiert nicht in der Datenbank "<nowiki>$1</nowiki>".',
 	'userrenametool-info-started' => '$1 hat Umbenennung begonnen: $2 in $3 (Logs: $4).
@@ -1063,6 +1073,7 @@ $messages['dsb'] = array(
  * @author Consta
  * @author Dead3y3
  * @author MF-Warburg
+ * @author Nikosguard
  * @author ZaDiak
  */
 $messages['el'] = array(
@@ -1092,6 +1103,7 @@ $messages['el'] = array(
 	'userrenametool-log' => '{{PLURAL:$1|1 επεξεργασία|$1 επεξεργασίες}}. Λόγος: $2',
 	'userrenametool-move-log' => 'Η σελίδα μετακινήθηκε αυτόματα κατά τη μετονομασία του χρήστη "[[User:$1|$1]]" σε "[[User:$2|$2]]"',
 	'right-renameuser' => 'Μετονομασία χρηστών',
+	'action-renameuser' => 'μετονομασία χρηστών',
 );
 
 /** Esperanto (Esperanto)
@@ -1173,6 +1185,7 @@ Por favor, vuelve atrás e inténtalo de nuevo.',
 	'userrenametool-error-extension-abort' => 'Una extensión impidió el proceso de cambio de nombre.',
 	'userrenametool-error-cannot-rename-account' => 'El cambio de nombre de usuario en la base de datos global compartida falló.',
 	'userrenametool-error-cannot-create-block' => 'La creación de un filtro de bloqueo en Phalanx falló.',
+	'userrenametool-error-cannot-rename-unexpected' => 'Se produjo un error inesperado, comprueba los registros o intenta de nuevo.',
 	'userrenametool-warn-repeat' => '¡Atención! El usuario "<nowiki>$1</nowiki>" ya ha sido renombrado a "<nowiki>$2</nowiki>".
 Continúa con el proceso sólo si necesitas actualizar alguna información faltante.',
 	'userrenametool-warn-table-missing' => 'La tabla "<nowiki>$2</nowiki>" no existe en la base de datos "<nowiki>$1</nowiki>."',
@@ -1205,6 +1218,7 @@ Serás notificado por correo electrónico cuando se haya completado.',
 	'userrenametool-log' => '{{PLURAL:$1|1 edición|$1 ediciones}}. Motivo: $2',
 	'userrenametool-move-log' => 'Página trasladada automáticamente al renombrar al usuario "[[User:$1|$1]]" a "[[User:$2|$2]]"',
 	'right-renameuser' => 'Renombrar usuarios',
+	'action-renameuser' => 'renombrar usuarios',
 );
 
 /** Estonian (eesti)
@@ -1358,7 +1372,7 @@ $messages['fo'] = array(
 $messages['fr'] = array(
 	'userrenametool' => 'Changer le nom d’un utilisateur',
 	'renameuser' => 'Renommer l’utilisateur',
-	'userrenametool-warning' => 'Avant de renommer un utilisateur, veuillez vous assurer que toutes les informations sont correctes et que l’utilisateur sait que cela peut nécessiter un certain temps. 
+	'userrenametool-warning' => 'Avant de renommer un utilisateur, veuillez vous assurer que toutes les informations sont correctes et que l’utilisateur sait que cela peut nécessiter un certain temps.
 Consulter le [[Special:Stafflog|journal du personnel]] pour les historiques.',
 	'userrenametool-desc' => "Ajoute une [[Special:UserRenameTool|page spéciale]] qui permet de renommer un utilisateur (nécessite l’autorisation ''renameuser'') et de traiter toutes les données qui lui sont liées.",
 	'userrenametool-old' => 'Nom actuel de l’utilisateur :',
@@ -1388,6 +1402,7 @@ Consulter le [[Special:Stafflog|journal du personnel]] pour les historiques.',
 	'userrenametool-error-extension-abort' => 'Une extension a empêché le processus de renommage.',
 	'userrenametool-error-cannot-rename-account' => 'Le renommage du compte utilisateur sur la base de données globale a échoué.',
 	'userrenametool-error-cannot-create-block' => 'La création d’un blocage Phalanx a échoué.',
+	'userrenametool-error-cannot-rename-unexpected' => 'Une erreur inattendue s’est produite, vérifier les journaux ou réessayez',
 	'userrenametool-warn-repeat' => 'Attention ! L’utilisateur « <nowiki>$1</nowiki> » a déjà été renommé « <nowiki>$2</nowiki> ».
 Vous ne devez continuer le traitement que si vous avez besoin de mettre à jour des informations manquantes.',
 	'userrenametool-warn-table-missing' => 'La table « <nowiki>$2</nowiki> » n’existe pas dans la base de données « <nowiki>$1</nowiki> ».',
@@ -1419,7 +1434,8 @@ Vous serez informé par courriel quand cela sera terminé.',
 	'userrenametool-logentry' => 'a renommé « $1 » en « $2 »',
 	'userrenametool-log' => '$1 {{PLURAL:$1|modification|modifications}}. Motif : $2',
 	'userrenametool-move-log' => 'Page automatiquement déplacée lors du renommage de l’utilisateur « [[User:$1|$1]] » en « [[User:$2|$2]] »',
-	'right-renameuser' => 'Renommer des utilisateurs',
+	'right-renameuser' => 'Renommer les utilisateurs',
+	'action-renameuser' => 'renommer les utilisateurs',
 );
 
 /** Franco-Provençal (arpetan)
@@ -1532,6 +1548,7 @@ Volva atrás e inténteo de novo.',
 	'userrenametool-error-extension-abort' => 'Unha extensión impediu o proceso de cambio de nome.',
 	'userrenametool-error-cannot-rename-account' => 'Houbo un erro ao mudar o nome á conta de usuario na base de datos global.',
 	'userrenametool-error-cannot-create-block' => 'Houbo un erro ao crear o bloqueo Phalanx.',
+	'userrenametool-error-cannot-rename-unexpected' => 'Produciuse un erro inesperado. Comprobe os rexistros ou inténteo de novo.',
 	'userrenametool-warn-repeat' => 'Atención! Ao usuario "<nowiki>$1</nowiki>" xa se lle mudou o nome por "<nowiki>$2</nowiki>".
 Continúe o proceso só se necesita actualizar información que falte.',
 	'userrenametool-warn-table-missing' => 'A táboa "<nowiki>$2</nowiki>" non existe na base de datos "<nowiki>$1</nowiki>".',
@@ -1564,6 +1581,7 @@ Recibirá unha notificación a través do correo electrónico en canto remate.',
 	'userrenametool-log' => '{{PLURAL:$1|1 edición|$1 edicións}}. Razón: $2',
 	'userrenametool-move-log' => 'A páxina moveuse automaticamente cando se mudou o nome do usuario "[[User:$1|$1]]" a "[[User:$2|$2]]"',
 	'right-renameuser' => 'Renomear usuarios',
+	'action-renameuser' => 'renomear usuarios',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -2588,6 +2606,7 @@ $messages['mk'] = array(
 	'userrenametool-error-extension-abort' => 'Некој додаток ја попречи постапката на преименување.',
 	'userrenametool-error-cannot-rename-account' => 'Преименувањето на корисничка сметка на заедничката глобална база на податоци не успеа.',
 	'userrenametool-error-cannot-create-block' => 'Создавањето на Phalanx-блок не успеа.',
+	'userrenametool-error-cannot-rename-unexpected' => 'Се појави неочекувана грешка. Погледајте во дневниците и обидете се повторно.',
 	'userrenametool-warn-repeat' => 'Внимание! Корисникот „<nowiki>$1</nowiki>“ е веќе преименуван во „<nowiki>$2</nowiki>“.
 Продолжете со постапката само ако треба да дополните некои податоци што недостасуваат.',
 	'userrenametool-warn-table-missing' => 'Табелата „<nowiki>$2</nowiki>“ не постои во базата „<nowiki>$1</nowiki>“.',
@@ -2620,6 +2639,7 @@ $messages['mk'] = array(
 	'userrenametool-log' => '{{PLURAL:$1|1 уредување|$1 уредувања}}. Образложение: $2',
 	'userrenametool-move-log' => 'Автоматски преместена страница при преименување на корисникот "[[User:$1|$1]]" во "[[User:$2|$2]]"',
 	'right-renameuser' => 'Преименување корисници',
+	'action-renameuser' => 'преименување на корисници',
 );
 
 /** Malayalam (മലയാളം)
@@ -2737,6 +2757,7 @@ Sila undur dan cuba lagi.',
 	'userrenametool-error-extension-abort' => 'Proses menukar nama dihalang oleh sambungan.',
 	'userrenametool-error-cannot-rename-account' => 'Gagal menukar nama akaun pengguna pada pangkalan data kongsian global.',
 	'userrenametool-error-cannot-create-block' => 'Sekatan Phalanx tidak dapat dibentuk.',
+	'userrenametool-error-cannot-rename-unexpected' => 'Berlakunya ralat tak dijangka; semak log atau cuba lagi.',
 	'userrenametool-warn-repeat' => 'Perhatian! Pengguna "<nowiki>$1</nowiki>" sudah menukar namanya kepada "<nowiki>$2</nowiki>".
 Teruskan memproses hanya jika anda perlu menambahkan maklumat yang belum diisi.',
 	'userrenametool-warn-table-missing' => 'Jadual "<nowiki>$2</nowiki>" tidak wujud dalam pangkalan data "<nowiki>$1</nowiki>."',
@@ -2769,6 +2790,7 @@ Anda akan dimaklumkan melalui e-mel sebaik sahaja ia selesai.',
 	'userrenametool-log' => '$1 suntingan. Sebab: $2',
 	'userrenametool-move-log' => 'Memindahkan laman secara automatik ketika menukar nama "[[User:$1|$1]]" menjadi "[[User:$2|$2]]"',
 	'right-renameuser' => 'Menukar nama pengguna',
+	'action-renameuser' => 'menukar nama pengguna',
 );
 
 /** Maltese (Malti)
@@ -3304,10 +3326,10 @@ $messages['ps'] = array(
 $messages['pt'] = array(
 	'userrenametool' => 'Alterar o nome de um utilizador',
 	'renameuser' => 'Alterar o nome do utilizador',
-	'userrenametool-warning' => 'Antes de alterar o nome de um utilizador, certifique-se de que todas as informações estão correctas e que o utilizador sabe que o processo pode demorar algum tempo.
-Pode ver os registos no [[Special:Stafflog|Registo da equipa]].',
+	'userrenametool-warning' => 'Antes de alterar o nome de um utilizador, certifique-se de que todas as informações estão corretas e que o utilizador sabe que o processo pode demorar algum tempo.
+Pode ver os registros no [[Special:Stafflog|Registro da equipa]].',
 	'userrenametool-desc' => "Adiciona uma [[Special:UserRenameTool|página especial]] para alterar o nome de um utilizador (requer o privilégio ''renameuser'') e processar todos os dados relacionados",
-	'userrenametool-old' => 'Nome de utilizador actual:',
+	'userrenametool-old' => 'Nome de utilizador atual:',
 	'userrenametool-new' => 'Novo nome de utilizador:',
 	'userrenametool-reason' => 'Motivo da alteração do nome:',
 	'userrenametool-move' => 'Mover as páginas de utilizador e de discussão do utilizador (e as respectivas subpáginas) para o novo nome',
@@ -3320,7 +3342,7 @@ Pode ver os registos no [[Special:Stafflog|Registo da equipa]].',
 	'userrenametool-errorexists' => 'Já existe um utilizador "<nowiki>$1</nowiki>".',
 	'userrenametool-errorinvalid' => 'O nome de utilizador "<nowiki>$1</nowiki>" é inválido.',
 	'userrenametool-errorinvalidnew' => '"<nowiki>$1</nowiki>" não é um nome de utilizador válido.',
-	'userrenametool-errortoomany' => 'O utilizador "<nowiki>$1</nowiki>" tem $2 {{PLURAL:$2|contribuição|contribuições}}. Alterar o nome de um utilizador com mais de $3 {{PLURAL:$3|contribuição|contribuições}} pode afectar o desempenho do site.',
+	'userrenametool-errortoomany' => 'O utilizador "<nowiki>$1</nowiki>" tem $2 {{PLURAL:$2|contribuição|contribuições}}. Alterar o nome de um utilizador com mais de $3 {{PLURAL:$3|contribuição|contribuições}} pode afetar o desempenho do site.',
 	'userrenametool-errorprocessing' => 'O processo de alteração do nome do utilizador <nowiki>$1</nowiki> para <nowiki>$2</nowiki> já está em progresso.',
 	'userrenametool-errorblocked' => 'O utilizador <nowiki>$1</nowiki> está bloqueado por <nowiki>$2</nowiki> por $3.',
 	'userrenametool-errorlocked' => 'O utilizador <nowiki>$1</nowiki> está bloqueado.',
@@ -3358,7 +3380,7 @@ Quando este terminar, receberá uma notificação por correio electrónico.',
 	'userrenametool-finished-email-body-text' => 'O processo de alteração de "<nowiki>$1</nowiki>" para "<nowiki>$2</nowiki>" terminou.',
 	'userrenametool-finished-email-body-html' => 'O processo de alteração de "<nowiki>$1</nowiki>" para "<nowiki>$2</nowiki>" terminou.',
 	'userrenametool-logpage' => 'Registo de alteração do nome de utilizador',
-	'userrenametool-logpagetext' => 'Este é um registo de alterações efectuadas a nomes de utilizadores.',
+	'userrenametool-logpagetext' => 'Este é um registro de alterações efetuadas a nomes de utilizadores.',
 	'userrenametool-logentry' => 'alterou o nome de $1 para "$2"',
 	'userrenametool-log' => '{{PLURAL:$1|1 edição|$1 edições}}. Motivo: $2',
 	'userrenametool-move-log' => 'Página movida automaticamente ao alterar o nome do utilizador "[[User:$1|$1]]" para "[[User:$2|$2]]"',
@@ -3766,6 +3788,7 @@ Prosimo, pojdite nazaj in poskusite znova.',
 	'userrenametool-error-extension-abort' => 'Razširitev je preprečila postopek preimenovanja.',
 	'userrenametool-error-cannot-rename-account' => 'Preimenovanje uporabniškega računa v skupni globalni zbirki podatkov ni uspelo.',
 	'userrenametool-error-cannot-create-block' => 'Ustvarjanje blokade Phalanx ni uspelo.',
+	'userrenametool-error-cannot-rename-unexpected' => 'Prišlo je do nepričakovane napake; preverite dnevnike ali poskusite znova.',
 	'userrenametool-warn-repeat' => 'Pozor! Uporabnik »<nowiki>$1</nowiki>« je že preimenovan v »<nowiki>$2</nowiki>«.
 Nadaljujte obdelavo le, če morate posodobiti kakšne manjkajoče informacije.',
 	'userrenametool-warn-table-missing' => 'Tabela »<nowiki>$2</nowiki>« v zbirki podatkov »<nowiki>$1</nowiki>« ne obstaja.',
@@ -3799,6 +3822,7 @@ Ko bo dokončan, boste obveščeni po e-pošti.',
 Razlog: $2',
 	'userrenametool-move-log' => 'Samodejno prestavljanje strani pri preimenovanju uporabnika »[[User:$1|$1]]« v »[[User:$2|$2]]«',
 	'right-renameuser' => 'Preimenovanje uporabnikov',
+	'action-renameuser' => 'preimenovanje uporabnikov',
 );
 
 /** Albanian (shqip)
@@ -3974,6 +3998,7 @@ Se [[Special:Stafflog|personalloggen]] för loggar.',
 	'userrenametool-error-extension-abort' => 'En förlängning förhindrade namnbytningsprocessen.',
 	'userrenametool-error-cannot-rename-account' => 'Att byta namn på användarkontot på den delade globala databasen misslyckades.',
 	'userrenametool-error-cannot-create-block' => 'Misslyckades att skapa ett Phalanx-block.',
+	'userrenametool-error-cannot-rename-unexpected' => 'Oväntat fel uppstod, kolla loggarna eller försök igen.',
 	'userrenametool-warn-repeat' => 'OBS! Användaren "<nowiki>$1</nowiki>" har redan byt namn till "<nowiki>$2</nowiki>".
 Fortsätt endast om du behöver uppdatera saknad information.',
 	'userrenametool-warn-table-missing' => 'Tabellen "<nowiki>$2</nowiki>" finns inte i databasen "<nowiki>$1</nowiki>."',
@@ -4007,6 +4032,7 @@ Du kommer att meddelas via e-post när det är slutfört.',
 Anledning: $2',
 	'userrenametool-move-log' => 'Flyttade automatiskt sidan när namnet byttes på användaren "[[User:$1|$1]]" till "[[User:$2|$2]]"',
 	'right-renameuser' => 'Ändra användares namn',
+	'action-renameuser' => 'byt namn på användare',
 );
 
 /** Telugu (తెలుగు)

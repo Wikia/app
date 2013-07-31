@@ -64,6 +64,7 @@ $messages['en'] = array(
 	'wall-message-removed-reply-because' => "$1 removed this reply because:",
 	'wall-message-deleted-reply-because' => "$1 deleted this reply because:",
 	'wall-message-closed-by' => "[[$2|$1]] closed this thread",
+	'wall-message-closed-by-because' => "$1 closed this thread because:",
 	'wall-message-restore-reply' => "Restore Reply",
 	'wall-delete-reason' => "User/admin action",
 	'wall-user-talk-page-archive-anchor' => 'See archived talk page',
@@ -92,6 +93,11 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-action-remove-thread-confirm-info' => "This thread and your summary will still appear in the wiki's history.",
 	'wall-action-remove-reply-confirm-info' => "This reply and your summary will still appear in the wiki's history.",
 	'wall-action-remove-confirm-ok' => 'Remove',
+
+	'wall-action-close-thread-title' => 'Close this thread',
+	'wall-action-close-confirm' => 'Please tell us why you would like to close this:',
+	'wall-action-close-thread-confirm-info' => "This thread will still be visible.",
+	'wall-action-close-confirm-ok' => 'Close',
 
 	'wall-action-admin-thread-title' => 'Delete this thread',
 	'wall-action-admin-reply-title' => 'Delete this reply',
@@ -422,7 +428,8 @@ $messages['qqq'] = array(
 	'wall-message-elseswall' => "Link to a user's wall. Parameters:
 * $1 is the username (GENDER is supported)",
 	'wall-message-no-permission' => 'Error message when a non-admin or staff tries to delete or revision-delete a message',
-	'wall-thread-removed' => 'In parentheses at the top of a removed thread page, next to the title',
+	'wall-thread-removed' => 'In parentheses at the top of a removed thread page, next to the title.
+{{Identical|Removed}}',
 	'wall-thread-isnotifyeveryone' => 'In parentheses at the top of a highlighted thread page, next to the title',
 	'wall-thread-deleted' => 'In parentheses at the top of a deleted thread page, next to the title',
 	'wall-thread-closed' => 'Label stating the thread is closed.
@@ -450,7 +457,8 @@ $messages['qqq'] = array(
 {{Identical|More}}',
 	'wall-message-delete' => 'Menu item to delete a message.
 {{Identical|Delete}}',
-	'wall-message-close-thread' => 'Menu item to close a thread or message',
+	'wall-message-close-thread' => 'Menu item to close a thread or message.
+{{Identical|Close this thread}}',
 	'wall-message-reopen-thread' => 'Menu item to reopen a thread',
 	'wall-message-removed-thread-because' => 'Summary at the top of a removed thread page. Parameters:
 * $1 is the user who removed the thread (GENDER is supported in this message).',
@@ -463,6 +471,8 @@ $messages['qqq'] = array(
 	'wall-message-deleted-reply-because' => 'Summary at the top of a deleted reply page. Parameters:
 * $1 is the user who deleted the reply (GENDER is supported in this message).',
 	'wall-message-closed-by' => 'message stating thread has been closed.  $1 is username, $2 is userpage title',
+	'wall-message-closed-by-because' => 'Summary at the top of a closed thread page. Parameters:
+* $1 is the user who closed the thread (GENDER is supported in this message).',
 	'wall-message-restore-reply' => 'Button to restore a reply on a removed reply page',
 	'wall-delete-reason' => 'default user/admin action',
 	'wall-user-talk-page-archive-anchor' => "Link on a Message Wall page to the user's old talk page archive",
@@ -492,6 +502,12 @@ See also:
 	'wall-action-remove-thread-confirm-info' => 'Explanation in the remove modal box that the thread and summary will still appear in the history',
 	'wall-action-remove-reply-confirm-info' => 'Explanation in the remove modal box that the reply and summary will still appear in the history',
 	'wall-action-remove-confirm-ok' => 'Button in the remove modal box',
+	'wall-action-close-thread-title' => 'Title of the modal box for closing a thread.
+{{Identical|Close this thread}}',
+	'wall-action-close-confirm' => 'Asks for summary in the close thread modal box',
+	'wall-action-close-thread-confirm-info' => 'Explanation in the close modal box that the thread and summary will still appear on the forum',
+	'wall-action-close-confirm-ok' => 'Button in the close modal box.
+{{Identical|Close}}',
 	'wall-action-admin-thread-title' => 'Title of the delete thread modal box',
 	'wall-action-admin-reply-title' => 'Title of the delete reply modal box',
 	'wall-action-admin-confirm' => 'Asks for summary in the delete modal box',
@@ -502,7 +518,8 @@ See also:
 	'wall-action-restore-thread-title' => 'Button to restore a thread',
 	'wall-action-restore-reply-title' => 'Button to restore a reply',
 	'wall-action-restore-confirm' => 'Asks for summary in the restore modal box',
-	'wall-action-restore-confirm-ok' => 'Button in the restore modal box',
+	'wall-action-restore-confirm-ok' => 'Button in the restore modal box.
+{{Identical|Restore}}',
 	'wall-action-rev-thread-title' => 'Title of revision delete thread modal box',
 	'wall-action-rev-reply-title' => 'Title of revision delete reply moal box',
 	'wall-action-rev-reply-confirm' => 'Confirmation for revision delete reply modal',
@@ -710,7 +727,8 @@ checkbox on Special:Block',
 	'wall-history-rail-block' => "wall history page, who's involved box - link for admins to block user.
 {{Identical|Block}}",
 	'wall-history-action-view' => 'wall history page, link to view removed thread',
-	'wall-history-action-restore' => 'wall history page, link to restore removed thread',
+	'wall-history-action-restore' => 'wall history page, link to restore removed thread.
+{{Identical|Restore}}',
 	'wall-history-action-thread-history' => 'wall history page, link to view thread history',
 	'wall-thread-history-title' => 'heading on thread history page',
 	'wall-thread-history-thread-created' => 'thread history page. GENDER is supported in this message. Parameters:
@@ -1311,9 +1329,21 @@ $messages['br'] = array(
 	'wall-topic-edit-cancel' => 'Nullañ',
 );
 
+/** Bosnian (bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'wall-message-closed-by-because' => '$1 je zatvorio ovaj niz zbog:',
+	'wall-action-close-thread-title' => 'Zatvorite ovaj niz',
+	'wall-action-close-confirm' => 'Molimo objasnite nam zašto želite zatvoriti ovo:',
+	'wall-action-close-thread-confirm-info' => 'Ovaj niz će i dalje biti vidljiv.',
+	'wall-action-close-confirm-ok' => 'Zatvori',
+);
+
 /** Catalan (català)
  * @author BroOk
  * @author Erdemaslancan
+ * @author Marcmpujol
  */
 $messages['ca'] = array(
 	'wall-no-title' => 'Sense títol',
@@ -1368,6 +1398,7 @@ $messages['ca'] = array(
 	'wall-message-removed-reply-because' => '$1 ha retirat aquesta resposta perquè:',
 	'wall-message-deleted-reply-because' => '$1 ha eliminat aquesta resposta perquè:',
 	'wall-message-closed-by' => '[[$2|$1]] ha tancat aquest tema',
+	'wall-message-closed-by-because' => '$1 ha tancat aquest tema per:',
 	'wall-message-restore-reply' => 'Restaurar resposta',
 	'wall-delete-reason' => "Acció d'usuari/admin",
 	'wall-user-talk-page-archive-anchor' => 'Veure la pàgina de discussió arxivada',
@@ -1391,6 +1422,10 @@ El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'wall-action-remove-thread-confirm-info' => "El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'wall-action-remove-reply-confirm-info' => "El missatge original i el teu resum continuaran apareixent a l'historial del wiki.",
 	'wall-action-remove-confirm-ok' => 'Retirar',
+	'wall-action-close-thread-title' => 'Tancar aquest tema',
+	'wall-action-close-confirm' => 'Per què vols tancar el tema:',
+	'wall-action-close-thread-confirm-info' => 'Aquest tema seguirà sent visible.',
+	'wall-action-close-confirm-ok' => 'Tancar',
 	'wall-action-admin-thread-title' => 'Esborrar aquest tema',
 	'wall-action-admin-reply-title' => 'Esborrar aquesta resposta',
 	'wall-action-admin-confirm' => "Si us plau, diga'ns per què vols esborrar això:",
@@ -1478,6 +1513,7 @@ El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'wall-recentchanges-closed-thread' => 'ha tancat el tema "[[$1|$2]] en el mur de [[$3|$4]]"',
 	'wall-recentchanges-reopened-thread' => 'ha restaurat el tema "[[$1|$2]] en el mur de [[$3|$4]]"',
 	'wall-recentchanges-deleted-reply-title' => 'Una resposta en el mur de missatges',
+	'wall-recentchanges-wall-created-title' => "S'ha creat un mur de missatges",
 	'wall-recentchanges-namespace-selector-message-wall' => 'Mur de missatges',
 	'wall-recentchanges-thread-group' => '$1 en el <a href="$2">Mur de $3</a>',
 	'wall-recentchanges-history-link' => 'Historial del mur',
@@ -1577,7 +1613,7 @@ ___________________________________________<br />
 	'wall-notifications-notifyeveryone' => 'Destacat per $1',
 	'wall-message-notifyeveryone' => 'Destacar aquest tema',
 	'wall-message-unnotifyeveryone' => 'Deixar de destacar aquest tema',
-	'wall-message-notifyeveryone-tooltip' => 'Tot usuari que ha iniciat sessió en el wiki serà notificat sobre aquest tema', # Fuzzy
+	'wall-message-notifyeveryone-tooltip' => 'Tot usuari que ha iniciat sessió en el wiki serà notificat sobre aquest tema',
 	'wall-votes-modal-showmore' => 'Veure altres que estan a favor',
 	'wall-votes-modal-title' => 'A favor',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Una persona ha donat|$1 persones han donat}} "a favor" a aquest missatge',
@@ -1598,6 +1634,16 @@ ___________________________________________<br />
 	'wall-topic-edit' => 'Editar temes',
 	'wall-topic-edit-save' => 'Desa',
 	'wall-topic-edit-cancel' => 'Cancel·lar',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'wall-message-wall' => 'Декъашхойн дийцаре',
+	'wall-message-wall-shorten' => 'дийцаре',
+	'wall-thread-closed' => 'ДӀачӀагӀа',
+	'mail-notification-html-button' => 'Хьажа дийцаре',
 );
 
 /** Czech (česky)
@@ -1658,6 +1704,7 @@ $messages['cs'] = array(
 	'wall-message-removed-reply-because' => '$1 odstranil vlákno, protože:',
 	'wall-message-deleted-reply-because' => '$1 smazal vlákno, protože:',
 	'wall-message-closed-by' => '[[$2|$1]] {{GENDER:$1|uzavřel|uzavřela|uzavřel}} tuto vlákno.',
+	'wall-message-closed-by-because' => '$1 uzavřel vlákno, protože:',
 	'wall-message-restore-reply' => 'Obnovit odpověď',
 	'wall-delete-reason' => 'Akce uživatele/správce',
 	'wall-user-talk-page-archive-anchor' => 'Zobrazit archivovanou diskuzi s uživatelem',
@@ -1679,6 +1726,10 @@ Původní příspěvek a vaše shrnutí se budou i nadále zobrazovat v historii
 	'wall-action-remove-thread-confirm-info' => 'Toto vlákno a vaše shrnutí se budou i nadále zobrazovat v historii wiki.',
 	'wall-action-remove-reply-confirm-info' => 'Tato odpověď a vaše shrnutí se budou i nadále zobrazovat v historii wiki.',
 	'wall-action-remove-confirm-ok' => 'Odstranit',
+	'wall-action-close-thread-title' => 'Uzavřít toto vlákno',
+	'wall-action-close-confirm' => 'Řekněte nám prosím Váš důvod pro uzavření:',
+	'wall-action-close-thread-confirm-info' => 'Toto vlákno bude stále viditelné.',
+	'wall-action-close-confirm-ok' => 'Uzavřít',
 	'wall-action-admin-thread-title' => 'Odstranit toto vlákno',
 	'wall-action-admin-reply-title' => 'Odstranit odpověď',
 	'wall-action-admin-confirm' => 'Řekněte nám prosím Váš důvod pro smazání:',
@@ -1757,13 +1808,33 @@ Původní příspěvek a vaše shrnutí se budou i nadále zobrazovat v historii
 	'wall-recentchanges-new-message' => 'na <a href="$1">zdi {{GENDER:$2|uživatele|uživatelky|uživatele}} $2</a>',
 	'wall-recentchanges-edit' => '(upravená zpráva)',
 	'wall-recentchanges-summary' => '($1)',
-	'wall-recentchanges-removed-thread' => '{{GENDER:$5|odstranil|odstranila|odstranil}} vlákno "[[$1|$2]]" ze [[$3|zdi uživatele $4]]', # Fuzzy
-	'wall-recentchanges-removed-reply' => '{{GENDER:$5|odstranil|odstranila|odstranil}} odpověď z vlákna "[[$1|$2]]" ze [[$3|zdi uživatele $4]]', # Fuzzy
+	'wall-recentchanges-removed-thread' => 'odstranil vlákno "[[$1|$2]]" ze [[$3|zdi uživatele $4]]',
+	'wall-recentchanges-removed-reply' => 'odstranil odpověď z vlákna "[[$1|$2]]" ze [[$3|zdi uživatele $4]]',
+	'wall-recentchanges-restored-thread' => 'obnovil vlákno "[[$1|$2]]" na [[$3|zdi uživatele $4]]',
+	'wall-recentchanges-restored-reply' => 'obnovil odpověď "[[$1|$2]]" na [[$3|zdi uživatele $4]]',
+	'wall-recentchanges-deleted-thread' => 'smazal vlákno "[[$1|$2]]" na [[$3|zdi uživatele $4]]',
+	'wall-recentchanges-deleted-reply' => 'smazal odpověď "[[$1|$2]]" na [[$3|zdi uživatele $4]]',
+	'wall-recentchanges-closed-thread' => 'uzavřel vlákno "[[$1|$2]]" na [[$3|zdi uživatele $4]]',
+	'wall-recentchanges-reopened-thread' => 'znovuotevřel vlákno "[[$1|$2]]" na [[$3|zdi uživatele $4]]',
+	'wall-recentchanges-deleted-reply-title' => 'Odpověď na zdi zpráv',
+	'wall-recentchanges-wall-created-title' => 'Vytvořil zeď zpráv',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Zeď zpráv',
+	'wall-recentchanges-thread-group' => '$1 na <a href="$2">zdi uživatele $3</a>',
 	'wall-recentchanges-history-link' => 'historie stránky',
 	'wall-recentchanges-thread-history-link' => 'historie vlákna',
+	'wall-contributions-wall-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> na <a href="$3">zdi uživatele $4</a>',
+	'wall-whatlinkshere-wall-line' => '<a href="$1">$2</a> na <a href="$3">zdi uživatele $4</a>',
+	'wall-message-not-found' => 'Tato zpráva nebyla nalezena. Kontaktujte prosím Wikiu na [[Special:Contact]] a poskytněte co nejvíce detailů o tom, jak k chybě došlo. Děkujeme!',
+	'wall-message-staff-text' => 'Tento uživatel je členem týmu Wikia',
+	'wall-ipballowusertalk' => 'Povolit tomuto uživateli editovat vlastní zeď zpráv po dobu zablokování',
+	'wall-ipbwatchuser' => 'Sledovat profil a zeď zpráv tohoto uživatele',
 	'wall-wiki-activity-on' => 'na $1',
 	'wall-wiki-activity-wall-owner' => 'Zeď uživatele $1',
+	'wall-removed-thread-undo' => 'Toto vlákno bylo odstraněno. $1',
+	'wall-removed-reply-undo' => 'Tato odpověď byla odstraněna. $1',
+	'wall-removed-reply' => 'Tato odpověď byla odstraněna',
+	'wall-deleted-thread-undo' => 'Toto vlákno bylo smazáno. $1',
+	'wall-deleted-reply-undo' => 'Tato odpověď byla smazána. $1',
 	'wall-deleted-reply' => 'Tato odpověď byla odstraněna.',
 	'wall-history' => 'Historie',
 	'wall-history-title' => 'historie stránky',
@@ -1783,15 +1854,77 @@ Původní příspěvek a vaše shrnutí se budou i nadále zobrazovat v historii
 	'wall-history-action-restore' => 'obnovit',
 	'wall-history-action-thread-history' => 'historie vlákna',
 	'wall-thread-history-title' => 'historie vlákna',
+	'wall-thread-history-thread-created' => '$1 $2 {{GENDER:$2|vytvořil|vytvořila}} toto vlákno',
+	'wall-thread-history-reply-created' => '$1 $2 {{GENDER:$2|zanechal|zanechala}} odpověď',
+	'wall-thread-history-thread-removed' => '$1 $2 {{GENDER:$2|odstranil|odstranila}} toto vlákno',
+	'wall-thread-history-reply-removed' => '$1 $2 {{GENDER:$2|odstranil|odstranila}} odpověď $5 uživatele $3',
+	'wall-thread-history-reply-deleted' => '$1 $2 {{GENDER:$2|smazal|smazala}} odpověď uživatele $3',
+	'wall-thread-history-thread-restored' => '$1 $2 {{GENDER:$2|obnovil|obnovila}} toto vlákno',
+	'wall-thread-history-reply-restored' => '$1 $2 {{GENDER:$2|obnovil|obnovila}} odpověď $5 uživatele $3',
+	'wall-thread-history-thread-deleted' => '$1 $2 {{GENDER:$2|smazal|smazala}} toto vlákno',
+	'wall-thread-history-thread-edited' => '$1 $2 {{GENDER:$2|upravil|upravila}} zprávu $5 uživatele $3',
+	'wall-thread-history-reply-edited' => '$1 $2 {{GENDER:$2|upravil|upravila}} zprávu $5 uživatele $3',
+	'wall-thread-history-thread-closed' => '$2 uzavřel toto téma',
+	'wall-thread-history-thread-reopened' => '$2 znovuotevřel toto téma',
 	'wall-history-action-restore-reply' => 'obnovit odpověď',
 	'wall-history-action-restore-thread' => 'obnovit vlákno',
+	'wall-message-not-found-in-db' => 'Omlouváme se, ale nemohli jsme najít tuto zprávu v naší databázi.',
 	'mail-notification-new-someone' => 'Na $WIKI $AUTHOR_NAME napsal novou zprávu.',
 	'mail-notification-new-your' => '$AUTHOR_NAME vám nechal novou zprávu na $WIKI.',
 	'mail-notification-reply-your' => '$AUTHOR_NAME odpověděl na vaši zprávu na $WIKI.',
+	'mail-notification-reply-his' => '$AUTHOR_NAME odpověděl na zprávu na $WIKI.',
+	'mail-notification-reply-someone' => '$AUTHOR_NAME odpověděl na zprávu uživatele $PARENT_AUTHOR_NAME na $WIKI.',
 	'mail-notification-html-greeting' => 'Ahoj $1,',
 	'mail-notification-html-button' => 'Zobrazit konverzaci',
+	'mail-notification-html-footer-line1' => 'Nejnovější dění na Wikii můžete sledovat na <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'mail-notification-html-footer-line2' => 'Chcete si nastavit e-mailová upozornění? Přejděte na <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Nastavení</a>',
+	'mail-notification-body' => 'Ahoj $WATCHER,
+
+$SUBJECT
+
+$METATITLE
+
+$MESSAGE_NO_HTML
+
+-- $AUTHOR
+
+Zobrazit konverzaci($MESSAGE_LINK)
+
+Tým Wikia
+
+___________________________________________
+* Nápovědu a rady naleznete zde: http://community.wikia.com
+* Chcete dostávat méne zpráv? Jejich nastavení můžete změnit zde: http://community.wikia.com/Special:Preferences',
+	'mail-notification-body-HTML' => 'Ahoj $WATCHER,
+<p>$SUBJECT.</p>
+			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
+			<p>$MESSAGE_HTML</p>
+			<p>-- $AUTHOR_SIGNATURE<p>
+			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Zobrazit konverzaci</a></p>
+			<p>Tým Wikia</p>
+___________________________________________<br />
+* Nápovědu a rady naleznete zde: http://community.wikia.com
+* Chcete dostávat méne zpráv? Jejich nastavení můžete změnit zde: http://community.wikia.com/Special:Preferences',
 	'prefs-email-wall-v2' => 'Zeď zpráv a fórum',
 	'tog-enotifwallthread-v2' => 'Napiš mi email...',
+	'tog-enotifmywall-every' => 'Pro každou zprávu a odpověď',
+	'tog-enotifmywall-sincevisited' => 'Jednou na každé vlákno od mé poslední návštěvy',
+	'tog-enotifmywall-reminder' => 'S denním připomenutím e-mailem',
+	'tog-enotifmywall-noemail' => 'Nikdy. Neposílejte mi žádné e-maily o zdi zpráv nebo fóru',
+	'wallshowsource-toggle-v2' => 'Povolit {{int:user-action-menu-view-source}} ve vláknech',
+	'wallshowsource-toggle' => 'Povolit {{int:user-action-menu-view-source}} v příspěvcích na zdi',
+	'walldelete-toggle' => 'Povolit mazání revizí vláken',
+	'wall-notifications-notifyeveryone' => 'Zvýrazněno {{GENDER:$1|uživatelem|uživatelkou|uživatelem}} $1',
+	'wall-message-notifyeveryone' => 'Zvýraznit toto vlákno',
+	'wall-message-unnotifyeveryone' => 'Zrušit zvýraznění tohoto vlákna',
+	'wall-message-notifyeveryone-tooltip' => 'Každý uživatel přihlášený budu upozorněn na toto téma, jakmile příště navštíví tuto wiki.',
+	'wall-votes-modal-showmore' => 'Zobrazit ostatní, kteří zvýšili Prestiž',
+	'wall-votes-modal-title' => 'Prestiž',
+	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Jeden člověk zvýšil|$1 lidé zvýšili|$1 lidí zvýšilo}} Prestiž této zprávy.',
+	'wall-votes-number' => '$1 {{PLURAL:$1|Prestiž|Prestiže|Prestiží}}',
+	'wall-votes-number-tooltip' => 'Zobrazit, kdo zvýšil Prestiž této zprávy',
+	'wall-votes-vote-tooltip' => 'Zvýšit Prestiž této zprávy',
+	'wall-votes-voted-tooltip' => 'Zvýšil jste Prestiž této zprávy!',
 	'wall-quote-author' => '$1 napsal:',
 	'wall-quote-reply-to' => 'odpověď na #$1',
 	'wall-preview-modal-title' => 'Náhled',
@@ -1799,6 +1932,8 @@ Původní příspěvek a vaše shrnutí se budou i nadále zobrazovat v historii
 	'wall-preview-modal-button-publish' => 'Publikovat',
 	'wall-topic-input-heading' => 'Téma',
 	'wall-topic-input-placeholder' => 'Přidat téma (volitelné)',
+	'wall-topic-input-error' => 'Neexistuje žádný článek s názvem "$1". Jako téma použijte název existujícího článku.',
+	'wall-topic-input-error-limit' => 'Vlákno může být maximálně $1 {{PLURAL:$1|téma|témata|témat}}.',
 	'wall-topic-heading' => 'Témata pro toto vlákno:',
 	'wall-topic-edit' => 'Upravit témata',
 	'wall-topic-edit-save' => 'Uložit',
@@ -1889,6 +2024,7 @@ $messages['de'] = array(
 	'wall-message-removed-reply-because' => '$1 entfernte diese Antwort, weil:',
 	'wall-message-deleted-reply-because' => '$1 löschte diese Antwort, weil:',
 	'wall-message-closed-by' => '[[$2|$1]] schloss den Thread',
+	'wall-message-closed-by-because' => '$1 schloss diesen Thread, weil:',
 	'wall-message-restore-reply' => 'Antwort wiederherstellen',
 	'wall-delete-reason' => 'Benutzer/Admin-Aktion',
 	'wall-user-talk-page-archive-anchor' => 'Archivierte Diskussionsseite ansehen',
@@ -1912,6 +2048,10 @@ Der Original-Post und deine Zusammenfassung bleiben in der Wiki-Historie sichtba
 	'wall-action-remove-thread-confirm-info' => 'Dieser Thread und deine Zusammenfassung bleiben in der Wiki-Historie sichtbar.',
 	'wall-action-remove-reply-confirm-info' => 'Diese Antwort und deine Zusammenfassung bleiben in der Wiki-Historie sichtbar.',
 	'wall-action-remove-confirm-ok' => 'Entfernen',
+	'wall-action-close-thread-title' => 'Diesen Thread schließen',
+	'wall-action-close-confirm' => 'Bitte erzähle uns, warum du das hier schließen möchtest:',
+	'wall-action-close-thread-confirm-info' => 'Dieser Thread bleibt noch sichtbar.',
+	'wall-action-close-confirm-ok' => 'Schließen',
 	'wall-action-admin-thread-title' => 'Diesen Thread löschen',
 	'wall-action-admin-reply-title' => 'Diese Antwort löschen',
 	'wall-action-admin-confirm' => 'Bitte teile uns mit, warum du dies löschen möchtest:',
@@ -2339,6 +2479,7 @@ $messages['es'] = array(
 	'wall-message-removed-reply-because' => '$1 retiró esta respuesta porque:',
 	'wall-message-deleted-reply-because' => '$1 eliminó esta respuesta porque:',
 	'wall-message-closed-by' => '[[$2|$1]] cerró este tema',
+	'wall-message-closed-by-because' => '$1 cerró este hilo por:',
 	'wall-message-restore-reply' => 'Restaurar respuesta',
 	'wall-delete-reason' => 'Acción de usuario/administrador',
 	'wall-user-talk-page-archive-anchor' => 'Ver página de discusión archivada',
@@ -2362,6 +2503,10 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'wall-action-remove-thread-confirm-info' => 'El mensaje original y tu resumen aparecerán en el historial del wiki.',
 	'wall-action-remove-reply-confirm-info' => 'El mensaje original y tu resumen seguirán apareciendo en el historial del wiki.',
 	'wall-action-remove-confirm-ok' => 'Retirar',
+	'wall-action-close-thread-title' => 'Cerrar este hilo',
+	'wall-action-close-confirm' => 'Por favor dinos por qué quieres cerrar esto:',
+	'wall-action-close-thread-confirm-info' => 'Este hilo seguirá estando visible.',
+	'wall-action-close-confirm-ok' => 'Cerrar',
 	'wall-action-admin-thread-title' => 'Borrar este tema',
 	'wall-action-admin-reply-title' => 'Borrar esta respuesta',
 	'wall-action-admin-confirm' => 'Por favor, dinos por qué quieres borrar esto:',
@@ -2377,10 +2522,10 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'wall-action-rev-reply-confirm' => '¿Estás seguro que quieres borrar este mensaje?',
 	'wall-action-rev-thread-confirm' => '¿Estás seguro que quieres eliminar este tema y todo su historial en el wiki? Esto no puede revertirse.',
 	'wall-action-rev-confirm-ok' => 'Sí, bórralo',
-	'wall-action-move-thread-heading' => 'Renombrar este tema',
+	'wall-action-move-thread-heading' => 'Trasladar este tema',
 	'wall-action-move-validation-select-wall' => 'Por favor selecciona un subforo',
-	'wall-action-move-topics-summary' => 'Tema renombrado',
-	'wall-action-move-thread-ok' => 'Renombrar tema',
+	'wall-action-move-topics-summary' => 'Tema trasladado',
+	'wall-action-move-thread-ok' => 'Trasladar tema',
 	'wall-action-move-board-label' => 'Selecciona un subforo a mover',
 	'wall-notifications' => 'Notificaciones',
 	'wall-notifications-all' => 'Todas las notificaciones',
@@ -2567,7 +2712,7 @@ ___________________________________________<br />
 	'wall-notifications-notifyeveryone' => 'Resaltado por $1',
 	'wall-message-notifyeveryone' => 'Resaltar este tema',
 	'wall-message-unnotifyeveryone' => 'Dejar de resaltar este tema',
-	'wall-message-notifyeveryone-tooltip' => 'Todo usuario que ha iniciado sesión en el wiki será notificado sobre este tema', # Fuzzy
+	'wall-message-notifyeveryone-tooltip' => 'Todo usuario que ha iniciado sesión en el wiki será notificado sobre este hilo la próxima vez que visite el wiki.',
 	'wall-votes-modal-showmore' => 'Ver a otros que les gusta',
 	'wall-votes-modal-title' => 'Valoraciones',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Una persona dio|$1 personas dieron}} me gusta a este mensaje',
@@ -2771,8 +2916,8 @@ $messages['fr'] = array(
 	'wall-message-edited' => '<a href="$3" >Modifié par</a> <a class="username" href="$1">$2</a>',
 	'wall-message-edited-summary' => '<a href="$4" >$1 par </a><a class="username" href="$2">$3</a>',
 	'wall-message-update-topics-summary' => 'Sujet modifié',
-	'wall-message-update-highlight-summary' => 'Mis en évidence',
-	'wall-message-update-removed-highlight-summary' => 'Mise en évidence supprimée',
+	'wall-message-update-highlight-summary' => 'Épinglé',
+	'wall-message-update-removed-highlight-summary' => 'Dépinglé',
 	'wall-message-mywall' => 'Mon mur',
 	'wall-toolbar-history' => 'Historique',
 	'wall-message-notify' => 'Avertir les administrateurs',
@@ -2814,6 +2959,7 @@ $messages['fr'] = array(
 	'wall-message-removed-reply-because' => '$1 a retiré cette réponse pour la raison :',
 	'wall-message-deleted-reply-because' => '$1 a supprimé cette réponse pour la raison :',
 	'wall-message-closed-by' => '[[$2|$1]] a fermé ce fil',
+	'wall-message-closed-by-because' => '$1 a fermé cette discussion pour la raison :',
 	'wall-message-restore-reply' => 'Restaurer la réponse',
 	'wall-delete-reason' => 'Action admin/utilisateur',
 	'wall-user-talk-page-archive-anchor' => 'Voir la page de discussion archivée',
@@ -2837,6 +2983,10 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-action-remove-thread-confirm-info' => 'Ce fil et votre résumé seront toujours visibles dans l’historique du wiki.',
 	'wall-action-remove-reply-confirm-info' => 'Cette réponse et votre résumé seront toujours visibles dans l’historique du wiki.',
 	'wall-action-remove-confirm-ok' => 'Retirer',
+	'wall-action-close-thread-title' => 'Fermer ce fil',
+	'wall-action-close-confirm' => 'Merci de nous dire pourquoi vous voulez sa fermeture :',
+	'wall-action-close-thread-confirm-info' => 'Cette discussion restera visible.',
+	'wall-action-close-confirm-ok' => 'Fermer',
 	'wall-action-admin-thread-title' => 'Supprimer ce fil',
 	'wall-action-admin-reply-title' => 'Supprimer cette réponse',
 	'wall-action-admin-confirm' => 'Veuillez indiquer pourquoi vous voulez sa suppression :',
@@ -3041,7 +3191,7 @@ modifier vos préférence de courriel ici : http://communaute.wikia.com/Special:
 	'wall-notifications-notifyeveryone' => 'Épinglé par $1',
 	'wall-message-notifyeveryone' => 'Épingler ce fil',
 	'wall-message-unnotifyeveryone' => 'Dépingler ce fil',
-	'wall-message-notifyeveryone-tooltip' => 'Chaque personne connectée sur le wiki recevra une notification pour ce fil', # Fuzzy
+	'wall-message-notifyeveryone-tooltip' => 'Chaque personne connectée sur le wiki recevra une notification pour ce fil la prochaine fois qu’elle visitera le wiki',
 	'wall-votes-modal-showmore' => 'Voir d’autres personnes qui l’ont sélectionné',
 	'wall-votes-modal-title' => 'Sélectionné',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Une personne a|$1 personnes ont}} sélectionné ce message',
@@ -3121,6 +3271,7 @@ $messages['gl'] = array(
 	'wall-message-removed-reply-because' => '$1 eliminou esta resposta porque:',
 	'wall-message-deleted-reply-because' => '$1 borrou esta resposta porque:',
 	'wall-message-closed-by' => '[[$2|$1]] pechou este fío',
+	'wall-message-closed-by-because' => '$1 pechou este fío porque:',
 	'wall-message-restore-reply' => 'Restaurar a resposta',
 	'wall-delete-reason' => 'Acción do administrador/usuario',
 	'wall-user-talk-page-archive-anchor' => 'Ollar a páxina de conversa arquivada',
@@ -3144,6 +3295,10 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'wall-action-remove-thread-confirm-info' => 'Este fío e o seu resumo seguirán aparecendo no historial do wiki.',
 	'wall-action-remove-reply-confirm-info' => 'Esta resposta e o seu resumo seguirán aparecendo no historial do wiki.',
 	'wall-action-remove-confirm-ok' => 'Eliminar',
+	'wall-action-close-thread-title' => 'Pechar este fío',
+	'wall-action-close-confirm' => 'Díganos por que quere pechar isto:',
+	'wall-action-close-thread-confirm-info' => 'Este fío seguirá sendo visible.',
+	'wall-action-close-confirm-ok' => 'Pechar',
 	'wall-action-admin-thread-title' => 'Borrar este fío',
 	'wall-action-admin-reply-title' => 'Borrar esta resposta',
 	'wall-action-admin-confirm' => 'Díganos por que quere borrar isto:',
@@ -4359,6 +4514,7 @@ $messages['mk'] = array(
 	'wall-message-removed-reply-because' => '$1 го отстрани одговоров бидејќи:',
 	'wall-message-deleted-reply-because' => '$1 го избриша одговоров бидејќи:',
 	'wall-message-closed-by' => '[[$2|$1]] ја затвори нишкава',
+	'wall-message-closed-by-because' => '$1 ја затвори нишкава бидејќи:',
 	'wall-message-restore-reply' => 'Врати одговор',
 	'wall-delete-reason' => 'Корисничка/администраторска дејство',
 	'wall-user-talk-page-archive-anchor' => 'Погл. архивирана страница за разговор',
@@ -4382,6 +4538,10 @@ $messages['mk'] = array(
 	'wall-action-remove-thread-confirm-info' => 'Оваа нишка и вашиот опис сепак ќе фигурираат во историјата на викито.',
 	'wall-action-remove-reply-confirm-info' => 'Оваа нишка и вашиот опис сепак ќе фигурираат во историјата на викито.',
 	'wall-action-remove-confirm-ok' => 'Отстрани',
+	'wall-action-close-thread-title' => 'Затвори ја нишкава',
+	'wall-action-close-confirm' => 'Напишете зошто сакате да ја затворите:',
+	'wall-action-close-thread-confirm-info' => 'Оваа нишка сè уште е видлива.',
+	'wall-action-close-confirm-ok' => 'Затвори',
 	'wall-action-admin-thread-title' => 'Избриши ја нишкава',
 	'wall-action-admin-reply-title' => 'Избриши го одговоров',
 	'wall-action-admin-confirm' => 'Кажете ни зошто сакате да го избришете ова:',
@@ -4469,6 +4629,7 @@ $messages['mk'] = array(
 	'wall-recentchanges-closed-thread' => 'ја затвори нишката „[[$1|$2]] на [[$3|ѕидот на $4]]“',
 	'wall-recentchanges-reopened-thread' => 'потвторно ја отвори нишката „[[$1|$2]] на [[$3|ѕидот на $4]]“',
 	'wall-recentchanges-deleted-reply-title' => 'Одговор на ѕидот за пораки',
+	'wall-recentchanges-wall-created-title' => 'Создаден ѕид за пораки',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Ѕид за пораки',
 	'wall-recentchanges-thread-group' => '$1 на <a href="$2">ѕидот на $3</a>',
 	'wall-recentchanges-history-link' => 'историја на ѕидот',
@@ -4588,7 +4749,7 @@ ___________________________________________<br />
 	'wall-notifications-notifyeveryone' => 'Истакнал: $1',
 	'wall-message-notifyeveryone' => 'Истакни ја нишкава',
 	'wall-message-unnotifyeveryone' => 'Одистакни ја нишкава',
-	'wall-message-notifyeveryone-tooltip' => 'За оваа нишка ќе биде известен секој што е најавен на викито.', # Fuzzy
+	'wall-message-notifyeveryone-tooltip' => 'За оваа нишка ќе биде известен секој што е најавен на викито, следниот пат кога ќе го посети.',
 	'wall-votes-modal-showmore' => 'Погледајте ги другите што бендисале',
 	'wall-votes-modal-title' => 'Ме бендисува',
 	'wall-votes-modal-title-desc' => 'На {{PLURAL:$1|едно лице му се|$1 лица им се}} бендисала поракава',
@@ -4667,6 +4828,7 @@ $messages['ms'] = array(
 	'wall-message-removed-reply-because' => '$1 membuang balasan ini kerana:',
 	'wall-message-deleted-reply-because' => '$1 menghapuskan balasan ini kerana:',
 	'wall-message-closed-by' => '[[$2|$1]] menutup tred ini',
+	'wall-message-closed-by-because' => '$1 menutup tred ini kerana:',
 	'wall-message-restore-reply' => 'Pulihkan Balasan',
 	'wall-delete-reason' => 'Tindakan pengguna/pentadbir',
 	'wall-user-talk-page-archive-anchor' => 'Lihat arkib laman perbincangan',
@@ -4690,6 +4852,10 @@ Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
 	'wall-action-remove-thread-confirm-info' => 'Tred ini dan ringkasan anda akan kekal dalam sejarah wiki.',
 	'wall-action-remove-reply-confirm-info' => 'Balasan ini dan ringkasan anda akan kekal dalam sejarah wiki.',
 	'wall-action-remove-confirm-ok' => 'Buang',
+	'wall-action-close-thread-title' => 'Tutup tred ini',
+	'wall-action-close-confirm' => 'Sila terangkan sebab anda ingin menutupnya:',
+	'wall-action-close-thread-confirm-info' => 'Thread ini akan masih boleh dilihat.',
+	'wall-action-close-confirm-ok' => 'Tutup',
 	'wall-action-admin-thread-title' => 'Hapuskan tred ini',
 	'wall-action-admin-reply-title' => 'Hapuskan balasan ini',
 	'wall-action-admin-confirm' => 'Sila terangkan sebab anda ingin menghapuskannya:',
@@ -5255,7 +5421,7 @@ $messages['nl'] = array(
 	'wall-button-to-preview-comment' => 'Voorvertoning',
 	'wall-button-to-cancel-preview' => 'Bewerken',
 	'wall-button-to-submit-comment' => 'Opslaan',
-	'wall-button-to-submit-reply' => 'Beantwoorden',
+	'wall-button-to-submit-reply' => 'Antwoorden',
 	'wall-button-to-submit-comment-no-topic' => 'Bericht plaatsen zonder koptekst',
 	'wall-button-save-changes' => 'Wijzigingen opslaan',
 	'wall-button-cancel-changes' => 'Annuleren',
@@ -5272,6 +5438,7 @@ $messages['nl'] = array(
 	'wall-message-removed-reply-because' => '$1 heeft dit antwoord verwijderd om de volgende reden:',
 	'wall-message-deleted-reply-because' => '$1 heeft dit antwoord verwijderd om de volgende reden:',
 	'wall-message-closed-by' => '[[$2|$1]] heeft deze draad gesloten',
+	'wall-message-closed-by-because' => '{{GENDER:$1|$1}} heeft deze draad gesloten om de volgende reden:',
 	'wall-message-restore-reply' => 'Antwoord terugplaatsen',
 	'wall-delete-reason' => 'Gebruikers- of beheerdershandeling',
 	'wall-user-talk-page-archive-anchor' => 'Zie gearchiveerde overlegpagina',
@@ -5295,6 +5462,10 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'wall-action-remove-thread-confirm-info' => 'Deze draad en uw opgave van reden blijven nog wel beschikbaar in de geschiedenis van de wiki.',
 	'wall-action-remove-reply-confirm-info' => 'Dit antwoord en uw reden blijven nog wel beschikbaar in geschiedenis van de wiki.',
 	'wall-action-remove-confirm-ok' => 'Verwijderen',
+	'wall-action-close-thread-title' => 'Draad sluiten',
+	'wall-action-close-confirm' => 'Geef een reden op waarom u deze draad wilt sluiten:',
+	'wall-action-close-thread-confirm-info' => 'Deze draad blijft zichtbaar.',
+	'wall-action-close-confirm-ok' => 'Sluiten',
 	'wall-action-admin-thread-title' => 'Deze draad verwijderen',
 	'wall-action-admin-reply-title' => 'Dit antwoord verwijderen',
 	'wall-action-admin-confirm' => 'Geef een reden op waarom u dit wilt verwijderen:',
@@ -5596,6 +5767,7 @@ $messages['pl'] = array(
 	'wall-message-removed-reply-because' => '$1 usunął tę odpowiedź ponieważ:',
 	'wall-message-deleted-reply-because' => '$1 skasował tę odpowiedź ponieważ:',
 	'wall-message-closed-by' => '[[$2|$1]] zamknął/zamknęła ten wątek',
+	'wall-message-closed-by-because' => '$1 {{GENDER:$1|zamknął|zamknęła}} ten wątek. Powód:',
 	'wall-message-restore-reply' => 'Przywróć odpowiedź',
 	'wall-delete-reason' => 'Decyzja użytkownika/administratora',
 	'wall-user-talk-page-archive-anchor' => 'Zobacz zarchiwizowaną stronę dyskusji',
@@ -5619,6 +5791,10 @@ Ten wątek i jego historia nadal będą dostępne w historii wiki.',
 	'wall-action-remove-thread-confirm-info' => 'Ten wątek i opis zmian będą dostępne w historii wiki.',
 	'wall-action-remove-reply-confirm-info' => 'Ta odpowiedź i opis zmian będą dostępne w historii wiki.',
 	'wall-action-remove-confirm-ok' => 'Usuń',
+	'wall-action-close-thread-title' => 'Zamknij ten wątek',
+	'wall-action-close-confirm' => 'Podaj powód zamknięcia:',
+	'wall-action-close-thread-confirm-info' => 'Ten wątek nadal będzie widoczny.',
+	'wall-action-close-confirm-ok' => 'Zamknij',
 	'wall-action-admin-thread-title' => 'Skasuj ten wątek',
 	'wall-action-admin-reply-title' => 'Skasuj tę odpowiedź',
 	'wall-action-admin-confirm' => 'Podaj powód skasowania wiadomości:',
@@ -6676,6 +6852,7 @@ $messages['sv'] = array(
 	'wall-message-removed-reply-because' => '$1 tog bort detta svar eftersom:',
 	'wall-message-deleted-reply-because' => '$1 raderade detta svar eftersom:',
 	'wall-message-closed-by' => '[[$2|$1]] stängde denna tråd',
+	'wall-message-closed-by-because' => '$1 stängde denna tråd eftersom:',
 	'wall-message-restore-reply' => 'Återställ svar',
 	'wall-delete-reason' => 'Användare/administratörsåtgärd',
 	'wall-user-talk-page-archive-anchor' => 'Se arkiverad diskussionssida',
@@ -6699,6 +6876,10 @@ Originalinlägget och din sammanfattning kommer fortfarande att visas i wikins h
 	'wall-action-remove-thread-confirm-info' => 'Denna tråd och din sammanfattning kommer fortfarande att visas i wikins historik.',
 	'wall-action-remove-reply-confirm-info' => 'Detta svar och din sammanfattning kommer fortfarande att visas i wikins historik.',
 	'wall-action-remove-confirm-ok' => 'Ta bort',
+	'wall-action-close-thread-title' => 'Stäng denna tråd',
+	'wall-action-close-confirm' => 'Berätta för oss varför du vill stänga denna:',
+	'wall-action-close-thread-confirm-info' => 'Denna tråd kommer fortfarande vara synlig.',
+	'wall-action-close-confirm-ok' => 'Stäng',
 	'wall-action-admin-thread-title' => 'Radera denna tråd',
 	'wall-action-admin-reply-title' => 'Radera detta svar',
 	'wall-action-admin-confirm' => 'Berätta för oss varför du vill ta bort detta:',
@@ -6906,7 +7087,7 @@ dina e-postinställningar här: http://community.wikia.com/Special:Preferences',
 	'wall-notifications-notifyeveryone' => 'Belyst av $1',
 	'wall-message-notifyeveryone' => 'Belys denna tråd',
 	'wall-message-unnotifyeveryone' => 'Avbelys denna tråd',
-	'wall-message-notifyeveryone-tooltip' => 'Varje inloggad person på wikin kommer att underrättas om denna tråd', # Fuzzy
+	'wall-message-notifyeveryone-tooltip' => 'Varje inloggad person på wikin kommer att underrättas om denna tråd nästa gång de besöker wikin',
 	'wall-votes-modal-showmore' => 'Se alla som gav beröm',
 	'wall-votes-modal-title' => 'Beröm',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|En person|$1 personer}} gav beröm till detta meddelande',
@@ -7926,6 +8107,7 @@ Li messaedje d' oridjinne eyet vosse rascourti seront todi veyåves dins l' istw
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author Liuxinyu970226
  * @author Sam Wang
  * @author Yfdyh000
  * @author 乌拉跨氪
@@ -7940,12 +8122,21 @@ $messages['zh-hans'] = array(
 	'wall-message-edited' => '<a href="$3" >编辑者</a> <a class="username" href="$1">$2</a>',
 	'wall-message-edited-summary' => '<a href="$4" >$1 由 </a><a class="username" href="$2">$3</a>',
 	'wall-message-update-topics-summary' => '更改主题',
+	'wall-message-update-highlight-summary' => '突出显示',
+	'wall-message-update-removed-highlight-summary' => '删除突出显示',
+	'wall-message-mywall' => '我的墙',
 	'wall-toolbar-history' => '历史',
 	'wall-message-notify' => '通知管理员',
 	'wall-message-remove' => '移除',
 	'wall-message-rev-delete' => '修订版本删除',
+	'wall-message-fast-admin-delete-message' => 'VSTF 删除',
 	'wall-message-quote-button' => '引用',
 	'wall-message-elseswall' => '$1的留言墙',
+	'wall-message-no-permission' => '您没有权限执行此操作的消息',
+	'wall-thread-removed' => '已移除',
+	'wall-thread-isnotifyeveryone' => '突出显示',
+	'wall-thread-deleted' => '已删除',
+	'wall-thread-closed' => '已关闭',
 	'wall-default-title' => '来自$1的信息',
 	'wall-placeholder-topic' => '这是什么？',
 	'wall-placeholder-reply' => '发表回复',
@@ -7957,11 +8148,15 @@ $messages['zh-hans'] = array(
 	'wall-button-cancel-changes' => '取消',
 	'wall-button-done-source' => '完成',
 	'wall-message-edit' => '编辑',
+	'wall-message-more' => '更多',
 	'wall-message-delete' => '删除',
+	'wall-message-close-thread' => '关闭这个标题',
+	'wall-message-reopen-thread' => '重启这个标题',
 	'wall-action-all-confirm-cancel' => '取消',
 	'wall-action-remove-reply-title' => '删除此回复',
 	'wall-delete-error-title' => '错误',
 	'wall-action-remove-confirm-ok' => '删除',
+	'wall-action-close-confirm-ok' => '关闭',
 	'wall-action-admin-reply-title' => '删除本条回复',
 	'wall-action-admin-confirm-ok' => '删除',
 	'wall-notifications' => '通知',
@@ -8007,9 +8202,12 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Liflon
  */
 $messages['zh-hant'] = array(
 	'wall-no-title' => '無標題',
 	'wall-message-wall' => '訊息牆',
 	'wall-message-wall-shorten' => '訊息牆',
+	'wall-action-close-confirm' => '請告訴我們您為何想要終止此討論：',
+	'wall-action-close-confirm-ok' => '關閉',
 );

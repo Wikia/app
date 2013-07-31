@@ -15,7 +15,8 @@
  * @var $headItems String
  * @var $bodyClasses String[]
  * @var $trackingCode String
- * @var $advertisement String
+ * @var $floatingTopLeaderBoard String
+ * @var $topLeaderBoard String
  * @var $wikiaNavigation String
  * @var $pageContent String
  * @var $wikiaFooter String
@@ -33,7 +34,7 @@
 	<?endif; ?>
 	<meta name=HandheldFriendly content=true>
 	<meta name=MobileOptimized content=width>
-	<meta name=viewport content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name=viewport content="initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
 	<meta name=apple-mobile-web-app-capable content=yes>
 	<? if ( !empty( $smartBannerConfig ) ) : ?>
 		<? foreach( $smartBannerConfig['meta'] as $name => $content ) : ?>
@@ -46,12 +47,15 @@
 	<?= $headItems ;?>
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>">
-	<?= $trackingCode ;?>
 	<?= $wikiaNavigation ;?>
+	<?= $topLeaderBoardAd ;?>
 	<?= $pageContent ;?>
 	<?= $wikiaFooter ;?>
 	<div id=wkCurtain>&nbsp;</div>
 	<?= $jsBodyFiles ;?>
-	<?= $advertisement ;?>
+	<?= $inContentAd ;?>
+	<?= $modalInterstitial ;?>
+	<?= $floatingAd ;?>
+	<?= $trackingCode ;?>
 </body>
 </html>

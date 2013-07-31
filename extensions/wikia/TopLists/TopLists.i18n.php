@@ -126,12 +126,17 @@ Head to Wikia to check out the changes! $1
  */
 $messages['qqq'] = array(
 	'toplists-desc' => '{{desc}}',
+	'right-toplists-create-edit-list' => '{{doc-right|toplists-create-edit-list}}',
+	'right-toplists-create-item' => '{{doc-right|toplists-create-item}}',
+	'right-toplists-edit-item' => '{{doc-right|toplists-edit-item}}',
+	'right-toplists-delete-item' => '{{doc-right|toplists-delete-item}}',
 	'toplists-category' => 'The name for the category that lists all the Top 10 Lists on a wiki',
 	'action-toplists-create-edit-list' => '{{doc-action|toplists-create-edit}}',
 	'toplists-editor-remove-item-tooltip' => '{{Identical|Remove item}}',
 	'toplists-create-button' => '{{Identical|Create list}}',
 	'toplits-image-browser-selected-picture' => '$1 is the title of the image page.',
 	'toplists-list-vote-up' => 'Keep this as short as possible. Everything exceeding allowed lenght will be cutted out!',
+	'toplists-seconds' => '{{Identical|Second}}',
 	'toplists-minutes' => '{{Identical|Minute}}',
 	'toplists-create-button-msg' => '{{Identical|Create list}}',
 	'toplists-oasis-only' => 'Displayed to users who try to edit or create Top 10 lists in a skin other than the Wikia skin.',
@@ -340,6 +345,13 @@ Gellout a rit <a href="$4">paouez da resevout</a> kemmoù ar roll-mañ.',
 	'toplists-create-button-msg' => 'Sevel ur roll',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'toplists-editor-related-article-placeholder' => 'ДӀаязъе йолуш йолу агӀона цӀе',
+);
+
 /** Czech (česky)
  * @author Chmee2
  * @author Darth Daron
@@ -544,6 +556,13 @@ $messages['diq'] = array(
 	'toplists-days' => '($1 {{PLURAL:$1|roce|roci}})',
 	'toplists-weeks' => '$1 {{PLURAL: $1|hefte|heftey}}',
 	'toplists-create-button-msg' => 'Liste vırazê',
+);
+
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'toplists-error-title-spam' => 'The supplied text contains some words recognised as spam.',
 );
 
 /** Spanish (español)
@@ -1809,6 +1828,7 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author GTNS
  * @author Hamilton Abreu
+ * @author Luckas
  * @author SandroHc
  * @author Waldir
  */
@@ -1822,7 +1842,7 @@ $messages['pt'] = array(
 	'edittoplist' => 'Editar lista Top 10',
 	'toplists-category' => 'Listas Top 10',
 	'toplists-error-invalid-title' => 'O texto fornecido não é válido.',
-	'toplists-error-invalid-picture' => 'A imagem seleccionada não é válida.',
+	'toplists-error-invalid-picture' => 'A imagem selecionada não é válida.',
 	'toplists-error-title-exists' => 'Esta página já existe. Pode ir para <a href="$2" target="_blank">$1</a> ou fornecer um nome diferente.',
 	'toplists-error-title-spam' => 'O texto introduzido contém algumas palavras identificadas como spam.',
 	'toplists-error-article-blocked' => 'Não pode criar uma página com este nome. Desculpe.',
@@ -1851,11 +1871,11 @@ $messages['pt'] = array(
 	'toplists-cancel-button' => 'Cancelar',
 	'toplists-items-removed' => '$1 {{PLURAL:$1|elemento removido|elementos removidos}}',
 	'toplists-items-created' => '$1 {{PLURAL:$1|elemento criado|elementos criados}}',
-	'toplists-items-updated' => '$1 {{PLURAL:$1|elemento actualizado|elementos actualizados}}',
+	'toplists-items-updated' => '$1 {{PLURAL:$1|elemento atualizado|elementos atualizados}}',
 	'toplists-items-nochange' => 'Não foi alterado nenhum elemento',
-	'toplits-image-browser-no-picture-selected' => 'Não foi seleccionada nenhuma imagem',
+	'toplits-image-browser-no-picture-selected' => 'Não foi selecionada nenhuma imagem',
 	'toplits-image-browser-clear-picture' => 'Limpar imagem',
-	'toplits-image-browser-selected-picture' => 'Seleccionada neste momento: $1',
+	'toplits-image-browser-selected-picture' => 'Selecionada neste momento: $1',
 	'toplists-image-browser-upload-btn' => 'Escolher',
 	'toplists-image-browser-upload-label' => 'Faça o upload de uma',
 	'toplists-list-creation-summary' => 'A criar uma lista, $1',
@@ -1933,11 +1953,44 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'toplists-desc' => 'Le megghie 10',
+	'right-toplists-create-edit-list' => "Ccreje e cange l'elenghe de le megghie 10 pàggene",
+	'edittoplist' => 'Cange le megghie 10',
+	'toplists-category' => 'Le megghie 10',
+	'toplists-error-invalid-title' => "'U teste scritte non g'è valide.",
+	'toplists-error-invalid-picture' => "'A fote scacchiate non g'è valide.",
 	'toplists-create-button' => "ccreje 'n'elenghe",
 	'toplists-update-button' => "Reggìstre l'elenghe",
 	'toplists-cancel-button' => 'Annulle',
+	'toplists-items-removed' => '$1 {{PLURAL:$1|vôsce}} luate',
+	'toplists-items-created' => '$1 {{PLURAL:$1|vôsce}} ccrejate',
+	'toplists-items-updated' => '$1 {{PLURAL:$1|vôsce}} aggiornate',
+	'toplists-items-nochange' => 'Nisciuna vôsce cangiate',
+	'toplits-image-browser-no-picture-selected' => 'Nisciuna fote scacchiate',
+	'toplits-image-browser-clear-picture' => "Pulizze 'a fote",
+	'toplits-image-browser-selected-picture' => 'Scacchiate pe mò: $1',
 	'toplists-image-browser-upload-btn' => 'Scacchie',
+	'toplists-image-browser-upload-label' => "Careche 'u tune",
+	'toplists-list-creation-summary' => "Stoche a ccreje 'n'elenghe, $1",
+	'toplists-list-update-summary' => "Stoche aggiorne 'n'elenghe, $1",
+	'toplists-item-creation-summary' => "Stoche a ccreje 'n'elenghe de vôsce",
+	'toplists-item-update-summary' => "Stoche aggiorne 'n'elenghe de vôsce",
+	'toplists-item-remove-summary' => "Vôsce luate da l'elenghe",
+	'toplists-item-restored' => 'Vôsce repristinate',
+	'toplists-list-related-to' => 'Riferite a:',
+	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />vote}}',
+	'toplists-list-created-by' => 'da [[User:$1|$1]]',
+	'toplists-list-vote-up' => 'Vote',
+	'toplists-list-hotitem-count' => "$1 {{PLURAL:$1|vote}} jndr'à $2",
+	'toplists-list-add-item-label' => "Aggiunge 'na vôsce",
 	'toplists-list-item-voted' => 'Vutate',
+	'toplists-createpage-dialog-label' => 'Le megghie 10',
+	'toplists-seconds' => '$1 {{PLURAL:$1|seconde}}',
+	'toplists-minutes' => '$1 {{PLURAL:$1|minute}}',
+	'toplists-hours' => '$1 {{PLURAL:$1|ore}}',
+	'toplists-days' => '$1 {{PLURAL:$1|sciurne}}',
+	'toplists-weeks' => '$1 {{PLURAL: $1|sumàne}}',
+	'toplists-create-button-msg' => "Ccreje 'n'elenghe",
 );
 
 /** Russian (русский)

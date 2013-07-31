@@ -18,7 +18,7 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 
-		$title = $this->wf->Msg( 'wikiagameguides-sponsored-title' );
+		$title = wfMsg( 'wikiagameguides-sponsored-title' );
 		$this->wg->Out->setPageTitle( $title );
 		$this->wg->Out->setHTMLTitle( $title );
 
@@ -45,7 +45,7 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 			$this->wg->Out->addScriptFile( $s );
 		}
 
-		F::build( 'JSMessages' )->enqueuePackage( 'GameGuidesSponsoredMsg', JSMessages::INLINE );
+		JSMessages::enqueuePackage( 'GameGuidesSponsoredMsg', JSMessages::INLINE );
 
 		$this->response->setVal( 'descriptions', [
 			wfMessage( 'wikiagameguides-sponsored-description-language' )->text(),
@@ -180,7 +180,7 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 			$this->response->setVal( 'status', $status );
 
 			if ( $status ) {
-				$this->wf->RunHooks( 'GameGuidesSponsoredVideosSave' );
+				wfRunHooks( 'GameGuidesSponsoredVideosSave' );
 			}
 		}
 

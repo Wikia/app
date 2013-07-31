@@ -123,6 +123,7 @@ Zbývající část stránky bude možné spustit tak, že lze snadno zobrazit, 
 );
 
 /** German (Deutsch)
+ * @author Das Schäfchen
  * @author LWChris
  * @author Quedel
  * @author SVG
@@ -140,7 +141,7 @@ Bitte wende dich an einen Systemadministrator, falls du andere Gruppen für das 
 	'batchuserrights-userload-error' => "Konnte den Benutzer „'''$1'''“ nicht laden.",
 	'batchuserrights-no-groups' => 'Du hast keine Gruppen ausgewählt.
 Dies wird nichts verändern.
-Der Rest der Seite wird nur geladen, sodass du einfach sehen kannst ob einer der Benutzer nicht geladen werden konnte.',
+Der Rest der Seite wird nur geladen, sodass du einfach sehen kannst, ob einer der Benutzer nicht geladen werden konnte.',
 );
 
 /** Zazaki (Zazaki)
@@ -252,6 +253,13 @@ Per favor demanda lo a un administrator de systema si tu ha besonio de permitter
 	'batchuserrights-no-groups' => 'Tu non seligeva alcun gruppo.
 Isto va complir nihil.
 Le resto del pagina essera executate solmente a fin que tu pote vider facilemente si alcun del nomines de usator non poteva esser cargate.',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'batchuserrights-desc' => 'Memperbolehkan menambahkan satu atau beberapa pengguna ke grup dalam satu tindakan',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -439,7 +447,18 @@ Será permitida a execução do resto da página apenas para que você possa ver
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'batchuserrights' => "Batch pe le deritte de l'utinde",
+	'batchuserrights-desc' => "Permette de aggiungere une o cchiù utinde a 'nu gruppe jndr'à 'na botta sole",
+	'batchuserrights-names' => 'Le nome utinde aggiunde a stu gruppe (une pe linèe):',
+	'batchuserrights-intro' => "Sta pàgene te lasse aggiungere 'nu gruppe a cchiù utinde jndr'à 'na botte.
+Pe mutive de securezze, l'elenghe de le gruppe ca se ponne aggiungere gruppe jè 'mbostate jndr'à configurazione de l'estenzione e non ge ponne essere cangiate da 'a uicchi.
+Pe piacere cirche a 'n'amministratore de sisteme ce tu è abbesògne de permettere l'agiunde automateche de otre gruppe.",
+	'batchuserrights-single-progress-update' => "Aggiunge a {{PLURAL:$1|'u gruppe|le gruppe}} <strong>$2</strong>.",
+	'batchuserrights-add-groups' => "Stoche aggiunge {{PLURAL:$1|'n'utende|$1 utinde}} a {{PLURAL:$2|'u seguende |le seguende}} gruppe: <strong>$3</strong>.",
 	'batchuserrights-userload-error' => "Non ge pozze carecà l'utende \"'''\$1'''\".",
+	'batchuserrights-no-groups' => "Non g'è scacchiate nisciune gruppe.
+Quiste non ge porte a ninde.
+'U reste d'a pàgene avène eseguite 'u stesse accussì tu puè facilmende 'ndrucà ce qualche nome utende non ge pò essere carecate.",
 );
 
 /** Russian (русский)

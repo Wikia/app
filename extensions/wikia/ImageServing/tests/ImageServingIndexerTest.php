@@ -32,11 +32,8 @@ class ImageServingIndexerTest extends WikiaBaseTest {
 		$article->mContentLoaded = true;
 
 		// disable access to the database
-		$this->mockGlobalFunction('GetDB', $this->mockClassWithMethods('Database', [
-			'replace' => null,
-			'delete' => null
-		]));
-		$this->mockApp();
+		$this->getMethodMock('DatabaseMysql','replace');
+		$this->getMethodMock('Database','delete');
 
 		$images = ImageServingHelper::buildAndGetIndex($article);
 		$this->assertEquals($expectedImages, $images, 'List of images matches expected ones');
@@ -58,6 +55,11 @@ class ImageServingIndexerTest extends WikiaBaseTest {
 			[
 				'wikitext' => '<gallery>Wiki-wordmark.png</gallery>',
 				'expectedImages' => ['Wiki-wordmark.png']
+			],
+			// tabber
+			[
+				'wikitext' => "<tabber>\n 1 = [[File:Wiki-wordmark.png|250px]]\n|-|\n 2 = [[File:FireflyLogo-NoBackground.png|250px]]\n</tabber>",
+				'expectedImages' => ['Wiki-wordmark.png', 'FireflyLogo-NoBackground.png']
 			],
 			// more images
 			[

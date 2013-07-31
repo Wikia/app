@@ -23,8 +23,8 @@ class PlaceCategory {
 	 * @param WikiaApp $app Nirvava application instance
 	 * @param string $sTitle title text
 	 */
-	public function __construct( WikiaApp $app, $sTitle ) {
-		$this->app = $app;
+	public function __construct( $sTitle ) {
+		$this->app = F::app();
 		$this->memc = $this->app->wg->Memc;
 		$this->sTitle = $sTitle;
 	}
@@ -38,13 +38,7 @@ class PlaceCategory {
 	public static function newFromTitle( $sTitle ) {
 		// include title to article ID logic
 
-		$instance = F::build(
-			'PlaceCategory',
-			array(
-				'app' => F::app(),
-				'sTitle' => $sTitle
-			)
-		);
+		$instance = new PlaceCategory( $sTitle );
 
 		// read data from database
 		$instance->read();
@@ -68,7 +62,7 @@ class PlaceCategory {
 			$aCategories = array_keys( $aCategories );
 			foreach ( $aCategories as $sCategory ){
 				$oTmpTitle = Title::newFromText( $sCategory, NS_CATEGORY );
-				if ( F::build('PlaceCategory', array( $oTmpTitle->getFullText() ), 'newFromTitle' )->isGeoTaggingEnabled() ){
+				if ( PlaceCategory::newFromTitle( $oTmpTitle->getFullText() )->isGeoTaggingEnabled() ){
 					return true;
 				};
 			}
@@ -91,7 +85,7 @@ class PlaceCategory {
 		wfProfileIn(__METHOD__);
 
 		$this->isEnabled = 0;
-		$oTitle = F::build( 'Title', array( $this->sTitle ), 'newFromText' );
+		$oTitle = Title::newFromText( $this->sTitle );
 		if ( is_object( $oTitle ) && ( $oTitle instanceof Title ) ){
 			$oTitle->exists();
 			$this->pageId = $oTitle->getArticleID();
@@ -108,11 +102,11 @@ class PlaceCategory {
 
 		// if memc was empty
 		if ( $this->isEnabled === false ) {
-			$this->app->wf->Debug(__METHOD__ . " - memcache miss for #{$this->pageId}\n");
-			$this->isEnabled = $this->app->wf->GetWikiaPageProp( WPP_PLACES_CATEGORY_GEOTAGGED, $this->pageId );
+			wfDebug(__METHOD__ . " - memcache miss for #{$this->pageId}\n");
+			$this->isEnabled = wfGetWikiaPageProp( WPP_PLACES_CATEGORY_GEOTAGGED, $this->pageId );
 			$this->memc->set( $this->getMemcKey(), $this->isEnabled, self::CACHE_TTL );
 		} else {
-			$this->app->wf->Debug(__METHOD__ . " - memcache hit for #{$this->pageId}\n");
+			wfDebug(__METHOD__ . " - memcache hit for #{$this->pageId}\n");
 		}
 
 		wfProfileOut(__METHOD__);
@@ -124,7 +118,7 @@ class PlaceCategory {
 
 		if ( $this->isEnabled !== false ){
 
-			$oTitle = F::build( 'Title', array( $this->sTitle ), 'newFromText' );
+			$oTitle = Title::newFromText( $this->sTitle );
 			if ( $oTitle instanceof Title ){
 				$oTitle->exists();
 				$this->pageId = $oTitle->getArticleID();
@@ -139,7 +133,7 @@ class PlaceCategory {
 					$this->pageId = $oArticle->getID();
 				}
 
-				$this->app->wf->setWikiaPageProp(
+				wfsetWikiaPageProp(
 					WPP_PLACES_CATEGORY_GEOTAGGED,
 					$this->pageId,
 					(int)$this->isEnabled
@@ -153,10 +147,10 @@ class PlaceCategory {
 	}
 
 	private function getDB($type = DB_SLAVE) {
-		return $this->app->wf->GetDB($type, array(), $this->app->wg->DBname);
+		return wfGetDB($type, array(), $this->app->wg->DBname);
 	}
 
 	private function getMemcKey() {
-		return $this->app->wf->MemcKey("placeCategoryGeoTag::{$this->pageId}");
+		return wfMemcKey("placeCategoryGeoTag::{$this->pageId}");
 	}
 }

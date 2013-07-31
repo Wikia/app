@@ -1,9 +1,10 @@
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/layout";
+@import "skins/oasis/css/mixins/gradient";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/mixins/opacity";
 
 $color-inactive-button: darken($color-secondary-button, 50%);
 @if lightness($color-page) < 50 {
@@ -36,6 +37,7 @@ $color-related-videos-background: darken($color-page, 20%);
 		display: block;
 		margin-bottom: .5em;
 	}
+
 	input[type="checkbox"] {
 		margin-left: 0;
 	}
@@ -68,9 +70,10 @@ $color-related-videos-background: darken($color-page, 20%);
 		cursor: pointer;
 	}
 
-	img.sprite {
+	.sprite {
 		background-color: transparent;
 		background-repeat: no-repeat;
+
 		&.addRelatedVideo {
 			background-image: url(/extensions/wikia/RelatedVideos/images/AddVideo_Icon.png);  /* base64 */
 			height: 22px;
@@ -80,36 +83,35 @@ $color-related-videos-background: darken($color-page, 20%);
 
 	.RVBody {
 		height: 200px;
+
 		.button {
+			height: 90px;
+			width: 15px;
+			position: absolute;
+			margin-top: 15px;
+			left: 10px;
+
 			&.secondary {
 				@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 35%, $color-secondary-button, 65%);
 				&:hover {
 					@include linear-gradient($color-secondary-button, top, $color-secondary-button, 5%, $color-secondary-button, 50%);
 				}
 			}
-			height: 90px;
-			width: 15px;
-			position: absolute;
-			margin-top: 15px;
-			left: 10px;
-			.chevron {
-				border-color: transparent $color-buttons transparent transparent;
-				border-width: 11px;
-				margin: 35px -9px;
-			}
-			&.left{
+
+			&.left {
 				left: 633px;
 				.chevron {
 					border-color: transparent transparent transparent $color-buttons;
 					margin: 35px 4px;
 				}
-				&.inactive{
+				&.inactive {
 					img {
 						border-color: transparent transparent transparent $color-inactive-button;
 					}
 				}
 			}
-			&.inactive{
+
+			&.inactive {
 				@include opacity(50);
 				@include linear-gradient($color-secondary-button, left, $color-secondary-button, 5%, $color-secondary-button, 50%);
 				cursor: auto;
@@ -117,162 +119,188 @@ $color-related-videos-background: darken($color-page, 20%);
 					border-color: transparent $color-inactive-button transparent transparent;
 				}
 			}
+
+			.chevron {
+				border-color: transparent $color-buttons transparent transparent;
+				border-width: 11px;
+				margin: 35px -9px;
+			}
 		}
-        .seemore {
-          clear:both;
-          margin-top:10px;
-          margin-bottom:10px;
-        }
-        .video-views {
-        	display: block;
-        	font-weight: normal;
-        	margin-top: 7px;
-        }
-		.wrapper {
-			position: absolute;
-			width: 580px;
-			left: 50px;
+	}
+
+    .seemore {
+      clear:both;
+      margin-top:10px;
+      margin-bottom:10px;
+    }
+
+    .video-views {
+    	display: block;
+    	font-weight: normal;
+    	margin-top: 7px;
+    }
+
+	.wrapper {
+		position: absolute;
+		width: 580px;
+		left: 50px;
+		overflow: hidden;
+	}
+
+	.container {
+		width: 500000px;
+		position: relative;
+	}
+
+	.item {
+		vertical-align: top;
+		padding: 5px;
+		height: 175px;
+		width: 160px;
+		margin: 11px;
+		display: inline-block;
+		float: left;
+		position: relative;
+
+		.description{
+			width: 160px;
+			line-height: 15px;
+			font-size: 12px;
+			font-weight: bold;
+			padding-top: 8px;
+			max-height: 30px;
 			overflow: hidden;
-			.container{
-				width: 500000px;
-				position: relative;
-				div.item {
-					vertical-align: top;
-					padding: 5px;
-					height: 175px;
-					width: 160px;
-					margin: 11px;
-					display: inline-block;
-					float: left;
-					position: relative;
-					.description{
-						width: 160px;
-						line-height: 15px;
-						font-size: 12px;
-						font-weight: bold;
-						padding-top: 8px;
-						max-height: 30px;
-						overflow: hidden;
-						margin-left: 2px;
-					}
-					.new {
-						position: absolute;
-						left: 0px;
-						top: 0px;
-						color: $color-button-text;
-						font-size: 11px;
-						line-height: 14px;
-						padding: 1px 4px 1px 6px;
-						background-color: $color-buttons;
-						&:before {
-							content: '';
-							position: absolute;
-							height: 0px;
-							width: 0px;
-							border-width: 8px;
-							border-style: solid;
-							border-color: transparent transparent $color-buttons transparent;
-							right: -8px;
-							top: 0px;
-							visibility: visible;
-						}
-						&:after {
-							content: '';
-							position: absolute;
-							height: 0px;
-							width: 0px;
-							border-width: 8px;
-							border-style: solid;
-							border-color: $color-buttons transparent transparent transparent;
-							right: -8px;
-							top: 0px;
-							visibility: visible;
-						}
-					}
-					a.video{
-						display: block;
-						width: 160px;
-						height: 90px;
-						overflow: hidden;
-						position: relative;
-						.playButton {
-							@include opacity(30);
-							width: 160px;
-							height: 90px;
-							position: absolute;
-							z-index: 1;
-							background-image: url(/extensions/wikia/RelatedVideos/images/PlayBtn_35Alpha.png); /* base64 */
-							background-repeat:no-repeat;
-							background-position:center;
-							&:hover {
-								@include opacity(75);
-							}
-						}
-						&:hover {
-								text-decoration: none;
-						}
-					}
-					.info {
-						font-size: 11px;
-						margin-left: 2px;
-						line-height: 14px;
-						margin-top: 2px;
+			margin-left: 2px;
+		}
 
-					}
-					.options {
-						float: left;
-						position: absolute;
-						left: 3px;
-						bottom: 0px;
-						font-size: 11px;
-						margin-left: 2px;
-						display: none;
-						img {
-							margin-top: -9px;
-							margin-right:5px;
-							width: 11px;
-							height: 14px;
-							background-image: url(/extensions/wikia/RelatedVideos/images/TrashCan.png); /* base64 */
-						}
-					}
-				}
+		.new {
+			position: absolute;
+			left: 0px;
+			top: 0px;
+			color: $color-button-text;
+			font-size: 11px;
+			line-height: 14px;
+			padding: 1px 4px 1px 6px;
+			background-color: $color-buttons;
 
-				div.action {
-					vertical-align: top;
-					padding: 5px;
-					height: 175px;
-					width: 160px;
-					margin: 11px;
-					display: inline-block;
-					position: relative;
-					a.video{
-						width: 160px;
-						height: 90px;
-						display: block;
-						overflow: hidden;
-						position: relative;
-						border: 1px solid $color-page-border;
-						background: $color-related-videos-background;
-						.addVideo {
-							@include opacity(30);
-							width: 168px;
-							height: 83px;
-							position: absolute;
-							z-index: 100;
-							background-image: url(/extensions/wikia/RelatedVideos/images/AddVideo_Large.png); /* base64 */
-							background-repeat:no-repeat;
-							background-position:center;
-							&:hover {
-								@include opacity(100);
-							}
-						}
-					}
-					&:hover {
-						.addVideo {
-							@include opacity(50);
-						}
-					}
+			&:before {
+				content: '';
+				position: absolute;
+				height: 0px;
+				width: 0px;
+				border-width: 8px;
+				border-style: solid;
+				border-color: transparent transparent $color-buttons transparent;
+				right: -8px;
+				top: 0px;
+				visibility: visible;
+			}
+
+			&:after {
+				content: '';
+				position: absolute;
+				height: 0px;
+				width: 0px;
+				border-width: 8px;
+				border-style: solid;
+				border-color: $color-buttons transparent transparent transparent;
+				right: -8px;
+				top: 0px;
+				visibility: visible;
+			}
+		}
+
+		.video {
+			display: block;
+			width: 160px;
+			height: 90px;
+			overflow: hidden;
+			position: relative;
+
+			.playButton {
+				@include opacity(30);
+				width: 160px;
+				height: 90px;
+				position: absolute;
+				z-index: 1;
+				background-image: url(/extensions/wikia/RelatedVideos/images/PlayBtn_35Alpha.png); /* base64 */
+				background-repeat:no-repeat;
+				background-position:center;
+
+				&:hover {
+					@include opacity(75);
 				}
+			}
+
+			&:hover {
+					text-decoration: none;
+			}
+		}
+
+		.info {
+			font-size: 11px;
+			margin-left: 2px;
+			line-height: 14px;
+			margin-top: 2px;
+
+		}
+
+		.options {
+			float: left;
+			position: absolute;
+			left: 3px;
+			bottom: 0px;
+			font-size: 11px;
+			margin-left: 2px;
+			display: none;
+
+			img {
+				margin-top: -9px;
+				margin-right:5px;
+				width: 11px;
+				height: 14px;
+				background-image: url(/extensions/wikia/RelatedVideos/images/TrashCan.png); /* base64 */
+			}
+		}
+	}
+
+	.action {
+		vertical-align: top;
+		padding: 5px;
+		height: 175px;
+		width: 160px;
+		margin: 11px;
+		display: inline-block;
+		position: relative;
+
+		.video {
+			width: 160px;
+			height: 90px;
+			display: block;
+			overflow: hidden;
+			position: relative;
+			border: 1px solid $color-page-border;
+			background: $color-related-videos-background;
+
+			.addVideo {
+				@include opacity(30);
+				width: 168px;
+				height: 83px;
+				position: absolute;
+				z-index: 100;
+				background-image: url(/extensions/wikia/RelatedVideos/images/AddVideo_Large.png); /* base64 */
+				background-repeat:no-repeat;
+				background-position:center;
+
+				&:hover {
+					@include opacity(100);
+				}
+			}
+		}
+
+		&:hover {
+			.addVideo {
+				@include opacity(50);
 			}
 		}
 	}
@@ -288,11 +316,13 @@ $color-related-videos-background: darken($color-page, 20%);
 }
 
 #relatedvideos-video-player {
-	section.modalContent {
+	.modalContent {
 		margin-top: 0px;
 	}
+
 	.embedCode {
 		margin-top: 18px;
+
 		input {
 			line-height: 25px;
 			height: 25px;
@@ -303,242 +333,275 @@ $color-related-videos-background: darken($color-page, 20%);
 			background-color: mix( $color-page, #FFFFFF, 95% );
 			width: 650px;
 			color: $color-text;
-		}
-		input:focus {
-			background-color: mix( $color-page, #FFFFFF, 90% );
+
+			&:focus {
+				background-color: mix( $color-page, #FFFFFF, 90% );
+			}
 		}
 	}
+
 	.embedHtml {
 		margin-top: 53px;
 	}
+
 	h1 {
 		display: none;
 	}
 }
 
 .WikiaRail .RelatedVideosModule.module {
-	#RelatedVideosRL {
-		&.RelatedVideosHidden { display: block }
+	.RelatedVideos {
 		width: 100%;
 		height: auto;
 		margin: 0;
+
+		&.RelatedVideosHidden {
+			display: block;
+		}
+
 		h1 {
 			margin-bottom: 12px;
 			padding: 0;
 		}
+
 		.messageHolder {
 			display: none;
 		}
-		.RVHeader {
-			border: none;
-			height: 38px;
-			.addVideo {
-				display: inline-block;
-				position: relative;
-				float: right;
-				margin: 2px 0px 0px;
-    			padding: 0 7px 0 33px;
-				img {
-					position: absolute;
-					left: 3px;
-				}
-			}
-			.tally {
-				display: inline-block;
-				float: left;
-				margin: 0px;
-				padding: 0;
-			}
-			.fixedwidth {
-				width: 80px;
+	}
+
+	.RVHeader {
+		border: none;
+		height: 38px;
+
+		.addVideo {
+			display: inline-block;
+			position: relative;
+			float: right;
+			margin: 2px 0px 0px;
+			padding: 0 7px 0 33px;
+
+			img {
+				position: absolute;
+				left: 3px;
 			}
 		}
 
-		.RVBody {
-			height: auto;
-			clear: both;
-			.novideos { padding: 7px; }
-			.wrapper {
-				width: 298px;
-				position: static;
-				margin: 5px 0;
-				div.item {
-					@include clearfix;
-					display: block;
-					float: none;
-					width: auto;
-					height: 90px;
-					padding: 0;
-					margin: 0 0 15px 0;
-					.new {
-						top: 14px;
-					}
-					.video {
-						display: block;
-						float: left;
-						margin-right: 12px;
-						width: 150px;
-						.playButton {
-							width: 150px;
-						}
-					}
-					.description {
-						display: block;
-						float: left;
-						max-height: 80px;
-						width: 135px;
-						padding-top: 2px;
-						font-size: 11px;
-						margin: 0;
-
-						// Video title next to thumbnail
-						a {
-							font-size: 12px;
-						}
-					}
-					.see-more-videos-placeholder {
-						background: $color-see-more-videos-placeholder;
-						border: 1px solid $color-page-border;
-						color: $color-text;
-						display: block;
-						font-size: 14px;
-						font-weight: bold;
-						height: 52px;
-						padding-top: 36px;
-						outline: none;
-						text-align: center;
-						width: 150px;
-					}
-					.remove {
-						background-color: #DDD;
-						display: none;
-						padding: 4px 5px;
-						position: absolute;
-						left: 127px;
-						top: 8px;
-						z-index: 101;
-						.sprite {
-							width: 13px;
-							height: 16px;
-							display: block;
-						}
-					}
-					&:hover .remove {
-						display: block;
-					}
-				}
-				div.action {
-				    cursor: pointer;
-    				padding: 0;
-    				margin: 0;
-    				display: inline-block;
-    				position: relative;
-    				height: 110px;
-    				a.video{
-    				    top: 14px;
-    					width: 150px;
-    					height: 85px;
-    					display: block;
-    					overflow: hidden;
-    					position: relative;
-    					border: none;
-    					background: $color-related-videos-background;
-    					.addVideo {
-    						@include opacity(30);
-    						width: 150px;
-    						height: 85px;
-    						position: absolute;
-    						z-index: 100;
-    						background-image: url(/extensions/wikia/RelatedVideos/images/AddVideo_Large.png); /* base64 */
-    						background-repeat:no-repeat;
-    						background-position:center;
-    						&:hover {
-    							@include opacity(100);
-    						}
-    					}
-    				}
-    				&:hover {
-    				    border: none;
-    					padding: 1px;
-    					@include box-shadow( 0, 0, 0, #ffffff, 0, 0 );
-    					background: none;
-    					.addVideo {
-    						@include opacity(50);
-    					}
-    				}
-    			}
-				.group {
-					display: inline-block;
-					float: left;
-					width: 298px;
-					padding-bottom: 5px;
-				}
-			}
-			.scrollleft, .scrollright {
-				left: 0;
-				position: static;
-				height: 25px;
-				margin: 0;
-				background: none;
-				cursor: pointer;
-			}
-			.scrollleft {
-				float: left;
-				padding: 0;
-				img {
-					border-color: transparent $color-buttons transparent transparent;
-					margin: 3px 0 0 -9px;
-				 	border-width: 9px;
-			 	}
-			}
-			.scrollright {
-				float: right;
-				padding: 0;
-				img {
-					border-color: transparent transparent transparent $color-buttons;
-					margin: 3px -9px 0 0;
-					border-width: 9px;
-				}
-			}
-			.scrollleft.inactive {
-				img {
-					@include opacity(50);
-				}
-			}
-			.scrollright.inactive {
-				img {
-					@include opacity(50);
-				}
-			}
-			.paginationbar {
-				margin: 0 0 20px 0px;
-				height: 25px;
-				.pagecount {
-					line-height: 25px;
-					text-align: center;
-				}
-			}
-			.requestvideos {
-				margin: 0 -10px;
-				padding: 0 0 2px 0;
-				text-align: center;
-                clear: both;
-				&:before{
-					@include opacity(50);
-					border-top: 1px solid $color-secondary-button-border;
-					content: "";
-					display: block;
-					margin-bottom: 15px;
-				}
-				button {
-					margin-bottom: 12px;
-				}
-			}
-
+		.tally {
+			display: inline-block;
+			float: left;
+			margin: 0px;
+			padding: 0;
 		}
-		.seeMorePlaceholder {
-			display: none;
+
+		.fixedwidth {
+			width: 80px;
 		}
 	}
-}
 
+	.RVBody {
+		height: auto;
+		clear: both;
+
+		.novideos {
+			padding: 7px;
+		}
+
+		.wrapper {
+			width: if( $responsive-layout-enabled, 269px, 298px );
+			position: static;
+			margin: 5px 0;
+		}
+
+		.item {
+			@include clearfix;
+			display: block;
+			float: none;
+			width: auto;
+			height: 90px;
+			padding: 0;
+			margin: 0 0 15px 0;
+
+			.new {
+				top: 14px;
+			}
+
+			.video {
+				display: block;
+				float: left;
+				margin-right: 12px;
+				width: 150px;
+				.playButton {
+					width: 150px;
+				}
+			}
+
+			.description {
+				display: block;
+				float: left;
+				max-height: 80px;
+				width: if( $responsive-layout-enabled, 107px, 135px );
+				padding-top: 2px;
+				font-size: 11px;
+				margin: 0;
+
+				// Video title next to thumbnail
+				a {
+					font-size: 12px;
+				}
+			}
+
+			.see-more-videos-placeholder {
+				background: $color-see-more-videos-placeholder;
+				border: 1px solid $color-page-border;
+				color: $color-text;
+				display: block;
+				font-size: 14px;
+				font-weight: bold;
+				height: 52px;
+				padding-top: 36px;
+				outline: none;
+				text-align: center;
+				width: 150px;
+			}
+
+			.remove {
+				background-color: #DDD;
+				display: none;
+				padding: 4px 5px;
+				position: absolute;
+				left: 127px;
+				top: 8px;
+				z-index: 101;
+				.sprite {
+					width: 13px;
+					height: 16px;
+					display: block;
+				}
+			}
+
+			&:hover .remove {
+				display: block;
+			}
+		}
+
+
+		.action {
+		    cursor: pointer;
+			padding: 0;
+			margin: 0;
+			display: inline-block;
+			position: relative;
+			height: 110px;
+
+			.video {
+			    top: 14px;
+				width: 150px;
+				height: 85px;
+				display: block;
+				overflow: hidden;
+				position: relative;
+				border: none;
+				background: $color-related-videos-background;
+
+				.addVideo {
+					@include opacity(30);
+					width: 150px;
+					height: 85px;
+					position: absolute;
+					z-index: 100;
+					background-image: url(/extensions/wikia/RelatedVideos/images/AddVideo_Large.png); /* base64 */
+					background-repeat:no-repeat;
+					background-position:center;
+					&:hover {
+						@include opacity(100);
+					}
+				}
+			}
+
+			&:hover {
+			    border: none;
+				padding: 1px;
+				@include box-shadow( 0, 0, 0, #ffffff, 0, 0 );
+				background: none;
+
+				.addVideo {
+					@include opacity(50);
+				}
+			}
+		}
+
+		.group {
+			display: inline-block;
+			float: left;
+			width: 298px;
+			padding-bottom: 5px;
+		}
+
+		.scrollleft,
+		.scrollright {
+			left: 0;
+			position: static;
+			height: 25px;
+			margin: 0;
+			background: none;
+			cursor: pointer;
+			padding: 0;
+
+			&.inactive img {
+				@include opacity(50);
+			}
+
+			img {
+				border-width: 9px;
+			}
+		}
+
+		.scrollleft {
+			float: left;
+			img {
+				border-color: transparent $color-buttons transparent transparent;
+				margin: 3px 0 0 -9px;
+		 	}
+		}
+
+		.scrollright {
+			float: right;
+			img {
+				border-color: transparent transparent transparent $color-buttons;
+				margin: 3px -9px 0 0;
+			}
+		}
+
+		.paginationbar {
+			margin: 0 0 20px 0px;
+			height: 25px;
+			.pagecount {
+				line-height: 25px;
+				text-align: center;
+			}
+		}
+
+		.requestvideos {
+			margin: 0 -10px;
+			padding: 0 0 2px 0;
+			text-align: center;
+            clear: both;
+
+			&:before {
+				@include opacity(50);
+				border-top: 1px solid $color-secondary-button-border;
+				content: "";
+				display: block;
+				margin-bottom: 15px;
+			}
+
+			button {
+				margin-bottom: 12px;
+			}
+		}
+	}
+
+	.seeMorePlaceholder {
+		display: none;
+	}
+}

@@ -108,7 +108,7 @@ class WikiaQuizController extends WikiaController {
 		$wgRequest = F::app()->getGlobal('wgRequest');
 		$elementId = $wgRequest->getVal('elementId');
 		if ($elementId) {
-			$quizElement = F::build('WikiaQuizElement', array($elementId), 'newFromId');
+			$quizElement = WikiaQuizElement::newFromId($elementId);
 			$this->data = $quizElement->getData();
 		}
 	}

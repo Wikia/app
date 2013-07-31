@@ -16,7 +16,7 @@ class PerformanceMetrics extends WikiaObject {
 		$instances = array();
 
 		foreach($providers as $providerName) {
-			$instances[] = F::build($providerName);
+			$instances[] = new $providerName;
 		}
 
 		return $instances;

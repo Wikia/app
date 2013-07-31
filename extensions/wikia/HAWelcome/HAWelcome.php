@@ -48,9 +48,9 @@ $wgExtensionMessagesFiles[ 'HAWelcome' ] = __DIR__ . '/HAWelcome.i18n.php';
 /**
  * @global Array The list of hooks.
  * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
- * @see http://www.mediawiki.org/wiki/Manual:Hooks/RevisionInsertComplete
+ * @see http://www.mediawiki.org/wiki/Manual:Hooks/ArticleSaveComplete
  */
-$wgHooks['RevisionInsertComplete'][] = 'HAWelcomeJob::onRevisionInsertComplete';
+$wgHooks['ArticleSaveComplete'][] = 'HAWelcomeJob::onArticleSaveComplete';
 /**
  * @type String Command name for the job aka type of the job.
  * @see http://www.mediawiki.org/wiki/Manual:RunJobs.php
@@ -96,19 +96,35 @@ class HAWelcomeJob extends Job {
 	/**
 	 * Enqueues a job based on a few simple preliminary checks.
 	 *
-	 * Called after a revision is inserted into the database.
+	 * Called once an article has been saved.
 	 *
+	 * @param $oArticle Object The WikiPage object for the contribution.
+	 * @param $oUser Object The User object for the contribution.
+	 * @param $sText String The contributed text.
+	 * @param $sSummary String The summary for the contribution.
+	 * @param $iMinorEdit Integer Indicates whether a contribution has been marked as a minor one.
+	 * @param $nWatchThis Null Not used as of MW 1.8
+	 * @param $nSectionAnchor Null Not used as of MW 1.8
+	 * @param $iFlags Integer Bitmask flags for the edit.
 	 * @param $oRevision Object The Revision object.
-	 * @param $sData String URL to external object.
-	 * @param $sFlags String Flags for this revision.
+	 * @param $oStatus Object The Status object returned by Article::doEdit().
+	 * @param $iBaseRevId Integer The ID of the revision, the current edit is based on (or Boolean False).
 	 * @return Boolean True so the calling method would continue.
 	 * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
-	 * @see http://www.mediawiki.org/wiki/Manual:Hooks/RevisionInsertComplete
+	 * @see http://www.mediawiki.org/wiki/Manual:Hooks/ArticleSaveComplete
 	 * @since MediaWiki 1.19.4
 	 * @internal
 	 */
-	public static function onRevisionInsertComplete( &$oRevision, $sData, $sFlags ) {
+	public static function onArticleSaveComplete( &$oArticle, &$oUser, $sText, $sSummary, $iMinorEdit, $nWatchThis, $nSectionAnchor, &$iFlags, $oRevision, $oStatus, $iBaseRevId ) {
 		wfProfileIn( __METHOD__ );
+
+		if ( is_null( $oRevision ) ) {
+			// if oRevision is null, that means we're dealing with a null edit (no content change)
+			// and therefore we don't have to welcome anybody
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+
 		/** @global Boolean Show PHP Notices. Set via WikiFactory. */
 		global $wgHAWelcomeNotices;
 		/** @type Interget Store the original error reporting level. */
@@ -399,13 +415,9 @@ class HAWelcomeJob extends Job {
 			}
 			// See: extensions/wikia/Wall/WallMessage.class.php
 			/** @type Mixed|Boolean The WallMessage object or logical false. */
-			$mWallMessage = F::build(
-				'WallMessage',
-				array(
-					$this->sMessage, $this->sRecipientName, $wgUser,
-					wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), false, array(), false, false
-				),
-				'buildNewMessageAndPost'
+			$mWallMessage = WallMessage::buildNewMessageAndPost(
+                $this->sMessage, $this->sRecipientName, $wgUser,
+                wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), false, array(), false, false
 			);
 			// Sets the sender of the message when the actual message
 			// was posted by the welcome bot
@@ -453,8 +465,9 @@ class HAWelcomeJob extends Job {
 		// Is recipient a registered user?
 		$sMessageKey .= $this->iRecipientId
 			? 'user'  : 'anon';
-		// Is sender a staff member?
-		$sMessageKey .= in_array( 'staff', $this->oSender->getEffectiveGroups() )
+		// Is sender a staff member and not a local admin?
+		$senderGroups = $this->oSender->getEffectiveGroups();
+		$sMessageKey .= ( in_array( 'staff', $senderGroups ) && !in_array( 'sysop', $senderGroups ) )
 			? '-staff' : '';
 		if ( $this->bShowNotices ) {
 			trigger_error( sprintf( '%s Message key is %s.', __METHOD__, $sMessageKey ) , E_USER_NOTICE );
@@ -464,7 +477,7 @@ class HAWelcomeJob extends Job {
 		// Article Comments and Message Wall hook up to this event.
 		wfRunHooks( 'HAWelcomeGetPrefixText' , array( &$sPrefixedText, $this->title ) );
 		// Determine the key for the signature.
-		$sSignatureKey = in_array( 'staff', $this->oSender->getEffectiveGroups() )
+		$sSignatureKey = ( in_array( 'staff', $senderGroups ) && !in_array( 'sysop', $senderGroups ) )
 			? 'staffsig-text' : 'signature';
 		// Determine the full signature.
 		$sFullSignature = wfMessage(

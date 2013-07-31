@@ -29,12 +29,6 @@ class DependencyContainer
 	protected $config;
 	
 	/**
-	 * Used to dependency-inject the ResultSet factory for GroupingSets.
-	 * @var \Wikia\Search\ResultSet\Factory
-	 */
-	protected $resultSetFactory;
-	
-	/**
 	 * Required to connect to Solr.
 	 * @var \Solarium_Client
 	 */
@@ -45,7 +39,6 @@ class DependencyContainer
 	 * @param array $dependencies an associative array of attribute to value.
 	 */
 	public function __construct( array $dependencies = array() ) {
-		$this->resultSetFactory = new ResultSet\Factory;
 		$this->service = (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\Search\MediaWikiService' );
 		$this->configureByArray( $dependencies );
 	}
@@ -103,22 +96,4 @@ class DependencyContainer
 		$this->client = $client;
 		return $this;
 	}
-	
-	/**
-	 * Accessor for resultsetfactory.
-	 * @return the $resultSetFactory
-	 */
-	public function getResultSetFactory() {
-		return $this->resultSetFactory;
-	}
-
-	/**
-	 * Mutator for resultsetfactory.
-	 * @param \Wikia\Search\ResultSet\Factory $resultSetFactory
-	 */
-	public function setResultSetFactory( \Wikia\Search\ResultSet\Factory $resultSetFactory ) {
-		$this->resultSetFactory = $resultSetFactory;
-		return $this;
-	}
-
 }

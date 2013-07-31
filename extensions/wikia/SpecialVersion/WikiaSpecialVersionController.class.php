@@ -18,14 +18,14 @@ class WikiaSpecialVersionController extends WikiaSpecialPageController
 	 * Constructor method. Overrides the original Special:Version page.
 	 */
 	public function __construct() {
-		$this->version = F::build( 'WikiaSpecialVersion' );
+		$this->version = (new WikiaSpecialVersion);
 		
 		parent::__construct( 'Version' );
 	}
 	
 	public function index() {
-		$title = F::build( 'Title', array( 'Version', NS_SPECIAL ), 'newFromText' );
-		$popts = F::build('ParserOptions', array( RequestContext::getMain() ), 'newFromContext' );
+		$title = Title::newFromText( 'Version', NS_SPECIAL );
+		$popts = ParserOptions::newFromContext( RequestContext::getMain() );
 
 		$this->wg->Title = $title;
 		$this->app->wg->Out->setPageTitle( $title );
@@ -44,7 +44,7 @@ class WikiaSpecialVersionController extends WikiaSpecialPageController
 		$this->setVal( 'wikiaConfigMessage', wfMessage( 'wikia-version-config' )->text() );
 		$this->setVal( 'wikiaConfigVersion', $this->version->getWikiaConfigVersion() );
 		$this->setVal( 'versionLicenseMessage', wfMessage( 'version-license' )->text() );
-		$this->setVal( 'versionLicenseInfoMessage', wfMessage( 'version-license-info' )->text() );
+		$this->setVal( 'versionLicenseInfoMessage', wfMessage( 'version-license-info' )->parse() );
 		$this->setVal( 'versionSoftwareMessage', wfMessage( 'version-software' )->text() );
 		$this->setVal( 'versionSoftwareProductMessage', wfMessage( 'version-software-product' )->text() );
 		$this->setVal( 'versionSoftwareVersionMessage', wfMessage( 'version-software-version' )->text() );

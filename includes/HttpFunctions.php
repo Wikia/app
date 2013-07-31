@@ -729,8 +729,8 @@ class CurlHttpRequest extends MWHttpRequest {
 		} else {
 			$this->curlOptions[CURLOPT_CUSTOMREQUEST] = $this->method;
 			// Wikia change - @author: mech - begin
-			// allow sending body for PUT requests
-			if ($this->method == 'PUT') {
+			// allow sending body for PUT, PATCH requests
+			if ( $this->method == 'PUT' || $this->method == 'PATCH' ) {
 				$this->curlOptions[CURLOPT_POSTFIELDS] = $this->postData;
 			}
 			// Wikia change - end

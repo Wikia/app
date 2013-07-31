@@ -41,12 +41,12 @@ class DataMartService extends Service {
 			}
 		}
 
-		$memKey = $app->wf->SharedMemcKey('datamart', 'pageviews', $wikiId, $periodId, $startDate, $endDate);
+		$memKey = wfSharedMemcKey('datamart', 'pageviews', $wikiId, $periodId, $startDate, $endDate);
 		$pageviews = $app->wg->Memc->get($memKey);
 		if (!is_array($pageviews)) {
 			$pageviews = array();
 			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = $app->wf->GetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 
 				$result = $db->select(
 					array('rollup_wiki_pageviews'),
@@ -97,12 +97,12 @@ class DataMartService extends Service {
 		}
 
 		$wkey = md5(implode(":", $wikis));
-		$memKey = $app->wf->SharedMemcKey('datamart', 'pageviews_wikis', $wkey, $periodId, $startDate, $endDate);
+		$memKey = wfSharedMemcKey('datamart', 'pageviews_wikis', $wkey, $periodId, $startDate, $endDate);
 		$pageviews = $app->wg->Memc->get($memKey);
 		if (!is_array($pageviews)) {
 			$pageviews = array();
 			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = $app->wf->GetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 
 				$result = $db->select(
 					array('rollup_wiki_pageviews'),
@@ -145,12 +145,12 @@ class DataMartService extends Service {
 		}
 
 		$dkey = md5(implode(":", $dates));
-		$memKey = $app->wf->SharedMemcKey('datamart', 'sumpageviews', $periodId, $dkey);
+		$memKey = wfSharedMemcKey('datamart', 'sumpageviews', $periodId, $dkey);
 		$pageviews = $app->wg->Memc->get($memKey);
 		if (!is_array($pageviews)) {
 			$pageviews = array();
 			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = $app->wf->GetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 
 				foreach ($dates as $date) {
 					$row = $db->selectRow(
@@ -230,7 +230,7 @@ class DataMartService extends Service {
 	 *
 	 * @return array $topWikis [ array( wikiId => pageviews ) ]
 	 */
-	public static function getTopWikisByPageviews ($periodId, $limit = 200, $lang = null, $hub = null, $public = null) {
+	public static function getTopWikisByPageviews ($periodId, $limit = 200, Array $langs = null, $hub = null, $public = null) {
 		$app = F::app();
 		wfProfileIn(__METHOD__);
 
@@ -251,20 +251,20 @@ class DataMartService extends Service {
 				break;
 		}
 
-		$memKey = $app->wf->SharedMemcKey('datamart', 'topwikis', $cacheVersion, $field, $limitUsed, $lang, $hub, $public);
-		$getData = function () use ($app, $limitUsed, $lang, $hub, $public, $field) {
+		$memKey = wfSharedMemcKey('datamart', 'topwikis', $cacheVersion, $field, $limitUsed, implode( ',', $langs ), $hub, $public);
+		$getData = function () use ($app, $limitUsed, $langs, $hub, $public, $field) {
 			wfProfileIn(__CLASS__ . '::TopWikisQuery');
 			$topWikis = array();
 
 			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = $app->wf->GetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 
 				$tables = array('report_wiki_recent_pageviews as r');
 				$where = array();
 
-				if (!empty($lang)) {
-					$lang = $db->addQuotes($lang);
-					$where[] = "r.lang = {$lang}";
+				if (!empty($langs)) {
+					$langs = $db->makeList($langs);
+					$where[] = 'r.lang IN (' . $langs . ')';
 				}
 
 				if (!empty($hub)) {
@@ -335,7 +335,7 @@ class DataMartService extends Service {
 
 			wfProfileIn(__CLASS__ . '::TopWikisVideoViewQuery');
 
-			$db = $app->wf->GetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 
 			$tables = array('rollup_wiki_video_views as r');
 			$where = array('period_id = ' . $periodId,
@@ -369,7 +369,7 @@ class DataMartService extends Service {
 		};
 
 		$cacheVersion = 1;
-		$memKey = $app->wf->SharedMemcKey('datamart', 'topvideowikis', $cacheVersion, $periodId);
+		$memKey = wfSharedMemcKey('datamart', 'topvideowikis', $cacheVersion, $periodId);
 		$topWikis = WikiaDataAccess::cache($memKey, 43200 /* 12 hours */, $getData);
 		$topWikis = array_slice($topWikis, 0, $limit, true);
 
@@ -404,12 +404,12 @@ class DataMartService extends Service {
 			}
 		}
 
-		$memKey = $app->wf->SharedMemcKey('datamart', 'events', $wikiId, $periodId, $startDate, $endDate);
+		$memKey = wfSharedMemcKey('datamart', 'events', $wikiId, $periodId, $startDate, $endDate);
 		$events = $app->wg->Memc->get($memKey);
 		if (!is_array($events)) {
 			$events = array();
 			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = $app->wf->GetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 
 				$result = $db->select(
 					array('rollup_wiki_namespace_user_events'),
@@ -501,7 +501,7 @@ class DataMartService extends Service {
 			$articleIds = null;
 		}
 
-		$memKey = $app->wf->SharedMemcKey(
+		$memKey = wfSharedMemcKey(
 			'datamart',
 			'toparticles',
 			$cacheVersion,
@@ -516,7 +516,7 @@ class DataMartService extends Service {
 			$topArticles = array();
 
 			if ( !empty( $app->wg->StatsDBEnabled ) ) {
-				$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+				$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
 
 				$where = array(
 					//the rollup_wiki_article_pageviews contains only summarized data
@@ -609,12 +609,12 @@ class DataMartService extends Service {
 			$periodId = self::PERIOD_ID_MONTHLY;
 		}
 
-		$memKey = $app->wf->SharedMemcKey('datamart', 'tags_top_wikis', $tagId, $periodId, $startDate, $endDate, $langCode, $limit);
+		$memKey = wfSharedMemcKey('datamart', 'tags_top_wikis', $tagId, $periodId, $startDate, $endDate, $langCode, $limit);
 		$tagViews = $app->wg->Memc->get($memKey);
 		if (!is_array($tagViews)) {
 			$tagViews = array();
 			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = $app->wf->GetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 
 				$tables = array(
 					'r' => 'rollup_wiki_pageviews',

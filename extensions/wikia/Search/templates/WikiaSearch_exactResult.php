@@ -21,7 +21,7 @@
 			</h1>
 
 			<p class="hub subtle"><?= strtoupper( $resultSet->getHeader( 'hub' ) ); ?></p>
-			<p class="description"><?= $resultSet->getDescriptionByLength( 135 ); ?></p>
+			<p class="description"><?= $resultSet->getDescriptionByLength( 130 ); ?></p>
 
 			<ul class="wiki-statistics subtle">
 				<li><?= $pagesMsg ?></li>

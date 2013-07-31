@@ -126,7 +126,7 @@ abstract class ApiWrapper {
 
 		wfProfileIn( __METHOD__ );
 		// need to check cached metadata
-		$memcKey = F::app()->wf->memcKey( $this->getMetadataCacheKey() );
+		$memcKey = wfMemcKey( $this->getMetadataCacheKey() );
 		$metadata = F::app()->wg->memc->get( $memcKey );
 		wfProfileOut( __METHOD__ );
 
@@ -153,7 +153,7 @@ abstract class ApiWrapper {
 		$apiUrl = $this->getApiUrl();
 
 		// use URL's hash to avoid going beyond 250 characters limit of memcache key
-		$memcKey = F::app()->wf->memcKey( static::$CACHE_KEY, md5($apiUrl), static::$CACHE_KEY_VERSION );
+		$memcKey = wfMemcKey( static::$CACHE_KEY, md5($apiUrl), static::$CACHE_KEY_VERSION );
 		if ( empty($this->videoId) ){
 			wfProfileOut( __METHOD__ );
 			throw new EmptyResponseException($apiUrl);
@@ -305,14 +305,38 @@ abstract class ApiWrapper {
 		if ( !isset($metadata['ageGate']) ) {
 			$metadata['ageGate'] = $this->isAgeGate();
 		}
+		if ( !isset( $metadata['ageRequired'] ) ) {
+			$metadata['ageRequired'] = $this->getAgeRequired();
+		}
 		if ( !isset($metadata['language']) ) {
 			$metadata['language'] = $this->getLanguage();
+		}
+		if ( !isset( $metadata['subtitle'] ) ) {
+			$metadata['subtitle'] = $this->getSubtitle();
 		}
 		if ( !isset($metadata['tags']) ) {
 			$metadata['tags'] = $this->getVideoTags();
 		}
 		if ( !isset($metadata['provider']) ) {
 			$metadata['provider'] = $this->getProvider();
+		}
+		if ( !isset( $metadata['targetCountry'] ) ) {
+			$metadata['targetCountry'] = $this->getTargetCountry();
+		}
+		if ( !isset( $metadata['source'] ) ) {
+			$metadata['source'] = $this->getSource();
+		}
+		if ( !isset( $metadata['sourceId'] ) ) {
+			$metadata['sourceId'] = $this->getSourceId();
+		}
+		if ( !isset( $metadata['series'] ) ) {
+			$metadata['series'] = $this->getSeries();
+		}
+		if ( !isset( $metadata['season'] ) ) {
+			$metadata['season'] = $this->getSeason();
+		}
+		if ( !isset( $metadata['episode'] ) ) {
+			$metadata['episode'] = $this->getEpisode();
 		}
 
 		$this->metadata = $metadata;
@@ -386,7 +410,23 @@ abstract class ApiWrapper {
 		return false;
 	}
 
+	/**
+	 * get age required
+	 * @return integer
+	 */
+	protected function getAgeRequired() {
+		return 0;
+	}
+
 	protected function getLanguage() {
+		return '';
+	}
+
+	/**
+	 * get subtitle
+	 * @return string
+	 */
+	protected function getSubtitle() {
 		return '';
 	}
 
@@ -405,6 +445,55 @@ abstract class ApiWrapper {
 	protected function getVideoExpirationDate() {
 		return '';
 	}
+
+	/**
+	 * get target country
+	 * @return string
+	 */
+	protected function getTargetCountry() {
+		return '';
+	}
+
+	/**
+	 * get source
+	 * @return string
+	 */
+	protected function getSource() {
+		return '';
+	}
+
+	/**
+	 * get source id (video id from source)
+	 * @return string
+	 */
+	protected function getSourceId() {
+		return '';
+	}
+
+	/**
+	 * get series
+	 * @return string
+	 */
+	protected function getSeries() {
+		return '';
+	}
+
+	/**
+	 * get season
+	 * @return string
+	 */
+	protected function getSeason() {
+		return '';
+	}
+
+	/**
+	 * get episode
+	 * @return string
+	 */
+	protected function getEpisode() {
+		return '';
+	}
+
 }
 
 class EmptyResponseException extends Exception {

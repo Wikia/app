@@ -38,7 +38,7 @@ class CategorySelectHooksHelper {
 	 */
 	public static function onEditPageGetContentEnd( $editPage, &$wikitext ) {
 		if ( !$editPage->isConflict ) {
-			$data = CategorySelect::extractCategoriesFromWikitext( $wikitext );
+			$data = CategoryHelper::extractCategoriesFromWikitext( $wikitext );
 			$wikitext = $data[ 'wikitext' ];
 		}
 
@@ -51,13 +51,14 @@ class CategorySelectHooksHelper {
 	 * @param EditPage $editPage
 	 * @param WebRequest $request
 	 *
+	 * @return Boolean because it's a hook
 	 */
 	public static function onEditPageImportFormData( $editPage, $request ) {
 		$app = F::app();
 
 		if ( $request->wasPosted() ) {
 			$categories = $editPage->safeUnicodeInput( $request, 'categories' );
-			$categories = CategorySelect::changeFormat( $categories, 'json', 'array' );
+			$categories = CategoryHelper::changeFormat( $categories, 'json', 'array' );
 
 			// Concatenate categories to article wikitext (if there are any).
 			if ( !empty( $categories ) ) {
@@ -79,9 +80,9 @@ class CategorySelectHooksHelper {
 
 				// Extract categories from the article, merge them with those passed in, weed out
 				// duplicates and finally append them back to the article (BugId:99348).
-				$data = CategorySelect::extractCategoriesFromWikitext( $editPage->textbox1, true );
-				$categories = CategorySelect::getUniqueCategories( $data[ 'categories' ], $categories );
-				$categories = CategorySelect::changeFormat( $categories, 'array', 'wikitext' );
+				$data = CategoryHelper::extractCategoriesFromWikitext( $editPage->textbox1, true );
+				$categories = CategoryHelper::getUniqueCategories( $data[ 'categories' ], $categories );
+				$categories = CategoryHelper::changeFormat( $categories, 'array', 'wikitext' );
 
 				// Remove trailing whitespace (BugId:11238)
 				$editPage->textbox1 = $data[ 'wikitext' ] . rtrim( $categories );
@@ -96,6 +97,8 @@ class CategorySelectHooksHelper {
 	 *
 	 * @param EditPage $editPage
 	 * @param OutputPage $out
+	 *
+	 * @return Boolean because it's a hook
 	 */
 	public static function onEditPageShowEditFormFields( $editPage, $out ) {
 		$out->addHTML( F::app()->renderView( 'CategorySelect', 'editPageMetadata' ) );
@@ -106,15 +109,15 @@ class CategorySelectHooksHelper {
 	 * Allow toggling CategorySelect in user preferences
 	 */
 	public static function onGetPreferences( $user, &$preferences ) {
-		$app = F::app();
+		global $wgEnableUserPreferencesV2Ext;
 
-		if ( $app->wg->EnableUserPreferencesV2Ext ) {
+		if ( $wgEnableUserPreferencesV2Ext ) {
 			$section = 'editing/starting-an-edit';
-			$message = $app->wf->Message( 'tog-disablecategoryselect-v2' )->text();
+			$message = wfMessage( 'tog-disablecategoryselect-v2' )->text();
 
 		} else {
 			$section = 'editing/editing-experience';
-			$message = $app->wf->Message( 'tog-disablecategoryselect' )->text();
+			$message = wfMessage( 'tog-disablecategoryselect' )->text();
 		}
 
 		$preferences[ 'disablecategoryselect' ] = array(
@@ -130,13 +133,13 @@ class CategorySelectHooksHelper {
 	 * Set global variables for javascript
 	 */
 	public static function onMakeGlobalVariablesScript( Array &$vars ) {
-		$app = F::app();
+		$wg = F::app()->wg;
 
 		$vars[ 'wgCategorySelect' ] = array(
-			'defaultNamespace' => $app->wg->ContLang->getNsText( NS_CATEGORY ),
-			'defaultNamespaces' => CategorySelect::getDefaultNamespaces(),
-			'defaultSeparator' => trim( $app->wf->Message( 'colon-separator' )->escaped() ),
-			'defaultSortKey' => $app->wg->Parser->getDefaultSort() ?: $app->wg->Title->getText()
+			'defaultNamespace' => $wg->ContLang->getNsText( NS_CATEGORY ),
+			'defaultNamespaces' => CategoryHelper::getDefaultNamespaces(),
+			'defaultSeparator' => trim( wfMessage( 'colon-separator' )->escaped() ),
+			'defaultSortKey' => $wg->Parser->getDefaultSort() ?: $wg->Title->getText()
 		);
 
 		return true;
@@ -146,23 +149,25 @@ class CategorySelectHooksHelper {
 	 * Add hooks for view and edit pages
 	 */
 	public static function onMediaWikiPerformAction( $output, $article, $title, $user, $request, $mediawiki, $force = false ) {
+		global $wgHooks;
+
 		wfProfileIn( __METHOD__ );
 
-		if ( $force || CategorySelect::isEnabled() ) {
+		if ( $force || CategorySelectHelper::isEnabled() ) {
 			$app = F::app();
 			$action = $app->wg->Request->getVal( 'action', 'view' );
 
-			F::build( 'JSMessages' )->enqueuePackage( 'CategorySelect', JSMessages::INLINE );
+			JSMessages::enqueuePackage( 'CategorySelect', JSMessages::INLINE );
 
-			$app->registerHook( 'MakeGlobalVariablesScript', 'CategorySelectHooksHelper', 'onMakeGlobalVariablesScript' );
+			$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectHooksHelper::onMakeGlobalVariablesScript';
 
 			// Add hooks for edit pages
 			if ( $action == 'edit' || $action == 'submit' || $force ) {
-				$app->registerHook( 'EditForm::MultiEdit:Form', 'CategorySelectHooksHelper', 'onEditFormMultiEditForm' );
-				$app->registerHook( 'EditPage::CategoryBox', 'CategorySelectHooksHelper', 'onEditPageCategoryBox' );
-				$app->registerHook( 'EditPage::getContent::end', 'CategorySelectHooksHelper', 'onEditPageGetContentEnd' );
-				$app->registerHook( 'EditPage::importFormData', 'CategorySelectHooksHelper', 'onEditPageImportFormData' );
-				$app->registerHook( 'EditPage::showEditForm:fields', 'CategorySelectHooksHelper', 'onEditPageShowEditFormFields' );
+				$wgHooks['EditForm::MultiEdit:Form'][] = 'CategorySelectHooksHelper::onEditFormMultiEditForm';
+				$wgHooks['EditPage::CategoryBox'][] = 'CategorySelectHooksHelper::onEditPageCategoryBox';
+				$wgHooks['EditPage::getContent::end'][] = 'CategorySelectHooksHelper::onEditPageGetContentEnd';
+				$wgHooks['EditPage::importFormData'][] = 'CategorySelectHooksHelper::onEditPageImportFormData';
+				$wgHooks['EditPage::showEditForm:fields'][] = 'CategorySelectHooksHelper::onEditPageShowEditFormFields';
 			}
 		}
 

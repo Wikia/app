@@ -85,7 +85,7 @@ $.fn.extend({
 
 				// or use width provided
 				if (typeof options.width != 'undefined') {
-					modalWidth = options.width + 30 /* padding */;
+					modalWidth = options.width + 40 /* padding */;
 				}
 			} else {
 				modalWidth = 'auto';
@@ -244,7 +244,7 @@ $.fn.extend({
 
 		blackout.fadeOut("fast", function() {
 			$(this).remove();
-			var callback = settings && settings.onAfterClose ? settings.onAfterClose : false;
+			var callback = settings && settings.onAfterClose;
 			if($.isFunction(callback)) {
 				callback();
 			}
@@ -267,7 +267,7 @@ $.fn.extend({
 			opacity: 0
 		}, "fast", function() {
 			$(this).hide();
-			var callback = settings && settings.onAfterClose ? settings.onAfterClose : false;
+			var callback = settings && settings.onAfterClose;
 			if($.isFunction(callback)) {
 				callback();
 			}

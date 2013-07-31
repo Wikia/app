@@ -63,7 +63,7 @@ class Phalanx implements arrayaccess {
 	 * @return Phalanx
 	 */
 	public static function newFromId( $blockId ) {
-		$instance = F::build( 'Phalanx', array( 'blockId' => $blockId ) );
+		$instance = new Phalanx( $blockId );
 
 		/* read data from database */
 		$instance->load();
@@ -97,7 +97,7 @@ class Phalanx implements arrayaccess {
 	public function load() {
 		wfProfileIn( __METHOD__ );
 
-		$dbr = $this->wf->GetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB );
+		$dbr = wfGetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB );
 
 		$row = $dbr->selectRow( $this->db_table, '*', array( 'p_id' => $this->blockId ), __METHOD__ );
 
@@ -113,6 +113,7 @@ class Phalanx implements arrayaccess {
 				'regex'     => $row->p_regex,
 				'case'      => $row->p_case,
 				'reason'    => $row->p_reason,
+				'comment'   => $row->p_comment,
 				'lang'      => $row->p_lang,
 				'ip_hex'    => $row->p_ip_hex
 			);
@@ -130,7 +131,7 @@ class Phalanx implements arrayaccess {
 			$this->data['ip_hex'] = IP::toHex( $this->data['text'] );
 		}
 
-		$dbw = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalSharedDB );
+		$dbw = wfGetDB( DB_MASTER, array(), $this->wg->ExternalSharedDB );
 		if ( empty( $this->data['id'] ) ) {
 			/* add block */
 			$dbw->insert( $this->db_table, $this->mapToDB(), __METHOD__ );
@@ -162,7 +163,7 @@ class Phalanx implements arrayaccess {
 			return false;
 		}
 
-		$dbw = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalSharedDB );
+		$dbw = wfGetDB( DB_MASTER, array(), $this->wg->ExternalSharedDB );
 		$dbw->delete( $this->db_table, array( 'p_id' => $this->data['id'] ), __METHOD__ );
 
 		if ( $removed = $dbw->affectedRows() ) {
@@ -213,7 +214,7 @@ class Phalanx implements arrayaccess {
 	}
 
 	private function log( $action ) {
-		$title = F::build( 'Title', array('PhalanxStats/' . $this->data['id'], NS_SPECIAL), 'newFromText' );
+		$title = Title::newFromText('PhalanxStats/' . $this->data['id'], NS_SPECIAL);
 		$types = implode( ',', Phalanx::getTypeNames( $this->data['type'] ) );
 
 		if ( $this->data['type'] & Phalanx::TYPE_EMAIL ) {
@@ -222,11 +223,11 @@ class Phalanx implements arrayaccess {
 			$logType = 'phalanx';
 		}
 
-		$log = F::build( 'LogPage', array( $logType ) );
+		$log = new LogPage( $logType );
 		$log->addEntry(
 			$action,
 			$title,
-			$this->wf->MsgExt( 'phalanx-rule-log-details', array( 'parsemag', 'content' ), $this->data['text'], $types, $this->data['reason'] )
+			wfMsgExt( 'phalanx-rule-log-details', array( 'parsemag', 'content' ), $this->data['text'], $types, $this->data['reason'] )
 		);
 	}
 }

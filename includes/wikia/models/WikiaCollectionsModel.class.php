@@ -6,15 +6,15 @@ class WikiaCollectionsModel extends WikiaModel {
 	const COLLECTIONS_MEMC_VERSION = '0.1';
 
 	private function getCollectionsListCacheKey($langCode) {
-		return $this->wf->SharedMemcKey('collections_list', self::COLLECTIONS_MEMC_VERSION, $langCode, __METHOD__);
+		return wfSharedMemcKey('collections_list', self::COLLECTIONS_MEMC_VERSION, $langCode, __METHOD__);
 	}
 	
 	private function getCollectionsListVisualizationCacheKey($langCode) {
-		return $this->wf->SharedMemcKey('collections_list_visualization', self::COLLECTIONS_MEMC_VERSION, $langCode, __METHOD__);
+		return wfSharedMemcKey('collections_list_visualization', self::COLLECTIONS_MEMC_VERSION, $langCode, __METHOD__);
 	}
 	
 	private function getWikiInCollectionCacheKey($cityId) {
-		return $this->wf->SharedMemcKey('wiki_in_collection', self::COLLECTIONS_MEMC_VERSION, $cityId, __METHOD__);
+		return wfSharedMemcKey('wiki_in_collection', self::COLLECTIONS_MEMC_VERSION, $cityId, __METHOD__);
 	}
 
 	private function clearCache($langCode) {
@@ -37,7 +37,7 @@ class WikiaCollectionsModel extends WikiaModel {
 	}
 	
 	private function getListFromDb($langCode, $useMaster = false) {
-		$sdb = $this->wf->GetDB($useMaster ? DB_MASTER : DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		$sdb = wfGetDB($useMaster ? DB_MASTER : DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 		$fields = ['id', 'sort', 'name', 'sponsor_hero_image', 'sponsor_image', 'sponsor_url', 'enabled'];
 		$conds = ['lang_code' => $langCode];
@@ -115,8 +115,8 @@ class WikiaCollectionsModel extends WikiaModel {
 	}
 
 	protected function save($langCode, $collection, $sortIndex) {
-		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
-		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		$mdb = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 		if ($collection['id']) {
 			$conds = ['id' => $collection['id']];
@@ -149,7 +149,7 @@ class WikiaCollectionsModel extends WikiaModel {
 	}
 
 	public function delete($langCode, $sortIndex) {
-		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$mdb = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
 		$conds = [
 			'lang_code' => $langCode,
@@ -163,7 +163,7 @@ class WikiaCollectionsModel extends WikiaModel {
 	}
 
 	protected function deleteById($id) {
-		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$mdb = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
 		$conds = [
 			'id' => $id
@@ -181,8 +181,17 @@ class WikiaCollectionsModel extends WikiaModel {
 	 * @param $collectionId
 	 */
 	public function addWikiToCollection($collectionId, $cityId) {
-		if ( !$this->checkWikiCollectionExists($collectionId, $cityId) ) {
-			$db = $this->wf->getDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$collection = $this->getById($collectionId);
+		$cityVisualization = new CityVisualization();
+		$wikiData = $cityVisualization->getWikiDataForVisualization($cityId, $collection['lang_code']);
+
+		if(empty($wikiData['main_image'])) {
+			$status = [
+				'value' => false,
+				'message' => wfMessage('manage-wikia-home-collections-add-failure-image', $wikiData['name'])->text()
+			];
+		} else if ( !$this->checkWikiCollectionExists($collectionId, $cityId) ) {
+			$db = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
 			$insertData = [
 				'collection_id' => $collectionId,
@@ -193,10 +202,20 @@ class WikiaCollectionsModel extends WikiaModel {
 
 			$db->commit();
 
-			$collection = $this->getById($collectionId);
 			$this->clearCache($collection['lang_code']);
 			$this->clearWikiCache($cityId);
+
+			$status = [
+				'value' => true,
+				'message' => wfMessage('manage-wikia-home-collections-add-success')->plain()
+			];
+		} else {
+			$status = [
+				'value' => false,
+				'message' => wfMessage('manage-wikia-home-collections-add-failure-already-exists')->plain()
+			];
 		}
+		return $status;
 	}
 
 	/**
@@ -206,7 +225,7 @@ class WikiaCollectionsModel extends WikiaModel {
 	 * @param $collectionId
 	 */
 	public function removeWikiFromCollection($collectionId, $cityId) {
-		$db = $this->wf->getDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$db = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
 		$conds = [
 			'collection_id' => $collectionId,
@@ -220,6 +239,11 @@ class WikiaCollectionsModel extends WikiaModel {
 		$collection = $this->getById($collectionId);
 		$this->clearCache($collection['lang_code']);
 		$this->clearWikiCache($cityId);
+
+		return [
+			'value' => true,
+			'message' => wfMessage('manage-wikia-home-collections-remove-success')->plain()
+		];
 	}
 
 	/**
@@ -228,7 +252,7 @@ class WikiaCollectionsModel extends WikiaModel {
 	 * @param $collectionId
 	 */
 	public function getWikisFromCollection($collectionId) {
-		$db = $this->wf->getDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 		$fields = [
 			'city_id',
@@ -257,12 +281,12 @@ class WikiaCollectionsModel extends WikiaModel {
 	 */
 	public function getCountWikisFromCollection($collectionId, $useMaster = false) {
 		$dbType = (!$useMaster) ? DB_SLAVE : DB_MASTER;
-		$db = $this->wf->getDB($dbType, array(), $this->wg->ExternalSharedDB);
+		$db = wfGetDB($dbType, array(), $this->wg->ExternalSharedDB);
 		return $db->selectField(self::COLLECTIONS_CV_TABLE, 'count(city_id)', ['collection_id' => $collectionId]);
 	}
 
 	public function getCollectionsByCityId($cityId) {
-		$db = $this->wf->getDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 		$fields = [
 			'collection_id'
@@ -284,7 +308,7 @@ class WikiaCollectionsModel extends WikiaModel {
 	}
 
 	private function checkWikiCollectionExists($collectionId, $cityId) {
-		$db = $this->wf->getDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 		$conds = [
 			'collection_id' => $collectionId,
@@ -297,7 +321,7 @@ class WikiaCollectionsModel extends WikiaModel {
 	}
 
 	public function getById($id) {
-		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 		$fields = ['id', 'sort', 'name', 'sponsor_hero_image', 'sponsor_image', 'sponsor_url', 'enabled', 'lang_code'];
 		$conds = ['id' => $id];
@@ -318,7 +342,7 @@ class WikiaCollectionsModel extends WikiaModel {
 	}
 	
 	private function getWikiInCollectionFromDb($cityId) {
-		$sdb = $this->wf->getDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 		$conds = [
 			'city_id' => $cityId

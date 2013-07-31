@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\Test\Query\Select
  */
 namespace Wikia\Search\Test\Query;
-use Wikia\Search\Query\Select as Query, Wikia\Search\MediaWikiService, Wikia\Search\Test\BaseTest, ReflectionMethod;
+use Wikia\Search\Query\Select as Query, Wikia\Search\MediaWikiService, Wikia\Search\Test\BaseTest, ReflectionMethod, ReflectionProperty;
 
 class SelectTest extends BaseTest
 {
@@ -26,8 +26,7 @@ class SelectTest extends BaseTest
 	public function testGetSanitizedQuery()
 	{
 		$sanitizer = $this->getMock( 'Sanitizer', array( 'StripAllTags' ) );
-		$this->proxyClass( 'Sanitizer', $sanitizer );
-		$this->mockApp();
+		$this->mockClass( 'Sanitizer', $sanitizer );
 		$rawQuery = "crime &amp; <b>punishment</b>";
 		$expected = "crime & punishment";
 		$query = new Query( $rawQuery );
@@ -134,6 +133,41 @@ class SelectTest extends BaseTest
 	}
 	
 	/**
+	 * @covers Wikia\Search\Query\Select::getNamespacePrefix
+	 */
+	public function testGetNamespacePrefix() {
+		$query = $this->getMockBuilder( 'Wikia\Search\Query\Select' )
+		              ->disableOriginalConstructor()
+		              ->setMethods( [ 'initializeNamespaceData' ] )
+		              ->getMock();
+		
+		$query
+		    ->expects( $this->once() )
+		    ->method ( 'initializeNamespaceData' )
+		;
+		
+		$attr = new ReflectionProperty( $query, 'namespacePrefix' );
+		$attr->setAccessible( true );
+		$attr->setValue( $query, 'foo' );
+		
+		$this->assertAttributeEmpty(
+				'namespaceChecked',
+				$query
+		);
+		$this->assertEquals(
+				'foo',
+				$query->getNamespacePrefix()
+		);
+		$nsattr = new ReflectionProperty( $query, 'namespaceChecked' );
+		$nsattr->setAccessible( true );
+		$nsattr->setValue( $query,true );
+		$this->assertEquals(
+				'foo',
+				$query->getNamespacePrefix()
+		); 
+	}
+	
+	/**
 	 * @covers Wikia\Search\Query\Select::getSolrQuery
 	 */
 	public function testGetSolrQuery() {
@@ -151,6 +185,26 @@ class SelectTest extends BaseTest
 		$this->assertEquals(
 				'\"foo\:bar\&&baz\"',
 				$query->getSolrQuery()
+		);
+	}
+	
+	public function testGetSolrQueryWithWordLimit() {
+		$query = <<<YEEZY
+Uh:my mind move like a Tron bike
+Uh, pop a wheelie on the Zeitgeist
+Uh, I'm finna start a new movement
+YEEZY;
+		$q = new Query( $query );
+		$this->assertEquals(
+				'Uh\:my mind move like a Tron bike Uh, pop a',
+				$q->getSolrQuery( 10 )
+		);
+
+		$sQuery = 'test';
+		$q = new Query( $sQuery );
+		$this->assertEquals(
+			$sQuery,
+			$q->getSolrQuery( 10 )
 		);
 	}
 }

@@ -4,15 +4,14 @@
  */
 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
-$app->registerClass( 'ImageLazyLoad', $dir . 'ImageLazyLoad.class.php' );
+$wgAutoloadClasses[ 'ImageLazyLoad'] =  $dir . 'ImageLazyLoad.class.php' ;
 
 /* Hooks */
-$app->registerHook( 'BeforePageDisplay', 'ImageLazyLoad', 'onBeforePageDisplay' );
-$app->registerHook( 'ParserClearState', 'ImageLazyLoad', 'onParserClearState' );
-$app->registerHook( 'ThumbnailImageHTML', 'ImageLazyLoad', 'onThumbnailImageHTML' );
-$app->registerHook( 'ThumbnailVideoHTML', 'ImageLazyLoad', 'onThumbnailImageHTML' );
+$wgHooks['BeforePageDisplay'][] = 'ImageLazyLoad::onBeforePageDisplay';
+$wgHooks['ParserClearState'][] = 'ImageLazyLoad::onParserClearState';
+$wgHooks['ThumbnailImageHTML'][] = 'ImageLazyLoad::onThumbnailImageHTML';
+$wgHooks['ThumbnailVideoHTML'][] = 'ImageLazyLoad::onThumbnailImageHTML';
 
 // galleries
-$app->registerHook( 'GalleryBeforeRenderImage', 'ImageLazyLoad', 'onGalleryBeforeRenderImage' );
+$wgHooks['GalleryBeforeRenderImage'][] = 'ImageLazyLoad::onGalleryBeforeRenderImage';

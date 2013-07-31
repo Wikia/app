@@ -10,14 +10,13 @@
 class PhalanxWikiCreationBlock extends WikiaObject {
 	function __construct() {
 		parent::__construct();
-		F::setInstance( __CLASS__, $this );
 	}
 	
-	public function isAllowedText( $text, $where = '', $split = '' ) {
+	static public function isAllowedText( $text, $where = '', $split = '' ) {
 		wfProfileIn( __METHOD__ );
 
 		$text = trim( $text );
-		$phalanxModel = F::build( 'PhalanxTextModel', array( $text ) );
+		$phalanxModel = new PhalanxTextModel( $text );
 		$ret = $phalanxModel->match_wiki_creation();
 		
 		wfProfileOut( __METHOD__ );

@@ -150,11 +150,11 @@ class WikiaComWikisListImport {
 	}
 
 	public function loadDataAndUpdateDatabase() {
-		global $wgCityId;
+		global $wgLanguageCode;
 		wfProfileIn(__METHOD__);
 
 		if( !$this->options->overwrittenLang ) {
-			$wikisVisualizationLangCode = WikiFactory::getVarValueByName('wgLanguageCode', $wgCityId);
+			$wikisVisualizationLangCode = $wgLanguageCode;
 		} else {
 			$wikisVisualizationLangCode = $this->options->overwrittenLang;
 		}
@@ -325,7 +325,7 @@ class WikiaComWikisListImport {
 		$success = false;
 
 		//fb#45624
-		$user = F::build('User', array('WikiaBot'), 'newFromName');
+		$user = User::newFromName('WikiaBot');
 		$user = ($user instanceof User) ? $user : null;
 		$imageData = new stdClass();
 		$imageData->name = $imageName;

@@ -267,7 +267,7 @@ class WallNotifications {
 	protected function groupEntity($list){
 		$grouped = array();
 		foreach(array_reverse($list) as $obj ) {
-			$notif = F::build('WallNotificationEntity', array($obj['entityKey']), 'getById');
+			$notif = WallNotificationEntity::getById($obj['entityKey']);
 			if(!empty($notif))
 				$grouped[] = $notif;
 		}
@@ -504,22 +504,26 @@ class WallNotifications {
 					}
 				}
 
+				$success = false;
 				// Make sure we have data
 				if (isset($data)) {
 					// See if we can set it successfully
 					if ($this->setData($memcSync, $data)) {
-						break;
+						$success = true;
 					}
 				} else {
 					// If there's no data don't bother doing anything
+					$success = true;
+				}
+				$memcSync->unlock();
+				if ( $success ) {
 					break;
 				}
+
 			} else {
 				$this->random_msleep($count);
 			}
 		}
-
-		$memcSync->unlock();
 
 		// If count is -1 it means we left the above loop failing to update
 		if ($count == -1) {
@@ -576,22 +580,25 @@ class WallNotifications {
 						$data = $this->getData($memcSync, $uId, $wikiId);
 						$this->remNotificationFromData($data, $uniqueId);
 
+						$success = false;
 						// Make sure we have data
 						if (isset($data)) {
 							// See if we can set it successfully
 							if ($this->setData($memcSync, $data)) {
-								break;
+								$success = true;
 							}
 						} else {
 							// If there's no data don't bother doing anything
+							$success = true;
+						}
+						$memcSync->unlock();
+						if ( $success ) {
 							break;
 						}
 					} else {
 						$this->random_msleep($count);
 					}
 				}
-
-				$memcSync->unlock();
 
 				// If count is -1 it means we left the above loop failing to update
 				if ($count == -1) {
@@ -690,23 +697,25 @@ class WallNotifications {
 				$data = $this->getData($memcSync, $userId, $wikiId);
 				$this->addNotificationToData($data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, false, $notifyeveryone );
 
+				$success = false;
 				// Make sure we have data
 				if (isset($data)) {
 					// See if we can set it successfully
 					if ($this->setData($memcSync, $data)) {
-						break;
+						$success = true;
 					}
 				} else {
 					// If there's no data don't bother doing anything
+					$success = true;
+				}
+				$memcSync->unlock();
+				if ( $success ) {
 					break;
 				}
 			} else {
 				$this->random_msleep($count);
 			}
-			$count++;
 		}
-
-		$memcSync->unlock();
 
 		// If count is -1 it means we left the above loop failing to update
 		if ($count == -1) {
@@ -947,11 +956,13 @@ class WallNotifications {
 	}
 
 	protected function getCache($userId, $wikiId) {
-		return new MemcacheSync($this->app->wg->Memc, $this->getKey($userId, $wikiId));
+		global $wgMemc;
+		return new MemcacheSync($wgMemc, $this->getKey($userId, $wikiId));
 	}
 
 	public function getDB($master = false){
-		return wfGetDB( $master ? DB_MASTER:DB_SLAVE, array(), $this->app->wg->ExternalDatawareDB );
+		global $wgExternalDatawareDB;
+		return wfGetDB( $master ? DB_MASTER:DB_SLAVE, array(), $wgExternalDatawareDB );
 	}
 
 	public function getLocalDB($master = false){
@@ -959,7 +970,7 @@ class WallNotifications {
 	}
 
 	public function getKey( $userId, $wikiId ){
-		return $this->app->runFunction( 'wfSharedMemcKey', __CLASS__, $userId, $wikiId. 'v30' );
+		return wfSharedMemcKey( __CLASS__, $userId, $wikiId. 'v30' );
 	}
 
 	/**
