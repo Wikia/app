@@ -216,8 +216,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 				} else if ( !empty( $program['GameWarning']['Warning'] ) ) {
 					$clipData['industryRating'] = $this->getIndustryRating( $program['GameWarning']['Warning'] );
 				}
-				$clipData['ageGate'] = $this->getAgeRequired( $clipData['industryRating'] );
-				$clipData['ageRequired'] = $clipData['ageGate'];
+				$clipData['ageRequired'] = $this->getAgeRequired( $clipData['industryRating'] );
 
 				$clipData['genres'] = '';
 				if ( !empty( $program['MovieCategory']['Category'] ) ) {
@@ -270,33 +269,32 @@ class IvaFeedIngester extends VideoFeedIngester {
 						$clipData['aspectRatio'] = $videoAsset['SourceWidth'] / $videoAsset['SourceHeight'];
 					}
 
-					$clipData['language'] = '';
-					$clipData['subtitle'] = '';
-					// $languageNames comes from cldr extension
-					if ( !empty( $languageNames ) ) {
-						// get language
-						if ( !empty( $videoAsset['LanguageSpoken']['LanguageName'] ) ) {
-							$lang = trim( $videoAsset['LanguageSpoken']['LanguageName'] );
-							$clipData['language'] = array_search( $lang, $languageNames );
-						}
-
-						// get subtitle
-						if ( !empty( $videoAsset['LanguageSubtitled']['LanguageName'] ) ) {
-							$subtitle = trim( $videoAsset['LanguageSubtitled']['LanguageName'] );
-							$clipData['subtitle'] = array_search( $subtitle, $languageNames );
-						}
+					// get language
+					if ( empty( $videoAsset['LanguageSpoken']['LanguageName'] ) ) {
+						$clipData['language'] = '';
+					} else {
+						$clipData['language'] = $this->getCldrCode( $videoAsset['LanguageSpoken']['LanguageName'] );
 					}
 
-					$clipData['targetCountry'] = '';
-					// $countryNames comes from cldr extension
-					if ( !empty( $countryNames ) && !empty( $videoAsset['CountryTarget']['CountryName'] ) ) {
-						$targetCountry = trim( $videoAsset['CountryTarget']['CountryName'] );
-						$clipData['targetCountry'] = array_search( $targetCountry, $countryNames );
+					// get subtitle
+					if ( empty( $videoAsset['LanguageSubtitled']['LanguageName'] ) ) {
+						$clipData['subtitle'] = '';
+					} else {
+						$clipData['subtitle'] = $this->getCldrCode( $videoAsset['LanguageSubtitled']['LanguageName'] );
 					}
 
+					// get target country
+					if ( empty( $videoAsset['CountryTarget']['CountryName'] ) ) {
+						$clipData['targetCountry'] = '';
+					} else {
+						$clipData['targetCountry'] = $this->getCldrCode( $videoAsset['CountryTarget']['CountryName'], 'country' );
+					}
+
+					// get keywords
 					$keywords = empty( $videoParams['keyword'] ) ? array() : array( $videoParams['keyword'] );
 					$keywords[] = $clipData['series'];
 					$keywords[] = $clipData['category'];
+					$keywords[] = $clipData['tags'];
 
 					// add to keywords to be used in page category
 					if ( ( !empty( $clipData['language'] ) && $clipData['language'] != 'en' )
@@ -307,6 +305,9 @@ class IvaFeedIngester extends VideoFeedIngester {
 					$keywordsLower = array_map( 'strtolower', $keywords );
 					$keywordsUniq = array_intersect_key( $keywords, array_unique( $keywordsLower ) );
 					$clipData['keywords'] = implode( ', ', $keywordsUniq );
+
+					// get page categories
+					$clipData['pageCategories'] = $this->generateCategories( $clipData, $createParams['addlCategories'] );
 
 					$msg = '';
 					$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
@@ -432,7 +433,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 		$response = json_decode( $response, true );
 
 		wfProfileOut( __METHOD__ );
-		return empty( $response['d']['results'] ) ? array() : $response['d']['results'];
+		return ( empty($response['d']['results']) ) ? array() : $response['d']['results'];
 	}
 
 	/**
@@ -444,7 +445,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 	public function generateCategories( array $data, $addlCategories ) {
 		wfProfileIn( __METHOD__ );
 
-		$categories = !empty( $addlCategories ) ? $addlCategories : array();
+		$categories = empty( $addlCategories ) ? array() : $addlCategories;
 
 		if ( !empty( $data['keywords'] ) ) {
 			$keywords = explode( ',', $data['keywords'] );

@@ -146,9 +146,6 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['published'] ) ) {
 			$metadata['published'] = $data['published'];
 		}
-		if ( !empty( $data['ageGate'] ) ) {
-			$metadata['agegate'] = $data['ageGate'];
-		}
 		if ( !empty( $data['tags'] ) ) {
 			$metadata['tags'] = $data['tags'];
 		}
@@ -196,6 +193,9 @@ class OoyalaAsset extends WikiaModel {
 		}
 		if ( !empty( $data['aspectRatio'] ) ) {
 			$metadata['aspectRatio'] = $data['aspectRatio'];
+		}
+		if ( !empty( $data['pageCategories'] ) ) {
+			$metadata['pageCategories'] = $data['pageCategories'];
 		}
 
 		return $metadata;
@@ -371,7 +371,7 @@ class OoyalaAsset extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$resp = true;
-		if ( !empty( $data['ageGate'] ) ) {
+		if ( !empty( $data['ageRequired'] ) ) {
 			$resp = $this->setPlayer( $videoId, OoyalaVideoHandler::OOYALA_PLAYER_ID_AGEGATE );
 		}
 
@@ -390,7 +390,7 @@ class OoyalaAsset extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$params = array();
-		if ( !empty( $data['ageGate'] ) && !empty( $this->wg->OoyalaApiConfig['LabelAgeGate'] ) ) {
+		if ( !empty( $data['ageRequired'] ) && !empty( $this->wg->OoyalaApiConfig['LabelAgeGate'] ) ) {
 			$params[] = $this->wg->OoyalaApiConfig['LabelAgeGate'];
 		}
 

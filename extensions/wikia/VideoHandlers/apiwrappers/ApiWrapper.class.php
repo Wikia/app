@@ -341,6 +341,9 @@ abstract class ApiWrapper {
 		if ( !isset( $metadata['resolution'] ) ) {
 			$metadata['resolution'] = $this->getResolution();
 		}
+		if ( !isset( $metadata['pageCategories'] ) ) {
+			$metadata['pageCategories'] = $this->getPageCategories();
+		}
 
 		$this->metadata = $metadata;
 
@@ -502,6 +505,14 @@ abstract class ApiWrapper {
 	 * @return string
 	 */
 	protected function getResolution() {
+		return '';
+	}
+
+	/**
+	 * get page categories
+	 * @return string
+	 */
+	protected function getPageCategories() {
 		return '';
 	}
 

@@ -95,7 +95,7 @@ function addAgeRequired( $video, $title, $ageRequired ) {
 	}
 
 	if ( !empty( $video['metadata']['age_required'] ) ) {
-		echo "\tSKIP: $title - age_required is set in Custom Metadata.\n";
+		echo "\tSKIP: $title - age_required is set in Custom Metadata (age_required: {$video['metadata']['age_required']}).\n";
 		$skipped++;
 		return;
 	}

@@ -89,7 +89,6 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['category'] = empty($video['metadata']['category']) ? '' : $video['metadata']['category'];
 				$clipData['keywords'] = empty($video['metadata']['keywords']) ? '' : $video['metadata']['keywords'];
 				$clipData['description'] = trim($video['description']);
-				$clipData['ageGate'] = empty($video['metadata']['agegate']) ? 0 : 1;
 				$clipData['ageRequired'] = empty( $video['metadata']['age_required'] ) ? 0 : $video['metadata']['age_required'];
 				$clipData['hd'] = empty($video['metadata']['hd']) ? 0 : 1;
 				$clipData['tags'] = empty($video['metadata']['tags']) ? '' : $video['metadata']['tags'];
@@ -183,7 +182,6 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 			'hd'             => $data['hd'],
 			'duration'       => $data['duration'],
 			'published'      => empty( $data['published'] ) ? $data['published'] : strtotime( $data['published'] ),
-			'ageGate'        => $data['ageGate'],
 			'ageRequired'    => $data['ageRequired'],
 			'industryRating' => $data['industryRating'],
 			'trailerRating'  => $data['trailerRating'],

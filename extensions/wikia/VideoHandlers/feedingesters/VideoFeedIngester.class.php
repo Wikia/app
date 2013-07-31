@@ -741,4 +741,29 @@ abstract class VideoFeedIngester {
 		return $category;
 	}
 
+	/**
+	 * get CLDR code (return the original value if code not found)
+	 * @param string $value
+	 * @param string $type [language|country]
+	 * @return string $value
+	 */
+	public function getCldrCode( $value, $type = 'language' ) {
+		$value = trim( $value );
+		if ( !empty( $value ) ) {
+			// include cldr extension for language code
+			include( dirname( __FILE__ ).'/../../../cldr/CldrNames/CldrNamesEn.php' );
+
+			// $languageNames, $countryNames comes from cldr extension
+			$paramName = ( $type == 'country' ) ? 'countryNames' : 'languageNames';
+			if ( !empty( ${$paramName} ) ) {
+				$code = array_search( $value, ${$paramName} );
+				if ( $code != false ) {
+					$value = $code;
+				}
+			}
+		}
+
+		return $value;
+	}
+
 }
