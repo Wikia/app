@@ -1,10 +1,10 @@
 <?php
-	$messages = array();
+$messages = array();
 
-	$messages['en'] = array(
-		'wantedquerypage-wantedpages-excludetitles' => 'Exclude titles'
-	);
+$messages['en'] = array(
+	'wantedquerypage-wantedpages-excludetitles' => 'Exclude titles'
+);
 
-	$messages['qqq'] = array(
-		'wantedquerypage-wantedpages-excludetitles' => 'Label for list of page titles to exclude'
-	);
+$messages['qqq'] = array(
+	'wantedquerypage-wantedpages-excludetitles' => 'Label for list of page titles to exclude'
+);
