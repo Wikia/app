@@ -4,7 +4,7 @@
  * Image lazy loading
  */
 /*global define*/
-define('lazyload', ['wikia.thumbnailer'], function (thumbnailer) {
+define('lazyload', ['wikia.thumbnailer', 'jquery'], function (thumbnailer, $) {
 	'use strict';
 
 	var d = document,
@@ -25,6 +25,7 @@ define('lazyload', ['wikia.thumbnailer'], function (thumbnailer) {
 				return function(){
 					var url = this.src;
 					img.className += ' load';
+
 					setTimeout(function(){
 						displayImage(img, url);
 					}, 250);
@@ -34,6 +35,8 @@ define('lazyload', ['wikia.thumbnailer'], function (thumbnailer) {
 				background ? img.style.backgroundImage = 'url(' + url + ')' : img.src = url;
 				img.className += ' loaded';
 			};
+
+		elements = $.makeArray(elements);
 
 		while(elm = elements[x++]) {
 			img = new Image();

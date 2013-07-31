@@ -6,7 +6,7 @@
  * Layout handling of WikiaMobile
  * ie. Sections, Images, Galleries etc.
  */
-define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.loader', 'lazyload', 'jquery'], function(sections, media, cache, loader, lazyload, $) {
+define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.loader', 'lazyload', 'jquery', 'sloth'], function(sections, media, cache, loader, lazyload, $, sloth) {
 	'use strict';
 
 	//init sections
@@ -16,7 +16,6 @@ define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.l
 		images = d.getElementsByClassName('media'),
 		selector = 'table:not(.toc):not(.infobox)',
 		tables = d.querySelectorAll(selector),
-		lazyLoadedSections = [],
 		tablesProcessedSections = [],
 		tablesModule,
 		tablesKey = 'wideTables',
@@ -40,10 +39,6 @@ define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.l
 			require([require.optional('tables')], function(t){
 				t && t.process($(selector).not('.artSec table, table table'));
 
-				//image Lazyloading	(load images outside any section)
-				//if there are tables to wrap this should be done after they are processed
-				lazyload($('.lazy').not('.artSec .lazy'));
-
 				//make it available for sections on open so tables can be processed as well
 				tablesModule = t;
 			});
@@ -59,11 +54,7 @@ define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.l
 			tablesProcessedSections[index] = true;
 		}
 
-		if(!lazyLoadedSections[index]){
-			lazyload(section.find('.lazy'));
-
-			lazyLoadedSections[index] = true;
-		}
+		window.scrollBy(0,1);
 	});
 
 	//tables
@@ -84,11 +75,14 @@ define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.l
 				}
 			}).done(process);
 		}
-	} else {
-		//if there are no tables on a page we can go to lazyloading images
-		lazyload($('.lazy').not('.artSec .lazy'));
 	}
 
 	//init media
 	media.init(images);
+
+	sloth({
+		on: document.getElementsByClassName('lazy'),
+		threshold: 200,
+		callback: lazyload
+	});
 });
