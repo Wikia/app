@@ -75,7 +75,12 @@ class Result extends ReadWrite {
 	 * @return string
 	 */
 	public function getHubs() {
-		return $this->getText( 'hub_s' );
+		$hub_ids = $this->getText( 'hub_s' );
+		if (!is_array($hub_ids)) {
+			$hub_ids = empty($hub_ids) ? [] : [ $hub_ids ];
+		}
+		$messages = array_map(function ($id) { return wfMessage('hub-'.$id)->text(); }, $hub_ids);
+		return $messages;
 	}
 
 	/**
