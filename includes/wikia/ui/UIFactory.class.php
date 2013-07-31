@@ -227,23 +227,22 @@ class UIFactory {
 		// iterate $componentNames, read configs, write down dependencies
 		foreach ( $componentNames as $name ) {
 			$componentConfig = $this->loadComponentConfig( $name );
-			
+
 			// if there are some components, put them in the $assets
-			if ( !empty( $componentConfig['dependencies']['js'] ) ) {
-				if ( is_array($componentConfig['dependencies']['js']) ) {
-					$assets = array_merge( $assets, $componentConfig['dependencies']['js'] );
-				} else {
-					$exceptionMessage = sprintf( WikiaUIDataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE );
-					throw new WikiaUIDataException( $exceptionMessage, 'js' );
-				}
+			$dependenciesJsCfg = !empty( $componentConfig['dependencies']['js'] ) ? $componentConfig['dependencies']['js'] : [];
+			if( is_array( $dependenciesJsCfg ) ) {
+				$assets = array_merge( $assets, $componentConfig['dependencies']['js'] );
+			} else {
+				$exceptionMessage = sprintf( WikiaUIDataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE, 'js' );
+				throw new WikiaUIDataException( $exceptionMessage );
 			}
-			if ( !empty( $componentConfig['dependencies']['css'] ) ) {
-				if ( is_array($componentConfig['dependencies']['css']) ) {
-					$assets = array_merge( $assets, $componentConfig['dependencies']['css'] );
-				} else {
-					$exceptionMessage = sprintf( WikiaUIDataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE );
-					throw new WikiaUIDataException( $exceptionMessage, 'css' );
-				}
+
+			$dependenciesCssCfg = !empty( $componentConfig['dependencies']['css'] ) ? $componentConfig['dependencies']['css'] : [];
+			if( is_array( $dependenciesCssCfg ) ) {
+				$assets = array_merge( $assets, $dependenciesCssCfg );
+			} else {
+				$exceptionMessage = sprintf( WikiaUIDataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE, 'css' );
+				throw new WikiaUIDataException( $exceptionMessage );
 			}
 
 			// init component, put config inside and set base template path
