@@ -546,6 +546,17 @@ class WikiaHomePageController extends WikiaController {
 		}
 
 		$this->imagesSlider = $this->sendRequest('WikiaMediaCarouselController', 'renderSlider', array('data' => $images));
+
+		$wordmarkUrl = '';
+		try {
+			$file = new LocalFile(Title::newFromText('Wiki-wordmark.png', NS_FILE), RepoGroup::singleton()->getLocalRepo());
+			if ( $file !== null ) {
+				$wordmarkUrl = wfReplaceImageServer($file->getUrl());
+			}
+		} catch ( Exception $e ) { }
+
+		$this->wordmark = $wordmarkUrl;
+
 	}
 
 	public static function onGetHTMLAfterBody($skin, &$html) {
