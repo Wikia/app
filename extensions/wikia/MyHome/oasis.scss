@@ -87,10 +87,8 @@
 				width: 160px;
 				padding: 5px 0;
 
-				// Using the wildcard attribute selector here in case we end up appending query strings or anything else to these hrefs
-				&[href*=".gif"], &[href*=".GIF"],
-				&[href*=".jpg"], &[href*=".JPG"],
-			  &[href*=".png"], &[href*=".PNG"]	{
+				// anchors that lead to images have a set height
+				&[data-image-link] {
 					height: 160px;
 					padding: 0;
 				}

@@ -734,7 +734,7 @@ class FeedRenderer {
 			if ( preg_match('/<a[^>]+href/', $thumb) ) {
 				$item_html = '<li>%s</li>';
 			} else {
-				$item_html = '<li><a href="'.$title->getLocalUrl().'">%s</a></li>';
+				$item_html = '<li><a data-image-link href="'.$title->getLocalUrl().'">%s</a></li>';
 			}
 			$thumbs[] = sprintf($item_html, $thumb);
 		}
