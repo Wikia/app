@@ -33,7 +33,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery' ) );
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'hasTerms' ), array( 'foo' ) );
 		
-		$mockSearch = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
+		$mockSearch = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\OnWiki' )
 		                   ->setMethods( array( 'search', 'getMatch' ) )
 		                   ->disableOriginalConstructor()
 		                   ->getMock();
@@ -1010,7 +1010,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 		$incr = 0;
 
-		$wg = (object) array( 'CityId' => Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID );
+		$wg = (object) array( 'CityId' => Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID );
 
 		$mockController
 			->expects	( $this->at( $incr++ ) )
@@ -1479,7 +1479,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	public function testVideoSearch() {
 		$mockConfig		=	$this->getMock( 'Wikia\Search\Config', array( 'setCityId', 'setQuery', 'setNamespaces', 'setVideoSearch', 'getResults' ) );
 		$mockController	=	$this->searchController->setMethods( array( 'getResponse', 'getVal' ) )->getMock();
-		$mockSearch		=	$this->getMockBuilder( 'Wikia\Search\QueryService\Select\Video' )
+		$mockSearch		=	$this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\Video' )
 								->setMethods( array( 'search' ) )
 								->disableOriginalConstructor()
 								->getMock();
@@ -1582,7 +1582,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	public function testSearchVideosByTitle() {
 		$mockConfig		=	$this->getMock( 'Wikia\Search\Config', array( 'setVideoTitleSearch', 'setQuery' ) );
 		$mockController	=	$this->searchController->setMethods( array( 'getResponse', 'getVal' ) )->getMock();
-		$mockSearch		=	$this->getMockBuilder( 'Wikia\Search\QueryService\Select\VideoTitle' )
+		$mockSearch		=	$this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\VideoTitle' )
 								->setMethods( array( 'searchAsApi' ) )
 								->disableOriginalConstructor()
 								->getMock();

@@ -1109,7 +1109,7 @@ $messages['mk'] = array(
 	'userlogin-forgot-password' => 'Ја заборавивте лозинката?',
 	'userlogin-forgot-password-button' => 'Продолжи',
 	'userlogin-forgot-password-go-to-login' => 'Веќе имате лозинка? [[Special:UserLogin|Најавете се]]',
-	'userlogin-remembermypassword' => 'Задржи ме најавен', # Fuzzy
+	'userlogin-remembermypassword' => 'Задржи ме најавен',
 	'userlogin-error-noname' => 'Пополнете го полето за корисничко име.',
 	'userlogin-error-sessionfailure' => 'Најавната сесија ви истече. Најавете се повторно.',
 	'userlogin-error-nosuchuser' => 'Ова име не се признава. Не заборавајте дека системот разликува мали и големи букви.',
@@ -1137,6 +1137,7 @@ $messages['mk'] = array(
 	'userlogin-error-mail-error' => 'Се појави проблем при испраќањето на пораката. Ве молиме, [[Special:Contact/general|контактирајте нè]].',
 	'userlogin-password-email-sent' => 'Ви испративме нова лозинка на е-поштата назначена за $1.',
 	'userlogin-error-unconfirmed-user' => 'Нажалост, ја немате потврдено вашата е-пошта. Ќе треба најпрвин да ја потврдите.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'Потврдната порака е веќе испратена на е-пошта.',
 	'userlogin-password-page-title' => 'Променете си ја лозинката.',
 	'userlogin-oldpassword' => 'Стара лозинка',
 	'userlogin-newpassword' => 'Нова лозинка',
@@ -1623,7 +1624,7 @@ $messages['pt-br'] = array(
 	'userlogin-forgot-password' => 'Esqueceu sua senha?',
 	'userlogin-forgot-password-button' => 'Continuar',
 	'userlogin-forgot-password-go-to-login' => 'Já tem sua senha? [[Special:UserLogin|Faça login]]',
-	'userlogin-remembermypassword' => 'Permanecer logado', # Fuzzy
+	'userlogin-remembermypassword' => 'Permanecer conectado',
 	'userlogin-error-noname' => 'Ops, por favor preencha o campo de nome de usuário.',
 	'userlogin-error-sessionfailure' => 'Sua sessão de login expirou. Por favor, faça login novamente.',
 	'userlogin-error-nosuchuser' => 'Nós não reconhecemos este nome. Não se esqueça, nomes de usuário são caso sensível.',
@@ -2222,6 +2223,7 @@ $messages['uz'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Xiao Qiao
  */
 $messages['vi'] = array(
@@ -2230,7 +2232,7 @@ $messages['vi'] = array(
 	'userlogin-remembermypassword' => 'Giữ đăng nhập', # Fuzzy
 	'userlogin-error-noname' => 'Rất tiếc, xin vui lòng điền vào trường tên người dùng.',
 	'userlogin-error-sessionfailure' => 'Thời gian đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại.',
-	'userlogin-error-nosuchuser' => 'Chúng tôi không nhận ra tên này. Đừng quên rằng tên người dùng là trường hợp nhạy cảm.',
+	'userlogin-error-nosuchuser' => 'Xin lỗi, tên tài khoản bạn vừa đăng nhập chưa từng tồn tại, hãy thử lại hoặc bạn có thể đăng ký tại [[Special:UserSignup|đây]]', # Fuzzy
 	'userlogin-error-wrongpassword' => 'Rất tiếc, sai mật khẩu. Hãy chắc rằng trạng thái caps lock của bạn đang tắt và thử lại.',
 	'userlogin-error-wrongpasswordempty' => 'Rất tiếc, xin vui lòng điền vào trường mật khẩu.',
 	'userlogin-error-resetpass_announce' => 'Hình như bạn đã sử dụng một mật khẩu tạm thời. Chọn một mật khẩu mới ở đây để tiếp tục đăng nhập.',

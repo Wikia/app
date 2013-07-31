@@ -142,9 +142,12 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 	}
 }
 
-body {
+html {
 	min-width: $width-outside-min;
+	overflow-x: auto;
+}
 
+body {
 	@if ( $background-is-dynamic ) {
 		background: $color-body;
 		overflow-x: hidden;
@@ -397,7 +400,8 @@ body > .global-notification,
 	}
 
 	.WikiaSearchHeader .WikiaSearch,
-	.WikiaRail .WikiaSearch {
+	.WikiaRail .WikiaSearch,
+	.WikiaPageHeader .WikiaSearch {
 		display: none;
 	}
 }
