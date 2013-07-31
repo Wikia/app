@@ -90,10 +90,10 @@ window.addEventListener('load', function(){
 					found = true;
 
 					fix();
-				},
-				functions: {
-					fix: fix,
-					unfix: unfix
+
+					$(document)
+						.on('ads:fix', fix)
+						.on('ads:unfix', unfix);
 				}
 			});
 		});

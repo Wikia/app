@@ -17,9 +17,7 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.dartmobilehelper'], funct
 	'use strict';
 
 	var STOP_COOKIE_NAME = 'wkStopAd',
-		ID_COOKIE_NAME = 'wikia_mobile_id',
-		fix = function(){},
-		unfix = function(){};
+		ID_COOKIE_NAME = 'wikia_mobile_id';
 
 	/**
 	 * Stops ads requests from being made for a specific amount of time
@@ -77,12 +75,6 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.dartmobilehelper'], funct
 					'"></script>',
 				findAd(options.wrapper, options.init)
 			);
-
-			//this is temporary for testing ads
-			if(options.functions){
-				fix = options.functions.fix;
-				unfix = options.functions.unfix;
-			}
 		}
 	}
 
@@ -156,12 +148,6 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.dartmobilehelper'], funct
 	return window.MobileAd = {
 		setupSlot: setupSlot,
 		shouldRequestAd: shouldRequestAd,
-		fix: function(){
-			fix && fix()
-		},
-		unfix: function(){
-			unfix && unfix();
-		},
 		init: function(name, options){
 			if(options && options.hasOwnProperty('stop')){
 				stop(options.stop);

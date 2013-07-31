@@ -5,7 +5,7 @@
  * @author Jakub "Student" Olek
  */
 
-define('modal', ['throbber', require.optional('ads')], function modal(throbber, ads){
+define('modal', ['throbber', 'jquery'], function modal(throbber, $){
 	var d = document,
 		w = window,
 		html = d.documentElement,
@@ -89,7 +89,7 @@ define('modal', ['throbber', require.optional('ads')], function modal(throbber, 
 
 		!created && setup();
 
-		ads && ads.unfix();
+		$.event.trigger('ads:unfix');
 
 		var con = options.content,
 			tool = options.toolbar,
@@ -213,7 +213,7 @@ define('modal', ['throbber', require.optional('ads')], function modal(throbber, 
 					}
 				},310);
 
-				ads && ads.fix();
+				$.event.trigger('ads:fix');
 			},10);
 
 			opened = false;
