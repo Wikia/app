@@ -42,27 +42,25 @@ define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.l
 
 				//image Lazyloading	(load images outside any section)
 				//if there are tables to wrap this should be done after they are processed
-				lazyload(d.getElementsByClassName('noSect'));
+				lazyload($('.lazy').not('.artSec .lazy'));
 
 				//make it available for sections on open so tables can be processed as well
 				tablesModule = t;
 			});
 		};
 
-
-
-	sections.addEventListener('open', function(){
-		var index = ~~this.getAttribute('data-index');
+	$(document).on('sections:open', function(event, section){
+		var index = ~~section.attr('data-index');
 
 		if(tablesModule && !tablesProcessedSections[index]){
 			//without fake I get DOM Exception 12
-			tablesModule.process($(this).find(selector).not('table table,fake'));
+			tablesModule.process(section.find(selector).not('table table,fake'));
 
 			tablesProcessedSections[index] = true;
 		}
 
 		if(!lazyLoadedSections[index]){
-			lazyload(this.getElementsByClassName('lazy'));
+			lazyload(section.find('.lazy'));
 
 			lazyLoadedSections[index] = true;
 		}
@@ -88,7 +86,7 @@ define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.l
 		}
 	} else {
 		//if there are no tables on a page we can go to lazyloading images
-		lazyload(d.getElementsByClassName('noSect'));
+		lazyload($('.lazy').not('.artSec .lazy'));
 	}
 
 	//init media
