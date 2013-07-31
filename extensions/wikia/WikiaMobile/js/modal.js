@@ -37,13 +37,7 @@ define('modal', ['throbber', 'jquery'], function modal(throbber, $){
 	}
 
 	function onContentClick(){
-		if(!stopHiding){
-			if(wrapper.className.indexOf('hdn') > -1){
-				showUI();
-			}else{
-				hideUI();
-			}
-		}
+		if(!stopHiding) $(wrapper).toggleClass('hdn');
 	}
 
 	function onCloseClick(ev){
@@ -54,7 +48,7 @@ define('modal', ['throbber', 'jquery'], function modal(throbber, $){
 	}
 
 	function onHashChange(ev){
-		if(isOpen() && w.location.hash === ''){
+		if(opened && w.location.hash === ''){
 			ev.preventDefault();
 			close();
 		}
@@ -63,20 +57,18 @@ define('modal', ['throbber', 'jquery'], function modal(throbber, $){
 	function onOrientationChange(ev){
 		//Setting minHeight is essential to hide url bar in a browser
 		//in GameGuides though there is nothing to hide
-		!Features.gameguides && (wrapper.style.minHeight = ev.height + 'px');
+		if(!Features.gameguides) wrapper.style.minHeight = ev.height + 'px';
 		!w.pageYOffset && w.scrollTo(0, 1);
 
 		if(typeof onResize == 'function') onResize(ev);
 	}
 
 	function hideUI(){
-		if(wrapper.className.indexOf('hdn') == -1){
-			wrapper.className += ' hdn';
-		}
+		$(wrapper).addClass('hdn');
 	}
 
 	function showUI(){
-		wrapper.className = wrapper.className.replace(' hdn', '');
+		$(wrapper).removeClass('hdn');
 	}
 
 	function fixTopBar(){
@@ -220,10 +212,6 @@ define('modal', ['throbber', 'jquery'], function modal(throbber, $){
 		}
 	}
 
-	function isOpen(){
-		return opened;
-	}
-
 	function setContent(con){
 		throbber.remove(content);
 		if(typeof con === 'string'){
@@ -255,22 +243,22 @@ define('modal', ['throbber', 'jquery'], function modal(throbber, $){
 		setContent: setContent,
 		open: open,
 		close: close,
-		isOpen: isOpen,
-		getWrapper: function(){
+		isOpen: function () {
+			return opened;
+		},
+		getWrapper: function () {
 			return wrapper;
 		},
 		hideUI: hideUI,
 		showUI: showUI,
-		setStopHiding: function(val){
-			stopHiding = (val) ? true : false;
+		setStopHiding: function (val) {
+			stopHiding = Boolean(val);
 		},
-		addClass: function(classes){
-			if(classes && wrapper.className.indexOf(classes) == -1){
-				wrapper.className += ' ' + classes;
-			}
+		addClass: function (classes) {
+			$(wrapper).addClass(classes);
 		},
-		removeClass: function(classes){
-			classes && (wrapper.className = wrapper.className.replace(' ' + classes,''));
+		removeClass: function (classes) {
+			$(wrapper).removeClass(classes);
 		}
 	}
 });
