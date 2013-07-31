@@ -43,7 +43,7 @@ function wfMainPageTag( &$parser ) {
  * @param Parser $parser The parent parser (a Parser object); more advanced extensions use this to obtain the contextual Title, parse wiki text, expand braces, register link relationships and dependencies, etc.
  */
 function wfMainPageTag_rcs( $input, $args, $parser ) {
-	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called, $wgMainPageTag_count, $wgOasisGrid;
+	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called, $wgMainPageTag_count;
 
 	if ( !$wfMainPageTag_lcs_called ) {
 		$wfMainPageTag_rcs_called = true;
@@ -51,7 +51,8 @@ function wfMainPageTag_rcs( $input, $args, $parser ) {
 
 	$wgMainPageTag_count++;
 
-	$html = '<div class="main-page-tag-rcs' . ( empty( $wgOasisGrid ) ? '' : ' grid-2' ) . '"><div>';
+	$isGridLayoutEnabled = F::app()->checkSkin( 'oasis' ) && BodyController::isGridLayoutEnabled();
+	$html = '<div class="main-page-tag-rcs' . ( $isGridLayoutEnabled ? ' grid-2' : '' ) . '"><div class="rcs-container">';
 
 	return $html;
 }
@@ -69,23 +70,32 @@ function wfMainPageTag_lcs( $input, $args, $parser ) {
 	$wfMainPageTag_lcs_called = true;
 	$wgMainPageTag_count++;
 
-	$isGridEnabled = BodyController::isGridLayoutEnabled();
+	$isOasis = F::app()->checkSkin( 'oasis' );
+	$isGridLayoutEnabled = $isOasis && BodyController::isGridLayoutEnabled();
+	$isResponsiveLayoutEnabled = $isOasis && BodyController::isResponsiveLayoutEnabled();
 	$gutter = isset( $args['gutter'] ) ? str_replace( 'px', '', $args['gutter'] ) : 10;
+
 	$html = '<div class="main-page-tag-lcs ';
 
-	if ( $isGridEnabled ) {
+	if ( $isGridLayoutEnabled ) {
 		$html .= 'grid-4 alpha ';
 	}
 
 	if ( $wfMainPageTag_rcs_called ) {
-		$html .= 'main-page-tag-lcs-collapsed" style="padding-right: '. $gutter .'px"><div>';
+		$html .= 'main-page-tag-lcs-collapsed"';
+
+		if ( !$isResponsiveLayoutEnabled ) {
+			$html .= ' style="padding-right: '. $gutter .'px"';
+		}
+
+		$html .= '><div class="lcs-container">';
 	} else {
 		$gutter += 300;
 		$html .= 'main-page-tag-lcs-exploded" ';
-		if ( F::app()->checkSkin( 'oasis' ) && $isGridEnabled ) {
-			$html .= '><div>';
+		if ( $isGridLayoutEnabled || $isResponsiveLayoutEnabled ) {
+			$html .= '><div class="lcs-container">';
 		} else {
-			$html .= 'style="margin-right: -'. $gutter .'px; "><div style="margin-right: '. $gutter .'px;">';
+			$html .= 'style="margin-right: -'. $gutter .'px; "><div class="lcs-container" style="margin-right: '. $gutter .'px;">';
 		}
 	}
 
