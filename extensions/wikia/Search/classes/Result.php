@@ -69,6 +69,14 @@ class Result extends ReadWrite {
 		}
 		return $textAsString;
 	}
+	
+	/**
+	 * Get the hub(s) name(s), translated to content language
+	 * @return string
+	 */
+	public function getHubs() {
+		return $this->getText( 'hub_s' );
+	}
 
 	/**
 	 * Returns the string value of the document's title
