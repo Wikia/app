@@ -64,33 +64,31 @@ function wfMainPageTag_rcs( $input, $args, $parser ) {
  * @param array $parser The parent parser (a Parser object); more advanced extensions use this to obtain the contextual Title, parse wiki text, expand braces, register link relationships and dependencies, etc.
  */
 function wfMainPageTag_lcs( $input, $args, $parser ) {
-	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called, $wgMainPageTag_count, $wgOasisGrid;
+	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called, $wgMainPageTag_count;
 
 	$wfMainPageTag_lcs_called = true;
 	$wgMainPageTag_count++;
 
-	if ( !isset( $args['gutter'] ) ) {
-		$args['gutter'] = '10';
-	}
-
-	$args['gutter'] = str_replace('px', '', $args['gutter']);
+	$isGridEnabled = BodyController::isGridLayoutEnabled();
+	$gutter = isset( $args['gutter'] ) ? str_replace( 'px', '', $args['gutter'] ) : 10;
 	$html = '<div class="main-page-tag-lcs ';
-	
-	if ( !empty($wgOasisGrid) ) {
+
+	if ( $isGridEnabled ) {
 		$html .= 'grid-4 alpha ';
 	}
 
 	if ( $wfMainPageTag_rcs_called ) {
-		$html .= 'main-page-tag-lcs-collapsed" style="padding-right: '. $args['gutter'] .'px"><div>';
+		$html .= 'main-page-tag-lcs-collapsed" style="padding-right: '. $gutter .'px"><div>';
 	} else {
-		$gutter = 300 + $args['gutter'];
+		$gutter += 300;
 		$html .= 'main-page-tag-lcs-exploded" ';
-		if ( F::app()->checkSkin( 'oasis' ) && !empty($wgOasisGrid) ) {
+		if ( F::app()->checkSkin( 'oasis' ) && $isGridEnabled ) {
 			$html .= '><div>';
 		} else {
 			$html .= 'style="margin-right: -'. $gutter .'px; "><div style="margin-right: '. $gutter .'px;">';
 		}
 	}
+
 	return $html;
 }
 
