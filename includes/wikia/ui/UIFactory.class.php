@@ -152,23 +152,26 @@ class UIFactory {
 	 */
 	protected function loadComponentConfig( $componentName ) {
 		wfProfileIn( __METHOD__ );
-		
-		global $wgMemc;
-		
-		$memcKey = wfMemcKey( __CLASS__, 'component', $componentName, static::MEMCACHE_VERSION);
-		$data = $wgMemc->get( $memcKey );
 
-		if ( !empty($data) ) {
-			wfProfileOut( __METHOD__ );
-			return $data;
-		} else {
-			$configFile = $this->getComponentConfigFileFullPath( $componentName );
-			$config = $this->loadComponentConfigFromFile( $configFile );
-			$wgMemc->set( $memcKey, $config, self::MEMCACHE_EXPIRATION );
+		$app = F::app();
+		$wgMemc = $app->wg->Memc;
+		$memcKey = wfMemcKey( __CLASS__, 'component', $componentName, static::MEMCACHE_VERSION );
 
-			wfProfileOut( __METHOD__ );
-			return $config;
-		}
+		$data = WikiaDataAccess::cache(
+			$memcKey,
+			self::MEMCACHE_EXPIRATION,
+			function() use ($componentName, $wgMemc, $memcKey) {
+				wfProfileIn( __METHOD__ );
+				$configFile = $this->getComponentConfigFileFullPath( $componentName );
+				$config = $this->loadComponentConfigFromFile( $configFile );
+
+				wfProfileOut( __METHOD__ );
+				return $config;
+			}
+		);
+
+		wfProfileOut( __METHOD__ );
+		return $data;
 	}
 
 	/**
