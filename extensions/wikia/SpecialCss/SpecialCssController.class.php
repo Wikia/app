@@ -71,7 +71,9 @@ class SpecialCssController extends WikiaSpecialPageController {
 		$this->dropdown = $this->createButtonLinks();
 		$this->handleAssets();
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->plain() );
-		
+
+		$this->wg->SuppressSpotlights = true;
+
 		wfProfileOut(__METHOD__);
 		return true;
 	}
