@@ -4,16 +4,16 @@
  * @todo once VID-555 is fixed, look into adding tracking for the global usage section
  */
 
-require( ['track', 'sections'], function( track, sections ) {
+require(['track', 'jquery'], function(track, $) {
 
 	/**
 	 * Tracking
 	 */
-	sections.addEventListener( 'open', function() {
+	$(document).on('sections:open', function(){
 		var id = this.previousElementSibling.id,
 			label;
 
-		switch( id ) {
+		switch(id) {
 			case 'filehistory':
 				label = 'history';
 				break;
