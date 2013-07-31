@@ -19,7 +19,7 @@ $messages['en'] = [
 	'special-css-diff-modal-title' => 'Changes',
 
 	'special-css-saving-internal-error' => 'Error while saving content.',
-	'special-css-merge-error' => "'''Warning!''' Someone else has changed this page since you started editing it!",
+	'special-css-merge-error' => "'''Warning!''' Someone else has published a change to this page since you started editing it. You can see the difference between the most recently saved edits and your edits below.",
 	'special-css-save-message' => 'Your changes to wikia.css have been saved.',
 	'special-css-oldid-message' => 'You are editing an old version of this page. If you save it, any changes made since this version will be lost.',
 
