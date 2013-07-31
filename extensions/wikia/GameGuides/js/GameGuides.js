@@ -201,12 +201,13 @@
 
 		window.Sections = Sections;
 
-		sections.addEventListener('open', function(){
-			document.documentElement.style.minHeight = document.documentElement.offsetHeight + 'px';
-		});
-
-		sections.addEventListener('close', function(){
-			document.documentElement.style.minHeight = 0;
+		$(document).on({
+			'sections:open': function(){
+				document.documentElement.style.minHeight = document.documentElement.offsetHeight + 'px';
+			},
+			'sections:close': function(){
+				document.documentElement.style.minHeight = 0;
+			}
 		});
 	});
 
