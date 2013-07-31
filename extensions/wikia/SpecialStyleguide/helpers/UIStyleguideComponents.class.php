@@ -22,9 +22,7 @@ class UIStyleguideComponents
 	 */
 	public function getAllComponents() {
 		$components = WikiaDataAccess::cache(
-			wfSharedMemcKey (
-				__CLASS__, 'all_components'
-			),
+			wfSharedMemcKey( __CLASS__, 'all_components' ),
 			UIFactory::MEMCACHE_EXPIRATION,
 			[ $this, 'getAllComponentsFromDirectories' ]
 		);

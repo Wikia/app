@@ -178,7 +178,7 @@ class UIFactory {
 	 * @return array
 	 */
 	private function addComponentsId( $componentCfg ) {
-		$componentCfg[ 'id' ] = static::sanitize( $componentCfg[ 'name-msg-key' ] );
+		$componentCfg[ 'id' ] = Sanitizer::escapeId( $componentCfg[ 'name-msg-key' ], 'noninitial' );
 
 		return $componentCfg;
 	}
@@ -197,7 +197,7 @@ class UIFactory {
 	}
 
 	public function getComponentsBaseTemplatePath( $name ) {
-		$name = static::sanitize( $name );
+		$name = Sanitizer::escapeId( $name, 'noninitial' );
 		return $this->getComponentsDir() .
 			$name .
 			DIRECTORY_SEPARATOR .
@@ -264,10 +264,6 @@ class UIFactory {
 	
 	protected function getComponentInstance() {
 		return new UIComponent();
-	}
-	
-	public static function sanitize( $string ) {
-		return str_replace( ' ', '_', mb_strtolower( $string ) );
 	}
 
 	/**
