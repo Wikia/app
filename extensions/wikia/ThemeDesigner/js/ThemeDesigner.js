@@ -369,7 +369,7 @@ var ThemeDesigner = {
 			.addClass(type);
 
 		// clicking away will close picker
-		$("body").bind("click.picker", ThemeDesigner.hidePicker);
+		$("body").bind("click.picker", $.proxy(ThemeDesigner.hidePicker, this));
 		this.themeDesignerPicker.click(function(event) {
 			event.stopPropagation();
 		});
