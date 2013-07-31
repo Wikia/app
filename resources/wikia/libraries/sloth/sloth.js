@@ -44,10 +44,10 @@ define('sloth', function(){
 	Branch.prototype.isVisible = function(){
 		var elem =  this.element,
 			threshold = this.threshold,
-			top = elem.offsetTop - threshold,
+			top = elem.y - threshold,
 			bottom = top + elem.offsetHeight + threshold;
 
-		return wBottom >= top && wTop <= bottom;
+		return (elem.offsetHeight && elem.offsetWidth && wBottom >= top && wTop <= bottom);
 	};
 
 	//return Sloth function
