@@ -105,7 +105,7 @@ class UIFactory {
 	 * @return string full file path
 	 */
 	public function getComponentConfigFileFullPath( $name ) {
-		return $this->getComponentsDir() . $name . '/' . $name . self::CONFIG_FILE_SUFFIX;
+		return $this->getComponentsDir() . $name . DIRECTORY_SEPARATOR . $name . self::CONFIG_FILE_SUFFIX;
 	}
 
 	/**
