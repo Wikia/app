@@ -11,7 +11,7 @@
  *
  * @author Jakub "Student" Olek
  */
-define('popover', ['throbber', 'jquery'], function popover(throbber, $){
+define('popover', ['throbber'], function popover(throbber){
 	return function(options){
 		options = options || {};
 
