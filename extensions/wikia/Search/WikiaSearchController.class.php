@@ -373,14 +373,17 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Called in index action to handle overriding template for different abTests
 	 */
 	protected function handleLayoutAbTest( $abGroup, $ns = null ) {
+		$abs = explode( ',', $abGroup );
 		//check if template for ab test exists
-		if( $abGroup !== null && $this->templateExists( $abGroup ) ) {
-			//set name depending on abGroup
-			$this->setVal( 'resultView', $abGroup );
-		} else {
-			//defaults to result
-			$this->setVal( 'resultView', static::WIKIA_DEFAULT_RESULT );
+		$view = static::WIKIA_DEFAULT_RESULT;
+		if ( !empty( $abs ) ) {
+			foreach( $abs as $abGroup ) {
+				if ( $this->templateExists( $abGroup ) ) {
+					$view = $abGroup;
+				}
+			}
 		}
+		$this->setVal( 'resultView', $view );
 		return true;
 	}
 
