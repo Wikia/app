@@ -10,6 +10,10 @@ $messages = array();
 
 $messages['en'] = array(
 	'lvs-page-title' => 'Licensed Video Swap',
+	'lvs-history-page-title' => 'Licensed Video Swap History',
+	'lvs-tooltip-history' => 'Licensed Video Swap Button',
+	'lvs-history-button-text' => 'History',
+	'lvs-page-header-back-link' => 'Back to Licensed Video Swap',
 	'lvs-callout-header' => "We've found matches for videos on your wiki in Wikia Video. <br> Replacing your videos with videos from Wikia Video is a good idea because:",
 	'lvs-callout-reason-licensed' => "Wikia Videos are '''licensed''' for our communities for use on your wikis",
 	'lvs-callout-reason-quality' => "Wikia Videos are high '''quality'''",
@@ -46,10 +50,17 @@ $messages['en'] = array(
 	'lvs-log-restore' => 'Restored swapped video ([[{{ns:File}}:$1]])',
 	'lvs-log-removed-redirected-link' => 'Removed redirected link',
 	'lvs-zero-state' => "At this time we have no matching videos from Wikia Video for videos on your wiki. Check back again soon!",
+	'lvs-history-swapped' => 'Swapped "$1" with "$2"',
+	'lvs-history-swapped-exact' => 'Swapped "$1" with a video of the same name',
+	'lvs-history-kept' => 'Kept "$1"',
 );
 
 $messages['qqq'] = array(
-	'lvs-page-title' => 'This is the page header/title (h1 tag) that is displayed at the top of the page.  This section is temporary and will go away after a certain number of views.',
+	'lvs-page-title' => 'This is the page header/title (h1 tag) that is displayed at the top of the page.',
+	'lvs-history-page-title' => 'This is the LVS history page header/title (h1 tag) that is displayed at the top of the page.',
+	'lvs-tooltip-history' => 'Tooltip Licensed Video Swap Button',
+	'lvs-history-button-text' => 'LVS history button text',
+	'lvs-page-header-back-link' => 'Text for link that brings users back to the Licensed Video Swap page from the history page',
 	'lvs-callout-header' => 'This is some header text that encourages the user to replace unlicensed videos with videos licensed for use on Wikia.  This section is temporary and will go away after a certain number of views. There\'s an optional "<br />" tag between the two sentences for purposes of making the header look nicer.',
 	'lvs-callout-reason-licensed' => 'This is a bullet point that appears below lvs-callout-header. It explains that Wikia videos are licensed for use on Wikia. This section is temporary and will go away after a certain number of views.',
 	'lvs-callout-reason-quality' => 'This is a bullet point that appears below lvs-callout-header.  This section is temporary and will go away after a certain number of views.',
@@ -88,4 +99,7 @@ $messages['qqq'] = array(
 	'lvs-log-swap' => 'log message shown in Special:RecentChanges for swapping video.',
 	'lvs-log-restore' => 'log message shown in Special:RecentChanges for restoring swapped video.',
 	'lvs-zero-state' => 'This message is displayed if there are no unlicenced videos to review on the licensed video swap page.',
+	'lvs-history-swapped' => "Message shown on the LVS history page for a video that had been swapped for a premium video",
+	'lvs-history-swapped-exact' => "Message shown on the LVS history page when the new video and the swapped video have exactly the same name",
+	'lvs-history-kept' => "Message shown on the LVS history page for a video that was kept as is and not swapped",
 );
