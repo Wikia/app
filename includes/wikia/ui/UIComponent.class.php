@@ -106,7 +106,7 @@ class UIComponent {
 	 * @throws WikiaUITemplateException
 	 */
 	private function setTemplatePath( $template ) {
-		$template = Sanitizer::escapeId( $template, 'noninitial' );
+		$template = Sanitizer::escapeId( strtolower( $template ), 'noninitial' );
 		$mustacheTplPath = $this->getBaseTemplatePath() . '_' . $template . '.' . self::MUSTACHE_FILE_EXTENSION;
 		if ( $this->fileExists( $mustacheTplPath ) ) {
 			$this->templatePath = $mustacheTplPath;
