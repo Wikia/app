@@ -34,8 +34,6 @@
 					</li>
 				</ul>
 			</nav>
-			<img src="<?= $wg->BlankImgUrl ?>" class="banner-corner-left" width="0" height="0">
-			<img src="<?= $wg->BlankImgUrl ?>" class="banner-corner-right" width="0" height="0">
 		</div>
 	</div>
 </header>
