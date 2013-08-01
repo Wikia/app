@@ -351,10 +351,10 @@ $wgAutoloadClasses['LeftMenuController'] = $IP.'/skins/oasis/modules/LeftMenuCon
 $wgAutoloadClasses['SassService']              = $IP.'/includes/wikia/services/sass/SassService.class.php';
 
 // Wikia Style Guide
-$wgAutoloadClasses['UIFactory'] = $IP . '/includes/wikia/ui/UIFactory.class.php';
-$wgAutoloadClasses['UIComponent'] = $IP . '/includes/wikia/ui/UIComponent.class.php';
-$wgAutoloadClasses['WikiaUITemplateException'] = $IP . '/includes/wikia/ui/exceptions/WikiaUITemplateException.class.php';
-$wgAutoloadClasses['WikiaUIDataException'] = $IP . '/includes/wikia/ui/exceptions/WikiaUIDataException.class.php';
+$wgAutoloadClasses['Wikia\UI\Factory'] = $IP . '/includes/wikia/ui/Factory.class.php';
+$wgAutoloadClasses['Wikia\UI\Component'] = $IP . '/includes/wikia/ui/Component.class.php';
+$wgAutoloadClasses['Wikia\UI\TemplateException'] = $IP . '/includes/wikia/ui/exceptions/TemplateException.class.php';
+$wgAutoloadClasses['Wikia\UI\DataException'] = $IP . '/includes/wikia/ui/exceptions/DataException.class.php';
 
 
 // Register \Wikia\Sass namespace

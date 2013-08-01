@@ -1,6 +1,7 @@
 <?php
-// TODO use namespace \Wikia\UI\Component when work will be done
-class UIComponent {
+namespace Wikia\UI;
+
+class Component {
 
 	/**
 	 * @desc Mustache file extension ;)
@@ -66,7 +67,7 @@ class UIComponent {
 	 *
 	 * @param $params
 	 * @return string
-	 * @throws WikiaUIDataException
+	 * @throws \Wikia\UI\DataException
 	 */
 	public function render( $params ) {
 		$this->setType( $params['type'] );
@@ -103,15 +104,15 @@ class UIComponent {
 	 * "sub templates": button_input.mustache, button_link.mustache and button_button.mustache the part between _ and .
 	 * is a "sub template" name
 	 *
-	 * @throws WikiaUITemplateException
+	 * @throws \Wikia\UI\TemplateException
 	 */
 	private function setTemplatePath( $template ) {
-		$template = Sanitizer::escapeId( strtolower( $template ), 'noninitial' );
+		$template = \Sanitizer::escapeId( strtolower( $template ), 'noninitial' );
 		$mustacheTplPath = $this->getBaseTemplatePath() . '_' . $template . '.' . self::MUSTACHE_FILE_EXTENSION;
 		if ( $this->fileExists( $mustacheTplPath ) ) {
 			$this->templatePath = $mustacheTplPath;
 		} else {
-			throw new WikiaUITemplateException();
+			throw new \Wikia\UI\TemplateException();
 		}
 	}
 
@@ -163,7 +164,7 @@ class UIComponent {
 	/**
 	 * @desc Checks if all required variables are set; throws an exception if not
 	 * 
-	 * @throws WikiaUIDataException
+	 * @throws \Wikia\UI\DataException
 	 */
 	private function validateTemplateVars() {
 		$config = $this->getTemplateVarsConfig();
@@ -171,8 +172,8 @@ class UIComponent {
 		
 		foreach ( $config[ $this->getType() ][ 'required' ] as $templateRequiredVarName ) {
 			if ( ! isset( $data[ $templateRequiredVarName ] ) ) {
-				$exceptionMessage = WikiaUIDataException::getInvalidParamDataMsg($templateRequiredVarName);
-				throw new WikiaUIDataException( $exceptionMessage );
+				$exceptionMessage = \Wikia\UI\DataException::getInvalidParamDataMsg($templateRequiredVarName);
+				throw new \Wikia\UI\DataException( $exceptionMessage );
 			}
 		}
 	}
@@ -182,7 +183,7 @@ class UIComponent {
 	 */
 	private function getTemplateEngine() {
 		if ( empty( $this->templateEngine ) ) {
-			$this->templateEngine = new Wikia\Template\MustacheEngine;
+			$this->templateEngine = new \Wikia\Template\MustacheEngine;
 		}
 
 		return $this->templateEngine;

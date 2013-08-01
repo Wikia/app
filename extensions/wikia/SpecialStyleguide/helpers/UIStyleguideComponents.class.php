@@ -12,7 +12,7 @@ class UIStyleguideComponents
 	private $uiFactory;
 
 	public function __construct() {
-		$this->uiFactory = UIFactory::getInstance();
+		$this->uiFactory = Wikia\UI\Factory::getInstance();
 	}
 
 	/**
@@ -23,7 +23,7 @@ class UIStyleguideComponents
 	public function getAllComponents() {
 		$components = WikiaDataAccess::cache(
 			wfSharedMemcKey( __CLASS__, 'all_components' ),
-			UIFactory::MEMCACHE_EXPIRATION,
+			Wikia\UI\Factory::MEMCACHE_EXPIRATION,
 			[ $this, 'getAllComponentsFromDirectories' ]
 		);
 
@@ -74,7 +74,7 @@ class UIStyleguideComponents
 
 		foreach ( $templateVars as $name => $var ) {
 			$renderedExample = isset( $exampleData[$name] )
-								? UIFactory::getInstance()->init( $filename )->render( $exampleData[$name] )
+								? Wikia\UI\Factory::getInstance()->init( $filename )->render( $exampleData[$name] )
 								: null;
 
 			if ( isset($var['name-var-msg-key']) ) {

@@ -1,16 +1,14 @@
 <?php
+namespace Wikia\UI;
 
 /**
- * UIFactory handles building component which means loading
+ * Wikia\UI\Factory handles building component which means loading
  * assets and component configuration file
  *
  * @author Andrzej Łukaszewski <nandy@wikia-inc.com>
  * @author Bartosz Bentkowski <bartosz.bentkowski@wikia-inc.com>
- *
  */
-
-// TODO use namespace \Wikia\UI\Factory when work will be done
-class UIFactory {
+class Factory {
 
 	/**
 	 * @desc Component's configuration file suffix
@@ -41,7 +39,7 @@ class UIFactory {
 	const MEMCACHE_VERSION = '1.0';
 	
 	/**
-	 * @var UIFactory
+	 * @var \Wikia\UI\Factory
 	 */
 	private static $instance = null;
 
@@ -63,7 +61,7 @@ class UIFactory {
 	private function __construct() {
 		global $IP;
 		$this->componentsDir = $IP . self::DEFAULT_COMPONENTS_PATH;
-		$this->loaderService = AssetsManager::getInstance();
+		$this->loaderService = \AssetsManager::getInstance();
 	}
 
 	/**
@@ -87,7 +85,7 @@ class UIFactory {
 	/**
 	 * @desc Returns the only instnace of the class; singleton
 	 *
-	 * @return UIFactory
+	 * @return \Wikia\UI\Factory
 	 */
 	static public function getInstance() {
 		if( is_null(static::$instance) ) {
@@ -118,11 +116,11 @@ class UIFactory {
 	 * @param string $configFilePath Path to file
 	 *
 	 * @return Array
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	private function loadComponentConfigFromFile( $configFilePath ) {
 		if ( false === $configString = file_get_contents( $configFilePath ) ) {
-			throw new Exception( 'Component\'s config file not found.' );
+			throw new \Exception( 'Component\'s config file not found.' );
 		} else {
 			return $configString;
 		}
@@ -133,9 +131,9 @@ class UIFactory {
 	 *
 	 * @param string $configContent JSON String
 	 *
-	 * @see UIFactory::loadComponentConfigFromFile() for example usage
+	 * @see Wikia\UI\Factory::loadComponentConfigFromFile() for example usage
 	 * @return Array
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	private function loadComponentConfigFromJSON( $configContent ) {
 		wfProfileIn( __METHOD__ );
@@ -147,7 +145,7 @@ class UIFactory {
 			return $config;
 		} else {
 			wfProfileOut( __METHOD__ );
-			throw new Exception( 'Invalid JSON.' );
+			throw new \Exception( 'Invalid JSON.' );
 		}
 	}
 
@@ -168,11 +166,11 @@ class UIFactory {
 	protected function loadComponentConfig( $componentName ) {
 		wfProfileIn( __METHOD__ );
 
-		$app = F::app();
+		$app = \F::app();
 		$wgMemc = $app->wg->Memc;
 		$memcKey = wfMemcKey( __CLASS__, 'component', $componentName, static::MEMCACHE_VERSION );
 
-		$data = WikiaDataAccess::cache(
+		$data = \WikiaDataAccess::cache(
 			$memcKey,
 			self::MEMCACHE_EXPIRATION,
 			function() use ($componentName, $wgMemc, $memcKey) {
@@ -196,7 +194,7 @@ class UIFactory {
 	private function addAsset( $assetName ) {
 		wfProfileIn( __METHOD__ );
 
-		Wikia::addAssetsToOutput( $assetName );
+		\Wikia::addAssetsToOutput( $assetName );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -205,11 +203,11 @@ class UIFactory {
 	 * @desc It uses MW Sanitizer to remove unwanted characters, builds
 	 * and returns the base path to a component's templates directory
 	 *
-	 * @param $name component's name
+	 * @param String $name component's name
 	 * @return string
 	 */
 	public function getComponentsBaseTemplatePath( $name ) {
-		$name = Sanitizer::escapeId( $name, 'noninitial' );
+		$name = \Sanitizer::escapeId( $name, 'noninitial' );
 		return $this->getComponentsDir() .
 			$name .
 			DIRECTORY_SEPARATOR .
@@ -219,7 +217,7 @@ class UIFactory {
 	}
 	
 	/**
-	 * @desc Loads JS/CSS dependencies, creates and configurates an instance of UIComponent object which is returned
+	 * @desc Loads JS/CSS dependencies, creates and configurates an instance of \Wikia\UI\Component object which is returned
 	 *
 	 * @param string|array
 	 * 
@@ -244,8 +242,8 @@ class UIFactory {
 				if( is_array( $dependenciesCfg ) ) {
 					$assets = array_merge( $assets, $dependenciesCfg );
 				} else {
-					$exceptionMessage = sprintf( WikiaUIDataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE, $assetType );
-					throw new WikiaUIDataException( $exceptionMessage );
+					$exceptionMessage = sprintf( \Wikia\UI\DataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE, $assetType );
+					throw new \Wikia\UI\DataException( $exceptionMessage );
 				}
 			}
 
@@ -267,23 +265,26 @@ class UIFactory {
 		// return components
 		return (sizeof($components) == 1) ? $components[0] : $components;
 	}
-	
+
+	/**
+	 * @return \Wikia\UI\Component
+	 */
 	protected function getComponentInstance() {
-		return new UIComponent();
+		return new \Wikia\UI\Component;
 	}
 
 	/**
 	 * @throws Exception
 	 */
 	public function __clone() {
-		throw new Exception( 'Cloning instances of this class is forbidden.' );
+		throw new \Exception( 'Cloning instances of this class is forbidden.' );
 	}
 
 	/**
 	 * @throws Exception
 	 */
 	public function __wakeup() {
-		throw new Exception( 'Unserializing instances of this class is forbidden.' );
+		throw new \Exception( 'Unserializing instances of this class is forbidden.' );
 	}
 }
 
