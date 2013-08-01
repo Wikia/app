@@ -51,9 +51,9 @@ $messages['en'] = array(
 	'lvs-log-restore' => 'Restored swapped video ([[{{ns:File}}:$1]])',
 	'lvs-log-removed-redirected-link' => 'Removed redirected link',
 	'lvs-zero-state' => "At this time we have no matching videos from Wikia Video for videos on your wiki. Check back again soon!",
-	'lvs-history-swapped' => "Swapped $1 with $2",
-	'lvs-history-swapped-exact' => "Swapped $1 with a video of the same name",
-	'lvs-history-kept' => "Kept $1",
+	'lvs-history-swapped' => 'Swapped "$1" with "$2"',
+	'lvs-history-swapped-exact' => 'Swapped "$1" with a video of the same name',
+	'lvs-history-kept' => 'Kept "$1"',
 );
 
 $messages['qqq'] = array(

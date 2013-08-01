@@ -82,7 +82,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/js/lvsHistoryPage.js' );
 		$helper = new LicensedVideoSwapHelper();
-		$this->videos = $helper->getUndoList();
+		$this->videos = $helper->getUndoList( $this->getContext() );
 	}
 
 	/**
@@ -98,10 +98,12 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		if ( !empty($path_parts[0]) ) {
 			$subpage = strtolower( $path_parts[0] );
 			if ( method_exists($this, $subpage) ) {
+				wfProfileOut(__METHOD__);
 				return $subpage;
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return null;
 	}
 
