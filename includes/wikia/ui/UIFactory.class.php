@@ -98,42 +98,49 @@ class UIFactory {
 	}
 
 	/**
-	 * @desc Returns full file path
+	 * @desc Returns full config file's path
 	 *
 	 * @param string $name component's name
 	 *
 	 * @return string full file path
 	 */
 	public function getComponentConfigFileFullPath( $name ) {
-		return $this->getComponentsDir() . $name . DIRECTORY_SEPARATOR . $name . self::CONFIG_FILE_SUFFIX;
+		return $this->getComponentsDir() .
+			$name .
+			DIRECTORY_SEPARATOR .
+			$name .
+			self::CONFIG_FILE_SUFFIX;
 	}
 
 	/**
-	 * @desc Loads UIComponent from given string
+	 * @desc Loads component's config from JSON file content, adds component's unique id
 	 *
 	 * @param string $configContent JSON String
 	 *
-	 * @return UIComponent
-	 *
+	 * @see UIFactory::loadComponentConfigFromFile() for example usage
+	 * @return Array
 	 * @throws Exception
 	 */
 	private function loadComponentConfigFromJSON( $configContent ) {
+		wfProfileIn( __METHOD__ );
+
 		$config = json_decode( $configContent, true );
 
 		if ( !is_null( $config ) ) {
+			wfProfileOut( __METHOD__ );
 			return $this->addComponentsId( $config );
 		} else {
+			wfProfileOut( __METHOD__ );
 			throw new Exception( 'Invalid JSON.' );
 		}
 	}
 
 	/**
-	 * @desc Loads UIComponent from file
+	 * @desc Checks if config file exists, if true: loads the configuration from file and returns as array
 	 *
 	 * @param string $configFilePath Path to file
 	 *
-	 * @return UIComponent
-	 *
+	 * @return Array
 	 * @throws Exception
 	 */
 	public function loadComponentConfigFromFile( $configFilePath ) {
@@ -145,7 +152,7 @@ class UIFactory {
 	}
 
 	/**
-	 * @desc Gets configuration file contents, decodes it to array and returns it
+	 * @desc Gets configuration file contents, decodes it to array and returns it; uses caching layer
 	 * 
 	 * @param String $componentName
 	 * @return string
@@ -175,7 +182,8 @@ class UIFactory {
 	}
 
 	/**
-	 * @desc Adds id element to the component's config array
+	 * @desc Adds id element to the component's config array;
+	 * uses MW Sanitizer to escape unwanted chars in the id
 	 *
 	 * @param Array $componentCfg
 	 * @return array
@@ -194,11 +202,18 @@ class UIFactory {
 	private function addAsset( $assetName ) {
 		wfProfileIn( __METHOD__ );
 
-		Wikia::addAssetsToOutput($assetName);
+		Wikia::addAssetsToOutput( $assetName );
 
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * @desc It uses MW Sanitizer to remove unwanted characters, builds
+	 * and returns the base path to a component's templates directory
+	 *
+	 * @param $name component's name
+	 * @return string
+	 */
 	public function getComponentsBaseTemplatePath( $name ) {
 		$name = Sanitizer::escapeId( $name, 'noninitial' );
 		return $this->getComponentsDir() .
@@ -229,20 +244,15 @@ class UIFactory {
 			$componentConfig = $this->loadComponentConfig( $name );
 
 			// if there are some components, put them in the $assets
-			$dependenciesJsCfg = !empty( $componentConfig['dependencies']['js'] ) ? $componentConfig['dependencies']['js'] : [];
-			if( is_array( $dependenciesJsCfg ) ) {
-				$assets = array_merge( $assets, $componentConfig['dependencies']['js'] );
-			} else {
-				$exceptionMessage = sprintf( WikiaUIDataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE, 'js' );
-				throw new WikiaUIDataException( $exceptionMessage );
-			}
-
-			$dependenciesCssCfg = !empty( $componentConfig['dependencies']['css'] ) ? $componentConfig['dependencies']['css'] : [];
-			if( is_array( $dependenciesCssCfg ) ) {
-				$assets = array_merge( $assets, $dependenciesCssCfg );
-			} else {
-				$exceptionMessage = sprintf( WikiaUIDataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE, 'css' );
-				throw new WikiaUIDataException( $exceptionMessage );
+			$assetsTypes = [ 'js', 'css' ];
+			foreach( $assetsTypes as $assetType ) {
+				$dependenciesCfg = !empty( $componentConfig['dependencies'][$assetType] ) ? $componentConfig['dependencies'][$assetType] : [];
+				if( is_array( $dependenciesCfg ) ) {
+					$assets = array_merge( $assets, $dependenciesCfg );
+				} else {
+					$exceptionMessage = sprintf( WikiaUIDataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE, $assetType );
+					throw new WikiaUIDataException( $exceptionMessage );
+				}
 			}
 
 			// init component, put config inside and set base template path
