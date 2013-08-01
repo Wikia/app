@@ -56,6 +56,18 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 */
 	protected $jaccard;
 
+	public function onPageHeaderIndexExtraButtons( $response ) {
+		$app = F::app();
+		if ( $app->wg->Title->getFullText() == 'Special:LicensedVideoSwap' ) {
+			$title = SpecialPage::getTitleFor("LicensedVideoSwap/History")->escapeLocalURL();
+			$extraButtons = $response->getVal('extraButtons');
+			$extraButtons[] = '<a class="button lvsHistory" href="'.$title.'" rel="tooltip" title="'.wfMessage("lvs-tooltip-history")->plain().'">'.wfMessage("lvs-history-button-text")->plain().'</a>';
+			$response->setVal('extraButtons', $extraButtons);
+		}
+		return true;
+	}
+
+
 	/**
 	 * Gets a list of videos that have not yet been swapped (e.g., no decision to keep or not keep the
 	 * original video has been made)
@@ -650,17 +662,21 @@ class LicensedVideoSwapHelper extends WikiaModel {
 			$dbKey = urlencode( $titleObj->getDBKey() );
 			$titleURL = $titleObj->getLocalURL();
 
-			// Define swap as NOT keep since there are two different swap statuses
-			$statusSwap = $props['status'] != self::STATUS_KEEP ? true : false;
+			// Define a few status helpers
+			$statusSwap  = $props['status'] == self::STATUS_SWAP_NORM  ? true : false;
+			$statusExact = $props['status'] == self::STATUS_SWAP_EXACT ? true : false;
+			$statusKeep  = $props['status'] == self::STATUS_KEEP       ? true : false;
 
-			$video = array('pageId'     => $row->page_id,
-						   'titleLink'  => '<a href="'.$titleURL.'">'.$titleObj->getText().'</a>',
-						   'userName'   => $userName,
-						   'userLink'   => $userLink,
-						   'created'    =>  empty($props['created']) ? '' : $props['created'],
-						   'createDate' => $createDate,
-						   'statusSwap' => $statusSwap,
-						   'undo'       => $this->wg->Server."/wikia.php?controller=LicensedVideoSwapSpecial&method=restoreVideo&format=json&videoTitle={$dbKey}",
+			$video = array('pageId'      => $row->page_id,
+						   'titleLink'   => '<a href="'.$titleURL.'">'.$titleObj->getText().'</a>',
+						   'userName'    => $userName,
+						   'userLink'    => $userLink,
+						   'created'     =>  empty($props['created']) ? '' : $props['created'],
+						   'createDate'  => $createDate,
+						   'statusSwap'  => $statusSwap,
+						   'statusExact' => $statusExact,
+						   'statusKeep'  => $statusKeep,
+						   'undo'        => $this->wg->Server."/wikia.php?controller=LicensedVideoSwapSpecial&method=restoreVideo&format=json&videoTitle={$dbKey}",
 			);
 
 			// If we swapped, we should have a redirect page pointing to the current video page

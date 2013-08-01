@@ -29,6 +29,8 @@ $wgGroupPermissions['sysop']['licensedvideoswap'] = true;
 $wgGroupPermissions['helper']['licensedvideoswap'] = true;
 $wgGroupPermissions['vstf']['licensedvideoswap'] = true;
 
+$wgHooks['PageHeaderIndexExtraButtons'][] = 'LicensedVideoSwapHelper::onPageHeaderIndexExtraButtons';
+
 // register messages package for JS
 // TODO: once 'back to roots' branch is merged, use JSMessages::registerPackage
 F::build('JSMessages')->registerPackage('LVS', array(

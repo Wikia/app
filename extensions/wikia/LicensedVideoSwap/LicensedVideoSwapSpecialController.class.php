@@ -35,15 +35,17 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		// TODO: once 'back to roots' branch is merged, use JSMessages::enqueuePackage
 		F::build('JSMessages')->enqueuePackage('LVS', JSMessages::EXTERNAL);
 
-		// update h1 text
-		$this->getContext()->getOutput()->setPageTitle( wfMessage('lvs-page-title')->text() );
-
 		// See if there is a subpage request to handle
 		$subpage = $this->getSubpage();
 		if ( $subpage ) {
 			$this->forward( __CLASS__, $subpage );
 			return true;
 		}
+
+		$this->wg->SupressPageSubtitle = true;
+
+		// update h1 text and <title> element
+		$this->getContext()->getOutput()->setPageTitle( wfMessage('lvs-page-title')->plain() );
 
 		$selectedSort = $this->getVal( 'sort', 'recent' );
 		$currentPage = $this->getVal( 'currentPage', 1 );
@@ -75,6 +77,9 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * History page
 	 */
 	public function history() {
+		$this->getContext()->getOutput()->setPageTitle( wfMessage('lvs-history-page-title')->text() );
+		$this->getContext()->getOutput()->setSubtitle( Wikia::link(SpecialPage::getTitleFor("LicensedVideoSwap"), wfMessage('lvs-page-header-back-link')->plain(), array('accesskey' => 'c'), array(), 'known') );
+
 		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/js/lvsHistoryPage.js' );
 		$helper = new LicensedVideoSwapHelper();
 		$this->videos = $helper->getUndoList();
