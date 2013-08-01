@@ -34,6 +34,7 @@ class UploadVisualizationImageFromFile extends UploadFromFile {
 		return $details;
 	}
 
+	// TODO cleanup not used methods after change to UploadStash
 	public function performUpload() {
 		global $wgUser;
 		return parent::performUpload('', '', false, $wgUser);

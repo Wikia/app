@@ -108,10 +108,11 @@ class SpecialPromoteHelper extends WikiaObject {
 					$uploadStatus["errors"] = $this->getUploadWarningMessages($warnings);
 				} else {
 					//save temp file
-					$status = $upload->performUpload();
+					// TODO check if file is ok
+					$file = $upload->stashFile();
 
 					$uploadStatus["status"] = "uploadattempted";
-					$uploadStatus["isGood"] = $status->isGood();
+					$uploadStatus["isGood"] = true;
 				}
 			}
 		}
@@ -260,7 +261,7 @@ class SpecialPromoteHelper extends WikiaObject {
 			switch ($fileType) {
 				case 'mainImageName':
 					$fileName = $dataContent;
-					if (strpos($fileName, 'Temp_file_') === 0) {
+					if (strpos($fileName, UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME) === false) {
 						$dstFileName = UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME;
 						$files['mainImage'] = $this->moveTmpFile($fileName, $dstFileName);
 						$files['mainImage']['modified'] = true;
@@ -364,7 +365,7 @@ class SpecialPromoteHelper extends WikiaObject {
 		// find all new files
 		$availableKeys = array_diff($allKeys,$keys);
 		foreach($additionalImagesNames as $singleFileName) {
-			if (strpos($singleFileName, 'Temp_file_') === 0) {
+			if (strpos($singleFileName, UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME) === false) {
 				$key = array_shift($availableKeys);
 				$dstFileName = $this->getAdditionalImageName($key);
 
@@ -403,14 +404,15 @@ class SpecialPromoteHelper extends WikiaObject {
 
 
 	protected function moveTmpFile($fileName, $dstFileName) {
-		$temp_file_title = Title::newFromText($fileName, NS_FILE);
+
 		$dst_file_title = Title::newFromText($dstFileName, NS_FILE);
 
-		$temp_file = new LocalFile($temp_file_title, RepoGroup::singleton()->getLocalRepo());
+		$temp_file = RepoGroup::singleton()->getLocalRepo()->getUploadStash()->getFile($fileName);
 		$file = new LocalFile($dst_file_title, RepoGroup::singleton()->getLocalRepo());
 
 		$file->upload($temp_file->getPath(), '', '');
-		$temp_file->delete('');
+		//TODO delete file
+		//$temp_file->delete('');
 
 		$data = array(
 			'url' => $file->getURL(),
@@ -420,8 +422,20 @@ class SpecialPromoteHelper extends WikiaObject {
 		return $data;
 	}
 
-	public function getImageUrl($imageName, $requestedWidth, $requestedHeight) {
-		return $this->homePageHelper->getImageUrl($imageName, $requestedWidth, $requestedHeight);
+	public function getImageUrl($imageFile, $requestedWidth, $requestedHeight) {
+		// TODO change it to image serving when it'll be ready
+		/*if ($imageFilse instanceof File && $imageFilse->exists()) {
+			$originalWidth = $imageFilse->getWidth();
+			$originalHeight = $imageFilse->getHeight();
+		}
+
+		if (!empty($originalHeight) && !empty($originalWidth)) {
+			$imageServing = $this->homePageHelper->getImageServingForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight);
+			$imageUrl = $imageServing->getUrl($imageFilse, $originalWidth, $originalHeight);
+		} else {
+			$imageUrl = $this->wg->blankImgUrl;
+		}*/
+		return $imageFile->createThumb($requestedWidth, $requestedHeight);
 	}
 
 	protected function createRemovalTask($taskDeletionList) {
