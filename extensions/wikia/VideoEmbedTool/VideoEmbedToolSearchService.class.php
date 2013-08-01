@@ -173,22 +173,25 @@ class VideoEmbedToolSearchService
 		$start = $config->getStart();
 		$pos = $start;
 		foreach ( $searchResponse['items'] as $singleVideoData ) {
-			(new WikiaFileHelper)->inflateArrayWithVideoData( 
-					$singleVideoData, 
-					Title::newFromText($singleVideoData['title_en'], NS_FILE ),
-					$this->getWidth(),
-					$this->getHeight(),
-					true
-			);
-			$trimTitle = $this->getTrimTitle();
-			if (! empty( $trimTitle ) ) {
-				$singleVideoData['title_en'] = mb_substr( $singleVideoData['title_en'], 0, $trimTitle );
+			$videoTitleObject = Title::newFromText( $singleVideoData['title'], NS_FILE );
+			if ( !empty( $videoTitleObject ) ) {
+				(new WikiaFileHelper)->inflateArrayWithVideoData(
+						$singleVideoData,
+						$videoTitleObject,
+						$this->getWidth(),
+						$this->getHeight(),
+						true
+				);
+				$trimTitle = $this->getTrimTitle();
+				if (! empty( $trimTitle ) ) {
+					$singleVideoData['title'] = mb_substr( $singleVideoData['title'], 0, $trimTitle );
+				}
+				$singleVideoData['pos'] = $pos++;
+				$data[] = $singleVideoData;
 			}
-			$singleVideoData['pos'] = $pos++;
-			$data[] = $singleVideoData;
 		}
 		return [
-				'totalItemCount' => count( $data ),
+				'totalItemCount' => $searchResponse['total'],
 				'nextStartFrom' => $start + $config->getLimit(),
 				'items' => $data
 		];
