@@ -71,16 +71,11 @@ class Result extends ReadWrite {
 	}
 	
 	/**
-	 * Get the hub(s) name(s), translated to content language
+	 * Get the hub name, translated to content language
 	 * @return string
 	 */
-	public function getHubs() {
-		$hub_ids = $this->getText( 'hub_s' );
-		if (!is_array($hub_ids)) {
-			$hub_ids = empty($hub_ids) ? [] : [ $hub_ids ];
-		}
-		$messages = array_map(function ($id) { return wfMessage('hub-'.$id)->text(); }, $hub_ids);
-		return $messages;
+	public function getHub() {
+		return wfMessage('hub-'.$this->getText( 'hub_s' ))->text(); 
 	}
 
 	/**
