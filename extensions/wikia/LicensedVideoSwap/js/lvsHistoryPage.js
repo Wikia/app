@@ -57,7 +57,6 @@ require([
 
 				that.undoSwap(url)
 					.success(function() {
-						that.redirectToLvs();
 						window.location = this.redirectUrl;
 					})
 					.error(function() {
