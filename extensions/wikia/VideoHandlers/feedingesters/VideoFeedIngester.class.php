@@ -30,6 +30,8 @@ abstract class VideoFeedIngester {
 	private static $instances = array();
 	protected $filterByProviderVideoId = array();
 
+	protected static $CLDR_NAMES = array();
+
 	const CACHE_KEY = 'videofeedingester-2';
 	const CACHE_EXPIRY = 3600;
 	const THROTTLE_INTERVAL = 1;	// seconds
@@ -146,7 +148,7 @@ abstract class VideoFeedIngester {
 			$ooyalaAsset = new OoyalaAsset();
 			$isExist = $ooyalaAsset->isSourceIdExist( $id, $provider );
 			if ( $isExist ) {
-				print "Not uploading - video already exists in remote assets.\n";
+				print "Not uploading [$name (Id: $id)] - video already exists in remote assets.\n";
 				wfProfileOut( __METHOD__ );
 				return 0;
 			}
@@ -750,13 +752,19 @@ abstract class VideoFeedIngester {
 	public function getCldrCode( $value, $type = 'language' ) {
 		$value = trim( $value );
 		if ( !empty( $value ) ) {
-			// include cldr extension for language code
-			include( dirname( __FILE__ ).'/../../../cldr/CldrNames/CldrNamesEn.php' );
+			if ( empty( self::$CLDR_NAMES ) ) {
+				// include cldr extension for language code
+				include( dirname( __FILE__ ).'/../../../cldr/CldrNames/CldrNamesEn.php' );
+				self::$CLDR_NAMES = array(
+					'languageNames' => $languageNames,
+					'countryNames' => $countryNames,
+				);
+			}
 
 			// $languageNames, $countryNames comes from cldr extension
 			$paramName = ( $type == 'country' ) ? 'countryNames' : 'languageNames';
-			if ( !empty( ${$paramName} ) ) {
-				$code = array_search( $value, ${$paramName} );
+			if ( !empty( self::$CLDR_NAMES[$paramName] ) ) {
+				$code = array_search( $value, self::$CLDR_NAMES[$paramName] );
 				if ( $code != false ) {
 					$value = $code;
 				}
@@ -764,6 +772,17 @@ abstract class VideoFeedIngester {
 		}
 
 		return $value;
+	}
+
+	/**
+	 * unique array and convert to string
+	 * @param array $arr
+	 * @return string
+	 */
+	public function uniqueArrayToString( $arr ) {
+		$lower = array_map( 'strtolower', $arr );
+		$unique = array_intersect_key( $arr, array_unique( $lower ) );
+		return implode( ', ', $unique );
 	}
 
 }

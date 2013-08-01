@@ -86,6 +86,8 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['thumbnail'] = $video['preview_image_url'];
 				$clipData['duration'] = $video['duration'] / 1000;
 				$clipData['published'] = empty($video['metadata']['published']) ? '' : $video['metadata']['published'];
+				$clipData['name'] = empty($video['metadata']['name']) ? '' : $video['metadata']['name'];
+				$clipData['type'] = empty($video['metadata']['type']) ? '' : $video['metadata']['type'];
 				$clipData['category'] = empty($video['metadata']['category']) ? '' : $video['metadata']['category'];
 				$clipData['keywords'] = empty($video['metadata']['keywords']) ? '' : $video['metadata']['keywords'];
 				$clipData['description'] = trim($video['description']);
@@ -116,6 +118,8 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['series'] = empty( $video['metadata']['series'] ) ? '' : $video['metadata']['series'];
 				$clipData['season'] = empty( $video['metadata']['season'] ) ? '' : $video['metadata']['season'];
 				$clipData['episode'] = empty( $video['metadata']['episode'] ) ? '' : $video['metadata']['episode'];
+				$clipData['characters'] = empty( $video['metadata']['characters'] ) ? '' : $video['metadata']['characters'];
+				$clipData['pageCategories'] = empty($video['metadata']['pageCategories']) ? '' : $video['metadata']['pageCategories'];
 
 				$msg = '';
 				$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug, 'provider' => $clipData['provider'] );
@@ -204,6 +208,10 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 			'series'         => $data['series'],
 			'season'         => $data['season'],
 			'episode'        => $data['episode'],
+			'name'           => $data['name'],
+			'type'           => $data['type'],
+			'characters'     => $data['characters'],
+			'pageCategories' => $data['pageCategories'],
 		);
 
 		return $metadata;

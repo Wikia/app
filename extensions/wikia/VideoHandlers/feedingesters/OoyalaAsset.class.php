@@ -43,12 +43,8 @@ class OoyalaAsset extends WikiaModel {
 					// set primary thumbnail
 					$resp = $this->setPrimaryThumbnail( $asset['embed_code'] );
 					if ( $resp ) {
-						// set age gate player
-						$resp = $this->setAgeGatePlayer( $asset['embed_code'], $data );
-						if ( $resp ) {
-							// set labels
-							$resp = $this->setLabels( $asset['embed_code'], $data );
-						}
+						// set labels
+						$resp = $this->setLabels( $asset['embed_code'], $data );
 					}
 				}
 			}
@@ -143,14 +139,24 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['actors'] ) ) {
 			$metadata['actors'] = $data['actors'];
 		}
+		if ( !empty( $data['duration'] ) ) {
+			$metadata['duration'] = $data['duration'];
+		}
 		if ( !empty( $data['published'] ) ) {
 			$metadata['published'] = $data['published'];
 		}
-		if ( !empty( $data['tags'] ) ) {
-			$metadata['tags'] = $data['tags'];
+		if ( !empty( $data['thumbnail'] ) ) {
+			$metadata['thumbnail'] = $data['thumbnail'];
 		}
-		if ( !empty( $data['hd'] ) ) {
+		// hd can be 0
+		if ( isset( $data['hd'] ) ) {
 			$metadata['hd'] = $data['hd'];
+		}
+		if ( !empty( $data['description'] ) ) {
+			$metadata['description'] = $data['description'];
+		}
+		if ( !empty( $data['name'] ) ) {
+			$metadata['name'] = $data['name'];
 		}
 		if ( !empty( $data['language'] ) ) {
 			$metadata['lang'] = $data['language'];
@@ -158,8 +164,8 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['subtitle'] ) ) {
 			$metadata['subtitle'] = $data['subtitle'];
 		}
-		if ( !empty( $data['trailerRating'] ) ) {
-			$metadata['trailerrating'] = $data['trailerRating'];
+		if ( !empty( $data['type'] ) ) {
+			$metadata['type'] = $data['type'];
 		}
 		if ( !empty( $data['industryRating'] ) ) {
 			$metadata['industryrating'] = $data['industryRating'];
@@ -173,7 +179,8 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['keywords'] ) ) {
 			$metadata['keywords'] = $data['keywords'];
 		}
-		if ( !empty( $data['ageRequired'] ) ) {
+		// ageRequired can be 0
+		if ( isset( $data['ageRequired'] ) ) {
 			$metadata['age_required'] = $data['ageRequired'];
 		}
 		if ( !empty( $data['targetCountry'] ) ) {
@@ -188,9 +195,13 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['episode'] ) ) {
 			$metadata['episode'] = $data['episode'];
 		}
+		if ( !empty( $data['characters'] ) ) {
+			$metadata['characters'] = $data['characters'];
+		}
 		if ( !empty( $data['resolution'] ) ) {
 			$metadata['resolution'] = $data['resolution'];
 		}
+		// ignore if aspectRatio is empty or 0
 		if ( !empty( $data['aspectRatio'] ) ) {
 			$metadata['aspectRatio'] = $data['aspectRatio'];
 		}
