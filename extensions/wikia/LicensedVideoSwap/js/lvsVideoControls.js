@@ -110,7 +110,8 @@ define( 'lvs.videocontrols', [ 'wikia.videoBootstrap', 'wikia.nirvana', 'jquery'
 	}
 
 	function reset() {
-		var i,
+		// TODO: reload the player
+		/*var i,
 			len = videoInstances.length,
 			vb;
 
@@ -121,7 +122,7 @@ define( 'lvs.videocontrols', [ 'wikia.videoBootstrap', 'wikia.nirvana', 'jquery'
 			removeVerticalAlign( $( vb.element ) );
 			vb.resetToThumb();
 
-		}
+		}*/
 	}
 
 	return {
