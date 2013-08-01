@@ -612,6 +612,10 @@ class SpecialCssModel extends WikiaModel {
 		return $dbName;
 	}
 
+	public function isMinorEditDefault() {
+		return $this->wg->User->getBoolOption('minordefault');
+	}
+
 	/**
 	 * @desc Returns array with page ids based on blog data from api
 	 *
