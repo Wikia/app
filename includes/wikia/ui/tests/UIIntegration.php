@@ -11,6 +11,7 @@ class UIIntegration extends WikiaBaseTest {
 	private $uiFactory;
 
 	protected function setUp() {
+		parent::setUp();
 		$this->path = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . '_fixtures/components/';
 
 		$this->uiFactory = UIFactory::getInstance();
