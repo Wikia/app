@@ -133,7 +133,7 @@ class SpecialStyleguideDataModel {
 	 * @param array $components array of components
 	 * @param string $sortByParam by which component parameter should it be sorted; default = 'name'
 	 * 
-	 * @see UIFactory::getAllComponents()
+	 * @see \Wikia\UI\Factory::getAllComponents()
 	 * 
 	 * @return array
 	 */

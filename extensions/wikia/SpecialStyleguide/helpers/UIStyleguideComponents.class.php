@@ -153,6 +153,6 @@ class UIStyleguideComponents
 	 * @return string
 	 */
 	private function getComponentExampleFileFullPath( $name ) {
-		return $this->uiFactory->getComponentsDir() . $name . '/' . $name . self::EXAMPLE_FILE_SUFFIX;
+		return $this->uiFactory->getComponentsDir() . $name . DIRECTORY_SEPARATOR . $name . self::EXAMPLE_FILE_SUFFIX;
 	}
 }
