@@ -61,8 +61,8 @@ class WikiFactoryLoader {
 	 * @access public
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
-	 * @param integer $id default null	explicite set wiki id
-	 * @param string $server_name default false	explicite set server name
+	 * @param integer $id default null    explicit set wiki id
+	 * @param bool|string $server_name default false    explicit set server name
 	 *
 	 * @return WikiFactoryLoader object
 	 */
@@ -196,7 +196,8 @@ class WikiFactoryLoader {
 	 *
 	 * @todo change new Database to LoadBalancer factory
 	 *
-	 * @return Database	database handler
+	 * @param int $type
+	 * @return Database    database handler
 	 */
 	public function getDB( $type = DB_SLAVE ) {
 		global $wgDBserver, $wgDBuser, $wgDBpassword;
@@ -708,7 +709,6 @@ class WikiFactoryLoader {
 		 * transfer configuration variables from database to GLOBALS
 		 */
 		if( is_array($this->mVariables) ) {
-			global $_variable_key, $_variable_value;
 			foreach ($this->mVariables as $key => $value) {
 				$tValue = $value;
 				#--- check, maybe there are variables in variable

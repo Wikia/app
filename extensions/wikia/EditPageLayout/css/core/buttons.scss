@@ -1,4 +1,4 @@
-#EditPage {
+.EditPage {
 	.cke_button {
 		> a {
 			@include border-radius(4px);
@@ -208,7 +208,7 @@
 	}
 }
 
-#EditPageTabs {
+.EditPageTabs {
 	.cke_button {
 		.cke_label {
 			color: $color-text;

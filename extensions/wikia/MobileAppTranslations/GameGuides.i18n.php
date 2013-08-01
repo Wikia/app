@@ -111,6 +111,13 @@ $messages['br'] = array(
 	'alert-download-updated-wikis-button-ok' => 'Mat eo',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'window-article-button-close' => 'ДӀачӀагӀа',
+);
+
 /** Czech (česky)
  * @author Chmee2
  * @author Reaperman
@@ -628,6 +635,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
  */
 $messages['pt'] = array(
 	'activityindicator-message' => 'A carregar…',
@@ -643,9 +651,9 @@ $messages['pt'] = array(
 	'searchview-button-back-list' => 'Voltar à lista',
 	'searchview-button-back-article' => 'Voltar ao artigo',
 	'searchbar-hint' => 'Pesquisar %s...',
-	'alert-download-updated-wikis-message' => 'A lista de guias disponíveis será actualizada.',
+	'alert-download-updated-wikis-message' => 'A lista de guias disponíveis será atualizada.',
 	'alert-download-updated-wikis-button-ok' => 'Ok',
-	'error-update-required' => 'Está disponível uma actualização necessária para esta aplicação.',
+	'error-update-required' => 'Está disponível uma atualização necessária para esta aplicação.',
 	'error-no-connection' => 'Não está disponível nenhuma ligação à internet.\\nTente novamente, por favor.',
 	'error-server' => 'Desculpe, os nossos servidores responderam com um erro.\\nTente novamente, por favor.',
 	'error-json-parse' => 'Desculpe, houve um problema com os dados recebidos dos nossos servidores.\\nTente novamente, por favor.',

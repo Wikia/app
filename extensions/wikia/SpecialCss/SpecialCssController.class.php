@@ -3,7 +3,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 	protected  $model;
 
 	public function __construct() {
-		parent::__construct('CSS', 'specialcss', true);
+		parent::__construct('CSS', 'editinterface', true);
 	}
 
 	/**

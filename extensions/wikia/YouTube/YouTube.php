@@ -53,6 +53,9 @@ $wgExtensionCredits['parserhook'][] = array
 	'description' => 'embeds YouTube and Google Video movies + Archive.org audio and video + WeGame and Gametrailers video + Tangler forum + GoGreenTube video + Crispy Gamer',
 );
 
+// Define the tallest a video can be to qualify as audio only
+define('AUDIO_ONLY_HEIGHT', 30);
+
 // Register the magic word "youtube" so that it can be used as a parser-function.
 function wfParserFunction_magic( &$magicWords, $langCode ) {
 	global $wgAllowNonPremiumVideos;
@@ -74,6 +77,10 @@ function upgradeYouTubeTag( $editpage, $request ) {
 		return true;
 	}
 	if ( $app->wg->User->isBlocked() ) {
+		return true;
+	}
+
+	if ( !$app->wg->User->isAllowed('videoupload') ) {
 		return true;
 	}
 
@@ -101,7 +108,7 @@ function upgradeYouTubeTag( $editpage, $request ) {
 
 			// If height is less than 30, they probably are using this as an audio file
 			// so don't bother converting it.
-			if ( $params['height'] <= 30 ) {
+			if ( $params['height'] <= AUDIO_ONLY_HEIGHT ) {
 				return $matches[0];
 			}
 
@@ -240,6 +247,16 @@ function embedYouTube( $input, $argv, $parser ) {
 	}
 	if (!empty($argv['height']) && settype($argv['height'], 'integer') && ($height_max >= $argv['height'])) {
 		$height = $argv['height'];
+	}
+
+	// If $wgAllVideosAdminOnly is set and is above the allowed audio only height
+	// then don't convert this.  Without this, a non-admin could add a full sized youtube
+	// tag that would not get upgraded to a file page on save, but remain a <youtube> tag.
+	// The non-admin would continue to see this, but the admin would see the
+	// youtube video player.
+	global $wgAllVideosAdminOnly;
+	if ( ($height > AUDIO_ONLY_HEIGHT) && $wgAllVideosAdminOnly ) {
+		return $input;
 	}
 
 	if (!empty($ytid)) {

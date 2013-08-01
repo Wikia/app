@@ -26,6 +26,7 @@ abstract class VideoFeedIngester {
 	protected static $PROVIDER;
 	protected static $FEED_URL;
 	protected static $CLIP_TYPE_BLACKLIST = array();
+	protected static $CLIP_FILTER = array();
 	private static $instances = array();
 	protected $filterByProviderVideoId = array();
 
@@ -49,9 +50,10 @@ abstract class VideoFeedIngester {
 	abstract protected function generateMetadata(array $data, &$errorMsg);
 	abstract protected function generateCategories(array $data, $addlCategories);
 
-	/*
+	/**
 	 *  If  $this->filterByProviderVideoId  is not empty, the ingestion script will only upload the videos
 	 *  that are in the array
+	 * @param $id
 	 */
 	public function setFilter( $id ) {
 
@@ -60,29 +62,46 @@ abstract class VideoFeedIngester {
 		}
 	}
 
+	/**
+	 * @param string $provider
+	 * @return null
+	 */
 	public static function getInstance($provider='') {
-		if (empty($provider)) {
+		if ( empty($provider) ) {
 			$className = __CLASS__;
-		}
-		else {
+		} else {
 			$className = ucfirst($provider) . 'FeedIngester';
-			if (!class_exists($className)) {
+			if ( !class_exists($className) ) {
 				return null;
 			}
 		}
 
-		if (empty(self::$instances[$className])) {
+		if ( empty(self::$instances[$className]) ) {
 			self::$instances[$className] = new $className();
 		}
 
 		return self::$instances[$className];
 	}
 
+	/**
+	 * @param array $data
+	 * @param $msg
+	 * @param array $params
+	 * @return int
+	 */
 	public function createVideo(array $data, &$msg, $params=array()) {
 		wfProfileIn( __METHOD__ );
 
-		// blacklist video
+		// See if this video is blacklisted (exact match against any data)
 		if ( $this->isBlacklistVideo($data) ) {
+			print "Skipping (due to \$CLIP_TYPE_BLACKLIST) '{$data['titleName']}' - {$data['description']}\n";
+			wfProfileOut( __METHOD__ );
+			return 0;
+		}
+
+		// See if this video should be filtered (regex match against specific fields)
+		if ( $this->isFilteredVideo($data) ) {
+			print "Skipping (due to \$CLIP_FILTER) '{$data['titleName']}' - {$data['description']}\n";
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -92,9 +111,9 @@ abstract class VideoFeedIngester {
 		$debug = !empty($params['debug']);
 		$remoteAsset = !empty( $params['remoteAsset'] );
 		$ignoreRecent = !empty($params['ignorerecent']) ? $params['ignorerecent'] : 0;
-		if($debug) {
+		if ( $debug ) {
 			print "data after initial processing: \n";
-			foreach( explode("\n", var_export($data, 1)) as $line ) {
+			foreach ( explode("\n", var_export($data, 1)) as $line ) {
 				print ":: $line\n";
 			}
 		}
@@ -103,7 +122,7 @@ abstract class VideoFeedIngester {
 		$id = $data['videoId'];
 		$name = $this->generateName($data);
 		$metadata = $this->generateMetadata($data, $msg);
-		if (!empty($msg)) {
+		if ( !empty($msg) ) {
 			print "Error when generating metadata\n";
 			var_dump($msg);
 			wfProfileOut( __METHOD__ );
@@ -112,13 +131,24 @@ abstract class VideoFeedIngester {
 
 		$provider = empty($params['provider']) ? static::$PROVIDER : $params['provider'];
 
-		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $id );
+		// check if the video id exists in Ooyala.
+		if ( $remoteAsset ) {
+			$ooyalaAsset = new OoyalaAsset();
+			$isExist = $ooyalaAsset->isSourceIdExist( $id, $provider );
+			if ( $isExist ) {
+				print "Not uploading - video already exists in remote assets.\n";
+				wfProfileOut( __METHOD__ );
+				return 0;
+			}
+		}
+
+		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $id, $remoteAsset );
 		$dup_count = count($duplicates);
 		$previousFile = null;
 		if ( $dup_count > 0 ) {
 			if ( $this->reupload === false ) {
 				// if reupload is disabled finish now
-				if($debug) {
+				if ( $debug ) {
 					print "Not uploading - video already exists and reupload is disabled\n";
 				}
 				wfProfileOut( __METHOD__ );
@@ -138,7 +168,7 @@ abstract class VideoFeedIngester {
 		}
 		$metadata['destinationTitle'] = $name;
 
-		if (!$this->validateTitle($id, $name, $msg, $debug)) {
+		if ( !$this->validateTitle($id, $name, $msg, $debug) ) {
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -152,12 +182,12 @@ abstract class VideoFeedIngester {
 
 		// prepare wiki categories string (eg [[Category:MyCategory]] )
 		$categories = $this->generateCategories($data, $addlCategories);
-		$categories[] = wfMsgForContent( 'videohandler-category' );
+		$categories[] = wfMessage( 'videohandler-category' )->inContentLanguage()->text();
 		$categories = array_unique( $categories );
 		$categoryStr = '';
-		foreach ($categories as $categoryName) {
+		foreach ( $categories as $categoryName ) {
 			$category = Category::newFromName($categoryName);
-			if ($category instanceof Category) {
+			if ( $category instanceof Category ) {
 				$categoryStr .= '[[' . $category->getTitle()->getFullText() . ']]';
 			}
 		}
@@ -173,31 +203,31 @@ abstract class VideoFeedIngester {
 		$body .= $videoHandlerHelper->addDescriptionHeader( $apiWrapper->getDescription() );
 
 
-		if ($debug) {
+		if ( $debug ) {
 			print "Ready to create video\n";
 			print "id:          $id\n";
 			print "name:        $name\n";
 			print "categories:  " . implode(',', $categories) . "\n";
 			print "metadata:\n";
-			foreach(explode("\n",var_export($metadata,1)) as $line) {
+			foreach ( explode("\n",var_export($metadata,1)) as $line ) {
 				print ":: $line\n";
 			}
 
 			print "body:\n";
-			foreach(explode("\n",$body) as $line) {
+			foreach ( explode("\n",$body) as $line ) {
 				print ":: $line\n";
 			}
 
 			wfProfileOut( __METHOD__ );
 			return 1;
 		} else {
-			if(!empty($ignoreRecent) && !is_null($previousFile) ) {
+			if ( !empty($ignoreRecent) && !is_null($previousFile) ) {
 				$revId = $previousFile->getLatestRevID();
 				$revision = Revision::newFromId( $revId );
 				$time = $revision->getTimestamp();
 				$timeUnix = intval(wfTimestamp( TS_UNIX, $time ) );
 				$timeNow = intval(wfTimestamp( TS_UNIX, time() ) );
-				if($timeUnix + $ignoreRecent >= $timeNow) {
+				if ( $timeUnix + $ignoreRecent >= $timeNow ) {
 					print "Recently uploaded, ignoring\n";
 					wfProfileOut( __METHOD__ );
 					return 0;
@@ -205,7 +235,7 @@ abstract class VideoFeedIngester {
 			}
 			$uploadedTitle = null;
 			$result = VideoFileUploader::uploadVideo( $provider, $id, $uploadedTitle, $body, false, $metadata );
-			if ($result->ok) {
+			if ( $result->ok ) {
 				$fullUrl = WikiFactory::getLocalEnvURL($uploadedTitle->getFullURL());
 				print "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$fullUrl}\n\n";
 				wfWaitForSlaves(self::THROTTLE_INTERVAL);
@@ -218,7 +248,7 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
-	 * create remote asset
+	 * Create remote asset
 	 * @param string $id
 	 * @param string $name
 	 * @param array $metadata
@@ -241,23 +271,24 @@ abstract class VideoFeedIngester {
 			return 0;
 		}
 
+		// check if video title exists
+		$ooyalaAsset = new OoyalaAsset();
+		$isExist = $ooyalaAsset->isTitleExist( $assetData['name'], $assetData['provider'] );
+		if ( $isExist ) {
+			print( "Skip (Uploading Asset): $name ($assetData[provider]): video already exists in remote assets.\n" );
+			wfProfileOut( __METHOD__ );
+			return 0;
+		}
+
 		if ( $debug ) {
 			print "Ready to create remote asset\n";
 			print "id:          $id\n";
 			print "name:        $name\n";
 			print "assetdata:\n";
-			foreach( explode("\n", var_export( $assetData, TRUE ) ) as $line ) {
+			foreach ( explode("\n", var_export( $assetData, TRUE ) ) as $line ) {
 				print ":: $line\n";
 			}
 		} else {
-			$ooyalaAsset = new OoyalaAsset();
-			$isExist = $ooyalaAsset->isExist( $assetData['name'], $assetData['provider'] );
-			if ( $isExist ) {
-				print( "Skip (Uploading Asset): $name ($assetData[provider]): Video already exists.\n" );
-				wfProfileOut( __METHOD__ );
-				return 0;
-			}
-
 			$result = $ooyalaAsset->addRemoteAsset( $assetData );
 			if ( !$result ) {
 				wfProfileOut( __METHOD__ );
@@ -270,7 +301,7 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
-	 * generate remote asset data
+	 * Generate remote asset data
 	 * @param string $name
 	 * @param array $data
 	 * @return array $data
@@ -281,6 +312,10 @@ abstract class VideoFeedIngester {
 		return $data;
 	}
 
+	/**
+	 * @param $name
+	 * @return string
+	 */
 	protected function getUniqueName( $name ) {
 		$name_final = $name;
 		$i = 2;
@@ -294,12 +329,19 @@ abstract class VideoFeedIngester {
 		return $name_final;
 	}
 
+	/**
+	 * @param $videoId
+	 * @param $name
+	 * @param $msg
+	 * @param $isDebug
+	 * @return int
+	 */
 	protected function validateTitle($videoId, $name, &$msg, $isDebug) {
 
 		wfProfileIn( __METHOD__ );
 		$sanitizedName = VideoFileUploader::sanitizeTitle($name);
 		$title = $this->titleFromText($sanitizedName);
-		if(is_null($title)) {
+		if ( is_null($title) ) {
 			$msg = "article title was null: clip id $videoId. name: $name";
 			wfProfileOut( __METHOD__ );
 			return 0;
@@ -308,10 +350,17 @@ abstract class VideoFeedIngester {
 		return 1;
 	}
 
+	/**
+	 * @param $name
+	 * @return Title
+	 */
 	protected function titleFromText($name) {
 		return Title::newFromText($name, NS_FILE);
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getWikiIngestionData() {
 
 		wfProfileIn( __METHOD__ );
@@ -322,15 +371,14 @@ abstract class VideoFeedIngester {
 		// partner API search keywords. Value is an array of categories
 		// relevant to wikis
 		$rawData = $this->getWikiIngestionDataFromSource();
-		foreach ($rawData as $cityId=>$cityData) {
-			if (is_array($cityData)) {
-				foreach (self::$WIKI_INGESTION_DATA_FIELDS as $field) {
-					if (!empty($cityData[$field]) && is_array($cityData[$field])) {
-						foreach ($cityData[$field] as $fieldVal) {
-							if (!empty($data[$field][$fieldVal]) && is_array($data[$field][$fieldVal])) {
+		foreach ( $rawData as $cityId=>$cityData ) {
+			if ( is_array($cityData) ) {
+				foreach ( self::$WIKI_INGESTION_DATA_FIELDS as $field ) {
+					if ( !empty($cityData[$field]) && is_array($cityData[$field]) ) {
+						foreach ( $cityData[$field] as $fieldVal ) {
+							if ( !empty($data[$field][$fieldVal]) && is_array($data[$field][$fieldVal]) ) {
 								$data[$field][$fieldVal] = array_merge($data[$field][$fieldVal], $cityData['categories']);
-							}
-							else {
+							} else {
 								$data[$field][$fieldVal] = $cityData['categories'];
 							}
 						}
@@ -344,6 +392,9 @@ abstract class VideoFeedIngester {
 		return $data;
 	}
 
+	/**
+	 * @return array|bool|Object
+	 */
 	protected function getWikiIngestionDataFromSource() {
 		global $wgExternalSharedDB, $wgMemc;
 
@@ -396,6 +447,10 @@ abstract class VideoFeedIngester {
 		return $aWikis;
 	}
 
+	/**
+	 * @param $url
+	 * @return string
+	 */
 	protected function getUrlContent($url) {
 		return Http::get($url);
 	}
@@ -412,28 +467,74 @@ abstract class VideoFeedIngester {
 		$keyphraseFound = false;
 		$keywords = explode(' ', $keyphrase);
 		$keywordMissing = false;
-		foreach ($keywords as $keyword) {
-			if (stripos($subject, $keyword) === false) {
+		foreach ( $keywords as $keyword ) {
+			if ( stripos($subject, $keyword) === false ) {
 				$keywordMissing = true;
 				break;
 			}
 		}
-		if (!$keywordMissing) {
+		if ( !$keywordMissing ) {
 			$keyphraseFound = true;
 		}
 
 		return $keyphraseFound;
 	}
 
+	/**
+	 * @param array $clipData
+	 * @return bool
+	 */
 	protected function isClipTypeBlacklisted(array $clipData) {
 		// assume that a clip with properties that match exactly undesired
 		// values should not be imported. This assumption will have to
 		// change if we consider values that fall into a range, such as
 		// duration < MIN_VALUE
-		if (is_array(static::$CLIP_TYPE_BLACKLIST)) {
+		if ( is_array(static::$CLIP_TYPE_BLACKLIST) ) {
 			$arrayIntersect = array_intersect(static::$CLIP_TYPE_BLACKLIST, $clipData);
-			if (!empty($arrayIntersect) && $arrayIntersect == static::$CLIP_TYPE_BLACKLIST) {
+			if ( !empty($arrayIntersect) && $arrayIntersect == static::$CLIP_TYPE_BLACKLIST ) {
 				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Tests whether this video should be filtered out because of a string in its metadata.
+	 *
+	 * Set the $CLIP_FILTER static associative array in the child class to match a particular key or
+	 * use '*' to match any key, e.g.:
+	 *
+	 *     $CLIP_FILTER = array( '*'        => '/Daily/',
+	 *                           'keywords' => '/Adult/i',
+	 *                         )
+	 *
+	 * This would filter out videos where any data contained the word 'Daily' and any video where the
+	 * keywords contained the case insensitive string 'adult'
+	 *
+	 * @param array $clipData - The video data
+	 * @return bool - Returns true if the video should be filtered out, false otherwise
+	 */
+	protected function isFilteredVideo( array $clipData ) {
+		if ( is_array( static::$CLIP_FILTER ) ) {
+			foreach ( $clipData as $key => $value ) {
+				// See if we match key explicitly or by the catchall '*'
+				$regex_list = empty( static::$CLIP_FILTER['*'] ) ? '' : static::$CLIP_FILTER['*'];
+				$regex_list = empty( static::$CLIP_FILTER[$key] ) ? $regex_list : static::$CLIP_FILTER[$key];
+
+				// If we don't have  regex at this point, skip this bit of clip data
+				if ( empty( $regex_list ) ) {
+					continue;
+				}
+
+				// This can be a single regex or a list of regexes
+				$regex_list = is_array($regex_list) ? $regex_list : array( $regex_list );
+
+				foreach ( $regex_list as $regex ) {
+					if ( preg_match( $regex, $value ) ) {
+						return true;
+					}
+				}
 			}
 		}
 
@@ -450,7 +551,7 @@ abstract class VideoFeedIngester {
 		if ( $keywords ) {
 			$keywords = explode( ',', $keywords );
 			$blacklist = array();
-			foreach( $keywords as $word ) {
+			foreach ( $keywords as $word ) {
 				$word = preg_replace( "/[^A-Za-z0-9' ]/", "", trim($word) );
 				if ( $word ) {
 					$blacklist[] = $word;
@@ -471,6 +572,8 @@ abstract class VideoFeedIngester {
 	 * @return boolean
 	 */
 	public function isBlacklistVideo( $data ) {
+
+		// General filter on all keywords
 		$regex = $this->getBlacklistRegex( F::app()->wg->VideoBlacklist );
 		if ( !empty($regex) ) {
 			$keys = array( 'titleName', 'description' );
@@ -480,7 +583,7 @@ abstract class VideoFeedIngester {
 			if ( array_key_exists('tags', $data) ) {
 				$keys[] = 'tags';
 			}
-			foreach( $keys as $key ) {
+			foreach ( $keys as $key ) {
 				if ( preg_match($regex, str_replace('-', ' ', $data[$key])) ) {
 					echo "Blacklisting video: ".$data['titleName'].", videoId ".$data['videoId']." (reason $key: ".$data[$key].")\n";
 					return true;
@@ -501,7 +604,7 @@ abstract class VideoFeedIngester {
 			$new = array();
 			if ( !empty($regex) ) {
 				$old = explode( ',', $keywords );
-				foreach( $old as $word ) {
+				foreach ( $old as $word ) {
 					if ( preg_match($regex, str_replace('-', ' ', $word)) ) {
 						echo "Skip: blacklisted keyword $word.\n";
 						continue;
@@ -518,7 +621,7 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
-	 * get industry rating
+	 * Get industry rating
 	 * @param string $rating
 	 * @return string $stdRating
 	 */
@@ -561,7 +664,7 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
-	 * get age gate
+	 * Get age gate
 	 * @param string $rating
 	 * @return int $ageGate
 	 */
@@ -580,6 +683,43 @@ abstract class VideoFeedIngester {
 		}
 
 		return $ageGate;
+	}
+
+	/**
+	 * map category
+	 * @param string $cate
+	 * @return string $category
+	 */
+	protected function mapCategory( $cate ) {
+		switch( $cate ) {
+			case 'Movie':
+			case 'Movies':
+			case 'Movie Interview':
+			case 'Movie Behind the Scenes':
+			case 'Movie SceneOrSample':
+			case 'Movie Alternate Version':
+				$category = 'Movies';
+				break;
+			case 'TV':
+			case 'Series':
+			case 'Season':
+			case 'Episode':
+			case 'TV Show':
+			case 'Episodic Interview':
+			case 'Episodic Behind the Scenes':
+			case 'Episodic SceneOrSample':
+			case 'Episodic Alternate Version':
+				$category = 'TV';
+				break;
+			case 'Game':
+			case 'Games':
+			case 'Games SceneOrSample':
+				$category = 'Gaming';
+				break;
+			default: $category = 'Others';
+		}
+
+		return $category;
 	}
 
 }

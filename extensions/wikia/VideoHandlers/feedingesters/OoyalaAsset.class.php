@@ -94,8 +94,11 @@ class OoyalaAsset extends WikiaModel {
 		$reqPath = '/v2/assets/'.$videoId.'/metadata';
 
 		$assetData = $this->getAssetMetadata( $metadata );
+
+		// source and sourceid are required. They are used for tracking the video.
 		$assetData['source'] = $metadata['provider'];
 		$assetData['sourceid'] = $metadata['videoId'];
+
 		$reqBody = json_encode( $assetData );
 
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
@@ -155,6 +158,9 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['language'] ) ) {
 			$metadata['lang'] = $data['language'];
 		}
+		if ( !empty( $data['subtitle'] ) ) {
+			$metadata['subtitle'] = $data['subtitle'];
+		}
 		if ( !empty( $data['trailerRating'] ) ) {
 			$metadata['trailerrating'] = $data['trailerRating'];
 		}
@@ -173,25 +179,63 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['ageRequired'] ) ) {
 			$metadata['age_required'] = $data['ageRequired'];
 		}
+		if ( !empty( $data['targetCountry'] ) ) {
+			$metadata['targetcountry'] = $data['targetCountry'];
+		}
+		if ( !empty( $data['series'] ) ) {
+			$metadata['series'] = $data['series'];
+		}
+		if ( !empty( $data['season'] ) ) {
+			$metadata['season'] = $data['season'];
+		}
+		if ( !empty( $data['episode'] ) ) {
+			$metadata['episode'] = $data['episode'];
+		}
 
 		return $metadata;
 	}
 
 	/**
-	 * check if video exists
+	 * check if video title exists
 	 * @param string $name
 	 * @param string $source
 	 * @param string $assetType [remote_asset]
 	 * @return boolean
 	 */
-	public function isExist( $name, $source, $assetType = 'remote_asset' ) {
-		wfProfileIn( __METHOD__ );
-
+	public function isTitleExist( $name, $source, $assetType = 'remote_asset' ) {
 		$cond = array(
 			"asset_type='$assetType'",
 			"name='".addslashes($name)."'",
+			//"metadata.source='$source'",
+		);
+
+		return $this->isExist( $cond );
+	}
+
+	/**
+	 * check if video id exists (match sourceid in metadata)
+	 * @param string $sourceId
+	 * @param string $source
+	 * @param string $assetType [remote_asset]
+	 * @return boolean
+	 */
+	public function isSourceIdExist( $videoId, $source, $assetType = 'remote_asset' ) {
+		$cond = array(
+			"asset_type='$assetType'",
+			"metadata.sourceid='$videoId'",
 			"metadata.source='$source'",
 		);
+
+		return $this->isExist( $cond );
+	}
+
+	/**
+	 * check if video exists
+	 * @param array $cond
+	 * @return boolean
+	 */
+	public function isExist( $cond ) {
+		wfProfileIn( __METHOD__ );
 
 		$params = array(
 			'limit' => 1,
@@ -264,6 +308,54 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
+	 * get player info
+	 * @param string $videoId
+	 * @return array|false $response
+	 */
+	public function getPlayer( $videoId ) {
+		wfProfileIn( __METHOD__ );
+
+		$method = 'GET';
+		$reqPath = '/v2/assets/'.$videoId.'/player/';
+
+		$url = OoyalaApiWrapper::getApi( $method, $reqPath );
+		//print( "Connecting to $url...\n" );
+
+		$req = MWHttpRequest::factory( $url );
+		$status = $req->execute();
+		if ( $status->isGood() ) {
+			$response = json_decode( $req->getContent(), true );
+		} else {
+			$response = false;
+			print( "Error: problem getting player (".$status->getMessage().").\n" );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $response;
+	}
+
+	/**
+	 * set player
+	 * @param string $videoId
+	 * @param string $playerId (new player id)
+	 * @return boolean $resp
+	 */
+	public function setPlayer( $videoId, $playerId ) {
+		wfProfileIn( __METHOD__ );
+
+		$method = 'PUT';
+		$reqPath = '/v2/assets/'.$videoId.'/player/'.$playerId;
+		$params = array();
+
+		$resp = $this->sendRequest( $method, $reqPath, $params );
+
+		wfProfileOut( __METHOD__ );
+
+		return $resp;
+	}
+
+	/**
 	 * set age gate player
 	 * @param string $videoId
 	 * @param array $data
@@ -274,11 +366,7 @@ class OoyalaAsset extends WikiaModel {
 
 		$resp = true;
 		if ( !empty( $data['ageGate'] ) ) {
-			$method = 'PUT';
-			$reqPath = '/v2/assets/'.$videoId.'/player/'.OoyalaVideoHandler::OOYALA_PLAYER_ID_AGEGATE;
-			$params = array();
-
-			$resp = $this->sendRequest( $method, $reqPath, $params );
+			$resp = $this->setPlayer( $videoId, OoyalaVideoHandler::OOYALA_PLAYER_ID_AGEGATE );
 		}
 
 		wfProfileOut( __METHOD__ );

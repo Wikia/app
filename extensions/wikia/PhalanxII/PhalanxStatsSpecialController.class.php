@@ -91,12 +91,22 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		$row = $data->toArray();
 		unset($row['text']);
 		unset($row['reason']);
+		unset($row['comment']);
 		unset($row['ip_hex']);
+
+		// parse block comment
+		if ($data['comment'] != '') {
+			$comment = ParserPool::parse($data['comment'], $this->wg->Title, new ParserOptions())->getText();
+		}
+		else {
+			$comment = '';
+		}
 
 		$table  = Xml::buildTable( array( $row ), $tableAttribs, $headers );
 		$table  = str_replace("</table>", "", $table);
 		$table .= "<tr><th>" . wfMsg('phalanx-stats-table-text') . "</th><td colspan='8'>" . htmlspecialchars( $data['text'] ) . "</td></tr>";
 		$table .= "<tr><th>" . wfMsg('phalanx-stats-table-reason')  ."</th><td colspan='8'>{$data['reason']}</td></tr>";
+		$table .= "<tr><th>" . wfMsg('phalanx-stats-table-comment')  ."</th><td colspan='8'>{$comment}</td></tr>";
 		$table .= "</table>";
 
 		$this->setVal('table', $table);

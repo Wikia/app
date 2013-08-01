@@ -142,6 +142,7 @@ $messages['qqq'] = array(
 	'rte-ck-link-add' => '{{Identical|Add link}}',
 	'rte-ck-link-error-title' => '{{Identical|Error}}',
 	'rte-ck-link-external-tab' => '{{Identical|External link}}',
+	'rte-ck-link-external-url' => '{{Identical|URL}}',
 	'rte-ck-link-internal-pageName' => '{{Identical|Page name}}',
 	'rte-ck-link-internal-tab' => '{{Identical|Internal link}}',
 	'rte-ck-link-status-external' => '{{Identical|External link}}',
@@ -152,6 +153,7 @@ $messages['qqq'] = array(
 	'rte-ck-photoGallery-gallery' => '{{Identical|Gallery}}',
 	'rte-ck-photoGallery-slideshow' => '{{Identical|Slideshow}}',
 	'rte-ck-photoGallery-tooltipSlider' => 'Tooltip for the slider placeholder in the editor.',
+	'rte-ck-poll-poll' => '{{Identical|Poll}}',
 	'rte-ck-signature-label' => '{{Identical|Signature}}',
 	'rte-ck-table-toolbarTooltip' => 'Appears when hovering over the button to add a table into the article. Tooltips inform users that button adds a table to article code',
 	'rte-ck-templateDropDown-chooseAnotherTpl' => 'See [[mw:Help:Magic words]] for the term.',
@@ -677,6 +679,9 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'rte-ck-link-error-badPageTitle' => 'Дехар до, дӀаязеъе агӀона цӀе.',
+	'rte-ck-media-delete' => 'дӀаяккха',
+	'rte-ck-modeSwitch-toWysiwyg' => 'Визуальни тадар',
 	'rte-ck-templateDropDown-label' => 'Кеп',
 );
 
@@ -991,6 +996,13 @@ $messages['diq'] = array(
 	'rte-ck-format-tag_h3' => 'Sername 3',
 	'rte-ck-format-tag_h4' => 'Sername 4',
 	'rte-ck-format-tag_h5' => 'Sername 5',
+);
+
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'rte-ck-link-error-badUrl' => 'We do not recognise that URL - please check it is correct.',
 );
 
 /** Spanish (español)
@@ -1901,6 +1913,7 @@ $messages['ksh'] = array(
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
+ * @author Ghybu
  */
 $messages['ku-latn'] = array(
 	'rte-ck-errorPopupTitle' => 'Çewtî!',
@@ -1916,7 +1929,7 @@ $messages['ku-latn'] = array(
 	'rte-ck-link-external-tab' => 'Lînka derve',
 	'rte-ck-link-external-url' => 'URL',
 	'rte-ck-link-internal-pageName' => 'Navê rûpelê',
-	'rte-ck-link-internal-tab' => 'Lînka hundir',
+	'rte-ck-link-internal-tab' => 'Girêdana hundir',
 	'rte-ck-link-status-exists' => 'Rûpel heye',
 	'rte-ck-link-status-notexists' => 'Rûpel tune ye',
 	'rte-ck-link-status-external' => 'Lînka derve',
@@ -2434,7 +2447,7 @@ $messages['nl'] = array(
 	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Naar de visuele modus schakelen',
 	'rte-ck-modeSwitch-error' => 'Er is een fout opgetreden tijdens het wisselen van modus. Probeer het opnieuw.',
 	'rte-ck-photoGallery-gallery' => 'Galerij',
-	'rte-ck-photoGallery-slideshow' => 'Diapresentatie',
+	'rte-ck-photoGallery-slideshow' => 'Diavoorstelling',
 	'rte-ck-photoGallery-slider' => 'Afbeeldingenschuiver',
 	'rte-ck-photoGallery-addGallery' => 'Afbeeldingengalerij toevoegen',
 	'rte-ck-photoGallery-addSlideshow' => 'Diavoorstelling toevoegen',
@@ -2913,7 +2926,7 @@ $messages['pt'] = array(
 	'rte-ck-videoPlaceholder-tooltip' => 'Este é um espaço reservado para um vídeo.',
 	'rte-ck-mut-add' => 'Adicionar um vídeo (beta)',
 	'rte-ck-mut-mut' => 'Vídeo (beta)',
-	'rte-ck-widescreen-toggle' => 'Activar ou desactivar o modo panorâmico',
+	'rte-ck-widescreen-toggle' => 'Ativar ou desativar o modo panorâmico',
 	'rte-ck-poll-confirmDelete' => 'Tem a certeza de que pretende remover a votação desta página?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Remover esta votação?',
 	'rte-ck-spellchecker-moreSuggestions' => 'Mais sugestões',

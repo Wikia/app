@@ -2,21 +2,16 @@
 @import "../core/layout";
 
 .GameStarLogo {
-  float: right;
-  margin: -3px -132px 0 0;
-  width: 132px;
-  height: 38px;
-  background: {
-    color: $color-header;
-    image: url(/skins/oasis/images/logo_gamestar.png); /* $wgCdnStylePath */
-    position: center;
-    repeat: no-repeat;
-  }
-  &.full-width {
-    background: {
-      color: transparent;
-    }
-  }
+	float: right;
+	margin: -3px -132px 0 0;
+	width: 132px;
+	height: 38px;
+	background: {
+		color: transparent;
+		image: url(/skins/oasis/images/logo_gamestar.png); /* $wgCdnStylePath */
+		position: center;
+		repeat: no-repeat;
+	}
 }
 
 .gamestar-wrapper {

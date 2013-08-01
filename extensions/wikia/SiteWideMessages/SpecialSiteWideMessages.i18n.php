@@ -166,8 +166,10 @@ $messages['qqq'] = array(
 	'swm-error-no-wiki-list' => 'Error message to display when no wikis where entered into the list of wikis box.',
 	'action-messagetool' => '{{doc-action|messagetool}}',
 	'swm-label-mode-users-registration' => 'Label for option to select users by registration date.',
-	'swm-mode-users-registration-after' => 'Option to select if user wants to send message to users who registered after the given date.',
-	'swm-mode-users-registration-before' => 'Option to select if user wants to send message to users who registered before the given date.',
+	'swm-mode-users-registration-after' => 'Option to select if user wants to send message to users who registered after the given date.
+{{Identical|After}}',
+	'swm-mode-users-registration-before' => 'Option to select if user wants to send message to users who registered before the given date.
+{{Identical|Before}}',
 	'swm-mode-users-registration-between' => 'Option to select if user wants to send message to users who registered between two given dates.',
 	'swm-label-mode-users-registration-hint' => 'Message that lets the user know that dates must be in the form 2012-04-01 00:00:00.',
 	'swm-error-registered-tobeforefrom' => 'Error message when given user registration end date is before start date.',
@@ -179,8 +181,10 @@ $messages['qqq'] = array(
 	'swm-error-editcount-tolessthanfrom' => 'Error message when given edit count upper limit is less than lower limit.',
 	'swm-error-editcount-notnumber' => 'Error message when given edit count is not a valid number.',
 	'swm-label-mode-wikis-created' => 'Label for option to select wikis by creation date.',
-	'swm-mode-wikis-created-after' => 'Option to select if user wants to send message to wikis created after the given date.',
-	'swm-mode-wikis-created-before' => 'Option to select if user wants to send message to wikis created before the given date.',
+	'swm-mode-wikis-created-after' => 'Option to select if user wants to send message to wikis created after the given date.
+{{Identical|After}}',
+	'swm-mode-wikis-created-before' => 'Option to select if user wants to send message to wikis created before the given date.
+{{Identical|Before}}',
 	'swm-mode-wikis-created-between' => 'Option to select if user wants to send message to wikis created between two given date.',
 	'swm-label-mode-wikis-created-hint' => 'Message that lets the user know that dates must be in the form 2012-04-01 00:00:00.',
 	'swm-error-created-tobeforefrom' => 'Error message when given wiki creation end date is before start date.',
@@ -685,10 +689,13 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
-	'swm-label-mode-users-active' => 'Жигар декъашхой',
+	'swm-label-preview' => 'Хьалха муха ю хьажа',
+	'swm-label-mode-users-active' => 'Жигара декъашхой',
 	'swm-label-language' => 'Мотт',
 	'swm-list-table-expire' => 'Чекхйолу',
+	'swm-list-table-tools' => 'ГӀирсаш',
 	'swm-list-table-lang' => 'Меттанаш',
+	'swm-error-empty-group' => 'ДӀаязъе тобан цӀе.',
 );
 
 /** Czech (česky)
@@ -2620,16 +2627,16 @@ $messages['pt'] = array(
 	'swm-label-recipient-users' => 'Utilizadores',
 	'swm-label-expiration' => 'Prazo de expiração',
 	'swm-label-mode-wikis-all' => 'Todas as wikis',
-	'swm-label-mode-wikis-hub' => 'Portal seleccionado',
-	'swm-label-mode-wikis-cluster' => 'Conjunto de wikis seleccionado',
-	'swm-label-mode-wikis-wiki' => 'Wiki seleccionada',
+	'swm-label-mode-wikis-hub' => 'Portal selecionado',
+	'swm-label-mode-wikis-cluster' => 'Conjunto de wikis selecionado',
+	'swm-label-mode-wikis-wiki' => 'Wiki selecionada',
 	'swm-label-mode-wikis-wiki-multi' => 'Lista de wikis',
 	'swm-label-mode-users-all' => 'Todos os utilizadores',
-	'swm-label-mode-users-active' => 'Utilizadores activos',
+	'swm-label-mode-users-active' => 'Utilizadores ativos',
 	'swm-label-mode-users-group' => 'Utilizadores pertencentes ao grupo',
-	'swm-label-mode-users-group-hint' => '<i>Escolha um grupo da lista ou escreva o nome do grupo para substituir a selecção da lista.</i>',
-	'swm-label-mode-users-user' => 'Utilizador seleccionado',
-	'swm-label-mode-users-user-hint' => '<i>Esta opção ignora a selecção no grupo "Wikis".</i>',
+	'swm-label-mode-users-group-hint' => '<i>Escolha um grupo da lista ou escreva o nome do grupo para substituir a seleção da lista.</i>',
+	'swm-label-mode-users-user' => 'Utilizador selecionado',
+	'swm-label-mode-users-user-hint' => '<i>Esta opção ignora a seleção no grupo "Wikis".</i>',
 	'swm-label-mode-users-user-multi' => 'Lista de usuários',
 	'swm-label-mode-users-anon' => 'Todos os usuários anônimos',
 	'swm-label-content' => 'Conteúdo',
@@ -2713,9 +2720,9 @@ $messages['pt-br'] = array(
 	'swm-label-mode-users-all' => 'Todos os utilizadores',
 	'swm-label-mode-users-active' => 'Usuários ativos',
 	'swm-label-mode-users-group' => 'Usuários pertencentes ao grupo',
-	'swm-label-mode-users-group-hint' => '<i>Escolha um grupo da lista ou escreva o nome do grupo para substituir a selecção da lista.</i>',
+	'swm-label-mode-users-group-hint' => '<i>Escolha um grupo da lista ou escreva o nome do grupo para substituir a seleção da lista.</i>',
 	'swm-label-mode-users-user' => 'Usuário selecionado',
-	'swm-label-mode-users-user-hint' => '<i>Esta opção ignora a selecção no grupo "Wikis".</i>',
+	'swm-label-mode-users-user-hint' => '<i>Esta opção ignora a seleção no grupo "Wikis".</i>',
 	'swm-label-mode-users-user-multi' => 'Lista de usuários',
 	'swm-label-content' => 'Conteúdo',
 	'swm-label-comment' => 'Comentário',
