@@ -57,7 +57,7 @@ require([
 
 				that.undoSwap(url)
 					.success(function() {
-						window.location = this.redirectUrl;
+						window.location = that.redirectUrl;
 					})
 					.error(function() {
 						that.$el.trigger('undo.failed');
