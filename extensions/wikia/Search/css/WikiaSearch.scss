@@ -36,6 +36,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 		background: $color-search-form-background;
 		border-top: 1px solid $color-search-grid-border;
 		border-bottom: 1px solid $color-search-grid-border;
+		overflow: hidden;
 		padding: 9px 10px;
 
 		.inter-wiki-search & {
