@@ -553,7 +553,7 @@ class WikiaHomePageController extends WikiaController {
 			if ( $title !== null ) {
 				$file = new GlobalFile($title);
 				if ( $file !== null ) {
-					$wordmarkUrl = wfReplaceImageServer($file->getUrl(), SassUtil::getCacheBuster());
+					$wordmarkUrl = $file->getUrl();
 				}
 			}
 		} catch ( Exception $e ) { }
