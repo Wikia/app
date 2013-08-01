@@ -76,7 +76,6 @@ class UIFactoryTest extends WikiaBaseTest {
 					'description-msg-key' => 'sample-component-desc',
 					'templateVars' => [ 'required' => [], 'optional' => [] ],
 					'dependencies' => [ 'js' => [], 'css' => [] ],
-					'id' => 'sample',
 				]
 			]
 		];

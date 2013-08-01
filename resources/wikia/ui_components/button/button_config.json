@@ -1,19 +1,19 @@
 {
-	"name-msg-key":"styleguide-name-buttons",
+	"name-msg-key": "styleguide-name-buttons",
 	"description-msg-key": "styleguide-description-button",
 	"templateVars": {
-		"link" : {
-			"name-var-msg-key" : "styleguide-description-link-button",
+		"link": {
+			"name-var-msg-key": "styleguide-description-link-button",
 			"required": [ "href", "classes", "value" ],
 			"optional": [ "label", "target" ]
 		},
-		"input" : {
-			"name-var-msg-key" : "styleguide-description-input-button",
+		"input": {
+			"name-var-msg-key": "styleguide-description-input-button",
 			"required": [ "type", "name", "classes", "value" ],
 			"optional": [ "label" ]
 		},
-		"button" : {
-			"name-var-msg-key" : "styleguide-description-simple-button",
+		"button": {
+			"name-var-msg-key": "styleguide-description-simple-button",
 			"required": [ "type", "classes", "value" ],
 			"optional": [ "label" ]
 		}

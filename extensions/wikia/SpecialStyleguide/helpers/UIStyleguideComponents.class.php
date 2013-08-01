@@ -42,17 +42,21 @@ class UIStyleguideComponents
 		while( $directory->valid() ) {
 			if( !$directory->isDot() && $directory->isDir() ) {
 				$filename = $directory->getFilename();
-				$component = $this->uiFactory->loadComponentConfigFromFile(
-					$this->uiFactory->getComponentConfigFileFullPath( $filename )
-				);
-				$component = $this->prepareMessages($component);
-				if ( isset($component['templateVars']) ) {
-					$component['mustacheVars'] = $this->prepareComponents($component['templateVars'], $filename);
+				$componentConfig = $this->uiFactory->loadComponentConfigAsArray( $filename );
+				$componentConfig = $this->prepareMessages( $componentConfig );
+				// add unique id so after clicking on the components list's link page jumps to the right anchor
+				$componentConfig['id'] = Sanitizer::escapeId( $filename, ['noninitial'] );
+
+				if ( isset( $componentConfig['templateVars'] ) ) {
+					$componentConfig['mustacheVars'] = $this->prepareComponents( $componentConfig['templateVars'], $filename );
 				}
-				$components[] = $component;
+
+				$components[] = $componentConfig;
 			}
+
 			$directory->next();
 		}
+
 		return $components;
 	}
 
@@ -63,24 +67,27 @@ class UIStyleguideComponents
 	 * @param String $filename
 	 * @return Array
 	 */
-	private function prepareComponents($templateVars, $filename) {
+	private function prepareComponents( $templateVars, $filename ) {
 		$mustacheVars = [];
 
-		$exampleData = $this->loadExampleFile($filename);
+		$exampleData = $this->loadExampleFile( $filename );
 
 		foreach ( $templateVars as $name => $var ) {
-			$renderedExample = isset($exampleData[$name])
-							   ? UIFactory::getInstance()->init($filename)->render($exampleData[$name])
-							   : null;
+			$renderedExample = isset( $exampleData[$name] )
+								? UIFactory::getInstance()->init( $filename )->render( $exampleData[$name] )
+								: null;
 
 			if ( isset($var['name-var-msg-key']) ) {
 				$var['name'] = $this->prepareMessage($var['name-var-msg-key']);
 			}
 
 			$mustacheVars[] = [
+				// component's type
 				'type' => $name,
+				// template variables
 				'fields' => $var,
-				'example' => $renderedExample
+				// rendered example
+				'example' => $renderedExample,
 			];
 		}
 
@@ -93,9 +100,9 @@ class UIStyleguideComponents
 	 * @param $component
 	 * @return mixed
 	 */
-	private function prepareMessages($component) {
-		$component['name'] = $this->prepareMessage($component['name-msg-key']);
-		$component['description'] = $this->prepareMessage($component['description-msg-key']);
+	private function prepareMessages( $component ) {
+		$component['name'] = $this->prepareMessage( $component['name-msg-key'] );
+		$component['description'] = $this->prepareMessage( $component['description-msg-key'] );
 
 		return $component;
 	}

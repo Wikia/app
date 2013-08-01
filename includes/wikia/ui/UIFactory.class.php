@@ -113,6 +113,22 @@ class UIFactory {
 	}
 
 	/**
+	 * @desc Checks if config file exists, if true: loads the configuration from file and returns as array
+	 *
+	 * @param string $configFilePath Path to file
+	 *
+	 * @return Array
+	 * @throws Exception
+	 */
+	private function loadComponentConfigFromFile( $configFilePath ) {
+		if ( false === $configString = file_get_contents( $configFilePath ) ) {
+			throw new Exception( 'Component\'s config file not found.' );
+		} else {
+			return $configString;
+		}
+	}
+
+	/**
 	 * @desc Loads component's config from JSON file content, adds component's unique id
 	 *
 	 * @param string $configContent JSON String
@@ -128,27 +144,19 @@ class UIFactory {
 
 		if ( !is_null( $config ) ) {
 			wfProfileOut( __METHOD__ );
-			return $this->addComponentsId( $config );
+			return $config;
 		} else {
 			wfProfileOut( __METHOD__ );
 			throw new Exception( 'Invalid JSON.' );
 		}
 	}
 
-	/**
-	 * @desc Checks if config file exists, if true: loads the configuration from file and returns as array
-	 *
-	 * @param string $configFilePath Path to file
-	 *
-	 * @return Array
-	 * @throws Exception
-	 */
-	public function loadComponentConfigFromFile( $configFilePath ) {
-		if ( false === $configString = file_get_contents( $configFilePath ) ) {
-			throw new Exception( 'Component\'s config file not found.' );
-		} else {
-			return $this->loadComponentConfigFromJSON( $configString );
-		}
+	public function loadComponentConfigAsArray( $componentName ) {
+		$configFile = $this->getComponentConfigFileFullPath( $componentName );
+		$configFileContent = $this->loadComponentConfigFromFile( $configFile );
+		$configInArray = $this->loadComponentConfigFromJSON( $configFileContent );
+
+		return $configInArray;
 	}
 
 	/**
@@ -169,29 +177,15 @@ class UIFactory {
 			self::MEMCACHE_EXPIRATION,
 			function() use ($componentName, $wgMemc, $memcKey) {
 				wfProfileIn( __METHOD__ );
-				$configFile = $this->getComponentConfigFileFullPath( $componentName );
-				$config = $this->loadComponentConfigFromFile( $configFile );
+				$configInArray = $this->loadComponentConfigAsArray( $componentName );
 
 				wfProfileOut( __METHOD__ );
-				return $config;
+				return $configInArray;
 			}
 		);
 
 		wfProfileOut( __METHOD__ );
 		return $data;
-	}
-
-	/**
-	 * @desc Adds id element to the component's config array;
-	 * uses MW Sanitizer to escape unwanted chars in the id
-	 *
-	 * @param Array $componentCfg
-	 * @return array
-	 */
-	private function addComponentsId( $componentCfg ) {
-		$componentCfg[ 'id' ] = Sanitizer::escapeId( $componentCfg[ 'name-msg-key' ], 'noninitial' );
-
-		return $componentCfg;
 	}
 
 	/**
