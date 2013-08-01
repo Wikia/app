@@ -32,6 +32,11 @@ $color-callout-text: $color-text-dark;
 	$color-callout-text: $color-text-light;
 }
 
+// button that leads to history undo swap/keep page
+.lvs-history-btn {
+	vertical-align: 5px;
+}
+
 // For now, this callout style will be specific to lvs, but we may want to make it global in the future
 .lvs-callout {
 	background: $color-buttons;

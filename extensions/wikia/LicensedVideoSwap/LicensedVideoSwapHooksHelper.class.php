@@ -16,7 +16,7 @@ class LicensedVideoSwapHooksHelper {
 		if ( $app->wg->Title->getFullText() == 'Special:LicensedVideoSwap' ) {
 			$title = SpecialPage::getTitleFor("LicensedVideoSwap/History")->escapeLocalURL();
 			$extraButtons = $response->getVal('extraButtons');
-			$extraButtons[] = '<a class="button lvsHistory" href="'.$title.'" rel="tooltip" title="'.wfMessage("lvs-tooltip-history")->plain().'">'.wfMessage("lvs-history-button-text")->plain().'</a>';
+			$extraButtons[] = '<a class="button lvs-history-btn" href="'.$title.'" rel="tooltip" title="'.wfMessage("lvs-tooltip-history")->plain().'">'.wfMessage("lvs-history-button-text")->plain().'</a>';
 			$response->setVal('extraButtons', $extraButtons);
 		}
 		return true;
