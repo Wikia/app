@@ -323,12 +323,6 @@ abstract class ApiWrapper {
 		if ( !isset( $metadata['targetCountry'] ) ) {
 			$metadata['targetCountry'] = $this->getTargetCountry();
 		}
-		if ( !isset( $metadata['source'] ) ) {
-			$metadata['source'] = $this->getSource();
-		}
-		if ( !isset( $metadata['sourceId'] ) ) {
-			$metadata['sourceId'] = $this->getSourceId();
-		}
 		if ( !isset( $metadata['series'] ) ) {
 			$metadata['series'] = $this->getSeries();
 		}
@@ -343,6 +337,15 @@ abstract class ApiWrapper {
 		}
 		if ( !isset( $metadata['pageCategories'] ) ) {
 			$metadata['pageCategories'] = $this->getPageCategories();
+		}
+		if ( !isset( $metadata['characters'] ) ) {
+			$metadata['characters'] = $this->getCharacters();
+		}
+		if ( !isset( $metadata['type'] ) ) {
+			$metadata['type'] = $this->getVideoType();
+		}
+		if ( !isset( $metadata['name'] ) ) {
+			$metadata['name'] = $this->getVideoName();
 		}
 
 		$this->metadata = $metadata;
@@ -513,6 +516,30 @@ abstract class ApiWrapper {
 	 * @return string
 	 */
 	protected function getPageCategories() {
+		return '';
+	}
+
+	/**
+	 * get characters
+	 * @return string
+	 */
+	protected function getCharacters() {
+		return '';
+	}
+
+	/**
+	 * get video type
+	 * @return string
+	 */
+	protected function getVideoType() {
+		return '';
+	}
+
+	/**
+	 * get video name
+	 * @return string
+	 */
+	protected function getVideoName() {
 		return '';
 	}
 
