@@ -10,15 +10,16 @@
  */
 
 $dir = dirname( __FILE__ ) . '/';
-$baseDir =  $dir . '../../../';
 
 $wgExtensionCredits['specialpage'][] = [
 	'name' => 'Special:Styleguide',
 	'description' => 'Extension to present a library of reusable components with usage examples',
 	'descriptionmsg' => 'styleguide-descriptionmsg',
 	'authors' => [
-		'Rafał Leszczyński',
 		'Sebastian Marzjan',
+		'Rafał Leszczyński',
+		"Andrzej 'nAndy' Łukaszewski",
+		"Jacek 'mech' Woźniak",
 	],
 	'version' => 1.0
 ];
@@ -26,7 +27,7 @@ $wgExtensionCredits['specialpage'][] = [
 // classes
 $wgAutoloadClasses['SpecialStyleguideController'] = $dir . 'SpecialStyleguideController.class.php';
 $wgAutoloadClasses['SpecialStyleguideDataModel'] = $dir . 'models/SpecialStyleguideDataModel.class.php';
-$wgAutoloadClasses['UIStyleguideComponents'] = $baseDir . 'includes/wikia/ui/UIStyleguideComponents.class.php';
+$wgAutoloadClasses['UIStyleguideComponents'] = $dir . 'helpers/UIStyleguideComponents.class.php';
 
 // special page
 $wgSpecialPages['Styleguide'] = 'SpecialStyleguideController';
