@@ -27,11 +27,23 @@ require([
 			return this.location.replace('/History', '');
 		},
 		bindUndoEvents: function() {
-			var that = this;
-			this.$el.on('undo.clicked undo.failed', function(evt) {
+			var events,
+					that;
+
+			that = this;
+			events = [
+				'undo.clicked',
+				'undo.failed'
+			];
+			
+			this.$el.on( events.join(' '), function(evt) {
 				// build function name from namespace and evoke
-				that['handleUndo' + evt.namespace.charAt(0)
-					.toUpperCase() + evt.namespace.slice(1)]();
+				var state = evt.namespace;
+				if (state === 'clicked') {
+					return that.handleUndoClick();
+				} else {
+					return that.handleUndoFail();
+				}
 			});
 		},
 		bindListAnchors: function() {
@@ -46,6 +58,7 @@ require([
 				that.undoSwap(url)
 					.success(function() {
 						that.redirectToLvs();
+						window.location = this.redirectUrl;
 					})
 					.error(function() {
 						that.$el.trigger('undo.failed');
@@ -56,15 +69,13 @@ require([
 			// returns the promise
 			return $.get(url);
 		},
-		handleUndoClicked: function() {
+		handleUndoClick: function() {
 			commonAjax.startLoadingGraphic();
 		},
-		handleUndoFailed: function() {
+		handleUndoFail: function() {
 			commonAjax.stopLoadingGraphic();
 		},
-		redirectToLvs: function() {
-			window.location = this.redirectUrl;
-		},
+		// restore clobbered constructor
 		constructor: LVSHistoryPage
 	};
 
