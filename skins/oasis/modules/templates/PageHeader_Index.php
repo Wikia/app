@@ -1,5 +1,5 @@
 <header id="WikiaPageHeader" class="WikiaPageHeader">
-    <h1><?= !empty($displaytitle) ? "$title" : htmlspecialchars("$title") ?></h1>
+    <h1><?= !empty($displaytitle) ? $title : htmlspecialchars($title) ?></h1>
 
 	<?php
 	// edit button with actions dropdown

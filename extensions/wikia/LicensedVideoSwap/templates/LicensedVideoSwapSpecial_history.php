@@ -10,7 +10,7 @@
 		<? elseif ( $video['statusKeep'] ): ?>
 			<?= wfMessage( 'lvs-history-kept', $video['titleLink'] )->plain() ?>
 		<? endif; ?>
-		(<a class="undo-link" href="<?= $video['undo'] ?>"><?= wfMessage('lvs-history-undo-link-text')->plain() ?></a>)
+		(<a class="undo-link" href="<?= $video['undo'] ?>"><?= wfMessage($video['statusKeep'] ? 'lvs-undo-keep' : 'lvs-undo-swap')->plain() ?></a>)
 	</li>
 <? endforeach; ?>
 </ul>
