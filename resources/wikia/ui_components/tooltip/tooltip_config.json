@@ -1,6 +1,4 @@
 {
-	"name-msg-key": "styleguide-name-tooltip",
-	"description-msg-key": "styleguide-description-tooltip",
 	"templateVars": {
 		"default": {
 			"required": [],

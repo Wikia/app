@@ -111,35 +111,37 @@ class Factory {
 	}
 
 	/**
-	 * @desc Checks if config file exists, if true: loads the configuration from file and returns as array
+	 * @desc Checks if a file exists, if true: loads its content and returns it
 	 *
-	 * @param string $configFilePath Path to file
+	 * @param string $path Path to file
 	 *
 	 * @return Array
 	 * @throws \Exception
 	 */
-	private function loadComponentConfigFromFile( $configFilePath ) {
-		if ( false === $configString = file_get_contents( $configFilePath ) ) {
-			throw new \Exception( 'Component\'s config file not found.' );
+	public function loadFileContent( $path ) {
+		if ( false === $fileContent = file_get_contents( $path ) ) {
+			throw new \Exception( 'File not found.' );
 		} else {
-			return $configString;
+			return $fileContent;
 		}
 	}
 
 	/**
-	 * @desc Loads component's config from JSON file content, adds component's unique id
+	 * @desc Loads data from JSON file content and returns in an array
 	 *
-	 * @param string $configContent JSON String
+	 * @param string $inputString JSON String
 	 *
 	 * @see Wikia\UI\Factory::loadComponentConfigFromFile() for example usage
+	 * @see
+	 *
 	 * @return Array
 	 * @throws \Exception
 	 */
-	private function loadComponentConfigFromJSON( $configContent ) {
-		$config = json_decode( $configContent, true );
+	public function loadFromJSON( $inputString ) {
+		$outputJson = json_decode( $inputString, true );
 
-		if ( !is_null( $config ) ) {
-			return $config;
+		if ( !is_null( $outputJson ) ) {
+			return $outputJson;
 		} else {
 			throw new \Exception( 'Invalid JSON.' );
 		}
@@ -149,8 +151,8 @@ class Factory {
 		wfProfileIn( __METHOD__ );
 
 		$configFile = $this->getComponentConfigFileFullPath( $componentName );
-		$configFileContent = $this->loadComponentConfigFromFile( $configFile );
-		$configInArray = $this->loadComponentConfigFromJSON( $configFileContent );
+		$configFileContent = $this->loadFileContent( $configFile );
+		$configInArray = $this->loadFromJSON( $configFileContent );
 
 		wfProfileOut( __METHOD__ );
 		return $configInArray;

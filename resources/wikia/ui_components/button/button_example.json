@@ -11,13 +11,14 @@
 	"link" : {
 		"type": "link",
 		"vars": {
+			"href": "#",
 			"classes": [ "wikia-button", "link" ],
 			"value": "Test Link",
-			"href": "#",
+			"title": "Test Link Button",
 			"data" : [
-						{ "key" : "id", "value" : "5" },
-						{ "key" : "lang", "value" : "en" }
-					]
+				{ "key" : "id", "value" : "5" },
+				{ "key" : "lang", "value" : "en" }
+			]
 		}
 	},
 	"button" : {

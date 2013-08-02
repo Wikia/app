@@ -1,6 +1,4 @@
 {
-	"name-msg-key": "styleguide-name-dropdown",
-	"description-msg-key": "styleguide-description-dropdown",
 	"templateVars": {
 		"default": {
 			"required": [],

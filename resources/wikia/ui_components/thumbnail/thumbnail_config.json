@@ -1,6 +1,4 @@
 {
-	"name-msg-key": "styleguide-name-thumbnail",
-	"description-msg-key": "styleguide-description-thumbnail",
 	"templateVars": {
 		"default": {
 			"required": [],

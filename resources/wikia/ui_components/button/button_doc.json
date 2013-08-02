@@ -1,0 +1,15 @@
+{
+	"name-msg-key": "styleguide-name-buttons",
+	"description-msg-key": "styleguide-description-button",
+	"types": {
+		"link": {
+			"name-var-msg-key" : "styleguide-description-link-button"
+		},
+		"input" : {
+			"name-var-msg-key" : "styleguide-description-input-button"
+		},
+		"button" : {
+			"name-var-msg-key" : "styleguide-description-simple-button"
+		}
+	}
+}

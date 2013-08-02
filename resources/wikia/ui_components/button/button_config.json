@@ -1,22 +1,14 @@
 {
-	// TODO: move to documentation JSON file
-	"name-msg-key": "styleguide-name-buttons",
-	"description-msg-key": "styleguide-description-button",
-	// End of move
-
 	"templateVars": {
 		"link" : {
-			"name-var-msg-key" : "styleguide-description-link-button", // move
 			"required": [ "href", "classes", "value", "title" ],
 			"optional": [ "target", "id" ]
 		},
 		"input" : {
-			"name-var-msg-key" : "styleguide-description-input-button", // move
 			"required": [ "type", "name", "classes", "value" ],
 			"optional": [ "id", "disabled" ]
 		},
 		"button" : {
-			"name-var-msg-key" : "styleguide-description-simple-button", //move
 			"required": [ "type", "classes", "value" ],
 			"optional": [ "id", "disabled" ]
 		}
