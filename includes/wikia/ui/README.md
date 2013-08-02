@@ -105,7 +105,9 @@ $bParams = [
     ]
 ];
 
-$list($a, $b) = \Wikia\UI\Factory::getInstance()->init( 'button', 'button' );
+$list($a, $b) = \Wikia\UI\Factory::getInstance()->init( ['button', 'button'] );
 $aMarkup = $a->render($aParams);
 $bMarkup = $b->render($bParams);
 </pre>
+
+WARNING! Notice it IS NOT yet possible to call render() on results of \Wikia\UI\Factory::init() when an array passed as parameter. It causes a PHP Fatal error.
