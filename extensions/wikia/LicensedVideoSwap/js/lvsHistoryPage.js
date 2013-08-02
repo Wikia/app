@@ -10,8 +10,7 @@ require([
 	function LVSHistoryPage(opts) {
 		this.location = window.location.href;
 
-		this.el = opts.el;
-		this.$el = $(this.el);
+		this.$el = $(opts.el);
 
 		this.init();
 	}
