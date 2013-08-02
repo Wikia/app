@@ -153,6 +153,7 @@ $messages['qqq'] = array(
 	'rte-ck-photoGallery-gallery' => '{{Identical|Gallery}}',
 	'rte-ck-photoGallery-slideshow' => '{{Identical|Slideshow}}',
 	'rte-ck-photoGallery-tooltipSlider' => 'Tooltip for the slider placeholder in the editor.',
+	'rte-ck-poll-poll' => '{{Identical|Poll}}',
 	'rte-ck-signature-label' => '{{Identical|Signature}}',
 	'rte-ck-table-toolbarTooltip' => 'Appears when hovering over the button to add a table into the article. Tooltips inform users that button adds a table to article code',
 	'rte-ck-templateDropDown-chooseAnotherTpl' => 'See [[mw:Help:Magic words]] for the term.',
@@ -678,7 +679,9 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'rte-ck-link-error-badPageTitle' => 'Дехар до, дӀаязеъе агӀона цӀе.',
 	'rte-ck-media-delete' => 'дӀаяккха',
+	'rte-ck-modeSwitch-toWysiwyg' => 'Визуальни тадар',
 	'rte-ck-templateDropDown-label' => 'Кеп',
 );
 

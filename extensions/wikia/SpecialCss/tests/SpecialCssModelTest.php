@@ -137,64 +137,6 @@ class SpecialCssModelTest extends WikiaBaseTest {
 		];
 	}
 
-	public function testRemoveFirstH3() {
-		$removeFirstH3Method = new ReflectionMethod('SpecialCssModel', 'removeFirstH3');
-		$removeFirstH3Method->setAccessible(true);
-
-		$text = '= Headline 1=\nText text text\n==Headline 2==\nText text text\n==== Headline 4 ====\nText text text\n=== Headlin e   ===\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu
-				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem.
-				===Nam ullamcorper ===nibh at justo === lacinia mattis===. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.';
-
-		$expected = '= Headline 1=\nText text text\n==Headline 2==\nText text text\n==== Headline 4 ====\nText text text\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu
-				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem.
-				===Nam ullamcorper ===nibh at justo === lacinia mattis===. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.';
-
-		$this->assertEquals( $expected, $removeFirstH3Method->invoke( new SpecialCssModel(), $text ) );
-	}
-
-	/**
-	 * @dataProvider testAddAnchorToPostUrlDataProvider
-	 */
-	public function testAddAnchorToPostUrl( $wikitext, $expected ) {
-		$addAnchorToPostUrlMethod = new ReflectionMethod('SpecialCssModel', 'getAnchorFromWikitext');
-		$addAnchorToPostUrlMethod->setAccessible(true);
-
-		$this->assertEquals( $expected, $addAnchorToPostUrlMethod->invoke( new SpecialCssModel(), $wikitext ) );
-	}
-
-	public function testAddAnchorToPostUrlDataProvider() {
-		return [
-			'short headline' => [
-				'wikitext' => '= Headline 1=\nText text text\n==Headline 2==\nText text text\n==== Headline 4 ====\nText text text\n=== Headlin e   ===\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu
-				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem.
-				===Nam ullamcorper ===nibh at justo === lacinia mattis===. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.',
-				'exptected' => '#_Headlin_e___'
-			],
-			'headline with spaces' => [
-				'wikitext' => 'Consectetur adipiscing elit\n\n===Headline with more text===\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu
-				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem.
-				===Nam ullamcorper ===nibh at justo === lacinia mattis===. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.',
-				'exptected' => '#Headline_with_more_text'
-			],
-			'headline at the begining of string' => [
-				'wikitext' => '===Headline 1===\nText text text\n==Headline 2==\nText text text\n==== Headline 4 ====\nText text text\n=== Headlin e   ===\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu
-				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem.
-				===Nam ullamcorper ===nibh at justo === lacinia mattis===. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.',
-				'exptected' => '#Headline_1'
-			],
-			'headline at the end of string' => [
-				'wikitext' => '= Headline 1=\nText text text\n==Headline 2==\nText text text\n==== Headline 4 ====\nText text text\n== Headlin e   ==\nLorem ipsum dolor sit amet, consectetur adipiscing elit. = Sed sodales =, nisi eu
-				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem.
-				==== Nam ullamcorper ====nibh at justo = lacinia mattis=. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.===Headline at the end===',
-				'exptected' => '#Headline_at_the_end'
-			],
-			'no h3 tag' => [
-				'wikitext' => ' = Donec dapibus =\nMetus id mi sodales dictum. Donec nec condimentum ligula. Duis molestie sagittis leo, ut porttitor neque dapibus non.\n == Nulla vitae ==\nante eros. Maecenas in nisl a justo placerat dignissim. = Suspendisse ipsum =\nAnte, fermentum vel odio eget, euismod ultrices erat. == Nulla volutpat ==\nligula nec tortor aliquam, eu hendrerit mi egestas. Duis adipiscing odio sit amet enim porta sollicitudin. Nullam euismod massa vitae tellus fermentum ullamcorper. Donec at sagittis dolor. Phasellus ac malesuada tellus. Nunc at mauris et tortor suscipit aliquam. Nam eget ipsum cursus elit eleifend tempus eu iaculis leo. Nulla consectetur tellus ut imperdiet hendrerit. Nullam eu varius justo, in viverra justo. Proin pulvinar rhoncus odio ac bibendum. Curabitur pretium enim eget adipiscing malesuada. Fusce vehicula ligula libero, eget interdum massa laoreet eget. Aenean a ligula nec nunc dictum suscipit. Sed vel turpis mauris. ',
-				'exptected' => ''
-			],
-		];
-	}
-
 	/**
 	 * @param String $titleText
 	 * @param String $fallbackUser
@@ -255,17 +197,17 @@ class SpecialCssModelTest extends WikiaBaseTest {
 	 *
 	 * @dataProvider testGetCommunityDbNameDataProvider
 	 */
-	public function testGetCommunityDbName($langCode, $expectedDbName) {
-		$this->mockGlobalVariable('wgCssUpdatesLangMap', $this->wgCssUpdatesLangMapMock);
+	public function testGetCommunityDbName( $langCode, $expectedDbName ) {
+		$this->mockGlobalVariable( 'wgCssUpdatesLangMap', $this->wgCssUpdatesLangMapMock );
 		/** @var $specialCssModelMock PHPUnit_Framework_MockObject_MockObject */
-		$specialCssModelMock = $this->getMock('SpecialCssModel', array('getCssUpdateLang'));
-		$specialCssModelMock->expects($this->any())
-			->method('getCssUpdateLang')
-			->will($this->returnValue($langCode));
+		$specialCssModelMock = $this->getMock( 'SpecialCssModel', ['getCssUpdateLang'] );
+		$specialCssModelMock->expects( $this->any() )
+			->method( 'getCssUpdateLang' )
+			->will( $this->returnValue( $langCode ) );
 
 		/** @var $specialCssModelMock SpecialCssModel */
 		$dbName = $specialCssModelMock->getCommunityDbName();
-		$this->assertEquals($expectedDbName, $dbName);
+		$this->assertEquals( $expectedDbName, $dbName );
 	}
 
 
@@ -329,17 +271,17 @@ class SpecialCssModelTest extends WikiaBaseTest {
 	 * @dataProvider testGetCssUpdateLangDataProvider
 	 */
 	public function testGetCssUpdateLang($userLang, $expectedLang) {
-		$this->mockGlobalVariable('wgCssUpdatesLangMap', $this->wgCssUpdatesLangMapMock);
-		$langMock = $this->getMock('Language', array('getCode'));
-		$langMock->expects($this->any())
-			->method('getCode')
-			->will($this->returnValue($userLang));
-		$specialCssModelMock = $this->getMock('SpecialCssModel', null);
-		$this->mockGlobalVariable('wgLang', $langMock);
+		$this->mockGlobalVariable( 'wgCssUpdatesLangMap', $this->wgCssUpdatesLangMapMock );
+		$langMock = $this->getMock( 'Language', ['getCode'] );
+		$langMock->expects( $this->any() )
+			->method( 'getCode' )
+			->will( $this->returnValue( $userLang ) );
+		$specialCssModelMock = $this->getMock( 'SpecialCssModel', null );
+		$this->mockGlobalVariable( 'wgLang', $langMock );
 
 		/** @var $specialCssModelMock SpecialCssModel */
 		$cssLang = $specialCssModelMock->getCssUpdateLang();
-		$this->assertEquals($expectedLang, $cssLang);
+		$this->assertEquals( $expectedLang, $cssLang );
 	}
 
 	public function testGetCssUpdateLangDataProvider() {
@@ -394,4 +336,199 @@ class SpecialCssModelTest extends WikiaBaseTest {
 			],
 		];
 	}
+
+	/**
+	 * @dataProvider testGetCssUpdateSectionDataProvider
+	 */
+	public function testGetCssUpdateSection( $blogPostWikitext, $expected ) {
+		$getCssUpdateSectionMethod = new ReflectionMethod('SpecialCssModel', 'getCssUpdateSection');
+		$getCssUpdateSectionMethod->setAccessible(true);
+
+		$specialCssModelMock = $this->getMock( 'SpecialCssModel', ['getCssUpdateHeadline'] );
+		$specialCssModelMock->expects( $this->once() )
+			->method( 'getCssUpdateHeadline' )
+			->will( $this->returnValue( 'CSS Updates') );
+
+		$this->assertEquals( $expected, $getCssUpdateSectionMethod->invoke( $specialCssModelMock, $blogPostWikitext ) );
+	}
+
+	public function testGetCssUpdateSectionDataProvider() {
+		return [
+			'CSS Updates section in the middle' =>
+			[
+				'blogPostWikitext' => '===one===
+da da da
+=== CSS Updates===
+* point one,
+* point two,
+* new with=100
+* point three.
+==== Secondary headline for this section #1 ====
+* 1a,
+* 1b.
+=== two ===
+asdasdasd
+asdasdasd
+asdasdasd
+',
+				'expected' => '* point one,
+* point two,
+* new with=100
+* point three.
+==== Secondary headline for this section #1 ====
+* 1a,
+* 1b.'
+			],
+			'CSS Updates section at the beginning' =>
+			[
+				'blogPostWikitext' => '=== CSS Updates===
+* point one,
+* point two,
+* new with=100
+* point three.
+==== Secondary headline for this section #1 ====
+* 1a,
+* 1b.
+===one===
+da da da
+=== two ===
+asdasdasd
+asdasdasd
+asdasdasd
+',
+				'expected' => '* point one,
+* point two,
+* new with=100
+* point three.
+==== Secondary headline for this section #1 ====
+* 1a,
+* 1b.'
+			],
+			'CSS Updates section at the end' =>
+			[
+				'blogPostWikitext' => '===one===
+da da da
+=== two ===
+asdasdasd
+asdasdasd
+asdasdasd
+=== CSS Updates===
+* point one,
+* point two,
+==== Secondary headline for this section #1 ====
+* 1a,
+* 1b.',
+				'expected' => '* point one,
+* point two,
+==== Secondary headline for this section #1 ====
+* 1a,
+* 1b.'
+			],
+			// H2 before and after our CSS Updates section
+			[
+				'blogPostWikitext' => '===one===
+da da da
+== first h2  ==
+asdasdasd
+asdasdasd
+asdasdasd
+=== CSS Updates===
+* point one,
+* point two,
+==== Secondary headline for this section #1 ====
+* 1a,
+* 1b.
+Paragraph text, text, sample text.
+== second h2 ==
+* new with=100
+* point three.
+=== two ===
+More sample text in paragraph. What to write here?
+I don\'t really know. Any ideas?
+=== three===
+This is the last one.',
+				'expected' => '* point one,
+* point two,
+==== Secondary headline for this section #1 ====
+* 1a,
+* 1b.
+Paragraph text, text, sample text.'
+			]
+		];
+	}
+
+	/**
+	 * @dataProvider testGetCssRevisionsInOrderDataProvider
+	 *
+	 * @param Array $cssUpdatesMock Mock of an array returned from MW API with revisions data of given pages
+	 * @param Array $pageIdsMock Mock of an array with pages' ids in the correct order
+	 *
+	 * @param Array $expected
+	 */
+	public function testGetCssRevisionsInOrder( $cssUpdatesMock, $pageIdsMock, $expected ) {
+		$getCssRevisionsInOrderMethod = new ReflectionMethod('SpecialCssModel', 'getCssRevisionsInOrder');
+		$getCssRevisionsInOrderMethod->setAccessible(true);
+
+		$this->assertEquals( $expected, $getCssRevisionsInOrderMethod->invoke( new SpecialCssModel(), $cssUpdatesMock, $pageIdsMock ) );
+	}
+
+	public function testGetCssRevisionsInOrderDataProvider() {
+		return [
+			'empty data' => [
+				'$cssUpdatesMock' => [],
+				'$pageIdsMock' => [],
+				'$expected' => []
+			],
+			'page_ids order is the same as timestamp order' => [
+				'$cssUpdatesMock' => [
+					1 => [ 'page #1 data' ],
+					2 => [ 'page #2 data' ],
+					3 => [ 'page #3 data' ],
+					4 => [ 'page #4 data' ],
+					5 => [ 'page #5 data' ]
+				],
+				'$pageIdsMock' => [ 1, 2, 3, 4, 5 ],
+				'$expected' => [
+					0 => [ 'page #1 data' ],
+					1 => [ 'page #2 data' ],
+					2 => [ 'page #3 data' ],
+					3 => [ 'page #4 data' ],
+					4 => [ 'page #5 data' ]
+				]
+			],
+			'page_ids order is different from timestamp order' => [
+				'$cssUpdatesMock' => [
+					1 => [ 'page #1 data' ],
+					2 => [ 'page #2 data' ],
+					3 => [ 'page #3 data' ],
+					4 => [ 'page #4 data' ],
+					5 => [ 'page #5 data' ]
+				],
+				'$pageIdsMock' => [ 4, 2, 1, 3, 5 ],
+				'$expected' => [
+					0 => [ 'page #4 data' ],
+					1 => [ 'page #2 data' ],
+					2 => [ 'page #1 data' ],
+					3 => [ 'page #3 data' ],
+					4 => [ 'page #5 data' ]
+				]
+			],
+			'page_ids are more than returned revisions data' => [
+				'$cssUpdatesMock' => [
+					1 => [ 'page #1 data' ],
+					2 => [ 'page #2 data' ],
+					3 => [ 'page #3 data' ],
+					4 => [ 'page #5 data' ],
+				],
+				'$pageIdsMock' => [ 1, 2, 3, 4, 5 ],
+				'$expected' => [
+					0 => [ 'page #1 data' ],
+					1 => [ 'page #2 data' ],
+					2 => [ 'page #3 data' ],
+					3 => [ 'page #5 data' ],
+				]
+			],
+		];
+	}
 }
+
