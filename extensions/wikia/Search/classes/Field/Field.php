@@ -25,6 +25,10 @@ class Field
 	        'headings',
 	        'redirect_titles',
 	        'categories',
+			'sitename', // wiki
+			'description', // wiki
+			'top_categories', // wiki
+			'top_articles', // wiki
 	);
 
 	/**
@@ -50,7 +54,7 @@ class Field
 	 * @see WikiaSearch::field
 	 * @staticvar array
 	 */
-	public static $multiValuedFields = array( 'categories', 'redirect_titles', 'headings' );
+	public static $multiValuedFields = array( 'categories', 'redirect_titles', 'headings', 'top_categories', 'top_articles' );
 	
 	/**
 	 * Constructs a field.

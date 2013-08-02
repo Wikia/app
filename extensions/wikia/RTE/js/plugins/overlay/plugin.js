@@ -14,7 +14,10 @@ CKEDITOR.plugins.add('rte-overlay',
 
 		// add node in which overlays will be stored
 		editor.on('instanceReady', function() {
-			self.overlays = $('<div>', {id : 'RTEMediaOverlays'}).appendTo(RTE.overlayNode);
+			self.overlays = $('<div>', {
+				id : 'RTEMediaOverlays',
+				'class' : 'rte-media-overlays'
+			}).appendTo(RTE.overlayNode);
 		});
 
 		// clean overlays when switching from source to wysiwyg mode
@@ -257,9 +260,9 @@ RTE.overlay = {
 		 * then we don't show overlay for video items in the visual editor,
 		 * preventing non-admins from editing video descriptions
 		 *
-		 * window.hideAddVideoBtn comes from EditPageLayout/EditPageLayoutHooks.class.php
+		 * window.showAddVideoBtn comes from EditPageLayout/EditPageLayoutHooks.class.php
 		 */
-		if ( node.hasClass('video') && window.hideAddVideoBtn ) {
+		if ( node.hasClass('video') && !window.showAddVideoBtn ) {
 			return;
 		}
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Applies staff powers to select users, like unblockableness, superhuman strenght and
+ * Applies staff powers to select users, like unblockableness, superhuman strength and
  * general awesomeness.
  *
  * @author Lucas Garczewski <tor@wikia-inc.com>

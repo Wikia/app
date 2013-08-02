@@ -1102,10 +1102,18 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'closewiki' => 'ДӀачӀагӀа вики',
+	'wf_city_created' => 'Кхоьллина',
 	'wf_city_lang' => 'Мотт',
+	'wikifactory-label-variables' => 'Хийцаме',
+	'wikifactory-label-google' => 'Google гӀирсаш',
+	'wikifactory-label-close' => 'ДӀачӀагӀа',
 	'wikifactory-label-findtags' => 'Лаха къастам',
 	'wikifactory-label-compare' => 'Муха ю хьажа',
 	'awc-metrics-all-languages' => 'Берриге меттанаш',
+	'awc-metrics-close' => 'ДӀачӀагӀа',
+	'awc-metrics-close-action' => 'дӀачӀагӀа',
+	'awc-metrics-close-checked' => 'ДӀачӀагӀа билгал йинарш',
 	'closed-reason' => 'Бахьан:',
 );
 
