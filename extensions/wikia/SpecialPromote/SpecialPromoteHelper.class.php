@@ -411,8 +411,7 @@ class SpecialPromoteHelper extends WikiaObject {
 		$file = new LocalFile($dst_file_title, RepoGroup::singleton()->getLocalRepo());
 
 		$file->upload($temp_file->getPath(), '', '');
-		//TODO delete file
-		//$temp_file->delete('');
+		$temp_file->remove();
 
 		$data = array(
 			'url' => $file->getURL(),
@@ -423,19 +422,19 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	public function getImageUrl($imageFile, $requestedWidth, $requestedHeight) {
-		// TODO change it to image serving when it'll be ready
-		/*if ($imageFilse instanceof File && $imageFilse->exists()) {
-			$originalWidth = $imageFilse->getWidth();
-			$originalHeight = $imageFilse->getHeight();
+		if ($imageFile instanceof File && $imageFile->exists()) {
+			$originalWidth = $imageFile->getWidth();
+			$originalHeight = $imageFile->getHeight();
 		}
 
 		if (!empty($originalHeight) && !empty($originalWidth)) {
 			$imageServing = $this->homePageHelper->getImageServingForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight);
-			$imageUrl = $imageServing->getUrl($imageFilse, $originalWidth, $originalHeight);
+			$imageUrl = $imageServing->getUrl($imageFile, $originalWidth, $originalHeight);
 		} else {
 			$imageUrl = $this->wg->blankImgUrl;
-		}*/
-		return $imageFile->createThumb($requestedWidth, $requestedHeight);
+		}
+		return $imageUrl;
+		//$imageFile->createThumb($requestedWidth, $requestedHeight);
 	}
 
 	protected function createRemovalTask($taskDeletionList) {
