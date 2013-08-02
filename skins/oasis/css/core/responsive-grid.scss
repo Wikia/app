@@ -28,11 +28,11 @@ $columns: 12;
 }
 
 @mixin grid {
-	@include clearfix;
 	margin-left: -$width-gutter;
 }
 
 @mixin row() {
+	@include clearfix;
 	padding-bottom: $width-gutter;
 
 	&.last,

@@ -2,7 +2,6 @@
 <html>
 	<head>
 		<title>Responsive Grid</title>
-		<link href="../skins/oasis/css/core/responsive-grid.scss">
 		<style>
 			body {
 				font: 13px/18px Arial, Helvetica, sans-serif;
@@ -27,6 +26,53 @@
 				padding: 10px;
 				text-align: center;
 			}
+
+			/* Generated from responsive-grid.scss */
+			.grid {
+			  margin-left: -20px; }
+			  .grid .row {
+			    zoom: 1;
+			    padding-bottom: 20px; }
+			    .grid .row:after {
+			      clear: both;
+			      content: " ";
+			      display: block;
+			      height: 0;
+			      overflow: hidden;
+			      visibility: hidden; }
+			    .grid .row.last, .grid .row:last-of-type {
+			      padding-bottom: 0; }
+			  .grid .column {
+			    -moz-box-sizing: border-box;
+			    -webkit-box-sizing: border-box;
+			    box-sizing: border-box;
+			    float: left;
+			    padding-left: 20px;
+			    overflow: hidden; }
+			  .grid .span-1 {
+			    width: 8.33333%; }
+			  .grid .span-2 {
+			    width: 16.66667%; }
+			  .grid .span-3 {
+			    width: 25%; }
+			  .grid .span-4 {
+			    width: 33.33333%; }
+			  .grid .span-5 {
+			    width: 41.66667%; }
+			  .grid .span-6 {
+			    width: 50%; }
+			  .grid .span-7 {
+			    width: 58.33333%; }
+			  .grid .span-8 {
+			    width: 66.66667%; }
+			  .grid .span-9 {
+			    width: 75%; }
+			  .grid .span-10 {
+			    width: 83.33333%; }
+			  .grid .span-11 {
+			    width: 91.66667%; }
+			  .grid .span-12 {
+			    width: 100%; }
 		</style>
 	</head>
 	<body>
@@ -34,62 +80,62 @@
 			<header>Fluid columns, fixed gutters</header>
 			<div class="grid">
 				<div class="row">
-					<div class="column_1/12">
+					<div class="column span-1">
 						<p>1</p>
 					</div>
-					<div class="column_1/12">
+					<div class="column span-1">
 						<p>2</p>
 					</div>
-					<div class="column_1/12">
+					<div class="column span-1">
 						<p>3<br>3<br>3</p>
 					</div>
-					<div class="column_1/12">
+					<div class="column span-1">
 						<p>4</p>
 					</div>
-					<div class="column_1/12">
+					<div class="column span-1">
 						<p>5</p>
 					</div>
-					<div class="column_1/12">
+					<div class="column span-1">
 						<p>6</p>
 					</div>
-					<div class="column_1/12">
+					<div class="column span-1">
 						<p>7</p>
 					</div>
-					<div class="column_1/12">
+					<div class="column span-1">
 						<p>8</p>
 					</div>
-					<div class="column_1/12">
+					<div class="column span-1">
 						<p>9</p>
 					</div>
-					<div class="column_1/12">
+					<div class="column span-1">
 						<p>10</p>
 					</div>
-					<div class="column_1/12">
+					<div class="column span-1">
 						<p>11</p>
 					</div>
-					<div class="column_1/12">
+					<div class="column span-1">
 						<p>12</p>
 					</div>
 				</div>
 				<div class="row">
-					<div class="column_1/4">
+					<div class="column span-3">
 						<p>1</p>
 					</div>
-					<div class="column_1/4">
+					<div class="column span-3">
 						<p>2</p>
 					</div>
-					<div class="column_1/4">
+					<div class="column span-3">
 						<p>3</p>
 					</div>
-					<div class="column_1/4">
+					<div class="column span-3">
 						<p>4</p>
 					</div>
 				</div>
 				<div class="row">
-					<div class="column_1/2">
+					<div class="column span-6">
 						<p>1</p>
 					</div>
-					<div class="column_1/2">
+					<div class="column span-6">
 						<p>2</p>
 					</div>
 				</div>
