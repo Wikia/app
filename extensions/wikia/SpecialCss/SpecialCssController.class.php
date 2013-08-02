@@ -72,7 +72,9 @@ class SpecialCssController extends WikiaSpecialPageController {
 		$this->handleAssets();
 		$this->minorDefault = $model->isMinorEditDefault();
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->plain() );
-		
+
+		$this->wg->SuppressSpotlights = true;
+
 		wfProfileOut(__METHOD__);
 		return true;
 	}
