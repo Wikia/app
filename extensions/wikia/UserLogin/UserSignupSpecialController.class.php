@@ -195,6 +195,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string subheading
 	 */
 	public function sendConfirmationEmail() {
+		global $wgDisableTempUser;
 		if($this->request->getVal('format', '') !== 'json') {
 			$this->wg->Out->setPageTitle(wfMsg('usersignup-confirm-page-title'));
 			$this->response->addAsset('extensions/wikia/UserLogin/css/UserSignup.scss');
@@ -215,10 +216,19 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		// default heading, subheading, msg
 		// depending on what happens, default will be over written below
 		$mailTo = $this->username;
-		$tempUser = TempUser::getTempUserFromName( $this->username );
-		if ( $tempUser ) {
-			if ( (isset($_SESSION['tempUserId']) && $_SESSION['tempUserId'] == $tempUser->getId()) ) {
-				$mailTo = $tempUser->getEmail();
+		if ( !empty( $wgDisableTempUser ) ) {//@TODO get rid of $wgDisableTempUser check when TempUser will be globally disabled
+			$user = User::newFromName( $this->username );
+			if ( $user instanceof User && $user->getID() != 0 ) {
+				if ( (isset($_SESSION['notConfirmedUserId']) && $_SESSION['notConfirmedUserId'] == $user->getId()) ) {
+					$mailTo = $user->getEmail();
+				}
+			}
+		} else {
+			$tempUser = TempUser::getTempUserFromName( $this->username );
+			if ( $tempUser ) {
+				if ( (isset($_SESSION['tempUserId']) && $_SESSION['tempUserId'] == $tempUser->getId()) ) {
+					$mailTo = $tempUser->getEmail();
+				}
 			}
 		}
 
@@ -244,7 +254,11 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 					'username' => $this->username,
 					'email' => $this->email
 				);
-				$response = $this->sendSelfRequest( 'changeTempUserEmail', $params );
+				if ( !empty( $wgDisableTempUser ) ) {//@TODO get rid of $wgDisableTempUser check when TempUser will be globally disabled
+					$response = $this->sendSelfRequest( 'changeUserEmail', $params );
+				} else {
+					$response = $this->sendSelfRequest( 'changeTempUserEmail', $params );
+				}
 
 				$this->result = $response->getVal( 'result','' );
 
@@ -354,6 +368,104 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 			// set counter to 1 for confirmation emails sent
 			$memKey = $this->userLoginHelper->getMemKeyConfirmationEmailsSent( $tempUser->getId() );
+			$this->wg->Memc->set( $memKey, 1, 24*60*60 );
+
+			if( !$result->isGood() ) {
+				$this->result = 'error';
+				$this->msg = wfMessage( 'userlogin-error-mail-error', $result->getMessage() )->parse();
+			}
+		}
+	}
+
+
+	/**
+	 * change user's email and send reconfirmation email
+	 * @requestParam string username
+	 * @requestParam string email
+	 * @responseParam string result [ok/error/invalidsession/confirmed]
+	 * @responseParam string msg - result messages
+	 * @responseParam string errParam - error param
+	 */
+	public function changeUserEmail() {
+
+		//get new email from request
+		$email = $this->request->getVal( 'email', '' );
+
+		//error if empty
+		if ( empty($email) ) {
+			$this->result = 'error';
+			$this->msg = wfMsg( 'usersignup-error-empty-email' );
+			$this->errParam = 'email';
+			return;
+		}
+
+		//validate new email
+		if ( !Sanitizer::validateEmail( $email ) ) {
+			$this->result = 'error';
+			$this->msg = wfMsg( 'usersignup-error-invalid-email' );
+			$this->errParam = 'email';
+			return;
+		}
+
+		//get username from request
+		$username = $this->request->getVal('username');
+		if ( empty($username) ) {
+			$this->result = 'error';
+			$this->msg = wfMsg( 'userlogin-error-noname' );
+			$this->errParam = 'username';
+			return;
+		}
+
+
+		$user = User::newFromName( $username );
+		if ( $user instanceof User && $user->getID() != 0 ) {
+			//break if user is already confirmed
+			if ( !$user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
+				$this->result = 'confirmed';
+				$this->msg = wfMsgExt( 'usersignup-error-confirmed-user', array('parseinline'), $username, $user->getUserPage()->getFullURL() );
+				$this->errParam = 'username';
+				return;
+			}
+		} else {//user doesn't exist
+			$this->result = 'error';
+			$this->msg = wfMsg( 'userlogin-error-nosuchuser' );
+			$this->errParam = 'username';
+			return;
+		}
+
+		//error if session is invalid
+		if ( !(isset($_SESSION['notConfirmedUserId']) && $_SESSION['notConfirmedUserId'] == $user->getId()) ) {
+			$this->result = 'invalidsession';
+			$this->msg = wfMsg( 'usersignup-error-invalid-user' );
+			$this->errParam = 'username';
+			return;
+		}
+
+		//check email changes limit
+		$memKey = wfSharedMemcKey( 'wikialogin', 'email_changes', $user->getId() );
+		$emailChanges = intval( $this->wg->Memc->get($memKey) );
+		if ( $emailChanges >= UserLoginHelper::LIMIT_EMAIL_CHANGES ) {
+			$this->result = 'error';
+			$this->msg = wfMsg( 'usersignup-error-too-many-changes' );
+			$this->errParam = 'email';
+			return;
+		}
+
+		// increase counter for email changes
+		$this->userLoginHelper->incrMemc( $memKey );
+
+		$this->result = 'ok';
+		$this->msg = wfMsg( 'usersignup-reconfirmation-email-sent', htmlspecialchars($email) );
+		if ( $email != $user->getEmail() ) {
+			$user->setEmail( $email );
+
+			// send reconfirmation email
+			$result = $user->sendReConfirmationMail();
+
+			$user->saveSettings();
+
+			// set counter to 1 for confirmation emails sent
+			$memKey = $this->userLoginHelper->getMemKeyConfirmationEmailsSent( $user->getId() );
 			$this->wg->Memc->set( $memKey, 1, 24*60*60 );
 
 			if( !$result->isGood() ) {
