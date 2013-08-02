@@ -54,19 +54,10 @@ define( 'lvs.swapkeep', [
 		videoControls.reset();
 
 		var currTitleText =  currTitle.replace(/_/g, ' ' ),
-			newTitleText,
 			title,
 			msg;
 
 		if ( isSwap ) {
-			newTitleText = newTitle.replace(/_/g, ' ' );
-			title = $.msg( 'lvs-confirm-swap-title' );
-			if ( currTitleText === newTitleText ) {
-				msg = $.msg( 'lvs-confirm-swap-message-same-title', currTitleText );
-			} else {
-				msg = $.msg( 'lvs-confirm-swap-message-different-title', currTitleText, newTitleText );
-			}
-
 			// Process request without confirm modal for "Swap"
 			doRequest();
 
