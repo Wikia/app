@@ -326,7 +326,7 @@ class CloseWikiPage extends SpecialPage {
 
                                 // Let's request the XML dump if needed
                                 if ( isset( $this->mFlags[WikiFactory::FLAG_CREATE_DB_DUMP] ) ) {
-                                    DumpsOnDemand::sendMail( $wiki->city_dbname, $wiki->city_id, isset( $this->mFlags[WikiFactory::FLAG_HIDE_DB_IMAGES] ), true );
+                                    DumpsOnDemand::queueDump( $wiki->city_id, isset( $this->mFlags[WikiFactory::FLAG_HIDE_DB_IMAGES] ), true );
                                 }
 
 				if ( empty($this->mReason) ) {
