@@ -1,9 +1,9 @@
 <?php
 
-class UIFactoryTest extends WikiaBaseTest {
+class FactoryTest extends WikiaBaseTest {
 
 	/**
-	 * @var UIFactory
+	 * @var /Wikia/UI/Factory
 	 */
 	private $instance = null;
 
@@ -33,20 +33,20 @@ class UIFactoryTest extends WikiaBaseTest {
 
 		global $IP;
 
-		include_once $IP . '/includes/wikia/ui/UIFactory.class.php';
+		include_once $IP . '/includes/wikia/ui/Factory.class.php';
 
-		$this->instance = UIFactory::getInstance();
+		$this->instance = Wikia\UI\Factory::getInstance();
 	}
 
 	public function testInitalizationAndSingleton() {
-		$instanceB = UIFactory::getInstance();
+		$instanceB = Wikia\UI\Factory::getInstance();
 
 		$this->assertEquals( $this->instance, $instanceB );
 	}
 
 	public function testGettingFileFullPath() {
 		// test private method
-		$method = new ReflectionMethod( 'UIFactory', 'getComponentConfigFileFullPath' );
+		$method = new ReflectionMethod( 'Wikia\UI\Factory', 'getComponentConfigFileFullPath' );
 		$method->setAccessible( true );
 
 		$fullPath = $method->invoke( $this->instance, 'component' );
@@ -59,7 +59,7 @@ class UIFactoryTest extends WikiaBaseTest {
 	 */
 	public function testLoadingComponentsFromString( $json, $expected ) {
 		// test private method
-		$loadComponentConfigFromJSONMethod = new ReflectionMethod( 'UIFactory', 'loadComponentConfigFromJSON' );
+		$loadComponentConfigFromJSONMethod = new ReflectionMethod( 'Wikia\UI\Factory', 'loadComponentConfigFromJSON' );
 		$loadComponentConfigFromJSONMethod->setAccessible( true );
 
 		$component = $loadComponentConfigFromJSONMethod->invoke( $this->instance, $json );
@@ -76,7 +76,6 @@ class UIFactoryTest extends WikiaBaseTest {
 					'description-msg-key' => 'sample-component-desc',
 					'templateVars' => [ 'required' => [], 'optional' => [] ],
 					'dependencies' => [ 'js' => [], 'css' => [] ],
-					'id' => 'sample',
 				]
 			]
 		];
@@ -87,7 +86,7 @@ class UIFactoryTest extends WikiaBaseTest {
 	 */
 	public function testAddAsset($asset, $type) {
 		// test private method
-		$addAssetMethod = new ReflectionMethod( 'UIFactory', 'addAsset' );
+		$addAssetMethod = new ReflectionMethod( 'Wikia\UI\Factory', 'addAsset' );
 		$addAssetMethod->setAccessible( true );
 
 		$wgOutMock = $this->getMock( 'stdclass', ['addStyle', 'addScript'] );
@@ -132,11 +131,11 @@ class UIFactoryTest extends WikiaBaseTest {
 	}
 
 	public function testInitForOneComponent() {
-		$UIComponentMock = $this->getMock('UIComponent', [ 'setTemplateVarsConfig', 'addAsset' ]);
+		$UIComponentMock = $this->getMock('Wikia\UI\Component', [ 'setTemplateVarsConfig', 'addAsset' ]);
 		$UIComponentMock->expects( $this->once() )->method( 'setTemplateVarsConfig' );
 		$UIComponentMock->expects( $this->never() )->method( 'addAsset' );
 		
-		$UIFactoryMock = $this->getMock( 'UIFactory', [ 
+		$UIFactoryMock = $this->getMock( 'Wikia\UI\Factory', [
 			'getComponentInstance', 
 			'loadComponentConfig', 
 			'getComponentsBaseTemplatePath', 
@@ -151,7 +150,7 @@ class UIFactoryTest extends WikiaBaseTest {
 		
 		$UIFactoryMock->expects( $this->once() )->method( 'getComponentsBaseTemplatePath' );
 		
-		/** @var $UIFactoryMock UIFactory */
+		/** @var $UIFactoryMock Wikia\UI\Factory */
 		$UIFactoryMock->init( 'component' );
 	}
 }

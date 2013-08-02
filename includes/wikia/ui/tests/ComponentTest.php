@@ -1,10 +1,10 @@
 <?php
-class UIComponentTest extends WikiaBaseTest {
+class ComponentTest extends WikiaBaseTest {
 	
 	public function setUp() {
 		parent::setUp();
 		global $IP;
-		include_once $IP . '/includes/wikia/ui/UIComponent.class.php';
+		include_once $IP . '/includes/wikia/ui/Component.class.php';
 	}
 
 	/**
@@ -12,10 +12,10 @@ class UIComponentTest extends WikiaBaseTest {
 	 */
 	public function testSetTemplatePath( $templateType, $templatePath, $expected ) {
 		// test private method
-		$setTemplatePathMethod = new ReflectionMethod( 'UIComponent', 'setTemplatePath' );
+		$setTemplatePathMethod = new ReflectionMethod( 'Wikia\UI\Component', 'setTemplatePath' );
 		$setTemplatePathMethod->setAccessible( true );
 		
-		$UIComponentMock = $this->getMock('UIComponent', ['getBaseTemplatePath', 'fileExists']);
+		$UIComponentMock = $this->getMock('Wikia\UI\Component', ['getBaseTemplatePath', 'fileExists']);
 		$UIComponentMock->expects( $this->once() )
 			->method( 'getBaseTemplatePath' )
 			->will( $this->returnValue( $templatePath ) );
@@ -25,7 +25,7 @@ class UIComponentTest extends WikiaBaseTest {
 			->will( $this->returnValue( true ) );
 		
 		$setTemplatePathMethod->invoke( $UIComponentMock, $templateType );
-		/** @var $UIComponentMock UIComponent */
+		/** @var $UIComponentMock Wikia\UI\Component */
 		$this->assertEquals( $expected, $UIComponentMock->getTemplatePath() );
 	}
 	
@@ -64,16 +64,16 @@ class UIComponentTest extends WikiaBaseTest {
 	 */
 	public function testValidateTemplateVars( $tplVarsCfg, $tplValues, $componentType, $expectedException ) {
 		// test private method
-		$validateTemplateVarsMethod = new ReflectionMethod( 'UIComponent', 'validateTemplateVars' );
+		$validateTemplateVarsMethod = new ReflectionMethod( '\Wikia\UI\Component', 'validateTemplateVars' );
 		$validateTemplateVarsMethod->setAccessible( true );
 
-		$UIComponentMock = $this->getMock('UIComponent', ['getTemplateVarsConfig', 'getValues', 'getType']);
+		$UIComponentMock = $this->getMock('\Wikia\UI\Component', ['getTemplateVarsConfig', 'getVarsValues', 'getType']);
 		$UIComponentMock->expects( $this->once() )
 			->method( 'getTemplateVarsConfig' )
 			->will( $this->returnValue( $tplVarsCfg ) );
 
 		$UIComponentMock->expects( $this->once() )
-			->method( 'getValues' )
+			->method( 'getVarsValues' )
 			->will( $this->returnValue( $tplValues ) );
 
 		$UIComponentMock->expects( $this->once() )
@@ -117,9 +117,8 @@ class UIComponentTest extends WikiaBaseTest {
 				],
 				'tplValues' => [ 'class' => 'sample-component-class', 'value' => 'Sample component value' ],
 				'componentType' => 'link',
-				'expectedException' => 'WikiaUIDataException',
+				'expectedException' => '\Wikia\UI\DataException',
 			]
 		];
 	}
 }
-

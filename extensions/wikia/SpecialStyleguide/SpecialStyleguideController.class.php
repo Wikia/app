@@ -17,7 +17,7 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		Global $wgAutoloadClasses;
+		global $wgAutoloadClasses;
 		wfProfileIn( __METHOD__ );
 
 		RenderContentOnlyHelper::setRenderContentVar( true );
