@@ -223,97 +223,54 @@ class MatchTest extends BaseTest {
 	 * @covers Wikia\Search\Match\Wiki::createResult
 	 */
 	public function testWikiMatchCreateResult() {
-		$serviceMethods = array(
-				'getGlobalForWiki', 'getMainPageUrlForWikiId', 'getDescriptionTextForWikiId',
-				'getStatsInfoForWikiId', 'getVisualizationInfoForWikiId', 'getHubForWikiId',
-				'getSimpleMessage'
-				);
-		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+		$serviceMethods = array( 'getResult', 'setCrossWiki', 'setWikiId' );
+		$mockService = $this->getMockBuilder( 'SolrDocumentService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( $serviceMethods )
 		                      ->getMock();
 		
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
-		                  ->setConstructorArgs( array( 123, $mockService ) )
-		                  ->setMethods( null )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( [ 'getId' ] )
 		                  ->getMock();
 		
-		$title = 'My title';
-		$url = 'http://foo.wikia.com/wiki/';
-		$text = 'this is a default description';
-		$desc = 'this is a better description';
-		$visualization = array( 'description' => $desc );
-		$stats = array( 'users_count' => 100 );
-		$hub = 'Entertainment';
+		$mockResult = $this->getMockBuilder( 'Wikia\Search\Result' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( [ 'offsetSet' ] )
+		                   ->getMock();
+		
 		$mockService
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getGlobalForWiki' )
-		    ->with   ( 'wgSitename', 123 )
-		    ->will   ( $this->returnValue( $title ) ) 
+		    ->expects( $this->once() )
+		    ->method ( 'setCrossWiki' )
+		    ->with   ( true )
+		;
+		$mockMatch
+		    ->expects( $this->once() )
+		    ->method ( 'getId' )
+		    ->will   ( $this->returnValue( 123 ) )
 		;
 		$mockService
-			->expects( $this->at( 3 ) )
-			->method ( 'getGlobalForWiki' )
-			->with   ( 'wgLanguageCode', 123 )
-			->will   ( $this->returnValue( 'en' ) )
+		    ->expects( $this->once() )
+		    ->method ( 'setWikiId' )
+		    ->with   ( 123 )
 		;
 		$mockService
-		   ->expects( $this->once() )
-		   ->method ( 'getMainPageUrlForWikiId' )
-		   ->with   ( 123 )
-		   ->will   ( $this->returnValue( $url ) )
+		    ->expects( $this->once() )
+		    ->method ( 'getResult' )
+		    ->will   ( $this->returnValue( $mockResult ) )
 		;
-		$mockService
-			->expects( $this->once() )
-			->method ( 'getSimpleMessage' )
-			->with   ( 'wikiasearch2-crosswiki-description', array( $title ) )
-			->will   ( $this->returnValue( $text ) )
+		$mockResult
+		    ->expects( $this->once() )
+		    ->method ( 'offsetSet' )
+		    ->with   ( 'exactWikiMatch', true )
 		;
-		$mockService
-		   ->expects( $this->once() )
-		   ->method ( 'getHubForWikiId' )
-		   ->with   ( 123 )
-		   ->will   ( $this->returnValue( $hub ) )
-		;
-		$mockService
-		   ->expects( $this->once() )
-		   ->method ( 'getVisualizationInfoForWikiId' )
-		   ->with   ( 123 )
-		   ->will   ( $this->returnValue( $visualization ) )
-		;
-		$mockService
-		   ->expects( $this->once() )
-		   ->method ( 'getStatsInfoForWikiId' )
-		   ->with   ( 123 )
-		   ->will   ( $this->returnValue( $stats ) )
-		;
-		$result = $mockMatch->createResult();
-		$this->assertInstanceOf(
-				'Wikia\Search\Result',
-				$result
-		);
+		
+		$this->proxyClass( 'SolrDocumentService', $mockService );
+		$this->mockApp();
 		$this->assertEquals(
-				$title,
-				$result->getTitle()
+				$mockResult,
+				$mockMatch->createResult()
 		);
-		$this->assertEquals(
-				$desc."&hellip;",
-				$result->getText()
-		);
-		$this->assertEquals(
-				123,
-				$result['wid']
-		);
-		$this->assertTrue(
-				$result['isWikiMatch']
-		);
-		$this->assertEquals(
-				$url,
-				$result['url']
-		);
-		$this->assertEquals(
-			$text,
-			$result['desc']
-		);
+		
 	}
 }

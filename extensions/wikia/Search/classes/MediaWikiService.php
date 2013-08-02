@@ -20,6 +20,12 @@ class MediaWikiService
 	const WIKI_DEFAULT_LANG_CODE = 'en';
 
 	/**
+	 * Thumbnails default size, used for getting article images
+	 */
+	const THUMB_DEFAULT_WIDTH = 160;
+	const THUMB_DEFAULT_HEIGHT = 100;
+
+	/**
 	 * Application interface
 	 * @var \WikiaApp
 	 */
@@ -493,6 +499,26 @@ class MediaWikiService
 	}
 	
 	/**
+	 * For a given wiki ID, get all values in the city_domain table.
+	 * @param int $wikiId
+	 * @return array
+	 */
+	public function getDomainsForWikiId( $wikiId ) {
+		$dbw = wfGetDB( DB_SLAVE, [], $this->getGlobal( 'ExternalSharedDB' ) );
+		$dbResult = $dbw->select(
+			array( "city_domains" ),
+			array( "*" ),
+			array( "city_id" => $wikiId ),
+			__METHOD__
+		);
+		$result = [];
+		while( $row = $dbw->fetchObject( $dbResult ) ) {
+			$result[] = $row->city_domain;
+		}
+		return $result;
+	}
+	
+	/**
 	 * Given a domain, returns a wiki ID.
 	 * @param string $domain
 	 * @return int|null
@@ -636,28 +662,42 @@ class MediaWikiService
 	public function searchSupportsLanguageCode( $languageCode ) {
 		return in_array( $languageCode, $this->getGlobal( 'WikiaSearchSupportedLanguages' ) );
 	}
-	
+
+	public function getThumbnailUrl( $pageId, $dimensions = null ) {
+		$width = (isset( $dimensions[ 'width' ] ) ) ? $dimensions[ 'width' ] : static::THUMB_DEFAULT_WIDTH;
+		$height = (isset( $dimensions[ 'height' ] ) ) ? $dimensions[ 'height' ] : static::THUMB_DEFAULT_HEIGHT;
+		$imgSource = $this->getImageServing( $pageId, $width, $height );
+		//get one image only
+		$img = $imgSource->getImages( 1 );
+		if ( !empty( $img ) ) {
+			return $img[ $pageId ][ 0 ][ 'url' ];
+		}
+		return false;
+	}
+
 	/**
-	 * Returns the HTML needed to get a thumbnail provided a page ID
-	 * @param int $pageId
-	 * @param array $transformParams
-	 * @param array $htmlParams
-	 * @return string
+	 * Gets image serving for page, moved to external method for easier testing
+	 * @param $pageId
+	 * @param $width
+	 * @param $height
+	 * @return \ImageServing
 	 */
-	public function getThumbnailHtmlForPageId(
-			$pageId, 
-			$transformParams = array( 'width' => 160 ), // WikiaGrid 1 column width
-			$htmlParams = array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true)
-			) {
+	protected function getImageServing( $pageId, $width, $height ) {
+		return new \ImageServing( array( $pageId ), $width, $height );
+	}
+
+	public function getThumbnailHtml( $pageId, $transformParams = null, /* WikiaGrid 1 column width */ $htmlParams = array( 'desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true ) ) {
 		$html = '';
 		$img = $this->getFileForPageId( $pageId );
 		if (! empty( $img ) ) {
+			$transformParams[ 'width' ] = (isset( $transformParams[ 'width' ] ) ) ? $transformParams[ 'width' ] : static::THUMB_DEFAULT_WIDTH;
+			$transformParams[ 'height' ] = (isset( $transformParams[ 'height' ] ) ) ? $transformParams[ 'height' ] : static::THUMB_DEFAULT_HEIGHT;
 			$thumb = $img->transform( $transformParams );
 			$html = $thumb->toHtml( $htmlParams );
 		}
 		return $html;
 	}
-	
+
 	/**
 	 * Returns the number of video views for a page ID.
 	 * @param int $pageId

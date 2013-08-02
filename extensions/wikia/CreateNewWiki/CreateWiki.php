@@ -127,8 +127,6 @@ class CreateWiki {
 			"*" => array(
 				'categorylinks',
 				'externallinks',
-				'image',
-				'imagelinks',
 				'langlinks',
 				'page',
 				'pagelinks',
@@ -1136,7 +1134,6 @@ class CreateWiki {
 			 * get UploadDirectory
 			 */
 			$starter[ "dbStarter" ] = $dbStarter;
-			$starter[ "uploadDir" ] = WikiFactory::getVarValueByName( "wgUploadDirectory", WikiFactory::DBtoID( $dbStarter ) );
 
 			// BugId:15644 - I need to pass this to CreateWikiLocalJob::changeStarterContributions
 			$this->sDbStarter = $dbStarter;
@@ -1180,16 +1177,6 @@ class CreateWiki {
 				return false;
 			}
 
-			/**
-			 * @todo move copying images from local database changes section
-			 * use wikifactory variable to determine proper path to images
-			 */
-			$startupImages = $starter[ "uploadDir" ];
-
-			if ( file_exists( $startupImages ) && is_dir( $startupImages ) ) {
-				wfShellExec("/bin/cp -af {$startupImages}/* {$this->mNewWiki->images_dir}/");
-				wfDebugLog( "createwiki", __METHOD__ . ": /bin/cp -af {$startupImages}/* {$this->mNewWiki->images_dir}/ \n", true);
-			}
 			$cmd = sprintf(
 				"SERVER_ID=%d %s %s/maintenance/updateArticleCount.php --update --conf %s",
 				$this->mNewWiki->city_id,

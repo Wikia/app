@@ -30,6 +30,15 @@ $messages['br'] = array(
 	'new-look' => 'Wikia',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'skinchooser-desc' => "Permet als usuaris triar l'aparença del wiki en les seves preferències",
+	'new-look' => 'Wikia',
+	'site-layout' => 'Dissenys del lloc',
+);
+
 /** Czech (česky)
  * @author Darth Daron
  * @author Dontlietome7

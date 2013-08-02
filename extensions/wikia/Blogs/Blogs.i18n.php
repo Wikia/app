@@ -153,10 +153,12 @@ Parameters:
 	'create-blog-invalid-title-error' => '{{Identical|Invalid title}}',
 	'create-blog-no-login' => '{{Identical|Not logged in}}',
 	'create-blog-categories-textinput' => '{{Identical|Add new category}}',
+	'create-blog-categories-submit' => '{{Identical|Submit}}',
 	'create-blog-save' => '{{Identical|Save page}}',
 	'create-blog-preview' => '{{Identical|Show preview}}',
 	'create-blog-listing-preview' => 'This is an H2 level header above a preview.
 {{Identical|Preview}}',
+	'create-blog-listing-matches' => '{{Identical|Match}}',
 	'create-blog-listing-matches-calculate' => 'Button label. User presses to calculate how many blogs would be included in the blog listing given the user-selected criteria. After button is triggered, message gets switched to [[Wikia:Create-blog-listing-matches-recalculate]].',
 	'create-blog-listing-matches-recalculate' => 'Button label. Appears after [[Wikia:Create-blog-listing-matches-calculate]] has been triggered. Allows user to re-calculate the number of blogs that meet the user-selected criteria if the user changes the criteria since initial calculation.',
 	'create-blog-listing-matches-info' => 'Informs the user of the number of blog posts (number is printed by AJAX) that meet the current criteria',
@@ -178,7 +180,10 @@ Parameters:
 Parameters:
 
 $1 - Username of blog author. GENDER is supported.',
-	'blog-fromsitename' => 'Prints the name of the wiki the blog is from into an RSS feed. The $1 parameter is <nowiki>{{SITENAME}}</nowiki>.',
+	'blog-fromsitename' => 'Prints the name of the wiki the blog is from into an RSS feed.
+
+Parameters:
+* $1 - <nowiki>{{SITENAME}}</nowiki>',
 	'blogs-comment-hidden' => 'If a tool like RevisionDelete has made the text of a comment inaccessible to the public, this message informs the reader the comment has been hidden',
 	'right-blog-comments-toggle' => '{{doc-right|blog-comments-toggle}}',
 	'right-blog-comments-delete' => '{{doc-right|blog-comments-delete}}',
@@ -509,6 +514,16 @@ $messages['bg'] = array(
 	'blog-by' => '$1 от $2',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'create-blog-save' => 'পাতা সংরক্ষণ',
+	'create-blog-preview' => 'প্রাকদর্শন দেখাও',
+	'create-blog-listing-preview' => 'প্রাকদর্শন',
+	'blog-defaulttitle' => 'ব্লগসমূহ',
+);
+
 /** Breton (brezhoneg)
  * @author Fulup
  * @author Gwendal
@@ -638,46 +653,46 @@ Gallout a reer krouiñ pajennadoù rollañ blogoù evit rummadoù evel "Barack O
  * @author SMP
  */
 $messages['ca'] = array(
-	'blog-file-page' => "<a href='$1'>$2</a> publicació en el bloc de <a href='$3'>$4</a>",
-	'createblogpage' => 'Crear un bloc',
-	'createbloglistingpage' => 'Crear una llista de blocs',
+	'blog-file-page' => "<a href='$1'>$2</a> publicació en el blog de <a href='$3'>$4</a>",
+	'createblogpage' => 'Crear un blog',
+	'createbloglistingpage' => 'Crear una llista de blogs',
 	'create-blog-spam' => 'Sembla spam',
 	'create-blog-cant-edit' => "No s'ha pogut realitzar l'edició",
-	'create-blog-post-category' => 'Entrades de bloc',
-	'create-blog-post-category-body' => 'Aquesta llista de blocs es genera automàticament',
-	'create-blog-post-category-log' => "Categoria d'articles per entrades de bloc",
+	'create-blog-post-category' => 'Entrades de blog',
+	'create-blog-post-category-body' => 'Aquesta llista de blogs es genera automàticament',
+	'create-blog-post-category-log' => "Categoria d'articles per a entrades de blog",
 	'create-blog-post-recent-listing' => 'Entrades recents',
 	'create-blog-post-recent-listing-title' => 'Entrades recents',
-	'create-blog-post-recent-listing-log' => 'Creat article per les entrades de bloc recents',
+	'create-blog-post-recent-listing-log' => 'Creat article per a les entrades de blog recents',
 	'create-blog-post-title' => 'Crea una entrada nova',
-	'create-blog-post-title-edit' => "Editar l'entrada de bloc",
-	'create-blog-form-title' => 'Què és una entrada de bloc?',
+	'create-blog-post-title-edit' => "Editar l'entrada de blog",
+	'create-blog-form-title' => 'Què és una entrada de blog?',
 	'create-blog-form-post-text' => "Contingut de l'entrada",
-	'create-blog-form-info' => 'Les entrades de bloc són una bona manera per a compartir notícies, opinions i elements creatius amb la comunitat.',
+	'create-blog-form-info' => 'Les entrades de blog són una bona manera per a compartir notícies, opinions i elements creatius amb la comunitat.',
 	'create-blog-form-post-title' => "Títol de l'entrada",
 	'create-blog-empty-title-error' => 'Títol requerit',
 	'create-blog-empty-post-error' => "El contingut de l'entrada està buit",
-	'create-blog-empty-article-log' => 'Article creat per a la llista de blocs',
+	'create-blog-empty-article-log' => 'Article creat per a la llista de blogs',
 	'create-blog-invalid-title-error' => 'Títol invàlid',
 	'create-listing-confirm-info' => 'Copia i enganxa el següent codi:',
 	'create-blog-no-login' => 'No has iniciat sessió',
-	'create-blog-login-required' => 'Has de [{{fullurl:Special:Signup|$1}} iniciar sessió] per a crear una entrada o una llista de blocs.',
-	'create-blog-categories-title' => 'Afegir aquesta entrada de bloc a aquesta categories (fes clic per a seleccionar-les)',
+	'create-blog-login-required' => 'Has de [{{fullurl:Special:Signup|$1}} iniciar sessió] per a crear una entrada o una llista de blogs.',
+	'create-blog-categories-title' => 'Afegir aquesta entrada de blog a aquesta categories (fes clic per a seleccionar-les)',
 	'create-blog-categories-textinput' => 'Afegir una nova categoria',
 	'create-blog-categories-submit' => 'Acceptar',
 	'create-blog-save' => 'Desa la pàgina',
 	'create-blog-preview' => 'Previsualitza',
-	'create-blog-updated' => 'Entrada de bloc creada o actualitzada.',
-	'create-blog-permission-denied' => 'Error mentre es desava la pàgina del bloc: Permisos Denegats',
+	'create-blog-updated' => 'Entrada de blog creada o actualitzada.',
+	'create-blog-permission-denied' => 'Error mentre que es desava la pàgina del blog: Permisos Denegats',
 	'create-blog-article-already-exists' => 'Ja existeix una entrada amb aquest nom. Si us plau, tria un nom diferent.',
-	'create-blog-listing-title' => 'Crear una nova pàgina amb una llista de blocs',
-	'create-blog-listing-form-title' => 'Què és una llista de blocs?',
-	'create-blog-listing-form-info' => 'Les llistes de blocs es fan servir per afegir entrades de diferents autors en una mateixa pàgina. Es poden crear pàgines de llistes de blocs per categories com ara "Barack Obama" o "Humor", o combinar diferents categories a la vegada.',
-	'create-blog-listing-page-title' => 'Títol de la llista de blocs',
+	'create-blog-listing-title' => 'Crear una nova pàgina amb una llista de blogs',
+	'create-blog-listing-form-title' => 'Què és una llista de blogs?',
+	'create-blog-listing-form-info' => 'Les llistes de blogs es fan servir per a afegir entrades de diferents autors en una mateixa pàgina. Es poden crear pàgines de llistes de blogs per categories com ara "Barack Obama" o "Humor", o combinar diferents categories a la vegada.',
+	'create-blog-listing-page-title' => 'Títol de la llista de blogs',
 	'create-blog-listing-preview' => 'Previsualització',
 	'create-blog-listing-authors' => 'Obtenir les entrades creades per aquests autors (separats per comes)',
 	'create-blog-listing-blog-post-categories-title' => "Obtenir les entrades d'aquestes categories",
-	'create-blog-listing-page-categories-title' => 'Afegir aquesta llista de blocs a aquestes categories',
+	'create-blog-listing-page-categories-title' => 'Afegir aquesta llista de blogs a aquestes categories',
 	'create-blog-listing-matches' => 'Marcats',
 	'create-blog-listing-matches-calculate' => 'Calcular',
 	'create-blog-listing-matches-recalculate' => 'Recomptar',
@@ -688,13 +703,13 @@ $messages['ca'] = array(
 	'create-blog-listing-sortby-comments' => 'Comptador de comentaris',
 	'create-blog-listing-output-as-box' => 'Generar un codi per copiar i enganxar',
 	'create-blog-listing-output-as-page' => 'Crear llista en una pàgina nova',
-	'create-blog-listing-tag-format-not-recognized-on-page' => 'Etiqueta de llista de blocs no reconeguda',
-	'blog-header' => 'Entrades de blocs a la categoria "$1"',
-	'blog-subheader' => '{{PLURAL:$1|Hi ha una entrada|Els següents $1 articles de bloc estan}} en aquesta categoria.',
-	'blog-subheader-all' => "{{PLURAL:$1|Hi ha un article del bloc en aquesta categoria.|El següents $1 articles del bloc són en aquesta categoria, d'un total de $2.}}",
+	'create-blog-listing-tag-format-not-recognized-on-page' => 'Etiqueta de llista de blogs no reconeguda',
+	'blog-header' => 'Entrades de blog a la categoria "$1"',
+	'blog-subheader' => '{{PLURAL:$1|Hi ha una entrada|Els següents $1 articles de blog estan}} en aquesta categoria.',
+	'blog-subheader-all' => "{{PLURAL:$1|Hi ha un article del blog en aquesta categoria.|El següents $1 articles del blog són en aquesta categoria, d'un total de $2.}}",
 	'blog-invalidparam' => "Paràmetre desconegut '$1' ignorat. Si us plau, fes servir un dels paràmetres disponibles: <code>$2</code>.",
 	'blog-emptyparam' => 'El nom del paràmetre no pot estar buit',
-	'blog-defaulttitle' => 'Blocs',
+	'blog-defaulttitle' => 'Blogs',
 	'blog-continuereading' => 'Continua llegint &raquo;',
 	'blog-readfullpost' => 'Llegir més',
 	'blog-olderposts' => 'Entrades antigues',
@@ -702,16 +717,16 @@ $messages['ca'] = array(
 	'blog-nbrcomments' => '{{PLURAL:$1|un comentari|$1 comentaris}}',
 	'blog-nopostfound' => 'Entrades no trobades.',
 	'blog-writeone' => 'Escriu-ne un!',
-	'blog-empty-user-blog' => 'Aquest usuari encara no ha escrit cap entrada en el seu bloc!',
+	'blog-empty-user-blog' => 'Aquest usuari encara no ha escrit cap entrada en el seu blog!',
 	'blog-added' => 'afegit',
 	'blog-edited' => 'editat',
-	'blog-page' => 'Bloc',
+	'blog-page' => 'Blog',
 	'blog-zero-comments' => 'Encara no hi ha comentaris!',
 	'blog-comment-post' => 'Comentar',
 	'blog-comments' => 'Comentaris',
-	'blog-rc-comments' => 'Comentaris del bloc',
-	'blog-comments-new' => 'Nou comentari al bloc',
-	'blog-comments-save' => 'Guardar comentari al bloc',
+	'blog-rc-comments' => 'Comentaris del blog',
+	'blog-comments-new' => 'Nou comentari al blog',
+	'blog-comments-save' => 'Guardar comentari al blog',
 	'blog-comments-label' => 'Comentaris',
 	'blog-voting-label' => 'Votació',
 	'blog-comments-info' => 'Fes servir aquesta caixa per a deixar un comentari. Li pots donar estil de wikitext.',
@@ -725,39 +740,41 @@ $messages['ca'] = array(
 	'blog-comment-history' => 'historial',
 	'blog-comment-edit' => 'editar',
 	'blog-comment-error' => "El comentari no s'ha pogut desar",
-	'blog-comment-cannot-add' => 'No pots afegir un comentari al bloc.',
+	'blog-comment-cannot-add' => 'No pots afegir un comentari al blog.',
 	'blog-avatar-preferences-title' => 'Avatar',
 	'blog-page-rate' => 'Valora aquesta entrada:',
 	'blog-create-post-label' => 'Crear una entrada',
 	'blog-create-label' => 'Crear una entrada',
-	'blog-create-next-label' => 'Crea una nova entrada del bloc',
-	'blog-create-listing-label' => 'Crea una llista de blocs',
+	'blog-create-next-label' => 'Crea una nova entrada de blog',
+	'blog-create-listing-label' => 'Crea una llista de blogs',
 	'blog-refresh-label' => 'Actualizar',
 	'blog-widgets-label' => 'Tauler de widgets',
-	'blog-listing-zero-other' => 'Aquest usuari encara no ha escrit cap entrada en el seu bloc!',
-	'blog-listing-created' => 'Pàgina de llistat de blocs creada',
-	'blog-userblog' => 'Bloc de $1',
+	'blog-listing-zero-other' => 'Aquest usuari encara no ha escrit cap entrada en el seu blog!',
+	'blog-listing-created' => 'Pàgina de llistat de blogs creada',
+	'blog-userblog' => 'Blog de $1',
 	'blog-fromsitename' => 'De $1',
 	'blogs-reportproblem' => 'Informar sobre un problema',
 	'blogs-comment-hidden' => 'Comentari amagat',
-	'right-blog-comments-toggle' => 'Alternar comentaris a articles del bloc',
-	'right-blog-comments-delete' => 'Esborrar comentaris en articles del bloc',
-	'right-blog-articles-edit' => 'Modifica articles del bloc',
-	'right-blog-articles-move' => 'Moure articles del bloc',
-	'blogs-recent-url-text' => 'Entrades de bloc recents',
-	'blog-desc' => 'Articles del bloc',
-	'blog-movepage-badtitle' => "Títol de l'entrada del bloc invàlid",
+	'right-blog-comments-toggle' => 'Alternar comentaris a articles del blog',
+	'right-blog-comments-delete' => 'Esborrar comentaris en articles del blog',
+	'right-blog-articles-edit' => 'Modifica articles del blog',
+	'right-blog-articles-move' => 'Moure articles del blog',
+	'blogs-recent-url-text' => 'Entrades de blog recents',
+	'blog-desc' => 'Articles del blog',
+	'blog-movepage-badtitle' => "Títol de l'entrada de blog invàlid",
 	'blog-comment-sending' => 'Enviant...',
 	'blog-by' => '$1 per $2',
-	'blogs-searchprofile' => 'Blocs',
-	'blogs-searchprofile-tooltip' => 'Cercar en articles de bloc i llistes de bloc',
-	'user-blog-url-link' => 'Usuari bloc:$1',
+	'blogs-searchprofile' => 'Blogs',
+	'blogs-searchprofile-tooltip' => 'Cercar en articles de blog i llistes de blog',
+	'user-blog-url-link' => 'Usuari blog:$1',
 );
 
 /** Chechen (нохчийн)
  * @author Умар
  */
 $messages['ce'] = array(
+	'create-blog-preview' => 'Хьалха муха ю хьажар',
+	'create-blog-listing-preview' => 'Хьалха муха ю хьажа',
 	'blog-refresh-label' => 'Карлаяккха',
 );
 
@@ -853,6 +870,7 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author Avatar
+ * @author Das Schäfchen
  * @author Kghbln
  * @author LWChris
  * @author Metalhead64
@@ -883,7 +901,7 @@ $messages['de'] = array(
 	'create-blog-invalid-title-error' => 'Ungültiger Titel',
 	'create-listing-confirm-info' => 'Kopiere den folgenden Code:',
 	'create-blog-no-login' => 'Du bist nicht angemeldet',
-	'create-blog-login-required' => 'Du musst [{{fullurl:Special:Signup|$1}} angemeldet sein] um einen Blogeintrag oder eine Blogliste zu erstellen.',
+	'create-blog-login-required' => 'Du musst [{{fullurl:Special:Signup|$1}} angemeldet sein], um einen Blogeintrag oder eine Blogliste zu erstellen.',
 	'create-blog-categories-title' => 'Füge diesen Beitrag den folgenden Kategorien hinzu (anklicken)',
 	'create-blog-categories-textinput' => 'Neue Kategorie hinzufügen',
 	'create-blog-categories-submit' => 'Hinzufügen',
@@ -894,7 +912,7 @@ $messages['de'] = array(
 	'create-blog-article-already-exists' => 'Es gibt schon einen Blogbeitrag mit diesem Namen, bitte wähle einen anderen',
 	'create-blog-listing-title' => 'Neue Blog-Aggregationsseite erstellen',
 	'create-blog-listing-form-title' => 'Was ist eine Blog-Aggregationsseite?',
-	'create-blog-listing-form-info' => 'Mit Blog-Aggregationsseiten kann man Blogeinträge von verschiedenen Autoren auf einer einzelnen Seite zusammenfassen. So kannst du z.B. Themenseiten über „Barack Obama“, „Buchvorstellungen“ oder auch über mehrere verschiedene Kategorien erstellen.',
+	'create-blog-listing-form-info' => 'Mit Blog-Aggregationsseiten kann man Blogeinträge von verschiedenen Autoren auf einer einzelnen Seite zusammenfassen. So kannst du z. B. Themenseiten über „Barack Obama“, „Buchvorstellungen“ oder auch über mehrere verschiedene Kategorien erstellen.',
 	'create-blog-listing-page-title' => 'Blog-Aggregationsseiten-Titel',
 	'create-blog-listing-preview' => 'Vorschau',
 	'create-blog-listing-authors' => 'Zeige Blogbeiträge von diesen Autoren (getrennt durch Komma)',
@@ -1125,6 +1143,13 @@ $messages['el'] = array(
 	'blogs-reportproblem' => 'Αναφορά του προβλήματος',
 	'right-blog-articles-edit' => 'Επεξεργασία άρθρων στο blog',
 	'right-blog-articles-move' => 'Μετακίνηση άρθρων του blog',
+);
+
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'create-blog-listing-tag-format-not-recognized-on-page' => 'Blog listing tag not recognised on page',
 );
 
 /** Esperanto (Esperanto)
@@ -2516,6 +2541,7 @@ $messages['kn'] = array(
  * @author Cafeinlove
  * @author Cwt96
  * @author 아라
+ * @author 한글화담당
  */
 $messages['ko'] = array(
 	'createblogpage' => '블로그 만들기',
@@ -2525,8 +2551,8 @@ $messages['ko'] = array(
 	'create-blog-form-title' => '블로그 게시물이 무엇입니까?',
 	'create-blog-form-post-title' => '블로그 게시물 제목',
 	'blog-defaulttitle' => '블로그',
-	'blog-added' => '추가했',
-	'blog-edited' => '편집했',
+	'blog-added' => '추가됨',
+	'blog-edited' => '편집됨',
 	'blog-page' => '블로그',
 	'blog-comment-post' => '덧글 남기기',
 	'blog-comments' => '덧글',
@@ -2598,6 +2624,7 @@ $messages['lb'] = array(
 	'blog-added' => 'derbäigesat',
 	'blog-edited' => 'geännert',
 	'blog-page' => 'Blog',
+	'blog-zero-comments' => 'Nach keng Bemierkungen!',
 	'blog-comments' => 'Bemierkungen',
 	'blog-comments-dsc' => "Neist fir d'éischt",
 	'blog-comments-anonymous' => 'Anonyme Benotzer',
@@ -2610,6 +2637,8 @@ $messages['lb'] = array(
 	'blog-refresh-label' => 'Aktualiséieren',
 	'blog-fromsitename' => 'Vu(n) $1',
 	'blogs-comment-hidden' => 'Bemierkung verstoppt.',
+	'blog-comment-sending' => 'Schécken...',
+	'blog-by' => '$1 vum $2',
 );
 
 /** Lithuanian (lietuvių)
@@ -3135,9 +3164,17 @@ Opprett bloggoppføringssider for å kategorier som «Barack Obama», «Fan Fict
 );
 
 /** Nepali (नेपाली)
+ * @author Bhawani Gautam
  * @author RajeshPandey
  */
 $messages['ne'] = array(
+	'createblogpage' => 'ब्लग बनाउने',
+	'createbloglistingpage' => 'ब्लग सूची बनाउने',
+	'create-blog-spam' => 'स्याम जस्तो देखिन्छ',
+	'create-blog-cant-edit' => 'सम्पादन गर्न सकिएन',
+	'create-blog-post-category' => 'ब्लोग पोस्ट',
+	'create-blog-post-category-body' => 'यो ब्लग पोस्टको एक स्वत: उत्पन्न सूची हो',
+	'create-blog-post-category-log' => 'ब्लग पोस्टको लागि श्रेणी लेख बनाइएको',
 	'blog-comments' => 'टिप्पणीहरु',
 );
 
@@ -3716,14 +3753,14 @@ $messages['pt'] = array(
 	'create-listing-confirm-info' => 'Copie e insira o seguinte código:',
 	'create-blog-no-login' => 'Não iniciou sessão',
 	'create-blog-login-required' => 'Tem de estar [{{fullurl:Special:Signup|$1}} autenticado] para criar entradas de blogues ou listagens.',
-	'create-blog-categories-title' => 'Adicionar esta entrada do blogue a estas categorias (clique para seleccionar)',
+	'create-blog-categories-title' => 'Adicionar esta entrada do blogue a estas categorias (clique para selecionar)',
 	'create-blog-categories-textinput' => 'Adicionar uma categoria nova',
 	'create-blog-categories-submit' => 'Enviar',
 	'create-blog-save' => 'Gravar página',
 	'create-blog-preview' => 'Mostrar antevisão',
-	'create-blog-updated' => 'A entrada foi criada ou actualizada.',
+	'create-blog-updated' => 'A entrada foi criada ou atualizada.',
 	'create-blog-permission-denied' => 'Erro ao gravar a página de blogue: Permissão negada',
-	'create-blog-article-already-exists' => 'Já existe uma entrada com esse nome. Seleccione um nome diferente, por favor.',
+	'create-blog-article-already-exists' => 'Já existe uma entrada com esse nome. Selecione um nome diferente, por favor.',
 	'create-blog-listing-title' => 'Crie uma página nova de listagem de blogues',
 	'create-blog-listing-form-title' => 'O que é uma página de listagem de blogues?',
 	'create-blog-listing-form-info' => 'As páginas de listagem de blogues são usadas para agregar listagens de blogues de vários autores numa única página.

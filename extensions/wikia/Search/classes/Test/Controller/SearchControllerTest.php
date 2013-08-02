@@ -26,13 +26,14 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	public function testIndex() {
 		
 		$methods = array( 'handleSkinSettings', 'getSearchConfigFromRequest', 
-				'handleArticleMatchTracking', 'setPageTitle', 'setResponseValuesFromConfig' );
+				'handleArticleMatchTracking', 'setPageTitle', 'setResponseValuesFromConfig',
+				'getVal', 'handleLayoutAbTest' );
 		$mockController = $this->searchController->setMethods( $methods )->getMock();
 		
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery' ) );
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'hasTerms' ), array( 'foo' ) );
 		
-		$mockSearch = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
+		$mockSearch = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\OnWiki' )
 		                   ->setMethods( array( 'search', 'getMatch' ) )
 		                   ->disableOriginalConstructor()
 		                   ->getMock();
@@ -45,6 +46,14 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$mockController
 		    ->expects( $this->once() )
 		    ->method ( 'handleSkinSettings' )
+		;
+		$mockController
+			->expects( $this->once() )
+			->method ( 'getVal' )
+		;
+		$mockController
+			->expects( $this->once() )
+			->method ( 'handleLayoutAbTest' )
 		;
 		$mockController
 		    ->expects( $this->once() )
@@ -111,6 +120,56 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 				"WikiaSearchController::handleArticleMatchTracking should return false if not on page 1"
 				);
 		
+	}
+
+	public function testHandleLayoutAbTest() {
+		$mockController = $this->searchController->setMethods( array( 'templateExists', 'setVal' ) )->getMock();
+
+		$method = new ReflectionMethod( 'WikiaSearchController', 'handleLayoutAbTest' );
+		$method->setAccessible( true );
+
+		$mockController
+			->expects( $this->at( 0 ) )
+			->method ( 'setVal' )
+			->with	 ( 'resultView', WikiaSearchController::WIKIA_DEFAULT_RESULT )
+		;
+
+		$this->assertTrue(
+			$method->invoke( $mockController, null )
+		);
+
+		$mockController
+			->expects( $this->at( 0 ) )
+			->method ( 'templateExists' )
+			->will	 ( $this->returnValue( false ) )
+		;
+
+		$mockController
+			->expects( $this->at( 1 ) )
+			->method ( 'setVal' )
+			->with	 ( 'resultView', WikiaSearchController::WIKIA_DEFAULT_RESULT )
+		;
+
+		$this->assertTrue(
+			$method->invoke( $mockController, 'Atest' )
+		);
+
+		$mockController
+			->expects( $this->at( 0 ) )
+			->method ( 'templateExists' )
+			->will	 ( $this->returnValue( true ) )
+		;
+
+		$mockController
+			->expects( $this->at( 1 ) )
+			->method ( 'setVal' )
+			->with	 ( 'resultView', 'Btest' )
+		;
+
+		$this->assertTrue(
+			$method->invoke( $mockController, 'Btest' )
+		);
+
 	}
 
 	/**
@@ -951,7 +1010,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 		$incr = 0;
 
-		$wg = (object) array( 'CityId' => Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID );
+		$wg = (object) array( 'CityId' => Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID );
 
 		$mockController
 			->expects	( $this->at( $incr++ ) )
@@ -1420,7 +1479,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	public function testVideoSearch() {
 		$mockConfig		=	$this->getMock( 'Wikia\Search\Config', array( 'setCityId', 'setQuery', 'setNamespaces', 'setVideoSearch', 'getResults' ) );
 		$mockController	=	$this->searchController->setMethods( array( 'getResponse', 'getVal' ) )->getMock();
-		$mockSearch		=	$this->getMockBuilder( 'Wikia\Search\QueryService\Select\Video' )
+		$mockSearch		=	$this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\Video' )
 								->setMethods( array( 'search' ) )
 								->disableOriginalConstructor()
 								->getMock();
@@ -1523,7 +1582,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	public function testSearchVideosByTitle() {
 		$mockConfig		=	$this->getMock( 'Wikia\Search\Config', array( 'setVideoTitleSearch', 'setQuery' ) );
 		$mockController	=	$this->searchController->setMethods( array( 'getResponse', 'getVal' ) )->getMock();
-		$mockSearch		=	$this->getMockBuilder( 'Wikia\Search\QueryService\Select\VideoTitle' )
+		$mockSearch		=	$this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\VideoTitle' )
 								->setMethods( array( 'searchAsApi' ) )
 								->disableOriginalConstructor()
 								->getMock();

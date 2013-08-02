@@ -17,4 +17,12 @@ class WikiListConditionerForCollection implements WikiListConditioner {
 			'(city_visualization.city_flags & ' . WikisModel::FLAG_BLOCKED . ') != ' . WikisModel::FLAG_BLOCKED,
 		];
 	}
+
+	/**
+	 * This implementation always returns false in order to flatten
+	 * promoted wikis in a collection
+	 */
+	public function getPromotionCondition( $isPromoted ) {
+		return false;
+	}
 }

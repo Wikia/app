@@ -167,27 +167,4 @@ class FilePageTabbed extends WikiaFilePage {
 
 		wfProfileOut( __METHOD__ );
 	}
-
-	/**
-	 * Display info about the video below the video player
-	 */
-	public function getVideoInfoLine( $file ) {
-		wfProfileIn( __METHOD__ );
-
-		$app = F::app();
-
-		$captionDetails = array(
-			'expireDate' => $file->getExpirationDate(),
-			'provider' => $file->getProviderName(),
-			'providerUrl' => $file->getProviderHomeUrl(),
-			'detailUrl' => $file->getProviderDetailUrl(),
-			'views' => MediaQueryService::getTotalVideoViewsByTitle( $file->getTitle()->getDBKey() ),
-		);
-
-		$caption = $app->renderView( 'FilePageController', 'videoCaption', $captionDetails );
-
-		wfProfileOut( __METHOD__ );
-
-		return $caption;
-	}
 }

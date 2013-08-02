@@ -56,8 +56,8 @@ $slotZIndex: 4000;
 	&.show {
 		visibility: visible;
 
-		width: 320px;
-		height: 50px;
+		width: $slotFooterWidthMax;
+		height: $slotFooterHeight;
 
 		margin: 0 auto;
 		text-align: center;
@@ -105,4 +105,11 @@ $slotZIndex: 4000;
 		font-size: 9px;
 		color: $ad-label-color;
 	}
+}
+
+//when ads are loaded and "floating" at the bottom
+//then make sure there's enough space to host them
+//without getting the adslot overlaying the links
+.ads {
+	padding-bottom: 50px;
 }

@@ -5,14 +5,17 @@
  * Available only on the www.wikia.com main domain.
  *
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+ * @author Artur Klajnerok <arturk@wikia-inc.com>
  */
 
 class WikisApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
 	const PARAMETER_KEYWORD = 'string';
+	const PARAMETER_LANGUAGES = 'lang';
 	const PARAMETER_WIKI_IDS = 'ids';
 	const CACHE_VALIDITY = 86400;//1 day
 	const MEMC_NAME = 'SharedWikiApiData:';
+	const LANGUAGES_LIMIT = 10;
 	const DEFAULT_TOP_EDITORS_NUMBER = 10;
 	const DEFAULT_WIDTH = 250;
 	const DEFAULT_HEIGHT = null;
@@ -31,7 +34,7 @@ class WikisApiController extends WikiaApiController {
 	 * Get the top wikis by pageviews optionally filtering by vertical (hub) and/or language
 	 *
 	 * @requestParam string $hub [OPTIONAL] The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) to use as a filter
-	 * @requestParam string $lang [OPTIONAL] The language code (e.g. en, de, fr, es, it, etc.) to use as a filter
+	 * @requestParam string $lang [OPTIONAL] The comma-separated list of language codes (e.g. en,de,fr,es,it, etc.) to use as a filter
 	 * @requestParam integer $limit [OPTIONAL] The maximum number of results to fetch, defaults to 25
 	 * @requestParam integer $batch [OPTIONAL] The batch/page index to retrieve, defaults to 1
 	 *
@@ -45,10 +48,15 @@ class WikisApiController extends WikiaApiController {
 	 */
 	public function getList() {
 		$hub = trim( $this->request->getVal( 'hub', null ) );
-		$lang = trim( $this->getVal( 'lang', null ) );
+		$langs = $this->request->getArray( self::PARAMETER_LANGUAGES );
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
 		$batch = $this->request->getInt( 'batch', 1 );
-		$results = self::$model->getTop( $lang, $hub );
+
+		if ( !empty( $langs ) &&  count($langs) > self::LANGUAGES_LIMIT) {
+			throw new LimitExceededApiException( self::PARAMETER_LANGUAGES, self::LANGUAGES_LIMIT );
+		}
+
+		$results = self::$model->getTop( $langs, $hub );
 		$batches = wfPaginateArray( $results, $limit, $batch );
 
 		foreach ( $batches as $name => $value ) {
@@ -71,7 +79,7 @@ class WikisApiController extends WikiaApiController {
 	 *
 	 * @requestParam string $keyword search term
 	 * @requestParam string $hub [OPTIONAL] The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) to use as a filter
-	 * @requestParam string $lang [OPTIONAL] The language code (e.g. en, de, fr, es, it, etc.) to use as a filter
+	 * @requestParam string $lang [OPTIONAL] The comma-separated list of language codes (e.g. en,de,fr,es,it, etc.) to use as a filter
 	 * @requestParam integer $limit [OPTIONAL] The number of items per each batch/page, defaults to 25
 	 * @requestParam integer $batch [OPTIONAL] The batch/page index to retrieve, defaults to 1
 	 * @requestParam bool $includeDomain [OPTIONAL] Wheter to include wikis' domains as search targets or not,
@@ -90,7 +98,7 @@ class WikisApiController extends WikiaApiController {
 
 		$keyword = trim( $this->request->getVal( self::PARAMETER_KEYWORD, null ) );
 		$hub = trim( $this->request->getVal( 'hub', null ) );
-		$lang = trim( $this->getVal( 'lang', null ) );
+		$langs = $this->request->getArray( self::PARAMETER_LANGUAGES );
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
 		$batch = $this->request->getInt( 'batch', 1 );
 		$includeDomain = $this->request->getBool( 'includeDomain', false );
@@ -99,7 +107,11 @@ class WikisApiController extends WikiaApiController {
 			throw new MissingParameterApiException( self::PARAMETER_KEYWORD );
 		}
 
-		$results = self::$model->getByString($keyword, $lang, $hub, $includeDomain );
+		if ( !empty( $langs ) &&  count($langs) > self::LANGUAGES_LIMIT) {
+			throw new LimitExceededApiException( self::PARAMETER_LANGUAGES, self::LANGUAGES_LIMIT );
+		}
+
+		$results = self::$model->getByString($keyword, $langs, $hub, $includeDomain );
 
 		if( is_array( $results ) ) {
 			$batches = wfPaginateArray( $results, $limit, $batch );

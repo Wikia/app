@@ -13,9 +13,14 @@ class VideoService extends WikiaModel {
 	public function addVideo( $url ) {
 		wfProfileIn( __METHOD__ );
 
+		if ( !$this->wg->User->isAllowed('videoupload') ) {
+			wfProfileOut( __METHOD__ );
+			return wfMessage('videos-error-admin-only')->plain();
+		}
+
 		if ( empty( $url ) ) {
 			wfProfileOut( __METHOD__ );
-			return wfMsg('videos-error-no-video-url');
+			return wfMessage('videos-error-no-video-url')->text();
 		}
 
 		try {
@@ -42,6 +47,10 @@ class VideoService extends WikiaModel {
 					$videoProvider = '';
 					wfRunHooks( 'AddPremiumVideo', array( $title ) );
 				} else {
+					if ( empty( $this->wg->allowNonPremiumVideos ) ) {
+						wfProfileOut( __METHOD__ );
+						return wfMessage( 'videohandler-non-premium' )->parse();
+					}
 					list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
 				}
 
@@ -50,7 +59,7 @@ class VideoService extends WikiaModel {
 				$vHelper = new VideoHandlerHelper();
 				$vHelper->addDefaultVideoDescription( $file );
 			} else {
-				throw new Exception( wfMsg('videos-error-old-type-video') );
+				throw new Exception( wfMessage( 'videos-error-old-type-video' )->text() );
 			}
 		} catch ( Exception $e ) {
 			wfProfileOut( __METHOD__ );
@@ -70,7 +79,7 @@ class VideoService extends WikiaModel {
 	protected function addVideoVideoHandlers( $url ) {
 		$title = VideoFileUploader::URLtoTitle( $url );
 		if ( !$title ) {
-			throw new Exception( wfMsg('videos-error-invalid-video-url') );
+			throw new Exception( wfMessage('videos-error-invalid-video-url')->text() );
 		}
 
 		return array( $title, $title->getArticleID(), null );

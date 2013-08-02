@@ -82,6 +82,13 @@ button {
 	}
 }
 
+.wikia-menu-button-submit {
+	input[type=submit] {
+		border: none;
+		height: 100%;
+	}
+}
+
 
 // Border-box model: Inputs and buttons count border as part of height. Increase height. //
 input[type="submit"],

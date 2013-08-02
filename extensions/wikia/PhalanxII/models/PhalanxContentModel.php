@@ -7,10 +7,15 @@ class PhalanxContentModel extends PhalanxModel {
 	const SPAM_WHITELIST_TITLE = 'Spam-whitelist';
 	const SPAM_WHITELIST_NS_TITLE = 'Mediawiki:Spam-whitelist';
 
+	/**
+	 * @param Title $title
+	 * @param string $lang
+	 * @param int $id
+	 */
 	public function __construct( $title, $lang = null, $id = 0 ) {
 		parent::__construct( __CLASS__, array( 'title' => $title, 'lang' => $lang, 'id' => $id ) );
 	}
-	
+
 	public function isOk() { 
 		return ( 
 			$this->wg->User->isAllowed( 'phalanxexempt' ) || 
@@ -68,7 +73,7 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 	
 	public function contentBlock() {
-		$msg = wfMessage('spamprotectionmatch', "{$this->block->text} (Block #{$this->block->id})")->text();
+		$msg = "{$this->block->text} (Block #{$this->block->id})";
 		$this->logBlock();
 		return $msg;
 	}

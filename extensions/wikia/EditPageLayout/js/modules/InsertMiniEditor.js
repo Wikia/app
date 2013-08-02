@@ -1,15 +1,22 @@
 (function(window){
 
-	var WE = window.WikiaEditor;
+		var WE = window.WikiaEditor,
+				items;
 
-	WE.modules.InsertMiniEditor = $.createClass(WE.modules.Insert, {
-		items: [
-			'InsertImage',
-			'InsertVideo'
-		],
-		init: function() {
-			WE.modules.InsertMiniEditor.superclass.init.call(this);
+		items = [
+			'InsertImage'
+		];
+
+		// for wgAllVideosAdminOnly
+		if (window.showAddVideoBtn) {
+			items.splice( 1, 0, "InsertVideo" );
 		}
-	});
+
+		WE.modules.InsertMiniEditor = $.createClass(WE.modules.Insert, {
+				items: items,
+				init: function() {
+					WE.modules.InsertMiniEditor.superclass.init.call(this);
+				}
+		});
 
 })(this);

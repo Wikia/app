@@ -134,7 +134,7 @@ $messages['qqq'] = array(
 	'multidelete' => '{{Identical|Delete batch of pages}}',
 	'multidelete_button' => '{{Identical|Delete}}',
 	'multidelete_select_all' => '{{Identical|Select all}}',
-	'multidelete_reason' => '{{Identical|Reason for deletion}}',
+	'multidelete_reason' => 'none',
 	'multidelete_success_subtitle' => '{{Identical|For $1}}',
 	'multidelete_split_results' => 'If number of articles to run the script on exceeds a maximum number, user receives a message informing them that the script will be split up into a number of tasks. 
 Parameters:
@@ -542,9 +542,11 @@ $messages['ca'] = array(
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
-	'multidelete_title' => 'Дуккха дIадайар',
+	'multidelete_title' => 'Дуккха дӀяккхар',
+	'multiwikienterpagename' => 'ДӀаязъе агӀона цӀе:',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -1457,12 +1459,18 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
  * @author Irwangatot
  */
 $messages['id'] = array(
 	'multitasks-link-back-label' => 'di sini',
+	'multiwikiedit_button' => 'SUNTING',
+	'multiwikiedit_help' => 'Menghapus sekelompok halaman. Anda dapat menyunting halaman-halaman yang terdaftar dalam kotak teks. Pilihlah pengguna yang akan ditampilkan pada log penghapusan. Berkas yang diunggah harus mengandung nama halaman dan alasan opsional, dipisahkan dengan suatu tanda "|" pada setiap barisnya.',
 	'multiwikiedit_caption' => 'Daftar halaman',
+	'multiwikiedit_both_modes' => 'Silakan pilih satu halaman tertentu atau suatu daftar halaman.',
 	'multiwikiedit_or' => '<b>ATAU</b>',
+	'multiwikiedit_list_caption' => 'Daftar wiki',
+	'multiwikiedit_norecentchanges_caption' => 'Jangan tampilkan perubahan ini di perubahan terbaru',
 	'multiwikiedit_from_form' => 'Formulir dari',
 	'multiwikiedit_success_subtitle' => 'untuk $1',
 	'multiwikiedit_select_yourself' => 'Anda',
@@ -2564,6 +2572,7 @@ $messages['ps'] = array(
 	'multiwikiedit_select_yourself' => 'تاسې',
 	'multidelete_button' => 'ړنګول',
 	'multidelete_caption' => 'د مخ لړليک',
+	'multidelete_or' => '<b>يا</b>',
 	'multidelete_select_all' => 'ټول ټاکل',
 	'multidelete_reason' => 'د ړنګولو سبب',
 	'multidelete_this_wiki' => 'همدا ويکي',
@@ -2573,6 +2582,8 @@ $messages['ps'] = array(
 	'multidelete_brazilian_portuguese_wikis' => 'ټولې برازيلۍ پارتوګالي ويکي ګانې',
 	'multidelete_hebrew_wikis' => 'ټولې عبري ويکي ګانې',
 	'multidelete_chinese_wikis' => 'ټولې چينايي ويکي ګانې',
+	'multidelete_polish_wikis' => 'ټول پولنډي ويکي ګان',
+	'multidelete_czech_wikis' => 'ټول چېکي ويکي ګان',
 	'multidelete_german_wikis' => 'ټولې جرمنۍ ويکي ګانې',
 	'multiwikifindpagenames' => 'د مخ نوم موندل',
 );
@@ -2594,7 +2605,7 @@ $messages['pt'] = array(
 	'multiwikiedit_or' => '<b>OU</b>',
 	'multiwikiedit_task_added' => 'Tarefa de edição multi wiki #$1 foi adicionada.',
 	'multiwikiedit_task_error' => 'Ocorreu um erro ao adicionar a tarefa de edição multi wiki.',
-	'multiwikiedit_task_none_selected' => 'Não seleccionou nenhum artigo. A tarefa não foi adicionada.',
+	'multiwikiedit_task_none_selected' => 'Não selecionou nenhum artigo. A tarefa não foi adicionada.',
 	'multiwikiedit_on' => 'em', # Fuzzy
 	'multiwikiedit_page' => 'Páginas para editar',
 	'multiwikiedit_page_text' => 'Texto para gravar',
@@ -2613,7 +2624,7 @@ $messages['pt'] = array(
 	'multiwikiedit_this_wiki' => 'esta wiki',
 	'multiwikiedit_inbox_caption' => 'separadas por vírgulas',
 	'multiwikiedit_all_wikis' => 'todas as wikis',
-	'multiwikiedit_selected_wikis' => 'as wikis seleccionadas',
+	'multiwikiedit_selected_wikis' => 'as wikis selecionadas',
 	'multiwikiedit_success_subtitle' => 'para $1',
 	'multiwikiedit_link_back' => 'Pode voltar ao formulário EdiçãoMultiWiki $1.',
 	'multiwikiedit_omitting_nonexistant' => 'A ignorar a página inexistente $1.',
@@ -2637,13 +2648,13 @@ $messages['pt'] = array(
 	'multidelete_title' => 'Eliminação Múltipla',
 	'multidelete_both_modes' => 'Escolha uma página específica ou uma lista de páginas, por favor.',
 	'multidelete_or' => '<b>OU</b>',
-	'multidelete_error_empty_selection' => 'Introduza a lista de wikis seleccionadas',
+	'multidelete_error_empty_selection' => 'Por favor, introduza a lista de wikis selecionadas',
 	'multidelete_error_empty_pages' => 'Escolha uma página específica ou uma lista de páginas, por favor.',
 	'multidelete_error_multi_page' => 'Para eliminação multi-wiki, só é permitido um título de cada vez.',
-	'multidelete_info_empty_list' => 'Os títulos fornecidos não foram encontrados em nenhuma das wikis seleccionadas.',
+	'multidelete_info_empty_list' => 'Os títulos fornecidos não foram encontrados em nenhuma das wikis selecionadas.',
 	'multidelete_task_added' => 'A tarefa de eliminação múltipla $1 foi adicionada.',
 	'multidelete_task_error' => 'Ocorreu um erro ao adicionar a tarefa de eliminação múltipla.',
-	'multidelete_task_none_selected' => 'Não seleccionou nenhum artigo. A tarefa não foi adicionada.',
+	'multidelete_task_none_selected' => 'Não selecionou nenhum artigo. A tarefa não foi adicionada.',
 	'multidelete_select_all' => 'Selecionar todas',
 	'multidelete_page' => 'Páginas para eliminar',
 	'multidelete_reason' => 'Motivo da eliminação',
@@ -2653,7 +2664,7 @@ $messages['pt'] = array(
 	'multidelete_this_wiki' => 'esta wiki',
 	'multidelete_inbox_caption' => 'ou separadas por vírgulas',
 	'multidelete_all_wikis' => 'todas as wikis',
-	'multidelete_selected_wikis' => 'as wikis seleccionadas',
+	'multidelete_selected_wikis' => 'as wikis selecionadas',
 	'multidelete_success_subtitle' => 'para $1',
 	'multidelete_link_back' => 'Pode voltar ao formulário EliminaçãoMúltipla $1',
 	'multidelete_omitting_nonexistant' => 'A ignorar a página inexistente $1.',
@@ -2697,7 +2708,7 @@ $messages['pt-br'] = array(
 	'multiwikiedit' => 'Editar conjunto de páginas',
 	'multiwikiedit_button' => 'EDITAR',
 	'multiwikiedit_confirm' => 'SALVAR',
-	'multiwikiedit_help' => 'Editar um conjunto de páginas. Pode editar as páginas listadas numa caixa de texto. Escolha um usuário para ser mostrado no registo de eliminações. O arquivo carregado deve conter em cada linha o nome da página e, opcionalmente, um motivo separado pelo caractere |. \\',
+	'multiwikiedit_help' => 'Editar um conjunto de páginas. Pode editar as páginas listadas numa caixa de texto. Escolha um usuário para ser mostrado no registro de eliminações. O arquivo carregado deve conter em cada linha o nome da página e, opcionalmente, um motivo separado pelo caractere |. \\',
 	'multiwikiedit_caption' => 'Lista de páginas',
 	'multiwikiedit_title' => 'Edição Multi Wiki',
 	'multiwikiedit_as' => 'Executar o script como',
@@ -2718,7 +2729,7 @@ $messages['pt-br'] = array(
 	'multiwikiedit_newonly_caption' => 'Ignorar artigos existentes',
 	'multiwikiedit_choose_articles' => 'escolha quais os artigos encontrados que devem ser editados',
 	'multiwikiedit_processing' => 'a editar páginas',
-	'multiwikiedit_from_file' => 'da lista de ficheiros',
+	'multiwikiedit_from_file' => 'da lista de arquivos',
 	'multiwikiedit_from_form' => 'do formulário',
 	'multiwikiedit_summary_text' => 'Campo de resumo',
 	'multiwikiedit_this_wiki' => 'esta wiki',
@@ -2729,7 +2740,7 @@ $messages['pt-br'] = array(
 	'multiwikiedit_link_back' => 'Pode voltar ao formulário EdiçãoMultiWiki $1.',
 	'multiwikiedit_omitting_nonexistant' => 'A ignorar a página inexistente $1.',
 	'multiwikiedit_omitting_invalid' => 'A ignorar a página inválida $1.',
-	'multiwikiedit_file_bad_format' => 'O ficheiro devia conter um texto simples',
+	'multiwikiedit_file_bad_format' => 'O arquivo deveria conter um texto simples',
 	'multiwikiedit_file_missing' => 'Não foi possível ler o arquivo',
 	'multiwikiedit_select_script' => 'editar o script',
 	'multiwikiedit_select_yourself' => 'você',

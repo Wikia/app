@@ -282,7 +282,8 @@ $messages['qqq'] = array(
 	'usersignup-confirm-email-change-email-content' => 'Change email heading.',
 	'usersignup-confirm-email-change-email' => 'Action link to open a dialog to change email.',
 	'usersignup-confirm-email-new-email-label' => 'Label for email input.',
-	'usersignup-confirm-email-update' => 'Button to submit e-mail address update form.',
+	'usersignup-confirm-email-update' => 'Button to submit email address update form.
+{{Identical|Update}}',
 	'usersignup-confirm-email-tooltip' => '{{doc-singularthey}}
 Tooltip letting user know they can change their email.  Tooltip is on the same line as {{msg-w|usersignup-confirm-email-change-email-content}}',
 	'usersignup-resend-email-heading-success' => 'Validation message telling the user the email has been re-sent.',
@@ -335,7 +336,8 @@ Tooltip letting user know they can change their email.  Tooltip is on the same l
 	'usersignup-marketing-creativity' => 'Third marketing blurb on right side of Special:UserSignup.',
 	'usersignup-createaccount-byemail' => 'Button label on signup form for Special:UserSignup?byemail=1 to create account for others.',
 	'usersignup-error-captcha' => 'Error message for captcha failure.',
-	'usersignup-account-creation-heading' => 'Page heading for confirm page when byemail=1 is used.',
+	'usersignup-account-creation-heading' => 'Page heading for confirm page when byemail=1 is used.
+{{Identical|Success}}',
 	'usersignup-account-creation-subheading' => 'Page subheading for confirm page when byemail=1 is used. Parameters:
 * $1 is an e-mail address.',
 	'usersignup-account-creation-email-sent' => '{{doc-singularthey}}
@@ -682,6 +684,13 @@ ___________________________________________
 Per veure els darrers esdeveniments a Wikia, visita http://ca.wikia.com
 Vols controlar els correus que reps? Vés a: {{fullurl: {{ns:special}}:Preferències}}",
 	'usersignup-facebook-problem' => 'Hi ha hagut un problema de comunicació amb Facebook. Si us plau, torna-ho a provar altre cop més tard.',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'usersignup-confirm-email-update' => 'Карлаяккха',
 );
 
 /** Czech (česky)
@@ -3850,7 +3859,7 @@ Vill du kontrollera vilka e-postmeddelanden du får? Gå till: {{fullurl:{{ns:sp
 	'usersignup-marketing-creativity' => 'Använd Wikia för att uttrycka din kreativitet med omröstningar och Topp 10-listor, foto- och videogallerier, applikationer och mer.',
 	'usersignup-createaccount-byemail' => 'Skapa ett konto för någon annan',
 	'usersignup-error-captcha' => 'Ordet du skrev in stämde inte överens med ordet i rutan, försök igen!',
-	'usersignup-account-creation-heading' => 'Succé!',
+	'usersignup-account-creation-heading' => 'Åtgärden genomfördes!',
 	'usersignup-account-creation-subheading' => 'Vi har skickat ett e-postmeddelande till $1',
 	'usersignup-account-creation-email-sent' => 'Du har börjat på att skapa ett konto för $2. Vi har skickat ett e-postmeddelande till $1 med ett tillfälligt lösenord och en bekräftelselänk.
 

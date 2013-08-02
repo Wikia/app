@@ -180,6 +180,18 @@ $messages['bg'] = array(
 	'categoryselect-edit-summary' => 'Добавяне на категории',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'categoryselect-button-add' => 'বিষয়শ্রেণী যোগ',
+	'categoryselect-button-cancel' => 'বাতিল',
+	'categoryselect-button-save' => 'সংরক্ষণ',
+	'categoryselect-category-add' => 'বিষয়শ্রেণী যোগ...',
+	'categoryselect-category-edit' => 'বিষয়শ্রেণী সম্পাদনা',
+	'categoryselect-category-remove' => 'বিষয়শ্রেণী অপসারণ',
+);
+
 /** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
@@ -318,16 +330,24 @@ $messages['diq'] = array(
 /** Greek (Ελληνικά)
  * @author Crazymadlover
  * @author Glavkos
+ * @author Nikosguard
  */
 $messages['el'] = array(
 	'categoryselect-button-add' => 'Προσθήκη κατηγορίας',
 	'categoryselect-button-cancel' => 'Ακύρωση',
 	'categoryselect-button-save' => 'Αποθήκευση',
-	'categoryselect-category-add' => 'Προσθήκη μιας κατηγορίας', # Fuzzy
-	'categoryselect-category-edit' => 'Επιλογές κατηγορίας', # Fuzzy
+	'categoryselect-category-add' => 'Προσθήκη κατηγορίας...',
+	'categoryselect-category-edit' => 'Επεξεργασία κατηγορίας',
 	'categoryselect-error-db-locked' => 'Η βάση δεδομένων είναι κλειδωμένη',
-	'categoryselect-modal-category-name' => 'Δώστε το όνομα της κατηγορίας:', # Fuzzy
-	'categoryselect-tooltip-add' => 'Πατήστε Enter όταν γίνει', # Fuzzy
+	'categoryselect-modal-category-name' => 'Δώστε όνομα στην κατηγορία:',
+	'categoryselect-tooltip-add' => 'Πιέστε το πλήκτρο Enter ή Return όταν γίνεται.',
+);
+
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'categoryselect-modal-category-sortkey' => 'Optionally, you may alphabetise this page on the "$1" category page under the name:',
 );
 
 /** Spanish (español)
@@ -532,6 +552,7 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
+ * @author C5st4wr6ch
  * @author Irwangatot
  */
 $messages['id'] = array(
@@ -541,15 +562,17 @@ $messages['id'] = array(
 	'categoryselect-button-save' => 'Simpan',
 	'categoryselect-category-add' => 'Menambahkan kategori', # Fuzzy
 	'categoryselect-category-edit' => 'Pilihan kategori', # Fuzzy
+	'categoryselect-category-remove' => 'Menghapus kategori',
 	'categoryselect-edit-summary' => 'Menambahkan kategori',
-	'categoryselect-error-article-doesnt-exist' => 'Artikel [id=$1] tidak ada.', # Fuzzy
+	'categoryselect-error-article-doesnt-exist' => 'Halaman [id=$1] tidak ada.',
 	'categoryselect-error-db-locked' => 'Basis data dikunci.',
+	'categoryselect-error-duplicate-category-name' => 'Kategori "$1" sudah ada.',
 	'categoryselect-error-edit-abort' => 'Perubahan yang coba Anda lakukan dibatalkan oleh suatu ekstensi kaitan.', # Fuzzy
-	'categoryselect-error-empty-category-name' => 'Membutuhkan nama kategori (bagian sebelum |)', # Fuzzy
-	'categoryselect-error-user-rights' => 'Kesalahan hak pengguna.', # Fuzzy
-	'categoryselect-modal-category-name' => 'Memberikan nama kategori:', # Fuzzy
+	'categoryselect-error-empty-category-name' => 'Silakan berikan nama kategori.',
+	'categoryselect-error-user-rights' => 'Pengguna tidak memiliki izin untuk melakukan aksi ini.',
+	'categoryselect-modal-category-name' => 'Menyediakan nama kategori:',
 	'categoryselect-modal-category-sortkey' => 'Penyusunan artikel ini menurut abjad pada kategori "$1" dengan nama:', # Fuzzy
-	'categoryselect-tooltip-add' => 'Tekan Enter jika sudah selesai', # Fuzzy
+	'categoryselect-tooltip-add' => 'Tekan tombol Masuk atau Kembali ketika sudah selesai.',
 	'tog-disablecategoryselect' => 'Nonaktifkan Kategori Tagging( hanya berlaku jika modus visual telah dinonaktifkan)',
 );
 

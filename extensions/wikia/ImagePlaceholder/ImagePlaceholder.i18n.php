@@ -251,6 +251,15 @@ $messages['ia'] = array(
 	'imgplc-notinhistory' => 'Non es possibile adder imagines in modo de historia.',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'imgplc-add-video' => 'Tambahkan Video',
+	'imgplc-notinhistory' => 'Anda tidak dapat menambahkan sebuah gambar pada mode riwayat.',
+	'imgplc-notinhistory-video' => 'Anda tidak dapat menambahkan sebuah video pada mode riwayat.',
+);
+
 /** Italian (italiano)
  * @author Pietrodn
  */
@@ -275,12 +284,13 @@ $messages['ja'] = array(
 
 /** Korean (한국어)
  * @author 아라
+ * @author 한글화담당
  */
 $messages['ko'] = array(
 	'imgplc-add-image' => '그림 추가',
 	'imgplc-placeholder' => '플레이스홀더',
 	'imgplc-image' => '그림',
-	'imgplc-notinhistory' => '역사 모드에서 그림을 더할 수 없습니다.',
+	'imgplc-notinhistory' => '역사 모드에서 그림을 추가할 수 없습니다.',
 );
 
 /** Colognian (Ripoarisch)

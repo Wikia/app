@@ -33,7 +33,7 @@ $wgHooks['AjaxAddScript'][] = 'Wikia::onAjaxAddScript';
 
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
-$wgHooks['MediaWikiPerformAction']   [] = "Wikia::onPerformActionMemcachePurge";
+$wgHooks['BeforeInitialize']         [] = "Wikia::onBeforeInitializeMemcachePurge";
 //$wgHooks['MediaWikiPerformAction']   [] = "Wikia::onPerformActionNewrelicNameTransaction"; disable to gather different newrelic statistics
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = "Wikia::onSkinTemplateOutputPageBeforeExec";
 $wgHooks['OutputPageCheckLastModified'][] = 'Wikia::onOutputPageCheckLastModified';
@@ -1752,7 +1752,7 @@ class Wikia {
 		$key = wfSharedMemcKey('const_values', $name);
 		$value = $wgMemc->get($key);
 
-		if ( is_null($value) ) {
+		if ( !is_numeric($value) ) {
 			$dbr = wfGetDB( DB_SLAVE, array(), 'specials' );
 
 			$oRes = $dbr->select('const_values', array('val'), array( 'name' =>  $name ), __METHOD__ );
@@ -1790,7 +1790,7 @@ class Wikia {
 	 * mcache=readonly disables memcache writes for the duration of the request
 	 * TODO: allow disabling specific keys?
 	 */
-	static public function onPerformActionMemcachePurge($output, $article, $title, $user, WebRequest $request, $wiki ) {
+	static public function onBeforeInitializeMemcachePurge($title, $unused, $output, $user, WebRequest $request, $wiki ) {
 		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads, $wgAllowMemcacheWrites;
 		$mcachePurge = $request->getVal("mcache", null);
 

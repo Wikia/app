@@ -1,10 +1,10 @@
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/bodytext";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/bodytext";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/gradient";
+@import "skins/oasis/css/mixins/opacity";
 
 $placeholder-bg-img: url(/extensions/wikia/SpecialVideos/images/AddVideoIcons_Dark.png);  /* base64 */
 $placeholder-bg-color: darken($color-page, 10%);
@@ -62,6 +62,9 @@ $placeholder-bg-color: darken($color-page, 10%);
 	// Override article p styles
 	p, p + p {
 		margin: 0;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
 	}
 	.video {
 		margin-bottom: 8px;

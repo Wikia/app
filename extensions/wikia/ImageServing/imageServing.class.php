@@ -7,11 +7,9 @@
  * or specific dimensions.
  */
 class ImageServing {
-	//private $maxCount = 10;
-	//private $minSize = 75;
-	//private $queryLimit = 50;
 	private $articles = array();
 	private $width;
+	private $height;
 	private $proportion;
 	private $deltaY = null;
 	private $db;
@@ -44,9 +42,11 @@ class ImageServing {
 			$height = (int) $proportionOrHeight;
 			$this->proportion = array("w" => $width, "h" => $height);
 			$this->proportionString = $width.":".$height;
+			$this->height = $height;
 		} else {
 			$this->proportion = $proportionOrHeight;
 			$this->proportionString = implode(":", $proportionOrHeight);
+			$this->height = (int) round($width / $proportionOrHeight['w'] * $proportionOrHeight['h']);
 		}
 		$this->articles = array();
 
@@ -59,11 +59,26 @@ class ImageServing {
 
 		$this->app = F::app();
 		$this->width = $width;
-		$this->memc =  $this->app->getGlobal( 'wgMemc' );
+		$this->memc =  $this->app->wg->Memc;
 		$this->imageServingDrivers = $this->app->getGlobal( 'wgImageServingDrivers' );
 
 		$this->db = $db;
 	}
+
+	/**
+	 * @return int min width of requested images
+	 */
+	public function getRequestedWidth() {
+		return $this->width;
+	}
+
+	/**
+	 * @return int min height of requested images
+	 */
+	public function getRequestedHeight() {
+		return $this->height;
+	}
+
 	/**
 	 * getImages - get array with list of top images for all article passed into the constructor
 	 *
@@ -89,7 +104,7 @@ class ImageServing {
 
 			$this->articlesByNS = array();
 			foreach($articles as $key => $value) {
-				$mcValue = $this->memc->get( $this->makeKey($key) , null );
+				$mcValue = $this->memc->get( $this->makeKey($key) );
 
 				if(!empty($mcValue)) {
 					unset($articles[$key]);
@@ -117,6 +132,7 @@ class ImageServing {
 			if(empty($driver)) {
 				foreach($this->imageServingDrivers as $key => $value ){
 					if(!empty($this->articlesByNS[$key])) {
+						/* @var ImageServingDriverBase $driver */
 						$driver = new $value($db, $this, $this->proportionString);
 						$driver->setArticlesList($this->articlesByNS[$key]);
 						unset($this->articlesByNS[$key]);
@@ -165,7 +181,7 @@ class ImageServing {
 	}
 
 	private function makeKey( $key ) {
-		return wfMemcKey("imageserving-article-details", $key, $this->width, $this->proportionString);
+		return wfMemcKey("imageserving-article-details", $key, $this->width, $this->height);
 	}
 
 	/**

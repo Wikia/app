@@ -38,7 +38,6 @@ class EmailTemplatesController extends WikiaController {
 		$this->username = array_key_exists( 'username', $params ) ? $params['username'] : wfMessage('oasis-anon-user')->plain();
 		$this->user_page_url = array_key_exists( 'user_page_url', $params ) ? $params['user_page_url'] : '';
 		$this->date = array_key_exists( 'date', $params ) ? $params['date'] : '';
-		$this->short_text = array_key_exists( 'short_text', $params ) ? $params['short_text'] : '';
 		wfProfileOut( __METHOD__ );
 	}
 

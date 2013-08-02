@@ -89,6 +89,13 @@ $messages['bg'] = array(
 	'ajaxpoll-submit' => 'Гласуване!',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'ajaxpoll-submit' => 'ভোট!',
+);
+
 /** Tibetan (བོད་ཡིག)
  * @author YeshiTuhden
  */
@@ -391,6 +398,7 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
  * @author Irwangatot
  */
 $messages['id'] = array(
@@ -400,7 +408,7 @@ $messages['id'] = array(
 	'ajaxpoll-summary' => 'Jajak pendapat telah dibuat sejak $1 pada $2, dan sejauh ini  $3 orang memilih.',
 	'ajaxpoll-submit' => 'Pilih!',
 	'ajaxpoll-closed' => 'Jajak pendapat telah ditutup. Nikmati hasilnya.',
-	'ajaxpoll-submitting' => 'Silakan tunggu, pengiriman suara Anda ...',
+	'ajaxpoll-submitting' => 'Silakan tunggu, mengirim suara Anda...',
 );
 
 /** Italian (italiano)
@@ -441,7 +449,9 @@ $messages['ko'] = array(
 	'ajaxpoll-thankyou' => '투표해 주셔서 감사합니다!',
 	'ajaxpoll-error' => '투표를 처리하는 도중 문제가 발생했습니다. 다시 시도하세요.',
 	'ajaxpoll-summary' => '이 설문 조사는 $2 $1에 만들어졌으며 지금까지 $3명이 투표했습니다.',
+	'ajaxpoll-submit' => '투표!',
 	'ajaxpoll-closed' => '설문 조사가 지금 끝났습니다. 결과를 비교해 보세요.',
+	'ajaxpoll-submitting' => '투표를 제출하는 동안 잠시 기다리세요...',
 );
 
 /** Colognian (Ripoarisch)
@@ -814,6 +824,14 @@ $messages['vi'] = array(
 	'ajaxpoll-submit' => 'Bình chọn!',
 	'ajaxpoll-closed' => 'Bảng thăm dò đã đóng. Hãy xem các kết quả.',
 	'ajaxpoll-submitting' => 'Xin vui lòng chờ, đang gửi bình chọn của bạn...',
+);
+
+/** Chinese (中文)
+ * @author Shangkuanlc
+ */
+$messages['zh'] = array(
+	'ajaxpoll-thankyou' => '感謝你的投票',
+	'ajaxpoll-error' => '投票過程發生問題，請再試一次',
 );
 
 /** Simplified Chinese (中文（简体）‎)

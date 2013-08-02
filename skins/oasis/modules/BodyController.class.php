@@ -50,6 +50,11 @@ class BodyController extends WikiaController {
 	public static function isGridLayoutEnabled() {
 		$app = F::app();
 
+		// Don't enable when responsive layout is enabled
+		if ( self::isResponsiveLayoutEnabled() ) {
+			return false;
+		}
+
 		if( !empty($app->wg->OasisGrid) ) {
 			return true;
 		}
@@ -65,6 +70,19 @@ class BodyController extends WikiaController {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Decide on which pages responsive / liquid layout should be turned on.
+	 * @return Boolean
+	 */
+	public static function isResponsiveLayoutEnabled() {
+		$app = F::app();
+		return !empty( $app->wg->OasisResponsive ) &&
+				// Prevent the responsive layout from being enabled on the
+				// corporate wiki as it will break styling on it.
+				// TODO: remove this check when it's safe to enable there.
+				empty( $app->wg->EnableWikiaHomePageExt );
 	}
 
 	/**
@@ -348,7 +366,7 @@ class BodyController extends WikiaController {
 		// show corporate header on this page?
 		} else if( HubService::isCorporatePage() ) {
 			$this->headerModuleName = 'PageHeader';
-			
+
 			if( self::isEditPage() ) {
 				$this->headerModuleAction = 'EditPage';
 			} else {
@@ -370,11 +388,26 @@ class BodyController extends WikiaController {
 			}
 		}
 
+		// Display Control Center Header on certain special pages
+		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
+			$this->headerModuleName = null;
+			$this->wgSuppressAds = true;
+			$this->displayAdminDashboard = true;
+			$this->displayAdminDashboardChromedArticle = ($wgTitle->getText() != SpecialPage::getTitleFor( 'AdminDashboard' )->getText());
+		} else {
+			$this->displayAdminDashboard = false;
+			$this->displayAdminDashboardChromedArticle = false;
+		}
+
 		$this->railModulesExist = true;
 
 		// use one column layout for pages with no right rail modules
 		if( count($this->railModuleList ) == 0 || !empty($this->wg->SuppressRail) ) {
-			OasisController::addBodyClass('oasis-one-column');
+			// Special:AdminDashboard doesn't need this class, but pages chromed with it do
+			if ( !$this->displayAdminDashboard || $this->displayAdminDashboardChromedArticle ) {
+				OasisController::addBodyClass('oasis-one-column');
+			}
+
 			$this->headerModuleParams = array ('showSearchBox' => true);
 			$this->railModulesExist = false;
 		}
@@ -415,17 +448,6 @@ class BodyController extends WikiaController {
 		// load CSS for Special:Allpages
 		if (!empty($wgTitle) && $wgTitle->isSpecial('Allpages')) {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialAllpages.scss'));
-		}
-
-		// Display Control Center Header on certain special pages
-		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
-			$this->headerModuleName = null;
-			$this->wgSuppressAds = true;
-			$this->displayAdminDashboard = true;
-			$this->displayAdminDashboardChromedArticle = ($wgTitle->getText() != SpecialPage::getTitleFor( 'AdminDashboard' )->getText());
-		} else {
-			$this->displayAdminDashboard = false;
-			$this->displayAdminDashboardChromedArticle = false;
 		}
 
 		// Forum Extension

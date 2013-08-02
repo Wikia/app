@@ -17,7 +17,6 @@ $messages['en'] = array(
 	'wikiamobile-password' => 'Password',
 	'wikiamobile-login-submit' => 'Login',
 	'wikiamobile-menu' => 'Menu',
-	'wikiamobile-explore' => 'Explore',
 	'wikiamobile-article-categories' => 'Categories',
 	'wikiamobile-feedback' => 'Feedback',
 	'wikiamobile-back' => 'Back',
@@ -60,6 +59,7 @@ you should definitely check this out:
 
 	//modal
 	'wikiamobile-image-not-loaded' => 'Image is not available',
+	'wikiamobile-shared-file-not-available' => "Oops, this item is no longer available, but now that you're here, explore the wiki!",
 
 	//404 page
 	'wikiamobile-page-not-found' => "Oops! <b>$1</b> does not exist.",
@@ -74,29 +74,64 @@ you should definitely check this out:
 
 /** Message documentation (Message documentation) */
 $messages['qqq'] = array(
-	'wikiamobile-page-not-found-tap' => 'Message that describe what to do on 404 page with an image behind the crack',
-	'wikiamobile-page-not-found' => 'Message shown to a user on 404 page; $1 is a page title that was not found. Please make sure b element wraps around $1.',
-	'wikiamobile-image-not-loaded' => 'This is a message shown to a user when an image could not be loaded in the modal',
-	'wikiamobile-footer-link-license' => 'label for the link pointing to content licensing information',
-	'wikiamobile-footer-link-lifestyle' => 'interwiki link, please translate only the last parameter after the last "|" if that makes sense',
-	'wikiamobile-footer-link-entertainment' => 'interwiki link, please translate only the last parameter after the last "|" if that makes sense',
-	'wikiamobile-footer-link-videogames' => 'interwiki link, please translate only the last parameter after the last "|" if that makes sense',
+	'wikiamobile-search-wiki' => 'Text indicating that scope for a search will be current wiki',
+	'wikiamobile-search-wikia' => 'Text indicating that scope for a search will be whole wikia network',
+	'wikiamobile-login' => 'Placeholder on input asking for password',
+	'wikiamobile-password' => 'Placeholder on input asking for password',
+	'wikiamobile-login-submit' => 'Label on a blue button prompting user to log in',
+	'wikiamobile-search' => 'Label on a search button placed in Mobile skin top bar',
+	'wikiamobile-search-this-wiki' => 'Placeholder in input on search field',
+	'wikiamobile-menu' => 'Header on wiki menu',
+	'wikiamobile-article-categories' => 'Message displayed on category section on an article',
+	'wikiamobile-feedback' => 'Link to a feedback form',
+	'wikiamobile-back' => 'Label on a button to go back one level on wiki navigation',
+	'wikiamobile-hide-section' => 'Link to close section on an article that is at the end of a given section',
+	'wikiamobile-profile' => 'Link to a profile page in a top wiki navigation',
+
+	//footer
+	'wikiamobile-footer-link-licencing' => 'Label for the link pointing to content licensing information',
+	'wikiamobile-footer-link-lifestyle' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',
+	'wikiamobile-footer-link-entertainment' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',
+	'wikiamobile-footer-link-videogames' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',
+	'mobile-full-site' => 'Link to reload a page and load desktop skin',
+
+	//categories
 	'wikiamobile-categories-tagline' => 'Tagline that appears next to the category page title, please keep it really short',
-	'wikiamobile-categories-items-total' => '$1 is the total number of articles in the category',
-	'wikiamobile-sharing-page-text' => '$1 is the title of the article, $2 is the name of the wiki',
-	'wikiamobile-sharing-modal-text' => '$1 is the type of media, $2 is the title of the article, $3 is the name of the wiki',
-	'wikiamobile-sharing-email-text' => '$1 is the result of wikiamobile-sharing-modal-text or wikiamobile-sharing-page-text, please keep the empty space before $1',
-	'wikiamobile-media-group-footer' => 'the caption under a media-group/gallery, $1 contains the total amount of images/videos in the group',
-	'wikiamobile-unsupported-video-download' => 'feedback message for browsers not supporting html5 videos with link to play the video in a native app (the video URL is in $1)',
-	'wikiamobile-video-views-counter' => 'counter for the number of views for a video, $1 is an integer number, minimum 0; possibly it should be no more than 1 or 2 words',
+	'wikiamobile-categories-items-total' => 'Message above list of articles in a category. $1 is the total number of articles in the category',
+	'wikiamobile-category-items-more' => 'Label on a button to load more articles under given letter on category page',
+	'wikiamobile-category-items-prev' => 'Label on a button to load previous articles under given letter on category page',
+	'wikiamobile-categories-expand' => 'Label on a button to expand/collapse all articles on category',
+	'wikiamobile-categories-collapse' => 'Label on a button to expand/collapse all articles on category',
+
+	//sharing
+	'wikiamobile-sharing-media-image' => 'This is a message that becomes part of wikiamobile-sharing-modal-text indicating type of media shared',
+	'wikiamobile-sharing-page-text' => 'Message feed into email that have links to wiki and article that is being shared. $1 is the title of the article, $2 is the name of the wiki',
+	'wikiamobile-sharing-modal-text' => 'Message feed into email that have links to wiki and media that is being shared. $1 is the type of media, $2 is the title of the article, $3 is the name of the wiki',
+	'wikiamobile-sharing-email-text' => 'Email message with a shared page or media. $1 is the result of wikiamobile-sharing-modal-text or wikiamobile-sharing-page-text, please keep the empty space before $1',
+
+	//media
+	'wikiamobile-media-group-footer' => 'Caption under a media-group/gallery, $1 contains the total amount of images/videos in the group',
+	'wikiamobile-unsupported-video-download' => 'Feedback message for browsers not supporting html5 videos with link to play the video in a native app (the video URL is in $1)',
+	'wikiamobile-video-views-counter' => 'Counter for the number of views for a video, $1 is an integer number, minimum 0; possibly it should be no more than 1 or 2 words',
+	'wikiamobile-video-not-friendly-header' => 'Friendly message on a screen with a not supported video',
+	'wikiamobile-video-not-friendly' => 'Message displayed in modal - to indicate that this video won\'t be loaded in mobile skin',
+
+	//ad
 	'wikiamobile-ad-label' => 'Message shown to a user on page next to advertisement - to distinguish that below is an ad',
 
+	//modal
+	'wikiamobile-image-not-loaded' => 'This is a message shown to a user when an image could not be loaded in the modal',
+	'wikiamobile-shared-file-not-available' => 'Message displayed when user opens a link to particular media on an article and this media is not available anymore.',
+
+	//404 page
+	'wikiamobile-page-not-found-tap' => 'Message that describe what to do on 404 page with an image behind the crack',
+	'wikiamobile-page-not-found' => 'Message shown to a user on 404 page; $1 is a page title that was not found. Please make sure b element wraps around $1.',
+
+	//Game Guides promotion on wikiamobile
 	'wikiasmartbanner-appstore' => 'Message displayed in smart banner promoting an app on app store',
 	'wikiasmartbanner-googleplay' => 'Message displayed in smart banner promoting an app on google play store',
 	'wikiasmartbanner-price' => 'Message displayed in smart banner indicating a price of an app',
 	'wikiasmartbanner-view' => 'Message displayed in smart banner promoting on a button that leads to a store',
-
-	'wikiamobile-video-not-friendly' => 'Message displayed in modal - to indicate that this video won\'t be loaded in mobile skin'
 );
 
 /** Адыгэбзэ (Адыгэбзэ)
