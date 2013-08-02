@@ -1,12 +1,12 @@
 <?php
-
 /**
  * simple hook for displaying additional informations in Special:Statistics
- *
+ * 
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
+ * @author Michał ‘Mix’ Roszka <mix@wikia-inc.com>
  */
 $wgHooks[ "CustomSpecialStatistics" ][] = "DumpsOnDemand::customSpecialStatistics";
-$wgExtensionMessagesFiles[ "DumpsOnDemand" ] =  dirname( __FILE__ ) . '/DumpsOnDemand.i18n.php';
+$wgExtensionMessagesFiles[ "DumpsOnDemand" ] =  __DIR__ . '/DumpsOnDemand.i18n.php';
 
 $wgAvailableRights[] = 'dumpsondemand';
 $wgGroupPermissions['*']['dumpsondemand'] = false;
@@ -87,7 +87,7 @@ class DumpsOnDemand {
 		$text .= $tmpl->render( "dod" );
 
 		if( $wgRequest->wasPosted() && $bIsAllowed ) {
-			self::sendMail();
+			self::queueDump( $wgCityId );
 			wfDebug( __METHOD__, ": request for database dump was posted\n" );
 			$text = Wikia::successbox( wfMsg( "dump-database-request-requested" ) ) . $text;
 		}
@@ -115,50 +115,59 @@ class DumpsOnDemand {
 			$file
 		);
 	}
+        
+        /**
+         * @static
+         * @access public
+         * @deprecated
+         */
+        static public function sendMail( $sDbName = null, $iCityId = null, $bHidden = false, $bClose = false ) {
+            trigger_error( sprintf( 'Using of deprecated method %s.', __METHOD__ ) , E_USER_WARNING );
+            self::queueDump( $iCityId, $bHidden, $bClose );
+        }
 
 	/**
 	 * @static
 	 * @access public
 	 */
-	static public function sendMail( $sDbName = null, $iCityId = null, $bHidden = false, $bClose = false ) {
-            
-            if ( is_null( $sDbName ) ) {
-                global $wgDBname;
-                $sDbName = $wgDBname;
-            }
+	static public function queueDump( $iCityId = null, $bHidden = false, $bClose = false ) {
             
             if ( is_null( $iCityId ) ) {
                 global $wgCityId;
                 $iCityId = $wgCityId;
             }
             
-            global $wgServer, $wgUser;
+            $oWiki = WikiFactory::getWikiByID( $iCityId );
             
-            $title = SpecialPage::getTitleFor( "Statistics" );
+            if ( !is_object( $oWiki ) ) {
+                trigger_error( sprintf( '%s terminated. No such wiki (city_id: %d.', __METHOD__, $iCityId ) , E_USER_WARNING );
+                return null;
+            }
             
-            $body = sprintf(
-                    "Database dump request for %s, city id %d, hidden %d, closeWiki %d\nurl %s\nRequested by %s\n",
-                    $sDbName, $iCityId, (int) $bHidden, (int) $bClose, $title->getFullUrl(), $wgUser->getName()
+            global $wgUser;
+            
+            $aData = array(
+                'dump_wiki_id'      => $iCityId,
+                'dump_wiki_dbname'  => $oWiki->city_dbname,
+                'dump_wiki_url'     => $oWiki->city_url,
+                'dump_user_name'    => $wgUser->getName(),
+                'dump_requested'    => wfTimestampNow()
             );
             
-            UserMailer::send(
-                new MailAddress( "dump-requests@wikia-inc.com" ),
-                new MailAddress( "dump-requests@wikia-inc.com" ),
-                "Database dump request for {$sDbName}",
-                $body,
-                null /*reply*/,
-                null /*ctype*/,
-                'DumpRequest'
-            );
+            if ( $bHidden ) {
+                $aData['dump_hidden'] = 'Y';
+            }
             
-            /**
-             * @todo universal WikiFactory metod for that
-             */
-            $dbw = WikiFactory::db( DB_MASTER );
-            $dbw->update(
-                    "city_list",
-                    array( "city_lastdump_timestamp" => wfTimestampNow() ),
-                    array( "city_id" => $iCityId ),
+            if ( $bClose ) {
+                $aData['dump_closed'] = 'Y';
+            }
+            
+            $oDB = wfGetDB( DB_MASTER, array(), 'wikicities' );
+            $oDB->insert( 'dumps', $aData, __METHOD__ );
+            $oDB->update(
+                    'city_list',
+                    array( 'city_lastdump_timestamp' => wfTimestampNow() ),
+                    array( 'city_id' => $iCityId ),
                     __METHOD__
             );
 	}
