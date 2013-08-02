@@ -1,16 +1,14 @@
 <?php
+namespace Wikia\UI;
 
 /**
- * UIFactory handles building component which means loading
+ * Wikia\UI\Factory handles building component which means loading
  * assets and component configuration file
  *
  * @author Andrzej Łukaszewski <nandy@wikia-inc.com>
  * @author Bartosz Bentkowski <bartosz.bentkowski@wikia-inc.com>
- *
  */
-
-// TODO use namespace \Wikia\UI\Factory when work will be done
-class UIFactory {
+class Factory {
 
 	/**
 	 * @desc Component's configuration file suffix
@@ -41,7 +39,7 @@ class UIFactory {
 	const MEMCACHE_VERSION = '1.0';
 	
 	/**
-	 * @var UIFactory
+	 * @var \Wikia\UI\Factory
 	 */
 	private static $instance = null;
 
@@ -63,7 +61,7 @@ class UIFactory {
 	private function __construct() {
 		global $IP;
 		$this->componentsDir = $IP . self::DEFAULT_COMPONENTS_PATH;
-		$this->loaderService = AssetsManager::getInstance();
+		$this->loaderService = \AssetsManager::getInstance();
 	}
 
 	/**
@@ -87,7 +85,7 @@ class UIFactory {
 	/**
 	 * @desc Returns the only instnace of the class; singleton
 	 *
-	 * @return UIFactory
+	 * @return \Wikia\UI\Factory
 	 */
 	static public function getInstance() {
 		if( is_null(static::$instance) ) {
@@ -98,89 +96,88 @@ class UIFactory {
 	}
 
 	/**
-	 * @desc Returns full file path
+	 * @desc Returns full config file's path
 	 *
 	 * @param string $name component's name
 	 *
 	 * @return string full file path
 	 */
 	public function getComponentConfigFileFullPath( $name ) {
-		return $this->getComponentsDir() . $name . '/' . $name . self::CONFIG_FILE_SUFFIX;
+		return $this->getComponentsDir() .
+			$name .
+			DIRECTORY_SEPARATOR .
+			$name .
+			self::CONFIG_FILE_SUFFIX;
 	}
 
 	/**
-	 * @desc Loads UIComponent from given string
+	 * @desc Checks if config file exists, if true: loads the configuration from file and returns as array
+	 *
+	 * @param string $configFilePath Path to file
+	 *
+	 * @return Array
+	 * @throws \Exception
+	 */
+	private function loadComponentConfigFromFile( $configFilePath ) {
+		if ( false === $configString = file_get_contents( $configFilePath ) ) {
+			throw new \Exception( 'Component\'s config file not found.' );
+		} else {
+			return $configString;
+		}
+	}
+
+	/**
+	 * @desc Loads component's config from JSON file content, adds component's unique id
 	 *
 	 * @param string $configContent JSON String
 	 *
-	 * @return UIComponent
-	 *
-	 * @throws Exception
+	 * @see Wikia\UI\Factory::loadComponentConfigFromFile() for example usage
+	 * @return Array
+	 * @throws \Exception
 	 */
 	private function loadComponentConfigFromJSON( $configContent ) {
 		$config = json_decode( $configContent, true );
 
 		if ( !is_null( $config ) ) {
-			return $this->addComponentsId( $config );
+			return $config;
 		} else {
-			throw new Exception( 'Invalid JSON.' );
+			throw new \Exception( 'Invalid JSON.' );
 		}
 	}
 
-	/**
-	 * @desc Loads UIComponent from file
-	 *
-	 * @param string $configFilePath Path to file
-	 *
-	 * @return UIComponent
-	 *
-	 * @throws Exception
-	 */
-	public function loadComponentConfigFromFile( $configFilePath ) {
-		if ( false === $configString = file_get_contents( $configFilePath ) ) {
-			throw new Exception( 'Component\'s config file not found.' );
-		} else {
-			return $this->loadComponentConfigFromJSON( $configString );
-		}
+	public function loadComponentConfigAsArray( $componentName ) {
+		wfProfileIn( __METHOD__ );
+
+		$configFile = $this->getComponentConfigFileFullPath( $componentName );
+		$configFileContent = $this->loadComponentConfigFromFile( $configFile );
+		$configInArray = $this->loadComponentConfigFromJSON( $configFileContent );
+
+		wfProfileOut( __METHOD__ );
+		return $configInArray;
 	}
 
 	/**
-	 * @desc Gets configuration file contents, decodes it to array and returns it
+	 * @desc Gets configuration file contents, decodes it to array and returns it; uses caching layer
 	 * 
 	 * @param String $componentName
 	 * @return string
 	 */
 	protected function loadComponentConfig( $componentName ) {
 		wfProfileIn( __METHOD__ );
-		
-		global $wgMemc;
-		
-		$memcKey = wfMemcKey( __CLASS__, 'component', $componentName, static::MEMCACHE_VERSION);
-		$data = $wgMemc->get( $memcKey );
 
-		if ( !empty($data) ) {
-			wfProfileOut( __METHOD__ );
-			return $data;
-		} else {
-			$configFile = $this->getComponentConfigFileFullPath( $componentName );
-			$config = $this->loadComponentConfigFromFile( $configFile );
-			$wgMemc->set( $memcKey, $config, self::MEMCACHE_EXPIRATION );
+		$memcKey = wfMemcKey( __CLASS__, 'component', $componentName, static::MEMCACHE_VERSION );
+		$data = \WikiaDataAccess::cache(
+			$memcKey,
+			self::MEMCACHE_EXPIRATION,
+			function() use ( $componentName ) {
+				$configInArray = $this->loadComponentConfigAsArray( $componentName );
 
-			wfProfileOut( __METHOD__ );
-			return $config;
-		}
-	}
+				wfProfileOut( __METHOD__ );
+				return $configInArray;
+			}
+		);
 
-	/**
-	 * @desc Adds id element to the component's config array
-	 *
-	 * @param Array $componentCfg
-	 * @return array
-	 */
-	private function addComponentsId( $componentCfg ) {
-		$componentCfg[ 'id' ] = Sanitizer::escapeId( $componentCfg[ 'name-msg-key' ], 'noninitial' );
-
-		return $componentCfg;
+		return $data;
 	}
 
 	/**
@@ -191,13 +188,20 @@ class UIFactory {
 	private function addAsset( $assetName ) {
 		wfProfileIn( __METHOD__ );
 
-		Wikia::addAssetsToOutput($assetName);
+		\Wikia::addAssetsToOutput( $assetName );
 
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * @desc It uses MW Sanitizer to remove unwanted characters, builds
+	 * and returns the base path to a component's templates directory
+	 *
+	 * @param String $name component's name
+	 * @return string
+	 */
 	public function getComponentsBaseTemplatePath( $name ) {
-		$name = Sanitizer::escapeId( $name, 'noninitial' );
+		$name = \Sanitizer::escapeId( $name, 'noninitial' );
 		return $this->getComponentsDir() .
 			$name .
 			DIRECTORY_SEPARATOR .
@@ -205,12 +209,13 @@ class UIFactory {
 			DIRECTORY_SEPARATOR .
 			$name;
 	}
-	
+
 	/**
-	 * @desc Loads JS/CSS dependencies, creates and configurates an instance of UIComponent object which is returned
+	 * @desc Loads JS/CSS dependencies, creates and configurates an instance of \Wikia\UI\Component object which is returned
 	 *
-	 * @param string|array
-	 * 
+	 * @param string|array $componentNames
+	 *
+	 * @throws \Wikia\UI\DataException
 	 * @return array
 	 */
 	public function init( $componentNames ) {
@@ -224,22 +229,16 @@ class UIFactory {
 		// iterate $componentNames, read configs, write down dependencies
 		foreach ( $componentNames as $name ) {
 			$componentConfig = $this->loadComponentConfig( $name );
-			
+
 			// if there are some components, put them in the $assets
-			if ( !empty( $componentConfig['dependencies']['js'] ) ) {
-				if ( is_array($componentConfig['dependencies']['js']) ) {
-					$assets = array_merge( $assets, $componentConfig['dependencies']['js'] );
+			$assetsTypes = [ 'js', 'css' ];
+			foreach( $assetsTypes as $assetType ) {
+				$dependenciesCfg = !empty( $componentConfig['dependencies'][$assetType] ) ? $componentConfig['dependencies'][$assetType] : [];
+				if( is_array( $dependenciesCfg ) ) {
+					$assets = array_merge( $assets, $dependenciesCfg );
 				} else {
-					$exceptionMessage = sprintf( WikiaUIDataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE );
-					throw new WikiaUIDataException( $exceptionMessage, 'js' );
-				}
-			}
-			if ( !empty( $componentConfig['dependencies']['css'] ) ) {
-				if ( is_array($componentConfig['dependencies']['css']) ) {
-					$assets = array_merge( $assets, $componentConfig['dependencies']['css'] );
-				} else {
-					$exceptionMessage = sprintf( WikiaUIDataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE );
-					throw new WikiaUIDataException( $exceptionMessage, 'css' );
+					$exceptionMessage = sprintf( DataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE, $assetType );
+					throw new DataException( $exceptionMessage );
 				}
 			}
 
@@ -261,23 +260,26 @@ class UIFactory {
 		// return components
 		return (sizeof($components) == 1) ? $components[0] : $components;
 	}
-	
+
+	/**
+	 * @return Component
+	 */
 	protected function getComponentInstance() {
-		return new UIComponent();
+		return new Component;
 	}
 
 	/**
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function __clone() {
-		throw new Exception( 'Cloning instances of this class is forbidden.' );
+		throw new \Exception( 'Cloning instances of this class is forbidden.' );
 	}
 
 	/**
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function __wakeup() {
-		throw new Exception( 'Unserializing instances of this class is forbidden.' );
+		throw new \Exception( 'Unserializing instances of this class is forbidden.' );
 	}
 }
 

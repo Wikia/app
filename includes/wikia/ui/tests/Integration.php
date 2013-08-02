@@ -1,12 +1,12 @@
 <?php
-class UIIntegration extends WikiaBaseTest {
+class Integration extends WikiaBaseTest {
 	/**
 	 * @var String $path
 	 */
 	private $path;
 
 	/**
-	 * @var UIFactory $uiFactory
+	 * @var \Wikia\UI\Factory $uiFactory
 	 */
 	private $uiFactory;
 
@@ -14,7 +14,7 @@ class UIIntegration extends WikiaBaseTest {
 		parent::setUp();
 		$this->path = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . '_fixtures/components/';
 
-		$this->uiFactory = UIFactory::getInstance();
+		$this->uiFactory = \Wikia\UI\Factory::getInstance();
 		$this->uiFactory->setComponentsDir( $this->path );
 	}
 	
@@ -22,68 +22,74 @@ class UIIntegration extends WikiaBaseTest {
 		// only required parameters given
 		$this->assertEquals(
 			'<input type="submit" class="button " name="just-a-button" value="Just a button in form of a link" />',
-			trim($this->uiFactory->init( 'button' )->render([
-				'type' => 'input',
-				'params' => [
-					'type' => 'submit',
-					'name' => 'just-a-button',
-					'classes' => ['button'],
-					'value' => 'Just a button in form of a link',
-				]
-			]))
+			trim(
+				$this->uiFactory->init( 'button' )->render([
+					'type' => 'input',
+					'vars' => [
+						'type' => 'submit',
+						'name' => 'just-a-button',
+						'classes' => ['button'],
+						'value' => 'Just a button in form of a link',
+					]
+				])
+			)
 		);
 		
 		// required parameters and optional given
 		$this->assertEquals(
 			'A button: <a href="http://www.wikia.com" class="button big " target="_blank">Just a button in form of a link</a>',
-			trim($this->uiFactory->init( 'button' )->render([
-				'type' => 'link',
-				'params' => [
-					'href' => 'http://www.wikia.com',
-					'classes' => ['button', 'big'],
-					'value' => 'Just a button in form of a link',
-					'label' => 'A button: ',
-					'target' => '_blank',
-				]
-			]))
+			trim(
+				$this->uiFactory->init( 'button' )->render([
+					'type' => 'link',
+					'vars' => [
+						'href' => 'http://www.wikia.com',
+						'classes' => ['button', 'big'],
+						'value' => 'Just a button in form of a link',
+						'label' => 'A button: ',
+						'target' => '_blank',
+					]
+				])
+			)
 		);
 
 		// required parameters and optional given + data attributes
 		$this->assertEquals(
 			'A button: <button type="submit" class="button " data-id="123" data-name="button">Just a button in form of a link</button>',
-			trim($this->uiFactory->init( 'button' )->render([
-				'type' => 'button',
-				'params' => [
-					'type' => 'submit',
-					'classes' => ['button'],
-					'value' => 'Just a button in form of a link',
-					'label' => 'A button: ',
-					'data' => [
-						[ 'key' => 'id', 'value' => 123 ],
-						[ 'key' => 'name', 'value' => 'button' ]
-					],
-				]
-			]))
+			trim(
+				$this->uiFactory->init( 'button' )->render([
+					'type' => 'button',
+					'vars' => [
+						'type' => 'submit',
+						'classes' => ['button'],
+						'value' => 'Just a button in form of a link',
+						'label' => 'A button: ',
+						'data' => [
+							[ 'key' => 'id', 'value' => 123 ],
+							[ 'key' => 'name', 'value' => 'button' ]
+						],
+					]
+				])
+			)
 		);
 	}
 
 	public function testRenderingMoreThanOneComponent() {
 		list($a, $b, $c) = $this->uiFactory->init( [ 'button', 'button', 'button' ] );
 		
-		/** @var UIComponent $a */
+		/** @var \Wikia\UI\Component $a */
 		$aMarkup = $a->render([
 			'type' => 'link',
-			'params' => [
+			'vars' => [
 				'href' => 'http://www.wikia.com',
 				'classes' => ['button'],
 				'value' => 'Just a button in form of a link',
 			]
 		]);
 
-		/** @var UIComponent $b */
+		/** @var \Wikia\UI\Component $b */
 		$bMarkup = $b->render([
 			'type' => 'button',
-			'params' => [
+			'vars' => [
 				'type' => 'submit',
 				'classes' => ['button'],
 				'value' => 'Just a button in form of a link',
@@ -95,10 +101,10 @@ class UIIntegration extends WikiaBaseTest {
 			]
 		]);
 
-		/** @var UIComponent $c */
+		/** @var \Wikia\UI\Component $c */
 		$cMarkup = $c->render([
 			'type' => 'input',
-			'params' => [
+			'vars' => [
 				'type' => 'submit',
 				'name' => 'just-a-button',
 				'classes' => ['button'],

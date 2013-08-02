@@ -1,5 +1,5 @@
 {
-	"name-msg-key":"styleguide-name-thumbnail",
+	"name-msg-key": "styleguide-name-thumbnail",
 	"description-msg-key": "styleguide-description-thumbnail",
 	"templateVars": {
 		"default": {

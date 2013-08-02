@@ -1,6 +1,9 @@
 <?php
-// TODO use namespace \Wikia\UI\Component when work will be done
-class UIComponent {
+namespace Wikia\UI;
+
+use Wikia\Template\MustacheEngine;
+
+class Component {
 
 	/**
 	 * @desc Mustache file extension ;)
@@ -62,20 +65,20 @@ class UIComponent {
 	}
 
 	/**
-	 * @desc Validates if required values are set and renders component
+	 * @desc Validates if required template variables' values are set and renders component
 	 *
 	 * @param $params
 	 * @return string
-	 * @throws WikiaUIDataException
+	 * @throws DataException
 	 */
 	public function render( $params ) {
 		$this->setType( $params['type'] );
 		$this->setTemplatePath( $this->getType() ); // set template for rendering
-		$this->setValues( $params['params'] ); // set mustache variables
+		$this->setVarsValues( $params['vars'] ); // set mustache variables
 		$this->validateTemplateVars(); // check if required vars are set
 
 		return $this->getTemplateEngine()
-			->setData( $this->getValues() )
+			->setData( $this->getVarsValues() )
 			->render( $this->getTemplatePath() );
 	}
 
@@ -103,15 +106,15 @@ class UIComponent {
 	 * "sub templates": button_input.mustache, button_link.mustache and button_button.mustache the part between _ and .
 	 * is a "sub template" name
 	 *
-	 * @throws WikiaUITemplateException
+	 * @throws \Wikia\UI\TemplateException
 	 */
 	private function setTemplatePath( $template ) {
-		$template = Sanitizer::escapeId( $template, 'noninitial' );
+		$template = \Sanitizer::escapeId( strtolower( $template ), 'noninitial' );
 		$mustacheTplPath = $this->getBaseTemplatePath() . '_' . $template . '.' . self::MUSTACHE_FILE_EXTENSION;
 		if ( $this->fileExists( $mustacheTplPath ) ) {
 			$this->templatePath = $mustacheTplPath;
 		} else {
-			throw new WikiaUITemplateException();
+			throw new TemplateException();
 		}
 	}
 
@@ -147,7 +150,7 @@ class UIComponent {
 	 * @param array $varsArray an array with key=>value structure; 
 	 * key is the template variable name and the second is its value
 	 */
-	public function setValues( Array $varsArray ) {
+	public function setVarsValues( Array $varsArray ) {
 		$this->templateData = $varsArray;
 	}
 
@@ -156,23 +159,23 @@ class UIComponent {
 	 * 
 	 * @return Array
 	 */
-	public function getValues() {
+	public function getVarsValues() {
 		return $this->templateData;
 	}
 
 	/**
 	 * @desc Checks if all required variables are set; throws an exception if not
 	 * 
-	 * @throws WikiaUIDataException
+	 * @throws DataException
 	 */
 	private function validateTemplateVars() {
 		$config = $this->getTemplateVarsConfig();
-		$data = $this->getValues();
-		
+		$data = $this->getVarsValues();
+
 		foreach ( $config[ $this->getType() ][ 'required' ] as $templateRequiredVarName ) {
 			if ( ! isset( $data[ $templateRequiredVarName ] ) ) {
-				$exceptionMessage = WikiaUIDataException::getInvalidParamDataMsg($templateRequiredVarName);
-				throw new WikiaUIDataException( $exceptionMessage );
+				$exceptionMessage = DataException::getInvalidParamDataMsg($templateRequiredVarName);
+				throw new DataException( $exceptionMessage );
 			}
 		}
 	}
@@ -182,7 +185,7 @@ class UIComponent {
 	 */
 	private function getTemplateEngine() {
 		if ( empty( $this->templateEngine ) ) {
-			$this->templateEngine = new Wikia\Template\MustacheEngine;
+			$this->templateEngine = new MustacheEngine;
 		}
 
 		return $this->templateEngine;
