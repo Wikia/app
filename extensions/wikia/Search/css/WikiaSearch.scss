@@ -493,6 +493,8 @@ $form-negative-side-padding: $form-side-padding*-1;
 	}
 	.category-articles-thumb {
 		float: left;
+		overflow: hidden;
+		width: 50px;
 	}
 	.category-articles-text {
 		overflow: hidden;
