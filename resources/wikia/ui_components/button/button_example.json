@@ -1,7 +1,7 @@
 {
 	"input" : {
 		"type": "input",
-		"params": {
+		"vars": {
 			"classes": [ "input", "secondary" ],
 			"value": "Test Input",
 			"name": "test-input",
@@ -10,7 +10,7 @@
 	},
 	"link" : {
 		"type": "link",
-		"params": {
+		"vars": {
 			"classes": [ "wikia-button", "link" ],
 			"value": "Test Link",
 			"href": "#",
@@ -22,7 +22,7 @@
 	},
 	"button" : {
 		"type": "button",
-		"params": {
+		"vars": {
 			"classes": [ "button", "big" ],
 			"value": "Test Button",
 			"type": "submit"

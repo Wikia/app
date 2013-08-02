@@ -14,9 +14,9 @@ class SpecialStyleguideDataModel {
 			'header' => [
 				'home' => [
 					'mainHeader' => wfMessage( 'styleguide-home-header' )->plain(),
-					'getStartedBtn' => UIFactory::getInstance()->init('button')->render([
+					'getStartedBtn' => \Wikia\UI\Factory::getInstance()->init('button')->render([
 						'type' => 'input',
-						'params' => [
+						'vars' => [
 							'type' => 'submit',
 							'name' => 'get-started',
 							'classes' => 'button',
@@ -133,7 +133,7 @@ class SpecialStyleguideDataModel {
 	 * @param array $components array of components
 	 * @param string $sortByParam by which component parameter should it be sorted; default = 'name'
 	 * 
-	 * @see UIFactory::getAllComponents()
+	 * @see \Wikia\UI\Factory::getAllComponents()
 	 * 
 	 * @return array
 	 */

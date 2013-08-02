@@ -23,7 +23,8 @@ ui_components/
             component01_default.js
             component01_[skin_name].js
         templates/
-            component01.mustache
+            component01_default.mustache
+            component01_type01.mustache
     component02/
         component02_config.JSON
         component02_example.JSON
@@ -32,9 +33,10 @@ ui_components/
         js/
             component02_default.js
         templates/
-            component02_[type01].mustache
-            component02_[type02].mustache
-            component02_[type03].mustache
+            component02_default.mustache
+            component02_type01.mustache
+            component02_type02.mustache
+            component02_type03.mustache
 </pre>
 
 All core styles styles specific to skin will be stored in /skins/[skin_name]/. By these styles I mean things like css reset, colors and other core variables, typography etc. 
@@ -42,9 +44,9 @@ Instead of creating many small SCSS files for different parts of core styles I w
 All skin independent styles (mixins, styles for corporate elements exp. hub colors) will be stored in /resources/wikia/styles/ 
 
 ## Rendering components on the PHP side
-The UIFactory class handles building component which means loading assets and component configuration file. It returns a new instance of the given component which is already configured and ready for rendering.
+The \Wikia\UI\Factory class handles building component which means loading assets and component configuration file. It returns a new instance of the given component which is already configured and ready for rendering.
 
-The UIComponent class handles all logic for rendering components.
+The \Wikia\UI\Component class handles all logic for rendering components.
 
 The following code is a basic example of the custom component JSON configuration file. It consist of component template variables and assets dependencies. This configuration files will also be used to automatically create documentation for each component in Wikia Styleguide (/Special:Styleguide).
 
@@ -75,19 +77,19 @@ The following code shows how to render a button in form of an anchor (type=link)
 <pre>
 $params = [
     "type" => "link",
-    "params" => [
+    "vars" => [
         "href" => "http://www.wikia.com",
         "value" => "Wikia Home Page",
         "classes" => [ "button", "big" ],
     ]
 ];
-$button = UIFactory::getInstance()->init('button')->render($params);
+$button = \Wikia\UI\Factory::getInstance()->init('button')->render($params);
 </pre>
 In order to create multiple components (of the same type of different) in the same time following pattern will be used:
 <pre>
 $aParams = [
     "type" => "link",
-    "params" => [
+    "vars" => [
         "href" => "http://www.wikia.com",
         "value" => "Wikia Home Page",
         "classes" => [ "button", "big" ],
@@ -96,14 +98,16 @@ $aParams = [
 
 $bParams = [
     "type" => "input",
-    "params" => [
+    "vars" => [
         "name" => "wikia-home-page-button",
         "value" => "Wikia Home Page",
         "classes" => [ "button" ],
     ]
 ];
 
-$list($a, $b) = UIFactory::getInstance()->init( 'button', 'button' );
+$list($a, $b) = \Wikia\UI\Factory::getInstance()->init( ['button', 'button'] );
 $aMarkup = $a->render($aParams);
 $bMarkup = $b->render($bParams);
 </pre>
+
+WARNING! Notice it IS NOT yet possible to call render() on results of \Wikia\UI\Factory::init() when an array passed as parameter. It causes a PHP Fatal error.
