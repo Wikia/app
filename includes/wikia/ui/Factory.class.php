@@ -136,24 +136,23 @@ class Factory {
 	 * @throws \Exception
 	 */
 	private function loadComponentConfigFromJSON( $configContent ) {
-		wfProfileIn( __METHOD__ );
-
 		$config = json_decode( $configContent, true );
 
 		if ( !is_null( $config ) ) {
-			wfProfileOut( __METHOD__ );
 			return $config;
 		} else {
-			wfProfileOut( __METHOD__ );
 			throw new \Exception( 'Invalid JSON.' );
 		}
 	}
 
 	public function loadComponentConfigAsArray( $componentName ) {
+		wfProfileIn( __METHOD__ );
+
 		$configFile = $this->getComponentConfigFileFullPath( $componentName );
 		$configFileContent = $this->loadComponentConfigFromFile( $configFile );
 		$configInArray = $this->loadComponentConfigFromJSON( $configFileContent );
 
+		wfProfileOut( __METHOD__ );
 		return $configInArray;
 	}
 
@@ -171,7 +170,6 @@ class Factory {
 			$memcKey,
 			self::MEMCACHE_EXPIRATION,
 			function() use ( $componentName ) {
-				wfProfileIn( __METHOD__ );
 				$configInArray = $this->loadComponentConfigAsArray( $componentName );
 
 				wfProfileOut( __METHOD__ );
@@ -179,7 +177,6 @@ class Factory {
 			}
 		);
 
-		wfProfileOut( __METHOD__ );
 		return $data;
 	}
 
