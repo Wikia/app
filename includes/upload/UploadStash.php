@@ -567,7 +567,6 @@ class UploadStashFile extends UnregisteredLocalFile {
 		return SpecialPage::getTitleFor( 'UploadStash', $subPage )->getLocalURL();
 	}
 
-
 	/**
 	 * Get a URL to access the thumbnail
 	 * This is required because the model of how files work requires that
@@ -643,6 +642,7 @@ class UploadStashFile extends UnregisteredLocalFile {
 	public function exists() {
 		return $this->repo->fileExists( $this->path, FileRepo::FILES_ONLY );
 	}
+
 }
 
 class UploadStashNotAvailableException extends MWException {};
