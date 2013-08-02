@@ -198,13 +198,13 @@ class IvaFeedIngester extends VideoFeedIngester {
 				// get season
 				$clipData['season'] = empty( $videoParams['season'] ) ? '' : $videoParams['season'];
 				if ( empty( $clipData['season'] ) && $program['MediaId'] == 26 ) {	// media type = season (26)
-					 $clipData['season'] = empty( $program['DisplayTitle'] ) ? trim( $program['Title'] ) : trim( $program['DisplayTitle'] );
+					 $clipData['season'] = $program['title'];
 				}
 
 				// get episode
 				$clipData['episode'] = empty( $videoParams['episode'] ) ? '' : $videoParams['episode'];
 				if ( empty( $clipData['episode'] ) && $program['MediaId'] == 27 ) {	// media type = episode (27)
-					 $clipData['episode'] = empty( $program['DisplayTitle'] ) ? trim( $program['Title'] ) : trim( $program['DisplayTitle'] );
+					 $clipData['episode'] = $program['title'];
 				}
 
 				$clipData['tags'] = trim( $program['Tagline'] );
