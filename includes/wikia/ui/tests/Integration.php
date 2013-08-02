@@ -25,7 +25,7 @@ class Integration extends WikiaBaseTest {
 			trim(
 				$this->uiFactory->init( 'button' )->render([
 					'type' => 'input',
-					'params' => [
+					'vars' => [
 						'type' => 'submit',
 						'name' => 'just-a-button',
 						'classes' => ['button'],
@@ -41,7 +41,7 @@ class Integration extends WikiaBaseTest {
 			trim(
 				$this->uiFactory->init( 'button' )->render([
 					'type' => 'link',
-					'params' => [
+					'vars' => [
 						'href' => 'http://www.wikia.com',
 						'classes' => ['button', 'big'],
 						'value' => 'Just a button in form of a link',
@@ -58,7 +58,7 @@ class Integration extends WikiaBaseTest {
 			trim(
 				$this->uiFactory->init( 'button' )->render([
 					'type' => 'button',
-					'params' => [
+					'vars' => [
 						'type' => 'submit',
 						'classes' => ['button'],
 						'value' => 'Just a button in form of a link',
@@ -79,7 +79,7 @@ class Integration extends WikiaBaseTest {
 		/** @var \Wikia\UI\Component $a */
 		$aMarkup = $a->render([
 			'type' => 'link',
-			'params' => [
+			'vars' => [
 				'href' => 'http://www.wikia.com',
 				'classes' => ['button'],
 				'value' => 'Just a button in form of a link',
@@ -89,7 +89,7 @@ class Integration extends WikiaBaseTest {
 		/** @var \Wikia\UI\Component $b */
 		$bMarkup = $b->render([
 			'type' => 'button',
-			'params' => [
+			'vars' => [
 				'type' => 'submit',
 				'classes' => ['button'],
 				'value' => 'Just a button in form of a link',
@@ -104,7 +104,7 @@ class Integration extends WikiaBaseTest {
 		/** @var \Wikia\UI\Component $c */
 		$cMarkup = $c->render([
 			'type' => 'input',
-			'params' => [
+			'vars' => [
 				'type' => 'submit',
 				'name' => 'just-a-button',
 				'classes' => ['button'],

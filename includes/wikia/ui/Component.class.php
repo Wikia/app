@@ -65,7 +65,7 @@ class Component {
 	}
 
 	/**
-	 * @desc Validates if required values are set and renders component
+	 * @desc Validates if required template variables' values are set and renders component
 	 *
 	 * @param $params
 	 * @return string
@@ -74,11 +74,11 @@ class Component {
 	public function render( $params ) {
 		$this->setType( $params['type'] );
 		$this->setTemplatePath( $this->getType() ); // set template for rendering
-		$this->setValues( $params['params'] ); // set mustache variables
+		$this->setVarsValues( $params['vars'] ); // set mustache variables
 		$this->validateTemplateVars(); // check if required vars are set
 
 		return $this->getTemplateEngine()
-			->setData( $this->getValues() )
+			->setData( $this->getVarsValues() )
 			->render( $this->getTemplatePath() );
 	}
 
@@ -150,7 +150,7 @@ class Component {
 	 * @param array $varsArray an array with key=>value structure; 
 	 * key is the template variable name and the second is its value
 	 */
-	public function setValues( Array $varsArray ) {
+	public function setVarsValues( Array $varsArray ) {
 		$this->templateData = $varsArray;
 	}
 
@@ -159,7 +159,7 @@ class Component {
 	 * 
 	 * @return Array
 	 */
-	public function getValues() {
+	public function getVarsValues() {
 		return $this->templateData;
 	}
 
@@ -170,8 +170,8 @@ class Component {
 	 */
 	private function validateTemplateVars() {
 		$config = $this->getTemplateVarsConfig();
-		$data = $this->getValues();
-		
+		$data = $this->getVarsValues();
+
 		foreach ( $config[ $this->getType() ][ 'required' ] as $templateRequiredVarName ) {
 			if ( ! isset( $data[ $templateRequiredVarName ] ) ) {
 				$exceptionMessage = DataException::getInvalidParamDataMsg($templateRequiredVarName);

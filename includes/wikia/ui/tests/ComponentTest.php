@@ -67,13 +67,13 @@ class ComponentTest extends WikiaBaseTest {
 		$validateTemplateVarsMethod = new ReflectionMethod( '\Wikia\UI\Component', 'validateTemplateVars' );
 		$validateTemplateVarsMethod->setAccessible( true );
 
-		$UIComponentMock = $this->getMock('\Wikia\UI\Component', ['getTemplateVarsConfig', 'getValues', 'getType']);
+		$UIComponentMock = $this->getMock('\Wikia\UI\Component', ['getTemplateVarsConfig', 'getVarsValues', 'getType']);
 		$UIComponentMock->expects( $this->once() )
 			->method( 'getTemplateVarsConfig' )
 			->will( $this->returnValue( $tplVarsCfg ) );
 
 		$UIComponentMock->expects( $this->once() )
-			->method( 'getValues' )
+			->method( 'getVarsValues' )
 			->will( $this->returnValue( $tplValues ) );
 
 		$UIComponentMock->expects( $this->once() )

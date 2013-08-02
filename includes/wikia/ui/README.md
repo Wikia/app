@@ -23,7 +23,8 @@ ui_components/
             component01_default.js
             component01_[skin_name].js
         templates/
-            component01.mustache
+            component01_default.mustache
+            component01_type01.mustache
     component02/
         component02_config.JSON
         component02_example.JSON
@@ -32,9 +33,10 @@ ui_components/
         js/
             component02_default.js
         templates/
-            component02_[type01].mustache
-            component02_[type02].mustache
-            component02_[type03].mustache
+            component02_default.mustache
+            component02_type01.mustache
+            component02_type02.mustache
+            component02_type03.mustache
 </pre>
 
 All core styles styles specific to skin will be stored in /skins/[skin_name]/. By these styles I mean things like css reset, colors and other core variables, typography etc. 
@@ -75,7 +77,7 @@ The following code shows how to render a button in form of an anchor (type=link)
 <pre>
 $params = [
     "type" => "link",
-    "params" => [
+    "vars" => [
         "href" => "http://www.wikia.com",
         "value" => "Wikia Home Page",
         "classes" => [ "button", "big" ],
@@ -87,7 +89,7 @@ In order to create multiple components (of the same type of different) in the sa
 <pre>
 $aParams = [
     "type" => "link",
-    "params" => [
+    "vars" => [
         "href" => "http://www.wikia.com",
         "value" => "Wikia Home Page",
         "classes" => [ "button", "big" ],
@@ -96,7 +98,7 @@ $aParams = [
 
 $bParams = [
     "type" => "input",
-    "params" => [
+    "vars" => [
         "name" => "wikia-home-page-button",
         "value" => "Wikia Home Page",
         "classes" => [ "button" ],
