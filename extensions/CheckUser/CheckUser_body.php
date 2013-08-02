@@ -563,7 +563,7 @@ class CheckUser extends SpecialPage {
 			$ret = $dbr->select( 'cu_changes',
 				array( 'cuc_ip_hex', 'COUNT(*) AS count', 'MIN(cuc_timestamp) AS first', 'MAX(cuc_timestamp) AS last' ),
 				array( $ip_conds, $time_conds ),
-				__METHOD___,
+				__METHOD__,
 				array(
 					'GROUP BY' => 'cuc_ip_hex',
 					'ORDER BY' => 'cuc_ip_hex',
