@@ -108,11 +108,15 @@ class SpecialPromoteHelper extends WikiaObject {
 					$uploadStatus["errors"] = $this->getUploadWarningMessages($warnings);
 				} else {
 					//save temp file
-					// TODO check if file is ok
 					$file = $upload->stashFile();
 
 					$uploadStatus["status"] = "uploadattempted";
-					$uploadStatus["isGood"] = true;
+					if ($file instanceof File) {
+						$uploadStatus["isGood"] = true;
+						$uploadStatus["file"] = $file;
+					} else {
+						$uploadStatus["isGood"] = false;
+					}
 				}
 			}
 		}
@@ -217,8 +221,9 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	public function removeTempImage($imageName) {
-		if ($this->isTempImageFile($imageName)) {
-			$this->removeImage($imageName);
+		$file = RepoGroup::singleton()->getLocalRepo()->getUploadStash()->getFile($imageName);
+		if ($file instanceof File) {
+			$file->remove();
 		}
 	}
 
@@ -232,21 +237,6 @@ class SpecialPromoteHelper extends WikiaObject {
 		if ($file->exists()) {
 			$file->delete('no longer needed');
 		}
-	}
-
-	public function isTempImageFile($imageName) {
-		if (strpos($imageName, 'Temp_file_') === 0) {
-			return true;
-		}
-		return false;
-	}
-
-	public function isVisualizationFile($imageName) {
-		$uploader = new UploadVisualizationImageFromFile();
-		if ($uploader->isVisualizationImageName($imageName)) {
-			return true;
-		}
-		return false;
 	}
 
 	public function saveVisualizationData($data, $langCode) {
@@ -452,7 +442,6 @@ class SpecialPromoteHelper extends WikiaObject {
 	protected function checkWikiStatus($WikiId, $langCode) {
 		$visualization = new CityVisualization();
 		$wikiDataVisualization = $visualization->getWikiDataForVisualization($WikiId, $langCode);
-		$wikiDataPromote = $visualization->getWikiDataForPromote($WikiId, $langCode);
 		$mainImage = $this->getMainImage();
 		$additionalImages = $this->getAdditionalImages();
 		$hasImagesRejected = false;

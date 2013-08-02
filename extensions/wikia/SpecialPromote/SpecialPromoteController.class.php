@@ -98,7 +98,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 		$result = array();
 
 		if ($status['status'] === 'uploadattempted' && $status['isGood']) {
-			$file = $upload->getLocalFile();
+			$file = $status['file'];
 			$result['uploadType'] = $this->request->getVal('uploadType');
 			$result['imageIndex'] = $this->request->getVal('imageIndex',null);
 
