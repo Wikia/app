@@ -6,7 +6,7 @@ var Paginator,
 		track;
 
 // alias global tracker
-globalTracker = window.Wikia.Tracker || {};
+globalTracker = window.Wikia.Tracker;
 
 track = globalTracker.buildTrackingFunction({
 		action: globalTracker.ACTIONS.CLICK,
@@ -35,7 +35,8 @@ Paginator.prototype = {
 				wiki;
 
 		this.$el.on('click', '.arrow', function(e) {
-				var prefix, $target;
+				var prefix,
+						$target;
 
 				$target = $(e.target);
 
