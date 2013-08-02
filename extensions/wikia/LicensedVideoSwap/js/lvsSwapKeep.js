@@ -52,18 +52,11 @@ define( 'lvs.swapkeep', [
 
 	function confirmModal() {
 		videoControls.reset();
-
-		var currTitleText =  currTitle.replace(/_/g, ' ' ),
-			title,
-			msg;
-
-			title = $.msg( 'lvs-confirm-keep-title' );
-			msg = $.msg( 'lvs-confirm-keep-message', currTitleText );
-
-			// Show confirmation modal only on "Keep"
+		var currTitleText =  currTitle.replace(/_/g, ' ' );
+		// Show confirmation modal only on "Keep"
 		$.confirm({
-			title: title,
-			content: msg,
+			title: $.msg( 'lvs-confirm-keep-title' ),
+			content: $.msg( 'lvs-confirm-keep-message', currTitleText ),
 			onOk: function() {
 				doRequest();
 				// Track click on okay button
