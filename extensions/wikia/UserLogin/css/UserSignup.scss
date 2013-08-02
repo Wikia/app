@@ -149,10 +149,13 @@
 
 		@if ( $responsive-layout-enabled ) {
 			@media screen and (max-width: 910px) {
-				width: 450px;
+				width: 52%;
+				padding-left: 2%;
 				form {
 					width: 270px;
-					margin: 0 auto;
+				}
+				.sso-login {
+					margin: 0;
 				}
 			}
 		}
@@ -174,4 +177,8 @@
 
 .modalWrapper.WikiaArticle {
 	position: absolute;
+}
+
+.WikiaMainContent {
+	float: none;
 }
