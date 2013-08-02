@@ -25,8 +25,6 @@ define( 'wikia.videoBootstrap', [ 'wikia.loader', 'wikia.nirvana', 'wikia.log', 
 		this.clickSource = clickSource;
 		this.title = json.title;
 		this.provider = json.provider;
-		this.width = json.width; // TODO: json.width doesn't exist yet.  It needs to be added to all video handlers.
-		this.height = json.height; // TODO: json.height doesn't exist yet.  It needs to be added to all video handlers.
 		this.thumbnailHtml = false;
 
 		// Insert html if it hasn't been inserted already
@@ -88,8 +86,6 @@ define( 'wikia.videoBootstrap', [ 'wikia.loader', 'wikia.nirvana', 'wikia.log', 
 			var undef,
 				element = this.element,
 				fileTitle = title || this.title,
-				fileWidth = width || this.width,// TODO: implement this.width; For now, width will be a required param for reload()
-				fileAutoPlay = ( autoplay === undef || autoplay === null ) ? this.autoplay : autoplay,// TODO: implement this.autoplay; For now, autoplay will be a required param for reload()
 				fileClickSource = clickSource || this.clickSource;
 
 			this.clearTimeoutTrack();
@@ -99,8 +95,8 @@ define( 'wikia.videoBootstrap', [ 'wikia.loader', 'wikia.nirvana', 'wikia.log', 
 				'getEmbedCode',
 				{
 					fileTitle: fileTitle,
-					width: fileWidth,
-					autoplay: fileAutoPlay ? 1 : 0 // backend needs an integer
+					width: width,
+					autoplay: autoplay ? 1 : 0 // backend needs an integer
 				}
 			).done( function( data ) {
 				new VideoBootstrap( element, data.embedCode, fileClickSource );
