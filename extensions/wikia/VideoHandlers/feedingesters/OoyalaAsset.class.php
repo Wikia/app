@@ -153,11 +153,17 @@ class OoyalaAsset extends WikiaModel {
 		if ( isset( $data['hd'] ) ) {
 			$metadata['hd'] = $data['hd'];
 		}
+		if ( !empty( $data['name'] ) ) {
+			$metadata['name'] = $data['name'];
+		}
 		if ( !empty( $data['language'] ) ) {
 			$metadata['lang'] = $data['language'];
 		}
 		if ( !empty( $data['subtitle'] ) ) {
 			$metadata['subtitle'] = $data['subtitle'];
+		}
+		if ( !empty( $data['type'] ) ) {
+			$metadata['type'] = $data['type'];
 		}
 		if ( !empty( $data['trailerRating'] ) ) {
 			$metadata['trailerrating'] = $data['trailerRating'];

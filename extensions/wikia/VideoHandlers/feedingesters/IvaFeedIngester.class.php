@@ -260,7 +260,8 @@ class IvaFeedIngester extends VideoFeedIngester {
 						$clipData['published'] = $matches[1]/1000;
 					}
 
-					$clipData['category'] = $this->getCategory( trim( $videoAsset['MediaType']['Media'] ) );
+					$clipData['type'] = trim( $videoAsset['MediaType']['Media'] );
+					$clipData['category'] = $this->getCategory( $clipData['type'] );
 					$clipData['description'] = trim( $videoAsset['Descriptions']['ItemDescription'] );
 					$clipData['hd'] = ( $videoAsset['HdSource'] == 'true' ) ? 1 : 0;
 					$clipData['provider'] = 'iva';
@@ -285,6 +286,8 @@ class IvaFeedIngester extends VideoFeedIngester {
 					} else {
 						$clipData['targetCountry'] = $this->getCldrCode( $videoAsset['CountryTarget']['CountryName'], 'country' );
 					}
+
+					$clipData['name'] = empty( $videoParams['keyword'] ) ? '' : $videoParams['keyword'];
 
 					// get keywords
 					$keywords = empty( $videoParams['keyword'] ) ? array() : array( $videoParams['keyword'] );
@@ -492,7 +495,9 @@ class IvaFeedIngester extends VideoFeedIngester {
 			'published'      => $data['published'],
 			'ageGate'        => $data['ageGate'],
 			'thumbnail'      => $data['thumbnail'],
+			'name'           => $data['name'],
 			'category'       => $data['category'],
+			'type'           => $data['type'],
 			'description'    => $data['description'],
 			'keywords'       => $data['keywords'],
 			'tags'           => $data['tags'],
