@@ -215,12 +215,13 @@ class Factory {
 			DIRECTORY_SEPARATOR .
 			$name;
 	}
-	
+
 	/**
 	 * @desc Loads JS/CSS dependencies, creates and configurates an instance of \Wikia\UI\Component object which is returned
 	 *
-	 * @param string|array
-	 * 
+	 * @param string|array $componentNames
+	 *
+	 * @throws \Wikia\UI\DataException
 	 * @return array
 	 */
 	public function init( $componentNames ) {
@@ -242,8 +243,8 @@ class Factory {
 				if( is_array( $dependenciesCfg ) ) {
 					$assets = array_merge( $assets, $dependenciesCfg );
 				} else {
-					$exceptionMessage = sprintf( \Wikia\UI\DataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE, $assetType );
-					throw new \Wikia\UI\DataException( $exceptionMessage );
+					$exceptionMessage = sprintf( DataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE, $assetType );
+					throw new DataException( $exceptionMessage );
 				}
 			}
 
@@ -267,21 +268,21 @@ class Factory {
 	}
 
 	/**
-	 * @return \Wikia\UI\Component
+	 * @return Component
 	 */
 	protected function getComponentInstance() {
-		return new \Wikia\UI\Component;
+		return new Component;
 	}
 
 	/**
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function __clone() {
 		throw new \Exception( 'Cloning instances of this class is forbidden.' );
 	}
 
 	/**
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function __wakeup() {
 		throw new \Exception( 'Unserializing instances of this class is forbidden.' );

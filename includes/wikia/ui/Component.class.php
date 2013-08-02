@@ -1,6 +1,8 @@
 <?php
 namespace Wikia\UI;
 
+use Wikia\Template\MustacheEngine;
+
 class Component {
 
 	/**
@@ -67,7 +69,7 @@ class Component {
 	 *
 	 * @param $params
 	 * @return string
-	 * @throws \Wikia\UI\DataException
+	 * @throws DataException
 	 */
 	public function render( $params ) {
 		$this->setType( $params['type'] );
@@ -112,7 +114,7 @@ class Component {
 		if ( $this->fileExists( $mustacheTplPath ) ) {
 			$this->templatePath = $mustacheTplPath;
 		} else {
-			throw new \Wikia\UI\TemplateException();
+			throw new TemplateException();
 		}
 	}
 
@@ -164,7 +166,7 @@ class Component {
 	/**
 	 * @desc Checks if all required variables are set; throws an exception if not
 	 * 
-	 * @throws \Wikia\UI\DataException
+	 * @throws DataException
 	 */
 	private function validateTemplateVars() {
 		$config = $this->getTemplateVarsConfig();
@@ -172,8 +174,8 @@ class Component {
 		
 		foreach ( $config[ $this->getType() ][ 'required' ] as $templateRequiredVarName ) {
 			if ( ! isset( $data[ $templateRequiredVarName ] ) ) {
-				$exceptionMessage = \Wikia\UI\DataException::getInvalidParamDataMsg($templateRequiredVarName);
-				throw new \Wikia\UI\DataException( $exceptionMessage );
+				$exceptionMessage = DataException::getInvalidParamDataMsg($templateRequiredVarName);
+				throw new DataException( $exceptionMessage );
 			}
 		}
 	}
@@ -183,7 +185,7 @@ class Component {
 	 */
 	private function getTemplateEngine() {
 		if ( empty( $this->templateEngine ) ) {
-			$this->templateEngine = new \Wikia\Template\MustacheEngine;
+			$this->templateEngine = new MustacheEngine;
 		}
 
 		return $this->templateEngine;
