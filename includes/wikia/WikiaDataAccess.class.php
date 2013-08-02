@@ -14,6 +14,7 @@ class WikiaDataAccess {
 	 **********************************/
 
 	const LOCK_TIMEOUT = 60; // lock for at most 60s
+	const CACHE_TIME_FACTOR_FOR_LOCK = 2; // How many times longer cache should be valid when using cacheWithLock
 
 	/**
 	 * WikiaDataAccess::USE_CACHE - does not have to be passed to cache or cacheWithLock [default]
@@ -93,7 +94,7 @@ class WikiaDataAccess {
 	 */
 	static private function setCache( $key, $result, $cacheTime, $command = self::USE_CACHE ) {
 		if ( $command == self::USE_CACHE || $command == self::REFRESH_CACHE ) {
-			F::app()->wg->Memc->set( $key, $result, $cacheTime * 2 );
+			F::app()->wg->Memc->set( $key, $result, $cacheTime );
 		}
 
 		if ( $command == self::REFRESH_CACHE ) {
@@ -141,7 +142,7 @@ class WikiaDataAccess {
 					'data' => $getData(),
 					'time' => wfTimestamp( TS_UNIX )
 				);
-				self::setCache( $key, $result, $cacheTime * 2, $command );
+				self::setCache( $key, $result, $cacheTime * self::CACHE_TIME_FACTOR_FOR_LOCK, $command );
 			}
 
 			if( $gotLock ) self::unlock( $keyLock );
@@ -162,7 +163,7 @@ class WikiaDataAccess {
 						'data' => $getData(),
 						'time' => wfTimestamp( TS_UNIX )
 					);
-					self::setCache( $key, $result, $cacheTime * 2, $command );
+					self::setCache( $key, $result, $cacheTime * self::CACHE_TIME_FACTOR_FOR_LOCK, $command );
 				} else {
 					// what we already have in $result is good enough
 					// and another thread is generating that data anyway for future requests

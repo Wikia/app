@@ -6,10 +6,11 @@
  *
  * @author Kyle Florence <kflorence@wikia-inc.com>
  */
-(function( context ) {
+(function( window ) {
 	'use strict';
+	var Wikia = window.Wikia || {};
 
-	function tracker( window ) {
+	function tracker() {
 		/** @private **/
 
 		/**
@@ -146,11 +147,11 @@
 	}
 
 	// Exports
-	context.Wikia = context.Wikia || {};
-	context.Wikia.Tracker = tracker( context );
+	window.Wikia = Wikia || {};
+	window.Wikia.Tracker = tracker( window );
 
-	if ( context.define && context.define.amd ) {
-		context.define( 'wikia.tracker', [ 'wikia.window' ], tracker );
+	if ( window.define && window.define.amd ) {
+		window.define( 'wikia.tracker', [ 'wikia.window' ], tracker );
 	}
 
-})( this );
+})( window, undefined );

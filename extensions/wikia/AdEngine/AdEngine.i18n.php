@@ -68,12 +68,30 @@ $messages['id'] = array(
 	'adengine-exitstitial-button' => 'Lewati Iklan ini',
 );
 
+/** Korean (한국어)
+ * @author 한글화담당
+ */
+$messages['ko'] = array(
+	'adengine-exitstitial-go-back' => '돌아가시겠습니까?',
+	'adengine-exitstitial-button' => '광고 건너뛰기',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
 	'adengine-exitstitial-title-template' => 'Dir verloosst $1...',
 	'adengine-exitstitial-button' => 'Dës Reklamm iwwersprangen',
+);
+
+/** Macedonian (македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'adengine-exitstitial-title-template' => 'Го напуштате $1…',
+	'adengine-exitstitial-redirecting' => 'Прелистувачот за некоја секунда ќе ве одведе на страницата што ја побаравте.',
+	'adengine-exitstitial-go-back' => 'Сакате да се вратите назад?',
+	'adengine-exitstitial-button' => 'Прескокни ја рекламава',
 );
 
 /** Malay (Bahasa Melayu)

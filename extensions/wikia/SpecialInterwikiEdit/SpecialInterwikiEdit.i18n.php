@@ -462,7 +462,7 @@ $messages['pt'] = array(
 	'iwedit-all-interwikis' => 'todos os links interwikis',
 	'iwedit-update' => 'Atualizar',
 	'iwedit-error' => '<p>Ocorreu um erro.</p>',
-	'iwedit-success' => '<p>Os links foram criados correctamente.</p>',
+	'iwedit-success' => '<p>Os links foram criados corretamente.</p>',
 );
 
 /** Brazilian Portuguese (português do Brasil)

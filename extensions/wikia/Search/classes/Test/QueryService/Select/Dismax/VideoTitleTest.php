@@ -1,17 +1,17 @@
 <?php
 /**
- * Class definition for Wikia\Search\Test\QueryService\Select\VideoTitleTest
+ * Class definition for Wikia\Search\Test\QueryService\Select\Dismax\VideoTitleTest
  */
 namespace Wikia\Search\Test\QueryService\Select;
 use Wikia\Search\Test\BaseTest, ReflectionMethod, Wikia\Search\QueryService\DependencyContainer, Wikia\Search\QueryService\Select\Video;
 /**
- * Tests the functionality of Wikia\Search\QueryService\Select\VideoTitle
+ * Tests the functionality of Wikia\Search\QueryService\Select\Dismax\VideoTitle
  * @author relwell
  */
 class VideoTitleTest extends BaseTest
 {
 	/**
-	 * @covers Wikia\Search\QueryService\Select\VideoTitle::getSelectQuery
+	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoTitle::getSelectQuery
 	 */
 	public function testGetSelectQuery() {
 		$mockClient = $this->getMockBuilder( 'Solarium_Client' )
@@ -35,7 +35,7 @@ class VideoTitleTest extends BaseTest
 
 		$dc = new \Wikia\Search\QueryService\DependencyContainer( [ 'client' => $mockClient, 'service' => $mockService, 'config' => $mockConfig ] );
 		
-		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\VideoTitle' )
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\VideoTitle' )
 		                   ->setConstructorArgs( [ $dc ] )
 		                   ->getMock();
 		
@@ -112,13 +112,13 @@ class VideoTitleTest extends BaseTest
 		    ->method ( 'getSanitizedQuery' )
 		    ->will  ( $this->returnValue( 'foo' ) )
 		;
-		$params = [ \Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID, 'Entertainment', 'foo' ];
+		$params = [ \Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID, 'Entertainment', 'foo' ];
 		$mockSolariumQuery
 		    ->expects( $this->once() )
 		    ->method ( 'setQuery' )
 		    ->with   ( "+(wid:%1% AND is_video:true AND categories_mv_en:%2%) AND +(%3%)", $params )
 		;
-		$getSelect = new ReflectionMethod( 'Wikia\Search\QueryService\Select\VideoTitle', 'getSelectQuery' );
+		$getSelect = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\VideoTitle', 'getSelectQuery' );
 		$getSelect->setAccessible( true );
 		$this->assertEquals(
 				$mockSolariumQuery,

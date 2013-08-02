@@ -1,15 +1,15 @@
 <?php
 /**
- * Class definition for Wikia\Search\QueryService\Select\VideoTitle
+ * Class definition for Wikia\Search\QueryService\Select\Dismax\VideoTitle
  */
-namespace Wikia\Search\QueryService\Select;
+namespace Wikia\Search\QueryService\Select\Dismax;
 use Solarium_Query_Select;
 /**
  * This class is designed to provide search results based on the title of a video.
  * @see WikiaSearchController::searchVideosByTitle for example usage.
  * @author relwell
  */
-class VideoTitle extends AbstractSelect
+class VideoTitle extends AbstractDismax
 {
 	/**
 	 * Minimum duration in seconds

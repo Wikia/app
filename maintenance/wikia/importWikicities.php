@@ -112,7 +112,7 @@ class ImportWikicities extends Maintenance {
 		$dump = reset($dumps);
 
 		if (empty($dump)) {
-			$this->error('No dump found!');
+			$this->error('No dump found!', 2);
 		}
 
 		// fetch the most recent dump to /tmp
@@ -121,7 +121,7 @@ class ImportWikicities extends Maintenance {
 
 		$res = $this->get($dump, $dumpFile);
 		if ($res === false) {
-			$this->error('Fetching failed!');
+			$this->error('Fetching failed!', 3);
 		}
 
 		// connect to devbox shared database
