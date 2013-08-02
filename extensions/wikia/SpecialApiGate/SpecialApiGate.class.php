@@ -191,21 +191,6 @@ class SpecialApiGate extends SpecialPage {
 				// If the user doesn't have any keys yet, show the registration form front-and-center.
 				$html .= $this->subpage_register();
 			}
-
-			// If this is an admin, show links to Admin subpages.
-			if ( ApiGate_Config::isAdmin() ) {
-				$links = array(
-					array(
-						"text" => wfMsg('apigate-adminlinks-viewkeys'),
-						"href" => "$APIGATE_LINK_ROOT/".self::SUBPAGE_ALL_KEYS,
-					),
-					array(
-						"text" => wfMsg('apigate-adminlinks-viewaggregate'),
-						"href" => "$APIGATE_LINK_ROOT/".self::SUBPAGE_AGGREGATE_STATS,
-					),
-				);
-				$html .= "<br/>" . ApiGate_Dispatcher::renderTemplate( "adminLinks", array( "links" => $links ) );
-			}
 		}
 
 		wfProfileOut( __METHOD__ );

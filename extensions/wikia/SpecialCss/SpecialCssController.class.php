@@ -70,6 +70,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 		$this->cssUpdatesUrl = $model->getCssUpdatesUrl();
 		$this->dropdown = $this->createButtonLinks();
 		$this->handleAssets();
+		$this->minorDefault = $model->isMinorEditDefault();
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->plain() );
 		
 		wfProfileOut(__METHOD__);

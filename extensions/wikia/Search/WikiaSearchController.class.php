@@ -85,6 +85,43 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	/**
+	 * Accesses top wiki articles for right rail, see PLA-466
+	 */
+	public function topWikiArticles() {
+		global $wgLang;
+		$pages = [];
+		try {
+			$pageData = $this->app->sendRequest( 'ArticlesApiController', 'getTop', [ 'namespaces' => 0 ] )->getData();
+			$ids = [];
+			$counter = 0;
+			foreach ( $pageData['items'] as $pageDatum ) {
+				$ids[] = $pageDatum['id'];
+				if ( $counter++ >= 12 ) {
+					break;
+				}
+			}
+			if (! empty( $ids ) ) {
+				$params = [ 'ids' => implode( ',', $ids ), 'height' => 80, 'width' => 80 ];
+				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
+				foreach ( $detailResponse['items'] as $id => $item ) {
+					if (! empty( $item['thumbnail'] ) ) {
+						//get the first one image from imageServing as it needs other size
+						if ( empty( $pages ) ) {
+							$is = new ImageServing( [ $id ], 300, 150 );
+							$result = $is->getImages( 1 );
+							$item[ 'thumbnail' ] = $result[ $id ][ 0 ][ 'url' ];
+						}
+						//render date
+						$item[ 'date' ] = $wgLang->date( $item[ 'revision' ][ 'timestamp' ] );
+						$pages[] = $item;
+					}
+				}
+			}
+		} catch ( Exception $e ) { } // ignoring API exceptions for gracefulness
+		$this->setVal( 'pages', $pages );
+	}
+
+	/**
 	 * Deprecated functionality for indexing.
 	 */
 	public function getPages() {
@@ -241,7 +278,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	protected function setResponseValuesFromConfig( Wikia\Search\Config $searchConfig ) {
 
-		global $wgExtensionsPath;
+		global $wgExtensionsPath, $wgLanguageCode;
 
 		$response = $this->getResponse();
 		$format = $response->getFormat();
@@ -279,6 +316,19 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $this->wg->OnWikiSearchIncludesWikiMatch && $searchConfig->hasWikiMatch() ) {
 			$this->registerWikiMatch( $searchConfig );
 		}
+		$topWikiArticlesHtml = '';
+		if (! $searchConfig->getInterWiki() && $wgLanguageCode == 'en' ) {
+			$dbname = $this->wg->DBName;
+			$cacheKey = wfMemcKey( __CLASS__, 'WikiaSearch', 'topWikiArticles', $this->wg->CityId );
+			$topWikiArticlesHtml = WikiaDataAccess::cache(
+				$cacheKey,
+				86400 * 5, // 5 days, one business week
+				function () {
+					return F::app()->renderView( 'WikiaSearchController', 'topWikiArticles' );
+				}
+			);
+		}
+		$this->setVal( 'topWikiArticles', $topWikiArticlesHtml );
 	}
 	
 	/**
