@@ -1,7 +1,6 @@
 @import "../../../../skins/oasis/css/core/color";
 
 // light theme
-$color-wall-border: mix($color-page-border, $color-page, 50%);
 $color-wall-bubble: mix($color-buttons, $color-page, 15%);
 $color-wall-bubble-preview: mix($color-error, $color-wall-bubble, 10%);
 $color-wall-bubble-preview-reply: mix($color-error, $color-page, 5%);
