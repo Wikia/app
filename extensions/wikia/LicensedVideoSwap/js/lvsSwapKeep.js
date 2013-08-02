@@ -57,38 +57,23 @@ define( 'lvs.swapkeep', [
 			title,
 			msg;
 
-		if ( isSwap ) {
-			// Process request without confirm modal for "Swap"
-			doRequest();
-
-			tracker.track({
-				action: tracker.actions.CLICK,
-				label: isSwap ? tracker.labels.SWAP : tracker.labels.KEEP
-			});
-
-		} else {
-
 			title = $.msg( 'lvs-confirm-keep-title' );
 			msg = $.msg( 'lvs-confirm-keep-message', currTitleText );
 
 			// Show confirmation modal only on "Keep"
-			$.confirm({
-				title: title,
-				content: msg,
-				onOk: function() {
-					doRequest();
-
-					// Track click on okay button
-					tracker.track({
-						action: tracker.actions.CONFIRM,
-						label: isSwap ? tracker.labels.SWAP : tracker.labels.KEEP
-					});
-				},
-				width: 700
-			});
-
-		}
-
+		$.confirm({
+			title: title,
+			content: msg,
+			onOk: function() {
+				doRequest();
+				// Track click on okay button
+				tracker.track({
+					action: tracker.actions.CONFIRM,
+					label: isSwap ? tracker.labels.SWAP : tracker.labels.KEEP
+				});
+			},
+			width: 700
+		});
 	}
 
 	function init( $elem ) {
@@ -114,7 +99,7 @@ define( 'lvs.swapkeep', [
 					// Get both titles - current/non-premium video and video to swap it out with
 					newTitle = decodeURIComponent( $button.attr( 'data-video-swap' ) );
 					currTitle = decodeURIComponent( $row.find( '.keep-button' ).attr( 'data-video-keep' ) );
-					confirmModal();
+					doRequest();
 
 					// Track click action
 					tracker.track({
