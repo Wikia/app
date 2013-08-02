@@ -2,38 +2,43 @@
 @import "../mixins/box-sizing";
 @import "../mixins/clearfix";
 
-$columns: 12;
+$columns: 12 !default;
 
-@function width-gutter() {
-	@return width-gutters( 1 );
+// Functions should be vendor prefixed so they don't collide
+// width standard CSS3 function names.
+@function -wikia-gutter-width( $span: 1 ) {
+	@return $span * $width-gutter;
 }
 
-@function width-gutters( $n: 1 ) {
-	@return $n * $width-gutter;
+@function -wikia-column-width( $span: 1, $columns: $columns ) {
+	@return $span * ( 100% / $columns );
 }
 
-@function width-column() {
-	@return width-columns( 1 );
+// This should be applied on the containing element
+@mixin grid( $columns: $columns ) {
+	margin-left: -wikia-gutter-width( -1 );
+
+	@for $span from 1 through $columns {
+		.span-#{ $span } {
+			width: -wikia-column-width( $span, $columns );
+		}
+	}
 }
 
-@function width-columns( $n: 1 ) {
-	@return ( 100% / $columns ) * $n;
-}
-
-@mixin column() {
+// This should be applied to a generic selector ONLY
+// DO NOT apply this to every column.
+@mixin grid-column() {
 	@include box-sizing( border-box );
 	float: left;
-	padding-left: $width-gutter;
+	padding-left: -wikia-gutter-width();
 	overflow: hidden;
 }
 
-@mixin grid {
-	margin-left: -$width-gutter;
-}
-
-@mixin row() {
+// This should be applied to a generic selector ONLY
+// DO NOT apply this to every row.
+@mixin grid-row() {
 	@include clearfix;
-	padding-bottom: $width-gutter;
+	padding-bottom: -wikia-gutter-width();
 
 	&.last,
 	&:last-of-type {
@@ -42,19 +47,18 @@ $columns: 12;
 }
 
 .grid {
-	@include grid;
+	// Convenience classes for the most commonly used grid layout
+	&.columns-12 {
+		@include grid;
+	}
 
+	// Generic row using standard gutter width
 	.row {
-		@include row;
+		@include grid-row;
 	}
 
+	// Generic column using standard gutter width
 	.column {
-		@include column;
-	}
-
-	@for $i from 1 through $columns {
-		.span-#{ $i } {
-			width: width-columns( $i );
-		}
+		@include grid-column;
 	}
 }

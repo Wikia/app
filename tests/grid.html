@@ -28,57 +28,57 @@
 			}
 
 			/* Generated from responsive-grid.scss */
-			.grid {
+			.grid.columns-12 {
 			  margin-left: -20px; }
-			  .grid .row {
-			    zoom: 1;
-			    padding-bottom: 20px; }
-			    .grid .row:after {
-			      clear: both;
-			      content: " ";
-			      display: block;
-			      height: 0;
-			      overflow: hidden;
-			      visibility: hidden; }
-			    .grid .row.last, .grid .row:last-of-type {
-			      padding-bottom: 0; }
-			  .grid .column {
-			    -moz-box-sizing: border-box;
-			    -webkit-box-sizing: border-box;
-			    box-sizing: border-box;
-			    float: left;
-			    padding-left: 20px;
-			    overflow: hidden; }
-			  .grid .span-1 {
+			  .grid.columns-12 .span-1 {
 			    width: 8.33333%; }
-			  .grid .span-2 {
+			  .grid.columns-12 .span-2 {
 			    width: 16.66667%; }
-			  .grid .span-3 {
+			  .grid.columns-12 .span-3 {
 			    width: 25%; }
-			  .grid .span-4 {
+			  .grid.columns-12 .span-4 {
 			    width: 33.33333%; }
-			  .grid .span-5 {
+			  .grid.columns-12 .span-5 {
 			    width: 41.66667%; }
-			  .grid .span-6 {
+			  .grid.columns-12 .span-6 {
 			    width: 50%; }
-			  .grid .span-7 {
+			  .grid.columns-12 .span-7 {
 			    width: 58.33333%; }
-			  .grid .span-8 {
+			  .grid.columns-12 .span-8 {
 			    width: 66.66667%; }
-			  .grid .span-9 {
+			  .grid.columns-12 .span-9 {
 			    width: 75%; }
-			  .grid .span-10 {
+			  .grid.columns-12 .span-10 {
 			    width: 83.33333%; }
-			  .grid .span-11 {
+			  .grid.columns-12 .span-11 {
 			    width: 91.66667%; }
-			  .grid .span-12 {
+			  .grid.columns-12 .span-12 {
 			    width: 100%; }
+			.grid .row {
+			  zoom: 1;
+			  padding-bottom: 20px; }
+			  .grid .row:after {
+			    clear: both;
+			    content: " ";
+			    display: block;
+			    height: 0;
+			    overflow: hidden;
+			    visibility: hidden; }
+			  .grid .row.last, .grid .row:last-of-type {
+			    padding-bottom: 0; }
+			.grid .column {
+			  -moz-box-sizing: border-box;
+			  -webkit-box-sizing: border-box;
+			  box-sizing: border-box;
+			  float: left;
+			  padding-left: 20px;
+			  overflow: hidden; }
 		</style>
 	</head>
 	<body>
 		<section>
 			<header>Fluid columns, fixed gutters</header>
-			<div class="grid">
+			<div class="grid columns-12">
 				<div class="row">
 					<div class="column span-1">
 						<p>1</p>
