@@ -230,17 +230,24 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				$counter = 0;
 				foreach ( $pageData['items'] as $pageDatum ) {
 					$ids[] = $pageDatum['id'];
-					if ( $counter++ >= 12 ) {
+					if ( $counter++ >= 2 ) {
 						break;
 					}
 				}
 				if (! empty( $ids ) ) {
-					$params = [ 'ids' => implode( ',', $ids ), 'height' => 80, 'width' => 100 ];
+					$params = [ 'ids' => implode( ',', $ids ), 'height' => 50, 'width' => 50, 'abstract' => 150 ];
 					$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
 					foreach ( $detailResponse['items'] as $item ) {
-						if (! empty( $item['thumbnail'] ) ) {
-							$pages[] = $item;
+						if ( empty( $item['thumbnail'] ) ) {
+							//add placeholder
+							$item['thumbnail'] = '';
 						}
+						$trimTitle = trim( $item[ 'title' ] );
+						$trimAbstract = trim( $item[ 'abstract' ] );
+						if ( strpos( $trimAbstract, $trimTitle ) === 0 ) {
+							$item['abstract'] = substr( $trimAbstract, strlen( $trimTitle ) );
+						}
+						$pages[] = $item;
 					}
 				}
 			} catch ( Exception $e ) { } // ignoring api errors for gracefulness
