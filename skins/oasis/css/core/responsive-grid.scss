@@ -1,0 +1,60 @@
+@import "layout";
+@import "../mixins/box-sizing";
+@import "../mixins/clearfix";
+
+$columns: 12;
+
+@function width-gutter() {
+	@return width-gutters( 1 );
+}
+
+@function width-gutters( $n: 1 ) {
+	@return $n * $width-gutter;
+}
+
+@function width-column() {
+	@return width-columns( 1 );
+}
+
+@function width-columns( $n: 1 ) {
+	@return ( 100% / $columns ) * $n;
+}
+
+@mixin column() {
+	@include box-sizing( border-box );
+	float: left;
+	padding-left: $width-gutter;
+	overflow: hidden;
+}
+
+@mixin grid {
+	@include clearfix;
+	margin-left: -$width-gutter;
+}
+
+@mixin row() {
+	padding-bottom: $width-gutter;
+
+	&.last,
+	&:last-of-type {
+		padding-bottom: 0;
+	}
+}
+
+.grid {
+	@include grid;
+
+	.row {
+		@include row;
+	}
+
+	.column {
+		@include column;
+	}
+
+	@for $i from 1 through $columns {
+		.span-#{ $i } {
+			width: width-columns( $i );
+		}
+	}
+}
