@@ -412,19 +412,7 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	public function getImageUrl($imageFile, $requestedWidth, $requestedHeight) {
-		if ($imageFile instanceof File && $imageFile->exists()) {
-			$originalWidth = $imageFile->getWidth();
-			$originalHeight = $imageFile->getHeight();
-		}
-
-		if (!empty($originalHeight) && !empty($originalWidth)) {
-			$imageServing = $this->homePageHelper->getImageServingForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight);
-			$imageUrl = $imageServing->getUrl($imageFile, $originalWidth, $originalHeight);
-		} else {
-			$imageUrl = $this->wg->blankImgUrl;
-		}
-		return $imageUrl;
-		//$imageFile->createThumb($requestedWidth, $requestedHeight);
+		return $this->homePageHelper->getImageUrlFromFile($imageFile, $requestedWidth, $requestedHeight);
 	}
 
 	protected function createRemovalTask($taskDeletionList) {
