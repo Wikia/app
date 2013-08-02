@@ -101,7 +101,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 		$this->response->addAsset('/extensions/wikia/SpecialCss/css/SpecialCss.scss');
 		$this->response->addAsset('special_css_js');
 		// This shouldn't be moved to asset manager package because of Ace internal autoloader
-		$this->response->addAsset('/resources/Ace/ace.js');
+		$this->response->addAsset('resources/Ace/ace.js');
 
 		$aceUrl = AssetsManager::getInstance()->getOneCommonURL('/resources/Ace');
 		$aceUrlParts = parse_url($aceUrl);
