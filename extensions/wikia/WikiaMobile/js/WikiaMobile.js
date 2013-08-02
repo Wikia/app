@@ -1,5 +1,5 @@
 //init
-$(function() {
+//$(function() {
 	'use strict';
 
 	require(['wikia.querystring', require.optional('topbar'), require.optional('toc'), require.optional('share'), require.optional('popover'), require.optional('wikia.cookies'), 'track', 'layout', 'wikia.videoBootstrap'],
@@ -58,32 +58,26 @@ $(function() {
 				});
 			}
 
-			$(d.getElementById('wkFtr')).on('click' , 'a', function(ev){
+			$(d.getElementById('wkFtr')).on('click' , 'a', function(event){
 				track.event('footer', track.TEXT_LINK, {
 					label: 'link',
 					href: this.href
-				},ev);
+				},event);
 			});
 
 
 			$(d.getElementById('wkTopBar')).find('a:first-child').on('click', function(event){
 				track.event('wordmark', track.CLICK, {
 					href: this.href
-				},ev);
+				},event);
 			});
 
-			$(d.getElementById('catlinks')).on('click', 'a', function(ev){
+			$(d.getElementById('catlinks')).on('click', 'a', function(event){
 				track.event('category', track.TEXT_LINK, {
 					label: 'article',
 					href: this.href
-				},ev);
+				},event);
 			});
-
-			// Play video on file pages
-			var filePageContainer = document.getElementById('file');
-			if(filePageContainer && window.playerParams) {
-				new VideoBootstrap(filePageContainer, window.playerParams, 'filePage');
-			}
 		}
 	);
-});
+//});

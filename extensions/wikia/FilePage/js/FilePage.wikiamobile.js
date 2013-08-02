@@ -6,11 +6,17 @@
 
 require(['track', 'jquery'], function(track, $) {
 
+	// Play video
+	var filePageContainer = document.getElementById('file');
+	if(filePageContainer && window.playerParams) {
+		new VideoBootstrap(filePageContainer, window.playerParams, 'filePage');
+	}
+
 	/**
 	 * Tracking
 	 */
-	$(document).on('sections:open', function(){
-		var id = this.previousElementSibling.id,
+	$(document).on('sections:open', function(event, section){
+		var id = section.previousElementSibling.id,
 			label;
 
 		switch(id) {
