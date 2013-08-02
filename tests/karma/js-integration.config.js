@@ -20,7 +20,6 @@ files = [
 	'resources/wikia/libraries/define.mock.js',
 
 	'resources/jquery/jquery-1.8.2.js',
-	'extensions/wikia/WikiaMobile/js/Wikia.utils.js',
 	'resources/wikia/libraries/deferred/deferred.js',
 	'resources/wikia/libraries/deferred/deferred.api.js',
 
