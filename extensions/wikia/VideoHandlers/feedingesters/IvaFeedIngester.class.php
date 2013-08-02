@@ -185,6 +185,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 				$clipData = array();
 
 				$program['title'] = empty( $program['DisplayTitle'] ) ? trim( $program['Title'] ) : trim( $program['DisplayTitle'] );
+				$program['title'] = $this->updateTitle( $program['title'] );
 
 				// get series
 				$clipData['series'] = empty( $videoParams['series'] ) ? $program['title'] : $videoParams['series'];
@@ -243,6 +244,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 				// add video assets
 				foreach ( $videoAssets as $videoAsset ) {
 					$clipData['titleName'] = empty( $videoAsset['DisplayTitle'] ) ? trim( $videoAsset['Title'] ) : trim( $videoAsset['DisplayTitle'] );
+					$clipData['titleName'] = $this->updateTitle( $clipData['titleName'] );
 					$clipData['videoId'] = $videoAsset['Publishedid'];
 
 					if ( !empty( $videoAsset['ExpirationDate'] ) ) {
@@ -548,4 +550,18 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 		return $hash;
 	}
+
+	/**
+	 * update title by moving 'the' from the end of the title to the beginning of the title
+	 * @param string $title
+	 * @return string $title
+	 */
+	protected function updateTitle( $title ) {
+		if ( preg_match( '/(.*),[ ]*([tT][hH][eE])$/', $title, $matches ) ) {
+			$title = trim( $matches[2] ).' '.trim( $matches[1] );
+		}
+
+		return $title;
+	}
+
 }
