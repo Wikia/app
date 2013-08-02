@@ -16,8 +16,11 @@ $width-outside-max-half: $width-outside-max / 2;
 $width-padding: $width-gutter / 2;
 
 // Breakpoints
+$breakpoint-content: $width-outside;
 $breakpoint-fluid: $width-outside + $width-adskins;
 $breakpoint-max: $width-outside-max + $width-adskins;
+$breakpoint-min: $width-outside-min;
+$breakpoint-small: 1023px;
 
 // Background
 // TODO: we might want to consider pre-calculating all of the background
@@ -163,12 +166,9 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 	}
 }
 
-html {
-	min-width: $width-outside-min;
-	overflow-x: auto;
-}
-
 body {
+	min-width: $width-outside-min;
+
 	@if ( $background-is-dynamic ) {
 		background: $color-body;
 		overflow-x: hidden;
@@ -342,7 +342,13 @@ body > .global-notification,
 }
 // END - edit page fixes
 
-@media screen and (max-width: 1023px) {
+@media screen and (max-width: $breakpoint-min) {
+	body {
+		overflow-x: auto;
+	}
+}
+
+@media screen and (max-width: $breakpoint-small) {
 	.WikiaArticle {
 		min-height: auto;
 	}
@@ -427,7 +433,7 @@ body > .global-notification,
 	}
 }
 
-@media screen and (max-width: $width-outside) {
+@media screen and (max-width: $breakpoint-content) {
 	body {
 		background: $color-page;
 
