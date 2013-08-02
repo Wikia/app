@@ -9,7 +9,7 @@ class SpecialStyleguideDataModel {
 	private $sectionData;
 
 	public function __construct() {
-		$uiStyleguide = new UIStyleguideComponents();
+		$helper = new StyleguideComponents();
 		$this->sectionData = [
 			'header' => [
 				'home' => [
@@ -88,7 +88,7 @@ class SpecialStyleguideDataModel {
 				]
 			],
 			'components' => [
-				'componentsList' => $this->sortComponents( $uiStyleguide->getAllComponents() )
+				'componentsList' => $this->sortComponents( $helper->getAllComponents() )
 			]
 		];
 	}

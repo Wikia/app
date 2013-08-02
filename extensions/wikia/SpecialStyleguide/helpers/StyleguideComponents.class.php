@@ -1,13 +1,20 @@
 <?php
 
-class UIStyleguideComponents
-{
+class StyleguideComponents {
 	/**
 	 * @desc Component's example file suffix
 	 *
 	 * @var String
 	 */
 	const EXAMPLE_FILE_SUFFIX = '_example.json';
+
+	/**
+	 * @desc Component's documentation file suffix
+	 * Example buttons component documentation file should be named buttons_doc.json
+	 *
+	 * @var String
+	 */
+	const DOCUMENTATION_FILE_SUFFIX = '_doc.json';
 
 	private $uiFactory;
 
@@ -31,6 +38,32 @@ class UIStyleguideComponents
 	}
 
 	/**
+	 * @desc Returns full documentation file's path
+	 *
+	 * @param string $name component's name
+	 *
+	 * @return string full file path
+	 */
+	public function getComponentDocumentationFileFullPath( $name ) {
+		return $this->uiFactory->getComponentsDir() .
+		$name .
+		DIRECTORY_SEPARATOR .
+		$name .
+		self::DOCUMENTATION_FILE_SUFFIX;
+	}
+
+	private function loadComponentDocumentationAsArray( $componentName ) {
+		wfProfileIn( __METHOD__ );
+
+		$docFile = $this->getComponentDocumentationFileFullPath( $componentName );
+		$docFileContent = $this->uiFactory->loadFileContent( $docFile );
+		$docInArray = $this->uiFactory->loadFromJSON( $docFileContent );
+
+		wfProfileOut( __METHOD__ );
+		return $docInArray;
+	}
+
+	/**
 	 * @desc Returns all components by iterating on components directory
 	 *
 	 * @return array
@@ -42,8 +75,10 @@ class UIStyleguideComponents
 		while( $directory->valid() ) {
 			if( !$directory->isDot() && $directory->isDir() ) {
 				$filename = $directory->getFilename();
+
 				$componentConfig = $this->uiFactory->loadComponentConfigAsArray( $filename );
-				$componentConfig = $this->prepareMessages( $componentConfig );
+				$messages = $this->loadComponentDocumentationAsArray( $filename );
+				$componentConfig = $this->prepareMessages( $componentConfig, $messages );
 				// add unique id so after clicking on the components list's link page jumps to the right anchor
 				$componentConfig['id'] = Sanitizer::escapeId( $filename, ['noninitial'] );
 
@@ -77,8 +112,8 @@ class UIStyleguideComponents
 								? Wikia\UI\Factory::getInstance()->init( $filename )->render( $exampleData[$name] )
 								: null;
 
-			if ( isset($var['name-var-msg-key']) ) {
-				$var['name'] = $this->prepareMessage($var['name-var-msg-key']);
+			if ( isset( $var['name-var-msg-key'] ) ) {
+				$var['name'] = $this->prepareMessage( $var['name-var-msg-key'] );
 			}
 
 			$mustacheVars[] = [
@@ -100,9 +135,9 @@ class UIStyleguideComponents
 	 * @param $component
 	 * @return mixed
 	 */
-	private function prepareMessages( $component ) {
-		$component['name'] = $this->prepareMessage( $component['name-msg-key'] );
-		$component['description'] = $this->prepareMessage( $component['description-msg-key'] );
+	private function prepareMessages( $component, $messages ) {
+		$component['name'] = $this->prepareMessage( $messages['name-msg-key'] );
+		$component['description'] = $this->prepareMessage( $messages['description-msg-key'] );
 
 		return $component;
 	}
