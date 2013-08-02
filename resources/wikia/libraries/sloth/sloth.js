@@ -20,11 +20,19 @@ define('sloth', function(){
 				callback(element);
 			};
 		},
+		lock = 0,
 		execute = function(){
 			var i = branches.length,
 				branch;
 
-			if(i){
+			win.removeEventListener('scroll', execute);
+
+			if(i && !lock) {
+				lock = setTimeout(function(){
+					lock = 0;
+					win.addEventListener('scroll', execute);
+				}, 200);
+
 				wTop = win.scrollY;
 				wBottom = wTop + win.innerHeight;
 
@@ -36,7 +44,7 @@ define('sloth', function(){
 						branches.splice(i, 1);
 					}
 				}
-			}else{
+			} else {
 				win.removeEventListener('scroll', execute);
 			}
 		};

@@ -1,12 +1,11 @@
 /* global wgStyleVersion*/
 /**
- * @define layout
- * @requires section, media, cache
+ * @requires section, media, cache, wikia.loader, lazyload, jquery, sloth
  *
  * Layout handling of WikiaMobile
  * ie. Sections, Images, Galleries etc.
  */
-define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.loader', 'lazyload', 'jquery', 'sloth'], function(sections, media, cache, loader, lazyload, $, sloth) {
+require(['sections', 'media', require.optional('wikia.cache'), 'wikia.loader', 'lazyload', 'jquery', 'sloth'], function(sections, media, cache, loader, lazyload, $, sloth) {
 	'use strict';
 
 	//init sections
@@ -82,7 +81,7 @@ define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.l
 
 	sloth({
 		on: document.getElementsByClassName('lazy'),
-		threshold: 200,
+		threshold: 300,
 		callback: lazyload
 	});
 });

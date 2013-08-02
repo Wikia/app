@@ -2,8 +2,8 @@
 //$(function() {
 	'use strict';
 
-	require(['wikia.querystring', require.optional('topbar'), require.optional('toc'), require.optional('share'), require.optional('popover'), require.optional('wikia.cookies'), 'track', 'layout', 'wikia.videoBootstrap'],
-		function (qs, topbar, toc, share, popover, cookies, track, layout, VideoBootstrap) {
+	require(['wikia.querystring', require.optional('topbar'), require.optional('toc'), require.optional('share'), require.optional('popover'), require.optional('wikia.cookies'), 'track'],
+		function (qs, topbar, toc, share, popover, cookies, track) {
 			var d = document,
 				clickEvent = 'click',
 				//used to add sharing menu to a page
