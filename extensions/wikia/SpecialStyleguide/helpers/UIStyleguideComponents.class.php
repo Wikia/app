@@ -125,9 +125,11 @@ class UIStyleguideComponents
 	 */
 	private function loadExampleFile($filename) {
 		$example = [];
+
 		if ( file_exists($this->getComponentExampleFileFullPath( $filename ))) {
-			$example = $this->loadComponentExampleFromFile($this->getComponentExampleFileFullPath( $filename ));
+			$example = $this->loadComponentExampleFromFile( $this->getComponentExampleFileFullPath( $filename ) );
 		}
+
 		return $example;
 	}
 

@@ -16,7 +16,7 @@ class SpecialStyleguideDataModel {
 					'mainHeader' => wfMessage( 'styleguide-home-header' )->plain(),
 					'getStartedBtn' => \Wikia\UI\Factory::getInstance()->init('button')->render([
 						'type' => 'input',
-						'params' => [
+						'vars' => [
 							'type' => 'submit',
 							'name' => 'get-started',
 							'classes' => 'button',
