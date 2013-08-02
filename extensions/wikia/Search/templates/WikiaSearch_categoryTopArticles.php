@@ -12,20 +12,22 @@
 	<? if ($redirectTitle = $result->getVar('redirectTitle')): ?>
 		<p class="redirect-title">&mdash; <?= wfMessage( 'wikiasearch2-results-redirected-from' )->text() ?> <a href="<?=$result->getVar('redirectUrl')?>" <?=$trackingData?>><?= $result->getVar('redirectTitle') ?></a></p>
 	<? endif; ?>
-	
+
 	<?= $result->getText(); ?>
-	
 	<?php if (! empty( $pages ) ) : ?>
-	<ul class="articles">
+	<div class="category-articles">
 		<?php foreach( $pages as $page ): ?>
-		<li><a href="<?=$page['url']?>"><img src="<?=$page['thumbnail']?>" alt="<?=$page['title']?>"/><?=$page['title']?></a> <?=$page['abstract']?></li>
+		<div class="category-article">
+			<div class="category-articles-thumb">
+				<a href="<?=$page['url']?>"><img src="<?=$page['thumbnail']?>" alt="<?=$page['title']?>"/></a>
+			</div>
+			<div class="category-articles-text">
+				<h1><a href="<?=$page['url']?>"><?=$page['title']?></a></h1>
+				<?=$page['abstract']?>
+			</div>
+		</div>
 		<?php endforeach; ?>
-	</ul>
-	<?php else: ?>
-	<ul>
-		<li><a href="<?= $result->getUrl(); ?>" <?=$trackingData;?> ><?=Language::factory($wg->ContentLanguage)->truncate($result->getTextUrl(), 90);?></a></li>
-	</ul>
+	</div>
 	<?php endif; ?>
 </article>
 </li>
-
