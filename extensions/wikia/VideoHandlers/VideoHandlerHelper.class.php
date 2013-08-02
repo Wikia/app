@@ -236,7 +236,7 @@ class VideoHandlerHelper extends WikiaModel {
 		$videoDetail = array();
 		$title = Title::newFromText( $videoInfo['title'], NS_FILE );
 		if ( $title instanceof Title ) {
-			$file = $this->wf->FindFile( $title );
+			$file = wfFindFile( $title );
 			if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
 				// get thumbnail
 				$thumb = $file->transform( array( 'width' => $thumbWidth, 'height' => $thumbHeight ) );
@@ -244,7 +244,7 @@ class VideoHandlerHelper extends WikiaModel {
 				// get user
 				if ( !empty($videoInfo['addedBy']) ) {
 					$user = User::newFromId( $videoInfo['addedBy'] );
-					$userName = ( User::isIP($user->getName()) ) ? $this->wf->Msg( 'oasis-anon-user' ) : $user->getName();
+					$userName = ( User::isIP($user->getName()) ) ? wfMessage( 'oasis-anon-user' )->text() : $user->getName();
 					$userUrl = $user->getUserPage()->getFullURL();
 				} else {
 					$userName = '';
@@ -287,9 +287,9 @@ class VideoHandlerHelper extends WikiaModel {
 	 */
 	public function getSortOptions() {
 		$options = array(
-			'recent' => $this->wf->Message( 'specialvideos-sort-latest' )->text(),
-			'popular' => $this->wf->Message( 'specialvideos-sort-most-popular' )->text(),
-			'trend' => $this->wf->Message( 'specialvideos-sort-trending' )->text(),
+			'recent' => wfMessage( 'specialvideos-sort-latest' )->text(),
+			'popular' => wfMessage( 'specialvideos-sort-most-popular' )->text(),
+			'trend' => wfMessage( 'specialvideos-sort-trending' )->text(),
 		);
 
 		return $options;
