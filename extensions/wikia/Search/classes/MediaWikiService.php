@@ -499,6 +499,26 @@ class MediaWikiService
 	}
 	
 	/**
+	 * For a given wiki ID, get all values in the city_domain table.
+	 * @param int $wikiId
+	 * @return array
+	 */
+	public function getDomainsForWikiId( $wikiId ) {
+		$dbw = wfGetDB( DB_SLAVE, [], $this->getGlobal( 'ExternalSharedDB' ) );
+		$dbResult = $dbw->select(
+			array( "city_domains" ),
+			array( "*" ),
+			array( "city_id" => $wikiId ),
+			__METHOD__
+		);
+		$result = [];
+		while( $row = $dbw->fetchObject( $dbResult ) ) {
+			$result[] = $row->city_domain;
+		}
+		return $result;
+	}
+	
+	/**
 	 * Given a domain, returns a wiki ID.
 	 * @param string $domain
 	 * @return int|null

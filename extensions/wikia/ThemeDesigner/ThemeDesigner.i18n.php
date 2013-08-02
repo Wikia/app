@@ -1588,6 +1588,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
  * @author Malafaya
  * @author Rhaijin
  * @author SandroHc
@@ -1641,9 +1642,9 @@ $messages['pt'] = array(
 	'themedesigner-history-item' => '$1 de $2',
 	'themedesigner-button-change-text' => 'Alterar texto',
 	'themedesigner-reason' => 'Compositor de Variantes do Tema - gravado por $1',
-	'themedesigner-size-error' => 'Tamanho de ficheiro incorrecto',
+	'themedesigner-size-error' => 'Tamanho de ficheiro incorreto',
 	'themedesigner-dimensions-error' => 'A imagem excede os limites de tamanho',
-	'themedesigner-type-error' => 'Tipo de ficheiro incorrecto',
+	'themedesigner-type-error' => 'Tipo de ficheiro incorreto',
 	'themedesigner-unknown-error' => 'Ocorreu um erro que não é possível identificar. Tente novamente, por favor.',
 	'themedesigner-manual-upload-error' => 'Use o Compositor de Variantes do Tema para colocar o símbolo da wiki e definir o fundo',
 	'themedesigner-favicon-heading' => 'Favicon',
@@ -1695,8 +1696,8 @@ $messages['pt-br'] = array(
 	'themedesigner-size' => 'tamanho',
 	'themedesigner-button-save' => 'Salvar',
 	'themedesigner-upload-a-graphic' => 'upload de um padrão gráfico',
-	'themedesigner-rules-wordmark' => 'até 250x65 pixels (só ficheiros .png)', # Fuzzy
-	'themedesigner-dont-use-a-graphic' => 'Não usar um padrão gráfico', # Fuzzy
+	'themedesigner-rules-wordmark' => 'Carregar um arquivo .png que de 250 x 65 pixels ou menos.',
+	'themedesigner-dont-use-a-graphic' => 'remover',
 	'themedesigner-history-item' => '$1 de $2',
 	'themedesigner-button-change-text' => 'Alterar texto',
 	'themedesigner-reason' => 'Compositor de Temas Visuais - gravado por $1',

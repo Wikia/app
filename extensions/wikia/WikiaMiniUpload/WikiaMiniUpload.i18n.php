@@ -94,6 +94,7 @@ $messages['qqq'] = array(
 {{Identical|Insert}}',
 	'wmu-name' => '{{Identical|Name}}',
 	'wmu-license' => '{{Identical|License}}',
+	'wmu-licensing' => '{{Identical|Licensing}}',
 	'wmu-size' => '{{Identical|Size}}',
 	'wmu-thumbnail' => '{{Identical|Thumbnail}}',
 	'wmu-width' => '{{Identical|Width}}',
@@ -971,6 +972,14 @@ $messages['diq'] = array(
 	'wmu-column' => 'Estûni',
 	'wmu-gallery-btn1' => 'Ju na dosya deke',
 	'wmu-alignment' => 'Hiza fi',
+);
+
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'wmu-license' => 'Licence',
+	'wmu-licensing' => 'Licencing',
 );
 
 /** Esperanto (Esperanto)
@@ -2429,7 +2438,7 @@ $messages['pt'] = array(
 	'wmu-license-cc' => 'Sujeito aos termos da licença Creative Commons - Atribuição - Partilha nos Mesmos Termos 3.0',
 	'wmu-bad-extension' => 'Tentou importar um tipo de ficheiro não permitido. Tente novamente, por favor.',
 	'wmu-filetype-missing' => 'Falta a extensão do ficheiro neste upload',
-	'wmu-filetype-incorrect' => 'Este upload tem uma extensão de ficheiro incorrecta',
+	'wmu-filetype-incorrect' => 'Este upload tem uma extensão de ficheiro incorreta',
 	'wmu-hide-license-msg' => 'esconder texto da licença',
 	'wmu-show-license-msg' => 'mostrar texto da licença',
 	'wmu-max-thumb' => 'foi excedido o tamanho máximo para miniaturas; a reverter para o original',
@@ -2522,7 +2531,7 @@ $messages['pt-br'] = array(
 	'wmu-columns' => '$1 {{PLURAL:$1|coluna|colunas}}',
 	'wmu-column' => 'Colunas',
 	'wmu-added-from-plc' => 'Arquivo adicionado via uma reserva de espaço para imagem',
-	'wmu-uploaddisabled' => 'A importação de ficheiros foi impossibilitada nesta wiki',
+	'wmu-uploaddisabled' => 'O carregamento de arquivos está desabilitado nesta wiki',
 	'wmu-gallery-success' => 'Adicionou uma imagem a uma galeria nova. Clique abaixo para adicionar mais imagens ou inserir a galeria',
 	'wmu-gallery-btn1' => 'Adicionar outra imagem',
 	'wmu-gallery-btn2' => 'Inserir galeria no artigo',

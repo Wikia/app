@@ -686,6 +686,13 @@ Vols controlar els correus que reps? Vés a: {{fullurl: {{ns:special}}:Preferèn
 	'usersignup-facebook-problem' => 'Hi ha hagut un problema de comunicació amb Facebook. Si us plau, torna-ho a provar altre cop més tard.',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'usersignup-confirm-email-update' => 'Карлаяккха',
+);
+
 /** Czech (česky)
  * @author Chmee2
  * @author Macinosak

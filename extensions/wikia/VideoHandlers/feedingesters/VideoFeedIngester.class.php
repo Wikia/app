@@ -131,7 +131,18 @@ abstract class VideoFeedIngester {
 
 		$provider = empty($params['provider']) ? static::$PROVIDER : $params['provider'];
 
-		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $id );
+		// check if the video id exists in Ooyala.
+		if ( $remoteAsset ) {
+			$ooyalaAsset = new OoyalaAsset();
+			$isExist = $ooyalaAsset->isSourceIdExist( $id, $provider );
+			if ( $isExist ) {
+				print "Not uploading - video already exists in remote assets.\n";
+				wfProfileOut( __METHOD__ );
+				return 0;
+			}
+		}
+
+		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $id, $remoteAsset );
 		$dup_count = count($duplicates);
 		$previousFile = null;
 		if ( $dup_count > 0 ) {
@@ -260,6 +271,15 @@ abstract class VideoFeedIngester {
 			return 0;
 		}
 
+		// check if video title exists
+		$ooyalaAsset = new OoyalaAsset();
+		$isExist = $ooyalaAsset->isTitleExist( $assetData['name'], $assetData['provider'] );
+		if ( $isExist ) {
+			print( "Skip (Uploading Asset): $name ($assetData[provider]): video already exists in remote assets.\n" );
+			wfProfileOut( __METHOD__ );
+			return 0;
+		}
+
 		if ( $debug ) {
 			print "Ready to create remote asset\n";
 			print "id:          $id\n";
@@ -269,14 +289,6 @@ abstract class VideoFeedIngester {
 				print ":: $line\n";
 			}
 		} else {
-			$ooyalaAsset = new OoyalaAsset();
-			$isExist = $ooyalaAsset->isExist( $assetData['name'], $assetData['provider'] );
-			if ( $isExist ) {
-				print( "Skip (Uploading Asset): $name ($assetData[provider]): Video already exists.\n" );
-				wfProfileOut( __METHOD__ );
-				return 0;
-			}
-
 			$result = $ooyalaAsset->addRemoteAsset( $assetData );
 			if ( !$result ) {
 				wfProfileOut( __METHOD__ );
@@ -672,4 +684,42 @@ abstract class VideoFeedIngester {
 
 		return $ageGate;
 	}
+
+	/**
+	 * map category
+	 * @param string $cate
+	 * @return string $category
+	 */
+	protected function mapCategory( $cate ) {
+		switch( $cate ) {
+			case 'Movie':
+			case 'Movies':
+			case 'Movie Interview':
+			case 'Movie Behind the Scenes':
+			case 'Movie SceneOrSample':
+			case 'Movie Alternate Version':
+				$category = 'Movies';
+				break;
+			case 'TV':
+			case 'Series':
+			case 'Season':
+			case 'Episode':
+			case 'TV Show':
+			case 'Episodic Interview':
+			case 'Episodic Behind the Scenes':
+			case 'Episodic SceneOrSample':
+			case 'Episodic Alternate Version':
+				$category = 'TV';
+				break;
+			case 'Game':
+			case 'Games':
+			case 'Games SceneOrSample':
+				$category = 'Gaming';
+				break;
+			default: $category = 'Others';
+		}
+
+		return $category;
+	}
+
 }

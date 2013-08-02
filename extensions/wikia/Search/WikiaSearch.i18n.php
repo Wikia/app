@@ -58,6 +58,9 @@ $messages['en'] = array(
 	'wikiasearch2-category-result' => 'Category for <strong>$1</strong>',
 	
 
+	'wikiasearch2-top-module-title' => 'What\'s hot now',
+	'wikiasearch2-top-module-edit' => 'Last edited on $1',
+
 	'wikiamobile-wikiasearch2-next' => 'Next',
 	'wikiamobile-wikiasearch2-prev' => 'Previous',
 	'wikiamobile-wikiasearch2-results-count-of' => ' of $1 {{PLURAL:$1|result|results}}'
@@ -96,6 +99,8 @@ $messages['qqq'] = array(
 	'wikiasearch2-videos-M' => 'Parameters: $1 - number of Videos above 1000000',
 	'wikiasearch2-crosswiki-description' => 'Used to display a generic description of a wiki for cross-wiki search results',
 	'wikiasearch2-category-result' => 'Header for special category result',
+	'wikiasearch2-top-module-title' => 'Top module header title on search page',
+	'wikiasearch2-top-module-edit' => 'Article last edit string containing date'
 );
 
 /** Afrikaans (Afrikaans)

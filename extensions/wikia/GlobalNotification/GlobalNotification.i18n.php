@@ -92,6 +92,14 @@ $messages['gl'] = array(
 	'globalnotification-general-ajax-failure' => 'O navegador non puido conectar con Wikia. Inténteo máis tarde.',
 );
 
+/** Hebrew (עברית)
+ * @author Amire80
+ */
+$messages['he'] = array(
+	'globalnotification-desc' => 'הצגת הודעות מערכת לאירועים כגון כשלי AJAX',
+	'globalnotification-general-ajax-failure' => 'הדפדפן לא הצליח להתחבר לוויקיה. נא לנסות שוב.',
+);
+
 /** Hungarian (magyar)
  * @author Misibacsi
  * @author TK-999

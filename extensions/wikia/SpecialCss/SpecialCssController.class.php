@@ -3,7 +3,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 	protected  $model;
 
 	public function __construct() {
-		parent::__construct('CSS', 'specialcss', true);
+		parent::__construct('CSS', 'editinterface', true);
 	}
 
 	/**
@@ -70,6 +70,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 		$this->cssUpdatesUrl = $model->getCssUpdatesUrl();
 		$this->dropdown = $this->createButtonLinks();
 		$this->handleAssets();
+		$this->minorDefault = $model->isMinorEditDefault();
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->plain() );
 		
 		wfProfileOut(__METHOD__);
