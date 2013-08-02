@@ -2,7 +2,7 @@
 
 $dirPlugin = __DIR__;
 
-if ( !$wgEnableWallExt ) {
+if ( !defined( 'NS_USER_WALL' ) ) {
 	include( $dirExt . '/../Wall/WallNamespaces.php' );
 }
 

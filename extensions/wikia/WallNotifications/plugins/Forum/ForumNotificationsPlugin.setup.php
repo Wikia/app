@@ -2,7 +2,7 @@
 
 $dirPlugin = __DIR__;
 
-if ( !$wgEnableForumExt ) {
+if ( !defined( 'NS_WIKIA_FORUM_BOARD' ) ) {
 	include( $dirExt . '/../Forum/Forum.namespace.setup.php' );
 }
 
