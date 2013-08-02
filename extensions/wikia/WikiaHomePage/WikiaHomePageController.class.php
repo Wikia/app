@@ -551,9 +551,9 @@ class WikiaHomePageController extends WikiaController {
 		try {
 			$title = GlobalTitle::newFromText('Wiki-wordmark.png', NS_FILE, $wikiId);
 			if ( $title !== null ) {
-				$file = new GlobalFile($title, RepoGroup::singleton()->getLocalRepo());
+				$file = new GlobalFile($title);
 				if ( $file !== null ) {
-					$wordmarkUrl = wfReplaceImageServer($file->getUrl(), SassUtil::getCacheBuster());
+					$wordmarkUrl = $file->getUrl();
 				}
 			}
 		} catch ( Exception $e ) { }
