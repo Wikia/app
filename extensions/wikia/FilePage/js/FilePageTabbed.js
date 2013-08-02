@@ -1,6 +1,20 @@
 $(function() {
 
-var Paginator = function(el, summary) {
+var Paginator,
+		FilePageTabbed,
+		globalTracker,
+		track;
+
+// alias global tracker
+globalTracker = window.Wikia.Tracker || {};
+
+track = globalTracker.buildTrackingFunction({
+		action: globalTracker.ACTIONS.CLICK,
+		category: 'file-page',
+		trackingMethod: 'both'
+});
+
+Paginator = function(el) {
 	this.$el = $(el);
 	this.$backward = this.$el.find('.left');
 	this.$forward = this.$el.find('.right');
@@ -17,19 +31,32 @@ var Paginator = function(el, summary) {
 Paginator.prototype = {
 	ARTICLES_PER_PAGE: 3,
 	init: function() {
-		var self = this;
-		this.$el.on('click', '.arrow', function(e) {
-			$target = $(e.target);
-			if(!$target.hasClass('disabled')) {
-				if($target.hasClass('right')) {
-					self.currentPage++;
-				} else if ($target.hasClass('left')) {
-					self.currentPage--;
-				}
-				self.updatePager();
-				self.updateContent();
-			}
+		var self = this,
+				wiki;
 
+		this.$el.on('click', '.arrow', function(e) {
+				var prefix, $target;
+
+				$target = $(e.target);
+
+				if ( !$target.hasClass('disabled') ) {
+
+					prefix = __determineClickContext(self.$root);
+
+					track({
+							label: prefix + '-usage-pagination',
+							action: globalTracker.ACTIONS.CLICK
+					});
+					
+					if ( $target.hasClass('right') ) {
+						self.currentPage++;
+					} else if ( $target.hasClass('left') ) {
+						self.currentPage--;
+					}
+
+					self.updatePager();
+					self.updateContent();
+				}
 		});
 
 		this.flatSummary = [];
@@ -60,17 +87,18 @@ Paginator.prototype = {
 		this.$current.text(this.currentPage + 1);
 	},
 	updateContent: function() {
+		var index = this.currentPage * Paginator.prototype.ARTICLES_PER_PAGE,
+				flatSubSummary = this.flatSummary.slice(index, index + Paginator.prototype.ARTICLES_PER_PAGE),
+				summary = {},
+				i = 0,
+				self = this,
+				flatSubSummaryLength = flatSubSummary.length,
+				wiki;
+
 		this.$content.startThrobbing();
 
-		var index = this.currentPage * Paginator.prototype.ARTICLES_PER_PAGE,
-			flatSubSummary = this.flatSummary.slice(index, index + Paginator.prototype.ARTICLES_PER_PAGE),
-			summary = {},
-			i = 0,
-			self = this,
-			flatSubSummaryLength = flatSubSummary.length;
-
 		for(i = 0; i < flatSubSummaryLength; i++) {
-			var wiki = flatSubSummary[i].wiki;
+			wiki = flatSubSummary[i].wiki;
 			if(!summary[wiki]) {
 				summary[wiki] = [];
 			}
@@ -78,29 +106,31 @@ Paginator.prototype = {
 		}
 
 		$.nirvana.sendRequest({
-			controller: 'FilePageController',
-			method: 'fileList',
-			type: 'get',
-			format: 'html',
-			data: {
-				summary: summary,
-				type: this.type
-			},
-			callback: function(html) {
-				self.$content.html(html).stopThrobbing();
+				controller: 'FilePageController',
+				method: 'fileList',
+				type: 'get',
+				format: 'html',
+				data: {
+					summary: summary,
+					type: this.type
+				},
+				callback: function(html) {
+					self.$content.html(html).stopThrobbing();
 
-			}
+				}
 		});
 	}
 };
 
-var FilePageTabbed = {
+FilePageTabbed = {
 	init: function() {
 		this.initTabCookies();
 
 		this.initRemoveVideo();
 
 		this.initPagination();
+
+		this.initClickTracking();
 
 		// Hide global usage sections in Oasis
 		$('#globalusage, #mw-imagepage-section-globalusage').hide();
@@ -111,17 +141,17 @@ var FilePageTabbed = {
 	 */
 	initTabCookies: function() {
 		require(['wikia.localStorage'], function(ls) {
-			if(window.wgUserName) {
-				var selected = ls.WikiaFilePageTab || 'about';
+				if(window.wgUserName) {
+					var selected = ls.WikiaFilePageTab || 'about';
 
-				$('[data-tab="' + selected + '"] a').click();
+					$('[data-tab="' + selected + '"] a').click();
 
-				$(window).on('wikiaTabClicked', function(e, tab) {
-					ls.WikiaFilePageTab = tab;
-				});
-			} else {
-				$('[data-tab="about"] a').click();
-			}
+					$(window).on('wikiaTabClicked', function(e, tab) {
+							ls.WikiaFilePageTab = tab;
+					});
+				} else {
+					$('[data-tab="about"] a').click();
+				}
 		});
 	},
 	/**
@@ -129,7 +159,7 @@ var FilePageTabbed = {
 	 */
 	initPagination: function() {
 		$('.page-list-pagination').each(function() {
-			new Paginator($(this));
+				new Paginator($(this));
 		});
 	},
 	/**
@@ -139,50 +169,110 @@ var FilePageTabbed = {
 		var self = this;
 
 		$('.WikiaMenuElement').on('click', '.remove', function(e) {
-			e.preventDefault();
+				e.preventDefault();
 
-			$.showCustomModal($.msg('videohandler-remove-video-modal-title'),'', {
-				id: 'remove-video-modal',
-				buttons: [
-					{
-						id: 'ok',
-						defaultButton: true,
-						message: $.msg('videohandler-remove-video-modal-ok'),
-						handler: function(){
-							$.nirvana.sendRequest({
-								controller: 'VideoHandlerController',
-								method: 'removeVideo',
-								type: 'POST',
-								format: 'json',
-								data: {
-									title: wgTitle
-								},
-								callback: function(json) {
-									if (json['result'] == 'ok') {
-										window.location = json['redirectUrl'];
-									} else {
-										GlobalNotification.show(json['msg'], 'error');
-									}
+				$.showCustomModal($.msg('videohandler-remove-video-modal-title'),'', {
+						id: 'remove-video-modal',
+						buttons: [
+							{
+								id: 'ok',
+								defaultButton: true,
+								message: $.msg('videohandler-remove-video-modal-ok'),
+								handler: function(){
+									$.nirvana.sendRequest({
+											controller: 'VideoHandlerController',
+											method: 'removeVideo',
+											type: 'POST',
+											format: 'json',
+											data: {
+												title: window.wgTitle
+											},
+											callback: function(json) {
+												if (json['result'] === 'ok') {
+													window.location = json['redirectUrl'];
+												} else {
+													window.GlobalNotification.show(json['msg'], 'error');
+												}
+											}
+									});
 								}
-							});
+							},
+							{
+								id: 'cancel',
+								message: $.msg('videohandler-remove-video-modal-cancel'),
+								handler: function(){
+									self.removeVideoModal.closeModal();
+								}
+							}
+						],
+						callback: function() {
+							self.removeVideoModal = $('#remove-video-modal');
 						}
-					},
-					{
-						id: 'cancel',
-						message: $.msg('videohandler-remove-video-modal-cancel'),
-						handler: function(){
-							self.removeVideoModal.closeModal();
-						}
-					}
-				],
-				callback: function() {
-					self.removeVideoModal = $('#remove-video-modal');
+				});
+		});
+	},
+	initClickTracking: function() {
+		/*
+		 * Sets up click tracking for the "Appears in xxx" listings
+		 */
+		var elements,
+				$pageListings,
+				$parent;
+
+		elements = [
+			'.page-listing-title a',
+			'.page-listing-image',
+			'.page-listing-wiki',
+			'.see-more-link'
+		];
+
+		$pageListings = $('.page-listings');
+
+		$pageListings.on('click', elements.join(', '), function( evt ) {
+				evt.preventDefault();
+				var node = evt.target,
+						$node = $(node),
+						prefix,
+						url = node.href;
+
+				$parent = $node.closest('.page-listings');
+
+				prefix = __determineClickContext($parent);
+
+				if ($node.hasClass('see-more-link') ) {
+					track({
+							label: 'see-more',
+							action: globalTracker.ACTIONS.CLICK,
+					});
+				} else {
+					track({
+							label: prefix + '-usage',
+							action: globalTracker.ACTIONS.CLICK,
+					});
 				}
-			});
+
+				window.location = url;
 		});
 	}
+};
+
+/**
+ * @name __determineClickContext
+ * @private function
+ *
+ * @description Checks node for data-attr 'listingType' value
+ * @param jQuery object containing node with data-attr 'listingType'
+ * @returns String
+ */
+function __determineClickContext( $node ) {
+	var data = $node.data('listingType');
+
+	if ( !data ) {
+		return '';
+	}
+
+	return data === 'local' ? 'wiki' : 'global';
 }
 
 FilePageTabbed.init();
-
 });
