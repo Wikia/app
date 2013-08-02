@@ -166,14 +166,11 @@ class Factory {
 	protected function loadComponentConfig( $componentName ) {
 		wfProfileIn( __METHOD__ );
 
-		$app = \F::app();
-		$wgMemc = $app->wg->Memc;
 		$memcKey = wfMemcKey( __CLASS__, 'component', $componentName, static::MEMCACHE_VERSION );
-
 		$data = \WikiaDataAccess::cache(
 			$memcKey,
 			self::MEMCACHE_EXPIRATION,
-			function() use ($componentName, $wgMemc, $memcKey) {
+			function() use ( $componentName ) {
 				wfProfileIn( __METHOD__ );
 				$configInArray = $this->loadComponentConfigAsArray( $componentName );
 
