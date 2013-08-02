@@ -292,9 +292,9 @@ class LinkSuggest {
 	 */
 
 	static private function replaceResultIfRedirected(&$results, &$redirects) {
-		for($i = 0; $i < count($results); $i++) {
-			if (isset($redirects[$results[$i]])) {
-				$results[$i] = $redirects[$results[$i]];
+		foreach($results as &$val){
+			if (isset($redirects[$val])) {
+				$val = $redirects[$val];
 			}
 		}
 	}
