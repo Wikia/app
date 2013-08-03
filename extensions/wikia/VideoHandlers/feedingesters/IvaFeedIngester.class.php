@@ -245,6 +245,12 @@ class IvaFeedIngester extends VideoFeedIngester {
 				foreach ( $videoAssets as $videoAsset ) {
 					$clipData['titleName'] = empty( $videoAsset['DisplayTitle'] ) ? trim( $videoAsset['Title'] ) : trim( $videoAsset['DisplayTitle'] );
 					$clipData['titleName'] = $this->updateTitle( $clipData['titleName'] );
+
+					// add episode name
+					if ( !empty( $clipData['episode'] ) && preg_match( '/.* clip \d+/', strtolower( $clipData['titleName'] ), $matches ) ) {
+						$clipData['titleName'] = $clipData['episode'].' - '.$clipData['titleName'];
+					}
+
 					$clipData['videoId'] = $videoAsset['Publishedid'];
 
 					if ( !empty( $videoAsset['ExpirationDate'] ) ) {
