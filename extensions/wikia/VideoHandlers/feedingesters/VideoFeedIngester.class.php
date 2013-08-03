@@ -30,6 +30,8 @@ abstract class VideoFeedIngester {
 	private static $instances = array();
 	protected $filterByProviderVideoId = array();
 
+	protected static $CLDR_NAMES = array();
+
 	const CACHE_KEY = 'videofeedingester-2';
 	const CACHE_EXPIRY = 3600;
 	const THROTTLE_INTERVAL = 1;	// seconds
@@ -136,7 +138,7 @@ abstract class VideoFeedIngester {
 			$ooyalaAsset = new OoyalaAsset();
 			$isExist = $ooyalaAsset->isSourceIdExist( $id, $provider );
 			if ( $isExist ) {
-				print "Not uploading - video already exists in remote assets.\n";
+				print "Not uploading [$name (Id: $id)] - video already exists in remote assets.\n";
 				wfProfileOut( __METHOD__ );
 				return 0;
 			}
@@ -625,7 +627,7 @@ abstract class VideoFeedIngester {
 	 * @param string $rating
 	 * @return string $stdRating
 	 */
-	protected function getIndustryRating( $rating ) {
+	public function getIndustryRating( $rating ) {
 		$rating = trim( $rating );
 		$name = strtolower( $rating );
 		switch( $name ) {
@@ -657,6 +659,14 @@ abstract class VideoFeedIngester {
 			case 'not rated':
 				$stdRating = 'NR';
 				break;
+			case 'redband':
+			case 'red band':
+				$stdRating = 'red band';
+				break;
+			case 'greenband':
+			case 'green band':
+				$stdRating = 'green band';
+				break;
 			default: $stdRating = $rating;
 		}
 
@@ -664,34 +674,35 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
-	 * Get age gate
+	 * Get age required from industry rating
 	 * @param string $rating
 	 * @return int $ageGate
 	 */
-	protected function getAgeGate( $rating ) {
+	public function getAgeRequired( $rating ) {
 		switch( $rating ) {
 			case 'M':
 			case 'R':
 			case 'TV-MA':
-				$ageGate = 17;
+			case 'red band':
+				$ageRequired = 17;
 				break;
 			case 'AO':
 			case 'NC-17':
-				$ageGate = 18;
+				$ageRequired = 18;
 				break;
-			default: $ageGate = 0;
+			default: $ageRequired = 0;
 		}
 
-		return $ageGate;
+		return $ageRequired;
 	}
 
 	/**
-	 * map category
-	 * @param string $cate
+	 * get standard category
+	 * @param string $cat
 	 * @return string $category
 	 */
-	protected function mapCategory( $cate ) {
-		switch( $cate ) {
+	public function getCategory( $cat ) {
+		switch( $cat ) {
 			case 'Movie':
 			case 'Movies':
 			case 'Movie Interview':
@@ -720,6 +731,48 @@ abstract class VideoFeedIngester {
 		}
 
 		return $category;
+	}
+
+	/**
+	 * get CLDR code (return the original value if code not found)
+	 * @param string $value
+	 * @param string $type [language|country]
+	 * @return string $value
+	 */
+	public function getCldrCode( $value, $type = 'language' ) {
+		$value = trim( $value );
+		if ( !empty( $value ) ) {
+			if ( empty( self::$CLDR_NAMES ) ) {
+				// include cldr extension for language code
+				include( dirname( __FILE__ ).'/../../../cldr/CldrNames/CldrNamesEn.php' );
+				self::$CLDR_NAMES = array(
+					'languageNames' => $languageNames,
+					'countryNames' => $countryNames,
+				);
+			}
+
+			// $languageNames, $countryNames comes from cldr extension
+			$paramName = ( $type == 'country' ) ? 'countryNames' : 'languageNames';
+			if ( !empty( self::$CLDR_NAMES[$paramName] ) ) {
+				$code = array_search( $value, self::$CLDR_NAMES[$paramName] );
+				if ( $code != false ) {
+					$value = $code;
+				}
+			}
+		}
+
+		return $value;
+	}
+
+	/**
+	 * unique array and convert to string
+	 * @param array $arr
+	 * @return string
+	 */
+	public function uniqueArrayToString( $arr ) {
+		$lower = array_map( 'strtolower', $arr );
+		$unique = array_intersect_key( $arr, array_unique( $lower ) );
+		return implode( ', ', $unique );
 	}
 
 }
