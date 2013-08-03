@@ -568,7 +568,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 	 * @return string $title
 	 */
 	protected function updateTitle( $title ) {
-		if ( preg_match( '/(.*),[ ]*([tT][hH][eE])$/', $title, $matches ) ) {
+		if ( preg_match( '/^(.+), *(the)$/i', $title, $matches ) ) {
 			$title = trim( $matches[2] ).' '.trim( $matches[1] );
 		}
 
