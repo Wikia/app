@@ -20,18 +20,6 @@ $arrow-button-color: white;
 	$arrow-button-color: black;
 }
 
-// Callout text should be calculated the same way normal text is calculated
-// except the button color is used instead of the page color.
-$buttons-are-dark: false;
-@if lightness($color-buttons) < 50 {
-	$buttons-are-dark: true;
-}
-
-$color-callout-text: $color-text-dark;
-@if $buttons-are-dark {
-	$color-callout-text: $color-text-light;
-}
-
 // button that leads to history undo swap/keep page
 .lvs-history-btn {
 	vertical-align: 5px;
@@ -44,16 +32,30 @@ $color-callout-text: $color-text-dark;
 	display: none;
 	margin: 10px 0;
 	padding: 20px;
-	h1 {
-		font-size: 22px;
-		line-height: 33px;
-		margin: 0 0 15px;
-	}
-	ul {
-		color: $color-callout-text;
-		list-style: none;
+	p {
 		margin: 0;
+	}
+	ul, li {
 		padding: 0;
+		margin: 0;
+		list-style: none;
+	}
+	li {
+		float: left;
+		width: 33%;
+		box-sizing: border-box;
+		&:before {
+			// add some opacity in here to lighten the color a bit
+			background: $color-button-text;
+			content: "";
+			display: block;
+			float: left;
+			height: 100px;
+			width: 1px;
+		}
+		&:first-child:before {
+			display: none;
+		}
 	}
 	.close {
 		float: right;
@@ -113,7 +115,7 @@ $color-callout-text: $color-text-dark;
 			width: 49px;
 			z-index: 1; // needs to show above a playing video
 			&:before {
-				@include sprite-LicensedVideoSwap('big_' + $arrow-color + '_arrow');
+				@include sprite-LicensedVideoSwap('big_arrow_' + $arrow-color);
 				content: "";
 				display: block;
 				margin: auto;
