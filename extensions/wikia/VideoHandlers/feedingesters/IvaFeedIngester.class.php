@@ -247,6 +247,10 @@ class IvaFeedIngester extends VideoFeedIngester {
 					$clipData['titleName'] = $this->updateTitle( $clipData['titleName'] );
 
 					// add episode name to title if the title contains 'clip' and number
+					// example:
+					// $clipData['episode'] = 'THE OFFICE: GARDEN PARTY'
+					// $clipData['titleName'] = 'THE OFFICE: CLIP 1'
+					// The new title will be 'THE OFFICE: GARDEN PARTY - CLIP 1'
 					if ( !empty( $clipData['episode'] ) && preg_match( '/^([^:]*:)(.* clip \d+.*)/i', $clipData['titleName'], $matches ) ) {
 						$titleName = $clipData['titleName'];
 
