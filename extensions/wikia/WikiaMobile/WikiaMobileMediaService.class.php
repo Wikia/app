@@ -179,7 +179,7 @@ class WikiaMobileMediaService extends WikiaService {
 		$content = $this->request->getVal( 'content' );
 		$width = $attribs['width'];
 		// Don't include small or linked images in the mobile lightbox
-		$includeInModal = !$linked && $width > self::SMALL_IMAGE_SIZE;
+		$includeInModal = !$linked && $width >= self::SMALL_IMAGE_SIZE;
 
 		$attribs['data-src'] = $attribs['src'];
 		$attribs['src'] = wfBlankImgUrl();

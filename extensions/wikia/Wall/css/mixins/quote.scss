@@ -4,7 +4,7 @@
 @mixin message-quote() {
 	@include clearfix;
 	background-color: $color-wall-infobox;
-	border: 1px solid $color-wall-border;
+	border: 1px solid $color-page-border-subtle;
 	font-style: italic;
 	margin: 8px 0;
 	padding: 10px;

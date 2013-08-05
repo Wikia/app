@@ -136,13 +136,13 @@ class VideoInfo extends WikiaModel {
 				__METHOD__
 			);
 
-			if ( $db->affectedRows() > 0 ) {
-				$affected = true;
-			}
+			$affected = $db->affectedRows() > 0;
 
 			$db->commit();
 
-			$this->saveToCache();
+			if ( $affected ) {
+				$this->saveToCache();
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -181,13 +181,13 @@ class VideoInfo extends WikiaModel {
 				'IGNORE'
 			);
 
-			if ( $db->affectedRows() > 0 ) {
-				$affected = true;
-			}
+			$affected = $db->affectedRows() > 0;
 
 			$db->commit();
 
-			$this->saveToCache();
+			if ( $affected ) {
+				$this->saveToCache();
+			}
 		}
 
 		wfProfileOut( __METHOD__ );

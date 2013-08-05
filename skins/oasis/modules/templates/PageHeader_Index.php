@@ -7,6 +7,8 @@
 		echo F::app()->renderView('MenuButton', 'Index', array('action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName));
 	}
 
+	// TODO: use PageHeaderIndexExtraButtons hook for these buttons
+
 	// "Add a photo" button
 	if (!empty($isNewFiles) && !empty($wg->EnableUploads)) {
 		echo Wikia::specialPageLink('Upload', 'oasis-add-photo', 'wikia-button upphotos', 'blank.gif', 'oasis-add-photo-to-wiki', 'sprite photo');

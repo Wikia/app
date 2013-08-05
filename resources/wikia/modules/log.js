@@ -16,6 +16,9 @@
  * //e.g. http://glee.wikia.com/wiki/Rachel_Berry?log_level=info
  * //e.g. http://glee.wikia.com/wiki/Rachel_Berry?log_level=info&log_group=MyLogGroup
  *
+ * // The higher the log_level, the more messages will be logged.  If you want all messages,
+ * // use ?log_level=10 or ?log_level=trace_l3 (they are the same)
+ *
  * @see  printMessage for a list of parameters and their description
  */
 (function (context) {
@@ -30,8 +33,8 @@
 		error: 6,
 		debug: 7,
 		trace: 8,
-		trace_l2: 9,
-		trace_l3: 10
+		trace_l2: 9, // trace level 2
+		trace_l3: 10 // trace level 3
 	};
 
 	function logger() {

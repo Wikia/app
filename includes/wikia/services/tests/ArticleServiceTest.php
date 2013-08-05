@@ -28,6 +28,7 @@ class ArticleServiceTest extends WikiaBaseTest {
 			->will( $this->returnValue( null ) );
 
 		$this->mockGlobalVariable( 'wgMemc', $mockCache );
+		$this->mockGlobalVariable( 'wgSolrIsMaster', true );
 
 		$mockOutput->expects( $this->any() )
 			->method( 'getText' )
@@ -65,7 +66,7 @@ class ArticleServiceTest extends WikiaBaseTest {
 		$snippet = $service->getTextSnippet( $snippetLength );
 		$this->assertEquals( $expSnippetText, $snippet );
 	}
-	
+
 	/**
 	 * @covers ArticleService::getTextSnippet
 	 */
@@ -86,6 +87,7 @@ class ArticleServiceTest extends WikiaBaseTest {
 			->will( $this->returnValue( null ) );
 
 		$this->mockGlobalVariable( 'wgMemc', $mockCache );
+		$this->mockGlobalVariable( 'wgSolrIsMaster', true );
 
 		$mockArticle->expects( $this->any() )
 			->method( 'getID' )
@@ -102,7 +104,7 @@ class ArticleServiceTest extends WikiaBaseTest {
 		;
 		$this->assertEquals( 'solr text as a snippet', $service->getTextSnippet() );
 	}
-	
+
 	/**
 	 * @covers ArticleService::getTextFromSolr
 	 */
@@ -111,11 +113,10 @@ class ArticleServiceTest extends WikiaBaseTest {
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( [ 'getId' ] )
 		                    ->getMock();
-		
+
 		$mockResult = $this->getMock( 'Wikia\Search\Result', [ 'offsetGet', 'offsetExists' ] );
 		$mockDocumentService = $this->getMock( 'SolrDocumentService', [ 'setArticleId', 'getResult' ] );
-		
-		
+
 		$mockArticle
 		    ->expects( $this->once() )
 		    ->method ( 'getId' )
@@ -143,15 +144,14 @@ class ArticleServiceTest extends WikiaBaseTest {
 		    ->with   ( Wikia\Search\Utilities::field( 'html' ) )
 		    ->will   ( $this->returnValue( 'foo' ) )
 		;
-		
-		
+
 		$this->proxyClass( 'SolrDocumentService', $mockDocumentService );
-		$this->mockApp();
+
 		$this->assertEquals(
 				'foo',
 				(new ArticleService( $mockArticle ) )->getTextFromSolr()
 		);
-		
+
 	}
 
 	public function getTextSnippetDataProvider() {

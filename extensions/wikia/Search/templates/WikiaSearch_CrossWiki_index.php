@@ -1,5 +1,5 @@
 <section class="Search 'this-wiki WikiaGrid clearfix">
-	<form class="WikiaSearch" id="search-v2-form" action="<?=$pageUrl;?>">
+	<form class="WikiaSearch" id="search-v2-form" action="<?=$specialSearchUrl;?>">
 
 		<div class="SearchInput">
 			<?php foreach($namespaces as $ns): ?>

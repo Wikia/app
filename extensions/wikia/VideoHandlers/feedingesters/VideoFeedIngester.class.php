@@ -708,11 +708,11 @@ abstract class VideoFeedIngester {
 
 	/**
 	 * get standard category
-	 * @param string $cate
+	 * @param string $cat
 	 * @return string $category
 	 */
-	public function getCategory( $cate ) {
-		switch( $cate ) {
+	public function getCategory( $cat ) {
+		switch( $cat ) {
 			case 'Movie':
 			case 'Movies':
 			case 'Movie Interview':

@@ -174,4 +174,24 @@ class VideoHandlerController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * check if the file exists
+	 * @requestParam string fileTitle
+	 * @responseParam boolean $fileExists
+	 */
+	public function fileExists() {
+		$fileExists = false;
+
+		$fileTitle = $this->getVal( 'fileTitle', '' );
+		$title = Title::newFromText( $fileTitle, NS_FILE );
+		if ( $title instanceof Title ) {
+			$file = wfFindFile( $title );
+			if ( $file instanceof File && $file->exists() ) {
+				$fileExists = true;
+			}
+		}
+
+		$this->fileExists = $fileExists;
+	}
+
 }

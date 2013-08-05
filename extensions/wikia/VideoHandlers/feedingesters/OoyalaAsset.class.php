@@ -148,6 +148,13 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['thumbnail'] ) ) {
 			$metadata['thumbnail'] = $data['thumbnail'];
 		}
+		// ageGate can be 0
+		if ( isset( $data['ageGate'] ) ) {
+			$metadata['agegate'] = $data['ageGate'];
+		}
+		if ( !empty( $data['tags'] ) ) {
+			$metadata['tags'] = $data['tags'];
+		}
 		// hd can be 0
 		if ( isset( $data['hd'] ) ) {
 			$metadata['hd'] = $data['hd'];
@@ -166,6 +173,9 @@ class OoyalaAsset extends WikiaModel {
 		}
 		if ( !empty( $data['type'] ) ) {
 			$metadata['type'] = $data['type'];
+		}
+		if ( !empty( $data['trailerRating'] ) ) {
+			$metadata['trailerrating'] = $data['trailerRating'];
 		}
 		if ( !empty( $data['industryRating'] ) ) {
 			$metadata['industryrating'] = $data['industryRating'];
