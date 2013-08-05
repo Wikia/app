@@ -10,7 +10,6 @@ class WikiaMobileMediaService extends WikiaService {
 	const THUMB_WIDTH = 480;
 	const SINGLE = 1;
 	const GROUP = 2;
-	const RIBBON_SIZE = 50;
 	const SMALL_IMAGE_SIZE = 64;
 
 	static public function calculateMediaSize( $width, $height ) {
@@ -26,12 +25,11 @@ class WikiaMobileMediaService extends WikiaService {
 		return array( 'width' => $targetWidth, 'height' => $targetHeight );
 	}
 
-	static public function showRibbon( $width, $height ) {
-		if( $width < self::RIBBON_SIZE || $height < self::RIBBON_SIZE ) {
-			return false;
-		}
-
-		return true;
+	static public function isSmallImage( $width, $height ) {
+		return (
+			(is_numeric($width) && (int) $width < self::SMALL_IMAGE_SIZE) ||
+			(is_numeric($height) && (int) $height < self::SMALL_IMAGE_SIZE)
+		);
 	}
 
 	public function renderMedia() {
@@ -178,8 +176,9 @@ class WikiaMobileMediaService extends WikiaService {
 		$linked = $this->request->getBool( 'linked', false );
 		$content = $this->request->getVal( 'content' );
 		$width = $attribs['width'];
+		$height = $attribs['height'];
 		// Don't include small or linked images in the mobile lightbox
-		$includeInModal = !$linked && $width >= self::SMALL_IMAGE_SIZE;
+		$includeInModal = !$linked && !self::isSmallImage($width, $height);
 
 		$attribs['data-src'] = $attribs['src'];
 		$attribs['src'] = wfBlankImgUrl();
@@ -203,12 +202,13 @@ class WikiaMobileMediaService extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		$width = $this->request->getVal( 'width', null );
+		$height = $this->request->getVal( 'height', null );
 		$class = $this->request->getVal( 'class', [] );
 		$content = $this->request->getVal( 'content', null );
 		$caption = $this->request->getVal( 'caption', null );
 		$showRibbon = $this->request->getVal( 'showRibbon', false );
 
-		if ( is_numeric( $width ) && (int) $width < self::SMALL_IMAGE_SIZE ) {
+		if ( self::isSmallImage($width, $height) ) {
 			$class[] = 'small';
 		}
 
@@ -270,7 +270,7 @@ class WikiaMobileMediaService extends WikiaService {
 				'class' => array_merge([( ( !empty( $link ) ) ? 'link' : 'thumb' )], $class),
 				'content' => $image->toString(),
 				'caption' => $caption,
-				'showRibbon' => self::showRibbon( $attribs['width'], $attribs['height'] ),
+				'showRibbon' => self::isSmallImage( $attribs['width'], $attribs['height'] ),
 				'width' => $image->getVal( 'width', null )
 			)
 		)->toString();
