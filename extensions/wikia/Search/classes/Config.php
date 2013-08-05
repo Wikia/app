@@ -480,9 +480,7 @@ class Config
 	 * @return \Wikia\Search\Config provides fluent interface
 	 */
 	public function setWikiMatch( Match\Wiki $wikiMatch ) {
-		if ( $this->getLanguageCode() === $this->getService()->getGlobalForWiki( 'wgLanguageCode', $wikiMatch->getId() ) ) {
-			$this->wikiMatch = $wikiMatch;
-		}
+		$this->wikiMatch = $wikiMatch;
 		return $this;
 	}
 	
