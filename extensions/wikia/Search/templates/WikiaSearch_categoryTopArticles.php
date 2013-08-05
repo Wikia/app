@@ -16,13 +16,14 @@
 	<?= $result->getText(); ?>
 	<?php if (! empty( $pages ) ) : ?>
 	<div class="category-articles">
+		<?php $apos = 0; ?>
 		<?php foreach( $pages as $page ): ?>
 		<div class="category-article">
-			<div class="category-articles-thumb">
+			<div class="category-articles-thumb" data-pos="<?= $apos ?>">
 				<a href="<?=$page['url']?>"><img src="<?=$page['thumbnail']?>" alt="<?=$page['title']?>"/></a>
 			</div>
-			<div class="category-articles-text">
-				<h1><a href="<?=$page['url']?>"><?=$page['title']?></a></h1>
+			<div class="category-articles-text" data-pos="<?= $apos++ ?>">
+				<b><a href="<?=$page['url']?>"><?=$page['title']?></a></b>
 				<?=$page['abstract']?>
 			</div>
 		</div>
