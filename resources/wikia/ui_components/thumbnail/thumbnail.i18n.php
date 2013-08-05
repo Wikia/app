@@ -10,6 +10,6 @@ $messages['pl'] = [
 ];
 
 $messages['qqq'] = [
-	'styleguide-name-buttons' => 'Name of thumbnail component section on Special:Styleguide page',
-	'styleguide-description-button' => "Description of thumbnail component its types displayed below the component's section name",
+	'styleguide-name-thumbnail' => 'Name of thumbnail component section on Special:Styleguide page',
+	'styleguide-description-thumbnail' => "Description of thumbnail component its types displayed below the component's section name",
 ];

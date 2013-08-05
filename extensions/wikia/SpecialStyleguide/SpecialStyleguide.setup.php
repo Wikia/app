@@ -35,3 +35,4 @@ $wgSpecialPageGroups['Styleguide'] = 'wikia';
 
 // message files
 $wgExtensionMessagesFiles['SpecialStyleguide'] = $dir . 'SpecialStyleguide.i18n.php';
+$wgExtensionMessagesFiles['SpecialStyleguideComponents'] = $dir . '../../../resources/wikia/ui_components/ui_components.i18n.php';
