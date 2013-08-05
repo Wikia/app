@@ -491,7 +491,8 @@ class MediaWikiService
                 $wikiId = ( $interWikiComId = $this->getWikiIdByHost( "{$langCode}.{$domain}.wikia.com" ) ) !== null ? $interWikiComId : $this->getWikiIdByHost( "{$domain}.{$langCode}" );
             }
             //exclude wikis which lang does not match current one
-            if ( isset( $wikiId ) && $langCode === $this->getGlobalForWiki( 'wgLanguageCode', $wikiId ) ) {
+            $wikiLang = $this->getGlobalForWiki( 'wgLanguageCode', $wikiId );
+            if ( isset( $wikiId ) && ( (! $wikiLang ) || ( $langCode === $wikiLang ) ) ) {
                 $match = new \Wikia\Search\Match\Wiki( $wikiId, $this );
             }
 		}
