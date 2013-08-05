@@ -35,4 +35,6 @@ $wgSpecialPageGroups['Styleguide'] = 'wikia';
 
 // message files
 $wgExtensionMessagesFiles['SpecialStyleguide'] = $dir . 'SpecialStyleguide.i18n.php';
+
+// TODO: We could try to encapsulate messages per component. There is green light from TOR and was one try but it failed
 $wgExtensionMessagesFiles['SpecialStyleguideComponents'] = $dir . '../../../resources/wikia/ui_components/ui_components.i18n.php';
