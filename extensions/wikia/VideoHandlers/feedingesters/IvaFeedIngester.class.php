@@ -246,9 +246,16 @@ class IvaFeedIngester extends VideoFeedIngester {
 					$clipData['titleName'] = empty( $videoAsset['DisplayTitle'] ) ? trim( $videoAsset['Title'] ) : trim( $videoAsset['DisplayTitle'] );
 					$clipData['titleName'] = $this->updateTitle( $clipData['titleName'] );
 
-					// add episode name
-					if ( !empty( $clipData['episode'] ) && preg_match( '/.* clip \d+/', strtolower( $clipData['titleName'] ), $matches ) ) {
-						$clipData['titleName'] = $clipData['episode'].' - '.$clipData['titleName'];
+					// add episode name to title if the title contains 'clip' and number
+					if ( !empty( $clipData['episode'] ) && preg_match( '/^([^:]*:)(.* clip \d+.*)/i', $clipData['titleName'], $matches ) ) {
+						$titleName = $clipData['titleName'];
+
+						// if episode and title start with the same words (i.e. <series_name>:), remove the matched word from the title
+						if ( !empty( $matches[1] ) && !empty( $matches[2] ) && preg_match( '/^'.$matches[1].'.*/i', $clipData['episode'] ) ) {
+							$titleName = trim( $matches[2] );
+						}
+
+						$clipData['titleName'] = $clipData['episode'].' - '.$titleName;
 					}
 
 					$clipData['videoId'] = $videoAsset['Publishedid'];
