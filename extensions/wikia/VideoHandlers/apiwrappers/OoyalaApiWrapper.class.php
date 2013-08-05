@@ -195,6 +195,12 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	protected function loadMetadata( array $overrideFields = array() ) {
+		if ( !isset( $overrideFields['source'] ) ) {
+			$metadata['source'] = $this->getSource();
+		}
+		if ( !isset( $overrideFields['sourceId'] ) ) {
+			$metadata['sourceId'] = $this->getSourceId();
+		}
 		if ( !isset($overrideFields['genres']) ) {
 			$overrideFields['genres'] = $this->getGenres();
 		}
