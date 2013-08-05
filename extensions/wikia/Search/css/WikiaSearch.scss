@@ -484,9 +484,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 //category module
 .category-articles {
 	overflow: hidden;
-	h1 {
-		display: inline;
-	}
+	margin: 10px 0 0 10px;
 	.category-article {
 		margin: 5px 0 5px 0;
 		min-height: 50px;
