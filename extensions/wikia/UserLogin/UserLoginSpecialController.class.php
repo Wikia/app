@@ -253,7 +253,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string errParam - error param
 	 */
 	public function login() {
-		global $wgDisableTempUser;
 		// Init session if necessary
 		if ( session_id() == '' ) {
 			wfSetupSession();
@@ -284,15 +283,15 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		switch ( $loginCase ) {
 			case LoginForm::SUCCESS:
 				// first check if user has confirmed email after sign up
-				if ( !empty( $wgDisableTempUser ) && $this->wg->User->getOption( self::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) == true ) {//@TODO get rid of $wgDisableTempUser check when TempUser will be globally disabled
-					//TempUser disabled case
+				if ( !UserLoginHelper::isTempUser( $loginForm->mUsername ) && $this->wg->User->getOption( self::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) == true ) {//@TODO remove isTempUser from condition when TempUser will be globally disabled
+					//User not confirmed on signup
 					LoginForm::clearLoginToken();
 					$this->userLoginHelper->setNotConfirmedUserSession( $this->wg->User->getId() );
 					$this->userLoginHelper->clearPasswordThrottle( $loginForm->mUsername );
 					$this->result = 'unconfirm';
 					$this->msg = wfMsgExt( 'usersignup-confirmation-email-sent', array('parseinline'), $this->wg->User->getEmail() );
 				} else {
-					//TempUser case
+					//Login succesful
 					$injected_html = '';
 					wfRunHooks('UserLoginComplete', array(&$this->wg->User, &$injected_html));
 
@@ -305,7 +304,11 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					}
 					$this->wg->User->setCookies();
 					LoginForm::clearLoginToken();
-					TempUser::clearTempUserSession();
+					if ( !UserLoginHelper::isTempUser( $loginForm->mUsername ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
+						UserLoginHelper::clearNotConfirmedUserSession();
+					} else {
+						TempUser::clearTempUserSession();
+					}
 					$this->userLoginHelper->clearPasswordThrottle( $loginForm->mUsername );
 					$this->username = $loginForm->mUsername;
 					$this->result = 'ok';
@@ -328,40 +331,34 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$this->errParam = 'username';
 				break;
 			case LoginForm::NOT_EXISTS:
-				if ( empty( $wgDisableTempUser ) ) {//@TODO get rid of $wgDisableTempUser check when TempUser will be globally disabled
+				if ( UserLoginHelper::isTempUser( $loginForm->mUsername ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
 					//TempUser case
-					$tempUser = TempUser::getTempUserFromName($loginForm->mUsername);
-					if ( $tempUser ) {
-						if ( $this->userLoginHelper->isPasswordThrottled($loginForm->mUsername) ) {
-							$this->result = 'error';
-							$this->msg = wfMsg( 'userlogin-error-login-throttled' );
-						} else {
-							$user = $tempUser->mapTempUserToUser( false );
-							if ( $user->checkPassword($loginForm->mPassword) ) {
-								LoginForm::clearLoginToken();
-								$tempUser->setTempUserSession();
-								$this->userLoginHelper->clearPasswordThrottle( $loginForm->mUsername );
-
-								// set lang for unconfirmed user
-								$langCode = $user->getOption('language');
-								if ( $this->wg->User->getOption('language') != $langCode ) {
-									$this->wg->User->setOption( 'language', $langCode );
-								}
-
-								$this->result = 'unconfirm';
-								$this->msg = wfMsgExt( 'usersignup-confirmation-email-sent', array('parseinline'), $tempUser->getEmail() );
-							} else if ( $user->checkTemporaryPassword($loginForm->mPassword) ) {
-								$this->result = 'resetpass';
-							} else {
-								$this->result = 'error';
-								$this->msg = wfMsg( 'userlogin-error-wrongpassword' );
-								$this->errParam = 'password';
-							}
-						}
-					} else {
+					if ( $this->userLoginHelper->isPasswordThrottled($loginForm->mUsername) ) {
 						$this->result = 'error';
-						$this->msg = wfMsg( 'userlogin-error-nosuchuser' );
-						$this->errParam = 'username';
+						$this->msg = wfMsg( 'userlogin-error-login-throttled' );
+					} else {
+						$tempUser = TempUser::getTempUserFromName($loginForm->mUsername);
+						$user = $tempUser->mapTempUserToUser( false );
+						if ( $user->checkPassword($loginForm->mPassword) ) {
+							LoginForm::clearLoginToken();
+							$tempUser->setTempUserSession();
+							$this->userLoginHelper->clearPasswordThrottle( $loginForm->mUsername );
+
+							// set lang for unconfirmed user
+							$langCode = $user->getOption('language');
+							if ( $this->wg->User->getOption('language') != $langCode ) {
+								$this->wg->User->setOption( 'language', $langCode );
+							}
+
+							$this->result = 'unconfirm';
+							$this->msg = wfMsgExt( 'usersignup-confirmation-email-sent', array('parseinline'), $tempUser->getEmail() );
+						} else if ( $user->checkTemporaryPassword($loginForm->mPassword) ) {
+							$this->result = 'resetpass';
+						} else {
+							$this->result = 'error';
+							$this->msg = wfMsg( 'userlogin-error-wrongpassword' );
+							$this->errParam = 'password';
+						}
 					}
 				} else {
 					$this->result = 'error';

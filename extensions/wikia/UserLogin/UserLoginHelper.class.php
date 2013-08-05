@@ -229,14 +229,14 @@ class UserLoginHelper extends WikiaModel {
 	 * @return array result { array( 'result' => result status[error/ok/invalidsession/confirmed], 'msg' => result message ) }
 	 */
 	public function sendConfirmationEmail( $username, $user=null ) {
-		global $wgDisableTempUser;
 		if ( empty($username) ) {
 			$result['result'] = 'error';
 			$result['msg'] = wfMsg( 'userlogin-error-noname' );
 			return $result;
 		}
 
-		if ( !empty($wgDisableTempUser) ) {//@TODO get rid of $wgDisableTempUser check when TempUser will be globally disabled
+		//Check whether user already exists or is already confirmed
+		if ( !$this->isTempUser( $username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
 			$user = User::newFromName( $username );
 			if ( !($user instanceof User) || $user->getID() == 0 ) {
 				//User doesn't exist
@@ -255,21 +255,10 @@ class UserLoginHelper extends WikiaModel {
 			//TempUser part
 			/* @var $tempUser TempUser */
 			$tempUser = TempUser::getTempUserFromName( $username );
-			if ( $tempUser == false ) {
-				$user = User::newFromName( $username );
-				if ( $user instanceof User && $user->getID() != 0 ) {
-					$result['result'] = 'confirmed';
-					$result['msg'] = wfMsgExt( 'usersignup-error-confirmed-user', array('parseinline'), $username, $user->getUserPage()->getFullURL() );
-				} else {
-					$result['result'] = 'error';
-					$result['msg'] = wfMsg( 'userlogin-error-nosuchuser' );
-				}
-				return $result;
-			}
 		}
 
 		//IF session is invalid, set invalidsession result and redirect to login page
-		if ( !empty( $wgDisableTempUser ) ) {//@TODO get rid of $wgDisableTempUser check when TempUser will be globally disabled
+		if ( !$this->isTempUser( $username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
 			if ( !(isset($_SESSION['notConfirmedUserId']) && $_SESSION['notConfirmedUserId'] == $user->getId()) ) {
 				$result['result'] = 'invalidsession';
 				$result['msg'] = wfMsg( 'usersignup-error-invalid-user' );
@@ -283,7 +272,7 @@ class UserLoginHelper extends WikiaModel {
 			}
 		}
 
-		if ( !empty($wgDisableTempUser) ) {//@TODO get rid of $wgDisableTempUser check when TempUser will be globally disabled
+		if ( !$this->isTempUser( $username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
 			if ( !$this->wg->EmailAuthentication || !Sanitizer::validateEmail($user->getEmail()) ) {//Why throw an invalid email error when wgEmailAuthentication is off?
 				$result['result'] = 'error';
 				$result['msg'] = wfMsg( 'usersignup-error-invalid-email' );
@@ -297,7 +286,7 @@ class UserLoginHelper extends WikiaModel {
 			}
 		}
 
-		if ( empty($wgDisableTempUser) ) {//@TODO get rid of $wgDisableTempUser check when TempUser will be globally disabled
+		if ( $this->isTempUser( $username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
 			$user = $tempUser->mapTempUserToUser( true, $user );
 		}
 		if ( $user->isEmailConfirmed() ) {
@@ -307,7 +296,7 @@ class UserLoginHelper extends WikiaModel {
 		}
 
 		//Signup throttle check
-		if ( !empty($wgDisableTempUser) ) {//@TODO get rid of $wgDisableTempUser check when TempUser will be globally disabled
+		if ( !$this->isTempUser( $username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
 			$memKey = $this->getMemKeyConfirmationEmailsSent( $user->getId() );
 		} else {
 			$memKey = $this->getMemKeyConfirmationEmailsSent( $tempUser->getId() );
@@ -321,7 +310,7 @@ class UserLoginHelper extends WikiaModel {
 
 		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array('language' => $user->getOption('language'), 'type' => 'confirmation-email') );
 		$response = $user->sendConfirmationMail( false, 'ConfirmationMail', 'usersignup-confirmation-email', true, $emailTextTemplate );
-		if ( empty($wgDisableTempUser) ) {//@TODO get rid of $wgDisableTempUser check when TempUser will be globally disabled
+		if ( $this->isTempUser( $username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
 			$tempUser->saveSettingsTempUserToUser( $user );
 		}
 		if( !$response->isGood() ) {
@@ -329,7 +318,7 @@ class UserLoginHelper extends WikiaModel {
 			$result['msg'] = wfMsg( 'userlogin-error-mail-error' );
 		} else {
 			$result['result'] = 'ok';
-			if ( !empty($wgDisableTempUser) ) {//@TODO get rid of $wgDisableTempUser check when TempUser will be globally disabled
+			if ( !$this->isTempUser( $username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
 				$result['msg'] = wfMsgExt( 'usersignup-confirmation-email-sent', array('parseinline'), htmlspecialchars($user->getEmail()) );
 			} else {
 				$result['msg'] = wfMsgExt( 'usersignup-confirmation-email-sent', array('parseinline'), htmlspecialchars($tempUser->getEmail()) );
@@ -561,6 +550,41 @@ class UserLoginHelper extends WikiaModel {
 
 	public static function setNotConfirmedUserSession( $userId ) {
 		$_SESSION['notConfirmedUserId'] = $userId;
+	}
+
+	/**
+	 * Function that helps to determine whether we have to do with TempUser case
+	 * It's a function for transitional state of getting rid of TempUser
+	 * It can be removed after TempUser global disable
+	 *
+	 * @param $username String User Name
+	 * @param $clear Bool resets static value for username
+	 * @return bool
+	 */
+	public static function isTempUser( $username, $clear = false ) {
+		global $wgDisableTempUser;
+		static $isTempUser;
+
+		if ( !empty( $wgDisableTempUser ) ) {
+			return false;
+		}
+
+		if ( $clear ) {
+			$isTempUser[$username] = null;
+			return null;
+		}
+
+		if ( isset( $isTempUser[$username] ) ) {
+			return $isTempUser[$username];
+		}
+
+		$tempuser = TempUser::getTempUserFromName( $username );
+		if ( $tempuser != false ) {
+			$isTempUser[$username] = true;
+		} else {
+			$isTempUser[$username] = false;
+		}
+		return $isTempUser[$username];
 	}
 
 

@@ -195,7 +195,6 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string subheading
 	 */
 	public function sendConfirmationEmail() {
-		global $wgDisableTempUser;
 		if($this->request->getVal('format', '') !== 'json') {
 			$this->wg->Out->setPageTitle(wfMsg('usersignup-confirm-page-title'));
 			$this->response->addAsset('extensions/wikia/UserLogin/css/UserSignup.scss');
@@ -216,7 +215,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		// default heading, subheading, msg
 		// depending on what happens, default will be over written below
 		$mailTo = $this->username;
-		if ( !empty( $wgDisableTempUser ) ) {//@TODO get rid of $wgDisableTempUser check when TempUser will be globally disabled
+		if ( !UserLoginHelper::isTempUser( $this->username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
 			$user = User::newFromName( $this->username );
 			if ( $user instanceof User && $user->getID() != 0 ) {
 				if ( (isset($_SESSION['notConfirmedUserId']) && $_SESSION['notConfirmedUserId'] == $user->getId()) ) {
@@ -254,7 +253,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 					'username' => $this->username,
 					'email' => $this->email
 				);
-				if ( !empty( $wgDisableTempUser ) ) {//@TODO get rid of $wgDisableTempUser check when TempUser will be globally disabled
+				if ( !UserLoginHelper::isTempUser( $this->username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
 					$response = $this->sendSelfRequest( 'changeUserEmail', $params );
 				} else {
 					$response = $this->sendSelfRequest( 'changeTempUserEmail', $params );
