@@ -5,8 +5,27 @@ $messages['en'] = [
 	// button
 	'styleguide-name-buttons' => 'Buttons',
 	'styleguide-description-button' => 'Description for Button component in Styleguide.',
+
 	'styleguide-description-link-button' => 'Link Button',
+	'styleguide-description-link-button-href' => '"href" attribute for a button',
+	'styleguide-description-link-button-title' => '"title" attribute for a button',
+	'styleguide-description-link-button-text' => 'Text for the button',
+	'styleguide-description-link-button-size' => 'Specify size of the button (3 possible options: "small", "normal",
+	"big")',
+	'styleguide-description-link-button-style' => 'Specify style of the button (2 possible options: "primary",
+	"secondary")',
+	'styleguide-description-link-button-target' => '"target" attribute for a button',
+	'styleguide-description-link-button-id' => '"id" attribute for a button',
+	'styleguide-description-link-button-data' => '"data" attribute for a button. Specify each data attribute as a
+	separate object with "key" and "value" params',
+
 	'styleguide-description-input-button' => 'Input Button',
+	'styleguide-description-input-button-type' => '"type" attribute for a button. (3 possible options: "button",
+	"submit", "reset")',
+	'styleguide-description-input-button-name' => '"name" attribute for a button',
+	'styleguide-description-input-button-value' => '"value" attribute for a button',
+	'styleguide-description-input-button-disabled' => '"disabled" attribute for a button',
+
 	'styleguide-description-simple-button' => 'Simple Button',
 
 	// dropdown
