@@ -59,8 +59,50 @@ abstract class VideoFeedIngester {
 		return $name;
 	}
 
-	abstract protected function generateMetadata(array $data, &$errorMsg);
-	abstract protected function generateCategories(array $data, $addlCategories);
+	/**
+	 * generate the metadata we consider interesting for this video
+	 * @param array $data - Video data
+	 * @param $errorMsg - Store any error we encounter
+	 * @return array|int - An associative array of meta data or zero on error
+	 */
+	protected function generateMetadata( $data, &$errorMsg ) {
+		if ( empty( $data['videoId'] ) ) {
+			$errorMsg = 'no video id exists';
+			return 0;
+		}
+
+		$metadata = array(
+			'videoId'        => $data['videoId'],
+			'hd'             => isset( $data['hd'] ) ? $data['hd'] : 0,
+			'duration'       => isset( $data['duration'] ) ? $data['duration'] : '',
+			'published'      => isset( $data['published'] ) ? $data['published'] : '',
+			'thumbnail'      => isset( $data['thumbnail'] ) ? $data['thumbnail'] : '',
+			'description'    => isset( $data['description'] ) ? $data['description'] : '',
+			'name'           => isset( $data['name'] ) ? $data['name'] : '',
+			'category'       => isset( $data['category'] ) ? $data['category'] : '',
+			'keywords'       => isset( $data['keywords'] ) ? $data['keywords'] : '',
+			'industryRating' => isset( $data['industryRating'] ) ? $data['industryRating'] : '',
+			'ageGate'        => isset( $data['ageGate'] ) ? $data['ageGate'] : 0,
+			'ageRequired'    => isset( $data['ageRequired'] ) ? $data['ageRequired'] : 0,
+			'provider'       => isset( $data['provider'] ) ? $data['provider'] : '',
+			'language'       => isset( $data['language'] ) ? $data['language'] : '',
+			'subtitle'       => isset( $data['subtitle'] ) ? $data['subtitle'] : '',
+			'type'           => isset( $data['type'] ) ? $data['type'] : '',
+			'genres'         => isset( $data['genres'] ) ? $data['genres'] : '',
+			'actors'         => isset( $data['actors'] ) ? $data['actors'] : '',
+			'targetCountry'  => isset( $data['targetCountry'] ) ? $data['targetCountry'] : '',
+			'series'         => isset( $data['series'] ) ? $data['series'] : '',
+			'season'         => isset( $data['season'] ) ? $data['season'] : '',
+			'episode'        => isset( $data['episode'] ) ? $data['episode'] : '',
+			'characters'     => isset( $data['characters'] ) ? $data['characters'] : '',
+			'resolution'     => isset( $data['resolution'] ) ? $data['resolution'] : '',
+			'aspectRatio'    => isset( $data['aspectRatio'] ) ? $data['aspectRatio'] : '',
+			'expirationDate' => isset( $data['expirationDate'] ) ? $data['expirationDate'] : '',
+			'pageCategories' => isset( $data['pageCategories'] ) ? $data['pageCategories'] : '',
+		);
+
+		return $metadata;
+	}
 
 	/**
 	 *  If  $this->filterByProviderVideoId  is not empty, the ingestion script will only upload the videos
@@ -129,7 +171,6 @@ abstract class VideoFeedIngester {
 				print ":: $line\n";
 			}
 		}
-		$addlCategories = !empty($params['addlCategories']) ? $params['addlCategories'] : array();
 
 		$id = $data['videoId'];
 		$name = $this->generateName($data);
@@ -193,7 +234,8 @@ abstract class VideoFeedIngester {
 		}
 
 		// prepare wiki categories string (eg [[Category:MyCategory]] )
-		$categories = $this->generateCategories($data, $addlCategories);
+		$categories = empty( $data['pageCategories'] ) ? array() : explode( ',', $data['pageCategories'] );
+		array_map( 'trim', $categories );
 		$categories[] = wfMessage( 'videohandler-category' )->inContentLanguage()->text();
 		$categories = array_unique( $categories );
 		$categoryStr = '';
