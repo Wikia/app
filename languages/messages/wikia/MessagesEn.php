@@ -317,6 +317,10 @@ Your account has been created. Don't forget to change your {{SITENAME}} [[Specia
 'group-wikiastars-member' => 'Wikia Star',
 'grouppage-wikiastars' => 'wikia:Help:WikiaStars',
 
+'group-voldev' => 'Volunteer Developers',
+'group-voldev-member' => 'Volunteer Developer',
+'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+
 # AjaxLogin
 'ajaxLogin1' => 'To complete your log in, you must enter a new password.  This will take you away from this edit page and you may lose your current edit.',
 'ajaxLogin2' => 'Are you sure? You may lose your edits if you leave this page now.',
