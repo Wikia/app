@@ -25,8 +25,8 @@ class WikiaHubsV2Hooks {
 			$app->wg->SuppressWikiHeader = true;
 			$app->wg->SuppressRail = true;
 			$app->wg->SuppressFooter = true;
-			// prevent saving user edits
 			if (!$app->wg->request->wasPosted()) {
+				// don't change article object while saving data
 				$article = new WikiaHubsV2Article($title, $model->getHubPageId($dbKeyNameSplit[0]), $hubTimestamp);
 			}
 		}
