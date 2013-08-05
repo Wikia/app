@@ -1,13 +1,16 @@
 <?php
 
 class StyleguideComponents {
+
 	/**
-	 * @desc Component's example file suffix
-	 * Example: button component example file should be named button_example.json
-	 *
-	 * @var String
+	 * @desc Array key name where message key for component's name could be found in documentation array
 	 */
-	const EXAMPLE_FILE_SUFFIX = '_example.json';
+	const COMPONENT_NAME_MSG_KEY = 'name-msg-templateVar';
+
+	/**
+	 * @desc Array key name where message key for component's description could be found in documentation array
+	 */
+	const COMPONENT_DESC_MSG_KEY = 'description-msg-templateVar';
 
 	/**
 	 * @desc Component's documentation file suffix
@@ -82,20 +85,6 @@ class StyleguideComponents {
 	}
 
 	/**
-	 * @desc Returns path to example json file
-	 *
-	 * @param String $name
-	 * @return string
-	 */
-	private function getComponentExampleFileFullPath( $name ) {
-		return $this->uiFactory->getComponentsDir() .
-		$name .
-		DIRECTORY_SEPARATOR .
-		$name .
-		self::EXAMPLE_FILE_SUFFIX;
-	}
-
-	/**
 	 * @desc Returns full documentation file's path
 	 *
 	 * @param string $name component's name
@@ -128,23 +117,6 @@ class StyleguideComponents {
 	}
 
 	/**
-	 * @desc
-	 *
-	 * @param String $componentName
-	 * @return Array
-	 */
-	private function loadExampleFileAsArray( $componentName ) {
-		wfProfileIn( __METHOD__ );
-
-		$exampleFile = $this->getComponentExampleFileFullPath( $componentName );
-		$exampleFileContent = $this->uiFactory->loadFileContent( $exampleFile );
-		$exampleInArray = $this->uiFactory->loadFromJSON( $exampleFileContent );
-
-		wfProfileOut( __METHOD__ );
-		return $exampleInArray;
-	}
-
-	/**
 	 * @desc Returns full documentation file's path
 	 *
 	 * @param string $name component's name
@@ -168,56 +140,21 @@ class StyleguideComponents {
 		$components = [];
 
 		foreach( $this->componentsNames as $componentName ) {
-			$componentConfig = $this->uiFactory->loadComponentConfigAsArray( $componentName );
+			$component = [];
 			$componentDocumentation = $this->loadComponentDocumentationAsArray( $componentName );
-			$componentConfig = $this->prepareMessages( $componentConfig, $componentDocumentation );
+			$component = $this->prepareMainMessages( $component, $componentDocumentation );
+
 			// add unique id so after clicking on the components list's link page jumps to the right anchor
 			$componentConfig['id'] = Sanitizer::escapeId( $componentName, ['noninitial'] );
 
-			if ( isset( $componentConfig['templateVars'] ) ) {
-				$componentConfig['mustacheVars'] = $this->prepareComponents( $componentConfig['templateVars'], $componentName );
+			if ( isset( $componentDocumentation['types'] ) ) {
+				$component['types'] = print_r( $componentDocumentation['types'], true);
 			}
 
-			$components[] = $componentConfig;
+			$components[] = $component;
 		}
 
 		return $components;
-	}
-
-	/**
-	 * @desc Returns array to render component information and examples on style guide page
-	 *
-	 * @param Array $templateVars
-	 * @param String $componentName
-	 * @return Array
-	 */
-	private function prepareComponents( $templateVars, $componentName ) {
-		$mustacheVars = [];
-
-		$exampleData = $this->loadExampleFileAsArray( $componentName );
-
-		foreach ( $templateVars as $name => $var ) {
-			/** @var \Wikia\UI\Component $component */
-			$component = Wikia\UI\Factory::getInstance()->init( $componentName );
-			$renderedExample = isset( $exampleData[$name] )
-								? $component->render( $exampleData[$name] )
-								: null;
-
-			if ( isset( $var['name-var-msg-key'] ) ) {
-				$var['name'] = $this->prepareMessage( $var['name-var-msg-key'] );
-			}
-
-			$mustacheVars[] = [
-				// component's type
-				'type' => $name,
-				// template variables
-				'fields' => $var,
-				// rendered example
-				'example' => $renderedExample,
-			];
-		}
-
-		return $mustacheVars;
 	}
 
 	/**
@@ -227,9 +164,9 @@ class StyleguideComponents {
 	 * @param Array $messages
 	 * @return mixed
 	 */
-	private function prepareMessages( $component, $messages ) {
-		$component['name'] = $this->prepareMessage( $messages['name-msg-key'] );
-		$component['description'] = $this->prepareMessage( $messages['description-msg-key'] );
+	private function prepareMainMessages( $component, $messages ) {
+		$component['name'] = $this->prepareMessage( $messages[ self::COMPONENT_NAME_MSG_KEY ] );
+		$component['description'] = $this->prepareMessage( $messages[ self::COMPONENT_DESC_MSG_KEY] );
 
 		return $component;
 	}

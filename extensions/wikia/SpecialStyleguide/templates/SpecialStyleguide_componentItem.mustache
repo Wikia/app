@@ -1,16 +1,5 @@
 <li class="component-item" id="{{id}}">
 	<h2>{{name}}</h2>
 	<p>{{description}}</p>
-	{{! the <dl> is temporary it will be replaced with rendered components and live preview after UI repo
-	implementation}}
-	{{#mustacheVars}}
-		{{#fields.name}}{{fields.name}}{{/fields.name}}
-		<dl>
-			<dt><strong>Required params: </strong></dt>
-			<dd><pre>{{#fields.required}}{{ . }}, {{/fields.required}}</pre></dd>
-			<dt><strong>Optional params:</strong></dt>
-			<dd><pre>{{#fields.optional}}{{ . }}, {{/fields.optional}}</pre></dd>
-		</dl>
-		{{#example}}<p>{{{example}}}</p>{{/example}}
-	{{/mustacheVars}}
+	<pre>{{types}}</pre>
 </li>
