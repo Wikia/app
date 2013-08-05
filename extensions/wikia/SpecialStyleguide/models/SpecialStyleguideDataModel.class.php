@@ -10,11 +10,13 @@ class SpecialStyleguideDataModel {
 
 	public function __construct() {
 		$helper = new StyleguideComponents();
+		/** @var \Wikia\UI\Component $button */
+		$button = \Wikia\UI\Factory::getInstance()->init('button');
 		$this->sectionData = [
 			'header' => [
 				'home' => [
 					'mainHeader' => wfMessage( 'styleguide-home-header' )->plain(),
-					'getStartedBtn' => \Wikia\UI\Factory::getInstance()->init('button')->render([
+					'getStartedBtn' => $button->render([
 						'type' => 'input',
 						'vars' => [
 							'type' => 'submit',
