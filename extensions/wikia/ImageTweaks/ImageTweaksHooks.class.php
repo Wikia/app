@@ -32,7 +32,7 @@ class ImageTweaksHooks {
 
 			if( is_object( $thumb ) ) {
 				$width = $thumb->getWidth();
-				$showRibbon = WikiaMobileMediaService::showRibbon( $width, $thumb->getHeight() );
+				$showRibbon = WikiaMobileMediaService::isSmallImage( $width, $thumb->getHeight() );
 			} else {
 				$width = false;
 				$showRibbon = false;
@@ -111,7 +111,7 @@ class ImageTweaksHooks {
 
 			if( is_object( $thumb ) ) {
 				$width = $thumb->getWidth();
-				$showRibbon = WikiaMobileMediaService::showRibbon( $width, $thumb->getHeight() );
+				$showRibbon = WikiaMobileMediaService::isSmallImage( $width, $thumb->getHeight() );
 			} else {
 				$width = false;
 				$showRibbon = false;
