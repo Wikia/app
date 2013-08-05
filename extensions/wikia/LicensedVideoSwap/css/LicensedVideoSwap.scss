@@ -9,7 +9,6 @@
 $alt-bg-color: mix($color-page-opposite, $color-page, 10%);
 $thumb-img-width: 184px;
 $thumb-img-height: 103px;
-$callout-section-padding-left: 60px;
 
 $arrow-color: 'black';
 @if $is-dark-wiki {
@@ -33,7 +32,7 @@ $button-icon-color: white;
 	display: none;
 	font-size: 13px;
 	margin: 10px 0;
-	padding: 20px;
+	padding: 15px 20px 8px 20px;
 	.description{
 		font-size: 16px;
 	}
@@ -47,17 +46,17 @@ $button-icon-color: white;
 	}
 	ul {
 		display: inline-block;
-		margin: 20px 0 15px;
+		margin: 35px 0 15px;
 		position: relative;
 		width: 100%;
 		&:before, &:after {
 			@include opacity(50);
 			background: $color-button-text;
-			bottom: 20px;
+			bottom: 0px;
 			content: "";
 			display: block;
 			position: absolute;
-			top: 20px;
+			top: 0px;
 			width: 1px;
 		}
 		&:before {
@@ -70,15 +69,11 @@ $button-icon-color: white;
 	li {
 		box-sizing: border-box;
 		float: left;
-		padding: 20px 0;
+		padding: 0px 6%;
 		width: 33.3%;
+		text-align: center;
 		&:first-child:before {
 			display: none;
-		}
-		// Help keep items centered with responsive layout
-		.inner {
-			width: 62%;
-			margin: auto;
 		}
 	}
 	.close {

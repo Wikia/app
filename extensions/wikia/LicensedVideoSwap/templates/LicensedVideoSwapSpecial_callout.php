@@ -7,22 +7,16 @@
 
 	<ul>
 		<li>
-			<div class="inner">
-				<span class="heading licensed"><?= wfMessage( 'lvs-callout-title-licensed' )->parse() ?></span>
-				<?= wfMessage( 'lvs-callout-reason-licensed' )->parse() ?>
-			</div>
+			<span class="heading licensed"><?= wfMessage( 'lvs-callout-title-licensed' )->parse() ?></span>
+			<?= wfMessage( 'lvs-callout-reason-licensed' )->parse() ?>
 		</li>
 		<li>
-			<div class="inner">
-				<span class="heading quality"><?= wfMessage( 'lvs-callout-title-quality' )->parse() ?></span>
-				<?= wfMessage( 'lvs-callout-reason-quality' )->parse() ?>
-			</div>
+			<span class="heading quality"><?= wfMessage( 'lvs-callout-title-quality' )->parse() ?></span>
+			<?= wfMessage( 'lvs-callout-reason-quality' )->parse() ?>
 		</li>
 		<li>
-			<div class="inner">
-				<span class="heading collaborative"><?= wfMessage( 'lvs-callout-title-collaborative' )->parse() ?></span>
-				<?= wfMessage( 'lvs-callout-reason-collaborative' )->parse() ?>
-			</div>
+			<span class="heading collaborative"><?= wfMessage( 'lvs-callout-title-collaborative' )->parse() ?></span>
+			<?= wfMessage( 'lvs-callout-reason-collaborative' )->parse() ?>
 		</li>
 	</ul>
 
