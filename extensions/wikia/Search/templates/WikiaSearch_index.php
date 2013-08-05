@@ -59,7 +59,7 @@
 									  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
 									  'query' => $query
 									));
-							} else if ( $result['ns'] === 14 && empty( $categorySeen ) ) {
+							} else if ( $result['ns'] === 14 && empty( $categorySeen ) && $categoryModule ) {
 								$categorySeen = true;
 								echo $app->renderView( 'WikiaSearch', 'categoryTopArticles', array(
 									  'result' => $result,

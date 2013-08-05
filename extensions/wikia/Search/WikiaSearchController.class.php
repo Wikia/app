@@ -478,7 +478,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$abs = explode( ',', $abGroup );
 		//check if template for ab test exists
 		$view = static::WIKIA_DEFAULT_RESULT;
+		$categoryModule = false;
 		if ( !empty( $abs ) ) {
+			//set ab for category
+			if ( in_array( 47, $abs ) ) {
+				$categoryModule = true;
+			}
 			foreach( $abs as $abGroup ) {
 				if ( $this->templateExists( $abGroup ) ) {
 					$view = $abGroup;
@@ -486,6 +491,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			}
 		}
 		$this->setVal( 'resultView', $view );
+		$this->setVal( 'categoryModule', $categoryModule );
 		return true;
 	}
 
