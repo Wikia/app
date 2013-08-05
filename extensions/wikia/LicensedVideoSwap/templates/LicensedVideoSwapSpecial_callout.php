@@ -1,6 +1,6 @@
 <section class="lvs-callout">
 	<button class="close wikia-chiclet-button">
-		<img src="<?= $wgStylePath ?>/oasis/images/icon_close.png">
+		<img src="<?= $wg->StylePath ?>/oasis/images/icon_close.png">
 	</button>
 	<p class="description"><?= wfMessage( 'lvs-callout-header' )->plain() ?></p>
 
