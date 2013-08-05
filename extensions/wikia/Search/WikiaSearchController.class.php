@@ -310,7 +310,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'tabs',                  $this->sendSelfRequest( 'tabs', $tabsArgs ) );
 		$this->setVal( 'query',                 $searchConfig->getQuery()->getQueryForHtml() );
 		$this->setVal( 'resultsPerPage',        $searchConfig->getLimit() );
-		$this->setVal( 'pageUrl',               $this->wg->Title->getFullUrl() );
+		$this->setVal( 'specialSearchUrl',      $this->wg->Title->getFullUrl() );
 		$this->setVal( 'isInterWiki',           $searchConfig->getInterWiki() );
 		$this->setVal( 'namespaces',            $searchConfig->getNamespaces() );
 		$this->setVal( 'hub',                   $searchConfig->getHub() );
