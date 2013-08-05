@@ -314,6 +314,7 @@ jQuery(function($){
 		var category = 'search',
 			suggestionShowed = false,
 			$topModule = $('.top-wiki-articles'),
+			$categoryModule = $('.category-articles'),
 			$wikiaSearch = $('.WikiaSearch');
 
 		$wikiaSearch.on('mousedown', '.autocomplete', {
@@ -405,6 +406,24 @@ jQuery(function($){
 					browserEvent: e,
 					category: topCategory,
 					label: 'top-module-title-' + el.data('pos')
+				});
+			});
+		}
+		if ( $categoryModule.length ) {
+			var moduleCategory = 'special-' + category;
+			$categoryModule.on('mousedown', '.category-articles-thumb', function(e){
+				var el = $(e.currentTarget);
+				track({
+					browserEvent: e,
+					category: moduleCategory,
+					label: 'category-module-thumb-' + el.data('pos')
+				});
+			}).on('mousedown', '.category-articles-text', function(e){
+				var el = $(e.currentTarget);
+				track({
+					browserEvent: e,
+					category: moduleCategory,
+					label: 'category-module-title-' + el.data('pos')
 				});
 			});
 		}
