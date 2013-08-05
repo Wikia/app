@@ -29,7 +29,6 @@ $button-icon-color: white;
 // For now, this callout style will be specific to lvs, but we might be able to re-use this on the Video Wikia home page
 .lvs-callout {
 	background: $color-buttons;
-	box-sizing: border-box;
 	color: $color-button-text;
 	display: none;
 	font-size: 13px;
@@ -51,27 +50,21 @@ $button-icon-color: white;
 		margin: 20px 0 15px;
 		position: relative;
 		width: 100%;
-		&:before {
+		&:before, &:after {
 			@include opacity(50);
 			background: $color-button-text;
 			bottom: 20px;
 			content: "";
 			display: block;
-			left: 33.3%;
 			position: absolute;
 			top: 20px;
 			width: 1px;
 		}
+		&:before {
+			left: 33.3%;
+		}
 		&:after {
-			@include opacity(50);
-			background: $color-button-text;
-			bottom: 20px;
-			content: "";
-			display: block;
 			right: 33.3%;
-			position: absolute;
-			top:20px;
-			width: 1px;
 		}
 	}
 	li {
