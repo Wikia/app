@@ -55,8 +55,7 @@ $messages['en'] = array(
 	'wikiasearch2-choose-category' => 'Choose Category',
 	'wikiasearch2-crosswiki-description' => '$1 is a community site that anyone can contribute to. Discover, share and add your knowledge!',
 	'wikiasearch2-exact-result' => 'Results for $1 from Wikia',
-	'wikiasearch2-category-result' => 'Category for <strong>$1</strong>',
-	
+
 
 	'wikiasearch2-top-module-title' => 'What\'s hot now',
 	'wikiasearch2-top-module-edit' => 'Last edited on $1',
@@ -98,7 +97,6 @@ $messages['qqq'] = array(
 	'wikiasearch2-images-M' => 'Parameters: $1 - number of Images above 1000000',
 	'wikiasearch2-videos-M' => 'Parameters: $1 - number of Videos above 1000000',
 	'wikiasearch2-crosswiki-description' => 'Used to display a generic description of a wiki for cross-wiki search results',
-	'wikiasearch2-category-result' => 'Header for special category result',
 	'wikiasearch2-top-module-title' => 'Top module header title on search page',
 	'wikiasearch2-top-module-edit' => 'Article last edit string containing date'
 );
