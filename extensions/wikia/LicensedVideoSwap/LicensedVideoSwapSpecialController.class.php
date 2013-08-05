@@ -486,5 +486,4 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->containerId = $this->getVal('containerId');
 		$this->blankImgUrl = $this->wg->BlankImgUrl;
 	}
-
 }

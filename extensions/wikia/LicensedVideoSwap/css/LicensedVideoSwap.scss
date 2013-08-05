@@ -9,15 +9,16 @@
 $alt-bg-color: mix($color-page-opposite, $color-page, 10%);
 $thumb-img-width: 184px;
 $thumb-img-height: 103px;
+$callout-section-padding-left: 60px;
 
 $arrow-color: 'black';
 @if $is-dark-wiki {
 	$arrow-color: 'white';
 }
 
-$arrow-button-color: white;
+$button-icon-color: white;
 @if lightness($color-buttons) > 55 {
-	$arrow-button-color: black;
+	$button-icon-color: black;
 }
 
 // button that leads to history undo swap/keep page
@@ -25,13 +26,18 @@ $arrow-button-color: white;
 	vertical-align: 5px;
 }
 
-// For now, this callout style will be specific to lvs, but we may want to make it global in the future
+// For now, this callout style will be specific to lvs, but we might be able to re-use this on the Video Wikia home page
 .lvs-callout {
 	background: $color-buttons;
+	box-sizing: border-box;
 	color: $color-button-text;
 	display: none;
+	font-size: 13px;
 	margin: 10px 0;
 	padding: 20px;
+	.description{
+		font-size: 16px;
+	}
 	p {
 		margin: 0;
 	}
@@ -40,25 +46,76 @@ $arrow-button-color: white;
 		margin: 0;
 		list-style: none;
 	}
-	li {
-		float: left;
-		width: 33%;
-		box-sizing: border-box;
+	ul {
+		display: inline-block;
+		margin: 20px 0 15px;
+		position: relative;
+		width: 100%;
 		&:before {
-			// add some opacity in here to lighten the color a bit
+			@include opacity(50);
 			background: $color-button-text;
+			bottom: 20px;
 			content: "";
 			display: block;
-			float: left;
-			height: 100px;
+			left: 33.3%;
+			position: absolute;
+			top: 20px;
 			width: 1px;
 		}
+		&:after {
+			@include opacity(50);
+			background: $color-button-text;
+			bottom: 20px;
+			content: "";
+			display: block;
+			right: 33.3%;
+			position: absolute;
+			top:20px;
+			width: 1px;
+		}
+	}
+	li {
+		box-sizing: border-box;
+		float: left;
+		padding: 20px 0;
+		width: 33.3%;
 		&:first-child:before {
 			display: none;
+		}
+		// Help keep items centered with responsive layout
+		.inner {
+			width: 62%;
+			margin: auto;
 		}
 	}
 	.close {
 		float: right;
+	}
+	.heading {
+		display: block;
+		font-size: 21px;
+		margin-bottom: 5px;
+		&:before {
+			@include sprite-LicensedVideoSwap-base;
+			content: "";
+			display: inline-block;
+			margin-right: 7px;
+		}
+		&.licensed:before {
+			@include sprite-LicensedVideoSwap('license_icon_' + $button-icon-color);
+			width: 20px;
+			height: 20px;
+		}
+		&.quality:before {
+			@include sprite-LicensedVideoSwap('high_quality_icon_' + $button-icon-color);
+			width: 20px;
+			height: 20px;
+		}
+		&.collaborative:before {
+			@include sprite-LicensedVideoSwap('collaboration_icon_' + $button-icon-color);
+			width: 23px;
+			height: 21px;
+		}
 	}
 }
 
@@ -202,7 +259,7 @@ $arrow-button-color: white;
 		}
 	}
 	.swap-button:before {
-		@include sprite-LicensedVideoSwap($arrow-button-color + '_small_arrow');
+		@include sprite-LicensedVideoSwap('small_arrow_' + $button-icon-color);
 		content: "";
 		display: inline-block;
 		height: 9px;

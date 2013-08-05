@@ -2,21 +2,27 @@
 	<button class="close wikia-chiclet-button">
 		<img src="<?= $wgStylePath ?>/oasis/images/icon_close.png">
 	</button>
-	<p><?= wfMessage( 'lvs-callout-header' )->plain() ?></p>
+	<p class="description"><?= wfMessage( 'lvs-callout-header' )->plain() ?></p>
 
 
 	<ul>
 		<li>
-			<?= wfMessage( 'lvs-callout-title-licensed' )->parse() ?>
-			<?= wfMessage( 'lvs-callout-reason-licensed' )->parse() ?>
+			<div class="inner">
+				<span class="heading licensed"><?= wfMessage( 'lvs-callout-title-licensed' )->parse() ?></span>
+				<?= wfMessage( 'lvs-callout-reason-licensed' )->parse() ?>
+			</div>
 		</li>
 		<li>
-			<?= wfMessage( 'lvs-callout-title-quality' )->parse() ?>
-			<?= wfMessage( 'lvs-callout-reason-quality' )->parse() ?>
+			<div class="inner">
+				<span class="heading quality"><?= wfMessage( 'lvs-callout-title-quality' )->parse() ?></span>
+				<?= wfMessage( 'lvs-callout-reason-quality' )->parse() ?>
+			</div>
 		</li>
 		<li>
-			<?= wfMessage( 'lvs-callout-title-collaborative' )->parse() ?>
-			<?= wfMessage( 'lvs-callout-reason-collaborative' )->parse() ?>
+			<div class="inner">
+				<span class="heading collaborative"><?= wfMessage( 'lvs-callout-title-collaborative' )->parse() ?></span>
+				<?= wfMessage( 'lvs-callout-reason-collaborative' )->parse() ?>
+			</div>
 		</li>
 	</ul>
 
