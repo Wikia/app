@@ -3,6 +3,7 @@
 class StyleguideComponents {
 	/**
 	 * @desc Component's example file suffix
+	 * Example: button component example file should be named button_example.json
 	 *
 	 * @var String
 	 */
@@ -10,16 +11,38 @@ class StyleguideComponents {
 
 	/**
 	 * @desc Component's documentation file suffix
-	 * Example buttons component documentation file should be named buttons_doc.json
+	 * Example: button component documentation file should be named button_doc.json
 	 *
 	 * @var String
 	 */
 	const DOCUMENTATION_FILE_SUFFIX = '_doc.json';
 
+	/**
+	 * @desc Component's messages/i18n file suffix
+	 * Example: button i18n file should be named button.i18n.php
+	 *
+	 * @var String
+	 */
+	const MESSAGES_FILE_SUFFIX = 'i18n.php';
+
+	/**
+	 * @var Array|null
+	 */
+	private $componentsNames = null;
+
+	/**
+	 * @var Wikia\UI\Factory
+	 */
 	private $uiFactory;
 
 	public function __construct() {
 		$this->uiFactory = Wikia\UI\Factory::getInstance();
+
+		$this->componentsNames = WikiaDataAccess::cache(
+			wfSharedMemcKey( __CLASS__, 'components_names_list' ),
+			\Wikia\UI\Factory::MEMCACHE_EXPIRATION,
+			[$this, 'loadComponentsFromFileSystem']
+		);
 	}
 
 	/**
@@ -29,12 +52,47 @@ class StyleguideComponents {
 	 */
 	public function getAllComponents() {
 		$components = WikiaDataAccess::cache(
-			wfSharedMemcKey( __CLASS__, 'all_components' ),
+			wfSharedMemcKey( __CLASS__, 'all_components_list_with_details' ),
 			Wikia\UI\Factory::MEMCACHE_EXPIRATION,
 			[ $this, 'getAllComponentsFromDirectories' ]
 		);
 
 		return $components;
+	}
+
+	/**
+	 * @desc Iterates the components directory and returns list of it subdirectories
+	 *
+	 * @return array
+	 */
+	public function loadComponentsFromFileSystem() {
+		$componentsNames = [];
+		$directory = new DirectoryIterator( $this->uiFactory->getComponentsDir() );
+
+		while( $directory->valid() ) {
+			if( !$directory->isDot() && $directory->isDir() ) {
+				$componentName = $directory->getFilename();
+				$componentsNames[] = $componentName;
+			}
+
+			$directory->next();
+		}
+
+		return $componentsNames;
+	}
+
+	/**
+	 * @desc Returns path to example json file
+	 *
+	 * @param String $name
+	 * @return string
+	 */
+	private function getComponentExampleFileFullPath( $name ) {
+		return $this->uiFactory->getComponentsDir() .
+		$name .
+		DIRECTORY_SEPARATOR .
+		$name .
+		self::EXAMPLE_FILE_SUFFIX;
 	}
 
 	/**
@@ -52,6 +110,12 @@ class StyleguideComponents {
 		self::DOCUMENTATION_FILE_SUFFIX;
 	}
 
+	/**
+	 * @desc
+	 *
+	 * @param String $componentName
+	 * @return Array
+	 */
 	private function loadComponentDocumentationAsArray( $componentName ) {
 		wfProfileIn( __METHOD__ );
 
@@ -64,6 +128,38 @@ class StyleguideComponents {
 	}
 
 	/**
+	 * @desc
+	 *
+	 * @param String $componentName
+	 * @return Array
+	 */
+	private function loadExampleFileAsArray( $componentName ) {
+		wfProfileIn( __METHOD__ );
+
+		$exampleFile = $this->getComponentExampleFileFullPath( $componentName );
+		$exampleFileContent = $this->uiFactory->loadFileContent( $exampleFile );
+		$exampleInArray = $this->uiFactory->loadFromJSON( $exampleFileContent );
+
+		wfProfileOut( __METHOD__ );
+		return $exampleInArray;
+	}
+
+	/**
+	 * @desc Returns full documentation file's path
+	 *
+	 * @param string $name component's name
+	 *
+	 * @return string full file path
+	 */
+	public function getComponentMessagesFileFullPath( $name ) {
+		return $this->uiFactory->getComponentsDir() .
+		$name .
+		DIRECTORY_SEPARATOR .
+		$name .
+		self::MESSAGES_FILE_SUFFIX;
+	}
+
+	/**
 	 * @desc Returns all components by iterating on components directory
 	 *
 	 * @return array
@@ -71,25 +167,18 @@ class StyleguideComponents {
 	public function getAllComponentsFromDirectories() {
 		$components = [];
 
-		$directory = new DirectoryIterator( $this->uiFactory->getComponentsDir() );
-		while( $directory->valid() ) {
-			if( !$directory->isDot() && $directory->isDir() ) {
-				$filename = $directory->getFilename();
+		foreach( $this->componentsNames as $componentName ) {
+			$componentConfig = $this->uiFactory->loadComponentConfigAsArray( $componentName );
+			$componentDocumentation = $this->loadComponentDocumentationAsArray( $componentName );
+			$componentConfig = $this->prepareMessages( $componentConfig, $componentDocumentation );
+			// add unique id so after clicking on the components list's link page jumps to the right anchor
+			$componentConfig['id'] = Sanitizer::escapeId( $componentName, ['noninitial'] );
 
-				$componentConfig = $this->uiFactory->loadComponentConfigAsArray( $filename );
-				$messages = $this->loadComponentDocumentationAsArray( $filename );
-				$componentConfig = $this->prepareMessages( $componentConfig, $messages );
-				// add unique id so after clicking on the components list's link page jumps to the right anchor
-				$componentConfig['id'] = Sanitizer::escapeId( $filename, ['noninitial'] );
-
-				if ( isset( $componentConfig['templateVars'] ) ) {
-					$componentConfig['mustacheVars'] = $this->prepareComponents( $componentConfig['templateVars'], $filename );
-				}
-
-				$components[] = $componentConfig;
+			if ( isset( $componentConfig['templateVars'] ) ) {
+				$componentConfig['mustacheVars'] = $this->prepareComponents( $componentConfig['templateVars'], $componentName );
 			}
 
-			$directory->next();
+			$components[] = $componentConfig;
 		}
 
 		return $components;
@@ -99,17 +188,19 @@ class StyleguideComponents {
 	 * @desc Returns array to render component information and examples on style guide page
 	 *
 	 * @param Array $templateVars
-	 * @param String $filename
+	 * @param String $componentName
 	 * @return Array
 	 */
-	private function prepareComponents( $templateVars, $filename ) {
+	private function prepareComponents( $templateVars, $componentName ) {
 		$mustacheVars = [];
 
-		$exampleData = $this->loadExampleFile( $filename );
+		$exampleData = $this->loadExampleFileAsArray( $componentName );
 
 		foreach ( $templateVars as $name => $var ) {
+			/** @var \Wikia\UI\Component $component */
+			$component = Wikia\UI\Factory::getInstance()->init( $componentName );
 			$renderedExample = isset( $exampleData[$name] )
-								? Wikia\UI\Factory::getInstance()->init( $filename )->render( $exampleData[$name] )
+								? $component->render( $exampleData[$name] )
 								: null;
 
 			if ( isset( $var['name-var-msg-key'] ) ) {
@@ -132,7 +223,8 @@ class StyleguideComponents {
 	/**
 	 * @desc Return component with i18n name and description
 	 *
-	 * @param $component
+	 * @param Array $component
+	 * @param Array $messages
 	 * @return mixed
 	 */
 	private function prepareMessages( $component, $messages ) {
@@ -150,46 +242,5 @@ class StyleguideComponents {
 	 */
 	private function prepareMessage($key) {
 		return wfMessage($key)->plain();
-	}
-
-	/**
-	 * @desc Checks if example file exists and returns array with example attributes or empty array
-	 *
-	 * @param String $filename example json file name
-	 * @return Array
-	 */
-	private function loadExampleFile($filename) {
-		$example = [];
-
-		if ( file_exists($this->getComponentExampleFileFullPath( $filename ))) {
-			$example = $this->loadComponentExampleFromFile( $this->getComponentExampleFileFullPath( $filename ) );
-		}
-
-		return $example;
-	}
-
-	/**
-	 * @desc Returns decoded json file with components examples values
-	 *
-	 * @param String $exampleFilePath path to example json file
-	 * @return Array
-	 */
-	private function loadComponentExampleFromFile( $exampleFilePath ) {
-		$exampleString = file_get_contents( $exampleFilePath );
-		if ( false === $exampleString ) {
-			return false;
-		} else {
-			return json_decode( $exampleString, true );
-		}
-	}
-
-	/**
-	 * @desc Returns path to example json file
-	 *
-	 * @param String $name
-	 * @return string
-	 */
-	private function getComponentExampleFileFullPath( $name ) {
-		return $this->uiFactory->getComponentsDir() . $name . DIRECTORY_SEPARATOR . $name . self::EXAMPLE_FILE_SUFFIX;
 	}
 }

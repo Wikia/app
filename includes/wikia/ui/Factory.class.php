@@ -120,7 +120,7 @@ class Factory {
 	 */
 	public function loadFileContent( $path ) {
 		if ( false === $fileContent = file_get_contents( $path ) ) {
-			throw new \Exception( 'File not found.' );
+			throw new \Exception( 'File not found (' . $path . ').' );
 		} else {
 			return $fileContent;
 		}
