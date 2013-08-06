@@ -17,12 +17,13 @@ class SpecialStyleguideDataModel {
 				'home' => [
 					'mainHeader' => wfMessage( 'styleguide-home-header' )->plain(),
 					'getStartedBtn' => $button->render([
-						'type' => 'input',
+						'type' => 'link',
 						'vars' => [
-							'type' => 'submit',
 							'name' => 'get-started',
+							'href' => '#',
 							'classes' => 'button',
 							'value' => wfMessage( 'styleguide-get-started' )->plain(),
+							'title' => wfMessage( 'styleguide-get-started' )->plain()
 						],
 					]),
 					'version' => 'Version 1.0.0'
