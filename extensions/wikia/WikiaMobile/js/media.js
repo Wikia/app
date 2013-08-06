@@ -23,6 +23,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		currentWrapperStyle,
 		wkMdlImages,
 		shrImg = qs().getVal('file'),
+		// index of shared file in array of videos/images on page
+		shrImgIdx = -1,
 		shareBtn,
 		clickEvent = 'click',
 		sharePopOver,
@@ -92,7 +94,9 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				while(imageData = data[j++]){
 					name = imageData.name;
 
-					if (name === shrImg) {shrImg = imagesLength;}
+					if (name === shrImg) {
+							shrImgIdx = imagesLength;
+					}
 
 					images[imagesLength] = new Media({
 						element: element,
@@ -129,17 +133,19 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 		//if url contains file=fileName - setup and find the image/video
 		if(shrImg) {
-			setTimeout(function(){
-				!inited && setup();
-				if ( isNaN(shrImg) ) {
-					// file specified in querystring doesn't exist on the page
-					toast.show( msg('wikiamobile-shared-file-not-available') );
-					qs().removeVal('file' ).replaceState();
-				} else {
+			!inited && setup();
+			if ( shrImgIdx > -1 ) {
+				// file specified in querystring exists on the page - show it in a modal
+				// after a short delay so the user will know they are on an article page
+				setTimeout(function(){
 					clickSource = "share";
-					openModal(shrImg);
-				}
-			}, 2000);
+					openModal(shrImgIdx);
+				}, 2000);
+			} else {
+				// file specified in querystring doesn't exist on the page
+				toast.show( msg('wikiamobile-shared-file-not-available') );
+				qs().removeVal('file' ).replaceState();
+			}
 		}
 
 		document.body.addEventListener(clickEvent, function(event){
