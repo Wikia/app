@@ -25,7 +25,7 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 		$this->response->addAsset( 'extensions/wikia/SpecialStyleguide/css/SpecialStyleguide.scss' );
 		$this->wg->Out->setPageTitle( wfMessage( 'styleguide-pagetitle' )->plain() );
 
-		$wgAutoloadClasses['GlobalHeaderController'] = dirname( __FILE__ ) . '/SpecialStyleguideGlobalHeaderControllerOverride.php';
+		$wgAutoloadClasses['GlobalHeaderController'] = dirname( __FILE__ ) . '/helpers/SpecialStyleguideGlobalHeaderControllerOverride.php';
 
 		$this->response->setCacheValidity(
 			86400,

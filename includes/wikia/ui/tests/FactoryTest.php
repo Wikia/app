@@ -59,10 +59,10 @@ class FactoryTest extends WikiaBaseTest {
 	 */
 	public function testLoadingComponentsFromString( $json, $expected ) {
 		// test private method
-		$loadComponentConfigFromJSONMethod = new ReflectionMethod( 'Wikia\UI\Factory', 'loadComponentConfigFromJSON' );
-		$loadComponentConfigFromJSONMethod->setAccessible( true );
+		$loadFromJSONMethod = new ReflectionMethod( 'Wikia\UI\Factory', 'loadFromJSON' );
+		$loadFromJSONMethod->setAccessible( true );
 
-		$component = $loadComponentConfigFromJSONMethod->invoke( $this->instance, $json );
+		$component = $loadFromJSONMethod->invoke( $this->instance, $json );
 		$this->assertEquals( $expected, $component );
 	}
 
@@ -108,8 +108,6 @@ class FactoryTest extends WikiaBaseTest {
 		}
 
 		$this->mockGlobalVariable( 'wgOut', $wgOutMock );
-		$this->mockApp();
-
 		$addAssetMethod->invoke( $this->instance, $asset );
 	}
 

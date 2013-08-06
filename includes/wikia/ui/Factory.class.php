@@ -50,27 +50,10 @@ class Factory {
 	private $loaderService;
 
 	/**
-	 * @desc Path to components directory
-	 * @var String|null
-	 */
-	private $componentsDir = null;
-
-	/**
 	 * @desc Private constructor because it's a singleton
 	 */
 	private function __construct() {
-		global $IP;
-		$this->componentsDir = $IP . self::DEFAULT_COMPONENTS_PATH;
 		$this->loaderService = \AssetsManager::getInstance();
-	}
-
-	/**
-	 * @desc Sets the path to components' directory
-	 *
-	 * @param String $path
-	 */
-	public function setComponentsDir( $path ) {
-		$this->componentsDir = $path;
 	}
 
 	/**
@@ -78,8 +61,9 @@ class Factory {
 	 *
 	 * @return null|String
 	 */
-	public function getComponentsDir() {
-		return $this->componentsDir;
+	public static function getComponentsDir() {
+		global $IP;
+		return $IP . self::DEFAULT_COMPONENTS_PATH;
 	}
 
 	/**
@@ -103,7 +87,7 @@ class Factory {
 	 * @return string full file path
 	 */
 	public function getComponentConfigFileFullPath( $name ) {
-		return $this->getComponentsDir() .
+		return static::getComponentsDir() .
 			$name .
 			DIRECTORY_SEPARATOR .
 			$name .
@@ -111,35 +95,37 @@ class Factory {
 	}
 
 	/**
-	 * @desc Checks if config file exists, if true: loads the configuration from file and returns as array
+	 * @desc Checks if a file exists, if true: loads its content and returns it
 	 *
-	 * @param string $configFilePath Path to file
+	 * @param string $path Path to file
 	 *
 	 * @return Array
 	 * @throws \Exception
 	 */
-	private function loadComponentConfigFromFile( $configFilePath ) {
-		if ( false === $configString = file_get_contents( $configFilePath ) ) {
-			throw new \Exception( 'Component\'s config file not found.' );
+	public function loadFileContent( $path ) {
+		if ( false === $fileContent = file_get_contents( $path ) ) {
+			throw new \Exception( 'File not found (' . $path . ').' );
 		} else {
-			return $configString;
+			return $fileContent;
 		}
 	}
 
 	/**
-	 * @desc Loads component's config from JSON file content, adds component's unique id
+	 * @desc Loads data from JSON file content and returns in an array
 	 *
-	 * @param string $configContent JSON String
+	 * @param string $inputString JSON String
 	 *
 	 * @see Wikia\UI\Factory::loadComponentConfigFromFile() for example usage
+	 * @see
+	 *
 	 * @return Array
 	 * @throws \Exception
 	 */
-	private function loadComponentConfigFromJSON( $configContent ) {
-		$config = json_decode( $configContent, true );
+	public function loadFromJSON( $inputString ) {
+		$outputJson = json_decode( $inputString, true );
 
-		if ( !is_null( $config ) ) {
-			return $config;
+		if ( !is_null( $outputJson ) ) {
+			return $outputJson;
 		} else {
 			throw new \Exception( 'Invalid JSON.' );
 		}
@@ -149,8 +135,8 @@ class Factory {
 		wfProfileIn( __METHOD__ );
 
 		$configFile = $this->getComponentConfigFileFullPath( $componentName );
-		$configFileContent = $this->loadComponentConfigFromFile( $configFile );
-		$configInArray = $this->loadComponentConfigFromJSON( $configFileContent );
+		$configFileContent = $this->loadFileContent( $configFile );
+		$configInArray = $this->loadFromJSON( $configFileContent );
 
 		wfProfileOut( __METHOD__ );
 		return $configInArray;
@@ -202,7 +188,7 @@ class Factory {
 	 */
 	public function getComponentsBaseTemplatePath( $name ) {
 		$name = \Sanitizer::escapeId( $name, 'noninitial' );
-		return $this->getComponentsDir() .
+		return static::getComponentsDir() .
 			$name .
 			DIRECTORY_SEPARATOR .
 			self::TEMPLATES_DIR_NAME .

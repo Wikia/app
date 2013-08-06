@@ -41,24 +41,6 @@ $messages['en'] = array(
 	// Components
 	'styleguide-components-header' => 'Components',
 	'styleguide-components-header-tagline' => 'Wikia UI styleguide re-usable elements',
-
-	'styleguide-name-buttons' => 'Buttons',
-	'styleguide-description-button' => 'Description for Button component in Styleguide.',
-	'styleguide-description-link-button' => 'Link Button',
-	'styleguide-description-input-button' => 'Input Button',
-	'styleguide-description-simple-button' => 'Simple Button',
-
-	'styleguide-name-dropdown' => 'Dropdowns',
-	'styleguide-description-dropdown' => 'Description for Dropdown component in Styleguide.',
-
-	'styleguide-name-modal' => 'Modals',
-	'styleguide-description-modal' => 'Description for Modal component in Styleguide.',
-
-	'styleguide-name-thumbnail' => 'Thumbnails',
-	'styleguide-description-thumbnail' => 'Description for Thumbnail component in Styleguide.',
-
-	'styleguide-name-tooltip' => 'Tooltips',
-	'styleguide-description-tooltip' => 'Description for Tooltip component in Styleguide.',
 );
 
 $messages['pl'] = array(
@@ -102,24 +84,6 @@ $messages['pl'] = array(
 	// Components
 	'styleguide-components-header' => 'Komponenty',
 	'styleguide-components-header-tagline' => 'Elementy wielokrotnego użytku Wikia Styleguide',
-
-	'styleguide-name-buttons' => 'Przyciski',
-	'styleguide-description-button' => 'Opis komponentu Przycisk w Wikia Styleguide',
-	'styleguide-description-link-button' => 'Link',
-	'styleguide-description-input-button' => 'Przycisk Input',
-	'styleguide-description-simple-button' => 'Przycisk',
-
-	'styleguide-name-dropdown' => 'Listy rozwijane',
-	'styleguide-description-dropdown' => 'Opis komponentu Lista rozwijana w Wikia Styleguide',
-
-	'styleguide-name-modal' => 'Modale',
-	'styleguide-description-modal' => 'Opis komponentu Modal w Wikia Styleguide',
-
-	'styleguide-name-thumbnail' => 'Miniaturki',
-	'styleguide-description-thumbnail' => 'Opis komponentu Miniaturka w Wikia Styleguide',
-
-	'styleguide-name-tooltip' => 'Podpowiedzi',
-	'styleguide-description-tooltip' => 'Opis komponentu Podpowiedz w Wikia Styleguide',
 );
 
 /** Message documentation (Message documentation)

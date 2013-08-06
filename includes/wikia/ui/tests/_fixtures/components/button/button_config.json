@@ -1,22 +1,20 @@
 {
-	"name":"Buttons",
-	"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in felis dui. Mauris feugiat tortor consectetur vulputate pretium. Vestibulum posuere ut ipsum in elementum. Pellentesque ipsum elit, pulvinar quis venenatis ut, tristique at erat. Mauris molestie erat nunc, elementum aliquet neque euismod in. Pellentesque porta malesuada justo, a commodo dolor mollis eu. Etiam imperdiet vestibulum dolor, sit amet porta ante euismod et. Morbi eget faucibus dolor. Nullam eu diam nec augue ultricies laoreet. Sed nisi tellus, ultrices eu consectetur vitae, accumsan eget lorem. Proin et dapibus justo. Aliquam sit amet sem nec enim bibendum commodo. Praesent interdum libero sem, ac ornare purus facilisis non. Mauris id hendrerit elit. Quisque quis magna tincidunt erat ornare euismod.",
 	"templateVars": {
-		"link": {
-			"required": [ "href", "classes", "value" ],
-			"optional": [ "label", "target" ]
+		"link" : {
+			"required": [ "href", "classes", "value", "title" ],
+			"optional": [ "target", "id" ]
 		},
-		"input": {
-			"required": [ "name", "classes", "value" ],
-			"optional": [ "label" ]
+		"input" : {
+			"required": [ "type", "name", "classes", "value" ],
+			"optional": [ "id", "disabled" ]
 		},
-		"button": {
+		"button" : {
 			"required": [ "type", "classes", "value" ],
-			"optional": [ "label" ]
+			"optional": [ "id", "disabled" ]
 		}
 	},
 	"dependencies": {
 		"js": [],
-		"css": []
+		"css": [ "resources/wikia/ui_components/button/css/button_default.scss" ]
 	}
 }

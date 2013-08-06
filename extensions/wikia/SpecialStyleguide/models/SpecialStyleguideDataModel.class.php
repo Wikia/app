@@ -9,18 +9,21 @@ class SpecialStyleguideDataModel {
 	private $sectionData;
 
 	public function __construct() {
-		$uiStyleguide = new UIStyleguideComponents();
+		$helper = new StyleguideComponents();
+		/** @var \Wikia\UI\Component $button */
+		$button = \Wikia\UI\Factory::getInstance()->init('button');
 		$this->sectionData = [
 			'header' => [
 				'home' => [
 					'mainHeader' => wfMessage( 'styleguide-home-header' )->plain(),
-					'getStartedBtn' => \Wikia\UI\Factory::getInstance()->init('button')->render([
-						'type' => 'input',
+					'getStartedBtn' => $button->render([
+						'type' => 'link',
 						'vars' => [
-							'type' => 'submit',
 							'name' => 'get-started',
+							'href' => '#',
 							'classes' => 'button',
 							'value' => wfMessage( 'styleguide-get-started' )->plain(),
+							'title' => wfMessage( 'styleguide-get-started' )->plain()
 						],
 					]),
 					'version' => 'Version 1.0.0'
@@ -88,7 +91,7 @@ class SpecialStyleguideDataModel {
 				]
 			],
 			'components' => [
-				'componentsList' => $this->sortComponents( $uiStyleguide->getAllComponents() )
+				'componentsList' => $this->sortComponents( $helper->getAllComponents() )
 			]
 		];
 	}
