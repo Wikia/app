@@ -8,12 +8,15 @@ require([
 ], function($, commonAjax) {
 
 	function LVSHistoryPage(opts) {
-		this.location = window.location.href;
+		var that = this;
 
-		this.el = opts.el;
-		this.$el = $(this.el);
+		// wait for DOM ready
+		$(function() {
+			that.location = window.location.href;
+			that.$el = $(opts.el);
+			that.init();
+		});
 
-		this.init();
 	}
 
 	LVSHistoryPage.prototype = {
@@ -35,7 +38,7 @@ require([
 				'undo.clicked',
 				'undo.failed'
 			];
-			
+
 			this.$el.on( events.join(' '), function(evt) {
 				// build function name from namespace and evoke
 				var state = evt.namespace;
