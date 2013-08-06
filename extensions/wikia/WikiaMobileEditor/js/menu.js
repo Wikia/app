@@ -3,11 +3,7 @@ define('menu', ['editor', 'config'], function(editor, config){
     var menuLeft = document.getElementById('menuLeft'),
         menuRight = document.getElementById('menuRight'),
         lastTouchX = 0,
-        lastTouchY = 0,
-        touchMap ={
-
-        };
-
+        lastTouchY = 0;
         menuLeft.master = menuLeft.getElementsByClassName('master')[0];
         menuRight.master = menuRight.getElementsByClassName('master')[0];
         menuLeft.primary = menuLeft.getElementsByClassName('primary')[0];
@@ -15,41 +11,52 @@ define('menu', ['editor', 'config'], function(editor, config){
         menuLeft.secondary = menuLeft.getElementsByClassName('secondary')[0];
         menuRight.secondary = menuRight.getElementsByClassName('secondary')[0];
         menuLeft.primary.expanded =
-            menuLeft.secondary.expanded =
-                menuRight.primary.expanded =
-                    menuRight.secondary.expanded = 'fold';
+        menuLeft.secondary.expanded =
+        menuRight.primary.expanded =
+        menuRight.secondary.expanded = 'fold';
         menuLeft.primary.elements = menuLeft.primary.getElementsByTagName('li');
         menuLeft.secondary.elements = menuLeft.secondary.getElementsByTagName('li');
         menuRight.primary.elements = menuRight.primary.getElementsByTagName('li');
         menuRight.secondary.elements = menuRight.secondary.getElementsByTagName('li');
         menuLeft.angles =[];
         menuRight.angles =[];
+        menuLeft.radius = menuRight.radius = 80;
 
+    config.init(function(activeTags){
+        attachTags(activeTags);
+    });
 
-    function updateButton (li, tag){
+    function updateButton (li, tag, key){
         li.setAttribute('data-tag', tag);
+        li.getElementsByTagName('p')[0].innerText = key;
     }
 
-    function attachTags(){
-        var tags = config.activeTags(),
-            prmLft = menuLeft.primary.elements.length,
+    function attachTags(tags){
+        var prmLft = menuLeft.primary.elements.length,
             prmRgt = menuRight.primary.elements.length,
             scdLft = menuLeft.secondary.elements.length,
-            scdRgt = menuRight.secondary.elements.length;
-        for(var i = 0; i < tags.length; i++){
-            if(i < prmLft){
-                updateButton(menuLeft.primary.elements[i], tags[i]);
-            }
-            else{
-                if(i - prmLft < scdLft){
-                    updateButton(menuRight.primary.elements[i - prmLft], tags[i]);
+            scdRgt = menuRight.secondary.elements.length,
+            i = 0;
+        for(var key in tags){
+            if(tags.hasOwnProperty(key)){
+                if(i < prmLft){
+                    updateButton(menuLeft.primary.elements[i], tags[key], key);
+                    i++;
                 }
                 else{
-                    if(i - prmLft - scdLft < prmRgt){
-                        updateButton(menuLeft.secondary.elements[i - prmLft - scdLft], tags[i]);
+                    if(i - prmLft < scdLft){
+                        updateButton(menuRight.primary.elements[i - prmLft], tags[key], key);
+                        i++;
                     }
                     else{
-                        updateButton(menuRight.secondary.elements[i - prmLft - scdLft - prmRgt], tags[i]);
+                        if(i - prmLft - scdLft < prmRgt){
+                            updateButton(menuLeft.secondary.elements[i - prmLft - scdLft], tags[key], key);
+                            i++;
+                        }
+                        else{
+                            updateButton(menuRight.secondary.elements[i - prmLft - scdLft - prmRgt], tags[key], key);
+                            i++;
+                        }
                     }
                 }
             }
@@ -57,25 +64,49 @@ define('menu', ['editor', 'config'], function(editor, config){
     }
 
     function switchButtons(primary, secondary){
+        var menu = primary.parentElement == menuLeft ? menuLeft : menuRight;
         if(primary.expanded == 'fold' && secondary.expanded == 'fold'){
-            drawMenu(primary.elements);
+            drawMenu(primary.elements, menu);
             return;
         }
         else if(primary.expanded){
-            foldMenu(primary.elements);
-            drawMenu(secondary.elements);
+            foldMenu(primary.elements, menu);
+            drawMenu(secondary.elements, menu);
             return;
         }
-        foldMenu(secondary.elements);
-        drawMenu(primary.elements);
+        foldMenu(secondary.elements, menu);
+        drawMenu(primary.elements, menu);
     }
 
-    function getRange(x) {return ~~((x + 15) / 30)}
+    function getRange(x) {return ~~((x + 30) / 30)}
 
-    function findArea(menu, Pheight, Pwidth){
+    function holdMenu(){
+        var boundTop;
+        window.addEventListener('scroll', function(){
+            boundTop = editor.editArea.getBoundingClientRect().top + window.scrollY + editor.editArea.offsetHeight;
+            if(window.scrollY > boundTop - document.documentElement.clientHeight/* && menuLeft.classList.contains('fixedPos')*/){
+                menuLeft.classList.add('absolutePos');
+                menuRight.classList.add('absolutePos');
+                menuLeft.classList.remove('fixedPos');
+                menuRight.classList.remove('fixedPos');
+                return;
+            }
+            if(window.scrollY < boundTop - document.documentElement.clientHeight && menuLeft.classList.contains('absolutePos')){
+                menuLeft.classList.remove('absolutePos');
+                menuRight.classList.remove('absolutePos');
+                menuLeft.classList.add('fixedPos');
+                menuRight.classList.add('fixedPos');
+                return;
+            }
+        });
+
+    }
+
+    function findArea(menu, Pwidth, Pheight){
         var x = Pwidth - lastTouchX,
             y = Pheight - lastTouchY,
             angle = 0;
+        if(menu == menuLeft)x = -x;
 
         if(x >= 0){
             if(y >= 0){
@@ -94,22 +125,34 @@ define('menu', ['editor', 'config'], function(editor, config){
         return getRange(angle) + 1;
     }
 
-    function drawMenu(ulElements){
+    function drawMenu(ulElements, menu){
         for(var i = 1; i <= ulElements.length; i++){
             ulElements[i-1].classList.remove('fold');
-            ulElements[i-1].getElementsByTagName('hr')[0].classList.add('rotHr' + i);
-            ulElements[i-1].getElementsByTagName('p')[0].classList.add('rotTag' + i);
+            if(menu == menuLeft){
+                ulElements[i-1].getElementsByTagName('hr')[0].classList.add('rotHrL' + i);
+                ulElements[i-1].getElementsByTagName('p')[0].classList.add('rotTagL' + i);
+            }
+            else{
+                ulElements[i-1].getElementsByTagName('hr')[0].classList.add('rotHr' + i);
+                ulElements[i-1].getElementsByTagName('p')[0].classList.add('rotTag' + i);
+            }
             ulElements[i-1].getElementsByTagName('hr')[0].classList.remove('foldHr');
             ulElements[i-1].getElementsByTagName('p')[0].classList.remove('foldTag');
         }
         ulElements[0].parentElement.expanded = 'expanded';
     }
 
-    function foldMenu(ulElements){
+    function foldMenu(ulElements, menu){
         for(var i = 1; i <= ulElements.length; i++){
             ulElements[i-1].classList.add('fold');
-            ulElements[i-1].getElementsByTagName('hr')[0].classList.remove('rotHr' + i);
-            ulElements[i-1].getElementsByTagName('p')[0].classList.remove('rotTag' + i);
+            if(menu == menuLeft){
+                ulElements[i-1].getElementsByTagName('hr')[0].classList.remove('rotHrL' + i);
+                ulElements[i-1].getElementsByTagName('p')[0].classList.remove('rotTagL' + i);
+            }
+            else{
+                ulElements[i-1].getElementsByTagName('hr')[0].classList.remove('rotHr' + i);
+                ulElements[i-1].getElementsByTagName('p')[0].classList.remove('rotTag' + i);
+            }
             ulElements[i-1].getElementsByTagName('hr')[0].classList.add('foldHr');
             ulElements[i-1].getElementsByTagName('p')[0].classList.add('foldTag');
         }
@@ -117,28 +160,30 @@ define('menu', ['editor', 'config'], function(editor, config){
     }
 
     function swipeCheck(menu){
-        var radius = menu.offsetWidth / 2;
-        menu.addEventListener('touchmove', function(event){
-            event.preventDefault();
-            var width = event.changedTouches[0].pageX - lastTouchX,
-                height = event.changedTouches[0].pageY - lastTouchY,
-                diagonal = Math.sqrt(width*width + height*height);
-            if(diagonal > radius){
-                afterSwipe(this, event.changedTouches[0].pageX, event.changedTouches[0].pageY);
+        window.addEventListener('touchmove', function(event){
+            if(event.srcElement.classList.contains('master')){
+                event.preventDefault();
+                var width = event.changedTouches[0].pageX - lastTouchX,
+                    height = event.changedTouches[0].pageY - lastTouchY,
+                    diagonal = Math.sqrt(width*width + height*height);
+                if(diagonal > menu.radius){
+                    afterSwipe(event.srcElement.parentElement, event.changedTouches[0].pageX, event.changedTouches[0].pageY);
+                }
             }
         });
-        menu.addEventListener('touchend', function(){
-            event.preventDefault();
-            if(menu.primary.expanded == 'expanded'){
-                foldMenu(menu.primary.elements);
-            }
-            else{
-                foldMenu(menu.secondary.elements);
+        window.addEventListener('touchend', function(){
+            if(event.srcElement.classList.contains('master')){
+                event.preventDefault();
+                menu = event.srcElement.parentElement; //wrapper menu
+                if(menu.primary.expanded == 'expanded'){
+                    foldMenu(menu.primary.elements, menu);
+                }
+                else{
+                    foldMenu(menu.secondary.elements, menu);
+                }
             }
         });
-        setTimeout(function(){
-            switchButtons(menu.primary, menu.secondary);
-        }, 300);
+        switchButtons(menu.primary, menu.secondary);
     }
 
     function afterSwipe(menu, width, height){
@@ -163,8 +208,8 @@ define('menu', ['editor', 'config'], function(editor, config){
         }
 
         menu.removeEventListener('touchmove');
-        foldMenu(menu.primary.elements);
-        foldMenu(menu.secondary.elements);
+        foldMenu(menu.primary.elements, menu);
+        foldMenu(menu.secondary.elements, menu);
     }
 
     function afterTouchStart(menu, changedTouches){
@@ -205,6 +250,7 @@ define('menu', ['editor', 'config'], function(editor, config){
     }
 
     function init(){
+        holdMenu();
         masters =[menuLeft.master, menuRight.master];
         masters.forEach(function(master){
             master.addEventListener('touchstart', function(event){

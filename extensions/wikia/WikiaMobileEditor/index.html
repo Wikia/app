@@ -2,177 +2,290 @@
 <html>
 <head>
     <title>WikiTextEditSoAwesomeYouJustWantToKissIt</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <link rel ='stylesheet' href = 'css/style.css'>
     <script src ='js/modil.js'></script>
-    <script src ='js/script2.js'></script>
+    <script src ='js/editor.js'></script>
+    <script src ='js/config.js'></script>
+    <script src ='js/menu.js'></script>
+    <script src ='js/init.js'></script>
 </head>
 <body>
 <nav id ='topBar'>
     <p>Wikia title</p>
 </nav>
-<div id='menuLeft' data-direction = 'top-right' class ='menuWrapper'>
-    <button type='button' data-expanded='false' class ='master'>X</button>
-    <ul class ='hr'>
-        <li><hr></hr></li>
-        <li><hr></hr></li>
-        <li><hr></hr></li>
-        <li><hr></hr></li>
-        <li><hr></hr></li>
-    </ul>
-    <ul class ='primary' data-position = 'in'>
-        <li class ='rollOut fold' data-tag ='[http]_$[/]'>Nazwa Tagu#1</li>
-        <li class ='rollOut fold' data-tag ='[http]_$[/]'>Nazwa Tagu#2</li>
-        <li class ='rollOut fold' data-tag ='[http]_$[/]'>Nazwa Tagu#3</li>
-        <li class ='rollOut fold' data-tag ='[http]_$[/]'>Nazwa Tagu#4</li>
-        <li class ='rollOut fold' data-tag ='[http]_$[/]'>Nazwa Tagu#5</li>
-    </ul>
-    <ul class ='secondary' data-position = 'in'>
-        <li class ='rollOut fold' data-tag ='[http]_$[/]'><button type ='button' class = 'menuOption' data-tags =''>1</button></li>
-        <li class ='rollOut fold' data-tag ='[http]_$[/]'><button type ='button' class = 'menuOption' data-tags =''>2</button></li>
-        <li class ='rollOut fold' data-tag ='[http]_$[/]'><button type ='button' class = 'menuOption' data-tags =''>3</button></li>
-        <li class ='rollOut fold' data-tag ='[http]_$[/]'><button type ='button' class = 'menuOption' data-tags =''>4</button></li>
-        <li class ='rollOut fold' data-tag ='[http]_$[/]'><button type ='button' class = 'menuOption' data-tags =''>4</button></li>
-    </ul>
+<p id ='artTitle'><small>Editing</small> Title of The Article</p>
+<div class ='wrapper'>
+    <div id='menuLeft' data-direction = 'top-right' class ='fixedPos'>
+        <button type='button' data-expanded='false' class ='master'>X</button>
+        <ul class ='primary' data-position = 'in'>
+            <li class ='rollOut fold' data-tag =''><p class ='rollOut'></p><hr class ='rollOut'></hr></li>
+            <li class ='rollOut fold' data-tag =''><p class ='rollOut'></p><hr class ='rollOut'></hr></li>
+            <li class ='rollOut fold' data-tag =''><p class ='rollOut'></p><hr class ='rollOut'></hr></li>
+            <li class ='rollOut fold' data-tag =''><p class ='rollOut'></p><hr class ='rollOut'></hr></li>
+            <li class ='rollOut fold' data-tag =''><p class ='rollOut'></p><hr class ='rollOut'></hr></li>
+        </ul>
+        <ul class ='secondary' data-position = 'in'>
+            <li class ='rollOut fold' data-tag =''><p class ='rollOut'></p><hr class ='rollOut'></hr></li>
+            <li class ='rollOut fold' data-tag =''><p class ='rollOut'></p><hr class ='rollOut'></hr></li>
+            <li class ='rollOut fold' data-tag =''><p class ='rollOut'></p><hr class ='rollOut'></hr></li>
+            <li class ='rollOut fold' data-tag =''><p class ='rollOut'></p><hr class ='rollOut'></hr></li>
+            <li class ='rollOut fold' data-tag =''><p class ='rollOut'></p><hr class ='rollOut'></hr></li>
+        </ul>
+    </div>
+    <div id='menuRight' data-direction = 'top-left' class ='fixedPos'>
+        <button type='button' data-expanded='false' class ='master'>X</button>
+        <ul class ='primary'>
+            <li class ='rollOut fold' data-tag =''><p class ='rollOut'></p><hr class ='rollOut'/></li>
+            <li class ='rollOut fold' data-tag =''><p class ='rollOut'></p><hr class ='rollOut' /></li>
+            <li class ='rollOut fold' data-tag =''><p class ='rollOut'></p><hr class ='rollOut' /></li>
+            <li class ='rollOut fold' data-tag =''><p class ='rollOut'></p><hr class ='rollOut' /></li>
+            <li class ='rollOut fold' data-tag =''><p class ='rollOut'></p><hr class ='rollOut' /></li>
+        </ul>
+        <ul class ='secondary'>
+            <li class ='rollOut fold' data-tag =''><p class ='rollOut'></p><hr class ='rollOut'></hr></li>
+            <li class ='rollOut fold' data-tag =''><p class ='rollOut'></p><hr class ='rollOut'></hr></li>
+            <li class ='rollOut fold' data-tag =''><p class ='rollOut'></p><hr class ='rollOut'></hr></li>
+            <li class ='rollOut fold' data-tag =''><p class ='rollOut'></p><hr class ='rollOut'></hr></li>
+            <li class ='rollOut fold' data-tag =''><p class ='rollOut'></p><hr class ='rollOut'></hr></li>
+        </ul>
+    </div>
+    <textarea rows ='60' cols='100' id ='editArea'></textarea>
 </div>
-<div id='menuRight' data-direction = 'top-left' class ='menuWrapper'>
-    <button type='button' data-expanded='false' class ='master'>X</button>
-    <ul class ='primary'>
-        <li class ='rollOut fold' data-tag ='[http]_$[/]'><button type ='button' class = 'menuOption' data-tags =''>1</button></li>
-        <li class ='rollOut fold' data-tag ='[http]_$[/]'><button type ='button' class = 'menuOption' data-tags =''>2</button></li>
-        <li class ='rollOut fold' data-tag ='[http]_$[/]'><button type ='button' class = 'menuOption' data-tags =''>3</button></li>
-        <li class ='rollOut fold' data-tag ='[http]_$[/]'><button type ='button' class = 'menuOption' data-tags =''>4</button></li>
-        <li class ='rollOut fold' data-tag ='[http]_$[/]'><button type ='button' class = 'menuOption' data-tags =''>4</button></li>
-    </ul>
-    <ul class ='secondary'>
-        <li class ='rollOut fold' data-tag ='[http]_$[/]'><button type ='button' class = 'menuOption' data-tags =''>1</button></li>
-        <li class ='rollOut fold' data-tag ='[http]_$[/]'><button type ='button' class = 'menuOption' data-tags =''>2</button></li>
-        <li class ='rollOut fold' data-tag ='[http]_$[/]'><button type ='button' class = 'menuOption' data-tags =''>3</button></li>
-        <li class ='rollOut fold' data-tag ='[http]_$[/]'><button type ='button' class = 'menuOption' data-tags =''>4</button></li>
-        <li class ='rollOut fold' data-tag ='[http]_$[/]'><button type ='button' class = 'menuOption' data-tags =''>4</button></li>
-    </ul>
-</div>
-<p id ='artTitle'>Editing Title of The Article</p>
-<textarea rows ='60' cols='100' id ='editArea'></textarea>
 <section id ='pageActions'>
     <input type ='submit' value ='Save Page'></submit>
     <button type ='button' id ='preview'>Preview</button>
-    <input type ='checkbox' id ='srata'>witam</input>
 </section>
 
 <section class ='tagListWrapper'>
     <section class ='tagsSection'>
-        <h1>WikiText</h1>
-        <hr></hr>
+        <h1>WikiText & Links</h1>
         <ul class = 'tagList'>
             <li>
-                <label for='http'>HTTP tag → </label>
-                <a href = '#'>[http://_$]</a>
-                <input type='checkbox' name='http' value='[http://_$]'>
+                <input type='checkbox' name='http' value="[[_$]]">
+                <label for='http'>Internal Link → </label>
+                <a href = '#'>[[]]</a>
             </li>
             <li>
+                <input type='checkbox' name='http' value="[http://_$ title]">
+                <label for='http'>External Link → </label>
+                <a href = '#'>[http:// title]</a>
+            </li>
+            <li>
+                <input type='checkbox' name='http' value='--~~~~'>
                 <label for='http'>Your username → </label>
                 <a href = '#'>--~~~~</a>
-                <input type='checkbox' name='http' value='--~~~~'>
             </li>
             <li>
-                <label for='http'>Category → </label>
-                <a href = '#'>[[Category:_$]]</a>
+                <input type='checkbox' name='http' value="[[File:_$]]">
+                <label for='http'>Embedded file → </label>
+                <a href = '#'>[[File:]]</a>
+            </li>
+            <li>
+                <input type='checkbox' name='http' value="[[Media:_$]]">
+                <label for='http'>Media file link → </label>
+                <a href = '#'>[[Media:]]</a>
+            </li>
+            <li>
+                <input type='checkbox' name='http' value="<math>_$</math>">
+                <label for='http'>Math formula → </label>
+                <a href = '#'>&lt;math&gt;&lt;/math&gt;</a>
+            </li>
+            <li>
+                <input type='checkbox' name='http' value="<nowiki>_$</nowiki>">
+                <label for='http'>Ignore Wiki → </label>
+                <a href = '#'>&lt;nowiki&gt;&lt;/nowiki&gt;</a>
+            </li>
+            <li>
                 <input type='checkbox' name='http' value='[[Category:_$]]'>
+                <label for='http'>Category → </label>
+                <a href = '#'>[[Category:]]</a>
             </li>
             <li>
-                <label for='http'>Redirection → </label>
-                <a href = '#'>#REDIRECT[[_$]]</a>
                 <input type='checkbox' name='http' value='#REDIRECT[[_$]]'>
+                <label for='http'>Redirection → </label>
+                <a href = '#'>#REDIRECT[[]]</a>
             </li>
             <li>
-                <label for='http'>Sup → </label>
-                <a href = '#'>&lt;sup&gt;_$&lt;/sup&gt;</a>
                 <input type='checkbox' name='http' value='<sup>_$</sup>'>
+                <label for='http'>Superscript → </label>
+                <a href = '#'>&lt;sup&gt;&lt;/sup&gt;</a>
             </li>
             <li>
-                <label for='http'>Sub → </label>
-                <a href = '#'>&lt;sub&gt;_$&lt;/sub&gt;</a>
                 <input type='checkbox' name='http' value='<sub>_$</sub>'>
+                <label for='http'>Subscript → </label>
+                <a href = '#'>&lt;sub&gt;&lt;/sub&gt;</a>
             </li>
             <li>
-                <label for='http'>Ref → </label>
-                <a href = '#'>&lt;ref&gt;_$&lt;/ref&gt;</a>
                 <input type='checkbox' name='http' value='<ref>_$</ref>'>
+                <label for='http'>Reference → </label>
+                <a href = '#'>&lt;ref&gt;&lt;/ref&gt;</a>
             </li>
             <li>
+                <input type='checkbox' name='http' value='</references>'>
                 <label for='http'>References → </label>
                 <a href = '#'>&lt;/references&gt;</a>
-                <input type='checkbox' name='http' value='</references>'>
             </li>
             <li>
-                <label for='http'>Include Only → </label>
-                <a href = '#'>&lt;includeonly&gt;_$&lt;/includeonly&gt;</a>
                 <input type='checkbox' name='http' value='<includeonly>_$</includeonly>'>
+                <label for='http'>Include Only → </label>
+                <a href = '#'>&lt;includeonly&gt;&lt;/includeonly&gt;</a>
             </li>
             <li>
-                <label for='http'>No Include → </label>
-                <a href = '#'>&lt;noinclude&gt;_$&lt;/noinclude&gt;</a>
                 <input type='checkbox' name='http' value='<noinclude>_$</noinclude>'>
+                <label for='http'>No Include → </label>
+                <a href = '#'>&lt;noinclude&gt;&lt;/noinclude&gt;</a>
             </li>
         </ul>
     </section>
     <section class ='tagsSection'>
-        <h1>Special Characters</h1>
-        <hr></hr>
+    <h1>Special Characters</h1>
+    <ul class = 'tagList'>
+        <li>
+            <input type='checkbox' name='http' value='á'>
+            <label for='http'>a acute → </label>
+            <a href = '#'>á</a>
+        </li>
+        <li>
+            <input type='checkbox' name='http' value='Á'>
+            <label for='http'>A acute → </label>
+            <a href = '#'>Á</a>
+        </li>
+        <li>
+            <input type='checkbox' name='http' value='ć'>
+            <label for='http'>c acute → </label>
+            <a href = '#'>ć</a>
+        </li>
+        <li>
+            <input type='checkbox' name='http' value='Ć'>
+            <label for='http'>C acute → </label>
+            <a href = '#'>Ć</a>
+        </li>
+        <li>
+            <input type='checkbox' name='http' value='é'>
+            <label for='http'>e Acute → </label>
+            <a href = '#'>é</a>
+        </li>
+        <li>
+            <input type='checkbox' name='http' value='É'>
+            <label for='http'>E acute → </label>
+            <a href = '#'>É</a>
+        </li>
+        <li>
+            <input type='checkbox' name='http' value='í'>
+            <label for='http'>i acute → </label>
+            <a href = '#'>í</a>
+        </li>
+        <li>
+            <input type='checkbox' name='http' value='Í'>
+            <label for='http'>I acute → </label>
+            <a href = '#'>Í</a>
+        </li>
+        <li>
+            <input type='checkbox' name='http' value='ĺ'>
+            <label for='http'>l acute → </label>
+            <a href = '#'>ĺ</a>
+        </li>
+        <li>
+            <input type='checkbox' name='http' value='Ĺ'>
+            <label for='http'>L acute → </label>
+            <a href = '#'>Ĺ</a>
+        </li>
+    </ul>
+    </section>
+    <section class ='tagsSection'>
+        <h1>Features and Media</h1>
         <ul class = 'tagList'>
             <li>
-                <label for='http'>a acute → </label>
-                <a href = '#'>á</a>
-                <input type='checkbox' name='http' value='á'>
-            </li>
-            <li>
-                <label for='http'>A acute → </label>
-                <a href = '#'>Á</a>
-                <input type='checkbox' name='http' value='Á'>
-            </li>
-            <li>
-                <label for='http'>c acute → </label>
-                <a href = '#'>ć</a>
-                <input type='checkbox' name='http' value='ć'>
-            </li>
-            <li>
-                <label for='http'>C acute → </label>
-                <a href = '#'>Ć</a>
-                <input type='checkbox' name='http' value='Ć'>
-            </li>
-            <li>
-                <label for='http'>e Acute → </label>
-                <a href = '#'>é</a>
-                <input type='checkbox' name='http' value='é'>
-            </li>
-            <li>
-                <label for='http'>E acute → </label>
-                <a href = '#'>É</a>
-                <input type='checkbox' name='http' value='É'>
-            </li>
-            <li>
-                <label for='http'>i acute → </label>
-                <a href = '#'>í</a>
-                <input type='checkbox' name='http' value='í'>
-            </li>
-            <li>
-                <label for='http'>I acute → </label>
-                <a href = '#'>Í</a>
-                <input type='checkbox' name='http' value='Í'>
-            </li>
-            <li>
-                <label for='http'>l acute → </label>
-                <a href = '#'>ĺ</a>
-                <input type='checkbox' name='http' value='ĺ'>
-            </li>
-            <li>
-                <label for='http'>L acute → </label>
-                <a href = '#'>Ĺ</a>
-                <input type='checkbox' name='http' value='Ĺ'>
+                <input type='checkbox' name='http' value='<gallery>Image:_$|Caption</gallery>'>
+                <label for='http'>Gallery → </label>
+                <a href = '#'>&lt;gallery&gt;Image:|Caption&lt;/gallery&gt;</a>
             </li>
         </ul>
     </section>
+    <section class ='tagsSection'>
+        <h1>Text Modifiers</h1>
+        <ul class = 'tagList'>
+            <li>
+                <input type='checkbox' name='http' value="''_$''">
+                <label for='http'>Bold → </label>
+                <a href = '#'>''''</a>
+            </li>
+            <li>
+                <input type='checkbox' name='http' value="'''_$'''">
+                <label for='http'>Italic → </label>
+                <a href = '#'>''''''</a>
+            </li>
+            <li>
+                <input type='checkbox' name='http' value="==_$==">
+                <label for='http'>Level 2 headline → </label>
+                <a href = '#'>====</a>
+            </li>
+            <li>
+                <input type='checkbox' name='http' value="<blockquote>_$</blockquote>">
+                <label for='http'>Blockquote → </label>
+                <a href = '#'>&lt;blockquote&gt;&lt;/blockquote&gt;</a>
+            </li>
+            <li>
+                <input type='checkbox' name='http' value="----">
+                <label for='http'>Strike → </label>
+                <a href = '#'>----</a>
+            </li>
+            <li>
+                <input type='checkbox' name='http' value="<br />">
+                <label for='http'>Line break → </label>
+                <a href = '#'>&lt;br /&gt;</a>
+            </li>
+            <li>
+                <input type='checkbox' name='http' value="<sup>_$</sup>">
+                <label for='http'>Superscript → </label>
+                <a href = '#'>&lt;sup&gt;&lt;/sup&gt;</a>
+            </li>
+            <li>
+                <input type='checkbox' name='http' value="<sub>_$</sub>">
+                <label for='http'>Subscript → </label>
+                <a href = '#'>&lt;sub&gt;&lt;/sub&gt;</a>
+            </li>
+            <li>
+                <input type='checkbox' name='http' value="<small>_$</small>">
+                <label for='http'>Small → </label>
+                <a href = '#'>&lt;small&gt;&lt;/small&gt;</a>
+            </li>
+        </ul>
+    </section>
+    <section class ='tagsSection'>
+        <h1>Custom</h1>
+        <ul class = 'tagList'>
+            <li>
+                <input type='checkbox' name='http' value='á'>
+                <input type='text' name='tagTitle' class='tagTitleField' placeholder='Name of Your tag'>
+                <input type='text' name='tag' class='tagField' placeholder='Your tag'>
+            </li>
+            <li>
+                <input type='checkbox' name='http' value='á'>
+                <input type='text' name='tagTitle' class='tagTitleField' placeholder='Name of Your tag'>
+                <input type='text' name='tag' class='tagField' placeholder='Your tag'>
+            </li>
+            <li>
+                <input type='checkbox' name='http' value='á'>
+                <input type='text' name='tagTitle' class='tagTitleField' placeholder='Name of Your tag'>
+                <input type='text' name='tag' class='tagField' placeholder='Your tag'>
+            </li>
+            <li>
+                <input type='checkbox' name='http' value='á'>
+                <input type='text' name='tagTitle' class='tagTitleField' placeholder='Name of Your tag'>
+                <input type='text' name='tag' class='tagField' placeholder='Your tag'>
+            </li>
+            <li>
+                <input type='checkbox' name='http' value='á'>
+                <input type='text' name='tagTitle' class='tagTitleField' placeholder='Name of Your tag'>
+                <input type='text' name='tag' class='tagField' placeholder='Your tag'>
+            </li>
+        </ul>
+    </section>
+    <p class='warning'>Warning! You picked wrong number of tags for the animated menu (0 or >20)</p>
+    <input type='submit' value='Reload animated menu'>
 </section>
 </body>
 </html>
