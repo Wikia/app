@@ -1,27 +1,28 @@
 <?php
 
+/**
+ * Class VideoHandlerController
+ */
 class VideoHandlerController extends WikiaController {
 
-	public function getEmbedCode() {
+	public function getEmbedCode( ) {
 		$title = $this->getVal('fileTitle', '');
 		$width = $this->getVal('width', '');
 		$autoplay = $this->getVal( 'autoplay', false );
 
 		$error = '';
-		if (empty($title)) {
+		if ( empty($title) ) {
 			$error = wfmsgForContent('videohandler-error-missing-parameter', 'title');
-		}
-		else {
-			if (empty($width)) {
+		} else {
+			if ( empty($width) ) {
 				$error = wfmsgForContent('videohandler-error-missing-parameter', 'width');
 			}
 			else {
 				$title = Title::newFromText($title, NS_FILE);
 				$file = ($title instanceof Title) ? wfFindFile($title) : false;
-				if ($file === false) {
+				if ( $file === false ) {
 					$error = wfmsgForContent('videohandler-error-video-no-exist');
-				}
-				else {
+				} else {
 					$videoId = $file->getVideoId();
 					$assetUrl = $file->getPlayerAssetUrl();
 					$embedCode = $file->getEmbedCode($width, $autoplay, true);
@@ -32,20 +33,20 @@ class VideoHandlerController extends WikiaController {
 			}
 		}
 
-		if (!empty($error)) {
+		if ( !empty($error) ) {
 			$this->setVal('error', $error);
 		}
 	}
 
-	public function getSanitizedOldVideoTitleString(){
+	public function getSanitizedOldVideoTitleString( ) {
 		$sTitle = $this->getVal( 'videoText', '' );
 
 		$prefix = '';
-		if ( strpos( $sTitle, ':' ) === 0 ){
+		if ( strpos( $sTitle, ':' ) === 0 ) {
 			$sTitle = substr( $sTitle, 1);
 			$prefix = ':';
 		}
-		if ( empty( $sTitle ) ){
+		if ( empty( $sTitle ) ) {
 			$this->setVal( 'error', 1 );
 		}
 
@@ -63,7 +64,7 @@ class VideoHandlerController extends WikiaController {
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
 	 */
-	public function removeVideo() {
+	public function removeVideo( ) {
 		wfProfileIn( __METHOD__ );
 
 		$videoTitle = $this->getVal( 'title', '' );
@@ -122,7 +123,7 @@ class VideoHandlerController extends WikiaController {
 					// delete the associated article first
 					if ( $page->doDeleteArticleReal( $reason, $suppress, 0, false ) >= WikiPage::DELETE_SUCCESS ) {
 						$status = $file->delete( $reason, $suppress );
-						if( $status->isOK() ) {
+						if ( $status->isOK() ) {
 							$dbw->commit();
 						} else {
 							$dbw->rollback();
@@ -171,6 +172,26 @@ class VideoHandlerController extends WikiaController {
 		}
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * check if the file exists
+	 * @requestParam string fileTitle
+	 * @responseParam boolean $fileExists
+	 */
+	public function fileExists() {
+		$fileExists = false;
+
+		$fileTitle = $this->getVal( 'fileTitle', '' );
+		$title = Title::newFromText( $fileTitle, NS_FILE );
+		if ( $title instanceof Title ) {
+			$file = wfFindFile( $title );
+			if ( $file instanceof File && $file->exists() ) {
+				$fileExists = true;
+			}
+		}
+
+		$this->fileExists = $fileExists;
 	}
 
 }

@@ -69,8 +69,10 @@ Check given username for possible typos.</p>',
 $messages['qqq'] = array(
 	'lookupcontribsgo' => '{{Identical|Go}}',
 	'lookupcontribswiki' => '{{Identical|Wiki}}',
+	'lookupcontribswikiurl' => '{{Identical|URL}}',
 	'lookupcontribswikititle' => '{{Identical|Title}}',
 	'lookupcontribsnext' => '{{Identical|Next}}',
+	'lookupcontribsprevious' => '{{Identical|Previous}}',
 	'lookupcontribspageremoved' => '{{Identical|Removed}}',
 	'lookupcontribsrestore' => '{{Identical|Restore}}',
 	'right-lookupcontribs' => '{{doc-right|lookupcontribs|ns=Wikia}}',
@@ -257,10 +259,13 @@ $messages['br'] = array(
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
 	'lookupcontribs' => 'Къинхьегаме хьажа',
 	'lookupcontribslinks' => 'къинхьегаме хьажориг',
+	'lookupcontribsnoresultfound' => 'ХӀума ца карийна!',
+	'lookupcontribswikititle' => 'ЦӀе',
 	'lookupcontribscontribslink' => 'Къинхьегаме хьажориг',
 	'lookupcontribscontribs' => 'къинхьегам',
 );
@@ -1424,7 +1429,7 @@ Verifique se se enganou com o nome do utilizador.</p>',
 	'lookupcontribsprevious' => 'anteriores',
 	'lookupcontribspageremoved' => 'Removidas:',
 	'lookupcontribsrestore' => 'recuperar',
-	'lookupcontribslog' => 'registo',
+	'lookupcontribslog' => 'registro',
 	'lookupcontribscontribs' => 'contribuições',
 	'lookupcontribshist' => 'histórico',
 	'lookupcontribsdiff' => 'diferenças',

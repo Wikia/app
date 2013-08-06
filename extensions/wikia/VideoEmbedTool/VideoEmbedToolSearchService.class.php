@@ -22,7 +22,7 @@ class VideoEmbedToolSearchService
 	 * Fields required for preprocessing to work when searching as API 
 	 * @var array
 	 */
-	protected $expectedFields = [ 'pageid', 'wid', 'title' ];
+	protected $expectedFields = [ 'pageid', 'wid', 'title', 'title_en' ];
 	
 	/**
 	 * Height of video
@@ -108,14 +108,15 @@ class VideoEmbedToolSearchService
 		$this->setSuggestionQueryByArticleId( $articleId );
 		$query = $this->getSuggestionQuery();
 		$service = $this->getMwService();
-		$config = $this->getConfig()->setWikiId( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID )
+		$expectedFields = $this->getExpectedFields();
+		$config = $this->getConfig()->setWikiId( Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID )
 		                            ->setQuery( $query )
+									->setRequestedFields( $expectedFields )
 		                            ->setFilterQuery( "+(title_en:({$query}) OR video_actors_txt:({$query}) OR nolang_txt:({$query}) OR html_media_extras_txt:({$query}))" )
 		                            ->setVideoEmbedToolSearch( true )
 		  
 		  ;
-		
-		return $this->postProcessSearchResponse( $this->getFactory()->getFromConfig( $config )->searchAsApi( $this->getExpectedFields(), true ) );
+		return $this->postProcessSearchResponse( $this->getFactory()->getFromConfig( $config )->searchAsApi( $expectedFields, true ) );
 	}
 	
 	/**
@@ -124,8 +125,9 @@ class VideoEmbedToolSearchService
 	 * @return array
 	 */
 	public function videoSearch( $query ) {
-		$config = $this->getConfig()->setVideoSearch( true )->setQuery( $query );
-		return $this->postProcessSearchResponse( $this->getFactory()->getFromConfig( $config )->searchAsApi( $this->getExpectedFields(), true ) );
+		$expectedFields = $this->getExpectedFields();
+		$config = $this->getConfig()->setVideoSearch( true )->setQuery( $query )->setRequestedFields( $expectedFields );
+		return $this->postProcessSearchResponse( $this->getFactory()->getFromConfig( $config )->searchAsApi( $expectedFields, true ) );
 	}
 	
 	/**
@@ -171,22 +173,25 @@ class VideoEmbedToolSearchService
 		$start = $config->getStart();
 		$pos = $start;
 		foreach ( $searchResponse['items'] as $singleVideoData ) {
-			(new WikiaFileHelper)->inflateArrayWithVideoData( 
-					$singleVideoData, 
-					Title::newFromText($singleVideoData['title'], NS_FILE ),
-					$this->getWidth(),
-					$this->getHeight(),
-					true
-			);
-			$trimTitle = $this->getTrimTitle();
-			if (! empty( $trimTitle ) ) {
-				$singleVideoData['title'] = mb_substr( $singleVideoData['title'], 0, $trimTitle );
+			$videoTitleObject = Title::newFromText( $singleVideoData['title'], NS_FILE );
+			if ( !empty( $videoTitleObject ) ) {
+				(new WikiaFileHelper)->inflateArrayWithVideoData(
+						$singleVideoData,
+						$videoTitleObject,
+						$this->getWidth(),
+						$this->getHeight(),
+						true
+				);
+				$trimTitle = $this->getTrimTitle();
+				if (! empty( $trimTitle ) ) {
+					$singleVideoData['title'] = mb_substr( $singleVideoData['title'], 0, $trimTitle );
+				}
+				$singleVideoData['pos'] = $pos++;
+				$data[] = $singleVideoData;
 			}
-			$singleVideoData['pos'] = $pos++;
-			$data[] = $singleVideoData;
 		}
 		return [
-				'totalItemCount' => count( $data ),
+				'totalItemCount' => $searchResponse['total'],
 				'nextStartFrom' => $start + $config->getLimit(),
 				'items' => $data
 		];
@@ -216,7 +221,7 @@ class VideoEmbedToolSearchService
 			             ->setRank( $this->getRank() );
 			$this->config->setFilterQueryByCode( Wikia\Search\Config::FILTER_VIDEO );
 			if ( $this->getSearchType() == 'premium' ) {
-				$this->config->setWikiId( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID );
+				$this->config->setWikiId( Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID );
 			}
 			
 		}

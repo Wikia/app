@@ -1782,29 +1782,71 @@ class MediaWikiServiceTest extends BaseTest
 			->with( 'wgLanguageCode', 123 )
 			->will ( $this->returnValue( 'en' ) )
 		;
-
 		$this->mockClass( 'Wikia\Search\Match\Wiki', $mockMatch );
 		$this->assertEquals(
 				$service->getWikiMatchByHost( 'foo' ),
 				$mockMatch
 		);
-
 		$service
 			->expects( $this->at( 0 ) )
 			->method ( 'getLanguageCode' )
 			->will   ( $this->returnValue( 'pl' ) )
 		;
-
 		$service
 			->expects( $this->at( 1 ) )
 			->method ( 'getWikiIdByHost' )
 			->with   ( 'pl.foo.wikia.com' )
 			->will   ( $this->returnValue( 123 ) )
 		;
+		$service
+			->expects( $this->at( 2 ) )
+			->method( 'getGlobalForWiki' )
+			->with( 'wgLanguageCode', 123 )
+			->will ( $this->returnValue( 'en' ) )
+		;
 		$this->assertEmpty(
 			$service->getWikiMatchByHost( 'foo' )
 		);
-
+		$service
+			->expects( $this->at( 0 ) )
+			->method ( 'getLanguageCode' )
+			->will   ( $this->returnValue( 'en' ) )
+		;
+		$service
+			->expects( $this->at( 1 ) )
+			->method ( 'getWikiIdByHost' )
+			->with   ( 'foo.wikia.com' )
+			->will   ( $this->returnValue( 123 ) )
+		;
+		$service
+			->expects( $this->at( 2 ) )
+			->method( 'getGlobalForWiki' )
+			->with( 'wgLanguageCode', 123 )
+			->will ( $this->returnValue( false ) )
+		;
+		$this->assertNotEmpty(
+			$service->getWikiMatchByHost( 'foo' )
+		);
+		$service
+			->expects( $this->at( 0 ) )
+			->method ( 'getLanguageCode' )
+			->will   ( $this->returnValue( 'pl' ) )
+		;
+		$service
+			->expects( $this->at( 1 ) )
+			->method ( 'getWikiIdByHost' )
+			->with   ( 'pl.foo.wikia.com' )
+			->will   ( $this->returnValue( 123 ) )
+		;
+		$service
+			->expects( $this->at( 2 ) )
+			->method( 'getGlobalForWiki' )
+			->with( 'wgLanguageCode', 123 )
+			->will ( $this->returnValue( false ) )
+		;
+		$this->assertEmpty(
+			$service->getWikiMatchByHost( 'foo' )
+		);
 		$service
 			->expects( $this->at( 0 ) )
 			->method ( 'getLanguageCode' )
@@ -2729,6 +2771,61 @@ class MediaWikiServiceTest extends BaseTest
 		$this->assertEquals(
 				'bar whatever',
 				$service->getSimpleMessage( 'foo', $params )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiService::getDomainsForWikiId
+	 */
+	public function testGetDomainsForWikiId() {
+		$mws = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal', 'getWikiId' ] ); 
+		
+		$mockDbr = $this->getMockBuilder( '\DatabaseMysql' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( array( 'select', 'fetchObject' ) )
+		                ->getMock();
+		
+		$mockGetDB = $this->getGlobalFunctionMock( 'wfGetDB' );
+		
+		$mockResult = $this->getMockBuilder( '\ResultWrapper' )
+		                   ->disableOriginalConstructor()
+		                   ->getMock();
+		
+		$mockObject = (object) [ 'city_domain' => 'foo.wikia.com' ];
+		
+		$mws
+		    ->expects( $this->once() )
+		    ->method ( 'getGlobal' )
+		    ->with   ( 'ExternalSharedDB' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$mockGetDB
+		    ->expects( $this->once() )
+		    ->method ( 'wfGetDB' )
+		    ->with   ( DB_SLAVE, [], true )
+		    ->will   ( $this->returnValue( $mockDbr ) )
+		;
+		$mockDbr
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'select' )
+		    ->with   ( [ 'city_domains' ], [ '*' ], [ 'city_id' => 123 ] )
+		    ->will   ( $this->returnValue( $mockResult ) )
+		;
+		$mockDbr
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'fetchObject' )
+		    ->with   ( $mockResult )
+		    ->will   ( $this->returnValue( $mockObject ) )
+		;
+		$mockDbr
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'fetchObject' )
+		    ->with   ( $mockResult )
+		    ->will   ( $this->returnValue( null ) )
+		;
+		$this->assertEquals(
+				[ 'foo.wikia.com' ],
+				$mws->getDomainsForWikiId( 123 )
 		);
 	}
 }

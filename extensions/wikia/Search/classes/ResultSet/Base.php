@@ -32,12 +32,11 @@ class Base extends EmptySet
 	protected function configure( DependencyContainer $container ) {
 		$this->searchResultObject  = $container->getResult();
 		$this->searchConfig        = $container->getConfig();
-		$this->service           = $container->getService();
+		$this->service             = $container->getService();
 		$this->results             = new ArrayIterator( array() );
 		$this->resultsFound        = $this->searchResultObject->getNumFound();
-		$this->prependArticleMatchIfExists()
-		     ->setResults( $this->searchResultObject->getDocuments() )
-		;
+		$this->handleMatchPrepends()
+		     ->setResults( $this->searchResultObject->getDocuments() );
 	}
 	
 	/**
@@ -79,14 +78,53 @@ class Base extends EmptySet
 	}
 	
 	/**
+	 * Responsible for firing match prepend logic
+	 * @return Wikia\Search\ResultSet\Base
+	 */
+	protected function handleMatchPrepends() {
+		if ( $this->getResultsStart() == 0 ) {
+			if ( $this->searchConfig->getInterWiki() ) {
+			    $this->prependWikiMatchIfExists();
+			} else {
+				$this->prependArticleMatchIfExists();
+			}
+		}
+		return $this;
+	}
+
+	/**
+	 * Prepends an existing wiki match to a result set
+	 * @see Wikia\Search\ResultSet\Base::handleMatchPrepends for logic dictating whether this is called
+	 * @return \Wikia\Search\ResultSet\Base
+	 */
+	protected function prependWikiMatchIfExists() {
+		if ( $this->searchConfig->hasWikiMatch() ) {
+			$this->addMatchResult( $this->searchConfig->getWikiMatch() );
+		}
+		return $this;
+	}
+	
+	/**
 	 * Subroutine for optionally prepending article match to result array.
-	 * @return Base provides fluent interface
+	 * @see Wikia\Search\ResultSet\Base::handleMatchPrepends for logic dictating whether this is called
+	 * @return Wikia\Search\ResultSet\Base provides fluent interface
 	 */
 	protected function prependArticleMatchIfExists() {
 		if ( $this->searchConfig->hasArticleMatch() ) {
-			if ( $this->getResultsStart() == 0 ) {
-				$this->addResult( $this->searchConfig->getArticleMatch()->getResult() );
-			}
+			$this->addMatchResult( $this->searchConfig->getArticleMatch() );
+		}
+		return $this;
+	}
+	
+	/**
+	 * Consistent API for handling prepending any kind of match
+	 * @param \Wikia\Search\Match\AbstractMatch $match
+	 * @return \Wikia\Search\ResultSet\Base
+	 */
+	protected function addMatchResult( \Wikia\Search\Match\AbstractMatch $match ) {
+		$result = $match->getResult();
+		if ( $result ) {
+			$this->addResult( $result );
 			$this->resultsFound++;
 		}
 		return $this;

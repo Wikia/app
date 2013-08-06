@@ -14,7 +14,8 @@ define('sections', ['JSMessages'], function(msg){
 			open: [],
 			close: []
 		},
-		OPENCLASS = ' open';
+		OPENCLASS = ' open',
+		goBck = '<span class=goBck>&uarr; ' + msg('wikiamobile-hide-section') + '</span>';
 
 	function fireEvent(event, target){
 		var stack = callbacks[event],
@@ -54,8 +55,7 @@ define('sections', ['JSMessages'], function(msg){
 				node,
 				nodeName,
 				isH2,
-				addNoSect = true,
-				goBck = '<span class=goBck>&uarr; ' + msg('wikiamobile-hide-section') + '</span>';
+				addNoSect = true;
 
 			for (x=0; x < y; x++) {
 				node = contents[x];
@@ -74,23 +74,17 @@ define('sections', ['JSMessages'], function(msg){
 							addNoSect = false;
 						}
 
-						if (currentSection) {
-							currentSection.insertAdjacentHTML('beforeend', goBck);
-							fragment.appendChild(currentSection);
-						}
+						node = node.cloneNode(true);
+						node.className += ' collSec';
+						//append chevron
+						node.insertAdjacentHTML('beforeend', '<span class=chev></span>');
+						fragment.appendChild(node);
 
 						currentSection = d.createElement('section');
 						currentSection.className = 'artSec';
 						currentSection.setAttribute('data-index', x);
-						node = node.cloneNode(true);
-
-						node.className += ' collSec';
-
-						//append chevron
-						node.insertAdjacentHTML('beforeend', '<span class=chev></span>');
-						fragment.appendChild(node);
-						currentSection.insertAdjacentHTML('beforeend', goBck);
 						fragment.appendChild(currentSection);
+
 						root = currentSection;
 						continue;
 					}
@@ -188,6 +182,11 @@ define('sections', ['JSMessages'], function(msg){
 
 			h2.className += OPENCLASS;
 			next.className += OPENCLASS;
+
+			if(!h2.goBackAdded && next.className.indexOf('artSec') > -1) {
+				next.insertAdjacentHTML('beforeend', goBck);
+				h2.goBackAdded = true;
+			}
 
 			fireEvent('open', next);
 		}

@@ -60,3 +60,12 @@ $messages['nl'] = array(
 	'wikiastyleguide-dropdown-select-all' => 'Alles selecteren',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 en nog $2',
 );
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hans'] = array(
+	'wikiastyleguide-dropdown-all' => '全部',
+	'wikiastyleguide-dropdown-select-all' => '全选',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1与$2以及更多',
+);

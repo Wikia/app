@@ -566,6 +566,7 @@ $messages['ja'] = array(
 /** Korean (한국어)
  * @author Excalibur777
  * @author 아라
+ * @author 한글화담당
  */
 $messages['ko'] = array(
 	'quickstats-header-label' => '간단한 통계',
@@ -573,7 +574,7 @@ $messages['ko'] = array(
 	'quickstats-header-views' => '보기',
 	'quickstats-header-edits' => '편집',
 	'quickstats-header-photos' => '사진',
-	'quickstats-header-likes' => 'Facebook Likes',
+	'quickstats-header-likes' => '좋아요',
 	'quickstats-totals-label' => '합계',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|더 많은 통계 보기]]',
 );
@@ -1028,6 +1029,23 @@ $messages['tly'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
+/** Turkish (Türkçe)
+ * @author Sabri Vatansever
+ */
+$messages['tr'] = array(
+	'quickstats-header-label' => 'Hızlı istatistik',
+	'quickstats-header-date' => 'Tarih',
+	'quickstats-header-views' => 'Görüntülenme',
+	'quickstats-header-edits' => 'Değişiklikler',
+	'quickstats-header-photos' => 'Fotoğraflar',
+	'quickstats-header-likes' => 'Beğeniler',
+	'quickstats-totals-label' => 'Toplam',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Daha fazla istatislik gör]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
+);
+
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
@@ -1104,6 +1122,18 @@ $messages['vi'] = array(
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1B',
+);
+
+/** Chinese (中文)
+ * @author Shangkuanlc
+ */
+$messages['zh'] = array(
+	'quickstats-header-label' => '統計快訊',
+	'quickstats-header-date' => '日期',
+	'quickstats-header-views' => '點閱數',
+	'quickstats-header-edits' => '編輯數',
+	'quickstats-header-photos' => '照片',
+	'quickstats-header-likes' => '按讚',
 );
 
 /** Simplified Chinese (中文（简体）‎)

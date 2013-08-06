@@ -503,7 +503,10 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		currentWrapper = wkMdlImages.getElementsByClassName('current')[0];
 		currentWrapperStyle = currentWrapper.style;
 
-		shareBtn.style.display = 'block';
+		// GameGuides has no share button
+		if( shareBtn ) {
+			shareBtn.style.display = 'block';
+		}
 		toggleGallery(true);
 		setupImage();
 	}

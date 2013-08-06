@@ -12,18 +12,15 @@
  */
 
 class PhalanxTitleBlock extends WikiaObject {
-	function __construct() {
-		parent::__construct();
-	}
 
 	/**
 	 * handler for beforeMove hook
 	 *
 	 * @static
 	 *
-	 * @param SpecialPage $move -- Special::Move class instance
+	 * @param MovePageForm $move -- Special::Move class instance
 	 *
-	 * @return true -- pass hook further
+	 * @return bool true -- pass hook further
 	 */
 	static public function beforeMove( &$move ) {
 		wfProfileIn( __METHOD__ );
@@ -41,6 +38,7 @@ class PhalanxTitleBlock extends WikiaObject {
 	/**
 	 * handler for editFilter hook
 	 *
+	 * @param EditPage $editPage -- edit page instance
 	 * @static
 	 */
 	static public function editFilter( $editPage, $text, $section, &$hookError, $summary ) {
@@ -73,7 +71,7 @@ class PhalanxTitleBlock extends WikiaObject {
 	 * @param Title $title -- title instance
 	 * @param Bool $displayBlock -- shoould block be displayed or not
 	 *
-	 * @return true -- pass hook further
+	 * @return bool true -- pass hook further
 	 */
 	static public function checkTitle( $title, $displayBlock = true ) {
 		wfProfileIn( __METHOD__ );
@@ -97,7 +95,7 @@ class PhalanxTitleBlock extends WikiaObject {
 	 * @param Title $title -- title for checking
 	 * @param String $error_msg -- returned message, by reference
 	 *
-	 * @return true -- pass hook further
+	 * @return bool true -- pass hook further
 	 */
 	static public function pageTitleFilter( $title, &$error_msg ) {
 		wfProfileIn( __METHOD__ );

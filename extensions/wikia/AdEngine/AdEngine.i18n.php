@@ -68,12 +68,30 @@ $messages['id'] = array(
 	'adengine-exitstitial-button' => 'Lewati Iklan ini',
 );
 
+/** Korean (한국어)
+ * @author 한글화담당
+ */
+$messages['ko'] = array(
+	'adengine-exitstitial-go-back' => '돌아가시겠습니까?',
+	'adengine-exitstitial-button' => '광고 건너뛰기',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
 	'adengine-exitstitial-title-template' => 'Dir verloosst $1...',
 	'adengine-exitstitial-button' => 'Dës Reklamm iwwersprangen',
+);
+
+/** Macedonian (македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'adengine-exitstitial-title-template' => 'Го напуштате $1…',
+	'adengine-exitstitial-redirecting' => 'Прелистувачот за некоја секунда ќе ве одведе на страницата што ја побаравте.',
+	'adengine-exitstitial-go-back' => 'Сакате да се вратите назад?',
+	'adengine-exitstitial-button' => 'Прескокни ја рекламава',
 );
 
 /** Malay (Bahasa Melayu)
@@ -86,10 +104,22 @@ $messages['ms'] = array(
 	'adengine-exitstitial-button' => 'Langkau iklan ini',
 );
 
+/** Norwegian Bokmål (norsk bokmål)
+ * @author Laaknor
+ */
+$messages['nb'] = array(
+	'adengine-exitstitial-title-template' => 'Du forlater $1...',
+	'adengine-exitstitial-redirecting' => 'Din nettleser vil om nøn sekunder omdirigere deg til siden du ba om.',
+	'adengine-exitstitial-go-back' => 'Vil du gå tilbake?',
+	'adengine-exitstitial-button' => 'Hopp over denne annonsen',
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'adengine-exitstitial-title-template' => 'تاسې له $1 څخه وځۍ...',
+	'adengine-exitstitial-go-back' => 'بېرته ورستنېدل غواړۍ؟',
 	'adengine-exitstitial-button' => 'له دې خبرتيا تېرېدل',
 );
 
@@ -111,4 +141,21 @@ $messages['sv'] = array(
 	'adengine-exitstitial-redirecting' => 'Din webbläsare kommer att omdirigera dig till den sida du begärt inom några sekunder.',
 	'adengine-exitstitial-go-back' => 'Vill du gå tillbaka?',
 	'adengine-exitstitial-button' => 'Hoppa över denna annons',
+);
+
+/** Turkish (Türkçe)
+ * @author Sabri Vatansever
+ */
+$messages['tr'] = array(
+	'adengine-exitstitial-title-template' => '$1 bırakıyorsun ...',
+	'adengine-exitstitial-redirecting' => 'Tarayıcınız için birkaç saniye içinde istediğiniz sayfa yönlendirme yapar.',
+	'adengine-exitstitial-go-back' => 'Geri dönmek ister misin?',
+	'adengine-exitstitial-button' => 'Reklamı geç',
+);
+
+/** Chinese (中文)
+ * @author Shangkuanlc
+ */
+$messages['zh'] = array(
+	'adengine-exitstitial-button' => '跳過廣告',
 );

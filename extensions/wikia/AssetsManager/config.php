@@ -270,7 +270,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/LatestPhotos.js',
 		'//skins/oasis/js/Interlang.js',
 		'//skins/oasis/js/WikiaNotifications.js',
-		'//skins/oasis/js/Spotlights.js',
 		'//skins/oasis/js/FirefoxFindFix.js',
 		'//skins/oasis/js/isTouchScreen.js',
 		'//skins/oasis/js/tabs.js',
@@ -1337,6 +1336,22 @@ $config['manage_wikia_home_js'] = array(
 	)
 );
 
+$config['licensed_video_swap_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/WikiaStyleGuide/js/Dropdown.js',
+		'//extensions/wikia/LicensedVideoSwap/js/lvsTracker.js',
+		'//extensions/wikia/LicensedVideoSwap/js/lvsCommonAjax.js',
+		'//extensions/wikia/LicensedVideoSwap/js/lvsVideoControls.js',
+		'//extensions/wikia/LicensedVideoSwap/js/lvsCallout.js',
+		'//extensions/wikia/LicensedVideoSwap/js/lvsDropDown.js',
+		'//extensions/wikia/LicensedVideoSwap/js/lvsEllipses.js',
+		'//extensions/wikia/LicensedVideoSwap/js/lvsSuggestions.js',
+		'//extensions/wikia/LicensedVideoSwap/js/lvsSwapKeep.js',
+		'//extensions/wikia/LicensedVideoSwap/js/lvsUndo.js',
+		'//extensions/wikia/LicensedVideoSwap/js/LicensedVideoSwap.js',
+	),
+);
 
 /* SpecialCSS */
 $config['special_css_js'] = array(

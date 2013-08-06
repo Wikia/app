@@ -484,18 +484,40 @@ class MediaWikiService
 	public function getWikiMatchByHost( $domain ) {
 		$match = null;
 		if ( $domain !== '' ) {
-		$langCode = $this->getLanguageCode();
-            if ( $langCode === static::WIKI_DEFAULT_LANG_CODE ) {
-                $wikiId = $this->getWikiIdByHost( $domain . '.wikia.com' );
-            } else {
-                $wikiId = ( $interWikiComId = $this->getWikiIdByHost( "{$langCode}.{$domain}.wikia.com" ) ) !== null ? $interWikiComId : $this->getWikiIdByHost( "{$domain}.{$langCode}" );
-            }
-            //exclude wikis which lang does not match current one
-            if ( isset( $wikiId ) && $langCode === $this->getGlobalForWiki( 'wgLanguageCode', $wikiId ) ) {
-                $match = new \Wikia\Search\Match\Wiki( $wikiId, $this );
-            }
+			$langCode = $this->getLanguageCode();
+			if ( $langCode === static::WIKI_DEFAULT_LANG_CODE ) {
+				$wikiId = $this->getWikiIdByHost( $domain . '.wikia.com' );
+			} else {
+				$wikiId = ( $interWikiComId = $this->getWikiIdByHost( "{$langCode}.{$domain}.wikia.com" ) ) !== null ? $interWikiComId : $this->getWikiIdByHost( "{$domain}.{$langCode}" );
+			}
+			//exclude wikis which lang does not match current one
+			$wikiLang = $this->getGlobalForWiki( 'wgLanguageCode', $wikiId );
+			//if wiki lang not set display only for default language
+			if ( isset( $wikiId ) && ( ( !$wikiLang && $langCode === static::WIKI_DEFAULT_LANG_CODE ) || ( $langCode === $wikiLang ) ) ) {
+				$match = new \Wikia\Search\Match\Wiki( $wikiId, $this );
+			}
 		}
 		return $match;
+	}
+	
+	/**
+	 * For a given wiki ID, get all values in the city_domain table.
+	 * @param int $wikiId
+	 * @return array
+	 */
+	public function getDomainsForWikiId( $wikiId ) {
+		$dbw = wfGetDB( DB_SLAVE, [], $this->getGlobal( 'ExternalSharedDB' ) );
+		$dbResult = $dbw->select(
+			array( "city_domains" ),
+			array( "*" ),
+			array( "city_id" => $wikiId ),
+			__METHOD__
+		);
+		$result = [];
+		while( $row = $dbw->fetchObject( $dbResult ) ) {
+			$result[] = $row->city_domain;
+		}
+		return $result;
 	}
 	
 	/**

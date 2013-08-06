@@ -6,7 +6,7 @@
 .BreadCrumbs {
 	@include clearfix;
 	font-size: 14px;
-	border-bottom: 1px solid $color-wall-border;
+	border-bottom: 1px solid $color-page-border-subtle;
 	line-height: 20px;
 	padding: 3px 0 5px;
 	.removed {

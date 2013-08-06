@@ -31,8 +31,16 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * Default sufix for result template
+	 * @var string
 	 */
 	const WIKIA_DEFAULT_RESULT = 'result';
+
+	/**
+	 * Default varnish cache time for a search result
+	 * Currently 12 hours.
+	 * @var int
+	 */
+	const VARNISH_CACHE_TIME = 43200;
 	
 	/**
 	 * Responsible for instantiating query services based on config.
@@ -73,6 +81,44 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		
 		$this->setPageTitle( $searchConfig );
 		$this->setResponseValuesFromConfig( $searchConfig );
+		$this->setVarnishCacheTime( self::VARNISH_CACHE_TIME );
+	}
+
+	/**
+	 * Accesses top wiki articles for right rail, see PLA-466
+	 */
+	public function topWikiArticles() {
+		global $wgLang;
+		$pages = [];
+		try {
+			$pageData = $this->app->sendRequest( 'ArticlesApiController', 'getTop', [ 'namespaces' => 0 ] )->getData();
+			$ids = [];
+			$counter = 0;
+			foreach ( $pageData['items'] as $pageDatum ) {
+				$ids[] = $pageDatum['id'];
+				if ( $counter++ >= 12 ) {
+					break;
+				}
+			}
+			if (! empty( $ids ) ) {
+				$params = [ 'ids' => implode( ',', $ids ), 'height' => 80, 'width' => 80 ];
+				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
+				foreach ( $detailResponse['items'] as $id => $item ) {
+					if (! empty( $item['thumbnail'] ) ) {
+						//get the first one image from imageServing as it needs other size
+						if ( empty( $pages ) ) {
+							$is = new ImageServing( [ $id ], 300, 150 );
+							$result = $is->getImages( 1 );
+							$item[ 'thumbnail' ] = $result[ $id ][ 0 ][ 'url' ];
+						}
+						//render date
+						$item[ 'date' ] = $wgLang->date( $item[ 'revision' ][ 'timestamp' ] );
+						$pages[] = $item;
+					}
+				}
+			}
+		} catch ( Exception $e ) { } // ignoring API exceptions for gracefulness
+		$this->setVal( 'pages', $pages );
 	}
 
 	/**
@@ -135,14 +181,20 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function searchVideosByTitle() {
 		$searchConfig = new Wikia\Search\Config;
 		$title = $this->getVal( 'title' );
+		$mm = $this->getVal( 'mm', '80%' );
 		if ( empty( $title ) ) {
 			throw new Exception( "Please include a value for 'title'." );
 		}
 		$searchConfig
 		    ->setVideoTitleSearch( true )
-		    ->setQuery( $title );
+		    ->setQuery( $title )
+		    ->setMinimumMatch( $mm );
+		$queryService = $this->queryServiceFactory->getFromConfig( $searchConfig );
+		if ( ( $minDuration = $this->getVal( 'minseconds' ) ) && ( $maxDuration = $this->getVal( 'maxseconds' ) ) ) {
+			$queryService->setMinDuration( $minDuration)->setMaxDuration( $maxDuration );
+		} 
 		$this->getResponse()->setFormat( 'json' );
-		$this->getResponse()->setData( $this->queryServiceFactory->getFromConfig( $searchConfig )->searchAsApi() );
+		$this->getResponse()->setData( $queryService->searchAsApi() );
 	}
 	
 	/**
@@ -221,15 +273,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
 		if ( substr( $this->getResponse()->getFormat(), 0, 4 ) == 'json' ) {
 			$requestedFields = $searchConfig->getRequestedFields();
-			$jsonFields = $this->getVal( 'jsonfields' );
-			if (! empty( $jsonFields ) ) {
-				foreach ( explode( ',', $jsonFields ) as $field ) {
-					if (! in_array( $field, $requestedFields ) ) {
-						$requestedFields[] = $field;
-					}
-				}
-				$searchConfig->setRequestedFields( $requestedFields );
-			}
+			$searchConfig->setRequestedFields( explode( ',', $this->getVal( 'jsonfields', '' ) ) );
 		}
 		return $searchConfig;
 	}
@@ -240,7 +284,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	protected function setResponseValuesFromConfig( Wikia\Search\Config $searchConfig ) {
 
-		global $wgExtensionsPath;
+		global $wgExtensionsPath, $wgLanguageCode;
 
 		$response = $this->getResponse();
 		$format = $response->getFormat();
@@ -266,7 +310,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'tabs',                  $this->sendSelfRequest( 'tabs', $tabsArgs ) );
 		$this->setVal( 'query',                 $searchConfig->getQuery()->getQueryForHtml() );
 		$this->setVal( 'resultsPerPage',        $searchConfig->getLimit() );
-		$this->setVal( 'pageUrl',               $this->wg->Title->getFullUrl() );
+		$this->setVal( 'specialSearchUrl',      $this->wg->Title->getFullUrl() );
 		$this->setVal( 'isInterWiki',           $searchConfig->getInterWiki() );
 		$this->setVal( 'namespaces',            $searchConfig->getNamespaces() );
 		$this->setVal( 'hub',                   $searchConfig->getHub() );
@@ -278,47 +322,32 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $this->wg->OnWikiSearchIncludesWikiMatch && $searchConfig->hasWikiMatch() ) {
 			$this->registerWikiMatch( $searchConfig );
 		}
+		$topWikiArticlesHtml = '';
+		if (! $searchConfig->getInterWiki() && $wgLanguageCode == 'en' ) {
+			$dbname = $this->wg->DBName;
+			$cacheKey = wfMemcKey( __CLASS__, 'WikiaSearch', 'topWikiArticles', $this->wg->CityId );
+			$topWikiArticlesHtml = WikiaDataAccess::cache(
+				$cacheKey,
+				86400 * 5, // 5 days, one business week
+				function () {
+					return F::app()->renderView( 'WikiaSearchController', 'topWikiArticles' );
+				}
+			);
+		}
+		$this->setVal( 'topWikiArticles', $topWikiArticlesHtml );
 	}
 	
 	/**
-	 * Sets wiki match view script variable in view
+	 * Includes wiki match partial for non cross-wiki searches
 	 * @param Wikia\Search\Config $searchConfig
 	 */
 	protected function registerWikiMatch( Wikia\Search\Config $searchConfig ) {
-		$resultSet = new Wikia\Search\ResultSet\MatchGrouping( new Wikia\Search\ResultSet\DependencyContainer( ['config' => $searchConfig, 'wikiMatch' => $searchConfig->getWikiMatch() ] ) );
-
-		$image = $resultSet->getHeader( 'image' );
-		$lang = $resultSet->getHeader( 'lang' );
-		$globalWikiId = (new CityVisualization())->getTargetWikiId( $lang );
-
-		if ( !empty( $image) && $globalWikiId !== false ) {
-			$imageUrl = ImagesService::getImageSrcByTitle( $globalWikiId, $image, 180, 120 );
-		}
-		//default image if not set or missing
-		if ( empty( $imageUrl ) ) {
-			$imageUrl = $this->wg->ExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png';
-		}
-		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="-1" data-event="search_click_wiki-';
-		$thumbTracking .= empty( $image ) ? 'no-thumb"' : 'thumb"';
-
-		//use default exacteResult template
-		$template = 'exactResult';
-		if ( $this->isCorporateWiki() ) {
-			$template = 'CrossWiki_exactResult';
-		}
+		$matchResult = $searchConfig->getWikiMatch()->getResult();
 		$this->setVal(
 				'wikiMatch',
-				$this->getApp()->getView( 'WikiaSearch', $template,
-						[ 'pos' => -1, 
-						'resultSet' => $resultSet, 
-						'pagesMsg' => $resultSet->getArticlesCountMsg(), 
-						'imgMsg' => $resultSet->getImagesCountMsg(), 
-						'videoMsg' => $resultSet->getVideosCountMsg(), 
-						'imageURL' => $imageUrl,
-						'thumbTracking' => $thumbTracking
-						]
-						) 
+				$this->getApp()->getView( 'WikiaSearch', 'CrossWiki_result', [ 'result' => $matchResult, 'pos' => -1 ] ) 
 				);
+		$this->resultsFound++;
 	}
 	
 	/**
@@ -471,7 +500,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$filters = $config->getFilterQueries();
 		$rank = $config->getRank();
-		$is_video_wiki = $this->wg->CityId == Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID;
+		$is_video_wiki = $this->wg->CityId == Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID;
 
 		$form = array(
 				'by_category' =>        $this->getVal('by_category', false),

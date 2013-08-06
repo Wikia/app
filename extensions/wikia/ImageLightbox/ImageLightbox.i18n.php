@@ -986,6 +986,7 @@ $messages['uk'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Liuxinyu970226
  * @author Sam Wang
  */
 $messages['zh-hans'] = array(
@@ -994,9 +995,17 @@ $messages['zh-hans'] = array(
 	'lightbox-standard-link' => '普通链接',
 	'lightbox-blog-link' => '博客链接',
 	'lightbox-send' => '发送',
+	'lightbox-share-description' => '照片在 $1 上$2',
 	'lightbox-share-button-email' => '电子邮件',
 	'lightbox-share-button-www' => '分享',
+	'lightbox-share-button-embed' => '嵌入',
+	'lightbox-share-email-page-label-address' => '邮件地址',
+	'lightbox-share-email-ok-caption' => '确认',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Email has|邮件已经}} 被发送。',
 	'lightbox-share-email-error-caption' => '错误',
+	'lightbox-share-email-error-content' => '发送{{PLURAL:$1|email|邮件}}时遇到错误。
+详细信息： $2',
+	'lightbox-visit-the-wiki' => '查阅维基：',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

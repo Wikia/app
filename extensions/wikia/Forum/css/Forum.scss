@@ -291,6 +291,8 @@
 	border-bottom: 0;
 	margin: 0 10px 0 10px;
 	padding-bottom: 0;
+	// DAR-1382 overwrite right padding to make place for larger forum tally
+	padding-right: 260px;
 	position: relative;
 
 	.header-right {
@@ -305,7 +307,7 @@
 		padding: 0 20px;
 
 		&.last {
-			border-left: 1px solid $color-wall-border;
+			border-left: 1px solid $color-page-border-subtle;
 		}
 
 		> span {
@@ -352,7 +354,7 @@
 
 .ForumPolicies {
   overflow-y: scroll;
-  border: 1px solid $color-wall-border;
+  border: 1px solid $color-page-border-subtle;
   font-size: 13px;
   height: 400px;
   position: relative;

@@ -173,6 +173,13 @@ $messages['br'] = array(
 	'lyrics-artist-byline' => 'gant %s',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'login-username-hint' => 'Декъашхочун цӀе',
+);
+
 /** Czech (česky)
  * @author Reaperman
  */
