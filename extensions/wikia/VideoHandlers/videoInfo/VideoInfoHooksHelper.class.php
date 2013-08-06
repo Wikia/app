@@ -295,6 +295,9 @@ class VideoInfoHooksHelper {
 			return true;
 		}
 
+		// Only report this file as deleted when this request is coming from a file page.  In other
+		// instances (search results from the WVL for example) we want to make sure these videos
+		// still appear.
 		$app = F::app();
 		if ( $app->wg->Title && $app->wg->Title->getNamespace() != NS_FILE ) {
 			return true;
