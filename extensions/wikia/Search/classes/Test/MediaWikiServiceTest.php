@@ -1782,29 +1782,71 @@ class MediaWikiServiceTest extends BaseTest
 			->with( 'wgLanguageCode', 123 )
 			->will ( $this->returnValue( 'en' ) )
 		;
-
 		$this->mockClass( 'Wikia\Search\Match\Wiki', $mockMatch );
 		$this->assertEquals(
 				$service->getWikiMatchByHost( 'foo' ),
 				$mockMatch
 		);
-
 		$service
 			->expects( $this->at( 0 ) )
 			->method ( 'getLanguageCode' )
 			->will   ( $this->returnValue( 'pl' ) )
 		;
-
 		$service
 			->expects( $this->at( 1 ) )
 			->method ( 'getWikiIdByHost' )
 			->with   ( 'pl.foo.wikia.com' )
 			->will   ( $this->returnValue( 123 ) )
 		;
+		$service
+			->expects( $this->at( 2 ) )
+			->method( 'getGlobalForWiki' )
+			->with( 'wgLanguageCode', 123 )
+			->will ( $this->returnValue( 'en' ) )
+		;
 		$this->assertEmpty(
 			$service->getWikiMatchByHost( 'foo' )
 		);
-
+		$service
+			->expects( $this->at( 0 ) )
+			->method ( 'getLanguageCode' )
+			->will   ( $this->returnValue( 'en' ) )
+		;
+		$service
+			->expects( $this->at( 1 ) )
+			->method ( 'getWikiIdByHost' )
+			->with   ( 'foo.wikia.com' )
+			->will   ( $this->returnValue( 123 ) )
+		;
+		$service
+			->expects( $this->at( 2 ) )
+			->method( 'getGlobalForWiki' )
+			->with( 'wgLanguageCode', 123 )
+			->will ( $this->returnValue( false ) )
+		;
+		$this->assertNotEmpty(
+			$service->getWikiMatchByHost( 'foo' )
+		);
+		$service
+			->expects( $this->at( 0 ) )
+			->method ( 'getLanguageCode' )
+			->will   ( $this->returnValue( 'pl' ) )
+		;
+		$service
+			->expects( $this->at( 1 ) )
+			->method ( 'getWikiIdByHost' )
+			->with   ( 'pl.foo.wikia.com' )
+			->will   ( $this->returnValue( 123 ) )
+		;
+		$service
+			->expects( $this->at( 2 ) )
+			->method( 'getGlobalForWiki' )
+			->with( 'wgLanguageCode', 123 )
+			->will ( $this->returnValue( false ) )
+		;
+		$this->assertEmpty(
+			$service->getWikiMatchByHost( 'foo' )
+		);
 		$service
 			->expects( $this->at( 0 ) )
 			->method ( 'getLanguageCode' )
