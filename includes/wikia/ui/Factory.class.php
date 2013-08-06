@@ -50,27 +50,10 @@ class Factory {
 	private $loaderService;
 
 	/**
-	 * @desc Path to components directory
-	 * @var String|null
-	 */
-	private $componentsDir = null;
-
-	/**
 	 * @desc Private constructor because it's a singleton
 	 */
 	private function __construct() {
-		global $IP;
-		$this->componentsDir = $IP . self::DEFAULT_COMPONENTS_PATH;
 		$this->loaderService = \AssetsManager::getInstance();
-	}
-
-	/**
-	 * @desc Sets the path to components' directory
-	 *
-	 * @param String $path
-	 */
-	public function setComponentsDir( $path ) {
-		$this->componentsDir = $path;
 	}
 
 	/**
@@ -78,8 +61,9 @@ class Factory {
 	 *
 	 * @return null|String
 	 */
-	public function getComponentsDir() {
-		return $this->componentsDir;
+	public static function getComponentsDir() {
+		global $IP;
+		return $IP . self::DEFAULT_COMPONENTS_PATH;
 	}
 
 	/**
