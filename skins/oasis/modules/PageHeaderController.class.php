@@ -302,6 +302,10 @@ class PageHeaderController extends WikiaController {
 					$this->tallyMsg = wfMessage('specialvideos-wiki-videos-tally',$mediaService->getTotalVideos())->parse();
 				}
 
+				if ( $wgTitle->isSpecial('LicensedVideoSwap') ) {
+					$this->pageType = "";
+				}
+
 				break;
 
 			case NS_CATEGORY:

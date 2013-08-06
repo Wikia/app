@@ -323,6 +323,15 @@ abstract class ApiWrapper {
 		if ( !isset( $metadata['targetCountry'] ) ) {
 			$metadata['targetCountry'] = $this->getTargetCountry();
 		}
+		if ( !isset( $metadata['series'] ) ) {
+			$metadata['series'] = $this->getSeries();
+		}
+		if ( !isset( $metadata['season'] ) ) {
+			$metadata['season'] = $this->getSeason();
+		}
+		if ( !isset( $metadata['episode'] ) ) {
+			$metadata['episode'] = $this->getEpisode();
+		}
 
 		$this->metadata = $metadata;
 
@@ -436,6 +445,46 @@ abstract class ApiWrapper {
 	 * @return string
 	 */
 	protected function getTargetCountry() {
+		return '';
+	}
+
+	/**
+	 * get source
+	 * @return string
+	 */
+	protected function getSource() {
+		return '';
+	}
+
+	/**
+	 * get source id (video id from source)
+	 * @return string
+	 */
+	protected function getSourceId() {
+		return '';
+	}
+
+	/**
+	 * get series
+	 * @return string
+	 */
+	protected function getSeries() {
+		return '';
+	}
+
+	/**
+	 * get season
+	 * @return string
+	 */
+	protected function getSeason() {
+		return '';
+	}
+
+	/**
+	 * get episode
+	 * @return string
+	 */
+	protected function getEpisode() {
 		return '';
 	}
 

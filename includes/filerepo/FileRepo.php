@@ -48,7 +48,7 @@ class FileRepo {
 	// a) they shouldn't affect repository when it's a local repository
 	// b) there are many classes that are derrived from LocalRepo and RepoGroup catches all uses
 	//    in one place
-	var $checkRedirects, $checkDuplicates, $allowBlocking;
+	var $checkRedirects, $checkDuplicates, $allowBlocking, $allowRedirect;
 	// Wikia Change End
 
 	/**
@@ -99,6 +99,9 @@ class FileRepo {
 			: true;
 		$this->allowBlocking = isset( $info['allowBlocking'] )
 			? $info['allowBlocking']
+			: false;
+		$this->allowRedirect = isset( $info['allowRedirect'] )
+			? $info['allowRedirect']
 			: false;
 		// Wikia Change End
 

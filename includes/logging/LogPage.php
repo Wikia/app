@@ -246,9 +246,6 @@ class LogPage {
 		}
 
 		$key = "$type/$action";
-		// macbre: ProblemReports (dirty code hack :[)
-		if ( $type == 'pr_rep_log' && class_exists('WikiaApiQueryProblemReports') )
-			return WikiaApiQueryProblemReports::makeActionText($key, $title, $params, $skin);
 
 		if( isset( $wgLogActions[$key] ) ) {
 			if( is_null( $title ) ) {

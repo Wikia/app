@@ -195,6 +195,12 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	protected function loadMetadata( array $overrideFields = array() ) {
+		if ( !isset( $overrideFields['source'] ) ) {
+			$overrideFields['source'] = $this->getSource();
+		}
+		if ( !isset( $overrideFields['sourceId'] ) ) {
+			$overrideFields['sourceId'] = $this->getSourceId();
+		}
 		if ( !isset($overrideFields['genres']) ) {
 			$overrideFields['genres'] = $this->getGenres();
 		}
@@ -453,6 +459,86 @@ class OoyalaApiWrapper extends ApiWrapper {
 
 		if ( !empty( $this->interfaceObj['metadata']['targetcountry'] ) ) {
 			return $this->interfaceObj['metadata']['targetcountry'];
+		}
+
+		return '';
+	}
+
+	/**
+	 * get source
+	 * @return string
+	 */
+	protected function getSource() {
+		if ( !empty( $this->metadata['source'] ) ) {
+			return $this->metadata['source'];
+		}
+
+		if ( !empty( $this->interfaceObj['metadata']['source'] ) ) {
+			return $this->interfaceObj['metadata']['source'];
+		}
+
+		return '';
+	}
+
+	/**
+	 * get source id (video id from source)
+	 * @return string
+	 */
+	protected function getSourceId() {
+		if ( !empty( $this->metadata['sourceId'] ) ) {
+			return $this->metadata['sourceId'];
+		}
+
+		if ( !empty( $this->interfaceObj['metadata']['sourceid'] ) ) {
+			return $this->interfaceObj['metadata']['sourceid'];
+		}
+
+		return '';
+	}
+
+	/**
+	 * get series
+	 * @return string
+	 */
+	protected function getSeries() {
+		if ( !empty( $this->metadata['series'] ) ) {
+			return $this->metadata['series'];
+		}
+
+		if ( !empty( $this->interfaceObj['metadata']['series'] ) ) {
+			return $this->interfaceObj['metadata']['series'];
+		}
+
+		return '';
+	}
+
+	/**
+	 * get season
+	 * @return string
+	 */
+	protected function getSeason() {
+		if ( !empty( $this->metadata['season'] ) ) {
+			return $this->metadata['season'];
+		}
+
+		if ( !empty( $this->interfaceObj['metadata']['season'] ) ) {
+			return $this->interfaceObj['metadata']['season'];
+		}
+
+		return '';
+	}
+
+	/**
+	 * get episode
+	 * @return string
+	 */
+	protected function getEpisode() {
+		if ( !empty( $this->metadata['episode'] ) ) {
+			return $this->metadata['episode'];
+		}
+
+		if ( !empty( $this->interfaceObj['metadata']['episode'] ) ) {
+			return $this->interfaceObj['metadata']['episode'];
 		}
 
 		return '';

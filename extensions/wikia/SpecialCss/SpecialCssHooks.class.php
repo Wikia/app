@@ -28,18 +28,25 @@ class SpecialCssHooks {
 	 * @return boolean
 	 */
 	static private function shouldRedirect( $app, $model, $articleId ) {
-		// currently special::css cannot handle undo mode
+		$result = false;
+
+		// currently Special:CSS cannot handle undo mode
 		if ( $app->wg->Request->getInt( 'undo' ) > 0 || $app->wg->Request->getInt( 'undoafter' ) > 0 ) {
-			return false;
+			return $result;
 		}
 
-		/** @noinspection PhpUndefinedVariableInspection 
-		 * SpecialCssModel::$suppoertedSkins is defined -- lint has issues with it 
-		 */
-		return $app->wg->EnableSpecialCssExt
-			&& $model->isWikiaCssArticle( $articleId )
-			&& $app->checkSkin( $model::$supportedSkins )
-			&& $app->wg->User->isAllowed( 'specialcss' );
+		if( $app->wg->EnableSpecialCssExt ) {
+			$specialCss = new SpecialCssController();
+
+			/** @noinspection PhpUndefinedVariableInspection
+			 * SpecialCssModel::$suppoertedSkins is defined -- lint has issues with it
+			 */
+			$result = $model->isWikiaCssArticle( $articleId )
+				&& $app->checkSkin( $model::$supportedSkins )
+				&& $specialCss->userCanExecute( $app->wg->User );
+		}
+
+		return $result;
 	}
 
 	/**
@@ -70,9 +77,9 @@ class SpecialCssHooks {
 	}
 
 	/**
-	 * @desc Returns true if given title has "CSS Updates" category
+	 * @desc Returns true if in given categories "CSS Updates" is present
 	 *
-	 * @param $title
+	 * @param Array $categories
 	 *
 	 * @return boolean
 	 */

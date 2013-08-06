@@ -3,7 +3,11 @@
 <head>
 
 <meta http-equiv="Content-Type" content="<?= $mimeType ?>; charset=<?= $charset ?>">
-<meta name="viewport" content="width=1200">
+<?php if ( BodyController::isResponsiveLayoutEnabled() ) : ?>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<?php else : ?>
+	<meta name="viewport" content="width=1200">
+<?php endif ?>
 <?= $headLinks ?>
 
 <title><?= $pageTitle ?></title>
@@ -75,6 +79,9 @@ if(Math.random()<0.01){
 
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>"<?= $itemType ?>>
+<? if ( BodyController::isResponsiveLayoutEnabled() ): ?>
+	<div class="background-image-gradient"></div>
+<? endif ?>
 
 <?= $comScore ?>
 <?= $quantServe ?>

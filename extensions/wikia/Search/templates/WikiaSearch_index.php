@@ -1,5 +1,5 @@
 <section class="Search this-wiki WikiaGrid clearfix">
-	<form class="WikiaSearch" id="search-v2-form" action="<?=$pageUrl;?>">
+	<form class="WikiaSearch" id="search-v2-form" action="<?=$specialSearchUrl;?>">
 		<div class="SearchInput">
 			<?php if(!empty($advancedSearchBox)) : ?>
 				<p class="advanced-link"><a href="#" id="advanced-link"><?= wfMessage('searchprofile-advanced') ?></a></p>
@@ -22,9 +22,6 @@
 		<?php echo $tabs; ?>
 
 		<div class="results-wrapper grid-3 alpha">
-			<?php if(!empty($wikiMatch)):?>
-				<?=$wikiMatch?>
-			<?php endif; ?>
 			<?php if(!empty($results)): ?>
 				<?php if( $resultsFound > 0 ): ?>
 					<p class="result-count subtle">
@@ -33,6 +30,9 @@
 						<?php else: ?>
 							<?= wfMsg('wikiasearch2-results-for', '<strong>'.$query.'</strong>'); ?>
 						<?php endif; ?>
+						<?php if(!empty($wikiMatch)):?>
+							<?=$wikiMatch?>
+						<?php endif; ?>			
 						<?php if ( isset($hub) && $hub ) : ?>
 							<?= wfMsg('wikiasearch2-onhub', $hub)?>
 							|
@@ -77,6 +77,7 @@
 			</div>
 			<div class="SearchAdsTopWrapper grid-2 alpha">
 				<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')); ?>
+				<?= $topWikiArticles ?>
 				<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2')); ?>
 				<div id="WikiaAdInContentPlaceHolder"></div>
 			</div>

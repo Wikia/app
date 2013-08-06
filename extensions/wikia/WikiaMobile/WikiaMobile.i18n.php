@@ -59,6 +59,7 @@ you should definitely check this out:
 
 	//modal
 	'wikiamobile-image-not-loaded' => 'Image is not available',
+	'wikiamobile-shared-file-not-available' => "Oops, this item is no longer available, but now that you're here, explore the wiki!",
 
 	//404 page
 	'wikiamobile-page-not-found' => "Oops! <b>$1</b> does not exist.",
@@ -120,6 +121,7 @@ $messages['qqq'] = array(
 
 	//modal
 	'wikiamobile-image-not-loaded' => 'This is a message shown to a user when an image could not be loaded in the modal',
+	'wikiamobile-shared-file-not-available' => 'Message displayed when user opens a link to particular media on an article and this media is not available anymore.',
 
 	//404 page
 	'wikiamobile-page-not-found-tap' => 'Message that describe what to do on 404 page with an image behind the crack',

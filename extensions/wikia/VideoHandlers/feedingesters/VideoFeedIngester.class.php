@@ -30,6 +30,8 @@ abstract class VideoFeedIngester {
 	private static $instances = array();
 	protected $filterByProviderVideoId = array();
 
+	protected static $CLDR_NAMES = array();
+
 	const CACHE_KEY = 'videofeedingester-2';
 	const CACHE_EXPIRY = 3600;
 	const THROTTLE_INTERVAL = 1;	// seconds
@@ -131,7 +133,18 @@ abstract class VideoFeedIngester {
 
 		$provider = empty($params['provider']) ? static::$PROVIDER : $params['provider'];
 
-		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $id );
+		// check if the video id exists in Ooyala.
+		if ( $remoteAsset ) {
+			$ooyalaAsset = new OoyalaAsset();
+			$isExist = $ooyalaAsset->isSourceIdExist( $id, $provider );
+			if ( $isExist ) {
+				print "Not uploading [$name (Id: $id)] - video already exists in remote assets.\n";
+				wfProfileOut( __METHOD__ );
+				return 0;
+			}
+		}
+
+		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $id, $remoteAsset );
 		$dup_count = count($duplicates);
 		$previousFile = null;
 		if ( $dup_count > 0 ) {
@@ -260,6 +273,15 @@ abstract class VideoFeedIngester {
 			return 0;
 		}
 
+		// check if video title exists
+		$ooyalaAsset = new OoyalaAsset();
+		$isExist = $ooyalaAsset->isTitleExist( $assetData['name'], $assetData['provider'] );
+		if ( $isExist ) {
+			print( "Skip (Uploading Asset): $name ($assetData[provider]): video already exists in remote assets.\n" );
+			wfProfileOut( __METHOD__ );
+			return 0;
+		}
+
 		if ( $debug ) {
 			print "Ready to create remote asset\n";
 			print "id:          $id\n";
@@ -269,14 +291,6 @@ abstract class VideoFeedIngester {
 				print ":: $line\n";
 			}
 		} else {
-			$ooyalaAsset = new OoyalaAsset();
-			$isExist = $ooyalaAsset->isExist( $assetData['name'], $assetData['provider'] );
-			if ( $isExist ) {
-				print( "Skip (Uploading Asset): $name ($assetData[provider]): Video already exists.\n" );
-				wfProfileOut( __METHOD__ );
-				return 0;
-			}
-
 			$result = $ooyalaAsset->addRemoteAsset( $assetData );
 			if ( !$result ) {
 				wfProfileOut( __METHOD__ );
@@ -613,7 +627,7 @@ abstract class VideoFeedIngester {
 	 * @param string $rating
 	 * @return string $stdRating
 	 */
-	protected function getIndustryRating( $rating ) {
+	public function getIndustryRating( $rating ) {
 		$rating = trim( $rating );
 		$name = strtolower( $rating );
 		switch( $name ) {
@@ -645,6 +659,14 @@ abstract class VideoFeedIngester {
 			case 'not rated':
 				$stdRating = 'NR';
 				break;
+			case 'redband':
+			case 'red band':
+				$stdRating = 'red band';
+				break;
+			case 'greenband':
+			case 'green band':
+				$stdRating = 'green band';
+				break;
 			default: $stdRating = $rating;
 		}
 
@@ -652,24 +674,105 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
-	 * Get age gate
+	 * Get age required from industry rating
 	 * @param string $rating
 	 * @return int $ageGate
 	 */
-	protected function getAgeGate( $rating ) {
+	public function getAgeRequired( $rating ) {
 		switch( $rating ) {
 			case 'M':
 			case 'R':
 			case 'TV-MA':
-				$ageGate = 17;
+			case 'red band':
+				$ageRequired = 17;
 				break;
 			case 'AO':
 			case 'NC-17':
-				$ageGate = 18;
+				$ageRequired = 18;
 				break;
-			default: $ageGate = 0;
+			default: $ageRequired = 0;
 		}
 
-		return $ageGate;
+		return $ageRequired;
 	}
+
+	/**
+	 * get standard category
+	 * @param string $cat
+	 * @return string $category
+	 */
+	public function getCategory( $cat ) {
+		switch( $cat ) {
+			case 'Movie':
+			case 'Movies':
+			case 'Movie Interview':
+			case 'Movie Behind the Scenes':
+			case 'Movie SceneOrSample':
+			case 'Movie Alternate Version':
+				$category = 'Movies';
+				break;
+			case 'TV':
+			case 'Series':
+			case 'Season':
+			case 'Episode':
+			case 'TV Show':
+			case 'Episodic Interview':
+			case 'Episodic Behind the Scenes':
+			case 'Episodic SceneOrSample':
+			case 'Episodic Alternate Version':
+				$category = 'TV';
+				break;
+			case 'Game':
+			case 'Games':
+			case 'Games SceneOrSample':
+				$category = 'Gaming';
+				break;
+			default: $category = 'Others';
+		}
+
+		return $category;
+	}
+
+	/**
+	 * get CLDR code (return the original value if code not found)
+	 * @param string $value
+	 * @param string $type [language|country]
+	 * @return string $value
+	 */
+	public function getCldrCode( $value, $type = 'language' ) {
+		$value = trim( $value );
+		if ( !empty( $value ) ) {
+			if ( empty( self::$CLDR_NAMES ) ) {
+				// include cldr extension for language code
+				include( dirname( __FILE__ ).'/../../../cldr/CldrNames/CldrNamesEn.php' );
+				self::$CLDR_NAMES = array(
+					'languageNames' => $languageNames,
+					'countryNames' => $countryNames,
+				);
+			}
+
+			// $languageNames, $countryNames comes from cldr extension
+			$paramName = ( $type == 'country' ) ? 'countryNames' : 'languageNames';
+			if ( !empty( self::$CLDR_NAMES[$paramName] ) ) {
+				$code = array_search( $value, self::$CLDR_NAMES[$paramName] );
+				if ( $code != false ) {
+					$value = $code;
+				}
+			}
+		}
+
+		return $value;
+	}
+
+	/**
+	 * unique array and convert to string
+	 * @param array $arr
+	 * @return string
+	 */
+	public function uniqueArrayToString( $arr ) {
+		$lower = array_map( 'strtolower', $arr );
+		$unique = array_intersect_key( $arr, array_unique( $lower ) );
+		return implode( ', ', $unique );
+	}
+
 }

@@ -356,6 +356,8 @@ $messages['br'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'scavengerhunt-form-error-no-landing-title' => 'Дехар до, дӀаязъе (URL-адрес) агӀона цӀе.',
+	'scavengerhunt-label-progressBarHintLabel' => 'Координаташ хьехар',
 	'scavengerhunt-label-entry-form-username' => 'Декъашхочун цӀе',
 );
 
@@ -1405,7 +1407,7 @@ $messages['mk'] = array(
 	'scavengerhunt-game-has-been-enabled' => 'Одбраната „Потрага“ е овозможена.',
 	'scavengerhunt-game-has-been-disabled' => 'Одбраната „Потрага“ е оневозможена.',
 	'scavengerhunt-game-has-not-been-saved' => 'Оваа „Потрага“ не е зачувана.',
-	'scavengerhunt-edit-token-mismatch' => 'Несовпаѓање во жетонот на уредувањето - обидете се повторно',
+	'scavengerhunt-edit-token-mismatch' => 'Несовпаѓање во шифрата на уредувањето — обидете се повторно',
 	'scavengerhunt-entry-form-name' => 'Вашето име:',
 	'scavengerhunt-entry-form-email' => 'Ваша е-пошта:',
 	'scavengerhunt-entry-form-submit' => 'Поднеси',
@@ -2167,9 +2169,9 @@ $messages['pt'] = array(
 	'scavengerhunt-form-error-invalid-title' => 'O título de página "$1" não foi encontrado.',
 	'scavengerhunt-form-error-landing-button-text' => 'Por favor insira o texto do botão página inicial.',
 	'scavengerhunt-form-error-landing-button-position' => 'Por favor, digite a posição de botão de página inicial.',
-	'scavengerhunt-form-error-starting-clue' => 'Preencha todos os campos da secção da pista inicial, por favor.',
-	'scavengerhunt-form-error-entry-form' => 'Preencha todos os campos da secção do formulário de entrada.',
-	'scavengerhunt-form-error-goodbye' => 'Preencha todos os campos da secção da janela de despedida, por favor.',
+	'scavengerhunt-form-error-starting-clue' => 'Preencha todos os campos da seção da pista inicial, por favor.',
+	'scavengerhunt-form-error-entry-form' => 'Preencha todos os campos da seção do formulário de entrada.',
+	'scavengerhunt-form-error-goodbye' => 'Preencha todos os campos da seção da janela de despedida, por favor.',
 	'scavengerhunt-form-error-no-article-title' => 'Introduza todos os títulos de artigos, por favor.',
 	'scavengerhunt-form-error-duplicated-article-title' => 'As etapas de caça não podem ter títulos duplicados',
 	'scavengerhunt-form-error-article-hidden-image' => 'Introduza todos os endereços das imagens ocultas, por favor.',

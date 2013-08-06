@@ -213,8 +213,8 @@ class ImageTweaksHooks {
 					$linkAttribs['class'] = 'image';
 				}
 
-				if ( !empty( $imageAttribs['data-image-name'] ) ) {
-					$imageParams['name'] = $imageAttribs['data-image-name'];
+				if ( !empty( $imageAttribs['data-image-key'] ) ) {
+					$imageParams['name'] = htmlspecialchars( $imageAttribs['data-image-key'] );
 				}
 
 				if ( !empty( $fullImageUrl ) ) {
@@ -297,8 +297,8 @@ class ImageTweaksHooks {
 				'full' => $imageAttribs['src']
 			);
 
-			if ( !empty($imageAttribs['data-video-name'] ) ) {
-				$imageParams['name'] = $imageAttribs['data-video-name'];
+			if ( !empty($imageAttribs['data-video-key'] ) ) {
+				$imageParams['name'] = htmlspecialchars( $imageAttribs['data-video-key'] );
 			}
 
 			if ( !empty( $options['caption'] ) ) {
@@ -325,12 +325,13 @@ class ImageTweaksHooks {
 			if ( $file instanceof File ) {
 				$title = $file->getTitle()->getDBKey();
 				$titleText = $file->getTitle()->getText();
+				$views = MediaQueryService::getTotalVideoViewsByTitle( $title );
 
 				$data['content'] = Xml::element(
 					'span',
 					array( 'class' => 'videoInfo' ),
 					"{$titleText} (" . $file->getHandler()->getFormattedDuration() .
-						", " . wfMsgForContent( 'wikiamobile-video-views-counter', MediaQueryService::getTotalVideoViewsByTitle( $title ) ) .
+						", " . wfMessage( 'wikiamobile-video-views-counter', $views )->inContentLanguage()->text() .
 						')'
 				);
 			}
@@ -372,7 +373,7 @@ class ImageTweaksHooks {
 
 			$html .= Xml::openElement( 'div', array( 'class' => 'picture-attribution' ) ) .
 				$avatar .
-				wfMsgExt('oasis-content-picture-added-by', array( 'parsemag' ), $link, $attributeTo ) .
+				wfMessage('oasis-content-picture-added-by', $link, $attributeTo )->text() .
 				Xml::closeElement( 'div' );
 
 			wfProfileOut( __METHOD__ . '::PictureAttribution' );

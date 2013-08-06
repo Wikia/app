@@ -3738,6 +3738,48 @@ $messages['kn'] = array(
 	'founderemails-answers-email-page-edited-anon-subject' => 'ಯಾರೋ ನಿಮ್ಮ ತಾಣವನ್ನು ಬದಲಾಯಿಸಿದರು!',
 );
 
+/** Korean (한국어)
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'founderemails-desc' => '위키에 바뀜에 대해 창립자에게 알리는 데 도움을 줍니다',
+	'tog-founderemailsenabled' => '다른 사람이 무엇을 하고 있는지에 대한 업데이트를 내게 이메일로 보내기 (창립자만)',
+	'founderemails-email-user-registered-subject' => '누군가가 $WIKINAME에 새로 가입했습니다',
+	'founderemails-email-user-registered-body' => '$USERNAME님 안녕하세요,
+
+축하합니다! $EDITORNAME 사용자가 $WIKINAME에 가입했습니다.
+
+이번 기회에 위키에 새 사용자가 온 것을 환영해주시고 편집하는 데 도움이 될 수 있도록 격려해주세요. 위키가 더 화끈하게, 그리고 더 빨리 성장할 것입니다.
+
+$EDITORPAGEURL
+
+위키아 팀',
+	'founderemails-email-user-registered-greeting' => '$USERNAME님 안녕하세요,',
+	'founderemails-email-user-registered-headline' => '축하합니다! $EDITORNAME 사용자가 $WIKINAME에 가입했습니다.',
+	'founderemails-email-user-registered-content' => '이번 기회에 위키에 새 사용자가 온 것을 환영해주시고 편집하는 데 도움이 될 수 있도록 격려해주세요. 위키가 더 화끈하게, 그리고 더 빨리 성장할 것입니다.',
+	'founderemails-email-user-registered-signature' => '위키아 팀',
+	'founderemails-email-user-registered-button' => '환영합니다',
+	'founderemails-email-user-registered-body-HTML' => '$USERNAME님,<br /><br />
+$EDITORNAME 사용자가 위키에 등록되어 있는 것 같습니다! <a href="$EDITORTALKPAGEURL">토론문서</a>에 안녕하세요라고 말하러 가지 않겠습니까?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- 위키아 팀</div>',
+	'founderemails-email-page-edited-reg-user-first-edit-subject' => '$WIKINAME에 새 편집이 있습니다!',
+	'founderemails-email-page-edited-reg-user-first-edit-body' => '$USERNAME님 안녕하세요,
+
+좋아요! $EDITORNAME 사용자가 $WIKINAME에 첫 편집을 했습니다.
+
+추가된 것을 확인하려면 $PAGETITLE(을)를 보세요.
+
+$PAGEURL
+
+위키아 팀',
+	'founderemails-email-first-edit-greeting' => '$USERNAME님 안녕하세요,',
+	'founderemails-email-first-edit-headline' => '좋아요! $EDITORNAME 사용자가 $WIKINAME에 첫 편집을 했습니다.',
+	'founderemails-email-first-edit-content' => '추가된 것을 확인하려면 $PAGETITLE(을)를 보세요.',
+	'founderemails-email-first-edit-signature' => '위키아 팀',
+	'founderemails-email-first-edit-button' => '확인하세요!',
+	'founderemails-email-0-day-heading' => '$USERNAME님 만나서 반갑습니다,',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -5863,6 +5905,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
  * @author Malafaya
  * @author Rhaijin
  * @author SandroHc
@@ -6066,7 +6109,7 @@ Há muitas coisas a acontecer hoje na sua wiki! Passe por $MYHOMEURL para ver o 
 	'founderemails-email-3-day-wikiahelps-signature' => 'Continue o bom trabalho!<br />A Equipa da Wikia',
 	'founderemails-email-10-day-heading' => 'Como vão as coisas $USERNAME?',
 	'founderemails-email-10-day-congratulations' => 'Como o tempo voa! Já passaram 10 dias desde que iniciou a $WIKINAME.',
-	'founderemails-email-10-day-tips-heading' => 'Envolva outras pessoas no seu projecto e exponha o bom trabalho que tem estado a fazer! Algumas formas de espalhar a palavra são estas:',
+	'founderemails-email-10-day-tips-heading' => 'Envolva outras pessoas no seu projeto e exponha o bom trabalho que tem estado a fazer! Algumas formas de espalhar a palavra são estas:',
 	'founderemails-email-10-day-share-heading' => 'A sua mãe não lhe ensinou que devia Partilhar?',
 	'founderemails-email-10-day-share-content' => 'Use o botão Partilhar na página principal do seu wiki, nas páginas de artigos e nas fotos para exibi-las aos seus amigos e seguidores no Facebook.',
 	'founderemails-email-10-day-email-heading' => 'Aproveite o poder do correio electrónico.',

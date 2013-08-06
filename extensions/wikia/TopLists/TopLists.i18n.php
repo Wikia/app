@@ -136,6 +136,7 @@ $messages['qqq'] = array(
 	'toplists-create-button' => '{{Identical|Create list}}',
 	'toplits-image-browser-selected-picture' => '$1 is the title of the image page.',
 	'toplists-list-vote-up' => 'Keep this as short as possible. Everything exceeding allowed lenght will be cutted out!',
+	'toplists-seconds' => '{{Identical|Second}}',
 	'toplists-minutes' => '{{Identical|Minute}}',
 	'toplists-create-button-msg' => '{{Identical|Create list}}',
 	'toplists-oasis-only' => 'Displayed to users who try to edit or create Top 10 lists in a skin other than the Wikia skin.',
@@ -342,6 +343,13 @@ Gellout a rit <a href="$4">paouez da resevout</a> kemmoù ar roll-mañ.',
 	'toplists-msg-fb-OnRateArticle-short' => 'en deus votet war ur roll Top 10 list war $WIKINAME !',
 	'toplists-create-heading' => "<em>Nevez!</em> Savit ho roll Top 10 deoc'h-c'hwi",
 	'toplists-create-button-msg' => 'Sevel ur roll',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'toplists-editor-related-article-placeholder' => 'ДӀаязъе йолуш йолу агӀона цӀе',
 );
 
 /** Czech (česky)
