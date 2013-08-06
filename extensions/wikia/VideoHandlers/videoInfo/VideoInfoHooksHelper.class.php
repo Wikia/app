@@ -57,6 +57,10 @@ class VideoInfoHooksHelper {
 			$videoInfoHelper = new VideoInfoHelper();
 			$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $title, true );
 			if ( !empty($videoInfo) ) {
+				// Sometimes videoInfo doesn't reflect what's actually in the video_info table
+				// so make sure the removed flag is cleared
+				$videoInfo->restoreVideo();
+
 				$affected = $videoInfo->addPremiumVideo( F::app()->wg->User->getId() );
 
 				if ( $affected ) {
@@ -288,6 +292,11 @@ class VideoInfoHooksHelper {
 	 */
 	public static function onForeignFileDeleted( $file, &$isDeleted ) {
 		if ( !VideoInfoHelper::videoInfoExists() ) {
+			return true;
+		}
+
+		$app = F::app();
+		if ( $app->wg->Title && $app->wg->Title->getNamespace() != NS_FILE ) {
 			return true;
 		}
 

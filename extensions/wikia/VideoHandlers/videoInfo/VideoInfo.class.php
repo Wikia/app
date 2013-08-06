@@ -112,18 +112,19 @@ class VideoInfo extends WikiaModel {
 
 	/**
 	 * update data in the database
+	 * @param array $updateFields
 	 * @return boolean $affected
 	 */
-	protected function updateDatabase() {
+	protected function updateDatabase( $updateFields = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		$affected = false;
 		if ( !wfReadOnly() && !empty($this->videoTitle) ) {
 			$db = wfGetDB( DB_MASTER );
 
-			$db->update(
-				'video_info',
-				array(
+			// Use all fields as the default
+			if ( count($updateFields) == 0 ) {
+				$updateFields = array(
 					'added_at' => $this->addedAt,
 					'added_by' => $this->addedBy,
 					'duration' => $this->duration,
@@ -131,7 +132,12 @@ class VideoInfo extends WikiaModel {
 					'hdfile' => $this->hdfile,
 					'removed' => $this->removed,
 					'featured' => $this->featured,
-				),
+				);
+			}
+
+			$db->update(
+				'video_info',
+				$updateFields,
 				array( 'video_title' => $this->videoTitle ),
 				__METHOD__
 			);
@@ -390,7 +396,7 @@ SQL;
 	public function restoreVideo() {
 		$this->setRemoved( false );
 
-		return $this->updateDatabase();
+		return $this->updateDatabase( array( 'removed' => $this->isRemoved() ) );
 	}
 
 	/**
