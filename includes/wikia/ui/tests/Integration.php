@@ -8,14 +8,18 @@ class Integration extends WikiaBaseTest {
 	/**
 	 * @var \Wikia\UI\Factory $uiFactory
 	 */
-	private $uiFactory;
+	private $uiFactoryMock;
 
 	protected function setUp() {
 		parent::setUp();
-		$this->path = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . '_fixtures/components/';
 
-		$this->uiFactory = \Wikia\UI\Factory::getInstance();
-		$this->uiFactory->setComponentsDir( $this->path );
+		$path = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . '_fixtures/components/';
+		$uiFactoryMock = $this->getMock( 'Wikia\UI\Factory', [ 'getComponentsDir', '__wakeup' ], [], '', false );
+		$uiFactoryMock::staticExpects( $this->any() )
+			->method( 'getComponentsDir' )
+			->will( $this->returnValue( $path ) );
+
+		$this->uiFactoryMock = $uiFactoryMock;
 	}
 	
 	public function testRenderingOneComponent() {
@@ -23,7 +27,7 @@ class Integration extends WikiaBaseTest {
 		$this->assertEquals(
 			'<input type="submit" class="button " name="just-a-button" value="Just a button in form of a link" />',
 			trim(
-				$this->uiFactory->init( 'button' )->render([
+				$this->uiFactoryMock->init( 'button' )->render([
 					'type' => 'input',
 					'vars' => [
 						'type' => 'submit',
@@ -39,7 +43,7 @@ class Integration extends WikiaBaseTest {
 		$this->assertEquals(
 			'A button: <a href="http://www.wikia.com" class="button big " target="_blank">Just a button in form of a link</a>',
 			trim(
-				$this->uiFactory->init( 'button' )->render([
+				$this->uiFactoryMock->init( 'button' )->render([
 					'type' => 'link',
 					'vars' => [
 						'href' => 'http://www.wikia.com',
@@ -56,7 +60,7 @@ class Integration extends WikiaBaseTest {
 		$this->assertEquals(
 			'A button: <button type="submit" class="button " data-id="123" data-name="button">Just a button in form of a link</button>',
 			trim(
-				$this->uiFactory->init( 'button' )->render([
+				$this->uiFactoryMock->init( 'button' )->render([
 					'type' => 'button',
 					'vars' => [
 						'type' => 'submit',
@@ -74,7 +78,7 @@ class Integration extends WikiaBaseTest {
 	}
 
 	public function testRenderingMoreThanOneComponent() {
-		list($a, $b, $c) = $this->uiFactory->init( [ 'button', 'button', 'button' ] );
+		list($a, $b, $c) = $this->uiFactoryMock->init( [ 'button', 'button', 'button' ] );
 		
 		/** @var \Wikia\UI\Component $a */
 		$aMarkup = $a->render([

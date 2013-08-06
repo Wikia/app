@@ -87,7 +87,7 @@ class Factory {
 	 * @return string full file path
 	 */
 	public function getComponentConfigFileFullPath( $name ) {
-		return $this->getComponentsDir() .
+		return static::getComponentsDir() .
 			$name .
 			DIRECTORY_SEPARATOR .
 			$name .
@@ -188,7 +188,7 @@ class Factory {
 	 */
 	public function getComponentsBaseTemplatePath( $name ) {
 		$name = \Sanitizer::escapeId( $name, 'noninitial' );
-		return $this->getComponentsDir() .
+		return static::getComponentsDir() .
 			$name .
 			DIRECTORY_SEPARATOR .
 			self::TEMPLATES_DIR_NAME .
