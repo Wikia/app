@@ -7,6 +7,7 @@
 class WikiaMobileMediaService extends WikiaService {
 	const CLASS_LAZYLOAD = 'lazy';
 	const CLASS_MEDIA = 'media';
+	const CLASS_SMALL = 'small';
 	const THUMB_WIDTH = 480;
 	const SINGLE = 1;
 	const GROUP = 2;
@@ -27,18 +28,18 @@ class WikiaMobileMediaService extends WikiaService {
 
 	static public function isSmallImage( $width, $height ) {
 		return (
-			(is_numeric($width) && (int) $width < self::SMALL_IMAGE_SIZE) ||
-			(is_numeric($height) && (int) $height < self::SMALL_IMAGE_SIZE)
+			((int) $width < self::SMALL_IMAGE_SIZE) ||
+			((int) $height < self::SMALL_IMAGE_SIZE)
 		);
 	}
 
 	public function renderMedia() {
 		wfProfileIn( __METHOD__ );
 
-		$attribs = $this->request->getVal( 'attributes', array() );
-		$params = $this->request->getVal( 'parameters', array() );
-		$linkAttribs = $this->request->getVal( 'anchorAttributes', array() );
-		$linked = $this->request->getBool( 'linked' );
+		$attribs = $this->request->getVal( 'attributes', [] );
+		$params = $this->request->getVal( 'parameters', [] );
+		$linkAttribs = $this->request->getVal( 'anchorAttributes', [] );
+		$linked = $this->request->getBool( 'linked', false );
 		$noscript = $this->request->getVal( 'noscript' );
 		$class = $this->request->getVal( 'class', null );
 		$caption = $this->request->getVal( 'caption', null );
@@ -71,7 +72,7 @@ class WikiaMobileMediaService extends WikiaService {
 			$file = wfFindFile( $item['title'] );
 
 			if ( $file instanceof File ) {
-				if ( !empty( $item['link'] ) || $file->getWidth() < self::SMALL_IMAGE_SIZE ) {
+				if ( !empty( $item['link'] ) || self::isSmallImage( $file->getWidth(), $file->getHeight() ) ) {
 					$wikiText .= self::renderOutsideGallery( $item );
 				} else {
 					if ( empty( $first ) ) {
@@ -139,7 +140,7 @@ class WikiaMobileMediaService extends WikiaService {
 					false,
 					Xml::element( 'img', $attribs, '', true ),
 					[],
-					wfMsgForContent( 'wikiamobile-media-group-footer', count( $params ) )
+					wfMessage( 'wikiamobile-media-group-footer', count( $params ) )->inContentLanguage()->plain()
 				);
 			}
 		}
@@ -169,20 +170,21 @@ class WikiaMobileMediaService extends WikiaService {
 	public function renderImageTag() {
 		wfProfileIn( __METHOD__ );
 
-		$attribs = $this->request->getVal( 'attributes', array() );
+		$attribs = $this->request->getVal( 'attributes', [] );
 		$params = $this->request->getVal( 'parameters', null );
-		$linkAttribs = $this->request->getVal( 'anchorAttributes', array() );
+		$linkAttribs = $this->request->getVal( 'anchorAttributes', [] );
 		$noscript = $this->request->getVal( 'noscript', null );
 		$linked = $this->request->getBool( 'linked', false );
 		$content = $this->request->getVal( 'content' );
-		$width = $attribs['width'];
-		$height = $attribs['height'];
-		// Don't include small or linked images in the mobile lightbox
-		$includeInModal = !$linked && !self::isSmallImage($width, $height);
+		$isSmall = $this->request->getVal( 'isSmall', false );
+
+		// Don't include small or linked images in the mobile modal
+		$includeInModal = !$linked && !$isSmall;
+		$notClickable = !$linked && $isSmall;
 
 		$attribs['data-src'] = $attribs['src'];
 		$attribs['src'] = wfBlankImgUrl();
-		$attribs['class'] = ( ( !empty( $attribs['class'] ) ) ? "{$attribs['class']} " : '' ) . self::CLASS_LAZYLOAD . ( $includeInModal  ? ' ' . self::CLASS_MEDIA : '' );
+		$attribs['class'] = ( ( !empty( $attribs['class'] ) ) ? "{$attribs['class']} " : '' ) . self::CLASS_LAZYLOAD . ' ' . ( $includeInModal  ? ' ' . self::CLASS_MEDIA : '' ) . ( $notClickable  ? ' ' . self::CLASS_SMALL : '' );
 
 		if ( !empty( $params ) ) {
 			$attribs['data-params'] = htmlentities( json_encode( $params ) , ENT_QUOTES );
@@ -192,7 +194,6 @@ class WikiaMobileMediaService extends WikiaService {
 		$this->response->setVal( 'anchorAttributes', $linkAttribs );
 		$this->response->setVal( 'noscript', $noscript );
 		$this->response->setVal( 'content', $content );
-		$this->response->setVal( 'width', $width );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -201,22 +202,20 @@ class WikiaMobileMediaService extends WikiaService {
 	public function renderFigureTag() {
 		wfProfileIn( __METHOD__ );
 
-		$width = $this->request->getVal( 'width', null );
-		$height = $this->request->getVal( 'height', null );
 		$class = $this->request->getVal( 'class', [] );
 		$content = $this->request->getVal( 'content', null );
 		$caption = $this->request->getVal( 'caption', null );
-		$showRibbon = $this->request->getVal( 'showRibbon', false );
+		$isSmall = $this->request->getVal( 'isSmall', false );
 
-		if ( self::isSmallImage($width, $height) ) {
-			$class[] = 'small';
+		if ( $isSmall ) {
+			$class[] = self::CLASS_SMALL;
 		}
 
 		if ( !empty( $class ) ) {
 			$class = implode( ' ', $class );
 		}
 
-		$this->response->setVal( 'showRibbon', $showRibbon );
+		$this->response->setVal( 'isSmall', $isSmall );
 		$this->response->setVal( 'class', $class );
 		$this->response->setVal( 'content', $content );
 		$this->response->setVal( 'caption', $caption );
@@ -253,6 +252,8 @@ class WikiaMobileMediaService extends WikiaService {
 			$caption = '';
 		}
 
+		$isSmall = self::isSmallImage( $attribs['width'], $attribs['height'] );
+
 		$image = $this->sendSelfRequest(
 			'renderImageTag',
 			array(
@@ -260,7 +261,8 @@ class WikiaMobileMediaService extends WikiaService {
 				'parameters' => $params,
 				'anchorAttributes' => $linkAttribs,
 				'linked' => !empty( $link ),
-				'noscript' => $noscript
+				'noscript' => $noscript,
+				'isSmall' => $isSmall
 			)
 		);
 
@@ -270,8 +272,7 @@ class WikiaMobileMediaService extends WikiaService {
 				'class' => array_merge([( ( !empty( $link ) ) ? 'link' : 'thumb' )], $class),
 				'content' => $image->toString(),
 				'caption' => $caption,
-				'showRibbon' => self::isSmallImage( $attribs['width'], $attribs['height'] ),
-				'width' => $image->getVal( 'width', null )
+				'isSmall' => $isSmall,
 			)
 		)->toString();
 
