@@ -36,11 +36,4 @@ $wgSpecialPageGroups['Styleguide'] = 'wikia';
 // message files
 $wgExtensionMessagesFiles['SpecialStyleguide'] = $dir . 'SpecialStyleguide.i18n.php';
 
-if( is_null(StyleguideComponents::$componentsNames) ) {
-	StyleguideComponents::$componentsNames = StyleguideComponents::loadComponentsFromFileSystem();
-}
-
-foreach( StyleguideComponents::$componentsNames as $componentName ) {
-	$componentMessageFile = StyleguideComponents::getComponentMessagesFileFullPath( $componentName );
-	$wgExtensionMessagesFiles['StyleguideComponents' . ucfirst($componentName) ] = $componentMessageFile;
-}
+$wgHooks['BeforeExtensionMessagesRecache'][] = 'StyleguideComponents::onBeforeExtensionMessagesRecache';
