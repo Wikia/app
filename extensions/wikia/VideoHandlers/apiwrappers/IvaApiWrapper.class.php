@@ -19,17 +19,6 @@ class IvaApiWrapper extends IngestionApiWrapper {
 		return '';
 	}
 
-	protected function loadMetadata( array $overrideFields = array() ) {
-		if ( !isset($overrideFields['genres']) ) {
-			$overrideFields['genres'] = $this->getGenres();
-		}
-		if ( !isset($overrideFields['actors']) ) {
-			$overrideFields['actors'] = $this->getActors();
-		}
-
-		parent::loadMetadata( $overrideFields );
-	}
-
 	protected function getOriginalDescription() {
 		if ( !empty($this->metadata['description']) ) {
 			return $this->metadata['description'];

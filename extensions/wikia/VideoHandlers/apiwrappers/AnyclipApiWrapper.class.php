@@ -134,12 +134,6 @@ class AnyclipApiWrapper extends ApiWrapper {
 			throw new WikiaException( wfMsg("videohandler-error-restricted-video") );
 		}
 
-		if ( !isset($metadata['genres']) ) {
-			$metadata['genres'] = $this->getGenres();
-		}
-		if ( !isset($metadata['actors']) ) {
-			$metadata['actors'] = $this->getActors();
-		}
 		if ( !isset($metadata['uniqueName']) ) {
 			$metadata['uniqueName'] = $this->getUniqueName();
 		}
@@ -244,12 +238,13 @@ class AnyclipApiWrapper extends ApiWrapper {
 
 	protected function isAgeGate() {
 		if ( !empty($this->metadata['ageGate']) ) {
-			return $this->metadata['ageGate'];
+			return 1;
 		}
 
 		if ( !empty($this->interfaceObj['restrictions']) ) {
 			return 1;
 		}
+
 		return 0;
 	}
 

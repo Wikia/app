@@ -286,7 +286,8 @@ abstract class ApiWrapper {
 		if ( !isset($metadata['duration']) ) {
 			$metadata['duration'] = $this->getVideoDuration();
 		}
-		if ( !isset($metadata['aspectRatio']) ) {
+		// set to default if empty
+		if ( empty( $metadata['aspectRatio'] ) ) {
 			$metadata['aspectRatio'] = $this->getAspectRatio();
 		}
 		if ( !isset($metadata['description']) ) {
@@ -319,6 +320,12 @@ abstract class ApiWrapper {
 		}
 		if ( !isset($metadata['provider']) ) {
 			$metadata['provider'] = $this->getProvider();
+		}
+		if ( !isset( $metadata['genres'] ) ) {
+			$metadata['genres'] = $this->getGenres();
+		}
+		if ( !isset( $metadata['actors'] ) ) {
+			$metadata['actors'] = $this->getActors();
 		}
 		if ( !isset( $metadata['targetCountry'] ) ) {
 			$metadata['targetCountry'] = $this->getTargetCountry();

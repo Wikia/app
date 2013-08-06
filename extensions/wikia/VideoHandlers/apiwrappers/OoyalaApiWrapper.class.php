@@ -201,12 +201,6 @@ class OoyalaApiWrapper extends ApiWrapper {
 		if ( !isset( $overrideFields['sourceId'] ) ) {
 			$overrideFields['sourceId'] = $this->getSourceId();
 		}
-		if ( !isset($overrideFields['genres']) ) {
-			$overrideFields['genres'] = $this->getGenres();
-		}
-		if ( !isset($overrideFields['actors']) ) {
-			$overrideFields['actors'] = $this->getActors();
-		}
 		if ( !isset($overrideFields['startDate']) ) {
 			$overrideFields['startDate'] = $this->getVideoStartDate();
 		}

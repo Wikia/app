@@ -161,9 +161,6 @@ class IvaFeedIngester extends VideoFeedIngester {
 	private function ingestVideos( $createParams, $startDate, $endDate, $videoParams ) {
 		wfProfileIn( __METHOD__ );
 
-		// include cldr extension for language, subtitle, target country
-		include( dirname( __FILE__ ).'/../../../cldr/CldrNames/CldrNamesEn.php' );
-
 		$page = 0;
 		$articlesCreated = 0;
 
@@ -283,9 +280,11 @@ class IvaFeedIngester extends VideoFeedIngester {
 					$clipData['hd'] = ( $videoAsset['HdSource'] == 'true' ) ? 1 : 0;
 					$clipData['provider'] = 'iva';
 
+					// get resolution and aspect ratio
 					$clipData['resolution'] = '';
 					$clipData['aspectRatio'] = '';
-					if ( !empty( $videoAsset['SourceWidth'] ) && !empty( $videoAsset['SourceHeight'] ) ) {
+					if ( !empty( $videoAsset['SourceWidth'] ) && $videoAsset['SourceWidth'] > 0
+						&& !empty( $videoAsset['SourceHeight'] ) && $videoAsset['SourceHeight'] > 0 ) {
 						$clipData['resolution'] = $videoAsset['SourceWidth'].'x'.$videoAsset['SourceHeight'];
 						$clipData['aspectRatio'] = $videoAsset['SourceWidth'] / $videoAsset['SourceHeight'];
 					}
@@ -318,17 +317,10 @@ class IvaFeedIngester extends VideoFeedIngester {
 					$keywords[] = $clipData['series'];
 					$keywords[] = $clipData['category'];
 					$keywords[] = $clipData['tags'];
-
-					// add to keywords to be used in page category
-					if ( ( !empty( $clipData['language'] ) && $clipData['language'] != 'en' )
-						|| ( !empty( $clipData['subtitle'] ) && $clipData['subtitle'] != 'en' ) ) {
-						$keywords[] = 'International';
-					}
-
 					$clipData['keywords'] = $this->uniqueArrayToString( $keywords );
 
 					// get page categories
-					$clipData['pageCategories'] = $this->generateCategories( $clipData, $createParams['addlCategories'] );
+					$clipData['pageCategories'] = $this->generatePageCategories( $clipData, $createParams['addlCategories'] );
 
 					$msg = '';
 					$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
@@ -458,78 +450,22 @@ class IvaFeedIngester extends VideoFeedIngester {
 	}
 
 	/**
-	 * Create a list of category names to add to the new file page
-	 * @param array $data - Video data
-	 * @param $addlCategories - Any additional categories to add
-	 * @return array - A list of category names
+	 * generate page categories
+	 * @param array $data
+	 * @param array $categories
+	 * @return string $categories
 	 */
-	public function generateCategories( array $data, $addlCategories ) {
-		wfProfileIn( __METHOD__ );
-
-		$categories = empty( $addlCategories ) ? array() : $addlCategories;
-
-		if ( !empty( $data['keywords'] ) ) {
-			$keywords = explode( ',', $data['keywords'] );
-
-			foreach ( $keywords as $keyword ) {
-				$categories[] = trim( $keyword );
-			}
+	public function generatePageCategories( $data, $categories = array() ) {
+		$categories[] = 'IVA';
+		$categories[] = $data['name'];
+		$categories[] = $data['series'];
+		$categories[] = $data['category'];
+		if ( ( !empty( $data['language'] ) && $data['language'] != 'en' )
+			|| ( !empty( $data['subtitle'] ) && $data['subtitle'] != 'en' ) ) {
+			$categories[] = 'International';
 		}
 
-		if ( !empty( $data['categoryName'] ) ) {
-			$categories[] = $data['categoryName'];
-		}
-
-		if ( !in_array( 'IVA', $categories) ) {
-			$categories[] = 'IVA';
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $categories;
-	}
-
-	/**
-	 * Pull out all the metadata we consider interesting for this video
-	 * @param array $data - Video data
-	 * @param $errorMsg - Store any error we encounter
-	 * @return array|int - An associative array of meta data or zero on error
-	 */
-	protected function generateMetadata( array $data, &$errorMsg ) {
-		if ( empty($data['videoId']) ) {
-			$errorMsg = 'no video id exists';
-			return 0;
-		}
-
-		$metadata = array(
-			'videoId'        => $data['videoId'],
-			'hd'             => $data['hd'],
-			'duration'       => $data['duration'],
-			'published'      => $data['published'],
-			'ageGate'        => $data['ageGate'],
-			'thumbnail'      => $data['thumbnail'],
-			'name'           => $data['name'],
-			'category'       => $data['category'],
-			'type'           => $data['type'],
-			'description'    => $data['description'],
-			'keywords'       => $data['keywords'],
-			'tags'           => $data['tags'],
-			'industryRating' => $data['industryRating'],
-			'provider'       => $data['provider'],
-			'language'       => $data['language'],
-			'subtitle'       => $data['subtitle'],
-			'genres'         => $data['genres'],
-			'actors'         => $data['actors'],
-			'ageRequired'    => $data['ageRequired'],
-			'targetCountry'  => $data['targetCountry'],
-			'series'         => $data['series'],
-			'season'         => $data['season'],
-			'episode'        => $data['episode'],
-			'resolution'     => $data['resolution'],
-			'aspectRatio'    => $data['aspectRatio'],
-		);
-
-		return $metadata;
+		return $this->uniqueArrayToString( $categories );
 	}
 
 	/**

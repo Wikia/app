@@ -139,28 +139,16 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['actors'] ) ) {
 			$metadata['actors'] = $data['actors'];
 		}
-		if ( !empty( $data['duration'] ) ) {
-			$metadata['duration'] = $data['duration'];
-		}
 		if ( !empty( $data['published'] ) ) {
 			$metadata['published'] = $data['published'];
-		}
-		if ( !empty( $data['thumbnail'] ) ) {
-			$metadata['thumbnail'] = $data['thumbnail'];
 		}
 		// ageGate can be 0
 		if ( isset( $data['ageGate'] ) ) {
 			$metadata['agegate'] = $data['ageGate'];
 		}
-		if ( !empty( $data['tags'] ) ) {
-			$metadata['tags'] = $data['tags'];
-		}
 		// hd can be 0
 		if ( isset( $data['hd'] ) ) {
 			$metadata['hd'] = $data['hd'];
-		}
-		if ( !empty( $data['description'] ) ) {
-			$metadata['description'] = $data['description'];
 		}
 		if ( !empty( $data['name'] ) ) {
 			$metadata['name'] = $data['name'];
@@ -173,9 +161,6 @@ class OoyalaAsset extends WikiaModel {
 		}
 		if ( !empty( $data['type'] ) ) {
 			$metadata['type'] = $data['type'];
-		}
-		if ( !empty( $data['trailerRating'] ) ) {
-			$metadata['trailerrating'] = $data['trailerRating'];
 		}
 		if ( !empty( $data['industryRating'] ) ) {
 			$metadata['industryrating'] = $data['industryRating'];
@@ -213,10 +198,10 @@ class OoyalaAsset extends WikiaModel {
 		}
 		// ignore if aspectRatio is empty or 0
 		if ( !empty( $data['aspectRatio'] ) ) {
-			$metadata['aspectRatio'] = $data['aspectRatio'];
+			$metadata['aspectratio'] = $data['aspectRatio'];
 		}
 		if ( !empty( $data['pageCategories'] ) ) {
-			$metadata['pageCategories'] = $data['pageCategories'];
+			$metadata['pagecategories'] = $data['pageCategories'];
 		}
 
 		return $metadata;
