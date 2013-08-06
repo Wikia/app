@@ -5,7 +5,7 @@
  * @author Jakub "Student" Olek
  */
 define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require.optional('popover'), 'track', require.optional('share'), require.optional('wikia.cache'), 'wikia.loader', 'wikia.nirvana', 'wikia.videoBootstrap', 'wikia.media.class', 'toast'],
-	function(msg, modal, throbber, qs, popover, track, share, cache, loader, nirvana, VideoBootstrap, Media, toast){
+	function(msg, modal, throbber, QueryString, popover, track, share, cache, loader, nirvana, VideoBootstrap, Media, toast){
 	'use strict';
 	/** @private **/
 
@@ -22,7 +22,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		currentWrapper,
 		currentWrapperStyle,
 		wkMdlImages,
-		shrImg = qs().getVal('file'),
+		qs = QueryString(),
+		shrImg = qs.getVal('file'),
 		// index of shared file in array of videos/images on page
 		shrImgIdx = -1,
 		shareBtn,
@@ -144,7 +145,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			} else {
 				// file specified in querystring doesn't exist on the page
 				toast.show( msg('wikiamobile-shared-file-not-available') );
-				qs().removeVal('file' ).replaceState();
+				qs.removeVal('file' ).replaceState();
 			}
 		}
 
@@ -185,7 +186,9 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		var video,
 			imgTitle = currentMedia.name,
 			// cache value for clickSource to prevent race conditions
-			cs = clickSource;
+			cs = clickSource,
+			// grab the querystring for the current url
+			currQS = QueryString();
 
 		throbber.remove(currentWrapper);
 
@@ -251,7 +254,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				}
 			}
 			// update url for sharing
-			qs().setVal( 'file', imgTitle, true ).replaceState();
+			currQS.setVal( 'file', imgTitle, true ).replaceState();
 		}else if(currentMedia.type == Media.types.IMAGE){
 			var img = new Image();
 			img.src = currentMedia.url;
@@ -288,7 +291,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				origH = img.height;
 			}
 			// update url for sharing
-			qs().setVal( 'file', imgTitle, true ).replaceState();
+			currQS.setVal( 'file', imgTitle, true ).replaceState();
 		} else if(currentMedia.type){//custom
 			var data = {
 					currentNum: currentNum,
@@ -304,7 +307,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				zoomable = data.zoomable
 			}
 			// We're showing an ad or other custom media type.  Don't support sharing.
-			qs().removeVal( 'file' ).replaceState();
+			currQS.removeVal( 'file' ).replaceState();
 		}
 
 		// Future video/image views will come from modal
@@ -556,7 +559,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				pager.cleanup();
 				removeZoom();
 				// remove file=title from URL
-				qs().removeVal('file' ).replaceState();
+				qs.removeVal('file' ).replaceState();
 				// reset tracking clickSource
 				clickSource = "embed";
 			},
