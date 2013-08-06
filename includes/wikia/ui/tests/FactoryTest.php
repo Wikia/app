@@ -108,8 +108,6 @@ class FactoryTest extends WikiaBaseTest {
 		}
 
 		$this->mockGlobalVariable( 'wgOut', $wgOutMock );
-		$this->mockApp();
-
 		$addAssetMethod->invoke( $this->instance, $asset );
 	}
 
