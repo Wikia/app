@@ -182,4 +182,20 @@ class StyleguideComponents {
 		self::MESSAGES_FILE_SUFFIX;
 	}
 
+	/**
+	 * Include components messages files when recompiling the language cache
+	 * @param $wgExtensionMessagesFiles - array with extensions' message files
+	 * @return bool hook run status
+	 */
+	public static function onBeforeExtensionMessagesRecache( &$wgExtensionMessagesFiles ) {
+		// we don't want to use componentsNames from the cache when rebuilding the cache, as it won't speedup the process
+		// anyway and we risk some of the messages won't get cached
+		foreach( StyleguideComponents::loadComponentsFromFileSystem() as $componentName ) {
+			$componentMessageFile = self::getComponentMessagesFileFullPath( $componentName );
+			$wgExtensionMessagesFiles['StyleguideComponents' . ucfirst($componentName) ] = $componentMessageFile;
+		}
+
+		return true;
+	}
+
 }

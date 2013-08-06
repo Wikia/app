@@ -653,6 +653,10 @@ class LocalisationCache {
 
 		$codeSequence = array_merge( array( $code ), $coreData['fallbackSequence'] );
 
+		// wikia changes begin
+		wfRunHooks( 'BeforeExtensionMessagesRecache', array( &$wgExtensionMessagesFiles ) );
+		// wikia changes end
+
 		# Load the extension localisations
 		# This is done after the core because we know the fallback sequence now.
 		# But it has a higher precedence for merging so that we can support things
