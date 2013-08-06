@@ -481,7 +481,7 @@ class Config
 	 */
 	public function setWikiMatch( Match\Wiki $wikiMatch ) {
 		$wikiLang = $this->getService()->getGlobalForWiki( 'wgLanguageCode', $wikiMatch->getId() );
-		if ( (! $wikiLang ) || $this->getLanguageCode() === $wikiLang ) {
+		if ( ( !$wikiLang && $this->getLanguageCode() === MediaWikiService::WIKI_DEFAULT_LANG_CODE ) || $this->getLanguageCode() === $wikiLang ) {
 			$this->wikiMatch = $wikiMatch;
 		}
 		return $this;

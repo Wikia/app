@@ -492,7 +492,8 @@ class MediaWikiService
             }
             //exclude wikis which lang does not match current one
             $wikiLang = $this->getGlobalForWiki( 'wgLanguageCode', $wikiId );
-            if ( isset( $wikiId ) && ( (! $wikiLang ) || ( $langCode === $wikiLang ) ) ) {
+			//if wiki lang not set display only for default language
+            if ( isset( $wikiId ) && ( ( !$wikiLang && $langCode === static::WIKI_DEFAULT_LANG_CODE ) || ( $langCode === $wikiLang ) ) ) {
                 $match = new \Wikia\Search\Match\Wiki( $wikiId, $this );
             }
 		}

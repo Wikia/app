@@ -1810,6 +1810,26 @@ class MediaWikiServiceTest extends BaseTest
 		$service
 			->expects( $this->at( 0 ) )
 			->method ( 'getLanguageCode' )
+			->will   ( $this->returnValue( 'en' ) )
+		;
+		$service
+			->expects( $this->at( 1 ) )
+			->method ( 'getWikiIdByHost' )
+			->with   ( 'foo.wikia.com' )
+			->will   ( $this->returnValue( 123 ) )
+		;
+		$service
+			->expects( $this->at( 2 ) )
+			->method( 'getGlobalForWiki' )
+			->with( 'wgLanguageCode', 123 )
+			->will ( $this->returnValue( false ) )
+		;
+		$this->assertNotEmpty(
+			$service->getWikiMatchByHost( 'foo' )
+		);
+		$service
+			->expects( $this->at( 0 ) )
+			->method ( 'getLanguageCode' )
 			->will   ( $this->returnValue( 'pl' ) )
 		;
 		$service
@@ -1824,7 +1844,7 @@ class MediaWikiServiceTest extends BaseTest
 			->with( 'wgLanguageCode', 123 )
 			->will ( $this->returnValue( false ) )
 		;
-		$this->assertNotEmpty(
+		$this->assertEmpty(
 			$service->getWikiMatchByHost( 'foo' )
 		);
 		$service
