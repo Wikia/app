@@ -1,9 +1,5 @@
 <?php
 class Integration extends WikiaBaseTest {
-	/**
-	 * @var String $path
-	 */
-	private $path;
 
 	/**
 	 * @var \Wikia\UI\Factory $uiFactory
