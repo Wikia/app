@@ -31,7 +31,7 @@ class StyleguideComponents {
 	/**
 	 * @var Array|null
 	 */
-	private $componentsNames = null;
+	public static $componentsNames = null;
 
 	/**
 	 * @var Wikia\UI\Factory
@@ -41,10 +41,10 @@ class StyleguideComponents {
 	public function __construct() {
 		$this->uiFactory = Wikia\UI\Factory::getInstance();
 
-		$this->componentsNames = WikiaDataAccess::cache(
+		static::$componentsNames = WikiaDataAccess::cache(
 			wfSharedMemcKey( __CLASS__, 'components_names_list' ),
 			\Wikia\UI\Factory::MEMCACHE_EXPIRATION,
-			[$this, 'loadComponentsFromFileSystem']
+			['StyleguideComponents', 'loadComponentsFromFileSystem']
 		);
 	}
 
@@ -68,9 +68,9 @@ class StyleguideComponents {
 	 *
 	 * @return array
 	 */
-	public function loadComponentsFromFileSystem() {
+	public static function loadComponentsFromFileSystem() {
 		$componentsNames = [];
-		$directory = new DirectoryIterator( $this->uiFactory->getComponentsDir() );
+		$directory = new DirectoryIterator( \Wikia\UI\Factory::getComponentsDir() );
 
 		while( $directory->valid() ) {
 			if( !$directory->isDot() && $directory->isDir() ) {
@@ -117,21 +117,6 @@ class StyleguideComponents {
 	}
 
 	/**
-	 * @desc Returns full documentation file's path
-	 *
-	 * @param string $name component's name
-	 *
-	 * @return string full file path
-	 */
-	public function getComponentMessagesFileFullPath( $name ) {
-		return $this->uiFactory->getComponentsDir() .
-		$name .
-		DIRECTORY_SEPARATOR .
-		$name .
-		self::MESSAGES_FILE_SUFFIX;
-	}
-
-	/**
 	 * @desc Returns all components by iterating on components directory
 	 *
 	 * @return array
@@ -139,7 +124,7 @@ class StyleguideComponents {
 	public function getAllComponentsFromDirectories() {
 		$components = [];
 
-		foreach( $this->componentsNames as $componentName ) {
+		foreach( static::$componentsNames as $componentName ) {
 			$component = [];
 			$componentDocumentation = $this->loadComponentDocumentationAsArray( $componentName );
 			$component = $this->prepareMainMessages( $component, $componentDocumentation );
@@ -180,4 +165,21 @@ class StyleguideComponents {
 	private function prepareMessage($key) {
 		return wfMessage($key)->plain();
 	}
+
+	/**
+	 * @desc Returns full documentation file's path
+	 *
+	 * @param string $name component's name
+	 *
+	 * @return string full file path
+	 */
+	public static function getComponentMessagesFileFullPath( $name ) {
+		return \Wikia\UI\Factory::getComponentsDir() .
+		$name .
+		DIRECTORY_SEPARATOR .
+		$name .
+		'.' .
+		self::MESSAGES_FILE_SUFFIX;
+	}
+
 }
