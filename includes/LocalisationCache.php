@@ -653,9 +653,12 @@ class LocalisationCache {
 
 		$codeSequence = array_merge( array( $code ), $coreData['fallbackSequence'] );
 
-		// wikia changes begin
+		// wikia change begin
+		// author: mech
+		// allow extensions to use hook to add messages files
+		// this can be used in cases when enumerating message files is expensive so it shouldn't be done in setup file
 		wfRunHooks( 'BeforeExtensionMessagesRecache', array( &$wgExtensionMessagesFiles ) );
-		// wikia changes end
+		// wikia change end
 
 		# Load the extension localisations
 		# This is done after the core because we know the fallback sequence now.
