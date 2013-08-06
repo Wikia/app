@@ -111,9 +111,10 @@ class VideoInfo extends WikiaModel {
 	}
 
 	/**
-	 * update data in the database
-	 * @param array $updateFields
-	 * @return boolean $affected
+	 * Update data in the database, optionally updating only select rows
+	 * @param array $updateFields - An array of fields and the value to update them to.  Defaults to all
+	 *                              fields if not passed.
+	 * @return boolean - Returns true if rows were updated, false if no rows were updated
 	 */
 	protected function updateDatabase( $updateFields = array() ) {
 		wfProfileIn( __METHOD__ );
