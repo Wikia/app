@@ -25,14 +25,14 @@ class Integration extends WikiaBaseTest {
 	public function testRenderingOneComponent() {
 		// only required parameters given
 		$this->assertEquals(
-			'<input type="submit" class="button " name="just-a-button" value="Just a button in form of a link" />',
+			'<input type="submit"  class="button small " name="just-a-button" value="Just a button in form of a link"  />',
 			trim(
 				$this->uiFactoryMock->init( 'button' )->render([
 					'type' => 'input',
 					'vars' => [
 						'type' => 'submit',
 						'name' => 'just-a-button',
-						'classes' => ['button'],
+						'classes' => ['small'],
 						'value' => 'Just a button in form of a link',
 					]
 				])
@@ -41,16 +41,17 @@ class Integration extends WikiaBaseTest {
 		
 		// required parameters and optional given
 		$this->assertEquals(
-			'A button: <a href="http://www.wikia.com" class="button big " target="_blank">Just a button in form of a link</a>',
+			'<input type="submit" id="uniqueButton" class="button small blue " name="just-a-button" value="Just a button in form of a link" disabled />',
 			trim(
 				$this->uiFactoryMock->init( 'button' )->render([
-					'type' => 'link',
+					'type' => 'input',
 					'vars' => [
-						'href' => 'http://www.wikia.com',
-						'classes' => ['button', 'big'],
+						'type' => 'submit',
+						'name' => 'just-a-button',
+						'classes' => ['small', 'blue'],
 						'value' => 'Just a button in form of a link',
-						'label' => 'A button: ',
-						'target' => '_blank',
+						'id' => ['uniqueButton'],
+						'disabled' => 'disabled'
 					]
 				])
 			)
@@ -58,15 +59,17 @@ class Integration extends WikiaBaseTest {
 
 		// required parameters and optional given + data attributes
 		$this->assertEquals(
-			'A button: <button type="submit" class="button " data-id="123" data-name="button">Just a button in form of a link</button>',
+			'<input type="submit" id="uniqueButton" class="button small blue " name="just-a-button" value="Just a button in form of a link" disabled data-id="123"data-name="button"/>',
 			trim(
 				$this->uiFactoryMock->init( 'button' )->render([
-					'type' => 'button',
+					'type' => 'input',
 					'vars' => [
 						'type' => 'submit',
-						'classes' => ['button'],
+						'name' => 'just-a-button',
+						'classes' => ['small', 'blue'],
 						'value' => 'Just a button in form of a link',
-						'label' => 'A button: ',
+						'id' => ['uniqueButton'],
+						'disabled' => 'disabled',
 						'data' => [
 							[ 'key' => 'id', 'value' => 123 ],
 							[ 'key' => 'name', 'value' => 'button' ]
@@ -85,8 +88,9 @@ class Integration extends WikiaBaseTest {
 			'type' => 'link',
 			'vars' => [
 				'href' => 'http://www.wikia.com',
-				'classes' => ['button'],
+				'classes' => ['small'],
 				'value' => 'Just a button in form of a link',
+				'title' => 'Link which looks like a button!'
 			]
 		]);
 
@@ -95,9 +99,10 @@ class Integration extends WikiaBaseTest {
 			'type' => 'button',
 			'vars' => [
 				'type' => 'submit',
-				'classes' => ['button'],
+				'classes' => ['small blue'],
 				'value' => 'Just a button in form of a link',
-				'label' => 'A button: ',
+				'id' => [ 'uniqueButton' ],
+				'disabled' => 'disabled',
 				'data' => [
 					[ 'key' => 'id', 'value' => 123 ],
 					[ 'key' => 'name', 'value' => 'button' ]
@@ -111,25 +116,31 @@ class Integration extends WikiaBaseTest {
 			'vars' => [
 				'type' => 'submit',
 				'name' => 'just-a-button',
-				'classes' => ['button'],
+				'classes' => ['small', 'blue'],
 				'value' => 'Just a button in form of a link',
-				'label' => 'An input: ',
+				'id' => ['uniqueButton'],
+				'disabled' => 'disabled',
+				'data' => [
+					[ 'key' => 'id', 'value' => 123 ],
+					[ 'key' => 'name', 'value' => 'button' ]
+				],
 			]
 		]);
 		
 		$this->assertEquals(
-			'<a href="http://www.wikia.com" class="button " target="">Just a button in form of a link</a>',
+			'<a href="http://www.wikia.com"  class="button small " title="Link which looks like a button!" target="" >Just a button in form of a link</a>',
 			trim($aMarkup)
 		);
 
 		$this->assertEquals(
-			'A button: <button type="submit" class="button " data-id="123" data-name="button">Just a button in form of a link</button>',
+			'<button type="submit" id="uniqueButton " class="small blue " disabled  data-id="123" data-name="button">Just a button in form of a link</button>',
 			trim($bMarkup)
 		);
 
 		$this->assertEquals(
-			'An input: <input type="submit" class="button " name="just-a-button" value="Just a button in form of a link" />',
+			'<input type="submit" id="uniqueButton" class="button small blue " name="just-a-button" value="Just a button in form of a link" disabled data-id="123"data-name="button"/>',
 			trim($cMarkup)
 		);
 	}
+
 }
