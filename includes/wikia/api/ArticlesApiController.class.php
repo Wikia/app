@@ -98,13 +98,12 @@ class ArticlesApiController extends WikiaApiController {
 
 		if ( !empty( $articles ) ) {
 			$mainPageId = Title::newMainPage()->getArticleID();
+			if ( isset( $articles[ $mainPageId ] ) ) {
+				unset( $articles[ $mainPageId ] );
+			}
+			$articleIds = array_keys( $articles );
 			if ( $expand ) {
 				$params = $this->getDetailsParams();
-				if ( isset( $articles[ $mainPageId ] ) ) {
-					unset( $articles[ $mainPageId ] );
-				}
-				$articleIds = array_keys( $articles );
-
 				$collection = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
 			} else {
 				$ids = [];
@@ -123,7 +122,7 @@ class ArticlesApiController extends WikiaApiController {
 					if ( !is_array( $cache ) ) {
 						$ids[] = $i;
 					} else {
-						$collection[] = $cache;
+						$collection[ $cache[ 'id' ] ] = $cache;
 					}
 				}
 
@@ -143,7 +142,7 @@ class ArticlesApiController extends WikiaApiController {
 								'ns' => $t->getNamespace()
 							];
 
-							$collection[] = $article;
+							$collection[ $id ] = $article;
 
 							$this->wg->Memc->set( self::getCacheKey( $id, self::ARTICLE_CACHE_ID ), $article, 86400 );
 						}
@@ -151,6 +150,15 @@ class ArticlesApiController extends WikiaApiController {
 
 					$titles = null;
 				}
+
+				//sort articles correctly
+				$result = [];
+				foreach( $articleIds as $id ) {
+					if ( isset( $collection[ $id ] ) ) {
+						$result[] = $collection[ $id ];
+					}
+				}
+				$collection = $result;
 			}
 		} else {
 			wfProfileOut( __METHOD__ );
@@ -507,8 +515,8 @@ class ArticlesApiController extends WikiaApiController {
 			$titles = Title::newFromIDs( $ids );
 		}
 
-		if ( !empty( $titleKeys ) ) {
-			$paramtitles = explode( ',', $titleKeys );
+		if ( !empty( $articleKeys ) ) {
+			$paramtitles = explode( ',', $articleKeys );
 
 			if ( count( $paramtitles ) > 0 ) {
 				foreach ( $paramtitles as $titleKey ) {
@@ -592,7 +600,6 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		$thumbnails = null;
-
 		//if strict return to original ids order
 		if ( $strict ) {
 			foreach( $articleIds as $id ) {
