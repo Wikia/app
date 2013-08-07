@@ -11,7 +11,7 @@
 	'use strict';
 
 	// Depends on tracker.stub.js
-	var Wikia = window.Wikia || {},
+	var Wikia = window.Wikia,
 			trackerStub = Wikia.Tracker;
 
 	// Adds the info from the second hash into the first.

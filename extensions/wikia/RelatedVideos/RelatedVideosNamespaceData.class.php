@@ -132,8 +132,27 @@ class RelatedVideosNamespaceData {
 				return;
 			}
 
-			// parse wikitext with RelatedVideos NS data (stored as wikitext list)
-			$content = $article->getContent();
+			// Get the content of the article, bypassing any user permission checks (we're using this
+			// page as a datastore so the same checks do not apply)
+			$page = $article->getPage();
+			if ( empty($page) ) {
+				wfDebug(__METHOD__ . ": RelatedVideos NS page doesn't exist\n");
+				wfProfileOut(__METHOD__);
+				return;
+			}
+			$rev = $page->getRevision();
+			if ( empty($rev) ) {
+				wfDebug(__METHOD__ . ": RelatedVideos NS revision doesn't exist\n");
+				wfProfileOut(__METHOD__);
+				return;
+			}
+			$content = $rev->getText( Revision::RAW );
+			if ( $content === false ) {
+				wfDebug(__METHOD__ . ": Problem retrieving RelatedVideos NS revision text\n");
+				wfProfileOut(__METHOD__);
+				return;
+			}
+
 			$lines = explode( "\n", $content );
 			$lists = array();
 			$lists[ self::BLACKLIST_MARKER ] = array();
