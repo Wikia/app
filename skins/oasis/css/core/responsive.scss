@@ -491,12 +491,17 @@ body > .global-notification,
 		width: auto;
 	}
 
-	.WikiaPageBackground {
-		display: none;
+	.WikiaPageContentWrapper {
+		padding-top: 20px;
 	}
 
 	.WikiaTopAds {
 		width: 100%;
+
+		.WikiaTopAdsInner > div {
+			float: none;
+			margin: 5px 0;
+		}
 	}
 }
 
