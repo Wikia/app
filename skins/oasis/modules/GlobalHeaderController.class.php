@@ -43,16 +43,16 @@ class GlobalHeaderController extends WikiaController {
 			$centralUrl = $this->wg->LangToCentralMap[$userLang];
 		}
 
-		$createWikiUrl = 'http://www.wikia.com/Special:CreateNewWiki';
-		if ($userLang != 'en') {
-			$createWikiUrl .= '?uselang=' . $userLang;
-		}
+//		$createWikiUrl = 'http://www.wikia.com/Special:CreateNewWiki';
+//		if ($userLang != 'en') {
+//			$createWikiUrl .= '?uselang=' . $userLang;
+//		}
 
 		$this->response->setVal('centralUrl', $centralUrl);
-		$this->response->setVal('createWikiUrl', $createWikiUrl);
-		$this->response->setVal('menuNodes', $this->menuNodes);
-		$this->response->setVal('menuNodesHash', !empty($this->menuNodes[0]) ? $this->menuNodes[0]['hash'] : null);
-		$this->response->setVal('topNavMenuItems', !empty($this->menuNodes[0]) ? $this->menuNodes[0]['children'] : null);
+//		$this->response->setVal('createWikiUrl', $createWikiUrl);
+//		$this->response->setVal('menuNodes', $this->menuNodes);
+//		$this->response->setVal('menuNodesHash', !empty($this->menuNodes[0]) ? $this->menuNodes[0]['hash'] : null);
+//		$this->response->setVal('topNavMenuItems', !empty($this->menuNodes[0]) ? $this->menuNodes[0]['children'] : null);
 		$isGameStarLogoEnabled = $this->isGameStarLogoEnabled();
 		$this->response->setVal('isGameStarLogoEnabled', $isGameStarLogoEnabled);
 		if($isGameStarLogoEnabled) {
