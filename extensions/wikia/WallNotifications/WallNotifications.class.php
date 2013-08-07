@@ -243,6 +243,10 @@ class WallNotifications {
 		}
 	}
 
+	/**
+	 * Return a list of wiki titles (from city_list table) on which given user has notifications
+	 * @return array of strings
+	 */
 	private function loadWikiListFromDB($userId) {
 		$db = $this->getDB(false);
 		$res = $db->select('wall_notification',
@@ -590,6 +594,12 @@ class WallNotifications {
 		}
 	}
 
+	/**
+	 * Return a list of users who received a given notification on a wiki
+	 * @param $wikiId
+	 * @param $uniqueId
+	 * @return array of ints (user ids)
+	 */
 	private function getUsersWithNotificationsForUniqueID( $wikiId, $uniqueId ) {
 
 		$db = $this->getDB(true);
@@ -626,6 +636,13 @@ class WallNotifications {
 
 	}
 
+	/**
+	 * Hide or permanently remove a given notification
+	 * @param $userId user identifier
+	 * @param $wikiId wiki id
+	 * @param $uniqueId notification identifier
+	 * @param bool $hide set to true to remove a notification permanently
+	 */
 	protected function remNotificationsForUniqueIDDB($userId, $wikiId, $uniqueId, $hide = false) {
 		$where = array(
 			'user_id' => $userId,
@@ -640,6 +657,9 @@ class WallNotifications {
 		}
 	}
 
+	/**
+	 * Show a hidden notification for all users (for example when restoring a removed wall message)
+	 */
 	protected function unhideNotificationsForUniqueIDDB($wikiId, $uniqueId) {
 		$where = array(
 			'wiki_id' => $wikiId,
@@ -647,17 +667,6 @@ class WallNotifications {
 		);
 
 		$this->getDB(true)->update('wall_notification' , array('is_hidden' => 0 ), $where, __METHOD__ );
-	}
-
-	protected function remNotificationDB($userId, $wikiId, $uniqueId, $entityId) {
-		$where = array(
-			'user_id' => $userId,
-			'wiki_id' => $wikiId,
-			'unique_id' => $uniqueId,
-			'entity_id' => $entityId
-		);
-
-		$this->getDB(true)->delete('wall_notification' , $where, __METHOD__ );
 	}
 
 	protected function addNotificationLinkInternal($userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $notifyeveryone ) {
@@ -812,6 +821,9 @@ class WallNotifications {
 
 	}
 
+	/**
+	 * Remove notifications stored in $this->removedEntities attribute
+	 */
 	protected function cleanEntitiesFromDB() {
 		foreach( $this->removedEntities as $val ) {
 			$this->getDB(true)->delete('wall_notification' , $val, __METHOD__ );
