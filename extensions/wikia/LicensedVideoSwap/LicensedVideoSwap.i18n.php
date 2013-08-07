@@ -27,8 +27,7 @@ $messages['en'] = array(
 	'lvs-best-match-label' => 'Best Match from Wikia Video',
 	'lvs-undo-swap' => 'Undo',
 	'lvs-undo-keep' => 'Undo',
-	'lvs-swap-video-success' => 'You have successfully replaced your video with a Wikia Video. You can check the file page $1. $2',
-	'lvs-file-link-text' => 'here',
+	'lvs-swap-video-success' => 'Congratulations. The original video has been deleted and all instances of this video, including embeds, have successfully been swapped out with the matching Wikia Video. $1',
 	'lvs-keep-video-success' => 'You have chosen to keep your current video. The video will be removed from this list. $1',
 	'lvs-restore-video-success' => 'You have restored the video to this list.',
 	'lvs-error-permission' => 'You cannot swap this video.',
@@ -77,7 +76,6 @@ $messages['qqq'] = array(
 	'lvs-swap-video-success' => 'This text appears after swapping out the video.
 * $1 is a link to the file page
 * $2 is a link to reverse the replacement',
-	'lvs-file-link-text' => 'This text is for file page link',
 	'lvs-keep-video-success' => 'This text appears after keeping the video.
 * $1 is the title of the video
 * $2 is a link to restore the video to the Special page again',
