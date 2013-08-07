@@ -31,7 +31,7 @@ if ( !empty( $wgEnableNirvanaAPI ) ){
 	$app->wg->title = Wikia::createTitleFromRequest( $app->wg->Request );
 
 	// support "mcache" URL parameter to ease debugging
-	Wikia::onBeforeInitializeMemcachePurge(null, null,null, null, $app->wg->Request, null);
+	Wikia::setUpMemcachePurge($app->wg->Request);
 
 	// initialize skin if requested
 	$app->initSkin( (bool) $app->wg->Request->getVal( "skin", false ) );

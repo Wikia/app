@@ -1791,6 +1791,16 @@ class Wikia {
 	 * TODO: allow disabling specific keys?
 	 */
 	static public function onBeforeInitializeMemcachePurge($title, $unused, $output, $user, WebRequest $request, $wiki ) {
+		self::setUpMemcachePurge($request);
+		return true;
+	}
+
+	/**
+	 * Control memcache behavior
+	 *
+	 * @param WebRequest $request
+	 */
+	static public function setUpMemcachePurge(WebRequest $request) {
 		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads, $wgAllowMemcacheWrites;
 		$mcachePurge = $request->getVal("mcache", null);
 
@@ -1812,7 +1822,6 @@ class Wikia {
 					break;
 			}
 		}
-		return true;
 	}
 
 	// Hook to Construct a tag for newrelic
