@@ -54,43 +54,7 @@ HoverMenu.prototype.mouseover = function(event) {
 	//Cancel mouseoutTimer
 	clearTimeout(this.mouseoutTimer);
 
-	// Lazy load content for Global Navigation (BugId:36973)
-	if (this.selector == '#GlobalNavigation' && !globalNavigationMenusCached) {
-		var $nav = $(this.selector),
-			$navItems = $nav.children('li'),
-			indexes = $navItems.map(function() {
-				return $(this).data('index');
-			}).get();
-
-		globalNavigationMenusCached = true;
-
-		$.nirvana.sendRequest({
-			controller: 'GlobalHeaderController',
-			method: 'menuItemsAll',
-			format: 'json',
-			type: 'GET',
-			data: {
-				hash: $nav.data('hash'),
-				indexes: indexes
-			},
-			callback: $.proxy(function(items) {
-				$.each(items, function(index, html) {
-					$navItems.filter(function() {
-						return $(this).data('index') == index;
-					}).find('.subnav').html(html);
-				});
-
-				// Make sure we haven't left yet (BugId:43496).
-				if (this.event.type == 'mouseover') {
-					this.handleShowNav(event);
-				}
-			}, this)
-		});
-
-	// Everything else: handle show immediately
-	} else {
-		this.handleShowNav(event);
-	}
+	this.handleShowNav(event);
 };
 
 HoverMenu.prototype.handleShowNav = function(event) {
@@ -157,18 +121,6 @@ HoverMenu.prototype.showNav = function(parent) {
 
 	if (nav.exists()) {
 		nav.addClass("show");
-
-		// spotlights displaying
-		if (this.selector == '#GlobalNavigation') {
-			var i = $(parent).index() + 1,
-				funcSuffix = "_SPOTLIGHT_GLOBALNAV_" + i,
-				func = window[ "fillIframe" + funcSuffix ] || window[ "fillElem" + funcSuffix ];
-
-			if ( func ) {
-				func();
-				func = null;
-			}
-		}
 	}
 };
 
@@ -192,13 +144,12 @@ var HoverMenuGlobal = {
 
 $(function() {
 	//Create instances of HoverMenu
-	HoverMenuGlobal.menus.push(new HoverMenu("#GlobalNavigation"));
 	HoverMenuGlobal.menus.push(new HoverMenu("#AccountNavigation"));
 	HoverMenuGlobal.menus.push(new HoverMenu("#WallNotifications"));
 	//Accessbility
 	$("div.skiplinkcontainer a").focus(function(evt) {
 		$("body").data("accessible", "true");
-		$("#GlobalNavigation .subnav, #WikiHeader .subnav").show();
+		$("#WikiHeader .subnav").show();
 	});
 });
 

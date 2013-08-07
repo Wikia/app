@@ -13,7 +13,7 @@
 				<? if ( $displayHeader ): ?>
 					<h1><?= wfMsgHtml('oasis-global-nav-header'); ?></h1>
 				<? endif; ?>
-				<ul>
+				<ul class="WikiaLogoContainer">
 					<li class="WikiaLogo">
 						<a href="<?= htmlspecialchars($centralUrl) ?>" rel="nofollow"><img src="<?= $wg->BlankImgUrl ?>" class="sprite logo" height="23" width="91" alt="Wikia"></a>
 					</li>

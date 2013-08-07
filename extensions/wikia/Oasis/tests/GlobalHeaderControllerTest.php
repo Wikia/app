@@ -2,61 +2,37 @@
 
 class GlobalHeaderControllerTest extends WikiaBaseTest
 {
-	
+
 	/**
 	 * @covers GlobalHeaderController::index
 	 */
 	public function testIndex() {
 		$controller = $this->getMockBuilder( 'GlobalHeaderController' )
-							->disableOriginalConstructor()
-							->setMethods( array( 'isGameStarLogoEnabled' ) )
-							->getMock();
-		
+			->disableOriginalConstructor()
+			->setMethods( array( 'isGameStarLogoEnabled' ) )
+			->getMock();
+
 		$mockResponse = $this->getMockBuilder( 'WikiaResponse' )
-							->disableOriginalConstructor()
-							->setMethods( array( 'setVal', 'addAsset' ) )
-							->getMock();
-		
+			->disableOriginalConstructor()
+			->setMethods( array( 'setVal', 'addAsset' ) )
+			->getMock();
+
 		$mockLang = $this->getMockBuilder( 'Language' )
-						->disableOriginalConstructor()
-						->setMethods( array( 'getCode' ) )
-						->getMock();
-		
+			->disableOriginalConstructor()
+			->setMethods( array( 'getCode' ) )
+			->getMock();
+
 		$mockLang
 			->expects	( $this->at( 0 ) )
 			->method	( 'getCode' )
 			->will		( $this->returnValue( 'en' ) )
 		;
-		
-//		$menuNodesRefl = new ReflectionProperty( 'GlobalHeaderController', 'menuNodes' );
-//		$menuNodesRefl->setAccessible( true );
-//		$menuNodes = $menuNodesRefl->getValue( $controller );
 
 		$mockResponse
 			->expects	( $this->at( 0 ) )
 			->method	( 'setVal' )
 			->with		( 'centralUrl', 'http://www.wikia.com/Wikia' )
 		;
-//		$mockResponse
-//			->expects	( $this->at( 1 ) )
-//			->method	( 'setVal' )
-//			->with		( 'createWikiUrl', 'http://www.wikia.com/Special:CreateNewWiki' )
-//		;
-//		$mockResponse
-//			->expects	( $this->at( 2 ) )
-//			->method	( 'setVal' )
-//			->with		( 'menuNodes', $menuNodes )
-//		;
-//		$mockResponse
-//			->expects	( $this->at( 3 ) )
-//			->method	( 'setVal' )
-//			->with		( 'menuNodesHash', $menuNodes[0]['hash'] )
-//		;
-//		$mockResponse
-//			->expects	( $this->at( 4 ) )
-//			->method	( 'setVal' )
-//			->with		( 'topNavMenuItems', $menuNodes[0]['children'] )
-//		;
 		$controller
 			->expects	( $this->once() )
 			->method	( 'isGameStarLogoEnabled' )
@@ -82,74 +58,50 @@ class GlobalHeaderControllerTest extends WikiaBaseTest
 			->method	( 'setVal' )
 			->with		( 'displayHeader', true )
 		;
-		
+
 		$resp = new ReflectionProperty( 'GlobalHeaderController', 'response' );
 		$resp->setAccessible( true );
 		$resp->setValue( $controller, $mockResponse );
-		
+
 		$wg = new ReflectionProperty( 'GlobalHeaderController', 'wg' );
 		$wg->setAccessible( true );
 		$wg->setValue( $controller, (object) array( 'CityId' => 380, 'Lang' => $mockLang, 'HideNavigationHeaders' => false ) );
-		
+
 		$this->mockGlobalVariable( 'wgLang', $mockLang );
-		
+
 		$controller->index();
 	}
-	
+
 	/**
 	 * @covers GlobalHeaderController::index
 	 */
 	public function testIndexForeignLang() {
 		$controller = $this->getMockBuilder( 'GlobalHeaderController' )
-							->disableOriginalConstructor()
-							->setMethods( array( 'isGameStarLogoEnabled' ) )
-							->getMock();
-		
+			->disableOriginalConstructor()
+			->setMethods( array( 'isGameStarLogoEnabled' ) )
+			->getMock();
+
 		$mockResponse = $this->getMockBuilder( 'WikiaResponse' )
-							->disableOriginalConstructor()
-							->setMethods( array( 'setVal', 'addAsset' ) )
-							->getMock();
-		
+			->disableOriginalConstructor()
+			->setMethods( array( 'setVal', 'addAsset' ) )
+			->getMock();
+
 		$mockLang = $this->getMockBuilder( 'Language' )
-						->disableOriginalConstructor()
-						->setMethods( array( 'getCode' ) )
-						->getMock();
-		
+			->disableOriginalConstructor()
+			->setMethods( array( 'getCode' ) )
+			->getMock();
+
 		$mockLang
 			->expects	( $this->at( 0 ) )
 			->method	( 'getCode' )
 			->will		( $this->returnValue( 'fr' ) )
 		;
-		
-//		$menuNodesRefl = new ReflectionProperty( 'GlobalHeaderController', 'menuNodes' );
-//		$menuNodesRefl->setAccessible( true );
-//		$menuNodes = $menuNodesRefl->getValue( $controller );
-		
+
 		$mockResponse
 			->expects	( $this->at( 0 ) )
 			->method	( 'setVal' )
 			->with		( 'centralUrl', "http://wikia.fr" )
 		;
-//		$mockResponse
-//			->expects	( $this->at( 1 ) )
-//			->method	( 'setVal' )
-//			->with		( 'createWikiUrl', 'http://www.wikia.com/Special:CreateNewWiki?uselang=fr' )
-//		;
-//		$mockResponse
-//			->expects	( $this->at( 2 ) )
-//			->method	( 'setVal' )
-//			->with		( 'menuNodes', $menuNodes )
-//		;
-//		$mockResponse
-//			->expects	( $this->at( 3 ) )
-//			->method	( 'setVal' )
-//			->with		( 'menuNodesHash', $menuNodes[0]['hash'] )
-//		;
-//		$mockResponse
-//			->expects	( $this->at( 4 ) )
-//			->method	( 'setVal' )
-//			->with		( 'topNavMenuItems', $menuNodes[0]['children'] )
-//		;
 		$controller
 			->expects	( $this->once() )
 			->method	( 'isGameStarLogoEnabled' )
@@ -170,17 +122,17 @@ class GlobalHeaderControllerTest extends WikiaBaseTest
 			->method	( 'setVal' )
 			->with		( 'altMessage', '' )
 		;
-		
+
 		$resp = new ReflectionProperty( 'GlobalHeaderController', 'response' );
 		$resp->setAccessible( true );
 		$resp->setValue( $controller, $mockResponse );
-		
+
 		$wg = new ReflectionProperty( 'GlobalHeaderController', 'wg' );
 		$wg->setAccessible( true );
 		$wg->setValue( $controller, (object) array( 'CityId' => 380, 'Lang' => $mockLang, 'LangToCentralMap' => array( 'fr' => "http://wikia.fr" ), 'HideNavigationHeaders' => false ) );
-		
+
 		$this->mockGlobalVariable( 'wgLang', $mockLang );
-		
+
 		$controller->index();
 	}
 }
