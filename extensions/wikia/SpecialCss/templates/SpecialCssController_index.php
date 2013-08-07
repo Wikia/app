@@ -1,14 +1,16 @@
 <form method="post" id="cssEditorForm" class="cssEditorForm">
 	<div class="css-editor">
-		<div class="editor-changes-info-wrapper">
-			<?= $deletedArticle ?>
-				<? if (!empty($diff)): ?>
-				<div class="css-diff">
-					<?= $diff; ?>
-				</div>
-				<? endif ?>
+		<div class="css-editor-wrapper">
+			<div class="editor-changes-info-wrapper">
+				<?= $deletedArticle ?>
+					<? if (!empty($diff)): ?>
+					<div class="css-diff">
+						<?= $diff; ?>
+					</div>
+					<? endif ?>
+			</div>
+			<pre class="css-editor-container" id="cssEditorContainer"><?= htmlspecialchars($cssFileInfo['content']); ?></pre>
 		</div>
-		<pre class="css-editor-container" id="cssEditorContainer"><?= htmlspecialchars($cssFileInfo['content']); ?></pre>
 	</div>
 	<aside class="css-side-bar">
 		<div class="css-edit-box">
