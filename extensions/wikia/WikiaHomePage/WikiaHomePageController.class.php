@@ -596,14 +596,14 @@ class WikiaHomePageController extends WikiaController {
 		return true;
 	}
 
-	public static function onAfterGlobalHeader(&$menuNodes, $category, $messageName) {
-		if (!empty($menuNodes) && isset($category->cat_id) && $category->cat_id == WikiFactoryHub::CATEGORY_ID_CORPORATE) {
-			foreach ($menuNodes as $key => $node) {
-				if (!empty($node['specialAttr'])) {
-					$menuNodes[$key]['class'] = $node['specialAttr'];
-				}
-			}
-		}
+//	public static function onAfterGlobalHeader(&$menuNodes, $category, $messageName) {
+//		if (!empty($menuNodes) && isset($category->cat_id) && $category->cat_id == WikiFactoryHub::CATEGORY_ID_CORPORATE) {
+//			foreach ($menuNodes as $key => $node) {
+//				if (!empty($node['specialAttr'])) {
+//					$menuNodes[$key]['class'] = $node['specialAttr'];
+//				}
+//			}
+//		}
 
 		return true;
 	}

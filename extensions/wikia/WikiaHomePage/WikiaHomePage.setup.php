@@ -30,5 +30,5 @@ $wgHooks['GetHTMLAfterBody'][] = 'WikiaHomePageController::onGetHTMLAfterBody';
 $wgHooks['OutputPageBeforeHTML'][] = 'WikiaHomePageController::onOutputPageBeforeHTML';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'WikiaHomePageController::onWikiaMobileAssetsPackages';
 $wgHooks['ArticleCommentCheck'][] = 'WikiaHomePageController::onArticleCommentCheck';
-$wgHooks['AfterGlobalHeader'][] = 'WikiaHomePageController::onAfterGlobalHeader';
+//$wgHooks['AfterGlobalHeader'][] = 'WikiaHomePageController::onAfterGlobalHeader';
 $wgHooks['GetRailModuleList'][] = 'WikiaHomePageController::onGetRailModuleList';
