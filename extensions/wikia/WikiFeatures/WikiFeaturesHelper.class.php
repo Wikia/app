@@ -11,7 +11,6 @@ class WikiFeaturesHelper extends WikiaModel {
 	protected static $instance = NULL;
 	protected $fogbugzService = NULL;
 
-	const FOGBUGZ_PROJECT_ID = 24;  // This is the "Product Feedback" Project ID in Fogbugz
 	const FOGBUGZ_CASE_TITLE = 'WikiFeatures Feedback - Project: ';
 	const FOGBUGZ_CASE_TAG = 'WikiFeaturesFeedback';
 	const FEEDBACK_FREQUENCY = 60;
