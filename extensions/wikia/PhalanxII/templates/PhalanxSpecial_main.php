@@ -122,6 +122,9 @@
 
 			<fieldset>
 				<legend><?php echo wfMsg( 'phalanx-legend-listing' ) ?></legend>
+
+				<?= wfMessage('phalanx-filters-intro', 'Special:Log/phalanx')->parse() ?>
+
 				<form id="phalanx-filters" method="get" action="<?= $action ?>">
 					<div id="phalanx-check-options">
 						<label for="wpPhalanxCheckBlocker"><?php echo wfMsg( 'phalanx-view-blocker' ) ?></label>
