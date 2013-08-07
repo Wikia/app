@@ -9,7 +9,6 @@
 class WikiFeaturesHelper extends WikiaModel {
 
 	protected static $instance = NULL;
-	protected $fogbugzService = NULL;
 
 	const FEEDBACK_FREQUENCY = 60;
 
