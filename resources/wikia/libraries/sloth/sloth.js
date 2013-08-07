@@ -11,6 +11,7 @@ define('sloth', function(){
 		wTop,
 		wBottom,
 		undef,
+		debounce,
 		delegate = win.setTimeout,
 		branches = [],
 		Branch = function(element, threshold, callback){
@@ -20,18 +21,24 @@ define('sloth', function(){
 				callback(element);
 			};
 		},
+		addEvent = function(){
+			win.addEventListener('scroll', execute);
+		},
+		removeEvent = function(){
+			win.removeEventListener('scroll', execute);
+		},
 		lock = 0,
 		execute = function(){
 			var i = branches.length,
 				branch;
 
-			win.removeEventListener('scroll', execute);
+			removeEvent();
 
 			if(i && !lock) {
-				lock = setTimeout(function(){
+				lock = delegate(function(){
 					lock = 0;
-					win.addEventListener('scroll', execute);
-				}, 200);
+					addEvent();
+				}, debounce);
 
 				wTop = win.scrollY;
 				wBottom = wTop + win.innerHeight;
@@ -44,8 +51,6 @@ define('sloth', function(){
 						branches.splice(i, 1);
 					}
 				}
-			} else {
-				win.removeEventListener('scroll', execute);
 			}
 		};
 
@@ -53,9 +58,10 @@ define('sloth', function(){
 		var elem =  this.element,
 			threshold = this.threshold,
 			top = elem.y - threshold,
-			bottom = top + elem.offsetHeight + threshold;
+			height = elem.offsetHeight,
+			bottom = top + height + threshold;
 
-		return (elem.offsetHeight && elem.offsetWidth && wBottom >= top && wTop <= bottom);
+		return (height && wBottom >= top && wTop <= bottom);
 	};
 
 	//return Sloth function
@@ -65,6 +71,8 @@ define('sloth', function(){
 				threshold = params.threshold !== undef ? params.threshold : 100,
 				callback = params.callback,
 				i;
+
+			debounce = params.debounce !== undef ? params.debounce : 500;
 
 			if(!elements) throw 'No elements passed';
 			if(!callback) throw 'No callback passed';
@@ -77,11 +85,8 @@ define('sloth', function(){
 			}else {
 				branches.push(new Branch(elements, threshold, callback))
 			}
-
-			execute();
-			branches.length && win.addEventListener('scroll', execute);
-		} else{
-			throw 'Gimme some data';
 		}
+
+		execute();
 	}
 });

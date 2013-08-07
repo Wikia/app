@@ -53,7 +53,7 @@ require(['sections', 'media', require.optional('wikia.cache'), 'wikia.loader', '
 			tablesProcessedSections[index] = true;
 		}
 
-		window.scrollBy(0,1);
+		sloth();
 	});
 
 	//tables
