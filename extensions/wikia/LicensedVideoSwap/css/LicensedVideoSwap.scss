@@ -15,21 +15,9 @@ $arrow-color: 'black';
 	$arrow-color: 'white';
 }
 
-$arrow-button-color: white;
+$button-icon-color: white;
 @if lightness($color-buttons) > 55 {
-	$arrow-button-color: black;
-}
-
-// Callout text should be calculated the same way normal text is calculated
-// except the button color is used instead of the page color.
-$buttons-are-dark: false;
-@if lightness($color-buttons) < 50 {
-	$buttons-are-dark: true;
-}
-
-$color-callout-text: $color-text-dark;
-@if $buttons-are-dark {
-	$color-callout-text: $color-text-light;
+	$button-icon-color: black;
 }
 
 // button that leads to history undo swap/keep page
@@ -37,26 +25,85 @@ $color-callout-text: $color-text-dark;
 	vertical-align: 5px;
 }
 
-// For now, this callout style will be specific to lvs, but we may want to make it global in the future
+// For now, this callout style will be specific to lvs, but we might be able to re-use this on the Video Wikia home page
 .lvs-callout {
 	background: $color-buttons;
 	color: $color-button-text;
 	display: none;
+	font-size: 13px;
 	margin: 10px 0;
-	padding: 20px;
-	h1 {
-		font-size: 22px;
-		line-height: 33px;
-		margin: 0 0 15px;
+	padding: 15px 20px 8px 20px;
+	.description{
+		font-size: 16px;
+	}
+	p {
+		margin: 0;
+	}
+	ul, li {
+		padding: 0;
+		margin: 0;
+		list-style: none;
 	}
 	ul {
-		color: $color-callout-text;
-		list-style: none;
-		margin: 0;
-		padding: 0;
+		display: inline-block;
+		margin: 35px 0 15px;
+		position: relative;
+		width: 100%;
+		&:before, &:after {
+			@include opacity(50);
+			background: $color-button-text;
+			bottom: 0px;
+			content: "";
+			display: block;
+			position: absolute;
+			top: 0px;
+			width: 1px;
+		}
+		&:before {
+			left: 33.3%;
+		}
+		&:after {
+			right: 33.3%;
+		}
+	}
+	li {
+		box-sizing: border-box;
+		float: left;
+		padding: 0px 6%;
+		width: 33.3%;
+		text-align: center;
+		&:first-child:before {
+			display: none;
+		}
 	}
 	.close {
 		float: right;
+	}
+	.heading {
+		display: block;
+		font-size: 21px;
+		margin-bottom: 5px;
+		&:before {
+			@include sprite-LicensedVideoSwap-base;
+			content: "";
+			display: inline-block;
+			margin-right: 7px;
+		}
+		&.licensed:before {
+			@include sprite-LicensedVideoSwap('license_icon_' + $button-icon-color);
+			width: 20px;
+			height: 20px;
+		}
+		&.quality:before {
+			@include sprite-LicensedVideoSwap('high_quality_icon_' + $button-icon-color);
+			width: 20px;
+			height: 20px;
+		}
+		&.collaborative:before {
+			@include sprite-LicensedVideoSwap('collaboration_icon_' + $button-icon-color);
+			width: 23px;
+			height: 21px;
+		}
 	}
 }
 
@@ -113,7 +160,7 @@ $color-callout-text: $color-text-dark;
 			width: 49px;
 			z-index: 1; // needs to show above a playing video
 			&:before {
-				@include sprite-LicensedVideoSwap('big_' + $arrow-color + '_arrow');
+				@include sprite-LicensedVideoSwap('big_arrow_' + $arrow-color);
 				content: "";
 				display: block;
 				margin: auto;
@@ -200,7 +247,7 @@ $color-callout-text: $color-text-dark;
 		}
 	}
 	.swap-button:before {
-		@include sprite-LicensedVideoSwap($arrow-button-color + '_small_arrow');
+		@include sprite-LicensedVideoSwap('small_arrow_' + $button-icon-color);
 		content: "";
 		display: inline-block;
 		height: 9px;
