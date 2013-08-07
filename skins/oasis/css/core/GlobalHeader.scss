@@ -11,7 +11,8 @@
 	color: $color-header-text;
 	margin: 0 auto;
 	min-width: 1050px;
-	position: relative;
+	position: fixed;
+	width: 100%;
 	z-index: $zTop;
 	-webkit-font-smoothing: antialiased; // prevents text flickering when css transformations in progress
 	h1 {
