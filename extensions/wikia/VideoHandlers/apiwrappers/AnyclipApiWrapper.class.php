@@ -68,10 +68,10 @@ class AnyclipApiWrapper extends ApiWrapper {
 			return $this->videoName;
 		}
 
-		return self::getVideoName( $this->interfaceObj );
+		return self::getClipName( $this->interfaceObj );
 	}
 
-	public static function getVideoName( $content ) {
+	public static function getClipName( $content ) {
 		$videoName = '';
 		if ( !empty($content['title']['name']) ) {
 			$videoName = $content['title']['name'];
@@ -237,15 +237,15 @@ class AnyclipApiWrapper extends ApiWrapper {
 	}
 
 	protected function isAgeGate() {
-		if ( !empty($this->metadata['ageGate']) ) {
-			return 1;
+		if ( !empty( $this->metadata['ageGate'] ) ) {
+			return true;
 		}
 
 		if ( !empty($this->interfaceObj['restrictions']) ) {
-			return 1;
+			return true;
 		}
 
-		return 0;
+		return false;
 	}
 
 	protected function getVideoTags() {
