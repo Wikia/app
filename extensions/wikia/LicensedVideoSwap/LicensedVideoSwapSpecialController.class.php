@@ -252,12 +252,6 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		//$this->html .= $helper->getPagination( $currentPage, $selectedSort );
 		$this->result = 'ok';
 
-		$fileOptions = array(
-			'href' => $newFile->getTitle()->escapeFullURL(),
-			'target' => '_blank',
-		);
-		$fileLink = Xml::element( 'a', $fileOptions, wfMessage( 'lvs-file-link-text' )->text() );
-
 		$undoOptions = array(
 			'class' => 'undo',
 			'href' => '#',
@@ -266,7 +260,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		);
 		$undo = Xml::element( 'a', $undoOptions, wfMessage( 'lvs-undo-swap' )->text() );
 
-		$this->msg = wfMessage( 'lvs-swap-video-success' )->rawParams( $fileLink, $undo )->parse();
+		$this->msg = wfMessage( 'lvs-swap-video-success' )->rawParams( $undo )->parse();
 	}
 
 	/**
@@ -486,5 +480,4 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->containerId = $this->getVal('containerId');
 		$this->blankImgUrl = $this->wg->BlankImgUrl;
 	}
-
 }
