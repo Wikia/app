@@ -190,19 +190,6 @@ class WikiFeaturesHelper extends WikiaModel {
 	}
 
 
-	public function getFogbugzService() {
-		if( $this->fogbugzService == null ) {
-			$this->fogbugzService = new FogbugzService(
-						$this->wg->fogbugzAPIConfig['apiUrl'],
-						$this->wg->fogbugzAPIConfig['username'],
-						$this->wg->fogbugzAPIConfig['password'],
-						$this->app->getGlobal( 'wgHTTPProxy' )
-			);
-		}
-		return $this->fogbugzService;
-	}
-
-
 	/**
 	 * Helper that actually sends the feedback to a specified e-mail address
 	 *
