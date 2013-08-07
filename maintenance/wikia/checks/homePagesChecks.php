@@ -14,13 +14,17 @@ require_once( 'commandLine.inc' );
 echo 'Execution starts ' . date( "Y-m-d H:i:s" );
 echo "\n";
 
-$homePageTest = new CorporateHomePageTest();
+$homePageTest = new CorporateHomePageTest( [ ] );
 $homePageTest->run_tests();
 
 echo 'Execution ends' . date( "Y-m-d H:i:s" );
 echo "\nScript finished running!\n";
 
 class CorporateHomePageTest {
+
+	const NO_STATS_MODULE_FOUND = 'No stats module found on $1';
+	const STATISTIC_DID_NOT_CHANGE = 'Statistic $1 did not change on $2';
+	const DEAULT_NO_CHANGE_TRESHOLD = 7;
 
 	/**
 	 * @var CorporateHomePageStatisticsStorage
@@ -30,28 +34,103 @@ class CorporateHomePageTest {
 	/**
 	 * @var string
 	 */
-	private $currentDate;
+	private $baseDate;
 
+	/**
+	 * @var array
+	 */
+	private $corporateWikis;
 
-	public function __construct() {
-		$this->currentDate = date( "Y-m-d" );
+	/**
+	 * @var integer
+	 */
+	private $noChangeTreshold;
+
+	/**
+	 * @param $params array of options
+	 *
+	 * Valid options are:
+	 * noChangeTreshold (int) -> how many days of non-changed stat cause an error
+	 */
+	public function __construct( $params ) {
+		$this->baseDate = date( "Y-m-d" );
+		if ( ! empty( $params['noChangeTreshold'] ) ) {
+			$this->noChangeTreshold = $params['noChangeTreshold'];
+		} else {
+			$this->noChangeTreshold = self::DEAULT_NO_CHANGE_TRESHOLD;
+		}
 		$this->dataStorage = new CorporateHomePageStatisticsStorage();
+		$cityVisualization = new CityVisualization();
+		$this->corporateWikis = $cityVisualization->getVisualizationWikisIds();
 	}
 
 	public function run_tests() {
-		$cityVisualization = new CityVisualization();
-		$corporateWikis = $cityVisualization->getVisualizationWikisIds();
 
-		foreach ( $corporateWikis as $wikiId ) {
-			$this->processCorporateWikiStats( $wikiId );
+		foreach ( $this->corporateWikis as $wikiId ) {
+			$corpWikiStatistics = $this->processCorporateWikiStats( $wikiId );
+
+			if ( $corpWikiStatistics ) {
+				$this->verifyStatsChanged( $wikiId, $corpWikiStatistics );
+			} else {
+				$this->signalError( self::NO_STATS_MODULE_FOUND, [ $wikiId ] );
+			}
 		}
 	}
 
+	private function verifyStatsChanged( $wikiId, $corpWikiStatistics ) {
+		$datesToCheck = [ ];
+
+		/*
+		 * checking noChangeTreshold days total, which means we're counting baseDate too
+		 */
+		for ( $i = 1; $i < $this->noChangeTreshold; $i ++ ) {
+			$datesToCheck [] = date( "Y-m-d", strtotime( $this->baseDate . " -$i days" ) );
+		}
+
+		foreach ( $corpWikiStatistics as $statKey => $statValue ) {
+			$changed = false;
+			$currentStatValue = $statValue;
+
+			foreach ( $datesToCheck as $date ) {
+				$previousStatValue = $this->dataStorage->getValue(
+					$this->getStatsKey( $date, $wikiId, $statKey )
+				);
+				if($currentStatValue != $previousStatValue) {
+					$changed = true;
+					break;
+				}
+				$currentStatValue = $previousStatValue;
+			}
+			if(!$changed) {
+				$this->signalError( self::STATISTIC_DID_NOT_CHANGE, [ $statKey, $wikiId ] );
+			}
+		}
+	}
+
+
+	/**
+	 * Returns false if new stats were NOT obtained
+	 *
+	 * @param $wikiId
+	 * @return bool|array
+	 */
 	private function processCorporateWikiStats( $wikiId ) {
 		$corpWikiStatistics = $this->getStatisticsModulesContents( $wikiId );
-		foreach ( $corpWikiStatistics as $statName => $statValue ) {
-			$this->dataStorage->setValue( $this->getStatsKey( $this->currentDate, $wikiId, $statName ), $statValue );
+
+		if ( ! empty( $corpWikiStatistics ) ) {
+			foreach ( $corpWikiStatistics as $statKey => $statValue ) {
+				$this->dataStorage->setValue( $this->getStatsKey( $this->baseDate, $wikiId, $statKey ), $statValue );
+			}
+			$result = $corpWikiStatistics;
+		} else {
+			$result = false;
 		}
+
+		return $result;
+	}
+
+	private function signalError( $errMessage, $data ) {
+		$message = wfMessage( $errMessage, $data )->text();
 	}
 
 	private function getStatisticsModulesContents( $wikiId ) {
@@ -61,8 +140,8 @@ class CorporateHomePageTest {
 		return $homePageStatistics;
 	}
 
-	private function getStatsKey( $date, $wikiId, $statName ) {
-		return implode( '-', [ $date, $wikiId, $statName ] );
+	private function getStatsKey( $date, $wikiId, $statKey ) {
+		return implode( '-', [ $date, $wikiId, $statKey ] );
 	}
 
 	private function getHomePageContents( $wikiId ) {
@@ -70,9 +149,9 @@ class CorporateHomePageTest {
 
 		echo "Loading $wikiId - ${url}";
 
-		$htmlContents =file_get_contents($url);
+		$htmlContents = file_get_contents( $url );
 
-		if ( !empty( $htmlContents ) ) {
+		if ( ! empty( $htmlContents ) ) {
 			echo " - success\n";
 		} else {
 			echo " - failed\n";
@@ -83,19 +162,30 @@ class CorporateHomePageTest {
 	}
 
 	/**
-	 * Processes HTML and returns associative array
-	 * of stat => value, i.e.
-	 *
-	 * [
-	 *
-	 *
-	 * ]
+	 * Processes HTML and returns array of stat values
 	 *
 	 * @param $html
 	 * @return array
 	 */
 	private function extractNumbersFromHtml( $html ) {
-		return [ ];
+		$regex = '#datasection.*<strong>(.*)<\/strong>.*#imsU';
+		$matches = [ ];
+
+		preg_match_all( $regex, $html, $matches );
+		if ( ! empty( $matches[1] ) && count( $matches[1] ) == 6 ) {
+			$output = $matches[1];
+			$this->normalizeNumbersArray( $output );
+		} else {
+			$output = [ ];
+		}
+
+		return $output;
+	}
+
+	private function normalizeNumbersArray( &$array ) {
+		foreach ( $array as &$value ) {
+			$value = intval( preg_replace( '#\D#imsU', '', $value ) );
+		}
 	}
 
 }
@@ -123,7 +213,7 @@ class CorporateHomePageStatisticsStorage {
 	 * @param $key
 	 */
 	public function getValue( $key ) {
-
+		echo "getting value from $key\n";
 	}
 
 }
