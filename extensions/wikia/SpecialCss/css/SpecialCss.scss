@@ -18,7 +18,12 @@ $edit-box-color: mix($color-page, #000, 95%);
 
 .css-editor {
 	float: left;
-	width: 670px;
+	margin-right: -350px;
+	width: 100%;
+
+	.css-editor-wrapper {
+		margin-right: 350px;
+	}
 
 	.editor-changes-info-wrapper > div:last-child {
 		margin-bottom: 10px;
