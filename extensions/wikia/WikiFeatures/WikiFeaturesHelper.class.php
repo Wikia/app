@@ -195,7 +195,7 @@ class WikiFeaturesHelper extends WikiaModel {
 	 * @param string $feature name of the feature
 	 * @param string $message feedback message
 	 * @param User $user user object
-	 * @param integer $feedbackCat feedback category which is defined above in $feedbackCategories property (equals piority in FogBugz: 4-7)
+	 * @param integer $feedbackCat feedback category which is defined above in $feedbackCategories property
 	 */
 	public function sendFeedback( $feature, $user, $message, $category, $priority = 5 ) {
 
