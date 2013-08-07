@@ -27,10 +27,7 @@ describe("Ads module", function () {
 			Features: {},
 			postscribe: function(){}
 		},
-		utils = function(func){
-			func();
-		},
-		ads = modules.ads(cookies, window, utils, dartHelper);
+		ads = modules.ads(cookies, window, dartHelper);
 
 	it("is defined as a module", function () {
 		expect(ads).toBeDefined();

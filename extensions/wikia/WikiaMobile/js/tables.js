@@ -14,10 +14,6 @@ define('tables', ['events', 'track', 'wikia.window', 'jquery'], function(ev, tra
 		handledTables = tables.add(handledTables);
 
 		tables.filter(function(index, element){
-			return $(element).width() > realWidth;
-		}).wrap('<div class="bigTable" />');
-
-		tables.filter(function(index, element){
 			var tr = $(element).find('tr'),
 				trLength = tr.length,
 				correctRows = 0,
@@ -37,7 +33,11 @@ define('tables', ['events', 'track', 'wikia.window', 'jquery'], function(ev, tra
 			}
 
 			return correctRows > Math.floor(trLength/2);
-		}).addClass('infobox');
+		})
+		.addClass('infobox')
+		.filter(function(index, element){
+			return $(element).width() > realWidth;
+		}).wrap('<div class="bigTable" />');
 
 		if(!inited && handledTables.length > 0){
 			inited = true;

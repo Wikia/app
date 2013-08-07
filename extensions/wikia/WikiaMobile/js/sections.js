@@ -7,6 +7,7 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 
+
 define('sections', ['JSMessages', 'jquery'], function(msg, $){
 	var d = document,
 		fragment = d.createDocumentFragment(),
@@ -96,7 +97,7 @@ define('sections', ['JSMessages', 'jquery'], function(msg, $){
 		//find in what section is the header
 		if(heading.length && !heading.is('h1,h2')) h2 = heading.parent('.artSec').prev();
 
-		return [h2 || heading, heading];
+		return [h2 || $(heading), heading];
 	}
 
 	function scrollTo(header){

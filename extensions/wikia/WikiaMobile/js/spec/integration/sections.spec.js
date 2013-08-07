@@ -5,7 +5,8 @@ describe("Sections module", function () {
 	var sections = modules.sections(
 		function(){
 			return 'TEST';
-		}
+		},
+		jQuery
 	);
 
 	it('should be defined', function(){

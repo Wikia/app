@@ -19,7 +19,8 @@ describe("Tables module", function () {
 
 			},
 			document: document
-		}
+		},
+		jQuery
 	);
 
 	beforeEach(function(){
@@ -46,7 +47,7 @@ describe("Tables module", function () {
 	it('should wrap/unwrap table', function(){
 		var tab = body.querySelectorAll('table');
 
-		tables.process(tab);
+		tables.process($(tab));
 
 		var table = body.getElementsByTagName('table')[0];
 

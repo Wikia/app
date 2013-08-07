@@ -17,6 +17,10 @@ describe("Lazyload module", function () {
 		getThumbURL: function(a){
 			return a;
 		}
+	}, {
+		makeArray: function(array){
+			return Array.prototype.slice.call(array);
+		}
 	});
 
 	it('is defined', function(){

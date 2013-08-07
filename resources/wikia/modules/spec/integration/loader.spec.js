@@ -7,15 +7,7 @@ describe("Loader Module", function () {
 			document: window.document,
 			wgCdnRootUrl: '',
 			wgAssetsManagerQuery: "/__am/%4$d/%1$s/%3$s/%2$s",
-			wgStyleVersion: ~~(Math.random()*99999),
-			$: {
-				extend: function(a, b){
-					for(var key in b){
-						a[key] = b[key];
-					}
-					return a;
-				}
-			}
+			wgStyleVersion: ~~(Math.random()*99999)
 		},
 		mwMock = undefined,
 		nirvanaMock = {},
@@ -23,7 +15,7 @@ describe("Loader Module", function () {
 
 	logMock.levels = {};
 
-	var loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, Wikia.Deferred, logMock);
+	var loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, jQuery, logMock);
 
 	it('registers itself', function() {
 		expect(typeof loader).toBe('function');
@@ -119,7 +111,7 @@ describe("Loader Module", function () {
 					}
 				}
 			},
-			loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, Wikia.Deferred, logMock);
+			loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, jQuery, logMock);
 
 		// check calls to this function
 		spyOn(mwMock.loader, 'use').andCallThrough();
@@ -142,7 +134,7 @@ describe("Loader Module", function () {
 					extend: function(a){return a}
 				}
 			},
-			loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, Wikia.Deferred, logMock);
+			loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, jQuery, logMock);
 
 		document.head.appendChild = function(script){
 			script.onload();
