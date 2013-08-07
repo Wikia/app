@@ -55,8 +55,10 @@
 		background-image: url(/skins/oasis/images/checkers.png); /* base64 */
 	}
 	.WikiaLogo {
-		padding-left: 20px;
-		padding-right: 23px;
+		position: absolute;
+		left: 50%;
+		margin-left: -45px;
+
 		a {
 			position: relative;
 			top: -5px;
