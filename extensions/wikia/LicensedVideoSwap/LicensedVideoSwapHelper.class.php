@@ -701,7 +701,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 			$videoList[] = $video;
 		}
 
-		usort($videoList, function ($a, $b) { return strcmp($a['created'], $b['created']); });
+		usort($videoList, function ($a, $b) { return strcmp($b['created'], $a['created']); });
 		return $videoList;
 	}
 }
