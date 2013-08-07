@@ -8,15 +8,9 @@ class WallNotificationEntity {
 	public $data_noncached; // this data is here only after you create this object
 	                        // when recreating object from memcache this will be empty
 
-
-	public function __construct() {
-		$this->helper = new WallHelper();
-	}
-
 	/*
 	 *	Public Interface
 	 */
-
 	public static function createFromRev( Revision $rev, $wikiId, $master = false ) {
 		$wn = new WallNotificationEntity();
 		if( $wn->loadDataFromRev( $rev, $wikiId, $master ) ) {
