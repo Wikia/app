@@ -132,14 +132,17 @@ define( 'lvs.videocontrols', [ 'wikia.videoBootstrap', 'wikia.nirvana', 'jquery'
 	function reset() {
 		var i,
 			len = videoInstances.length,
-			vb;
+			vb,
+			playerWidth = 500,
+			clickSource = 'licensedVideoSwap',
+			autoPlay = false;
 
+		// loop through all loaded video players on the page
 		for ( i = 0; i < len; i++ ) {
 			vb = videoInstances[ i ];
 
-			// revert to original html
-			removeVerticalAlign( $( vb.element ) );
-			vb.reload( vb.title, 500, false, 'licensedVideoSwap');
+			// reload the player
+			vb.reload( vb.title, playerWidth, autoPlay, clickSource );
 		}
 	}
 
