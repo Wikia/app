@@ -59,13 +59,12 @@ class VideoInfoHooksHelper {
 			if ( !empty($videoInfo) ) {
 				$affected = $videoInfo->addPremiumVideo( F::app()->wg->User->getId() );
 
-				# Add the log entry
-				$log = new LogPage( 'upload' );
-
-				$comment = wfMessage('videohandler-log-add-video')->plain();
-				$log->addEntry( 'upload', $title, $comment, array(), F::app()->wg->User );
-
 				if ( $affected ) {
+					# Add a log entry
+					$log = new LogPage( 'upload' );
+					$comment = wfMessage('videohandler-log-add-video')->plain();
+					$log->addEntry( 'upload', $title, $comment, array(), F::app()->wg->User );
+
 					$mediaService = new MediaQueryService();
 					$mediaService->clearCacheTotalVideos();
 					$mediaService->clearCacheTotalPremiumVideos();
