@@ -6,8 +6,6 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 class WikiaMobileService extends WikiaService {
-	//AppCache will be disabled for the first several releases
-	//const CACHE_MANIFEST_PATH = 'wikia.php?controller=WikiaMobileAppCache&method=serveManifest&format=html';
 	const LYRICSWIKI_ID = 43339;
 
 	/**
@@ -30,12 +28,14 @@ class WikiaMobileService extends WikiaService {
 
 		$jsHeadPackages = [ 'wikiamobile_js_head' ];
 		$jsBodyPackages = [ 'wikiamobile_js_body_full' ];
-		$scssPackages = [];
+		$jsExtensionPackages = [];
+		$scssPackages = [ 'wikiamobile_scss' ];
 		$cssLinks = '';
 		$jsBodyFiles = '';
 		$jsHeadFiles = '';
-		$styles = null;
-		$scripts = null;
+		$jsExtensionFiles = '';
+		$styles = $this->skin->getStyles();
+		$scripts = $this->skin->getScripts();
 		$assetsManager = AssetsManager::getInstance();
 		$floatingAd = '';
 		$topLeaderBoardAd = '';
@@ -44,10 +44,6 @@ class WikiaMobileService extends WikiaService {
 		$globalVariables = [];
 
 		JSMessages::enqueuePackage( 'WkMbl', JSMessages::INLINE );
-
-		$scssPackages[] = 'wikiamobile_scss';
-		$styles = $this->skin->getStyles();
-		$scripts = $this->skin->getScripts();
 
 		$mobileAdService = new WikiaMobileAdService();
 		if ($mobileAdService->shouldLoadAssets()) {
@@ -63,10 +59,10 @@ class WikiaMobileService extends WikiaService {
 		}
 
 		$nav = $this->app->renderView( 'WikiaMobileNavigationService', 'index' );
-		$pageContent = $this->app->renderView( 'WikiaMobileBodyService', 'index', array(
+		$pageContent = $this->app->renderView( 'WikiaMobileBodyService', 'index', [
 			'bodyText' => $this->templateObject->get( 'bodytext' ),
 			'categoryLinks' => $this->templateObject->get( 'catlinks')
-		) );
+		] );
 		$footer = $this->app->renderView( 'WikiaMobileFooterService', 'index' );
 
 		//let extensions manipulate the asset packages (e.g. ArticleComments,
@@ -74,8 +70,10 @@ class WikiaMobileService extends WikiaService {
 		$this->app->runHook(
 			'WikiaMobileAssetsPackages',
 			[
-				&$jsHeadPackages,
+				//This should be a static package - files that need to be loaded on EVERY page
 				&$jsBodyPackages,
+				//All the rest can go here ie. assets for FilePage, special pages and so on
+				&$jsExtensionPackages,
 				&$scssPackages
 			]
 		);
@@ -86,7 +84,7 @@ class WikiaMobileService extends WikiaService {
 				//packages/assets are enqueued via an hook, let's make sure we should actually let them through
 				if ( $assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
 					//W3C standard says type attribute and quotes (for single non-URI values) not needed, let's save on output size
-					$cssLinks .= "<link rel=stylesheet href=\"" . $s . "\"/>";
+					$cssLinks .= "<link rel=stylesheet href='{$s}'/>";
 				}
 			}
 		}
@@ -94,35 +92,35 @@ class WikiaMobileService extends WikiaService {
 		if ( is_array( $styles ) ) {
 			foreach ( $styles as $s ) {
 				//safe URL's as getStyles performs all the required checks
-				//W3C standard says type attribute and quotes (for single non-URI values) not needed, let's save on output size
-				$cssLinks .= "<link rel=stylesheet href=\"{$s['url']}\"/>";//this is a strict skin, getStyles returns only elements with a set URL
+				$cssLinks .= "<link rel=stylesheet href='{$s['url']}'/>";//this is a strict skin, getStyles returns only elements with a set URL
 			}
 		}
 
-//		if ( is_array( $jsHeadPackages ) ) {
-//			//core JS in the head section, definitely safe
-//			foreach ( $assetsManager->getURL( $jsHeadPackages ) as $src ) {
-//				//HTML5 standard, no type attribute required == smaller output
-//				$jsHeadFiles .= "<script src=\"{$src}\"></script>";
-//			}
-//		}
+		//We were able to push all JS to bottom of a page
+		//js class is used to style some element on a page therefore it is better to apply it as soon as possible
+		$jsHeadFiles .= '<script>document.documentElement.className += "js";</script>';
 
-		$jsHeadFiles .= '<script>document.documentElement.className += " js";</script>';
+		if ( is_array( $jsExtensionPackages ) ) {
+			//core JS in the head section, definitely safe
+			foreach ( $assetsManager->getURL( $jsExtensionPackages ) as $src ) {
+				$jsExtensionFiles .= "<script src='{$src}'></script>";
+			}
+		}
+
+
 
 		if ( is_array( $jsBodyPackages ) ) {
 			foreach ( $assetsManager->getURL( $jsBodyPackages ) as $s ) {
 				//packages/assets are enqueued via an hook, let's make sure we should actually let them through
 				if ( $assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
-					//HTML5 standard, no type attribute required == smaller output
-					$jsBodyFiles .= "<script src=\"{$s}\"></script>";
+					$jsBodyFiles .= "<script src='{$s}'></script>";
 				}
 			}
 		}
 
 		if ( is_array( $scripts ) ) {
 			foreach ( $scripts as $s ) {
-				//safe URL's as getScripts performs all the required checks
-				//HTML5 standard, no type attribute required == smaller output
+				//safe URLs as getScripts performs all the required checks
 				$jsBodyFiles .= "<script src=\"{$s['url']}\"></script>";
 			}
 		}
@@ -140,6 +138,7 @@ class WikiaMobileService extends WikiaService {
 		}
 
 		$this->response->setVal( 'jsHeadFiles', $jsHeadFiles );
+		$this->response->setVal( 'jsExtensionPackages', $jsExtensionFiles );
 		$this->response->setVal( 'allowRobots', ( !$this->wg->DevelEnvironment ) );
 		$this->response->setVal( 'cssLinks', $cssLinks );
 		$this->response->setVal( 'mimeType', $this->templateObject->get( 'mimetype' ) );
@@ -164,12 +163,12 @@ class WikiaMobileService extends WikiaService {
 		//tracking
 		$trackingCode = '';
 
-		if ( !in_array( $this->wg->Request->getVal( 'action' ), array( 'edit', 'submit' ) ) ) {
+		if ( !in_array( $this->wg->Request->getVal( 'action' ), [ 'edit', 'submit' ] ) ) {
 			$trackingCode .= AnalyticsEngine::track(
 				'QuantServe',
 				AnalyticsEngine::EVENT_PAGEVIEW,
-				array(),
-				array( 'extraLabels'=> array( 'mobilebrowser' ) )
+				[],
+				['extraLabels'=> ['mobilebrowser']]
 			) .
 		   	AnalyticsEngine::track(
 				'Comscore',
@@ -183,8 +182,8 @@ class WikiaMobileService extends WikiaService {
 		}
 
 		$trackingCode .= AnalyticsEngine::track( 'GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW ).
-			AnalyticsEngine::track( 'GA_Urchin', 'onewiki', array( $this->wg->cityId ) ).
-			AnalyticsEngine::track( 'GA_Urchin', 'pagetime', array( 'wikiamobile' ) ).
+			AnalyticsEngine::track( 'GA_Urchin', 'onewiki', [$this->wg->cityId] ).
+			AnalyticsEngine::track( 'GA_Urchin', 'pagetime', ['wikiamobile'] ).
 			AnalyticsEngine::track( 'GA_Urchin', 'varnish-stat').
 			AnalyticsEngine::track( 'GAS', 'usertiming' );
 

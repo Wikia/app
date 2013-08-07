@@ -351,7 +351,6 @@ $config['gameguides_js'] = array(
 		'//extensions/wikia/GameGuides/js/isGameGuides.js',
 
 		//polyfills
-		'//resources/wikia/polyfills/outerhtml.js',
 		'//extensions/wikia/WikiaMobile/js/viewport.js',
 
 		//groups
@@ -464,7 +463,6 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/feature-detects/overflow.wikiamobile.js',
 
 		//polyfills
-		'//resources/wikia/polyfills/outerhtml.js',
 		'//extensions/wikia/WikiaMobile/js/viewport.js',
 
 		//platform components
@@ -515,16 +513,6 @@ $config['wikiamobile_smartbanner_init_js'] = [
 	]
 ];
 
-$config['wikiamobile_relatedpages_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
-		'//extensions/wikia/RelatedPages/css/RelatedPages.wikiamobile.scss'
-	)
-);
-
-//sloth is a generic library but currently used only by RelatedPages on wikiamobile
-//move to body package if needed
 $config['wikiamobile_relatedpages_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',

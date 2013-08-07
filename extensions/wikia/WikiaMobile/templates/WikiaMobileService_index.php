@@ -27,8 +27,12 @@
 <html lang=<?= $languageCode ;?> dir=<?= $languageDirection ;?><? if ( !empty( $appCacheManifestPath ) ) :?> manifest=<?= $appCacheManifestPath ;?><? endif ;?>>
 <head>
 	<meta http-equiv=Content-Type content="<?= "{$mimeType};charset={$charSet}" ;?>">
-	<title><?= htmlspecialchars( $pageTitle ) ;?></title>
 	<?= $cssLinks ;?>
+	<title><?= htmlspecialchars( $pageTitle ) ;?></title>
+	<?= $headLinks ;?>
+	<?= $headItems ;?>
+	<?= $globalVariablesScript ;?>
+	<?= $jsHeadFiles ;?>
 	<? if( !$allowRobots ): ?>
 	<meta name=robots content='noindex, nofollow'>
 	<?endif; ?>
@@ -41,10 +45,6 @@
 			<meta name="<?= $name ?>" content="<?= $content ?>">
 		<? endforeach; ?>
 	<? endif; ?>
-	<?= $headLinks ;?>
-	<?= $globalVariablesScript ;?>
-	<?= $jsHeadFiles ;?>
-	<?= $headItems ;?>
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>">
 	<?= $wikiaNavigation ;?>
@@ -53,6 +53,7 @@
 	<?= $wikiaFooter ;?>
 	<div id=wkCurtain>&nbsp;</div>
 	<?= $jsBodyFiles ;?>
+	<?= $jsExtensionPackages ?>
 	<?= $inContentAd ;?>
 	<?= $modalInterstitial ;?>
 	<?= $floatingAd ;?>

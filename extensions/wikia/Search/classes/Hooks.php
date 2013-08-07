@@ -121,9 +121,9 @@ class Hooks
 	 * @param  array $scssPackages
 	 * @return boolean
 	 */
-	public static function onWikiaMobileAssetsPackages( &$jsHeadPackages, &$jsBodyPackages, &$scssPackages){
+	public static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages){
 		if( \F::app()->wg->Title->isSpecial( 'Search' ) ) {
-			$jsBodyPackages[] = 'wikiasearch_js_wikiamobile';
+			$jsExtensionPackages[] = 'wikiasearch_js_wikiamobile';
 			$scssPackages[] = 'wikiasearch_scss_wikiamobile';
 		}
 		return true;
