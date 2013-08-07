@@ -58,7 +58,7 @@ class GlobalHeaderController extends WikiaController {
 		if($isGameStarLogoEnabled) {
 			$this->response->addAsset('skins/oasis/css/modules/GameStarLogo.scss');
 		}
-		$this->response->setVal( 'altMessage', $this->wg->CityId % 5 == 1 ? '-alt' : '' );
+
 		$this->response->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
 	}
 
