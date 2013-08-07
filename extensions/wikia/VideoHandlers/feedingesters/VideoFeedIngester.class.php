@@ -44,6 +44,14 @@ abstract class VideoFeedIngester {
 	abstract public function import($content='', $params=array());
 
 	/**
+	 * Create a list of category names to add to the new file page
+	 * @param array $data - Video data
+	 * @param $addlCategories - Any additional categories to add
+	 * @return array - A list of category names
+	 */
+	abstract protected function generateCategories( $data, $addlCategories );
+
+	/**
 	 * Generate name for video.
 	 * Note: The name is not sanitized for use as filename or article title.
 	 * @param array $data video data
@@ -73,12 +81,14 @@ abstract class VideoFeedIngester {
 
 		$metadata = array(
 			'videoId'        => $data['videoId'],
+			'altVideoId'     => isset( $data['altVideoId'] ) ? $data['altVideoId'] : '',
 			'hd'             => isset( $data['hd'] ) ? $data['hd'] : 0,
 			'duration'       => isset( $data['duration'] ) ? $data['duration'] : '',
 			'published'      => isset( $data['published'] ) ? $data['published'] : '',
 			'thumbnail'      => isset( $data['thumbnail'] ) ? $data['thumbnail'] : '',
 			'description'    => isset( $data['description'] ) ? $data['description'] : '',
 			'name'           => isset( $data['name'] ) ? $data['name'] : '',
+			'type'           => isset( $data['type'] ) ? $data['type'] : '',
 			'category'       => isset( $data['category'] ) ? $data['category'] : '',
 			'keywords'       => isset( $data['keywords'] ) ? $data['keywords'] : '',
 			'industryRating' => isset( $data['industryRating'] ) ? $data['industryRating'] : '',
@@ -87,7 +97,6 @@ abstract class VideoFeedIngester {
 			'provider'       => isset( $data['provider'] ) ? $data['provider'] : '',
 			'language'       => isset( $data['language'] ) ? $data['language'] : '',
 			'subtitle'       => isset( $data['subtitle'] ) ? $data['subtitle'] : '',
-			'type'           => isset( $data['type'] ) ? $data['type'] : '',
 			'genres'         => isset( $data['genres'] ) ? $data['genres'] : '',
 			'actors'         => isset( $data['actors'] ) ? $data['actors'] : '',
 			'targetCountry'  => isset( $data['targetCountry'] ) ? $data['targetCountry'] : '',
@@ -98,7 +107,6 @@ abstract class VideoFeedIngester {
 			'resolution'     => isset( $data['resolution'] ) ? $data['resolution'] : '',
 			'aspectRatio'    => isset( $data['aspectRatio'] ) ? $data['aspectRatio'] : '',
 			'expirationDate' => isset( $data['expirationDate'] ) ? $data['expirationDate'] : '',
-			'pageCategories' => isset( $data['pageCategories'] ) ? $data['pageCategories'] : '',
 		);
 
 		return $metadata;
@@ -171,6 +179,7 @@ abstract class VideoFeedIngester {
 				print ":: $line\n";
 			}
 		}
+		$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
 
 		$id = $data['videoId'];
 		$name = $this->generateName($data);
@@ -226,16 +235,18 @@ abstract class VideoFeedIngester {
 			return 0;
 		}
 
+		// create category names to add to the new file page
+		$categories = $this->generateCategories( $data, $addlCategories );
+
 		// create remote asset (ooyala)
 		if ( $remoteAsset ) {
+			$metadata['pageCategories'] = implode( ', ', $categories );
 			$result = $this->createRemoteAsset( $id, $name, $metadata, $debug );
 			wfProfileOut( __METHOD__ );
 			return $result;
 		}
 
 		// prepare wiki categories string (eg [[Category:MyCategory]] )
-		$categories = empty( $data['pageCategories'] ) ? array() : explode( ',', $data['pageCategories'] );
-		array_map( 'trim', $categories );
 		$categories[] = wfMessage( 'videohandler-category' )->inContentLanguage()->text();
 		$categories = array_unique( $categories );
 		$categoryStr = '';
@@ -817,14 +828,14 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
-	 * unique array and convert to string
+	 * get unique array (case insensitive)
 	 * @param array $arr
-	 * @return string
+	 * @return array $unique
 	 */
-	public function uniqueArrayToString( $arr ) {
+	public function getUniqueArray( $arr ) {
 		$lower = array_map( 'strtolower', $arr );
 		$unique = array_intersect_key( $arr, array_unique( $lower ) );
-		return implode( ', ', $unique );
+		return $unique;
 	}
 
 }

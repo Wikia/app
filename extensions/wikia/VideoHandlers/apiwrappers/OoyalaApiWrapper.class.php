@@ -210,6 +210,9 @@ class OoyalaApiWrapper extends ApiWrapper {
 		if ( !isset($overrideFields['playerId']) ) {
 			$overrideFields['playerId'] = $this->getVideoPlayerId();
 		}
+		if ( !isset( $overrideFields['pageCategories'] ) ) {
+			$overrideFields['pageCategories'] = $this->getPageCategories();
+		}
 
 		parent::loadMetadata( $overrideFields );
 	}
@@ -343,15 +346,15 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	protected function isAgeGate() {
-		if ( !empty($this->metadata['ageGate']) ) {
-			return $this->metadata['ageGate'];
+		if ( !empty( $this->metadata['ageGate'] ) ) {
+			return true;
 		}
 
 		if ( !empty($this->interfaceObj['metadata']['agegate']) ) {
-			return 1;
+			return true;
 		}
 
-		return 0;
+		return false;
 	}
 
 	/**
@@ -533,6 +536,22 @@ class OoyalaApiWrapper extends ApiWrapper {
 
 		if ( !empty( $this->interfaceObj['metadata']['episode'] ) ) {
 			return $this->interfaceObj['metadata']['episode'];
+		}
+
+		return '';
+	}
+
+	/**
+	 * get page categories
+	 * @return string
+	 */
+	protected function getPageCategories() {
+		if ( !empty( $this->metadata['pageCategories'] ) ) {
+			return $this->metadata['pageCategories'];
+		}
+
+		if ( !empty( $this->interfaceObj['metadata']['pagecategories'] ) ) {
+			return $this->interfaceObj['metadata']['pagecategories'];
 		}
 
 		return '';

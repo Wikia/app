@@ -214,6 +214,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 				} else if ( !empty( $program['GameWarning']['Warning'] ) ) {
 					$clipData['industryRating'] = $this->getIndustryRating( $program['GameWarning']['Warning'] );
 				}
+
 				$clipData['ageRequired'] = $this->getAgeRequired( $clipData['industryRating'] );
 				$clipData['ageGate'] = empty( $clipData['ageRequired'] ) ? 0 : 1;
 
@@ -313,14 +314,13 @@ class IvaFeedIngester extends VideoFeedIngester {
 					$clipData['name'] = empty( $videoParams['keyword'] ) ? '' : $videoParams['keyword'];
 
 					// get keywords
-					$keywords = empty( $videoParams['keyword'] ) ? array() : array( $videoParams['keyword'] );
+					$keywords = empty( $clipData['name'] ) ? array() : array( $clipData['name'] );
 					$keywords[] = $clipData['series'];
 					$keywords[] = $clipData['category'];
-					$keywords[] = $clipData['tags'];
-					$clipData['keywords'] = $this->uniqueArrayToString( $keywords );
-
-					// get page categories
-					$clipData['pageCategories'] = $this->generatePageCategories( $clipData, $createParams['addlCategories'] );
+					if ( !empty( $clipData['tags'] ) ) {
+						$keywords[] = $clipData['tags'];
+					}
+					$clipData['keywords'] = implode( ', ', $this->getUniqueArray( $keywords ) );
 
 					$msg = '';
 					$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
@@ -450,12 +450,14 @@ class IvaFeedIngester extends VideoFeedIngester {
 	}
 
 	/**
-	 * generate page categories
+	 * Create a list of category names to add to the new file page
 	 * @param array $data
 	 * @param array $categories
-	 * @return string $categories
+	 * @return array $categories
 	 */
-	public function generatePageCategories( $data, $categories = array() ) {
+	protected function generateCategories( $data, $categories ) {
+		wfProfileIn( __METHOD__ );
+
 		$categories[] = 'IVA';
 		$categories[] = $data['name'];
 		$categories[] = $data['series'];
@@ -465,7 +467,9 @@ class IvaFeedIngester extends VideoFeedIngester {
 			$categories[] = 'International';
 		}
 
-		return $this->uniqueArrayToString( $categories );
+		wfProfileOut( __METHOD__ );
+
+		return $this->getUniqueArray( $categories );
 	}
 
 	/**
