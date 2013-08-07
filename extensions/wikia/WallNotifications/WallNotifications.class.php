@@ -31,7 +31,11 @@ class WallNotifications {
 		wfProfileIn(__METHOD__);
 
 		$memcSync = $this->getCache($userId, $wikiId);
+		// this list is multi-dimensional array with two elements "notification" and "relation"
+		// the first is a one-dimension array with list of *probably* article ids
+		// the second one is multi-dimensional array with more details of the notification but still not instances of WallNotificationEntity
 		$list = $this->getData($memcSync, $userId, $wikiId);
+
 		if(empty($list)) {
 			wfProfileOut(__METHOD__);
 			return array();
@@ -833,10 +837,10 @@ class WallNotifications {
 	protected function getData($cache, $userId, $wiki) {
 		$val = $cache->get();
 
-		if(empty($val) && !is_array($val)) {
+		if( empty($val) && !is_array($val) ) {
 			$val = $this->rebuildData($userId, $wiki);
 
-			// this normally would be unnessesery (after all everything should be
+			// this normally would be unnecessary (after all everything should be
 			// already removed from DB if we are just recreating our structures)
 			// however because this "cleaning" functionality was added later it's
 			// possible that we will find data to remove in rebuild process
