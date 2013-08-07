@@ -49,7 +49,9 @@
 					<select name="rank">
 						<option value="default" <? if($form['sort_default']){ ?>selected<? } ?>><?= wfMessage('wikiasearch2-sort-relevancy') ?></option>
 						<option value="newest" <? if($form['sort_newest']){ ?>selected<? } ?>><?= wfMessage('wikiasearch2-sort-publish-date') ?></option>
-						<option value="longest" <? if($form['sort_longest']){ ?>selected<? } ?>><?= wfMessage('wikiasearch2-sort-duration') ?></option>
+						<? if ( isset($form['is_video']) && $form['is_video']==true ) { ?>
+							<option value="longest" <? if($form['sort_longest']){ ?>selected<? } ?>><?= wfMessage('wikiasearch2-sort-duration') ?></option>
+						<? } ?>
 					</select>
 
 				</div>
