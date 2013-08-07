@@ -7,7 +7,7 @@ define ('config', ['editor'], function(editor){
         maxItems = 20,
         warning = wrapper.getElementsByClassName('warning')[0],
         onChange,
-        activeTags = [];
+        activeTags = {};
 
     var tags = {
         bold : "''_$''",

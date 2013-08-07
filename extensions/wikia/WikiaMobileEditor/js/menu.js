@@ -1,15 +1,17 @@
 define('menu', ['editor', 'config'], function(editor, config){
 
-    var menuLeft = document.getElementById('menuLeft'),
-        menuRight = document.getElementById('menuRight'),
+    var menuLeft = {},
+        menuRight = {};
+        menuLeft.wrapper = document.getElementById('menuLeft'),
+        menuRight.wrapper = document.getElementById('menuRight'),
         lastTouchX = 0,
         lastTouchY = 0;
-        menuLeft.master = menuLeft.getElementsByClassName('master')[0];
-        menuRight.master = menuRight.getElementsByClassName('master')[0];
-        menuLeft.primary = menuLeft.getElementsByClassName('primary')[0];
-        menuRight.primary = menuRight.getElementsByClassName('primary')[0];
-        menuLeft.secondary = menuLeft.getElementsByClassName('secondary')[0];
-        menuRight.secondary = menuRight.getElementsByClassName('secondary')[0];
+        menuLeft.master = menuLeft.wrapper.getElementsByClassName('master')[0];
+        menuRight.master = menuRight.wrapper.getElementsByClassName('master')[0];
+        menuLeft.primary = menuLeft.wrapper.getElementsByClassName('primary')[0];
+        menuRight.primary = menuRight.wrapper.getElementsByClassName('primary')[0];
+        menuLeft.secondary = menuLeft.wrapper.getElementsByClassName('secondary')[0];
+        menuRight.secondary = menuRight.wrapper.getElementsByClassName('secondary')[0];
         menuLeft.primary.expanded =
         menuLeft.secondary.expanded =
         menuRight.primary.expanded =
@@ -26,45 +28,39 @@ define('menu', ['editor', 'config'], function(editor, config){
         attachTags(activeTags);
     });
 
-    function updateButton (li, tag, key){
+    function updateButton (li, tag, tagTitle){
         li.setAttribute('data-tag', tag);
-        li.getElementsByTagName('p')[0].innerText = key;
+        li.getElementsByTagName('p')[0].innerText = tagTitle;
+    }
+
+    function findLi(index){
+        var prmLeft = menuLeft.primary.elements.length,
+            prmRight = menuRight.primary.elements.length,
+            secLeft = menuLeft.secondary.elements.length,
+            secRight = menuRight.secondary.elements.length;
+        if(!(index+1) || index >= prmLeft + prmRight + secLeft + secRight) return false;
+        if(index < prmLeft) return menuLeft.primary.elements[index];
+        index -= prmLeft;
+        if(index < prmRight) return menuRight.primary.elements[index];
+        index -= prmRight;
+        if(index < secLeft) return menuLeft.secondary.elements[index];
+        index -= secLeft;
+        return menuRight.secondary.elements[index];
     }
 
     function attachTags(tags){
-        var prmLft = menuLeft.primary.elements.length,
-            prmRgt = menuRight.primary.elements.length,
-            scdLft = menuLeft.secondary.elements.length,
-            scdRgt = menuRight.secondary.elements.length,
-            i = 0;
+        var i = 0, currentLi;
         for(var key in tags){
-            if(tags.hasOwnProperty(key)){
-                if(i < prmLft){
-                    updateButton(menuLeft.primary.elements[i], tags[key], key);
-                    i++;
-                }
-                else{
-                    if(i - prmLft < scdLft){
-                        updateButton(menuRight.primary.elements[i - prmLft], tags[key], key);
-                        i++;
-                    }
-                    else{
-                        if(i - prmLft - scdLft < prmRgt){
-                            updateButton(menuLeft.secondary.elements[i - prmLft - scdLft], tags[key], key);
-                            i++;
-                        }
-                        else{
-                            updateButton(menuRight.secondary.elements[i - prmLft - scdLft - prmRgt], tags[key], key);
-                            i++;
-                        }
-                    }
-                }
+            currentLi = findLi(i);
+            if(tags.hasOwnProperty(key) && currentLi){
+                updateButton(currentLi, tags[key], key);
+                i++;
             }
         }
     }
 
     function switchButtons(primary, secondary){
-        var menu = primary.parentElement == menuLeft ? menuLeft : menuRight;
+        var menu = menuRef(primary.parentElement);
         if(primary.expanded == 'fold' && secondary.expanded == 'fold'){
             drawMenu(primary.elements, menu);
             return;
@@ -85,17 +81,17 @@ define('menu', ['editor', 'config'], function(editor, config){
         window.addEventListener('scroll', function(){
             boundTop = editor.editArea.getBoundingClientRect().top + window.scrollY + editor.editArea.offsetHeight;
             if(window.scrollY > boundTop - document.documentElement.clientHeight/* && menuLeft.classList.contains('fixedPos')*/){
-                menuLeft.classList.add('absolutePos');
-                menuRight.classList.add('absolutePos');
-                menuLeft.classList.remove('fixedPos');
-                menuRight.classList.remove('fixedPos');
+                menuLeft.wrapper.classList.add('absolutePos');
+                menuRight.wrapper.classList.add('absolutePos');
+                menuLeft.wrapper.classList.remove('fixedPos');
+                menuRight.wrapper.classList.remove('fixedPos');
                 return;
             }
-            if(window.scrollY < boundTop - document.documentElement.clientHeight && menuLeft.classList.contains('absolutePos')){
-                menuLeft.classList.remove('absolutePos');
-                menuRight.classList.remove('absolutePos');
-                menuLeft.classList.add('fixedPos');
-                menuRight.classList.add('fixedPos');
+            if(window.scrollY < boundTop - document.documentElement.clientHeight && menuLeft.wrapper.classList.contains('absolutePos')){
+                menuLeft.wrapper.classList.remove('absolutePos');
+                menuRight.wrapper.classList.remove('absolutePos');
+                menuLeft.wrapper.classList.add('fixedPos');
+                menuRight.wrapper.classList.add('fixedPos');
                 return;
             }
         });
@@ -167,14 +163,14 @@ define('menu', ['editor', 'config'], function(editor, config){
                     height = event.changedTouches[0].pageY - lastTouchY,
                     diagonal = Math.sqrt(width*width + height*height);
                 if(diagonal > menu.radius){
-                    afterSwipe(event.srcElement.parentElement, event.changedTouches[0].pageX, event.changedTouches[0].pageY);
+                    afterSwipe(menuRef(event.srcElement.parentElement), event.changedTouches[0].pageX, event.changedTouches[0].pageY);
                 }
             }
         });
         window.addEventListener('touchend', function(){
             if(event.srcElement.classList.contains('master')){
                 event.preventDefault();
-                menu = event.srcElement.parentElement; //wrapper menu
+                menu = menuRef(event.srcElement.parentElement); //wrapper menu
                 if(menu.primary.expanded == 'expanded'){
                     foldMenu(menu.primary.elements, menu);
                 }
@@ -207,14 +203,22 @@ define('menu', ['editor', 'config'], function(editor, config){
             editor.insertTags(expElements[touchArea-1].getAttribute('data-tag'))
         }
 
-        menu.removeEventListener('touchmove');
+        menu.wrapper.removeEventListener('touchmove');
         foldMenu(menu.primary.elements, menu);
         foldMenu(menu.secondary.elements, menu);
     }
 
+    function expanded(menu){
+        if(menu.primary.expanded) return menu.primary;
+        if(menu.secondary.expanded) return menu.secondary;
+        return false;
+    }
+
+    function menuRef(wrapper){
+        return wrapper.id == 'menuLeft' ? menuLeft : menuRight;
+    }
+
     function afterTouchStart(menu, changedTouches){
-        //wait for touchend, if it comes faster than 100ms (assumption) don't show the menu
-        //check if the second menu expanded - if yes, switch it
         if(menu === menuLeft){
             if(menuRight.primary.expanded == 'expanded'){
                 switchButtons(menuRight.primary, menuRight.secondary);
@@ -255,7 +259,7 @@ define('menu', ['editor', 'config'], function(editor, config){
         masters.forEach(function(master){
             master.addEventListener('touchstart', function(event){
                 event.preventDefault();
-                afterTouchStart(master.parentElement, event.changedTouches);
+                afterTouchStart(menuRef(master.parentElement), event.changedTouches);
             });
         })
     }

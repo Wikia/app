@@ -106,7 +106,7 @@ autoWatch = true;
 
 // Start these browsers, to run tests:
 browsers = [
-	'PhantomJS',
+	//'PhantomJS',
 	//'Chrome',
 	//'ChromeCanary',
 	//'Firefox',

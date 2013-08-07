@@ -51,8 +51,10 @@ class WikiaMobileEditor {
 	 *
 	 * @return true
 	 */
-	public function onOutputPageBeforeHTML( &$out, &$text ) {
-		return true;
-	}
+    public static function onAlternateEdit( $editpage ) {
+        echo('Witam Cotam');
+        var_dump($editpage);
+        return false;
+    }
 
 }

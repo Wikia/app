@@ -11,28 +11,28 @@ $dir = dirname(__FILE__) . '/';
 /**
  * classes
  */
-$wgAutoloadClasses['HelloWorld'] =  $dir . 'WikiaMobileEditor.class.php';
+$wgAutoloadClasses['WikiaMobileEditor'] =  $dir . 'WikiaMobileEditor.class.php';
 
 /**
  * hooks
  */
-//$wgHooks['OutputPageBeforeHTML'][] = 'HelloWorld::onOutputPageBeforeHTML';
+$wgHooks['AlternateEdit'][] = 'WikiaMobileEditor::onAlternateEdit';
 
 /**
  * controllers
  */
-$wgAutoloadClasses['HelloWorldController'] =  $dir . 'HelloWorldController.class.php';
-$wgAutoloadClasses['HelloWorldSpecialController'] =  $dir . 'HelloWorldSpecialController.class.php';
+//$wgAutoloadClasses['HelloWorldController'] =  $dir . 'HelloWorldController.class.php';
+//$wgAutoloadClasses['HelloWorldSpecialController'] =  $dir . 'HelloWorldSpecialController.class.php';
 
 /**
  * special pages
  */
-$wgSpecialPages['HelloWorld'] = 'HelloWorldSpecialController';
+//$wgSpecialPages['HelloWorld'] = 'HelloWorldSpecialController';
 
 /**
  * message files
  */
-$wgExtensionMessagesFiles['HelloWorld'] = $dir . 'WikiaMobileEditor.i18n.php';
+$wgExtensionMessagesFiles['WikiaMobileEditor'] = $dir . 'WikiaMobileEditor.i18n.php';
 
 /**
  * setup functions
