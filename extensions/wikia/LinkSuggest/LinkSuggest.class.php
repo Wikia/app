@@ -171,8 +171,7 @@ class LinkSuggest {
 						LEFT JOIN redirect ON page_is_redirect = 1 AND page_id = rd_from
 						LEFT JOIN querycache ON qc_title = page_title
 						WHERE {$pageNamespaceClause} (page_title LIKE '{$query}%' or LOWER(page_title) LIKE '{$queryLower}%')
-						GROUP BY page_id
-						HAVING (group_concat(qc_type) NOT LIKE ('%BrokenRedirects%'))
+							AND ( qc_type != 'BrokenRedirects' OR qc_type IS NULL )
 						LIMIT ".($wgLinkSuggestLimit * 3);
 
 			$res = $db->query($sql, __METHOD__);
