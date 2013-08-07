@@ -9,11 +9,7 @@
 class WikiFeaturesHelper extends WikiaModel {
 
 	protected static $instance = NULL;
-	protected $fogbugzService = NULL;
 
-	const FOGBUGZ_PROJECT_ID = 24;  // This is the "Product Feedback" Project ID in Fogbugz
-	const FOGBUGZ_CASE_TITLE = 'WikiFeatures Feedback - Project: ';
-	const FOGBUGZ_CASE_TAG = 'WikiFeaturesFeedback';
 	const FEEDBACK_FREQUENCY = 60;
 
 	/**
@@ -193,31 +189,18 @@ class WikiFeaturesHelper extends WikiaModel {
 	}
 
 
-	public function getFogbugzService() {
-		if( $this->fogbugzService == null ) {
-			$this->fogbugzService = new FogbugzService(
-						$this->wg->fogbugzAPIConfig['apiUrl'],
-						$this->wg->fogbugzAPIConfig['username'],
-						$this->wg->fogbugzAPIConfig['password'],
-						$this->app->getGlobal( 'wgHTTPProxy' )
-			);
-		}
-		return $this->fogbugzService;
-	}
-
-
 	/**
 	 * Helper that actually sends the feedback to a specified e-mail address
 	 *
 	 * @param string $feature name of the feature
 	 * @param string $message feedback message
 	 * @param User $user user object
-	 * @param integer $feedbackCat feedback category which is defined above in $feedbackCategories property (equals piority in FogBugz: 4-7)
+	 * @param integer $feedbackCat feedback category which is defined above in $feedbackCategories property
 	 */
 	public function sendFeedback( $feature, $user, $message, $category, $priority = 5 ) {
 
 		$areaId = self::$feedbackAreaIDs[$feature];
-		$title = self::FOGBUGZ_CASE_TITLE . $feature .' - '.self::$feedbackCategories[$category]['title'];
+		$title = $feature .' - '.self::$feedbackCategories[$category]['title'];
 
 		$message = <<<MSG
 User name: {$user->getName()}
