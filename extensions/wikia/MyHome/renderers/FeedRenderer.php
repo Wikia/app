@@ -702,12 +702,6 @@ class FeedRenderer {
 		$namespace = NS_FILE;
 
 		foreach ( $row[$key] as $item ) {
-			// Empty span for styling IE. Ugly, but offers an image size independent
-			// solution for centering thumbnails within their container.
-			$thumb = '<!--[if lt IE 8]><span></span><![endif]-->';
-
-			//$thumb .= substr($item['html'], 0, -2) . '/>';
-			$thumb .= $item['html'];
 
 			// localised title for popup
 			$popupTitle = $wg->Lang->getNsText($namespace) . ':' . $item['name'];
@@ -730,13 +724,13 @@ class FeedRenderer {
 				$attribs['href'] = $title->getLocalUrl();
 			}
 
+			$thumb = $item['html'];
 			// Only wrap the line in an anchor if it doesn't already include one
 			if ( preg_match('/<a[^>]+href/', $thumb) ) {
-				$item_html = '<li>%s</li>';
+				$thumbs[] = "<li>$thumb</li>";
 			} else {
-				$item_html = '<li><a data-image-link href="'.$title->getLocalUrl().'">%s</a></li>';
+				$thumbs[] = "<li><a data-image-link href=\"{$title->getLocalUrl()}\">$thumb</a></li>";
 			}
-			$thumbs[] = sprintf($item_html, $thumb);
 		}
 
 		// render thumbs
