@@ -32,7 +32,7 @@ class Track {
 			'ip='.$ip.$sep.
 			'a='.(is_object($wgArticle) ? $wgArticle->getID() : null).$sep.
 			's='.RequestContext::getMain()->getSkin()->getSkinName().
-			($wgTitle && !is_object($wgArticle) ? $sep.'pg='.urlencode($wgTitle->getPrefixedDBkey()) : '').
+			(is_object($wgTitle) ? $sep.'pg='.urlencode($wgTitle->getPrefixedDBkey()) : '').
 			($wgTitle ? $sep.'n='.$wgTitle->getNamespace() : '').
 			(!empty($wgAdServerTest) ? $sep.'db_test=1' : '');
 
@@ -50,7 +50,7 @@ class Track {
 		global $wgDevelEnvironment, $wgJsMimeType;
 
 		// Fake beacon and varnishTime values for development environment
-		if ( !empty( $wgDevelEnvironment ) ) {
+		if ( empty( $wgDevelEnvironment ) ) {
 			$script = '<script>var beacon_id = "ThisIsFake", varnishTime = "' . date( "r" ) . '";</script>';
 
 		} else {
