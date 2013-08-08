@@ -50,7 +50,7 @@ class Track {
 		global $wgDevelEnvironment, $wgJsMimeType;
 
 		// Fake beacon and varnishTime values for development environment
-		if ( empty( $wgDevelEnvironment ) ) {
+		if ( !empty( $wgDevelEnvironment ) ) {
 			$script = '<script>var beacon_id = "ThisIsFake", varnishTime = "' . date( "r" ) . '";</script>';
 
 		} else {
