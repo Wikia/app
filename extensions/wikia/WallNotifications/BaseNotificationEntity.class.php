@@ -49,10 +49,6 @@ class BaseNotificationEntity {
 		$wn->id = $id;
 		$wn->data = $wn->getCache()->get( $wn->getMemcKey() );
 
-		// TODO: remove line below after committing
-		$wn->data = null;
-		// TODO: remove line above before committing
-
 		if( empty( $wn->data ) ) {
 			$wn->recreateFromDB();
 		}
