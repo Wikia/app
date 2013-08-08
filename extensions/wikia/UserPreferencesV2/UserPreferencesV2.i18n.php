@@ -9,7 +9,8 @@ $messages['en'] = array(
 	'preferences-v2-password' => 'My password:',
 	'preferences-v2-oldsig' => 'Existing signature:',
 	'preferences-v2-nickname' => 'Custom signature:',
-	'preferences-v2-fancysig' => 'I want to use wikitext in my signature<br />[[Help:Signature|What are signatures?]]',
+	'preferences-v2-fancysig' => 'I want to use wikitext in my signature<br />[[{{ MediaWiki:preferences-v2-fancysig-help-page-name }} | What are signatures? ]]',
+	'preferences-v2-fancysig-help-page-name' => 'Help:Signature',
 	'prefs-appearance' => 'Appearance',
 	'preferences-v2-date' => 'Date format:',
 	'preferences-v2-time' => 'Time zone:',
@@ -64,4 +65,6 @@ $messages['en'] = array(
 
 $messages['qqq'] = array(
 	'preferences-v2-redirect-explanation' => '$1 is the URL of the site, e.g. www.wikia.com',
+	'preferences-v2-fancysig' => 'Message text for checkbox for enabling wikitext in signature. Includes localized message with link to Help:Signature (or equivalent). This link needs to be in the content language (language of the wiki) hence the MediaWiki namespace transclusion.',
+	'preferences-v2-fancysig-help-page-name' => 'The translated version of the namespace based on local wiki language: Help:Signature for wikis in English'
 );
