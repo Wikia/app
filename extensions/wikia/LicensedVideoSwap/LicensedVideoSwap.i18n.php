@@ -55,6 +55,7 @@ $messages['en'] = array(
 	'lvs-history-swapped' => 'Swapped "$1" with "$2"',
 	'lvs-history-swapped-exact' => 'Swapped "$1" with a video of the same name',
 	'lvs-history-kept' => 'Kept "$1"',
+	'lvs-histroy-instructions' => "To view the history for all swaps and undos, go to $1."
 );
 
 $messages['qqq'] = array(
@@ -106,4 +107,5 @@ $messages['qqq'] = array(
 	'lvs-history-swapped' => "Message shown on the LVS history page for a video that had been swapped for a premium video",
 	'lvs-history-swapped-exact' => "Message shown on the LVS history page when the new video and the swapped video have exactly the same name",
 	'lvs-history-kept' => "Message shown on the LVS history page for a video that was kept as is and not swapped",
+	'lvs-histroy-instructions' => "This is informational text at the top of the LVS history page."
 );
