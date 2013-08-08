@@ -23,3 +23,12 @@ $wgHooks['EditPageLayoutModifyPreview'][] = 'JSSnippets::onEditPageLayoutModifyP
 $wgHooks['WikiaSkinTopScripts'][] = 'JSSnippets::onMakeGlobalVariablesScript';
 $wgHooks['SkinAfterBottomScripts'][] = 'JSSnippets::onSkinAfterBottomScripts';
 
+
+$wgExtensionFunctions[] = function () {
+	// This has to be wrapped in a function so it isn't run before we include GlobalSettings.php
+	JSMessages::registerPackage("ConfirmModal", array(
+		'ok',
+		'cancel'
+	));
+	JSMessages::enqueuePackage("ConfirmModal", JSMessages::EXTERNAL); // We need this to ensure the messages are loaded on every page
+};
