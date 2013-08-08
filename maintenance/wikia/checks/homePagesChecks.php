@@ -44,20 +44,20 @@ class CorporateHomePageTest {
 	/**
 	 * @var integer
 	 */
-	private $noChangeTreshold;
+	private $noChangeThreshold;
 
 	/**
 	 * @param $params array of options
 	 *
 	 * Valid options are:
-	 * noChangeTreshold (int) -> how many days of non-changed stat cause an error
+	 * noChangeThreshold (int) -> how many days of non-changed stat cause an error
 	 */
 	public function __construct( $params ) {
 		$this->baseDate = date( "Y-m-d" );
-		if ( ! empty( $params['noChangeTreshold'] ) ) {
-			$this->noChangeTreshold = $params['noChangeTreshold'];
+		if ( ! empty( $params['noChangeThreshold'] ) ) {
+			$this->noChangeThreshold = $params['noChangeThreshold'];
 		} else {
-			$this->noChangeTreshold = self::DEAULT_NO_CHANGE_TRESHOLD;
+			$this->noChangeThreshold = self::DEAULT_NO_CHANGE_TRESHOLD;
 		}
 		$this->dataStorage = new CorporateHomePageStatisticsStorage();
 		$cityVisualization = new CityVisualization();
@@ -81,9 +81,9 @@ class CorporateHomePageTest {
 		$datesToCheck = [ ];
 
 		/*
-		 * checking noChangeTreshold days total, which means we're counting baseDate too
+		 * checking noChangeThreshold days total, which means we're counting baseDate too
 		 */
-		for ( $i = 1; $i < $this->noChangeTreshold; $i ++ ) {
+		for ( $i = 1; $i < $this->noChangeThreshold; $i ++ ) {
 			$datesToCheck [] = date( "Y-m-d", strtotime( $this->baseDate . " -$i days" ) );
 		}
 
