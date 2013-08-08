@@ -2005,8 +2005,9 @@ class Wikia {
 		if ( $wgExternalAuthType ) {
 			$mExtUser = ExternalUser::newFromName( $user_name );
 			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
-				$mExtUser->linkToLocal( $mExtUser->getId() );
+				$mExtUser->linkToLocal( $mExtUser->getId() ); 
 				$s = $mExtUser->getLocalUser( $bUserObject );
+error_log ( __METHOD__ . ": s = " . print_r( $s, true ) . " \n", 3, "/tmp/moli.log" );
 			}
 		}
 
@@ -2025,6 +2026,7 @@ class Wikia {
 			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
 				$mExtUser->linkToLocal( $mExtUser->getId() );
 				$s = $mExtUser->getLocalUser( false );
+error_log ( __METHOD__ . ": s = " . print_r( $s, true ) . " \n", 3, "/tmp/moli.log" );
 			}
 		}
 
