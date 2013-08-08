@@ -78,11 +78,12 @@ $edit-box-color: mix($color-page, #000, 95%);
 		.edit-summary {
 			border: 1px solid $color-page-border;
 			@include border-radius(4px);
+			@include box-sizing();
 			clear: both;
 			margin: 5px 0;
 			padding: 5px;
 			resize: none;
-			width: 290px;
+			width: 100%;
 		}
 
 		#minorEdit {
@@ -219,7 +220,7 @@ $edit-box-color: mix($color-page, #000, 95%);
 }
 
 @if ( $responsive-layout-enabled ) {
-	@media screen and (max-width: 1023px) {
+	@media screen and (max-width: $width-outside) {
 		.css-editor,
 		.css-side-bar {
 			float: none;
@@ -231,6 +232,10 @@ $edit-box-color: mix($color-page, #000, 95%);
 			.edit-summary {
 				display: block;
 			}
+		}
+
+		.css-edit-box {
+			margin-top: 10px;
 		}
 	}
 }
