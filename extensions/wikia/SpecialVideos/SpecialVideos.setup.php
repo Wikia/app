@@ -24,9 +24,7 @@ $wgSpecialPages[ 'Videos' ] =  'SpecialVideosSpecialController';
 
 JSMessages::registerPackage('SpecialVideos', array(
 	'specialvideos-remove-modal-title',
-	'specialvideos-remove-modal-message',
-	'ok',
-	'cancel'
+	'specialvideos-remove-modal-message'
 ));
 
 $wgGroupPermissions['*']['specialvideosdelete'] = false;
