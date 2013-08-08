@@ -4,10 +4,10 @@
  * Class VideoFileUploader
  */
 class VideoFileUploader {
-	
+
 	protected static $ILLEGAL_TITLE_CHARS = array( '/', ':', '#' );
 	protected static $IMAGE_NAME_MAX_LENGTH = 255;
-	
+
 	const SANITIZE_MODE_FILENAME = 1;
 	const SANITIZE_MODE_ARTICLETITLE = 2;
 
@@ -20,7 +20,7 @@ class VideoFileUploader {
 	protected $sProvider;
 	protected $oApiWrapper;
 
-	public function setTargetTitle( $sTitle ) {			
+	public function setTargetTitle( $sTitle ) {
 		$this->sTargetTitle = $sTitle;
 	}
 	public function setDescription( $sDescription )          { $this->sDescription = $sDescription; }
@@ -169,7 +169,7 @@ class VideoFileUploader {
 
 		/* ingestion video won't be able to load anything so we need to spoon feed it the correct data */
 		if ( $this->getApiWrapper()->isIngestion() ) {
-			$meta = $this->getApiWrapper()->getNonemptyMetadata();
+			$meta = $this->getApiWrapper()->getMetadata();
 			$file->forceMetadata( serialize($meta) );
 		}
 
@@ -190,28 +190,28 @@ class VideoFileUploader {
 	protected function adjustThumbnailToVideoRatio( $upload ) {
 
 		wfProfileIn( __METHOD__ );
-		
+
 		$sTmpPath = $upload->getTempPath();
-		
+
 		$props = getimagesize( $sTmpPath );
 		$orgWidth = $props[0];
 		$orgHeight = $props[1];
 		$finalWidth = $props[0];
 		$finalHeight = $finalWidth / $this->getApiWrapper()->getAspectRatio();
-		
+
 		if ( $orgHeight == $finalHeight ) {
 			// no need to resize, we're lucky :)
 			wfProfileOut( __METHOD__ );
 			return;
 		}
-		
+
 		$data = file_get_contents( $sTmpPath );
 		$src = imagecreatefromstring( $data );
 
 		$dest = imagecreatetruecolor ( $finalWidth, $finalHeight );
 		imagecopy( $dest, $src, 0, 0, 0, ( $orgHeight - $finalHeight ) / 2 , $finalWidth, $finalHeight );
 
-		
+
 		switch ( $props[2] ) {
 			case 2:	imagejpeg( $dest, $sTmpPath ); break;
 			case 1:	imagegif ( $dest, $sTmpPath ); break;
@@ -220,7 +220,7 @@ class VideoFileUploader {
 		imagedestroy( $src );
 		imagedestroy( $dest );
 		wfProfileOut( __METHOD__ );
-		
+
 	}
 
 	protected function getApiWrapper( ) {
@@ -280,7 +280,7 @@ class VideoFileUploader {
 
 		return $this->sDescription;
 	}
-	
+
 	/**
 	 * gets wiki text for the "Videos" category. For example, on English
 	 * wikis: [[Category:Videos]]. i18n-compatible
@@ -290,7 +290,7 @@ class VideoFileUploader {
 		$cat = F::app()->wg->ContLang->getFormattedNsText( NS_CATEGORY );
 		return '[[' . $cat . ':' . wfMessage( 'videohandler-category' )->inContentLanguage()->text() . ']]';
 	}
-	
+
 	public function getVideoId( ) {
 		wfProfileIn( __METHOD__ );
 		if ( empty( $this->sVideoId ) ) {
@@ -346,7 +346,7 @@ class VideoFileUploader {
 	 * @param boolean $undercover upload a video without creating the associated article
 	 * @param array $overrideMetadata one or more metadata fields that override API response
 	 * @return FileRepoStatus On success, the value member contains the
-	 *     archive name, or an empty string if it was a new file. 
+	 *     archive name, or an empty string if it was a new file.
 	 */
 	public static function uploadVideo( $provider, $videoId, &$title, $description=null, $undercover=false, $overrideMetadata=array() ) {
 
@@ -400,18 +400,18 @@ class VideoFileUploader {
 	 * Sanitize text for use as filename and article title
 	 * @param string $titleText title to sanitize
 	 * @param string $replaceChar character to replace illegal characters with
-	 * @return string sanitized title 
+	 * @return string sanitized title
 	 */
 	public static function sanitizeTitle( $titleText, $replaceChar=' ' ) {
 
 		wfProfileIn( __METHOD__ );
-		
+
 		foreach ( self::$ILLEGAL_TITLE_CHARS as $illegalChar ) {
 			$titleText = str_replace( $illegalChar, $replaceChar, $titleText );
 		}
-		
+
 		$titleText = preg_replace(Title::getTitleInvalidRegex(), $replaceChar, $titleText);
-		
+
 		// remove multiple spaces
 		$aTitle = explode( $replaceChar, $titleText );
 		$sTitle = implode( $replaceChar, array_filter( $aTitle ) );    // array_filter() removes null elements
@@ -421,22 +421,22 @@ class VideoFileUploader {
 		wfProfileOut( __METHOD__ );
 
 		return trim($sTitle);
-		
+
 		/*
 		// remove all characters that are not alphanumeric.
 		$sanitized = preg_replace( '/[^[:alnum:]]{1,}/', $replaceChar, $titleText );
-		
+
 		return $sanitized;
 		*/
 	}
-	
+
 	public static function hasForbiddenCharacters( $text ) {
 		foreach ( self::$ILLEGAL_TITLE_CHARS as $illegalChar ) {
 			if ( strpos($text, $illegalChar) !== FALSE ) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 }
