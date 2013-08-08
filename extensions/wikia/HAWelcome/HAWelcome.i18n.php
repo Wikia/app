@@ -1058,6 +1058,7 @@ Jika anda memerlukan bantuan, sila baca [[Help:Contents|halaman bantuan]] kami t
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
+ * @author Laaknor
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -1118,6 +1119,7 @@ Vennligst legg igjen en beskjed hvis jeg kan hjelpe deg med noe!",
 '''[[Special:Userlogin|Vennligst logg inn og opprett et brukernavn]]'''. Det er en enkel måte å holde oversikt over bidragene dine og hjelper deg med å kommunisere med resten av fellesskapet.
 
 Vennligst legg igjen en beskjed hvis jeg kan hjelpe deg med noe!", # Fuzzy
+	'welcome-description' => 'Sender en velkomstbeskjed til brukere etter deres første redigering',
 );
 
 /** Dutch (Nederlands)
@@ -1922,6 +1924,7 @@ Xin vui lòng để lại tin nhắn cho tôi nếu bạn cần sự trợ giúp
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Liuxinyu970226
  */
 $messages['zh-hans'] = array(
 	'welcome-user-page' => "==关于我==
@@ -1937,6 +1940,15 @@ $messages['zh-hans'] = array(
 * 在此为您喜爱的页面添加链接！
 * 喜爱的页面 #2
 * 喜爱的页面 #3",
+	'welcome-message-user' => '嗨，欢迎来到{{SITENAME}}！ 感谢您对[[:$1]]页面的编辑。
+
+请在[[$2|我的讨论页]]处留言，如果我能帮助您什么事情的话！$3',
+	'welcome-message-anon' => "您好，欢迎来到{{SITENAME}} ！感谢您编辑[[:$1]]页面。
+
+'''[[Special:Userlogin|请登录并定义一个用户名]]'''。
+这是很容易的方法来跟踪您的贡献和帮助您与社会其他成员进行沟通。
+
+请在[[$2|我的讨论页]]留言如果可以帮忙！$3",
 	'welcome-message-log' => '欢迎新贡献者',
 	'welcome-message-wall-user' => '嗨，欢迎来到{{SITENAME}}！ 感谢您协助编辑[[:$1]]页。
 

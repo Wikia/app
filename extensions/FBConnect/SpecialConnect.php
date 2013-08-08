@@ -464,7 +464,7 @@ class SpecialConnect extends SpecialPage {
 			// This must be done up here so that the data is in the database before copy-to-local is done for sharded setups.
 			FBConnectDB::addFacebookID($user, $fb_id);
 
-			wfRunHooks( 'AddNewAccount', array( $user ) );
+			wfRunHooks( 'AddNewAccount', array( $user, false ) );
 
 			// Mark that the user is a Facebook user
 			$user->addGroup('fb-user');
@@ -635,7 +635,7 @@ class SpecialConnect extends SpecialPage {
 			}
 			++$i;
 		}
-		return $prefix;
+		return $this->userNamePrefix;
 	}
 
 	/**
@@ -804,7 +804,7 @@ class SpecialConnect extends SpecialPage {
 			$wgOut->readOnlyPage();
 			return false;
 		} elseif ( $wgUser->isBlockedFromCreateAccount() ) {
-			LoginForm::userBlockedMessage(); //this is not an explicitly static method but doesn't use $this and can be called like static (fixes RT#75589)
+			LoginForm::userBlockedMessage($wgUser->getBlock()); //this is not an explicitly static method but doesn't use $this and can be called like static (fixes RT#75589)
 			return false;
 		} elseif ( count( $permErrors = $titleObj->getUserPermissionsErrors( 'createaccount', $wgUser, true ) )>0 ) {
 			$wgOut->showPermissionsErrorPage( $permErrors, 'createaccount' );
@@ -935,7 +935,7 @@ class SpecialConnect extends SpecialPage {
 
 		$fb = new FBConnectAPI();
 
-		$user = $fb->verifyAccountReclamation( $sRequest );
+		$user = $fb->verifyAccountReclamation();
 
 		if (!($user === false)) {
 			$result = FBConnect::coreDisconnectFromFB($user);

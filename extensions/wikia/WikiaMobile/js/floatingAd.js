@@ -2,7 +2,7 @@ window.addEventListener('load', function(){
 	'use strict';
 
 	if(!Wikia.AbTest || ['E', undefined].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS")) != -1){
-		require(['ads', 'wikia.window'], function (ads, window) {
+		require(['ads', 'wikia.window', 'wikia.utils'], function (ads, window, $) {
 			var wrapper = document.getElementById('wkFloatingAd'),
 				wrapperStyle = wrapper.style,
 				positionfixed = window.Features.positionfixed,
@@ -49,7 +49,7 @@ window.addEventListener('load', function(){
 					}
 
 					$.addClass(wrapper, classes);
-					$.addClass(ftr, ['ads']);
+					$.addClass(ftr || window.document.body, ['ads']);
 				}
 			}
 
@@ -72,12 +72,12 @@ window.addEventListener('load', function(){
 					}
 
 					$.removeClass(wrapper, classes);
-					$.removeClass(ftr, ['ads']);
+					$.removeClass(ftr || window.document.body, ['ads']);
 				}
 			}
 
 			ads.setupSlot({
-				name: 'MOBILE_TOP_LEADERBOARD',
+				name: 'MOBILE_FLOATING_FOOTER',
 				size: '320x50',
 				wrapper: wrapper,
 				init: function(){

@@ -631,11 +631,11 @@ $messages['ps'] = array(
 $messages['pt'] = array(
 	'dump-database' => 'Cópias da base de dados em ficheiro',
 	'dump-database-info' => 'Cópias da base de dados em ficheiro podem ser usadas como cópia de segurança pessoal (a Wikia produz automaticamente cópias de segurança separadas, de todas as wikis) ou por robôs de manutenção',
-	'dump-database-curr-pages' => 'páginas actuais',
+	'dump-database-curr-pages' => 'Páginas atuais',
 	'dump-database-curr-pages-info' => '(Normalmente, esta versão é melhor para uso por robôs)',
 	'dump-database-full-pages' => 'Páginas atuais e histórico',
 	'dump-database-full-pages-info' => '(Aviso: este ficheiro pode ser muito grande)',
-	'dump-database-request' => 'Pedir uma actualização',
+	'dump-database-request' => 'Pedir uma atualização',
 	'dump-database-request-info' => '(Normalmente as cópias em ficheiro são geradas semanalmente)',
 	'dump-database-request-submit' => 'Enviar pedido',
 	'dump-database-request-already-submitted' => 'Foi solicitada recentemente uma cópia para ficheiro (há menos de 7 dias)',
@@ -674,10 +674,18 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'dump-database' => "Dump d'u database",
+	'dump-database-info' => "Le dump d'u database ponne essere ausate cumme 'na copie personale (Uicchia face copie separate de tutte le uicchi automaticamende) o pe bot de manutenzione",
 	'dump-database-curr-pages' => 'Pàggene de mò',
+	'dump-database-curr-pages-info' => "(Sta versione se ause megghie pe l'ause de le bot)",
 	'dump-database-full-pages' => 'Pàggene de mò e cunde lore',
+	'dump-database-full-pages-info' => '(Attenziò: stu file pò essere granne assaije)',
 	'dump-database-request' => "Cirche 'n'aggiornamende",
+	'dump-database-request-info' => '(Le dump se fanne normalmende ogne sumane)',
 	'dump-database-request-submit' => "Manne 'a richieste",
+	'dump-database-request-already-submitted' => "'U dump ha state cercate recendemende (mene de 7 sciurne fa)",
+	'dump-database-request-requested' => "Richieste pu dump d'u database mannate",
+	'dump-database-info-more' => 'Pe piacere <a href="http://community.wikia.com/wiki/Help:Database_download">\'ndruche</a> pe cchiù \'mbormaziune',
 );
 
 /** Russian (русский)

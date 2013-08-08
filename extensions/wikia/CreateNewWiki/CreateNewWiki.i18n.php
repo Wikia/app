@@ -1347,6 +1347,7 @@ $messages['km'] = array(
 /** Korean (한국어)
  * @author Wrightbus
  * @author 아라
+ * @author 한글화담당
  */
 $messages['ko'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|위키 만들기 마법사]]',
@@ -1375,7 +1376,7 @@ $messages['ko'] = array(
 	'cnw-desc-headline' => '어떤 위키를 만들겠습니까?',
 	'cnw-desc-creative' => '주제에 대한 설명',
 	'cnw-desc-tip1' => '힌트',
-	'cnw-desc-tip2' => '약간의 보충',
+	'cnw-desc-tip2' => '잠깐',
 	'cnw-desc-tip3' => '전문 팁',
 	'cnw-desc-choose' => '분류를 선택하세요',
 	'cnw-desc-select-one' => '1개 선택',
@@ -1509,6 +1510,8 @@ $messages['mk'] = array(
 	'cnw-desc-tip3-creative' => 'Соопштете им на луѓето дека можат да уредуваат страници на викито и така да помогнат во неговиот развој',
 	'cnw-desc-choose' => 'Одберете категорија',
 	'cnw-desc-select-one' => 'Одберете една категорија',
+	'cnw-desc-all-ages' => 'Сите возрасти',
+	'cnw-desc-tip-all-ages' => 'Дали викито е на тема што ги интересира децата? Законите на САД ни налагаат да водиме евиденција за темите од непосреден интерес за деца на возраст до 12 години.',
 	'cnw-desc-default-lang' => 'Викито ќе биде на $1',
 	'cnw-desc-change-lang' => 'измени',
 	'cnw-desc-lang' => 'Јазик',
@@ -1634,6 +1637,7 @@ $messages['ms'] = array(
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
+ * @author Laaknor
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -1663,7 +1667,7 @@ $messages['nb'] = array(
 	'cnw-userauth-headline' => 'Har du en konto?',
 	'cnw-userauth-creative' => 'Logg inn',
 	'cnw-userauth-marketing-heading' => 'Har du ikke en konto?',
-	'cnw-userauth-marketing-body' => 'Du trenger en konto for å opprette en wiki hos Wikia. Det tar bare et minutt å registrere deg!', # Fuzzy
+	'cnw-userauth-marketing-body' => 'Du trenger en konto for å opprette en wiki hos Wikia. Det tar bare et minutt å registrere deg!',
 	'cnw-userauth-signup-button' => 'Registrer deg',
 	'cnw-desc-headline' => 'Hva handler wikien din om?',
 	'cnw-desc-creative' => 'Beskriv emnet ditt',
@@ -1676,6 +1680,7 @@ $messages['nb'] = array(
 	'cnw-desc-tip3-creative' => 'La folk få vite at de kan hjelpe wikien din med å vokse ved å redigere og legge til sider',
 	'cnw-desc-choose' => 'Velg kategori',
 	'cnw-desc-select-one' => 'Velg en',
+	'cnw-desc-all-ages' => 'Alle aldere',
 	'cnw-desc-default-lang' => 'Wikien din vil være på $1',
 	'cnw-desc-change-lang' => 'endre',
 	'cnw-desc-lang' => 'Språk',
@@ -1687,8 +1692,8 @@ $messages['nb'] = array(
 	'cnw-welcome-instruction1' => 'Trykk på knappen under for å begynne å legge til siden på wikien din.',
 	'cnw-welcome-instruction2' => 'Du vil se denne knappen på wikien din, bruk den når du vil legge til en ny side.',
 	'cnw-welcome-help' => 'Finn svar, råd, og mer på <a href="http://community.wikia.com">Community Central</a>.',
-	'cnw-error-general' => 'Noe gikk galt under opprettning av wikien din. Vennligst prøv igjen senere.', # Fuzzy
-	'cnw-error-general-heading' => 'Opprett ny wiki-feil', # Fuzzy
+	'cnw-error-general' => 'Noe gikk galt under opprettning av wikien din. Vennligst prøv igjen, eller <a href="/Special:Contact">kontakt oss</a> for hjelp.',
+	'cnw-error-general-heading' => 'Våre unnskyldninger',
 	'cnw-badword-header' => 'Hei der',
 	'cnw-badword-msg' => 'Hei, vennligst unngå å bruke disse grove eller forbudte ordene i beskrivelsen av wikien: $1',
 	'cnw-error-wiki-limit-header' => 'Wikigrense nådd',

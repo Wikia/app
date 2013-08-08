@@ -1,5 +1,6 @@
-@import "skins/oasis/css/core/color.scss";
-@import "skins/oasis/css/mixins/clearfix.scss";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/layout";
+@import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/box-sizing";
@@ -212,4 +213,19 @@ $edit-box-color: mix($color-page, #000, 95%);
 	}
 }
 
+@if ( $responsive-layout-enabled ) {
+	@media screen and (max-width: 1023px) {
+		.css-editor,
+		.css-side-bar {
+			float: none;
+			width: auto;
+		}
 
+		.css-side-bar {
+			.editSummary,
+			.edit-summary {
+				display: block;
+			}
+		}
+	}
+}

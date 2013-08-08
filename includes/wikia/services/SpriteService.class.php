@@ -101,6 +101,9 @@
 					}
 				}
 			}
+			if ( count($list) == 0 ) {
+				die("No images found in $path \n");
+			}
 			return $list;
 		}
 

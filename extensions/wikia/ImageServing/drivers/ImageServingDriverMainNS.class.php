@@ -2,7 +2,6 @@
 class ImageServingDriverMainNS extends ImageServingDriverBase {
 	protected $queryLimit = 50;
 	protected $maxCount = 10;
-	protected $minSize = 75;
 
 	function __construct($db, $imageServing, $proportion) {
 		parent::__construct( $db, $imageServing, $proportion );
@@ -68,6 +67,8 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 			$batch = array_slice( $imageNames, $i, 100 );
 			$i += 100;
 			$sql = array();
+			# FIXME
+			# select il_to, count(*) from imagelinks where il_to IN(..., ...) group by il_to;
 			foreach ( $batch as $imageName ) {
 				$sql[] = "(select il_to from {$imageLinksTable} where il_to = {$this->db->addQuotes($imageName)} limit {$sqlCount} )";
 			}
@@ -123,10 +124,10 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 					'img_name' => array_keys($imageRefs),
 				),
 				__METHOD__
-
 			);
+
 			foreach ($result as $row) {
-				if ( $row->img_height > $this->minSize && $row->img_width > $this->minSize ) {
+				if ( $row->img_height >= $this->minHeight && $row->img_width >= $this->minWidth ) {
 					if ( !in_array( $row->img_minor_mime, array( "svg+xml","svg") ) ) {
 						$imageData[$row->img_name] = $row;
 					}

@@ -330,16 +330,17 @@ $messages['diq'] = array(
 /** Greek (Ελληνικά)
  * @author Crazymadlover
  * @author Glavkos
+ * @author Nikosguard
  */
 $messages['el'] = array(
 	'categoryselect-button-add' => 'Προσθήκη κατηγορίας',
 	'categoryselect-button-cancel' => 'Ακύρωση',
 	'categoryselect-button-save' => 'Αποθήκευση',
-	'categoryselect-category-add' => 'Προσθήκη μιας κατηγορίας', # Fuzzy
-	'categoryselect-category-edit' => 'Επιλογές κατηγορίας', # Fuzzy
+	'categoryselect-category-add' => 'Προσθήκη κατηγορίας...',
+	'categoryselect-category-edit' => 'Επεξεργασία κατηγορίας',
 	'categoryselect-error-db-locked' => 'Η βάση δεδομένων είναι κλειδωμένη',
-	'categoryselect-modal-category-name' => 'Δώστε το όνομα της κατηγορίας:', # Fuzzy
-	'categoryselect-tooltip-add' => 'Πατήστε Enter όταν γίνει', # Fuzzy
+	'categoryselect-modal-category-name' => 'Δώστε όνομα στην κατηγορία:',
+	'categoryselect-tooltip-add' => 'Πιέστε το πλήκτρο Enter ή Return όταν γίνεται.',
 );
 
 /** British English (British English)

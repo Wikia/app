@@ -169,7 +169,9 @@ class LinkSuggest {
 			$sql = "SELECT page_len, page_id, page_title, rd_title, page_namespace, page_is_redirect
 						FROM page IGNORE INDEX (`name_title`)
 						LEFT JOIN redirect ON page_is_redirect = 1 AND page_id = rd_from
+						LEFT JOIN querycache ON qc_title = page_title
 						WHERE {$pageNamespaceClause} (page_title LIKE '{$query}%' or LOWER(page_title) LIKE '{$queryLower}%')
+							AND ( qc_type != 'BrokenRedirects' OR qc_type IS NULL )
 						LIMIT ".($wgLinkSuggestLimit * 3);
 
 			$res = $db->query($sql, __METHOD__);
@@ -232,6 +234,9 @@ class LinkSuggest {
 			}
 		}
 
+		// Overwrite canonical title with redirect title for all formats
+		self::replaceResultIfRedirected($results, $redirects);
+
 		$format = $request->getText('format');
 
 		if ($format == 'json') {
@@ -243,13 +248,9 @@ class LinkSuggest {
 				$out = json_encode(array('query' => $request->getText('query'), 'suggestions' => $result_values, 'redirects' => $redirects));
 			}
 		} elseif ($format == 'array') {
-			self::replaceResultIfRedirected($results, $redirects);
 			$out = $results;
 		} else {
 			// legacy: LinkSuggest.js uses plain text
-			// Overwrite canonical title with redirect title
-			self::replaceResultIfRedirected($results, $redirects);
-
 			$out = implode("\n", $results);
 		}
 
@@ -290,9 +291,9 @@ class LinkSuggest {
 	 */
 
 	static private function replaceResultIfRedirected(&$results, &$redirects) {
-		for($i = 0; $i < count($results); $i++) {
-			if (isset($redirects[$results[$i]])) {
-				$results[$i] = $redirects[$results[$i]];
+		foreach($results as &$val){
+			if (isset($redirects[$val])) {
+				$val = $redirects[$val];
 			}
 		}
 	}
@@ -334,7 +335,7 @@ class LinkSuggest {
 
 				$redirTitleFormatted = self::formatTitle($row->page_namespace, $row->rd_title);
 
-				if (!in_array($redirTitleFormatted, $results)) {
+				if ( !in_array( $redirTitleFormatted, $results ) ) {
 
 					$results[] = $redirTitleFormatted;
 					$redirects[$redirTitleFormatted] = $titleFormatted;

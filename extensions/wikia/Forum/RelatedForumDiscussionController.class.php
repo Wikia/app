@@ -89,7 +89,7 @@ class RelatedForumDiscussionController extends WikiaController {
 
 		foreach($ids as $id) {
 			$key = wfMemcKey( __CLASS__, 'getData', $id );
-			WikiaDataAccess::cacheWithLockPurge($key);
+			WikiaDataAccess::cachePurge($key);
 			$requestsParams[] = array('articleId' => $id);
 		}
 
@@ -98,7 +98,7 @@ class RelatedForumDiscussionController extends WikiaController {
 
 	private function getData($id) {
 		$key = wfMemcKey( __CLASS__, 'getData', $id );
-		return WikiaDataAccess::cacheWithLock( $key, 24*60*60, function() use ($id) {
+		return WikiaDataAccess::cache( $key, 24*60*60, function() use ($id) {
 			$wlp = new WallRelatedPages();
 			$messages = $wlp->getArticlesRelatedMessgesSnippet($id, 2, 2 );
 			return $messages;

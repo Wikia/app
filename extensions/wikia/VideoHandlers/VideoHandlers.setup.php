@@ -101,6 +101,7 @@ $wgHooks['BeforePageDisplay'][] = 'VideoHandlerHooks::onBeforePageDisplay';
 $wgHooks['LinkerMakeThumbLink2FileOriginalSize'][] = 'VideoHandlerHooks::onLinkerMakeThumbLink2FileOriginalSize';
 $wgHooks['ParserAfterStrip'][] = 'VideoHandlerHooks::convertOldInterwikiToNewInterwiki';
 $wgHooks['File::checkExtensionCompatibilityResult'][] = 'VideoHandlerHooks::checkExtensionCompatibilityResult';
+$wgHooks['FindRedirectedFile'][] = 'VideoHandlerHooks::onFindRedirectedFile';
 
 $wgHooks['FileUpload'][] = 'VideoInfoHooksHelper::onFileUpload';
 $wgHooks['ArticleSaveComplete'][] = 'VideoInfoHooksHelper::onArticleSaveComplete';
@@ -111,8 +112,9 @@ $wgHooks['AddPremiumVideo'][] = 'VideoInfoHooksHelper::onAddPremiumVideo';
 $wgHooks['ArticleDeleteComplete'][] = 'VideoInfoHooksHelper::onArticleDeleteComplete';
 $wgHooks['UndeleteComplete'][] = 'VideoInfoHooksHelper::onUndeleteComplete';
 $wgHooks['ForeignFileDeleted'][] = 'VideoInfoHooksHelper::onForeignFileDeleted';
+$wgHooks['RemovePremiumVideo'][] = 'VideoInfoHooksHelper::onRemovePremiumVideo';
 
-if(!empty($wgVideoHandlersVideosMigrated)) {
+if ( !empty($wgVideoHandlersVideosMigrated) ) {
 	$wgHooks['ParserFirstCallInit'][] = 'VideoHandlerHooks::initParserHook';
 }
 
@@ -250,17 +252,3 @@ $wgVideoMigrationProviderMap = array(
 	29 => 'Iva',
 	30 => 'Snappytv',
 );
-
-
-/*
- * After migration
- */
-if(!empty($wgVideoHandlersVideosMigrated)) {
-
-	/**
-	 * SpecialPages
-	 */
-	//$wgAutoloadClasses[ 'VideoHandlerSpecialController'] =  $dir . '/VideoHandlerSpecialController.class.php' ;
-	//$wgSpecialPages['VideoHandler'] = 'VideoHandlerSpecialController';
-
-}
