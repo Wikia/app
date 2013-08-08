@@ -80,6 +80,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->getContext()->getOutput()->setPageTitle( wfMessage('lvs-history-page-title')->text() );
 		$this->getContext()->getOutput()->setSubtitle( Wikia::link(SpecialPage::getTitleFor("LicensedVideoSwap"), wfMessage('lvs-page-header-back-link')->plain(), array('accesskey' => 'c'), array(), 'known') );
 
+		$this->recentChangesLink = Wikia::link( SpecialPage::getTitleFor( "RecentChanges" ) );
 		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/js/lvsHistoryPage.js' );
 		$helper = new LicensedVideoSwapHelper();
 		$this->videos = $helper->getUndoList( $this->getContext() );
