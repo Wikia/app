@@ -11,9 +11,7 @@
 	color: $color-header-text;
 	margin: 0 auto;
 	min-width: 1050px;
-	position: fixed;
-	top: 0;
-	width: 100%;
+	position: relative;
 	z-index: $zTop;
 	-webkit-font-smoothing: antialiased; // prevents text flickering when css transformations in progress
 	h1 {
@@ -68,6 +66,12 @@
 		position: relative;
 		width: $wikiaheader-width;
 	}
+}
+
+body.global-header-fixed-at-top .WikiaHeader {
+	position: fixed;
+	top: 0;
+	width: 100%;
 }
 
 .GlobalNavigation {
