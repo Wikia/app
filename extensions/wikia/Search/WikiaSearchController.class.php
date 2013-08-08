@@ -230,7 +230,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				$counter = 0;
 				foreach ( $pageData['items'] as $pageDatum ) {
 					$ids[] = $pageDatum['id'];
-					if ( $counter++ >= 2 ) {
+					if ( $counter++ >= 9 ) {
 						break;
 					}
 				}
@@ -247,11 +247,16 @@ class WikiaSearchController extends WikiaSpecialPageController {
 						if ( strpos( $trimAbstract, $trimTitle ) === 0 ) {
 							$item['abstract'] = substr( $trimAbstract, strlen( $trimTitle ) );
 						}
-						$pages[] = $item;
+						if ( !empty( $item[ 'abstract' ] ) ) {
+							$pages[] = $item;
+						}
 					}
 				}
 			} catch ( Exception $e ) { } // ignoring api errors for gracefulness
 		}
+		//limit number of results
+		$pages = array_slice( $pages, 0, 3 );
+
 		$this->setVal( 'category', $category );
 		$this->setVal( 'pages', $pages );
 		$this->setVal( 'result', $result );
