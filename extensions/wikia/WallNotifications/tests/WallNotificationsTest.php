@@ -48,13 +48,13 @@ class WallNotificationsTest extends WikiaBaseTest {
 		$notification = $this->getMock('WallNotificationEntity',array('isMain') );
 
 		$notification->data = new StdClass();
-		$notification->data_noncached = new StdClass();
+		$notification->data_non_cached = new StdClass();
 
 		$notification->data->wall_userid = '123';
 		$notification->data->msg_author_id = '567';
 		$notification->data->wall_username = 'LoremIpsum';
 		$notification->data->title_id = 555;
-		$notification->data_noncached->parent_title_dbkey = 'dbkey';
+		$notification->data_non_cached->parent_title_dbkey = 'dbkey';
 
 		$users = array('123'=>'123','234'=>'234');
 

@@ -291,10 +291,10 @@ class WallNotifications {
 	public function notifyEveryone($notification) {
 		$users = array();
 
-		if(empty($notification->data_noncached) || empty($notification->data_noncached->parent_title_dbkey)) {
+		if(empty($notification->data_non_cached) || empty($notification->data_non_cached->parent_title_dbkey)) {
 			$title = "";
 		} else {
-			$title = $notification->data_noncached->parent_title_dbkey;
+			$title = $notification->data_non_cached->parent_title_dbkey;
 		}
 
 		if(!empty($notification->data->article_title_ns)) {
@@ -342,7 +342,7 @@ class WallNotifications {
 	protected function sendEmails($watchers, $notification) {
 		$watchersOut = array();
 
-		$text = strip_tags($notification->data_noncached->msg_text, '<p><br>');
+		$text = strip_tags($notification->data_non_cached->msg_text, '<p><br>');
 		$text = substr($text,0,3000).( strlen($text) > 3000 ? '...':'');
 
 		$textNoHtml = preg_replace('#<br\s*/?>#i', "\n", $text);
