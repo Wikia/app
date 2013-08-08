@@ -47,9 +47,6 @@ class WallNotificationEntity {
 
 		$wn->id = $id;
 		$wn->data = $wn->getCache()->get( $wn->getMemcKey() );
-
-		$wn->data = null;
-
 		if( empty( $wn->data ) ) {
 			$wn->recreateFromDB();
 		}
