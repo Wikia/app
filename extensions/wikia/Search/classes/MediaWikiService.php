@@ -494,7 +494,7 @@ class MediaWikiService
 			if ( isset( $wikiId ) ) {
 				$wiki = $this->getWikiFromWikiId( $wikiId );
 				//exclude wikis which lang does not match current one, and wikis that are closed
-				if ( (! empty( $wiki ) ) && ( $wiki->city_public == 1 ) && isset( $wikiId ) && $langCode === $wiki->city_lang ) {
+				if ( (! empty( $wiki ) ) && ( $wiki->city_public == 1 ) && $langCode === $wiki->city_lang ) {
 					$match = new \Wikia\Search\Match\Wiki( $wikiId, $this );
 				}
 			}
