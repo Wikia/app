@@ -18,7 +18,9 @@
 		<?php foreach( $pages as $page ): ?>
 		<div class="category-article">
 			<div class="category-articles-thumb" data-pos="<?= $apos ?>">
+				<?php if ( !empty( $page['thumbnail'] ) ) : ?>
 				<a href="<?=$page['url']?>"><img src="<?=$page['thumbnail']?>" alt="<?=$page['title']?>"/></a>
+				<?php endif; ?>
 			</div>
 			<div class="category-articles-text" data-pos="<?= $apos++ ?>">
 				<b><a href="<?=$page['url']?>"><?=$page['title']?></a></b>
