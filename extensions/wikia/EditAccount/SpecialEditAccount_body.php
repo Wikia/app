@@ -38,7 +38,7 @@ class EditAccount extends SpecialPage {
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgOut, $wgUser, $wgRequest, $wgEnableUserLoginExt, $wgExternalAuthType;
+		global $wgOut, $wgUser, $wgRequest, $wgEnableUserLoginExt, $wgExternalAuthType, $wgTitle;
 
 		// Set page title and other stuff
 		$this->setHeaders();
@@ -140,7 +140,7 @@ class EditAccount extends SpecialPage {
 				$this->mStatusMsg = $this->mStatus ? wfMsg( 'editaccount-requested' ) : wfMsg( 'editaccount-not-requested' );
 				break;
 			case 'closeaccountconfirm':
-				$this->mStatus = $this->closeAccount( $changeReason );
+				$this->mStatus = $this->closeAccount( $changeReason, $this->mUser, $wgTitle, $this->mStatusMsg, $this->mStatusMsg2 );
 				$template = $this->mStatus ? 'selectuser' : 'displayuser';
 				break;
 			case 'clearunsub':
@@ -346,12 +346,12 @@ class EditAccount extends SpecialPage {
 	 * @param $changeReason String: reason for change
 	 * @return Boolean: true on success, false on failure
 	 */
-	public static function closeAccount( $changeReason = '', $user = '') {
+	public static function closeAccount( $changeReason = '', $user = '', $title, &$mStatusMsg = '', &$mStatusMsg2 = '' ) {
 		global $wgExternalAuthType;
 		# Set flag for Special:Contributions
 		# NOTE: requires FlagClosedAccounts.php to be included separately
 		if ( empty($user) ) {
-		 $user = $this->mUser;
+		 throw new Exception("User object is invalid.");
 		}
 		if ( defined( 'CLOSED_ACCOUNT_FLAG' ) ) {
 			$user->setRealName( CLOSED_ACCOUNT_FLAG );
@@ -366,7 +366,7 @@ class EditAccount extends SpecialPage {
 			if ( !$avatar->isDefault() ) {
 				if( !$avatar->removeFile( false ) ) {
 					# dont quit here, since the avatar is a non-critical part of closing, but flag for later
-					$this->mStatusMsg2 = wfMsgExt( 'editaccount-remove-avatar-fail' );
+					$mStatusMsg = wfMsgExt( 'editaccount-remove-avatar-fail' );
 				}
 			}
 		}
@@ -398,11 +398,6 @@ class EditAccount extends SpecialPage {
 
 			// Log what was done
 			$log = new LogPage( 'editaccnt' );
-			if ( isset( $this ) ) {
-			 $title = $wgTitle;
-			} else {
-			 $title = Title::newFromText('EditAccount', NS_SPECIAL);
-			}
 			$log->addEntry( 'closeaccnt', $title, $changeReason, array( $user->getUserPage() ) );
 
 			// delete the record from all the secondary clusters
@@ -411,24 +406,19 @@ class EditAccount extends SpecialPage {
 			}
 
 			// All clear!
-			$msg = wfMsg( 'editaccount-success-close', $user->mName );
 
-			if ( isset($this) ) {
-			 $this->mStatusMsg = $msg;
-			}
+			$mStatusMsg = wfMsg( 'editaccount-success-close', $user->mName );
+
 			return array(
 			 'status' => 'success',
-			 'message' => $msg
+			 'message' => $mStatusMsg
 			 );
 		} else {
 			// There were errors...inform the user about those
-			$msg = wfMsg( 'editaccount-error-close', $user->mName );
-			if ( isset($this) ) {
-			 $this->mStatusMsg = $msg;
-			}
+			$mStatusMsg = wfMsg( 'editaccount-error-close', $user->mName );
 			return array(
 			 'status' => 'fail',
-			 'message' => $msg
+			 'message' => $mStatusMsg
 			 );
 		}
 	}
