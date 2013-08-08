@@ -20,9 +20,7 @@ require([
 
 	LVSHistoryPage.prototype = {
 		init: function() {
-			this.bindListAnchors();
-		},
-		bindListAnchors: function() {
+			// bind click event on undo links
 			this.$el.on( 'click', '.undo-link', $.proxy( this.handleUndoClick, this ) );
 		},
 		undoSwap: function(url) {
