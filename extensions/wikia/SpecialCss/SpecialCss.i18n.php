@@ -25,26 +25,65 @@ $messages['en'] = [
 	'special-css-education-item-webinars-header' => 'Wikia CSS Webinar',
 	'special-css-education-item-webinars-link-title' => 'Wikia CSS Webinar',
 	'special-css-education-item-webinars-paragraph' => 'An introduction to using custom CSS on Wikia.',
+	'special-css-education-item-webinars-link-url' => 'http://community.wikia.com/wiki/File:Intro_to_CSS_%26_Your_Wiki_Webinar',
 	'special-css-education-item-help-header' => 'Help and FAQs',
 	'special-css-education-item-help-link-title' => 'Help and FAQs',
 	'special-css-education-item-help-paragraph' => 'Guides and best practices for using custom CSS.',
+	'special-css-education-item-help-link-url' => 'http://community.wikia.com/wiki/Help:CSS',
 	'special-css-education-item-com-center-header' => 'Got questions?',
 	'special-css-education-item-com-center-link-title' => 'Got questions?',
 	'special-css-education-item-com-center-paragraph' => 'Get CSS help from other Wikia users.',
+	'special-css-education-item-com-center-link-url' => 'http://community.wikia.com/wiki/Board:Support_Requests_-_Designing_Your_Wiki',
 
 	'special-css-leaveconfirm-message' => 'You have made some unpublished edits. Are you sure you want to leave without publishing them?',
 ];
 
 $messages['es'] = [
 	'special-css-community-update-headline' => 'Actualizaciones sobre CSS',
+	'special-css-education-item-webinars-header' => 'Seminario Virtual sobre CSS en Wikia',
+	'special-css-education-item-webinars-link-title' => 'Seminario Virtual sobre CSS en Wikia',
+	'special-css-education-item-webinars-paragraph' => 'Una introducción sobre el uso del CSS en Wikia.',
+	'special-css-education-item-webinars-link-url' => 'http://community.wikia.com/wiki/File:Intro_to_CSS_%26_Your_Wiki_Webinar',
+	'special-css-education-item-help-header' => 'Ayuda y preguntas frecuentes',
+	'special-css-education-item-help-link-title' => 'Ayuda y preguntas frecuentes',
+	'special-css-education-item-help-paragraph' => 'Guías y prácticas recomendadas para el uso de CSS personalizado.',
+	'special-css-education-item-help-link-url' => 'http://community.wikia.com/wiki/Help:CSS',
+	'special-css-education-item-com-center-header' => '¿Tienes preguntas?',
+	'special-css-education-item-com-center-link-title' => '¿Tienes preguntas?',
+	'special-css-education-item-com-center-paragraph' => 'Obtén ayuda con el CSS de otros miembros de Wikia.',
+	'special-css-education-item-com-center-link-url' => 'http://community.wikia.com/wiki/Board:Support_Requests_-_Designing_Your_Wiki',
 ];
 
 $messages['de'] = [
-	'special-css-community-update-headline' => 'Neuigkeiten zu CSS',
+	'special-css-community-update-headline' => 'Wikia CSS-Neuigkeiten',
+	'special-css-education-item-webinars-header' => 'Wikia CSS-Videos',
+	'special-css-education-item-webinars-link-title' => 'Wikia CSS-Videos',
+	'special-css-education-item-webinars-paragraph' => 'Hier erfährst du, wie du CSS auf Wikia nutzt (en).',
+	'special-css-education-item-webinars-link-url' => 'http://community.wikia.com/wiki/File:Intro_to_CSS_%26_Your_Wiki_Webinar',
+	'special-css-education-item-help-header' => 'Hilfe und FAQs',
+	'special-css-education-item-help-link-title' => 'Hilfe und FAQs',
+	'special-css-education-item-help-paragraph' => 'Anleitungen und Hinweise zur Nutzung von angepasstem CSS.',
+	'special-css-education-item-help-link-url' => 'http://de.community.wikia.com/wiki/Hilfe:CSS-Anpassungen',
+	'special-css-education-item-com-center-header' => 'Hast du Fragen?',
+	'special-css-education-item-com-center-link-title' => 'Hast du Fragen?',
+	'special-css-education-item-com-center-paragraph' => 'Erhalte Hilfe zu CSS-Anpassungen von anderen Wikia-Benutzern.',
+	'special-css-education-item-com-center-link-url' => 'http://de.community.wikia.com/wiki/Diskussionsforum:Wiki-Gestaltung',
 ];
 
 $messages['fr'] = [
-	'special-css-community-update-headline' => 'Informations liées au CSS',
+	'special-css-community-update-headline' => 'Informations Wikia liées au CSS',
+	'special-css-education-item-webinars-header' => 'Vidéos Wikia liées au CSS',
+	'special-css-education-item-webinars-link-title' => 'Vidéos Wikia liées au CSS',
+	'special-css-education-item-webinars-paragraph' => 'Une introduction à l\'utilisation du CSS personnalisé sur Wikia.',
+	'special-css-education-item-webinars-link-url' => 'http://community.wikia.com/wiki/File:Intro_to_CSS_%26_Your_Wiki_Webinar',
+	'special-css-education-item-help-header' => 'Aide et FAQs',
+	'special-css-education-item-help-link-title' => 'Aide et FAQs',
+	'special-css-education-item-help-paragraph' => 'Guides et bonnes pratiques pour utiliser le CSS personnalisé.',
+	'special-css-education-item-help-link-url' => 'http://community.wikia.com/wiki/Help:CSS',
+	'special-css-education-item-com-center-header' => 'Vous avez des questions ?',
+	'special-css-education-item-com-center-link-title' => 'Vous avez des questions ?',
+	'special-css-education-item-com-center-paragraph' => 'Obtenez de l\'aide sur le CSS d\'autres utilisateurs de Wikia.',
+	'special-css-education-item-com-center-link-url' => 'http://communaute.wikia.com/wiki/Sous-forum:Aide',
 ];
 
 $messages['it'] = [
