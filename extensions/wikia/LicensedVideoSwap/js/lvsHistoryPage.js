@@ -3,8 +3,8 @@
  * @author Kenneth Kouot <kenneth@wikia-inc.com>
  */
 require([
-		'jquery',
-		'lvs.commonajax'
+	'jquery',
+	'lvs.commonajax'
 ], function($, commonAjax) {
 
 	function LVSHistoryPage(opts) {
