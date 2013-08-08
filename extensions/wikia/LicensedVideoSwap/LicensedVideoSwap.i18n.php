@@ -85,6 +85,7 @@ $messages['qqq'] = array(
 	'lvs-error-permission' => 'This text appears if user does not have permission to swap the video.',
 	'lvs-error-invalid-page-status' => 'This text appears if the file is in invalid status',
 	'lvs-posted-in-label' => 'This is the label text that appears before a list of titles in which the video is posted.  Due to design constraints, it comes before the list, so if, when translated, it would otherwise come after the list, please do your best to adjust accordingly.  ex: "Current video posted in: title1, title2, title3."  It is up to you if you want to include a colon at the end.',
+	'lvs-posted-in-label-none' => 'Message shown above a video when it is not posted in any articles.',
 	'lvs-posted-in-more' => 'This is the text that is shown after a truncated list of titles in which a video is posted.  When hovered, a full list appears.  When clicked, the user is taken to a page where the full list is displayed.',
 	'lvs-confirm-swap-title' => 'This is the heading that is displayed in the confirm swap modal.',
 	'lvs-confirm-swap-message-same-title' => 'This message is shown in a modal when a user clicks a button to swap out an un-licensed video for a licensed video. It is a coonfirmation message.',
