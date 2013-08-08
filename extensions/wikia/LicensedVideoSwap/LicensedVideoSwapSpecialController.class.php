@@ -24,6 +24,11 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array videoList
 	 */
 	public function index() {
+		$user = $this->getUser();
+		if ( !$user->isAllowed( 'licensedvideoswap' ) ) {
+			$this->displayRestrictionError();
+			return false;
+		}
 
 		// Add assets
 		// TODO: move this to Assets Manager once we release this
