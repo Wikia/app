@@ -89,13 +89,15 @@ class ExternalUser_Wikia extends ExternalUser {
 		$User = null;
 		if ( !empty($this->mRow) ) {
 			$memkey = sprintf("extuser:%d:%s", $this->getId(), $wgDBcluster);
+error_log( __METHOD__ . ": memkey = $memkey \n", 3, "/tmp/moli.log" );
 			$user_touched = $wgMemc->get( $memkey );
+error_log( __METHOD__ . ": user_touched = $user_touched, getUserTouched = " . $this->getUserTouched() . " \n", 3, "/tmp/moli.log" );
 			if ( $user_touched != $this->getUserTouched() ) {
 				$_key = wfSharedMemcKey( "user_touched", $this->getId() );
 				wfDebug ( __METHOD__ . ": user touched is different on central and $wgDBcluster \n" );
 				wfDebug ( __METHOD__ . ": clear $_key \n" );
 				$wgMemc->set( $memkey, $this->getUserTouched() );
-				$wgMemc->set( $_key, false, 1 );
+				$wgMemc->delete( $_key );
 			} else {
 				$User = $this->getLocalUser();
 			}
@@ -260,8 +262,11 @@ class ExternalUser_Wikia extends ExternalUser {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
-		
+
+error_log( __METHOD__ . ": id = $id \n", 3, "/tmp/moli.log" );
+
 		if ( ( '' == $this->getToken() ) && ( '' == $this->getEmail() ) && ( ! $this->getEmailToken() ) ) {
+error_log( __METHOD__ . ": don't copy - token, email and emailtoken is empty \n", 3, "/tmp/moli.log" );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -272,6 +277,8 @@ class ExternalUser_Wikia extends ExternalUser {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
+
+error_log( __METHOD__ . ": copy to local cluster \n", 3, "/tmp/moli.log" );
 
 		if( !wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
 			$dbw = wfGetDB( DB_MASTER );
@@ -311,19 +318,7 @@ class ExternalUser_Wikia extends ExternalUser {
 		}
 
 		if ( $obj ) {
-			$uid = $this->getId();
-			wfDebug( __METHOD__ . ": get local user: $uid \n" );
-			$dbr = wfGetDb( DB_MASTER );
-			$row = $dbr->selectRow(
-				'user',
-				'*',
-				array( 'user_id' => $uid )
-			);
-			if ( $obj ) {
-				$res = $row ? User::newFromId( $uid ) : null;
-			} else {
-				$res = $row;
-			}
+			$res = User::newFromRow( $this->mRow );
 		} else {
 			$res = $this->mRow;
 		}

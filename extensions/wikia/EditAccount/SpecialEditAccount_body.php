@@ -90,8 +90,11 @@ class EditAccount extends SpecialPage {
 				$oUser = User::newFromName( $userName );
 				wfRunHooks( 'UserNameLoadFromId', array( $userName, &$oUser, true ) );
 
+				$id = 0;
 				$this->mUser = $oUser;
-				$id = $this->mUser->getId();
+				if ( !empty( $this->mUser ) ) {
+					$id = $this->mUser->getId();
+				}
 
 				if( empty($action) ) {
 					$action = 'displayuser';
@@ -350,6 +353,7 @@ class EditAccount extends SpecialPage {
 		global $wgExternalAuthType;
 		# Set flag for Special:Contributions
 		# NOTE: requires FlagClosedAccounts.php to be included separately
+		$id = $this->mUser->getId();
 		if ( defined( 'CLOSED_ACCOUNT_FLAG' ) ) {
 			$this->mUser->setRealName( CLOSED_ACCOUNT_FLAG );
 		} else {
@@ -369,6 +373,7 @@ class EditAccount extends SpecialPage {
 		}
 
 		# close account and invalidate cache + cluster data
+error_log( __METHOD__ . ": close account: " . print_r( $this->mUser, true ) . "\n",3, "/tmp/moli.log" );
 		Wikia::invalidateUser( $this->mUser, true, true );
 
 		if ( $this->mUser->getEmail() == ''  ) {

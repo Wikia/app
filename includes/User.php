@@ -297,6 +297,7 @@ class User {
 			# Object is expired, load from DB
 			$data = false;
 		}
+error_log( __METHOD__ . ": key = $key, data = " . print_r( $data, true ) . "\n", 3, "/tmp/moli.log" );
 
 		$isExpired = false;
 		if( !empty( $wgSharedDB ) ) {
@@ -309,7 +310,9 @@ class User {
 			if(!empty($data)) {
 				$_key = wfSharedMemcKey( "user_touched", $this->mId );
 				$_touched = $wgMemc->get( $_key );
+error_log( __METHOD__ . ": user_touched, key = $_key, _touched = $_touched, $_touched <= " . $data['mTouched'] . "\n", 3, "/tmp/moli.log" );
 				if( empty( $_touched ) ) {
+error_log( __METHOD__ . ": SET KEY $_key: " . $data['mTouched'] . "\n", 3, "/tmp/moli.log" );
 					$wgMemc->set( $_key, $data['mTouched'] );
 				} else if( $_touched <= $data['mTouched'] ) {
 					$isExpired = false;
@@ -320,6 +323,7 @@ class User {
 		if ( !$data || $isExpired ) { # Wikia
 			wfDebug( "User: cache miss for user {$this->mId}\n" );
 			# Load from DB
+error_log( __METHOD__ . ": User cache miss for {$this->mId} -> loadFromDatabase \n", 3, "/tmp/moli.log" );
 			if ( !$this->loadFromDatabase() ) {
 				# Can't load from ID, user is anonymous
 				return false;
@@ -1992,13 +1996,14 @@ class User {
 		$this->load();
 		if( $this->mId ) {
 			global $wgMemc, $wgSharedDB; # Wikia
+error_log( __METHOD__ . ": mId = " . $this->mId . "\n", 3, "/tmp/moli.log" );
 			$wgMemc->delete( wfMemcKey( 'user', 'id', $this->mId ) );
 			# not uncyclo
 			if( !empty( $wgSharedDB ) ) {
-				// sometimes after removing data from memcached, data still exists there!
-				// changed delete action to set with lower TTL
 				$memckey = wfSharedMemcKey( "user_touched", $this->mId );
-				$wgMemc->set( $memckey, false, 1 ); # Wikia
+error_log( __METHOD__ . ": set to false $memckey \n", 3, "/tmp/moli.log" );
+				$wgMemc->delete( $memckey );
+error_log( __METHOD__ . ": memkey = $memckey = " . $wgMemc->get( $memckey ) . " \n", 3, "/tmp/moli.log" );
 			}
 		}
 	}
@@ -2030,7 +2035,7 @@ class User {
 				array( 'user_touched' => $dbw->timestamp( $this->mTouched ) ),
 				array( 'user_id' => $this->mId ),
 				__METHOD__ );
-
+error_log( __METHOD__ . ": updated touched for {$this->mId}: {$this->mTouched} \n", 3, "/tmp/moli.log" );
 			$this->clearSharedCache();
 		}
 	}
