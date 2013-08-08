@@ -47,7 +47,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @var int
 	 */
 	const SNIPPET_SUBSTR = 50;
-	
+
 	/**
 	 * Responsible for instantiating query services based on config.
 	 * @var Wikia\Search\QueryService\Factory
@@ -198,7 +198,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$queryService = $this->queryServiceFactory->getFromConfig( $searchConfig );
 		if ( ( $minDuration = $this->getVal( 'minseconds' ) ) && ( $maxDuration = $this->getVal( 'maxseconds' ) ) ) {
 			$queryService->setMinDuration( $minDuration)->setMaxDuration( $maxDuration );
-		} 
+		}
 		$this->getResponse()->setFormat( 'json' );
 		$this->getResponse()->setData( $queryService->searchAsApi() );
 	}
@@ -440,7 +440,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $matchResult !== null ) {
 			$this->setVal(
 					'wikiMatch',
-					$this->getApp()->getView( 'WikiaSearch', 'CrossWiki_result', [ 'result' => $matchResult, 'pos' => -1 ] ) 
+					$this->getApp()->getView( 'WikiaSearch', 'CrossWiki_result', [ 'result' => $matchResult, 'pos' => -1 ] )
 					);
 			$this->resultsFound++;
 		}
