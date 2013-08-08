@@ -38,7 +38,7 @@ require([
 
 			this.undoSwap(url)
 				.success(function( data ) {
-					if ( data.result == "error" ) {
+					if ( data.result === "error" ) {
 						that.handleUndoFail( data.msg );
 					} else {
 						that.handleUndoSuccess( data.msg, target );
