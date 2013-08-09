@@ -26,13 +26,11 @@ class WikiaMobileService extends WikiaService {
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
-		$jsHeadPackages = [ 'wikiamobile_js_head' ];
 		$jsBodyPackages = [ 'wikiamobile_js_body_full' ];
 		$jsExtensionPackages = [];
 		$scssPackages = [ 'wikiamobile_scss' ];
 		$cssLinks = '';
 		$jsBodyFiles = '';
-		$jsHeadFiles = '';
 		$jsExtensionFiles = '';
 		$styles = $this->skin->getStyles();
 		$scripts = $this->skin->getScripts();
@@ -96,18 +94,12 @@ class WikiaMobileService extends WikiaService {
 			}
 		}
 
-		//We were able to push all JS to bottom of a page
-		//js class is used to style some element on a page therefore it is better to apply it as soon as possible
-		$jsHeadFiles .= '<script>document.documentElement.className += "js";</script>';
-
 		if ( is_array( $jsExtensionPackages ) ) {
 			//core JS in the head section, definitely safe
 			foreach ( $assetsManager->getURL( $jsExtensionPackages ) as $src ) {
 				$jsExtensionFiles .= "<script src='{$src}'></script>";
 			}
 		}
-
-
 
 		if ( is_array( $jsBodyPackages ) ) {
 			foreach ( $assetsManager->getURL( $jsBodyPackages ) as $s ) {
@@ -121,14 +113,14 @@ class WikiaMobileService extends WikiaService {
 		if ( is_array( $scripts ) ) {
 			foreach ( $scripts as $s ) {
 				//safe URLs as getScripts performs all the required checks
-				$jsBodyFiles .= "<script src=\"{$s['url']}\"></script>";
+				$jsBodyFiles .= "<script src='{$s['url']}'></script>";
 			}
 		}
 
 		//Add GameGuides SmartBanner promotion on Gaming Vertical
 		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner ) ) {
 			foreach ( $assetsManager->getURL( 'wikiamobile_smartbanner_init_js' ) as $src ) {
-				$jsBodyFiles .= "<script src=\"{$src}\"></script>";
+				$jsBodyFiles .= "<script src='{$src}'></script>";
 			}
 
 			$globalVariables['wgAppName'] = $this->wg->WikiaMobileSmartBannerConfig['name'];
@@ -137,7 +129,9 @@ class WikiaMobileService extends WikiaService {
 			$this->response->setVal( 'smartBannerConfig', $this->wg->WikiaMobileSmartBannerConfig );
 		}
 
-		$this->response->setVal( 'jsHeadFiles', $jsHeadFiles );
+		//We were able to push all JS to bottom of a page
+		//js class is used to style some element on a page therefore it is better to apply it as soon as possible
+		$this->response->setVal( 'jsClassScript', '<script>document.documentElement.className = "js";</script>' );
 		$this->response->setVal( 'jsExtensionPackages', $jsExtensionFiles );
 		$this->response->setVal( 'allowRobots', ( !$this->wg->DevelEnvironment ) );
 		$this->response->setVal( 'cssLinks', $cssLinks );
@@ -148,7 +142,7 @@ class WikiaMobileService extends WikiaService {
 		$this->response->setVal( 'languageDirection', $this->templateObject->get( 'dir' ) );
 		$this->response->setVal( 'headLinks', $this->wg->Out->getHeadLinks() );
 		$this->response->setVal( 'pageTitle', $this->wg->Out->getHTMLTitle() );
-		$this->response->setVal( 'bodyClasses', array( 'wkMobile', $this->templateObject->get( 'pageclass' ) ) );
+		$this->response->setVal( 'bodyClasses', [ 'wkMobile', $this->templateObject->get( 'pageclass' ) ] );
 		$this->response->setVal( 'jsBodyFiles', $jsBodyFiles );
 		$this->response->setVal( 'wikiaNavigation', $nav );
 		$this->response->setVal( 'pageContent', $pageContent );
