@@ -190,6 +190,9 @@ body > .global-notification,
 	@include box-sizing( border-box );
 	width: $width-outside;
 }
+.global-notification.float {
+	margin-left: -$width-outside / 2;
+}
 
 .WikiaArticle,
 .WikiaArticleFooter {
