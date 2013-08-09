@@ -90,7 +90,7 @@ class WallHistory extends WikiaModel {
 			$feed->data->title_id,
 			$feed->data->article_title_ns,
 			$feed->data->parent_id,
-			$feed->data_noncached->thread_title_full,
+			$feed->data_non_cached->thread_title_full,
 			$action,
 			$feed->data->reason,
 			$feed->data->rev_id

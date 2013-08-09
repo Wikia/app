@@ -40,15 +40,14 @@ class BaseNotificationEntity {
 	}
 
 	public static function getByWikiAndRevId( $revId, $wikiId ) {
-		return WallNotificationEntity::getById( $revId . '_' . $wikiId );
+		return static::getById( $revId . '_' . $wikiId );
 	}
 
 	public static function getById( $id ) {
-		$wn = new WallNotificationEntity();
+		$wn = new BaseNotificationEntity();
 
 		$wn->id = $id;
 		$wn->data = $wn->getCache()->get( $wn->getMemcKey() );
-
 		if( empty( $wn->data ) ) {
 			$wn->recreateFromDB();
 		}

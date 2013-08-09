@@ -9,47 +9,77 @@ class WallNotificationEntity extends NotificationEntityDecorator {
 		$this->notificationEntity = $notificationEntity;
 	}
 
+	public static function getById( $id ) {
+		$wn = new self( new BaseNotificationEntity() );
+
+		$wn->id = $id;
+		$wn->data = $wn->getCache()->get( $wn->getMemcKey() );
+		if( empty( $wn->data ) ) {
+			$wn->recreateFromDB();
+		}
+
+		if( empty( $wn->data ) ) {
+			return null;
+		}
+
+		return $wn;
+	}
+
+	public static function createFromRev( Revision $rev, $wikiId, $master = false ) {
+		$wn = new self( new BaseNotificationEntity() );
+
+		if( $wn->loadDataFromRev( $rev, $wikiId, $master ) ) {
+			$wn->save();
+		}
+
+		return $wn;
+	}
+
 	public function loadDataFromRev( Revision $rev, $wikiId, $master = false ) {
 		$result = $this->notificationEntity->loadDataFromRev( $rev, $wikiId, $master );
 
 		if( $result ) {
+			$this->id = $this->notificationEntity->id;
+			$this->data = $this->notificationEntity->data;
+			$this->data_non_cached = $this->notificationEntity->data_non_cached;
+
 			$ac = WallMessage::newFromTitle( $rev->getTitle() ); /* @var $ac WallMessage */
 			$ac->load();
 
 			$walluser = $ac->getWallOwner( $master );
 			if( empty( $walluser ) ) {
 				error_log( 'WALL_NO_OWNER: (entityId)' . $this->notificationEntity->id );
-				$this->notificationEntity->data = null;
-				$this->notificationEntity->data_non_cached = null;
+				$this->data = null;
+				$this->data_non_cached = null;
 
 				return false;
 			}
 
 			$wallTitle = $ac->getWallTitle();
-			$this->notificationEntity->data->parent_page_id = $wallTitle->getArticleId();
+			$this->data->parent_page_id = $wallTitle->getArticleId();
 			if( !empty($wallTitle) && $wallTitle->exists() ) {
-				$this->notificationEntity->data->article_title_ns = $wallTitle->getNamespace();
-				$this->notificationEntity->data->article_title_text = $wallTitle->getText();
-				$this->notificationEntity->data->article_title_dbkey = $wallTitle->getDBkey();
-				$this->notificationEntity->data->article_title_id = $wallTitle->getArticleId();
+				$this->data->article_title_ns = $wallTitle->getNamespace();
+				$this->data->article_title_text = $wallTitle->getText();
+				$this->data->article_title_dbkey = $wallTitle->getDBkey();
+				$this->data->article_title_id = $wallTitle->getArticleId();
 			}
 
-			$this->notificationEntity->data->wall_username = $walluser->getName();
-			$this->notificationEntity->data->wall_userid = $walluser->getId();
-			$this->notificationEntity->data->wall_displayname = $this->notificationEntity->data->wall_username;
-			$this->notificationEntity->data->wall_username = $walluser->getName();
-			$this->notificationEntity->data->wall_userid = $walluser->getId();
-			$this->notificationEntity->data->wall_displayname = $this->notificationEntity->data->wall_username;
+			$this->data->wall_username = $walluser->getName();
+			$this->data->wall_userid = $walluser->getId();
+			$this->data->wall_displayname = $this->data->wall_username;
+			$this->data->wall_username = $walluser->getName();
+			$this->data->wall_userid = $walluser->getId();
+			$this->data->wall_displayname = $this->data->wall_username;
 
 			/**
 			 * @var WallMessage $acParent
 			 */
 			$acParent = $ac->getTopParentObj();
-			$this->notificationEntity->data_non_cached->msg_text = $ac->getText();
-			$this->notificationEntity->data->notifyeveryone = $ac->getNotifyeveryone();
+			$this->data_non_cached->msg_text = $ac->getText();
+			$this->data->notifyeveryone = $ac->getNotifyeveryone();
 
 			if( $ac->isEdited() ) {
-				$this->notificationEntity->data->reason = $ac->getLastEditSummery();
+				$this->data->reason = $ac->getLastEditSummery();
 			}
 
 			if( !empty($acParent) ) {
@@ -57,34 +87,34 @@ class WallNotificationEntity extends NotificationEntityDecorator {
 				$parentUser = $acParent->getUser();
 
 				if( $parentUser instanceof User ) {
-					$this->notificationEntity->data->parent_username = $parentUser->getName();
+					$this->data->parent_username = $parentUser->getName();
 					if($parentUser->getId() > 0) {
-						$this->notificationEntity->data->parent_displayname = $this->notificationEntity->data->parent_username;
+						$this->data->parent_displayname = $this->data->parent_username;
 					} else {
-						$this->notificationEntity->data->parent_displayname = wfMsg('oasis-anon-user');
+						$this->data->parent_displayname = wfMsg('oasis-anon-user');
 					}
-					$this->notificationEntity->data->parent_user_id = $acParent->getUser()->getId();
+					$this->data->parent_user_id = $acParent->getUser()->getId();
 				} else {
 					// parent was deleted and somehow reply stays in the system
 					// the only way I've reproduced it was: I deleted a thread
 					// then I went to Special:Log/delete and restored only its reply
 					// an edge case but it needs to be handled
 					// --nAndy
-					$this->notificationEntity->data->parent_username = $this->notificationEntity->data->parent_displayname = wfMsg('oasis-anon-user');
-					$this->notificationEntity->data->parent_user_id = 0;
+					$this->data->parent_username = $this->data->parent_displayname = wfMsg('oasis-anon-user');
+					$this->data->parent_user_id = 0;
 				}
 				$title = $acParent->getTitle();
-				$this->notificationEntity->data_non_cached->thread_title_full = $acParent->getMetaTitle();
-				$this->notificationEntity->data->thread_title = $acParent->getMetaTitle();
-				$this->notificationEntity->data_non_cached->parent_title_dbkey = $title->getDBkey();
-				$this->notificationEntity->data->parent_id = $acParent->getId();
-				$this->notificationEntity->data->url = $ac->getMessagePageUrl();
+				$this->data_non_cached->thread_title_full = $acParent->getMetaTitle();
+				$this->data->thread_title = $acParent->getMetaTitle();
+				$this->data_non_cached->parent_title_dbkey = $title->getDBkey();
+				$this->data->parent_id = $acParent->getId();
+				$this->data->url = $ac->getMessagePageUrl();
 
 			} else {
-				$this->notificationEntity->data->url = $ac->getMessagePageUrl();
-				$this->notificationEntity->data->parent_username = $walluser->getName();
-				$this->notificationEntity->data_non_cached->thread_title_full = $ac->getMetaTitle();
-				$this->notificationEntity->data->thread_title = $ac->getMetaTitle();
+				$this->data->url = $ac->getMessagePageUrl();
+				$this->data->parent_username = $walluser->getName();
+				$this->data_non_cached->thread_title_full = $ac->getMetaTitle();
+				$this->data->thread_title = $ac->getMetaTitle();
 			}
 		}
 

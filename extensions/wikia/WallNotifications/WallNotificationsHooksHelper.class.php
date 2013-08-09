@@ -38,7 +38,7 @@ class WallNotificationsHooksHelper {
 	/**
 	 * @brief Add notification dropdown to right corner for monobook
 	 *
-	 * @return true
+	 * @return Boolean true
 	 *
 	 * @author Tomasz Odrobny
 	 * @author Piotrek Bablok
