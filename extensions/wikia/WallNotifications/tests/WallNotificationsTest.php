@@ -17,9 +17,9 @@ class WallNotificationsTest extends WikiaBaseTest {
 	}
 
 	public function testNotifyEveryoneForMainThread() {
-		$wn = $this->getMock('WallNotifications', array('sendEmails','addNotificationLinks'));
+		$wn = $this->getMock('WallNotifications', array('sendEmails','addNotificationLinks'), [], '', false);
 
-		$notification = $this->getMock('WallNotificationEntity',array('isMain') );
+		$notification = $this->getMock('WallNotificationEntity', array('isMain'), [], '', false );
 
 		$notification->data = new StdClass();
 
@@ -43,9 +43,9 @@ class WallNotificationsTest extends WikiaBaseTest {
 
 
 	public function testNotifyEveryoneForReply() {
-		$wn = $this->getMock('WallNotifications', array('sendEmails','addNotificationLinks','getWatchlist'));
+		$wn = $this->getMock('WallNotifications', array('sendEmails','addNotificationLinks','getWatchlist'), [], '', false);
 
-		$notification = $this->getMock('WallNotificationEntity',array('isMain') );
+		$notification = $this->getMock('WallNotificationEntity', array('isMain'), [], '', false );
 
 		$notification->data = new StdClass();
 		$notification->data_non_cached = new StdClass();
