@@ -61,7 +61,6 @@ class WAMApiController extends WikiaApiController {
 		$app = F::app();
 
 		$options = $this->getWAMParameters();
-
 		$wamIndex = WikiaDataAccess::cacheWithLock(
 			wfSharedMemcKey(
 				'wam_index_table',
@@ -72,7 +71,7 @@ class WAMApiController extends WikiaApiController {
 			6 * 60 * 60,
 			function () use ($options) {
 				$wamService = new WAMService();
-
+			
 				$wamIndex = $wamService->getWamIndex($options);
 
 				if ($options['fetchAdmins']) {
@@ -80,8 +79,10 @@ class WAMApiController extends WikiaApiController {
 						$wikiService = new WikiService();
 					}
 					foreach ($wamIndex['wam_index'] as &$row) {
-						$row['admins'] = $wikiService->getWikiAdmins($row['wiki_id'], $options['avatarSize'], self::DEFAULT_WIKI_ADMINS_LIMIT);
+						$row['admins'] = $wikiService->getWikiAdmins($row['wiki_id'], $options['avatarSize']);
+						$row['admins'] = $this->getMostActiveAdmins($row['admins'], $row['wiki_id']);
 						$row['admins'] = $this->prepareAdmins($row['admins'], self::DEFAULT_WIKI_ADMINS_LIMIT);
+						var_dump($row['admins']);
 					}
 				}
 				if ($options['fetchWikiImages']) {
@@ -97,7 +98,7 @@ class WAMApiController extends WikiaApiController {
 				}
 
 				return $wamIndex;
-			}
+			}, WikiaDataAccess::REFRESH_CACHE
 		);
 
 		$this->response->setVal('wam_index', $wamIndex['wam_index']);
@@ -204,5 +205,27 @@ class WAMApiController extends WikiaApiController {
 			$admins = array_slice( $admins, 0, $limit );
 		}
 		return $admins;
+	}
+
+	private function getMostActiveAdmins($admins, $wikiId) {
+		$edits = [];
+		foreach($admins as $key => &$admin) {
+			if (empty($admin['userId'])) {
+				unset($admins[$key]);
+				continue;
+			}
+			$adminEdit = DataMartService::getEventsByWikiId(2, '2013-07-23', '2013-08-09', $wikiId, $admin['userId']);
+			$edits[$key] = $admin['edits'] = $this->countAdminEdits($adminEdit);
+		}
+		array_multisort($edits, SORT_DESC, $admins);
+		return $admins;
+	}
+
+	private function countAdminEdits($adminEdits) {
+		$editsCount = 0;
+		foreach($adminEdits as $edits) {
+			$editsCount += (int)$edits['edits'] + (int)$edits['deletes'] + (int)$edits['undeletes'];
+		}
+		return $editsCount;
 	}
 }
