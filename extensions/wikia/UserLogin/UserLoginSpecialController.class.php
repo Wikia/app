@@ -8,7 +8,11 @@
  */
 class UserLoginSpecialController extends WikiaSpecialPageController {
 
+	/* @const NOT_CONFIRMED_SIGNUP_OPTION_NAME Name of user option saying that user hasn't confirmed email since sign up */
 	const NOT_CONFIRMED_SIGNUP_OPTION_NAME = 'NotConfirmedSignup';
+
+	/* @const SIGNUP_REDIRECT_NAME Name of user option containing redirect path to return to after email confirmation */
+	const SIGNUP_REDIRECT_NAME = 'SignupRedirect';
 
 	/* @var $userLoginHelper UserLoginHelper */
 	private $userLoginHelper = null;

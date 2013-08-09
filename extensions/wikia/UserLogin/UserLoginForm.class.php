@@ -228,41 +228,16 @@ class UserLoginForm extends LoginForm {
 		// for FBconnect we don't want to create temp users
 		if ($createTempUser === false) {
 			return parent::initUser($u, $autocreate);
-		}
-
-		// add TempUser, update User object, set TempUser session
-		$tempUser = TempUser::createNewFromUser( $u, $this->mReturnTo );
-
-		if ( $wgExternalAuthType ) {
-			$u = ExternalUser::addUser( $u, "", "", "" );
-			if ( is_object( $u ) ) {
-				$this->mExtUser = ExternalUser::newFromName( $this->mUsername );
-			}
 		} else {
-			$u->addToDatabase();
-		}
-		$u->setToken();
-
-		$wgAuth->initUser( $u, $autocreate );
-
-		if ( is_object( $this->mExtUser ) ) {
-			$this->mExtUser->linkToLocal( $u->getId() );
+			$res = parent::initUser($u, $autocreate);
+			$res->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_NAME, $this->mReturnTo );
+			$res->setOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, true );
+			$res->saveSettings();
+			UserLoginHelper::setNotConfirmedUserSession($res->getId());
+			return $res;
 		}
 
-		$u->setOption( 'rememberpassword', $this->mRemember ? 1 : 0 );
-		if ( $this->mLanguage )
-			$u->setOption( 'language', $this->mLanguage );
-		$u->setOption('skinoverwrite', 1);
-
-		$u->setPassword( $this->mPassword );
-		$tempUser->setPassword( $u->mPassword );
-		$tempUser->setId( $u->getId() );
-		$tempUser->addToDatabase();
-
-		wfRunHooks( 'AddNewAccountTempUser', array( $u, false ) );
-
-		$tempUser->saveSettingsTempUserToUser( $u );
-		$tempUser->setTempUserSession();
+		wfRunHooks( 'AddNewAccount', array( $u, false ) );
 
 		return $u;
 	}

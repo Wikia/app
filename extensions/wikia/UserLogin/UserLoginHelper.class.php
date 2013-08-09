@@ -553,6 +553,20 @@ class UserLoginHelper extends WikiaModel {
 	}
 
 	/**
+	 * Removes not confirmed option from user's properties
+	 * 
+	 * @param User $user
+	 * @return bool
+	 */
+	public static function removeNotConfirmedFlag( User &$user ) {
+		$user->setOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null );
+		$user->saveSettings();
+		$user->saveToCache();
+		UserLoginHelper::isTempUser( $user->getName(), true );
+		return true;
+	}
+
+	/**
 	 * Function that helps to determine whether we have to do with TempUser case
 	 * It's a function for transitional state of getting rid of TempUser
 	 * It can be removed after TempUser global disable
