@@ -15,6 +15,7 @@ define('modal', ['throbber', 'jquery'], function modal(throbber, $){
 		content,
 		caption,
 		wrapper,
+		$wrapper,
 		closeButton,
 		topBar,
 		position,
@@ -27,6 +28,7 @@ define('modal', ['throbber', 'jquery'], function modal(throbber, $){
 	/* private */
 	function setup(){
 		wrapper = d.getElementById('wkMdlWrp');
+		$wrapper = $(wrapper);
 		content = d.getElementById('wkMdlCnt');
 		topBar = d.getElementById('wkMdlTB');
 		toolbar = d.getElementById('wkMdlTlBar');
@@ -37,7 +39,7 @@ define('modal', ['throbber', 'jquery'], function modal(throbber, $){
 	}
 
 	function onContentClick(){
-		if(!stopHiding) $(wrapper).toggleClass('hdn');
+		if(!stopHiding) $wrapper.toggleClass('hdn');
 	}
 
 	function onCloseClick(ev){
@@ -64,11 +66,11 @@ define('modal', ['throbber', 'jquery'], function modal(throbber, $){
 	}
 
 	function hideUI(){
-		$(wrapper).addClass('hdn');
+		$wrapper.addClass('hdn');
 	}
 
 	function showUI(){
-		$(wrapper).removeClass('hdn');
+		$wrapper.removeClass('hdn');
 	}
 
 	function fixTopBar(){
@@ -255,10 +257,10 @@ define('modal', ['throbber', 'jquery'], function modal(throbber, $){
 			stopHiding = Boolean(val);
 		},
 		addClass: function (classes) {
-			$(wrapper).addClass(classes);
+			$wrapper.addClass(classes);
 		},
 		removeClass: function (classes) {
-			$(wrapper).removeClass(classes);
+			$wrapper.removeClass(classes);
 		}
 	}
 });

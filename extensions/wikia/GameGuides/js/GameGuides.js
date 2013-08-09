@@ -201,17 +201,17 @@
 
 		window.Sections = Sections;
 
-		$(document).on({
+		$(window).on({
 			'sections:open': function(){
-				document.documentElement.style.minHeight = document.documentElement.offsetHeight + 'px';
+				html.style.minHeight = html.offsetHeight + 'px';
 			},
 			'sections:close': function(){
-				document.documentElement.style.minHeight = 0;
+				html.style.minHeight = 0;
 			}
 		});
 	});
 
-	window.addEventListener('DOMContentLoaded', function(){
+	$(function(){
 		require(['toc'], function(toc){
 			Ponto.invoke(
 				'Article',

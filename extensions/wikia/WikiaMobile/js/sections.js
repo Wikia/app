@@ -125,7 +125,7 @@ define('sections', ['JSMessages', 'jquery'], function(msg, $){
 				h2[0].goBackAdded = true;
 			}
 
-			$d.trigger('sections:open', [next]);
+			$.event.trigger('sections:open', [next]);
 		}
 
 		if(scroll && headers[1]){
@@ -140,7 +140,7 @@ define('sections', ['JSMessages', 'jquery'], function(msg, $){
 		if(h2.hasClass('open')) {
 			next = h2.removeClass(OPENCLASS).next().removeClass(OPENCLASS);
 
-			$d.trigger('sections:close', [next]);
+			$.event.trigger('sections:close', [next]);
 		}
 	}
 
