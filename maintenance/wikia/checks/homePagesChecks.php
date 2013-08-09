@@ -29,9 +29,9 @@ echo "\nScript finished running!\n";
 class CorporateHomePageChecker {
 
 	const REPORT_EMAIL_TOPIC = 'Abnormal condition on Corporate Page detected';
-	const NO_STATS_MODULE_FOUND = 'No stats module found on $1';
-	const INVALID_STATS_MODULE_NUMBER = 'Found $1 stats modules instead of $2 on CityID $3';
-	const STATISTIC_DID_NOT_CHANGE = 'Statistic $1 did not change on CityID $2';
+	const NO_STATS_MODULE_FOUND = 'No stats module found on CityID %d';
+	const INVALID_STATS_MODULE_NUMBER = 'Found %d stats modules instead of %d on CityID %d';
+	const STATISTIC_DID_NOT_CHANGE = 'Statistic %d did not change on CityID %d';
 	const DEFAULT_NO_CHANGE_THRESHOLD = 7;
 	const EXPECTED_NUMBER_OF_STAT_MODULES = 6;
 	const DATE_FORMAT = "Y-m-d";
@@ -135,7 +135,7 @@ class CorporateHomePageChecker {
 		 * checking noChangeThreshold days total, which means we're counting baseDate too
 		 */
 		for ( $i = 1; $i < $this->noChangeThreshold; $i ++ ) {
-			$datesToCheck []= date( self::DATE_FORMAT, strtotime( $this->baseDate . " -$i days" ) );
+			$datesToCheck[] = date( self::DATE_FORMAT, strtotime( $this->baseDate . " -$i days" ) );
 		}
 
 		foreach ( $corpWikiStatistics as $statKey => $statValue ) {
@@ -186,10 +186,7 @@ class CorporateHomePageChecker {
 	}
 
 	private function collectError( $errMessage, $data ) {
-		// no need to use wfMessage here and use Parser
-		for ( $i = 1; $i <= count( $data ); $i++ ) {
-			$errMessage = mb_ereg_replace( "\\\$$i", $data[$i - 1], $errMessage );
-		}
+		$errMessage = vsprintf( $errMessage, $data );
 		$this->collectedErrors[] = $errMessage;
 	}
 
@@ -200,6 +197,8 @@ class CorporateHomePageChecker {
 	 * @return bool
 	 */
 	private function sendErrors() {
+		var_dump($this->collectedErrors);
+		die;
 		$result = false;
 		if ( !empty( $this->collectedErrors ) ) {
 			$errorList = implode( "\n", $this->collectedErrors );
