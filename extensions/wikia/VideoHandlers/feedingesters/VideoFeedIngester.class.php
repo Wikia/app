@@ -168,7 +168,7 @@ abstract class VideoFeedIngester {
 			return 0;
 		}
 
-		$this->filterKeywords( $data['tags'] );
+		$this->filterKeywords( $data['keywords'] );
 
 		$debug = !empty($params['debug']);
 		$remoteAsset = !empty( $params['remoteAsset'] );
@@ -632,7 +632,7 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
-	 * check if video is blacklisted ( titleName, description, keywords, tags )
+	 * check if video is blacklisted ( titleName, description, keywords, name )
 	 * @param array $data
 	 * @return boolean
 	 */
@@ -645,8 +645,8 @@ abstract class VideoFeedIngester {
 			if ( array_key_exists('keywords', $data) ) {
 				$keys[] = 'keywords';
 			}
-			if ( array_key_exists('tags', $data) ) {
-				$keys[] = 'tags';
+			if ( array_key_exists( 'name', $data ) ) {
+				$keys[] = 'name';
 			}
 			foreach ( $keys as $key ) {
 				if ( preg_match($regex, str_replace('-', ' ', $data[$key])) ) {
@@ -724,11 +724,11 @@ abstract class VideoFeedIngester {
 				break;
 			case 'redband':
 			case 'red band':
-				$stdRating = 'red band';
+				$stdRating = 'Redband';
 				break;
 			case 'greenband':
 			case 'green band':
-				$stdRating = 'green band';
+				$stdRating = 'Greenband';
 				break;
 			default: $stdRating = $rating;
 		}
@@ -746,7 +746,7 @@ abstract class VideoFeedIngester {
 			case 'M':
 			case 'R':
 			case 'TV-MA':
-			case 'red band':
+			case 'Redband':
 				$ageRequired = 17;
 				break;
 			case 'AO':
@@ -765,29 +765,32 @@ abstract class VideoFeedIngester {
 	 * @return string $category
 	 */
 	public function getCategory( $cat ) {
+		$cat = strtolower( trim( $cat ) );
 		switch( $cat ) {
-			case 'Movie':
-			case 'Movies':
-			case 'Movie Interview':
-			case 'Movie Behind the Scenes':
-			case 'Movie SceneOrSample':
-			case 'Movie Alternate Version':
+			case 'movie':
+			case 'movies':
+			case 'movie interview':
+			case 'movie behind the scenes':
+			case 'movie sceneorsample':
+			case 'movie alternate version':
 				$category = 'Movies';
 				break;
-			case 'TV':
-			case 'Series':
-			case 'Season':
-			case 'Episode':
-			case 'TV Show':
-			case 'Episodic Interview':
-			case 'Episodic Behind the Scenes':
-			case 'Episodic SceneOrSample':
-			case 'Episodic Alternate Version':
+			case 'tv':
+			case 'series':
+			case 'season':
+			case 'episode':
+			case 'tv show':
+			case 'episodic interview':
+			case 'episodic behind the scenes':
+			case 'episodic sceneorsample':
+			case 'episodic alternate version':
+			case 'tv trailer':
 				$category = 'TV';
 				break;
-			case 'Game':
-			case 'Games':
-			case 'Games SceneOrSample':
+			case 'game':
+			case 'games':
+			case 'games scenerrsample':
+			case 'video game':
 				$category = 'Gaming';
 				break;
 			default: $category = 'Others';

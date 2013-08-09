@@ -136,6 +136,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 			$clipData['actors'] = implode( ', ', $actors );
 
 			$clipData['hd'] = 0;
+			$clipData['provider'] = 'anyclip';
 
 			$msg = '';
 			if ( $this->isClipTypeBlacklisted( $clipData ) ) {
