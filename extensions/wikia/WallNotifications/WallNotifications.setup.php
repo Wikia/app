@@ -11,6 +11,7 @@ $wgAutoloadClasses['WallNotificationsOwner'] = $dirExt . '/WallNotificationsOwne
 $wgAutoloadClasses['WallNotificationOwnerEntity'] = $dirExt . '/WallNotificationOwnerEntity.class.php';
 
 $wgAutoloadClasses['BaseNotificationEntity'] = $dirExt . '/BaseNotificationEntity.class.php';
+$wgAutoloadClasses['NotificationEntityDecorator'] = $dirExt . '/NotificationEntityDecorator.class.php';
 $wgAutoloadClasses['WallNotificationEntity'] = $dirExt . '/WallNotificationEntity.class.php';
 $wgAutoloadClasses['WallNotificationsController'] = $dirExt . '/WallNotificationsController.class.php';
 $wgAutoloadClasses['WallNotificationsExternalController'] = $dirExt . '/WallNotificationsExternalController.class.php';
@@ -28,8 +29,6 @@ $wgHooks['SkinAfterBottomScripts'][] = 'WallNotificationsHooksHelper::onSkinAfte
 $wgHooks['MakeGlobalVariablesScript'][] = 'WallNotificationsHooksHelper::onMakeGlobalVariablesScript';
 
 $wgHooks['PersonalUrls'][] = 'WallNotificationsHooksHelper::onPersonalUrls';
-
-$wgHooks['NotificationAfterLoadDataFromRev'][] = 'WallNotificationsHooksHelper::onNotificationAfterLoadDataFromRev';
 
 $wgExtensionMessagesFiles['WallNotifications'] = $dirExt . '/WallNotifications.i18n.php';
 
