@@ -25,7 +25,7 @@ $db = wfGetDb( DB_SLAVE, array(), $wgExternalSharedDB);
 $res = $db->select(
  '`user`',
  array( 'user_email', 'user_real_name', 'count(*)' ),
- 'user_real_name != "Account Disabled"',
+ '',
  __METHOD__,
  array('HAVING count(*) > 700') // TODO: do not hardcore this value
 );
