@@ -10,7 +10,12 @@ describe("Lazyload module", function () {
 		'data-params="[{&quot;name&quot;:&quot;Sectionals2.jpg&quot;,&quot;full&quot;:&quot;data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D&quot;}]">' +
 		'</section></div>';
 
-	var async = new AsyncSpec(this);
+	var Image = function(){};
+
+	Image.prototype.__defineSetter__('onload', function(onload){
+		onload.call(this);
+		jasmine.Clock.tick(250);
+	});
 
 	var lazyload = modules.lazyload({
 		isThumbUrl: function(){},
@@ -21,21 +26,24 @@ describe("Lazyload module", function () {
 		makeArray: function(array){
 			return Array.prototype.slice.call(array);
 		}
+	},{
+		addEventListener: function(){},
+		Image: Image
 	});
 
 	it('is defined', function(){
 		expect(lazyload).toBeDefined();
 	});
 
-	async.it('lazyloads images', function(done){
-		lazyload(body.getElementsByClassName('lazy'));
+	it('lazyloads images', function(){
+		var images = body.getElementsByClassName('lazy');
 
-		body.getElementsByClassName('lazy')[0].addEventListener('load', function(){
-			expect(body.getElementsByClassName('lazy')[0].src).toMatch('data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D');
+		jasmine.Clock.useMock();
 
-			done();
-		})
+		lazyload(images);
 
+		expect(images[0].className).toContain('load loaded');
+		expect(images[0].src).toMatch('data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D');
 	});
 
 });

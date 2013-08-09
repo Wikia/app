@@ -4,7 +4,7 @@
  * Image lazy loading
  */
 /*global define*/
-define('lazyload', ['wikia.thumbnailer', 'jquery'], function (thumbnailer, $) {
+define('lazyload', ['wikia.thumbnailer', 'jquery', 'wikia.window'], function (thumbnailer, $, window) {
 	'use strict';
 
 	var d = document,
@@ -39,7 +39,7 @@ define('lazyload', ['wikia.thumbnailer', 'jquery'], function (thumbnailer, $) {
 		elements = $.makeArray(elements);
 
 		while(elm = elements[x++]) {
-			img = new Image();
+			img = new window.Image();
 			src = elm.getAttribute('data-src');
 			imageWidth = ~~elm.getAttribute('width');
 
