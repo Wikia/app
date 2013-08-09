@@ -187,11 +187,10 @@ class CorporateHomePageChecker {
 
 	private function collectError( $errMessage, $data ) {
 		// no need to use wfMessage here and use Parser
-		$parsedMessage = $errMessage;
 		for ( $i = 1; $i <= count( $data ); $i++ ) {
-			$parsedMessage = mb_ereg_replace( "\\\$$i", $data[$i - 1], $parsedMessage );
+			$errMessage = mb_ereg_replace( "\\\$$i", $data[$i - 1], $errMessage );
 		}
-		$this->collectedErrors[] = $parsedMessage;
+		$this->collectedErrors[] = $errMessage;
 	}
 
 	/**
