@@ -14,17 +14,20 @@ require_once( 'commandLine.inc' );
 echo 'Execution starts ' . date( "Y-m-d H:i:s" );
 echo "\n";
 
-$homePageTest = new CorporateHomePageTest( [ ] );
+$homePageTest = new CorporateHomePageChecker( [ ] );
 $homePageTest->run_tests();
 
 echo 'Execution ends' . date( "Y-m-d H:i:s" );
 echo "\nScript finished running!\n";
 
-class CorporateHomePageTest {
+class CorporateHomePageChecker {
 
+	const REPORT_EMAIL_TOPIC = 'Abnormal condition on Corporate Page detected';
 	const NO_STATS_MODULE_FOUND = 'No stats module found on $1';
+	const INVALID_STATS_MODULE_NUMBER = 'Found $1 stats modules instead of $2';
 	const STATISTIC_DID_NOT_CHANGE = 'Statistic $1 did not change on $2';
-	const DEAULT_NO_CHANGE_TRESHOLD = 7;
+	const DEFAULT_NO_CHANGE_THRESHOLD = 7;
+	const EXPECTED_NUMBER_OF_STAT_MODULES = 6;
 
 	/**
 	 * @var CorporateHomePageStatisticsStorage
@@ -47,6 +50,16 @@ class CorporateHomePageTest {
 	private $noChangeThreshold;
 
 	/**
+	 * @var array
+	 */
+	private $watcherEmails;
+
+	/**
+	 * @var array
+	 */
+	private $collectedErrors;
+
+	/**
 	 * @param $params array of options
 	 *
 	 * Valid options are:
@@ -57,11 +70,19 @@ class CorporateHomePageTest {
 		if ( ! empty( $params['noChangeThreshold'] ) ) {
 			$this->noChangeThreshold = $params['noChangeThreshold'];
 		} else {
-			$this->noChangeThreshold = self::DEAULT_NO_CHANGE_TRESHOLD;
+			$this->noChangeThreshold = self::DEFAULT_NO_CHANGE_THRESHOLD;
 		}
+		if ( !empty($params['watherEmails'])) {
+			$this->watcherEmails = $params['watherEmails'];
+		} else {
+			$this->watcherEmails = [ ]; // TODO: what should be default value?
+		}
+
+
 		$this->dataStorage = new CorporateHomePageStatisticsStorage();
 		$cityVisualization = new CityVisualization();
 		$this->corporateWikis = $cityVisualization->getVisualizationWikisIds();
+		$this->collectedErrors = [ ];
 	}
 
 	public function run_tests() {
@@ -69,11 +90,19 @@ class CorporateHomePageTest {
 		foreach ( $this->corporateWikis as $wikiId ) {
 			$corpWikiStatistics = $this->processCorporateWikiStats( $wikiId );
 
-			if ( $corpWikiStatistics ) {
-				$this->verifyStatsChanged( $wikiId, $corpWikiStatistics );
+			if ( ! $corpWikiStatistics ) {
+				$this->collectError( self::NO_STATS_MODULE_FOUND, [ $wikiId ] );
+			} elseif ( count( $corpWikiStatistics ) != self::EXPECTED_NUMBER_OF_STAT_MODULES ) {
+				$this->collectError( self::INVALID_STATS_MODULE_NUMBER, [ count( $corpWikiStatistics ), self::EXPECTED_NUMBER_OF_STAT_MODULES ] );
 			} else {
-				$this->signalError( self::NO_STATS_MODULE_FOUND, [ $wikiId ] );
+				$this->verifyStatsChanged( $wikiId, $corpWikiStatistics );
 			}
+		}
+
+		if($this->sendErrors()) {
+			echo "Error(s) detected\n";
+		} else {
+			echo "No errors detected\n";
 		}
 	}
 
@@ -92,17 +121,16 @@ class CorporateHomePageTest {
 			$currentStatValue = $statValue;
 
 			foreach ( $datesToCheck as $date ) {
-				$previousStatValue = $this->dataStorage->getValue(
-					$this->getStatsKey( $date, $wikiId, $statKey )
-				);
-				if($currentStatValue != $previousStatValue) {
+				$previousStatValue = $this->dataStorage->getValue( $this->getStatsKey( $date, $wikiId, $statKey ) );
+
+				if ( $currentStatValue != $previousStatValue ) {
 					$changed = true;
 					break;
 				}
 				$currentStatValue = $previousStatValue;
 			}
-			if(!$changed) {
-				$this->signalError( self::STATISTIC_DID_NOT_CHANGE, [ $statKey, $wikiId ] );
+			if ( ! $changed ) {
+				$this->collectError( self::STATISTIC_DID_NOT_CHANGE, [ $statKey, $wikiId ] );
 			}
 		}
 	}
@@ -129,8 +157,26 @@ class CorporateHomePageTest {
 		return $result;
 	}
 
-	private function signalError( $errMessage, $data ) {
-		$message = wfMessage( $errMessage, $data )->text();
+	private function collectError( $errMessage, $data ) {
+		$this->collectedErrors [] = wfMessage( $errMessage, $data )->text();
+	}
+
+	/**
+	 * Sends out emails; Returns true if any error notifications were sent,
+	 * false otherwise
+	 * @return bool
+	 */
+	private function sendErrors() {
+		$result = false;
+		if ( !empty( $this->collectedErrors ) ) {
+			$errorList = implode( "\n", $this->collectedErrors );
+			foreach ( $this->watcherEmails as $email ) {
+				UserMailer::send( new MailAddress( $email ), new MailAddress( $email ), self::REPORT_EMAIL_TOPIC, $errorList );
+			}
+			$result = true;
+		}
+
+		return $result;
 	}
 
 	private function getStatisticsModulesContents( $wikiId ) {
