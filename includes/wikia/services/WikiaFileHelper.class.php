@@ -6,7 +6,7 @@ class WikiaFileHelper extends Service {
 
 	const maxWideoWidth = 1200;
 
-	/*
+	/**
 	 * Checks if videos on the wiki are converted to new format (File namespace)
 	 * @return boolean
 	 */
@@ -15,13 +15,12 @@ class WikiaFileHelper extends Service {
 		return true;
 	}
 
-	/*
+	/**
 	 * Checks if given File is video
 	 * @param $file WikiaLocalFile object or Title object eventually
 	 * @return boolean
 	 */
 	public static function isFileTypeVideo( $file ) {
-
 		if ( self::isVideoStoredAsFile() ) {
 			// File can be video only when new video logic is enabled for the wiki
 			if ( $file instanceof Title ) {
@@ -36,9 +35,11 @@ class WikiaFileHelper extends Service {
 		return ( $file instanceof LocalFile && $file->getHandler() instanceof VideoHandler);
 	}
 
-	/*
+	/**
 	 * Checks if given Title is video
 	 * @deprecated use isFileTypeVideo instead
+	 * @param $title
+	 * @param bool $allowOld
 	 * @return boolean
 	 */
 	public static function isTitleVideo( $title, $allowOld = true ) {
@@ -210,7 +211,12 @@ class WikiaFileHelper extends Service {
 		return $html;
 	}
 
-	// get html for title for video overlay
+	/**
+	 * get html for title for video overlay
+	 * @param $title
+	 * @param $width
+	 * @return string
+	 */
 	public static function videoOverlayTitle( $title, $width ) {
 		$attribs = array(
 			'class' => 'info-overlay-title',
@@ -221,7 +227,11 @@ class WikiaFileHelper extends Service {
 		return Xml::element( 'span', $attribs, $title, false );
 	}
 
-	// get html for duration for video overlay
+	/**
+	 * get html for duration for video overlay
+	 * @param $duration
+	 * @return string
+	 */
 	public static function videoOverlayDuration( $duration ) {
 		$html = '';
 		if ( !empty($duration) ) {
@@ -236,7 +246,11 @@ class WikiaFileHelper extends Service {
 		return $html;
 	}
 
-	// get html for views for video overlay
+	/**
+	 * get html for views for video overlay
+	 * @param $views
+	 * @return string
+	 */
 	public static function videoOverlayViews( $views ) {
 		$app = F::app();
 
@@ -248,7 +262,7 @@ class WikiaFileHelper extends Service {
 		return Xml::element( 'span', $attribs, $views, false );
 	}
 
-	/*
+	/**
 	 * Checks if user wants to have old image bahaviour
 	 * @return boolean
 	 */
@@ -352,6 +366,7 @@ class WikiaFileHelper extends Service {
 	 * @param Title $fileTitle
 	 * @param array $config ( contextWidth, contextHeight, imageMaxWidth, userAvatarWidth )
 	 * TODO - this method is very specific to lightbox.  This needs to be refactored back out to lightbox, and return just the basic objects (file, user, tect)
+	 * @return array
 	 */
 	public static function getMediaDetail( $fileTitle, $config = array() ) {
 		global $wgEnableVideoPageRedesign;
@@ -524,6 +539,7 @@ class WikiaFileHelper extends Service {
 
 	/**
 	 * Get the duration in ISO 8601 format for meta tag
+	 * @param $hms
 	 * @return string
 	 */
 	public static function getISO8601Duration( $hms ) {

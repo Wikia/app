@@ -35,9 +35,12 @@ $is-dark-wiki: false;
 }
 
 // Text color
-$color-text: #3a3a3a;
+$color-text-dark: #3a3a3a;
+$color-text-light: #D5D4D4;
+
+$color-text: $color-text-dark;
 @if $is-dark-wiki {
-	$color-text: #D5D4D4;
+	$color-text: $color-text-light;
 }
 
 // Generic Error text color
@@ -86,6 +89,9 @@ $color-page-border: mix($color-page, #000000, 80%);
 @if $is-dark-wiki {
 	$color-page-border: mix($color-page, #ffffff, 80%);
 }
+$color-page-border-subtle: mix($color-page-border, $color-page, 50%);
+
+
 $color-page-shadow: #333;
 @if $is-dark-wiki {
 	$color-page-shadow: #000;

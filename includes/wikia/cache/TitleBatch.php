@@ -149,9 +149,9 @@ class TitleBatch {
 		$props = array();
 		foreach ($res as $row) {
 			if ( is_array( $propertyIds ) ) {
-				$props[$row->page_id][$row->propname] = wfUnserializeProp($row->props);
+				$props[$row->page_id][$row->propname] = wfUnserializeProp($row->propname, $row->props);
 			} else {
-				$props[$row->page_id] = wfUnserializeProp($row->props);
+				$props[$row->page_id] = wfUnserializeProp($row->propname, $row->props);
 			}
 		}
 		return $props;

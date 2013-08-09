@@ -71,6 +71,31 @@ class VideoInfoHooksHelper {
 	}
 
 	/**
+	 * Hook: remove premium video and clear cache
+	 * @param Title $title
+	 * @return true
+	 */
+	public static function onRemovePremiumVideo( $title ) {
+		if ( !VideoInfoHelper::videoInfoExists() ) {
+			return true;
+		}
+
+		if ( $title instanceof Title ) {
+			$videoInfo = VideoInfo::newFromTitle( $title->getDBKey() );
+			if ( !empty( $videoInfo ) && $videoInfo->isPremium() ) {
+				$videoInfo->deleteVideo();
+
+				// clear cache
+				$mediaService = new MediaQueryService();
+				$mediaService->clearCacheTotalVideos();
+				$mediaService->clearCacheTotalPremiumVideos();
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * Hook: add premium video and clear cache (editor - source mode)
 	 * @param Article $article
 	 * @param User $user
@@ -206,6 +231,8 @@ class VideoInfoHooksHelper {
 		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
 			$videoInfo = VideoInfo::newFromTitle( $title->getDBKey() );
 			if ( empty($videoInfo) ) {
+				$affected = false;
+
 				// add removed video
 				$videoInfoHelper = new VideoInfoHelper();
 				$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $title, true );

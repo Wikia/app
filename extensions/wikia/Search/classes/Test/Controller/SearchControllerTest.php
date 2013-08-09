@@ -2652,7 +2652,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$mockController
 		    ->expects( $this->at( $controllerIncr++ ) )
 		    ->method ( 'setVal' )
-		    ->with   ( 'pageUrl', 'foo.wikia.com/wiki/search' )
+		    ->with   ( 'specialSearchUrl', 'foo.wikia.com/wiki/search' )
 		;
 		$mockController
 		    ->expects( $this->at( $controllerIncr++ ) )
