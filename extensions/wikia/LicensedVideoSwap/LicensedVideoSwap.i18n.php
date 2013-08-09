@@ -39,8 +39,6 @@ $messages['en'] = array(
 	'lvs-posted-in-label-none' => 'Current video is not posted in any articles',
 	'lvs-posted-in-more' => 'more',
 	'lvs-confirm-swap-title' => 'Swap Video',
-	'lvs-confirm-swap-message-same-title' => "You are about to swap out '''$1''' with a Wikia Video on your wiki. This will replace all instances of the video, including any videos embedded in articles, and the original video will be deleted. Any changes can be reversed later from History on this Special page. Do you want to continue?",
-	'lvs-confirm-swap-message-different-title' => "You are about to swap out '''$1''' with '''$2''' on your wiki. This will replace all instances of the video, including any videos embedded in articles. The original video will be deleted and the file page will be redirected to the new video file page. Any changes can be reversed later from History on this Special page. Do you want to continue?",
 	'lvs-confirm-keep-title' => 'Keep Video',
 	'lvs-confirm-keep-message' => 'You have chosen not to replace your current video with a licensed Wikia Video. Do you want to continue?',
 	'lvs-confirm-undo-swap-title' => 'Confirm Undo',
@@ -55,7 +53,9 @@ $messages['en'] = array(
 	'lvs-history-swapped' => 'Swapped "$1" with "$2"',
 	'lvs-history-swapped-exact' => 'Swapped "$1" with a video of the same name',
 	'lvs-history-kept' => 'Kept "$1"',
-	'lvs-histroy-instructions' => "To view the history for all swaps and undos, go to $1."
+	'lvs-histroy-instructions' => "To view the history for all swaps and undos, go to $1.",
+	'lvs-no-monobook-support' => "This page is not supported in Monobook. To access it in the Wikia layout, $1. This will not change your layout preference",
+	'lvs-click-here' => 'click here',
 );
 
 $messages['qqq'] = array(
@@ -107,5 +107,7 @@ $messages['qqq'] = array(
 	'lvs-history-swapped' => "Message shown on the LVS history page for a video that had been swapped for a premium video",
 	'lvs-history-swapped-exact' => "Message shown on the LVS history page when the new video and the swapped video have exactly the same name",
 	'lvs-history-kept' => "Message shown on the LVS history page for a video that was kept as is and not swapped",
-	'lvs-histroy-instructions' => "This is informational text at the top of the LVS history page."
+	'lvs-histroy-instructions' => "This is informational text at the top of the LVS history page.",
+	'lvs-no-monobook-support' => "This message is shown to users who try to access LVS in an unsupported skin. The $1 value is lvs-click-here.",
+	'lvs-click-here' => "This message is inserted into lvs-no-monobook-support and replaces the $1 value there.",
 );

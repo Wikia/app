@@ -14,7 +14,7 @@ class LicensedVideoSwapHooksHelper {
 	public static function onPageHeaderIndexExtraButtons( $response ) {
 		$app = F::app();
 		if ( $app->wg->Title->getFullText() == 'Special:LicensedVideoSwap' ) {
-			$title = SpecialPage::getTitleFor("LicensedVideoSwap/History")->escapeLocalURL();
+			$title = SpecialPage::getTitleFor("LicensedVideoSwap/History")->escapeLocalURL( "useskin=wikia" );
 			$extraButtons = $response->getVal('extraButtons');
 			$extraButtons[] = '<a class="button lvs-history-btn" href="'.$title.'" rel="tooltip" title="'.wfMessage("lvs-tooltip-history")->plain().'">'.wfMessage("lvs-history-button-text")->plain().'</a>';
 			$response->setVal('extraButtons', $extraButtons);

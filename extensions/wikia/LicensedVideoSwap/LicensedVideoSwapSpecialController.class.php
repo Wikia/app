@@ -25,6 +25,22 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 */
 	public function index() {
 
+		// See if there is a subpage request to handle (i.e. /History)
+		$subpage = $this->getSubpage();
+
+		if ( !$this->app->checkSkin( 'oasis' ) ) {
+			$oasisURL = SpecialPage::getTitleFor( 'LicensedVideoSwap', $subpage )->getLocalURL( 'useskin=wikia' );
+			$oasisLink = Xml::element( 'a', [ 'href' => $oasisURL ], wfMessage( 'lvs-click-here' ) );
+			$this->wg->out->addHTML( wfMessage( 'lvs-no-monobook-support' )->rawParams( $oasisLink )->parse() );
+			$this->skipRendering();
+			return true;
+		}
+
+		if ( $subpage ) {
+			$this->forward( __CLASS__, $subpage );
+			return true;
+		}
+
 		// Add assets
 		// TODO: move this to Assets Manager once we release this
 		$this->response->addAsset( 'licensed_video_swap_js' );
@@ -33,14 +49,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// Setup messages for JS
 		// TODO: once 'back to roots' branch is merged, use JSMessages::enqueuePackage
-		F::build('JSMessages')->enqueuePackage('LVS', JSMessages::EXTERNAL);
-
-		// See if there is a subpage request to handle
-		$subpage = $this->getSubpage();
-		if ( $subpage ) {
-			$this->forward( __CLASS__, $subpage );
-			return true;
-		}
+		JSMessages::enqueuePackage('LVS', JSMessages::EXTERNAL);
 
 		$this->wg->SupressPageSubtitle = true;
 
