@@ -8,16 +8,15 @@
  *
  */
 
-define('wikia.uifactory', ['wikia.nirvana', 'wikia.deferred', 'wikia.uicomponent'], function loader(nirvana, Deferred, UIComponent){
+define('wikia.uifactory', ['wikia.nirvana', 'wikia.deferred', 'wikia.uicomponent'], function(nirvana, Deferred, UIComponent){
 	'use strict';
 
 	/**
 	 * Request components configs from backend
 	 *
-	 * @param array components
+	 * @param {[]} components array with names of the requested components
 	 *
-	 * @return promise with components configs
-	 *
+	 * @return {{}} promise with components configs
 	 */
 
 	function getComponentConfig(components) {
@@ -47,8 +46,7 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.deferred', 'wikia.uicomponent
 	/**
 	 * Creates a new instance of UI component
 	 *
-	 * @return new clean instance of UIComponent
-	 *
+	 * @return {{}} new clean instance of UIComponent
 	 */
 
 	function getComponentInstance() {
@@ -58,9 +56,9 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.deferred', 'wikia.uicomponent
 	/**
 	 * Removes duplicates from an Array
 	 *
-	 * @param array array
+	 * @param {[]} array Array with potential duplicated items
 	 *
-	 * @return array
+	 * @return {[]} array without duplicates
 	 *
 	 */
 
@@ -84,12 +82,11 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.deferred', 'wikia.uicomponent
 	/**
 	 * Add styles to DOM
 	 *
-	 * @param array styles
-	 *
+	 * @param {[]} styles Array with links for CSS files
 	 */
 
 	function addStylesToDOM(styles) {
-		var domFragment = createDocumentFragment();
+		var domFragment = document.createDocumentFragment();
 
 		styles.forEach(function(element) {
 			var link = document.createElement('link');
@@ -104,12 +101,11 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.deferred', 'wikia.uicomponent
 	/**
 	 * Add scripts to DOM
 	 *
-	 * @param array scripts
-	 *
+	 * @param {[]} scripts Array wiwith links for JS files
 	 */
 
 	function addScriptsToDOM(scripts) {
-		var domFragment = createDocumentFragment();
+		var domFragment = document.createDocumentFragment();
 
 		scripts.forEach(function(element) {
 			var script = document.createElement('script');
@@ -124,10 +120,9 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.deferred', 'wikia.uicomponent
 	* Factory method for initialising components
 	* (load assets dependencies and adds them to DOM + instantiates UI components and applies config to them)
 	*
-	* @param string|array componentName
+	* @param {String|[]} componentName Name of a single component or array with multiple components
 	*
-	* @return promise with UI components
-	*
+	* @return {{}} promise with UI components
 	*/
 
 	function init(componentName) {
@@ -148,7 +143,8 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.deferred', 'wikia.uicomponent
 
 				var component = getComponentInstance(),
 					templateVars = element['templateVars'],
-					dependencies = element['dependencies'];
+					dependencies = element['dependencies'],
+					templates = element['templates'];
 
 				if (dependencies) {
 					jsAssets = jsAssets.concat(dependencies['js']);
@@ -156,7 +152,7 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.deferred', 'wikia.uicomponent
 				}
 
 				if (templateVars) {
-					component.setTemplateVarsConfig(templateVars);
+					component.setComponentsConfig(templates, templateVars);
 				}
 
 				components.push(component);
