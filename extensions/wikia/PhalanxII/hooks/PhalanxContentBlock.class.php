@@ -10,10 +10,6 @@
 class PhalanxContentBlock extends WikiaObject {
 	private static $whitelist = null;
 
-	function __construct() {
-		parent::__construct();
-	}
-
 	/**
 	 * @static
 	 *
@@ -29,9 +25,14 @@ class PhalanxContentBlock extends WikiaObject {
 	static public function editFilter( $editPage, $text, $section, &$hookError, $summary ) {
 		wfProfileIn( __METHOD__ );
 
+		if (self::isContentBlockingDisabled()) {
+			wfProfileOut( __METHOD__ );
+			wfDebug(__METHOD__ . ": content blocking disabled by \$wgPhalanxDisableContent\n");
+			return true;
+		}
+
 		$title = RequestContext::getMain()->getTitle();
 
-		/* @var PhalanxContentModel $phalanxModel */
 		$phalanxModel = new PhalanxContentModel( $title );
 
 		$summary = $editPage->summary;
@@ -41,7 +42,7 @@ class PhalanxContentBlock extends WikiaObject {
 		if ( !empty( $summary ) && !empty( $textbox ) && is_null(self::$whitelist) ) {
 			self::$whitelist = $phalanxModel->buildWhiteList();
 		}
-		
+
 		/* check summary */
 		if ( !empty( self::$whitelist ) ) {
 			$summary = preg_replace( self::$whitelist, '', $summary );
@@ -73,6 +74,12 @@ class PhalanxContentBlock extends WikiaObject {
 	 */
 	static public function abortMove( $oldTitle, $newTitle, $user, &$error, $reason ) {
 		wfProfileIn( __METHOD__ );
+
+		if (self::isContentBlockingDisabled()) {
+			wfProfileOut( __METHOD__ );
+			wfDebug(__METHOD__ . ": content blocking disabled by \$wgPhalanxDisableContent\n");
+			return true;
+		}
 
 		$phalanxModel = new PhalanxContentModel( $newTitle );
 		$ret = $phalanxModel->match_title();
@@ -156,5 +163,16 @@ class PhalanxContentBlock extends WikiaObject {
 		
 		wfProfileOut( __METHOD__ );
 		return $ret;
+	}
+
+	/**
+	 * BAC-675: handle $wgPhalanxDisableContent
+	 *
+	 * Don't check content related blocks on VSTF wiki
+	 *
+	 * @return bool
+	 */
+	static private function isContentBlockingDisabled() {
+		return !empty( F::app()->wg->PhalanxDisableContent );
 	}
 }
