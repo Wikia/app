@@ -3,13 +3,19 @@ class DumpsOnDemandCron extends Maintenance {
     
     const PIDFILE = '/var/run/MediaWikiDumpsOnDemandCron.pid';
     
-    protected $iPid;
-    
     public function __construct() {
         parent::__construct();
     }
     
     public function execute() {
+
+        if ( file_exists( self::PIDFILE ) ) {
+            // Another process already running.
+            exit( 0 );
+        }
+
+        file_put_contents( self::PIDFILE, getmypid() );
+
         $oDB = wfGetDB( DB_SLAVE, array(), $wgSharedDB );
         $sWikiaId = (string) $oDB->selectField(
                 'dumps',
@@ -24,7 +30,8 @@ class DumpsOnDemandCron extends Maintenance {
         
         if ( !$sWikiaId ) {
             // No pending requests.
-            return null;
+            unlink( self::PIDFILE );
+            exit( 0 );
         }
         
         global $IP, $wgWikiaLocalSettingsPath;
@@ -34,6 +41,7 @@ class DumpsOnDemandCron extends Maintenance {
         wfShellExec( $sCommand, $iStatus );
 
         if ( $iStatus ) {
+            unlink( self::PIDFILE );
             exit( $iStatus );
         }
 
@@ -48,6 +56,9 @@ class DumpsOnDemandCron extends Maintenance {
             ),
             __METHOD__
         );
+
+        unlink( self::PIDFILE );
+        exit( 0 );
     }
 }
 
