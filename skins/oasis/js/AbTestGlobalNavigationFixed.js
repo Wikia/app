@@ -5,13 +5,14 @@ $(function() {
         : ;
 
     switch (group) {
-        case "FIXED_HIDE_WIKIA_BAR":
+        case "HIDE_WIKIA_BAR":
             // collapse as the default state for anons
             if (WikiaBar && WikiaBar.isUserAnon() && WikiaBar.getAnonData(false) === false) {
                 WikiaBar.handleLoggedOutUsersWikiaBar();
             }
             // no break intended: for this group we should have global nav fixed too
-        case "FIXED_SHOW_WIKIA_BAR":
+            // break;
+        case "SHOW_WIKIA_BAR":
             $('body').addClass('global-header-fixed-at-top');
             break;
         default:
