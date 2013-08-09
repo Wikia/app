@@ -1,6 +1,8 @@
 <?php
 /** 
- * SERVER_ID=177 php maintenance/wikia/identifySpamAccounts.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
+ * @author Kenneth Kouot <kenneth@wikia-inc.com>
+ * @description Job that queries the database to produce a list of all account ids associated with spamming
+ * @usage SERVER_ID=177 php maintenance/wikia/identifySpamAccounts.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
  */
 
 ini_set( 'include_path', dirname(__FILE__) . '/../' );
@@ -53,3 +55,4 @@ foreach($res as $row) {
 fwrite($output, $data);
 fwrite($stdOut, "Thank you, good bye.\n");
 fclose($output);
+fclose($stdOut);
