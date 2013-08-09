@@ -65,18 +65,16 @@ describe("Loader Module", function () {
 			path1 = 'some/other/path/dd'
 
 		loader(path, path1)
-
 		.done(function(){
 			//if this runs there is something wrong
 			//email someone!!! :)
 			expect(false).toBe(true);
 			done();
 		})
-
 		.fail(function(resources){
 			expect(resources).toBeDefined();
-			expect(resources.value.error).toEqual(loader.NOT_LOADED);
-			expect(resources.value.resources[1].type).toEqual(loader.UNKNOWN);
+			expect(resources.error).toEqual(loader.NOT_LOADED);
+			expect(resources.resources[1].type).toEqual(loader.UNKNOWN);
 
 			done();
 		});
@@ -87,7 +85,7 @@ describe("Loader Module", function () {
 			type: loader.JS,
 			resources: ['test', 'test/test']
 		}).always(function(fail){
-			expect(fail.value.resources.length).toBe(2);
+			expect(fail.resources.length).toBe(2);
 			done()
 		})
 	});
@@ -129,10 +127,7 @@ describe("Loader Module", function () {
 	async.it('Facebook library is properly initialized when lazy loaded', function(done) {
 		var windowMock = {
 				document: window.document,
-				onFBloaded:  function() {},
-				$: {
-					extend: function(a){return a}
-				}
+				onFBloaded:  function() {}
 			},
 			loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, jQuery, logMock);
 

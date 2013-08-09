@@ -45,9 +45,9 @@ describe("Tables module", function () {
 	});
 
 	it('should wrap/unwrap table', function(){
-		var tab = body.querySelectorAll('table');
+		var tab = $(body).find('table');
 
-		tables.process($(tab));
+		tables.process(tab);
 
 		var table = body.getElementsByTagName('table')[0];
 
@@ -56,7 +56,7 @@ describe("Tables module", function () {
 	});
 
 	it('should add wkScroll to bitTable', function(){
-		var foundTables = body.getElementsByTagName('table');
+		var foundTables = $(body).find('table');
 
 		tables.process(foundTables);
 
@@ -65,7 +65,7 @@ describe("Tables module", function () {
 		fireEvent('click', table.parentElement);
 
 		expect(table.parentElement.className).toMatch('active');
-		expect(table.parentElement.wkScroll).toBeTruthy();
+		expect(table.wkScroll).toBeTruthy();
 
 	});
 });
