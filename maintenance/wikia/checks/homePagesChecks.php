@@ -4,8 +4,14 @@
  * this script runs periodically, pulls the Corporate Pages
  * (with statistics modules),
  * parses the data in statistics modules and stores it.
- * If the data does not change for N days,
- * an email is sent to designated person
+ * If there is no stats module, number of modules is wrong
+ * or the data does not change for specified number of days,
+ * an email is sent to designated person(s)
+ *
+ * Example:
+ * run_maintenance --script='wikia/checks/homePagesChecks.php \
+ *   --noChangeThreshold=4 --watcherEmails=email1@wikia-inc.com,email2@wikia-inc.com'
+ *
  */
 
 ini_set( "include_path", dirname( __FILE__ ) . "/../.." );
@@ -14,7 +20,7 @@ require_once( 'commandLine.inc' );
 echo 'Execution starts ' . date( "Y-m-d H:i:s" );
 echo "\n";
 
-$homePageTest = new CorporateHomePageChecker( [ ] );
+$homePageTest = new CorporateHomePageChecker( $options );
 $homePageTest->run_tests();
 
 echo 'Execution ends' . date( "Y-m-d H:i:s" );
@@ -60,6 +66,14 @@ class CorporateHomePageChecker {
 	private $collectedErrors;
 
 	/**
+	 * Modules excluded from change checks
+	 *
+	 * @var array
+	 */
+	private $excludedModules = [ 0, 1 ];
+
+
+	/**
 	 * @param $params array of options
 	 *
 	 * Valid options are:
@@ -68,16 +82,16 @@ class CorporateHomePageChecker {
 	public function __construct( $params ) {
 		$this->baseDate = date( "Y-m-d" );
 		if ( ! empty( $params['noChangeThreshold'] ) ) {
-			$this->noChangeThreshold = $params['noChangeThreshold'];
+			$this->noChangeThreshold = intval( $params['noChangeThreshold'] );
 		} else {
 			$this->noChangeThreshold = self::DEFAULT_NO_CHANGE_THRESHOLD;
 		}
-		if ( !empty($params['watherEmails'])) {
-			$this->watcherEmails = $params['watherEmails'];
+		if ( ! empty( $params['watcherEmails'] ) ) {
+			$this->watcherEmails = explode( ',', $params['watcherEmails'] );
 		} else {
-			$this->watcherEmails = [ ]; // TODO: what should be default value?
+			// if no emails are passed, we don't send anything
+			$this->watcherEmails = [ ];
 		}
-
 
 		$this->dataStorage = new CorporateHomePageStatisticsStorage();
 		$cityVisualization = new CityVisualization();
@@ -99,7 +113,7 @@ class CorporateHomePageChecker {
 			}
 		}
 
-		if($this->sendErrors()) {
+		if ( $this->sendErrors() ) {
 			echo "Error(s) detected\n";
 		} else {
 			echo "No errors detected\n";
@@ -117,6 +131,11 @@ class CorporateHomePageChecker {
 		}
 
 		foreach ( $corpWikiStatistics as $statKey => $statValue ) {
+			// only check modules that we care for
+			if ( in_array( $statKey, $this->excludedModules ) ) {
+				continue;
+			}
+
 			$changed = false;
 			$currentStatValue = $statValue;
 
@@ -147,7 +166,10 @@ class CorporateHomePageChecker {
 
 		if ( ! empty( $corpWikiStatistics ) ) {
 			foreach ( $corpWikiStatistics as $statKey => $statValue ) {
-				$this->dataStorage->setValue( $this->getStatsKey( $this->baseDate, $wikiId, $statKey ), $statValue );
+				// only store modules that we care for
+				if ( ! in_array( $statKey, $this->excludedModules ) ) {
+					$this->dataStorage->setValue( $this->getStatsKey( $this->baseDate, $wikiId, $statKey ), $statValue );
+				}
 			}
 			$result = $corpWikiStatistics;
 		} else {
@@ -164,11 +186,12 @@ class CorporateHomePageChecker {
 	/**
 	 * Sends out emails; Returns true if any error notifications were sent,
 	 * false otherwise
+	 *
 	 * @return bool
 	 */
 	private function sendErrors() {
 		$result = false;
-		if ( !empty( $this->collectedErrors ) ) {
+		if ( ! empty( $this->collectedErrors ) ) {
 			$errorList = implode( "\n", $this->collectedErrors );
 			foreach ( $this->watcherEmails as $email ) {
 				UserMailer::send( new MailAddress( $email ), new MailAddress( $email ), self::REPORT_EMAIL_TOPIC, $errorList );
