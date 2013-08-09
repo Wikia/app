@@ -17,9 +17,9 @@ class WallNotificationsTest extends WikiaBaseTest {
 	}
 
 	public function testNotifyEveryoneForMainThread() {
-		$wn = $this->getMock('WallNotifications', array('sendEmails','addNotificationLinks'));
+		$wn = $this->getMock('WallNotifications', array('sendEmails','addNotificationLinks'), [], '', false);
 
-		$notification = $this->getMock('WallNotificationEntity',array('isMain') );
+		$notification = $this->getMock('WallNotificationEntity', array('isMain'), [], '', false );
 
 		$notification->data = new StdClass();
 
@@ -43,18 +43,18 @@ class WallNotificationsTest extends WikiaBaseTest {
 
 
 	public function testNotifyEveryoneForReply() {
-		$wn = $this->getMock('WallNotifications', array('sendEmails','addNotificationLinks','getWatchlist'));
+		$wn = $this->getMock('WallNotifications', array('sendEmails','addNotificationLinks','getWatchlist'), [], '', false);
 
-		$notification = $this->getMock('WallNotificationEntity',array('isMain') );
+		$notification = $this->getMock('WallNotificationEntity', array('isMain'), [], '', false );
 
 		$notification->data = new StdClass();
-		$notification->data_noncached = new StdClass();
+		$notification->data_non_cached = new StdClass();
 
 		$notification->data->wall_userid = '123';
 		$notification->data->msg_author_id = '567';
 		$notification->data->wall_username = 'LoremIpsum';
 		$notification->data->title_id = 555;
-		$notification->data_noncached->parent_title_dbkey = 'dbkey';
+		$notification->data_non_cached->parent_title_dbkey = 'dbkey';
 
 		$users = array('123'=>'123','234'=>'234');
 
