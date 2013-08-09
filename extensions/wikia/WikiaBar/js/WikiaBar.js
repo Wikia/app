@@ -322,17 +322,17 @@ var WikiaBar = {
 		$.storage.set(this.getLocalStorageDataKey(), state);
 	},
     // defaultState - default state for anon's bar (hidden|shown); if null, it's dynamic
-	getAnonData: function (defaultState = null) {
+	getAnonData: function ( defaultState ) {
 		var key = this.getCookieKey(),
 			data = $.cookie(key),
 			hidden = null;
 
 		if (data === null && !this.isMainWikiaBarLang()) {
 			//first time and data storage is empty let's hide the bar if it IS NOT a main language wiki
-			hidden = (defaultState === null ? true : defaultState);
+			hidden = (typeof defaultState !== 'undefined') ? defaultState : true ;
 		} else if (data === null && this.isMainWikiaBarLang()) {
 			//first time and data storage is empty let's hide the bar if it IS a main language wiki
-			hidden = (defaultState === null ? false : defaultState);
+            hidden = (typeof defaultState !== 'undefined') ? defaultState : false ;
 		} else {
 			hidden = (data === 'true'); //all data in cookies is saved as strings
 		}
