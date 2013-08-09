@@ -408,18 +408,12 @@ class EditAccount extends SpecialPage {
 			// All clear!
 
 			$mStatusMsg = wfMsg( 'editaccount-success-close', $user->mName );
+			return true;
 
-			return array(
-			 'status' => 'success',
-			 'message' => $mStatusMsg
-			 );
 		} else {
 			// There were errors...inform the user about those
 			$mStatusMsg = wfMsg( 'editaccount-error-close', $user->mName );
-			return array(
-			 'status' => 'fail',
-			 'message' => $mStatusMsg
-			 );
+			return false;
 		}
 	}
 

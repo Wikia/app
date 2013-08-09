@@ -23,7 +23,9 @@ fwrite( $stdOut, "Attempting to disable user account: " . $userId. "\n" );
 $user = User::newFromId($userId);
 
 $title = Title::newFromText('EditAccount', NS_SPECIAL);
-$result = EditAccount::closeAccount( 'Spamming', $user, $title);
-fwrite( $stdOut, "Status: " . $result['status'] . "\nMessage: " . $result['message'] . "\n" );
+$statusMessage = NULL;
+
+$result = EditAccount::closeAccount( 'Spamming', $user, $title, $statusMessage);
+fwrite( $stdOut, "Status: " . ( $result ? 'SUCCESS' : 'FAIL' ) . "\nMessage: " . $statusMessage . "\n" );
 fwrite( $stdOut, "__________________________________________________________\n" );
 fclose( $stdOut );
