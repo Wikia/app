@@ -11,7 +11,6 @@ $wgAutoloadClasses['WallNotificationsOwner'] = $dirExt . '/WallNotificationsOwne
 $wgAutoloadClasses['WallNotificationOwnerEntity'] = $dirExt . '/WallNotificationOwnerEntity.class.php';
 
 $wgAutoloadClasses['BaseNotificationEntity'] = $dirExt . '/BaseNotificationEntity.class.php';
-$wgAutoloadClasses['NotificationEntityDecorator'] = $dirExt . '/NotificationEntityDecorator.class.php';
 $wgAutoloadClasses['WallNotificationEntity'] = $dirExt . '/WallNotificationEntity.class.php';
 $wgAutoloadClasses['WallNotificationsController'] = $dirExt . '/WallNotificationsController.class.php';
 $wgAutoloadClasses['WallNotificationsExternalController'] = $dirExt . '/WallNotificationsExternalController.class.php';

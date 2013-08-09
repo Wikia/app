@@ -1,5 +1,5 @@
 <?php
-class WallNotificationEntity extends NotificationEntityDecorator {
+class WallNotificationEntity extends BaseNotificationEntity {
 	/**
 	 * @var BaseNotificationEntity $notificationEntity
 	 */
