@@ -135,7 +135,7 @@ class CorporateHomePageChecker {
 		 * checking noChangeThreshold days total, which means we're counting baseDate too
 		 */
 		for ( $i = 1; $i < $this->noChangeThreshold; $i ++ ) {
-			$datesToCheck [] = date( self::DATE_FORMAT, strtotime( $this->baseDate . " -$i days" ) );
+			$datesToCheck []= date( self::DATE_FORMAT, strtotime( $this->baseDate . " -$i days" ) );
 		}
 
 		foreach ( $corpWikiStatistics as $statKey => $statValue ) {
