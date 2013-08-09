@@ -124,8 +124,6 @@ class BaseNotificationEntity {
 		$this->data_non_cached->parent_title_dbkey = '';
 		$this->data->reason = '';
 
-		wfRunHooks( 'NotificationAfterLoadDataFromRev', [ $this->id, &$this->data, &$this->data_non_cached, $rev, $master ] );
-
 		return true;
 	}
 
