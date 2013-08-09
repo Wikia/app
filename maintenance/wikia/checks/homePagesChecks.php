@@ -21,7 +21,7 @@ echo 'Execution starts ' . date( "Y-m-d H:i:s" );
 echo "\n";
 
 $homePageTest = new CorporateHomePageChecker( $options );
-$homePageTest->run_tests();
+$homePageTest->runTests();
 
 echo 'Execution ends' . date( "Y-m-d H:i:s" );
 echo "\nScript finished running!\n";
@@ -30,10 +30,11 @@ class CorporateHomePageChecker {
 
 	const REPORT_EMAIL_TOPIC = 'Abnormal condition on Corporate Page detected';
 	const NO_STATS_MODULE_FOUND = 'No stats module found on $1';
-	const INVALID_STATS_MODULE_NUMBER = 'Found $1 stats modules instead of $2';
-	const STATISTIC_DID_NOT_CHANGE = 'Statistic $1 did not change on $2';
+	const INVALID_STATS_MODULE_NUMBER = 'Found $1 stats modules instead of $2 on CityID $3';
+	const STATISTIC_DID_NOT_CHANGE = 'Statistic $1 did not change on CityID $2';
 	const DEFAULT_NO_CHANGE_THRESHOLD = 7;
 	const EXPECTED_NUMBER_OF_STAT_MODULES = 6;
+	const DATE_FORMAT = "Y-m-d";
 
 	/**
 	 * @var CorporateHomePageStatisticsStorage
@@ -80,13 +81,13 @@ class CorporateHomePageChecker {
 	 * noChangeThreshold (int) -> how many days of non-changed stat cause an error
 	 */
 	public function __construct( $params ) {
-		$this->baseDate = date( "Y-m-d" );
-		if ( ! empty( $params['noChangeThreshold'] ) ) {
+		$this->baseDate = date( self::DATE_FORMAT );
+		if ( !empty( $params['noChangeThreshold'] ) ) {
 			$this->noChangeThreshold = intval( $params['noChangeThreshold'] );
 		} else {
 			$this->noChangeThreshold = self::DEFAULT_NO_CHANGE_THRESHOLD;
 		}
-		if ( ! empty( $params['watcherEmails'] ) ) {
+		if ( !empty( $params['watcherEmails'] ) ) {
 			$this->watcherEmails = explode( ',', $params['watcherEmails'] );
 		} else {
 			// if no emails are passed, we don't send anything
@@ -99,15 +100,22 @@ class CorporateHomePageChecker {
 		$this->collectedErrors = [ ];
 	}
 
-	public function run_tests() {
+	public function runTests() {
 
 		foreach ( $this->corporateWikis as $wikiId ) {
 			$corpWikiStatistics = $this->processCorporateWikiStats( $wikiId );
 
-			if ( ! $corpWikiStatistics ) {
+			if ( !$corpWikiStatistics ) {
 				$this->collectError( self::NO_STATS_MODULE_FOUND, [ $wikiId ] );
 			} elseif ( count( $corpWikiStatistics ) != self::EXPECTED_NUMBER_OF_STAT_MODULES ) {
-				$this->collectError( self::INVALID_STATS_MODULE_NUMBER, [ count( $corpWikiStatistics ), self::EXPECTED_NUMBER_OF_STAT_MODULES ] );
+				$this->collectError(
+					self::INVALID_STATS_MODULE_NUMBER,
+					[
+						count( $corpWikiStatistics ),
+						self::EXPECTED_NUMBER_OF_STAT_MODULES,
+						$wikiId
+					]
+				);
 			} else {
 				$this->verifyStatsChanged( $wikiId, $corpWikiStatistics );
 			}
@@ -127,7 +135,7 @@ class CorporateHomePageChecker {
 		 * checking noChangeThreshold days total, which means we're counting baseDate too
 		 */
 		for ( $i = 1; $i < $this->noChangeThreshold; $i ++ ) {
-			$datesToCheck [] = date( "Y-m-d", strtotime( $this->baseDate . " -$i days" ) );
+			$datesToCheck [] = date( self::DATE_FORMAT, strtotime( $this->baseDate . " -$i days" ) );
 		}
 
 		foreach ( $corpWikiStatistics as $statKey => $statValue ) {
@@ -137,18 +145,16 @@ class CorporateHomePageChecker {
 			}
 
 			$changed = false;
-			$currentStatValue = $statValue;
 
 			foreach ( $datesToCheck as $date ) {
 				$previousStatValue = $this->dataStorage->getValue( $this->getStatsKey( $date, $wikiId, $statKey ) );
 
-				if ( $currentStatValue != $previousStatValue ) {
+				if ( $statValue != $previousStatValue ) {
 					$changed = true;
 					break;
 				}
-				$currentStatValue = $previousStatValue;
 			}
-			if ( ! $changed ) {
+			if ( !$changed ) {
 				$this->collectError( self::STATISTIC_DID_NOT_CHANGE, [ $statKey, $wikiId ] );
 			}
 		}
@@ -164,10 +170,10 @@ class CorporateHomePageChecker {
 	private function processCorporateWikiStats( $wikiId ) {
 		$corpWikiStatistics = $this->getStatisticsModulesContents( $wikiId );
 
-		if ( ! empty( $corpWikiStatistics ) ) {
+		if ( !empty( $corpWikiStatistics ) ) {
 			foreach ( $corpWikiStatistics as $statKey => $statValue ) {
 				// only store modules that we care for
-				if ( ! in_array( $statKey, $this->excludedModules ) ) {
+				if ( !in_array( $statKey, $this->excludedModules ) ) {
 					$this->dataStorage->setValue( $this->getStatsKey( $this->baseDate, $wikiId, $statKey ), $statValue );
 				}
 			}
@@ -180,7 +186,12 @@ class CorporateHomePageChecker {
 	}
 
 	private function collectError( $errMessage, $data ) {
-		$this->collectedErrors [] = wfMessage( $errMessage, $data )->text();
+		// no need to use wfMessage here and use Parser
+		$parsedMessage = $errMessage;
+		for ( $i = 1; $i <= count( $data ); $i++ ) {
+			$parsedMessage = mb_ereg_replace( "\\\$$i", $data[$i - 1], $parsedMessage );
+		}
+		$this->collectedErrors[] = $parsedMessage;
 	}
 
 	/**
@@ -191,7 +202,7 @@ class CorporateHomePageChecker {
 	 */
 	private function sendErrors() {
 		$result = false;
-		if ( ! empty( $this->collectedErrors ) ) {
+		if ( !empty( $this->collectedErrors ) ) {
 			$errorList = implode( "\n", $this->collectedErrors );
 			foreach ( $this->watcherEmails as $email ) {
 				UserMailer::send( new MailAddress( $email ), new MailAddress( $email ), self::REPORT_EMAIL_TOPIC, $errorList );
@@ -220,7 +231,7 @@ class CorporateHomePageChecker {
 
 		$htmlContents = file_get_contents( $url );
 
-		if ( ! empty( $htmlContents ) ) {
+		if ( !empty( $htmlContents ) ) {
 			echo " - success\n";
 		} else {
 			echo " - failed\n";
@@ -241,9 +252,9 @@ class CorporateHomePageChecker {
 		$matches = [ ];
 
 		preg_match_all( $regex, $html, $matches );
-		if ( ! empty( $matches[1] ) && count( $matches[1] ) == 6 ) {
+		if ( !empty( $matches[1] ) && count( $matches[1] ) == self::EXPECTED_NUMBER_OF_STAT_MODULES ) {
 			$output = $matches[1];
-			$this->normalizeNumbersArray( $output );
+			$output = $this->normalizeNumbersArray( $output );
 		} else {
 			$output = [ ];
 		}
@@ -251,10 +262,17 @@ class CorporateHomePageChecker {
 		return $output;
 	}
 
-	private function normalizeNumbersArray( &$array ) {
-		foreach ( $array as &$value ) {
-			$value = intval( preg_replace( '#\D#imsU', '', $value ) );
+	/**
+	 * @param $array
+	 * @return $array
+	 */
+	private function normalizeNumbersArray( $array ) {
+		$newArray = [];
+		foreach ( $array as $key => $value ) {
+			$newArray[$key] = intval( preg_replace( '#\D#imsU', '', $value ) );
 		}
+
+		return $newArray;
 	}
 
 }
