@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-require(['uifactory', 'uicomponent'], function(uiFactory, uiComponent){
+require(['wikia.uifactory', 'wikia.uicomponent'], function(uiFactory, uiComponent){
 
 	console.log(uiFactory);
 	var test = new uiComponent;
