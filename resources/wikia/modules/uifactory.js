@@ -101,7 +101,7 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.deferred', 'wikia.uicomponent
 	/**
 	 * Add scripts to DOM
 	 *
-	 * @param {[]} scripts Array wiwith links for JS files
+	 * @param {[]} scripts Array with links for JS files
 	 */
 
 	function addScriptsToDOM(scripts) {

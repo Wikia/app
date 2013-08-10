@@ -1,7 +1,7 @@
 /**
  * JS version of Component.class.php - part of UI repo API for rendering components
  *
- * UIComponent handles rendering component w
+ * UIComponent handles rendering component
  *
  * @author Rafal Leszczynski <rafal@wikia-inc.com>
  *
