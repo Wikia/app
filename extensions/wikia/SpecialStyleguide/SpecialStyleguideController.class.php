@@ -22,7 +22,10 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 
 		RenderContentOnlyHelper::setRenderContentVar( true );
 		RenderContentOnlyHelper::setRenderContentLevel( RenderContentOnlyHelper::LEAVE_NAV_ONLY );
+		$this->response->addAsset( 'ui_repo_api_js' );
+		$this->response->addAsset( 'extensions/wikia/SpecialStyleguide/test.js' );
 		$this->response->addAsset( 'extensions/wikia/SpecialStyleguide/css/SpecialStyleguide.scss' );
+
 		$this->wg->Out->setPageTitle( wfMessage( 'styleguide-pagetitle' )->plain() );
 
 		$wgAutoloadClasses['GlobalHeaderController'] = dirname( __FILE__ ) . '/helpers/SpecialStyleguideGlobalHeaderControllerOverride.php';
