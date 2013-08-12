@@ -387,7 +387,7 @@ class DataMartService extends Service {
 	 * @return array $events [ array( 'YYYY-MM-DD' => pageviews ) ]
 	 * Note: number of edits includes number of creates
 	 */
-	public static function getEventsByWikiId ($periodId, $startDate, $endDate = null, $wikiId = null, $userId = null, $eventType = null) {
+	protected static function getEventsByWikiId ($periodId, $startDate, $endDate = null, $wikiId = null, $eventType = null) {
 		$app = F::app();
 
 		wfProfileIn(__METHOD__);
@@ -404,17 +404,7 @@ class DataMartService extends Service {
 			}
 		}
 
-		$cond = array(
-			'period_id' => $periodId,
-			'wiki_id' => $wikiId,
-			"time_id between '$startDate' and '$endDate'"
-		);
-
-		if(!empty($userId)) {
-			$cond['user_id'] = $userId;
-		}
-
-		$memKey = wfSharedMemcKey('datamart', 'events', $wikiId, $userId, $periodId, $startDate, $endDate);
+		$memKey = wfSharedMemcKey('datamart', 'events', $wikiId, $periodId, $startDate, $endDate);
 		$events = $app->wg->Memc->get($memKey);
 		if (!is_array($events)) {
 			$events = array();
@@ -424,7 +414,9 @@ class DataMartService extends Service {
 				$result = $db->select(
 					array('rollup_wiki_namespace_user_events'),
 					array("date_format(time_id,'%Y-%m-%d') as date, sum(creates) creates, sum(edits) edits, sum(deletes) deletes, sum(undeletes) undeletes"),
-					$cond,
+					array('period_id' => $periodId,
+						'wiki_id' => $wikiId,
+						"time_id between '$startDate' and '$endDate'"),
 					__METHOD__,
 					array('GROUP BY' => 'date, wiki_id')
 				);
