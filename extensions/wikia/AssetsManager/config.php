@@ -318,18 +318,14 @@ $config['gameguides_js'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		'//extensions/wikia/GameGuides/js/initGameGuides.js',
-		'#group_wikiamobile_js_head',
+		'//extensions/wikia/WikiaMobile/js/html_js_class.js',
 
 		//libraries/frameworks
 		'//resources/wikia/libraries/modil/modil.js',
+		'//resources/jquery/jquery-2.0.3.js',
 		'//resources/wikia/libraries/Ponto/ponto.js',
 
-		// deferred.js - jQuery-free implementation (BugId:34943)
-		'//resources/wikia/libraries/deferred/deferred.js',
-		'//resources/wikia/libraries/deferred/deferred.api.js',
-
 		//core modules
-		'//resources/wikia/modules/deferred.js',
 		'//resources/wikia/modules/window.js',
 		'//resources/wikia/modules/location.js',
 		'//resources/wikia/modules/nirvana.js',
@@ -358,8 +354,12 @@ $config['gameguides_js'] = array(
 		'#group_wikiamobile_scroll_js',
 		'#group_wikiamobile_mediagallery_js',
 
+		//video
+		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
+
 		//modules
-		'//resources/wikia/modules/ajax.js',
+		'//resources/wikia/modules/thumbnailer.js',
+		'//resources/wikia/libraries/sloth/sloth.js',
 		'//extensions/wikia/WikiaMobile/js/toc.js',
 		'//extensions/wikia/WikiaMobile/js/lazyload.js',
 		'//extensions/wikia/WikiaMobile/js/track.js',
@@ -372,10 +372,6 @@ $config['gameguides_js'] = array(
 		'//extensions/wikia/WikiaMobile/js/media.js',
 		'//extensions/wikia/WikiaMobile/js/sections.js',
 		'//extensions/wikia/WikiaMobile/js/layout.js',
-		'//resources/wikia/modules/thumbnailer.js',
-
-		//video
-		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
@@ -405,16 +401,6 @@ $config['wikiamobile_404_js'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		'//extensions/wikia/WikiaMobile/js/404.js',
-	)
-);
-
-//loaded at the top of the page in the head section
-$config['wikiamobile_js_head'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
-		//set js class as fast as possible to make styling as fast as possible
-		'//extensions/wikia/WikiaMobile/js/html_js_class.js',
 	)
 );
 
