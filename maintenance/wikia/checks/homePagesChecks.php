@@ -270,7 +270,6 @@ class CorporateHomePageChecker {
  * Class CorporateHomePageStatisticsStorage
  * basically, any key-value storage implementation
  * can be used here
- * TODO: add proper implementation
  */
 class CorporateHomePageStatisticsStorage {
 
