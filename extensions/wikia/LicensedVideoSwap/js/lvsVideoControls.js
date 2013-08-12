@@ -96,7 +96,7 @@ define( 'lvs.videocontrols', [ 'wikia.videoBootstrap', 'wikia.nirvana', 'jquery'
 				},
 				callback: function( data ) {
 					var videoInstance,
-						vbIdx;
+						vbIndex;
 
 					// Remove styles of previous video
 					removeVerticalAlign( $element );
@@ -112,12 +112,12 @@ define( 'lvs.videocontrols', [ 'wikia.videoBootstrap', 'wikia.nirvana', 'jquery'
 					 * If the wrapper element already has a player in it, switch it for this new one.
 					 * If not, add it to the videoInstances array.
 					 */
-					vbIdx = $element.data( 'vb-index');
-					if ( vbIdx === undef ) {
+					vbIndex = $element.data( 'vb-index');
+					if ( vbIndex === undef ) {
 						$element.data( 'vb-index', videoInstances.length );
 						videoInstances.push( videoInstance );
 					} else {
-						videoInstances.splice( vbIdx, 1, videoInstance );
+						videoInstances.splice( vbIndex, 1, videoInstance );
 					}
 				}
 			});
