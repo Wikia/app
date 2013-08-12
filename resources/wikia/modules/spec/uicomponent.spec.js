@@ -1,4 +1,5 @@
 describe('UICompnent', function(){
+	'use strict';
 
 	var mustache = {
 			render: function(template, params) {
