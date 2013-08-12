@@ -387,7 +387,7 @@ class DataMartService extends Service {
 	 * @return array $events [ array( 'YYYY-MM-DD' => pageviews ) ]
 	 * Note: number of edits includes number of creates
 	 */
-	public static function getEventsByWikiId ($periodId, $startDate, $endDate = null, $wikiId = null, $userId = null, $eventType = null) {
+	public static function getEventsByWikiId ($periodId, $startDate, $endDate = null, $wikiId = null, $eventType = null, $userId = null) {
 		$app = F::app();
 
 		wfProfileIn(__METHOD__);
