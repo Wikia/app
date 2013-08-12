@@ -300,18 +300,6 @@ class CorporateHomePageStatisticsStorage {
 
 		// insert or update
 		$db->replace( '`common_key_value`', [ '`key`', '`value`' ], [ '`key`' => $key, '`value`' => $value ], __METHOD__ );
-
-		/*
-		$db->query(
-			'REPLACE INTO `common_key_value` VALUES ('
-			. $key
-			. ', '
-			. $value
-			. ')',
-			__METHOD__
-		);
-		*/
-
 	}
 
 	/**
