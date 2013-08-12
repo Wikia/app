@@ -15,12 +15,17 @@ require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 require_once( dirname( __FILE__ ) . '/../../lib/vendor/php-rql/rdb/rdb.php' );
 
 class RethinkDBTest extends Maintenance {
-	private $host = "dev-eloy";
-	private $port = "28016";
+	private $host = "dev-moli";
+	private $port = "28015";
 	private $db = "links";
 	private $table = "categorylinks";
 	private $datacenter = "devbox";
 	private $durability = 'hard';
+	private $cache_size = 1024;
+	
+	private $mysql_table = 'categorylinks_test';
+	private $mysql_db = 'wikia';
+	
 	private $conn = null;
 	
 	public function __construct() {
@@ -37,6 +42,7 @@ class RethinkDBTest extends Maintenance {
 		$this->addOption( 'package', 'Number of records in one package', false, true );
 		$this->addOption( 'limit', 'Limit result', false, true );
 		$this->addOption( 'durability', 'Hard or soft durability', false, true );
+		$this->addOption( 'cache_size', 'Size of cache', false, true );
 	}
 
 	public function execute() {
@@ -51,6 +57,7 @@ class RethinkDBTest extends Maintenance {
 		$info = $this->hasOption( 'info' );
 		$package = $this->getOption( 'package', 100 );
 		$limit = $this->getOption( 'limit', 100000 );
+		$this->cache_size = $this->getOption( 'cache_size', $this->cache_size );
 		$this->durability = $this->getOption( 'durability', 'hard' );
 		
 		$this->output( "Use " . r\systemInfo() . "\r\n" );
@@ -71,21 +78,21 @@ class RethinkDBTest extends Maintenance {
 			);
 
 			$data = array();
-			$i = 0;
+			$i = 1;
 			$y = 0;
 			while ( $row = $dbr->fetchObject($res) ) {
 				if ( ( $i % $package ) == 0 ) {
 					$y++;
 				}
 				$data[ $y ][] = array(
-					'id'       => $i,
-					'to'       => $row->cl_to,
-					'title'    => $row->page_title,
-					'pid' 	   => $row->page_id,
-					'ns'       => $row->page_namespace,
+					'id'    => $i,
+					'cl_to'    => $row->cl_to,
+					'cl_title' => $row->page_title,
+					'cl_pid'   => $row->page_id,
+					'cl_ns'    => $row->page_namespace,
 					'cl_type'  => $row->cl_type,
 					'cl_ts'    => $row->cl_timestamp,
-					'sort'     => $row->cl_sortkey
+					'cl_sort'  => $row->cl_sortkey
 				);
 				$i++;
 			}
@@ -135,7 +142,13 @@ class RethinkDBTest extends Maintenance {
 	private function db_connect() {
 		$this->output("Connect to RethinkDB\r\n");
 		$start = microtime( true );
-		$this->conn = r\connect( $this->host, $this->port );
+		try {
+			$this->conn = r\connect( $this->host, $this->port );
+		} catch (RqlDriverError $e) {
+			echo $e->getMessage() . "\n";
+		} catch (Exception $e) { 
+			echo sprintf( "Cannot connect to RDB: %s \n", $e->getMessage() ); exit(0);
+		}  
 		$delta = microtime( true ) - $start;
 		$this->output( sprintf( "\tConnected in %0.2f secs\r\n", $delta ) );
 	}
@@ -175,6 +188,19 @@ class RethinkDBTest extends Maintenance {
 		$global_delta = microtime( true ) - $global_start;
 		$this->output( sprintf( "\tRDB updated in %0.2f secs\r\n", $global_delta ) ); 
 		$this->db_close();
+		
+		# insert the same data to mysql
+		$this->output( sprintf( "\tInsert data to MySQL \n" ) );
+		$global_start = microtime( true );
+		$dbw = wfGetDB( DB_MASTER, array(), $this->mysql_db );
+		foreach ( $data as $package ) {
+			$start = microtime( true );
+			$dbw->insert( $this->mysql_table, $package, __METHOD__ );
+			$delta = microtime( true ) - $start;
+			$this->output( sprintf( "\t\t%d records added in %0.2f secs: %s\r\n", count( $package), $delta, $result ) );
+		}
+		$global_delta = microtime( true ) - $global_start;
+		$this->output( sprintf( "\tMySQL updated in %0.2f secs\r\n", $global_delta ) ); 
 	}
 	
 	private function db_delete() {
@@ -189,9 +215,9 @@ class RethinkDBTest extends Maintenance {
 		$this->db_close();
 		
 		$start = microtime( true );
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER, array(), $this->mysql_db );
 		$this->output( "Remove data from MySQL database\r\n" ); 
-		$dbw->delete( 'categorylinks_test', '*', __METHOD__ );
+		$dbw->delete( $this->mysql_table, '*', __METHOD__ );
 		$delta = microtime( true ) - $start;
 		$this->output( sprintf( "MySQL updated in %0.2f secs\r\n", $delta ) ); 
 	}
@@ -206,6 +232,14 @@ class RethinkDBTest extends Maintenance {
 		$this->output( sprintf( "\tData ($key, $value) updated in %0.2f secs: %s\r\n", $delta, $result ) );
 		
 		$this->db_close();
+		
+		# insert the same data to mysql
+		$this->output( sprintf( "\tUpdate MySQL \n" ) );
+		$global_start = microtime( true );
+		$dbw = wfGetDB( DB_MASTER, array(), $this->mysql_db );
+		$dbw->update( $this->mysql_table, array( "$key" => "$value" ), array() ,__METHOD__ );
+		$global_delta = microtime( true ) - $global_start;
+		$this->output( sprintf( "\tRDB updated in %0.2f secs\r\n", $global_delta ) ); 
 	}
 	
 	private function db_drop() {
@@ -237,18 +271,25 @@ class RethinkDBTest extends Maintenance {
 		
 		# create table
 		$start = microtime( true );
-		$result = r\db( $this->db )->tableCreate( $this->table, array( 'datacenter' => $this->datacenter, 'durability' => $this->durability ) )->run( $this->conn );
+		$result = r\db( $this->db )->tableCreate( 
+			$this->table, 
+			array( 
+				'datacenter' => $this->datacenter, 
+				'durability' => $this->durability, 
+				'cache_size' => $this->cache_size
+			) 
+		)->run( $this->conn );
 		$delta = microtime( true ) - $start;
 		$this->output( sprintf( "\tTable created in %0.2f secs: %s\r\n", $delta, $result ) );	
 		
 		# create index
 		$start = microtime( true );
-		$result = r\db( $this->db )->table( $this->table )->indexCreate( 'pid' )->run( $this->conn );
+		$result = r\db( $this->db )->table( $this->table )->indexCreate( 'cl_pid' )->run( $this->conn );
 		$delta = microtime( true ) - $start;
 		$this->output( sprintf( "\tIndex created in %0.2f secs: %s\r\n", $delta, $result ) );
 		
 		$start = microtime( true );
-		$result = r\db( $this->db )->table( $this->table )->indexCreate( 'title' )->run( $this->conn );
+		$result = r\db( $this->db )->table( $this->table )->indexCreate( 'cl_title' )->run( $this->conn );
 		$delta = microtime( true ) - $start;
 		$this->output( sprintf( "\tIndex created in %0.2f secs: %s\r\n", $delta, $result ) );	
 		

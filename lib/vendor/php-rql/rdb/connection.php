@@ -195,7 +195,7 @@ class Connection
     }
     
     private function receiveProtobuf() {
-        $responseSize = stream_get_contents($this->socket, 4);
+        $responseSize = @stream_get_contents($this->socket, 4);
         if ($responseSize === false || strlen($responseSize) < 4) {
             $this->close();
             throw new RqlDriverError("Unable to read from socket. Disconnected.");
@@ -213,7 +213,7 @@ class Connection
     private function connect() {
         if ($this->isOpen()) throw new RqlDriverError("Already connected");
     
-        $this->socket = stream_socket_client("tcp://" . $this->host . ":" . $this->port, $errno, $errstr);
+        $this->socket = @stream_socket_client("tcp://" . $this->host . ":" . $this->port, $errno, $errstr);
         if ($errno != 0 || $this->socket === false) {
             $this->socket = null;
             throw new RqlDriverError("Unable to connect: " . $errstr);
