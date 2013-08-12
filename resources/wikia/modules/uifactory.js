@@ -19,7 +19,7 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'w
 	 * @return {{}} promise with components configs
 	 */
 
-	function getComponentConfig(components) {
+	function getComponentsConfig(components) {
 
 		var deferred = new Deferred,
 			data = {
@@ -28,11 +28,11 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'w
 		};
 
 		nirvana.getJson(
-			'[controller_name]',
-			'[method_name]',
+			'Wikia\\UI\\UIFactory',
+			'getComponentsConfig',
 			data,
-			function(configs) {
-					deferred.resolve(configs);
+			function(data) {
+					deferred.resolve(data);
 			},
 			function() {
 				deferred.reject();
@@ -134,12 +134,17 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'w
 			componentName = [].push(componentName);
 		}
 
-		getComponentConfig(componentName).done(function(configsArray) {
+		getComponentsConfig(componentName).done(function(data) {
+
+			if (!data.status) {
+				deferred.reject();
+				throw new Error(data.errorMessage);
+			}
 
 			var jsAssets = [],
 				cssAssets = [];
 
-			configsArray.forEach(function(element) {
+			data.components.forEach(function(element) {
 
 				var component = getComponentInstance(),
 					templateVars = element['templateVars'],
@@ -151,7 +156,7 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'w
 					cssAssets = cssAssets.concat(dependencies['css']);
 				}
 
-				if (templateVars) {
+				if (templateVars && templates) {
 					component.setComponentsConfig(templates, templateVars);
 				}
 
