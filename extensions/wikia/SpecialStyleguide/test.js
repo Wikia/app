@@ -11,6 +11,8 @@ require(['wikia.uifactory', 'wikia.uicomponent'], function(uiFactory, uiComponen
 	console.log(uiFactory);
 	var test = new uiComponent;
 	console.log(test);
+	var test2 = uiComponent();
+	console.log(test2);
 
 	uiFactory.init('button').done(function(button) {
 		var params = {},

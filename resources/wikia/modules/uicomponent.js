@@ -14,7 +14,9 @@ define('wikia.uicomponent',['wikia.mustache'], function (mustache) {
 
 		var componentConfig,
 			componentType,
-			componentVars;
+			componentVars,
+			// preventing this from pointing to Global Object if by accident UIComponent is called without "new"
+			that = (!this instanceof UIComponent) ? {} : this;
 
 		/**
 		 * Set template name for rendering this component
@@ -97,7 +99,7 @@ define('wikia.uicomponent',['wikia.mustache'], function (mustache) {
 		 * @return {String} html markup for the component
 		 */
 
-		this.render = function(params) {
+		that.render = function(params) {
 
 			setComponentType(params['type']);
 			setComponentVars(params['vars']);
@@ -114,10 +116,12 @@ define('wikia.uicomponent',['wikia.mustache'], function (mustache) {
 		 * @param {{}} templateVars object with accepted template variables
 		 */
 
-		this.setComponentsConfig = function(templates, templateVars) {
+		that.setComponentsConfig = function(templates, templateVars) {
 			componentConfig['templates'] = templates;
 			componentConfig['templatesVars'] = templateVars;
 		};
+
+		return that;
 
 	}
 
