@@ -11,8 +11,7 @@ define( 'lvs.videocontrols', [ 'wikia.videoBootstrap', 'wikia.nirvana', 'jquery'
 	 * the vb instance it contains. That way we can add and splice vb's into the
 	 * videoInstances array as they get switched out on the page.
 	 */
-	var videoInstances = [],
-		undef;
+	var videoInstances = [];
 
 	function setVerticalAlign( $element, video ) {
 		// TODO: once height is set dynamically, let this function run.
@@ -113,7 +112,7 @@ define( 'lvs.videocontrols', [ 'wikia.videoBootstrap', 'wikia.nirvana', 'jquery'
 					 * If not, add it to the videoInstances array.
 					 */
 					vbIndex = $element.data( 'vb-index');
-					if ( vbIndex === undef ) {
+					if ( !vbIndex ) {
 						$element.data( 'vb-index', videoInstances.length );
 						videoInstances.push( videoInstance );
 					} else {
