@@ -451,19 +451,19 @@ class DataMartService extends Service {
 	/**
 	 * get user edits by user and wiki Id
 	 * @param integer $periodId
-	 * @param integer $userId
+	 * @param integer|array $userIds
 	 * @param string $startDate [YYYY-MM-DD]
 	 * @param string $endDate [YYYY-MM-DD]
 	 * @param integer $wikiId
-	 * @return array $events [ array( 'user_id' => array() ) ]
+	 * @return array $events [ array( 'user_id' => 'YYYY-MM-DD' => array() ) ]
 	 * Note: number of edits includes number of creates
 	 */
-	public static function getUserEditsByWikiId ($periodId, $userId, $startDate, $endDate = null, $wikiId = null) {
+	public static function getUserEditsByWikiId ($periodId, $userIds, $startDate, $endDate = null, $wikiId = null) {
 		$app = F::app();
 
 		wfProfileIn(__METHOD__);
 
-		if ( empty($userId) ) {
+		if ( empty($userIds) ) {
 			return false;
 		}
 
@@ -473,50 +473,80 @@ class DataMartService extends Service {
 
 		if (empty($endDate)) {
 			if ($periodId == self::PERIOD_ID_MONTHLY) {
+				// date from begining of month
 				$endDate = date('Y-m-01');
 			} else {
+				// date from last day
 				$endDate = date('Y-m-d', strtotime('-1 day'));
 			}
 		}
 
-		$cond = array(
-			'period_id' => $periodId,
-			'wiki_id' => $wikiId,
-			"time_id >= '$startDate' and time_id < '$endDate'",
-			'user_id' => $userId
-		);
+		// this is made because memcache key has character limit and a long
+		// list of user ids can be passed so we need to have it shorter
+		$userIdsKey = $this->makeUserIdsMemCacheKey($userIds);
 
-		$memKey = wfSharedMemcKey('datamart', 'user_edits', $wikiId, $userId, $periodId, $startDate, $endDate);
-		$events = $app->wg->Memc->get($memKey);
-		if (!is_array($events)) {
-			$events = array();
-			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+		$events = WikiaDataAccess::cache(
+			wfSharedMemcKey('datamart', 'user_edits', $wikiId, $userIdsKey, $periodId, $startDate, $endDate),
+			60 * 60 * 24,
+			function () use ($wikiId, $userIds, $periodId, $startDate, $endDate) {
+				$events =[];
+				if (!empty($app->wg->StatsDBEnabled)) {
+					$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 
-				$result = $db->select(
-					array('rollup_wiki_namespace_user_events'),
-					array("user_id, date_format(time_id,'%Y-%m-%d') as date, sum(creates) creates, sum(edits) edits, sum(deletes) deletes, sum(undeletes) undeletes"),
-					$cond,
-					__METHOD__,
-					array('GROUP BY' => 'user_id, date, wiki_id')
-				);
+					$table = 'rollup_wiki_namespace_user_events';
 
-				while ($row = $db->fetchObject($result)) {
-					$events[$row->user_id] = array(
-						'creates' => $row->creates,
-						'edits' => $row->creates + $row->edits,
-						'deletes' => $row->deletes,
-						'undeletes' => $row->undeletes,
+					$vars = [
+						'user_id',
+						"date_format(time_id,'%Y-%m-%d') as date",
+						'sum(creates) creates',
+						'sum(edits) edits',
+						'sum(deletes) deletes',
+						'sum(undeletes) undeletes'
+					];
+
+					$conds = [
+						'period_id' => $periodId,
+						'wiki_id' => $wikiId,
+						"time_id >= '$startDate' and time_id < '$endDate'",
+						'user_id' => $userIds
+					];
+
+					$options = [
+						'GROUP BY' => 'user_id, date, wiki_id'
+					]
+
+					$result = $db->select(
+						$table,
+						$vars,
+						$conds,
+						__METHOD__,
+						$options
 					);
-				}
 
-				$app->wg->Memc->set($memKey, $events, 60 * 60 * 12);
+					while ($row = $db->fetchObject($result)) {
+						$events[$row->user_id][$row->date] = [
+							'creates' => $row->creates,
+							'edits' => $row->creates + $row->edits,
+							'deletes' => $row->deletes,
+							'undeletes' => $row->undeletes,
+						];
+					}
+				}
+				return $events;
 			}
-		}
+		);
 
 		wfProfileOut(__METHOD__);
 
 		return $events;
+	}
+
+	private function makeUserIdsMemCacheKey($userIds) {
+		$idsKey = implode(',', $userIds);
+		if ( strlen($idsKey) > 150 ) {
+			$idsKey = md5($idsKey);
+		}
+		return $idsKey;
 	}
 
 	// get daily edits
