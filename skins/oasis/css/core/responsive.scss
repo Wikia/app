@@ -192,7 +192,6 @@ body {
 		}
 
 		&:before {
-			background-position: 0;
 			// The extra 0.1% fixes sub-pixel rendering issues in Safari (DAR-1052)
 			left: 50.1%;
 			margin-left: -$background-width-half;
