@@ -66,11 +66,10 @@ class UserLoginForm extends LoginForm {
 			return false;
 		}
 
-		// reset password
-		$tempUser = TempUser::getTempUserFromName( $this->mUsername );
-		$tempUser->setPassword('');
-		$tempUser->updateData();
-		$u = $tempUser->mapTempUserToUser( false, $u );
+		// Wipe the initial password and mail a temporary one
+		$u->setPassword( null );
+		$u->saveSettings();
+		$result = $this->mailPasswordInternal( $u, false, 'createaccount-title', 'createaccount-text' );
 
 		// add log
 		$userLoginHelper = (new UserLoginHelper);
@@ -222,11 +221,11 @@ class UserLoginForm extends LoginForm {
 		$this->errParam = $errParam;
 	}
 
-	public function initUser( $u, $autocreate, $createTempUser = true ) {
+	public function initUser( $u, $autocreate, $skipConfirm = false ) {
 		global $wgAuth, $wgExternalAuthType;
 
 		// for FBconnect we don't want to create temp users
-		if ($createTempUser === false) {
+		if ( $skipConfirm === true ) {
 			return parent::initUser($u, $autocreate);
 		} else {
 			$res = parent::initUser($u, $autocreate);

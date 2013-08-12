@@ -642,6 +642,7 @@ class ContactForm extends SpecialPage {
 		}
 
 		// check if exist in tempUser
+		// @TODO get rid of TempUser handling when it will be globally disabled
 		if ( TempUser::getTempUserFromName( $userName ) ) {
 			$this->err[] = wfMsg( 'userlogin-error-userexists' );
 			$this->errInputs['wpUserNameNew'] = true;
