@@ -459,10 +459,11 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 
 	.LightboxHeader {
 		border-bottom: 1px solid $color-lightbox-border;
-		height: 50px;
+		box-sizing: border-box;
+		height: 80px;
 		padding: 20px 20px 10px;
 		top: 0;
-		width: 960px;
+		width: 100%;
 		z-index: 2;
 		h1 {
 			float: left;

@@ -152,8 +152,8 @@ $.confirm = function(options) {
 
 	html += '<p>' + (options.content || '') + '</p>' +
 		'<div class="neutral modalToolbar">' +
-		'<button id="WikiaConfirmCancel" class="wikia-button secondary">' + (options.cancelMsg || 'Cancel') + '</button>' +
-		'<button id="WikiaConfirmOk" class="wikia-button">' + (options.okMsg || 'Ok') + '</button>' +
+		'<button id="WikiaConfirmCancel" class="wikia-button secondary">' + (options.cancelMsg || $.msg( 'cancel' )) + '</button>' +
+		'<button id="WikiaConfirmOk" class="wikia-button">' + (options.okMsg || $.msg( 'ok' )) + '</button>' +
 		'</div>';
 
 	var dialog = $('<div>').
