@@ -315,7 +315,7 @@ class CorporateHomePageStatisticsStorage {
 		$result = $db->select( 'common_key_value', [ '`value`' ], [ '`key`' => $key ], __METHOD__ );
 		$row = $result->fetchRow();
 		if ( $row ) {
-			$value = $row->value;
+			$value = $row[ 'value' ];
 		}
 
 		return $value;
