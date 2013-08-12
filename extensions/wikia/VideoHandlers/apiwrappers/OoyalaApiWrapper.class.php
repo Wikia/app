@@ -152,48 +152,6 @@ class OoyalaApiWrapper extends ApiWrapper {
 		return rtrim( $sig, '=' );
 	}
 
-	/**
-	 * get video player id
-	 * @param integer $videoId
-	 * @return integer $videoPlayerId
-	 */
-	public static function getPlayerId ( $videoId ) {
-		wfProfileIn( __METHOD__ );
-
-		$videoPlayerId = '';
-
-		// get url
-		$method = 'GET';
-		$reqPath = '/v2/assets/'.$videoId.'/player';
-		$url = self::getApi( $method, $reqPath );
-
-		// send request
-		$req = MWHttpRequest::factory( $url );
-		$status = $req->execute();
-		if( $status->isOK() ) {
-			$response = $req->getContent();
-			$return = json_decode( $response, true );
-			if ( !empty( $return['id'] ) ) {
-				$videoPlayerId = $return['id'];
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $videoPlayerId;
-	}
-
-	/**
-	 * add playerId to video for interfaceObj
-	 * @param array $return
-	 * @return array $return
-	 */
-	protected function postProcess( $return ) {
-		$return['playerid'] = self::getPlayerId ( $this->videoId );
-
-		return $return;
-	}
-
 	protected function loadMetadata( array $overrideFields = array() ) {
 		if ( !isset( $overrideFields['source'] ) ) {
 			$overrideFields['source'] = $this->getSource();
@@ -206,9 +164,6 @@ class OoyalaApiWrapper extends ApiWrapper {
 		}
 		if ( !isset($overrideFields['expirationDate']) ) {
 			$overrideFields['expirationDate'] = $this->getVideoExpirationDate();
-		}
-		if ( !isset($overrideFields['playerId']) ) {
-			$overrideFields['playerId'] = $this->getVideoPlayerId();
 		}
 		if ( !isset( $overrideFields['pageCategories'] ) ) {
 			$overrideFields['pageCategories'] = $this->getPageCategories();
@@ -428,18 +383,6 @@ class OoyalaApiWrapper extends ApiWrapper {
 
 		if ( !empty($this->interfaceObj['metadata']['expirationdate']) ) {
 			return strtotime( $this->interfaceObj['metadata']['expirationdate'] );
-		}
-
-		return '';
-	}
-
-	protected function getVideoPlayerId() {
-		if ( !empty($this->metadata['playerId']) ) {
-			return $this->metadata['playerId'];
-		}
-
-		if ( !empty( $this->interfaceObj['playerid'] ) ) {
-			return $this->interfaceObj['playerid'];
 		}
 
 		return '';
