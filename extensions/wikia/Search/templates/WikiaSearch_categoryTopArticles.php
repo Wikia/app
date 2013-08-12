@@ -2,7 +2,7 @@
 	<article>
 		<h1>
 		<?php
-			$trackingData = 'class="result-link" data-pos="'.$pos.'"' . ( $result->getVar('isArticleMatch') ? 'data-event="search_click_match"' : '' );
+			$trackingData = 'class="result-link" data-pos="'.$pos.'"' . ( $result->getVar('isArticleMatch') ? ' data-event="search_click_match"' : '' );
 		?>
 
 		<a href="<?= $result->getUrl(); ?>" <?=$trackingData;?> ><?= $result->getTitle() ?></a>
@@ -13,6 +13,7 @@
 
 	<?= $result->getText(); ?>
 	<?php if (! empty( $pages ) ) : ?>
+	Ala ma kota
 	<div class="category-articles">
 		<?php $apos = 0; ?>
 		<?php foreach( $pages as $page ): ?>
