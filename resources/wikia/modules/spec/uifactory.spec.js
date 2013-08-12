@@ -18,17 +18,23 @@ describe('UIFactory', function(){
 			}
 		},
 		componentConfig = {
-			templates: {
-				link: '<a href="{{href}}" titile="{{title}}">{{value}}</a>'
-			},
-			templateVars: {
-				required: ['href', 'title', 'value']
-			},
-			dependencies: {
-				css: ['link1', 'link2', 'link3'],
-				js: ['link1', 'link2', 'link3']
-			}
+			status: true,
+			components: [
+				{
+					templates: {
+						link: '<a href="{{href}}" titile="{{title}}">{{value}}</a>'
+					},
+					templateVars: {
+						required: ['href', 'title', 'value']
+					},
+					dependencies: {
+						css: ['link1', 'link2', 'link3'],
+						js: ['link1', 'link2', 'link3']
+					}
+				}
+			]
 		},
+		error = 'Error from backend',
 		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, uiComponent);
 
 	function nirvanaMock(resp) {
@@ -58,14 +64,42 @@ describe('UIFactory', function(){
 
 		uifactory.init(requestedComponent).done(function(component) {
 			expect(component instanceof uiComponent).toBe(true);
+
 			done();
 		});
 	});
 
 	async.it('returns array of components', function(done) {
 		var requestedComponent = ['button1', 'button2'],
-		//TODO: add config
-			componentConfig = {},
+			componentConfig = {
+				status: true,
+				components: [
+					{
+						templates: {
+							link: '<a href="{{href}}" titile="{{title}}">{{value}}</a>'
+						},
+						templateVars: {
+							required: ['href', 'title', 'value']
+						},
+						dependencies: {
+							css: ['link1', 'link2', 'link3'],
+							js: ['link1', 'link2', 'link3']
+						}
+					},
+					{
+						templates: {
+							link: '<a href="{{href}}" titile="{{title}}">{{value}}</a>'
+						},
+						templateVars: {
+							required: ['href', 'title', 'value']
+						},
+						dependencies: {
+							css: ['link1', 'link2', 'link3'],
+							js: ['link1', 'link2', 'link3']
+						}
+					}
+				]
+			},
 			nirvana = nirvanaMock(componentConfig);
 		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, uiComponent);
 
@@ -73,8 +107,24 @@ describe('UIFactory', function(){
 			expect(components.length).toBe(2);
 			expect(components[0] instanceof uiComponent).toBe(true);
 			expect(components[1] instanceof uiComponent).toBe(true);
+
 			done();
 		});
+	});
+
+	async.it('returns error form backend when requesting components', function(done) {
+		var componentConfig = {
+			status: false,
+			message: 'Error from backend'
+			},
+			nirvana = nirvanaMock(componentConfig);
+		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, uiComponent);
+
+		expect(function() {
+			uifactory.init(requestedComponent);
+		}).toThrow(error);
+
+		done();
 	});
 
 	async.it('add assets to DOM', function(done) {
@@ -82,8 +132,6 @@ describe('UIFactory', function(){
 		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, uiComponent);
 
 		uifactory.init(requestedComponent).done(function() {
-
-
 
 			done();
 		});
