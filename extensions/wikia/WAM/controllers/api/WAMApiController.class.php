@@ -61,7 +61,6 @@ class WAMApiController extends WikiaApiController {
 		$app = F::app();
 
 		$options = $this->getWAMParameters();
-
 		$wamIndex = WikiaDataAccess::cacheWithLock(
 			wfSharedMemcKey(
 				'wam_index_table',
@@ -72,7 +71,7 @@ class WAMApiController extends WikiaApiController {
 			6 * 60 * 60,
 			function () use ($options) {
 				$wamService = new WAMService();
-
+			
 				$wamIndex = $wamService->getWamIndex($options);
 
 				if ($options['fetchAdmins']) {
@@ -80,7 +79,10 @@ class WAMApiController extends WikiaApiController {
 						$wikiService = new WikiService();
 					}
 					foreach ($wamIndex['wam_index'] as &$row) {
-						$row['admins'] = $wikiService->getWikiAdmins($row['wiki_id'], $options['avatarSize'], self::DEFAULT_WIKI_ADMINS_LIMIT);
+						$ids = [];
+						$row['admins'] = $wikiService->getWikiAdmins($row['wiki_id'], $options['avatarSize']);
+						$ids = array_map(function($item) { return $item['userId']; }, $row['admins']);
+						$row['admins'] = $this->getMostActiveAdminsByIds($ids, $row['wiki_id']);
 						$row['admins'] = $this->prepareAdmins($row['admins'], self::DEFAULT_WIKI_ADMINS_LIMIT);
 					}
 				}
@@ -97,7 +99,7 @@ class WAMApiController extends WikiaApiController {
 				}
 
 				return $wamIndex;
-			}
+			}, WikiaDataAccess::REFRESH_CACHE
 		);
 
 		$this->response->setVal('wam_index', $wamIndex['wam_index']);
@@ -204,5 +206,40 @@ class WAMApiController extends WikiaApiController {
 			$admins = array_slice( $admins, 0, $limit );
 		}
 		return $admins;
+	}
+
+	private function getMostActiveAdmins($admins, $wikiId) {
+		$edits = [];
+		$startDate = date('Y-m-d', strtotime("-2 weeks"));
+		$endDate = date('Y-m-d', time());
+
+		foreach($admins as $key => &$admin) {
+			if (empty($admin['userId'])) {
+				unset($admins[$key]);
+				continue;
+			}
+			$adminEdit = DataMartService::getEventsByWikiId(DataMartService::PERIOD_ID_WEEKLY, $startDate, $endDate, $wikiId, $admin['userId']);
+			$edits[$key] = $admin['edits'] = $this->countAdminEdits($adminEdit);
+		}
+		array_multisort($edits, SORT_DESC, $admins);
+		return $admins;
+	}
+
+	private function getMostActiveAdminsByIds($ids, $wikiId) {
+		$edits = [];
+		$startDate = date('Y-m-d', strtotime("-2 weeks"));
+		$endDate = date('Y-m-d', time());
+
+		$admins = DataMartService::getUserEditsByWikiId(DataMartService::PERIOD_ID_WEEKLY, $ids, $startDate, $endDate, $wikiId);
+
+		return $admins;
+	}
+
+	private function countAdminEdits($adminEdits) {
+		$editsCount = 0;
+		foreach($adminEdits as $edits) {
+			$editsCount += (int)$edits['edits'] + (int)$edits['deletes'] + (int)$edits['undeletes'];
+		}
+		return $editsCount;
 	}
 }
