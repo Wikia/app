@@ -215,6 +215,12 @@ body > .global-notification,
 	margin-left: -$width-outside / 2;
 }
 
+.global-notification {
+	&.float {
+		margin-left: -515px;
+	}
+}
+
 .WikiaArticle,
 .WikiaArticleFooter {
 	padding: 0;
@@ -484,9 +490,16 @@ body > .global-notification,
 		}
 	}
 
-	.global-notification,
 	.WikiaHeader .page-width-container {
 		width: auto;
+	}
+
+	.global-notification {
+		width: 100%;
+		&.float {
+			left: 0;
+			margin-left: 0;
+		}
 	}
 
 	.WikiaPage {
@@ -494,12 +507,16 @@ body > .global-notification,
 		width: auto;
 	}
 
-	.WikiaPageBackground {
-		display: none;
+	.WikiaPageContentWrapper {
+		padding-top: 20px;
 	}
 
 	.WikiaTopAds {
 		width: 100%;
+
+		#TOP_BUTTON_WIDE {
+			display: none;
+		}
 	}
 }
 
@@ -508,7 +525,6 @@ body > .global-notification,
 		@include background-fluid;
 	}
 
-	body > .global-notification,
 	.WikiaHeader .page-width-container,
 	.WikiaPage {
 		margin: 0 $width-adskin;
@@ -521,7 +537,6 @@ body > .global-notification,
 		@include background-max;
 	}
 
-	body > .global-notification,
 	.WikiaHeader .page-width-container,
 	.WikiaPage {
 		margin: 0 auto;

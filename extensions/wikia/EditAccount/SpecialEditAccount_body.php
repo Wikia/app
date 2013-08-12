@@ -38,7 +38,7 @@ class EditAccount extends SpecialPage {
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgOut, $wgUser, $wgRequest, $wgEnableUserLoginExt, $wgExternalAuthType;
+		global $wgOut, $wgUser, $wgRequest, $wgEnableUserLoginExt, $wgExternalAuthType, $wgTitle;
 
 		// Set page title and other stuff
 		$this->setHeaders();
@@ -140,7 +140,7 @@ class EditAccount extends SpecialPage {
 				$this->mStatusMsg = $this->mStatus ? wfMsg( 'editaccount-requested' ) : wfMsg( 'editaccount-not-requested' );
 				break;
 			case 'closeaccountconfirm':
-				$this->mStatus = $this->closeAccount( $changeReason );
+				$this->mStatus = $this->closeAccount( $changeReason, $this->mUser, $wgTitle, $this->mStatusMsg, $this->mStatusMsg2 );
 				$template = $this->mStatus ? 'selectuser' : 'displayuser';
 				break;
 			case 'clearunsub':
@@ -346,44 +346,47 @@ class EditAccount extends SpecialPage {
 	 * @param $changeReason String: reason for change
 	 * @return Boolean: true on success, false on failure
 	 */
-	function closeAccount( $changeReason = '' ) {
+	public static function closeAccount( $changeReason = '', $user = '', $title, &$mStatusMsg = '', &$mStatusMsg2 = '' ) {
 		global $wgExternalAuthType;
 		# Set flag for Special:Contributions
 		# NOTE: requires FlagClosedAccounts.php to be included separately
+		if ( empty($user) ) {
+		 throw new Exception("User object is invalid.");
+		}
 		if ( defined( 'CLOSED_ACCOUNT_FLAG' ) ) {
-			$this->mUser->setRealName( CLOSED_ACCOUNT_FLAG );
+			$user->setRealName( CLOSED_ACCOUNT_FLAG );
 		} else {
 			# magic value not found, so lets at least blank it
-			$this->mUser->setRealName( '' );
+			$user->setRealName( '' );
 		}
 
 		// remove users avatar
 		if ( class_exists( 'Masthead' ) ) {
-			$avatar = Masthead::newFromUser( $this->mUser );
+			$avatar = Masthead::newFromUser( $user );
 			if ( !$avatar->isDefault() ) {
 				if( !$avatar->removeFile( false ) ) {
 					# dont quit here, since the avatar is a non-critical part of closing, but flag for later
-					$this->mStatusMsg2 = wfMsgExt( 'editaccount-remove-avatar-fail' );
+					$mStatusMsg = wfMsgExt( 'editaccount-remove-avatar-fail' );
 				}
 			}
 		}
 
 		// Remove e-mail address and password
-		$this->mUser->setEmail( '' );
-		$this->mUser->setPassword( $newpass = $this->generateRandomScrambledPassword() );
+		$user->setEmail( '' );
+		$user->setPassword( $newpass = EditAccount::generateRandomScrambledPassword() );
 		// Save the new settings
-		$this->mUser->saveSettings();
+		$user->saveSettings();
 
 		// get User ID
-		$id = $this->mUser->getId();
+		$id = $user->getId();
 
-		if ( $this->mUser->getEmail() == ''  ) {
+		if ( $user->getEmail() == ''  ) {
 			global $wgUser, $wgTitle;
 			// Mark as disabled in a more real way, that doesnt depend on the real_name text
-			$this->mUser->setOption( 'disabled', 1 );
-			$this->mUser->setOption( 'disabled_date', wfTimestamp( TS_DB ) );
+			$user->setOption( 'disabled', 1 );
+			$user->setOption( 'disabled_date', wfTimestamp( TS_DB ) );
 			// BugId:18085 - setting a new token causes the user to be logged out.
-			$this->mUser->setToken( md5( microtime() . mt_rand( 0, 0x7fffffff ) ) );
+			$user->setToken( md5( microtime() . mt_rand( 0, 0x7fffffff ) ) );
 
 			// BugID:95369 This forces saveSettings() to commit the transaction
 			// FIXME: this is a total hack, we should add a commit=true flag to saveSettings
@@ -391,12 +394,11 @@ class EditAccount extends SpecialPage {
 			$wgRequest->setVal('action', 'ajax');
 
 			// Need to save these additional changes
-			$this->mUser->saveSettings();
-
+			$user->saveSettings();
 
 			// Log what was done
 			$log = new LogPage( 'editaccnt' );
-			$log->addEntry( 'closeaccnt', $wgTitle, $changeReason, array( $this->mUser->getUserPage() ) );
+			$log->addEntry( 'closeaccnt', $title, $changeReason, array( $user->getUserPage() ) );
 
 			// delete the record from all the secondary clusters
 			if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
@@ -404,11 +406,13 @@ class EditAccount extends SpecialPage {
 			}
 
 			// All clear!
-			$this->mStatusMsg = wfMsg( 'editaccount-success-close', $this->mUser->mName );
+
+			$mStatusMsg = wfMsg( 'editaccount-success-close', $user->mName );
 			return true;
+
 		} else {
 			// There were errors...inform the user about those
-			$this->mStatusMsg = wfMsg( 'editaccount-error-close', $this->mUser->mName );
+			$mStatusMsg = wfMsg( 'editaccount-error-close', $user->mName );
 			return false;
 		}
 	}
@@ -462,7 +466,7 @@ class EditAccount extends SpecialPage {
 	 * Returns a random password which conforms to our password requirements and is
 	 * not easily guessable.
 	 */
-	function generateRandomScrambledPassword() {
+	public static function generateRandomScrambledPassword() {
 		// Password requirements need a captial letter, a digit, and a lowercase letter.
 		// wfGenerateToken() returns a 32 char hex string, which will almost always satisfy the digit/letter but not always.
 		// This suffix shouldn't reduce the entropy of the intentionally scrambled password.
