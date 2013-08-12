@@ -444,7 +444,7 @@
 				// PSS: fuck scrollbars.
 				// TODO: we should have access to breakpoints and such in JavaScript
 				// as variables instead of hardcoded values.
-				if ( CKEDITOR.env.webkit && $wikiaPage.width() >= 1370 ) {
+				if ( 'webkitRequestAnimationFrame' in window && $wikiaPage.width() >= 1370 ) {
 					width -= this.scrollbarWidth;
 				}
 			}
