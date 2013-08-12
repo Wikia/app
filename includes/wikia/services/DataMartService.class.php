@@ -416,8 +416,7 @@ class DataMartService extends Service {
 					array("date_format(time_id,'%Y-%m-%d') as date, sum(creates) creates, sum(edits) edits, sum(deletes) deletes, sum(undeletes) undeletes"),
 					array('period_id' => $periodId,
 						'wiki_id' => $wikiId,
-						"time_id between '$startDate' and '$endDate'"
-					),
+						"time_id between '$startDate' and '$endDate'"),
 					__METHOD__,
 					array('GROUP BY' => 'date, wiki_id')
 				);
