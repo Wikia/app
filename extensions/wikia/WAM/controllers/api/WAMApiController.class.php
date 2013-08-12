@@ -82,7 +82,7 @@ class WAMApiController extends WikiaApiController {
 						$ids = [];
 						$row['admins'] = $wikiService->getWikiAdmins($row['wiki_id'], $options['avatarSize']);
 						$ids = array_map(function($item) { return $item['userId']; }, $row['admins']);
-						$row['admins'] = $this->getMostActiveAdminsByIds($ids, $row['wiki_id']);
+						$row['admins'] = $this->getMostActiveAdminsByIds($ids, $row['admins'], $row['wiki_id']);
 						$row['admins'] = $this->prepareAdmins($row['admins'], self::DEFAULT_WIKI_ADMINS_LIMIT);
 					}
 				}
@@ -225,21 +225,22 @@ class WAMApiController extends WikiaApiController {
 		return $admins;
 	}
 
-	private function getMostActiveAdminsByIds($ids, $wikiId) {
+	private function getMostActiveAdminsByIds($ids, $admins, $wikiId) {
 		$edits = [];
 		$startDate = date('Y-m-d', strtotime("-2 weeks"));
-		$endDate = date('Y-m-d', time());
+		$endDate = date('Y-m-d', strtotime("-1 week"));
 
-		$admins = DataMartService::getUserEditsByWikiId(DataMartService::PERIOD_ID_WEEKLY, $ids, $startDate, $endDate, $wikiId);
-
+		$adminsEdits = DataMartService::getUserEditsByWikiId(DataMartService::PERIOD_ID_WEEKLY, $ids, $startDate, $endDate, $wikiId);
+		foreach($admins as $key => $admin) {
+			$edits[$key] = $admins[$key]['edits'] = $this->countAdminEdits($adminsEdits[(int)$admin['userId']]);
+		}
+		array_multisort($edits, SORT_DESC, $admins);
 		return $admins;
 	}
 
-	private function countAdminEdits($adminEdits) {
+	private function countAdminEdits($edits) {
 		$editsCount = 0;
-		foreach($adminEdits as $edits) {
-			$editsCount += (int)$edits['edits'] + (int)$edits['deletes'] + (int)$edits['undeletes'];
-		}
+		$editsCount += (int)$edits['edits'] + (int)$edits['deletes'] + (int)$edits['undeletes'];
 		return $editsCount;
 	}
 }

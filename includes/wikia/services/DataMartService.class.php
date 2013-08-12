@@ -486,12 +486,12 @@ class DataMartService extends Service {
 		$cond = array(
 			'period_id' => $periodId,
 			'wiki_id' => $wikiId,
-			"time_id between '$startDate' and '$endDate'",
+			"time_id >= '$startDate' and time_id < '$endDate'",
 			'user_id' => $userId
 		);
 
-		$memKey = wfSharedMemcKey('datamart', 'user_edits', $wikiId, $userId, $periodId, $startDate, $endDate);
-		$events = $app->wg->Memc->get($memKey);
+	//	$memKey = wfSharedMemcKey('datamart', 'user_edits', $wikiId, $userId, $periodId, $startDate, $endDate);
+	//	$events = $app->wg->Memc->get($memKey);
 		if (!is_array($events)) {
 			$events = array();
 			if (!empty($app->wg->StatsDBEnabled)) {
@@ -506,7 +506,7 @@ class DataMartService extends Service {
 				);
 
 				while ($row = $db->fetchObject($result)) {
-					$events[$row->user_id][$row->date] = array(
+					$events[$row->user_id] = array(
 						'creates' => $row->creates,
 						'edits' => $row->creates + $row->edits,
 						'deletes' => $row->deletes,
