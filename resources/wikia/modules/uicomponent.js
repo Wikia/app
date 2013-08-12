@@ -7,7 +7,7 @@
  *
  */
 
-define('wikia.uicomponent',['wikia.mustache'], function (mustache) {
+define('wikia.uicomponent',['wikia.mustache'], function uicomponent(mustache) {
 	'use strict';
 
 	function UIComponent() {
@@ -87,7 +87,8 @@ define('wikia.uicomponent',['wikia.mustache'], function (mustache) {
 			});
 
 			if (missingVars.length > 0) {
-				throw new Error('Missing required mustache variables: ' + missingVars);
+				var variables = missingVars.join(', ');
+				throw new Error('Missing required mustache variables: ' + variables + '!');
 			}
 		}
 
