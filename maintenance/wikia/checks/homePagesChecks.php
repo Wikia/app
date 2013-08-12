@@ -299,7 +299,7 @@ class CorporateHomePageStatisticsStorage {
 		$db = $this->getMaster();
 
 		// insert or update
-		$db->replace( '`common_key_value`', [ '`key`', '`value`' ], [ '`key`' => $key, '`value`' => $value ], __METHOD__ );
+		$db->replace( '`common_key_value`', [ '`key`' ], [ '`key`' => $key, '`value`' => $value ], __METHOD__ );
 	}
 
 	/**
