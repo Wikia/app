@@ -334,3 +334,11 @@ p > small{
 #pageActions{
     padding-left:2.5%;
 }
+
+.off{
+    display : none;
+}
+
+.on{
+    display:block;
+}

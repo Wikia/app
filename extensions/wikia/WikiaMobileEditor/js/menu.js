@@ -53,7 +53,7 @@ define('menu', ['editor', 'config'], function(editor, config){
         for(var key in tags){
             currentLi = findLi(i);
             if(tags.hasOwnProperty(key) && currentLi){
-                updateButton(currentLi, tags[key], key);
+                updateButton(currentLi, tags[key].tag, key);
                 i++;
             }
         }

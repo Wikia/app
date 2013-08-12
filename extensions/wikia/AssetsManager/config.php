@@ -304,7 +304,7 @@ $config['oasis_user_js'] = array(
 $config['gameguides_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => 'wikiamobile',
-	'assets' => array(
+	'assets' => array();
 		'//extensions/wikia/GameGuides/css/GameGuides.scss'
 	)
 );

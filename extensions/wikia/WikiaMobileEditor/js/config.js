@@ -1,221 +1,267 @@
-define ('config', ['editor'], function(editor){
-    'use strict';
+define('config', ['editor'], function(editor){
 
-    var wrapper = document.getElementsByClassName('tagListWrapper')[0],
-        submitter,
-        chbArray = wrapper.getElementsByTagName('input'),
-        maxItems = 20,
-        warning = wrapper.getElementsByClassName('warning')[0],
+    var configObj,
+        activeTags = {},
         onChange,
-        activeTags = {};
+        maxItems = 20;;
+
+    ConfigObj = function(wrapSection){
+        this.wrapper = wrapSection;
+        this.sections = {};
+        this.warning = wrapSection.getElementsByClassName('warning')[0];
+        this.submit = wrapSection.getElementsByClassName('save')[0];
+        this.checkboxes = wrapSection.getElementsByClassName('tagChb');
+        var sectionsList = wrapSection.getElementsByTagName('section'),
+            tagType;
+        for(var i = 0; i < sectionsList.length; i++){
+            tagType = sectionsList[i].getAttribute('data-tagType');
+            this.sections[tagType] = {
+                section : sectionsList[i],
+                ul : sectionsList[i].getElementsByTagName('ul')[0],
+            };
+            this.sections[tagType].ul.elements = this.sections[tagType].ul.getElementsByTagName('li');
+        }
+    }
 
     var tags = {
-        bold : "''_$''",
-        italic : "''_$''",
-        internalLink : "[[_$]]",
-        externalLink : "[http://_$ title]",
-        level2Headline : "==_$==",
-        embeddedFile : "[[File:_$]]",
-        fileLink : "[[Media:_$]]",
-        mathFormula : "<math></math>",
-        ignoreWiki : "<nowiki></nowiki>",
-        gallery : "<gallery>Image:_$|Caption</gallery>",
-        blockquote : "<blockquote>_$</blockquote>",
-        /*table : "{| class="wikitable"
-            |-
-            ! header 1
-            ! header 2
-            ! header 3
-            |-
-            | row 1, cell 1
-            | row 1, cell 2
-            | row 1, cell 3
-            |-
-            | row 2, cell 1
-            | row 2, cell 2
-            | row 2, cell 3
-        |}",*/
-        usernameAndTime : "--~~~~",
-        horizontalLine : "----",
-        category : "[[Category:_$]]",
-        redirect : "#REDIRECT[[_$]]",
-        strike : "----",
-        lineBreak : "<br />",
-        small : "<small></small>",
-        hiddenComment : "<!-- _$ -->",
-        superScript : "<sup>_$</sup>",
-        subScript : "<sub>_$</sub>",
-        ref : "<ref>_$</ref>",
-        references : "</references>", //?
-        includeOnly : "<includeonly>_$</includeonly>",
-        noInclude : "<noinclude>_$</noinclude>",
-        tilde : "~",
-        brvbar : "|",
-        amp : "&",
-        iexcl : "¡",
-        iquest : "¿",
-        dagger : "†",
-        Dagger : "‡",
-        harr : "↔",
-        uarr : "↑",
-        rarr : "→", //?
-        darr : "↓",
-        larr : "←", //?
-        bull : "•",
-        hash : "#", //?
-        sect : "§",
-        percent : "%",
-        mdash : "—",
-        ndash : "–",
-        hellip : "…",
-        deg : "°",
-        asymp : "≈",
-        plusmn : "±",
-        times : "×",
-        divide : "÷",
-        middot : "·",
-        sup1 : "¹",
-        sup2 : "²",
-        sup3 : "³",
-        frac12 : "½",
-        frac13 : "⅓",
-        frac23 : "⅔",
-        frac14 : "¼",
-        frac34 : "¾",
-        frac18 : "⅛",
-        frac38 : "⅜",
-        frac58 : "⅝",
-        frac78 : "⅞",
-        lsquo : "‘",
-        rsquo : "’",
-        ldquo : "“",
-        rdquo : "”",
-        cent : "¢",
-        dollar : "$",
-        euro : "€",
-        pound : "£",
-        yen : "¥",
-        aAcute : "á",
-        aAcuteCap : "Á",
-        cAcute : "ć",
-        cAcuteCap : "Ć",
-        eAcute : "é",
-        eAcuteCap : "É",
-        iAcute : "í",
-        iAcuteCap : "Í",
-        lAcute : "ĺ",
-        lAcuteCap : "Ĺ",
-        nAcute : "ń",
-        nAcuteCap : "Ń",
-        oAcute : "ó",
-        oAcuteCap : "Ó",
-        rAcute : "ŕ",
-        rAcuteCap : "Ŕ",
-        sAcute : "ś",
-        sAcuteCap : "Ś",
-        uAcute : "ú",
-        uAcuteCap : "Ú",
-        yAcute : "ý",
-        yAcuteCap : "Ý",
-        zAcute : "ź",
-        zAcuteCap : "Ź",
-        aGrave : "à",
-        aGraveCap : "À",
-        eGrave : "è",
-        eGraveCap : "È",
-        iGrave : "ì",
-        iGraveCap : "Ì",
-        oGrave : "ò",
-        oGraveCap : "Ò",
-        uGrave : "ù",
-        uGraveCap : "Ù",
-        aDashed : "â",
-        aDashedCap : "Â",
-        cDashed : "ĉ",
-        cDashedCap : "Ĉ",
-        eDashed : "ê",
-        eDashedCap : "Ê",
-        gDashed : "ĝ",
-        gDashedCap : "Ĝ",
-        hDashed : "ĥ",
-        hDashedCap : "Ĥ",
-        iDashed : "î",
-        iDashedCap : "Î",
-        jDashed : "ĵ",
-        jDashedCap : "Ĵ",
-        oDashed : "ô",
-        oDashedCap : "Ô",
-        sDashed : "ŝ",
-        sDashedCap : "Ŝ",
-        uDashed : "û",
-        uDashedCap : "Û",
-        wDashed : "ŵ",
-        wDashedCap : "Ŵ",
-        yDashed : "ŷ",
-        yDashedCap : "Ŷ",
-        aUmlaut : "ä",
-        aUmlautCap : "Ä",
-        eUmlaut : "ë",
-        eUmlautCap : "Ë",
-        iUmlaut : "ï",
-        iUmlautCap : "Ï",
-        oUmlaut : "ö",
-        oUmlautCap : "Ö",
-        uUmlaut : "ü",
-        uUmlautCap : "Ü",
-        yUmlaut : "ÿ",
-        yUmlautCap : "Ÿ",
-        ss : "ß"
-    };
+        'Text Modifiers' : {
+            'Bold' : {
+                tag : "''_$''",
+                abbr : 'B',
+                display : "'' ''"
+            },
+            'Italic' : {
+                tag : "'''_$'''",
+                abbr : 'I',
+                display : "''' '''"
+            },
+            'Small' : {
+                tag : "<small>_$</small>",
+                abbr : 'Sm',
+                display : '&lt;small&gt; &lt;/small&gt;'
+            },
+            'Superscript' : {
+                tag : "<sup>_$</sup>",
+                abbr : 'Sup',
+                display : 'Superscript'
+            },
+            'Subscript' : {
+                tag : "<sub>_$</sub>",
+                abbr : 'Sub',
+                display : 'Subscript'
+            },
+            'Level 2 Headline' : {
+                tag : "==_$==",
+                abbr : 'H2',
+                display : 'Level 2 Headline'
+            },
+            'Blockquote' : {
+                tag : "<blockquote>_$</blockquote>",
+                abbr : 'Qte',
+                display : 'Blockquote'
+            },
+        },
+        'Wiki Markup' : {
+            'Internal Link' : {
+                tag : "[[_$]]",
+                abbr : 'Int',
+                display : 'Internal Link'
+            },
+            'External Link' : {
+                tag : "[http://_$ title]",
+                abbr : 'Ext',
+                display : 'External Link'
+            },
+            'Embedded File' : {
+                tag : "[[File:_$]]",
+                abbr : 'Embd',
+                display : 'Embedded File'
+            },
+            'File Link' : {
+                tag : "[Media:_$]",
+                abbr : 'File',
+                display : 'File Link'
+            },
+            'Math Formula' : {
+                tag : "<math>_$</math>",
+                abbr : 'Math',
+                display : 'Math Formula'
+            },
+            'Ignore Wiki' : {
+                tag : "<nowiki>_$</nowiki>",
+                abbr : 'Ignr',
+                display : 'Ignore Wiki'
+            },
+            'Username And Time' : {
+                tag : "~~~~",
+                abbr : 'Usr',
+                display : 'Username and time'
+            },
+            'Horizontal Line' : {
+                tag : "----",
+                abbr : 'Usr',
+                display : 'Username and time'
+            },
+            'Strike' : {
+                tag : "<strike>_$</strike>",
+                abbr : 'Str',
+                display : 'Strike'
+            },
+            'Hidden Comment' : {
+                tag : "<!-- _$ -->",
+                abbr : 'Hdn',
+                display : 'Hidden Comment'
+            },
+            'Category' : {
+                tag : "[[Category:_$]]",
+                abbr : 'Hdn',
+                display : 'Hidden Comment'
+            },
+            'Redirect' : {
+                tag : "#REDIRECT[[_$]]",
+                abbr : 'Hdn',
+                display : 'Hidden Comment'
+            },
+            'Redirect' : {
+                tag : "#REDIRECT[[_$]]",
+                abbr : 'Hdn',
+                display : 'Hidden Comment'
+            },
+            'Reference' : {
+                tag : "<ref>_$</ref>",
+                abbr : 'Ref',
+                display : 'Reference'
+            },
+            'Include Only' : {
+                tag : "<includeonly>_$</includeonly>",
+                abbr : 'Incl',
+                display : 'Include Only'
+            },
+            'No Include' : {
+                tag : "<noinclude>_$</noinclude>",
+                abbr : 'NIncl',
+                display : 'No Include'
+            },
+        },
+        'Special Characters' : {
+            'title' : {
+                tag : '#hello',
+                abbr : 'hel',
+                display : 'hello tag'
+            },
+            'title2' : {
+                tag : '#hello2',
+                abbr : 'hel2',
+                display : 'hello tag2'
+            }
+        },
+        'Features And Media' : {
+            'Gallery' : {
+                tag : "<gallery>Image:_$|Caption</gallery>",
+                abbr : 'Gal',
+                display : 'Gallery'
+            },
+        }
+    }
+
+
 
     function initializeLinks(){
-        var links = wrapper.getElementsByTagName('a');
-        var tag;
-        for(var i = 0; i < links.length; i++){
-            links[i].addEventListener('click', function(){
-                tag = this.parentElement.getElementsByTagName('input')[0].getAttribute('value');
-                editor.insertTags(tag);
+        var links;
+        Object.keys(configObj.sections).forEach(function(section){
+            if(configObj.sections.hasOwnProperty(section)){
+                links = configObj.sections[section].ul.getElementsByTagName('a');
+                for(var i = 0; i < links.length; i++){
+                    links[i].addEventListener('click', function(evt){
+                        evt.preventDefault();
+                        editor.insertTags(this.innerText);
+                    });
+                }
+            }
+        });
+    }
+
+    function buildHTML(){
+        var html = '';
+        Object.keys(tags).forEach(function(tagGr){ //tu foricz
+            if(tags.hasOwnProperty(tagGr)){
+                html+='<section class ="tagSection" data-tagType="'+tagGr+'">';
+                html+='<h1>'+tagGr+'</h1><a href="" class="toggle">expand</a>';
+                html+='<ul class="off">';
+                Object.keys(tags[tagGr]).forEach(function(tag){ //i tu foricz
+                    if(tags[tagGr].hasOwnProperty(tag)){
+                        html+='<li>';
+                        html+='<input type="checkbox" class="tagChb" name="'+tag+'">';
+                        html+='<label for="'+tag+'">'+tag+'</label>';
+                        html+='<a href="">'+tags[tagGr][tag].tag+'</a>';
+                        html+='</li>';
+                    }
+                });
+                html+='</ul></section>';
+            }
+        });
+        return html;
+    }
+
+    function expand(section){
+        section.ul.classList.add('on');
+    }
+
+    function fold(section){
+        section.ul.classList.add('off');
+    }
+
+    function activateToggle(){
+        var toggles = configObj.wrapper.getElementsByClassName('toggle'),
+            ul;
+        for(var i = 0; i < toggles.length; i++){
+            toggles[i].addEventListener('click', function(evt){
+                evt.preventDefault();
+                ul = this.parentElement.getElementsByTagName('ul')[0];
+                if(ul.classList.contains('on')){
+                    ul.classList.remove('on');
+                }
+                else{
+                    ul.classList.add('on');
+                }
             });
         }
     }
 
-    function findSubmitter(){
-        var inputs = wrapper.getElementsByTagName('input');
-        for(var i = 0; i < inputs.length; i++){
-            if(inputs[i].getAttribute('type') == 'submit'){
-                return inputs[i];
+    function getActive(){ //returns elements with checkboxes in 'active' state
+        var activeChb = [],
+            tagObj = {};
+        for(var i = 0; i < configObj.checkboxes.length; i++){
+            if(configObj.checkboxes[i].checked){
+                activeChb.push(configObj.checkboxes[i]);
             }
+        }
+        return activeChb;
+    }
+
+    function setActiveTags(activeChb){
+        for(var i = 0; i < activeChb.length; i++){
+            curChb = activeChb[i];
+            activeTags[curChb.name] = {
+                tag : curChb.parentElement.getElementsByTagName('a')[0].innerText,
+                abbr : '' //ToDo! -> extracting abbreviation from the tags dictionary
+            };
         }
     }
 
-    function validate(activeTags){
-        return !!(activeTags.length < maxItems && activeTags.length > 0);
-    }
-
-    function active(){ //returns elements with checkboxes in 'active' state
-        var activeTags = {},
-            key,
-            value,
-            tagField,
-            titleField;
-        for(var i = 0; i < chbArray.length; i++){
-            if(chbArray[i].checked){
-                if(chbArray[i].parentElement.getElementsByClassName('tagField')[0]){
-                    tagField = chbArray[i].parentElement.getElementsByClassName('tagField')[0];
-                    titleField = chbArray[i].parentElement.getElementsByClassName('tagTitleField')[0];
-                    if(tagField.value && titleField.value){
-                        key = titleField.value;
-                        activeTags[key] = tagField.value;
-                    }
-                }
-                else{
-                    key = chbArray[i].parentElement.getElementsByTagName('label')[0].innerText;
-                    key = key.substring(0, key.length-2);
-                    activeTags[key] = chbArray[i].getAttribute('value');
-                }
+    function onUpdate(){
+        var activeChb = getActive();
+        setActiveTags(activeChb);
+        if(validate(activeTags)){
+            if(configObj.warning.classList.contains('on')){
+                configObj.warning.classList.remove('off');
             }
+            //ask the animated menu to update itself
+            onChange(activeTags);
         }
-        return activeTags;
+        else{
+            configObj.warning.classList.add('on');
+        }
     }
 
     function validate(activeTags){
@@ -226,32 +272,24 @@ define ('config', ['editor'], function(editor){
         return !!(checker <= maxItems && checker > 0);
     }
 
-    function updateMenu(){
-        activeTags = active();
-        if(validate(activeTags)){
-            if(warning.classList.contains('warningOn')){
-                warning.classList.remove('warningOn');
-            }
-            //ask the animated menu to update itself
-            onChange(activeTags);
-        }
-        else{
-            warning.classList.add('warningOn');
-        }
-    }
-
-    function init(callback){
-        initializeLinks();
-        onChange = callback;
-        submitter = findSubmitter();
-        submitter.addEventListener('click', function(event){
-            event.preventDefault();
-            updateMenu();
+    function watchForSubmit(){
+        configObj.submit.addEventListener('click', function(evt){
+            evt.preventDefault();
+            onUpdate();
         });
     }
 
-    return{
-        active: active,
-        init: init,
+    function init(callback){
+        onChange = callback;
+        var configHTML = buildHTML(),
+            wrapper = document.getElementsByClassName('tagListWrapper')[0];
+        wrapper.innerHTML += configHTML;
+        configObj = new ConfigObj(wrapper);
+        activateToggle();
+        initializeLinks();
+        watchForSubmit();
+    }
+    return {
+        init : init
     }
 });
