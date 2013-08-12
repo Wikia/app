@@ -23,6 +23,8 @@ $wgExtensionMessagesFiles['LicensedVideoSwap'] = $dir.'LicensedVideoSwap.i18n.ph
 // special pages
 $wgSpecialPages['LicensedVideoSwap'] = 'LicensedVideoSwapSpecialController';
 
+$wgSpecialPageGroups['LicensedVideoSwap'] = 'media';
+
 // permissions
 $wgGroupPermissions['*']['licensedvideoswap'] = false;
 $wgGroupPermissions['staff']['licensedvideoswap'] = true;

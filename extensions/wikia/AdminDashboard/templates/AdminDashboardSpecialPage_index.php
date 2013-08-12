@@ -180,6 +180,14 @@
 							<?= wfMessage("admindashboard-control-multiple-upload-label")->text() ?>
 						</a>
 					</li>
+					<li class="control" data-tooltip="<?= wfMessage("admindashboard-control-lvs-tooltip")->text() ?>">
+						<a href="<?= $urlLVS ?>" class="set" data-tracking="general/lvs">
+							<span class="representation">
+								<span class="icon licensedvideoswap"></span>
+							</span>
+							<?= wfMessage("admindashboard-control-lvs-label")->text() ?>
+						</a>
+					</li>
 				</ul>
 			</section>
 		</div>
