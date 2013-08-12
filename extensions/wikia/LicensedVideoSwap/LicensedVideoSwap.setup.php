@@ -34,12 +34,9 @@ $wgHooks['PageHeaderIndexExtraButtons'][] = 'LicensedVideoSwapHooksHelper::onPag
 
 // register messages package for JS
 JSMessages::registerPackage('LVS', array(
-	'lvs-confirm-swap-title',
 	'lvs-confirm-keep-title',
-	'lvs-confirm-undo-swap-title',
-	'lvs-confirm-swap-message-different-title',
-	'lvs-confirm-swap-message-same-title',
 	'lvs-confirm-keep-message',
+	'lvs-confirm-undo-swap-title',
 	'lvs-confirm-undo-swap-message',
 	'lvs-confirm-undo-keep-title',
 	'lvs-confirm-undo-keep-message',
