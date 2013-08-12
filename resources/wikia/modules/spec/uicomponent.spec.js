@@ -1,4 +1,4 @@
-describe('UICompnent', function(){
+describe('UIComponent', function(){
 	'use strict';
 
 	var mustache = {
@@ -25,7 +25,7 @@ describe('UICompnent', function(){
 
 	it('registers AMD module', function() {
 		expect(uicomponent).toBeDefined();
-		expect(typeof uicomponent).toBe('function', 'uicomponent');
+		expect(typeof uicomponent).toBe('object', 'uicomponent');
 	});
 
 	it('gives nice and clean API', function() {
