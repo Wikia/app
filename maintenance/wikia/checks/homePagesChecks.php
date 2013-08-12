@@ -82,22 +82,22 @@ class CorporateHomePageChecker {
 	 */
 	public function __construct( $params ) {
 		$this->baseDate = date( self::DATE_FORMAT );
-		if ( ! empty( $params['noChangeThreshold'] ) ) {
+		if ( !empty( $params['noChangeThreshold'] ) ) {
 			$this->noChangeThreshold = intval( $params['noChangeThreshold'] );
 		} else {
 			$this->noChangeThreshold = self::DEFAULT_NO_CHANGE_THRESHOLD;
 		}
-		if ( ! empty( $params['watcherEmails'] ) ) {
+		if ( !empty( $params['watcherEmails'] ) ) {
 			$this->watcherEmails = explode( ',', $params['watcherEmails'] );
 		} else {
 			// if no emails are passed, we don't send anything
-			$this->watcherEmails = [ ];
+			$this->watcherEmails = [];
 		}
 
 		$this->dataStorage = new CorporateHomePageStatisticsStorage();
 		$cityVisualization = new CityVisualization();
 		$this->corporateWikis = $cityVisualization->getVisualizationWikisIds();
-		$this->collectedErrors = [ ];
+		$this->collectedErrors = [];
 	}
 
 	public function runTests() {
@@ -105,7 +105,7 @@ class CorporateHomePageChecker {
 		foreach ( $this->corporateWikis as $wikiId ) {
 			$corpWikiStatistics = $this->processCorporateWikiStats( $wikiId );
 
-			if ( ! $corpWikiStatistics ) {
+			if ( !$corpWikiStatistics ) {
 				$this->collectError( self::NO_STATS_MODULE_FOUND, [ $wikiId ] );
 			} elseif ( count( $corpWikiStatistics ) != self::EXPECTED_NUMBER_OF_STAT_MODULES ) {
 				$this->collectError( self::INVALID_STATS_MODULE_NUMBER, [ count( $corpWikiStatistics ), self::EXPECTED_NUMBER_OF_STAT_MODULES, $wikiId ] );
@@ -122,7 +122,7 @@ class CorporateHomePageChecker {
 	}
 
 	private function verifyStatsChanged( $wikiId, $corpWikiStatistics ) {
-		$datesToCheck = [ ];
+		$datesToCheck = [];
 
 		/*
 		 * checking noChangeThreshold days total, which means we're counting baseDate too
@@ -147,7 +147,7 @@ class CorporateHomePageChecker {
 					break;
 				}
 			}
-			if ( ! $changed ) {
+			if ( !$changed ) {
 				$this->collectError( self::STATISTIC_DID_NOT_CHANGE, [ $statKey, $wikiId ] );
 			}
 		}
@@ -163,10 +163,10 @@ class CorporateHomePageChecker {
 	private function processCorporateWikiStats( $wikiId ) {
 		$corpWikiStatistics = $this->getStatisticsModulesContents( $wikiId );
 
-		if ( ! empty( $corpWikiStatistics ) ) {
+		if ( !empty( $corpWikiStatistics ) ) {
 			foreach ( $corpWikiStatistics as $statKey => $statValue ) {
 				// only store modules that we care for
-				if ( ! in_array( $statKey, $this->excludedModules ) ) {
+				if ( !in_array( $statKey, $this->excludedModules ) ) {
 					$this->dataStorage->setValue( $this->getStatsKey( $this->baseDate, $wikiId, $statKey ), $statValue );
 				}
 			}
@@ -191,7 +191,7 @@ class CorporateHomePageChecker {
 	 */
 	private function sendErrors() {
 		$result = false;
-		if ( ! empty( $this->collectedErrors ) ) {
+		if ( !empty( $this->collectedErrors ) ) {
 			$errorList = implode( "\n", $this->collectedErrors );
 			foreach ( $this->watcherEmails as $email ) {
 				UserMailer::send( new MailAddress( $email ), new MailAddress( $email ), self::REPORT_EMAIL_TOPIC, $errorList );
@@ -220,7 +220,7 @@ class CorporateHomePageChecker {
 
 		$htmlContents = file_get_contents( $url );
 
-		if ( ! empty( $htmlContents ) ) {
+		if ( !empty( $htmlContents ) ) {
 			echo " - success\n";
 		} else {
 			echo " - failed\n";
@@ -238,14 +238,14 @@ class CorporateHomePageChecker {
 	 */
 	private function extractNumbersFromHtml( $html ) {
 		$regex = '#datasection.*<strong>(.*)<\/strong>.*#imsU';
-		$matches = [ ];
+		$matches = [];
 
 		preg_match_all( $regex, $html, $matches );
-		if ( ! empty( $matches[1] ) && count( $matches[1] ) == self::EXPECTED_NUMBER_OF_STAT_MODULES ) {
+		if ( !empty( $matches[1] ) && count( $matches[1] ) == self::EXPECTED_NUMBER_OF_STAT_MODULES ) {
 			$output = $matches[1];
 			$output = $this->normalizeNumbersArray( $output );
 		} else {
-			$output = [ ];
+			$output = [];
 		}
 
 		return $output;
@@ -256,7 +256,7 @@ class CorporateHomePageChecker {
 	 * @return $array
 	 */
 	private function normalizeNumbersArray( $array ) {
-		$newArray = [ ];
+		$newArray = [];
 		foreach ( $array as $key => $value ) {
 			$newArray[$key] = intval( preg_replace( '#\D#imsU', '', $value ) );
 		}
@@ -313,7 +313,7 @@ class CorporateHomePageStatisticsStorage {
 
 		echo "getting value from $key\n";
 		$db = $this->getSlave();
-		$result = $db->select( 'common_key_value', [ '`value`' ], [ '`key`	' => $key ], __METHOD__, [ ], [ ] );
+		$result = $db->select( 'common_key_value', [ '`value`' ], [ '`key`' => $key ], __METHOD__ );
 		$row = $result->fetchRow();
 		if ( $row ) {
 			$value = $row->value;
@@ -329,7 +329,7 @@ class CorporateHomePageStatisticsStorage {
 	 */
 	private function getMaster() {
 		if ( $this->mdbConn == null ) {
-			$this->mdbConn = wfGetDB( DB_MASTER, [ ], 'specials' );
+			$this->mdbConn = wfGetDB( DB_MASTER, [], 'specials' );
 		}
 
 		return $this->mdbConn;
@@ -340,7 +340,7 @@ class CorporateHomePageStatisticsStorage {
 	 */
 	private function getSlave() {
 		if ( $this->sdbConn == null ) {
-			$this->sdbConn = wfGetDB( DB_SLAVE, [ ], 'specials' );
+			$this->sdbConn = wfGetDB( DB_SLAVE, [], 'specials' );
 		}
 
 		return $this->sdbConn;
