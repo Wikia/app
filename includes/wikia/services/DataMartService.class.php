@@ -455,7 +455,7 @@ class DataMartService extends Service {
 	 * @param string $startDate [YYYY-MM-DD]
 	 * @param string $endDate [YYYY-MM-DD]
 	 * @param integer $wikiId
-	 * @return array $events [ array( 'user_id' => 'YYYY-MM-DD' => array() ) ]
+	 * @return array $events [ array( 'user_id' => array() ) ]
 	 * Note: number of edits includes number of creates
 	 */
 	public static function getUserEditsByWikiId ($periodId, $userId, $startDate, $endDate = null, $wikiId = null) {
@@ -486,8 +486,8 @@ class DataMartService extends Service {
 			'user_id' => $userId
 		);
 
-	//	$memKey = wfSharedMemcKey('datamart', 'user_edits', $wikiId, $userId, $periodId, $startDate, $endDate);
-	//	$events = $app->wg->Memc->get($memKey);
+		$memKey = wfSharedMemcKey('datamart', 'user_edits', $wikiId, $userId, $periodId, $startDate, $endDate);
+		$events = $app->wg->Memc->get($memKey);
 		if (!is_array($events)) {
 			$events = array();
 			if (!empty($app->wg->StatsDBEnabled)) {
