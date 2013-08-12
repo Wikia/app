@@ -87,7 +87,17 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 */
 	public function history() {
 		$this->getContext()->getOutput()->setPageTitle( wfMessage('lvs-history-page-title')->text() );
-		$this->getContext()->getOutput()->setSubtitle( Wikia::link(SpecialPage::getTitleFor("LicensedVideoSwap"), wfMessage('lvs-page-header-back-link')->plain(), array('accesskey' => 'c'), array(), 'known') );
+
+		// Get the user preference skin, not the current skin of the page
+		$skin = F::app()->wg->User->getOption( 'skin' );
+
+		// for monobook users, specify wikia skin in querystring
+		$queryArr = [];
+		if( $skin == "monobook" ) {
+			$queryArr["useskin"] = "wikia";
+		}
+
+		$this->getContext()->getOutput()->setSubtitle( Wikia::link(SpecialPage::getTitleFor("LicensedVideoSwap"), wfMessage('lvs-page-header-back-link')->plain(), array('accesskey' => 'c'), $queryArr, 'known') );
 
 		$this->recentChangesLink = Wikia::link( SpecialPage::getTitleFor( "RecentChanges" ) );
 		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/js/lvsHistoryPage.js' );
