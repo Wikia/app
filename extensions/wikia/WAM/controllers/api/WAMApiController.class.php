@@ -71,7 +71,7 @@ class WAMApiController extends WikiaApiController {
 			6 * 60 * 60,
 			function () use ($options) {
 				$wamService = new WAMService();
-			
+
 				$wamIndex = $wamService->getWamIndex($options);
 
 				if ($options['fetchAdmins']) {
@@ -98,7 +98,7 @@ class WAMApiController extends WikiaApiController {
 				}
 
 				return $wamIndex;
-			}, WikiaDataAccess::REFRESH_CACHE
+			}
 		);
 
 		$this->response->setVal('wam_index', $wamIndex['wam_index']);
@@ -197,10 +197,6 @@ class WAMApiController extends WikiaApiController {
 	}
 
 	private function prepareAdmins($admins, $limit) {
-		// WikiService adds to admins array wiki's founder, which sometimes for older wiki's doesn't exists so wrong data are recieved
-		if( empty( $admins[0]['userId'] ) ) {
-			unset( $admins[0] );
-		}
 		if( count($admins) > $limit ) {
 			$admins = array_slice( $admins, 0, $limit );
 		}
@@ -211,14 +207,14 @@ class WAMApiController extends WikiaApiController {
 		$edits = $ids = [];
 		$startDate = date('Y-m-d', strtotime("-2 weeks"));
 		$endDate = date('Y-m-d', strtotime("-1 week"));
-		$ids = array_map(function($item) { return $item['userId']; }, $row['admins']);
+		$ids = array_map(function($item) { return $item['userId']; }, $admins);
 
 		$adminsEdits = DataMartService::getUserEditsByWikiId(DataMartService::PERIOD_ID_WEEKLY, $ids, $startDate, $endDate, $wikiId);
 
 		foreach($admins as $key => $admin) {
 			$userEdits = 0;
 			if(empty($admin['userId'])) {
-				unset($admin[$key]);
+				unset($admins[$key]);
 				continue;
 			}
 			if(isset($adminsEdits[$admin['userId']])) {
