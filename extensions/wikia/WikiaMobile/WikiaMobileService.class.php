@@ -107,6 +107,11 @@ class WikiaMobileService extends WikiaService {
 			}
 		}
 
+		//Test how much of impact have jquery on loading WikiaMobile skin
+		if ( !is_null( $this->wg->Request->getVal( 'addjquery', null ) ) ) {
+			$jsBodyPackages[] = 'wikiamobile_jquerytest_js';
+		}
+
 		if ( is_array( $jsBodyPackages ) ) {
 			foreach ( $assetsManager->getURL( $jsBodyPackages ) as $s ) {
 				//packages/assets are enqueued via an hook, let's make sure we should actually let them through
