@@ -8,7 +8,7 @@
  *
  */
 
-define('wikia.uifactory', ['wikia.nirvana', 'wikia.deferred', 'wikia.uicomponent'], function(nirvana, Deferred, UIComponent){
+define('wikia.uifactory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'wikia.uicomponent'], function uifactory(nirvana, window, Deferred, UIComponent){
 	'use strict';
 
 	/**
@@ -86,16 +86,16 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.deferred', 'wikia.uicomponent
 	 */
 
 	function addStylesToDOM(styles) {
-		var domFragment = document.createDocumentFragment();
+		var domFragment = window.document.createDocumentFragment();
 
 		styles.forEach(function(element) {
-			var link = document.createElement('link');
+			var link = window.document.createElement('link');
 			link.rel = 'stylesheet';
 			link.href = element;
 			domFragment.appendChild(link);
 		});
 
-		document.head.appendChild(domFragment);
+		window.document.head.appendChild(domFragment);
 	}
 
 	/**
@@ -105,15 +105,15 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.deferred', 'wikia.uicomponent
 	 */
 
 	function addScriptsToDOM(scripts) {
-		var domFragment = document.createDocumentFragment();
+		var domFragment = window.document.createDocumentFragment();
 
 		scripts.forEach(function(element) {
-			var script = document.createElement('script');
+			var script = window.document.createElement('script');
 			script.src = element;
 			domFragment.appendChild(script);
 		});
 
-		document.body.appendChild(domFragment);
+		window.document.body.appendChild(domFragment);
 	}
 
 	/**
