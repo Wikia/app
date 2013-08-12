@@ -79,7 +79,6 @@ class WAMApiController extends WikiaApiController {
 						$wikiService = new WikiService();
 					}
 					foreach ($wamIndex['wam_index'] as &$row) {
-						$ids = [];
 						$row['admins'] = $wikiService->getWikiAdmins($row['wiki_id'], $options['avatarSize']);
 						$row['admins'] = $this->getMostActiveAdmins($row['admins'], $row['wiki_id']);
 						$row['admins'] = $this->prepareAdmins($row['admins'], self::DEFAULT_WIKI_ADMINS_LIMIT);
