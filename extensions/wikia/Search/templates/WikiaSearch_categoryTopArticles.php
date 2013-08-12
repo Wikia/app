@@ -13,7 +13,6 @@
 
 	<?= $result->getText(); ?>
 	<?php if (! empty( $pages ) ) : ?>
-	Ala ma kota
 	<div class="category-articles">
 		<?php $apos = 0; ?>
 		<?php foreach( $pages as $page ): ?>
