@@ -213,6 +213,40 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$response->setFormat( 'json' );
 		$response->setData( $entityResponse );
 	}
+	
+	/**
+	 * JSON service that supports the access of video (and optionally photo) content from both 
+	 * the current and premium video wiki.
+	 * 
+	 *  Request params:
+	 *  -- q (required) the query
+	 *  -- videoOnly (optional) whether to only include videos (false by default)
+	 *  -- next (optional) pagination value
+	 *  
+	 */
+	public function combinedMediaSearch() {
+		global $wgServer;
+		$request = $this->getRequest();
+		$query = $request->getVal( 'q' );
+		if ( empty( $query ) ) {
+			throw new Exception( "Please include a query value for parameter 'q'" );
+		}
+		$config = new Wikia\Search\Config;
+		$config->setQuery( $query )
+		       ->setCombinedMediaSearch( true )
+		       ->setCombinedMediaSearchIsVideoOnly( (bool) $request->getVal( 'videoOnly', false ) )
+		       ->setLimit( 4 )
+		       ->setStart( $this->getVal( 'next', 0 ) );
+		
+		$results = $this->queryServiceFactory->getFromConfig( $config )->searchAsApi( [ 'url', 'id' ], true );
+		foreach ( $results['items'] as &$result ) {
+			$result['url'] = str_replace( 'http://video.wikia.com/', $wgServer, $result['url'] );
+		}
+		
+		$response = $this->getResponse();
+		$response->setFormat( 'json' );
+		$response->setData( $results );
+	}
 
 	/**
 	 * Controller Helper Methods
@@ -343,11 +377,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	protected function registerWikiMatch( Wikia\Search\Config $searchConfig ) {
 		$matchResult = $searchConfig->getWikiMatch()->getResult();
-		$this->setVal(
-				'wikiMatch',
-				$this->getApp()->getView( 'WikiaSearch', 'CrossWiki_result', [ 'result' => $matchResult, 'pos' => -1 ] ) 
-				);
-		$this->resultsFound++;
+		if ( $matchResult !== null ) {
+			$this->setVal(
+					'wikiMatch',
+					$this->getApp()->getView( 'WikiaSearch', 'CrossWiki_result', [ 'result' => $matchResult, 'pos' => -1 ] ) 
+					);
+			$this->resultsFound++;
+		}
 	}
 	
 	/**
