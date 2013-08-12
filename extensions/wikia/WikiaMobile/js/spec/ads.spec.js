@@ -27,10 +27,7 @@ describe("Ads module", function () {
 			Features: {},
 			postscribe: function(){}
 		},
-		utils = function(func){
-			func();
-		},
-		ads = modules.ads(cookies, window, utils, dartHelper);
+		ads = modules.ads(cookies, window, dartHelper);
 
 	it("is defined as a module", function () {
 		expect(ads).toBeDefined();
@@ -43,8 +40,6 @@ describe("Ads module", function () {
 	it("has a public API", function () {
 		expect(typeof ads.setupSlot).toEqual('function');
 		expect(typeof ads.init).toEqual('function');
-		expect(typeof ads.fix).toEqual('function');
-		expect(typeof ads.unfix).toEqual('function');
 		expect(typeof ads.stop).toEqual('function');
 	});
 

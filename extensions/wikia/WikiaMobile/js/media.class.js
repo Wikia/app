@@ -31,7 +31,7 @@ define('wikia.media.class', ['wikia.window'], function(window){
 	}
 
 	Media.prototype.toString = function(){
-		return '<section data-type=' + this.type + ' data-num=' + this.imgNum + '><img src=' + this.url + '></section>';
+		return '<section data-type="' + this.type + '" data-num="' + this.imgNum + '"><img src="' + this.url + '"></section>';
 	};
 
 	Media.types = {
