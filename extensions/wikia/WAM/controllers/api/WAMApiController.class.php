@@ -81,8 +81,7 @@ class WAMApiController extends WikiaApiController {
 					foreach ($wamIndex['wam_index'] as &$row) {
 						$ids = [];
 						$row['admins'] = $wikiService->getWikiAdmins($row['wiki_id'], $options['avatarSize']);
-						$ids = array_map(function($item) { return $item['userId']; }, $row['admins']);
-						$row['admins'] = $this->getMostActiveAdminsByIds($ids, $row['admins'], $row['wiki_id']);
+						$row['admins'] = $this->getMostActiveAdmins($row['admins'], $row['wiki_id']);
 						$row['admins'] = $this->prepareAdmins($row['admins'], self::DEFAULT_WIKI_ADMINS_LIMIT);
 					}
 				}
@@ -209,31 +208,25 @@ class WAMApiController extends WikiaApiController {
 	}
 
 	private function getMostActiveAdmins($admins, $wikiId) {
-		$edits = [];
-		$startDate = date('Y-m-d', strtotime("-2 weeks"));
-		$endDate = date('Y-m-d', time());
-
-		foreach($admins as $key => &$admin) {
-			if (empty($admin['userId'])) {
-				unset($admins[$key]);
-				continue;
-			}
-			$adminEdit = DataMartService::getEventsByWikiId(DataMartService::PERIOD_ID_WEEKLY, $startDate, $endDate, $wikiId, $admin['userId']);
-			$edits[$key] = $admin['edits'] = $this->countAdminEdits($adminEdit);
-		}
-		array_multisort($edits, SORT_DESC, $admins);
-		return $admins;
-	}
-
-	private function getMostActiveAdminsByIds($ids, $admins, $wikiId) {
-		$edits = [];
+		$edits = $ids = [];
 		$startDate = date('Y-m-d', strtotime("-2 weeks"));
 		$endDate = date('Y-m-d', strtotime("-1 week"));
+		$ids = array_map(function($item) { return $item['userId']; }, $row['admins']);
 
 		$adminsEdits = DataMartService::getUserEditsByWikiId(DataMartService::PERIOD_ID_WEEKLY, $ids, $startDate, $endDate, $wikiId);
+
 		foreach($admins as $key => $admin) {
-			$edits[$key] = $admins[$key]['edits'] = $this->countAdminEdits($adminsEdits[(int)$admin['userId']]);
+			$userEdits = 0;
+			if(empty($admin['userId'])) {
+				unset($admin[$key]);
+				continue;
+			}
+			if(isset($adminsEdits[$admin['userId']])) {
+				$userEdits = $this->countAdminEdits($adminsEdits[$admin['userId']]);
+			}
+			$edits[$key] = $admins[$key]['edits'] = $userEdits;
 		}
+
 		array_multisort($edits, SORT_DESC, $admins);
 		return $admins;
 	}
