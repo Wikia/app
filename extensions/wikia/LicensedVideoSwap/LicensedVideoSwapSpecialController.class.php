@@ -48,7 +48,6 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/css/Dropdown.scss' );
 
 		// Setup messages for JS
-		// TODO: once 'back to roots' branch is merged, use JSMessages::enqueuePackage
 		JSMessages::enqueuePackage('LVS', JSMessages::EXTERNAL);
 
 		$this->wg->SupressPageSubtitle = true;

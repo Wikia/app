@@ -24,11 +24,11 @@ class LicensedVideoSwapHooksHelper {
 				$query = "useskin=wikia";
 			}
 
-			$href = SpecialPage::getTitleFor("LicensedVideoSwap/History")->escapeLocalURL( $query );
-			$extraButtons = $response->getVal('extraButtons');
+			$href = SpecialPage::getTitleFor( "LicensedVideoSwap/History" )->escapeLocalURL( $query );
+			$extraButtons = $response->getVal( 'extraButtons' );
 
-			$extraButtons[] = '<a class="button lvs-history-btn" href="'.$href.'" rel="tooltip" title="'.wfMessage("lvs-tooltip-history")->plain().'">'.wfMessage("lvs-history-button-text")->plain().'</a>';
-			$response->setVal('extraButtons', $extraButtons);
+			$extraButtons[] = '<a class="button lvs-history-btn" href="'.$href.'" rel="tooltip" title="'.wfMessage( "lvs-tooltip-history" )->plain().'">'.wfMessage( "lvs-history-button-text" )->plain().'</a>';
+			$response->setVal( 'extraButtons', $extraButtons );
 		}
 		return true;
 	}
