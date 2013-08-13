@@ -111,7 +111,7 @@ class VideoInfo extends WikiaModel {
 	}
 
 	/**
-	 * Update data in the database, optionally updating only select rows
+	 * Update data in the database
 	 * @return boolean - Returns true if rows were updated, false if no rows were updated
 	 */
 	protected function updateDatabase() {
