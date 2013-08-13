@@ -477,7 +477,7 @@ class DataMartService extends Service {
 		// list of user ids can be passed so we need to have it shorter
 		$userIdsKey = self::makeUserIdsMemCacheKey($userIds);
 
-		$events = WikiaDataAccess::cache(
+		$events = WikiaDataAccess::cacheWithLock(
 			wfSharedMemcKey('datamart', 'user_edits', $wikiId, $userIdsKey, $periodId, $rollupDate),
 			60 * 60 * 24,
 			function () use ($app, $wikiId, $userIds, $periodId, $rollupDate) {
