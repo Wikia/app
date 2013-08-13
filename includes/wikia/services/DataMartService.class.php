@@ -481,7 +481,7 @@ class DataMartService extends Service {
 			wfSharedMemcKey('datamart', 'user_edits', $wikiId, $userIdsKey, $periodId, $rollupDate),
 			60 * 60 * 24,
 			function () use ($app, $wikiId, $userIds, $periodId, $rollupDate) {
-				$events =[];
+				$events = [];
 				if (!empty($app->wg->StatsDBEnabled)) {
 					$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 
