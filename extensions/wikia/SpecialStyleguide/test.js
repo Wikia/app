@@ -8,16 +8,50 @@
 
 require(['wikia.uifactory', 'wikia.uicomponent'], function(uiFactory, uiComponent){
 
-	console.log(uiFactory);
 	var test = new uiComponent;
-	console.log(test);
 	var test2 = uiComponent();
+
+	console.log(test);
 	console.log(test2);
 
 	uiFactory.init('button').done(function(button) {
-		var params = {},
+		var params = {
+				type: 'link',
+				vars: {
+					href: 'test',
+					title: 'test',
+					value: 'test',
+					classes: ['test']
+				}
+			},
 			html = button.render(params);
 
-			console.log(html);
+		console.log(html);
+
+		params = {
+			type: 'xxx',
+			vars: {
+				href: 'test',
+				title: 'test',
+				classes: ['test']
+			}
+		};
+		html = button.render(params);
+		console.log(html);
+	});
+
+	uiFactory.init('xxx').done(function(button) {
+		var params = {
+				type: 'link',
+				vars: {
+					href: 'test',
+					title: 'test',
+					value: 'test',
+					classes: ['test']
+				}
+			},
+			html = button.render(params);
+
+		console.log(html);
 	});
 });
