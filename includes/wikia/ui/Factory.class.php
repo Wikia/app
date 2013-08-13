@@ -99,7 +99,7 @@ class Factory {
 	 * @throws \Exception
 	 */
 	public function loadFileContent( $path ) {
-		if ( false === $fileContent = file_get_contents( $path ) ) {
+		if ( false === $fileContent = @file_get_contents( $path ) ) {
 			throw new \Exception( 'File not found (' . $path . ').' );
 		} else {
 			return $fileContent;
@@ -299,7 +299,8 @@ class Factory {
 
 		// add merged assets
 		foreach ( array_unique( $assets ) as $asset ) {
-			//@todo why do we have to add assets to output if there is a chance we won't render the components
+			// @todo why do we have to add assets to output if there is a chance we won't render the components at all
+			// (like in case of ajax request)
 			$this->addAsset( $asset );
 		}
 
