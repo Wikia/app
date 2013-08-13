@@ -127,7 +127,7 @@ class Factory {
 		}
 	}
 
-	public function loadComponentConfigAsArray( $componentName ) {
+	protected function loadComponentConfigAsArray( $componentName ) {
 		wfProfileIn( __METHOD__ );
 
 		$configFile = $this->getComponentConfigFileFullPath( $componentName );
@@ -205,7 +205,7 @@ class Factory {
 	 * @param String $componentName
 	 * @return string
 	 */
-	protected function loadComponentConfig( $componentName ) {
+	public function loadComponentConfig( $componentName ) {
 		wfProfileIn( __METHOD__ );
 
 		$memcKey = wfMemcKey( __CLASS__, 'component', $componentName, $this->getCacheVersion() );
