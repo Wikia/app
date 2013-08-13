@@ -75,12 +75,4 @@ class RealgravityApiWrapper extends IngestionApiWrapper {
 		return '';
 	}
 
-	protected function getVideoTags() {
-		if ( !empty($this->metadata['tags']) ) {
-			return $this->metadata['tags'];
-		}
-
-		return '';
-	}
-
 }

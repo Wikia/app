@@ -63,12 +63,20 @@ class IvaApiWrapper extends IngestionApiWrapper {
 		return '';
 	}
 
-	protected function getVideoTags() {
-		if ( !empty($this->metadata['tags']) ) {
-			return $this->metadata['tags'];
+	protected function isAgeGate() {
+		if ( !empty( $this->metadata['ageGate'] ) ) {
+			return true;
 		}
 
-		return '';
+		return false;
+	}
+
+	protected function getAgeRequired() {
+		if ( !empty( $this->metadata['ageRequired'] ) ) {
+			return $this->metadata['ageRequired'];
+		}
+
+		return 0;
 	}
 
 	protected function getGenres() {

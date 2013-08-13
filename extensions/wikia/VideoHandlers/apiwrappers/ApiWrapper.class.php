@@ -297,9 +297,6 @@ abstract class ApiWrapper {
 		if ( !isset($metadata['altVideoId']) ) {
 			$metadata['altVideoId'] = $this->getAltVideoId();
 		}
-		if ( !isset($metadata['trailerRating']) ) {
-			$metadata['trailerRating'] = $this->getTrailerRating();
-		}
 		if ( !isset($metadata['industryRating']) ) {
 			$metadata['industryRating'] = $this->getIndustryRating();
 		}
@@ -314,9 +311,6 @@ abstract class ApiWrapper {
 		}
 		if ( !isset( $metadata['subtitle'] ) ) {
 			$metadata['subtitle'] = $this->getSubtitle();
-		}
-		if ( !isset($metadata['tags']) ) {
-			$metadata['tags'] = $this->getVideoTags();
 		}
 		if ( !isset($metadata['provider']) ) {
 			$metadata['provider'] = $this->getProvider();
@@ -398,14 +392,6 @@ abstract class ApiWrapper {
 	}
 
 	/**
-	 * MPAA trailer rating (e.g. "greenband", "redband")
-	 * @return string
-	 */
-	protected function getTrailerRating() {
-		return '';
-	}
-
-	/**
 	 * Rating from industry board.
 	 * Examples from MPAA: R, PG-13
 	 * Examples from ESRB: E, T, AO
@@ -440,10 +426,6 @@ abstract class ApiWrapper {
 	 * @return string
 	 */
 	protected function getSubtitle() {
-		return '';
-	}
-
-	protected function getVideoTags() {
 		return '';
 	}
 

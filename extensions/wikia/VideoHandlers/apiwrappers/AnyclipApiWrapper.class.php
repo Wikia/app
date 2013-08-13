@@ -192,9 +192,9 @@ class AnyclipApiWrapper extends ApiWrapper {
 		return 'Movies';
 	}
 
-	protected function getVideoKeywords() {
-		if ( !empty($this->metadata['keywords']) ) {
-			return $this->metadata['keywords'];
+	protected function getVideoName() {
+		if ( !empty($this->metadata['name']) ) {
+			return $this->metadata['name'];
 		}
 
 		if ( !empty($this->interfaceObj['title']['name']) ) {
@@ -236,6 +236,19 @@ class AnyclipApiWrapper extends ApiWrapper {
 		return 0;
 	}
 
+	protected function getAgeRequired() {
+		if ( !empty( $this->metadata['ageRequired'] ) ) {
+			return $this->metadata['ageRequired'];
+		}
+
+		// set default age required
+		if ( !empty( $this->interfaceObj['restrictions'] ) ) {
+			return 18;
+		}
+
+		return 0;
+	}
+
 	protected function isAgeGate() {
 		if ( !empty( $this->metadata['ageGate'] ) ) {
 			return true;
@@ -248,9 +261,9 @@ class AnyclipApiWrapper extends ApiWrapper {
 		return false;
 	}
 
-	protected function getVideoTags() {
-		if ( !empty($this->metadata['tags']) ) {
-			return $this->metadata['tags'];
+	protected function getVideoKeywords() {
+		if ( !empty($this->metadata['keywords']) ) {
+			return $this->metadata['keywords'];
 		}
 
 		if ( !empty($this->interfaceObj['tags']) ) {

@@ -276,18 +276,6 @@ class OoyalaApiWrapper extends ApiWrapper {
 		return 0;
 	}
 
-	protected function getTrailerRating() {
-		if ( !empty($this->metadata['trailerRating']) ) {
-			return $this->metadata['trailerRating'];
-		}
-
-		if ( !empty($this->interfaceObj['metadata']['trailerrating']) ) {
-			return $this->interfaceObj['metadata']['trailerrating'];
-		}
-
-		return '';
-	}
-
 	protected function getIndustryRating() {
 		if ( !empty($this->metadata['industryRating']) ) {
 			return $this->metadata['industryRating'];
@@ -326,18 +314,6 @@ class OoyalaApiWrapper extends ApiWrapper {
 		}
 
 		return 0;
-	}
-
-	protected function getVideoTags() {
-		if ( !empty($this->metadata['tags']) ) {
-			return $this->metadata['tags'];
-		}
-
-		if ( !empty($this->interfaceObj['metadata']['tags']) ) {
-			return $this->interfaceObj['metadata']['tags'];
-		}
-
-		return '';
 	}
 
 	protected function getGenres() {
