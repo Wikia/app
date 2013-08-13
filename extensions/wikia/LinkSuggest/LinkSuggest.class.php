@@ -169,9 +169,9 @@ class LinkSuggest {
 			$sql = "SELECT page_len, page_id, page_title, rd_title, page_namespace, page_is_redirect
 						FROM page IGNORE INDEX (`name_title`)
 						LEFT JOIN redirect ON page_is_redirect = 1 AND page_id = rd_from
-						LEFT JOIN querycache ON qc_title = page_title
-						WHERE {$pageNamespaceClause} (page_title LIKE '{$query}%' or LOWER(page_title) LIKE '{$queryLower}%')
-							AND ( qc_type != 'BrokenRedirects' OR qc_type IS NULL )
+						LEFT JOIN querycache ON qc_title = page_title AND qc_type = 'BrokenRedirects'
+						WHERE {$pageNamespaceClause} (LOWER(page_title) LIKE '{$queryLower}%')
+							AND qc_type IS NULL
 						LIMIT ".($wgLinkSuggestLimit * 3);
 
 			$res = $db->query($sql, __METHOD__);
