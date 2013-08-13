@@ -136,7 +136,7 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'w
 
 		getComponentsConfig(componentName).done(function(data) {
 
-			if (!data.status) {
+			if (data.status !== 1) {
 				deferred.reject();
 				throw new Error(data.errorMessage);
 			}
@@ -147,17 +147,17 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'w
 			data.components.forEach(function(element) {
 
 				var component = getComponentInstance(),
-					templateVars = element['templateVars'],
-					dependencies = element['dependencies'],
-					templates = element['templates'];
+					templateVarsConfig = element.templateVarsConfig,
+					assets = element.assets,
+					templates = element.templates;
 
-				if (dependencies) {
-					jsAssets = jsAssets.concat(dependencies['js']);
-					cssAssets = cssAssets.concat(dependencies['css']);
+				if (assets) {
+					jsAssets = jsAssets.concat(assets.js);
+					cssAssets = cssAssets.concat(assets.css);
 				}
 
-				if (templateVars && templates) {
-					component.setComponentsConfig(templates, templateVars);
+				if (templateVarsConfig && templates) {
+					component.setComponentsConfig(templates, templateVarsConfig);
 				}
 
 				components.push(component);
@@ -170,7 +170,6 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'w
 			addStylesToDOM(cssAssets);
 
 			deferred.resolve((components.length == 1) ? components[0] : components);
-
 		}).fail(function() {
 			deferred.reject();
 		});
