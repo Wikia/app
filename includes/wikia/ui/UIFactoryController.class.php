@@ -31,7 +31,7 @@ class UIFactoryController extends \WikiaController {
 		$componentNames = $this->request->getArray( 'components', [] );
 		$factory = Factory::getInstance();
 		try {
-			$components = $factory->init( $componentNames );
+			$components = $factory->init( $componentNames, false );
 			if ( !is_array( $components ) ) {
 				$components = array( $components );
 			}

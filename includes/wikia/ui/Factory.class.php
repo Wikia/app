@@ -256,11 +256,12 @@ class Factory {
 	 * @desc Loads JS/CSS dependencies, creates and configurates an instance of \Wikia\UI\Component object which is returned
 	 *
 	 * @param string|array $componentNames
+	 * @param bool $loadAssets flag indicating if the component assets should be loaded - needed when we want to render components
 	 *
 	 * @throws \Wikia\UI\DataException
-	 * @return array - @todo - shouldn't it return a componentName indexed dictionary?
+	 * @return array
 	 */
-	public function init( $componentNames ) {
+	public function init( $componentNames, $loadAssets = true ) {
 		if ( !is_array($componentNames ) ) {
 			$componentNames = (array)$componentNames;
 		}
@@ -297,11 +298,12 @@ class Factory {
 			$components[] = $component;
 		}
 
-		// add merged assets
-		foreach ( array_unique( $assets ) as $asset ) {
-			// @todo why do we have to add assets to output if there is a chance we won't render the components at all
-			// (like in case of ajax request)
-			$this->addAsset( $asset );
+		if ( $loadAssets ) {
+			// add merged assets
+			// @todo - I'm not sure we should add assets one-by-one - it this case AssetManager may not combine them
+			foreach ( array_unique( $assets ) as $asset ) {
+				$this->addAsset( $asset );
+			}
 		}
 
 		// return components
