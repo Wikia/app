@@ -37,7 +37,7 @@ class UIFactoryController extends \WikiaController {
 				$components = array( $components );
 			}
 		} catch( \Exception $e ) {
-			$this->setVal( 'status', STATUS_ERROR );
+			$this->setVal( 'status', self::STATUS_ERROR );
 			$this->setVal( 'errorMessage', $e->getMessage() );
 			return;
 		}
@@ -55,7 +55,7 @@ class UIFactoryController extends \WikiaController {
 			$result[] = $componentResult;
 		}
 		$this->setVal( 'components', $result );
-		$this->setVal( 'status', STATUS_OK );
+		$this->setVal( 'status', self::STATUS_OK );
 	}
 
 }
