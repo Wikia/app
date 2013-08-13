@@ -15,20 +15,22 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	/**
 	 * LicensedVideoSwap page
 	 *
-	 * @requestParam string sort [recent/popular/trend]
 	 * @requestParam integer currentPage
-	 * @responseParam string selectedSort
-	 * @responseParam array sortOptions
 	 * @responseParam integer currentPage
 	 * @responseParam integer pages
 	 * @responseParam array videoList
 	 */
 	public function index() {
+		$user = $this->getUser();
+		if ( !$user->isAllowed( 'licensedvideoswap' ) ) {
+			$this->displayRestrictionError();
+			return false;
+		}
+
 		// Add assets to both LVS and LVS/History
 		// TODO: move this to Assets Manager once we release this
 		$this->response->addAsset( 'licensed_video_swap_js' );
 		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/css/LicensedVideoSwap.scss' );
-		$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/css/Dropdown.scss' );
 
 		// See if there is a subpage request to handle (i.e. /History)
 		$subpage = $this->getSubpage();
@@ -54,30 +56,18 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		// update h1 text and <title> element
 		$this->getContext()->getOutput()->setPageTitle( wfMessage('lvs-page-title')->plain() );
 
-		$selectedSort = $this->getVal( 'sort', 'recent' );
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
 		// list of videos
 		$helper = new LicensedVideoSwapHelper();
 
 		// Get the list of videos that have suggestions
-		$this->videoList = $helper->getRegularVideoList( $selectedSort, $currentPage );
+		$this->videoList = $helper->getRegularVideoList( 'recent', $currentPage );
 		$this->thumbWidth = LicensedVideoSwapHelper::THUMBNAIL_WIDTH;
 		$this->thumbHeight = LicensedVideoSwapHelper::THUMBNAIL_HEIGHT;
 
 		// Set up pagination
-		$this->pagination = ''; //$helper->getPagination( $currentPage, $selectedSort );
-
-		// sort options
-		$videoHelper = new VideoHandlerHelper();
-		$options = $videoHelper->getSortOptions();
-		$this->contentHeaderSortOptions = array(
-			'label' =>  wfMessage('specialvideos-sort-by')->text(), // TODO: abstract this message
-			'selectedSort' => $selectedSort,
-			'sortOptions' => $videoHelper->getTemplateSelectOptions( $options, $selectedSort ),
-			'sortMsg' => $options[$selectedSort],
-			'containerId' => 'sorting-dropdown',
-		);
+		$this->pagination = ''; //$helper->getPagination( $currentPage, 'recent' );
 	}
 
 	/**
@@ -128,7 +118,6 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * swap video
 	 * @requestParam string videoTitle
 	 * @requestParam string newTitle
-	 * @requestParam string sort [recent/popular/trend]
 	 * @requestParam integer currentPage
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
@@ -258,15 +247,14 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// TODO: send request for tracking
 
-		$selectedSort = $this->getVal( 'sort', 'recent' );
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
 		// get video list
 		$use_master = true;
-		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage, $use_master );
+		$videoList = $helper->getRegularVideoList( 'recent', $currentPage, $use_master );
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
-		//$this->html .= $helper->getPagination( $currentPage, $selectedSort );
+		//$this->html .= $helper->getPagination( $currentPage, 'recent' );
 		$this->result = 'ok';
 
 		$undoOptions = array(
@@ -283,7 +271,6 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	/**
 	 * keep video
 	 * @requestParam string videoTitle
-	 * @requestParam string sort [recent/popular/trend]
 	 * @requestParam integer currentPage
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
@@ -327,15 +314,14 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		);
 		$helper->setPageStatusKeep( $articleId, $value );
 
-		$selectedSort = $this->getVal( 'sort', 'recent' );
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
 		// Get list video of non-premium videos available to swap
 		$use_master = true;
-		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage, $use_master );
+		$videoList = $helper->getRegularVideoList( 'recent', $currentPage, $use_master );
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
-		//$this->html .= $helper->getPagination( $currentPage, $selectedSort );
+		//$this->html .= $helper->getPagination( $currentPage, 'recent' );
 		$this->result = 'ok';
 
 		$undoOptions = array(
@@ -351,7 +337,6 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * restore video after swapping or keeping it
 	 * @requestParam string videoTitle
 	 * @requestParam string newTitle
-	 * @requestParam string sort [recent/popular/trend]
 	 * @requestParam integer currentPage
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
@@ -433,15 +418,14 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			$helper->addLog( $file->getTitle(), 'licensedvideoswap_restore', $reason );
 		}
 
-		$selectedSort = $this->getVal( 'sort', 'recent' );
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
 		// get video list
 		$use_master = true;
-		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage, $use_master );
+		$videoList = $helper->getRegularVideoList( 'recent', $currentPage, $use_master );
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
-		//$this->html .= $helper->getPagination( $currentPage, $selectedSort );
+		//$this->html .= $helper->getPagination( $currentPage, 'recent' );
 		$this->result = 'ok';
 		$this->msg = wfMessage( 'lvs-restore-video-success' )->text();
 	}
@@ -486,15 +470,5 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->videoList = $this->getVal( 'videoList', array() );
 		$this->thumbWidth = LicensedVideoSwapHelper::THUMBNAIL_WIDTH;
 		$this->thumbHeight = LicensedVideoSwapHelper::THUMBNAIL_HEIGHT;
-	}
-
-	public function contentHeaderSort() {
-		$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_MUSTACHE);
-
-		$this->label = $this->getVal('label');
-		$this->sortMsg = $this->getVal('sortMsg');
-		$this->sortOptions = $this->getVal('sortOptions');
-		$this->containerId = $this->getVal('containerId');
-		$this->blankImgUrl = $this->wg->BlankImgUrl;
 	}
 }

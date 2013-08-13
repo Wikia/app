@@ -13,6 +13,12 @@ class LicensedVideoSwapHooksHelper {
 	 */
 	public static function onPageHeaderIndexExtraButtons( $response ) {
 		$app = F::app();
+
+		$user = $app->wg->User;
+		if ( !$user->isAllowed( 'licensedvideoswap' ) ) {
+			return true;
+		}
+
 		if ( $app->wg->Title->getFullText() == 'Special:LicensedVideoSwap' ) {
 
 			// Get the user preference skin, not the current skin of the page
@@ -30,6 +36,7 @@ class LicensedVideoSwapHooksHelper {
 			$extraButtons[] = '<a class="button lvs-history-btn" href="'.$href.'" rel="tooltip" title="'.wfMessage( "lvs-tooltip-history" )->plain().'">'.wfMessage( "lvs-history-button-text" )->plain().'</a>';
 			$response->setVal( 'extraButtons', $extraButtons );
 		}
+
 		return true;
 	}
 }

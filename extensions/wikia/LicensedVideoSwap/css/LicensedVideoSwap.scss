@@ -107,38 +107,9 @@ $button-icon-color: white;
 	}
 }
 
-.ContentHeader {
-  @include clearfix;
-  border-bottom: 1px solid $color-page-border;
-  border-top: 1px solid $color-page-border;
-  margin-bottom: 18px;
-  padding: 18px 0;
-  > label {
-    display: block;
-    float: left;
-    font-weight: bold;
-    line-height: 21px;
-    margin-right: 8px;
-  }
-
-  .WikiaDropdown {
-    float:left;
-    .dropdown {
-      @include box-shadow(0, 0, 0, transparent, 0, 0);
-      width: 215px;
-      .selected {
-        display: none;
-      }
-    }
-    strong {
-      font-weight: normal;
-    }
-  }
-}
-
-
 .LVSGrid {
 	position: relative;
+	border-top: 1px solid $color-page-border;
 	.lvs-sprite:before {
 		@include sprite-LicensedVideoSwap-base;
 	}
