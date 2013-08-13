@@ -1,4 +1,4 @@
-describe('UIComponent', function(){
+describe('UIComponent', function() {
 	'use strict';
 
 	var mustache = {
@@ -11,21 +11,25 @@ describe('UIComponent', function(){
 			templates: {
 				link: '<a href="{{href}}" titile="{{title}}">{{value}}</a>'
 			},
-			templateVars: {
-				required: ['href', 'title', 'value']
+			templateVarsConfig: {
+				link: {
+					required: ['href', 'title', 'value']
+				}
 			}
 		},
-		mustacheVariables = {
-			href: 'http://www.wikia.com',
-			title: 'Wikia Home Page',
-			value: 'Wikia'
+		paramsToRender = {
+			type: 'link',
+			vars: {
+				href: 'http://www.wikia.com',
+				title: 'Wikia Home Page',
+				value: 'Wikia'
+			}
 		},
-		componentHMTLMock = '<a href="http://www.wikia.com" titile="Wikia Home Page">Wikia</a>',
-		validationError = 'Missing required mustache variables: value!';
+		componentHTMLMock = '<a href="http://www.wikia.com" titile="Wikia Home Page">Wikia</a>';
 
 	it('registers AMD module', function() {
 		expect(uicomponent).toBeDefined();
-		expect(typeof uicomponent).toBe('object', 'uicomponent');
+		expect(typeof uicomponent).toBe('function', 'uicomponent');
 	});
 
 	it('gives nice and clean API', function() {
@@ -44,26 +48,47 @@ describe('UIComponent', function(){
 
 	it('render component', function() {
 		var uiComponent = uicomponent();
+		uiComponent.setComponentsConfig(componentConfig['templates'], componentConfig['templateVarsConfig']);
+		var html = uiComponent.render(paramsToRender);
 
-		uiComponent.setComponentsConfig(componentConfig['templates'], componentConfig['templateVars']);
-		var html = uiComponent.render(mustacheVariables);
-
-		expect(html.toContain(componentHMTLMock));
+		expect(html).toBe(componentHTMLMock);
 	});
 
-	mustacheVariables = {
-		href: 'http://www.wikia.com',
-		title: 'Wikia Home Page'
-	};
+	it('throw error on validation - requested type is not supported', function(){
+		var paramsToRender = {
+				type: 'xxx',
+				vars: {
+					href: 'http://www.wikia.com',
+					title: 'Wikia Home Page',
+					value: 'Wikia'
 
-	it('throw error on validation', function() {
-		var uiComponent = uicomponent();
+				}
+			},
+			validationError = 'Requested component type is not supported!',
+			uiComponent = uicomponent();
 
-		uiComponent.setComponentsConfig(componentConfig['templates'], componentConfig['templateVars']);
+		uiComponent.setComponentsConfig(componentConfig['templates'], componentConfig['templateVarsConfig']);
 
 		expect(function() {
-			uiComponent.render(mustacheVariables);
+			uiComponent.render(paramsToRender);
+		}).toThrow(validationError);
+	});
+
+	it('throw error on validation - missing required variable', function() {
+		var paramsToRender = {
+			type: 'link',
+			vars: {
+				href: 'http://www.wikia.com',
+				title: 'Wikia Home Page'
+			}
+			},
+			validationError = 'Missing required mustache variables: value!',
+			uiComponent = uicomponent();
+
+		uiComponent.setComponentsConfig(componentConfig['templates'], componentConfig['templateVarsConfig']);
+
+		expect(function() {
+			uiComponent.render(paramsToRender);
 		}).toThrow(validationError);
 	})
-
 });
