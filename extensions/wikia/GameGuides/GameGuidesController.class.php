@@ -22,7 +22,7 @@ class GameGuidesController extends WikiaController {
 	 */
 	private $mModel = null;
 	private $mPlatform = null;
-
+	
 	function init() {
 		$requestedVersion = $this->request->getInt( 'ver', self::API_VERSION );
 		$requestedRevision = $this->request->getInt( 'rev', self::API_REVISION );
@@ -33,6 +33,7 @@ class GameGuidesController extends WikiaController {
 
 		$this->mModel = (new GameGuidesModel);
 		$this->mPlatform = $this->request->getVal( 'os' );
+		$this->assetsPath = $this->wg->ExtensionsPath . '/wikia/GameGuides/assets/GameGuidesAssets.json';
 	}
 
 	/*
@@ -270,21 +271,16 @@ class GameGuidesController extends WikiaController {
 	 * it returns a page and all 'global' assets
 	 */
 	public function renderFullPage(){
+		global $IP;
+
 		wfProfileIn( __METHOD__ );
 
-		$resources = $this->sendRequest( 'AssetsManager', 'getMultiTypePackage', array(
-			'scripts' => 'gameguides_js',
-			'styles' => '//extensions/wikia/GameGuides/css/GameGuides.scss'
-		) );
+		$resources = json_decode(file_get_contents($IP . $this->assetsPath));
 
-		$js = $resources->getVal( 'scripts', '' );
 		$scripts = '';
-
-		foreach( $js as $s ) {
+		foreach( $resources->scripts as $s ) {
 			$scripts .= $s;
 		}
-
-		$styles = $resources->getVal( 'styles', '' );
 
 		$page = $this->sendSelfRequest( 'getPage', array(
 			'page' => $this->getVal( 'page')
@@ -292,7 +288,7 @@ class GameGuidesController extends WikiaController {
 
 		$this->response->setVal( 'html', $page->getVal( 'html' ) );
 		$this->response->setVal( 'js', $scripts );
-		$this->response->setVal( 'css', $styles );
+		$this->response->setVal( 'css', $resources->styles );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -307,13 +303,7 @@ class GameGuidesController extends WikiaController {
 		$this->response->setFormat( 'json' );
 
 		$this->response->setVal( 'url',
-			AssetsManager::getInstance()->getMultiTypePackageURL(
-				array(
-					'scripts' => 'gameguides_js',
-					'styles' => '//extensions/wikia/GameGuides/css/GameGuides.scss'
-				),
-				true
-			)
+			$this->assetsPath . '?cb=' . $this->wg->StyleVersion
 		);
 
 		$this->response->setVal( 'cb', (string) $this->wg->StyleVersion );
