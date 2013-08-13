@@ -27,21 +27,29 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
-		// Add assets
+		// Add assets to both LVS and LVS/History
 		// TODO: move this to Assets Manager once we release this
 		$this->response->addAsset( 'licensed_video_swap_js' );
 		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/css/LicensedVideoSwap.scss' );
 
-		// Setup messages for JS
-		// TODO: once 'back to roots' branch is merged, use JSMessages::enqueuePackage
-		F::build('JSMessages')->enqueuePackage('LVS', JSMessages::EXTERNAL);
-
-		// See if there is a subpage request to handle
+		// See if there is a subpage request to handle (i.e. /History)
 		$subpage = $this->getSubpage();
+
+		if ( !$this->app->checkSkin( 'oasis' ) ) {
+			$oasisURL = SpecialPage::getTitleFor( 'LicensedVideoSwap', $subpage )->getLocalURL( 'useskin=wikia' );
+			$oasisLink = Xml::element( 'a', [ 'href' => $oasisURL ], wfMessage( 'lvs-click-here' ) );
+			$this->wg->out->addHTML( wfMessage( 'lvs-no-monobook-support' )->rawParams( $oasisLink )->parse() );
+			$this->skipRendering();
+			return true;
+		}
+
 		if ( $subpage ) {
 			$this->forward( __CLASS__, $subpage );
 			return true;
 		}
+
+		// Setup messages for JS
+		JSMessages::enqueuePackage('LVS', JSMessages::EXTERNAL);
 
 		$this->wg->SupressPageSubtitle = true;
 
@@ -67,10 +75,19 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 */
 	public function history() {
 		$this->getContext()->getOutput()->setPageTitle( wfMessage('lvs-history-page-title')->text() );
-		$this->getContext()->getOutput()->setSubtitle( Wikia::link(SpecialPage::getTitleFor("LicensedVideoSwap"), wfMessage('lvs-page-header-back-link')->plain(), array('accesskey' => 'c'), array(), 'known') );
+
+		// Get the user preference skin, not the current skin of the page
+		$skin = F::app()->wg->User->getOption( 'skin' );
+
+		// for monobook users, specify wikia skin in querystring
+		$queryArr = [];
+		if( $skin == "monobook" ) {
+			$queryArr["useskin"] = "wikia";
+		}
+
+		$this->getContext()->getOutput()->setSubtitle( Wikia::link(SpecialPage::getTitleFor("LicensedVideoSwap"), wfMessage('lvs-page-header-back-link')->plain(), array('accesskey' => 'c'), $queryArr, 'known') );
 
 		$this->recentChangesLink = Wikia::link( SpecialPage::getTitleFor( "RecentChanges" ) );
-		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/js/lvsHistoryPage.js' );
 		$helper = new LicensedVideoSwapHelper();
 		$this->videos = $helper->getUndoList( $this->getContext() );
 	}
