@@ -17,7 +17,7 @@ class OoyalaVideoHandler extends VideoHandler {
 		$ooyalaPlayerId = F::app()->wg->OoyalaApiConfig['playerId'];
 		$jsFile = 'http://player.ooyala.com/v3/'.$ooyalaPlayerId;
 
-		$autoPlayStr = ( $autoplay && !$this->isAgeGate() ) ? 'true' : 'false';
+		$autoPlayStr = ( $autoplay ) ? 'true' : 'false';
 
 		$html = <<<EOT
 <div id='{$playerId}' style="width:{$width}px; height:{$height}px"></div>

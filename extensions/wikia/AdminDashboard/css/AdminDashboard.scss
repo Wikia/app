@@ -387,9 +387,6 @@ $color-highlight-column: rgba($color-page, 0);
 	.shadow-mask {
 		display: none;
 	}
-	> nav {
-		bottom: 0;
-	}
 	@if ( not $responsive-layout-enabled ) {
 		>.buttons {
 			bottom: auto;

@@ -26,7 +26,7 @@ class VideoTitleTest extends BaseTest
 		
 		$mockDismax = $this->getMockBuilder( 'Solarium_Query_Select_Component_DisMax' )
 		                   ->disableOriginalConstructor()
-		                   ->setMethods( [ 'setQueryParser', 'setQueryFields', 'setMinimumMatch' ] )
+		                   ->setMethods( [ 'setQueryParser', 'setQueryFields', 'setMinimumMatch', 'setPhraseFields', 'setPhraseSlop' ] )
 		                   ->getMock();
 		
 		$mockService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getHubForWikiId', 'getWikiId' ] );
@@ -37,7 +37,6 @@ class VideoTitleTest extends BaseTest
 		
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\VideoTitle' )
 		                   ->setConstructorArgs( [ $dc ] )
-		                   ->setMethods( [ 'getQueryFieldsString' ] )
 		                   ->getMock();
 		
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getSanitizedQuery' ], [ 'foo' ] );
@@ -63,15 +62,22 @@ class VideoTitleTest extends BaseTest
 		    ->with   ( 'edismax' )
 		    ->will   ( $this->returnValue( $mockDismax ) )
 		;
-		$mockSelect
-		    ->expects( $this->once() )
-		    ->method ( 'getQueryFieldsString' )
-		    ->will   ( $this->returnValue( 'title_en^5 nolang_txt' ) )
-		;
 		$mockDismax
 		    ->expects( $this->once() )
 		    ->method ( 'setQueryFields' )
-		    ->with   ( 'title_en^5 nolang_txt' )
+		    ->with   ( 'title_en' )
+		    ->will   ( $this->returnValue( $mockDismax ) )
+		;
+		$mockDismax
+		    ->expects( $this->once() )
+		    ->method ( 'setPhraseFields' )
+		    ->with   ( 'title_en' )
+		    ->will   ( $this->returnValue( $mockDismax ) )
+		;
+		$mockDismax
+		    ->expects( $this->once() )
+		    ->method ( 'setPhraseSlop' )
+		    ->with   ( 4 )
 		    ->will   ( $this->returnValue( $mockDismax ) )
 		;
 		$mockConfig
@@ -83,6 +89,7 @@ class VideoTitleTest extends BaseTest
 		    ->expects( $this->once() )
 		    ->method ( 'setMinimumMatch' )
 		    ->with   ( '80%' )
+		    ->will   ( $this->returnValue( $mockDismax ) )
 		;
 		$mockService
 		    ->expects( $this->once() )
@@ -109,7 +116,7 @@ class VideoTitleTest extends BaseTest
 		$mockSolariumQuery
 		    ->expects( $this->once() )
 		    ->method ( 'setQuery' )
-		    ->with   ( "(wid:%1% AND ns:6 AND categories_mv_en:%2%) AND (%3%)", $params )
+		    ->with   ( "+(wid:%1% AND is_video:true AND categories_mv_en:%2%) AND +(%3%)", $params )
 		;
 		$getSelect = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\VideoTitle', 'getSelectQuery' );
 		$getSelect->setAccessible( true );

@@ -323,12 +323,6 @@ abstract class ApiWrapper {
 		if ( !isset( $metadata['targetCountry'] ) ) {
 			$metadata['targetCountry'] = $this->getTargetCountry();
 		}
-		if ( !isset( $metadata['source'] ) ) {
-			$metadata['source'] = $this->getSource();
-		}
-		if ( !isset( $metadata['sourceId'] ) ) {
-			$metadata['sourceId'] = $this->getSourceId();
-		}
 		if ( !isset( $metadata['series'] ) ) {
 			$metadata['series'] = $this->getSeries();
 		}
