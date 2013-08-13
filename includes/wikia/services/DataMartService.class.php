@@ -467,18 +467,22 @@ class DataMartService extends Service {
 			return false;
 		}
 
-		if (empty($wikiId)) {
+		if ( empty($wikiId) ) {
 			$wikiId = $app->wg->CityId;
 		}
 
-		if (empty($endDate)) {
-			if ($periodId == self::PERIOD_ID_MONTHLY) {
-				// date from begining of month
+		if ( empty($endDate) ) {
+			if ( $periodId == self::PERIOD_ID_MONTHLY ) {
+				// monthly rollup is made always on first day each month
 				$endDate = date('Y-m-01');
 			} else {
-				// date from last day
+				// daily rollup is made every day, but is safer to check day before
 				$endDate = date('Y-m-d', strtotime('-1 day'));
 			}
+		}
+
+		if ( $startDate < $endDate ) {
+			return false;
 		}
 
 		// this is made because memcache key has character limit and a long
@@ -507,7 +511,7 @@ class DataMartService extends Service {
 					$conds = [
 						'period_id' => $periodId,
 						'wiki_id' => $wikiId,
-						"time_id >= '$startDate' and time_id < '$endDate'",
+						"time_id between '$startDate' and '$endDate'",
 						'user_id' => $userIds
 					];
 
