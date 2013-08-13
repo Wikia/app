@@ -481,18 +481,18 @@ class DataMartService extends Service {
 			}
 		}
 
-		if ( $startDate < $endDate ) {
+		if ( $startDate > $endDate ) {
 			return false;
 		}
 
 		// this is made because memcache key has character limit and a long
 		// list of user ids can be passed so we need to have it shorter
-		$userIdsKey = $this->makeUserIdsMemCacheKey($userIds);
+		$userIdsKey = self::makeUserIdsMemCacheKey($userIds);
 
 		$events = WikiaDataAccess::cache(
 			wfSharedMemcKey('datamart', 'user_edits', $wikiId, $userIdsKey, $periodId, $startDate, $endDate),
 			60 * 60 * 24,
-			function () use ($wikiId, $userIds, $periodId, $startDate, $endDate) {
+			function () use ($app, $wikiId, $userIds, $periodId, $startDate, $endDate) {
 				$events =[];
 				if (!empty($app->wg->StatsDBEnabled)) {
 					$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
@@ -517,7 +517,7 @@ class DataMartService extends Service {
 
 					$options = [
 						'GROUP BY' => 'user_id, date, wiki_id'
-					]
+					];
 
 					$result = $db->select(
 						$table,
@@ -545,7 +545,7 @@ class DataMartService extends Service {
 		return $events;
 	}
 
-	private function makeUserIdsMemCacheKey($userIds) {
+	private static function makeUserIdsMemCacheKey($userIds) {
 		$idsKey = implode(',', $userIds);
 		if ( strlen($idsKey) > 150 ) {
 			$idsKey = md5($idsKey);
