@@ -24,6 +24,11 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array videoList
 	 */
 	public function index() {
+		// Add assets to both LVS and LVS/History
+		// TODO: move this to Assets Manager once we release this
+		$this->response->addAsset( 'licensed_video_swap_js' );
+		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/css/LicensedVideoSwap.scss' );
+		$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/css/Dropdown.scss' );
 
 		// See if there is a subpage request to handle (i.e. /History)
 		$subpage = $this->getSubpage();
@@ -40,12 +45,6 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			$this->forward( __CLASS__, $subpage );
 			return true;
 		}
-
-		// Add assets
-		// TODO: move this to Assets Manager once we release this
-		$this->response->addAsset( 'licensed_video_swap_js' );
-		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/css/LicensedVideoSwap.scss' );
-		$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/css/Dropdown.scss' );
 
 		// Setup messages for JS
 		JSMessages::enqueuePackage('LVS', JSMessages::EXTERNAL);
@@ -99,7 +98,6 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->getContext()->getOutput()->setSubtitle( Wikia::link(SpecialPage::getTitleFor("LicensedVideoSwap"), wfMessage('lvs-page-header-back-link')->plain(), array('accesskey' => 'c'), $queryArr, 'known') );
 
 		$this->recentChangesLink = Wikia::link( SpecialPage::getTitleFor( "RecentChanges" ) );
-		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/js/lvsHistoryPage.js' );
 		$helper = new LicensedVideoSwapHelper();
 		$this->videos = $helper->getUndoList( $this->getContext() );
 	}

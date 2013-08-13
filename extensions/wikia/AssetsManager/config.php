@@ -1349,6 +1349,7 @@ $config['licensed_video_swap_js'] = array(
 		'//extensions/wikia/LicensedVideoSwap/js/lvsSuggestions.js',
 		'//extensions/wikia/LicensedVideoSwap/js/lvsSwapKeep.js',
 		'//extensions/wikia/LicensedVideoSwap/js/lvsUndo.js',
+		'//extensions/wikia/LicensedVideoSwap/js/lvsHistoryPage.js',
 		'//extensions/wikia/LicensedVideoSwap/js/LicensedVideoSwap.js',
 	),
 );
