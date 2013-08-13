@@ -26,7 +26,6 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		// TODO: move this to Assets Manager once we release this
 		$this->response->addAsset( 'licensed_video_swap_js' );
 		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/css/LicensedVideoSwap.scss' );
-		$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/css/Dropdown.scss' );
 
 		// Setup messages for JS
 		// TODO: once 'back to roots' branch is merged, use JSMessages::enqueuePackage
