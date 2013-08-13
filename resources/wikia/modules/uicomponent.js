@@ -85,7 +85,7 @@ define('wikia.uicomponent',['wikia.mustache'], function uicomponent(mustache) {
 				supportedTypes = componentConfig.templates;
 
 			if (!supportedTypes.hasOwnProperty(type)) {
-				throw new Error('Requested component type is not supported');
+				throw new Error('Requested component type is not supported!');
 			}
 
 			// Validate required mustache variables
@@ -126,7 +126,7 @@ define('wikia.uicomponent',['wikia.mustache'], function uicomponent(mustache) {
 		 * Configures component
 		 *
 		 * @param {{}} templates object with mustache templates
-		 * @param {{}} templateVars object with accepted template variables
+		 * @param {{}} templateVarsConfig object with accepted template variables
 		 */
 
 		this.setComponentsConfig = function(templates, templateVarsConfig) {
