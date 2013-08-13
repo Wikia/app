@@ -449,17 +449,19 @@ class DataMartService extends Service {
 	}
 
 	/**
-	 * get user edits by user and wiki Id
-	 * @param integer $periodId
+	 * Gets user edits by user and wiki id
+	 * It will be used in WAM and Interstitials
 	 * @param integer|array $userIds
-	 * @param string $startDate [YYYY-MM-DD]
-	 * @param string $endDate [YYYY-MM-DD]
 	 * @param integer $wikiId
-	 * @return array $events [ array( 'user_id' => 'YYYY-MM-DD' => array() ) ]
+	 * @return array $events [ array( 'user_id' => array() ) ]
 	 * Note: number of edits includes number of creates
 	 */
-	public static function getUserEditsByWikiId ($periodId, $userIds, $startDate, $endDate = null, $wikiId = null) {
+	public static function getUserEditsByWikiId ($userIds, $wikiId = null) {
 		$app = F::app();
+		$periodId = self::PERIOD_ID_WEEKLY;
+		// Every weekly rollup is made on Sundays. We need date of penultimate Sunday.
+		// We dont get penultimate date of rollup from database, becasuse of performance issue
+		$rollupDate = date("Y-m-d", strtotime("last Sunday",strtotime("-1 week")));
 
 		wfProfileIn(__METHOD__);
 
@@ -471,28 +473,14 @@ class DataMartService extends Service {
 			$wikiId = $app->wg->CityId;
 		}
 
-		if ( empty($endDate) ) {
-			if ( $periodId == self::PERIOD_ID_MONTHLY ) {
-				// monthly rollup is made always on first day each month
-				$endDate = date('Y-m-01');
-			} else {
-				// daily rollup is made every day, but is safer to check day before
-				$endDate = date('Y-m-d', strtotime('-1 day'));
-			}
-		}
-
-		if ( $startDate > $endDate ) {
-			return false;
-		}
-
 		// this is made because memcache key has character limit and a long
 		// list of user ids can be passed so we need to have it shorter
 		$userIdsKey = self::makeUserIdsMemCacheKey($userIds);
 
 		$events = WikiaDataAccess::cache(
-			wfSharedMemcKey('datamart', 'user_edits', $wikiId, $userIdsKey, $periodId, $startDate, $endDate),
+			wfSharedMemcKey('datamart', 'user_edits', $wikiId, $userIdsKey, $periodId, $rollupDate),
 			60 * 60 * 24,
-			function () use ($app, $wikiId, $userIds, $periodId, $startDate, $endDate) {
+			function () use ($app, $wikiId, $userIds, $periodId, $rollupDate) {
 				$events =[];
 				if (!empty($app->wg->StatsDBEnabled)) {
 					$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
@@ -501,7 +489,6 @@ class DataMartService extends Service {
 
 					$vars = [
 						'user_id',
-						"date_format(time_id,'%Y-%m-%d') as date",
 						'sum(creates) creates',
 						'sum(edits) edits',
 						'sum(deletes) deletes',
@@ -511,12 +498,12 @@ class DataMartService extends Service {
 					$conds = [
 						'period_id' => $periodId,
 						'wiki_id' => $wikiId,
-						"time_id between '$startDate' and '$endDate'",
+						'time_id' => $rollupDate,
 						'user_id' => $userIds
 					];
 
 					$options = [
-						'GROUP BY' => 'user_id, date, wiki_id'
+						'GROUP BY' => 'user_id, time_id'
 					];
 
 					$result = $db->select(
@@ -528,7 +515,7 @@ class DataMartService extends Service {
 					);
 
 					while ($row = $db->fetchObject($result)) {
-						$events[$row->user_id][$row->date] = [
+						$events[$row->user_id] = [
 							'creates' => $row->creates,
 							'edits' => $row->creates + $row->edits,
 							'deletes' => $row->deletes,

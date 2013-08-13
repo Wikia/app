@@ -204,11 +204,9 @@ class WAMApiController extends WikiaApiController {
 
 	private function getMostActiveAdmins($admins, $wikiId) {
 		$edits = $ids = [];
-		$startDate = date('Y-m-d', strtotime("-2 weeks"));
-		$endDate = date('Y-m-d', strtotime("-1 week"));
 		$ids = array_map(function($item) { return $item['userId']; }, $admins);
 
-		$adminsEdits = DataMartService::getUserEditsByWikiId(DataMartService::PERIOD_ID_WEEKLY, $ids, $startDate, $endDate, $wikiId);
+		$adminsEdits = DataMartService::getUserEditsByWikiId( $ids, $wikiId);
 
 		foreach($admins as $key => $admin) {
 			$userEdits = 0;
@@ -228,9 +226,7 @@ class WAMApiController extends WikiaApiController {
 
 	private function countAdminEdits($adminEdits) {
 		$editsCount = 0;
-		foreach($adminEdits as $edits) {
-			$editsCount += (int)$edits['edits'] + (int)$edits['deletes'] + (int)$edits['undeletes'];
-		}
+		$editsCount += (int)$edits['edits'] + (int)$edits['deletes'] + (int)$edits['undeletes'];
 		return $editsCount;
 	}
 }
