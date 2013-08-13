@@ -12,11 +12,13 @@ define('wikia.uicomponent',['wikia.mustache'], function uicomponent(mustache) {
 
 	function UIComponent() {
 
-		var componentConfig,
+		if(!(this instanceof UIComponent)) {
+			return new UIComponent;
+		}
+
+		var componentConfig = {},
 			componentType,
-			componentVars,
-			// preventing this from pointing to Global Object if by accident UIComponent is called without "new"
-			that = (!this instanceof UIComponent) ? {} : this;
+			componentVars;
 
 		/**
 		 * Set template name for rendering this component
@@ -77,7 +79,17 @@ define('wikia.uicomponent',['wikia.mustache'], function uicomponent(mustache) {
 		 */
 
 		function validateComponent() {
-			var requiredVars = componentConfig['templatesVars'][getComponentType()]['required'],
+
+			// Validate component type
+			var type = getComponentType(),
+				supportedTypes = componentConfig.templates;
+
+			if (!supportedTypes.hasOwnProperty(type)) {
+				throw new Error('Requested component type is not supported');
+			}
+
+			// Validate required mustache variables
+			var	requiredVars = componentConfig.templateVarsConfig[type].required,
 				missingVars= [];
 
 			requiredVars.forEach(function(element) {
@@ -100,7 +112,7 @@ define('wikia.uicomponent',['wikia.mustache'], function uicomponent(mustache) {
 		 * @return {String} html markup for the component
 		 */
 
-		that.render = function(params) {
+		this.render = function(params) {
 
 			setComponentType(params['type']);
 			setComponentVars(params['vars']);
@@ -117,13 +129,10 @@ define('wikia.uicomponent',['wikia.mustache'], function uicomponent(mustache) {
 		 * @param {{}} templateVars object with accepted template variables
 		 */
 
-		that.setComponentsConfig = function(templates, templateVars) {
-			componentConfig['templates'] = templates;
-			componentConfig['templatesVars'] = templateVars;
+		this.setComponentsConfig = function(templates, templateVarsConfig) {
+			componentConfig.templates = templates;
+			componentConfig.templateVarsConfig = templateVarsConfig;
 		};
-
-		return that;
-
 	}
 
 	return UIComponent;
