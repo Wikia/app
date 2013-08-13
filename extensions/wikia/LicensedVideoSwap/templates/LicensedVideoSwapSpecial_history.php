@@ -1,4 +1,4 @@
-<p><?= wfMessage( 'lvs-histroy-instructions' )->rawParams( $recentChangesLink )->parse() ?></p>
+<p><?= wfMessage( 'lvs-history-instructions' )->rawParams( $recentChangesLink )->parse() ?></p>
 
 <ul class="lvs-undo-list">
 <? foreach ( $videos as $video ): ?>
