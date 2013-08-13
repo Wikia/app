@@ -6,13 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-require(['wikia.uifactory', 'wikia.uicomponent'], function(uiFactory, uiComponent){
-
-	var test = new uiComponent;
-	var test2 = uiComponent();
-
-	console.log(test);
-	console.log(test2);
+require(['wikia.uifactory'], function(uiFactory) {
 
 	uiFactory.init('button').done(function(button) {
 		var params = {
