@@ -157,27 +157,63 @@ describe('UIFactory', function(){
 		done();
 	});
 
-//	async.it('add assets to DOM', function(done) {
-//		function nirvanaMock(resp) {
-//			var nirvana = {
-//				getJson: function(controller, method, params, callback) {
-//					expect(params.components).toBe(requestedComponent);
-//					expect(params.cb).toBe(window.wgStyleVersion);
-//
-//					callback(resp);
-//				}
-//			};
-//
-//			return nirvana;
-//		}
-//
-//		var nirvana = nirvanaMock(componentConfig);
-//		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, uiComponent);
-//
-//		uifactory.init(requestedComponent).done(function() {
-//			done();
-//		});
-//	});
+	async.it('add assets to DOM', function(done) {
+		function nirvanaMock(resp) {
+			var nirvana = {
+				getJson: function(controller, method, params, callback) {
+					expect(params.components).toBe(requestedComponent);
+					expect(params.cb).toBe(window.wgStyleVersion);
+
+					callback(resp);
+				}
+			};
+
+			return nirvana;
+		}
+
+		var nirvana = nirvanaMock(componentConfig),
+			window = {
+				document: {
+					head: {
+						appendChild: function(prop) {
+							this[prop] = {}
+						}
+					},
+					body: {
+						appendChild: function(prop) {
+							this[prop] = {}
+						}
+					},
+					createDocumentFragment: function() {
+						return {
+							appendChild: function(prop) {
+								this[prop] = {}
+							}
+						}
+					},
+					createElement: function(object) {
+						return {};
+					}
+				},
+				wgStyleVersion: 12345
+			},
+		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, uiComponent);
+
+		spyOn(window.document.body, 'appendChild').andCallThrough();
+		spyOn(window.document.head, 'appendChild').andCallThrough();
+		spyOn(window.document, 'createDocumentFragment').andCallThrough();
+		spyOn(window.document, 'createElement').andCallThrough();
+
+		uifactory.init(requestedComponent).done(function() {
+
+			expect(window.document.createDocumentFragment.calls.length).toEqual(2);
+			expect(window.document.createElement.calls.length).toEqual(6);
+			expect(window.document.body.appendChild.calls.length).toEqual(1);
+			expect(window.document.head.appendChild.calls.length).toEqual(1);
+
+			done();
+		});
+	});
 
 
 });
