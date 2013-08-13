@@ -378,11 +378,7 @@ class EditAccount extends SpecialPage {
 		}
 
 		# close account and invalidate cache + cluster data
-<<<<<<< HEAD
 		Wikia::invalidateUser( $user, true, true );
-=======
-		Wikia::invalidateUser( $this->mUser, true, true );
->>>>>>> BAC-556: remove error logs needed in test
 
 		if ( $user->getEmail() == ''  ) {
 			// Log what was done
