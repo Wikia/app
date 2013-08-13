@@ -188,7 +188,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 	 * @param sring $errorMsg
 	 * @return array|int $metadata or 0 on error
 	 */
-	protected function generateMetadata( $data, &$errorMsg ) {
+	public function generateMetadata( $data, &$errorMsg ) {
 		$metadata = parent::generateMetadata( $data, $errorMsg );
 		if ( empty( $metadata ) ) {
 			return 0;

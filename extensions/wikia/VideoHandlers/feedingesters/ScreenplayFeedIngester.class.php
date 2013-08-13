@@ -255,7 +255,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 	 * @param string $errorMsg
 	 * @return array|int $metadata or 0 on error
 	 */
-	protected function generateMetadata( $data, &$errorMsg ) {
+	public function generateMetadata( $data, &$errorMsg ) {
 		//error checking
 		if ( empty( $data['stdBitrateCode'] ) ) {
 			$errorMsg = 'no supported bitrate code for video id ' . $data['videoId'];

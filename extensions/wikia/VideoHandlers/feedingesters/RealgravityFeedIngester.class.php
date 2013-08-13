@@ -156,7 +156,7 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 				$clipData['ageRequired'] = 0;
 				$clipData['ageGate'] = 0;
 				$clipData['hd'] = 0;
-				$clipData['keywords'] = $video['tag_list'];
+				$clipData['keywords'] = preg_replace( '/,([^\s])/', ', $1', $video['tag_list'] );
 				$clipData['provider'] = 'realgravity';
 
 				$clipData['marketplaceName'] = $video['video_catalog']['name'];
@@ -219,7 +219,7 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 	 * @param string $errorMsg
 	 * @return array|integer $metadata or zero on error
 	 */
-	protected function generateMetadata( $data, &$errorMsg ) {
+	public function generateMetadata( $data, &$errorMsg ) {
 		$metadata = parent::generateMetadata( $data, $errorMsg );
 		if ( empty( $metadata ) ) {
 			return 0;

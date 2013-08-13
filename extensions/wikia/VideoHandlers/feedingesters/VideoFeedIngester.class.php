@@ -73,7 +73,7 @@ abstract class VideoFeedIngester {
 	 * @param $errorMsg - Store any error we encounter
 	 * @return array|int - An associative array of meta data or zero on error
 	 */
-	protected function generateMetadata( $data, &$errorMsg ) {
+	public function generateMetadata( $data, &$errorMsg ) {
 		if ( empty( $data['videoId'] ) ) {
 			$errorMsg = 'no video id exists';
 			return 0;

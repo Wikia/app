@@ -162,7 +162,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 	 * @param string $errorMsg
 	 * @return array|integer $metadata or zero on error
 	 */
-	protected function generateMetadata( $data, &$errorMsg ) {
+	public function generateMetadata( $data, &$errorMsg ) {
 		$metadata = parent::generateMetadata( $data, $errorMsg );
 		if ( empty( $metadata ) ) {
 			return 0;
