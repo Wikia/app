@@ -179,7 +179,7 @@ class Factory {
 	 */
 	public function getComponentAssetsUrls( $component ) {
 		wfProfileIn( __METHOD__ );
-		$result =  array( 'js' => array(), 'css' => array() );
+		$result =  [ 'js' => [], 'css' => [] ];
 		foreach( $component->getAssets() as $assets ) {
 			$type = false;
 			$sources = \AssetsManager::getInstance()->getURL( $assets, $type );
@@ -331,4 +331,3 @@ class Factory {
 		throw new \Exception( 'Unserializing instances of this class is forbidden.' );
 	}
 }
-

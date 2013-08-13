@@ -33,7 +33,7 @@ class UIFactoryController extends \WikiaController {
 		try {
 			$components = $factory->init( $componentNames, false );
 			if ( !is_array( $components ) ) {
-				$components = array( $components );
+				$components = [ $components ];
 			}
 		} catch( \Exception $e ) {
 			$this->setVal( 'status', self::STATUS_ERROR );
