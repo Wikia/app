@@ -47,6 +47,53 @@ class Component {
 	private $type;
 
 	/**
+	 * @var String component name
+	 */
+	private $name;
+
+	/**
+	 * @var Array assets needed to render this components. This dictionary contains arrays under the
+	 * 'js' and 'css' keys
+	 */
+	private $assets = null;
+
+	/**
+	 * @desc Sets template JS and CSS assets
+	 *
+	 * @param $assets Dictionary containing 'css' and 'js' keys
+	 */
+	public function setAssets( $assets ) {
+		$this->assets = $assets;
+	}
+
+	/**
+	 * @desc Returns a dictionary of JS and CSS assets
+	 *
+	 * @return Array
+	 */
+	public function getAssets() {
+		return $this->assets;
+	}
+
+	/**
+	 * @desc Set component name
+	 *
+	 * @param $name component name
+	 */
+	public function setName( $name ) {
+		$this->name = $name;
+	}
+
+	/**
+	 * @desc Get component name
+	 *
+	 * @return String component name
+	 */
+	public function getName() {
+		return $this->name;
+	}
+
+	/**
 	 * @desc Sets template variables from configuration
 	 *
 	 * @param $templateVarsConfig
@@ -73,13 +120,18 @@ class Component {
 	 */
 	public function render( $params ) {
 		$this->setType( $params['type'] );
-		$this->setTemplatePath( $this->getType() ); // set template for rendering
 		$this->setVarsValues( $params['vars'] ); // set mustache variables
 		$this->validateTemplateVars(); // check if required vars are set
 
 		return $this->getTemplateEngine()
 			->setData( $this->getVarsValues() )
 			->render( $this->getTemplatePath() );
+	}
+
+	public function getTemplateContents( $type ) {
+		$this->setType( $type );
+		$this->setTemplatePath( $type );
+		return file_get_contents( $this->getTemplatePath() );
 	}
 
 	/**
@@ -133,6 +185,7 @@ class Component {
 	 */
 	public function setType( $type ) {
 		$this->type = $type;
+		$this->setTemplatePath( $this->type );
 	}
 
 	/**

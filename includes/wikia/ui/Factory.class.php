@@ -7,6 +7,7 @@ namespace Wikia\UI;
  *
  * @author Andrzej Łukaszewski <nandy@wikia-inc.com>
  * @author Bartosz Bentkowski <bartosz.bentkowski@wikia-inc.com>
+ * @author mech <mech@wikia-inc.com>
  */
 class Factory {
 
@@ -143,6 +144,58 @@ class Factory {
 	}
 
 	/**
+	 * @desc Gets the raw template contents for a given component type
+	 *
+	 * @param $component Component
+	 * @param $type String component type
+	 * @return String
+	 */
+	public function loadComponentTemplateContent( $component, $type ) {
+		wfProfileIn( __METHOD__ );
+		//@todo what about devbox development and wgStyleVersion? should we include it in memcache key?
+		$memcKey = wfMemcKey( __CLASS__, 'component', $component->getName(), $type, static::MEMCACHE_VERSION );
+		$content = \WikiaDataAccess::cache(
+			$memcKey,
+			self::MEMCACHE_EXPIRATION,
+			function() use ( $component, $type ) {
+				$component->setType( $type );
+				return $this->loadFileContent( $component->getTemplatePath() );
+			}
+		);
+		wfProfileOut( __METHOD__ );
+		return $content;
+	}
+
+	/**
+	 * Generate component assets url. The result is a dictionary containing 'js' and 'css' keys, each of those
+	 * pointing to array of urls;
+	 *
+	 * @param $component Component
+	 * @return array assets links
+	 */
+	public function getComponentAssetsUrls( $component ) {
+		wfProfileIn( __METHOD__ );
+		$result =  array( 'js' => array(), 'css' => array() );
+		foreach( $component->getAssets() as $assets ) {
+			$type = false;
+			$sources = \AssetsManager::getInstance()->getURL( $assets, $type );
+			foreach($sources as $src){
+				switch ( $type ) {
+					case \AssetsManager::TYPE_CSS:
+					case \AssetsManager::TYPE_SCSS:
+						$result[ 'css' ] = $src;
+						break;
+					case \AssetsManager::TYPE_JS:
+						$result[ 'js' ] = $src;
+						break;
+				}
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		return $result;
+	}
+
+	/**
 	 * @desc Gets configuration file contents, decodes it to array and returns it; uses caching layer
 	 * 
 	 * @param String $componentName
@@ -158,11 +211,10 @@ class Factory {
 			function() use ( $componentName ) {
 				$configInArray = $this->loadComponentConfigAsArray( $componentName );
 
-				wfProfileOut( __METHOD__ );
 				return $configInArray;
 			}
 		);
-
+		wfProfileOut( __METHOD__ );
 		return $data;
 	}
 
@@ -202,7 +254,7 @@ class Factory {
 	 * @param string|array $componentNames
 	 *
 	 * @throws \Wikia\UI\DataException
-	 * @return array
+	 * @return array - @todo - shouldn't it return a componentName indexed dictionary?
 	 */
 	public function init( $componentNames ) {
 		if ( !is_array($componentNames ) ) {
@@ -230,16 +282,20 @@ class Factory {
 
 			// init component, put config inside and set base template path
 			$component = $this->getComponentInstance();
+			$component->setName( $name );
 			if ( !empty($componentConfig['templateVars']) ) {
 				$component->setTemplateVarsConfig( $componentConfig['templateVars'] );
 			}
 			$component->setBaseTemplatePath( $this->getComponentsBaseTemplatePath( $name ) );
+
+			$component->setAssets( $componentConfig['dependencies'] );
 
 			$components[] = $component;
 		}
 
 		// add merged assets
 		foreach ( array_unique( $assets ) as $asset ) {
+			//@todo why do we have to add assets to output if there is a chance we won't render the components
 			$this->addAsset( $asset );
 		}
 
