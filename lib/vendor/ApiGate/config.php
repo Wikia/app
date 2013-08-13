@@ -11,8 +11,7 @@
  */
 $APIGATE_CONTACT_EMAIL = "api@wikia.com";
 
-global $wgScriptPath, $wgArticlePath, $wgDevelEnvironment;
-$APIGATE_LINK_ROOT = str_replace("$1", "Special:ApiGate", $wgArticlePath);
+global $wgScriptPath, $wgDevelEnvironment;
 
 // Wikia-specific settings (ie: not used by ApiGate in general)
 $WIKIA_CITYID_APIWIKI = "352316";

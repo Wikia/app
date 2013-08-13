@@ -152,7 +152,7 @@ class ArticleService extends WikiaObject {
 					wfProfileIn( $fname . '::CacheMiss' );
 
 					$content = '';
-					if ( !empty( $this->wg->SolrIsMaster ) ) {
+					if ( !empty( $this->wg->SolrMaster ) ) {
 						$content = $service->getTextFromSolr();
 					}
 
