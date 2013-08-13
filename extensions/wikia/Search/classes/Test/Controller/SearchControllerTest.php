@@ -128,12 +128,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$method = new ReflectionMethod( 'WikiaSearchController', 'handleLayoutAbTest' );
 		$method->setAccessible( true );
 
-		$mockController
-			->expects( $this->at( 0 ) )
-			->method ( 'setVal' )
-			->with	 ( 'resultView', WikiaSearchController::WIKIA_DEFAULT_RESULT )
-		;
-
 		$this->assertTrue(
 			$method->invoke( $mockController, null )
 		);
@@ -2717,5 +2711,75 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$reflSet = new ReflectionMethod( 'WikiaSearchController', 'setResponseValuesFromConfig' );
 		$reflSet->setAccessible( true );
 		$reflSet->invoke( $mockController, $mockConfig );
+	}
+
+	/**
+	 * @covers WikiaSearchController::processArticleItem
+	 * @dataProvider articleItemProvider
+	 */
+	public function testProcessArticleItem( $item, $abstract ) {
+		$mockController = $this->getMockBuilder( 'WikiaSearchController' )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$method = new ReflectionMethod( 'WikiaSearchController', 'processArticleItem' );
+		$method->setAccessible( true );
+		$result = $method->invoke( $mockController, $item );
+
+		$this->assertEquals( $abstract, $result[ 'abstract' ] );
+	}
+
+	public function articleItemProvider() {
+		return [
+			//item, expected abstract
+			[
+				[ 'title' => '', 'abstract' => '' ],
+				''
+			],
+			[
+				[ 'title' => 'Jakis title', 'abstract' => 'Jakis titl bla bla bla' ],
+				' - Jakis titl bla bla bla'
+			],
+			[
+				[ 'title' => 'ABC', 'abstract' => 'ABC l bla bla bla' ],
+				' l bla bla bla'
+			],
+			[
+				[ 'title' => 'Ian (Fallout)', 'abstract' => 'Ian is short' ],
+				' is short'
+			],
+			[
+				[ 'title' => 'Followers of the Apocalypse', 'abstract' => 'Reputation image from Fallout: New Vegas. The Followers of the Apocalypse, or simply the Followers...' ],
+				', or simply the Followers...'
+			],
+			[
+				[ 'title' => 'Lancaster (film)', 'abstract' => 'Lancaster was set to appear as a location in the cancelled Fallout film. It was going to be...' ],
+				' was set to appear as a location in the cancelled Fallout film. It was going to be...'
+			],
+			[
+				[ 'title' => 'Assault rifle', 'abstract' => '  ...  An assault rifle is a selective fire rifle that uses an intermediate cartridge and a...' ],
+				' is a selective fire rifle that uses an intermediate cartridge and a...'
+			],
+			[
+				[ 'title' => 'Dart gun', 'abstract' => '   The dart gun is a constructable small gun in Fallout 3. Characteristics The dart gun is a...' ],
+				' is a constructable small gun in Fallout 3. Characteristics The dart gun is a...'
+			],
+			[
+				[ 'title' => '9mm', 'abstract' => '   9mm is an ammunition type in Fallout, Fallout 2, Fallout: New Vegas, Fallout Tactics...' ],
+				' is an ammunition type in Fallout, Fallout 2, Fallout: New Vegas, Fallout Tactics...'
+			],
+			[
+				[ 'title' => 'Raseleanne', 'abstract' => '   Paladin Raseleanne was a Paladin sent out to scout Nellis Air Force Base. She was killed and...' ],
+				' was a Paladin sent out to scout Nellis Air Force Base. She was killed and...'
+			],
+			[
+				[ 'title' => 'Nathan Drake', 'abstract' => ' Nathan \"Nate\" Drake is a treasure hunter and fortune seeker, as well as a deep-sea salvage...' ],
+				' - Nathan \"Nate\" Drake is a treasure hunter and fortune seeker, as well as a deep-sea salvage...'
+			],
+			[
+				[ 'title' => 'Gonzo', 'abstract' => ' Gonzo, formally known as \"The Great Gonzo\" or \"Gonzo the Great,\" is the resident daredevil...' ],
+				', formally known as \"The Great Gonzo\" or \"Gonzo the Great,\" is the resident daredevil...'
+			]
+		];
 	}
 }

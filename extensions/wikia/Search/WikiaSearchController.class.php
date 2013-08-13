@@ -41,6 +41,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @var int
 	 */
 	const VARNISH_CACHE_TIME = 43200;
+
+	/**
+	 * On what max position title can occur and still snippet will be cutted shorter
+	 * @var int
+	 */
+	const SNIPPET_SUBSTR = 50;
 	
 	/**
 	 * Responsible for instantiating query services based on config.
@@ -244,16 +250,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 					$params = [ 'ids' => implode( ',', $ids ), 'height' => 50, 'width' => 50, 'abstract' => 150 ];
 					$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
 					foreach ( $detailResponse['items'] as $item ) {
-						if ( empty( $item['thumbnail'] ) ) {
-							//add placeholder
-							$item['thumbnail'] = '';
-						}
-						$trimTitle = trim( $item[ 'title' ] );
-						$trimAbstract = trim( $item[ 'abstract' ] );
-						if ( strpos( $trimAbstract, $trimTitle ) === 0 ) {
-							$item['abstract'] = substr( $trimAbstract, strlen( $trimTitle ) );
-						}
-						if ( !empty( $item[ 'abstract' ] ) ) {
+						$item = $this->processArticleItem( $item );
+						if ( !empty( $item ) ) {
 							$pages[] = $item;
 						}
 					}
@@ -275,6 +273,41 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Controller Helper Methods
 	 *----------------------------------------------------------------------------------*/
 
+	protected function processArticleItem( $item ) {
+		if ( empty( $item['thumbnail'] ) ) {
+			//add placeholder
+			$item['thumbnail'] = '';
+		}
+		//sanitize strings first
+		$trimTitle = trim( strtolower( $item[ 'title' ] ) );
+		$bracketPos = strpos( $trimTitle, '(' );
+		if ( $bracketPos !== false ) {
+			$trimTitleWObrackets = substr( $trimTitle, 0, $bracketPos - 1 );
+		}
+		$normSpacesAbs = preg_replace( '|\s+|', ' ', $item[ 'abstract' ] );
+		$lowerAbstract = strtolower( $normSpacesAbs );
+
+		$pos = strpos( $lowerAbstract, $trimTitle );
+		if ( $pos !== false ) {
+			if ( $pos <= static::SNIPPET_SUBSTR ) {
+				$pos += strlen( $trimTitle );
+			}
+		} elseif ( isset( $trimTitleWObrackets ) ) {
+			$pos = strpos( $lowerAbstract, $trimTitleWObrackets );
+			if ( $pos !== false && $pos <= static::SNIPPET_SUBSTR ) {
+				$pos += strlen( $trimTitleWObrackets );
+			}
+		}
+		if ( $pos !== false ) {
+			$item['abstract'] = substr( $normSpacesAbs, $pos );
+		} elseif ( !empty( $item[ 'abstract' ] ) ) {
+			$item['abstract'] = ' - ' . trim( $normSpacesAbs );
+		}
+		if ( !empty( $item[ 'abstract' ] ) ) {
+			return $item;
+		}
+		return null;
+	}
 	/**
 	 * Called in index action.
 	 * Based on an article match and various settings, generates tracking events and routes user to appropriate page.
