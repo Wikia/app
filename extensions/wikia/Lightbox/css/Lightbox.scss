@@ -1,11 +1,12 @@
-@import "../../../../skins/oasis/css/mixins/arrow";
-@import "../../../../skins/oasis/css/mixins/background-opacity";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/opacity";
-@import "../../../../skins/oasis/css/mixins/transition";
-@import "../../../../skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/arrow";
+@import "skins/oasis/css/mixins/background-opacity";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/mixins/box-sizing-border-box";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/mixins/transition";
+@import "skins/oasis/css/core/color";
 @import "mixins/sprite-Lightbox";
 
 $lightbox-overlay-show-duration: 200ms;
@@ -458,8 +459,8 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 	}
 
 	.LightboxHeader {
+		@include box-sizing-border-box;
 		border-bottom: 1px solid $color-lightbox-border;
-		box-sizing: border-box;
 		height: 80px;
 		padding: 20px 20px 10px;
 		top: 0;
