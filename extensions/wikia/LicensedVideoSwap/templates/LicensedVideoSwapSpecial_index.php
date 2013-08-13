@@ -11,8 +11,6 @@
 
 <? if ( !empty( $videoList ) ): ?>
 
-	<?= $app->renderView( 'LicensedVideoSwapSpecialController', 'contentHeaderSort', $contentHeaderSortOptions ) ?>
-
 	<div class="WikiaGrid LVSGrid" id="LVSGrid">
 
 		<?= $app->renderPartial( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList, 'thumbWidth' => $thumbWidth, 'thumbHeight' => $thumbHeight ) ) ?>
