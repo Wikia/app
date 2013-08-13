@@ -41,7 +41,7 @@
 
 		<?php if( !empty($cssUpdates) ): ?>
 			<div class="community-updates widget-box">
-				<h2><?= wfMessage('special-css-community-update-headline')->text(); ?></h2>
+				<h2><?= wfMessage('special-css-community-update-header')->text(); ?></h2>
 				<ul class="community-updates-list">
 					<?php foreach( $cssUpdates as $cssUpdate ): ?>
 						<li class="community-update-item plainlinks">

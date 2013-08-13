@@ -14,6 +14,7 @@ $messages['en'] = [
 	'special-css-community-read-more' => 'Read more',
 	'special-css-community-update-see-all' => 'See all',
 	'special-css-community-update-headline' => 'CSS Updates',
+	'special-css-community-update-header' => 'CSS Updates',
 	'special-css-wikia-skin-only' => 'Special:CSS is available only in Wikia skin. If you would like to use this feature please switch your preference to the Wikia skin.',
 	'special-css-diff-modal-title' => 'Changes',
 
@@ -40,6 +41,7 @@ $messages['en'] = [
 
 $messages['es'] = [
 	'special-css-community-update-headline' => 'Actualizaciones sobre CSS',
+	'special-css-community-update-header' => 'Actualizaciones sobre CSS',
 	'special-css-education-item-webinars-header' => 'Seminario Virtual sobre CSS en Wikia',
 	'special-css-education-item-webinars-link-title' => 'Seminario Virtual sobre CSS en Wikia',
 	'special-css-education-item-webinars-paragraph' => 'Una introducción sobre el uso del CSS en Wikia.',
@@ -55,7 +57,8 @@ $messages['es'] = [
 ];
 
 $messages['de'] = [
-	'special-css-community-update-headline' => 'Wikia CSS-Neuigkeiten',
+	'special-css-community-update-headline' => 'Neuigkeiten zu CSS',
+	'special-css-community-update-header' => 'Wikia CSS-Neuigkeiten',
 	'special-css-education-item-webinars-header' => 'Wikia CSS-Videos',
 	'special-css-education-item-webinars-link-title' => 'Wikia CSS-Videos',
 	'special-css-education-item-webinars-paragraph' => 'Hier erfährst du, wie du CSS auf Wikia nutzt (en).',
@@ -71,7 +74,8 @@ $messages['de'] = [
 ];
 
 $messages['fr'] = [
-	'special-css-community-update-headline' => 'Informations Wikia liées au CSS',
+	'special-css-community-update-headline' => 'Informations liées au CSS',
+	'special-css-community-update-header' => 'Informations Wikia liées au CSS',
 	'special-css-education-item-webinars-header' => 'Vidéos Wikia liées au CSS',
 	'special-css-education-item-webinars-link-title' => 'Vidéos Wikia liées au CSS',
 	'special-css-education-item-webinars-paragraph' => 'Une introduction à l\'utilisation du CSS personnalisé sur Wikia.',
@@ -86,12 +90,15 @@ $messages['fr'] = [
 	'special-css-education-item-com-center-link-url' => 'http://communaute.wikia.com/wiki/Sous-forum:Aide',
 ];
 
+
 $messages['it'] = [
 	'special-css-community-update-headline' => 'Aggiornamenti sul CSS',
+	'special-css-community-update-header' => 'Aggiornamenti sul CSS',
 ];
 
 $messages['ru'] = [
 	'special-css-community-update-headline' => 'Обновления CSS',
+	'special-css-community-update-header' => 'Обновления CSS',
 ];
 
 $messages['pl'] = [
@@ -106,6 +113,7 @@ $messages['pl'] = [
 	'special-css-community-read-more' => 'Czytaj więcej',
 	'special-css-community-update-see-all' => 'Zobacz wszystko',
 	'special-css-community-update-headline' => 'Aktualizacje CSS',
+	'special-css-community-update-header' => 'Aktualizacje CSS',
 	'special-css-oasis-only' => 'Special:CSS jest stroną dostępną tylko w skórce Wikia. Jeśli chcesz używać tej strony zmień ustawienia skórki w swoich preferencjach na Wikia.',
 	'special-css-education-item-webinars-header' => 'CSS_ Wikia Webinars',
 	'special-css-education-item-webinars-link-title' => 'Wikia CSS Webinar',
@@ -134,7 +142,8 @@ $messages['qqq'] = [
 	'special-css-delete-button' => 'Text on the delete button from dropdown; pressing the button deletes CSS file',
 	'special-css-undelete-button' => 'Text on the undelete button from dropdown; pressing the button undeletes CSS file',
 
-	'special-css-community-update-headline' => 'Headline above container with blog posts feed. The feed contains blog posts from a category with posts regarding markup and CSS changes since previous release.',
+	'special-css-community-update-headline' => 'Headline used to get updates content from community blogs. Section under this headline will be taken into update section box.',
+	'special-css-community-update-header' => 'Headline above container with blog posts feed. The feed contains blog posts from a category with posts regarding markup and CSS changes since previous release.',
 	'special-css-community-update-by' => "Post (regarding markup and CSS changes since previous release) detailed informations text: $1 = post's creation time, $2 = link to post's author profile page on community.wikia.com, $3 = post's author username",
 	'special-css-community-read-more' => "Link label below post snippet leading to the full post page; The post page includes information regarding markup and CSS changes",
 	'special-css-community-update-see-all' => 'Link to blog listing with contains all CSS updates',
