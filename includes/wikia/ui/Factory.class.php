@@ -35,11 +35,6 @@ class Factory {
 	const MEMCACHE_EXPIRATION = 900; // 15 minutes
 
 	/**
-	 * @desc Version passed to memcache key
-	 */
-	const MEMCACHE_VERSION = '1.0';
-	
-	/**
 	 * @var \Wikia\UI\Factory
 	 */
 	private static $instance = null;
@@ -144,6 +139,16 @@ class Factory {
 	}
 
 	/**
+	 * @desc Return memcache version
+	 * As the ui components may change after each release, we would like to invalidate the cache immediately
+	 *
+	 * @return int cache version
+	 */
+	public function getCacheVersion() {
+		global $wgCacheBuster;
+		return $wgCacheBuster;
+	}
+	/**
 	 * @desc Gets the raw template contents for a given component type
 	 *
 	 * @param $component Component
@@ -152,8 +157,7 @@ class Factory {
 	 */
 	public function loadComponentTemplateContent( $component, $type ) {
 		wfProfileIn( __METHOD__ );
-		//@todo what about devbox development and wgStyleVersion? should we include it in memcache key?
-		$memcKey = wfMemcKey( __CLASS__, 'component', $component->getName(), $type, static::MEMCACHE_VERSION );
+		$memcKey = wfMemcKey( __CLASS__, 'component', $component->getName(), $type, $this->getCacheVersion() );
 		$content = \WikiaDataAccess::cache(
 			$memcKey,
 			self::MEMCACHE_EXPIRATION,
@@ -204,7 +208,7 @@ class Factory {
 	protected function loadComponentConfig( $componentName ) {
 		wfProfileIn( __METHOD__ );
 
-		$memcKey = wfMemcKey( __CLASS__, 'component', $componentName, static::MEMCACHE_VERSION );
+		$memcKey = wfMemcKey( __CLASS__, 'component', $componentName, $this->getCacheVersion() );
 		$data = \WikiaDataAccess::cache(
 			$memcKey,
 			self::MEMCACHE_EXPIRATION,
