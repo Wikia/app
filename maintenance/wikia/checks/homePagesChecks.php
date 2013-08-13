@@ -1,6 +1,15 @@
 <?php
 
 /**
+ *
+ ********************************** <important> ****************************************
+ * This is a proof-of-concept and not a final implementation.
+ * It MUST NOT be reused or copied at this point
+ * Thank you. :)
+ ********************************** </important> ****************************************
+ *
+ *
+ *
  * this script runs periodically, pulls the Corporate Pages
  * (with statistics modules),
  * parses the data in statistics modules and stores it.
