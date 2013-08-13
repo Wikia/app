@@ -128,12 +128,6 @@ class Component {
 			->render( $this->getTemplatePath() );
 	}
 
-	public function getTemplateContents( $type ) {
-		$this->setType( $type );
-		$this->setTemplatePath( $type );
-		return file_get_contents( $this->getTemplatePath() );
-	}
-
 	/**
 	 * @desc Returns base path for template
 	 *
@@ -171,7 +165,7 @@ class Component {
 	}
 
 	/**
-	 * @desc Returns template path
+	 * @desc Returns template path. This should be called after setting the type of the component
 	 * @return String
 	 */
 	public function getTemplatePath() {
