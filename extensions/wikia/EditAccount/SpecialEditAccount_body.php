@@ -373,7 +373,6 @@ class EditAccount extends SpecialPage {
 		}
 
 		# close account and invalidate cache + cluster data
-error_log( __METHOD__ . ": close account: " . print_r( $this->mUser, true ) . "\n",3, "/tmp/moli.log" );
 		Wikia::invalidateUser( $this->mUser, true, true );
 
 		if ( $this->mUser->getEmail() == ''  ) {

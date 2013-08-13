@@ -2007,7 +2007,6 @@ class Wikia {
 			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
 				$mExtUser->linkToLocal( $mExtUser->getId() ); 
 				$s = $mExtUser->getLocalUser( $bUserObject );
-error_log ( __METHOD__ . ": s = " . print_r( $s, true ) . " \n", 3, "/tmp/moli.log" );
 			}
 		}
 
@@ -2026,7 +2025,6 @@ error_log ( __METHOD__ . ": s = " . print_r( $s, true ) . " \n", 3, "/tmp/moli.l
 			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
 				$mExtUser->linkToLocal( $mExtUser->getId() );
 				$s = $mExtUser->getLocalUser( false );
-error_log ( __METHOD__ . ": s = " . print_r( $s, true ) . " \n", 3, "/tmp/moli.log" );
 			}
 		}
 
