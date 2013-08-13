@@ -52,6 +52,9 @@ files = [
 	'resources/wikia/modules/stringhelper.js',
 	'resources/wikia/modules/thumbnailer.js',
 	'resources/wikia/modules/uniqueId.js',
+	//UI Repo JS API
+	'resources/wikia/modules/uicomponent.js',
+	'resources/wikia/modules/uifactory.js',
 	'resources/wikia/modules/spec/*.spec.js',
 
 	//Advertisment
@@ -87,7 +90,8 @@ files = [
 	//Search
 	'extensions/wikia/Search/js/SearchAbTest.js',
 	'extensions/wikia/Search/js/SearchAbTest.*.js',
-	'extensions/wikia/Search/js/spec/*.spec.js'
+	'extensions/wikia/Search/js/spec/*.spec.js',
+
 ];
 
 notCovered = [
