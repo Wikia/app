@@ -17,6 +17,11 @@ class UIFactoryApiController extends \WikiaApiController {
 	const STATUS_ERROR = 0;
 
 	/**
+	 * @desc how long the response should be cached in varnish/browser
+	 */
+	const CLIENT_CACHE_VALIDITY = 86400; //24*60*60 = 24h
+
+	/**
 	 * @desc Status code returned in json when there were no errors
 	 */
 	const STATUS_OK = 1;
@@ -55,6 +60,15 @@ class UIFactoryApiController extends \WikiaApiController {
 		}
 		$this->setVal( 'components', $result );
 		$this->setVal( 'status', self::STATUS_OK );
+
+		$this->response->setCacheValidity(
+			self::CLIENT_CACHE_VALIDITY,
+			self::CLIENT_CACHE_VALIDITY,
+			array(
+				\WikiaResponse::CACHE_TARGET_BROWSER,
+				\WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
 	}
 
 }
