@@ -9,7 +9,7 @@
 class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 	public function __construct() {
-		parent::__construct( 'LicensedVideoSwap', '', false );
+		parent::__construct( 'LicensedVideoSwap', 'licensedvideoswap', true );
 	}
 
 	/**
