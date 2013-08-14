@@ -264,31 +264,11 @@ class ConfigTest extends BaseTest {
 		                      ->disableOriginalConstructor()
 		                      ->getMock();
 
-		$mockWikiMatch
-			->expects( $this->exactly( 2 ) )
-			->method( 'getId' )
-			->will( $this->returnValue( 0 ) )
-		;
-		$wikiService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobalForWiki' ] );
-
-		$wikiService
-			->expects( $this->exactly( 2 ) )
-			->method( 'getGlobalForWiki' )
-			->with( 'wgLanguageCode', 0 )
-			->will( $this->returnValue( 'en' ) )
-		;
-
 		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
 			->disableOriginalConstructor()
 			->setMethods( [ 'getService' ] )
 			->getMock()
 		;
-		$config
-			->expects( $this->exactly( 2 ) )
-			->method( 'getService' )
-			->will( $this->returnValue( $wikiService ) )
-		;
-
 		$this->assertFalse(
 				$config->hasWikiMatch(),
 				'\Wikia\Search\Config should not have an wiki match by default.'
@@ -297,16 +277,6 @@ class ConfigTest extends BaseTest {
 				$config->getWikiMatch(),
 				'\Wikia\Search\Config should return null when getting an uninitialized wiki match'
 		);
-
-		$config->setLanguageCode( 'pl' );
-		$config->setWikiMatch( $mockWikiMatch );
-		$this->assertNull(
-				$config->getWikiMatch(),
-				'\Wikia\Search\Config::setWikiMatch should not set match if lang is not correct'
-		);
-
-		$config->setLanguageCode( 'en' );
-
 		$this->assertEquals(
 				$config,
 				$config->setWikiMatch( $mockWikiMatch ),

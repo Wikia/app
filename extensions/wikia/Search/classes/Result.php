@@ -69,6 +69,14 @@ class Result extends ReadWrite {
 		}
 		return $textAsString;
 	}
+	
+	/**
+	 * Get the hub name, translated to content language
+	 * @return string
+	 */
+	public function getHub() {
+		return wfMessage('hub-'.$this->getText( 'hub_s' ))->text(); 
+	}
 
 	/**
 	 * Returns the string value of the document's title

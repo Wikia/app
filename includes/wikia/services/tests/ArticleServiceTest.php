@@ -28,7 +28,6 @@ class ArticleServiceTest extends WikiaBaseTest {
 			->will( $this->returnValue( null ) );
 
 		$this->mockGlobalVariable( 'wgMemc', $mockCache );
-		$this->mockGlobalVariable( 'wgSolrIsMaster', true );
 
 		$mockOutput->expects( $this->any() )
 			->method( 'getText' )
@@ -87,7 +86,6 @@ class ArticleServiceTest extends WikiaBaseTest {
 			->will( $this->returnValue( null ) );
 
 		$this->mockGlobalVariable( 'wgMemc', $mockCache );
-		$this->mockGlobalVariable( 'wgSolrIsMaster', true );
 
 		$mockArticle->expects( $this->any() )
 			->method( 'getID' )
