@@ -36,7 +36,7 @@
 			<a href="<?= $url ?>" <?=$trackingData;?> ><?= $title ?></a>
 		</h1>
 
-		<p class="hub subtle"><?= strtoupper( $result->getText( 'hub_s' ) ); ?></p>
+		<p class="hub subtle"><?= strtoupper($result->getHub()); ?></p>
 		<p class="description"><?= $result->getText( Wikia\Search\Utilities::field( 'description' ), 60 ); ?></p>
 
 		<ul class="wiki-statistics subtle">

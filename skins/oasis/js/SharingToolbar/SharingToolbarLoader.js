@@ -6,6 +6,11 @@ jQuery(function( $ ) {
 	function initialize( event ) {
 		$button.addClass('share-enabled');
 
+		var widthType = window.wgOasisGrid ? 3 : 0;
+		if (window.wgOasisResponsive) {
+			widthType = 2;
+		}
+
 		require(['wikia.loader', 'mw'], function(loader, mw) {
 			loader({
 				type: loader.MULTI,
@@ -23,7 +28,7 @@ jQuery(function( $ ) {
 				type: loader.SCSS,
 				resources: '/skins/oasis/css/core/SharingToolbar.scss',
 				params: {
-					widthType: window.wgOasisGrid ? 3 : 0
+					widthType: widthType
 				}
 			}).done(
 				function( response ) {

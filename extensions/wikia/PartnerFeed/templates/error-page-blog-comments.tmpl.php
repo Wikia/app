@@ -1,7 +1,7 @@
 <!-- s:<?= __FILE__ ?> -->
 <!-- MAIN-PAGE -->
 
-<b>Error:</b> Blog post <?=$blogPostName; ?> does not exist.
+<?= wfMessage('partner-feed-error-no-blogpost-found', $blogPostName)->parse(); ?>
 
 <!-- END OF MAIN-PAGE -->
 <!-- e:<?= __FILE__ ?> -->

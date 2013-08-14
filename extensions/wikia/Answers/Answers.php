@@ -30,10 +30,6 @@ function answersStyle() {
 require_once( dirname(__FILE__) . "/AnswersClass.php");
 require_once( dirname(__FILE__) . "/AttributionCache.class.php");
 
-if( !empty($wgEnableWikiaSearchExt) ) {
-	require_once("$IP/extensions/wikia/solr2rss/solr2rss.php");
-}
-
 $wgExtensionMessagesFiles['Answers'] = dirname( __FILE__ ) . '/Answers.i18n.php';
 
 if(empty($wgAnswerHelperIDs)) {

@@ -8,6 +8,7 @@ $(function() {
 
 		var editor = ace.edit("cssEditorContainer");
 		editor.setTheme("ace/theme/geshi");
+		editor.setShowPrintMargin(false);
 		var editorSession = editor.getSession();
 		editorSession.setMode("ace/mode/css");
 
