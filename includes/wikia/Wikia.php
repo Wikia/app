@@ -1792,9 +1792,9 @@ class Wikia {
 	 * TODO: allow disabling specific keys?
 	 */
 	static public function onBeforeInitializeMemcachePurge( $title, $unused, $output, $user, WebRequest $request, $wiki ) {
-		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads, $wgAllowMemcacheWrites, $wgUser;
+		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads, $wgAllowMemcacheWrites;
 
-		if ( !$wgUser->isAllowed( 'mcachepurge' ) ) {
+		if ( !$user->isAllowed( 'mcachepurge' ) ) {
 			return true;
 		}
 
