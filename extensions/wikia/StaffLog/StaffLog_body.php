@@ -6,15 +6,15 @@ class StaffLog extends SpecialPage
 	private $aTypes = array( 'piggyback', 'wikifactor' );
 
 	function __construct(){
-		global $wgRequest;
+		global $wgRequest, $wgLang;
 		$this->request = &$wgRequest;
 		parent::__construct( "stafflog","stafflog");
 		$this->aTypes = array(
 			'' => '',
-			'block' => wfMsg( 'stafflog-filter-type-block' ),
-			'piggyback' => wfMsg( 'stafflog-filter-type-piggyback' ),
-			'renameuser' => wfMsg( 'stafflog-filter-type-renameuser' ),
-			'wikifactor' => wfMsg( 'stafflog-filter-type-wikifactory' )
+			'block' => wfMessage( 'stafflog-filter-type-block' )->inLanguage( $wgLang->getCode() )->text(),
+			'piggyback' => wfMessage( 'stafflog-filter-type-piggyback' )->inLanguage( $wgLang->getCode() )->text(),
+			'renameuser' => wfMessage( 'stafflog-filter-type-renameuser' )->inLanguage( $wgLang->getCode() )->text(),
+			'wikifactor' => wfMessage( 'stafflog-filter-type-wikifactory' )->inLanguage( $wgLang->getCode() )->text()
 		);
 	}
 
@@ -157,19 +157,19 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 				{
 					$siteurl =  Xml::tags('a', array("href" => "http://".$domains[0] ), $siteurl);
 				}
-				$out = wfMsg( 'stafflog-blockmsg' ,
+				$out = wfMessage( 'stafflog-blockmsg' ,
 					array($time,
 						$linker->userLink($result->slog_user, $result->slog_user_name),
 						$linker->userLink($result->slog_userdst, $result->slog_user_namedst),
 						$siteurl,
-						strlen($result->slog_comment) > 0 ? $result->slog_comment:"-" ));
+						strlen($result->slog_comment) > 0 ? $result->slog_comment:"-" ))->inLanguage( $wgLang->getCode() )->text();
 				break;
 			case  'piggyback':
 				$msg = $result->slog_action == "login" ? "stafflog-piggybackloginmsg" : "stafflog-piggybacklogoutmsg";
-				$out = wfMsg( $msg,
+				$out = wfMessage( $msg,
 					array($time,
 						$linker->userLink($result->slog_user, $result->slog_user_name),
-						$linker->userLink($result->slog_userdst, $result->slog_user_namedst)));
+						$linker->userLink($result->slog_userdst, $result->slog_user_namedst)))->inLanguage( $wgLang->getCode() )->text();
 				break;
 			case 'wikifactor':
 				$out = $time . ' ' . $result->slog_comment;
