@@ -444,7 +444,8 @@
 				// PSS: fuck scrollbars.
 				// TODO: we should have access to breakpoints and such in JavaScript
 				// as variables instead of hardcoded values.
-				if ( 'webkitRequestAnimationFrame' in window && $wikiaPage.width() >= 1370 ) {
+
+				if (((/Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)) || (/Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor))) && $wikiaPage.width() >= 1370) {
 					width -= this.scrollbarWidth;
 				}
 			}
