@@ -514,6 +514,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			}
 
 			if( $this->wg->User->matchEditToken( $this->editToken ) ) {
+				//@TODO get rid of TempUser check when TempUser will be globally disabled
 				$tempUser = TempUser::getTempUserFromName( $this->username );
 				if ( $tempUser ) {
 					$user = $tempUser->mapTempUserToUser( false );

@@ -224,16 +224,14 @@ class UserLoginForm extends LoginForm {
 	public function initUser( $u, $autocreate, $skipConfirm = false ) {
 		global $wgAuth, $wgExternalAuthType;
 
-		// for FBconnect we don't want to create temp users
-		if ( $skipConfirm === true ) {
-			return parent::initUser($u, $autocreate);
-		} else {
-			$res = parent::initUser($u, $autocreate);
-			$res->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_NAME, $this->mReturnTo );
-			$res->setOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, true );
-			$res->saveSettings();
-			UserLoginHelper::setNotConfirmedUserSession($res->getId());
-			return $res;
+		$u = parent::initUser( $u, $autocreate );
+
+		if ( $skipConfirm === false ) {
+			//Set properties that will require user to confirm email after signup
+			$u->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_NAME, $this->mReturnTo );
+			$u->setOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, true );
+			$u->saveSettings();
+			UserLoginHelper::setNotConfirmedUserSession( $u->getId() );
 		}
 
 		wfRunHooks( 'AddNewAccount', array( $u, false ) );
