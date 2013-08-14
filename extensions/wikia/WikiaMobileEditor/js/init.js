@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function(){
-    require(['config', 'menu'], function(config, menu){
+    require(['config', 'editor', 'menu'], function(config, editor, menu){
         menu.init();
-        //config.init();
+        editor.init();
+        config.init();
     });
 });

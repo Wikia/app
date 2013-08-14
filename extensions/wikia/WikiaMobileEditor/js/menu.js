@@ -1,4 +1,4 @@
-define('menu', ['editor', 'config'], function(editor, config){
+define('menu', ['pubsub', 'editor', 'config'], function(pubsub, editor, config){
 
     var menuLeft = {},
         menuRight = {};
@@ -24,7 +24,7 @@ define('menu', ['editor', 'config'], function(editor, config){
         menuRight.angles =[];
         menuLeft.radius = menuRight.radius = 80;
 
-    config.init(function(activeTags){
+    pubsub.subscribe('menuUpdate', function(activeTags){
         attachTags(activeTags);
     });
 
@@ -200,7 +200,7 @@ define('menu', ['editor', 'config'], function(editor, config){
         touchArea = findArea(menu, width, height);
 
         if(touchArea > 0 && touchArea < 6){
-            editor.insertTags(expElements[touchArea-1].getAttribute('data-tag'))
+            pubsub.publish('insert', expElements[touchArea-1].getAttribute('data-tag'));
         }
 
         menu.wrapper.removeEventListener('touchmove');

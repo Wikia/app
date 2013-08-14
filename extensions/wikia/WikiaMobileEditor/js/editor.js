@@ -1,8 +1,23 @@
-define('editor', function(){
+define('editor', ['pubsub'], function(pubsub){
     var editArea = document.getElementById('editArea'),
-        pattern = /_\$/;
+        pattern = /_\$/,
+        snippets = {};
 
-    this.insertTags = function(phrase){ //distFromEnd - number of chars from end to center of the phrase
+    function Snippets(){
+        this.active = false;
+        this.break = false;
+        this.isValid = function(string){
+            if(string.length > editor.maxTagLength()) return false;
+        }
+    }
+
+    function watchForTags(){
+        pubsub.subscribe('insert', function(tag){
+            insertTags(tag);
+        });
+    }
+
+    function insertTags(phrase){ //distFromEnd - number of chars from end to center of the phrase
         var startPos, endPos, cursorPos, halvesOfText, distFromEnd= 0;
         if(phrase.match(pattern)){ //extracts _$ if present to know the cursor position
             halvesOfText = phrase.split('_$');
@@ -29,7 +44,28 @@ define('editor', function(){
         editArea.setSelectionRange(cursorPos, cursorPos);
     };
 
+    function watchForSnippets(){
+        editArea.addEventListener('keyup', function(evt){
+            if(evt.keyCode === 49){ //49 = charCode('!')
+                if(snippets.active && !snippets.break){
+                    snippets.getSnippet();
+                }
+                else{
+                    snippets.active = true;
+                }
+            }
+            if(evt.keyCode === 32 && snippets.active){
+                snippets.break = true;
+            }
+        });
+    }
+
+    function init(){
+        watchForTags();
+    }
+
     return{
+        init: init,
         editArea: editArea,
         insertTags: insertTags
     };

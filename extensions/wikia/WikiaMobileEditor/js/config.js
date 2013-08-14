@@ -1,8 +1,7 @@
-define('config', ['editor'], function(editor){
+define('config', ['pubsub'], function(pubsub){
 
     var configObj,
         activeTags = {},
-        onChange,
         maxItems = 20;;
 
     ConfigObj = function(wrapSection){
@@ -17,6 +16,7 @@ define('config', ['editor'], function(editor){
             tagType = sectionsList[i].getAttribute('data-tagType');
             this.sections[tagType] = {
                 section : sectionsList[i],
+                toggle : sectionsList[i].getElementsByClassName('toggle')[0],
                 ul : sectionsList[i].getElementsByTagName('ul')[0],
             };
             this.sections[tagType].ul.elements = this.sections[tagType].ul.getElementsByTagName('li');
@@ -162,9 +162,16 @@ define('config', ['editor'], function(editor){
                 display : 'Gallery'
             },
         }
+    };
+
+    function isFirstCharValid(tag){
+        return (tagStarts.indexOf(tag.substring(0,1)) != -1);
     }
 
-
+    function isValid(tag){
+        if(tag.length > tags.maxLength && isFirstCharValid(tag)) return true;
+        return false;
+    }
 
     function initializeLinks(){
         var links;
@@ -174,7 +181,7 @@ define('config', ['editor'], function(editor){
                 for(var i = 0; i < links.length; i++){
                     links[i].addEventListener('click', function(evt){
                         evt.preventDefault();
-                        editor.insertTags(this.innerText);
+                        pubsub.publish('insert', this.innerText);
                     });
                 }
             }
@@ -184,7 +191,7 @@ define('config', ['editor'], function(editor){
     function buildHTML(){
         var html = '';
         Object.keys(tags).forEach(function(tagGr){ //tu foricz
-            if(tags.hasOwnProperty(tagGr)){
+            if(tags.hasOwnProperty(tagGr) && typeof tags[tagGr] === 'object'){
                 html+='<section class ="tagSection" data-tagType="'+tagGr+'">';
                 html+='<h1>'+tagGr+'</h1><a href="" class="toggle">expand</a>';
                 html+='<ul class="off">';
@@ -200,15 +207,19 @@ define('config', ['editor'], function(editor){
                 html+='</ul></section>';
             }
         });
+        html+='<p class="warning">Warning! You picked wrong number of tags for the animated menu (0 or >20)</p>';
+        html+= '<input type="submit" value="Reload animated menu" class="save">';
         return html;
     }
 
     function expand(section){
         section.ul.classList.add('on');
+        section.toggle.innerText = 'fold';
     }
 
     function fold(section){
         section.ul.classList.add('off');
+        section.toggle.innerText = 'expand';
     }
 
     function activateToggle(){
@@ -219,10 +230,12 @@ define('config', ['editor'], function(editor){
                 evt.preventDefault();
                 ul = this.parentElement.getElementsByTagName('ul')[0];
                 if(ul.classList.contains('on')){
+                    this.innerText = 'expand';
                     ul.classList.remove('on');
                 }
                 else{
                     ul.classList.add('on');
+                    this.innerText = 'fold';
                 }
             });
         }
@@ -257,7 +270,7 @@ define('config', ['editor'], function(editor){
                 configObj.warning.classList.remove('off');
             }
             //ask the animated menu to update itself
-            onChange(activeTags);
+            pubsub.publish('menuUpdate', activeTags);
         }
         else{
             configObj.warning.classList.add('on');
@@ -279,8 +292,7 @@ define('config', ['editor'], function(editor){
         });
     }
 
-    function init(callback){
-        onChange = callback;
+    function init(){
         var configHTML = buildHTML(),
             wrapper = document.getElementsByClassName('tagListWrapper')[0];
         wrapper.innerHTML += configHTML;
