@@ -603,7 +603,9 @@ class ArticlesApiController extends WikiaApiController {
 		//if strict return to original ids order
 		if ( $strict ) {
 			foreach( $articleIds as $id ) {
-				$result[] = $collection[ $id ];
+				if ( !empty( $collection[ $id ] ) ) {
+					$result[] = $collection[ $id ];
+				}
 			}
 			return $result;
 		}
