@@ -38,7 +38,7 @@
 		</h1>
 
 		<p class="hub subtle"><?= strtoupper( $result->getText( 'hub_s' ) ); ?></p>
-		<p class="description"><?= $result->getText( Wikia\Search\Utilities::field( 'description' ), $isOnWikiMatch ? 30 : 60 ); ?></p>
+		<p class="description"><?= $result->getText( Wikia\Search\Utilities::field( 'description' ), $isOnWikiMatch ? 16 : 60 ); ?></p>
 
 		<ul class="wiki-statistics subtle">
 			<li><?= $pagesMsg ?></li>
