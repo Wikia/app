@@ -193,9 +193,6 @@ $config['oasis_jquery'] = array(
 		'//resources/wikia/libraries/jquery/getResources/jquery.wikia.getResources.js',
 		'//resources/wikia/libraries/jquery/loadLibrary/jquery.wikia.loadLibrary.js',
 
-		// jQuery/Oasis specific code
-		'//skins/oasis/js/tables.js',
-
 		// Search A/B testing
 		'//extensions/wikia/Search/js/SearchAbTest.DomUpdater.js',
 		'//extensions/wikia/Search/js/SearchAbTest.Context.js',

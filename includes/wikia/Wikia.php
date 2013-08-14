@@ -30,6 +30,7 @@ $wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
 $wgHooks['PageHistoryLineEnding']    [] = "Wikia::onPageHistoryLineEnding";
 $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
 $wgHooks['AjaxAddScript'][] = 'Wikia::onAjaxAddScript';
+$wgHooks['ParserAfterTidy'][] = 'Wikia::onParserAfterTidy';
 
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
@@ -2005,7 +2006,7 @@ class Wikia {
 		if ( $wgExternalAuthType ) {
 			$mExtUser = ExternalUser::newFromName( $user_name );
 			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
-				$mExtUser->linkToLocal( $mExtUser->getId() ); 
+				$mExtUser->linkToLocal( $mExtUser->getId() );
 				$s = $mExtUser->getLocalUser( $bUserObject );
 			}
 		}
@@ -2030,13 +2031,13 @@ class Wikia {
 
 		return true;
 	}
-	
+
 	/**
-	 * @param $user User 
+	 * @param $user User
 	 */
 	public static function invalidateUser( $user, $disabled = false, $ajax = false ) {
 		global $wgExternalAuthType;
-		
+
 		if ( $disabled ) {
 			$user->setEmail( '' );
 			$user->setPassword( wfGenerateToken() . self::HEX_CHARS );
@@ -2056,7 +2057,28 @@ class Wikia {
 			ExternalUser_Wikia::removeFromSecondaryClusters( $id );
 		}
 		$user->invalidateCache();
-		
+
+		return true;
+	}
+
+	/**
+	 * @author kflorence
+	 *
+	 * @param $parser Parser
+	 * @param $text String
+	 * @return bool
+	 */
+	public static function onParserAfterTidy( &$parser, &$text ) {
+		wfProfileIn( __METHOD__ );
+
+		// Wrap tables in a div so we can properly control their overflow
+		$text = preg_replace(
+			'/<table\b[^>]*>.*?<\/table>/is',
+			'<div class="table-wrapper">$0</div>',
+			$text
+		);
+
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 }
