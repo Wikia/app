@@ -1,9 +1,10 @@
-@import "../../../../skins/oasis/css/mixins/arrow";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/mixins/arrow";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/box-sizing-border-box";
+@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/opacity";
 @import "mixins/_sprite-LicensedVideoSwap";
 
 $alt-bg-color: mix($color-page-opposite, $color-page, 10%);
@@ -67,7 +68,7 @@ $button-icon-color: white;
 		}
 	}
 	li {
-		box-sizing: border-box;
+		@include box-sizing-border-box;
 		float: left;
 		padding: 0px 6%;
 		width: 33.3%;
