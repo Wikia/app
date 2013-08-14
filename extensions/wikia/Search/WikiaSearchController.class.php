@@ -250,9 +250,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 					$params = [ 'ids' => implode( ',', $ids ), 'height' => 50, 'width' => 50, 'abstract' => 150 ];
 					$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
 					foreach ( $detailResponse['items'] as $item ) {
-						$item = $this->processArticleItem( $item );
-						if ( !empty( $item ) ) {
-							$pages[] = $item;
+						$processed = $this->processArticleItem( $item );
+						if ( !empty( $processed ) ) {
+							$pages[] = $processed;
 						}
 					}
 				}
