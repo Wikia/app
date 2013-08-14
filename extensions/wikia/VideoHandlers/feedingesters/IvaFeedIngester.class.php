@@ -281,13 +281,11 @@ class IvaFeedIngester extends VideoFeedIngester {
 					$clipData['hd'] = ( $videoAsset['HdSource'] == 'true' ) ? 1 : 0;
 					$clipData['provider'] = 'iva';
 
-					// get resolution and aspect ratio
+					// get resolution
 					$clipData['resolution'] = '';
-					$clipData['aspectRatio'] = '';
 					if ( !empty( $videoAsset['SourceWidth'] ) && $videoAsset['SourceWidth'] > 0
 						&& !empty( $videoAsset['SourceHeight'] ) && $videoAsset['SourceHeight'] > 0 ) {
 						$clipData['resolution'] = $videoAsset['SourceWidth'].'x'.$videoAsset['SourceHeight'];
-						$clipData['aspectRatio'] = $videoAsset['SourceWidth'] / $videoAsset['SourceHeight'];
 					}
 
 					// get language
