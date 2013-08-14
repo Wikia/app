@@ -89,7 +89,7 @@ class VideoInfoHelper extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		// Attempt to retrieve this information from the video_info table first
-		$videoInfo = VideoInfo::newFromTitle($title->getDBkey());
+		$videoInfo = VideoInfo::newFromTitle( is_object($title) ? $title->getDBkey() : $title );
 
 		// If its not in the DB, recreate it from existing file data
 		if ( empty($videoInfo) ) {
