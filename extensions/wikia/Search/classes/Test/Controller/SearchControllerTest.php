@@ -2741,8 +2741,8 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 				' - Jakis titl bla bla bla'
 			],
 			[
-				[ 'title' => 'ABC', 'abstract' => 'ABC l bla bla bla' ],
-				' l bla bla bla'
+				[ 'title' => 'ABC', 'abstract' => 'ABCś l bla bla bla' ],
+				' - ABCś l bla bla bla'
 			],
 			[
 				[ 'title' => 'Ian (Fallout)', 'abstract' => 'Ian is short' ],
@@ -2779,6 +2779,14 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			[
 				[ 'title' => 'Gonzo', 'abstract' => ' Gonzo, formally known as \"The Great Gonzo\" or \"Gonzo the Great,\" is the resident daredevil...' ],
 				', formally known as \"The Great Gonzo\" or \"Gonzo the Great,\" is the resident daredevil...'
+			],
+			[
+				[ 'title' => 'Character', 'abstract' => ' ...  Characters are the representations of persons in works of art. In the Fallout series, the...' ],
+				' - Characters are the representations of persons in works of art. In the Fallout series, the...'
+			],
+			[
+				[ 'title' => 'Tranquility Lane', 'abstract' => '   “ Just who are you? ”— The Lone Wanderer when asking who Betty actually is. Tranquility Lane theme “ 同志站开，我们正在处理这些帝国主义走狗。 (Pinyin: Tóngzhì...' ],
+				' - “ Just who are you? ”— The Lone Wanderer when asking who Betty actually is. Tranquility Lane theme “ 同志站开，我们正在处理这些帝国主义走狗。 (Pinyin: Tóngzhì...'
 			]
 		];
 	}

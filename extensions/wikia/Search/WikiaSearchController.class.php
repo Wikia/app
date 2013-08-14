@@ -287,21 +287,25 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$normSpacesAbs = preg_replace( '|\s+|', ' ', $item[ 'abstract' ] );
 		$lowerAbstract = strtolower( $normSpacesAbs );
 
-		$pos = strpos( $lowerAbstract, $trimTitle );
-		if ( $pos !== false ) {
-			if ( $pos <= static::SNIPPET_SUBSTR ) {
-				$pos += strlen( $trimTitle );
-			}
-		} elseif ( isset( $trimTitleWObrackets ) ) {
-			$pos = strpos( $lowerAbstract, $trimTitleWObrackets );
-			if ( $pos !== false && $pos <= static::SNIPPET_SUBSTR ) {
-				$pos += strlen( $trimTitleWObrackets );
+		if ( !empty( $trimTitle ) ) {
+			$pos = strpos( $lowerAbstract, $trimTitle );
+			if ( $pos !== false ) {
+				if ( $pos <= static::SNIPPET_SUBSTR ) {
+					$cutIn = $pos + strlen( $trimTitle );
+				}
+			} elseif ( isset( $trimTitleWObrackets ) ) {
+				$pos = strpos( $lowerAbstract, $trimTitleWObrackets );
+				if ( $pos !== false && $pos <= static::SNIPPET_SUBSTR ) {
+					$cutIn = $pos + strlen( $trimTitleWObrackets );
+				}
 			}
 		}
-		if ( $pos !== false ) {
-			$item['abstract'] = substr( $normSpacesAbs, $pos );
+		//dont substr if next char is alphanumeric
+		$splitted = str_split( $lowerAbstract );
+		if ( isset( $cutIn ) && ( ctype_punct( $splitted[ $cutIn ] ) || ctype_space( $splitted[ $cutIn ] ) ) ) {
+			$item['abstract'] = substr( $normSpacesAbs, $cutIn );
 		} elseif ( !empty( $item[ 'abstract' ] ) ) {
-			$item['abstract'] = ' - ' . trim( $normSpacesAbs );
+			$item['abstract'] = ' - ' . ltrim( $normSpacesAbs, " \t\n\r\0\x0B.-" );
 		}
 		if ( !empty( $item[ 'abstract' ] ) ) {
 			return $item;
