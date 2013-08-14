@@ -48,17 +48,17 @@ var SuggestModalWikiaHubsV2 = {
 					var articleUrl = modal.find('input[name=articleurl]').val();
 					var reason = modal.find('textarea[name=reason]').val();
 
-					WikiaHubs.trackClick('GetPromoted', Wikia.Tracker.ACTIONS.SUBMIT, 'suggestSubmit', null, {
-						lang: wgContentLanguage,
-						user_name: window.wgUserName,
-						article_url: articleUrl,
-						reason: reason,
-						page_name: window.wgPageName
-					}, e);
+                    WikiaHubs.trackClick('get-promoted', Wikia.Tracker.ACTIONS.SUBMIT, 'suggest-article-submit', null, {
+                        lang: wgContentLanguage,
+                        user_name: window.wgUserName,
+                        article_url: articleUrl,
+                        reason: reason,
+                        page_name: window.wgPageName
+                    }, e);
 
-					$().log('suggestArticle modal submit');
-					formView.hide();
-					successView.show();
+                    $().log('suggestArticle modal submit');
+                    formView.hide();
+                    successView.show();
 				});
 	
 				modal.find('button.cancel').click(function (e) {
