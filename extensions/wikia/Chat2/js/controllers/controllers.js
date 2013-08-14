@@ -288,7 +288,7 @@ var NodeRoomController = $.createClass(Observable,{
 		} else {
 			this.socket.send(chatEntry.xport());
 		}
-	}
+	},
 
 	inputListener: function(event) {
 		if(this.active && event.which == 13 && !event.shiftKey) {
