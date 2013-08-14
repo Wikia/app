@@ -9,7 +9,7 @@ namespace Wikia\UI;
  */
 
 
-class UIFactoryController extends \WikiaController {
+class UIFactoryApiController extends \WikiaApiController {
 
 	/**
 	 * @desc Status code returned in json in case of an error
@@ -24,7 +24,7 @@ class UIFactoryController extends \WikiaController {
 	/**
 	 * Return configuration of UI Styleguide components
 	 *
-	 * @param components Array list of component names
+	 * @requestParam Array  $components list of component names
 	 */
 	public function getComponentsConfig() {
 

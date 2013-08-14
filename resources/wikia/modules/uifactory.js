@@ -28,7 +28,7 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'w
 		};
 
 		nirvana.getJson(
-			'Wikia\\UI\\UIFactory',
+			'Wikia\\UI\\UIFactoryApi',
 			'getComponentsConfig',
 			data,
 			function(data) {
