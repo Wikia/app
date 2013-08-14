@@ -99,17 +99,19 @@ class IgnFeedIngester extends VideoFeedIngester {
 			}
 			$clipData['ageGate'] = empty( $clipData['ageRequired'] ) ? 0 : 1;
 
-			$keywords = array();
+			// get name
+			$name = array();
 			foreach ( $video['objectRelations'] as $obj ) {
-				$keywords[$obj['objectName']] = true;
+				$name[$obj['objectName']] = true;
 			}
-			$name = array_keys( $keywords );
+			$name = array_keys( $name );
 			$clipData['name'] = implode( ', ', $name );
 
 			// add name to page categories
 			$addlCategories = array_merge( $addlCategories, $name );
 
 			// add tags to keywords
+			$keywords = array();
 			foreach ( $video['tags'] as $obj ) {
 				if ( array_key_exists( 'slug', $obj ) ) {
 					$keywords[$obj['slug']] = true;

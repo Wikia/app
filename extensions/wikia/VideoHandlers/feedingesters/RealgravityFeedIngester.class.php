@@ -151,7 +151,6 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 				$clipData['duration'] = $video['duration'];
 				$clipData['published'] = strtotime( $video['published_at'] );
 				$clipData['category'] = $video['category']['name'];
-				$clipData['name'] = $video['category']['name'];
 				$clipData['description'] = trim( $video['description'] );
 				$clipData['ageRequired'] = 0;
 				$clipData['ageGate'] = 0;

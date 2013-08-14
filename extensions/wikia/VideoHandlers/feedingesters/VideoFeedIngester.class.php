@@ -788,10 +788,10 @@ abstract class VideoFeedIngester {
 				$category = 'TV';
 				break;
 			case 'game':
-			case 'games':
+			case 'gaming':
 			case 'games scenerrsample':
 			case 'video game':
-				$category = 'Gaming';
+				$category = 'Games';
 				break;
 			default: $category = 'Others';
 		}
