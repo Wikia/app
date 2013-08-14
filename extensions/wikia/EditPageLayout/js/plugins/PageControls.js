@@ -1,6 +1,7 @@
 (function(window,$){
 
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
+	var isWebkit = navigator.userAgent.toLowerCase().indexOf( ' applewebkit/' ) > -1;
 
 	// Returns the width of the browsers scrollbar
 	function getScrollbarWidth() {
@@ -444,8 +445,7 @@
 				// PSS: fuck scrollbars.
 				// TODO: we should have access to breakpoints and such in JavaScript
 				// as variables instead of hardcoded values.
-
-				if (((/Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)) || (/Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor))) && $wikiaPage.width() >= 1370) {
+				if ( isWebkit && $wikiaPage.width() >= 1370 ) {
 					width -= this.scrollbarWidth;
 				}
 			}
