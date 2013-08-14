@@ -35,6 +35,8 @@ class UIFactoryApiController extends \WikiaApiController {
 			throw new \MissingParameterApiException( self::PARAMETER_COMPONENTS );
 		}
 
+
+		// create the Component instances for names specified in request parameter
 		$factory = Factory::getInstance();
 		try {
 			$components = $factory->init( $componentNames, false );
@@ -46,6 +48,7 @@ class UIFactoryApiController extends \WikiaApiController {
 			throw new \NotFoundApiException( $e->getMessage() );
 		}
 
+		// build the response
 		$result = [];
 		foreach( $components as $component ) {
 			$componentResult = [];
@@ -60,6 +63,7 @@ class UIFactoryApiController extends \WikiaApiController {
 		}
 		$this->setVal( 'components', $result );
 
+		// set response caching
 		$this->response->setCacheValidity(
 			self::CLIENT_CACHE_VALIDITY,
 			self::CLIENT_CACHE_VALIDITY,
@@ -68,6 +72,7 @@ class UIFactoryApiController extends \WikiaApiController {
 				\WikiaResponse::CACHE_TARGET_VARNISH
 			)
 		);
+
 		wfProfileOut( __METHOD__ );
 	}
 
