@@ -305,7 +305,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( isset( $cutIn ) && ( ctype_punct( $splitted[ $cutIn ] ) || ctype_space( $splitted[ $cutIn ] ) ) ) {
 			$item['abstract'] = substr( $normSpacesAbs, $cutIn );
 		} elseif ( !empty( $item[ 'abstract' ] ) ) {
-			$item['abstract'] = ' - ' . ltrim( $normSpacesAbs, " \t\n\r\0\x0B.-" );
+			$item['abstract'] = ' - ' . preg_replace( '|^[^{\pL\pN\p{Pi}}]+|', '', $normSpacesAbs );
 		}
 		if ( !empty( $item[ 'abstract' ] ) ) {
 			return $item;
