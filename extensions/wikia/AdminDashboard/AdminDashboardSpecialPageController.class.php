@@ -47,6 +47,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		}
 		$this->urlCreateBlogPage = Title::newFromText('CreateBlogPage', NS_SPECIAL)->getFullURL();
 		$this->urlMultipleUpload = Title::newFromText('MultipleUpload', NS_SPECIAL)->getFullURL();
+		$this->urlLVS = Title::newFromText('LicensedVideoSwap', NS_SPECIAL)->getFullURL();
 		$this->urlGetPromoted = Title::newFromText('Promote', NS_SPECIAL)->getFullURL();
 		$this->urlSpecialCss = SpecialPage::getTitleFor('CSS')->getFullURL();
 
