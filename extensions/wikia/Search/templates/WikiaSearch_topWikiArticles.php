@@ -3,7 +3,7 @@
 <div class="top-wiki-articles RailModule">
     <h1 class="top-wiki-main"><?= wfMessage( 'wikiasearch2-top-module-title' )->plain() ?></h1>
     <?php foreach ( $pages as $page ) : ?>
-    <?php if ( $counter == 0 ): ?>
+    <?php if ( !empty( $page["thumbnailSize"] ) && $page["thumbnailSize"] === "large" ): ?>
     <div class="top-wiki-article hot-article result">
         <div class="top-wiki-article-thumbnail" data-pos="<?= $counter ?>">
             <? if ( isset( $page['thumbnail'] ) ) : ?>
