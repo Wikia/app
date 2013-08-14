@@ -1791,12 +1791,17 @@ class Wikia {
 	 * mcache=readonly disables memcache writes for the duration of the request
 	 * TODO: allow disabling specific keys?
 	 */
-	static public function onBeforeInitializeMemcachePurge($title, $unused, $output, $user, WebRequest $request, $wiki ) {
-		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads, $wgAllowMemcacheWrites;
-		$mcachePurge = $request->getVal("mcache", null);
+	static public function onBeforeInitializeMemcachePurge( $title, $unused, $output, $user, WebRequest $request, $wiki ) {
+		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads, $wgAllowMemcacheWrites, $wgUser;
 
-		if ($wgAllowMemcacheDisable && $mcachePurge !== null) {
-			switch( $mcachePurge ) {
+		if ( !$wgUser->isAllowed( 'mcachepurge' ) ) {
+			return true;
+		}
+
+		$mcachePurge = $request->getVal( 'mcache', null );
+
+		if ( $wgAllowMemcacheDisable && $mcachePurge !== null ) {
+			switch ( $mcachePurge ) {
 				case 'writeonly':
 					$wgAllowMemcacheReads = false;
 					$wgAllowMemcacheWrites = true;
@@ -1813,6 +1818,7 @@ class Wikia {
 					break;
 			}
 		}
+
 		return true;
 	}
 
@@ -2005,7 +2011,7 @@ class Wikia {
 		if ( $wgExternalAuthType ) {
 			$mExtUser = ExternalUser::newFromName( $user_name );
 			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
-				$mExtUser->linkToLocal( $mExtUser->getId() ); 
+				$mExtUser->linkToLocal( $mExtUser->getId() );
 				$s = $mExtUser->getLocalUser( $bUserObject );
 			}
 		}
@@ -2030,13 +2036,13 @@ class Wikia {
 
 		return true;
 	}
-	
+
 	/**
-	 * @param $user User 
+	 * @param $user User
 	 */
 	public static function invalidateUser( $user, $disabled = false, $ajax = false ) {
 		global $wgExternalAuthType;
-		
+
 		if ( $disabled ) {
 			$user->setEmail( '' );
 			$user->setPassword( wfGenerateToken() . self::HEX_CHARS );
@@ -2056,7 +2062,7 @@ class Wikia {
 			ExternalUser_Wikia::removeFromSecondaryClusters( $id );
 		}
 		$user->invalidateCache();
-		
+
 		return true;
 	}
 }
