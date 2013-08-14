@@ -12,19 +12,14 @@ namespace Wikia\UI;
 class UIFactoryApiController extends \WikiaApiController {
 
 	/**
-	 * @desc Status code returned in json in case of an error
-	 */
-	const STATUS_ERROR = 0;
-
-	/**
 	 * @desc how long the response should be cached in varnish/browser
 	 */
 	const CLIENT_CACHE_VALIDITY = 86400; //24*60*60 = 24h
 
 	/**
-	 * @desc Status code returned in json when there were no errors
+	 * @desc Name of the request parameter containing an array of component names
 	 */
-	const STATUS_OK = 1;
+	const PARAMETER_COMPONENTS = 'components';
 
 	/**
 	 * Return configuration of UI Styleguide components
@@ -32,8 +27,14 @@ class UIFactoryApiController extends \WikiaApiController {
 	 * @requestParam Array  $components list of component names
 	 */
 	public function getComponentsConfig() {
+		wfProfileIn( __METHOD__ );
 
-		$componentNames = $this->request->getArray( 'components', [] );
+		$componentNames = $this->request->getArray( self::PARAMETER_COMPONENTS, [] );
+		if ( empty( $componentNames ) || ( $componentNames == [ "" ] ) ) {
+			wfProfileOut( __METHOD__ );
+			throw new \MissingParameterApiException( self::PARAMETER_COMPONENTS );
+		}
+
 		$factory = Factory::getInstance();
 		try {
 			$components = $factory->init( $componentNames, false );
@@ -41,9 +42,8 @@ class UIFactoryApiController extends \WikiaApiController {
 				$components = [ $components ];
 			}
 		} catch( \Exception $e ) {
-			$this->setVal( 'status', self::STATUS_ERROR );
-			$this->setVal( 'errorMessage', $e->getMessage() );
-			return;
+			wfProfileOut( __METHOD__ );
+			throw new \NotFoundApiException( $e->getMessage() );
 		}
 
 		$result = [];
@@ -59,7 +59,6 @@ class UIFactoryApiController extends \WikiaApiController {
 			$result[] = $componentResult;
 		}
 		$this->setVal( 'components', $result );
-		$this->setVal( 'status', self::STATUS_OK );
 
 		$this->response->setCacheValidity(
 			self::CLIENT_CACHE_VALIDITY,
@@ -69,6 +68,7 @@ class UIFactoryApiController extends \WikiaApiController {
 				\WikiaResponse::CACHE_TARGET_VARNISH
 			)
 		);
+		wfProfileOut( __METHOD__ );
 	}
 
 }
