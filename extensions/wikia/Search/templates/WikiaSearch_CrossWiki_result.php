@@ -15,7 +15,7 @@
 
 	$pagesMsg = $service->shortnumForMsg( $result['articles_i']?:0, 'wikiasearch2-pages' );
 	$imgMsg = $service->shortnumForMsg( $result['images_i']?:0, 'wikiasearch2-images' );
-	$videoMsg = $service->shortnumForMsg( $result['videos_i']?:0, 'wikiasearch2-images' );
+	$videoMsg = $service->shortnumForMsg( $result['videos_i']?:0, 'wikiasearch2-videos' );
 	$title = ( $sn = $result->getText( 'sitename_txt' ) ) ? $sn : $result->getText( 'headline_txt' );
 	$url = $result->getText( 'url' );
 ?>

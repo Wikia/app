@@ -27,7 +27,6 @@ $wgHooks['AllowNotifyOnPageChange']  [] = "Wikia::allowNotifyOnPageChange";
 $wgHooks['AfterInitialize']          [] = "Wikia::onAfterInitialize";
 $wgHooks['UserMailerSend']           [] = "Wikia::onUserMailerSend";
 $wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
-$wgHooks['PageHistoryLineEnding']    [] = "Wikia::onPageHistoryLineEnding";
 $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
 $wgHooks['AjaxAddScript'][] = 'Wikia::onAjaxAddScript';
 $wgHooks['ParserAfterTidy'][] = 'Wikia::onParserAfterTidy';
@@ -1792,12 +1791,17 @@ class Wikia {
 	 * mcache=readonly disables memcache writes for the duration of the request
 	 * TODO: allow disabling specific keys?
 	 */
-	static public function onBeforeInitializeMemcachePurge($title, $unused, $output, $user, WebRequest $request, $wiki ) {
+	static public function onBeforeInitializeMemcachePurge( $title, $unused, $output, $user, WebRequest $request, $wiki ) {
 		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads, $wgAllowMemcacheWrites;
-		$mcachePurge = $request->getVal("mcache", null);
 
-		if ($wgAllowMemcacheDisable && $mcachePurge !== null) {
-			switch( $mcachePurge ) {
+		if ( !$user->isAllowed( 'mcachepurge' ) ) {
+			return true;
+		}
+
+		$mcachePurge = $request->getVal( 'mcache', null );
+
+		if ( $wgAllowMemcacheDisable && $mcachePurge !== null ) {
+			switch ( $mcachePurge ) {
 				case 'writeonly':
 					$wgAllowMemcacheReads = false;
 					$wgAllowMemcacheWrites = true;
@@ -1814,6 +1818,7 @@ class Wikia {
 					break;
 			}
 		}
+
 		return true;
 	}
 
@@ -1863,15 +1868,6 @@ class Wikia {
 		if ( $title instanceof Title ) {
 			$title->getArticleID( Title::GAID_FOR_UPDATE );
 		}
-		return true;
-	}
-
-	/**
-	 * Fix for bugid:38093
-	 * Chrome bug: No "Undo" links on Recent Changes
-	 */
-	public static function onPageHistoryLineEnding( $HistoryActionObj, $row , &$s, $classes ) {
-		$s = '<span dir="auto">'.$s.'</span>';
 		return true;
 	}
 
@@ -2076,6 +2072,7 @@ class Wikia {
 		$text = preg_replace( '/<\/table>/i', '$0</div>', $text );
 
 		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 }
