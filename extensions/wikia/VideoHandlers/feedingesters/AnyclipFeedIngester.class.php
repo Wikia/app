@@ -198,8 +198,8 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 			return 0;
 		}
 
-		$metadata['videoUrl'] = $data['videoUrl'];
-		$metadata['uniqueName'] = $data['uniqueName'];
+		$metadata['videoUrl'] = empty( $data['videoUrl'] ) ? '' : $data['videoUrl'];
+		$metadata['uniqueName'] = empty( $data['uniqueName'] ) ? '' : $data['uniqueName'];
 
 		return $metadata;
 	}

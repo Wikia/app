@@ -240,7 +240,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		$categories[] = $data['name'];
 
 		if ( !empty( $data['type'] ) ) {
-			$categories[] = $this->getStdPageCategores( $data['type'] );
+			$categories[] = $this->getStdPageCategory( $data['type'] );
 		}
 
 		// add language

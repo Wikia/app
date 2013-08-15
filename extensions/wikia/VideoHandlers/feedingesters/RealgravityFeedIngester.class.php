@@ -224,9 +224,9 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 			return 0;
 		}
 
-		$metadata['marketplaceId'] = $data['marketplaceId'];
-		$metadata['marketplaceName'] = $data['marketplaceName'];
-		$metadata['categoryId'] = $data['categoryId'];
+		$metadata['marketplaceId'] = empty( $data['marketplaceId'] ) ? '' : $data['marketplaceId'];
+		$metadata['marketplaceName'] = empty( $data['marketplaceName'] ) ? '' : $data['marketplaceName'];
+		$metadata['categoryId'] = empty( $data['categoryId'] ) ? '' : $data['categoryId'];
 
 		return $metadata;
 	}

@@ -175,7 +175,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 			return 0;
 		}
 
-		$metadata['videoUrl'] = $data['videoUrl'];
+		$metadata['videoUrl'] = empty( $data['videoUrl'] ) ? '' : $data['videoUrl'];
 
 		return $metadata;
 	}

@@ -211,10 +211,10 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 			return 0;
 		}
 
-		$metadata['startDate'] = $data['startDate'];
-		$metadata['source'] = $data['source'];
-		$metadata['sourceId'] = $data['sourceId'];
-		$metadata['pageCategories'] = $data['pageCategories'];
+		$metadata['startDate'] = empty( $data['startDate'] ) ? '' :  $data['startDate'];
+		$metadata['source'] = empty( $data['source'] ) ? '' :  $data['source'];
+		$metadata['sourceId'] = empty( $data['sourceId'] ) ? '' :  $data['sourceId'];
+		$metadata['pageCategories'] = empty( $data['pageCategories'] ) ? '' :  $data['pageCategories'];
 
 		return $metadata;
 	}

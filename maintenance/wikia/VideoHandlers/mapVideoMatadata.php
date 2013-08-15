@@ -57,7 +57,13 @@ function mapMetadata( $videoTitle, $ingester, $data ) {
 			}
 		}
 
-		if ( count($keywords) == 1 ) {
+		// use series if keywords is empty
+		if ( empty( $keywords ) && !empty( $data['series'] ) ) {
+			$keywords[] = $data['series'];
+		}
+
+
+		if ( count( $keywords ) == 1 ) {
 			$data['name'] = array_pop( $keywords );
 		} else {
 			$skip++;
@@ -204,7 +210,6 @@ function mapMetadataAnyclip( $ingester, $data, &$metadata ) {
 	if ( !empty( $metadata['language'] ) && !empty( $languageNames ) && array_key_exists( $metadata['language'], $languageNames ) ) {
 		$metadata['language'] = $languageNames[$metadata['language']];
 	}
-
 }
 
 // ----------------------------- Main ------------------------------------
@@ -216,8 +221,9 @@ require_once( "commandLine.inc" );
 if ( isset($options['help']) ) {
 	die( "Usage: php mapVideoMatadata.php [--help] [--dry-run] [--provider=abc] [--limit=123]
 	--dry-run                      dry run
-	--provider                     video provider
-	--limit                        limit number of videos
+	--provider                     video provider (required)
+	--limit                        limit number of videos (required)
+	--name                         video title (optional)
 	--help                         you are reading it right now\n\n" );
 }
 
@@ -228,6 +234,7 @@ if ( empty($wgCityId) ) {
 $dryRun = isset( $options['dry-run'] );
 $provider = isset( $options['provider'] ) ? $options['provider'] : '';
 $limit = isset( $options['limit'] ) ? $options['limit'] : 0 ;
+$videoTitle = isset( $options['name'] ) ? $options['name'] : '';
 
 if ( empty( $provider ) ) {
 	die( "Error: Invalid provider.\n" );
@@ -247,7 +254,7 @@ if ( empty( $ingestionData ) ) {
 }
 
 // keywords for page categories
-$categories = array( 'International', 'Foreign', 'Movies', 'TV', 'Gaming', 'Others' );
+$categories = array( 'International', 'Foreign', 'Movies', 'TV', 'Gaming', 'Games', 'Others' );
 
 // providers that require extra mapping
 $extraMapping = array( 'iva', 'realgravity', 'ign', 'anyclip' );
@@ -257,15 +264,21 @@ include( dirname( __FILE__ ).'/../../../extensions/cldr/CldrNames/CldrNamesEn.ph
 
 $dbw = wfGetDB( DB_MASTER );
 
+$sqlWhere = array(
+	'img_media_type' => 'VIDEO',
+	'img_minor_mime' => $provider,
+);
+
+if ( !empty( $videoTitle ) ) {
+	$sqlWhere[] = "img_name >= ".$dbw->addQuotes( $videoTitle );
+}
+
 $result = $dbw->select(
 	array( 'image' ),
 	array( 'img_name', 'img_metadata' ),
-	array(
-		'img_media_type' => 'VIDEO',
-		'img_minor_mime' => $provider,
-	),
+	$sqlWhere,
 	__METHOD__,
-	array( 'LIMIT' => $limit )
+	array( 'LIMIT' => $limit, 'ORDER BY' => 'img_name' )
 );
 
 $total = $result->numRows();

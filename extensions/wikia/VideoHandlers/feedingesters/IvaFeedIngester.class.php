@@ -313,8 +313,12 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 					// get keywords
 					$keywords = empty( $clipData['name'] ) ? array() : array( $clipData['name'] );
-					$keywords[] = $clipData['series'];
-					$keywords[] = $clipData['category'];
+					if ( !empty( $clipData['series'] ) ) {
+						$keywords[] = $clipData['series'];
+					}
+					if ( !empty( $clipData['category'] ) ) {
+						$keywords[] = $clipData['category'];
+					}
 					if ( !empty( $clipData['tags'] ) ) {
 						$keywords[] = $clipData['tags'];
 					}
