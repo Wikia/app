@@ -453,7 +453,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 	 * @param array $categories
 	 * @return array $categories
 	 */
-	protected function generateCategories( $data, $categories ) {
+	public function generateCategories( $data, $categories ) {
 		wfProfileIn( __METHOD__ );
 
 		$categories[] = 'IVA';

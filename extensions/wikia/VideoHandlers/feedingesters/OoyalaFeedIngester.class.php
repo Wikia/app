@@ -100,9 +100,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['hd'] = empty( $video['metadata']['hd'] ) ? 0 : 1;
 
 				$clipData['industryRating'] = '';
-				if ( !empty( $video['metadata']['trailerrating'] ) ) {
-					$clipData['industryRating'] = $this->getIndustryRating( $video['metadata']['trailerrating'] );
-				} else if ( !empty( $video['metadata']['industryrating'] ) ) {
+				if ( !empty( $video['metadata']['industryrating'] ) ) {
 					$clipData['industryRating'] = $this->getIndustryRating( $video['metadata']['industryrating'] );
 				}
 
@@ -173,7 +171,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 	 * @param array $categories
 	 * @return array $categories
 	 */
-	protected function generateCategories( $data, $categories ) {
+	public function generateCategories( $data, $categories ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !empty( $data['keywords'] ) ) {

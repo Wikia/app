@@ -119,7 +119,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 
 			$elements = $item->getElementsByTagNameNS( 'http://search.yahoo.com/mrss/', 'content' );
 			if ( $elements->length > 0 ) {
-				$clipData['language'] = $elements->item(0)->getAttribute('lang');
+				$clipData['language'] = $this->getCldrCode( $elements->item(0)->getAttribute('lang'), 'language', false );
 				$clipData['duration'] = $elements->item(0)->getAttribute('duration');
 			}
 
@@ -168,7 +168,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 	 * @param array $categories
 	 * @return array $categories
 	 */
-	protected function generateCategories( $data, $categories ) {
+	public function generateCategories( $data, $categories ) {
 		wfProfileIn( __METHOD__ );
 
 		$categories[] = 'AnyClip';

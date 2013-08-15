@@ -24,6 +24,7 @@ function mapMetadata( $videoTitle, $ingester, $data ) {
 		$pageCategories = array();
 	} else {
 		$pageCategories = array_map( 'trim', explode( ',', $data['pageCategories'] ) );
+		$pageCategories = $ingester->getUniqueArray( $pageCategories );
 	}
 
 	// get name
@@ -31,9 +32,20 @@ function mapMetadata( $videoTitle, $ingester, $data ) {
 		$keywords = array();
 		foreach ( explode( ',' , $data['keywords'] ) as $keyword ) {
 			$keyword = trim( $keyword );
+			if ( empty( $keyword ) ) {
+				continue;
+			}
+
 			$keywords[] = $keyword;
 
 			// remove page categories from keywords (for ooyala, iva)
+			if ( !empty( $data['series'] ) ) {
+				$categories[] = $data['series'];
+			}
+			if ( !empty( $data['provider'] ) ) {
+				$categories[] = $data['provider'];
+			}
+
 			foreach ( $categories as $category) {
 				if ( strcasecmp( $keyword, $category ) == 0 ) {
 					array_pop( $keywords );
@@ -108,17 +120,30 @@ function mapMetadata( $videoTitle, $ingester, $data ) {
 	// map additional metadata (per provider)
 	if ( in_array( $metadata['provider'], $extraMapping ) ) {
 		$function = 'mapMetadata'.ucfirst( $metadata['provider'] );
-		$function( $data, $metadata );
+		$function( $ingester, $data, $metadata );
 	}
 
 	return $metadata;
 }
 
-function mapMetadataRealgravity( $data, &$metadata ) {
+/**
+ * mapping additional metadata for RealGravity
+ * @param VideoFeedIngester $ingester
+ * @param array $data
+ * @param array $metadata
+ */
+function mapMetadataRealgravity( $ingester, $data, &$metadata ) {
 	$metadata['name'] = '';
+	$metadata['category'] = $ingester->getCategory( $metadata['category'] );
 }
 
-function mapMetadataIva( $data, &$metadata ) {
+/**
+ * mapping additional metadata for IVA
+ * @param VideoFeedIngester $ingester
+ * @param array $data
+ * @param array $metadata
+ */
+function mapMetadataIva( $ingester, $data, &$metadata ) {
 	global $countryNames, $languageNames;
 
 	// get language
@@ -136,17 +161,51 @@ function mapMetadataIva( $data, &$metadata ) {
 		$metadata['targetCountry'] = $countryNames[$metadata['targetCountry']];
 	}
 
+	$metadata['category'] = $ingester->getCategory( $metadata['category'] );
+	$metadata['type'] = $ingester->getStdType( $metadata['category'] );
+
 	// add page categories to metadata
 	$metadata['pageCategories'] = empty( $data['pageCategories'] ) ? '' : $data['pageCategories'];
+	if ( empty( $data['pageCategories'] ) ) {
+		$metadata['pageCategories'] = '';
+	} else {
+		$categories = array_map( 'trim', explode( ',', $data['pageCategories'] ) );
+		$categories = $ingester->generateCategories( $metadata, $categories );
+		$metadata['pageCategories'] = implode( ', ', $categories );
+	}
 }
 
-function mapMetadataIgn( $data, &$metadata ) {
-	if ( !empty( $metadata['category'] ) && strtolower( $metadata['category'] != 'none' ) ) {
-		$metadata['type'] = $metadata['category'];
+/**
+ * mapping additional metadata for IGN
+ * @param VideoFeedIngester $ingester
+ * @param array $data
+ * @param array $metadata
+ */
+function mapMetadataIgn( $ingester, $data, &$metadata ) {
+	if ( !empty( $metadata['category'] ) ) {
+		$metadata['type'] = $ingester->getStdType( $metadata['category'] );
 	}
 	$metadata['category'] = '';
 }
 
+/**
+ * mapping additional metadata for Anyclip
+ * @param VideoFeedIngester $ingester
+ * @param array $data
+ * @param array $metadata
+ */
+function mapMetadataAnyclip( $ingester, $data, &$metadata ) {
+	global $languageNames;
+	if ( !empty( $metadata['category'] ) && strtolower( $metadata['category'] == 'Movies' ) ) {
+		$metadata['type'] = 'Clip';
+	}
+
+	// get language
+	if ( !empty( $metadata['language'] ) && !empty( $languageNames ) && array_key_exists( $metadata['language'], $languageNames ) ) {
+		$metadata['language'] = $languageNames[$metadata['language']];
+	}
+
+}
 
 // ----------------------------- Main ------------------------------------
 
@@ -188,13 +247,13 @@ if ( empty( $ingestionData ) ) {
 }
 
 // keywords for page categories
-$categories = array( 'International', 'Foreign', 'Movies', 'TV', 'Gaming' );
+$categories = array( 'International', 'Foreign', 'Movies', 'TV', 'Gaming', 'Others' );
 
 // providers that require extra mapping
-$extraMapping = array( 'iva', 'realgravity', 'ign' );
+$extraMapping = array( 'iva', 'realgravity', 'ign', 'anyclip' );
 
 // include cldr extension for language code ($languageNames), country code ($countryNames)
-include( dirname( __FILE__ ).'/../../../cldr/CldrNames/CldrNamesEn.php' );
+include( dirname( __FILE__ ).'/../../../extensions/cldr/CldrNames/CldrNamesEn.php' );
 
 $dbw = wfGetDB( DB_MASTER );
 

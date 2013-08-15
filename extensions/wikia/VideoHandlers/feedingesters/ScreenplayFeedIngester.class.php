@@ -233,7 +233,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 	 * @param array $categories
 	 * @return array $categories
 	 */
-	protected function generateCategories( $data, $categories ) {
+	public function generateCategories( $data, $categories ) {
 		wfProfileIn( __METHOD__ );
 
 		$categories[] = 'Screenplay, Inc.';
@@ -279,9 +279,9 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		}
 
 		$metadata['stdBitrateCode'] = $data['stdBitrateCode'];
-		$metadata['jpegBitrateCode'] = $data['jpegBitrateCode'];
-		$metadata['streamUrl'] = $data['streamUrl'];
-		$metadata['streamHdUrl'] = $data['streamHdUrl'];
+		$metadata['jpegBitrateCode'] = empty( $data['jpegBitrateCode'] ) ? '' : $data['jpegBitrateCode'];
+		$metadata['streamUrl'] = empty( $data['streamUrl'] ) ? '' : $data['streamUrl'];
+		$metadata['streamHdUrl'] = empty( $data['streamHdUrl'] ) ? '' : $data['streamHdUrl'];
 
 		return $metadata;
 	}

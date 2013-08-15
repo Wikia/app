@@ -49,7 +49,7 @@ abstract class VideoFeedIngester {
 	 * @param $addlCategories - Any additional categories to add
 	 * @return array - A list of category names
 	 */
-	abstract protected function generateCategories( $data, $addlCategories );
+	abstract public function generateCategories( $data, $addlCategories );
 
 	/**
 	 * Generate name for video.
@@ -960,7 +960,7 @@ abstract class VideoFeedIngester {
 	 * @param string $type [language|country]
 	 * @return string $value
 	 */
-	public function getCldrCode( $value, $type = 'language' ) {
+	public function getCldrCode( $value, $type = 'language', $code = true ) {
 		$value = trim( $value );
 		if ( !empty( $value ) ) {
 			if ( empty( self::$CLDR_NAMES ) ) {
@@ -975,9 +975,15 @@ abstract class VideoFeedIngester {
 			// $languageNames, $countryNames comes from cldr extension
 			$paramName = ( $type == 'country' ) ? 'countryNames' : 'languageNames';
 			if ( !empty( self::$CLDR_NAMES[$paramName] ) ) {
-				$code = array_search( $value, self::$CLDR_NAMES[$paramName] );
-				if ( $code != false ) {
-					$value = $code;
+				if ( $code ) {
+					$code = array_search( $value, self::$CLDR_NAMES[$paramName] );
+					if ( $code != false ) {
+						$value = $code;
+					}
+				} else {
+					if ( array_key_exists( $value, self::$CLDR_NAMES[$paramName] ) ) {
+						$value = self::$CLDR_NAMES[$paramName][$value];
+					}
 				}
 			}
 		}
