@@ -3,27 +3,27 @@
 $messages = array();
 
 $messages['en'] = array(
-	'Autocreatewiki-welcomebody-HTML' => '<p>Hello $2,<br /><br />
+	'autocreatewiki-welcomebody-HTML' => '<p>Hello $2,<br /><br />
 The Wikia you created is now available at <a href="$1">$1</a>.  We hope to see you editing there soon!<br /><br />
 We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">Wikia Help</a>.<br /><br />
 Good luck with the project,<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
 Wikia Community Team<br /></p>',
-	'Confirmemail_body-HTML' => '<p>Hello $2,<br /><br />
+	'confirmemail_body-HTML' => '<p>Hello $2,<br /><br />
 Thank you for registering with Wikia.<br /><br />
 Please activate your new account by <a href="$3">confirming your e-mail address here</a>.<br /><br /><br />
 We look forward to seeing you soon!<br /><br />
 The Wikia Community Team<br />
 <a href="http://community.wikia.com/">community.wikia.com</a><br /></p>',
-	'Confirmemailreminder_body-HTML' => '<p>Hello $1,<br /><br />
+	'confirmemailreminder_body-HTML' => '<p>Hello $1,<br /><br />
 Last week you joined Wikia, but you still need to confirm your account. Please do so by clicking <a href="$2">here</a>.<br /><br />
 We look forward to seeing you soon!<br /><br />
 The Wikia Community Team<br />
 <a href="http://www.wikia.com/">www.wikia.com</a></p>',
-	'Createaccount-text-HTML' => '<p>Someone created an account for your e-mail address on {{SITENAME}} ($4) named "$2", with password "$3".<br />
+	'createaccount-text-HTML' => '<p>Someone created an account for your e-mail address on {{SITENAME}} ($4) named "$2", with password "$3".<br />
 You should log in and change your password now.<br /><br />
 You may ignore this message if this account was created in error.</p>',
-	'Enotif_body-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+	'enotif_body-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
 There has been an edit to a page you are watching on {{SITENAME}}.<br /><br />
 See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.<br /><br />
 $NEWPAGEHTML<br /><br />
@@ -34,7 +34,7 @@ Please visit and edit often...<br /><br />
 <li><a href="http://www.wikia.com">Check out our featured wikis!</a></li>
 <li>Want to control which e-mails you receive? Go to <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul></p>',
-	'Enotif_body_article_comment-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+	'enotif_body_article_comment-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
 An article you following, $PAGETITLE, has new comments.<br /><br />
 To see the comment thread, follow the link below: <a href="$PAGETITLE_URL#article-comments">$PAGETITLE</a> <br /><br />
 Please visit and edit often...<br /><br />
@@ -42,7 +42,7 @@ Please visit and edit often...<br /><br />
 <ul>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">{{ns:special}}:Preferences<a>.</li>
 </ul></p>',
-	'Enotif_body_blogs_comment-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+	'enotif_body_blogs_comment-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
 $PAGEEDITOR made a comment on the blog post "$BLOGTITLE".<br /><br />
 <a href="$PAGETITLE_URL#comments">View the comments</a><br /><br />
 Please visit and edit often...<br /><br />
@@ -51,7 +51,7 @@ Please visit and edit often...<br /><br />
 <li><a href="http://www.wikia.com">Check out our featured wikis!</a></li>
 <li>Want to control which e-mails you receive? Go to <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul></p>',
-	'Enotif_body_delete-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+	'enotif_body_delete-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
 A page you are watching on {{SITENAME}} has been deleted.<br /><br />
 The page was at <a href="$PAGETITLE_URL">$PAGETITLE</a> <br /><br />
 $PAGESUMMARY<br /><br />
@@ -61,7 +61,7 @@ Please visit and edit often...<br /><br />
 <li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}"> User Preferences</a></li>
 </ul></p>',
-	'Enotif_body_move-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+	'enotif_body_move-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
 A page you are watching on {{SITENAME}} has been moved.<br /><br />
 See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.<br /><br />
 $PAGESUMMARY<br /><br />
@@ -71,7 +71,7 @@ Please visit and edit often...<br /><br />
 <li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul></p>',
-	'Enotif_body_prl_chn-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+	'enotif_body_prl_chn-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
 A problem has been updated for a page you are watching on {{SITENAME}}.<br /><br />
 See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the page.<br /><br />
 For a list of recent problem reports, see <a href="{{fullurl:{{ns:special}}:ProblemReports}}">{{ns:special}}:ProblemReports</a><br /><br />
@@ -81,7 +81,7 @@ Please visit and edit often...<br /><br />
 <li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul></p>',
-	'Enotif_body_prl_rep-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+	'enotif_body_prl_rep-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
 A problem has been reported for a page you are watching on {{SITENAME}}.<br /><br />
 See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the page.<br /><br />
 For a list of recent problem reports, see <a href="{{fullurl:{{ns:special}}:ProblemReports}}">{{ns:special}}:ProblemReports</a><br /><br />
@@ -91,7 +91,7 @@ Please visit and edit often...<br /><br />
 <li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul></p>',
-	'Enotif_body_protect-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+	'enotif_body_protect-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
 A page you are watching on {{SITENAME}} has been protected.<br /><br />
 See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.<br /><br />
 $PAGESUMMARY<br /><br />
@@ -101,7 +101,7 @@ Please visit and edit often...<br /><br />
 <li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul></p>',
-	'Enotif_body_restore-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+	'enotif_body_restore-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
 A page you are watching on {{SITENAME}} has been restored from deletion.<br /><br />
 See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.<br /><br />
 $PAGESUMMARY<br /><br />
@@ -111,7 +111,7 @@ Please visit and edit often...<br /><br />
 <li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}"> User Preferences</a></li>
 </ul></p>',
-	'Enotif_body_rights-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+	'enotif_body_rights-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
 User rights on {{SITENAME}} have been changed for a person whose user page you are watching. You can see their user page here: <a href="$PAGETITLE_URL">$PAGETITLE</a><br /><br />
 $PAGESUMMARY<br /><br />
 <a href="{{fullurl:{{ns:special}}:Log/rights}}">Click here</a> for a log of all recent rights changes.<br /><br />
@@ -121,7 +121,7 @@ Please visit and edit often...<br /><br />
 <li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul></p>',
-	'Enotif_body_unprotect-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+	'enotif_body_unprotect-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
 A page you are watching on {{SITENAME}} has been unprotected.<br /><br />
 See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.<br /><br />
 $PAGESUMMARY<br /><br />
@@ -131,7 +131,7 @@ Please visit and edit often...<br /><br />
 <li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul></p>',
-	'Enotif_body_upload-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+	'enotif_body_upload-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
 A file you are watching on {{SITENAME}} has been uploaded.<br /><br />
 See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.<br /><br />
 $PAGESUMMARY<br /><br />
@@ -141,14 +141,14 @@ Please visit and edit often...<br /><br />
 <li>Have you checked out our hubs? <a href="http://www.wikia.com/wiki/Category:Hubs">Visit Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">{{fullurl:{{ns:special}}:Preferences}}<a>.</li>
 </ul></p>',
-	'Enotif_lastvisited-HTML' => 'To see all changes to this page since your last visit, <a href="$1">click here</a>',
-	'Founderemails-email-page-edited-body-HTML' => '<strong>Hey $1,</strong><br /><br />
+	'enotif_lastvisited-HTML' => 'To see all changes to this page since your last visit, <a href="$1">click here</a>',
+	'founderemails-email-page-edited-body-HTML' => '<strong>Hey $1,</strong><br /><br />
 It looks like $2 has edited your wiki! Why don\'t you drop by their <a href="$3">userpage</a> to say hello?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
-	'Founderemails-email-user-registered-body-HTML' => '<strong>Hey $1,</strong><br /><br />
+	'founderemails-email-user-registered-body-HTML' => '<strong>Hey $1,</strong><br /><br />
 It looks like $2 has registered on your wiki! Why don\'t you drop by their <a href="$3">userpage</a> to say hello?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
-	'Globalwatchlist-digest-email-body-HTML' => '<p>Dear $1,<br /><br />
+	'flobalwatchlist-digest-email-body-HTML' => '<p>Dear $1,<br /><br />
 This is a list of pages on your Wikia watchlist that have been edited since you last visited them.<br /><br />
 $2<br /><br />
 This is a list of blog pages on your Wikia watchlist that have been edited or commented since you last visited them.<br /><br />
@@ -159,7 +159,7 @@ Wikia<br /><hr />
 <li>To change your preferences for watchlist notifications, please visit <a href="http://community.wikia.com/wiki/Special:Preferences">Your Preferences</a></li>
 <li>To mark all pages from this Weekly Digest as visited, see the option in the "Watchlist" tab of your Preferences page</li>
 </ul></p>',
-	'Passwordremindertext-HTML' => '<p>Hi,<br /><br />
+	'passwordremindertext-HTML' => '<p>Hi,<br /><br />
 The login password for user "$2" is now "$3".<br /><br />
 If you did not request a new password, don’t worry. The replacement password has been sent only to you at this e-mail address. Your account is secure and you can continue to use your old password.<br /><br />
 Thanks,<br /><br />
@@ -169,7 +169,7 @@ www.wikia.com<br /><hr />
 <li>To change your preferences or password, go to: <a href="http://community.wikia.com/wiki/Special:Preferences">User Preferences</a>.</li>
 <li>This password reminder was requested from the following address: $1.</li>
 </ul></p>',
-	'Reconfirmemail_body-HTML' => '<p>Hello $2,<br /><br />
+	'reconfirmemail_body-HTML' => '<p>Hello $2,<br /><br />
 Thank you for updating the e-mail address for your Wikia account. Please confirm this is the correct e-mail address by <a href="$3">clicking here</a>.<br /><br /><br />
 We look forward to seeing you on Wikia!<br /><br />
 The Wikia Community Team<br />

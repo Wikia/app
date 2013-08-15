@@ -1,6 +1,6 @@
 <?php
 /**
-aliases for special pages
+ * aliases for special pages
  *
  * @file
  * @ingroup Extensions

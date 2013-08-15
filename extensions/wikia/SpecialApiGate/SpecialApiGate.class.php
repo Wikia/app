@@ -34,6 +34,9 @@ class SpecialApiGate extends SpecialPage {
 
 	public function __construct() {
 		parent::__construct( 'ApiGate' );
+		//set apigate link path
+		global $APIGATE_LINK_ROOT;
+		$APIGATE_LINK_ROOT = Title::newFromText( 'ApiGate', NS_SPECIAL)->fixSpecialName()->getFullUrl();
 	}
 
 	/**
@@ -190,6 +193,21 @@ class SpecialApiGate extends SpecialPage {
 			} else {
 				// If the user doesn't have any keys yet, show the registration form front-and-center.
 				$html .= $this->subpage_register();
+			}
+
+			// If this is an admin, show links to Admin subpages.
+			if ( ApiGate_Config::isAdmin() ) {
+				$links = array(
+					array(
+						"text" => wfMsg('apigate-adminlinks-viewkeys'),
+						"href" => "$APIGATE_LINK_ROOT/".self::SUBPAGE_ALL_KEYS,
+					),
+					array(
+						"text" => wfMsg('apigate-adminlinks-viewaggregate'),
+						"href" => "$APIGATE_LINK_ROOT/".self::SUBPAGE_AGGREGATE_STATS,
+					),
+				);
+				$html .= "<br/>" . ApiGate_Dispatcher::renderTemplate( "adminLinks", array( "links" => $links ) );
 			}
 		}
 
