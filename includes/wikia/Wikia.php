@@ -2072,11 +2072,8 @@ class Wikia {
 		wfProfileIn( __METHOD__ );
 
 		// Wrap tables in a div so we can properly control their overflow
-		$text = preg_replace(
-			'/<table\b[^>]*>.*?<\/table>/is',
-			'<div class="table-wrapper">$0</div>',
-			$text
-		);
+		$text = preg_replace( '/<table\b[^>]*>/i', '<div class="table-wrapper">$0', $text );
+		$text = preg_replace( '/<\/table>/i', '$0</div>', $text );
 
 		wfProfileOut( __METHOD__ );
 		return true;
