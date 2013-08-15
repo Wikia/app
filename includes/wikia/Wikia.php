@@ -1790,8 +1790,8 @@ class Wikia {
 	 * mcache=readonly disables memcache writes for the duration of the request
 	 * TODO: allow disabling specific keys?
 	 */
-	static public function onBeforeInitializeMemcachePurge($title, $unused, $output, $user, WebRequest $request, $wiki ) {
-		self::setUpMemcachePurge($request);
+	static public function onBeforeInitializeMemcachePurge( $title, $unused, $output, $user, WebRequest $request, $wiki ) {
+		self::setUpMemcachePurge( $request, $user );
 		return true;
 	}
 
@@ -1800,7 +1800,7 @@ class Wikia {
 	 *
 	 * @param WebRequest $request
 	 */
-	static public function setUpMemcachePurge(WebRequest $request) {
+	static public function setUpMemcachePurge( WebRequest $request, $user ) {
 		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads, $wgAllowMemcacheWrites;
 
 		if ( !$user->isAllowed( 'mcachepurge' ) ) {
