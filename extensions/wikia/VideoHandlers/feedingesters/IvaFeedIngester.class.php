@@ -275,7 +275,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 						$clipData['published'] = $matches[1]/1000;
 					}
 
-					$clipData['type'] = trim( $videoAsset['MediaType']['Media'] );
+					$clipData['type'] = $this->getStdType( $videoAsset['MediaType']['Media'] );
 					$clipData['category'] = $this->getCategory( $clipData['type'] );
 					$clipData['description'] = trim( $videoAsset['Descriptions']['ItemDescription'] );
 					$clipData['hd'] = ( $videoAsset['HdSource'] == 'true' ) ? 1 : 0;

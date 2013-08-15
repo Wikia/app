@@ -768,14 +768,13 @@ abstract class VideoFeedIngester {
 		$cat = trim( $cat );
 		switch( strtolower( $cat ) ) {
 			case 'movie':
-			case 'movies':
 			case 'movie interview':
 			case 'movie behind the scenes':
 			case 'movie sceneorsample':
 			case 'movie alternate version':
+			case 'theatrical';
 				$category = 'Movies';
 				break;
-			case 'tv':
 			case 'series':
 			case 'season':
 			case 'episode':
@@ -793,7 +792,72 @@ abstract class VideoFeedIngester {
 			case 'video game':
 				$category = 'Games';
 				break;
+			case 'movie fan-made':
+			case 'game fan-made':
+			case 'song fan-made':
+			case 'other fan-made':
+			case 'episodic fan-made':
+				$category = 'Fan-Made';
+				break;
+			case 'live event':
+			case 'live event interview':
+			case 'live event behind the scenes':
+			case 'live event sceneorsample':
+			case 'live event alternate version':
+			case 'live event fan-made':
+				$category = 'Live Event';
+				break;
+			case 'mind & body':
+			case 'personal care & style':
+				$category = 'Beauty';
+				break;
+			case 'performing arts':
+				$category = 'Arts';
+				break;
+			case 'crafts & hobbies':
+				$category = 'Crafts';
+				break;
+			case 'sports & fitness':
+			case 'health & nutrition':
+				$category = 'Health';
+				break;
+			case 'business & finance':
+				$category = 'Business';
+				break;
+			case 'first aid & safety':
+				$category = 'Safety';
+				break;
+			case 'kids':
+			case 'pets':
+			case 'parenting & family':
+				$category = 'Family';
+				break;
+			case 'careers & education':
+				$category = 'Education';
+				break;
+			case 'sex & relationships':
+				$category = 'Relationships';
+				break;
+			case 'language & reference':
+				$category = 'Reference';
+				break;
+			case 'cars & transportation':
+				$category = 'Auto';
+				break;
+			case 'holidays & celebrations':
+				$category = 'Holidays';
+				break;
+			case 'religion & spirituality':
+				$category = 'Religion';
+				break;
 			case 'none':
+			case 'not set':
+			case 'home video':
+			case 'open-ended':
+			case 'other interview':
+			case 'other behind the scenes':
+			case 'other sceneorsample':
+			case 'other alternate version':
 				$category = '';
 				break;
 			default: $category = $cat;
@@ -810,7 +874,36 @@ abstract class VideoFeedIngester {
 	public function getStdType( $type ) {
 		$type = trim( $type );
 		switch( strtolower( $type ) ) {
-			case 'movies':
+			case 'movie behind the scenes':
+			case 'episodic behind the scenes':
+			case 'other behind the scenes':
+			case 'live event behind the scenes':
+				$stdType = 'Behind the Scenes';
+				break;
+			case 'movie sceneorsample':
+				$stdType = 'Clip';
+				break;
+			case 'movie fan-made':
+			case 'game fan-made':
+			case 'song fan-made':
+			case 'other fan-made':
+			case 'episodic fan-made':
+			case 'live event fan-made':
+				$stdType = 'Fan-Made';
+				break;
+			case 'game':
+				$stdType = 'Games';
+				break;
+			case 'movie interview':
+			case 'episodic interview':
+			case 'other interview':
+			case 'live event interview':
+			case 'song interview':
+				$stdType = 'Interview';
+				break;
+			case 'movie':
+				$stdType = 'Movies';
+				break;
 			case 'extra (clip)':
 				$stdType = 'Clip';
 				break;
@@ -818,6 +911,18 @@ abstract class VideoFeedIngester {
 				$stdType = 'Trailer';
 				break;
 			case 'none':
+			case 'not set':
+			case 'song sceneorsample':
+			case 'song behind the scenes':
+			case 'movie alternate version':
+			case 'games sceneorsample':
+			case 'game alternate version':
+			case 'episodic sceneorsample':
+			case 'episodic alternate version':
+			case 'other sceneorsample':
+			case 'other alternate version':
+			case 'live event sceneorsample':
+			case 'live event alternate version':
 				$stdType = '';
 				break;
 			default: $stdType = $type;

@@ -109,7 +109,11 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 
 			$elements = $item->getElementsByTagNameNS( 'http://search.yahoo.com/mrss/', 'category' );
 			if ( $elements->length > 0 ) {
-				$clipData['category'] = $elements->item(0)->textContent;
+				$clipData['category'] = $this->getCategory( $elements->item(0)->textContent );
+				if ( !empty( $clipData['category'] ) && $clipData['category'] == 'Movies' ) {
+					$clipData['type'] = 'Clip';
+				}
+
 				$clipData['name'] = $elements->item(0)->getAttribute('label');
 			}
 

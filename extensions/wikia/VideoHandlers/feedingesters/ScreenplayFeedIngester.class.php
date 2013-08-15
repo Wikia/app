@@ -89,22 +89,13 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 				$clipData['name'] = $titleName;
 
 				$clip = $clips->item($j);
-				$clipData['category'] = $clip->getElementsByTagName('TrailerType')->item(0)->textContent;
-				$clipData['type'] = $clip->getElementsByTagName('TrailerVersion')->item(0)->textContent;
+				$clipData['category'] = $this->getCategory( $clip->getElementsByTagName('TrailerType')->item(0)->textContent );
+				$clipData['type'] = $this->getStdType( $clip->getElementsByTagName('TrailerVersion')->item(0)->textContent );
 				if ( empty( $addlCategories ) ) {
 					if ( strtolower( $clipData['type'] ) == 'trailer'
-						&& ( strtolower( $clipData['category'] ) != 'video game' && stripos( $clipData['titleName'], '(VG)' ) === false ) ) {
+						&& ( strtolower( $clipData['category'] ) != 'games' && stripos( $clipData['titleName'], '(VG)' ) === false ) ) {
 						$addlCategories[] = 'Movie Trailers';
 					}
-				}
-				if ( strtolower( $clipData['category'] ) == 'not set' ) {
-					unset( $clipData['category'] );
-				}
-				if ( strtolower( $clipData['type'] ) == 'not set' ) {
-					unset( $clipData['type'] );
-				}
-				if ( strtolower( $clipData['type'] ) == 'Extra (Clip)' ) {
-					$clipData['type'] = 'Clip';
 				}
 
 				$clipData['videoId'] = $clip->getElementsByTagName('EclipId')->item(0)->textContent;
