@@ -880,9 +880,6 @@ abstract class VideoFeedIngester {
 			case 'live event behind the scenes':
 				$stdType = 'Behind the Scenes';
 				break;
-			case 'movie sceneorsample':
-				$stdType = 'Clip';
-				break;
 			case 'movie fan-made':
 			case 'game fan-made':
 			case 'song fan-made':
@@ -904,6 +901,7 @@ abstract class VideoFeedIngester {
 			case 'movie':
 				$stdType = 'Movies';
 				break;
+			case 'movie sceneorsample':
 			case 'extra (clip)':
 				$stdType = 'Clip';
 				break;
@@ -929,6 +927,54 @@ abstract class VideoFeedIngester {
 		}
 
 		return $stdType;
+	}
+
+	/**
+	 * get standard genre
+	 * @param string $genre
+	 * @return string $stdGenre
+	 */
+	public function getStdGenre( $genre ) {
+		$genre = trim( $genre );
+		switch( strtolower( $genre ) ) {
+			case 'parenting & family':
+				$stdGenre = 'Parenting';
+				break;
+			case 'health & nutrition':
+				$stdGenre = 'Nutrition';
+				break;
+			case 'technology':
+			case 'environment':
+			case 'food & drink':
+			case 'entertainment':
+			case 'house & garden':
+			case 'performing arts':
+			case 'crafts & hobbies':
+			case 'business & finance':
+			case 'first aid & safety':
+			case 'careers & education':
+			case 'sex & relationships':
+			case 'language & reference':
+			case 'cars & transportation':
+			case 'personal care & style':
+			case 'holidays & celebrations':
+			case 'religion & spirituality':
+			case 'games':
+			case 'music':
+			case 'other':
+			case 'comedy':
+			case 'travel':
+			case 'fashion':
+			case 'education':
+				$stdGenre = '';
+				break;
+			case 'sports & fitness':
+				$stdGenre = 'Fitness';
+				break;
+			default: $stdGenre = $genre;
+		}
+
+		return $stdGenre;
 	}
 
 	/**

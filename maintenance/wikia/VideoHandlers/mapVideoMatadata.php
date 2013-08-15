@@ -141,6 +141,7 @@ function mapMetadata( $videoTitle, $ingester, $data ) {
  */
 function mapMetadataRealgravity( $ingester, $data, &$metadata ) {
 	$metadata['name'] = '';
+	$metadata['genres'] = $ingester->getStdGenre( $metadata['category'] );
 	$metadata['category'] = $ingester->getCategory( $metadata['category'] );
 }
 
