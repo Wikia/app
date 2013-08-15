@@ -10,6 +10,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'licensedvideoswap' => 'Licensed Video Swap',
+	'action-licensedvideoswap' => 'swap unlicensed video',
 	'lvs-page-title' => 'Licensed Video Swap',
 	'lvs-history-page-title' => 'Licensed Video Swap History',
 	'lvs-tooltip-history' => 'Licensed Video Swap Button',
@@ -60,6 +61,7 @@ $messages['en'] = array(
 
 $messages['qqq'] = array(
 	'licensedvideoswap' => 'Licensed Video Swap short title (for special page listings)',
+	'action-licensedvideoswap' => 'Sentence fragment MW injects into the following message when a permission error occurs: "You do not have permission to <action-licensedvideoswap>"',
 	'lvs-page-title' => 'This is the page header/title (h1 tag) that is displayed at the top of the page.',
 	'lvs-history-page-title' => 'This is the LVS history page header/title (h1 tag) that is displayed at the top of the page.',
 	'lvs-tooltip-history' => 'Tooltip Licensed Video Swap Button',
