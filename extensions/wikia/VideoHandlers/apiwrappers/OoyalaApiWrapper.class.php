@@ -153,23 +153,26 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	protected function loadMetadata( array $overrideFields = array() ) {
-		if ( !isset( $overrideFields['source'] ) ) {
-			$overrideFields['source'] = $this->getSource();
+		parent::loadMetadata( $overrideFields );
+
+		$metadata = array();
+		if ( !isset( $metadata['source'] ) ) {
+			$metadata['source'] = $this->getSource();
 		}
-		if ( !isset( $overrideFields['sourceId'] ) ) {
-			$overrideFields['sourceId'] = $this->getSourceId();
+		if ( !isset( $metadata['sourceId'] ) ) {
+			$metadata['sourceId'] = $this->getSourceId();
 		}
-		if ( !isset($overrideFields['startDate']) ) {
-			$overrideFields['startDate'] = $this->getVideoStartDate();
+		if ( !isset($metadata['startDate'] ) ) {
+			$metadata['startDate'] = $this->getVideoStartDate();
 		}
-		if ( !isset($overrideFields['expirationDate']) ) {
-			$overrideFields['expirationDate'] = $this->getVideoExpirationDate();
+		if ( !isset($metadata['expirationDate'] ) ) {
+			$metadata['expirationDate'] = $this->getVideoExpirationDate();
 		}
-		if ( !isset( $overrideFields['pageCategories'] ) ) {
-			$overrideFields['pageCategories'] = $this->getPageCategories();
+		if ( !isset( $metadata['pageCategories'] ) ) {
+			$metadata['pageCategories'] = $this->getPageCategories();
 		}
 
-		parent::loadMetadata( $overrideFields );
+		$this->metadata = array_merge( $this->metadata, $metadata );
 	}
 
 	protected function getOriginalDescription() {

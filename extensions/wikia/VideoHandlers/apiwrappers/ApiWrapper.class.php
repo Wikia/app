@@ -265,37 +265,33 @@ abstract class ApiWrapper {
 		if ( !isset($metadata['videoId']) ) {
 			$metadata['videoId'] = $this->videoId;
 		}
-		if ( !isset($metadata['title']) ) {
-			$metadata['title'] = $this->getTitle();
-		}
-		if ( !isset($metadata['published']) ) {
-			$metadata['published'] = $this->getVideoPublished();
-		}
-		if ( !isset($metadata['category']) ) {
-			$metadata['category'] = $this->getVideoCategory();
-		}
-		if ( !isset($metadata['canEmbed']) ) {
-			$metadata['canEmbed'] = $this->canEmbed();
+		// for providers that use diffrent video id for embeded code
+		if ( !isset($metadata['altVideoId']) ) {
+			$metadata['altVideoId'] = $this->getAltVideoId();
 		}
 		if ( !isset($metadata['hd']) ) {
 			$metadata['hd'] = $this->isHdAvailable();
 		}
-		if ( !isset($metadata['keywords']) ) {
-			$metadata['keywords'] = $this->getVideoKeywords();
-		}
 		if ( !isset($metadata['duration']) ) {
 			$metadata['duration'] = $this->getVideoDuration();
 		}
-		// set to default if empty
-		if ( empty( $metadata['aspectRatio'] ) ) {
-			$metadata['aspectRatio'] = $this->getAspectRatio();
+		if ( !isset($metadata['published']) ) {
+			$metadata['published'] = $this->getVideoPublished();
 		}
 		if ( !isset($metadata['description']) ) {
 			$metadata['description'] = $this->getOriginalDescription();
 		}
-		// for providers that use diffrent video id for embeded code
-		if ( !isset($metadata['altVideoId']) ) {
-			$metadata['altVideoId'] = $this->getAltVideoId();
+		if ( !isset( $metadata['name'] ) ) {
+			$metadata['name'] = $this->getVideoName();
+		}
+		if ( !isset( $metadata['type'] ) ) {
+			$metadata['type'] = $this->getVideoType();
+		}
+		if ( !isset($metadata['category']) ) {
+			$metadata['category'] = $this->getVideoCategory();
+		}
+		if ( !isset($metadata['keywords']) ) {
+			$metadata['keywords'] = $this->getVideoKeywords();
 		}
 		if ( !isset($metadata['industryRating']) ) {
 			$metadata['industryRating'] = $this->getIndustryRating();
@@ -306,14 +302,14 @@ abstract class ApiWrapper {
 		if ( !isset( $metadata['ageRequired'] ) ) {
 			$metadata['ageRequired'] = $this->getAgeRequired();
 		}
+		if ( !isset($metadata['provider']) ) {
+			$metadata['provider'] = $this->getProvider();
+		}
 		if ( !isset($metadata['language']) ) {
 			$metadata['language'] = $this->getLanguage();
 		}
 		if ( !isset( $metadata['subtitle'] ) ) {
 			$metadata['subtitle'] = $this->getSubtitle();
-		}
-		if ( !isset($metadata['provider']) ) {
-			$metadata['provider'] = $this->getProvider();
 		}
 		if ( !isset( $metadata['genres'] ) ) {
 			$metadata['genres'] = $this->getGenres();
@@ -333,17 +329,24 @@ abstract class ApiWrapper {
 		if ( !isset( $metadata['episode'] ) ) {
 			$metadata['episode'] = $this->getEpisode();
 		}
-		if ( !isset( $metadata['resolution'] ) ) {
-			$metadata['resolution'] = $this->getResolution();
-		}
 		if ( !isset( $metadata['characters'] ) ) {
 			$metadata['characters'] = $this->getCharacters();
 		}
-		if ( !isset( $metadata['type'] ) ) {
-			$metadata['type'] = $this->getVideoType();
+		if ( !isset( $metadata['resolution'] ) ) {
+			$metadata['resolution'] = $this->getResolution();
 		}
-		if ( !isset( $metadata['name'] ) ) {
-			$metadata['name'] = $this->getVideoName();
+		// set to default if empty
+		if ( empty( $metadata['aspectRatio'] ) ) {
+			$metadata['aspectRatio'] = $this->getAspectRatio();
+		}
+		if ( empty( $metadata['expirationDate'] ) ) {
+			$metadata['expirationDate'] = $this->getVideoExpirationDate();
+		}
+		if ( !isset($metadata['title']) ) {
+			$metadata['title'] = $this->getTitle();
+		}
+		if ( !isset($metadata['canEmbed']) ) {
+			$metadata['canEmbed'] = $this->canEmbed();
 		}
 
 		$this->metadata = $metadata;

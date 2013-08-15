@@ -176,6 +176,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 			throw new WikiaException( wfMessage("videohandler-error-restricted-video")->text() );
 		}
 
+		$metadata = array();
 		if ( !isset($metadata['uniqueName']) ) {
 			$metadata['uniqueName'] = $this->getUniqueName();
 		}
