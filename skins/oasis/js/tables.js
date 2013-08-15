@@ -1,3 +1,22 @@
+// Use the table overflow technique (VE-164)
+jQuery(function( $ ) {
+	var $article = $( '#WikiaArticle' );
+
+	function scan() {
+		$article.find( '.table-wrapper' ).each(function() {
+			var $wrapper = $( this );
+
+			$wrapper.toggleClass( 'overflow',
+				$wrapper.children( 'table' ).width() > $article.width() );
+		});
+	}
+
+	$( window ).on( 'resize', $.debounce( 100, scan ) );
+	scan();
+});
+
+// TODO: get rid of everything below here once the old table handling method
+// is completely phased out (have to wait for article caches to update).
 (function($) {
 var WikiaWideTables = {
 	settings: {
@@ -101,12 +120,13 @@ var WikiaWideTables = {
 		this.article.find("table").each(function() {
 			var table = $(this);
 
-			if (
-				// Table is using the overflow technique (VE-164)
-				table.parent( '.table-wrapper' ).length ||
-				//If the table isn't very wide and doesn't have class="popout", ignore it
-				( table.width() <= that.article.width() && !table.hasClass('popout') )
-			) {
+			//Ignore tables using the overflow method
+			if (table.parent( '.table-wrapper' ).length ) {
+				return;
+			}
+
+			//If the table isn't very wide and doesn't have class="popout", ignore it
+			if (table.width() <= that.article.width() && !table.hasClass('popout')) {
 				return;
 			}
 
