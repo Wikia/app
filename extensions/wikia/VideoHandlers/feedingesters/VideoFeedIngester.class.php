@@ -765,8 +765,8 @@ abstract class VideoFeedIngester {
 	 * @return string $category
 	 */
 	public function getCategory( $cat ) {
-		$cat = strtolower( trim( $cat ) );
-		switch( $cat ) {
+		$cat = trim( $cat );
+		switch( strtolower( $cat ) ) {
 			case 'movie':
 			case 'movies':
 			case 'movie interview':
@@ -793,7 +793,57 @@ abstract class VideoFeedIngester {
 			case 'video game':
 				$category = 'Games';
 				break;
-			default: $category = 'Others';
+			case 'none':
+				$category = '';
+				break;
+			default: $category = $cat;
+		}
+
+		return $category;
+	}
+
+	/**
+	 * get standard type
+	 * @param string $type
+	 * @return string $stdType
+	 */
+	public function getStdType( $type ) {
+		$type = trim( $type );
+		switch( strtolower( $type ) ) {
+			case 'movies':
+			case 'extra (clip)':
+				$stdType = 'Clip';
+				break;
+			case 'trailer':
+				$stdType = 'Trailer';
+				break;
+			case 'none':
+				$stdType = '';
+				break;
+			default: $stdType = $type;
+		}
+
+		return $stdType;
+	}
+
+	/**
+	 * get standard page category
+	 * @param string $cat
+	 * @return string $category
+	 */
+	public function getStdPageCategory( $cat ) {
+		$cat = trim( $cat );
+		switch( strtolower( $cat ) ) {
+			case 'clip':
+				$category = 'Clips';
+				break;
+			case 'trailer':
+				$category = 'Trailers';
+				break;
+			case 'none':
+				$category = '';
+				break;
+			default: $category = $cat;
 		}
 
 		return $category;

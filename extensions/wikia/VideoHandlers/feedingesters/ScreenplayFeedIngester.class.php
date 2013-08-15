@@ -86,6 +86,8 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 					'published' => strtotime( $dateAdded ),
 				);
 
+				$clipData['name'] = $titleName;
+
 				$clip = $clips->item($j);
 				$clipData['category'] = $clip->getElementsByTagName('TrailerType')->item(0)->textContent;
 				$clipData['type'] = $clip->getElementsByTagName('TrailerVersion')->item(0)->textContent;
@@ -116,18 +118,28 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 				$clipData['duration'] = $clip->getElementsByTagName('RunTime')->item(0)->textContent;
 
 				// check Trailer Rating first. if not found, check MPAA Rating
-				if ( !empty( $clip->getElementsByTagName('TrailerRating')->item(0)->textContent ) ) {
-					$clipData['industryRating'] = $this->getIndustryRating( $clip->getElementsByTagName('TrailerRating')->item(0)->textContent );
+				$trailerRating = $this->getIndustryRating( $clip->getElementsByTagName('TrailerRating')->item(0)->textContent );
+				if ( !empty( $trailerRating ) && $trailerRating != 'NR' ) {
+					$clipData['industryRating'] = $trailerRating;
 				} else if ( !empty( $clip->getElementsByTagName('MPAARating')->item(0)->textContent ) ) {
 					$clipData['industryRating'] = $this->getIndustryRating( $clip->getElementsByTagName('MPAARating')->item(0)->textContent );
 				}
 
+				// set age required if ageGate is set
 				$ageGate = $clip->getElementsByTagName('AgeGate')->item(0)->textContent;
-				$clipData['ageGate'] = ( $ageGate && strtolower( $ageGate ) == "true" ) ? 1 : 0;
-				// set age required to 18 if the age gate is set
-				$clipData['ageRequired'] = empty( $clipData['ageGate'] ) ? 0 : 18;
+				if  ( $ageGate && strtolower( $ageGate ) == "true" ) {
+					$clipData['ageGate'] = 1;
+					$clipData['ageRequired'] = $this->getAgeRequired( $clipData['industryRating'] );
+					// set age required to 18 if ageRequired is empty
+					if ( empty( $clipData['ageRequired'] ) ) {
+						$clipData['ageRequired'] = 18;
+					}
+				} else {
+					$clipData['ageGate'] = 0;
+					$clipData['ageRequired'] = 0;
+				}
 
-				$clipData['language'] = $this->getCldrCode( $clip->getElementsByTagName('Language')->item(0)->textContent );
+				$clipData['language'] = $clip->getElementsByTagName('Language')->item(0)->textContent;
 				$clipData['jpegBitrateCode'] = ScreenplayApiWrapper::MEDIUM_JPEG_BITRATE_ID;
 				$clipData['streamUrl'] = '';
 				$clipData['streamHdUrl'] = '';
@@ -234,10 +246,18 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		wfProfileIn( __METHOD__ );
 
 		$categories[] = 'Screenplay, Inc.';
+		$categories[] = $data['name'];
 
 		if ( !empty( $data['type'] ) ) {
-			$categories[] = $data['type'];
+			$categories[] = $this->getStdPageCategores( $data['type'] );
 		}
+
+		// add language
+		if ( !empty( $data['language'] ) && strtolower( $data['language'] ) != 'english' ) {
+			$categories[] = 'International';
+			$categories[] = $data['language'];
+		}
+
 		if ( stripos( $data['titleName'], '(VG)' ) !== false ) {
 			$categories[] = 'Games';
 		} else {

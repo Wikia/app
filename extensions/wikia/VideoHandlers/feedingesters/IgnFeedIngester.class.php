@@ -86,9 +86,14 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$clipData['duration'] =  empty( $video['metadata']['duration'] ) ?  '' : $video['metadata']['duration'];
 			$clipData['thumbnail'] =  $video['metadata']['thumbnail'];
 			$clipData['videoUrl'] =  $video['metadata']['url'];
-			$clipData['type'] = $video['metadata']['classification'];
+
+			$clipData['type'] = '';
+			if ( !empty( $video['metadata']['classification'] ) ) {
+				$clipData['type'] = $this->getStdType( $video['metadata']['classification'] );
+			}
+
 			$clipData['gameContent'] = $video['metadata']['gameContent'];
-			$clipData['category'] = empty( $clipData['gameContent'] ) ? 'Entertainment' : 'Gaming';
+			$clipData['category'] = empty( $clipData['gameContent'] ) ? 'Entertainment' : 'Games';
 			$clipData['hd'] = empty( $video['metadata']['highDefinition'] ) ? 0 : 1;
 			$clipData['provider'] = 'ign';
 

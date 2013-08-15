@@ -292,21 +292,21 @@ class IvaFeedIngester extends VideoFeedIngester {
 					if ( empty( $videoAsset['LanguageSpoken']['LanguageName'] ) ) {
 						$clipData['language'] = '';
 					} else {
-						$clipData['language'] = $this->getCldrCode( $videoAsset['LanguageSpoken']['LanguageName'] );
+						$clipData['language'] = $videoAsset['LanguageSpoken']['LanguageName'];
 					}
 
 					// get subtitle
 					if ( empty( $videoAsset['LanguageSubtitled']['LanguageName'] ) ) {
 						$clipData['subtitle'] = '';
 					} else {
-						$clipData['subtitle'] = $this->getCldrCode( $videoAsset['LanguageSubtitled']['LanguageName'] );
+						$clipData['subtitle'] = $videoAsset['LanguageSubtitled']['LanguageName'];
 					}
 
 					// get target country
 					if ( empty( $videoAsset['CountryTarget']['CountryName'] ) ) {
 						$clipData['targetCountry'] = '';
 					} else {
-						$clipData['targetCountry'] = $this->getCldrCode( $videoAsset['CountryTarget']['CountryName'], 'country' );
+						$clipData['targetCountry'] = $videoAsset['CountryTarget']['CountryName'];
 					}
 
 					$clipData['name'] = empty( $videoParams['keyword'] ) ? '' : $videoParams['keyword'];
@@ -460,9 +460,17 @@ class IvaFeedIngester extends VideoFeedIngester {
 		$categories[] = $data['name'];
 		$categories[] = $data['series'];
 		$categories[] = $data['category'];
-		if ( ( !empty( $data['language'] ) && $data['language'] != 'en' )
-			|| ( !empty( $data['subtitle'] ) && $data['subtitle'] != 'en' ) ) {
+
+		// add language
+		if ( !empty( $data['language'] ) && strtolower( $data['language'] ) != 'english' ) {
 			$categories[] = 'International';
+			$categories[] = $data['language'];
+		}
+
+		// add subtitle
+		if ( !empty( $data['subtitle'] ) && strtolower( $data['subtitle'] ) != 'english' ) {
+			$categories[] = 'International';
+			$categories[] = $data['subtitle'];
 		}
 
 		wfProfileOut( __METHOD__ );

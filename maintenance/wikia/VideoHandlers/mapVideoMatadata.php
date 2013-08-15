@@ -10,13 +10,14 @@
  * map metadata
  * @global int $skip
  * @global array $categories
+ * @global array $extraMapping
  * @param string $videoTitle
  * @param VideoFeedIngester $ingester
  * @param array $data
  * @return array|false $metadata
  */
 function mapMetadata( $videoTitle, $ingester, $data ) {
-	global $skip, $categories;
+	global $skip, $categories, $extraMapping;
 
 	// default page categories
 	if ( empty( $data['pageCategories'] ) ) {
@@ -28,7 +29,7 @@ function mapMetadata( $videoTitle, $ingester, $data ) {
 	// get name
 	if ( empty( $data['name'] ) && !empty( $data['keywords'] ) ) {
 		$keywords = array();
-		foreach ( explode( ',' , $data['keywords'] ) as $key => $keyword ) {
+		foreach ( explode( ',' , $data['keywords'] ) as $keyword ) {
 			$keyword = trim( $keyword );
 			$keywords[] = $keyword;
 
@@ -80,7 +81,7 @@ function mapMetadata( $videoTitle, $ingester, $data ) {
 
 	// get age required
 	if ( empty( $data['ageRequired'] ) && !empty( $data['ageGate'] ) && is_numeric( $data['ageGate'] ) ) {
-		if ( $data['ageGate'] > 10 ) {
+		if ( $data['ageGate'] > 1 ) {
 			$data['ageRequired'] = $data['ageGate'];
 		} else if ( !empty( $data['industryRating'] ) ) {
 			$data['ageRequired'] = $ingester->getAgeRequired( $data['industryRating'] );
@@ -91,21 +92,6 @@ function mapMetadata( $videoTitle, $ingester, $data ) {
 
 	// get age gate
 	$data['ageGate'] = empty( $data['ageRequired'] ) ? 0 : 1;
-
-	// get language
-	if ( !empty( $data['language'] ) ) {
-		$data['language'] = $ingester->getCldrCode( $data['language'] );
-	}
-
-	// get subtitle
-	if ( !empty( $data['subtitle'] ) ) {
-		$data['subtitle'] = $ingester->getCldrCode( $data['subtitle'] );
-	}
-
-	// get country code
-	if ( !empty( $data['targetCountry'] ) ) {
-		$data['targetCountry'] = $ingester->getCldrCode( $data['targetCountry'], 'country' );
-	}
 
 	$errorMsg = '';
 	$metadata = $ingester->generateMetadata( $data, $errorMsg );
@@ -119,8 +105,48 @@ function mapMetadata( $videoTitle, $ingester, $data ) {
 	$metadata['title'] = $data['title'];
 	$metadata['canEmbed'] = $data['canEmbed'];
 
+	// map additional metadata (per provider)
+	if ( in_array( $metadata['provider'], $extraMapping ) ) {
+		$function = 'mapMetadata'.ucfirst( $metadata['provider'] );
+		$function( $data, $metadata );
+	}
+
 	return $metadata;
 }
+
+function mapMetadataRealgravity( $data, &$metadata ) {
+	$metadata['name'] = '';
+}
+
+function mapMetadataIva( $data, &$metadata ) {
+	global $countryNames, $languageNames;
+
+	// get language
+	if ( !empty( $metadata['language'] ) && !empty( $languageNames ) && array_key_exists( $metadata['language'], $languageNames ) ) {
+		$metadata['language'] = $languageNames[$metadata['language']];
+	}
+
+	// get subtitle
+	if ( !empty( $metadata['subtitle'] ) && !empty( $languageNames ) && array_key_exists( $metadata['subtitle'], $languageNames ) ) {
+		$metadata['subtitle'] = $languageNames[$metadata['subtitle']];
+	}
+
+	// get country code
+	if ( !empty( $metadata['targetCountry'] ) && !empty( $countryNames ) && array_key_exists( $metadata['targetCountry'], $countryNames ) ) {
+		$metadata['targetCountry'] = $countryNames[$metadata['targetCountry']];
+	}
+
+	// add page categories to metadata
+	$metadata['pageCategories'] = empty( $data['pageCategories'] ) ? '' : $data['pageCategories'];
+}
+
+function mapMetadataIgn( $data, &$metadata ) {
+	if ( !empty( $metadata['category'] ) && strtolower( $metadata['category'] != 'none' ) ) {
+		$metadata['type'] = $metadata['category'];
+	}
+	$metadata['category'] = '';
+}
+
 
 // ----------------------------- Main ------------------------------------
 
@@ -163,6 +189,12 @@ if ( empty( $ingestionData ) ) {
 
 // keywords for page categories
 $categories = array( 'International', 'Foreign', 'Movies', 'TV', 'Gaming' );
+
+// providers that require extra mapping
+$extraMapping = array( 'iva', 'realgravity', 'ign' );
+
+// include cldr extension for language code ($languageNames), country code ($countryNames)
+include( dirname( __FILE__ ).'/../../../cldr/CldrNames/CldrNamesEn.php' );
 
 $dbw = wfGetDB( DB_MASTER );
 
@@ -234,18 +266,48 @@ while ( $row = $dbw->fetchObject($result) ) {
 		continue;
 	}
 
+	// set provider
+	if ( empty( $metadata['provider'] ) ) {
+		$metadata['provider'] = $provider;
+	}
+
 	// map metadata
 	$newMetadata = mapMetadata( $name, $ingester, $metadata );
 	if ( $newMetadata === false ) {
 		continue;
 	}
 
-	echo "\n\tMetadata:\n";
-	foreach ( $metadata as $key => $value ) {
-		echo "\t\t$key: $value\n";
+	// for debugging
+	//echo "\n\tMetadata:\n";
+	//foreach ( $metadata as $key => $value ) {
+	//	echo "\t\t$key: $value\n";
+	//}
+
+	if ( !$dryRun ) {
+		$serializedMeta = serialize( $newMetadata );
+
+		if ( wfReadOnly() ) {
+			die( "Read only mode.\n" );
+		}
+
+		$dbw->begin();
+
+		// update database
+		$dbw->update( 'image',
+			array( 'img_metadata' => $serializedMeta ),
+			array( 'img_name' => $name ),
+			__METHOD__
+		);
+
+		$dbw->commit();
+
+		// clear cache
+		$file->purgeEverything();
 	}
 
-	echo "\n\tNEW Metadata:\n";
+	echo "...DONE.\n";
+
+	echo "\tNEW Metadata:\n";
 	$fields = array_unique( array_merge( array_keys( $newMetadata ), array_keys( $metadata ) ) );
 	foreach ( $fields as $field ) {
 		if ( !isset( $newMetadata[$field] ) ) {
@@ -259,30 +321,7 @@ while ( $row = $dbw->fetchObject($result) ) {
 		}
 	}
 
-	if ( !$dryRun ) {
-		$newMetadata = serialize( $newMetadata );
-
-		if ( wfReadOnly() ) {
-			die( "Read only mode.\n" );
-		}
-
-		$dbw->begin();
-
-		// update database
-		$dbw->update( 'image',
-			array( 'img_metadata' => $newMetadata ),
-			array( 'img_name' => $name ),
-			__METHOD__
-		);
-
-		$dbw->commit();
-
-		// clear cache
-		$file->purgeEverything();
-	}
-
 	$success++;
-	echo "Name: $name...DONE.\n";
 }
 
 echo "Total Videos: $total, Success: $success, Failed: $failed, Skipped: $skip.\n\n";
