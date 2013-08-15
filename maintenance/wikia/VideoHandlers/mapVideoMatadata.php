@@ -124,8 +124,9 @@ function mapMetadata( $videoTitle, $ingester, $data ) {
 	$metadata['canEmbed'] = $data['canEmbed'];
 
 	// map additional metadata (per provider)
-	if ( in_array( $metadata['provider'], $extraMapping ) ) {
-		$function = 'mapMetadata'.ucfirst( $metadata['provider'] );
+	$provider = strtolower( $metadata['provider'] );
+	if ( in_array( $provider, $extraMapping ) ) {
+		$function = 'mapMetadata'.ucfirst( $provider );
 		$function( $ingester, $data, $metadata );
 	}
 
