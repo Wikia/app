@@ -479,4 +479,52 @@ class OoyalaApiWrapper extends ApiWrapper {
 		return '';
 	}
 
+	/**
+	 * get resolution
+	 * @return string
+	 */
+	protected function getResolution() {
+		if ( !empty( $this->metadata['resolution'] ) ) {
+			return $this->metadata['resolution'];
+		}
+
+		if ( !empty( $this->interfaceObj['metadata']['resolution'] ) ) {
+			return $this->interfaceObj['metadata']['resolution'];
+		}
+
+		return '';
+	}
+
+	/**
+	 * get video type
+	 * @return string
+	 */
+	protected function getVideoType() {
+		if ( !empty( $this->metadata['type'] ) ) {
+			return $this->metadata['type'];
+		}
+
+		if ( !empty( $this->interfaceObj['metadata']['type'] ) ) {
+			return $this->interfaceObj['metadata']['type'];
+		}
+
+		return '';
+	}
+
+	/**
+	 * get video name
+	 * @return string
+	 */
+	protected function getVideoName() {
+		if ( !empty( $this->metadata['name'] ) ) {
+			return $this->metadata['name'];
+		}
+
+		if ( !empty( $this->interfaceObj['metadata']['name'] ) ) {
+			return $this->interfaceObj['metadata']['name'];
+		}
+
+		return '';
+	}
+
 }
