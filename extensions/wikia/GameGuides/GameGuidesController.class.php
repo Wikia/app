@@ -17,22 +17,31 @@ class GameGuidesController extends WikiaController {
 
 	const NEW_API_VERSION = 1;
 
+	const ASSET_FILE = 'GameGuidesAssets.json';
+	const CB_FILE = 'GameGuidesCacheBuster';
+
 	/**
 	 * @var $mModel GameGuidesModel
 	 */
 	private $mModel = null;
 	private $mPlatform = null;
-	
+	private $assetsPath = null;
+	private $cacheBusterPath = null;
+
 	function init() {
 		$requestedVersion = $this->request->getInt( 'ver', self::API_VERSION );
 		$requestedRevision = $this->request->getInt( 'rev', self::API_REVISION );
 		
 		if ( $requestedVersion != self::API_VERSION || $requestedRevision != self::API_REVISION ) {
-			throw new  GameGuidesWrongAPIVersionException();
+			throw new GameGuidesWrongAPIVersionException();
 		}
 		
-		$this->mModel = (new GameGuidesModel);
+		$this->mModel = new GameGuidesModel();
 		$this->mPlatform = $this->request->getVal( 'os' );
+		$path = $this->wg->ExtensionsPath . '/wikia/GameGuides/assets/';
+
+		$this->assetsPath = $path . self::ASSET_FILE;
+		$this->cacheBusterPath = $path . self::CB_FILE;
 	}
 	
 	/*
@@ -262,21 +271,16 @@ class GameGuidesController extends WikiaController {
 	 * it returns a page and all 'global' assets
 	 */
 	public function renderFullPage(){
+		global $IP;
+
 		wfProfileIn( __METHOD__ );
 
-		$resources = $this->sendRequest( 'AssetsManager', 'getMultiTypePackage', array(
-			'scripts' => 'gameguides_js',
-			'styles' => '//extensions/wikia/GameGuides/css/GameGuides.scss'
-		) );
+		$resources = json_decode( file_get_contents( $IP . $this->assetsPath ) );
 
-		$js = $resources->getVal( 'scripts', '' );
 		$scripts = '';
-
-		foreach( $js as $s ) {
+		foreach( $resources->scripts as $s ) {
 			$scripts .= $s;
 		}
-
-		$styles = $resources->getVal( 'styles', '' );
 
 		$page = $this->sendSelfRequest( 'getPage', array(
 			'page' => $this->getVal( 'page')
@@ -284,7 +288,7 @@ class GameGuidesController extends WikiaController {
 
 		$this->response->setVal( 'html', $page->getVal( 'html' ) );
 		$this->response->setVal( 'js', $scripts );
-		$this->response->setVal( 'css', $styles );
+		$this->response->setVal( 'css', $resources->styles );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -296,19 +300,17 @@ class GameGuidesController extends WikiaController {
 	 * @responseParam Integer cb current style version number
 	 */
 	public function getResourcesUrl(){
+		global $IP;
+
 		$this->response->setFormat( 'json' );
 
+		$cacheBuster = file_get_contents( $IP . $this->cacheBusterPath );
+
 		$this->response->setVal( 'url',
-			AssetsManager::getInstance()->getMultiTypePackageURL(
-				array(
-					'scripts' => 'gameguides_js',
-					'styles' => '//extensions/wikia/GameGuides/css/GameGuides.scss'
-				),
-				true
-			)
+			$this->assetsPath . '?cb=' . $cacheBuster
 		);
 
-		$this->response->setVal( 'cb', (string) $this->wg->StyleVersion );
+		$this->response->setVal( 'cb', $cacheBuster );
 	}
 
 	/**
