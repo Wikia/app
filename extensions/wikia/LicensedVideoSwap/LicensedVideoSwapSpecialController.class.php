@@ -9,68 +9,65 @@
 class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 	public function __construct() {
-		parent::__construct( 'LicensedVideoSwap', '', false );
+		parent::__construct( 'LicensedVideoSwap', 'licensedvideoswap', true );
 	}
 
 	/**
 	 * LicensedVideoSwap page
 	 *
-	 * @requestParam string sort [recent/popular/trend]
 	 * @requestParam integer currentPage
-	 * @responseParam string selectedSort
-	 * @responseParam array sortOptions
 	 * @responseParam integer currentPage
 	 * @responseParam integer pages
 	 * @responseParam array videoList
 	 */
 	public function index() {
+		$user = $this->getUser();
+		if ( !$user->isAllowed( 'licensedvideoswap' ) ) {
+			$this->displayRestrictionError();
+			return false;
+		}
 
-		// Add assets
+		// Add assets to both LVS and LVS/History
 		// TODO: move this to Assets Manager once we release this
 		$this->response->addAsset( 'licensed_video_swap_js' );
 		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/css/LicensedVideoSwap.scss' );
-		$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/css/Dropdown.scss' );
 
-		// Setup messages for JS
-		// TODO: once 'back to roots' branch is merged, use JSMessages::enqueuePackage
-		F::build('JSMessages')->enqueuePackage('LVS', JSMessages::EXTERNAL);
-
-		// See if there is a subpage request to handle
+		// See if there is a subpage request to handle (i.e. /History)
 		$subpage = $this->getSubpage();
+
+		if ( !$this->app->checkSkin( 'oasis' ) ) {
+			$oasisURL = SpecialPage::getTitleFor( 'LicensedVideoSwap', $subpage )->getLocalURL( 'useskin=wikia' );
+			$oasisLink = Xml::element( 'a', [ 'href' => $oasisURL ], wfMessage( 'lvs-click-here' ) );
+			$this->wg->out->addHTML( wfMessage( 'lvs-no-monobook-support' )->rawParams( $oasisLink )->parse() );
+			$this->skipRendering();
+			return true;
+		}
+
 		if ( $subpage ) {
 			$this->forward( __CLASS__, $subpage );
 			return true;
 		}
+
+		// Setup messages for JS
+		JSMessages::enqueuePackage('LVS', JSMessages::EXTERNAL);
 
 		$this->wg->SupressPageSubtitle = true;
 
 		// update h1 text and <title> element
 		$this->getContext()->getOutput()->setPageTitle( wfMessage('lvs-page-title')->plain() );
 
-		$selectedSort = $this->getVal( 'sort', 'recent' );
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
 		// list of videos
 		$helper = new LicensedVideoSwapHelper();
 
 		// Get the list of videos that have suggestions
-		$this->videoList = $helper->getRegularVideoList( $selectedSort, $currentPage );
+		$this->videoList = $helper->getRegularVideoList( 'recent', $currentPage );
 		$this->thumbWidth = LicensedVideoSwapHelper::THUMBNAIL_WIDTH;
 		$this->thumbHeight = LicensedVideoSwapHelper::THUMBNAIL_HEIGHT;
 
 		// Set up pagination
-		$this->pagination = ''; //$helper->getPagination( $currentPage, $selectedSort );
-
-		// sort options
-		$videoHelper = new VideoHandlerHelper();
-		$options = $videoHelper->getSortOptions();
-		$this->contentHeaderSortOptions = array(
-			'label' =>  wfMessage('specialvideos-sort-by')->text(), // TODO: abstract this message
-			'selectedSort' => $selectedSort,
-			'sortOptions' => $videoHelper->getTemplateSelectOptions( $options, $selectedSort ),
-			'sortMsg' => $options[$selectedSort],
-			'containerId' => 'sorting-dropdown',
-		);
+		$this->pagination = ''; //$helper->getPagination( $currentPage, 'recent' );
 	}
 
 	/**
@@ -78,9 +75,19 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 */
 	public function history() {
 		$this->getContext()->getOutput()->setPageTitle( wfMessage('lvs-history-page-title')->text() );
-		$this->getContext()->getOutput()->setSubtitle( Wikia::link(SpecialPage::getTitleFor("LicensedVideoSwap"), wfMessage('lvs-page-header-back-link')->plain(), array('accesskey' => 'c'), array(), 'known') );
 
-		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/js/lvsHistoryPage.js' );
+		// Get the user preference skin, not the current skin of the page
+		$skin = F::app()->wg->User->getOption( 'skin' );
+
+		// for monobook users, specify wikia skin in querystring
+		$queryArr = [];
+		if( $skin == "monobook" ) {
+			$queryArr["useskin"] = "wikia";
+		}
+
+		$this->getContext()->getOutput()->setSubtitle( Wikia::link(SpecialPage::getTitleFor("LicensedVideoSwap"), wfMessage('lvs-page-header-back-link')->plain(), array('accesskey' => 'c'), $queryArr, 'known') );
+
+		$this->recentChangesLink = Wikia::link( SpecialPage::getTitleFor( "RecentChanges" ) );
 		$helper = new LicensedVideoSwapHelper();
 		$this->videos = $helper->getUndoList( $this->getContext() );
 	}
@@ -111,7 +118,6 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * swap video
 	 * @requestParam string videoTitle
 	 * @requestParam string newTitle
-	 * @requestParam string sort [recent/popular/trend]
 	 * @requestParam integer currentPage
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
@@ -241,22 +247,15 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// TODO: send request for tracking
 
-		$selectedSort = $this->getVal( 'sort', 'recent' );
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
 		// get video list
 		$use_master = true;
-		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage, $use_master );
+		$videoList = $helper->getRegularVideoList( 'recent', $currentPage, $use_master );
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
-		//$this->html .= $helper->getPagination( $currentPage, $selectedSort );
+		//$this->html .= $helper->getPagination( $currentPage, 'recent' );
 		$this->result = 'ok';
-
-		$fileOptions = array(
-			'href' => $newFile->getTitle()->escapeFullURL(),
-			'target' => '_blank',
-		);
-		$fileLink = Xml::element( 'a', $fileOptions, wfMessage( 'lvs-file-link-text' )->text() );
 
 		$undoOptions = array(
 			'class' => 'undo',
@@ -266,13 +265,12 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		);
 		$undo = Xml::element( 'a', $undoOptions, wfMessage( 'lvs-undo-swap' )->text() );
 
-		$this->msg = wfMessage( 'lvs-swap-video-success' )->rawParams( $fileLink, $undo )->parse();
+		$this->msg = wfMessage( 'lvs-swap-video-success' )->rawParams( $undo )->parse();
 	}
 
 	/**
 	 * keep video
 	 * @requestParam string videoTitle
-	 * @requestParam string sort [recent/popular/trend]
 	 * @requestParam integer currentPage
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
@@ -316,15 +314,14 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		);
 		$helper->setPageStatusKeep( $articleId, $value );
 
-		$selectedSort = $this->getVal( 'sort', 'recent' );
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
 		// Get list video of non-premium videos available to swap
 		$use_master = true;
-		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage, $use_master );
+		$videoList = $helper->getRegularVideoList( 'recent', $currentPage, $use_master );
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
-		//$this->html .= $helper->getPagination( $currentPage, $selectedSort );
+		//$this->html .= $helper->getPagination( $currentPage, 'recent' );
 		$this->result = 'ok';
 
 		$undoOptions = array(
@@ -340,7 +337,6 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * restore video after swapping or keeping it
 	 * @requestParam string videoTitle
 	 * @requestParam string newTitle
-	 * @requestParam string sort [recent/popular/trend]
 	 * @requestParam integer currentPage
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
@@ -422,15 +418,14 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			$helper->addLog( $file->getTitle(), 'licensedvideoswap_restore', $reason );
 		}
 
-		$selectedSort = $this->getVal( 'sort', 'recent' );
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
 		// get video list
 		$use_master = true;
-		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage, $use_master );
+		$videoList = $helper->getRegularVideoList( 'recent', $currentPage, $use_master );
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
-		//$this->html .= $helper->getPagination( $currentPage, $selectedSort );
+		//$this->html .= $helper->getPagination( $currentPage, 'recent' );
 		$this->result = 'ok';
 		$this->msg = wfMessage( 'lvs-restore-video-success' )->text();
 	}
@@ -476,15 +471,4 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->thumbWidth = LicensedVideoSwapHelper::THUMBNAIL_WIDTH;
 		$this->thumbHeight = LicensedVideoSwapHelper::THUMBNAIL_HEIGHT;
 	}
-
-	public function contentHeaderSort() {
-		$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_MUSTACHE);
-
-		$this->label = $this->getVal('label');
-		$this->sortMsg = $this->getVal('sortMsg');
-		$this->sortOptions = $this->getVal('sortOptions');
-		$this->containerId = $this->getVal('containerId');
-		$this->blankImgUrl = $this->wg->BlankImgUrl;
-	}
-
 }
