@@ -47,9 +47,11 @@ window.addEventListener('DOMContentLoaded', function () {
 				fllSite.addEventListener(clickEvent, function(event){
 					event.preventDefault();
 					event.stopPropagation();
-					cookies.set('mobilefullsite', 'true');
 
-					qs().setVal('useskin', this.getAttribute('data-skin')).addCb().goTo();
+					var skin = this.getAttribute('data-skin');
+
+					cookies.set('useskin', skin);
+					qs().setVal('useskin', skin).addCb().goTo();
 				});
 			}
 
