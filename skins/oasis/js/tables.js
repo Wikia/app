@@ -2,11 +2,13 @@
 jQuery(function( $ ) {
 	var $article = $( '#WikiaArticle' );
 
+	// Scans tables inside of the article and applies overflow hint styles
+	// on any tables that are wider than the article content area.
 	function scan() {
 		$article.find( '.table-wrapper' ).each(function() {
 			var $wrapper = $( this );
 
-			$wrapper.toggleClass( 'table-overflow-hint',
+			$wrapper.toggleClass( 'table-scrollable',
 				$wrapper.find( 'table' ).width() > $article.width() );
 		});
 	}

@@ -2067,7 +2067,7 @@ class Wikia {
 	public static function onParserAfterTidy( &$parser, &$text ) {
 		wfProfileIn( __METHOD__ );
 
-		// Wrap tables in a div so we can properly control their overflow
+		// Wrap tables so we can properly control their overflow
 		$text = preg_replace( '/<table\b[^>]*>/i', '<div class="table-wrapper"><div class="table">$0', $text );
 		$text = preg_replace( '/<\/table>/i', '$0</div></div>', $text );
 
