@@ -17,23 +17,31 @@ class GameGuidesController extends WikiaController {
 
 	const NEW_API_VERSION = 1;
 
+	const ASSET_FILE = 'GameGuidesAssets.json';
+	const CB_FILE = 'GameGuidesCacheBuster';
+
 	/**
 	 * @var $mModel GameGuidesModel
 	 */
 	private $mModel = null;
 	private $mPlatform = null;
-	
+	private $assetsPath = null;
+	private $cacheBusterPath = null;
+
 	function init() {
 		$requestedVersion = $this->request->getInt( 'ver', self::API_VERSION );
 		$requestedRevision = $this->request->getInt( 'rev', self::API_REVISION );
 
 		if ( $requestedVersion != self::API_VERSION || $requestedRevision != self::API_REVISION ) {
-			throw new  GameGuidesWrongAPIVersionException();
+			throw new GameGuidesWrongAPIVersionException();
 		}
-
-		$this->mModel = (new GameGuidesModel);
+		
+		$this->mModel = new GameGuidesModel();
 		$this->mPlatform = $this->request->getVal( 'os' );
-		$this->assetsPath = $this->wg->ExtensionsPath . '/wikia/GameGuides/assets/GameGuidesAssets.json';
+		$path = $this->wg->ExtensionsPath . '/wikia/GameGuides/assets/';
+
+		$this->assetsPath = $path . self::ASSET_FILE;
+		$this->cacheBusterPath = $path . self::CB_FILE;
 	}
 
 	/*
@@ -275,7 +283,7 @@ class GameGuidesController extends WikiaController {
 
 		wfProfileIn( __METHOD__ );
 
-		$resources = json_decode(file_get_contents($IP . $this->assetsPath));
+		$resources = json_decode( file_get_contents( $IP . $this->assetsPath ) );
 
 		$scripts = '';
 		foreach( $resources->scripts as $s ) {
@@ -300,13 +308,17 @@ class GameGuidesController extends WikiaController {
 	 * @responseParam Integer cb current style version number
 	 */
 	public function getResourcesUrl(){
+		global $IP;
+
 		$this->response->setFormat( 'json' );
 
+		$cacheBuster = file_get_contents( $IP . $this->cacheBusterPath );
+
 		$this->response->setVal( 'url',
-			$this->assetsPath . '?cb=' . $this->wg->StyleVersion
+			$this->assetsPath . '?cb=' . $cacheBuster
 		);
 
-		$this->response->setVal( 'cb', (string) $this->wg->StyleVersion );
+		$this->response->setVal( 'cb', $cacheBuster );
 	}
 
 	/**
