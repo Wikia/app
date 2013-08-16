@@ -74,8 +74,9 @@ class SassUtil {
 
 			// sending width and height of background image to SASS
 			if ( isset($settings["background-image-width"]) && isset($settings["background-image-height"]) ) {
-				$oasisSettings["background-image-width"] = $settings["background-image-width"];
-				$oasisSettings["background-image-height"] = $settings["background-image-height"];
+				// strip 'px' from previously cached settings since we removed 'px' (sanity check)
+				$oasisSettings["background-image-width"] = str_replace( 'px', '', $settings["background-image-width"] );
+				$oasisSettings["background-image-height"] = str_replace( 'px', '', $settings["background-image-height"] );
 			} else {
 				// if not cached in theme settings
 				$bgImage = wfFindFile(ThemeSettings::BackgroundImageName);
