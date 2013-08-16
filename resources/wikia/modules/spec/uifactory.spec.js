@@ -31,7 +31,7 @@ describe('UIFactory', function(){
 				}
 			]
 		},
-		error = 'Error from backend',
+		error = 'NotFoundApiException: File not found (/usr/wikia/source/wiki/resources/wikia/ui_components/xxx/xxx_config.json).',
 		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, uiComponent);
 
 	window.wgStyleVersion = 12345;
@@ -132,22 +132,22 @@ describe('UIFactory', function(){
 	async.it('returns error form backend when requesting components', function(done) {
 		function nirvanaMock(resp) {
 			var nirvana = {
-				getJson: function(controller, method, params, callback) {
+				getJson: function(controller, method, params, callback, errorCallback) {
 					expect(params.components).toBe(requestedComponent);
 					expect(params.cb).toBe(window.wgStyleVersion);
 
-					callback(resp);
+					errorCallback(resp);
 				}
 			};
 
 			return nirvana;
 		}
 
-		var componentConfig = {
-			status: 0,
-			errorMessage: 'Error from backend'
+		var xhrObject = {
+			responseText: '{"error":"NotFoundApiException","message":"File not found (\/usr\/wikia\/source\/wiki\/resources\/wikia\/ui_components\/xxx\/xxx_config.json)."}'
 			},
-			nirvana = nirvanaMock(componentConfig);
+			nirvana = nirvanaMock(xhrObject),
+			requestedComponent = 'xxx',
 		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, uiComponent);
 
 		expect(function() {
