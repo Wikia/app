@@ -1801,9 +1801,9 @@ class Wikia {
 	 * @param WebRequest $request
 	 */
 	static public function setUpMemcachePurge( WebRequest $request, $user ) {
-		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads, $wgAllowMemcacheWrites;
+		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads, $wgAllowMemcacheWrites, $wgDevelEnvironment;
 
-		if ( !$user->isAllowed( 'mcachepurge' ) ) {
+		if ( !$user->isAllowed( 'mcachepurge' ) && empty( $wgDevelEnvironment ) ) {
 			return true;
 		}
 
