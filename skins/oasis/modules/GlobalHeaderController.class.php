@@ -35,6 +35,8 @@ class GlobalHeaderController extends WikiaController {
 
 	public function index() {
 
+		$this->response->addAsset('ui_repo_api_js');
+		$this->response->addAsset('//skins/oasis/js/GlobalHeader.js');
 		$userLang = $this->wg->Lang->getCode();
 
 		// Link to Wikia home page

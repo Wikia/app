@@ -1,5 +1,5 @@
 define('wikia.uifactory.drawer', function drawer(){
-	//'use strict';
+	'use strict';
 
 	var drawer = function(side) {
 		this.element = $('#drawer-' + side);
