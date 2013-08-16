@@ -423,18 +423,12 @@
 			}
 
 			if ( wgOasisResponsive ) {
-				var $wikiaPage = $( '#WikiaPage' ),
-					widthArticlePadding = 20,
-					widthLayout = $wikiaPage.width(),
-					widthRail = $( '#EditPageRail' ).outerWidth( true ),
-					widthRailMargin = 10;
+				var editContentWidth = $('#EditPageMainContainer').width(),
+					pageLayoutWidth = $('#WikiaPage').width(),
+					widthArticlePadding = 20;
 
-				width = ( widthLayout - widthArticlePadding );
-
-				// Pages without a right rail (like main pages)
-				if ( !config.isWidePage ) {
-					width -= ( widthRail + widthRailMargin )
-				}
+				width = (config.isWidePage) ? pageLayoutWidth : editContentWidth;
+				width -= widthArticlePadding;
 
 				// For Webkit browsers, when the responsive layout kicks in
 				// we have to subtract the width of the scrollbar. For more
@@ -445,7 +439,7 @@
 				// PSS: fuck scrollbars.
 				// TODO: we should have access to breakpoints and such in JavaScript
 				// as variables instead of hardcoded values.
-				if ( isWebkit && $wikiaPage.width() >= 1370 ) {
+				if ( isWebkit && pageLayoutWidth >= 1370 ) {
 					width -= this.scrollbarWidth;
 				}
 			}
