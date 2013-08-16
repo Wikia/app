@@ -33,6 +33,12 @@ class WikiaHubsV2Controller extends WikiaController {
 	 * Main method for displaying hub pages
 	 */
 	public function index() {
+		$this->response->addAsset('ui_repo_api_js');
+$this->drawer = \Wikia\UI\Factory::getInstance()->init('drawer')->render([
+	'type' => 'default',
+	'vars' => ['side' => 'right']
+]);
+		return;
 		if (!$this->checkAccess()) {
 			$titleText = $this->getContext()->getTitle()->getText();
 			$titleTextSplit = explode('/', $titleText);
