@@ -11,6 +11,7 @@
 /*global AdProviderAdDriver2, AdProviderEvolve, AdProviderGamePro, AdProviderLater, AdProviderNull */
 /*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdLogicShortPage, AdLogicPageLevelParams */
 /*global AdLogicPageLevelParamsLegacy */
+/*global require*/
 /*jslint newcap:true */
 
 (function (log, tracker, window, ghostwriter, document, Geo, LazyQueue, Cookies, Cache, Krux, abTest) {
@@ -162,5 +163,19 @@
 
 	// Register window.wikiaDartHelper so jwplayer can use it
 	window.wikiaDartHelper = wikiaDart;
+
+	// Custom ads (skins, footer, etc)
+	// TODO: loadable modules
+	window.loadCustomAd = function (params) {
+		log('loadCustomAd', 3, module);
+
+		var adModule = 'ext.wikia.adengine.template.' + params.type;
+		log('loadCustomAd: loading ' + adModule, 5, module);
+
+		require([adModule], function (adTemplate) {
+			log('loadCustomAd: module ' + adModule + ' required', 5, module);
+			adTemplate.show(params);
+		});
+	};
 
 }(Wikia.log, Wikia.Tracker, window, ghostwriter, document, Geo, Wikia.LazyQueue, Wikia.Cookies, Wikia.Cache, Krux, Wikia.AbTest));
