@@ -1,6 +1,4 @@
 <?php
-echo $drawer;/*
-
 	$app = F::app();
 ?>
 <div id="mw-content-text" lang="<?= $app->wg->contLang->getCode(); ?>">
@@ -37,4 +35,4 @@ echo $drawer;/*
 			<?= $modules[MarketingToolboxModuleFromthecommunityService::MODULE_ID] ?>
 		</div>
 	</div>
-</div>*/
+</div>
