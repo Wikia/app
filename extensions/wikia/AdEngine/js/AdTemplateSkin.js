@@ -12,7 +12,7 @@ define('ext.wikia.adengine.template.skin', ['wikia.document', 'wikia.window', 'w
 	 * }
 	 */
 	function show(params) {
-		log(params, 5, logGroup);
+		log(params, 'debug', logGroup);
 
 		var adSkin = document.getElementById('ad-skin'),
 			adSkinStyle = adSkin.style,
@@ -37,7 +37,7 @@ define('ext.wikia.adengine.template.skin', ['wikia.document', 'wikia.window', 'w
 		wikiaSkinStyle.opacity = 1;
 
 		adSkin.onclick = function (e) {
-			log('Click on skin', 1, logGroup);
+			log('Click on skin', 'user', logGroup);
 			window.open(params.destUrl);
 		};
 
@@ -49,7 +49,7 @@ define('ext.wikia.adengine.template.skin', ['wikia.document', 'wikia.window', 'w
 			for (i = 0, len = params.pixels.length; i < len; i += 1) {
 				pixelUrl = params.pixels[i];
 				if (pixelUrl) {
-					log('Adding tracking pixel ' + pixelUrl, 9, logGroup);
+					log('Adding tracking pixel ' + pixelUrl, 'debug', logGroup);
 					pixelElement = document.createElement('img');
 					pixelElement.src = pixelUrl;
 					pixelElement.width = 1;
@@ -59,7 +59,7 @@ define('ext.wikia.adengine.template.skin', ['wikia.document', 'wikia.window', 'w
 			}
 		}
 
-		log('Pixels added', 5, logGroup);
+		log('Pixels added', 'debug', logGroup);
 	}
 
 	return {

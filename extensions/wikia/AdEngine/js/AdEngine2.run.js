@@ -167,13 +167,13 @@
 	// Custom ads (skins, footer, etc)
 	// TODO: loadable modules
 	window.loadCustomAd = function (params) {
-		log('loadCustomAd', 3, module);
+		log('loadCustomAd', 'debug', module);
 
 		var adModule = 'ext.wikia.adengine.template.' + params.type;
-		log('loadCustomAd: loading ' + adModule, 5, module);
+		log('loadCustomAd: loading ' + adModule, 'debug', module);
 
 		require([adModule], function (adTemplate) {
-			log('loadCustomAd: module ' + adModule + ' required', 5, module);
+			log('loadCustomAd: module ' + adModule + ' required', 'debug', module);
 			adTemplate.show(params);
 		});
 	};
