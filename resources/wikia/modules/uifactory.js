@@ -34,8 +34,8 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'w
 			function(data) {
 					deferred.resolve(data);
 			},
-			function() {
-				deferred.reject();
+			function(xhrObject) {
+				deferred.reject(JSON.parse(xhrObject.responseText));
 			}
 		);
 
@@ -136,11 +136,6 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'w
 
 		getComponentsConfig(componentName).done(function(data) {
 
-			if (data.status !== 1) {
-				deferred.reject();
-				throw new Error(data.errorMessage);
-			}
-
 			var jsAssets = [],
 				cssAssets = [];
 
@@ -170,7 +165,10 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'w
 			addStylesToDOM(cssAssets);
 
 			deferred.resolve((components.length == 1) ? components[0] : components);
-		}).fail(function() {
+		}).fail(function(data) {
+			if (data.error) {
+				throw new Error(data.error + ': ' + data.message);
+			}
 			deferred.reject();
 		});
 
