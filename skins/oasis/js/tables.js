@@ -6,8 +6,8 @@ jQuery(function( $ ) {
 		$article.find( '.table-wrapper' ).each(function() {
 			var $wrapper = $( this );
 
-			$wrapper.toggleClass( 'overflow',
-				$wrapper.children( 'table' ).width() > $article.width() );
+			$wrapper.toggleClass( 'table-overflow-hint',
+				$wrapper.find( 'table' ).width() > $article.width() );
 		});
 	}
 
@@ -121,7 +121,7 @@ var WikiaWideTables = {
 			var table = $(this);
 
 			//Ignore tables using the overflow method
-			if (table.parent( '.table-wrapper' ).length ) {
+			if (table.parent( '.table' ).length ) {
 				return;
 			}
 

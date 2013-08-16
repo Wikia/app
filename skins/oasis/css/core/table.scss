@@ -31,16 +31,22 @@ table.wikitable {
 	}
 }
 
-.table-wrapper {
+.table {
 	overflow: auto;
+}
 
-	&.overflow {
+.table-overflow-hint {
+	position: relative;
+
+	&:before {
 		@include box-shadow( -15px, 0, 20px, $color-page-border, true, -15px );
-
-		table {
-			position: relative;
-			z-index: -1;
-		}
+		content: "";
+		height: 100%;
+		pointer-events: none;
+		position: absolute;
+		right: 0;
+		width: 20px;
+		z-index: 2;
 	}
 }
 
