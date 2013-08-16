@@ -354,6 +354,9 @@ div#userloginErrorBox3 {
 	}
 	.tooltip-icon-wrapper {
 		position: relative;
+		.tooltip-text {
+			padding-right: 0.7em;
+		}
 		.tooltip-icon {
 			@include tooltip-icon;
 		}
