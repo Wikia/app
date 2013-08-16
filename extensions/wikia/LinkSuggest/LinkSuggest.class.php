@@ -164,17 +164,17 @@ class LinkSuggest {
 
 		$pageNamespaceClause = isset($commaJoinedNamespaces) ?  'page_namespace IN (' . $commaJoinedNamespaces . ') AND ' : '';
 		if( count($results) < $wgLinkSuggestLimit ) {
+			/**
+			 * @var string $pageTitlePrefilter this condition is able to use name_title index. It's added only for performance reasons.
+			 * It uses fact that page titles can't start with lowercase letter.
+			 */
 			$pageTitlePrefilter = "";
 			if( strlen($queryLower) >= 2 ) {
 				$pageTitlePrefilter = "(
-							(page_title " . $db->buildLike(strtolower($queryLower[0]) . strtolower($queryLower[1]) , $db->anyString() ) . ") OR
-							(page_title " . $db->buildLike(strtoupper($queryLower[0]) . strtolower($queryLower[1]) , $db->anyString() ) . ") OR
-							(page_title " . $db->buildLike(strtolower($queryLower[0]) . strtoupper($queryLower[1]) , $db->anyString() ) . ") OR
-							(page_title " . $db->buildLike(strtoupper($queryLower[0]) . strtoupper($queryLower[1]) , $db->anyString() ) . ") ) AND ";
+							( page_title " . $db->buildLike(strtoupper($queryLower[0]) . strtolower($queryLower[1]) , $db->anyString() ) . " ) OR
+							( page_title " . $db->buildLike(strtoupper($queryLower[0]) . strtoupper($queryLower[1]) , $db->anyString() ) . " ) ) AND ";
 			} else if( strlen($queryLower) >= 1 ) {
-				$pageTitlePrefilter = "(
-							(page_title " . $db->buildLike(strtolower($queryLower[0]) , $db->anyString() ) . " ) OR
-							(page_title " . $db->buildLike(strtoupper($queryLower[0]) , $db->anyString() ) . " ) ) AND ";
+				$pageTitlePrefilter = "( page_title " . $db->buildLike(strtoupper($queryLower[0]) , $db->anyString() ) . " ) AND ";
 			}
 			// TODO: use $db->select helper method
 			$sql = "SELECT page_len, page_id, page_title, rd_title, page_namespace, page_is_redirect
