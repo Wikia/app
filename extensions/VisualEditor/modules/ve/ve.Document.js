@@ -1,7 +1,7 @@
-/**
+/*!
  * VisualEditor Document class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -9,18 +9,27 @@
  * Generic document.
  *
  * @class
+ * @mixins ve.EventEmitter
+ *
  * @constructor
  * @param {ve.Node} model Model to observe
  */
 ve.Document = function VeDocument( documentNode ) {
+	// Mixin constructors
+	ve.EventEmitter.call( this );
+
 	// Properties
 	this.documentNode = documentNode;
 };
 
+/* Inheritance */
+
+ve.mixinClass( ve.Document, ve.EventEmitter );
+
 /* Methods */
 
 /**
- * Gets the root of the document's node tree.
+ * Get the root of the document's node tree.
  *
  * @method
  * @returns {ve.Node} Root of node tree
@@ -34,31 +43,34 @@ ve.Document.prototype.getDocumentNode = function () {
  *
  * @method
  * @param {ve.Range} range Range within document to select nodes
- * @param {String} [mode='leaves'] Type of selection to perform
- *     'leaves': Return all leaf nodes in the given range (descends all the way down)
- *     'branches': Return all branch nodes in the given range
- *     'covered': Do not descend into nodes that are entirely covered by the range. The result
- *                is similar to that of 'leaves' except that if a node is entirely covered, its
- *                children aren't returned separately.
- *     'siblings': Return a set of adjacent siblings covered by the range (descends as long as the
- *                 range is in a single node)
- * @returns {Array} List of objects describing nodes in the selection and the ranges therein
- *                  'node': Reference to a ve.dm.Node
- *                  'range': ve.Range, missing if the entire node is covered
- *                  'index': Index of the node in its parent, missing if node has no parent
- *                  'indexInNode': If range is a zero-length range between two children of node,
- *                                 this is set to the index of the child following range (or to
- *                                 node.children.length+1 if range is between the last child and
- *                                 the end). Missing in all other cases
- *                  'nodeRange': Range covering the inside of the entire node, not including wrapper
- *                  'nodeOuterRange': Range covering the entire node, including wrapper
- *                  'parentOuterRange': Outer range of node's parent. Missing if there is no parent
- *                                      or if indexInNode is set.
- * @throws 'Invalid start offset' if range.start is out of range
- * @throws 'Invalid end offset' if range.end is out of range
+ * @param {string} [mode='leaves'] Type of selection to perform:
+ *
+ * - `leaves`: Return all leaf nodes in the given range (descends all the way down)
+ * - `branches`': Return all branch nodes in the given range
+ * - `covered`: Do not descend into nodes that are entirely covered by the range. The result
+ *   is similar to that of 'leaves' except that if a node is entirely covered, its
+ *   children aren't returned separately.
+ * - `siblings`: Return a set of adjacent siblings covered by the range (descends as long as the
+ *   range is in a single node)
+ * @returns {Array} List of objects describing nodes in the selection and the ranges therein:
+ *
+ * - `node`: Reference to a ve.dm.Node
+ * - `range`: ve.Range, missing if the entire node is covered
+ * - `index`: Index of the node in its parent, missing if node has no parent
+ * - `indexInNode`: If range is a zero-length range between two children of node,
+ *   this is set to the index of the child following range (or to
+ *   `node.children.length + 1` if range is between the last child and
+ *   the end). If range is a zero-length range inside an empty non-content branch node, this is 0.
+ *   Missing in all other cases.
+ * - `nodeRange`: Range covering the inside of the entire node, not including wrapper
+ * - `nodeOuterRange`: Range covering the entire node, including wrapper
+ * - `parentOuterRange`: Outer range of node's parent. Missing if there is no parent
+ *   or if indexInNode is set.
+ *
+ * @throws {Error} Range.start is out of range
+ * @throws {Error} Range.end is out of range
  */
 ve.Document.prototype.selectNodes = function ( range, mode ) {
-	range.normalize();
 	var doc = this.documentNode,
 		retval = [],
 		start = range.start,
@@ -88,7 +100,8 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 		parentRange,
 		isWrapped,
 		isPrevUnwrapped,
-		isNextUnwrapped;
+		isNextUnwrapped,
+		isEmptyBranch;
 
 	mode = mode || 'leaves';
 	if ( mode !== 'leaves' && mode !== 'branches' && mode !== 'covered' && mode !== 'siblings' ) {
@@ -130,6 +143,8 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 		isPrevUnwrapped = prevNode ? !prevNode.isWrapped() : false;
 		// Is there an unwrapped node right after this node?
 		isNextUnwrapped = nextNode ? !nextNode.isWrapped() : false;
+		// Is this node an empty non-content branch node?
+		isEmptyBranch = node.getLength() === 0 && !node.isContent() && !node.canContainContent();
 		// Is the start between prevNode's closing and node or between the parent's opening and node?
 		startBetween = ( isWrapped ? start === left - 1 : start === left ) && !isPrevUnwrapped;
 		// Is the end between node and nextNode's opening or between node and the parent's closing?
@@ -179,14 +194,14 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 		} else if ( startBetween ) {
 			// start is between the previous sibling and node
 			// so the selection covers all or part of node
-			
+
 			// Descend if
-			// * we are in leaves mode, OR
-			// * we are in covered mode and the end is inside node OR
-			// * we are in branches mode and node is a branch (can have grandchildren)
+			// - we are in leaves mode, OR
+			// - we are in covered mode and the end is inside node OR
+			// - we are in branches mode and node is a branch (can have grandchildren)
 			if ( ( mode === 'leaves' ||
 					( mode === 'covered' && endInside ) ||
-					( mode === 'branches' && node.canHaveGrandchildren() ) ) &&
+					( mode === 'branches' && node.canHaveChildrenNotContent() ) ) &&
 				node.children && node.children.length
 			) {
 				// Descend into node
@@ -232,7 +247,7 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 			}
 		} else if ( startInside && endInside ) {
 			if ( node.children && node.children.length &&
-				( mode !== 'branches' || node.canHaveGrandchildren() ) ) {
+				( mode !== 'branches' || node.canHaveChildrenNotContent() ) ) {
 				// Descend into node
 				currentFrame = {
 					'node': node,
@@ -247,7 +262,7 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 				continue;
 			} else {
 				// node is a leaf node and the range is entirely inside it
-				return [ {
+				retval = [ {
 					'node': node,
 					'range': new ve.Range( start, end ),
 					'index': currentFrame.index,
@@ -258,11 +273,15 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 						parentRange.end + currentFrame.node.isWrapped()
 					)
 				} ];
+				if ( isEmptyBranch ) {
+					retval[0].indexInNode = 0;
+				}
+				return retval;
 			}
 		} else if ( startInside ) {
 			if ( ( mode === 'leaves' ||
 					mode === 'covered' ||
-					( mode === 'branches' && node.canHaveGrandchildren() ) ) &&
+					( mode === 'branches' && node.canHaveChildrenNotContent() ) ) &&
 				node.children && node.children.length
 			) {
 				// node is a branch node and the start is inside it
@@ -298,9 +317,9 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 			// end is between node and the next sibling
 			// start is not inside node, so the selection covers
 			// all of node, then ends
-			
+
 			if (
-				( mode === 'leaves' || ( mode === 'branches' && node.canHaveGrandchildren() ) ) &&
+				( mode === 'leaves' || ( mode === 'branches' && node.canHaveChildrenNotContent() ) ) &&
 				node.children && node.children.length
 			) {
 				// Descend into node
@@ -333,7 +352,7 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 		} else if ( endInside ) {
 			if ( ( mode === 'leaves' ||
 					mode === 'covered' ||
-					( mode === 'branches' && node.canHaveGrandchildren() ) ) &&
+					( mode === 'branches' && node.canHaveChildrenNotContent() ) ) &&
 				node.children && node.children.length
 			) {
 				// node is a branch node and the end is inside it
@@ -371,7 +390,7 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 			// Add the entire node, so no range property
 
 			if (
-				( mode === 'leaves' || ( mode === 'branches' && node.canHaveGrandchildren() ) ) &&
+				( mode === 'leaves' || ( mode === 'branches' && node.canHaveChildrenNotContent() ) ) &&
 				node.children && node.children.length
 			) {
 				// Descend into node
@@ -401,7 +420,7 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 				} );
 			}
 		}
-		
+
 		// Move to the next node
 		if ( nextNode ) {
 			// The next node exists
@@ -456,7 +475,7 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 				// (this is present for sure, because the parent has children)
 				left++;
 			}
-			
+
 			// Skip over nextNode's opening if present
 			if ( nextNode.isWrapped() ) {
 				left++;
@@ -470,12 +489,14 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 };
 
 /**
- * Return groups of sibling nodes covered by the given range
+ * Get groups of sibling nodes covered by the given range.
+ *
  * @param {ve.Range} selection Range
- * @return {Array} Array of objects. Each object has the following keys:
- *     nodes: Array of sibling nodes covered by a part of range
- *     parent: Parent of all of these nodes
- *     grandparent: parent's parent
+ * @returns {Array} Array of objects. Each object has the following keys:
+ *
+ *  - nodes: Array of sibling nodes covered by a part of range
+ *  - parent: Parent of all of these nodes
+ *  - grandparent: parent's parent
  */
 ve.Document.prototype.getCoveredSiblingGroups = function ( selection ) {
 	var i, firstCoveredSibling, lastCoveredSibling, node, parentNode, siblingNode,

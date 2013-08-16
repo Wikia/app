@@ -1,26 +1,31 @@
-/**
- * VisualEditor user interface ButtonTool class.
+/*!
+ * VisualEditor UserInterface ButtonTool class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Creates an ve.ui.ButtonTool object.
+ * UserInterface button tool.
  *
- * @abstract
  * @class
+ * @abstract
+ * @extends ve.ui.Tool
+ *
  * @constructor
- * @extends {ve.ui.Tool}
  * @param {ve.ui.Toolbar} toolbar
+ * @param {Object} [config] Config options
  */
-ve.ui.ButtonTool = function VeUiButtonTool( toolbar ) {
+ve.ui.ButtonTool = function VeUiButtonTool( toolbar, config ) {
+	var icon = this.constructor.static.icon,
+		lang = ve.init.platform.getUserLanguage();
+
 	// Parent constructor
-	ve.ui.Tool.call( this, toolbar );
+	ve.ui.Tool.call( this, toolbar, config );
 
 	// Properties
 	this.active = false;
-	this.disabled = false;
+	this.$icon = this.$$( '<span>' );
 
 	// Events
 	this.$.on( {
@@ -29,33 +34,61 @@ ve.ui.ButtonTool = function VeUiButtonTool( toolbar ) {
 	} );
 
 	// Initialization
-	this.$.addClass( 've-ui-buttonTool ve-ui-icon-' + this.constructor.static.name );
+	this.$icon.addClass( 've-ui-buttonTool-icon' );
+	if ( icon ) {
+		if ( ve.isPlainObject( icon ) ) {
+			icon = lang in icon ? icon[lang] : icon['default'];
+		}
+		this.$icon.addClass( 've-ui-icon-' + icon );
+	}
+	this.$.addClass( 've-ui-buttonTool' ).append( this.$icon );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.ui.ButtonTool, ve.ui.Tool );
 
+/* Static Properties */
+
+/**
+ * Symbolic name of icon.
+ *
+ * Value should be the unique portion of an icon CSS class name, such as 'up' for 've-ui-icon-up'.
+ *
+ * For i18n purposes, this property can be an object containing a `default` icon name property and
+ * additional icon names keyed by language code.
+ *
+ * Example of i18n icon definition:
+ *     { 'default': 'bold-a', 'en': 'bold-b', 'de': 'bold-f' }
+ *
+ * @abstract
+ * @static
+ * @property {string|Object}
+ * @inheritable
+ */
+ve.ui.ButtonTool.static.icon = '';
+
+ve.ui.ButtonTool.static.tagName = 'a';
+
 /* Methods */
 
 /**
- * Responds to the mouse button being pressed.
+ * Handle the mouse button being pressed.
  *
  * @method
- * @param {jQuery.Event} e Normalized event
+ * @param {jQuery.Event} e Mouse down event
  */
 ve.ui.ButtonTool.prototype.onMouseDown = function ( e ) {
 	if ( e.which === 1 ) {
-		e.preventDefault();
 		return false;
 	}
 };
 
 /**
- * Responds to the mouse button being released.
+ * Handle the mouse button being released.
  *
  * @method
- * @param {jQuery.Event} e Normalized event
+ * @param {jQuery.Event} e Mouse up event
  */
 ve.ui.ButtonTool.prototype.onMouseUp = function ( e ) {
 	if ( e.which === 1 && !this.disabled ) {
@@ -64,7 +97,7 @@ ve.ui.ButtonTool.prototype.onMouseUp = function ( e ) {
 };
 
 /**
- * Responds to the button being clicked.
+ * Handle the button being clicked.
  *
  * This is an abstract method that must be overridden in a concrete subclass.
  *
@@ -78,29 +111,20 @@ ve.ui.ButtonTool.prototype.onClick = function () {
 };
 
 /**
- * Responds to the toolbar state being cleared.
+ * Check if the button is active.
  *
  * @method
- */
-ve.ui.ButtonTool.prototype.onClearState = function () {
-	this.setActive( false );
-};
-
-/**
- * Checks if this button is active.
- *
- * @method
- * @param {Boolean} Button is active
+ * @param {boolean} Button is active
  */
 ve.ui.ButtonTool.prototype.isActive = function () {
 	return this.active;
 };
 
 /**
- * Makes button appear active or inactive.
+ * Make the button appear active or inactive.
  *
  * @method
- * @param {Boolean} state Make button appear active
+ * @param {boolean} state Make button appear active
  */
 ve.ui.ButtonTool.prototype.setActive = function ( state ) {
 	this.active = !!state;
@@ -108,32 +132,5 @@ ve.ui.ButtonTool.prototype.setActive = function ( state ) {
 		this.$.addClass( 've-ui-buttonTool-active' );
 	} else {
 		this.$.removeClass( 've-ui-buttonTool-active' );
-	}
-};
-
-/**
- * Checks if this button is disabled.
- *
- * @method
- * @param {Boolean} Button is disabled
- */
-ve.ui.ButtonTool.prototype.isDisabled = function () {
-	return this.disabled;
-};
-
-/**
- * Disables button.
- *
- * This will change the button's appearance and prevent the {onClick} from being called.
- *
- * @method
- * @param {Boolean} state Disable button
- */
-ve.ui.ButtonTool.prototype.setDisabled = function ( state ) {
-	this.disabled = !!state;
-	if ( this.disabled ) {
-		this.$.addClass( 've-ui-buttonTool-disabled' );
-	} else {
-		this.$.removeClass( 've-ui-buttonTool-disabled' );
 	}
 };

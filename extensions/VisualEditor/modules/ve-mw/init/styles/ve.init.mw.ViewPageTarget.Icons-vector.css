@@ -1,0 +1,16 @@
+/*!
+ * VisualEditor MediaWiki Initialization ViewPageTarget vector icon styles.
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-init-mw-viewPageTarget-saveDialog-prevButton {
+	/* @embed */
+	background-image: url(../../../ve/ui/styles/images/icons/move-rtl.svg);
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-closeButton {
+	/* @embed */
+	background-image: url(../../../ve/ui/styles/images/icons/collapse.svg);
+}

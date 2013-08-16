@@ -1,22 +1,23 @@
-/**
- * VisualEditor user interface ListButtonTool class.
+/*!
+ * VisualEditor UserInterface ListButtonTool class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Creates an ve.ui.ListButtonTool object.
+ * UserInterface list button tool.
  *
  * @abstract
  * @class
+ * @extends ve.ui.ButtonTool
  * @constructor
- * @extends {ve.ui.ButtonTool}
- * @param {ve.ui.Toolbar} toolbar
+ * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {Object} [config] Config options
  */
-ve.ui.ListButtonTool = function VeUiListButtonTool( toolbar ) {
+ve.ui.ListButtonTool = function VeUiListButtonTool( toolbar, config ) {
 	// Parent constructor
-	ve.ui.ButtonTool.call( this, toolbar );
+	ve.ui.ButtonTool.call( this, toolbar, config );
 };
 
 /* Inheritance */
@@ -24,19 +25,19 @@ ve.ui.ListButtonTool = function VeUiListButtonTool( toolbar ) {
 ve.inheritClass( ve.ui.ListButtonTool, ve.ui.ButtonTool );
 
 /**
- * List style this button applies.
+ * List style the button applies.
  *
  * @abstract
  * @static
- * @member
- * @type {String}
+ * @property {string}
+ * @inheritable
  */
 ve.ui.ListButtonTool.static.style = '';
 
 /* Methods */
 
 /**
- * Responds to the button being clicked.
+ * Handle the button being clicked.
  *
  * @method
  */
@@ -49,7 +50,7 @@ ve.ui.ListButtonTool.prototype.onClick = function () {
 };
 
 /**
- * Responds to the toolbar state being updated.
+ * Handle the toolbar state being updated.
  *
  * @method
  * @param {ve.dm.Node[]} nodes List of nodes covered by the current selection

@@ -1,30 +1,33 @@
-/**
- * VisualEditor user interface IndentButtonTool class.
+/*!
+ * VisualEditor UserInterface IndentButtonTool class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Creates an ve.ui.IndentButtonTool object.
+ * UserInterface indent button tool.
  *
  * @class
+ * @extends ve.ui.IndentationButtonTool
  * @constructor
- * @extends {ve.ui.IndentationButtonTool}
- * @param {ve.ui.Toolbar} toolbar
+ * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {Object} [config] Config options
  */
-ve.ui.IndentButtonTool = function VeUiIndentButtonTool( toolbar ) {
+ve.ui.IndentButtonTool = function VeUiIndentButtonTool( toolbar, config ) {
 	// Parent constructor
-	ve.ui.IndentationButtonTool.call( this, toolbar );
+	ve.ui.IndentationButtonTool.call( this, toolbar, config );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.ui.IndentButtonTool, ve.ui.IndentationButtonTool );
 
-/* Static Members */
+/* Static Properties */
 
 ve.ui.IndentButtonTool.static.name = 'indent';
+
+ve.ui.IndentButtonTool.static.icon = 'indent-list';
 
 ve.ui.IndentButtonTool.static.titleMessage = 'visualeditor-indentationbutton-indent-tooltip';
 
@@ -33,3 +36,7 @@ ve.ui.IndentButtonTool.static.method = 'increase';
 /* Registration */
 
 ve.ui.toolFactory.register( 'indent', ve.ui.IndentButtonTool );
+
+ve.ui.commandRegistry.register( 'indent', 'indentation', 'increase' );
+
+ve.ui.triggerRegistry.register( 'indent', new ve.ui.Trigger( 'tab' ) );

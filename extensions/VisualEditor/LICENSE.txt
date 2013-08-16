@@ -1,4 +1,4 @@
-Copyright (c) 2011-2012 VisualEditor Team and others under the terms
+Copyright (c) 2011-2013 VisualEditor Team and others under the terms
 of The MIT License (MIT), as follows:
 
 This software consists of voluntary contributions made by many

@@ -1,44 +1,48 @@
-/**
- * VisualEditor user interface DropdownTool class.
+/*!
+ * VisualEditor UserInterface DropdownTool class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Creates an ve.ui.DropdownTool object.
+ * UserInterface dropdown tool.
  *
  * @abstract
  * @class
+ * @extends ve.ui.Tool
  * @constructor
- * @extends {ve.ui.Tool}
  * @param {ve.ui.Toolbar} toolbar
- * @param {Object[]} items
+ * @param {Object} [config] Config options
  */
-ve.ui.DropdownTool = function VeUiDropdownTool( toolbar, items ) {
+ve.ui.DropdownTool = function VeUiDropdownTool( toolbar, config ) {
 	// Parent constructor
-	ve.ui.Tool.call( this, toolbar );
+	ve.ui.Tool.call( this, toolbar, config );
 
 	// Properties
-	this.menuView = new ve.ui.Menu( items, ve.bind( this.onMenuItemSelect, this ), null, this.$ );
-	this.$icon = $( '<div class="ve-ui-dropdownTool-icon ve-ui-icon-down"></div>' );
-	this.$label = $( '<div class="ve-ui-dropdownTool-label"></div>' );
-	this.$labelText = $( '<span>&nbsp;</span>' );
+	this.menu = new ve.ui.MenuWidget( { '$$': this.$$ } );
+	this.$icon = this.$$( '<div class="ve-ui-dropdownTool-icon ve-ui-icon-down"></div>' );
+	this.$label = this.$$( '<div class="ve-ui-dropdownTool-label"></div>' );
+	this.$labelText = this.$$( '<span>&nbsp;</span>' );
+	this.onBlurHandler = ve.bind( this.onBlur, this );
 
 	// Events
-	$( document )
-		.add( this.toolbar.getSurface().getView().$ )
-		.mousedown( ve.bind( this.onBlur, this ) );
 	this.$.on( {
-		'mousedown': ve.bind( this.onMousedown, this ),
-		'mouseup': ve.bind( this.onMouseup, this )
+		'mousedown': ve.bind( this.onMouseDown, this ),
+		'mouseup': ve.bind( this.onMouseUp, this )
 	} );
+	this.menu.connect( this, { 'select': 'onMenuItemSelect' } );
 
 	// Initialization
 	this.$
-		.append( this.$icon, this.$label )
-		.addClass( 've-ui-dropdownTool ve-ui-dropdownTool-' + this.constructor.static.name )
-		.attr( 'title', ve.msg( this.constructor.static.titleMessage ) );
+		.append( this.$icon, this.$label, this.menu.$ )
+		.addClass(
+			've-ui-dropdownTool ve-ui-dropdownTool-' +
+			( this.constructor.static.cssName || this.constructor.static.name )
+		);
+	if ( this.constructor.static.titleMessage ) {
+		this.$.attr( 'title', ve.msg( this.constructor.static.titleMessage ) );
+	}
 	this.$label.append( this.$labelText );
 };
 
@@ -49,73 +53,101 @@ ve.inheritClass( ve.ui.DropdownTool, ve.ui.Tool );
 /* Methods */
 
 /**
- * Responds to the mouse button being pressed.
+ * Handle the mouse button being pressed.
  *
  * @method
- * @param {jQuery.Event} e Normalized event
+ * @param {jQuery.Event} e Mouse down event
  */
-ve.ui.DropdownTool.prototype.onMousedown = function ( e ) {
+ve.ui.DropdownTool.prototype.onMouseDown = function ( e ) {
 	if ( e.which === 1 ) {
-		e.preventDefault();
 		return false;
 	}
 };
 
 /**
- * Responds to the mouse button being released.
+ * Handle the mouse button being released.
  *
  * @method
- * @param {jQuery.Event} e Normalized event
+ * @param {jQuery.Event} e Mouse up event
  */
-ve.ui.DropdownTool.prototype.onMouseup = function ( e ) {
+ve.ui.DropdownTool.prototype.onMouseUp = function ( e ) {
 	if ( e.which === 1 ) {
-		// Don't respond to menu clicks
-		var $item = $( e.target ).closest( '.ve-ui-menu' );
-		if ( e.which === 1 && $item.length === 0 ) {
-			this.menuView.open();
+		// Toggle menu
+		if ( this.menu.isVisible() ) {
+			this.deactivate();
 		} else {
-			this.menuView.close();
+			this.activate();
 		}
 	}
+	return false;
 };
 
 /**
- * Responds to focus being lost.
+ * Switch into active mode.
  *
- * The event is actually generated from a mousedown on an element outside the menu, so it is not
- * a normal blur event object.
+ * When active, the menu is visible, the tool has a different style and mousedown events are being
+ * captured from the document and will trigger deactivation.
  *
  * @method
- * @param {jQuery.Event} e Normalized event
+ */
+ve.ui.DropdownTool.prototype.activate = function () {
+	this.menu.show();
+	this.$.addClass( 've-ui-dropdownTool-active' );
+	this.getElementDocument().addEventListener( 'mousedown', this.onBlurHandler, true );
+};
+
+/**
+ * Switch out of active mode.
+ *
+ * When inactive, the menu is hidden, the tool returns to normal styling and mousedown events are
+ * no longer captured.
+ *
+ * @method
+ */
+ve.ui.DropdownTool.prototype.deactivate = function () {
+	this.menu.hide();
+	this.$.removeClass( 've-ui-dropdownTool-active' );
+	this.getElementDocument().removeEventListener( 'mousedown', this.onBlurHandler, true );
+};
+
+/**
+ * Handle focus being lost.
+ *
+ * The event is actually generated from a mousedown, so it is not a normal blur event object.
+ *
+ * @method
+ * @param {jQuery.Event} e Mouse down event
  */
 ve.ui.DropdownTool.prototype.onBlur = function ( e ) {
-	if ( e.which === 1 ) {
-		this.menuView.close();
+	// Only deactivate when clicking outside the dropdown element
+	if ( $( e.target ).closest( '.ve-ui-dropdownTool' )[0] !== this.$[0] ) {
+		this.deactivate();
 	}
 };
 
 /**
- * Responds to one of the items in the menu being selected.
+ * Handle one of the items in the menu being selected.
  *
  * This should not be overridden in subclasses, it simple connects events from the internal menu
  * to the onSelect method.
  *
  * @method
- * @param {Object} item Menu item
+ * @param {ve.ui.MenuItemWidget|null} item Selected menu item, null if none is selected
  */
 ve.ui.DropdownTool.prototype.onMenuItemSelect = function ( item ) {
-	this.setLabel( item.label );
+	this.setLabel( item && item.$label.text() );
 	this.onSelect( item );
+	this.deactivate();
 };
 
 /**
- * Responds to dropdown option being selected.
+ * Handle dropdown option being selected.
  *
  * This is an abstract method that must be overridden in a concrete subclass.
  *
  * @abstract
  * @method
- * @param {Object} item Menu item
+ * @param {ve.ui.MenuItemWidget} item Menu item
  */
 ve.ui.DropdownTool.prototype.onSelect = function () {
 	throw new Error(
@@ -124,21 +156,13 @@ ve.ui.DropdownTool.prototype.onSelect = function () {
 };
 
 /**
- * Responds to toolbar state being cleared.
- *
- * @method
- */
-ve.ui.DropdownTool.prototype.onClearState = function () {
-	this.setLabel();
-};
-
-/**
- * Sets the label.
+ * Set the label.
  *
  * If the label value is empty, undefined or only contains whitespace an empty label will be used.
  *
  * @method
- * @param {jQuery|String} [value] jQuery HTML node selection or string text value to use for label
+ * @param {jQuery|string} [value] Label text
+ * @chainable
  */
 ve.ui.DropdownTool.prototype.setLabel = function ( value ) {
 	if ( typeof value === 'string' && value.length && /[^\s]*/.test( value ) ) {
@@ -148,4 +172,5 @@ ve.ui.DropdownTool.prototype.setLabel = function ( value ) {
 	} else {
 		this.$labelText.html( '&nbsp;' );
 	}
+	return this;
 };

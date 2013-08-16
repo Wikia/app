@@ -1,19 +1,19 @@
-/**
- * VisualEditor data model LinkAnnotation class.
+/*!
+ * VisualEditor DataModel LinkAnnotation class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Generic link annotation.
+ * DataModel link annotation.
  *
- * Represents <a> tags that don't have a specific type.
+ * Represents `<a>` tags that don't have a specific type.
  *
  * @class
+ * @extends ve.dm.Annotation
  * @constructor
- * @extends {ve.dm.Annotation}
- * @param {HTMLElement} element
+ * @param {Object} element
  */
 ve.dm.LinkAnnotation = function VeDmLinkAnnotation( element ) {
 	// Parent constructor
@@ -24,38 +24,41 @@ ve.dm.LinkAnnotation = function VeDmLinkAnnotation( element ) {
 
 ve.inheritClass( ve.dm.LinkAnnotation, ve.dm.Annotation );
 
-/* Static Members */
+/* Static Properties */
 
 ve.dm.LinkAnnotation.static.name = 'link';
 
 ve.dm.LinkAnnotation.static.matchTagNames = ['a'];
 
+ve.dm.LinkAnnotation.static.splitOnWordbreak = true;
+
+ve.dm.LinkAnnotation.static.toDataElement = function ( domElements ) {
+	return {
+		'type': 'link',
+		'attributes': {
+			'href': domElements[0].getAttribute( 'href' )
+		}
+	};
+};
+
+ve.dm.LinkAnnotation.static.toDomElements = function ( dataElement, doc ) {
+	var domElement = doc.createElement( 'a' );
+	domElement.setAttribute( 'href', dataElement.attributes.href );
+	return [ domElement ];
+};
+
 /* Methods */
 
 /**
- * Get annotation data, especially the href of the link.
- *
- * @method
- * @param {HTMLElement} element
- * @returns {Object} Annotation data, containing href property
+ * @returns {Object}
  */
-ve.dm.LinkAnnotation.prototype.getAnnotationData = function( element ) {
-	return { 'href': element.getAttribute( 'href' ) };
-};
-
-/**
- * Convert to an object with HTML element information.
- *
- * @method
- * @returns {Object} HTML element information, including tag and attributes properties
- */
-ve.dm.LinkAnnotation.prototype.toHTML = function () {
-	var parentResult = ve.dm.Annotation.prototype.toHTML.call( this );
-	parentResult.tag = 'a';
-	parentResult.attributes.href = this.data.href;
-	return parentResult;
+ve.dm.LinkAnnotation.prototype.getComparableObject = function () {
+	return {
+		'type': this.getType(),
+		'href': this.getAttribute( 'href' )
+	};
 };
 
 /* Registration */
 
-ve.dm.annotationFactory.register( 'link', ve.dm.LinkAnnotation );
+ve.dm.modelRegistry.register( ve.dm.LinkAnnotation );

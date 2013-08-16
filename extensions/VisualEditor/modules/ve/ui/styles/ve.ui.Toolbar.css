@@ -1,35 +1,74 @@
-/**
- * VisualEditor user interface Toolbar styles.
+/*!
+ * VisualEditor UserInterface Toolbar styles.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 .ve-ui-toolbar {
+	clear: both;
+}
+
+.ve-ui-toolbar-bar {
+	border-bottom: solid 1px #ccc;
+	background-color: white;
+	/* @embed */
+	background-image: url(images/fade-up.png);
+	background-position: left bottom;
+	background-repeat: repeat-x;
 	padding-bottom: 1px;
 	line-height: 1em;
 }
 
-.ve-ui-toolbarGroup {
-	display: inline-block;
+.ve-ui-toolbar-floating .ve-ui-toolbar-bar {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	border-top: none; /* TODO: Do we need this? What does it reset? */
+}
+
+.ve-ui-toolbar-bottom .ve-ui-toolbar-bar {
+	position: absolute;
+}
+
+.ve-ui-toolbar-actions {
+	float: right;
 	padding: 0.25em;
-	border-right: solid 1px #f0f3f5;
-	vertical-align: middle;
-}
-
-.ve-ui-toolbarDivider {
-	display: inline-block;
-	width: 1px;
-	height: 24px;
-	margin: 0.5em 0 0.5em 0.5em;
-	background-color: #ddd;
-}
-
-.ve-ui-toolbarLabel {
-	display: inline-block;
-	padding: 0.5em 0.75em;
-	line-height: 22px;
 	font-size: 0.8em;
-	color: #555;
-	vertical-align: top;
+}
+
+.ve-ui-toolbar-tools {
+	float: left;
+}
+
+.ve-ui-toolbar-tools,
+.ve-ui-toolbar-actions,
+.ve-ui-toolbar-shadow {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+.ve-ui-toolbar-shadow {
+	/* @embed */
+	background-image: url(images/toolbar-shadow.png);
+	background-position: left top;
+	background-repeat: repeat-x;
+	position: absolute;
+	bottom: -9px;
+	height: 9px;
+	width: 100%;
+	pointer-events: none;
+	-webkit-transition: opacity 500ms ease-in-out;
+	-moz-transition: opacity 500ms ease-in-out;
+	-ms-transition: opacity 500ms ease-in-out;
+	-o-transition: opacity 500ms ease-in-out;
+	transition: opacity 500ms ease-in-out;
+	opacity: 0.125;
+}
+
+.ve-ui-toolbar-floating .ve-ui-toolbar-shadow {
+	opacity: 0.5;
 }

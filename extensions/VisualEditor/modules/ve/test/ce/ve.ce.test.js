@@ -1,7 +1,7 @@
-/**
- * VisualEditor content editable tests.
+/*!
+ * VisualEditor ContentEditable tests.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -16,14 +16,14 @@ QUnit.test( 'whitespacePattern', 4, function ( assert ) {
 	assert.equal( 'ab'.match( ve.ce.whitespacePattern ), null, 'does not match non-whitespace' );
 } );
 
-QUnit.test( 'getDOMText', 1, function ( assert ) {
+QUnit.test( 'getDomText', 1, function ( assert ) {
 	assert.equal( ve.ce.getDomText(
 		$( '<span>a<b><a href="#">b</a></b><span></span><i>c</i>d</span>' )[0] ),
 		'abcd'
 	);
 } );
 
-QUnit.test( 'getDOMHash', 1, function ( assert ) {
+QUnit.test( 'getDomHash', 1, function ( assert ) {
 	assert.equal(
 		ve.ce.getDomHash( $( '<span>a<b><a href="#">b</a></b><span></span><i>c</i>d</span>' )[0] ),
 		'<SPAN>#<B><A>#</A></B><SPAN></SPAN><I>#</I>#</SPAN>'

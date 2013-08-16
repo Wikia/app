@@ -1,24 +1,25 @@
-/**
- * VisualEditor user interface UndoButtonTool class.
+/*!
+ * VisualEditor UserInterface UndoButtonTool class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Creates an ve.ui.UndoButtonTool object.
+ * UserInterface undo button tool.
  *
  * @class
+ * @extends ve.ui.ButtonTool
  * @constructor
- * @extends {ve.ui.ButtonTool}
- * @param {ve.ui.Toolbar} toolbar
+ * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {Object} [config] Config options
  */
-ve.ui.UndoButtonTool = function VeUiUndoButtonTool( toolbar ) {
+ve.ui.UndoButtonTool = function VeUiUndoButtonTool( toolbar, config ) {
 	// Parent constructor
-	ve.ui.ButtonTool.call( this, toolbar );
+	ve.ui.ButtonTool.call( this, toolbar, config );
 
 	// Events
-	this.toolbar.getSurface().getModel().addListenerMethod( this, 'history', 'onUpdateState' );
+	this.toolbar.getSurface().getModel().connect( this, { 'history': 'onUpdateState' } );
 
 	// Initialization
 	this.setDisabled( true );
@@ -28,16 +29,18 @@ ve.ui.UndoButtonTool = function VeUiUndoButtonTool( toolbar ) {
 
 ve.inheritClass( ve.ui.UndoButtonTool, ve.ui.ButtonTool );
 
-/* Static Members */
+/* Static Properties */
 
 ve.ui.UndoButtonTool.static.name = 'undo';
+
+ve.ui.UndoButtonTool.static.icon = 'undo';
 
 ve.ui.UndoButtonTool.static.titleMessage = 'visualeditor-historybutton-undo-tooltip';
 
 /* Methods */
 
 /**
- * Responds to the button being clicked.
+ * Handle the button being clicked.
  *
  * @method
  */
@@ -46,7 +49,7 @@ ve.ui.UndoButtonTool.prototype.onClick = function () {
 };
 
 /**
- * Responds to the toolbar state being updated.
+ * Handle the toolbar state being updated.
  *
  * @method
  * @param {ve.dm.Node[]} nodes List of nodes covered by the current selection
@@ -60,3 +63,12 @@ ve.ui.UndoButtonTool.prototype.onUpdateState = function () {
 /* Registration */
 
 ve.ui.toolFactory.register( 'undo', ve.ui.UndoButtonTool );
+
+ve.ui.commandRegistry.register(
+	'undo', 'history', 'undo'
+);
+
+ve.ui.triggerRegistry.register(
+	'undo', { 'mac': new ve.ui.Trigger( 'cmd+z' ), 'pc': new ve.ui.Trigger( 'ctrl+z' ) }
+);
+

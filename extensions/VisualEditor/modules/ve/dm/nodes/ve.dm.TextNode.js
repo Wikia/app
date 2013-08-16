@@ -1,48 +1,37 @@
-/**
- * VisualEditor data model TextNode class.
+/*!
+ * VisualEditor DataModel TextNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * DataModel node for a document.
+ * DataModel text node.
  *
  * @class
+ * @extends ve.dm.LeafNode
  * @constructor
- * @extends {ve.dm.LeafNode}
- * @param {Number} [length] Length of content data in document
+ * @param {number} [length] Length of content data in document
  */
 ve.dm.TextNode = function VeDmTextNode( length ) {
 	// Parent constructor
-	ve.dm.LeafNode.call( this, 'text', length );
+	ve.dm.LeafNode.call( this, length );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.dm.TextNode, ve.dm.LeafNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.dm.NodeFactory
- * @static
- * @member
- */
-ve.dm.TextNode.rules = {
-	'isWrapped': false,
-	'isContent': true,
-	'canContainContent': false,
-	'hasSignificantWhitespace': false,
-	'childNodeTypes': [],
-	'parentNodeTypes': null
-};
+ve.dm.TextNode.static.name = 'text';
 
-// This is a special node, no converter registration is required
-ve.dm.TextNode.converters = null;
+ve.dm.TextNode.static.isWrapped = false;
+
+ve.dm.TextNode.static.isContent = true;
+
+ve.dm.TextNode.static.matchTagNames = [];
 
 /* Registration */
 
-ve.dm.nodeFactory.register( 'text', ve.dm.TextNode );
+ve.dm.modelRegistry.register( ve.dm.TextNode );

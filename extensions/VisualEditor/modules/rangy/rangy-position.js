@@ -133,6 +133,10 @@ rangy.createModule("Coordinates", function(api, module) {
             };
         };
 
+        api.hello = function() {
+	        return "hi";
+        }
+
         var rangeProto = api.rangePrototype;
 
         if (api.features.implementsTextRange && elementSupportsGetBoundingClientRect) {

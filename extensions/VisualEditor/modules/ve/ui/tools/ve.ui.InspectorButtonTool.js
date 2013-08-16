@@ -1,44 +1,62 @@
-/**
- * VisualEditor user interface InspectorButtonTool class.
+/*!
+ * VisualEditor UserInterface InspectorButtonTool class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Creates an ve.ui.InspectorButtonTool object.
+ * UserInterface inspector button tool.
  *
  * @abstract
  * @class
+ * @extends ve.ui.ButtonTool
  * @constructor
- * @extends {ve.ui.ButtonTool}
- * @param {ve.ui.Toolbar} toolbar
+ * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {Object} [config] Config options
  */
-ve.ui.InspectorButtonTool = function VeUiInspectorButtonTool( toolbar ) {
+ve.ui.InspectorButtonTool = function VeUiInspectorButtonTool( toolbar, config ) {
 	// Parent constructor
-	ve.ui.ButtonTool.call( this, toolbar );
+	ve.ui.ButtonTool.call( this, toolbar, config );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.ui.InspectorButtonTool, ve.ui.ButtonTool );
 
-/* Static Members */
+/* Static Properties */
 
 /**
- * Symbolic name of inspector this button opens.
+ * Symbolic name of inspector the button opens.
  *
  * @abstract
  * @static
- * @member
- * @type {String}
+ * @property {string}
+ * @inheritable
  */
 ve.ui.InspectorButtonTool.static.inspector = '';
+
+/**
+ * Annotation or node models this tool is related to.
+ *
+ * Used by #canEditModel.
+ *
+ * @static
+ * @property {Function[]}
+ */
+ve.ui.InspectorButtonTool.static.modelClasses = [];
+
+/**
+ * @inheritdoc
+ */
+ve.ui.InspectorButtonTool.static.canEditModel = function ( model ) {
+	return ve.isInstanceOfAny( model, this.modelClasses );
+};
 
 /* Methods */
 
 /**
- * Responds to the button being clicked.
+ * Handle the button being clicked.
  *
  * @method
  */
@@ -47,7 +65,7 @@ ve.ui.InspectorButtonTool.prototype.onClick = function () {
 };
 
 /**
- * Responds to the toolbar state being updated.
+ * Handle the toolbar state being updated.
  *
  * @method
  * @param {ve.dm.Node[]} nodes List of nodes covered by the current selection
@@ -56,8 +74,6 @@ ve.ui.InspectorButtonTool.prototype.onClick = function () {
  */
 ve.ui.InspectorButtonTool.prototype.onUpdateState = function ( nodes, full ) {
 	this.setActive(
-		full.hasAnnotationWithName(
-			ve.ui.inspectorFactory.getTypePattern( this.constructor.static.inspector )
-		)
+		ve.ui.toolFactory.getToolsForAnnotations( full ).indexOf( this.constructor ) !== -1
 	);
 };

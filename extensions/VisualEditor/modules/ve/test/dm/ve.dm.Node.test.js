@@ -1,7 +1,7 @@
-/**
- * VisualEditor data model Node tests.
+/*!
+ * VisualEditor DataModel Node tests.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -9,23 +9,18 @@ QUnit.module( 've.dm.Node' );
 
 /* Stubs */
 
-ve.dm.NodeStub = function VeDmNodeStub( length, attributes ) {
+ve.dm.NodeStub = function VeDmNodeStub( length, element ) {
 	// Parent constructor
-	ve.dm.Node.call( this, 'stub', length, attributes );
+	ve.dm.Node.call( this, length, element );
 };
 
-ve.inheritClass( ve.dm.NodeStub, ve.dm.Node );
+ve.inheritClass( ve.dm.NodeStub, ve.dm.LeafNode );
 
-ve.dm.NodeStub.rules = {
-	'isWrapped': true,
-	'isContent': true,
-	'canContainContent': false,
-	'childNodeTypes': []
-};
+ve.dm.NodeStub.static.name = 'stub';
 
-ve.dm.NodeStub.converters = null;
+ve.dm.NodeStub.static.matchTagNames = [];
 
-ve.dm.nodeFactory.register( 'stub', ve.dm.NodeStub );
+ve.dm.nodeFactory.register( ve.dm.NodeStub );
 
 /* Tests */
 
@@ -34,9 +29,9 @@ QUnit.test( 'canHaveChildren', 1, function ( assert ) {
 	assert.equal( node.canHaveChildren(), false );
 } );
 
-QUnit.test( 'canHaveGrandchildren', 1, function ( assert ) {
+QUnit.test( 'canHaveChildrenNotContent', 1, function ( assert ) {
 	var node = new ve.dm.NodeStub();
-	assert.equal( node.canHaveGrandchildren(), false );
+	assert.equal( node.canHaveChildrenNotContent(), false );
 } );
 
 QUnit.test( 'getLength', 2, function ( assert ) {
@@ -59,7 +54,7 @@ QUnit.test( 'setLength', 2, function ( assert ) {
 	assert.strictEqual( node.getLength(), 1234 );
 	assert.throws(
 		function () {
-			// Length can not be negative
+			// Length cannot be negative
 			node.setLength( -1 );
 		},
 		Error,
@@ -74,7 +69,7 @@ QUnit.test( 'adjustLength', 1, function ( assert ) {
 } );
 
 QUnit.test( 'getAttribute', 2, function ( assert ) {
-	var node = new ve.dm.NodeStub( 0, { 'a': 1, 'b': 2 } );
+	var node = new ve.dm.NodeStub( 0, { 'type': 'stub', 'attributes': { 'a': 1, 'b': 2 } } );
 	assert.strictEqual( node.getAttribute( 'a' ), 1 );
 	assert.strictEqual( node.getAttribute( 'b' ), 2 );
 } );
@@ -91,7 +86,7 @@ QUnit.test( 'attach', 2, function ( assert ) {
 		node2 = new ve.dm.NodeStub();
 	node1.attach( node2 );
 	assert.strictEqual( node1.getParent(), node2 );
-	assert.strictEqual( node1.getRoot(), node2 );
+	assert.strictEqual( node1.getRoot(), null );
 } );
 
 QUnit.test( 'detach', 2, function ( assert ) {
@@ -100,7 +95,7 @@ QUnit.test( 'detach', 2, function ( assert ) {
 	node1.attach( node2 );
 	node1.detach();
 	assert.strictEqual( node1.getParent(), null );
-	assert.strictEqual( node1.getRoot(), node1 );
+	assert.strictEqual( node1.getRoot(), null );
 } );
 
 QUnit.test( 'canBeMergedWith', 4, function ( assert ) {
@@ -114,4 +109,144 @@ QUnit.test( 'canBeMergedWith', 4, function ( assert ) {
 	assert.strictEqual( node2.canBeMergedWith( node5 ), false, 'different level, same type' );
 	assert.strictEqual( node2.canBeMergedWith( node1 ), false, 'different level, different type' );
 	assert.strictEqual( node2.canBeMergedWith( node4 ), false, 'same level, different type' );
+} );
+
+QUnit.test( 'getClonedElement', function ( assert ) {
+	var i, node,
+		cases = [
+			{
+				'original': {
+					'type': 'foo'
+				},
+				'clone': {
+					'type': 'foo'
+				},
+				'msg': 'Simple element is cloned verbatim'
+			},
+			{
+				'original': {
+					'type': 'foo',
+					'attributes': {
+						'bar': 'baz'
+					}
+				},
+				'clone': {
+					'type': 'foo',
+					'attributes': {
+						'bar': 'baz'
+					}
+				},
+				'msg': 'Element with simple attributes is cloned verbatim'
+			},
+			{
+				'original': {
+					'type': 'foo',
+					'attributes': {
+						'bar': 'baz'
+					},
+					'htmlAttributes': [
+						{
+							'keys': [ 'typeof', 'href' ],
+							'values': {
+								'typeof': 'Foo',
+								'href': 'Bar'
+							}
+						}
+					]
+				},
+				'clone': {
+					'type': 'foo',
+					'attributes': {
+						'bar': 'baz'
+					}
+				},
+				'msg': 'htmlAttributes is removed from clone'
+			},
+			{
+				'original': {
+					'type': 'foo',
+					'internal': {
+						'generated': 'wrapper',
+						'whitespace': [ undefined, ' ' ]
+					}
+				},
+				'clone': {
+					'type': 'foo',
+					'internal': {
+						'whitespace': [ undefined, ' ' ]
+					}
+				},
+				'msg': 'internal.generated property is removed from clone'
+			},
+			{
+				'original': {
+					'type': 'foo',
+					'internal': {
+						'generated': 'wrapper'
+					}
+				},
+				'clone': {
+					'type': 'foo'
+				},
+				'msg': 'internal property is removed if it only contained .generated'
+			},
+			{
+				'original': {
+					'type': 'foo',
+					'internal': {
+						'generated': 'wrapper'
+					},
+					'htmlAttributes': [
+						{
+							'keys': [ 'typeof', 'href' ],
+							'values': {
+								'typeof': 'Foo',
+								'href': 'Bar'
+							}
+						}
+					]
+				},
+				'clone': {
+					'type': 'foo'
+				},
+				'msg': 'internal and htmlAttributes properties are both removed'
+			},
+			{
+				'original': {
+					'type': 'foo',
+					'internal': {
+						'generated': 'wrapper',
+						'whitespace': [ undefined, ' ' ]
+					},
+					'attributes': {
+						'bar': 'baz'
+					},
+					'htmlAttributes': [
+						{
+							'keys': [ 'typeof', 'href' ],
+							'values': {
+								'typeof': 'Foo',
+								'href': 'Bar'
+							}
+						}
+					]
+				},
+				'clone': {
+					'type': 'foo',
+					'internal': {
+						'whitespace': [ undefined, ' ' ]
+					},
+					'attributes': {
+						'bar': 'baz'
+					}
+				},
+				'msg': 'internal.generated and htmlAttributes are both removed'
+			}
+		];
+	QUnit.expect( cases.length );
+
+	for ( i = 0; i < cases.length; i++ ) {
+		node = new ve.dm.NodeStub( 0, cases[i].original );
+		assert.deepEqual( node.getClonedElement(), cases[i].clone, cases[i].msg );
+	}
 } );

@@ -1,44 +1,45 @@
-/**
- * VisualEditor user interface IndentationButtonTool class.
+/*!
+ * VisualEditor UserInterface IndentationButtonTool class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Creates an ve.ui.IndentationButtonTool object.
+ * UserInterface intentation button tool.
  *
  * @abstract
  * @class
+ * @extends ve.ui.ButtonTool
  * @constructor
- * @extends {ve.ui.ButtonTool}
- * @param {ve.ui.Toolbar} toolbar
+ * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {Object} [config] Config options
  */
-ve.ui.IndentationButtonTool = function VeUiIndentationButtonTool( toolbar ) {
+ve.ui.IndentationButtonTool = function VeUiIndentationButtonTool( toolbar, config ) {
 	// Parent constructor
-	ve.ui.ButtonTool.call( this, toolbar );
+	ve.ui.ButtonTool.call( this, toolbar, config );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.ui.IndentationButtonTool, ve.ui.ButtonTool );
 
-/* Static Members */
+/* Static Properties */
 
 /**
- * Indentation method this button applies.
+ * Indentation method the button applies.
  *
  * @abstract
  * @static
- * @member
- * @type {String}
+ * @property {string}
+ * @inheritable
  */
 ve.ui.IndentationButtonTool.static.method = '';
 
 /* Methods */
 
 /**
- * Responds to the button being clicked.
+ * Handle the button being clicked.
  *
  * @method
  */
@@ -47,7 +48,7 @@ ve.ui.IndentationButtonTool.prototype.onClick = function () {
 };
 
 /**
- * Responds to the toolbar state being updated.
+ * Handle the toolbar state being updated.
  *
  * @method
  * @param {ve.dm.Node[]} nodes List of nodes covered by the current selection

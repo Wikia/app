@@ -1,0 +1,49 @@
+/*!
+ * VisualEditor UserInterface Layout styles.
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/* ve.ui.GridLayout */
+/* ve.ui.PanelLayout */
+
+.ve-ui-gridLayout,
+.ve-ui-panelLayout {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.ve-ui-panelLayout-scrollable {
+	overflow-y: auto;
+}
+
+.ve-ui-panelLayout-padded {
+	padding: 2em;
+}
+
+/* ve.ui.FieldsetLayout */
+
+.ve-ui-fieldsetLayout {
+	border: none;
+	margin: 0 0 1.75em 0;
+	padding: 0;
+}
+
+.ve-ui-fieldsetLayout-labeled {
+	margin-top: -0.75em;
+}
+
+.ve-ui-fieldsetLayout > legend.ve-ui-labeledElement-label {
+	font-size: 1.5em;
+	margin-bottom: 0.5em;
+}
+
+.ve-ui-fieldsetLayout-decorated > legend.ve-ui-labeledElement-label {
+	padding-left: 1.75em;
+	background-position: left center;
+	background-repeat: no-repeat;
+}

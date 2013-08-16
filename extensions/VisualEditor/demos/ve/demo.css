@@ -1,18 +1,16 @@
 /**
  * VisualEditor standalone demo styles.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 body {
-	font-family: Arial;
-	font-size: 1em;
-	width: 100%;
-	margin: 1em 0;
+	margin: 0;
 	padding: 0;
 	overflow-y: scroll;
-	background-color: #fff;
+	background: #fff;
+	font: normal 1em/1.5 sans-serif;
 }
 
 /* Demo */
@@ -30,32 +28,48 @@ body {
 	display: inline-block;
 }
 
-/* Editor */
-
-.ve-surface {
-	margin: 2em;
-	margin-top: 0;
-	-webkit-box-shadow: 0 0.25em 1.5em 0 #ddd;
-	-moz-box-shadow: 0 0.25em 1.5em 0 #ddd;
-	box-shadow: 0 0.25em 1.5em 0 #ddd;
-	-webkit-border-radius: 0.5em;
-	-moz-border-radius: 0.5em;
-	-o-border-radius: 0.5em;
+.ve-demo-utilities {
+	margin: 0 2.5em 1em 2.5em;
+	border: solid 1px #ccc;
+	border-top-width: 0;
 	border-radius: 0.5em;
+	-webkit-border-top-right-radius: 0;
+	-moz-border-top-right-radius: 0;
+	-o-border-top-right-radius: 0;
+	border-top-right-radius: 0;
+	-webkit-border-top-left-radius: 0;
+	-moz-border-top-left-radius: 0;
+	-o-border-top-left-radius: 0;
+	border-top-left-radius: 0;
+	padding: 1em 2em;
+	font-size: 0.8em;
+	box-shadow: 0 0.25em 1.5em 0 #ddd;
 }
 
-.ve-ce-documentNode {
-	border: solid 1px #ccc;
-	border-top: none;
-	padding: 0.75em 1.5em;
+.ve-demo-utilities-commands .ve-ui-widget,
+.ve-demo-utilities-commands-divider {
+	display: inline-block;
+	margin-right: 1em;
 }
 
-.ve-ui-toolbar {
-	border: solid 1px #ccc;
-	position: relative;
-	-webkit-border-radius: 0;
-	-moz-border-radius: 0;
-	-o-border-radius: 0;
+.ve-demo-utilities-commands .ve-ui-textInputWidget {
+	width: 4em;
+}
+
+.ve-demo-utilities-commands-divider {
+	border-right: solid 1px #ddd;
+	padding-left: 0.2em;
+	width: 0px;
+}
+
+.ve-demo-dump {
+	margin: 2em 0 1.5em 0;
+	display: none;
+	border: none;
+	background-color: #f3f3f3;
+	width: 100%;
+	font-size: 0.9em;
+	border: solid 1px #ddd;
 	border-radius: 0;
 	-webkit-border-top-right-radius: 0.25em;
 	-moz-border-top-right-radius: 0.25em;
@@ -65,52 +79,84 @@ body {
 	-moz-border-top-left-radius: 0.25em;
 	-o-border-top-left-radius: 0.25em;
 	border-top-left-radius: 0.25em;
-	/* @embed */
-	background-image: url(../../modules/ve/ui/styles/images/fade-up.png);
-	background-position: left bottom;
-	background-repeat: repeat-x;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	-o-user-select: none;
-	user-select: none;
 }
 
-.ve-ui-toolbar-wrapper {
+.ve-demo-dump td {
+	padding: 0.25em 1em;
+	background-color: #fff;
+}
+
+.ve-demo-dump th {
+	padding: 0.5em 1em;
+	color: #555;
+	text-shadow: 0 1px 1px #fff;
+}
+
+.ve-demo-dump ol {
+	padding-left: 1.5em;
+	color: #999;
+}
+
+.ve-demo-dump li > span {
+	display: inline-block;
+	background-color: #f3f3f3;
+	border-radius: 0.3em;
+	margin: 0.25em 0 0.25em 0;
+	padding: 0.125em 0.5em;
+	text-shadow: 0 1px 1px #fff;
+	color: #000;
+}
+
+.ve-demo-dump li > span > span {
+	color: #aaa;
+	text-shadow: 0 1px 1px #fff;
+}
+
+.ve-demo-dump li .ve-demo-dump-element {
+	background-color: #ddeeff;
+}
+
+.ve-demo-dump li .ve-demo-dump-char {
+	background-color: #ddffee;
+}
+
+.ve-demo-dump li .ve-demo-dump-achar {
+	background-color: #ffeedd;
+}
+
+/* Editor */
+
+.ve-ui-surface {
+	margin: 2em 2em 0 2em;
+	margin-top: 0;
+	box-shadow: 0 0.25em 1.5em 0 #ddd;
+	border-radius: 0.5em;
+}
+
+.ve-ce-documentNode {
+	border: solid 1px #ccc;
+	border-top: none;
+	padding: 0.75em 1.5em;
+}
+
+.ve-init-sa-target-toolbar {
 	margin: 0 2em;
 }
 
-.ve-ui-toolbar-wrapper.float .ve-ui-toolbar {
-	top: 0;
-	position: fixed;
-	-webkit-border-radius: 0;
-	-moz-border-radius: 0;
-	-o-border-radius: 0;
+.ve-init-sa-target-toolbar .ve-ui-toolbar-bar {
+	border: solid 1px #ccc;
 	border-radius: 0;
-	z-index: 100;
+	-webkit-border-top-right-radius: 0.25em;
+	-moz-border-top-right-radius: 0.25em;
+	-o-border-top-right-radius: 0.25em;
+	border-top-right-radius: 0.25em;
+	-webkit-border-top-left-radius: 0.25em;
+	-moz-border-top-left-radius: 0.25em;
+	-o-border-top-left-radius: 0.25em;
+	border-top-left-radius: 0.25em;
+}
+
+.ve-init-sa-target-toolbar.ve-ui-toolbar-floating .ve-ui-toolbar-bar {
 	border-top: none;
-}
-
-.ve-ui-toolbar-shadow {
-	/* @embed */
-	background-image: url(../../modules/ve/ui/styles/images/toolbar-shadow.png);
-	background-position: left top;
-	background-repeat: repeat-x;
-	position: absolute;
-	bottom: -9px;
-	height: 9px;
-	width: 100%;
-	pointer-events: none;
-	-ms-transition: opacity 500ms ease-in-out;
-	-webkit-transition: opacity 500ms ease-in-out;
-	-moz-transition: opacity 500ms ease-in-out;
-	-o-transition: opacity 500ms ease-in-out;
-	transition: opacity 500ms ease-in-out;
-	filter: alpha(opacity=12);
-	opacity: 0.125;
-}
-
-.ve-ui-toolbar-wrapper.float .ve-ui-toolbar-shadow {
-	filter: alpha(opacity=50);
-	opacity: 0.5;
+	border-radius: 0;
 }

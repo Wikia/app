@@ -1,50 +1,40 @@
-/**
- * VisualEditor data model DocumentNode class.
+/*!
+ * VisualEditor DataModel DocumentNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * DataModel node for a document.
+ * DataModel document node.
  *
  * @class
+ * @extends ve.dm.BranchNode
  * @constructor
- * @extends {ve.dm.BranchNode}
  * @param {ve.dm.BranchNode[]} [children] Child nodes to attach
  */
 ve.dm.DocumentNode = function VeDmDocumentNode( children ) {
 	// Parent constructor
-	ve.dm.BranchNode.call( this, 'document', children );
+	ve.dm.BranchNode.call( this, children );
+
+	// Properties
+	this.root = this;
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.dm.DocumentNode, ve.dm.BranchNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.dm.NodeFactory
- * @static
- * @member
- */
-ve.dm.DocumentNode.rules = {
-	'isWrapped': false,
-	'isContent': false,
-	'canContainContent': false,
-	'hasSignificantWhitespace': false,
-	'childNodeTypes': null,
-	'parentNodeTypes': []
-};
+ve.dm.DocumentNode.static.name = 'document';
 
-// This is a special node, no converter registration is required
-ve.dm.DocumentNode.converters = null;
+ve.dm.DocumentNode.static.isWrapped = false;
+
+ve.dm.DocumentNode.static.parentNodeTypes = [];
+
+ve.dm.DocumentNode.static.matchTagNames = [];
 
 /* Registration */
 
-ve.dm.nodeFactory.register( 'document', ve.dm.DocumentNode );
-
-// This is a special node, no converter registration is required
+ve.dm.modelRegistry.register( ve.dm.DocumentNode );

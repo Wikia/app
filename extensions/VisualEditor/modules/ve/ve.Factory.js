@@ -1,24 +1,23 @@
-/**
+/*!
  * VisualEditor Factory class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
  * Generic object factory.
  *
- * @class
  * @abstract
+ * @extends ve.Registry
  * @constructor
- * @extends {ve.Registry}
  */
 ve.Factory = function VeFactory() {
 	// Parent constructor
 	ve.Registry.call( this );
 
 	// Properties
-	this.registry = [];
+	this.entries = [];
 };
 
 /* Inheritance */
@@ -31,15 +30,16 @@ ve.inheritClass( ve.Factory, ve.Registry );
  * Register a constructor with the factory.
  *
  * @method
- * @param {String|String[]} name Symbolic name or list of symbolic names
+ * @param {string|string[]} name Symbolic name or list of symbolic names
  * @param {Function} constructor Constructor to use when creating object
- * @throws 'constructor must be a function'
+ * @throws {Error} Constructor must be a function
  */
 ve.Factory.prototype.register = function ( name, constructor ) {
 	if ( typeof constructor !== 'function' ) {
 		throw new Error( 'constructor must be a function, cannot be a ' + typeof constructor );
 	}
 	ve.Registry.prototype.register.call( this, name, constructor );
+	this.entries.push( name );
 };
 
 /**
@@ -49,10 +49,10 @@ ve.Factory.prototype.register = function ( name, constructor ) {
  * constructor directly, so leaving one out will pass an undefined to the constructor.
  *
  * @method
- * @param {string} name Object name.
- * @param {mixed} [...] Arguments to pass to the constructor.
- * @returns {Object} The new object.
- * @throws 'Unknown object name'
+ * @param {string} name Object name
+ * @param {Mixed...} [args] Arguments to pass to the constructor
+ * @returns {Object} The new object
+ * @throws {Error} Unknown object name
  */
 ve.Factory.prototype.create = function ( name ) {
 	var args, obj,

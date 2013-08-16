@@ -1,0 +1,200 @@
+<!--
+/**
+ * VisualEditor trigger demo
+ *
+ * @file
+ * @ingroup Extensions
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>VisualEditor Trigger Demo</title>
+		<style>
+			body {
+				font-size: 1em;
+				font-family: sans-serif;
+				cursor: default;
+			}
+			ul {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			.flow li {
+				display: inline-block;
+			}
+			.stack li {
+				display: inline-block;
+				white-space: nowrap;
+				padding: 0.75em;
+				margin: 0.125em;
+				border: solid 1px #ccc;
+				background-color: #eee;
+				border-radius: 0.5em;
+			}
+			.key {
+				display: inline-block;
+				cursor: pointer;
+				color: #fff;
+				background-color: #555;
+				margin: 0.125em;
+				padding: 0.75em;
+				border-radius: 0.25em;
+				border: outset 2px #555;
+				-moz-user-select: none;
+				-webkit-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+			.alias {
+				color: #bbb;
+			}
+			.active {
+				border: inset 2px #444;
+				background-color: #333;
+				text-shadow: 0 0 0.5em #fff
+			}
+			table {
+				width: 100%;
+			}
+			td {
+				padding: 3em;
+				vertical-align: top;
+			}
+			h1 {
+				padding: 1.5em;
+				padding-bottom: 0;
+				margin: 0;
+			}
+			h2 {
+				font-weight: normal;
+			}
+			.title {
+				color: #777;
+			}
+		</style>
+	</head>
+	<body>
+		<h1><span class="title">Key sequence: </span><span id="trigger"></span></h1>
+		<table>
+			<tr>
+				<td>
+					<h2 class="title">Modifiers</h2>
+					<ul id="modifiers" class="flow"></ul>
+				</td>
+				<td>
+					<h2 class="title">Primary</h2>
+					<ul id="primary" class="flow"></ul>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<h2 class="title">Aliases</h2>
+					<ul id="aliases" class="stack"></ul>
+				</td>
+			</tr>
+		</table>
+		<script src="../../modules/jquery/jquery.js"></script>
+		<script src="../../modules/oojs/oo.js"></script>
+		<script src="../../modules/unicodejs/unicodejs.js"></script>
+		<script src="../../modules/unicodejs/unicodejs.graphemebreak.js"></script>
+		<script src="../../modules/unicodejs/unicodejs.graphemebreakproperties.js"></script>
+		<script src="../../modules/unicodejs/unicodejs.textstring.js"></script>
+		<script src="../../modules/unicodejs/unicodejs.wordbreak.js"></script>
+		<script src="../../modules/unicodejs/unicodejs.wordbreakproperties.js"></script>
+		<script src="../../modules/ve/ve.js"></script>
+		<script src="../../modules/ve/ui/ve.ui.js"></script>
+		<script src="../../modules/ve/ui/ve.ui.Trigger.js"></script>
+		<script>
+			function setTrigger( trigger ) {
+				var i, len, key,
+					trigger = trigger.toString(),
+					parts = trigger.split( '+' );
+				$( '#trigger' ).text( trigger );
+				for ( i = 0, len = parts.length; i < len; i++ ) {
+					key = parts[i].replace( '\\', '\\\\' ).replace( '"', '\\"' );
+					$( '.key[rel="' + key + '"]' ).addClass( 'active' );
+				}
+			}
+
+			// Initialiation
+
+			var i, len, key,
+				$primary = $( '#primary' ),
+				$modifiers = $( '#modifiers' ),
+				$aliases = $( '#aliases' ),
+				primaryKeys = ve.ui.Trigger.static.primaryKeys,
+				modifierKeys = ve.ui.Trigger.static.modifierKeys,
+				keyAliases = ve.ui.Trigger.static.keyAliases;
+
+			for ( i = 0, len = modifierKeys.length; i < len; i++ ) {
+				$modifiers.append(
+					$( '<li>' ).append(
+						$( '<span class="key"></span>' )
+							.text( modifierKeys[i] )
+							.attr( 'rel', modifierKeys[i] )
+					)
+				);
+			}
+			for ( i = 0, len = primaryKeys.length; i < len; i++ ) {
+				$primary.append(
+					$( '<li>' ).append(
+						$( '<span class="key"></span>' )
+							.text( primaryKeys[i] )
+							.attr( 'rel', primaryKeys[i] )
+					)
+				);
+			}
+			for ( key in keyAliases ) {
+				$aliases.append(
+					$( '<li>' )
+						.append( $( '<span class="key alias"></span>' ).text( key ) )
+						.append( '⇢' )
+						.append( $( '<span class="key"></span>' ).text( keyAliases[key] ) )
+				);
+			}
+
+			// Events
+
+			$( 'body' ).on( {
+				'keydown': function ( e ) {
+					$( '.active' ).removeClass( 'active' );
+					setTrigger( new ve.ui.Trigger( e ) );
+					e.preventDefault();
+				}
+			} );
+			$( '#primary .key, #modifiers .key' ).on( {
+				'mousedown': function( e ) {
+					var $target = $( e.target );
+					if ( e.which === 1 ) {
+						if ( $target.closest( '#primary' ).length ) {
+							$primary.find( '.active' ).removeClass( 'active' );
+						}
+						if ( !$target.hasClass( 'active' ) ) {
+							$target.addClass( 'active activating' );
+						}
+					}
+				},
+				'mouseup': function( e ) {
+					var parts = [],
+						$target = $( e.target );
+					if ( e.which === 1 ) {
+						if ( $target.hasClass( 'active' ) && !$target.hasClass( 'activating' ) ) {
+							$target.removeClass( 'active' );
+						}
+						$target.removeClass( 'activating' );
+						$( '.active' ).each( function () {
+							parts.push( $(this).attr( 'rel' ) );
+						} );
+						setTrigger( new ve.ui.Trigger( parts.join( '+' ) ) );
+					}
+				}
+			} );
+
+		</script>
+	</body>
+</html>

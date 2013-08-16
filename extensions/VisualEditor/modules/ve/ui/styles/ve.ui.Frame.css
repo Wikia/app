@@ -1,0 +1,22 @@
+/*!
+ * VisualEditor UserInterface Frame styles.
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-ui-frame {
+	margin: 0;
+	padding: 0;
+}
+
+.ve-ui-frame-body {
+	margin: 0;
+	padding: 0;
+	background: none;
+}
+
+.ve-ui-frame-content {
+	font-family: sans-serif;
+	font-size: 0.8em;
+}

@@ -1,18 +1,18 @@
-/**
- * VisualEditor data model InspectorFactory class.
+/*!
+ * VisualEditor UserInterface InspectorFactory class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * DataModel Inspector factory.
+ * UserInterface inspector factory.
  *
  * @class
+ * @extends ve.Factory
  * @constructor
- * @extends {ve.Factory}
  */
-ve.ui.InspectorFactory = function VeDmInspectorFactory() {
+ve.ui.InspectorFactory = function VeUiInspectorFactory() {
 	// Parent constructor
 	ve.Factory.call( this );
 };
@@ -20,28 +20,6 @@ ve.ui.InspectorFactory = function VeDmInspectorFactory() {
 /* Inheritance */
 
 ve.inheritClass( ve.ui.InspectorFactory, ve.Factory );
-
-/* Methods */
-
-/**
- * Gets an inspector constructor for a given annotation type.
- *
- * If {static.typePattern} is not defined in an inspector subclass a regular expression that matches
- * nothing will be returned.
- *
- * @method
- * @param {String} name Symbolic name of inspector to get pattern for
- * @returns {RegExp} Regular expression matching annotations relevant to a given inspector
- */
-ve.ui.InspectorFactory.prototype.getTypePattern = function ( name ) {
-	if ( name in this.registry ) {
-		if ( this.registry[name].static && this.registry[name].static.typePattern ) {
-			return this.registry[name].static.typePattern;
-		}
-		return new RegExp();
-	}
-	throw new Error( 'Unknown inspector: ' + name );
-};
 
 /* Initialization */
 

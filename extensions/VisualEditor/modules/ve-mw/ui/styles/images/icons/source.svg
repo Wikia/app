@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px"
+	 height="24px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+<g id="source" style="opacity:0.75;">
+	<path id="opening_bracket" style="fill-rule:evenodd;clip-rule:evenodd;" d="M6,18h3v-2H8V8h1V6H6V18z"/>
+	<path id="closing_bracket" style="fill-rule:evenodd;clip-rule:evenodd;" d="M18,18h-3v-2h1V8h-1V6h3V18z"/>
+</g>
+</svg>

@@ -1,24 +1,25 @@
-/**
- * VisualEditor user interface RedoButtonTool class.
+/*!
+ * VisualEditor UserInterface RedoButtonTool class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Creates an ve.ui.RedoButtonTool object.
+ * UserInterface redo button tool.
  *
  * @class
+ * @extends ve.ui.ButtonTool
  * @constructor
- * @extends {ve.ui.ButtonTool}
- * @param {ve.ui.Toolbar} toolbar
+ * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {Object} [config] Config options
  */
-ve.ui.RedoButtonTool = function VeUiRedoButtonTool( toolbar ) {
+ve.ui.RedoButtonTool = function VeUiRedoButtonTool( toolbar, config ) {
 	// Parent constructor
-	ve.ui.ButtonTool.call( this, toolbar );
+	ve.ui.ButtonTool.call( this, toolbar, config );
 
 	// Events
-	this.toolbar.getSurface().getModel().addListenerMethod( this, 'history', 'onUpdateState' );
+	this.toolbar.getSurface().getModel().connect( this, { 'history': 'onUpdateState' } );
 
 	// Initialization
 	this.setDisabled( true );
@@ -28,16 +29,18 @@ ve.ui.RedoButtonTool = function VeUiRedoButtonTool( toolbar ) {
 
 ve.inheritClass( ve.ui.RedoButtonTool, ve.ui.ButtonTool );
 
-/* Static Members */
+/* Static Properties */
 
 ve.ui.RedoButtonTool.static.name = 'redo';
+
+ve.ui.RedoButtonTool.static.icon = 'redo';
 
 ve.ui.RedoButtonTool.static.titleMessage = 'visualeditor-historybutton-redo-tooltip';
 
 /* Methods */
 
 /**
- * Responds to the button being clicked.
+ * Handle the button being clicked.
  *
  * @method
  */
@@ -46,7 +49,7 @@ ve.ui.RedoButtonTool.prototype.onClick = function () {
 };
 
 /**
- * Responds to the toolbar state being updated.
+ * Handle the toolbar state being updated.
  *
  * @method
  * @param {ve.dm.Node[]} nodes List of nodes covered by the current selection
@@ -60,3 +63,12 @@ ve.ui.RedoButtonTool.prototype.onUpdateState = function () {
 /* Registration */
 
 ve.ui.toolFactory.register( 'redo', ve.ui.RedoButtonTool );
+
+ve.ui.commandRegistry.register(
+	'redo', 'history', 'redo'
+);
+
+ve.ui.triggerRegistry.register(
+	'redo', { 'mac': new ve.ui.Trigger( 'cmd+shift+z' ), 'pc': new ve.ui.Trigger( 'ctrl+shift+z' ) }
+);
+

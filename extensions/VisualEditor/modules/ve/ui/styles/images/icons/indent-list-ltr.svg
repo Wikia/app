@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" opacity="0.75" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-	 x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
-<g id="indent-list-ltr">
-	<polygon id="arrow_6_" points="5,15.079 9.794,11.552 5.09,7.953 5.08,10 3,10 3,13 5,13 	"/>
-	<path id="bottom_line_2_" d="M20,17H4c-0.553,0-1,0.447-1,1v1c0,0.553,0.447,1,1,1h16c0.553,0,1-0.447,1-1v-1
-		C21,17.447,20.553,17,20,17z"/>
-	<path id="middle_line_2_" d="M20,10h-7c-0.553,0-1,0.447-1,1v1c0,0.553,0.447,1,1,1h7c0.553,0,1-0.447,1-1v-1
-		C21,10.447,20.553,10,20,10z"/>
-	<path id="top_line_2_" d="M20,3H4C3.447,3,3,3.447,3,4v1c0,0.553,0.447,1,1,1h16c0.553,0,1-0.447,1-1V4C21,3.447,20.553,3,20,3z"/>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px"
+	 height="24px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+<g id="indent-list-ltr" style="opacity:0.75;">
+	<polygon id="arrow" points="5,15.079 9.794,11.552 5.09,7.953 5.08,10 3,10 3,13 5,13"/>
+	<path id="bottom_line" d="M20,17H4c-0.553,0-1,0.447-1,1v1c0,0.553,0.447,1,1,1h16c0.553,0,1-0.447,1-1v-1 C21,17.447,20.553,17,20,17z"/>
+	<path id="middle_line" d="M20,10h-7c-0.553,0-1,0.447-1,1v1c0,0.553,0.447,1,1,1h7c0.553,0,1-0.447,1-1v-1 C21,10.447,20.553,10,20,10z"/>
+	<path id="top_line" d="M20,3H4C3.447,3,3,3.447,3,4v1c0,0.553,0.447,1,1,1h16c0.553,0,1-0.447,1-1V4C21,3.447,20.553,3,20,3z"/>
 </g>
 </svg>

@@ -1,26 +1,28 @@
 /*global rangy */
 
-/**
- * VisualEditor content editable Surface class.
+/*!
+ * VisualEditor ContentEditable Surface class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Surface observer.
+ * ContentEditable surface observer.
  *
  * @class
+ * @mixins ve.EventEmitter
+ *
  * @constructor
- * @extends {ve.EventEmitter}
  * @param {ve.ce.Document} documentView Document to observe
  */
 ve.ce.SurfaceObserver = function VeCeSurfaceObserver( documentView ) {
-	// Parent constructor
+	// Mixin constructors
 	ve.EventEmitter.call( this );
 
 	// Properties
 	this.documentView = documentView;
+	this.domDocument = null;
 	this.polling = false;
 	this.timeoutId = null;
 	this.frequency = 250; //ms
@@ -31,49 +33,74 @@ ve.ce.SurfaceObserver = function VeCeSurfaceObserver( documentView ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.SurfaceObserver, ve.EventEmitter );
+ve.mixinClass( ve.ce.SurfaceObserver, ve.EventEmitter );
+
+/* Events */
+
+/**
+ * When #poll sees a change this event is emitted (before the
+ * properties are updated).
+ *
+ * @event contentChange
+ * @param {HTMLElement} node DOM node the change occured in
+ * @param {Object} previous Old data
+ * @param {Object} previous.text Old plain text content
+ * @param {Object} previous.hash Old DOM hash
+ * @param {ve.Range} previous.range Old selection
+ * @param {Object} next New data
+ * @param {Object} next.text New plain text content
+ * @param {Object} next.hash New DOM hash
+ * @param {ve.Range} next.range New selection
+ */
+
+/**
+ * When #poll observes a change in the document and the new
+ * selection does not equal as the last known selection, this event
+ * is emitted (before the properties are updated).
+ *
+ * @event selectionChange
+ * @param {ve.Range} oldRange
+ * @param {ve.Range} newRange
+ */
 
 /* Methods */
 
 /**
- * Clears polling data.
+ * Clear polling data.
  *
  * @method
+ * @param {ve.Range} range Initial range to use
  */
-ve.ce.SurfaceObserver.prototype.clear = function () {
-	this.rangySelection = {
-		anchorNode: null,
-		anchorOffset: null,
-		focusNode: null,
-		focusOffset: null
-	};
-	this.range = null;
+ve.ce.SurfaceObserver.prototype.clear = function ( range ) {
+	this.rangyRange = null;
+	this.range = range || null;
 	this.node = null;
 	this.text = null;
 	this.hash = null;
 };
 
 /**
- * Starts polling.
+ * Start polling.
  *
  * If {async} is false or undefined the first poll cycle will occur immediately and synchronously.
  *
  * @method
- * @param {Boolean} async Poll the first time asynchronously
+ * @param {boolean} async Poll the first time asynchronously
  */
 ve.ce.SurfaceObserver.prototype.start = function ( async ) {
+	this.domDocument = this.documentView.getDocumentNode().getElementDocument();
 	this.polling = true;
 	this.poll( async );
 };
 
 /**
- * Stops polling.
+ * Stop polling.
  *
  * If {poll} is false or undefined than no final poll cycle will occur and changes can be lost. If
  * it's true then a final poll cycle will occur immediately and synchronously.
  *
  * @method
- * @param {Boolean} poll Poll one last time before stopping future polling
+ * @param {boolean} poll Poll one last time before stopping future polling
  */
 ve.ce.SurfaceObserver.prototype.stop = function ( poll ) {
 	if ( this.polling === true ) {
@@ -89,15 +116,24 @@ ve.ce.SurfaceObserver.prototype.stop = function ( poll ) {
 /**
  * Poll for changes.
  *
- * If {async} is false or undefined then polling will occcur asynchronously.
+ * If `async` is false or undefined then polling will occcur asynchronously.
  *
  * TODO: fixing selection in certain cases, handling selection across multiple nodes in Firefox
  *
+ * FIXME: Does not work well (selectionChange is not emited) when cursor is placed inside a slug
+ * with a mouse.
+ *
  * @method
- * @param {Boolean} async Poll asynchronously
+ * @param {boolean} async Poll asynchronously
+ * @emits contentChange
+ * @emits selectionChange
  */
 ve.ce.SurfaceObserver.prototype.poll = function ( async ) {
-	var delayPoll, rangySelection, range, node, text, hash;
+	var delayPoll, $nodeOrSlug, node, text, hash, range, rangyRange;
+
+	if ( this.polling === false ) {
+		return;
+	}
 
 	if ( this.timeoutId !== null ) {
 		clearTimeout( this.timeoutId );
@@ -116,39 +152,20 @@ ve.ce.SurfaceObserver.prototype.poll = function ( async ) {
 		return;
 	}
 
-	rangySelection = rangy.getSelection();
 	range = this.range;
 	node = this.node;
+	rangyRange = ve.ce.DomRange.newFromDomSelection( rangy.getSelection( this.domDocument ) );
 
-	if (
-		rangySelection.anchorNode !== this.rangySelection.anchorNode ||
-		rangySelection.anchorOffset !== this.rangySelection.anchorOffset ||
-		rangySelection.focusNode !== this.rangySelection.focusNode ||
-		rangySelection.focusOffset !== this.rangySelection.focusOffset
-	) {
-		this.rangySelection.anchorNode = rangySelection.anchorNode;
-		this.rangySelection.anchorOffset = rangySelection.anchorOffset;
-		this.rangySelection.focusNode = rangySelection.focusNode;
-		this.rangySelection.focusOffset = rangySelection.focusOffset;
-
-		range = new ve.Range(
-			ve.ce.getOffset( rangySelection.anchorNode, rangySelection.anchorOffset ),
-			ve.ce.getOffset( rangySelection.focusNode, rangySelection.focusOffset )
-		);
-
-		//if ( range.getLength() === 0 ) {
-			node = $( rangySelection.anchorNode ).closest( '.ve-ce-branchNode' ).data( 'node' );
-			if ( node.canHaveGrandchildren() === true ) {
-				node = null;
+	if ( !rangyRange.equals( this.rangyRange ) ) {
+		this.rangyRange = rangyRange;
+		node = null;
+		$nodeOrSlug = $( rangyRange.anchorNode ).closest( '.ve-ce-branchNode, .ve-ce-branchNode-slug' );
+		if ( $nodeOrSlug.length ) {
+			range = rangyRange.getRange();
+			if ( !$nodeOrSlug.hasClass( 've-ce-branchNode-slug' ) ) {
+				node = $nodeOrSlug.data( 'view' );
 			}
-		/*} else {
-			nodes = this.documentView.selectNodes( range, 'branches' );
-			if ( nodes.length === 1 && nodes[0].node.canHaveGrandchildren() === false ) {
-				node = nodes[0].node;
-			} else {
-				node = null;
-			}
-		}*/
+		}
 	}
 
 	if ( this.node !== node ) {
@@ -178,7 +195,8 @@ ve.ce.SurfaceObserver.prototype.poll = function ( async ) {
 		}
 	}
 
-	if ( this.range !== range ) {
+	// Only emit selectionChange event if there's a meaningful range difference
+	if ( ( this.range && range ) ? !this.range.equals( range ) : ( this.range !== range ) ) {
 		this.emit(
 			'selectionChange',
 			this.range,

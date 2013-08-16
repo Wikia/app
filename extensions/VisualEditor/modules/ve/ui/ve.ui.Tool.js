@@ -1,60 +1,103 @@
-/**
- * VisualEditor user interface Tool class.
+/*!
+ * VisualEditor UserInterface Tool class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Creates an ve.ui.Tool object.
+ * UserInterface tool.
  *
  * @class
  * @abstract
+ * @extends ve.ui.Widget
+ *
  * @constructor
  * @param {ve.ui.Toolbar} toolbar
+ * @param {Object} [config] Config options
  */
-ve.ui.Tool = function VeUiTool( toolbar ) {
+ve.ui.Tool = function VeUiTool( toolbar, config ) {
+	// Parent constructor
+	ve.ui.Widget.call( this, config );
+
 	// Properties
 	this.toolbar = toolbar;
-	this.$ = $( '<div class="ve-ui-tool"></div>' );
 
 	// Events
-	this.toolbar.addListenerMethods(
-		this, { 'updateState': 'onUpdateState', 'clearState': 'onClearState' }
-	);
+	this.toolbar.connect( this, { 'updateState': 'onUpdateState' } );
+	ve.ui.triggerRegistry.connect( this, { 'register': 'onTriggerRegistryRegister' } );
 
-	// Intialization
-	this.$.attr( 'title', ve.msg( this.constructor.static.titleMessage ) );
+	// Initialization
+	this.setTitle();
+	this.$.addClass( 've-ui-tool' );
 };
 
-/* Static Members */
+/* Inheritance */
 
-ve.ui.Tool.static = {};
+ve.inheritClass( ve.ui.Tool, ve.ui.Widget );
+
+/* Static Properties */
 
 /**
  * Symbolic name of tool.
  *
  * @abstract
  * @static
- * @member
- * @type {String}
+ * @property {string}
  */
 ve.ui.Tool.static.name = '';
+
+/**
+ * CSS class name, rendered as ve-ui-dropdownTool-cssName
+ *
+ * If this is left as null, static.name is used instead.
+ *
+ * @abstract
+ * @static
+ * @property {string}
+ */
+ve.ui.Tool.static.cssName = null;
 
 /**
  * Message key for tool title.
  *
  * @abstract
  * @static
- * @member
- * @type {String}
+ * @property {string}
  */
-ve.ui.Tool.static.titleMessage = '';
+ve.ui.Tool.static.titleMessage = null;
+
+/**
+ * Check if this tool can be used on a model.
+ *
+ * @method
+ * @static
+ * @inheritable
+ * @param {ve.dm.Model} model Model to check
+ * @returns {boolean} Tool can be used to edit model
+ */
+ve.ui.Tool.static.canEditModel = function () {
+	return false;
+};
 
 /* Methods */
 
 /**
- * Responds to the toolbar state being updated.
+ * Handle trigger registry register events.
+ *
+ * If a trigger is registered after the tool is loaded, this handler will ensure the tool's title is
+ * updated to reflect the available key command for the tool.
+ *
+ * @param {string} name Symbolic name of trigger
+ */
+ve.ui.Tool.prototype.onTriggerRegistryRegister = function ( name ) {
+	if ( name === this.constructor.static.name ) {
+		this.setTitle();
+	}
+};
+
+/**
+ * Handle the toolbar state being updated.
  *
  * This is an abstract method that must be overridden in a concrete subclass.
  *
@@ -62,17 +105,29 @@ ve.ui.Tool.static.titleMessage = '';
  * @method
  */
 ve.ui.Tool.prototype.onUpdateState = function () {
-	throw new Error( 'Tool.onUpdateState not implemented in this subclass:' + this.constructor );
+	throw new Error(
+		've.ui.Tool.onUpdateState not implemented in this subclass:' + this.constructor
+	);
 };
 
 /**
- * Responds to the toolbar state being cleared.
+ * Sets the tool title attribute in the dom.
  *
- * This is an abstract method that must be overridden in a concrete subclass.
+ * Combines trigger i18n with tooltip message if trigger exists.
+ * Otherwise defaults to titleMessage value.
  *
  * @abstract
  * @method
+ * @chainable
  */
-ve.ui.Tool.prototype.onClearState = function () {
-	throw new Error( 'Tool.onClearState not implemented in this subclass:' + this.constructor );
+ve.ui.Tool.prototype.setTitle = function () {
+	var trigger = ve.ui.triggerRegistry.lookup( this.constructor.static.name ),
+		labelMessage = this.constructor.static.titleMessage,
+		labelText = labelMessage ? ve.msg( labelMessage ) : '';
+
+	if ( trigger ) {
+		labelText += ' [' + trigger.getMessage() + ']';
+	}
+	this.$.attr( 'title', labelText );
+	return this;
 };

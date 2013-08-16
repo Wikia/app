@@ -1,21 +1,22 @@
-/**
- * VisualEditor user interface ClearButtonTool class.
+/*!
+ * VisualEditor UserInterface ClearButtonTool class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Creates an ve.ui.ClearButtonTool object.
+ * UserInterface clear button tool.
  *
  * @class
+ * @extends ve.ui.ButtonTool
  * @constructor
- * @extends {ve.ui.ButtonTool}
- * @param {ve.ui.Toolbar} toolbar
+ * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {Object} [config] Config options
  */
-ve.ui.ClearButtonTool = function VeUiClearButtonTool( toolbar ) {
+ve.ui.ClearButtonTool = function VeUiClearButtonTool( toolbar, config ) {
 	// Parent constructor
-	ve.ui.ButtonTool.call( this, toolbar );
+	ve.ui.ButtonTool.call( this, toolbar, config );
 
 	// Initialization
 	this.setDisabled( true );
@@ -25,16 +26,18 @@ ve.ui.ClearButtonTool = function VeUiClearButtonTool( toolbar ) {
 
 ve.inheritClass( ve.ui.ClearButtonTool, ve.ui.ButtonTool );
 
-/* Static Members */
+/* Static Properties */
 
 ve.ui.ClearButtonTool.static.name = 'clear';
+
+ve.ui.ClearButtonTool.static.icon = 'clear';
 
 ve.ui.ClearButtonTool.static.titleMessage = 'visualeditor-clearbutton-tooltip';
 
 /* Methods */
 
 /**
- * Responds to the button being clicked.
+ * Handle the button being clicked.
  *
  * @method
  */
@@ -43,7 +46,7 @@ ve.ui.ClearButtonTool.prototype.onClick = function () {
 };
 
 /**
- * Responds to the toolbar state being updated.
+ * Handle the toolbar state being updated.
  *
  * @method
  * @param {ve.dm.Node[]} nodes List of nodes covered by the current selection
@@ -57,3 +60,9 @@ ve.ui.ClearButtonTool.prototype.onUpdateState = function ( nodes, full, partial 
 /* Registration */
 
 ve.ui.toolFactory.register( 'clear', ve.ui.ClearButtonTool );
+
+ve.ui.commandRegistry.register( 'clear', 'annotation', 'clearAll' );
+
+ve.ui.triggerRegistry.register(
+	'clear', { 'mac': new ve.ui.Trigger( 'cmd+\\' ), 'pc': new ve.ui.Trigger( 'ctrl+\\' ) }
+);

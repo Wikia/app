@@ -1,44 +1,46 @@
-/**
- * VisualEditor user interface AnnotationButtonTool class.
+/*!
+ * VisualEditor UserInterface AnnotationButtonTool class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Creates an ve.ui.AnnotationButtonTool object.
+ * UserInterface annotation button tool.
  *
- * @abstract
  * @class
+ * @abstract
+ * @extends ve.ui.ButtonTool
+ *
  * @constructor
- * @extends {ve.ui.ButtonTool}
- * @param {ve.ui.Toolbar} toolbar
+ * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {Object} [config] Config options
  */
-ve.ui.AnnotationButtonTool = function VeUiAnnotationButtonTool( toolbar ) {
+ve.ui.AnnotationButtonTool = function VeUiAnnotationButtonTool( toolbar, config ) {
 	// Parent constructor
-	ve.ui.ButtonTool.call( this, toolbar );
+	ve.ui.ButtonTool.call( this, toolbar, config );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.ui.AnnotationButtonTool, ve.ui.ButtonTool );
 
-/* Static Members */
+/* Static Properties */
 
 /**
- * Annotation name and data this button applies.
+ * Annotation name and data the button applies.
  *
  * @abstract
  * @static
- * @member
- * @type {Object}
+ * @property {Object}
+ * @inheritable
  */
 ve.ui.AnnotationButtonTool.static.annotation = { 'name': '' };
 
 /* Methods */
 
 /**
- * Responds to the button being clicked.
+ * Handle the button being clicked.
  *
  * @method
  */
@@ -49,7 +51,7 @@ ve.ui.AnnotationButtonTool.prototype.onClick = function () {
 };
 
 /**
- * Responds to the toolbar state being updated.
+ * Handle the toolbar state being updated.
  *
  * @method
  * @param {ve.dm.Node[]} nodes List of nodes covered by the current selection

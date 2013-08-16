@@ -1,65 +1,42 @@
-/**
- * VisualEditor data model CenterNode class.
+/*!
+ * VisualEditor DataModel CenterNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * DataModel node for a center tag.
+ * DataModel center node.
  *
  * @class
+ * @extends ve.dm.BranchNode
  * @constructor
- * @extends {ve.dm.BranchNode}
  * @param {ve.dm.BranchNode[]} [children] Child nodes to attach
- * @param {Object} [attributes] Reference to map of attribute key/value pairs
+ * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.CenterNode = function VeDmCenterNode( children, attributes ) {
+ve.dm.CenterNode = function VeDmCenterNode( children, element ) {
 	// Parent constructor
-	ve.dm.BranchNode.call( this, 'center', children, attributes );
+	ve.dm.BranchNode.call( this, children, element );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.dm.CenterNode, ve.dm.BranchNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.dm.NodeFactory
- * @static
- * @member
- */
-ve.dm.CenterNode.rules = {
-	'isWrapped': true,
-	'isContent': false,
-	'canContainContent': false,
-	'hasSignificantWhitespace': false,
-	'childNodeTypes': null,
-	'parentNodeTypes': null
+ve.dm.CenterNode.static.name = 'center';
+
+ve.dm.CenterNode.static.matchTagNames = [ 'center' ];
+
+ve.dm.CenterNode.static.toDataElement = function () {
+	return { 'type': 'center' };
 };
 
-/**
- * Node converters.
- *
- * @see {ve.dm.Converter}
- * @static
- * @member
- */
-ve.dm.CenterNode.converters = {
-	'domElementTypes': ['center'],
-	'toDomElement': function () {
-		return document.createElement( 'center' );
-	},
-	'toDataElement': function () {
-		return {
-			'type': 'center'
-		};
-	}
+ve.dm.CenterNode.static.toDomElements = function ( dataElement, doc ) {
+	return [ doc.createElement( 'center' ) ];
 };
 
 /* Registration */
 
-ve.dm.nodeFactory.register( 'center', ve.dm.CenterNode );
+ve.dm.modelRegistry.register( ve.dm.CenterNode );

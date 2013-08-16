@@ -1,77 +1,58 @@
-/**
- * VisualEditor data model HeadingNode class.
+/*!
+ * VisualEditor DataModel HeadingNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * DataModel node for a heading.
+ * DataModel heading node.
  *
  * @class
+ * @extends ve.dm.BranchNode
  * @constructor
- * @extends {ve.dm.BranchNode}
  * @param {ve.dm.LeafNode[]} [children] Child nodes to attach
- * @param {Object} [attributes] Reference to map of attribute key/value pairs
+ * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.HeadingNode = function VeDmHeadingNode( children, attributes ) {
+ve.dm.HeadingNode = function VeDmHeadingNode( children, element ) {
 	// Parent constructor
-	ve.dm.BranchNode.call( this, 'heading', children, attributes );
+	ve.dm.BranchNode.call( this, children, element );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.dm.HeadingNode, ve.dm.BranchNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.dm.NodeFactory
- * @static
- * @member
- */
-ve.dm.HeadingNode.rules = {
-	'isWrapped': true,
-	'isContent': false,
-	'canContainContent': true,
-	'hasSignificantWhitespace': false,
-	'childNodeTypes': null,
-	'parentNodeTypes': null
+ve.dm.HeadingNode.static.name = 'heading';
+
+ve.dm.HeadingNode.static.canContainContent = true;
+
+ve.dm.HeadingNode.static.defaultAttributes = {
+	'level': 1
 };
 
-/**
- * Node converters.
- *
- * @see {ve.dm.Converter}
- * @static
- * @member
- */
-ve.dm.HeadingNode.converters = {
-	'domElementTypes': ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
-	'toDomElement': function ( type, element ) {
-		return element.attributes && ( {
-			1: document.createElement( 'h1' ),
-			2: document.createElement( 'h2' ),
-			3: document.createElement( 'h3' ),
-			4: document.createElement( 'h4' ),
-			5: document.createElement( 'h5' ),
-			6: document.createElement( 'h6' )
-		} )[element.attributes.level];
-	},
-	'toDataElement': function ( tag ) {
-		return ( {
-			'h1': { 'type': 'heading', 'attributes': { 'level': 1 } },
-			'h2': { 'type': 'heading', 'attributes': { 'level': 2 } },
-			'h3': { 'type': 'heading', 'attributes': { 'level': 3 } },
-			'h4': { 'type': 'heading', 'attributes': { 'level': 4 } },
-			'h5': { 'type': 'heading', 'attributes': { 'level': 5 } },
-			'h6': { 'type': 'heading', 'attributes': { 'level': 6 } }
-		} )[tag];
-	}
+ve.dm.HeadingNode.static.matchTagNames = [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ];
+
+ve.dm.HeadingNode.static.toDataElement = function ( domElements ) {
+	var levels = {
+			'h1': 1,
+			'h2': 2,
+			'h3': 3,
+			'h4': 4,
+			'h5': 5,
+			'h6': 6
+		},
+		level = levels[domElements[0].nodeName.toLowerCase()];
+	return { 'type': 'heading', 'attributes': { 'level': level } };
+};
+
+ve.dm.HeadingNode.static.toDomElements = function ( dataElement, doc ) {
+	var level = dataElement.attributes && dataElement.attributes.level || 1;
+	return [ doc.createElement( 'h' + level ) ];
 };
 
 /* Registration */
 
-ve.dm.nodeFactory.register( 'heading', ve.dm.HeadingNode );
+ve.dm.modelRegistry.register( ve.dm.HeadingNode );

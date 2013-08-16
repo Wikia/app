@@ -1,29 +1,37 @@
-/**
+/*!
  * VisualEditor Registry class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Generic object factory.
+ * Generic data registry.
  *
- * @class
  * @abstract
+ * @mixins ve.EventEmitter
+ *
  * @constructor
- * @extends {ve.EventEmitter}
  */
 ve.Registry = function VeRegistry() {
-	// Parent constructor
+	// Mixin constructors
 	ve.EventEmitter.call( this );
 
 	// Properties
-	this.registry = [];
+	this.registry = {};
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.Registry, ve.EventEmitter );
+ve.mixinClass( ve.Registry, ve.EventEmitter );
+
+/* Events */
+
+/**
+ * @event register
+ * @param {string} name
+ * @param {Mixed} data
+ */
 
 /* Methods */
 
@@ -31,13 +39,14 @@ ve.inheritClass( ve.Registry, ve.EventEmitter );
  * Associate one or more symbolic names with some data.
  *
  * @method
- * @param {String|String[]} name Symbolic name or list of symbolic names
+ * @param {string|string[]} name Symbolic name or list of symbolic names
  * @param {Mixed} data Data to associate with symbolic name
- * @throws 'name must be a string'
+ * @emits register
+ * @throws {Error} Name argument must be a string or array
  */
 ve.Registry.prototype.register = function ( name, data ) {
 	if ( typeof name !== 'string' && !ve.isArray( name ) ) {
-		throw new Error( 'name must be a string or array, cannot be a ' + typeof name );
+		throw new Error( 'Name argument must be a string or array, cannot be a ' + typeof name );
 	}
 	var i, len;
 	if ( ve.isArray( name ) ) {
@@ -56,7 +65,7 @@ ve.Registry.prototype.register = function ( name, data ) {
  * Gets data for a given symbolic name.
  *
  * @method
- * @param {String} name Symbolic name
+ * @param {string} name Symbolic name
  * @returns {Mixed|undefined} Data associated with symbolic name
  */
 ve.Registry.prototype.lookup = function ( name ) {

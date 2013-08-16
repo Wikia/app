@@ -1,96 +1,136 @@
-/**
- * VisualEditor user interface FormatDropdownTool class.
+/*!
+ * VisualEditor UserInterface FormatDropdownTool class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Creates an ve.ui.FormatDropdownTool object.
+ * UserInterface format dropdown tool.
  *
  * @class
+ * @extends ve.ui.DropdownTool
  * @constructor
- * @extends {ve.ui.DropdownTool}
- * @param {ve.ui.Toolbar} toolbar
+ * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {Object} [config] Config options
  */
-ve.ui.FormatDropdownTool = function VeUiFormatDropdownTool( toolbar ) {
+ve.ui.FormatDropdownTool = function VeUiFormatDropdownTool( toolbar, config ) {
+	var i, len, item,
+		items = this.constructor.static.items.slice( 0 );
+
 	// Parent constructor
-	ve.ui.DropdownTool.call( this, toolbar, ve.ui.FormatDropdownTool.static.options );
+	ve.ui.DropdownTool.call( this, toolbar, config );
+
+	// Initialization
+	for ( i = 0, len = items.length; i < len; i++ ) {
+		item = items[i];
+		items[i] = new ve.ui.MenuItemWidget(
+			item.data, { '$$': this.$$, 'rel': item.rel, 'label': ve.msg( item.label ) }
+		);
+	}
+	this.menu.addItems( items );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.ui.FormatDropdownTool, ve.ui.DropdownTool );
 
-/* Static Members */
+/* Static Properties */
 
 ve.ui.FormatDropdownTool.static.name = 'format';
 
 ve.ui.FormatDropdownTool.static.titleMessage = 'visualeditor-formatdropdown-title';
 
-ve.ui.FormatDropdownTool.static.options = [
+/**
+ * Options given to ve.ui.DropdownTool.
+ *
+ * @static
+ * @property {Object[]}
+ */
+ve.ui.FormatDropdownTool.static.items = [
 	{
-		'name': 'paragraph',
-		'label': ve.msg( 'visualeditor-formatdropdown-format-paragraph' ),
-		'type' : 'paragraph'
+		'label': 'visualeditor-formatdropdown-format-paragraph',
+		'rel': 'paragraph',
+		'data': {
+			'type' : 'paragraph'
+		}
 	},
 	{
-		'name': 'heading-1',
-		'label': ve.msg( 'visualeditor-formatdropdown-format-heading1' ),
-		'type' : 'heading',
-		'attributes': { 'level': 1 }
+		'label': 'visualeditor-formatdropdown-format-heading1',
+		'rel': 'heading-1',
+		'data': {
+			'type' : 'heading',
+			'attributes': { 'level': 1 }
+		}
 	},
 	{
-		'name': 'heading-2',
-		'label': ve.msg( 'visualeditor-formatdropdown-format-heading2' ),
-		'type' : 'heading',
-		'attributes': { 'level': 2 }
+		'label': 'visualeditor-formatdropdown-format-heading2',
+		'rel': 'heading-2',
+		'data': {
+			'type' : 'heading',
+			'attributes': { 'level': 2 }
+		}
 	},
 	{
-		'name': 'heading-3',
-		'label': ve.msg( 'visualeditor-formatdropdown-format-heading3' ),
-		'type' : 'heading',
-		'attributes': { 'level': 3 }
+		'label': 'visualeditor-formatdropdown-format-heading3',
+		'rel': 'heading-3',
+		'data': {
+			'type' : 'heading',
+			'attributes': { 'level': 3 }
+		}
 	},
 	{
-		'name': 'heading-4',
-		'label': ve.msg( 'visualeditor-formatdropdown-format-heading4' ),
-		'type' : 'heading',
-		'attributes': { 'level': 4 }
+		'label': 'visualeditor-formatdropdown-format-heading4',
+		'rel': 'heading-4',
+		'data': {
+			'type' : 'heading',
+			'attributes': { 'level': 4 }
+		}
 	},
 	{
-		'name': 'heading-5',
-		'label': ve.msg( 'visualeditor-formatdropdown-format-heading5' ),
-		'type' : 'heading',
-		'attributes': { 'level': 5 }
+		'label': 'visualeditor-formatdropdown-format-heading5',
+		'rel': 'heading-5',
+		'data': {
+			'type' : 'heading',
+			'attributes': { 'level': 5 }
+		}
 	},
 	{
-		'name': 'heading-6',
-		'label': ve.msg( 'visualeditor-formatdropdown-format-heading6' ),
-		'type' : 'heading',
-		'attributes': { 'level': 6 }
+		'label': 'visualeditor-formatdropdown-format-heading6',
+		'rel': 'heading-6',
+		'data': {
+			'type' : 'heading',
+			'attributes': { 'level': 6 }
+		}
 	},
 	{
-		'name': 'preformatted',
-		'label': ve.msg( 'visualeditor-formatdropdown-format-preformatted' ),
-		'type' : 'preformatted'
+		'label': 'visualeditor-formatdropdown-format-preformatted',
+		'rel': 'preformatted',
+		'data': {
+			'type' : 'preformatted'
+		}
 	}
 ];
 
 /* Methods */
 
 /**
- * Responds to dropdown option being selected.
+ * Handle dropdown option being selected.
  *
  * @method
- * @param {Object} item Menu item
+ * @param {ve.ui.MenuItemWidget} item Menu item
  */
 ve.ui.FormatDropdownTool.prototype.onSelect = function ( item ) {
-	this.toolbar.getSurface().execute( 'format', 'convert', item.type, item.attributes );
+	var data;
+
+	if ( item ) {
+		data = item.getData();
+		this.toolbar.getSurface().execute( 'format', 'convert', data.type, data.attributes );
+	}
 };
 
 /**
- * Responds to the toolbar state being updated.
+ * Handle the toolbar state being updated.
  *
  * @method
  * @param {ve.dm.Node[]} nodes List of nodes covered by the current selection
@@ -98,9 +138,10 @@ ve.ui.FormatDropdownTool.prototype.onSelect = function ( item ) {
  * @param {ve.dm.AnnotationSet} partial Annotations that cover some or all of the current selection
  */
 ve.ui.FormatDropdownTool.prototype.onUpdateState = function ( nodes ) {
-	var i, nodesLength, node, j, itemsLength, item,
-		items = this.menuView.getItems(),
-		matches = [];
+	var i, nodesLength, node, j, itemsLength, item, match,
+		items = this.menu.getItems();
+
+	nodeLoop:
 	for ( i = 0, nodesLength = nodes.length; i < nodesLength; i++ ) {
 		node = nodes[i];
 		if ( !node.canHaveChildren() ) {
@@ -109,16 +150,26 @@ ve.ui.FormatDropdownTool.prototype.onUpdateState = function ( nodes ) {
 		if ( node ) {
 			for ( j = 0, itemsLength = items.length; j < itemsLength; j++ ) {
 				item = items[j];
-				if ( item.type === node.getType() ) {
-					if ( item.attributes && !node.hasAttributes( item.attributes ) ) {
+				if ( item.data.type === node.getType() ) {
+					if ( item.data.attributes && !node.hasAttributes( item.data.attributes ) ) {
 						continue;
 					}
-					matches.push( item );
+					if ( match ) {
+						match = null;
+						break nodeLoop;
+					}
+					match = item;
 				}
 			}
 		}
 	}
-	this.setLabel( matches.length === 1 ? matches[0].label : '' );
+	if ( match ) {
+		this.menu.intializeSelection( match );
+		this.setLabel( match.$label.text() );
+	} else {
+		this.menu.intializeSelection( null );
+		this.setLabel();
+	}
 };
 
 /* Registration */

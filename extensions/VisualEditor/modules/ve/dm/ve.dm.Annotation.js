@@ -1,139 +1,175 @@
-/**
- * VisualEditor data model Annotation class.
+/*!
+ * VisualEditor DataModel Annotation class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Generic data model annotation.
+ * Generic DataModel annotation.
  *
  * This is an abstract class, annotations should extend this and call this constructor from their
  * constructor. You should not instantiate this class directly.
  *
- * Annotations in the linear model are instances of subclasses of this class. Subclasses are
- * required to have a constructor with the same signature.
- *
- * this.htmlTagName and this.htmlAttributes are private to the base class, subclasses must not
- * use them. Any information from the HTML element that is needed later should be extracted into
- * this.data by overriding getAnnotationData(). Subclasses can read from this.data but must not
- * write to it directly.
- *
- * TODO: Make this constructor optionally accept a data object instead of an element.
+ * Annotations in the linear model are instances of subclasses of this class. Subclasses should
+ * only override static properties and functions.
  *
  * @class
- * @abstract
+ * @extends {ve.dm.Model}
  * @constructor
- *
- * @param {HTMLElement} [element] HTML element this annotation was converted from, if any
+ * @param {Object} element Linear model annotation
  */
 ve.dm.Annotation = function VeDmAnnotation( element ) {
-	this.name = this.constructor.static.name; // Needed for proper hashing
-	this.data = {};
-	if ( element ) {
-		this.htmlTagName = element.nodeName.toLowerCase();
-		this.htmlAttributes = ve.getDOMAttributes( element );
-		this.data = this.getAnnotationData( element );
-	}
+	// Parent constructor
+	ve.dm.Model.call( this, element );
+	// Properties
+	this.name = this.constructor.static.name; // For ease of filtering
 };
+
+/* Inheritance */
+
+ve.inheritClass( ve.dm.Annotation, ve.dm.Model );
 
 /* Static properties */
 
 /**
- * Object containing static properties. ve.inheritClass() contains special logic to make sure these
- * properties are inherited by subclasses.
- */
-ve.dm.Annotation.static = {};
-
-/**
- * Symbolic name for the annotation class. Must be set to a unique string by every subclass.
- */
-ve.dm.Annotation.static.name = null;
-
-/**
- * Array of HTML tag names that this annotation should be a match candidate for.
- * Empty array means none, null means any.
- * For more information about annotation matching, see ve.dm.AnnotationFactory.
- */
-ve.dm.Annotation.static.matchTagNames = null;
-
-/**
- * Array of RDFa types that this annotation should be a match candidate for.
- * Empty array means none, null means any.
- * For more information about annotation matching, see ve.dm.AnnotationFactory.
- */
-ve.dm.Annotation.static.matchRdfaTypes = null;
-
-/**
- * Optional function to determine whether this annotation should match a given element.
- * Takes an HTMLElement and returns true or false.
- * This function is only called if this annotation has a chance of "winning"; see
- * ve.dm.AnnotationFactory for more information about annotation matching.
- * If set to null, this property is ignored. Setting this to null is not the same as unconditionally
- * returning true, because the presence or absence of a matchFunction affects the annotation's
- * specificity.
+ * About grouping is not supported for annotations; setting this to true has no effect.
  *
- * NOTE: This function is NOT a method, within this function "this" will not refer to an instance
- * of this class (or to anything reasonable, for that matter).
+ * @static
+ * @property {boolean} static.enableAboutGrouping
+ * @inheritable
  */
-ve.dm.Annotation.static.matchFunction = null;
+ve.dm.Annotation.static.enableAboutGrouping = false;
+
+/**
+ * Automatically apply annotation to content inserted after it.
+ *
+ * @type {boolean}
+ */
+ve.dm.Annotation.static.applyToAppendedContent = true;
+
+/**
+ * Abandon continuation when a wordbreak is generated
+ *
+ * @type {boolean}
+ */
+ve.dm.Annotation.static.splitOnWordbreak = false;
+
+/**
+ * Static function to convert a linear model data element for this annotation type back to
+ * a DOM element.
+ *
+ * As special facilities for annotations, the annotated content that the returned element will
+ * wrap around is passed in as childDomElements, and this function may return an empty array to
+ * indicate that the annotation should produce no output. In that case, the child DOM elements will
+ * not be wrapped in anything and will be inserted directly into this annotation's parent.
+ *
+ * @static
+ * @inheritable
+ * @method
+ * @param {Object|Array} dataElement Linear model element or array of linear model data
+ * @param {HTMLDocument} doc HTML document for creating elements
+ * @param {ve.dm.Converter} converter Converter object to optionally call .getDomSubtreeFromData() on
+ * @param {HTMLElement[]} childDomElements Children that will be appended to the returned element
+ * @returns {HTMLElement[]} Array of DOM elements; only the first element is used; may be empty
+ */
+ve.dm.Annotation.static.toDomElements = function ( /*dataElement, doc, converter, childDomElements*/ ) {
+	throw new Error( 've.dm.Annotation subclass must implement toDomElements' );
+};
 
 /* Methods */
 
 /**
- * Get annotation data for the linear model. Called when building a new annotation from an HTML
- * element.
- *
- * This annotation data object is completely free-form. It's stored in the linear model, it can be
- * manipulated by UI widgets, and you access it as this.data in toHTML() on the way out and in
- * renderHTML() for rendering. It is also the ONLY data you can reliably use in those contexts, so
- * any information from the HTML element that you'll need later should be extracted into the data
- * object here.
- *
- * @param {HTMLElement} element HTML element this annotation will represent
- * @returns {Object} Annotation data
+ * Convenience wrapper for .toDomElements() on the current annotation
+ * @method
+ * @param {HTMLDocument} [doc] HTML document to use to create elements
+ * @see ve.dm.Model#toDomElements
  */
-ve.dm.Annotation.prototype.getAnnotationData = function () {
-	return {};
+ve.dm.Annotation.prototype.getDomElements = function ( doc ) {
+	return this.constructor.static.toDomElements( this.element, doc || document );
 };
 
 /**
- * Convert this annotation back to HTML for output purposes.
+ * Get an object containing comparable annotation properties.
  *
- * You should only use this.data here, you cannot reliably use any of the other properties.
- * The default action is to restore the original HTML element's tag name and attributes (if this
- * annotation was created based on an element). If a subclass wants to do this too (this is common),
- * it should call its parent's implementation first, then manipulate the return value.
+ * This is used by the converter to merge adjacent annotations.
  *
- * @returns {Object} Object with 'tag' (tag name) and 'attributes' (object with attribute key/values)
+ * @returns {Object} An object containing a subset of the annotation's properties
  */
-ve.dm.Annotation.prototype.toHTML = function () {
-	return {
-		'tag': this.htmlTagName || '',
-		'attributes': this.htmlAttributes || {}
-	};
+ve.dm.Annotation.prototype.getComparableObject = function () {
+	var hashObject = this.getHashObject();
+	delete hashObject.htmlAttributes;
+	return hashObject;
 };
 
 /**
- * Convert this annotation to HTML for rendering purposes. By default, this just calls toHTML(),
- * but it may be customized if the rendering should be different from the output.
+ * HACK: This method strips data-parsoid from HTML attributes for comparisons.
  *
- * @see ve.dm.Annotation.toHTML
- * @returns {Object} Object with 'tag' (tag name) and 'attributes' (object with attribute key/values)
+ * This should be removed once similar annotation merging is handled correctly
+ * by Parsoid.
+ *
+ * @returns {Object} An object all HTML attributes except data-parsoid
  */
-ve.dm.Annotation.prototype.renderHTML = function () {
-	return this.toHTML();
-};
+ve.dm.Annotation.prototype.getComparableHtmlAttributes = function () {
+	var comparableAttributes, attributes = this.getHtmlAttributes();
 
-/**
- * Custom hash function for ve.getHash(). Should not be overridden by subclasses.
- */
-ve.dm.Annotation.prototype.getHash = function () {
-	var keys = [ 'name', 'data' ], obj = {}, i;
-	for ( i = 0; i < keys.length; i++ ) {
-		if ( this[keys[i]] !== undefined ) {
-			obj[keys[i]] = this[keys[i]];
-		}
+	if ( attributes[0] ) {
+		comparableAttributes = ve.copy( attributes[0].values );
+		delete comparableAttributes['data-parsoid'];
+		return comparableAttributes;
+	} else {
+		return {};
 	}
-	return ve.getHash( obj );
+};
+
+/**
+ * HACK: This method adds in HTML attributes so comparable objects aren't serialized
+ * together if they have different HTML attributes.
+ *
+ * This method needs to be different from getComparableObject which is
+ * still used for editing annotations.
+ *
+ * @returns {Object} An object containing a subset of the annotation's properties and HTML attributes
+ */
+ve.dm.Annotation.prototype.getComparableObjectForSerialization = function () {
+	var object = this.getComparableObject(),
+		htmlAttributes = this.getComparableHtmlAttributes();
+
+	if ( !ve.isEmptyObject( htmlAttributes ) ) {
+		object.htmlAttributes = htmlAttributes;
+	}
+	return object;
+};
+
+/**
+ * HACK: Check if the annotation was generated by the converter
+ *
+ * Used by compareToForSerialization to avoid merging generated annotations.
+ *
+ * @returns {boolean} The annotation was generated
+ */
+ve.dm.Annotation.prototype.isGenerated = function () {
+	var attributes = this.getHtmlAttributes();
+	return attributes[0] && attributes[0].values && attributes[0].values['data-parsoid'];
+};
+
+/**
+ * HACK: Compare to another annotation for serialization
+ *
+ * Compares two annotations using getComparableObjectForSerialization, unless
+ * they are both generated annotations, in which case they must be identical.
+ *
+ * @param {ve.dm.Annotation} annotation Annotation to compare to
+ * @returns {boolean} The other annotation is similar to this one
+ */
+ve.dm.Annotation.prototype.compareToForSerialization = function ( annotation ) {
+	// If both annotations were generated
+	if ( this.isGenerated() && annotation.isGenerated() ) {
+		return ve.compare( this.getHashObject(), annotation.getHashObject() );
+	}
+
+	return ve.compare(
+		this.getComparableObjectForSerialization(),
+		annotation.getComparableObjectForSerialization()
+	);
 };
