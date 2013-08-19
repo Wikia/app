@@ -14,4 +14,4 @@ var NewUsernameUrlEncoder = {
 
 $(function(){
 	NewUsernameUrlEncoder.init();
-})
+});
