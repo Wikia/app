@@ -53,14 +53,14 @@ class Component {
 
 	/**
 	 * @var Array assets needed to render this components. This dictionary contains arrays under the
-	 * 'js' and 'css' keys
+	 * Factory::ASSET_TYPE_CSS and Factory::ASSET_TYPE_JS keys
 	 */
 	private $assets = null;
 
 	/**
 	 * @desc Sets template JS and CSS assets
 	 *
-	 * @param $assets Dictionary containing 'css' and 'js' keys
+	 * @param $assets Dictionary containing Factory::ASSET_TYPE_CSS and Factory::ASSET_TYPE_JS keys
 	 */
 	public function setAssets( $assets ) {
 		$this->assets = $assets;
