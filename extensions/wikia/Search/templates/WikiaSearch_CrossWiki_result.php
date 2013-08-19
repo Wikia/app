@@ -1,6 +1,7 @@
 <?php
 	// get wiki thumbnail and thumbnail tracking
 	$image = $result['image_s'];
+	$isOnWikiMatch = isset($result['onWikiMatch']) && $result['onWikiMatch'];
 	if (! empty( $image ) ) {
 		$imageURL = ImagesService::getImageSrcByTitle( (new CityVisualization)->getTargetWikiId( $result['lang_s'] ), $result['image_s'], 180, 120 );
 		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-thumb"';
@@ -37,7 +38,7 @@
 		</h1>
 
 		<p class="hub subtle"><?= strtoupper($result->getHub()); ?></p>
-		<p class="description"><?= $result->getText( Wikia\Search\Utilities::field( 'description' ), 60 ); ?></p>
+		<p class="description"><?= $result->getText( Wikia\Search\Utilities::field( 'description' ), $isOnWikiMatch ? 16 : 60 ); ?></p>
 
 		<ul class="wiki-statistics subtle">
 			<li><?= $pagesMsg ?></li>

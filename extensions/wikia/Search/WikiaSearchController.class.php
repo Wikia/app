@@ -344,6 +344,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	protected function registerWikiMatch( Wikia\Search\Config $searchConfig ) {
 		$matchResult = $searchConfig->getWikiMatch()->getResult();
 		if ( $matchResult !== null ) {
+			$matchResult['onWikiMatch'] = true;
 			$this->setVal(
 					'wikiMatch',
 					$this->getApp()->getView( 'WikiaSearch', 'CrossWiki_result', [ 'result' => $matchResult, 'pos' => -1 ] ) 
