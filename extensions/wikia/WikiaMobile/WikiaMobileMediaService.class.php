@@ -58,7 +58,16 @@ class WikiaMobileMediaService extends WikiaService {
 		 * This is a parser from ImageGallery
 		 * @var $parser Parser
 		*/
-		$parser = $this->request->getVal( 'parser', $this->wg->Parser );
+		$parser = $this->request->getVal( 'parser' );
+
+		//ImageGallery has parser as false by default
+		//and getVal returns default value when there is no value for a parameter
+		//false is not useful here but is a value nevertheless
+		//that is why default value is set after getVal
+		if ( !($parser instanceof Parser) ) {
+			$parser = $this->wg->Parser;
+		}
+
 		$first = null;
 		$wikiText = '';
 		$result = '';
@@ -73,8 +82,8 @@ class WikiaMobileMediaService extends WikiaService {
 			$file = wfFindFile( $item['title'] );
 
 			if ( $file instanceof File ) {
-				if ( !empty( $item['link'] ) || $file->getWidth() < self::SMALL_IMAGE_SIZE ) {
-					$wikiText .= self::renderOutsideGallery( $item );
+				if ( ( !empty( $item['link'] ) || $file->getWidth() < self::SMALL_IMAGE_SIZE ) ) {
+					//$wikiText .= self::renderOutsideGallery( $item );
 				} else {
 					if ( empty( $first ) ) {
 						$first = [ 'data' => $item, 'file' => $file ];
@@ -153,7 +162,7 @@ class WikiaMobileMediaService extends WikiaService {
 
 			//avoid wikitext recursion
 			$this->wg->WikiaMobileDisableMediaGrouping = true;
-
+			//var_dump($wikiText);exit();
 			$ret = $parser->recursiveTagParse( $wikiText );
 			$parser->replaceLinkHolders( $ret );
 
