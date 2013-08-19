@@ -1,6 +1,35 @@
 <?php
 
-/** Controller for acquiring information about latest user activity on current wiki */
+use Swagger\Annotations as SWG;
+
+/**
+ * @SWG\Resource(
+ *     apiVersion="0.2",
+ *     swaggerVersion="1.1",
+ *     resourcePath="ActivityApi",
+ *     basePath="http://www.wikia.com/wikia.php"
+ * )
+ */
+
+/**
+ *
+ * @SWG\Api(
+ *   path="",
+ *   description="Controller for acquiring information about latest user activity on current wiki",
+ *	@SWG\Operations(
+ *		@SWG\Operation( httpMethod="GET", summary="Fetches latest activity information", nickname="getLatestActivity",
+ * 			@SWG\Parameters(
+ * 				@SWG\Parameter( name="controller", description="Controller used", paramType="query", required="true", allowMultiple="false", dataType="string", defaultValue="ActivityApi" ),
+ * 				@SWG\Parameter( name="method", description="Method used", paramType="query", required="true", allowMultiple="false", dataType="string", defaultValue="getLatestActivity" ),
+ * 				@SWG\Parameter( name="limit", description="Maximal result count", paramType="query", required="false", allowMultiple="false", dataType="int", defaultValue="10" ),
+ * 				@SWG\Parameter( name="namespaces", description="Namespaces filtering", paramType="query", required="false", allowMultiple="false", dataType="Array", defaultValue="0" ),
+ * 				@SWG\Parameter( name="allowDuplicates", description="Set if duplicate values are allowed", paramType="query", required="false", allowMultiple="false", dataType="boolean", defaultValue="true" )
+ * 			)
+ *		)
+ *	)
+ * )
+ */
+
 
 class ActivityApiController extends WikiaApiController {
 	private $revisionService;
