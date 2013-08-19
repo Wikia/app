@@ -299,7 +299,9 @@ class VideoInfoHooksHelper {
 		// instances (search results from the WVL for example) we want to make sure these videos
 		// still appear.
 		$app = F::app();
-		if ( $app->wg->Title && $app->wg->Title->getNamespace() != NS_FILE ) {
+		$req = $app->wg->Request;
+
+		if ( ($req->getVal('controller', '') == 'VideoEmbedTool') or ($req->getVal('method') == 'insertVideo') )  {
 			return true;
 		}
 
