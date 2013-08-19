@@ -1979,15 +1979,24 @@ class WallHooksHelper {
 		return true;
 	}
 
+	/**
+	 * @param $title Title
+	 * @param $unused
+	 * @param $output
+	 * @param $user
+	 * @param $request
+	 * @param $mediawiki
+	 * @return bool
+	 */
 	static public function onBeforeInitialize( $title, $unused, $output, $user, $request, $mediawiki ) {
 		global $wgHooks;
 		if( !empty($title) && $title->isSpecial('Allpages') ) {
-			$wgHooks['AfterLanguageGetNamespaces'][] = 'WallHooksHelper::onAfterLanguageGetNamespaces';
+			$wgHooks['LanguageGetNamespaces'][] = 'WallHooksHelper::onLanguageGetNamespaces';
 		}
 		return true;
 	}
 
-	static public function onAfterLanguageGetNamespaces( &$namespaces ) {
+	static public function onLanguageGetNamespaces( &$namespaces ) {
 		wfProfileIn(__METHOD__);
 		$app = F::App();
 		$title = $app->wg->Title;
