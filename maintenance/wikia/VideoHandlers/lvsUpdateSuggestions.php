@@ -47,7 +47,9 @@ class LVSUpdateSuggestions extends Maintenance {
 		$stats = $this->processVideoList( );
 
 		$delta = $this->formatDuration(time() - $startTime);
-		$this->debug("Found suggestions for {$stats['vidsWithSuggestions']} of {$stats['vidsFound']} video(s) in $delta\n");
+
+		global $wgServerName;
+		echo "[$wgServerName] Found suggestions for {$stats['vidsWithSuggestions']} of {$stats['vidsFound']} video(s) in $delta\n";
 	}
 
 	/**
