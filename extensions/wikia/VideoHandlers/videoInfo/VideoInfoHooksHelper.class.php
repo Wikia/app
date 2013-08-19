@@ -296,6 +296,16 @@ class VideoInfoHooksHelper {
 			return true;
 		}
 
+		// Only report this file as deleted when this request is coming from a file page.  In other
+		// instances (search results from the WVL for example) we want to make sure these videos
+		// still appear.
+		$app = F::app();
+		$req = $app->wg->Request;
+
+		if ( ($req->getVal('controller', '') == 'VideoEmbedTool') or ($req->getVal('method') == 'insertVideo') )  {
+			return true;
+		}
+
 		if ( WikiaFileHelper::isFileTypeVideo($file) && !$file->isLocal() ) {
 			$videoInfoHelper = new VideoInfoHelper();
 			$isDeleted = $videoInfoHelper->isVideoRemoved( $file->getName() );
