@@ -23,8 +23,7 @@
 				<?php endif; ?>
 			</div>
 			<div class="category-articles-text" data-pos="<?= $apos++ ?>">
-				<b><a href="<?=$page['url']?>"><?=$page['title']?></a></b>
-				<?=$page['abstract']?>
+				<b><a href="<?=$page['url']?>"><?=$page['title']?></a></b><?=$page['abstract']?>
 			</div>
 		</div>
 		<?php endforeach; ?>
