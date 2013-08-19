@@ -357,7 +357,7 @@ class EditAccount extends SpecialPage {
 			throw new Exception("User object is invalid.");
 		}
 
-		$id = $this->mUser->getId();
+		$id = $user->getId();
 
 		if ( defined( 'CLOSED_ACCOUNT_FLAG' ) ) {
 			$user->setRealName( CLOSED_ACCOUNT_FLAG );
