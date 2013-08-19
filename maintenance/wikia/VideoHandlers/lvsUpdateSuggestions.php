@@ -13,7 +13,7 @@ ini_set('error_reporting', E_NOTICE);
 require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 
 // Include the LVS extension so we can build suggestions even when the wiki does not have it enabled
-include( "$IP/extensions/wikia/LicensedVideoSwap/LicensedVideoSwap.setup.php" );
+include( dirname( __FILE__ ) . "/../../../extensions/wikia/LicensedVideoSwap/LicensedVideoSwap.setup.php" );
 
 /**
  * Class LVSUpdateSuggestions
