@@ -16,6 +16,17 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	public function init() {
 		$this->response->addAsset('videopagetool_js');
 		$this->response->addAsset('videopagetool_css');
+
+		$leftMenuItems = [
+			[
+				'href' => '/wiki/Special:MarketingToolbox/editHub?moduleId=1&date=1376265600&region=en&verticalId=2&sectionId=1',
+				'selected' => '1',
+	            'title' => 'Slider',
+	            'anchor' => 'Slider',
+			],
+		];
+
+		$this->leftMenuItems = $leftMenuItems;
 	}
 
 	/**
