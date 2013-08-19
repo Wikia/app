@@ -30,7 +30,11 @@ class SpecialRenameuser extends SpecialPage {
 
 		$this->setHeaders();
 
-		$wgOut->addScriptFile( $wgScriptPath . '/extensions/wikia/UserRenameTool/js/NewUsernameUrlEncoder.js' );
+		$oAssetsManager = AssetsManager::getInstance();
+
+		foreach ( $oAssetsManager->getURL( '/extensions/wikia/UserRenameTool/js/NewUsernameUrlEncoder.js' ) as $sUrl ) {
+			$wgOut->addScript( "<script src=\"{$sUrl}\"></script>" );
+		}
 
 		if( wfReadOnly() || !$wgStatsDBEnabled ) {
 			$wgOut->readOnlyPage();
