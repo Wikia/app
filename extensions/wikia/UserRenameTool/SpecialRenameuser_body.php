@@ -26,7 +26,7 @@ class SpecialRenameuser extends SpecialPage {
 	public function execute( $par ) {
 		wfProfileIn(__METHOD__);
 
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgStatsDBEnabled, $wgScriptPath;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgStatsDBEnabled;
 
 		$this->setHeaders();
 
