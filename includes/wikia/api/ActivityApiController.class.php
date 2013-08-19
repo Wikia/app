@@ -12,22 +12,105 @@ use Swagger\Annotations as SWG;
  */
 
 /**
+ * 
+ * @SWG\Model( id="ActivityResponseResult" )
+ *     @SWG\Property(
+ *         name="items",
+ *         required="true",
+ *         type="ActivityResponseItem",
+ *         description="A list of each individual event, ordered by recency descending."
+ *         )
+ *      @SWG\Property(
+ *          name="basepath",
+ *          type="string",
+ *          required="true",
+ *          description="The base path of the request made. Used to confirm the origin of the response."
+ *          )
+ * 
+ * @SWG\Model( id="ActivityResponseItem" )
+ *     @SWG\Property( 
+ *         name="article", 
+ *         type="int", 
+ *         required="true",
+ *         description="The ID of the article acted upon" 
+ *         )
+ *     @SWG\Property( 
+ *         name="user", 
+ *         type="int", 
+ *         required="true",
+ *         description="The ID of the user performing the action" 
+ *         )
+ *     @SWG\Property( 
+ *         name="revisionId", 
+ *         type="int", 
+ *         required="true",
+ *         description="The ID of the revision created from this event" 
+ *         )
+ *     @SWG\Property( 
+ *         name="timestamp", 
+ *         type="int", 
+ *         required="true",
+ *         description="The Unix timestamp (in seconds) that the revision was made" 
+ *         )
  *
  * @SWG\Api(
- *   path="",
- *   description="Controller for acquiring information about latest user activity on current wiki",
- *	@SWG\Operations(
- *		@SWG\Operation( httpMethod="GET", summary="Fetches latest activity information", nickname="getLatestActivity",
- * 			@SWG\Parameters(
- * 				@SWG\Parameter( name="controller", description="Controller used", paramType="query", required="true", allowMultiple="false", dataType="string", defaultValue="ActivityApi" ),
- * 				@SWG\Parameter( name="method", description="Method used", paramType="query", required="true", allowMultiple="false", dataType="string", defaultValue="getLatestActivity" ),
- * 				@SWG\Parameter( name="limit", description="Maximal result count", paramType="query", required="false", allowMultiple="false", dataType="int", defaultValue="10" ),
- * 				@SWG\Parameter( name="namespaces", description="Namespaces filtering", paramType="query", required="false", allowMultiple="false", dataType="Array", defaultValue="0" ),
- * 				@SWG\Parameter( name="allowDuplicates", description="Set if duplicate values are allowed", paramType="query", required="false", allowMultiple="false", dataType="boolean", defaultValue="true" )
- * 			)
- *		)
- *	)
- * )
+ *     path="/wikia.php?controller=ActivityApi&method=getLatestActivity",
+ *     description="Acquire information about the latest user activity on the current wiki.",
+ *     @SWG\Operations(
+ *         @SWG\Operation( 
+ *             httpMethod="GET", 
+ *             summary="Fetches latest activity information", 
+ *             nickname="getLatestActivity", 
+ *             responseClass="ActivityResponseResult",
+ *             @SWG\Parameters(
+ *                 @SWG\Parameter( 
+ *                                name="controller", 
+ *                                description="Controller used", 
+ *                                paramType="query", 
+ *                                required="true", 
+ *                                allowMultiple="false", 
+ *                                dataType="string", 
+ *                                defaultValue="ActivityApi" ),
+ *                 @SWG\Parameter(
+ *                                name="method", 
+ *                                description="Method used", 
+ *                                paramType="query", 
+ *                                required="true", 
+ *                                allowMultiple="false", 
+ *                                dataType="string", 
+ *                                defaultValue="getLatestActivity" 
+ *                                ),
+ *                 @SWG\Parameter(
+ *                                name="limit", 
+ *                                description="Maximum number of results", 
+ *                                paramType="query", 
+ *                                required="false", 
+ *                                allowMultiple="false", 
+ *                                dataType="int", 
+ *                                defaultValue="10" 
+ *                                ),
+ *                 @SWG\Parameter(
+ *                                name="namespaces", 
+ *                                description="Namespaces results must match", 
+ *                                paramType="query", 
+ *                                required="false", 
+ *                                allowMultiple="false", 
+ *                                dataType="Array", 
+ *                                defaultValue="0" 
+ *                                ),
+ *                 @SWG\Parameter( 
+ *                                name="allowDuplicates", 
+ *                                description="Set if duplicate values are allowed -- otherwise they are filtered", 
+ *                                paramType="query", 
+ *                                required="false", 
+ *                                allowMultiple="false", 
+ *                                dataType="boolean", 
+ *                                defaultValue="true" 
+ *                                )
+ *                 )
+ *             )
+ *         )
+ *     )
  */
 
 
