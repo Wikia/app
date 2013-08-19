@@ -1,14 +1,10 @@
-define('editor', ['pubsub'], function(pubsub){
+define('editor', ['pubsub', 'config'], function(pubsub, config){
     var editArea = document.getElementById('editArea'),
         pattern = /_\$/,
         snippets = {};
 
     function Snippets(){
         this.active = false;
-        this.break = false;
-        this.isValid = function(string){
-            if(string.length > editor.maxTagLength()) return false;
-        }
     }
 
     function watchForTags(){
@@ -44,24 +40,57 @@ define('editor', ['pubsub'], function(pubsub){
         editArea.setSelectionRange(cursorPos, cursorPos);
     };
 
+    function checkSnippet(evt){
+        if(editArea.value[editArea.selectionStart-1] != '!') return;
+        if(!snippets.active){
+            snippets.active = true;
+            return;
+        }
+        evt.preventDefault();
+        var abbr = "!",
+            ch = "",
+            tag,
+            pos = editArea.selectionStart - 1,
+            text = editArea.value.split("");
+        while(pos) {
+            ch = text.splice(pos-1,1);
+            if(ch == " " || ch == "\n") {
+                //resetSnippet();
+                return;
+            }
+            abbr += ch;
+            pos -= 1;
+            if(ch == "!") {
+                break;
+            }
+        }
+        abbr = abbr.split('').splice(1, abbr.length-2).join('');
+        tag = config.findTag(abbr.split('').reverse().join(''));
+        if(tag){
+            var start = text.splice(0, pos);
+            var end = text.splice(1, text.length);
+            editArea.value = start.join('') + end.join('');
+            editArea.setSelectionRange(pos,pos);
+            insertTags(tag);
+            resetSnippet();
+        }
+
+    }
+
+    function resetSnippet(){
+        snippets.active = false;
+    }
+
     function watchForSnippets(){
         editArea.addEventListener('keyup', function(evt){
-            if(evt.keyCode === 49){ //49 = charCode('!')
-                if(snippets.active && !snippets.break){
-                    snippets.getSnippet();
-                }
-                else{
-                    snippets.active = true;
-                }
-            }
-            if(evt.keyCode === 32 && snippets.active){
-                snippets.break = true;
-            }
+            checkSnippet(evt);
         });
     }
 
     function init(){
         watchForTags();
+        snippets = new Snippets();
+        watchForSnippets();
     }
 
     return{

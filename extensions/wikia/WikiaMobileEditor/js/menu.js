@@ -1,28 +1,179 @@
-define('menu', ['pubsub', 'editor', 'config'], function(pubsub, editor, config){
+define('menu', ['pubsub'], function(pubsub){
 
-    var menuLeft = {},
-        menuRight = {};
-        menuLeft.wrapper = document.getElementById('menuLeft'),
-        menuRight.wrapper = document.getElementById('menuRight'),
-        lastTouchX = 0,
-        lastTouchY = 0;
-        menuLeft.master = menuLeft.wrapper.getElementsByClassName('master')[0];
-        menuRight.master = menuRight.wrapper.getElementsByClassName('master')[0];
-        menuLeft.primary = menuLeft.wrapper.getElementsByClassName('primary')[0];
-        menuRight.primary = menuRight.wrapper.getElementsByClassName('primary')[0];
-        menuLeft.secondary = menuLeft.wrapper.getElementsByClassName('secondary')[0];
-        menuRight.secondary = menuRight.wrapper.getElementsByClassName('secondary')[0];
-        menuLeft.primary.expanded =
-        menuLeft.secondary.expanded =
-        menuRight.primary.expanded =
-        menuRight.secondary.expanded = 'fold';
-        menuLeft.primary.elements = menuLeft.primary.getElementsByTagName('li');
-        menuLeft.secondary.elements = menuLeft.secondary.getElementsByTagName('li');
-        menuRight.primary.elements = menuRight.primary.getElementsByTagName('li');
-        menuRight.secondary.elements = menuRight.secondary.getElementsByTagName('li');
-        menuLeft.angles =[];
-        menuRight.angles =[];
-        menuLeft.radius = menuRight.radius = 80;
+    var menuLeft,
+        menuRight,
+        rMin = 50,
+        rMax = 100,
+        minMove = 20;
+
+    function menuObj(wrapperId){ //constructor for menu object, parameter = div wrapper for menu
+        var wrapper = document.getElementById(wrapperId);
+        this.wrapper = wrapper;
+        this.master = wrapper.getElementsByClassName('master')[0]
+        this.primary = {
+            ul : wrapper.getElementsByTagName('ul')[0],
+            elements : wrapper.getElementsByTagName('ul')[0].getElementsByTagName('li'),
+            expanded : false
+        };
+        this.secondary = {
+            ul : wrapper.getElementsByTagName('ul')[1],
+            elements : wrapper.getElementsByTagName('ul')[1].getElementsByTagName('li'),
+            expanded : false
+        };
+        this.activeElement = false;
+    }
+
+    function build(menuIdL, menuIdR){ //constructs 2 menu objects and adds references to each other
+        menuLeft = new menuObj(menuIdL),
+            menuRight = new menuObj(menuIdR);
+        menuLeft.other = menuRight;
+        menuRight.other = menuLeft;
+    }
+
+    function waitForTouch(menus){
+        menus.forEach(function(menu){
+            menu.master.addEventListener('touchstart', function(){
+                //event.preventDefault();
+                onTouchStart(menu);
+            });
+        });
+    }
+
+    function onTouchStart(menu){
+        if(menu.other.primary.expanded || menu.other.secondary.expanded){
+            switchMenu(menu.other);
+        }
+        else{
+            switchMenu(menu);
+            waitForTouchMove(menu);
+            waitForTouchEnd(menu);
+        }
+    }
+
+    function waitForTouchMove(menu){
+        menu.wrapper.addEventListener('touchmove', function(evt){
+            var x = evt.changedTouches[0].clientX - getMasterPosition(menu).x,
+                y = getMasterPosition(menu).y - evt.changedTouches[0].clientY;
+            //event.preventDefault();
+            if(Math.sqrt(x*x + y*y) > minMove){
+                onMoveOut(menu, event.changedTouches[0]);
+            }
+        });
+    }
+
+    function waitForTouchEnd(menu){
+        menu.wrapper.addEventListener('touchend', function(event){
+            //event.preventDefault();
+            onTouchEnd(menu, event.changedTouches[0]);
+        });
+    }
+
+    function onTouchEnd(menu, changedTouch){
+        var activeElement = getActiveElement(menu, changedTouch.clientX, changedTouch.clientY);
+        if(activeElement)action(activeElement);
+        reset(menu);
+    }
+
+    function action(li){
+        pubsub.publish('insert', li.getAttribute('data-tag')); //TODO -> tag preparation!
+    }
+
+    function onMoveOut(menu, changedTouch){
+        var activeElement = getActiveElement(menu, changedTouch.clientX, changedTouch.clientY);
+        if(activeElement != menu.activeElement){
+            if(activeElement) onActive(activeElement);
+            if(menu.activeElement) onActiveOut(menu.activeElement);
+            menu.activeElement = activeElement;
+        }
+    }
+
+    function getActiveElement(menu, offsetLeft, offsetTop){
+        var masterPos = getMasterPosition(menu),
+            x = offsetLeft - masterPos.x,
+            y = masterPos.y - offsetTop,
+            angle = getAngle(x, y),
+            range = getRange(angle, menu),
+            activeElements = menu.secondary.expanded ? menu.secondary.elements : menu.primary.elements;
+        if(range === -1) return false;
+        return activeElements[range];
+    }
+
+    function onActive(li){
+        li.classList.add('highlight');
+    }
+
+    function onActiveOut(li){
+        li.classList.remove('highlight');
+    }
+
+    function getRange(angle, menu){
+        var k = 0;
+        if(menu === menuLeft){
+            if(angle < 135 && angle > 99) return 0;
+            if(angle < 99 && angle > 63) return 1;
+            if(angle < 63 && angle > 27) return 2;
+            if(angle < 27 && angle > 0 || angle > 351) return 3;
+            if(angle < 351 && angle > 315) return 4;
+            return -1;
+        }
+        if(angle < 225 && angle > 189) return 0;
+        if(angle < 189 && angle > 153) return 1;
+        if(angle < 153 && angle > 117) return 2;
+        if(angle < 117 && angle > 81) return 3;
+        if(angle < 81 && angle > 45) return 4;
+        return -1;
+    }
+
+    function getAngle(x, y){
+        var r = Math.sqrt(x*x + y*y);
+        if(x > 0){
+            if(y > 0) return Math.asin(y / r) * 180 / Math.PI;
+            return 360 - Math.asin(- y / r) * 180 / Math.PI;
+        }
+        if(y > 0){
+            return 180 - Math.asin( y / r) * 180 / Math.PI;
+        }
+        return 180 + Math.asin( - y / r) * 180 / Math.PI;
+    }
+
+    function getMasterPosition(menu){
+        return{
+            x : menu.master.getBoundingClientRect().left + menu.master.offsetWidth / 2,
+            y : menu.master.getBoundingClientRect().top + menu.master.offsetHeight / 2
+        }
+    }
+
+    function switchMenu(menu){
+        if(menu.primary.expanded){
+            fold(menu.primary);
+            expand(menu.secondary);
+        }
+        else{
+            if(menu.secondary.expanded){
+                fold(menu.secondary);
+            }
+            expand(menu.primary);
+        }
+    }
+
+    function reset(menu){
+        if(menu.activeElement){
+            onActiveOut(menu.activeElement);
+            menu.activeElement = false;
+        }
+        fold(menu.primary);
+        fold(menu.secondary);
+    }
+
+    function expand(ul){
+        ul.ul.classList.remove('minified');
+        ul.expanded = true;
+    };
+
+    function fold(ul){
+        ul.ul.classList.add('minified');
+        ul.expanded = false;
+    };
 
     pubsub.subscribe('menuUpdate', function(activeTags){
         attachTags(activeTags);
@@ -30,10 +181,10 @@ define('menu', ['pubsub', 'editor', 'config'], function(pubsub, editor, config){
 
     function updateButton (li, tag, tagTitle){
         li.setAttribute('data-tag', tag);
-        li.getElementsByTagName('p')[0].innerText = tagTitle;
+        li.getElementsByTagName('span')[0].innerText = tagTitle;
     }
 
-    function findLi(index){
+    function getLi(index){
         var prmLeft = menuLeft.primary.elements.length,
             prmRight = menuRight.primary.elements.length,
             secLeft = menuLeft.secondary.elements.length,
@@ -51,7 +202,7 @@ define('menu', ['pubsub', 'editor', 'config'], function(pubsub, editor, config){
     function attachTags(tags){
         var i = 0, currentLi;
         for(var key in tags){
-            currentLi = findLi(i);
+            currentLi = getLi(i);
             if(tags.hasOwnProperty(key) && currentLi){
                 updateButton(currentLi, tags[key].tag, key);
                 i++;
@@ -59,212 +210,12 @@ define('menu', ['pubsub', 'editor', 'config'], function(pubsub, editor, config){
         }
     }
 
-    function switchButtons(primary, secondary){
-        var menu = menuRef(primary.parentElement);
-        if(primary.expanded == 'fold' && secondary.expanded == 'fold'){
-            drawMenu(primary.elements, menu);
-            return;
-        }
-        else if(primary.expanded){
-            foldMenu(primary.elements, menu);
-            drawMenu(secondary.elements, menu);
-            return;
-        }
-        foldMenu(secondary.elements, menu);
-        drawMenu(primary.elements, menu);
-    }
-
-    function getRange(x) {return ~~((x + 30) / 30)}
-
-    function holdMenu(){
-        var boundTop;
-        window.addEventListener('scroll', function(){
-            boundTop = editor.editArea.getBoundingClientRect().top + window.scrollY + editor.editArea.offsetHeight;
-            if(window.scrollY > boundTop - document.documentElement.clientHeight/* && menuLeft.classList.contains('fixedPos')*/){
-                menuLeft.wrapper.classList.add('absolutePos');
-                menuRight.wrapper.classList.add('absolutePos');
-                menuLeft.wrapper.classList.remove('fixedPos');
-                menuRight.wrapper.classList.remove('fixedPos');
-                return;
-            }
-            if(window.scrollY < boundTop - document.documentElement.clientHeight && menuLeft.wrapper.classList.contains('absolutePos')){
-                menuLeft.wrapper.classList.remove('absolutePos');
-                menuRight.wrapper.classList.remove('absolutePos');
-                menuLeft.wrapper.classList.add('fixedPos');
-                menuRight.wrapper.classList.add('fixedPos');
-                return;
-            }
-        });
-
-    }
-
-    function findArea(menu, Pwidth, Pheight){
-        var x = Pwidth - lastTouchX,
-            y = Pheight - lastTouchY,
-            angle = 0;
-        if(menu == menuLeft)x = -x;
-
-        if(x >= 0){
-            if(y >= 0){
-                return 0;
-            }
-            angle = Math.atan(x / -y) * 180 / Math.PI + 90;
-        }
-        else{
-            if(y < 0){
-                angle = Math.atan(y / x) * 180 / Math.PI;
-            }
-            else{
-                angle = - Math.atan(-y / x) * 180 / Math.PI;
-            }
-        }
-        return getRange(angle) + 1;
-    }
-
-    function drawMenu(ulElements, menu){
-        for(var i = 1; i <= ulElements.length; i++){
-            ulElements[i-1].classList.remove('fold');
-            if(menu == menuLeft){
-                ulElements[i-1].getElementsByTagName('hr')[0].classList.add('rotHrL' + i);
-                ulElements[i-1].getElementsByTagName('p')[0].classList.add('rotTagL' + i);
-            }
-            else{
-                ulElements[i-1].getElementsByTagName('hr')[0].classList.add('rotHr' + i);
-                ulElements[i-1].getElementsByTagName('p')[0].classList.add('rotTag' + i);
-            }
-            ulElements[i-1].getElementsByTagName('hr')[0].classList.remove('foldHr');
-            ulElements[i-1].getElementsByTagName('p')[0].classList.remove('foldTag');
-        }
-        ulElements[0].parentElement.expanded = 'expanded';
-    }
-
-    function foldMenu(ulElements, menu){
-        for(var i = 1; i <= ulElements.length; i++){
-            ulElements[i-1].classList.add('fold');
-            if(menu == menuLeft){
-                ulElements[i-1].getElementsByTagName('hr')[0].classList.remove('rotHrL' + i);
-                ulElements[i-1].getElementsByTagName('p')[0].classList.remove('rotTagL' + i);
-            }
-            else{
-                ulElements[i-1].getElementsByTagName('hr')[0].classList.remove('rotHr' + i);
-                ulElements[i-1].getElementsByTagName('p')[0].classList.remove('rotTag' + i);
-            }
-            ulElements[i-1].getElementsByTagName('hr')[0].classList.add('foldHr');
-            ulElements[i-1].getElementsByTagName('p')[0].classList.add('foldTag');
-        }
-        ulElements[0].parentElement.expanded = 'fold';
-    }
-
-    function swipeCheck(menu){
-        window.addEventListener('touchmove', function(event){
-            if(event.srcElement.classList.contains('master')){
-                event.preventDefault();
-                var width = event.changedTouches[0].pageX - lastTouchX,
-                    height = event.changedTouches[0].pageY - lastTouchY,
-                    diagonal = Math.sqrt(width*width + height*height);
-                if(diagonal > menu.radius){
-                    afterSwipe(menuRef(event.srcElement.parentElement), event.changedTouches[0].pageX, event.changedTouches[0].pageY);
-                }
-            }
-        });
-        window.addEventListener('touchend', function(){
-            if(event.srcElement.classList.contains('master')){
-                event.preventDefault();
-                menu = menuRef(event.srcElement.parentElement); //wrapper menu
-                if(menu.primary.expanded == 'expanded'){
-                    foldMenu(menu.primary.elements, menu);
-                }
-                else{
-                    foldMenu(menu.secondary.elements, menu);
-                }
-            }
-        });
-        switchButtons(menu.primary, menu.secondary);
-    }
-
-    function afterSwipe(menu, width, height){
-        //just check the coords and find the appropriate button
-        var expElements, touchArea;
-        if(menu.primary.expanded == 'expanded'){
-            expElements = menu.primary.elements;
-        }
-        else{
-            if(menu.secondary.expanded == 'expanded'){
-                expElements = menu.secondary.elements
-            }
-            else{
-                return; //what about quick swipe?
-            }
-        }
-
-        touchArea = findArea(menu, width, height);
-
-        if(touchArea > 0 && touchArea < 6){
-            pubsub.publish('insert', expElements[touchArea-1].getAttribute('data-tag'));
-        }
-
-        menu.wrapper.removeEventListener('touchmove');
-        foldMenu(menu.primary.elements, menu);
-        foldMenu(menu.secondary.elements, menu);
-    }
-
-    function expanded(menu){
-        if(menu.primary.expanded) return menu.primary;
-        if(menu.secondary.expanded) return menu.secondary;
-        return false;
-    }
-
-    function menuRef(wrapper){
-        return wrapper.id == 'menuLeft' ? menuLeft : menuRight;
-    }
-
-    function afterTouchStart(menu, changedTouches){
-        if(menu === menuLeft){
-            if(menuRight.primary.expanded == 'expanded'){
-                switchButtons(menuRight.primary, menuRight.secondary);
-            }
-            else{
-                if(menuRight.secondary.expanded == 'expanded'){
-                    switchButtons(menuRight.secondary, menuRight.primary);
-                }
-
-                else{
-                    swipeCheck(menu);
-                    lastTouchX = changedTouches[0].pageX;
-                    lastTouchY = changedTouches[0].pageY;
-                }
-            }
-        }
-        else{
-            if(menuLeft.primary.expanded == 'expanded'){
-                switchButtons(menuLeft.primary, menuLeft.secondary);
-            }
-            else{
-                if(menuLeft.secondary.expanded == 'expanded'){
-                    switchButtons(menuLeft.secondary, menuLeft.primary);
-                }
-
-                else{
-                    swipeCheck(menu);
-                    lastTouchX = changedTouches[0].pageX;
-                    lastTouchY = changedTouches[0].pageY;
-                }
-            }
-        }
-    }
-
     function init(){
-        holdMenu();
-        masters =[menuLeft.master, menuRight.master];
-        masters.forEach(function(master){
-            master.addEventListener('touchstart', function(event){
-                event.preventDefault();
-                afterTouchStart(menuRef(master.parentElement), event.changedTouches);
-            });
-        })
+        build('menuLeft', 'menuRight');
+        waitForTouch([menuLeft, menuRight]);
     }
 
     return{
         init: init
-    };
+    }
 });

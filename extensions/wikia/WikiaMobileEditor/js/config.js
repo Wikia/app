@@ -2,7 +2,7 @@ define('config', ['pubsub'], function(pubsub){
 
     var configObj,
         activeTags = {},
-        maxItems = 20;;
+        maxItems = 16;
 
     ConfigObj = function(wrapSection){
         this.wrapper = wrapSection;
@@ -164,6 +164,21 @@ define('config', ['pubsub'], function(pubsub){
         }
     };
 
+    function findTag(abbr){
+        for(var tagGr in tags){
+            if(tags.hasOwnProperty(tagGr) && typeof tags[tagGr] === 'object'){
+                for(var tag in tags[tagGr]){
+                    if(tags[tagGr].hasOwnProperty(tag) && typeof tags[tagGr][tag] === 'object'){
+                        if (tags[tagGr][tag].abbr === abbr){
+                            return tags[tagGr][tag].tag;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     function isFirstCharValid(tag){
         return (tagStarts.indexOf(tag.substring(0,1)) != -1);
     }
@@ -242,8 +257,7 @@ define('config', ['pubsub'], function(pubsub){
     }
 
     function getActive(){ //returns elements with checkboxes in 'active' state
-        var activeChb = [],
-            tagObj = {};
+        var activeChb = [];
         for(var i = 0; i < configObj.checkboxes.length; i++){
             if(configObj.checkboxes[i].checked){
                 activeChb.push(configObj.checkboxes[i]);
@@ -302,6 +316,7 @@ define('config', ['pubsub'], function(pubsub){
         watchForSubmit();
     }
     return {
-        init : init
+        init : init,
+        findTag: findTag
     }
 });
