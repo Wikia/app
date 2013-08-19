@@ -12,6 +12,9 @@ ini_set('error_reporting', E_NOTICE);
 
 require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 
+// Include the LVS extension so we can build suggestions even when the wiki does not have it enabled
+include( "$IP/extensions/wikia/LicensedVideoSwap/LicensedVideoSwap.setup.php" );
+
 /**
  * Class LVSUpdateSuggestions
  */
@@ -24,9 +27,9 @@ class LVSUpdateSuggestions extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Pre-populate LVS suggestions";
-		$this->addOption( 'test', 'Test', false, false, 't' );
-		$this->addOption( 'verbose', 'Verbose', false, false, 'v' );
-		$this->addOption( 'force', 'Force', false, false, 'f' );
+		$this->addOption( 'test', 'Test mode; make no changes', false, false, 't' );
+		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
+		$this->addOption( 'force', 'Force a rebuild of all suggestions', false, false, 'f' );
 	}
 
 	public function execute() {
