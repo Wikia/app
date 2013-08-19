@@ -103,6 +103,7 @@ class AdminDashboardLogic {
 				"UserPathPrediction",
 				"UserSignup",
 				"Version",
+				"VideoPageTool",
 				"Videos",
 				"WDACReview",
 				"WhereIsExtension",
