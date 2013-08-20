@@ -9,6 +9,61 @@ use Swagger\Annotations as SWG;
  *     resourcePath="ArticlesApi",
  *     basePath="http://muppet.wikia.com"
  * )
+ *
+ * @SWG\Model( id="HubArticleResult" )
+ * 		@SWG\Property(
+ * 			name="wiki",
+ * 			type="Wikia",
+ * 			required="true",
+ * 			description="Wikia info object"
+ * 		)
+ * 		@SWG\Property(
+ * 			name="articles",
+ * 			type="Array",
+ *         	items="$ref:HubArticle",
+ * 			required="true",
+ * 			description="Article list"
+ * 		)
+ *
+ * @SWG\Model( id="Wikia" )
+ * 		@SWG\Property(
+ * 			name="id",
+ * 			type="int",
+ * 			required="true",
+ * 			description="Wikia ID."
+ * 		)
+ * 		@SWG\Property(
+ * 			name="name",
+ * 			type="string",
+ * 			required="true",
+ * 			description="Wikia name"
+ * 		)
+ * 		@SWG\Property(
+ * 			name="language",
+ * 			type="string",
+ * 			required="true",
+ * 			description="Wikia language"
+ * 		)
+ * 		@SWG\Property(
+ * 			name="domain",
+ * 			type="string",
+ * 			required="true",
+ * 			description="Wikia base URL"
+ * 		)
+ *
+ * @SWG\Model( id="HubArticle" )
+ * 		@SWG\Property(
+ * 			name="id",
+ * 			type="int",
+ * 			required="true",
+ * 			description="Article ID."
+ * 		)
+ * 		@SWG\Property(
+ * 			name="ns",
+ * 			type="int",
+ * 			required="true",
+ * 			description="The namespace value of the given article."
+ * 		)
  * 
  * @SWG\Model( id="UnexpandedArticle" )
  *     @SWG\Property(
@@ -135,6 +190,56 @@ use Swagger\Annotations as SWG;
  *         required="true",
  *         description="Original height of the thumbnail, in pixels."
  *     )
+ *
+ * @SWG\Model( id="HubArticleResultSet" )
+ * 		@SWG\Property(
+ *         name="items",
+ *         required="true",
+ *         type="Array",
+ *         items="$ref:HubArticleResult",
+ *         description="A list of each wikia for given hub or language with their top articles"
+ *      )
+ *
+ * @SWG\Model( id="UnexpandedListArticleResultSet" )
+ *     @SWG\Property(
+ *         name="items",
+ *         required="true",
+ *         type="Array",
+ *         items="$ref:UnexpandedArticle",
+ *         description="A list of each unexpanded top article in the result set, sorted by pageview descending."
+ *         )
+ * 		@SWG\Property(
+ *          name="offset",
+ *          type="string",
+ *          required="true",
+ *          description="Offset to start next batch of data."
+ *          )
+ *      @SWG\Property(
+ *          name="basepath",
+ *          type="string",
+ *          required="true",
+ *          description="The base path of the request made. Used to construct absolute URLs."
+ *          )
+ * @SWG\Model( id="ExpandedListArticleResultSet" )
+ *     @SWG\Property(
+ *         name="items",
+ *         required="true",
+ *         type="Array",
+ *         items="$ref:ExpandedArticle",
+ *         description="A list of each unexpanded top article in the result set, sorted by pageview descending."
+ *         )
+ * 		@SWG\Property(
+ *          name="offset",
+ *          type="string",
+ *          required="true",
+ *          description="Offset to start next batch of data."
+ *          )
+ *      @SWG\Property(
+ *          name="basepath",
+ *          type="string",
+ *          required="true",
+ *          description="The base path of the request made. Used to construct absolute URLs."
+ *          )
  * 
  * @SWG\Model( id="UnexpandedArticleResultSet" )
  *     @SWG\Property(
@@ -173,7 +278,7 @@ use Swagger\Annotations as SWG;
  *         @SWG\Operation(
  *             httpMethod="GET",
  *             summary="Get pages related to a given article ID", 
- *             nickname="getList", 
+ *             nickname="getTop",
  *             responseClass="UnexpandedArticleResultSet",
  *             @SWG\ErrorResponses(
  *                 @SWG\ErrorResponse( code="404", reason="Invalid parameter or category" )
@@ -183,10 +288,10 @@ use Swagger\Annotations as SWG;
  *                     name="namespaces", 
  *                     description="The integer namespace values to filter the results by, comma-separated.", 
  *                     paramType="query", 
- *                     required="true", 
+ *                     required="false",
  *                     allowMultiple="true", 
  *                     dataType="Array", 
- *                     defaultValue="0"
+ *                     defaultValue=""
  *                 ),
  *                 @SWG\Parameter(
  *                     name="category", 
@@ -208,7 +313,7 @@ use Swagger\Annotations as SWG;
  *         @SWG\Operation(
  *             httpMethod="GET",
  *             summary="Get pages related to a given article ID", 
- *             nickname="getList", 
+ *             nickname="getTop",
  *             responseClass="ExpandedArticleResultSet",
  *             @SWG\ErrorResponses(
  *                 @SWG\ErrorResponse( code="404", reason="Related Pages extension not available" )
@@ -218,10 +323,10 @@ use Swagger\Annotations as SWG;
  *                     name="namespaces", 
  *                     description="The integer namespace values to filter the results by, comma-separated.", 
  *                     paramType="query", 
- *                     required="true", 
+ *                     required="false",
  *                     allowMultiple="true", 
  *                     dataType="Array", 
- *                     defaultValue="0"
+ *                     defaultValue=""
  *                 ),
  *                 @SWG\Parameter(
  *                     name="category", 
@@ -442,6 +547,50 @@ class ArticlesApiController extends WikiaApiController {
 	 * @example http://www.wikia.com/wikia.php?controller=ArticlesApi&method=getTopByHub&hub=Gaming&namespaces=0,14
 	 * @example http://www.wikia.com/wikia.php?controller=ArticlesApi&method=getTopByHub&hub=Gaming&lang=de
 	 */
+
+/**
+*@SWG\Api(
+*     path="/wikia.php?controller=ArticlesApi&method=getTopByHub",
+*     description="Get the top articles by pageviews for a hub optionally filtering by namespace and/or language, available only on the www.wikia.com main domain",
+*     @SWG\Operations(
+*         @SWG\Operation(
+*             httpMethod="GET",
+*             summary="Get the top articles by pageviews for a hub optionally filtering by namespace and/or language",
+*             nickname="getTopByHub",
+*             responseClass="HubArticleResultSet",
+*             @SWG\Parameters(
+*				  @SWG\Parameter(
+*                     name="hub",
+*                     description="The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) to use as a filter",
+*                     paramType="query",
+*                     required="true",
+*                     allowMultiple="false",
+*                     dataType="Array",
+*                     defaultValue="0"
+*                 ),
+*				  @SWG\Parameter(
+*                     name="lang",
+*                     description="Specifying a title corresponding to an existing for this value will display only articles that pertain to this category.",
+*                     paramType="query",
+*                     required="false",
+*                     allowMultiple="true",
+*                     dataType="string",
+*                     defaultValue=""
+*                 ),
+*                 @SWG\Parameter(
+*                     name="namespaces",
+*                     description="The integer namespace values to filter the results by, comma-separated.",
+*                     paramType="query",
+*                     required="false",
+*                     allowMultiple="true",
+*                     dataType="Array",
+*                     defaultValue=""
+*                 )
+*             )
+*         )
+*     )
+* )
+*/
 	public function getTopByHub() {
 		wfProfileIn( __METHOD__ );
 
@@ -551,6 +700,109 @@ class ArticlesApiController extends WikiaApiController {
 	 * @example &limit=10&namespaces=14&offset=R
 	 * @example &category=Weapons
 	 * @example &category=Weapons&limit=5
+	 */
+
+	/**
+	 * @SWG\Api(
+	 *     path="/wikia.php?controller=ArticlesApi&method=getList",
+	 *     description="Get Articles under a category",
+	 *     @SWG\Operations(
+	 *         @SWG\Operation(
+	 *             httpMethod="GET",
+	 *             summary="Get Articles under a category",
+	 *             nickname="getList",
+	 *             responseClass="UnexpandedListArticleResultSet",
+	 *             @SWG\Parameters(
+	 * 				   @SWG\Parameter(
+	 *                     name="category",
+	 *                     description="Specifying a title corresponding to an existing for this value will display only articles that pertain to this category.",
+	 *                     paramType="query",
+	 *                     required="false",
+	 *                     allowMultiple="false",
+	 *                     dataType="string",
+	 *                     defaultValue=""
+	 *                 ),
+	 *                 @SWG\Parameter(
+	 *                     name="namespaces",
+	 *                     description="The integer namespace values to filter the results by, comma-separated.",
+	 *                     paramType="query",
+	 *                     required="false",
+	 *                     allowMultiple="true",
+	 *                     dataType="Array",
+	 *                     defaultValue=""
+	 *                 ),
+	 *                  @SWG\Parameter(
+	 *                     name="limit",
+	 *                     description="The maximum number of results to fetch",
+	 *                     paramType="query",
+	 *                     required="false",
+	 *                     allowMultiple="false",
+	 *                     dataType="int",
+	 *                     defaultValue="25"
+	 *                 ),
+	 *                   @SWG\Parameter(
+	 *                     name="offset",
+	 *                     description="Offset to start fetching data from",
+	 *                     paramType="query",
+	 *                     required="false",
+	 *                     allowMultiple="false",
+	 *                     dataType="string",
+	 *                     defaultValue=""
+	 *                 )
+	 *             )
+	 *         )
+	 *     )
+	 * )
+	 * @SWG\Api(
+	 *     path="/wikia.php?controller=ArticlesApi&method=getList&expand=1",
+	 *     description="Fetch top articles for the current wiki",
+	 *     @SWG\Operations(
+	 *         @SWG\Operation(
+	 *             httpMethod="GET",
+	 *             summary="Get Articles under a category",
+	 *             nickname="getList",
+	 *             responseClass="ExpandedListArticleResultSet",
+	 *             @SWG\Parameters(
+	 * 				   @SWG\Parameter(
+	 *                     name="category",
+	 *                     description="Specifying a title corresponding to an existing for this value will display only articles that pertain to this category.",
+	 *                     paramType="query",
+	 *                     required="false",
+	 *                     allowMultiple="false",
+	 *                     dataType="string",
+	 *                     defaultValue=""
+	 *                 ),
+	 *                 @SWG\Parameter(
+	 *                     name="namespaces",
+	 *                     description="The integer namespace values to filter the results by, comma-separated.",
+	 *                     paramType="query",
+	 *                     required="false",
+	 *                     allowMultiple="true",
+	 *                     dataType="Array",
+	 *                     defaultValue=""
+	 *                 ),
+	 *                   @SWG\Parameter(
+	 *                     name="limit",
+	 *                     description="The maximum number of results to fetch",
+	 *                     paramType="query",
+	 *                     required="false",
+	 *                     allowMultiple="false",
+	 *                     dataType="int",
+	 *                     defaultValue="25"
+	 *                 ),
+	 *                   @SWG\Parameter(
+	 *                     name="offset",
+	 *                     description="Offset to start fetching data from",
+	 *                     paramType="query",
+	 *                     required="false",
+	 *                     allowMultiple="false",
+	 *                     dataType="string",
+	 *                     defaultValue=""
+	 *                 )
+	 *             )
+	 *         )
+	 *     )
+	 * )
 	 */
 	public function getList(){
 		wfProfileIn( __METHOD__ );
@@ -694,6 +946,70 @@ class ArticlesApiController extends WikiaApiController {
 	 *
 	 * @example &ids=2187,23478&abstract=200&width=300&height=150
 	 */
+
+	/**
+	 * @SWG\Api(
+	 *     path="/wikia.php?controller=ArticlesApi&method=getDetails",
+	 *     description="Fetch top articles for the current wiki",
+	 *     @SWG\Operations(
+	 *         @SWG\Operation(
+	 *             httpMethod="GET",
+	 *             summary="Get details about one or more articles",
+	 *             nickname="getDetails",
+	 *             responseClass="ExpandedArticleResultSet",
+	 *             @SWG\Parameters(
+	 *                 @SWG\Parameter(
+	 *                     name="ids",
+	 *                     description="A string with a comma-separated list of article ID's.",
+	 *                     paramType="query",
+	 *                     required="true",
+	 *                     allowMultiple="true",
+	 *                     dataType="Array",
+	 *                     defaultValue="50"
+	 *                 ),
+	 *                 @SWG\Parameter(
+	 *                     name="titles",
+	 *                     description="DbKey titles",
+	 *                     paramType="query",
+	 *                     required="false",
+	 *                     allowMultiple="false",
+	 *                     dataType="string",
+	 *                     defaultValue=""
+	 *                 ),
+	 *                  @SWG\Parameter(
+	 *                     name="$abstract",
+	 *                     description="The desired length for the article's abstract",
+	 *                     paramType="query",
+	 *                     required="false",
+	 *                     allowMultiple="false",
+	 *                     dataType="int",
+	 *                     defaultValue="100",
+	 * 					   @SWG\AllowableValues(valueType="RANGE",min="0", max="500")
+	 *                 ),
+	 *                  @SWG\Parameter(
+	 *                     name="width",
+	 *                     description="The desired width for the thumbnail",
+	 *                     paramType="query",
+	 *                     required="false",
+	 *                     allowMultiple="false",
+	 *                     dataType="int",
+	 *                     defaultValue="200"
+	 *                 ),
+	 *                  @SWG\Parameter(
+	 *                     name="height",
+	 *                     description="The desired height for the thumbnail",
+	 *                     paramType="query",
+	 *                     required="false",
+	 *                     allowMultiple="false",
+	 *                     dataType="int",
+	 *                     defaultValue="200"
+	 *                 )
+	 *             )
+	 *         )
+	 *     )
+	 * )
+	 */
+
 	public function getDetails() {
 		wfProfileIn( __METHOD__ );
 
