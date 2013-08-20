@@ -337,4 +337,16 @@ class AnyclipApiWrapper extends ApiWrapper {
 		return '';
 	}
 
+	/**
+	 * get video type
+	 * @return string
+	 */
+	protected function getVideoType() {
+		if ( !empty( $this->metadata['type'] ) ) {
+			return $this->metadata['type'];
+		}
+
+		return 'Clip';
+	}
+
 }

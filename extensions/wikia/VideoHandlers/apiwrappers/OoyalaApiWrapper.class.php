@@ -165,9 +165,6 @@ class OoyalaApiWrapper extends ApiWrapper {
 		if ( !isset($metadata['startDate'] ) ) {
 			$metadata['startDate'] = $this->getVideoStartDate();
 		}
-		if ( !isset($metadata['expirationDate'] ) ) {
-			$metadata['expirationDate'] = $this->getVideoExpirationDate();
-		}
 		if ( !isset( $metadata['pageCategories'] ) ) {
 			$metadata['pageCategories'] = $this->getPageCategories();
 		}
@@ -490,6 +487,22 @@ class OoyalaApiWrapper extends ApiWrapper {
 
 		if ( !empty( $this->interfaceObj['metadata']['resolution'] ) ) {
 			return $this->interfaceObj['metadata']['resolution'];
+		}
+
+		return '';
+	}
+
+	/**
+	 * get characters
+	 * @return string
+	 */
+	protected function getCharacters() {
+		if ( !empty( $this->metadata['characters'] ) ) {
+			return $this->metadata['characters'];
+		}
+
+		if ( !empty( $this->interfaceObj['metadata']['characters'] ) ) {
+			return $this->interfaceObj['metadata']['characters'];
 		}
 
 		return '';
