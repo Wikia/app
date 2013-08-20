@@ -1,0 +1,4 @@
+define('VideoPageTool', [
+], function() {
+
+});

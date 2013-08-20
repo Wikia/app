@@ -999,6 +999,35 @@ $config['VET_js'] = array(
 	)
 );
 
+/**
+ * @name VideoPageTool
+ * @description Assets for the VideoPageTool, same styles as SpecialMarketingToolbox
+ * 
+ */
+
+$config['videopagetool_js'] = array(
+	'skin' => array( 'oasis' ),
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//resources/jquery.ui/jquery.ui.datepicker.js',
+		'//extensions/wikia/VideoPageTool/js/models/datepicker.js',
+		'//extensions/wikia/VideoPageTool/js/views/datepicker.js',
+		'//extensions/wikia/VideoPageTool/js/views/index.js',
+		// '//extensions/wikia/VideoPageTool/js/Datepicker.js'
+	)
+);
+
+$config['videopagetool_css'] = array(
+	'skin' => array( 'oasis' ),
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => array(
+		'//extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox.scss',
+		'//extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Dashboard.scss',
+		'//extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Footer.scss',
+		'//extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Header.scss'
+	)
+);
+
 /** UserLogin **/
 $config['userlogin_scss_wikiamobile'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
