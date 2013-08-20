@@ -24,7 +24,7 @@
 </td>
 </tr>
 </table>
-<h1 style="color:#fa5c1f;font-size:19px;font-weight:normal"><?= wfMsg('usersignup-welcome-email-greeting')->inLanguage( $language )->text() ?></h1>
+<h1 style="color:#fa5c1f;font-size:19px;font-weight:normal"><?= wfMessage( 'usersignup-welcome-email-greeting' )->inLanguage( $language )->text() ?></h1>
 </td>
 <td width="30">
 &nbsp;
