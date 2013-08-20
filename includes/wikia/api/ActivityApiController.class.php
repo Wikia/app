@@ -19,13 +19,13 @@ use Swagger\Annotations as SWG;
  *         required="true",
  *         type="Array",
  *         items="$ref:ActivityResponseItem",
- *         description="A list of each individual event, ordered by recency descending."
+ *         description="A list of each individual event, ordered by recency descending"
  *         )
  *      @SWG\Property(
  *          name="basepath",
  *          type="string",
  *          required="true",
- *          description="The base path of the request made. Used to construct absolute URLs."
+ *          description="The base path of the request made. Used to construct absolute URLs"
  *          )
  * 
  * @SWG\Model( id="ActivityResponseItem" )
@@ -56,7 +56,7 @@ use Swagger\Annotations as SWG;
  *
  * @SWG\Api(
  *     path="/wikia.php?controller=ActivityApi&method=getLatestActivity",
- *     description="Acquire information about the latest user activity on the current wiki.",
+ *     description="Acquire information about the latest user activity on the current wiki",
  *     @SWG\Operations(
  *         @SWG\Operation( 
  *             httpMethod="GET", 
