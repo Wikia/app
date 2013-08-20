@@ -1,4 +1,4 @@
-<div class="WikiaGrid">
+<div class="WikiaGrid VPTForms">
 	<div class="grid-2">
 		<?= $app->renderView('LeftMenu',
 			'Index',
@@ -6,7 +6,17 @@
 		) ?>
 	</div>
 	<div class="grid-4">
-		<?= $moduleView ?>
+		<form>
+
+
+		</form>
+
+
+
+		<?//= $moduleView ?>
+	</div>
+	<div class="publish">
+		<button class="big"><?= wfMessage( 'videopagetool-publish-button' ) ?></button>
 	</div>
 </div>
 

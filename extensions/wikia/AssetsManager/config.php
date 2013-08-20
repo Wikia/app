@@ -1362,3 +1362,10 @@ $config['special_css_js'] = array(
 		'//resources/wikia/libraries/mustache/jquery.mustache.js'
 	)
 );
+
+$config['videopagetool_css'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => array(
+		'//extensions/wikia/VideoPageTool/css/VideoPageTool.scss',
+	),
+);

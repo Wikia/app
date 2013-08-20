@@ -13,6 +13,7 @@ $messages['en'] = array(
 	'videopagetool-section-featured' => 'Featured',
 	'videopagetool-section-trending' => 'Trending Video',
 	'videopagetool-section-fan' => 'Wikia Fan Media',
+	'videopagetool-publish-button' => 'Publish',
 
 );
 

@@ -62,7 +62,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		}
 
 		$this->leftMenuItems = VideoPageToolHelper::getLeftMenuItems( $section );
-		$this->moduleView = "form goes here";
+		//$this->moduleView = "form goes here"; // TODO: add view based on section. For now it will be hard coded
 		$this->section = $section;
 		$this->date = $date;
 		$this->region = $region;
@@ -98,7 +98,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		$this->info = $info;
 	}
 
-	public function slider() {
+	public function featured() {
 
 	}
 }

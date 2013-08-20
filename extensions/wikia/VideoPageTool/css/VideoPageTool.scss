@@ -1,8 +1,12 @@
-@import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/core/color";
-@import "skins/oasis/css/mixins/bodytext";
-@import "skins/oasis/css/mixins/border-radius";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/opacity";
+
+.VPTForms {
+	.publish {
+		border-top: 1px solid $color-page-border-subtle;
+		clear: both;
+		padding-top: 10px;
+		button {
+			float: right;
+		}
+	}
+}
