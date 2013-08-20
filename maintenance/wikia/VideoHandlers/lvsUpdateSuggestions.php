@@ -41,6 +41,11 @@ class LVSUpdateSuggestions extends Maintenance {
 
 		$startTime = time();
 
+		// Clear existing suggestions if we are forcing a rebuild
+		if ( $this->force ) {
+			$this->clearSuggestions();
+		}
+
 		$this->processVideoList( );
 
 		$delta = $this->formatDuration(time() - $startTime);
@@ -120,6 +125,17 @@ class LVSUpdateSuggestions extends Maintenance {
 					 'vidsWithSuggestions' => $vidsWithSugggestions,
 					 'totalSuggestions'    => $totalSuggestions,
 					);
+	}
+
+	/**
+	 * Remove all existing suggestions
+	 */
+	public function clearSuggestions() {
+		$sql = "delete from page_wikia_props
+		 		where propname in (".WPP_LVS_SUGGEST.", ".WPP_LVS_SUGGEST_DATE.", ".WPP_LVS_EMPTY_SUGGEST.")";
+		$db = wfGetDB( DB_MASTER );
+
+		$db->query($sql);
 	}
 
 	public function usageStats() {
