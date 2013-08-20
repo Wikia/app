@@ -246,6 +246,10 @@ $wgAutoloadClasses[ 'ParserPool'                      ] = "$IP/includes/wikia/pa
 $wgAutoloadClasses[ 'WikiDataSource'                  ] = "$IP/includes/wikia/WikiDataSource.php";
 $wgAutoloadClasses[ 'DateFormatHelper'                ] = "$IP/includes/wikia/DateFormatHelper.php";
 $wgAutoloadClasses[ 'CategoryHelper'                  ] = "$IP/includes/wikia/helpers/CategoryHelper.class.php";
+$wgAutoloadClasses[ 'CustomMeasurementsDriver'        ] = "$IP/includes/wikia/measurements/CustomMeasurements.php";
+$wgAutoloadClasses[ 'CustomMeasurements'              ] = "$IP/includes/wikia/measurements/CustomMeasurements.php";
+$wgAutoloadClasses[ 'CustomMeasurementsDummyDriver'   ] = "$IP/includes/wikia/measurements/CustomMeasurements.php";
+$wgAutoloadClasses[ 'CustomMeasurementsNewrelicDriver'] = "$IP/includes/wikia/measurements/CustomMeasurements.php";
 
 /**
  * Resource Loader enhancements
