@@ -44,12 +44,16 @@ class LVSUpdateSuggestions extends Maintenance {
 
 		$startTime = time();
 
-		$stats = $this->processVideoList( );
+		$this->processVideoList( );
 
 		$delta = $this->formatDuration(time() - $startTime);
 
-		global $wgServerName;
-		echo "[$wgServerName] Found suggestions for {$stats['vidsWithSuggestions']} of {$stats['vidsFound']} video(s) in $delta\n";
+		$stats = $this->usageStats();
+
+		$wgDBName = WikiFactory::IDtoDB($_ENV['SERVER_ID']);
+		echo "[$wgDBName] Finished in $delta.  Usage Stats:\n";
+		echo "[$wgDBName] Video stats: total=".$stats['totalVids']." with_suggestion=".$stats['vidsWithSuggestions']." ave_per_vid=".$stats['avgSuggestions'];
+		echo "[$wgDBName] Swap status: kept=".$stats['swapTypes'][1]." swapped=".$stats['swapTypes'][2]." exact=".$stats['swapTypes'][3]."\n";
 	}
 
 	/**
@@ -120,6 +124,59 @@ class LVSUpdateSuggestions extends Maintenance {
 					 'totalSuggestions'    => $totalSuggestions,
 					);
 	}
+
+	public function usageStats() {
+		$db = wfGetDB( DB_SLAVE );
+
+		$sqlTotal = "SELECT count(*) as cnt
+					 FROM video_info
+					 WHERE removed = 0
+					   AND premium = 0";
+
+		$results = $db->query($sqlTotal);
+
+		$totalVids = 0;
+		while( $row = $db->fetchObject($results) ) {
+			$totalVids = $row->cnt;
+		}
+
+		$sqlStatus = "select substr(props, locate('status\";i', props)+10, 1) as status,
+		 			  count(*) as cnt
+		 			  from page_wikia_props
+		 			  where propname = 18
+		 			  group by status";
+
+		$results = $db->query($sqlStatus);
+
+		$swapTypes = array('1' => 0,
+						   '2' => 0,
+						   '3' => 3);
+		while( $row = $db->fetchObject($results) ) {
+			$swapTypes[$row->status] = $row->cnt;
+		}
+
+		$sqlCounts = "select substring_index(substring_index(props, ':', 2), ':', -1) as suggestions
+					  from page_wikia_props
+					  where propname = 19";
+
+		$results = $db->query($sqlCounts);
+
+		$vidsWithSuggestions = 0;
+		$numSuggestions = 0;
+		while( $row = $db->fetchObject($results) ) {
+			$vidsWithSuggestions++;
+			$numSuggestions += $row->cnt;
+		}
+		$avgSuggestions = $vidsWithSuggestions/$numSuggestions;
+
+		return array("totalVids"           => $totalVids,
+					 "vidsWithSuggestions" => $vidsWithSuggestions,
+					 "numSuggestions"      => $numSuggestions,
+					 "avgSuggestions"      => $avgSuggestions,
+					 "swapTypes"           => $swapTypes,
+					 );
+	}
+
 
 	/**
 	 * Print the message if verbose is enabled
