@@ -281,7 +281,8 @@ use Swagger\Annotations as SWG;
  *             nickname="getTop",
  *             responseClass="UnexpandedArticleResultSet",
  *             @SWG\ErrorResponses(
- *                 @SWG\ErrorResponse( code="404", reason="Invalid parameter or category" )
+ *                 @SWG\ErrorResponse( code="400", reason="Invalid parameter or category" ),
+ * 				   @SWG\ErrorResponse( code="404", reason="Results not found" )
  *             ),
  *             @SWG\Parameters(
  *                 @SWG\Parameter(
@@ -316,7 +317,8 @@ use Swagger\Annotations as SWG;
  *             nickname="getTop",
  *             responseClass="ExpandedArticleResultSet",
  *             @SWG\ErrorResponses(
- *                 @SWG\ErrorResponse( code="404", reason="Related Pages extension not available" )
+ *                 @SWG\ErrorResponse( code="400", reason="Invalid parameter or category" ),
+ *                 @SWG\ErrorResponse( code="404", reason="Results not found" )
  *             ),
  *             @SWG\Parameters(
  *                 @SWG\Parameter(
@@ -558,6 +560,10 @@ class ArticlesApiController extends WikiaApiController {
 *             summary="Get the top articles by pageviews for a hub optionally filtering by namespace and/or language",
 *             nickname="getTopByHub",
 *             responseClass="HubArticleResultSet",
+ * 			  @SWG\ErrorResponses(
+ *                @SWG\ErrorResponse( code="400", reason="Missing 'hub' parameter, number of languages exceeded or not on www.wikia.com domain" ),
+ *                @SWG\ErrorResponse( code="404", reason="Results not found" )
+ *            ),
 *             @SWG\Parameters(
 *				  @SWG\Parameter(
 *                     name="hub",
@@ -712,6 +718,10 @@ class ArticlesApiController extends WikiaApiController {
 	 *             summary="Get Articles under a category",
 	 *             nickname="getList",
 	 *             responseClass="UnexpandedListArticleResultSet",
+	 * 			   @SWG\ErrorResponses(
+	 *                 @SWG\ErrorResponse( code="400", reason="Namespaces or category parameter is invalid" ),
+	 *                 @SWG\ErrorResponse( code="404", reason="Results not found" )
+	 *             ),
 	 *             @SWG\Parameters(
 	 * 				   @SWG\Parameter(
 	 *                     name="category",
@@ -762,6 +772,10 @@ class ArticlesApiController extends WikiaApiController {
 	 *             summary="Get Articles under a category",
 	 *             nickname="getList",
 	 *             responseClass="ExpandedListArticleResultSet",
+	 * 			   @SWG\ErrorResponses(
+	 *                 @SWG\ErrorResponse( code="400", reason="Namespaces or category parameter is invalid" ),
+	 *                 @SWG\ErrorResponse( code="404", reason="Results not found" )
+	 *             ),
 	 *             @SWG\Parameters(
 	 * 				   @SWG\Parameter(
 	 *                     name="category",
@@ -957,6 +971,9 @@ class ArticlesApiController extends WikiaApiController {
 	 *             summary="Get details about one or more articles",
 	 *             nickname="getDetails",
 	 *             responseClass="ExpandedArticleResultSet",
+	 * 			   @SWG\ErrorResponses(
+	 *                 @SWG\ErrorResponse( code="400", reason="Missing ids parameter or abstract out of range" )
+	 *             ),
 	 *             @SWG\Parameters(
 	 *                 @SWG\Parameter(
 	 *                     name="ids",
@@ -977,7 +994,7 @@ class ArticlesApiController extends WikiaApiController {
 	 *                     defaultValue=""
 	 *                 ),
 	 *                  @SWG\Parameter(
-	 *                     name="$abstract",
+	 *                     name="abstract",
 	 *                     description="The desired length for the article's abstract",
 	 *                     paramType="query",
 	 *                     required="false",
