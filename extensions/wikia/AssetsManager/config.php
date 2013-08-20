@@ -1013,7 +1013,6 @@ $config['videopagetool_js'] = array(
 		'//extensions/wikia/VideoPageTool/js/models/datepicker.js',
 		'//extensions/wikia/VideoPageTool/js/views/datepicker.js',
 		'//extensions/wikia/VideoPageTool/js/views/index.js',
-		// '//extensions/wikia/VideoPageTool/js/Datepicker.js'
 	)
 );
 

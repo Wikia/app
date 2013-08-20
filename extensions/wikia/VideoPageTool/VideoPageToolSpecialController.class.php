@@ -16,7 +16,6 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	public function init() {
 		$this->response->addAsset('videopagetool_js');
 		$this->response->addAsset('videopagetool_css');
-		// $this->response->addAsset(__DIR__ . '/js/Datepicker.js');
 
 	}
 

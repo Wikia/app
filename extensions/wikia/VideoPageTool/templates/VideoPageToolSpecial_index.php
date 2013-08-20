@@ -23,17 +23,6 @@
 			<? endforeach ?>
 		</select>
 	</div>
-<<<<<<< HEAD
-	<div class="grid-4">
-		<form>
-
-
-		</form>
-
-
-
-		<?//= $moduleView ?>
-	</div>
 	<div class="grid-2 data">
 		<img class="chevron border" src="<?= $wg->BlankImgUrl; ?>">
 		<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
@@ -43,7 +32,6 @@
 		</div>
 	</div>
 </div>
-
 
 <div class="ui-widget ui-datepicker datepicker-example">
 	<table class="ui-datepicker-calendar">
