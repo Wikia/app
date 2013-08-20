@@ -14,6 +14,7 @@ $dir = dirname(__FILE__) . '/';
 
 //classes
 $wgAutoloadClasses['VideoPageToolSpecialController'] = $dir.'VideoPageToolSpecialController.class.php';
+$wgAutoloadClasses['VideoPageToolHelper'] =  $dir . 'VideoPageToolHelper.class.php';
 
 // i18n mapping
 $wgExtensionMessagesFiles['VideoPageTool'] = $dir.'VideoPageTool.i18n.php';

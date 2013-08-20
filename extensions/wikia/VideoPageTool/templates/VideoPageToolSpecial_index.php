@@ -5,4 +5,8 @@
 			array('menuItems' => $leftMenuItems)
 		) ?>
 	</div>
+	<div class="grid-4">
+		<?= $moduleView ?>
+	</div>
 </div>
+

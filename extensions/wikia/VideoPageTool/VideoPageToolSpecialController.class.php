@@ -17,16 +17,6 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset('videopagetool_js');
 		$this->response->addAsset('videopagetool_css');
 
-		$leftMenuItems = [
-			[
-				'href' => '/wiki/Special:MarketingToolbox/editHub?moduleId=1&date=1376265600&region=en&verticalId=2&sectionId=1',
-				'selected' => '1',
-	            'title' => 'Slider',
-	            'anchor' => 'Slider',
-			],
-		];
-
-		$this->leftMenuItems = $leftMenuItems;
 	}
 
 	/**
@@ -57,11 +47,9 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		$date = $this->getVal( 'date', date( 'Y-M-d' ) );
 		$region = $this->getVal( 'region', 'en' );
 
-		if ( $this->wg->request->wasPosted() ) {
-			$section = $this->getVal( 'section', 'featured' );
+		$section = $this->getVal( 'section', 'featured' );
 
-			$this->section = $section;
-		} else {
+		if ( !$this->wg->request->wasPosted() ) {
 			$regions = array(
 				'en' => 'English',
 			);
@@ -73,6 +61,9 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 			$this->msg = $response->getVal( 'msg', '' );
 		}
 
+		$this->leftMenuItems = VideoPageToolHelper::getLeftMenuItems( $section );
+		$this->moduleView = "form goes here";
+		$this->section = $section;
 		$this->date = $date;
 		$this->region = $region;
 	}
@@ -107,5 +98,8 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		$this->info = $info;
 	}
 
+	public function slider() {
+
+	}
 }
 
