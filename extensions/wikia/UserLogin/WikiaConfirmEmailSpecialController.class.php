@@ -34,7 +34,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressAds = true;
 		$this->wg->SuppressToolbar = true;
 		
-		$this->wg->Out->setPageTitle( wfMessage('wikiaconfirmemail-heading')->escaped() );
+		$this->wg->Out->setPageTitle( wfMessage('wikiaconfirmemail-heading')->plain() );
 
 		$par = $this->request->getVal( 'par', '' );
 		$this->code = $this->request->getVal( 'code', $par );
