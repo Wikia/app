@@ -17,7 +17,6 @@
 	}
 
 	.speech-bubble-message {
-		@include bodytext;
 		@include border-radius(5px);
 		background: $color-speech-bubble;
 		border: 1px solid $color-page-border;
