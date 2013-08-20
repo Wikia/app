@@ -88,7 +88,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->initializeTemplate();
 
 		// set page title
-		$this->wg->Out->setPageTitle( wfMessage('userlogin-login-heading')->escaped() );
+		$this->wg->Out->setPageTitle( wfMessage('userlogin-login-heading')->plain() );
 
 		// params
 		$this->username = $this->request->getVal( 'username', '' );
@@ -149,7 +149,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				} else if ( $this->result == 'resetpass') {
 					$this->editToken = $this->wg->User->getEditToken();
 					$this->subheading = wfMessage('resetpass_announce')->escaped();
-					$this->wg->Out->setPageTitle( wfMessage('userlogin-password-page-title')->escaped() );
+					$this->wg->Out->setPageTitle( wfMessage('userlogin-password-page-title')->plain() );
 					$this->response->getView()->setTemplate( 'UserLoginSpecial', 'changePassword' );
 				}
 			}
@@ -158,7 +158,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		if ($type === 'forgotPassword') {
 			$this->overrideTemplate('forgotPassword');
 			// set page title
-			$this->wg->Out->setPageTitle( wfMessage('userlogin-forgot-password')->escaped() );
+			$this->wg->Out->setPageTitle( wfMessage('userlogin-forgot-password')->plain() );
 			return;
 		}
 
@@ -355,7 +355,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 							}
 
 							$this->result = 'unconfirm';
-							$this->msg = wfMessage( 'usersignup-confirmation-email-sent', array('parseinline'), $tempUser->getEmail() )->parse();
+							$this->msg = wfMessage( 'usersignup-confirmation-email-sent', $tempUser->getEmail() )->parse();
 						} else if ( $user->checkTemporaryPassword($loginForm->mPassword) ) {
 							$this->result = 'resetpass';
 						} else {
@@ -485,7 +485,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string msg - result message
 	 */
 	public function changePassword() {
-		$this->wg->Out->setPageTitle(wfMessage('userlogin-password-page-title')->escaped());
+		$this->wg->Out->setPageTitle(wfMessage('userlogin-password-page-title')->plain());
 		$this->pageHeading = wfMessage('resetpass')->escaped();
 		$this->initializeTemplate();
 

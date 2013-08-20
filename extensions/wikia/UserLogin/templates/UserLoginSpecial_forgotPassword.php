@@ -16,7 +16,7 @@
 
 	$backToLoginLink = array(
 		'type' => 'custom',
-		'output' => wfMessage('userlogin-forgot-password-go-to-login', 'parseinline')->parse(),
+		'output' => wfMessage('userlogin-forgot-password-go-to-login')->parse(),
 	);
 
 	if (isset($result) && ($result == 'error')) {

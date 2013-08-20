@@ -104,7 +104,7 @@ class UserLoginForm extends LoginForm {
 		// check username length
 		if( !User::isNotMaxNameChars($this->mUsername) ) {
 			global $wgWikiaMaxNameChars;
-			$this->mainLoginForm( wfMessage( 'usersignup-error-username-length', $wgWikiaMaxNameChars ), 'error', 'username' );
+			$this->mainLoginForm( wfMessage( 'usersignup-error-username-length', $wgWikiaMaxNameChars )->escaped(), 'error', 'username' );
 			return false;
 		}
 
@@ -246,7 +246,7 @@ class UserLoginForm extends LoginForm {
 	}
 
 	public function throttleHit( $limit ) {
-		$this->mainLoginForm( wfMessage( 'userlogin-error-acct_creation_throttle_hit', array( 'parseinline' ), $limit ) );
+		$this->mainLoginForm( wfMessage( 'userlogin-error-acct_creation_throttle_hit', $limit )->parse() );
 	}
 
 }

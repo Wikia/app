@@ -35,7 +35,7 @@
 			),
 			array(
 				'type' => 'custom',
-				'output' => '<a href="#" class="forgot-password" tabindex="0">'.wfMessage('userlogin-forgot-password').'</a>',
+				'output' => '<a href="#" class="forgot-password" tabindex="0">'.wfMessage('userlogin-forgot-password')->escaped().'</a>',
 			),
 			array(
 				'type' => 'checkbox',

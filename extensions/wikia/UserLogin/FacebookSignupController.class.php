@@ -31,9 +31,9 @@ class FacebookSignupController extends WikiaController {
 			$modal = $this->sendRequest('FacebookSignup', 'modal')->__toString();
 
 			// no account connected - show FB sign up modal
-			$this->title = wfMsg('usersignup-facebook-heading');
-			$this->modal = !empty($modal) ? $modal : wfMsg('usersignup-facebook-problem');
-			$this->cancelMsg = wfMsg('cancel');
+			$this->title = wfMessage('usersignup-facebook-heading')->escaped();
+			$this->modal = !empty($modal) ? $modal : wfMessage('usersignup-facebook-problem')->escaped();
+			$this->cancelMsg = wfMessage('cancel')->escaped();
 		}
 	}
 
@@ -57,7 +57,7 @@ class FacebookSignupController extends WikiaController {
 		$email = $resp->getVal('email', false);
 		// check for proxy email
 		if ( $this->fbEmail != $email ) {
-			$this->fbEmail = wfMsg( 'usersignup-facebook-proxy-email' );
+			$this->fbEmail = wfMessage( 'usersignup-facebook-proxy-email' )->escaped();
 		}
 
 		$this->loginToken = UserLoginHelper::getSignupToken();

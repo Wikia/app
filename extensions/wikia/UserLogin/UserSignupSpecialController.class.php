@@ -43,7 +43,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string errParam - error param
 	 */
 	public function index() {
-		$this->wg->Out->setPageTitle(wfMessage('usersignup-page-title')->escaped());
+		$this->wg->Out->setPageTitle(wfMessage('usersignup-page-title')->plain());
 		$this->response->addAsset('extensions/wikia/UserLogin/css/UserSignup.scss');
 
 		if ( F::app()->checkSkin( 'oasis' )) {
@@ -196,7 +196,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 */
 	public function sendConfirmationEmail() {
 		if($this->request->getVal('format', '') !== 'json') {
-			$this->wg->Out->setPageTitle(wfMessage('usersignup-confirm-page-title')->escaped());
+			$this->wg->Out->setPageTitle(wfMessage('usersignup-confirm-page-title')->plain());
 			$this->response->addAsset('extensions/wikia/UserLogin/css/UserSignup.scss');
 			$this->response->addAsset('extensions/wikia/UserLogin/css/ConfirmEmail.scss');
 			$this->response->addAsset('extensions/wikia/UserLogin/js/ConfirmEmail.js');
@@ -355,7 +355,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->userLoginHelper->incrMemc( $memKey );
 
 		$this->result = 'ok';
-		$this->msg = wfMessage( 'usersignup-reconfirmation-email-sent', htmlspecialchars($email) )->escaped();
+		$this->msg = wfMessage( 'usersignup-reconfirmation-email-sent', $email )->escaped();
 		if ( $email != $tempUser->getEmail() ) {
 			$tempUser->setEmail( $email );
 			$tempUser->updateData();
@@ -454,7 +454,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->userLoginHelper->incrMemc( $memKey );
 
 		$this->result = 'ok';
-		$this->msg = wfMessage( 'usersignup-reconfirmation-email-sent', htmlspecialchars($email) )->escaped();
+		$this->msg = wfMessage( 'usersignup-reconfirmation-email-sent', $email )->escaped();
 		if ( $email != $user->getEmail() ) {
 			$user->setEmail( $email );
 

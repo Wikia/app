@@ -212,7 +212,7 @@ class UserLoginHelper extends WikiaModel {
 	 */
 	public function sendEmail( User $user, $category, $msgSubject, $msgBody, $emailParams, $templateType, $template='GeneralMail', $priority=0 ) {
 		$subject = strtr( wfMessage( $msgSubject )->escaped(), $emailParams );
-		$body = strtr( wfMessage( $msgBody ), $emailParams )->escaped();
+		$body = strtr( wfMessage( $msgBody )->escaped(), $emailParams );
 		if ( empty($this->wg->EnableRichEmails) ) {
 			$bodyHTML = null;
 		} else {
