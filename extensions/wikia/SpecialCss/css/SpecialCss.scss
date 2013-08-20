@@ -68,7 +68,8 @@ $edit-box-color: mix($color-page, #000, 95%);
 
 		.css-publish-button {
 			border: none;
-			height: 20px;
+			// fix for touch devices, because in touchScreen.scss height is set to 30px !important
+			height: 20px !important;
 		}
 
 		.drop {
@@ -220,11 +221,15 @@ $edit-box-color: mix($color-page, #000, 95%);
 }
 
 @if ( $responsive-layout-enabled ) {
-	@media screen and (max-width: $width-outside) {
+	@media screen and (max-width: $breakpoint-small) {
 		.css-editor,
 		.css-side-bar {
 			float: none;
 			width: auto;
+		}
+
+		.css-editor {
+			margin-right: 0;
 		}
 
 		.css-side-bar {
