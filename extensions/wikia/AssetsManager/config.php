@@ -304,7 +304,7 @@ $config['oasis_user_js'] = array(
 $config['gameguides_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => 'wikiamobile',
-	'assets' => array();
+	'assets' => array(
 		'//extensions/wikia/GameGuides/css/GameGuides.scss'
 	)
 );
@@ -390,6 +390,27 @@ $config['wikiamobile_scss'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		'//extensions/wikia/WikiaMobile/css/WikiaMobile.scss',
+	)
+);
+
+$config['wikiamobile_editor_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/WikiaMobileEditor/css/WikiaMobileEditor.scss',
+	)
+);
+
+$config['wikiamobile_editor_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//resources/wikia/libraries/mustache/mustache.js',
+		'//extensions/wikia/WikiaMobileEditor/js/pubsub.js',
+		'//extensions/wikia/WikiaMobileEditor/js/editor.js',
+		'//extensions/wikia/WikiaMobileEditor/js/config.js',
+		'//extensions/wikia/WikiaMobileEditor/js/menu.js',
+		'//extensions/wikia/WikiaMobileEditor/js/init.js',
 	)
 );
 

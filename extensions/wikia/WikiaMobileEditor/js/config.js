@@ -1,4 +1,4 @@
-define('config', ['pubsub'], function(pubsub){
+define('config', ['pubsub', 'wikia.loader', 'wikia.mustache'], function(pubsub, loader, mustache){
 
     var configObj,
         activeTags = {},
@@ -141,7 +141,7 @@ define('config', ['pubsub'], function(pubsub){
                 tag : "<noinclude>_$</noinclude>",
                 abbr : 'NIncl',
                 display : 'No Include'
-            },
+            }
         },
         'Special Characters' : {
             'title' : {
@@ -160,7 +160,7 @@ define('config', ['pubsub'], function(pubsub){
                 tag : "<gallery>Image:_$|Caption</gallery>",
                 abbr : 'Gal',
                 display : 'Gallery'
-            },
+            }
         }
     };
 
@@ -184,12 +184,12 @@ define('config', ['pubsub'], function(pubsub){
     }
 
     function isValid(tag){
-        if(tag.length > tags.maxLength && isFirstCharValid(tag)) return true;
-        return false;
+		return (tag.length > tags.maxLength && isFirstCharValid(tag));
     }
 
     function initializeLinks(){
         var links;
+
         Object.keys(configObj.sections).forEach(function(section){
             if(configObj.sections.hasOwnProperty(section)){
                 links = configObj.sections[section].ul.getElementsByTagName('a');
@@ -307,6 +307,16 @@ define('config', ['pubsub'], function(pubsub){
     }
 
     function init(){
+		loader({
+			type: loader.MULTI,
+			resources: {
+				mustache: '/extensions/wikia/WikiaMobileEditor/templates/WikiaMobileEditorController_tagList.mustache'
+			}
+		}).done(function(resp){
+			console.log(mustache.render(resp.mustache[0],{tagSections: {name: 'data'}}))
+		});
+
+
         var configHTML = buildHTML(),
             wrapper = document.getElementsByClassName('tagListWrapper')[0];
         wrapper.innerHTML += configHTML;

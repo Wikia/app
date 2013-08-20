@@ -187,7 +187,10 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 
 			//facebook login
 			'fbAppId',
-			'fbUseMarkup'
+			'fbUseMarkup',
+
+			//edit page
+			'tagList'
 		];
 }
 

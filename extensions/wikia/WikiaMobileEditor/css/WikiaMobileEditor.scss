@@ -1,11 +1,3 @@
-html {
-    font-family: Helvetica,Roboto,"Lucida Grande",arial,sans-serif;
-}
-
-body{
-    margin: 0px auto;
-}
-
 li > p{
     margin:0px;
     width:109px;
@@ -155,7 +147,8 @@ p > small{
 }
 
 .master{
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(221,221,221,1)), color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */    border: 1px solid #dddddd;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(221,221,221,1)), color-stop(100%,rgba(255,255,255,1)));
+    border: 1px solid #dddddd; /* Chrome,Safari4+ */
 }
 
 .tagListWrapper{
@@ -275,14 +268,14 @@ p > small{
 }
 
 .off{
-    -webkit-transform: scale(0,0);
+    -webkit-transform: scale(0);
     -webkit-transform-origin: 50% 0%;
     height:0;
 }
 
 .on{
     height:auto;
-    -webkit-transform: scale(1,1);
+    -webkit-transform: scale(1);
 }
 
 .toggle{
@@ -299,10 +292,6 @@ p > small{
     width:80%;
     margin: 0.5em 0 0.5em 0;
     padding: 10px 0 10px 0;
-}
-
-*{
-    -webkit-transition: all 0.2s cubic-bezier(.95,.22,.41,1.41);
 }
 
 .container ul{
@@ -344,6 +333,8 @@ p > small{
     background: -webkit-radial-gradient(center, ellipse cover, rgba(229,229,229,1) 2%,rgba(254,255,255,1) 98%);
     -webkit-box-shadow: -4px -4px 10px rgba(50, 50, 50, 0.25);
     border: 1px solid #fff;
+
+	-webkit-transition: all 0.2s cubic-bezier(.95,.22,.41,1.41);
 }
 
 .rotL1{
@@ -425,12 +416,8 @@ p > small{
 }
 
 .minified{
-    -webkit-transform: scale(0.2, 0.2) rotate(360deg);
+    -webkit-transform: scale(0);
     visibility:hidden;
-}
-
-*{
-    -webkit-transition: all 0.3s ease-in;
 }
 
 .left{

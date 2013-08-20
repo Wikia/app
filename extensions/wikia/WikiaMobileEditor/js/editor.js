@@ -1,5 +1,5 @@
 define('editor', ['pubsub', 'config'], function(pubsub, config){
-    var editArea = document.getElementById('editArea'),
+    var editArea = document.getElementById('wpTextbox1'),
         pattern = /_\$/,
         snippets = {};
 
@@ -38,7 +38,7 @@ define('editor', ['pubsub', 'config'], function(pubsub, config){
         cursorPos = endPos+phrase.length - distFromEnd;
         editArea.focus();
         editArea.setSelectionRange(cursorPos, cursorPos);
-    };
+    }
 
     function checkSnippet(evt){
         if(editArea.value[editArea.selectionStart-1] != '!') return;

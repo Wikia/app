@@ -24,8 +24,8 @@ define('menu', ['pubsub'], function(pubsub){
     }
 
     function build(menuIdL, menuIdR){ //constructs 2 menu objects and adds references to each other
-        menuLeft = new menuObj(menuIdL),
-            menuRight = new menuObj(menuIdR);
+        menuLeft = new menuObj(menuIdL);
+        menuRight = new menuObj(menuIdR);
         menuLeft.other = menuRight;
         menuRight.other = menuLeft;
     }
@@ -168,12 +168,12 @@ define('menu', ['pubsub'], function(pubsub){
     function expand(ul){
         ul.ul.classList.remove('minified');
         ul.expanded = true;
-    };
+    }
 
     function fold(ul){
         ul.ul.classList.add('minified');
         ul.expanded = false;
-    };
+    }
 
     pubsub.subscribe('menuUpdate', function(activeTags){
         attachTags(activeTags);
