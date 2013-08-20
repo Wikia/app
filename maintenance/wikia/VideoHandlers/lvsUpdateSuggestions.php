@@ -12,9 +12,6 @@ ini_set('error_reporting', E_NOTICE);
 
 require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 
-// Include the LVS extension so we can build suggestions even when the wiki does not have it enabled
-include( dirname( __FILE__ ) . "/../../../extensions/wikia/LicensedVideoSwap/LicensedVideoSwap.setup.php" );
-
 /**
  * Class LVSUpdateSuggestions
  */
@@ -165,7 +162,7 @@ class LVSUpdateSuggestions extends Maintenance {
 		$numSuggestions = 0;
 		while( $row = $db->fetchObject($results) ) {
 			$vidsWithSuggestions++;
-			$numSuggestions += $row->cnt;
+			$numSuggestions += $row->suggestions;
 		}
 		$avgSuggestions = $vidsWithSuggestions/$numSuggestions;
 
