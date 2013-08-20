@@ -45,6 +45,11 @@ class SkinWikiaApp extends WikiaSkin {
 	function initPage( OutputPage $out ) {
 		global $wgRequest, $wgCookiePrefix;
 
+		$out->prependHTML('<a href="?useskin=wikiamobile">This skin is being depracted please use WikiaMobile</a>');
+		$out->prependHTML('<a href="https://play.google.com/store/apps/details?id=com.wikia.app.GameGuides&amp;referrer=utm_source%3Dwikia%26utm_medium%3Dsmartbanner"><img src=""></a><br>');
+
+		Wikia::log('SkinWikiaApp', 'visit', '', true);
+
 		//this will force the skin after the first visit, only for selected mobile platforms
 		if( empty( $_COOKIE[ $wgCookiePrefix . self::COOKIE_NAME ] ) ) {	
 			$mobServ = MobileService::getInstance();
