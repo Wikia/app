@@ -95,7 +95,13 @@ class ImportWikicities extends Maintenance {
 	}
 
 	public function execute() {
-		global $IP, $wgExternalSharedDB;
+		global $IP, $wgExternalSharedDB, $wgDevelEnvironment, $wgWikiaDatacenter;
+
+		if (empty($wgDevelEnvironment)) {
+			$this->error('This script should only be run in development environment', 4);
+		}
+
+		$this->output("Running for {$wgWikiaDatacenter} devboxes\n");
 
 		$this->output("Getting list of dumps...\n");
 		$dumps = $this->ls(self::S3_PATTERN);
