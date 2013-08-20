@@ -163,7 +163,7 @@ class LVSUpdateSuggestions extends Maintenance {
 
 		$swapTypes = array('1' => 0,
 						   '2' => 0,
-						   '3' => 3);
+						   '3' => 0);
 		while( $row = $db->fetchObject($results) ) {
 			$swapTypes[$row->status] = $row->cnt;
 		}
