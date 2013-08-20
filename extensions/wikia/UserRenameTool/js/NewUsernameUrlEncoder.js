@@ -2,12 +2,12 @@ var NewUsernameUrlEncoder = {
 
 	init: function() {
 	var input = $( "input[name='newusername']" ),
-		output = $( "#newUsernameEncoded" );
+		output = $( "#newUsernameEncoded>strong" );
 
 		input.on( 'input', function() {
 		var newUsername = input.val(),
 			newUsernameEncoded = encodeURIComponent( newUsername );
-			output.html( "URL Encoded: " + newUsernameEncoded );
+			output.html( newUsernameEncoded );
 		});
 	}
 }

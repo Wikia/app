@@ -22,7 +22,7 @@
 				<td class='mw-input'>
 					<input type="text" name="newusername" size="20" tabindex="2" value="<?=$newusername_hsc;?>"<?=($warnings) ? ' disabled' : null;?>/>
 					<?if($warnings):?><input type="hidden" name="newusername" value="<?=$newusername_hsc;?>"/><?endif?>
-					<span id="newUsernameEncoded"></span>
+					<span id="newUsernameEncoded"><?=wfMessage( 'userrenametool-encoded' )?> <strong></strong></span>
 				</td>
 			</tr>
 			<tr>
