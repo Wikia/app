@@ -13,7 +13,7 @@ require_once( __DIR__ . '/../Maintenance.php' );
 
 class ImportWikicities extends Maintenance {
 
-	const S3_PATTERN = 's3://database_Sharedb/fulldump_*';
+	const S3_PATTERN = 's3://database_ShareDB_devboxes/fulldump_*';
 	const S3_DUMP_PATTERN = 'wikicities_devbox';
 	const DEST_DATABASE = 'wikicities';
 	#const DEST_DATABASE = 'wikicities_macbre_test';
