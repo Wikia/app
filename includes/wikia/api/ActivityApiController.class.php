@@ -25,7 +25,7 @@ use Swagger\Annotations as SWG;
  *          name="basepath",
  *          type="string",
  *          required="true",
- *          description="The base path of the request made. Used to confirm the origin of the response."
+ *          description="The base path of the request made. Used to construct absolute URLs."
  *          )
  * 
  * @SWG\Model( id="ActivityResponseItem" )
@@ -55,7 +55,7 @@ use Swagger\Annotations as SWG;
  *         )
  *
  * @SWG\Api(
- *     path="/wikia.php",
+ *     path="/wikia.php?controller=ActivityApi&method=getLatestActivity",
  *     description="Acquire information about the latest user activity on the current wiki.",
  *     @SWG\Operations(
  *         @SWG\Operation( 
@@ -64,23 +64,6 @@ use Swagger\Annotations as SWG;
  *             nickname="getLatestActivity", 
  *             responseClass="ActivityResponseResult",
  *             @SWG\Parameters(
- *                 @SWG\Parameter( 
- *                                name="controller", 
- *                                description="Controller used", 
- *                                paramType="query", 
- *                                required="true", 
- *                                allowMultiple="false", 
- *                                dataType="string", 
- *                                defaultValue="ActivityApi" ),
- *                 @SWG\Parameter(
- *                                name="method", 
- *                                description="Method used", 
- *                                paramType="query", 
- *                                required="true", 
- *                                allowMultiple="false", 
- *                                dataType="string", 
- *                                defaultValue="getLatestActivity" 
- *                                ),
  *                 @SWG\Parameter(
  *                                name="limit", 
  *                                description="Maximum number of results", 

@@ -14,7 +14,7 @@ use Swagger\Annotations as SWG;
 /**
  *
  * @SWG\Api(
- *     path="/wikia.php",
+ *     path="/wikia.php?controller=RelatedPagesApi&method=getList",
  *     description="Controller to fetch related pages for given article ID",
  *     @SWG\Operations(
  *         @SWG\Operation(
@@ -26,24 +26,6 @@ use Swagger\Annotations as SWG;
  *                 @SWG\ErrorResponse( code="404", reason="Related Pages extension not available" )
  *             ),
  *             @SWG\Parameters(
- *                 @SWG\Parameter(
- *                     name="controller",
- *                     description="Controller used", 
- *                     paramType="query", 
- *                     required="true", 
- *                     allowMultiple="false", 
- *                     dataType="string", 
- *                     defaultValue="RelatedPagesApi"
- *                 ),
- *                 @SWG\Parameter(
- *                     name="method", 
- *                     description="Method used", 
- *                     paramType="query", 
- *                     required="true", 
- *                     allowMultiple="false", 
- *                     dataType="string", 
- *                     defaultValue="getList" 
- *                 ),
  *                 @SWG\Parameter(
  *                     name="ids", 
  *                     description="Id of an article to fetch related pages for", 

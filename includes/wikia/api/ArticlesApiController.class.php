@@ -1,4 +1,246 @@
 <?php
+
+use Swagger\Annotations as SWG;
+
+/**
+ * @SWG\Resource(
+ *     apiVersion="0.2",
+ *     swaggerVersion="1.1",
+ *     resourcePath="ArticlesApi",
+ *     basePath="http://muppet.wikia.com"
+ * )
+ * 
+ * @SWG\Model( id="UnexpandedArticle" )
+ *     @SWG\Property(
+ *         name="id",
+ *         type="int",
+ *         required="true",
+ *         description="Article ID."
+ *         )
+ *     @SWG\Property(
+ *         name="title",
+ *         type="string",
+ *         required="true",
+ *         description="The title of the article."
+ *     )
+ *     @SWG\Property(
+ *         name="url",
+ *         type="string",
+ *         required="true",
+ *         description="The path of the article URL. Combine with the basepath attribute of the response to create an absolute URL."
+ *     )
+ *     @SWG\Property(
+ *         name="ns",
+ *         type="int",
+ *         required="true",
+ *         description="The namespace value of the given article."
+ *     )
+ *     
+ * @SWG\Model( id="ExpandedArticle" )
+ *     @SWG\Property(
+ *         name="id",
+ *         type="int",
+ *         required="true",
+ *         description="Article ID."
+ *         )
+ *     @SWG\Property(
+ *         name="title",
+ *         type="string",
+ *         required="true",
+ *         description="The title of the article."
+ *     )
+ *     @SWG\Property(
+ *         name="url",
+ *         type="string",
+ *         required="true",
+ *         description="The path of the article URL. Combine with the basepath attribute of the response to create an absolute URL."
+ *     )
+ *     @SWG\Property(
+ *         name="ns",
+ *         type="int",
+ *         required="true",
+ *         description="The namespace value of the given article."
+ *     )
+ *     @SWG\Property(
+ *         name="revision",
+ *         type="Revision",
+ *         required="true",
+ *         description="The latest revision for this article."
+ *     )
+ *     @SWG\Property(
+ *         name="comments",
+ *         type="int",
+ *         required="true",
+ *         description="Number of comments on this article."
+ *     )
+ *     @SWG\Property(
+ *         name="type",
+ *         type="string",
+ *         required="true",
+ *         description="The functional type of the document (e.g. article, file, category)."
+ *     )
+ *     @SWG\Property(
+ *         name="abstract",
+ *         type="string",
+ *         required="true",
+ *         description="A snippet of text from the beginning of the article."
+ *     )
+ *     @SWG\Property(
+ *         name="thumbnail",
+ *         type="string",
+ *         description="The absolute URL of the thumbnail for this article."
+ *     )
+ *     @SWG\Property(
+ *         name="original_dimensions",
+ *         type="OriginalDimension",
+ *         description="The original dimensions of the thumbnail for the article, if available."
+ *     )
+ * 
+ * @SWG\Model( id="Revision" )
+ *     @SWG\Property(
+ *         name="id",
+ *         type="int",
+ *         required="true",
+ *         description="The ID of the revision."
+ *     )
+ *     @SWG\Property(
+ *         name="user",
+ *         type="string",
+ *         required="true",
+ *         description="The name of the user who made the revision."
+ *     )
+ *     @SWG\Property(
+ *         name="user_id",
+ *         type="int",
+ *         required="true",
+ *         description="The ID of the user who made the revision."
+ *     )
+ *     @SWG\Property(
+ *         name="timestamp",
+ *         type="int",
+ *         required="true",
+ *         description="The Unix timestamp in seconds of the date the revision was made."
+ *     )
+ *     
+ * @SWG\Model( id="OriginalDimension" )
+ *     @SWG\Property(
+ *         name="width",
+ *         type="int",
+ *         required="true",
+ *         description="Original width of the thumbnail, in pixels."
+ *     )
+ *     @SWG\Property(
+ *         name="height",
+ *         type="int",
+ *         required="true",
+ *         description="Original height of the thumbnail, in pixels."
+ *     )
+ * 
+ * @SWG\Model( id="UnexpandedArticleResultSet" )
+ *     @SWG\Property(
+ *         name="items",
+ *         required="true",
+ *         type="Array",
+ *         items="$ref:UnexpandedArticle",
+ *         description="A list of each unexpanded top article in the result set, sorted by pageview descending."
+ *         )
+ *      @SWG\Property(
+ *          name="basepath",
+ *          type="string",
+ *          required="true",
+ *          description="The base path of the request made. Used to construct absolute URLs."
+ *          )
+ * @SWG\Model( id="ExpandedArticleResultSet" )
+ *     @SWG\Property(
+ *         name="items",
+ *         required="true",
+ *         type="Array",
+ *         items="$ref:ExpandedArticle",
+ *         description="A list of each expanded top article in the result set, sorted by pageview descending."
+ *         )
+ *      @SWG\Property(
+ *          name="basepath",
+ *          type="string",
+ *          required="true",
+ *          description="The base path of the request made. Used to construct absolute URLs."
+ *          )         
+ *          
+ * 
+ * @SWG\Api(
+ *     path="/wikia.php?controller=ArticlesApi&method=getTop",
+ *     description="Fetch top articles for the current wiki",
+ *     @SWG\Operations(
+ *         @SWG\Operation(
+ *             httpMethod="GET",
+ *             summary="Get pages related to a given article ID", 
+ *             nickname="getList", 
+ *             responseClass="UnexpandedArticleResultSet",
+ *             @SWG\ErrorResponses(
+ *                 @SWG\ErrorResponse( code="404", reason="Invalid parameter or category" )
+ *             ),
+ *             @SWG\Parameters(
+ *                 @SWG\Parameter(
+ *                     name="namespaces", 
+ *                     description="The integer namespace values to filter the results by, comma-separated.", 
+ *                     paramType="query", 
+ *                     required="true", 
+ *                     allowMultiple="true", 
+ *                     dataType="Array", 
+ *                     defaultValue="0"
+ *                 ),
+ *                 @SWG\Parameter(
+ *                     name="category", 
+ *                     description="Specifying a title corresponding to an existing for this value will display only articles that pertain to this category.", 
+ *                     paramType="query", 
+ *                     required="false", 
+ *                     allowMultiple="false", 
+ *                     dataType="string", 
+ *                     defaultValue="" 
+ *                 )
+ *             )
+ *         )
+ *     )
+ * )
+ * @SWG\Api(
+ *     path="/wikia.php?controller=ArticlesApi&method=getTop&expand=1",
+ *     description="Fetch top articles for the current wiki",
+ *     @SWG\Operations(
+ *         @SWG\Operation(
+ *             httpMethod="GET",
+ *             summary="Get pages related to a given article ID", 
+ *             nickname="getList", 
+ *             responseClass="ExpandedArticleResultSet",
+ *             @SWG\ErrorResponses(
+ *                 @SWG\ErrorResponse( code="404", reason="Related Pages extension not available" )
+ *             ),
+ *             @SWG\Parameters(
+ *                 @SWG\Parameter(
+ *                     name="namespaces", 
+ *                     description="The integer namespace values to filter the results by, comma-separated.", 
+ *                     paramType="query", 
+ *                     required="true", 
+ *                     allowMultiple="true", 
+ *                     dataType="Array", 
+ *                     defaultValue="0"
+ *                 ),
+ *                 @SWG\Parameter(
+ *                     name="category", 
+ *                     description="Specifying a title corresponding to an existing for this value will display only articles that pertain to this category.", 
+ *                     paramType="query", 
+ *                     required="false", 
+ *                     allowMultiple="false", 
+ *                     dataType="string", 
+ *                     defaultValue="" 
+ *                 )
+ *             )
+ *         )
+ *     )
+ * )
+ * 
+ * 
+ * 
+ */
+
 /**
  * Controller to fetch information about articles
  *
