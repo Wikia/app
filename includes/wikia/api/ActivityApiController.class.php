@@ -7,7 +7,7 @@ use Swagger\Annotations as SWG;
  *     apiVersion="0.2",
  *     swaggerVersion="1.1",
  *     resourcePath="ActivityApi",
- *     basePath="http://www.wikia.com/wikia.php"
+ *     basePath="http://muppet.wikia.com"
  * )
  */
 
@@ -17,7 +17,8 @@ use Swagger\Annotations as SWG;
  *     @SWG\Property(
  *         name="items",
  *         required="true",
- *         type="ActivityResponseItem",
+ *         type="Array",
+ *         items="$ref:ActivityResponseItem",
  *         description="A list of each individual event, ordered by recency descending."
  *         )
  *      @SWG\Property(
@@ -54,7 +55,7 @@ use Swagger\Annotations as SWG;
  *         )
  *
  * @SWG\Api(
- *     path="/wikia.php?controller=ActivityApi&method=getLatestActivity",
+ *     path="/wikia.php",
  *     description="Acquire information about the latest user activity on the current wiki.",
  *     @SWG\Operations(
  *         @SWG\Operation( 
