@@ -21,18 +21,18 @@ class UserLoginHooksHelper {
 
 	// get error message when abort new account
 	public static function onAbortNewAccountErrorMessage( &$abortError, &$errParam ) {
-		if ( $abortError == wfMsg('phalanx-user-block-new-account') ) {
-			$abortError = wfMsg( 'userlogin-error-user-not-allowed' );
+		if ( $abortError == wfMessage('phalanx-user-block-new-account')->escaped() ) {
+			$abortError = wfMessage( 'userlogin-error-user-not-allowed' )->escaped();
 			$errParam = 'username';
-		} else if ( $abortError == wfMsg('userexists') ) {
-			$abortError = wfMsg( 'userlogin-error-userexists' );
+		} else if ( $abortError == wfMessage('userexists')->escaped() ) {
+			$abortError = wfMessage( 'userlogin-error-userexists' )->escaped();
 			$errParam = 'username';
-		} else if ( $abortError == wfMsg('captcha-createaccount-fail') ) {
-			$abortError = wfMsg( 'userlogin-error-captcha-createaccount-fail' );
+		} else if ( $abortError == wfMessage('captcha-createaccount-fail')->escaped() ) {
+			$abortError = wfMessage( 'userlogin-error-captcha-createaccount-fail' )->escaped();
 			$errParam = 'wpCaptchaWord';
-		} else if ( $abortError == wfMsg('phalanx-help-type-user-email') ) {
+		} else if ( $abortError == wfMessage('phalanx-help-type-user-email')->escaped() ) {
 			$errParam = 'email';
-		} else if ( $abortError == wfMsg('phalanx-email-block-new-account')) {
+		} else if ( $abortError == wfMessage('phalanx-email-block-new-account')->escaped()) {
 			$errParam = 'email';	 
 		}
 
@@ -109,7 +109,7 @@ class UserLoginHooksHelper {
 	// check if email is empty
 	public static function onSavePreferences( &$formData, &$error ) {
 		if ( array_key_exists( 'emailaddress', $formData ) && empty( $formData['emailaddress'] ) ) {
-			$error = wfMsg( 'usersignup-error-empty-email' );
+			$error = wfMessage( 'usersignup-error-empty-email' )->escaped();
 			return false;
 		}
 

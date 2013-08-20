@@ -1,12 +1,12 @@
 	<div class="sso-login">
 		<?= $app->renderView('FacebookButton', 'index', array(
 			'class' => 'sso-login-facebook',
-			'text' => wfMsg('fbconnect-wikia-signup-w-facebook'),
+			'text' => wfMessage('fbconnect-wikia-signup-w-facebook')->escaped(),
 			'tooltip' => (!empty($requestType) && $requestType === 'signup' ? 
-				wfMsg('userlogin-provider-tooltip-facebook-signup') : 
-				wfMsg('userlogin-provider-tooltip-facebook'))
+				wfMessage('userlogin-provider-tooltip-facebook-signup')->escaped() : 
+				wfMessage('userlogin-provider-tooltip-facebook')->escaped())
 		)) ?>
 		<div class="sso-login-divider">
-			<span><?= wfMsg('userlogin-provider-or') ?></span>
+			<span><?= wfMessage('userlogin-provider-or')->escaped() ?></span>
 		</div>
 	</div>

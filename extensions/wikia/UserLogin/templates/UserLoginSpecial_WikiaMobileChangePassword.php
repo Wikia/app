@@ -29,18 +29,18 @@ if ( !empty( $result ) && $result == 'error' ) {
 		<input type=hidden name=username value="<?= htmlspecialchars($username) ;?>">
 		<input type=hidden name=returnto value="<?= $returnto ;?>">
 
-		<label for=password><?= wfMsg( 'userlogin-oldpassword' ) ;?></label>
+		<label for=password><?= wfMessage( 'userlogin-oldpassword' )->escaped() ;?></label>
 		<input type=password name=password<?= ($password) ? ' value="'.htmlspecialchars($password).'"' : ''?><?= ($oldErr) ? ' class=inpErr' : ''?>>
 		<? if( $oldErr ) : ?><div class=wkErr><?= $msg ?></div><? endif; ?>
 
-		<label for=newpassword><?= wfMsg( 'userlogin-newpassword' ) ;?></label>
+		<label for=newpassword><?= wfMessage( 'userlogin-newpassword' )->escaped() ;?></label>
 		<input type=password name=newpassword <?= ($newErr) ? ' class=inpErr' : ''?>>
 		<? if( $newErr ) : ?><div class=wkErr><?= $msg ?></div><? endif; ?>
 
-		<label for=retype><?= wfMsg( 'userlogin-retypenew' ) ;?></label>
+		<label for=retype><?= wfMessage( 'userlogin-retypenew' )->escaped() ;?></label>
 		<input type=password name=retype <?= ($retErr) ? ' class=inpErr' : ''?>>
 		<? if( $retErr ) : ?><div class=wkErr><?= $msg ?></div><? endif; ?>
 
-		<input id=wkLgnBtn name=action type=submit value='<?= wfMsg( 'resetpass_submit' ) ?>' class='wkBtn main'>
+		<input id=wkLgnBtn name=action type=submit value='<?= wfMessage( 'resetpass_submit' )->escaped() ?>' class='wkBtn main'>
 	</form>
 </div>

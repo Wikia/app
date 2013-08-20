@@ -34,7 +34,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressAds = true;
 		$this->wg->SuppressToolbar = true;
 		
-		$this->wg->Out->setPageTitle(wfMsg('wikiaconfirmemail-heading'));
+		$this->wg->Out->setPageTitle( wfMessage('wikiaconfirmemail-heading')->escaped() );
 
 		$par = $this->request->getVal( 'par', '' );
 		$this->code = $this->request->getVal( 'code', $par );
@@ -43,21 +43,21 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 
 		if ( $this->code == '' ) {
 			$this->result = 'error';
-			$this->msg = wfMsg( 'wikiaconfirmemail-error-empty-code' );
+			$this->msg = wfMessage( 'wikiaconfirmemail-error-empty-code' )->escaped();
 			return;
 		}
 
 		if ( $this->wg->request->wasPosted() ) {
 			if ( $this->username == '' ) {
 				$this->result = 'error';
-				$this->msg = wfMsg( 'userlogin-error-noname' );
+				$this->msg = wfMessage( 'userlogin-error-noname' )->escaped();
 				$this->errParam = 'username';
 				return;
 			}
 
 			if ( $this->password == '' ) {
 				$this->result = 'error';
-				$this->msg = wfMsg( 'userlogin-error-wrongpasswordempty' );
+				$this->msg = wfMessage( 'userlogin-error-wrongpasswordempty' )->escaped();
 				$this->errParam = 'password';
 				return;
 			}
@@ -65,7 +65,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 			$expUser = User::newFromConfirmationCode( $this->code );
 			if ( !is_object( $expUser ) ) {
 				$this->result = 'error';
-				$this->msg = wfMsg( 'wikiaconfirmemail-error-invalid-code' );
+				$this->msg = wfMessage( 'wikiaconfirmemail-error-invalid-code' )->escaped();
 				return;
 			}
 
@@ -75,7 +75,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 				$tempUser = TempUser::getTempUserFromName( $this->username );
 				if ( $tempUser->getId() != $expUser->getId() ) {
 					$this->result = 'error';
-					$this->msg = wfMsg( 'wikiaconfirmemail-error-user-not-match' );
+					$this->msg = wfMessage( 'wikiaconfirmemail-error-user-not-match' )->escaped();
 					$this->errParam = 'username';
 					return;
 				}
@@ -83,7 +83,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 				$userLoginHelper = (new UserLoginHelper);
 				if ( $userLoginHelper->isPasswordThrottled($this->username) ) {
 					$this->result = 'error';
-					$this->msg = wfMsg( 'userlogin-error-login-throttled' );
+					$this->msg = wfMessage( 'userlogin-error-login-throttled' )->escaped();
 					$this->errParam = 'password';
 					return;
 				}
@@ -108,7 +108,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 					return;
 				} else {
 					$this->result = 'error';
-					$this->msg = wfMsg( 'userlogin-error-wrongpassword' );
+					$this->msg = wfMessage( 'userlogin-error-wrongpassword' )->escaped();
 					$this->errParam = 'password';
 					return;
 				}
@@ -119,7 +119,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 				$user = User::newFromName( $this->username );
 				if ( $user->getId() != $expUser->getId() ) {
 					$this->result = 'error';
-					$this->msg = wfMsg( 'wikiaconfirmemail-error-user-not-match' );
+					$this->msg = wfMessage( 'wikiaconfirmemail-error-user-not-match' )->escaped();
 					$this->errParam = 'username';
 					return;
 				}
@@ -127,7 +127,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 				$userLoginHelper = ( new UserLoginHelper ); /* @var UserLoginHelper $userLoginHelper */
 				if ( $userLoginHelper->isPasswordThrottled( $this->username ) ) {
 					$this->result = 'error';
-					$this->msg = wfMsg( 'userlogin-error-login-throttled' );
+					$this->msg = wfMessage( 'userlogin-error-login-throttled' )->escaped();
 					$this->errParam = 'password';
 					return;
 				}
@@ -191,7 +191,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 
 				} else {
 					$this->result = 'error';
-					$this->msg = wfMsg( 'userlogin-error-wrongpassword' );
+					$this->msg = wfMessage( 'userlogin-error-wrongpassword' )->escaped();
 					$this->errParam = 'password';
 					return;
 				}

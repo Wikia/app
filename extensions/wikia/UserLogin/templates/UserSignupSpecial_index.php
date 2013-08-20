@@ -6,20 +6,20 @@
 	<h3 class="subheading"></h3>
 	<div class="wiki-info">
 		<?= F::app()->renderView('WikiHeader', 'Wordmark') ?>
-		<p><?= wfMsgExt('usersignup-marketing-wikia', 'parseinline') ?></p>
-		<?= wfMsgExt('usersignup-marketing-login', 'parseinline') ?>
+		<p><?= wfMessage('usersignup-marketing-wikia')->parse() ?></p>
+		<?= wfMessage('usersignup-marketing-login')->parse() ?>
 	</div>
 	<? if(empty($byemail)) { ?>
 		<div class="marketing">
-			<h2><?= wfMsg('usersignup-marketing-benefits') ?></h2>
+			<h2><?= wfMessage('usersignup-marketing-benefits')->escaped() ?></h2>
 			<div class="benefit">
 				<ul class="avatars">
 					<? foreach($avatars as $avatar) { ?>
 						<li class="avatar"><img src="<?= $avatar ?>" width="30" height="30"></li>
 					<? } ?>
 				</ul>
-				<h3><?= wfMsg('usersignup-marketing-community-heading') ?></h3>
-				<p><?= wfMsg('usersignup-marketing-community') ?></p>
+				<h3><?= wfMessage('usersignup-marketing-community-heading')->escaped() ?></h3>
+				<p><?= wfMessage('usersignup-marketing-community')->escaped() ?></p>
 			</div>
 			<div class="benefit">
 				<ul class="wikis">
@@ -27,12 +27,12 @@
 						<li class="wiki"><img src="<?= $wiki ?>" width="65" height="18"></li>
 					<? } ?>
 				</ul>
-				<h3><?= wfMsg('usersignup-marketing-global-heading') ?></h3>
-				<p><?= wfMsg('usersignup-marketing-global') ?></p>
+				<h3><?= wfMessage('usersignup-marketing-global-heading')->escaped() ?></h3>
+				<p><?= wfMessage('usersignup-marketing-global')->escaped() ?></p>
 			</div>
 			<div class="benefit">
-				<h3><?= wfMsg('usersignup-marketing-creativity-heading') ?></h3>
-				<p><?= wfMsg('usersignup-marketing-creativity') ?></p>
+				<h3><?= wfMessage('usersignup-marketing-creativity-heading')->escaped() ?></h3>
+				<p><?= wfMessage('usersignup-marketing-creativity')->escaped() ?></p>
 			</div>
 		</div>
 	<?php } //marketing ?>
@@ -58,7 +58,7 @@
 				'type' => 'text',
 				'name' => 'username',
 				'value' => htmlspecialchars($username),
-				'label' => wfMsg('yourname'),
+				'label' => wfMessage('yourname')->escaped(),
 				'isRequired' => true,
 				'isInvalid' => (!empty($errParam) && $errParam === 'username'),
 				'errorMsg' => (!empty($msg) ? $msg : '')
@@ -67,7 +67,7 @@
 				'type' => 'text',
 				'name' => 'email',
 				'value' => $email,
-				'label' => wfMsg('email'),
+				'label' => wfMessage('email')->escaped(),
 				'isRequired' => true,
 				'isInvalid' => (!empty($errParam) && $errParam === 'email'),
 				'errorMsg' => (!empty($msg) ? $msg : '')
@@ -76,7 +76,7 @@
 				'type' => 'password',
 				'name' => 'password',
 				'value' => '',
-				'label' => wfMsg('yourpassword'),
+				'label' => wfMessage('yourpassword')->escaped(),
 				'isRequired' => true,
 				'isInvalid' => (!empty($errParam) && $errParam === 'password'),
 				'errorMsg' => (!empty($msg) ? $msg : '')

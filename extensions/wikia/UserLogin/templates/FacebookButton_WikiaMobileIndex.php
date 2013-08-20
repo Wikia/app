@@ -1,1 +1,1 @@
-<button id=ssoFbBtn disabled=true><div id=fbLogo></div><img src="<?= wfBlankImgUrl() ;?>"><?= wfMsg( 'fbconnect-connect-simple' ) ;?></button>
+<button id=ssoFbBtn disabled=true><div id=fbLogo></div><img src="<?= wfBlankImgUrl() ;?>"><?= wfMessage( 'fbconnect-connect-simple' )->escaped() ;?></button>

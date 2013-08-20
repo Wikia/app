@@ -82,7 +82,7 @@ class UserLoginForm extends LoginForm {
 			$this->mainLoginForm( wfMessage( 'userlogin-error-mail-error', $result->getMessage() )->parse() );
 			return false;
 		} else {
-			$this->mainLoginForm( wfMsgExt( 'usersignup-account-creation-email-sent', array('parseinline'), $this->mEmail, $this->username ), 'success' );
+			$this->mainLoginForm( wfMessage( 'usersignup-account-creation-email-sent', $this->mEmail, $this->username )->parse(), 'success' );
 			return $u;
 		}
 	}
@@ -91,26 +91,26 @@ class UserLoginForm extends LoginForm {
 	public function initValidationUsername() {
 		// check empty username
 		if ( $this->mUsername == '' ) {
-			$this->mainLoginForm( wfMsg( 'userlogin-error-noname' ), 'error', 'username' );
+			$this->mainLoginForm( wfMessage( 'userlogin-error-noname' )->escaped(), 'error', 'username' );
 			return false;
 		}
 
 		// check if exist in tempUser
 		if ( TempUser::getTempUserFromName( $this->mUsername ) ) {
-			$this->mainLoginForm( wfMsg( 'userlogin-error-userexists' ), 'error', 'username' );
+			$this->mainLoginForm( wfMessage( 'userlogin-error-userexists' )->escaped(), 'error', 'username' );
 			return false;
 		}
 
 		// check username length
 		if( !User::isNotMaxNameChars($this->mUsername) ) {
 			global $wgWikiaMaxNameChars;
-			$this->mainLoginForm( wfMsg( 'usersignup-error-username-length', $wgWikiaMaxNameChars ), 'error', 'username' );
+			$this->mainLoginForm( wfMessage( 'usersignup-error-username-length', $wgWikiaMaxNameChars ), 'error', 'username' );
 			return false;
 		}
 
 		// check valid username
 		if( !User::getCanonicalName( $this->mUsername, 'creatable' ) ) {
-			$this->mainLoginForm( wfMsg( 'usersignup-error-symbols-in-username' ), 'error', 'username' );
+			$this->mainLoginForm( wfMessage( 'usersignup-error-symbols-in-username' )->escaped(), 'error', 'username' );
 			return false;
 		}
 
@@ -127,11 +127,11 @@ class UserLoginForm extends LoginForm {
 		if ( $result !== true ) {
 			$msg = '';
 			if ( $result == 'userlogin-bad-username-taken' ) {
-				$msg = wfMsg('userlogin-error-userexists');
+				$msg = wfMessage('userlogin-error-userexists')->escaped();
 			} else if ( $result == 'userlogin-bad-username-character' ) {
-				$msg = wfMsg('usersignup-error-symbols-in-username');
+				$msg = wfMessage('usersignup-error-symbols-in-username')->escaped();
 			} else if ( $result == 'userlogin-bad-username-length' ) {
-				$msg = wfMsg('usersignup-error-username-length', $app->wg->WikiaMaxNameChars);
+				$msg = wfMessage('usersignup-error-username-length', $app->wg->WikiaMaxNameChars)->escaped();
 			} else {
 				$msg = $result;
 			}
@@ -147,13 +147,13 @@ class UserLoginForm extends LoginForm {
 	public function initValidationPassword() {
 		// check empty password
 		if ( $this->mPassword == '' ) {
-			$this->mainLoginForm( wfMsg( 'userlogin-error-wrongpasswordempty' ), 'error', 'password' );
+			$this->mainLoginForm( wfMessage( 'userlogin-error-wrongpasswordempty' )->escaped(), 'error', 'password' );
 			return false;
 		}
 
 		// check password length
 		if( !User::isNotMaxNameChars($this->mPassword) ) {
-			$this->mainLoginForm( wfMsg( 'usersignup-error-password-length' ), 'error', 'password' );
+			$this->mainLoginForm( wfMessage( 'usersignup-error-password-length' )->escaped(), 'error', 'password' );
 			return false;
 		}
 
@@ -164,14 +164,14 @@ class UserLoginForm extends LoginForm {
 	public function initValidationBirthdate() {
 		// check birthday
 		if ( $this->wpBirthYear == -1 || $this->wpBirthMonth == -1 || $this->wpBirthDay == -1 ) {
-			$this->mainLoginForm( wfMsg( 'userlogin-error-userlogin-bad-birthday' ), 'error', 'birthday' );
+			$this->mainLoginForm( wfMessage( 'userlogin-error-userlogin-bad-birthday' )->escaped(), 'error', 'birthday' );
 			return false;
 		}
 
 		// check valid age
 		$userBirthDay = strtotime( $this->wpBirthYear . '-' . $this->wpBirthMonth . '-' . $this->wpBirthDay );
 		if( $userBirthDay > strtotime('-13 years') ) {
-			$this->mainLoginForm( wfMsg( 'userlogin-error-userlogin-unable-info' ), 'error', 'birthday' );
+			$this->mainLoginForm( wfMessage( 'userlogin-error-userlogin-unable-info' )->escaped(), 'error', 'birthday' );
 			return false;
 		}
 
@@ -182,13 +182,13 @@ class UserLoginForm extends LoginForm {
 	public function initValidationEmail() {
 		// check empty email
 		if ( $this->mEmail == '') {
-			$this->mainLoginForm( wfMsg( 'usersignup-error-empty-email' ), 'error', 'email' );
+			$this->mainLoginForm( wfMessage( 'usersignup-error-empty-email' )->escaped(), 'error', 'email' );
 			return false;
 		}
 
 		// check email format
 		if( !Sanitizer::validateEmail( $this->mEmail ) ) {
-			$this->mainLoginForm( wfMsg( 'userlogin-error-invalidemailaddress' ), 'error', 'email' );
+			$this->mainLoginForm( wfMessage( 'userlogin-error-invalidemailaddress' )->escaped(), 'error', 'email' );
 			return false;
 		}
 
@@ -222,8 +222,6 @@ class UserLoginForm extends LoginForm {
 	}
 
 	public function initUser( $u, $autocreate, $skipConfirm = false ) {
-		global $wgAuth, $wgExternalAuthType;
-
 		$u = parent::initUser( $u, $autocreate );
 
 		if ( $skipConfirm === false ) {
@@ -240,15 +238,15 @@ class UserLoginForm extends LoginForm {
 	}
 
 	public function userNotPrivilegedMessage() {
-		$this->mainLoginForm( wfMsg( 'userlogin-error-user-not-allowed' ) );
+		$this->mainLoginForm( wfMessage( 'userlogin-error-user-not-allowed' )->escaped() );
 	}
 
 	public function userBlockedMessage(Block $block) {
-		$this->mainLoginForm( wfMsg( 'userlogin-error-cantcreateaccount-text' ) );
+		$this->mainLoginForm( wfMessage( 'userlogin-error-cantcreateaccount-text' )->escaped() );
 	}
 
 	public function throttleHit( $limit ) {
-		$this->mainLoginForm( wfMsgExt( 'userlogin-error-acct_creation_throttle_hit', array( 'parseinline' ), $limit ) );
+		$this->mainLoginForm( wfMessage( 'userlogin-error-acct_creation_throttle_hit', array( 'parseinline' ), $limit ) );
 	}
 
 }

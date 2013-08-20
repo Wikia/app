@@ -2,7 +2,7 @@
 <? if(!empty($pageHeading)) { ?>
 	<h1 class="pageheading"><?= $pageHeading ?></h1>
 <? } ?>
-	<h2 class="subheading"><?= wfMsg('wikiaconfirmemail-subheading') ?></h2>
+	<h2 class="subheading"><?= wfMessage('wikiaconfirmemail-subheading')->escaped() ?></h2>
 <?
 	$form = array(
 		'method' => 'post',
@@ -15,7 +15,7 @@
 			array(
 				'type' => 'text',
 				'name' => 'username',
-				'label' => wfMsg('wikiaconfirmemail-username'),
+				'label' => wfMessage('wikiaconfirmemail-username')->escaped(),
 				'value' => $username,
 				'isInvalid' => !empty($errParam) && $errParam === 'username',
 				'errorMsg' => !empty($msg) ? $msg : ''
@@ -23,7 +23,7 @@
 			array(
 				'type' => 'password',
 				'name' => 'password',
-				'label' => wfMsg('yourpassword'),
+				'label' => wfMessage('yourpassword')->escaped(),
 				'isInvalid' => !empty($errParam) && $errParam === 'password',
 				'errorMsg' => !empty($msg) ? $msg : ''
 			)
@@ -31,7 +31,7 @@
 		'submits' => array(
 			array(
 				'name' => 'action',
-				'value' => wfMsg('wikiaconfirmemail-login-button'),
+				'value' => wfMessage('wikiaconfirmemail-login-button')->escaped(),
 				'class' => 'big login-button'
 			)
 		)

@@ -1,5 +1,5 @@
 <? if(!empty($rawHtml)) { ?>
-	<label><?= wfMsg('usersignup-page-captcha-label') ?></label>
+	<label><?= wfMessage('usersignup-page-captcha-label')->escaped() ?></label>
 	<? if($isFancyCaptcha) { ?>
 		<div class="fancy-captcha">
 			<?= $rawHtml ?>

@@ -1,4 +1,4 @@
 <p>
-	<?= wfMsgExt('prefs-help-terms', 'parseinline') ?>
+	<?= wfMsg('prefs-help-terms')->parse() ?>
 </p>
 <input type="submit" value="<?= $createAccountButtonLabel ?>" class="big" name="submit">
