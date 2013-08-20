@@ -503,7 +503,7 @@ class DataMartService extends Service {
 					];
 
 					$options = [
-						'GROUP BY' => 'user_id, time_id'
+						'GROUP BY' => 'user_id'
 					];
 
 					$result = $db->select(
@@ -514,12 +514,12 @@ class DataMartService extends Service {
 						$options
 					);
 
-					while ($row = $db->fetchObject($result)) {
-						$events[$row->user_id] = [
-							'creates' => $row->creates,
-							'edits' => $row->creates + $row->edits,
-							'deletes' => $row->deletes,
-							'undeletes' => $row->undeletes,
+					while ($row = $db->fetchRow($result)) {
+						$events[$row['user_id']] = [
+							'creates' => $row['creates'],
+							'edits' => $row['creates'] + $row['edits'],
+							'deletes' => $row['deletes'],
+							'undeletes' => $row['undeletes'],
 						];
 					}
 				}
