@@ -62,6 +62,9 @@ The rest will be done in background.
 You will be notified via e-mail when it is completed.',
 	'userrenametool-success' => 'The user "$1" has been renamed to "$2".',
 
+	'userrenametool-warnings-characters' => 'Username cannot containt @, / or a non-breaking space.',
+	'userrenametool-warnings-maxlength' => 'The maximum length of username is 255 characters.',
+
 	'userrenametool-confirm-intro' => 'Do you really want to do this?',
 	'userrenametool-confirm-yes' => 'Yes',
 	'userrenametool-confirm-no' => 'No',
@@ -112,6 +115,8 @@ $messages['qqq'] = array(
 {{Identical|Rename user}}',
 	'action-renameuser' => '{{doc-action|renameuser}}
 {{Identical|Rename user}}',
+	'userrenametool-warnings-characters' => 'Warning about new username containing @, / or non-breaking space.',
+	'userrenametool-warnings-maxlength' => 'Warning about new username exceeding maximum length of 255 characters.',
 );
 
 /** Afrikaans (Afrikaans)
