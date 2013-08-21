@@ -52,16 +52,17 @@ class UserLoginController extends WikiaController {
 
 		switch ( $params['type'] ) {
 			case 'password-email':
-				$this->greeting = wfMessage( 'userlogin-'.$this->type.'-greeting' )->inLanguage( $this->language )->parse();
-				$this->content = wfMessage( 'userlogin-'.$this->type.'-content' )->inLanguage( $this->language )->parse();
+				$this->greeting = wfMessage( 'userlogin-'.$this->type.'-greeting' )->inLanguage( $this->language )->text();
+				$this->content = wfMessage( 'userlogin-'.$this->type.'-content' )->inLanguage( $this->language )->text();
+				$this->signature = wfMessage( 'userlogin-'.$this->type.'-signature' )->inLanguage( $this->language )->text();
 				break;
 			case 'confirmation-email':
 			case 'reconfirmation-email':
 			case 'account-creation-email':
 			case 'confirmation-reminder-email' :
-				$this->greeting = wfMessage( 'usersignup-'.$this->type.'-greeting' )->inLanguage( $this->language )->parse();
-				$this->content = wfMessage( 'usersignup-'.$this->type.'-content' )->inLanguage( $this->language )->parse();
-				$this->signature = wfMessage( 'usersignup-'.$this->type.'-signature' )->inLanguage( $this->language )->parse();
+				$this->greeting = wfMessage( 'usersignup-'.$this->type.'-greeting' )->inLanguage( $this->language )->text();
+				$this->content = wfMessage( 'usersignup-'.$this->type.'-content' )->inLanguage( $this->language )->text();
+				$this->signature = wfMessage( 'usersignup-'.$this->type.'-signature' )->inLanguage( $this->language )->text();
 				break;
 			default:
 				$this->greeting = '';
