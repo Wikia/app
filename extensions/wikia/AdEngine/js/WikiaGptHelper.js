@@ -1,4 +1,4 @@
-/*global setTimeout */
+/*global setTimeout*/
 var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 	'use strict';
 
@@ -10,6 +10,7 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 		doneCallbacks = {},// key: slot name, value: callback
 		slotMap,
 		gptSlots = {},
+		dataAttribs = {},
 		googletag;
 
 	pageLevelParams.src = 'gpt';
@@ -115,7 +116,8 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 					sizes,
 					slot,
 					slotItem,
-					slotPath;
+					slotPath,
+					slotParams;
 
 				pubads.collapseEmptyDivs();
 
@@ -146,13 +148,28 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 						slot = googletag.defineSlot(slotPath, sizes, slotnameGpt);
 						slot.addService(googletag.pubads());
 
-						// Per-slot targeting keys: pos, loc
-						slot.setTargeting('pos', slotname);
-						if (slotItem.loc) {
-							slot.setTargeting('loc', slotItem.loc);
+						// Per-slot targeting keys
+						slotParams = {
+							pos: slotname,
+							loc: slotItem.loc
+						};
+						for (name in slotParams) {
+							if (slotParams.hasOwnProperty(name)) {
+								value = slotParams[name];
+								if (value) {
+									log(['slot.setTargeting', name, value], 9, logGroup);
+									slot.setTargeting(name, value);
+								}
+							}
 						}
 
 						gptSlots[slotname] = slot;
+
+						dataAttribs[slotname] = {
+							'data-gpt-page-params': JSON.stringify(pageLevelParams),
+							'data-gpt-slot-params': JSON.stringify(slotParams),
+							'data-gpt-slot-sizes': JSON.stringify(sizes)
+						};
 
 						log(['loadGpt', 'defined slot', slotname, slot], 9, logGroup);
 
@@ -179,15 +196,13 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 
 		// Create a div for the GPT ad
 		slotDiv.id = slotnameGpt;
-		// Save page level and slot level params for easier ad delivery debugging
-		// TODO: have the data params again
-		/*slotDiv.setAttribute('data-gpt-page-params', JSON.stringify(pageLevelParams));
-		slotDiv.setAttribute('data-gpt-slot-params', JSON.stringify(params));
-		slotDiv.setAttribute('data-gpt-slot-sizes', JSON.stringify(sizes));*/
+
 		document.getElementById(slotname).appendChild(slotDiv);
 
 		log(['pushAd', slotname], 9, logGroup);
 		googletag.cmd.push(function () {
+			var attrName;
+
 			log(['googletag.display', slotnameGpt], 9, logGroup);
 			googletag.display(slotnameGpt);
 
@@ -219,6 +234,14 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 					}
 				}
 			};
+
+			// Save page level and slot level params for easier ad delivery debugging
+			for (attrName in dataAttribs[slotname]) {
+				if (dataAttribs[slotname].hasOwnProperty(attrName)) {
+					console.log(slotDiv, attrName, dataAttribs[slotname][attrName]);
+					slotDiv.setAttribute(attrName, dataAttribs[slotname][attrName]);
+				}
+			}
 		});
 	}
 
