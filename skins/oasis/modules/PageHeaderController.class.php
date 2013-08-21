@@ -56,6 +56,13 @@ class PageHeaderController extends WikiaController {
 			unset($this->content_actions['viewsource']);
 		}
 
+		// If cascade protected, show viewsource button - BugId:VE-89
+		if ( isset( $this->content_actions['edit'] ) && $wgTitle->isCascadeProtected() ) {
+			$this->content_actions['viewsource'] = $this->content_actions['edit'];
+			$this->content_actions['viewsource']['text'] = wfMsg('viewsource');
+			unset( $this->content_actions['edit'] );
+		}
+
 		// PvX's rate (RT #76386)
 		if (isset($this->content_actions['rate'])) {
 			$this->action = $this->content_actions['rate'];
