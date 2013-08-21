@@ -19,6 +19,9 @@
 
 		.input {
 			display: inline-block;
+			&::-ms-clear {
+				display: none;
+			}
 		}
 
 		> .toolbar {

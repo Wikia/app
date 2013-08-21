@@ -27,7 +27,6 @@ $wgHooks['AllowNotifyOnPageChange']  [] = "Wikia::allowNotifyOnPageChange";
 $wgHooks['AfterInitialize']          [] = "Wikia::onAfterInitialize";
 $wgHooks['UserMailerSend']           [] = "Wikia::onUserMailerSend";
 $wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
-$wgHooks['PageHistoryLineEnding']    [] = "Wikia::onPageHistoryLineEnding";
 $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
 $wgHooks['AjaxAddScript'][] = 'Wikia::onAjaxAddScript';
 
@@ -1791,12 +1790,27 @@ class Wikia {
 	 * mcache=readonly disables memcache writes for the duration of the request
 	 * TODO: allow disabling specific keys?
 	 */
-	static public function onBeforeInitializeMemcachePurge($title, $unused, $output, $user, WebRequest $request, $wiki ) {
-		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads, $wgAllowMemcacheWrites;
-		$mcachePurge = $request->getVal("mcache", null);
+	static public function onBeforeInitializeMemcachePurge( $title, $unused, $output, $user, WebRequest $request, $wiki ) {
+		self::setUpMemcachePurge( $request, $user );
+		return true;
+	}
 
-		if ($wgAllowMemcacheDisable && $mcachePurge !== null) {
-			switch( $mcachePurge ) {
+	/**
+	 * Control memcache behavior
+	 *
+	 * @param WebRequest $request
+	 */
+	static public function setUpMemcachePurge( WebRequest $request, $user ) {
+		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads, $wgAllowMemcacheWrites, $wgDevelEnvironment;
+
+		if ( !$user->isAllowed( 'mcachepurge' ) && empty( $wgDevelEnvironment ) ) {
+			return true;
+		}
+
+		$mcachePurge = $request->getVal( 'mcache', null );
+
+		if ( $wgAllowMemcacheDisable && $mcachePurge !== null ) {
+			switch ( $mcachePurge ) {
 				case 'writeonly':
 					$wgAllowMemcacheReads = false;
 					$wgAllowMemcacheWrites = true;
@@ -1813,7 +1827,6 @@ class Wikia {
 					break;
 			}
 		}
-		return true;
 	}
 
 	// Hook to Construct a tag for newrelic
@@ -1862,15 +1875,6 @@ class Wikia {
 		if ( $title instanceof Title ) {
 			$title->getArticleID( Title::GAID_FOR_UPDATE );
 		}
-		return true;
-	}
-
-	/**
-	 * Fix for bugid:38093
-	 * Chrome bug: No "Undo" links on Recent Changes
-	 */
-	public static function onPageHistoryLineEnding( $HistoryActionObj, $row , &$s, $classes ) {
-		$s = '<span dir="auto">'.$s.'</span>';
 		return true;
 	}
 
@@ -2005,7 +2009,7 @@ class Wikia {
 		if ( $wgExternalAuthType ) {
 			$mExtUser = ExternalUser::newFromName( $user_name );
 			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
-				$mExtUser->linkToLocal( $mExtUser->getId() ); 
+				$mExtUser->linkToLocal( $mExtUser->getId() );
 				$s = $mExtUser->getLocalUser( $bUserObject );
 			}
 		}
@@ -2030,13 +2034,13 @@ class Wikia {
 
 		return true;
 	}
-	
+
 	/**
-	 * @param $user User 
+	 * @param $user User
 	 */
 	public static function invalidateUser( $user, $disabled = false, $ajax = false ) {
 		global $wgExternalAuthType;
-		
+
 		if ( $disabled ) {
 			$user->setEmail( '' );
 			$user->setPassword( wfGenerateToken() . self::HEX_CHARS );
@@ -2056,7 +2060,7 @@ class Wikia {
 			ExternalUser_Wikia::removeFromSecondaryClusters( $id );
 		}
 		$user->invalidateCache();
-		
+
 		return true;
 	}
 }

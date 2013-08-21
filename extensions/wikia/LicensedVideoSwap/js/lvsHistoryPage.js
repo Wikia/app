@@ -3,8 +3,8 @@
  * @author Kenneth Kouot <kenneth@wikia-inc.com>
  */
 require([
-		'jquery',
-		'lvs.commonajax'
+	'jquery',
+	'lvs.commonajax'
 ], function($, commonAjax) {
 
 	function LVSHistoryPage(opts) {
@@ -12,7 +12,6 @@ require([
 
 		// wait for DOM ready
 		$(function() {
-			that.location = window.location.href;
 			that.$el = $(opts.el);
 			that.init();
 		});
@@ -21,61 +20,42 @@ require([
 
 	LVSHistoryPage.prototype = {
 		init: function() {
-			this.redirectUrl = this.buildRedirectUrl();
-			this.bindUndoEvents();
-			this.bindListAnchors();
-		},
-		buildRedirectUrl: function() {
-			// redirect back to main LVS page
-			return this.location.replace('/History', '');
-		},
-		bindUndoEvents: function() {
-			var events,
-					that;
-
-			that = this;
-			events = [
-				'undo.clicked',
-				'undo.failed'
-			];
-
-			this.$el.on( events.join(' '), function(evt) {
-				// build function name from namespace and evoke
-				var state = evt.namespace;
-				if (state === 'clicked') {
-					return that.handleUndoClick();
-				} else {
-					return that.handleUndoFail();
-				}
-			});
-		},
-		bindListAnchors: function() {
-			var that = this;
-
-			this.$el.on('click', '.undo-link', function(evt) {
-				var url = evt.target.href;
-				evt.preventDefault();
-
-				that.$el.trigger('undo.clicked');
-
-				that.undoSwap(url)
-					.success(function() {
-						window.location = that.redirectUrl;
-					})
-					.error(function() {
-						that.$el.trigger('undo.failed');
-					});
-			});
+			// bind click event on undo links
+			this.$el.on( 'click', '.undo-link', $.proxy( this.handleUndoClick, this ) );
 		},
 		undoSwap: function(url) {
 			// returns the promise
 			return $.get(url);
 		},
-		handleUndoClick: function() {
+		handleUndoClick: function( evt ) {
+			evt.preventDefault();
+
+			var target = evt.target,
+				url = target.href,
+				that = this;
+
 			commonAjax.startLoadingGraphic();
+
+			this.undoSwap(url)
+				.success(function( data ) {
+					if ( data.result === "error" ) {
+						that.handleUndoFail( data.msg );
+					} else {
+						that.handleUndoSuccess( data.msg, target );
+					}
+				})
+				.error(function() {
+					that.handleUndoFail( $.msg( 'oasis-generic-error' ) );
+				});
 		},
-		handleUndoFail: function() {
+		handleUndoFail: function( msg ) {
 			commonAjax.stopLoadingGraphic();
+			GlobalNotification.show( msg, 'error' );
+		},
+		handleUndoSuccess: function( msg, target ) {
+			$( target ).closest( 'li' ).remove();
+			commonAjax.stopLoadingGraphic();
+			GlobalNotification.show( msg, 'confirm' );
 		},
 		// restore clobbered constructor
 		constructor: LVSHistoryPage
