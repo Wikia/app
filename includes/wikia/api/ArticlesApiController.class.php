@@ -572,7 +572,7 @@ class ArticlesApiController extends WikiaApiController {
 *                     required="true",
 *                     allowMultiple="false",
 *                     dataType="Array",
-*                     defaultValue="0"
+*                     defaultValue="gaming"
 *                 ),
 *				  @SWG\Parameter(
 *                     name="lang",
