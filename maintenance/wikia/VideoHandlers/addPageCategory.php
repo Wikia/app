@@ -139,7 +139,7 @@ $result = $db->select(
 	array( 'img_name', 'img_metadata' ),
 	$sqlWhere,
 	__METHOD__,
-	array( 'LIMIT' => $limit )
+	array( 'LIMIT' => $limit, 'ORDER BY' => 'img_name' )
 );
 
 $total = $result->numRows();
