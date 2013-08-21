@@ -1,15 +1,21 @@
 // Use the table overflow technique (VE-164)
 jQuery(function( $ ) {
-	var $article = $( '#WikiaArticle' );
+	var $article = $( '#WikiaArticle' ),
+		scrollableTemplate = '<div class="table-scrollable" />';
 
 	// Scans tables inside of the article and applies overflow hint styles
 	// on any tables that are wider than the article content area.
 	function scan() {
 		$article.find( '.table-wrapper' ).each(function() {
-			var $wrapper = $( this );
+			var $wrapper = $( this ),
+				$table = $wrapper.find( 'table' ),
+				isWide = $table.width() > $article.width();
 
-			$wrapper.toggleClass( 'table-scrollable',
-				$wrapper.find( 'table' ).width() > $article.width() );
+			$wrapper.toggleClass( 'table-is-wide', isWide );
+
+			if ( isWide && !$table.parent( '.table-scrollable' ).length ) {
+				$table.wrap( scrollableTemplate );
+			}
 		});
 	}
 
@@ -123,7 +129,7 @@ var WikiaWideTables = {
 			var table = $(this);
 
 			//Ignore tables using the overflow method
-			if (table.parent( '.table' ).length ) {
+			if (table.parent( '.table-scrollable' ).length ) {
 				return;
 			}
 
