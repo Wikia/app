@@ -490,7 +490,7 @@ class ArticlesApiController extends WikiaApiController {
 			'width' => $this->request->getInt( static::PARAMETER_WIDTH, static::DEFAULT_WIDTH ),
 			'height' => $this->request->getInt( static::PARAMETER_HEIGHT, static::DEFAULT_HEIGHT ),
 			'length' => $this->request->getInt( static::PARAMETER_ABSTRACT, static::DEFAULT_ABSTRACT_LEN ),
-			'titleKeys' => $this->request->getVal( self::PARAMETER_TITLES, null )
+			'titleKeys' => $this->request->getArray( self::PARAMETER_TITLES, null )
 		];
 	}
 
@@ -516,10 +516,8 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		if ( !empty( $articleKeys ) ) {
-			$paramtitles = explode( ',', $articleKeys );
-
-			if ( count( $paramtitles ) > 0 ) {
-				foreach ( $paramtitles as $titleKey ) {
+			if ( count( $articleKeys ) > 0 ) {
+				foreach ( $articleKeys as $titleKey ) {
 					$titleObj = Title::newFromDbKey( $titleKey );
 
 					if ( $titleObj instanceof Title && $titleObj->exists() ) {
