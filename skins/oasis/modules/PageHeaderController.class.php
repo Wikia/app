@@ -9,6 +9,9 @@ class PageHeaderController extends WikiaController {
 
 	var $content_actions;
 
+	/* @var SkinTemplate */
+	private $skinTemplate;
+
 	public function init() {
 		$this->isMainPage = null;
 		$this->likes = null;
@@ -19,7 +22,9 @@ class PageHeaderController extends WikiaController {
 		$this->actionName = null;
 		$this->dropdown = null;
 
-		$skinVars = $this->app->getSkinTemplateObj()->data;
+		$this->skinTemplate = $this->app->getSkinTemplateObj();
+
+		$skinVars = $this->skinTemplate->data;
 		$this->content_actions = $skinVars['content_actions'];
 		$this->displaytitle = $skinVars['displaytitle']; // if true - don't encode HTML
 		$this->title = $skinVars['title'];
@@ -367,19 +372,21 @@ class PageHeaderController extends WikiaController {
 			 * this adds links which automatically convert the content to that variant
 			 *
 			 * @author tor@wikia-inc.com
+			 * @author macbre@wikia-inc.com
 			 */
-			if ( $wgContLang->hasVariants() ) {
-				foreach ( $wgContLang->getVariants() as $variant ) {
-					if ( $variant != $wgContLang->getCode() ) {
-						$subtitle[] = Xml::element(
-							'a',
-							array(
-								'href' => $wgTitle->getLocalUrl( array( 'variant' => $variant ) ),
-								'rel' => 'nofollow'
-							),
-							$wgContLang->getVariantname( $variant )
-						);
-					}
+			$variants = $this->skinTemplate->get('content_navigation')['variants'];
+
+			if ( !empty($variants) ) {
+				foreach ( $variants as $variant ) {
+					$subtitle[] = Xml::element(
+						'a',
+						array(
+							'href' => $variant['href'],
+							'rel' => 'nofollow',
+							'id' => $variant['id']
+						),
+						$variant['text']
+					);
 				}
 			}
 
