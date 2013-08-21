@@ -11,7 +11,6 @@
 			array('menuItems' => $leftMenuItems)
 		) ?>
 	</div>
-<? lizbug($leftMenuItems) ?>
 	<div class="grid-4 alpha">
 		<? if (!empty($flashMessage)): ?>
 			<p class="success"><?=$flashMessage ?></p>
