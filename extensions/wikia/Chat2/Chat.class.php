@@ -472,11 +472,9 @@ class Chat {
 			$log->addEntry( 'chatconnect', SpecialPage::getTitleFor( 'Chat' ), '', array( $ip ), $wgUser );
 
 			$xff = $wgRequest->getHeader( self::HTTP_HEADER_XFF );
+			list( $xff_ip, $isSquidOnly ) = IP::getClientIPfromXFF( $xff );
+
 			$userAgent = $wgRequest->getHeader( self::HTTP_HEADER_USER_AGENT );
-
-			$xff = ( $xff === false ) ? '' : $xff;
-			$userAgent = ( $userAgent === false ) ? null : $userAgent;
-
 			$dbw = wfGetDB( DB_MASTER );
 			$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
 			$rcRow = [
@@ -494,9 +492,9 @@ class Chat {
 					'cuc_timestamp'  => $dbw->timestamp(),
 					'cuc_ip'         => IP::sanitizeIP( $ip ),
 					'cuc_ip_hex'     => $ip ? IP::toHex( $ip ) : null,
-					'cuc_xff'        => $xff,
-					'cuc_xff_hex'    => null,
-					'cuc_agent'      => $userAgent
+					'cuc_xff'        => !$isSquidOnly ? $xff : '',
+					'cuc_xff_hex'    => ( $xff_ip && !$isSquidOnly ) ? IP::toHex( $xff_ip ) : null,
+					'cuc_agent'      => ( $userAgent === false ) ? null : $userAgent,
 			];
 
 			$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
