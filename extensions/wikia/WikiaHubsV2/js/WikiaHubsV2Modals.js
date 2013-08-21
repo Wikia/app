@@ -55,11 +55,11 @@ var SuggestModalWikiaHubsV2 = {
 						reason: reason,
 						page_title: window.wgPageName,
 						vertical_id: wgWikiaHubsVerticalId
-                    }, e);
+					}, e);
 
-                    $().log('suggestArticle modal submit');
-                    formView.hide();
-                    successView.show();
+ 					$().log('suggestArticle modal submit');
+					formView.hide();
+					successView.show();
 				});
 	
 				modal.find('button.cancel').click(function (e) {
