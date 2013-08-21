@@ -1065,7 +1065,7 @@ class ArticlesApiController extends WikiaApiController {
 			'width' => $this->request->getInt( static::PARAMETER_WIDTH, static::DEFAULT_WIDTH ),
 			'height' => $this->request->getInt( static::PARAMETER_HEIGHT, static::DEFAULT_HEIGHT ),
 			'length' => $this->request->getInt( static::PARAMETER_ABSTRACT, static::DEFAULT_ABSTRACT_LEN ),
-			'titleKeys' => explode( ',', $this->request->getVal( self::PARAMETER_TITLES, null ) )
+			'titleKeys' => $this->request->getVal( self::PARAMETER_TITLES, null )
 		];
 	}
 
