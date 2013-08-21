@@ -494,7 +494,7 @@ class ArticlesApiController extends WikiaApiController {
 		];
 	}
 
-	protected function getArticlesDetails( $articleIds, $articleKeys = null, $width = 0, $height = 0, $abstract = 0, $strict = false ) {
+	protected function getArticlesDetails( $articleIds, $articleKeys = [], $width = 0, $height = 0, $abstract = 0, $strict = false ) {
 		$articles = is_array( $articleIds ) ? $articleIds : [ $articleIds ];
 		$ids = [];
 		$collection = [];
@@ -516,13 +516,11 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		if ( !empty( $articleKeys ) ) {
-			if ( count( $articleKeys ) > 0 ) {
-				foreach ( $articleKeys as $titleKey ) {
-					$titleObj = Title::newFromDbKey( $titleKey );
+			foreach ( $articleKeys as $titleKey ) {
+				$titleObj = Title::newFromDbKey( $titleKey );
 
-					if ( $titleObj instanceof Title && $titleObj->exists() ) {
-						$titles[] = $titleObj;
-					}
+				if ( $titleObj instanceof Title && $titleObj->exists() ) {
+					$titles[] = $titleObj;
 				}
 			}
 		}
