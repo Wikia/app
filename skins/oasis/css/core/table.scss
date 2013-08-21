@@ -49,6 +49,9 @@ table.wikitable {
 			z-index: 2;
 		}
 
+		// This second element is needed because of stacking order rules.
+		// Otherwise, tables with background colors will overlap the box
+		// shadow applied above.
 		.table-scrollable {
 			overflow: auto;
 		}
