@@ -323,7 +323,7 @@ function authConnection(handshakeData, authcallback){
 		}
 	};
 
-	mwBridge.authenticateUser(roomId, name, key, handshakeData.headers, callback, function(){
+	mwBridge.authenticateUser(roomId, name, key, handshakeData, callback, function(){
 		logger.error("User failed authentication: Wrong call to media wiki");
 		authcallback(null, false); // error first callback style
 	});
