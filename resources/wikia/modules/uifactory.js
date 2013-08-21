@@ -8,7 +8,7 @@
  *
  */
 
-define('wikia.uifactory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'wikia.uicomponent'], function uifactory(nirvana, window, Deferred, UIComponent){
+define('wikia.uifactory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'wikia.loader', 'wikia.uicomponent'], function uifactory(nirvana, window, Deferred, loader, UIComponent){
 	'use strict';
 
 	/**
@@ -80,43 +80,6 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'w
 	}
 
 	/**
-	 * Add styles to DOM
-	 *
-	 * @param {[]} styles Array with links for CSS files
-	 */
-
-	function addStylesToDOM(styles) {
-		var domFragment = window.document.createDocumentFragment();
-
-		styles.forEach(function(element) {
-			var link = window.document.createElement('link');
-			link.rel = 'stylesheet';
-			link.href = element;
-			domFragment.appendChild(link);
-		});
-
-		window.document.head.appendChild(domFragment);
-	}
-
-	/**
-	 * Add scripts to DOM
-	 *
-	 * @param {[]} scripts Array with links for JS files
-	 */
-
-	function addScriptsToDOM(scripts) {
-		var domFragment = window.document.createDocumentFragment();
-
-		scripts.forEach(function(element) {
-			var script = window.document.createElement('script');
-			script.src = element;
-			domFragment.appendChild(script);
-		});
-
-		window.document.body.appendChild(domFragment);
-	}
-
-	/**
 	* Factory method for initialising components
 	* (load assets dependencies and adds them to DOM + instantiates UI components and applies config to them)
 	*
@@ -161,10 +124,18 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'w
 			jsAssets = arrayUnique(jsAssets);
 			cssAssets = arrayUnique(cssAssets);
 
-			addScriptsToDOM(jsAssets);
-			addStylesToDOM(cssAssets);
 
-			deferred.resolve((components.length == 1) ? components[0] : components);
+			// TODO: temporary solution - to limit number of requests all assets will be fetched as strings in a single request while calling getComponentsConfig
+			loader({
+				type: loader.CSS,
+				resources: cssAssets
+			});
+			loader({
+				type: loader.JS,
+				resources: jsAssets
+			}).done(function() {
+					deferred.resolve((components.length == 1) ? components[0] : components);
+			});
 		}).fail(function(data) {
 			if (data.error) {
 				throw new Error(data.error + ': ' + data.message);
