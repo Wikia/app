@@ -146,8 +146,8 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 						$user->confirmEmail();
 
 						//Get and clear redirect page
-						$userSignupRedirect = $user->getOption( UserLoginSpecialController::SIGNUP_REDIRECT_NAME );
-						$user->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_NAME, null );
+						$userSignupRedirect = $user->getOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
+						$user->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
 
 						$user->saveSettings();
 

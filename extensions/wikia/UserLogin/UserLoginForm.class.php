@@ -222,12 +222,14 @@ class UserLoginForm extends LoginForm {
 	}
 
 	public function initUser( $u, $autocreate, $skipConfirm = false ) {
+		global $wgCityId;
 		$u = parent::initUser( $u, $autocreate );
 
 		if ( $skipConfirm === false ) {
 			//Set properties that will require user to confirm email after signup
-			$u->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_NAME, $this->mReturnTo );
+			$u->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, $this->mReturnTo );
 			$u->setOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, true );
+			$u->setOption( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, $wgCityId );
 			$u->saveSettings();
 			UserLoginHelper::setNotConfirmedUserSession( $u->getId() );
 		}
