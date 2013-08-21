@@ -14,7 +14,16 @@ describe('AdProviderAdDriver2', function(){
 			cacheStorageMock,
 			adLogicHighValueCountryMock = {},
 			adLogicDartSubdomainMock = {getSubdomain: function() {return 'sub';}},
-			abTestMock,
+			abTestMock = {
+				getGroup: function(exp) {
+					if (exp === 'LEADERBOARD_TESTS') {
+						return 'SOME_GROUP';
+					}
+				}
+			},
+			wikiaGptMock = {
+				init: function() {}
+			},
 			adProviderAdDriver2;
 
 		dartCalled = false;
@@ -33,13 +42,8 @@ describe('AdProviderAdDriver2', function(){
 			cacheStorageMock = {set: function() {}, get: function() {}, del: function() {}},
 			adLogicHighValueCountryMock,
 			adLogicDartSubdomainMock,
-			abTestMock = {
-				getGroup: function(exp) {
-					if (exp === 'LEADERBOARD_TESTS') {
-						return 'SOME_GROUP';
-					}
-				}
-			}
+			abTestMock,
+			wikiaGptMock
 		);
 
 		adProviderAdDriver2.fillInSlot(['TOP_LEADERBOARD']);
@@ -70,7 +74,16 @@ describe('AdProviderAdDriver2', function(){
 			cacheStorageMock,
 			adLogicHighValueCountryMock = {},
 			adLogicDartSubdomainMock = {getSubdomain: function() {return 'sub';}},
-			abTestMock,
+			abTestMock = {
+				getGroup: function(exp) {
+					if (exp === 'LEADERBOARD_TESTS') {
+						return 'SOME_GROUP';
+					}
+				}
+			},
+			wikiaGptMock = {
+				init: function() {}
+			},
 			adProviderAdDriver2;
 
 		dartCalled = false;
@@ -89,13 +102,8 @@ describe('AdProviderAdDriver2', function(){
 			cacheStorageMock = {set: function() {}, get: function() {return 8;}, del: function() {}},
 			adLogicHighValueCountryMock,
 			adLogicDartSubdomainMock,
-			abTestMock = {
-				getGroup: function(exp) {
-					if (exp === 'LEADERBOARD_TESTS') {
-						return 'SOME_GROUP';
-					}
-				}
-			}
+			abTestMock,
+			wikiaGptMock
 		);
 
 		adProviderAdDriver2.fillInSlot(['TOP_LEADERBOARD']);
