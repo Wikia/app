@@ -54,6 +54,8 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 		GPT_FLUSH: 'flushonly'
 	};
 
+	wikiaGpt.init(slotMap);
+
 	// Private methods
 
 	function formatTrackTime(t, max) {
@@ -250,12 +252,7 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 			// Use the new GPT library:
 			log('Use the new GPT library for ' + slotname, 5, logGroup);
 
-			wikiaGpt.pushAd({
-				slotname: slotname,
-				slotsize: slotsize,
-				dcopt: dcopt,
-				loc: loc
-			}, success, error);
+			wikiaGpt.pushAd(slotname, success, error);
 
 			if (gptConfig[slotname] === 'flush' || gptFlushed) {
 				flushGpt();
