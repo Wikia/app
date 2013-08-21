@@ -1,17 +1,22 @@
 var NewUsernameUrlEncoder = {
 
 	init: function() {
-	var input = $( "input[name='newusername']" ),
-		output = $( "#newUsernameEncoded>strong" );
+		this.input = $( "input[name='newusername']" ),
+			this.output = $( "#newUsernameEncoded>strong" );
 
-		input.on( 'input', function() {
-		var newUsername = input.val(),
-			newUsernameEncoded = encodeURIComponent( newUsername );
-			output.html( newUsernameEncoded );
+		this.input.on( 'input', function() {
+			NewUsernameUrlEncoder.update();
 		});
+	},
+
+	update: function() {
+		var newUsername = this.input.val(),
+			newUsernameEncoded = encodeURIComponent( newUsername );
+		this.output.html( newUsernameEncoded );
 	}
 }
 
-$(function(){
+$(document).ready( function() {
 	NewUsernameUrlEncoder.init();
+	NewUsernameUrlEncoder.update();
 });
