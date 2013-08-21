@@ -74,7 +74,10 @@
 					</td>
 				</tr>
 			<?endif;?>
-			
+			<tr id="mw-warnings-row">
+				<td class="mw-label"><?= wfMessage( 'userrenametool-warnings' )->inContentLanguage()->escaped(); ?></td>
+				<td class="mw-input"><ul id="mw-warnings-list"></ul></td>
+			</tr>
 		</table>
 	</fieldset>
 </form>
