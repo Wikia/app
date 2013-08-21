@@ -65,7 +65,7 @@ define('editor', ['pubsub', 'config'], function(pubsub, config){
             }
         }
         abbr = abbr.split('').splice(1, abbr.length-2).join('');
-        tag = config.findTag(abbr.split('').reverse().join(''));
+        tag = config.findTag(abbr.split('').reverse().join('')).tag;
         if(tag){
             var start = text.splice(0, pos);
             var end = text.splice(1, text.length);

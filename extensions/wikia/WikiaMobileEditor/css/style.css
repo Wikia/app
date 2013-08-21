@@ -313,6 +313,7 @@ p > small{
 }
 
 .container li{
+    background-color:#3f92d2;
     width: 100px;
     height: 100px;
     position: absolute;
@@ -326,9 +327,13 @@ p > small{
     margin-left:-5px;
 }
 
+.container li:nth-child(2n){
+    background-color:#66a3d2;
+}
+
 .container{
-    width:202px;
-    height:202px;
+    width:50px;
+    height:50px;
     position: fixed;
     bottom: 10px;
 }
@@ -339,11 +344,11 @@ p > small{
     padding:0;
     margin:0;
     position:absolute;
+    top:-76px;
+    left:-76px;
     border-radius:100%;
     overflow:hidden;
-    background: -webkit-radial-gradient(center, ellipse cover, rgba(229,229,229,1) 2%,rgba(254,255,255,1) 98%);
-    -webkit-box-shadow: -4px -4px 10px rgba(50, 50, 50, 0.25);
-    border: 1px solid #fff;
+    border: 1px solid #66a3d2;;
 }
 
 .rotL1{
@@ -401,8 +406,6 @@ p > small{
     width:50px;
     height:50px;
     position:absolute;
-    top: 71px;
-    left: 71px;
     border-radius:100%;
     z-index:10;
 }
@@ -430,17 +433,17 @@ p > small{
 }
 
 *{
-    -webkit-transition: all 0.3s ease-in;
+    -webkit-transition: all 0.1s ease-in;
 }
 
 .left{
-    left:-30px;
-    bottom: -30px;
+    left:40px;
+    bottom:40px;
 }
 
 .right{
-    right:-30px;
-    bottom:-30px;
+    right:40px;
+    bottom:40px;
 }
 
 .highlight{

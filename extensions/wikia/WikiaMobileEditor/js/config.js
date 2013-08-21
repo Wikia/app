@@ -27,120 +27,115 @@ define('config', ['pubsub'], function(pubsub){
         'Text Modifiers' : {
             'Bold' : {
                 tag : "''_$''",
-                abbr : 'B',
+                abbr : 'b',
                 display : "'' ''"
             },
             'Italic' : {
                 tag : "'''_$'''",
-                abbr : 'I',
+                abbr : 'i',
                 display : "''' '''"
             },
             'Small' : {
                 tag : "<small>_$</small>",
-                abbr : 'Sm',
-                display : '&lt;small&gt; &lt;/small&gt;'
+                abbr : 'sm',
+                display : '&lt;small&gt;&lt;/small&gt;'
             },
             'Superscript' : {
                 tag : "<sup>_$</sup>",
-                abbr : 'Sup',
-                display : 'Superscript'
+                abbr : 'sup',
+                display : '&lt;sup&gt;&lt;/sup&gt;'
             },
             'Subscript' : {
                 tag : "<sub>_$</sub>",
-                abbr : 'Sub',
-                display : 'Subscript'
+                abbr : 'sub',
+                display : '&lt;sub&gt;&lt;/sub&gt;'
             },
             'Level 2 Headline' : {
                 tag : "==_$==",
-                abbr : 'H2',
+                abbr : 'h2',
                 display : 'Level 2 Headline'
             },
             'Blockquote' : {
                 tag : "<blockquote>_$</blockquote>",
-                abbr : 'Qte',
+                abbr : 'qte',
                 display : 'Blockquote'
             },
         },
         'Wiki Markup' : {
             'Internal Link' : {
                 tag : "[[_$]]",
-                abbr : 'Int',
-                display : 'Internal Link'
+                abbr : 'int',
+                display : '[[]]'
             },
             'External Link' : {
                 tag : "[http://_$ title]",
-                abbr : 'Ext',
-                display : 'External Link'
+                abbr : 'ext',
+                display : '[http:// title]'
             },
             'Embedded File' : {
                 tag : "[[File:_$]]",
-                abbr : 'Embd',
-                display : 'Embedded File'
+                abbr : 'file',
+                display : '[[File:]]'
             },
-            'File Link' : {
+            'Media File Link' : {
                 tag : "[Media:_$]",
-                abbr : 'File',
-                display : 'File Link'
+                abbr : 'med',
+                display : '[Media:]'
             },
             'Math Formula' : {
                 tag : "<math>_$</math>",
-                abbr : 'Math',
-                display : 'Math Formula'
+                abbr : 'math',
+                display : '&lt;math&gt;_$&lt;/math&gt;'
             },
             'Ignore Wiki' : {
                 tag : "<nowiki>_$</nowiki>",
-                abbr : 'Ignr',
-                display : 'Ignore Wiki'
+                abbr : 'ign',
+                display : '&lt;nowiki&gt;&lt;/nowiki&gt;'
             },
             'Username And Time' : {
                 tag : "~~~~",
-                abbr : 'Usr',
+                abbr : 'usr',
                 display : 'Username and time'
             },
             'Horizontal Line' : {
                 tag : "----",
-                abbr : 'Usr',
-                display : 'Username and time'
+                abbr : 'hrzl',
+                display : '----'
             },
             'Strike' : {
                 tag : "<strike>_$</strike>",
-                abbr : 'Str',
-                display : 'Strike'
+                abbr : 'str',
+                display : '&lt;strike&gt;_$&lt;/strike&gt;'
             },
             'Hidden Comment' : {
                 tag : "<!-- _$ -->",
-                abbr : 'Hdn',
-                display : 'Hidden Comment'
+                abbr : 'hdn',
+                display : '&lt;!-- _$ --&gt;'
             },
             'Category' : {
                 tag : "[[Category:_$]]",
-                abbr : 'Hdn',
-                display : 'Hidden Comment'
+                abbr : 'cat',
+                display : '[[Category:]]'
             },
             'Redirect' : {
                 tag : "#REDIRECT[[_$]]",
-                abbr : 'Hdn',
-                display : 'Hidden Comment'
-            },
-            'Redirect' : {
-                tag : "#REDIRECT[[_$]]",
-                abbr : 'Hdn',
-                display : 'Hidden Comment'
+                abbr : 'red',
+                display : 'REDIRECT[[]]'
             },
             'Reference' : {
                 tag : "<ref>_$</ref>",
-                abbr : 'Ref',
-                display : 'Reference'
+                abbr : 'ref',
+                display : '&lt;ref&gt;&lt;/ref&gt;'
             },
             'Include Only' : {
                 tag : "<includeonly>_$</includeonly>",
-                abbr : 'Incl',
-                display : 'Include Only'
+                abbr : 'incl',
+                display : '&lt;includeonly&gt;&lt;/includeonly&gt;'
             },
             'No Include' : {
                 tag : "<noinclude>_$</noinclude>",
-                abbr : 'NIncl',
-                display : 'No Include'
+                abbr : 'noinc',
+                display : '&lt;noinclude&gt;&lt;/noinclude&gt;'
             },
         },
         'Special Characters' : {
@@ -158,8 +153,8 @@ define('config', ['pubsub'], function(pubsub){
         'Features And Media' : {
             'Gallery' : {
                 tag : "<gallery>Image:_$|Caption</gallery>",
-                abbr : 'Gal',
-                display : 'Gallery'
+                abbr : 'gal',
+                display : '&lt;gallery&gt;Image:|Caption&lt;/gallery&gt;'
             },
         }
     };
@@ -170,7 +165,7 @@ define('config', ['pubsub'], function(pubsub){
                 for(var tag in tags[tagGr]){
                     if(tags[tagGr].hasOwnProperty(tag) && typeof tags[tagGr][tag] === 'object'){
                         if (tags[tagGr][tag].abbr === abbr){
-                            return tags[tagGr][tag].tag;
+                            return tags[tagGr][tag];
                         }
                     }
                 }
@@ -213,9 +208,9 @@ define('config', ['pubsub'], function(pubsub){
                 Object.keys(tags[tagGr]).forEach(function(tag){ //i tu foricz
                     if(tags[tagGr].hasOwnProperty(tag)){
                         html+='<li>';
-                        html+='<input type="checkbox" class="tagChb" name="'+tag+'">';
-                        html+='<label for="'+tag+'">'+tag+'</label>';
-                        html+='<a href="">'+tags[tagGr][tag].tag+'</a>';
+                        html+='<input type="checkbox" class="tagChb" name="'+tags[tagGr][tag].abbr+'">';
+                        html+='<label for="'+tags[tagGr][tag].abbr+'">'+tag+'</label>';
+                        html+='<a href="">'+tags[tagGr][tag].display+'</a>';
                         html+='</li>';
                     }
                 });
@@ -269,11 +264,16 @@ define('config', ['pubsub'], function(pubsub){
     function setActiveTags(activeChb){
         for(var i = 0; i < activeChb.length; i++){
             curChb = activeChb[i];
-            activeTags[curChb.name] = {
-                tag : curChb.parentElement.getElementsByTagName('a')[0].innerText,
-                abbr : '' //ToDo! -> extracting abbreviation from the tags dictionary
-            };
+            activeTags[curChb.name] = findTag(curChb.name);
         }
+    }
+
+    function storeTags(tags){
+        localStorage.setItem('tags', JSON.stringify(tags));
+    }
+
+    function getTagsFromStorage(){
+        return JSON.parse(localStorage.getItem('tags'));
     }
 
     function onUpdate(){
@@ -284,11 +284,13 @@ define('config', ['pubsub'], function(pubsub){
                 configObj.warning.classList.remove('off');
             }
             //ask the animated menu to update itself
+            storeTags(activeTags);
             pubsub.publish('menuUpdate', activeTags);
         }
         else{
             configObj.warning.classList.add('on');
         }
+        activeTags = {};
     }
 
     function validate(activeTags){
@@ -311,6 +313,10 @@ define('config', ['pubsub'], function(pubsub){
             wrapper = document.getElementsByClassName('tagListWrapper')[0];
         wrapper.innerHTML += configHTML;
         configObj = new ConfigObj(wrapper);
+        if(localStorage['tags']){
+            activeTags = getTagsFromStorage();
+            onUpdate();
+        }
         activateToggle();
         initializeLinks();
         watchForSubmit();

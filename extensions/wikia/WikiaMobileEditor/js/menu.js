@@ -32,45 +32,49 @@ define('menu', ['pubsub'], function(pubsub){
 
     function waitForTouch(menus){
         menus.forEach(function(menu){
-            menu.master.addEventListener('touchstart', function(){
-                //event.preventDefault();
-                onTouchStart(menu);
+            menu.master.addEventListener('touchstart', function aa(evt){
+                onTouchStart(evt, menu);
             });
         });
     }
 
-    function onTouchStart(menu){
+    function onTouchStart(event, menu){
+        event.preventDefault();
         if(menu.other.primary.expanded || menu.other.secondary.expanded){
             switchMenu(menu.other);
         }
         else{
             switchMenu(menu);
-            waitForTouchMove(menu);
-            waitForTouchEnd(menu);
+            addListeners(menu);
         }
     }
 
-    function waitForTouchMove(menu){
-        menu.wrapper.addEventListener('touchmove', function(evt){
-            var x = evt.changedTouches[0].clientX - getMasterPosition(menu).x,
-                y = getMasterPosition(menu).y - evt.changedTouches[0].clientY;
-            //event.preventDefault();
+    function addListeners(menu){
+        menu.wrapper.addEventListener('touchmove', function tm(event){
+            var x = event.changedTouches[0].clientX - getMasterPosition(menu).x,
+                y = getMasterPosition(menu).y - event.changedTouches[0].clientY;
+            event.preventDefault();
             if(Math.sqrt(x*x + y*y) > minMove){
                 onMoveOut(menu, event.changedTouches[0]);
             }
         });
-    }
 
-    function waitForTouchEnd(menu){
-        menu.wrapper.addEventListener('touchend', function(event){
-            //event.preventDefault();
+        menu.wrapper.addEventListener('touchend', function te(event){
+            event.preventDefault();
             onTouchEnd(menu, event.changedTouches[0]);
+            this.removeEventListener('touchend', te);
+            this.removeEventListener('touchmove');
         });
     }
 
     function onTouchEnd(menu, changedTouch){
-        var activeElement = getActiveElement(menu, changedTouch.clientX, changedTouch.clientY);
-        if(activeElement)action(activeElement);
+        var x = event.changedTouches[0].clientX - getMasterPosition(menu).x,
+            y = getMasterPosition(menu).y - event.changedTouches[0].clientY,
+            r = Math.sqrt(x*x+y*y);
+        if(r > rMin && r < rMax){
+            var activeElement = getActiveElement(menu, changedTouch.clientX, changedTouch.clientY);
+            if(activeElement)action(activeElement);
+        }
         reset(menu);
     }
 
@@ -163,6 +167,8 @@ define('menu', ['pubsub'], function(pubsub){
         }
         fold(menu.primary);
         fold(menu.secondary);
+        menu.wrapper.removeEventListener('touchend');
+        menu.wrapper.removeEventListener('touchmove');
     }
 
     function expand(ul){
@@ -179,9 +185,9 @@ define('menu', ['pubsub'], function(pubsub){
         attachTags(activeTags);
     });
 
-    function updateButton (li, tag, tagTitle){
-        li.setAttribute('data-tag', tag);
-        li.getElementsByTagName('span')[0].innerText = tagTitle;
+    function updateButton (li, tag){
+        li.setAttribute('data-tag', tag.tag);
+        li.getElementsByTagName('span')[0].innerText = tag.abbr;
     }
 
     function getLi(index){
@@ -204,7 +210,7 @@ define('menu', ['pubsub'], function(pubsub){
         for(var key in tags){
             currentLi = getLi(i);
             if(tags.hasOwnProperty(key) && currentLi){
-                updateButton(currentLi, tags[key].tag, key);
+                updateButton(currentLi, tags[key]);
                 i++;
             }
         }
