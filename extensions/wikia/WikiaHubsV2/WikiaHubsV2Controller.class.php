@@ -59,9 +59,8 @@ class WikiaHubsV2Controller extends WikiaController {
 		$this->response->addAsset('wikiahubs_v2_scss');
 		$this->response->addAsset('wikiahubs_v2_scss_mobile');
 		
-		//TODO: remove after releasing WikiaHubsV2 and removing WikiaHubs extension
 		$this->wg->Out->addJsConfigVars([
-			'isWikiaHubsV2Page' => true,
+			'wgWikiaHubsVerticalId' => $this->verticalId
 		]);
 
 		if (F::app()->checkSkin('wikiamobile')) {
