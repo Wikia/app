@@ -1008,6 +1008,7 @@ $config['videopagetool_js'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'//resources/jquery.ui/jquery.ui.core.js',
 		'//resources/jquery.ui/jquery.ui.datepicker.js',
 		'//extensions/wikia/VideoPageTool/js/models/datepicker.js',
 		'//extensions/wikia/VideoPageTool/js/views/datepicker.js',

@@ -1,9 +1,8 @@
-function noop() { console.log('noop'); }
 define('vpt.views.datepicker', [
 		'vpt.models.datepicker'
 ], function(DatepickerCollection) {
 
-	function Datepicker(params) {
+	function DatepickerView(params) {
 		this.$el = $(params.el);
 		this.collection = new DatepickerCollection({
 				language: 'en',
@@ -15,32 +14,61 @@ define('vpt.views.datepicker', [
 		this.init();
 	}
 
-	Datepicker.prototype = {
+	DatepickerView.prototype = {
 		init: function() {
-			this.render();
-
 			// TODO: not a fan of how this callback chain requires a specific order, change this
 			this.collection.models = this.collection
 				.collectData( this.currDate.getFullYear(), this.currDate.getMonth() + 1 )
 				.complete(function() {
 						console.log(arguments);
 				});
+			this.render();
 		},
 		render: function() {
-			this.$el.text('')
-				.datepicker({
+			this.$el.text('').datepicker({
 						showOtherMonths: true,
 						selectOtherMoths: true,
 						dateFormat: '@',
-						beforeShowDay: noop,
-						onChangeMonthYear: noop,
-						onSelect: noop
+						beforeShowDay: $.proxy(this.beforeShowDay, this),
+						onChangeMonthYear: $.proxy(function(year, month) {
+								return this.collection.collectData(year, month);
+						}),
+						onSelect: $.proxy(this.onSelect, this)
 				});
-
 			return this;
 		},
-		constructor: Datepicker
+		beforeShowDay: function(date) {
+			var tdClassName,
+					tooltip,
+					dayStatus;
+
+			tdClassName = '';
+			tooltip = '';
+			dayStatus = this.collection.getStatus(date);
+
+			window.wgMarketingToolboxConstants = {};
+			window.wgMarketingToolboxConstants.NOT_PUBLISHED = 2;
+			window.wgMarketingToolboxConstants.PUBLISHED = 1;
+			dayStatus = 1;
+			if (dayStatus) {
+				if (dayStatus === window.wgMarketingToolboxConstants.NOT_PUBLISHED) {
+					tdClassName = 'inProg';
+				} else if (dayStatus === window.wgMarketingToolboxConstants.PUBLISHED) {
+					tdClassName = 'published';
+				}
+				// tooltip = this.tooltipMessages[dayStatus];
+			}
+
+			return [true, tdClassName, tooltip];
+		},
+		onChangeMonthYear: function(year, month) {
+			return this.collection.collectData(year, month);
+		},
+		onSelect: function() {
+			alert('clicked');
+		},
+		constructor: DatepickerView
 	};
 
-	return Datepicker;
+	return DatepickerView;
 });

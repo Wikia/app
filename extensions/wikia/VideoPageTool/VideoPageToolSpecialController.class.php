@@ -14,8 +14,6 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
-		$this->response->addAsset('videopagetool_js');
-		$this->response->addAsset('videopagetool_css');
 
 	}
 
@@ -32,6 +30,8 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string msg - result message
 	 */
 	public function index() {
+		$this->response->addAsset('videopagetool_js');
+		$this->response->addAsset('videopagetool_css');
 		if ( !$this->getUser()->isAllowed( 'videopagetool' ) ) {
 			$this->displayRestrictionError();
 			return false;

@@ -19,5 +19,7 @@ define('vpt.views.index', [
 });
 
 require(['vpt.views.index'], function(IndexView) {
-		var index = new IndexView();
+		$(function() {
+			var index = new IndexView();
+		});
 });

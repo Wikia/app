@@ -41,13 +41,13 @@ define('vpt.models.datepicker', [], function() {
 				maxDate.setMonth(maxDate.getMonth() + 1);
 				endTimestamp = maxDate.getTime() / 1000 - maxDate.getTimezoneOffset() * 60;
 				minDate = new Date(Math.min.apply(null, dates));
-				beginTimestamp = minDate.getTime() / 1000 - minDate.getTimezoneOffset() *
-					60;
+				beginTimestamp = minDate.getTime() / 1000 - minDate.getTimezoneOffset() * 60;
 
 				for (i = 0; i < datesLength; i++) {
 					this.setCollected(dates[i].getFullYear(), dates[i].getMonth() + 1);
 				}
 
+				console.log(this);
 				return $.nirvana.sendRequest({
 					controller: this.controller,
 					method: this.method,
@@ -58,6 +58,7 @@ define('vpt.models.datepicker', [], function() {
 						'endTimestamp': endTimestamp
 					},
 					callback: $.proxy(function(response) {
+							console.log(response, 'ken');
 						$.extend(this.specialDates, response['calendarData']);
 					}, this)
 				});
