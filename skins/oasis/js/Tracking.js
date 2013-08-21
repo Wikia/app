@@ -416,7 +416,7 @@ jQuery(function($){
 					category: category,
 					label: 'category-module-thumb-' + el.data('pos')
 				});
-			}).on('mousedown', '.category-articles-text', function(e){
+			}).on('mousedown', '.category-articles-text a', function(e){
 				var el = $(e.currentTarget);
 				track({
 					browserEvent: e,
