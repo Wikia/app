@@ -144,7 +144,7 @@ var clearAuthenticateCache = function(roomId, name) {
 }
 
 WMBridge.prototype.authenticateUser = function(roomId, name, key, handshake, success, error) {
-        var cacheKey = name + "_" + roomId;  
+        var cacheKey = name + "_" + roomId;
         if(authenticateUserCache[cacheKey] && authenticateUserCache[cacheKey].key == key ) {
                 return success(authenticateUserCache[cacheKey].data);
         }
@@ -156,17 +156,17 @@ WMBridge.prototype.authenticateUser = function(roomId, name, key, handshake, suc
         });
         
         logger.debug(requestUrl);
-	var ts = Math.round((new Date()).getTime() / 1000);                                                                
-	monitoring.incrEventCounter('authenticateUserRequest');
-        requestMW('GET', roomId, {}, requestUrl, handshake, function(data){
-		authenticateUserCache[cacheKey] = {
-			data: data, 
-			key: key, 
-			ts: ts
-		};
-                success(data);
-        }, error);
-}       
+		var ts = Math.round((new Date()).getTime() / 1000);
+		monitoring.incrEventCounter('authenticateUserRequest');
+		requestMW( 'GET', roomId, {}, requestUrl, handshake, function(data) {
+			authenticateUserCache[cacheKey] = {
+				data: data,
+				key: key,
+				ts: ts
+			};
+			success(data);
+		}, error );
+}
 
 setInterval(function() {
 	var ts = Math.round((new Date()).getTime() / 1000);
