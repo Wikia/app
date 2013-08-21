@@ -146,12 +146,10 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 						slot = googletag.defineSlot(slotPath, sizes, slotnameGpt);
 						slot.addService(googletag.pubads());
 
+						// Per-slot targeting keys: pos, loc
 						slot.setTargeting('pos', slotname);
 						if (slotItem.loc) {
 							slot.setTargeting('loc', slotItem.loc);
-						}
-						if (slotItem.dcopt) {
-							slot.setTargeting('dcopt', slotItem.dcopt);
 						}
 
 						gptSlots[slotname] = slot;
