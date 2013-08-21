@@ -1018,8 +1018,17 @@ $config['videopagetool_js'] = array(
 
 $config['videopagetool_css'] = array(
 	'skin' => array( 'oasis' ),
+	'type' => AssetsManager::TYPE_CSS,
+	'assets' => array(
+		'//resources/jquery.ui/themes/default/jquery.ui.datepicker.css'
+	)
+);
+
+$config['videopagetool_scss'] = array(
+	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => array(
+		'//skins/oasis/css/modules/CorporateDatepicker.scss',
 		'//extensions/wikia/VideoPageTool/css/VideoPageTool.scss',
 		// TODO: Don't actually source from MarketingToolbox
 		'//extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox.scss',

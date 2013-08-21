@@ -6,7 +6,7 @@ define('vpt.views.datepicker', [
 		this.$el = $(params.el);
 		this.collection = new DatepickerCollection({
 				language: 'en',
-				controller: 'VideoPageTool',
+				controller: 'VideoPageToolSpecial',
 				method: 'getCalendarInfo'
 		});
 
@@ -29,10 +29,13 @@ define('vpt.views.datepicker', [
 						showOtherMonths: true,
 						selectOtherMoths: true,
 						dateFormat: '@',
+						nextText: '',
+						prevText: '',
 						beforeShowDay: $.proxy(this.beforeShowDay, this),
 						onChangeMonthYear: $.proxy(function(year, month) {
+								console.log(this);
 								return this.collection.collectData(year, month);
-						}),
+						}, this),
 						onSelect: $.proxy(this.onSelect, this)
 				});
 			return this;
