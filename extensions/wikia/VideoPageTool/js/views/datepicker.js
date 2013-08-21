@@ -10,13 +10,21 @@ define('vpt.views.datepicker', [
 				controller: 'VideoPageTool',
 				method: 'getCalendarInfo'
 		});
+
+		this.currDate = new Date();
 		this.init();
 	}
 
 	Datepicker.prototype = {
 		init: function() {
 			this.render();
-			console.log(this.collection.collectData());
+
+			// TODO: not a fan of how this callback chain requires a specific order, change this
+			this.collection.models = this.collection
+				.collectData( this.currDate.getFullYear(), this.currDate.getMonth() + 1 )
+				.complete(function() {
+						console.log(arguments);
+				});
 		},
 		render: function() {
 			this.$el.text('')
