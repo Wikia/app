@@ -51,7 +51,7 @@
 			),
 			array(
 				'type' => 'custom',
-				'output' => wfMessage('userlogin-get-account', array($specialSignupLink, ++$tabIndex))->inContentLanguage()->parse(),
+				'output' => wfMessage('userlogin-get-account', array($specialSignupLink, ++$tabIndex))->inContentLanguage()->text(),
 				'class' => 'get-account',
 				'tabindex' => ++$tabIndex,
 			)

@@ -550,7 +550,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$valid = $user->getPasswordValidity( $this->newpassword );
 				if ( $valid !== true ) {
 					$this->result = 'error';
-					$this->msg = wfMessage( $valid, $this->wg->MinimalPasswordLength )->parse();
+					$this->msg = wfMessage( $valid, $this->wg->MinimalPasswordLength )->text();
 					return;
 				}
 
