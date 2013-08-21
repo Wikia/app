@@ -1002,7 +1002,6 @@ $config['VET_js'] = array(
 /**
  * @name VideoPageTool
  * @description Assets for the VideoPageTool, same styles as SpecialMarketingToolbox
- * 
  */
 
 $config['videopagetool_js'] = array(
@@ -1020,6 +1019,8 @@ $config['videopagetool_css'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => array(
+		'//extensions/wikia/VideoPageTool/css/VideoPageTool.scss',
+		// TODO: Don't actually source from MarketingToolbox
 		'//extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox.scss',
 		'//extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Dashboard.scss',
 		'//extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Footer.scss',
@@ -1389,11 +1390,4 @@ $config['special_css_js'] = array(
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/libraries/mustache/jquery.mustache.js'
 	)
-);
-
-$config['videopagetool_css'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => array(
-		'//extensions/wikia/VideoPageTool/css/VideoPageTool.scss',
-	),
 );
