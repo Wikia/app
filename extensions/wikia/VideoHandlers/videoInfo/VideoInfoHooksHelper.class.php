@@ -301,7 +301,7 @@ class VideoInfoHooksHelper {
 		$app = F::app();
 		$req = $app->wg->Request;
 
-		if ( ($req->getVal('controller', '') == 'VideoEmbedTool') or ($req->getVal('method') == 'insertVideo') )  {
+		if ( ($req->getVal('controller', '') == 'VideoEmbedTool') || ($req->getVal('method') == 'insertVideo') )  {
 			return true;
 		}
 
