@@ -423,11 +423,12 @@
 			}
 
 			if ( wgOasisResponsive ) {
-				var editContentWidth = $('#EditPageMainContainer').width(),
-					pageLayoutWidth = $('#WikiaPage').width(),
-					widthArticlePadding = 20;
+				var pageWidth = $('#WikiaPage').width(),
+					widthArticlePadding = 20,
+					railWidth = 310;
 
-				width = (config.isWidePage) ? pageLayoutWidth : editContentWidth;
+
+				width = (config.isWidePage) ? pageWidth : pageWidth - railWidth;
 				width -= widthArticlePadding;
 
 				// For Webkit browsers, when the responsive layout kicks in
@@ -439,7 +440,7 @@
 				// PSS: fuck scrollbars.
 				// TODO: we should have access to breakpoints and such in JavaScript
 				// as variables instead of hardcoded values.
-				if ( isWebkit && pageLayoutWidth >= 1370 ) {
+				if ( isWebkit && pageWidth >= 1370 ) {
 					width -= this.scrollbarWidth;
 				}
 			}
