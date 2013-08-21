@@ -303,6 +303,8 @@ class GameGuidesController extends WikiaController {
 		if( is_array( $name ) ) {
 			$name = $name[2];
 
+			$this->cacheMeFor( 1/96 ); //15 minutes
+
 			$this->response->setVal( 'url',
 				self::ASSETS_PATH . '/' . $name
 			);
