@@ -1490,7 +1490,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				$javascriptInitializationFunction = 'WikiaMosaicSliderMasterControl.init';
 			} else {
 				$sliderResources = array(
-					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.css',
+					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.scss',
 					'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.js'
 				);
 				$javascriptInitializationFunction = 'WikiaPhotoGallerySlider.init';
