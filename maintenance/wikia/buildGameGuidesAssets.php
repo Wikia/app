@@ -11,24 +11,28 @@ require_once( "commandLine.inc" );
 
 $ret = new StdClass();
 
+//Path where to save assets
 $path = $IP . '/extensions/wikia/GameGuides/assets/';
 
+
+if ( !is_dir( $path ) ) {
+	mkdir($path);
+} else {
+	//If dir exists remove all files inside
+	array_map( 'unlink', glob( $path . '*' ) );
+}
+
+//Get assets
 $resources = F::app()->sendRequest( 'AssetsManager', 'getMultiTypePackage', array(
 	'scripts' => 'gameguides_js',
 	'styles' => '//extensions/wikia/GameGuides/css/GameGuides.scss'
 ) );
 
+$file = $path . md5( $resources ) . '.json';
+
 $ret->styles = $resources->getVal( 'styles', '' );
 $ret->scripts = $resources->getVal( 'scripts', '' );
 
-if ( !is_dir( $path ) ) {
-	mkdir($path);
-}
+file_put_contents( $file, json_encode( $ret ) );
 
-$cb = (int) file_get_contents( $path . 'GameGuidesCacheBuster' ) + 1;
-
-file_put_contents( $path . 'GameGuidesAssets.json', json_encode( $ret ) );
-file_put_contents( $path . 'GameGuidesCacheBuster', $cb );
-
-echo 'Assets saved - ' . realpath($path) . "\n";
-echo 'Cache Buster - ' . $cb . "\n";
+echo 'Assets saved - ' . realpath( $file ) . "\n";
