@@ -2067,9 +2067,13 @@ class Wikia {
 	public static function onParserAfterTidy( &$parser, &$text ) {
 		wfProfileIn( __METHOD__ );
 
-		// Wrap tables so we can properly control their overflow
-		$text = preg_replace( '/<table\b[^>]*>/i', '<div class="table-wrapper">$0', $text );
-		$text = preg_replace( '/<\/table>/i', '$0</div>', $text );
+		// Only for Oasis
+		// TODO: make this work for WikiaMobile
+		if ( F::app()->checkSkin( 'oasis' ) ) {
+			// Wrap tables so we can properly control their overflow
+			$text = preg_replace( '/<table\b[^>]*>/i', '<div class="table-wrapper">$0', $text );
+			$text = preg_replace( '/<\/table>/i', '$0</div>', $text );
+		}
 
 		wfProfileOut( __METHOD__ );
 
