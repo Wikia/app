@@ -57,8 +57,15 @@ class PageHeaderController extends WikiaController {
 			!$wgTitle->isNamespaceProtected($wgUser) ) {
 			// force login to edit page that is not protected
 			$this->content_actions['edit'] = $this->content_actions['viewsource'];
-			$this->content_actions['edit']['text'] = wfMsg('edit');
+			$this->content_actions['edit']['text'] = wfMessage('edit')->text();
 			unset($this->content_actions['viewsource']);
+		}
+
+		// If cascade protected, show viewsource button - BugId:VE-89
+		if ( isset( $this->content_actions['edit'] ) && $wgTitle->isCascadeProtected() ) {
+			$this->content_actions['viewsource'] = $this->content_actions['edit'];
+			$this->content_actions['viewsource']['text'] = wfMessage('viewsource')->text();
+			unset($this->content_actions['edit']);
 		}
 
 		// PvX's rate (RT #76386)
