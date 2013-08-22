@@ -540,18 +540,18 @@
 											options: [
 												{
 													value: 'current',
-													name: 'current width'
+													name: $.msg('wikia-editor-preview-current-width')
 												},
 												{
 													value: 'min',
-													name: 'minimum width'
+													name: $.msg('wikia-editor-preview-min-width')
 												},
 												{
 													value: 'max',
-													name: 'maximum width'
+													name: $.msg('wikia-editor-preview-max-width')
 												}
 											],
-											toolTipMessage: 'Lorem ipsum',
+											toolTipMessage: $.msg('wikia-editor-preview-type-tooltip'),
 											toolTipIcon: '',
 											toolTipIconAlt: 'tooltip'
 										},
