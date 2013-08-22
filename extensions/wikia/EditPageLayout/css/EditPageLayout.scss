@@ -303,8 +303,16 @@ body {
 		top: 50%;
 	}
 	&.preview {
+		& > h1 {
+			float: left;
+			margin-right: 20px;
+		}
+		& > .WikiaForm {
+			float: left;
+		}
 		.modalContent {
 			border-color: transparent;
+			clear: both;
 			padding: 0;
 			.ArticlePreview {
 				border: 1px solid $color-page-border;

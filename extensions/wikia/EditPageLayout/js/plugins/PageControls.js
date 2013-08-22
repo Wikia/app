@@ -557,7 +557,7 @@
 										},
 										html = Mustache.render(template, params);
 
-									$(html).insertBefore(contentNode.parent());
+									$(html).insertBefore(contentNode.parent().parent());
 
 									// fire an event once preview is rendered
 									$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
