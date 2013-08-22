@@ -56,6 +56,12 @@ $label-padding: 10px 10px 10px 0px;
 	}
 
 	// Page level styles
+	.submits {
+		@include clearfix;
+		float: right;
+		padding: 10px 0 30px;
+	}
+
 	.publish {
 		border-top: 1px solid $color-page-border-subtle;
 		clear: both;

@@ -28,5 +28,10 @@
 
 	<? endfor; ?>
 
+	<div class="submits">
+		<button><?= wfMessage( 'videopagetool-button-save' )->text() ?></button>
+		<button class="secondary"><?= wfMessage( 'videopagetool-button-clear' )->text() ?></button>
+	</div>
+
 </form>
 
