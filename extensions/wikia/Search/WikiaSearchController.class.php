@@ -82,6 +82,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setPageTitle( $searchConfig );
 		$this->setResponseValuesFromConfig( $searchConfig );
 		$this->setVarnishCacheTime( self::VARNISH_CACHE_TIME );
+
+		// PLA-593 DEBUG ONLY
+		$this->setVal( 'currentUrl', $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
 	}
 
 	/**

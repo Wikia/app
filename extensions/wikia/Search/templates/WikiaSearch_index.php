@@ -1,3 +1,5 @@
+
+<!-- PLA-593: <?= htmlspecialchars($currentUrl) ?> -->
 <section class="Search this-wiki WikiaGrid clearfix">
 	<form class="WikiaSearch" id="search-v2-form" action="<?=$specialSearchUrl;?>">
 		<div class="SearchInput">
