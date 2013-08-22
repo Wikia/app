@@ -68,7 +68,7 @@ var requestMW = function(method, roomId, postdata, query, handshake, callback, e
 				}
 
 				if( typeof handshake.headers['x-forwarded-for'] !== 'undefined' ) {
-					headers['x-forwarded-for'] = handshake.headers['x-forwarded-for'];
+					headers['x-chat-forwarded-for'] = handshake.headers['x-forwarded-for'];
 				}
 			}
 
