@@ -68,10 +68,10 @@ class AnyclipApiWrapper extends ApiWrapper {
 			return $this->videoName;
 		}
 
-		return self::getVideoName( $this->interfaceObj );
+		return self::getClipName( $this->interfaceObj );
 	}
 
-	public static function getVideoName( $content ) {
+	public static function getClipName( $content ) {
 		$videoName = '';
 		if ( !empty($content['title']['name']) ) {
 			$videoName = $content['title']['name'];
@@ -134,12 +134,7 @@ class AnyclipApiWrapper extends ApiWrapper {
 			throw new WikiaException( wfMsg("videohandler-error-restricted-video") );
 		}
 
-		if ( !isset($metadata['genres']) ) {
-			$metadata['genres'] = $this->getGenres();
-		}
-		if ( !isset($metadata['actors']) ) {
-			$metadata['actors'] = $this->getActors();
-		}
+		$metadata = array();
 		if ( !isset($metadata['uniqueName']) ) {
 			$metadata['uniqueName'] = $this->getUniqueName();
 		}
@@ -198,9 +193,9 @@ class AnyclipApiWrapper extends ApiWrapper {
 		return 'Movies';
 	}
 
-	protected function getVideoKeywords() {
-		if ( !empty($this->metadata['keywords']) ) {
-			return $this->metadata['keywords'];
+	protected function getVideoName() {
+		if ( !empty($this->metadata['name']) ) {
+			return $this->metadata['name'];
 		}
 
 		if ( !empty($this->interfaceObj['title']['name']) ) {
@@ -242,20 +237,34 @@ class AnyclipApiWrapper extends ApiWrapper {
 		return 0;
 	}
 
-	protected function isAgeGate() {
-		if ( !empty($this->metadata['ageGate']) ) {
-			return $this->metadata['ageGate'];
+	protected function getAgeRequired() {
+		if ( !empty( $this->metadata['ageRequired'] ) ) {
+			return $this->metadata['ageRequired'];
 		}
 
-		if ( !empty($this->interfaceObj['restrictions']) ) {
-			return 1;
+		// set default age required
+		if ( !empty( $this->interfaceObj['restrictions'] ) ) {
+			return 18;
 		}
+
 		return 0;
 	}
 
-	protected function getVideoTags() {
-		if ( !empty($this->metadata['tags']) ) {
-			return $this->metadata['tags'];
+	protected function isAgeGate() {
+		if ( !empty( $this->metadata['ageGate'] ) ) {
+			return true;
+		}
+
+		if ( !empty($this->interfaceObj['restrictions']) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected function getVideoKeywords() {
+		if ( !empty($this->metadata['keywords']) ) {
+			return $this->metadata['keywords'];
 		}
 
 		if ( !empty($this->interfaceObj['tags']) ) {
@@ -326,6 +335,18 @@ class AnyclipApiWrapper extends ApiWrapper {
 		}
 
 		return '';
+	}
+
+	/**
+	 * get video type
+	 * @return string
+	 */
+	protected function getVideoType() {
+		if ( !empty( $this->metadata['type'] ) ) {
+			return $this->metadata['type'];
+		}
+
+		return 'Clip';
 	}
 
 }

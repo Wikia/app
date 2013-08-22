@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * @author Kenneth Kouot <kenneth@wikia-inc.com
  * @description Job that accepts a user id as an argument and disables that user account
  * @usage cat spamAccountIds.txt | while read line; do SERVER_ID=177 php maintenance/wikia/disableUserAccount.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php "$line"; done
@@ -22,10 +22,9 @@ fwrite( $stdOut, "Attempting to disable user account: " . $userId. "\n" );
 
 $user = User::newFromId($userId);
 
-$title = Title::newFromText('EditAccount', NS_SPECIAL);
 $statusMessage = NULL;
 
-$result = EditAccount::closeAccount( 'Spamming', $user, $title, $statusMessage);
+$result = EditAccount::closeAccount( $user, 'Spamming', $statusMessage );
 fwrite( $stdOut, "Status: " . ( $result ? 'SUCCESS' : 'FAIL' ) . "\nMessage: " . $statusMessage . "\n" );
 fwrite( $stdOut, "__________________________________________________________\n" );
 fclose( $stdOut );
