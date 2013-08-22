@@ -44,7 +44,7 @@ class NodeApiClient {
 	 * @param roomUsers - for private chats: an array of users who are in the room. TODO: Document what formatat these users are in (user ids? db_keys?)
 	 */
 	static public function getDefaultRoomId(&$roomName, &$roomTopic, $roomType = "open", $roomUsers = array() ){
-		global $wgCityId, $wgSitename, $wgServer, $wgArticlePath, $wgMemc;
+		global $wgCityId, $wgSitename, $wgServer, $wgArticlePath;
 		wfProfileIn(__METHOD__);
 
 		if(empty($roomData)){ // TODO: FIXME: What is this testing? Isn't it ALWAYS empty? - SWC 20110905

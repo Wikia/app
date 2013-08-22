@@ -6,7 +6,7 @@ class ChatController extends WikiaController {
 	const CHAT_AVATAR_DIMENSION = 41;
 
 	public function executeIndex() {
-		global $wgUser, $wgDevelEnvironment, $wgRequest, $wgCityId, $wgFavicon, $wgOut, $wgHooks;
+		global $wgUser, $wgFavicon, $wgOut, $wgHooks, $wgSitename;
 		wfProfileIn( __METHOD__ );
 
 		// String replacement logic taken from includes/Skin.php
@@ -25,8 +25,10 @@ class ChatController extends WikiaController {
 		// Find the chat for this wiki (or create it, if it isn't there yet).
 		$roomName = $roomTopic = "";
 		$this->roomId = (int) NodeApiClient::getDefaultRoomId($roomName, $roomTopic);
-		$this->roomName = $roomName;
-		$this->roomTopic = $roomTopic;
+
+		// we overwrite here data from redis since it causes a bug DAR-1532
+		$this->roomName = $wgSitename;
+		$this->roomTopic = wfMsg('chat-default-topic', $wgSitename);
 
  		$this->chatkey = Chat::echoCookies();
 		// Set the hostname of the node server that the page will connect to.
