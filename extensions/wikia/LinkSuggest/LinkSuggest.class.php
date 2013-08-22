@@ -183,7 +183,6 @@ class LinkSuggest {
 						LEFT JOIN querycache ON qc_title = page_title AND qc_type = 'BrokenRedirects'
 						WHERE  {$pageTitlePrefilter} {$pageNamespaceClause} (LOWER(page_title) LIKE '{$queryLower}%')
 							AND qc_type IS NULL
-						ORDER BY page_title
 						LIMIT ".($wgLinkSuggestLimit * 3); // we fetch 3 times more results to leave out redirects to the same page
 
 			$res = $db->query($sql, __METHOD__);
