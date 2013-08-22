@@ -231,6 +231,9 @@ $edit-box-color: mix($color-page, #000, 95%);
 
 		.css-editor {
 			margin-right: 0;
+			.css-editor-wrapper {
+				margin-right: 0;
+			}
 		}
 
 		.css-side-bar {
