@@ -2,7 +2,6 @@
 
 class OoyalaVideoHandler extends VideoHandler {
 
-	const OOYALA_PLAYER_ID = '52bc289bedc847e3aa8eb2b347644f68';
 	const OOYALA_PLAYER_ID_AGEGATE = '5b38887edf80466cae0b5edc918b27e8';
 
 	protected $apiName = 'OoyalaApiWrapper';
@@ -44,14 +43,4 @@ EOT;
 		);
 	}
 
-	protected function getVideoPlayerId() {
-		$metadata = $this->getMetadata( true );
-		if ( !empty($metadata['playerId']) ) {
-			return $metadata['playerId'];
-		} else if ( $this->isAgeGate() ) {
-			return self::OOYALA_PLAYER_ID_AGEGATE;
-		}
-
-		return self::OOYALA_PLAYER_ID;
-	}
 }
