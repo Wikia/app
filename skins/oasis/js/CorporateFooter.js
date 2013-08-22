@@ -5,7 +5,7 @@ require(['JSMessages', 'wikia.cookies', 'wikia.tracker', 'jquery', 'wikia.querys
 
 	var linksWrapper = $('.CorporateFooter ul').first();
 
-	if(linksWrapper.exists()){
+	if($().isTouchscreen() && linksWrapper.exists()){
 		msg.get('Oasis-mobile-switch').then(function(){
 			var mobileSwitch = $('<li><a href="#">' + msg('oasis-mobile-site') + '</a></li>');
 
@@ -13,14 +13,18 @@ require(['JSMessages', 'wikia.cookies', 'wikia.tracker', 'jquery', 'wikia.querys
 				ev.preventDefault();
 				ev.stopPropagation();
 
+				//This is being depracted remove when Varnish will be updated to use useskin
+				cookies.set('mobilefullsite', null);//invalidate cookie
+
 				cookies.set('useskin', 'wikiamobile');
 
 				tracker.track({
 					category: 'corporate-footer',
-					action: Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON,
+					action: tracker.ACTIONS.CLICK_LINK_BUTTON,
 					label: 'mobile-switch',
 					trackingMethod: 'both'
 				});
+
 
 				Querystring().setVal('useskin', 'wikiamobile').addCb().goTo();
 			});
