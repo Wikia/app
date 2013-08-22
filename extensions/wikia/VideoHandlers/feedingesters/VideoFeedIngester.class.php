@@ -69,6 +69,8 @@ abstract class VideoFeedIngester {
 
 	/**
 	 * generate the metadata we consider interesting for this video
+	 * Note: metadata is array instead of object because it's stored in the database as a serialized array,
+	 *       and serialized objects would have more version issues.
 	 * @param array $data - Video data
 	 * @param $errorMsg - Store any error we encounter
 	 * @return array|int - An associative array of meta data or zero on error
@@ -1004,6 +1006,7 @@ abstract class VideoFeedIngester {
 	 * get CLDR code (return the original value if code not found)
 	 * @param string $value
 	 * @param string $type [language|country]
+	 * @param boolean $code
 	 * @return string $value
 	 */
 	public function getCldrCode( $value, $type = 'language', $code = true ) {

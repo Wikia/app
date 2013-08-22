@@ -150,12 +150,12 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 		$categories[] = 'IGN';
 
-		if ( !empty( $data['gameContent'] ) ) {
-			$categories[] = 'IGN_games';
-			$categories[] = 'Games';
-		} else {
+		if ( empty( $data['gameContent'] ) ) {
 			$categories[] = 'IGN_entertainment';
 			$categories[] = 'Entertainment';
+		} else {
+			$categories[] = 'IGN_games';
+			$categories[] = 'Games';
 		}
 
 		wfProfileOut( __METHOD__ );

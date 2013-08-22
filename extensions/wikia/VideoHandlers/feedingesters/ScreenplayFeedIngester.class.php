@@ -196,8 +196,6 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 	protected function generateName( $data ) {
 		wfProfileIn( __METHOD__ );
 
-		$name = '';
-
 		$altDescription = '';
 		$altDescription .= !empty( $data['category'] ) ? $data['category'] . ' ' : '';
 		$altDescription .= !empty( $data['type'] ) ? $data['type'] . ' ' : '';
