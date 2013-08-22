@@ -2,18 +2,36 @@ define('wikia.uifactory.drawer', function drawer(){
 	'use strict';
 
 	var drawer = function(side) {
-		this.element = $('#drawer-' + side);
+		var getDrawerBackground = function() {
+			var drawerBackground = $('#drawerBackground');
+			if (!drawerBackground.exists()) {
+				drawerBackground = $('<div />').addClass('drawerBackground').attr('id', 'drawerBackground');
+				$('body').append(drawerBackground);
+			}
+			drawerBackground.click($.proxy(function() {
+				if (that.isOpen()) {
+					that.close();
+				}
+			}, that));
+			return drawerBackground;
+		};
 
 		this.open = function() {
 			this.element.addClass('open');
+			this.drawerBackground.addClass('visible');
 		}
 		this.close = function() {
 			this.element.removeClass('open');
+			this.drawerBackground.removeClass('visible');
 		}
 
 		this.isOpen = function() {
 			return this.element.hasClass('open');
 		}
+
+		var that = this;
+		this.element = $('#drawer-' + side);
+		this.drawerBackground = getDrawerBackground();
 	};
 
 	function init(side) {
