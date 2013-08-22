@@ -307,6 +307,7 @@
 				if ( tracking.ga && gaTrackEvent ) {
 					gaTrackEvent.apply( null, gaqArgs );
 				}
+				
 				if ( tracking.internal ) {
 					internalTrack( eventName, data );
 				}
