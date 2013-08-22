@@ -21,12 +21,12 @@ define('vpt.views.index', [
 			//TODO: should value always be a 2 char lang code?
 			var value = evt.target.value;
 			// don't render if placeholder is chosen (for first time)
-			if (value === "placeholder") {
+			if (value === 'placeholder') {
 				return false;
 			}
 
 			// disable placeholder from being selected after a region has been selected
-			this.$regionSelect.find('option[value="placeholder"]').attr('disabled', true);
+			this.$regionSelect.find('option[value=\'placeholder\']').attr('disabled', true);
 
 			// delete stale datepickers
 			if (this.datepicker) {
