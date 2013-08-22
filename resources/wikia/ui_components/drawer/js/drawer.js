@@ -10,6 +10,10 @@ define('wikia.uifactory.drawer', function drawer(){
 		this.close = function() {
 			this.element.removeClass('open');
 		}
+
+		this.isOpen = function() {
+			return this.element.hasClass('open');
+		}
 	};
 
 	function init(side) {
