@@ -183,10 +183,6 @@ class SkinChooser {
 			" <span class='toggletext'><label for=\"$tname\">$ttext</label>$trailer</span></div>\n";
 	}
 
-	private static function canForceSkin($skin){
-		return in_array( $skin, [ "monobook", "oasis", "wikia", "wikiamobile", "wikiaapp" ] );
-	}
-
 	/**
 	 * Select proper skin and theme based on user preferences / default settings
 	 */
@@ -202,23 +198,12 @@ class SkinChooser {
 		$user = $context->getUser();
 
 		/**
-		 * Check cookies to force skin
-		 * @author Student, requested by Student
-		 */
-		if ( isset( $_COOKIE['useskin'] ) && self::canForceSkin( $_COOKIE['useskin'] ) ){
-			$skin = Skin::newFromKey( $_COOKIE['useskin'] );
-			wfProfileOut(__METHOD__);
-			return false;
-		}
-
-		/**
 		 * check headers sent by varnish, if X-Skin is send force skin
 		 * @author eloy, requested by artur
 		 */
 		if( function_exists( 'apache_request_headers' ) ) {
 			$headers = apache_request_headers();
-
-			if( isset( $headers[ "X-Skin"] ) && self::canForceSkin(  $headers[ "X-Skin"] ) ) {
+			if( isset( $headers[ "X-Skin" ] ) && in_array( $headers[ "X-Skin" ], array( "monobook", "oasis", "wikia", "wikiamobile", "wikiaapp" ) ) ) {
 				$skin = Skin::newFromKey( $headers[ "X-Skin" ] );
 				wfProfileOut(__METHOD__);
 				return false;
