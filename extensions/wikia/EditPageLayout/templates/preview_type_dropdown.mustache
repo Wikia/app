@@ -1,0 +1,12 @@
+<form class="WikiaForm">
+	<div class="input-group">
+		<select id="previewTypeDropdown">
+			{{#options}}
+				<option value="{{value}}">{{name}}</option>
+			{{/options}}
+		</select>
+		<span class="tooltip-icon" rel="tooltip" title="{{toolTipMessage}}">
+			<img src="{{toolTipIcon}}" alt={{toolTipIconAlt}} />
+		</span>
+	</div>
+</form>

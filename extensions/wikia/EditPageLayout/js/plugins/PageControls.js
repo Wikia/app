@@ -530,9 +530,45 @@
 									html(data.summary);
 							}
 
-							// fire an event once preview is rendered
-							$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
-						});
+							//adding type dropdown to preview
+							if ( wgOasisResponsive ) {
+								Wikia.getMultiTypePackage({
+									mustache: 'extensions/wikia/EditPageLayout/templates/preview_type_dropdown.mustache'
+								}).done(function(responese) {
+									var template = responese.mustache[0],
+										params = {
+											options: [
+												{
+													value: 'current',
+													name: 'current width'
+												},
+												{
+													value: 'min',
+													name: 'minimum width'
+												},
+												{
+													value: 'max',
+													name: 'maximum width'
+												}
+											],
+											toolTipMessage: 'Lorem ipsum',
+											toolTipIcon: '',
+											toolTipIconAlt: 'tooltip'
+										},
+										html = Mustache.render(template, params);
+
+									$(html).insertBefore(contentNode.parent());
+
+									// fire an event once preview is rendered
+									$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
+								});
+							} else {
+								// fire an event once preview is rendered
+								$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
+							}
+
+						}
+					);
 				});
 			});
 		},
