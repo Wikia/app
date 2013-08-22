@@ -238,7 +238,6 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 			// Save page level and slot level params for easier ad delivery debugging
 			for (attrName in dataAttribs[slotname]) {
 				if (dataAttribs[slotname].hasOwnProperty(attrName)) {
-					console.log(slotDiv, attrName, dataAttribs[slotname][attrName]);
 					slotDiv.setAttribute(attrName, dataAttribs[slotname][attrName]);
 				}
 			}
