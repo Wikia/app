@@ -412,6 +412,7 @@ class AdEngine2Controller extends WikiaController {
 		$vars['wgShowAds'] = self::areAdsShowableOnPage();
 
 		$vars['wgAdDriverUseFullGpt'] = $req->getBool('usefullgpt', (bool) $wg->AdDriverUseFullGpt);
+		$vars['wgAdDriverUseNewGptZones'] = $req->getBool('usenewgptzones', (bool) $wg->AdDriverUseNewGptZones);
 		$vars['wgAdVideoTargeting'] = $req->getBool('videotargeting', (bool) $wg->AdVideoTargeting);
 		$vars['wgAdDriverStartLiftiumOnLoad'] = $req->getBool('liftiumonload', (bool) $wg->LiftiumOnLoad);
 
