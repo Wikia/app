@@ -54,7 +54,7 @@ var SuggestModalWikiaHubsV2 = {
 						article_url: articleUrl,
 						reason: reason,
 						page_title: window.wgPageName,
-						vertical_id: wgWikiaHubsVerticalId
+						vertical_id: window.wgWikiaHubsVerticalId
 					}, e);
 
  					$().log('suggestArticle modal submit');
