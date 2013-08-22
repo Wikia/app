@@ -94,22 +94,24 @@ a {
 	padding: $page-padding;
 }
 
+//fixes for fluid content
 #wkMainCnt{
-	//fixes for fluid content
 	.tvetnone {
 		width: 100% !important;
 		text-align: center;
     }
+}
 
+#mw-content-text {
 	//don't let iframes,objects be wider than a screen (videos)
-	iframe[width], object {
+	> iframe[width], > object {
 		width: 75% !important;
 		height: auto;
 		margin: 0 auto;
 		display: block;
 	}
-	//end of fluiding thead content
 }
+//end of fluiding thead content
 
 blockquote {
 	border-left: 1px solid $border-color;
