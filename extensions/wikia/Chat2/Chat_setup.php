@@ -192,17 +192,12 @@ function ChatAjax() {
 		/*
 		 ChatAjax requests come from chat nodejs server, and that's not the user ip
 		 so if the server passed the correct user ip, we try to make use of it and
-		 record it here so $wgRequest->getIP return this address.
-		 Similar thing is done with XFF - original value of this header (passed to nodejs server) is passed
-		 in X-Chat-Forwarded-For.
+		 record it here so $wgRequest->getIP return this address
 		 */
 		$userIP = $wgRequest->getVal('userIP');
 		if ( ( $userIP !== false ) && IP::isIPAddress( $userIP ) ){
 			ChatAjax::$chatUserIP = $userIP;
-		}
-		$chatXFF = $wgRequest->getHeader( 'X-Chat-Forwarded-For' );
-		if ( !empty( $chatXFF ) ) {
-			$wgRequest->setHeader( 'X-FORWARDED-FOR', $chatXFF );
+
 		}
 
 		$data = ChatAjax::$method();
