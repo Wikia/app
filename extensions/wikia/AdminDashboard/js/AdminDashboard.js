@@ -72,7 +72,21 @@ var AdminDashboard = {
 			AdminDashboard.ui.selectTab(el);
 			AdminDashboard.ui.showSection(el.data('section'));
 		});
+
+        $("a[data-tracking]").on("click", function(e) {
+            AdminDashboard.track(Wikia.Tracker.ACTIONS.CLICK, $(e.target).data('tracking'), null, {}, e);
+        });
 	},
+    track: function (action, label, value, params, event) {
+        Wikia.Tracker.track({
+            category: 'admin-dashboard',
+            action: action,
+            browserEvent: event,
+            label: label,
+            trackingMethod: 'both',
+            value: value
+        }, params);
+    },
 	handleControlClick: function(e) {
 		var modal = $(this).data('modal');
 		if (modal) {
