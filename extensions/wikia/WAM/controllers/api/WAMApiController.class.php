@@ -79,8 +79,7 @@ class WAMApiController extends WikiaApiController {
 						$wikiService = new WikiService();
 					}
 					foreach ($wamIndex['wam_index'] as &$row) {
-						$row['admins'] = $wikiService->getWikiAdmins($row['wiki_id'], $options['avatarSize']);
-						$row['admins'] = $this->getMostActiveAdmins($row['admins'], $row['wiki_id']);
+						$row['admins'] = $wikiService->getMostActiveAdmins($row['wiki_id'], $options['avatarSize']);
 						$row['admins'] = $this->prepareAdmins($row['admins'], self::DEFAULT_WIKI_ADMINS_LIMIT);
 					}
 				}
@@ -199,28 +198,6 @@ class WAMApiController extends WikiaApiController {
 		if( count($admins) > $limit ) {
 			$admins = array_slice( $admins, 0, $limit );
 		}
-		return $admins;
-	}
-
-	private function getMostActiveAdmins($admins, $wikiId) {
-		$edits = $ids = [];
-		$ids = array_map(function($item) { return $item['userId']; }, $admins);
-
-		$adminsEdits = DataMartService::getUserEditsByWikiId( $ids, $wikiId);
-
-		foreach($admins as $key => $admin) {
-			$userEdits = 0;
-			if(empty($admin['userId'])) {
-				unset($admins[$key]);
-				continue;
-			}
-			if(isset($adminsEdits[$admin['userId']])) {
-				$userEdits = $this->countAdminEdits($adminsEdits[$admin['userId']]);
-			}
-			$edits[$key] = $admins[$key]['edits'] = $userEdits;
-		}
-
-		array_multisort($edits, SORT_DESC, $admins);
 		return $admins;
 	}
 

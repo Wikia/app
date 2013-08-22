@@ -367,6 +367,35 @@ class WikiService extends WikiaModel {
 		);
 	}
 
+	/**
+	 * @param int wiki id
+	 * @param int avatar size
+	 *
+	 * @return array most active admins from last week ordered desc
+	 */
+	public function getMostActiveAdmins($wikiId, $avatarSize) {
+		$edits = $ids = [];
+		$admins = $this->getWikiAdmins($wikiId, $avatarSize);
+		$ids = array_map(function($item) { return $item['userId']; }, $admins);
+
+		$adminsEdits = DataMartService::getUserEditsByWikiId( $ids, $wikiId);
+
+		foreach($admins as $key => $admin) {
+			$userEdits = 0;
+			if(empty($admin['userId'])) {
+				unset($admins[$key]);
+				continue;
+			}
+			if(isset($adminsEdits[$admin['userId']])) {
+				$userEdits = $this->countAdminEdits($adminsEdits[$admin['userId']]);
+			}
+			$edits[$key] = $admins[$key]['edits'] = $userEdits;
+		}
+
+		array_multisort($edits, SORT_DESC, $admins);
+		return $admins;
+	}
+
 	public function getWikiDescription( Array $wikiIds, $imgWidth = 250, $imgHeight = null ) {
 
 		$wikiDetails = $this->getWikiDetails( $wikiIds );
