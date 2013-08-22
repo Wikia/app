@@ -7,6 +7,7 @@ namespace Wikia\UI;
  *
  * @author Andrzej Łukaszewski <nandy@wikia-inc.com>
  * @author Bartosz Bentkowski <bartosz.bentkowski@wikia-inc.com>
+ * @author mech <mech@wikia-inc.com>
  */
 class Factory {
 
@@ -34,10 +35,15 @@ class Factory {
 	const MEMCACHE_EXPIRATION = 900; // 15 minutes
 
 	/**
-	 * @desc Version passed to memcache key
+	 * @desc css asset type
 	 */
-	const MEMCACHE_VERSION = '1.0';
-	
+	const ASSET_TYPE_CSS = 'css';
+
+	/**
+	 * @desc js asset type
+	 */
+	const ASSET_TYPE_JS = 'js';
+
 	/**
 	 * @var \Wikia\UI\Factory
 	 */
@@ -103,8 +109,11 @@ class Factory {
 	 * @throws \Exception
 	 */
 	public function loadFileContent( $path ) {
+		if ( !is_readable( $path ) ) {
+			throw new \Exception( 'Cannot read file (' . $path . ').' );
+		}
 		if ( false === $fileContent = file_get_contents( $path ) ) {
-			throw new \Exception( 'File not found (' . $path . ').' );
+			throw new \Exception( 'Unexpected error while reading file (' . $path . ').' );
 		} else {
 			return $fileContent;
 		}
@@ -131,7 +140,7 @@ class Factory {
 		}
 	}
 
-	public function loadComponentConfigAsArray( $componentName ) {
+	protected function loadComponentConfigAsArray( $componentName ) {
 		wfProfileIn( __METHOD__ );
 
 		$configFile = $this->getComponentConfigFileFullPath( $componentName );
@@ -143,26 +152,103 @@ class Factory {
 	}
 
 	/**
+	 * @desc Return memcache version
+	 * As the ui components may change after each release, we would like to invalidate the cache immediately
+	 *
+	 * @return int cache version
+	 */
+	public function getCacheVersion() {
+		global $wgCacheBuster;
+		return $wgCacheBuster;
+	}
+
+	/**
+	 * @desc Gets the raw template contents for a given component type
+	 *
+	 * @param $component Component
+	 * @param $type String component type
+	 * @return String
+	 */
+	public function loadComponentTemplateContent( $component, $type ) {
+		wfProfileIn( __METHOD__ );
+		$memcKey = wfMemcKey( __CLASS__, 'component', $component->getName(), $type, $this->getCacheVersion() );
+		$content = \WikiaDataAccess::cache(
+			$memcKey,
+			self::MEMCACHE_EXPIRATION,
+			function() use ( $component, $type ) {
+				$component->setType( $type );
+				return $this->loadFileContent( $component->getTemplatePath() );
+			}
+		);
+		wfProfileOut( __METHOD__ );
+		return $content;
+	}
+
+	/**
+	 * Simple AssetsManager::getURL wrapper, mainly because AM returns type via reference, and this is not
+	 * supported by PHPUnit, so we use this function, which is possible to mock.
+	 * Return an array containing a list of URLs and asset type (Factory::ASSET_TYPE_*)
+	 */
+	protected function getAssetsURL( $assets ) {
+		$type = false;
+		$sources = \AssetsManager::getInstance()->getURL( $assets, $type );
+		switch( $type ) {
+			case \AssetsManager::TYPE_CSS:
+			case \AssetsManager::TYPE_SCSS:
+				$type = self::ASSET_TYPE_CSS;
+				break;
+			case \AssetsManager::TYPE_JS:
+				$type = self::ASSET_TYPE_JS;
+				break;
+			default:
+				$type = false;
+				$sources = [];
+		}
+		return [ $sources, $type ];
+	}
+
+	/**
+	 * Generate component assets url. The result is a dictionary containing ASSET_TYPE_JS and ASSET_TYPE_CSS keys,
+	 * each of those pointing to array of urls.
+	 *
+	 * @param $component Component
+	 * @return array assets links
+	 */
+	public function getComponentAssetsUrls( $component ) {
+		wfProfileIn( __METHOD__ );
+		$result =  [ self::ASSET_TYPE_JS => [], self::ASSET_TYPE_CSS => [] ];
+		foreach( $component->getAssets() as $assets ) {
+			foreach( $assets as $asset ) {
+				list( $sources, $type ) = $this->getAssetsURL( $asset );
+				if ( !empty( $sources ) ) {
+					$result[ $type ] = array_merge( $result[ $type ], $sources );
+				}
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		return $result;
+	}
+
+	/**
 	 * @desc Gets configuration file contents, decodes it to array and returns it; uses caching layer
 	 * 
 	 * @param String $componentName
 	 * @return string
 	 */
-	protected function loadComponentConfig( $componentName ) {
+	public function loadComponentConfig( $componentName ) {
 		wfProfileIn( __METHOD__ );
 
-		$memcKey = wfMemcKey( __CLASS__, 'component', $componentName, static::MEMCACHE_VERSION );
+		$memcKey = wfMemcKey( __CLASS__, 'component', $componentName, $this->getCacheVersion() );
 		$data = \WikiaDataAccess::cache(
 			$memcKey,
 			self::MEMCACHE_EXPIRATION,
 			function() use ( $componentName ) {
 				$configInArray = $this->loadComponentConfigAsArray( $componentName );
 
-				wfProfileOut( __METHOD__ );
 				return $configInArray;
 			}
 		);
-
+		wfProfileOut( __METHOD__ );
 		return $data;
 	}
 
@@ -200,11 +286,12 @@ class Factory {
 	 * @desc Loads JS/CSS dependencies, creates and configurates an instance of \Wikia\UI\Component object which is returned
 	 *
 	 * @param string|array $componentNames
+	 * @param bool $loadAssets flag indicating if the component assets should be loaded - needed when we want to render components
 	 *
 	 * @throws \Wikia\UI\DataException
 	 * @return array
 	 */
-	public function init( $componentNames ) {
+	public function init( $componentNames, $loadAssets = true ) {
 		if ( !is_array($componentNames ) ) {
 			$componentNames = (array)$componentNames;
 		}
@@ -217,7 +304,7 @@ class Factory {
 			$componentConfig = $this->loadComponentConfig( $name );
 
 			// if there are some components, put them in the $assets
-			$assetsTypes = [ 'js', 'css' ];
+			$assetsTypes = [ self::ASSET_TYPE_JS, self::ASSET_TYPE_CSS ];
 			foreach( $assetsTypes as $assetType ) {
 				$dependenciesCfg = !empty( $componentConfig['dependencies'][$assetType] ) ? $componentConfig['dependencies'][$assetType] : [];
 				if( is_array( $dependenciesCfg ) ) {
@@ -230,17 +317,22 @@ class Factory {
 
 			// init component, put config inside and set base template path
 			$component = $this->getComponentInstance();
+			$component->setName( $name );
 			if ( !empty($componentConfig['templateVars']) ) {
 				$component->setTemplateVarsConfig( $componentConfig['templateVars'] );
 			}
 			$component->setBaseTemplatePath( $this->getComponentsBaseTemplatePath( $name ) );
 
+			$component->setAssets( $componentConfig['dependencies'] );
+
 			$components[] = $component;
 		}
 
-		// add merged assets
-		foreach ( array_unique( $assets ) as $asset ) {
-			$this->addAsset( $asset );
+		if ( $loadAssets ) {
+			// add merged assets
+			foreach ( array_unique( $assets ) as $asset ) {
+				$this->addAsset( $asset );
+			}
 		}
 
 		// return components
@@ -268,4 +360,3 @@ class Factory {
 		throw new \Exception( 'Unserializing instances of this class is forbidden.' );
 	}
 }
-
