@@ -396,6 +396,12 @@ class WikiService extends WikiaModel {
 		return $admins;
 	}
 
+	private function countAdminEdits($edits) {
+		$editsCount = 0;
+		$editsCount += (int)$edits['edits'] + (int)$edits['deletes'] + (int)$edits['undeletes'];
+		return $editsCount;
+	}
+
 	public function getWikiDescription( Array $wikiIds, $imgWidth = 250, $imgHeight = null ) {
 
 		$wikiDetails = $this->getWikiDetails( $wikiIds );

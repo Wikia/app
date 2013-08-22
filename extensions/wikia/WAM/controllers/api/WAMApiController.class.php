@@ -200,10 +200,4 @@ class WAMApiController extends WikiaApiController {
 		}
 		return $admins;
 	}
-
-	private function countAdminEdits($edits) {
-		$editsCount = 0;
-		$editsCount += (int)$edits['edits'] + (int)$edits['deletes'] + (int)$edits['undeletes'];
-		return $editsCount;
-	}
 }
