@@ -76,11 +76,19 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	public function edit() {
 		$date = $this->getVal( 'date', date( 'Y-M-d' ) );
 		$region = $this->getVal( 'region', 'en' );
-		$section = $this->getVal( 'section', 'featured' );
+		$section = $this->getVal( 'section', VideoPageToolHelper::DEFAULT_SECTION );
+
+		$helper = new VideoPageToolHelper();
+
+		// validate section - set to DEFAULT_SECTION if not exists
+		$sections = $helper->getSections();
+		if ( !array_key_exists( $section, $sections ) ) {
+			$section = VideoPageToolHelper::DEFAULT_SECTION;
+		}
 
 		$videos = array();
 
-		$this->leftMenuItems = VideoPageToolHelper::getLeftMenuItems( $section );
+		$this->leftMenuItems = $helper->getLeftMenuItems( $section );
 		$this->moduleView = $this->app->renderView( 'VideoPageToolSpecial', $section, array( 'videos' => $videos ) );
 
 		$this->section = $section;

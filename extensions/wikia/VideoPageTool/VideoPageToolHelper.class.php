@@ -1,22 +1,38 @@
 <?php
 
-class VideoPageToolHelper {
-	public static function getLeftMenuItems( $selected ) {
-		$sections = array( 'featured', 'trending', 'fan' );
+class VideoPageToolHelper extends WikiaModel {
 
-		if( !in_array( $selected, $sections ) ) {
-			// optional: add an error message here, otherwise just send them to "featured"
-			$selected = $sections[0];
-		}
+	const DEFAULT_SECTION = 'featured';
+
+	/**
+	 * get list of sections
+	 * @return array $sections
+	 */
+	public function getSections() {
+		$sections = array(
+			'featured' => wfMessage( 'videopagetool-section-featured' )->plain(),
+			'trending' => wfMessage( 'videopagetool-section-trending' )->plain(),
+			'fan' => wfMessage( 'videopagetool-section-fan' )->plain(),
+		);
+
+		return $sections;
+	}
+
+	/**
+	 * get left menu items
+	 * @param string $selected [featured/trending/fan]
+	 * @return array $leftMenuItems
+	 */
+	public function getLeftMenuItems( $selected ) {
+		$sections = $this->getSections();
 
 		$leftMenuItems = array();
-
-		foreach( $sections as $section ) {
+		foreach( $sections as $key => $value ) {
 			$leftMenuItems[] = array(
-				'title' => wfMessage( 'videopagetool-section-' . $section ),
-				'anchor' => wfMessage( 'videopagetool-section-' . $section ),
+				'title' => $value,
+				'anchor' => $value,
 				'href' => '#', // TODO: get the URL
-				'selected' => ($selected == $section),
+				'selected' => ($selected == $key),
 			);
 		}
 
