@@ -34,15 +34,15 @@ class Factory {
 	 */
 	const MEMCACHE_EXPIRATION = 900; // 15 minutes
 
-    /**
-     * @desc css asset type
-     */
-    const ASSET_TYPE_CSS = 'css';
+	/**
+	 * @desc css asset type
+	 */
+	const ASSET_TYPE_CSS = 'css';
 
-    /**
-     * @desc js asset type
-     */
-    const ASSET_TYPE_JS = 'js';
+	/**
+	 * @desc js asset type
+	 */
+	const ASSET_TYPE_JS = 'js';
 
 	/**
 	 * @var \Wikia\UI\Factory
@@ -109,8 +109,11 @@ class Factory {
 	 * @throws \Exception
 	 */
 	public function loadFileContent( $path ) {
-		if ( false === $fileContent = @file_get_contents( $path ) ) {
-			throw new \Exception( 'File not found (' . $path . ').' );
+		if ( !is_readable( $path ) ) {
+			throw new \Exception( 'Cannot read file (' . $path . ').' );
+		}
+		if ( false === $fileContent = file_get_contents( $path ) ) {
+			throw new \Exception( 'Unexpected error while reading file (' . $path . ').' );
 		} else {
 			return $fileContent;
 		}
@@ -158,6 +161,7 @@ class Factory {
 		global $wgCacheBuster;
 		return $wgCacheBuster;
 	}
+
 	/**
 	 * @desc Gets the raw template contents for a given component type
 	 *
@@ -180,28 +184,28 @@ class Factory {
 		return $content;
 	}
 
-    /**
-     * Simple AssetsManager::getURL wrapper, mainly because AM returns type via reference, and this is not
-     * supported by PHPUnit, so we use this function, which is possible to mock.
-     * Return an array containing a list of URLs and asset type (Factory::ASSET_TYPE_*)
-     */
-    protected function getAssetsURL( $assets ) {
-        $type = false;
-        $sources = \AssetsManager::getInstance()->getURL( $assets, $type );
-        switch( $type ) {
-            case \AssetsManager::TYPE_CSS:
-            case \AssetsManager::TYPE_SCSS:
-                $type = self::ASSET_TYPE_CSS;
-                break;
-            case \AssetsManager::TYPE_JS:
-                $type = self::ASSET_TYPE_JS;
-                break;
-            default:
-                $type = false;
-                $sources = [];
-        }
-        return [ $sources, $type ];
-    }
+	/**
+	 * Simple AssetsManager::getURL wrapper, mainly because AM returns type via reference, and this is not
+	 * supported by PHPUnit, so we use this function, which is possible to mock.
+	 * Return an array containing a list of URLs and asset type (Factory::ASSET_TYPE_*)
+	 */
+	protected function getAssetsURL( $assets ) {
+		$type = false;
+		$sources = \AssetsManager::getInstance()->getURL( $assets, $type );
+		switch( $type ) {
+			case \AssetsManager::TYPE_CSS:
+			case \AssetsManager::TYPE_SCSS:
+				$type = self::ASSET_TYPE_CSS;
+				break;
+			case \AssetsManager::TYPE_JS:
+				$type = self::ASSET_TYPE_JS;
+				break;
+			default:
+				$type = false;
+				$sources = [];
+		}
+		return [ $sources, $type ];
+	}
 
 	/**
 	 * Generate component assets url. The result is a dictionary containing ASSET_TYPE_JS and ASSET_TYPE_CSS keys,
