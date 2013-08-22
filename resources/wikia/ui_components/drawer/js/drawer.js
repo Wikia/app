@@ -5,7 +5,7 @@ define('wikia.uifactory.drawer', function drawer(){
 		var getDrawerBackground = function() {
 			var drawerBackground = $('#drawerBackground');
 			if (!drawerBackground.exists()) {
-				drawerBackground = $('<div />').addClass('drawerBackground').attr('id', 'drawerBackground');
+				drawerBackground = $('<div id="drawerBackground" class="drawerBackground" />');
 				$('body').append(drawerBackground);
 			}
 			drawerBackground.click($.proxy(function() {
