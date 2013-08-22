@@ -47,9 +47,14 @@ function apiDispatcher(req, res, reqData, successCallback, errorCallback){
 			// TODO: FIXME: ADD SOME TOKEN-VERIFICATION. This would make sure that only the MediaWiki app is creating rooms (it can check permissions, make sure the extraDataString is good, etc.).
 			// TODO: FIXME: ADD SOME TOKEN-VERIFICATION. This would make sure that only the MediaWiki app is creating rooms (it can check permissions, make sure the extraDataString is good, etc.).
 
-			api_getDefaultRoomId(reqData.query.wgCityId, reqData.query.defaultRoomName,
-								 reqData.query.defaultRoomTopic, reqData.query.extraDataString, reqData.query.roomType, reqData.query.roomUsers,
-								 successCallback, errorCallback);
+			api_getDefaultRoomId(
+				reqData.query.wgCityId,
+				reqData.query.extraDataString,
+				reqData.query.roomType,
+				reqData.query.roomUsers,
+				successCallback,
+				errorCallback
+			);
 
 		} else if(func == "getcityidforroom"){
 			api_getCityIdForRoom(reqData.query.roomId, successCallback, errorCallback);
@@ -69,14 +74,12 @@ function apiDispatcher(req, res, reqData, successCallback, errorCallback){
 /**
  * Returns the id of the default chat for the given wiki.
  *
- * Expects the deafult room name and default topic name because those require MediaWiki-side i18n.
- *
  * If the chat doesn't exist, creates it.
  *
  * As per the API convention, passes json on success to the successCallback or an error message (a string) to
  * the errorCallback on error.
  */
-function api_getDefaultRoomId(cityId, defaultRoomName, defaultRoomTopic, extraDataString, type, serializedUsers, successCallback, errorCallback){
+function api_getDefaultRoomId(cityId, extraDataString, type, serializedUsers, successCallback, errorCallback){
 	// See if there are any rooms for this wiki and if there are, get the first one.
 	var roomId = "";
 
@@ -88,7 +91,7 @@ function api_getDefaultRoomId(cityId, defaultRoomName, defaultRoomTopic, extraDa
 	}
 
 	var createRoom = function() {
-		api_createChatRoom(cityId, defaultRoomName, defaultRoomTopic, extraDataString, type, users, successCallback, errorCallback);
+		api_createChatRoom(cityId, extraDataString, type, users, successCallback, errorCallback);
 	};
 	
 	storage.getListOfRooms(cityId, type, users,
@@ -98,14 +101,11 @@ function api_getDefaultRoomId(cityId, defaultRoomName, defaultRoomTopic, extraDa
 				roomId = roomIds[0];
 				storage.getRoomData(roomId, null,
 					function(roomData) {
-
 						var result = {
 							'type' : users,
-							'roomId': roomId,
-							'roomName': roomData.room_name,
-							'roomTopic': roomData.room_topic
+							'roomId': roomId
 						};
-						successCallback(result);					
+						successCallback(result);
 					},
 					createRoom
 				);
@@ -113,7 +113,7 @@ function api_getDefaultRoomId(cityId, defaultRoomName, defaultRoomTopic, extraDa
 			} else {
 				// No luck loading the room... create it.
 				createRoom();
-			}			
+			}
 		},
 		createRoom
 	);	
@@ -125,8 +125,8 @@ function api_getDefaultRoomId(cityId, defaultRoomName, defaultRoomTopic, extraDa
  * The 'extraDataString' is a json string of a hash of data which should be stored in the 'room'
  * object for use in the chat server later.
  */
-function api_createChatRoom(cityId, roomName, roomTopic, extraDataString, type, users, successCallback, errorCallback) {	
-	storage.createChatRoom(cityId, roomName, roomTopic, extraDataString, type, users, successCallback, errorCallback);
+function api_createChatRoom(cityId, extraDataString, type, users, successCallback, errorCallback) {
+	storage.createChatRoom(cityId, extraDataString, type, users, successCallback, errorCallback);
 	
 } // end api_createChatRoom()
 
@@ -138,6 +138,6 @@ function api_getCityIdForRoom(roomId, successCallback, errorCallback){
 		var result = {
 			'cityId': value
 		};
-		successCallback(result);		
+		successCallback(result);
 	}, errorCallback);
 } // end api_getCityIdForRoom()
