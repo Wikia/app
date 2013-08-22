@@ -11,7 +11,7 @@
 	<div class="grid-2">
 		<h2><?= wfMsg('marketing-toolbox-region-title'); ?></h2>
 		<select id="marketingToolboxRegionSelect">
-			<option class="placeholder-option"><?= wfMsg('marketing-toolbox-region-select-default-value'); ?></option>
+			<option value="placeholder"><?= wfMsg('marketing-toolbox-region-select-default-value'); ?></option>
 			<? asort($regions); ?>
 			<? foreach ($regions as $regionName): ?>
 				<option

@@ -1,13 +1,18 @@
+/**
+ * @description Generalized view for jQuery.ui Datepicker, based/refactored from SpecialMarketingToolbox implementation
+ * @dependencies Model datepicker
+ */
 define('vpt.views.datepicker', [
 		'vpt.models.datepicker'
 ], function(DatepickerCollection) {
+	'use strict';
 
 	function DatepickerView(params) {
 		this.$el = $(params.el);
 		this.collection = new DatepickerCollection({
-				language: 'en',
-				controller: 'VideoPageToolSpecial',
-				method: 'getCalendarInfo'
+				language: params.language,
+				controller: params.controller,
+				method: params.method
 		});
 
 		this.currDate = new Date();
@@ -18,13 +23,16 @@ define('vpt.views.datepicker', [
 		init: function() {
 			var that = this;
 			// TODO: not a fan of how this callback chain requires a specific order, change this
+			// Bootstrap the collection
 			this.collection
 				.collectData( this.currDate.getFullYear(), this.currDate.getMonth() + 1 )
+				// when collection returns, render the calendar
 				.success(function() {
 					that.render();
 				});
 		},
 		state: {
+			// private constants used to track state of a date entry
 			_notPublished: 2,
 			_published: 1
 		},
@@ -37,12 +45,15 @@ define('vpt.views.datepicker', [
 						prevText: '',
 						beforeShowDay: $.proxy(this.beforeShowDay, this),
 						onChangeMonthYear: $.proxy(function(year, month) {
-								console.log(this);
 								return this.collection.collectData(year, month);
 						}, this),
 						onSelect: $.proxy(this.onSelect, this)
 				});
 			return this;
+		},
+		destroy: function() {
+			this.$el.datepicker('destroy');
+			delete this.collection;
 		},
 		beforeShowDay: function(date) {
 			var tdClassName,
@@ -68,7 +79,8 @@ define('vpt.views.datepicker', [
 			return this.collection.collectData(year, month);
 		},
 		onSelect: function() {
-			alert('clicked');
+			// TODO: not implemented, build appropriate URI to programming page based on date and lang?
+			window.alert('clicked');
 		},
 		constructor: DatepickerView
 	};

@@ -1,3 +1,7 @@
+/**
+ * @description Generalized model for jQuery.ui Datepicker, based/refactored from SpecialMarketingToolbox implementation
+ * @dependencies Model datepicker
+ */
 define('vpt.models.datepicker', [], function() {
 
 	function Datepicker(params) {
@@ -47,7 +51,6 @@ define('vpt.models.datepicker', [], function() {
 					this.setCollected(dates[i].getFullYear(), dates[i].getMonth() + 1);
 				}
 
-				console.log(this);
 				return $.nirvana.sendRequest({
 					controller: this.controller,
 					method: this.method,
