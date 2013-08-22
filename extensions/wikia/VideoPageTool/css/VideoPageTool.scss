@@ -48,6 +48,13 @@ $label-padding: 10px 10px 10px 0px;
 		color: $color-alternate-text;
 	}
 
+	.count {
+		display: block;
+		float: left;
+		font-size: 18px;
+		margin: 15px 0 0 -35px;
+	}
+
 	// Page level styles
 	.publish {
 		border-top: 1px solid $color-page-border-subtle;
