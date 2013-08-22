@@ -303,12 +303,14 @@
 
 			if ( tracking.ad && gaTrackAdEvent ) {
 				gaTrackAdEvent.apply( null, gaqArgs );
-
-			} else if ( tracking.ga && gaTrackEvent ) {
-				gaTrackEvent.apply( null, gaqArgs );
-
-			} else if ( tracking.internal ) {
-				internalTrack( eventName, data );
+			} else {
+				if ( tracking.ga && gaTrackEvent ) {
+					gaTrackEvent.apply( null, gaqArgs );
+				}
+				
+				if ( tracking.internal ) {
+					internalTrack( eventName, data );
+				}
 			}
 
 			// Handle links which navigate away from the current page
