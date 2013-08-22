@@ -26,9 +26,14 @@ class SpecialRenameuser extends SpecialPage {
 	public function execute( $par ) {
 		wfProfileIn(__METHOD__);
 
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgStatsDBEnabled;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgStatsDBEnabled, $wgJsMimeType;
 
 		$this->setHeaders();
+
+		$oAssetsManager = AssetsManager::getInstance();
+
+		$sSrc = $oAssetsManager->getOneCommonURL( '/extensions/wikia/UserRenameTool/js/NewUsernameUrlEncoder.js' );
+        $wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$sSrc}\"></script>" );
 
 		if( wfReadOnly() || !$wgStatsDBEnabled ) {
 			$wgOut->readOnlyPage();
