@@ -35,6 +35,16 @@ class Factory {
 	const MEMCACHE_EXPIRATION = 900; // 15 minutes
 
 	/**
+	 * @desc css asset type
+	 */
+	const ASSET_TYPE_CSS = 'css';
+
+	/**
+	 * @desc js asset type
+	 */
+	const ASSET_TYPE_JS = 'js';
+
+	/**
 	 * @var \Wikia\UI\Factory
 	 */
 	private static $instance = null;
@@ -99,8 +109,11 @@ class Factory {
 	 * @throws \Exception
 	 */
 	public function loadFileContent( $path ) {
-		if ( false === $fileContent = @file_get_contents( $path ) ) {
-			throw new \Exception( 'File not found (' . $path . ').' );
+		if ( !is_readable( $path ) ) {
+			throw new \Exception( 'Cannot read file (' . $path . ').' );
+		}
+		if ( false === $fileContent = file_get_contents( $path ) ) {
+			throw new \Exception( 'Unexpected error while reading file (' . $path . ').' );
 		} else {
 			return $fileContent;
 		}
@@ -148,6 +161,7 @@ class Factory {
 		global $wgCacheBuster;
 		return $wgCacheBuster;
 	}
+
 	/**
 	 * @desc Gets the raw template contents for a given component type
 	 *
@@ -171,27 +185,43 @@ class Factory {
 	}
 
 	/**
-	 * Generate component assets url. The result is a dictionary containing 'js' and 'css' keys, each of those
-	 * pointing to array of urls;
+	 * Simple AssetsManager::getURL wrapper, mainly because AM returns type via reference, and this is not
+	 * supported by PHPUnit, so we use this function, which is possible to mock.
+	 * Return an array containing a list of URLs and asset type (Factory::ASSET_TYPE_*)
+	 */
+	protected function getAssetsURL( $assets ) {
+		$type = false;
+		$sources = \AssetsManager::getInstance()->getURL( $assets, $type );
+		switch( $type ) {
+			case \AssetsManager::TYPE_CSS:
+			case \AssetsManager::TYPE_SCSS:
+				$type = self::ASSET_TYPE_CSS;
+				break;
+			case \AssetsManager::TYPE_JS:
+				$type = self::ASSET_TYPE_JS;
+				break;
+			default:
+				$type = false;
+				$sources = [];
+		}
+		return [ $sources, $type ];
+	}
+
+	/**
+	 * Generate component assets url. The result is a dictionary containing ASSET_TYPE_JS and ASSET_TYPE_CSS keys,
+	 * each of those pointing to array of urls.
 	 *
 	 * @param $component Component
 	 * @return array assets links
 	 */
 	public function getComponentAssetsUrls( $component ) {
 		wfProfileIn( __METHOD__ );
-		$result =  [ 'js' => [], 'css' => [] ];
+		$result =  [ self::ASSET_TYPE_JS => [], self::ASSET_TYPE_CSS => [] ];
 		foreach( $component->getAssets() as $assets ) {
-			$type = false;
-			$sources = \AssetsManager::getInstance()->getURL( $assets, $type );
-			foreach($sources as $src){
-				switch ( $type ) {
-					case \AssetsManager::TYPE_CSS:
-					case \AssetsManager::TYPE_SCSS:
-						$result[ 'css' ] = $src;
-						break;
-					case \AssetsManager::TYPE_JS:
-						$result[ 'js' ] = $src;
-						break;
+			foreach( $assets as $asset ) {
+				list( $sources, $type ) = $this->getAssetsURL( $asset );
+				if ( !empty( $sources ) ) {
+					$result[ $type ] = array_merge( $result[ $type ], $sources );
 				}
 			}
 		}
@@ -274,7 +304,7 @@ class Factory {
 			$componentConfig = $this->loadComponentConfig( $name );
 
 			// if there are some components, put them in the $assets
-			$assetsTypes = [ 'js', 'css' ];
+			$assetsTypes = [ self::ASSET_TYPE_JS, self::ASSET_TYPE_CSS ];
 			foreach( $assetsTypes as $assetType ) {
 				$dependenciesCfg = !empty( $componentConfig['dependencies'][$assetType] ) ? $componentConfig['dependencies'][$assetType] : [];
 				if( is_array( $dependenciesCfg ) ) {
@@ -300,7 +330,6 @@ class Factory {
 
 		if ( $loadAssets ) {
 			// add merged assets
-			// @todo - I'm not sure we should add assets one-by-one - it this case AssetManager may not combine them
 			foreach ( array_unique( $assets ) as $asset ) {
 				$this->addAsset( $asset );
 			}

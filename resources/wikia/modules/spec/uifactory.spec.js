@@ -5,15 +5,21 @@ describe('UIFactory', function(){
 		async = new AsyncSpec(this),
 		nirvana = {},
 		deferred = jQuery.Deferred,
+		loader = function() {
+			return {
+				done: function(func) {
+					func();
+				}
+			}
+		},
 		uiComponent = function() {
-			var confing = {};
+			var config = {};
 			this.setComponentsConfig = function(templates, templateVarsConfig) {
-				confing.templates = templates;
-				confing.templateVarsConfig = templateVarsConfig;
+				config.templates = templates;
+				config.templateVarsConfig = templateVarsConfig;
 			}
 		},
 		componentConfig = {
-			status: 1,
 			components: [
 				{
 					templates: {
@@ -31,8 +37,8 @@ describe('UIFactory', function(){
 				}
 			]
 		},
-		error = 'Error from backend',
-		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, uiComponent);
+		error = 'NotFoundApiException: File not found (/usr/wikia/source/wiki/resources/wikia/ui_components/xxx/xxx_config.json).',
+		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, loader, uiComponent);
 
 	window.wgStyleVersion = 12345;
 
@@ -60,9 +66,10 @@ describe('UIFactory', function(){
 		}
 
 		var nirvana = nirvanaMock(componentConfig);
-		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, uiComponent);
+		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, loader, uiComponent);
 
 		uifactory.init(requestedComponent).done(function(component) {
+			dump(component)
 			expect(component instanceof uiComponent).toBe(true);
 
 			done();
@@ -85,7 +92,6 @@ describe('UIFactory', function(){
 
 		var requestedComponent = ['button1', 'button2'],
 			componentConfig = {
-				status: 1,
 				components: [
 					{
 						templates: {
@@ -118,7 +124,7 @@ describe('UIFactory', function(){
 				]
 			},
 			nirvana = nirvanaMock(componentConfig);
-		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, uiComponent);
+		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, loader, uiComponent);
 
 		uifactory.init(requestedComponent).done(function(components) {
 			expect(components.length).toBe(2);
@@ -132,23 +138,23 @@ describe('UIFactory', function(){
 	async.it('returns error form backend when requesting components', function(done) {
 		function nirvanaMock(resp) {
 			var nirvana = {
-				getJson: function(controller, method, params, callback) {
+				getJson: function(controller, method, params, callback, errorCallback) {
 					expect(params.components).toBe(requestedComponent);
 					expect(params.cb).toBe(window.wgStyleVersion);
 
-					callback(resp);
+					errorCallback(resp);
 				}
 			};
 
 			return nirvana;
 		}
 
-		var componentConfig = {
-			status: 0,
-			errorMessage: 'Error from backend'
+		var xhrObject = {
+			responseText: '{"error":"NotFoundApiException","message":"File not found (\/usr\/wikia\/source\/wiki\/resources\/wikia\/ui_components\/xxx\/xxx_config.json)."}'
 			},
-			nirvana = nirvanaMock(componentConfig);
-		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, uiComponent);
+			nirvana = nirvanaMock(xhrObject),
+			requestedComponent = 'xxx',
+		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, loader, uiComponent);
 
 		expect(function() {
 			uifactory.init(requestedComponent);
@@ -156,64 +162,4 @@ describe('UIFactory', function(){
 
 		done();
 	});
-
-	async.it('add assets to DOM', function(done) {
-		function nirvanaMock(resp) {
-			var nirvana = {
-				getJson: function(controller, method, params, callback) {
-					expect(params.components).toBe(requestedComponent);
-					expect(params.cb).toBe(window.wgStyleVersion);
-
-					callback(resp);
-				}
-			};
-
-			return nirvana;
-		}
-
-		var nirvana = nirvanaMock(componentConfig),
-			window = {
-				document: {
-					head: {
-						appendChild: function(prop) {
-							this[prop] = {}
-						}
-					},
-					body: {
-						appendChild: function(prop) {
-							this[prop] = {}
-						}
-					},
-					createDocumentFragment: function() {
-						return {
-							appendChild: function(prop) {
-								this[prop] = {}
-							}
-						}
-					},
-					createElement: function(object) {
-						return {};
-					}
-				},
-				wgStyleVersion: 12345
-			},
-		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, uiComponent);
-
-		spyOn(window.document.body, 'appendChild').andCallThrough();
-		spyOn(window.document.head, 'appendChild').andCallThrough();
-		spyOn(window.document, 'createDocumentFragment').andCallThrough();
-		spyOn(window.document, 'createElement').andCallThrough();
-
-		uifactory.init(requestedComponent).done(function() {
-
-			expect(window.document.createDocumentFragment.calls.length).toEqual(2);
-			expect(window.document.createElement.calls.length).toEqual(6);
-			expect(window.document.body.appendChild.calls.length).toEqual(1);
-			expect(window.document.head.appendChild.calls.length).toEqual(1);
-
-			done();
-		});
-	});
-
-
 });
