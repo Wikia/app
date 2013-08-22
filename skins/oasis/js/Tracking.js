@@ -409,7 +409,7 @@ jQuery(function($){
 			});
 		}
 		if ( $categoryModule.length ) {
-			$categoryModule.on('mousedown', '.category-articles-thumb', function(e){
+			$categoryModule.on('mousedown', '.category-articles-thumb a', function(e){
 				var el = $(e.currentTarget);
 				track({
 					browserEvent: e,
