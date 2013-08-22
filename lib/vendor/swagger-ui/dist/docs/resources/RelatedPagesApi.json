@@ -1,0 +1,89 @@
+{
+    "basePath": "http://muppet.wikia.com",
+    "swaggerVersion": "1.1",
+    "apiVersion": "0.2",
+    "resourcePath": "RelatedPagesApi",
+    "apis": [
+        {
+            "path": "/wikia.php?controller=RelatedPagesApi&method=getList",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "summary": "Get pages related to a given article ID",
+                    "nickname": "getList",
+                    "responseClass": "RelatedPages",
+                    "parameters": [
+                        {
+                            "name": "ids",
+                            "description": "Id of an article to fetch related pages for",
+                            "allowMultiple": false,
+                            "dataType": "Array",
+                            "paramType": "query",
+                            "required": true,
+                            "defaultValue": "50"
+                        },
+                        {
+                            "name": "limit",
+                            "description": "Limit the number of related pages to return",
+                            "allowMultiple": false,
+                            "dataType": "int",
+                            "paramType": "query",
+                            "required": false,
+                            "defaultValue": "3"
+                        }
+                    ],
+                    "errorResponses": [
+                        {
+                            "reason": "Related Pages extension not available",
+                            "code": 404
+                        }
+                    ]
+                }
+            ],
+            "description": "Controller to fetch related pages for given article ID"
+        }
+    ],
+    "models": {
+        "RelatedPages": {
+            "id": "RelatedPages",
+            "properties": {
+                "items": {
+                    "type": "Array",
+                    "description": "The related page results for the provided ID",
+                    "items": {
+                        "$ref": "RelatedPage"
+                    }
+                },
+                "basepath": {
+                    "type": "string",
+                    "description": "Base URL for current domain"
+                }
+            }
+        },
+        "RelatedPage": {
+            "id": "RelatedPage",
+            "properties": {
+                "url": {
+                    "type": "string",
+                    "description": "URL to article without domain part",
+                    "required": true
+                },
+                "title": {
+                    "type": "string",
+                    "description": "Formatted article title",
+                    "required": true
+                },
+                "id": {
+                    "type": "int",
+                    "description": "Article ID",
+                    "required": true
+                },
+                "imgUrl": {
+                    "type": "string",
+                    "description": "URL for article image",
+                    "required": true
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "basePath": "http://www.wikia.com/",
+    "swaggerVersion": "1.1",
+    "apiVersion": "0.2",
+    "resourcePath": "/wikia.php",
+    "apis": [
+        {
+            "path": "/controller=ArticlesApi&method={operation}",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "summary": "gets stuff",
+                    "nickname": "getStuff"
+                },
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getMoarStuff"
+                }
+            ],
+            "description": "does moar stuff"
+        }
+    ]
+}

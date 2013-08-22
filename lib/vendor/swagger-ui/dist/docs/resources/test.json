@@ -1,0 +1,79 @@
+{
+    "basePath": "http://www.wikia.com/",
+    "swaggerVersion": "1.1",
+    "apiVersion": "0.2",
+    "resourcePath": "/wikia.php",
+    "apis": [
+        {
+            "path": "",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "summary": "Fetches latest activity information",
+                    "nickname": "getLatestActivity",
+                    "parameters": [
+						{
+							"name": "controller",
+							"allowMultiple": false,
+							"dataType": "string",
+							"paramType": "query",
+							"required": true,
+							"defaultValue": "ActivityApi"
+						},
+						{
+							"name": "method",
+							"allowMultiple": false,
+							"dataType": "string",
+							"paramType": "query",
+							"required": true,
+							"defaultValue": "getLatestActivity"
+						},
+                        {
+                            "name": "limit",
+                            "description": "Maximal result count",
+                            "allowMultiple": false,
+                            "dataType": "int",
+                            "paramType": "query",
+                            "required": false,
+                            "defaultValue": "10"
+                        },
+                        {
+                            "name": "namespaces",
+                            "description": "Namespaces filtering",
+                            "allowMultiple": false,
+                            "dataType": "Array",
+                            "paramType": "query",
+                            "required": false,
+                            "defaultValue": "0"
+                        },
+                        {
+                            "name": "allowDuplicates",
+                            "description": "Set if duplicate values are allowed",
+                            "allowMultiple": false,
+                            "dataType": "boolean",
+                            "paramType": "query",
+                            "required": false,
+                            "defaultValue": true
+                        }
+                    ]
+                }
+            ],
+            "description": "ontroller for acquiring information about latest user activity on current wiki"
+        },
+        {
+            "path": "/controller=ArticlesApi&method={operation}",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "summary": "gets stuff",
+                    "nickname": "getStuff"
+                },
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getMoarStuff"
+                }
+            ],
+            "description": "does moar stuff"
+        }
+    ]
+}
