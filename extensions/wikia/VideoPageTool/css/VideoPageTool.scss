@@ -1,12 +1,87 @@
 @import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/box-sizing-border-box";
+
+$label-padding: 10px 10px 10px 5px;
 
 .VPTForms {
+
+	// Form container styles
+	.form-box {
+		@include clearfix;
+		border: 1px solid $color-page-border;
+		margin-bottom: 40px;
+		padding: 0 5px;
+	}
+	.input-group {
+		@include box-sizing-border-box;
+		border-bottom: 1px solid $color-page-border-subtle;
+		padding: 5px 0;
+		width: 100%;
+		&.last {
+			border-bottom: 0;
+		}
+		input[type="text"], textarea, select {
+			@include box-sizing-border-box;
+			width: 70%;
+		}
+		textarea {
+			height: 100px;
+		}
+	}
+	label {
+		@include box-sizing-border-box;
+		float: left;
+		padding: $label-padding;
+		width: 30%;
+	}
+	.tip {
+		border-top: 1px solid $color-page-border-subtle;
+		clear: both;
+		padding: $label-padding;
+	}
+	.alternative {
+		color: $color-alternate-text;
+	}
+
+	// Page level styles
 	.publish {
 		border-top: 1px solid $color-page-border-subtle;
 		clear: both;
 		padding-top: 10px;
 		button {
 			float: right;
+		}
+	}
+
+	// Featured video form styles
+	.featured-video {
+		.add-video-button {
+			float: left;
+			height: 25px;
+			margin: $label-padding;
+		}
+		.video-name {
+			padding: $label-padding;
+		}
+		.form-box-rail {
+			@include box-sizing-border-box;
+			float: right;
+			padding: 10px 5px 10px 10px;
+			width: 30%;
+		}
+		.form-box-inner {
+			float: left;
+			width: 70%;
+		}
+		.video-thumb {
+			@include box-sizing-border-box;
+			background: $color-page-border-subtle;
+			border: 1px solid $color-page-border;
+			float: right;
+			height: 100px;
+			width: 100%;
+
 		}
 	}
 }

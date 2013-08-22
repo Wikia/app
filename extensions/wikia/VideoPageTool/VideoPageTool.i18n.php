@@ -14,7 +14,12 @@ $messages['en'] = array(
 	'videopagetool-section-trending' => 'Trending Video',
 	'videopagetool-section-fan' => 'Wikia Fan Media',
 	'videopagetool-publish-button' => 'Publish',
-
+	'videopagetool-button-add-video' => 'Add Video',
+	'videopagetool-video-title-default-text' => 'Video name',
+	'videopagetool-label-display-title' => 'Display Title',
+	'videopagetool-label-video-description' => 'Description',
+	'videopagetool-placeholder-video-description' => 'About this video',
+	'videopagetool-html-text-tip' => "'''Tip:''' to add a link copy the following and replace the italicized text with your own: <a href=\"''your_url_here''\">''Your Text Here''</a>",
 );
 
 $messages['qqq'] = array(
@@ -23,4 +28,12 @@ $messages['qqq'] = array(
 	'videopagetool-section-featured' => 'Link title for the left menu item',
 	'videopagetool-section-trending' => 'Link title for the left menu item',
 	'videopagetool-section-fan' => 'Link title for the left menu item',
+	'videopagetool-publish-button' => 'Button text - click the button to publish the page based on what\'s been inputted into the form.',
+	'videopagetool-button-add-video' => 'Button text - click the button to open the add video modal',
+	'videopagetool-video-title-default-text' => 'Placeholder text to be replace with the title of the video the user has chosen.',
+	'videopagetool-label-display-title' => 'Label text for an input to enter the title to display next to the video',
+	'videopagetool-label-video-description' => 'Label text for the video description textarea',
+	'videopagetool-placeholder-video-description' => 'Placeholder text inside a textarea for entering a description of a video',
+	'videopagetool-html-text-tip' => "Tip advising how to add html anchor tags to their content.",
+
 );
