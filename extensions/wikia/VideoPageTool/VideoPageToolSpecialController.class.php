@@ -19,11 +19,10 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 
 	/**
 	 * VideoPageTool page
-	 * on GET, calendar template will render
-	 * on POST, form template will render
-	 * @requestParam string region (on POST)
-	 * @requestParam string date [yyyy-mm-dd] (on POST)
-	 * @requestParam string section [featured/trending/fan] (on POST)
+	 * If no subpage, calendar template will render
+	 * Otherwise, form template will render
+	 * @requestParam string region
+	 * @requestParam string date [yyyy-mm-dd]
 	 * @responseParam array regions - list of regions
 	 * @responseParam string region - current region
 	 * @responseParam string result [ok/error]
@@ -48,25 +47,61 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		$date = $this->getVal( 'date', date( 'Y-M-d' ) );
 		$region = $this->getVal( 'region', 'en' );
 
-		$section = $this->getVal( 'section', 'featured' );
-
-		if ( !$this->wg->request->wasPosted() ) {
-			$regions = array(
-				'en' => 'English',
-			);
-			$this->regions = $regions;
-
-			$response = $this->sendSelfRequest( 'getCalendarInfo', array( 'region' => $region, 'date' => $date ) );
-			$this->calendarInfo = $response->getVal( 'info', array() );
-			$this->result = $response->getVal( 'result', '' );
-			$this->msg = $response->getVal( 'msg', '' );
+		$subpage = $this->getSubpage();
+		if ( !empty( $subpage ) ) {
+			$this->forward( __CLASS__, $subpage );
+			return true;
 		}
 
+		$regions = array(
+			'en' => 'English',
+		);
+		$this->regions = $regions;
+		$this->region = $region;
+
+		$response = $this->sendSelfRequest( 'getCalendarInfo', array( 'region' => $region, 'date' => $date ) );
+		$this->calendarInfo = $response->getVal( 'info', array() );
+		$this->result = $response->getVal( 'result', '' );
+		$this->msg = $response->getVal( 'msg', '' );
+	}
+
+	/**
+	 * Edit page
+	 * @requestParam string region
+	 * @requestParam string date [yyyy-mm-dd]
+	 * @requestParam string section [featured/trending/fan]
+	 * @responseParam string result [ok/error]
+	 * @responseParam string msg - result message
+	 */
+	public function edit() {
+		$date = $this->getVal( 'date', date( 'Y-M-d' ) );
+		$region = $this->getVal( 'region', 'en' );
+		$section = $this->getVal( 'section', 'featured' );
+
+		$videos = array();
+
 		$this->leftMenuItems = VideoPageToolHelper::getLeftMenuItems( $section );
-		//$this->moduleView = "form goes here"; // TODO: add view based on section. For now it will be hard coded
+		$this->moduleView = $this->app->renderView( 'VideoPageToolSpecial', $section, array( 'videos' => $videos ) );
+
 		$this->section = $section;
 		$this->date = $date;
 		$this->region = $region;
+	}
+
+	/**
+	 * get subpage
+	 * @return string|null $subpage
+	 */
+	protected function getSubpage() {
+		$path = $this->getPar();
+		$path_parts = explode( '/', $path );
+
+		$subpage = null;
+		if ( !empty( $path_parts[0] ) && method_exists( $this, $path_parts[0] ) ) {
+			$subpage = $path_parts[0];
+		}
+
+		return $subpage;
 	}
 
 	/**
@@ -99,8 +134,53 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		$this->info = $info;
 	}
 
+	/**
+	 * Featured videos template
+	 * @requestParam array videos
+	 * @responseParam array videos
+	 */
 	public function featured() {
+		$videos[] = array(
+			'videoTitle' => 'Video Title',
+			'videoKey' => 'Video_Title',
+			'videoThumb' => '',
+			'displayTitle' => 'Display Title',
+			'description' => 'description...',
+		);
 
+		$this->videos = $videos;
 	}
+
+	/**
+	 * Trending videos template
+	 * @requestParam array videos
+	 * @responseParam array videos
+	 */
+	protected function trending() {
+		$videos[] = array(
+			'categoryName' => 'Category Name',
+			'displayTitle' => 'Title',
+		);
+		$this->videos = $videos;
+	}
+
+	/**
+	 * Fan videos template
+	 * @requestParam array videos
+	 * @responseParam array videos
+	 */
+	protected function fan() {
+		$videos[] = array(
+			'videoTitle' => 'Video Title',
+			'videoKey' => 'Video_Title',
+			'videoThumb' => '',
+			'displayTitle' => 'Display Title',
+			'programTitle' => 'Progam Title',
+			'programUrl' => '',
+			'description' => 'description...',
+		);
+		$this->videos = $videos;
+	}
+
 }
 
