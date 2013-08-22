@@ -151,4 +151,49 @@ class FactoryTest extends WikiaBaseTest {
 		/** @var $UIFactoryMock Wikia\UI\Factory */
 		$UIFactoryMock->init( 'component' );
 	}
+
+	public function testLoadComponentTemplateContent() {
+		$path = '/tmp/sample/path/component';
+
+		$UIFactoryMock = $this->getMock( 'Wikia\UI\Factory', [
+			'loadFileContent',
+			'__wakeup'
+		], [], '', false );
+		$UIFactoryMock->expects( $this->once() )->method( 'loadFileContent' )->with( $path );
+
+		$componentMock = $this->getMock( 'Wikia\UI\Component', [ 'setType', 'getTemplatePath' ]);
+		$componentMock->expects( $this->once() )->method( 'setType' )->with( 'subtype' );
+		$componentMock->expects( $this->once() )->method( 'getTemplatePath' )->will( $this->returnValue( $path ) );
+
+		// make sure we don't use memcache during the call
+		$wgMemcMock = $this->getMock( 'stdclass', ['get', 'set'] );
+		$wgMemcMock->expects( $this->any() )->method( 'get' )->will( $this->returnValue( null ) );
+		$this->mockGlobalVariable('wgMemc', $wgMemcMock);
+
+		$UIFactoryMock->loadComponentTemplateContent( $componentMock, 'subtype' );
+	}
+
+	public function testGetComponentAssetsUrls() {
+		$componentMock = $this->getMock( 'Wikia\UI\Component', [ 'getAssets' ] );
+		$componentMock->expects( $this->once() )->method( 'getAssets' )->will( $this->returnValue(
+            [ 'js' => ['1.js','2.js'], 'css' => ['3.css','4.css'] ]
+        ) );
+
+        $UIFactoryMock = $this->getMock( 'Wikia\UI\Factory', [
+            'getAssetsURL',
+            '__wakeup'
+        ], [], '', false );
+
+        $UIFactoryMock->expects( $this->any() )->method( 'getAssetsURL' )
+			->will( $this->returnValueMap( [
+		        [ '1.js', [ [ 'url1' ], \Wikia\UI\Factory::ASSET_TYPE_JS ] ],
+		        [ '2.js', [ [ 'url2' ], \Wikia\UI\Factory::ASSET_TYPE_JS ] ],
+		        [ '3.css', [ [ 'url3' ], \Wikia\UI\Factory::ASSET_TYPE_CSS ] ],
+		        [ '4.css', [ [ 'url4' ], \Wikia\UI\Factory::ASSET_TYPE_CSS ] ],
+	        ] ) );
+
+        /** @var $UIFactoryMock Wikia\UI\Factory */
+        $this->assertEquals( [ 'js' => [ 'url1', 'url2' ], 'css' => [ 'url3', 'url4' ] ], $UIFactoryMock->getComponentAssetsUrls( $componentMock ));
+	}
+
 }
