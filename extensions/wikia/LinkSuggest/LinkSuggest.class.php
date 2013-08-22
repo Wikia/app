@@ -164,15 +164,26 @@ class LinkSuggest {
 
 		$pageNamespaceClause = isset($commaJoinedNamespaces) ?  'page_namespace IN (' . $commaJoinedNamespaces . ') AND ' : '';
 		if( count($results) < $wgLinkSuggestLimit ) {
-
+			/**
+			 * @var string $pageTitlePrefilter this condition is able to use name_title index. It's added only for performance reasons.
+			 * It uses fact that page titles can't start with lowercase letter.
+			 */
+			$pageTitlePrefilter = "";
+			if( strlen($queryLower) >= 2 ) {
+				$pageTitlePrefilter = "(
+							( page_title " . $db->buildLike(strtoupper($queryLower[0]) . strtolower($queryLower[1]) , $db->anyString() ) . " ) OR
+							( page_title " . $db->buildLike(strtoupper($queryLower[0]) . strtoupper($queryLower[1]) , $db->anyString() ) . " ) ) AND ";
+			} else if( strlen($queryLower) >= 1 ) {
+				$pageTitlePrefilter = "( page_title " . $db->buildLike(strtoupper($queryLower[0]) , $db->anyString() ) . " ) AND ";
+			}
 			// TODO: use $db->select helper method
 			$sql = "SELECT page_len, page_id, page_title, rd_title, page_namespace, page_is_redirect
-						FROM page IGNORE INDEX (`name_title`)
+						FROM page
 						LEFT JOIN redirect ON page_is_redirect = 1 AND page_id = rd_from
-						LEFT JOIN querycache ON qc_title = page_title
-						WHERE {$pageNamespaceClause} (page_title LIKE '{$query}%' or LOWER(page_title) LIKE '{$queryLower}%')
-							AND ( qc_type != 'BrokenRedirects' OR qc_type IS NULL )
-						LIMIT ".($wgLinkSuggestLimit * 3);
+						LEFT JOIN querycache ON qc_title = page_title AND qc_type = 'BrokenRedirects'
+						WHERE  {$pageTitlePrefilter} {$pageNamespaceClause} (LOWER(page_title) LIKE '{$queryLower}%')
+							AND qc_type IS NULL
+						LIMIT ".($wgLinkSuggestLimit * 3); // we fetch 3 times more results to leave out redirects to the same page
 
 			$res = $db->query($sql, __METHOD__);
 
