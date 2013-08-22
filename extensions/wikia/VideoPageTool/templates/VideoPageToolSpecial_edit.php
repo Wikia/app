@@ -6,7 +6,7 @@
 		) ?>
 	</div>
 	<div class="grid-4">
-		forms go here
+		<?= $moduleView ?>
 	</div>
 	<div class="publish">
 		<button class="big"><?= wfMessage( 'videopagetool-publish-button' )->text() ?></button>
