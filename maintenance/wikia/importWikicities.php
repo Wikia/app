@@ -13,7 +13,7 @@ require_once( __DIR__ . '/../Maintenance.php' );
 
 class ImportWikicities extends Maintenance {
 
-	const S3_PATTERN = 's3://database_Sharedb/fulldump_*';
+	const S3_PATTERN = 's3://database_ShareDB_devboxes/fulldump_*';
 	const S3_DUMP_PATTERN = 'wikicities_devbox';
 	const DEST_DATABASE = 'wikicities';
 	#const DEST_DATABASE = 'wikicities_macbre_test';
@@ -95,7 +95,13 @@ class ImportWikicities extends Maintenance {
 	}
 
 	public function execute() {
-		global $IP, $wgExternalSharedDB;
+		global $IP, $wgExternalSharedDB, $wgDevelEnvironment, $wgWikiaDatacenter;
+
+		if (empty($wgDevelEnvironment)) {
+			$this->error('This script should only be run in development environment', 4);
+		}
+
+		$this->output("Running for {$wgWikiaDatacenter} devboxes\n");
 
 		$this->output("Getting list of dumps...\n");
 		$dumps = $this->ls(self::S3_PATTERN);
@@ -148,6 +154,9 @@ class ImportWikicities extends Maintenance {
 			$this->dbw->sourceFile($sql);
 			$this->output("done\n");
 		}
+
+		// cleanup
+		unlink($dumpFile);
 
 		$this->output("\nI'm done!\n");
 	}

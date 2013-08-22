@@ -41,7 +41,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @var int
 	 */
 	const VARNISH_CACHE_TIME = 43200;
-	
+
+	/**
+	 * On what max position title can occur and still snippet will be cutted shorter
+	 * @var int
+	 */
+	const SNIPPET_SUBSTR = 50;
+
 	/**
 	 * Responsible for instantiating query services based on config.
 	 * @var Wikia\Search\QueryService\Factory
@@ -105,11 +111,15 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
 				foreach ( $detailResponse['items'] as $id => $item ) {
 					if (! empty( $item['thumbnail'] ) ) {
+						$item['thumbnailSize'] = "small";
 						//get the first one image from imageServing as it needs other size
 						if ( empty( $pages ) ) {
 							$is = new ImageServing( [ $id ], 300, 150 );
 							$result = $is->getImages( 1 );
-							$item[ 'thumbnail' ] = $result[ $id ][ 0 ][ 'url' ];
+							if(! empty( $result[ $id ][ 0 ][ 'url' ] ) ) {
+								$item[ 'thumbnail' ] = $result[ $id ][ 0 ][ 'url' ];
+								$item['thumbnailSize'] = "large";
+							}
 						}
 						//render date
 						$item[ 'date' ] = $wgLang->date( $item[ 'revision' ][ 'timestamp' ] );
@@ -192,7 +202,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$queryService = $this->queryServiceFactory->getFromConfig( $searchConfig );
 		if ( ( $minDuration = $this->getVal( 'minseconds' ) ) && ( $maxDuration = $this->getVal( 'maxseconds' ) ) ) {
 			$queryService->setMinDuration( $minDuration)->setMaxDuration( $maxDuration );
-		} 
+		}
 		$this->getResponse()->setFormat( 'json' );
 		$this->getResponse()->setData( $queryService->searchAsApi() );
 	}
@@ -213,11 +223,99 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$response->setFormat( 'json' );
 		$response->setData( $entityResponse );
 	}
+	
+	/**
+	 * Powers the category page view
+	 */
+	public function categoryTopArticles() {
+		$pages = [];
+		$category = '';
+		$result = $this->getVal( 'result' );
+		if (! empty( $result ) ) {
+			try {
+				$category = $result['title'];
+				$colonSploded = explode( ':', $category );
+				$namespace = (new Wikia\Search\MediaWikiService)->getNamespaceIdForString( $colonSploded[0] );
+				// remove "Category:", since it doesn't work with ArticlesApiController
+				$category = ( is_int( $namespace ) && $namespace == NS_CATEGORY ) 
+				         ? implode( ':', array_slice( $colonSploded, 1 ) ) 
+				         : $category; 
+				//@todo use single API call here when expansion is released
+				$pageData = $this->app->sendRequest( 'ArticlesApiController', 'getTop', [ 'namespaces' => 0, 'category' => $category ] )->getData();
+				$ids = [];
+				$counter = 0;
+				foreach ( $pageData['items'] as $pageDatum ) {
+					$ids[] = $pageDatum['id'];
+					if ( $counter++ >= 9 ) {
+						break;
+					}
+				}
+				if (! empty( $ids ) ) {
+					$params = [ 'ids' => implode( ',', $ids ), 'height' => 50, 'width' => 50, 'abstract' => 150 ];
+					$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
+					foreach ( $detailResponse['items'] as $item ) {
+						$processed = $this->processArticleItem( $item );
+						if ( !empty( $processed ) ) {
+							$pages[] = $processed;
+						}
+					}
+				}
+			} catch ( Exception $e ) { } // ignoring api errors for gracefulness
+		}
+		//limit number of results
+		$pages = array_slice( $pages, 0, 3 );
+
+		$this->setVal( 'category', $category );
+		$this->setVal( 'pages', $pages );
+		$this->setVal( 'result', $result );
+		$this->setVal( 'gpos', $this->getVal( 'gpos' ) );
+		$this->setVal( 'pos', $this->getVal( 'pos' ) );
+		$this->setVal( 'query', $this->getVal( 'query' ) );
+	}
 
 	/**
 	 * Controller Helper Methods
 	 *----------------------------------------------------------------------------------*/
 
+	protected function processArticleItem( $item ) {
+		if ( empty( $item['thumbnail'] ) ) {
+			//add placeholder
+			$item['thumbnail'] = '';
+		}
+		//sanitize strings first
+		$trimTitle = trim( strtolower( $item[ 'title' ] ) );
+		$bracketPos = strpos( $trimTitle, '(' );
+		if ( $bracketPos !== false ) {
+			$trimTitleWObrackets = substr( $trimTitle, 0, $bracketPos - 1 );
+		}
+		$normSpacesAbs = preg_replace( '|\s+|', ' ', $item[ 'abstract' ] );
+		$lowerAbstract = strtolower( $normSpacesAbs );
+
+		if ( !empty( $trimTitle ) ) {
+			$pos = strpos( $lowerAbstract, $trimTitle );
+			if ( $pos !== false ) {
+				if ( $pos <= static::SNIPPET_SUBSTR ) {
+					$cutIn = $pos + strlen( $trimTitle );
+				}
+			} elseif ( isset( $trimTitleWObrackets ) ) {
+				$pos = strpos( $lowerAbstract, $trimTitleWObrackets );
+				if ( $pos !== false && $pos <= static::SNIPPET_SUBSTR ) {
+					$cutIn = $pos + strlen( $trimTitleWObrackets );
+				}
+			}
+		}
+		//dont substr if next char is alphanumeric
+		$splitted = str_split( $lowerAbstract );
+		if ( isset( $cutIn ) && ( ctype_punct( $splitted[ $cutIn ] ) || ctype_space( $splitted[ $cutIn ] ) ) ) {
+			$item['abstract'] = substr( $normSpacesAbs, $cutIn );
+		} elseif ( !empty( $item[ 'abstract' ] ) ) {
+			$item['abstract'] = ' - ' . preg_replace( '|^[^{\pL\pN\p{Pi}}]+|', '', $normSpacesAbs );
+		}
+		if ( !empty( $item[ 'abstract' ] ) ) {
+			return $item;
+		}
+		return null;
+	}
 	/**
 	 * Called in index action.
 	 * Based on an article match and various settings, generates tracking events and routes user to appropriate page.
@@ -346,7 +444,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $matchResult !== null ) {
 			$this->setVal(
 					'wikiMatch',
-					$this->getApp()->getView( 'WikiaSearch', 'CrossWiki_result', [ 'result' => $matchResult, 'pos' => -1 ] ) 
+					$this->getApp()->getView( 'WikiaSearch', 'CrossWiki_result', [ 'result' => $matchResult, 'pos' => -1 ] )
 					);
 			$this->resultsFound++;
 		}
@@ -432,14 +530,23 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Called in index action to handle overriding template for different abTests
 	 */
 	protected function handleLayoutAbTest( $abGroup, $ns = null ) {
+		$abs = explode( ',', $abGroup );
 		//check if template for ab test exists
-		if( $abGroup !== null && $this->templateExists( $abGroup ) ) {
-			//set name depending on abGroup
-			$this->setVal( 'resultView', $abGroup );
-		} else {
-			//defaults to result
-			$this->setVal( 'resultView', static::WIKIA_DEFAULT_RESULT );
+		$view = static::WIKIA_DEFAULT_RESULT;
+		$categoryModule = false;
+		if ( !empty( $abs ) ) {
+			//set ab for category
+			if ( in_array( 47, $abs ) ) {
+				$categoryModule = true;
+			}
+			foreach( $abs as $abGroup ) {
+				if ( $this->templateExists( $abGroup ) ) {
+					$view = $abGroup;
+				}
+			}
 		}
+		$this->setVal( 'resultView', $view );
+		$this->setVal( 'categoryModule', $categoryModule );
 		return true;
 	}
 

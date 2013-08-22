@@ -276,7 +276,8 @@ $.fn.makeCollapsible = function() {
 
 				// If theres no toggle link, add it to the last cell
 				if ( !$toggle.length ) {
-					$firstRowCells.eq(-1).prepend( buildDefaultToggleLink() );
+					$toggleLink = buildDefaultToggleLink();
+					$firstRowCells.eq(-1).prepend( $toggleLink );
 				} else {
 					$toggleLink = $toggle.unbind( 'click.mw-collapse' ).bind( 'click.mw-collapse', function( e ) {
 						toggleLinkPremade( $toggle, e );
@@ -317,7 +318,8 @@ $.fn.makeCollapsible = function() {
 
 				// If theres no toggle link, add it
 				if ( !$toggle.length ) {
-					$that.prepend( buildDefaultToggleLink() );
+					$toggleLink = buildDefaultToggleLink();
+					$that.prepend( $toggleLink );
 				} else {
 					$toggleLink = $toggle.unbind( 'click.mw-collapse' ).bind( 'click.mw-collapse', function( e ) {
 						toggleLinkPremade( $toggle, e );

@@ -265,39 +265,33 @@ abstract class ApiWrapper {
 		if ( !isset($metadata['videoId']) ) {
 			$metadata['videoId'] = $this->videoId;
 		}
-		if ( !isset($metadata['title']) ) {
-			$metadata['title'] = $this->getTitle();
-		}
-		if ( !isset($metadata['published']) ) {
-			$metadata['published'] = $this->getVideoPublished();
-		}
-		if ( !isset($metadata['category']) ) {
-			$metadata['category'] = $this->getVideoCategory();
-		}
-		if ( !isset($metadata['canEmbed']) ) {
-			$metadata['canEmbed'] = $this->canEmbed();
-		}
-		if ( !isset($metadata['hd']) ) {
-			$metadata['hd'] = $this->isHdAvailable();
-		}
-		if ( !isset($metadata['keywords']) ) {
-			$metadata['keywords'] = $this->getVideoKeywords();
-		}
-		if ( !isset($metadata['duration']) ) {
-			$metadata['duration'] = $this->getVideoDuration();
-		}
-		if ( !isset($metadata['aspectRatio']) ) {
-			$metadata['aspectRatio'] = $this->getAspectRatio();
-		}
-		if ( !isset($metadata['description']) ) {
-			$metadata['description'] = $this->getOriginalDescription();
-		}
 		// for providers that use diffrent video id for embeded code
 		if ( !isset($metadata['altVideoId']) ) {
 			$metadata['altVideoId'] = $this->getAltVideoId();
 		}
-		if ( !isset($metadata['trailerRating']) ) {
-			$metadata['trailerRating'] = $this->getTrailerRating();
+		if ( !isset($metadata['hd']) ) {
+			$metadata['hd'] = $this->isHdAvailable();
+		}
+		if ( !isset($metadata['duration']) ) {
+			$metadata['duration'] = $this->getVideoDuration();
+		}
+		if ( !isset($metadata['published']) ) {
+			$metadata['published'] = $this->getVideoPublished();
+		}
+		if ( !isset($metadata['description']) ) {
+			$metadata['description'] = $this->getOriginalDescription();
+		}
+		if ( !isset( $metadata['name'] ) ) {
+			$metadata['name'] = $this->getVideoName();
+		}
+		if ( !isset( $metadata['type'] ) ) {
+			$metadata['type'] = $this->getVideoType();
+		}
+		if ( !isset($metadata['category']) ) {
+			$metadata['category'] = $this->getVideoCategory();
+		}
+		if ( !isset($metadata['keywords']) ) {
+			$metadata['keywords'] = $this->getVideoKeywords();
 		}
 		if ( !isset($metadata['industryRating']) ) {
 			$metadata['industryRating'] = $this->getIndustryRating();
@@ -308,17 +302,20 @@ abstract class ApiWrapper {
 		if ( !isset( $metadata['ageRequired'] ) ) {
 			$metadata['ageRequired'] = $this->getAgeRequired();
 		}
+		if ( !isset($metadata['provider']) ) {
+			$metadata['provider'] = $this->getProvider();
+		}
 		if ( !isset($metadata['language']) ) {
 			$metadata['language'] = $this->getLanguage();
 		}
 		if ( !isset( $metadata['subtitle'] ) ) {
 			$metadata['subtitle'] = $this->getSubtitle();
 		}
-		if ( !isset($metadata['tags']) ) {
-			$metadata['tags'] = $this->getVideoTags();
+		if ( !isset( $metadata['genres'] ) ) {
+			$metadata['genres'] = $this->getGenres();
 		}
-		if ( !isset($metadata['provider']) ) {
-			$metadata['provider'] = $this->getProvider();
+		if ( !isset( $metadata['actors'] ) ) {
+			$metadata['actors'] = $this->getActors();
 		}
 		if ( !isset( $metadata['targetCountry'] ) ) {
 			$metadata['targetCountry'] = $this->getTargetCountry();
@@ -332,10 +329,43 @@ abstract class ApiWrapper {
 		if ( !isset( $metadata['episode'] ) ) {
 			$metadata['episode'] = $this->getEpisode();
 		}
+		if ( !isset( $metadata['characters'] ) ) {
+			$metadata['characters'] = $this->getCharacters();
+		}
+		if ( !isset( $metadata['resolution'] ) ) {
+			$metadata['resolution'] = $this->getResolution();
+		}
+		// set to default if empty
+		if ( empty( $metadata['aspectRatio'] ) ) {
+			$metadata['aspectRatio'] = $this->getAspectRatio();
+		}
+		if ( empty( $metadata['expirationDate'] ) ) {
+			$metadata['expirationDate'] = $this->getVideoExpirationDate();
+		}
+		if ( !isset($metadata['title']) ) {
+			$metadata['title'] = $this->getTitle();
+		}
+		if ( !isset($metadata['canEmbed']) ) {
+			$metadata['canEmbed'] = $this->canEmbed();
+		}
 
 		$this->metadata = $metadata;
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * get metadata value
+	 * @param string $name
+	 * @param string $defaultValue
+	 * @return type
+	 */
+	protected function getMetaValue( $name, $defaultValue = '' ) {
+		if ( !empty( $this->metadata[$name] ) ) {
+			return $this->metadata[$name];
+		}
+
+		return $defaultValue;
 	}
 
 	protected function getVideoPublished(){
@@ -379,15 +409,8 @@ abstract class ApiWrapper {
 	}
 
 	/**
-	 * MPAA trailer rating (e.g. "greenband", "redband")
-	 * @return string
-	 */
-	protected function getTrailerRating() {
-		return '';
-	}
-
-	/**
-	 * Rating from industry board.
+	 * Rating from industry board. (include MPAA trailer)
+	 * Examples MPAA trailer rating (e.g. "greenband", "redband")
 	 * Examples from MPAA: R, PG-13
 	 * Examples from ESRB: E, T, AO
 	 * @return string
@@ -412,6 +435,10 @@ abstract class ApiWrapper {
 		return 0;
 	}
 
+	/**
+	 * get language
+	 * @return string
+	 */
 	protected function getLanguage() {
 		return '';
 	}
@@ -424,18 +451,26 @@ abstract class ApiWrapper {
 		return '';
 	}
 
-	protected function getVideoTags() {
-		return '';
-	}
-
+	/**
+	 * get genres
+	 * @return string
+	 */
 	protected function getGenres() {
 		return '';
 	}
 
+	/**
+	 * get actors
+	 * @return string
+	 */
 	protected function getActors() {
 		return '';
 	}
 
+	/**
+	 * get expiration date
+	 * @return string
+	 */
 	protected function getVideoExpirationDate() {
 		return '';
 	}
@@ -445,22 +480,6 @@ abstract class ApiWrapper {
 	 * @return string
 	 */
 	protected function getTargetCountry() {
-		return '';
-	}
-
-	/**
-	 * get source
-	 * @return string
-	 */
-	protected function getSource() {
-		return '';
-	}
-
-	/**
-	 * get source id (video id from source)
-	 * @return string
-	 */
-	protected function getSourceId() {
 		return '';
 	}
 
@@ -485,6 +504,38 @@ abstract class ApiWrapper {
 	 * @return string
 	 */
 	protected function getEpisode() {
+		return '';
+	}
+
+	/**
+	 * get resolution
+	 * @return string
+	 */
+	protected function getResolution() {
+		return '';
+	}
+
+	/**
+	 * get characters
+	 * @return string
+	 */
+	protected function getCharacters() {
+		return '';
+	}
+
+	/**
+	 * get video type
+	 * @return string
+	 */
+	protected function getVideoType() {
+		return '';
+	}
+
+	/**
+	 * get video name
+	 * @return string
+	 */
+	protected function getVideoName() {
 		return '';
 	}
 
@@ -573,6 +624,195 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 
 	public function isIngestion() {
 		return true;
+	}
+
+	/**
+	 * get video published
+	 * @return string
+	 */
+	protected function getVideoPublished(){
+		return $this->getMetaValue( 'published' );
+	}
+
+	/**
+	 * get category
+	 * @return string
+	 */
+	protected function getVideoCategory() {
+		return $this->getMetaValue( 'category' );
+	}
+
+	/**
+	 * get description
+	 * @return string
+	 */
+	protected function getOriginalDescription() {
+		return $this->getMetaValue( 'description' );
+	}
+
+	/**
+	 * is hd video
+	 * @return boolean
+	 */
+	protected function isHdAvailable() {
+		$hd = $this->getMetaValue( 'hd', false );
+		return empty( $hd ) ? false : true;
+	}
+
+	/**
+	 * List of keywords, separated by comma
+	 * @return string
+	 */
+	protected function getVideoKeywords() {
+		return $this->getMetaValue( 'keywords' );
+	}
+
+	/**
+	 * get duration
+	 * @return string
+	 */
+	protected function getVideoDuration() {
+		return $this->getMetaValue( 'duration' );
+	}
+
+	/**
+	 * get altVideoId
+	 * @return string
+	 */
+	protected function getAltVideoId() {
+		return $this->getMetaValue( 'altVideoId' );
+	}
+
+	/**
+	 * Rating from industry board. (include MPAA trailer)
+	 * Examples MPAA trailer rating (e.g. "greenband", "redband")
+	 * Examples from MPAA: R, PG-13
+	 * Examples from ESRB: E, T, AO
+	 * @return string
+	 */
+	protected function getIndustryRating() {
+		return $this->getMetaValue( 'industryRating' );
+	}
+
+	/**
+	 * Is video age gated?
+	 * @return boolean
+	 */
+	protected function isAgeGate() {
+		$ageGate = $this->getMetaValue( 'ageGate', false );
+		return empty( $ageGate ) ? false : true;
+	}
+
+	/**
+	 * get age required
+	 * @return integer
+	 */
+	protected function getAgeRequired() {
+		return $this->getMetaValue( 'ageRequired', 0 );
+	}
+
+	/**
+	 * get language
+	 * @return string
+	 */
+	protected function getLanguage() {
+		return $this->getMetaValue( 'language' );
+	}
+
+	/**
+	 * get subtitle
+	 * @return string
+	 */
+	protected function getSubtitle() {
+		return $this->getMetaValue( 'subtitle' );
+	}
+
+	/**
+	 * get genres
+	 * @return string
+	 */
+	protected function getGenres() {
+		return $this->getMetaValue( 'genres' );
+	}
+
+	/*
+	 * get actors
+	 * @return string
+	 */
+	protected function getActors() {
+		return $this->getMetaValue( 'actors' );
+	}
+
+	/**
+	 * get expiration date
+	 * @return string
+	 */
+	protected function getVideoExpirationDate() {
+		return $this->getMetaValue( 'expirationDate' );
+	}
+
+	/**
+	 * get target country
+	 * @return string
+	 */
+	protected function getTargetCountry() {
+		return $this->getMetaValue( 'targetCountry' );
+	}
+
+	/**
+	 * get series
+	 * @return string
+	 */
+	protected function getSeries() {
+		return $this->getMetaValue( 'series' );
+	}
+
+	/**
+	 * get season
+	 * @return string
+	 */
+	protected function getSeason() {
+		return $this->getMetaValue( 'season' );
+	}
+
+	/**
+	 * get episode
+	 * @return string
+	 */
+	protected function getEpisode() {
+		return $this->getMetaValue( 'episode' );
+	}
+
+	/**
+	 * get resolution
+	 * @return string
+	 */
+	protected function getResolution() {
+		return $this->getMetaValue( 'resolution' );
+	}
+
+	/**
+	 * get characters
+	 * @return string
+	 */
+	protected function getCharacters() {
+		return $this->getMetaValue( 'characters' );
+	}
+
+	/**
+	 * get video type
+	 * @return string
+	 */
+	protected function getVideoType() {
+		return $this->getMetaValue( 'type' );
+	}
+
+	/**
+	 * get video name
+	 * @return string
+	 */
+	protected function getVideoName() {
+		return $this->getMetaValue( 'name' );
 	}
 
 }

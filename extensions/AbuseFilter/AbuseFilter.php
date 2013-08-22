@@ -164,8 +164,5 @@ $wgAbuseFilterUDPPort = null;
 $wgAbuseFilterCentralDB = null;
 $wgAbuseFilterIsCentral = false;
 
-// Block duration
-$wgAbuseFilterBlockDuration = 'indefinite';
-
 // Callback functions for custom actions
 $wgAbuseFilterCustomActionsHandlers = array();
