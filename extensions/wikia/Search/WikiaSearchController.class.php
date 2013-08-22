@@ -111,11 +111,15 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
 				foreach ( $detailResponse['items'] as $id => $item ) {
 					if (! empty( $item['thumbnail'] ) ) {
+						$item['thumbnailSize'] = "small";
 						//get the first one image from imageServing as it needs other size
 						if ( empty( $pages ) ) {
 							$is = new ImageServing( [ $id ], 300, 150 );
 							$result = $is->getImages( 1 );
-							$item[ 'thumbnail' ] = $result[ $id ][ 0 ][ 'url' ];
+							if(! empty( $result[ $id ][ 0 ][ 'url' ] ) ) {
+								$item[ 'thumbnail' ] = $result[ $id ][ 0 ][ 'url' ];
+								$item['thumbnailSize'] = "large";
+							}
 						}
 						//render date
 						$item[ 'date' ] = $wgLang->date( $item[ 'revision' ][ 'timestamp' ] );
