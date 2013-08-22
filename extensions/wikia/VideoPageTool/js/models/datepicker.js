@@ -19,7 +19,7 @@ define('vpt.models.datepicker', [], function() {
 		getStatus: function(day) {
 			var fullDay = $.datepicker.formatDate('yy-mm-dd', day);
 
-			if (fullDay in this.specialDates) {
+			if (this.specialDates[fullDay]) {
 				return this.specialDates[fullDay];
 			}
 		},
@@ -58,8 +58,7 @@ define('vpt.models.datepicker', [], function() {
 						'endTimestamp': endTimestamp
 					},
 					callback: $.proxy(function(response) {
-							console.log(response, 'ken');
-						$.extend(this.specialDates, response['calendarData']);
+						$.extend(this.specialDates, response['info']);
 					}, this)
 				});
 			}

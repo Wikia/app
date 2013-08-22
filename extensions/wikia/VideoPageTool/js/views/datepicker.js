@@ -16,13 +16,17 @@ define('vpt.views.datepicker', [
 
 	DatepickerView.prototype = {
 		init: function() {
+			var that = this;
 			// TODO: not a fan of how this callback chain requires a specific order, change this
-			this.collection.models = this.collection
+			this.collection
 				.collectData( this.currDate.getFullYear(), this.currDate.getMonth() + 1 )
-				.complete(function() {
-						console.log(arguments);
+				.success(function() {
+					that.render();
 				});
-			this.render();
+		},
+		state: {
+			_notPublished: 2,
+			_published: 1
 		},
 		render: function() {
 			this.$el.text('').datepicker({
@@ -49,14 +53,10 @@ define('vpt.views.datepicker', [
 			tooltip = '';
 			dayStatus = this.collection.getStatus(date);
 
-			window.wgMarketingToolboxConstants = {};
-			window.wgMarketingToolboxConstants.NOT_PUBLISHED = 2;
-			window.wgMarketingToolboxConstants.PUBLISHED = 1;
-			dayStatus = 1;
 			if (dayStatus) {
-				if (dayStatus === window.wgMarketingToolboxConstants.NOT_PUBLISHED) {
+				if (dayStatus === this.state._notPublished ) {
 					tdClassName = 'inProg';
-				} else if (dayStatus === window.wgMarketingToolboxConstants.PUBLISHED) {
+				} else if (dayStatus === this.state._published ) {
 					tdClassName = 'published';
 				}
 				// tooltip = this.tooltipMessages[dayStatus];
