@@ -19,15 +19,14 @@ define('wikia.uicomponent',['wikia.mustache'], function uicomponent(mustache) {
 	function validateComponent(componentConfig, componentType, componentVars) {
 
 		// Validate component type
-		var type = componentType,
-			supportedTypes = componentConfig.templates;
+		var	supportedTypes = componentConfig.templates;
 
-		if (!supportedTypes.hasOwnProperty(type)) {
+		if (!supportedTypes.hasOwnProperty(componentType)) {
 			throw new Error('Requested component type is not supported!');
 		}
 
 		// Validate required mustache variables
-		var	requiredVars = componentConfig.templateVarsConfig[type].required,
+		var	requiredVars = componentConfig.templateVarsConfig[componentType].required,
 			missingVars= [];
 
 		requiredVars.forEach(function(element) {
