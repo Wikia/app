@@ -152,72 +152,24 @@ class OoyalaApiWrapper extends ApiWrapper {
 		return rtrim( $sig, '=' );
 	}
 
-	/**
-	 * get video player id
-	 * @param integer $videoId
-	 * @return integer $videoPlayerId
-	 */
-	public static function getPlayerId ( $videoId ) {
-		wfProfileIn( __METHOD__ );
-
-		$videoPlayerId = '';
-
-		// get url
-		$method = 'GET';
-		$reqPath = '/v2/assets/'.$videoId.'/player';
-		$url = self::getApi( $method, $reqPath );
-
-		// send request
-		$req = MWHttpRequest::factory( $url );
-		$status = $req->execute();
-		if( $status->isOK() ) {
-			$response = $req->getContent();
-			$return = json_decode( $response, true );
-			if ( !empty( $return['id'] ) ) {
-				$videoPlayerId = $return['id'];
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $videoPlayerId;
-	}
-
-	/**
-	 * add playerId to video for interfaceObj
-	 * @param array $return
-	 * @return array $return
-	 */
-	protected function postProcess( $return ) {
-		$return['playerid'] = self::getPlayerId ( $this->videoId );
-
-		return $return;
-	}
-
 	protected function loadMetadata( array $overrideFields = array() ) {
-		if ( !isset( $overrideFields['source'] ) ) {
-			$overrideFields['source'] = $this->getSource();
+		parent::loadMetadata( $overrideFields );
+
+		$metadata = array();
+		if ( !isset( $metadata['source'] ) ) {
+			$metadata['source'] = $this->getSource();
 		}
-		if ( !isset( $overrideFields['sourceId'] ) ) {
-			$overrideFields['sourceId'] = $this->getSourceId();
+		if ( !isset( $metadata['sourceId'] ) ) {
+			$metadata['sourceId'] = $this->getSourceId();
 		}
-		if ( !isset($overrideFields['genres']) ) {
-			$overrideFields['genres'] = $this->getGenres();
+		if ( !isset($metadata['startDate'] ) ) {
+			$metadata['startDate'] = $this->getVideoStartDate();
 		}
-		if ( !isset($overrideFields['actors']) ) {
-			$overrideFields['actors'] = $this->getActors();
-		}
-		if ( !isset($overrideFields['startDate']) ) {
-			$overrideFields['startDate'] = $this->getVideoStartDate();
-		}
-		if ( !isset($overrideFields['expirationDate']) ) {
-			$overrideFields['expirationDate'] = $this->getVideoExpirationDate();
-		}
-		if ( !isset($overrideFields['playerId']) ) {
-			$overrideFields['playerId'] = $this->getVideoPlayerId();
+		if ( !isset( $metadata['pageCategories'] ) ) {
+			$metadata['pageCategories'] = $this->getPageCategories();
 		}
 
-		parent::loadMetadata( $overrideFields );
+		$this->metadata = array_merge( $this->metadata, $metadata );
 	}
 
 	protected function getOriginalDescription() {
@@ -324,18 +276,6 @@ class OoyalaApiWrapper extends ApiWrapper {
 		return 0;
 	}
 
-	protected function getTrailerRating() {
-		if ( !empty($this->metadata['trailerRating']) ) {
-			return $this->metadata['trailerRating'];
-		}
-
-		if ( !empty($this->interfaceObj['metadata']['trailerrating']) ) {
-			return $this->interfaceObj['metadata']['trailerrating'];
-		}
-
-		return '';
-	}
-
 	protected function getIndustryRating() {
 		if ( !empty($this->metadata['industryRating']) ) {
 			return $this->metadata['industryRating'];
@@ -349,15 +289,15 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	protected function isAgeGate() {
-		if ( !empty($this->metadata['ageGate']) ) {
-			return $this->metadata['ageGate'];
+		if ( !empty( $this->metadata['ageGate'] ) ) {
+			return true;
 		}
 
 		if ( !empty($this->interfaceObj['metadata']['agegate']) ) {
-			return 1;
+			return true;
 		}
 
-		return 0;
+		return false;
 	}
 
 	/**
@@ -374,18 +314,6 @@ class OoyalaApiWrapper extends ApiWrapper {
 		}
 
 		return 0;
-	}
-
-	protected function getVideoTags() {
-		if ( !empty($this->metadata['tags']) ) {
-			return $this->metadata['tags'];
-		}
-
-		if ( !empty($this->interfaceObj['metadata']['tags']) ) {
-			return $this->interfaceObj['metadata']['tags'];
-		}
-
-		return '';
 	}
 
 	protected function getGenres() {
@@ -431,18 +359,6 @@ class OoyalaApiWrapper extends ApiWrapper {
 
 		if ( !empty($this->interfaceObj['metadata']['expirationdate']) ) {
 			return strtotime( $this->interfaceObj['metadata']['expirationdate'] );
-		}
-
-		return '';
-	}
-
-	protected function getVideoPlayerId() {
-		if ( !empty($this->metadata['playerId']) ) {
-			return $this->metadata['playerId'];
-		}
-
-		if ( !empty( $this->interfaceObj['playerid'] ) ) {
-			return $this->interfaceObj['playerid'];
 		}
 
 		return '';
@@ -539,6 +455,86 @@ class OoyalaApiWrapper extends ApiWrapper {
 
 		if ( !empty( $this->interfaceObj['metadata']['episode'] ) ) {
 			return $this->interfaceObj['metadata']['episode'];
+		}
+
+		return '';
+	}
+
+	/**
+	 * get page categories
+	 * @return string
+	 */
+	protected function getPageCategories() {
+		if ( !empty( $this->metadata['pageCategories'] ) ) {
+			return $this->metadata['pageCategories'];
+		}
+
+		if ( !empty( $this->interfaceObj['metadata']['pagecategories'] ) ) {
+			return $this->interfaceObj['metadata']['pagecategories'];
+		}
+
+		return '';
+	}
+
+	/**
+	 * get resolution
+	 * @return string
+	 */
+	protected function getResolution() {
+		if ( !empty( $this->metadata['resolution'] ) ) {
+			return $this->metadata['resolution'];
+		}
+
+		if ( !empty( $this->interfaceObj['metadata']['resolution'] ) ) {
+			return $this->interfaceObj['metadata']['resolution'];
+		}
+
+		return '';
+	}
+
+	/**
+	 * get characters
+	 * @return string
+	 */
+	protected function getCharacters() {
+		if ( !empty( $this->metadata['characters'] ) ) {
+			return $this->metadata['characters'];
+		}
+
+		if ( !empty( $this->interfaceObj['metadata']['characters'] ) ) {
+			return $this->interfaceObj['metadata']['characters'];
+		}
+
+		return '';
+	}
+
+	/**
+	 * get video type
+	 * @return string
+	 */
+	protected function getVideoType() {
+		if ( !empty( $this->metadata['type'] ) ) {
+			return $this->metadata['type'];
+		}
+
+		if ( !empty( $this->interfaceObj['metadata']['type'] ) ) {
+			return $this->interfaceObj['metadata']['type'];
+		}
+
+		return '';
+	}
+
+	/**
+	 * get video name
+	 * @return string
+	 */
+	protected function getVideoName() {
+		if ( !empty( $this->metadata['name'] ) ) {
+			return $this->metadata['name'];
+		}
+
+		if ( !empty( $this->interfaceObj['metadata']['name'] ) ) {
+			return $this->interfaceObj['metadata']['name'];
 		}
 
 		return '';

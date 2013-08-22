@@ -86,7 +86,7 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 
 		$numCreated = 0;
 
-		foreach( self::$API_MARKETPLACES as $id => $info ) {
+		foreach ( self::$API_MARKETPLACES as $id => $info ) {
 			$params['marketplaceId'] = $id;
 			$params['marketplaceName'] = $info['name'];
 			$params['extraCategories'] = $info['categories'];
@@ -98,16 +98,21 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 		return $numCreated;
 	}
 
+	/**
+	 * import videos
+	 * @param array $params
+	 * @return integer $articlesCreated
+	 */
 	protected function importVideos( $params = array() ) {
 		wfProfileIn( __METHOD__ );
 
-		$addlCategories = ( !empty($params['addlCategories']) ) ? $params['addlCategories'] : array();
-		if ( !empty($params['extraCategories']) ) {
+		$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
+		if ( !empty( $params['extraCategories'] ) ) {
 			$addlCategories = array_merge( $addlCategories, $params['extraCategories'] );
 		}
-		$debug = ( !empty($params['debug']) );
-		$startDate = ( !empty($params['startDate']) ) ? $params['startDate'] : '';
-		$marketplaceId = ( !empty($params['marketplaceId']) ) ? $params['marketplaceId'] : '';
+		$debug = !empty( $params['debug'] );
+		$startDate = empty( $params['startDate'] ) ? '' : $params['startDate'];
+		$marketplaceId = empty( $params['marketplaceId'] ) ? '' : $params['marketplaceId'];
 
 		$page = 1;
 		$articlesCreated = 0;
@@ -117,14 +122,14 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 
 			// connect to provider API
 			$url = $this->initFeedUrl( $marketplaceId, $startDate, $page++ );
-			print("Connecting to $url...\n");
+			print( "Connecting to $url...\n" );
 
 			$req = MWHttpRequest::factory( $url );
 			$status = $req->execute();
 			if( $status->isOK() ) {
 				$response = $req->getContent();
 			} else {
-				print("ERROR: problem downloading content.\n");
+				print( "ERROR: problem downloading content.\n" );
 				wfProfileOut( __METHOD__ );
 
 				return 0;
@@ -132,25 +137,26 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 
 			// parse response
 			$response = json_decode( $response, true );
-			$videos = ( empty($response['contents']) ) ? array() : $response['contents'] ;
+			$videos = empty( $response['contents'] ) ? array() : $response['contents'] ;
 
 			$numVideos = count( $videos );
 			print("Found $numVideos videos...\n");
 
 			foreach( $videos as $video ) {
 				$clipData = array();
-				$clipData['titleName'] = trim($video['title']);
+				$clipData['titleName'] = trim( $video['title'] );
 				$clipData['videoId'] = $video['id'];
 				$clipData['altVideoId'] = $video['uuid'];
 				$clipData['thumbnail'] = $video['thumbnail_url'];
 				$clipData['duration'] = $video['duration'];
-				$clipData['published'] = $video['published_at'];
-				$clipData['category'] = $video['category']['name'];
-				$clipData['keywords'] = $video['category']['name'];
-				$clipData['description'] = trim($video['description']);
+				$clipData['published'] = strtotime( $video['published_at'] );
+				$clipData['category'] = $this->getCategory( $video['category']['name'] );
+				$clipData['genres'] = $this->getStdGenre( $video['category']['name'] );
+				$clipData['description'] = trim( $video['description'] );
+				$clipData['ageRequired'] = 0;
 				$clipData['ageGate'] = 0;
 				$clipData['hd'] = 0;
-				$clipData['tags'] = $video['tag_list'];
+				$clipData['keywords'] = preg_replace( '/,([^\s])/', ', $1', $video['tag_list'] );
 				$clipData['provider'] = 'realgravity';
 
 				$clipData['marketplaceName'] = $video['video_catalog']['name'];
@@ -171,22 +177,34 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 		return $articlesCreated;
 	}
 
+	/**
+	 * get feed url
+	 * @param integer $marketplaceId
+	 * @param string $startDate
+	 * @param string $page
+	 * @return string $url
+	 */
 	private function initFeedUrl( $marketplaceId, $startDate, $page ) {
 		global $wgRealgravityApiKey;
 
-		$url = str_replace('$1', $marketplaceId, static::$FEED_URL);
-		$url = str_replace('$2', $startDate, $url);
-		$url = str_replace('$3', $page, $url);
-		$url = str_replace('$4', self::API_PAGE_SIZE, $url);
-		$url = str_replace('$5', $wgRealgravityApiKey, $url);
+		$url = str_replace( '$1', $marketplaceId, static::$FEED_URL );
+		$url = str_replace( '$2', $startDate, $url );
+		$url = str_replace( '$3', $page, $url );
+		$url = str_replace( '$4', self::API_PAGE_SIZE, $url );
+		$url = str_replace( '$5', $wgRealgravityApiKey, $url );
 
 		return $url;
 	}
 
-	public function generateCategories( array $data, $addlCategories ) {
+	/**
+	 * Create list of category names to add to the new file page
+	 * @param array $data
+	 * @param array $categories
+	 * @return array $categories
+	 */
+	public function generateCategories( $data, $categories ) {
 		wfProfileIn( __METHOD__ );
 
-		$categories = ( !empty($addlCategories) ) ? $addlCategories : array();
 		$categories[] = 'RealGravity';
 		$categories[] = $data['marketplaceName'];
 
@@ -195,39 +213,21 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 		return $categories;
 	}
 
-	protected function generateName( array $data ) {
-		wfProfileIn( __METHOD__ );
-
-		$name = $data['titleName'];
-
-		wfProfileOut( __METHOD__ );
-
-		return $name;
-	}
-
-	protected function generateMetadata( array $data, &$errorMsg ) {
-		if ( empty($data['videoId']) ) {
-			$errorMsg = 'no video id exists';
+	/**
+	 * generate meatadata
+	 * @param array $data
+	 * @param string $errorMsg
+	 * @return array|integer $metadata or zero on error
+	 */
+	public function generateMetadata( $data, &$errorMsg ) {
+		$metadata = parent::generateMetadata( $data, $errorMsg );
+		if ( empty( $metadata ) ) {
 			return 0;
 		}
 
-		$metadata = array(
-			'videoId' => $data['videoId'],
-			'altVideoId' => $data['altVideoId'],
-			'hd' => $data['hd'],
-			'duration' => $data['duration'],
-			'published' => strtotime($data['published']),
-			'ageGate' => $data['ageGate'],
-			'thumbnail' => $data['thumbnail'],
-			'category' => $data['category'],
-			'description' => $data['description'],
-			'keywords' => $data['keywords'],
-			'tags' => $data['tags'],
-			'provider' => $data['provider'],
-			'marketplaceId' => $data['marketplaceId'],
-			'marketplaceName' => $data['marketplaceName'],
-			'categoryId' => $data['categoryId'],
-			);
+		$metadata['marketplaceId'] = empty( $data['marketplaceId'] ) ? '' : $data['marketplaceId'];
+		$metadata['marketplaceName'] = empty( $data['marketplaceName'] ) ? '' : $data['marketplaceName'];
+		$metadata['categoryId'] = empty( $data['categoryId'] ) ? '' : $data['categoryId'];
 
 		return $metadata;
 	}
