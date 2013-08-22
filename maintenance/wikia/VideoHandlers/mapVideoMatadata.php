@@ -221,11 +221,12 @@ ini_set( "include_path", dirname( __FILE__ )."/../../" );
 require_once( "commandLine.inc" );
 
 if ( isset($options['help']) ) {
-	die( "Usage: php mapVideoMatadata.php [--help] [--dry-run] [--provider=abc] [--limit=123]
+	die( "Usage: php mapVideoMatadata.php [--help] [--dry-run] [--provider=abc] [--limit=123] [--name=xyz] [--end=<timestamp>]
 	--dry-run                      dry run
 	--provider                     video provider (required)
 	--limit                        limit number of videos (required)
 	--name                         video title (optional)
+	--end                          end date (optional)
 	--help                         you are reading it right now\n\n" );
 }
 
@@ -237,6 +238,7 @@ $dryRun = isset( $options['dry-run'] );
 $provider = isset( $options['provider'] ) ? $options['provider'] : '';
 $limit = isset( $options['limit'] ) ? $options['limit'] : 0 ;
 $videoTitle = isset( $options['name'] ) ? $options['name'] : '';
+$end = isset( $options['end'] ) ? $options['end'] : '';
 
 if ( empty( $provider ) ) {
 	die( "Error: Invalid provider.\n" );
@@ -247,6 +249,8 @@ if ( !is_numeric( $limit ) ) {
 }
 
 echo "Wiki: $wgCityId ($wgDBname)\n";
+echo "Provider: $provider\n";
+echo "Limit: $limit\n";
 
 $ingester = VideoFeedIngester::getInstance( $provider );
 // get WikiFactory data
@@ -272,7 +276,14 @@ $sqlWhere = array(
 );
 
 if ( !empty( $videoTitle ) ) {
+	echo "Video title: $videoTitle\n";
 	$sqlWhere[] = "img_name >= ".$dbw->addQuotes( $videoTitle );
+}
+
+if ( !empty( $end ) ) {
+	$endDate = $dbw->timestamp( $end );
+	echo "End date: $end ($endDate)\n";
+	$sqlWhere[] = "img_timestamp < '$endDate'";
 }
 
 $result = $dbw->select(
