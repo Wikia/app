@@ -1002,6 +1002,7 @@ $config['VET_js'] = array(
 /**
  * @name VideoPageTool
  * @description Assets for the VideoPageTool, same styles as SpecialMarketingToolbox
+ * @TODO: decide if we want to split the js/css into two different packages for index and edit pages
  */
 
 $config['videopagetool_js'] = array(
@@ -1010,9 +1011,11 @@ $config['videopagetool_js'] = array(
 	'assets' => array(
 		'//resources/jquery.ui/jquery.ui.core.js',
 		'//resources/jquery.ui/jquery.ui.datepicker.js',
+		'//resources/jquery/jquery.validate.js',
 		'//extensions/wikia/VideoPageTool/js/models/datepicker.js',
 		'//extensions/wikia/VideoPageTool/js/views/datepicker.js',
 		'//extensions/wikia/VideoPageTool/js/views/index.js',
+		'//extensions/wikia/VideoPageTool/js/views/edit.js',
 	)
 );
 
