@@ -78,9 +78,16 @@ define('vpt.views.datepicker', [
 		onChangeMonthYear: function(year, month) {
 			return this.collection.collectData(year, month);
 		},
-		onSelect: function() {
-			// TODO: not implemented, build appropriate URI to programming page based on date and lang?
-			window.alert('clicked');
+		onSelect: function(timestamp) {
+			var qs = window.Wikia.Querystring,
+					loc = window.location;
+
+			qs(loc.origin + loc.pathname + 'edit')
+				.setVal({
+						region: this.collection.language,
+						date: timestamp
+				})
+				.goTo();
 		},
 		constructor: DatepickerView
 	};
