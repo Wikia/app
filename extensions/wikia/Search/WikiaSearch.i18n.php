@@ -56,6 +56,7 @@ $messages['en'] = array(
 	'wikiasearch2-crosswiki-description' => '$1 is a community site that anyone can contribute to. Discover, share and add your knowledge!',
 	'wikiasearch2-exact-result' => 'Results for $1 from Wikia',
 
+
 	'wikiasearch2-top-module-title' => 'What\'s hot now',
 	'wikiasearch2-top-module-edit' => 'Last edited on $1',
 
