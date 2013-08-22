@@ -1,25 +1,24 @@
 <form class="WikiaForm" method="post">
-	<div class="form-box featured-video">
-		<div class="form-box-rail">
-			<div class="video-thumb"></div>
+	<div class="form-box featured-video with-nav">
+		<div class="input-group">
+			<button class="add-video-button"><?= wfMessage( 'videopagetool-button-add-video' )->text() ?></button>
+			<p class="video-name alternative"><?= wfMessage( 'videopagetool-video-title-default-text' )->text() ?></p>
 		</div>
-		<div class="form-box-inner">
-			<div class="input-group">
-				<button class="add-video-button"><?= wfMessage( 'videopagetool-button-add-video' )->text() ?></button>
-				<p class="video-name alternative"><?= wfMessage( 'videopagetool-video-title-default-text' )->text() ?></p>
-			</div>
-			<div class="input-group">
-				<label><?= wfMessage( 'videopagetool-label-display-title' )->text() ?></label>
-				<input type="text">
-			</div>
-			<div class="input-group last">
-				<label><?= wfMessage( 'videopagetool-label-video-description' )->text() ?></label>
-				<textarea placeholder="<?= wfMessage( 'videopagetool-placeholder-video-description' )->text() ?>"></textarea>
-				<p class="alternative char-count"><!-- TODO: add char counter here --></p>
-			</div>
-			<p class='tip alternative'>
-				<?= wfMessage('videopagetool-html-text-tip')->parse() ?>
-			</p>
+		<div class="video-thumb"></div>
+		<div class="input-group border">
+			<label><?= wfMessage( 'videopagetool-label-display-title' )->text() ?></label>
+			<input type="text" name="display_title[]">
 		</div>
+		<div class="input-group">
+			<label><?= wfMessage( 'videopagetool-label-video-description' )->text() ?></label>
+			<textarea placeholder="<?= wfMessage( 'videopagetool-placeholder-video-description' )->text() ?>"></textarea>
+			<p class="alternative char-count"><!-- TODO: add char counter here --></p>
+		</div>
+		<button class="secondary navigation nav-up">
+			<img class="chevron chevron-up" src="<?= $wg->BlankImgUrl ?>">
+		</button>
+		<button class="secondary navigation nav-down">
+			<img class="chevron" src="<?= $wg->BlankImgUrl ?>">
+		</button>
 	</div>
 </form>

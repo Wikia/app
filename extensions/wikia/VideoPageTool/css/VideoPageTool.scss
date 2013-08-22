@@ -1,25 +1,29 @@
 @import "skins/oasis/css/core/color";
-@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-sizing-border-box";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/curation-elements";
 
-$label-padding: 10px 10px 10px 5px;
+$label-padding: 10px 10px 10px 0px;
 
 .VPTForms {
 
 	// Form container styles
 	.form-box {
 		@include clearfix;
-		border: 1px solid $color-page-border;
-		margin-bottom: 40px;
-		padding: 0 5px;
+		@include module-box;
+		padding: 0 10px;
+		position: relative;
+		&.with-nav {
+			padding-right: 37px; // width of nav buttons + 5px padding
+		}
 	}
 	.input-group {
 		@include box-sizing-border-box;
-		border-bottom: 1px solid $color-page-border-subtle;
 		padding: 5px 0;
 		width: 100%;
-		&.last {
-			border-bottom: 0;
+		&.border {
+			border-bottom: 1px solid $color-page-border-subtle;
 		}
 		input[type="text"], textarea, select {
 			@include box-sizing-border-box;
@@ -29,16 +33,16 @@ $label-padding: 10px 10px 10px 5px;
 			height: 100px;
 		}
 	}
+
+	button.navigation {
+		@include navigation;
+	}
+
 	label {
 		@include box-sizing-border-box;
 		float: left;
 		padding: $label-padding;
 		width: 30%;
-	}
-	.tip {
-		border-top: 1px solid $color-page-border-subtle;
-		clear: both;
-		padding: $label-padding;
 	}
 	.alternative {
 		color: $color-alternate-text;
@@ -56,32 +60,28 @@ $label-padding: 10px 10px 10px 5px;
 
 	// Featured video form styles
 	.featured-video {
+		.input-group {
+			clear: none;
+			width: 68%;
+		}
 		.add-video-button {
 			float: left;
 			height: 25px;
-			margin: $label-padding;
+			margin: 10px 10px 0 0;
 		}
 		.video-name {
-			padding: $label-padding;
-		}
-		.form-box-rail {
-			@include box-sizing-border-box;
-			float: right;
-			padding: 10px 5px 10px 10px;
-			width: 30%;
-		}
-		.form-box-inner {
-			float: left;
-			width: 70%;
+			padding-top: 11px;
 		}
 		.video-thumb {
 			@include box-sizing-border-box;
 			background: $color-page-border-subtle;
 			border: 1px solid $color-page-border;
+			clear: left;
 			float: right;
 			height: 100px;
-			width: 100%;
-
+			margin-top: 5px;
+			padding: 10px 5px 10px 10px;
+			width: 30%;
 		}
 	}
 }

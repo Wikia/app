@@ -1,5 +1,5 @@
 define('vpt.views.index', [
-		'vpt.views.datepicker'
+	'vpt.views.datepicker'
 ], function(Datepicker) {
 
 	function VPTIndex() {
@@ -14,7 +14,7 @@ define('vpt.views.index', [
 		bindEvents: function() {
 			var that = this;
 			this.$regionSelect.on('change', function(evt) {
-					return that.renderDatepicker.call(that, evt);
+				return that.renderDatepicker.call(that, evt);
 			});
 		},
 		renderDatepicker: function(evt) {
@@ -35,10 +35,10 @@ define('vpt.views.index', [
 
 			// initialize new datepicker, passing through the language
 			this.datepicker = new Datepicker({
-					el: '#date-picker',
-					language: value,
-					controller: 'VideoPageToolSpecial',
-					method: 'getCalendarInfo'
+				el: '#date-picker',
+				language: value,
+				controller: 'VideoPageToolSpecial',
+				method: 'getCalendarInfo'
 			});
 		}
 	};
@@ -47,7 +47,7 @@ define('vpt.views.index', [
 });
 
 require(['vpt.views.index'], function(IndexView) {
-		$(function() {
-			new IndexView();
-		});
+	$(function() {
+		new IndexView();
+	});
 });
