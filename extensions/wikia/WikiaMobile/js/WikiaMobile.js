@@ -50,6 +50,9 @@ window.addEventListener('DOMContentLoaded', function () {
 
 					var skin = this.getAttribute('data-skin');
 
+					//This is being depracted remove when Varnish will be updated to use useskin
+					cookies.set('mobilefullsite', 'true');
+
 					cookies.set('useskin', skin);
 					qs().setVal('useskin', skin).addCb().goTo();
 				});
