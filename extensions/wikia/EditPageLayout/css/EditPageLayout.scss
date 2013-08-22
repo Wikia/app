@@ -402,14 +402,6 @@ body {
 	display: none;
 }
 
-.EditPageHeader h1 {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    width: 300px;
-
-}
-
 .mw-toolbar-editbutton {
 	@include sprite-edit-mw-toolbar-deep-embed(23px,23px);
 }

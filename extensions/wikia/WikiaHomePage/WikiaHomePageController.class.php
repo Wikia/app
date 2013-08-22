@@ -546,6 +546,20 @@ class WikiaHomePageController extends WikiaController {
 		}
 
 		$this->imagesSlider = $this->sendRequest('WikiaMediaCarouselController', 'renderSlider', array('data' => $images));
+
+		$wordmarkUrl = '';
+		try {
+			$title = GlobalTitle::newFromText('Wiki-wordmark.png', NS_FILE, $wikiId);
+			if ( $title !== null ) {
+				$file = new GlobalFile($title);
+				if ( $file !== null ) {
+					$wordmarkUrl = $file->getUrl();
+				}
+			}
+		} catch ( Exception $e ) { }
+
+		$this->wordmark = $wordmarkUrl;
+
 	}
 
 	public static function onGetHTMLAfterBody($skin, &$html) {
@@ -577,18 +591,6 @@ class WikiaHomePageController extends WikiaController {
 		//this hook is fired only by the WikiaMobile skin, no need to check for what skin is being used
 		if (F::app()->wg->EnableWikiaHomePageExt && WikiaPageType::isMainPage()) {
 			$scssPackages[] = 'wikiahomepage_scss_wikiamobile';
-		}
-
-		return true;
-	}
-
-	public static function onAfterGlobalHeader(&$menuNodes, $category, $messageName) {
-		if (!empty($menuNodes) && isset($category->cat_id) && $category->cat_id == WikiFactoryHub::CATEGORY_ID_CORPORATE) {
-			foreach ($menuNodes as $key => $node) {
-				if (!empty($node['specialAttr'])) {
-					$menuNodes[$key]['class'] = $node['specialAttr'];
-				}
-			}
 		}
 
 		return true;

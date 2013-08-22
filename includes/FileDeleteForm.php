@@ -130,6 +130,7 @@ class FileDeleteForm {
 			$user = $wgUser;
 		}
 
+		/* @var LocalFile $file */
 		if( $oldimage ) {
 			$page = null;
 			$status = $file->deleteOld( $oldimage, $reason, $suppress );

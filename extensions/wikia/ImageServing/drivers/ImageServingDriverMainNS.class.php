@@ -67,6 +67,8 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 			$batch = array_slice( $imageNames, $i, 100 );
 			$i += 100;
 			$sql = array();
+			# FIXME
+			# select il_to, count(*) from imagelinks where il_to IN(..., ...) group by il_to;
 			foreach ( $batch as $imageName ) {
 				$sql[] = "(select il_to from {$imageLinksTable} where il_to = {$this->db->addQuotes($imageName)} limit {$sqlCount} )";
 			}

@@ -426,7 +426,7 @@ div.gallerybox div.thumb {
 	line-height: 250px;
 }
 
-div.main-page-tag-rcs {
+.main-page-tag-rcs {
 	position: relative;
 	width: 300px;
 	float: right;
@@ -437,12 +437,12 @@ div.main-page-tag-rcs {
     float:right;
 }
 
-div.main-page-tag-lcs-collapsed {
+.main-page-tag-lcs-collapsed {
 	overflow: hidden;
-	height: 1%; 
+	height: 1%;
 }
 
-div.main-page-tag-lcs-exploded {
+.main-page-tag-lcs-exploded {
 	float: left;
 	width: 100%;
 	position: relative;
@@ -459,5 +459,3 @@ div.main-page-tag-lcs-exploded {
     width: 100%;
     word-wrap: break-word;
 }
-
-

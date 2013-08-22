@@ -220,6 +220,8 @@ $wgAutoloadClasses[ 'MustachePHP'                     ] = "$IP/lib/vendor/mustac
 $wgAutoloadClasses[ 'Minify_CSS_Compressor'           ] = "$IP/lib/vendor/Minify_CSS_Compressor.php";
 $wgAutoloadClasses[ 'GMetricClient'                   ] = "$IP/lib/vendor/GMetricClient.class.php";
 $wgAutoloadClasses[ 'FakeLocalFile'                   ] = "$IP/includes/wikia/FakeLocalFile.class.php";
+$wgAutoloadClasses[ 'WikiaUploadStash'                ] = "$IP/includes/wikia/upload/WikiaUploadStash.class.php";
+$wgAutoloadClasses[ 'WikiaUploadStashFile'            ] = "$IP/includes/wikia/upload/WikiaUploadStashFile.class.php";
 $wgAutoloadClasses[ 'PayflowAPI'                      ] = "$IP/includes/wikia/PayflowAPI.php";
 $wgAutoloadClasses[ 'Curl'                            ] = "$IP/includes/wikia/Curl.php";
 $wgAutoloadClasses[ 'WikiaPageType'                   ] = "$IP/includes/wikia/WikiaPageType.class.php";
@@ -276,7 +278,6 @@ $wgAutoloadClasses['CategoriesService'] = $IP.'/includes/wikia/services/Categori
 $wgAutoloadClasses['UserCommandsService'] = $IP.'/includes/wikia/services/UserCommandsService.class.php';
 $wgAutoloadClasses['ToolbarService'] = $IP.'/includes/wikia/services/OasisToolbarService.class.php';
 $wgAutoloadClasses['OasisToolbarService'] = $IP.'/includes/wikia/services/OasisToolbarService.class.php';
-$wgAutoloadClasses['FogbugzService'] = $IP . '/includes/wikia/services/FogbugzService.class.php';
 $wgAutoloadClasses['CsvService'] = $IP . '/includes/wikia/services/CsvService.class.php';
 $wgAutoloadClasses['MobileService'] = $IP . '/includes/wikia/services/MobileService.class.php';
 $wgAutoloadClasses['TemplateService'] = $IP . '/includes/wikia/services/TemplateService.class.php';
@@ -892,11 +893,6 @@ $wgPayflowProCredentials = array();
  */
 
 $wgMemCachedTimeout = 500000; //Data timeout in microseconds
-
-/**
- * Fogbugz API config
- */
-$wgFogbugzAPIConfig = array();
 
 $wgAssetsManagerQuery = '/__am/%4$d/%1$s/%3$s/%2$s';
 //$wgAssetsManagerQuery = '/index.php?action=ajax&rs=AssetsManagerEntryPoint&__am&type=%1$s&cb=%4$d&params=%3$s&oid=%2$s';

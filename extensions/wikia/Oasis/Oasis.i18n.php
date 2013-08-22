@@ -34,7 +34,6 @@ $messages['en'] = array(
 	'oasis-latest-photos-more-dotdotdot' => 'more...',
 	'oasis-global-nav-header' => 'Wikia Navigation',
 	'oasis-global-nav-create-wiki' => 'Start a wiki',
-	'oasis-global-nav-create-wiki-alt' => 'Create a wiki',
 	'oasis-page-header-no-comments-tooltip' => 'Be the first to discuss this page',
 	'oasis-page-header-comments' => '{{PLURAL:$1|Comment|Comments}}',
 	'oasis-page-header-comments-k' => '$1k',

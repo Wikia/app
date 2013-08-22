@@ -2,16 +2,16 @@ $height-designer: 250px;
 $height-toolbar: 45px;
 $color-borders: #CECECE;
 
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/core/globalelements";
-@import "../../../../skins/oasis/css/core/reset";
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/core/buttons";
-@import "../../../../skins/oasis/css/core/typography";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/globalelements";
+@import "skins/oasis/css/core/reset";
+@import "skins/oasis/css/mixins/gradient";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/buttons";
+@import "skins/oasis/css/core/typography";
 
 body {
 	background: #F5F5F5;
@@ -197,7 +197,7 @@ h1 {
 	display: none;
 }
 
-@import "../../../../extensions/wikia/ThemeDesigner/css/ThemeTab";
-@import "../../../../extensions/wikia/ThemeDesigner/css/CustomizeTab";
-@import "../../../../extensions/wikia/ThemeDesigner/css/WordmarkTab";
-@import "../../../../extensions/wikia/ThemeDesigner/css/Picker";
+@import "extensions/wikia/ThemeDesigner/css/ThemeTab";
+@import "extensions/wikia/ThemeDesigner/css/CustomizeTab";
+@import "extensions/wikia/ThemeDesigner/css/WordmarkTab";
+@import "extensions/wikia/ThemeDesigner/css/Picker";
