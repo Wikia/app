@@ -6,7 +6,7 @@ class StaffLog extends SpecialPage
 	private $aTypes = array( 'piggyback', 'wikifactor' );
 
 	function __construct(){
-		global $wgRequest, $wgLang;
+		global $wgRequest;
 		$this->request = &$wgRequest;
 		parent::__construct( "stafflog","stafflog");
 		$this->aTypes = array(
