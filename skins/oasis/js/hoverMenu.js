@@ -182,9 +182,11 @@ HoverMenu.prototype.hideNav = function() {
 		nav = this.menu.find(".subnav");
 	nav.removeClass("show");
 
-	event = document.createEvent("HTMLEvents");
-	event.initEvent("hover-menu-hidden", true, true);
-	nav.get(0).dispatchEvent(event);
+	if (nav.exists()) {
+		event = document.createEvent("HTMLEvents");
+		event.initEvent("hover-menu-hidden", true, true);
+		nav.get(0).dispatchEvent(event);
+	}
 };
 
 /**

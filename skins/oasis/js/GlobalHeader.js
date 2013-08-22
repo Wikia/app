@@ -60,12 +60,15 @@ $(function () {
 		}
 	}
 
-	function isSampledEvent() {
+	function isSampledPV() {
 		return GLOBAL_NAV_SAMPLING_RATIO >= Math.floor((Math.random() * 100 + 1));
 	};
 
-	if (isSampledEvent()) {
+	if (isSampledPV()) {
+		Wikia.log( 'Global nav tracking enabled', 'info', 'GlobalNav' );
 		document.getElementById('WikiaHeader').addEventListener('click', clickTrackingHandler, true);
 		document.getElementById('WikiaHeader').addEventListener('hover-menu-shown', hoverMenuTrackingHandler, true);
+	} else {
+		Wikia.log( 'Global nav tracking disabled', 'info', 'GlobalNav' );
 	}
 });
