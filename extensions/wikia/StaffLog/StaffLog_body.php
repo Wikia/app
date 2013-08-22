@@ -11,10 +11,10 @@ class StaffLog extends SpecialPage
 		parent::__construct( "stafflog","stafflog");
 		$this->aTypes = array(
 			'' => '',
-			'block' => wfMessage( 'stafflog-filter-type-block' )->inLanguage( $wgLang->getCode() )->text(),
-			'piggyback' => wfMessage( 'stafflog-filter-type-piggyback' )->inLanguage( $wgLang->getCode() )->text(),
-			'renameuser' => wfMessage( 'stafflog-filter-type-renameuser' )->inLanguage( $wgLang->getCode() )->text(),
-			'wikifactor' => wfMessage( 'stafflog-filter-type-wikifactory' )->inLanguage( $wgLang->getCode() )->text()
+			'block' => wfMessage( 'stafflog-filter-type-block' )->text(),
+			'piggyback' => wfMessage( 'stafflog-filter-type-piggyback' )->text(),
+			'renameuser' => wfMessage( 'stafflog-filter-type-renameuser' )->text(),
+			'wikifactor' => wfMessage( 'stafflog-filter-type-wikifactory' )->text()
 		);
 	}
 
@@ -162,14 +162,14 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 						$linker->userLink($result->slog_user, $result->slog_user_name),
 						$linker->userLink($result->slog_userdst, $result->slog_user_namedst),
 						$siteurl,
-						strlen($result->slog_comment) > 0 ? $result->slog_comment:"-" ))->inLanguage( $wgLang->getCode() )->text();
+						strlen($result->slog_comment) > 0 ? $result->slog_comment:"-" ))->text();
 				break;
 			case  'piggyback':
 				$msg = $result->slog_action == "login" ? "stafflog-piggybackloginmsg" : "stafflog-piggybacklogoutmsg";
 				$out = wfMessage( $msg,
 					array($time,
 						$linker->userLink($result->slog_user, $result->slog_user_name),
-						$linker->userLink($result->slog_userdst, $result->slog_user_namedst)))->inLanguage( $wgLang->getCode() )->text();
+						$linker->userLink($result->slog_userdst, $result->slog_user_namedst)))->text();
 				break;
 			case 'wikifactor':
 				$out = $time . ' ' . $result->slog_comment;
