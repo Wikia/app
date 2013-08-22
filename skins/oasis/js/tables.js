@@ -6,6 +6,8 @@ jQuery(function( $ ) {
 	// Scans tables inside of the article and applies overflow hint styles
 	// on any tables that are wider than the article content area.
 	function scan() {
+		var wideCount = 0;
+
 		$article.find( '.table-wrapper' ).each(function() {
 			var $wrapper = $( this ),
 				$table = $wrapper.find( 'table' ),
@@ -13,13 +15,20 @@ jQuery(function( $ ) {
 
 			$wrapper.toggleClass( 'table-is-wide', isWide );
 
-			if ( isWide && !$table.parent( '.table-scrollable' ).length ) {
-				$table.wrap( scrollableTemplate );
+			if ( isWide ) {
+				wideCount++;
+
+				if ( !$table.parent( '.table-scrollable' ).length ) {
+					$table.wrap( scrollableTemplate );
+				}
 			}
 		});
 	}
 
-	$( window ).on( 'resize', $.debounce( 100, scan ) );
+	if ( wideCount ) {
+		$( window ).on( 'resize', $.debounce( 100, scan ) );
+	}
+
 	scan();
 });
 
