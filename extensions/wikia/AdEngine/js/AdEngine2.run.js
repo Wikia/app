@@ -7,8 +7,8 @@
 /*global Geo, Wikia */
 /*global ghostwriter, Krux */
 /*global AdConfig2, AdEngine2, DartUrl, EvolveHelper, SlotTweaker, ScriptWriter */
-/*global WikiaDartHelper, WikiaGptHelper */
-/*global AdProviderAdDriver2, AdProviderEvolve, AdProviderGamePro, AdProviderLater, AdProviderNull */
+/*global WikiaDartHelper, WikiaGptHelper, WikiaFullGptHelper */
+/*global AdProviderAdDriver2, AdProviderEvolve, AdProviderGpt, AdProviderGamePro, AdProviderLater, AdProviderNull */
 /*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdLogicShortPage, AdLogicPageLevelParams */
 /*global AdLogicPageLevelParamsLegacy */
 /*global require*/
@@ -29,8 +29,10 @@
 		dartUrl,
 		wikiaDart,
 		wikiaGpt,
+		wikiaFullGpt,
 		evolveHelper,
 		adProviderAdDriver2,
+		adProviderGpt,
 		adProviderEvolve,
 		adProviderGamePro,
 		adProviderLater,
@@ -54,10 +56,12 @@
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
 	wikiaDart = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl, adLogicDartSubdomain);
 	wikiaGpt = WikiaGptHelper(log, window, document, adLogicPageLevelParams);
+	wikiaFullGpt = WikiaFullGptHelper(log, window, document, adLogicPageLevelParams);
 	evolveHelper = EvolveHelper(log, window);
 
 	// Construct Ad Providers
 	adProviderAdDriver2 = AdProviderAdDriver2(wikiaDart, scriptWriter, tracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, adLogicDartSubdomain, wikiaGpt);
+	adProviderGpt = AdProviderGpt(tracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaFullGpt);
 	adProviderEvolve = AdProviderEvolve(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, document, Krux, evolveHelper, slotTweaker);
 	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, slotTweaker);
 	adProviderNull = AdProviderNull(log, slotTweaker);
@@ -77,6 +81,7 @@
 
 		// AdProviders:
 		adProviderAdDriver2,
+		adProviderGpt,
 		adProviderEvolve,
 		adProviderGamePro,
 		adProviderLater,
