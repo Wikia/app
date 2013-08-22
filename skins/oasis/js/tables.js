@@ -23,12 +23,11 @@ jQuery(function( $ ) {
 				}
 			}
 		});
-	}
 
-	if ( wideCount ) {
-		$( window ).on( 'resize', $.debounce( 100, scan ) );
+		if ( wideCount ) {
+			$( window ).on( 'resize', $.debounce( 100, scan ) );
+		}
 	}
-
 	scan();
 });
 
