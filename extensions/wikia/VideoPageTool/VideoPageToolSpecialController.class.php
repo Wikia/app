@@ -156,7 +156,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	 * @requestParam array videos
 	 * @responseParam array videos
 	 */
-	protected function trending() {
+	public function trending() {
 		$videos[] = array(
 			'categoryName' => 'Category Name',
 			'displayTitle' => 'Title',
@@ -169,7 +169,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	 * @requestParam array videos
 	 * @responseParam array videos
 	 */
-	protected function fan() {
+	public function fan() {
 		$videos[] = array(
 			'videoTitle' => 'Video Title',
 			'videoKey' => 'Video_Title',
