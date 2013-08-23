@@ -24,7 +24,6 @@ class GameGuidesController extends WikiaController {
 	 */
 	private $mModel = null;
 	private $mPlatform = null;
-	private $cacheBusterPath = null;
 
 	function init() {
 		$requestedVersion = $this->request->getInt( 'ver', self::API_VERSION );
