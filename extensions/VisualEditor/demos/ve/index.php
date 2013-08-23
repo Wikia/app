@@ -58,6 +58,8 @@ $html = file_get_contents( $page );
 		<link rel=stylesheet href="../../modules/ve/ui/styles/ve.ui.Widget.css">
 		<link rel=stylesheet href="../../modules/ve/ui/styles/ve.ui.Inspector.css">
 		<link rel=stylesheet href="../../modules/ve/ui/styles/ve.ui.Dialog.css">
+		<!-- ext.visualEditor.mediawiki -->
+		<link rel=stylesheet href="../../modules/ve/ce/styles/ve.ce.Node.css">
 
 		<!-- demo -->
 		<link rel="stylesheet" href="demo.css">
@@ -289,6 +291,52 @@ $html = file_get_contents( $page );
 		<!-- ext.visualEditor.experimental -->
 		<script src="../../modules/ve/dm/annotations/ve.dm.LanguageAnnotation.js"></script>
 		<script src="../../modules/ve/ce/annotations/ve.ce.LanguageAnnotation.js"></script>
+		<!-- ext.visualEditor.mediawiki -->
+		<script src="../../modules/ve-mw/dm/annotations/ve.dm.MWExternalLinkAnnotation.js"></script>
+		<script src="../../modules/ve-mw/dm/annotations/ve.dm.MWInternalLinkAnnotation.js"></script>
+		<script src="../../modules/ve-mw/dm/annotations/ve.dm.MWNowikiAnnotation.js"></script>
+		<script src="../../modules/ve-mw/dm/metaitems/ve.dm.MWAlienMetaItem.js"></script>
+		<script src="../../modules/ve-mw/dm/metaitems/ve.dm.MWCategoryMetaItem.js"></script>
+		<script src="../../modules/ve-mw/dm/metaitems/ve.dm.MWDefaultSortMetaItem.js"></script>
+		<script src="../../modules/ve-mw/dm/metaitems/ve.dm.MWLanguageMetaItem.js"></script>
+		<script src="../../modules/ve-mw/dm/metaitems/ve.dm.MWTransclusionMetaItem.js"></script>
+		<script src="../../modules/ve-mw/dm/models/ve.dm.MWTransclusionPartModel.js"></script>
+		<script src="../../modules/ve-mw/dm/models/ve.dm.MWTemplateModel.js"></script>
+		<script src="../../modules/ve-mw/dm/models/ve.dm.MWTemplateParameterModel.js"></script>
+		<script src="../../modules/ve-mw/dm/models/ve.dm.MWTemplatePlaceholderModel.js"></script>
+		<script src="../../modules/ve-mw/dm/models/ve.dm.MWTemplateSpecModel.js"></script>
+		<script src="../../modules/ve-mw/dm/models/ve.dm.MWTransclusionContentModel.js"></script>
+		<script src="../../modules/ve-mw/dm/models/ve.dm.MWTransclusionModel.js"></script>
+		<script src="../../modules/ve-mw/dm/nodes/ve.dm.MWExtensionNode.js"></script>
+		<script src="../../modules/ve-mw/dm/nodes/ve.dm.MWAlienExtensionNode.js"></script>
+		<script src="../../modules/ve-mw/dm/nodes/ve.dm.MWBlockImageNode.js"></script>
+		<script src="../../modules/ve-mw/dm/nodes/ve.dm.MWEntityNode.js"></script>
+		<script src="../../modules/ve-mw/dm/nodes/ve.dm.MWHeadingNode.js"></script>
+		<script src="../../modules/ve-mw/dm/nodes/ve.dm.MWHieroNode.js"></script>
+		<script src="../../modules/ve-mw/dm/nodes/ve.dm.MWImageCaptionNode.js"></script>
+		<script src="../../modules/ve-mw/dm/nodes/ve.dm.MWInlineImageNode.js"></script>
+		<script src="../../modules/ve-mw/dm/nodes/ve.dm.MWMathNode.js"></script>
+		<script src="../../modules/ve-mw/dm/nodes/ve.dm.MWPreformattedNode.js"></script>
+		<script src="../../modules/ve-mw/dm/nodes/ve.dm.MWReferenceListNode.js"></script>
+		<script src="../../modules/ve-mw/dm/nodes/ve.dm.MWReferenceNode.js"></script>
+		<script src="../../modules/ve-mw/dm/nodes/ve.dm.MWTransclusionNode.js"></script>
+		<script src="../../modules/ve-mw/ce/ve.ce.MWResizableNode.js"></script>
+		<script src="../../modules/ve-mw/ce/annotations/ve.ce.MWExternalLinkAnnotation.js"></script>
+		<script src="../../modules/ve-mw/ce/annotations/ve.ce.MWInternalLinkAnnotation.js"></script>
+		<script src="../../modules/ve-mw/ce/annotations/ve.ce.MWNowikiAnnotation.js"></script>
+		<script src="../../modules/ve-mw/ce/nodes/ve.ce.MWExtensionNode.js"></script>
+		<script src="../../modules/ve-mw/ce/nodes/ve.ce.MWAlienExtensionNode.js"></script>
+		<script src="../../modules/ve-mw/ce/nodes/ve.ce.MWBlockImageNode.js"></script>
+		<script src="../../modules/ve-mw/ce/nodes/ve.ce.MWEntityNode.js"></script>
+		<script src="../../modules/ve-mw/ce/nodes/ve.ce.MWHeadingNode.js"></script>
+		<script src="../../modules/ve-mw/ce/nodes/ve.ce.MWHieroNode.js"></script>
+		<script src="../../modules/ve-mw/ce/nodes/ve.ce.MWImageCaptionNode.js"></script>
+		<script src="../../modules/ve-mw/ce/nodes/ve.ce.MWInlineImageNode.js"></script>
+		<script src="../../modules/ve-mw/ce/nodes/ve.ce.MWMathNode.js"></script>
+		<script src="../../modules/ve-mw/ce/nodes/ve.ce.MWPreformattedNode.js"></script>
+		<script src="../../modules/ve-mw/ce/nodes/ve.ce.MWReferenceListNode.js"></script>
+		<script src="../../modules/ve-mw/ce/nodes/ve.ce.MWReferenceNode.js"></script>
+		<script src="../../modules/ve-mw/ce/nodes/ve.ce.MWTransclusionNode.js"></script>
 
 		<!-- demo -->
 		<script>
