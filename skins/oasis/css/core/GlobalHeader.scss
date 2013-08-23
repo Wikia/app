@@ -51,6 +51,13 @@
 
 		&:hover{
 			text-decoration: none;
+
+			.hubname-container {
+				display: inline;
+			}
+			.text-container {
+				display: none;
+			}
 		}
 
 		.chevron-container {
@@ -63,11 +70,15 @@
 			height: 34px;
 			float: left;
 		}
-		.text-container {
+		.text-container, .hubname-container {
 			color: $color-header-text;
 			font-weight: bold;
 			padding: 9px;
 			text-transform: uppercase;
+		}
+
+		.hubname-container {
+			display:none;
 		}
 	}
 	.drawer {
