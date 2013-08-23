@@ -14,16 +14,16 @@
  */
 /*global window, define, setTimeout, setInterval, clearInterval*/
 
-require([require.optional('ads')], function (ads) {
+require(['jquery', 'wikia.window'], function ($, w) {
 	'use strict';
 
-	var w = window,
-		doc = w.document;
+	var doc = w.document;
 
 	// If there's a hash, or addEventListener is undefined, stop here
 	if(!location.hash && w.addEventListener){
 		//scroll to 1
 		w.scrollTo( 0, 1 );
+
 		var scrollTop = 1,
 			getScrollTop = function(){
 				return w.pageYOffset || doc.compatMode === "CSS1Compat" && doc.documentElement.scrollTop || doc.body.scrollTop || 0;
@@ -37,14 +37,14 @@ require([require.optional('ads')], function (ads) {
 				}
 			}, 15 );
 
-		w.addEventListener('load', function(){
+		$(function(){
 			if( getScrollTop() < 20 ){
 				setTimeout(function(){
 					//reset to hide addr bar at onload
 					w.scrollTo( 0, scrollTop === 1 ? 0 : 1 );
 
 					//make sure ad is fixed
-					ads && ads.fix();
+					$.event.trigger('ads:fix');
 				}, 0);
 			}
 		});

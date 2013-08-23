@@ -6,7 +6,7 @@
 (function (context) {
 	'use strict';
 
-	function nirvana(ajax) {
+	function nirvana($) {
 
 		function sendRequest(attr) {
 			var type = (attr.type || 'POST').toUpperCase(),
@@ -62,7 +62,7 @@
 				}
 			}
 
-			return ajax({
+			return $.ajax({
 				url: url + '/wikia.php?' + $.param(getUrl), /* JSlint ignore */
 				dataType: format,
 				type: type,
@@ -109,10 +109,10 @@
 	}
 
 	if (context.define && context.define.amd) {
-		context.define('wikia.nirvana', ['wikia.ajax'], nirvana);
+		context.define('wikia.nirvana', ['jquery'], nirvana);
 	}
 
 	if(context.jQuery) {
-		context.jQuery.nirvana = nirvana(context.jQuery.ajax);
+		context.jQuery.nirvana = nirvana(context.jQuery);
 	}
 }(this));
