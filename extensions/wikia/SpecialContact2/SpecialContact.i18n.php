@@ -17,7 +17,7 @@ $messages['en'] = array(
 	'specialcontact-intro-main-head' => "<big>Need help? Don't worry, the Wikia community is here to help you!</big><br/>
 Follow the links below to learn more about how to use Wikia, make changes to your wiki or modify your account.",
 	'specialcontact-intro-main-local' => '', #(this is meant to be blank)
-	'specialcontact-intro-main-foot' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]]  or post on our '''[[w:c:community:Forum:Community_Central_Forum|community help forums]]'''. If you are looking for admin help and advice, stop by [[w:c:community:Admin_Central:Main_Page|Founder & Admin Central]].",
+	'specialcontact-intro-main-foot' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]]  or post on our '''[[w:c:community:Special:Forum|community help forums]]'''. If you are looking for admin help and advice, stop by [[w:c:community:Admin_Central:Main_Page|Founder & Admin Central]].",
 
 
 	'specialcontact-secheader-onwiki' => "Questions about this wiki",
@@ -116,7 +116,7 @@ If you feel you still need to discuss this block further with Wikia staff, pleas
 	'specialcontact-intro-using-wikia' => "Now that you are a part of the community, you are able to edit and contribute to almost any page across Wikia. For some introductory help, check out our [[Help:Getting_Started|help pages here]]. They are a great place to learn the basics of editing, formatting and much more.
 
 If you have questions about this specific wiki, start by [[Special:ListAdmins|contacting your local admins]].
-You can also ask general questions to other community members on our [[w:c:community:Forum:Community_Central_Forum|community help forum]].
+You can also ask general questions to other community members on our [[w:c:community:Special:Forum|community help forum]].
 
 Remember, you can't break a wiki, so don't be afraid to get started. Happy editing!",
 	'specialcontact-intro-feedback' => "Got feedback? We would love to hear it! Please provide your thoughts and details below. If you have feedback on a Wikia Labs product, please provide feedback [[Special:WikiaLabs|there]].
@@ -169,13 +169,13 @@ Happy editing!",
 
 	'specialcontact-intro-general' => "You can contact [[w:project:Staff|Wikia Staff]] using this form. Admins of this wiki can be found [[Special:ListAdmins|here]].
 
-	Additional information on how to report problems to Wikia can be found [[w:project:Report_a_problem|here]], or you can post on [[w:Forum:Index|Wikia Community Forums]] for user support.
+	Additional information on how to report problems to Wikia can be found [[w:project:Report_a_problem|here]], or you can post on [[w:c:community:Special:Forum|Wikia Community Forums]] for user support.
 
 If you prefer to use regular e-mail or have attachments, you can contact us at [mailto:community@wikia.com community@wikia.com].
 ",
 
 	/* non-form footer */
-	'specialcontact-noform-footer' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]]  or post on our '''[[w:c:community:Forum:Community_Central_Forum|community help forums]]'''. If you are looking for admin help and advice, stop by [[w:c:community:Admin_Central:Main_Page|Founder & Admin Central]].",
+	'specialcontact-noform-footer' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]]  or post on our '''[[w:c:community:Special:Forum|community help forums]]'''. If you are looking for admin help and advice, stop by [[w:c:community:Admin_Central:Main_Page|Founder & Admin Central]].",
 
 	/* form */
 	'specialcontact-username' => 'Your username',
@@ -225,7 +225,7 @@ If you prefer to use regular e-mail or have attachments, you can contact us at [
 	/* after */
 	'specialcontact-submitcomplete' => 'Thank you for contacting Wikia. We receive and review all messages submitted here. We will do our best to get back to you in the next 2-3 business days, but please be patient as we work through all of the messages.
 
-Remember, you can also find help in our [[w:c:community:Forum:Community_Central_Forum|Community Forum]] and [[w:c:community:Help:Index|Help pages]]. You can keep up to date with the latest Wikia news on our [[w:c:community:Blog:Wikia_Staff_Blog |Staff Blog]]. Happy editing!',
+Remember, you can also find help in our [[w:c:community:Special:Forum|Community Forum]] and [[w:c:community:Help:Index|Help pages]]. You can keep up to date with the latest Wikia news on our [[w:c:community:Blog:Wikia_Staff_Blog |Staff Blog]]. Happy editing!',
 );
 
 $messages['de'] = array(
@@ -238,7 +238,7 @@ $messages['de'] = array(
 	'specialcontact-intro-main-head' => "<big>Brauchst du Hilfe? Mach dir keine Sorgen, die Wikia-Community ist hier um dir zu helfen.</big><br/>
 Klicke auf die folgenden Links, um mehr darüber zu erfahren, wie man Wikis benutzt, Wikis anpasst oder das eigene Profil verändert.",
 	'specialcontact-intro-main-local' => '', #(this is meant to be blank)
-	'specialcontact-intro-main-foot' => "'''Beantwortet diese Seite deine Fragen?''' Falls nicht, dann [[Special:contact/general|schreib uns]]. Vergiss nicht, dass du dir immer unsere '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''', das [[w:c:de.community:Blog:Wikia_Deutschland_News|Wikia-Blog]]  oder unsere '''[[w:c:de.community:Forum:Übersicht|Foren]]''' ansehen kannst. Falls du ein Admin bist und nach Hilfe suchst, sieh dir unseren [[w:c:de.community:Admin-Bereich:Hauptseite|Gründer- und Adminbereich]] an.",
+	'specialcontact-intro-main-foot' => "'''Beantwortet diese Seite deine Fragen?''' Falls nicht, dann [[Special:contact/general|schreib uns]]. Vergiss nicht, dass du dir immer unsere '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''', das [[w:c:de.community:Blog:Wikia_Deutschland_News|Wikia-Blog]]  oder unsere '''[[w:c:de.community:Spezial:Forum|Foren]]'''  ansehen kannst. Falls du ein Admin bist und nach Hilfe suchst, sieh dir unseren [[w:c:de.community:Admin-Bereich:Hauptseite|Gründer- und Adminbereich]] an.",
 
 
 	'specialcontact-secheader-onwiki' => "Allgemeine Wiki-Fragen",
@@ -326,7 +326,7 @@ Falls du die Sperre dennoch mit einem Wikia-Mitarbeiter diskutieren willst dann 
 	'specialcontact-intro-using-wikia' => "Jetzt wo du ein Teil der Community bist, steht dir frei bei den Wikis deiner Wahl mitzumachen. Für Starthilfe, besuche die [[Help:Getting_Started|Hilfeseiten]].
 
 Hast du Fragen zu einem bestimmten Wiki, dann [[Special:ListAdmins|frag die lokalen Admins]].
-Du kannst auch jederzeit in unserem [[w:c:de.community:Forum:Übersicht|Hilfeforum]] fragen.
+Du kannst auch jederzeit in unserem [[w:c:de.community:Spezial:Forum|Hilfeforum]] fragen.
 
 Und vergiss nicht, dass man ein Wiki nicht kaputt machen kann! Experementieren ist erwünscht!",
 
@@ -372,13 +372,13 @@ Wenn du das Gefühl hast, dass dieses Wiki keinen Nutzen für andere darstellt (
 
 	'specialcontact-intro-general' => "Du kannst einen [[w:project:Staff|Wikia Mitarbeiter]] kontaktieren, indem du dieses Formular benutzt. Die Admins dieses Wiki können [[Special:ListAdmins|hier]] gefunden werden.
 
-	Zusätzliche Informationen zur Meldung von Problemen können [[w:project:Report_a_problem|hier]] gefunden werden, oder ihr postet es in unseren [[w:Forum:Index|Foren]].
+	Zusätzliche Informationen zur Meldung von Problemen können [[w:project:Report_a_problem|hier]] gefunden werden, oder ihr postet es iunsere '''[[w:c:de.community:Spezial:Forum|Foren]]'''
 
 Falls ihr lieber eine E-Mail schicken wollt, dann schreibt uns an [mailto:community@wikia.com community@wikia.com].
 ",
 
 	/* non-form footer */
-	'specialcontact-noform-footer' => "'''Beantwortet das hier deine Frage?''' Wenn nicht, dann [[Special:contact/general|schreib uns]]. Vergiss nicht, du kannst dir jederzeit die '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''' ansehen, das [[w:c:de.community:Blog:Wikia_Deutschland_News|Wikia-Blog]] lesen oder in unseren '''[[w:c:de.community:Forum:Übersicht|Foren]]''' posten. Falls du ein Admin bist und nach Hilfe und Ratschlägen suchst, dann besuche unseren [[w:c:de.community:Admin-Bereich:Hauptseite|Gründer & Admin Bereich]].",
+	'specialcontact-noform-footer' => "'''Beantwortet das hier deine Frage?''' Wenn nicht, dann [[Special:contact/general|schreib uns]]. Vergiss nicht, du kannst dir jederzeit die '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''' ansehen, das [[w:c:de.community:Blog:Wikia_Deutschland_News|Wikia-Blog]] lesen oder in unseren '''[[w:c:de.community:Spezial:Forum|Foren]]''' posten. Falls du ein Admin bist und nach Hilfe und Ratschlägen suchst, dann besuche unseren [[w:c:de.community:Admin-Bereich:Hauptseite|Gründer & Admin Bereich]].",
 
 	/* form */
 	'specialcontact-username' => 'Bitte gib deinen Benutzernamen ein',
@@ -428,7 +428,7 @@ Falls ihr lieber eine E-Mail schicken wollt, dann schreibt uns an [mailto:commun
 	/* after */
 	'specialcontact-submitcomplete' => "Danke, dass du Wikia kontaktiert hast. Wir haben alle hier angegebenen Informationen bekommen. Wir werden unser bestes tun, um innerhalb von 2 Arbeitstagen auf deine Nachricht zu antworten. Wir bitten um Geduld.
 
-Vergiss nicht, du kannst dir jederzeit die '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''' ansehen, den [[w:c:community:Blog:Wikia_Staff_Blog|Wikia-Blog]] lesen oder in unseren '''[[w:c:community:Forum:Community_Central_Forum|Foren]]''' posten.",
+Vergiss nicht, du kannst dir jederzeit die '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''' ansehen, den [[w:c:community:Blog:Wikia_Staff_Blog|Wikia-Blog]] lesen oder in unseren '''[[w:c:de.community:Spezial:Forum|Foren]]''' posten.",
 );
 
 $messages['es'] = array(
