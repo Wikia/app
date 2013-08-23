@@ -171,7 +171,9 @@ function mapMetadataIva( $ingester, $data, &$metadata ) {
 	}
 
 	$metadata['category'] = $ingester->getCategory( $metadata['category'] );
-	$metadata['type'] = $ingester->getStdType( $metadata['category'] );
+	if ( !empty( $data['category'] ) ) {
+		$metadata['type'] = $ingester->getStdType( $data['category'] );
+	}
 
 	// add page categories to metadata
 	$metadata['pageCategories'] = empty( $data['pageCategories'] ) ? '' : $data['pageCategories'];
