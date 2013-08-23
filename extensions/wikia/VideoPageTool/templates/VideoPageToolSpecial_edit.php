@@ -1,5 +1,5 @@
 <div class="WikiaGrid VPTForms">
-	<div class="grid-2">
+	<div class="grid-2 alpha">
 		<?= $app->renderView('LeftMenu',
 			'Index',
 			array('menuItems' => $leftMenuItems)
