@@ -1,8 +1,8 @@
 //init
 window.addEventListener('DOMContentLoaded', function () {
 	'use strict';
-	require(['wikia.querystring', require.optional('topbar'), require.optional('toc'), require.optional('share'), require.optional('popover'), require.optional('wikia.cookies'), 'track', 'layout', 'wikia.videoBootstrap'],
-		function (qs, topbar, toc, share, popover, cookies, track, layout, VideoBootstrap) {
+	require(['wikia.querystring', require.optional('topbar'), require.optional('toc'), require.optional('share'), require.optional('popover'), require.optional('wikia.cookies'), 'track', 'layout', 'wikia.videoBootstrap', 'wikia.window'],
+		function (qs, topbar, toc, share, popover, cookies, track, layout, VideoBootstrap, window) {
 			var d = document,
 				clickEvent = 'click',
 				//add chevrons to elements that need it
@@ -30,7 +30,7 @@ window.addEventListener('DOMContentLoaded', function () {
 					var t = ev.target;
 					ev.preventDefault();
 
-					if(t.tagName == 'A') {
+					if(t.tagName === 'A') {
 						track.event('read-more', track.IMAGE_LINK, {
 							href: t.href
 						},
@@ -47,9 +47,17 @@ window.addEventListener('DOMContentLoaded', function () {
 				fllSite.addEventListener(clickEvent, function(event){
 					event.preventDefault();
 					event.stopPropagation();
+
+					var skin = this.getAttribute('data-skin');
+
+					//This is being deprecated remove when Varnish will be updated to use useskin
 					cookies.set('mobilefullsite', 'true');
 
-					qs().setVal('useskin', this.getAttribute('data-skin')).addCb().goTo();
+					cookies.set('useskin', skin, {
+						domain: window.wgCookieDomain,
+						path: window.wgCookiePath
+					});
+					qs().setVal('useskin', skin).addCb().goTo();
 				});
 			}
 
