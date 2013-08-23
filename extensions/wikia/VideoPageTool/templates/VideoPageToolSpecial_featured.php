@@ -1,4 +1,4 @@
-<form class="WikiaForm vpt-form" method="post">
+<form class="WikiaForm vpt-form" method="post" action="#">
 
 	<? for( $x = 1; $x <= 5; $x++ ): ?>
 
@@ -10,12 +10,12 @@
 			</div>
 			<div class="video-thumb"></div>
 			<div class="input-group border">
-				<label><?= wfMessage( 'videopagetool-label-display-title' )->text() ?></label>
-				<input type="text" name="display_title[]">
+				<label for="video_display_title"><?= wfMessage( 'videopagetool-label-display-title' )->text() ?></label>
+				<input class="required" id="video_display_title" type="text" name="display_title[]">
 			</div>
 			<div class="input-group">
-				<label><?= wfMessage( 'videopagetool-label-video-description' )->text() ?></label>
-				<textarea placeholder="<?= wfMessage( 'videopagetool-placeholder-video-description' )->text() ?>"></textarea>
+				<label for="video_description"><?= wfMessage( 'videopagetool-label-video-description' )->text() ?></label>
+				<textarea id="video_description" placeholder="<?= wfMessage( 'videopagetool-placeholder-video-description' )->text() ?>" name="description[]"></textarea>
 				<p class="alternative char-count"><!-- TODO: add char counter here --></p>
 			</div>
 			<button class="secondary navigation nav-up">

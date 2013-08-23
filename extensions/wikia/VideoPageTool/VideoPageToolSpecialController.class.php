@@ -86,6 +86,10 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 			$section = VideoPageToolHelper::DEFAULT_SECTION;
 		}
 
+		if ($this->request->wasPosted()) {
+			// Do form validation and saving here
+		}
+
 		$videos = array();
 
 		$this->leftMenuItems = $helper->getLeftMenuItems( $section );

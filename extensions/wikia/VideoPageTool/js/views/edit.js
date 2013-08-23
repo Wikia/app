@@ -10,7 +10,7 @@ define( 'vpt.views.edit', [
 	VPTEdit.prototype = {
 		init: function() {
 			this.$form.validate({
-				debug: true
+				//debug: true
 			});
 		}
 	};
