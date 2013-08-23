@@ -22,9 +22,9 @@ $(function () {
 				action: Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT,
 				label: 'signup'
 			});
-		} else if (element.classList.contains('ajaxLogin')) { // log in link
+		} else if (element.classList.contains('login-button')) { // log in button
 			track({
-				action: Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT,
+				action: Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON,
 				label: 'login'
 			});
 		} else if (element.parentNode.classList.contains('topNav')) { // hub link
