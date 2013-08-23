@@ -80,9 +80,17 @@ define('vpt.views.datepicker', [
 		},
 		onSelect: function(timestamp) {
 			var qs = window.Wikia.Querystring,
-					loc = window.location;
+					loc = window.location,
+					pathname;
 
-			qs(loc.origin + loc.pathname + 'edit')
+
+			if (loc.pathname.charAt( loc.pathname.length - 1 ) !== '/') {
+				pathname = loc.pathname + '/';
+			} else {
+				pathname = loc.pathname;
+			}
+
+			qs(loc.origin + pathname + 'edit')
 				.setVal({
 						region: this.collection.language,
 						date: timestamp
