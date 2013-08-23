@@ -84,10 +84,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->handleArticleMatchTracking( $searchConfig );
 			$search->search();
 		}
-		
+
 		$this->setPageTitle( $searchConfig );
 		$this->setResponseValuesFromConfig( $searchConfig );
-		$this->setVarnishCacheTime( self::VARNISH_CACHE_TIME );
+		//$this->setVarnishCacheTime( self::VARNISH_CACHE_TIME );
 	}
 
 	/**
@@ -166,7 +166,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    $this->setVal( 'label',     $label );
 	    $this->setVal( 'tooltip',   $tooltip );
 	}
-	
+
 	/**
 	 * Delivers a JSON response for video searches
 	 */
@@ -178,12 +178,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    	->setNamespaces     ( array(NS_FILE) )
 	    	->setVideoSearch    ( true )
 	    ;
-		$wikiaSearch = $this->queryServiceFactory->getFromConfig( $searchConfig ); 
+		$wikiaSearch = $this->queryServiceFactory->getFromConfig( $searchConfig );
 	    $this->getResponse()->setFormat( 'json' );
 	    $this->getResponse()->setData( $wikiaSearch->searchAsApi() );
 
 	}
-	
+
 	/**
 	 * Delivers a JSON response for videos matching a provided title
 	 * Expects query param "title" for the title value.
@@ -206,7 +206,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->getResponse()->setFormat( 'json' );
 		$this->getResponse()->setData( $queryService->searchAsApi() );
 	}
-	
+
 	/**
 	 * Given a "title" parameter, tests if there's a near match, and then returns the canonical title
 	 */
@@ -223,7 +223,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$response->setFormat( 'json' );
 		$response->setData( $entityResponse );
 	}
-	
+
 	/**
 	 * Powers the category page view
 	 */
@@ -237,9 +237,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				$colonSploded = explode( ':', $category );
 				$namespace = (new Wikia\Search\MediaWikiService)->getNamespaceIdForString( $colonSploded[0] );
 				// remove "Category:", since it doesn't work with ArticlesApiController
-				$category = ( is_int( $namespace ) && $namespace == NS_CATEGORY ) 
-				         ? implode( ':', array_slice( $colonSploded, 1 ) ) 
-				         : $category; 
+				$category = ( is_int( $namespace ) && $namespace == NS_CATEGORY )
+				         ? implode( ':', array_slice( $colonSploded, 1 ) )
+				         : $category;
 				//@todo use single API call here when expansion is released
 				$pageData = $this->app->sendRequest( 'ArticlesApiController', 'getTop', [ 'namespaces' => 0, 'category' => $category ] )->getData();
 				$ids = [];
@@ -320,7 +320,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Called in index action.
 	 * Based on an article match and various settings, generates tracking events and routes user to appropriate page.
 	 * @param  Wikia\Search\Config $searchConfig
-	 * @return boolean true if on page 1 and not routed, false if not on page 1 
+	 * @return boolean true if on page 1 and not routed, false if not on page 1
 	 */
 	protected function handleArticleMatchTracking( Wikia\Search\Config $searchConfig ) {
 		if ( $searchConfig->getPage() != 1 ) {
@@ -375,7 +375,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 		return $searchConfig;
 	}
-	
+
 	/**
 	 * Sets values for the view to work with during index method.
 	 * @param Wikia\Search\Config $searchConfig
@@ -434,7 +434,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 		$this->setVal( 'topWikiArticles', $topWikiArticlesHtml );
 	}
-	
+
 	/**
 	 * Includes wiki match partial for non cross-wiki searches
 	 * @param Wikia\Search\Config $searchConfig
@@ -450,7 +450,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->resultsFound++;
 		}
 	}
-	
+
 	/**
 	 * Sets the page title during index method.
 	 * @param Wikia\Search\Config $searchConfig
@@ -474,7 +474,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Called in index action. Sets the SearchConfigs namespaces based on MW-core NS request style.
 	 * @see    WikiSearchControllerTest::testSetNamespacesFromRequest
 	 * @param  Wikia\Search\Config $searchConfig
-	 * @param  User $user 
+	 * @param  User $user
 	 * @return boolean true
 	 */
 	protected function setNamespacesFromRequest( $searchConfig, User $user ) {
