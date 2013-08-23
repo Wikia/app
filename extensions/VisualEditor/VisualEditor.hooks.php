@@ -10,7 +10,7 @@
 
 class VisualEditorHooks {
 	/** List of skins VisualEditor integration supports */
-	protected static $supportedSkins = array( 'vector', 'apex', 'monobook' );
+	protected static $supportedSkins = array( 'oasis' );
 
 	public static function onSetup() {
 		global $wgResourceModules, $wgVisualEditorResourceTemplate,
@@ -23,7 +23,7 @@ class VisualEditorHooks {
 		// parties who attempt to install VisualEditor onto non-alpha wikis, as
 		// this should have no impact on deploying to Wikimedia's wiki cluster.
 		// Is fine for release tarballs because 1.22wmf11 < 1.22alpha < 1.22.0.
-		wfUseMW( '1.22wmf11' );
+		//wfUseMW( '1.22wmf11' ); #back-compat
 
 		// Add tab messages to the init init module
 		foreach ( $wgVisualEditorTabMessages as $msg ) {
@@ -78,8 +78,8 @@ class VisualEditorHooks {
 	 * @param $skin Skin
 	 */
 	public static function onBeforePageDisplay( &$output, &$skin ) {
-		$output->addModules( array( 'ext.visualEditor.viewPageTarget.init' ) );
-		$output->addModuleStyles( array( 'ext.visualEditor.viewPageTarget.noscript' ) );
+		$output->addModules( array( 'ext.visualEditor.wikiaViewPageTarget.init' ) );
+		//$output->addModuleStyles( array( 'ext.visualEditor.viewPageTarget.noscript' ) );
 		return true;
 	}
 

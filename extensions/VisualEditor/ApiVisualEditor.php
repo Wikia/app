@@ -42,7 +42,8 @@ class ApiVisualEditor extends ApiBase {
 				),
 				array(
 					'method' => 'GET',
-					'timeout' => $wgVisualEditorParsoidTimeout
+					'timeout' => $wgVisualEditorParsoidTimeout,
+					'noProxy' => true
 				)
 			);
 			$status = $req->execute();
@@ -96,7 +97,8 @@ class ApiVisualEditor extends ApiBase {
 					'content' => $html,
 					'oldid' => $parserParams['oldid']
 				),
-				'timeout' => $wgVisualEditorParsoidTimeout
+				'timeout' => $wgVisualEditorParsoidTimeout,
+				'noProxy' => true
 			)
 		);
 	}
@@ -218,7 +220,11 @@ class ApiVisualEditor extends ApiBase {
 				// Dirty hack to provide the correct context for edit notices
 				global $wgTitle; // FIXME NOOOOOOOOES
 				$wgTitle = $page;
-				$notices = $page->getEditNotices();
+				// TODO: In MW 1.19.7 method getEditNotices does not exist so for now fallback to just an empty
+				// but in future figure out what's the proper backward compatibility solution.
+				// #back-compat
+				// $notices = $page->getEditNotices();
+				$notices = array();
 				if ( $user->isAnon() ) {
 					$wgVisualEditorEditNotices[] = 'anoneditwarning';
 				}

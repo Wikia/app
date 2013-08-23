@@ -175,7 +175,7 @@ $wgResourceModules += array(
 			'mediawiki.api',
 			'mediawiki.feedback',
 			'mediawiki.jqueryMsg',
-			'mediawiki.notify',
+			//'mediawiki.notify', #back-compat
 			'mediawiki.Title',
 			'mediawiki.Uri',
 			'mediawiki.user',
@@ -806,14 +806,16 @@ $wgVisualEditorTabMessages = array(
 	'edit' => null,
 	// i18n message key to use for the old edit tab
 	// If null, the tab's caption will not be changed
-	'editsource' => 'visualeditor-ca-editsource',
+	//'editsource' => 'visualeditor-ca-editsource',
+	'editsource' => 'visualeditor-ca-classiceditor',
 	// i18n message key to use for the VisualEditor create tab
 	// If null, the default create tab caption will be used
 	// The 'visualeditor-ca-ve-create' message is available for this
 	'create' => null,
 	// i18n message key to use for the old create tab
 	// If null, the tab's caption will not be changed
-	'createsource' => 'visualeditor-ca-createsource',
+	//'createsource' => 'visualeditor-ca-createsource',
+	'createsource' => 'visualeditor-ca-classiceditor',
 	// i18n message key to use for the VisualEditor section edit link
 	// If null, the default edit section link caption will be used
 	'editsection' => null,
