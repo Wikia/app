@@ -1,5 +1,5 @@
 # Wikia .editorconfig
-# Download the plugin for your editor/IDE of choice from http://http://editorconfig.org/#download
+# Download the plugin for your editor/IDE of choice from http://editorconfig.org/#download
 root = true
 
 [*.js]
