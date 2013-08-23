@@ -90,7 +90,7 @@ If there's an active user community on the wiki you wish to adopt, please start 
 *Is your browser up-to-date?
 *Have you confirmed your email address?
 *Are you trying to log in via Facebook Connect? Be sure to follow the steps [[Help:Facebook_Connect|here]].
-*Not able to create an account? It may be that you are not eligible for an account at this time. See [[w:c::wikia:Wikia:Terms_of_use#Membership|terms of use]] for more details.
+*Not able to create an account? It may be that you are not eligible for an account at this time. See [[homepage:Terms of Use#Membership|terms of use]] for more details.
 *Lost your password? You can request a new password [[Special:Signup|here]] Once there, enter your username, and click the \"new password\" button. You will then receive an email with a new temporary password. You can use this to sign in and update your password to one of your choice.
 
 If you have done all of these and are still having an issue - please send us a detailed report below. We will get back to you as soon as possible to help fix the problem.
