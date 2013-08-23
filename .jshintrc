@@ -1,5 +1,7 @@
 { 
 	// Wikia .jshintrc
+	// Installation instructions and linters for your preferred IDE/editor here: http://www.jshint.com/install/
+	
 	// Enforcing
 
 	"bitwise": true,
