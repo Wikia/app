@@ -1,0 +1,13 @@
+{
+	"templateVars": {
+		"default": {
+			"required": ["side", "content"],
+			"optional": []
+		}
+
+	},
+	"dependencies": {
+		"js": ["resources/wikia/ui_components/drawer/js/drawer.js"],
+		"css": [ "resources/wikia/ui_components/drawer/css/drawer_default.scss" ]
+	}
+}
