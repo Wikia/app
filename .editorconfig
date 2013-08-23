@@ -2,7 +2,7 @@
 # Download the plugin for your editor/IDE of choice from http://editorconfig.org/#download
 root = true
 
-[*.js]
+[**.js]
 indent_style = tab
 indent_size = tab
 end_of_line = lf
