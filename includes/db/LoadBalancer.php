@@ -49,7 +49,9 @@ class LoadBalancer {
 		$this->mWaitForPos = false;
 		$this->mLaggedSlaveMode = false;
 		$this->mErrorConnection = false;
-		$this->mAllowLagged = false;
+		// wikia change start
+		$this->mAllowLagged = true;
+		// wikia change end
 
 		if ( isset( $params['loadMonitor'] ) ) {
 			$this->mLoadMonitorClass = $params['loadMonitor'];
