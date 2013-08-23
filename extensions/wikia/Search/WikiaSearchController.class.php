@@ -41,7 +41,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @var int
 	 */
 	const VARNISH_CACHE_TIME = 43200;
-	
+
 	/**
 	 * Responsible for instantiating query services based on config.
 	 * @var Wikia\Search\QueryService\Factory
@@ -78,10 +78,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->handleArticleMatchTracking( $searchConfig );
 			$search->search();
 		}
-		
+
 		$this->setPageTitle( $searchConfig );
 		$this->setResponseValuesFromConfig( $searchConfig );
-		$this->setVarnishCacheTime( self::VARNISH_CACHE_TIME );
+		//$this->setVarnishCacheTime( self::VARNISH_CACHE_TIME );
 
 		// PLA-593 DEBUG ONLY
 		$this->setVal( 'currentUrl', $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
@@ -159,7 +159,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    $this->setVal( 'label',     $label );
 	    $this->setVal( 'tooltip',   $tooltip );
 	}
-	
+
 	/**
 	 * Delivers a JSON response for video searches
 	 */
@@ -171,12 +171,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    	->setNamespaces     ( array(NS_FILE) )
 	    	->setVideoSearch    ( true )
 	    ;
-		$wikiaSearch = $this->queryServiceFactory->getFromConfig( $searchConfig ); 
+		$wikiaSearch = $this->queryServiceFactory->getFromConfig( $searchConfig );
 	    $this->getResponse()->setFormat( 'json' );
 	    $this->getResponse()->setData( $wikiaSearch->searchAsApi() );
 
 	}
-	
+
 	/**
 	 * Delivers a JSON response for videos matching a provided title
 	 * Expects query param "title" for the title value.
@@ -195,11 +195,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$queryService = $this->queryServiceFactory->getFromConfig( $searchConfig );
 		if ( ( $minDuration = $this->getVal( 'minseconds' ) ) && ( $maxDuration = $this->getVal( 'maxseconds' ) ) ) {
 			$queryService->setMinDuration( $minDuration)->setMaxDuration( $maxDuration );
-		} 
+		}
 		$this->getResponse()->setFormat( 'json' );
 		$this->getResponse()->setData( $queryService->searchAsApi() );
 	}
-	
+
 	/**
 	 * Given a "title" parameter, tests if there's a near match, and then returns the canonical title
 	 */
@@ -225,7 +225,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Called in index action.
 	 * Based on an article match and various settings, generates tracking events and routes user to appropriate page.
 	 * @param  Wikia\Search\Config $searchConfig
-	 * @return boolean true if on page 1 and not routed, false if not on page 1 
+	 * @return boolean true if on page 1 and not routed, false if not on page 1
 	 */
 	protected function handleArticleMatchTracking( Wikia\Search\Config $searchConfig ) {
 		if ( $searchConfig->getPage() != 1 ) {
@@ -280,7 +280,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 		return $searchConfig;
 	}
-	
+
 	/**
 	 * Sets values for the view to work with during index method.
 	 * @param Wikia\Search\Config $searchConfig
@@ -339,7 +339,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 		$this->setVal( 'topWikiArticles', $topWikiArticlesHtml );
 	}
-	
+
 	/**
 	 * Includes wiki match partial for non cross-wiki searches
 	 * @param Wikia\Search\Config $searchConfig
@@ -349,12 +349,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $matchResult !== null ) {
 			$this->setVal(
 					'wikiMatch',
-					$this->getApp()->getView( 'WikiaSearch', 'CrossWiki_result', [ 'result' => $matchResult, 'pos' => -1 ] ) 
+					$this->getApp()->getView( 'WikiaSearch', 'CrossWiki_result', [ 'result' => $matchResult, 'pos' => -1 ] )
 					);
 			$this->resultsFound++;
 		}
 	}
-	
+
 	/**
 	 * Sets the page title during index method.
 	 * @param Wikia\Search\Config $searchConfig
@@ -378,7 +378,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Called in index action. Sets the SearchConfigs namespaces based on MW-core NS request style.
 	 * @see    WikiSearchControllerTest::testSetNamespacesFromRequest
 	 * @param  Wikia\Search\Config $searchConfig
-	 * @param  User $user 
+	 * @param  User $user
 	 * @return boolean true
 	 */
 	protected function setNamespacesFromRequest( $searchConfig, User $user ) {
