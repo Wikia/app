@@ -51,11 +51,51 @@ describe('UIFactory', function(){
 		expect(typeof uifactory.init).toBe('function', 'init');
 	});
 
+	async.it('check if requested components are passed to AJAX request as array', function(done){
+		function nirvanaMock(resp) {
+			var nirvana = {
+				getJson: function(controller, method, params, callback) {
+					expect(params.components instanceof Array).toBe(true);
+					callback(resp);
+				}
+			};
+
+			return nirvana;
+		}
+
+		var nirvana = nirvanaMock(componentConfig);
+		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, loader, uiComponent);
+
+		uifactory.init(requestedComponent).done(function() {
+			done();
+		});
+	});
+
+	async.it('check if cachebaster is passed to AJAX request', function(done) {
+		function nirvanaMock(resp) {
+			var nirvana = {
+				getJson: function(controller, method, params, callback) {
+					expect(params.cb).toBe(window.wgStyleVersion);
+
+					callback(resp);
+				}
+			};
+
+			return nirvana;
+		}
+
+		var nirvana = nirvanaMock(componentConfig);
+		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, loader, uiComponent);
+
+		uifactory.init(requestedComponent).done(function() {
+			done();
+		});
+	});
+
 	async.it('returns single component', function(done) {
 		function nirvanaMock(resp) {
 			var nirvana = {
 				getJson: function(controller, method, params, callback) {
-					expect(params.components).toBe(requestedComponent);
 					expect(params.cb).toBe(window.wgStyleVersion);
 
 					callback(resp);
@@ -69,7 +109,6 @@ describe('UIFactory', function(){
 		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, loader, uiComponent);
 
 		uifactory.init(requestedComponent).done(function(component) {
-			dump(component)
 			expect(component instanceof uiComponent).toBe(true);
 
 			done();
@@ -80,9 +119,6 @@ describe('UIFactory', function(){
 		function nirvanaMock(resp) {
 			var nirvana = {
 				getJson: function(controller, method, params, callback) {
-					expect(params.components).toBe(requestedComponent);
-					expect(params.cb).toBe(window.wgStyleVersion);
-
 					callback(resp);
 				}
 			};
@@ -139,9 +175,6 @@ describe('UIFactory', function(){
 		function nirvanaMock(resp) {
 			var nirvana = {
 				getJson: function(controller, method, params, callback, errorCallback) {
-					expect(params.components).toBe(requestedComponent);
-					expect(params.cb).toBe(window.wgStyleVersion);
-
 					errorCallback(resp);
 				}
 			};

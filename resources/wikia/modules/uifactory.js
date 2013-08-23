@@ -62,6 +62,8 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'w
 	 *
 	 */
 
+	// TODO: use jQuery helper methods for this or move this method to separate shared utility lib - waiting for decision about using jQuery in mobile skin
+
 	function arrayUnique(array) {
 
 		var o = {},
@@ -93,8 +95,10 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'w
 		var deferred = new Deferred,
 			components = [];
 
-		if (!componentName instanceof Array) {
-			componentName = [].push(componentName);
+		if (!(componentName instanceof Array)) {
+			var a = [];
+			a.push(componentName);
+			componentName = a;
 		}
 
 		getComponentsConfig(componentName).done(function(data) {
@@ -124,18 +128,23 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'w
 			jsAssets = arrayUnique(jsAssets);
 			cssAssets = arrayUnique(cssAssets);
 
-
 			// TODO: temporary solution - to limit number of requests all assets will be fetched as strings in a single request while calling getComponentsConfig
 			loader({
 				type: loader.CSS,
 				resources: cssAssets
 			});
-			loader({
-				type: loader.JS,
-				resources: jsAssets
-			}).done(function() {
+
+			if (jsAssets.length > 0) {
+				loader({
+					type: loader.JS,
+					resources: jsAssets
+				}).done(function() {
 					deferred.resolve((components.length == 1) ? components[0] : components);
-			});
+				});
+			} else {
+				deferred.resolve((components.length == 1) ? components[0] : components);
+			}
+
 		}).fail(function(data) {
 			if (data.error) {
 				throw new Error(data.error + ': ' + data.message);

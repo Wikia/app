@@ -40,10 +40,14 @@ describe('UIComponent', function() {
 	});
 
 	it('calling without a "new" returns a new instance of UIComponent', function() {
-		var uiComponent = uicomponent();
+		var uiComponent1 = uicomponent(),
+			uiComponent2 = uicomponent();
 
-		expect(typeof uiComponent.render).toBe('function', 'render');
-		expect(typeof uiComponent.setComponentsConfig).toBe('function', 'setComponentsConfig');
+		expect(typeof uiComponent1.render).toBe('function', 'render');
+		expect(typeof uiComponent1.setComponentsConfig).toBe('function', 'setComponentsConfig');
+		expect(typeof uiComponent2.render).toBe('function', 'render');
+		expect(typeof uiComponent2.setComponentsConfig).toBe('function', 'setComponentsConfig');
+		expect(uiComponent1 === uiComponent2).toBe(false);
 	});
 
 	it('render component', function() {
