@@ -174,8 +174,8 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 	public function generateCategories( $data, $categories ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( !empty( $data['keywords'] ) ) {
-			$categories += array_map( 'trim', explode( ',', $data['keywords'] ) );
+		if ( !empty( $data['name'] ) ) {
+			$categories += array_map( 'trim', explode( ',', $data['name'] ) );
 		}
 
 		if ( !empty( $data['pageCategories'] ) ) {
