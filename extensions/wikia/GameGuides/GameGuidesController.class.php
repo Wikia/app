@@ -276,7 +276,7 @@ class GameGuidesController extends WikiaController {
 
 		wfProfileIn( __METHOD__ );
 
-		$resources = json_decode( file_get_contents( self::ASSETS_PATH ) );
+		$resources = json_decode( file_get_contents( $IP . self::ASSETS_PATH ) );
 
 		$scripts = '';
 
