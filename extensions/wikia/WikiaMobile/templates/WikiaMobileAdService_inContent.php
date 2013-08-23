@@ -19,8 +19,6 @@ if(Wikia.AbTest && ['A', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADS
 						init: function(found){
 							if(found) {
 								adWrapper.className = 'show';
-							}else{
-								adWrapper.parentElement.removeChild(adWrapper);
 							}
 						}
 					});
