@@ -47,6 +47,7 @@ $messages['en'] = array(
 	'visualeditor-ca-ve-create' => 'VisualEditor',
 	'visualeditor-ca-ve-edit' => 'VisualEditor',
 	'visualeditor-ca-ve-edit-section' => 'VisualEditor',
+	'visualeditor-ca-classiceditor' => 'Classic editor',
 	'visualeditor-clearbutton-tooltip' => 'Clear formatting',
 	'visualeditor-desc' => 'Visual editor for MediaWiki',
 	'visualeditor-descriptionpagelink' => 'Project:VisualEditor',

@@ -17,11 +17,11 @@
  */
 ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 	var browserWhitelisted,
-		currentUri = new mw.Uri();
+		currentUri = new mw.Uri( location.href );
 
 	// Parent constructor
 	ve.init.mw.Target.call(
-		this, $( '#content' ),
+		this, $( '#WikiaArticle' ),
 		mw.config.get( 'wgRelevantPageName' ),
 		currentUri.query.oldid
 	);
@@ -175,7 +175,7 @@ ve.init.mw.ViewPageTarget.static.surfaceCommands = [
 ];
 
 // TODO: Accessibility tooltips and logical tab order for prevButton and closeButton.
-ve.init.mw.ViewPageTarget.saveDialogTemplate = '\
+ve.init.mw.ViewPageTarget.static.saveDialogTemplate = '\
 	<div class="ve-init-mw-viewPageTarget-saveDialog-head">\
 		<div class="ve-init-mw-viewPageTarget-saveDialog-prevButton"></div>\
 		<div class="ve-init-mw-viewPageTarget-saveDialog-closeButton"></div>\
@@ -321,7 +321,7 @@ ve.init.mw.ViewPageTarget.prototype.onLoad = function ( doc ) {
 			if ( mw.config.get( 'wgVisualEditorConfig' ).showBetaWelcome ) {
 				this.showBetaWelcome();
 			}
-			mw.hook( 've.activationComplete' ).fire();
+			//mw.hook( 've.activationComplete' ).fire();
 		}, this ) );
 	}
 };
@@ -1420,7 +1420,7 @@ ve.init.mw.ViewPageTarget.prototype.setupSaveDialog = function () {
 	viewPage.$saveDialog
 		// Must not use replaceWith because that can't be used on fragement roots,
 		// plus, we want to preserve the reference and class names of the wrapper.
-		.empty().append( this.constructor.saveDialogTemplate )
+		.empty().append( this.constructor.static.saveDialogTemplate )
 		// Attach buttons
 		.find( '.ve-init-mw-viewPageTarget-saveDialog-slide-save' )
 			.find( '.ve-init-mw-viewPageTarget-saveDialog-actions' )
@@ -1699,7 +1699,7 @@ ve.init.mw.ViewPageTarget.prototype.swapSaveDialog = function ( slide, options )
 	// Show the target slide
 	$slide.show();
 
-	mw.hook( 've.saveDialog.stateChanged' ).fire();
+	//mw.hook( 've.saveDialog.stateChanged' ).fire();
 
 	if ( slide === 'save' ) {
 		setTimeout( function () {
@@ -1855,7 +1855,8 @@ ve.init.mw.ViewPageTarget.prototype.setUpToolbar = function () {
 	}
 	this.toolbar.$
 		.addClass( 've-init-mw-viewPageTarget-toolbar' )
-		.insertBefore( '#firstHeading' );
+		//.insertBefore( '#firstHeading' );
+		.insertAfter( '#WikiaPageHeader' );
 	this.toolbar.$bar.slideDown( 'fast', ve.bind( function () {
 		// Check the surface wasn't torn down while the toolbar was animating
 		if ( this.surface ) {
