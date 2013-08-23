@@ -4,7 +4,7 @@ class ChatHelper {
 	private static $serversBasket = "wgChatServersBasket";
 	private static $operationMode = "wgChatOperationMode";
 	private static $CentralCityId = 177;
-	private static $configFile = array();
+	private static $configFile = [];
 
 	// constants with config file sections
 	const CHAT_DEVBOX_ENV = 'dev';
@@ -302,4 +302,26 @@ class ChatHelper {
 
 		return wfMsg('chat-'.$action.'-log-entry', $link, $time, $endon );
 	}
+
+	/**
+	 * @desc Temporary solution not to display internal IPs on Special:CheckUser page
+	 *
+	 * @param String $actionText
+	 * @param String $xff
+	 *
+	 * @return bool true because it's a hook
+	 */
+	public static function onBeforeInsertCheckUserData( &$actionText, &$ip, &$xff ) {
+		global $wgEnableChat, $wgChatExcludeIPsInXFF;
+
+		if( !empty( $wgEnableChat ) && !empty( $wgChatExcludeIPsInXFF ) ) {
+			foreach( $wgChatExcludeIPsInXFF as $ip ) {
+				$xff = str_replace( $ip, '', $xff);
+			}
+			$xff = trim( $xff, ' , ');
+		}
+
+		return true;
+	}
+
 }
