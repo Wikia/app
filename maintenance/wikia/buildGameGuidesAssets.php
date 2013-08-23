@@ -9,17 +9,12 @@
 ini_set( "include_path", dirname(__FILE__) . "/.." );
 require_once( "commandLine.inc" );
 
-$ret = new StdClass();
-
 //Path where to save assets
 $path = $IP . '/extensions/wikia/GameGuides/assets/';
-
+$file = $path . 'GameGuidesAssets.json';
 
 if ( !is_dir( $path ) ) {
-	mkdir($path);
-} else {
-	//If dir exists remove all files inside
-	array_map( 'unlink', glob( $path . '*' ) );
+	mkdir( $path );
 }
 
 //Get assets
@@ -28,8 +23,7 @@ $resources = F::app()->sendRequest( 'AssetsManager', 'getMultiTypePackage', arra
 	'styles' => '//extensions/wikia/GameGuides/css/GameGuides.scss'
 ) );
 
-$file = $path . md5( $resources ) . '.json';
-
+$ret = new StdClass();
 $ret->styles = $resources->getVal( 'styles', '' );
 $ret->scripts = $resources->getVal( 'scripts', '' );
 

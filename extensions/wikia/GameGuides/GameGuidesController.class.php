@@ -17,7 +17,7 @@ class GameGuidesController extends WikiaController {
 
 	const NEW_API_VERSION = 1;
 
-	const ASSETS_PATH = '/extensions/wikia/GameGuides/assets';
+	const ASSETS_PATH = '/extensions/wikia/GameGuides/assets/GameGuidesAssets.json';
 
 	/**
 	 * @var $mModel GameGuidesModel
@@ -276,9 +276,10 @@ class GameGuidesController extends WikiaController {
 
 		wfProfileIn( __METHOD__ );
 
-		$resources = json_decode( file_get_contents( $IP . self::ASSETS_PATH . '/' . scandir( $IP . self::ASSETS_PATH )[2] ) );
+		$resources = json_decode( file_get_contents( self::ASSETS_PATH ) );
 
 		$scripts = '';
+
 		foreach( $resources->scripts as $s ) {
 			$scripts .= $s;
 		}
@@ -304,23 +305,16 @@ class GameGuidesController extends WikiaController {
 		global $IP;
 
 		$this->response->setFormat( 'json' );
+		$this->cacheMeFor( 1/96 ); //15 minutes
 
-		$name = scandir( $IP . self::ASSETS_PATH );
+		$hash = md5_file( $IP . self::ASSETS_PATH );
 
-		if( is_array( $name ) ) {
-			$name = $name[2];
+		$this->response->setVal( 'url',
+			self::ASSETS_PATH . '?cb=' . $hash
+		);
 
-			$this->cacheMeFor( 1/96 ); //15 minutes
-
-			$this->response->setVal( 'url',
-				self::ASSETS_PATH . '/' . $name
-			);
-
-			//when apps will be updated this won't be needed anymore
-			$this->response->setVal( 'cb', $name );
-		} else{
-			throw new NotFoundApiException();
-		}
+		//when apps will be updated this won't be needed anymore
+		$this->response->setVal( 'cb', $hash );
 	}
 
 	/**
