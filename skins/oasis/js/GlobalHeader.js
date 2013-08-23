@@ -4,7 +4,7 @@ $(function(){
 			$('#WikiaHeader').append(elem.render({type:"default", vars: {side: 'left', content: 'test content'}}));
 			require(['wikia.uifactory.drawer'], function(drawer){
 				var leftDrawer = drawer.init('left');
-				$('.WikiaLogo').click(function(){
+				$('#BrowseEntry').click(function(){
 					if (leftDrawer.isOpen()) {
 						leftDrawer.close();
 					} else {

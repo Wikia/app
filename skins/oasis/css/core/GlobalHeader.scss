@@ -45,5 +45,33 @@
 		width: $wikiaheader-width;
 		height: 34px;
 	}
+	.browse-entry {
+		display: inline-block;
+		line-height: 34px;
+
+		&:hover{
+			text-decoration: none;
+		}
+
+		.chevron-container {
+			background-color: $color-header;
+			background-image: url(/skins/oasis/images/chevron_down.png); /* base64 */
+			background-position: center;
+			background-repeat: no-repeat;
+			display: inline-block;
+			width: 34px;
+			height: 34px;
+			float: left;
+		}
+		.text-container {
+			color: $color-header-text;
+			font-weight: bold;
+			padding: 9px;
+			text-transform: uppercase;
+		}
+	}
+	.drawer {
+		width: 190px;
+	}
 }
 
