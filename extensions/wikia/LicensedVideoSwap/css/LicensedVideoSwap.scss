@@ -109,6 +109,10 @@ $button-icon-color: white;
 }
 
 .LVSGrid {
+	// begin temp fix for lvs & responsive
+	width: 1010px;
+	margin: 0 auto;
+	// end
 	position: relative;
 	border-top: 1px solid $color-page-border;
 	.lvs-sprite:before {
@@ -162,6 +166,7 @@ $button-icon-color: white;
 	}
 	.grid-3 {
 		height: 395px;
+		overflow: hidden;
 	}
 	.video-wrapper {
 		background-color: #000;
