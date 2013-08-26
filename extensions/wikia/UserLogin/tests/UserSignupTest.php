@@ -14,6 +14,7 @@
 			// mock cache
 			$memcParams = array(
 				'set' => null,
+				'get' => null,
 				'delete' => null,
 				'add' => null,
 				'incr' => null,
@@ -31,18 +32,18 @@
 		}
 
 		protected function tearDown() {
-			parent::tearDown();
+            parent::tearDown();
 			$_SERVER = $this->originalServer;
 		}
 
 		protected function patchSetupUser( &$mockUserObj, $params ) {
-			foreach( $params[0] as $key => $value ) {
+            foreach( $params[0] as $key => $value ) {
 				$mockUserObj->$key = $value;
 			}
 		}
 
 		public function runHooksCallback( $hookName ) {
-			switch ($hookName) {
+            switch ($hookName) {
 				case 'cxValidateUserName':
 				case 'isValidEmailAddr':
 					return true;
@@ -85,7 +86,7 @@
 		}
 
 		public function signupDataProvider() {
-			global $wgWikiaMaxNameChars;
+            global $wgWikiaMaxNameChars;
 
 			// error - empty username
 			$reqParams1 = array(

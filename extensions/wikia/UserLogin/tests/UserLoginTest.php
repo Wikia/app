@@ -14,13 +14,15 @@
 		}
 
 		protected function setUpMock() {
-			$mock_cache = $this->getMock('stdClass', array('set', 'delete'));
-			$mock_cache->expects($this->any())
-						->method('set');
-			$mock_cache->expects($this->any())
-						->method('delete');
+			// mock cache
+			$memcParams = array(
+				'set' => null,
+				'get' => null,
+				'delete' => null
+			);
 
-			$this->mockGlobalVariable('wgMemc', $mock_cache);
+			$this->setUpMockObject( 'stdClass', $memcParams, false, 'wgMemc' );
+
 			$this->mockGlobalVariable('wgCityId', self::TEST_CITY_ID);
 		}
 
