@@ -5,18 +5,6 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 	function(window, nirvana, deferred, jquery, loader, mustache, msg) {
 	'use strict';
 
-	/**
-	 * Test method
-	 *
-	 * @public
-	 *
-	 * @return {String} The country code
-	 */
-	function test() {
-		alert('inside test');
-		return 'foo';
-	}
-
 	// show dialog for preview / show changes and scale it to fit viewport's height
 	function renderDialog(title, options, callback) {
 		options = jquery.extend({
