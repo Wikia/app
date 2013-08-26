@@ -10,12 +10,12 @@
 			</div>
 			<div class="video-thumb"></div>
 			<div class="input-group border">
-				<label for="video_display_title"><?= wfMessage( 'videopagetool-label-display-title' )->text() ?></label>
-				<input class="required" id="video_display_title" type="text" name="display_title[]">
+				<label for="video_display_title_<?= $x ?>"><?= wfMessage( 'videopagetool-label-display-title' )->text() ?></label>
+				<input class="video_display_title" id="video_display_title_<?= $x ?>" type="text" name="display_title[]">
 			</div>
 			<div class="input-group">
-				<label for="video_description"><?= wfMessage( 'videopagetool-label-video-description' )->text() ?></label>
-				<textarea id="video_description" placeholder="<?= wfMessage( 'videopagetool-placeholder-video-description' )->text() ?>" name="description[]"></textarea>
+				<label for="video_description_<?= $x ?>"><?= wfMessage( 'videopagetool-label-video-description' )->text() ?></label>
+				<textarea class="video_description" id="video_description_<?= $x ?>" placeholder="<?= wfMessage( 'videopagetool-placeholder-video-description' )->text() ?>" name="description[]"></textarea>
 				<p class="alternative char-count"><!-- TODO: add char counter here --></p>
 			</div>
 			<button class="secondary navigation nav-up">
@@ -29,8 +29,8 @@
 	<? endfor; ?>
 
 	<div class="submits">
-		<button><?= wfMessage( 'videopagetool-button-save' )->text() ?></button>
-		<button class="secondary"><?= wfMessage( 'videopagetool-button-clear' )->text() ?></button>
+		<button type="submit"><?= wfMessage( 'videopagetool-button-save' )->text() ?></button>
+		<button class="secondary reset"><?= wfMessage( 'videopagetool-button-clear' )->text() ?></button>
 	</div>
 
 </form>

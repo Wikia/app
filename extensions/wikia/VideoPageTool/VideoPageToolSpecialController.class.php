@@ -39,7 +39,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 
 		$this->wg->SupressPageSubtitle = true;
 
-		JSMessages::enqueuePackage( 'VideoToolPage', JSMessages::EXTERNAL );
+		JSMessages::enqueuePackage( 'VideoPageTool', JSMessages::EXTERNAL );
 
 		// Change the <title> attribute and the <h1> for the page
 		$this->getContext()->getOutput()->setPageTitle( wfMessage( 'videopagetool-page-title' )->plain() );
@@ -74,6 +74,8 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string msg - result message
 	 */
 	public function edit() {
+		JSMessages::enqueuePackage( 'VideoPageTool', JSMessages::EXTERNAL );
+
 		$date = $this->getVal( 'date', date( 'Y-M-d' ) );
 		$region = $this->getVal( 'region', 'en' );
 		$section = $this->getVal( 'section', VideoPageToolHelper::DEFAULT_SECTION );

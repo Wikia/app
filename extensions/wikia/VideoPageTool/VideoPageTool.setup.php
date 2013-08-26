@@ -31,4 +31,8 @@ $wgGroupPermissions['vstf']['videopagetool'] = true;
 
 // register messages package for JS
 JSMessages::registerPackage('VideoPageTool', array(
+	'htmlform-required',
+	'videopagetool-confirm-clear-title',
+	'videopagetool-confirm-clear-message',
 ));
+

@@ -22,6 +22,8 @@ $messages['en'] = array(
 	'videopagetool-html-text-tip' => "'''Tip:''' to add a link copy the following and replace the italicized text with your own: <a href=\"''your_url_here''\">''Your Text Here''</a>",
 	'videopagetool-button-save' => 'Save',
 	'videopagetool-button-clear' => 'Clear all',
+	'videopagetool-confirm-clear-title' => 'Clear form',
+	'videopagetool-confirm-clear-message' => 'Are you sure you want to clear the entire contents of the form?',
 );
 
 $messages['qqq'] = array(
@@ -39,4 +41,6 @@ $messages['qqq'] = array(
 	'videopagetool-html-text-tip' => "Tip advising how to add html anchor tags to their content.",
 	'videopagetool-button-save' => 'button text for saving a form',
 	'videopagetool-button-clear' => 'button text for clearing the entire contents of a form',
+	'videopagetool-confirm-clear-title' => 'Title text that appears in a confirmation modal after the reset form button is clicked.',
+	'videopagetool-confirm-clear-message' => 'message text that appears in a confirmation modal after the reset form button is clicked.',
 );
