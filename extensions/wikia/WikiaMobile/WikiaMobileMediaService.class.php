@@ -161,7 +161,6 @@ class WikiaMobileMediaService extends WikiaService {
 
 			//avoid wikitext recursion
 			$this->wg->WikiaMobileDisableMediaGrouping = true;
-			//var_dump($wikiText);exit();
 			$ret = $parser->recursiveTagParse( $wikiText );
 			$parser->replaceLinkHolders( $ret );
 
