@@ -56,9 +56,9 @@ define('vpt.models.datepicker', [], function() {
 					method: this.method,
 					type: 'POST',
 					data: {
-						'langCode': this.language,
-						'beginTimestamp': beginTimestamp,
-						'endTimestamp': endTimestamp
+						'language': this.language,
+						'startTime': beginTimestamp,
+						'endTime': endTimestamp
 					},
 					callback: $.proxy(function(response) {
 						$.extend(this.specialDates, response['info']);

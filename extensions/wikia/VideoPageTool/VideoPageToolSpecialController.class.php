@@ -21,10 +21,10 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	 * VideoPageTool page
 	 * If no subpage, calendar template will render
 	 * Otherwise, form template will render
-	 * @requestParam string region
+	 * @requestParam string language
 	 * @requestParam string date [yyyy-mm-dd]
-	 * @responseParam array regions - list of regions
-	 * @responseParam string region - current region
+	 * @responseParam array languages - list of languages
+	 * @responseParam string language - current language
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
 	 */
@@ -45,7 +45,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		$this->getContext()->getOutput()->setPageTitle( wfMessage( 'videopagetool-page-title' )->plain() );
 
 		$date = $this->getVal( 'date', date( 'Y-M-d' ) );
-		$region = $this->getVal( 'region', 'en' );
+		$language = $this->getVal( 'language', VideoPageToolHelper::DEFAULT_LANGUAGE );
 
 		$subpage = $this->getSubpage();
 		if ( !empty( $subpage ) ) {
@@ -53,13 +53,11 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 			return true;
 		}
 
-		$regions = array(
-			'en' => 'English',
-		);
-		$this->regions = $regions;
-		$this->region = $region;
+		$helper = new VideoPageToolHelper();
+		$this->languages = $helper->getLanguages();
+		$this->language = $language;
 
-		$response = $this->sendSelfRequest( 'getCalendarInfo', array( 'region' => $region, 'date' => $date ) );
+		$response = $this->sendSelfRequest( 'getCalendarInfo', array( 'language' => $language ) );
 		$this->calendarInfo = $response->getVal( 'info', array() );
 		$this->result = $response->getVal( 'result', '' );
 		$this->msg = $response->getVal( 'msg', '' );
@@ -67,7 +65,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 
 	/**
 	 * Edit page
-	 * @requestParam string region
+	 * @requestParam string language
 	 * @requestParam string date [yyyy-mm-dd]
 	 * @requestParam string section [featured/trending/fan]
 	 * @responseParam string result [ok/error]
@@ -77,7 +75,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		JSMessages::enqueuePackage( 'VideoPageTool', JSMessages::EXTERNAL );
 
 		$date = $this->getVal( 'date', date( 'Y-M-d' ) );
-		$region = $this->getVal( 'region', 'en' );
+		$language = $this->getVal( 'language', VideoPageToolHelper::DEFAULT_LANGUAGE );
 		$section = $this->getVal( 'section', VideoPageToolHelper::DEFAULT_SECTION );
 
 		$helper = new VideoPageToolHelper();
@@ -99,7 +97,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 
 		$this->section = $section;
 		$this->date = $date;
-		$this->region = $region;
+		$this->language = $language;
 	}
 
 	/**
@@ -120,28 +118,47 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 
 	/**
 	 * get calendar info
-	 * @requestParam string region
-	 * @requestParam string date [yyyy-mm-dd]
-	 * @responseParam array info [array( date => status ); status = 0 (not published)/ 1 (published)]
+	 * @requestParam string language
+	 * @requestParam string startTime [timestamp]
+	 * @requestParam string endTime [timestamp]
+	 * @responseParam array info [array( date => status ); date = yyyy-mm-dd; status = 0 (not published)/ 1 (published)]
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
 	 */
 	public function getCalendarInfo() {
+		// check permission
 		if ( !$this->wg->User->isAllowed( 'videopagetool' ) ) {
 			$this->result = 'error';
 			$this->msg = wfMessage( 'videopagetool-error-permission' )->plain();
 			return false;
 		}
 
-		$date = $this->getVal( 'date', date( 'Y-M-d' ) );
-		$region = $this->getVal( 'region', 'en' );
+		$language = $this->getVal( 'language', VideoPageToolHelper::DEFAULT_LANGUAGE );
+		$startTime = $this->getVal( 'startTime', strtotime( 'first day of this month' ) );
+		$endTime = $this->getVal( 'endTime', strtotime( 'first day of next month' ) );
 
-		$info = array(
-			'2013-08-08' => 1,
-			'2013-08-12' => 2,
-			'2013-08-14' => 2,
-			'2013-08-15' => 1,
-		);
+		$helper = new VideoPageToolHelper();
+
+		// validate language
+		$languages = $helper->getLanguages();
+		if ( !array_key_exists( $language, $languages ) ) {
+			$this->result = 'error';
+			$this->msg = wfMessage( 'videopagetool-error-invalid-language' );
+			$this->info = array();
+			return;
+		}
+
+		// validate date
+		$sDate = getdate( $startTime );
+		$eDate = getdate( $endTime );
+		if ( !checkdate($sDate['mon'], $sDate['mday'], $sDate['year'] ) || !checkdate($eDate['mon'], $eDate['mday'], $eDate['year'] )  ) {
+			$this->result = 'error';
+			$this->msg = wfMessage( 'videopagetool-error-invalid-date' );
+			$this->info = array();
+			return;
+		}
+
+		$info = $helper->getPrograms( $language, date( 'Y-m-d', $startTime ), date( 'Y-m-d', $endTime ) );
 
 		$this->result = 'ok';
 		$this->msg = '';
