@@ -79,7 +79,7 @@ class WhereIsExtension extends SpecialPage {
 		$formData['actionURL'] = $wgTitle->getFullURL();
 
                 // by default, we don't need a paginator
-                $sPaginator = '';
+                $sPager = '';
 
 		if (!empty($gVar)) {
 			$formData['selectedVar'] = $gVar;

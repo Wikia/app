@@ -2969,7 +2969,7 @@ class WikiFactory {
 		$varId = mysql_real_escape_string($varId);
 		$aWhere = array('city_id = cv_city_id');
 
-                $aOptions = array( 'ORDER BY' => 'city_sitename' );
+		$aOptions = array( 'ORDER BY' => 'city_title ASC' );
 
                 if ( isset( $limit ) ) {
                     $aOptions['LIMIT'] = $limit;
