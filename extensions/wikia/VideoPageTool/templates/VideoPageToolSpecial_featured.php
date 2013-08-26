@@ -4,9 +4,10 @@
 
 		<div class="form-box featured-video with-nav">
 			<span class="count"><?= $x ?>.</span>
-			<div class="input-group">
+			<div class="input-group url-group">
 				<button class="add-video-button"><?= wfMessage( 'videopagetool-button-add-video' )->text() ?></button>
 				<p class="video-name alternative"><?= wfMessage( 'videopagetool-video-title-default-text' )->text() ?></p>
+				<input type="hidden" name="video_url" class="video_url" id="video_url_<?= $x ?>">
 			</div>
 			<div class="video-thumb"></div>
 			<div class="input-group border">

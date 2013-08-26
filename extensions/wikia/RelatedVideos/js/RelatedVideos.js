@@ -83,6 +83,7 @@ var RelatedVideos = {
 			relatedVideosModule.on( 'click', '.scrollleft', this.scrollleft );
 
 			relatedVideosModule.find('.addVideo').addVideoButton({
+				// TODO: add vet as second param in the callback function so you don't have to require it here
 				callbackAfterSelect: function(url) {
 					require(['wikia.vet'], function(vet) {
 						RelatedVideos.track({

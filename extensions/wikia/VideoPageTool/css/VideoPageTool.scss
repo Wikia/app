@@ -94,6 +94,7 @@ $label-padding: 10px 10px 10px 0px;
 			height: 100px;
 			margin-top: 5px;
 			padding: 10px 5px 10px 10px;
+			position: relative;
 			width: 30%;
 		}
 		// validation
@@ -102,6 +103,9 @@ $label-padding: 10px 10px 10px 0px;
 			float: right;
 			font-size: 13px;
 			width: 70%;
+		}
+		.url-group label.error {
+			float: none;
 		}
 	}
 }
