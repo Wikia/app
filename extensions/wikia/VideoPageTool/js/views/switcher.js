@@ -1,48 +1,87 @@
+/**
+ * jQuery plugin Switcher:
+ *
+ * Move elements up and down by clicking up and down buttons inside each element.
+ * The top and bottom elements will have the top and bottom buttons disabled respectively.
+ *
+ * Options:
+ *  up: jQuery selector string to identify up buttons
+ *  down: jQuery selector string to identify down buttons
+ *  boxes: jQuery selector string to identify elements to be moved up and down
+ *  onChange: function to be called after elements are moved up or down
+ *
+ * @author Liz Lee <liz@wikia-inc.com>
+ */
+
 $(function( $, window) {
 	$.fn.switcher = function( options ) {
 		var $this = $( this ),
 			$boxes,
 			count,
-			defaults = {};
+			upArrows,
+			downArrows,
+			defaults = {
+				up: '.nav-up',
+				down: '.nav-down',
+				boxes: '.form-box',
+				onChange: false
+			};
 
 		options = $.extend(defaults, options);
 
-		$boxes = $this.find( options.boxes );
-		count = $boxes.length;
+		// runs once at the begining
+		function initBoxes() {
+			setBoxes();
 
-		// Assign up and down arrows to each box
-		$boxes.each( function() {
-			var $box = $( this ),
-				upArrow = $box.find( options.up ),
-				downArrow = $box.find( options.down );
-			$box.data( 'up-arrow', upArrow ).data( 'down-arrow', downArrow );
-		});
+			count = $boxes.length;
+			upArrows = $boxes.find( options.up );
+			downArrows = $boxes.find( options.down );
 
-		$boxes.eq( 0 ).data( 'up-arrow' ).attr( 'disabled', true );
-		$boxes.eq( count - 1 ).data( 'down-arrow' ).attr( 'disabled', true );
-
-		/*function isFirst( $elem ) {
-			return ( $elem.index() == 0 );
+			updateDisabled();
 		}
 
-		function isLast( $elem ) {
-			return ( $elem.index() == count );
-		}*/
+		// Get jQuery array of boxes
+		function setBoxes() {
+			$boxes = $this.find( options.boxes );
+		}
+
+		// Disable up button for first box and down button for last box
+		function updateDisabled() {
+			setBoxes();
+
+			upArrows.attr('disabled', false);
+			downArrows.attr('disabled', false);
+
+			$boxes.eq( 0 ).find( options.up ).attr( 'disabled', true );
+			$boxes.eq( count - 1 ).find( options.down ).attr( 'disabled', true );
+		}
 
 		return this.each( function() {
-			/*var $this = $( this ),
-				upArrow = $this.data( 'up-arrow' ),
-				downArrow = $this.data( 'down-arrow' );
+			initBoxes();
 
-			upArrow.on( 'click', function( e ) {
+			upArrows.on( 'click', function( e ) {
 				e.preventDefault();
-				alert('up clicked');
+
+				var $box = $( this ).parent(),
+					$prev = $box.prev();
+				$box.insertBefore( $prev );
+
+				updateDisabled();
+
+				options.onChange && options.onChange( $box, $prev );
 			});
-			downArrow.on( 'click', function( e ) {
-				e.preventDefault();
-				alert('down clicked');
-			});*/
 
+			downArrows.on( 'click', function( e ) {
+				e.preventDefault();
+
+				var $box = $( this ).parent(),
+					$next = $box.next();
+				$box.insertAfter( $next );
+
+				updateDisabled();
+
+				options.onChange && options.onChange( $box, $next );
+			});
 		});
 	};
 });

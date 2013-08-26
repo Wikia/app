@@ -14,9 +14,18 @@ define( 'vpt.views.edit', [
 			this.initValidate();
 			this.initReset();
 			this.$form.switcher({
-				boxes: '.form-box',
-				up: '.nav-up',
-				down: '.nav-down'
+				onChange: function( $elem, $switched ) {
+					// Update the numbers beside the elements
+					var $oCount = $elem.find( '.count' ),
+						oCountVal = $oCount.html(),
+						$nCount = $switched.find( '.count' ),
+						nCountVal = $nCount.html();
+
+					$oCount.html( nCountVal );
+					$nCount.html( oCountVal );
+
+
+				}
 			});
 		},
 		initValidate: function() {
