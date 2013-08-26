@@ -456,125 +456,29 @@
 			// add width of scrollbar (BugId:35767)
 			width += this.scrollbarWidth;
 
-			var options = {
-				buttons: [
-					{
-						id: 'close',
-						message: $.msg('back'),
-						handler: function() {
-							$('#EditPageDialog').closeModal();
-						}
-					},
-					{
-						id: 'publish',
-						defaultButton: true,
-						message: $.msg('savearticle'),
-						handler: function() {
-							// click "Publish" button
-							$('#wpSave').click();
-						}
-					}
-				],
+			var previewOptions = {
 				width: width,
-				className: 'preview',
-				onClose: function() {
-					$(window).trigger('EditPagePreviewClosed');
-				}
+				onPublishButton: function() {
+					$('#wpSave').click();
+				},
+				getEditorContent: this.getContent,  //@todo - consider passing content as string instead of callback
+				summary: this.getSummary(),
+				getPreviewContent: function(options, callback) {self.ajax('preview', options, callback);}
 			};
 
-			// allow extension to modify the preview dialog
-			$(window).trigger('EditPageRenderPreview', [options]);
+			if (self.categories.length) {
+				previewOptions.categories = self.categories.val();
+			}
 
-			this.renderDialog($.msg('preview'), options, function(contentNode) {
-				self.getContent(function(content) {
-					var summary = $('#wpSummary').val();
-
-					// bugid-93498: IE fakes placeholder functionality by setting a real val
-					if ( summary === $('#wpSummary').attr('placeholder') ) {
-						summary = '';
-					}
-
-					// add section name when adding new section (BugId:7658)
-					if (window.wgEditPageSection == 'new') {
-						content = '== ' + summary + ' ==\n\n' + content;
-					}
-					else {
-						extraData.summary = summary;
-					}
-
-					extraData.content = content;
-
-					if (window.wgEditPageSection !== null) {
-						extraData.section = window.wgEditPageSection;
-					}
-
-					if (self.categories.length) {
-						extraData.categories = self.categories.val();
-					}
-
-					self.ajax('preview',
-						extraData,
-						function(data) {
-							contentNode.html(data.html + data.catbox + data.interlanglinks);
-
-							// move "edit" link to the right side of heading names
-							contentNode.find('.editsection').each(function() {
-								$(this).appendTo($(this).next());
-							});
-
-							// add summary
-							if (typeof data.summary != 'undefined') {
-								$('<div>', {id: "EditPagePreviewEditSummary"}).
-									width(width - 150).
-									appendTo(contentNode.parent()).
-									html(data.summary);
-							}
-
-							//adding type dropdown to preview
-							if ( wgOasisResponsive ) {
-								Wikia.getMultiTypePackage({
-									mustache: 'extensions/wikia/EditPageLayout/templates/preview_type_dropdown.mustache'
-								}).done(function(responese) {
-									var template = responese.mustache[0],
-										params = {
-											options: [
-												{
-													value: 'current',
-													name: $.msg('wikia-editor-preview-current-width')
-												},
-												{
-													value: 'min',
-													name: $.msg('wikia-editor-preview-min-width')
-												},
-												{
-													value: 'max',
-													name: $.msg('wikia-editor-preview-max-width')
-												}
-											],
-											toolTipMessage: $.msg('wikia-editor-preview-type-tooltip'),
-											toolTipIcon: '',
-											toolTipIconAlt: 'tooltip'
-										},
-										html = Mustache.render(template, params);
-
-									$(html).insertBefore(contentNode.parent().parent());
-
-									// fire an event once preview is rendered
-									$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
-								});
-							} else {
-								// fire an event once preview is rendered
-								$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
-							}
-
-						}
-					);
-				});
+			require(['wikia.preview'], function(preview) {
+				preview.renderPreview(previewOptions, extraData);
 			});
+
 		},
 
 		// render "show diff" modal
 		renderChanges: function(extraData) {
+			//@todo - reuse the dialog from preview module?
 			var self = this;
 			this.renderDialog($.msg('editpagelayout-pageControls-changes'), {}, function(contentNode) {
 				self.getContent(function(content) {
@@ -598,6 +502,18 @@
 					});
 				});
 			});
+		},
+
+		getSummary: function() {
+			var summary = $('#wpSummary').val();
+
+			// bugid-93498: IE fakes placeholder functionality by setting a real val
+			if ( summary === $('#wpSummary').attr('placeholder') ) {
+				summary = '';
+			}
+
+			return summary;
+
 		},
 
 		// get editor's content (either wikitext or HTML)
