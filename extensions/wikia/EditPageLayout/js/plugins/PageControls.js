@@ -524,15 +524,13 @@
 
 			callback = callback || function() {};
 
-			var summary = this.getSummary();
-
 			switch(mode) {
 				case 'mw':
-					callback($('#wpTextbox1').val(), summary);
+					callback($('#wpTextbox1').val());
 					return;
 				case 'source':
 				case 'wysiwyg':
-					callback(editor.getData(), summary);
+					callback(editor.getData());
 					return;
 			}
 		}
