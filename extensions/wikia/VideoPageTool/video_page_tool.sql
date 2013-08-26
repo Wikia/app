@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS `vpt_program` (
   `program_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `region` varchar(2) NOT NULL DEFAULT 'en',
+  `language` varchar(2) NOT NULL DEFAULT 'en',
   `publish_date` datetime NOT NULL,
   `is_published` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`program_id`),
