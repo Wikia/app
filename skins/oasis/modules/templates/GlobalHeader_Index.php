@@ -11,8 +11,8 @@
 			<? if ( !empty($isGameStarLogoEnabled )) echo $app->renderView('GameStarLogo', 'Index'); ?>
 			<a href="#" id="BrowseEntry" class="browse-entry">
 				<span class="chevron-container"></span>
-				<span class="text-container"><?= wfMessage('oasis-global-nav-browse-entry-point')->text() ?></span>
 				<span class="hubname-container"><?= wfMsg('hub-'. $category->cat_name)?></span>
+				<span class="text-container"><?= wfMessage('oasis-global-nav-browse-entry-point')->text() ?></span>
 			</a>
 			<nav>
 				<? if ( $displayHeader ): ?>

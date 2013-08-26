@@ -53,15 +53,17 @@
 			text-decoration: none;
 
 			.hubname-container {
-				display: inline;
+				display: none;
 			}
 			.text-container {
-				display: none;
+				display: inline;
+			}
+			.chevron-container {
+				background-color: $color-header;
 			}
 		}
 
 		.chevron-container {
-			background-color: $color-header;
 			background-image: url(/skins/oasis/images/chevron_down.png); /* base64 */
 			background-position: center;
 			background-repeat: no-repeat;
@@ -77,7 +79,7 @@
 			text-transform: uppercase;
 		}
 
-		.hubname-container {
+		.text-container {
 			display:none;
 		}
 	}
