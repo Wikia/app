@@ -1,8 +1,8 @@
 /**
  * Preview for the editor, this should be moved to /resources/wikia/modules once we want to use it for several skins
  */
-define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery', 'wikia.loader', 'wikia.mustache', 'mw'],
-	function(window, nirvana, deferred, jquery, loader, mustache, mw) {
+define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery', 'wikia.loader', 'wikia.mustache', 'JSMessages'],
+	function(window, nirvana, deferred, jquery, loader, mustache, msg) {
 	'use strict';
 
 	/**
@@ -58,7 +58,7 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 			buttons: [
 				{
 					id: 'close',
-					message: mw.msg('back'),
+					message: msg('back'),
 					handler: function() {
 						jquery('#EditPageDialog').closeModal();
 					}
@@ -66,7 +66,7 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 				{
 					id: 'publish',
 					defaultButton: true,
-					message: mw.msg('savearticle'),
+					message: msg('savearticle'),
 					handler: options.onPublishButton
 				}
 			],
@@ -79,7 +79,7 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 		// allow extension to modify the preview dialog
 		jquery(window).trigger('EditPageRenderPreview', [dialogOptions]);
 
-		renderDialog(mw.msg('preview'), dialogOptions, function(contentNode) {
+		renderDialog(msg('preview'), dialogOptions, function(contentNode) {
 			options.getEditorContent(function(content) {
 				// add section name when adding new section (BugId:7658)
 				if (window.wgEditPageSection == 'new') {
@@ -122,18 +122,18 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 											options: [
 												{
 													value: 'current',
-													name: mw.msg('wikia-editor-preview-current-width')
+													name: msg('wikia-editor-preview-current-width')
 												},
 												{
 													value: 'min',
-													name: mw.msg('wikia-editor-preview-min-width')
+													name: msg('wikia-editor-preview-min-width')
 												},
 												{
 													value: 'max',
-													name: mw.msg('wikia-editor-preview-max-width')
+													name: msg('wikia-editor-preview-max-width')
 												}
 											],
-											toolTipMessage: mw.msg('wikia-editor-preview-type-tooltip'),
+											toolTipMessage: msg('wikia-editor-preview-type-tooltip'),
 											toolTipIcon: '',
 											toolTipIconAlt: 'tooltip'
 										},
@@ -158,8 +158,6 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 
 	/** @public **/
 	return {
-		test: test,
 		renderPreview: renderPreview
 	};
 });
-
