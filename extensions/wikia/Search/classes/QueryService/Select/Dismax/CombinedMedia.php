@@ -21,7 +21,7 @@ class CombinedMedia extends AbstractDismax
 	protected function getQueryClausesString() {
 		$config = $this->getConfig();
 		$queryClauses = [];
-		$queryClauses[] = sprintf( '+(wid:%d OR wid:%d)', Video::VIDEO_WIKI_ID, $config->getWikiId() );
+		$queryClauses[] = sprintf( '+((wid:%d AND (%s)) OR wid:%d)', Video::VIDEO_WIKI_ID, $this->getTopicsAsQuery(), $config->getWikiId() );
 		$queryClauses[] = Utilities::valueForField( 'ns', \NS_FILE );
 		if ( $config->getCombinedMediaSearchIsVideoOnly() ) {
 			$queryClauses[] = Utilities::valueForField( 'is_video', 'true' );
@@ -29,5 +29,18 @@ class CombinedMedia extends AbstractDismax
 		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
 	}
 	
-	
+	/**
+	 * Takes whatever global topics are set and returns them disjunctively
+	 * The backoff for this is to return the wiki name with "wiki" stripped off
+	 * Taken from VideoEmbedTool, so if this shows up again we should make a parent class or trait or something
+	 * @return string
+	 */
+	protected function getTopicsAsQuery() {
+		$topics = [];
+		$service = $this->getService();
+		foreach ( $service->getGlobalWithDefault( 'WikiVideoSearchTopics', [] ) as $topic ) {
+			$topics[] = sprintf( '"%s"', $topic );
+		}
+		return empty( $topics ) ? sprintf( '"%s"', trim( preg_replace( '/\bwiki\b/', '', strtolower( $service->getGlobal( 'Sitename' ) ) ) ) ) : implode( ' OR ', $topics );
+	}
 }
