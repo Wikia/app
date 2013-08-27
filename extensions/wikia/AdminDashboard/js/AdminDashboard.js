@@ -74,7 +74,7 @@ var AdminDashboard = {
 		});
 
         $("a[data-tracking]").on("click", function(e) {
-			AdminDashboard.track(Wikia.Tracker.ACTIONS.CLICK, $(this).data('tracking'), null, {}, e);
+			AdminDashboard.track(Wikia.Tracker.ACTIONS.CLICK, $(this).data('tracking'), null, {href: $(this).attr('href')}, e);
         });
 	},
     track: function (action, label, value, params, event) {

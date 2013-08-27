@@ -20,19 +20,20 @@ $(function() {
 
     // click on update-items and educational modules
     $("a[data-tracking]").on("click", function(e) {
-        trackSpecialCssClick(Wikia.Tracker.ACTIONS.CLICK, $(this).data('tracking'), null, {}, e);
+        trackSpecialCssClick(Wikia.Tracker.ACTIONS.CLICK, $(this).data('tracking'), null, {href: $(this).attr('href')}, e);
     });
     $("input.css-publish-button").on("click", function(e) {
         trackSpecialCssClick(Wikia.Tracker.ACTIONS.SUBMIT, 'publish', null, {}, e);
     });
     // history and show changes
     $(".wikia-menu-button-submit a").on("click", function(e) {
+		var url = $(this).attr('href');
         switch ($(e.target).data('id')) {
             case 0:
-                trackSpecialCssClick(Wikia.Tracker.ACTIONS.OPEN, 'history', null, {}, e);
+                trackSpecialCssClick(Wikia.Tracker.ACTIONS.OPEN, 'history', null, {href: url}, e);
                 return;
             case 1:
-                trackSpecialCssClick(Wikia.Tracker.ACTIONS.OPEN, 'changes', null, {}, e);
+                trackSpecialCssClick(Wikia.Tracker.ACTIONS.OPEN, 'changes', null, {href: url}, e);
                 return;
         }
     });
