@@ -29,7 +29,6 @@ $wgHooks['UserMailerSend']           [] = "Wikia::onUserMailerSend";
 $wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
 $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
 $wgHooks['AjaxAddScript'][] = 'Wikia::onAjaxAddScript';
-$wgHooks['ParserAfterTidy'][] = 'Wikia::onParserAfterTidy';
 
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
@@ -2061,29 +2060,6 @@ class Wikia {
 			ExternalUser_Wikia::removeFromSecondaryClusters( $id );
 		}
 		$user->invalidateCache();
-
-		return true;
-	}
-
-	/**
-	 * @author kflorence
-	 *
-	 * @param $parser Parser
-	 * @param $text String
-	 * @return bool
-	 */
-	public static function onParserAfterTidy( &$parser, &$text ) {
-		wfProfileIn( __METHOD__ );
-
-		// Only for Oasis
-		// TODO: make this work for WikiaMobile
-		if ( F::app()->checkSkin( 'oasis' ) ) {
-			// Wrap tables so we can properly control their overflow
-			$text = preg_replace( '/<table\b[^>]*>/i', '<div class="table-wrapper">$0', $text );
-			$text = preg_replace( '/<\/table>/i', '$0</div>', $text );
-		}
-
-		wfProfileOut( __METHOD__ );
 
 		return true;
 	}
