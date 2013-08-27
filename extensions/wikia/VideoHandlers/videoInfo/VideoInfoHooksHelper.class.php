@@ -301,8 +301,9 @@ class VideoInfoHooksHelper {
 		}
 
 		// Only report this file as deleted when this request is coming from a file page.  In other
-		// instances (search results from the WVL for example) we want to make sure these videos
-		// still appear.
+		// instances (search results from the WVL for example) we want to make sure these videos still appear.
+		// (VideoEmbedTool controller for search in VET, insertVideo method for add video via VET, and
+		// Videos controller and addVideo method for add video in general)
 		$req = F::app()->wg->Request;
 		$controller = $req->getVal( 'controller', '' );
 		$method = $req->getVal( 'method', '' );
