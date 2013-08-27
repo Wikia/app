@@ -8,6 +8,7 @@
 @import "skins/oasis/css/mixins/multiple-box-shadow";
 @import "skins/oasis/css/mixins/opacity";
 @import "skins/oasis/css/mixins/wordmark";
+@import "extensions/wikia/UserLogin/mixins/tooltip-icon";
 
 // Colors
 @import "core/colors";
@@ -307,8 +308,14 @@ body {
 			float: left;
 			margin-right: 20px;
 		}
-		& > .WikiaForm {
+		& > form {
 			float: left;
+			margin-top: 20px;
+			position: relative;
+		}
+		& .tooltip-icon {
+			@include tooltip-icon;
+			top: 4px;
 		}
 		.modalContent {
 			border-color: transparent;
