@@ -11,8 +11,10 @@ class GameGuidesController extends WikiaController {
 	const API_MINOR_REVISION = 5;
 	const APP_NAME = 'GameGuides';
 	const SKIN_NAME = 'wikiaapp';
-	const SECONDS_IN_A_DAY = 86400; //24h
-	const SIX_HOURS = 21600; //6h
+	const DAYS = 86400;
+	const HOURS = 3600;
+	const MINUTES = 60;
+	const SECONDS = 1;
 	const LIMIT = 25;
 
 	const NEW_API_VERSION = 1;
@@ -140,16 +142,24 @@ class GameGuidesController extends WikiaController {
 	}
 
 	/**
-	 * Simple DRY function to set cache for 24 hours
+	 * Simple DRY function to set cache for a given time
+	 *
+	 * @example:
+	 * $this->cacheResponseFor( 1, self:HOURS )
+	 * $this->cacheResponseFor( 14, self:DAYS )
 	 */
-	private function cacheMeFor( $days = 1 ){
-		$this->response->setCacheValidity(
-			self::SECONDS_IN_A_DAY * $days, //86400 = 24h
-			self::SECONDS_IN_A_DAY * $days,
-			array(
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
+	private function cacheResponseFor( $factor, $period ){
+		if( isset( $period ) && isset( $factor ) ) {
+			$cacheValidityTime = $factor * $period;
+
+			$this->response->setCacheValidity(
+				$cacheValidityTime,
+				$cacheValidityTime,
+				[
+					WikiaResponse::CACHE_TARGET_VARNISH
+				]
+			);
+		}
 	}
 
 	/**
@@ -163,7 +173,7 @@ class GameGuidesController extends WikiaController {
 		//This will always return json
 		$this->response->setFormat( 'json' );
 
-		$this->cacheMeFor( 7 );//a week
+		$this->cacheResponseFor( 7, self::DAYS );
 
 		//set mobile skin as this is based on it
 		RequestContext::getMain()->setSkin(
@@ -276,9 +286,10 @@ class GameGuidesController extends WikiaController {
 			$scripts .= $s;
 		}
 
-		$page = $this->sendSelfRequest( 'getPage', array(
+		//getPage sets cache for a response for 7 days
+		$page = $this->sendSelfRequest( 'getPage', [
 			'page' => $this->getVal( 'page')
-		) );
+		] );
 
 		$this->response->setVal( 'html', $page->getVal( 'html' ) );
 		$this->response->setVal( 'js', $scripts );
@@ -297,7 +308,7 @@ class GameGuidesController extends WikiaController {
 		global $IP;
 
 		$this->response->setFormat( 'json' );
-		$this->cacheMeFor( 1/96 ); //15 minutes
+		$this->cacheResponseFor( 15, self::MINUTES );
 
 		$hash = md5_file( $IP . self::ASSETS_PATH );
 
@@ -335,7 +346,7 @@ class GameGuidesController extends WikiaController {
 			$tag = $this->request->getVal( 'tag' );
 
 			if ( empty( $tag ) ) {
-				$this->cacheMeFor( 14 ); //2 weeks
+				$this->cacheResponseFor( 14, self::DAYS );
 				$this->getTags( $content );
 			} else {
 				$this->getTagCategories( $content, $tag );
@@ -363,7 +374,7 @@ class GameGuidesController extends WikiaController {
 
 		$categories = WikiaDataAccess::cache(
 			wfMemcKey( __METHOD__, $offset, $limit, self::NEW_API_VERSION ),
-			self::SIX_HOURS,
+			6 * self::HOURS,
 			function() use ( $limit, $offset ) {
 				return ApiService::call(
 					array(
@@ -543,7 +554,7 @@ class GameGuidesController extends WikiaController {
 
 		$this->response->setFormat( 'json' );
 		//We have full control on when this data change so lets cache it for a longer period of time
-		$this->cacheMeFor( 120 );
+		$this->cacheResponseFor( 120, self::DAYS );
 
 		$lang = $this->request->getVal( 'lang' , 'en' );
 
