@@ -14,7 +14,7 @@
         </div>
         <div class="top-wiki-article-text" data-pos="<?= $counter ?>">
             <b><a href="<?= $page['url'] ?>"><?= $page['title'] ?></a></b>
-            <p class="top-wiki-article-text-synopsis subtle"><?= $page['abstract'] ?></p>
+            <span class="top-wiki-article-text-synopsis subtle"><?= $page['abstract'] ?></span>
         </div>
     </div>
     <?php else: ?>
