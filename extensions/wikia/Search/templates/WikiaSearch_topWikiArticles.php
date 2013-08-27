@@ -14,7 +14,7 @@
         </div>
         <div class="top-wiki-article-text" data-pos="<?= $counter ?>">
             <h1><a href="<?= $page['url'] ?>"><?= $page['title'] ?></a></h1>
-            <p class="top-wiki-article-text-synopsis subtle"><?= wfMessage( 'wikiasearch2-top-module-edit', $page['date'] )->plain() ?></p>
+            <p class="top-wiki-article-text-synopsis subtle"><?= $page['abstract'] ?></p>
         </div>
     </div>
     <?php else: ?>
@@ -28,7 +28,7 @@
         </div>
         <div class="top-wiki-article-text" data-pos="<?= $counter ?>">
             <h1><a href="<?= $page['url'] ?>"><?= $page['title'] ?></a></h1>
-            <p class="top-wiki-article-text-synopsis subtle"><?= wfMessage( 'wikiasearch2-top-module-edit', $page['date'] )->plain() ?></p>
+            <p class="top-wiki-article-text-synopsis subtle"><?= $page['abstract'] ?></p>
         </div>
     </div>
     <?php endif; ?>
