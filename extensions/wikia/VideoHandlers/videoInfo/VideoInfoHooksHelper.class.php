@@ -303,10 +303,10 @@ class VideoInfoHooksHelper {
 		// Only report this file as deleted when this request is coming from a file page.  In other
 		// instances (search results from the WVL for example) we want to make sure these videos
 		// still appear.
-		$app = F::app();
-		$req = $app->wg->Request;
-
-		if ( ($req->getVal('controller', '') == 'VideoEmbedTool') || ($req->getVal('method') == 'insertVideo') )  {
+		$req = F::app()->wg->Request;
+		$controller = $req->getVal( 'controller', '' );
+		$method = $req->getVal( 'method', '' );
+		if ( $controller == 'VideoEmbedTool' || $method == 'insertVideo' || ( $controller == 'Videos' && $method == 'addVideo' ) )  {
 			return true;
 		}
 
