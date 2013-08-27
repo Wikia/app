@@ -10,15 +10,15 @@
 <div class="marketingToolbox WikiaGrid">
 	<div class="grid-2">
 		<h2><?= wfMsg('marketing-toolbox-region-title'); ?></h2>
-		<select id="marketingToolboxRegionSelect">
+		<select id="marketingToolboxRegionSelect" data-default-language="<?= $language ?>">
 			<option value="placeholder"><?= wfMsg('marketing-toolbox-region-select-default-value'); ?></option>
 			<? asort( $languages ); ?>
-			<? foreach ( $languages as $langCode ): ?>
+			<? foreach ( $languages as $langCode => $langName ): ?>
 				<option
 					value="<?= $langCode ?>"
-					<? if ( $language== $langCode ): ?>selected="selected"<? endif ?>
+					<? if ( $language == $langCode ): ?>selected="selected"<? endif ?>
 					>
-					<?= $langCode ?>
+					<?= $langName ?>
 				</option>
 			<? endforeach ?>
 		</select>

@@ -92,7 +92,7 @@ define('vpt.views.datepicker', [
 
 			qs(loc.origin + pathname + 'edit')
 				.setVal({
-						region: this.collection.language,
+						language: this.collection.language,
 						date: timestamp
 				})
 				.goTo();

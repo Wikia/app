@@ -12,7 +12,6 @@ define('vpt.models.datepicker', [], function() {
 		this.init();
 	}
 
-	// TODO: the callback chains here require a specific order, not good, change this
 	Datepicker.prototype = {
 		init: function() {
 			this.specialDates = {};
@@ -70,10 +69,7 @@ define('vpt.models.datepicker', [], function() {
 			this.collectedMonths[this.getMonthKey(theYear, theMonth)] = true;
 		},
 		isCollected: function(theYear, theMonth) {
-			if (this.getMonthKey(theYear, theMonth) in this.collectedMonths) {
-				return true;
-			}
-			return false;
+			return (this.getMonthKey(theYear, theMonth) in this.collectedMonths);
 		},
 		getMonthsToCollect: function(theYear, theMonth) {
 			var out,
