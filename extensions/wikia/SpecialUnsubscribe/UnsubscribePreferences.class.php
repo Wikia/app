@@ -21,7 +21,7 @@ class UnsubscribePreferences {
 		$notice = array( 'no-email-notice-followedpages' => array(
 			'type' => 'info',
 			'section' => 'watchlist/basic',
-			'default' => wfMsg( 'unsubscribe-preferences-notice' ),
+			'default' => wfMessage( 'unsubscribe-preferences-notice' )->text(),
 			)
 	       );
 

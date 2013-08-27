@@ -23,7 +23,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 	}
 
 	function getDescription() {
-		return wfMsg( 'unsubscribe' );
+		return $this->msg( 'unsubscribe' )->text();
 	}
 
 	/**
@@ -32,7 +32,10 @@ class UnsubscribePage extends UnlistedSpecialPage {
 	 * @param $subpage Mixed: parameter passed to the page or null
 	 */
 	public function execute( $subpage ) {
-		global $wgRequest, $wgUser, $wgOut;
+		// Set the variables for this instance
+		$output = $this->getOutput();
+		$user = $this->getUser();
+		$request = $this->getRequest();
 
 		$this->setHeaders();
 
@@ -52,21 +55,21 @@ class UnsubscribePage extends UnlistedSpecialPage {
 				$email = $oUser->getEmail();
 			}
 		} else {
-			$email = $wgRequest->getText( 'email' , null );
-			$token = $wgRequest->getText( 'token' , null );
-			$timestamp = $wgRequest->getText( 'timestamp' , null );
+			$email = $request->getText( 'email' , null );
+			$token = $request->getText( 'token' , null );
+			$timestamp = $request->getText( 'timestamp' , null );
 		}
 
-		if($email == null || $token == null || $timestamp == null) {
+		if ( $email == null || $token == null || $timestamp == null ) {
 			#give up now, abandon all hope.
-			$wgOut->addWikiMsg( 'unsubscribe-badaccess' );
+			$output->addWikiMsg( 'unsubscribe-badaccess' );
 			return;
 		}
 
 		#validate timestamp isnt spoiled (you only have 7 days)
 		$timeCutoff = strtotime("7 days ago");
-		if( $timestamp <= $timeCutoff ) {
-			$wgOut->addWikiMsg( 'unsubscribe-badtime' );
+		if ( $timestamp <= $timeCutoff ) {
+			$output->addWikiMsg( 'unsubscribe-badtime' );
 			// $wgOut->addHTML("timestamp={$timestamp}\n"); #DEVL (remove before release)
 			// $wgOut->addHTML("timeCutoff={$timeCutoff}\n"); #DEVL (remove before release)
 			return;
@@ -75,7 +78,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 		#generate what the token SHOULD be
 		$shouldToken = wfGenerateUnsubToken($email, $timestamp);
 		if( $token != $shouldToken ) {
-			$wgOut->addWikiMsg( 'unsubscribe-badtoken' );
+			$output->addWikiMsg( 'unsubscribe-badtoken' );
 			// $wgOut->addHTML("shouldtoken={$shouldToken}\n"); #DEVL (remove before release)
 			return;
 		}
@@ -83,7 +86,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 		#does the non-blank email they gave us look like an email?
 		if( Sanitizer::validateEmail( $email ) == false ) {
 			#email wasnt blank, but didnt look like any email
-			$wgOut->addWikiMsg( 'unsubscribe-bademail' );
+			$output->addWikiMsg( 'unsubscribe-bademail' );
 			// $wgOut->addHTML("email={$email}\n"); #DEVL (remove before release)
 			return;
 		}
@@ -91,8 +94,8 @@ class UnsubscribePage extends UnlistedSpecialPage {
 		#at this point, the 3 params check out.
 
 		#is this their 2nd pass at this?
-		$confirmed = $wgRequest->getBool( 'confirm' , null );
-		if( $wgRequest->wasPosted() && $confirmed) {
+		$confirmed = $request->getBool( 'confirm' , null );
+		if( $request->wasPosted() && $confirmed) {
 			#this is the 2nd round, they pushed the button, so do it
 			$this->procUnsub( $email );
 		} else {
@@ -135,8 +138,9 @@ class UnsubscribePage extends UnlistedSpecialPage {
 	 * @param $token string: token from url, to verify this link
 	 */
 	function showInfo( $email, $token, $timestamp ) {
-		global $wgOut, $wgLang, $wgScript;
-
+		global $wgScript;
+		$lang = $this->getLanguage();
+		$output = $this->getOutput();
 
 		/**
 		 * find uid=>username(s) by email
@@ -148,7 +152,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 			#note: should never happen
 			# (except... if they get the email, change their email,
 			# then use a unsub link from an email sent to old address...)
-			$wgOut->addWikiMsg( 'unsubscribe-nousers' );
+			$output->addWikiMsg( 'unsubscribe-nousers' );
 			return;
 		}
 		#$wgOut->addHTML( print_pre($this->mUsers,1) ); #DEVL
@@ -165,7 +169,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 
 			if ( $user == null || $user->getId() == 0 ) {
 				#user bad? wtf?! how?
-				unset($this->mUsers[$uid]);
+				unset( $this->mUsers[$uid] );
 				continue;
 
 			} else {
@@ -189,18 +193,18 @@ class UnsubscribePage extends UnlistedSpecialPage {
 		}
 
 		#do we have atleast 1 left
-		if( empty($this->mUsers) ) {
-			$wgOut->addWikiMsg( 'unsubscribe-noconfusers' );
+		if( empty( $this->mUsers ) ) {
+			$output->addWikiMsg( 'unsubscribe-noconfusers' );
 			return;
 		}
 
 		#reloop over any left, actually print this time
-		$wgOut->addHTML( Xml::openElement('ul') );
-		foreach($this->mUsers as $uid=>$username) {
+		$output->addHTML( Xml::openElement( 'ul' ) );
+		foreach ( $this->mUsers as $uid => $username ) {
 			#not yet
-			$wgOut->addHTML( Xml::element('li', null, $username) );
+			$output->addHTML( Xml::element( 'li', null, $username ) );
 		}
-		$wgOut->addHTML( Xml::closeElement('ul') );
+		$output->addHTML( Xml::closeElement( 'ul' ) );
 
 		/**
 		 * form
@@ -208,26 +212,24 @@ class UnsubscribePage extends UnlistedSpecialPage {
 		$form_action = htmlspecialchars( $this->getTitle()->getFullUrl() );
 		$form_title = htmlspecialchars( $this->getTitle()->getPrefixedText() );
 
-		$unsub_legend = wfMsg( 'unsubscribe-confirm-legend' );
-		$unsub_text = wfMsg( 'unsubscribe-confirm-text', $email );
-		$unsub_button = wfMsg( 'unsubscribe-confirm-button' );
+		$unsub_legend = wfMessage( 'unsubscribe-confirm-legend' )->text();
+		$unsub_text = wfMessage( 'unsubscribe-confirm-text', $email )->text();
+		$unsub_button = wfMessage( 'unsubscribe-confirm-button' )->text();
 
-		#TODO: Xml:: this
-		$wgOut->addHTML( <<<EOT
-<fieldset>
-<legend>{$unsub_legend}</legend>
-<form method="post" action="{$form_action}">
-<input type="hidden" name="title" value="{$form_title}" />
-<input type="hidden" name="email" value="{$email}" />
-<input type="hidden" name="token" value="{$token}" />
-<input type="hidden" name="timestamp" value="{$timestamp}" />
-<input type="hidden" name="confirm" value="1" />
-{$unsub_text} &nbsp; <input type="submit" value="{$unsub_button}" />
-</form>
-</fieldset>
-EOT
-		);
-
+		# Build the form
+		$fieldset = Html::openElement( "form", array(
+			"method" => "POST",
+			"action" => $form_action
+		) );
+		$fieldset .= Html::input( "title", $form_title, "hidden" );
+		$fieldset .= Html::input( "email", $email, "hidden" );
+		$fieldset .= Html::input( "token", $token, "hidden" );
+		$fieldset .= Html::input( "timestamp", $timestamp, "hidden" );
+		$fieldset .= Html::input( "confirm", "1", "hidden" );
+		$fieldset .= $unsub_text;
+		$fieldset .= Html::input( null, $unsub_button, "submit" );
+		$fieldset .= Html::closeElement( "form" );
+		$output->addHTML( Xml::fieldset( $unsub_legend, $fieldset ) );
 	}
 
 	/**
@@ -236,14 +238,14 @@ EOT
 	 */
 	private function procUnsub( $email )
 	{
-		global $wgOut;
+		$output = $this->getOutput();
 
 		/**
 		 * load uid=>username(s) by email
 		 */
 		$this->email2users( $email );
 
-		$wgOut->addWikiMsg( 'unsubscribe-working', count($this->mUsers), $email );
+		$output->addWikiMsg( 'unsubscribe-working', count( $this->mUsers ), $email );
 
 		foreach($this->mUsers as $uid=>$username)
 		{
@@ -252,7 +254,7 @@ EOT
 
 			if ( $user == null || $user->getId() == 0 ) {
 				#user bad? wtf?! how?
-				$wgOut->addWikiText( '* ' . wfMsg('unsubscribe-working-problem', $username ) );
+				$output->addWikiText( '* ' . wfMessage( 'unsubscribe-working-problem', $username )->text() );
 				continue;
 			} else {
 				if ( !$user->isEmailConfirmed() ) {
@@ -277,9 +279,9 @@ EOT
 				#super important, dont forget to save the bits back to metal
 				$user->saveSettings();
 
-				$wgOut->addWikiText('* ' . $username );
+				$output->addWikiText('* ' . $username );
 			}
 		}
-		$wgOut->addWikimsg('unsubscribe-working-done');
+		$output->addWikiMsg( 'unsubscribe-working-done' );
 	}
 }
