@@ -41,7 +41,18 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 		jquery.showCustomModal(title, content, options);
 	}
 
-	function renderPreview(options, extraData) {
+	/**
+	 * Display a dialog with article preview. Options passed in the object are:
+	 *  - 'width' - dialog width in pixels
+	 *  - 'onPublishButton' - callback function launched when user presses the 'Publish' button on the dialog
+	 *  - 'getPreviewContent' - callback function called when the dialog tries to fetch the current article content from
+	 *    the editor. this function takes a callback as a parameter and is supposed to call it with two parameters. the
+	 *    first parameter is the article markup, the second is the edit summary markup
+	 *  Additionally the preview dialog triggers the EditPagePreviewClosed event when the dialog is closed.
+	 *
+	 * @param options object containing dialog options, see method description for details
+	 */
+	function renderPreview(options) {
 		var dialogOptions = {
 			buttons: [
 				{
@@ -68,80 +79,63 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 		jquery(window).trigger('EditPageRenderPreview', [dialogOptions]);
 
 		renderDialog(msg('preview'), dialogOptions, function(contentNode) {
-			options.getEditorContent(function(content) {
-				// add section name when adding new section (BugId:7658)
-				if (window.wgEditPageSection == 'new') {
-					content = '== ' + options.summary + ' ==\n\n' + content;
+
+			options.getPreviewContent(function(content, summary) {
+
+				contentNode.html(content);
+
+				// move "edit" link to the right side of heading names
+				contentNode.find('.editsection').each(function() {
+					jquery(this).appendTo(jquery(this).next());
+				});
+
+				// add summary
+				if (typeof summary != 'undefined') {
+					jquery('<div>', {id: "EditPagePreviewEditSummary"}).
+						width(options.width - 150).
+						appendTo(contentNode.parent()).
+						html(summary);
 				}
-				else {
-					extraData.summary = options.summary;
-				}
 
-				extraData.content = content;
-
-				if (window.wgEditPageSection !== null) {
-					extraData.section = window.wgEditPageSection;
-				}
-
-				options.getPreviewContent(extraData,
-					function(data) {
-						contentNode.html(data.html + data.catbox + data.interlanglinks);
-
-						// move "edit" link to the right side of heading names
-						contentNode.find('.editsection').each(function() {
-							jquery(this).appendTo(jquery(this).next());
-						});
-
-						// add summary
-						if (typeof data.summary != 'undefined') {
-							jquery('<div>', {id: "EditPagePreviewEditSummary"}).
-								width(options.width - 150).
-								appendTo(contentNode.parent()).
-								html(data.summary);
-						}
-
-						//adding type dropdown to preview
-						if ( window.wgOasisResponsive ) {
-							loader({type: loader.MULTI, resources: {
-								mustache: 'extensions/wikia/EditPreview/templates/preview_type_dropdown.mustache'
-							}}).done(function(response) {
-									var template = response.mustache[0],
-										params = {
-											options: [
-												{
-													value: 'current',
-													name: msg('wikia-editor-preview-current-width')
-												},
-												{
-													value: 'min',
-													name: msg('wikia-editor-preview-min-width')
-												},
-												{
-													value: 'max',
-													name: msg('wikia-editor-preview-max-width')
-												}
-											],
-											toolTipMessage: msg('wikia-editor-preview-type-tooltip'),
-											toolTipIcon: '',
-											toolTipIconAlt: 'tooltip'
+				//adding type dropdown to preview
+				if ( window.wgOasisResponsive ) {
+					loader({type: loader.MULTI, resources: {
+						mustache: 'extensions/wikia/EditPreview/templates/preview_type_dropdown.mustache'
+					}}).done(function(response) {
+							var template = response.mustache[0],
+								params = {
+									options: [
+										{
+											value: 'current',
+											name: msg('wikia-editor-preview-current-width')
 										},
-										html = mustache.render(template, params);
+										{
+											value: 'min',
+											name: msg('wikia-editor-preview-min-width')
+										},
+										{
+											value: 'max',
+											name: msg('wikia-editor-preview-max-width')
+										}
+									],
+									toolTipMessage: msg('wikia-editor-preview-type-tooltip'),
+									toolTipIcon: '',
+									toolTipIconAlt: 'tooltip'
+								},
+								html = mustache.render(template, params);
 
-									jquery(html).insertBefore(contentNode.parent().parent());
+							jquery(html).insertBefore(contentNode.parent().parent());
 
-									// fire an event once preview is rendered
-									jquery(window).trigger('EditPageAfterRenderPreview', [contentNode]);
-								});
-						} else {
 							// fire an event once preview is rendered
 							jquery(window).trigger('EditPageAfterRenderPreview', [contentNode]);
-						}
+						});
+				} else {
+					// fire an event once preview is rendered
+					jquery(window).trigger('EditPageAfterRenderPreview', [contentNode]);
+				}
 
-					}
-				);
 			});
 		});
-
 	}
 
 	/** @public **/

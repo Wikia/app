@@ -400,6 +400,31 @@
 			$.showCustomModal(title, content, options);
 		},
 
+		// internal method, based on the editor content and some extraData, prepare a preview markup for the
+		// preview dialog and pass it to the callback
+		getPreviewContent: function(content, extraData, callback) {
+			// add section name when adding new section (BugId:7658)
+			if (window.wgEditPageSection == 'new') {
+				content = '== ' + this.getSummary() + ' ==\n\n' + content;
+			} else {
+				extraData.summary = this.getSummary();
+			}
+
+			extraData.content = content;
+
+			if (window.wgEditPageSection !== null) {
+				extraData.section = window.wgEditPageSection;
+			}
+
+			if (this.categories.length) {
+				extraData.categories = this.categories.val();
+			}
+
+			this.ajax('preview', extraData, function(data) {
+				callback(data.html + data.catbox + data.interlanglinks, data.summary);
+			});
+		},
+
 		// render "Preview" modal
 		// TODO: it would be nice if there weren't any hardcoded values in here.
 		// Any changes to the article page or modal will break here. Also, get rid
@@ -461,17 +486,15 @@
 				onPublishButton: function() {
 					$('#wpSave').click();
 				},
-				getEditorContent: this.getContent,  //@todo - consider passing content as string instead of callback
-				summary: this.getSummary(),
-				getPreviewContent: function(options, callback) {self.ajax('preview', options, callback);}
+				getPreviewContent: function(callback) {
+					self.getContent(function(content) {
+						self.getPreviewContent(content, extraData, callback);
+					});
+				}
 			};
 
-			if (self.categories.length) {
-				extraData.categories = self.categories.val();
-			}
-
 			require(['wikia.preview'], function(preview) {
-				preview.renderPreview(previewOptions, extraData);
+				preview.renderPreview(previewOptions);
 			});
 
 		},
