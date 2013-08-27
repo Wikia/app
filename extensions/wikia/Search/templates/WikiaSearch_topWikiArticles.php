@@ -1,7 +1,9 @@
 <?php $counter = 0; ?>
 <?php if ( !empty( $pages ) ) : ?>
 <div class="top-wiki-articles RailModule">
-    <h1 class="top-wiki-main"><?= wfMessage( 'wikiasearch2-top-module-title' )->plain() ?></h1>
+    <h1 class="top-wiki-main header-test-1"><?= wfMessage( 'wikiasearch2-top-module-test-1' )->plain() ?></h1>
+    <h1 class="top-wiki-main header-test-2"><?= wfMessage( 'wikiasearch2-top-module-test-2' )->plain() ?></h1>
+    <h1 class="top-wiki-main header-test-3"><?= wfMessage( 'wikiasearch2-top-module-test-3' )->plain() ?></h1>
     <?php foreach ( $pages as $page ) : ?>
     <?php if ( !empty( $page["thumbnailSize"] ) && $page["thumbnailSize"] === "large" ): ?>
     <div class="top-wiki-article hot-article result">
