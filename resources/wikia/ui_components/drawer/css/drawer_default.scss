@@ -4,6 +4,8 @@
 @import "skins/oasis/css/mixins/box-shadow.scss";
 
 $drawer-width: 300px;
+$drawer-shadow-size: 30px;
+$drawer-background-color: black;
 
 .drawer, .drawerBackground {
 	@include transition-shorthand(all 0.2s ease-in-out);
@@ -14,7 +16,7 @@ $drawer-width: 300px;
 }
 
 .drawer {
-	@include box-shadow(0px, 0px, 30px, $color-page-shadow);
+	@include box-shadow(0px, 0px, $drawer-shadow-size, $color-page-shadow);
 	background: $color-page;
 	color: $color-text;
 	padding: 0;
@@ -25,14 +27,14 @@ $drawer-width: 300px;
 	}
 
 	&.left {
-		left: -$drawer-width;
+		left: -$drawer-width - $drawer-shadow-size;
 
 		&.open {
 			left: 0;
 		}
 	}
 	&.right {
-		right: -$drawer-width;
+		right: -$drawer-width - $drawer-shadow-size;
 
 		&.open {
 			right: 0;
@@ -42,7 +44,7 @@ $drawer-width: 300px;
 
 /* TODO while implementing new modals in styleguide think about reusing those styles for that element */
 .drawerBackground {
-	background: black;
+	background: $drawer-background-color;
 	left: 0;
 	right: 0;
 	z-index: -1;
