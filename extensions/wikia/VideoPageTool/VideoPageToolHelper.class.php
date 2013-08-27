@@ -5,6 +5,9 @@ class VideoPageToolHelper extends WikiaModel {
 	const DEFAULT_LANGUAGE = 'en';
 	const DEFAULT_SECTION = 'featured';
 
+	const THUMBNAIL_WIDTH = 180;
+	const THUMBNAIL_HEIGHT = 100;
+
 	/**
 	 * get list of sections
 	 * @return array $sections
@@ -50,6 +53,44 @@ class VideoPageToolHelper extends WikiaModel {
 		}
 
 		return $leftMenuItems;
+	}
+
+	/**
+	 * get video data
+	 * @param string $videoTitle
+	 * @return array $video
+	 */
+	public function getVideoData( $videoTitle ) {
+		wfProfileIn( __METHOD__ );
+
+		$video = array();
+
+		$title = Title::newFromText( $videoTitle, NS_FILE );
+		if ( $title instanceof Title ) {
+			$file = wfFindFile( $title );
+			if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
+				$videoTitle = $title->getText();
+
+				// get thumbnail
+				$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
+				$videoThumb = $thumb->toHtml();
+
+				// get description
+				$videoHandlerHelper = new VideoHandlerHelper();
+				$description = $videoHandlerHelper->getVideoDescription( $file );
+
+				$video = array(
+					'videoTitle' => $videoTitle,
+					'displayTitle' => $videoTitle,
+					'videoThumb' => $videoThumb,
+					'description' => $description,
+				);
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $video;
 	}
 
 	/**

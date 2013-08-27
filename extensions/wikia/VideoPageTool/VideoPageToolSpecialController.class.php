@@ -221,5 +221,39 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		$this->videos = $videos;
 	}
 
+	/**
+	 * get video data
+	 * @requestParam string url
+	 * @responseParam string result [ok/error]
+	 * @responseParam string msg - result message
+	 * @responseParam array video
+	 */
+	public function getVideoData() {
+		$url = $this->getVal( 'url', '' );
+
+		$video = array();
+
+		if ( empty( $url ) ) {
+			$this->result = 'error';
+			$this->msg = wfMessage( 'videos-error-invalid-video-url' )->plain();
+			return;
+		}
+
+		if ( preg_match( '/.+\/wiki\/File:(.+)$/i', $url, $matches ) ) {
+			$helper = new VideoPageToolHelper();
+			$video = $helper->getVideoData( $matches[1] );
+		}
+
+		if ( empty( $video ) ) {
+			$this->result = 'error';
+			$this->msg = wfMessage( 'videohandler-unknown-title' )->plain();
+			$this->video = $video;
+		} else {
+			$this->result = 'ok';
+			$this->msg = '';
+			$this->video = $video;
+		}
+	}
+
 }
 
