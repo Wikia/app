@@ -35,7 +35,7 @@ $(function() {
 				return;
 			case 1:
 				trackSpecialCssClick(Wikia.Tracker.ACTIONS.OPEN, 'changes', null, {href: t.attr('href')}, e);
-			return; 
+				return;
 		}
 	});
 
