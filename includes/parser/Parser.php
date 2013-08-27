@@ -943,7 +943,11 @@ class Parser {
 				# RTE - end
 				$attributes = Sanitizer::fixTagAttributes( $attributes , 'table' );
 
-				$outLine = str_repeat( '<dl><dd>' , $indent_level ) . "<table{$attributes}>";
+				// Wikia change - begin - @author kflorence
+				$outLine = str_repeat( '<dl><dd>' , $indent_level ) .
+					"<div class=\"table-wrapper\"><table{$attributes}>";
+				// Wikia change - end
+
 				# RTE (Rich Text Editor) - begin
 				$outLine = $RTEcomment.$outLine;
 				$RTEcomment = null;
@@ -959,7 +963,9 @@ class Parser {
 				continue;
 			} elseif ( substr( $line , 0 , 2 ) === '|}' ) {
 				# We are ending a table
-				$line = '</table>' . substr( $line , 2 );
+				// Wikia change - start - @author kflorence
+				$line = '</table></div>' . substr( $line , 2 );
+				// Wikia change - end
 				$last_tag = array_pop( $last_tag_history );
 
 				if ( !array_pop( $has_opened_tr ) ) {
@@ -1116,7 +1122,9 @@ class Parser {
 				$out .= "<tr><td></td></tr>\n" ;
 			}
 
-			$out .= "</table>\n";
+			// Wikia change - begin - @author kflorence
+			$out .= "</table></div>\n";
+			// Wikia change - end
 		}
 
 		# Remove trailing line-ending (b/c)
@@ -1125,7 +1133,9 @@ class Parser {
 		}
 
 		# special case: don't return empty table
-		if ( $out === "<table>\n<tr><td></td></tr>\n</table>" ) {
+		// Wikia change - begin - @author kflorence
+		if ( $out === "<div class=\"table-wrapper\"><table>\n<tr><td></td></tr>\n</table></div>" ) {
+			// Wikia change - end
 			$out = '';
 		}
 
