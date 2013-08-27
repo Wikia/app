@@ -56,11 +56,9 @@ define('vpt.views.datepicker', [
 		},
 		beforeShowDay: function(date) {
 			var tdClassName,
-					tooltip,
 					dayStatus;
 
 			tdClassName = '';
-			tooltip = '';
 			dayStatus = this.collection.getStatus(date);
 
 			if (dayStatus) {
@@ -69,10 +67,9 @@ define('vpt.views.datepicker', [
 				} else if (dayStatus === this.state._published ) {
 					tdClassName = 'published';
 				}
-				// tooltip = this.tooltipMessages[dayStatus];
 			}
 
-			return [true, tdClassName, tooltip];
+			return [true, tdClassName ];
 		},
 		onChangeMonthYear: function(year, month) {
 			return this.collection.collectData(year, month);

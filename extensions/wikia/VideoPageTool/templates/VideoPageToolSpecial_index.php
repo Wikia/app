@@ -9,9 +9,9 @@
 
 <div class="marketingToolbox WikiaGrid">
 	<div class="grid-2">
-		<h2><?= wfMsg('marketing-toolbox-region-title'); ?></h2>
+		<h2><?= wfMsg('videopagetool-language-title'); ?></h2>
 		<select id="marketingToolboxRegionSelect" data-default-language="<?= $language ?>">
-			<option value="placeholder"><?= wfMsg('marketing-toolbox-region-select-default-value'); ?></option>
+			<option value="placeholder"><?= wfMsg('videopagetool-language-select-default-value'); ?></option>
 			<? asort( $languages ); ?>
 			<? foreach ( $languages as $langCode => $langName ): ?>
 				<option
@@ -27,8 +27,8 @@
 		<img class="chevron border" src="<?= $wg->BlankImgUrl; ?>">
 		<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
 		<div class="ml15">
-			<h2><?= wfMsg('marketing-toolbox-date-title'); ?></h2>
-			<div id="date-picker"><?=wfMsg('marketing-toolbox-tooltip-calendar-placeholder')?></div>
+			<h2><?= wfMsg('videopagetool-date-title'); ?></h2>
+			<div id="date-picker"><?=wfMsg('videopagetool-tooltip-calendar-placeholder')?></div>
 		</div>
 	</div>
 </div>
@@ -38,15 +38,15 @@
 		<tr>
 			<td class="ui-datepicker-current-day-legend">
 				<a>&nbsp;&nbsp;</a>
-				<?= wfMsg('marketing-toolbox-tooltip-current-date'); ?>
+				<?= wfMsg('videopagetool-tooltip-current-date'); ?>
 			</td>
 			<td class="published">
 				<a>&nbsp;&nbsp;</a>
-				<?= wfMsg('marketing-toolbox-tooltip-published'); ?>
+				<?= wfMsg('videopagetool-tooltip-published'); ?>
 			</td>
 			<td class="inProg">
 				<a>&nbsp;&nbsp;</a>
-				<?= wfMsg('marketing-toolbox-tooltip-in-progress'); ?>
+				<?= wfMsg('videopagetool-tooltip-in-progress'); ?>
 			</td>
 		</tr>
 	</table>
