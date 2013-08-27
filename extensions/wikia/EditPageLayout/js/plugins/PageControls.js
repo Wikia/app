@@ -467,7 +467,7 @@
 			};
 
 			if (self.categories.length) {
-				previewOptions.categories = self.categories.val();
+				extraData.categories = self.categories.val();
 			}
 
 			require(['wikia.preview'], function(preview) {
