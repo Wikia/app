@@ -145,7 +145,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		$languages = $helper->getLanguages();
 		if ( !array_key_exists( $language, $languages ) ) {
 			$this->result = 'error';
-			$this->msg = wfMessage( 'videopagetool-error-invalid-language' );
+			$this->msg = wfMessage( 'videopagetool-error-invalid-language' )->plain();
 			$this->info = array();
 			return;
 		}
@@ -155,7 +155,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		$eDate = getdate( $endTime );
 		if ( !checkdate($sDate['mon'], $sDate['mday'], $sDate['year'] ) || !checkdate($eDate['mon'], $eDate['mday'], $eDate['year'] )  ) {
 			$this->result = 'error';
-			$this->msg = wfMessage( 'videopagetool-error-invalid-date' );
+			$this->msg = wfMessage( 'videopagetool-error-invalid-date' )->plain();
 			$this->info = array();
 			return;
 		}
