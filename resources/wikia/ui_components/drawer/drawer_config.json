@@ -2,7 +2,7 @@
 	"templateVars": {
 		"default": {
 			"required": ["side", "content"],
-			"optional": []
+			"optional": ["class"]
 		}
 
 	},

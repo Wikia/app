@@ -3,6 +3,8 @@
 @import "skins/oasis/css/mixins/transition.scss";
 @import "skins/oasis/css/mixins/box-shadow.scss";
 
+$drawer-width: 300px;
+
 .drawer, .drawerBackground {
 	@include transition-shorthand(all 0.2s ease-in-out);
 	bottom: 0;
@@ -16,21 +18,21 @@
 	background: $color-page;
 	color: $color-text;
 	padding: 0;
-	width: 300px;
+	width: $drawer-width;
 
 	&.open {
 		opacity: 1;
 	}
 
 	&.left {
-		left: -350px;
+		left: -$drawer-width;
 
 		&.open {
 			left: 0;
 		}
 	}
 	&.right {
-		right: -350px;
+		right: -$drawer-width;
 
 		&.open {
 			right: 0;
@@ -38,6 +40,7 @@
 	}
 }
 
+/* TODO while implementing new modals in styleguide think about reusing those styles for that element */
 .drawerBackground {
 	background: black;
 	left: 0;
