@@ -82,7 +82,7 @@ $(function() {
 			// prevent submitting immediately so we can track this event
 			e.preventDefault();
 			form.unbind('submit');
-			setTimeout(form.submit(), 100);
+			setTimeout(function() {form.submit();}, 100, form);
 		});
 
 		$('#showChanges').click(function() {
