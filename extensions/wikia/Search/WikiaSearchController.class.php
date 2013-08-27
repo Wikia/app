@@ -238,9 +238,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		       ->setLimit( 4 )
 		       ->setStart( $this->getVal( 'next', 0 ) );
 		
-		$results = $this->queryServiceFactory->getFromConfig( $config )->searchAsApi( [ 'url', 'id' ], true );
+		$results = $this->queryServiceFactory->getFromConfig( $config )->searchAsApi( [ 'url', 'id', 'pageid', 'wid', 'title' ], true );
+		$params = [ 'contextWidth' => 125, 'maxHeight' => 94 ]; 
 		foreach ( $results['items'] as &$result ) {
 			$result['url'] = str_replace( 'http://video.wikia.com/', $wgServer, $result['url'] );
+			$result['mediaDetail'] = WikiaFileHelper::getMediaDetail( Title::newFromText( $result['title'] ), $params );
 		}
 		
 		$response = $this->getResponse();
@@ -352,7 +354,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'isMonobook',            ( $this->wg->User->getSkin() instanceof SkinMonobook ) );
 		$this->setVal( 'isCorporateWiki',       $this->isCorporateWiki() );
 		$this->setVal( 'wgExtensionsPath',      $wgExtensionsPath);
-
+		
+		$this->setVal( 'mediaData',             $this->sendSelfRequest( 'combinedMediaSearch', 
+				array( 'q' => $searchConfig->getQuery()->getSanitizedQuery(), 'videoOnly' => true ) )->getData() );
+		
 		if ( $this->wg->OnWikiSearchIncludesWikiMatch && $searchConfig->hasWikiMatch() ) {
 			$this->registerWikiMatch( $searchConfig );
 		}

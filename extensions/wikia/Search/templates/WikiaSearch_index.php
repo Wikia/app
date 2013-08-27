@@ -52,6 +52,9 @@
 					<?php foreach( $results as $result ): ?>
 						<?php
 							$pos++;
+							if ( $pos == 1 && $mediaData ):
+								echo $app->getView( 'WikiaSearch', 'mediadata', array( 'mediaData' => $mediaData, 'query' => $query ) );
+							endif;
 							echo $app->getView( 'WikiaSearch', ( $result->getVar( 'ns' ) === 0 ) ? $resultView : WikiaSearchController::WIKIA_DEFAULT_RESULT, array(
 							  'result' => $result,
 							  'gpos' => 0,
