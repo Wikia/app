@@ -4,6 +4,8 @@
 @import "../mixins/clearfix";
 @import "../mixins/gradient";
 
+$browse-chevron-background-color: rgba($color-header, 0.7);
+
 .WikiaHeader {
 	@include box-shadow(0, 0, 10px, $color-page-shadow);
 	@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
@@ -84,7 +86,7 @@
 				display: inline;
 			}
 			.chevron-container {
-				background-color: $color-header;
+				background-color: $browse-chevron-background-color;
 			}
 		}
 
@@ -92,8 +94,9 @@
 			background-image: url(/skins/oasis/images/chevron_down.png); /* base64 */
 			background-position: center;
 			background-repeat: no-repeat;
+			border-right: 1px solid $browse-chevron-background-color;
 			display: inline-block;
-			width: 34px;
+			width: 37px;
 			height: $wikiaglobal-nav-height;
 			float: left;
 		}
