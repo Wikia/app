@@ -133,6 +133,7 @@ class FSFileBackend extends FileBackendStore {
 	public function isPathUsableInternal( $storagePath ) {
 		$fsPath = $this->resolveToFSPath( $storagePath );
 		if ( $fsPath === null ) {
+			WikiaLog::init( 'file', true )->send( 'invalid file path', $storagePath );
 			return false; // invalid
 		}
 		$parentDir = dirname( $fsPath );
@@ -154,6 +155,7 @@ class FSFileBackend extends FileBackendStore {
 
 		$dest = $this->resolveToFSPath( $params['dst'] );
 		if ( $dest === null ) {
+			WikiaLog::init( 'file', true )->send( 'invalid file path', $params );
 			$status->fatal( 'backend-fail-invalidpath', $params['dst'] );
 			return $status;
 		}
@@ -162,10 +164,12 @@ class FSFileBackend extends FileBackendStore {
 			if ( !empty( $params['overwrite'] ) ) {
 				$ok = unlink( $dest );
 				if ( !$ok ) {
+					WikiaLog::init( 'file', true )->send( 'file delete error', $params );
 					$status->fatal( 'backend-fail-delete', $params['dst'] );
 					return $status;
 				}
 			} else {
+				WikiaLog::init( 'file', true )->send( 'file already exists', $params );
 				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
 				return $status;
 			}
@@ -173,6 +177,7 @@ class FSFileBackend extends FileBackendStore {
 
 		$ok = copy( $params['src'], $dest );
 		if ( !$ok ) {
+			WikiaLog::init( 'file', true )->send( 'cannot copy file', $params );
 			$status->fatal( 'backend-fail-store', $params['src'], $params['dst'] );
 			return $status;
 		}
@@ -190,12 +195,14 @@ class FSFileBackend extends FileBackendStore {
 
 		$source = $this->resolveToFSPath( $params['src'] );
 		if ( $source === null ) {
+			WikiaLog::init( 'file', true )->send( 'invalid file path', $params );
 			$status->fatal( 'backend-fail-invalidpath', $params['src'] );
 			return $status;
 		}
 
 		$dest = $this->resolveToFSPath( $params['dst'] );
 		if ( $dest === null ) {
+			WikiaLog::init( 'file', true )->send( 'invalid file path', $params );
 			$status->fatal( 'backend-fail-invalidpath', $params['dst'] );
 			return $status;
 		}
@@ -204,10 +211,12 @@ class FSFileBackend extends FileBackendStore {
 			if ( !empty( $params['overwrite'] ) ) {
 				$ok = unlink( $dest );
 				if ( !$ok ) {
+					WikiaLog::init( 'file', true )->send( 'file delete error', $params );
 					$status->fatal( 'backend-fail-delete', $params['dst'] );
 					return $status;
 				}
 			} else {
+				WikiaLog::init( 'file', true )->send( 'file already exists', $params );
 				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
 				return $status;
 			}
@@ -215,6 +224,7 @@ class FSFileBackend extends FileBackendStore {
 
 		$ok = copy( $source, $dest );
 		if ( !$ok ) {
+			WikiaLog::init( 'file', true )->send( 'cannot copy file', $params );
 			$status->fatal( 'backend-fail-copy', $params['src'], $params['dst'] );
 			return $status;
 		}
@@ -232,12 +242,14 @@ class FSFileBackend extends FileBackendStore {
 
 		$source = $this->resolveToFSPath( $params['src'] );
 		if ( $source === null ) {
+			WikiaLog::init( 'file', true )->send( 'invalid file path', $params );
 			$status->fatal( 'backend-fail-invalidpath', $params['src'] );
 			return $status;
 		}
 
 		$dest = $this->resolveToFSPath( $params['dst'] );
 		if ( $dest === null ) {
+			WikiaLog::init( 'file', true )->send( 'invalid file path', $params );
 			$status->fatal( 'backend-fail-invalidpath', $params['dst'] );
 			return $status;
 		}
@@ -248,11 +260,13 @@ class FSFileBackend extends FileBackendStore {
 				if ( wfIsWindows() ) {
 					$ok = unlink( $dest );
 					if ( !$ok ) {
+						WikiaLog::init( 'file', true )->send( 'file delete error', $params );
 						$status->fatal( 'backend-fail-delete', $params['dst'] );
 						return $status;
 					}
 				}
 			} else {
+				WikiaLog::init( 'file', true )->send( 'file already exists', $params );				
 				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
 				return $status;
 			}
@@ -261,6 +275,7 @@ class FSFileBackend extends FileBackendStore {
 		$ok = rename( $source, $dest );
 		clearstatcache(); // file no longer at source
 		if ( !$ok ) {
+			WikiaLog::init( 'file', true )->send( 'cannot move file', $params );
 			$status->fatal( 'backend-fail-move', $params['src'], $params['dst'] );
 			return $status;
 		}
@@ -276,11 +291,13 @@ class FSFileBackend extends FileBackendStore {
 
 		$source = $this->resolveToFSPath( $params['src'] );
 		if ( $source === null ) {
+			WikiaLog::init( 'file', true )->send( 'invalid file path', $params );
 			$status->fatal( 'backend-fail-invalidpath', $params['src'] );
 			return $status;
 		}
 
 		if ( !is_file( $source ) ) {
+			WikiaLog::init( 'file', true )->send( 'file does not exist', $params );
 			if ( empty( $params['ignoreMissingSource'] ) ) {
 				$status->fatal( 'backend-fail-delete', $params['src'] );
 			}
@@ -289,6 +306,7 @@ class FSFileBackend extends FileBackendStore {
 
 		$ok = unlink( $source );
 		if ( !$ok ) {
+			WikiaLog::init( 'file', true )->send( 'cannot delete file', $params );
 			$status->fatal( 'backend-fail-delete', $params['src'] );
 			return $status;
 		}
@@ -304,6 +322,7 @@ class FSFileBackend extends FileBackendStore {
 
 		$dest = $this->resolveToFSPath( $params['dst'] );
 		if ( $dest === null ) {
+			WikiaLog::init( 'file', true )->send( 'invalid file path', $params );
 			$status->fatal( 'backend-fail-invalidpath', $params['dst'] );
 			return $status;
 		}
@@ -312,10 +331,12 @@ class FSFileBackend extends FileBackendStore {
 			if ( !empty( $params['overwrite'] ) ) {
 				$ok = unlink( $dest );
 				if ( !$ok ) {
+					WikiaLog::init( 'file', true )->send( 'cannot delete file', $params );
 					$status->fatal( 'backend-fail-delete', $params['dst'] );
 					return $status;
 				}
 			} else {
+				WikiaLog::init( 'file', true )->send( 'file already exists', $params );
 				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
 				return $status;
 			}
@@ -323,6 +344,7 @@ class FSFileBackend extends FileBackendStore {
 
 		$bytes = file_put_contents( $dest, $params['content'] );
 		if ( $bytes === false ) {
+			WikiaLog::init( 'file', true )->send( 'file create error', $params );
 			$status->fatal( 'backend-fail-create', $params['dst'] );
 			return $status;
 		}
@@ -341,10 +363,13 @@ class FSFileBackend extends FileBackendStore {
 		$contRoot = $this->containerFSRoot( $shortCont, $fullCont ); // must be valid
 		$dir = ( $dirRel != '' ) ? "{$contRoot}/{$dirRel}" : $contRoot;
 		if ( !wfMkdirParents( $dir ) ) { // make directory and its parents
+			WikiaLog::init( 'file', true )->send( 'cannot create error', $params );			
 			$status->fatal( 'directorycreateerror', $params['dir'] );
 		} elseif ( !is_writable( $dir ) ) {
+			WikiaLog::init( 'file', true )->send( 'directory is readonly', $params );	
 			$status->fatal( 'directoryreadonlyerror', $params['dir'] );
 		} elseif ( !is_readable( $dir ) ) {
+			WikiaLog::init( 'file', true )->send( 'directory is not readable', $params );
 			$status->fatal( 'directorynotreadableerror', $params['dir'] );
 		}
 		return $status;
@@ -496,6 +521,9 @@ class FSFileBackend extends FileBackendStore {
 	protected function chmod( $path ) {
 		wfSuppressWarnings();
 		$ok = chmod( $path, $this->fileMode );
+		if ( $ok === false ) {
+			WikiaLog::init( 'file', true )->send( 'cannot chmod a file', $path );
+		}
 		wfRestoreWarnings();
 
 		return $ok;

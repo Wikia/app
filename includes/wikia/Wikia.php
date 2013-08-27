@@ -451,7 +451,7 @@ class Wikia {
 	 * @example Wikia::debugBacktrace(__METHOD__);
 	 * @author Piotr Molski <moli@wikia-inc.com>
 	 *
-	 * @param String $method - use __METHOD__
+	 * @param String $method - use __METHOD__ as default
 	 */
 	static public function debugBacktrace($method) {
 		$backtrace = wfDebugBacktrace();
@@ -480,7 +480,7 @@ class Wikia {
 		$msg = "***** END *****";
 		Wikia::log($method, false, $msg, true /* $force */);
 	}
-
+	
 	/**
 	 * get staff person responsible for language
 	 *
