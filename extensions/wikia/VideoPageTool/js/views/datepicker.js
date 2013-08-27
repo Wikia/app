@@ -22,7 +22,6 @@ define('vpt.views.datepicker', [
 	DatepickerView.prototype = {
 		init: function() {
 			var that = this;
-			// TODO: not a fan of how this callback chain requires a specific order, change this
 			// Bootstrap the collection
 			this.collection
 				.collectData( this.currDate.getFullYear(), this.currDate.getMonth() + 1 )
