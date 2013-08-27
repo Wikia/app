@@ -20,7 +20,36 @@
 	h1 {
 		display: none;
 	}
-
+	nav {
+		font-size: 20px;
+		height: $wikiaglobal-nav-height - 3px; // -3 because of border-top
+		>ul>li:last-child {
+			padding: 0;
+		}
+	}
+	li {
+		float: left;
+		height: 22px;
+		margin-top: 7px;
+		padding: 0 15px;
+		&:first-child {
+			border: 0;
+		}
+		&.start-a-wiki {
+			border-left: 1px solid mix($color-header-text, $color-header, 20%);
+			margin-top: 5px;
+		}
+	}
+	li > .wikia-button {
+		border: 1px solid mix($color-buttons, $color-page, 35%);
+		float: left;
+		font-size: 12px;
+		height: 17px;
+		line-height: 16px;
+		padding: 1px 12px 0px;
+		position: relative;
+		top: 2px;
+	}
 	.chevron {
 		border-top-color: mix($color-header-text, $color-header);
 	}
