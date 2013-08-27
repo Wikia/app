@@ -68,11 +68,6 @@ $messages['en'] = array(
 
 	'wikia-editor-leaveconfirm-message' => 'You have made some unpublished edits. Are you sure you want to leave without publishing them?',
 
-	'wikia-editor-preview-current-width' => 'current width',
-	'wikia-editor-preview-min-width' => 'minimum width',
-	'wikia-editor-preview-max-width' => 'maximum width',
-	'wikia-editor-preview-type-tooltip' => 'Lorem pisum dolor',
-
 	// Short notices
 	'nonunicodebrowser-notice' => "'''Warning: Your browser is not Unicode compliant.'''",
 	'rev-deleted-text-notice' => "Warning: This page revision has been '''deleted'''. [More info]",
@@ -146,11 +141,6 @@ $messages['qqq'] = array(
 	'prefs-general' => '{{Identical|General}}',
 	'prefs-starting-an-edit' => 'This is a heading in Special:Preferences',
 	'prefs-editing-experience' => 'This is a heading in Special:Preferences',
-
-	'wikia-editor-preview-current-width' => 'select option - current width',
-	'wikia-editor-preview-min-width' => 'select option - minimum width',
-	'wikia-editor-preview-max-width' => 'select option - maximum width',
-	'wikia-editor-preview-type-tooltip' => 'Tooltip explaining what preview type select does'
 );
 
 /** Azerbaijani (azərbaycanca)
