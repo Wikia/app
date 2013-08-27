@@ -18,3 +18,14 @@ $wgExtensionCredits['editpreview'][] = [
 	],
 	'version' => 1.0
 ];
+
+// messages
+$wgExtensionMessagesFiles[ 'EditPreview' ] = $dir . '/EditPreview.i18n.php';
+
+// register messages package for JS
+JSMessages::registerPackage('EditPreview', [
+	'wikia-editor-preview-current-width',
+	'wikia-editor-preview-min-width',
+	'wikia-editor-preview-max-width',
+	'wikia-editor-preview-type-tooltip'
+]);
