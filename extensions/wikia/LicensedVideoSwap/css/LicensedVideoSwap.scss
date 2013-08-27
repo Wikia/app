@@ -3,6 +3,7 @@
 @import "skins/oasis/css/mixins/box-sizing-border-box";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/mixins/opacity";
 @import "mixins/_sprite-LicensedVideoSwap";
@@ -109,10 +110,6 @@ $button-icon-color: white;
 }
 
 .LVSGrid {
-	// begin temp fix for lvs & responsive
-	width: 1010px;
-	margin: 0 auto;
-	// end
 	position: relative;
 	border-top: 1px solid $color-page-border;
 	.lvs-sprite:before {
@@ -303,5 +300,20 @@ body.lvs-loading {
 	}
 	p {
 		margin: 0;
+	}
+}
+
+@if( $responsive-layout-enabled ) {
+	.LVSGrid {
+		width: 1010px;
+		margin: 0 auto;
+
+		.row > .grid-3 {
+			margin: 0;
+
+			&:first-of-type {
+				margin-right: 40px !important;
+			}
+		}
 	}
 }
