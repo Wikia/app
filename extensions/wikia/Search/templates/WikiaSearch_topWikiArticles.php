@@ -13,8 +13,8 @@
             <? endif; ?>
         </div>
         <div class="top-wiki-article-text" data-pos="<?= $counter ?>">
-            <b><a href="<?= $page['url'] ?>"><?= $page['title'] ?></a></b>
-            <span class="top-wiki-article-text-synopsis subtle"><?= $page['abstract'] ?></span>
+            <b><a href="<?= $page['url'] ?>"><?= $page['title'] ?></a></b><!-- comment to remove whitespace
+            --><span class="top-wiki-article-text-synopsis subtle"><?= $page['abstract'] ?></span>
         </div>
     </div>
     <?php else: ?>
@@ -27,8 +27,8 @@
             <? endif; ?>
         </div>
         <div class="top-wiki-article-text" data-pos="<?= $counter ?>">
-            <b><a href="<?= $page['url'] ?>"><?= $page['title'] ?></a></b>
-            <span class="top-wiki-article-text-synopsis subtle"><?= $page['abstract'] ?></span>
+            <b><a href="<?= $page['url'] ?>"><?= $page['title'] ?></a></b><!-- comment to remove whitespace
+	        --><span class="top-wiki-article-text-synopsis subtle"><?= $page['abstract'] ?></span>
         </div>
     </div>
     <?php endif; ?>
