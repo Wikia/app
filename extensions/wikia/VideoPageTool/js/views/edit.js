@@ -4,7 +4,7 @@ define( 'vpt.views.edit', [
 
 	function VPTEdit() {
 		this.$form = $( '.vpt-form' );
-		this.validator = this.$form.validate({debug:true});
+		this.validator = this.$form.validate({debug:false});
 		// all elements to be validated - jQuery validate doesn't support arrays of form names inputs like "names[]" :(
 		this.$formFields = this.$form.find( '.video_description, .video_display_title, .video_url' );
 		this.init();
@@ -37,7 +37,7 @@ define( 'vpt.views.edit', [
 
 						// update input value and remove any error messages that might be there.
 						$urlInput.val( url ).removeClass('error' ).next( '.error' ).remove();
-						$titleDisplay.val( title );
+						$titleDisplay.removeClass( 'alternative' ).text( title );
 						$titleInput.val( title );
 						$descInput.val( description );
 						$thumb.html( thumbHtml );

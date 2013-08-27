@@ -88,14 +88,16 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 
 		if ($this->request->wasPosted()) {
 			// Do form validation and saving here
+			//$this->request->getParams();
 		}
 
 		$videos = array();
 
 		$this->leftMenuItems = $helper->getLeftMenuItems( $section );
-		$this->moduleView = $this->app->renderView( 'VideoPageToolSpecial', $section, array( 'videos' => $videos ) );
+		$this->moduleView = $this->app->renderView( 'VideoPageToolSpecial', $section, array( 'videos' => $videos, 'date' => $date, 'language' => $language ) );
 
 		$this->section = $section;
+		// TODO: not sure if these are needed in edit(), just in the sub views like "featured" etc.
 		$this->date = $date;
 		$this->language = $language;
 	}
@@ -171,15 +173,21 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array videos
 	 */
 	public function featured() {
-		$videos[] = array(
+		// TODO: this is way hard coded
+		$video = array(
 			'videoTitle' => 'Video Title',
 			'videoKey' => 'Video_Title',
 			'videoThumb' => '',
 			'displayTitle' => 'Display Title',
 			'description' => 'description...',
+			'url' => 'http://sktest123.liz.wikia-dev.com/wiki/File:Ooyala_Test',
 		);
 
+		$videos[0] = $videos[1] = $videos[2] = $videos[3] = $videos[4] = $video;
+
 		$this->videos = $videos;
+		$this->date = $this->getVal( 'date' );
+		$this->language = $this->getVal( 'language' );
 	}
 
 	/**
