@@ -11,12 +11,13 @@
  * $wgProtectsiteExempt - Array of usergroups to be not effected by rights changes
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is a MediaWiki extension.\n";
-	exit(1);
+	exit( 1 );
 }
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
+$app = F::app();
 
 /* Register the new user rights level */
 $wgAvailableRights[] = 'protectsite';
@@ -37,8 +38,8 @@ $wgExtensionMessagesFiles['SpecialProtectSite'] = $dir . '/SpecialProtectSite.i1
 $wgExtensionMessagesFiles['SpecialProtectSiteAliases'] = __DIR__ . '/SpecialProtectSite.aliases.php';
 
 /* Add this Special page to the Special page listing array */
-$wgSpecialPages['Protectsite'] = 'ProtectsiteForm';
-$wgAutoloadClasses[ "ProtectsiteForm" ] = $dir. "/SpecialProtectSite_body.php";
+$wgAutoloadClasses['SpecialProtectSiteController'] = $dir . "/SpecialProtectSiteController.class.php";
+$app->registerSpecialPage( 'Protectsite', 'SpecialProtectSiteController', 'wikia' );
 
 /* Register initialization function */
 $wgExtensionFunctions[] = 'wfSetupProtectsite';
@@ -47,9 +48,6 @@ $wgExtensionFunctions[] = 'wfSetupProtectsite';
 if( empty( $wgProtectsiteDefaultTimeout ) ) {
 	$wgProtectsiteDefaultTimeout = '1 hour';
 }
-
-$wgSpecialPageGroups['Protectsite'] = 'wikia';
-
 
 /**
  * This function does all the initialization work for the extension.
@@ -60,33 +58,31 @@ $wgSpecialPageGroups['Protectsite'] = 'wikia';
  * a block.
  */
 function wfSetupProtectsite() {
-	/* Globals */
-	global $wgUser, $wgGroupPermissions, $wgMemc, $wgProtectsiteExempt, $wgCommandLineMode;
 
 	// macbre: don't run code below when running in command line mode (memcache starts to act strange)
-	if (!empty($wgCommandLineMode)) {
+	if ( !empty( $app->wg->CommandLineMode ) ) {
 		return;
 	}
 
 	/* Get data into the prot hash */
-	$prot = $wgMemc->get( ProtectsiteForm::key() );
+	$prot = $app->wg->memc->get( SpecialProtectSiteController::key() );
 	if( !$prot ) {
 		#no data, or it has expired, can stop here
 		return;
 	}
 
 	/* Logic to disable the selected user rights */
-	if (is_array($prot)) {
+	if ( is_array( $prot ) ) {
 		/* do a sanity check, see if the time has passed (but it didnt expire correctly) */
-		if (time() >= $prot['until']) {
-			$wgMemc->delete( ProtectsiteForm::key() );
+		if ( time() >= $prot['until'] ) {
+			$app->wg->memc->delete( SpecialProtectSiteController::key() );
 			return;
 		}
 
 		// are there any groups that should not get affected by Protectsite's lockdown?
-		if( !empty($wgProtectsiteExempt) && is_array($wgProtectsiteExempt) ) {
+		if( !empty( $app->wg->ProtectsiteExempt ) && is_array( $app->wg->ProtectsiteExempt ) ) {
 			//there are some, so check if we are any of them
-			if( array_intersect( $wgUser->getEffectiveGroups(), $wgProtectsiteExempt ) ) {
+			if( array_intersect( $app->wg->User->getEffectiveGroups(), $app->wg->ProtectsiteExempt ) ) {
 				// we are one of the exempt groups, so dont both modifying permissions
 				return;
 			}
