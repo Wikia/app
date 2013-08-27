@@ -20,7 +20,7 @@ $(function() {
 
     // click on update-items and educational modules
     $("a[data-tracking]").on("click", function(e) {
-        trackSpecialCssClick(Wikia.Tracker.ACTIONS.CLICK, $(e.target).data('tracking'), null, {}, e);
+        trackSpecialCssClick(Wikia.Tracker.ACTIONS.CLICK, $(this).data('tracking'), null, {}, e);
     });
     $("input.css-publish-button").on("click", function(e) {
         trackSpecialCssClick(Wikia.Tracker.ACTIONS.SUBMIT, 'publish', null, {}, e);
