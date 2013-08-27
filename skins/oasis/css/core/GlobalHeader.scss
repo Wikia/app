@@ -3,6 +3,7 @@
 @import "../mixins/box-shadow";
 @import "../mixins/clearfix";
 @import "../mixins/gradient";
+@import "../mixins/transition";
 
 $browse-chevron-background-color: rgba($color-header, 0.7);
 
@@ -72,21 +73,26 @@ $browse-chevron-background-color: rgba($color-header, 0.7);
 	.browse-entry {
 		display: inline-block;
 		line-height: $wikiaglobal-nav-height;
+		position: relative;
 
 		&:hover{
 			text-decoration: none;
 
 			.hubname-container {
-				display: none;
+				opacity: 0;
 			}
 			.text-container {
-				display: inline;
+				opacity: 1;
 			}
 			.chevron-container {
 				background-color: $browse-chevron-background-color;
+				border-color: transparent;
 			}
 		}
 
+		span {
+			@include transition-shorthand(all 0.2s);
+		}
 		.chevron-container {
 			background-image: url(/skins/oasis/images/chevron_down.png); /* base64 */
 			background-position: center;
@@ -100,13 +106,15 @@ $browse-chevron-background-color: rgba($color-header, 0.7);
 		.text-container, .hubname-container {
 			color: $color-header-text;
 			font-weight: bold;
-			padding: 9px;
+			left: 37px;
+			padding: 0 8px;
+			position: absolute;
 			text-transform: uppercase;
 			-webkit-font-smoothing: antialiased; // prevents text flickering when css transformations in progress
 		}
 
 		.text-container {
-			display:none;
+			opacity: 0;
 		}
 	}
 	.drawer {
