@@ -13,7 +13,7 @@
             <? endif; ?>
         </div>
         <div class="top-wiki-article-text" data-pos="<?= $counter ?>">
-            <h1><a href="<?= $page['url'] ?>"><?= $page['title'] ?></a></h1>
+            <b><a href="<?= $page['url'] ?>"><?= $page['title'] ?></a></b>
             <p class="top-wiki-article-text-synopsis subtle"><?= $page['abstract'] ?></p>
         </div>
     </div>
