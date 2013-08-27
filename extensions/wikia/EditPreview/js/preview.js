@@ -5,6 +5,14 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 	function(window, nirvana, deferred, jquery, loader, mustache, msg) {
 	'use strict';
 
+	var	$articleWrapper,
+		articleMargin = 11, // 10px margin + 1px border
+		previewTypes = {
+			current: { name: 'current', value: null },
+			min: { name: 'min', value: 768 - articleMargin * 2 },
+			max: { name:'max', value: 1300 - articleMargin * 2 }
+		}
+
 	// show dialog for preview / show changes and scale it to fit viewport's height
 	function renderDialog(title, options, callback) {
 		options = jquery.extend({
@@ -106,21 +114,19 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 								params = {
 									options: [
 										{
-											value: 'current',
+											value: previewTypes.current.name,
 											name: msg('wikia-editor-preview-current-width')
 										},
 										{
-											value: 'min',
+											value: previewTypes.min.name,
 											name: msg('wikia-editor-preview-min-width')
 										},
 										{
-											value: 'max',
+											value: previewTypes.max.name,
 											name: msg('wikia-editor-preview-max-width')
 										}
 									],
-									toolTipMessage: msg('wikia-editor-preview-type-tooltip'),
-									toolTipIcon: '',
-									toolTipIconAlt: 'tooltip'
+									toolTipMessage: msg('wikia-editor-preview-type-tooltip')
 								},
 								html = mustache.render(template, params);
 
@@ -128,7 +134,17 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 
 							// fire an event once preview is rendered
 							jquery(window).trigger('EditPageAfterRenderPreview', [contentNode]);
-						});
+
+							// cache article wrapper selector and its initial width
+							$articleWrapper = $('#EditPageDialog .WikiaArticle');
+							previewTypes.current.value = $articleWrapper.width();
+
+							// attach events to type dropdown
+							$('#previewTypeDropdown').on('change', function(event) {
+								switchPreview($(event.target).val());
+							});
+						}
+					);
 				} else {
 					// fire an event once preview is rendered
 					jquery(window).trigger('EditPageAfterRenderPreview', [contentNode]);
@@ -136,6 +152,56 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 
 			});
 		});
+	}
+
+	/**
+	 * change preview type
+	 *
+	 * @param {string} type - type of the preview
+	 */
+
+	function switchPreview(type) {
+		$articleWrapper.width(previewTypes[type].value);
+		scalePreview(type);
+	}
+
+	/**
+	 * Helper for finding CSS3 property name supported by browser
+	 *
+	 * @param {[]} proparray - Array CSS3 property names for different browsers
+	 *
+	 * @return {string} CSS3 property name
+	 */
+
+	function getSupportedProp(proparray) {
+		var root = document.documentElement;
+		for (var i = 0; i < proparray.length; i++) {
+			if (proparray[i] in root.style) {
+				return proparray[i]
+			}
+		}
+	}
+
+	/**
+	 * Scale articleWrapper so it fits current modal size
+	 *
+	 * @param {string} type - type of the preview
+	 */
+
+	function scalePreview(type) {
+		var	initialPreviewWidth = previewTypes.current.value,
+			selectedPreviewWidth = previewTypes[type].value,
+			scaleRatio = initialPreviewWidth / selectedPreviewWidth,
+			cssTransform = getSupportedProp(['transform', 'MozTransform', 'WebkitTransform', 'msTransform', 'OTransform']),
+			cssTransformOrigin = getSupportedProp(['transformOrigin', 'MozTransformOrigin', 'WebkitTransformOrigin', 'msTransformOrigin', 'OTransformOrigin'])
+
+		if (selectedPreviewWidth > initialPreviewWidth) {
+			var	scaleVar = 'scale(' + scaleRatio + ')';
+			$articleWrapper.css(cssTransformOrigin, 'left top');
+			$articleWrapper.css(cssTransform , scaleVar);
+		} else {
+			$articleWrapper.css(cssTransform, '');
+		}
 	}
 
 	/** @public **/
