@@ -114,7 +114,6 @@ $wgHooks[ 'ContributionsToolLinks' ][] = 'ChatHelper::onContributionsToolLinks';
 $wgHooks[ 'LogLine' ][] = 'ChatHelper::onLogLine';
 $wgHooks[ 'UserGetRights' ][] = 'chatAjaxonUserGetRights';
 $wgHooks[ 'GetIP' ][] = 'ChatAjax::onGetIP'; // used for calls from chat nodejs server
-$wgHooks[ 'BeforeInsertCheckUserData' ][] = 'ChatHelper::onBeforeInsertCheckUserData';
 
 // logs
 $wgLogTypes[] = 'chatban';

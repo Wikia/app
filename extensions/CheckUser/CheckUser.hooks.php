@@ -31,10 +31,6 @@ class CheckUserHooks {
 			$actionText = '';
 		}
 
-		/** Wikia change -- start */
-		wfRunHooks( 'BeforeInsertCheckUserData', [ &$actionText, &$ip, &$xff ] );
-		/** Wikia change -- end */
-
 		$dbw = wfGetDB( DB_MASTER );
 		$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
 		$rcRow = array(
