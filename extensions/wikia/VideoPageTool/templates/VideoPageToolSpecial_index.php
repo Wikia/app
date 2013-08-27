@@ -12,13 +12,13 @@
 		<h2><?= wfMsg('marketing-toolbox-region-title'); ?></h2>
 		<select id="marketingToolboxRegionSelect">
 			<option value="placeholder"><?= wfMsg('marketing-toolbox-region-select-default-value'); ?></option>
-			<? asort($regions); ?>
-			<? foreach ($regions as $regionName): ?>
+			<? asort( $languages ); ?>
+			<? foreach ( $languages as $langCode ): ?>
 				<option
-					value="<?=$regionName?>"
-					<? if ($region == $regionName): ?>selected="selected"<? endif ?>
+					value="<?= $langCode ?>"
+					<? if ( $language== $langCode ): ?>selected="selected"<? endif ?>
 					>
-					<?=$regionName ?>
+					<?= $langCode ?>
 				</option>
 			<? endforeach ?>
 		</select>
