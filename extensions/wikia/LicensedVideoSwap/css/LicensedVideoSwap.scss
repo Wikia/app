@@ -303,6 +303,7 @@ body.lvs-loading {
 	}
 }
 
+// temp fix for responsive layout and lvs
 @if( $responsive-layout-enabled ) {
 	.LVSGrid {
 		width: 1010px;
@@ -312,7 +313,7 @@ body.lvs-loading {
 			margin: 0;
 
 			&:first-of-type {
-				margin-right: 40px !important;
+				margin-right: 40px;
 			}
 		}
 	}
