@@ -8,22 +8,22 @@ class SpecialChat extends UnlistedSpecialPage {
 
 	public function execute() {
 		wfProfileIn( __METHOD__ );
-		global $wgUser, $wgOut, $wgCityId;
+		global $wgCityId;
+		$output = $this->getOutput();
+		$user = $this->getUser();
 
 		// check if logged in
-		if($wgUser->isLoggedIn()){
-			if( Chat::canChat($wgUser) ){
+		if ( $user->isLoggedIn() ) {
+			if ( Chat::canChat( $user ) ){
 				Wikia::setVar( 'OasisEntryControllerName', 'Chat' );
 				Chat::logChatWindowOpenedEvent();
 			} else {
-				$wgOut->showErrorPage( 'chat-you-are-banned', 'chat-you-are-banned-text' );
+				$output->showErrorPage( 'chat-you-are-banned', 'chat-you-are-banned-text' );
 			}
 		} else {
-			// TODO: FIXME: Make a link on this page which lets the user login.
-			// TODO: FIXME: Make a link on this page which lets the user login.
-			
+
 			// $wgOut->permissionRequired( 'chat' ); // this is a really useless message, don't use it.
-			$wgOut->showErrorPage( 'chat-no-login', 'chat-no-login-text' );
+			$output->showErrorPage( 'chat-no-login', 'chat-no-login-text' );
 
 		}
 
