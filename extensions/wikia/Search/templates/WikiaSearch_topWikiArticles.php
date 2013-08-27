@@ -27,8 +27,8 @@
             <? endif; ?>
         </div>
         <div class="top-wiki-article-text" data-pos="<?= $counter ?>">
-            <h1><a href="<?= $page['url'] ?>"><?= $page['title'] ?></a></h1>
-            <p class="top-wiki-article-text-synopsis subtle"><?= $page['abstract'] ?></p>
+            <b><a href="<?= $page['url'] ?>"><?= $page['title'] ?></a></b>
+            <span class="top-wiki-article-text-synopsis subtle"><?= $page['abstract'] ?></span>
         </div>
     </div>
     <?php endif; ?>

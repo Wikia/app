@@ -123,7 +123,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 						}
 						//render date
 						$item[ 'date' ] = $wgLang->date( $item[ 'revision' ][ 'timestamp' ] );
-						$this->processArticleItem( $item );
+						$item = $this->processArticleItem( $item );
 						$pages[] = $item;
 					}
 				}
