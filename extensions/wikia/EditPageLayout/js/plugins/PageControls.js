@@ -364,42 +364,6 @@
 			});
 		},
 
-		// show dialog for preview / show changes and scale it to fit viewport's height
-		renderDialog: function(title, options, callback) {
-			options = $.extend({
-				callback: function() {
-					var contentNode = $('#EditPageDialog .ArticlePreview');
-
-					// block all clicks
-					contentNode.
-						bind('click', function(ev) {
-							var target = $(ev.target);
-
-							target.attr('target','_blank');
-							// don't block links opening in new tab
-							if (target.attr('target') !== '_blank') {
-								ev.preventDefault();
-							}
-						}).
-						css({
-							'height': options.height || ($(window).height() - 250),
-							'overflow': 'auto'
-						});
-
-					if (typeof callback == 'function') {
-						callback(contentNode);
-					}
-				},
-				id: 'EditPageDialog',
-				width: 680
-			}, options);
-
-			// use loading indicator before real content will be fetched
-			var content = '<div class="ArticlePreview"><img src="' + stylepath + '/common/images/ajax.gif" class="loading"></div>';
-
-			$.showCustomModal(title, content, options);
-		},
-
 		// internal method, based on the editor content and some extraData, prepare a preview markup for the
 		// preview dialog and pass it to the callback
 		getPreviewContent: function(content, extraData, callback) {
@@ -501,27 +465,28 @@
 
 		// render "show diff" modal
 		renderChanges: function(extraData) {
-			//@todo - reuse the dialog from preview module?
 			var self = this;
-			this.renderDialog($.msg('editpagelayout-pageControls-changes'), {}, function(contentNode) {
-				self.getContent(function(content) {
-					extraData.content = extraData.content || content;
-					extraData.section = parseInt($.getUrlVar('section') || 0);
+			require(['wikia.preview'], function(preview) {
+				preview.renderDialog($.msg('editpagelayout-pageControls-changes'), {}, function(contentNode) {
+					self.getContent(function(content) {
+						extraData.content = extraData.content || content;
+						extraData.section = parseInt($.getUrlVar('section') || 0);
 
-					if (self.categories.length) {
-						extraData.categories = self.categories.val();
-					}
+						if (self.categories.length) {
+							extraData.categories = self.categories.val();
+						}
 
-					$.when(
-						// get wikitext diff
-						self.ajax('diff', extraData),
-						// load CSS for diff
-						mw.loader.use('mediawiki.action.history.diff')
-					).done(function(ajaxData) {
-						var data = ajaxData[0],
-							html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;
+						$.when(
+								// get wikitext diff
+								self.ajax('diff', extraData),
+								// load CSS for diff
+								mw.loader.use('mediawiki.action.history.diff')
+							).done(function(ajaxData) {
+								var data = ajaxData[0],
+									html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;
 
-						contentNode.html(html);
+								contentNode.html(html);
+							});
 					});
 				});
 			});

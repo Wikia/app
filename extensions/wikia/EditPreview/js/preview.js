@@ -206,6 +206,7 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 
 	/** @public **/
 	return {
-		renderPreview: renderPreview
+		renderPreview: renderPreview,
+		renderDialog: renderDialog
 	};
 });
