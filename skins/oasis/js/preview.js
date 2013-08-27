@@ -103,7 +103,7 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 						//adding type dropdown to preview
 						if ( window.wgOasisResponsive ) {
 							loader({type: loader.MULTI, resources: {
-								mustache: 'extensions/wikia/EditPageLayout/templates/preview_type_dropdown.mustache'
+								mustache: 'extensions/wikia/EditPreview/templates/preview_type_dropdown.mustache'
 							}}).done(function(response) {
 									var template = response.mustache[0],
 										params = {
