@@ -73,9 +73,9 @@ var AdminDashboard = {
 			AdminDashboard.ui.showSection(el.data('section'));
 		});
 
-        $("a[data-tracking]").on("click", function(e) {
+ 		$("a[data-tracking]").on("click", function(e) {
 			AdminDashboard.track(Wikia.Tracker.ACTIONS.CLICK, $(this).data('tracking'), null, {href: $(this).attr('href')}, e);
-        });
+ 		});
 	},
     track: function (action, label, value, params, event) {
         Wikia.Tracker.track({
