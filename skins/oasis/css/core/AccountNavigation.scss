@@ -6,9 +6,8 @@
 .AccountNavigation {
 	line-height: 20px;
 	list-style: none;
-	position: absolute;
-	top: 1px;
-	right: 20px;
+	float: right;
+	margin-top: 1px;
 	li {
 		border: 0;
 		height: 29px;

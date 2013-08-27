@@ -54,9 +54,8 @@ html>body #WallNotifications .avatars { *float: left; }
 	}
 	line-height: 20px;
 	list-style: none;
-	position: absolute;
-	top: 1px;
-	right: 10px;
+	float: right;
+	margin-top: 1px;
 	.notifications-empty { color: $color-text; width: 250px; text-align: center; }
 	li { border: none; margin: 0; padding: 0; }
 	&>li {
