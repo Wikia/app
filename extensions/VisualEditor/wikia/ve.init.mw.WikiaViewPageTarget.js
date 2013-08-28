@@ -39,3 +39,10 @@ ve.init.mw.ViewPageTarget.prototype.hidePageContent = function () {
 		.addClass( 've-init-mw-viewPageTarget-content' )
 		.hide();
 };
+
+ve.init.mw.ViewPageTarget.prototype.showPageContent = function () {
+	$( '.ve-init-mw-viewPageTarget-content' )
+		.removeClass( 've-init-mw-viewPageTarget-content' )
+		.show()
+		.fadeTo( 0, 1 );
+};
