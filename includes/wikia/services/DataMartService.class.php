@@ -461,7 +461,7 @@ class DataMartService extends Service {
 		$periodId = self::PERIOD_ID_WEEKLY;
 		// Every weekly rollup is made on Sundays. We need date of penultimate Sunday.
 		// We dont get penultimate date of rollup from database, becasuse of performance issue
-		$rollupDate = date("Y-m-d", strtotime("last Sunday",strtotime("-1 week")));
+		$rollupDate = date("Y-m-d", strtotime("Sunday 1 week ago"));
 
 		wfProfileIn(__METHOD__);
 
@@ -533,10 +533,7 @@ class DataMartService extends Service {
 	}
 
 	private static function makeUserIdsMemCacheKey($userIds) {
-		$idsKey = implode(',', $userIds);
-		if ( strlen($idsKey) > 150 ) {
-			$idsKey = md5($idsKey);
-		}
+		$idsKey = md5(implode(',', $userIds));
 		return $idsKey;
 	}
 
