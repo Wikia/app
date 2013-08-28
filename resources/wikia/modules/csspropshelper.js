@@ -30,7 +30,7 @@ define('wikia.csspropshelper', ['wikia.document'], function(document) {
 			i;
 
 		for (i = 0; i < propArray.length; i++) {
-			if (root.style.hasOwnProperty(propArray[i])) {
+			if (propArray[i] in root.style) {
 				return propArray[i];
 			}
 		}
