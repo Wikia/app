@@ -1,8 +1,8 @@
 /**
  * Preview for the editor, this should be moved to /resources/wikia/modules once we want to use it for several skins
  */
-define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery', 'wikia.loader', 'wikia.mustache', 'JSMessages', 'wikia.tracker'],
-	function(window, nirvana, deferred, jquery, loader, mustache, msg, tracker) {
+define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery', 'wikia.loader', 'wikia.mustache', 'JSMessages', 'wikia.tracker', 'wikia.csspropshelper'],
+	function(window, nirvana, deferred, jquery, loader, mustache, msg, tracker, cssPropHelper) {
 	'use strict';
 
 	var	$articleWrapper,
@@ -185,7 +185,7 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 	function getSupportedProp(proparray) {
 		var root = document.documentElement;
 		for (var i = 0; i < proparray.length; i++) {
-			if (proparray[i] in root.style) {
+			for (proparray[i] in root.style) {
 				return proparray[i]
 			}
 		}
@@ -201,8 +201,8 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 		var	initialPreviewWidth = previewTypes.current.value,
 			selectedPreviewWidth = previewTypes[type].value,
 			scaleRatio = initialPreviewWidth / selectedPreviewWidth,
-			cssTransform = getSupportedProp(['transform', 'MozTransform', 'WebkitTransform', 'msTransform', 'OTransform']),
-			cssTransformOrigin = getSupportedProp(['transformOrigin', 'MozTransformOrigin', 'WebkitTransformOrigin', 'msTransformOrigin', 'OTransformOrigin'])
+			cssTransform = cssPropHelper.getCSSPropName('transform'),
+			cssTransformOrigin = cssPropHelper.getCSSPropName('transform-origin');
 
 		if (selectedPreviewWidth > initialPreviewWidth) {
 			var	scaleVar = 'scale(' + scaleRatio + ')';
