@@ -192,7 +192,6 @@ body {
 		}
 
 		&:before {
-			background-position: 0;
 			// The extra 0.1% fixes sub-pixel rendering issues in Safari (DAR-1052)
 			left: 50.1%;
 			margin-left: -$background-width-half;
@@ -213,6 +212,12 @@ body > .global-notification,
 }
 .global-notification.float {
 	margin-left: -$width-outside / 2;
+}
+
+.global-notification {
+	&.float {
+		margin-left: -515px;
+	}
 }
 
 .WikiaArticle,
@@ -488,9 +493,16 @@ body > .global-notification,
 		}
 	}
 
-	.global-notification,
 	.WikiaHeader .page-width-container {
 		width: auto;
+	}
+
+	.global-notification {
+		width: 100%;
+		&.float {
+			left: 0;
+			margin-left: 0;
+		}
 	}
 
 	.WikiaPage {
@@ -498,12 +510,16 @@ body > .global-notification,
 		width: auto;
 	}
 
-	.WikiaPageBackground {
-		display: none;
+	.WikiaPageContentWrapper {
+		padding-top: 20px;
 	}
 
 	.WikiaTopAds {
 		width: 100%;
+
+		#TOP_BUTTON_WIDE {
+			display: none;
+		}
 	}
 }
 
@@ -512,7 +528,6 @@ body > .global-notification,
 		@include background-fluid;
 	}
 
-	body > .global-notification,
 	.WikiaHeader .page-width-container,
 	.WikiaPage {
 		margin: 0 $width-adskin;
@@ -525,7 +540,6 @@ body > .global-notification,
 		@include background-max;
 	}
 
-	body > .global-notification,
 	.WikiaHeader .page-width-container,
 	.WikiaPage {
 		margin: 0 auto;

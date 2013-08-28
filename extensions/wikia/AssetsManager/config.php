@@ -62,6 +62,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdProviderGamePro.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
+		'//extensions/wikia/AdEngine/js/AdTemplateSkin.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
@@ -386,6 +387,14 @@ $config['gameguides_js'] = array(
 );
 
 /** WikiaMobile **/
+$config['wikiamobile_jquerytest_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/WikiaMobile/js/jquery-deprecated-effects-event-alias-sizzle.min.js',
+	)
+);
+
 $config['wikiamobile_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => 'wikiamobile',
@@ -1339,16 +1348,15 @@ $config['manage_wikia_home_js'] = array(
 $config['licensed_video_swap_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/WikiaStyleGuide/js/Dropdown.js',
 		'//extensions/wikia/LicensedVideoSwap/js/lvsTracker.js',
 		'//extensions/wikia/LicensedVideoSwap/js/lvsCommonAjax.js',
 		'//extensions/wikia/LicensedVideoSwap/js/lvsVideoControls.js',
 		'//extensions/wikia/LicensedVideoSwap/js/lvsCallout.js',
-		'//extensions/wikia/LicensedVideoSwap/js/lvsDropDown.js',
 		'//extensions/wikia/LicensedVideoSwap/js/lvsEllipses.js',
 		'//extensions/wikia/LicensedVideoSwap/js/lvsSuggestions.js',
 		'//extensions/wikia/LicensedVideoSwap/js/lvsSwapKeep.js',
 		'//extensions/wikia/LicensedVideoSwap/js/lvsUndo.js',
+		'//extensions/wikia/LicensedVideoSwap/js/lvsHistoryPage.js',
 		'//extensions/wikia/LicensedVideoSwap/js/LicensedVideoSwap.js',
 	),
 );

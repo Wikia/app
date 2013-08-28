@@ -51,6 +51,7 @@ define( 'lvs.commonajax', ['wikia.window', 'lvs.tracker'], function( window, tra
 	return {
 		init: init,
 		startLoadingGraphic: startLoadingGraphic,
+		stopLoadingGraphic: stopLoadingGraphic,
 		success: success,
 		failure: failure
 	}

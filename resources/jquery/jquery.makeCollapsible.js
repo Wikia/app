@@ -26,6 +26,7 @@ $.fn.makeCollapsible = function() {
 			that = this,
 			collapsetext = $(this).attr( 'data-collapsetext' ),
 			expandtext = $(this).attr( 'data-expandtext' ),
+			$toggleLink,
 			toggleElement = function( $collapsible, action, $defaultToggle, instantHide ) {
 				// Validate parameters
 				if ( !$collapsible.jquery ) { // $collapsible must be an instance of jQuery
@@ -211,6 +212,17 @@ $.fn.makeCollapsible = function() {
 				$collapsible.toggleClass( 'mw-collapsed' );
 				toggleElement( $collapsible, action, $that );
 
+			},
+			buildDefaultToggleLink = function () {
+				return $( '<a href="#"></a>' )
+					.text( collapsetext )
+					.wrap( '<span class="mw-collapsible-toggle"></span>' )
+					.parent()
+					.prepend( '&nbsp;[' )
+					.append( ']&nbsp;' )
+					.bind( 'click.mw-collapse', function(e) {
+						toggleLinkDefault( this, e );
+					} );
 			};
 
 		// Use custom text or default ?
@@ -220,18 +232,6 @@ $.fn.makeCollapsible = function() {
 		if ( !expandtext ) {
 			expandtext = mw.msg( 'collapsible-expand' );
 		}
-
-		// Create toggle link with a space around the brackets (&nbsp;[text]&nbsp;)
-		var $toggleLink =
-			$( '<a href="#"></a>' )
-				.text( collapsetext )
-				.wrap( '<span class="mw-collapsible-toggle"></span>' )
-				.parent()
-				.prepend( '&nbsp;[' )
-				.append( ']&nbsp;' )
-				.bind( 'click.mw-collapse', function(e) {
-					toggleLinkDefault( this, e );
-				} );
 
 		// Return if it has been enabled already.
 		if ( $that.hasClass( 'mw-made-collapsible' ) ) {
@@ -276,6 +276,7 @@ $.fn.makeCollapsible = function() {
 
 				// If theres no toggle link, add it to the last cell
 				if ( !$toggle.length ) {
+					$toggleLink = buildDefaultToggleLink();
 					$firstRowCells.eq(-1).prepend( $toggleLink );
 				} else {
 					$toggleLink = $toggle.unbind( 'click.mw-collapse' ).bind( 'click.mw-collapse', function( e ) {
@@ -297,6 +298,7 @@ $.fn.makeCollapsible = function() {
 					if ( firstval === undefined || !firstval || firstval == '-1' ) {
 						$firstItem.attr( 'value', '1' );
 					}
+					$toggleLink = buildDefaultToggleLink();
 					$that.prepend( $toggleLink.wrap( '<li class="mw-collapsible-toggle-li"></li>' ).parent() );
 				} else {
 					$toggleLink = $toggle.unbind( 'click.mw-collapse' ).bind( 'click.mw-collapse', function( e ) {
@@ -316,6 +318,7 @@ $.fn.makeCollapsible = function() {
 
 				// If theres no toggle link, add it
 				if ( !$toggle.length ) {
+					$toggleLink = buildDefaultToggleLink();
 					$that.prepend( $toggleLink );
 				} else {
 					$toggleLink = $toggle.unbind( 'click.mw-collapse' ).bind( 'click.mw-collapse', function( e ) {

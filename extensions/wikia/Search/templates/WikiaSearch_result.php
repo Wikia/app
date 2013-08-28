@@ -14,7 +14,7 @@
 		<?php $title = $result->getTitle(); ?>
 
 		<?php
-			$trackingData = 'class="result-link" data-pos="'.$pos.'"' . ( $result->getVar('isArticleMatch') ? 'data-event="search_click_match"' : '' );
+			$trackingData = 'class="result-link" data-pos="'.$pos.'"' . ( $result->getVar('isArticleMatch') ? ' data-event="search_click_match"' : '' );
 		?>
 
 		<a href="<?= $result->getUrl(); ?>" <?=$trackingData;?> ><?= $title ?></a>

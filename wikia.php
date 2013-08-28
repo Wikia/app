@@ -30,6 +30,9 @@ if ( !empty( $wgEnableNirvanaAPI ) ){
 	// Ensure that we have a title stub, otherwise parser does not work BugId: 12901
 	$app->wg->title = Wikia::createTitleFromRequest( $app->wg->Request );
 
+	// support "mcache" URL parameter to ease debugging
+	Wikia::setUpMemcachePurge( $app->wg->Request, $app->wg->User );
+
 	// initialize skin if requested
 	$app->initSkin( (bool) $app->wg->Request->getVal( "skin", false ) );
 

@@ -184,6 +184,18 @@ class ResultTest extends BaseTest {
 				'Wikia\Search\Result::getUrl should return exactly what was stored in Wikia\Search\Result::setUrl'
 		);
 	}
+	/**
+	 * @covers Wikia\Search\Result::getHub
+	 */ 
+	
+	public function testGetHub() {
+		$result	= new Result( $this->defaultFields );
+		$hubs = [ 'Gaming' => 'Video Games', 'Entertainment' => 'Entertainment', 'Lifestyle' => 'Lifestyle' ];
+		foreach ($hubs as $key => $value) {
+			$result->setField("hub_s", $key);
+			$this->assertEquals($result->getHub(),  $value);
+		}
+	}
 
 	/**
 	 * @covers Wikia\Search\Result::setVar
