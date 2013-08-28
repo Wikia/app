@@ -180,7 +180,6 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 			'videoThumb' => '',
 			'displayTitle' => 'Display Title',
 			'description' => 'description...',
-			'url' => 'http://sktest123.liz.wikia-dev.com/wiki/File:Ooyala_Test',
 		);
 
 		$videos[0] = $videos[1] = $videos[2] = $videos[3] = $videos[4] = $video;

@@ -5,7 +5,7 @@
 		<?
 			// Assume if we have anything in $videos array, we have everything, since all fields are required
 			// TODO: maybe this should be done on the controller side...
-			if( empty( $videos ) ) {
+			if( !empty( $videos ) ) {
 				$video = $videos[ $x ];
 				$videoTitle = $video[ 'videoTitle' ];
 				$displayTitle = $video[ 'displayTitle' ];
@@ -49,7 +49,7 @@
 	<? endfor; ?>
 
 	<input type="hidden" value="<?= $date ?>" name="date">
-	<input type="hidden" value="<?= $language ?>" name="region">
+	<input type="hidden" value="<?= $language ?>" name="language">
 
 	<div class="submits">
 		<button type="submit"><?= wfMessage( 'videopagetool-button-save' )->text() ?></button>
