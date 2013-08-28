@@ -454,6 +454,8 @@ $form-negative-side-padding: $form-side-padding*-1;
 		.top-wiki-article-text {
 			float: left;
 			margin-bottom: 0;
+			position: relative;
+			top: -4px;
 			width: 205px;
 		}
 		.top-wiki-article-thumbnail {
