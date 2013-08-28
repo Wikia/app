@@ -37,27 +37,6 @@ define('wikia.csspropshelper', ['wikia.document'], function(document) {
 		return false;
 	}
 
-	/**
-	 * Convert CSS property name to JS camel case style
-	 *
-	 * @param {string} prop - CSS style property name
-	 *
-	 * @return {string} JS camel case styleproperty name
-	 */
-
-	function convertPropName(prop) {
-		var a = [],
-			tempArray = prop.split('-');
-
-		for (var i = 0; i < tempArray.length; i++) {
-			var str = tempArray[i];
-			if (i !== 0) {
-				str = tempArray[i].charAt(0).toUpperCase() + tempArray[i].slice(1);
-			}
-			a.push(str)
-		}
-		return a.join('');
-	}
 
 	/**
 	 * Create an array with browser prefixed CSS property names
@@ -78,6 +57,28 @@ define('wikia.csspropshelper', ['wikia.document'], function(document) {
 		}
 
 		return a;
+	}
+
+	/**
+	 * Public API method fo converting CSS property name to JS camel case style
+	 *
+	 * @param {string} prop - CSS style property name
+	 *
+	 * @return {string} JS camel case styleproperty name
+	 */
+
+	function convertPropName(prop) {
+		var a = [],
+			tempArray = prop.split('-');
+
+		for (var i = 0; i < tempArray.length; i++) {
+			var str = tempArray[i];
+			if (i !== 0) {
+				str = tempArray[i].charAt(0).toUpperCase() + tempArray[i].slice(1);
+			}
+			a.push(str)
+		}
+		return a.join('');
 	}
 
 	/**
@@ -103,6 +104,7 @@ define('wikia.csspropshelper', ['wikia.document'], function(document) {
 	/** @public **/
 
 	return {
+		convertPropName: convertPropName,
 		getCSSPropName: getCSSPropName
 	}
 
