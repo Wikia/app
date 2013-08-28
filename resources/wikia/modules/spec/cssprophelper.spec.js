@@ -4,11 +4,16 @@ describe('CSSPropsHelper', function() {
 	var document = {
 			documentElement: {
 				style: {
-					webkitTransformOrigin: ''
+					backgroundColor: '',
+					borderShadow: '',
+					lineHeight: '',
+					webkitTransformOrigin: '',
+					zIndex: ''
 				}
 			}
 		},
 		cssProperty = 'transform-origin',
+		error = 'Requested CSS property - ' + cssProperty + ' is not supported by your browser!',
 		cssPropsHelper = modules['wikia.csspropshelper'](document);
 
 	it('registers AMD module', function() {
@@ -24,12 +29,29 @@ describe('CSSPropsHelper', function() {
 		expect(prop).toBe(formattedProp);
 	});
 
-	it('return prop name supported by current browser', function() {
+	it('return property name supported by current browser', function() {
 		var formattedProp = 'webkitTransformOrigin',
 			prop = cssPropsHelper.getCSSPropName(cssProperty);
 
 		expect(prop).toBe(formattedProp);
 	});
 
+	it('throws error when property is not supported', function() {
+		var document = {
+			documentElement: {
+				style: {
+					backgroundColor: '',
+					borderShadow: '',
+					lineHeight: '',
+					zIndex: ''
+				}
+			}
+		},
+			cssPropsHelper = modules['wikia.csspropshelper'](document);
+
+		expect(function() {
+			cssPropsHelper.getCSSPropName(cssProperty);
+		}).toThrow(error);
+	});
 
 });
