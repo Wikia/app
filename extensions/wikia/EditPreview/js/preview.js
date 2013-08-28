@@ -1,8 +1,8 @@
 /**
  * Preview for the editor, this should be moved to /resources/wikia/modules once we want to use it for several skins
  */
-define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery', 'wikia.loader', 'wikia.mustache', 'JSMessages', 'wikia.tracker'],
-	function(window, nirvana, deferred, jquery, loader, mustache, msg, tracker) {
+define( 'wikia.preview', [ 'wikia.window','wikia.nirvana','wikia.deferred','jquery', 'wikia.loader', 'wikia.mustache', 'JSMessages', 'wikia.tracker', 'wikia.tooltip' ],
+	function( window, nirvana, deferred, jquery, loader, mustache, msg, tracker, tooltip ) {
 	'use strict';
 
 	var	$articleWrapper,
@@ -140,9 +140,11 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 							previewTypes.current.value = $articleWrapper.width();
 
 							// attach events to type dropdown
-							$('#previewTypeDropdown').on('change', function(event) {
+							jquery('#previewTypeDropdown').on('change', function(event) {
 								switchPreview($(event.target).val());
 							});
+
+							jquery('.tooltip-icon').tooltip( { placement: 'right' } );
 						}
 					);
 				} else {

@@ -196,6 +196,7 @@ $config['oasis_jquery'] = array(
 
 		// jQuery/Oasis specific code
 		'//skins/oasis/js/tables.js',
+		'//resources/wikia/modules/tooltip.js',
 
 		// Search A/B testing
 		'//extensions/wikia/Search/js/SearchAbTest.DomUpdater.js',
