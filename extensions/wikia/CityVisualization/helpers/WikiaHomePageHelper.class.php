@@ -48,11 +48,6 @@ class WikiaHomePageHelper extends WikiaModel {
 	protected $visualizationModel = null;
 	protected $collectionsModel;
 
-	protected $excludeUsersFromInterstitial = array(
-		22439, //Wikia
-		1458396, //Abuse filter
-	);
-
 	public function getNumberOfEntertainmentSlots($lang) {
 		return $this->getVarFromWikiFactory($this->getCorpWikiIdByLang($lang), self::ENTERTAINMENT_SLOTS_VAR_NAME);
 	}
@@ -445,7 +440,7 @@ class WikiaHomePageHelper extends WikiaModel {
 
 		return (
 			!$user->isIP($userName)
-				&& !in_array($userId, $this->excludeUsersFromInterstitial)
+				&& !in_array($userId, WikiService::$excludedWikiaUsers)
 				&& !in_array('bot', $user->getRights())
 				&& !$user->isBlocked()
 				&& !$user->isBlockedGlobally()

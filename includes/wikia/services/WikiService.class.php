@@ -5,6 +5,11 @@ class WikiService extends WikiaModel {
 	const IMAGE_HEIGHT_KEEP_ASPECT_RATIO = -1;
 
 	static $botGroups = array('bot', 'bot-global');
+	static $excludedWikiaUsers = array(
+		22439, //Wikia
+		1458396, //Abuse filter
+	);
+
 	protected $cityVisualizationObject = null;
 
 	/**
@@ -384,7 +389,7 @@ class WikiService extends WikiaModel {
 
 		foreach($admins as $key => $admin) {
 			$userEdits = 0;
-			if(empty($admin['userId'])) {
+			if(empty($admin['userId']) || in_array($admin['userId'], self::$excludedWikiaUsers)) {
 				unset($admins[$key]);
 				continue;
 			}
