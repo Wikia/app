@@ -62,13 +62,13 @@ class StaffLogger {
 
 	static public function eventlogWFPublicStatusChange( $cityStatus, $cityId, $reason ) {
 		global $wgUser;
-		$comment = wfMsgForContent(
+		$comment = wfMessage(
 			'stafflog-wiki-status-change',
 			RenameUserLogFormatter::getCommunityUser( $wgUser->getName() ),
 			RenameUserLogFormatter::getCityLink( $cityId ),
 			$cityStatus,
 			$reason
-		);
+		)->inLanguage( 'en' )->text();
 		// sadly, $type and $action have 10-character limit, hence 'wikifactor' and 'pubstatus'.
 		self::log( 'wikifactor', 'pubstatus', $wgUser->getID(), $wgUser->getName(), '', '',  $comment );
 		return true;

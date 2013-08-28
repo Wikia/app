@@ -56,22 +56,45 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 	}
 
 	protected function getImagesPopularity( $imageNames, $limit ) {
+		wfProfileIn(__METHOD__);
 		$result = array();
 
 		$sqlCount = $limit + 1;
 		$imageNames = array_values($imageNames);
 		$count = count($imageNames);;
 		$i = 0;
+
 		$imageLinksTable = $this->db->tableName('imagelinks');
+		$pageTable = $this->db->tableName('page');
+		$redirectTable = $this->db->tableName('redirect');
+
 		while ( $i < $count ) {
 			$batch = array_slice( $imageNames, $i, 100 );
 			$i += 100;
-			$sql = array();
+
+			// get all possible redirects for a given image (BAC-589)
+			$imageRedirectsMap = []; // from image -> to image
+			$sql = [];
 			foreach ( $batch as $imageName ) {
-				$sql[] = "(select il_to from {$imageLinksTable} where il_to = {$this->db->addQuotes($imageName)} limit {$sqlCount} )";
+				$imageRedirectsMap[$imageName] = $imageName;
+				$sql[] = "(SELECT page_title, rd_title FROM {$redirectTable} LEFT JOIN {$pageTable} ON page_id = rd_from WHERE rd_namespace = " . NS_FILE . " AND rd_title = {$this->db->addQuotes($imageName)} LIMIT 5)";
 			}
 			$sql = implode(' UNION ALL ',$sql);
-			$batchResult = $this->db->query($sql, __METHOD__);
+			$batchResult = $this->db->query($sql, __METHOD__ . '::redirects');
+
+			foreach($batchResult as $row) {
+				wfDebug(__METHOD__ . ": redirect found - {$row->page_title} -> {$row->rd_title}\n");
+				$imageRedirectsMap[ $row->page_title ] = $row->rd_title;
+			}
+			$batchResult->free();
+
+			// get image usage
+			$sql = [];
+			foreach ( $imageRedirectsMap as $fromImg => $toImg ) {
+				$sql[] = "(SELECT {$this->db->addQuotes($toImg)} AS il_to FROM {$imageLinksTable} WHERE il_to = {$this->db->addQuotes($fromImg)} LIMIT {$sqlCount} )";
+			}
+			$sql = implode(' UNION ALL ',$sql);
+			$batchResult = $this->db->query($sql, __METHOD__. '::imagelinks');
 
 			// do a "group by" on PHP side
 			$batchResponse = array();
@@ -87,12 +110,14 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 			// remove rows that exceed usage limit
 			foreach ($batchResponse as $k => $imageCount) {
 				if ( $imageCount > $limit ) {
+					wfDebug(__METHOD__ . ": filtered out {$k} (used {$imageCount} times)\n");
 					unset($batchResponse[$k]);
 				}
 			}
 
 			$result = array_merge( $result, $batchResponse );
 		}
+		wfProfileOut(__METHOD__);
 		return $result;
 	}
 

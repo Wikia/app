@@ -1,4 +1,4 @@
-@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/mixins/box-shadow";
 
 $color-chevron: #4175A7;
 $color-selected-thumbnail: #72ADD5;
@@ -9,7 +9,7 @@ $color-selected-thumbnail: #72ADD5;
 		overflow: hidden;
 		position: absolute;
 		top: 20px;
-		width: 760px;	
+		width: 760px;
 	}
 	ul {
 		width: 2000px;
@@ -23,7 +23,7 @@ $color-selected-thumbnail: #72ADD5;
 			}
 			img {
 				@include box-shadow(0px, 0px, 5px, $color-selected-thumbnail);
-				border-color: $color-selected-thumbnail; 
+				border-color: $color-selected-thumbnail;
 			}
 		}
 	}
@@ -46,7 +46,7 @@ $color-selected-thumbnail: #72ADD5;
 		position: absolute;
 		width: 0;
 		&.disabled {
-			cursor: default;	
+			cursor: default;
 		}
 	}
 	.previous {

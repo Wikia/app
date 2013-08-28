@@ -97,20 +97,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$showEmailBlock = $this->wg->User->isAllowed('phalanxemailblock');
 		$blockTypes  = Phalanx::getAllTypeNames();
 
-		if (!$showEmailBlock) {
-			unset($blockTypes[Phalanx::TYPE_EMAIL]);
-		}
-
-		$this->setVal( 'expiries', $expiries );
-		$this->setVal( 'languages', $this->wg->PhalanxSupportedLanguages );
-		$this->setVal( 'listing', $listing );
-		$this->setVal( 'data',  $data);
-		$this->setVal( 'editMode',  $editMode);
-		$this->setVal( 'action', $this->title->getLocalURL() );
-		$this->setVal( 'typeFilter', $pager->getSearchFilter() );
-		$this->setVal( 'blockTypes', $blockTypes );
-		$this->setVal( 'type', $this->wg->Request->getInt('type') );
-		$this->setVal( 'typeSections', [
+		$typeSections = [
 			'page-edition' => [
 				Phalanx::TYPE_CONTENT,
 				Phalanx::TYPE_SUMMARY,
@@ -127,7 +114,22 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 				Phalanx::TYPE_ANSWERS_QUESTION_TITLE,
 				Phalanx::TYPE_ANSWERS_RECENT_QUESTIONS,
 			]
-		]);
+		];
+
+		if (!$showEmailBlock) {
+			unset($typeSections['account-creation']);
+		}
+
+		$this->setVal( 'expiries', $expiries );
+		$this->setVal( 'languages', $this->wg->PhalanxSupportedLanguages );
+		$this->setVal( 'listing', $listing );
+		$this->setVal( 'data',  $data);
+		$this->setVal( 'editMode',  $editMode);
+		$this->setVal( 'action', $this->title->getLocalURL() );
+		$this->setVal( 'typeFilter', $pager->getSearchFilter() );
+		$this->setVal( 'blockTypes', $blockTypes );
+		$this->setVal( 'type', $this->wg->Request->getInt('type') );
+		$this->setVal( 'typeSections', $typeSections);
 
 		wfProfileOut( __METHOD__ );
 	}

@@ -28,11 +28,6 @@ $chev-color: rgb(157,157,157);
 		}
 	}
 
-	video, iframe, object, embed {
-		width: 70%;
-		height: auto;
-	}
-
 	.wkMblThrobber {
 		display: table-cell;
 	}
@@ -40,6 +35,11 @@ $chev-color: rgb(157,157,157);
 
 .player {
 	display: inline-block;
+
+	video, iframe, object, embed {
+		width: 70%;
+		height: auto;
+	}
 }
 
 .not-supported {

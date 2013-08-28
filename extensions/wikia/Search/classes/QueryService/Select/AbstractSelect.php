@@ -434,7 +434,10 @@ abstract class AbstractSelect
 		$service = $this->getService();
 		$wikiMatch = $service->getWikiMatchByHost( $domain );
 		if (! empty( $wikiMatch ) && ( $wikiMatch->getId() !== $service->getWikiId() ) ) {
-			$config->setWikiMatch( $wikiMatch );
+			$result = $wikiMatch->getResult();
+			if ( $result['articles_i'] >= 50 ) {
+				$config->setWikiMatch( $wikiMatch );
+			}
 		}
 		return $config->getWikiMatch();
 	}

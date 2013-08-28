@@ -484,16 +484,20 @@ class MediaWikiService
 	public function getWikiMatchByHost( $domain ) {
 		$match = null;
 		if ( $domain !== '' ) {
-		$langCode = $this->getLanguageCode();
-            if ( $langCode === static::WIKI_DEFAULT_LANG_CODE ) {
-                $wikiId = $this->getWikiIdByHost( $domain . '.wikia.com' );
-            } else {
-                $wikiId = ( $interWikiComId = $this->getWikiIdByHost( "{$langCode}.{$domain}.wikia.com" ) ) !== null ? $interWikiComId : $this->getWikiIdByHost( "{$domain}.{$langCode}" );
-            }
-            //exclude wikis which lang does not match current one
-            if ( isset( $wikiId ) && $langCode === $this->getGlobalForWiki( 'wgLanguageCode', $wikiId ) ) {
-                $match = new \Wikia\Search\Match\Wiki( $wikiId, $this );
-            }
+			$langCode = $this->getLanguageCode();
+			if ( $langCode === static::WIKI_DEFAULT_LANG_CODE ) {
+				$wikiId = $this->getWikiIdByHost( $domain . '.wikia.com' );
+			} else {
+				$wikiId = ( $interWikiComId = $this->getWikiIdByHost( "{$langCode}.{$domain}.wikia.com" ) ) !== null ? $interWikiComId : $this->getWikiIdByHost( "{$domain}.{$langCode}" );
+			}
+			
+			if ( isset( $wikiId ) ) {
+				$wiki = $this->getWikiFromWikiId( $wikiId );
+				//exclude wikis which lang does not match current one, and wikis that are closed
+				if ( (! empty( $wiki ) ) && ( $wiki->city_public == 1 ) && $langCode === $wiki->city_lang ) {
+					$match = new \Wikia\Search\Match\Wiki( $wikiId, $this );
+				}
+			}
 		}
 		return $match;
 	}
@@ -859,6 +863,15 @@ class MediaWikiService
 	 */
 	protected function getTitleKeyFromPageId( $pageId ) {
 		return $this->getTitleFromPageId( $pageId )->getDbKey();
+	}
+	
+	/**
+	 * Returns an instance of stdClass with attributes corresponding to rows in the city_list table 
+	 * @param int $wikiId
+	 * @return stdClass
+	 */
+	protected function getWikiFromWikiId( $wikiId ) {
+		return (new \WikiFactory)->getWikiById( $wikiId );
 	}
 	
 	/**

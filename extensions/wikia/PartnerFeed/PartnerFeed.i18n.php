@@ -31,7 +31,8 @@ $messages['en'] = array(
 	'blog-posts-from-listing'		=> 'from listing: $1',
 	'feed-title-hot-content'		=> 'Hot content - $1',
 	'feed-title-blogcomments'		=> 'Comments to $1',
-	'feed-title-recentchanges'		=> 'Recent changes'
+	'feed-title-recentchanges'		=> 'Recent changes',
+	'partner-feed-error-no-blogpost-found' => '<b>Error:</b> Blog post $1 does not exist.'
 );
 
 /** Message documentation (Message documentation)
@@ -48,6 +49,9 @@ $messages['qqq'] = array(
 	'feed-title-blogcomments' => 'Parameters:
 * $1 is a blog post title.',
 	'feed-title-recentchanges' => '{{Identical|Recent changes}}',
+	'partner-feed-error-no-blogpost-found' => 'Displayed when the provided blog post does not exist.
+Parameters:
+* $1 is a blog post title.'
 );
 
 /** Arabic (العربية)

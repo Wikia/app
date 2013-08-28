@@ -3579,7 +3579,10 @@ function &wfGetLBFactory() {
  * @return File, or false if the file does not exist
  */
 function wfFindFile( $title, $options = array() ) {
-	return RepoGroup::singleton()->findFile( $title, $options );
+	wfProfileIn(__METHOD__);
+	$file = RepoGroup::singleton()->findFile( $title, $options );
+	wfProfileOut(__METHOD__);
+	return $file;
 }
 
 /**
@@ -3587,7 +3590,7 @@ function wfFindFile( $title, $options = array() ) {
  * Returns a valid placeholder object if the file does not exist.
  *
  * @param $title Title|String
- * @return File|null A File, or null if passed an invalid Title
+ * @return LocalFile|null A File, or null if passed an invalid Title
  */
 function wfLocalFile( $title ) {
 	return RepoGroup::singleton()->getLocalRepo()->newFile( $title );

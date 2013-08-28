@@ -21,9 +21,7 @@ class FilePageController extends WikiaController {
 
 		$seeMoreLink = '';
 		$seeMoreText = '';
-		$heading = '';               // The message to use for the section header
 		$shortenedSummary = array(); // A subset of the data returned to show immediately
-		$fileList = array();         // The list of other articles to show based on $shortenedSummary
 
 		$type = $this->getVal('type', 'local');
 
@@ -124,7 +122,9 @@ class FilePageController extends WikiaController {
 
 		foreach($expandedSummary as $wiki => $articles) {
 			foreach($articles as $article) {
-				$result[] = $article;
+				if ( !empty($article['url']) ) {
+					$result[] = $article;
+				}
 			}
 		}
 
@@ -134,7 +134,11 @@ class FilePageController extends WikiaController {
 
 	private function nameToTitle ( $dbName ) {
 		$wikiData = WikiFactory::getWikiByDB($dbName);
-		return $wikiData->city_title;
+		if ( empty($wikiData) ) {
+			return '';
+		} else {
+			return $wikiData->city_title;
+		}
 	}
 
 	/**
@@ -442,7 +446,16 @@ class FilePageController extends WikiaController {
 				// Loop with indexes so we can change $data in place
 				for ($i = 0; $i < count($articles); $i++) {
 					$info = $articles[$i];
-					$extraInfo = $extraData[$info['id']];
+
+					if ( empty($extraData[$info['id']]) ) {
+						continue;
+					} else {
+						$extraInfo = $extraData[$info['id']];
+					}
+
+					if ( !is_array($extraInfo) ) {
+						continue;
+					}
 
 					// Let the wall code clean up any links to the user wall or forums
 					wfRunHooks( 'FormatForumLinks', array( &$extraInfo, $info['title'], $info['namespace_id']) );

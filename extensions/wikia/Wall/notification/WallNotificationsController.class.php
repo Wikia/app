@@ -278,7 +278,9 @@ class WallNotificationsController extends WikiaController {
 			/** @var $title title */
 			$title = Title::newFromText( $topic );
 
-			$result = (bool) $title->exists();
+			if ( $title instanceof Title ) {
+				$result = (bool) $title->exists();
+			}
 		}
 
 		$this->response->setVal( 'exists' , $result );

@@ -221,4 +221,97 @@ class VideoHandlerHelper extends WikiaModel {
 
 		return $newContent;
 	}
+
+	/**
+	 * get video detail
+	 * @param array $videoInfo [ array( 'title' => title, 'addedAt' => addedAt , 'addedBy' => addedBy ) ]
+	 * @param integer $thumbWidth
+	 * @param integer $thumbHeight
+	 * @param integer $postedInArticles
+	 * @return array $videoDetail
+	 */
+	public function getVideoDetail( $videoInfo, $thumbWidth, $thumbHeight, $postedInArticles ) {
+		wfProfileIn( __METHOD__ );
+
+		$videoDetail = array();
+		$title = Title::newFromText( $videoInfo['title'], NS_FILE );
+		if ( $title instanceof Title ) {
+			$file = wfFindFile( $title );
+			if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
+				// get thumbnail
+				$thumb = $file->transform( array( 'width' => $thumbWidth, 'height' => $thumbHeight ) );
+				$thumbUrl = $thumb->getUrl();
+				// get user
+				if ( !empty($videoInfo['addedBy']) ) {
+					$user = User::newFromId( $videoInfo['addedBy'] );
+					$userName = ( User::isIP($user->getName()) ) ? wfMessage( 'oasis-anon-user' )->text() : $user->getName();
+					$userUrl = $user->getUserPage()->getFullURL();
+				} else {
+					$userName = '';
+					$userUrl = '';
+				}
+
+				// get article list
+				$mediaQuery = new ArticlesUsingMediaQuery( $title );
+				$articleList = $mediaQuery->getArticleList();
+				list( $truncatedList, $isTruncated ) = WikiaFileHelper::truncateArticleList( $articleList, $postedInArticles );
+
+				// video details
+				$videoDetail = array(
+					'title' => $title->getDBKey(),
+					'fileTitle' => $title->getText(),
+					'fileUrl' => $title->getLocalUrl(),
+					'thumbUrl' => $thumbUrl,
+					'userName' => $userName,
+					'userUrl' => $userUrl,
+					'truncatedList' => $truncatedList,
+					'isTruncated' => $isTruncated,
+					'timestamp' => empty($videoInfo['addedAt']) ? '' : $videoInfo['addedAt'],
+					'embedUrl' => $file->getHandler()->getEmbedUrl(),
+				);
+			} else {
+				Wikia::Log(__METHOD__, false, "No file found for '".$videoInfo['title']."'");
+			}
+		} else {
+			Wikia::Log(__METHOD__, false, "No title object found for '".$videoInfo['title']."'");
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $videoDetail;
+	}
+
+	/**
+	 * get list of sorting options
+	 * @return array $options
+	 */
+	public function getSortOptions() {
+		$options = array(
+			'recent' => wfMessage( 'specialvideos-sort-latest' )->text(),
+			'popular' => wfMessage( 'specialvideos-sort-most-popular' )->text(),
+			'trend' => wfMessage( 'specialvideos-sort-trending' )->text(),
+		);
+
+		return $options;
+	}
+
+	/**
+	 * get select options for template
+	 * @param array $options
+	 * @param string $selected
+	 * @return array $opts
+	 */
+	public function getTemplateSelectOptions( $options, $selected ) {
+		$opts = array();
+		foreach( $options as $key => $value ) {
+			$opts[] = array(
+				'label' => $value,
+				'value' => $key,
+				'selected' => ( $key == $selected ),
+			);
+		}
+
+		return $opts;
+	}
+
 }

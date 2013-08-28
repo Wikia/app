@@ -11,7 +11,7 @@ class SpecialCssHooks {
 		$app = F::app();
 		$model = new SpecialCssModel();
 
-		if( static::shouldRedirect($app, $model, $editPage->getArticle()->getTitle()->getArticleId()) ) {
+		if( static::shouldRedirect($app, $model, $editPage->getArticle()->getTitle()) ) {
 			$oldid = $app->wg->Request->getIntOrNull( 'oldid' );
 			$app->wg->Out->redirect( $model->getSpecialCssUrl( false, ( $oldid ) ? array( 'oldid' => $oldid ) : null ) );
 		}
@@ -27,10 +27,9 @@ class SpecialCssHooks {
 	 *
 	 * @return boolean
 	 */
-	static private function shouldRedirect( $app, $model, $articleId ) {
+	static private function shouldRedirect( $app, $model, $title ) {
 		$result = false;
-
-		// currently Special:CSS cannot handle undo mode
+		// currently special:css cannot handle undo mode
 		if ( $app->wg->Request->getInt( 'undo' ) > 0 || $app->wg->Request->getInt( 'undoafter' ) > 0 ) {
 			return $result;
 		}
@@ -41,7 +40,7 @@ class SpecialCssHooks {
 			/** @noinspection PhpUndefinedVariableInspection
 			 * SpecialCssModel::$suppoertedSkins is defined -- lint has issues with it
 			 */
-			$result = $model->isWikiaCssArticle( $articleId )
+			$result = $model->isWikiaCssTitle( $title )
 				&& $app->checkSkin( $model::$supportedSkins )
 				&& $specialCss->userCanExecute( $app->wg->User );
 		}

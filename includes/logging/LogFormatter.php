@@ -499,7 +499,10 @@ class LogFormatter {
 					$user->getName(),
 					true, // Red if no edits
 					0, // Flags
-					$user->getEditCount()
+					/* Wikia change begin - @author: Macbre (BAC-503) */
+					#$user->getEditCount()
+					$user->getEditCountLocal()
+					/* Wikia change end */
 				);
 			}
 		}

@@ -18,6 +18,9 @@ class RepoGroup {
 	 */
 	var $localRepo;
 
+	/**
+	 * @var FileRepo[]
+	 */
 	var $foreignRepos, $reposInitialised = false;
 	var $localInfo, $foreignInfo;
 	var $cache;
@@ -144,6 +147,16 @@ class RepoGroup {
 			return $image;
 		}
 
+		# Wikia change - begin
+		# @author macbre
+		# Check redirects before checking foreign repositories (BAC-352)
+		$titleRedirected = $this->localRepo->checkRedirect($title);
+		if ($titleRedirected) {
+			wfDebug( __METHOD__.": followed redirect before checking foreign repos\n" );
+			$title = $titleRedirected;
+		}
+		# Wikia change - end
+
 		# Check the foreign repos
 		foreach ( $this->foreignRepos as $repo ) {
 			$image = $repo->findFile( $title, $options );
@@ -164,6 +177,17 @@ class RepoGroup {
 				return $image;
 			}
 		}
+
+		/* Wikia changes begin */
+		if ( $title->isRedirect() ) {
+			// get redirected file if the foreign repo allows file redirecting
+			wfRunHooks( 'FindRedirectedFile', array( $this->foreignRepos, $title, $options, $useCache, &$image, &$cacheEntry ) );
+			if ( $image ) {
+				return $image;
+			}
+		}
+		/* Wikia changes end */
+
 		# Not found, do not override negative cache
 		return false;
 	}

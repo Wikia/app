@@ -67,10 +67,10 @@ class QueryServiceTest extends Search\Test\BaseTest {
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'getQueryService' )
-		    ->will   ( $this->returnValue( '\\Wikia\\Search\\QueryService\\Select\\OnWiki' ) )
+		    ->will   ( $this->returnValue( '\\Wikia\\Search\\QueryService\\Select\\Dismax\\OnWiki' ) )
 		;
 		$this->assertInstanceOf(
-				'Wikia\Search\QueryService\Select\OnWiki',
+				'Wikia\Search\QueryService\Select\Dismax\OnWiki',
 				$mockFactory->get( $dc )
 		);
 	}

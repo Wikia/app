@@ -67,14 +67,14 @@ class DumpsOnDemand {
 			"url" => self::getUrl( $wgDBname, "pages_current.xml.gz" ),
 			"timestamp" => !empty( $index["pages_current.xml.gz"]->mwtimestamp )
 				? $wgLang->timeanddate( $index[ "pages_current.xml.gz"]->mwtimestamp )
-				: "unknown"
+				: wfMessage( 'dump-database-last-unknown' )->escaped()
 		));
 
 		$tmpl->set( "full", array(
 			"url" => self::getUrl( $wgDBname, "pages_full.xml.gz" ),
 			"timestamp" => !empty( $index[ "pages_full.xml.gz" ]->mwtimestamp )
 				? $wgLang->timeanddate( $index[ "pages_full.xml.gz" ]->mwtimestamp )
-				: "unknown"
+				: wfMessage( 'dump-database-last-unknown' )->escaped()
 		));
 
 		// The Community Central's value of the wgDumpRequestBlacklist variable contains an array of users who are not allowed to request dumps with this special page.
