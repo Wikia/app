@@ -321,7 +321,7 @@ ve.init.mw.ViewPageTarget.prototype.onLoad = function ( doc ) {
 			if ( mw.config.get( 'wgVisualEditorConfig' ).showBetaWelcome ) {
 				this.showBetaWelcome();
 			}
-			//mw.hook( 've.activationComplete' ).fire();
+			mw.hook( 've.activationComplete' ).fire();
 		}, this ) );
 	}
 };
@@ -1699,7 +1699,7 @@ ve.init.mw.ViewPageTarget.prototype.swapSaveDialog = function ( slide, options )
 	// Show the target slide
 	$slide.show();
 
-	//mw.hook( 've.saveDialog.stateChanged' ).fire();
+	mw.hook( 've.saveDialog.stateChanged' ).fire();
 
 	if ( slide === 'save' ) {
 		setTimeout( function () {
