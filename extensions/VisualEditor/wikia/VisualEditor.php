@@ -25,6 +25,9 @@ $wgResourceModules += array(
 	),
 	'ext.visualEditor.wikiaViewPageTarget' => array(
 		'scripts' => 've.init.mw.WikiaViewPageTarget.js',
+		'styles' => array(
+			've.init.mw.WikiaViewPageTarget.css',
+		),
 		'dependencies' => array(
 			'ext.visualEditor.viewPageTarget'
 		),
