@@ -9,7 +9,7 @@ class GlobalHeaderController extends WikiaController {
 	public function index() {
 		wfProfileIn(__METHOD__);
 		$this->response->addAsset('ui_repo_api_js');
-		$this->response->addAsset('//skins/oasis/js/GlobalHeader.js');
+		$this->response->addAsset('skins/oasis/js/GlobalHeader.js');
 
 		$userLang = $this->wg->Lang->getCode();
 
