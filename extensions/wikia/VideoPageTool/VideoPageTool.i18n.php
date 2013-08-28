@@ -8,7 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'videopagetool-page-title' => 'Video Page Tool',
+	'videopagetool-page-title' => 'Wikia Video Tool',
 	'videopagetool-error-permission' => 'You cannot access this tool.',
 	'videopagetool-error-invalid-language' => 'Invalid language',
 	'videopagetool-error-invalid-date' => 'Invalid date',
