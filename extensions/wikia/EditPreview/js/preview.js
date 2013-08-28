@@ -176,23 +176,6 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 	}
 
 	/**
-	 * Helper for finding CSS3 property name supported by browser
-	 *
-	 * @param {[]} proparray - Array CSS3 property names for different browsers
-	 *
-	 * @return {string} CSS3 property name
-	 */
-
-	function getSupportedProp(proparray) {
-		var root = document.documentElement;
-		for (var i = 0; i < proparray.length; i++) {
-			for (proparray[i] in root.style) {
-				return proparray[i]
-			}
-		}
-	}
-
-	/**
 	 * Scale articleWrapper so it fits current modal size
 	 *
 	 * @param {string} type - type of the preview
