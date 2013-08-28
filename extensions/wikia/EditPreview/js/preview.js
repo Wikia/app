@@ -32,7 +32,8 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 					}).
 					parent().css({
 						'height': options.height || (jquery(window).height() - 250),
-						'overflow': 'auto'
+						'overflow': 'auto',
+						'overflow-x': 'hidden'
 					});
 
 				if (typeof callback == 'function') {
