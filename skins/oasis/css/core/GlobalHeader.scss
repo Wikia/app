@@ -5,7 +5,7 @@
 @import "../mixins/gradient";
 @import "../mixins/transition";
 
-$browse-chevron-background-color: rgba($color-header, 0.7);
+$global-nav-alt-background-color: rgba($color-header, 0.7);
 
 .WikiaHeader {
 	@include box-shadow(0, 0, 10px, $color-page-shadow);
@@ -34,14 +34,11 @@ $browse-chevron-background-color: rgba($color-header, 0.7);
 	li {
 		float: left;
 		height: 22px;
-		margin-top: 7px;
+		margin-top: 9px;
 		padding: 0 15px;
-		&:first-child {
+		border-left: 1px solid $global-nav-alt-background-color;
+		&.WikiaLogo {
 			border: 0;
-		}
-		&.start-a-wiki {
-			border-left: 1px solid mix($color-header-text, $color-header, 20%);
-			margin-top: 5px;
 		}
 	}
 	li > .wikia-button {
@@ -59,6 +56,7 @@ $browse-chevron-background-color: rgba($color-header, 0.7);
 	}
 	.wikia-header-mask {
 		background-image: url(/skins/oasis/images/checkers.png); /* base64 */
+
 		height: $wikiaglobal-nav-height;
 	}
 	.WikiaLogo a {
@@ -85,31 +83,29 @@ $browse-chevron-background-color: rgba($color-header, 0.7);
 				opacity: 1;
 			}
 			.chevron-container {
-				background-color: $browse-chevron-background-color;
+				background-color: $global-nav-alt-background-color;
 				border-color: transparent;
 			}
 		}
 
-		span {
-			@include transition-shorthand(all 0.2s);
-		}
 		.chevron-container {
 			background-image: url(/skins/oasis/images/chevron_down.png); /* base64 */
 			background-position: center;
 			background-repeat: no-repeat;
-			border-right: 1px solid $browse-chevron-background-color;
+			border-right: 1px solid $global-nav-alt-background-color;
 			display: inline-block;
-			width: 37px;
+			width: 45px;
 			height: $wikiaglobal-nav-height;
 			float: left;
 		}
 		.text-container, .hubname-container {
+			@include transition-shorthand(all 0.2s);
 			color: $color-header-text;
-			font-weight: bold;
-			left: 37px;
+			left: 45px;
 			padding: 0 8px;
 			position: absolute;
 			text-transform: uppercase;
+			white-space: nowrap;
 			-webkit-font-smoothing: antialiased; // prevents text flickering when css transformations in progress
 		}
 
@@ -121,4 +117,3 @@ $browse-chevron-background-color: rgba($color-header, 0.7);
 		width: 190px;
 	}
 }
-
