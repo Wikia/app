@@ -479,7 +479,7 @@ class DataMartService extends Service {
 
 		$events = WikiaDataAccess::cacheWithLock(
 			wfSharedMemcKey('datamart', 'user_edits', $wikiId, $userIdsKey, $periodId, $rollupDate),
-			60 * 60 * 24,
+			86400 /* 24 hours */,
 			function () use ($app, $wikiId, $userIds, $periodId, $rollupDate) {
 				$events = [];
 				if (!empty($app->wg->StatsDBEnabled)) {
