@@ -1,11 +1,14 @@
 /* VE uses ems instead of pxs so set correct defaults */
-.ve-ui-surface-overlay,
+.skin-oasis .ve-ui-surface-overlay,
 .ve-ui-frame-body,
 .ve-ui-toolbar {
 	font-size: 16px;
 }
 
-/* Make it up for <section id="WikiaPage"> which appears in the DOM sooner but has z-index = 1 */
+/**
+ * <section id="WikiaPage"> element in Oasis has z-index=1 so we have to set z-index=1 on our
+ * element as well in order to make it appear on top
+ */
 .ve-ui-surface-overlay {
 	z-index: 1;
 }
