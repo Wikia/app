@@ -309,6 +309,8 @@ class WikiService extends WikiaModel {
 				$date = getdate(strtotime('2005-06-01'));
 			}
 
+			$userInfo['lastRevision'] = $stats['lastRevision'];
+
 			$userInfo['since'] = F::App()->wg->Lang->getMonthAbbreviation($date['mon']) . ' ' . $date['year'];
 		}
 
@@ -390,9 +392,10 @@ class WikiService extends WikiaModel {
 				$userEdits = $this->countAdminEdits($adminsEdits[$admin['userId']]);
 			}
 			$edits[$key] = $admins[$key]['edits'] = $userEdits;
+			$lastRevision[$key] = $admins[$key]['lastRevision'];
 		}
 
-		array_multisort($edits, SORT_DESC, $admins);
+		array_multisort($edits, SORT_DESC, $lastRevision, SORT_DESC,  $admins);
 		return $admins;
 	}
 
