@@ -6,7 +6,7 @@ use Swagger\Annotations as SWG;
  * @SWG\Resource(
  *     apiVersion="0.2",
  *     swaggerVersion="1.1",
- *     resourcePath="ArticlesApi",
+ *     resourcePath="WikisApi",
  *     basePath="http://www.wikia.com"
  * )
  *
