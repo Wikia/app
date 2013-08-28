@@ -48,21 +48,21 @@
 					<?php foreach( $cssUpdates as $cssUpdate ): ?>
 						<li class="community-update-item plainlinks">
 							<?= $cssUpdate['userAvatar']; ?>
-							<h4><a href="<?= $cssUpdate['url']; ?>"><?= $cssUpdate['title']; ?></a></h4>
+							<h4><a href="<?= $cssUpdate['url']; ?>" data-tracking="update-read-item"><?= $cssUpdate['title']; ?></a></h4>
 							<span><?= wfMessage('special-css-community-update-by')->params([$cssUpdate['timestamp'], $cssUpdate['userUrl'], $cssUpdate['userName']])->parse(); ?></span>
 							<blockquote><?= $cssUpdate['text']; ?></blockquote>
-							<a href="<?= $cssUpdate['url']; ?>"><?= wfMessage('special-css-community-read-more')->plain(); ?></a>
+							<a href="<?= $cssUpdate['url']; ?>" data-tracking="update-read-item"><?= wfMessage('special-css-community-read-more')->plain(); ?></a>
 						</li>
 					<?php endforeach; ?>
 				</ul>
-				<a href="<?= $cssUpdatesUrl; ?>" title="<?= wfMessage('special-css-community-update-see-all')->text(); ?>" class="see-all-link"><?= wfMessage('special-css-community-update-see-all')->text(); ?></a>
+				<a href="<?= $cssUpdatesUrl; ?>" title="<?= wfMessage('special-css-community-update-see-all')->text(); ?>" class="see-all-link" data-tracking="update-read-all"><?= wfMessage('special-css-community-update-see-all')->text(); ?></a>
 			</div>
 		<?php endif; ?>
 
 		<ul class="education-links">
 			<li class="widget-box">
 				<h2>
-					<a href="<?= wfMessage('special-css-education-item-webinars-link-url')->text(); ?>" title="<?= wfMessage('special-css-education-item-webinars-link-title')->text(); ?>">
+					<a href="<?= wfMessage('special-css-education-item-webinars-link-url')->text(); ?>" title="<?= wfMessage('special-css-education-item-webinars-link-title')->text(); ?>" data-tracking="education-webinars">
 						<?= wfMessage('special-css-education-item-webinars-header')->text(); ?>
 					</a>
 				</h2>
@@ -70,7 +70,7 @@
 			</li>
 			<li class="widget-box">
 				<h2>
-					<a href="<?= wfMessage('special-css-education-item-help-link-url')->text(); ?>" title="<?= wfMessage('special-css-education-item-help-link-title')->text(); ?>">
+					<a href="<?= wfMessage('special-css-education-item-help-link-url')->text(); ?>" title="<?= wfMessage('special-css-education-item-help-link-title')->text(); ?>" data-tracking="education-help">
 						<?= wfMessage('special-css-education-item-help-header')->text(); ?>
 					</a>
 				</h2>
@@ -78,7 +78,7 @@
 			</li>
 			<li class="widget-box">
 				<h2>
-					<a href="<?= wfMessage('special-css-education-item-com-center-link-url')->text(); ?>" title="<?= wfMessage('special-css-education-item-com-center-link-title')->text(); ?>">
+					<a href="<?= wfMessage('special-css-education-item-com-center-link-url')->text(); ?>" title="<?= wfMessage('special-css-education-item-com-center-link-title')->text(); ?>" data-tracking="education-com-center">
 						<?= wfMessage('special-css-education-item-com-center-header')->text(); ?>
 					</a>
 				</h2>
