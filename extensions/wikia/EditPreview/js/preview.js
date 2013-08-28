@@ -1,8 +1,8 @@
 /**
  * Preview for the editor, this should be moved to /resources/wikia/modules once we want to use it for several skins
  */
-define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery', 'wikia.loader', 'wikia.mustache', 'JSMessages'],
-	function(window, nirvana, deferred, jquery, loader, mustache, msg) {
+define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery', 'wikia.loader', 'wikia.mustache', 'JSMessages', 'wikia.tracker'],
+	function(window, nirvana, deferred, jquery, loader, mustache, msg, tracker) {
 	'use strict';
 
 	var	$articleWrapper,
@@ -162,6 +162,15 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 
 	function switchPreview(type) {
 		$articleWrapper.width(previewTypes[type].value);
+
+		tracker.track({
+			action: Wikia.Tracker.ACTIONS.CLICK,
+			category: 'edit-preview',
+			label: 'preview-type-changed',
+			trackingMethod: 'both',
+			value: type
+		});
+
 		scalePreview(type);
 	}
 
