@@ -2036,42 +2036,6 @@ class Wikia {
 	}
 
 	/**
-	 * @desc Adds assets to OutputPage depending on asset type
-	 *
-	 * @param mixed $assetName the name of a configured package or path to an asset file or an array of them
-	 * @param bool $local [OPTIONAL] whether to fetch per-wiki local URLs,
-	 * (false by default, i.e. the method returns a shared host URL's for our network);
-	 * please note that this parameter has no effect on SASS assets, those will always produce shared host URL's.
-	 *
-	 * @example Wikia::addAssetsToOutput('path/to/asset/file/assetName.scss')
-	 * @example Wikia::addAssetsToOutput('assetName')
-	 * (assetName should be set in includes/wikia/AssetsManager/config.php)
-	 * @example	Wikia::addAssetsToOutput([
-	 * 		'path/to/asset/file/assetName.scss',
-	 * 		'path/to/other/asset/file/assetJS.js'
-	 * ])
-	 */
-	public static function addAssetsToOutput( $assetName, $local = false ) {
-		$app = F::app();
-
-		$type = false;
-
-		$sources = AssetsManager::getInstance()->getURL( $assetName, $type, $local );
-
-		foreach($sources as $src){
-			switch ( $type ) {
-				case AssetsManager::TYPE_CSS:
-				case AssetsManager::TYPE_SCSS:
-					$app->wg->Out->addStyle( $src );
-					break;
-				case AssetsManager::TYPE_JS:
-					$app->wg->Out->addScript( "<script type=\"{$app->wg->JsMimeType}\" src=\"{$src}\"></script>" );
-					break;
-			}
-		}
-	}
-
-	/*
 	 * @param $user User
 	 */
 	public static function invalidateUser( $user, $disabled = false, $ajax = false ) {
