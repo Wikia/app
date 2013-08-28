@@ -107,7 +107,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				}
 			}
 			if (! empty( $ids ) ) {
-				$params = [ 'ids' => implode( ',', $ids ), 'height' => 80, 'width' => 80 ];
+				$params = [ 'ids' => implode( ',', $ids ), 'height' => 80, 'width' => 80, 'abstract' => 80 ];
 				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
 				foreach ( $detailResponse['items'] as $id => $item ) {
 					if (! empty( $item['thumbnail'] ) ) {
