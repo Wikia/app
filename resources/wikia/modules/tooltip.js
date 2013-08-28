@@ -3,5 +3,5 @@
  */
 
 define( 'wikia.tooltip', [ 'wikia.window', 'jquery' ], function(window, $) {
-	return (typeof $ !== 'undefined') ? $.tooltip : {};
+	return $.tooltip;
 });
