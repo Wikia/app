@@ -32,8 +32,8 @@ define('vpt.views.datepicker', [
 		},
 		state: {
 			// private constants used to track state of a date entry
-			_notPublished: 2,
-			_published: 1
+			_notPublished: 1,
+			_published: 0
 		},
 		render: function() {
 			this.$el.text('').datepicker({
@@ -61,7 +61,9 @@ define('vpt.views.datepicker', [
 			tdClassName = '';
 			dayStatus = this.collection.getStatus(date);
 
-			if (dayStatus) {
+			if (dayStatus !== undefined) {
+				// response sends back a string, parse it to int
+				dayStatus = parseInt(dayStatus, 10);
 				if (dayStatus === this.state._notPublished ) {
 					tdClassName = 'inProg';
 				} else if (dayStatus === this.state._published ) {
