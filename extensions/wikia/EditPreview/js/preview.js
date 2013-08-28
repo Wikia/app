@@ -17,12 +17,12 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 	function renderDialog(title, options, callback) {
 		options = jquery.extend({
 			callback: function() {
-				var contentNode = jquery('#EditPageDialog .ArticlePreview');
+				var contentNode = jquery('#EditPageDialog .ArticlePreviewInner');
 
 				// block all clicks
 				contentNode.
 					bind('click', function(ev) {
-						var target = $(ev.target);
+						var target = jquery(ev.target);
 
 						target.attr('target','_blank');
 						// don't block links opening in new tab
@@ -30,7 +30,7 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 							ev.preventDefault();
 						}
 					}).
-					css({
+					parent().css({
 						'height': options.height || (jquery(window).height() - 250),
 						'overflow': 'auto'
 					});
@@ -44,7 +44,7 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 		}, options);
 
 		// use loading indicator before real content will be fetched
-		var content = '<div class="ArticlePreview"><img src="' + stylepath + '/common/images/ajax.gif" class="loading"></div>';
+		var content = '<div class="ArticlePreview"><div class="ArticlePreviewInner"><img src="' + stylepath + '/common/images/ajax.gif" class="loading"></div></div>';
 
 		jquery.showCustomModal(title, content, options);
 	}
@@ -80,7 +80,7 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 			width: options.width,
 			className: 'preview',
 			onClose: function() {
-				$(window).trigger('EditPagePreviewClosed');
+				jquery(window).trigger('EditPagePreviewClosed');
 			}
 		};
 		// allow extension to modify the preview dialog
@@ -130,18 +130,18 @@ define('wikia.preview', ['wikia.window','wikia.nirvana','wikia.deferred','jquery
 								},
 								html = mustache.render(template, params);
 
-							jquery(html).insertBefore(contentNode.parent().parent());
+							jquery(html).insertAfter('#EditPageDialog >h1');
 
 							// fire an event once preview is rendered
 							jquery(window).trigger('EditPageAfterRenderPreview', [contentNode]);
 
 							// cache article wrapper selector and its initial width
-							$articleWrapper = $('#EditPageDialog .WikiaArticle');
+							$articleWrapper = jquery('#EditPageDialog .ArticlePreviewInner');
 							previewTypes.current.value = $articleWrapper.width();
 
 							// attach events to type dropdown
-							$('#previewTypeDropdown').on('change', function(event) {
-								switchPreview($(event.target).val());
+							jquery('#previewTypeDropdown').on('change', function(event) {
+								switchPreview(jquery(event.target).val());
 							});
 						}
 					);
