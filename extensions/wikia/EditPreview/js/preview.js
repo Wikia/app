@@ -1,8 +1,8 @@
 /**
  * Preview for the editor, this should be moved to /resources/wikia/modules once we want to use it for several skins
  */
-define( 'wikia.preview', [ 'wikia.window','wikia.nirvana','wikia.deferred','jquery', 'wikia.loader', 'wikia.mustache', 'JSMessages', 'wikia.tracker', 'wikia.tooltip' ],
-	function( window, nirvana, deferred, jquery, loader, mustache, msg, tracker, tooltip ) {
+define( 'wikia.preview', [ 'wikia.window', 'wikia.nirvana', 'wikia.deferred', 'jquery', 'wikia.loader', 'wikia.mustache', 'JSMessages', 'wikia.tracker', 'wikia.csspropshelper', 'wikia.tooltip' ],
+	function(window, nirvana, deferred, jquery, loader, mustache, msg, tracker, cssPropHelper, tooltip) {
 	'use strict';
 
 	var	$articleWrapper,
@@ -17,12 +17,12 @@ define( 'wikia.preview', [ 'wikia.window','wikia.nirvana','wikia.deferred','jque
 	function renderDialog(title, options, callback) {
 		options = jquery.extend({
 			callback: function() {
-				var contentNode = jquery('#EditPageDialog .ArticlePreview');
+				var contentNode = jquery('#EditPageDialog .ArticlePreviewInner');
 
 				// block all clicks
 				contentNode.
 					bind('click', function(ev) {
-						var target = $(ev.target);
+						var target = jquery(ev.target);
 
 						target.attr('target','_blank');
 						// don't block links opening in new tab
@@ -30,9 +30,10 @@ define( 'wikia.preview', [ 'wikia.window','wikia.nirvana','wikia.deferred','jque
 							ev.preventDefault();
 						}
 					}).
-					css({
+					parent().css({
 						'height': options.height || (jquery(window).height() - 250),
-						'overflow': 'auto'
+						'overflow': 'auto',
+						'overflow-x': 'hidden'
 					});
 
 				if (typeof callback == 'function') {
@@ -44,7 +45,7 @@ define( 'wikia.preview', [ 'wikia.window','wikia.nirvana','wikia.deferred','jque
 		}, options);
 
 		// use loading indicator before real content will be fetched
-		var content = '<div class="ArticlePreview"><img src="' + stylepath + '/common/images/ajax.gif" class="loading"></div>';
+		var content = '<div class="ArticlePreview"><div class="ArticlePreviewInner"><img src="' + stylepath + '/common/images/ajax.gif" class="loading"></div></div>';
 
 		jquery.showCustomModal(title, content, options);
 	}
@@ -80,7 +81,7 @@ define( 'wikia.preview', [ 'wikia.window','wikia.nirvana','wikia.deferred','jque
 			width: options.width,
 			className: 'preview',
 			onClose: function() {
-				$(window).trigger('EditPagePreviewClosed');
+				jquery(window).trigger('EditPagePreviewClosed');
 			}
 		};
 		// allow extension to modify the preview dialog
@@ -130,18 +131,18 @@ define( 'wikia.preview', [ 'wikia.window','wikia.nirvana','wikia.deferred','jque
 								},
 								html = mustache.render(template, params);
 
-							jquery(html).insertBefore(contentNode.parent().parent());
+							jquery(html).insertAfter('#EditPageDialog >h1');
 
 							// fire an event once preview is rendered
 							jquery(window).trigger('EditPageAfterRenderPreview', [contentNode]);
 
 							// cache article wrapper selector and its initial width
-							$articleWrapper = $('#EditPageDialog .WikiaArticle');
+							$articleWrapper = jquery('#EditPageDialog .ArticlePreviewInner');
 							previewTypes.current.value = $articleWrapper.width();
 
 							// attach events to type dropdown
 							jquery('#previewTypeDropdown').on('change', function(event) {
-								switchPreview($(event.target).val());
+								switchPreview(jquery(event.target).val());
 							});
 
 							jquery('.tooltip-icon').tooltip( { placement: 'right' } );
@@ -177,23 +178,6 @@ define( 'wikia.preview', [ 'wikia.window','wikia.nirvana','wikia.deferred','jque
 	}
 
 	/**
-	 * Helper for finding CSS3 property name supported by browser
-	 *
-	 * @param {[]} proparray - Array CSS3 property names for different browsers
-	 *
-	 * @return {string} CSS3 property name
-	 */
-
-	function getSupportedProp(proparray) {
-		var root = document.documentElement;
-		for (var i = 0; i < proparray.length; i++) {
-			if (proparray[i] in root.style) {
-				return proparray[i]
-			}
-		}
-	}
-
-	/**
 	 * Scale articleWrapper so it fits current modal size
 	 *
 	 * @param {string} type - type of the preview
@@ -203,8 +187,8 @@ define( 'wikia.preview', [ 'wikia.window','wikia.nirvana','wikia.deferred','jque
 		var	initialPreviewWidth = previewTypes.current.value,
 			selectedPreviewWidth = previewTypes[type].value,
 			scaleRatio = initialPreviewWidth / selectedPreviewWidth,
-			cssTransform = getSupportedProp(['transform', 'MozTransform', 'WebkitTransform', 'msTransform', 'OTransform']),
-			cssTransformOrigin = getSupportedProp(['transformOrigin', 'MozTransformOrigin', 'WebkitTransformOrigin', 'msTransformOrigin', 'OTransformOrigin'])
+			cssTransform = cssPropHelper.getCSSPropName('transform'),
+			cssTransformOrigin = cssPropHelper.getCSSPropName('transform-origin');
 
 		if (selectedPreviewWidth > initialPreviewWidth) {
 			var	scaleVar = 'scale(' + scaleRatio + ')';

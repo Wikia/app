@@ -258,6 +258,7 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/CategorySelect/js/CategorySelect.view.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
+		'//resources/wikia/modules/csspropshelper.js',
 		'//extensions/wikia/EditPreview/js/preview.js',
 
 		// oasis specific files
