@@ -14,7 +14,6 @@
 			// mock cache
 			$memcParams = array(
 				'set' => null,
-				'get' => null,
 				'delete' => null,
 				'add' => null,
 				'incr' => null,
@@ -22,6 +21,11 @@
 			if ( is_array($cacheParams) ) {
 				$memcParams = $memcParams + $cacheParams;
 			}
+
+			if ( !array_key_exists( 'get', $memcParams ) ) {
+				$memcParams[ 'get' ] = null;
+			}
+
 			$this->setUpMockObject( 'stdClass', $memcParams, false, 'wgMemc' );
 
 			$this->mockGlobalVariable('wgCityId', self::TEST_CITY_ID);
