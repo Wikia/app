@@ -27,9 +27,13 @@ class VideoPageToolHelper extends WikiaModel {
 	 * @return array $languages
 	 */
 	public function getLanguages() {
-		$languages = array(
-			'en' => wfMessage( 'videopagetool-language-en' )->plain(),
-		);
+		// default language codes
+		$languageCodes = array( 'en' );
+
+		$languages = array();
+		foreach ( $languageCodes as $code ) {
+			$languages[$code] = Language::getLanguageName( $code );
+		}
 
 		return $languages;
 	}
