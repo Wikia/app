@@ -71,6 +71,11 @@ $label-padding: 10px 10px 10px 0px;
 		}
 	}
 
+	// CharCounter
+	.counter-success {
+		color: green;
+	}
+
 	// Featured video form styles
 	.featured-video {
 		.input-group {
@@ -102,10 +107,15 @@ $label-padding: 10px 10px 10px 0px;
 			clear: both;
 			float: right;
 			font-size: 13px;
+			margin: 0;
 			width: 70%;
 		}
 		.url-group label.error {
 			float: none;
+		}
+		.char-count {
+			float: right;
+			clear: right;
 		}
 	}
 }

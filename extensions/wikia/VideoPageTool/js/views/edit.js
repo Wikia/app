@@ -2,13 +2,17 @@ define( 'vpt.views.edit', [
 	'jquery'
 ], function( $ ) {
 
-	function VPTEdit() {
+	var VPTEdit = function() {
 		this.$form = $( '.vpt-form' );
-		this.validator = this.$form.validate({debug:false});
+		this.validator = this.$form.validate({
+			//debug:false,
+			onkeyup: true
+		});
 		// all elements to be validated - jQuery validate doesn't support arrays of form names inputs like "names[]" :(
 		this.$formFields = this.$form.find( '.video_description, .video_display_title, .video_url' );
+		this.descriptionMinLength = 20;
 		this.init();
-	}
+	};
 
 	VPTEdit.prototype = {
 		init: function() {
@@ -16,6 +20,20 @@ define( 'vpt.views.edit', [
 			this.initReset();
 			this.initSwitcher();
 			this.initAddVideo();
+			//this.initCharCounters();
+		},
+		initCharCounters: function() {
+			var that = this;
+
+			this.$form.find( '.video_description' ).each( function() {
+				var $this = $( this ),
+					$container = $this.siblings( '.char-count' );
+
+				$this.charCounter({
+					min: that.descriptionMinLength,
+					container: $container
+				});
+			})
 		},
 		initAddVideo: function() {
 			this.$form.find( '.add-video-button' ).each( function() {
@@ -29,7 +47,7 @@ define( 'vpt.views.edit', [
 
 				$this.addVideoButton({
 					callbackAfterSelect: function( url, vet ) {
-						// TODO: ajax request - send url, get back thumbnail html, title, description.  Hard coded for now
+						// TODO: ajax request - send url, get back thumbnail html, title, description.  Hard coded for now.
 
 						var title = 'test title',
 							description = 'test description',
@@ -68,11 +86,21 @@ define( 'vpt.views.edit', [
 
 			// add a rule to each element because validator can't handle array inputs by default (i.e. video_description[])
 			this.$formFields.each( function() {
-				$( this ).rules( "add", {
+				var $this = $( this ),
+					minLength = $this.is( '.video_description' ) ? that.descriptionMinLength : 0;
+
+				$this.rules( "add", {
 					required: true,
+					minlength: minLength,
 					messages: {
-						required: $.msg( 'htmlform-required' )
-					}
+						required: $.msg( 'htmlform-required' ),
+						minlength: function( len, elem ) {
+							var charsToGo = that.descriptionMinLength - $( elem ).val().length;
+console.log(charsToGo);
+							return [ $.msg( 'videopagetool-description-minlength-error', len, charsToGo ) ];
+						}
+					},
+					onkeyup: true
 				});
 			});
 
@@ -95,7 +123,7 @@ define( 'vpt.views.edit', [
 						// Clear all form input values
 						that.$form[0].reset();
 						// Also clear all error messages for better UX
-						that.$formFields.removeClass('error' ).next( '.error' ).remove();
+						that.$formFields.removeClass( 'error' ).next( '.error' ).remove();
 					},
 					width: 700
 				});
