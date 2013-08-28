@@ -47,16 +47,16 @@ define('wikia.csspropshelper', ['wikia.document'], function(document) {
 	 */
 
 	function createPropArray(prop) {
-		var i = 0,
-			a = [prop],
+		var i,
+			result = [prop],
 			formattedProp = prop.charAt(0).toUpperCase() + prop.slice(1);
 
-		for (i; i < prefixArray.length; i++) {
+		for (i = 0; i < prefixArray.length; i++) {
 			var str = prefixArray[i] + formattedProp;
-			a.push(str);
+			result.push(str);
 		}
 
-		return a;
+		return result;
 	}
 
 	/**
@@ -87,6 +87,7 @@ define('wikia.csspropshelper', ['wikia.document'], function(document) {
 	 * @param {string} prop - CSS style property name
 	 *
 	 * @return {string} JS camel case style property name supported by current browser
+	 * @throw {Error} when property is not supported
 	 */
 
 	function getCSSPropName(prop) {
