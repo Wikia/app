@@ -90,8 +90,11 @@ class EditAccount extends SpecialPage {
 				$oUser = User::newFromName( $userName );
 				wfRunHooks( 'UserNameLoadFromId', array( $userName, &$oUser, true ) );
 
+				$id = 0;
 				$this->mUser = $oUser;
-				$id = $this->mUser->getId();
+				if ( !empty( $this->mUser ) ) {
+					$id = $this->mUser->getId();
+				}
 
 				if( empty($action) ) {
 					$action = 'displayuser';
@@ -140,7 +143,7 @@ class EditAccount extends SpecialPage {
 				$this->mStatusMsg = $this->mStatus ? wfMsg( 'editaccount-requested' ) : wfMsg( 'editaccount-not-requested' );
 				break;
 			case 'closeaccountconfirm':
-				$this->mStatus = $this->closeAccount( $changeReason, $this->mUser, $wgTitle, $this->mStatusMsg, $this->mStatusMsg2 );
+				$this->mStatus = $this->closeAccount( $this->mUser, $changeReason, $this->mStatusMsg, $this->mStatusMsg2 );
 				$template = $this->mStatus ? 'selectuser' : 'displayuser';
 				break;
 			case 'clearunsub':
@@ -343,16 +346,21 @@ class EditAccount extends SpecialPage {
 	/**
 	 * Scrambles the user's password, sets an empty e-mail and marks as disabled
 	 *
-	 * @param $changeReason String: reason for change
+	 * @param $user User User account to close
+	 * @param $changeReason String reason for change
+	 * @param $mStatusMsg String Main error message
+	 * @param $mStatusMsg2 String Secondary (non-critical) error message
 	 * @return Boolean: true on success, false on failure
 	 */
-	public static function closeAccount( $changeReason = '', $user = '', $title, &$mStatusMsg = '', &$mStatusMsg2 = '' ) {
-		global $wgExternalAuthType;
+	public static function closeAccount( $user = '', $changeReason = '', &$mStatusMsg = '', &$mStatusMsg2 = '' ) {
+		if ( empty( $user ) ) {
+			throw new Exception( 'User object is invalid.' );
+		}
+
+		$id = $user->getId();
+
 		# Set flag for Special:Contributions
 		# NOTE: requires FlagClosedAccounts.php to be included separately
-		if ( empty($user) ) {
-		 throw new Exception("User object is invalid.");
-		}
 		if ( defined( 'CLOSED_ACCOUNT_FLAG' ) ) {
 			$user->setRealName( CLOSED_ACCOUNT_FLAG );
 		} else {
@@ -366,53 +374,27 @@ class EditAccount extends SpecialPage {
 			if ( !$avatar->isDefault() ) {
 				if( !$avatar->removeFile( false ) ) {
 					# dont quit here, since the avatar is a non-critical part of closing, but flag for later
-					$mStatusMsg = wfMsgExt( 'editaccount-remove-avatar-fail' );
+					$mStatusMsg2 = wfMessage( 'editaccount-remove-avatar-fail' )->plain();
 				}
 			}
 		}
 
-		// Remove e-mail address and password
-		$user->setEmail( '' );
-		$user->setPassword( $newpass = EditAccount::generateRandomScrambledPassword() );
-		// Save the new settings
-		$user->saveSettings();
-
-		// get User ID
-		$id = $user->getId();
+		# close account and invalidate cache + cluster data
+		Wikia::invalidateUser( $user, true, true );
 
 		if ( $user->getEmail() == ''  ) {
-			global $wgUser, $wgTitle;
-			// Mark as disabled in a more real way, that doesnt depend on the real_name text
-			$user->setOption( 'disabled', 1 );
-			$user->setOption( 'disabled_date', wfTimestamp( TS_DB ) );
-			// BugId:18085 - setting a new token causes the user to be logged out.
-			$user->setToken( md5( microtime() . mt_rand( 0, 0x7fffffff ) ) );
-
-			// BugID:95369 This forces saveSettings() to commit the transaction
-			// FIXME: this is a total hack, we should add a commit=true flag to saveSettings
-			global $wgRequest;
-			$wgRequest->setVal('action', 'ajax');
-
-			// Need to save these additional changes
-			$user->saveSettings();
-
+			$title = Title::newFromText( 'EditAccount', NS_SPECIAL );
 			// Log what was done
 			$log = new LogPage( 'editaccnt' );
 			$log->addEntry( 'closeaccnt', $title, $changeReason, array( $user->getUserPage() ) );
 
-			// delete the record from all the secondary clusters
-			if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
-				ExternalUser_Wikia::removeFromSecondaryClusters( $id );
-			}
-
 			// All clear!
-
-			$mStatusMsg = wfMsg( 'editaccount-success-close', $user->mName );
+			$mStatusMsg = wfMessage( 'editaccount-success-close', $user->mName )->plain();
 			return true;
 
 		} else {
 			// There were errors...inform the user about those
-			$mStatusMsg = wfMsg( 'editaccount-error-close', $user->mName );
+			$mStatusMsg = wfMessage( 'editaccount-error-close', $user->mName )->plain();
 			return false;
 		}
 	}

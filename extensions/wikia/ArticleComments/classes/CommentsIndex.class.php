@@ -190,55 +190,58 @@ class CommentsIndex extends WikiaModel {
 
 	/**
 	 * add comment to database
+	 * this assumes that wfReadOnly was called before and we're safe to write to master (see DAR-120 for details)
 	 */
 	public function addToDatabase() {
-		wfProfileIn( __METHOD__ );
 
 		//Just for transition time
 		if(empty($this->wg->EnableWallEngine) || !WallHelper::isWallNamespace($this->namespace) ) {
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
-		if ( !wfReadOnly() ) {
-			$this->createTableCommentsIndex();
-			$db = wfGetDB( DB_MASTER );
-			$timestamp = $db->timestamp();
-			if ( empty($this->createdAt) ) {
-				$this->createdAt = $timestamp;
-			}
-			if ( empty($this->lastTouched) ) {
-				$this->lastTouched = $timestamp;
-			}
-			$status = $db->replace(
-				'comments_index',
-				'',
-				array(
-					'parent_page_id' => $this->parentPageId,
-					'comment_id' => $this->commentId,
-					'parent_comment_id' => $this->parentCommentId,
-					'last_child_comment_id' => $this->lastChildCommentId == 0 ? $this->commentId:$this->lastChildCommentId,
-					'archived' => $this->archived,
-					'deleted' => $this->deleted,
-					'removed' => $this->removed,
-					'locked' => $this->locked,
-					'protected' => $this->protected,
-					'sticky' => $this->sticky,
-					'first_rev_id' => $this->firstRevId,
-					'created_at' => $this->createdAt,
-					'last_rev_id' => $this->lastRevId,
-					'last_touched' => $this->lastTouched,
-				),
-				__METHOD__
-			);
-			if ( false === $status ) {
-				Wikia::log(__FUNCTION__, __LINE__, "WALL_COMMENTS_INDEX_ERROR Failed to create comments_index entry, parent_page_id={$this->parentPageId}, comment_id={$this->commentId}, parent_comment_id={$this->parentCommentId}", true);
-			}
+		wfProfileIn( __METHOD__ );
 
-			$db->commit();
-		} else {
-			Wikia::log(__FUNCTION__, __LINE__, "WALL_COMMENTS_INDEX_ERROR Failed to create comments_index entry, db is readonly", true);
+		// this call and log is left to make sure the readonly in the middle of request is caused by LoadBalancer::getReaderIndex
+		if ( wfReadOnly() ) {
+			global $wgReadOnly;
+			Wikia::log(__FUNCTION__, __LINE__, "WALL_COMMENTS_INDEX_WARNING DB in readonly mode while trying to create comments_index entry, parent_page_id={$this->parentPageId}, comment_id={$this->commentId}, parent_comment_id={$this->parentCommentId} (reason: $wgReadOnly)", true);
 		}
+
+		$this->createTableCommentsIndex();
+		$db = wfGetDB( DB_MASTER );
+		$timestamp = $db->timestamp();
+		if ( empty($this->createdAt) ) {
+			$this->createdAt = $timestamp;
+		}
+		if ( empty($this->lastTouched) ) {
+			$this->lastTouched = $timestamp;
+		}
+		$status = $db->replace(
+			'comments_index',
+			'',
+			array(
+				'parent_page_id' => $this->parentPageId,
+				'comment_id' => $this->commentId,
+				'parent_comment_id' => $this->parentCommentId,
+				'last_child_comment_id' => $this->lastChildCommentId == 0 ? $this->commentId:$this->lastChildCommentId,
+				'archived' => $this->archived,
+				'deleted' => $this->deleted,
+				'removed' => $this->removed,
+				'locked' => $this->locked,
+				'protected' => $this->protected,
+				'sticky' => $this->sticky,
+				'first_rev_id' => $this->firstRevId,
+				'created_at' => $this->createdAt,
+				'last_rev_id' => $this->lastRevId,
+				'last_touched' => $this->lastTouched,
+			),
+			__METHOD__
+		);
+		if ( false === $status ) {
+			Wikia::log(__FUNCTION__, __LINE__, "WALL_COMMENTS_INDEX_ERROR Failed to create comments_index entry, parent_page_id={$this->parentPageId}, comment_id={$this->commentId}, parent_comment_id={$this->parentCommentId}", true);
+		}
+
+		$db->commit();
 
 		wfProfileOut( __METHOD__ );
 	}

@@ -14,6 +14,11 @@ body {
 		display: none;
 	}
 }
+
+body.global-header-fixed-at-top {
+	padding-top: 37px;
+}
+
 @if $background-tiled == false {
 	body {
 		background-repeat: no-repeat;

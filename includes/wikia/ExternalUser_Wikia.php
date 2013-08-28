@@ -261,6 +261,11 @@ class ExternalUser_Wikia extends ExternalUser {
 			return false;
 		}
 
+		if ( ( '' == $this->getToken() ) && ( '' == $this->getEmail() ) && ( ! $this->getEmailToken() ) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
 		wfDebug( __METHOD__ . ": update local user table: $id \n" );
 
 		if ( $id != $this->getId() ) {
@@ -298,20 +303,20 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	public function getLocalUser( $obj = true ) {
-		$uid = $this->getId();
-		wfDebug( __METHOD__ . ": get local user: $uid \n" );
-
-		$dbr = wfGetDb( DB_MASTER );
-		$row = $dbr->selectRow(
-			'user',
-			'*',
-			array( 'user_id' => $uid )
-		);
-		if ( $obj ) {
-			$res = $row ? User::newFromId( $row->user_id ) : null;
-		} else {
-			$res = $row;
+		wfProfileIn( __METHOD__ );
+		
+		if ( empty( $this->mRow ) ) {
+			wfProfileOut( __METHOD__ );
+			return null;
 		}
+
+		if ( $obj ) {
+			$res = User::newFromRow( $this->mRow );
+		} else {
+			$res = $this->mRow;
+		}
+
+		wfProfileOut( __METHOD__ );
 		return $res;
 	}
 

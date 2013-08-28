@@ -115,17 +115,30 @@ HoverMenu.prototype.mouseout = function(event) {
 };
 
 HoverMenu.prototype.showNav = function(parent) {
-	var nav = $(parent).children('ul');
+	var event,
+	nav = $(parent).children('ul');
 	window.HoverMenuGlobal.hideAll();
 	this.mouseoverTimerRunning = false;
 
 	if (nav.exists()) {
 		nav.addClass("show");
+
+		event = document.createEvent("HTMLEvents");
+		event.initEvent("hover-menu-shown", true, true);
+		nav.get(0).dispatchEvent(event);
 	}
 };
 
 HoverMenu.prototype.hideNav = function() {
-	this.menu.find(".subnav").removeClass("show");
+	var event,
+		nav = this.menu.find(".subnav");
+	nav.removeClass("show");
+
+	if (nav.exists()) {
+		event = document.createEvent("HTMLEvents");
+		event.initEvent("hover-menu-hidden", true, true);
+		nav.get(0).dispatchEvent(event);
+	}
 };
 
 /**

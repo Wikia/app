@@ -9,7 +9,7 @@ define( 'lvs.swapkeep', [
 	'wikia.nirvana',
 	'lvs.tracker'
 ], function( QueryString, commonAjax, videoControls, $, nirvana, tracker ) {
-	"use strict";
+	'use strict';
 
 	var $parent,
 		$overlay,
@@ -52,31 +52,13 @@ define( 'lvs.swapkeep', [
 
 	function confirmModal() {
 		videoControls.reset();
-
-		var currTitleText =  currTitle.replace(/_/g, ' ' ),
-			newTitleText,
-			title,
-			msg;
-
-		if ( isSwap ) {
-			newTitleText = newTitle.replace(/_/g, ' ' );
-			title = $.msg( 'lvs-confirm-swap-title' );
-			if ( currTitleText == newTitleText ) {
-				msg = $.msg( 'lvs-confirm-swap-message-same-title', currTitleText );
-			} else {
-				msg = $.msg( 'lvs-confirm-swap-message-different-title', currTitleText, newTitleText );
-			}
-		} else {
-			title = $.msg( 'lvs-confirm-keep-title' );
-			msg = $.msg( 'lvs-confirm-keep-message', currTitleText );
-		}
-
+		var currTitleText =  currTitle.replace(/_/g, ' ' );
+		// Show confirmation modal only on "Keep"
 		$.confirm({
-			title: title,
-			content: msg,
+			title: $.msg( 'lvs-confirm-keep-title' ),
+			content: $.msg( 'lvs-confirm-keep-message', currTitleText ),
 			onOk: function() {
 				doRequest();
-
 				// Track click on okay button
 				tracker.track({
 					action: tracker.actions.CONFIRM,
@@ -101,16 +83,16 @@ define( 'lvs.swapkeep', [
 
 			if ( isSwap ) {
 				// swap button hovered
-				if ( e.type == 'mouseover' ) {
+				if ( e.type === 'mouseover' ) {
 					$overlay.fadeIn( 100 );
-				} else if ( e.type == 'mouseout' ) {
+				} else if ( e.type === 'mouseout' ) {
 					$overlay.fadeOut( 100 );
 					// swap button clicked
-				} else if ( e.type == 'click' ) {
+				} else if ( e.type === 'click' ) {
 					// Get both titles - current/non-premium video and video to swap it out with
 					newTitle = decodeURIComponent( $button.attr( 'data-video-swap' ) );
 					currTitle = decodeURIComponent( $row.find( '.keep-button' ).attr( 'data-video-keep' ) );
-					confirmModal();
+					doRequest();
 
 					// Track click action
 					tracker.track({
@@ -119,7 +101,7 @@ define( 'lvs.swapkeep', [
 					});
 				}
 				// Keep button clicked
-			} else if ( e.type == 'click' ) {
+			} else if ( e.type === 'click' ) {
 				currTitle = decodeURIComponent( $row.find( '.keep-button' ).attr( 'data-video-keep' ) );
 				// no new title b/c we're keeping the current video
 				newTitle = '';

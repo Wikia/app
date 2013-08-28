@@ -10,7 +10,7 @@ class StatsApiController extends WikiaApiController {
 	const CACHE_VALIDITY = 10800; //3 hours
 
 	/**
-	 * Get statistical information about the current wiki
+	 * Get statistical information about the current wiki [DEPRECATED]
 	 *
 	 * @responseParam Integer $edits Number of edits on a wiki
 	 * @responseParam Integer $articles Number of real articles on a wiki

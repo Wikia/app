@@ -14,30 +14,100 @@
 	$image-y: -1;
 	$image-width: -1;
 	$image-height: -1;
-	// @autosprite-image-details: big_black_arrow.png@72,0,121662448b5607e7f8f17b42132be4b0
-	@if $imageName == 'big_black_arrow' {
+	// @autosprite-image-details: big_arrow_black.png@72,0,121662448b5607e7f8f17b42132be4b0
+	@if $imageName == 'big_arrow_black' {
 		$image-x: 72px;
 		$image-y: 0px;
 		$image-width: 49px;
 		$image-height: 31px;
 	}
-	// @autosprite-image-details: big_white_arrow.png@133,0,5f66ce3d0f67caec72a159b3ff9c68c6
-	@if $imageName == 'big_white_arrow' {
+	// @autosprite-image-details: big_arrow_white.png@133,0,5f66ce3d0f67caec72a159b3ff9c68c6
+	@if $imageName == 'big_arrow_white' {
 		$image-x: 133px;
 		$image-y: 0px;
 		$image-width: 49px;
 		$image-height: 31px;
 	}
-	// @autosprite-image-details: black_small_arrow.png@194,0,5a7b696995edf9742febd5093683e4d6
-	@if $imageName == 'black_small_arrow' {
+	// @autosprite-image-details: big_black_arrow.png@194,0,121662448b5607e7f8f17b42132be4b0
+	@if $imageName == 'big_black_arrow' {
 		$image-x: 194px;
+		$image-y: 0px;
+		$image-width: 49px;
+		$image-height: 31px;
+	}
+	// @autosprite-image-details: big_white_arrow.png@255,0,5f66ce3d0f67caec72a159b3ff9c68c6
+	@if $imageName == 'big_white_arrow' {
+		$image-x: 255px;
+		$image-y: 0px;
+		$image-width: 49px;
+		$image-height: 31px;
+	}
+	// @autosprite-image-details: black_small_arrow.png@316,0,5a7b696995edf9742febd5093683e4d6
+	@if $imageName == 'black_small_arrow' {
+		$image-x: 316px;
 		$image-y: 0px;
 		$image-width: 13px;
 		$image-height: 9px;
 	}
-	// @autosprite-image-details: white_small_arrow.png@219,0,caf71b236205056840dd065187d73627
+	// @autosprite-image-details: collaboration_icon_black.png@341,0,4e296f48ed84e7f2cc8db6737ddbfea9
+	@if $imageName == 'collaboration_icon_black' {
+		$image-x: 341px;
+		$image-y: 0px;
+		$image-width: 23px;
+		$image-height: 21px;
+	}
+	// @autosprite-image-details: collaboration_icon_white.png@376,0,0959cca012cfb6820591e03438ca4b4b
+	@if $imageName == 'collaboration_icon_white' {
+		$image-x: 376px;
+		$image-y: 0px;
+		$image-width: 23px;
+		$image-height: 21px;
+	}
+	// @autosprite-image-details: high_quality_icon_black.png@411,0,1380b24b57b1399df0205e050b52846c
+	@if $imageName == 'high_quality_icon_black' {
+		$image-x: 411px;
+		$image-y: 0px;
+		$image-width: 20px;
+		$image-height: 20px;
+	}
+	// @autosprite-image-details: high_quality_icon_white.png@443,0,38771dccfd29b7ccd92919f2ba268b68
+	@if $imageName == 'high_quality_icon_white' {
+		$image-x: 443px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 21px;
+	}
+	// @autosprite-image-details: license_icon_black.png@474,0,321c904fab4c5fa73e903383ee48d194
+	@if $imageName == 'license_icon_black' {
+		$image-x: 474px;
+		$image-y: 0px;
+		$image-width: 21px;
+		$image-height: 20px;
+	}
+	// @autosprite-image-details: license_icon_white.png@507,0,b610c7dfe1e78e07a3c69cf2ab6d600e
+	@if $imageName == 'license_icon_white' {
+		$image-x: 507px;
+		$image-y: 0px;
+		$image-width: 20px;
+		$image-height: 21px;
+	}
+	// @autosprite-image-details: small_arrow_black.png@539,0,5a7b696995edf9742febd5093683e4d6
+	@if $imageName == 'small_arrow_black' {
+		$image-x: 539px;
+		$image-y: 0px;
+		$image-width: 13px;
+		$image-height: 9px;
+	}
+	// @autosprite-image-details: small_arrow_white.png@564,0,caf71b236205056840dd065187d73627
+	@if $imageName == 'small_arrow_white' {
+		$image-x: 564px;
+		$image-y: 0px;
+		$image-width: 13px;
+		$image-height: 9px;
+	}
+	// @autosprite-image-details: white_small_arrow.png@589,0,caf71b236205056840dd065187d73627
 	@if $imageName == 'white_small_arrow' {
-		$image-x: 219px;
+		$image-x: 589px;
 		$image-y: 0px;
 		$image-width: 13px;
 		$image-height: 9px;
@@ -63,25 +133,85 @@
 @mixin sprite-LicensedVideoSwap-embed($imageName,$width: 0,$height: 0,$offset-x: 0,$offset-y: 0) {
 	$image-width: -1;
 	$image-height: -1;
-	// @autosprite-image-details: big_black_arrow.png@72,0,121662448b5607e7f8f17b42132be4b0
+	// @autosprite-image-details: big_arrow_black.png@72,0,121662448b5607e7f8f17b42132be4b0
+	@if $imageName == 'big_arrow_black' {
+		$image-width: 49px;
+		$image-height: 31px;
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/big_arrow_black.png'); /* base64 */
+	}
+	// @autosprite-image-details: big_arrow_white.png@133,0,5f66ce3d0f67caec72a159b3ff9c68c6
+	@if $imageName == 'big_arrow_white' {
+		$image-width: 49px;
+		$image-height: 31px;
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/big_arrow_white.png'); /* base64 */
+	}
+	// @autosprite-image-details: big_black_arrow.png@194,0,121662448b5607e7f8f17b42132be4b0
 	@if $imageName == 'big_black_arrow' {
 		$image-width: 49px;
 		$image-height: 31px;
 		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/big_black_arrow.png'); /* base64 */
 	}
-	// @autosprite-image-details: big_white_arrow.png@133,0,5f66ce3d0f67caec72a159b3ff9c68c6
+	// @autosprite-image-details: big_white_arrow.png@255,0,5f66ce3d0f67caec72a159b3ff9c68c6
 	@if $imageName == 'big_white_arrow' {
 		$image-width: 49px;
 		$image-height: 31px;
 		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/big_white_arrow.png'); /* base64 */
 	}
-	// @autosprite-image-details: black_small_arrow.png@194,0,5a7b696995edf9742febd5093683e4d6
+	// @autosprite-image-details: black_small_arrow.png@316,0,5a7b696995edf9742febd5093683e4d6
 	@if $imageName == 'black_small_arrow' {
 		$image-width: 13px;
 		$image-height: 9px;
 		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/black_small_arrow.png'); /* base64 */
 	}
-	// @autosprite-image-details: white_small_arrow.png@219,0,caf71b236205056840dd065187d73627
+	// @autosprite-image-details: collaboration_icon_black.png@341,0,4e296f48ed84e7f2cc8db6737ddbfea9
+	@if $imageName == 'collaboration_icon_black' {
+		$image-width: 23px;
+		$image-height: 21px;
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/collaboration_icon_black.png'); /* base64 */
+	}
+	// @autosprite-image-details: collaboration_icon_white.png@376,0,0959cca012cfb6820591e03438ca4b4b
+	@if $imageName == 'collaboration_icon_white' {
+		$image-width: 23px;
+		$image-height: 21px;
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/collaboration_icon_white.png'); /* base64 */
+	}
+	// @autosprite-image-details: high_quality_icon_black.png@411,0,1380b24b57b1399df0205e050b52846c
+	@if $imageName == 'high_quality_icon_black' {
+		$image-width: 20px;
+		$image-height: 20px;
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/high_quality_icon_black.png'); /* base64 */
+	}
+	// @autosprite-image-details: high_quality_icon_white.png@443,0,38771dccfd29b7ccd92919f2ba268b68
+	@if $imageName == 'high_quality_icon_white' {
+		$image-width: 19px;
+		$image-height: 21px;
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/high_quality_icon_white.png'); /* base64 */
+	}
+	// @autosprite-image-details: license_icon_black.png@474,0,321c904fab4c5fa73e903383ee48d194
+	@if $imageName == 'license_icon_black' {
+		$image-width: 21px;
+		$image-height: 20px;
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/license_icon_black.png'); /* base64 */
+	}
+	// @autosprite-image-details: license_icon_white.png@507,0,b610c7dfe1e78e07a3c69cf2ab6d600e
+	@if $imageName == 'license_icon_white' {
+		$image-width: 20px;
+		$image-height: 21px;
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/license_icon_white.png'); /* base64 */
+	}
+	// @autosprite-image-details: small_arrow_black.png@539,0,5a7b696995edf9742febd5093683e4d6
+	@if $imageName == 'small_arrow_black' {
+		$image-width: 13px;
+		$image-height: 9px;
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/small_arrow_black.png'); /* base64 */
+	}
+	// @autosprite-image-details: small_arrow_white.png@564,0,caf71b236205056840dd065187d73627
+	@if $imageName == 'small_arrow_white' {
+		$image-width: 13px;
+		$image-height: 9px;
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/small_arrow_white.png'); /* base64 */
+	}
+	// @autosprite-image-details: white_small_arrow.png@589,0,caf71b236205056840dd065187d73627
 	@if $imageName == 'white_small_arrow' {
 		$image-width: 13px;
 		$image-height: 9px;
@@ -115,6 +245,12 @@
 }
 @mixin sprite-LicensedVideoSwap-deep($width: 0,$height: 0) {
 	@include sprite-LicensedVideoSwap-base;
+	&.big-arrow-black {
+		@include sprite-LicensedVideoSwap('big_arrow_black',$width,$height);
+	}
+	&.big-arrow-white {
+		@include sprite-LicensedVideoSwap('big_arrow_white',$width,$height);
+	}
 	&.big-black-arrow {
 		@include sprite-LicensedVideoSwap('big_black_arrow',$width,$height);
 	}
@@ -124,12 +260,42 @@
 	&.black-small-arrow {
 		@include sprite-LicensedVideoSwap('black_small_arrow',$width,$height);
 	}
+	&.collaboration-icon-black {
+		@include sprite-LicensedVideoSwap('collaboration_icon_black',$width,$height);
+	}
+	&.collaboration-icon-white {
+		@include sprite-LicensedVideoSwap('collaboration_icon_white',$width,$height);
+	}
+	&.high-quality-icon-black {
+		@include sprite-LicensedVideoSwap('high_quality_icon_black',$width,$height);
+	}
+	&.high-quality-icon-white {
+		@include sprite-LicensedVideoSwap('high_quality_icon_white',$width,$height);
+	}
+	&.license-icon-black {
+		@include sprite-LicensedVideoSwap('license_icon_black',$width,$height);
+	}
+	&.license-icon-white {
+		@include sprite-LicensedVideoSwap('license_icon_white',$width,$height);
+	}
+	&.small-arrow-black {
+		@include sprite-LicensedVideoSwap('small_arrow_black',$width,$height);
+	}
+	&.small-arrow-white {
+		@include sprite-LicensedVideoSwap('small_arrow_white',$width,$height);
+	}
 	&.white-small-arrow {
 		@include sprite-LicensedVideoSwap('white_small_arrow',$width,$height);
 	}
 }
 @mixin sprite-LicensedVideoSwap-deep-embed($width: 0,$height: 0) {
 	@include sprite-LicensedVideoSwap-base-embed;
+	&.big-arrow-black {
+		@include sprite-LicensedVideoSwap-embed('big_arrow_black',$width,$height);
+	}
+	&.big-arrow-white {
+		@include sprite-LicensedVideoSwap-embed('big_arrow_white',$width,$height);
+	}
 	&.big-black-arrow {
 		@include sprite-LicensedVideoSwap-embed('big_black_arrow',$width,$height);
 	}
@@ -138,6 +304,30 @@
 	}
 	&.black-small-arrow {
 		@include sprite-LicensedVideoSwap-embed('black_small_arrow',$width,$height);
+	}
+	&.collaboration-icon-black {
+		@include sprite-LicensedVideoSwap-embed('collaboration_icon_black',$width,$height);
+	}
+	&.collaboration-icon-white {
+		@include sprite-LicensedVideoSwap-embed('collaboration_icon_white',$width,$height);
+	}
+	&.high-quality-icon-black {
+		@include sprite-LicensedVideoSwap-embed('high_quality_icon_black',$width,$height);
+	}
+	&.high-quality-icon-white {
+		@include sprite-LicensedVideoSwap-embed('high_quality_icon_white',$width,$height);
+	}
+	&.license-icon-black {
+		@include sprite-LicensedVideoSwap-embed('license_icon_black',$width,$height);
+	}
+	&.license-icon-white {
+		@include sprite-LicensedVideoSwap-embed('license_icon_white',$width,$height);
+	}
+	&.small-arrow-black {
+		@include sprite-LicensedVideoSwap-embed('small_arrow_black',$width,$height);
+	}
+	&.small-arrow-white {
+		@include sprite-LicensedVideoSwap-embed('small_arrow_white',$width,$height);
 	}
 	&.white-small-arrow {
 		@include sprite-LicensedVideoSwap-embed('white_small_arrow',$width,$height);

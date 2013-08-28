@@ -45,6 +45,15 @@ class SkinWikiaApp extends WikiaSkin {
 	function initPage( OutputPage $out ) {
 		global $wgRequest, $wgCookiePrefix;
 
+		$out->prependHTML(
+			'<a style="width:100%;" href="https://play.google.com/store/apps/details?id=com.wikia.app.GameGuides&amp;referrer=utm_source%3Dwikia%26utm_medium%3Dwikiaapp"><img style="width:100%;height:auto;" src="/extensions/wikia/GameGuides/images/GG_MobileAd_320x50.jpg"></a><br>
+			<a href="?useskin=wikiamobile">This skin is being deprecated please use WikiaMobile</a>'
+		);
+
+		//We want to log any usage of this skin
+		//This WILL be removed after about 2 weeks
+		Wikia::log('SkinWikiaApp', 'visit', '', true);
+
 		//this will force the skin after the first visit, only for selected mobile platforms
 		if( empty( $_COOKIE[ $wgCookiePrefix . self::COOKIE_NAME ] ) ) {	
 			$mobServ = MobileService::getInstance();

@@ -481,6 +481,27 @@ $form-negative-side-padding: $form-side-padding*-1;
 	}
 }
 
+//category module
+.category-articles {
+	overflow: hidden;
+	margin: 10px 0 0 10px;
+	.category-article {
+		margin: 5px 0 5px 0;
+		min-height: 50px;
+	}
+	.category-articles-thumb {
+		float: left;
+		overflow: hidden;
+		width: 50px;
+		height: 50px;
+	}
+	.category-articles-text {
+		overflow: hidden;
+		padding: 0 0 0 10px;
+		white-space: normal;
+	}
+}
+
 // Search ads
 // TODO: needs refactoring
 .WikiaSearchAds {

@@ -19,7 +19,8 @@ define('smartbanner', ['wikia.window', 'wikia.cookies', 'wikia.utils', 'track'],
 		},
 		hide = function(){
 			html.className = html.className.replace(' sb-shown', '');
-		};
+		},
+		link;
 
 	return function(options) {
 		var meta,
@@ -40,13 +41,19 @@ define('smartbanner', ['wikia.window', 'wikia.cookies', 'wikia.utils', 'track'],
 
 			options = util.extend(defaults, options);
 
+			if(type == 'android'){
+				link = 'https://play.google.com/store/apps/details?id=' + appId + '&referrer=utm_source%3Dwikia%26utm_medium%3Dsmartbanner%26utm_term%3D' + window.wgDBname;
+			}else{
+				link = 'https://itunes.apple.com/' + options.appStoreLanguage + '/app/id' + appId;
+			}
+
 			document.body.insertAdjacentHTML('afterbegin', Mustache.render(options.template, {
 				type: type,
 				title: options.title || '',
 				author: options.author || '',
 				inStore: options.price ? options.price.toUpperCase() + ' - ' + (type == 'android' ? options.inGooglePlay : options.inAppStore) : '',
 				gloss: options.iconGloss === null ? type == 'ios' : options.iconGloss,
-				link: (options.url ? options.url : (type == 'android' ? 'market://details?id=' : ('https://itunes.apple.com/' + window.wgUserLanguage + '/app/id')) + appId),
+				link: (options.url ? options.url : link),
 				button: options.button || 'VIEW',
 				icon: options.icon
 			}));
