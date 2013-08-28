@@ -145,6 +145,7 @@ $messages['qqq'] = array(
 	'phalanx-label-expiry' => '{{Identical|Expiry}}',
 	'phalanx-label-type' => '{{Identical|Type}}',
 	'phalanx-label-lang' => '{{Identical|Language}}',
+	'phalanx-format-text' => '{{Identical|Plain text}}',
 	'phalanx-format-regex' => '{{Identical|Regex}}',
 	'phalanx-test-submit' => '{{Identical|Test}}',
 	'phalanx-link-unblock' => '{{Identical|Unblock}}',
@@ -326,6 +327,7 @@ $messages['ce'] = array(
 	'phalanx-label-lang' => 'Мотт:',
 	'phalanx-stats-table-expire' => 'Чекхйолу',
 	'phalanx-stats-table-language' => 'Мотт',
+	'phalanx-rule-log-details' => 'Литтар: "$1", тайп: "$2", бахьна: "$3"',
 );
 
 /** Czech (česky)
@@ -2120,6 +2122,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
  * @author SandroHc
  */
 $messages['pt'] = array(
@@ -2157,7 +2160,7 @@ $messages['pt'] = array(
 	'phalanx-modify-failure' => 'Ocorreu um erro durante a modificação do bloqueio',
 	'phalanx-modify-warning' => 'Está a editar o bloqueio com o ID Nº $1.
 Clicar "{{int:phalanx-add-block}}" grava as suas alterações!',
-	'phalanx-test-description' => 'Texto fornecido pelo teste contra bloqueios actuais.',
+	'phalanx-test-description' => 'Texto fornecido pelo teste contra bloqueios atuais.',
 	'phalanx-test-submit' => 'Testar',
 	'phalanx-test-results-legend' => 'Resultados do teste',
 	'phalanx-display-row-blocks' => 'bloqueios: $1',
@@ -2183,19 +2186,19 @@ Nota: só funciona nas wikis de Perguntas e Respostas.',
 Não impede a criação dessas páginas.
 
 Nota: só funciona nas wikis de Perguntas e Respostas.',
-	'phalanx-user-block-reason-ip' => 'O seu endereço IP está impedido de editar as wikis da Wikia, devido a actividades de vandalismo ou perturbação originadas por si ou por outra pessoa que partilha o seu endereço IP actual.
-Se acredita que este bloqueio foi feito em erro [[Special:Contact|contacte a Wikia]], por favor.',
-	'phalanx-user-block-reason-exact' => 'Este utilizador ou endereço IP está impedido de editar as wikis da Wikia, devido a actividades de vandalismo ou outras formas de perturbação.
-Se acredita que este bloqueio foi feito em erro [[Special:Contact|contacte a Wikia]], por favor.',
-	'phalanx-user-block-reason-similar' => 'Este nome de utilizador está impedido de editar as wikis da Wikia, devido a actividades de vandalismo ou outras formas de perturbação exercidas por outro utilizador com um nome semelhante.
-[[Special:Contact|Contacte a Wikia]] acerca deste problema, por favor.',
+	'phalanx-user-block-reason-ip' => 'O seu endereço IP está impedido de editar as wikis da Wikia, devido a atividades de vandalismo ou perturbação originadas por si ou por outra pessoa que partilha o seu endereço IP atual.
+Se acredita que este bloqueio foi feito em erro [[Special:Contact|contate a Wikia]], por favor.',
+	'phalanx-user-block-reason-exact' => 'Este utilizador ou endereço IP está impedido de editar as wikis da Wikia, devido a atividades de vandalismo ou outras formas de perturbação.
+Se acredita que este bloqueio foi feito em erro [[Special:Contact|contate a Wikia]], por favor.',
+	'phalanx-user-block-reason-similar' => 'Este nome de utilizador está impedido de editar as wikis da Wikia, devido a atividades de vandalismo ou outras formas de perturbação exercidas por outro utilizador com um nome semelhante.
+[[Special:Contact|Contate a Wikia]] acerca deste problema, por favor.',
 	'phalanx-user-block-new-account' => 'O nome de utilizador não está disponível para registo. Escolha outro, por favor.',
-	'phalanx-user-block-withreason-ip' => 'Este endereço IP está impedido de editar as wikis da Wikia, devido a actividades de vandalismo ou outra forma de perturbação conduzidas por si ou por outra pessoa que partilha o seu endereço IP actual.
-Se acredita que este bloqueio foi feito em erro, [[Special:Contact|contacte a Wikia]], por favor.<br />O autor do bloqueio apresentou também este motivo adicional: $1.',
-	'phalanx-user-block-withreason-exact' => 'Este nome de utilizador ou endereço IP estão impedidos de editar as wikis da Wikia, devido a actividades de vandalismo ou outra forma de perturbação.
-Se acredita que este bloqueio foi feito em erro [[Special:Contact|contacte a Wikia]], por favor.<br />O autor do bloqueio apresentou também este motivo adicional: $1.',
-	'phalanx-user-block-withreason-similar' => 'Este nome de utilizador está impedido de editar as wikis da Wikia, devido a actividades de vandalismo ou outras formas de perturbação exercidas por outro utilizador com um nome semelhante.
-[[Special:Contact|Contacte a Wikia]] acerca deste problema, por favor.<br />O autor do bloqueio apresentou também este motivo adicional: $1.',
+	'phalanx-user-block-withreason-ip' => 'Este endereço IP está impedido de editar as wikis da Wikia, devido a atividades de vandalismo ou outra forma de perturbação conduzidas por si ou por outra pessoa que partilha o seu endereço IP atual.
+Se acredita que este bloqueio foi feito em erro, [[Special:Contact|contate a Wikia]], por favor.<br />O autor do bloqueio apresentou também este motivo adicional: $1.',
+	'phalanx-user-block-withreason-exact' => 'Este nome de utilizador ou endereço IP estão impedidos de editar as wikis da Wikia, devido a atividades de vandalismo ou outra forma de perturbação.
+Se acredita que este bloqueio foi feito em erro [[Special:Contact|contate a Wikia]], por favor.<br />O autor do bloqueio apresentou também este motivo adicional: $1.',
+	'phalanx-user-block-withreason-similar' => 'Este nome de utilizador está impedido de editar as wikis da Wikia, devido a atividades de vandalismo ou outras formas de perturbação exercidas por outro utilizador com um nome semelhante.
+[[Special:Contact|Contate a Wikia]] acerca deste problema, por favor.<br />O autor do bloqueio apresentou também este motivo adicional: $1.',
 	'phalanx-title-move-summary' => 'O motivo que introduziu continha uma frase bloqueada.',
 	'phalanx-content-spam-summary' => 'O texto foi encontrado no resumo da página.',
 	'phalanx-stats-title' => 'Estatísticas do Phalanx',
@@ -2282,9 +2285,16 @@ $messages['pt-br'] = array(
 $messages['roa-tara'] = array(
 	'phalanx' => 'Falange',
 	'phalanx-title' => "Falange - Meccanisme de Difese Indegrate condre a 'u Spam",
+	'phalanx-type-content' => "condenute d'a pàgene",
+	'phalanx-type-summary' => "riepiloghe d'a pàgene",
 	'phalanx-type-title' => "Titole d'a pàgene",
 	'phalanx-type-user' => 'utende',
 	'phalanx-type-user-email' => 'e-mail',
+	'phalanx-type-answers-question-title' => "titole d'a domande",
+	'phalanx-type-answers-recent-questions' => 'domande recende',
+	'phalanx-type-wiki-creation' => "ccrejazione d'a uicchi",
+	'phalanx-add-block' => "Appliche 'u blocche",
+	'phalanx-edit-block' => "Reggìstre 'u blocche",
 	'phalanx-label-filter' => 'Filtre:',
 	'phalanx-label-reason' => 'Mutive:',
 	'phalanx-label-expiry' => 'Scadenze:',
@@ -2292,6 +2302,7 @@ $messages['roa-tara'] = array(
 	'phalanx-label-lang' => 'Lènghe:',
 	'phalanx-view-type' => 'Tipe de blocche...',
 	'phalanx-test-submit' => 'Test',
+	'phalanx-stats-table-type' => 'Tipe',
 );
 
 /** Russian (русский)

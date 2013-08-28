@@ -73,7 +73,7 @@ var LightboxLoader = {
 					parent,
 					isVideo;
 
-				if( $this.hasClass('link-internal') || $this.hasClass('link-external') || $thumb.attr('data-shared-help') ) {
+				if( $this.hasClass('link-internal') || $this.hasClass('link-external') || $thumb.attr('data-shared-help') || $this.hasClass( 'no-lightbox' ) ) {
 					return;
 				}
 
@@ -306,7 +306,7 @@ var LightboxLoader = {
 	handleOldDom: function(type) {
 		if(LightboxLoader.isOldDom === null) {
 			$().log("Send old DOM tracking", "Lightbox");
-			LightboxTracker.track(Wikia.Tracker.ACTIONS.VIEW, 'old-dom', type, null, 'ga');
+			LightboxTracker.track(Wikia.Tracker.ACTIONS.VIEW, 'old-dom', type, null, 'internal');
 		}
 		LightboxLoader.isOldDom = true;
 	}

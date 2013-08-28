@@ -89,8 +89,9 @@ class ArticleCommentsController extends WikiaController {
 			$title = $this->wg->title;
 		}
 
-		// If articleId is invalid, don't trigger a fatal error, just return nothing.
+		// If articleId is invalid, don't trigger a fatal error, just throw a 404 and return nothing.
 		if ( $title === null ) {
+			$this->response->setCode( 404 );
 			$this->skipRendering();
 			wfProfileOut( __METHOD__ );
 			return;

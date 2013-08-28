@@ -1,12 +1,16 @@
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/forms";
-@import "../../../../skins/oasis/css/mixins/wordmark";
-@import "../../../../skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/forms";
+@import "skins/oasis/css/mixins/wordmark";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/layout";
 @import "../mixins/submitpane";
 @import "../mixins/divider";
 
 .WikiaSignup {
 	margin: 50px 25px 50px 15px;
+
+	text-align: justify;
+
 	>.pageheading {
 		border: 0;
 		font-size: 32px;
@@ -18,8 +22,19 @@
 		font-weight: normal;
 		margin: 0;
 	}
+	>div {
+		display: inline-block;
+		text-align: left;
+		vertical-align: top;
+	}
+	&:after {
+		content: '';
+		width: 100%;
+		display: inline-block;
+		font-size: 0;
+		line-height: 0;
+	}
 	.wiki-info {
-		float: left;
 		width: 250px;
 		p {
 			margin: 30px 0;
@@ -30,7 +45,6 @@
 		}
 	}
 	.marketing {
-		float: right;
 		width: 250px;
 		.benefit {
 			@include clearfix;
@@ -82,7 +96,20 @@
 			line-height: 16px;
 			margin-left: 80px;
 		}
+
+		@if ( $responsive-layout-enabled ) {
+			@media screen and (max-width: 910px) {
+				width: 100%;
+				margin-top: 35px;
+				.benefit {
+					float: left;
+					width: 33%;
+				}
+			}
+		}
+
 	}
+
 	.form-container {
 		margin: 0 auto;
 		width: 270px;
@@ -119,6 +146,19 @@
 		.submit-pane {
 			@include submitpane;
 		}
+
+		@if ( $responsive-layout-enabled ) {
+			@media screen and (max-width: 910px) {
+				width: 52%;
+				padding-left: 2%;
+				form {
+					width: 270px;
+				}
+				.sso-login {
+					margin: 0;
+				}
+			}
+		}
 	}
 	.wordmark {
 		@include wordmark;
@@ -137,4 +177,8 @@
 
 .modalWrapper.WikiaArticle {
 	position: absolute;
+}
+
+.WikiaMainContent {
+	float: none;
 }

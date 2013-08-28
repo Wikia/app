@@ -342,7 +342,7 @@ $messages['lv'] = array(
 $messages['mk'] = array(
 	'unsubscribe' => 'Отпиши',
 	'unsubscribe-badaccess' => 'Нажалост, оваа страница не може да се користи директно. Стиснете на врската наведена во пораката што ви ја испративме по е-пошта.',
-	'unsubscribe-badtoken' => 'Нажалост, се појави проблем со безбедносниот жетон.',
+	'unsubscribe-badtoken' => 'Нажалост, се појави проблем со безбедносната шифра.',
 	'unsubscribe-bademail' => 'Нажалост, се појави проблем со е-поштата.',
 	'unsubscribe-badtime' => 'Нажалост, врската истече. Врската не треба да е постара од 7 дена.',
 	'unsubscribe-nousers' => 'Не пронајдов корисници со таа е-поштенска адреса.',
@@ -489,10 +489,11 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
  */
 $messages['pt'] = array(
 	'unsubscribe' => 'Anular subscrição',
-	'unsubscribe-badaccess' => 'Esta página não pode ser usada directamente. Siga o link no seu correio electrónico, por favor.',
+	'unsubscribe-badaccess' => 'Esta página não pode ser usada diretamente. Siga o link no seu correio eletrónico, por favor.',
 	'unsubscribe-badtoken' => 'Desculpe, ocorreu um problema com a chave de segurança.',
 	'unsubscribe-bademail' => 'Desculpe, ocorreu um problema com o correio electrónico.',
 	'unsubscribe-badtime' => 'Desculpe, o link expirou. Use um link criado há menos de 7 dias, por favor.',

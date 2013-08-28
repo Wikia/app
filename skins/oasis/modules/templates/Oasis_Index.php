@@ -37,7 +37,7 @@
 <? endif ?>
 
 <? // 1% of JavaScript errors are logged for $wgEnableJSerrorLogging=true non-devbox wikis ?>
-<? if ( $wg->EnableJavaScriptErrorLogging && !$wg->DevelEnvironment ): ?>
+<? if ( ($wg->IsGASpecialWiki || $wg->EnableJavaScriptErrorLogging) && !$wg->DevelEnvironment ): ?>
 <script>
 window.onerror=function(m,u,l){
 var q='//jserrorslog.wikia.com/',i=new Image();

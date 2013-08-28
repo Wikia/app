@@ -773,6 +773,8 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'create-blog-preview' => 'Хьалха муха ю хьажар',
+	'create-blog-listing-preview' => 'Хьалха муха ю хьажа',
 	'blog-refresh-label' => 'Карлаяккха',
 );
 
@@ -2539,6 +2541,7 @@ $messages['kn'] = array(
  * @author Cafeinlove
  * @author Cwt96
  * @author 아라
+ * @author 한글화담당
  */
 $messages['ko'] = array(
 	'createblogpage' => '블로그 만들기',
@@ -2548,8 +2551,8 @@ $messages['ko'] = array(
 	'create-blog-form-title' => '블로그 게시물이 무엇입니까?',
 	'create-blog-form-post-title' => '블로그 게시물 제목',
 	'blog-defaulttitle' => '블로그',
-	'blog-added' => '추가했',
-	'blog-edited' => '편집했',
+	'blog-added' => '추가됨',
+	'blog-edited' => '편집됨',
 	'blog-page' => '블로그',
 	'blog-comment-post' => '덧글 남기기',
 	'blog-comments' => '덧글',
@@ -3757,7 +3760,7 @@ $messages['pt'] = array(
 	'create-blog-preview' => 'Mostrar antevisão',
 	'create-blog-updated' => 'A entrada foi criada ou atualizada.',
 	'create-blog-permission-denied' => 'Erro ao gravar a página de blogue: Permissão negada',
-	'create-blog-article-already-exists' => 'Já existe uma entrada com esse nome. Seleccione um nome diferente, por favor.',
+	'create-blog-article-already-exists' => 'Já existe uma entrada com esse nome. Selecione um nome diferente, por favor.',
 	'create-blog-listing-title' => 'Crie uma página nova de listagem de blogues',
 	'create-blog-listing-form-title' => 'O que é uma página de listagem de blogues?',
 	'create-blog-listing-form-info' => 'As páginas de listagem de blogues são usadas para agregar listagens de blogues de vários autores numa única página.

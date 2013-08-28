@@ -22,4 +22,3 @@ $wgAutoloadClasses['JSSnippets'] =  $dir . '/JSSnippets.class.php';
 $wgHooks['EditPageLayoutModifyPreview'][] = 'JSSnippets::onEditPageLayoutModifyPreview';
 $wgHooks['WikiaSkinTopScripts'][] = 'JSSnippets::onMakeGlobalVariablesScript';
 $wgHooks['SkinAfterBottomScripts'][] = 'JSSnippets::onSkinAfterBottomScripts';
-

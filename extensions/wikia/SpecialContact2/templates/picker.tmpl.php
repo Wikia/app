@@ -1,5 +1,5 @@
 <!-- s:<?= __FILE__ ?> -->
-<div style="width:675px;">
+<div class="special-contact-picker">
 <?php print $head ?>
 <br/>
 <?php if( !empty( $local ) ) {

@@ -6,94 +6,101 @@
 class IvaFeedIngester extends VideoFeedIngester {
 	protected static $API_WRAPPER = 'IvaApiWrapper';
 	protected static $PROVIDER = 'iva';
-	protected static $FEED_URL = 'http://api.internetvideoarchive.com/1.0/DataService/VideoAssets?$top=$1&$skip=$2&$filter=$3&$expand=$4&$format=json&developerid=$5';
+	protected static $FEED_URL = 'http://api.internetvideoarchive.com/1.0/DataService/EntertainmentPrograms?$top=$1&$skip=$2&$filter=$3&$expand=$4&$format=json&developerid=$5';
 	protected static $ASSET_URL = 'http://www.videodetective.net/video.mp4?cmd=6&fmt=4&customerid=$1&videokbrate=750&publishedid=$2&e=$3';
 
 	private static $VIDEO_SETS = array(
-		'Wiggles',
-		'Futurama',
-		'Winnie the Pooh',
-		'Hey Arnold',
-		'Huntik',
-		'Rugrats',
-		'Digimon',
-		'Power Rangers',
-		'South Park ',
-		'Alvin and the Chipmunks',
-		'Animaniacs',
-		'Kamen Rider',
-		'Bakugan',
-		'Full Metal Alchemist',
-		'Teen Titans',
-		'True Blood',
-		'iCarly',
-		'Dexter',
-		'X-Files',
-		'Xiaolin',
-		'Blues Clues',
-		'Naruto',
-		'Yu-Gi-Oh!',
-		'Walking Dead',
-		'Dragon Ball',
-		'Bleach',
-		'Glee',
-		'My Little Pony',
-		'Vampire Diaries',
-		'Game of Thrones',
-		'Doctor Who',
-		'Gundam',
-		'Degrassi',
-		'The Simpsons',
-		'Thomas the Tank Engine',
-		'Young Justice',
-		'Batman',
-		'Spongebob',
-		'Spartacus',
-		'Family Guy',
-		'How I Met Your Mother',
-		'Stargate',
-		'Smallville',
-		'Big Bang Theory',
-		'Breaking Bad',
-		'Buffy',
-		'Criminal Minds',
-		'Survivor',
-		'American Dad',
-		'Archer',
-		'Dance Moms',
-		'Merlin',
-		'Grimm',
-		'Sons of Anarchy',
-		'Saint Seiya',
-		'NCIS',
-		'Being Human',
-		'American Horror Story',
-		'Law and Order',
-		'Person of Interest',
-		'Sailor Moon',
-		'The Mentalist',
-		'YuYu Hakusho',
-		'Justified',
-		'The Office',
-		'CSI',
-		'Prison Break',
-		'Suits',
-		'The Cleveland Show',
-		'White Collar',
-		'H2O: Just Add Water',
-		'Fringe',
-		'Looney Tunes',
-		'SMASH',
-		'Amazing Race',
-		'Glee Project',
-		'Veggie Tales',
-		'The Following',
-		'Twilight',
-		'Hunger Games',
+		'Wiggles' => array( 'Wiggles' ),
+		'Futurama' => array( 'Futurama' ),
+		'Winnie the Pooh' => array( 'Winnie the Pooh' ),
+		'Huntik' => array( 'Huntik' ),
+		'Rugrats' => array( 'Rugrats' ),
+		'Digimon' => array( 'Digimon' ),
+		'Power Rangers' => array( 'Power Rangers' ),
+		'South Park' => array( 'South Park' ),
+		'Alvin and the Chipmunks' => array( 'Alvin and the Chipmunks' ),
+		'Animaniacs' => array( 'Animaniacs' ),
+		'Kamen Rider' => array( 'Kamen Rider' ),
+		'Bakugan' => array( 'Bakugan' ),
+		'Lost' => array ( 1307 ),
+		'Full Metal Alchemist' => array( 'Full Metal Alchemist' ),
+		'Teen Titans' => array( 'Teen Titans' ),
+		'True Blood' => array( 'True Blood' ),
+		'iCarly' => array( 'iCarly' ),
+		'Dexter' => array( 'Dexter' ),
+		'Arthur' => array ( 266094, 60437, 664249, 495354, 15190, 490750, 897802, 897802, 866981 ),
+		'X-Files' => array( 'X-Files' ),
+		'Xiaolin' => array( 'Xiaolin' ),
+		'Blues Clues' => array( 'Blues Clues' ),
+		'Naruto' => array( 'Naruto' ),
+		'Yu-Gi-Oh!' => array( 'Yu-Gi-Oh!' ),
+		'Walking Dead' => array( 'Walking Dead' ),
+		'Dragon Ball' => array( 'Dragon Ball' ),
+		'Bleach' => array( 604483, 611394, 20912, 189824 ),
+		'Glee' => array( 'Glee' ),
+		'My Little Pony' => array( 'My Little Pony' ),
+		'Vampire Diaries' => array( 'Vampire Diaries' ),
+		'Game of Thrones' => array( 'Game of Thrones', 785881, 722311 ),
+		'Doctor Who' => array( 'Doctor Who' ),
+		'Gundam' => array( 'Gundam' ),
+		'Degrassi' => array( 'Degrassi' ),
+		'The Simpsons' => array( 'Simpsons' ),
+		'Thomas the Tank Engine' => array( 'Thomas the Tank Engine' ),
+		'Young Justice' => array( 'Young Justice' ),
+		'Batman' => array( 'Batman' ),
+		'Spongebob' => array( 'Spongebob' ),
+		'Spartacus' => array( 'Spartacus' ),
+		'Family Guy' => array( 'Family Guy' ),
+		'How I Met Your Mother' => array( 'How I Met Your Mother' ),
+		'Stargate' => array( 'Stargate' ),
+		'Smallville' => array( 'Smallville' ),
+		'Big Bang Theory' => array( 'Big Bang Theory' ),
+		'Breaking Bad' => array( 'Breaking Bad' ),
+		'Buffy' => array( 'Buffy' ),
+		'Criminal Minds' => array( 'Criminal Minds' ),
+		'Survivor' => array( 'Survivor' ),
+		'American Dad' => array( 'American Dad' ),
+		'Archer' => array( 457165 ),
+		'Dance Moms' => array( 'Dance Moms' ),
+		'Merlin' => array( 665766 ),
+		'Grimm' => array( 'Grimm' ),
+		'24' => array( 665302 ),
+		'Sons of Anarchy' => array( 'Sons of Anarchy' ),
+		'Saint Seiya' => array( 'Saint Seiya' ),
+		'Bones' => array( 156185 ),
+		'NCIS' => array( 'NCIS' ),
+		'Being Human' => array( 'Being Human' ),
+		'American Horror Story' => array( 'American Horror Story' ),
+		'Law and Order' => array( 'Law and Order' ),
+		'Person of Interest' => array( 'Person of Interest' ),
+		'Sailor Moon' => array( 'Sailor Moon' ),
+		'The Mentalist' => array( 172291 ),
+		'Friends' => array( 55503 ),
+		'YuYu Hakusho' => array( 'YuYu Hakusho' ),
+		'House' => array( 422384 ),
+		'Revenge' => array( 618690 ),
+		'Justified' => array( 877316 ),
+		'The Office' => array( 558636, 946809 ),
+		'CSI' => array( 'CSI' ),
+		'Prison Break' => array( 'Prison Break' ),
+		'Suits' => array( 976703 ),
+		'The Cleveland Show' => array( 'Cleveland Show' ),
+		'White Collar' => array( 'White Collar' ),
+		'H2O: Just Add Water' => array( 'H2O: Just Add Water' ),
+		'Fringe' => array( 459388 ),
+		'Misfits' => array( 828965 ),
+		'Looney Tunes' => array( 'Looney Tunes' ),
+		'Psych' => array( 839810 ),
+		'SMASH' => array( 229948 ),
+		'Avengers' => array( 7627, 225128, 102346 ),
+		'Amazing Race' => array( 'Amazing Race' ),
+		'Glee Project' => array( 'Glee Project' ),
+		'Veggie Tales' => array( 'Veggie Tales' ),
+		'The Following' => array( 828411 ),
+		'Twilight' => array( 980633, 924807, 15097, 151421, 149755 ),
+		'Hunger Games' => array( 'Hunger Games' ),
 	);
 
-	// These are for a Series, TV Show, Season and Episode
-	private static $TV_MEDIA_IDS = array( 24, 25, 26, 27 );
 	private static $EXCLUDE_MEDIA_IDS = array( 3, 12, 14, 15, 33, 36 );	// exclude song types
 
 	const API_PAGE_SIZE = 100;
@@ -121,47 +128,22 @@ class IvaFeedIngester extends VideoFeedIngester {
 		$articlesCreated = 0;
 
 		// Ingest any content from the defined video sets above
-		foreach( self::$VIDEO_SETS as $videoSet ) {
-			$page = 0;
-			do {
-				// Get the URL that selects specific video sets based on title matches
-				$url = $this->makeSetFeedURL( $videoSet, $startDate, $endDate, $page++ );
+		foreach( self::$VIDEO_SETS as $keyword => $videoSet ) {
+			$videoParams['keyword'] = $keyword;
 
-				// Try to ingest the videos from this URL
-				$result = $this->ingestVideoURL( $url, $createParams, $videoSet );
+			foreach( $videoSet as $value ) {
+				$videoParams['videoSet'] = $value;
+				$videoParams['isPublishedId'] = ( is_numeric( $value ) );
 
-				// If we get back 'false' (different than zero) then we've hit an error
+				$result = $this->ingestVideos( $createParams, $startDate, $endDate, $videoParams );
 				if ( $result === false ) {
 					wfProfileOut( __METHOD__ );
 					return 0;
 				}
 
-				$articlesCreated += $result['created'];
-			} while ( $result['found'] == self::API_PAGE_SIZE );
-		}
-
-		/* 2013-07-16 : VideoSprint28 : VID-536
-		   Content didn't really want all TV content
-		   Delete these lines on or after VideoSprint30 in case they change their minds
-
-		// Ingest ALL TV content
-		$page = 0;
-		do {
-			// Get the URL that selects video in any of the TV categories
-			$url = $this->makeTVFeedURL( $startDate, $endDate, $page++ );
-
-			// Try to ingest the videos from this URL
-			$numVideos = $this->ingestVideoURL( $url, $createParams, 'TV' );
-
-			// If we get back 'false' (different than zero) then we've hit an error
-			if ( $numVideos === false ) {
-				wfProfileOut( __METHOD__ );
-				return 0;
+				$articlesCreated += $result;
 			}
-
-			$articlesCreated += $result['created'];
-		} while ( $numVideos == self::API_PAGE_SIZE );
-		*/
+		}
 
 		wfProfileOut( __METHOD__ );
 
@@ -169,48 +151,241 @@ class IvaFeedIngester extends VideoFeedIngester {
 	}
 
 	/**
-	 * Create the feed URL for a specific $videoSet (basically a match on title
-	 * @param $videoSet - A substring that should match part of the video title
-	 * @param $startDate - Unixtime for beginning of modified-on date range
-	 * @param $endDate - Unixtime for ending of modified-on date range
-	 * @param $page - The page of results to fetch
-	 * @return string - A feed URL
+	 * ingest videos
+	 * @param array $createParams
+	 * @param integer $startDate - Unixtime for beginning of modified-on date range
+	 * @param integer $endDate - Unixtime for ending of modified-on date range
+	 * @param array $videoParams
+	 * @return integer|false $articlesCreated - number of articles created or false
 	 */
-	private function makeSetFeedURL( $videoSet, $startDate, $endDate, $page ) {
-		$filter = "(DateModified gt datetime'$startDate') " .
-			"and (DateModified le datetime'$endDate') ".
-			"and (substringof('$videoSet', Title) eq true)";
+	private function ingestVideos( $createParams, $startDate, $endDate, $videoParams ) {
+		wfProfileIn( __METHOD__ );
 
-		foreach ( self::$EXCLUDE_MEDIA_IDS as $id ) {
-			$filter .= " and (MediaId ne $id) ";
-		}
+		$page = 0;
+		$articlesCreated = 0;
 
-		return $this->initFeedUrl( $filter, $page );
+		do {
+			// Get the URL that selects specific video sets based on title matches
+			$url = $this->makeSetFeedURL( $videoParams, $startDate, $endDate, $page++ );
+
+			// Retrieve the video data from IVA
+			$programs = $this->requestData( $url );
+			if ( $programs === false ) {
+				wfProfileOut( __METHOD__ );
+				return false;
+			}
+
+			$numPrograms = count( $programs );
+			print( "Found $numPrograms Entertainment Programs...\n" );
+
+			foreach( $programs as $program ) {
+				$clipData = array();
+
+				$program['title'] = empty( $program['DisplayTitle'] ) ? trim( $program['Title'] ) : trim( $program['DisplayTitle'] );
+				$program['title'] = $this->updateTitle( $program['title'] );
+
+				// get series
+				$clipData['series'] = empty( $videoParams['series'] ) ? $program['title'] : $videoParams['series'];
+
+				if ( isset( $program['OkToEncodeAndServe'] ) && $program['OkToEncodeAndServe'] == false ) {
+					print "Skip: {$clipData['series']} (Publishedid:{$program['Publishedid']}) has OkToEncodeAndServe set to false.\n";
+					continue;
+				}
+
+				// get season
+				$clipData['season'] = empty( $videoParams['season'] ) ? '' : $videoParams['season'];
+				if ( empty( $clipData['season'] ) && $program['MediaId'] == 26 ) {	// media type = season (26)
+					 $clipData['season'] = $program['title'];
+				}
+
+				// get episode
+				$clipData['episode'] = empty( $videoParams['episode'] ) ? '' : $videoParams['episode'];
+				if ( empty( $clipData['episode'] ) && $program['MediaId'] == 27 ) {	// media type = episode (27)
+					 $clipData['episode'] = $program['title'];
+				}
+
+				$clipData['tags'] = trim( $program['Tagline'] );
+
+				$clipData['industryRating'] = '';
+				if ( !empty( $program['MovieMpaa']['Rating'] ) ) {
+					$clipData['industryRating'] = $this->getIndustryRating( $program['MovieMpaa']['Rating'] );
+				} else if ( !empty( $program['TvRating']['Rating'] ) ) {
+					$clipData['industryRating'] = $this->getIndustryRating( $program['TvRating']['Rating'] );
+				} else if ( !empty( $program['GameWarning']['Warning'] ) ) {
+					$clipData['industryRating'] = $this->getIndustryRating( $program['GameWarning']['Warning'] );
+				}
+
+				$clipData['ageRequired'] = $this->getAgeRequired( $clipData['industryRating'] );
+				$clipData['ageGate'] = empty( $clipData['ageRequired'] ) ? 0 : 1;
+
+				$clipData['genres'] = '';
+				if ( !empty( $program['MovieCategory']['Category'] ) ) {
+					$clipData['genres'] = $program['MovieCategory']['Category'];
+				} else if ( !empty( $program['TvCategory']['Category'] ) ) {
+					$clipData['genres'] = $program['TvCategory']['Category'];
+				} else if ( !empty( $program['GameCategory']['Category'] ) ) {
+					$clipData['genres'] = $program['GameCategory']['Category'];
+				}
+
+				$actors = array();
+				if ( !empty( $program['ProgramToPerformerMaps']['results'] ) ) {
+					foreach( $program['ProgramToPerformerMaps']['results'] as $performer ) {
+						$actors[] = trim( $performer['Performer']['FullName'] );
+					}
+				}
+				$clipData['actors'] = implode( ', ', $actors );
+
+				$videoAssets = $program['VideoAssets']['results'];
+				$numVideos = count( $videoAssets );
+				print( "{$program['title']} (Series:{$clipData['series']}): Found $numVideos videos...\n" );
+
+				// add video assets
+				foreach ( $videoAssets as $videoAsset ) {
+					$clipData['titleName'] = empty( $videoAsset['DisplayTitle'] ) ? trim( $videoAsset['Title'] ) : trim( $videoAsset['DisplayTitle'] );
+					$clipData['titleName'] = $this->updateTitle( $clipData['titleName'] );
+
+					// add episode name to title if the title contains 'clip' and number
+					// example:
+					// $clipData['episode'] = 'THE OFFICE: GARDEN PARTY'
+					// $clipData['titleName'] = 'THE OFFICE: CLIP 1'
+					// The new title will be 'THE OFFICE: GARDEN PARTY - CLIP 1'
+					if ( !empty( $clipData['episode'] ) && preg_match( '/^([^:]*:)(.* clip \d+.*)/i', $clipData['titleName'], $matches ) ) {
+						$titleName = $clipData['titleName'];
+
+						// if episode and title start with the same words (i.e. <series_name>:), remove the matched word from the title
+						if ( !empty( $matches[1] ) && !empty( $matches[2] ) && preg_match( '/^'.$matches[1].'.*/i', $clipData['episode'] ) ) {
+							$titleName = trim( $matches[2] );
+						}
+
+						$clipData['titleName'] = $clipData['episode'].' - '.$titleName;
+					}
+
+					$clipData['videoId'] = $videoAsset['Publishedid'];
+
+					if ( !empty( $videoAsset['ExpirationDate'] ) ) {
+						print "Skip: {$clipData['titleName']} (Id:{$clipData['videoId']}) has expiration date.\n";
+						continue;
+					}
+
+					$clipData['thumbnail'] = $videoAsset['VideoAssetScreenCapture']['URL'];
+					$clipData['duration'] = $videoAsset['StreamLengthinseconds'];
+
+					$clipData['published'] = '';
+					if ( preg_match('/Date\((\d+)\)/', $videoAsset['DateCreated'], $matches) ) {
+						$clipData['published'] = $matches[1]/1000;
+					}
+
+					$clipData['type'] = $this->getStdType( $videoAsset['MediaType']['Media'] );
+					$clipData['category'] = $this->getCategory( $clipData['type'] );
+					$clipData['description'] = trim( $videoAsset['Descriptions']['ItemDescription'] );
+					$clipData['hd'] = ( $videoAsset['HdSource'] == 'true' ) ? 1 : 0;
+					$clipData['provider'] = 'iva';
+
+					// get resolution
+					$clipData['resolution'] = '';
+					if ( !empty( $videoAsset['SourceWidth'] ) && $videoAsset['SourceWidth'] > 0
+						&& !empty( $videoAsset['SourceHeight'] ) && $videoAsset['SourceHeight'] > 0 ) {
+						$clipData['resolution'] = $videoAsset['SourceWidth'].'x'.$videoAsset['SourceHeight'];
+					}
+
+					// get language
+					if ( empty( $videoAsset['LanguageSpoken']['LanguageName'] ) ) {
+						$clipData['language'] = '';
+					} else {
+						$clipData['language'] = $videoAsset['LanguageSpoken']['LanguageName'];
+					}
+
+					// get subtitle
+					if ( empty( $videoAsset['LanguageSubtitled']['LanguageName'] ) ) {
+						$clipData['subtitle'] = '';
+					} else {
+						$clipData['subtitle'] = $videoAsset['LanguageSubtitled']['LanguageName'];
+					}
+
+					// get target country
+					if ( empty( $videoAsset['CountryTarget']['CountryName'] ) ) {
+						$clipData['targetCountry'] = '';
+					} else {
+						$clipData['targetCountry'] = $videoAsset['CountryTarget']['CountryName'];
+					}
+
+					$clipData['name'] = empty( $videoParams['keyword'] ) ? '' : $videoParams['keyword'];
+
+					// get keywords
+					$keywords = empty( $clipData['name'] ) ? array() : array( $clipData['name'] );
+					if ( !empty( $clipData['series'] ) ) {
+						$keywords[] = $clipData['series'];
+					}
+					if ( !empty( $clipData['category'] ) ) {
+						$keywords[] = $clipData['category'];
+					}
+					if ( !empty( $clipData['tags'] ) ) {
+						$keywords[] = $clipData['tags'];
+					}
+					$clipData['keywords'] = implode( ', ', $this->getUniqueArray( $keywords ) );
+
+					$msg = '';
+					$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
+					if ( $msg ) {
+						print "ERROR: $msg\n";
+					}
+				}
+
+				// get videos for series (24), season (26)
+				if ( !empty( $videoParams['isPublishedId'] )
+					&& ( $program['MediaId'] == 24 || $program['MediaId'] == 26 ) ) {
+					$params = $videoParams;
+					$params['series'] = $clipData['series'];
+					$params['season'] = $clipData['season'];
+					$params['episode'] = $clipData['episode'];
+					$params['videoSet'] = $program['Publishedid'];
+					$params['isPromotesPublishedId'] = true;
+
+					$result = $this->ingestVideos( $createParams, $startDate, $endDate, $params );
+					if ( $result === false ) {
+						wfProfileOut( __METHOD__ );
+						return false;
+					}
+
+					$articlesCreated += $result;
+				}
+			}
+		} while ( $numPrograms == self::API_PAGE_SIZE );
+
+		wfProfileOut( __METHOD__ );
+
+		return $articlesCreated;
 	}
 
 	/**
-	 * Craete the feed URL for TV resources
-	 * @param $startDate - Unixtime for beginning of modified-on date range
-	 * @param $endDate - Unixtime for ending of modified-on date range
-	 * @param $page - The page of results to fetch
+	 * Create the feed URL for a specific $videoSet
+	 * @param array $videoParams
+	 * @param integer $startDate - Unixtime for beginning of modified-on date range
+	 * @param integer $endDate - Unixtime for ending of modified-on date range
+	 * @param integer $page - The page of results to fetch
 	 * @return string - A feed URL
 	 */
-	private function makeTVFeedURL( $startDate, $endDate, $page ) {
+	private function makeSetFeedURL( $videoParams, $startDate, $endDate, $page ) {
+		$filter = "(DateModified gt datetime'$startDate') " .
+			"and (DateModified le datetime'$endDate') ";
 
-		// The example query shows this kind of nesting so just do it ...
-		// http://www.internetvideoarchive.com/IVA/support/documentation/data/iva-odata-api/example-queries
-		$matchTV = '';
-		foreach ( self::$TV_MEDIA_IDS as $id ) {
-			if ( empty($matchTV) ) {
-				$matchTV = "(MediaId eq $id)";
+		$videoSet = $videoParams['videoSet'];
+		// check if it is PromotesPublishedId
+		if ( empty( $videoParams['isPromotesPublishedId'] ) ) {
+			// check if $videoSet is publish id or keyword
+			if ( empty( $videoParams['isPublishedId'] ) ) {
+				$filter .= "and (substringof('$videoSet', Title) eq true) ";
 			} else {
-				$matchTV = "($matchTV or (MediaId eq $id))";
+				$filter .= "and (Publishedid eq $videoSet) ";
 			}
+		} else {
+			$filter .= "and (PromotesPublishedId eq $videoSet) ";
 		}
 
-		$filter = "(DateModified gt datetime'$startDate') " .
-			"and (DateModified le datetime'$endDate') ".
-			"and $matchTV";
+		// exclude song
+		foreach ( self::$EXCLUDE_MEDIA_IDS as $id ) {
+			$filter .= "and (MediaId ne $id) ";
+		}
 
 		return $this->initFeedUrl( $filter, $page );
 	}
@@ -227,156 +402,25 @@ class IvaFeedIngester extends VideoFeedIngester {
 		$url = str_replace( '$3', urlencode( $filter ), $url );
 
 		$expand = array(
-			'EntertainmentProgram',
-			'Descriptions',
-			'VideoAssetScreenCapture',
-			'MediaType',
-			'EntertainmentProgram/MovieMpaa',
-			'EntertainmentProgram/TvRating',
-			'EntertainmentProgram/MovieCategory',
-			'EntertainmentProgram/TvCategory',
-			'EntertainmentProgram/ProgramToPerformerMaps/Performer',
-			'LanguageSpoken',
-			'LanguageSubtitled',
-			'CountryTarget',
-			'EntertainmentProgram/GameWarning',
+			'VideoAssets',
+			'VideoAssets/Descriptions',
+			'VideoAssets/VideoAssetScreenCapture',
+			'VideoAssets/MediaType',
+			'MovieMpaa',
+			'TvRating',
+			'GameWarning',
+			'MovieCategory',
+			'TvCategory',
+			'ProgramToPerformerMaps/Performer',
+			'VideoAssets/LanguageSpoken',
+			'VideoAssets/LanguageSubtitled',
+			'VideoAssets/CountryTarget',
 		);
 
 		$url = str_replace( '$4', implode( ',', $expand ), $url );
 		$url = str_replace( '$5', F::app()->wg->IvaApiConfig['DeveloperId'], $url );
 
 		return $url;
-	}
-
-	/**
-	 * Given an IVA video asset URL, request the content and ingest all the videos returned
-	 * @param $url - The IVA URL to ingest video from
-	 * @param $createParams
-	 * @param $defaultKeyword
-	 * @return bool - True if the ingestion succeeded, false otherwise
-	 */
-	private function ingestVideoURL( $url, $createParams, $defaultKeyword = null ) {
-		wfProfileIn( __METHOD__ );
-
-		// include cldr extension for language, subtitle, target country
-		include( dirname( __FILE__ ).'/../../../cldr/CldrNames/CldrNamesEn.php' );
-
-		// Retrieve the video data from IVA
-		$videos = $this->requestData( $url );
-		if ( $videos === false ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		$numVideos = count( $videos );
-		print( "Found $numVideos videos...\n" );
-
-		$articlesCreated = 0;
-		foreach( $videos as $video ) {
-			$clipData = array();
-			$clipData['titleName'] =  empty( $video['DisplayTitle'] ) ? trim( $video['Title'] ) : trim( $video['DisplayTitle'] );
-			$clipData['videoId'] = $video['Publishedid'];
-
-			if ( !empty($video['ExpirationDate']) ) {
-				print "Skip: {$clipData['titleName']} (Id:{$clipData['videoId']}) has expiration date.\n";
-				continue;
-			}
-
-			if ( isset( $video['EntertainmentProgram']['OkToEncodeAndServe'] ) && $video['EntertainmentProgram']['OkToEncodeAndServe'] == false ) {
-				print "Skip: {$clipData['titleName']} (Id:{$clipData['videoId']}) has OkToEncodeAndServe set to false.\n";
-				continue;
-			}
-
-			$clipData['thumbnail'] = $video['VideoAssetScreenCapture']['URL'];
-			$clipData['duration'] = $video['StreamLengthinseconds'];
-
-			$clipData['published'] = '';
-			if ( preg_match('/Date\((\d+)\)/', $video['DateCreated'], $matches) ) {
-				$clipData['published'] = $matches[1]/1000;
-			}
-
-			$clipData['category'] = trim( $video['MediaType']['Media'] );
-			$clipData['description'] = trim( $video['Descriptions']['ItemDescription'] );
-			$clipData['hd'] = ( $video['HdSource'] == 'true' ) ? 1 : 0;
-			$clipData['tags'] = trim( $video['EntertainmentProgram']['Tagline'] );
-			$clipData['provider'] = 'iva';
-
-			$clipData['language'] = '';
-			$clipData['subtitle'] = '';
-			// $languageNames comes from cldr extension
-			if ( !empty( $languageNames ) ) {
-				// get language
-				if ( !empty( $video['LanguageSpoken']['LanguageName'] ) ) {
-					$lang = trim( $video['LanguageSpoken']['LanguageName'] );
-					$clipData['language'] =  array_search( $lang, $languageNames );
-				}
-
-				// get subtitle
-				if ( !empty( $video['LanguageSubtitled']['LanguageName'] ) ) {
-					$subtitle = trim( $video['LanguageSubtitled']['LanguageName'] );
-					$clipData['subtitle'] =  array_search( $subtitle, $languageNames );
-				}
-			}
-
-			$clipData['targetCountry'] = '';
-			// $countryNames comes from cldr extension
-			if ( !empty( $countryNames ) && !empty( $video['CountryTarget']['CountryName'] ) ) {
-				$targetCountry = trim( $video['CountryTarget']['CountryName'] );
-				$clipData['targetCountry'] =  array_search( $targetCountry, $countryNames );
-			}
-
-			$clipData['industryRating'] = '';
-			if ( !empty( $video['EntertainmentProgram']['MovieMpaa']['Rating'] ) ) {
-				$clipData['industryRating'] = $this->getIndustryRating( $video['EntertainmentProgram']['MovieMpaa']['Rating'] );
-			} else if ( !empty( $video['EntertainmentProgram']['TvRating']['Rating'] ) ) {
-				$clipData['industryRating'] = $this->getIndustryRating( $video['EntertainmentProgram']['TvRating']['Rating'] );
-			} else if ( !empty( $video['EntertainmentProgram']['GameWarning']['Warning'] ) ) {
-				$clipData['industryRating'] = $this->getIndustryRating( $video['EntertainmentProgram']['GameWarning']['Warning'] );
-			}
-
-			$clipData['ageGate'] = $this->getAgeGate( $clipData['industryRating'] );
-			$clipData['ageRequired'] = $clipData['ageGate'];
-
-			$clipData['genres'] = '';
-			$keywords = $defaultKeyword ? array( $defaultKeyword ) : array();
-			if ( !empty( $video['EntertainmentProgram']['MovieCategory']['Category'] ) ) {
-				$clipData['genres'] = $video['EntertainmentProgram']['MovieCategory']['Category'];
-				$keywords[] = 'Movies';
-			} else if ( !empty( $video['EntertainmentProgram']['TvCategory']['Category'] ) ) {
-				$clipData['genres'] = $video['EntertainmentProgram']['TvCategory']['Category'];
-				$keywords[] = 'TV';
-			} else if ( !empty( $video['EntertainmentProgram']['GameCategory']['Category'] ) ) {
-				$clipData['genres'] = $video['EntertainmentProgram']['GameCategory']['Category'];
-				$keywords[] = 'Gaming';
-			}
-
-			// add to keywords to be used in page category
-			if ( ( !empty( $clipData['language'] ) && $clipData['language'] != 'en' )
-				|| ( !empty( $clipData['subtitle'] ) && $clipData['subtitle'] != 'en' ) ) {
-				$keywords[] = 'Foreign';
-			}
-
-			$clipData['keywords'] = implode( ', ', $keywords );
-
-			$actors = array();
-			if ( !empty( $video['EntertainmentProgram']['ProgramToPerformerMaps']['results'] ) ) {
-				foreach( $video['EntertainmentProgram']['ProgramToPerformerMaps']['results'] as $performer ) {
-					$actors[] = trim( $performer['Performer']['FullName'] );
-				}
-			}
-			$clipData['actors'] = implode( ', ', $actors );
-
-			$msg = '';
-			$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
-			if ( $msg ) {
-				print "ERROR: $msg\n";
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return array("created" => $articlesCreated,
-					 "found"   => $numVideos);
 	}
 
 	/**
@@ -409,85 +453,33 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Create a list of category names to add to the new file page
-	 * @param array $data - Video data
-	 * @param $addlCategories - Any additional categories to add
-	 * @return array - A list of category names
+	 * @param array $data
+	 * @param array $categories
+	 * @return array $categories
 	 */
-	public function generateCategories( array $data, $addlCategories ) {
+	public function generateCategories( $data, $categories ) {
 		wfProfileIn( __METHOD__ );
 
-		$categories = !empty($addlCategories) ? $addlCategories : array();
+		$categories[] = 'IVA';
+		$categories[] = $data['name'];
+		$categories[] = $data['series'];
+		$categories[] = $data['category'];
 
-		if ( !empty($data['keywords']) ) {
-			$keywords = explode( ',', $data['keywords'] );
-
-			foreach( $keywords as $keyword ) {
-				$categories[] = trim( $keyword );
-			}
+		// add language
+		if ( !empty( $data['language'] ) && strtolower( $data['language'] ) != 'english' ) {
+			$categories[] = 'International';
+			$categories[] = $data['language'];
 		}
 
-		if ( !empty($data['categoryName']) ) {
-			$categories[] = $data['categoryName'];
-		}
-
-		if ( !in_array( 'IVA', $categories) ) {
-			$categories[] = 'IVA';
+		// add subtitle
+		if ( !empty( $data['subtitle'] ) && strtolower( $data['subtitle'] ) != 'english' ) {
+			$categories[] = 'International';
+			$categories[] = $data['subtitle'];
 		}
 
 		wfProfileOut( __METHOD__ );
 
-		return $categories;
-	}
-
-	/**
-	 * Grab the 'titleName' element of the video data
-	 * @param array $data - Video data
-	 * @return string - The video title
-	 */
-	protected function generateName( array $data ) {
-		wfProfileIn( __METHOD__ );
-
-		$name = $data['titleName'];
-
-		wfProfileOut( __METHOD__ );
-
-		return $name;
-	}
-
-	/**
-	 * Pull out all the metadata we consider interesting for this video
-	 * @param array $data - Video data
-	 * @param $errorMsg - Store any error we encounter
-	 * @return array|int - An associative array of meta data or zero on error
-	 */
-	protected function generateMetadata( array $data, &$errorMsg ) {
-		if ( empty($data['videoId']) ) {
-			$errorMsg = 'no video id exists';
-			return 0;
-		}
-
-		$metadata = array(
-			'videoId'        => $data['videoId'],
-			'hd'             => $data['hd'],
-			'duration'       => $data['duration'],
-			'published'      => $data['published'],
-			'ageGate'        => $data['ageGate'],
-			'thumbnail'      => $data['thumbnail'],
-			'category'       => $data['category'],
-			'description'    => $data['description'],
-			'keywords'       => $data['keywords'],
-			'tags'           => $data['tags'],
-			'industryRating' => $data['industryRating'],
-			'provider'       => $data['provider'],
-			'language'       => $data['language'],
-			'subtitle'       => $data['subtitle'],
-			'genres'         => $data['genres'],
-			'actors'         => $data['actors'],
-			'ageRequired'    => $data['ageRequired'],
-			'targetCountry'  => $data['targetCountry'],
-		);
-
-		return $metadata;
+		return $this->getUniqueArray( $categories );
 	}
 
 	/**
@@ -528,4 +520,18 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 		return $hash;
 	}
+
+	/**
+	 * update title by moving 'the' from the end of the title to the beginning of the title
+	 * @param string $title
+	 * @return string $title
+	 */
+	protected function updateTitle( $title ) {
+		if ( preg_match( '/^(.+), *(the)$/i', $title, $matches ) ) {
+			$title = trim( $matches[2] ).' '.trim( $matches[1] );
+		}
+
+		return $title;
+	}
+
 }

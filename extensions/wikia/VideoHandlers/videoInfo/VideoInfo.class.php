@@ -66,6 +66,18 @@ class VideoInfo extends WikiaModel {
 		return $this->videoTitle;
 	}
 
+	public function getAddedAt() {
+		return $this->addedAt;
+	}
+
+	public function getAddedBy() {
+		return $this->addedBy;
+	}
+
+	public function getDuration() {
+		return $this->duration;
+	}
+
 	/**
 	 * check if it is premium video
 	 * @return boolean
@@ -124,13 +136,13 @@ class VideoInfo extends WikiaModel {
 				__METHOD__
 			);
 
-			if ( $db->affectedRows() > 0 ) {
-				$affected = true;
-			}
+			$affected = $db->affectedRows() > 0;
 
 			$db->commit();
 
-			$this->saveToCache();
+			if ( $affected ) {
+				$this->saveToCache();
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -169,13 +181,13 @@ class VideoInfo extends WikiaModel {
 				'IGNORE'
 			);
 
-			if ( $db->affectedRows() > 0 ) {
-				$affected = true;
-			}
+			$affected = $db->affectedRows() > 0;
 
 			$db->commit();
 
-			$this->saveToCache();
+			if ( $affected ) {
+				$this->saveToCache();
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -411,7 +423,7 @@ SQL;
 	 * save to cache
 	 */
 	protected function saveToCache() {
-		foreach( self::$fields as $field ) {
+		foreach ( self::$fields as $field ) {
 			$cache[$field] = $this->$field;
 		}
 

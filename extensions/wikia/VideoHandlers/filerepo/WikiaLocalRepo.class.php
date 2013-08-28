@@ -18,6 +18,15 @@ class WikiaLocalRepo extends LocalRepo {
 		return $oldFileClass::newFromArchiveName( $title, $this, $archiveName );
 	}
 
+	/**
+	 * Get an UploadStash associated with this repo.
+	 *
+	 * @return UploadStash
+	 */
+	public function getUploadStash() {
+		return new WikiaUploadStash( $this );
+	}
+
 
 }
 

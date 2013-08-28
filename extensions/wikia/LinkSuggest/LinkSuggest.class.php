@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Measurements\Time as T;
+
 /**
  * LinkSuggest main class
  *
@@ -49,6 +51,7 @@ class LinkSuggest {
 
 	static function getLinkSuggest(WebRequest $request) {
 		global $wgContLang, $wgContentNamespaces, $wgMemc, $wgLinkSuggestLimit;
+		$measurement = T::start(__FUNCTION__);
 		wfProfileIn(__METHOD__);
 
 		$isMobile = F::app()->checkSkin( 'wikiamobile' );
@@ -140,7 +143,7 @@ class LinkSuggest {
 		$exactMatchRow = null;
 
 		$queryLower = strtolower($query);
-
+		$sql1Measurement = T::start(__FUNCTION__ . "\\sql-1");
 		$res = $db->select(
 			array( 'querycache', 'page' ),
 			array( 'page_namespace', 'page_title', 'page_is_redirect' ),
@@ -157,24 +160,39 @@ class LinkSuggest {
 		);
 
 		self::formatResults($db, $res, $query, $redirects, $results, $exactMatchRow);
-
+		$sql1Measurement->stop();
 		if (count($namespaces) > 0) {
 			$commaJoinedNamespaces = count($namespaces) > 1 ?  array_shift($namespaces) . ', ' . implode(', ', $namespaces) : $namespaces[0];
 		}
 
 		$pageNamespaceClause = isset($commaJoinedNamespaces) ?  'page_namespace IN (' . $commaJoinedNamespaces . ') AND ' : '';
 		if( count($results) < $wgLinkSuggestLimit ) {
-
+			/**
+			 * @var string $pageTitlePrefilter this condition is able to use name_title index. It's added only for performance reasons.
+			 * It uses fact that page titles can't start with lowercase letter.
+			 */
+			$pageTitlePrefilter = "";
+			if( strlen($queryLower) >= 2 ) {
+				$pageTitlePrefilter = "(
+							( page_title " . $db->buildLike(strtoupper($queryLower[0]) . strtolower($queryLower[1]) , $db->anyString() ) . " ) OR
+							( page_title " . $db->buildLike(strtoupper($queryLower[0]) . strtoupper($queryLower[1]) , $db->anyString() ) . " ) ) AND ";
+			} else if( strlen($queryLower) >= 1 ) {
+				$pageTitlePrefilter = "( page_title " . $db->buildLike(strtoupper($queryLower[0]) , $db->anyString() ) . " ) AND ";
+			}
 			// TODO: use $db->select helper method
 			$sql = "SELECT page_len, page_id, page_title, rd_title, page_namespace, page_is_redirect
-						FROM page IGNORE INDEX (`name_title`)
+						FROM page
 						LEFT JOIN redirect ON page_is_redirect = 1 AND page_id = rd_from
-						WHERE {$pageNamespaceClause} (page_title LIKE '{$query}%' or LOWER(page_title) LIKE '{$queryLower}%')
-						LIMIT ".($wgLinkSuggestLimit * 3);
+						LEFT JOIN querycache ON qc_title = page_title AND qc_type = 'BrokenRedirects'
+						WHERE  {$pageTitlePrefilter} {$pageNamespaceClause} (LOWER(page_title) LIKE '{$queryLower}%')
+							AND qc_type IS NULL
+						LIMIT ".($wgLinkSuggestLimit * 3); // we fetch 3 times more results to leave out redirects to the same page
 
+			$sql2Measurement = T::start(__FUNCTION__ . "\\sql-2");
 			$res = $db->query($sql, __METHOD__);
 
 			self::formatResults($db, $res, $query, $redirects, $results, $exactMatchRow);
+			$sql2Measurement->stop();
 		}
 
 		if ($exactMatchRow !== null) {
@@ -232,6 +250,9 @@ class LinkSuggest {
 			}
 		}
 
+		// Overwrite canonical title with redirect title for all formats
+		self::replaceResultIfRedirected($results, $redirects);
+
 		$format = $request->getText('format');
 
 		if ($format == 'json') {
@@ -243,13 +264,9 @@ class LinkSuggest {
 				$out = json_encode(array('query' => $request->getText('query'), 'suggestions' => $result_values, 'redirects' => $redirects));
 			}
 		} elseif ($format == 'array') {
-			self::replaceResultIfRedirected($results, $redirects);
 			$out = $results;
 		} else {
 			// legacy: LinkSuggest.js uses plain text
-			// Overwrite canonical title with redirect title
-			self::replaceResultIfRedirected($results, $redirects);
-
 			$out = implode("\n", $results);
 		}
 
@@ -290,9 +307,9 @@ class LinkSuggest {
 	 */
 
 	static private function replaceResultIfRedirected(&$results, &$redirects) {
-		for($i = 0; $i < count($results); $i++) {
-			if (isset($redirects[$results[$i]])) {
-				$results[$i] = $redirects[$results[$i]];
+		foreach($results as &$val){
+			if (isset($redirects[$val])) {
+				$val = $redirects[$val];
 			}
 		}
 	}
@@ -334,7 +351,7 @@ class LinkSuggest {
 
 				$redirTitleFormatted = self::formatTitle($row->page_namespace, $row->rd_title);
 
-				if (!in_array($redirTitleFormatted, $results)) {
+				if ( !in_array( $redirTitleFormatted, $results ) ) {
 
 					$results[] = $redirTitleFormatted;
 					$redirects[$redirTitleFormatted] = $titleFormatted;

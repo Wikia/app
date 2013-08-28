@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\Test\Query\Select
  */
 namespace Wikia\Search\Test\Query;
-use Wikia\Search\Query\Select as Query, Wikia\Search\MediaWikiService, Wikia\Search\Test\BaseTest, ReflectionMethod;
+use Wikia\Search\Query\Select as Query, Wikia\Search\MediaWikiService, Wikia\Search\Test\BaseTest, ReflectionMethod, ReflectionProperty;
 
 class SelectTest extends BaseTest
 {
@@ -130,6 +130,41 @@ class SelectTest extends BaseTest
 				'Category',
 				$query->getNamespacePrefix()
 		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Query\Select::getNamespacePrefix
+	 */
+	public function testGetNamespacePrefix() {
+		$query = $this->getMockBuilder( 'Wikia\Search\Query\Select' )
+		              ->disableOriginalConstructor()
+		              ->setMethods( [ 'initializeNamespaceData' ] )
+		              ->getMock();
+		
+		$query
+		    ->expects( $this->once() )
+		    ->method ( 'initializeNamespaceData' )
+		;
+		
+		$attr = new ReflectionProperty( $query, 'namespacePrefix' );
+		$attr->setAccessible( true );
+		$attr->setValue( $query, 'foo' );
+		
+		$this->assertAttributeEmpty(
+				'namespaceChecked',
+				$query
+		);
+		$this->assertEquals(
+				'foo',
+				$query->getNamespacePrefix()
+		);
+		$nsattr = new ReflectionProperty( $query, 'namespaceChecked' );
+		$nsattr->setAccessible( true );
+		$nsattr->setValue( $query,true );
+		$this->assertEquals(
+				'foo',
+				$query->getNamespacePrefix()
+		); 
 	}
 	
 	/**

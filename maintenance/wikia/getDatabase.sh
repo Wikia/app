@@ -26,7 +26,7 @@ url='http://'"$host"'.wikia.com/wiki/Special:Version'
 echo
 echo Checking db name and cluster from $url
 echo
-out="`curl "$url" | egrep -o 'cluster: c[1-9]|wgDBname="[^"]*"'`"
+out="`curl -L "$url" | egrep -o 'cluster: c[1-9]|wgDBname="[^"]*"'`"
 
 dbname="`echo "$out" | grep wgDBname | sed 's/.*"\([^"]*\)"/\1/'`"
 cluster="`echo "$out" | grep cluster | sed 's/.*\([1-9]\).*/\1/' | tr 123456789 ABCDEFGHIJ`"

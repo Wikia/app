@@ -3,6 +3,7 @@
 /**
  * @method setBlock
  * @method getBlock
+ * @method setText
  * @method getText
  * @method getLang
  */

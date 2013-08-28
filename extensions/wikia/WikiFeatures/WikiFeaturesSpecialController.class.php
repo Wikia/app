@@ -103,7 +103,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 	}
 
 /**
- * Save a fogbugz ticket
+ * Does some validation and hands user's feedback over so we had a chance to know it.
  * @requestParam type $category
  * @requestParam type $message
  * @responseParam string result [OK/error]

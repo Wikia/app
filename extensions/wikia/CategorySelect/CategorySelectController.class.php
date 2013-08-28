@@ -27,7 +27,7 @@ class CategorySelectController extends WikiaController {
 
 		$categories = $this->wg->out->getCategories();
 		$showHidden = $this->wg->User->getBoolOption( 'showhiddencats' );
-		$userCanEdit = $this->request->getVal( 'userCanEdit', CategorySelect::isEditable() );
+		$userCanEdit = $this->request->getVal( 'userCanEdit', CategorySelectHelper::isEditable() );
 
 		// There are no categories present and user can't edit, skip rendering
 		if ( !$userCanEdit && !count( $categories ) ) {
@@ -79,7 +79,7 @@ class CategorySelectController extends WikiaController {
 			$data[ $name ] = array(
 				'link' => Linker::link( $title, $text ),
 				'name' => $text,
-				'type' => CategorySelect::getCategoryType( $originalName ),
+				'type' => CategoryHelper::getCategoryType( $originalName ),
 			);
 		}
 
@@ -113,7 +113,7 @@ class CategorySelectController extends WikiaController {
 		$this->response->addAsset( 'extensions/wikia/CategorySelect/css/CategorySelect.edit.scss' );
 
 		$categories = array();
-		$data = CategorySelect::getExtractedCategoryData();
+		$data = CategoryHelper::getExtractedCategoryData();
 
 		if ( isset( $data ) && !empty( $data[ 'categories' ] ) ) {
 			$categories = $data[ 'categories' ];
@@ -128,10 +128,10 @@ class CategorySelectController extends WikiaController {
 	 */
 	public function editPageMetadata() {
 		$categories = '';
-		$data = CategorySelect::getExtractedCategoryData();
+		$data = CategoryHelper::getExtractedCategoryData();
 
 		if ( isset( $data ) && !empty( $data[ 'categories' ] ) ) {
-			$categories = htmlspecialchars( CategorySelect::changeFormat( $data[ 'categories' ], 'array', 'json' ) );
+			$categories = htmlspecialchars( CategoryHelper::changeFormat( $data[ 'categories' ], 'array', 'json' ) );
 		}
 
 		$this->response->setVal( 'categories', $categories );
@@ -204,13 +204,13 @@ class CategorySelectController extends WikiaController {
 			// Pull in categories from templates inside of the article (BugId:100980)
 			$options = new ParserOptions();
 			$preprocessedWikitext = ParserPool::preprocess( $wikitext, $title, $options );
-			$preprocessedData = CategorySelect::extractCategoriesFromWikitext( $preprocessedWikitext, true );
+			$preprocessedData = CategoryHelper::extractCategoriesFromWikitext( $preprocessedWikitext, true );
 
 			// Compare the new categories with those already in the article to weed out duplicates
-			$newCategories = CategorySelect::getDiffCategories( $preprocessedData[ 'categories' ], $categories );
+			$newCategories = CategoryHelper::getDiffCategories( $preprocessedData[ 'categories' ], $categories );
 
 			// Append the new categories to the end of the article wikitext
-			$wikitext .= CategorySelect::changeFormat( $newCategories, 'array', 'wikitext' );
+			$wikitext .= CategoryHelper::changeFormat( $newCategories, 'array', 'wikitext' );
 
 			// Update the array of categories for the front-end
 			$categories = array_merge( $preprocessedData[ 'categories' ], $newCategories );

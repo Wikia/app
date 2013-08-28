@@ -106,6 +106,11 @@ class FileDeleteForm {
 				} elseif ( $this->title->userIsWatching() ) {
 					WatchAction::doUnwatch( $this->title, $wgUser );
 				}
+				
+				# Wikia change begin
+				# LinkCache
+				LinkCache::singleton()->clearLink( $this->title );
+				# Wikia change end 
 			}
 			return;
 		}
@@ -130,6 +135,7 @@ class FileDeleteForm {
 			$user = $wgUser;
 		}
 
+		/* @var LocalFile $file */
 		if( $oldimage ) {
 			$page = null;
 			$status = $file->deleteOld( $oldimage, $reason, $suppress );

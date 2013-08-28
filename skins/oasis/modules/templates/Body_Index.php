@@ -102,7 +102,7 @@
 				</div>
 
 				<? if ( empty( $wg->SuppressArticleCategories ) ): ?>
-					<? if ( !empty( $wg->EnableCategorySelectExt ) && CategorySelect::isEnabled() ): ?>
+					<? if ( !empty( $wg->EnableCategorySelectExt ) && CategorySelectHelper::isEnabled() ): ?>
 						<?= $app->renderView( 'CategorySelect', 'articlePage' ) ?>
 					<? else: ?>
 						<?= $app->renderView( 'ArticleCategories', 'Index' ) ?>

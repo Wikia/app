@@ -1347,6 +1347,7 @@ $messages['km'] = array(
 /** Korean (한국어)
  * @author Wrightbus
  * @author 아라
+ * @author 한글화담당
  */
 $messages['ko'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|위키 만들기 마법사]]',
@@ -1375,7 +1376,7 @@ $messages['ko'] = array(
 	'cnw-desc-headline' => '어떤 위키를 만들겠습니까?',
 	'cnw-desc-creative' => '주제에 대한 설명',
 	'cnw-desc-tip1' => '힌트',
-	'cnw-desc-tip2' => '약간의 보충',
+	'cnw-desc-tip2' => '잠깐',
 	'cnw-desc-tip3' => '전문 팁',
 	'cnw-desc-choose' => '분류를 선택하세요',
 	'cnw-desc-select-one' => '1개 선택',
@@ -1509,6 +1510,8 @@ $messages['mk'] = array(
 	'cnw-desc-tip3-creative' => 'Соопштете им на луѓето дека можат да уредуваат страници на викито и така да помогнат во неговиот развој',
 	'cnw-desc-choose' => 'Одберете категорија',
 	'cnw-desc-select-one' => 'Одберете една категорија',
+	'cnw-desc-all-ages' => 'Сите возрасти',
+	'cnw-desc-tip-all-ages' => 'Дали викито е на тема што ги интересира децата? Законите на САД ни налагаат да водиме евиденција за темите од непосреден интерес за деца на возраст до 12 години.',
 	'cnw-desc-default-lang' => 'Викито ќе биде на $1',
 	'cnw-desc-change-lang' => 'измени',
 	'cnw-desc-lang' => 'Јазик',
@@ -2736,53 +2739,8 @@ $messages['vi'] = array(
 
 /** Chinese (中文)
  */
-$messages['zh'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wiki creation wizard]]',
-	'cnw-next' => 'Next',
-	'cnw-back' => 'Back',
-	'cnw-or' => 'or',
-	'cnw-title' => 'Create New Wiki',
-	'cnw-name-wiki-headline' => 'Start a Wiki',
-	'cnw-name-wiki-creative' => 'Wikia is the best place to build a website and grow a community around what you love.',
-	'cnw-name-wiki-label' => 'Name your wiki',
-	'cnw-name-wiki-wiki' => 'Wiki',
-	'cnw-name-wiki-domain-label' => 'Give your wiki an address',
-	'cnw-name-wiki-submit-error' => 'Oops! You need to fill in both of the boxes above to keep going.',
-	'cnw-login' => 'Log In',
-	'cnw-signup' => 'Create Account',
-	'cnw-signup-prompt' => 'Need an account?',
-	'cnw-call-to-signup' => 'Sign up here',
-	'cnw-login-prompt' => 'Already have an account?',
-	'cnw-call-to-login' => 'Log in here',
-	'cnw-auth-headline' => 'Log In',
-	'cnw-auth-headline2' => 'Sign Up',
-	'cnw-auth-creative' => 'Log in to your account to continue building your wiki.',
-	'cnw-auth-signup-creative' => "You'll need an account to continue building your wiki.<br />It only takes a minute to sign up!",
-	'cnw-auth-facebook-signup' => 'Sign up with Facebook',
-	'cnw-auth-facebook-login' => 'Login with Facebook',
-	'cnw-desc-headline' => "What's your wiki about?",
-	'cnw-desc-creative' => 'Describe your topic',
-	'cnw-desc-placeholder' => 'This will appear on the main page of your wiki.',
-	'cnw-desc-tip1' => 'Hint',
-	'cnw-desc-tip1-creative' => 'Use this space to tell people about your wiki in a sentence or two',
-	'cnw-desc-tip2' => 'Psst',
-	'cnw-desc-tip2-creative' => 'Give your visitors some specific details about your subject',
-	'cnw-desc-tip3' => 'Pro Tip',
-	'cnw-desc-tip3-creative' => 'Let people know they can help your wiki grow by editing and adding pages',
-	'cnw-desc-choose' => 'Choose a category',
-	'cnw-desc-select-one' => 'Select one',
-	'cnw-desc-default-lang' => 'Your wiki will be in $1',
-	'cnw-desc-change-lang' => 'change',
-	'cnw-desc-lang' => 'Language',
-	'cnw-desc-wiki-submit-error' => 'Please choose a category',
-	'cnw-theme-headline' => 'Choose a theme',
-	'cnw-theme-creative' => "Choose a theme below, you'll be able to see a preview of each theme as you select it.",
-	'cnw-theme-instruction' => 'You can also design your own theme later by going to "My Tools".',
-	'cnw-welcome-headline' => 'Congratulations! $1 has been created',
-	'cnw-welcome-instruction1' => 'Click the button below to start adding pages to your wiki.',
-	'cnw-welcome-instruction2' => "You'll see this button throughout your wiki, use it any time you want to add a new page.",
-	'cnw-welcome-help' => 'Find answers, advice, and more on <a href="http://community.wikia.com">Community Central</a>.',
-);
+
+
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia

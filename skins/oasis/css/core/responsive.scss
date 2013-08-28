@@ -1,3 +1,5 @@
+// This file should always be loaded after oasis.scss because it
+// overrides some of the styles in that file.
 @import "color";
 @import "layout";
 @import "responsive-font-sizing";
@@ -14,8 +16,11 @@ $width-outside-max-half: $width-outside-max / 2;
 $width-padding: $width-gutter / 2;
 
 // Breakpoints
+$breakpoint-content: $width-outside;
 $breakpoint-fluid: $width-outside + $width-adskins;
 $breakpoint-max: $width-outside-max + $width-adskins;
+$breakpoint-min: $width-outside-min;
+$breakpoint-small: 1023px;
 
 // Background
 // TODO: we might want to consider pre-calculating all of the background
@@ -23,35 +28,48 @@ $breakpoint-max: $width-outside-max + $width-adskins;
 // more performant. However, before we do that, we should come up with a
 // better way of passing parameters into Sass (like using a hash), otherwise
 // the URLs generated for Sass files will be even more ridiculously long.
-$background-height: get_command_line_param( "background-image-height", 0 );
-$background-width: get_command_line_param( "background-image-width", 0 );
+$background-height: get_command_line_param( "background-image-height", 0 ) * 1px; // convert int to pixel value
+$background-width: get_command_line_param( "background-image-width", 0 ) * 1px; // convert int to pixel value
 $background-width-half: $background-width / 2;
 $background-position: if( $background-fixed, fixed, absolute );
+
+// Determines whether or not to apply the dynamic background. Only applies if:
+// - background is not tiled
+// - background image height is greather than zero
+// - background image width is wider than the width of the skin (visible in the ad skin margins)
 $background-is-dynamic: if( not $background-tiled and $background-height > 0 and $background-width > $width-outside, true, false );
+
+// The background image is considered to be "wide" if it bleeds off the screen
+// at the size of the fluid breakpoint. This is important because it will determine
+// how the two slices of background images need to be positioned below.
 $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 
 // This mixin positions the background images and gradients while the skin is
 // in fluid width mode. Positioning is based on the left and right edges of
 // the viewport.
 @mixin background-fluid() {
+	// This calculates the width from the edge of each background image slice
+	// to the point where it is visible inside the viewpoint at the time the
+	// fluid breakpoint is reached. This will be used as an offset to keep
+	// the image positioned in the same place when the browser is being resized.
+	$background-offset: ( $breakpoint-fluid - $background-width ) / 2;
 	$background-offset-left: 0;
 	$background-offset-right: 0;
 	$background-position-after: -$background-width-half;
 	$background-position-before: 0;
 	$background-width-both: $background-width-half;
-	$gradient-offset: 0;
+
+	// The gradient is positioned on the outer edge of the background image
+	// slices, overlapping by the width of the gradient itself.
+	$gradient-offset: ( $background-width-half + $background-offset ) - $width-gradient;
 
 	@if ( $background-is-wide ) {
-		$background-offset: ( $width-outside - ( $background-width-half - $width-adskin ) * 2 ) / 2;
 		$background-width-both: $background-width-half + $background-offset;
 		$background-position-before: $background-offset;
-		$gradient-offset: $background-width-both - $width-gradient;
 
 	} @else {
-		$background-offset: ( $breakpoint-fluid - $background-width ) / 2;
 		$background-offset-left: $background-offset;
 		$background-offset-right: $background-offset;
-		$gradient-offset: ( $background-width-both + $background-offset ) - $width-gradient;
 	}
 
 	body {
@@ -106,8 +124,14 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 // has been hit and the skin goes back into static mode. Positioning is done
 // relative to the center of the viewport.
 @mixin background-max() {
+	// This margin correctly aligns the background image slices from the center
+	// of the viewport. It's basically the difference between where the image sat
+	// before the layout became fluid, and where it sits once max width is reached.
 	$background-margin: $width-outside-half - ( $width-outside-max-half + $background-width-half );
 	$background-position-after: -$background-width-half;
+
+	// The gradient is still positioned on the outer edge of the background image
+	// slices, overlapping by the width of the gradient itself.
 	$gradient-offset: $background-margin + ( $background-width-half - $width-gradient );
 
 	body {
@@ -168,7 +192,6 @@ body {
 		}
 
 		&:before {
-			background-position: 0;
 			// The extra 0.1% fixes sub-pixel rendering issues in Safari (DAR-1052)
 			left: 50.1%;
 			margin-left: -$background-width-half;
@@ -186,6 +209,12 @@ body > .global-notification,
 .WikiaHeader .page-width-container {
 	@include box-sizing( border-box );
 	width: $width-outside;
+}
+
+.global-notification {
+	&.float {
+		margin-left: -515px;
+	}
 }
 
 .WikiaArticle,
@@ -318,7 +347,43 @@ body > .global-notification,
 }
 // END - edit page fixes
 
-@media screen and (max-width: 1023px) {
+// START - main page tag fixes
+.lcs-container {
+	margin-right: $width-rail + $width-padding;
+}
+
+.main-page-tag-lcs-exploded {
+	margin-right: -( $width-rail + $width-gutter );
+}
+// END - main page tag fixes
+
+@media screen and (max-width: $breakpoint-min) {
+	body {
+		overflow-x: auto;
+	}
+}
+
+@media screen and (max-width: $breakpoint-small) {
+	// START - main page tag fixes
+	.home-top-right-ads {
+		display: none;
+	}
+
+	.lcs-container {
+		margin-right: 0;
+	}
+
+	.main-page-tag-lcs {
+		float: none;
+		margin-right: 0;
+	}
+
+	.main-page-tag-rcs {
+		float: none;
+		width: auto;
+	}
+	// END - main page tag fixes
+
 	.WikiaArticle {
 		min-height: auto;
 	}
@@ -397,12 +462,13 @@ body > .global-notification,
 	}
 
 	.WikiaSearchHeader .WikiaSearch,
-	.WikiaRail .WikiaSearch {
+	.WikiaRail .WikiaSearch,
+	.WikiaPageHeader .WikiaSearch {
 		display: none;
 	}
 }
 
-@media screen and (max-width: $width-outside) {
+@media screen and (max-width: $breakpoint-content) {
 	body {
 		background: $color-page;
 
@@ -420,9 +486,16 @@ body > .global-notification,
 		}
 	}
 
-	.global-notification,
 	.WikiaHeader .page-width-container {
 		width: auto;
+	}
+
+	.global-notification {
+		width: 100%;
+		&.float {
+			left: 0;
+			margin-left: 0;
+		}
 	}
 
 	.WikiaPage {
@@ -430,12 +503,16 @@ body > .global-notification,
 		width: auto;
 	}
 
-	.WikiaPageBackground {
-		display: none;
+	.WikiaPageContentWrapper {
+		padding-top: 20px;
 	}
 
 	.WikiaTopAds {
 		width: 100%;
+
+		#TOP_BUTTON_WIDE {
+			display: none;
+		}
 	}
 }
 
@@ -444,7 +521,6 @@ body > .global-notification,
 		@include background-fluid;
 	}
 
-	body > .global-notification,
 	.WikiaHeader .page-width-container,
 	.WikiaPage {
 		margin: 0 $width-adskin;
@@ -457,7 +533,6 @@ body > .global-notification,
 		@include background-max;
 	}
 
-	body > .global-notification,
 	.WikiaHeader .page-width-container,
 	.WikiaPage {
 		margin: 0 auto;

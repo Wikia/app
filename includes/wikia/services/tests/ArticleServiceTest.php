@@ -4,12 +4,14 @@ class ArticleServiceTest extends WikiaBaseTest {
 	const TEST_CITY_ID = 79860;
 
 	/**
+	 * @covers ArticleService::getUncachedSnippetFromArticle
+	 * @covers ArticleService::getTextSnippet
 	 * @dataProvider getTextSnippetDataProvider
 	 * @param $snippetLength maximum length of text snippet to be pulled
 	 * @param $rawArticleText raw text of article to be snippeted
 	 * @param $expSnippetText expected output text snippet
 	 */
-	public function testGetTextSnippetTest($snippetLength, $articleText, $expSnippetText) {
+	public function testGetTextSnippetAsArticleTest($snippetLength, $articleText, $expSnippetText) {
 		$randId = (int) ( rand() * microtime() );
 		$mockTitle = $this->getMock( 'Title' );
 		$mockCache = $this->getMock( 'MemCachedClientforWiki', array( 'get', 'set' ), array( array() ) );
@@ -51,9 +53,103 @@ class ArticleServiceTest extends WikiaBaseTest {
 			->method( 'getID' )
 			->will( $this->returnValue( $randId ) );
 
-		$service = new ArticleService( $mockArticle );
+		$service = $this->getMockBuilder( 'ArticleService' )
+		                ->setConstructorArgs( [ $mockArticle ] )
+		                ->setMethods( [ 'getTextFromSolr' ] )
+		                ->getMock();
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getTextFromSolr' )
+		    ->will   ( $this->returnValue( '' ) )
+		;
 		$snippet = $service->getTextSnippet( $snippetLength );
 		$this->assertEquals( $expSnippetText, $snippet );
+	}
+
+	/**
+	 * @covers ArticleService::getTextSnippet
+	 */
+	public function testGetTextSnippetAsSolrTest() {
+		$randId = (int) ( rand() * microtime() );
+		$mockTitle = $this->getMock( 'Title' );
+		$mockCache = $this->getMock( 'MemCachedClientforWiki', array( 'get', 'set' ), array( array() ) );
+		$mockPage = $this->getMock( 'WikiPage', array( 'getParserOutput', 'makeParserOptions' ), array( $mockTitle ) );
+		$mockOutput = $this->getMock( 'OutputPage', array( 'getText' ), array() );
+		$mockArticle = $this->getMock( 'Article', array( 'getPage', 'getID' ), array( $mockTitle ) );
+
+		$mockCache->expects( $this->any() )
+			->method( 'get' )
+			->will( $this->returnValue( null ) );
+
+		$mockCache->expects( $this->any() )
+			->method( 'set' )
+			->will( $this->returnValue( null ) );
+
+		$this->mockGlobalVariable( 'wgMemc', $mockCache );
+
+		$mockArticle->expects( $this->any() )
+			->method( 'getID' )
+			->will( $this->returnValue( $randId ) );
+
+		$service = $this->getMockBuilder( 'ArticleService' )
+		                ->setConstructorArgs( [ $mockArticle ] )
+		                ->setMethods( [ 'getTextFromSolr' ] )
+		                ->getMock();
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getTextFromSolr' )
+		    ->will   ( $this->returnValue( 'solr text as a snippet' ) )
+		;
+		$this->assertEquals( 'solr text as a snippet', $service->getTextSnippet() );
+	}
+
+	/**
+	 * @covers ArticleService::getTextFromSolr
+	 */
+	public function testGetTextFromSolr() {
+		$mockArticle = $this->getMockBuilder( 'Article' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( [ 'getId' ] )
+		                    ->getMock();
+
+		$mockResult = $this->getMock( 'Wikia\Search\Result', [ 'offsetGet', 'offsetExists' ] );
+		$mockDocumentService = $this->getMock( 'SolrDocumentService', [ 'setArticleId', 'getResult' ] );
+
+		$mockArticle
+		    ->expects( $this->once() )
+		    ->method ( 'getId' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$mockDocumentService
+		    ->expects( $this->once() )
+		    ->method( 'setArticleId' )
+		    ->with  ( 123 )
+		;
+		$mockDocumentService
+		    ->expects( $this->once() )
+		    ->method ( 'getResult' )
+		    ->will   ( $this->returnValue( $mockResult ) )
+		;
+		$mockResult
+		    ->expects( $this->once() )
+		    ->method ( 'offsetExists' )
+		    ->with   ( Wikia\Search\Utilities::field( 'html' ) )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$mockResult
+		    ->expects( $this->once() )
+		    ->method ( 'offsetGet' )
+		    ->with   ( Wikia\Search\Utilities::field( 'html' ) )
+		    ->will   ( $this->returnValue( 'foo' ) )
+		;
+
+		$this->proxyClass( 'SolrDocumentService', $mockDocumentService );
+
+		$this->assertEquals(
+				'foo',
+				(new ArticleService( $mockArticle ) )->getTextFromSolr()
+		);
+
 	}
 
 	public function getTextSnippetDataProvider() {

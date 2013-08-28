@@ -566,6 +566,7 @@ $messages['ja'] = array(
 /** Korean (한국어)
  * @author Excalibur777
  * @author 아라
+ * @author 한글화담당
  */
 $messages['ko'] = array(
 	'quickstats-header-label' => '간단한 통계',
@@ -573,7 +574,7 @@ $messages['ko'] = array(
 	'quickstats-header-views' => '보기',
 	'quickstats-header-edits' => '편집',
 	'quickstats-header-photos' => '사진',
-	'quickstats-header-likes' => 'Facebook Likes',
+	'quickstats-header-likes' => '좋아요',
 	'quickstats-totals-label' => '합계',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|더 많은 통계 보기]]',
 );

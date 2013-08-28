@@ -1,114 +1,118 @@
-/**
- * This file is used for styling the edit page
- */
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/gradient";
+// This file is used for styling the edit page
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/gradient";
 
-/* positioning for first run notice */
-#editform {
+// positioning for first run notice
+.editform {
 	position: relative;
 }
 
-/* hide MW textarea */
+// hide MW textarea
 #wpTextbox1 {
 	visibility: hidden;
 }
-/* hide edit tools in wysiwyg mode */
+
+// hide edit tools in wysiwyg mode
 .rte_wysiwyg .mw-editTools {
 	display: none;
 }
 
-/* loading indicator */
-.RTEloading #cke_contents_wpTextbox1 {
-	background: #ddd url(/skins/common/images/ajax.gif) no-repeat 50% 50% !important; /* $wgCdnStylePath */
-	overflow: hidden;
-	position: relative;
+// loading indicator
+.RTEloading {
+	&.rte_wysiwyg .cke_toolbar_tab,
+	&.rte_source #mw-toolbar {
+		visibility: hidden !important;
+	}
+
+	&.rte_wysiwyg .cke_toolbar_tab .cke_button_source {
+		visibility: visible;
+	}
+
+	.cke_contents {
+		background: #ddd url(/skins/common/images/ajax.gif) no-repeat 50% 50% !important; /* $wgCdnStylePath */
+		overflow: hidden;
+		position: relative;
+	}
+
+	// hide textarea (RT #56006)
+	.cke_contents iframe {
+		display: none;
+	}
+
+	.cke_contents textarea {
+		position: absolute !important;
+		left: -10000px;
+	}
 }
 
-/* hide textarea */
-.RTEloading .cke_contents iframe {
-	/* RT #56006 */
-	display: none;
-}
-
-.RTEloading .cke_contents textarea {
-	position: absolute !important;
-	left: -10000px;
-}
-
-.RTEloading.rte_wysiwyg .cke_toolbar_tab,
-.RTEloading.rte_source #mw-toolbar {
-	visibility: hidden !important;
-}
-
-.RTEloading.rte_wysiwyg .cke_toolbar_tab .cke_button_source {
-	visibility: visible;
-}
-
-/* RT #37254 / #37260 */
-.cke_browser_ie #cke_contents_wpTextbox1 {
+// RT #37254 / #37260
+.cke_browser_ie .cke_contents {
 	position: static !important;
 }
 
-/* hide stuff */
+// hide stuff
 #mw-anon-edit-warning,
 #toolbar {
 	display: none;
 }
 
-/* MW suggest */
-.cke_dialog_body .os-suggest {
-	background-color: window;
-	border: 1px solid #aaa;
-	left: 0 !important;
-	top: 17px !important;
-	z-index: 20000;
+.cke_dialog_body {
+	// MW suggest
+	.os-suggest {
+		background-color: window;
+		border: 1px solid #aaa;
+		left: 0 !important;
+		top: 17px !important;
+		z-index: 20000;
+	}
+
+	.os-suggest-results {
+		width: 500px !important;
+	}
+
+	.os-suggest-result-hl,
+	.os-suggest-result-hl span {
+		background-color: highlight !important;
+		color: highlighttext !important;
+	}
 }
 
-.cke_dialog_body .os-suggest-results {
-	width: 500px !important;
+// jQuery "alerts" and "confirms"
+.RTEModal {
+	p {
+		font-size: 0.9em;
+		line-height: 1.4em;
+		padding: 8px 5px;
+	}
+
+	.RTEConfirmButtons {
+		border-top-style: solid;
+		border-top-width: 1px;
+		padding: 5px;
+		text-align: right;
+	}
+
+	.RTEConfirmButtons a {
+		margin: 0 0 0 4px;
+	}
 }
 
-.cke_dialog_body .os-suggest-result-hl,
-.cke_dialog_body .os-suggest-result-hl span {
-	background-color: highlight !important;
-	color: highlighttext !important;
-}
-
-/* jQuery "alerts" and "confirms" */
-.RTEModal p {
-	font-size: 0.9em;
-	line-height: 1.4em;
-	padding: 8px 5px;
-}
-
-.RTEModal .RTEConfirmButtons {
-	border-top-style: solid;
-	border-top-width: 1px;
-	padding: 5px;
-	text-align: right;
-}
-
-.RTEModal .RTEConfirmButtons a {
-	margin: 0 0 0 4px;
-}
-
-/* div for placeholder previews / image menus */
-#RTEOverlay {
+// div for placeholder previews / image menus
+.rte-overlay {
 	position: absolute;
 	z-index: 100;
 }
 
-/* hide placeholder preview / image menu in source mode */
-.rte_source #RTEOverlay div {
+// hide placeholder preview / image menu in source mode
+.rte_source .rte-overlay div {
 	display: none;
 }
 
-/* image previews */
-#RTEMediaOverlays {
+// image previews
+.rte-media-overlays {
 	position: absolute;
 }
 
@@ -128,11 +132,11 @@
 	top: 0;
 	white-space: nowrap;
 	z-index: 2; // place it over caption
-}
 
-.RTEMediaMenu span {
-	cursor: pointer;
-	padding: 0 3px;
+	span {
+		cursor: pointer;
+		padding: 0 3px;
+	}
 }
 
 .RTEMediaCaption {
@@ -147,8 +151,8 @@
 	position: absolute;
 }
 
-/* template previews */
-#RTEPlaceholderPreviews {
+// template previews
+.rte-placeholder-previews {
 	left: 11px;
 	position: absolute;
 }
@@ -191,16 +195,16 @@
 	}
 }
 
-.RTEPlaceholderPreviewLoading .RTEPlaceholderPreviewInner {
-	background: #fff url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
-	height: 30px;
-}
-
 .RTEPlaceholderPreviewInner {
 	background-color: #fff;
 	border: solid 1px #d5d5d5;
 	padding: 2px;
 	width: 350px;
+}
+
+.RTEPlaceholderPreviewLoading .RTEPlaceholderPreviewInner {
+	background: #fff url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+	height: 30px;
 }
 
 .RTEPlaceholderPreviewTitleBar {
@@ -219,7 +223,7 @@
 	width: 12px;
 }
 
-/* info line */
+// info line
 .RTEPlaceholderPreviewIntro {
 	border-bottom: solid 1px #aaa;
 	color: #3a3a3a;
@@ -228,7 +232,7 @@
 	padding: 3px 0;
 }
 
-/* preview area */
+// preview area
 .RTEPlaceholderPreviewCode {
 	color: #3a3a3a;
 	cursor: default;
@@ -236,7 +240,6 @@
 	max-height: 350px;
 	overflow: auto;
 	padding: 4px;
-	_height: 75px; /* for IE */
 }
 
 .RTEPlaceholderPreviewExpanded {
@@ -244,7 +247,7 @@
 }
 
 .RTEPlaceholderPreviewCode * {
-	float: none !important; /* RT #37692 */
+	float: none !important; // RT #37692
 	cursor: default !important;
 }
 
@@ -253,110 +256,139 @@
 	white-space: pre;
 }
 
-/* [edit] / [delete] */
+// [edit] / [delete]
 .RTEPlaceholderPreviewTools {
 	border-top: solid 1px #aaa;
 	padding: 3px;
 	text-align: right;
+
+	a {
+		cursor: pointer;
+		margin: 0 10px 0 0;
+	}
 }
 
-.RTEPlaceholderPreviewTools a {
-	cursor: pointer;
-	margin: 0 10px 0 0;
+// wikia editor pop-ups
+.wikiaEditorDialog {
+	h1,
+	.templateEditorHeader {
+		font-size: 2.2em;
+	}
+
+	h2 {
+		font-size: 1.5em;
+		font-weight: bold;
+	}
+
+	hr {
+		background: #000;
+		height: 1px;
+		width: 100%;
+	}
+
+	textarea {
+		border: solid 1px #000;
+		font-family: monospace;
+		width: 300px;
+	}
 }
 
-/* wikia editor pop-ups */
-.wikiaEditorDialog h1,
-.wikiaEditorDialog span.templateEditorHeader {
-	font-size: 2.2em;
+.cke_skin_wikia {
+	&.linkEditorDialog {
+		.cke_dialog {
+			width: 500px;
+		}
+		.cke_dialog_page_contents {
+			margin-top: -20px;
+		}
+		.cke_dialog_ui_text label {
+			display: block;
+			margin-bottom: 5px;
+		}
+		.link-type-note {
+			float: right;
+			position: relative;
+			top: 26px;
+			width: 200px;
+		}
+		.link-type-note .link-icon,
+		.link-type-note .sprite,
+		.link-type-note span {
+			float: right;
+		}
+		.link-type-note .sprite {
+			display: none;
+			width: 16px;
+			height: 16px;
+		}
+		.link-type-note .link-icon {
+			background: url(/extensions/wikia/RTE/ckeditor/_source/skins/wikia/icons.png) left top no-repeat; /* $wgCdnStylePath */
+			height: 16px;
+			margin-right: 3px;
+			width: 16px;
+		}
+		.link-type-note .link-icon.link-yes {
+			background-position: left -527px;
+		}
+		.link-type-note .link-icon.link-no {
+			background-position: left -542px;
+		}
+	}
+
+	// dropdown lists
+	.cke_panel.cke_format_panel,
+	// BugId:5678
+	.cke_panel.cke_format_panel iframe {
+		height: 212px;
+		width: 200px;
+	}
+
+	.cke_template_panel {
+		height: 155px !important;
+		width: 220px !important;
+	}
 }
 
-.wikiaEditorDialog h2 {
-	font-size: 1.5em;
-	font-weight: bold;
+// dialog loading indicator
+.wikiaEditorLoading {
+	.cke_dialog_body {
+		background: transparent url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+
+		* {
+			visibility: hidden !important;
+		}
+	}
+
+	.loading {
+		background: transparent url(/skins/common/images/ajax.gif) no-repeat 50% 50% !important; /* $wgCdnStylePath */
+	}
 }
 
-.wikiaEditorDialog hr {
-	background: #000;
-	height: 1px;
-	width: 100%;
-}
+// template editor - search and list of templates*/
+.templateEditorDialog {
+	.cke_dialog_tabs {
+		display: none;
+	}
 
-.cke_skin_wikia.linkEditorDialog .cke_dialog {
-	xwidth: 500px;
-}
-.cke_skin_wikia.linkEditorDialog .cke_dialog_page_contents{
-	margin-top: -20px;
-}
-.cke_skin_wikia.linkEditorDialog .cke_dialog_ui_text label {
-	display: block;
-	margin-bottom: 5px;
-}
-.cke_skin_wikia.linkEditorDialog .link-type-note {
-	float: right;
-	position: relative;
-	top: 26px;
-	width: 200px;
-}
-.cke_skin_wikia.linkEditorDialog .link-type-note .link-icon,
-.cke_skin_wikia.linkEditorDialog .link-type-note .sprite,
-.cke_skin_wikia.linkEditorDialog .link-type-note span {
-	float: right;
-}
-.cke_skin_wikia.linkEditorDialog .link-type-note .sprite{
-	display: none;
-	width: 16px;
-	height: 16px;
-}
-.cke_skin_wikia.linkEditorDialog .link-type-note .link-icon {
-	background: url(/extensions/wikia/RTE/ckeditor/_source/skins/wikia/icons.png) left top no-repeat; /* $wgCdnStylePath */
-	height: 16px;
-	margin-right: 3px;
-	width: 16px;
-}
-.cke_skin_wikia.linkEditorDialog .link-type-note .link-icon.link-yes {
-	background-position: left -527px;
-}
-.cke_skin_wikia.linkEditorDialog .link-type-note .link-icon.link-no {
-	background-position: left -542px;
-}
+	.cke_dialog_contents {
+		margin-top: 0;
+	}
 
-/* dialog loading indicator */
-.wikiaEditorLoading .cke_dialog_body {
-	background: transparent url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
-}
+	.cke_browser_ie7 .cke_dialog_contents {
+		position: relative;
+		top: -15px;
+	}
 
-.wikiaEditorLoading .cke_dialog_body * {
-	visibility: hidden !important;
-}
+	// RT #37688
+	.cke_browser_ie8 .cke_dialog_contents {
+		position: relative;
+		top: 8px;
+	}
 
-.wikiaEditorDialog .loading {
-	background: transparent url(/skins/common/images/ajax.gif) no-repeat 50% 50% !important; /* $wgCdnStylePath */
-}
-
-/* template editor - search and list of templates*/
-div.templateEditorDialog .cke_dialog_tabs {
-	display: none;
-}
-
-div.templateEditorDialog .cke_dialog_contents {
-	margin-top: 0;
-}
-
-div.templateEditorDialog .cke_browser_ie7 .cke_dialog_contents {
-	position: relative;
-	top: -15px;
-}
-
-/* RT #37688  */
-div.templateEditorDialog .cke_browser_ie8 .cke_dialog_contents {
-	position: relative;
-	top: 8px;
-}
-
-/* RT #37689 */
-div.templateEditorDialog .cke_browser_ie .cke_dialog_body {
-	width: 800px !important;
+	// RT #37689
+	.cke_browser_ie .cke_dialog_body {
+		width: 800px !important;
+	}
 }
 
 #templateLinkToHelp {
@@ -371,68 +403,62 @@ div.templateEditorDialog .cke_browser_ie .cke_dialog_body {
 	list-style: none;
 	margin: 5px 0;
 	overflow: auto;
-}
 
-#templateEditorHotTemplates li,
-#templateEditorMagicWords li {
-	padding: 4px 0;
+	a {
+		cursor: pointer;
+		font-size: 13px;
+		text-decoration: none;
+	}
+
+	li {
+		padding: 4px 0;
+	}
 }
 
 #templateEditorHotTemplates {
 	width: 510px;
+
+	li {
+		float: left;
+		width: 240px;
+	}
 }
 
-#templateEditorHotTemplates li {
-	float: left;
-	width: 240px;
-}
-
-#templateEditorHotTemplates a,
-#templateEditorMagicWords a {
-	cursor: pointer;
-	font-size: 13px;
-	text-decoration: none;
-}
-
-/* template editor - parameters editor */
+// template editor - parameters editor
 #templateEditorTemplateName {
 	display: inline;
 	margin-right: 30px;
 }
 
-#templateEditorIntro a {
-	color: #0080C0;
-	cursor: pointer;
-}
+#templateEditorIntro {
+	a {
+		color: #0080C0;
+		cursor: pointer;
+	}
 
-#templateEditorIntro p {
-	font-size: 14px;
-	margin: 5px 0 10px 0;
+	p {
+		font-size: 14px;
+		margin: 5px 0 10px 0;
+	}
 }
 
 #templateParameters {
 	height: 250px;
 	overflow: auto;
-}
 
-#templateParameters label {
-	display: block;
-	font-weight: normal;
-	margin-top: 5px;
-}
+	dd {
+		margin: 0;
+	}
 
-#templateParameters dd {
-	margin: 0;
-}
+	label {
+		display: block;
+		font-weight: normal;
+		margin-top: 5px;
+	}
 
-.wikiaEditorDialog textarea {
-	border: solid 1px #000;
-	font-family: monospace;
-	width: 300px;
-}
-
-#templateParameters textarea {
-	height: 32px;
+	textarea {
+		height: 32px;
+	}
 }
 
 #templatePreview {
@@ -440,50 +466,23 @@ div.templateEditorDialog .cke_browser_ie .cke_dialog_body {
 	overflow: auto;
 	position: relative;
 	width: 310px;
+
+	* {
+		float: none !important;
+		white-space: normal;
+	}
+
+	a {
+		color: #002BB8;
+		cursor: pointer !important;
+
+		&:hover {
+			text-decoration: underline !important;
+		}
+	}
 }
 
-#templatePreview * {
-	float: none !important;
-	white-space: normal;
-}
-
-#templatePreview a {
-	color: #002BB8;
-	cursor: pointer !important;
-}
-
-#templatePreview a:hover {
-	text-decoration: underline !important;
-}
-
-.templateEditorDialog .cke_dialog_choose_another_tpl .cke_dialog_ui_button {
-	width: 200px !important;
-}
-
-/* positioning of footer buttons in step #2 */
-.templateEditorDialog .cke_dialog_footer_buttons {
-	width: 100% !important;
-}
-
-.templateEditorDialog .cke_dialog_footer .cke_dialog_ui_hbox_first {
-	text-align: left;
-}
-
-.templateEditorDialog .cke_dialog_footer .cke_dialog_ui_hbox_child {
-	text-align: right;
-}
-
-.templateEditorDialog .cke_dialog_footer .cke_dialog_ui_hbox_last {
-	display: none; /* hide fake "Cancel" button */
-}
-
-/* fix alignment of "Preview" button */
-.cke_dialog_contents div[name=step2] .cke_dialog_ui_hbox_child {
-	text-align: center;
-	vertical-align: middle;
-}
-
-/* template editor - advanced */
+// template editor - advanced
 #templateAdvEditorSource {
 	height: 285px;
 }
@@ -494,74 +493,87 @@ div.templateEditorDialog .cke_browser_ie .cke_dialog_body {
 	width: 100%;
 }
 
-/* link editor */
-/* RT #37688 */
-div.linkEditorDialog .cke_browser_ie8 .cke_dialog_title {
-	height: 38px;
+.templateEditorDialog {
+	.cke_dialog_choose_another_tpl .cke_dialog_ui_button {
+		width: 200px !important;
+	}
+
+	// positioning of footer buttons in step #2
+	.cke_dialog_footer_buttons {
+		width: 100% !important;
+	}
+
+	.cke_dialog_footer {
+		.cke_dialog_ui_hbox_first {
+			text-align: left;
+		}
+
+		.cke_dialog_footer .cke_dialog_ui_hbox_child {
+			text-align: right;
+		}
+
+		// hide fake "Cancel" button
+		.cke_dialog_footer .cke_dialog_ui_hbox_last {
+			display: none;
+		}
+	}
 }
 
-/* comment editor - show title */
+// fix alignment of "Preview" button
+.cke_dialog_contents div[name=step2] .cke_dialog_ui_hbox_child {
+	text-align: center;
+	vertical-align: middle;
+}
+
+// comment editor - show title
 .commentEditorDialog textarea.cke_dialog_ui_input_textarea {
 	height: 130px;
 }
 
-/* dropdown lists */
-.cke_skin_wikia .cke_panel.cke_format_panel,
-.cke_skin_wikia .cke_panel.cke_format_panel iframe /* BugId:5678 */
-{
-	height: 212px;
-	width: 200px;
+// image / video toolbar items
+.editform {
+	.RTEImageButton .cke_icon {
+		background-position: 0 -1247px;
+	}
+
+	.RTEGalleryButton .cke_icon {
+		background-position: 0 -1311px;
+	}
+
+	.RTEVideoButton .cke_icon {
+		background-position: 0 -1232px;
+	}
+
+	.RTEMUTButton .cke_icon {
+		background-position: 0 -1232px;
+	}
+
+	.RTESignatureButton .cke_icon {
+		background-position: 0 -1216px;
+	}
+
+	.RTEWidescreenButton .cke_icon {
+		background-position: 0 -1264px;
+	}
+
+	.RTEPollButton .cke_icon {
+		background-position: 0 -1328px;
+	}
 }
 
-.cke_skin_wikia .cke_template_panel {
-	height: 155px !important;
-	width: 220px !important;
-}
-
-/* image / video toolbar items */
-#editform .RTEImageButton .cke_icon {
-	background-position: 0 -1247px;
-}
-
-#editform .RTEGalleryButton .cke_icon {
-	background-position: 0 -1311px;
-}
-
-#editform .RTEVideoButton .cke_icon {
-	background-position: 0 -1232px;
-}
-
-#editform .RTEMUTButton .cke_icon {
-	background-position: 0 -1232px;
-}
-
-#editform .RTESignatureButton .cke_icon {
-	background-position: 0 -1216px;
-}
-
-#editform .RTEWidescreenButton .cke_icon {
-	background-position: 0 -1264px;
-}
-
-/* poll icon */
-#editform .RTEPollButton .cke_icon {
-	background-position: 0 -1328px;
-}
-
-
-/* link suggest - RT #37690 */
+// link suggest - RT #37690
 .RTEloading .link-suggest-container,
 .rte_wysiwyg .link-suggest-container {
 	display: none;
 }
 
-/* min width of editor (RT #38820) */
+// min width of editor (RT #38820)
 #wikia_page {
 	min-width: 350px;
 }
 
-/* CK on-hover menus */
-#RTEOverlay {
+// CK on-hover menus
+.rte-overlay {
 	margin-top: 15px;
 	.color1 {
 		background-color: mix($color-buttons, $color-page, 5%);
@@ -577,7 +589,7 @@ div.linkEditorDialog .cke_browser_ie8 .cke_dialog_title {
 	}
 }
 
-/* CK modal tweaks */
+// CK modal tweaks
 .skin-oasis.rte,
 .skin-oasis.MiniEditor {
 	.cke_dialog {
@@ -626,7 +638,7 @@ div.linkEditorDialog .cke_browser_ie8 .cke_dialog_title {
 		}
 	}
 
-	/* CK modal tabs */
+	// CK modal tabs
 	.cke_dialog .tabs {
 		background: transparent;
 		overflow: hidden;

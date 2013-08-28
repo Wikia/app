@@ -82,7 +82,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 		// redirect if signup
 		$type = $this->request->getVal('type', '');
-		if ($type === 'signup') {
+		if ($type === 'signup' || $this->getPar() == 'signup') {
 			$title = SpecialPage::getTitleFor( 'UserSignup' );
 			$this->wg->Out->redirect( $title->getFullURL() );
 			return false;

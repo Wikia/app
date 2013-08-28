@@ -243,6 +243,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		$data['imagesHeight'] = $this->getModel()->getImageHeight();
 		$data['imagesWidth'] = $this->getModel()->getImageWidth();
 		$data['searchHubName'] = $this->getSearchHubName($data['verticalName']);
+		$data['specialSearchUrl'] = SpecialPage::getTitleFor( 'WikiaSearch' )->getFullUrl();
 		$data['scoreChangeMap'] = [self::WAM_SCORE_CHANGE_DOWN => 'down', self::WAM_SCORE_NO_CHANGE => 'nochange', self::WAM_SCORE_CHANGE_UP => 'up'];
 
 		return parent::render($data);

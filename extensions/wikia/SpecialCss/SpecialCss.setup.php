@@ -45,15 +45,7 @@ $wgSpecialPageGroups['CSS'] = 'wikia';
 
 // message files
 $wgExtensionMessagesFiles['SpecialCss'] = $dir.'SpecialCss.i18n.php';
-(new JSMessages())->registerPackage('SpecialCss', array('special-css-*'));
-
-//user rights
-$wgGroupPermissions['*']['specialcss'] = false;
-$wgGroupPermissions['staff']['specialcss'] = true;
-$wgGroupPermissions['util']['specialcss'] = true;
-$wgGroupPermissions['vstf']['specialcss'] = false;
-$wgGroupPermissions['helper']['specialcss'] = false;
-$wgGroupPermissions['sysop']['specialcss'] = true;
+(new JSMessages())->registerPackage( 'SpecialCss', array( 'special-css-*' ) );
 
 //mapping community central language to it's database name
 $wgCssUpdatesLangMap = array (

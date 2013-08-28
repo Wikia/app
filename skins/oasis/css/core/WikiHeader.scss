@@ -232,7 +232,7 @@ $WikiNavWidth: $width-outside - 271px;
 			@include box-shadow( 1px, 2px, 12px, darken($color-page,80%));
 			z-index: 90;
 			display: none;
-			top: 25;
+			top: 25px;
 			margin-left:4px;
 			min-width: 150px;
 			border: 1px solid $color-button-highlight;

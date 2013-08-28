@@ -1,7 +1,302 @@
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/bodytext";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/mixins/arrow";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/box-sizing-border-box";
+@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/opacity";
+@import "mixins/_sprite-LicensedVideoSwap";
+
+$alt-bg-color: mix($color-page-opposite, $color-page, 10%);
+$thumb-img-width: 184px;
+$thumb-img-height: 103px;
+
+$arrow-color: 'black';
+@if $is-dark-wiki {
+	$arrow-color: 'white';
+}
+
+$button-icon-color: white;
+@if lightness($color-buttons) > 55 {
+	$button-icon-color: black;
+}
+
+// button that leads to history undo swap/keep page
+.lvs-history-btn {
+	vertical-align: 5px;
+}
+
+// For now, this callout style will be specific to lvs, but we might be able to re-use this on the Video Wikia home page
+.lvs-callout {
+	background: $color-buttons;
+	color: $color-button-text;
+	display: none;
+	font-size: 13px;
+	margin: 10px 0;
+	padding: 15px 20px 8px 20px;
+	.description{
+		font-size: 16px;
+	}
+	p {
+		margin: 0;
+	}
+	ul, li {
+		padding: 0;
+		margin: 0;
+		list-style: none;
+	}
+	ul {
+		display: inline-block;
+		margin: 35px 0 15px;
+		position: relative;
+		width: 100%;
+		&:before, &:after {
+			@include opacity(50);
+			background: $color-button-text;
+			bottom: 0px;
+			content: "";
+			display: block;
+			position: absolute;
+			top: 0px;
+			width: 1px;
+		}
+		&:before {
+			left: 33.3%;
+		}
+		&:after {
+			right: 33.3%;
+		}
+	}
+	li {
+		@include box-sizing-border-box;
+		float: left;
+		padding: 0px 6%;
+		width: 33.3%;
+		text-align: center;
+		&:first-child:before {
+			display: none;
+		}
+	}
+	.close {
+		float: right;
+	}
+	.heading {
+		display: block;
+		font-size: 21px;
+		margin-bottom: 5px;
+		&:before {
+			@include sprite-LicensedVideoSwap-base;
+			content: "";
+			display: inline-block;
+			margin-right: 7px;
+		}
+		&.licensed:before {
+			@include sprite-LicensedVideoSwap('license_icon_' + $button-icon-color);
+			width: 20px;
+			height: 20px;
+		}
+		&.quality:before {
+			@include sprite-LicensedVideoSwap('high_quality_icon_' + $button-icon-color);
+			width: 20px;
+			height: 20px;
+		}
+		&.collaborative:before {
+			@include sprite-LicensedVideoSwap('collaboration_icon_' + $button-icon-color);
+			width: 23px;
+			height: 21px;
+		}
+	}
+}
+
+.LVSGrid {
+	position: relative;
+	border-top: 1px solid $color-page-border;
+	.lvs-sprite:before {
+		@include sprite-LicensedVideoSwap-base;
+	}
+	.row {
+		@include clearfix;
+		margin-bottom: 30px;
+		position: relative;
+		overflow-x: hidden;
+		.swap-arrow {
+			@include border-radius(5px);
+			background-color: $color-page;
+			display: none;
+			height: 31px;
+			left: 50%;
+			margin-left: -40px;
+			padding: 15px;
+			position: absolute;
+			top: 157px;
+			width: 49px;
+			z-index: 1; // needs to show above a playing video
+			&:before {
+				@include sprite-LicensedVideoSwap('big_arrow_' + $arrow-color);
+				content: "";
+				display: block;
+				margin: auto;
+				height: 31px;
+				width: 49px;
+			}
+		}
+	}
+	.more-link {
+		color: $color-text;
+		font-size: 13px;
+		float: right;
+		line-height: 15px;
+		padding-right: 10px;
+
+		&:before {
+			@include arrow(5px, $color-text, 'down');
+			content: "";
+			display: block;
+			float: right;
+			margin-top: 6px;
+			margin-left: 5px;
+		}
+		&.expanded:before {
+			@include arrow(5px, $color-text, 'up');
+		}
+	}
+	.grid-3 {
+		height: 395px;
+	}
+	.video-wrapper {
+		background-color: #000;
+		height: 309px;
+		margin-bottom: 9px;
+	}
+	.more-videos {
+		@include clearfix;
+		clear:both;
+		display: none;
+		padding-top: 20px;
+		width: 100%; // needed for smooth jQuery animation
+		&:before {
+			@include arrow(15px, $alt-bg-color, 'up');
+			margin-top: -15px;
+			margin-right: 15px;
+			content: "";
+			display: inline-block;
+			float: right;
+		}
+
+		ul, li {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		ul {
+			@include clearfix;
+			background-color: $alt-bg-color;
+			padding: 15px;
+		}
+		li {
+			float: left;
+			margin-right: 15px;
+			width: $thumb-img-width;
+			&:last-child {
+				margin-right: 0;
+			}
+
+			> a.selected {
+			      outline: 5px solid $color-buttons;
+			}
+		}
+		.Wikia-video-play-button {
+			line-height: $thumb-img-height;
+			width: $thumb-img-width;
+		}
+		.video {
+			display: block;
+			position: relative;
+			> img {
+				height:$thumb-img-height;
+				width:$thumb-img-width;
+			}
+		}
+	}
+	.swap-button:before {
+		@include sprite-LicensedVideoSwap('small_arrow_' + $button-icon-color);
+		content: "";
+		display: inline-block;
+		height: 9px;
+		margin-left: -2px;
+		padding-right: 2px;
+		width: 13px;
+	}
+	.posted-in {
+		overflow: hidden;
+		white-space: nowrap;
+		margin: 0.4em 0 0.5em; // mimic a <p> tag
+		width: 480px;
+		ul, li {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			display: inline;
+		}
+		li:after {
+			content: ", ";
+		}
+		li:last-child:after {
+			content: "";
+		}
+		a.ellipses {
+			float: right;
+			display: none;
+		}
+		> div {
+			display: inline-block;
+			&.processed {
+				float: left; // ie10 layout
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+	}
+}
+
+.popover .details {
+	background-color: $color-page;
+	font-size: 12px;
+	padding: 2px;
+	width: 180px;
+	ul {
+		a {
+			display: block;
+			padding: 6px 5px;
+		}
+		li {
+			border-top: 1px solid $color-page-border-subtle;
+		}
+		li:first-child {
+			border-top: none;
+		}
+	}
+}
+
+body.lvs-loading {
+	overflow: hidden;
+}
+
+.lvs-zero-state {
+	border-top: 1px solid $color-page-border-subtle;
+	padding-top: 10px;
+}
+
+
+.WikiaArticle .lvs-instructions {
+	padding: 4px 0 14px;
+	h2 {
+		border-bottom: none;
+		font-size: 16px;
+		margin: 0;
+		padding-bottom: 0;
+	}
+	p {
+		margin: 0;
+	}
+}

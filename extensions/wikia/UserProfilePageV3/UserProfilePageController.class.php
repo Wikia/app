@@ -139,7 +139,7 @@ class UserProfilePageController extends WikiaController {
 			$this->setVal('reloadUrl', '');
 		}
 
-		$this->response->addAsset('/resources/wikia/modules/aim.js');
+		$this->response->addAsset('resources/wikia/modules/aim.js');
 
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			$this->overrideTemplate( 'WikiaMobileRenderUserIdentityBox' );

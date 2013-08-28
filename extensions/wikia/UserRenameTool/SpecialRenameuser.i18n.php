@@ -15,6 +15,7 @@ $messages['en'] = array(
 	'userrenametool-desc' => 'Adds a [[Special:UserRenameTool|special page]] to rename a user (need \'\'renameuser\'\' right) and process all the related data',
 	'userrenametool-old' => 'Current username:',
 	'userrenametool-new' => 'New username:',
+    'userrenametool-encoded' => 'URL encoded:',
 	'userrenametool-reason' => 'Reason for rename:',
 	'userrenametool-move' => 'Move user and talk pages (and their subpages) to new name',
 	'userrenametool-reserve' => 'Block the old username from future use',
@@ -95,6 +96,7 @@ Reason: $2',
 $messages['qqq'] = array(
 	'renameuser' => '{{Identical|Rename user}}',
 	'userrenametool-desc' => 'Short description of the Renameuser extension, shown on [[Special:Version]]. Do not translate or change links.',
+    'userrenametool-encoded' => 'Label for URL encoded version of new username',
 	'userrenametool-reserve' => 'Option to block the old username (after it has been renamed) from being used again.',
 	'userrenametool-warnings' => '{{Identical|Warning}}',
 	'userrenametool-submit' => '{{Identical|Submit}}',
@@ -2606,6 +2608,7 @@ $messages['mk'] = array(
 	'userrenametool-error-extension-abort' => 'Некој додаток ја попречи постапката на преименување.',
 	'userrenametool-error-cannot-rename-account' => 'Преименувањето на корисничка сметка на заедничката глобална база на податоци не успеа.',
 	'userrenametool-error-cannot-create-block' => 'Создавањето на Phalanx-блок не успеа.',
+	'userrenametool-error-cannot-rename-unexpected' => 'Се појави неочекувана грешка. Погледајте во дневниците и обидете се повторно.',
 	'userrenametool-warn-repeat' => 'Внимание! Корисникот „<nowiki>$1</nowiki>“ е веќе преименуван во „<nowiki>$2</nowiki>“.
 Продолжете со постапката само ако треба да дополните некои податоци што недостасуваат.',
 	'userrenametool-warn-table-missing' => 'Табелата „<nowiki>$2</nowiki>“ не постои во базата „<nowiki>$1</nowiki>“.',
@@ -2638,6 +2641,7 @@ $messages['mk'] = array(
 	'userrenametool-log' => '{{PLURAL:$1|1 уредување|$1 уредувања}}. Образложение: $2',
 	'userrenametool-move-log' => 'Автоматски преместена страница при преименување на корисникот "[[User:$1|$1]]" во "[[User:$2|$2]]"',
 	'right-renameuser' => 'Преименување корисници',
+	'action-renameuser' => 'преименување на корисници',
 );
 
 /** Malayalam (മലയാളം)
@@ -3324,10 +3328,10 @@ $messages['ps'] = array(
 $messages['pt'] = array(
 	'userrenametool' => 'Alterar o nome de um utilizador',
 	'renameuser' => 'Alterar o nome do utilizador',
-	'userrenametool-warning' => 'Antes de alterar o nome de um utilizador, certifique-se de que todas as informações estão correctas e que o utilizador sabe que o processo pode demorar algum tempo.
-Pode ver os registos no [[Special:Stafflog|Registo da equipa]].',
+	'userrenametool-warning' => 'Antes de alterar o nome de um utilizador, certifique-se de que todas as informações estão corretas e que o utilizador sabe que o processo pode demorar algum tempo.
+Pode ver os registros no [[Special:Stafflog|Registro da equipa]].',
 	'userrenametool-desc' => "Adiciona uma [[Special:UserRenameTool|página especial]] para alterar o nome de um utilizador (requer o privilégio ''renameuser'') e processar todos os dados relacionados",
-	'userrenametool-old' => 'Nome de utilizador actual:',
+	'userrenametool-old' => 'Nome de utilizador atual:',
 	'userrenametool-new' => 'Novo nome de utilizador:',
 	'userrenametool-reason' => 'Motivo da alteração do nome:',
 	'userrenametool-move' => 'Mover as páginas de utilizador e de discussão do utilizador (e as respectivas subpáginas) para o novo nome',
@@ -3378,7 +3382,7 @@ Quando este terminar, receberá uma notificação por correio electrónico.',
 	'userrenametool-finished-email-body-text' => 'O processo de alteração de "<nowiki>$1</nowiki>" para "<nowiki>$2</nowiki>" terminou.',
 	'userrenametool-finished-email-body-html' => 'O processo de alteração de "<nowiki>$1</nowiki>" para "<nowiki>$2</nowiki>" terminou.',
 	'userrenametool-logpage' => 'Registo de alteração do nome de utilizador',
-	'userrenametool-logpagetext' => 'Este é um registo de alterações efectuadas a nomes de utilizadores.',
+	'userrenametool-logpagetext' => 'Este é um registro de alterações efetuadas a nomes de utilizadores.',
 	'userrenametool-logentry' => 'alterou o nome de $1 para "$2"',
 	'userrenametool-log' => '{{PLURAL:$1|1 edição|$1 edições}}. Motivo: $2',
 	'userrenametool-move-log' => 'Página movida automaticamente ao alterar o nome do utilizador "[[User:$1|$1]]" para "[[User:$2|$2]]"',

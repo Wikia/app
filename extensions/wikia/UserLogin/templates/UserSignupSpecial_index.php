@@ -6,36 +6,10 @@
 	<h3 class="subheading"></h3>
 	<div class="wiki-info">
 		<?= F::app()->renderView('WikiHeader', 'Wordmark') ?>
-		<p><?= wfMessage('usersignup-marketing-wikia')->parse() ?></p>
+		<p><?= wfMessage('usersignup-marketing-wikia')->text() ?></p>
 		<?= wfMessage('usersignup-marketing-login')->parse() ?>
 	</div>
-	<? if(empty($byemail)) { ?>
-		<div class="marketing">
-			<h2><?= wfMessage('usersignup-marketing-benefits')->escaped() ?></h2>
-			<div class="benefit">
-				<ul class="avatars">
-					<? foreach($avatars as $avatar) { ?>
-						<li class="avatar"><img src="<?= $avatar ?>" width="30" height="30"></li>
-					<? } ?>
-				</ul>
-				<h3><?= wfMessage('usersignup-marketing-community-heading')->escaped() ?></h3>
-				<p><?= wfMessage('usersignup-marketing-community')->escaped() ?></p>
-			</div>
-			<div class="benefit">
-				<ul class="wikis">
-					<? foreach($popularWikis as $wiki ) { ?>
-						<li class="wiki"><img src="<?= $wiki ?>" width="65" height="18"></li>
-					<? } ?>
-				</ul>
-				<h3><?= wfMessage('usersignup-marketing-global-heading')->escaped() ?></h3>
-				<p><?= wfMessage('usersignup-marketing-global')->escaped() ?></p>
-			</div>
-			<div class="benefit">
-				<h3><?= wfMessage('usersignup-marketing-creativity-heading')->escaped() ?></h3>
-				<p><?= wfMessage('usersignup-marketing-creativity')->escaped() ?></p>
-			</div>
-		</div>
-	<?php } //marketing ?>
+
 <?php } //$isMonobookOrUncyclo ?>
 	<div class="form-container">
 	<?php
@@ -58,7 +32,7 @@
 				'type' => 'text',
 				'name' => 'username',
 				'value' => htmlspecialchars($username),
-				'label' => wfMessage('yourname')->escaped(),
+				'label' => wfMessage('yourname')->text(),
 				'isRequired' => true,
 				'isInvalid' => (!empty($errParam) && $errParam === 'username'),
 				'errorMsg' => (!empty($msg) ? $msg : '')
@@ -67,7 +41,7 @@
 				'type' => 'text',
 				'name' => 'email',
 				'value' => $email,
-				'label' => wfMessage('email')->escaped(),
+				'label' => wfMessage('email')->text(),
 				'isRequired' => true,
 				'isInvalid' => (!empty($errParam) && $errParam === 'email'),
 				'errorMsg' => (!empty($msg) ? $msg : '')
@@ -76,7 +50,7 @@
 				'type' => 'password',
 				'name' => 'password',
 				'value' => '',
-				'label' => wfMessage('yourpassword')->escaped(),
+				'label' => wfMessage('yourpassword')->text(),
 				'isRequired' => true,
 				'isInvalid' => (!empty($errParam) && $errParam === 'password'),
 				'errorMsg' => (!empty($msg) ? $msg : '')
@@ -131,4 +105,32 @@
 	echo F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
 ?>
 	</div>
+
+	<? if(empty($byemail)) { ?>
+    <div class="marketing">
+        <h2><?= wfMessage('usersignup-marketing-benefits')->text() ?></h2>
+        <div class="benefit">
+            <ul class="avatars">
+				<? foreach($avatars as $avatar) { ?>
+                <li class="avatar"><img src="<?= $avatar ?>" width="30" height="30"></li>
+				<? } ?>
+            </ul>
+            <h3><?= wfMessage('usersignup-marketing-community-heading')->text() ?></h3>
+            <p><?= wfMessage('usersignup-marketing-community')->text() ?></p>
+        </div>
+        <div class="benefit">
+            <ul class="wikis">
+				<? foreach($popularWikis as $wiki ) { ?>
+                <li class="wiki"><img src="<?= $wiki ?>" width="65" height="18"></li>
+				<? } ?>
+            </ul>
+            <h3><?= wfMessage('usersignup-marketing-global-heading')->text() ?></h3>
+            <p><?= wfMessage('usersignup-marketing-global')->text() ?></p>
+        </div>
+        <div class="benefit">
+            <h3><?= wfMessage('usersignup-marketing-creativity-heading')->text() ?></h3>
+            <p><?= wfMessage('usersignup-marketing-creativity')->text() ?></p>
+        </div>
+    </div>
+	<?php } //marketing ?>
 </section>

@@ -111,6 +111,13 @@ $messages['br'] = array(
 	'alert-download-updated-wikis-button-ok' => 'Mat eo',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'window-article-button-close' => 'ДӀачӀагӀа',
+);
+
 /** Czech (česky)
  * @author Chmee2
  * @author Reaperman

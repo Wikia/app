@@ -420,7 +420,7 @@ $messages['pt'] = array(
 	'spellchecker-info-spellcheck-text' => 'Texto para ser verificado',
 	'spellchecker-info-spellcheck-languages' => 'Língua',
 	'spellchecker-info-spellcheck-submit' => 'Verificar ortografia',
-	'spellchecker-info-spellcheck-is-correct' => 'A palavra "$1" está escrita correctamente',
+	'spellchecker-info-spellcheck-is-correct' => 'A palavra "$1" está escrita corretamente',
 	'spellchecker-info-spellcheck-suggestions' => 'Sugestões de ortografia para "$1": $2',
 );
 

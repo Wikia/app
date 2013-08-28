@@ -449,7 +449,9 @@ $messages['ko'] = array(
 	'ajaxpoll-thankyou' => '투표해 주셔서 감사합니다!',
 	'ajaxpoll-error' => '투표를 처리하는 도중 문제가 발생했습니다. 다시 시도하세요.',
 	'ajaxpoll-summary' => '이 설문 조사는 $2 $1에 만들어졌으며 지금까지 $3명이 투표했습니다.',
+	'ajaxpoll-submit' => '투표!',
 	'ajaxpoll-closed' => '설문 조사가 지금 끝났습니다. 결과를 비교해 보세요.',
+	'ajaxpoll-submitting' => '투표를 제출하는 동안 잠시 기다리세요...',
 );
 
 /** Colognian (Ripoarisch)

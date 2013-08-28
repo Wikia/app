@@ -253,6 +253,9 @@ $color-highlight-column: rgba($color-page, 0);
 							&.addvideo {
 								background-position: -850px 0;
 							}
+							&.licensedvideoswap {
+								background-position: -950px 0;
+							}
 						}
 					}
 					&:hover {
@@ -387,9 +390,6 @@ $color-highlight-column: rgba($color-page, 0);
 	.shadow-mask {
 		display: none;
 	}
-	> nav {
-		bottom: 0;
-	}
 	@if ( not $responsive-layout-enabled ) {
 		>.buttons {
 			bottom: auto;
@@ -500,12 +500,13 @@ $color-highlight-column: rgba($color-page, 0);
 		}
 	}
 
-	.WikiaMainContentContainer {
+	.page-Special_AdminDashboard .WikiaMainContentContainer {
+		margin-right: $admin-dashboard-rail-width;
 		padding: 0;
 	}
 
-	.page-Special_AdminDashboard .WikiaMainContentContainer {
-		margin-right: $admin-dashboard-rail-width;
+	.WikiaMainContentContainer {
+		padding: 0;
 	}
 
 	.AdminDashboardGeneralHeader.AdminDashboardArticleHeader {

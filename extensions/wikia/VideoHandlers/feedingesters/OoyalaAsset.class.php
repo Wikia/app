@@ -43,12 +43,8 @@ class OoyalaAsset extends WikiaModel {
 					// set primary thumbnail
 					$resp = $this->setPrimaryThumbnail( $asset['embed_code'] );
 					if ( $resp ) {
-						// set age gate player
-						$resp = $this->setAgeGatePlayer( $asset['embed_code'], $data );
-						if ( $resp ) {
-							// set labels
-							$resp = $this->setLabels( $asset['embed_code'], $data );
-						}
+						// set labels
+						$resp = $this->setLabels( $asset['embed_code'], $data );
 					}
 				}
 			}
@@ -94,8 +90,11 @@ class OoyalaAsset extends WikiaModel {
 		$reqPath = '/v2/assets/'.$videoId.'/metadata';
 
 		$assetData = $this->getAssetMetadata( $metadata );
+
+		// source and sourceid are required. They are used for tracking the video.
 		$assetData['source'] = $metadata['provider'];
 		$assetData['sourceid'] = $metadata['videoId'];
+
 		$reqBody = json_encode( $assetData );
 
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
@@ -143,14 +142,16 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['published'] ) ) {
 			$metadata['published'] = $data['published'];
 		}
-		if ( !empty( $data['ageGate'] ) ) {
+		// ageGate can be 0
+		if ( isset( $data['ageGate'] ) ) {
 			$metadata['agegate'] = $data['ageGate'];
 		}
-		if ( !empty( $data['tags'] ) ) {
-			$metadata['tags'] = $data['tags'];
-		}
-		if ( !empty( $data['hd'] ) ) {
+		// hd can be 0
+		if ( isset( $data['hd'] ) ) {
 			$metadata['hd'] = $data['hd'];
+		}
+		if ( !empty( $data['name'] ) ) {
+			$metadata['name'] = $data['name'];
 		}
 		if ( !empty( $data['language'] ) ) {
 			$metadata['lang'] = $data['language'];
@@ -158,8 +159,8 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['subtitle'] ) ) {
 			$metadata['subtitle'] = $data['subtitle'];
 		}
-		if ( !empty( $data['trailerRating'] ) ) {
-			$metadata['trailerrating'] = $data['trailerRating'];
+		if ( !empty( $data['type'] ) ) {
+			$metadata['type'] = $data['type'];
 		}
 		if ( !empty( $data['industryRating'] ) ) {
 			$metadata['industryrating'] = $data['industryRating'];
@@ -173,31 +174,80 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['keywords'] ) ) {
 			$metadata['keywords'] = $data['keywords'];
 		}
-		if ( !empty( $data['ageRequired'] ) ) {
+		// ageRequired can be 0
+		if ( isset( $data['ageRequired'] ) ) {
 			$metadata['age_required'] = $data['ageRequired'];
 		}
 		if ( !empty( $data['targetCountry'] ) ) {
 			$metadata['targetcountry'] = $data['targetCountry'];
+		}
+		if ( !empty( $data['series'] ) ) {
+			$metadata['series'] = $data['series'];
+		}
+		if ( !empty( $data['season'] ) ) {
+			$metadata['season'] = $data['season'];
+		}
+		if ( !empty( $data['episode'] ) ) {
+			$metadata['episode'] = $data['episode'];
+		}
+		if ( !empty( $data['characters'] ) ) {
+			$metadata['characters'] = $data['characters'];
+		}
+		if ( !empty( $data['resolution'] ) ) {
+			$metadata['resolution'] = $data['resolution'];
+		}
+		// ignore if aspectRatio is empty or 0
+		if ( !empty( $data['aspectRatio'] ) ) {
+			$metadata['aspectratio'] = $data['aspectRatio'];
+		}
+		if ( !empty( $data['pageCategories'] ) ) {
+			$metadata['pagecategories'] = $data['pageCategories'];
 		}
 
 		return $metadata;
 	}
 
 	/**
-	 * check if video exists
+	 * check if video title exists
 	 * @param string $name
 	 * @param string $source
 	 * @param string $assetType [remote_asset]
 	 * @return boolean
 	 */
-	public function isExist( $name, $source, $assetType = 'remote_asset' ) {
-		wfProfileIn( __METHOD__ );
-
+	public function isTitleExist( $name, $source, $assetType = 'remote_asset' ) {
 		$cond = array(
 			"asset_type='$assetType'",
 			"name='".addslashes($name)."'",
+			//"metadata.source='$source'",
+		);
+
+		return $this->isExist( $cond );
+	}
+
+	/**
+	 * check if video id exists (match sourceid in metadata)
+	 * @param string $sourceId
+	 * @param string $source
+	 * @param string $assetType [remote_asset]
+	 * @return boolean
+	 */
+	public function isSourceIdExist( $videoId, $source, $assetType = 'remote_asset' ) {
+		$cond = array(
+			"asset_type='$assetType'",
+			"metadata.sourceid='$videoId'",
 			"metadata.source='$source'",
 		);
+
+		return $this->isExist( $cond );
+	}
+
+	/**
+	 * check if video exists
+	 * @param array $cond
+	 * @return boolean
+	 */
+	public function isExist( $cond ) {
+		wfProfileIn( __METHOD__ );
 
 		$params = array(
 			'limit' => 1,
@@ -270,6 +320,54 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
+	 * get player info
+	 * @param string $videoId
+	 * @return array|false $response
+	 */
+	public function getPlayer( $videoId ) {
+		wfProfileIn( __METHOD__ );
+
+		$method = 'GET';
+		$reqPath = '/v2/assets/'.$videoId.'/player/';
+
+		$url = OoyalaApiWrapper::getApi( $method, $reqPath );
+		//print( "Connecting to $url...\n" );
+
+		$req = MWHttpRequest::factory( $url );
+		$status = $req->execute();
+		if ( $status->isGood() ) {
+			$response = json_decode( $req->getContent(), true );
+		} else {
+			$response = false;
+			print( "Error: problem getting player (".$status->getMessage().").\n" );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $response;
+	}
+
+	/**
+	 * set player
+	 * @param string $videoId
+	 * @param string $playerId (new player id)
+	 * @return boolean $resp
+	 */
+	public function setPlayer( $videoId, $playerId ) {
+		wfProfileIn( __METHOD__ );
+
+		$method = 'PUT';
+		$reqPath = '/v2/assets/'.$videoId.'/player/'.$playerId;
+		$params = array();
+
+		$resp = $this->sendRequest( $method, $reqPath, $params );
+
+		wfProfileOut( __METHOD__ );
+
+		return $resp;
+	}
+
+	/**
 	 * set age gate player
 	 * @param string $videoId
 	 * @param array $data
@@ -279,12 +377,8 @@ class OoyalaAsset extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$resp = true;
-		if ( !empty( $data['ageGate'] ) ) {
-			$method = 'PUT';
-			$reqPath = '/v2/assets/'.$videoId.'/player/'.OoyalaVideoHandler::OOYALA_PLAYER_ID_AGEGATE;
-			$params = array();
-
-			$resp = $this->sendRequest( $method, $reqPath, $params );
+		if ( !empty( $data['ageRequired'] ) ) {
+			$resp = $this->setPlayer( $videoId, OoyalaVideoHandler::OOYALA_PLAYER_ID_AGEGATE );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -302,7 +396,7 @@ class OoyalaAsset extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$params = array();
-		if ( !empty( $data['ageGate'] ) && !empty( $this->wg->OoyalaApiConfig['LabelAgeGate'] ) ) {
+		if ( !empty( $data['ageRequired'] ) && !empty( $this->wg->OoyalaApiConfig['LabelAgeGate'] ) ) {
 			$params[] = $this->wg->OoyalaApiConfig['LabelAgeGate'];
 		}
 
@@ -333,10 +427,10 @@ class OoyalaAsset extends WikiaModel {
 	 * @param array $params
 	 * @return boolean $result
 	 */
-	protected function sendRequest( $method, $reqPath, $params ) {
+	protected function sendRequest( $method, $reqPath, $params = array() ) {
 		wfProfileIn( __METHOD__ );
 
-		$reqBody = json_encode( $params );
+		$reqBody = empty( $params ) ? '' : json_encode( $params );
 
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
 		//print( "Connecting to $url...\n" );
@@ -367,6 +461,19 @@ class OoyalaAsset extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $result;
+	}
+
+	/**
+	 * Send request to Ooyala to delete video
+	 * @param string $videoId
+	 * @return boolean $resp
+	 */
+	public function deleteAsset( $videoId ) {
+		$method = 'DELETE';
+		$reqPath = '/v2/assets/'.$videoId;
+		$resp = $this->sendRequest( $method, $reqPath );
+
+		return $resp;
 	}
 
 }

@@ -192,4 +192,31 @@ class VideoHandlerHooks {
 
 		return true;
 	}
+
+	/**
+	 * Hook: get redirected file from foreign repo
+	 * @param RepoGroup $repos
+	 * @param Title $title
+	 * @param array $options
+	 * @param boolean $useCache
+	 * @param File|false $file
+	 * @param File $cacheEntry
+	 * @return true
+	 */
+	public function onFindRedirectedFile( $repos, $title, $options, $useCache, &$file, &$cacheEntry ) {
+		$redirect = RepoGroup::singleton()->getLocalRepo()->checkRedirect( $title );
+		if ( $redirect instanceof Title && $redirect->getNamespace() == NS_FILE && $title->getDBKey() != $redirect->getDBKey() ) {
+			foreach ( $repos as $repo ) {
+				if ( $repo->allowRedirect) {
+					$file = $repo->findfile( $redirect, $options );
+					if ( $file && $useCache ) {
+						$cacheEntry = $file;
+					}
+				}
+			}
+		}
+
+		return true;
+	}
+
 }

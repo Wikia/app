@@ -737,6 +737,15 @@ $messages['ja'] = array(
  */
 $messages['ko'] = array(
 	'comboajaxlogin-createlog' => '로그인하거나 계정 만들기',
+	'comboajaxlogin-actionmsg' => '이 행동을 수행하려면 먼저 로그인하거나 계정을 만들어야 합니다',
+	'comboajaxlogin-actionmsg-protected' => '이 행동을 수행하려면 먼저 로그인하거나 계정을 만들어야 합니다.',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>페이스북에 연결해 로그인</h1>',
+	'comboajaxlogin-connectmarketing-back' => '« 뒤로',
+	'comboajaxlogin-connectmarketing-forward' => '시작하기 »',
+	'comboajaxlogin-connectdirections' => '여기에 위키아 사용자 이름과 비밀번호를 입력하세요 - 위키아 계정과 페이스북 계정을 연결 처리해드립니다.
+
+한 번 설정해두면, 페이스북 연결 버튼으로에서 쉽게 로그인할 수 있습니다.',
+	'comboajaxlogin-ajaxerror' => '위키아가 응답하지 않습니다. 네트워크 연결을 확인하세요.',
 );
 
 /** Kirghiz (Кыргызча)
@@ -1026,6 +1035,7 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Giro720
  * @author Hamilton Abreu
+ * @author Luckas
  */
 $messages['pt'] = array(
 	'comboajaxlogin-desc' => 'Caixa dinâmica que permite a autenticação e registo de utilizadores e relembrar a palavra-chave',
@@ -1034,15 +1044,15 @@ $messages['pt'] = array(
 	'comboajaxlogin-actionmsg-protected' => 'Para editar esta página protegida, precisa de autenticar-se ou criar uma conta.',
 	'comboajaxlogin-connectmarketing' => '<h1>Ligue as suas contas</h1>
 <ul>
-<li>Mantenha o seu nome de utilizador, historial e edições... nada muda, excepto a forma como se autentica</li>
-<li>Partilhe a sua actividade na Wikia com os seus amigos no Facebook</li>
+<li>Mantenha o seu nome de utilizador, histórico e edições... nada muda, exceto a forma como se autentica</li>
+<li>Partilhe a sua atividade na Wikia com os seus amigos no Facebook</li>
 <li>Controlo total do que é publicado</li>
 </ul>',
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Autenticar-se com o Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>Ligue a sua conta Wikia ao Facebook</h1>
 <ul>
-<li>Mantenha o seu nome de utilizador, histórico, edições... nada muda, excepto a forma como entra</li>
-<li>Partilhe a sua actividade na Wikia com os amigos no Facebook com controlo total do que é publicado</li>
+<li>Mantenha o seu nome de utilizador, histórico, edições... nada muda, exceto a forma como entra</li>
+<li>Partilhe a sua atividade na Wikia com os amigos no Facebook com controlo total do que é publicado</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Voltar',
 	'comboajaxlogin-connectmarketing-forward' => 'Começar &raquo;',

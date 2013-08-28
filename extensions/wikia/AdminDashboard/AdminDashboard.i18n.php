@@ -59,6 +59,8 @@ $messages['en'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Add a blog post to your wiki.',
 	'admindashboard-control-multiple-upload-label' => 'Add Multiple Photos',
 	'admindashboard-control-multiple-upload-tooltip' => 'Upload more than one photo at once with the multiple photo upload tool.',
+	'admindashboard-control-lvs-label' => 'Licensed Video Swap',
+	'admindashboard-control-lvs-tooltip' => 'Find licensed video to replace existing unlicensed or blocked video',
 
 // Chrome
 	'admindashboard-back-to-dashboard' => 'Back to Dashboard',
@@ -109,6 +111,8 @@ $messages['qqq'] = array(
 	'admindashboard-control-multiple-upload-tooltip' => 'tooltip/hover describing special:multipleupload',
 	'admindashboard-control-special-css-label' => 'Label for link to Special:CSS page',
 	'admindashboard-control-special-css-tooltip' => 'Tooltip/hover describing Special:CSS',
+	'admindashboard-control-lvs-label' => 'Label for link to Special:LicensedVideoSwap',
+	'admindashboard-control-lvs-tooltip' => 'Toolsip/hover describing the Special:LicensedVideoSwap page',
 );
 
 /** Magyar (magázó) (Magyar (magázó))

@@ -598,19 +598,26 @@ class WikiaHomePageHelper extends WikiaModel {
 			$title = Title::newFromText($imageName, NS_IMAGE);
 			$file = wfFindFile($title);
 
-			if ($file instanceof File && $file->exists()) {
-				$originalWidth = $file->getWidth();
-				$originalHeight = $file->getHeight();
-			}
-
-			if (!empty($originalHeight) && !empty($originalWidth)) {
-				$imageServing = $this->getImageServingForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight);
-				$imageUrl = $imageServing->getUrl($file, $originalWidth, $originalHeight);
-			} else {
-				$imageUrl = $this->wg->blankImgUrl;
-			}
+			$imageUrl = $this->getImageUrlFromFile($file, $requestedWidth, $requestedHeight);
 		}
 
+		wfProfileOut(__METHOD__);
+		return $imageUrl;
+	}
+
+	public function getImageUrlFromFile($file, $requestedWidth, $requestedHeight) {
+		wfProfileIn(__METHOD__);
+		if ($file instanceof File && $file->exists()) {
+			$originalWidth = $file->getWidth();
+			$originalHeight = $file->getHeight();
+		}
+
+		if (!empty($originalHeight) && !empty($originalWidth)) {
+			$imageServing = $this->getImageServingForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight);
+			$imageUrl = $imageServing->getUrl($file, $originalWidth, $originalHeight);
+		} else {
+			$imageUrl = $this->wg->blankImgUrl;
+		}
 		wfProfileOut(__METHOD__);
 		return $imageUrl;
 	}

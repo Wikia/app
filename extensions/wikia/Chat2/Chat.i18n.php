@@ -1686,6 +1686,7 @@ $messages['khw'] = array(
  * @author Cafeinlove
  * @author Infinity
  * @author 아라
+ * @author 한글화담당
  */
 $messages['ko'] = array(
 	'chat-desc' => '[[Special:Chat|실시간 채팅]]',
@@ -1693,7 +1694,7 @@ $messages['ko'] = array(
 	'chat-no-login-text' => '채팅을 하기 위해서는 로그인이 필요합니다.',
 	'chat-default-topic' => '$1 채팅에 오신 것을 환영합니다',
 	'chat-ban-cant-ban-moderator' => '다른 채팅 운영자를 추방할 수 없습니다.',
-	'chat-ban-already-banned' => '$1 사용자는 이미 이 위키의 채트에서 추방되었습니다.',
+	'chat-ban-already-banned' => '$1 사용자는 이미 이 위키의 채팅에서 추방되었습니다.',
 	'chat-ban-you-need-permission' => '다른 사용자를 추방하기 위해서는 $1 권한이 필요합니다.',
 	'chat-you-are-banned' => '권한 오류',
 	'chat-you-are-banned-text' => '죄송합니다. 이 위키에서 채팅에 참여할 권한이 없습니다. 만약 이 사안이 관리자의 실수이거나 재검토가 필요하다고 생각하신다면 관리자에게 문의해주세요.',

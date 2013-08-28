@@ -68,8 +68,10 @@ class FilePageHooks extends WikiaObject{
 	 * @return bool
 	 */
 	static public function onWikiaMobileAssetsPackages( Array &$jsHeadPackages, Array &$jsBodyPackages, Array &$scssPackages ){
-		$jsBodyPackages[] = 'filepage_js_wikiamobile';
-		$scssPackages[] = 'filepage_scss_wikiamobile';
+		if( F::app()->wg->Title->getNamespace() == NS_FILE ) {
+			$jsBodyPackages[] = 'filepage_js_wikiamobile';
+			$scssPackages[] = 'filepage_scss_wikiamobile';
+		}
 
 		return true;
 	}

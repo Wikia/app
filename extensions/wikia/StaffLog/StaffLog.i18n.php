@@ -325,6 +325,7 @@ $messages['mk'] = array(
 	'stafflog-filter-type-piggyback' => 'На ушка',
 	'stafflog-filter-type-renameuser' => 'Преименувања на корисници',
 	'stafflog-filter-type-wikifactory' => 'Статус на викито',
+	'action-stafflog' => 'преглед на централизираниот девник на персоналот',
 );
 
 /** Malay (Bahasa Melayu)

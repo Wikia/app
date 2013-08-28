@@ -40,7 +40,8 @@ $messages['qqq'] = array(
 	'wikiapoll-vote' => 'Button text to vote in a poll.',
 	'wikiapoll-votes' => 'Parameter:
 * $1 is the number of votes cast.',
-	'wikiapoll-createpoll-headline' => 'Headline for Create Poll Special Page',
+	'wikiapoll-createpoll-headline' => 'Headline for Create Poll Special Page.
+{{Identical|Create poll}}',
 	'wikiapoll-editpoll-headline' => 'Headline for Edit Poll Special Page',
 	'wikiapoll-question-label' => 'Form Label for Special Page.
 {{Identical|Question}}',
@@ -51,7 +52,8 @@ $messages['qqq'] = array(
 	'wikiapoll-error-invalid-title' => 'Error message when title of poll is invalid/empty',
 	'wikiamobile-wikiapoll-open-poll' => 'Text on a button to open poll in a modal',
 	'wikiamobile-wikiapoll-thanks-voting' => 'Message displayed to a user after voting',
-	'wikiamobile-wikiapoll-poll' => 'Title of a modal',
+	'wikiamobile-wikiapoll-poll' => 'Title of a modal.
+{{Identical|Poll}}',
 	'wikiamobile-wikiapoll-user-voted' => 'Message displayed to a user after voting instead of wikiamobile-wikiapoll-open-poll button',
 );
 

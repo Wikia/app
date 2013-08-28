@@ -26,12 +26,25 @@ class SpecialCssModel extends WikiaModel {
 	const UPDATE_SECTION_IN_BLOGPOST = 2;
 
 	/**
-	 * @desc Regex pattern used to extract h3 tags
+	 * @desc Regex pattern used to extract "CSS Updates" headline
 	 *
-	 * @see SpecialCssModel::removeHeadline(removeFirstH3
-	 * @see SpecialCssModel::addAnchorToPostUrl(getAnchorFromWikitext
+	 * @see SpecialCssModel::filterRevisionsData()
 	 */
-	const WIKITEXT_H3_PATTERN = '/([^=]|^)={3}([^=]+)={3}([^=]|$)/';
+	const WIKITEXT_HEADLINE_PATTERN = '/===\s*%s\s*===/s';
+
+	/**
+	 * @desc Regex pattern used to extract "CSS Updates" section
+	 *
+	 * @see SpecialCssModel::getCssUpdateSection()
+	 */
+	const WIKITEXT_SECTION_PATTERN = '/===\s*%s\s*===\s*$(.+)/ms';
+
+	/**
+	 * @desc Regex pattern used to extract H1-H3 headlines
+	 *
+	 * @see SpecialCssModel::getCssUpdateSection()
+	 */
+	const WIKITEXT_H3_TO_H1_PATTERN = '/(^===[^$=]+===\\s*$)|(^==[^$=]+==\\s*$)|(^=[^$=]+=\\s*$)/m';
 
 	/**
 	 * @desc Limit of characters per one post snippet
@@ -41,7 +54,12 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Memcache key for CSS Updates
 	 */
-	const MEMC_KEY = 'css-chrome-updates';
+	const MEMC_KEY = 'css-chrome-updates-v2.0';
+
+	/**
+	 * @desc Memcache key suffix for CSS Updates headline
+	 */
+	const MEMC_KEY_HEADLINE_SUFFIX = 'css-updates-headline';
 
 	protected $dbName;
 
@@ -126,13 +144,13 @@ class SpecialCssModel extends WikiaModel {
 	}
 
 	/**
-	 * @desc Compares passed article id with Wikia.css article id
+	 * @desc Compares passed title with Wikia.css title
 	 *
-	 * @param $articleId
+	 * @param $title
 	 * @return bool
 	 */
-	public function isWikiaCssArticle($articleId) {
-		return ($articleId == $this->getCssFileArticleId() );
+	public function isWikiaCssTitle($title) {
+		return Title::compare($title, $this->getCssFileTitle()) === 0;
 	}
 
 	/**
@@ -245,12 +263,13 @@ class SpecialCssModel extends WikiaModel {
 				$cssUpdatesPostsData = $this->getCssPostsApiData($postsParams);
 
 				if ( !empty( $cssUpdatesPostsData ) ) {
-					$ids = $this->getBlogsIds( $cssUpdatesPostsData );
-					$cssRevisionsData = $this->getCssRevisionsApiData( $ids, $revisionsParams );
-
-					foreach ( $cssUpdatesPostsData as $postData ) {
-						$cssUpdatesPosts[] = $this->prepareCssUpdateData($cssRevisionsData, $postData);
-					}
+					$pageIds = $this->getBlogsIds( $cssUpdatesPostsData );
+					$cssRevisionsData = $this->getCssRevisionsApiData( $pageIds, $revisionsParams );
+					// we got revisions data as a associative array with page id as a key
+					// but we need this array ordered by timestamp
+					$cssRevisionsData = $this->getCssRevisionsInOrder($cssRevisionsData, $pageIds);
+					$filteredRevisionData = $this->filterRevisionsData( $cssRevisionsData );
+					$cssUpdatesPosts = array_map( [ $this, 'prepareCssUpdateData' ], $filteredRevisionData );
 				}
 
 				return $cssUpdatesPosts;
@@ -275,120 +294,178 @@ class SpecialCssModel extends WikiaModel {
 		return $title->getFullURL();
 	}
 
+	private function filterRevisionsData( $cssRevisionsData ) {
+		$filtered = [];
+
+		foreach( $cssRevisionsData as $revisionData ) {
+			$content = isset( $revisionData['revisions'][0]['*'] ) ? $revisionData['revisions'][0]['*'] : '';
+			if( $this->isCssHeadlineIn( $content ) ) {
+				$filtered[] = $revisionData;
+			}
+		}
+
+		return $filtered;
+	}
+
 	/**
 	 * @desc Returns an array with correct elements from given api results
 	 *
-	 * @param array $cssRevisionsData results from API call with request of revision's info
 	 * @param array $postData results from API call with request of posts (articles) list in a category
 	 *
 	 * @return array
 	 */
-	private function prepareCssUpdateData($cssRevisionsData, $postData) {
-		$cssUpdatePost = [
-			'title' => '',
-			'url' => '',
-			'userAvatar' => '',
-			'userUrl' => '',
-			'userName' => '',
-			'timestamp' => '',
-			'text' => '',
-		];
-
-		$pageId = $postData['pageid'];
+	private function prepareCssUpdateData( $postData ) {
+		$cssUpdatePost = [];
 		$communityWikiId = WikiFactory::DBtoID( $this->getCommunityDbName() );
-		
+
 		$blogTitle = GlobalTitle::newFromText( $postData['title'], NS_MAIN, $communityWikiId );
 		$blogTitleText = $blogTitle->getText();
 
-		$lastRevisionUser = $cssRevisionsData[$pageId]['revisions'][0]['user'];
-		$blogUser = $this->getUserFromTitleText( $blogTitleText, $lastRevisionUser);
+		$lastRevisionUser = isset( $postData['revisions'][0]['user'] ) ? $postData['revisions'][0]['user'] : null;
+		$timestamp = isset( $postData['revisions'][0]['timestamp'] ) ? $postData['revisions'][0]['timestamp'] : null;
+		$blogUser = $this->getUserFromTitleText( $blogTitleText, $lastRevisionUser );
 		$userPage = GlobalTitle::newFromText( $blogUser, NS_USER, $communityWikiId );
 
-		if( $blogTitle instanceof GlobalTitle && $userPage instanceof GlobalTitle ) {
-			$timestamp = $cssRevisionsData[$pageId]['revisions'][0]['timestamp'];
-			$sectionText = $cssRevisionsData[$pageId]['revisions'][0]['*'];
-
+		if( !is_null( $lastRevisionUser ) &&
+			!is_null( $timestamp ) &&
+			$blogTitle instanceof GlobalTitle &&
+			$userPage instanceof GlobalTitle
+		) {
+			// $postData['revisions'][0]['*'] is being checked in SpecialCssModel::filterRevisionsData()
+			// which is called before this method
+			$sectionText = $postData['revisions'][0]['*'];
+			$cssUpdateText = $this->truncateAndParse( $blogTitle, $this->getCssUpdateSection( $sectionText ) );
 			$cssUpdatePost = [
 				'title' => $this->getAfterLastSlashText( $blogTitleText ),
-				'url' => trim( $blogTitle->getFullURL() . $this->getAnchorFromWikitext( $sectionText ) ),
+				'url' => $this->appendHeadlineAnchor( $blogTitle->getFullURL() ),
 				'userAvatar' => AvatarService::renderAvatar( $blogUser, 25 ),
 				'userUrl' => $userPage->getFullUrl(),
 				'userName' => $blogUser,
 				'timestamp' => $this->wg->Lang->date( wfTimestamp( TS_MW, $timestamp ) ),
-				'text' => $this->getPostSnippet($blogTitle, $sectionText),
+				'text' => $cssUpdateText,
 			];
 		}
 
 		return $cssUpdatePost;
 	}
 
+	private function isCssHeadlineIn( $wikitext ) {
+		$headline = $this->getCssUpdateHeadline();
+		$pattern = sprintf( self::WIKITEXT_HEADLINE_PATTERN, $headline );
+
+		return preg_match( $pattern, $wikitext );
+	}
+
 	/**
-	 * @desc Removes wikitext H3, truncates $sectionText and parse wikitext
+	 * @desc Gets "CSS Updates" headline and adds it to the url
 	 *
-	 * @param Title $blogTitle
-	 * @param String $sectionText
+	 * @param String $url
+	 *
+	 * @return string
+	 */
+	private function appendHeadlineAnchor( $url ) {
+		$headline = $this->getCssUpdateHeadline();
+		$url .= '#' . Sanitizer::escapeId( $headline, 'noninitial' );
+
+		return $url;
+	}
+
+	/**
+	 * @desc Retrives part of the blog post's content and returns it
+	 *
+	 * @param String $blogPostWikitext content of a blog post
 	 *
 	 * @return String
 	 */
-	private function getPostSnippet($blogTitle, $sectionText) {
-		$output = $this->removeFirstH3( $sectionText );
-		$output = $this->wg->Lang->truncate( $output, self::SNIPPET_CHAR_LIMIT, wfMessage( 'ellipsis' )->text() );
-		$output = $this->getParsedText($output, $blogTitle);
+	private function getCssUpdateSection( $blogPostWikitext ) {
+		wfProfileIn( __METHOD__ );
+		$output = '';
+		$pattern = sprintf( self::WIKITEXT_SECTION_PATTERN, $this->getCssUpdateHeadline() );
 
+		preg_match( $pattern, $blogPostWikitext, $matches, PREG_OFFSET_CAPTURE );
+		if( count( $matches ) > 1 ) {
+			$output = substr( $blogPostWikitext, $matches[1][1] );
+			preg_match( self::WIKITEXT_H3_TO_H1_PATTERN, $output, $matches, PREG_OFFSET_CAPTURE );
+
+			if( count( $matches ) > 0 ) {
+				$output = substr( $output, 0, $matches[0][1] );
+			}
+
+			$output = trim( $output );
+		}
+
+		wfProfileOut( __METHOD__ );
 		return $output;
 	}
 
 	/**
-	 * @desc Gets first H3 tag content and makes an anchor of it if found
+	 * @desc Returns array with CSS Updates ordered by timestamp
 	 *
-	 * @param String $sectionText
+	 * @param $cssUpdates Array with CSS Updates in order by page id
+	 * @param $pageIds Array with page ids in order by timestamp
 	 *
-	 * @return string
+	 * @return array
 	 */
-	private function getAnchorFromWikitext( $sectionText ) {
-		$anchor = '';
-		$firstH3Tag = $this->getFirstH3Tag( $sectionText );
+	private function getCssRevisionsInOrder( $cssUpdates, $pageIds ) {
+		$cssUpdatesInOrder = [];
 
-		if( !empty( $firstH3Tag ) ) {
-			$anchor .= '#' . str_replace(' ', '_', $firstH3Tag);
+		foreach( $pageIds as $id ) {
+			if( isset( $cssUpdates[$id] ) ) {
+				$cssUpdatesInOrder[] = $cssUpdates[$id];
+			}
 		}
 
-		return $anchor;
+		return $cssUpdatesInOrder;
 	}
 
 	/**
-	 * @desc Removes wikitext's H3 tags from given text
+	 * @desc Truncates given wiki text, added ellipsis at the end, parses truncated text and returns it
 	 *
-	 * @param String $text
-	 * @return mixed
+	 * @param GlobalTitle|Title $title mediawiki article's title
+	 * @param String $wikitext wikitext which is going to be truncated
+	 *
+	 * @return String
 	 */
-	private function removeFirstH3($text) {
-		$firstH3Tag = $this->getFirstH3Tag( $text );
+	private function truncateAndParse( $title, $wikitext ) {
+		$userLang = $this->wg->Lang;
+		$wikitext = $userLang->truncate( $wikitext, self::SNIPPET_CHAR_LIMIT, wfMessage( 'ellipsis' )->text() );
 
-		if( !empty( $firstH3Tag ) ) {
-			$wikitextFirstH3Tag = '===' . $firstH3Tag . '===';
-			$text = str_replace( $wikitextFirstH3Tag, '', $text );
+		$extractedWikitext = CategoryHelper::extractCategoriesFromWikitext( $wikitext, true, $userLang );
+
+		if ( isset($extractedWikitext['wikitext']) ) {
+			$wikitext = $extractedWikitext['wikitext'];
 		}
 
-		return $text;
+		$wikitext = $this->getParsedText( $wikitext, $title );
+
+		return $wikitext;
 	}
 
 	/**
-	 * @desc Uses regural expression to find first wikitext h3 tag (i.e. "=== this is a wikitext h3 tag ===") and returns it if found
+	 * @desc Returns "CSS Updates" headline for selected language
 	 *
-	 * @param String $wikitext
-	 *
-	 * @return string
+	 * @return String | null
 	 */
-	private function getFirstH3Tag($wikitext) {
-		$firstH3Tag = '';
-		$wikitextH3Tags = [];
+	protected function getCssUpdateHeadline() {
+		$lang = $this->getCssUpdateLang();
 
-		if( preg_match( self::WIKITEXT_H3_PATTERN, $wikitext, $wikitextH3Tags ) && !empty( $wikitextH3Tags[2] ) ) {
-			$firstH3Tag = $wikitextH3Tags[2];
-		}
+		$headline = WikiaDataAccess::cache( wfSharedMemcKey(
+				self::MEMC_KEY,
+				self::MEMC_KEY_HEADLINE_SUFFIX,
+				$lang
+			),
+			60 * 60 * 24,
+			function() use ( $lang ) {
+				$headline = $this->wg->Lang->getMessageFor(
+					'special-css-community-update-headline',
+					$lang
+				);
 
-		return $firstH3Tag;
+				return $headline;
+			}
+		);
+
+		return $headline;
 	}
 
 	/**
@@ -512,12 +589,9 @@ class SpecialCssModel extends WikiaModel {
 	 * @return string language code
 	 */
 	public function getCssUpdateLang() {
-		/** @var $wgLang Language */
-		global $wgLang, $wgCssUpdatesLangMap;
+		$langCode = $this->wg->Lang->getCode();
 
-		$langCode = $wgLang->getCode();
-
-		if ( !array_key_exists($langCode, $wgCssUpdatesLangMap) ) {
+		if ( !array_key_exists($langCode, $this->wg->CssUpdatesLangMap) ) {
 			$langCode = self::CSS_DEFAULT_LANG;
 		}
 
@@ -538,6 +612,10 @@ class SpecialCssModel extends WikiaModel {
 		return $dbName;
 	}
 
+	public function isMinorEditDefault() {
+		return $this->wg->User->getBoolOption('minordefault');
+	}
+
 	/**
 	 * @desc Returns array with page ids based on blog data from api
 	 *
@@ -551,8 +629,17 @@ class SpecialCssModel extends WikiaModel {
 			$pageIds[] = $blog['pageid'];
 		}
 
-		$ids = implode('|', $pageIds);
+		return $pageIds;
+	}
 
+	/**
+	 * @desc Returns page ids concatenated with '|' char
+	 *
+	 * @param $pageIds Array with page ids
+	 * @return string
+	 */
+	private function implodeBlogsIds($pageIds) {
+		$ids = implode('|', $pageIds);
 		return $ids;
 	}
 
@@ -575,16 +662,16 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Returns default parameters for fetching revision data
 	 *
-	 * @param string $ids page ids separated by '|'
+	 * @param array $ids an array with page ids
+	 *
 	 * @return array
 	 */
-	private function getDefaultRevisionParams($ids = '') {
+	private function getDefaultRevisionParams( $ids = [] ) {
 		return [
 			'action' => 'query',
 			'prop' => 'revisions',
 			'rvprop' => 'content|user|timestamp',
-			'rvsection' => self::UPDATE_SECTION_IN_BLOGPOST,
-			'pageids' => $ids
+			'pageids' => $this->implodeBlogsIds( $ids )
 		];
 	}
 }

@@ -530,6 +530,9 @@ var Lightbox = {
 			// Show special header for ads
 			Lightbox.renderAdHeader();
 
+			// For interstitial ads, always show the overlay
+			Lightbox.showOverlay();
+
 			// Show the ad
 			$('#' + this.getSlotName()).show();
 
@@ -648,6 +651,12 @@ var Lightbox = {
 	},
 	hideOverlay: function(delay) {
 		var overlay = Lightbox.openModal;
+
+		// If an interstitial ad is being shown, do not hideOverlay
+		if (Lightbox.ads.adIsShowing) {
+			return;
+		}
+
 		if(!overlay.hasClass('overlay-hidden') && overlay.data('overlayactive')) {
 			clearTimeout(Lightbox.eventTimers.overlay);
 			Lightbox.eventTimers.overlay = setTimeout(

@@ -689,10 +689,13 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
-	'swm-label-mode-users-active' => 'Жигар декъашхой',
+	'swm-label-preview' => 'Хьалха муха ю хьажа',
+	'swm-label-mode-users-active' => 'Жигара декъашхой',
 	'swm-label-language' => 'Мотт',
 	'swm-list-table-expire' => 'Чекхйолу',
+	'swm-list-table-tools' => 'ГӀирсаш',
 	'swm-list-table-lang' => 'Меттанаш',
+	'swm-error-empty-group' => 'ДӀаязъе тобан цӀе.',
 );
 
 /** Czech (česky)
@@ -2629,7 +2632,7 @@ $messages['pt'] = array(
 	'swm-label-mode-wikis-wiki' => 'Wiki selecionada',
 	'swm-label-mode-wikis-wiki-multi' => 'Lista de wikis',
 	'swm-label-mode-users-all' => 'Todos os utilizadores',
-	'swm-label-mode-users-active' => 'Utilizadores activos',
+	'swm-label-mode-users-active' => 'Utilizadores ativos',
 	'swm-label-mode-users-group' => 'Utilizadores pertencentes ao grupo',
 	'swm-label-mode-users-group-hint' => '<i>Escolha um grupo da lista ou escreva o nome do grupo para substituir a seleção da lista.</i>',
 	'swm-label-mode-users-user' => 'Utilizador selecionado',

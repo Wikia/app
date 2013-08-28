@@ -230,7 +230,7 @@ class DataMartService extends Service {
 	 *
 	 * @return array $topWikis [ array( wikiId => pageviews ) ]
 	 */
-	public static function getTopWikisByPageviews ($periodId, $limit = 200, Array $langs = null, $hub = null, $public = null) {
+	public static function getTopWikisByPageviews ($periodId, $limit = 200, Array $langs = [], $hub = null, $public = null) {
 		$app = F::app();
 		wfProfileIn(__METHOD__);
 
@@ -507,7 +507,7 @@ class DataMartService extends Service {
 			$cacheVersion,
 			$wikiId,
 			$limitUsed,
-			( !empty( $keyToken ) ) ? md5( $keyToken ) : null,
+			( $keyToken !== '' ) ? md5( $keyToken ) : null,
 			$excludeNamespaces
 		);
 

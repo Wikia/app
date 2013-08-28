@@ -518,6 +518,21 @@ class WikiaHomePageController extends WikiaController {
 	 */
 	public function getInterstitial() {
 		$wikiId = $this->request->getVal('wikiId', 0);
+		$domain = $this->request->getVal('domain', null);
+
+		if ($wikiId == 0 && $domain != null) {
+			// This is not guaranteed valid for all domains, but the custom domains in use have aliases set up
+			$domain = "$domain.wikia.com";
+			$wikiId = WikiFactory::DomainToId($domain);
+			if ($wikiId == 0) {
+				throw new InvalidParameterApiException("domain");
+			}
+		}
+
+		if ($wikiId == 0) {
+			throw new MissingParameterApiException("wikiId or domain");
+		}
+
 		$this->wikiAdminAvatars = $this->helper->getWikiAdminAvatars($wikiId);
 		$this->wikiTopEditorAvatars = $this->helper->getWikiTopEditorAvatars($wikiId);
 		$tempArray = array();
@@ -546,6 +561,20 @@ class WikiaHomePageController extends WikiaController {
 		}
 
 		$this->imagesSlider = $this->sendRequest('WikiaMediaCarouselController', 'renderSlider', array('data' => $images));
+
+		$wordmarkUrl = '';
+		try {
+			$title = GlobalTitle::newFromText('Wiki-wordmark.png', NS_FILE, $wikiId);
+			if ( $title !== null ) {
+				$file = new GlobalFile($title);
+				if ( $file !== null ) {
+					$wordmarkUrl = $file->getUrl();
+				}
+			}
+		} catch ( Exception $e ) { }
+
+		$this->wordmark = $wordmarkUrl;
+
 	}
 
 	public static function onGetHTMLAfterBody($skin, &$html) {
@@ -598,7 +627,7 @@ class WikiaHomePageController extends WikiaController {
 		$railModuleList = [
 			1500 => ['Search', 'Index', null],
 		];
-		
+
 		return true;
 	}
 
@@ -626,12 +655,12 @@ class WikiaHomePageController extends WikiaController {
 		}
 
 	}
-	
+
 	private function getVisualization() {
 		if( is_null($this->visualization) ) {
 			$this->visualization = new CityVisualization();
 		}
-		
+
 		return $this->visualization;
 	}
 }

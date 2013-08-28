@@ -68,7 +68,19 @@ class RebuildLocalisationCache extends Maintenance {
 		$lc = new LocalisationCache_BulkLoad( $conf );
 
 		$codes = array_keys( Language::getLanguageNames( true ) );
+
+		// Define a list of language codes we should rebuild first
+		$firstCodes = array( 'en', 'de', 'es', 'fr','pl', 'it' );
+
+		// Filter these out of the full language code list
+		$codes = array_filter( $codes,
+							   function ( $item ) use ( $firstCodes ) {
+									return !in_array($item, $firstCodes);
+							   } );
 		sort( $codes );
+
+		// Add the priority codes to the front of the list
+		$codes = array_merge($firstCodes, $codes);
 
 		// Initialise and split into chunks
 		$numRebuilt = 0;
