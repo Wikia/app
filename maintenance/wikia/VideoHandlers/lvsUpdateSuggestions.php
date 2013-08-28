@@ -53,9 +53,11 @@ class LVSUpdateSuggestions extends Maintenance {
 		$stats = $this->usageStats();
 
 		$wgDBName = WikiFactory::IDtoDB($_ENV['SERVER_ID']);
-		echo "[$wgDBName] Finished in $delta.  Usage Stats:\n";
-		echo "[$wgDBName] Video stats: total=".$stats['totalVids']." with_suggestion=".$stats['vidsWithSuggestions']." ave_per_vid=".sprintf("%.1f", $stats['avgSuggestions'])."\n";
-		echo "[$wgDBName] Swap status: kept=".$stats['swapTypes'][1]." swapped=".$stats['swapTypes'][2]." exact=".$stats['swapTypes'][3]."\n";
+		echo "[$wgDBName] Finished in $delta.\n";
+		echo "[$wgDBName] Usage Stats: Total videos before swapping videos=".( $stats['totalVids'] + $stats['swapTypes'][1] + $stats['swapTypes'][2] + $stats['swapTypes'][3] ).", ";
+		echo "Total videos=".$stats['totalVids']." (Videos with suggestions=".$stats['vidsWithSuggestions']."), ";
+		echo "Total suggestions=".$stats['numSuggestions'].", Avg per video=".sprintf("%.1f", $stats['avgSuggestions']).", ";
+		echo "Total kept videos=".$stats['swapTypes'][1].", Total swapped videos=".( $stats['swapTypes'][2] + $stats['swapTypes'][3] )." (Exact title=".$stats['swapTypes'][3].")\n";
 	}
 
 	/**
@@ -180,7 +182,7 @@ class LVSUpdateSuggestions extends Maintenance {
 			$vidsWithSuggestions++;
 			$numSuggestions += $row->suggestions;
 		}
-		$avgSuggestions = $numSuggestions/$vidsWithSuggestions;
+		$avgSuggestions = empty( $vidsWithSuggestions ) ? 0 : $numSuggestions/$vidsWithSuggestions;
 
 		return array("totalVids"           => $totalVids,
 					 "vidsWithSuggestions" => $vidsWithSuggestions,
