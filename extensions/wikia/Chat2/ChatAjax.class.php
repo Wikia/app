@@ -134,12 +134,8 @@ class ChatAjax {
 		global $wgRequest;
 		wfProfileIn( __METHOD__ );
 
-		// TODO: change this
-		$roomName = 'private room name';
-		$roomTopic = 'private room topic';
-
 		$users = json_decode($wgRequest->getVal('users'));
-		$roomId = NodeApiClient::getDefaultRoomId($roomName, $roomTopic, 'private', $users );
+		$roomId = NodeApiClient::getDefaultRoomId( 'private', $users );
 
 		wfProfileOut( __METHOD__ );
 		return array("id" => $roomId);
