@@ -30,7 +30,7 @@ ve.ce.WikiaBlockMediaNode = function VeCeWikiaBlockMediaNode( model, config ) {
 	this.$thumb = null;
 
 	// Initialize
-	this.update();
+	this.update( true );
 
 	// Mixin constructors
 	ve.ce.ProtectedNode.call( this );
@@ -105,16 +105,10 @@ ve.ce.WikiaBlockMediaNode.prototype.getCssClass = function ( type, alignment ) {
 /**
  * Update the view on attribute change.
  *
- * @emits setup
- * @emits teardown
  * @method
  */
 ve.ce.WikiaBlockMediaNode.prototype.onAttributeChange = function () {
-	this.emit( 'teardown' );
-
 	this.update();
-
-	this.emit( 'setup' );
 };
 
 /** */
@@ -187,15 +181,26 @@ ve.ce.WikiaBlockMediaNode.prototype.getWrapperElement = function () {
 /**
  * Builds the view from scratch.
  *
+ * @emits setup
+ * @emits teardown
  * @method
  */
-ve.ce.WikiaBlockMediaNode.prototype.update = function () {
-	this.$ = this.$thumb = this.getThumbElement();
+ve.ce.WikiaBlockMediaNode.prototype.update = function ( onInitialize ) {
+	var $root;
+
+	$root = this.$thumb = this.getThumbElement();
 
 	if ( this.model.getAttribute( 'align' ) === 'center' ) {
-		this.$ = this.getWrapperElement().append( this.$thumb );
+		$root = this.getWrapperElement().append( this.$thumb );
 	}
 
+	if ( !onInitialize ) {
+		this.emit( 'teardown' );
+		this.$.replaceWith( $root );
+		this.emit( 'setup' );
+	}
+
+	this.$ = $root;
 	this.$anchor = this.getAnchorElement().appendTo( this.$thumb );
 	this.$image = this.getImageElement().appendTo( this.$anchor );
 
