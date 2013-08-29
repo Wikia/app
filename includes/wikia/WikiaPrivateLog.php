@@ -159,10 +159,13 @@ class WikiaPrivateLog {
 		$array_contents = str_replace( ['[', ']', '=>'], ['#!#', '#?#', ''], $array_contents );
 		$array_fields = explode( "#!#", $array_contents );
 
-		for( $i = 0; $i < count($array_fields); $i++ ) {
-			if( $i != 0 ) {
+		for ( $i = 0; $i < count($array_fields); $i++ ) {
+			if ( $i != 0 ) {
 				$bits = explode( '#?#', $array_fields[$i] );
-				if( $bits[0] != '' ) $output[] = [$bits[0] => $bits[1]];
+
+				if ( $bits[0] != '' ) {
+					$output[] = [$bits[0] => $bits[1]];
+				}
 			}
 		}
 
