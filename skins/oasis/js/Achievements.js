@@ -104,7 +104,7 @@
 					self.showBadgesDescription();
 					self.trackSponsoredBadges();
 
-					if ( Math.floor( self.page >= self.pageCount ) ) {
+					if ( self.page >= self.pageCount ) {
 						self.prev.show();
 						self.next.hide();
 					} else if ( self.page <= 0 ) {
