@@ -105,10 +105,16 @@ ve.ce.WikiaBlockMediaNode.prototype.getCssClass = function ( type, alignment ) {
 /**
  * Update the view on attribute change.
  *
+ * @emits setup
+ * @emits teardown
  * @method
  */
 ve.ce.WikiaBlockMediaNode.prototype.onAttributeChange = function () {
+	this.emit( 'teardown' );
+
 	this.update();
+
+	this.emit( 'setup' );
 };
 
 /** */
