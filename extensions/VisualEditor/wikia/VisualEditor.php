@@ -8,7 +8,6 @@ $wgExtensionCredits['other'][] = array(
 );
 
 // Register resource modules
-
 $wgResourceModules += array(
 	'ext.visualEditor.wikiaViewPageTarget.init' => array(
 		'scripts' => 've.init.mw.WikiaViewPageTarget.init.js',
@@ -24,7 +23,9 @@ $wgResourceModules += array(
 		'remoteExtPath' => 'VisualEditor/wikia',
 	),
 	'ext.visualEditor.wikiaViewPageTarget' => array(
-		'scripts' => 've.init.mw.WikiaViewPageTarget.js',
+		'scripts' => array(
+			've.init.mw.WikiaViewPageTarget.js',
+		),
 		'styles' => array(
 			've.init.mw.WikiaViewPageTarget.css',
 		),
@@ -34,4 +35,16 @@ $wgResourceModules += array(
 		'localBasePath' => dirname( __FILE__ ) . '/modules',
 		'remoteExtPath' => 'VisualEditor/wikia',
 	),
+	'ext.visualEditor.wikiaCore' => array(
+		'scripts' => array(
+			've.ce.WikiaBlockMediaNode.js',
+		),
+		'dependencies' => array(
+			'ext.visualEditor.core'
+		),
+		'localBasePath' => dirname( __FILE__ ) . '/modules',
+		'remoteExtPath' => 'VisualEditor/wikia',
+	)
 );
+
+$wgVisualEditorPluginModules[] = 'ext.visualEditor.wikiaCore';
