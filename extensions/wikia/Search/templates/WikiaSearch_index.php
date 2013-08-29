@@ -52,8 +52,8 @@
 					<?php foreach( $results as $result ): ?>
 						<?php
 							$pos++;
-							if ( $pos == 1 && $mediaData ):
-								echo $app->getView( 'WikiaSearch', 'mediadata', array( 'mediaData' => $mediaData, 'query' => $query ) );
+							if ( ( $pos == 2 || $pos == 4 ) && $mediaData ):
+								echo '<li class="video-addon-results video-addon-results-before-' . $pos . '">' . $app->getView( 'WikiaSearch', 'mediadata', array( 'mediaData' => $mediaData, 'query' => $query ) ) . '</li>';
 							endif;
 							echo $app->getView( 'WikiaSearch', ( $result->getVar( 'ns' ) === 0 ) ? $resultView : WikiaSearchController::WIKIA_DEFAULT_RESULT, array(
 							  'result' => $result,

@@ -239,10 +239,16 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		       ->setStart( $this->getVal( 'next', 0 ) );
 		
 		$results = $this->queryServiceFactory->getFromConfig( $config )->searchAsApi( [ 'url', 'id', 'pageid', 'wid', 'title' ], true );
-		$params = [ 'contextWidth' => 125, 'maxHeight' => 94 ]; 
+		$dimensions = [ 'width' => 125, 'height' => 94 ];
+		$service = new \Wikia\Search\MediaWikiService();
 		foreach ( $results['items'] as &$result ) {
-			$result['url'] = str_replace( 'http://video.wikia.com/', $wgServer, $result['url'] );
-			$result['mediaDetail'] = WikiaFileHelper::getMediaDetail( Title::newFromText( $result['title'] ), $params );
+			if (! isset( $result['thumbnail'] ) ) {
+				try {
+					$result['thumbnail'] = $service->getThumbnailHtml( $result['pageid'], $dimensions );
+				} catch ( \Exception $e ) {
+					$result['thumbnail'] = '';
+				}
+			}
 		}
 		
 		$response = $this->getResponse();
