@@ -330,13 +330,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $searchConfig->hasArticleMatch() ) {
 			$article = Article::newFromID( $searchConfig->getArticleMatch()->getId() );
 			$title = $article->getTitle();
-			$track = new Track();
 			if ( $this->getVal('fulltext', '0') === '0') {
 				wfRunHooks( 'SpecialSearchIsgomatch', array( $title, $query ) );
-				$track->event( 'search_start_gomatch', array( 'sterm' => $query, 'rver' => 0 ) );
 				$this->response->redirect( $title->getFullUrl() );
-			} else {
-				$track->event( 'search_start_match', array( 'sterm' => $query, 'rver' => 0 ) );
 			}
 		} else {
 			$title = Title::newFromText( $query );
