@@ -315,7 +315,8 @@ body {
 		}
 		& .tooltip-icon {
 			@include tooltip-icon;
-			top: 4px;
+			top: 6px;
+			right: -17px;
 		}
 		.modalContent {
 			border-color: transparent;
