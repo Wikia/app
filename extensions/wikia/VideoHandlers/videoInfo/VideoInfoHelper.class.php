@@ -80,7 +80,7 @@ class VideoInfoHelper extends WikiaModel {
 	}
 
 	/**
-	 * get VideoInfo from title
+	 * Get a VideoInfo object given a Title object
 	 * @param Title|string $title
 	 * @param boolean $premiumOnly
 	 * @return VideoInfo|null $videoInfo
@@ -88,11 +88,15 @@ class VideoInfoHelper extends WikiaModel {
 	public function getVideoInfoFromTitle( $title, $premiumOnly = false ) {
 		wfProfileIn( __METHOD__ );
 
-		$videoInfo = null;
+		// Attempt to retrieve this information from the video_info table first
+		$videoInfo = VideoInfo::newFromTitle( $title instanceof Title ? $title->getDBkey() : $title );
 
-		$videoData = $this->getVideoDataFromTitle( $title, $premiumOnly );
-		if ( !empty($videoData) ) {
-			$videoInfo = new VideoInfo( $videoData );
+		// If its not in the DB, recreate it from existing file data
+		if ( empty($videoInfo) ) {
+			$videoData = $this->getVideoDataFromTitle( $title, $premiumOnly );
+			if ( !empty($videoData) ) {
+				$videoInfo = new VideoInfo( $videoData );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
