@@ -148,12 +148,10 @@ define( 'wikia.preview', [ 'wikia.window', 'wikia.nirvana', 'wikia.deferred', 'j
 							});
 
 							var tooltipParams = { placement: 'right' };
-							var editPageDialog = document.getElementById( 'EditPageDialog' );
-
-							if( editPageDialog && editPageDialog.style.zIndex ) {
+							if( $dialog[0] && $dialog[0].style && $dialog[0].style.zIndex ) {
 								// on Chrome when using $.css('z-index') / $.css('zIndex') it gave me 2e+9
 								// this vanilla solution works better
-								tooltipParams['z-index'] = parseInt( editPageDialog.style.zIndex, 10 );
+								tooltipParams['z-index'] = parseInt( $dialog[0].style.zIndex, 10 );
 							}
 
 							jquery('.tooltip-icon').tooltip( tooltipParams );
