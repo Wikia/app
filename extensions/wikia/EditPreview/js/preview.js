@@ -132,7 +132,7 @@ define( 'wikia.preview', [ 'wikia.window', 'wikia.nirvana', 'wikia.deferred', 'j
 								},
 								html = mustache.render(template, params);
 
-							jquery(html).insertAfter( jquery( $dialog.find('h1:first') ) );
+							jquery(html).insertAfter( $dialog.find('h1:first') );
 
 							// fire an event once preview is rendered
 							jquery(window).trigger('EditPageAfterRenderPreview', [contentNode]);
