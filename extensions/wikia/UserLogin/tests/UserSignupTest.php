@@ -98,7 +98,7 @@
 			);
 			$mockTempUserParams1 = null;
 			$mockUserLoginForm1 = null;
-			$expMsg1 = wfMsg( 'userlogin-error-noname' );
+			$expMsg1 = wfMessage( 'userlogin-error-noname' )->escaped();
 			$expErrParam1 = 'username';
 
 			// error - username exists in temp user
@@ -112,20 +112,20 @@
 					'user_wiki_id' => 0,
 				),
 			);
-			$expMsg2 = wfMsg( 'userlogin-error-userexists' );
+			$expMsg2 = wfMessage( 'userlogin-error-userexists' )->escaped();
 
 			// error - username length exceed limit
 			$reqParams3 = array(
 				'username' => 'test123456789test123456789test123456789test123456789test123456789',
 			);
 			$mockTempUserParams3 = false;
-			$expMsg3 = wfMsg( 'usersignup-error-username-length', $wgWikiaMaxNameChars );
+			$expMsg3 = wfMessage( 'usersignup-error-username-length', $wgWikiaMaxNameChars )->escaped();
 
 			// error - invalid user name ( getCanonicalName() = false for creatable )
 			$reqParams4 = array(
 				'username' => '#'.self::TEST_USERNAME.'#',
 			);
-			$expMsg4 = wfMsg( 'usersignup-error-symbols-in-username' );
+			$expMsg4 = wfMessage( 'usersignup-error-symbols-in-username' )->escaped();
 
 			// error - empty password
 			$reqParams5 = array(
@@ -133,7 +133,7 @@
 				'email' => self::TEST_EMAIL,
 				'password' => '',
 			);
-			$expMsg5 = wfMsg( 'userlogin-error-wrongpasswordempty' );
+			$expMsg5 = wfMessage( 'userlogin-error-wrongpasswordempty' )->escaped();
 			$expErrParam2 = 'password';
 
 			// error - password length exceed limit
@@ -142,14 +142,14 @@
 				'email' => self::TEST_EMAIL,
 				'password' => 'testPasswordtestPasswordtestPasswordtestPasswordtestPasswordtestPassword',
 			);
-			$expMsg6 = wfMsg( 'usersignup-error-password-length' );
+			$expMsg6 = wfMessage( 'usersignup-error-password-length' )->escaped();
 
 			// error - empty email
 			$reqParams7 = array(
 				'username' => self::TEST_DNE_USER,
 				'email' => '',
 			);
-			$expMsg7 = wfMsg( 'usersignup-error-empty-email' );
+			$expMsg7 = wfMessage( 'usersignup-error-empty-email' )->escaped();
 			$expErrParam7 = 'email';
 
 			// error - invalid email ( isValidEmailAddr() = false )
@@ -157,7 +157,7 @@
 				'username' => self::TEST_DNE_USER,
 				'email' => 'testEmail',
 			);
-			$expMsg8 = wfMsg( 'userlogin-error-invalidemailaddress' );
+			$expMsg8 = wfMessage( 'userlogin-error-invalidemailaddress' )->escaped();
 
 			// error - birthdate not select
 			$reqParams9 = array(
@@ -168,7 +168,7 @@
 				'birthmonth' => -1,
 				'birthday' => -1,
 			);
-			$expMsg9 = wfMsg( 'userlogin-error-userlogin-bad-birthday' );
+			$expMsg9 = wfMessage( 'userlogin-error-userlogin-bad-birthday' )->escaped();
 			$expErrParam9 = 'birthday';
 
 			// error - birthday not select
@@ -210,7 +210,7 @@
 				'birthmonth' => 11,
 				'birthday' => 22,
 			);
-			$expMsg13 = wfMsg( 'userlogin-error-userlogin-unable-info' );
+			$expMsg13 = wfMessage( 'userlogin-error-userlogin-unable-info' )->escaped();
 
 			// not pass byemail -- call addNewAccount()
 			$reqParams14 = array(
@@ -333,21 +333,21 @@
 			$mockTempUserParams1 = null;
 			$mockSessionParams1 = null;
 			$mockCacheParams1 = null;
-			$expMsg1 = wfMsg( 'usersignup-error-empty-email' );
+			$expMsg1 = wfMessage( 'usersignup-error-empty-email' )->escaped();
 			$expErrParam1 = 'email';
 
 			// error - invalid email
 			$params2 = array(
 				'email' => 'testEmail',
 			);
-			$expMsg2 = wfMsg( 'usersignup-error-invalid-email' );
+			$expMsg2 = wfMessage( 'usersignup-error-invalid-email' )->escaped();
 
 			// error - empty username
 			$params3 = array(
 				'email' => self::TEST_EMAIL,
 				'username' => '',
 			);
-			$expMsg3 = wfMsg( 'userlogin-error-noname' );
+			$expMsg3 = wfMessage( 'userlogin-error-noname' )->escaped();
 			$expErrParam3 = 'username';
 
 			// error - temp user does not exist
@@ -356,7 +356,7 @@
 				'username' => self::TEST_USERNAME,
 			);
 			$mockTempUserParams4 = false;
-			$expMsg4 = wfMsg( 'userlogin-error-nosuchuser' );
+			$expMsg4 = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
 
 			// error - temp user id does not match with one in $_SESSION
 			$mockTempUserParams5 = array(
@@ -371,14 +371,14 @@
 			$mockSessionParams5 = array(
 				'tempUserId' => 123,
 			);
-			$expMsg5 = wfMsg( 'usersignup-error-invalid-user' );
+			$expMsg5 = wfMessage( 'usersignup-error-invalid-user' )->escaped();
 
 			// error - email changes exceed limit
 			$mockSessionParams6 = array(
 				'tempUserId' => 11,
 			);
 			$mockCacheParams6 = 1;
-			$expMsg6 = wfMsg( 'usersignup-error-too-many-changes' );
+			$expMsg6 = wfMessage( 'usersignup-error-too-many-changes' )->escaped();
 
 			// error - email changes == limit
 			$mockCacheParams6v2 = 0;
@@ -398,7 +398,7 @@
 				),
 			);
 			$mockCacheParams7 = -1;
-			$expMsg7 = wfMsg( 'usersignup-reconfirmation-email-sent', htmlspecialchars(self::TEST_EMAIL) );
+			$expMsg7 = wfMessage( 'usersignup-reconfirmation-email-sent', self::TEST_EMAIL )->escaped();
 
 			// success - new email != current email ( email changes < limit )
 			$status8 = Status::newGood();
@@ -515,11 +515,11 @@
 			$mockTempUser1 = false;
 			$mockSession1 = null;
 			$mockCache1 = null;
-			$mockMsgExt1 = wfMsg( 'usersignup-confirmation-email-sent', self::TEST_USERNAME );
-			$expMsg1 = wfMsg( 'usersignup-confirmation-email-sent', self::TEST_USERNAME );
+			$mockMsgExt1 = wfMessage( 'usersignup-confirmation-email-sent', self::TEST_USERNAME )->parse();
+			$expMsg1 = wfMessage( 'usersignup-confirmation-email-sent', self::TEST_USERNAME )->parse();
 			$expMsgEmail1 = '';
-			$expHeading1 = wfMsg( 'usersignup-confirmation-heading' );
-			$expSubheading1 = wfMsg( 'usersignup-confirmation-subheading' );
+			$expHeading1 = wfMessage( 'usersignup-confirmation-heading' )->escaped();
+			$expSubheading1 = wfMessage( 'usersignup-confirmation-subheading' )->escaped();
 
 			// GET + temp user exists + not pass byemail
 			$mockTempUser2 = array(
@@ -535,10 +535,10 @@
 				'username' => self::TEST_USERNAME,
 				'byemail' => 1,
 			);
-			$mockMsgExt3 = wfMsg( 'usersignup-account-creation-email-sent', self::TEST_USERNAME, self::TEST_USERNAME );
+			$mockMsgExt3 = wfMessage( 'usersignup-account-creation-email-sent', self::TEST_USERNAME, self::TEST_USERNAME )->parse();
 			$expMsg3 = $mockMsgExt3;
-			$expHeading3 = wfMsg( 'usersignup-account-creation-heading' );
-			$expSubheading3 = wfMsg( 'usersignup-account-creation-subheading', self::TEST_USERNAME );
+			$expHeading3 = wfMessage( 'usersignup-account-creation-heading' )->escaped();
+			$expSubheading3 = wfMessage( 'usersignup-account-creation-subheading', self::TEST_USERNAME )->escaped();
 
 			// GET + temp user exists + pass byemail
 
@@ -562,8 +562,8 @@
 				'username' => '',
 				'action' => 'resendconfirmation',
 			);
-			$expMsg101 = wfMsg( 'userlogin-error-noname' );
-			$expHeading101 = wfMsg( 'usersignup-confirmation-heading-email-resent' );
+			$expMsg101 = wfMessage( 'userlogin-error-noname' )->escaped();
+			$expHeading101 = wfMessage( 'usersignup-confirmation-heading-email-resent' )->escaped();
 
 			// error - temp user does not exist ( POST + action = resendconfirmation )
 			$params102 = array(
@@ -571,7 +571,7 @@
 				'action' => 'resendconfirmation',
 			);
 			$mockTempUser102 = false;
-			$expMsg102 = wfMsg( 'userlogin-error-nosuchuser' );
+			$expMsg102 = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
 
 			// error - temp user id does not match with one in $_SESSION ( POST + action = resendconfirmation )
 			$mockTempUserParams103 = array(
@@ -587,14 +587,14 @@
 			$mockSession103 = array(
 				'tempUserId' => 123,
 			);
-			$expMsg103 = wfMsg( 'usersignup-error-invalid-user' );
+			$expMsg103 = wfMessage( 'usersignup-error-invalid-user' )->escaped();
 
 			// error - $wgEmailAuthentication == false ( POST + action = resendconfirmation )
 			$mockSession104 = array(
 				'tempUserId' => 11,
 			);
 			$mockEmailAuth104 = false;
-			$expMsg104 = wfMsg( 'usersignup-error-invalid-email' );
+			$expMsg104 = wfMessage( 'usersignup-error-invalid-email' )->escaped();
 
 			// error - invalid email ( POST + action = resendconfirmation )
 			$mockEmailAuth105 = true;
@@ -630,7 +630,7 @@
 					'user_email' => self::TEST_EMAIL,
 				),
 			);
-			$expMsg106 = wfMsg( 'usersignup-error-already-confirmed' );
+			$expMsg106 = wfMessage( 'usersignup-error-already-confirmed' )->escaped();
 
 			// error - pending email + email sent exceed limit ( POST + action = resendconfirmation )
 			$mockUser107 = array(
@@ -647,7 +647,7 @@
 				),
 			);
 			$mockCache107 = 1;
-			$expMsg107 = wfMsg( 'usersignup-error-throttled-email' );
+			$expMsg107 = wfMessage( 'usersignup-error-throttled-email' )->escaped();
 
 			// error - email sent == limit ( POST + action = resendconfirmation )
 			$mockCache108 = 0;
