@@ -108,6 +108,7 @@
 						self.prev.show();
 						self.next.hide();
 					} else if ( self.page <= 0 ) {
+						self.next.show();
 						self.prev.hide();
 					} else {
 						self.next.show();
