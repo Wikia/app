@@ -996,6 +996,9 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 		&.fr .sprite.edit-pencil {
 			background-position: -72px -171px;
 		}
+		&.pl .sprite.edit-pencil {
+			background-position: -96px -171px;
+		}
 		a {
 			background-image: url(/extensions/wikia/WikiaHomePage/images/community-sprite.png); /* $wgCdnStylePath */
 			display: block;
@@ -1013,6 +1016,9 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 			}
 			&.fr {
 				background-position: -72px -171px;
+			}
+			&.pl {
+				background-position: -96px -171px;
 			}
 		}
 		li {
