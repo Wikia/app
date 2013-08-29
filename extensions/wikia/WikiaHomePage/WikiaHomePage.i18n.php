@@ -551,3 +551,6 @@ $messages['qqq'] = array(
 	
 	'wikiahome-hub-current-day' => 'Date in format "day monthname year" using templates: {{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
 );
+$messages['pl'] = [
+	'wikiahome-community-social-wikia-blog-link' => 'http://spolecznosc.wikia.com/wiki/Blog:Wikia_News',
+];
