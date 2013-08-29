@@ -111,6 +111,7 @@ define( 'wikia.preview', [ 'wikia.window', 'wikia.nirvana', 'wikia.deferred', 'j
 					loader({type: loader.MULTI, resources: {
 						mustache: 'extensions/wikia/EditPreview/templates/preview_type_dropdown.mustache'
 					}}).done(function(response) {
+							var $dialog = jquery('#EditPageDialog');
 							var template = response.mustache[0],
 								params = {
 									options: [
@@ -131,13 +132,14 @@ define( 'wikia.preview', [ 'wikia.window', 'wikia.nirvana', 'wikia.deferred', 'j
 								},
 								html = mustache.render(template, params);
 
-							jquery(html).insertAfter('#EditPageDialog >h1');
+							jquery(html).insertAfter( jquery( $dialog.find('h1:first') ) );
 
 							// fire an event once preview is rendered
 							jquery(window).trigger('EditPageAfterRenderPreview', [contentNode]);
 
 							// cache article wrapper selector and its initial width
-							$articleWrapper = jquery('#EditPageDialog .ArticlePreviewInner');
+							$articleWrapper = jquery( $dialog.find('.ArticlePreviewInner') );
+
 							previewTypes.current.value = $articleWrapper.width();
 
 							// attach events to type dropdown
