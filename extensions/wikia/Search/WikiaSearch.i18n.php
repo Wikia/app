@@ -58,9 +58,9 @@ $messages['en'] = array(
 
 
 	'wikiasearch2-top-module-title' => 'What\'s hot now',
-	'wikiasearch2-top-module-test-1' => 'What\'s hot now',
-	'wikiasearch2-top-module-test-2' => 'Trending articles',
-	'wikiasearch2-top-module-test-3' => 'Popular articles',
+	'wikiasearch2-top-module-test-1' => 'Top pages',
+	'wikiasearch2-top-module-test-2' => 'Popular articles',
+	'wikiasearch2-top-module-test-3' => 'What\'s hot now',
 	'wikiasearch2-top-module-edit' => 'Last edited on $1',
 
 	'wikiamobile-wikiasearch2-next' => 'Next',
