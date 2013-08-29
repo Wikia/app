@@ -469,8 +469,6 @@ body > .global-notification,
 
 @media screen and (max-width: $breakpoint-content) {
 	body {
-		background: $color-page;
-
 		&:after,
 		&:before {
 			display: none;
