@@ -54,7 +54,7 @@ class LVSUpdateSuggestions extends Maintenance {
 
 		$wgDBName = WikiFactory::IDtoDB($_ENV['SERVER_ID']);
 		echo "[$wgDBName] Finished in $delta.\n";
-		echo "[$wgDBName] Usage Stats: Total videos before swapping videos=".( $stats['totalVids'] + $stats['swapTypes'][1] + $stats['swapTypes'][2] + $stats['swapTypes'][3] ).", ";
+		echo "[$wgDBName] Usage Stats: Total videos before swapping videos=".( $stats['totalVids'] + $stats['swapTypes'][2] + $stats['swapTypes'][3] ).", ";
 		echo "Total videos=".$stats['totalVids']." (Videos with suggestions=".$stats['vidsWithSuggestions']."), ";
 		echo "Total suggestions=".$stats['numSuggestions'].", Avg per video=".sprintf("%.1f", $stats['avgSuggestions']).", ";
 		echo "Total kept videos=".$stats['swapTypes'][1].", Total swapped videos=".( $stats['swapTypes'][2] + $stats['swapTypes'][3] )." (Exact title=".$stats['swapTypes'][3].")\n";
