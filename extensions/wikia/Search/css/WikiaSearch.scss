@@ -437,6 +437,13 @@ $form-negative-side-padding: $form-side-padding*-1;
 	overflow: hidden;
 	padding: 14px 14px 4px 14px;
 	width: 300px;
+	//ab test classes
+	.header-test-2 {
+		display: none;
+	}
+	.header-test-3 {
+		display: none;
+	}
 	.top-wiki-main {
 		border: none;
 		margin: 0 0 15px 0;

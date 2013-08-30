@@ -49,6 +49,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	const SNIPPET_SUBSTR = 9;
 
 	/**
+	 * Used for changing mem cache key for top articles snippet (after changed will end up in purging cache)
+	 * @var string
+	 */
+	const TOP_ARTICLES_CACHE = 1;
+
+	/**
 	 * Responsible for instantiating query services based on config.
 	 * @var Wikia\Search\QueryService\Factory
 	 */
@@ -430,7 +436,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$topWikiArticlesHtml = '';
 		if (! $searchConfig->getInterWiki() && $wgLanguageCode == 'en' ) {
 			$dbname = $this->wg->DBName;
-			$cacheKey = wfMemcKey( __CLASS__, 'WikiaSearch', 'topWikiArticles', $this->wg->CityId );
+			$cacheKey = wfMemcKey( __CLASS__, 'WikiaSearch', 'topWikiArticles', $this->wg->CityId, static::TOP_ARTICLES_CACHE );
 			$topWikiArticlesHtml = WikiaDataAccess::cache(
 				$cacheKey,
 				86400 * 5, // 5 days, one business week
