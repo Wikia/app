@@ -292,7 +292,11 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 		if(wkPrf.className.indexOf('loaded') === -1){
 			throbber.show(wkPrf, {center: true});
 
-			loader({
+			loader(
+			{
+				type: loader.LIBRARY,
+				resources: 'facebook'
+			},{
 				type: loader.MULTI,
 				resources: {
 					templates: [{
