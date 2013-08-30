@@ -2,11 +2,11 @@
  * Preview for the editor, this should be moved to /resources/wikia/modules once we want to use it for several skins
  */
 define( 'wikia.preview', [ 'wikia.window', 'wikia.nirvana', 'wikia.deferred', 'jquery', 'wikia.loader', 'wikia.mustache', 'JSMessages', 'wikia.tracker', 'wikia.csspropshelper'],
-	function(window, nirvana, deferred, jquery, loader, mustache, msg, tracker, cssPropHelper) {
+	function(window, nirvana, deferred, $, loader, mustache, msg, tracker, cssPropHelper) {
 	'use strict';
 
 	var	$articleWrapper,
-		articleMargin = 11, // 10px margin + 1px border
+		articleMargin = 11, // 10px margin + 1px bordser
 		previewTypes = {
 			current: { name: 'current', value: null },
 			min: { name: 'min', value: 768 - articleMargin * 2 },
@@ -15,14 +15,14 @@ define( 'wikia.preview', [ 'wikia.window', 'wikia.nirvana', 'wikia.deferred', 'j
 
 	// show dialog for preview / show changes and scale it to fit viewport's height
 	function renderDialog(title, options, callback) {
-		options = jquery.extend({
+		options = $.extend({
 			callback: function() {
-				var contentNode = jquery('#EditPageDialog .ArticlePreviewInner');
+				var contentNode = $('#EditPageDialog .ArticlePreviewInner');
 
 				// block all clicks
 				contentNode.
 					bind('click', function(ev) {
-						var target = jquery(ev.target);
+						var target = $(ev.target);
 
 						target.attr('target','_blank');
 						// don't block links opening in new tab
@@ -31,7 +31,7 @@ define( 'wikia.preview', [ 'wikia.window', 'wikia.nirvana', 'wikia.deferred', 'j
 						}
 					}).
 					parent().css({
-						'height': options.height || (jquery(window).height() - 250),
+						'height': options.height || ($(window).height() - 250),
 						'overflow': 'auto',
 						'overflow-x': 'hidden'
 					});
@@ -47,7 +47,7 @@ define( 'wikia.preview', [ 'wikia.window', 'wikia.nirvana', 'wikia.deferred', 'j
 		// use loading indicator before real content will be fetched
 		var content = '<div class="ArticlePreview"><div class="ArticlePreviewInner"><img src="' + stylepath + '/common/images/ajax.gif" class="loading"></div></div>';
 
-		jquery.showCustomModal(title, content, options);
+		$.showCustomModal(title, content, options);
 	}
 
 	/**
@@ -68,7 +68,7 @@ define( 'wikia.preview', [ 'wikia.window', 'wikia.nirvana', 'wikia.deferred', 'j
 					id: 'close',
 					message: msg('back'),
 					handler: function() {
-						jquery('#EditPageDialog').closeModal();
+						$('#EditPageDialog').closeModal();
 					}
 				},
 				{
@@ -81,11 +81,11 @@ define( 'wikia.preview', [ 'wikia.window', 'wikia.nirvana', 'wikia.deferred', 'j
 			width: options.width,
 			className: 'preview',
 			onClose: function() {
-				jquery(window).trigger('EditPagePreviewClosed');
+				$(window).trigger('EditPagePreviewClosed');
 			}
 		};
 		// allow extension to modify the preview dialog
-		jquery(window).trigger('EditPageRenderPreview', [dialogOptions]);
+		$(window).trigger('EditPageRenderPreview', [dialogOptions]);
 
 		renderDialog(msg('preview'), dialogOptions, function(contentNode) {
 
@@ -95,12 +95,12 @@ define( 'wikia.preview', [ 'wikia.window', 'wikia.nirvana', 'wikia.deferred', 'j
 
 				// move "edit" link to the right side of heading names
 				contentNode.find('.editsection').each(function() {
-					jquery(this).appendTo(jquery(this).next());
+					$(this).appendTo($(this).next());
 				});
 
 				// add summary
 				if (typeof summary != 'undefined') {
-					jquery('<div>', {id: "EditPagePreviewEditSummary"}).
+					$('<div>', {id: "EditPagePreviewEditSummary"}).
 						width(options.width - 150).
 						appendTo(contentNode.parent()).
 						html(summary);
@@ -111,7 +111,7 @@ define( 'wikia.preview', [ 'wikia.window', 'wikia.nirvana', 'wikia.deferred', 'j
 					loader({type: loader.MULTI, resources: {
 						mustache: 'extensions/wikia/EditPreview/templates/preview_type_dropdown.mustache'
 					}}).done(function(response) {
-							var $dialog = jquery('#EditPageDialog');
+							var $dialog = $('#EditPageDialog');
 							var template = response.mustache[0],
 								params = {
 									options: [
@@ -132,19 +132,19 @@ define( 'wikia.preview', [ 'wikia.window', 'wikia.nirvana', 'wikia.deferred', 'j
 								},
 								html = mustache.render(template, params);
 
-							jquery(html).insertAfter( $dialog.find('h1:first') );
+							$(html).insertAfter( $dialog.find('h1:first') );
 
 							// fire an event once preview is rendered
-							jquery(window).trigger('EditPageAfterRenderPreview', [contentNode]);
+							$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
 
 							// cache article wrapper selector and its initial width
-							$articleWrapper = jquery( $dialog.find('.ArticlePreviewInner') );
+							$articleWrapper = $( $dialog.find('.ArticlePreviewInner') );
 
 							previewTypes.current.value = $articleWrapper.width();
 
 							// attach events to type dropdown
-							jquery('#previewTypeDropdown').on('change', function(event) {
-								switchPreview(jquery(event.target).val());
+							$('#previewTypeDropdown').on('change', function(event) {
+								switchPreview($(event.target).val());
 							});
 
 							var tooltipParams = { placement: 'right' };
@@ -154,12 +154,12 @@ define( 'wikia.preview', [ 'wikia.window', 'wikia.nirvana', 'wikia.deferred', 'j
 								tooltipParams['z-index'] = parseInt( $dialog[0].style.zIndex, 10 );
 							}
 
-							jquery('.tooltip-icon').tooltip( tooltipParams );
+							$('.tooltip-icon').tooltip( tooltipParams );
 						}
 					);
 				} else {
 					// fire an event once preview is rendered
-					jquery(window).trigger('EditPageAfterRenderPreview', [contentNode]);
+					$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
 				}
 
 			});
