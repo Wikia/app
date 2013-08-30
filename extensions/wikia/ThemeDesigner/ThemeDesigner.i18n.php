@@ -57,6 +57,7 @@ $messages['en'] = array(
 	'themedesigner-manual-upload-error' => 'Use Theme Designer to upload wordmark or wiki background',
         'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Preview',
+	'themedesigner-wordmark-preview-error' => 'Empty Wordmark is not supported!',
 );
 
 /** Message documentation (Message documentation)
@@ -91,6 +92,7 @@ $messages['qqq'] = array(
 	'themedesigner-history-item' => 'Parameters:
 * $1 is "how long ago"
 * $2 is the author name',
+	'themedesigner-wordmark-preview-error' => 'Validation error on attempt to save empty text wordmark'
 );
 
 /** Afrikaans (Afrikaans)

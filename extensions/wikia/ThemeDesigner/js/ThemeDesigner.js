@@ -189,7 +189,13 @@ var ThemeDesigner = {
 		// handle wordmark editing
 		$("#wordmark-edit").find("button").click(function(event) {
 			event.preventDefault();
-			ThemeDesigner.set("wordmark-text", $("#wordmark-edit").find('input[type="text"]').val());
+			var value = $("#wordmark-edit").find('input[type="text"]').val().trim();
+			if (value.length > 0) {
+				ThemeDesigner.set("wordmark-text", value);
+			} else {
+				alert($.msg('Empty Wordmark is not supported!'));
+			}
+
 		});
 
 		//graphic wordmark clicking

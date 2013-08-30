@@ -29,3 +29,7 @@ $wgGroupPermissions['*']['themedesigner'] = false;
 $wgGroupPermissions['sysop']['themedesigner'] = true;
 $wgGroupPermissions['helper']['themedesigner'] = true;
 $wgGroupPermissions['staff']['themedesigner'] = true;
+
+JSMessages::registerPackage('ThemeDesigner', array(
+	'themedesigner-wordmark-preview-error'
+));
