@@ -22,7 +22,7 @@ class WikiService extends WikiaModel {
 	 *
 	 * @return array of $userIds
 	 */
-	public function getWikiAdminIds( $wikiId = 0, $useMaster = false, $excludeBots = false, $limit = null ) {
+	public function getWikiAdminIds( $wikiId = 0, $useMaster = false, $excludeBots = false, $limit = null, $includeFounder = true ) {
 		wfProfileIn( __METHOD__ );
 
 		$userIds = array();
@@ -31,7 +31,9 @@ class WikiService extends WikiaModel {
 			$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 			$wiki = WikiFactory::getWikiById($wikiId);
 			if ( !empty($wiki) && $wiki->city_public == 1 ) {
-				$userIds[] = $wiki->city_founding_user;
+				if ($includeFounder) {
+					$userIds[] = $wiki->city_founding_user;
+				}
 
 				// get admin and bureaucrat
 				if ( empty($this->wg->EnableAnswers) ) {
@@ -360,7 +362,7 @@ class WikiService extends WikiaModel {
 			function () use ($wikiId, $avatarSize, $limit) {
 				$admins = array();
 				try {
-					$admins = $this->getWikiAdminIds($wikiId, false, true, $limit);
+					$admins = $this->getWikiAdminIds($wikiId, false, true, $limit, false);
 					$checkUserCallback = function ($user) { return true; };
 					foreach ($admins as &$admin) {
 						$userInfo = $this->getUserInfo($admin, $wikiId, $avatarSize, $checkUserCallback);
