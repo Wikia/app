@@ -289,14 +289,10 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 	}
 
 	function openLogin(hash){
-		if(wkPrf.className.indexOf('loaded') == -1){
+		if(wkPrf.className.indexOf('loaded') === -1){
 			throbber.show(wkPrf, {center: true});
 
 			loader(
-			{
-				type: loader.LIBRARY,
-				resources: 'facebook'
-			},
 			{
 				type: loader.MULTI,
 				resources: {
@@ -319,15 +315,6 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 					wkPrf.insertAdjacentHTML('beforeend', res.templates.UserLoginSpecial_index);
 					loader.processScript(res.scripts);
 
-					//see fbconnect.js
-					w.FB.init({
-						appId : w.fbAppId,
-						oauth : true,
-						status : true, // Check login status
-						cookie : true, // Enable cookies to allow the server to access the session
-						xfbml  : w.fbUseMarkup // Whether XFBML should be automatically parsed
-					});
-
 					wkPrf.className += ' loaded';
 
 					var wkLgn = document.getElementById('wkLgn'),
@@ -343,10 +330,10 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 					form.addEventListener('submit', function(ev){
 						var t = ev.target;
 
-						if(t[2].value.trim() == '' || t[3].value.trim() == '') {
+						if(t[2].value.trim() === '' || t[3].value.trim() === '') {
 							ev.preventDefault();
 						}
-					})
+					});
 				}
 			);
 		}

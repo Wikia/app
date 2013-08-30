@@ -1,10 +1,23 @@
-require(['track', 'wikia.querystring', 'toast', 'wikia.nirvana', 'JSMessages'], function(track, qs, toast, nirvana, msg){
+require(['track', 'wikia.querystring', 'toast', 'wikia.nirvana', 'JSMessages', 'wikia.window'],
+	function(track, Qs, toast, nirvana, msg, window){
+	'use strict';
+
 	var btn = document.getElementById('ssoFbBtn');
 
 	btn.addEventListener('click', function(){
-		FB.login(
+		//see fbconnect.js
+		window.FB.init({
+			appId : window.fbAppId,
+			oauth : true,
+			status : true, // Check login status
+			cookie : true, // Enable cookies to allow the server to access the session
+			xfbml  : window.fbUseMarkup // Whether XFBML should be automatically parsed
+		});
+
+		window.FB.login(
 			function(response){
-				if(typeof response === 'object' && response.status == 'connected'){
+				console.log(response);
+				if(typeof response === 'object' && response.status === 'connected'){
 					// now check FB account (is it connected with Wikia account?)
 					nirvana.postJson('FacebookSignup', 'index').done(
 						function(resp){
@@ -14,7 +27,7 @@ require(['track', 'wikia.querystring', 'toast', 'wikia.nirvana', 'JSMessages'], 
 									value: 1
 								});
 
-								var reload = new qs(),
+								var reload = new Qs(),
 									returnto = reload.getVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/))) ? wgMainPageTitle : '');
 
 								if(returnto) {
