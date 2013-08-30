@@ -60,10 +60,9 @@ ve.ui.AnnotationInspector.prototype.onSetup = function () {
 
 	// Parent method
 	ve.ui.Inspector.prototype.onSetup.call( this );
-
 	// Initialize range
 	if ( !annotation ) {
-		if ( fragment.getRange().isCollapsed() ) {
+		if ( fragment.getRange().isCollapsed() && !this.surface.view.hasSlugAtOffset( fragment.getRange().start ) ) {
 			// Expand to nearest word
 			expandedFragment = fragment.expandRange( 'word' );
 			fragment = expandedFragment;
@@ -167,7 +166,7 @@ ve.ui.AnnotationInspector.prototype.onClose = function ( action ) {
 		// Apply new annotation
 		fragment.annotateContent( 'set', annotation );
 	}
-	if ( action === 'back' ) {
+	if ( action === 'back' || insert ) {
 		// Restore selection to what it was before we expanded it
 		selection = this.previousSelection;
 	}

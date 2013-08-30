@@ -215,6 +215,24 @@ QUnit.test( 'getAnnotationsFromRange', 1, function ( assert ) {
 			'expected': []
 		},
 		{
+			'msg': 'no common coverage due to un-annotated content node',
+			'data': [
+				['a', [ { 'type': 'textStyle/bold' } ] ],
+				{ 'type': 'image' },
+				{ 'type': '/image' }
+			],
+			'expected': []
+		},
+		{
+			'msg': 'branch node is ignored',
+			'data': [
+				['a', [ { 'type': 'textStyle/bold' } ] ],
+				{ 'type': 'paragraph' },
+				{ 'type': '/paragraph' }
+			],
+			'expected': [ { 'type': 'textStyle/bold' } ]
+		},
+		{
 			'msg': 'annotations are collected using all with mismatched annotations',
 			'data': [
 				['a', [ { 'type': 'textStyle/bold' } ] ],
@@ -284,8 +302,8 @@ QUnit.test( 'getAnnotationsFromRange', 1, function ( assert ) {
 		data = ve.dm.example.preprocessAnnotations( cases[i].data );
 		doc = new ve.dm.Document( data );
 		assert.deepEqual(
-			doc.data.getAnnotationsFromRange( new ve.Range( 0, cases[i].data.length ), cases[i].all ),
-			ve.dm.example.createAnnotationSet( doc.getStore(), cases[i].expected ),
+			doc.data.getAnnotationsFromRange( new ve.Range( 0, cases[i].data.length ), cases[i].all ).getIndexes(),
+			ve.dm.example.createAnnotationSet( doc.getStore(), cases[i].expected ).getIndexes(),
 			cases[i].msg
 		);
 	}

@@ -39,7 +39,7 @@ QUnit.test( 'isBreak', function ( assert ) {
 		pos += unicodeJS.graphemebreak.splitClusters( broken[i] ).length;
 		breakOffsets.push( pos );
 	}
-	textString = new unicodeJS.TextString( broken.join( '' ) ),
+	textString = new unicodeJS.TextString( broken.join( '' ) );
 
 	QUnit.expect( textString.getLength() + 1 );
 

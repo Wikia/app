@@ -133,7 +133,7 @@ ve.ui.LanguageInputWidget.prototype.setAttributes = function ( lang, dir ) {
  */
 ve.ui.LanguageInputWidget.prototype.getValue = function () {
 	// Specifically to be displayed
-	return this.lang;
+	return this.$langNameDisp.text();
 };
 
 /**

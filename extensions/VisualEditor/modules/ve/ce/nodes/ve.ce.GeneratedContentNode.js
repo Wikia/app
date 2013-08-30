@@ -17,12 +17,11 @@ ve.ce.GeneratedContentNode = function VeCeGeneratedContentNode() {
 	// Properties
 	this.generatingPromise = null;
 
-	// DOM Changes
+	// DOM changes
 	this.$.addClass( 've-ce-generatedContentNode' );
-	this.$.attr( 'contenteditable', false );
 
 	// Events
-	this.model.connect( this, { 'update': 'update' } );
+	this.model.connect( this, { 'update': 'onGeneratedContentNodeUpdate' } );
 
 	// Initialization
 	this.update();
@@ -72,6 +71,13 @@ ve.ce.GeneratedContentNode.prototype.generateContents = function () {
 /* Methods */
 
 /**
+ * Handler for the update event
+ */
+ve.ce.GeneratedContentNode.prototype.onGeneratedContentNodeUpdate = function () {
+	this.update();
+};
+
+/**
  * Rerender the contents of this node.
  *
  * @param {HTMLElement[]} domElements Array of DOM elements
@@ -80,11 +86,15 @@ ve.ce.GeneratedContentNode.prototype.generateContents = function () {
  * @emits rerender
  */
 ve.ce.GeneratedContentNode.prototype.render = function ( domElements ) {
-	var doc = this.getElementDocument();
+	var $rendering, doc = this.getElementDocument();
 	if ( this.live ) {
 		this.emit( 'teardown' );
 	}
-	this.$.empty().append( ve.copyDomElements( domElements, doc ) );
+	// Filter out link, meta and style tags for bug 50043
+	$rendering = $( ve.copyDomElements( domElements, doc ) ).not( 'link, meta, style' );
+	// Also remove link, meta and style tags nested inside other tags
+	$rendering.find( 'link, meta, style' ).remove();
+	this.$.empty().append( $rendering );
 	if ( this.live ) {
 		this.emit( 'setup' );
 		this.emit( 'rerender' );

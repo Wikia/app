@@ -962,7 +962,7 @@ ve.dm.mwExample.domToDataCases = {
 				'attributes': {
 					'listIndex': 2,
 					'listGroup': 'mwReference/g1',
-					'listKey': null,
+					'listKey': ':2',
 					'refGroup': 'g1',
 					'mw': { 'name': 'ref', 'body': { 'html': 'No name' }, 'attrs': { 'group': 'g1' } },
 					'originalMw': '{"name":"ref","body":{"html":"No name"},"attrs":{"group":"g1"}}',
@@ -1172,7 +1172,7 @@ ve.dm.mwExample.domToDataCases = {
 					'contentsUsed': true,
 					'listGroup': 'mwReference/',
 					'listIndex': 0,
-					'listKey': null,
+					'listKey': ':0',
 					'mw': {
 						'attrs': {},
 						'body': {

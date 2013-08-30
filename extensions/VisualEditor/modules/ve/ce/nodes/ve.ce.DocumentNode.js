@@ -25,9 +25,9 @@ ve.ce.DocumentNode = function VeCeDocumentNode( model, surface, config ) {
 	// Set root
 	this.setRoot( this );
 
-	// DOM Changes
+	// DOM changes
 	this.$.addClass( 've-ce-documentNode' );
-	this.$.attr( { 'contentEditable': 'true', 'spellcheck': 'true' } );
+	this.$.prop( { 'contentEditable': 'true', 'spellcheck': true } );
 };
 
 /* Inheritance */
@@ -68,7 +68,7 @@ ve.ce.DocumentNode.prototype.getSurface = function () {
  * @method
  */
 ve.ce.DocumentNode.prototype.disable = function () {
-	this.$.attr( 'contentEditable', 'false' );
+	this.$.prop( 'contentEditable', 'false' );
 };
 
 /**
@@ -77,7 +77,7 @@ ve.ce.DocumentNode.prototype.disable = function () {
  * @method
  */
 ve.ce.DocumentNode.prototype.enable = function () {
-	this.$.attr( 'contentEditable', 'true' );
+	this.$.prop( 'contentEditable', 'true' );
 };
 
 /* Registration */

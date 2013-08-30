@@ -26,7 +26,7 @@ ve.ce.AlienNode = function VeCeAlienNode( model, config ) {
 	ve.ce.ProtectedNode.call( this );
 	ve.ce.GeneratedContentNode.call( this );
 
-	// DOM Changes
+	// DOM changes
 	this.$.addClass( 've-ce-alienNode' );
 };
 
@@ -48,14 +48,10 @@ ve.ce.AlienNode.static.$phantomTemplate = ve.ce.AlienNode.static.$phantomTemplat
 
 /* Methods */
 
-/**
- * Handle update events.
- *
- * @method
- */
-ve.ce.AlienNode.prototype.update = function () {
-	// TODO use GeneratedContentNode the way it was meant to be used
-	this.$.html( ve.copyDomElements( this.model.getAttribute( 'domElements' ) || [], this.getElementDocument() ) );
+ve.ce.AlienNode.prototype.generateContents = function ( config )  {
+	var deferred = $.Deferred();
+	deferred.resolve( ( config && config.domElements ) || this.model.getAttribute( 'domElements' ) || [] );
+	return deferred.promise();
 };
 
 /* Concrete subclasses */
@@ -72,7 +68,7 @@ ve.ce.AlienBlockNode = function VeCeAlienBlockNode( model ) {
 	// Parent constructor
 	ve.ce.AlienNode.call( this, model );
 
-	// DOM Changes
+	// DOM changes
 	this.$.addClass( 've-ce-alienBlockNode' );
 };
 
@@ -96,7 +92,7 @@ ve.ce.AlienInlineNode = function VeCeAlienInlineNode( model ) {
 	// Parent constructor
 	ve.ce.AlienNode.call( this, model );
 
-	// DOM Changes
+	// DOM changes
 	this.$.addClass( 've-ce-alienInlineNode' );
 };
 

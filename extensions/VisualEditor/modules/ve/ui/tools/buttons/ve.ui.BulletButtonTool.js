@@ -25,7 +25,7 @@ ve.inheritClass( ve.ui.BulletButtonTool, ve.ui.ListButtonTool );
 
 /* Static Properties */
 
-ve.ui.BulletButtonTool.static.name = 'bullet';
+ve.ui.BulletButtonTool.static.name = 'structure/bullet';
 
 ve.ui.BulletButtonTool.static.icon = 'bullet-list';
 
@@ -35,4 +35,4 @@ ve.ui.BulletButtonTool.static.style = 'bullet';
 
 /* Registration */
 
-ve.ui.toolFactory.register( 'bullet', ve.ui.BulletButtonTool );
+ve.ui.toolFactory.register( 'structure/bullet', ve.ui.BulletButtonTool );

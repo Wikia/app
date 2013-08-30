@@ -96,8 +96,8 @@ ve.ui.LanguageInspector.prototype.onSetup = function () {
 	// This will be called only if the annotation doesn't already exist, setting
 	// the default value as the current language/dir of the selected text.
 	if ( fragDOM ) {
-		this.initLang = fragDOM.$.closest('[lang]').attr('lang') || 'en';
-		this.initDir = fragDOM.$.closest('[dir]').css('direction') || 'ltr';
+		this.initLang = fragDOM.$.closest('[lang]').attr('lang');
+		this.initDir = fragDOM.$.closest('[dir]').css('direction');
 	}
 
 	// Parent method
@@ -146,43 +146,52 @@ ve.ui.LanguageInspector.prototype.getAnnotation = function () {
  * @chainable
  */
 ve.ui.LanguageInspector.prototype.setAnnotation = function ( annotation ) {
-	var langCode = '',
-		langDir = '';
+	var langCode, langDir, annData;
 
 	// Validate the given annotation:
-
-	// Give precedence to dir value if it already exists
-	// in the annotation:
-	if ( annotation.getAttribute( 'dir' ) ) {
+	if ( annotation ) {
+		// Give precedence to dir value if it already exists
+		// in the annotation:
 		langDir = annotation.getAttribute( 'dir' );
-	}
 
-	// Set language according to the one in the given annotation
-	// or leave blank if element has no language set
-	if ( annotation.getAttribute( 'lang' ) ) {
+		// Set language according to the one in the given annotation
+		// or leave blank if element has no language set
 		langCode = annotation.getAttribute( 'lang' );
+	} else {
+		// No annotation (empty text or collapsed fragment on empty line)
+		langCode = this.initLang;
+		langDir = this.initDir;
 	}
 
 	// If language exists, but dir is undefined/null,
 	// fix the dir in terms of language:
 	if ( langCode && !langDir ) {
-		langDir = $.uls.data.getDir( this.lang );
+		langDir = $.uls.data.getDir( langCode );
 	}
 
+	// Set the annotation data:
+	annData = {
+		'type': 'language',
+		'attributes': {}
+	};
+
+	if ( langCode ) {
+		annData.attributes.lang = langCode;
+	}
+
+	if ( langDir ) {
+		annData.attributes.dir = langDir;
+	}
+
+	// Update the widget:
+	this.targetInput.setAttributes( langCode, langDir );
+
+	// Update inspector properties:
 	this.lang = langCode;
 	this.dir = langDir;
 
-	// Update the widget:
-	this.targetInput.setAttributes( this.lang, this.dir );
-
-	// Set the annotation:
-	this.annotation = new ve.dm.LanguageAnnotation( {
-		'type': 'language',
-		'attributes': {
-			'lang': this.lang,
-			'dir': this.dir
-		}
-	} );
+	// Set up the annotation:
+	this.annotation = new ve.dm.LanguageAnnotation( annData );
 
 	return this;
 };

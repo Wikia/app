@@ -25,8 +25,10 @@ ve.ce.ProtectedNode = function VeCeProtectedNode() {
 		'teardown': 'onProtectedTeardown'
 	} );
 
-	// Initialization
-	this.$.addClass( 've-ce-protectedNode' );
+	// DOM changes
+	this.$
+		.addClass( 've-ce-protectedNode' )
+		.prop( 'contentEditable', 'false' );
 };
 
 /* Static Properties */

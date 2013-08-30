@@ -222,7 +222,7 @@ ve.ui.Context.prototype.update = function () {
 				this.toolbar.destroy();
 			}
 			this.toolbar = new ve.ui.SurfaceToolbar( this.surface );
-			this.toolbar.setup( [ { 'items' : tools } ] );
+			this.toolbar.setup( [ { 'include' : tools } ] );
 			this.$menu.append( this.toolbar.$ );
 			this.show();
 			this.toolbar.initialize();
@@ -249,45 +249,61 @@ ve.ui.Context.prototype.updateDimensions = function ( transition ) {
 		surface = this.surface.getView(),
 		inspector = this.inspectors.getCurrent(),
 		focusedNode = surface.getFocusedNode(),
-		// Get cursor position
-		position = surface.getSelectionRect(),
-		surfaceOffset = surface.$.offset();
+		surfaceOffset = surface.$.offset(),
+		$node, nodePosition, cursorPosition, position;
 
-	// translate from ce surface
-	position = {
-		y: position.end.y - surfaceOffset.top,
-		x: position.end.x - surfaceOffset.left
-	};
-
-	if ( position ) {
-		$container = inspector ? this.inspectors.$ : this.$menu;
+	$container = inspector ? this.inspectors.$ : this.$menu;
+	if ( focusedNode ) {
+		// We're on top of a node
+		$node = focusedNode.$;
+		nodePosition = $node.position();
 		if ( this.embedded ) {
+			// Get the position relative to the surface it is embedded in
 			focusableOffset = ve.Element.getRelativePosition(
-				focusedNode.$focusable, this.surface.$
+				$node, this.surface.$
 			);
-			focusableWidth = focusedNode.$focusable.outerWidth();
 			position = { 'y': focusableOffset.top };
-			// RTL check for Page-level (CE)
+
+			// When inspector is embedded in RTL, it requires
+			// adjustments to the relative positioning (pop up on the other side):
 			if ( this.surface.view.getDir() === 'rtl' ) {
 				position.x = focusableOffset.left;
 				this.popup.align = 'left';
 			} else {
+				focusableWidth = $node.outerWidth();
 				position.x = focusableOffset.left + focusableWidth;
 				this.popup.align = 'right';
 			}
 		} else {
+			// Get the position of the focusedNode:
+			position = {
+				x: nodePosition.left,
+				y: nodePosition.top
+			};
 			this.popup.align = 'center';
 		}
-		this.$.css( { 'left': position.x, 'top': position.y } );
+	} else {
+		// We're on top of a selected text
+		// Get the position of the cursor
+		cursorPosition = surface.getSelectionRect();
 
-		this.popup.display(
-			position.x,
-			position.y,
-			$container.outerWidth( true ),
-			$container.outerHeight( true ),
-			transition
-		);
+		// Correct for surface offset:
+		position = {
+			x: cursorPosition.end.x - surfaceOffset.left,
+			y: cursorPosition.end.y - surfaceOffset.top
+		};
+		this.popup.align = 'center';
 	}
+
+	this.$.css( { 'left': position.x, 'top': position.y } );
+
+	this.popup.display(
+		position.x,
+		position.y,
+		$container.outerWidth( true ),
+		$container.outerHeight( true ),
+		transition
+	);
 
 	return this;
 };

@@ -25,6 +25,7 @@ $wgExtensionCredits['other'][] = array(
 		'Subramanya Sastry',
 		'Timo Tijhof',
 		'Ed Sanders',
+		'David Chan',
 	),
 	'version' => '0.1.0',
 	'url' => 'https://www.mediawiki.org/wiki/Extension:VisualEditor',
@@ -37,7 +38,7 @@ $dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['ApiVisualEditor'] = $dir . 'ApiVisualEditor.php';
 $wgAutoloadClasses['ApiVisualEditorEdit'] = $dir . 'ApiVisualEditorEdit.php';
 $wgAutoloadClasses['VisualEditorHooks'] = $dir . 'VisualEditor.hooks.php';
-$wgAutoloadClasses['VisualEditorMessagesModule'] = $dir . 'VisualEditorMessagesModule.php';
+$wgAutoloadClasses['VisualEditorDataModule'] = $dir . 'VisualEditorDataModule.php';
 $wgAutoloadClasses['ApiPhotoAttribution'] = $dir . 'ApiPhotoAttribution.php';
 $wgExtensionMessagesFiles['VisualEditor'] = $dir . 'VisualEditor.i18n.php';
 
@@ -250,8 +251,8 @@ $wgResourceModules += array(
 		),
 	),
 
-	'ext.visualEditor.specialMessages' => $wgVisualEditorResourceTemplate + array(
-		'class' => 'VisualEditorMessagesModule'
+	'ext.visualEditor.data' => $wgVisualEditorResourceTemplate + array(
+		'class' => 'VisualEditorDataModule'
 	),
 
 	'ext.visualEditor.core' => $wgVisualEditorResourceTemplate + array(
@@ -566,13 +567,6 @@ $wgResourceModules += array(
 			'visualeditor-annotationbutton-code-tooltip',
 			'visualeditor-annotationbutton-italic-tooltip',
 			'visualeditor-annotationbutton-link-tooltip',
-			'visualeditor-languageinspector-title',
-			'visualeditor-languageinspector-block-tooltip',
-			'visualeditor-languageinspector-block-tooltip-rtldirection',
-			'visualeditor-languageinspector-widget-changelang',
-			'visualeditor-languageinspector-widget-label-language',
-			'visualeditor-languageinspector-widget-label-langcode',
-			'visualeditor-languageinspector-widget-label-direction',
 			'visualeditor-beta-label',
 			'visualeditor-beta-warning',
 			'visualeditor-browserwarning',
@@ -657,8 +651,6 @@ $wgResourceModules += array(
 			'visualeditor-linkinspector-suggest-matching-page',
 			'visualeditor-linkinspector-suggest-new-page',
 			'visualeditor-linkinspector-title',
-			'visualeditor-languageinspector-block-tooltip',
-			'visualeditor-languageinspector-block-tooltip-rtldirection',
 			'visualeditor-listbutton-bullet-tooltip',
 			'visualeditor-listbutton-number-tooltip',
 			'visualeditor-media-input-placeholder',
@@ -736,14 +728,23 @@ $wgResourceModules += array(
 		),
 		'messages' => array(
 			// VE messages needed by code that is only in experimental mode
-			'visualeditor-mwalienextensioninspector-title',
-			'visualeditor-mwhieroinspector-title',
-			'visualeditor-mwmathinspector-title',
+			'visualeditor-languageinspector-title',
+			'visualeditor-languageinspector-block-tooltip',
+			'visualeditor-languageinspector-block-tooltip-rtldirection',
+			'visualeditor-languageinspector-widget-changelang',
+			'visualeditor-languageinspector-widget-label-language',
+			'visualeditor-languageinspector-widget-label-langcode',
+			'visualeditor-languageinspector-widget-label-direction',
+			'visualeditor-languageinspector-block-tooltip',
+			'visualeditor-languageinspector-block-tooltip-rtldirection',
 			'visualeditor-annotationbutton-language-tooltip',
 			'visualeditor-annotationbutton-strikethrough-tooltip',
 			'visualeditor-annotationbutton-subscript-tooltip',
 			'visualeditor-annotationbutton-superscript-tooltip',
 			'visualeditor-annotationbutton-underline-tooltip',
+			'visualeditor-mwalienextensioninspector-title',
+			'visualeditor-mwhieroinspector-title',
+			'visualeditor-mwmathinspector-title',
 		),
 	),
 

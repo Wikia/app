@@ -123,6 +123,17 @@ ve.Range.prototype.equals = function ( other ) {
 };
 
 /**
+ * Check if two ranges are equal, ignoring direction.
+ *
+ * @method
+ * @param {ve.Range}
+ * @returns {boolean}
+ */
+ve.Range.prototype.equalsSelection = function ( other ) {
+	return this.end === other.end && this.start === other.start;
+};
+
+/**
  * Create a new range with a limited length.
  *
  * @method

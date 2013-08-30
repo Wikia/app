@@ -25,7 +25,7 @@ ve.inheritClass( ve.ui.CodeButtonTool, ve.ui.AnnotationButtonTool );
 
 /* Static Properties */
 
-ve.ui.CodeButtonTool.static.name = 'code';
+ve.ui.CodeButtonTool.static.name = 'textStyle/code';
 
 ve.ui.CodeButtonTool.static.icon = 'code';
 
@@ -35,6 +35,6 @@ ve.ui.CodeButtonTool.static.annotation = { 'name': 'textStyle/code' };
 
 /* Registration */
 
-ve.ui.toolFactory.register( 'code', ve.ui.CodeButtonTool );
+ve.ui.toolFactory.register( 'textStyle/code', ve.ui.CodeButtonTool );
 
-ve.ui.commandRegistry.register( 'code', 'annotation', 'toggle', 'textStyle/code' );
+ve.ui.commandRegistry.register( 'textStyle/code', 'annotation', 'toggle', 'textStyle/code' );

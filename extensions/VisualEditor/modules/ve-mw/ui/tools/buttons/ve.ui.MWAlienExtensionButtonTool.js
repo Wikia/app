@@ -25,7 +25,7 @@ ve.inheritClass( ve.ui.MWAlienExtensionButtonTool, ve.ui.InspectorButtonTool );
 
 /* Static Properties */
 
-ve.ui.MWAlienExtensionButtonTool.static.name = 'mwAlienExtension';
+ve.ui.MWAlienExtensionButtonTool.static.name = 'object/alienExtension/mw';
 
 ve.ui.MWAlienExtensionButtonTool.static.icon = 'alienextension';
 
@@ -35,6 +35,8 @@ ve.ui.MWAlienExtensionButtonTool.static.inspector = 'mwAlienExtensionInspector';
 
 ve.ui.MWAlienExtensionButtonTool.static.modelClasses = [ ve.dm.MWAlienExtensionNode ];
 
+ve.ui.MWAlienExtensionButtonTool.static.autoAdd = false;
+
 /* Registration */
 
-ve.ui.toolFactory.register( 'mwAlienExtension', ve.ui.MWAlienExtensionButtonTool );
+ve.ui.toolFactory.register( 'object/alienExtension/mw', ve.ui.MWAlienExtensionButtonTool );

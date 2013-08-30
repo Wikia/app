@@ -25,7 +25,7 @@ ve.inheritClass( ve.ui.MWLinkButtonTool, ve.ui.LinkButtonTool );
 
 /* Static Members */
 
-ve.ui.MWLinkButtonTool.static.name = 'mwLink';
+ve.ui.MWLinkButtonTool.static.name = 'meta/link/mw';
 
 ve.ui.MWLinkButtonTool.static.inspector = 'mwLink';
 
@@ -35,10 +35,10 @@ ve.ui.MWLinkButtonTool.static.modelClasses = [
 
 /* Registration */
 
-ve.ui.toolFactory.register( 'mwLink', ve.ui.MWLinkButtonTool );
+ve.ui.toolFactory.register( 'meta/link/mw', ve.ui.MWLinkButtonTool );
 
-ve.ui.commandRegistry.register( 'mwLink', 'inspector', 'open', 'mwLink' );
+ve.ui.commandRegistry.register( 'meta/link/mw', 'inspector', 'open', 'mwLink' );
 
 ve.ui.triggerRegistry.register(
-	'mwLink', { 'mac': new ve.ui.Trigger( 'cmd+k' ), 'pc': new ve.ui.Trigger( 'ctrl+k' ) }
+	'meta/link/mw', { 'mac': new ve.ui.Trigger( 'cmd+k' ), 'pc': new ve.ui.Trigger( 'ctrl+k' ) }
 );

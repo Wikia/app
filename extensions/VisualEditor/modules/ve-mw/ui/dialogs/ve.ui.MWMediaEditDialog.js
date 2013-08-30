@@ -33,14 +33,33 @@ ve.ui.MWMediaEditDialog.static.titleMessage = 'visualeditor-dialog-media-title';
 
 ve.ui.MWMediaEditDialog.static.icon = 'picture';
 
-ve.ui.MWMediaEditDialog.static.toolbarTools = [
-	{ 'items': ['undo', 'redo'] },
-	{ 'items': ['bold', 'italic', 'mwLink', 'clear'] },
-	{ 'items': ['mwReference', 'mwTransclusion', 'mwMath'] }
+ve.ui.MWMediaEditDialog.static.toolbarGroups = [
+	{
+		'include': [ 'history' ],
+		'promote': [
+			'history/undo',
+			'history/redo'
+		]
+	},
+	{
+		'include': [ 'textStyle', 'meta', 'utility/clear' ],
+		'promote': [
+			'textStyle/bold',
+			'textStyle/italic',
+			'meta/link'
+		],
+		'demote': [ 'utility/clear' ]
+	},
+	{ 'include': [ 'object' ], 'exclude': [ 'object/referenceList/mw' ] }
 ];
 
 ve.ui.MWMediaEditDialog.static.surfaceCommands = [
-	'bold', 'italic', 'mwLink', 'undo', 'redo', 'clear'
+	'history/undo',
+	'history/redo',
+	'textStyle/bold',
+	'textStyle/italic',
+	'meta/link/mw',
+	'utility/clear'
 ];
 
 /* Methods */
@@ -98,7 +117,7 @@ ve.ui.MWMediaEditDialog.prototype.onOpen = function () {
 		new ve.dm.ElementLinearData( doc.getStore(), data ),
 		{
 			'$$': this.frame.$$,
-			'tools': this.constructor.static.toolbarTools,
+			'tools': this.constructor.static.toolbarGroups,
 			'commands': this.constructor.static.surfaceCommands
 		}
 	);

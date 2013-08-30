@@ -26,7 +26,7 @@ ve.inheritClass( ve.ui.MWReferenceButtonTool, ve.ui.DialogButtonTool );
 
 /* Static Properties */
 
-ve.ui.MWReferenceButtonTool.static.name = 'mwReference';
+ve.ui.MWReferenceButtonTool.static.name = 'object/reference/mw';
 
 ve.ui.MWReferenceButtonTool.static.icon = 'reference';
 
@@ -38,4 +38,4 @@ ve.ui.MWReferenceButtonTool.static.modelClasses = [ ve.dm.MWReferenceNode ];
 
 /* Registration */
 
-ve.ui.toolFactory.register( 'mwReference', ve.ui.MWReferenceButtonTool );
+ve.ui.toolFactory.register( 'object/reference/mw', ve.ui.MWReferenceButtonTool );

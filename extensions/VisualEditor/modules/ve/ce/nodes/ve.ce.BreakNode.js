@@ -18,7 +18,7 @@ ve.ce.BreakNode = function VeCeBreakNode( model, config ) {
 	// Parent constructor
 	ve.ce.LeafNode.call( this, model, config );
 
-	// DOM Changes
+	// DOM changes
 	this.$.addClass( 've-ce-BreakNode' );
 };
 
