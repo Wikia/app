@@ -60,7 +60,7 @@ define('wikia.csspropshelper', ['wikia.document'], function(document) {
 	}
 
 	/**
-	 * Public API method fo converting CSS property name to JS camel case style
+	 * Public API method for converting CSS property name to JS camel case style
 	 *
 	 * @param {string} prop - CSS style property name
 	 *
@@ -68,17 +68,15 @@ define('wikia.csspropshelper', ['wikia.document'], function(document) {
 	 */
 
 	function convertPropName(prop) {
-		var a = [],
-			tempArray = prop.split('-');
+		var i,
+			tempArray = prop.split('-'),
+			result = [tempArray[0]];
 
-		for (var i = 0; i < tempArray.length; i++) {
-			var str = tempArray[i];
-			if (i !== 0) {
-				str = tempArray[i].charAt(0).toUpperCase() + tempArray[i].slice(1);
-			}
-			a.push(str)
+		for (i = 1; i < tempArray.length; i++) {
+			var str = tempArray[i].charAt(0).toUpperCase() + tempArray[i].slice(1);
+			result.push(str)
 		}
-		return a.join('');
+		return result.join('');
 	}
 
 	/**

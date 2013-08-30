@@ -22,7 +22,7 @@ describe('CSSPropsHelper', function() {
 		expect(typeof cssPropsHelper.convertPropName).toBe('function');
 	});
 
-	it('apply JS camel case style formatting', function() {
+	it('applies JS camel case style formatting', function() {
 		var formattedProp = 'transformOrigin',
 			prop = cssPropsHelper.convertPropName(cssProperty);
 
