@@ -7,7 +7,9 @@
 
 /**
  * ContentEditable Wikia media node.
+ * This is an abstract class and as such should not be instantiated directly.
  *
+ * @abstract
  * @class
  * @extends ve.ce.BranchNode
  * @mixins ve.ce.ProtectedNode
@@ -30,7 +32,7 @@ ve.ce.WikiaBlockMediaNode = function VeCeWikiaBlockMediaNode( model, config ) {
 	this.$thumb = null;
 
 	// Initialize
-	this.update( true );
+	this.update();
 
 	// Mixin constructors
 	ve.ce.ProtectedNode.call( this );
@@ -58,7 +60,7 @@ ve.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.MWResizableNode );
 
 /* Static Properties */
 
-ve.ce.WikiaBlockMediaNode.static.name = 'mwBlockImage';
+ve.ce.WikiaBlockMediaNode.static.name = null;
 
 ve.ce.WikiaBlockMediaNode.static.tagName = 'figure';
 
@@ -108,7 +110,7 @@ ve.ce.WikiaBlockMediaNode.prototype.getCssClass = function ( type, alignment ) {
  * @method
  */
 ve.ce.WikiaBlockMediaNode.prototype.onAttributeChange = function () {
-	this.update();
+	this.update( true );
 };
 
 /** */
@@ -128,7 +130,10 @@ ve.ce.WikiaBlockMediaNode.prototype.onSplice = function () {
  * @returns {jQuery} The properly scoped jQuery object
  */
 ve.ce.WikiaBlockMediaNode.prototype.getAnchorElement = function () {
-	return this.$$( '<a>' ).attr( 'href', this.model.getAttribute( 'href' ) );
+	return this.$$( '<a>' )
+		// Images and videos both have this class
+		.addClass( 'image' )
+		.attr( 'href', this.model.getAttribute( 'href' ) );
 };
 
 /**
@@ -185,22 +190,26 @@ ve.ce.WikiaBlockMediaNode.prototype.getWrapperElement = function () {
  * @emits teardown
  * @method
  */
-ve.ce.WikiaBlockMediaNode.prototype.update = function ( onInitialize ) {
+ve.ce.WikiaBlockMediaNode.prototype.update = function ( replaceRoot ) {
 	var $root;
 
-	$root = this.$thumb = this.getThumbElement();
+	this.$thumb = this.getThumbElement();
 
 	if ( this.model.getAttribute( 'align' ) === 'center' ) {
 		$root = this.getWrapperElement().append( this.$thumb );
+	} else {
+		$root = this.$thumb;
 	}
 
-	if ( !onInitialize ) {
+	if ( replaceRoot ) {
 		this.emit( 'teardown' );
 		this.$.replaceWith( $root );
+		this.$ = $root;
 		this.emit( 'setup' );
+	} else {
+		this.$ = $root;
 	}
 
-	this.$ = $root;
 	this.$anchor = this.getAnchorElement().appendTo( this.$thumb );
 	this.$image = this.getImageElement().appendTo( this.$anchor );
 
@@ -221,7 +230,3 @@ ve.ce.WikiaBlockMediaNode.prototype.update = function ( onInitialize ) {
 	}
 */
 };
-
-/* Registration */
-
-ve.ce.nodeFactory.register( ve.ce.WikiaBlockMediaNode );
