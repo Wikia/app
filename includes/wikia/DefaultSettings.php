@@ -61,6 +61,7 @@ $wgUseFakeExternalStoreDB = false;
 require_once ( $IP."/includes/wikia/Defines.php" );
 require_once ( $IP."/includes/wikia/GlobalFunctions.php" );
 require_once ( $IP."/includes/wikia/Wikia.php" );
+require_once ( $IP."/includes/wikia/WikiaPrivateLog.php" );
 require_once ( $IP."/includes/wikia/WikiaMailer.php" );
 require_once ( $IP."/extensions/Math/Math.php" );
 
@@ -1165,4 +1166,3 @@ $wgHooks['IsTrustedProxy'][] = 'TrustedProxyService::onIsTrustedProxy';
  * Enables verbose logging from chat
  */
 //$wgChatDebugEnabled = true;
-
