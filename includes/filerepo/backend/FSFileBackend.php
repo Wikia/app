@@ -7,11 +7,11 @@
 
 /**
  * Class for a file system (FS) based file backend.
- * 
+ *
  * All "containers" each map to a directory under the backend's base directory.
  * For backwards-compatibility, some container paths can be set to custom paths.
  * The wiki ID will not be used in any custom paths, so this should be avoided.
- * 
+ *
  * Having directories with thousands of files will diminish performance.
  * Sharding can be accomplished by using FileRepo-style hash paths.
  *
@@ -75,7 +75,7 @@ class FSFileBackend extends FileBackendStore {
 
 	/**
 	 * Sanity check a relative file system path for validity
-	 * 
+	 *
 	 * @param $path string Normalized relative path
 	 * @return bool
 	 */
@@ -94,14 +94,14 @@ class FSFileBackend extends FileBackendStore {
 	/**
 	 * Given the short (unresolved) and full (resolved) name of
 	 * a container, return the file system path of the container.
-	 * 
+	 *
 	 * @param $shortCont string
 	 * @param $fullCont string
-	 * @return string|null 
+	 * @return string|null
 	 */
 	protected function containerFSRoot( $shortCont, $fullCont ) {
 		if ( isset( $this->containerPaths[$shortCont] ) ) {
-			return $this->containerPaths[$shortCont]; 
+			return $this->containerPaths[$shortCont];
 		} elseif ( isset( $this->basePath ) ) {
 			return "{$this->basePath}/{$fullCont}";
 		}
@@ -110,7 +110,7 @@ class FSFileBackend extends FileBackendStore {
 
 	/**
 	 * Get the absolute file system path for a storage path
-	 * 
+	 *
 	 * @param $storagePath string Storage path
 	 * @return string|null
 	 */
@@ -133,6 +133,7 @@ class FSFileBackend extends FileBackendStore {
 	public function isPathUsableInternal( $storagePath ) {
 		$fsPath = $this->resolveToFSPath( $storagePath );
 		if ( $fsPath === null ) {
+			WikiaPrivateLog::getChannel( 'file' )->send( ['invalid file path', $storagePath], true );
 			return false; // invalid
 		}
 		$parentDir = dirname( $fsPath );
@@ -154,6 +155,7 @@ class FSFileBackend extends FileBackendStore {
 
 		$dest = $this->resolveToFSPath( $params['dst'] );
 		if ( $dest === null ) {
+			WikiaPrivateLog::getChannel( 'file' )->send( ['invalid file path', $params], true );
 			$status->fatal( 'backend-fail-invalidpath', $params['dst'] );
 			return $status;
 		}
@@ -162,10 +164,12 @@ class FSFileBackend extends FileBackendStore {
 			if ( !empty( $params['overwrite'] ) ) {
 				$ok = unlink( $dest );
 				if ( !$ok ) {
+					WikiaPrivateLog::getChannel( 'file' )->send( ['file delete error', $params], true );
 					$status->fatal( 'backend-fail-delete', $params['dst'] );
 					return $status;
 				}
 			} else {
+				WikiaPrivateLog::getChannel( 'file' )->send( ['file already exists', $params], true );
 				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
 				return $status;
 			}
@@ -173,6 +177,7 @@ class FSFileBackend extends FileBackendStore {
 
 		$ok = copy( $params['src'], $dest );
 		if ( !$ok ) {
+			WikiaPrivateLog::getChannel( 'file' )->send( ['cannot copy file', $params], true );
 			$status->fatal( 'backend-fail-store', $params['src'], $params['dst'] );
 			return $status;
 		}
@@ -190,12 +195,14 @@ class FSFileBackend extends FileBackendStore {
 
 		$source = $this->resolveToFSPath( $params['src'] );
 		if ( $source === null ) {
+			WikiaPrivateLog::getChannel( 'file' )->send( ['invalid file path', $params], true );
 			$status->fatal( 'backend-fail-invalidpath', $params['src'] );
 			return $status;
 		}
 
 		$dest = $this->resolveToFSPath( $params['dst'] );
 		if ( $dest === null ) {
+			WikiaPrivateLog::getChannel( 'file' )->send( ['invalid file path', $params], true );
 			$status->fatal( 'backend-fail-invalidpath', $params['dst'] );
 			return $status;
 		}
@@ -204,10 +211,12 @@ class FSFileBackend extends FileBackendStore {
 			if ( !empty( $params['overwrite'] ) ) {
 				$ok = unlink( $dest );
 				if ( !$ok ) {
+					WikiaPrivateLog::getChannel( 'file' )->send( ['file delete error', $params], true );
 					$status->fatal( 'backend-fail-delete', $params['dst'] );
 					return $status;
 				}
 			} else {
+				WikiaPrivateLog::getChannel( 'file' )->send( ['file already exists', $params], true );
 				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
 				return $status;
 			}
@@ -215,6 +224,7 @@ class FSFileBackend extends FileBackendStore {
 
 		$ok = copy( $source, $dest );
 		if ( !$ok ) {
+			WikiaPrivateLog::getChannel( 'file' )->send( ['cannot copy file', $params], true );
 			$status->fatal( 'backend-fail-copy', $params['src'], $params['dst'] );
 			return $status;
 		}
@@ -232,12 +242,14 @@ class FSFileBackend extends FileBackendStore {
 
 		$source = $this->resolveToFSPath( $params['src'] );
 		if ( $source === null ) {
+			WikiaPrivateLog::getChannel( 'file' )->send( ['invalid file path', $params], true );
 			$status->fatal( 'backend-fail-invalidpath', $params['src'] );
 			return $status;
 		}
 
 		$dest = $this->resolveToFSPath( $params['dst'] );
 		if ( $dest === null ) {
+			WikiaPrivateLog::init( 'file' )->send( ['invalid file path', $params], true );
 			$status->fatal( 'backend-fail-invalidpath', $params['dst'] );
 			return $status;
 		}
@@ -248,11 +260,13 @@ class FSFileBackend extends FileBackendStore {
 				if ( wfIsWindows() ) {
 					$ok = unlink( $dest );
 					if ( !$ok ) {
+						WikiaPrivateLog::getChannel( 'file' )->send( ['file delete error', $params], true );
 						$status->fatal( 'backend-fail-delete', $params['dst'] );
 						return $status;
 					}
 				}
 			} else {
+				WikiaPrivateLog::getChannel( 'file' )->send( ['file already exists', $params], true );
 				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
 				return $status;
 			}
@@ -261,6 +275,7 @@ class FSFileBackend extends FileBackendStore {
 		$ok = rename( $source, $dest );
 		clearstatcache(); // file no longer at source
 		if ( !$ok ) {
+			WikiaPrivateLog::getChannel( 'file' )->send( ['cannot move file', $params], true );
 			$status->fatal( 'backend-fail-move', $params['src'], $params['dst'] );
 			return $status;
 		}
@@ -276,11 +291,13 @@ class FSFileBackend extends FileBackendStore {
 
 		$source = $this->resolveToFSPath( $params['src'] );
 		if ( $source === null ) {
+			WikiaPrivateLog::getChannel( 'file' )->send( ['invalid file path', $params], true );
 			$status->fatal( 'backend-fail-invalidpath', $params['src'] );
 			return $status;
 		}
 
 		if ( !is_file( $source ) ) {
+			WikiaPrivateLog::getChannel( 'file' )->send( ['file does not exist', $params], true );
 			if ( empty( $params['ignoreMissingSource'] ) ) {
 				$status->fatal( 'backend-fail-delete', $params['src'] );
 			}
@@ -289,6 +306,7 @@ class FSFileBackend extends FileBackendStore {
 
 		$ok = unlink( $source );
 		if ( !$ok ) {
+			WikiaPrivateLog::getChannel( 'file' )->send( ['cannot delete file', $params], true );
 			$status->fatal( 'backend-fail-delete', $params['src'] );
 			return $status;
 		}
@@ -304,6 +322,7 @@ class FSFileBackend extends FileBackendStore {
 
 		$dest = $this->resolveToFSPath( $params['dst'] );
 		if ( $dest === null ) {
+			WikiaPrivateLog::getChannel( 'file' )->send( ['invalid file path', $params], true );
 			$status->fatal( 'backend-fail-invalidpath', $params['dst'] );
 			return $status;
 		}
@@ -312,10 +331,12 @@ class FSFileBackend extends FileBackendStore {
 			if ( !empty( $params['overwrite'] ) ) {
 				$ok = unlink( $dest );
 				if ( !$ok ) {
+					WikiaPrivateLog::getChannel( 'file' )->send( ['cannot delete file', $params], true );
 					$status->fatal( 'backend-fail-delete', $params['dst'] );
 					return $status;
 				}
 			} else {
+				WikiaPrivateLog::getChannel( 'file' )->send( ['file already exists', $params], true );
 				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
 				return $status;
 			}
@@ -323,6 +344,7 @@ class FSFileBackend extends FileBackendStore {
 
 		$bytes = file_put_contents( $dest, $params['content'] );
 		if ( $bytes === false ) {
+			WikiaPrivateLog::getChannel( 'file' )->send( ['file create error', $params], true );
 			$status->fatal( 'backend-fail-create', $params['dst'] );
 			return $status;
 		}
@@ -341,10 +363,13 @@ class FSFileBackend extends FileBackendStore {
 		$contRoot = $this->containerFSRoot( $shortCont, $fullCont ); // must be valid
 		$dir = ( $dirRel != '' ) ? "{$contRoot}/{$dirRel}" : $contRoot;
 		if ( !wfMkdirParents( $dir ) ) { // make directory and its parents
+			WikiaPrivateLog::getChannel( 'file' )->send( ['cannot create error', $params], true );
 			$status->fatal( 'directorycreateerror', $params['dir'] );
 		} elseif ( !is_writable( $dir ) ) {
+			WikiaPrivateLog::getChannel( 'file' )->send( ['directory is readonly', $params], true );
 			$status->fatal( 'directoryreadonlyerror', $params['dir'] );
 		} elseif ( !is_readable( $dir ) ) {
+			WikiaPrivateLog::getChannel( 'file' )->send( ['directory is not readable', $params], true );
 			$status->fatal( 'directorynotreadableerror', $params['dir'] );
 		}
 		return $status;
@@ -496,6 +521,9 @@ class FSFileBackend extends FileBackendStore {
 	protected function chmod( $path ) {
 		wfSuppressWarnings();
 		$ok = chmod( $path, $this->fileMode );
+		if ( $ok === false ) {
+			WikiaPrivateLog::getChannel( 'file' )->send( ['cannot chmod a file', $path], true );
+		}
 		wfRestoreWarnings();
 
 		return $ok;
@@ -553,11 +581,11 @@ class FSFileBackendFileList implements Iterator {
 				# RecursiveDirectoryIterator extends FilesystemIterator.
 				# FilesystemIterator::SKIP_DOTS default is inconsistent in PHP 5.3.x.
 				$flags = FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::SKIP_DOTS;
-				$this->iter = new RecursiveIteratorIterator( 
+				$this->iter = new RecursiveIteratorIterator(
 					new RecursiveDirectoryIterator( $dir, $flags ) );
 			} else { // PHP < 5.3
 				# RecursiveDirectoryIterator extends DirectoryIterator
-				$this->iter = new RecursiveIteratorIterator( 
+				$this->iter = new RecursiveIteratorIterator(
 					new RecursiveDirectoryIterator( $dir ) );
 			}
 		} catch ( UnexpectedValueException $e ) {
