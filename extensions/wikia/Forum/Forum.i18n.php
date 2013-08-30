@@ -17,7 +17,7 @@ $messages['en'] = array(
 	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|Active<br />Discussion|Active<br />Discussions}}</span>',
 
 	/* Forum:Special (Index) */
-	'forum-specialpage-heading' => '{{SITENAME}} Forum',
+	'forum-specialpage-heading' => 'Forum',
 	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading You can edit it<span>',
 	'forum-specialpage-blurb' => '',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|thread|threads}}',
