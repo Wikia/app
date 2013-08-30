@@ -306,7 +306,7 @@ var LightboxLoader = {
 	handleOldDom: function(type) {
 		if(LightboxLoader.isOldDom === null) {
 			$().log("Send old DOM tracking", "Lightbox");
-			LightboxTracker.track(Wikia.Tracker.ACTIONS.VIEW, 'old-dom', type, null, 'ga');
+			LightboxTracker.track(Wikia.Tracker.ACTIONS.VIEW, 'old-dom', type, null, 'internal');
 		}
 		LightboxLoader.isOldDom = true;
 	}

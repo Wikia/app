@@ -31,11 +31,9 @@ class ImageTweaksHooks {
 			$caption = ( !empty( $frameParams['caption'] ) ) ? $frameParams['caption'] : null;
 
 			if( is_object( $thumb ) ) {
-				$width = $thumb->getWidth();
-				$showRibbon = WikiaMobileMediaService::showRibbon( $width, $thumb->getHeight() );
+				$isSmall = WikiaMobileMediaService::isSmallImage( $thumb->getWidth(), $thumb->getHeight() );
 			} else {
-				$width = false;
-				$showRibbon = false;
+				$isSmall = false;
 			}
 
 			$html = F::app()->sendRequest(
@@ -43,11 +41,10 @@ class ImageTweaksHooks {
 				'renderFigureTag',
 				array(
 					'class' => [( $linked ) ? 'link' : 'thumb'],
-					'width' => $width,
 					'content' => $origHTML,
 					//force the caption wrapper to exist if it's a linked image without caption
 					'caption' => ( $linked && empty( $caption ) ) ? '' :  $caption,
-					'showRibbon' => $showRibbon
+					'isSmall' => $isSmall
 				),
 				true
 			)->toString();
@@ -110,11 +107,9 @@ class ImageTweaksHooks {
 			$caption = ( !empty( $frameParams['caption'] ) ) ? $frameParams['caption'] : null;
 
 			if( is_object( $thumb ) ) {
-				$width = $thumb->getWidth();
-				$showRibbon = WikiaMobileMediaService::showRibbon( $width, $thumb->getHeight() );
+				$isSmall = WikiaMobileMediaService::isSmallImage( $thumb->getWidth(), $thumb->getHeight() );
 			} else {
-				$width = false;
-				$showRibbon = false;
+				$isSmall = true;
 			}
 
 			$html = F::app()->sendRequest(
@@ -122,11 +117,10 @@ class ImageTweaksHooks {
 				'renderFigureTag',
 				array(
 					'class' => [( $linked ) ? 'link' : 'thumb'],
-					'width' => $width,
 					'content' => $origHTML,
 					//force the caption wrapper to exist if it's a linked image without caption
 					'caption' => ( $linked && empty( $caption ) ) ? '' : $caption,
-					'showRibbon' => $showRibbon
+					'isSmall' => $isSmall
 				),
 				true
 			)->toString();
@@ -255,7 +249,8 @@ class ImageTweaksHooks {
 						'parameters' => [ $imageParams ],
 						'anchorAttributes' => $linkAttribs,
 						'linked' => !empty( $link ),
-						'noscript' => $contents
+						'noscript' => $contents,
+						'isSmall' => WikiaMobileMediaService::isSmallImage($imageAttribs['width'],  $imageAttribs['height'])
 					],
 					true
 				)->toString();
@@ -319,7 +314,8 @@ class ImageTweaksHooks {
 				'attributes' => $imageAttribs,
 				'parameters' => [ $imageParams ],
 				'anchorAttributes' => $linkAttribs,
-				'noscript' => $origImg
+				'noscript' => $origImg,
+				'isSmall' => WikiaMobileMediaService::isSmallImage($imageAttribs['width'], $imageAttribs['height'])
 			];
 
 			if ( $file instanceof File ) {

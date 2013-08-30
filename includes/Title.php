@@ -4554,7 +4554,7 @@ class Title {
 	 * $wgLang (such as special pages, which are in the user language).
 	 *
 	 * @since 1.18
-	 * @return object Language
+	 * @return Language
 	 */
 	public function getPageLanguage() {
 		global $wgLang;

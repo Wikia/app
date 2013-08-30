@@ -1,4 +1,5 @@
 @import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/responsive";
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/border-radius";
@@ -18,7 +19,12 @@ $edit-box-color: mix($color-page, #000, 95%);
 
 .css-editor {
 	float: left;
-	width: 670px;
+	margin-right: -350px;
+	width: 100%;
+
+	.css-editor-wrapper {
+		margin-right: 350px;
+	}
 
 	.editor-changes-info-wrapper > div:last-child {
 		margin-bottom: 10px;
@@ -63,7 +69,8 @@ $edit-box-color: mix($color-page, #000, 95%);
 
 		.css-publish-button {
 			border: none;
-			height: 20px;
+			// fix for touch devices, because in touchScreen.scss height is set to 30px !important
+			height: 20px !important;
 		}
 
 		.drop {
@@ -73,11 +80,12 @@ $edit-box-color: mix($color-page, #000, 95%);
 		.edit-summary {
 			border: 1px solid $color-page-border;
 			@include border-radius(4px);
+			@include box-sizing();
 			clear: both;
 			margin: 5px 0;
 			padding: 5px;
 			resize: none;
-			width: 290px;
+			width: 100%;
 		}
 
 		#minorEdit {
@@ -214,11 +222,18 @@ $edit-box-color: mix($color-page, #000, 95%);
 }
 
 @if ( $responsive-layout-enabled ) {
-	@media screen and (max-width: 1023px) {
+	@media screen and (max-width: $breakpoint-small) {
 		.css-editor,
 		.css-side-bar {
 			float: none;
 			width: auto;
+		}
+
+		.css-editor {
+			margin-right: 0;
+			.css-editor-wrapper {
+				margin-right: 0;
+			}
 		}
 
 		.css-side-bar {
@@ -226,6 +241,10 @@ $edit-box-color: mix($color-page, #000, 95%);
 			.edit-summary {
 				display: block;
 			}
+		}
+
+		.css-edit-box {
+			margin-top: 10px;
 		}
 	}
 }

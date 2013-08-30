@@ -34,6 +34,9 @@ class SpecialApiGate extends SpecialPage {
 
 	public function __construct() {
 		parent::__construct( 'ApiGate' );
+		//set apigate link path
+		global $APIGATE_LINK_ROOT;
+		$APIGATE_LINK_ROOT = Title::newFromText( 'ApiGate', NS_SPECIAL)->fixSpecialName()->getFullUrl();
 	}
 
 	/**

@@ -490,11 +490,13 @@ class MediaWikiService
 			} else {
 				$wikiId = ( $interWikiComId = $this->getWikiIdByHost( "{$langCode}.{$domain}.wikia.com" ) ) !== null ? $interWikiComId : $this->getWikiIdByHost( "{$domain}.{$langCode}" );
 			}
-			//exclude wikis which lang does not match current one
-			$wikiLang = $this->getGlobalForWiki( 'wgLanguageCode', $wikiId );
-			//if wiki lang not set display only for default language
-			if ( isset( $wikiId ) && ( ( !$wikiLang && $langCode === static::WIKI_DEFAULT_LANG_CODE ) || ( $langCode === $wikiLang ) ) ) {
-				$match = new \Wikia\Search\Match\Wiki( $wikiId, $this );
+			
+			if ( isset( $wikiId ) ) {
+				$wiki = $this->getWikiFromWikiId( $wikiId );
+				//exclude wikis which lang does not match current one, and wikis that are closed
+				if ( (! empty( $wiki ) ) && ( $wiki->city_public == 1 ) && $langCode === $wiki->city_lang ) {
+					$match = new \Wikia\Search\Match\Wiki( $wikiId, $this );
+				}
 			}
 		}
 		return $match;
@@ -884,6 +886,15 @@ class MediaWikiService
 		return $this->getTitleFromPageId( $pageId )->getDbKey();
 	}
 
+	/**
+	 * Returns an instance of stdClass with attributes corresponding to rows in the city_list table 
+	 * @param int $wikiId
+	 * @return stdClass
+	 */
+	protected function getWikiFromWikiId( $wikiId ) {
+		return (new \WikiFactory)->getWikiById( $wikiId );
+	}
+	
 	/**
 	 * Give a page id, provide a file
 	 * @param int $pageId

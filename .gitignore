@@ -1,3 +1,5 @@
+# Ignore root jshintrc for now
+/.jshintrc
 /.komodotools
 /mediawiki-1.19.komodoproject
 /nbproject

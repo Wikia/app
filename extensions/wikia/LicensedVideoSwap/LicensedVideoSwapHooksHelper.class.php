@@ -13,12 +13,30 @@ class LicensedVideoSwapHooksHelper {
 	 */
 	public static function onPageHeaderIndexExtraButtons( $response ) {
 		$app = F::app();
-		if ( $app->wg->Title->getFullText() == 'Special:LicensedVideoSwap' ) {
-			$title = SpecialPage::getTitleFor("LicensedVideoSwap/History")->escapeLocalURL();
-			$extraButtons = $response->getVal('extraButtons');
-			$extraButtons[] = '<a class="button lvs-history-btn" href="'.$title.'" rel="tooltip" title="'.wfMessage("lvs-tooltip-history")->plain().'">'.wfMessage("lvs-history-button-text")->plain().'</a>';
-			$response->setVal('extraButtons', $extraButtons);
+
+		$user = $app->wg->User;
+		if ( !$user->isAllowed( 'licensedvideoswap' ) ) {
+			return true;
 		}
+
+		if ( $app->wg->Title->getFullText() == 'Special:LicensedVideoSwap' ) {
+
+			// Get the user preference skin, not the current skin of the page
+			$skin = $app->wg->User->getOption( 'skin' );
+
+			// for monobook users, specify wikia skin in querystring
+			$query = "";
+			if( $skin == "monobook" ) {
+				$query = "useskin=wikia";
+			}
+
+			$href = SpecialPage::getTitleFor( "LicensedVideoSwap/History" )->escapeLocalURL( $query );
+			$extraButtons = $response->getVal( 'extraButtons' );
+
+			$extraButtons[] = '<a class="button lvs-history-btn" href="'.$href.'" rel="tooltip" title="'.wfMessage( "lvs-tooltip-history" )->plain().'">'.wfMessage( "lvs-history-button-text" )->plain().'</a>';
+			$response->setVal( 'extraButtons', $extraButtons );
+		}
+
 		return true;
 	}
 }

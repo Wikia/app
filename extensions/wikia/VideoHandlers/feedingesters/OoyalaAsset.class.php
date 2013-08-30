@@ -146,9 +146,6 @@ class OoyalaAsset extends WikiaModel {
 		if ( isset( $data['ageGate'] ) ) {
 			$metadata['agegate'] = $data['ageGate'];
 		}
-		if ( !empty( $data['tags'] ) ) {
-			$metadata['tags'] = $data['tags'];
-		}
 		// hd can be 0
 		if ( isset( $data['hd'] ) ) {
 			$metadata['hd'] = $data['hd'];
@@ -164,9 +161,6 @@ class OoyalaAsset extends WikiaModel {
 		}
 		if ( !empty( $data['type'] ) ) {
 			$metadata['type'] = $data['type'];
-		}
-		if ( !empty( $data['trailerRating'] ) ) {
-			$metadata['trailerrating'] = $data['trailerRating'];
 		}
 		if ( !empty( $data['industryRating'] ) ) {
 			$metadata['industryrating'] = $data['industryRating'];
@@ -195,6 +189,19 @@ class OoyalaAsset extends WikiaModel {
 		}
 		if ( !empty( $data['episode'] ) ) {
 			$metadata['episode'] = $data['episode'];
+		}
+		if ( !empty( $data['characters'] ) ) {
+			$metadata['characters'] = $data['characters'];
+		}
+		if ( !empty( $data['resolution'] ) ) {
+			$metadata['resolution'] = $data['resolution'];
+		}
+		// ignore if aspectRatio is empty or 0
+		if ( !empty( $data['aspectRatio'] ) ) {
+			$metadata['aspectratio'] = $data['aspectRatio'];
+		}
+		if ( !empty( $data['pageCategories'] ) ) {
+			$metadata['pagecategories'] = $data['pageCategories'];
 		}
 
 		return $metadata;
@@ -370,7 +377,7 @@ class OoyalaAsset extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$resp = true;
-		if ( !empty( $data['ageGate'] ) ) {
+		if ( !empty( $data['ageRequired'] ) ) {
 			$resp = $this->setPlayer( $videoId, OoyalaVideoHandler::OOYALA_PLAYER_ID_AGEGATE );
 		}
 
@@ -389,7 +396,7 @@ class OoyalaAsset extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$params = array();
-		if ( !empty( $data['ageGate'] ) && !empty( $this->wg->OoyalaApiConfig['LabelAgeGate'] ) ) {
+		if ( !empty( $data['ageRequired'] ) && !empty( $this->wg->OoyalaApiConfig['LabelAgeGate'] ) ) {
 			$params[] = $this->wg->OoyalaApiConfig['LabelAgeGate'];
 		}
 

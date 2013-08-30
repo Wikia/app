@@ -52,15 +52,37 @@
 					<?php foreach( $results as $result ): ?>
 						<?php
 							$pos++;
+							if ( $result['ns'] === 0 ) {
+								echo $app->getView( 'WikiaSearch', $resultView, array(
+									  'result' => $result,
+									  'gpos' => 0,
+									  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
+									  'query' => $query
+									));
+								continue;
+							} else if ( $result['ns'] === 14 && empty( $categorySeen ) && !empty( $categoryModule ) ) {
+								$categorySeen = true;
+								$topArticles = $app->sendRequest( 'WikiaSearch', 'categoryTopArticles', array(
+									  'result' => $result,
+									  'gpos' => 0,
+									  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
+									  'query' => $query,
+									), true);
+								if (count($topArticles->getVal('pages'))>0) {
+									echo $topArticles->toString();
+									continue;
+								} 							
+							}
+							// display standard view instead
+							echo $app->getView( 'WikiaSearch', WikiaSearchController::WIKIA_DEFAULT_RESULT, array(
+									'result' => $result,
+									'gpos' => 0,
+									'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
+									'query' => $query
+								));
 							if ( ( $pos == 2 || $pos == 4 ) && $mediaData ):
 								echo '<li class="video-addon-results video-addon-results-before-' . $pos . '">' . $app->getView( 'WikiaSearch', 'mediadata', array( 'mediaData' => $mediaData, 'query' => $query ) ) . '</li>';
 							endif;
-							echo $app->getView( 'WikiaSearch', ( $result->getVar( 'ns' ) === 0 ) ? $resultView : WikiaSearchController::WIKIA_DEFAULT_RESULT, array(
-							  'result' => $result,
-							  'gpos' => 0,
-							  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
-							  'query' => $query
-							));
 						?>
 					<?php endforeach; ?>
 					</ul>
