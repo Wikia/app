@@ -368,7 +368,7 @@
 		// preview dialog and pass it to the callback
 		getPreviewContent: function(content, extraData, callback) {
 			// add section name when adding new section (BugId:7658)
-			if (window.wgEditPageSection == 'new') {
+			if (window.wgEditPageSection === 'new') {
 				content = '== ' + this.getSummary() + ' ==\n\n' + content;
 			} else {
 				extraData.summary = this.getSummary();
@@ -428,7 +428,7 @@
 				// PSS: fuck scrollbars.
 				// TODO: we should have access to breakpoints and such in JavaScript
 				// as variables instead of hardcoded values.
-				if ( isWebkit && pageWidth ) {
+				if ( isWebkit && pageWidth >= 1370 ) {
 					width -= this.scrollbarWidth;
 				}
 			}
