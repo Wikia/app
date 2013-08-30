@@ -1,4 +1,5 @@
 @import "../../../../skins/oasis/css/core/color";
+@import "skins/oasis/css/core/layout";
 @import "../../../../skins/oasis/css/mixins/arrow";
 @import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
@@ -121,11 +122,11 @@ body.skin-oasis .ChatMonobookEntryPoint {
 		}
 
 		.carousel-container {
-			left: 20px;
+			left: 21px;
 			height: 34px;
 			overflow: hidden;
 			position: relative;
-			width: 218px;
+			width: 244px;
 			& > div {
 				position: relative;
 			}
@@ -137,7 +138,17 @@ body.skin-oasis .ChatMonobookEntryPoint {
 			}
 			li {
 				float: left;
-				margin: 0 12px 0 0;
+				margin: 0 8px 0 0;
+			}
+		}
+		@if ($responsive-layout-enabled) {
+			.carousel-container {
+				left: 19px;
+				width: 218px;
+
+				li {
+					margin-right: 12px;
+				}
 			}
 		}
 

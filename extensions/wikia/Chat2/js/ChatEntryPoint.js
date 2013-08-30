@@ -41,12 +41,13 @@ var ChatEntryPoint = {
 		// remove the ChatModuleUninitialized so we don't initialize the same element more than once
 		$(".ChatModuleUninitialized").html(wgWikiaChatModuleContent).removeClass("ChatModuleUninitialized");
 
-		var chatWhosHere = $('.ChatModule .chat-whos-here');
+		var chatWhosHere = $('.ChatModule .chat-whos-here'),
+			itemsShown = (wgOasisResponsive) ? 5 : 6;
 
 		chatWhosHere.find('.carousel-container').carousel({
 			nextClass: 'arrow-right',
 			prevClass: 'arrow-left',
-			itemsShown: 5
+			itemsShown: itemsShown
 		});
 
 		// TODO: abstract this because we use this pattern in a few places: i.e. hovering over popover will not close it
