@@ -14,7 +14,7 @@ class GlobalHeaderController extends WikiaController {
 		$userLang = $this->wg->Lang->getCode();
 
 		global $wgCityId;
-		$this->response->setVal('category', WikiFactory::getCategory($wgCityId));
+		$this->response->setVal('category', HubService::getCategoryInfoForCurrentPage());
 
 		// Link to Wikia home page
 		$centralUrl = 'http://www.wikia.com/Wikia';
