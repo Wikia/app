@@ -243,14 +243,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$service = new \Wikia\Search\MediaWikiService();
 		foreach ( $results['items'] as &$result ) {
 			if (! isset( $result['thumbnail'] ) ) {
-				try {
-					$result['thumbnail'] = $service->getThumbnailHtml( $result['pageid'], $dimensions );
-				} catch ( \Exception $e ) {
-					$result['thumbnail'] = '';
-				}
+				//try {
+					$result['thumbnail'] = $service->getThumbnailHtmlFromPageTitle( $result['title'], $dimensions );
+				//} catch ( \Exception $e ) {
+				//	$result['thumbnail'] = '';
+				//}
 			}
 		}
-		
+
 		$response = $this->getResponse();
 		$response->setFormat( 'json' );
 		$response->setData( $results );
@@ -359,8 +359,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'hasArticleMatch',       $searchConfig->hasArticleMatch() );
 		$this->setVal( 'isMonobook',            ( $this->wg->User->getSkin() instanceof SkinMonobook ) );
 		$this->setVal( 'isCorporateWiki',       $this->isCorporateWiki() );
-		$this->setVal( 'wgExtensionsPath',      $wgExtensionsPath);
-		
+		$this->setVal( 'wgExtensionsPath',      $this->wg->ExtensionsPath);
 		$this->setVal( 'mediaData',             $this->sendSelfRequest( 'combinedMediaSearch', 
 				array( 'q' => $searchConfig->getQuery()->getSanitizedQuery(), 'videoOnly' => true ) )->getData() );
 		

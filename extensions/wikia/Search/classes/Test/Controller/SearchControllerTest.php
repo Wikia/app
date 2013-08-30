@@ -2497,9 +2497,14 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		                 ->disableOriginalConstructor()
 		                 ->setMethods( array( 'getSkin' ) )
 		                 ->getMock();
-		
-		$mockWg = (object) array( 'Title' => $mockTitle, 'User' => $mockUser );
-		
+		$mockMediaResponse = $this->getMockBuilder( 'WikiaResponse' )
+			->disableOriginalConstructor()
+			->setMethods( array('getData') )
+			->getMock();
+		$mockMediaData = array( 'foo' => 'bar' );
+		$mockWgOut = (object) array( 'mSquidMaxage' => 123 );
+		$mockWg = (object) array( 'Title' => $mockTitle, 'User' => $mockUser, 'Out' => $mockWgOut, 'ExtensionsPath' => 'foo_ext_path' );
+
 		$controllerIncr = 0;
 		$tabsArgs = array( 'config' => $mockConfig, 'by_category' => false, 'filters' => array() );
 		
@@ -2705,10 +2710,37 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		    ->will   ( $this->returnValue( false ) )
 		;
 		$mockController
-		    ->expects( $this->at( $controllerIncr++ ) )
-		    ->method ( 'setVal' )
-		    ->with   ( 'isCorporateWiki', false )
+			->expects( $this->at( $controllerIncr++ ) )
+			->method ( 'setVal' )
+			->with   ( 'isCorporateWiki', false )
 		;
+		$mockController
+			->expects( $this->at( $controllerIncr++ ) )
+			->method ( 'setVal' )
+			->with   ( 'wgExtensionsPath', $mockWg->ExtensionsPath )
+		;
+		$mockController
+			->expects( $this->at( $controllerIncr++ ) )
+			->method ( 'sendSelfRequest' )
+			->will   ( $this->returnValue( $mockMediaResponse ) )
+		;
+		$mockMediaResponse
+			->expects( /* $this->at( $controllerIncr++ ) */ $this->once() )
+			->method ( 'getData' )
+			->will   ( $this->returnValue( $mockMediaData ) )
+		;
+		$mockController
+			->expects( $this->at( $controllerIncr++ ) )
+			->method ( 'setVal' )
+			->with   ( 'mediaData', $mockMediaData )
+		;
+		/*
+		$mockController
+			->expects( $this->at( $controllerIncr++ ) )
+			->method ( 'setVal' )
+			->with   ( 'topWikiArticles', $this->any() )
+		;
+		*/
 		
 		$reflWg = new ReflectionProperty( 'WikiaSearchController', 'wg' );
 		$reflWg->setAccessible( true );

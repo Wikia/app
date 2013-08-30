@@ -9,7 +9,7 @@ namespace Wikia\Search;
  * This will allow us to abstract our behavior away from MediaWiki if we want.
  * Public functions should not return instances of classes defined in MediaWiki core.
  * @author relwell
- * @package Search 
+ * @package Search
  */
 class MediaWikiService
 {
@@ -701,6 +701,27 @@ class MediaWikiService
 	}
 
 	/**
+	 * @param string $pageTitle
+	 * @param array|null $transformParams
+	 * @return string|null - html of thumbnail with play button
+	 */
+	public function getThumbnailHtmlFromPageTitle( $pageTitle, $transformParams = null ) {
+		$file = null;
+		try {
+			$title = \Title::newFromText( $pageTitle, NS_FILE );
+
+			$transformParams[ 'width' ] = (isset( $transformParams[ 'width' ] ) ) ? $transformParams[ 'width' ] : static::THUMB_DEFAULT_WIDTH;
+			$transformParams[ 'height' ] = (isset( $transformParams[ 'height' ] ) ) ? $transformParams[ 'height' ] : static::THUMB_DEFAULT_HEIGHT;
+
+			return \WikiaFileHelper::getVideoThumbnailHtml( $title, $transformParams['width'], $transformParams['height'], false );
+		} catch ( \Exception $ex ) {
+			// we have some isses on dev box (no starter database).
+			// swallow the exception for now. Should we log this event ?
+			return '';
+		}
+	}
+
+	/**
 	 * Returns the number of video views for a page ID.
 	 * @param int $pageId
 	 * @return string
@@ -862,7 +883,7 @@ class MediaWikiService
 	protected function getTitleKeyFromPageId( $pageId ) {
 		return $this->getTitleFromPageId( $pageId )->getDbKey();
 	}
-	
+
 	/**
 	 * Give a page id, provide a file
 	 * @param int $pageId
@@ -879,7 +900,7 @@ class MediaWikiService
 	 * Standard interface for this class's services to access a page
 	 * @param int $pageId
 	 * @return Article
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	protected function getPageFromPageId( $pageId ) {
 		wfProfileIn( __METHOD__ );
