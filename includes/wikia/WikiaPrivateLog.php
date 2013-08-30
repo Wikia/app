@@ -128,6 +128,8 @@ class WikiaPrivateLog {
 				] as $param ){
 					$x[$param] = $item->getParam( $param );
 				}
+
+				$results[] = $x;
 			} else {
 				$results[] = gettype( $item );
 			}
