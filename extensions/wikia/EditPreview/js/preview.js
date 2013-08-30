@@ -6,11 +6,24 @@ define( 'wikia.preview', [ 'wikia.window', 'wikia.nirvana', 'wikia.deferred', 'j
 	'use strict';
 
 	var	$articleWrapper,
-		articleMargin = 11, // 10px margin + 1px bordser
+		// current design of preview has this margins to emulate page margins
+		// TODO: when we will redesign preview to meet darwin design directions - this should be done differently and refactored
+		articleMargin = 11, // 10px margin + 1px border
+		// values for min and max are Darwin minimum and maximum supported article width.
+		// This should be abstracted and stored in one place so it's available both for SASS and JS
 		previewTypes = {
-			current: { name: 'current', value: null },
-			min: { name: 'min', value: 768 - articleMargin * 2 },
-			max: { name:'max', value: 1300 - articleMargin * 2 }
+			current: {
+				name: 'current',
+				value: null
+			},
+			min: {
+				name: 'min',
+				value: 768 - articleMargin * 2
+			},
+			max: {
+				name:'max',
+				value: 1300 - articleMargin * 2
+			}
 		}
 
 	// show dialog for preview / show changes and scale it to fit viewport's height
@@ -111,8 +124,8 @@ define( 'wikia.preview', [ 'wikia.window', 'wikia.nirvana', 'wikia.deferred', 'j
 					loader({type: loader.MULTI, resources: {
 						mustache: 'extensions/wikia/EditPreview/templates/preview_type_dropdown.mustache'
 					}}).done(function(response) {
-							var $dialog = $('#EditPageDialog');
-							var template = response.mustache[0],
+							var $dialog = $('#EditPageDialog'),
+								template = response.mustache[0],
 								params = {
 									options: [
 										{
