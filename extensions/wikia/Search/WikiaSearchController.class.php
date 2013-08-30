@@ -46,7 +46,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * On what max position title can occur and still snippet will be cutted shorter
 	 * @var int
 	 */
-	const SNIPPET_SUBSTR = 50;
+	const SNIPPET_SUBSTR = 9;
 
 	/**
 	 * Responsible for instantiating query services based on config.
@@ -107,7 +107,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				}
 			}
 			if (! empty( $ids ) ) {
-				$params = [ 'ids' => implode( ',', $ids ), 'height' => 80, 'width' => 80 ];
+				$params = [ 'ids' => implode( ',', $ids ), 'height' => 80, 'width' => 80, 'abstract' => 120 ];
 				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
 				foreach ( $detailResponse['items'] as $id => $item ) {
 					if (! empty( $item['thumbnail'] ) ) {
@@ -123,6 +123,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 						}
 						//render date
 						$item[ 'date' ] = $wgLang->date( $item[ 'revision' ][ 'timestamp' ] );
+						$item = $this->processArticleItem( $item, 100 );
 						$pages[] = $item;
 					}
 				}
@@ -277,7 +278,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Controller Helper Methods
 	 *----------------------------------------------------------------------------------*/
 
-	protected function processArticleItem( $item ) {
+	protected function processArticleItem( $item, $maxlen = 150 ) {
 		if ( empty( $item['thumbnail'] ) ) {
 			//add placeholder
 			$item['thumbnail'] = '';
@@ -309,9 +310,15 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( isset( $cutIn ) && ( ctype_punct( $splitted[ $cutIn ] ) || ctype_space( $splitted[ $cutIn ] ) ) ) {
 			$item['abstract'] = substr( $normSpacesAbs, $cutIn );
 		} elseif ( !empty( $item[ 'abstract' ] ) ) {
-			$item['abstract'] = ' - ' . preg_replace( '|^[^{\pL\pN\p{Pi}}]+|', '', $normSpacesAbs );
+			$item['abstract'] = ' - ' . preg_replace( '|^[^\pL\pN\p{Pi}"]+|', '', $normSpacesAbs );
 		}
 		if ( !empty( $item[ 'abstract' ] ) ) {
+			$maxlen -= strlen( $trimTitle );
+			if ( $maxlen > 0 ) {
+				$item[ 'abstract' ] = wfShortenText( $item[ 'abstract' ], $maxlen, true );
+			} else {
+				$item[ 'abstract' ] = '';
+			}
 			return $item;
 		}
 		return null;
