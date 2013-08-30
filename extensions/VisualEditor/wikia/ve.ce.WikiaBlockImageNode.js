@@ -26,7 +26,7 @@ ve.inheritClass( ve.ce.WikiaBlockImageNode, ve.ce.WikiaBlockMediaNode );
 
 /* Static Properties */
 
-ve.ce.WikiaBlockImageNode.static.name = 'mwBlockImage';
+ve.ce.WikiaBlockImageNode.static.name = 'wikiaBlockImage';
 
 
 /* Registration */
