@@ -1,3 +1,7 @@
+<!-- TODO: remove this, only temp for styling before hook is done -->
+<div class="veeseoRA2VWwikiaV1"></div>
+<script src="http://rce.veeseo.com/code/wikia/veeseorcw.js" type="text/javascript"></script>
+
 <ul class="tabs">
 	<li data-tab="about" class="selected">
 		<a><?= wfMessage('file-page-tab-about') ?></a>
