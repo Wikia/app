@@ -98,7 +98,7 @@ abstract class FileOp {
 
 		$n = count( $performOps );
 		if ( $n > self::MAX_BATCH_SIZE ) {
-			WikiaPrivateLog::getChannel( 'file' )->send( ['max_batch_size is exceeded (n = ' . $n . ', max = ' . self::MAX_BATCH_SIZE . ')', $performOps], true );
+			WikiaPrivateLog::getChannel( 'file' )->send( ['max_batch_size is exceeded (n = ' . $n . ', max = ' . self::MAX_BATCH_SIZE . ')', $performOps] );
 			$status->fatal( 'backend-fail-batchsize', $n, self::MAX_BATCH_SIZE );
 			return $status;
 		}
@@ -112,7 +112,7 @@ abstract class FileOp {
 			$subStatus = $fileOp->precheck( $predicates );
 			$status->merge( $subStatus );
 			if ( !$subStatus->isOK() ) { // operation failed?
-				WikiaPrivateLog::getChannel( 'file' )->send( ['attempt batch failed (' . $index . ')', $performOps], true );
+				WikiaPrivateLog::getChannel( 'file' )->send( ['attempt batch failed (' . $index . ')', $performOps] );
 				$status->success[$index] = false;
 				++$status->failCount;
 				if ( !$ignoreErrors ) {
@@ -150,7 +150,7 @@ abstract class FileOp {
 				for ( $i = ($index + 1); $i < count( $performOps ); $i++ ) {
 					$performOps[$i]->logFailure( 'attempt_aborted' );
 				}
-				WikiaPrivateLog::getChannel( 'file' )->send( ['attempt batch failed (' . $index . ')', $performOps], true );
+				WikiaPrivateLog::getChannel( 'file' )->send( ['attempt batch failed (' . $index . ')', $performOps] );
 				return $status; // bail out
 			}
 		}

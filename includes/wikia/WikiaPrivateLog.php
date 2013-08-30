@@ -39,18 +39,22 @@ class WikiaPrivateLog {
 	 * log channel
 	 */
 	public function __construct( $canonicalName = '*' ) {
-		global $wgDisablePrivateLog;
+		global $wgDisablePrivateLog,
+			$wgPrivateLogWikisBlacklist,
+			$wgDBname,
+			$wgServer;
 
 		$this->name = "{$canonicalName}-WIKIA";
-		$this->disabled = isset( $wgDisablePrivateLog ) &&
+		$this->disabled = ( ( isset( $wgDisablePrivateLog ) &&
 			( $wgDisablePrivateLog === true ||
 			  ( is_array( $wgDisablePrivateLog ) &&
-				!empty( $wgDisablePrivateLog[ $canonicalName ] ) ) );
+				!empty( $wgDisablePrivateLog[ $canonicalName ] ) ) ) ) ||
+			( isset( $wgPrivateLogWikisBlacklist ) &&
+			  is_array( $wgPrivateLogWikisBlacklist ) &&
+			  in_array( $wgDBname, $wgPrivateLogWikisBlacklist ) ) );
 
-		if ( isset( $_SERVER['REQUEST_METHOD'] ) &&
-			 $_SERVER['REQUEST_METHOD'] === 'GET' &&
-			 $_SERVER['SCRIPT_URL'] === '/wikia.php' ) {
-			$this->uri = $_SERVER['REQUEST_URI'];
+		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
+			$this->uri = "{$wgServer}{$_SERVER['REQUEST_URI']}";
 		}
 	}
 
@@ -163,7 +167,7 @@ class WikiaPrivateLog {
 			if ( $i != 0 ) {
 				$bits = explode( '#?#', $array_fields[$i] );
 
-				if ( $bits[0] != '' ) {
+				if ( !in_array( $bits[0], [null, '', 'null', 'NULL'], true ) ) {
 					$output[] = [$bits[0] => $bits[1]];
 				}
 			}
