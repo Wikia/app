@@ -14,7 +14,15 @@ abstract class UserLoginBaseTest extends WikiaBaseTest {
 	protected function setUpMockObject( $objectName, $objectParams=null, $needSetInstance=false, $globalVarName=null, $objectValues=array(), $callOriginalConstructor=true ) {
 		$mockObject = $objectParams;
 		if ( is_array($objectParams) ) {
+
+			//list of methods
 			$methods = array_keys( $objectParams );
+
+			//add methods from mockValueMap list if exists
+			if( isset($objectParams['mockValueMap']) ) {
+				$methodsForValMap = array_keys( $objectParams['mockValueMap'] );
+				$methods = array_merge( $methods, $methodsForValMap);
+			}
 
 			if ( $callOriginalConstructor ) {
 				$mockObject = $this->getMock( $objectName, $methods, $objectValues );
@@ -23,7 +31,7 @@ abstract class UserLoginBaseTest extends WikiaBaseTest {
 			}
 
 			foreach( $objectParams as $method => $value ) {
-				if ( $method == 'params' ) {
+				if ( $method == 'params' || $method == 'mockValueMap' ) {
 					// processed later
 				} else if ( $value === null ) {
 					$mockObject->expects( $this->any() )
@@ -52,6 +60,15 @@ abstract class UserLoginBaseTest extends WikiaBaseTest {
 					$reflProp = $reflCl->getProperty($name);
 					$reflProp->setAccessible(true);
 					$reflProp->setValue($mockObject,$value);
+				}
+			}
+
+			if ( !empty( $objectParams['mockValueMap'] ) ) {
+				$parameters = $objectParams['mockValueMap'];
+				foreach ($parameters as $method => $valueMap) {
+					$mockObject->expects( $this->any() )
+						->method( $method )
+						->will( $this->returnValueMap( $valueMap ) );
 				}
 			}
 		}
