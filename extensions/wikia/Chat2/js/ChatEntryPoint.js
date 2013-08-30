@@ -46,7 +46,7 @@ var ChatEntryPoint = {
 		chatWhosHere.find('.carousel-container').carousel({
 			nextClass: 'arrow-right',
 			prevClass: 'arrow-left',
-			itemsShown: 6
+			itemsShown: 5
 		});
 
 		// TODO: abstract this because we use this pattern in a few places: i.e. hovering over popover will not close it
