@@ -3,9 +3,8 @@
 
 .GameStarLogo {
 	float: right;
-	margin: -3px 0 0 0;
 	width: 132px;
-	height: 38px;
+	height: $wikiaglobal-nav-height;
 	background: {
 		color: transparent;
 		image: url(/skins/oasis/images/logo_gamestar.png); /* $wgCdnStylePath */
