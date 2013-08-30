@@ -304,16 +304,16 @@ body {
 		top: 50%;
 	}
 	&.preview {
-		& > h1 {
+		> h1 {
 			float: left;
 			margin-right: 20px;
 		}
-		& > form {
+		> form {
 			float: left;
 			margin-top: 20px;
 			position: relative;
 		}
-		& .tooltip-icon {
+		.tooltip-icon {
 			@include tooltip-icon;
 			top: 4px;
 		}
