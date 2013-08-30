@@ -1,6 +1,7 @@
 Principal Authors (major contributors, alphabetically)
 
 Christian Williams <christian@wikia-inc.com>
+David Chan <dchan@wikimedia.org>
 Ed Sanders <esanders@wikimedia.org>
 Inez Korczynski <inez@wikia-inc.com>
 Roan Kattouw <roan@wikimedia.org>

@@ -11,6 +11,7 @@
  * @class
  * @extends ve.Element
  * @mixins ve.EventEmitter
+ * @mixins ve.ui.GroupElement
  *
  * @constructor
  * @param {Object} [config] Config options
@@ -26,21 +27,22 @@ ve.ui.Toolbar = function VeUiToolbar( options ) {
 
 	// Mixin constructors
 	ve.EventEmitter.call( this );
+	ve.ui.GroupElement.call( this, this.$$( '<div>' ) );
 
 	// Properties
+	this.groups = [];
 	this.$bar = this.$$( '<div>' );
-	this.$tools = this.$$( '<div>' );
 	this.$actions = this.$$( '<div>' );
 	this.initialized = false;
 
 	// Events
 	this.$
-		.add( this.$bar ).add( this.$tools ).add( this.$actions )
+		.add( this.$bar ).add( this.$group ).add( this.$actions )
 		.on( 'mousedown', false );
 
 	// Initialization
-	this.$tools.addClass( 've-ui-toolbar-tools' );
-	this.$bar.addClass( 've-ui-toolbar-bar' ).append( this.$tools );
+	this.$group.addClass( 've-ui-toolbar-tools' );
+	this.$bar.addClass( 've-ui-toolbar-bar' ).append( this.$group );
 	if ( options.actions ) {
 		this.$actions.addClass( 've-ui-toolbar-actions' );
 		this.$bar.append( this.$actions );
@@ -57,34 +59,9 @@ ve.ui.Toolbar = function VeUiToolbar( options ) {
 ve.inheritClass( ve.ui.Toolbar, ve.Element );
 
 ve.mixinClass( ve.ui.Toolbar, ve.EventEmitter );
+ve.mixinClass( ve.ui.Toolbar, ve.ui.GroupElement );
 
 /* Methods */
-
-/**
- * Initialize all tools and groups.
- *
- * @method
- * @param {Object[]} config List of tool group configurations
- */
-ve.ui.Toolbar.prototype.setup = function ( config ) {
-	var i, j, group, tools;
-
-	for ( i = 0; i < config.length; i++ ) {
-		tools = config[i].items;
-		group = new ve.ui.ToolGroup( this, { '$$': this.$$ } );
-
-		// Add tools
-		for ( j = 0; j < tools.length; j++ ) {
-			try {
-				tools[j] = ve.ui.toolFactory.create( tools[j], this );
-			} catch( e ) {}
-		}
-		group.addItems( tools );
-
-		// Append group
-		this.$tools.append( group.$ );
-	}
-};
 
 /**
  * Sets up handles and preloads required information for the toolbar to work.
@@ -95,10 +72,32 @@ ve.ui.Toolbar.prototype.initialize = function () {
 };
 
 /**
+ * Setup toolbar.
+ *
+ * @method
+ * @param {Object[]} groups List of tool group configurations
+ */
+ve.ui.Toolbar.prototype.setup = function ( groups ) {
+	var i, len,
+		items = [];
+
+	for ( i = 0, len = groups.length; i < len; i++ ) {
+		items.push( new ve.ui.ToolGroup( this, ve.extendObject( { '$$': this.$$ }, groups[i] ) ) );
+	}
+	this.addItems( items );
+};
+
+/**
  * Destroys toolbar, removing event handlers and DOM elements.
  *
  * Call this whenever you are done using a toolbar.
  */
 ve.ui.Toolbar.prototype.destroy = function () {
+	var i, len;
+
+	this.clearItems();
+	for ( i = 0, len = this.items.length; i < len; i++ ) {
+		this.items[i].destroy();
+	}
 	this.$.remove();
 };

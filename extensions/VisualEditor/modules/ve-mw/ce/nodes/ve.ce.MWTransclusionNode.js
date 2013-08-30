@@ -30,7 +30,7 @@ ve.ce.MWTransclusionNode = function VeCeMWTransclusionNode( model, config ) {
 	ve.ce.FocusableNode.call( this );
 	ve.ce.GeneratedContentNode.call( this );
 
-	// DOM Changes
+	// DOM changes
 	this.$.addClass( 've-ce-mwTransclusionNode' );
 };
 
@@ -127,7 +127,7 @@ ve.ce.MWTransclusionBlockNode = function VeCeMWTransclusionBlockNode( model ) {
 	// Parent constructor
 	ve.ce.MWTransclusionNode.call( this, model );
 
-	// DOM Changes
+	// DOM changes
 	this.$.addClass( 've-ce-mwTransclusionBlockNode' );
 };
 
@@ -153,7 +153,7 @@ ve.ce.MWTransclusionInlineNode = function VeCeMWTransclusionInlineNode( model ) 
 	// Parent constructor
 	ve.ce.MWTransclusionNode.call( this, model );
 
-	// DOM Changes
+	// DOM changes
 	this.$.addClass( 've-ce-mwTransclusionInlineNode' );
 };
 

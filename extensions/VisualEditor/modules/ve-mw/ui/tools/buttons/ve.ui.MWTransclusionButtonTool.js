@@ -25,7 +25,7 @@ ve.inheritClass( ve.ui.MWTransclusionButtonTool, ve.ui.DialogButtonTool );
 
 /* Static Properties */
 
-ve.ui.MWTransclusionButtonTool.static.name = 'mwTransclusion';
+ve.ui.MWTransclusionButtonTool.static.name = 'object/transclusion/mw';
 
 ve.ui.MWTransclusionButtonTool.static.icon = 'template';
 
@@ -37,4 +37,4 @@ ve.ui.MWTransclusionButtonTool.static.modelClasses = [ ve.dm.MWTransclusionNode 
 
 /* Registration */
 
-ve.ui.toolFactory.register( 'mwTransclusion', ve.ui.MWTransclusionButtonTool );
+ve.ui.toolFactory.register( 'object/transclusion/mw', ve.ui.MWTransclusionButtonTool );

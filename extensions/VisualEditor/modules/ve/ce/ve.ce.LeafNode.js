@@ -25,7 +25,7 @@ ve.ce.LeafNode = function VeCeLeafNode( model, config ) {
 	// Parent constructor
 	ve.ce.Node.call( this, model, config );
 
-	// DOM Changes
+	// DOM changes
 	if ( model.isWrapped() ) {
 		this.$.addClass( 've-ce-leafNode' );
 	}

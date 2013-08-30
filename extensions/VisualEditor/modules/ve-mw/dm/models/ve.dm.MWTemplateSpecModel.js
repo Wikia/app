@@ -42,14 +42,17 @@ ve.dm.MWTemplateSpecModel = function VeDmMWTemplateSpecModel( template ) {
  * @returns {string} Message text or fallback if not available
  */
 ve.dm.MWTemplateSpecModel.getMessage = function ( val, fallback, lang ) {
-	if ( lang === undefined ) {
-		lang = ve.init.platform.getUserLanguage();
-	}
+	var i, len, langs = lang !== undefined ? [lang] : ve.init.platform.getUserLanguages();
 	if ( fallback === undefined ) {
 		fallback = null;
 	}
 	if ( ve.isPlainObject( val ) ) {
-		return val[lang] || fallback;
+		for ( i = 0, len = langs.length; i < len; i++ ) {
+			if ( val[langs[i]] ) {
+				return val[langs[i]];
+			}
+		}
+		return fallback;
 	}
 	return typeof val === 'string' ? val : fallback;
 };

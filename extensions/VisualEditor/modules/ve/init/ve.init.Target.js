@@ -29,25 +29,46 @@ ve.mixinClass( ve.init.Target, ve.EventEmitter );
 
 /* Static Properties */
 
-ve.init.Target.static.toolbarTools = [
-	{ 'items': ['undo', 'redo'] },
-	{ 'items': ['format'] },
-	{ 'items': ['bold', 'italic', 'strikethrough', 'subscript', 'superscript',
-		'underline', 'link', 'code', 'language', 'clear'] },
-	{ 'items': ['number', 'bullet', 'outdent', 'indent'] }
+ve.init.Target.static.toolbarGroups = [
+	{
+		'include': [ 'history' ],
+		'promote': [
+			'history/undo',
+			'history/redo'
+		]
+	},
+	{
+		'include': [ 'format' ],
+		'promote': [ 'format/convert' ]
+	},
+	{
+		'include': [ 'textStyle', 'meta', 'utility/clear' ],
+		'promote': [
+			'textStyle/bold',
+			'textStyle/italic',
+			'meta/link'
+		],
+		'demote': [ 'utility/clear' ]
+	},
+	{
+		'include': [ 'structure' ],
+		'promote': [
+			'structure/number',
+			'structure/bullet',
+			'structure/outdent',
+			'structure/indent'
+		]
+	},
+	{ 'include': [ 'object' ] }
 ];
 
 ve.init.Target.static.surfaceCommands = [
-	'bold',
-	'italic',
-	//'strikethrough',
-	//'subscript',
-	//'superscript',
-	//'underline',
-	'link',
-	//'language',
-	'undo',
-	'redo',
-	'indent',
-	'outdent'
+	'history/undo',
+	'history/redo',
+	'textStyle/bold',
+	'textStyle/italic',
+	'meta/link',
+	'utility/clear',
+	'structure/indent',
+	'structure/outdent'
 ];

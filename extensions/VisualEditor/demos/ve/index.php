@@ -58,6 +58,13 @@ $html = file_get_contents( $page );
 		<link rel=stylesheet href="../../modules/ve/ui/styles/ve.ui.Widget.css">
 		<link rel=stylesheet href="../../modules/ve/ui/styles/ve.ui.Inspector.css">
 		<link rel=stylesheet href="../../modules/ve/ui/styles/ve.ui.Dialog.css">
+		<!-- jquery.uls.grid -->
+		<link rel=stylesheet href="../../modules/jquery.uls/css/jquery.uls.grid.css">
+		<!-- jquery.uls.compact -->
+		<link rel=stylesheet href="../../modules/jquery.uls/css/jquery.uls.compact.css">
+		<!-- jquery.uls -->
+		<link rel=stylesheet href="../../modules/jquery.uls/css/jquery.uls.css">
+		<link rel=stylesheet href="../../modules/jquery.uls/css/jquery.uls.lcd.css">
 
 		<!-- demo -->
 		<link rel="stylesheet" href="demo.css">
@@ -91,6 +98,7 @@ $html = file_get_contents( $page );
 		<script src="../../modules/unicodejs/unicodejs.wordbreak.js"></script>
 		<!-- ext.visualEditor.base#standalone-init -->
 		<script src="../../modules/ve/ve.js"></script>
+		<script src="../../modules/ve/ve.track.js"></script>
 		<script src="../../modules/ve/ve.EventEmitter.js"></script>
 		<script src="../../modules/ve/init/ve.init.js"></script>
 		<script src="../../modules/ve/init/ve.init.Platform.js"></script>
@@ -286,9 +294,20 @@ $html = file_get_contents( $page );
 		<script src="../../modules/ve/ui/tools/dropdowns/ve.ui.FormatDropdownTool.js"></script>
 		<script src="../../modules/ve/ui/inspectors/ve.ui.AnnotationInspector.js"></script>
 		<script src="../../modules/ve/ui/inspectors/ve.ui.LinkInspector.js"></script>
+		<!-- jquery.uls.data -->
+		<script src="../../modules/jquery.uls/src/jquery.uls.data.js"></script>
+		<script src="../../modules/jquery.uls/src/jquery.uls.data.utils.js"></script>
+		<!-- jquery.uls -->
+		<script src="../../modules/jquery.uls/src/jquery.uls.core.js"></script>
+		<script src="../../modules/jquery.uls/src/jquery.uls.lcd.js"></script>
+		<script src="../../modules/jquery.uls/src/jquery.uls.languagefilter.js"></script>
+		<script src="../../modules/jquery.uls/src/jquery.uls.regionfilter.js"></script>
 		<!-- ext.visualEditor.experimental -->
 		<script src="../../modules/ve/dm/annotations/ve.dm.LanguageAnnotation.js"></script>
 		<script src="../../modules/ve/ce/annotations/ve.ce.LanguageAnnotation.js"></script>
+		<script src="../../modules/ve/ui/inspectors/ve.ui.LanguageInspector.js"></script>
+		<script src="../../modules/ve/ui/widgets/ve.ui.LanguageInputWidget.js"></script>
+		<script src="../../modules/ve/ui/tools/ve.ui.ExperimentalTool.js"></script>
 
 		<!-- demo -->
 		<script>

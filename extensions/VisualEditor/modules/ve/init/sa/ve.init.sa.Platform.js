@@ -30,12 +30,7 @@ ve.inheritClass( ve.init.sa.Platform, ve.init.Platform );
 
 /* Methods */
 
-/**
- * Get a regular expression that matches allowed external link URLs.
- *
- * @method
- * @returns {RegExp} Regular expression object
- */
+/** @inheritdoc */
 ve.init.sa.Platform.prototype.getExternalLinkUrlProtocolsRegExp = function () {
 	return this.externalLinkUrlProtocolsRegExp;
 };
@@ -43,43 +38,26 @@ ve.init.sa.Platform.prototype.getExternalLinkUrlProtocolsRegExp = function () {
 /**
  * Set the remotely accessible URL to the modules directory.
  *
- * @method
  * @param {string} url Remote modules URL
  */
 ve.init.sa.Platform.prototype.setModulesUrl = function ( url ) {
 	this.modulesUrl = url;
 };
 
-/**
- * Get a remotely accessible URL to the modules directory.
- *
- * @method
- * @returns {string} Remote modules URL
- */
+/** @inheritdoc */
 ve.init.sa.Platform.prototype.getModulesUrl = function () {
 	return this.modulesUrl;
 };
 
-/**
- * Add multiple messages to the localization system.
- *
- * @method
- * @param {Object} messages Map of message-key/message-string pairs
- */
+
+/** @inheritdoc */
 ve.init.sa.Platform.prototype.addMessages = function ( messages ) {
 	for ( var key in messages ) {
 		this.messages[key] = messages[key];
 	}
 };
 
-/**
- * Get a message from the localization system.
- *
- * @method
- * @param {string} key Message key
- * @param {Mixed...} [args] List of arguments which will be injected at $1, $2, etc. in the messaage
- * @returns {string} Localized message
- */
+/** @inheritdoc */
 ve.init.sa.Platform.prototype.getMessage = function ( key ) {
 	if ( key in this.messages ) {
 		// Simple message parser, does $N replacement and nothing else.
@@ -92,31 +70,16 @@ ve.init.sa.Platform.prototype.getMessage = function ( key ) {
 	return '<' + key + '>';
 };
 
-/**
- * Add multiple parsed messages to the localization system.
- *
- * @method
- * @param {Object} messages Map of message-key/html pairs
- */
+/** @inheritdoc */
 ve.init.sa.Platform.prototype.addParsedMessages = function ( messages ) {
 	for ( var key in messages ) {
 		this.parsedMessages[key] = messages[key];
 	}
 };
 
-/**
- * Get a parsed message as HTML string.
- *
- * Falls back to mw.messsage with .escaped().
- * Does not support $# replacements.
- *
- * @method
- * @param {string} key Message key
- * @returns {string} Parsed localized message as HTML string
- */
+/** @inheritdoc */
 ve.init.sa.Platform.prototype.getParsedMessage = function ( key ) {
 	if ( key in this.parsedMessages ) {
-		// Prefer parsed results from VisualEditorMessagesModule.php if available.
 		return this.parsedMessages[key];
 	}
 	// Fallback to regular messages, html escaping applied.
@@ -136,12 +99,7 @@ ve.init.sa.Platform.prototype.getParsedMessage = function ( key ) {
 	} );
 };
 
-/**
- * Gets client platform string from browser.
- *
- * @method
- * @returns {string} Client platform string
- */
+/** @inheritdoc */
 ve.init.sa.Platform.prototype.getSystemPlatform = function () {
 	var platforms = ['win', 'mac', 'linux', 'sunos', 'solaris', 'iphone'],
 		match = new RegExp( '(' + platforms.join( '|' ) + ')' ).exec( window.navigator.platform.toLowerCase() );
@@ -150,16 +108,18 @@ ve.init.sa.Platform.prototype.getSystemPlatform = function () {
 	}
 };
 
-/**
- * Gets the user language from the browser.
- *
- * @method
- * @returns {string} User language string
- */
-ve.init.sa.Platform.prototype.getUserLanguage = function () {
+/** @inheritdoc */
+ve.init.sa.Platform.prototype.getUserLanguages = function () {
 	// IE or Firefox Safari Opera
-	var lang = window.navigator.userLanguage || window.navigator.language;
-	return lang.split( '-' )[0];
+	var lang = window.navigator.userLanguage || window.navigator.language,
+		langParts = lang.split( '-' ),
+		langs = [ lang ];
+
+	if ( langParts.length > 0 ) {
+		langs.push( langParts[0] );
+	}
+
+	return langs;
 };
 
 /* Initialization */

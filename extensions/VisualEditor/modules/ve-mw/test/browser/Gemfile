@@ -1,0 +1,11 @@
+#ruby=ruby-2.0.0-p247
+#ruby-gemset=VisualEditor
+
+source 'https://rubygems.org'
+
+gem 'cucumber'
+gem 'json'
+gem 'net-http-persistent'
+gem 'page-object'
+gem 'rspec-expectations'
+gem 'syntax'

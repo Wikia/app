@@ -22,6 +22,7 @@ ve.ui.FormatDropdownTool = function VeUiFormatDropdownTool( toolbar, config ) {
 	ve.ui.DropdownTool.call( this, toolbar, config );
 
 	// Initialization
+	this.$.addClass( 've-ui-formatDropdownTool' );
 	for ( i = 0, len = items.length; i < len; i++ ) {
 		item = items[i];
 		items[i] = new ve.ui.MenuItemWidget(
@@ -37,7 +38,7 @@ ve.inheritClass( ve.ui.FormatDropdownTool, ve.ui.DropdownTool );
 
 /* Static Properties */
 
-ve.ui.FormatDropdownTool.static.name = 'format';
+ve.ui.FormatDropdownTool.static.name = 'format/convert';
 
 ve.ui.FormatDropdownTool.static.titleMessage = 'visualeditor-formatdropdown-title';
 
@@ -174,4 +175,4 @@ ve.ui.FormatDropdownTool.prototype.onUpdateState = function ( nodes ) {
 
 /* Registration */
 
-ve.ui.toolFactory.register( 'format', ve.ui.FormatDropdownTool );
+ve.ui.toolFactory.register( 'format/convert', ve.ui.FormatDropdownTool );

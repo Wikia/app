@@ -26,7 +26,7 @@ ve.inheritClass( ve.ui.MWMediaInsertButtonTool, ve.ui.DialogButtonTool );
 
 /* Static Properties */
 
-ve.ui.MWMediaInsertButtonTool.static.name = 'mwMediaInsert';
+ve.ui.MWMediaInsertButtonTool.static.name = 'object/mediaInsert/mw';
 
 ve.ui.MWMediaInsertButtonTool.static.icon = 'picture';
 
@@ -36,4 +36,4 @@ ve.ui.MWMediaInsertButtonTool.static.dialog = 'mwMediaInsert';
 
 /* Registration */
 
-ve.ui.toolFactory.register( 'mwMediaInsert', ve.ui.MWMediaInsertButtonTool );
+ve.ui.toolFactory.register( 'object/mediaInsert/mw', ve.ui.MWMediaInsertButtonTool );

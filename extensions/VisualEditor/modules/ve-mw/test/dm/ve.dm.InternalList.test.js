@@ -9,7 +9,7 @@ QUnit.module( 've.dm.InternalList' );
 
 /* Tests */
 
-QUnit.test( 'addNode/removeNode', 6, function ( assert ) {
+QUnit.test( 'addNode/removeNode', 5, function ( assert ) {
 	var doc = ve.dm.mwExample.createExampleDocument( 'references' ),
 		newInternalList = new ve.dm.InternalList( doc ),
 		referenceNodes = [
@@ -23,8 +23,11 @@ QUnit.test( 'addNode/removeNode', 6, function ( assert ) {
 		expectedNodes = {
 			'mwReference/': {
 				'keyedNodes': {
+					':0': [ referenceNodes[0] ],
 					'bar': [ referenceNodes[1], referenceNodes[3] ],
-					'quux': [ referenceNodes[2] ]
+					'quux': [ referenceNodes[2] ],
+					':1': [ referenceNodes[4] ],
+					':2': [ referenceNodes[5] ]
 				},
 				'firstNodes': [
 					referenceNodes[0],
@@ -37,12 +40,12 @@ QUnit.test( 'addNode/removeNode', 6, function ( assert ) {
 			}
 		};
 
-	newInternalList.addNode( 'mwReference/', null, 0, referenceNodes[0] );
+	newInternalList.addNode( 'mwReference/', ':0', 0, referenceNodes[0] );
 	newInternalList.addNode( 'mwReference/', 'bar', 1, referenceNodes[1] );
 	newInternalList.addNode( 'mwReference/', 'quux', 2, referenceNodes[2] );
 	newInternalList.addNode( 'mwReference/', 'bar', 1, referenceNodes[3] );
-	newInternalList.addNode( 'mwReference/', null, 3, referenceNodes[4] );
-	newInternalList.addNode( 'mwReference/', null, 4, referenceNodes[5] );
+	newInternalList.addNode( 'mwReference/', ':1', 3, referenceNodes[4] );
+	newInternalList.addNode( 'mwReference/', ':2', 4, referenceNodes[5] );
 	newInternalList.onTransact();
 
 	assert.deepEqualWithNodeTree(
@@ -53,12 +56,12 @@ QUnit.test( 'addNode/removeNode', 6, function ( assert ) {
 
 	newInternalList = new ve.dm.InternalList( doc );
 
-	newInternalList.addNode( 'mwReference/', null, 4, referenceNodes[5] );
-	newInternalList.addNode( 'mwReference/', null, 3, referenceNodes[4] );
+	newInternalList.addNode( 'mwReference/', ':2', 4, referenceNodes[5] );
+	newInternalList.addNode( 'mwReference/', ':1', 3, referenceNodes[4] );
 	newInternalList.addNode( 'mwReference/', 'bar', 1, referenceNodes[3] );
 	newInternalList.addNode( 'mwReference/', 'quux', 2, referenceNodes[2] );
 	newInternalList.addNode( 'mwReference/', 'bar', 1, referenceNodes[1] );
-	newInternalList.addNode( 'mwReference/', null, 0, referenceNodes[0] );
+	newInternalList.addNode( 'mwReference/', ':0', 0, referenceNodes[0] );
 	newInternalList.onTransact();
 
 
@@ -76,8 +79,11 @@ QUnit.test( 'addNode/removeNode', 6, function ( assert ) {
 		{
 			'mwReference/': {
 				'keyedNodes': {
+					':0': [ referenceNodes[0] ],
 					'bar': [ referenceNodes[3] ],
-					'quux': [ referenceNodes[2] ]
+					'quux': [ referenceNodes[2] ],
+					':1': [ referenceNodes[4] ],
+					':2': [ referenceNodes[5] ]
 				},
 				'firstNodes': [
 					referenceNodes[0],
@@ -100,7 +106,10 @@ QUnit.test( 'addNode/removeNode', 6, function ( assert ) {
 		{
 			'mwReference/': {
 				'keyedNodes': {
-					'quux': [ referenceNodes[2] ]
+					':0': [ referenceNodes[0] ],
+					'quux': [ referenceNodes[2] ],
+					':1': [ referenceNodes[4] ],
+					':2': [ referenceNodes[5] ]
 				},
 				'firstNodes': [
 					referenceNodes[0],
@@ -115,31 +124,9 @@ QUnit.test( 'addNode/removeNode', 6, function ( assert ) {
 		'Keys truncated after last item of key removed'
 	);
 
-	newInternalList.removeNode( 'mwReference/', null, 0, referenceNodes[0] );
-	newInternalList.onTransact();
-
-	assert.deepEqualWithNodeTree(
-		newInternalList.nodes,
-		{
-			'mwReference/': {
-				'keyedNodes': {
-					'quux': [ referenceNodes[2] ]
-				},
-				'firstNodes': [
-					undefined,
-					undefined,
-					referenceNodes[2],
-					referenceNodes[4],
-					referenceNodes[5]
-				],
-				'indexOrder': [ 2, 3, 4 ]
-			}
-		},
-		'Removing keyless item'
-	);
-
-	newInternalList.removeNode( 'mwReference/', null, 4, referenceNodes[5] );
-	newInternalList.removeNode( 'mwReference/', null, 3, referenceNodes[4] );
+	newInternalList.removeNode( 'mwReference/', ':0', 0, referenceNodes[0] );
+	newInternalList.removeNode( 'mwReference/', ':2', 4, referenceNodes[5] );
+	newInternalList.removeNode( 'mwReference/', ':1', 3, referenceNodes[4] );
 	newInternalList.removeNode( 'mwReference/', 'quux', 2, referenceNodes[2] );
 	newInternalList.onTransact();
 

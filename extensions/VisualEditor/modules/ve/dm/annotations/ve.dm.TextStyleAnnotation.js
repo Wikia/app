@@ -41,8 +41,8 @@ ve.dm.TextStyleAnnotation.static.toDataElement = function ( domElements ) {
 			'span': 'span',
 			'strong': 'strong',
 			'em': 'emphasize',
-			'sup': 'superScript',
-			'sub': 'subScript',
+			'sup': 'superscript',
+			'sub': 'subscript',
 			'code': 'code',
 			'tt': 'code'
 		};
@@ -71,8 +71,8 @@ ve.dm.TextStyleAnnotation.static.toDomElements = function ( dataElement, doc ) {
 			'span': 'span',
 			'strong': 'strong',
 			'emphasize': 'em',
-			'superScript': 'sup',
-			'subScript': 'sub',
+			'superscript': 'sup',
+			'subscript': 'sub',
 			'code': 'code'
 		};
 		return [ doc.createElement( nodeNames[ dataElement.type.substring( 10 ) ] ) ];
@@ -248,13 +248,13 @@ ve.dm.modelRegistry.register( ve.dm.TextStyleEmphasizeAnnotation );
  * @constructor
  * @param {Object} element
  */
-ve.dm.TextStyleSuperScriptAnnotation = function VeDmTextStyleSuperScriptAnnotation( element ) {
+ve.dm.TextStyleSuperscriptAnnotation = function VeDmTextStyleSuperscriptAnnotation( element ) {
 	ve.dm.TextStyleAnnotation.call( this, element );
 };
-ve.inheritClass( ve.dm.TextStyleSuperScriptAnnotation, ve.dm.TextStyleAnnotation );
-ve.dm.TextStyleSuperScriptAnnotation.static.name = 'textStyle/superScript';
-ve.dm.TextStyleSuperScriptAnnotation.static.matchTagNames = ['sup'];
-ve.dm.modelRegistry.register( ve.dm.TextStyleSuperScriptAnnotation );
+ve.inheritClass( ve.dm.TextStyleSuperscriptAnnotation, ve.dm.TextStyleAnnotation );
+ve.dm.TextStyleSuperscriptAnnotation.static.name = 'textStyle/superscript';
+ve.dm.TextStyleSuperscriptAnnotation.static.matchTagNames = ['sup'];
+ve.dm.modelRegistry.register( ve.dm.TextStyleSuperscriptAnnotation );
 
 /**
  * DataModel sub script annotation.
@@ -264,13 +264,13 @@ ve.dm.modelRegistry.register( ve.dm.TextStyleSuperScriptAnnotation );
  * @constructor
  * @param {Object} element
  */
-ve.dm.TextStyleSubScriptAnnotation = function VeDmTextStyleSubScriptAnnotation( element ) {
+ve.dm.TextStyleSubscriptAnnotation = function VeDmTextStyleSubscriptAnnotation( element ) {
 	ve.dm.TextStyleAnnotation.call( this, element );
 };
-ve.inheritClass( ve.dm.TextStyleSubScriptAnnotation, ve.dm.TextStyleAnnotation );
-ve.dm.TextStyleSubScriptAnnotation.static.name = 'textStyle/subScript';
-ve.dm.TextStyleSubScriptAnnotation.static.matchTagNames = ['sub'];
-ve.dm.modelRegistry.register( ve.dm.TextStyleSubScriptAnnotation );
+ve.inheritClass( ve.dm.TextStyleSubscriptAnnotation, ve.dm.TextStyleAnnotation );
+ve.dm.TextStyleSubscriptAnnotation.static.name = 'textStyle/subscript';
+ve.dm.TextStyleSubscriptAnnotation.static.matchTagNames = ['sub'];
+ve.dm.modelRegistry.register( ve.dm.TextStyleSubscriptAnnotation );
 
 /**
  * DataModel code script annotation.
