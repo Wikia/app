@@ -24,9 +24,6 @@ ve.ce.ProtectedNode = function VeCeProtectedNode() {
 		'setup': 'onProtectedSetup',
 		'teardown': 'onProtectedTeardown'
 	} );
-
-	// Initialization
-	this.$.addClass( 've-ce-protectedNode' );
 };
 
 /* Static Properties */
@@ -96,6 +93,9 @@ ve.ce.ProtectedNode.prototype.onProtectedSetup = function () {
 		}
 	} );
 
+	// DOM changes
+	this.$.addClass( 've-ce-protectedNode' );
+
 	this.isSetup = true;
 };
 
@@ -123,6 +123,9 @@ ve.ce.ProtectedNode.prototype.onProtectedTeardown = function () {
 
 	// Phantoms
 	this.clearPhantoms();
+
+	// DOM changes
+	this.$.removeClass( 've-ce-protectedNode' );
 
 	this.isSetup = false;
 };
