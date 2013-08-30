@@ -18,20 +18,20 @@ describe('CSSPropsHelper', function() {
 
 	it('registers AMD module', function() {
 		expect(typeof cssPropsHelper).toBe('object');
-		expect(typeof cssPropsHelper.getCSSPropName).toBe('function');
-		expect(typeof cssPropsHelper.convertPropName).toBe('function');
+		expect(typeof cssPropsHelper.getSupportedProp).toBe('function');
+		expect(typeof cssPropsHelper.formatName).toBe('function');
 	});
 
 	it('applies JS camel case style formatting', function() {
 		var formattedProp = 'transformOrigin',
-			prop = cssPropsHelper.convertPropName(cssProperty);
+			prop = cssPropsHelper.formatName(cssProperty);
 
 		expect(prop).toBe(formattedProp);
 	});
 
 	it('return property name supported by current browser', function() {
 		var formattedProp = 'webkitTransformOrigin',
-			prop = cssPropsHelper.getCSSPropName(cssProperty);
+			prop = cssPropsHelper.getSupportedProp(cssProperty);
 
 		expect(prop).toBe(formattedProp);
 	});
@@ -50,7 +50,7 @@ describe('CSSPropsHelper', function() {
 			cssPropsHelper = modules['wikia.csspropshelper'](document);
 
 		expect(function() {
-			cssPropsHelper.getCSSPropName(cssProperty);
+			cssPropsHelper.getSupportedProp(cssProperty);
 		}).toThrow(error);
 	});
 

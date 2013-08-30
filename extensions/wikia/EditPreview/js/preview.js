@@ -212,8 +212,8 @@ define( 'wikia.preview', [ 'wikia.window', 'wikia.nirvana', 'wikia.deferred', 'j
 		var	initialPreviewWidth = previewTypes.current.value,
 			selectedPreviewWidth = previewTypes[type].value,
 			scaleRatio = initialPreviewWidth / selectedPreviewWidth,
-			cssTransform = cssPropHelper.getCSSPropName('transform'),
-			cssTransformOrigin = cssPropHelper.getCSSPropName('transform-origin');
+			cssTransform = cssPropHelper.getSupportedProp('transform'),
+			cssTransformOrigin = cssPropHelper.getSupportedProp('transform-origin');
 
 		if (selectedPreviewWidth > initialPreviewWidth) {
 			var	scaleVar = 'scale(' + scaleRatio + ')';

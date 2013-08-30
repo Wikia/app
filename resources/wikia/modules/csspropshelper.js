@@ -25,7 +25,7 @@ define('wikia.csspropshelper', ['wikia.document'], function(document) {
 	 * @return {string||boolean} CSS3 property name
 	 */
 
-	function getSupportedProp(propArray) {
+	function checkForSupportedProp(propArray) {
 		var root = document.documentElement,
 			i;
 
@@ -67,7 +67,7 @@ define('wikia.csspropshelper', ['wikia.document'], function(document) {
 	 * @return {string} JS camel case styleproperty name
 	 */
 
-	function convertPropName(prop) {
+	function formatName(prop) {
 		var i,
 			tempArray = prop.split('-'),
 			result = [tempArray[0]];
@@ -88,10 +88,10 @@ define('wikia.csspropshelper', ['wikia.document'], function(document) {
 	 * @throw {Error} when property is not supported
 	 */
 
-	function getCSSPropName(prop) {
-		var formatedProp = convertPropName(prop),
-			prefixedPropArray = createPropArray(formatedProp),
-			supportedProp = getSupportedProp(prefixedPropArray);
+	function getSupportedProp(prop) {
+		var formattedProp = formatName(prop),
+			prefixedPropArray = createPropArray(formattedProp),
+			supportedProp = checkForSupportedProp(prefixedPropArray);
 
 		if (supportedProp === false) {
 			throw new Error('Requested CSS property - ' + prop + ' is not supported by your browser!');
@@ -103,8 +103,8 @@ define('wikia.csspropshelper', ['wikia.document'], function(document) {
 	/** @public **/
 
 	return {
-		convertPropName: convertPropName,
-		getCSSPropName: getCSSPropName
+		formatName: formatName,
+		getSupportedProp: getSupportedProp
 	}
 
 });
