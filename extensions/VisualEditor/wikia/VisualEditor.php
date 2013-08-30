@@ -10,7 +10,7 @@ $wgExtensionCredits['other'][] = array(
 // Register resource modules
 $wgResourceModules += array(
 	'ext.visualEditor.wikiaViewPageTarget.init' => array(
-		'scripts' => 've.init.mw.WikiaViewPageTarget.init.js',
+		'scripts' => 'init/ve.init.mw.WikiaViewPageTarget.init.js',
 		'dependencies' => array(
 			'jquery.client',
 			'mediawiki.Title',
@@ -24,10 +24,10 @@ $wgResourceModules += array(
 	),
 	'ext.visualEditor.wikiaViewPageTarget' => array(
 		'scripts' => array(
-			've.init.mw.WikiaViewPageTarget.js',
+			'init/ve.init.mw.WikiaViewPageTarget.js',
 		),
 		'styles' => array(
-			've.init.mw.WikiaViewPageTarget.css',
+			'init/styles/ve.init.mw.WikiaViewPageTarget.css',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.viewPageTarget'
@@ -37,11 +37,11 @@ $wgResourceModules += array(
 	),
 	'ext.visualEditor.wikiaCore' => array(
 		'scripts' => array(
-			've.dm.WikiaBlockMediaNode.js',
-			've.dm.WikiaBlockImageNode.js',
-			've.ce.WikiaBlockMediaNode.js',
-			've.ce.WikiaBlockImageNode.js',
-			've.ce.WikiaMediaCaptionNode.js'
+			'dm/ve.dm.WikiaBlockMediaNode.js',
+			'dm/ve.dm.WikiaBlockImageNode.js',
+			'ce/ve.ce.WikiaBlockMediaNode.js',
+			'ce/ve.ce.WikiaBlockImageNode.js',
+			'ce/ve.ce.WikiaMediaCaptionNode.js'
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core'
