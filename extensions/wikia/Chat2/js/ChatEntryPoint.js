@@ -42,7 +42,7 @@ var ChatEntryPoint = {
 		$(".ChatModuleUninitialized").html(wgWikiaChatModuleContent).removeClass("ChatModuleUninitialized");
 
 		var chatWhosHere = $('.ChatModule .chat-whos-here'),
-			itemsShown = (wgOasisResponsive) ? 5 : 6;
+			itemsShown = (window.wgOasisResponsive) ? 5 : 6;
 
 		chatWhosHere.find('.carousel-container').carousel({
 			nextClass: 'arrow-right',
