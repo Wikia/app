@@ -16,9 +16,11 @@ class WikiService extends WikiaModel {
 	 * get list of wiki founder/admin/bureaucrat id
 	 * Note: also called from maintenance script.
 	 *
-	 * @param integer $wikiId
-	 * @param bool    $useMaster
-	 * @param bool    $excludeBots
+	 * @param integer $wikiId - wiki Id (default: current wiki Id)
+	 * @param bool    $useMaster - flag that describes if we should use masted DB (default: false)
+	 * @param bool    $excludeBots - flag that describes if bots should be excluded from admins list (default: false)
+	 * @param integer $limit - admins limit
+	 * @param bool    $includeFounder - flag that describes if founder user should be added to admins list (default: true)
 	 *
 	 * @return array of $userIds
 	 */
