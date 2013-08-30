@@ -140,12 +140,12 @@ ve.ce.WikiaBlockVideoNode.prototype.getPlayButtonElement = function () {
  * @emits teardown
  * @method
  */
-ve.ce.WikiaBlockMediaNode.prototype.update = function ( replaceRoot ) {
+ve.ce.WikiaBlockVideoNode.prototype.update = function ( replaceRoot ) {
 	ve.ce.WikiaBlockMediaNode.prototype.update.call( this, replaceRoot );
 
 	this.$anchor
 		.append( this.getOverlayElement() )
-		.prepent( this.getPlayButtonElement() );
+		.prepend( this.getPlayButtonElement() );
 };
 
 /* Registration */

@@ -39,6 +39,7 @@ $wgResourceModules += array(
 		'scripts' => array(
 			'dm/ve.dm.WikiaBlockMediaNode.js',
 			'dm/ve.dm.WikiaBlockImageNode.js',
+			'dm/ve.dm.WikiaBlockVideoNode.js',
 			'ce/ve.ce.WikiaBlockMediaNode.js',
 			'ce/ve.ce.WikiaBlockImageNode.js',
 			'ce/ve.ce.WikiaBlockVideoNode.js',
