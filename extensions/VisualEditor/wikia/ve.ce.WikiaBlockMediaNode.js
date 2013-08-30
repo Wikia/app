@@ -29,6 +29,7 @@ ve.ce.WikiaBlockMediaNode = function VeCeWikiaBlockMediaNode( model, config ) {
 	// Properties
 	this.$anchor = null;
 	this.$image = null;
+	this.$magnify = null;
 	this.$thumb = null;
 
 	// Initialize
@@ -150,6 +151,17 @@ ve.ce.WikiaBlockMediaNode.prototype.getImageElement = function () {
 };
 
 /**
+ * Builds the magnify element.
+ *
+ * @method
+ * @returns {jQuery} The properly scoped jQuery object
+ */
+ve.ce.WikiaBlockMediaNode.prototype.getMagnifyElement = function () {
+	// It's inside a protected node, so user can't see href/title.
+	return this.$$( '<a>' ).addClass( 'internal sprite details magnify' );
+};
+
+/**
  * Builds the thumb element.
  *
  * @method
@@ -191,7 +203,8 @@ ve.ce.WikiaBlockMediaNode.prototype.getWrapperElement = function () {
  * @method
  */
 ve.ce.WikiaBlockMediaNode.prototype.update = function ( replaceRoot ) {
-	var $root;
+	var $root, captionModel, captionView,
+		type = this.model.getAttribute( 'type' );
 
 	this.$thumb = this.getThumbElement();
 
@@ -213,20 +226,22 @@ ve.ce.WikiaBlockMediaNode.prototype.update = function ( replaceRoot ) {
 	this.$anchor = this.getAnchorElement().appendTo( this.$thumb );
 	this.$image = this.getImageElement().appendTo( this.$anchor );
 
-	// TODO: Optional caption
-	// TODO: Optional attribution
-/*
-	// I smell a caption!
-	if ( type !== 'none' && type !== 'frameless' && this.model.children.length === 1 ) {
-		captionModel = this.model.children[0];
-		captionView = ve.ce.nodeFactory.create( captionModel.getType(), captionModel );
-		captionModel.connect( this, { 'update': 'onModelUpdate' } );
-		this.children.push( captionView );
-		captionView.attach( this );
-		captionView.$.appendTo( this.$thumbInner );
-		if ( this.live !== captionView.isLive() ) {
-			captionView.setLive( this.live );
+	if ( type !== 'none' ) {
+		this.$magnify = this.getMagnifyElement().appendTo( this.$thumb );
+
+		// Caption
+		if ( this.model.children.length === 1 ) {
+			captionModel = this.model.children[ 0 ];
+			captionView = ve.ce.nodeFactory.create( captionModel.getType(), captionModel );
+			captionModel.connect( this, { 'update': 'onModelUpdate' } );
+			this.children.push( captionView );
+			captionView.attach( this );
+			captionView.$.appendTo( this.$thumb );
+			if ( this.live !== captionView.isLive() ) {
+				captionView.setLive( this.live );
+			}
 		}
+	} else {
+		this.$magnify = null;
 	}
-*/
 };
