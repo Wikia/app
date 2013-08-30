@@ -32,19 +32,19 @@ use Swagger\Annotations as SWG;
  *			name="url",
  *			type="string",
  *			required="true",
- *			description="Relative URL for user profile page"
+ *			description="The relative URL of the user profile page"
  *		)
  *		@SWG\Property(
  *			name="numberofedits",
  *			type="int",
  *			required="true",
- *			description="Number of edits made by user on the current wiki"
+ *			description="Total number of edits made by user on the current wiki"
  *		)
  *		@SWG\Property(
  *			name="avatar",
  *			type="string",
  *			required="true",
- *			description="Full URL for user avatar image"
+ *			description="The absolute URL of the user avatar image"
  *		)
  *
  *		@SWG\Model( id="UserResultSet" )
