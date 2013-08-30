@@ -1,0 +1,64 @@
+{
+	// Wikia .jshintrc
+	// Please keep these in alphabetical order.
+	// Installation instructions and linters for your preferred
+	// IDE/editor here: http://www.jshint.com/install/
+
+	// Enforcing
+	"bitwise": true,
+	"camelcase": true,
+	"curly": true,
+	"eqeqeq": true,
+	"immed": true,
+	"latedef": true,
+	"maxdepth": 3,
+	"maxlen": 120,
+	"maxparams": 4,
+	"newcap": true,
+	"noarg": true,
+	"noempty": true,
+	"nonew": true,
+	"onevar": true,
+	"plusplus": false,
+	"quotmark": "single",
+	"undef": true,
+	"unused": true,
+	"strict": true,
+	"trailing": true,
+
+	// Relaxing
+	"asi": false,
+	"boss": false,
+	"debug": false,
+	"eqnull": false,
+	"esnext": false,
+	"evil": false,
+	"expr": false,
+	"funcscope": false,
+	"globalstrict": false,
+	"iterator": false,
+	"lastsemic": false,
+	"laxbreak": false,
+	"laxcomma": false,
+	"loopfunc": false,
+	"moz": false,
+	"multistr": false,
+	"proto": false,
+	"scripturl": false,
+	"shadow": false,
+	"smarttabs": false,
+	"sub": false,
+	"supernew": false,
+	"validthis": false,
+
+	// Environments
+	"browser": true,
+	"devel": false,
+	"globals": {
+		"mediaWiki": false,
+		"Wikia": false
+	},
+	"jquery": true,
+	"node": true,
+	"nonstandard": true
+}
