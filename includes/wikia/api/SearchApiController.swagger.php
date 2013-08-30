@@ -75,8 +75,8 @@ use Swagger\Annotations as SWG;
  *		@swg\Operations(
  *			@swg\Operation(
  *				httpMethod="get",
- *				summary="do search for given phrase",
- *				nickname="getlist",
+ *				summary="Do search for given phrase",
+ *				nickname="getList",
  *				responseClass="localWikiSearchResultSet",
  *				@swg\ErrorResponses(
  *					@swg\ErrorResponse( code="400", reason="invalid parameters" ),
@@ -142,6 +142,100 @@ use Swagger\Annotations as SWG;
  *			)
  *		)
  * )
+ *
+ *
+ *
+ *
+ *	@swg\Model( id="CrossWikiSearchResult" )
+ *		@swg\Property(
+ *			name="id",
+ *			type="int",
+ *			required="true",
+ *			description="Wikia id"
+ *		)
+ *		@swg\Property(
+ *			name="language",
+ *			type="string",
+ *			required="true",
+ *			description="Language of the site"
+ *		)
+ *
+ *	@swg\Model( id="CrossWikiSearchResultSet" )
+ *		@swg\Property(
+ *			name="items",
+ *			required="true",
+ *			type="Array",
+ *			items="$ref:CrossWikiSearchResult",
+ *			description="A list of search results"
+ *		)
+ *
+ *
+ *	@swg\Api(
+ *		path="/wikia.php?controller=SearchApi&method=getCrossWiki",
+ *		description="Fetches results for cross-wiki search for submitted query. As a result you get a list of Wikis.",
+ *		@swg\Operations(
+ *			@swg\Operation(
+ *				httpMethod="get",
+ *				summary="Fetches results for cross-wiki search.",
+ *				nickname="getCrossWiki",
+ *				responseClass="CrossWikiSearchResultSet",
+ *				@swg\ErrorResponses(
+ *					@swg\ErrorResponse( code="400", reason="invalid parameters" ),
+ *					@swg\ErrorResponse( code="404", reason="results not found" )
+ *				),
+ *				@swg\Parameters(
+ *					@swg\Parameter(
+ *						name="query",
+ *						description="The query to use for the search",
+ *						paramType="query",
+ *						required="true",
+ *						allowMultiple="false",
+ *						dataType="string",
+ *						defaultValue=""
+ *					),
+ *					@swg\Parameter(
+ *						name="lang",
+ *						description="The two chars wiki language code, (eg.: en, de, fr)",
+ *						paramType="query",
+ *						required="true",
+ *						allowMultiple="false",
+ *						dataType="string",
+ * 						defaultValue="en"
+ *					),
+ *					@swg\Parameter(
+ * 						@SWG\AllowableValues(valueType="LIST",values="['newest', 'oldest', 'recently-modified', 'stable', 'most-viewed', 'freshest', 'stalest']"),
+ *						name="rank",
+ *						description="The ranking to use in fetching the list of results, one of default, newest, oldest, recently-modified, stable, most-viewed, freshest, stalest",
+ *						paramType="query",
+ *						required="false",
+ *						allowMultiple="false",
+ *						dataType="string",
+ *						defaultValue=""
+ *					),
+ *					@swg\Parameter(
+ *						name="limit",
+ *						description="The number of items per batch (page)",
+ *						paramType="query",
+ *						required="false",
+ *						allowMultiple="false",
+ *						dataType="int",
+ *						defaultValue="25"
+ *					),
+ *					@swg\Parameter(
+ *						name="batch",
+ *						description="The batch (page) of results to fetch",
+ *						paramType="query",
+ *						required="false",
+ *						allowMultiple="false",
+ *						dataType="int",
+ *						defaultValue=""
+ *					)
+ *				)
+ *			)
+ *		)
+ * )
+ *
+ *
  *
  */
 
