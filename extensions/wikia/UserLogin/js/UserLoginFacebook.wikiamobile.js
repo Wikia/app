@@ -2,22 +2,32 @@ require(['track', 'wikia.querystring', 'toast', 'wikia.nirvana', 'JSMessages', '
 	function(track, Qs, toast, nirvana, msg, window){
 	'use strict';
 
-	var btn = document.getElementById('ssoFbBtn');
+	var btn = document.getElementById('ssoFbBtn'),
+		fbInit = (function () {
+			var initialized = false;
+
+			return function(){
+				if (!initialized) {
+					//see fbconnect.js
+					window.FB.init({
+						appId : window.fbAppId,
+						oauth : true,
+						status : true, // Check login status
+						cookie : true, // Enable cookies to allow the server to access the session
+						xfbml  : window.fbUseMarkup // Whether XFBML should be automatically parsed
+					});
+
+					initialized = true;
+				}
+			};
+		})();
 
 	btn.addEventListener('click', function(){
-		//see fbconnect.js
-		window.FB.init({
-			appId : window.fbAppId,
-			oauth : true,
-			status : true, // Check login status
-			cookie : true, // Enable cookies to allow the server to access the session
-			xfbml  : window.fbUseMarkup // Whether XFBML should be automatically parsed
-		});
+		fbInit();
 
 		window.FB.login(
 			function(response){
-				console.log(response);
-				if(typeof response === 'object' && response.status === 'connected'){
+				if(response && response.status === 'connected'){
 					// now check FB account (is it connected with Wikia account?)
 					nirvana.postJson('FacebookSignup', 'index').done(
 						function(resp){
