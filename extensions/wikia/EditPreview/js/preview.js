@@ -121,9 +121,12 @@ define( 'wikia.preview', [ 'wikia.window', 'wikia.nirvana', 'wikia.deferred', 'j
 
 				//adding type dropdown to preview
 				if ( window.wgOasisResponsive ) {
-					loader({type: loader.MULTI, resources: {
-						mustache: 'extensions/wikia/EditPreview/templates/preview_type_dropdown.mustache'
-					}}).done(function(response) {
+					loader({
+						type: loader.MULTI,
+						resources: {
+							mustache: 'extensions/wikia/EditPreview/templates/preview_type_dropdown.mustache'
+						}
+					}).done(function(response) {
 							var $dialog = $('#EditPageDialog'),
 								template = response.mustache[0],
 								params = {
