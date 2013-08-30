@@ -1,10 +1,10 @@
-@import "../../../../skins/oasis/css/core/color";
+@import "skins/oasis/css/core/color";
 @import "skins/oasis/css/core/layout";
-@import "../../../../skins/oasis/css/mixins/arrow";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/mixins/arrow";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/opacity";
 
 @import "ChatColor";
 @import "ChatSprite";
@@ -122,8 +122,8 @@ body.skin-oasis .ChatMonobookEntryPoint {
 		}
 
 		.carousel-container {
-			left: 21px;
 			height: 34px;
+			left: 21px;
 			overflow: hidden;
 			position: relative;
 			width: 244px;
