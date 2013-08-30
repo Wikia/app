@@ -467,9 +467,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'isMonobook',            ( $this->wg->User->getSkin() instanceof SkinMonobook ) );
 		$this->setVal( 'isCorporateWiki',       $this->isCorporateWiki() );
 		$this->setVal( 'wgExtensionsPath',      $this->wg->ExtensionsPath);
-		$this->setVal( 'mediaData',             $this->sendSelfRequest( 'combinedMediaSearch', 
-				array( 'q' => $searchConfig->getQuery()->getSanitizedQuery(), 'videoOnly' => true ) )->getData() );
-		
+		if ( in_array( 0, $searchConfig->getNamespaces() ) && !in_array( 6, $searchConfig->getNamespaces() ) ) {
+			$this->setVal( 'mediaData',             $this->sendSelfRequest( 'combinedMediaSearch',
+					array( 'q' => $searchConfig->getQuery()->getSanitizedQuery(), 'videoOnly' => true ) )->getData() );
+		} else {
+			$this->setVal( 'mediaData', [] );
+		}
 		if ( $this->wg->OnWikiSearchIncludesWikiMatch && $searchConfig->hasWikiMatch() ) {
 			$this->registerWikiMatch( $searchConfig );
 		}
