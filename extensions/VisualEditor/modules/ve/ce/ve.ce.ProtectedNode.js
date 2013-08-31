@@ -78,6 +78,9 @@ ve.ce.ProtectedNode.prototype.onProtectedSetup = function () {
 	this.getRoot().getSurface().getSurface()
 		.connect( this, { 'position': 'positionPhantoms' } );
 
+	// DOM changes
+	this.$.addClass( 've-ce-protectedNode' );
+
 	// Shields
 	this.$.add( this.$.find( '*' ) ).each( function () {
 		var $this = $( this );
@@ -92,9 +95,6 @@ ve.ce.ProtectedNode.prototype.onProtectedSetup = function () {
 			node.$shields = node.$shields.add( $shield );
 		}
 	} );
-
-	// DOM changes
-	this.$.addClass( 've-ce-protectedNode' );
 
 	this.isSetup = true;
 };
