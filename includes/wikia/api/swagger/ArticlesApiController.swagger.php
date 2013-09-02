@@ -173,7 +173,7 @@ use Swagger\Annotations as SWG;
  * 		name="timestamp",
  * 		type="int",
  * 		required="true",
- * 		description="The Unix timestamp in seconds of the date the revision was made"
+ * 		description="The Unix timestamp (in seconds) that the revision was made"
  * 	)
  * 
  * @SWG\Model( id="OriginalDimension" )

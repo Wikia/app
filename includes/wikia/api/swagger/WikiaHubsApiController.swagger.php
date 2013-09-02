@@ -99,7 +99,7 @@ use Swagger\Annotations as SWG;
  *                 ),
  *                 @SWG\Parameter(
  *                     name="ts",
- *                     description="Timestamp",
+ *                     description="The Unix timestamp (in seconds)",
  *                     paramType="query",
  *                     required="false",
  *                     allowMultiple="false",
