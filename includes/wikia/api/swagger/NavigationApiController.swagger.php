@@ -7,7 +7,7 @@ use Swagger\Annotations as SWG;
  * 	apiVersion="0.2",
  * 	swaggerVersion="1.1",
  * 	resourcePath="NavigationApi",
- * 	basePath="http://muppet.wikia.com"
+ * 	basePath="http://www.wikia.com"
  * )
  * 
  * @SWG\Model( id="NavigationResultSet" )
