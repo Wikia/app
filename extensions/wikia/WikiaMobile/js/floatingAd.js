@@ -1,7 +1,7 @@
 window.addEventListener('load', function(){
 	'use strict';
 
-	if(!Wikia.AbTest || ['E', undefined].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS")) != -1){
+	if(!Wikia.AbTest || ['E', undefined].indexOf(Wikia.AbTest.getGroup('WIKIAMOBILEADSLOTS')) !== -1){
 		require(['ads', 'wikia.window', 'jquery'], function (ads, window, $) {
 			var wrapper = document.getElementById('wkFloatingAd'),
 				positionfixed = window.Features.positionfixed,
@@ -12,7 +12,9 @@ window.addEventListener('load', function(){
 				$wrapper = $(wrapper),
 				$ftr = $(ftr);
 
-			!positionfixed && (classes += ' jsfix');
+			if(!positionfixed) {
+				classes += ' jsfix';
+			}
 
 			/**
 			 * Moves the slot at the bottom of the viewport
@@ -94,8 +96,9 @@ window.addEventListener('load', function(){
 					$(document)
 						.on('ads:fix', fix)
 						.on('ads:unfix', unfix);
-				}
-			});
+					}
+				});
+			}
 		});
 	}
 });
