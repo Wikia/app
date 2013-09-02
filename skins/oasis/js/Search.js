@@ -73,7 +73,7 @@ WikiaSearchApp = (function() {
 					minLength: 3,
 					maxHeight: 1000,
 					selectedClass: 'selected',
-					width: 100%,
+					width: '100%',
 					positionRight: this.positionRight + 'px',
 					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
 				});
