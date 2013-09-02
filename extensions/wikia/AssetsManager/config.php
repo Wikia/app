@@ -381,14 +381,6 @@ $config['gameguides_js'] = array(
 );
 
 /** WikiaMobile **/
-$config['wikiamobile_jquerytest_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
-		'//extensions/wikia/WikiaMobile/js/jquery-deprecated-effects-event-alias-sizzle.min.js',
-	)
-);
-
 $config['wikiamobile_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => 'wikiamobile',
