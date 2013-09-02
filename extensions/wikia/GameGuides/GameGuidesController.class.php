@@ -1,7 +1,7 @@
 <?php
 /**
  * Game Guides mobile app API controller
- * 
+ *
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
 
@@ -10,7 +10,6 @@ class GameGuidesController extends WikiaController {
 	const API_REVISION = 6;
 	const API_MINOR_REVISION = 5;
 	const APP_NAME = 'GameGuides';
-	const SKIN_NAME = 'wikiaapp';
 	const SECONDS_IN_A_DAY = 86400; //24h
 	const SIX_HOURS = 21600; //6h
 	const LIMIT = 25;
@@ -22,25 +21,25 @@ class GameGuidesController extends WikiaController {
 	 */
 	private $mModel = null;
 	private $mPlatform = null;
-	
+
 	function init() {
 		$requestedVersion = $this->request->getInt( 'ver', self::API_VERSION );
 		$requestedRevision = $this->request->getInt( 'rev', self::API_REVISION );
-		
+
 		if ( $requestedVersion != self::API_VERSION || $requestedRevision != self::API_REVISION ) {
 			throw new  GameGuidesWrongAPIVersionException();
 		}
-		
+
 		$this->mModel = (new GameGuidesModel);
 		$this->mPlatform = $this->request->getVal( 'os' );
 	}
-	
+
 	/*
 	 * @brief Returns a list of recommended wikis with some data from Oasis' ThemeSettings
-	 * 
+	 *
 	 * @requestParam integer $limit [OPTIONAL] the maximum number of results for this call
 	 * @requestParam integer $batch [OPTIONAL] the batch of results for this call, used only when $limit is passed in
-	 * 
+	 *
 	 * @responseParam see GameGuidesModel::getWikiList
 	 * @see GameGuidesModel::getWikiList
 	 */
@@ -48,22 +47,22 @@ class GameGuidesController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$this->response->setFormat( 'json' );
-		
+
 		$limit = $this->request->getInt( 'limit', null );
 		$batch = $this->request->getInt( 'batch', 1 );
 		$result = $this->mModel->getWikisList( $limit, $batch );
-		
+
 		foreach( $result as $key => $value ){
 			$this->response->setVal( $key, $value );
 		}
 
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	/*
 	 * @brief Returns a collection of data for the current wiki to use in the
 	 * per-wiki screen of the application
-	 * 
+	 *
 	 * @responseParam see GameGuidesModel::getWikiContents
 	 * @see GameGuidesModel::getWikiContents
 	 */
@@ -72,23 +71,23 @@ class GameGuidesController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$this->response->setFormat( 'json' );
-		
+
 		$result = $this->mModel->getWikiContents();
-		
+
 		foreach( $result as $key => $value ){
 			$this->response->setVal( $key, $value );
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	/*
 	 * @brief Returns all the contents associated to a category for the current wiki
-	 * 
+	 *
 	 * @requestParam string $category the name of the category to fetch contents from
 	 * @requestParam integer $limit [OPTIONAL] the maximum number of results for this call
 	 * @requestParam integer $batch [OPTIONAL] the batch of results for this call, used only when $limit is passed in
-	 * 
+	 *
 	 * @responseParam see GameGuidesModel::getCategoryContents
 	 * @see GameGuidesModel::getCategoryContents
 	 */
@@ -96,28 +95,28 @@ class GameGuidesController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$this->response->setFormat( 'json' );
-		
+
 		$category = $this->getVal('category');
 
 
 		$limit = $this->request->getInt( 'limit', null );
 		$batch = $this->request->getInt( 'batch', 1 );
 		$result = $this->mModel->getCategoryContents( $category, $limit, $batch );
-		
+
 		foreach( $result as $key => $value ){
 			$this->response->setVal( $key, $value );
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	/**
 	 * @brief Returns the results from a local wiki search for the passed in term
-	 * 
+	 *
 	 * @reqeustParam string $term the term to search for
 	 * @requestParam integer $limit [OPTIONAL] the maximum number of results for this call
 	 * @requestParam integer $batch [OPTIONAL] the batch of results for this call, used only when $limit is passed in
-	 * 
+	 *
 	 * @responseParam see GameGuidesModel::getSearchResults
 	 * @see GameGuidesModel::getSearchResults
 	 */
@@ -125,15 +124,15 @@ class GameGuidesController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$this->response->setFormat( 'json' );
-		
+
 		$term = $this->request->getVal( 'term' );
 		$limit = $this->request->getInt( 'limit', GameGuidesModel::SEARCH_RESULTS_LIMIT );
 		$result = $this->mModel->getSearchResults( $term, $limit );
-		
+
 		foreach( $result as $key => $value ){
 			$this->response->setVal( $key, $value );
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 	}
 
