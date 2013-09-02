@@ -98,8 +98,8 @@ abstract class FileOp {
 
 		$n = count( $performOps );
 		if ( $n > self::MAX_BATCH_SIZE ) {
-			WikiaPrivateLog::getChannel( 'file' )->send( ['max_batch_size is exceeded (n = ' . $n . ', max = ' . self::MAX_BATCH_SIZE . ')', $performOps] );
 			$status->fatal( 'backend-fail-batchsize', $n, self::MAX_BATCH_SIZE );
+			WikiaPrivateLog::getChannel( 'filesystem' )->send( [__CLASS__, 'max_batch_size exceeded', $status->getXML(), $performOps], true );
 			return $status;
 		}
 
@@ -112,7 +112,7 @@ abstract class FileOp {
 			$subStatus = $fileOp->precheck( $predicates );
 			$status->merge( $subStatus );
 			if ( !$subStatus->isOK() ) { // operation failed?
-				WikiaPrivateLog::getChannel( 'file' )->send( ['attempt batch failed (' . $index . ')', $performOps] );
+				WikiaPrivateLog::getChannel( 'filesystem' )->send( [__CLASS__, "batch precheck failed at index {$index}", $status->getXML(), $performOps], true );
 				$status->success[$index] = false;
 				++$status->failCount;
 				if ( !$ignoreErrors ) {
@@ -150,7 +150,7 @@ abstract class FileOp {
 				for ( $i = ($index + 1); $i < count( $performOps ); $i++ ) {
 					$performOps[$i]->logFailure( 'attempt_aborted' );
 				}
-				WikiaPrivateLog::getChannel( 'file' )->send( ['attempt batch failed (' . $index . ')', $performOps] );
+				WikiaPrivateLog::getChannel( 'filesystem' )->send( [__CLASS__, "batch attempt failed at index {$index}", $status->getXML(), $performOps], true );
 				return $status; // bail out
 			}
 		}
@@ -200,6 +200,7 @@ abstract class FileOp {
 		$status = $this->doPrecheck( $predicates );
 		if ( !$status->isOK() ) {
 			$this->failed = true;
+			WikiaPrivateLog::getChannel( 'filesystem' )->send( [__CLASS__, 'precheck failed', $predicates, $this->params, $this->backend] );
 		}
 		return $status;
 	}
@@ -220,6 +221,7 @@ abstract class FileOp {
 		if ( !$status->isOK() ) {
 			$this->failed = true;
 			$this->logFailure( 'attempt' );
+			WikiaPrivateLog::getChannel( 'filesystem' )->send( [__CLASS__, 'attempt failed', $this->params, $this->backend] );
 		}
 		return $status;
 	}
