@@ -33,7 +33,7 @@ use Swagger\Annotations as SWG;
  *			name="ns",
  *			type="int",
  *			required="true",
- *			description="Article namespace number. example namespaces: 0 - main ns (regular articles), 1 - main ns user talk pages, user page - 2, user talk - 3, files (images,movies) - 6, help - 12, category - 14. see more: http://www.mediawiki.org/wiki/help:namespaces "
+ *			description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces"
  *		)
  *
  *		@swg\Model( id="localWikiSearchResultSet" )
@@ -131,7 +131,7 @@ use Swagger\Annotations as SWG;
  *					),
  *					@swg\Parameter(
  *						name="namespaces",
- *						description="A comma-separated list of namespaces to restrict the results (e.g. 0, 6, 14)",
+ *						description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
  *						paramType="query",
  *						required="false",
  *						allowMultiple="false",
