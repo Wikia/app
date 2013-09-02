@@ -1,4 +1,4 @@
-/* global wgStyleVersion*/
+/* global Features */
 /**
  * @requires section, media, cache, wikia.loader, lazyload, jquery, sloth
  *

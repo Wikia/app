@@ -1,8 +1,10 @@
-/*global WikiaMobile*/
+/*global define */
 
 //init toc
 
 define('toc', ['track', 'sections', 'wikia.window', 'jquery'], function toc(track, sections, w, $){
+	'use strict';
+
 	//private
 	var d = w.document,
 		$body = $(d.body),
@@ -40,7 +42,7 @@ define('toc', ['track', 'sections', 'wikia.window', 'jquery'], function toc(trac
 				event.preventDefault();
 
 				var	target = event.target,
-					a = (target.nodeName == 'A');
+					a = (target.nodeName === 'A');
 
 				//if anchor was clicked dont trigger tracking event of close
 				(table.hasClass('open') ? close : open)(a);
@@ -61,9 +63,11 @@ define('toc', ['track', 'sections', 'wikia.window', 'jquery'], function toc(trac
 			id,
 			ul,
 			parent,
-			text;
+			text,
+			i = 0,
+			l = list.length;
 
-		for(var i = 0, l = list.length; i < l; i++){
+		for(; i < l; i++){
 			section = list[i];
 			a = section.children[0];
 			id = a.hash.slice(1);
@@ -102,7 +106,7 @@ define('toc', ['track', 'sections', 'wikia.window', 'jquery'], function toc(trac
 					toc.push({
 						id: h2.id,
 						name: (h2.textContent || h2.innerText).trim()
-					})
+					});
 				}
 			}
 
