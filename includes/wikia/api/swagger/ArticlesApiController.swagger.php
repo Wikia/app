@@ -217,7 +217,7 @@ use Swagger\Annotations as SWG;
  * 		name="basepath",
  * 		type="string",
  * 		required="true",
- * 		description="The base path of the request made. Used to construct absolute URLs"
+ * 		description="Common URL prefix for relative URLs"
  * 	)
  * @SWG\Model( id="ExpandedListArticleResultSet" )
  * 	@SWG\Property(
@@ -237,7 +237,7 @@ use Swagger\Annotations as SWG;
  * 		name="basepath",
  * 		type="string",
  * 		required="true",
- * 		description="Base path of current wiki; used for constructing absolute URLs from relative ones"
+ * 		description="Common URL prefix for relative URLs"
  * 	)
  * 
  * @SWG\Model( id="UnexpandedArticleResultSet" )
@@ -252,7 +252,7 @@ use Swagger\Annotations as SWG;
  * 		name="basepath",
  * 		type="string",
  * 		required="true",
- * 		description="Base path of current wiki; used for constructing absolute URLs from relative ones"
+ * 		description="Common URL prefix for relative URLs"
  * 	)
  * 	@SWG\Model( id="ExpandedArticleResultSet" )
  * 	@SWG\Property(
@@ -266,7 +266,7 @@ use Swagger\Annotations as SWG;
  * 		name="basepath",
  * 		type="string",
  * 		required="true",
- * 		description="Base path of current wiki; used for constructing absolute URLs from relative ones"
+ * 		description="Common URL prefix for relative URLs"
  * 	)
  * 
  * @SWG\Api(

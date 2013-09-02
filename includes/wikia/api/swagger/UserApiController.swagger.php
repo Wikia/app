@@ -59,7 +59,7 @@ use Swagger\Annotations as SWG;
  *				name="basepath",
  *				type="string",
  *				required="true",
- *				description="Base path of current wiki; used for constructing absolute URLs from relative ones"
+ *				description="Common URL prefix for relative URLs"
  *			)
  *
  *

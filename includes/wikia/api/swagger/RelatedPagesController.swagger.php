@@ -62,7 +62,7 @@ use Swagger\Annotations as SWG;
  *     @SWG\Property(
  *         name="basepath",
  *         type="string",
- *         description="Base URL for current domain"
+ *         description="Common URL prefix for relative URLs"
  *     )
  * )
  * @SWG\Model(
