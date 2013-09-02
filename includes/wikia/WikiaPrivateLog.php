@@ -83,6 +83,12 @@ class WikiaPrivateLog {
 				$msg = $arg;
 			} elseif (is_array( $arg ) ) {
 				$msg = json_encode( $this->processArray( $arg ) );
+			} elseif ( is_object( $arg) ) {
+				if ( $arg instanceof FileBackend ) {
+					$msg = $arg->getName() . ( $arg->isReadOnly() ? ' (read-only: ' . $arg->getReadOnlyReason() . ')' : '' );
+				} else {
+					$msg = get_class( $arg );
+				}
 			} else {
 				$msg = gettype( $arg );
 			}
@@ -112,10 +118,12 @@ class WikiaPrivateLog {
 		$results = [];
 
 		foreach ( $items as $item ) {
-			if ( is_scalar( $item ) ) {
+			if ( is_array( $item ) ) {
+				$results[] = json_encode( $item );
+			} elseif ( is_scalar( $item ) ) {
 				$results[] = $item;
 			} elseif ( $item instanceof FileOp ) {
-				$x = ['type' => gettype( $item )];
+				$x = ['type' => get_class( $item )];
 
 				foreach( [
 					'op',

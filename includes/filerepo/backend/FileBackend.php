@@ -1378,7 +1378,7 @@ abstract class FileBackendStore extends FileBackend {
 			$scopeLockS = $this->getScopedFileLocks( $filesLockSh, LockManager::LOCK_UW, $status );
 			$scopeLockE = $this->getScopedFileLocks( $filesLockEx, LockManager::LOCK_EX, $status );
 			if ( !$status->isOK() ) {
-				WikiaPrivateLog::getChannel( 'file' )->send( ['cannot lock files', $filesLockSh] );
+				WikiaPrivateLog::getChannel( 'filesystem' )->send( [__CLASS__, 'cannot lock files', $status->getXML(), $opts, $filesLockSh, $this], true );
 				wfProfileOut( __METHOD__ );
 				return $status; // abort
 			}
