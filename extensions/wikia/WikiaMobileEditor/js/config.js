@@ -1,10 +1,11 @@
-define('config', ['pubsub', 'wikia.loader', 'wikia.mustache'], function(pubsub, loader, mustache){
-
+define('config', ['pubsub', 'wikia.loader', 'wikia.mustache', 'toast'], function(pubsub, loader, mustache, toast){
+   'use strict';
     var configObj,
         activeTags = {},
-        maxItems = 16;
+        maxItems = 20,
+        startMsg = 'Use checkboxes in tag lists below to add items to the animated menu. You can also define custom tags.'
 
-    ConfigObj = function(wrapSection){
+    function ConfigObj(wrapSection){
         this.wrapper = wrapSection;
         this.sections = {};
         this.warning = wrapSection.getElementsByClassName('warning')[0];
@@ -156,6 +157,33 @@ define('config', ['pubsub', 'wikia.loader', 'wikia.mustache'], function(pubsub, 
                 abbr : 'gal',
                 display : '&lt;gallery&gt;Image:|Caption&lt;/gallery&gt;'
             }
+        },
+        'Custom' : {
+            'custom1' : {
+                tag : "",
+                abbr : "",
+                display : "Custom Tag 1"
+            },
+            'custom2' : {
+                tag : "",
+                abbr : "",
+                display : "Custom Tag 2"
+            },
+            'custom3' : {
+                tag : "",
+                abbr : "",
+                display : "Custom Tag 3"
+            },
+            'custom4' : {
+                tag : "",
+                abbr : "",
+                display : "Custom Tag 4"
+            },
+            'custom5' : {
+                tag : "",
+                abbr : "",
+                display : "Custom Tag 5"
+            }
         }
     };
 
@@ -184,14 +212,14 @@ define('config', ['pubsub', 'wikia.loader', 'wikia.mustache'], function(pubsub, 
 
     function initializeLinks(){
         var links;
-
         Object.keys(configObj.sections).forEach(function(section){
             if(configObj.sections.hasOwnProperty(section)){
                 links = configObj.sections[section].ul.getElementsByTagName('a');
                 for(var i = 0; i < links.length; i++){
                     links[i].addEventListener('click', function(evt){
                         evt.preventDefault();
-                        pubsub.publish('insert', this.innerText);
+                        pubsub.publish('insert',
+                            findTag(this.parentElement.getElementsByTagName('input')[0].name).tag);
                     });
                 }
             }
@@ -202,23 +230,29 @@ define('config', ['pubsub', 'wikia.loader', 'wikia.mustache'], function(pubsub, 
         var html = '';
         Object.keys(tags).forEach(function(tagGr){ //tu foricz
             if(tags.hasOwnProperty(tagGr) && typeof tags[tagGr] === 'object'){
-                html+='<section class ="tagSection" data-tagType="'+tagGr+'">';
-                html+='<h1>'+tagGr+'</h1><a href="" class="toggle">expand</a>';
-                html+='<ul class="off">';
+                html+='<section class ="tagSection show" data-tagType="'+tagGr+'">';
+                html+='<h1 class="collSec addChev">'+tagGr+'</h1>';
+                html+='<ul class="wkLst artSec">';
                 Object.keys(tags[tagGr]).forEach(function(tag){ //i tu foricz
                     if(tags[tagGr].hasOwnProperty(tag)){
                         html+='<li>';
                         html+='<input type="checkbox" class="tagChb" name="'+tags[tagGr][tag].abbr+'">';
-                        html+='<label for="'+tags[tagGr][tag].abbr+'">'+tag+'</label>';
-                        html+='<a href="">'+tags[tagGr][tag].display+'</a>';
+                        if(tagGr != 'Custom'){
+                            html+='<label for="'+tags[tagGr][tag].abbr+'">'+tag+' (!'+tags[tagGr][tag].abbr+ '!) </label>';
+                            html+='<a href="">'+tags[tagGr][tag].display+'</a>';
+                        }
+                        else{
+                            html+='<input type="text" class="tagInput" name="'+tag+'" placeholder ="Your abbreviation">';
+                            html+='<input type="text" class="tagInput" name='+tags[tagGr][tag].display+' placeholder="Your Tag">';
+                        }
                         html+='</li>';
                     }
                 });
-                html+='</ul></section>';
+                html+='</ul><span class="chev"></span></section>';
             }
         });
         html+='<p class="warning">Warning! You picked wrong number of tags for the animated menu (0 or >20)</p>';
-        html+= '<input type="submit" value="Reload animated menu" class="save">';
+        html+= '<button type="button" class="save wkBtn">Reload animated menu</button>';
         return html;
     }
 
@@ -230,25 +264,6 @@ define('config', ['pubsub', 'wikia.loader', 'wikia.mustache'], function(pubsub, 
     function fold(section){
         section.ul.classList.add('off');
         section.toggle.innerText = 'expand';
-    }
-
-    function activateToggle(){
-        var toggles = configObj.wrapper.getElementsByClassName('toggle'),
-            ul;
-        for(var i = 0; i < toggles.length; i++){
-            toggles[i].addEventListener('click', function(evt){
-                evt.preventDefault();
-                ul = this.parentElement.getElementsByTagName('ul')[0];
-                if(ul.classList.contains('on')){
-                    this.innerText = 'expand';
-                    ul.classList.remove('on');
-                }
-                else{
-                    ul.classList.add('on');
-                    this.innerText = 'fold';
-                }
-            });
-        }
     }
 
     function getActive(){ //returns elements with checkboxes in 'active' state
@@ -264,7 +279,17 @@ define('config', ['pubsub', 'wikia.loader', 'wikia.mustache'], function(pubsub, 
     function setActiveTags(activeChb){
         for(var i = 0; i < activeChb.length; i++){
             curChb = activeChb[i];
-            activeTags[curChb.name] = findTag(curChb.name);
+            if(curChb.parentElement.getElementsByClassName('tagInput')[0]){
+                var abbr = curChb.parentElement.getElementsByTagName('input')[1].value,
+                    tag = curChb.parentElement.getElementsByTagName('input')[2].value,
+                    name = curChb.parentElement.getElementsByTagName('input')[1].name;
+                tags['Custom'][name].tag = tag;
+                tags['Custom'][name].abbr = abbr;
+                activeTags[abbr] = findTag(abbr);
+            }
+            else{
+                activeTags[curChb.name] = findTag(curChb.name);
+            }
         }
     }
 
@@ -278,10 +303,11 @@ define('config', ['pubsub', 'wikia.loader', 'wikia.mustache'], function(pubsub, 
 
     function onUpdate(){
         var activeChb = getActive();
+        toast.show('Aktywacja tagów menu');
         setActiveTags(activeChb);
         if(validate(activeTags)){
             if(configObj.warning.classList.contains('on')){
-                configObj.warning.classList.remove('off');
+                configObj.warning.classList.remove('on');
             }
             //ask the animated menu to update itself
             storeTags(activeTags);
@@ -289,6 +315,7 @@ define('config', ['pubsub', 'wikia.loader', 'wikia.mustache'], function(pubsub, 
         }
         else{
             configObj.warning.classList.add('on');
+            configObj.warning.scrollIntoView();
         }
         activeTags = {};
     }
@@ -327,9 +354,9 @@ define('config', ['pubsub', 'wikia.loader', 'wikia.mustache'], function(pubsub, 
             activeTags = getTagsFromStorage();
             onUpdate();
         }
-        activateToggle();
         initializeLinks();
         watchForSubmit();
+        toast.show(startMsg);
     }
     return {
         init : init,

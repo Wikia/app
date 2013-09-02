@@ -1,23 +1,26 @@
-define('menu', ['pubsub'], function(pubsub){
+define('menu', ['pubsub', 'editor', 'device'], function(pubsub, editor, device){
 
     var menuLeft,
         menuRight,
         rMin = 50,
         rMax = 100,
-        minMove = 20;
+        minMove = 20,
+        wrapper = document.getElementsByClassName('wrapper')[0],
+        shadow = wrapper.getElementsByClassName('shadow')[0],
+        tags = JSON.parse(localStorage.getItem('tags')) || {};
 
     function menuObj(wrapperId){ //constructor for menu object, parameter = div wrapper for menu
-        var wrapper = document.getElementById(wrapperId);
-        this.wrapper = wrapper;
-        this.master = wrapper.getElementsByClassName('master')[0]
+        var myWrapper = document.getElementById(wrapperId);
+        this.wrapper = myWrapper;
+        this.master = myWrapper.getElementsByClassName('master')[0]
         this.primary = {
-            ul : wrapper.getElementsByTagName('ul')[0],
-            elements : wrapper.getElementsByTagName('ul')[0].getElementsByTagName('li'),
+            ul : myWrapper.getElementsByTagName('ul')[0],
+            elements : myWrapper.getElementsByTagName('ul')[0].getElementsByTagName('li'),
             expanded : false
         };
         this.secondary = {
-            ul : wrapper.getElementsByTagName('ul')[1],
-            elements : wrapper.getElementsByTagName('ul')[1].getElementsByTagName('li'),
+            ul : myWrapper.getElementsByTagName('ul')[1],
+            elements : myWrapper.getElementsByTagName('ul')[1].getElementsByTagName('li'),
             expanded : false
         };
         this.activeElement = false;
@@ -31,11 +34,12 @@ define('menu', ['pubsub'], function(pubsub){
     }
 
     function waitForTouch(menus){
-        menus.forEach(function(menu){
-            menu.master.addEventListener('touchstart', function aa(evt){
-                onTouchStart(evt, menu);
+            document.addEventListener('touchstart', function(evt){
+                if(evt.target.classList.contains('master')){
+                    var curMenu = evt.target.parentElement.classList.contains('left') ? menuLeft : menuRight;
+                    onTouchStart(evt, curMenu);
+                }
             });
-        });
     }
 
     function onTouchStart(event, menu){
@@ -51,6 +55,7 @@ define('menu', ['pubsub'], function(pubsub){
 
     function addListeners(menu){
         menu.wrapper.addEventListener('touchmove', function tm(event){
+            moveShadow(event);
             var x = event.changedTouches[0].clientX - getMasterPosition(menu).x,
                 y = getMasterPosition(menu).y - event.changedTouches[0].clientY;
             event.preventDefault();
@@ -91,6 +96,27 @@ define('menu', ['pubsub'], function(pubsub){
         }
     }
 
+    function hold(){
+        var bound = editor.editArea.getBoundingClientRect();
+        if(window.innerHeight - bound.top > 80
+            && bound.bottom > 10){
+                //if(!wrapper.classList.contains('on'))wrapper.classList.add('on');
+                if(wrapper.classList.contains('off'))wrapper.classList.remove('off');
+        }
+        else{
+            if(!wrapper.classList.contains('off')){
+                wrapper.classList.add('off');
+            }
+        }
+    }
+
+    function watchForScroll(){
+        hold();
+        window.addEventListener('scroll', function(){
+            hold();
+        });
+    }
+
     function getActiveElement(menu, offsetLeft, offsetTop){
         var masterPos = getMasterPosition(menu),
             x = offsetLeft - masterPos.x,
@@ -111,21 +137,10 @@ define('menu', ['pubsub'], function(pubsub){
     }
 
     function getRange(angle, menu){
-        var k = 0;
-        if(menu === menuLeft){
-            if(angle < 135 && angle > 99) return 0;
-            if(angle < 99 && angle > 63) return 1;
-            if(angle < 63 && angle > 27) return 2;
-            if(angle < 27 && angle > 0 || angle > 351) return 3;
-            if(angle < 351 && angle > 315) return 4;
-            return -1;
-        }
-        if(angle < 225 && angle > 189) return 0;
-        if(angle < 189 && angle > 153) return 1;
-        if(angle < 153 && angle > 117) return 2;
-        if(angle < 117 && angle > 81) return 3;
-        if(angle < 81 && angle > 45) return 4;
-        return -1;
+        angle = 180-angle;
+        if(menu === menuRight) angle+=99;
+        if(angle < 0) angle +=360;
+        return ~~((angle-47)/36);
     }
 
     function getAngle(x, y){
@@ -145,6 +160,11 @@ define('menu', ['pubsub'], function(pubsub){
             x : menu.master.getBoundingClientRect().left + menu.master.offsetWidth / 2,
             y : menu.master.getBoundingClientRect().top + menu.master.offsetHeight / 2
         }
+    }
+
+    function moveShadow(evt){
+        if(!shadow.classList.contains('shadowOn'))shadow.classList.add('shadowOn');
+        shadow.style.webkitTransform = 'translate(' + (evt.targetTouches[0].pageX-25) + 'px, ' + (evt.targetTouches[0].pageY-25) + 'px)';
     }
 
     function switchMenu(menu){
@@ -187,7 +207,7 @@ define('menu', ['pubsub'], function(pubsub){
 
     function updateButton (li, tag){
         li.setAttribute('data-tag', tag.tag);
-        li.getElementsByTagName('span')[0].innerText = tag.abbr;
+        li.getElementsByTagName('a')[0].innerText = tag.abbr;
     }
 
     function getLi(index){
@@ -216,9 +236,71 @@ define('menu', ['pubsub'], function(pubsub){
         }
     }
 
+    function activateStaticMenu(){
+        var menus = {left: menuLeft, right: menuRight};
+        for(menu in menus){
+            if(menus.hasOwnProperty(menu)){
+                menus[menu].master.addEventListener('click', function(evt){
+                    myMenu = this.parentElement.classList.contains('left')? 'left' : 'right';
+                    evt.preventDefault();
+                    if(menus[myMenu].other.primary.expanded){
+                        menus[myMenu].other.primary.expanded = false;
+                        menus[myMenu].other.primary.ul.classList.add('minified');
+                        return;
+                    }
+                    else {
+                        if(menus[myMenu].other.secondary.expanded){
+                            menus[myMenu].other.secondary.expanded = false;
+                            menus[myMenu].other.secondary.ul.classList.add('minified');
+                            return;
+                        }
+                    }
+                    if(menus[myMenu].primary.expanded){
+                        menus[myMenu].primary.expanded = false;
+                        menus[myMenu].primary.ul.classList.add('minified');
+                        menus[myMenu].secondary.expanded = true;
+                        menus[myMenu].secondary.ul.classList.remove('minified');
+                        return;
+                    }
+                    if(menus[myMenu].secondary.expanded){
+                        menus[myMenu].secondary.expanded = false;
+                        menus[myMenu].secondary.ul.classList.add('minified');
+                    }
+                    menus[myMenu].primary.expanded = true;
+                    menus[myMenu].primary.ul.classList.remove('minified');
+                    return;
+                });
+                var lis = menus[menu].wrapper.getElementsByTagName('li');
+                for(var i = 0; i < lis.length; i++){
+                        lis[i].addEventListener('click', function(evt){
+                            myMenu = this.parentElement.classList.contains('left')? 'left' : 'right';
+                            evt.preventDefault();
+                            editor.insertTags(this.getAttribute('data-tag'));
+                            this.parentElement.classList.add('minified');
+                            if(this.parentElement.classList.contains('primary')){
+                                menus[myMenu]['primary'].expanded = false;
+                            }
+                            else{
+                                menus[myMenu]['secondary'].expanded = false;
+                            }
+                        });
+                }
+            }
+        }
+    }
+
     function init(){
         build('menuLeft', 'menuRight');
-        waitForTouch([menuLeft, menuRight]);
+        attachTags(tags);
+        watchForScroll();
+        if(device.handlesAnimatedMenu()){
+            wrapper.classList.add('fancy');
+            waitForTouch([menuLeft, menuRight]);
+        }
+        else{
+            wrapper.classList.add('static');
+            activateStaticMenu();
+        }
     }
 
     return{

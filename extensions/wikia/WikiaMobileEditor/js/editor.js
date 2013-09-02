@@ -14,11 +14,14 @@ define('editor', ['pubsub', 'config'], function(pubsub, config){
     }
 
     function insertTags(phrase){ //distFromEnd - number of chars from end to center of the phrase
-        var startPos, endPos, cursorPos, halvesOfText, distFromEnd= 0;
+        var startPos, endPos, cursorPos, halvesOfText, inText='', distFromEnd= 0;
         if(phrase.match(pattern)){ //extracts _$ if present to know the cursor position
             halvesOfText = phrase.split('_$');
             distFromEnd = halvesOfText[1].length;
-            phrase = halvesOfText[0].concat(halvesOfText[1]);
+            if(editArea.selectionStart != editArea.selectionEnd){
+                inText = editArea.value.substring(editArea.selectionStart, editArea.selectionEnd);
+            }
+            phrase = halvesOfText[0] + inText + halvesOfText[1];
         }
 
         if (editArea.selectionStart || editArea.selectionStart == '0') {
@@ -36,6 +39,7 @@ define('editor', ['pubsub', 'config'], function(pubsub, config){
             startPos = endPos = editArea.value.length;
         }
         cursorPos = endPos+phrase.length - distFromEnd;
+        editArea.scrollIntoView();
         editArea.focus();
         editArea.setSelectionRange(cursorPos, cursorPos);
     }

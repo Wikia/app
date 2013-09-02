@@ -29,7 +29,7 @@ class WikiaMobileEditorController extends WikiaController{
 	 *
 	 * @return true
 	 */
-	public static function onEditPageInitial( $editPage, $output ) {
+	public static function onEditPageInitial( EditPage $editPage ) {
 		$app = F::app();
 
 		if ( $app->checkSkin( 'wikiamobile' ) ) {

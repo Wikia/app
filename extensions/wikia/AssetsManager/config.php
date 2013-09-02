@@ -407,6 +407,7 @@ $config['wikiamobile_editor_js'] = array(
 	'assets' => array(
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//extensions/wikia/WikiaMobileEditor/js/pubsub.js',
+        '//extensions/wikia/WikiaMobileEditor/js/device.js',
 		'//extensions/wikia/WikiaMobileEditor/js/editor.js',
 		'//extensions/wikia/WikiaMobileEditor/js/config.js',
 		'//extensions/wikia/WikiaMobileEditor/js/menu.js',
