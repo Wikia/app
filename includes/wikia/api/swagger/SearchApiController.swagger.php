@@ -66,7 +66,7 @@ use Swagger\Annotations as SWG;
  *				required="true",
  *				type="Array",
  *				items="$ref:localWikiSearchResult",
- *				description="A list of search results"
+ *				description="Standard container name for element collection (list)"
  *			)
  *
  *	@swg\Api(
@@ -166,7 +166,7 @@ use Swagger\Annotations as SWG;
  *			required="true",
  *			type="Array",
  *			items="$ref:CrossWikiSearchResult",
- *			description="A list of search results"
+ *			description="Standard container name for element collection (list)"
  *		)
  *
  *

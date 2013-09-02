@@ -16,7 +16,7 @@ use Swagger\Annotations as SWG;
  * 			type="Array",
  * 			items="$ref:ExpandedWikiaItem",
  * 			required="true",
- * 			description="Array containing Wikis set"
+ * 			description="Standard container name for element collection (list)"
  * 		)
  *
  * @SWG\Model( id="UnexpandedWikiaResultSet" )
@@ -25,7 +25,7 @@ use Swagger\Annotations as SWG;
  * 			type="Array",
  * 			items="$ref:UnexpandedWikiaItem",
  * 			required="true",
- * 			description="Array containing Wikis set"
+ * 			description="Standard container name for element collection (list)"
  * 		)
  * 		@SWG\Property(
  * 			name="next",
@@ -97,7 +97,7 @@ use Swagger\Annotations as SWG;
  * 			type="Array",
  * 			items="$ref:ExpandedWikiaItem",
  * 			required="true",
- * 			description="Array containing Wikis set"
+ * 			description="Standard container name for element collection (list)"
  * 		)
  * 		@SWG\Property(
  * 			name="next",

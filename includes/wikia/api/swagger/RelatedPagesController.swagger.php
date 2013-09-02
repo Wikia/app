@@ -56,7 +56,7 @@ use Swagger\Annotations as SWG;
  *     @SWG\Property(
  *         name="items",
  *         type="Array",
- *         description="The related page results for the provided ID",
+ *         description="Standard container name for element collection (list)",
  *         items="$ref:RelatedPage"
  *     ),
  *     @SWG\Property(
