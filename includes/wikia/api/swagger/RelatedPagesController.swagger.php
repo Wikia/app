@@ -71,7 +71,7 @@ use Swagger\Annotations as SWG;
  *         name="url",
  *         type="string",
  *         required="true",
- *         description="URL to article without domain part"
+ *         description="The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
  *  ),
  *      @SWG\Property(
  *         name="title",
@@ -89,7 +89,7 @@ use Swagger\Annotations as SWG;
  *         name="imgUrl",
  *         type="string",
  *         required="true",
- *         description="URL for article image"
+ *         description="The absolute URL of the image"
  *     )
  * )
  */

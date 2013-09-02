@@ -32,7 +32,7 @@ use Swagger\Annotations as SWG;
  *			name="url",
  *			type="string",
  *			required="true",
- *			description="The relative URL of the user profile page"
+ *			description="The relative URL of the User page. Absolute URL: obtained from combining relative URL with basepath attribute from response."
  *		)
  *		@SWG\Property(
  *			name="numberofedits",

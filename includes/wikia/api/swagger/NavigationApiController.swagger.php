@@ -45,7 +45,7 @@ use Swagger\Annotations as SWG;
  * 			name="href",
  * 			type="string",
  * 			required="true",
- * 			description="URL path"
+ * 			description="The relative URL of the Page. Absolute URL: obtained from combining relative URL with basepath attribute from response."
  * 		)
  * 		@SWG\Property(
  * 			name="children",
@@ -66,7 +66,7 @@ use Swagger\Annotations as SWG;
  * 			name="href",
  * 			type="string",
  * 			required="true",
- * 			description="URL path"
+ * 			description="The relative URL of the Page. Absolute URL: obtained from combining relative URL with basepath attribute from response."
  * 		)
  *
  *

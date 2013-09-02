@@ -32,7 +32,7 @@ use Swagger\Annotations as SWG;
  * 			name="photoUrl",
  * 			type="string",
  * 			required="true",
- * 			description="Image URL"
+ * 			description="The absolute URL of the image"
  * 		)
  * 		@SWG\Property(
  * 			name="strapline",
@@ -56,7 +56,7 @@ use Swagger\Annotations as SWG;
  * 			name="url",
  * 			type="string",
  * 			required="true",
- * 			description="URL to page"
+ * 			description="The absolute URL of the page"
  * 		)
  * 		@SWG\Property(
  * 			name="photoName",
