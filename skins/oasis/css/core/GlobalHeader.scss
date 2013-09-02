@@ -74,15 +74,9 @@ $global-nav-alt-background-color: rgba($color-header, 0.7);
 		line-height: $wikiaglobal-nav-height;
 		position: relative;
 
-		&:hover{
+		&.active, &:hover{
 			text-decoration: none;
 
-			.hubname-container {
-				opacity: 0;
-			}
-			.text-container {
-				opacity: 1;
-			}
 			.chevron-container {
 				background-color: $global-nav-alt-background-color;
 				border-color: transparent;
@@ -108,10 +102,26 @@ $global-nav-alt-background-color: rgba($color-header, 0.7);
 			text-transform: uppercase;
 			white-space: nowrap;
 			-webkit-font-smoothing: antialiased; // prevents text flickering when css transformations in progress
-		}
 
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-khtml-user-select: none;
+			-moz-user-select: -moz-none;
+			-ms-user-select: none;
+			user-select: none;
+
+		}
 		.text-container {
 			opacity: 0;
+		}
+
+		&.active {
+			.text-container {
+				opacity: 1;
+			}
+			.hubname-container {
+				opacity: 0;
+			}
 		}
 	}
 	.drawer {

@@ -3,11 +3,22 @@ $(function(){
 		uiFactory.init('drawer').then(function(elem){
 			$('#WikiaHeader').append(elem.render({type:"default", vars: {side: 'left', content: 'test content'}}));
 			require(['wikia.uifactory.drawer'], function(drawer){
-				var leftDrawer = drawer.init('left');
-				$('#BrowseEntry').click(function(){
+				var leftDrawer = drawer.init('left'),
+					browseEntry = $('#BrowseEntry');
+				leftDrawer
+					.getHTMLElement()
+					.on('drawer-open', function(){
+						browseEntry.addClass('active');
+					})
+					.on('drawer-close', function(){
+						browseEntry.removeClass('active');
+					});
+				browseEntry.click(function(){
 					if (leftDrawer.isOpen()) {
+						$(this).removeClass('active');
 						leftDrawer.close();
 					} else {
+						$(this).addClass('active');
 						leftDrawer.open();
 					}
 
