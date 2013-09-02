@@ -140,6 +140,14 @@ $messages['fi'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Yhteisöviestejä on päivitetty]].',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'communitymessages-desc' => 'Hjálpartól (víðkan) til felagskapsboð',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|Felagsskapsboðini eru dagførd]].',
+);
+
 /** French (français)
  * @author IAlex
  * @author Wyz

@@ -340,6 +340,7 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
+ * @author SteveR
  * @author Ua2004
  * @author Тест
  */

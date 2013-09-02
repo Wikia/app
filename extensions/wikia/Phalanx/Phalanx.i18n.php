@@ -651,6 +651,7 @@ $messages['diq'] = array(
 );
 
 /** Spanish (español)
+ * @author Fitoschido
  * @author Mor
  * @author VegaDark
  */
@@ -733,7 +734,7 @@ Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].<br />E
 	'phalanx-content-spam-summary' => 'El texto fue encontrado en el resumen de la página.',
 	'phalanx-stats-title' => 'Estadísticas de Phalanx',
 	'phalanx-stats-block-notfound' => 'ID de bloqueo no encontrado',
-	'phalanx-stats-table-id' => 'ID de bloqueo',
+	'phalanx-stats-table-id' => 'Id. de bloqueo',
 	'phalanx-stats-table-user' => 'Añadido por',
 	'phalanx-stats-table-type' => 'Tipo',
 	'phalanx-stats-table-create' => 'Creado',
@@ -754,7 +755,7 @@ Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].<br />E
 	'phalanx-rule-log-edit' => 'Regla de Phalanx editada: $1',
 	'phalanx-rule-log-delete' => 'Reglas de Phalanx borrada: $1',
 	'phalanx-rule-log-details' => 'Filtro: "$1", tipo: "$2", motivo: "$3"',
-	'phalanx-stats-table-wiki-id' => 'ID de wiki',
+	'phalanx-stats-table-wiki-id' => 'Id. del wiki',
 	'phalanx-stats-table-wiki-name' => 'Nombre de wiki',
 	'phalanx-stats-table-wiki-url' => 'URL de wiki',
 	'phalanx-stats-table-wiki-last-edited' => 'Última edición',
@@ -2425,8 +2426,32 @@ $messages['roa-tara'] = array(
 	'phalanx-label-type' => 'Tipe:',
 	'phalanx-label-lang' => 'Lènghe:',
 	'phalanx-view-type' => 'Tipe de blocche...',
+	'phalanx-format-regex' => 'regex',
+	'phalanx-format-exact' => 'satte satte',
+	'phalanx-tab-main' => 'Gestisce le filtre',
+	'phalanx-tab-secondary' => 'Filtre de test',
+	'phalanx-block-success' => "'U blocche ha state aggiunde",
+	'phalanx-modify-success' => "'U blocche ha state cangiate",
 	'phalanx-test-submit' => 'Test',
+	'phalanx-test-results-legend' => "Resultate d'u test",
+	'phalanx-display-row-blocks' => 'blocche: $1',
+	'phalanx-display-row-created' => "ccrejate da '''$1''' 'u $2",
+	'phalanx-link-unblock' => 'sblocche',
+	'phalanx-link-modify' => 'cange',
+	'phalanx-link-stats' => 'statisteche',
+	'phalanx-stats-title' => "Statisteche d'a Falange",
+	'phalanx-stats-block-notfound' => "ID d'u blocche none acchiate",
+	'phalanx-stats-table-id' => "ID d'u blocche",
+	'phalanx-stats-table-user' => 'Aggiunde da',
 	'phalanx-stats-table-type' => 'Tipe',
+	'phalanx-stats-table-create' => 'Ccrejate',
+	'phalanx-stats-table-expire' => 'Scade',
+	'phalanx-stats-table-exact' => 'Satte satte',
+	'phalanx-stats-table-regex' => 'Regex',
+	'phalanx-stats-table-case' => 'Case',
+	'phalanx-stats-table-language' => 'Lènghe',
+	'phalanx-stats-table-text' => 'Teste',
+	'phalanx-stats-table-reason' => 'Mutive',
 );
 
 /** Russian (русский)
@@ -2839,7 +2864,9 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  * @author Ата
  * @author Тест
  */
@@ -2851,6 +2878,7 @@ $messages['uk'] = array(
 	'phalanx-type-summary' => 'стислий опис сторінки',
 	'phalanx-type-title' => 'Назва сторінки',
 	'phalanx-type-user' => 'користувач',
+	'phalanx-type-user-email' => 'електронна пошта',
 	'phalanx-type-answers-question-title' => 'назва запитання',
 	'phalanx-type-answers-recent-questions' => 'нові запитання',
 	'phalanx-type-wiki-creation' => 'створення вікі',
@@ -2876,6 +2904,9 @@ $messages['uk'] = array(
 	'phalanx-block-failure' => 'Помилка при додаванні блоку',
 	'phalanx-modify-success' => 'Блок успішно змінено',
 	'phalanx-modify-failure' => 'Помилка при зміні блоку',
+	'phalanx-modify-warning' => 'Вb змінили ID блоку #$1.
+Натисніть "{{int:phalanx-edit-block}}", щоб зберегти зміни!',
+	'phalanx-test-description' => 'Тест надав текст про поточні блоки.',
 	'phalanx-test-submit' => 'Тест',
 	'phalanx-test-results-legend' => 'Результати тесту',
 	'phalanx-display-row-blocks' => 'блоки: $1',
@@ -2883,10 +2914,31 @@ $messages['uk'] = array(
 	'phalanx-link-unblock' => 'розблокувати',
 	'phalanx-link-modify' => 'змінити',
 	'phalanx-link-stats' => 'статистика',
+	'phalanx-reset-form' => 'Скинути форму',
 	'phalanx-legend-input' => 'Створити або змінити фільтр',
 	'phalanx-legend-listing' => 'Поточні фільтри',
 	'phalanx-unblock-message' => 'Блок ID # $1  успішно вилучено',
 	'phalanx-help-type-content' => 'Якщо зміст відповідає будь-якому слову з чорного списку фраз, то фільтр забороняє збереження після редагування.',
+	'phalanx-help-type-summary' => 'Фільтр не дає зберігати редагування, якщо подане резюме містить щось із чорного списку фраз.',
+	'phalanx-help-type-title' => 'Цей фільтр запобігає створенню сторінки, якщо її назва відповідає будь-якому слову з чорного списку.
+
+Це не заважає редагуванню сторінки.',
+	'phalanx-help-type-user' => "Цей фільтр блокує учасника (також як блокування на самій вікі), коли його ім'я або IP-адреса відповідає імені або IP-адресі з чорного списку.",
+	'phalanx-help-type-wiki-creation' => 'Якщо назва або URL-адреса вікі відповідає тому, що знаходиться в чорному списку, то цей фільтр забороняє створення такої вікі.',
+	'phalanx-help-type-answers-question-title' => 'Цей фільтр блокує створення питання (сторінки), якщо його назва відповідає слову з чорного списку фільтра.
+
+Примітка: працює тільки на вікі типу відповіді.',
+	'phalanx-help-type-answers-recent-questions' => 'Цей фільтр запобігає відображенню питань (сторінок) на екрані в ряді випадків (віджети, списки, генеровані тегами списки).
+Це не заважає створенню даних сторінок.
+
+Примітка: працює тільки на вікі типу відповіді.',
+	'phalanx-help-type-user-email' => 'Цей фільтр запобігає створення облікового запису з допомогою заблокованої адреси електронної пошти.',
+	'phalanx-user-block-reason-ip' => "Учасник з даними IP-адресою не може редагувати на всій Вікія через вандалізм або інших порушень, які вчинив він чи хтось з таким же IP-адресою.
+Якщо Ви вважаєте, що сталася помилка, то, будь ласка,[[Special:Contact|зв'яжіться із співробітниками Вікія]].",
+	'phalanx-user-block-reason-exact' => "Цей учасник або учасник з даною IP-адресою не може редагувати на всій Вікія через вандалізм або інші порушення.
+Якщо Ви вважаєте, що сталася помилка, то, будь ласка, [[Special:Contact|зв'яжіться із співробітниками Вікія]].",
+	'phalanx-user-block-reason-similar' => "Учаснику з даним ім'ям користувача заборонено редагувати на всій Вікія через вандалізм або інші порушення.
+Будь ласка,  [[Special:Contact| зв'яжіться із співробітниками Вікія]], щоб дізнатися більше про це.",
 	'phalanx-user-block-new-account' => "Це ім'я користувача не доступно для реєстрації. Будь ласка, виберіть інше.",
 	'phalanx-user-block-withreason-ip' => 'Користувач з цією IP-адресою не може редагувати на всій Вікіа через вандалізм або інші порушення, які вчинив він або хтось з тією ж IP-адресою.
 Якщо Ви вважаєте, що сталася помилка, будь ласка,[[Special:Contact|зверніться до адміністраторів Вікіа]].<br />Блокувач так пояснив свій крок: $1.',
@@ -2894,13 +2946,40 @@ $messages['uk'] = array(
 Якщо Ви вважаєте, що сталася помилка, будь ласка,[[Special:Contact|зверніться до адміністраторів Вікіа]].<br />Блокувач так пояснив свій крок: $1.",
 	'phalanx-user-block-withreason-similar' => "Користувач з цим ім'ям не може редагувати на всій Вікіа через вандалізм або інші порушення, які вчинив він або хтось з тією ж IP-адресою.
 Якщо Ви вважаєте, що сталася помилка, будь ласка,[[Special:Contact|зверніться до адміністраторів Вікіа]].<br />Блокувач так пояснив свій крок: $1.",
+	'phalanx-title-move-summary' => 'Причина, по якій ви додаєте цю фразу для блокування.',
+	'phalanx-content-spam-summary' => 'Текст знайдено у резюме сторінки.',
+	'phalanx-stats-title' => 'Статистика Phalanx',
+	'phalanx-stats-block-notfound' => 'ID блоку не найдено',
+	'phalanx-stats-table-id' => 'ID блоку',
+	'phalanx-stats-table-user' => 'Додано',
 	'phalanx-stats-table-type' => 'Тип',
+	'phalanx-stats-table-create' => 'Створено',
 	'phalanx-stats-table-expire' => 'Закінчується',
 	'phalanx-stats-table-exact' => 'Точно',
+	'phalanx-stats-table-regex' => 'регулярний вираз',
 	'phalanx-stats-table-case' => 'У разі',
 	'phalanx-stats-table-language' => 'Мова',
 	'phalanx-stats-table-text' => 'Текст',
 	'phalanx-stats-table-reason' => 'Причина',
+	'phalanx-stats-row' => "в $4, тип фільтру '''$1''' заблоковано '''$2''' на $3",
+	'phalanx-stats-row-per-wiki' => "користувач '''$2''' заблокований на '''$4''' з ID фільтром '''$3''' ($5) (тип: '''$1''')",
+	'phalanx-rule-log-name' => 'журнал правил Phalanx',
+	'phalanx-rule-log-header' => 'Це журнал змін правил phalanx.',
+	'phalanx-email-rule-log-name' => 'Журнал правил Phalanx для ел.пошти',
+	'phalanx-email-rule-log-header' => 'Це журнал змін правил Phalanx для ел.пошти.',
+	'phalanx-rule-log-add' => 'Правило Phalanx додано: $1',
+	'phalanx-rule-log-edit' => 'Правило Phalanx відредаговано: $1',
+	'phalanx-rule-log-delete' => 'Правило Phalanx вилучено: $1',
+	'phalanx-rule-log-details' => 'Фільтр: "$1", тип: "$2", причина: "$3"',
+	'phalanx-stats-table-wiki-id' => 'ID вікі',
+	'phalanx-stats-table-wiki-name' => 'Назва вікі',
+	'phalanx-stats-table-wiki-url' => 'URL-адреса вікі',
+	'phalanx-stats-table-wiki-last-edited' => 'Останнє редагування',
+	'phalanx-email-filter-hidden' => 'Фільтр пошти прихований. Ви не маєте дозвіл на перегляд тексту.',
+	'action-phalanx' => 'використовувати комплексний механізм захисту від спаму',
+	'right-phalanx' => 'Можна керувати блокуванням і спам-фільтрами',
+	'right-phalanxexempt' => 'Звільнено від правил Phalanx',
+	'right-phalanxemailblock' => 'Можна звернутися, переглянути і управляти ел.поштою на основі блоків',
 );
 
 /** Uzbek (oʻzbekcha)

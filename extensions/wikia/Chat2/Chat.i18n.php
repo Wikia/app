@@ -182,8 +182,9 @@ $messages['qqq'] = array(
 	'chat-chatconnect-log' => 'Name for Chat connection log entry',
 	'chat-chatconnect-log-entry' => 'Chat connection log entry description; $1 is the Chat page url, $2 is the user address',
 	'chat-contributions-ban-notice' => 'When going to a contributions page for a banned user, this message informs the reader that the user is currently banned from chat. It then prints the log data about the chat ban. 
-Paramaters:
-* $1 - User name is passed to the message for gender purposes.',
+
+Parameters:
+* $1 - User name is passed to the message for gender purposes',
 	'chat-browser-is-notsupported' => 'shown when user broser is not supported',
 	'chat-checkuser-join-action' => 'Shown in CheckUser extension for chat-join events',
 	'chat-status-away' => 'Display when user chnages his status to away',
@@ -1809,7 +1810,9 @@ $messages['lb'] = array(
 	'chat-default-topic' => 'Wëllkomm am $1-Chat',
 	'chat-private-messages' => 'Privat Messagen',
 	'chat-user-blocked' => '$1 huet $2 gespaart.',
+	'chat-user-allow' => '$1 huet $2 erlaabt.',
 	'chat-ban-modal-label-reason' => 'Grond',
+	'chat-ban-modal-button-ok' => 'De Benotzer spären',
 	'chat-ban-modal-button-cancel' => 'Ofbriechen',
 	'chat-log-reason-banchange' => 'Kee Grond uginn',
 	'chat-log-reason-banremove' => 'Kee Grond uginn',
@@ -1819,6 +1822,7 @@ $messages['lb'] = array(
 	'chat-edit-count' => '{{PLURAL:$1|Eng Ännerung|$1 Ännerungen}}',
 	'chat-member-since' => 'Member zënter $1',
 	'chat-user-menu-talk-page' => 'Diskussiounssäit',
+	'chat-user-menu-contribs' => 'Kontributiounen',
 	'chat-user-menu-private' => 'Private Message',
 	'chat-user-menu-private-block' => 'Privat Message spären',
 	'chat-user-menu-private-allow' => 'Privat Messagen erlaben',
@@ -3104,8 +3108,10 @@ $messages['tzm'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Kerm68
  * @author Steve.rusyn
+ * @author SteveR
  * @author Ua2004
  * @author Wildream
  */
@@ -3154,8 +3160,13 @@ $messages['uk'] = array(
 	'chat-ban-you-need-permission' => 'У вас немає статусу $1, який необхідний, щоб забанити користувача.',
 	'chat-missing-required-parameter' => '"$1" вимагається, але немає в запиті.',
 	'chat-err-already-chatmod' => 'Помилка: "$1" уже є в групі "$2".',
+	'chat-err-no-permission-to-add-chatmod' => 'Помилка: Ви не маєте дозволу для додавання до групи "$1"  цього користувача.',
+	'chat-userrightslog-a-made-b-chatmod' => '$1 присвоїв $2 статус модератора чату на цій вікі.',
 	'chat-err-invalid-username-chatmod' => 'Помилка: не вдалося знайти користувача "$1"',
 	'chat-you-are-banned' => 'Помилка доступу.',
+	'chat-you-are-banned-text' => 'На жаль, ви не маєте дозволу для спілкування на цій вікі.  Якщо ви думаєте, що це була помилка, або хочете, щоб заборона була переглянута, то, будь ласка, зверніться до адміністратора.',
+	'chat-room-is-not-on-this-wiki' => 'Чат-кімната, яку ви намагаєтеся ввести, мабуть, не існує на цій вікі.',
+	'chat-kick-log-reason' => "$1 заборонив чат на цій вікі. Будь ласка, зв'яжіться з ним для отримання додаткової інформації.",
 	'chat-live2' => 'Live! Чат',
 	'chat-start-a-chat' => 'Розпочати чат',
 	'chat-join-the-chat' => 'Приєднатися',
@@ -3178,9 +3189,16 @@ $messages['uk'] = array(
 	'group-chatmoderator-member' => 'Модератор чату',
 	'group-bannedfromchat' => 'Забанений у чаті',
 	'group-bannedfromchat-member' => 'Забанений у чаті',
+	'chat-ban-option-list' => '2 години:2 hours,1 день:1 day,3 дні:3 days,1 тиждень:1 week,2 тижні:2 weeks,1 місяць:1 month,3 місяці:3 months,6 місяців:6 months,1 рік:1 year,назавжди:infinite',
 	'chat-ban-log-change-ban-link' => 'змінити бан',
 	'chat-chatconnect-log' => "Журнал з'єднань у чаті",
+	'chat-chatconnect-log-entry' => 'підключений до $1 з адреси $2',
 	'chat-chatban-log' => 'Журнал банів у чаті',
+	'chat-chatbanadd-log-entry' => '$1 заборонено чат на $2, завершується $3',
+	'chat-chatbanremove-log-entry' => '$1 розблокований у чаті',
+	'chat-chatbanchange-log-entry' => 'змінено параметри заборони для $1 на термін $2, завершується $3',
+	'chat-contributions-ban-notice' => '{{GENDER:$1|Цей користувач заблокований|Ця користувачка заблокована}} на даний час у чаті. Ниже наведено останній запис із журналу блокувань у чаті:',
+	'chat-browser-is-notsupported' => 'Ваш браузер не підтримується. Для найкращого результату використовуйте <a href="http://community.wikia.com/wiki/Help:Supported_browsers">новий браузер</a>.',
 	'chat-checkuser-join-action' => 'Приєднатися',
 	'chat-status-away' => 'Відсутній',
 );

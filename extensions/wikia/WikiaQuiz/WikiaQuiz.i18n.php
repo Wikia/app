@@ -581,6 +581,16 @@ $messages['fa'] = array(
 	'wikiaquiz-game-finish-button' => 'پایان',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'wikiaquiz-desc' => 'Veitir ein lættan máta at upprætta og skipa spurnakappingum',
+	'wikiaquiz-createquiz-headline' => 'Upprætta spurnakapping',
+	'wikiaquiz-editquiz-headline' => 'Ritsjórna spurnakapping',
+	'wikiaquiz-title-label' => 'Heiti',
+);
+
 /** French (français)
  * @author Cmarget
  * @author Crochet.david
@@ -2042,17 +2052,30 @@ $messages['tl'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
+	'wikiaquiz-desc' => 'Забезпечує простий спосіб створення та керування вікторинами',
+	'wikiaquiz-createquiz-headline' => 'Створити вікторину',
+	'wikiaquiz-editquiz-headline' => 'Редагувати вікторину',
+	'wikiaquiz-createquizarticle-headline' => 'Створити питання та відповіді опитування',
+	'wikiaquiz-editquizarticle-headline' => 'Редагувати питання та відповіді вікторини',
 	'wikiaquiz-title-label' => 'Назва',
 	'wikiaquiz-titlescreentext-label' => 'Назва для відображення на екрані',
+	'wikiaquiz-fbrecommendationtext-label' => 'Опис рекомендацій Facebook',
+	'wikiaquiz-titlescreenimages-label' => 'Зображення основного екрану',
+	'wikiaquiz-moreinfoheading-label' => 'Додаткові відомості',
+	'wikiaquiz-requireemail-label' => 'Вимагається від гравців ввести адресу електронної пошти в кінці гри',
+	'wikiaquiz-moreinfolinks-label' => 'Подробиці у посиланнях',
 	'wikiaquiz-moreinfoarticle-label' => 'Стаття',
 	'wikiaquiz-moreinfolinktext-label' => 'Текст посилання',
 	'wikiaquiz-question-label' => 'Запитання',
 	'wikiaquiz-image-label' => "Зображення (необов'язково)",
 	'wikiaquiz-video-label' => "Відео (необов'язково, заміняє зображення)",
 	'wikiaquiz-explanation-label' => "Пояснення відповіді (необов'язково)",
+	'wikiaquiz-quiz-label' => 'Вікторина',
 	'wikiaquiz-questions-label' => 'Запитання',
 	'wikiaquiz-answers-label' => 'Відповіді',
 	'wikiaquiz-answer-label' => 'Відповідь',
@@ -2060,6 +2083,16 @@ $messages['uk'] = array(
 	'wikiaquiz-addnewitem-label' => 'Додати новий пункт',
 	'wikiaquiz-cancel-label' => 'Скасувати',
 	'wikiaquiz-publish-label' => 'Опублікувати',
+	'wikiaquiz-error-duplicate-quiz' => "Вікторина з таким ім'ям вже існує.",
+	'wikiaquiz-error-duplicate-question' => "Питання з таким ім'ям вже існує.",
+	'wikiaquiz-error-invalid-question' => 'Текст запитання є неприпустимим.',
+	'wikiaquiz-error-invalid-image' => 'Зображення є неприпустимим:$1',
+	'wikiaquiz-error-invalid-video' => 'Відео є неприпустимим:$1',
+	'wikiaquiz-error-missing-answers' => 'Потрібно вказати принаймні одну відповідь.',
+	'wikiaquiz-error-invalid-correct-answer' => 'Необхідно вказати одну правильну відповідь.',
+	'wikiaquiz-error-invalid-quiz' => 'Назва вікторини невірна.',
+	'wikiaquiz-error-invalid-article' => 'Код статті невірний.',
+	'wikiaquiz-error-invalid-article-with-details' => 'Стаття є неприпустима: $1',
 	'wikiaquiz-game-start-button' => 'Розпочати гру',
 	'wikiaquiz-game-cadence-3' => 'Приготуватися',
 	'wikiaquiz-game-cadence-2' => 'Увага',
@@ -2071,9 +2104,18 @@ $messages['uk'] = array(
 	'wikiaquiz-game-incorrect-label' => 'Невірно.',
 	'wikiaquiz-game-congratulations' => 'Чудова робота, $1!',
 	'wikiaquiz-game-congratulations-anon' => 'Чудова робота!',
+	'wikiaquiz-game-your-score' => 'ВАША ОЦІНКА',
 	'wikiaquiz-game-continue-button' => 'Продовжити',
 	'wikiaquiz-game-thanks' => 'Дякуємо за гру!',
 	'wikiaquiz-game-provide-email' => 'Будь ласка, введіть Вашу адресу електронної пошти',
+	'wikiaquiz-game-email-placeholder' => 'yourname@youremail.com',
+	'wikiaquiz-game-email-button' => 'Надіслати мені безкоштовний матеріал',
+	'wikiaquiz-game-email-valid-please' => 'Будь ласка, введіть справжню адресу електронної пошти.',
+	'wikiaquiz-game-email-token-mismatch' => 'Йой! Знак не збігається',
+	'wikiaquiz-game-email-subject' => 'Дякуємо за вашу заявку!',
+	'wikiaquiz-game-email-body' => 'Це підтвердження по електронній пошті. Ми отримали вашу заявку і повідомимо вам, якщо ви переможець!',
+	'wikiaquiz-game-email-error' => 'Виникла помилка під час надсилання на цю електронну пошту: $1',
+	'wikiaquiz-game-challenge' => 'Киньте виклик своїм друзям, щоб грати!',
 	'wikiaquiz-game-mute' => 'Без звуку',
 );
 

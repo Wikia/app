@@ -525,6 +525,7 @@ Suriin ang iyong pagbabaybay.',
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Wildream
  */
 $messages['uk'] = array(
@@ -536,6 +537,12 @@ $messages['uk'] = array(
 Перевірте правильність написання.',
 	'piggyback-wronguser' => "$1Це не ваше ім'я користувача",
 	'piggyback-loginprompt' => "Будь ласка, повторно введіть ім'я користувача та пароль.",
+	'piggyback-firstlogout' => 'Спочатку вийдіть з поверненням у свій обліковий запис.',
+	'piggyback-itisyou' => 'Ви не можете підключитися до самого себе.',
+	'piggyback-issysopto' => 'Ви не можете підключитися під користувача з правом на piggyback (підключення до інших).',
+	'action-piggyback' => 'увійти до системи як інший користувач',
+	'log-name-piggyback' => 'Журнал Piggyback',
+	'log-description-piggyback' => 'Цей журнал містить записи входів через облікові записи piggyback.',
 );
 
 /** Simplified Chinese (中文（简体）‎)

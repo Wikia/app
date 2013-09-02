@@ -1056,6 +1056,7 @@ Si eres el fundador o un administrador de este wiki, puedes cambiar este mensaje
  * @author KalmerE.
  */
 $messages['et'] = array(
+	'myhome-desc' => 'Isiklik avaleht sisse loginud kasutajale',
 	'myhome' => 'Wiki logi',
 	'wikiactivity' => 'Wiki logi',
 	'myhome-activity-more' => 'vaata lisa viimaseid toiminguid',
@@ -1066,20 +1067,77 @@ Kirjutamise alustamiseks klõpsa "" [[Special:CreatePage|Uus lehekülg]] ""!',
 	'myhome-watchlist-feed-empty' => 'Lehekülje jälgimisloendisse lisamiseks klõpsa lehekülje ülaosa menüüribal "{{int:watch}}" linki.
 Jälgimisloendit saad kasutada oma lemmik lehekülje või oma muudatuste jälgimiseks.',
 	'myhome-user-contributions-feed' => 'Kaastööd',
+	'myhome-hot-spots-feed' => 'Põnevamad teemad',
 	'myhome-hot-spots-feed-empty' => 'Wiki ootab sinu osalemist.
 Klõpsa "" [[Special:CreatePage|Uus lehekülg]] "" ja alusta kirjutamist!',
+	'myhome-hot-spots-newest' => 'Uued lehed vikis',
+	'tog-userlandingpage' => 'Sihtleht:',
+	'prefs-myhome' => 'Wiki logi',
 	'myhome-feed-newpage' => 'Uus lehekülg',
 	'myhome-feed-edit' => 'redigeeri',
+	'myhome-feed-move' => 'lehekülg teisaldatud',
 	'myhome-feed-talkpage' => 'Aruteluleht',
+	'myhome-feed-blogcomment' => 'blogi kommentaar',
 	'myhome-feed-delete' => 'kustutatud',
+	'myhome-feed-image' => 'pilt lisatud',
+	'myhome-feed-video' => 'lisatud video',
+	'myhome-feed-categorization' => 'kategoriseerimine',
+	'myhome-feed-created-by' => 'kasutaja $1 loonud',
+	'myhome-feed-added-by' => '$1 lisas',
+	'myhome-feed-edited-by' => '$1 redigeeris',
+	'myhome-feed-posted-by' => '$1 postitas',
 	'myhome-feed-comment-by' => 'kommentaar $1',
+	'myhome-feed-deleted-by' => '$1 kustutas',
+	'myhome-feed-moved-by' => '$1 teisaldas',
+	'myhome-feed-article-comment-created-by' => '$1 kommenteeris',
+	'myhome-feed-article-comment-edited-by' => '$1 redigeeris kommentaari',
+	'myhome-feed-by' => '$1 poolt',
+	'myhome-feed-diff-alt' => 'näita selle lehe muudatusi',
 	'myhome-feed-new-page-details' => 'Uus lehekülg',
 	'myhome-feed-summary-details' => 'Resümee:',
+	'myhome-feed-section-edit-details' => 'Redigeeritud sektsioon',
+	'myhome-feed-new-blog-post-details' => 'Uus blogi',
 	'myhome-feed-new-blog-comment-details' => 'Kommentaar',
 	'myhome-feed-new-article-comment-details' => 'Kommentaar',
 	'myhome-feed-move-details' => 'Nimeta ümber',
 	'myhome-feed-redirect-details' => 'Ümbersuunamine',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Lisatud foto|Lisatud fotod}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Lisatud video|Lisatud videod}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Lisatud kategooria|Lisatud kategooriad}}',
+	'myhome-user-contributions-empty' => 'Võid osaleda selle viki tegemisel, klõpsates ükskõik mis lehel "{{int:editthispage}}"  ning lisades mida sa tead või parandada teksti sisu.
+Kõik saavad redigeerida, lisada informatsiooni või parandada vigu.
+Viki on loodud kogukonna poolt. Klõpsates redigeerimise nuppu, ühined kogukonnaga.
+Osale!',
+	'myhome-hot-spots-number-of-editors' => 'redigeerijad',
+	'myhome-log-in' => '<center>Viki logi funktsioon on saadaval ainult juhul, kui oled sisse loginud.<br /><br /><big>"\'[{{fullurl:Special:Signup|$1}} Logi sisse, et näha seda lehte!]"\'</big></center>',
+	'myhome-switch-to-monaco' => 'Wiki aktiivsuse funktsioon on saadaval ainult juhul, kui kasutad Wikia välimuse kesta.
+Kui soovid Viki logi näha ja muuta välimuse kesta, külasta "\'[[Special:Preferences|oma eelistuste lehte]]"\'.',
+	'myhome-namespace-blog' => 'Blogi',
+	'myhome-community-corner-header' => 'Kogukonna teade',
+	'oasis-myhome-community-corner-edit' => 'Redigeeri sõnumit &gt;',
+	'myhome-community-corner-edit' => 'redigeeri teadet',
+	'community-corner' => '""Tere tulemast!"\'
+
+See leht aitab teil vikis toimuvaga kursis püsida vikis toimuvaga. 
+
+Viki asutaja ja admin saavad siin jagada kogukonnale teavet  toimuvast.
+Näiteks:
+
+* Korraldame vikis mingi teema arendamist.
+
+* Tutvustame mõnda põnevat või head uut lehte, mida peaks igaüks nägema.
+
+* Kaasata inimesi arutellu, mingisse konkreetsesse teemasse.
+
+* Anda redigeerijatele võimaluse näidata, kes on lisanud midagi erilist vikisse.
+
+* Või lihtsalt postidada mõned julgustavad sõnad!',
+	'myhome-hot-spots-definition' => 'Lehed, enim redigeerijaid {{PLURAL:$1|viimasel|$1 viimastel}} {{PLURAL:$1|päeval|$1 päevadel}}.',
+	'myhome-default-view-checkbox' => 'Tee $1 minu vaikevalikuks',
+	'myhome-default-view-success' => 'See on nüüd vaikevalik',
+	'tooltip-pt-myhome' => 'Suundu Viki logisse',
+	'activityfeed' => 'Aktiivsuse kanal',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|üks sõnum|$1 sõnumit}}',
 );
 
 /** Persian (فارسی)
@@ -2838,7 +2896,7 @@ Clique '''[[Special:CreatePage|Página nova]]''' para começar a escrever!",
 	'myhome-feed-new-blog-post-details' => 'Blogue novo',
 	'myhome-feed-new-blog-comment-details' => 'Comentário',
 	'myhome-feed-new-article-comment-details' => 'Comentário',
-	'myhome-feed-move-details' => 'Nome alterado',
+	'myhome-feed-move-details' => 'Renomeado',
 	'myhome-feed-redirect-details' => 'Redirecionamento',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Adicionou fotografia|Adicionou fotografias}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Adicionou vídeo|Adicionou vídeos}}',
@@ -2971,9 +3029,11 @@ Se você é o fundador ou um administrador desta wiki, pode mudar esta mensagem 
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'myhome-desc' => "'Na pàgena prengèpale private pe le utinde trasute",
 	'myhome' => 'Pàgena meje',
 	'wikiactivity' => "Attivita d'a Uicchi",
 	'myhome-activity-more' => "'ndruche cchiù attività recende",
+	'myhome-activity-feed' => "Feed de l'attività",
 	'prefs-myhome' => 'Pàgena meje',
 	'myhome-feed-newpage' => 'pàgena nova',
 	'myhome-feed-edit' => 'cange',
@@ -3002,6 +3062,8 @@ $messages['roa-tara'] = array(
 	'myhome-namespace-blog' => 'Blog',
 	'oasis-myhome-community-corner-edit' => "cange 'u messagge &gt;",
 	'myhome-community-corner-edit' => "cange 'u messagge",
+	'activityfeed' => "Feed de l'attività",
+	'wiki-activity-message-wall-messages-count' => "{{PLURAL:$1|'nu messàgge|$1 messàgge}}",
 );
 
 /** Russian (русский)
@@ -3459,6 +3521,7 @@ $messages['tly'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Incelemeelemani
  * @author Joseph
  */
 $messages['tr'] = array(
@@ -3498,7 +3561,7 @@ $messages['tr'] = array(
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Eklenen kategori|Eklenen kategoriler}}',
 	'myhome-hot-spots-number-of-editors' => 'editörler',
 	'myhome-namespace-blog' => 'Günlük',
-	'myhome-community-corner-header' => 'Topluluk Köşesi', # Fuzzy
+	'myhome-community-corner-header' => 'Topluluk Mesajları',
 	'myhome-community-corner-edit' => 'iletiyi değiştir',
 	'myhome-hot-spots-definition' => 'Son $1 günde en fazla editöre sahip sayfalar', # Fuzzy
 	'myhome-default-view-checkbox' => '$1 sayfasını varsayılan görünümüm yap',
@@ -3599,6 +3662,7 @@ $messages['tzm'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Prima klasy4na
  * @author Wildream
  * @author Тест
@@ -3619,19 +3683,26 @@ $messages['uk'] = array(
 	'myhome-hot-spots-feed-empty' => "Ця вікі чекає вашого внеску!
 Натисніть на кнопку '''[[Special:CreatePage|Нова сторінка]]''', щоб почати редагування!",
 	'myhome-hot-spots-newest' => 'Нові сторінки у вікі',
+	'tog-userlandingpage' => 'Цільова сторінка:',
 	'prefs-myhome' => 'Моя домашня сторінка',
 	'myhome-feed-newpage' => 'нова сторінка',
 	'myhome-feed-edit' => 'редагування',
 	'myhome-feed-move' => 'переміщено сторінку',
 	'myhome-feed-talkpage' => 'сторінка обговорення',
+	'myhome-feed-blogcomment' => 'коментарі в блозі',
 	'myhome-feed-delete' => 'вилучено',
 	'myhome-feed-image' => 'додано зображення',
+	'myhome-feed-video' => 'додано відео',
 	'myhome-feed-categorization' => 'категоризація',
 	'myhome-feed-created-by' => 'створено користувачем $1',
 	'myhome-feed-added-by' => 'додано користувачем $1',
 	'myhome-feed-edited-by' => 'відредаговано користувачем $1',
+	'myhome-feed-posted-by' => 'опубліковано від $1',
+	'myhome-feed-comment-by' => 'коментар від $1',
 	'myhome-feed-deleted-by' => 'вилучено користувачем $1',
 	'myhome-feed-moved-by' => 'переміщено $1',
+	'myhome-feed-article-comment-created-by' => 'новий коментар від $1',
+	'myhome-feed-article-comment-edited-by' => 'відредагований коментар від $1',
 	'myhome-feed-by' => '$1',
 	'myhome-feed-diff-alt' => 'показати мені зміни на цій сторінці',
 	'myhome-feed-new-page-details' => 'Нова сторінка',
@@ -3643,15 +3714,38 @@ $messages['uk'] = array(
 	'myhome-feed-move-details' => 'Перейменовано',
 	'myhome-feed-redirect-details' => 'Перенаправлення',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Додано зображення|Додані зображення}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Додано відео|Додані відео}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Додано категорію|Додані категорії}}',
+	'myhome-user-contributions-empty' => 'Ви можете взяти участь у редагуванні вікі, якщо натиснете посилання „{{int:editthispage}}“ на будь-якій сторінці. Будь-хто може робити зміни, додавати інформацію і виправляти помилки. Вікі створена спільнотою учасників, і ви станете частиною цієї спільноти, одного разу натиснувши на посилання редагування. Спробуйте самі!',
 	'myhome-hot-spots-number-of-editors' => 'редактори',
 	'myhome-log-in' => "<center>Можливості \"Моєї домашньої сторінки\" доступні тільки після входу в систему.<br /><br /><big>'''[{{fullurl:Special:Signup|\$1}} Будь ласка, увійдіть, щоб побачити цю сторінку!]'''</big></center>",
+	'myhome-switch-to-monaco' => "Сторінка вікі-діяльності доступна тільки при використанні оболонки Вікія.
+Якщо ви хочете побачити особистий кабінет, будь ласка, відвідайте сторінку '''[[Special:Preferences|ваших налаштувань]]''' і змініть оболонку.",
 	'myhome-namespace-blog' => 'Блог',
 	'myhome-community-corner-header' => 'Повідомлення спільноти',
+	'oasis-myhome-community-corner-edit' => 'редагувати повідомлення &gt;',
 	'myhome-community-corner-edit' => 'редагувати повідомлення',
+	'community-corner' => "'' 'Ласкаво просимо в свій особистий кабінет!'''
+
+Ця сторінка допоможе вам бути в курсі останніх подій що відбуваються на вікі.
+
+Якщо ви засновник або адміністратор цієї вікі, то ви можете змінити це повідомлення на будь-яке інше, що повідомляє спільноті учасників про найважливіші події цього сайту. Наприклад, ви можете:
+
+* Організувати розвиток окремих областей вікі у вигляді проекту.
+
+* Відобразити деякі нові сторінки, які має побачити кожен.
+
+* Залучити учасників до обговорень подій, які відбуваються на сайті.
+
+* Звернути увагу на учасника, який зробив певний внесок у розвиток вікі.
+
+* Або написати кілька слів підтримки для редакторів!",
 	'myhome-hot-spots-definition' => 'Сторінки з найбільшою кількістю редакторів за {{PLURAL:$1|останній день|останні $1 дні|останніх $1 днів}}.',
+	'myhome-default-view-checkbox' => 'Зробити $1 моїм типовим поданням',
+	'myhome-default-view-success' => 'Гаразд, це типове подання зараз',
 	'tooltip-pt-myhome' => 'На мою домашню сторінку',
 	'activityfeed' => 'Останні зміни',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|одне повідомлення|$1 повідомлення|$1 повідомлень}}',
 );
 
 /** Vietnamese (Tiếng Việt)

@@ -209,6 +209,7 @@ $messages['es'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|página|páginas}})',
 	'tagsreportpagesfound' => '<strong>$1</strong> {{PLURAL:$1|página encontrada|páginas encontradas}}, que contengan alguna etiqueta especial (dpl, youtube, etc.)',
 	'tagsreportgenerated' => 'Generado el $1 a $2',
+	'tagsreportpageremoved' => 'La página #$1 ha sido borrada',
 );
 
 /** Finnish (suomi)
@@ -256,6 +257,7 @@ $messages['gl'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|páxina|páxinas}})',
 	'tagsreportpagesfound' => '{{PLURAL:$1|Atopouse <strong>$1</strong> páxina que contén|Atopáronse <strong>$1</strong> páxinas que conteñen}} unha etiqueta especial (DPL, YouTube etc.)',
 	'tagsreportgenerated' => 'Xerado o $1 ás $2',
+	'tagsreportpageremoved' => 'A páxina nº$1 foi eliminada',
 );
 
 /** Hausa (Hausa)
@@ -375,6 +377,7 @@ $messages['lb'] = array(
 	'tagsreportgo' => 'Weisen',
 	'tagsreportnoresults' => 'Näischt fonnt',
 	'tagsreportpages' => '(<strong>$1</strong>  {{PLURAL:$1|Säit|Säiten}})',
+	'tagsreportpageremoved' => "D'Säit #$1 gouf ewechgeholl",
 );
 
 /** Latgalian (latgaļu)
@@ -398,6 +401,7 @@ $messages['mk'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|страница|страници}})',
 	'tagsreportpagesfound' => '{{PLURAL:$1|Пронајдена е|Пронајдени се}} <strong>$1</strong> {{PLURAL:$1|страница што содржи|страници што содржат}} специјална ознака (DPL, YouTube и тн.)',
 	'tagsreportgenerated' => 'Создадено на $1 во $2 ч.',
+	'tagsreportpageremoved' => 'Страницата бр. $1 е отстранета',
 );
 
 /** Mongolian (монгол)
@@ -405,6 +409,13 @@ $messages['mk'] = array(
  */
 $messages['mn'] = array(
 	'tagsreportgo' => 'Үзүүлэх',
+);
+
+/** Marathi (मराठी)
+ * @author V.narsikar
+ */
+$messages['mr'] = array(
+	'tagsreportpageremoved' => 'पान #$1 हे वगळल्या गेले आहे',
 );
 
 /** Malay (Bahasa Melayu)
@@ -421,6 +432,7 @@ $messages['ms'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> laman)',
 	'tagsreportpagesfound' => '<strong>$1</strong> laman yang mengandungi tag khas (DPL, YouTube, dsb.) dijumpai',
 	'tagsreportgenerated' => 'Dijana pada $1, $2',
+	'tagsreportpageremoved' => 'Halaman #$1 telah dibuang',
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -462,6 +474,7 @@ $messages['nl'] = array(
 	'tagsreportpages' => "(<strong>$1</strong> {{PLURAL:$1|pagina|pagina's}})",
 	'tagsreportpagesfound' => "Er {{PLURAL:$1|is <strong>$1</strong> pagina|zijn <strong>$1</strong> pagina's}} aangetroffen die een special label {{PLURAL:$1|bevat|bevatten}} (DPL, YouTube, enzovoort).",
 	'tagsreportgenerated' => 'Aangemaakt op $1 om $2',
+	'tagsreportpageremoved' => 'Pagina #$1 is verwijderd',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -486,6 +499,7 @@ $messages['pl'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|strona|strony|stron}})',
 	'tagsreportpagesfound' => 'Znaleziono <strong>$1</strong> {{PLURAL:$1|stronę|strony|strony}}, gdzie znajduje się znacznik specjalny (DPL, YouTube, etc.)',
 	'tagsreportgenerated' => 'Utworzono $1 o $2',
+	'tagsreportpageremoved' => 'Strona #$1 została usunięta',
 );
 
 /** Piedmontese (Piemontèis)
@@ -564,6 +578,7 @@ $messages['roa-tara'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pàgene|pàggene}})',
 	'tagsreportpagesfound' => 'Acchiate <strong>$1</strong> {{PLURAL:$1|pàgene|pàggene}}, ca tènene tag speciale (DPL, YouTube, etc.)',
 	'tagsreportgenerated' => "Generate 'u $1 a le $2",
+	'tagsreportpageremoved' => "'A pàgene #$1 ha state luate",
 );
 
 /** Russian (русский)
@@ -617,6 +632,7 @@ $messages['sv'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|sida|sidor}})',
 	'tagsreportpagesfound' => 'Hittade <strong>$1</strong> {{PLURAL:$1|sida|sidor}}, som innehåller speciella taggar (DPL, YouTube, etc.)',
 	'tagsreportgenerated' => 'Skapad den $1, $2',
+	'tagsreportpageremoved' => 'Sidan #$1 har tagits bort',
 );
 
 /** Swahili (Kiswahili)
@@ -654,6 +670,7 @@ $messages['tl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Prima klasy4na
  * @author Тест
  */
@@ -668,6 +685,7 @@ $messages['uk'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|сторінка|сторінки|сторінок}})',
 	'tagsreportpagesfound' => 'Знайдено <strong>$1</strong> {{PLURAL:$1|сторінку|сторінки|сторінок}}, що містять спеціальні теги (DPL, youtube, і т.д.)',
 	'tagsreportgenerated' => 'Створено $1 о $2',
+	'tagsreportpageremoved' => 'Сторінка #$1 вже вилучена',
 );
 
 /** Veps (vepsän kel’)

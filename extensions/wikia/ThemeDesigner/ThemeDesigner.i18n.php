@@ -91,6 +91,7 @@ $messages['qqq'] = array(
 	'themedesigner-history-item' => 'Parameters:
 * $1 is "how long ago"
 * $2 is the author name',
+	'themedesigner-wodmark-preview' => '{{Identical|Preview}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -1689,7 +1690,8 @@ $messages['pt-br'] = array(
 	'themedesigner-pick-an-image' => 'Escolher uma imagem',
 	'themedesigner-dont-use-a-background' => 'Não usar imagem de fundo',
 	'themedesigner-upload-your-own' => 'Faça o upload de uma',
-	'themedesigner-button-upload' => 'Carregar',
+	'themedesigner-button-upload' => 'Enviar',
+	'themedesigner-button-upload-wordmark' => 'Enviar',
 	'themedesigner-rules-background' => 'jpg, gif ou png. Máximo: {{PLURAL:$1|$1 kilobyte|$1 kilobytes}}',
 	'themedesigner-default' => 'Padrão',
 	'themedesigner-font' => 'fonte',
@@ -1997,24 +1999,64 @@ $messages['tly'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Тест
  */
 $messages['uk'] = array(
+	'themedesigner-or' => 'або',
+	'themedesigner-desc' => 'Дозволяє адміністраторам вікі проектувати тему для вікі',
+	'themedesigner-title' => 'Дизайнер тем Вікія',
+	'themedesigner-background' => 'Тло',
 	'themedesigner-page' => 'Сторінка',
 	'themedesigner-color' => 'колір',
+	'themedesigner-graphic' => 'графіка',
 	'themedesigner-buttons' => 'кнопки',
 	'themedesigner-links' => 'посилання',
 	'themedesigner-header' => 'заголовок',
+	'themedesigner-text-wordmark' => 'Текстовий логотип',
+	'themedesigner-graphic-wordmark' => 'Графічний логотип',
 	'themedesigner-small' => 'Малий',
 	'themedesigner-medium' => 'Середній',
 	'themedesigner-large' => 'Великий',
+	'themedesigner-tile-background' => 'плитка',
+	'themedesigner-fix-background' => 'виправити',
+	'themedesigner-transparency' => 'прозорість',
+	'themedesigner-tab-theme' => 'Тема',
+	'themedesigner-tab-customize' => 'Налаштувати',
+	'themedesigner-tab-wordmark' => 'Логотип',
 	'themedesigner-preview-mode' => 'Режим попереднього перегляду...',
 	'themedesigner-previous-versions' => 'Попередні версії',
+	'themedesigner-button-save-im-done' => 'Зберегти, все завершено',
 	'themedesigner-button-cancel' => 'Скасувати',
+	'themedesigner-pick-a-color' => 'Вибрати колір',
+	'themedesigner-enter-your-own' => 'Введіть свій власний',
+	'themedesigner-color-name-or-hex-code' => 'Назва кольору або шістнадцятковий код',
+	'themedesigner-button-ok' => 'Гаразд',
+	'themedesigner-pick-an-image' => 'Вибрати зображення',
+	'themedesigner-dont-use-a-background' => 'Не використовуйте тло',
+	'themedesigner-upload-your-own' => 'Завантажити свій власний',
+	'themedesigner-button-upload' => 'Вивантажити',
+	'themedesigner-button-upload-wordmark' => 'Вивантажити',
+	'themedesigner-rules-background' => 'jpg, gif або png. Обмеження до {{PLURAL:$1|$1 кілобайт|$1 кілобайти|$1 кілобайтів}}',
+	'themedesigner-default' => 'Стандартна',
 	'themedesigner-font' => 'шрифт',
 	'themedesigner-size' => 'розмір',
 	'themedesigner-button-save' => 'Зберегти',
+	'themedesigner-upload-a-graphic' => 'вивантажити малюнок',
+	'themedesigner-rules-wordmark' => 'Вивантажити файли .png розміром 250 х 65 пікселів або меншим.',
+	'themedesigner-rules-favicon' => 'Вивантажте файл .ico розміром 16х16 пікселів. Фавікон - це крихітний значок, що відображається зліва від вашого wiki у адресному рядку переглядача.',
+	'themedesigner-rules-favicon-learn-more-link' => 'Дізнатися більше.',
+	'themedesigner-dont-use-a-graphic' => 'вилучити',
+	'themedesigner-history-item' => '$1 від $2',
 	'themedesigner-button-change-text' => 'Змінити текст',
+	'themedesigner-reason' => 'Дизайнер тем - зберегти зроблене $1',
+	'themedesigner-size-error' => 'Невірний розмір файлу',
+	'themedesigner-dimensions-error' => 'Зображення перевищує обмеження розмірів',
+	'themedesigner-type-error' => 'Хибний тип файлу',
+	'themedesigner-unknown-error' => 'Сталася помилка, на жаль, ми не змогли ідентифікувати його, будь-ласка, спробуйте знову',
+	'themedesigner-manual-upload-error' => 'Використовувати Дизайнер тем, щоб завантажити логотип або тло вікі',
+	'themedesigner-favicon-heading' => 'Фавікон',
+	'themedesigner-wodmark-preview' => 'Попередній перегляд',
 );
 
 /** Vietnamese (Tiếng Việt)

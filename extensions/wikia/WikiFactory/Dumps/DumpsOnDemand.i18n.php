@@ -803,6 +803,7 @@ $messages['tl'] = array(
 
 /** Ukrainian (українська)
  * @author Alex Khimich
+ * @author Andriykopanytsia
  * @author Prima klasy4na
  * @author Ua2004
  * @author Тест
@@ -820,6 +821,7 @@ $messages['uk'] = array(
 	'dump-database-request-already-submitted' => 'Запит на створення дампа було надіслано недавно (менше 7 днів тому)',
 	'dump-database-request-requested' => 'Запит на створення дампу бази даних надіслано.',
 	'dump-database-info-more' => 'Будь ласка, ознайомтесь з детальнішою інформацією <a href="http://community.wikia.com/wiki/Help:Database_download">тут</a>',
+	'dump-database-last-unknown' => 'Невідомо',
 );
 
 /** Simplified Chinese (中文（简体）‎)

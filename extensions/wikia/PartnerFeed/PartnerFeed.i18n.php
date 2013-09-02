@@ -707,6 +707,7 @@ $messages['tl'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Andriykopanytsia
  * @author Ua2004
  * @author Тест
  */
@@ -730,6 +731,7 @@ $messages['uk'] = array(
 	'feed-title-hot-content' => 'Топ контент - $1',
 	'feed-title-blogcomments' => 'Коментарі до $1',
 	'feed-title-recentchanges' => 'Нові редагування',
+	'partner-feed-error-no-blogpost-found' => '<b>Помилка:</b> Повідомлення в блозі  $1  не існує.',
 );
 
 /** Simplified Chinese (中文（简体）‎)
