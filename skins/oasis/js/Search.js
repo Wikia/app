@@ -1,9 +1,11 @@
 WikiaSearchApp = (function() {
 
-	function WikiaSearchApp(id, positionRight) {
+	function WikiaSearchApp(id) {
 		this.id = id;
-		this.positionRight = positionRight;
 		this.searchForm = $(id);
+		// make autocomplete sticked to right, but only under inputbox (not button on it's right)
+		// 4 is border + padding of autocomplete container
+		this.positionRight = this.searchForm.innerWidth() - this.searchForm.children('input:first-child').outerWidth() + 4;
 		this.searchField = this.searchForm.children('input[placeholder]');
 
 		// RT #141437 - hide HOME_TOP_RIGHT_BOXAD when showing search suggestions
@@ -72,7 +74,7 @@ WikiaSearchApp = (function() {
 					maxHeight: 1000,
 					selectedClass: 'selected',
 					width: '100%',
-					positionRight: this.positionRight,
+					positionRight: this.positionRight + 'px',
 					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
 				});
 			}, this));
@@ -82,6 +84,6 @@ WikiaSearchApp = (function() {
 })();
 
 $(function() {
-	new WikiaSearchApp('#WikiaSearch', '55px');
-	new WikiaSearchApp('#HeaderWikiaSearch', '57px');
+	new WikiaSearchApp('#WikiaSearch');
+	new WikiaSearchApp('#HeaderWikiaSearch');
 });
