@@ -47,6 +47,8 @@ class GameGuidesController extends WikiaController {
 	public function listWikis(){
 		wfProfileIn( __METHOD__ );
 
+		Wikia::log( __METHOD__, '', '', true );
+
 		$this->response->setFormat( 'json' );
 
 		$limit = $this->request->getInt( 'limit', null );
@@ -71,6 +73,8 @@ class GameGuidesController extends WikiaController {
 	public function listWikiContents(){
 		wfProfileIn( __METHOD__ );
 
+		Wikia::log( __METHOD__, '', '', true );
+
 		$this->response->setFormat( 'json' );
 
 		$result = $this->mModel->getWikiContents();
@@ -94,6 +98,8 @@ class GameGuidesController extends WikiaController {
 	 */
 	public function listCategoryContents(){
 		wfProfileIn( __METHOD__ );
+
+		Wikia::log( __METHOD__, '', '', true );
 
 		$this->response->setFormat( 'json' );
 
@@ -123,6 +129,8 @@ class GameGuidesController extends WikiaController {
 	 */
 	public function search(){
 		wfProfileIn( __METHOD__ );
+
+		Wikia::log( __METHOD__, '', '', true );
 
 		$this->response->setFormat( 'json' );
 
