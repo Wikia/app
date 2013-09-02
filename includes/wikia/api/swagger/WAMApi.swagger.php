@@ -23,13 +23,13 @@ use Swagger\Annotations as SWG;
  * 			name="max_date",
  * 			type="int",
  * 			required=true,
- * 			description="Timestamp for maximal date of wam index"
+ * 			description="The Unix timestamp (in seconds) for maximal date of index"
  * 		)
  * 		@SWG\Property(
  * 			name="min_date",
  * 			type="int",
  * 			required=true,
- * 			description="Timestamp for minimal date of wam index"
+ * 			description="The Unix timestamp (in seconds) for minimal date of index"
  * 		)
  *
  * @SWG\Model( id="WAMResultSet" )
