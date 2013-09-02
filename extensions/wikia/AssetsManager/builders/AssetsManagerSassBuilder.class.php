@@ -88,6 +88,11 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			}
 		}
 
+		if ($hasErrors) {
+			wfProfileOut(__METHOD__);
+			throw new Exception($this->mContent);
+		}
+
 		wfProfileOut(__METHOD__);
 
 		return $this->mContent;

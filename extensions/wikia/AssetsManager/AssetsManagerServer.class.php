@@ -57,8 +57,20 @@ class AssetsManagerServer {
 
 		// BugId:31327
 		$headers['Vary'] = $builder->getVary();
-
 		$cacheDuration = $builder->getCacheDuration();
+
+		// render the response
+		try {
+			$content = $builder->getContent();
+		} catch(Exception $e) {
+			header('HTTP/1.1 503');
+			$content = $e->getMessage();
+			$cacheDuration = [
+				'server' => 10,
+				'client' => 0,
+			];
+		}
+
 		if($cacheDuration > 0) {
 			$headers['Expires'] = gmdate('D, d M Y H:i:s \G\M\T', strtotime($cacheDuration['server'] . ' seconds'));
 			$headers['Cache-Control'] = $builder->getCacheMode() . ', max-age=' . $cacheDuration['server'];
@@ -71,6 +83,6 @@ class AssetsManagerServer {
 			header($k . ': ' . $v);
 		}
 
-		echo $builder->getContent();
+		echo $content;
 	}
 }
