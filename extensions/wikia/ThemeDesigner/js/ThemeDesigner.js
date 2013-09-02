@@ -193,7 +193,9 @@ var ThemeDesigner = {
 			if (value.length > 0) {
 				ThemeDesigner.set("wordmark-text", value);
 			} else {
-				alert($.msg('Empty Wordmark is not supported!'));
+				$.getMessages('ThemeDesigner', function() {
+					alert($.msg('themedesigner-wordmark-preview-error'));
+				});
 			}
 
 		});

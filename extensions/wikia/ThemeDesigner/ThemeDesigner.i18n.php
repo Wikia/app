@@ -57,7 +57,8 @@ $messages['en'] = array(
 	'themedesigner-manual-upload-error' => 'Use Theme Designer to upload wordmark or wiki background',
         'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Preview',
-	'themedesigner-wordmark-preview-error' => 'Empty Wordmark is not supported!',
+	'themedesigner-wordmark-preview-error' => 'Oops! The name of the wiki can\'t be blank,
+please enter the name of the wiki to save.',
 );
 
 /** Message documentation (Message documentation)
