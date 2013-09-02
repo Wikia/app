@@ -33,7 +33,7 @@ define('tables', ['events', 'track', 'wikia.window', 'jquery'], function(ev, tra
 			}
 
 			return correctRows > Math.floor(trLength/2);
-		}).addClass('infobox')
+		}).addClass('infobox');
 
 
 		tables.filter(function(index, element){
@@ -58,8 +58,11 @@ define('tables', ['events', 'track', 'wikia.window', 'jquery'], function(ev, tra
 						table.wrap('<div class="bigTable" />');
 					}else if(!isBig && isWrapped){
 						table = table.unwrap()[0];
-						table.wkScroll.destroy();
-						table.wkScroll = null;
+
+						if(table.wkScroll) {
+							table.wkScroll.destroy();
+							table.wkScroll = null;
+						}
 					}
 				}
 			});
