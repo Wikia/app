@@ -26,6 +26,7 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'dump-database-last-unknown' => 'Used when the time of the last database dump request is not known, or if there have been no requests'
 );
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
