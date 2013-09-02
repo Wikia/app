@@ -2,15 +2,15 @@
 @import "./skins/oasis/css/mixins/box-sizing";
 
 $alter-background-color: mix($color-page, #000, 90%);
-$page-width: 1024px;
+$page-width: 1030px;
 
 body {
 	background-image: none;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	text-rendering: optimizeLegibility;
 	font-size: 14px;
 	line-height: 22px;
 	padding-bottom: 0;
+	text-rendering: optimizeLegibility;
 }
 
 h1 {
@@ -189,7 +189,7 @@ h2 {
 			}
 		}
 
-			&:last-child {
+		&:last-child {
 			border-left: 1px solid $color-page-border;
 		}
 
@@ -238,11 +238,11 @@ h2 {
 }
 
 .styleguide-subnav {
+	@include box-sizing();
 	border: 1px solid $color-page-border;
 	float: left;
 	margin-right: 60px;
 	width: 270px;
-	@include box-sizing();
 
 	li {
 		border-top: 1px solid $color-page-border;
@@ -267,10 +267,12 @@ h2 {
 
 	}
 }
+
 .components {
 	float: left;
 	width: 694px
 }
+
 .component-item {
 	padding-bottom: 30px;
 
