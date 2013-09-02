@@ -44,7 +44,7 @@ use Swagger\Annotations as SWG;
  * 					paramType="query",
  * 					required="true",
  * 					allowMultiple="false",
- * 					dataType="String",
+ * 					dataType="string",
  * 					defaultValue=""
  * 				)
  * 			)
