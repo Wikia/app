@@ -2065,7 +2065,7 @@ class Wikia {
 					$app->wg->Out->addStyle( $src );
 					break;
 				case AssetsManager::TYPE_JS:
-					$app->wg->Out->addScript( "<script type=\"{$app->wg->JsMimeType}\" src=\"{$src}\"></script>" );
+					$app->wg->Out->addScript( "<script src=\"{$src}\"></script>" );
 					break;
 			}
 		}

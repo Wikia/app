@@ -110,14 +110,14 @@ class SpecialStyleguideDataModel {
 	public function getPartOfSectionData( $sectionNames ) {
 		$results = [];
 		$data = $this->getSectionData();
-		$itterations = count( $sectionNames );
+		$iterations = count( $sectionNames );
 		
 		foreach( $sectionNames as $subSection ) {
-			if( $itterations === 1 ) {
+			if( $iterations === 1 ) {
 				$results = isset( $data[$subSection] ) ? $data[$subSection] : [];
 			} else {
 				$data = isset( $data[$subSection] ) ? $data[$subSection] : [];
-				$itterations--;
+				$iterations--;
 			}
 		}
 		

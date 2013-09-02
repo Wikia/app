@@ -93,10 +93,10 @@ class StyleguideComponents {
 	 */
 	public function getComponentDocumentationFileFullPath( $name ) {
 		return $this->uiFactory->getComponentsDir() .
-		$name .
-		DIRECTORY_SEPARATOR .
-		$name .
-		self::DOCUMENTATION_FILE_SUFFIX;
+			$name .
+			DIRECTORY_SEPARATOR .
+			$name .
+			self::DOCUMENTATION_FILE_SUFFIX;
 	}
 
 	/**
@@ -175,11 +175,11 @@ class StyleguideComponents {
 	 */
 	public static function getComponentMessagesFileFullPath( $name ) {
 		return \Wikia\UI\Factory::getComponentsDir() .
-		$name .
-		DIRECTORY_SEPARATOR .
-		$name .
-		'.' .
-		self::MESSAGES_FILE_SUFFIX;
+			$name .
+			DIRECTORY_SEPARATOR .
+			$name .
+			'.' .
+			self::MESSAGES_FILE_SUFFIX;
 	}
 
 	/**
