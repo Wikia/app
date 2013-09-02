@@ -10,6 +10,7 @@ class GameGuidesController extends WikiaController {
 	const API_REVISION = 6;
 	const API_MINOR_REVISION = 5;
 	const APP_NAME = 'GameGuides';
+	const SKIN_NAME = 'wikiamobile';
 	const SECONDS_IN_A_DAY = 86400; //24h
 	const SIX_HOURS = 21600; //6h
 	const LIMIT = 25;
