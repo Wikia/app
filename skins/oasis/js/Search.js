@@ -40,8 +40,6 @@ WikiaSearchApp = (function() {
 		$.when(
 				$.loadJQueryAutocomplete()
 			).then($.proxy(function() {
-				console.log('init autocomplete for: ' + this.id);
-
 				this.searchField.autocomplete({
 					serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
 					onSelect: $.proxy(function(value, data, event) {
