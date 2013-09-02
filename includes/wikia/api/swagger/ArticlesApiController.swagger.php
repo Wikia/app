@@ -285,7 +285,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="The integer namespace values to filter the results by, comma-separated",
+ * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -321,7 +321,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="The integer namespace values to filter the results by, comma-separated",
+ * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -377,7 +377,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="The integer namespace values to filter the results by, comma-separated",
+ * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -415,7 +415,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="The integer namespace values to filter the results by, comma-separated",
+ * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -469,7 +469,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="The integer namespace values to filter the results by, comma-separated",
+ * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
