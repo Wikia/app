@@ -14,7 +14,7 @@ use Swagger\Annotations as SWG;
  *			name="user_id",
  *			type="int",
  *			required="true",
- *			description="Wikia user ID"
+ *			description="An internal identification number for User"
  *		)
  *		@SWG\Property(
  *			name="title",

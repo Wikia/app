@@ -58,7 +58,7 @@ use Swagger\Annotations as SWG;
  * 			name="id",
  * 			type="int",
  * 			required="true",
- * 			description="Wikia ID number"
+ * 			description="An internal identification number for Wikia"
  * 		)
  * 		@SWG\Property(
  * 			name="name",
@@ -129,7 +129,7 @@ use Swagger\Annotations as SWG;
  * 			name="id",
  * 			type="int",
  * 			required="true",
- * 			description="Wikia ID number"
+ * 			description="An internal identification number for Wikia"
  * 		)
  * 		@SWG\Property(
  * 			name="name",
