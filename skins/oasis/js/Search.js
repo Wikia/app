@@ -1,7 +1,8 @@
 WikiaSearchApp = (function() {
 
-	function WikiaSearchApp(id) {
+	function WikiaSearchApp(id, positionRight) {
 		this.id = id;
+		this.positionRight = positionRight;
 		this.searchForm = $(id);
 		this.searchField = this.searchForm.children('input[placeholder]');
 
@@ -70,7 +71,8 @@ WikiaSearchApp = (function() {
 					minLength: 3,
 					maxHeight: 1000,
 					selectedClass: 'selected',
-					width: '270px',
+					width: '100%',
+					positionRight: this.positionRight,
 					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
 				});
 			}, this));
@@ -80,6 +82,6 @@ WikiaSearchApp = (function() {
 })();
 
 $(function() {
-	new WikiaSearchApp('#WikiaSearch');
-	new WikiaSearchApp('#HeaderWikiaSearch');
+	new WikiaSearchApp('#WikiaSearch', '55px');
+	new WikiaSearchApp('#HeaderWikiaSearch', '57px');
 });

@@ -290,6 +290,11 @@ body > .global-notification,
 	padding: 0 10px 0 0;
 }
 
+// SearchAutocomplete fixes
+.WikiaSearch .autocomplete {
+	width: 100%;
+}
+
 // START - edit page fixes
 .editor .WikiaMainContent {
 	float: none;

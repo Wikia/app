@@ -55,7 +55,8 @@
       /* Wikia changes */
       queryParamName: 'query',
       fnPreprocessResults: null,
-      skipBadQueries: false
+      skipBadQueries: false,
+      positionRight: null
     };
     if (options) {
 		// since we're using an old version of this plugin with minChars instead of minLength,
@@ -113,7 +114,10 @@
     fixPosition: function() {
       var offset = this.el.offset();
       var parentOffset = $(this.options.appendTo).offset();
-      $(this.options.appendTo).find('#' + this.mainContainerId).css({ top: (offset.top + this.el.innerHeight() - parentOffset.top) + 'px', left: (offset.left - parentOffset.left) + 'px' });
+      var el = $(this.options.appendTo).find('#' + this.mainContainerId).css({ top: (offset.top + this.el.innerHeight() - parentOffset.top) + 'px', left: (offset.left - parentOffset.left) + 'px' });
+      if ( this.options.positionRight !== null ) {
+        el.css({ right: this.options.positionRight });
+      }
     },
 
     enableKillerFn: function() {
