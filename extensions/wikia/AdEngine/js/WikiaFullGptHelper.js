@@ -245,6 +245,11 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 	}
 
 	function flushAds() {
+		if (!gptLoaded) {
+			log(['flushAds', 'done', 'no slots to flush'], 4, logGroup);
+			return;
+		}
+
 		googletag.cmd.push(function () {
 			var i, len, callback;
 
