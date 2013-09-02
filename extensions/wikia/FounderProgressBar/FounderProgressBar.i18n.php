@@ -616,6 +616,21 @@ $messages['fi'] = array(
 	'founderprogressbar-browse-page-name' => 'Selaa',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'founderprogressbar-progress-see-full-list' => 'Síggj allan listan',
+	'founderprogressbar-progress-hide-full-list' => 'Fjal fulla listan',
+	'founderprogressbar-list-label' => 'Uppgávur hjá {{SITENAME}}',
+	'founderprogressbar-list-task-label' => 'Uppgávur',
+	'founderprogressbar-task-call-to-action' => 'Far til uppgávu',
+	'founderprogressbar-page-add10-label' => 'Røkk $1 {{PLURAL:$1|síðu|síðum}}',
+	'founderprogressbar-page-add20-label' => 'Røkk $1 {{PLURAL:$1|síðu|síðum}}',
+	'founderprogressbar-category-edit-label' => 'Rætta eina bólkasíðu',
+	'founderprogressbar-category-add5-label' => 'Røkk $1 {{PLURAL:$1|Bólki|Bólkum}}',
+);
+
 /** French (français)
  * @author Balzac 40
  * @author Gomoko
@@ -1012,7 +1027,20 @@ $messages['lb'] = array(
 	'founderprogressbar-category-edit-label' => 'Eng Säit vun enger Kategorie änneren',
 	'founderprogressbar-gallery-add-label' => 'Eng Fotogalerie derbäisetzen',
 	'founderprogressbar-video-add-label' => 'E Video derbäisetzen',
+	'founderprogressbar-recentchanges-visit-label' => 'Rezent Ännerunge besichen',
 	'founderprogressbar-uncategorized-visit-label' => 'Net kategoriséiert Säite weisen',
+);
+
+/** Lithuanian (lietuvių)
+ * @author Mantak111
+ */
+$messages['lt'] = array(
+	'founderprogressbar-task-completed' => 'Baigtas',
+	'founderprogressbar-list-task-label' => 'Užduotys',
+	'founderprogressbar-list-skipped-task-label' => 'Praleistos užduotys',
+	'founderprogressbar-list-skipped-task-desc' => 'Jūs galėsite užbaigti juos bet kada.',
+	'founderprogressbar-video-add-label' => 'Pridėti vaizdo įrašą',
+	'founderprogressbar-browse-page-name' => 'Naršyti',
 );
 
 /** Macedonian (македонски)
@@ -1892,23 +1920,94 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  * @author Ua2004
  */
 $messages['uk'] = array(
+	'founderprogressbar-credits' => 'Центр завдань і посібник для засновників нової вікі',
+	'founderprogressbar-widget-label' => 'Перебіг {{SITENAME}}',
+	'founderprogressbar-progress-label' => 'Виконані завдання',
+	'founderprogressbar-progress-see-full-list' => 'Переглянути повний список',
+	'founderprogressbar-progress-hide-full-list' => 'Приховати повний список',
+	'founderprogressbar-skip-for-now' => 'Пропустити зараз',
+	'founderprogressbar-task-completed' => 'Завершено',
+	'founderprogressbar-list-label' => 'Завдання для {{SITENAME}}',
+	'founderprogressbar-list-description1' => 'Готові просунути вашу вікі до успіху? Виконайте всі завдання, перераховані нижче, щоб заповнити смугу перебігу до 100%! Будь-який учасник вікі може допомогти і будь-які з їх правок будуть зараховані до цього списку завдань.',
+	'founderprogressbar-list-description2' => 'Це список всіх завдань, які необхідно виконати. Якщо пропустити завдання, то воно переміститься в розділ пропущених завдань і залишиться доступним для виконання в будь-який час. Якщо є завдання зі списку, яке, як ви відчуваєте, ніколи не зможете виконати, то не турбуйтеся. Виконуючи інші завдання, ви розблоковуєте бонусні завдання. Виконайте їх і ви заповните смугу перебігу до 100%, незважаючи на те, що частина завдань залишаться незавершеними.',
 	'founderprogressbar-list-task-label' => 'Завдання',
 	'founderprogressbar-list-skipped-task-label' => 'Пропущені завдання',
 	'founderprogressbar-list-skipped-task-desc' => 'Ви можете виконати їх пізніше.',
 	'founderprogressbar-list-bonus-task-label' => 'Бонусні завдання',
+	'founderprogressbar-list-bonus-task-desc' => 'Повний список завдань, щоб розблокувати бонусні завдання',
 	'founderprogressbar-task-call-to-action' => 'Перейти до завдання',
+	'founderprogressbar-completion-message' => 'Вітаємо! Ви зробили приголомшливу роботу і завершили всі завдання до 100%. Ваш вікі-сайт — на шляху до успіху, або навіть вже там. Продовжуйте дивовижну роботу!',
+	'founderprogressbar-bonus-task-notice' => 'Примітка: Кожен бонусне завдання може виконуватися більше одного разу. Виконайте стільки, скільки вам потрібно, щоб дістатися до 100%',
 	'founderprogressbar-page-add10-label' => 'Досягти $1 {{PLURAL:$1|сторінки|сторінок}}',
+	'founderprogressbar-page-add10-description' => 'Кращий спосіб почати на вікі - це додавати сторінки з інформацією по вашій темі. Кращі сторінки повинні містити, принаймні, один-два абзаци і, можливо, посилання на інші сторінки.',
+	'founderprogressbar-themedesigner-visit-label' => 'Налаштувати вашу тему',
+	'founderprogressbar-themedesigner-visit-description' => 'Конструктор тем дозволяє вибрати тему для вікі або створити свою власну тему, використовуючи прості інструменти. Власна тема дійсно робить вікі унікальною.',
+	'founderprogressbar-mainpage-edit-label' => 'Заповніть вашу Головну сторінку',
+	'founderprogressbar-mainpage-edit-description' => 'Коли люди відвідають вашу вікі, то Головна стаття - це перше, що вони побачать. Переконайтеся, що вона "розповість" їм, про що ваша вікі, як вони можуть допомогти вікі, і "покаже" їм найкраще з того, що є на вікі.',
+	'founderprogressbar-photo-add10-label' => 'Досягнути $1 {{PLURAL:$1|фотографію|фотографії|фотографій}}',
+	'founderprogressbar-photo-add10-description' => 'Зображення допомагають проілюструвати тематику вашої вікі. Дослідження показують, що людей завжди привертають візуальні ефекти. Ми наполегливо рекомендуємо додавати, принаймні, по одному зображенню на кожну сторінку вікі, і навіть більше, якщо у вас є зображення.',
+	'founderprogressbar-category-add3-label' => 'Досягнути $1 {{PLURAL:$1|категорію|категорії|категорій}}',
+	'founderprogressbar-category-add3-description' => 'Категорії є одним з кращих способів організації вашої вікі і допомагають людям знайти ті сторінки, які вони шукають. Система категорій повинна бути простою, тому що занадто багато категорій можуть ввести учасників в оману.',
+	'founderprogressbar-commcentral-visit-label' => 'Відвідайте центр засновника і адміністратора',
+	'founderprogressbar-commcentral-visit-description' => "Ви не самотні! Центр засновника і адміністратора - це місце, де всі учасники Вікія працюють разом, щоб допомогти колегам, дати пораду. Тут ви також можете знайти довідкову інформацію і зв'язатися з співробітниками Вікія.",
+	'founderprogressbar-wikiactivity-visit-label' => 'Відвідайте вікі діяльність',
+	'founderprogressbar-wikiactivity-visit-description' => 'Сторінка вікі-діяльності дозволяє вам бачити все, що відбувається на вікі. Вона показує, хто з учасників вніс правки, і дозволяє легко дістатися до відредагованій сторінки.',
+	'founderprogressbar-profile-edit-label' => 'Заповніть сторінку вашого профілю',
+	'founderprogressbar-profile-edit-description' => "Особиста сторінка розповість про вас учасникам, які приходять на вікі, і допоможе створити відчуття зв'язку між учасниками вікі.",
+	'founderprogressbar-photo-add20-label' => 'Досягнути $1 {{PLURAL:$1|фотографію|фотографії|фотографій}}',
+	'founderprogressbar-photo-add20-description' => 'Ви додали, принаймні, по одному зображенню на кожну сторінку? Людям подобаються картинки, і вони дійсно допомагають зробити вашу вікі популярною.',
 	'founderprogressbar-total-edit75-label' => 'Досягти 75 редагувань',
 	'founderprogressbar-total-edit75-description' => '75 правок - це віха на шляху до величі wiki!',
 	'founderprogressbar-page-add20-label' => 'Досягти $1 {{PLURAL:$1|сторінки|сторінок}}',
+	'founderprogressbar-page-add20-description' => "Продовжуйте працювати, щоб зробити з вікі всеосяжний ресурс з вашої теми. Пам'ятайте, не потрібно просто створювати сторінки - переконайтеся, що всі вони мають якісний вміст.",
+	'founderprogressbar-category-edit-label' => 'Редагувати сторінку категорії',
+	'founderprogressbar-category-edit-description' => 'Сторінка категорії може не тільки відображати посилання на всі сторінки, що входять до категорії; ви можете відредагувати її, щоб сказати людям, про що сторінки в цій категорії. Таким чином, учасники будуть знати, які сторінки необхідно додавати сюди.',
+	'founderprogressbar-wikialabs-visit-label' => 'Відвідайте Wikia Labs',
+	'founderprogressbar-wikialabs-visit-description' => 'Лабораторії Вікія дозволяє підключити нові можливості Вікія на вашій вікі. Це хороший спосіб дізнатися, що зараз актуально на Вікія і спробувати це самому.',
+	'founderprogressbar-fb-connect-label' => 'Підключити Facebook',
+	'founderprogressbar-fb-connect-description' => 'Розкажіть про роботу, яку ви робите! Підключення до Facebook дозволяє розповісти про ваші дії на вікі друзям з Facebook. Ви можете налаштувати, які зі своїх дій ви хочете розмістити на Facebook. Щоб виконати це завдання, потрібно підключити до Facebook будь-якого з адміністраторів.',
+	'founderprogressbar-category-add5-label' => 'Досягнути $1 {{PLURAL:$1|категорію|категорії|категорій}}',
+	'founderprogressbar-category-add5-description' => 'Тепер, коли ви додали багато сторінок на вікі, вам, ймовірно, потрібно більше категорій, щоб організувати їх.',
 	'founderprogressbar-gallery-add-label' => 'Додати фотогалерею',
+	'founderprogressbar-gallery-add-description' => 'Фотогалереї є відмінним способом для того, щоб продемонструвати кілька зображень на невеликій ділянці сторінки. Крім того, це цікавий спосіб відображення зображень на вікі, щоб привернути увагу людей, які зайшли на сторінку.',
+	'founderprogressbar-topnav-edit-label' => 'Налаштувати вашу навігацію',
+	'founderprogressbar-topnav-edit-description' => 'Спадне меню справа від логотипу вікі - це навігація по вашій вікі. Ви можете поставити тут посилання на сторінки, щоб допомогти учасникам швидко знайти популярні статті, категорії, повідомлення в блогах і ін. Відвідайте Довідку, щоб дізнатися, як редагувати меню навігації.',
+	'founderprogressbar-mainpage-addslider-label' => 'Додати повзунок на Головну сторінку',
+	'founderprogressbar-mainpage-addslider-description' => 'Повзунок на головній сторінці - гарний спосіб, щоб додати головній сторінці професійного вигляду. Кожне з зображень повзунка є також посиланням на сторінку, тому це відмінний метод виділити ті статті, якими ви пишаєтеся у першу чергу. Перегляньте <a href="http://community.wikia.com/wiki/User_blog:Susan_Taylor/Tips_to_spruce_up_your_main_page"> цей блог </a> , якщо вам потрібна допомога для зміни розміру зображень під повзунок.',
+	'founderprogressbar-commcorner-edit-label' => 'Редагувати куток спільноти',
+	'founderprogressbar-commcorner-edit-description' => 'Редагуючи куточок спільноти, ви створите сповіщення для всіх людей, які відвідають вашу вікі. Це відмінний спосіб розповісти учасникам про спільноту, пояснити, як вони можуть допомогти йому, або просто зробити оголошення.',
 	'founderprogressbar-video-add-label' => 'Додати відео',
 	'founderprogressbar-video-add-description' => 'Відео це інший тип популярних засобів масової інформації, які допоможуть залучити людей на ваш wiki. Ви можете позичити відео на YouTube, Hulu та інших сайтах. Додати, використовуючи кнопку "Можливості і Медіа" в редакторі',
 	'founderprogressbar-user-add5-label' => 'Досягти 5 профілів користувачів',
+	'founderprogressbar-user-add5-description' => 'Велика вікі завжди підкріплена великою спільнотою. На найкращих вікіях багато людей редагують її; дістанете 5 учасників на своїй вікі і це буде відмінний старт!',
+	'founderprogressbar-recentchanges-visit-label' => 'Відвідайте останні зміни',
+	'founderprogressbar-recentchanges-visit-description' => 'Сторінка Останніх змін є найрозширенішою версією сторінки вікі-діяльності. Тут ви можете, натиснувши на посилання "різниця", побачити точно, які зміни відбулися на сторінці, скасувати зміни. Сторінка Останніх змін дає  детальнішу інформацію по редагуваннях, ніж вікі-діяльність. Це чудовий інструмент для управління вікі, коли вам потрібно більше інформації.',
+	'founderprogressbar-wordmark-edit-label' => 'Вивантажити логотип',
+	'founderprogressbar-wordmark-edit-description' => 'Логотип - це флагман вашої вікі. Його видно на кожній сторінці вікі, і він дійсно може допомогти учасникам отримати загальне уявлення про тематику вікі, якщо ви докладете трохи таланту. Вивантаження логотипу - це створення відмінних рис вашого вікі, що дозволить їй виділитися на тлі інших вікі.',
+	'founderprogressbar-mostvisited-visit-label' => 'Показати найвідвідуваніші сторінки',
+	'founderprogressbar-mostvisited-visit-description' => 'Як тільки на вашу вікі дійсно стане приємно дивитися, зверніть увагу на список найпопулярніших сторінок. Ви можете ще поліпшити їх і додати посилання на менш відвідувані сторінки. Найвідвідуваніші сторінки визначають те, що найкраще працює на вашій вікі, тому ви можете створювати нові сторінки за образом цих!',
+	'founderprogressbar-toptenlist-add-label' => 'Додати список 10 популярних',
+	'founderprogressbar-toptenlist-add-description' => 'Списки 10 популярних можуть заохотити учасників, які соромляться редагувати. Це також чудовий спосіб зацікавити спільноту. Учасники можуть голосувати за статті вікі і додавати свої статті до списку.',
+	'founderprogressbar-blogpost-add-label' => 'Написати повідомлення в блозі',
+	'founderprogressbar-blogpost-add-description' => 'Блог на вікі є хорошим інструментом, щоб зробити оголошення, висловити свою думку, в тому числі і про сторінки вікі, або висловити свою подяку учасникам. Спробуйте!',
+	'founderprogressbar-fb-likes3-label' => 'Досягнуть $1 вподобань на Facebook',
+	'founderprogressbar-fb-likes3-description' => 'Соціальні мережі дійсно можуть розповісти про вашу вікі багатьом людям. Заохочуйте учасників і просто читачів вашої вікі ставити "Подобається"за вашу головну сторінку вікі на Facebook, щоб поширювати її.',
+	'founderprogressbar-uncategorized-visit-label' => 'Побачити некатегоризовані зображення',
+	'founderprogressbar-uncategorized-visit-description' => "Коли на вашій вікі багато сторінок, дуже легко в них загубитися. Обов'язково відстежуєте сторінки, які не входять ні в одну категорію, і додавайте їх у категорії, щоб все було доступно і організовано.",
+	'founderprogressbar-total-edit300-label' => 'Досягнути {{PLURAL:$1|$1 редагування|$1 редагувань}}',
+	'founderprogressbar-total-edit300-description' => "$1 редагувань - це відмінний результат; продовжуйте вносити зміни до змісту вікі і ви обов'язково досягнете успіху!",
+	'founderprogressbar-bonus-photo-add10-label' => 'Додати ще $1 фотографій',
+	'founderprogressbar-bonus-photo-add10-description' => 'Додавання зображень - це відмінний спосіб для поліпшення вашої вікі. Додайте більше десяти зображень, щоб заробити кредит за одне бонусне завдання.',
+	'founderprogressbar-bonus-page-add5-label' => 'Додати  {{PLURAL:$1|$1 додаткову сторінку|$1  додаткові сторінки|$1 додаткових сторінок}}',
+	'founderprogressbar-bonus-page-add5-description' => "Вмісту на вікі ніколи не буває багато. Додайте ще п'ять сторінок, щоб заробити кредит за одне бонусне завдання.",
+	'founderprogressbar-bonus-edit50-label' => 'Відредагувати {{PLURAL:$1|$1 додаткову сторінку|$1 додаткові сторінки|$1 додаткових сторінок}}',
+	'founderprogressbar-bonus-edit50-description' => 'Прагніть більшого! Досягніть 50 додаткових редагувань, щоби зарахувати це бонусне завдання.',
 	'founderprogressbar-browse-page-name' => 'Огляд',
 );
 

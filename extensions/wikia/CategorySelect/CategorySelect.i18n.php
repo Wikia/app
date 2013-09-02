@@ -177,6 +177,7 @@ $messages['bg'] = array(
 	'categoryselect-button-add' => 'Добавяне на категория',
 	'categoryselect-button-cancel' => 'Отказване',
 	'categoryselect-button-save' => 'Съхраняване',
+	'categoryselect-category-add' => 'Добавяне на категория...',
 	'categoryselect-edit-summary' => 'Добавяне на категории',
 );
 
@@ -430,6 +431,24 @@ $messages['fi'] = array(
 	'tog-disablecategoryselect-v2' => 'Poista luokkamoduuli käytöstä (koskee vain jos visuaalinen muokkaus on poistettu käytöstä)',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'categoryselect-desc' => 'Veitir eitt markamót (interface) til stýring av bólkum á einari síðu, uttan at rætta eina heila síðu',
+	'categoryselect-button-add' => 'Legg afturat ein bólk',
+	'categoryselect-button-cancel' => 'Angra',
+	'categoryselect-button-save' => 'Goym',
+	'categoryselect-category-add' => 'Legg afturat bólk...',
+	'categoryselect-category-edit' => 'Rætta bólk',
+	'categoryselect-category-remove' => 'Tak burtur bólk',
+	'categoryselect-edit-summary' => 'Legg bólkar afturat',
+	'categoryselect-error-article-doesnt-exist' => 'Síðan [id=$1] er ikki til.',
+	'categoryselect-error-category-name-length' => 'Maksimala longdin fyri eitt bólkanavn er nádd.',
+	'categoryselect-error-db-locked' => 'Dátagrunnurin er stongdur.',
+	'categoryselect-error-duplicate-category-name' => 'Bólkurin "$1" er longu til.',
+);
+
 /** French (français)
  * @author Gomoko
  * @author IAlex
@@ -588,6 +607,7 @@ $messages['ig'] = array(
  * @author Beta16
  * @author Leviathan 89
  * @author Minerva Titani
+ * @author RickyB98
  * @author Ximo17
  */
 $messages['it'] = array(
@@ -595,17 +615,20 @@ $messages['it'] = array(
 	'categoryselect-button-add' => 'Aggiungi categoria',
 	'categoryselect-button-cancel' => 'Annulla',
 	'categoryselect-button-save' => 'Salva',
-	'categoryselect-category-add' => 'Aggiungi una categoria', # Fuzzy
-	'categoryselect-category-edit' => 'Opzioni categoria', # Fuzzy
+	'categoryselect-category-add' => 'Aggiungi una categoria...',
+	'categoryselect-category-edit' => 'Modifica categoria',
+	'categoryselect-category-remove' => 'Elimina categoria',
 	'categoryselect-edit-summary' => 'Categorie aggiunte',
-	'categoryselect-error-article-doesnt-exist' => "L'articolo [id=$1] non esiste.", # Fuzzy
+	'categoryselect-error-article-doesnt-exist' => "L'articolo [id=$1] non esiste.",
+	'categoryselect-error-category-name-length' => 'È stato raggiunto il limite di lunghezza per il nome di una categoria.',
 	'categoryselect-error-db-locked' => 'Database bloccato.',
-	'categoryselect-error-edit-abort' => "La modifica che si sta tentando di fare è stata interrotta da un problema dell'estensione", # Fuzzy
-	'categoryselect-error-empty-category-name' => 'Fornire il nome della categoria (parte prima di |)', # Fuzzy
-	'categoryselect-error-user-rights' => "Errore nei diritti dell'utente.", # Fuzzy
-	'categoryselect-modal-category-name' => 'Fornire il nome della categoria:', # Fuzzy
+	'categoryselect-error-duplicate-category-name' => 'La categoria "$1" esiste già.',
+	'categoryselect-error-edit-abort' => "La modifica che si sta tentando di fare è stata interrotta da un problema dell'estensione",
+	'categoryselect-error-empty-category-name' => 'Fornire il nome della categoria (parte prima di |)',
+	'categoryselect-error-user-rights' => "Errore nei diritti dell'utente.",
+	'categoryselect-modal-category-name' => 'Fornire il nome della categoria:',
 	'categoryselect-modal-category-sortkey' => 'Alfabetizzare questo articolo nella categoria "$1" sotto il nome:', # Fuzzy
-	'categoryselect-tooltip-add' => 'Premi INVIO quando hai fatto', # Fuzzy
+	'categoryselect-tooltip-add' => 'Premi INVIO quando hai fatto',
 	'tog-disablecategoryselect' => 'Disabilita il modulo Categoria (si applica solo se la modifica in modalità visuale è stata disabilitata)',
 	'tog-disablecategoryselect-v2' => 'Disabilita il modulo Categoria (si applica solo se la modifica in modalità visuale è disabilitata)',
 );

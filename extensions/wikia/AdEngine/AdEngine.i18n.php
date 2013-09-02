@@ -9,14 +9,25 @@ $messages['en'] = array(
 	'adengine-exitstitial-button' => 'Skip this Ad',
 );
 
-/**
- * Message documentation
+/** Message documentation (Message documentation)
+ * @author Siebrand
  */
 $messages['qqq'] = array(
-	'adengine-exitstitial-title-template' => 'Title of the box showing up when you click on link to outside the wiki (site title is $1)',
+	'adengine-exitstitial-title-template' => 'Title of the box showing up when you click on link to outside the wiki. Parameters:
+* $1 is a site title',
 	'adengine-exitstitial-redirecting' => 'Text displayed in the box showing up when you click on link to outside the wiki',
 	'adengine-exitstitial-go-back' => 'Text of the link/button that you can close the box with and get back to the content',
 	'adengine-exitstitial-button' => 'Text of the link/button that you can close the box with and get directly to the link target',
+);
+
+/** Bikol Central (Bikol Central)
+ * @author Geopoet
+ */
+$messages['bcl'] = array(
+	'adengine-exitstitial-title-template' => 'Binabayaan mo tabi an $1...',
+	'adengine-exitstitial-redirecting' => 'An saimong kilyawan minapalikwat saimo pasiring sa pahina na saimong pinaghahagad sa laog nin nagkapirang segundos.',
+	'adengine-exitstitial-go-back' => 'Gusto mo tabing bumalik?',
+	'adengine-exitstitial-button' => 'Likwasan ining Ad',
 );
 
 /** Bhojpuri (भोजपुरी)
@@ -50,6 +61,26 @@ $messages['ca'] = array(
 	'adengine-exitstitial-button' => 'Saltar aquest anunci',
 );
 
+/** German (Deutsch)
+ * @author Metalhead64
+ */
+$messages['de'] = array(
+	'adengine-exitstitial-title-template' => 'Du verlässt $1 …',
+	'adengine-exitstitial-redirecting' => 'Dein Browser leitet dich in einigen Sekunden auf die angeforderte Seite weiter.',
+	'adengine-exitstitial-go-back' => 'Zurück gehen?',
+	'adengine-exitstitial-button' => 'Diese Anzeige überspringen',
+);
+
+/** Greek (Ελληνικά)
+ * @author Glavkos
+ */
+$messages['el'] = array(
+	'adengine-exitstitial-title-template' => 'Αφήνεις το  $1…',
+	'adengine-exitstitial-redirecting' => 'Το πρόγραμμα περιήγησης θα σας ανακατευθύνει στη σελίδα που ζητήσατε σε λίγα δευτερόλεπτα.',
+	'adengine-exitstitial-go-back' => 'Θέλεις να γυρίσεις πίσω;',
+	'adengine-exitstitial-button' => 'Παραλείψτε αυτή η διαφήμιση',
+);
+
 /** Spanish (español)
  * @author VegaDark
  */
@@ -58,6 +89,26 @@ $messages['es'] = array(
 	'adengine-exitstitial-redirecting' => 'Tu navegador te redirigirá a la página que solicitaste en unos segundos.',
 	'adengine-exitstitial-go-back' => '¿Quieres volver atrás?',
 	'adengine-exitstitial-button' => 'Saltar este anuncio',
+);
+
+/** Estonian (eesti)
+ * @author KalmerE.
+ */
+$messages['et'] = array(
+	'adengine-exitstitial-title-template' => 'Oled lahkumas $1...',
+	'adengine-exitstitial-redirecting' => 'Kohe suunab brauser sind soovitud lehele.',
+	'adengine-exitstitial-go-back' => 'Soovid minna tagasi?',
+	'adengine-exitstitial-button' => 'Jäta see reklaam vahele',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'adengine-exitstitial-title-template' => 'Tú ert á veg vekk frá $1…',
+	'adengine-exitstitial-redirecting' => 'Tín internetkagi fer at víðaristilla teg til umbidnu síðuna um nøkur fá sekund.',
+	'adengine-exitstitial-go-back' => 'Ynskir tú at fara aftur?',
+	'adengine-exitstitial-button' => 'Loyp hesa lýsingina um',
 );
 
 /** French (français)
@@ -104,6 +155,8 @@ $messages['ko'] = array(
  */
 $messages['lb'] = array(
 	'adengine-exitstitial-title-template' => 'Dir verloosst $1...',
+	'adengine-exitstitial-redirecting' => 'Äre Browser leet Iecht an e puer Sekonnen op déi Säit virun déi Dir gefrot hutt.',
+	'adengine-exitstitial-go-back' => 'Wëllt Dir zréckgoen?',
 	'adengine-exitstitial-button' => 'Dës Reklamm iwwersprangen',
 );
 
@@ -127,6 +180,23 @@ $messages['mk'] = array(
 	'adengine-exitstitial-button' => 'Прескокни ја рекламава',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Kavya Manohar
+ */
+$messages['ml'] = array(
+	'adengine-exitstitial-go-back' => 'തിരികെ പോകണോ?',
+);
+
+/** Marathi (मराठी)
+ * @author V.narsikar
+ */
+$messages['mr'] = array(
+	'adengine-exitstitial-title-template' => 'आपण $1 सोडत आहात',
+	'adengine-exitstitial-redirecting' => 'आपला न्याहाळक आपल्याला आपण विनंती केलेल्या पानावर काही सेकंदातच पुनर्निर्देशित करेल.',
+	'adengine-exitstitial-go-back' => 'परत जायचे आहे?',
+	'adengine-exitstitial-button' => 'ही जाहिरात टाळा',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -135,6 +205,16 @@ $messages['ms'] = array(
 	'adengine-exitstitial-redirecting' => 'Pelayar anda akan membawa anda ke halaman yang anda minta dalam beberapa saat.',
 	'adengine-exitstitial-go-back' => 'Ingin kembali?',
 	'adengine-exitstitial-button' => 'Langkau iklan ini',
+);
+
+/** Maltese (Malti)
+ * @author Chrisportelli
+ */
+$messages['mt'] = array(
+	'adengine-exitstitial-title-template' => 'Int se tħalli $1...',
+	'adengine-exitstitial-redirecting' => 'Il-brawżer tiegħek se jirrindirizzak lejn il-paġna li tlabt fi ftit sekondi.',
+	'adengine-exitstitial-go-back' => 'Tixtieq tmur lura?',
+	'adengine-exitstitial-button' => 'Aqbeż dan ir-reklam',
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -147,6 +227,26 @@ $messages['nb'] = array(
 	'adengine-exitstitial-button' => 'Hopp over denne annonsen',
 );
 
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'adengine-exitstitial-title-template' => 'U verlaat nu $1...',
+	'adengine-exitstitial-redirecting' => 'Uw browser leidt u over een paar seconden om naar de pagina die u gevraagd.',
+	'adengine-exitstitial-go-back' => 'Wilt u terug?',
+	'adengine-exitstitial-button' => 'Advertentie overslaan',
+);
+
+/** Polish (polski)
+ * @author Sovq
+ */
+$messages['pl'] = array(
+	'adengine-exitstitial-title-template' => 'Opuszczasz $1...',
+	'adengine-exitstitial-redirecting' => 'Twoja przeglądarka przekieruje Cię na pożądaną stronę za kilka sekund.',
+	'adengine-exitstitial-go-back' => 'Chcesz wrócić na wiki?',
+	'adengine-exitstitial-button' => 'Zamknij reklamę',
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
@@ -157,13 +257,24 @@ $messages['ps'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Matheus Sousa L.T
  * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
-	'adengine-exitstitial-title-template' => 'Você está deixando a $1...',
+	'adengine-exitstitial-title-template' => 'Você está deixando a $1....',
 	'adengine-exitstitial-redirecting' => 'Seu navegador irá redirecioná-lo à página que você requisitou em alguns segundos.',
 	'adengine-exitstitial-go-back' => 'Deseja voltar?',
 	'adengine-exitstitial-button' => 'Pular este anúncio',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'adengine-exitstitial-title-template' => 'Ste lasse $1 ...',
+	'adengine-exitstitial-redirecting' => "'U browser te adda mannà a 'a pàgene ca è cercate jndr'à quacche seconde.",
+	'adengine-exitstitial-go-back' => 'Vue ccù tuèrne rrete?',
+	'adengine-exitstitial-button' => 'Zumbe sta pubblecetà',
 );
 
 /** Swedish (svenska)
@@ -184,6 +295,26 @@ $messages['tr'] = array(
 	'adengine-exitstitial-redirecting' => 'Tarayıcınız için birkaç saniye içinde istediğiniz sayfa yönlendirme yapar.',
 	'adengine-exitstitial-go-back' => 'Geri dönmek ister misin?',
 	'adengine-exitstitial-button' => 'Reklamı geç',
+);
+
+/** Ukrainian (українська)
+ * @author Andriykopanytsia
+ */
+$messages['uk'] = array(
+	'adengine-exitstitial-title-template' => 'Ви залишаєте $1...',
+	'adengine-exitstitial-redirecting' => 'Ваш переглядач переадресує вас на запитувану вами сторінку за декілька секунд.',
+	'adengine-exitstitial-go-back' => 'Хочете повернутися?',
+	'adengine-exitstitial-button' => 'Пропустити це оголошення',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
+ */
+$messages['vi'] = array(
+	'adengine-exitstitial-title-template' => 'Bạn đang rời khỏi $1…',
+	'adengine-exitstitial-redirecting' => 'Trình duyệt của bạn sẽ chuyển hướng bạn đến trang web mà bạn yêu cầu trong vài giây nữa.',
+	'adengine-exitstitial-go-back' => 'Bạn muốn quay trở lại?',
+	'adengine-exitstitial-button' => 'Bỏ qua các quảng cáo này',
 );
 
 /** Chinese (中文)

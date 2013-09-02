@@ -348,6 +348,40 @@ Tiedot: $2',
 	'lightbox-visit-the-wiki' => 'Siirry wikiin:',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'lightbox_details_tooltip' => 'Vís smálutir um myndina',
+	'lightbox-forum' => 'Forum',
+	'lightbox-standard-link' => 'Standarsleinkja',
+	'lightbox-blog-link' => 'Bloggleinkja',
+	'lightbox-send' => 'Send',
+	'lightbox-share-description' => 'Mynd á $1 á $2',
+	'lightbox-share-email-subject' => '$1 hevur sent tær eina mynd á Wikia',
+	'lightbox-share-email-body' => 'Hey,
+
+Onkur vildi vísa tær eina mynd á Wikia. Kekka tað út:
+
+$1
+
+- Wikia toymið',
+	'lightbox-share-button-email' => 'T-postur',
+	'lightbox-share-button-www' => 'Deil',
+	'lightbox-share-button-embed' => 'Innlima',
+	'lightbox-share-email-label' => 'Send hesa myndina við t-posti til ein vin',
+	'lightbox-share-email-page-label' => 'Send hesa síðuna við t-posti til ein vin',
+	'lightbox-share-email-page-label-address' => 'T-postadressa',
+	'lightbox-share-email-ok-caption' => 'Váttan',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Teldubrævið er|Teldubrøvini eru}} send.',
+	'lightbox-share-email-error-caption' => 'Feilur',
+	'lightbox-share-email-error-content' => 'Feilur hendi tá ið {{PLURAL:$1|teldubræv|teldubrøv}} skuldi sendast.
+Smálutir: $2',
+	'lightbox-share-email-error-login' => 'Fyri at senda teldubrøv, mást tú rita inn',
+	'lightbox-share-email-error-noaddress' => 'Ongin adressa varð givin.',
+	'lightbox-visit-the-wiki' => 'Vitja wiki:',
+);
+
 /** French (français)
  * @author Gomoko
  * @author Wyz
@@ -559,6 +593,16 @@ $messages['lb'] = array(
 	'lightbox-share-email-ok-caption' => 'Confirmatioun',
 	'lightbox-share-email-error-caption' => 'Feeler',
 	'lightbox-share-email-error-noaddress' => 'Dir hutt keng Adress uginn.',
+);
+
+/** Lithuanian (lietuvių)
+ * @author Mantak111
+ */
+$messages['lt'] = array(
+	'lightbox-forum' => 'Forumas',
+	'lightbox-send' => 'Siųsti',
+	'lightbox-share-button-www' => 'Dalintis',
+	'lightbox-share-email-error-caption' => 'Klaida',
 );
 
 /** Macedonian (македонски)
@@ -973,19 +1017,39 @@ $messages['tr'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
 	'lightbox_details_tooltip' => 'Перегляд відомостей про фото',
 	'lightbox-forum' => 'Форум',
 	'lightbox-standard-link' => 'Стандартне посилання',
+	'lightbox-blog-link' => 'Посилання на блог',
 	'lightbox-send' => 'Надіслати',
+	'lightbox-share-description' => 'Фото в $1 на $2',
+	'lightbox-share-email-subject' => '$1 відправив вам фото на Вікії',
+	'lightbox-share-email-body' => 'Привіт
+
+Хтось хотів показати вам фотографії на Вікія. Перегляньте  його тут:
+
+$1
+
+- Команда Вікія',
 	'lightbox-share-button-email' => 'Email',
 	'lightbox-share-button-www' => 'Поділитися',
 	'lightbox-share-button-embed' => 'Вставити',
+	'lightbox-share-email-label' => 'Відіслати це зображення другові',
+	'lightbox-share-email-page-label' => 'Надіслати цю сторінку другу',
 	'lightbox-share-email-page-label-address' => 'Адреса електронної пошти',
 	'lightbox-share-email-ok-caption' => 'Підтвердження',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|лист вже відправлений|листи вже відправлені|листів вже відправлено}}.',
 	'lightbox-share-email-error-caption' => 'Помилка',
+	'lightbox-share-email-error-content' => 'Помилка надсилання {{PLURAL:$1|листа|листів}}.
+Детальна інформація: $2',
+	'lightbox-share-email-error-login' => 'Для надсилання листів вам необхідно увійти на сайт',
+	'lightbox-share-email-error-noaddress' => 'Жодної адреси не вказано.',
+	'lightbox-visit-the-wiki' => 'Відвідати вікі:',
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -1018,9 +1082,15 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ * @author Justincheng12345
  * @author Radish10cm
  */
 $messages['zh-hant'] = array(
 	'lightbox_details_tooltip' => '查看圖片詳細資訊',
 	'lightbox-blog-link' => '部落格連結',
+	'lightbox-share-button-email' => '電子郵件',
+	'lightbox-share-button-www' => '分享',
+	'lightbox-share-button-embed' => '嵌入',
+	'lightbox-share-email-page-label-address' => '電郵地址',
 );

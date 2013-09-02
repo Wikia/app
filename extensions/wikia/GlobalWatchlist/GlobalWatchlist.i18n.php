@@ -308,6 +308,18 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Blogisivua ei löytynyt.',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'globalwatchlist-desc' => 'Sendir t-post samandráttir einaferð um vikuna við eftirlitssíðum á øllum wikium',
+	'tog-watchlistdigest' => 'Send mær ein Vikuligan eftirlitssamandrátt (Weekly Watchlist Digest)',
+	'tog-watchlistdigestclear' => 'Merk allar síður frá mínum viku-eftirlits-samandrátti sum vitjaðar',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|viðmerking|viðmerkingar}})',
+	'globalwatchlist-no-page-found' => 'Ongin síða funnin.',
+	'globalwatchlist-no-blog-page-found' => 'Ongin bloggsíða funnin.',
+);
+
 /** French (français)
  * @author IAlex
  * @author Peter17
@@ -838,7 +850,30 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'globalwatchlist-desc' => "manne ogne sumane 'nu riepiloghe cu l'email cu le pàggene da condrollà sus a tutte le uicchi",
+	'tog-watchlistdigest' => "Manname 'na mail cu 'nu riepiloghe d'a sumane de le pàggene condrollate",
+	'tog-watchlistdigestclear' => "Signe tutte le pàggene da 'u Riepiloghe d'a sumàne de le pàggene condrollate cumme visitate",
+	'globalwatchlist-see-more' => 'Pe piacere verifiche le pàggene condrollate locale tune pe cchiù cangiaminde',
 	'globalwatchlist-digest-email-subject' => "Riepiloghe d'a sumane",
+	'globalwatchlist-digest-email-body' => "Care \$1,
+
+Queste jè 'n'elenghe de pàggene sus 'a le pàggene condrollate d'a Uicchia toje ca onne state cangiate da quanne tu l'è viste l'urtema vote.
+
+\$2
+
+Quiste jè 'n'elenghe de pàggene d'u blog sus 'a le pàggene condrollate d'a Uicchia toje ca onne state cangiate da quanne tu l'è viste l'urtema vote.
+
+\$3
+
+Pe piacere visitale e cangiale spesse...
+
+Uicchia
+
+* Pe cangià le preferenze tune sus a le notifiche de le pàggene condrollate, pe piacere visite  http://www.wikia.com/wiki/Special:Preferences
+* Pe signà tutte le pàggene de stu riepiloghe sumanale cumme visitate, 'ndruche l'opzione jndr'à schede \"Pàggene condrollate\" d'a pàgene de le Preferenze tune",
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|commende}})',
+	'globalwatchlist-no-page-found' => 'Nisciuna pàgene acchiate.',
+	'globalwatchlist-no-blog-page-found' => 'Nisciuna pàgene de blog acchiate.',
 );
 
 /** Russian (русский)

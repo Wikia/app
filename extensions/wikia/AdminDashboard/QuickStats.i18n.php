@@ -26,7 +26,11 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'quickstats-header-date' => '{{Identical|Date}}',
+	'quickstats-header-views' => '{{Identical|View}}',
+	'quickstats-header-edits' => '{{Identical|Edit}}',
 	'quickstats-header-photos' => '{{Identical|Photo}}',
+	'quickstats-header-likes' => '{{Identical|Like}}',
 	'quickstats-date-format' => 'Follow this guide: http://php.net/manual/en/function.date.php.',
 	'quickstats-totals-label' => '{{Identical|Total}}',
 	'quickstats-number-shortening' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 10.000 are rendered using this message (as thousands rounded up to the first decimal fraction). K stands for thousands (1.000)',
@@ -117,6 +121,23 @@ $messages['ba'] = array(
 $messages['bar'] = array(
 	'quickstats-header-label' => 'Ministatistik',
 	'quickstats-header-date' => 'Datum',
+);
+
+/** Bikol Central (Bikol Central)
+ * @author Geopoet
+ */
+$messages['bcl'] = array(
+	'quickstats-header-label' => 'Hidaling Estadistika',
+	'quickstats-header-date' => 'Petsa',
+	'quickstats-header-views' => 'Mga Tanawon',
+	'quickstats-header-edits' => 'Mga Pagliwat',
+	'quickstats-header-photos' => 'Mga Litrato',
+	'quickstats-header-likes' => 'Mga Kinamuyahan',
+	'quickstats-totals-label' => 'Mga Kabilogan',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Hilngon an mga kadugangang mga estadistika]]',
+	'quickstats-number-shortening' => '$1 na ribo',
+	'quickstats-number-shortening-millions' => '$1 na milyon',
+	'quickstats-number-shortening-billions' => '$1 na bilyon',
 );
 
 /** Bulgarian (български)
@@ -212,6 +233,9 @@ $messages['ckb'] = array(
 	'quickstats-header-date' => 'ڕێکەوت',
 	'quickstats-header-edits' => 'دەستکارییەکان',
 	'quickstats-header-photos' => 'وێنەکان',
+	'quickstats-number-shortening' => '$1 ھەزار',
+	'quickstats-number-shortening-millions' => '$1 میلیۆن',
+	'quickstats-number-shortening-billions' => '$1 بیلیۆن',
 );
 
 /** Czech (česky)
@@ -354,11 +378,17 @@ $messages['es'] = array(
  * @author KalmerE.
  */
 $messages['et'] = array(
+	'quickstats-header-label' => 'Lühi statistika',
 	'quickstats-header-date' => 'Kuupäev',
 	'quickstats-header-views' => 'Vaatamisi',
 	'quickstats-header-edits' => 'Muudatusi',
 	'quickstats-header-photos' => 'Fotod',
+	'quickstats-header-likes' => 'Meeldib',
 	'quickstats-totals-label' => 'Kokku',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Vaata rohkem statistikat]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Persian (فارسی)
@@ -400,8 +430,11 @@ $messages['fi'] = array(
 $messages['fo'] = array(
 	'quickstats-header-label' => 'Skjót Hagtøl',
 	'quickstats-header-date' => 'Dagur',
+	'quickstats-header-views' => 'Sýningar',
 	'quickstats-header-edits' => 'Rættingar',
 	'quickstats-header-photos' => 'Myndir',
+	'quickstats-header-likes' => 'Dámar',
+	'quickstats-totals-label' => 'Tilsamans',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Sí fleiri hagtøl]]',
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
@@ -444,7 +477,7 @@ $messages['gl'] = array(
 	'quickstats-number-shortening-billions' => '$1B',
 );
 
-/** Hakka (Hak-kâ-fa)
+/** Hakka (客家語/Hak-kâ-ngî)
  * @author Anson2812
  */
 $messages['hak'] = array(
@@ -659,6 +692,13 @@ $messages['lt'] = array(
 	'quickstats-number-shortening-billions' => '$1B',
 );
 
+/** Latvian (latviešu)
+ * @author Papuass
+ */
+$messages['lv'] = array(
+	'quickstats-header-date' => 'Datums',
+);
+
 /** Basa Banyumasan (Basa Banyumasan)
  * @author StefanusRA
  */
@@ -694,6 +734,35 @@ $messages['mk'] = array(
 	'quickstats-number-shortening-billions' => '$1 млд',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Kavya Manohar
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'quickstats-header-date' => 'തീയതി',
+	'quickstats-header-edits' => 'തിരുത്തുകൾ',
+	'quickstats-header-photos' => 'ചിത്രങ്ങൾ',
+	'quickstats-totals-label' => 'ആകെ',
+	'quickstats-number-shortening' => '$1 ആയിരം',
+	'quickstats-number-shortening-millions' => '$1 ദശലക്ഷം',
+	'quickstats-number-shortening-billions' => '$1 ആയിരം കോടി',
+);
+
+/** Marathi (मराठी)
+ * @author V.narsikar
+ */
+$messages['mr'] = array(
+	'quickstats-header-label' => 'जलद सांख्यिकी',
+	'quickstats-header-date' => 'दिनांक',
+	'quickstats-header-views' => 'दृष्ये',
+	'quickstats-header-edits' => 'संपादने',
+	'quickstats-header-photos' => 'छायाचित्रे',
+	'quickstats-header-likes' => 'आवडीचे',
+	'quickstats-totals-label' => 'एकूण',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|अधिक आकडेवारी बघा]]',
+	'quickstats-number-shortening' => '$1के',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -709,6 +778,22 @@ $messages['ms'] = array(
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Lihat banyak lagi statistik]]',
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1J',
+	'quickstats-number-shortening-billions' => '$1B',
+);
+
+/** Maltese (Malti)
+ * @author Chrisportelli
+ */
+$messages['mt'] = array(
+	'quickstats-header-label' => 'Statistiċi ħfief',
+	'quickstats-header-date' => 'Data',
+	'quickstats-header-views' => 'Dehriet',
+	'quickstats-header-edits' => 'Modifiki',
+	'quickstats-header-photos' => 'Ritratti',
+	'quickstats-totals-label' => 'Total',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Aktar statistika]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1B',
 );
 

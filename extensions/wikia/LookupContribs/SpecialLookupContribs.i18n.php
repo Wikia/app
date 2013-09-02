@@ -594,6 +594,29 @@ $messages['fi'] = array(
 	'lookupcontribsall' => 'kaikki',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'lookupcontribsrecentcontributions' => 'Nýggjastu íkøst hjá $1',
+	'lookupcontribsselectuser' => 'Vel brúkara:',
+	'lookupcontribsgo' => 'Far',
+	'lookupcontribsselectwikis' => 'Vel wikiir:',
+	'lookupcontribslistwikiainfo' => 'Listi yvir wikiir har greinar vóru rættaðar av <b>$1</b>',
+	'lookupcontribsnoresultfound' => 'Ongi úrslit funnin!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'DB navn',
+	'lookupcontribswikititle' => 'Heiti',
+	'lookupcontribswikioptions' => 'Møguleikar',
+	'lookupcontribslastedited' => 'Seinast rættað',
+	'lookupcontribsnext' => 'næsta',
+	'lookupcontribsprevious' => 'fyrra',
+	'lookupcontribshist' => 'søga',
+	'lookupcontribsdiff' => 'munur',
+	'lookupcontribsshowpages' => 'Allar síður ($1 navnarúm)',
+	'lookupcontribscontent' => 'innihald',
+);
+
 /** French (français)
  * @author Gomoko
  * @author IAlex
@@ -929,6 +952,7 @@ Vergewëssert Iech datt Dir Iech beim Benotzernumm net vertippt hutt.</p>',
 	'right-lookupcontribs' => 'Déi global Ännerunge vu Benotzer weisen',
 	'lookupcontribsshowpages' => 'All Säiten ($1 Nummraim)',
 	'lookupcontribscontent' => 'Inhalt',
+	'lookupcontribsall' => 'All',
 );
 
 /** Macedonian (македонски)
@@ -1788,19 +1812,62 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  * @author Тест
  */
 $messages['uk'] = array(
+	'lookupcontribs' => 'Перегляд внесків',
+	'lookupcontribstitle' => 'Перегляд внесків',
+	'lookupcontribsrecentcontributions' => 'Останні внески $1',
+	'lookupcontribsfinalcontributions' => 'Остаточні внески $1',
+	'lookupcontribshelp' => "Цю спеціальну сторінку можна використовувати, щоб відобразити внески користувача на декілька вікій.
+ Для відображення списку вкажіть нижче ім'я користувача.",
+	'lookupcontribusernotspecify' => 'Ви не вказали користувача',
 	'lookupcontribsselectuser' => 'Виберіть користувача:',
+	'lookupcontribsselectfor' => 'Виберіть для:',
+	'lookupcontribsdisplaymode' => 'Режим відображення:',
+	'lookupcontribsselectmodenormal' => 'останні внески цього користувача',
+	'lookupcontribsselectmodefinal' => 'остаточний внесок цього користувача',
+	'lookupcontribsselectmodeall' => 'всі внески цього користувача',
+	'lookupcontribsfullurls' => 'повні URL-адреси',
+	'lookupcontribslinks' => 'посилання на внески',
 	'lookupcontribsgo' => 'Перейти',
+	'lookupcontribsinvaliduser' => '<p class="error">Користувач <b>$1</b> не існує.
+Перевірте, чи немає помилок у вказаному імені користувача.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error">"<b> $1 </b>" не є допустимим режимом перегляду.</p>',
+	'lookupcontribsinvalidmode' => '<p class="error">"<b> $1 </b>" не є допустимим режимом.</p>',
+	'lookupcontribsselectwikis' => 'Виберіть вікі:',
+	'lookupcontribslistwikiainfo' => 'Перелік вікі, де статті відредаговані <b>$1</b>',
+	'lookupcontribsnoresultfound' => 'Нічого не знайдено!',
+	'lookupcontribsinvalidresults' => 'Неприпустимі результати!',
+	'lookupcontribswiki' => 'Вікі',
+	'lookupcontribswikidbname' => 'Назва БД',
 	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Заголовок',
 	'lookupcontribswikioptions' => 'Параметри',
+	'lookupcontribscontribslink' => 'Посилання на внески',
+	'lookupcontribsdetails' => 'Подробиці див. на:',
+	'lookupcontribslastedited' => 'Останнє редагування',
+	'lookupcontribsrecordspager' => "Показано від '''$1''' до '''$2''' із '''$3''' записів.",
+	'lookupcontribsnbrresult' => 'Число результатів:',
+	'lookupcontribsnext' => 'наступний',
+	'lookupcontribsprevious' => 'попередній',
+	'lookupcontribspageremoved' => 'Вилучено:',
 	'lookupcontribsrestore' => 'відновити',
 	'lookupcontribslog' => 'журнал',
+	'lookupcontribscontribs' => 'внесок',
 	'lookupcontribshist' => 'історія',
 	'lookupcontribsdiff' => 'різн.',
+	'right-lookupcontribs' => 'Переглянути глобальні зміни користувача',
+	'lookupcontribsshowpages' => 'Усі сторінки ($1  простори імен)',
 	'lookupcontribscontent' => 'вміст',
+	'lookupcontribscontribtitleforuser' => 'Внески користувача:',
+	'lookupcontribsnormal' => 'недавні',
+	'lookupcontribsfinal' => 'остаточні',
+	'lookupcontribsall' => 'усі',
+	'action-lookupcontribs' => 'пошук внесків користувача на декількох вікі',
 );
 
 /** Yiddish (ייִדיש)

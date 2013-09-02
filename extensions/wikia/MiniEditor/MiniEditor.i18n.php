@@ -105,6 +105,17 @@ $messages['fi'] = array(
 	'minieditor-placeholder-reply' => 'Vastaa viestiin tässä',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'minieditor-specialpage-title' => 'MiniEditor Royndarsíða',
+	'minieditor-new-heading' => 'Upprætta eitt nýtt boð',
+	'minieditor-placeholder-new' => 'Skriva títt boð her',
+	'minieditor-reply' => 'Svara',
+	'minieditor-placeholder-reply' => 'Svara boðnum her',
+);
+
 /** French (français)
  * @author Wyz
  */
@@ -364,6 +375,7 @@ $messages['tzm'] = array(
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
+ * @author SteveR
  * @author Ua2004
  */
 $messages['uk'] = array(

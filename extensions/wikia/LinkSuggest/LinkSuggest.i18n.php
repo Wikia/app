@@ -224,10 +224,11 @@ $messages['lb'] = array(
 );
 
 /** Latvian (latviešu)
+ * @author Papuass
  * @author Xil
  */
 $messages['lv'] = array(
-	'tog-disablelinksuggest' => 'Neradīt saišu ieteikumus', # Fuzzy
+	'tog-disablelinksuggest' => 'Neradīt saišu ieteikumus izejas koda režīmā',
 );
 
 /** Macedonian (македонски)

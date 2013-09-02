@@ -12,6 +12,13 @@ $messages['en'] = array(
 	"ajaxpoll-submitting" => "Please wait, submitting your vote..."
 );
 
+/** Message documentation (Message documentation)
+ * @author Shirayuki
+ */
+$messages['qqq'] = array(
+	'ajaxpoll-submit' => '{{Identical|Vote}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -64,6 +71,19 @@ $messages['ba'] = array(
 	'ajaxpoll-submit' => 'Тауыш бирергә!',
 	'ajaxpoll-closed' => 'Тауыш биреү ябыҡ. Һөҙөмтәләр менән рәхәтләнегеҙ.',
 	'ajaxpoll-submitting' => 'Зинһар, һеҙҙең тауыш тураһында мәғлүмәт тапшырылғанын көтөгөз...',
+);
+
+/** Bikol Central (Bikol Central)
+ * @author Geopoet
+ */
+$messages['bcl'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;kan gabos na mga boto',
+	'ajaxpoll-thankyou' => 'Mabalos tabi sa saindong pagboto!',
+	'ajaxpoll-error' => 'Nagkaigwa nin sarong problema an pagproseso kan saimong boto, pakiprubare tabi giraray.',
+	'ajaxpoll-summary' => 'An pirilian pinagmukna sa $1 kan $2, asin sa kalawigan $3 na katawohan an nagboto na.',
+	'ajaxpoll-submit' => 'Botohan!',
+	'ajaxpoll-closed' => 'An pirilian pinasarado na ngunyan. Mag-ogma sa mga resulta.',
+	'ajaxpoll-submitting' => 'Pakihalat tabi, pinagsusumite pa an saimong boto...',
 );
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
@@ -291,6 +311,7 @@ $messages['fo'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;av øllum atkvøðum',
 	'ajaxpoll-thankyou' => 'Takk fyri tína atkvøðu!',
 	'ajaxpoll-error' => 'Tað var ein trupulleiki við at skráseta tína atkvøðu, vinarliga royn aftur.',
+	'ajaxpoll-summary' => 'Atkvøðugreiðslan var upprættað kl. $1 hin $2, og tik nú hava $3 fólk atkvøtt.',
 	'ajaxpoll-submit' => 'Atkvøð!',
 	'ajaxpoll-closed' => 'Atkvøðugreiðslan er stongd nú. Njót úrslitini.',
 	'ajaxpoll-submitting' => 'Vinarliga bíða eitt sindur, tín atkvøða verður viðgjørt...',
@@ -336,7 +357,7 @@ $messages['gsw'] = array(
 	'ajaxpoll-submitting' => 'Bitte warte e Wyyli. Am Ibermittle vu Dyyre Stimm ...',
 );
 
-/** Hakka (Hak-kâ-fa)
+/** Hakka (客家語/Hak-kâ-ngî)
  * @author Anson2812
  */
 $messages['hak'] = array(
@@ -474,6 +495,7 @@ $messages['lb'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp; vun alle Stëmmen',
 	'ajaxpoll-thankyou' => 'Merci fir Är Stëmm!',
 	'ajaxpoll-submit' => 'Ofstëmmen!',
+	'ajaxpoll-closed' => "D'Ëmfro ass ofgeschloss. Kuckt d'Resultater.",
 	'ajaxpoll-submitting' => 'Waart w.e.g., Är Stëmm gëtt elo geschéckt ...',
 );
 
@@ -488,6 +510,13 @@ $messages['lt'] = array(
 	'ajaxpoll-submit' => 'Balsuoti!',
 	'ajaxpoll-closed' => 'Apklausa baigta. Mėgaukitės rezultatais.',
 	'ajaxpoll-submitting' => 'Prašome palaukti, siunčiame jūsų balsą ...',
+);
+
+/** Latvian (latviešu)
+ * @author Papuass
+ */
+$messages['lv'] = array(
+	'ajaxpoll-submit' => 'Balsot!',
 );
 
 /** Basa Banyumasan (Basa Banyumasan)
@@ -523,6 +552,16 @@ $messages['ml'] = array(
 	'ajaxpoll-submitting' => 'ദയവായി കാത്തിരിക്കുക, താങ്കളുടെ വോട്ട് സമർപ്പിക്കുന്നു...',
 );
 
+/** Marathi (मराठी)
+ * @author V.narsikar
+ */
+$messages['mr'] = array(
+	'ajaxpoll-thankyou' => 'आपल्या मतासाठी धन्यवाद!',
+	'ajaxpoll-error' => 'आपले मतावर प्रक्रिया करण्यात अडचण आली आहे, कृपया पुन्हा प्रयत्न करा.',
+	'ajaxpoll-closed' => 'मतदान आता बंद झाले. निकालांची मजा घ्या.',
+	'ajaxpoll-submitting' => 'कृपया थांबा. आपले मत सादर करीत आहे...',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -534,6 +573,19 @@ $messages['ms'] = array(
 	'ajaxpoll-submit' => 'Undi!',
 	'ajaxpoll-closed' => 'Tinjauan ditutup sekarang. Lihat hasilnya.',
 	'ajaxpoll-submitting' => 'Sila tunggu, undian anda sedang diserahkan...',
+);
+
+/** Maltese (Malti)
+ * @author Chrisportelli
+ */
+$messages['mt'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;tal-voti kollha',
+	'ajaxpoll-thankyou' => 'Grazzi tal-ivvutajt!',
+	'ajaxpoll-error' => "Kien hemm problema fl-ipproċessar tal-vot tiegħek, jekk jogħġbok erġa' pprova.",
+	'ajaxpoll-summary' => "Is-sondaġġ sar fil-$1 nhar il-$2, u s'issa $3 persuni  vvutaw.",
+	'ajaxpoll-submit' => 'Ivvota!',
+	'ajaxpoll-closed' => 'Is-sondaġġ huwa magħluq. Iċċekkja r-riżultati.',
+	'ajaxpoll-submitting' => 'Jekk jogħġbok stenna, il-vot tiegħek qiegħed jintbagħat.',
 );
 
 /** Norwegian Bokmål (norsk bokmål)

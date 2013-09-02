@@ -1054,13 +1054,36 @@ $messages['roa-tara'] = array(
 	'app-tab-search' => 'Cirche',
 	'app-tab-about' => 'Sus a',
 	'app-tab-browse' => 'A..Z',
+	'app-tab-sotd' => 'SotD',
 	'app-async-error-title' => 'Ohhhhh!',
+	'app-async-error-message' => "Probbleme temboranèe cu 'a connessione. Pe piacere pruève cchiù tarde.",
+	'app-nonetwork-dialog-title' => 'Rete indisponibbile',
+	'app-nonetwork-dialog-message' => 'Nisciuna connessione de rete ha state acchiate.',
 	'app-nonetwork-dialog-close-button' => 'OK',
 	'search-go' => 'Veje!',
+	'search-hint-text' => "p.e. 'Fido Guido:Maje nisciune'",
+	'search-no-match-found' => "Non g'agghie acchiate ninde.",
+	'search-no-match-found-query' => 'Cercate: %s',
+	'search-results-title' => "Resultate d'a ricerche pe: %s",
+	'login-label' => "Trase jndr'à LyricUicchi",
 	'login-username-hint' => 'Nome utende',
 	'login-password-hint' => 'Passuord',
 	'login-submit-button' => 'Tràse',
+	'about-heading' => 'LyricUicchi',
 	'about-credits' => 'da %s',
+	'about-heading-tips' => 'Stoche a cerche',
+	'about-tips-0' => "Accuminze a scrivere 'u nome de 'n'artiste da auto combletà cumme tu scrive.",
+	'about-tips-1' => "Lefote sus 'u scherme prengepàle sò 'u Megghie 9 canzune sus a iTunes mò.",
+	'about-heading-licensing' => 'Copyright',
+	'about-licensing-0' => "St'app jè a 'u 100% legale. Le deritte onne state paiate pu titolare d'a canzone cu Gracenote - 'ndruche 'u site LyricUicchi.",
+	'about-heading-feedback' => 'Segnalazione',
+	'about-feedback-0' => "Ne vuè ccu dice quaccheccose sus a l'app? Mannane 'na mail: %s",
+	'about-heading-rate' => "Vote st'app pe piacere!",
+	'about-rate-0-android' => "Ce te piace st'app, pe piacere mitte 5 stelle sus a 'u Mercate de Android!",
+	'about-rate-0-ios' => "Ce te piace st'app, pe piacere mitte 5 stelle sus a 'u Negozie de App!",
+	'gracenote-takedown' => "Naaa! Sfortunatamende, non ge tenime 'a licenze pe fà vedè tutte le teste pe sta canzone jndr'à stu mumende (quiste succede pe mene de l'1% de le canzune nuèstre). Pe piacere pruève 'a sumane prossime.",
+	'lyrics-artist-byline' => 'da %s',
+	'ringtone-matcher-by-song' => "Manne %s suonerie sus a 'u Cellulare tune",
 );
 
 /** Russian (русский)
@@ -1244,6 +1267,7 @@ $messages['tr'] = array(
 /** Ukrainian (українська)
  * @author Base
  * @author Steve.rusyn
+ * @author SteveR
  * @author Ua2004
  */
 $messages['uk'] = array(

@@ -821,17 +821,31 @@ $messages['tly'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Base
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
 	'activityindicator-message' => 'Завантаження…',
+	'window-wikis-title' => 'Посібники ігор Вікія',
+	'window-wikis-wikilist-search-hint' => 'Пошук найпопулярніших ігор…',
 	'window-category-load-batch' => 'Більше',
 	'window-article-button-close' => 'Закрити',
 	'window-article-button-back' => 'Назад',
 	'window-article-menu-search-label' => 'Пошук',
+	'window-article-menu-dashboard-label' => 'Вміст посібника',
 	'window-article-menu-cancel-label' => 'Скасувати',
+	'searchview-no-results' => 'Нічого не знайдено для "%s"',
+	'searchview-button-back-list' => 'Назад до списку',
+	'searchview-button-back-article' => 'Назад до статті',
+	'searchbar-hint' => 'Пошук  %s ...',
+	'alert-download-updated-wikis-message' => 'Перелік доступних посібників буде оновлено.',
 	'alert-download-updated-wikis-button-ok' => 'Гаразд',
+	'error-update-required' => 'Оновлення для цієї програми доступне і необхідне.',
+	'error-no-connection' => 'Немає підключення до Інтернету.\\пбудь ласка спробуйте ще раз.',
+	'error-server' => 'Наші сервери відповіли: помилка, вибачте. \\nСпробуйте ще раз.',
+	'error-json-parse' => 'Виникла проблема з даними, які повертаються з наших серверів, вибачте. \\nБудь ласка, спробуйте ще раз.',
 );
 
 /** Simplified Chinese (中文（简体）‎)
