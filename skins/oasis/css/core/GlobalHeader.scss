@@ -16,7 +16,7 @@ $global-nav-alt-background-color: rgba($color-header, 0.7);
 	position: fixed;
 	top: 0;
 	width: 100%;
-	z-index: $zTop;
+	z-index: $zTop + 2;
 	-webkit-font-smoothing: antialiased; // prevents text flickering when css transformations in progress
 	h1 {
 		display: none;
