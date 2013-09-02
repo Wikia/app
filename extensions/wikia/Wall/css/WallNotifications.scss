@@ -1,4 +1,5 @@
 @import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/core/layout";
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/menus";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
@@ -18,9 +19,10 @@ html>body #WallNotifications .avatars { *float: left; }
   }
 	.bubbles {
 		background-image: url(/skins/common/images/bubbles.png); /* base64 */
+		background-position: center;
 		background-repeat: no-repeat;
-		width: 34px;
-		height: 20px;
+		width: 45px;
+		height: $wikiaglobal-nav-height;
 		&.reddot #bubbles_count {
 			@include border-radius(15px);
 			background: red;
@@ -28,8 +30,8 @@ html>body #WallNotifications .avatars { *float: left; }
 		}
 		#bubbles_count {
 			position: relative;
-			left: 16px;
-			top: -6px;
+			left: 27px;
+			top: 6px;
 			font-size: 12px;
 			text-align: center;
 			display: inline-block;
@@ -54,15 +56,12 @@ html>body #WallNotifications .avatars { *float: left; }
 	}
 	line-height: 20px;
 	list-style: none;
-	position: absolute;
-	top: 1px;
-	right: 10px;
+	float: right;
 	.notifications-empty { color: $color-text; width: 250px; text-align: center; }
-	li { border: none; margin: 0; padding: 0; }
+	li { margin: 0; padding: 0; }
 	&>li {
-		height: 27px;
-		padding: 6px 10px 0 10px;
 		position: relative;
+		height: $wikiaglobal-nav-height;
 		&:hover {
 			@include linear-gradient(false, top, rgba(#000, 0), 0, #000, 100%);
 		}
@@ -89,7 +88,7 @@ html>body #WallNotifications .avatars { *float: left; }
 			padding: 0;
 			position: relative;
 			width: 45px;
-			height: 45px;
+			height: $wikiaglobal-nav-height;
 			top: 5px;
 			left: 5px;
 
@@ -133,7 +132,7 @@ html>body #WallNotifications .avatars { *float: left; }
 		width: 250px;
 		&.show {
 			right: 0;
-			top: 33px;
+			top: $wikiaglobal-nav-height;
 		}
 		li {
 			float: none;

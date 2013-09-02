@@ -1,4 +1,33 @@
-$(function () {
+$(function(){
+	require(['wikia.uifactory'], function(uiFactory) {
+		uiFactory.init('drawer').then(function(elem){
+			$('#WikiaHeader').append(elem.render({type:"default", vars: {side: 'left', content: 'test content'}}));
+			require(['wikia.uifactory.drawer'], function(drawer){
+				var leftDrawer = drawer.init('left'),
+					browseEntry = $('#BrowseEntry');
+				leftDrawer
+					.getHTMLElement()
+					.on('drawer-open', function(){
+						browseEntry.addClass('active');
+					})
+					.on('drawer-close', function(){
+						browseEntry.removeClass('active');
+					});
+				browseEntry.click(function(){
+					if (leftDrawer.isOpen()) {
+						$(this).removeClass('active');
+						leftDrawer.close();
+					} else {
+						$(this).addClass('active');
+						leftDrawer.open();
+					}
+
+					return false;
+				});
+			})
+		})
+	});
+
 	var GLOBAL_NAV_SAMPLING_RATIO = 10, // integer (0-100): 0 - no tracking, 100 - track everything */
 		track = Wikia.Tracker.buildTrackingFunction({
 			category: 'global-navigation',

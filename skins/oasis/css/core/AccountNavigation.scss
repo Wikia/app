@@ -6,14 +6,11 @@
 .AccountNavigation {
 	line-height: 20px;
 	list-style: none;
-	position: absolute;
-	top: 1px;
-	right: 20px;
+	float: right;
 	li {
-		border: 0;
-		height: 29px;
+		height: $wikiaglobal-nav-height;
 		margin-top: 0;
-		padding: 4px 0 0;
+		padding: 0;
 		position: relative;
 		float: left;
 		&:hover {
@@ -22,22 +19,17 @@
 		&.nohover:hover {
 			background: transparent;
 		}
-		&:last-child a {
-			border: 0;
-		}
 		>a {
-			border-right: 1px solid mix($color-header-text, $color-header, 20%);
 			display: inline-block;
 			height: 22px;
 			line-height: 24px;
-			padding: 0 15px;
+			padding: 11px 12px;
 			&:hover {
 				text-decoration: none;
 			}
 		}
 		& .chevron {
-			position: relative;
-			left: 6px;
+			margin-left: 6px;
 		}
 	}
 	#fbconnect {
@@ -62,7 +54,7 @@
 		right: 0;
 		top: -9999px;
 		&.show {
-			top: 33px;
+			top: $wikiaglobal-nav-height;
 		}
 		> li {
 			float: none;

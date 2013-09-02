@@ -3,18 +3,19 @@
 @import "../mixins/box-shadow";
 @import "../mixins/clearfix";
 @import "../mixins/gradient";
+@import "../mixins/transition";
+
+$global-nav-alt-background-color: rgba($color-header, 0.7);
 
 .WikiaHeader {
 	@include box-shadow(0, 0, 10px, $color-page-shadow);
 	@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
-	border-top: 3px solid #000;
 	color: $color-header-text;
 	margin: 0 auto;
 	min-width: 1050px;
 	position: fixed;
 	top: 0;
 	width: 100%;
-	height: 34px;
 	z-index: $zTop + 2;
 	-webkit-font-smoothing: antialiased; // prevents text flickering when css transformations in progress
 	h1 {
@@ -22,22 +23,22 @@
 	}
 	nav {
 		font-size: 20px;
-		height: $wikiaglobal-nav-height - 3px; // -3 because of border-top
-		>ul>li:last-child {
+		position: absolute;
+		top: 0;
+		left: 50%;
+		margin-left: -45px;
+		li {
 			padding: 0;
 		}
 	}
 	li {
 		float: left;
 		height: 22px;
-		margin-top: 7px;
+		margin-top: 9px;
 		padding: 0 15px;
-		&:first-child {
+		border-left: 1px solid $global-nav-alt-background-color;
+		&.WikiaLogo {
 			border: 0;
-		}
-		&.start-a-wiki {
-			border-left: 1px solid mix($color-header-text, $color-header, 20%);
-			margin-top: 5px;
 		}
 	}
 	li > .wikia-button {
@@ -55,23 +56,75 @@
 	}
 	.wikia-header-mask {
 		background-image: url(/skins/oasis/images/checkers.png); /* base64 */
-		height: 34px;
-	}
-	.WikiaLogoContainer
-	{
-		position: absolute;
-		top: 0;
-		left: 50%;
-		margin-left: -45px;
+
+		height: $wikiaglobal-nav-height;
 	}
 	.WikiaLogo a {
 		position: relative;
-		top: 3px;
 	}
 	.page-width-container {
 		margin: 0 auto;
 		position: relative;
 		width: $wikiaheader-width;
-		height: 34px;
+		height: $wikiaglobal-nav-height;
+	}
+	.browse-entry {
+
+		display: inline-block;
+		line-height: $wikiaglobal-nav-height;
+		position: relative;
+
+		&.active, &:hover{
+			text-decoration: none;
+
+			.chevron-container {
+				background-color: $global-nav-alt-background-color;
+				border-color: transparent;
+			}
+		}
+
+		.chevron-container {
+			background-image: url(/skins/oasis/images/chevron_down.png); /* base64 */
+			background-position: center;
+			background-repeat: no-repeat;
+			border-right: 1px solid $global-nav-alt-background-color;
+			display: inline-block;
+			width: 45px;
+			height: $wikiaglobal-nav-height;
+			float: left;
+		}
+		.text-container, .hubname-container {
+			@include transition-shorthand(all 0.2s);
+			color: $color-header-text;
+			left: 45px;
+			padding: 0 8px;
+			position: absolute;
+			text-transform: uppercase;
+			white-space: nowrap;
+			-webkit-font-smoothing: antialiased; // prevents text flickering when css transformations in progress
+
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-khtml-user-select: none;
+			-moz-user-select: -moz-none;
+			-ms-user-select: none;
+			user-select: none;
+
+		}
+		.text-container {
+			opacity: 0;
+		}
+
+		&.active {
+			.text-container {
+				opacity: 1;
+			}
+			.hubname-container {
+				opacity: 0;
+			}
+		}
+	}
+	.drawer {
+		width: 190px;
 	}
 }

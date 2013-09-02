@@ -7,13 +7,14 @@ class GlobalHeaderController extends WikiaController {
 	}
 
 	public function index() {
-
 		wfProfileIn(__METHOD__);
+		$this->response->addAsset('ui_repo_api_js');
+		$this->response->addAsset('skins/oasis/js/GlobalHeader.js');
 
 		$userLang = $this->wg->Lang->getCode();
 
 		global $wgCityId;
-		$this->response->setVal('category', WikiFactory::getCategory($wgCityId));
+		$this->response->setVal('category', HubService::getCategoryInfoForCurrentPage());
 
 		// Link to Wikia home page
 		$centralUrl = 'http://www.wikia.com/Wikia';

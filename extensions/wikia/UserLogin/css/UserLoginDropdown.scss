@@ -10,7 +10,7 @@
 	width: 141px;
 	/* global form overrides */
 	&.show {
-		top: 33px;
+		top: $wikiaglobal-nav-height;
 	}
 	.WikiaForm {
 		label {
