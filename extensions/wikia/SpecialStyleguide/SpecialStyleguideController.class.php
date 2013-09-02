@@ -64,10 +64,10 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 			->render( 'SpecialStyleguide_index.mustache' )
 		);
 
-		wfProfileOut( __METHOD__ );
-
 		// skip rendering
 		$this->skipRendering();
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	private function getFirstTextAfterSlash( $subpageText ) {

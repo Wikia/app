@@ -93,7 +93,7 @@ class FactoryTest extends WikiaBaseTest {
 
 		switch ( $type ) {
 			case 'scss':
-			case  'css':
+			case 'css':
 				$wgOutMock->expects( $this->once() )
 					->method( 'addStyle' );
 				$wgOutMock->expects( $this->never() )

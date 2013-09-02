@@ -1,4 +1,15 @@
 <?php
+/**
+ * @group Integration
+ *
+ * Integration test for Wikia Styleguide.
+ *
+ * Covers:
+ * * Wikia\UI\Factory
+ * * Wikia\UI\Component
+ *
+ */
+
 class Integration extends WikiaBaseTest {
 
 	/**
