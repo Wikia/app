@@ -1,4 +1,42 @@
+
+var trackSpecialCssClick = function (action, label, value, params, event) {
+	Wikia.Tracker.track({
+		category: 'special-css',
+		action: action,
+		browserEvent: event,
+		label: label,
+		trackingMethod: 'both',
+		value: value
+	}, params);
+};
+
 $(function() {
+	// impressions
+	Wikia.Tracker.buildTrackingFunction({
+		category: "special-css",
+		trackingMethod: "both",
+		action: Wikia.Tracker.ACTIONS.IMPRESSION
+	});
+
+	// click on update-items and educational modules
+	$("a[data-tracking]").on("click", function(e) {
+		var t = $(this);
+		trackSpecialCssClick(Wikia.Tracker.ACTIONS.CLICK, t.data('tracking'), null, {href: t.attr('href')}, e);
+	});
+
+	// history and show changes
+	$(".wikia-menu-button-submit a").on("click", function(e) {
+		var t = $(this);
+		switch (t.data('id')) {
+			case 0:
+				trackSpecialCssClick(Wikia.Tracker.ACTIONS.CLICK, 'history', null, {href: t.attr('href')}, e);
+				return;
+			case 1:
+				trackSpecialCssClick(Wikia.Tracker.ACTIONS.OPEN, 'changes', null, {}, e);
+				return;
+		}
+	});
+
 	require(['ace/ace'], function(ace) {
 		var disableBeforeUnload = false;
 		var EDITOR_BOTTOM_MARGIN = 10;
@@ -29,13 +67,22 @@ $(function() {
 
 		heightUpdateFunction();
 
-		$('#cssEditorForm').submit(function() {
+		$('#cssEditorForm').submit(function(e) {
 			disableBeforeUnload = true;
+			var form = $(this);
+
+			trackSpecialCssClick(Wikia.Tracker.ACTIONS.SUBMIT, 'publish', null, {}, e);
+
 			var hiddenInput = $('<input/>')
 				.attr('type', 'hidden')
 				.attr('name', 'cssContent')
 				.val(editorSession.getValue());
-			$(this).append(hiddenInput);
+			form.append(hiddenInput);
+
+			// prevent submitting immediately so we can track this event
+			e.preventDefault();
+			form.unbind('submit');
+			setTimeout(function() {form.submit();}, 100, form);
 		});
 
 		$('#showChanges').click(function() {

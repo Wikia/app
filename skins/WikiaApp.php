@@ -47,7 +47,7 @@ class SkinWikiaApp extends WikiaSkin {
 
 		$out->prependHTML(
 			'<a style="width:100%;" href="https://play.google.com/store/apps/details?id=com.wikia.app.GameGuides&amp;referrer=utm_source%3Dwikia%26utm_medium%3Dwikiaapp"><img style="width:100%;height:auto;" src="/extensions/wikia/GameGuides/images/GG_MobileAd_320x50.jpg"></a><br>
-			<a href="?useskin=wikiamobile">This skin is being depracted please use WikiaMobile</a>'
+			<a href="?useskin=wikiamobile">This skin is being deprecated please use WikiaMobile</a>'
 		);
 
 		//We want to log any usage of this skin

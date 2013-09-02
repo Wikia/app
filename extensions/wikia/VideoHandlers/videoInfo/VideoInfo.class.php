@@ -111,8 +111,8 @@ class VideoInfo extends WikiaModel {
 	}
 
 	/**
-	 * update data in the database
-	 * @return boolean $affected
+	 * Update data in the database
+	 * @return boolean - Returns true if rows were updated, false if no rows were updated
 	 */
 	protected function updateDatabase() {
 		wfProfileIn( __METHOD__ );

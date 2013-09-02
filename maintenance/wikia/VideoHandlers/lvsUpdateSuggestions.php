@@ -24,9 +24,9 @@ class LVSUpdateSuggestions extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Pre-populate LVS suggestions";
-		$this->addOption( 'test', 'Test', false, false, 't' );
-		$this->addOption( 'verbose', 'Verbose', false, false, 'v' );
-		$this->addOption( 'force', 'Force', false, false, 'f' );
+		$this->addOption( 'test', 'Test mode; make no changes', false, false, 't' );
+		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
+		$this->addOption( 'force', 'Force a rebuild of all suggestions', false, false, 'f' );
 	}
 
 	public function execute() {
@@ -41,10 +41,23 @@ class LVSUpdateSuggestions extends Maintenance {
 
 		$startTime = time();
 
-		$stats = $this->processVideoList( );
+		// Clear existing suggestions if we are forcing a rebuild
+		if ( $this->force ) {
+			$this->clearSuggestions();
+		}
+
+		$this->processVideoList( );
 
 		$delta = $this->formatDuration(time() - $startTime);
-		$this->debug("Found suggestions for {$stats['vidsWithSuggestions']} of {$stats['vidsFound']} video(s) in $delta\n");
+
+		$stats = $this->usageStats();
+
+		$wgDBName = WikiFactory::IDtoDB($_ENV['SERVER_ID']);
+		echo "[$wgDBName] Finished in $delta.\n";
+		echo "[$wgDBName] Usage Stats: Total videos before swapping videos=".( $stats['totalVids'] + $stats['swapTypes'][2] + $stats['swapTypes'][3] ).", ";
+		echo "Total videos=".$stats['totalVids']." (Videos with suggestions=".$stats['vidsWithSuggestions']."), ";
+		echo "Total suggestions=".$stats['numSuggestions'].", Avg per video=".sprintf("%.1f", $stats['avgSuggestions']).", ";
+		echo "Total kept videos=".$stats['swapTypes'][1].", Total swapped videos=".( $stats['swapTypes'][2] + $stats['swapTypes'][3] )." (Exact title=".$stats['swapTypes'][3].")\n";
 	}
 
 	/**
@@ -115,6 +128,70 @@ class LVSUpdateSuggestions extends Maintenance {
 					 'totalSuggestions'    => $totalSuggestions,
 					);
 	}
+
+	/**
+	 * Remove all existing suggestions
+	 */
+	public function clearSuggestions() {
+		$sql = "delete from page_wikia_props
+		 		where propname in (".WPP_LVS_SUGGEST.", ".WPP_LVS_SUGGEST_DATE.", ".WPP_LVS_EMPTY_SUGGEST.")";
+		$db = wfGetDB( DB_MASTER );
+
+		$db->query($sql);
+	}
+
+	public function usageStats() {
+		$db = wfGetDB( DB_SLAVE );
+
+		$sqlTotal = "SELECT count(*) as cnt
+					 FROM video_info
+					 WHERE removed = 0
+					   AND premium = 0";
+
+		$results = $db->query($sqlTotal);
+
+		$totalVids = 0;
+		while( $row = $db->fetchObject($results) ) {
+			$totalVids = $row->cnt;
+		}
+
+		$sqlStatus = "select substr(props, locate('status\";i', props)+10, 1) as status,
+		 			  count(*) as cnt
+		 			  from page_wikia_props
+		 			  where propname = 18
+		 			  group by status";
+
+		$results = $db->query($sqlStatus);
+
+		$swapTypes = array('1' => 0,
+						   '2' => 0,
+						   '3' => 0);
+		while( $row = $db->fetchObject($results) ) {
+			$swapTypes[$row->status] = $row->cnt;
+		}
+
+		$sqlCounts = "select substring_index(substring_index(props, ':', 2), ':', -1) as suggestions
+					  from page_wikia_props
+					  where propname = 19";
+
+		$results = $db->query($sqlCounts);
+
+		$vidsWithSuggestions = 0;
+		$numSuggestions = 0;
+		while( $row = $db->fetchObject($results) ) {
+			$vidsWithSuggestions++;
+			$numSuggestions += $row->suggestions;
+		}
+		$avgSuggestions = empty( $vidsWithSuggestions ) ? 0 : $numSuggestions/$vidsWithSuggestions;
+
+		return array("totalVids"           => $totalVids,
+					 "vidsWithSuggestions" => $vidsWithSuggestions,
+					 "numSuggestions"      => $numSuggestions,
+					 "avgSuggestions"      => $avgSuggestions,
+					 "swapTypes"           => $swapTypes,
+					 );
+	}
+
 
 	/**
 	 * Print the message if verbose is enabled

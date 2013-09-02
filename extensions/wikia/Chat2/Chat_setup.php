@@ -111,7 +111,11 @@ $wgHooks[ 'ParserFirstCallInit' ][] = 'ChatEntryPoint::onParserFirstCallInit';
 $wgHooks[ 'LinkEnd' ][] = 'ChatHelper::onLinkEnd';
 $wgHooks[ 'BeforePageDisplay' ][] = 'ChatHelper::onBeforePageDisplay';
 $wgHooks[ 'ContributionsToolLinks' ][] = 'ChatHelper::onContributionsToolLinks';
+$wgHooks[ 'LogLine' ][] = 'ChatHelper::onLogLine';
+$wgHooks[ 'UserGetRights' ][] = 'chatAjaxonUserGetRights';
+$wgHooks[ 'GetIP' ][] = 'ChatAjax::onGetIP'; // used for calls from chat nodejs server
 
+// logs
 $wgLogTypes[] = 'chatban';
 $wgLogHeaders['chatban'] = 'chat-chatban-log';
 $wgLogNames['chatban'] = 'chat-chatban-log';
@@ -122,12 +126,9 @@ $wgLogNames['chatconnect'] = 'chat-chatconnect-log';
 $wgLogActions['chatconnect/chatconnect'] = 'chat-chatconnect-log-entry';
 $wgLogRestrictions["chatconnect"] = 'checkuser';
 
-$wgHooks[ 'LogLine' ][] = 'ChatHelper::onLogLine';
-
 $wgLogActionsHandlers['chatban/chatbanchange'] = "ChatHelper::formatLogEntry";
 $wgLogActionsHandlers['chatban/chatbanremove'] = "ChatHelper::formatLogEntry";
 $wgLogActionsHandlers['chatban/chatbanadd'] = "ChatHelper::formatLogEntry";
-
 
 // register messages package for JS
 JSMessages::registerPackage('Chat', array(
@@ -142,12 +143,8 @@ JSMessages::registerPackage('ChatBanModal', array(
 	'chat-ban-modal-button-change-ban',
 ));
 
-
 define( 'CHAT_TAG', 'chat' );
 define( 'CUC_TYPE_CHAT', 128);	// for CheckUser operation type
-
-
-$wgHooks['UserGetRights'][] = 'chatAjaxonUserGetRights';
 
 /**
  * Add read right to ChatAjax am reqest.
@@ -212,5 +209,3 @@ function ChatAjax() {
 		return $response;
 	}
 }
-
-$wgHooks['GetIP'][] = 'ChatAjax::onGetIP';        // used for calls from chat nodejs server
