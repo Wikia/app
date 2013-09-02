@@ -113,8 +113,8 @@ WARNING! Notice it IS NOT yet possible to call render() on results of \Wikia\UI\
 ## Component's documentation on Special:Styleguide page
 On Special:Styleguide page in "Component" section we're going to present all available components with UI and live preview.
 In order to display your component on this page you have to create [component-name]_doc.json file which is similar to configuration file but more detailed. It contains three main elements:
-* name-msg-templateVar -- which is a component name's message key in example: "styleguide-name-buttons",
-* description-msg-templateVar -- which is a component's description message key in example: "styleguide-description-button",
+* name -- which is a component name's message key in example: "styleguide-name-buttons",
+* description -- which is a component's description message key in example: "styleguide-description-button",
 * types -- different types of a component; keys of the elements here should be the same as keys of elements in `templateVars`
 
 The `types` elements contain message keys for description of a component's type. They also provide information about each template variable: its name, type and message key for description.
