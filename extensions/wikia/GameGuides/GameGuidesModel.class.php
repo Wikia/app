@@ -161,7 +161,7 @@ class GameGuidesModel{
 				foreach( $titles as $title ) {
 					$contents[] = array(
 						'title' => $title->getText(),
-						'url' => $title->getLocalUrl( array( 'useskin' => 'wikiamobile' ) )
+						'url' => $title->getLocalUrl( array( 'useskin' => GameGuidesController::SKIN_NAME ) )
 					);
 				}
 
@@ -219,7 +219,7 @@ class GameGuidesModel{
 						try {
 							$textResults[] = array(
 									'textForm' => $result->getTitle(),
-									'urlForm' => $mwService->getLocalUrlForPageId( $result['pageid'], array( 'useskin' => 'wikiamobile' ) )
+									'urlForm' => $mwService->getLocalUrlForPageId( $result['pageid'], array( 'useskin' => GameGuidesController::SKIN_NAME ) )
 									);
 							$count++;
 						} catch ( Exception $e ) {} // result is probably stale/deleted
