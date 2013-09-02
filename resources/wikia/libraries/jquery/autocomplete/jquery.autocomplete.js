@@ -95,7 +95,9 @@
       if (!this.options.width) { this.options.width = this.el.width(); }
       this.mainContainerId = 'AutocompleteContainter_' + uid;
 
-      $('<div id="' + this.mainContainerId + '" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + this.options.width + '"></div></div></div>').appendTo(this.options.appendTo);
+			if (this.options.width[this.options.width.length - 1] != '%') this.options.width += this.options.width + 'px';
+
+      $('<div id="' + this.mainContainerId + '" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + this.options.width + ';"></div></div></div>').appendTo(this.options.appendTo);
 
       this.container = $(this.options.appendTo).find('#' + autocompleteElId);
       this.fixPosition();
