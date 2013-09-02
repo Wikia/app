@@ -212,7 +212,6 @@ class RecentChange {
 
 		# Insert new row
 		$dbw->insert( 'recentchanges', $this->mAttribs, __METHOD__ );
-		$dbw->commit();
 
 		# Set the ID
 		$this->mAttribs['rc_id'] = $dbw->insertId();

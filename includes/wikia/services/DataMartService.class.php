@@ -596,7 +596,7 @@ class DataMartService extends Service {
 			$cacheVersion,
 			$wikiId,
 			$limitUsed,
-			( !empty( $keyToken ) ) ? md5( $keyToken ) : null,
+			( $keyToken !== '' ) ? md5( $keyToken ) : null,
 			$excludeNamespaces
 		);
 

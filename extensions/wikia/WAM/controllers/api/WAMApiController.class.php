@@ -3,6 +3,8 @@
 /**
  * Controller to pull WAM data
  *
+ * Available only on corporate wikis (www.wikia.com, de.wikia.com, fr.wikia.com, etc.)
+ *
  * @author Sebastian Marzjan
  */
 

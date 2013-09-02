@@ -714,4 +714,48 @@ class IP {
 		}
 		return "$start/$bits";
 	}
+
+	/** Wikia change -- start */
+	/**
+	 * Wikia: took this method from CheckUser extension
+	 *
+	 * @desc Locates the client IP within a given XFF string
+	 * @param string $xff
+	 * @return array( string, bool )
+	 */
+	public static function getClientIPfromXFF( $xff ) {
+		global $wgSquidServers, $wgSquidServersNoPurge;
+
+		if ( !$xff ) {
+			return array( null, false );
+		}
+
+		// Avoid annoyingly long xff hacks
+		$xff = trim( substr( $xff, 0, 255 ) );
+		$client = null;
+		$isSquidOnly = true;
+		$trusted = true;
+		// Check each IP, assuming they are separated by commas
+		$ips = explode( ',', $xff );
+		foreach ( $ips as $ip ) {
+			$ip = trim( $ip );
+			// If it is a valid IP, not a hash or such
+			if ( IP::isIPAddress( $ip ) ) {
+				# The first IP should be the client.
+				# Start only from the first public IP.
+				if ( is_null( $client ) ) {
+					if ( IP::isPublic( $ip ) ) {
+						$client = $ip;
+					}
+				} elseif ( !wfIsTrustedProxy( $ip ) )
+				{
+					$isSquidOnly = false;
+					break;
+				}
+			}
+		}
+
+		return array( $client, $isSquidOnly );
+	}
+	/** Wikia change -- end */
 }

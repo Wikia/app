@@ -88,7 +88,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 			ev.preventDefault();
 		}else{
 			track.event('search', track.SUBMIT, {
-				label: w.wgCanonicalSpecialPageName == 'Search' ? 'search' : 'article'
+				label: w.wgCanonicalSpecialPageName === 'Search' ? 'search' : 'article'
 			});
 		}
 	});
@@ -138,7 +138,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 
 				handleHeaderLink(href);
 
-				if(wkNavMenu.className == 'cur1'){
+				if(wkNavMenu.className === 'cur1'){
 					wikiNavH1.innerText = element.innerText;
 					lvl2Link = href;
 					track.event('wikinav', track.CLICK, {
@@ -162,7 +162,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 		});
 
 		d.getElementById('wkNavBack').addEventListener('click', function() {
-			if(wkNavMenu.className == 'cur2') {
+			if(wkNavMenu.className === 'cur2') {
 				setTimeout(function(){
 					wkNavMenu.querySelector('.lvl2.cur').className = 'lvl2';
 				}, 501);
@@ -289,15 +289,14 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 	}
 
 	function openLogin(hash){
-		if(wkPrf.className.indexOf('loaded') == -1){
+		if(wkPrf.className.indexOf('loaded') === -1){
 			throbber.show(wkPrf, {center: true});
 
 			loader(
 			{
 				type: loader.LIBRARY,
 				resources: 'facebook'
-			},
-			{
+			},{
 				type: loader.MULTI,
 				resources: {
 					templates: [{
@@ -319,15 +318,6 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 					wkPrf.insertAdjacentHTML('beforeend', res.templates.UserLoginSpecial_index);
 					loader.processScript(res.scripts);
 
-					//see fbconnect.js
-					w.FB.init({
-						appId : w.fbAppId,
-						oauth : true,
-						status : true, // Check login status
-						cookie : true, // Enable cookies to allow the server to access the session
-						xfbml  : w.fbUseMarkup // Whether XFBML should be automatically parsed
-					});
-
 					wkPrf.className += ' loaded';
 
 					var wkLgn = document.getElementById('wkLgn'),
@@ -343,10 +333,10 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 					form.addEventListener('submit', function(ev){
 						var t = ev.target;
 
-						if(t[2].value.trim() == '' || t[3].value.trim() == '') {
+						if(t[2].value.trim() === '' || t[3].value.trim() === '') {
 							ev.preventDefault();
 						}
-					})
+					});
 				}
 			);
 		}
@@ -356,7 +346,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 		closeNav();
 		closeProfile();
 		closeSearch();
-		if(qs().getHash() == "#topbar") {
+		if(qs().getHash() === '#topbar') {
 			var pos = w.scrollY;
 			w.history.back();
 			w.scrollTo(0,pos);
@@ -377,7 +367,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 	function hidePage(){
 		ads && ads.unfix();
 
-		if(d.documentElement.className.indexOf('hidden') == -1) {
+		if(d.documentElement.className.indexOf('hidden') === -1) {
 			d.documentElement.className += ' hidden';
 		}
 	}

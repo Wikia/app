@@ -192,7 +192,6 @@ body {
 		}
 
 		&:before {
-			background-position: 0;
 			// The extra 0.1% fixes sub-pixel rendering issues in Safari (DAR-1052)
 			left: 50.1%;
 			margin-left: -$background-width-half;
@@ -253,7 +252,6 @@ body > .global-notification,
 }
 
 .WikiaMainContentContainer {
-	background-color: $color-page;
 	margin-right: $width-rail + $width-padding;
 	padding: 0 $width-padding;
 }
@@ -471,8 +469,6 @@ body > .global-notification,
 
 @media screen and (max-width: $breakpoint-content) {
 	body {
-		background: $color-page;
-
 		&:after,
 		&:before {
 			display: none;

@@ -14,7 +14,7 @@ $messages['en'] = array(
 	'phalanx-type-question-title' => 'question title',
 	'phalanx-type-recent-questions' => 'recent questions',
 	'phalanx-type-wiki-creation' => 'wiki creation',
-	'phalanx-add-block' => 'Apply block',
+	'phalanx-add-block' => 'Add filter',
 	'phalanx-edit-block' => 'Save block',
 	'phalanx-label-filter' => 'Filter:',
 	'phalanx-label-reason' => 'Reason:',
@@ -61,13 +61,17 @@ Clicking "{{int:phalanx-edit-block}}" will save your changes!',
 	'phalanx-display-row-expire' => "expires on $1",
 	'phalanx-display-row-expire-infinity' => 'never expires',
 
-	'phalanx-link-unblock' => 'unblock',
+	'phalanx-link-unblock' => 'Remove',
 	'phalanx-link-modify' => 'modify',
 	'phalanx-link-stats' => 'stats',
 	'phalanx-reset-form' => 'Reset form',
 
 	'phalanx-legend-input' => 'Create or modify filter',
-	'phalanx-legend-listing' => 'Currently applied filters',
+	'phalanx-legend-listing' => 'Active filters',
+	'phalanx-filters-intro' => 'This is the list of all the filters being currently applied, use the form below to filter the list and search through it.
+
+After being removed, a filter and all the actions connected to it will not be accessible from here anymore; the creation and deletion of filters are permanently recorded on [[$1|log special page]].',
+
 	'phalanx-unblock-message' => 'Block ID #$1 was successfully removed',
 
 	'phalanx-help-type-content' => 'This filter prevents an edit from being saved, if its content matches any of the blacklisted phrases.',
@@ -175,7 +179,8 @@ $messages['qqq'] = array(
 	'phalanx-section-type-wiki-creation' => 'Legend for fieldset grouping blocks related to Wiki creation',
 	'phalanx-section-type-questions' => 'Legend for fieldset grouping blocks related to Answers wiki',
 	'phalanx-expire-custom' => 'Dropdown option for choosing custom expiry time',
-	'phalanx-expire-custom-tooltip' => 'Placeholder for custom expiry time input box with value examples'
+	'phalanx-expire-custom-tooltip' => 'Placeholder for custom expiry time input box with value examples',
+	'phalanx-filters-intro' => 'Intro text shown in block filtering section: $1 is a link to [[Special:Log]] with Phalanx entries'
 );
 
 /** Arabic (العربية)
@@ -1797,6 +1802,9 @@ Kliknięcie "{{int:phalanx-edit-block}}" spowoduje zapisanie zmian!',
 	'phalanx-reset-form' => 'Wyzeruj formularz',
 	'phalanx-legend-input' => 'Tworzenie lub modyfikowanie filtru',
 	'phalanx-legend-listing' => 'Obecnie stosowane filtry',
+	'phalanx-filters-intro' => 'Poniżej znajduje się lista wszystkich obecnie aktywnych blokad. Użyj poniższego formularza do jej przeszukiwania.
+
+Po usunięciu blokady wszystkie związane z nią akcje nie są dostępne na tej stronie. Logi dotyczące utworzenia i usunięcia blokady są zawsze dostępne na [[$1|stronie specjalnej Rejestr]].',
 	'phalanx-unblock-message' => 'Blokada o ID #$1  została pomyślnie usunięta',
 	'phalanx-help-type-content' => 'Ten filtr zapobiega zapisowi zmiany, jeśli zawartość pasuje do dowolnego z wyrażeń zabronionych.',
 	'phalanx-help-type-summary' => 'Ten filtr zapobiega zapisowi zmiany, jeśli wprowadzone podsumowanie pasuje do dowolnego z wyrażeń zabronionych.',
