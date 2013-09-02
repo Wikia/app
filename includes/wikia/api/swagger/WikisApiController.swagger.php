@@ -51,7 +51,7 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="Current batch number"
  * 	)
- * 
+ *
  * @SWG\Model( id="UnexpandedWikiaItem" )
  * 	@SWG\Property(
  * 		name="id",
@@ -89,7 +89,7 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="The absolute URL of the Wikia domain"
  * 	)
- * 
+ *
  * @SWG\Model( id="ExpandedWikiaResultSet" )
  * 	@SWG\Property(
  * 		name="items",
@@ -122,7 +122,7 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="Current batch number"
  * 	)
- * 
+ *
  * @SWG\Model( id="ExpandedWikiaItem" )
  * 	@SWG\Property(
  * 		name="id",
@@ -181,7 +181,6 @@ use Swagger\Annotations as SWG;
  * 	@SWG\Property(
  * 		name="topUsers",
  * 		type="Array",
- * 		items="int",
  * 		required="true",
  * 		description="Array with ten top contributors"
  * 	)
@@ -194,7 +193,6 @@ use Swagger\Annotations as SWG;
  * 	@SWG\Property(
  * 		name="flags",
  * 		type="Array",
- * 		items="string",
  * 		required="true",
  * 		description="Array with flags"
  * 	)
