@@ -1,4 +1,3 @@
-
 //
 //Controllers
 //
@@ -132,7 +131,7 @@ var NodeRoomController = $.createClass(Observable,{
 	userMain: null,
 	maxCharacterLimit: 1000,
 	sanitizeHtml: function(str) {
-		return str.replace(/</g, "&lt;").replace(/>/g, "&gt;");	// Prevent simple HTML/JS vulnerabilities
+                return str.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/$./g, "&#36;&#46;").replace(/$(/g, "&#36;&#40;").replace(/jQuery(/g, "&#74;&#81;&#85;&#69;&#82;&#89;&#40;");// Prevent simple HTML/JS/jQuery vulnerabilities
 	},
 	constructor: function(roomId) {
 
