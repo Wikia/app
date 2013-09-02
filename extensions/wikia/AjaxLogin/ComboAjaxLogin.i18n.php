@@ -136,6 +136,19 @@ $messages['bg'] = array(
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Връщане',
 );
 
+/** Bhojpuri (भोजपुरी)
+ * @author Nepaboy
+ */
+$messages['bho'] = array(
+	'comboajaxlogin-desc' => 'गतिशील बाकस जउन सदस्य के खाता प्रवेश के अनुमति देवेला, गुप्तशब्द याद रखेला आ सदस्य के पंजीकरण करेला',
+	'comboajaxlogin-createlog' => 'खाता प्रवेश या एगो खाता बनाईं',
+	'comboajaxlogin-actionmsg' => 'इ क्रिया के पुरा करे खातिर रउआ पहिले एगो खाता में प्रवेश करे के पड़ी या एगो खाता बनावे के पड़ी',
+	'comboajaxlogin-actionmsg-protected' => 'इ क्रिया के पुरा करे खातिर रउआ पहिले एगो खाता में प्रवेश करे के पड़ी या एगो खाता बनावे के पड़ी',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>फेसबुक कनेक्ट के साथ खाता में प्रवेश करीं</h1>',
+	'comboajaxlogin-connectmarketing-back' => '«वापस',
+	'comboajaxlogin-connectmarketing-forward' => 'शुरु करीं',
+);
+
 /** Bengali (বাংলা)
  * @author Aftab1995
  */
@@ -186,7 +199,9 @@ Klaskit en-dro pe [[Special:Contact|kasit keloù]].',
 );
 
 /** Catalan (català)
+ * @author BroOk
  * @author Marcmpujol
+ * @author Roxas Nobody 15
  */
 $messages['ca'] = array(
 	'comboajaxlogin-desc' => 'Caixa dinàmica que permet als usuaris connectar-se, recordar contrasenyes i registrar usuaris',
@@ -200,6 +215,23 @@ $messages['ca'] = array(
 <li>Controla completament el que publiques</li>
 </ul>",
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Inicia sessió amb Facebook Connect</h1>',
+	'comboajaxlogin-connectmarketing-oasis' => "<h1> Connecta el teu compte de Facebook amb Wikia </ h1>
+<ul>
+<li> Mantingui el seu nom d'usuari actual, història, edita ... res no canvia, excepte el que es connecti </ li>
+<li> Comparteixi la seva activitat en Wikia amb els teus amics a Facebook, amb un control total del que es publica </li>",
+	'comboajaxlogin-connectmarketing-back' => 'Tornar',
+	'comboajaxlogin-connectmarketing-forward' => 'Començar»',
+	'comboajaxlogin-connectdirections' => "Introduïu el vostre nom d'usuari de Wikia i contrasenya aquí - connectarem per art de màgia els comptes de Wikia i Facebook.
+
+Una vegada ho facis, pots iniciar sessió fàcilment amb qualsevol botó Facebook Connect.",
+	'comboajaxlogin-post-not-understood' => "Hi va haver un error en la forma d'aquest formulari quan va ser construït.
+Si Us Plau proveu de nou o [[Special:Contactar|informeu d'aquesta]].", # Fuzzy
+	'comboajaxlogin-readonlytext' => '<h2>Em sap greu!</h2>
+<p>No podeu crear un compte en el moment - hauria de ser amunt i corrent una altra vegada en breu. Aquí és el que està succeint:<br><em>$1</em></p>
+<p>Si us plau comprovi <a href="http://twitter.com/wikia">Twitter</a> o <a href="http://facebook.com/wikia">Facebook</a> per a més informació.
+<br>
+(Si ja teniu un compte, podeu <a href="#">iniciar la sessió</a> com normal, però no podrà editar.)</p>', # Fuzzy
+	'comboajaxlogin-ajaxerror' => 'Wikia no està responent. Si us plau, comproveu la connexió de xarxa.',
 );
 
 /** Czech (česky)
@@ -772,6 +804,25 @@ $messages['lb'] = array(
 $messages['lt'] = array(
 	'comboajaxlogin-createlog' => 'Prisijungti arba sukurti sąskaitą',
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Prisijungti su FaceBook Prisijungimu</h1>',
+);
+
+/** Basa Banyumasan (Basa Banyumasan)
+ * @author StefanusRA
+ */
+$messages['map-bms'] = array(
+	'comboajaxlogin-createlog' => 'Mlebu log utawa gawe akun',
+	'comboajaxlogin-actionmsg' => 'Kanggo nglakokna tindakan kiye Rika kudu mlebu log disit utawa gawe akun',
+	'comboajaxlogin-actionmsg-protected' => 'Kanggo nglakokna tindakan kiye Rika kudu mlebu log disit utawa gawe akun',
+	'comboajaxlogin-connectmarketing' => '<h1>Nyambungna akun-akune Rika</h1>
+<ul>
+<li>jeneng panganggo sekiye, riwayat, lan suntingan tetep disimpen... Ora ana sing owah mung carane Rika mlebu log thok</li>
+<li>Sebarna aktivitase Rika nang Wikia maring kanca-kancane Rika nang Facebook</li>
+<li>Kendali kabeh maring apa sing arep dipublikasikna</li>
+</ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Mlebu log nganggo Koneksi Facebook</h1>',
+	'comboajaxlogin-connectmarketing-back' => '« Mbalik',
+	'comboajaxlogin-connectmarketing-forward' => 'Molai »',
+	'comboajaxlogin-ajaxerror' => 'Wikia ora nanggepi. Monggo dipriksa sambungan jaringane Rika.',
 );
 
 /** Macedonian (македонски)

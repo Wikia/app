@@ -59,10 +59,12 @@ $messages['ar'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  */
 $messages['br'] = array(
 	'piggyback-otherusername' => 'Anv implijer all',
 	'piggyback-wronguser' => "N'eo ket $1 ho anv implijer",
+	'piggyback-loginprompt' => "Adebarzhit hoc'h anv implijer hag ho ker-tremen, mar plij.",
 );
 
 /** Czech (česky)

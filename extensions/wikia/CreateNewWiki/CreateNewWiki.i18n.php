@@ -433,6 +433,7 @@ $messages['br'] = array(
 	'cnw-userauth-headline' => 'Hag ur gont ho peus ?',
 	'cnw-userauth-creative' => 'Kevreañ',
 	'cnw-userauth-marketing-heading' => "N'hoc'h eus kont ebet ?",
+	'cnw-userauth-marketing-body' => "Ezhomm ho peus ur gont evit krouiñ a wiki war Wikia. Trawalc'h zo gant ur vunutenn evit lakaat e anv !",
 	'cnw-userauth-signup-button' => 'En em enskrivañ',
 	'cnw-desc-headline' => 'Eus petra zo kaoz en ho wiki ?',
 	'cnw-desc-creative' => 'Deskrivit ho sujed',
@@ -458,11 +459,14 @@ $messages['br'] = array(
 	'cnw-welcome-instruction2' => "Gwelet a reot ar bouton-mañ hed-ha-hed ho wiki, grit gantañ bep tro ha ma fello deoc'h ouzhpennañ ur bajenn nevez.",
 	'cnw-welcome-help' => 'Kavout a reot respontoù, kuzulioù ha kement zo war <a href="http://community.wikia.com">Kalonenn ar gumuniezh</a>.',
 	'cnw-error-general' => "Un dra bennak a zo aet a-dreuz pa veze krouet ho wiki. Mar plij adklaskit diwezhatoc'h.", # Fuzzy
-	'cnw-error-general-heading' => "Ur fazi 'zo bet e-pad krouidigezh ur wiki nevez", # Fuzzy
+	'cnw-error-general-heading' => "Digarezit ac'hanomp",
+	'cnw-badword-header' => "Oc'ho",
 	'cnw-badword-msg' => "Ac'hanta, mar plij chomit hep implijout gerioù vil pe difennet e deskrivadur ho wiki : $1",
 	'cnw-error-wiki-limit-header' => 'Bevenn ar wikioù bet tizhet',
 	'cnw-error-wiki-limit' => "Ac'hanta, bevennet eo ar c'hrouiñ wikioù da $1 wiki dre zen ha dre zevezh. Gortozit 24 eurvezh a-benn gellout krouiñ unan all.", # Fuzzy
 	'cnw-error-blocked-header' => 'Kont stanket',
+	'cnw-error-torblock' => "N'eo ket aotreet krouiñ wikioù dre ar rouedad Tor.",
+	'cnw-error-bot-header' => "Kavet hon eus ez oc'h ur robot",
 );
 
 /** Chechen (нохчийн)
@@ -2737,16 +2741,13 @@ $messages['vi'] = array(
 	'cnw-error-bot-header' => 'Bạn đã được phát hiện là một bot',
 );
 
-/** Chinese (中文)
- */
-
-
-
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
+ * @author Liuxinyu970226
  * @author Sam Wang
+ * @author TianyinLee
  * @author Yfdyh000
  * @author 乌拉跨氪
  */
@@ -2784,9 +2785,11 @@ $messages['zh-hans'] = array(
 	'cnw-desc-tip1' => '暗示',
 	'cnw-desc-tip1-creative' => '在这里用一两句话向大家介绍您的维基',
 	'cnw-desc-tip2' => '喂',
+	'cnw-desc-tip2-creative' => '给访客提供一些关于你主题的某些特定信息',
 	'cnw-desc-tip3' => '进阶提示',
 	'cnw-desc-choose' => '选择一个分类',
 	'cnw-desc-select-one' => '选一',
+	'cnw-desc-all-ages' => '所有年龄',
 	'cnw-desc-default-lang' => '您的维基将位于$1',
 	'cnw-desc-change-lang' => '改变',
 	'cnw-desc-lang' => '语言',

@@ -257,6 +257,63 @@ $messages['br'] = array(
 	'lookupcontribsall' => 'pep tra',
 );
 
+/** Catalan (català)
+ * @author Alvaro Vidal-Abarca
+ * @author Roxas Nobody 15
+ */
+$messages['ca'] = array(
+	'lookupcontribs' => 'Cerca contribucions',
+	'lookupcontribstitle' => 'Cerca contribucions',
+	'lookupcontribsrecentcontributions' => "Contribucions de l'usuari $1",
+	'lookupcontribsfinalcontributions' => 'Contribucions finals de $1',
+	'lookupcontribshelp' => "Aquesta pàgina especial pot ser utilitzat per mostrar les contribucions dels usuaris en múltiples Wikias.
+Per visualitzar la llista, posa un nom d'usuari sota.",
+	'lookupcontribusernotspecify' => 'No he especificat un usuari encara',
+	'lookupcontribsselectuser' => "Seleccioneu l'usuari:",
+	'lookupcontribsselectfor' => 'Seleccioneu per a:',
+	'lookupcontribsdisplaymode' => "Mode d'exhibició:",
+	'lookupcontribsselectmodenormal' => 'Contribucions recents per aquells usuari',
+	'lookupcontribsselectmodefinal' => "Contribucions finals per a l'usuari",
+	'lookupcontribsselectmodeall' => "Totes les contribucions per a l'usuari",
+	'lookupcontribsfullurls' => 'Enllaços Complets',
+	'lookupcontribslinks' => 'Enllaços de contribucions',
+	'lookupcontribsgo' => 'Anar',
+	'lookupcontribsinvaliduser' => '<p class="error">L\'usuari "<b> $1 </b>" no existeix.
+Registre d\'entrada donat nom d\'usuari per possibles errors tipogràfics.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error">"<b> $1 </b>" no és un mode de vista vàlid.</p>',
+	'lookupcontribsinvalidmode' => '<p class="error">"<b> $1 </b>" no és una manera vàlida.</p>',
+	'lookupcontribsselectwikis' => 'Seleccioneu wikis:',
+	'lookupcontribslistwikiainfo' => 'Llista dels wikis on els articles van ser editats per<b>$1</b>',
+	'lookupcontribsnoresultfound' => 'Cap resultat',
+	'lookupcontribsinvalidresults' => 'Resultats no vàlids!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'Nom de DB',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Títol',
+	'lookupcontribswikioptions' => 'Opcions',
+	'lookupcontribscontribslink' => 'Enllaços de contribucions',
+	'lookupcontribsdetails' => 'Veure detalls a:',
+	'lookupcontribslastedited' => 'Última edició',
+	'lookupcontribsrecordspager' => "S'estan mostrant ' ' $1 ' ' per ' ' $2 ' ' de ' ' $3 ' ' records.",
+	'lookupcontribsnbrresult' => 'Nombre de resultat:',
+	'lookupcontribsnext' => 'Següent',
+	'lookupcontribsprevious' => 'anterior',
+	'lookupcontribspageremoved' => 'Eliminat',
+	'lookupcontribsrestore' => 'Restaurar',
+	'lookupcontribslog' => 'Registre',
+	'lookupcontribscontribs' => 'Contribucions',
+	'lookupcontribshist' => 'Llista',
+	'lookupcontribsdiff' => 'diff',
+	'right-lookupcontribs' => "Veure edicions global de l'usuari",
+	'lookupcontribsshowpages' => "Totes les pàgines (de l'espai de noms $1)",
+	'lookupcontribscontent' => 'Contingut',
+	'lookupcontribscontribtitleforuser' => "Contribucions de l'usuari:",
+	'lookupcontribsnormal' => 'Recents',
+	'lookupcontribsfinal' => 'final',
+	'lookupcontribsall' => 'Tot',
+	'action-lookupcontribs' => "Cerca les aportacions d'un usuari en múltiples wikis",
+);
+
 /** Chechen (нохчийн)
  * @author Sasan700
  * @author Умар
@@ -266,6 +323,7 @@ $messages['ce'] = array(
 	'lookupcontribslinks' => 'къинхьегаме хьажориг',
 	'lookupcontribsnoresultfound' => 'ХӀума ца карийна!',
 	'lookupcontribswikititle' => 'ЦӀе',
+	'lookupcontribswikioptions' => 'Параметраш',
 	'lookupcontribscontribslink' => 'Къинхьегаме хьажориг',
 	'lookupcontribscontribs' => 'къинхьегам',
 );
@@ -1755,6 +1813,7 @@ $messages['yi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Liuxinyu970226
  * @author Yfdyh000
  * @author 乌拉跨氪
  */
@@ -1782,12 +1841,14 @@ $messages['zh-hans'] = array(
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => '标题',
 	'lookupcontribswikioptions' => '选择',
+	'lookupcontribscontribslink' => '贡献链接',
 	'lookupcontribsdetails' => '查看详情：',
 	'lookupcontribslastedited' => '最后编辑',
 	'lookupcontribsrecordspager' => "显示'''$1'''至'''$2'''项记录，总共'''$3'''项。",
 	'lookupcontribsnbrresult' => '结果数量：',
 	'lookupcontribsnext' => '下一步',
 	'lookupcontribsprevious' => '前一步',
+	'lookupcontribspageremoved' => '移除：',
 	'lookupcontribsrestore' => '恢复',
 	'lookupcontribslog' => '日志',
 	'lookupcontribscontribs' => '贡献',

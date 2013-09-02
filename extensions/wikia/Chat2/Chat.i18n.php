@@ -421,6 +421,7 @@ $messages['bn'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -441,14 +442,20 @@ $messages['br'] = array(
 	'chat-kick-cant-kick-moderator' => "N'hallit ket skarzhañ ur merour all eus ar flap.",
 	'chat-user-was-kicked' => 'Skarzhet eo bet $1 gant $2.',
 	'chat-you-were-kicked' => "Skarzhet oc'h bet gant $1.",
+	'chat-user-was-banned' => '$1 zo bet forbannet gant $2 $3.',
+	'chat-you-were-banned' => "Forbannet oc'h bet gant $1.",
 	'chat-user-permanently-disconnected' => "Digevreet oc'h bet, gwiriit ho kevreadur Kenrouedad ha freskait prenestr ho merdeer",
 	'chat-inlinealert-a-made-b-chatmod' => 'Lakaet eo bet <strong>$2</strong> da verour ar flap gant $1.',
 	'chat-err-connected-from-another-browser' => "Kevreet oc'h gant ur merdeer all. Klozet e vo ar c'hevreadur-mañ.",
+	'chat-err-communicating-with-mediawiki' => 'Fazi kehentiñ gant ar servijer MediaWiki.',
+	'chat-ban-contributions-heading' => 'Forbannañ eus ar flap',
+	'chat-ban-modal-heading' => 'Forbannañ an implijer-mañ eus ar flap',
 	'chat-ban-modal-label-expires' => "A ya d'e dermen",
 	'chat-ban-modal-label-reason' => 'Abeg',
 	'chat-log-reason-banadd' => "Emzalc'h direizh er flap",
 	'chat-log-reason-undo' => 'dizober',
 	'chat-ban-undolink' => 'dizober',
+	'chat-ban-modal-button-ok' => 'Forbannañ an implijer-mañ',
 	'chat-ban-modal-button-cancel' => 'Nullañ',
 	'chat-ban-modal-change-ban-label' => 'Kemmañ e',
 	'chat-log-reason-banchange' => "N'eus bet roet abeg ebet",
@@ -3211,6 +3218,7 @@ $messages['vi'] = array(
  * @author Dimension
  * @author Hydra
  * @author Liangent
+ * @author Liuxinyu970226
  * @author Sam Wang
  * @author Yanmiao liu
  * @author Yfdyh000
@@ -3235,6 +3243,8 @@ $messages['zh-hans'] = array(
 	'chat-you-were-kicked' => '您已被 $1 踢出了。',
 	'chat-user-was-banned' => '$1已被$2封禁   $3.',
 	'chat-you-were-banned' => '您已被$1封禁',
+	'chat-user-was-unbanned' => '$2已经解除了对$1的禁止聊天。',
+	'chat-ban-cannt-undo' => '禁令已经被撤消',
 	'chat-user-permanently-disconnected' => '您已经断开，检查网络连接并刷新浏览器窗口',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 升级 <strong>$2</strong> 为聊天主持人。',
 	'chat-err-connected-from-another-browser' => '您已从另一个浏览器连接。此连接将被关闭。',
@@ -3288,9 +3298,16 @@ $messages['zh-hans'] = array(
 	'group-chatmoderator-member' => '聊天主持人',
 	'group-bannedfromchat' => '从聊天中禁止',
 	'group-bannedfromchat-member' => '从聊天中禁止',
+	'chat-ban-option-list' => '2小时:2 hours,1天:1 day,3天:3 days,1周:1 week,2周:2 weeks,1个月:1 month,3个月:3 months,6个月:6 months,1年:1 year,无限期:infinite',
 	'chat-ban-log-change-ban-link' => '改变封禁',
+	'chat-chatconnect-log' => '聊天连接日志',
+	'chat-chatconnect-log-entry' => '连接至$1从地址$2',
 	'chat-chatban-log' => '聊天封禁日志',
+	'chat-chatbanadd-log-entry' => '禁止$1聊天由$2起至$3',
+	'chat-chatbanremove-log-entry' => '$1已被解禁',
+	'chat-chatbanchange-log-entry' => '更改$1的禁止设置从$2至$3',
 	'chat-contributions-ban-notice' => '{{GENDER:$1|该用户}}目前被禁止发言。请参见最新的禁言日志：',
+	'chat-browser-is-notsupported' => '您的浏览器不支持。为了获得最佳体验，请使用<a href="http://community.wikia.com/wiki/Help:Supported_browsers">较新的浏览器</a>。',
 	'chat-checkuser-join-action' => '加入聊天',
 	'chat-status-away' => '不在',
 );

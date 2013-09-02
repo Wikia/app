@@ -113,6 +113,7 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author Marcmpujol
  * @author Paucabot
  */
@@ -127,6 +128,7 @@ $messages['ca'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pàgina|pàgines}})',
 	'tagsreportpagesfound' => '<strong>$1</strong> {{PLURAL:$1|pàgina trobada|pàgines trobades}}, que continguin alguna etiqueta especial (dpl, youtube, etc.)',
 	'tagsreportgenerated' => 'Generat el $1 a les $2',
+	'tagsreportpageremoved' => 'La pàgina #$1 ha estat esborrada',
 );
 
 /** Chechen (нохчийн)

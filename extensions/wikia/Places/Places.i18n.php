@@ -71,6 +71,8 @@ $messages['ar'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'places-in-category' => "Lec'hioù er rummad $1",
+	'places-on-map' => '{{PLURAL:$1|$1 plas|$1 plas}} war ar gartenn-mañ', # Fuzzy
 	'places-editor-search' => 'Klask',
 	'places-editor-geoposition' => "Geolec'hiadur a-vremañ :",
 	'places-geolocation-button-label' => "Ouzhpennañ ul lec'hiadur",

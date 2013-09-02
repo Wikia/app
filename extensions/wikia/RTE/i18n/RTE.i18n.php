@@ -96,6 +96,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -118,15 +119,17 @@ $messages['br'] = array(
 	'enablerichtexteditor' => 'Gweredekaat an embanner nevez', # Fuzzy
 	'rte-enablerichtexteditormessage' => 'Gweredekaet eo bet an aozer testennoù araokaet (Rich Text Editor)',
 	'rte-first-run-notice' => "Degaset hon eus un nebeut gwelladennoù d'an embanner. Evit gouzout hiroc'h, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lennit ar c'hemenn].",
+	'prefs-rte' => 'Aozer testenn pinvidikaet',
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author BroOk
  * @author Marcmpujol
  */
 $messages['ca'] = array(
 	'rte-desc' => 'CKeditor integrat per MediaWiki',
-	'rte-no-js-fallback' => "L'editor de text enriquit no funciona si el JavaScript està desactivat. Si us plau, activa'l en les opcions del teu navegador, o visita les teves [[Especial:Preferències|preferències]] per canviar l'antic editor de MediaWiki", # Fuzzy
+	'rte-no-js-fallback' => "L'editor de text enriquit no funciona si el JavaScript està desactivat. Si us plau, activa'l en les opcions del teu navegador, o visita les teves [[Special:Preferences|preferences]] per canviar a l'antic editor de MediaWiki",
 	'rte-edgecase-info-title' => 'Requereix mode font',
 	'rte-edgecase-info' => "L'editor de text enriquit s'ha desactivat perquè la pàgina conté un codi complex.",
 	'rte-edgecase-comment' => 'Comentaris HTML',

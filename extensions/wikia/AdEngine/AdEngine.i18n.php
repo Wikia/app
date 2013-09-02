@@ -19,12 +19,35 @@ $messages['qqq'] = array(
 	'adengine-exitstitial-button' => 'Text of the link/button that you can close the box with and get directly to the link target',
 );
 
+/** Bhojpuri (भोजपुरी)
+ * @author Nepaboy
+ */
+$messages['bho'] = array(
+	'adengine-exitstitial-title-template' => 'रउआ $1 से जा रहल बानी...',
+	'adengine-exitstitial-redirecting' => 'कुछ क्षण में राउर ब्राउजर रउआ के उ पन्ना पर पहुँचा दि जउना के रउआ अनुरोध कईले रहनी ह।',
+	'adengine-exitstitial-go-back' => 'का वापस जाये के चाहत बानी?',
+	'adengine-exitstitial-button' => 'इ विज्ञापन के छोड़ चलीं',
+);
+
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
 	'adengine-exitstitial-title-template' => "Emaoc'h o kuitaat $1...",
+	'adengine-exitstitial-redirecting' => "Kaset e vioc'h gant ho merdeer d'ar bajenn ho peus goulennet a-benn un nebeud eilennoù.",
 	'adengine-exitstitial-go-back' => "Ha fellout a ra deoc'h mont war-gil ?",
+	'adengine-exitstitial-button' => 'Chom hep sellet ouzh an tamm bruderezh-mañ',
+);
+
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'adengine-exitstitial-title-template' => 'Estàs sortint de $1...',
+	'adengine-exitstitial-redirecting' => 'El teu navegador et redirigirà a la pàgina que has sol·licitat en uns segons.',
+	'adengine-exitstitial-go-back' => 'Vols tornar enrrere?',
+	'adengine-exitstitial-button' => 'Saltar aquest anunci',
 );
 
 /** Spanish (español)
@@ -82,6 +105,16 @@ $messages['ko'] = array(
 $messages['lb'] = array(
 	'adengine-exitstitial-title-template' => 'Dir verloosst $1...',
 	'adengine-exitstitial-button' => 'Dës Reklamm iwwersprangen',
+);
+
+/** Basa Banyumasan (Basa Banyumasan)
+ * @author StefanusRA
+ */
+$messages['map-bms'] = array(
+	'adengine-exitstitial-title-template' => 'Rika ninggalna $1...',
+	'adengine-exitstitial-redirecting' => 'Browsere Rika arep ngarahna Rika maring kaca sing dijaluk sedela maning.',
+	'adengine-exitstitial-go-back' => 'Kepengin balik maning?',
+	'adengine-exitstitial-button' => 'Liwati iklan kiye',
 );
 
 /** Macedonian (македонски)
@@ -158,4 +191,15 @@ $messages['tr'] = array(
  */
 $messages['zh'] = array(
 	'adengine-exitstitial-button' => '跳過廣告',
+);
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Byfserag
+ * @author Liuxinyu970226
+ */
+$messages['zh-hans'] = array(
+	'adengine-exitstitial-title-template' => '你要离开 $1 …',
+	'adengine-exitstitial-redirecting' => '您的浏览器将在几秒钟后重定向至您请求的页面。',
+	'adengine-exitstitial-go-back' => '想要回去吗？',
+	'adengine-exitstitial-button' => '跳过这个广告',
 );

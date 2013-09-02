@@ -839,6 +839,7 @@ Bài viết '''$1''' không tìm thấy.
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Liuxinyu970226
  * @author Wilsonmess
  */
 $messages['zh-hans'] = array(
@@ -848,7 +849,7 @@ $messages['zh-hans'] = array(
 
 找不到名为'''$1'''的页面。
 
-*或许这些页面会对您有所帮助：[[$2]]；
+*您可以尝试标题[[$2]]
 *或许您可以使用左上方的搜索框进行搜索；
 *若您想访问本站主页，点击这个链接：[{{SERVER}} {{SITENAME}}]",
 );

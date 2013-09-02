@@ -292,6 +292,7 @@ $messages['hu'] = array(
  * @author C5st4wr6ch
  */
 $messages['id'] = array(
+	'filepage-desc' => 'Modifikasi dari halaman berkas MediaWiki standar untuk dukungan video',
 	'video-page-file-list-header' => 'Muncul pada halaman-halaman ini',
 	'video-page-global-file-list-header' => 'Muncul pada wiki ini',
 	'video-page-from-provider' => 'Dari $1',
@@ -300,6 +301,8 @@ $messages['id'] = array(
 	'video-page-default-description-header-and-text' => '==Deskripsi==
 Masukkan deskripsi di sini.',
 	'video-page-file-list-pagination' => '$1 dari $2',
+	'file-page-tab-metadata' => 'Metadata',
+	'file-page-more-links' => 'Lihat daftar lengkap',
 );
 
 /** Italian (italiano)

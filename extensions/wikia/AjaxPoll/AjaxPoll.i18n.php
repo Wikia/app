@@ -490,6 +490,17 @@ $messages['lt'] = array(
 	'ajaxpoll-submitting' => 'Prašome palaukti, siunčiame jūsų balsą ...',
 );
 
+/** Basa Banyumasan (Basa Banyumasan)
+ * @author StefanusRA
+ */
+$messages['map-bms'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;sekang kabeh swara',
+	'ajaxpoll-thankyou' => 'Matur nuwun Rika uwis gelem urun rembug!',
+	'ajaxpoll-error' => 'Ana masalah dong lagi mroses swarane Rika, monggo jajal maning.',
+	'ajaxpoll-submit' => 'Milih!',
+	'ajaxpoll-submitting' => 'Monggo dienteni, lagi ngirimna swarane Rika...',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

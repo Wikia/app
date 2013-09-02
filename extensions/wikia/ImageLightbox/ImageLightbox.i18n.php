@@ -102,6 +102,7 @@ $messages['br'] = array(
 	'lightbox_details_tooltip' => 'Gwelet munudoù ar skeudenn',
 	'lightbox-forum' => 'Forom',
 	'lightbox-standard-link' => 'Liamm standart',
+	'lightbox-blog-link' => 'Liamm blog',
 	'lightbox-send' => 'Kas',
 	'lightbox-share-description' => 'Skeudenn $1 war $2',
 	'lightbox-share-email-subject' => "$1 en deus kaset deoc'h ur skeudenn war Wikia",
@@ -121,6 +122,10 @@ $1
 	'lightbox-share-email-ok-caption' => 'Kadarnadur',
 	'lightbox-share-email-ok-content' => 'Kaset eo bet ar postel{{PLURAL:$1||où}}.',
 	'lightbox-share-email-error-caption' => 'Fazi',
+	'lightbox-share-email-error-content' => 'Fazi o kas {{PLURAL:$1|postel|postel}}.
+Munudoù : $2', # Fuzzy
+	'lightbox-share-email-error-login' => 'Ezhomm ho peus da gevreañ evit kas posteloù',
+	'lightbox-share-email-error-noaddress' => "N'eus bet lakaet chomlec'h ebet.",
 	'lightbox-visit-the-wiki' => 'Gweladenniñ ar wiki :',
 );
 
@@ -999,12 +1004,16 @@ $messages['zh-hans'] = array(
 	'lightbox-share-button-email' => '电子邮件',
 	'lightbox-share-button-www' => '分享',
 	'lightbox-share-button-embed' => '嵌入',
+	'lightbox-share-email-label' => '将此图片电邮发送给一位好友',
+	'lightbox-share-email-page-label' => '将此页面电邮发送给一位好友',
 	'lightbox-share-email-page-label-address' => '邮件地址',
 	'lightbox-share-email-ok-caption' => '确认',
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Email has|邮件已经}} 被发送。',
 	'lightbox-share-email-error-caption' => '错误',
 	'lightbox-share-email-error-content' => '发送{{PLURAL:$1|email|邮件}}时遇到错误。
 详细信息： $2',
+	'lightbox-share-email-error-login' => '您需要登录以发送电邮',
+	'lightbox-share-email-error-noaddress' => '尚未指定电邮地址。',
 	'lightbox-visit-the-wiki' => '查阅维基：',
 );
 

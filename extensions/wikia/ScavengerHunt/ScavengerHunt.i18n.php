@@ -331,25 +331,36 @@ $messages['br'] = array(
 	'scavengerhunt-list-enabled' => 'Gweredekaet',
 	'scavengerhunt-list-disabled' => 'Diweredekaet',
 	'scavengerhunt-list-edit' => 'kemmañ',
+	'scavengerhunt-label-image-check' => '(diskouez ar skeudenn)',
 	'scavengerhunt-label-general' => 'Hollek',
 	'scavengerhunt-label-name' => 'Anv :',
 	'scavengerhunt-label-article-title' => 'Titl ar bajenn (URL ar pennad e forzh peseurt wiki) :',
 	'scavengerhunt-label-article-hidden-image' => 'Skeudenn kuzhet :',
+	'scavengerhunt-label-entry-form-button-text' => 'Testenn ar bouton :',
 	'scavengerhunt-button-add' => "Ouzhpennañ ur c'hoari",
 	'scavengerhunt-button-save' => 'Enrollañ',
 	'scavengerhunt-button-disable' => 'Diweredekaat',
 	'scavengerhunt-button-enable' => 'Gweredekaat',
 	'scavengerhunt-button-delete' => 'Dilemel',
+	'scavengerhunt-button-export' => 'Ezporzhiañ da CVS',
+	'scavengerhunt-form-error' => 'Reizhit ar fazioù-mañ, mar plij :',
+	'scavengerhunt-form-error-article-hidden-image' => "Ebarzhit an holl chomlec'hioù evit ar skeudennoù kuzhet, mar plij.",
+	'scavengerhunt-form-error-invalid-url' => 'Pourchasit un URL gwiriek, mar plij.',
 	'scavengerhunt-entry-form-name' => "Hoc'h anv :",
 	'scavengerhunt-entry-form-email' => "Ho chomlec'h postel :",
+	'scavengerhunt-label-sprite-X' => "Lec'hiadur an elfenn",
+	'scavengerhunt-game-more-to-go' => "# hepken d'ober.",
 	'scavengerhunt-label-progress-bar' => 'Barrenn mont war-raok',
 	'scavengerhunt-quit-game-button-quit' => 'Kuitaat',
 	'scavengerhunt-quit-game-button-cancel' => 'Nullañ',
+	'scavengerhunt-quit-game-button-stay' => "Kenderc'hel da c'hoari",
 	'scavengerhunt-label-entry-form-email' => 'Postel an implijer',
 	'scavengerhunt-label-entry-form-username' => 'Anv implijer',
 	'scavengerhunt-label-clue-color' => 'Liv ar font',
 	'scavengerhunt-label-clue-size' => 'Ment ar font',
+	'scavengerhunt-label-clue-font' => 'Kinkladurioù ar font',
 	'scavengerhunt-label-article-congrats' => "Kemennadenn gourc'hemennoù",
+	'scavengerhunt-label-facebook' => 'Rannañ Facebook',
 );
 
 /** Chechen (нохчийн)
@@ -2159,7 +2170,7 @@ $messages['pt'] = array(
 	'scavengerhunt-label-goodbye-text' => 'Mensagem da janela:',
 	'scavengerhunt-label-goodbye-image' => 'Imagem da janela (endereço URL):',
 	'scavengerhunt-button-add' => 'Adicionar um jogo',
-	'scavengerhunt-button-save' => 'Gravar',
+	'scavengerhunt-button-save' => 'Salvar',
 	'scavengerhunt-button-disable' => 'Desativar',
 	'scavengerhunt-button-enable' => 'Ativar',
 	'scavengerhunt-button-delete' => 'Eliminar',
@@ -2807,6 +2818,7 @@ $messages['uk'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Liuxinyu970226
  * @author Sam Wang
  */
 $messages['zh-hans'] = array(
@@ -2822,6 +2834,7 @@ $messages['zh-hans'] = array(
 	'scavengerhunt-label-image-check' => '（显示图像）',
 	'scavengerhunt-label-general' => '简单介绍',
 	'scavengerhunt-label-name' => '名：',
+	'scavengerhunt-label-goodbye' => '再见弹出菜单',
 	'scavengerhunt-button-add' => '添加一个游戏',
 	'scavengerhunt-button-save' => '保存',
 	'scavengerhunt-button-disable' => '禁用',
@@ -2832,7 +2845,12 @@ $messages['zh-hans'] = array(
 	'scavengerhunt-entry-form-email' => '您的电子邮件地址：',
 	'scavengerhunt-quit-game-button-quit' => '退出',
 	'scavengerhunt-quit-game-button-cancel' => '取消',
+	'scavengerhunt-quit-game-button-stay' => '保持游戏',
+	'scavengerhunt-label-entry-form-email' => '用户电邮',
 	'scavengerhunt-label-entry-form-username' => '用户名',
 	'scavengerhunt-label-clue-color' => '字体颜色',
 	'scavengerhunt-label-clue-size' => '字体大小',
+	'scavengerhunt-label-facebook' => 'Facebook分享',
+	'scavengerhunt-facebook-image' => 'Facebook分享的图片',
+	'scavengerhunt-facebook-description' => 'Facebook分享的文本',
 );

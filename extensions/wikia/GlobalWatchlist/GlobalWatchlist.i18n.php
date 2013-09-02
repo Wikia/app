@@ -117,6 +117,37 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => "N'eo bet kavet pajenn blog ebet.",
 );
 
+/** Catalan (català)
+ * @author Alvaro Vidal-Abarca
+ * @author Roxas Nobody 15
+ */
+$messages['ca'] = array(
+	'globalwatchlist-desc' => 'Envia setmanalment digerir e-mails amb watchlisted pàgines en tots els wikis',
+	'tog-watchlistdigest' => 'Envieu-me per correu electrònic un Butlletí Setmanal de la cistella de Seguiment',
+	'tog-watchlistdigestclear' => 'Marcar totes les pàgines de la meva llista de seguiment Setmanal com a visitades',
+	'globalwatchlist-see-more' => 'Si us plau, comprovi la llista de canvis locals per a més canvis',
+	'globalwatchlist-digest-email-subject' => 'Recull Setmanal',
+	'globalwatchlist-digest-email-body' => 'Benvolgut / da $1,
+
+Aquest és un llistat de les pàgines de la vostra llista de seguiment de Wikia que han estat editades des de la darrera visita.
+
+$2
+
+Aquest és un llistat de les pàgines de blocs incloses la vostra llista de seguiment Wikia que han estat editades o en les que s\'ha comentat des de l\'última vegada que les vas visitar.
+
+$3
+
+Si us plau visita-les i edita-les freqüentment ...
+
+Wikia
+
+* Per canviar les preferències de notificacions de la vostra llista de seguiment, per favor, visita http://www.wikia.com/wiki/Special:Preferences
+* Per tenir les pàgines d\'aquest Butlletí Setmanal com visitades vegeu a la pestanya de "Seguiment" en les vostres Preferències',
+	'globalwatchlist-blog-page-title-comment' => '$1( $2  {{PLURAL:$2| comment|comments}})',
+	'globalwatchlist-no-page-found' => 'Cap pàgina trobada.',
+	'globalwatchlist-no-blog-page-found' => "No s'ha trobat el fitxer del registre.",
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  */

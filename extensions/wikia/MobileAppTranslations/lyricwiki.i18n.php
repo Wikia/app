@@ -173,6 +173,47 @@ $messages['br'] = array(
 	'lyrics-artist-byline' => 'gant %s',
 );
 
+/** Catalan (català)
+ * @author Alvaro Vidal-Abarca
+ * @author Roxas Nobody 15
+ */
+$messages['ca'] = array(
+	'app-loading' => "S'està carregant…",
+	'app-tab-search' => 'Cerca',
+	'app-tab-about' => 'Sobre',
+	'app-tab-browse' => 'A..Z',
+	'app-tab-sotd' => 'SotD',
+	'app-async-error-title' => 'Vaja!',
+	'app-async-error-message' => 'Problema amb la connexió temporal. Si us plau provar una altra vegada més tard.',
+	'app-nonetwork-dialog-title' => 'Xarxa no disponible',
+	'app-nonetwork-dialog-message' => 'No hi ha connexió de xarxa detectada',
+	'app-nonetwork-dialog-close-button' => 'OK',
+	'search-go' => 'Vés-hi!',
+	'search-hint-text' => "per exemple, \"John Lennon: Imagini's '",
+	'search-no-match-found' => "No s'han trobat coincidències.",
+	'search-no-match-found-query' => 'Cercat:%s',
+	'search-results-title' => 'Resultats de la recerca per: %s',
+	'login-label' => 'Inici de sessió a LyricWiki',
+	'login-username-hint' => "Nom d'usuari",
+	'login-password-hint' => 'Contrasenya',
+	'login-submit-button' => 'Inici de sessió',
+	'about-heading' => 'LyricWiki',
+	'about-credits' => 'per%s',
+	'about-heading-tips' => 'Cercant...',
+	'about-tips-0' => "Començar a escriure un nom d'artista per usar l'auto-completar a mesura que escriviu.",
+	'about-tips-1' => 'Les imatges a la pantalla principal, són les primeres 9 cançons a iTunes ara mateix.',
+	'about-heading-licensing' => "Drets d'autor",
+	'about-licensing-0' => "Aquesta aplicació és 100% legal. Drets d'autor són pagats per la cançó als titulars de drets a través de Gracenote - igual que en el LyricWiki lloc web.",
+	'about-heading-feedback' => 'Comentaris',
+	'about-feedback-0' => 'Vols dir-nos alguna cosa sobre l\'aplicació? Envia\'m un correu electrònic: <span class="notranslate" traduir="no">%s</span>',
+	'about-heading-rate' => "Valorar l'app si us plau!",
+	'about-rate-0-android' => "Si t'agrada aquest app, si us plau puntua amb 5 estrelles a l'Android Market!",
+	'about-rate-0-ios' => "Si t'agrada aquest app, si us plau puntua amb 5 estrelles a la Botiga App!",
+	'gracenote-takedown' => "Doh! Malauradament, no ens estan autoritzats per a mostrar la lletra completa d'aquesta cançó en el moment (això passa per menys de 1% de les nostres cançons). Si us plau provar una altra vegada la setmana que ve.",
+	'lyrics-artist-byline' => 'per%s',
+	'ringtone-matcher-by-song' => 'Enviar  %s  to de trucada per mòbil',
+);
+
 /** Chechen (нохчийн)
  * @author Умар
  */
@@ -1244,6 +1285,7 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
+ * @author Liuxinyu970226
  */
 $messages['zh-hans'] = array(
 	'app-loading' => '正在载入…',
@@ -1266,6 +1308,8 @@ $messages['zh-hans'] = array(
 	'login-password-hint' => '密码',
 	'login-submit-button' => '登录',
 	'about-heading' => '歌词维基',
+	'about-credits' => '由%s',
+	'about-heading-tips' => '搜索',
 	'about-heading-licensing' => '版权',
 	'about-heading-feedback' => '反馈',
 	'about-heading-rate' => '请给此应用程序评一评！',

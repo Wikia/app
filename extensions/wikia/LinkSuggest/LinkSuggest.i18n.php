@@ -40,10 +40,12 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Gwenn-Ael
  */
 $messages['br'] = array(
 	'tog-disablelinksuggest' => 'Chomp hep diskouez al liammoù kinniget', # Fuzzy
+	'tog-redirected-from' => '&ndash; adkaset adalek $1',
 );
 
 /** Catalan (català)
@@ -277,7 +279,7 @@ $messages['nn'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'tog-disablelinksuggest' => 'Far pas veire los ligams suggerits', # Fuzzy
+	'tog-disablelinksuggest' => 'Afichar pas la suggestion de ligam en mòde font',
 );
 
 /** Polish (polski)

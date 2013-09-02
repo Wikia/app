@@ -131,6 +131,23 @@ $messages['bg'] = array(
 	'quickstats-number-shortening-billions' => '$1B',
 );
 
+/** Bhojpuri (भोजपुरी)
+ * @author Nepaboy
+ */
+$messages['bho'] = array(
+	'quickstats-header-label' => 'त्वरित आँकड़े',
+	'quickstats-header-date' => 'तिथि',
+	'quickstats-header-views' => 'दृष्टिकोण',
+	'quickstats-header-edits' => 'संपादन',
+	'quickstats-header-photos' => 'तस्वीरें',
+	'quickstats-header-likes' => 'पंसदें',
+	'quickstats-totals-label' => 'योग',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|और आँकड़ा देखीं]]',
+	'quickstats-number-shortening' => '$1के',
+	'quickstats-number-shortening-millions' => '$1मिलियन',
+	'quickstats-number-shortening-billions' => '$1बिलियन',
+);
+
 /** Bengali (বাংলা)
  * @author Aftab1995
  */
@@ -640,6 +657,23 @@ $messages['lt'] = array(
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1B',
+);
+
+/** Basa Banyumasan (Basa Banyumasan)
+ * @author StefanusRA
+ */
+$messages['map-bms'] = array(
+	'quickstats-header-label' => 'Statistik Banter',
+	'quickstats-header-date' => 'Tanggal',
+	'quickstats-header-views' => 'Dideleng',
+	'quickstats-header-edits' => 'Suntingan',
+	'quickstats-header-photos' => 'Foto',
+	'quickstats-header-likes' => 'Seneng',
+	'quickstats-totals-label' => 'Total',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Deleng lewih akeh maning statistike]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1Jt',
+	'quickstats-number-shortening-billions' => '$1M',
 );
 
 /** Macedonian (македонски)

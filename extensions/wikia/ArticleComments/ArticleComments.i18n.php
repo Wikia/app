@@ -1538,6 +1538,7 @@ $messages['id'] = array(
 	'wikiamobile-article-comments-post-reply' => 'Kirimkan balassan',
 	'wikiamobile-article-comments-post' => 'Kirim',
 	'wikiamobile-article-comments-show' => 'Tampilkan',
+	'wikiamobile-article-comments-login-post' => 'Silakan masuk log untuk mengirimkan komentar.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR telah berkomentar pada "$PAGETITLE" pada {{SITENAME}}',
 	'enotif_body_article_comment' => 'Hai $WATCHINGUSERNAME,
 
@@ -1920,6 +1921,41 @@ $messages['lus'] = array(
 	'article-comments-rc-comments' => 'Thuziak tuihnihna ([[$1]])',
 );
 
+/** Basa Banyumasan (Basa Banyumasan)
+ * @author StefanusRA
+ */
+$messages['map-bms'] = array(
+	'article-comments-file-page' => "<a href='$1'>Komentar sekang $2</a> nang <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Komentar sekang $2</a> nang <a href='$3'>$4</a> sing diposting nang blog <a href='$5'>$6's</a>",
+	'article-comments-anonymous' => 'Panganggo anonim',
+	'article-comments-comments' => 'Komentar ($1)',
+	'article-comments-post' => 'Ngirimna komentar',
+	'article-comments-cancel' => 'Batalna',
+	'article-comments-delete' => 'busek',
+	'article-comments-edit' => 'nyunting',
+	'article-comments-history' => 'riwayat',
+	'article-comments-error' => 'Komentar ora teyeng disimpen',
+	'article-comments-undeleted-comment' => 'Mbatalna komentar kanggo kaca blog $1',
+	'article-comments-rc-comment' => 'Komentar artikel (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-comments' => 'Komentar artikel ([[$1]])',
+	'article-comments-fblogin' => 'Monggo <a href="$1" rel="nofollow">mlebu log lan nyambung nganggo Facebook</a> kanggo ngirimna komentar nang wiki kiye!',
+	'article-comments-fbconnect' => 'Monggo <a href="$1">nyambungna akun kiye karo Facebook</a> kanggo kirim komentar!',
+	'article-comments-rc-blog-comment' => 'Komentar blog (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-blog-comments' => 'Komentar blog ([[$1]])',
+	'article-comments-login' => 'Monggo <a href="$1">mlebu log</a> kanggo ngirimna komentar nang wiki kiye.',
+	'article-comments-toc-item' => 'Komentar',
+	'article-comments-comment-cannot-add' => 'Rika ora teyeng nambahna komentar maring artikel.',
+	'article-comments-vote' => 'Aweh swara',
+	'article-comments-reply' => 'Bales',
+	'article-comments-show-all' => 'Tidokna kabeh komentar',
+	'article-comments-prev-page' => 'Sedurunge',
+	'article-comments-next-page' => 'Seuwise',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'Artikel induk/komentar induk uwis dibusek.',
+	'article-comments-empty-comment' => "Rika ora teyeng ngirimna komentar kosong. <a href='$1'>Arep dibusek baen?</a>",
+	'wikiamobile-article-comments-header' => 'komentar <span class=cnt id=wkArtCnt>$1</span>',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -2087,10 +2123,12 @@ $messages['mzn'] = array(
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
+ * @author Event
  * @author Laaknor
  */
 $messages['nb'] = array(
 	'article-comments-file-page' => "<a href='$1'>Kommentarer fra $2</a> på <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Kommentar fra $2</a> den <a href='$3'>$4</a> som innlegg på <a href='$5'>$6s</a> blogg",
 	'article-comments-anonymous' => 'Anonym bruker',
 	'article-comments-comments' => 'Kommentarer ($1)',
 	'article-comments-post' => 'Post kommentar',

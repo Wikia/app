@@ -96,7 +96,7 @@ Reason: $2',
 $messages['qqq'] = array(
 	'renameuser' => '{{Identical|Rename user}}',
 	'userrenametool-desc' => 'Short description of the Renameuser extension, shown on [[Special:Version]]. Do not translate or change links.',
-    'userrenametool-encoded' => 'Label for URL encoded version of new username',
+	'userrenametool-encoded' => 'Label for URL encoded version of new username',
 	'userrenametool-reserve' => 'Option to block the old username (after it has been renamed) from being used again.',
 	'userrenametool-warnings' => '{{Identical|Warning}}',
 	'userrenametool-submit' => '{{Identical|Submit}}',
@@ -945,6 +945,7 @@ $messages['da'] = array(
  * @author Kghbln
  * @author LWChris
  * @author Lyzzy
+ * @author Metalhead64
  * @author PtM
  * @author Raimond Spekking
  * @author Spacebirdy
@@ -959,6 +960,7 @@ Siehe [[Special:Stafflog|Mitarbeiterlog]] für Logs.',
 	'userrenametool-desc' => "Ergänzt eine [[Special:Renameuser|Spezialseite]] zur Umbenennung eines Benutzers (erfordert das ''renameuser''-Recht)",
 	'userrenametool-old' => 'Bisheriger Benutzername:',
 	'userrenametool-new' => 'Neuer Benutzername:',
+	'userrenametool-encoded' => 'URL-kodiert:',
 	'userrenametool-reason' => 'Grund:',
 	'userrenametool-move' => 'Benutzer-/Diskussionsseite (inkl. Unterseiten) auf den neuen Benutzernamen verschieben',
 	'userrenametool-reserve' => 'Alten Benutzernamen für eine Neuregistrierung blockieren',
@@ -984,6 +986,7 @@ Siehe [[Special:Stafflog|Mitarbeiterlog]] für Logs.',
 	'userrenametool-error-extension-abort' => 'Eine Erweiterung verhinderte den Umbenennungsprozess.',
 	'userrenametool-error-cannot-rename-account' => 'Die Umbenennung des Benutzerkontos in der gemeinsamen globalen Datenbank ist fehlgeschlagen.',
 	'userrenametool-error-cannot-create-block' => 'Fehler bei der Erstellung des Phalanx-Blocks',
+	'userrenametool-error-cannot-rename-unexpected' => 'Es ist ein unerwarteter Fehler aufgetreten. Bitte Logs überprüfen oder erneut versuchen.',
 	'userrenametool-warn-repeat' => 'Achtung! Der Benutzer "<nowiki> $1 </nowiki>" wurde bereits umbenannt in "<nowiki> $2 </nowiki>".
 Setze den Prozess nur fort, wenn du fehlende Informationen hinzufügen musst.',
 	'userrenametool-warn-table-missing' => 'Die Tabelle "<nowiki>$2</nowiki>" existiert nicht in der Datenbank "<nowiki>$1</nowiki>".',
@@ -1016,6 +1019,7 @@ Du wirst per E-Mail benachrichtigt, wenn alles abgeschlossen ist.',
 	'userrenametool-log' => '{{PLURAL:$1|Eine Bearbeitung|$1 Bearbeitungen}}. Grund: $2',
 	'userrenametool-move-log' => 'Seite während der Benutzerkontoumbenennung von „[[User:$1|$1]]“ in „[[User:$2|$2]]“ automatisch verschoben',
 	'right-renameuser' => 'Benutzer umbenennen',
+	'action-renameuser' => 'Benutzer umzubenennen',
 );
 
 /** Zazaki (Zazaki)
@@ -3161,6 +3165,7 @@ Zobacz [[Special:Stafflog|Staff log]] aby sprawdzić logi.',
 	'userrenametool-desc' => "Dodaje [[Special:UserRenameTool|stronę specjalną]] służącą do zmiany nazwy użytkownika. (wymaga posiadania uprawnień ''renameuser'')",
 	'userrenametool-old' => 'Obecna nazwa użytkownika:',
 	'userrenametool-new' => 'Nowa nazwa użytkownika:',
+	'userrenametool-encoded' => 'Wersja URL encoded:',
 	'userrenametool-reason' => 'Przyczyna zmiany nazwy:',
 	'userrenametool-move' => 'Przeniesienie strony i dyskusji użytkownika (oraz ich podstron) pod nową nazwę użytkownika',
 	'userrenametool-reserve' => 'Zablokuj starą nazwę użytkownika przed możliwością użycia jej',
@@ -3187,6 +3192,7 @@ Wróć i spróbuj jeszcze raz.',
 	'userrenametool-error-extension-abort' => 'Inne rozszerzenie zablokowało proces zmiany nazwy.',
 	'userrenametool-error-cannot-rename-account' => 'Zmiana nazwy użytkownika w globalnej bazie danych nie powiodła się.',
 	'userrenametool-error-cannot-create-block' => 'Tworzenie bloku Phalanx nie powiodło się.',
+	'userrenametool-error-cannot-rename-unexpected' => 'Wystąpił nieoczekiwany błąd, sprawdź logi lub spróbuj ponownie.',
 	'userrenametool-warn-repeat' => 'Uwaga! Nazwa użytkownika "<nowiki>$1</nowiki>" została już zmieniona na "<nowiki>$2</nowiki>".
 Kontynuuj jedynie jeśli musisz dodać brakujące informacje.',
 	'userrenametool-warn-table-missing' => 'Tabela "<nowiki>$2</nowiki>" nie istnieje w bazie danych "<nowiki>$1</nowiki>.”',
@@ -3220,6 +3226,7 @@ Zostaniesz powiadomiony e-mailem o jej zakończeniu.',
 Powód: $2',
 	'userrenametool-move-log' => 'Automatyczne przeniesienie stron użytkownika po zmianie nazwy konta z „[[User:$1|$1]]” na „[[User:$2|$2]]”',
 	'right-renameuser' => 'Zmiana nazw kont użytkowników',
+	'action-renameuser' => 'zmiana nazwy użytkownika',
 );
 
 /** Piedmontese (Piemontèis)

@@ -407,6 +407,7 @@ $messages['bo'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -427,6 +428,7 @@ Gallout a rit implijout ho roll evezhiañ evit mirout ur roud eus eus ar cheñch
 	'myhome-hot-spots-feed-empty' => "Emañ ar wiki-mañ o gortoz e kemerfer perzh ennañ.
 Klikit war '''[[Special:CreatePage|Pajenn nevez]]''' evit kregiñ da skrivañ !",
 	'myhome-hot-spots-newest' => 'Pajennoù nevez war ar wiki',
+	'tog-userlandingpage' => 'Pajenn degouezhout :',
 	'prefs-myhome' => 'Ma fajenn degemer',
 	'myhome-feed-newpage' => 'pajenn nevez',
 	'myhome-feed-edit' => 'kemmañ',
@@ -490,6 +492,7 @@ Ma'z oc'h diazezer ar wiki-mañ pe unan eus merourien anezhañ e c'hallit kemma�
 	'myhome-default-view-success' => 'Mat eo, hon sell dre ziouer eo bremañ',
 	'tooltip-pt-myhome' => "Mont d'am Degemer",
 	'activityfeed' => 'Gwazh obererezh',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|ur gemennadenn|$1 kemennadenn}}',
 );
 
 /** Catalan (català)

@@ -110,6 +110,7 @@ $messages['ia'] = array(
  */
 $messages['id'] = array(
 	'confirmemailprompt-desc' => 'Tampilkan pesan peringatan jika seorang pengguna memiliki alamat email yang belum dikonfirmasi',
+	'confirmemailprompt-error' => 'Apakah ini alamat surel Anda: <strong>$1</strong>? [[$2|Konfirmasikan]] atau [[$3|ubah]].',
 );
 
 /** Italian (italiano)

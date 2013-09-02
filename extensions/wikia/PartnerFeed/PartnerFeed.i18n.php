@@ -51,7 +51,7 @@ $messages['qqq'] = array(
 	'feed-title-recentchanges' => '{{Identical|Recent changes}}',
 	'partner-feed-error-no-blogpost-found' => 'Displayed when the provided blog post does not exist.
 Parameters:
-* $1 is a blog post title.'
+* $1 is a blog post title.',
 );
 
 /** Arabic (العربية)
@@ -88,13 +88,40 @@ $messages['bg'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'partner-feed-earned-badges' => 'Badjoù gounezet nevez zo gant ur Wiki difer',
 	'partner-feed-recent-changes' => 'Kemmoù diwezhañ',
+	'feed-title-blogposts' => 'Blogadennoù nevez',
 	'feed-title-recent-badges' => 'Badjoù diwezhañ',
 	'feed-title-recent-images' => 'Skeudennoù diwezhañ',
 	'all-blog-posts' => 'an holl rummadoù',
 	'blog-posts-from-listing' => 'eus ar roll : $1',
 	'feed-title-blogcomments' => 'Evezhiadenn da $1',
-	'feed-title-recentchanges' => 'Kemmoù graet nevez zo',
+	'feed-title-recentchanges' => 'Kemmoù diwezhañ',
+);
+
+/** Catalan (català)
+ * @author Roxas Nobody 15
+ */
+$messages['ca'] = array(
+	'partner-feed-achievements-leaderboard' => 'Taula de líders amb més exits',
+	'partner-feed-earned-badges' => 'Recentment va guanyar insígnies per a un determinat Wiki',
+	'partner-feed-recent-blog-posts' => 'Darreres entrades del bloc relacionades amb la promoció',
+	'partner-feed-latest-images' => "Galeria de les últimes imatges que s'han pujat",
+	'partner-feed-hotcontent' => 'Hub / verticals "Hot Contingut com ordenades per nombre de redactors',
+	'partner-feed-recent-blog-comments' => "Comentaris recents relacionats amb un bloc l'especificat .",
+	'partner-feed-recent-changes' => 'Canvis Recents',
+	'partnerfeed' => 'Partner feed',
+	'error-no-article' => 'Error: No hi ha "article" parametre passat',
+	'feed-title-blogposts' => 'Entrades de blog recents',
+	'feed-title-recent-badges' => 'Insígnies Recents',
+	'feed-title-recent-images' => 'Imatges recents',
+	'feed-title-leaderboard' => 'Taula de Exits',
+	'feed-main-title' => 'Wikia partner feed',
+	'all-blog-posts' => 'totes les categories',
+	'blog-posts-from-listing' => 'des de la llista:$1',
+	'feed-title-hot-content' => 'Contenido Novedós - $1',
+	'feed-title-blogcomments' => 'Comentaris - $1',
+	'feed-title-recentchanges' => 'Canvis Recents',
 );
 
 /** Chechen (нохчийн)
@@ -119,6 +146,7 @@ $messages['cs'] = array(
  * @author Diebuche
  * @author George Animal
  * @author LWChris
+ * @author Metalhead64
  * @author ✓
  */
 $messages['de'] = array(
@@ -141,6 +169,7 @@ $messages['de'] = array(
 	'feed-title-hot-content' => 'Hot Content - $1',
 	'feed-title-blogcomments' => 'Kommentare zu $1',
 	'feed-title-recentchanges' => 'Letzte Änderungen',
+	'partner-feed-error-no-blogpost-found' => '<b>Fehler:</b> Der Blogbeitrag $1 ist nicht vorhanden.',
 );
 
 /** Zazaki (Zazaki)
@@ -469,6 +498,7 @@ $messages['pl'] = array(
 	'feed-title-hot-content' => 'Gorące treści - $1',
 	'feed-title-blogcomments' => 'Komentarze do $1',
 	'feed-title-recentchanges' => 'Ostatnie zmiany',
+	'partner-feed-error-no-blogpost-found' => '<b>Błąd:</b> Wpis na blogu $1 nie istnieje.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -705,6 +735,7 @@ $messages['uk'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Liuxinyu970226
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
@@ -714,4 +745,5 @@ $messages['zh-hans'] = array(
 	'feed-title-blogposts' => '最新博客帖子',
 	'feed-title-recent-badges' => '最新徽章',
 	'all-blog-posts' => '全部分类',
+	'blog-posts-from-listing' => '来自列表：$1',
 );

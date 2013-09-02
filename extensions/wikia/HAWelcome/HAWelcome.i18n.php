@@ -118,13 +118,13 @@ $messages['br'] = array(
 
 ==Ma degasadennoù==
 
-* [[Special:Contributions/{{PAGENAME}}|Degasadennoù an implijer]]
+* [[Special:Contributions/$1|Degasadennoù an implijer]]
 
 ==Ar pajennoù plijetañ ==
 
 * Ouzhpennañ liammoù d'ar pajennoù plijetañ  war ar wiki amañ!
 * Pajennoù plijetañ #2
-* Pajennoù plijetañ #3", # Fuzzy
+* Pajennoù plijetañ #3",
 	'welcome-message-user' => "Demat, Degemer mat war {{SITENAME}} ! Trugarez da vezañ kemmet [[:$1]].
 
 Gallout a rit lezel ur gemennadenn war ma fajenn V [[$2|kaozeal]] ma c'hallan sikour ac'hanoc'h d'ober tra pe dra ! $3",
@@ -146,7 +146,7 @@ Demat, Degemer mat war {{SITENAME}}; Trugarez da vezañ kemmet ar bajenn [[:$1]]
 '''[[Special:Userlogin|Please sign in and create a user name]]'''. Un doare aes eo evit mirout roudoù eus ho labourioù hag evel-se e c'hallot mont e darempred gant ar peurrest eus ar gumuniezh.
 
 M'ho peus ezhomm skoazell ha ma n'eus merour ebet amañ e c'hallit gweladenniñ ar [[wikia:Forum:Community Central Forum|foromoù Kreiz ar Gumuniezh]] $3", # Fuzzy
-	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|forom skoazellañ]] | [[w:sblog|blog]])</small>', # Fuzzy
+	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|forom skoazellañ]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => "Demat, Degemer mat war {{SITENAME}} ! Trugarez da vezañ kemmet [[:$1]].
 
@@ -1227,17 +1227,19 @@ Als je hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Foru
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'welcome-user-page' => "Aquesta pagina es vòstra pagina personala. I podètz apondre d'entresenhas que vos concernisson !
+	'welcome-user-page' => "==A prepaus de ieu==
+
+Aquò's vòstra vòstra pagina d'utilizaire. I podètz apondre d'entresenhas que vos concernisson !
 
 ==Mas contribucions==
 
-* [[Special:Contributions/{{PAGENAME}}|Mas contribucions]]
+* [[Special:Contributions/$1|Mas contribucions]]
 
 ==Mas paginas preferidas==
 
 * Podètz plaçar aicí de ligams cap a vòstras paginas preferidas del wiki !
 * Ligam cap a la pagina #2
-* Ligam cap a la pagina #3", # Fuzzy
+* Ligam cap a la pagina #3",
 	'welcome-message-user' => "Bonjorn, benvenguda sus {{SITENAME}} ! Mercés d'aver modificada la pagina [[:$1]].
 
 Podètz daissar un messatge sus ma pagina de [[$2|discussion]] se vos pòdi ajudar per qué que siá ! $3",
@@ -1248,15 +1250,18 @@ Podètz daissar un messatge sus ma pagina de [[$2|discussion]] se vos pòdi ajud
 Trantalhetz pas a daissar un messatge sus [[$2|ma pagina de discussion]] se vos pòdi ajudar per qué que siá ! $3",
 	'welcome-message-log' => 'Aculhir un novèl utilizaire',
 	'welcome-message-user-staff' => "== Benvenguda ==
-Bonjorn e benvenguda sus {{SITENAME}} ! Mercés d'aver modificada la pagina [[:$1]].
+Bonjorn
 
-S'avètz besonh d'ajuda e qu'i a pas d'administrator aicí, podètz visitar los [[wikia:Forum:Community Central Forum|forums del Wiki Central de la Comunautat]] $3", # Fuzzy
+Benvenguda sus {{SITENAME}} e mercé d'aver modificada la pagina [[:$1]].
+
+S'avètz besonh d'ajuda, començatz per consultar nòstras [[Help:Contents|paginas d’ajuda]]. Visitatz lo [[w:c:community|centre de la comunautat]] per demorar assabentat via lo [[w:c:community:Blog:Wikia_Staff_Blog|blog de nòstra equipa]], pausatz vòstras questions sus nòstre [[w:c:community:Special:Forum|forum de comunautat]], participatz a nòstras [[w:c:community:Help:Webinars|serias de webinar]], o discutissètz en dirècte amb d’autres Wikians. Bonas modificacions! $3",
 	'welcome-message-anon-staff' => "== Benvenguda ==
-Bonjorn e benvenguda sus {{SITENAME}}. Mercés d'aver modificada la pagina [[:$1]].
 
-'''[[Special:Userlogin|Mercés de vos enregistrar e de crear un nom d'utilizaire]]'''. Es un mejan simple per gardar la traça de vòstras contribucions e que vos ajudarà a comunicar amb la rèsta de la comunautat.
+Bonjorn,
 
-S'avètz besonh d'ajuda e qu'i a pas d'administrator aicí, podètz visitar los [[wikia:Forum:Community Central Forum|forums del Wiki Central de la Comunautat]] $3", # Fuzzy
+Benvenguda sus {{SITENAME}} e mercé d'aver modificada la pagina [[:$1]]. Encoratjam totes los contributors a [[Special:Userlogin|crear un nom d'utilizaire]]''' per tal de gardar la traça de vòstras contribucions, d'accedir a mai de foncionalitats e connéisser la rèsta de la comunautat de {{SITENAME}}.
+
+S'avètz besonh d'ajuda e, podètz visitar peimièr nòstras [[Help:Contents|paginas d’ajuda]], puèi, visitatz lo [[w:c:community|centre de la comunautat]] per ne saber mai. Bonas modificacions! $3", # Fuzzy
 );
 
 /** Polish (polski)
@@ -1950,6 +1955,7 @@ $messages['zh-hans'] = array(
 
 请在[[$2|我的讨论页]]留言如果可以帮忙！$3",
 	'welcome-message-log' => '欢迎新贡献者',
+	'hawelcomeedit' => 'HA欢迎编辑',
 	'welcome-message-wall-user' => '嗨，欢迎来到{{SITENAME}}！ 感谢您协助编辑[[:$1]]页。
 
 如果我能帮忙做些什么，请给我留言！',

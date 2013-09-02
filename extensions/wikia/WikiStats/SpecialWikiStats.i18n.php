@@ -3648,6 +3648,7 @@ Per favor [[Special:UserLogin|aperi un session, o crea un conto]] si tu non jam 
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
  * @author Anakmalaysia
+ * @author C5st4wr6ch
  * @author Farras
  * @author Irwangatot
  * @author Kenrick95
@@ -3691,7 +3692,7 @@ $messages['id'] = array(
 	'wikistats_pageviews_percent' => 'Persentase peningkatan atau penurunan dibandingkan dengan bulan sebelumnya',
 	'wikistats_distrib_article_subtext' => 'hanya suntingan artikel yang dihitung, bukan suntingan pada halaman diskusi, dll',
 	'wikistats_namespace_records' => 'Rekaman basis data per namespace',
-	'wikistats_page_edits' => 'Artikel terbanyak disunting (Konten namespaces) (&gt; 25 suntingan)', # Fuzzy
+	'wikistats_page_edits' => 'Artikel terbanyak disunting (ruang nama konten) (&gt; 25 suntingan)',
 	'wikistats_other_nspaces_edits' => 'Halaman terbanyak disunting (namespaces lain) (&gt; 25 suntingan)',
 	'wikistats_page_edits_count' => '$1 {{PLURAL:$1|edited article|most edited articles}} ditemukan',
 	'wikistats_other_nspaces_edits_count' => '$1 {{PLURAL:$1|edited page|most edited pages}} ditemukan',
@@ -6461,7 +6462,7 @@ $messages['oc'] = array(
 	'wikistats_namespaces' => 'espacis de noms',
 	'wikistats_redirects' => 'redireccions',
 	'wikistats_edited_in_namespace' => "modificat dins l'espaci de noms",
-	'wikistats_main_namespace' => 'principal', # Fuzzy
+	'wikistats_main_namespace' => 'principal',
 	'wikistats_image_namespace' => 'imatge',
 	'wikistats_page_requests' => 'requèstas de paginas',
 	'wikistats_visits' => 'visitas',

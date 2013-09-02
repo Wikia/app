@@ -330,6 +330,7 @@ $messages['id'] = array(
 	'cloakcheck-form-username' => 'Nama pengguna:',
 	'cloakcheck-process-notexist' => 'Nama pengguna tidak ada.',
 	'cloakcheck-process-edits-yes' => 'Pengguna memiliki suntingan cukup.',
+	'cloakcheck-process-edits-no' => 'Pengguna tidak memiliki cukup suntingan.',
 );
 
 /** Italian (italiano)

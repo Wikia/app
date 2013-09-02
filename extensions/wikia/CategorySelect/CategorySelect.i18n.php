@@ -561,7 +561,7 @@ $messages['id'] = array(
 	'categoryselect-button-cancel' => 'Batalkan',
 	'categoryselect-button-save' => 'Simpan',
 	'categoryselect-category-add' => 'Menambahkan kategori', # Fuzzy
-	'categoryselect-category-edit' => 'Pilihan kategori', # Fuzzy
+	'categoryselect-category-edit' => 'Sunting kategori',
 	'categoryselect-category-remove' => 'Menghapus kategori',
 	'categoryselect-edit-summary' => 'Menambahkan kategori',
 	'categoryselect-error-article-doesnt-exist' => 'Halaman [id=$1] tidak ada.',
@@ -944,7 +944,7 @@ $messages['pt'] = array(
 	'categoryselect-desc' => 'Fornece uma interface de gestão das categorias de um artigo sem editar o artigo completo.',
 	'categoryselect-button-add' => 'Adicionar categoria',
 	'categoryselect-button-cancel' => 'Cancelar',
-	'categoryselect-button-save' => 'Gravar',
+	'categoryselect-button-save' => 'Salvar',
 	'categoryselect-category-add' => 'Adicionar categoria...',
 	'categoryselect-category-edit' => 'Editar categoria',
 	'categoryselect-category-remove' => 'Remover categoria',
@@ -1067,13 +1067,14 @@ $messages['sl'] = array(
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Milicevic01
  * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
 	'categoryselect-button-cancel' => 'Откажи',
 	'categoryselect-button-save' => 'Сачувај',
-	'categoryselect-category-edit' => 'Поставке категорије', # Fuzzy
+	'categoryselect-category-edit' => 'Уреди категорију',
 	'categoryselect-edit-summary' => 'Додавање категорија',
 	'categoryselect-error-db-locked' => 'База података је закључана.',
 	'categoryselect-error-user-rights' => 'Грешка у корисничким правима.', # Fuzzy

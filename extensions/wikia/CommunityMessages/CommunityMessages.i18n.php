@@ -71,11 +71,12 @@ $messages['bar'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
 	'communitymessages-desc' => 'Astenn skoazell evit kemennadennoù ar gumuniezh',
-	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Hizivaet eo bet kemennadennoù ar gumuniezh]].', # Fuzzy
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|Hizivaet eo bet kemennadennoù ar gumuniezh]].',
 );
 
 /** Catalan (català)
@@ -254,7 +255,7 @@ $messages['nl'] = array(
  */
 $messages['oc'] = array(
 	'communitymessages-desc' => "Extension d'ajuda pels messatges a la comunautat",
-	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Los messatges a la comunautat son estats meses a jorn]].', # Fuzzy
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|Los messatges a la comunautat son estats meses a jorn]].',
 );
 
 /** Polish (polski)
