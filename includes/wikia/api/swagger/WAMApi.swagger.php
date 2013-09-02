@@ -130,7 +130,7 @@ use Swagger\Annotations as SWG;
  * 			name="url",
  * 			type="string",
  * 			required="true",
- * 			description="Wiki URL"
+ * 			description="The absolute URL of the Wikia"
  * 		)
  * 		@SWG\Property(
  * 			name="hub_id",
@@ -154,7 +154,7 @@ use Swagger\Annotations as SWG;
  * 			name="wiki_image",
  * 			type="string",
  * 			required="false",
- * 			description="Wiki image URL"
+ * 			description="The absolute URL of the Wikia image"
  * 		)
  * 		@SWG\Property(
  * 			name="admins",
@@ -169,7 +169,7 @@ use Swagger\Annotations as SWG;
  * 			name="avatarUrl",
  * 			type="string",
  * 			required="true",
- * 			description="Avatar URL"
+ * 			description="The absolute URL of the User avatar image"
  * 		)
  * 		@SWG\Property(
  * 			name="edits",
@@ -187,13 +187,13 @@ use Swagger\Annotations as SWG;
  * 			name="userPageUrl",
  * 			type="string",
  * 			required="true",
- * 			description="User page URL"
+ * 			description="The absolute URL of the User page"
  * 		)
  * 		@SWG\Property(
  * 			name="userContributionsUrl",
  * 			type="string",
  * 			required="true",
- * 			description="User contributions page URL"
+ * 			description="The absolute URL of the User contributions page"
  * 		)
  * 		@SWG\Property(
  * 			name="userId",

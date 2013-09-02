@@ -27,7 +27,7 @@ use Swagger\Annotations as SWG;
  *			name="url",
  *			type="string",
  *			required="true",
- *			description="Absolute url for given article"
+ *			description="The absolute URL of the Article"
  *		)
  *		@swg\Property(
  *			name="ns",

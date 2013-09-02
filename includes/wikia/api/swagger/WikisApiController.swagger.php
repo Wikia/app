@@ -88,7 +88,7 @@ use Swagger\Annotations as SWG;
  * 			name="domain",
  * 			type="string",
  * 			required="true",
- * 			description="Base domain URL"
+ * 			description="The absolute URL of the Wikia domain"
  * 		)
  *
  * @SWG\Model( id="ExpandedWikiaResultSet" )
@@ -159,7 +159,7 @@ use Swagger\Annotations as SWG;
  * 			name="domain",
  * 			type="string",
  * 			required="true",
- * 			description="Base domain URL"
+ * 			description="The absolute URL of the Wikia domain"
  * 		)
  * 		@SWG\Property(
  * 			name="title",
@@ -171,7 +171,7 @@ use Swagger\Annotations as SWG;
  * 			name="url",
  * 			type="string",
  * 			required="true",
- * 			description="Wikia main URL"
+ * 			description="The absolute URL of the Wikia"
  * 		)
  * 		@SWG\Property(
  * 			name="stats",
@@ -209,7 +209,7 @@ use Swagger\Annotations as SWG;
  * 			name="image",
  * 			type="string",
  * 			required="true",
- * 			description="URL to Wikia image"
+ * 			description="The absolute URL of the Wikia image"
  * 		)
  * 		@SWG\Property(
  * 			name="original_dimensions",
