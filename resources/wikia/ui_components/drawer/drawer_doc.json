@@ -1,6 +1,6 @@
 {
-	"name-msg-templateVar": "styleguide-name-drawer",
-	"description-msg-templateVar": "styleguide-description-drawer",
+	"name": "styleguide-name-drawer",
+	"description": "styleguide-description-drawer",
 	"types": {
 		"default": {
 			"params" : {

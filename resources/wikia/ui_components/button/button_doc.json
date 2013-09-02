@@ -1,6 +1,6 @@
 {
-	"name-msg-templateVar": "styleguide-name-buttons",
-	"description-msg-templateVar": "styleguide-description-button",
+	"name": "styleguide-name-buttons",
+	"description": "styleguide-description-button",
 	"types": {
 		"link": {
 			"name-var-msg-templateVar" : "styleguide-description-link-button",
