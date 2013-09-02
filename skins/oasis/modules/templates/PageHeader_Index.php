@@ -57,7 +57,7 @@
 if ($showSearchBox) {
 	?>
 <section id="WikiaSearchHeader" class="WikiaSearchHeader">
-	<?=  F::app()->renderView('Search', 'Index', array('search_form_id' => 'WikiaSearch')) ?>
+	<?=  F::app()->renderView('Search', 'Index', array('searchFormId' => 'WikiaSearch')) ?>
 </section>
 <?php
 }

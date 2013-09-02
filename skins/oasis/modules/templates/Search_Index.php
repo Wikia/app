@@ -1,7 +1,7 @@
 <?php $searchterm = isset($searchterm) ? $searchterm : ''; ?>
-<?php $search_form_id = isset($search_form_id) ? $search_form_id : 'WikiaSearch'; ?>
+<?php $searchFormId = isset($searchFormId) ? $searchFormId : 'WikiaSearch'; ?>
 
-<form id="<?= $search_form_id; ?>" class="WikiaSearch<?= empty($noautocomplete) ? '' : ' noautocomplete' ?>" action="<?= $specialSearchUrl; ?>" method="get">
+<form id="<?= $searchFormId; ?>" class="WikiaSearch<?= empty($noautocomplete) ? '' : ' noautocomplete' ?>" action="<?= $specialSearchUrl; ?>" method="get">
 	<input type="text" name="search" placeholder="<?= $placeholder ?>" autocomplete="off" accesskey="f" value="<?= htmlspecialchars( $searchterm ) ?>">
 	<input type="hidden" name="fulltext" value="<?= $fulltext ?>">
 	<input type="submit">

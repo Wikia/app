@@ -2,7 +2,7 @@
 	<?= $app->renderView( 'WikiHeader', 'Wordmark' ) ?>
     <?php if ( BodyController::isResponsiveLayoutEnabled() ) : ?>
     <div class="WikiHeaderSearch">
-        <?= $app->renderView( 'Search', 'Index', array( 'search_form_id' => 'HeaderWikiaSearch' ) ) ?>
+        <?= $app->renderView( 'Search', 'Index', array( 'searchFormId' => 'HeaderWikiaSearch' ) ) ?>
     </div>
     <?php endif ?>
     <nav class="WikiNav">
