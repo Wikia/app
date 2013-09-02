@@ -83,7 +83,7 @@ use Swagger\Annotations as SWG;
  *         name="id",
  *         type="int",
  *         required="true",
- *         description="Article ID"
+ *         description="An internal identification number for Article"
  * ),
  *     @SWG\Property(
  *         name="imgUrl",

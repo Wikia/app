@@ -29,7 +29,7 @@ use Swagger\Annotations as SWG;
  * 		name="id",
  * 		type="int",
  * 		required="true",
- * 		description="Wikia ID"
+ * 		description="An internal identification number for Wikia"
  * 	)
  * 	@SWG\Property(
  * 		name="name",
@@ -55,7 +55,7 @@ use Swagger\Annotations as SWG;
  * 		name="id",
  * 		type="int",
  * 		required="true",
- * 		description="Article ID"
+ * 		description="An internal identification number for Article"
  * 	)
  * 	@SWG\Property(
  * 		name="ns",
@@ -69,7 +69,7 @@ use Swagger\Annotations as SWG;
  * 		name="id",
  * 		type="int",
  * 		required="true",
- * 		description="Article ID"
+ * 		description="An internal identification number for Article"
  * 	)
  * 	@SWG\Property(
  * 		name="title",
@@ -95,7 +95,7 @@ use Swagger\Annotations as SWG;
  * 		name="id",
  * 		type="int",
  * 		required="true",
- * 		description="Article ID"
+ * 		description="An internal identification number for Article"
  * 	)
  * 	@SWG\Property(
  * 		name="title",
@@ -155,7 +155,7 @@ use Swagger\Annotations as SWG;
  * 		name="id",
  * 		type="int",
  * 		required="true",
- * 		description="The ID of the revision"
+ * 		description="An internal identification number for Revision"
  * 	)
  * 	@SWG\Property(
  * 		name="user",
@@ -167,7 +167,7 @@ use Swagger\Annotations as SWG;
  * 		name="user_id",
  * 		type="int",
  * 		required="true",
- * 		description="The ID of the user who made the revision"
+ * 		description="An internal identification number for User"
  * 	)
  * 	@SWG\Property(
  * 		name="timestamp",

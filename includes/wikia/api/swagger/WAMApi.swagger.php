@@ -58,7 +58,7 @@ use Swagger\Annotations as SWG;
  * 			name="wiki_id",
  * 			type="int",
  * 			required="true",
- * 			description="Wikia identification number"
+ * 			description="An internal identification number for Wikia"
  * 		)
  * 		@SWG\Property(
  * 			name="wam",
@@ -136,7 +136,7 @@ use Swagger\Annotations as SWG;
  * 			name="hub_id",
  * 			type="int",
  * 			required="true",
- * 			description="wiki hub id"
+ * 			description="An internal identification number for Hub"
  * 		)
  * 		@SWG\Property(
  * 			name="wam_change",
@@ -199,7 +199,7 @@ use Swagger\Annotations as SWG;
  * 			name="userId",
  * 			type="string",
  * 			required="int",
- * 			description="User identification number"
+ * 			description="An internal identification number for User"
  * 		)
  * 		@SWG\Property(
  * 			name="since",
