@@ -16,7 +16,7 @@ use Swagger\Annotations as SWG;
  *     @SWG\Property(
  *         name="items",
  *         type="Array",
- *         description="The list of phrases matching the query",
+ *         description="Standard container name for element collection (list)",
  *         items="$ref:SearchSuggestionsItems"
  *     )
  * )

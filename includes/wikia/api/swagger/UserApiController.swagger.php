@@ -53,7 +53,7 @@ use Swagger\Annotations as SWG;
  *				required="true",
  *				type="Array",
  *				items="$ref:UserElement",
- *				description="A list of selected users"
+ *				description="Standard container name for element collection (list)"
  *			)
  *			@SWG\Property(
  *				name="basepath",

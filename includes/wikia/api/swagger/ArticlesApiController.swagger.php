@@ -196,7 +196,7 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		type="Array",
  * 		items="$ref:HubArticleResult",
- * 		description="A list of each wikia for given hub or language with their top articles"
+ * 		description="Standard container name for element collection (list)"
  * 	)
  * 
  * @SWG\Model( id="UnexpandedListArticleResultSet" )
@@ -205,7 +205,7 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		type="Array",
  * 		items="$ref:UnexpandedArticle",
- * 		description="A list of each unexpanded top article in the result set, sorted by pageview descending"
+ * 		description="Standard container name for element collection (list)"
  * 	)
  * 	@SWG\Property(
  * 		name="offset",
@@ -225,7 +225,7 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		type="Array",
  * 		items="$ref:ExpandedArticle",
- * 		description="A list of each unexpanded top article in the result set, sorted by pageview descending"
+ * 		description="Standard container name for element collection (list)"
  * 	)
  * 	@SWG\Property(
  * 		name="offset",
@@ -246,7 +246,7 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		type="Array",
  * 		items="$ref:UnexpandedArticle",
- * 		description="A list of each unexpanded top article in the result set, sorted by pageview descending"
+ * 		description="Standard container name for element collection (list)"
  * 	)
  * 	@SWG\Property(
  * 		name="basepath",
@@ -260,7 +260,7 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		type="Array",
  * 		items="$ref:ExpandedArticle",
- * 		description="A list of each expanded top article in the result set, sorted by pageview descending"
+ * 		description="Standard container name for element collection (list)"
  * 	)
  * 	@SWG\Property(
  * 		name="basepath",
