@@ -529,7 +529,7 @@ $messages['pl'] = array(
 	'wikiahome-community-social-googleplus' => 'Google+',
 
 	'wikiahome-footer-wikiainc' => '===Wikia, Inc.===
-*http://pl.corporate.wikia.com/wiki/O_nas O nas]
+*[http://pl.corporate.wikia.com/wiki/O_nas O nas]
 *[http://www.wikia.com/Special:Contact Kontakt]
 *[http://www.wikia.com/Careers Kariera]
 *[http://www.wikia.com/Press Prasa]
