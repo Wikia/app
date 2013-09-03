@@ -89,7 +89,9 @@ SpecialPromote.prototype = {
 	initValidate: function(targetObject, fieldName) {
 		var characterCount = targetObject.val().length;
 
-		if (typeof this.inputParams[fieldName].minChars != 'undefined' && typeof this.inputParams[fieldName].maxChars != 'undefined') {
+		if (typeof this.inputParams[fieldName].minChars != 'undefined'
+			&& typeof this.inputParams[fieldName].maxChars != 'undefined'
+		) {
 			this.inputParams[fieldName].minChars = parseInt(this.inputParams[fieldName].minChars);
 			this.inputParams[fieldName].maxChars = parseInt(this.inputParams[fieldName].maxChars);
 
@@ -142,13 +144,13 @@ SpecialPromote.prototype = {
 
 		this.checkPublishButton();
 	},
-	addLessCharsError: function(targetObject, characterCount, minChars) {
+	addTooLittleCharsError: function(targetObject, characterCount, minChars) {
 		targetObject.closest('div').parent().addClass('error');
 		targetObject.closest('div').parent().find('.error').text(
 			$.msg('promote-error-less-characters-than-minimum', characterCount, minChars)
 		);
 	},
-	addMoreCharsError: function(targetObject, characterCount, maxChars) {
+	addTooManyCharsError: function(targetObject, characterCount, maxChars) {
 		targetObject.closest('div').parent().addClass('error');
 		targetObject.closest('div').parent().find('.error').text(
 			$.msg('promote-error-more-characters-than-maximum', characterCount, maxChars)
