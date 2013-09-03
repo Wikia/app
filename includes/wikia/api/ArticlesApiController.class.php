@@ -614,6 +614,7 @@ class ArticlesApiController extends WikiaApiController {
 		if ( $file instanceof WikiaLocalFile ) {
 			//media type: photo, video
 			if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
+				/* @var VideoHandler $handler */
 				$handler = VideoHandler::getHandler( $file->getMimeType() );
 				$typeInfo = explode( '/', $file->getMimeType() );
 				$metadata = ( $handler ) ? $handler->getMetadata( true ) : null;
