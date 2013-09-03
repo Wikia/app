@@ -888,7 +888,8 @@ $config['theme_designer_js'] = array(
 		'//resources/wikia/modules/aim.js',
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
-		'//extensions/wikia/ThemeDesigner/js/ThemeDesigner.js',
+		'//extensions/wikia/JSMessages/js/JSMessages.js',
+		'//extensions/wikia/ThemeDesigner/js/ThemeDesigner.js'
 	)
 );
 
