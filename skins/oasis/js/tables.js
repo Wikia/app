@@ -1,38 +1,3 @@
-// Use the table overflow technique (VE-164)
-jQuery(function( $ ) {
-	var $article = $( '#WikiaArticle' ),
-		scrollableTemplate = '<div class="table-scrollable" />';
-
-	// Scans tables inside of the article and applies overflow hint styles
-	// on any tables that are wider than the article content area.
-	function scan() {
-		var wideCount = 0;
-
-		$article.find( '.table-wrapper' ).each(function() {
-			var $wrapper = $( this ),
-				$table = $wrapper.find( 'table' ),
-				isWide = $table.width() > $article.width();
-
-			$wrapper.toggleClass( 'table-is-wide', isWide );
-
-			if ( isWide ) {
-				wideCount++;
-
-				if ( !$table.parent( '.table-scrollable' ).length ) {
-					$table.wrap( scrollableTemplate );
-				}
-			}
-		});
-
-		if ( wideCount ) {
-			$( window ).on( 'resize', $.debounce( 100, scan ) );
-		}
-	}
-	scan();
-});
-
-// TODO: get rid of everything below here once the old table handling method
-// is completely phased out (have to wait for article caches to update).
 (function($) {
 var WikiaWideTables = {
 	settings: {
@@ -135,11 +100,6 @@ var WikiaWideTables = {
 
 		this.article.find("table").each(function() {
 			var table = $(this);
-
-			//Ignore tables using the overflow method
-			if (table.parent( '.table-scrollable' ).length ) {
-				return;
-			}
 
 			//If the table isn't very wide and doesn't have class="popout", ignore it
 			if (table.width() <= that.article.width() && !table.hasClass('popout')) {

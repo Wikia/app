@@ -252,7 +252,6 @@ body > .global-notification,
 }
 
 .WikiaMainContentContainer {
-	background-color: $color-page;
 	margin-right: $width-rail + $width-padding;
 	padding: 0 $width-padding;
 }
@@ -470,8 +469,6 @@ body > .global-notification,
 
 @media screen and (max-width: $breakpoint-content) {
 	body {
-		background: $color-page;
-
 		&:after,
 		&:before {
 			display: none;

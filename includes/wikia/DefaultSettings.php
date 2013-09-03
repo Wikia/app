@@ -246,6 +246,11 @@ $wgAutoloadClasses[ 'ParserPool'                      ] = "$IP/includes/wikia/pa
 $wgAutoloadClasses[ 'WikiDataSource'                  ] = "$IP/includes/wikia/WikiDataSource.php";
 $wgAutoloadClasses[ 'DateFormatHelper'                ] = "$IP/includes/wikia/DateFormatHelper.php";
 $wgAutoloadClasses[ 'CategoryHelper'                  ] = "$IP/includes/wikia/helpers/CategoryHelper.class.php";
+$wgAutoloadClasses[ 'Wikia\\Measurements\\Driver'     ] = "$IP/includes/wikia/measurements/Drivers.php";
+$wgAutoloadClasses[ 'Wikia\\Measurements\\Drivers'    ] = "$IP/includes/wikia/measurements/Drivers.php";
+$wgAutoloadClasses[ 'Wikia\\Measurements\\NewrelicDriver' ] = "$IP/includes/wikia/measurements/Drivers.php";
+$wgAutoloadClasses[ 'Wikia\\Measurements\\DummyDriver'    ] = "$IP/includes/wikia/measurements/Drivers.php";
+$wgAutoloadClasses[ 'Wikia\\Measurements\\Time'       ] = "$IP/includes/wikia/measurements/Time.class.php";
 
 /**
  * Resource Loader enhancements
@@ -647,6 +652,7 @@ $wgExternalArchiveDB = 'archive';
 $wgStatsDB = 'stats';
 $wgKnowledgeDB = 'dataknowledge';
 $wgDatamartDB = 'statsdb_mart';
+$wgDWStatsDB = 'statsdb';
 $wgStatsDBEnabled = true;
 $wgExternalWikiaStatsDB = 'wikiastats';
 $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see wfSharedMemcKey
@@ -1142,6 +1148,19 @@ $wgEnableJavaScriptErrorLogging = false;
  * Enables ad engine
  */
 $wgEnableAdEngineExt = true;
+
+/**
+ * @name $wgAdDriverUseNewGptZones
+ * Whether to use zones with slot name included (true) in GPT tags or not (false)
+ */
+$wgAdDriverUseNewGptZones = false;
+
+/**
+ * @name $wgAdDriverUseFullGpt
+ * Whether to use full GPT (true) or mixed GPT for roadbloack and legacy DART calls for other slots (false)
+ * If true, $wgAdDriverUseNewGptZones is meaningless (assumed true) as full GPT requires unique zone names
+ */
+$wgAdDriverUseFullGpt = false;
 
 /**
  * @name $wgAdVideoTargeting

@@ -124,7 +124,8 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 			slotnameGpt = slotname + '_gpt',
 			slotDiv = document.createElement('div'),
 			sizes = convertSizesToGpt(slotParams.slotsize),
-			params = {};
+			params = {},
+			slotPath = window.wgAdDriverUseNewGptZones ? path + '/' + slotname : path;
 
 		loadGpt();
 
@@ -141,10 +142,10 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 		slotDiv.setAttribute('data-gpt-slot-sizes', JSON.stringify(sizes));
 		document.getElementById(slotname).appendChild(slotDiv);
 
-		log(['googletag.cmd.push', path, sizes, slotnameGpt, params], 4, logGroup);
+		log(['googletag.cmd.push', slotPath, sizes, slotnameGpt, params], 4, logGroup);
 
 		googletag.cmd.push(function () {
-			var slot = googletag.defineSlot(path, sizes, slotnameGpt),
+			var slot = googletag.defineSlot(slotPath, sizes, slotnameGpt),
 				name,
 				value;
 

@@ -56,10 +56,12 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaGptHelper.js',
+		'//extensions/wikia/AdEngine/js/WikiaFullGptHelper.js',
 		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
 		'//extensions/wikia/AdEngine/js/AdProviderAdDriver2.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 		'//extensions/wikia/AdEngine/js/AdProviderGamePro.js',
+		'//extensions/wikia/AdEngine/js/AdProviderGpt.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
 		'//extensions/wikia/AdEngine/js/AdTemplateSkin.js',
@@ -389,6 +391,14 @@ $config['gameguides_js'] = array(
 );
 
 /** WikiaMobile **/
+$config['wikiamobile_jquerytest_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/WikiaMobile/js/jquery-deprecated-effects-event-alias-sizzle.min.js',
+	)
+);
+
 $config['wikiamobile_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => 'wikiamobile',
@@ -880,7 +890,8 @@ $config['theme_designer_js'] = array(
 		'//resources/wikia/modules/aim.js',
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
-		'//extensions/wikia/ThemeDesigner/js/ThemeDesigner.js',
+		'//extensions/wikia/JSMessages/js/JSMessages.js',
+		'//extensions/wikia/ThemeDesigner/js/ThemeDesigner.js'
 	)
 );
 
