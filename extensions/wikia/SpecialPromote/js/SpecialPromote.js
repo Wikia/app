@@ -2,6 +2,17 @@ var SpecialPromote = function (params) {
 	this.headlineNode = null;
 	this.descriptionNode = null;
 
+	this.inputParams = {
+		title: {
+			minChars: 0,
+			maxChars: 0
+		},
+		description: {
+			minChars: 0,
+			maxChars: 0
+		}
+	}
+
 	this.original = {
 		headline: null,
 		description: null,
@@ -65,40 +76,60 @@ SpecialPromote.prototype = {
 			.on('click', '.modify-remove .remove', $.proxy(this.onDeletePhotoClick, this));
 		$('.WikiaArticle').addClass('SpecialPromoteArticle');
 
-		this.headlineNode.keyup();
-		this.descriptionNode.keyup();
+		this.initInput(this.headlineNode);
+		this.initInput(this.descriptionNode);
 		this.checkPublishButton();
 		$().log('SpecialPromote.init finished');
 	},
-	onKeyUp: function (event) {
-		var targetObject = $(event.target);
-		var minChars = targetObject.data('min');
-		var maxChars = targetObject.data('max');
+	initInput: function(targetObject) {
 		var fieldName = targetObject.attr('name');
+		this.initInputParams(targetObject, fieldName);
+		this.initValidate(targetObject, fieldName);
+	},
+	initValidate: function(targetObject, fieldName) {
 		var characterCount = targetObject.val().length;
 
-		if (typeof minChars != 'undefined' && typeof maxChars != 'undefined') {
-			minChars = parseInt(minChars);
-			maxChars = parseInt(maxChars);
+		if (typeof this.inputParams[fieldName].minChars != 'undefined' && typeof this.inputParams[fieldName].maxChars != 'undefined') {
+			this.inputParams[fieldName].minChars = parseInt(this.inputParams[fieldName].minChars);
+			this.inputParams[fieldName].maxChars = parseInt(this.inputParams[fieldName].maxChars);
 
-			if (minChars > characterCount) {
-				targetObject.closest('div').parent().addClass('error');
-				targetObject.closest('div').parent().find('.error').text(
-					$.msg('promote-error-less-characters-than-minimum', characterCount, minChars)
-				);
+			if (this.inputParams[fieldName].minChars > characterCount) {
+				if (characterCount) {
+					this.addLessCharsError(targetObject, characterCount, this.inputParams[fieldName].minChars);
+				}
 				this.status[fieldName] = false;
-			} else if (maxChars < characterCount) {
-				targetObject.closest('div').parent().addClass('error');
-				targetObject.closest('div').parent().find('.error').text(
-					$.msg('promote-error-more-characters-than-maximum', characterCount, maxChars)
-				);
+			}
+			else if (this.inputParams[fieldName].maxChars < characterCount) {
+				if (characterCount) {
+					this.addMoreCharsError(targetObject, characterCount, this.inputParams[fieldName].maxChars);
+				}
 				this.status[fieldName] = false;
 			} else {
-				targetObject.closest('div').parent().removeClass('error');
-				targetObject.closest('div').parent().find('.error').text('');
 				this.status[fieldName] = true;
 			}
 		}
+	},
+	initInputParams: function(targetObject, fieldName) {
+		this.inputParams[fieldName].minChars = targetObject.data('min');
+		this.inputParams[fieldName].maxChars = targetObject.data('max');
+	},
+	onKeyUp: function (event) {
+		var targetObject = $(event.target);
+		var fieldName = targetObject.attr('name');
+		var characterCount = targetObject.val().length;
+
+		if (this.inputParams[fieldName].minChars > characterCount) {
+			this.addLessCharsError(targetObject, characterCount, this.inputParams[fieldName].minChars);
+			this.status[fieldName] = false;
+		} else if (this.inputParams[fieldName].maxChars < characterCount) {
+			this.addMoreCharsError(targetObject, characterCount, this.inputParams[fieldName].maxChars);
+			this.status[fieldName] = false;
+		} else {
+			targetObject.closest('div').parent().removeClass('error');
+			targetObject.closest('div').parent().find('.error').text('');
+			this.status[fieldName] = true;
+		}
+
 		if (fieldName == 'description') {
 			this.characterCounter.text(characterCount);
 		}
@@ -110,7 +141,18 @@ SpecialPromote.prototype = {
 		this.current.description = this.descriptionNode.val();
 
 		this.checkPublishButton();
-
+	},
+	addLessCharsError: function(targetObject, characterCount, minChars) {
+		targetObject.closest('div').parent().addClass('error');
+		targetObject.closest('div').parent().find('.error').text(
+			$.msg('promote-error-less-characters-than-minimum', characterCount, minChars)
+		);
+	},
+	addMoreCharsError: function(targetObject, characterCount, maxChars) {
+		targetObject.closest('div').parent().addClass('error');
+		targetObject.closest('div').parent().find('.error').text(
+			$.msg('promote-error-more-characters-than-maximum', characterCount, maxChars)
+		);
 	},
 	checkMainImage: function() {
 		var image = $('.large-photo img#curMainImageName').data('filename');
