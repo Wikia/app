@@ -52,12 +52,12 @@ The following code is a basic example of the custom component JSON configuration
 {
   "templateVars": {
       "type01": {
-          "name-var-msg-key" : "styleguide-component-type01-description-message-key",
+          "name" : "styleguide-component-type01-description-message-key",
           "required": [ "href", "classes", "value" ],
           "optional": [ "label", "target" ]
       },
       "type02": {
-          "name-var-msg-key" : "styleguide-component-type02-description-message-key",
+          "name" : "styleguide-component-type02-description-message-key",
           "required": [ "name", "classes", "value" ],
           "optional": [ "label" ]
       }
@@ -85,7 +85,7 @@ $button = \Wikia\UI\Factory::getInstance()->init( 'button' )->render( $params );
 
 In order to create multiple components (of the same type of different) in the same time following pattern will be used:
 <pre>
-$aParams = [
+$buttonParams = [
     "type" => "link",
     "vars" => [
         "href" => "http://www.wikia.com",
@@ -94,12 +94,12 @@ $aParams = [
     ]
 ];
 
-$bParams = [
-    "type" => "input",
+$inputParams = [
+    "type" => "text",
     "vars" => [
-        "name" => "wikia-home-page-button",
-        "value" => "Wikia Home Page",
-        "classes" => [ "button" ],
+        "name" => "username",
+        "value" => "joe",
+        "classes" => [ "wide" ],
     ]
 ];
 
