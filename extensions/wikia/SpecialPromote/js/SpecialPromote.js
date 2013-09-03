@@ -97,13 +97,13 @@ SpecialPromote.prototype = {
 
 			if (this.inputParams[fieldName].minChars > characterCount) {
 				if (characterCount) {
-					this.addLessCharsError(targetObject, characterCount, this.inputParams[fieldName].minChars);
+					this.addTooLittleCharsError(targetObject, characterCount, this.inputParams[fieldName].minChars);
 				}
 				this.status[fieldName] = false;
 			}
 			else if (this.inputParams[fieldName].maxChars < characterCount) {
 				if (characterCount) {
-					this.addMoreCharsError(targetObject, characterCount, this.inputParams[fieldName].maxChars);
+					this.addTooManyCharsError(targetObject, characterCount, this.inputParams[fieldName].maxChars);
 				}
 				this.status[fieldName] = false;
 			} else {
@@ -121,10 +121,10 @@ SpecialPromote.prototype = {
 		var characterCount = targetObject.val().length;
 
 		if (this.inputParams[fieldName].minChars > characterCount) {
-			this.addLessCharsError(targetObject, characterCount, this.inputParams[fieldName].minChars);
+			this.addTooLittleCharsError(targetObject, characterCount, this.inputParams[fieldName].minChars);
 			this.status[fieldName] = false;
 		} else if (this.inputParams[fieldName].maxChars < characterCount) {
-			this.addMoreCharsError(targetObject, characterCount, this.inputParams[fieldName].maxChars);
+			this.addTooManyCharsError(targetObject, characterCount, this.inputParams[fieldName].maxChars);
 			this.status[fieldName] = false;
 		} else {
 			targetObject.closest('div').parent().removeClass('error');
