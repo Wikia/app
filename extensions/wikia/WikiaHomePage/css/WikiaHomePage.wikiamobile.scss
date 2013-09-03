@@ -61,6 +61,12 @@
 				background-position: 0 0;
 			}
 		}
+        &.wkhome-community-pl .wkhome-hero {
+            img {
+                background-image: url('/extensions/wikia/WikiaHomePage/images/communitycentral-pl-mobile.png'); /* base64 */
+                background-position: 0 0;
+            }
+        }
 		p {
 			letter-spacing: -0.05em;
 			line-height: 1.5em;
