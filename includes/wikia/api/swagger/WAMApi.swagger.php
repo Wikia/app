@@ -209,7 +209,7 @@ use Swagger\Annotations as SWG;
  * 	)
  * 
  * @SWG\Api(
- * 	path="/wikia.php?controller=ArticlesApi&method=getWAMIndex",
+ * 	path="/wikia.php?controller=WAMApi&method=getWAMIndex",
  * 	description="A method to get WAM index (list of wikis with their WAM ranks)",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -372,7 +372,7 @@ use Swagger\Annotations as SWG;
  * )
  * 
  * @SWG\Api(
- * 	path="/wikia.php?controller=ArticlesApi&method=getMinMaxWamIndexDate",
+ * 	path="/wikia.php?controller=WAMApi&method=getMinMaxWamIndexDate",
  * 	description="A method to get WAM score starting and last available dates",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
