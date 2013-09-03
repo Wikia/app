@@ -1,9 +1,9 @@
 // TODO: move Wikia.Tracker outside
 
-var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, adLogicDartSubdomain, wikiaGpt) {
+var AdProviderGpt = function (tracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, wikiaGptRefresh) {
 	'use strict';
 
-	var logGroup = 'AdProviderAdDriver2',
+	var logGroup = 'AdProviderGpt',
 		slotMap,
 		forgetAdsShownAfterTime = 3600, // an hour
 		country = Geo.getCountryCode(),
@@ -18,6 +18,7 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 	isHighValueCountry = adLogicHighValueCountry.isHighValueCountry(country);
 
 	// TODO: tile is not used, keys without apostrophes
+	// GPT: only loc, pos and size keys are used
 	slotMap = {
 		'CORP_TOP_LEADERBOARD': {'size': '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
 		'CORP_TOP_RIGHT_BOXAD': {'size': '300x250,300x600,300x1050', 'tile': 1, 'loc': 'top'},
@@ -25,7 +26,7 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 		'HOME_TOP_LEADERBOARD': {'size': '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
 		'HOME_TOP_RIGHT_BOXAD': {'size': '300x250,300x600,300x1050', 'tile': 1, 'loc': 'top'},
 		'HUB_TOP_LEADERBOARD':  {'size': '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
-		'INVISIBLE_SKIN': {'size': '1x1', 'loc': 'top'},
+		'INVISIBLE_SKIN': {'size': '1x1', 'loc': 'top', 'gptOnly': true},
 		'LEFT_SKYSCRAPER_2': {'size': '160x600', 'tile': 3, 'loc': 'middle'},
 		'LEFT_SKYSCRAPER_3': {'size': '160x600', 'tile': 6, 'loc': 'footer'},
 		'MODAL_INTERSTITIAL':   {'size': '300x250,600x400,800x450,550x480', 'tile': 2, 'loc': 'modal'},
@@ -53,6 +54,8 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 		HOME_TOP_RIGHT_BOXAD: 'flush',
 		GPT_FLUSH: 'flushonly'
 	};
+
+	wikiaGptRefresh.init(slotMap);
 
 	// Private methods
 
@@ -89,7 +92,7 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 	function canHandleSlot(slotinfo) {
 		log(['canHandleSlot', slotinfo], 5, logGroup);
 
-		return slotMap[slotinfo[0]];
+		return !!slotMap[slotinfo[0]];
 	}
 
 	// Public methods
@@ -103,10 +106,8 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 	function flushGpt() {
 		log('flushGpt', 5, logGroup);
 
-		if (!gptFlushed) {
-			gptFlushed = true;
-			wikiaGpt.flushAds();
-		}
+		gptFlushed = true;
+		wikiaGptRefresh.flushAds();
 	}
 
 	function fillInSlot(slot) {
@@ -119,16 +120,12 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 
 		var slotname = slot[0],
 			slotsize = slotMap[slotname].size,
-			loc = slotMap[slotname].loc,
-			dcopt = slotMap[slotname].dcopt,
-			ord,
 
 			noAdStorageKey = 'dart_noad_' + slotname,
 			numCallForSlotStorageKey = 'dart_calls_' + slotname,
 
 			noAdLastTime = cacheStorage.get(noAdStorageKey, now) || false,
 			numCallForSlot = cacheStorage.get(numCallForSlotStorageKey, now) || 0,
-			url,
 			dontCallDart = false,
 
 			hopTimer,
@@ -213,11 +210,6 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 			leaderboardCalled = true;
 		}
 
-		// Don't show skin ads for logged in users
-		if (window.wgUserName && !window.wgUserShowAds) {
-			dcopt = false;
-		}
-
 		hopTimer = new Date().getTime();
 		log('hopTimer start for ' + slotname, 7, logGroup);
 
@@ -232,65 +224,17 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 			trackingMethod: 'ad'
 		});
 
-		/*
-		 * We can only issue one request for SRA for now, so we only do the request for
-		 * the slots defined in gptConfig. Slots with 'wait' strategy are pushed to wikiaGpt
-		 * and the first slot to have 'flush' flushes all the slots and the ads are requested.
-		 * gptFlush flag is set, so all the other slots will go through legacy DART API.
-		 */
-		if (gptConfig[slotname] && !gptFlushed) {
-			// Use the new GPT library:
-			log('Use the new GPT library for ' + slotname, 5, logGroup);
+		log('Use the new GPT library for ' + slotname, 5, logGroup);
 
-			wikiaGpt.pushAd({
-				slotname: slotname,
-				slotsize: slotsize,
-				dcopt: dcopt,
-				loc: loc
-			}, success, error);
+		wikiaGptRefresh.pushAd(slotname, success, error);
 
-			if (gptConfig[slotname] === 'flush') {
-				flushGpt();
-			}
-		} else {
-			// Legacy DART call:
-			log('Legacy DART call for ' + slotname, 5, logGroup);
-
-			// Random ord for MODAL_INTERSTITIAL
-			// This disables synchronisation of Lightbox ads, but allows ads to repeat
-			if (slotname.match(/^MODAL_INTERSTITIAL/)) {
-				ord = Math.floor(Math.random() * 100000000000);
-			}
-
-			url = wikiaDart.getUrl({
-				slotname: slotname,
-				slotsize: slotsize,
-				subdomain: adLogicDartSubdomain.getSubdomain(),
-				dcopt: dcopt,
-				loc: loc,
-				ord: ord
-			});
-
-			scriptWriter.injectScriptByUrl(slotname, url, function () {
-				/**
-				 * Our DART server when having no ads returns
-				 *
-				 * window.adDriverLastDARTCallNoAds[slotname] = true
-				 *
-				 * We're handling this here.
-				 */
-				if (window.adDriverLastDARTCallNoAds && window.adDriverLastDARTCallNoAds[slotname]) {
-					error();
-				} else {
-					log(slotname + ' was filled by DART', 5, logGroup);
-					success();
-				}
-			});
+		if (gptConfig[slotname] === 'flush' || gptFlushed) {
+			flushGpt();
 		}
 	}
 
 	return {
-		name: 'AdDriver2',
+		name: 'Gpt',
 		fillInSlot: fillInSlot,
 		canHandleSlot: canHandleSlot
 	};
