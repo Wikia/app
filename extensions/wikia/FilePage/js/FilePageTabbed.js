@@ -241,9 +241,9 @@ $(function() {
 			$pageListings.on('click', elements.join(', '), function(evt) {
 				evt.preventDefault();
 				var node = evt.target,
-					$node = $(node),
-					prefix,
-					url = node.href;
+						$node = $(node).closest('a'),
+						prefix,
+						url = $node[0].href;
 
 				$parent = $node.closest('.page-listings');
 
