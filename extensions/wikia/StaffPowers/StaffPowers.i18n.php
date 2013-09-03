@@ -195,6 +195,13 @@ $messages['tl'] = array(
 	'staffpowers-ipblock-abort' => 'Hindi maaari ang Pagharang sa Tauhan ng Wikia, Mga Katulong ng Wikia, o mga kasapi sa aming pangkat ng tagagamit ng Nagkukusang Loob na Puwersang Panggawaing Pambasura (Volunteer Spam Task Force o VSTF). Paki gamitin ang  [[Special:Contact|pormularyo ng pakikipag-ugnayan]] upang makapag-ulat sa aming tauhan ng anumang mga paksa o mga suliranin.',
 );
 
+/** Ukrainian (українська)
+ * @author Andriykopanytsia
+ */
+$messages['uk'] = array(
+	'staffpowers-ipblock-abort' => "Заблокувати співробітників Вікія, помічників Вікія або членів нашої команди користувачів-добровольців по боротбі з спамом (VSTF) - неможливо. Будь ласка, використовуйте  [[Special:Contact|контактну форму]], щоб повідомити про будь-яку проблему, пов'язану з нашими співробітниками.",
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  */

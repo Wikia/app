@@ -4,7 +4,6 @@ window.addEventListener('load', function(){
 	if(!Wikia.AbTest || ['E', undefined].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS")) != -1){
 		require(['ads', 'wikia.window', 'wikia.utils'], function (ads, window, $) {
 			var wrapper = document.getElementById('wkFloatingAd'),
-				wrapperStyle = wrapper.style,
 				positionfixed = window.Features.positionfixed,
 				fixed,
 				found,
@@ -24,7 +23,7 @@ window.addEventListener('load', function(){
 			 * @private
 			 */
 			function moveSlot(plus) {
-				wrapperStyle.top = Math.min(
+				wrapper.style.top = Math.min(
 					(window.pageYOffset + window.innerHeight - 50 + ~~plus),
 					ftr.offsetTop + 160
 				) + 'px';
@@ -76,20 +75,23 @@ window.addEventListener('load', function(){
 				}
 			}
 
-			ads.setupSlot({
-				name: 'MOBILE_FLOATING_FOOTER',
-				size: '320x50',
-				wrapper: wrapper,
-				init: function(){
-					found = true;
+			if (wrapper) {
+				ads.setupSlot({
+					name: 'MOBILE_FLOATING_FOOTER',
+					size: '320x50',
+					wrapper: wrapper,
+					init: function(){
+						found = true;
 
-					fix();
-				},
-				functions: {
-					fix: fix,
-					unfix: unfix
-				}
-			});
+						fix();
+					},
+					functions: {
+						fix: fix,
+						unfix: unfix
+					}
+				});
+			}
+
 		});
 	}
 });

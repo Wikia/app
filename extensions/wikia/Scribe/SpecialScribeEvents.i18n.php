@@ -16,9 +16,11 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'scribe-desc' => '{{desc}}',
+	'scribeeventsrecords' => '{{Identical|Record}}',
 );
 
 /** Arabic (العربية)
@@ -86,6 +88,14 @@ $messages['fi'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Työkalu]] jolla etsiä tietyn sivun otsikkoa kaikista wikeistä',
 	'scribeevents' => 'Viimeisimmät tapahtumat',
 	'scribeeventsrecords' => 'Tiedotteet',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'scribe-desc' => '[[Special:Scribeevents|Tól]] til at leita eftir einum serstakum síðuheiti tvørtur um wikiir',
+	'scribeevents' => 'Nýligar hendingar',
 );
 
 /** French (français)
@@ -279,6 +289,7 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
+ * @author SteveR
  * @author Ua2004
  */
 $messages['uk'] = array(
