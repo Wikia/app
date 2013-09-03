@@ -19,7 +19,7 @@ $(function() {
 	});
 
 	// click on update-items and educational modules
-	$("a[data-tracking]").on("click", function(e) {
+	$("#cssEditorForm").on("click", "a[data-tracking]", function(e) {
 		var t = $(this);
 		trackSpecialCssClick(Wikia.Tracker.ACTIONS.CLICK, t.data('tracking'), null, {href: t.attr('href')}, e);
 	});
