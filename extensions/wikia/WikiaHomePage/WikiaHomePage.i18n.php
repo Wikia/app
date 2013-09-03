@@ -487,16 +487,16 @@ $messages['pl'] = array(
 	'wikia-home-parse-wiki-too-few-parameters' => 'Niepoprawne dane wiki - wymagane jest więcej parametrów',
 
 	'wikiahome-hubs-videogames-heading' => 'Gry',
-	'wikiahome-hubs-videogames-url' => 'http://pl.corporate.wikia.com/wiki/Gry',
+	'wikiahome-hubs-videogames-url' => 'http://pl.wikia.com/Gry',
 	'wikiahome-hubs-videogames-creative' => 'Wszystko co chcesz wiedzieć o swoich ulubionych grach. Przygotuj się potężny zastrzyk informacji.',
 	'wikiahome-hubs-videogames-more-heading' => 'Więcej w kategorii Gry',
 	'wikiahome-hubs-videogames-more-list' => '
-*[http://pl.corporate.wikia.com/wiki/Gry Poradniki]
+*[http://pl.wikia.com/Gry Poradniki]
 *[http://gaming.wikia.com/wiki/Portal:Kickstarter_Games Portal Kickstarter]
 *[http://gaming.wikia.com/wiki/Encyclopedia_Gamia Encylopedia Gamia]',
 
 	'wikiahome-hubs-entertainment-heading' => 'Rozrywka',
-	'wikiahome-hubs-entertainment-url' => 'http://pl.corporate.wikia.com/wiki/Rozrywka',
+	'wikiahome-hubs-entertainment-url' => 'http://pl.wikia.com/Rozrywka',
 	'wikiahome-hubs-entertainment-creative' => 'Twoja dzienna dawka informacji o szeroko rozumianej rozrywce prosto od znających się na temacie społeczności.',
 	'wikiahome-hubs-entertainment-more-heading' => 'Więcej w kategorii Rozrywka',
 	'wikiahome-hubs-entertainment-more-list' => '
@@ -506,7 +506,7 @@ $messages['pl'] = array(
 *[http://www.wikia.com/Entertainment Trendy]',
 
 	'wikiahome-hubs-lifestyle-heading' => 'Lifestyle, Nowości i Kultura',
-	'wikiahome-hubs-lifestyle-url' => 'http://pl.corporate.wikia.com/wiki/Lifestyle',
+	'wikiahome-hubs-lifestyle-url' => 'http://pl.wikia.com/Lifestyle',
 	'wikiahome-hubs-lifestyle-creative' => 'Odkryj doskonale poinformowane społeczności dzielące się swoją wiedzy o świecie, w którym żyjemy.',
 	'wikiahome-hubs-lifestyle-more-heading' => 'Więcej w kategorii Lifestyle',
 	'wikiahome-hubs-lifestyle-more-list' => '
@@ -529,7 +529,7 @@ $messages['pl'] = array(
 	'wikiahome-community-social-googleplus' => 'Google+',
 
 	'wikiahome-footer-wikiainc' => '===Wikia, Inc.===
-*[http://pl.corporate.wikia.com/wiki/O_nas O nas]
+*[http://pl.wikia.com/O_nas O nas]
 *[http://www.wikia.com/Special:Contact Kontakt]
 *[http://www.wikia.com/Careers Kariera]
 *[http://www.wikia.com/Press Prasa]
@@ -552,7 +552,7 @@ __NOEDITSECTION__',
 __NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===Wikia wszędzie===
 *[http://www.wikia.com/Mobile Wikia Mobilna]
-*[http://pl.corporate.wikia.com/wiki/Aplikacje_mobilne/GameGuides Video Game Apps]
+*[http://pl.wikia.com/Aplikacje_mobilne/GameGuides Video Game Apps]
 *[http://www.wikia.com/Mobile/PhotoPop Entertainment Apps]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
