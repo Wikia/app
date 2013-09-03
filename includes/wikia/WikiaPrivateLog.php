@@ -80,6 +80,12 @@ class WikiaPrivateLog {
 
 		foreach ( $args as $arg ) {
 			if( is_string( $arg ) ) {
+				//skip commons-related errors due to their
+				//volume
+				if ( stripos( $arg, 'wikimediacommons' ) !== false ) {
+					return false;
+				}
+
 				$lines[] = $this->processString( $arg );
 			} elseif ( is_scalar( $arg ) ) {
 				$lines[] = $arg;
