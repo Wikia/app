@@ -16,7 +16,6 @@ return [
 			'wikia.ajax',
 			'wikia.cache',
 			'wikia.cookies',
-			'wikia.deferred',
 			'wikia.document',
 			'wikia.geo',
 			'wikia.loader',
@@ -63,13 +62,6 @@ return [
 	],
 	'wikia.localStorage' => [
 		'scripts' => 'resources/wikia/modules/localStorage.js',
-		'dependencies' => [
-			'amd',
-			'wikia.window',
-		],
-	],
-	'wikia.deferred' => [
-		'scripts' => 'resources/wikia/modules/deferred.js',
 		'dependencies' => [
 			'amd',
 			'wikia.window',
