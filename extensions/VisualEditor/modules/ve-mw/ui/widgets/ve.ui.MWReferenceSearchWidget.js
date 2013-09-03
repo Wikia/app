@@ -121,7 +121,7 @@ ve.ui.MWReferenceSearchWidget.prototype.buildIndex = function () {
 			}
 
 			citation = ( attr.refGroup.length ? attr.refGroup + ' ' : '' ) + ( j + 1 );
-			name = attr.listKey && attr.listKey.charAt( 0 ) !== ':' ? attr.listKey : '';
+			name = !ve.dm.InternalList.static.isUniqueListKey( attr.listKey ) ? attr.listKey : '';
 			// Make visible text, citation and reference name searchable
 			text = [ view.$.text().toLowerCase(), citation, name ].join( ' ' );
 			// Make URLs searchable

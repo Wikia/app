@@ -1,6 +1,6 @@
 <?php
 /**
- * Resource loader module for certain VisualEditor messages.
+ * Resource loader module providing extra data from the server to VisualEditor.
  *
  * @file
  * @ingroup Extensions
@@ -8,10 +8,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/**
- * Module for special messages VisualEditor needs to have parsed server side.
- */
-class VisualEditorMessagesModule extends ResourceLoaderModule {
+class VisualEditorDataModule extends ResourceLoaderModule {
 
 	/* Protected Members */
 
@@ -31,9 +28,16 @@ class VisualEditorMessagesModule extends ResourceLoaderModule {
 		foreach ( $msgInfo['vals'] as $msgKey => $msgVal ) {
 			$messages[ $msgKey ] = $msgVal;
 		}
+
 		return
-			've.init.platform.addParsedMessages(' . FormatJson::encode( $parsedMesssages ) . ');'.
-			've.init.platform.addMessages(' . FormatJson::encode( $messages ) . ');';
+			've.init.platform.addParsedMessages(' . FormatJson::encode(
+				$parsedMesssages,
+				ResourceLoader::inDebugMode()
+			) . ');'.
+			've.init.platform.addMessages(' . FormatJson::encode(
+				$messages,
+				ResourceLoader::inDebugMode()
+			) . ');';
 	}
 
 	protected function getMessageInfo() {
@@ -108,7 +112,7 @@ class VisualEditorMessagesModule extends ResourceLoaderModule {
 		return max(
 			$this->getMsgBlobMtime( $context->getLanguage() ),
 			// Also invalidate this module if this file changes (i.e. when messages were
-			// added or removed, or when the Javascript invocation in getScript is changes).
+			// added or removed, or when the Javascript invocation in getScript is changed).
 			// Use 1 because 0 = now, would invalidate continously
 			file_exists( __FILE__ ) ? filemtime( __FILE__ ) : 1
 		);

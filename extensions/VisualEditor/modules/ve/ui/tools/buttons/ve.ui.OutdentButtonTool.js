@@ -25,7 +25,7 @@ ve.inheritClass( ve.ui.OutdentButtonTool, ve.ui.IndentationButtonTool );
 
 /* Static Properties */
 
-ve.ui.OutdentButtonTool.static.name = 'outdent';
+ve.ui.OutdentButtonTool.static.name = 'structure/outdent';
 
 ve.ui.OutdentButtonTool.static.icon = 'outdent-list';
 
@@ -35,9 +35,9 @@ ve.ui.OutdentButtonTool.static.method = 'decrease';
 
 /* Registration */
 
-ve.ui.toolFactory.register( 'outdent', ve.ui.OutdentButtonTool );
+ve.ui.toolFactory.register( 'structure/outdent', ve.ui.OutdentButtonTool );
 
 // TODO: Consistency between outdent and unindent.
-ve.ui.commandRegistry.register( 'outdent', 'indentation', 'decrease' );
+ve.ui.commandRegistry.register( 'structure/outdent', 'indentation', 'decrease' );
 
-ve.ui.triggerRegistry.register( 'outdent', new ve.ui.Trigger( 'shift+tab' ) );
+ve.ui.triggerRegistry.register( 'structure/outdent', new ve.ui.Trigger( 'shift+tab' ) );

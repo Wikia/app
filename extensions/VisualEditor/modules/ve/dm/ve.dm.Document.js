@@ -872,7 +872,7 @@ ve.dm.Document.prototype.getSlice = function ( range ) {
 	if ( selection.length === 0 ) {
 		return new ve.dm.DocumentSlice( [] );
 	}
-	if ( selection.length === 1 && selection[0].range.equals( range ) ) {
+	if ( selection.length === 1 && selection[0].range && selection[0].range.equalsSelection( range ) ) {
 		// Nothing to fix up
 		return new ve.dm.DocumentSlice( this.data.slice( range.start, range.end ) );
 	}

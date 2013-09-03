@@ -326,5 +326,5 @@
 .ve-init-mw-viewPageTarget-loading,
 .ve-init-mw-viewPageTarget-saveDialog-working {
 	/* @embed */
-	background-image: url(images/loading.gif);
+	background-image: url(images/loading-ltr.gif);
 }

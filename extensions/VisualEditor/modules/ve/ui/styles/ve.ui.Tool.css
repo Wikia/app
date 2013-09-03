@@ -32,6 +32,11 @@
 	vertical-align: middle;
 	border-radius: 0.25em;
 	border: solid 1px transparent;
+	-webkit-transition: border-color 300ms;
+	-moz-transition: border-color 300ms;
+	-ms-transition: border-color 300ms;
+	-o-transition: border-color 300ms;
+	transition: border-color 300ms;
 }
 
 .ve-ui-toolGroup:hover {
@@ -148,45 +153,45 @@
 
 /* ve.ui.FormatDropdownTool */
 
-.ve-ui-dropdownTool-format {
+.ve-ui-formatDropdownTool {
 	width: 8em;
 }
 
-.ve-ui-dropdownTool-format .ve-ui-optionWidget[rel="paragraph"] .ve-ui-labeledElement-label {
+.ve-ui-formatDropdownTool .ve-ui-optionWidget[rel="paragraph"] .ve-ui-labeledElement-label {
 	font-weight: normal;
 }
 
-.ve-ui-dropdownTool-format .ve-ui-optionWidget[rel="heading-1"] .ve-ui-labeledElement-label {
+.ve-ui-formatDropdownTool .ve-ui-optionWidget[rel="heading-1"] .ve-ui-labeledElement-label {
 	font-size: 188%;
 	font-weight: normal;
 }
 
-.ve-ui-dropdownTool-format .ve-ui-optionWidget[rel="heading-2"] .ve-ui-labeledElement-label {
+.ve-ui-formatDropdownTool .ve-ui-optionWidget[rel="heading-2"] .ve-ui-labeledElement-label {
 	font-size: 150%;
 	font-weight: normal;
 }
 
-.ve-ui-dropdownTool-format .ve-ui-optionWidget[rel="heading-3"] .ve-ui-labeledElement-label {
+.ve-ui-formatDropdownTool .ve-ui-optionWidget[rel="heading-3"] .ve-ui-labeledElement-label {
 	font-size: 132%;
 	font-weight: bold;
 }
 
-.ve-ui-dropdownTool-format .ve-ui-optionWidget[rel="heading-4"] .ve-ui-labeledElement-label {
+.ve-ui-formatDropdownTool .ve-ui-optionWidget[rel="heading-4"] .ve-ui-labeledElement-label {
 	font-size: 116%;
 	font-weight: bold;
 }
 
-.ve-ui-dropdownTool-format .ve-ui-optionWidget[rel="heading-5"] .ve-ui-labeledElement-label {
+.ve-ui-formatDropdownTool .ve-ui-optionWidget[rel="heading-5"] .ve-ui-labeledElement-label {
 	font-size: 100%;
 	font-weight: bold;
 }
 
-.ve-ui-dropdownTool-format .ve-ui-optionWidget[rel="heading-6"] .ve-ui-labeledElement-label {
+.ve-ui-formatDropdownTool .ve-ui-optionWidget[rel="heading-6"] .ve-ui-labeledElement-label {
 	font-size: 80%;
 	font-weight: bold;
 }
 
-.ve-ui-dropdownTool-format .ve-ui-optionWidget[rel="preformatted"] .ve-ui-labeledElement-label {
+.ve-ui-formatDropdownTool .ve-ui-optionWidget[rel="preformatted"] .ve-ui-labeledElement-label {
 	font-family: monospace, "Courier New";
 }
 

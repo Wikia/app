@@ -25,7 +25,7 @@ ve.inheritClass( ve.ui.MWMathButtonTool, ve.ui.InspectorButtonTool );
 
 /* Static Properties */
 
-ve.ui.MWMathButtonTool.static.name = 'mwMath';
+ve.ui.MWMathButtonTool.static.name = 'object/math/mw';
 
 ve.ui.MWMathButtonTool.static.icon = 'math';
 
@@ -37,4 +37,4 @@ ve.ui.MWMathButtonTool.static.modelClasses = [ ve.dm.MWMathNode ];
 
 /* Registration */
 
-ve.ui.toolFactory.register( 'mwMath', ve.ui.MWMathButtonTool );
+ve.ui.toolFactory.register( 'object/math/mw', ve.ui.MWMathButtonTool );

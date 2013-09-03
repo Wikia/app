@@ -59,11 +59,11 @@ ve.ui.Widget.prototype.isDisabled = function () {
  * This should probably change the widgets's appearance and prevent it from being used.
  *
  * @method
- * @param {boolean} state Disable button
+ * @param {boolean} disabled Disable button
  * @chainable
  */
-ve.ui.Widget.prototype.setDisabled = function ( state ) {
-	this.disabled = !!state;
+ve.ui.Widget.prototype.setDisabled = function ( disabled ) {
+	this.disabled = !!disabled;
 	if ( this.disabled ) {
 		this.$.addClass( 've-ui-widget-disabled' );
 	} else {

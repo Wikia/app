@@ -25,7 +25,7 @@ ve.inheritClass( ve.ui.MWHieroButtonTool, ve.ui.InspectorButtonTool );
 
 /* Static Properties */
 
-ve.ui.MWHieroButtonTool.static.name = 'mwHiero';
+ve.ui.MWHieroButtonTool.static.name = 'object/hiero/mw';
 
 ve.ui.MWHieroButtonTool.static.icon = 'hiero';
 
@@ -37,4 +37,4 @@ ve.ui.MWHieroButtonTool.static.modelClasses = [ ve.dm.MWHieroNode ];
 
 /* Registration */
 
-ve.ui.toolFactory.register( 'mwHiero', ve.ui.MWHieroButtonTool );
+ve.ui.toolFactory.register( 'object/hiero/mw', ve.ui.MWHieroButtonTool );

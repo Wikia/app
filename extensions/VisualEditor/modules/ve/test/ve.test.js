@@ -454,18 +454,18 @@ QUnit.test( 'createDocumentFromHtml', function ( assert ) {
 // TODO: ve.getCharacterOffset
 
 QUnit.test( 'graphemeSafeSubstring', function ( assert ) {
-	var i, text = '12𨋢45𨋢789𨋢bc', cases = [
+	var i, text = '12\ud860\udee245\ud860\udee2789\ud860\udee2bc', cases = [
 			{
 				'msg': 'start and end inside multibyte',
 				'start': 3,
 				'end': 12,
-				'expected': [ '𨋢45𨋢789𨋢', '45𨋢789' ]
+				'expected': [ '\ud860\udee245\ud860\udee2789\ud860\udee2', '45\ud860\udee2789' ]
 			},
 			{
 				'msg': 'start and end next to multibyte',
 				'start': 4,
 				'end': 11,
-				'expected': [ '45𨋢789', '45𨋢789' ]
+				'expected': [ '45\ud860\udee2789', '45\ud860\udee2789' ]
 			},
 			{
 				'msg': 'complete string',
@@ -477,7 +477,7 @@ QUnit.test( 'graphemeSafeSubstring', function ( assert ) {
 				'msg': 'collapsed selection inside multibyte',
 				'start': 3,
 				'end': 3,
-				'expected': [ '𨋢', '' ]
+				'expected': [ '\ud860\udee2', '' ]
 			}
 		];
 	QUnit.expect( cases.length * 2 );

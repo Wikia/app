@@ -28,7 +28,10 @@ ve.dm.MWLanguageMetaItem.static.name = 'mwLanguage';
 
 ve.dm.MWLanguageMetaItem.static.matchTagNames = [ 'link' ];
 
-ve.dm.MWLanguageMetaItem.static.matchRdfaTypes = [ 'mw:WikiLink/Language' ];
+ve.dm.MWLanguageMetaItem.static.matchRdfaTypes = [
+	'mw:WikiLink/Language', // old type, pre-bug 53432
+	'mw:PageProp/Language' // new type
+];
 
 ve.dm.MWLanguageMetaItem.static.toDataElement = function ( domElements ) {
 	var firstDomElement = domElements[0],

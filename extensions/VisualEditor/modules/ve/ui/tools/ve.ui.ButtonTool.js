@@ -17,8 +17,9 @@
  * @param {Object} [config] Config options
  */
 ve.ui.ButtonTool = function VeUiButtonTool( toolbar, config ) {
-	var icon = this.constructor.static.icon,
-		lang = ve.init.platform.getUserLanguage();
+	var i, len,
+		icon = this.constructor.static.icon,
+		langs = ve.init.platform.getUserLanguages();
 
 	// Parent constructor
 	ve.ui.Tool.call( this, toolbar, config );
@@ -37,7 +38,13 @@ ve.ui.ButtonTool = function VeUiButtonTool( toolbar, config ) {
 	this.$icon.addClass( 've-ui-buttonTool-icon' );
 	if ( icon ) {
 		if ( ve.isPlainObject( icon ) ) {
-			icon = lang in icon ? icon[lang] : icon['default'];
+			langs.push( 'default' );
+			for ( i = 0, len = langs.length; i < len; i++ ) {
+				if ( langs[i] in icon ) {
+					icon = icon[langs[i]];
+					break;
+				}
+			}
 		}
 		this.$icon.addClass( 've-ui-icon-' + icon );
 	}

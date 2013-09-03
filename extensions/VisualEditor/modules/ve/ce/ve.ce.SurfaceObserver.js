@@ -82,15 +82,16 @@ ve.ce.SurfaceObserver.prototype.clear = function ( range ) {
 /**
  * Start polling.
  *
- * If {async} is false or undefined the first poll cycle will occur immediately and synchronously.
+ * If {postpone} is false or undefined the first poll cycle will occur immediately and synchronously.
  *
  * @method
- * @param {boolean} async Poll the first time asynchronously
+ * @param {boolean} postpone Add the first poll to the end of the event queue
+ * @param {boolean} emitContentChanges Allow contentChange to be emitted
  */
-ve.ce.SurfaceObserver.prototype.start = function ( async ) {
+ve.ce.SurfaceObserver.prototype.start = function ( postpone, emitContentChanges ) {
 	this.domDocument = this.documentView.getDocumentNode().getElementDocument();
 	this.polling = true;
-	this.poll( async );
+	this.poll( postpone, emitContentChanges );
 };
 
 /**
@@ -101,11 +102,12 @@ ve.ce.SurfaceObserver.prototype.start = function ( async ) {
  *
  * @method
  * @param {boolean} poll Poll one last time before stopping future polling
+ * @param {boolean} emitContentChanges Allow contentChange to be emitted
  */
-ve.ce.SurfaceObserver.prototype.stop = function ( poll ) {
+ve.ce.SurfaceObserver.prototype.stop = function ( poll, emitContentChanges ) {
 	if ( this.polling === true ) {
 		if ( poll === true ) {
-			this.poll();
+			this.poll( false, emitContentChanges );
 		}
 		this.polling = false;
 		clearTimeout( this.timeoutId );
@@ -116,7 +118,7 @@ ve.ce.SurfaceObserver.prototype.stop = function ( poll ) {
 /**
  * Poll for changes.
  *
- * If `async` is false or undefined then polling will occcur asynchronously.
+ * If `postpone` is false or undefined then polling will occcur immediately.
  *
  * TODO: fixing selection in certain cases, handling selection across multiple nodes in Firefox
  *
@@ -124,12 +126,13 @@ ve.ce.SurfaceObserver.prototype.stop = function ( poll ) {
  * with a mouse.
  *
  * @method
- * @param {boolean} async Poll asynchronously
+ * @param {boolean} postpone Append the poll action to the end of the event queue
+ * @param {boolean} emitContentChanges Allow contentChange to be emitted
  * @emits contentChange
  * @emits selectionChange
  */
-ve.ce.SurfaceObserver.prototype.poll = function ( async ) {
-	var delayPoll, $nodeOrSlug, node, text, hash, range, rangyRange;
+ve.ce.SurfaceObserver.prototype.poll = function ( postpone, emitContentChanges ) {
+	var $nodeOrSlug, node, text, hash, range, rangyRange;
 
 	if ( this.polling === false ) {
 		return;
@@ -140,15 +143,13 @@ ve.ce.SurfaceObserver.prototype.poll = function ( async ) {
 		this.timeoutId = null;
 	}
 
-	delayPoll = ve.bind( function ( async ) {
+	if ( postpone === true ) {
 		this.timeoutId = setTimeout(
 			ve.bind( this.poll, this ),
-			async === true ? 0 : this.frequency
+			0,
+			false,
+			emitContentChanges
 		);
-	}, this );
-
-	if ( async === true ) {
-		delayPoll( true );
 		return;
 	}
 
@@ -178,20 +179,20 @@ ve.ce.SurfaceObserver.prototype.poll = function ( async ) {
 			this.hash = ve.ce.getDomHash( node.$[0] );
 			this.node = node;
 		}
-	} else {
-		if ( node !== null ) {
-			text = ve.ce.getDomText( node.$[0] );
-			hash = ve.ce.getDomHash( node.$[0] );
-			if ( this.text !== text || this.hash !== hash ) {
+	} else if ( node !== null ) {
+		text = ve.ce.getDomText( node.$[0] );
+		hash = ve.ce.getDomHash( node.$[0] );
+		if ( this.text !== text || this.hash !== hash ) {
+			if ( emitContentChanges ) {
 				this.emit(
 					'contentChange',
 					node,
 					{ 'text': this.text, 'hash': this.hash, 'range': this.range },
 					{ 'text': text, 'hash': hash, 'range': range }
 				);
-				this.text = text;
-				this.hash = hash;
 			}
+			this.text = text;
+			this.hash = hash;
 		}
 	}
 
@@ -205,5 +206,10 @@ ve.ce.SurfaceObserver.prototype.poll = function ( async ) {
 		this.range = range;
 	}
 
-	delayPoll();
+	this.timeoutId = setTimeout(
+		ve.bind( this.poll, this ),
+		this.frequency,
+		false,
+		emitContentChanges
+	);
 };

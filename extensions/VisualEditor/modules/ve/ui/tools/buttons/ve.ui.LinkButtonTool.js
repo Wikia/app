@@ -25,7 +25,7 @@ ve.inheritClass( ve.ui.LinkButtonTool, ve.ui.InspectorButtonTool );
 
 /* Static Properties */
 
-ve.ui.LinkButtonTool.static.name = 'link';
+ve.ui.LinkButtonTool.static.name = 'meta/link';
 
 ve.ui.LinkButtonTool.static.icon = 'link';
 
@@ -37,10 +37,11 @@ ve.ui.LinkButtonTool.static.modelClasses = [ ve.dm.LinkAnnotation ];
 
 /* Registration */
 
-ve.ui.toolFactory.register( 'link', ve.ui.LinkButtonTool );
+ve.ui.toolFactory.register( 'meta/link', ve.ui.LinkButtonTool );
 
-ve.ui.commandRegistry.register( 'link', 'inspector', 'open', 'link' );
+ve.ui.commandRegistry.register( 'meta/link', 'inspector', 'open', 'link' );
 
 ve.ui.triggerRegistry.register(
-	'link', { 'mac': new ve.ui.Trigger( 'cmd+k' ), 'pc': new ve.ui.Trigger( 'ctrl+k' ) }
+	'meta/link',
+	{ 'mac': new ve.ui.Trigger( 'cmd+k' ), 'pc': new ve.ui.Trigger( 'ctrl+k' ) }
 );

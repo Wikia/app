@@ -25,7 +25,7 @@ ve.inheritClass( ve.ui.MWMediaEditButtonTool, ve.ui.DialogButtonTool );
 
 /* Static Properties */
 
-ve.ui.MWMediaEditButtonTool.static.name = 'mwMediaEdit';
+ve.ui.MWMediaEditButtonTool.static.name = 'object/mediaEdit/mw';
 
 ve.ui.MWMediaEditButtonTool.static.icon = 'picture';
 
@@ -35,6 +35,8 @@ ve.ui.MWMediaEditButtonTool.static.dialog = 'mwMediaEdit';
 
 ve.ui.MWMediaEditButtonTool.static.modelClasses = [ ve.dm.MWBlockImageNode ];
 
+ve.ui.MWMediaEditButtonTool.static.autoAdd = false;
+
 /* Registration */
 
-ve.ui.toolFactory.register( 'mwMediaEdit', ve.ui.MWMediaEditButtonTool );
+ve.ui.toolFactory.register( 'object/mediaEdit/mw', ve.ui.MWMediaEditButtonTool );

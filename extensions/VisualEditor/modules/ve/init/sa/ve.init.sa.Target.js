@@ -30,7 +30,7 @@ ve.init.sa.Target = function VeInitSaTarget( $container, doc ) {
 
 	// Initialization
 	this.toolbar.$.addClass( 've-init-sa-target-toolbar' );
-	this.toolbar.setup( this.constructor.static.toolbarTools );
+	this.toolbar.setup( this.constructor.static.toolbarGroups );
 	this.toolbar.enableFloatable();
 
 	this.$.append( this.toolbar.$, this.surface.$ );

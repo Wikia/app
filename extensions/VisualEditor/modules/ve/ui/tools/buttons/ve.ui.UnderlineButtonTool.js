@@ -25,7 +25,7 @@ ve.inheritClass( ve.ui.UnderlineButtonTool, ve.ui.AnnotationButtonTool );
 
 /* Static Properties */
 
-ve.ui.UnderlineButtonTool.static.name = 'underline';
+ve.ui.UnderlineButtonTool.static.name = 'textStyle/underline';
 
 ve.ui.UnderlineButtonTool.static.icon = {
 	'default': 'underline-a',
@@ -38,6 +38,8 @@ ve.ui.UnderlineButtonTool.static.annotation = { 'name': 'textStyle/underline' };
 
 /* Registration */
 
-ve.ui.toolFactory.register( 'underline', ve.ui.UnderlineButtonTool );
+ve.ui.toolFactory.register( 'textStyle/underline', ve.ui.UnderlineButtonTool );
 
-ve.ui.commandRegistry.register( 'underline', 'annotation', 'toggle', 'textStyle/underline' );
+ve.ui.commandRegistry.register(
+	'textStyle/underline', 'annotation', 'toggle', 'textStyle/underline'
+);

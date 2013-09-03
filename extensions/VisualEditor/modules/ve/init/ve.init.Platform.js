@@ -75,7 +75,7 @@ ve.init.Platform.prototype.getMessage = function () {
  *
  * @method
  * @abstract
- * @param {Object} messages Containing parsed html strings
+ * @param {Object} messages Map of message-key/html pairs
  */
 ve.init.Platform.prototype.addParsedMessages = function () {
 	throw new Error( 've.init.Platform.addParsedMessages must be overridden in subclass' );
@@ -83,6 +83,7 @@ ve.init.Platform.prototype.addParsedMessages = function () {
 
 /**
  * Get a parsed message as HTML string.
+ *
  * Does not support $# replacements.
  *
  * @method
@@ -95,7 +96,7 @@ ve.init.Platform.prototype.getParsedMessage = function () {
 };
 
 /**
- * Gets client platform string from browser.
+ * Get client platform string from browser.
  *
  * @method
  * @abstract
@@ -106,12 +107,12 @@ ve.init.Platform.prototype.getSystemPlatform = function () {
 };
 
 /**
- * Gets the user language from the browser.
+ * Get the user language and any fallback languages.
  *
  * @method
  * @abstract
- * @returns {string} User language string
+ * @returns {string[]} User language strings
  */
-ve.init.Platform.prototype.getUserLanguage = function () {
-	throw new Error( 've.init.Platform.getUserLanugage must be overridden in subclass' );
+ve.init.Platform.prototype.getUserLanguages = function () {
+	throw new Error( 've.init.Platform.getUserLanugages must be overridden in subclass' );
 };

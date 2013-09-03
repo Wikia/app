@@ -48,17 +48,6 @@ ve.inheritClass( ve.ui.Tool, ve.ui.Widget );
 ve.ui.Tool.static.name = '';
 
 /**
- * CSS class name, rendered as ve-ui-dropdownTool-cssName
- *
- * If this is left as null, static.name is used instead.
- *
- * @abstract
- * @static
- * @property {string}
- */
-ve.ui.Tool.static.cssName = null;
-
-/**
  * Message key for tool title.
  *
  * @abstract
@@ -66,6 +55,14 @@ ve.ui.Tool.static.cssName = null;
  * @property {string}
  */
 ve.ui.Tool.static.titleMessage = null;
+
+/**
+ * Tool should be automatically added to toolbars.
+ *
+ * @static
+ * @property {boolean}
+ */
+ve.ui.Tool.static.autoAdd = true;
 
 /**
  * Check if this tool can be used on a model.
@@ -116,7 +113,6 @@ ve.ui.Tool.prototype.onUpdateState = function () {
  * Combines trigger i18n with tooltip message if trigger exists.
  * Otherwise defaults to titleMessage value.
  *
- * @abstract
  * @method
  * @chainable
  */
@@ -130,4 +126,15 @@ ve.ui.Tool.prototype.setTitle = function () {
 	}
 	this.$.attr( 'title', labelText );
 	return this;
+};
+
+/**
+ * Destroy tool.
+ *
+ * @method
+ */
+ve.ui.Tool.prototype.destroy = function () {
+	this.toolbar.disconnect( this );
+	ve.ui.triggerRegistry.disconnect( this );
+	this.$.remove();
 };

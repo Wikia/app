@@ -31,7 +31,7 @@ ve.inheritClass( ve.ui.UndoButtonTool, ve.ui.ButtonTool );
 
 /* Static Properties */
 
-ve.ui.UndoButtonTool.static.name = 'undo';
+ve.ui.UndoButtonTool.static.name = 'history/undo';
 
 ve.ui.UndoButtonTool.static.icon = 'undo';
 
@@ -62,13 +62,11 @@ ve.ui.UndoButtonTool.prototype.onUpdateState = function () {
 
 /* Registration */
 
-ve.ui.toolFactory.register( 'undo', ve.ui.UndoButtonTool );
+ve.ui.toolFactory.register( 'history/undo', ve.ui.UndoButtonTool );
 
-ve.ui.commandRegistry.register(
-	'undo', 'history', 'undo'
-);
+ve.ui.commandRegistry.register( 'history/undo', 'history', 'undo' );
 
 ve.ui.triggerRegistry.register(
-	'undo', { 'mac': new ve.ui.Trigger( 'cmd+z' ), 'pc': new ve.ui.Trigger( 'ctrl+z' ) }
+	'history/undo',
+	{ 'mac': new ve.ui.Trigger( 'cmd+z' ), 'pc': new ve.ui.Trigger( 'ctrl+z' ) }
 );
-

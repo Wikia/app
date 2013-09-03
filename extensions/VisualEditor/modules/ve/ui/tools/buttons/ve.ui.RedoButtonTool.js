@@ -31,7 +31,7 @@ ve.inheritClass( ve.ui.RedoButtonTool, ve.ui.ButtonTool );
 
 /* Static Properties */
 
-ve.ui.RedoButtonTool.static.name = 'redo';
+ve.ui.RedoButtonTool.static.name = 'history/redo';
 
 ve.ui.RedoButtonTool.static.icon = 'redo';
 
@@ -62,13 +62,11 @@ ve.ui.RedoButtonTool.prototype.onUpdateState = function () {
 
 /* Registration */
 
-ve.ui.toolFactory.register( 'redo', ve.ui.RedoButtonTool );
+ve.ui.toolFactory.register( 'history/redo', ve.ui.RedoButtonTool );
 
-ve.ui.commandRegistry.register(
-	'redo', 'history', 'redo'
-);
+ve.ui.commandRegistry.register( 'history/redo', 'history', 'redo' );
 
 ve.ui.triggerRegistry.register(
-	'redo', { 'mac': new ve.ui.Trigger( 'cmd+shift+z' ), 'pc': new ve.ui.Trigger( 'ctrl+shift+z' ) }
+	'history/redo',
+	{ 'mac': new ve.ui.Trigger( 'cmd+shift+z' ), 'pc': new ve.ui.Trigger( 'ctrl+shift+z' ) }
 );
-

@@ -55,6 +55,18 @@ ve.dm.AlienNode.static.toDomElements = function ( dataElement, doc ) {
 	return ve.copyDomElements( dataElement.attributes.domElements, doc );
 };
 
+ve.dm.AlienNode.static.getHashObject = function ( dataElement ) {
+	var parentResult = ve.dm.LeafNode.static.getHashObject( dataElement );
+	if ( parentResult.attributes && parentResult.attributes.domElements ) {
+		// If present, replace domElements with a DOM summary
+		parentResult.attributes = ve.copy( parentResult.attributes );
+		parentResult.attributes.domElements = ve.copy(
+			parentResult.attributes.domElements, ve.convertDomElements
+		);
+	}
+	return parentResult;
+};
+
 /* Concrete subclasses */
 
 /**
