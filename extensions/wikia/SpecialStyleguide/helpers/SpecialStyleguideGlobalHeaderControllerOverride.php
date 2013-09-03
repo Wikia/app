@@ -62,11 +62,50 @@ class GlobalHeaderController extends WikiaController {
 	private function getMenuNodes( $activeElement = self::HOME_NODE ) {
 		$menuNodes = [
 			0 => [ 'children' => [ 1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5 ] ],
-			self::HOME_NODE => [ 'original' => '#', 'text' => wfMessage( 'styleguide-home' )->plain(), 'href' => $this->getLink(), 'specialAttr' => null, 'parentIndex' => 0, 'depth' => 0, 'children' => [ ] ],
-			self::GET_STARTED_NODE => [ 'original' => '#', 'text' => wfMessage( 'styleguide-get-started' )->plain(), 'href' => $this->getLink( 'Get started' ), 'specialAttr' => null, 'parentIndex' => 0, 'depth' => 0, 'children' => [ ] ],
-			self::BASE_STYLES_NODE => [ 'original' => '#', 'text' => wfMessage( 'styleguide-base-styles' )->plain(), 'href' => $this->getLink( 'Base Styles' ), 'specialAttr' => null, 'parentIndex' => 0, 'depth' => 0, 'children' => [ ] ],
-			self::COMPONENTS_NODE => [ 'original' => '#', 'text' => wfMessage( 'styleguide-components' )->plain(), 'href' => $this->getLink( 'Components' ), 'specialAttr' => null, 'parentIndex' => 0, 'depth' => 0, 'children' => [ ] ],
-			self::DESIGN_NODE => [ 'original' => '#', 'text' => wfMessage( 'styleguide-design' )->plain(), 'href' => $this->getLink( 'Design' ), 'specialAttr' => null, 'parentIndex' => 0, 'depth' => 0, 'children' => [ ] ] 
+			self::HOME_NODE => [
+				'original' => '#',
+				'text' => wfMessage( 'styleguide-home' )->plain(),
+				'href' => $this->getLink(),
+				'specialAttr' => null,
+				'parentIndex' => 0,
+				'depth' => 0,
+				'children' => []
+			],
+			self::GET_STARTED_NODE => [
+				'original' => '#',
+				'text' => wfMessage( 'styleguide-get-started' )->plain(),
+				'href' => $this->getLink( 'Get started' ),
+				'specialAttr' => null, 'parentIndex' => 0,
+				'depth' => 0,
+				'children' => []
+			],
+			self::BASE_STYLES_NODE => [
+				'original' => '#',
+				'text' => wfMessage( 'styleguide-base-styles' )->plain(),
+				'href' => $this->getLink( 'Base Styles' ),
+				'specialAttr' => null,
+				'parentIndex' => 0,
+				'depth' => 0,
+				'children' => []
+			],
+			self::COMPONENTS_NODE => [
+				'original' => '#',
+				'text' => wfMessage( 'styleguide-components' )->plain(),
+				'href' => $this->getLink( 'Components' ),
+				'specialAttr' => null,
+				'parentIndex' => 0,
+				'depth' => 0,
+				'children' => []
+			],
+			self::DESIGN_NODE => [
+				'original' => '#',
+				'text' => wfMessage( 'styleguide-design' )->plain(),
+				'href' => $this->getLink( 'Design' ),
+				'specialAttr' => null,
+				'parentIndex' => 0,
+				'depth' => 0,
+				'children' => []
+			]
 		];
 
 		$menuNodes[$activeElement]['specialAttr'] = 'active';
