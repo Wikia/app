@@ -15,7 +15,8 @@
 define('wikia.csspropshelper', ['wikia.document'], function(document) {
 	'use strict';
 
-	var prefixArray = ['Moz', 'webkit', 'ms', 'O'];
+	var prefixArray = ['Moz', 'webkit', 'ms', 'O'],
+		prefixArrayLength = prefixArray.length;
 
 	/**
 	 * Find CSS3 property name supported by browser
@@ -27,11 +28,13 @@ define('wikia.csspropshelper', ['wikia.document'], function(document) {
 
 	function checkForSupportedProp(propArray) {
 		var root = document.documentElement,
-			i;
+			i,
+			length = propArray.length;
 
-		for (i = 0; i < propArray.length; i++) {
-			if (propArray[i] in root.style) {
-				return propArray[i];
+		for (i = 0; i < length; i++) {
+			var prop = propArray[i];
+			if (prop in root.style) {
+				return prop;
 			}
 		}
 		return false;
@@ -51,7 +54,7 @@ define('wikia.csspropshelper', ['wikia.document'], function(document) {
 			result = [prop],
 			formattedProp = prop.charAt(0).toUpperCase() + prop.slice(1);
 
-		for (i = 0; i < prefixArray.length; i++) {
+		for (i = 0; i < prefixArrayLength; i++) {
 			var str = prefixArray[i] + formattedProp;
 			result.push(str);
 		}
@@ -70,10 +73,12 @@ define('wikia.csspropshelper', ['wikia.document'], function(document) {
 	function formatName(prop) {
 		var i,
 			tempArray = prop.split('-'),
+			length = tempArray.length,
 			result = [tempArray[0]];
 
-		for (i = 1; i < tempArray.length; i++) {
-			var str = tempArray[i].charAt(0).toUpperCase() + tempArray[i].slice(1);
+		for (i = 1; i < length; i++) {
+			var tempStr = tempArray[i],
+				str = tempStr.charAt(0).toUpperCase() + tempStr.slice(1);
 			result.push(str)
 		}
 		return result.join('');
