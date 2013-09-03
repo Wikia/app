@@ -2351,7 +2351,7 @@ class MediaWikiServiceTest extends BaseTest
 	/**
 	 * @covers Wikia\Search\MediaWikiService::getThumbnailHtmlFromPageTitle
 	 */
-	public function testGetThumbnailHtmlFromPageTitle() {
+	public function testGetThumbnailHtmlFromFileTitle() {
 		$service = $this->service->setMethods( null )->getMock();
 		$title = $this->getMock( 'Title' );
 
@@ -2369,7 +2369,7 @@ class MediaWikiServiceTest extends BaseTest
 
 		$this->assertEquals(
 			'bar',
-			$service->getThumbnailHtmlFromPageTitle( 'x', array( 'width' => 12, 'height' => 13 ) )
+			$service->getThumbnailHtmlFromFileTitle( 'x', array( 'width' => 12, 'height' => 13 ) )
 		);
 	}
 	

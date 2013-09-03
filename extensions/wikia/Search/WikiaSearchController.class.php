@@ -260,11 +260,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$service = new \Wikia\Search\MediaWikiService();
 		foreach ( $results['items'] as &$result ) {
 			if (! isset( $result['thumbnail'] ) ) {
-				//try {
-					$result['thumbnail'] = $service->getThumbnailHtmlFromPageTitle( $result['title'], $dimensions );
-				//} catch ( \Exception $e ) {
-				//	$result['thumbnail'] = '';
-				//}
+				$result['thumbnail'] = $service->getThumbnailHtmlFromFileTitle( $result['title'], $dimensions );
 			}
 		}
 

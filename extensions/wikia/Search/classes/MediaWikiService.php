@@ -707,7 +707,7 @@ class MediaWikiService
 	 * @param array|null $transformParams
 	 * @return string|null - html of thumbnail with play button
 	 */
-	public function getThumbnailHtmlFromPageTitle( $pageTitle, $transformParams = null ) {
+	public function getThumbnailHtmlFromFileTitle( $pageTitle, $transformParams = null ) {
 		$file = null;
 		try {
 			$title = \Title::newFromText( $pageTitle, NS_FILE );
