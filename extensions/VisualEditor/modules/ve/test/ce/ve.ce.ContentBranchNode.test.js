@@ -115,9 +115,9 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 			'msg': 'Superscript text',
 			'data': [
 				{ 'type': 'paragraph' },
-				['a', [ { 'type': 'textStyle/superScript' } ]],
-				['b', [ { 'type': 'textStyle/superScript' } ]],
-				['c', [ { 'type': 'textStyle/superScript' } ]],
+				['a', [ { 'type': 'textStyle/superscript' } ]],
+				['b', [ { 'type': 'textStyle/superscript' } ]],
+				['c', [ { 'type': 'textStyle/superscript' } ]],
 				{ 'type': '/paragraph' }
 			],
 			'html': '<sup>abc</sup>'
@@ -126,9 +126,9 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 			'msg': 'Subscript text',
 			'data': [
 				{ 'type': 'paragraph' },
-				['a', [ { 'type': 'textStyle/subScript' } ]],
-				['b', [ { 'type': 'textStyle/subScript' } ]],
-				['c', [ { 'type': 'textStyle/subScript' } ]],
+				['a', [ { 'type': 'textStyle/subscript' } ]],
+				['b', [ { 'type': 'textStyle/subscript' } ]],
+				['c', [ { 'type': 'textStyle/subscript' } ]],
 				{ 'type': '/paragraph' }
 			],
 			'html': '<sub>abc</sub>'

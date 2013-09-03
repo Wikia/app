@@ -28,13 +28,13 @@ ve.ce.MWReferenceListNode = function VeCeMWReferenceListNode( model, config ) {
 	this.internalList = null;
 	this.listNode = null;
 
-	// Initialization
-	this.$
-		.addClass( 've-ce-mwReferenceListNode', 'reference' )
-		.prop( 'contenteditable', false );
+	// DOM changes
+	this.$.addClass( 've-ce-mwReferenceListNode', 'reference' );
 	this.$reflist = $( '<ol class="references"></ol>' );
 	this.$refmsg = $( '<p>' )
 		.addClass( 've-ce-mwReferenceListNode-muted' );
+
+	// Initialization
 	this.update();
 };
 
@@ -150,7 +150,7 @@ ve.ce.MWReferenceListNode.prototype.update = function () {
 			firstNode = nodes.firstNodes[index];
 
 			key = internalList.keys[index];
-			keyedNodes = nodes.keyedNodes[key] || [];
+			keyedNodes = nodes.keyedNodes[key];
 			// Exclude references defined inside the reference list node
 			/*jshint loopfunc:true */
 			keyedNodes = keyedNodes.filter( function ( node ) {
@@ -162,7 +162,7 @@ ve.ce.MWReferenceListNode.prototype.update = function () {
 				return true;
 			} );
 
-			if ( key !== undefined && !keyedNodes.length ) {
+			if ( !keyedNodes.length ) {
 				continue;
 			}
 

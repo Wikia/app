@@ -16,6 +16,9 @@
 ve.ui.MWFormatDropdownTool = function VeUiMWFormatDropdownTool( toolbar, config ) {
 	// Parent constructor
 	ve.ui.FormatDropdownTool.call( this, toolbar, config );
+
+	// Initialize
+	this.$.addClass( 've-ui-mwFormatDropdownTool' );
 };
 
 /* Inheritance */
@@ -24,9 +27,7 @@ ve.inheritClass( ve.ui.MWFormatDropdownTool, ve.ui.FormatDropdownTool );
 
 /* Static Properties */
 
-ve.ui.MWFormatDropdownTool.static.name = 'mwFormat';
-
-ve.ui.MWFormatDropdownTool.static.cssName = 'format ve-ui-dropdownTool-mwFormat';
+ve.ui.MWFormatDropdownTool.static.name = 'format/convert/mw';
 
 ve.ui.MWFormatDropdownTool.static.items[1].data.type = 'mwHeading';
 ve.ui.MWFormatDropdownTool.static.items[1].label = 'visualeditor-formatdropdown-format-mw-heading1';
@@ -42,9 +43,11 @@ ve.ui.MWFormatDropdownTool.static.items[6].data.type = 'mwHeading';
 ve.ui.MWFormatDropdownTool.static.items[6].label = 'visualeditor-formatdropdown-format-mw-heading6';
 ve.ui.MWFormatDropdownTool.static.items[7].data.type = 'mwPreformatted';
 
-// Move the H1 (item 1 in the list) to the end (7) so as to make it less prominent and tempting to users
-ve.ui.MWFormatDropdownTool.static.items.splice( 7, 0, ve.ui.MWFormatDropdownTool.static.items.splice( 1, 1 )[0] );
+// Move H1 (index 0) to the end (index 7) so as to make it less prominent and tempting to users
+ve.ui.MWFormatDropdownTool.static.items.splice(
+	7, 0, ve.ui.MWFormatDropdownTool.static.items.splice( 1, 1 )[0]
+);
 
 /* Registration */
 
-ve.ui.toolFactory.register( 'mwFormat', ve.ui.MWFormatDropdownTool );
+ve.ui.toolFactory.register( 'format/convert/mw', ve.ui.MWFormatDropdownTool );

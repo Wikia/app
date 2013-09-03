@@ -149,6 +149,10 @@ class MakeStaticLoader extends Maintenance {
 			'Dependencies',
 			'ext.visualEditor.base#standalone-init',
 			'ext.visualEditor.core',
+			'jquery.uls.grid',
+			'jquery.uls.data',
+			'jquery.uls.compact',
+			'jquery.uls',
 			'ext.visualEditor.experimental',
 		);
 
@@ -162,7 +166,7 @@ class MakeStaticLoader extends Maintenance {
 			$headAdd = $bodyAdd = '';
 
 			if ( isset( $registry['styles'] ) && $target !== 'test' ){
-				foreach ( $registry['styles'] as $path ) {
+				foreach ( (array)$registry['styles'] as $path ) {
 					if ( strpos( $path, 've-mw/' ) === 0 ) {
 						continue;
 					}
@@ -173,7 +177,7 @@ class MakeStaticLoader extends Maintenance {
 				}
 			}
 			if ( isset( $registry['scripts'] ) ) {
-				foreach ( $registry['scripts'] as $path ) {
+				foreach ( (array)$registry['scripts'] as $path ) {
 					if ( strpos( $path, 've-mw/' ) === 0 ) {
 						continue;
 					}
@@ -181,7 +185,7 @@ class MakeStaticLoader extends Maintenance {
 				}
 			}
 			if ( isset( $registry['debugScripts'] ) ) {
-				foreach ( $registry['debugScripts'] as $path ) {
+				foreach ( (array)$registry['debugScripts'] as $path ) {
 					if ( strpos( $path, 've-mw/' ) === 0 ) {
 						continue;
 					}

@@ -36,10 +36,7 @@ ve.ui.DropdownTool = function VeUiDropdownTool( toolbar, config ) {
 	// Initialization
 	this.$
 		.append( this.$icon, this.$label, this.menu.$ )
-		.addClass(
-			've-ui-dropdownTool ve-ui-dropdownTool-' +
-			( this.constructor.static.cssName || this.constructor.static.name )
-		);
+		.addClass( 've-ui-dropdownTool' );
 	if ( this.constructor.static.titleMessage ) {
 		this.$.attr( 'title', ve.msg( this.constructor.static.titleMessage ) );
 	}

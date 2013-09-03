@@ -30,7 +30,10 @@ ve.dm.MWCategoryMetaItem.static.group = 'mwCategory';
 
 ve.dm.MWCategoryMetaItem.static.matchTagNames = [ 'link' ];
 
-ve.dm.MWCategoryMetaItem.static.matchRdfaTypes = [ 'mw:WikiLink/Category' ];
+ve.dm.MWCategoryMetaItem.static.matchRdfaTypes = [
+	'mw:WikiLink/Category', // old type, pre-bug 53432
+	'mw:PageProp/Category' // new type
+];
 
 ve.dm.MWCategoryMetaItem.static.toDataElement = function ( domElements ) {
 	var firstDomElement = domElements[0],

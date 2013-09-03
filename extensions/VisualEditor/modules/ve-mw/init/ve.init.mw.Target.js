@@ -35,7 +35,7 @@ ve.init.mw.Target = function VeInitMwTarget( $container, pageName, revisionId ) 
 	this.modules = [
 			mw.config.get( 'wgVisualEditorConfig' ).enableExperimentalCode ?
 				'ext.visualEditor.experimental' : 'ext.visualEditor.core',
-			'ext.visualEditor.specialMessages'
+			'ext.visualEditor.data'
 		]
 		.concat(
 			document.createElementNS && document.createElementNS( 'http://www.w3.org/2000/svg', 'svg' ).createSVGRect ?

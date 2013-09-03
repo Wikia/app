@@ -79,7 +79,9 @@ ve.ce.ProtectedNode.prototype.onProtectedSetup = function () {
 		.connect( this, { 'position': 'positionPhantoms' } );
 
 	// DOM changes
-	this.$.addClass( 've-ce-protectedNode' );
+	this.$
+		.addClass( 've-ce-protectedNode' )
+		.prop( 'contentEditable', 'false' );
 
 	// Shields
 	this.$.add( this.$.find( '*' ) ).each( function () {
@@ -125,7 +127,9 @@ ve.ce.ProtectedNode.prototype.onProtectedTeardown = function () {
 	this.clearPhantoms();
 
 	// DOM changes
-	this.$.removeClass( 've-ce-protectedNode' );
+	this.$
+		.removeClass( 've-ce-protectedNode' )
+		.removeProp( 'contentEditable' );
 
 	this.isSetup = false;
 };

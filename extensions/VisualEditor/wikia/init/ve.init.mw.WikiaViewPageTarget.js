@@ -34,8 +34,15 @@ ve.init.mw.WikiaViewPageTarget.prototype.mutePageContent = function () {
 		.fadeTo( 'fast', 0.6 );
 };
 
-ve.init.mw.ViewPageTarget.prototype.hidePageContent = function () {
+ve.init.mw.WikiaViewPageTarget.prototype.hidePageContent = function () {
 	$( '#mw-content-text, .WikiaArticleCategories' )
 		.addClass( 've-init-mw-viewPageTarget-content' )
 		.hide();
+};
+
+ve.init.mw.WikiaViewPageTarget.prototype.showPageContent = function () {
+	$( '.ve-init-mw-viewPageTarget-content' )
+		.removeClass( 've-init-mw-viewPageTarget-content' )
+		.show()
+		.fadeTo( 0, 1 );
 };

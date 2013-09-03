@@ -33,13 +33,44 @@ ve.ui.MWReferenceDialog.static.titleMessage = 'visualeditor-dialog-reference-tit
 
 ve.ui.MWReferenceDialog.static.icon = 'reference';
 
-ve.ui.MWReferenceDialog.static.toolbarTools = [
-	{ 'items': ['undo', 'redo'] },
-	{ 'items': ['bold', 'italic', 'mwLink', 'clear', 'mwMediaInsert', 'mwTransclusion'] }
+ve.ui.MWReferenceDialog.static.toolbarGroups = [
+	{
+		'include': [ 'history' ],
+		'promote': [
+			'history/undo',
+			'history/redo'
+		]
+	},
+	{
+		'include': [ 'textStyle', 'meta', 'utility/clear' ],
+		'promote': [
+			'textStyle/bold',
+			'textStyle/italic',
+			'meta/link'
+		],
+		'demote': [ 'utility/clear' ]
+	},
+	{
+		'include': [ 'structure' ],
+		'promote': [
+			'structure/number',
+			'structure/bullet',
+			'structure/outdent',
+			'structure/indent'
+		]
+	},
+	{ 'include': [ 'object' ], 'exclude': [ 'object/reference/mw', 'object/referenceList/mw' ] }
 ];
 
 ve.ui.MWReferenceDialog.static.surfaceCommands = [
-	'bold', 'italic', 'mwLink', 'undo', 'redo', 'clear'
+	'history/undo',
+	'history/redo',
+	'textStyle/bold',
+	'textStyle/italic',
+	'meta/link/mw',
+	'utility/clear',
+	'structure/indent',
+	'structure/outdent'
 ];
 
 /* Methods */
@@ -165,8 +196,11 @@ ve.ui.MWReferenceDialog.prototype.onOpen = function () {
  * @inheritdoc
  */
 ve.ui.MWReferenceDialog.prototype.onClose = function ( action ) {
-	var i, len, txs, item, data, group, refGroup, listGroup, keyIndex, refNode, refNodes,
+	var i, len, txs, item, data, group, refGroup, listGroup, keyIndex, refNodes,
 		surfaceModel = this.surface.getModel(),
+		// Store the original selection browsers may reset it after
+		// the first model change.
+		selection = surfaceModel.getSelection().clone(),
 		doc = surfaceModel.getDocument(),
 		internalList = doc.getInternalList();
 
@@ -175,7 +209,7 @@ ve.ui.MWReferenceDialog.prototype.onClose = function ( action ) {
 
 	if ( action === 'insert' || action === 'apply' ) {
 		data = this.referenceSurface.getContent();
-		refGroup = this.referenceGroupInput.getValue(),
+		refGroup = this.referenceGroupInput.getValue();
 		listGroup = 'mwReference/' + refGroup;
 
 		// Internal item changes
@@ -223,28 +257,12 @@ ve.ui.MWReferenceDialog.prototype.onClose = function ( action ) {
 
 		// Content changes
 		if ( action === 'insert' ) {
-			if ( this.ref ) {
-				// Re-use existing internal item
-				if ( this.ref.listKey === null ) {
-					// Auto-generate list key on first re-use
-					this.ref.listKey = internalList.getUniqueListKey( this.ref.listGroup );
-					// Update the list key in the other use of this source
-					refNode = internalList.nodes[this.ref.listGroup].firstNodes[this.ref.listIndex];
-					// HACK: Removing and re-inserting nodes to/from the internal list is done
-					// because internal list doesn't yet support attribute changes
-					refNode.removeFromInternalList();
-					surfaceModel.change(
-						ve.dm.Transaction.newFromAttributeChanges(
-							doc, refNode.getOuterRange().start, { 'listKey': this.ref.listKey }
-						)
-					);
-					refNode.addToInternalList();
-				}
-			} else {
+			if ( !this.ref ) {
+				listGroup = 'mwReference/' + refGroup;
 				// Create new internal item
 				this.ref = {
-					'listKey': null,
-					'listGroup': 'mwReference/' + refGroup,
+					'listKey': internalList.getUniqueListKey( listGroup ),
+					'listGroup': listGroup,
 					'refGroup': refGroup
 				};
 				item = internalList.getItemInsertion( this.ref.listGroup, this.ref.listKey, data );
@@ -252,7 +270,7 @@ ve.ui.MWReferenceDialog.prototype.onClose = function ( action ) {
 				this.ref.listIndex = item.index;
 			}
 			// Add reference at cursor
-			surfaceModel.getFragment().collapseRangeToEnd().insertContent( [
+			surfaceModel.getFragment( selection ).collapseRangeToEnd().insertContent( [
 				{ 'type': 'mwReference', 'attributes': this.ref }, { 'type': '/mwReference' }
 			] );
 		}
@@ -303,10 +321,13 @@ ve.ui.MWReferenceDialog.prototype.useReference = function ( ref ) {
 		new ve.dm.ElementLinearData( doc.getStore(), data ),
 		{
 			'$$': this.frame.$$,
-			'tools': this.constructor.static.toolbarTools,
+			'tools': this.constructor.static.toolbarGroups,
 			'commands': this.constructor.static.surfaceCommands
 		}
 	);
+
+	// Event handlers
+	this.referenceSurface.getSurface().getModel().connect( this, { 'change': 'onSurfaceChange' } );
 
 	// Initialization
 	this.referenceGroupInput.setValue( refGroup );
@@ -314,6 +335,18 @@ ve.ui.MWReferenceDialog.prototype.useReference = function ( ref ) {
 	this.referenceSurface.initialize();
 
 	return this;
+};
+
+/**
+ * Handle reference surface change events
+ */
+ve.ui.MWReferenceDialog.prototype.onSurfaceChange = function () {
+	var data = this.referenceSurface.getContent(),
+		// TODO: Check for other types of empty, e.g. only whitespace?
+		disabled = data.length <= 2;
+
+	this.insertButton.setDisabled( disabled );
+	this.applyButton.setDisabled( disabled );
 };
 
 /* Registration */

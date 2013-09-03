@@ -196,38 +196,38 @@ ve.ce.TextStyleEmphasizeAnnotation.static.tagName = 'em';
 ve.ce.annotationFactory.register( ve.ce.TextStyleEmphasizeAnnotation );
 
 /**
- * ContentEditable superScript annotation.
+ * ContentEditable superscript annotation.
  *
  * @class
  * @extends ve.ce.TextStyleAnnotation
  * @constructor
- * @param {ve.dm.TextStyleSuperScriptAnnotation} model
+ * @param {ve.dm.TextStyleSuperscriptAnnotation} model
  */
-ve.ce.TextStyleSuperScriptAnnotation = function VeCeTextStyleSuperScriptAnnotation( model, config ) {
+ve.ce.TextStyleSuperscriptAnnotation = function VeCeTextStyleSuperscriptAnnotation( model, config ) {
 	ve.ce.TextStyleAnnotation.call( this, model, config );
-	this.$.addClass( 've-ce-TextStyleSuperScriptAnnotation' );
+	this.$.addClass( 've-ce-TextStyleSuperscriptAnnotation' );
 };
-ve.inheritClass( ve.ce.TextStyleSuperScriptAnnotation, ve.ce.TextStyleAnnotation );
-ve.ce.TextStyleSuperScriptAnnotation.static.name = 'textStyle/superScript';
-ve.ce.TextStyleSuperScriptAnnotation.static.tagName = 'sup';
-ve.ce.annotationFactory.register( ve.ce.TextStyleSuperScriptAnnotation );
+ve.inheritClass( ve.ce.TextStyleSuperscriptAnnotation, ve.ce.TextStyleAnnotation );
+ve.ce.TextStyleSuperscriptAnnotation.static.name = 'textStyle/superscript';
+ve.ce.TextStyleSuperscriptAnnotation.static.tagName = 'sup';
+ve.ce.annotationFactory.register( ve.ce.TextStyleSuperscriptAnnotation );
 
 /**
- * ContentEditable subScript annotation.
+ * ContentEditable subscript annotation.
  *
  * @class
  * @extends ve.ce.TextStyleAnnotation
  * @constructor
- * @param {ve.dm.TextStyleSubScriptAnnotation} model
+ * @param {ve.dm.TextStyleSubscriptAnnotation} model
  */
-ve.ce.TextStyleSubScriptAnnotation = function VeCeTextStyleSubScriptAnnotation( model, config ) {
+ve.ce.TextStyleSubscriptAnnotation = function VeCeTextStyleSubscriptAnnotation( model, config ) {
 	ve.ce.TextStyleAnnotation.call( this, model, config );
-	this.$.addClass( 've-ce-TextStyleSubScriptAnnotation' );
+	this.$.addClass( 've-ce-TextStyleSubscriptAnnotation' );
 };
-ve.inheritClass( ve.ce.TextStyleSubScriptAnnotation, ve.ce.TextStyleAnnotation );
-ve.ce.TextStyleSubScriptAnnotation.static.name = 'textStyle/subScript';
-ve.ce.TextStyleSubScriptAnnotation.static.tagName = 'sub';
-ve.ce.annotationFactory.register( ve.ce.TextStyleSubScriptAnnotation );
+ve.inheritClass( ve.ce.TextStyleSubscriptAnnotation, ve.ce.TextStyleAnnotation );
+ve.ce.TextStyleSubscriptAnnotation.static.name = 'textStyle/subscript';
+ve.ce.TextStyleSubscriptAnnotation.static.tagName = 'sub';
+ve.ce.annotationFactory.register( ve.ce.TextStyleSubscriptAnnotation );
 
 /**
  * ContentEditable code annotation.

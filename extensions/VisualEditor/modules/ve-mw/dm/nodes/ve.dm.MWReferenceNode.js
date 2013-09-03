@@ -46,7 +46,7 @@ ve.dm.MWReferenceNode.static.toDataElement = function ( domElements, converter )
 		body = mwData.body ? mwData.body.html : '',
 		refGroup = mwData.attrs && mwData.attrs.group || '',
 		listGroup = this.name + '/' + refGroup,
-		listKey = mwData.attrs && mwData.attrs.name !== undefined ? mwData.attrs.name : null,
+		listKey = mwData.attrs && mwData.attrs.name !== undefined ? mwData.attrs.name : ':' + converter.internalList.itemHtmlQueue.length,
 		queueResult = converter.internalList.queueItemHtml( listGroup, listKey, body ),
 		listIndex = queueResult.index,
 		contentsUsed = ( body !== '' && queueResult.isNew );
@@ -80,7 +80,7 @@ ve.dm.MWReferenceNode.static.toDomElements = function ( dataElement, doc, conver
 	mwData = dataElement.attributes.mw ? ve.copy( dataElement.attributes.mw ) : {};
 	mwData.name = 'ref';
 
-	setContents = dataElement.attributes.contentsUsed || dataElement.attributes.listKey === null;
+	setContents = dataElement.attributes.contentsUsed;
 
 	keyedNodes = converter.internalList
 		.getNodeGroup( dataElement.attributes.listGroup )
@@ -132,7 +132,11 @@ ve.dm.MWReferenceNode.static.toDomElements = function ( dataElement, doc, conver
 	}
 
 	// Set or clear key
-	if ( dataElement.attributes.listKey !== null ) {
+	if (
+		// We always assign unique keys. If the key hasn't be reused, then don't render it.
+		keyedNodes.length !== 1 ||
+		!ve.dm.InternalList.static.isUniqueListKey( dataElement.attributes.listKey )
+	) {
 		ve.setProp( mwData, 'attrs', 'name', dataElement.attributes.listKey );
 	} else if ( mwData.attrs ) {
 		delete mwData.attrs.listKey;
@@ -235,6 +239,7 @@ ve.dm.MWReferenceNode.prototype.removeFromInternalList = function () {
 ve.dm.MWReferenceNode.prototype.getClonedElement = function () {
 	var clone = ve.dm.LeafNode.prototype.getClonedElement.call( this );
 	delete clone.attributes.contentsUsed;
+	delete clone.attributes.mw;
 	delete clone.attributes.originalMw;
 	return clone;
 };

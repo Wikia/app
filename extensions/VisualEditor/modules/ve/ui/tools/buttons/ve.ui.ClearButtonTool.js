@@ -28,7 +28,7 @@ ve.inheritClass( ve.ui.ClearButtonTool, ve.ui.ButtonTool );
 
 /* Static Properties */
 
-ve.ui.ClearButtonTool.static.name = 'clear';
+ve.ui.ClearButtonTool.static.name = 'utility/clear';
 
 ve.ui.ClearButtonTool.static.icon = 'clear';
 
@@ -59,10 +59,11 @@ ve.ui.ClearButtonTool.prototype.onUpdateState = function ( nodes, full, partial 
 
 /* Registration */
 
-ve.ui.toolFactory.register( 'clear', ve.ui.ClearButtonTool );
+ve.ui.toolFactory.register( 'utility/clear', ve.ui.ClearButtonTool );
 
-ve.ui.commandRegistry.register( 'clear', 'annotation', 'clearAll' );
+ve.ui.commandRegistry.register( 'utility/clear', 'annotation', 'clearAll' );
 
 ve.ui.triggerRegistry.register(
-	'clear', { 'mac': new ve.ui.Trigger( 'cmd+\\' ), 'pc': new ve.ui.Trigger( 'ctrl+\\' ) }
+	'utility/clear',
+	{ 'mac': new ve.ui.Trigger( 'cmd+\\' ), 'pc': new ve.ui.Trigger( 'ctrl+\\' ) }
 );

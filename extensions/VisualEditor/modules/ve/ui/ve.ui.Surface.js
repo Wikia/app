@@ -82,7 +82,7 @@ ve.ui.Surface.prototype.initialize = function () {
 	// By re-asserting the current selection and forcing a poll we force selection to be something
 	// reasonable - otherwise in Firefox, the initial selection is (0,0), causing bug 42277
 	this.model.getFragment().select();
-	this.view.surfaceObserver.poll();
+	this.view.surfaceObserver.poll( false, true );
 	this.model.startHistoryTracking();
 };
 

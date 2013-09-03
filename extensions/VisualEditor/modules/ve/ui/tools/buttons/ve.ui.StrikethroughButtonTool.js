@@ -25,19 +25,22 @@ ve.inheritClass( ve.ui.StrikethroughButtonTool, ve.ui.AnnotationButtonTool );
 
 /* Static Properties */
 
-ve.ui.StrikethroughButtonTool.static.name = 'strikethrough';
+ve.ui.StrikethroughButtonTool.static.name = 'textStyle/strikethrough';
 
 ve.ui.StrikethroughButtonTool.static.icon = {
 	'default': 'strikethrough-a',
 	'en': 'strikethrough-s'
 };
 
-ve.ui.StrikethroughButtonTool.static.titleMessage = 'visualeditor-annotationbutton-strikethrough-tooltip';
+ve.ui.StrikethroughButtonTool.static.titleMessage =
+	'visualeditor-annotationbutton-strikethrough-tooltip';
 
 ve.ui.StrikethroughButtonTool.static.annotation = { 'name': 'textStyle/strike' };
 
 /* Registration */
 
-ve.ui.toolFactory.register( 'strikethrough', ve.ui.StrikethroughButtonTool );
+ve.ui.toolFactory.register( 'textStyle/strikethrough', ve.ui.StrikethroughButtonTool );
 
-ve.ui.commandRegistry.register( 'strikethrough', 'annotation', 'toggle', 'textStyle/strike' );
+ve.ui.commandRegistry.register(
+	'textStyle/strikethrough', 'annotation', 'toggle', 'textStyle/strike'
+);

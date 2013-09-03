@@ -101,7 +101,9 @@ ve.dm.Surface.prototype.startHistoryTracking = function () {
 	if ( !this.enabled ) {
 		return;
 	}
-	this.historyTrackingInterval = setInterval( ve.bind( this.breakpoint, this ), 750 );
+	if ( this.historyTrackingInterval === null ) {
+		this.historyTrackingInterval = setInterval( ve.bind( this.breakpoint, this ), 750 );
+	}
 };
 
 /**
@@ -113,7 +115,10 @@ ve.dm.Surface.prototype.stopHistoryTracking = function () {
 	if ( !this.enabled ) {
 		return;
 	}
-	clearInterval( this.historyTrackingInterval );
+	if ( this.historyTrackingInterval !== null ) {
+		clearInterval( this.historyTrackingInterval );
+		this.historyTrackingInterval = null;
+	}
 };
 
 /**
@@ -125,7 +130,7 @@ ve.dm.Surface.prototype.purgeHistory = function () {
 	if ( !this.enabled ) {
 		return;
 	}
-	this.selection = null;
+	this.selection = new ve.Range( 0, 0 );
 	this.smallStack = [];
 	this.bigStack = [];
 	this.undoIndex = 0;

@@ -25,7 +25,7 @@ ve.inheritClass( ve.ui.LanguageButtonTool, ve.ui.InspectorButtonTool );
 
 /* Static Properties */
 
-ve.ui.LanguageButtonTool.static.name = 'language';
+ve.ui.LanguageButtonTool.static.name = 'meta/language';
 
 ve.ui.LanguageButtonTool.static.icon = 'language';
 
@@ -37,6 +37,6 @@ ve.ui.LanguageButtonTool.static.modelClasses = [ ve.dm.LanguageAnnotation ];
 
 /* Registration */
 
-ve.ui.toolFactory.register( 'language', ve.ui.LanguageButtonTool );
+ve.ui.toolFactory.register( 'meta/language', ve.ui.LanguageButtonTool );
 
-ve.ui.commandRegistry.register( 'language', 'inspector', 'open', 'language' );
+ve.ui.commandRegistry.register( 'meta/language', 'inspector', 'open', 'language' );

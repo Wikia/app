@@ -87,9 +87,13 @@ ve.ui.MWLinkInspector.prototype.getAnnotationFromText = function ( target ) {
 /**
  * Regular expression matching a valid internal link
  *
+ * This is a slightly modified version of the PHP regex
+ * - unicode range changed from 0080-00ff to 0080-ffff
+ * - added '(#.*)?' to allow section links
+ *
  * @type {RegExp}
  */
-ve.ui.MWLinkInspector.static.legalTitle = /^[ %!"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\u0080-\u00FF+]+$/;
+ve.ui.MWLinkInspector.static.legalTitle = /^[ %!"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\u0080-\uFFFF+]+(#.*)?$/;
 
 /* Registration */
 

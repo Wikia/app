@@ -25,11 +25,11 @@ ve.inheritClass( ve.ui.BoldButtonTool, ve.ui.AnnotationButtonTool );
 
 /* Static Properties */
 
-ve.ui.BoldButtonTool.static.name = 'bold';
+ve.ui.BoldButtonTool.static.name = 'textStyle/bold';
 
 ve.ui.BoldButtonTool.static.icon = {
 	'default': 'bold-a',
-	'be-tarask': 'bold-cyrl-te-el',
+	'be': 'bold-cyrl-te',
 	'cs': 'bold-b',
 	'da': 'bold-f',
 	'de': 'bold-f',
@@ -50,7 +50,6 @@ ve.ui.BoldButtonTool.static.icon = {
 	'os': 'bold-cyrl-be',
 	'pl': 'bold-b',
 	'pt': 'bold-n',
-	'pt-br': 'bold-n',
 	'ru': 'bold-cyrl-zhe',
 	'sv': 'bold-f'
 };
@@ -61,10 +60,11 @@ ve.ui.BoldButtonTool.static.annotation = { 'name': 'textStyle/bold' };
 
 /* Registration */
 
-ve.ui.toolFactory.register( 'bold', ve.ui.BoldButtonTool );
+ve.ui.toolFactory.register( 'textStyle/bold', ve.ui.BoldButtonTool );
 
-ve.ui.commandRegistry.register( 'bold', 'annotation', 'toggle', 'textStyle/bold' );
+ve.ui.commandRegistry.register( 'textStyle/bold', 'annotation', 'toggle', 'textStyle/bold' );
 
 ve.ui.triggerRegistry.register(
-	'bold', { 'mac': new ve.ui.Trigger( 'cmd+b' ), 'pc': new ve.ui.Trigger( 'ctrl+b' ) }
+	'textStyle/bold',
+	{ 'mac': new ve.ui.Trigger( 'cmd+b' ), 'pc': new ve.ui.Trigger( 'ctrl+b' ) }
 );

@@ -143,6 +143,17 @@ ve.inheritClass( ve.init.mw.ViewPageTarget, ve.init.mw.Target );
 
 /* Static Properties */
 
+ve.init.mw.ViewPageTarget.static.surfaceCommands = [
+	'history/undo',
+	'history/redo',
+	'textStyle/bold',
+	'textStyle/italic',
+	'meta/link/mw',
+	'utility/clear',
+	'structure/indent',
+	'structure/outdent'
+];
+
 /**
  * Compatibility map used with jQuery.client to black-list incompatible browsers.
  *
@@ -160,19 +171,6 @@ ve.init.mw.ViewPageTarget.compatibility = {
 		'chrome': [['>=', 19]]
 	}
 };
-
-ve.init.mw.ViewPageTarget.static.toolbarTools = [
-	{ 'items': [ 'undo', 'redo' ] },
-	{ 'items': [ 'mwFormat' ] },
-	{ 'items': [ 'bold', 'italic', 'strikethrough', 'subscript', 'superscript',
-		'underline', 'mwLink', 'language', 'code', 'clear' ] },
-	{ 'items': [ 'number', 'bullet', 'outdent', 'indent' ] },
-	{ 'items': [ 'mwMediaInsert', 'mwReference', 'mwReferenceList', 'mwTransclusion', 'mwMath', 'mwHiero' ] }
-];
-
-ve.init.mw.ViewPageTarget.static.surfaceCommands = [
-	'bold', 'italic', 'mwLink', 'undo', 'redo', 'indent', 'outdent', 'clear'
-];
 
 // TODO: Accessibility tooltips and logical tab order for prevButton and closeButton.
 ve.init.mw.ViewPageTarget.static.saveDialogTemplate = '\
@@ -321,7 +319,7 @@ ve.init.mw.ViewPageTarget.prototype.onLoad = function ( doc ) {
 			if ( mw.config.get( 'wgVisualEditorConfig' ).showBetaWelcome ) {
 				this.showBetaWelcome();
 			}
-			//mw.hook( 've.activationComplete' ).fire();
+			mw.hook( 've.activationComplete' ).fire();
 		}, this ) );
 	}
 };
@@ -1699,7 +1697,7 @@ ve.init.mw.ViewPageTarget.prototype.swapSaveDialog = function ( slide, options )
 	// Show the target slide
 	$slide.show();
 
-	//mw.hook( 've.saveDialog.stateChanged' ).fire();
+	mw.hook( 've.saveDialog.stateChanged' ).fire();
 
 	if ( slide === 'save' ) {
 		setTimeout( function () {
@@ -1848,7 +1846,7 @@ ve.init.mw.ViewPageTarget.prototype.hideTableOfContents = function () {
 ve.init.mw.ViewPageTarget.prototype.setUpToolbar = function () {
 	this.toolbar = new ve.ui.SurfaceToolbar( this.surface, { 'shadow': true, 'actions': true } );
 	this.toolbar.connect( this, { 'position': 'onToolbarPosition' } );
-	this.toolbar.setup( this.constructor.static.toolbarTools );
+	this.toolbar.setup( this.constructor.static.toolbarGroups );
 	this.surface.addCommands( this.constructor.static.surfaceCommands );
 	if ( !this.isMobileDevice ) {
 		this.toolbar.enableFloatable();

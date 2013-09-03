@@ -35,7 +35,7 @@ QUnit.test( 'queueItemHtml/getItemHtmlQueue', 5, function ( assert ) {
 	);
 
 	// Queue up empty data
-	internalList.queueItemHtml( 'reference', 'baz', '' ),
+	internalList.queueItemHtml( 'reference', 'baz', '' );
 	assert.deepEqual(
 		internalList.queueItemHtml( 'reference', 'baz', 'Quux' ),
 		{ 'index': 2, 'isNew': true },

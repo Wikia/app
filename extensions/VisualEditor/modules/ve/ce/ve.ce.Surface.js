@@ -33,6 +33,7 @@ ve.ce.Surface = function VeCeSurface( model, surface, options ) {
 	this.documentView = new ve.ce.Document( model.getDocument(), this );
 	this.surfaceObserver = new ve.ce.SurfaceObserver( this.documentView );
 	this.selectionTimeout = null;
+	this.keyPressTimeout = null;
 	this.$document = $( this.getElementDocument() );
 	this.clipboard = {};
 	this.renderingEnabled = true;
@@ -63,13 +64,16 @@ ve.ce.Surface = function VeCeSurface( model, surface, options ) {
 		$documentNode.focus();
 	} );
 
-	this.$.on( {
+	this.$document.on( {
 		'cut': ve.bind( this.onCut, this ),
 		'copy': ve.bind( this.onCopy, this ),
-		'paste': ve.bind( this.onPaste, this ),
+		'paste': ve.bind( this.onPaste, this )
+	} );
+	this.$.on( {
 		'dragover': ve.bind( this.onDocumentDragOver, this ),
 		'drop': ve.bind( this.onDocumentDrop, this )
 	} );
+
 	if ( $.browser.msie ) {
 		this.$.on( 'beforepaste', ve.bind( this.onPaste, this ) );
 	}
@@ -78,7 +82,7 @@ ve.ce.Surface = function VeCeSurface( model, surface, options ) {
 	this.$.addClass( 've-ce-surface' );
 	this.$phantoms.addClass( 've-ce-surface-phantoms' );
 	this.$highlights.addClass( 've-ce-surface-highlights' );
-	this.$pasteTarget.addClass( 've-ce-surface-paste' ).prop( 'contenteditable', true );
+	this.$pasteTarget.addClass( 've-ce-surface-paste' ).prop( 'contentEditable', 'true' );
 
 	// Add elements to the DOM
 	this.$.append( this.documentView.getDocumentNode().$, this.$pasteTarget );
@@ -292,7 +296,7 @@ ve.ce.Surface.prototype.documentOnFocus = function () {
 		'compositionstart.ve-ce-Surface': ve.bind( this.onDocumentCompositionStart, this ),
 		'compositionend.ve-ce-Surface': ve.bind( this.onDocumentCompositionEnd, this )
 	} );
-	this.surfaceObserver.start( true );
+	this.surfaceObserver.start( true, true );
 };
 
 /**
@@ -303,7 +307,7 @@ ve.ce.Surface.prototype.documentOnFocus = function () {
  */
 ve.ce.Surface.prototype.documentOnBlur = function () {
 	this.$document.off( '.ve-ce-Surface' );
-	this.surfaceObserver.stop( true );
+	this.surfaceObserver.stop( true, true );
 	this.dragging = false;
 };
 
@@ -323,7 +327,7 @@ ve.ce.Surface.prototype.onDocumentMouseDown = function ( e ) {
 	// this.$$( e.target ).closest( '.ve-ce-documentNode' ).length === 0
 
 	if ( e.which === 1 ) {
-		this.surfaceObserver.stop( true );
+		this.surfaceObserver.stop( true, true );
 	}
 
 	// Handle triple click
@@ -349,7 +353,7 @@ ve.ce.Surface.prototype.onDocumentMouseDown = function ( e ) {
  * @emits selectionEnd
  */
 ve.ce.Surface.prototype.onDocumentMouseUp = function ( e ) {
-	this.surfaceObserver.start();
+	this.surfaceObserver.start( false, true );
 	if ( !e.shiftKey && this.selecting ) {
 		this.emit( 'selectionEnd' );
 		this.selecting = false;
@@ -450,6 +454,7 @@ ve.ce.Surface.prototype.onDocumentDrop = function ( e ) {
  */
 ve.ce.Surface.prototype.onDocumentKeyDown = function ( e ) {
 	var trigger;
+	this.forceKeyPressTimeout();
 
 	// Ignore keydowns while in IME mode but do not preventDefault them (so text actually appear on
 	// the screen).
@@ -467,7 +472,7 @@ ve.ce.Surface.prototype.onDocumentKeyDown = function ( e ) {
 		return;
 	}
 
-	this.surfaceObserver.stop( true );
+	this.surfaceObserver.stop( true, false );
 	switch ( e.keyCode ) {
 		case ve.Keys.LEFT:
 		case ve.Keys.RIGHT:
@@ -502,7 +507,7 @@ ve.ce.Surface.prototype.onDocumentKeyDown = function ( e ) {
 			}
 			break;
 	}
-	this.surfaceObserver.start();
+	this.surfaceObserver.start( false, false );
 };
 
 /**
@@ -513,6 +518,8 @@ ve.ce.Surface.prototype.onDocumentKeyDown = function ( e ) {
  */
 ve.ce.Surface.prototype.onDocumentKeyPress = function ( e ) {
 	var selection, prevNode, documentModel = this.model.getDocument();
+
+	this.forceKeyPressTimeout();
 
 	// Prevent IE from editing Aliens/Entities
 	// TODO: Better comment about what's going on here is needed.
@@ -539,9 +546,39 @@ ve.ce.Surface.prototype.onDocumentKeyPress = function ( e ) {
 	}
 
 	this.handleInsertion();
-	setTimeout( ve.bind( function () {
-		this.surfaceObserver.start();
+	this.setKeyPressTimeout();
+};
+
+/**
+ * Append a call to onKeyPressTimeout to the event queue.
+ * @method
+ */
+ve.ce.Surface.prototype.setKeyPressTimeout = function () {
+	this.keyPressTimeout = setTimeout( ve.bind( function() {
+		this.keyPressTimeout = null;
+		this.onKeyPressTimeout();
 	}, this ) );
+};
+
+/**
+ * If there is a pending call to onKeyPressTimeout in the event queue, delete it and call now
+ * @method
+ */
+ve.ce.Surface.prototype.forceKeyPressTimeout = function () {
+	if ( this.keyPressTimeout === null ) {
+		return;
+	}
+	clearTimeout( this.keyPressTimeout );
+	this.keyPressTimeout = null;
+	this.onKeyPressTimeout();
+};
+
+/**
+ * post-keypress handler: re-sync the surface and model
+ * @method
+ */
+ve.ce.Surface.prototype.onKeyPressTimeout = function () {
+	this.surfaceObserver.start( false, true );
 };
 
 /**
@@ -566,7 +603,7 @@ ve.ce.Surface.prototype.onDocumentKeyUp = function ( e ) {
  * @param {jQuery.Event} e Cut event
  */
 ve.ce.Surface.prototype.onCut = function ( e ) {
-	this.surfaceObserver.stop();
+	this.surfaceObserver.stop( false, true );
 	this.onCopy( e );
 	setTimeout( ve.bind( function () {
 		var selection, tx;
@@ -578,9 +615,12 @@ ve.ce.Surface.prototype.onCut = function ( e ) {
 		// Transact
 		tx = ve.dm.Transaction.newFromRemoval( this.documentView.model, selection );
 
+		// Document may not have had real focus (e.g. with a FocusableNode)
+		this.documentView.documentNode.$[0].focus();
+
 		this.model.change( tx, new ve.Range( selection.start ) );
 		this.surfaceObserver.clear();
-		this.surfaceObserver.start();
+		this.surfaceObserver.start( false, true );
 	}, this ) );
 };
 
@@ -590,21 +630,31 @@ ve.ce.Surface.prototype.onCut = function ( e ) {
  * @method
  * @param {jQuery.Event} e Copy event
  */
-ve.ce.Surface.prototype.onCopy = function () {
+ve.ce.Surface.prototype.onCopy = function ( e ) {
 	var sel = rangy.getSelection( this.$document[0] ),
-		$frag = this.$$( sel.getRangeAt(0).cloneContents() ),
+		$frag = sel.rangeCount ? this.$$( sel.getRangeAt(0).cloneContents() ) : null,
 		slice = this.documentView.model.getSlice( this.model.getSelection() ),
-		key = '';
+		clipboardData = e.originalEvent.clipboardData,
+		fragText = $frag ? $frag.text() : '',
+		key = 've-' + fragText.replace( /\s/gm, '' );
 
 	// CLone the elements in the slice
 	slice.cloneElements();
 
-	// Create key from text and element names
-	$frag.contents().each( function () {
-		key += this.textContent || this.nodeName;
-	} );
-	key = 've-' + key.replace( /\s/gm, '' );
-
+	// Check we have setData and that it actually works (returns true)
+	if ( clipboardData && clipboardData.setData && clipboardData.setData( 'text/xcustom', '' ) ) {
+		// Webkit
+		e.preventDefault();
+		clipboardData.setData( 'text/xcustom', key );
+		// As we've disabled the default event we need to set the normal clipboard data
+		clipboardData.setData( 'text/plain', fragText );
+	} else {
+		if ( window.clipboardData ) {
+			// IE
+			e.originalEvent.returnValue = false;
+			window.clipboardData.setData( 'text/plain', fragText );
+		}
+	}
 	// Set clipboard
 	this.clipboard[key] = slice;
 };
@@ -615,7 +665,7 @@ ve.ce.Surface.prototype.onCopy = function () {
  * @method
  * @param {jQuery.Event} e Paste event
  */
-ve.ce.Surface.prototype.onPaste = function () {
+ve.ce.Surface.prototype.onPaste = function ( e ) {
 	// Prevent pasting until after we are done
 	if ( this.pasting ) {
 		return false;
@@ -625,9 +675,12 @@ ve.ce.Surface.prototype.onPaste = function () {
 	var tx, scrollTop,
 		$window = $( ve.Element.getWindow( this.$$.context ) ),
 		view = this,
-		selection = this.model.getSelection();
+		selection = this.model.getSelection(),
+		clipboardData = e.originalEvent.clipboardData,
+		eventPasteKey = clipboardData && clipboardData.getData( 'text/xcustom' ),
+		eventPasteText = clipboardData && clipboardData.getData( 'text/plain' );
 
-	this.surfaceObserver.stop();
+	this.surfaceObserver.stop( false, true );
 
 	// Pasting into a range? Remove first.
 	if ( !rangy.getSelection( this.$document[0] ).isCollapsed ) {
@@ -644,11 +697,16 @@ ve.ce.Surface.prototype.onPaste = function () {
 		var pasteData, slice, tx,
 			key = '';
 
-		// Create key from text and element names
-		view.$pasteTarget.hide().contents().each( function () {
-			key += this.textContent || this.nodeName;
-		} );
-		key = 've-' + key.replace( /\s/gm, '' );
+		if ( eventPasteKey ) {
+			key = eventPasteKey;
+		} else {
+			if ( eventPasteText ) {
+				key = eventPasteText;
+			} else {
+				key = view.$pasteTarget.text();
+			}
+			key = 've-' + key.replace( /\s/gm, '' );
+		}
 
 		// Get linear model from clipboard or create array from unknown pasted content
 		if ( view.clipboard[key] ) {
@@ -660,20 +718,38 @@ ve.ce.Surface.prototype.onPaste = function () {
 				)
 			);
 		}
-		pasteData = slice.getBalancedData();
 
-		// Annotate
-		ve.dm.Document.addAnnotationsToData( pasteData, this.model.getInsertionAnnotations() );
+		try {
+			// Try to paste in the orignal data
+			// Take a copy to prevent the data being annotated a second time in the catch block
+			pasteData = ve.copy( slice.getData() );
 
-		// Transaction
-		tx = ve.dm.Transaction.newFromInsertion(
-			view.documentView.model,
-			selection.start,
-			pasteData
-		);
+			// Annotate
+			ve.dm.Document.addAnnotationsToData( pasteData, this.model.getInsertionAnnotations() );
+
+			// Transaction
+			tx = ve.dm.Transaction.newFromInsertion(
+				view.documentView.model,
+				selection.start,
+				pasteData
+			);
+		} catch ( e ) {
+			// If that fails, balance the data before pasting
+			pasteData = slice.getBalancedData();
+
+			// Annotate
+			ve.dm.Document.addAnnotationsToData( pasteData, this.model.getInsertionAnnotations() );
+
+			// Transaction
+			tx = ve.dm.Transaction.newFromInsertion(
+				view.documentView.model,
+				selection.start,
+				pasteData
+			);
+		}
 
 		// Restore focus and scroll position
-		view.documentView.documentNode.$.focus();
+		view.documentView.documentNode.$[0].focus();
 		$window.scrollTop( scrollTop );
 
 		selection = tx.translateRange( selection );
@@ -708,7 +784,7 @@ ve.ce.Surface.prototype.onDocumentCompositionStart = function () {
  */
 ve.ce.Surface.prototype.onDocumentCompositionEnd = function () {
 	this.inIme = false;
-	this.surfaceObserver.start();
+	this.surfaceObserver.start( false, false );
 };
 
 /*! Custom Events */
@@ -942,7 +1018,7 @@ ve.ce.Surface.prototype.onContentChange = function ( node, previous, next ) {
  * @method
  */
 ve.ce.Surface.prototype.onLock = function () {
-	this.surfaceObserver.stop();
+	this.surfaceObserver.stop( false, true );
 };
 
 /**
@@ -952,7 +1028,7 @@ ve.ce.Surface.prototype.onLock = function () {
  */
 ve.ce.Surface.prototype.onUnlock = function () {
 	this.surfaceObserver.clear( this.model.getSelection() );
-	this.surfaceObserver.start();
+	this.surfaceObserver.start( false, true );
 };
 
 /*! Relocation */
@@ -1000,7 +1076,7 @@ ve.ce.Surface.prototype.handleLeftOrRightArrowKey = function ( e ) {
 	// Selection is going to be displayed programmatically so prevent default browser behaviour
 	e.preventDefault();
 	// Stop with final poll cycle so we have correct information in model
-	this.surfaceObserver.stop( true );
+	this.surfaceObserver.stop( true, false );
 	selection = this.model.getSelection();
 	if ( this.$$( e.target ).css( 'direction' ) === 'rtl' ) {
 		// If the language direction is RTL, switch left/right directions:
@@ -1017,7 +1093,7 @@ ve.ce.Surface.prototype.handleLeftOrRightArrowKey = function ( e ) {
 	);
 
 	this.model.change( null, range );
-	this.surfaceObserver.start();
+	this.surfaceObserver.start( false, true );
 };
 
 /**
@@ -1034,7 +1110,7 @@ ve.ce.Surface.prototype.handleUpOrDownArrowKey = function ( e ) {
 		nativeSel.modify( 'extend', 'left', 'character' );
 		return;
 	}
-	this.surfaceObserver.stop( true );
+	this.surfaceObserver.stop( true, true );
 	selection = this.model.getSelection();
 	rangySelection = rangy.getSelection( this.$document[0] );
 	// Perform programatic handling only for selection that is expanded and backwards according to
@@ -1058,18 +1134,18 @@ ve.ce.Surface.prototype.handleUpOrDownArrowKey = function ( e ) {
 			if ( !$element.hasClass( 've-ce-branchNode-slug' ) ) {
 				$element.remove();
 			}
-			this.surfaceObserver.start();
-			this.surfaceObserver.stop( false );
+			this.surfaceObserver.start( false, true );
+			this.surfaceObserver.stop( false, true );
 			if ( e.shiftKey === true ) { // expanded range
 				range = new ve.Range( selection.from, this.model.getSelection().to );
 			} else { // collapsed range (just a cursor)
 				range = new ve.Range( this.model.getSelection().to );
 			}
 			this.model.change( null, range );
-			this.surfaceObserver.start();
+			this.surfaceObserver.start( false, true );
 		}, this ), 0 );
 	} else {
-		this.surfaceObserver.start();
+		this.surfaceObserver.start( false, true );
 	}
 };
 
@@ -1125,7 +1201,7 @@ ve.ce.Surface.prototype.handleInsertion = function () {
 		}
 	}
 
-	this.surfaceObserver.stop( true );
+	this.surfaceObserver.stop( true, true );
 };
 
 /**

@@ -25,7 +25,7 @@ ve.inheritClass( ve.ui.IndentButtonTool, ve.ui.IndentationButtonTool );
 
 /* Static Properties */
 
-ve.ui.IndentButtonTool.static.name = 'indent';
+ve.ui.IndentButtonTool.static.name = 'structure/indent';
 
 ve.ui.IndentButtonTool.static.icon = 'indent-list';
 
@@ -35,8 +35,8 @@ ve.ui.IndentButtonTool.static.method = 'increase';
 
 /* Registration */
 
-ve.ui.toolFactory.register( 'indent', ve.ui.IndentButtonTool );
+ve.ui.toolFactory.register( 'structure/indent', ve.ui.IndentButtonTool );
 
-ve.ui.commandRegistry.register( 'indent', 'indentation', 'increase' );
+ve.ui.commandRegistry.register( 'structure/indent', 'indentation', 'increase' );
 
-ve.ui.triggerRegistry.register( 'indent', new ve.ui.Trigger( 'tab' ) );
+ve.ui.triggerRegistry.register( 'structure/indent', new ve.ui.Trigger( 'tab' ) );

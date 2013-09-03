@@ -30,7 +30,7 @@ ve.ce.MWExtensionNode = function VeCeMWExtensionNode( model, config ) {
 	ve.ce.ProtectedNode.call( this );
 	ve.ce.GeneratedContentNode.call( this );
 
-	// DOM Changes
+	// DOM changes
 	this.$.addClass( 've-ce-mwExtensionNode' );
 };
 

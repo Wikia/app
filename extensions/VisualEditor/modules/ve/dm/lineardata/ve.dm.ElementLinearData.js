@@ -433,9 +433,7 @@ ve.dm.ElementLinearData.prototype.getAnnotatedRangeFromSelection = function ( ra
  * @returns {ve.dm.AnnotationSet} All annotation objects range is covered by
  */
 ve.dm.ElementLinearData.prototype.getAnnotationsFromRange = function ( range, all ) {
-	var i,
-		left,
-		right;
+	var i, left, right;
 	// Look at left side of range for annotations
 	left = this.getAnnotationsFromOffset( range.start );
 	// Shortcut for single character and zero-length ranges
@@ -444,8 +442,8 @@ ve.dm.ElementLinearData.prototype.getAnnotationsFromRange = function ( range, al
 	}
 	// Iterator over the range, looking for annotations, starting at the 2nd character
 	for ( i = range.start + 1; i < range.end; i++ ) {
-		// Skip non character data
-		if ( this.isElementData( i ) ) {
+		// Skip non-content data
+		if ( this.isElementData( i ) && !ve.dm.nodeFactory.isNodeContent( this.getType( i ) ) ) {
 			continue;
 		}
 		// Current character annotations
