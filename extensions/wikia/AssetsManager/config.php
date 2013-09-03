@@ -605,23 +605,6 @@ $config['special_contact_wikiamobile_js'] = array(
 	)
 );
 
-/** WikiaApp **/
-$config['wikiaapp_css'] = array(
-	'type' => AssetsManager::TYPE_CSS,
-	'assets' => array(
-		'//skins/wikiaapp/main.css',
-		'//skins/wikiaapp/skin.css'
-	)
-);
-
-$config['wikiaapp_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//resources/wikia/libraries/zepto/zepto-0.8.js',
-		'//skins/wikiaapp/main.js'
-	)
-);
-
 /** MonoBook **/
 $config['monobook_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
