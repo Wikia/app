@@ -120,7 +120,7 @@ ve.ce.WikiaBlockVideoNode.prototype.getPlayButtonElement = function () {
 	var $image, $wrapper;
 
 	$wrapper = this.$$( '<div>' )
-		.addClass( 'wikia-video-play-button' )
+		.addClass( 'Wikia-video-play-button' )
 		.css({
 			'line-height': this.model.getAttribute( 'height' ) + 'px',
 			'width': this.model.getAttribute( 'width' )
