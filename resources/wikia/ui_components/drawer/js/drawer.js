@@ -1,4 +1,4 @@
-define('wikia.uifactory.drawer', function drawer(){
+define('wikia.ui.drawer', function drawer(){
 	'use strict';
 
 	function Drawer(side) {
