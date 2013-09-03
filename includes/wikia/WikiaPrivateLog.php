@@ -70,37 +70,66 @@ class WikiaPrivateLog {
 			return false;
 		}
 
-		if ( !empty( $this->uri ) ) {
-			W::log( $this->name, false, $this->uri, true /* $force */ );
-		}
-
 		if ( !is_array( $args ) ) {
 			$args = [$args];
 		}
 
+		//accumulate the log lines instead of pushing them
+		//immediately to allow skipping in special cases
+		$lines = [];
+
 		foreach ( $args as $arg ) {
-			if ( is_scalar( $arg ) ) {
-				$msg = $arg;
+			if( is_string( $arg ) ) {
+				$lines[] = $this->processString( $arg );
+			} elseif ( is_scalar( $arg ) ) {
+				$lines[] = $arg;
 			} elseif (is_array( $arg ) ) {
-				$msg = json_encode( $this->processArray( $arg ) );
+				$lines[] = json_encode( $this->processArray( $arg ) );
 			} elseif ( is_object( $arg) ) {
 				if ( $arg instanceof FileBackend ) {
-					$msg = $arg->getName() . ( $arg->isReadOnly() ? ' (read-only: ' . $arg->getReadOnlyReason() . ')' : '' );
+					$name = $arg->getName();
+
+					//skip commons-related errors due to
+					//their volume, we'll inquire those
+					//separately
+					if ( $name === 'wikimediacommons-backend' ) {
+						return false;
+					}
+
+					$lines[] = "Backend: {$name}" . ( $arg->isReadOnly() ? ' (read-only: ' . $this->processString( $arg->getReadOnlyReason() ) . ')' : '' );
 				} else {
-					$msg = get_class( $arg );
+					$lines[] = get_class( $arg );
 				}
 			} else {
-				$msg = gettype( $arg );
+				$lines[] = gettype( $arg );
 			}
-
-			W::log( $this->name, false, $msg, true /* $force */ );
 		}
 
+		if ( !empty( $this->uri ) ) {
+			W::log( $this->name, false, $this->uri, true /* $force */ );
+		}
+
+		foreach ( $lines as $msg ) {
+			W::log( $this->name, false, $msg, true /* $force */ );
+		}
 		if ( $includeBacktrace === true ) {
 			W::debugBacktrace( $this->name );
 		}
 
 		return true;
+	}
+
+	/**
+	 * Transforms any string to a single line, space-separated
+	 * string replacing new lines, tabs, carriage returns and
+	 * repeated spaces
+	 *
+	 * @param  string $text
+	 *
+	 * @return string
+	 */
+	private function processString( $text ) {
+		return preg_replace( "/\s{1,}/", ' ', $text );
 	}
 
 	/**
@@ -120,6 +149,8 @@ class WikiaPrivateLog {
 		foreach ( $items as $item ) {
 			if ( is_array( $item ) ) {
 				$results[] = json_encode( $item );
+			} elseif ( is_string( $item ) ) {
+				$results[] = $this->processString( $item );
 			} elseif ( is_scalar( $item ) ) {
 				$results[] = $item;
 			} elseif ( $item instanceof FileOp ) {
