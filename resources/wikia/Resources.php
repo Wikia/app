@@ -13,7 +13,6 @@ return [
 	// shared AMD modules loaded on each page
 	'amd.shared' => [
 		'dependencies' => [
-			'wikia.ajax',
 			'wikia.cache',
 			'wikia.cookies',
 			'wikia.document',
@@ -67,15 +66,10 @@ return [
 			'wikia.window',
 		],
 	],
-	'wikia.ajax' => [
-		'scripts' => 'resources/wikia/modules/ajax.js',
-		'dependencies' => 'amd',
-	],
 	'wikia.nirvana' => [
 		'scripts' => 'resources/wikia/modules/nirvana.js',
 		'dependencies' => [
-			'amd',
-			'wikia.ajax',
+			'amd'
 		],
 	],
 	'wikia.mw' => [
