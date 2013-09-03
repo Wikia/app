@@ -69,7 +69,7 @@ class LinkSuggest {
 		if (strlen($query) < 3) {
 			// enforce minimum character limit on server side
 			$out = self::getEmptyResponse($request->getText('format'));
-		} else if (false && $cached = $wgMemc->get($key)) {
+		} else if ($cached = $wgMemc->get($key)) {
 			$out = $cached;
 		}
 
