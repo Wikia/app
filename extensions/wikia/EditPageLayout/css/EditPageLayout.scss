@@ -8,6 +8,7 @@
 @import "skins/oasis/css/mixins/multiple-box-shadow";
 @import "skins/oasis/css/mixins/opacity";
 @import "skins/oasis/css/mixins/wordmark";
+@import "extensions/wikia/UserLogin/mixins/tooltip-icon";
 
 // Colors
 @import "core/colors";
@@ -303,8 +304,23 @@ body {
 		top: 50%;
 	}
 	&.preview {
+		> h1 {
+			float: left;
+			margin-right: 20px;
+		}
+		> form {
+			float: left;
+			margin-top: 20px;
+			position: relative;
+		}
+		.tooltip-icon {
+			@include tooltip-icon;
+			right: -17px;
+			top: 6px;
+		}
 		.modalContent {
 			border-color: transparent;
+			clear: both;
 			padding: 0;
 			.ArticlePreview {
 				border: 1px solid $color-page-border;
