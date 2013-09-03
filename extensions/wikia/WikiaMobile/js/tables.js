@@ -1,11 +1,39 @@
+/* global Features */
 define('tables', ['events', 'track', 'wikia.window', 'jquery'], function(ev, track, w, $){
 	'use strict';
 
 	var d = w.document,
 		pageContent = d.getElementById('mw-content-text') || d.getElementById('wkMainCnt'),
 		realWidth = pageContent.offsetWidth,
-		inited = false,
+		initialized = false,
 		handledTables = $();
+
+	function check(){
+		var table,
+			isWrapped,
+			isBig,
+			x = 0,
+			y = handledTables.length;
+
+		realWidth = pageContent.offsetWidth;
+
+		for(; x < y; x++){
+			table = handledTables.eq(x);
+			isBig = table.width() > realWidth;
+			isWrapped = table.parent().is('.bigTable');
+
+			if(isBig && !isWrapped){
+				table.wrap('<div class="bigTable" />');
+			}else if(!isBig && isWrapped){
+				table = table.unwrap()[0];
+
+				if(table.wkScroll) {
+					table.wkScroll.destroy();
+					table.wkScroll = null;
+				}
+			}
+		}
+	}
 
 	function process(tables){
 		//if the table width is bigger than any screen dimension (device can rotate)
@@ -26,7 +54,7 @@ define('tables', ['events', 'track', 'wikia.window', 'jquery'], function(ev, tra
 				l = tr.length;
 
 				for(; i < l; i++) {
-					if(tr[i].cells.length == 2){
+					if(tr[i].cells.length === 2){
 						correctRows++;
 					}
 				}
@@ -40,32 +68,10 @@ define('tables', ['events', 'track', 'wikia.window', 'jquery'], function(ev, tra
 			return $(element).width() > realWidth;
 		}).wrap('<div class="bigTable" />');
 
-		if(!inited && handledTables.length > 0){
-			inited = true;
-			w.addEventListener('viewportsize', function(){
-				var table,
-					isWrapped,
-					isBig;
+		if(!initialized && handledTables.length > 0){
+			initialized = true;
 
-				realWidth = pageContent.offsetWidth;
-
-				for(var x = 0, y = handledTables.length; x < y; x++){
-					table = handledTables.eq(x);
-					isBig = table.width() > realWidth;
-					isWrapped = table.parent().is('.bigTable');
-
-					if(isBig && !isWrapped){
-						table.wrap('<div class="bigTable" />');
-					}else if(!isBig && isWrapped){
-						table = table.unwrap()[0];
-
-						if(table.wkScroll) {
-							table.wkScroll.destroy();
-							table.wkScroll = null;
-						}
-					}
-				}
-			});
+			w.addEventListener('viewportsize', check);
 
 			if(!Features.overflow){
 				$(d.body).on(ev.touch, '.bigTable', function(){
@@ -83,6 +89,7 @@ define('tables', ['events', 'track', 'wikia.window', 'jquery'], function(ev, tra
 	}
 
 	return {
-		process: process
+		process: process,
+		check: check
 	};
 });

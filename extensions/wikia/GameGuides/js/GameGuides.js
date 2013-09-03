@@ -1,9 +1,12 @@
-(function(html, window){
+/* global Ponto */
+(function($html, window){
+	'use strict';
+
 	var links = document.querySelectorAll('a:not(.external):not(.extiw)'),
 		host = window.wgServer.replace(/^http\:\/\//, ''),
 		i = links.length,
 		namespaces = window.wgNamespaceIds,
-		regExpNamespace = new RegExp(window.wgArticlePath.replace('$1', "([^:]*)")),
+		regExpNamespace = new RegExp(window.wgArticlePath.replace('$1', '([^:]*)')),
 		//not all namespaces in GG should be clickable
 		//there are custom namespaces on wikis therefore black list will be better suited here
 		disabledNs = [-2,-1,1,2,3,4,5,6,7,10,11,12,13,15,110,111,500,501,700,701,1200,1201,1202],
@@ -12,24 +15,28 @@
 		parent,
 		notAllowed,
 		namespace,
-		pathMatch;
+		pathMatch,
+		serifClass = 'serif',
+		alignmentClass = 'full',
+		lightSkinClass = 'light';
 
 	while(i--) {
 		link = links[i];
 		path = link.pathname;
 		parent = link.parentElement;
-		notAllowed = ((link.host && link.host !== host) || path === '/wikia.php') && !~parent.className.indexOf('thumb');
+		notAllowed = ((link.host && link.host !== host) || path === '/wikia.php') &&
+			parent.className.indexOf('thumb') === -1;
 
-		if(!notAllowed && ~path.indexOf(':')) {
+		if(!notAllowed && path.indexOf(':') > -1) {
 			pathMatch = path.match(regExpNamespace);
 
 			if(pathMatch && (namespace = namespaces[pathMatch[1].toLowerCase()])) {
-				notAllowed = !!~disabledNs.indexOf(namespace);
+				notAllowed = disabledNs.indexOf(namespace) > -1;
 			}
 		}
 
 		if(notAllowed) {
-			if(~link.className.indexOf('image')) {
+			if(link.className.indexOf('image') > -1) {
 				parent.className = 'thumb';
 				link.firstElementChild.className += ' media';
 			}else {
@@ -39,10 +46,12 @@
 	}
 
 	//handling clicking on a link
-	html.addEventListener('click', function(ev){
+	$html.on('click', function(ev){
 		var t = ev.target,
 			title,
-			ns = 0;
+			ns = 0,
+			split,
+			namespace;
 
 		if(t.tagName === 'A'){
 			ev.preventDefault();
@@ -51,12 +60,12 @@
 				title = t.title.replace(/ /g, '_');
 			}else{
 				//links in ie. images do not have title attribute
-				title = t.pathname.replace("/wiki/", '')
+				title = t.pathname.replace('/wiki/', '');
 			}
 
-			if(~title.indexOf(':')) {
-				var split = title.split(':'),
-					namespace = namespaces[split.shift().toLowerCase()];
+			if(title.indexOf(':') > -1) {
+				split = title.split(':');
+				namespace = namespaces[split.shift().toLowerCase()];
 
 				if(namespace) {
 					title = split.join(':');
@@ -79,9 +88,11 @@
 	function Photos(){
 		this.getList = function(){
 			var images = Array.prototype.slice.call(document.images),
-				links = [];
+				links = [],
+				i = 0,
+				l = images.length;
 
-			for(var i = 0, l = images.length; i < l; i++){
+			for(; i < l; i++){
 				links[i] = images[i].getAttribute('data-src') || images[i].src;
 			}
 
@@ -97,36 +108,28 @@
 
 	window.Photos = Photos;
 
-	function toggle(on, off, force){
-		var hasClass = ~html.className.indexOf(on);
-
-		if(!force || force == on || force == off){
-			if(force == off || hasClass && force != on) {
-				hasClass && (html.className = html.className.replace(' ' + on, ''));
-
-				return off;
-			}else{
-				!hasClass && (html.className += ' ' + on);
-
-				return on;
-			}
-		}
-	}
-
 	function Font(){
 		this.toggleType = function(type){
-			return toggle('serif', 'sans-serif', type);
+			return $html
+				.toggleClass(serifClass, type && (type === serifClass))
+				.hasClass(serifClass) ? serifClass : 'sans-' + serifClass;
 		};
 
 		this.setSize = function(size){
 			size = Math.max(Math.min(~~size, 200), 50);
-			html.style.fontSize = size + '%';
+			$html.css('font-size', size + '%');
+
+			require(['tables'], function(t){
+				t.check();
+			});
 
 			return size;
 		};
 
 		this.toggleAlignment = function(alignment){
-			return toggle('full', 'left', alignment)
+			return $html
+				.toggleClass(alignmentClass, alignment && (alignment === alignmentClass))
+				.hasClass(alignmentClass) ? alignmentClass : 'left';
 		};
 
 		this.setOptions = function(options){
@@ -152,7 +155,9 @@
 	//Light/Dark skin handling
 	function Skin(){
 		this.toggleMode = function(type){
-			return toggle('light', 'dark', type);
+			return $html
+				.toggleClass(lightSkinClass, type && (type === lightSkinClass))
+				.hasClass(lightSkinClass) ? lightSkinClass : 'dark';
 		};
 	}
 
@@ -203,10 +208,10 @@
 
 		$(window).on({
 			'sections:open': function(){
-				html.style.minHeight = html.offsetHeight + 'px';
+				$html.css('min-height', $html.height());
 			},
 			'sections:close': function(){
-				html.style.minHeight = 0;
+				$html.css('min-height', 0);
 			}
 		});
 	});
@@ -227,4 +232,4 @@
 			);
 		});
 	});
-})(document.documentElement, window);
+})($(document.documentElement), window);
