@@ -321,19 +321,14 @@ $config['gameguides_js'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		'//extensions/wikia/GameGuides/js/initGameGuides.js',
-		'#group_wikiamobile_js_head',
+		'//extensions/wikia/WikiaMobile/js/html_js_class.js',
 
 		//libraries/frameworks
 		'//resources/wikia/libraries/modil/modil.js',
+		'//resources/jquery/jquery-2.0.3.js',
 		'//resources/wikia/libraries/Ponto/ponto.js',
-		'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
-
-		// deferred.js - jQuery-free implementation (BugId:34943)
-		'//resources/wikia/libraries/deferred/deferred.js',
-		'//resources/wikia/libraries/deferred/deferred.api.js',
 
 		//core modules
-		'//resources/wikia/modules/deferred.js',
 		'//resources/wikia/modules/window.js',
 		'//resources/wikia/modules/location.js',
 		'//resources/wikia/modules/nirvana.js',
@@ -355,7 +350,6 @@ $config['gameguides_js'] = array(
 		'//extensions/wikia/GameGuides/js/isGameGuides.js',
 
 		//polyfills
-		'//resources/wikia/polyfills/outerhtml.js',
 		'//extensions/wikia/WikiaMobile/js/viewport.js',
 
 		//groups
@@ -363,8 +357,12 @@ $config['gameguides_js'] = array(
 		'#group_wikiamobile_scroll_js',
 		'#group_wikiamobile_mediagallery_js',
 
+		//video
+		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
+
 		//modules
-		'//resources/wikia/modules/ajax.js',
+		'//resources/wikia/modules/thumbnailer.js',
+		'//resources/wikia/libraries/sloth/sloth.js',
 		'//extensions/wikia/WikiaMobile/js/toc.js',
 		'//extensions/wikia/WikiaMobile/js/lazyload.js',
 		'//extensions/wikia/WikiaMobile/js/track.js',
@@ -377,10 +375,6 @@ $config['gameguides_js'] = array(
 		'//extensions/wikia/WikiaMobile/js/media.js',
 		'//extensions/wikia/WikiaMobile/js/sections.js',
 		'//extensions/wikia/WikiaMobile/js/layout.js',
-		'//resources/wikia/modules/thumbnailer.js',
-
-		//video
-		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
@@ -389,14 +383,6 @@ $config['gameguides_js'] = array(
 );
 
 /** WikiaMobile **/
-$config['wikiamobile_jquerytest_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
-		'//extensions/wikia/WikiaMobile/js/jquery-deprecated-effects-event-alias-sizzle.min.js',
-	)
-);
-
 $config['wikiamobile_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => 'wikiamobile',
@@ -421,16 +407,6 @@ $config['wikiamobile_404_js'] = array(
 	)
 );
 
-//loaded at the top of the page in the head section
-$config['wikiamobile_js_head'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
-		//set js class as fast as possible to make styling as fast as possible
-		'//extensions/wikia/WikiaMobile/js/html_js_class.js',
-	)
-);
-
 //loaded at the bottom of the page in the body section
 $config['wikiamobile_js_body_minimal'] = array(
 	'type' => AssetsManager::TYPE_JS,
@@ -438,11 +414,7 @@ $config['wikiamobile_js_body_minimal'] = array(
 	'assets' => array(
 		//libraries/frameworks
 		'//resources/wikia/libraries/modil/modil.js',
-		'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
-
-		// deferred.js - jQuery-free implementation (BugId:34943)
-		'//resources/wikia/libraries/deferred/deferred.js',
-		'//resources/wikia/libraries/deferred/deferred.api.js',
+		'//resources/jquery/jquery-2.0.3.js',
 
 		//core modules
 		'//resources/wikia/modules/window.js',
@@ -460,8 +432,6 @@ $config['wikiamobile_js_body_minimal'] = array(
 		'#group_tracker_js',
 
 		//modules
-		'//resources/wikia/modules/deferred.js',
-		'//resources/wikia/modules/ajax.js',
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/loader.js',
 		'//resources/wikia/modules/cache.js',
@@ -482,7 +452,6 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/feature-detects/overflow.wikiamobile.js',
 
 		//polyfills
-		'//resources/wikia/polyfills/outerhtml.js',
 		'//extensions/wikia/WikiaMobile/js/viewport.js',
 
 		//platform components
@@ -533,16 +502,6 @@ $config['wikiamobile_smartbanner_init_js'] = [
 	]
 ];
 
-$config['wikiamobile_relatedpages_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
-		'//extensions/wikia/RelatedPages/css/RelatedPages.wikiamobile.scss'
-	)
-);
-
-//sloth is a generic library but currently used only by RelatedPages on wikiamobile
-//move to body package if needed
 $config['wikiamobile_relatedpages_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',

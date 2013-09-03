@@ -70,9 +70,9 @@ class RelatedPagesController extends WikiaController {
 		}
 	}
 
-	static function onWikiaMobileAssetsPackages(&$jsHead, &$jsBody, &$scss) {
-		$jsBody[] = 'wikiamobile_relatedpages_js';
-		$scss[] = 'wikiamobile_relatedpages_scss';
+	static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages) {
+		$jsStaticPackages[] = 'wikiamobile_relatedpages_js';
+		//css is in WikiaMobile.scss as AM can't concatanate scss files currently
 
 		return true;
 	}

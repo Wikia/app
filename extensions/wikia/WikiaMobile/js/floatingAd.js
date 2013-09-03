@@ -1,16 +1,20 @@
 window.addEventListener('load', function(){
 	'use strict';
 
-	if(!Wikia.AbTest || ['E', undefined].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS")) != -1){
-		require(['ads', 'wikia.window', 'wikia.utils'], function (ads, window, $) {
+	if(!Wikia.AbTest || ['E', undefined].indexOf(Wikia.AbTest.getGroup('WIKIAMOBILEADSLOTS')) !== -1){
+		require(['ads', 'wikia.window', 'jquery'], function (ads, window, $) {
 			var wrapper = document.getElementById('wkFloatingAd'),
 				positionfixed = window.Features.positionfixed,
 				fixed,
 				found,
-				ftr = window.document.getElementById('wkFtr'),
-				classes = ['over', 'fixed'];
+				ftr = window.document.getElementById('wkFtr') || window.document.body,
+				classes = 'over fixed',
+				$wrapper = $(wrapper),
+				$ftr = $(ftr);
 
-			!positionfixed && classes.push('jsfix');
+			if(!positionfixed) {
+				classes += ' jsfix';
+			}
 
 			/**
 			 * Moves the slot at the bottom of the viewport
@@ -47,8 +51,10 @@ window.addEventListener('load', function(){
 						moveSlot();
 					}
 
-					$.addClass(wrapper, classes);
-					$.addClass(ftr || window.document.body, ['ads']);
+					$wrapper.addClass(classes);
+					//$.addClass(wrapper, classes);
+					$ftr.addClass('ads');
+					//$.addClass(ftr || window.document.body, ['ads']);
 				}
 			}
 
@@ -70,8 +76,10 @@ window.addEventListener('load', function(){
 						moveSlot(ftr.offsetTop);
 					}
 
-					$.removeClass(wrapper, classes);
-					$.removeClass(ftr || window.document.body, ['ads']);
+					//$.removeClass(wrapper, classes);
+					//$.removeClass(ftr || window.document.body, ['ads']);
+					$wrapper.removeClass(classes);
+					$ftr.removeClass('ads');
 				}
 			}
 
@@ -83,15 +91,14 @@ window.addEventListener('load', function(){
 					init: function(){
 						found = true;
 
-						fix();
-					},
-					functions: {
-						fix: fix,
-						unfix: unfix
+					fix();
+
+					$(document)
+						.on('ads:fix', fix)
+						.on('ads:unfix', unfix);
 					}
 				});
 			}
-
 		});
 	}
 });
