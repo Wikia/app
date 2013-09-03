@@ -38,7 +38,7 @@ describe('UIFactory', function(){
 			]
 		},
 		error = 'NotFoundApiException: File not found (/usr/wikia/source/wiki/resources/wikia/ui_components/xxx/xxx_config.json).',
-		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, loader, uiComponent);
+		uifactory = modules['wikia.ui.factory'](nirvana, window, deferred, loader, uiComponent);
 
 	window.wgStyleVersion = 12345;
 
@@ -64,7 +64,7 @@ describe('UIFactory', function(){
 		}
 
 		var nirvana = nirvanaMock(componentConfig);
-		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, loader, uiComponent);
+		uifactory = modules['wikia.ui.factory'](nirvana, window, deferred, loader, uiComponent);
 
 		uifactory.init(requestedComponent).done(function() {
 			done();
@@ -85,7 +85,7 @@ describe('UIFactory', function(){
 		}
 
 		var nirvana = nirvanaMock(componentConfig);
-		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, loader, uiComponent);
+		uifactory = modules['wikia.ui.factory'](nirvana, window, deferred, loader, uiComponent);
 
 		uifactory.init(requestedComponent).done(function() {
 			done();
@@ -106,7 +106,7 @@ describe('UIFactory', function(){
 		}
 
 		var nirvana = nirvanaMock(componentConfig);
-		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, loader, uiComponent);
+		uifactory = modules['wikia.ui.factory'](nirvana, window, deferred, loader, uiComponent);
 
 		uifactory.init(requestedComponent).done(function(component) {
 			expect(component instanceof uiComponent).toBe(true);
@@ -160,7 +160,7 @@ describe('UIFactory', function(){
 				]
 			},
 			nirvana = nirvanaMock(componentConfig);
-		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, loader, uiComponent);
+		uifactory = modules['wikia.ui.factory'](nirvana, window, deferred, loader, uiComponent);
 
 		uifactory.init(requestedComponent).done(function(components) {
 			expect(components.length).toBe(2);
@@ -187,7 +187,7 @@ describe('UIFactory', function(){
 			},
 			nirvana = nirvanaMock(xhrObject),
 			requestedComponent = 'xxx',
-		uifactory = modules['wikia.uifactory'](nirvana, window, deferred, loader, uiComponent);
+		uifactory = modules['wikia.ui.factory'](nirvana, window, deferred, loader, uiComponent);
 
 		expect(function() {
 			uifactory.init(requestedComponent);

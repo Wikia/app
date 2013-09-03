@@ -8,7 +8,7 @@
  *
  */
 
-define('wikia.uifactory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'wikia.loader', 'wikia.uicomponent'], function uifactory(nirvana, window, Deferred, loader, UIComponent){
+define('wikia.ui.factory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'wikia.loader', 'wikia.ui.component'], function uifactory(nirvana, window, Deferred, loader, UIComponent){
 	'use strict';
 
 	/**
@@ -23,8 +23,8 @@ define('wikia.uifactory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'w
 
 		var deferred = new Deferred,
 			data = {
-			components: components,
-			cb: window.wgStyleVersion
+				components: components,
+				cb: window.wgStyleVersion
 		};
 
 		nirvana.getJson(

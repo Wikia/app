@@ -7,7 +7,7 @@
  *
  */
 
-define('wikia.uicomponent',['wikia.mustache'], function uicomponent(mustache) {
+define('wikia.ui.component',['wikia.mustache'], function uicomponent(mustache) {
 	'use strict';
 
 	/**
@@ -19,14 +19,14 @@ define('wikia.uicomponent',['wikia.mustache'], function uicomponent(mustache) {
 	function validateComponent(componentConfig, componentType, componentVars) {
 
 		// Validate component type
-		var	supportedTypes = componentConfig.templates;
+		var supportedTypes = componentConfig.templates;
 
 		if (!supportedTypes.hasOwnProperty(componentType)) {
 			throw new Error('Requested component type is not supported!');
 		}
 
 		// Validate required mustache variables
-		var	requiredVars = componentConfig.templateVarsConfig[componentType].required,
+		var requiredVars = componentConfig.templateVarsConfig[componentType].required,
 			missingVars= [];
 
 		requiredVars.forEach(function(element) {
@@ -43,7 +43,7 @@ define('wikia.uicomponent',['wikia.mustache'], function uicomponent(mustache) {
 
 	function UIComponent() {
 
-		if(!(this instanceof UIComponent)) {
+		if (!(this instanceof UIComponent)) {
 			return new UIComponent;
 		}
 
