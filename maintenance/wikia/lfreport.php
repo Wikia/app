@@ -137,7 +137,7 @@ class LyricFindReport extends Maintenance {
 					# check title exists
 					$page = Article::newFromID( $row->article_id );
 					if ( $this->debug ) {
-						$this->output( "Parse article: " . $row->article_id . ": text = " . $page->getText() . "\n" );
+						$this->output( "Parse article: " . $row->article_id . "\n" );
 					}
 					
 					if ( is_null( $page ) ) {
@@ -172,11 +172,16 @@ class LyricFindReport extends Maintenance {
 			
 				$this->compressReport();
 				#$this->putToFTPServer();
-				$this->output( sprintf( "\nReport for month %s and namespace %d generated\n", $this->month, $this->namespaceId ) );
-			
+				
 				if ( !empty( $emails ) ) {
 					$this->sendEmail( $emails );
 				}
+				
+				# remove tmp files
+				@unlink( $this->file );
+				@unlink( $this->zipfile );
+				
+				$this->output( sprintf( "\nReport for month %s and namespace %d generated\n", $this->month, $this->namespaceId ) );
 			}
 		}
 		$this->output( "Script finished after: " . date( "H:i:s", microtime(true) - $tStart ) . "\n" );
@@ -248,16 +253,21 @@ class LyricFindReport extends Maintenance {
 			$body = sprintf( "LyricFind report for month %s. Report in attachment", $this->month );  
 			$subject = sprintf( "LyricFind report for month %s", $this->month );
 	
-			$mime = $magic->guessMimeType( $this->zipfile );
-			if ( $mime !== 'unknown/unknown' ) {
-					# Get a space separated list of extensions
-					$extList = $magic->getExtensionsForType( $mime );
-					$ext_file = strtok( $extList, ' ' );
+			if ( file_exists( $this->zipfile ) ) {
+				$mime = $magic->guessMimeType( $this->zipfile );
+				if ( $mime !== 'unknown/unknown' ) {
+						# Get a space separated list of extensions
+						$extList = $magic->getExtensionsForType( $mime );
+						$ext_file = strtok( $extList, ' ' );
+				} else {
+						$mime = 'application/octet-stream';
+				}
+				$attachements = [ array( 'file' => $this->zipfile, 'mime' => $mime ) ];
 			} else {
-					$mime = 'application/octet-stream';
+				$body .= "\nThere is no report for this month";
+				$attachements = [];
 			}
-			$attachements = [ array( 'file' => $this->zipfile, 'ext' => $ext_file, 'mime' => $mime ) ];
-	
+		
 			$result = UserMailer::send( $fromAddress, $toAddress, $subject, $body, $fromAddress, null, 'LFReport', 0, $attachements );
 			if ( !$result ) {
 				$this->output( "\tCannot send email to $email\n" );
@@ -294,7 +304,7 @@ class LyricFindReport extends Maintenance {
 		$zip = new ZipArchive();
 		$this->zipfile = sprintf( "%s.zip", $this->file );
 		if ( $zip->open( $this->zipfile,  ZipArchive::CREATE ) === true ) {
-			$zip->addFile( $this->file );
+			$zip->addFile( $this->file, $this->filename );
 			$zip->close();
 			$this->output( "\tFile {$this->zipfile} created \n" );
 		} else {
