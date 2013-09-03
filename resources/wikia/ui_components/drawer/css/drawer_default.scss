@@ -7,7 +7,8 @@ $drawer-width: 300px;
 $drawer-shadow-size: 30px;
 $drawer-background-color: black;
 
-.drawer, .drawerBackground {
+.drawer,
+.drawerBackground {
 	@include transition-shorthand(all 0.2s ease-in-out);
 	bottom: 0;
 	opacity: 0;

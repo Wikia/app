@@ -1,45 +1,42 @@
 define('wikia.uifactory.drawer', function drawer(){
 	'use strict';
 
-	var drawer = function(side) {
-		var getDrawerBackground = function() {
+	function Drawer(side) {
+		var that = this;
+		this.element = $('#drawer-' + side);
+		this.drawerBackground = getDrawerBackground();
+
+		function getDrawerBackground() {
 			var drawerBackground = $('#drawerBackground');
 			if (!drawerBackground.exists()) {
 				drawerBackground = $('<div id="drawerBackground" class="drawerBackground" />');
 				$('body').append(drawerBackground);
 			}
 			drawerBackground.click($.proxy(function() {
-				if (that.isOpen()) {
-					that.close();
+				if (this.isOpen()) {
+					this.close();
 				}
 			}, that));
 			return drawerBackground;
-		};
-
-		this.open = function() {
-			this.element.addClass('open');
-			this.drawerBackground.addClass('visible');
 		}
-		this.close = function() {
-			this.element.removeClass('open');
-			this.drawerBackground.removeClass('visible');
-		}
-
-		this.isOpen = function() {
-			return this.element.hasClass('open');
-		}
-
-		var that = this;
-		this.element = $('#drawer-' + side);
-		this.drawerBackground = getDrawerBackground();
-	};
-
-	function init(side) {
-		return new drawer(side);
 	}
+
+	Drawer.prototype.open = function() {
+		this.element.addClass('open');
+		this.drawerBackground.addClass('visible');
+	};
+	Drawer.prototype.close = function() {
+		this.element.removeClass('open');
+		this.drawerBackground.removeClass('visible');
+	};
+	Drawer.prototype.isOpen = function() {
+		return this.element.hasClass('open');
+	};
 
 	//Public API
 	return {
-		init: init
+		init: function(side) {
+			return new Drawer(side);
+		}
 	}
 });
