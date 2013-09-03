@@ -3,7 +3,7 @@
 	"description": "styleguide-description-button",
 	"types": {
 		"link": {
-			"name-var-msg-templateVar" : "styleguide-description-link-button",
+			"description" : "styleguide-description-link-button",
 			"params" : {
 				"href" : {
 					"templateVar" : "href",
@@ -62,7 +62,7 @@
 			}
 		},
 		"input" : {
-			"name-var-msg-templateVar" : "styleguide-description-input-button",
+			"description" : "styleguide-description-input-button",
 			"params" : {
 				"type" : {
 					"templateVar" : "type",
@@ -125,7 +125,7 @@
 			}
 		},
 		"button" : {
-			"name-var-msg-templateVar" : "styleguide-description-simple-button",
+			"description" : "styleguide-description-simple-button",
 			"params" : {
 				"type" : {
 					"templateVar" : "type",
