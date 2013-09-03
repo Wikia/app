@@ -552,7 +552,6 @@ $wgSkipSkins = array(
 		'lostbook',
 		'quartz',
 		'monaco_old',
-		'wikiaapp',
 		'smartphone',
 		'efmonaco',
 		'answers',
@@ -935,7 +934,7 @@ $wgSpecialEditCountExludedUsernames = array(
 /**
  * List of mobile skins
  */
-$wgMobileSkins = array( 'wikiaapp', 'wikiamobile' );
+$wgMobileSkins = array( 'wikiamobile' );
 
 /**
  * variable for disabling memcached deleted key replication
