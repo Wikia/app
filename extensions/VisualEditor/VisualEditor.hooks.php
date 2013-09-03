@@ -25,6 +25,10 @@ class VisualEditorHooks {
 		// Is fine for release tarballs because 1.22wmf11 < 1.22alpha < 1.22.0.
 		//wfUseMW( '1.22wmf11' ); #back-compat
 
+		// Wikia change - begin
+		JSMessages::enqueuePackage( 'VisualEditor', JSMessages::INLINE );
+		// Wikia chnage - end
+
 		// Add tab messages to the init init module
 		foreach ( $wgVisualEditorTabMessages as $msg ) {
 			if ( $msg !== null ) {

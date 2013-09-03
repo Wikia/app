@@ -54,3 +54,9 @@ $wgResourceModules += array(
 );
 
 $wgVisualEditorPluginModules[] = 'ext.visualEditor.wikiaCore';
+
+/* Messages */
+
+JSMessages::registerPackage( 'VisualEditor', array(
+	'videohandler-video-views',
+));

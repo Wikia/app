@@ -64,7 +64,10 @@ ve.ce.WikiaBlockVideoNode.prototype.getImageElement = function () {
  * @returns {jQuery} The properly scoped jQuery object
  */
 ve.ce.WikiaBlockVideoNode.prototype.getOverlayElement = function () {
-	var $br, $overlay, $title, $views;
+	var $br, $overlay, $title, $views,
+		// mocked for now
+		title = 'Test Attribution',
+		views = $.msg( 'videohandler-video-views', 0 );
 
 	$overlay = this.$$( '<span>' )
 		.addClass( 'info-overlay' )
@@ -72,14 +75,14 @@ ve.ce.WikiaBlockVideoNode.prototype.getOverlayElement = function () {
 
 	$title = this.$$( '<span>' )
 		.addClass( 'info-overlay-title' )
-		.css( 'width', this.model.getAttribute( 'width' ) - 60 );
-		//.text( this.model.getAttribute( 'title' ) );
+		.css( 'width', this.model.getAttribute( 'width' ) - 60 )
+		.text( title );
 
 	$br = this.$$( '<br>' );
 
 	$views = this.$$( '<span>' )
-		.addClass( 'info-overlay-views' );
-		//.text( this.model.getAttribute( 'views' ) );
+		.addClass( 'info-overlay-views' )
+		.text( views );
 
 	return $overlay
 		.append( $title )
@@ -94,41 +97,25 @@ ve.ce.WikiaBlockVideoNode.prototype.getOverlayElement = function () {
  * @returns {jQuery} The properly scoped jQuery object
  */
 ve.ce.WikiaBlockVideoNode.prototype.getPlayButtonElement = function () {
-	var $image, $wrapper;
-
-	$wrapper = this.$$( '<div>' )
-		.addClass( 'wikia-video-play-button' )
-		.css({
-			'line-height': this.model.getAttribute( 'height' ),
-			'width': this.model.getAttribute( 'width' )
-		});
-
-	$image = this.$$( '<img>' )
-		.addClass( 'sprite play' ) // TODO: support 'large'
-		.attr( 'src', mw.config.get( 'wgBlankImgUrl' ) );
-
-	return $wrapper.append( $image );
-};
-
-/**
- * Builds the play button element.
- *
- * @method
- * @returns {jQuery} The properly scoped jQuery object
- */
-ve.ce.WikiaBlockVideoNode.prototype.getPlayButtonElement = function () {
-	var $image, $wrapper;
+	var $image, $wrapper,
+		width = this.model.getAttribute( 'width' ),
+		// This logic is from the function videoPlayButtonOverlay() in WikiaFileHelper.class.php
+		size = ( width <= 170 ? 'small' : width > 360 ? 'large' : '' );
 
 	$wrapper = this.$$( '<div>' )
 		.addClass( 'Wikia-video-play-button' )
 		.css({
 			'line-height': this.model.getAttribute( 'height' ) + 'px',
-			'width': this.model.getAttribute( 'width' )
+			'width': width
 		});
 
 	$image = this.$$( '<img>' )
-		.addClass( 'sprite play' ) // TODO: support 'large'
+		.addClass( 'sprite play' )
 		.attr( 'src', mw.config.get( 'wgBlankImgUrl' ) );
+
+	if ( size ) {
+		$image.addClass( size );
+	}
 
 	return $wrapper.append( $image );
 };
