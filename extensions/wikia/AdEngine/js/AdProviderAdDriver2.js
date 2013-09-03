@@ -18,6 +18,7 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 	isHighValueCountry = adLogicHighValueCountry.isHighValueCountry(country);
 
 	// TODO: tile is not used, keys without apostrophes
+	// GPT: only loc, pos and size keys are used
 	slotMap = {
 		'CORP_TOP_LEADERBOARD': {'size': '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
 		'CORP_TOP_RIGHT_BOXAD': {'size': '300x250,300x600,300x1050', 'tile': 1, 'loc': 'top'},
@@ -53,6 +54,8 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 		HOME_TOP_RIGHT_BOXAD: 'flush',
 		GPT_FLUSH: 'flushonly'
 	};
+
+	wikiaGpt.init(slotMap);
 
 	// Private methods
 
@@ -107,10 +110,8 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 	function flushGpt() {
 		log('flushGpt', 5, logGroup);
 
-		if (!gptFlushed) {
-			gptFlushed = true;
-			wikiaGpt.flushAds();
-		}
+		gptFlushed = true;
+		wikiaGpt.flushAds();
 	}
 
 	function fillInSlot(slot) {
@@ -248,24 +249,13 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 			trackingMethod: 'ad'
 		});
 
-		/*
-		 * We can only issue one request for SRA for now, so we only do the request for
-		 * the slots defined in gptConfig. Slots with 'wait' strategy are pushed to wikiaGpt
-		 * and the first slot to have 'flush' flushes all the slots and the ads are requested.
-		 * gptFlush flag is set, so all the other slots will go through legacy DART API.
-		 */
-		if (window.wgAdDriverUseGpt && gptConfig[slotname] && !gptFlushed) {
+		if (window.wgAdDriverUseGpt) {
 			// Use the new GPT library:
 			log('Use the new GPT library for ' + slotname, 5, logGroup);
 
-			wikiaGpt.pushAd({
-				slotname: slotname,
-				slotsize: slotsize,
-				dcopt: dcopt,
-				loc: loc
-			}, success, error);
+			wikiaGpt.pushAd(slotname, success, error);
 
-			if (gptConfig[slotname] === 'flush') {
+			if (gptConfig[slotname] === 'flush' || gptFlushed) {
 				flushGpt();
 			}
 		} else {
