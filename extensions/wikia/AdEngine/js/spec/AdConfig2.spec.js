@@ -11,7 +11,7 @@ describe('AdConfig2', function(){
 			, logMock = function() {}
 			, windowMock = {}
 			, documentMock = {}
-			, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
+			, adLogicShortPageMock = {isApplicable: function() {return false;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
@@ -41,7 +41,7 @@ describe('AdConfig2', function(){
 			, logMock = function() {}
 			, windowMock = {wgHighValueCountries: {'hi-value-country': true, 'another-hi-value-country': true}}
 			, documentMock = {}
-			, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
+			, adLogicShortPageMock = {isApplicable: function() {return false;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig
 			, highValueSlot = 'TOP_LEADERBOARD'
@@ -75,7 +75,7 @@ describe('AdConfig2', function(){
 			, logMock = function() {}
 			, windowMock = {}
 			, documentMock = {}
-			, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
+			, adLogicShortPageMock = {isApplicable: function() {return false;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
@@ -105,7 +105,7 @@ describe('AdConfig2', function(){
 			, logMock = function() {}
 			, windowMock = {}
 			, documentMock = {}
-			, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
+			, adLogicShortPageMock = {isApplicable: function() {return false;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
@@ -135,7 +135,7 @@ describe('AdConfig2', function(){
 			, logMock = function() {}
 			, windowMock = {}
 			, documentMock = {}
-			, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
+			, adLogicShortPageMock = {isApplicable: function() {return false;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
@@ -165,7 +165,7 @@ describe('AdConfig2', function(){
 			, logMock = function() {}
 			, windowMock = {wgContentLanguage: 'de'}
 			, documentMock = {}
-			, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
+			, adLogicShortPageMock = {isApplicable: function() {return false;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
@@ -197,7 +197,7 @@ describe('AdConfig2', function(){
 			, logMock = function() {}
 			, windowMock = {wgContentLanguage: 'de'}
 			, documentMock = {}
-			, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
+			, adLogicShortPageMock = {isApplicable: function() {return false;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
@@ -229,7 +229,7 @@ describe('AdConfig2', function(){
 		expect(adConfig.getProvider(['TOP_LEADERBOARD'])).toBe(adProviderGameProMock, 'adProviderGameProMock TOP_LEADERBOARD');
 	});
 
-	it('getProvider calls adLogicShortPageMock.isPageTooShortForSlot with proper slot name', function() {
+	it('getProvider calls adLogicShortPageMock.isApplicable with proper slot name', function() {
 		var adProviderNullMock = {name: 'NullMock'}
 			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return true;}}
 			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
@@ -241,7 +241,7 @@ describe('AdConfig2', function(){
 			, windowMock = {}
 			, documentMock = {}
 			, adLogicShortPageCalledWithSlot
-			, adLogicShortPageMock = {isPageTooShortForSlot: function(slot) {adLogicShortPageCalledWithSlot = slot;}}
+			, adLogicShortPageMock = {isApplicable: function(slot) {adLogicShortPageCalledWithSlot = slot;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
@@ -258,11 +258,12 @@ describe('AdConfig2', function(){
 		);
 
 		adConfig.getProvider(['foo']);
-		expect(adLogicShortPageCalledWithSlot).toBe('foo');
+		expect(adLogicShortPageCalledWithSlot).toEqual(['foo']);
 	});
 
-	it('getProvider returns Null on short page', function() {
+	it('getProvider returns WindowSizeProviderProxy if AdLogicShortPage say so', function() {
 		var adProviderNullMock = {name: 'NullMock'}
+			, adProviderProxyMock = {name: 'WindowSizeProviderProxyMock'}
 			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return true;}}
 			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
 			, adProviderAdDriver2Mock = {name: 'AdDriver2Mock', canHandleSlot: function() {return false;}}
@@ -272,7 +273,7 @@ describe('AdConfig2', function(){
 			, logMock = function() {}
 			, windowMock = {}
 			, documentMock = {}
-			, adLogicShortPageMock = {isPageTooShortForSlot: function() {return true;}}
+			, adLogicShortPageMock = {isApplicable: function() {return true;}, getProxy: function() {return adProviderProxyMock;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
@@ -288,6 +289,6 @@ describe('AdConfig2', function(){
 			, adProviderNullMock
 		);
 
-		expect(adConfig.getProvider(['foo'])).toBe(adProviderNullMock);
+		expect(adConfig.getProvider(['foo'])).toBe(adProviderProxyMock);
 	});
 });
