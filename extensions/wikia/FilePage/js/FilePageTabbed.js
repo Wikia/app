@@ -238,12 +238,13 @@ $(function() {
 
 			$pageListings = $('.page-listings');
 
-			$pageListings.on('click', elements.join(', '), function(evt) {
+			$pageListings.on('mousedown', elements.join(', '), function(evt) {
 				evt.preventDefault();
-				var node = evt.target,
-						$node = $(node).closest('a'),
+				var $node = $(this).closest('a'),
 						prefix,
 						url = $node[0].href;
+
+				console.log($node);
 
 				$parent = $node.closest('.page-listings');
 
@@ -260,8 +261,6 @@ $(function() {
 						action: globalTracker.ACTIONS.CLICK,
 					});
 				}
-
-				window.location = url;
 			});
 		}
 	};
