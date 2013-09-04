@@ -132,7 +132,7 @@ ve.ce.WikiaBlockVideoNode.prototype.update = function ( replaceRoot ) {
 	ve.ce.WikiaBlockMediaNode.prototype.update.call( this, replaceRoot );
 
 	// Mocked for now
-	title = 'Test Attribution'; //this.model.getAttribute( 'title' );
+	title = 'Test Title'; //this.model.getAttribute( 'title' );
 	width = this.model.getAttribute( 'width' );
 
 	// This logic is from the function videoInfoOverlay() in WikiaFileHelper.class.php
