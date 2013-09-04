@@ -217,6 +217,9 @@ use Swagger\Annotations as SWG;
  * 			summary="A method to get WAM index (list of wikis with their WAM ranks)",
  * 			nickname="getWAMIndex",
  * 			responseClass="WAMResultSet",
+ * 			@SWG\ErrorResponses(
+ *				@SWG\ErrorResponse( code="400", reason="Invalid parameters passed" )
+ *			),
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="wam_day",

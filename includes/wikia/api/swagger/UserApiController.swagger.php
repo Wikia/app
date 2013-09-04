@@ -73,7 +73,7 @@ use Swagger\Annotations as SWG;
  *				nickname="getDetails",
  *				responseClass="UserResultSet",
  *				@SWG\ErrorResponses(
- *					@SWG\ErrorResponse( code="400", reason="Invalid parameter or category" ),
+ *					@SWG\ErrorResponse( code="400", reason="Ids parameter is missing" ),
  *					@SWG\ErrorResponse( code="404", reason="Results not found" )
  *				),
  *				@SWG\Parameters(

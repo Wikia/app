@@ -59,7 +59,8 @@ use Swagger\Annotations as SWG;
  * 			nickname="getList",
  * 			responseClass="RelatedPages",
  * 			@SWG\ErrorResponses(
- * 				@SWG\ErrorResponse( code="404", reason="Related Pages extension not available" )
+ * 				@SWG\ErrorResponse( code="404", reason="Related Pages extension not available on this domain" ),
+ * 				@SWG\ErrorResponse( code="400", reason="Ids param should be not empty and comma separated numbers only" )
  * 			),
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(

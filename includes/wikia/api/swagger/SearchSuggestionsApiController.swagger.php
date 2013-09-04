@@ -35,7 +35,8 @@ use Swagger\Annotations as SWG;
  * 			nickname="getList",
  * 			responseClass="SearchSuggestionsPhrases",
  * 			@SWG\ErrorResponses(
- * 				@SWG\ErrorResponse( code="404", reason="Search Suggestions extension not available" )
+ * 				@SWG\ErrorResponse( code="404", reason="Search Suggestions extension not available or results not found" ),
+ * 				@SWG\ErrorResponse( code="400", reason="Query parameter is missing" )
  * 			),
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(

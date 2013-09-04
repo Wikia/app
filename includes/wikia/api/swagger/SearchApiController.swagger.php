@@ -102,8 +102,8 @@ use Swagger\Annotations as SWG;
  * 			nickname="getList",
  * 			responseClass="localWikiSearchResultSet",
  * 			@SWG\ErrorResponses(
- * 				@SWG\ErrorResponse( code="400", reason="invalid parameters" ),
- * 				@SWG\ErrorResponse( code="404", reason="results not found" )
+ * 				@SWG\ErrorResponse( code="400", reason="Query parameter is missing or namespaces parameter is not numeric" ),
+ * 				@SWG\ErrorResponse( code="404", reason="Results not found" )
  * 			),
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
@@ -176,8 +176,7 @@ use Swagger\Annotations as SWG;
  * 			nickname="getCrossWiki",
  * 			responseClass="CrossWikiSearchResultSet",
  * 			@SWG\ErrorResponses(
- * 				@SWG\ErrorResponse( code="400", reason="invalid parameters" ),
- * 				@SWG\ErrorResponse( code="404", reason="results not found" )
+ * 				@SWG\ErrorResponse( code="400", reason="Query or lang parameters missing" )
  * 			),
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
