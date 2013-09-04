@@ -393,7 +393,8 @@ use Swagger\Annotations as SWG;
  * 			nickname="getByString",
  * 			responseClass="UnexpandedWikiaResultSet",
  * 			@SWG\ErrorResponses(
- * 				@SWG\ErrorResponse( code="400", reason="Number of languages exceeded" )
+ * 				@SWG\ErrorResponse( code="400", reason="Number of languages exceeded or keyword is missing" ),
+ * 				@SWG\ErrorResponse( code="404", reason="Results not found" )
  * 			),
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
@@ -462,7 +463,8 @@ use Swagger\Annotations as SWG;
  * 			nickname="getByString",
  * 			responseClass="ExpandedWikiaResultSet",
  * 			@SWG\ErrorResponses(
- * 				@SWG\ErrorResponse( code="400", reason="Number of languages exceeded" )
+ * 				@SWG\ErrorResponse( code="400", reason="Number of languages exceeded or keyword is missing" ),
+ * 				@SWG\ErrorResponse( code="404", reason="Results not found" )
  * 			),
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
@@ -531,7 +533,7 @@ use Swagger\Annotations as SWG;
  * 			nickname="getDetails",
  * 			responseClass="WikiaDetailsResultSet",
  * 			@SWG\ErrorResponses(
- * 				@SWG\ErrorResponse( code="400", reason="Number of languages exceeded" )
+ * 				@SWG\ErrorResponse( code="400", reason="Ids parameter is missing" )
  * 			),
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
