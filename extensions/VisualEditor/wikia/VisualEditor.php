@@ -45,6 +45,9 @@ $wgResourceModules += array(
 			'ce/ve.ce.WikiaBlockVideoNode.js',
 			'ce/ve.ce.WikiaMediaCaptionNode.js',
 		),
+		'styles' => array (
+			'ce/styles/ve.ce.Node.css',
+		),
 		'dependencies' => array(
 			'ext.visualEditor.core'
 		),
