@@ -38,9 +38,6 @@ $wgResourceModules += array(
 // Register hooks
 $wgHooks['ResourceLoaderTestModules'][] = 'Wikia_onResourceLoaderTestModules';
 
-// Register plugins
-$wgVisualEditorPluginModules[] = 'ext.visualEditor.wikiaCore';
-
 function Wikia_onResourceLoaderTestModules( array &$testModules, ResourceLoader &$resourceLoader ) {
 	$testModules['qunit']['ext.visualEditor.wikiaTest'] = array(
 		'scripts' => array(
