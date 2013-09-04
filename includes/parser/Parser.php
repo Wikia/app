@@ -885,6 +885,17 @@ class Parser {
 		global $wgRTEParserEnabled;
 		# RTE - end
 
+		// Wikia change - begin - @author kflorence
+		$tableOpen = '<table';
+		$tableClose = '</table>';
+
+		// Table wrapping div is only used outside of RTE
+		if ( empty( $wgRTEParserEnabled ) ) {
+			$tableOpen = '<div class="table-wrapper">' . $tableOpen;
+			$tableClose = $tableClose . '</div>';
+		}
+		// Wikia change - end
+
 		$lines = StringUtils::explode( "\n", $text );
 		$out = '';
 		$td_history = array(); # Is currently a td tag open?
@@ -944,8 +955,7 @@ class Parser {
 				$attributes = Sanitizer::fixTagAttributes( $attributes , 'table' );
 
 				// Wikia change - begin - @author kflorence
-				$outLine = str_repeat( '<dl><dd>' , $indent_level ) .
-					"<div class=\"table-wrapper\"><table{$attributes}>";
+				$outLine = str_repeat( '<dl><dd>' , $indent_level ) . "{$tableOpen}{$attributes}>";
 				// Wikia change - end
 
 				# RTE (Rich Text Editor) - begin
@@ -963,9 +973,9 @@ class Parser {
 				continue;
 			} elseif ( substr( $line , 0 , 2 ) === '|}' ) {
 				# We are ending a table
-				// Wikia change - start - @author kflorence
-				$line = '</table></div>' . substr( $line , 2 );
-				// Wikia change - end
+				// Wikia change - begin - @author kflorence
+				$line = $tableClose . substr( $line , 2 );
+				// Wikia chnage - end
 				$last_tag = array_pop( $last_tag_history );
 
 				if ( !array_pop( $has_opened_tr ) ) {
@@ -1123,7 +1133,7 @@ class Parser {
 			}
 
 			// Wikia change - begin - @author kflorence
-			$out .= "</table></div>\n";
+			$out .= "{$tableClose}\n";
 			// Wikia change - end
 		}
 
@@ -1134,7 +1144,7 @@ class Parser {
 
 		# special case: don't return empty table
 		// Wikia change - begin - @author kflorence
-		if ( $out === "<div class=\"table-wrapper\"><table>\n<tr><td></td></tr>\n</table></div>" ) {
+		if ( $out === "{$tableOpen}>\n<tr><td></td></tr>\n{$tableClose}" ) {
 			// Wikia change - end
 			$out = '';
 		}
