@@ -63,26 +63,25 @@ ve.ce.WikiaBlockVideoNode.prototype.getImageElement = function () {
  * @method
  * @returns {jQuery} The properly scoped jQuery object
  */
-ve.ce.WikiaBlockVideoNode.prototype.getOverlayElement = function () {
+ve.ce.WikiaBlockVideoNode.prototype.getOverlayElement = function ( title, width ) {
 	var $br, $overlay, $title, $views,
 		// mocked for now
-		title = 'Test Attribution',
-		views = $.msg( 'videohandler-video-views', 0 );
+		views = 0; //this.model.getAttribute( 'views' );
 
 	$overlay = this.$$( '<span>' )
 		.addClass( 'info-overlay' )
-		.css( 'max-width', this.model.getAttribute( 'width' ) );
+		.css( 'max-width', width );
 
 	$title = this.$$( '<span>' )
 		.addClass( 'info-overlay-title' )
-		.css( 'width', this.model.getAttribute( 'width' ) - 60 )
+		.css( 'width', width - 60 )
 		.text( title );
 
 	$br = this.$$( '<br>' );
 
 	$views = this.$$( '<span>' )
 		.addClass( 'info-overlay-views' )
-		.text( views );
+		.text( $.msg( 'videohandler-video-views', views ) );
 
 	return $overlay
 		.append( $title )
@@ -128,11 +127,20 @@ ve.ce.WikiaBlockVideoNode.prototype.getPlayButtonElement = function () {
  * @method
  */
 ve.ce.WikiaBlockVideoNode.prototype.update = function ( replaceRoot ) {
+	var title, width;
+
 	ve.ce.WikiaBlockMediaNode.prototype.update.call( this, replaceRoot );
 
-	this.$anchor
-		.append( this.getOverlayElement() )
-		.prepend( this.getPlayButtonElement() );
+	// Mocked for now
+	title = 'Test Attribution'; //this.model.getAttribute( 'title' );
+	width = this.model.getAttribute( 'width' );
+
+	// This logic is from the function videoInfoOverlay() in WikiaFileHelper.class.php
+	if ( width > 230 && title ) {
+		this.$anchor.append( this.getOverlayElement( title, width ) );
+	}
+
+	this.$anchor.prepend( this.getPlayButtonElement() );
 };
 
 /* Registration */
