@@ -159,7 +159,8 @@ HoverMenu.prototype.showNav = function(parent) {
 	if (nav.exists()) {
 		nav.addClass("show");
 
-		event = new CustomEvent("hover-menu-shown", {"bubbles": true, "cancelable": true});
+		event = document.createEvent("HTMLEvents");
+		event.initEvent("hover-menu-shown", true, true);
 		nav.get(0).dispatchEvent(event);
 
 		// spotlights displaying
@@ -182,7 +183,8 @@ HoverMenu.prototype.hideNav = function() {
 	nav.removeClass("show");
 
 	if (nav.exists()) {
-		event = new CustomEvent("hover-menu-hidden", {"bubbles": true, "cancelable": true});
+		event = document.createEvent("HTMLEvents");
+		event.initEvent("hover-menu-hidden", true, true);
 		nav.get(0).dispatchEvent(event);
 	}
 };

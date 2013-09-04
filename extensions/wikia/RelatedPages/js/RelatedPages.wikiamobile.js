@@ -1,4 +1,6 @@
 require(['sloth', 'wikia.nirvana', 'wikia.window'], function(sloth, nirvana, w){
+	'use strict';
+
 	var relatedPages = document.getElementById('wkRelPag');
 
 	if(relatedPages) {
@@ -36,8 +38,8 @@ require(['sloth', 'wikia.nirvana', 'wikia.window'], function(sloth, nirvana, w){
 							relatedPages.className += ' show';
 						}
 					}
-				)
+				);
 			}
-		})
+		});
 	}
 });

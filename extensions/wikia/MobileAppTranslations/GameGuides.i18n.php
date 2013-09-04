@@ -111,6 +111,31 @@ $messages['br'] = array(
 	'alert-download-updated-wikis-button-ok' => 'Mat eo',
 );
 
+/** Catalan (català)
+ * @author Roxas Nobody 15
+ */
+$messages['ca'] = array(
+	'activityindicator-message' => "S'està carregant…",
+	'window-wikis-title' => 'Wikia VideoJocs',
+	'window-wikis-wikilist-search-hint' => 'Cerca el nostre Top  de Videojocs...',
+	'window-category-load-batch' => 'Més',
+	'window-article-button-close' => 'Tanca',
+	'window-article-button-back' => 'Torna',
+	'window-article-menu-search-label' => 'Cerca',
+	'window-article-menu-dashboard-label' => 'Guia de Continguts',
+	'window-article-menu-cancel-label' => 'Anul·la',
+	'searchview-no-results' => 'No hi ha resultats per a " %s "',
+	'searchview-button-back-list' => 'Tornar a la llista',
+	'searchview-button-back-article' => "Tornar a l'article",
+	'searchbar-hint' => 'Cercant...',
+	'alert-download-updated-wikis-message' => "La llista de guies disponibles s'actualitzaràn.",
+	'alert-download-updated-wikis-button-ok' => "D'acord",
+	'error-update-required' => 'Una actualització per a aquest app està disponible i necessària.',
+	'error-no-connection' => 'No hi ha connexió a internet disponible. torneu-\\nPlease.',
+	'error-server' => 'Els nostres servidors va respondre amb un error, ho sento. torneu-\\nPlease.',
+	'error-json-parse' => 'Hi havia un problema amb les dades que es retornen dels nostres servidors, ho sento. torneu-\\nPlease.',
+);
+
 /** Chechen (нохчийн)
  * @author Умар
  */
@@ -796,17 +821,31 @@ $messages['tly'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Base
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
 	'activityindicator-message' => 'Завантаження…',
+	'window-wikis-title' => 'Посібники ігор Вікія',
+	'window-wikis-wikilist-search-hint' => 'Пошук найпопулярніших ігор…',
 	'window-category-load-batch' => 'Більше',
 	'window-article-button-close' => 'Закрити',
 	'window-article-button-back' => 'Назад',
 	'window-article-menu-search-label' => 'Пошук',
+	'window-article-menu-dashboard-label' => 'Вміст посібника',
 	'window-article-menu-cancel-label' => 'Скасувати',
+	'searchview-no-results' => 'Нічого не знайдено для "%s"',
+	'searchview-button-back-list' => 'Назад до списку',
+	'searchview-button-back-article' => 'Назад до статті',
+	'searchbar-hint' => 'Пошук  %s ...',
+	'alert-download-updated-wikis-message' => 'Перелік доступних посібників буде оновлено.',
 	'alert-download-updated-wikis-button-ok' => 'Гаразд',
+	'error-update-required' => 'Оновлення для цієї програми доступне і необхідне.',
+	'error-no-connection' => 'Немає підключення до Інтернету.\\пбудь ласка спробуйте ще раз.',
+	'error-server' => 'Наші сервери відповіли: помилка, вибачте. \\nСпробуйте ще раз.',
+	'error-json-parse' => 'Виникла проблема з даними, які повертаються з наших серверів, вибачте. \\nБудь ласка, спробуйте ще раз.',
 );
 
 /** Simplified Chinese (中文（简体）‎)

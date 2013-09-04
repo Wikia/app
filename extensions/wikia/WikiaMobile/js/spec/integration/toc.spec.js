@@ -15,7 +15,7 @@ describe("Toc module", function() {
 				}
 			}
 		},
-		toc = modules.toc(track, sections, window);
+		toc = modules.toc(track, sections, window, jQuery);
 
 	it('should be defined', function(){
 			expect(toc).toBeDefined();

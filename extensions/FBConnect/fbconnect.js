@@ -213,6 +213,8 @@ function fixXFBML(id) {
 // BugId:19767 - fix FBconnect button on Special:Connect
 $(function() {
 	if (window.wgCanonicalSpecialPageName === 'Connect') {
-		fixXFBML('fbSpecialConnect');
+		$.loadFacebookAPI( function() {
+			fixXFBML('fbSpecialConnect');
+		});
 	}
 });
