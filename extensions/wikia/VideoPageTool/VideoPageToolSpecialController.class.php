@@ -74,7 +74,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	public function edit() {
 		JSMessages::enqueuePackage( 'VideoPageTool', JSMessages::EXTERNAL );
 
-		$date = $this->getVal( 'date', date( 'Y-M-d' ) );
+		$date = $this->getVal( 'date', strtotime( date( 'Y-M-d' ) ) );
 		$language = $this->getVal( 'language', VideoPageToolHelper::DEFAULT_LANGUAGE );
 		$section = $this->getVal( 'section', VideoPageToolHelper::DEFAULT_SECTION );
 
@@ -86,12 +86,22 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 			$section = VideoPageToolHelper::DEFAULT_SECTION;
 		}
 
+		$videoTool = VideoPageTool::newFromSection( $section, $language, $date );
+
 		if ($this->request->wasPosted()) {
 			// Do form validation and saving here
-			//$this->request->getParams();
+			$formValues = $this->request->getParams();
+			if ( $videoTool->validateForm( $formValues ) ) {
+				$formValues = $videoTool->formatFormData( $formValues );
+				$result = $videoTool->saveData( $formValues );
+				if ( $result ) {
+					$this->result = 'ok';
+					$this->msg = '';
+				}
+			}
 		}
 
-		$videos = array();
+		$videos = $videoTool->getData();
 
 		$this->leftMenuItems = $helper->getLeftMenuItems( $section );
 		$this->moduleView = $this->app->renderView( 'VideoPageToolSpecial', $section, array( 'videos' => $videos, 'date' => $date, 'language' => $language ) );
@@ -173,19 +183,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array videos
 	 */
 	public function featured() {
-		// TODO: this is way hard coded
-		$video = array(
-			'videoTitle' => 'Video Title',
-			'videoKey' => 'Video_Title',
-			'videoThumb' => '',
-			'displayTitle' => 'Display Title',
-			'description' => 'description...',
-			'url' => 'http://sktest123.liz.wikia-dev.com/wiki/File:Ooyala_Test',
-		);
-
-		$videos[0] = $videos[1] = $videos[2] = $videos[3] = $videos[4] = $video;
-
-		$this->videos = $videos;
+		$this->videos = $this->getVal( 'videos', array() );
 		$this->date = $this->getVal( 'date' );
 		$this->language = $this->getVal( 'language' );
 	}
