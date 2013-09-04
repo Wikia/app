@@ -19,13 +19,19 @@
 		$tempUsersNames = array();
 
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$result = $dbr->select(
-			'user_temp',
-			array( 'user_name' ),
-			array( 'date(user_registration) >= curdate() - interval 30 day' ),
-			__METHOD__
-		);
-		
+
+		//prepare date range
+		$date = new DateTime();
+		$date->add(date_interval_create_from_date_string('1 day'));
+		$to = date_format($date, 'Ymdu');
+		$date->sub(date_interval_create_from_date_string('31 days'));
+		$from =  date_format($date, 'Ymdu');
+
+		//query
+		$queryString = "SELECT user_name FROM `user_temp` force key(user_registration) WHERE (user_registration between '$from' and '$to') order by user_registration;";
+
+		$result = $dbr->query( $queryString, __METHOD__ );
+
 		while ( $row = $dbr->fetchObject($result) ) {
 			$tempUsersNames[] = $row->user_name;
 		}

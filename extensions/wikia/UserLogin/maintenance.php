@@ -7,7 +7,7 @@
 	 *    - send reminder (user's registered date = 7 days) for current wiki ONLY
 	 * @author Hyun
 	 * @author Saipetch
-	 * @authot Kamil Koterba
+	 * @author Kamil Koterba
 	 */
 
 	/**
