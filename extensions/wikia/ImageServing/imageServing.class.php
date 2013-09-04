@@ -210,9 +210,11 @@ class ImageServing {
 	}
 
 	/**
-	 *  !!! deprecated !!! use getImages fetches an array with thumbnails and titles for the supplied files
-	 *  TODO: remove it image serving work also with FILE_NS we keep this function for backward compatibility
-	 * @author Federico "Lox" Lucignano
+	 * TODO: remove it image serving work also with FILE_NS we keep this function for backward compatibility
+	 * FIXME: this method will return thumbnails for just a single file (despite allowing a list of files to be passed)
+	 *
+	 * @deprecated use getImages fetches an array with thumbnails and titles for the supplied files
+	 * @@author Federico "Lox" Lucignano
 	 *
 	 * @param Array $fileNames a list of file names to fetch thumbnails for
 	 * @return Array an array containing the url to the thumbnail image and the title associated to the file
