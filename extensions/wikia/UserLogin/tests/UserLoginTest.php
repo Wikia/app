@@ -6,6 +6,7 @@
 		const TEST_CITY_ID = 79860;
 		const TEST_USERNAME = 'WikiaUser';
 		const TEST_USERID = 12345;
+		const TEST_EMAIL = 'devbox+test@wikia-inc.com';
 
 		protected $skinOrg = null;
 
@@ -25,26 +26,24 @@
 			$this->setUpMockObject( 'stdClass', $memcParams, false, 'wgMemc' );
 
 			$this->mockGlobalVariable('wgCityId', self::TEST_CITY_ID);
+
+			// "mock" IP
+			$this->originalServer = $_SERVER;
+			$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 		}
 
 		/**
 		 * @dataProvider loginDataProvider
 		 */
-		public function testLogin( $requestParams, $mockLoginFormParams, $mockUserParams, $mockTempUserParams, $mockHelperParams, $expResult, $expMsg, $expErrParam='' ) {
+		public function testLogin( $requestParams, $mockLoginFormParams, $mockUserParams, $mockHelperParams, $expResult, $expMsg, $expErrParam='' ) {
 			// setup
 			$this->setUpRequest( $requestParams );
 			$this->setUpMockObject( 'User', $mockUserParams, true, 'wgUser' );
-			$this->setUpMockObject( 'TempUser', $mockTempUserParams, true );
+			$this->setUpMockObject( 'TempUser', false, true );
 			$this->setUpMockObject( 'UserLoginHelper', $mockHelperParams, true );
 			if ( !is_null($mockLoginFormParams) ) {
 				$this->setUpMockObject( 'LoginForm', $mockLoginFormParams, true, null, array(), false );
 			}
-
-			$mockMsgExtCount = ( $expResult == 'unconfirm' ) ? 1 : 0 ;
-			$this->getGlobalFunctionMock( 'wfMsgExt' )
-				->expects( $this->exactly( $mockMsgExtCount ) )
-				->method( 'wfMsgExt' )
-				->will( $this->returnValue( $expMsg ) );
 
 			$this->setUpMock();
 
@@ -107,7 +106,6 @@
 			);
 			$mockLoginFormParams1 = null;
 			$mockUserParams1 = null;
-			$mockTempUserParams1 = null;
 			$mockHelperParams1 = null;
 			$expMsg1 = wfMessage('userlogin-error-noname')->escaped();
 			$expErrParam1 = 'username';
@@ -186,41 +184,33 @@
 
 			// error - NOT_EXISTS
 			$mockLoginFormParams114 = array( 'authenticateUserData' => LoginForm::NOT_EXISTS );
-			$mockTempUserParams114 = false;
 
-			// error - NOT_EXISTS - Temp User account with password throttled
-			$mockTempUserParams115 = array( 'getTempUserFromName' => true );
-			$mockHelperParams115 = array( 'isPasswordThrottled' => true );
+			// error - THROTTLED password throttled
+			$mockLoginFormParams115 = array( 'authenticateUserData' => LoginForm::THROTTLED );
 
-			// error - NOT_EXISTS - Temp User account with wrong password
-			$mockUserParams116 = array(
-				'load' => null,
-				'loadFromDatabase' => null,
-				'checkPassword' => false,
-				'checkTemporaryPassword' => false,
-			);
-			$mockTempUserParams116 = array( 'setTempUserSession' => null );
-			$mockHelperParams116 = array( 'isPasswordThrottled' => false );
-
-			// reset - NOT_EXISTS - Temp User account with temporary password
-			$mockUserParams117 = array(
-				'load' => null,
-				'loadFromDatabase' => null,
-				'checkPassword' => false,
-				'checkTemporaryPassword' => true,
-			);
-
-			// unconfirm - NOT_EXISTS - Temp User account with temporary password
+			// unconfirm - SUCCESS, but Unconfimed user - confirmation email sent
+			$mockLoginFormParams118 = array( 'authenticateUserData' => LoginForm::SUCCESS );
 			$mockUserParams118 = array(
 				'load' => null,
 				'loadFromDatabase' => null,
 				'checkPassword' => true,
 				'checkTemporaryPassword' => false,
+				'params' => array(
+					'mId' => self::TEST_USERID,
+					'mName' => self::TEST_USERNAME,
+					'mEmail' => self::TEST_EMAIL
+				),
+				'mockValueMap' => array(
+					'getOption' => array(
+						array( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null, false, true ),
+						array( 'language', null, false, 'en' )
+					)
+				)
 			);
 			$mockHelperParams118 = array( 'isPasswordThrottled' => false, 'clearPasswordThrottle' => null );
-			$expMsg118 = wfMessage( 'usersignup-confirmation-email-sent', '' )->escaped();
+			$expMsg118 = wfMessage( 'usersignup-confirmation-email-sent', self::TEST_EMAIL )->parse();
 
-			// success
+			// SUCCESS success
 			$mockLoginFormParams120 = array( 'authenticateUserData' => LoginForm::SUCCESS );
 			$mockUserParams120 = array(
 				'load' => null,
@@ -235,52 +225,48 @@
 
 			return array(
 				// error - no username
-				array($reqParams1, $mockLoginFormParams1, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg1, $expErrParam1),
+				array($reqParams1, $mockLoginFormParams1, $mockUserParams1, $mockHelperParams1, 'error', $expMsg1, $expErrParam1),
 				// error - not pass token
-				array($reqParams2, $mockLoginFormParams1, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg2),
+				array($reqParams2, $mockLoginFormParams1, $mockUserParams1, $mockHelperParams1, 'error', $expMsg2),
 				// error - empty token
-				array($reqParams3, $mockLoginFormParams1, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg2),
+				array($reqParams3, $mockLoginFormParams1, $mockUserParams1, $mockHelperParams1, 'error', $expMsg2),
 
 				// mock authenticateUserData()
 				// error - NO_NAME
-				array($reqParams101, $mockLoginFormParams101, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg1, $expErrParam1),
+				array($reqParams101, $mockLoginFormParams101, $mockUserParams1, $mockHelperParams1, 'error', $expMsg1, $expErrParam1),
 				// error - NEED_TOKEN
-				array($reqParams101, $mockLoginFormParams102, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg2),
+				array($reqParams101, $mockLoginFormParams102, $mockUserParams1, $mockHelperParams1, 'error', $expMsg2),
 				// error - THROTTLED
-				array($reqParams101, $mockLoginFormParams103, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg103),
+				array($reqParams101, $mockLoginFormParams103, $mockUserParams1, $mockHelperParams1, 'error', $expMsg103),
 				// error - WRONG_TOKEN
-				array($reqParams101, $mockLoginFormParams104, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg2),
+				array($reqParams101, $mockLoginFormParams104, $mockUserParams1, $mockHelperParams1, 'error', $expMsg2),
 				// error - ILLEGAL
-				array($reqParams101, $mockLoginFormParams105, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg105, $expErrParam1),
+				array($reqParams101, $mockLoginFormParams105, $mockUserParams1, $mockHelperParams1, 'error', $expMsg105, $expErrParam1),
 				// reset - RESET_PASS
-				array($reqParams101, $mockLoginFormParams107, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'resetpass', null),
+				array($reqParams101, $mockLoginFormParams107, $mockUserParams1, $mockHelperParams1, 'resetpass', null),
 				// error - EMPTY_PASS
-				array($reqParams101, $mockLoginFormParams108, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg108, $expErrParam8),
+				array($reqParams101, $mockLoginFormParams108, $mockUserParams1, $mockHelperParams1, 'error', $expMsg108, $expErrParam8),
 
 				// error - WRONG_PASS
-				array($reqParams101, $mockLoginFormParams109, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg109, $expErrParam8),
+				array($reqParams101, $mockLoginFormParams109, $mockUserParams1, $mockHelperParams1, 'error', $expMsg109, $expErrParam8),
 				// error - CLOSED_ACCOUNT_FLAG account (WRONG_PASS)
-				array($reqParams101, $mockLoginFormParams110, $mockUserParams110, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg110),
+				array($reqParams101, $mockLoginFormParams110, $mockUserParams110, $mockHelperParams1, 'error', $expMsg110),
 				// error - USER_BLOCKED
-				array($reqParams101, $mockLoginFormParams111, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg111),
+				array($reqParams101, $mockLoginFormParams111, $mockUserParams1, $mockHelperParams1, 'error', $expMsg111),
 				// error - WRONG_PLUGIN_PASS
-				array($reqParams101, $mockLoginFormParams112, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg109, $expErrParam8),
+				array($reqParams101, $mockLoginFormParams112, $mockUserParams1, $mockHelperParams1, 'error', $expMsg109, $expErrParam8),
 				// error - CREATE_BLOCKED
-				array($reqParams101, $mockLoginFormParams113, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg113),
+				array($reqParams101, $mockLoginFormParams113, $mockUserParams1, $mockHelperParams1, 'error', $expMsg113),
 
 				// error - NOT_EXISTS
-				array($reqParams101, $mockLoginFormParams114, $mockUserParams1, $mockTempUserParams114, $mockHelperParams1, 'error', $expMsg105, $expErrParam1),
-				// error - NOT_EXISTS - Temp User account with password throttled
-				array($reqParams101, $mockLoginFormParams114, $mockUserParams1, $mockTempUserParams115, $mockHelperParams115, 'error', $expMsg103),
-				// error - NOT_EXISTS - Temp User account with wrong password
-				array($reqParams101, $mockLoginFormParams114, $mockUserParams116, $mockTempUserParams116, $mockHelperParams116, 'error', $expMsg109, $expErrParam8),
-				// reset - NOT_EXISTS - Temp User account with temporary password
-				array($reqParams101, $mockLoginFormParams114, $mockUserParams117, $mockTempUserParams116, $mockHelperParams116, 'resetpass', null),
-				// unconfirm - NOT_EXISTS - Temp User account with temporary password
-				array($reqParams101, $mockLoginFormParams114, $mockUserParams118, $mockTempUserParams116, $mockHelperParams118, 'unconfirm', $expMsg118),
+				array($reqParams101, $mockLoginFormParams114, $mockUserParams1, $mockHelperParams1, 'error', $expMsg105, $expErrParam1),
+				// error - THROTTLED password throttled
+				array($reqParams101, $mockLoginFormParams115, $mockUserParams1, $mockHelperParams1, 'error', $expMsg103),
+				// unconfirm - SUCCESS, but Unconfimed user - confirmation email sent
+				array($reqParams101, $mockLoginFormParams118, $mockUserParams118, $mockHelperParams118, 'unconfirm', $expMsg118),
 
-				// SUCCESS
-				array($reqParams101, $mockLoginFormParams120, $mockUserParams120, $mockTempUserParams1, $mockHelperParams120, 'ok', null),
+				// SUCCESS success
+				array($reqParams101, $mockLoginFormParams120, $mockUserParams120, $mockHelperParams120, 'ok', null),
 			);
 		}
 
