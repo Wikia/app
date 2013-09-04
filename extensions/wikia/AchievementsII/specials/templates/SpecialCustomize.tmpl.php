@@ -136,7 +136,7 @@ foreach($config->getNotInTrackStatic() as $badgeTypeId => $badgeData) {
 			$badgesCount = count($badges);
 			?>
 			<?foreach($badges as $index => $badge):?>
-				<li class="clearfix<?= ($index == ($badgesCount-1)) ? ' last' : '' ?>">
+				<li class="<?= ($index == ($badgesCount-1)) ? ' last' : '' ?>">
 					<div class="content-form">
 						<p class="input">
 							<input class="c-message" type="text" name="msg_<?=$badge->getTypeId();?>" value="<?=htmlspecialchars($badge->getName());?>">
