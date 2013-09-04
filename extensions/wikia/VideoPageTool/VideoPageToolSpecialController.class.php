@@ -255,5 +255,28 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		}
 	}
 
+	/*
+	 * Render header
+	 */
+
+	public function executeHeader($data) {
+		$this->response->addAsset('/extensions/wikia/VideoPageTool/css/VideoPageTool.scss');
+
+		/*
+		 * TODO: imported function from SpecialMarketingToolbox, not sure if we need it
+		 */
+		
+		// $optionalDataKeys = array('date', 'moduleName', 'sectionName', 'verticalName',
+		// 	'regionName', 'lastEditor', 'lastEditTime');
+
+		// foreach ($optionalDataKeys as $key) {
+		// 	if (isset($data[$key])) {
+		// 		$this->$key = $data[$key];
+		// 	}
+		// }
+
+		$this->dashboardHref = SpecialPage::getTitleFor('VideoPageTool')->getLocalURL();
+	}
+
 }
 

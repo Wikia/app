@@ -35,8 +35,7 @@ $messages['en'] = array(
 	'videopagetool-tooltip-published' => 'Published',
 	'videopagetool-tooltip-in-progress' => 'In Progress',
 
-
-
+	'videopagetool-header-dashboard' => 'Dashboard',
 );
 
 $messages['qqq'] = array(
@@ -67,4 +66,5 @@ $messages['qqq'] = array(
 	'videopagetool-tooltip-published' => 'Published',
 	'videopagetool-tooltip-in-progress' => 'In Progress',
 
+	'videopagetool-header-dashboard' => 'Title for dashboard page',
 );
