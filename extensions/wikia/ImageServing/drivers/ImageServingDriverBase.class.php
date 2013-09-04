@@ -3,17 +3,14 @@
 /*
  * @author: Tomek Odrobny
  *
- * This class is use to get image list for custom namespaces
+ * This class is used to get image list for custom namespaces
  */
 
 abstract class ImageServingDriverBase {
 	private $articles;
 	private $proportion;
-	/**
-	 * @var Database
-	 */
-	var $db;
 
+	protected $db;
 	protected $imagesList;
 	protected $articleCountList;
 	protected $filterdOut;
@@ -22,7 +19,7 @@ abstract class ImageServingDriverBase {
 	protected $minHeight;
 
 	/**
-	 * @param $db
+	 * @param $db DatabaseBase
 	 * @param $imageServing ImageServing
 	 * @param $proportion
 	 */
@@ -53,7 +50,14 @@ abstract class ImageServingDriverBase {
 		return array_keys($this->articles);
 	}
 
-	public function execute($limit) {
+	/**
+	 * Returns matching images for requested article(s)
+	 *
+	 * Will return up to ImageServing::MAX_LIMIT images
+	 *
+	 * @return array
+	 */
+	final public function execute() {
 		wfProfileIn( __METHOD__ );
 
 		$articles = $this->getSimpleArticlesList();
@@ -71,7 +75,7 @@ abstract class ImageServingDriverBase {
 
 		$this->executeGetData( $articles );
 
-		$dbOut = $this->formatResult($this->imagesList, $this->filterdOut, $limit);
+		$dbOut = $this->formatResult($this->imagesList, $this->filterdOut);
 
 		$this->storeInCache($dbOut);
 
@@ -137,14 +141,15 @@ abstract class ImageServingDriverBase {
 		return array( 'data' => $out, 'rest' => $articlesRest ) ;
 	}
 
-	protected function formatResult($imageList ,$dbOut, $limit) {
+	protected function formatResult($imageList ,$dbOut) {
 		wfProfileIn( __METHOD__ );
 
 		$out = array();
 		foreach( $imageList as $key => $value  ) {
 			if( isset($dbOut[ $key ]) ) {
+				// loop through images for each article ($key2 = article ID)
 				foreach($value as $key2 => $value2) {
-					if (empty($out[$key2]) || count($out[$key2]) < $limit) {
+					if (empty($out[$key2]) || count($out[$key2]) < ImageServing::MAX_LIMIT) {
 						$img = $this->getImageFile( $key );
 						$out[$key2][] = array(
 							"name" => $key,
@@ -170,21 +175,21 @@ abstract class ImageServingDriverBase {
 	}
 
 	protected function storeInCache($dbOut) {
-		foreach ($dbOut as $key => $value) {
-			$this->memc->set( $this->makeKey( $key ), $value, $this->getStoreTime() );
+		// store images for each article separately
+		foreach ($dbOut as $articleId => $images) {
+			$this->memc->set( $this->makeKey( $articleId ), $images, 3600 );
 		}
 	}
 
-	protected function getStoreTime() {
-		return  60*60;
-	}
-
 	/**
-	 * Generates a memcache key based on the supplied value
+	 * Returns memcache key to be used to cache images for articles
+	 *
+	 * @param $articleId int
+	 * @return String
 	 *
 	 * @author Federico "Lox" Lucignano
 	 */
-	protected function makeKey( $key  ) {
-		return wfMemcKey("imageserving-images-data", $key, $this->minWidth, $this->minHeight);
+	protected function makeKey( $articleId  ) {
+		return wfMemcKey("imageserving-images-data", $articleId, $this->minWidth, $this->minHeight);
 	}
 }
