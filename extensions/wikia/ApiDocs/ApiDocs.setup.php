@@ -16,3 +16,5 @@ $app = F::app();
 $wgAutoloadClasses['ApiDocsController'] = "{$dir}ApiDocsController.class.php";
 
 $wgSpecialPages['ApiDocs'] = 'ApiDocsController';
+
+$wgAutoloadClasses['ApiDocsController'] = "{$IP}/lib/vendor/swagger-php/library/ApiDocsController.class.php";
