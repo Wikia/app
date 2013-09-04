@@ -5,6 +5,7 @@
 	class UserLoginTest extends UserLoginBaseTest {
 		const TEST_CITY_ID = 79860;
 		const TEST_USERNAME = 'WikiaUser';
+		const TEST_USERID = 12345;
 
 		protected $skinOrg = null;
 
@@ -286,15 +287,12 @@
 		/**
 		 * @dataProvider mailPasswordDataProvider
 		 */
-		public function testMailPassword( $requestParams, $mockWgUserParams, $mockAuthParams, $mockTempUserParams, $mockUserParams, $mockLoginFormParams, $expResult, $expMsg, $expErrParam='' ) {
+		public function testMailPassword( $requestParams, $mockWgUserParams, $mockAuthParams, $mockUserParams, $mockLoginFormParams, $expResult, $expMsg, $expErrParam='' ) {
 			// setup
 			$this->setUpMockObject( 'AuthPlugin', $mockAuthParams, false, 'wgAuth' );
 			$this->setUpMockObject( 'User', $mockWgUserParams, false, 'wgUser' );
 			$this->setUpMockObject( 'User', $mockUserParams, true );
-			if ( $mockTempUserParams ) {
-				$mockTempUserParams = new TempUser( $mockTempUserParams );
-			}
-			$this->setUpMockObject( 'TempUser', $mockTempUserParams, true );
+			$this->setUpMockObject( 'TempUser', false, true );
 			if ( !is_null($mockLoginFormParams) ) {
 				$this->setUpMockObject( 'LoginForm', $mockLoginFormParams, true, null, array(), false );
 			}
@@ -313,20 +311,18 @@
 		}
 
 		public function mailPasswordDataProvider() {
-			$testUser = User::newFromName( self::TEST_USERNAME );
-			$testUserId = $testUser->getId();
+			$testUserId = self::TEST_USERID;
 
 			// empty username
 			$reqParams1 = array( 'username' => '', 'action' => 'mailpassword' );
 			$mockWgUserParams1 = null;		// not mock $wgUser
 			$mockAuthParams1 = null;		// not mock $wgAuth
-			$mockTempUserParams1 = null;	// not mock TempUser Object
 			$mockUserParams1 = null;		// not mock User Object
 			$mockLoginFormParams1 = null;	// not mock LoginForm Object
 			$expMsg1 = wfMessage('userlogin-error-noname')->escaped();
 
 			// not allow user to change password
-			$reqParams2 = array( 'username' => 'WikiaUser', 'action' => 'mailpassword' );
+			$reqParams2 = array( 'username' => 'WikiaUser', 'action' => 'mailpassword', 'lang' => 'en' );
 			$mockAuthParams2 = array( 'allowPasswordChange' => false );
 			$expMsg2 = wfMessage('userlogin-error-resetpass_forbidden')->escaped();
 
@@ -336,8 +332,9 @@
 			$expMsg3 = wfMessage('userlogin-error-blocked-mailpassword')->escaped();
 
 			// user not found
-			$mockWgUserParams4 = array( 'isBlocked' => false );
-			$mockTempUserParams4 = false;
+			$mockWgUserParams4 = array(
+				'isBlocked' => false,
+			);
 			$mockUserParams4 = false;
 			$expMsg4 = wfMessage('userlogin-error-noname')->escaped();
 
@@ -363,7 +360,13 @@
 				'load' => null,
 				'loadFromDatabase' => null,
 				'getId' => $testUserId,
-				'isPasswordReminderThrottled' => false
+				'isPasswordReminderThrottled' => false,
+				'mockValueMap' => array(
+					'getOption' => array(
+						array( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null, false, true ),
+						array( 'language', null, false, 'en' )
+					)
+				)
 			);
 			$status7 = Status::newFatal('');
 			$mockLoginFormParams7 = array( 'mailPasswordInternal' => $status7 );
@@ -374,31 +377,43 @@
 			$mockLoginFormParams8 = array( 'mailPasswordInternal' => $status8 );
 			$expMsg8 = wfMessage('userlogin-password-email-sent', $reqParams2['username'])->escaped();
 
-			// TempUser - email sent
-			$mockTempUserParams9 = array(
-				'user_id' => $testUserId,
-				'user_name' => 'WikiaUser',
+			// User - mail error
+			$mockUserParams9 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
+				'getId' => $testUserId,
+				'isPasswordReminderThrottled' => false,
+				'params' => array(
+					'mId' => $testUserId,
+					'mName' => 'WikiaUser'
+				),
+				'mockValueMap' => array(
+					'getOption' => array(
+						array( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null, false, true ),
+						array( 'language', null, false, 'en' )
+					)
+				)
 			);
 
 			return array(
 				// error - empty username
-				array( $reqParams1, $mockWgUserParams1, $mockAuthParams1, $mockTempUserParams1, $mockUserParams1, $mockLoginFormParams1, 'error', $expMsg1 ),
+				array( $reqParams1, $mockWgUserParams1, $mockAuthParams1, $mockUserParams1, $mockLoginFormParams1, 'error', $expMsg1 ),
 				// error - not allow user to change password
-				array( $reqParams2, $mockWgUserParams1, $mockAuthParams2, $mockTempUserParams1, $mockUserParams1, $mockLoginFormParams1, 'error', $expMsg2 ),
+				array( $reqParams2, $mockWgUserParams1, $mockAuthParams2, $mockUserParams1, $mockLoginFormParams1, 'error', $expMsg2 ),
 				// error - user is blocked
-				array( $reqParams2, $mockWgUserParams3, $mockAuthParams3, $mockTempUserParams1, $mockUserParams1, $mockLoginFormParams1, 'error', $expMsg3 ),
+				array( $reqParams2, $mockWgUserParams3, $mockAuthParams3, $mockUserParams1, $mockLoginFormParams1, 'error', $expMsg3 ),
 				// error - user not found
-				array( $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockTempUserParams4, $mockUserParams4, $mockLoginFormParams1, 'error', $expMsg4 ),
+				array( $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockUserParams4, $mockLoginFormParams1, 'error', $expMsg4 ),
 				// error - User - invalid user (user id = 0)
-				array( $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockTempUserParams4, $mockUserParams5, $mockLoginFormParams1, 'error', $expMsg5 ),
+				array( $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockUserParams5, $mockLoginFormParams1, 'error', $expMsg5 ),
 				// error - User - password reminder throttled
-				array( $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockTempUserParams4, $mockUserParams6, $mockLoginFormParams1, 'error', $expMsg6 ),
+				array( $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockUserParams6, $mockLoginFormParams1, 'error', $expMsg6 ),
 				// error - User - mail error
-				array( $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockTempUserParams4, $mockUserParams7, $mockLoginFormParams7, 'error', $expMsg7 ),
+				array( $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockUserParams7, $mockLoginFormParams7, 'error', $expMsg7 ),
 				// success - User - email sent
-				array( $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockTempUserParams4, $mockUserParams7, $mockLoginFormParams8, 'ok', $expMsg8 ),
+				array( $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockUserParams7, $mockLoginFormParams8, 'ok', $expMsg8 ),
 				// success - Temp User - email sent
-				array( $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockTempUserParams9, $mockUserParams7, $mockLoginFormParams8, 'ok', $expMsg8 ),
+				array( $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockUserParams9, $mockLoginFormParams8, 'ok', $expMsg8 ),
 			);
 		}
 
