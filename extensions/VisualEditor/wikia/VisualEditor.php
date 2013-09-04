@@ -7,8 +7,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'VisualEditor for Wikia'
 );
 
-// Register resource modules
-
+// Register resource loader modules
 $wgResourceModules += array(
 	'ext.visualEditor.wikiaViewPageTarget.init' => array(
 		'scripts' => 've.init.mw.WikiaViewPageTarget.init.js',
@@ -17,21 +16,39 @@ $wgResourceModules += array(
 			'mediawiki.Title',
 			'mediawiki.Uri',
 			'mediawiki.util',
-			'user.options',
+			'user.options'
 		),
 		'position' => 'top',
 		'localBasePath' => dirname( __FILE__ ) . '/modules',
-		'remoteExtPath' => 'VisualEditor/wikia',
+		'remoteExtPath' => 'VisualEditor/wikia'
 	),
 	'ext.visualEditor.wikiaViewPageTarget' => array(
 		'scripts' => 've.init.mw.WikiaViewPageTarget.js',
 		'styles' => array(
-			've.init.mw.WikiaViewPageTarget.css',
+			've.init.mw.WikiaViewPageTarget.css'
 		),
 		'dependencies' => array(
 			'ext.visualEditor.viewPageTarget'
 		),
-		'localBasePath' => dirname( __FILE__ ) . '/modules',
-		'remoteExtPath' => 'VisualEditor/wikia',
-	),
+		'localBasePath' => dirname( __FILE__ ),
+		'remoteExtPath' => 'VisualEditor/wikia'
+	)
 );
+
+// Register hooks
+$wgHooks['ResourceLoaderTestModules'][] = 'Wikia_onResourceLoaderTestModules';
+
+function Wikia_onResourceLoaderTestModules( array &$testModules, ResourceLoader &$resourceLoader ) {
+	$testModules['qunit']['ext.visualEditor.wikiaTest'] = array(
+		'scripts' => array(
+			'test/test.js'
+		),
+		'dependencies' => array(
+			'ext.visualEditor.test'
+		),
+		'localBasePath' => dirname( __FILE__ ),
+		'remoteExtPath' => 'VisualEditor/wikia'
+	);
+	return true;
+}
+
