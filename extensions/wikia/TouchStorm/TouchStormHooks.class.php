@@ -2,6 +2,29 @@
 
 class TouchStormHooks extends WikiaObject {
 
+	static public function onBeforePageDisplay( OutputPage $out, $skin ) {
+		wfProfileIn(__METHOD__);
+
+		if ( self::canDisplay() ) {
+			$assetsManager = AssetsManager::getInstance();
+
+			// Load CSS
+			$scssPackage = 'touchstorm_scss';
+			foreach ( $assetsManager->getURL( $scssPackage ) as $url ) {
+				$out->addStyle( $url );
+			}
+
+			// Load JS (when it becomes necessary for this module)
+			//$jsPackage = 'touchstorm_js';
+			//foreach ( $assetsManager->getURL( $jsPackage ) as $url ) {
+			//	$out->addScript( "<script src=\"{$url}\"></script>" );
+			//}
+		}
+
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+
 	/**
 	 * Add modules to the right rail if necessary
 	 * @param $modules
@@ -11,15 +34,8 @@ class TouchStormHooks extends WikiaObject {
 		$app = F::App();
 		wfProfileIn(__METHOD__);
 
-		$curNS = $app->wg->Title->getNamespace();
-
-		// Set the default location to the file page
-		$tsLocation = $app->wg->TouchStormLocation ? $app->wg->TouchStormLocation : 'file';
-
 		// Make sure the TouchStorm location matches the current location
-		if ( (($curNS == NS_FILE) && preg_match('/file/', $tsLocation))    ||
-			 (($curNS == NS_MAIN) && preg_match('/article/', $tsLocation))
-		) {
+		if ( self::canDisplay() ) {
 			// These positions are set to be between the Photos module and
 			// the Videos module (1303) when logged out and below the Recent Activity module
 			// when logged in (1287)
@@ -29,5 +45,19 @@ class TouchStormHooks extends WikiaObject {
 
 		wfProfileOut(__METHOD__);
 		return true;
+	}
+
+	static public function canDisplay() {
+		$app = F::App();
+
+		// Get the current page's namespace
+		$curNS = $app->wg->Title->getNamespace();
+
+		// Set the default location to the file page
+		$tsLocation = $app->wg->TouchStormLocation ? $app->wg->TouchStormLocation : 'file';
+
+		// Make sure the TouchStorm location matches the current location
+		return (($curNS == NS_FILE) && preg_match('/file/', $tsLocation)) ||
+			   (($curNS == NS_MAIN) && preg_match('/article/', $tsLocation));
 	}
 }
