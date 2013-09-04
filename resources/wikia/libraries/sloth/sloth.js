@@ -5,6 +5,8 @@
  * @see https://github.com/hakubo/Sloth
  */
 define('sloth', function(){
+	'use strict';
+
 	//some private vars
 	var slice = Array.prototype.slice,
 		win = window,
@@ -57,7 +59,7 @@ define('sloth', function(){
 	Branch.prototype.isVisible = function(){
 		var elem =  this.element,
 			threshold = this.threshold,
-			top = elem.y - threshold,
+			top = (elem.offsetTop || elem.y) - threshold,
 			height = elem.offsetHeight,
 			bottom = top + height + threshold;
 
@@ -88,5 +90,5 @@ define('sloth', function(){
 		}
 
 		execute();
-	}
+	};
 });
