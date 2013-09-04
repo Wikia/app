@@ -39,6 +39,7 @@
 		$curRanking = $rankedUser->getCurrentRanking();
 		$prevRanking = $rankedUser->getPreviousRanking();
 		if (!isset($topUserBadges[$rankedUser->getID()])) continue;
+
 		$badge = $topUserBadges[$rankedUser->getID()];
 		$badgeIsSponsored = $badge->isSponsored();
 		$hoverUrl = $badge->getHoverPictureUrl();
@@ -59,7 +60,7 @@
 				</span>
 			</td>
 			<td class="user">
-				<img src="<?=$rankedUser->getAvatarUrl();?>" width="35" height="35">
+				<?= AvatarService::renderAvatar($rankedUser->getName(), 35); ?>
 				<a href="<?=$rankedUser->getUserPageUrl();?>"><?=htmlspecialchars($rankedUser->getName());?></a>
 			</td>
 			<td class="tally">
