@@ -66,7 +66,7 @@ foreach($config->getInTrackStatic() as $badgeTypeId => $trackData){
 				<?
 				$badge = new AchBadge($badgeTypeId, $lap, $badgeData['level']);
 				?>
-				<li class="clearfix<?=($lap == ($inTrackBadgesCount - 1)) ? ' last' : null?>">
+				<li class="<?=($lap == ($inTrackBadgesCount - 1)) ? ' last' : null?>">
 
 					<div class="content-form">
 						<p class="input">
