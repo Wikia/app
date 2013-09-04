@@ -128,12 +128,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$method = new ReflectionMethod( 'WikiaSearchController', 'handleLayoutAbTest' );
 		$method->setAccessible( true );
 
-		$mockController
-			->expects( $this->at( 0 ) )
-			->method ( 'setVal' )
-			->with	 ( 'resultView', WikiaSearchController::WIKIA_DEFAULT_RESULT )
-		;
-
 		$this->assertTrue(
 			$method->invoke( $mockController, null )
 		);
@@ -192,7 +186,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( array( 'getTitle' ) )
 		                    ->getMock();
-		$mockTrack = $this->getMock( 'Track', array( 'event' ) );
 		$mockRunHooks = $this->getGlobalFunctionMock( 'wfRunHooks' );
 
 		$originalQuery = 'foo';
@@ -244,11 +237,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'wfRunHooks' )
 		    ->with   ( 'SpecialSearchIsgomatch', array( $mockTitle, $originalQuery ) )
 		;
-		$mockTrack
-		    ->staticExpects( $this->once() )
-		    ->method ( 'event' )
-		    ->with   ( 'search_start_gomatch', array( 'sterm' => $originalQuery, 'rver' => 0 ) )
-		;
 		$mockTitle
 			->expects	( $this->any() )
 			->method	( 'getFullURL' )
@@ -267,8 +255,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 		$this->mockClass( 'Article', $mockArticle );
 		$this->mockClass( 'Article', $mockArticle, 'newFromID' );
-		$this->mockClass( 'Track', $mockTrack );
-		$this->mockClass( 'Track', $mockTrack );
 
 		$method = new ReflectionMethod( 'WikiaSearchController', 'handleArticleMatchTracking' );
 		$method->setAccessible( true );
@@ -360,7 +346,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		                    ->setMethods( array( 'getTitle' ) )
 		                    ->getMock();
 		$mockResponse = $this->getMock( 'WikiaResponse', array( 'redirect' ), array( 'html' ) );
-		$mockTrack = $this->getMock( 'Track', array( 'event' ) );
 		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( array( 'RunHooks' ) )
@@ -410,11 +395,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->with		( 'fulltext', '0' )
 			->will		( $this->returnValue( 'search' ) )
 		;
-		$mockTrack
-		    ->staticExpects( $this->once() )
-		    ->method ( 'event' )
-		    ->with   ( 'search_start_match', array( 'sterm' => $originalQuery, 'rver' => 0 ) )
-		;
 
 		$responserefl = new ReflectionProperty( 'WikiaSearchController', 'response' );
 		$responserefl->setAccessible( true );
@@ -425,13 +405,12 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$wfrefl->setValue( $mockController, $mockWrapper );
 
 		$this->mockClass( 'Article', $mockArticle, 'newFromID' );
-		$this->mockClass( 'Track', $mockTrack );
 
 		$method = new ReflectionMethod( 'WikiaSearchController', 'handleArticleMatchTracking' );
 		$method->setAccessible( true );
 
 		$this->assertTrue(
-				$method->invoke( $mockController, $searchConfig, $mockTrack ),
+				$method->invoke( $mockController, $searchConfig ),
 				'WikiaSearchController::handleArticleMatchTracking should return true.'
 		);
 	}
@@ -2717,5 +2696,112 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$reflSet = new ReflectionMethod( 'WikiaSearchController', 'setResponseValuesFromConfig' );
 		$reflSet->setAccessible( true );
 		$reflSet->invoke( $mockController, $mockConfig );
+	}
+
+	/**
+	 * @covers WikiaSearchController::processArticleItem
+	 * @dataProvider articleItemProvider
+	 */
+	public function testProcessArticleItem( $item, $len, $abstract ) {
+		$mockController = $this->getMockBuilder( 'WikiaSearchController' )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$method = new ReflectionMethod( 'WikiaSearchController', 'processArticleItem' );
+		$method->setAccessible( true );
+		$result = $method->invoke( $mockController, $item, $len );
+
+		$this->assertEquals( $abstract, $result[ 'abstract' ] );
+	}
+
+	public function articleItemProvider() {
+		return [
+			//item, expected abstract
+			[
+				[ 'title' => '', 'abstract' => '' ],
+				150,
+				''
+			],
+			[
+				[ 'title' => 'Jakis title', 'abstract' => 'Jakis titl bla bla bla' ],
+				150,
+				' - Jakis titl bla bla bla'
+			],
+			[
+				[ 'title' => 'ABC', 'abstract' => 'ABCś l bla bla bla' ],
+				150,
+				' - ABCś l bla bla bla'
+			],
+			[
+				[ 'title' => 'Ian (Fallout)', 'abstract' => 'Ian is short' ],
+				150,
+				' is short'
+			],
+			[
+				[ 'title' => 'Followers of the Apocalypse', 'abstract' => 'Reputation image from Fallout: New Vegas. The Followers of the Apocalypse, or simply the Followers...' ],
+				150,
+				' - Reputation image from Fallout: New Vegas. The Followers of the Apocalypse, or simply the Followers...'
+			],
+			[
+				[ 'title' => 'Lancaster (film)', 'abstract' => 'Lancaster was set to appear as a location in the cancelled Fallout film. It was going to be...' ],
+				150,
+				' was set to appear as a location in the cancelled Fallout film. It was going to be...'
+			],
+			[
+				[ 'title' => 'Assault rifle', 'abstract' => '  ...  An assault rifle is a selective fire rifle that uses an intermediate cartridge and a...' ],
+				150,
+				' is a selective fire rifle that uses an intermediate cartridge and a...'
+			],
+			[
+				[ 'title' => 'Dart gun', 'abstract' => '   The dart gun is a constructable small gun in Fallout 3. Characteristics The dart gun is a...' ],
+				150,
+				' is a constructable small gun in Fallout 3. Characteristics The dart gun is a...'
+			],
+			[
+				[ 'title' => '9mm', 'abstract' => '   9mm is an ammunition type in Fallout, Fallout 2, Fallout: New Vegas, Fallout Tactics...' ],
+				150,
+				' is an ammunition type in Fallout, Fallout 2, Fallout: New Vegas, Fallout Tactics...'
+			],
+			[
+				[ 'title' => 'Raseleanne', 'abstract' => '   Paladin Raseleanne was a Paladin sent out to scout Nellis Air Force Base. She was killed and...' ],
+				150,
+				' was a Paladin sent out to scout Nellis Air Force Base. She was killed and...'
+			],
+			[
+				[ 'title' => 'Nathan Drake', 'abstract' => ' Nathan \"Nate\" Drake is a treasure hunter and fortune seeker, as well as a deep-sea salvage...' ],
+				150,
+				' - Nathan \"Nate\" Drake is a treasure hunter and fortune seeker, as well as a deep-sea salvage...'
+			],
+			[
+				[ 'title' => 'Gonzo', 'abstract' => ' Gonzo, formally known as \"The Great Gonzo\" or \"Gonzo the Great,\" is the resident daredevil...' ],
+				150,
+				', formally known as \"The Great Gonzo\" or \"Gonzo the Great,\" is the resident daredevil...'
+			],
+			[
+				[ 'title' => 'Character', 'abstract' => ' ...  Characters are the representations of persons in works of art. In the Fallout series, the...' ],
+				150,
+				' - Characters are the representations of persons in works of art. In the Fallout series, the...'
+			],
+			[
+				[ 'title' => 'Tranquility Lane', 'abstract' => '   “ Just who are you? ”— The Lone Wanderer when asking who Betty actually is. Tranquility Lane theme “ 同志站开，我们正在处理这些帝国主义走狗。 (Pinyin: Tóngzhì...' ],
+				150,
+				' - “ Just who are you? ”— The Lone Wanderer when asking who Betty actually is. Tranquility Lane theme “ 同志站开，我们正在处理这些帝国主义走狗。...'
+			],
+			[
+				[ 'title' => 'Origins', 'abstract' => ' "Every story has a beginning...and an end." — "Origins" trailer "Unleashed after the Germans unearthed the mysterious Element 115, this next chapter in the Zombies legacy will explore the saga’s...'],
+				150,
+				' - "Every story has a beginning...and an end." — "Origins" trailer "Unleashed after the Germans unearthed the mysterious Element 115, this...'
+			],
+			[
+				[ 'title' => 'x', 'abstract' => 'a b ...'],
+				11,
+				' - a b ...'
+			],
+			[
+				[ 'title' => 'x', 'abstract' => 'a b c d e f ...'],
+				11,
+				' - a b...'
+			],
+		];
 	}
 }

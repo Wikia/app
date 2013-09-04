@@ -1,26 +1,29 @@
-/*global WikiaMobile*/
+/*global define */
 
 //init toc
 
-define('toc', ['track', 'sections', 'wikia.window'], function toc(track, sections, w){
+define('toc', ['track', 'sections', 'wikia.window', 'jquery'], function toc(track, sections, w, $){
+	'use strict';
+
 	//private
 	var d = w.document,
+		$body = $(d.body),
 		table,
 		conStyle;
 
 	function open(){
-		if(table){
-			table.className += ' open';
-			d.body.className += ' hidden';
+		if(table.length){
+			table.addClass('open');
+			$body.addClass('hidden');
 			track.event('toc', track.CLICK, {label: 'open'});
-			conStyle.minHeight = (table.offsetHeight - 40) + 'px';
+			conStyle.minHeight = (table.height() - 40) + 'px';
 		}
 	}
 
 	function close(a){
-		if(table && table.className.indexOf('open') > -1){
-			table.className = table.className.replace(' open', '');
-			d.body.className =  d.body.className.replace(' hidden', '');
+		if(table.length && table.hasClass('open')){
+			table.removeClass('open');
+			$body.removeClass('hidden');
 			if(!a) {track.event('toc', track.CLICK, {label: 'close'});}
 			conStyle.minHeight = '0';
 		}
@@ -28,28 +31,28 @@ define('toc', ['track', 'sections', 'wikia.window'], function toc(track, section
 
 	function init(){
 		//init only if toc is on a page
-		table = d.getElementById('toc');
+		table = $(d.getElementById('toc'));
 
-		if(table){
+		if(table.length){
 			d.getElementById('toctitle').insertAdjacentHTML('afterbegin', '<span class=chev></span>');
-			d.body.className += ' hasToc';
+			$body.addClass('hasToc');
 			conStyle = d.getElementById('mw-content-text').style;
 
-			table.addEventListener('click', function(ev){
-				ev.preventDefault();
+			table.on('click', function(event){
+				event.preventDefault();
 
-				var node = ev.target,
-					a = (node.nodeName == 'A');
+				var	target = event.target,
+					a = (target.nodeName === 'A');
 
 				//if anchor was clicked dont trigger tracking event of close
-				(table.className.indexOf('open') > -1 ? close : open)(a);
+				(table.hasClass('open') ? close : open)(a);
 
 				if(a){
 					track.event('toc', track.CLICK, {label: 'element'});
 
-					sections.open(node.getAttribute('href').substr(1), true);
+					sections.open(target.getAttribute('href').substr(1), true);
 				}
-			}, true);
+			});
 		}
 	}
 
@@ -60,9 +63,11 @@ define('toc', ['track', 'sections', 'wikia.window'], function toc(track, section
 			id,
 			ul,
 			parent,
-			text;
+			text,
+			i = 0,
+			l = list.length;
 
-		for(var i = 0, l = list.length; i < l; i++){
+		for(; i < l; i++){
 			section = list[i];
 			a = section.children[0];
 			id = a.hash.slice(1);
@@ -89,8 +94,8 @@ define('toc', ['track', 'sections', 'wikia.window'], function toc(track, section
 		get: function(){
 			var toc = [];
 
-			if(table || (table = d.getElementById('toc'))){
-				toc = getToc(table.getElementsByClassName('toclevel-1'));
+			if(table.length || (table = $(d.getElementById('toc')))){
+				toc = getToc(table.find('.toclevel-1'));
 			}else{
 				//fallback if there is no toc on a page
 				var h2s = d.querySelectorAll('#mw-content-text h2[id]'),
@@ -101,7 +106,7 @@ define('toc', ['track', 'sections', 'wikia.window'], function toc(track, section
 					toc.push({
 						id: h2.id,
 						name: (h2.textContent || h2.innerText).trim()
-					})
+					});
 				}
 			}
 

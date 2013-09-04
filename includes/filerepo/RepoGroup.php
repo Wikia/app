@@ -18,6 +18,9 @@ class RepoGroup {
 	 */
 	var $localRepo;
 
+	/**
+	 * @var FileRepo[]
+	 */
 	var $foreignRepos, $reposInitialised = false;
 	var $localInfo, $foreignInfo;
 	var $cache;
@@ -143,6 +146,16 @@ class RepoGroup {
 			}
 			return $image;
 		}
+
+		# Wikia change - begin
+		# @author macbre
+		# Check redirects before checking foreign repositories (BAC-352)
+		$titleRedirected = $this->localRepo->checkRedirect($title);
+		if ($titleRedirected) {
+			wfDebug( __METHOD__.": followed redirect before checking foreign repos\n" );
+			$title = $titleRedirected;
+		}
+		# Wikia change - end
 
 		# Check the foreign repos
 		foreach ( $this->foreignRepos as $repo ) {

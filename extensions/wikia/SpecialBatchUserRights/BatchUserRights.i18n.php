@@ -54,6 +54,24 @@ $messages['ar'] = array(
 سوف يتم السماح بتشغيل بقية الصفحة فقط حيث أنه يمكنك رؤية بسهولة إذا كان أي من أسماء المستخدمين لا يمكن تحميله.',
 );
 
+/** Bikol Central (Bikol Central)
+ * @author Geopoet
+ */
+$messages['bcl'] = array(
+	'batchuserrights' => 'Mga katanosan kan grupo nin paragamit',
+	'batchuserrights-desc' => 'Minatugot na magdudugang nin saro o dakol na mga paragamit sa sarong grupo sa laog nin sarong aksyon',
+	'batchuserrights-names' => 'Mga pangaran nin paragamit tanganing idugang ining grupo sa (saro kada linya):',
+	'batchuserrights-intro' => 'Ining pahina minatugot saimo na magdugang nin sarong grupo sa kadakulon na mga paragamit na sararoan.
+Para sa rason nin seguridad, an lista kan maidudugang na mga grupo ibinugtak sa laog kan konpigurasyon nin ekstensyon asin dae maliliwat gikan sa laog kan wiki.
+Tabi man maghapot sa sarong administrador nin sistema kun ika kaipuhan na magtutugot na magdudugang kan ibang mga grupo.',
+	'batchuserrights-single-progress-update' => 'Nagdugang nin {{PLURAL:$1|grupo|mga grupo}} sa <strong>$2</strong>.',
+	'batchuserrights-add-groups' => 'Nagdudugang nin {{PLURAL:$1|sarong paragamit|$1 mga paragamit}} sa minasunod na {{PLURAL:$2|grupo|mga grupo}}: <strong>$3</strong>.',
+	'batchuserrights-userload-error' => "Dae maikakarga an paragamit na si \"'''\$1'''\".",
+	'batchuserrights-no-groups' => 'Ika dae tabi nagpili nin arinman na mga grupo.
+Ini dae nanggad makakapagtapos nin anuman na bagay.
+An tada kan pahina pagtutugutan na magdalagan na tangani baya na saimong sayon na mahiling kun arin sa mga pangaran nin paragamit an dae maipagkakarga.',
+);
+
 /** Bulgarian (български)
  * @author DCLXVI
  */
@@ -182,6 +200,24 @@ $messages['fi'] = array(
 	'batchuserrights-add-groups' => 'Lisätään {{PLURAL:$1|yksi käyttäjä|$1 käyttäjää}} seuraavaan {{PLURAL:$2|ryhmään|ryhmiin}}: <strong>$3</strong>.',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'batchuserrights' => 'Arbeið uppá brúkararættindini í setti',
+	'batchuserrights-desc' => 'Ger tað møguligt at leggja ein ella fleiri brúkarar til ein bólk í einari handling',
+	'batchuserrights-names' => 'Brúkaranøvn sum skulu leggjast til henda bólkin (eitt navn pr. rað):',
+	'batchuserrights-intro' => 'Henda síðan letur teg leggja ein bólk til fleiri brúkarar samstundis.
+Av trygdarávum er listin við bólkum sum kunnu leggjast afturat vístur í víðkanarkonfigurasjónini og kann ikki broytast her frá hesi wiki.
+Vinarliga bið ein system administrator um hjálp, um tú ynskir at loyva fleirfaldaða tilleggjan (batch adding) av øðrum bólkum.',
+	'batchuserrights-single-progress-update' => 'Legði afturat {{PLURAL:$1|bólk|bólkar}} til <strong>$2</strong>.',
+	'batchuserrights-add-groups' => 'Legði afturat {{PLURAL:$1|ein brúkara|$1 brúkarar}} til fylgjandi {{PLURAL:$2|bólk|bólkar}}: <strong>$3</strong>.',
+	'batchuserrights-userload-error' => "Tað bar ikki til at innlesa brúkara \"'''\$1'''\".",
+	'batchuserrights-no-groups' => 'Tú valdi ongar bólkar.
+Hetta fer ikki at føra til nakað.
+Restin av síðuni fær loyvi til at koyra, bert fyri at tú lættliga kanst síggja, um summi av brúkaranøvnunum ikki kundu innlesast.',
+);
+
 /** French (français)
  * @author Gomoko
  * @author Peter17
@@ -260,6 +296,9 @@ Le resto del pagina essera executate solmente a fin que tu pote vider facilement
  */
 $messages['id'] = array(
 	'batchuserrights-desc' => 'Memperbolehkan menambahkan satu atau beberapa pengguna ke grup dalam satu tindakan',
+	'batchuserrights-intro' => 'Halaman ini mengizinkan Anda menambahkan sebuah grup ke banyak pengguna sekaligus.
+Untuk alasan keamanan, daftar grup yang dapat ditambahkan diatur dalam pengaturan ekstensi dan tidak dapat diubah dari dalam wiki.
+Silakan minta ke seorang pengurus sistem jika Anda butuh mengizinkan penambahan-massal dari grup-grup lain.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -526,6 +565,7 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
+ * @author SteveR
  * @author Тест
  */
 $messages['uk'] = array(

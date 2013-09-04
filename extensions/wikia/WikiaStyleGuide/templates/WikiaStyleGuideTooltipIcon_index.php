@@ -2,3 +2,4 @@
 	<?= $text; ?>
 	<span class="tooltip-icon <?= $classes; ?>" rel="tooltip" title="<?= $tooltipIconTitle; ?>"><?= $tooltipIconSign; ?></span>
 </span>
+
