@@ -155,6 +155,9 @@ class ImportWikicities extends Maintenance {
 			$this->output("done\n");
 		}
 
+		// cleanup
+		unlink($dumpFile);
+
 		$this->output("\nI'm done!\n");
 	}
 }

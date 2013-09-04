@@ -5,7 +5,8 @@ describe("Sections module", function () {
 	var sections = modules.sections(
 		function(){
 			return 'TEST';
-		}
+		},
+		jQuery
 	);
 
 	it('should be defined', function(){
@@ -15,8 +16,6 @@ describe("Sections module", function () {
 		expect(typeof sections.toggle).toBe('function');
 		expect(typeof sections.open).toBe('function');
 		expect(typeof sections.close).toBe('function');
-		expect(typeof sections.addEventListener).toBe('function');
-		expect(typeof sections.removeEventListener).toBe('function');
 	});
 
 	it('should init sections', function(){
@@ -87,12 +86,13 @@ describe("Sections module", function () {
 
 		var success = false;
 
-		sections.addEventListener('open', function(){
-			sections.close(document.getElementsByTagName('h2')[0]);
-		});
-
-		sections.addEventListener('close', function(){
-			success = true;
+		$(document).on({
+			'sections:open': function(){
+				sections.close(document.getElementsByTagName('h2')[0]);
+			},
+			'sections:close': function(){
+				success = true;
+			}
 		});
 
 		sections.open(document.getElementsByTagName('h2')[0]);

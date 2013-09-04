@@ -11,7 +11,7 @@ describe("JSMessages", function () {
 			wgUserLanguage: 'foo',
 			wgJSMessagesCB: 123
 		},
-		msg = modules.JSMessages(nirvanaMock, jQuery.Deferred, window);
+		msg = modules.JSMessages(nirvanaMock, $, window);
 
 	it('registers AMD module', function() {
 		expect(typeof msg).toBe('function');
@@ -56,7 +56,7 @@ describe("JSMessages", function () {
 					return dfd.promise();
 				}
 			},
-			msg = modules.JSMessages(nirvanaMock, jQuery.Deferred, window);
+			msg = modules.JSMessages(nirvanaMock, jQuery, window);
 
 		msg.get(packageName).then(function(resp) {
 			// new message value should be used

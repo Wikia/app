@@ -227,6 +227,21 @@ $messages['es'] = array(
 	'wikiahubs-social-googleplus-link-Lifestyle' => '',
 );
 
+$messages['pl'] = [
+	// social icons
+	'wikiahubs-social-twitter-link-VideoGames' => 'https://twitter.com/wikia_pl',
+	'wikiahubs-social-facebook-link-VideoGames' => 'https://www.facebook.com/wikiapl',
+	'wikiahubs-social-googleplus-link-VideoGames' => '',
+
+	'wikiahubs-social-twitter-link-Entertainment' => 'https://twitter.com/wikia_pl',
+	'wikiahubs-social-facebook-link-Entertainment' => 'https://www.facebook.com/wikiapl',
+	'wikiahubs-social-googleplus-link-Entertainment' => '',
+
+	'wikiahubs-social-twitter-link-Lifestyle' => 'https://twitter.com/wikia_pl',
+	'wikiahubs-social-facebook-link-Lifestyle' => 'https://www.facebook.com/wikiapl',
+	'wikiahubs-social-googleplus-link-Lifestyle' => '',
+];
+
 $messages['qqq'] = array(
 	// general
 	'wikiahubs-button-cancel' => 'Cancel',

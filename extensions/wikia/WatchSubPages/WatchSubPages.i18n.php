@@ -291,6 +291,7 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
 	'wikia-watchsubpages-desc' => 'Автоматичний перехід на підсторінки',

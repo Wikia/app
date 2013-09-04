@@ -35,6 +35,13 @@ $messages['bn'] = array(
 	'globalnotification-general-ajax-failure' => 'ব্রাউজার উইকিয়ার সাথে সংযোগ করতে পারে নি। দয়া করে পরে আবার চেষ্টা করুন।',
 );
 
+/** Breton (brezhoneg)
+ * @author Fohanno
+ */
+$messages['br'] = array(
+	'globalnotification-general-ajax-failure' => "Ar medeer ne oa ket evit kevreañ ouzh  ar Wikia. Esaeit en-dro diwezhatoc'h.",
+);
+
 /** Catalan (català)
  * @author Marcmpujol
  */
@@ -74,6 +81,14 @@ $messages['es'] = array(
  */
 $messages['fi'] = array(
 	'globalnotification-general-ajax-failure' => 'Yhteyden muodostaminen Wikian palvelimille epäonnistui. Yritä myöhemmin uudelleen.',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'globalnotification-desc' => 'Vísir boð frá skipanini fyri hendingar sum eitt nú AJAX feilir',
+	'globalnotification-general-ajax-failure' => 'Brovsarin fekk ikki samband við Wikia. Royn aftur seinni.',
 );
 
 /** French (français)
