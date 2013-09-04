@@ -6,11 +6,12 @@
 /*
  * Temporary styling for the TouchStorm right rail module
  * Currently have no control over 3rd party markup or styles
- * So the css below breaks style conventions
+ * So the css below breaks style and naming conventions
  */
 .veeseoRA2VWwikiaV1 {
 	// clearfix
 	&:after, &:before {
+		width: 100%;
 		clear: both;
 		content: ' ';
 		display: table;
@@ -36,22 +37,33 @@
 		& > span {
 			display: block;
 			float: left;
-			width: 140px;
+			width: 50%;
 			
-			p { cursor: pointer }
+			p { 
+				// style the <p> to look like a link because
+				// veeseo doesn't let us change markup
+				// and doesn't use semantic markup ~_~
+				cursor: pointer;
+				color: $color-links;
+				font-weight: bold;
+
+				&:hover {
+					text-decoration: underline;
+				}
+			}
 		}
 	}
 
 	// contains thumbnail
 	.veeseoRCWInlineVDivItem {
 		float: left;
-		margin-right: 10px;
-		width: 160px;
+		margin-right: 5%;
+		width: 45%;
 
 		img {
 			cursor: pointer;
 			height: auto;
-			width: 160px;
+			width: 100%;
 		}
 	}
 }
