@@ -1,0 +1,105 @@
+{
+    "basePath": "http://www.wikia.com",
+    "swaggerVersion": "1.1",
+    "apiVersion": "0.2",
+    "resourcePath": "UserApi",
+    "apis": [
+        {
+            "path": "/wikia.php?controller=UserApi&method=getDetails",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "summary": "Fetch details about selected users",
+                    "nickname": "getDetails",
+                    "responseClass": "UserResultSet",
+                    "parameters": [
+                        {
+                            "name": "ids",
+                            "description": "The integer user ID values, comma-separated, max number of IDs is 100",
+                            "allowMultiple": true,
+                            "dataType": "Array",
+                            "paramType": "query",
+                            "required": true,
+                            "defaultValue": ""
+                        },
+                        {
+                            "name": "size",
+                            "description": "The desired width (and height, because it is a square) for the thumbnail, defaults to 100, 0 for no thumbnail",
+                            "allowMultiple": false,
+                            "dataType": "int",
+                            "paramType": "query",
+                            "required": false,
+                            "defaultValue": ""
+                        }
+                    ],
+                    "errorResponses": [
+                        {
+                            "reason": "Invalid parameter or category",
+                            "code": 400
+                        },
+                        {
+                            "reason": "Results not found",
+                            "code": 404
+                        }
+                    ]
+                }
+            ],
+            "description": "Get details about one or more user"
+        }
+    ],
+    "models": {
+        "UserResultSet": {
+            "id": "UserResultSet",
+            "properties": {
+                "items": {
+                    "type": "Array",
+                    "description": "Standard container name for element collection (list)",
+                    "required": true,
+                    "items": {
+                        "$ref": "UserElement"
+                    }
+                },
+                "basepath": {
+                    "type": "string",
+                    "description": "Common URL prefix for relative URLs",
+                    "required": true
+                }
+            }
+        },
+        "UserElement": {
+            "id": "UserElement",
+            "properties": {
+                "user_id": {
+                    "type": "int",
+                    "description": "An internal identification number for User",
+                    "required": true
+                },
+                "title": {
+                    "type": "string",
+                    "description": "Wikia user login",
+                    "required": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Wikia user name (it can contain space characters)",
+                    "required": true
+                },
+                "url": {
+                    "type": "string",
+                    "description": "The relative URL of the User page. Absolute URL: obtained from combining relative URL with basepath attribute from response.",
+                    "required": true
+                },
+                "numberofedits": {
+                    "type": "int",
+                    "description": "Total number of edits made by user on the current wiki",
+                    "required": true
+                },
+                "avatar": {
+                    "type": "string",
+                    "description": "The absolute URL of the user avatar image",
+                    "required": true
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,377 @@
+{
+    "basePath": "http://www.wikia.com",
+    "swaggerVersion": "1.1",
+    "apiVersion": "0.2",
+    "resourcePath": "WAMApi",
+    "apis": [
+        {
+            "path": "/wikia.php?controller=WAMApi&method=getMinMaxWamIndexDate",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "summary": "A method to get WAM score starting and last available dates",
+                    "nickname": "getMinMaxWamIndexDate",
+                    "responseClass": "MinMaxResultSet"
+                }
+            ],
+            "description": "A method to get WAM score starting and last available dates"
+        },
+        {
+            "path": "/wikia.php?controller=WAMApi&method=getWAMIndex",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "summary": "A method to get WAM index (list of wikis with their WAM ranks)",
+                    "nickname": "getWAMIndex",
+                    "responseClass": "WAMResultSet",
+                    "parameters": [
+                        {
+                            "name": "wam_day",
+                            "description": "day for which the WAM scores are displayed",
+                            "allowMultiple": false,
+                            "dataType": "int",
+                            "paramType": "query",
+                            "required": false
+                        },
+                        {
+                            "name": "wam_previous_day",
+                            "description": "day from which the difference in WAM scores is calculated",
+                            "allowMultiple": false,
+                            "dataType": "int",
+                            "paramType": "query",
+                            "required": false
+                        },
+                        {
+                            "name": "vertical_id",
+                            "description": "vertical for which wiki list is to be pulled",
+                            "allowMultiple": true,
+                            "dataType": "int",
+                            "paramType": "query",
+                            "required": false,
+                            "defaultValue": "2,3,9"
+                        },
+                        {
+                            "name": "wiki_lang",
+                            "description": "Language code if narrowing the results to specific language",
+                            "allowMultiple": false,
+                            "dataType": "string",
+                            "paramType": "query",
+                            "required": false
+                        },
+                        {
+                            "name": "wiki_id",
+                            "description": "Id of specific wiki to pull",
+                            "allowMultiple": false,
+                            "dataType": "int",
+                            "paramType": "query",
+                            "required": false
+                        },
+                        {
+                            "name": "wiki_word",
+                            "description": "Fragment of url to search for amongst wikis",
+                            "allowMultiple": false,
+                            "dataType": "string",
+                            "paramType": "query",
+                            "required": false
+                        },
+                        {
+                            "name": "exclude_blacklist",
+                            "description": "Determines if exclude blacklisted wikis (with Content Warning enabled)",
+                            "allowMultiple": false,
+                            "dataType": "boolean",
+                            "paramType": "query",
+                            "required": false
+                        },
+                        {
+                            "name": "sort_column",
+                            "description": "Column by which to sort",
+                            "allowMultiple": false,
+                            "dataType": "string",
+                            "paramType": "query",
+                            "required": false,
+                            "allowableValues": {
+                                "valueType": "LIST",
+                                "values": [
+                                    "wam_rank",
+                                    "wam_change",
+                                    "wam"
+                                ]
+                            },
+                            "defaultValue": "wam"
+                        },
+                        {
+                            "name": "sort_direction",
+                            "description": "Sort direction",
+                            "allowMultiple": false,
+                            "dataType": "string",
+                            "paramType": "query",
+                            "required": false,
+                            "allowableValues": {
+                                "valueType": "LIST",
+                                "values": [
+                                    "ASC",
+                                    "DESC"
+                                ]
+                            },
+                            "defaultValue": "ASC"
+                        },
+                        {
+                            "name": "offset",
+                            "description": "offset from the beginning of data",
+                            "allowMultiple": false,
+                            "dataType": "int",
+                            "paramType": "query",
+                            "required": false,
+                            "defaultValue": "0"
+                        },
+                        {
+                            "name": "limit",
+                            "description": "limit on fetched number of wikis",
+                            "allowMultiple": false,
+                            "dataType": "int",
+                            "paramType": "query",
+                            "required": false,
+                            "allowableValues": {
+                                "valueType": "RANGE",
+                                "min": "0",
+                                "max": "20"
+                            },
+                            "defaultValue": "20"
+                        },
+                        {
+                            "name": "fetch_admins",
+                            "description": "Determines if admins of each wiki are to be returned",
+                            "allowMultiple": false,
+                            "dataType": "boolean",
+                            "paramType": "query",
+                            "required": false,
+                            "defaultValue": "0"
+                        },
+                        {
+                            "name": "avatar_size",
+                            "description": "Size of admin avatars in pixels if fetch_admins is enabled",
+                            "allowMultiple": false,
+                            "dataType": "int",
+                            "paramType": "query",
+                            "required": false
+                        },
+                        {
+                            "name": "fetch_wiki_images",
+                            "description": "Determines if image of each wiki is to be returned",
+                            "allowMultiple": false,
+                            "dataType": "boolean",
+                            "paramType": "query",
+                            "required": false,
+                            "defaultValue": false
+                        },
+                        {
+                            "name": "wiki_image_width",
+                            "description": "Width of wiki image in pixels if fetch_wiki_images is enabled",
+                            "allowMultiple": false,
+                            "dataType": "int",
+                            "paramType": "query",
+                            "required": false
+                        },
+                        {
+                            "name": "wiki_image_height",
+                            "description": "Height of wiki image in pixels if fetch_wiki_images is enabled. You can pass here -1 to keep aspect ratio",
+                            "allowMultiple": false,
+                            "dataType": "int",
+                            "paramType": "query",
+                            "required": false
+                        }
+                    ]
+                }
+            ],
+            "description": "A method to get WAM index (list of wikis with their WAM ranks)"
+        }
+    ],
+    "models": {
+        "WAMResultSet": {
+            "id": "WAMResultSet",
+            "properties": {
+                "wam_index": {
+                    "type": "Array",
+                    "description": "Collection of wam index ordered by ranking",
+                    "required": true,
+                    "items": {
+                        "$ref": "WAMItem"
+                    }
+                },
+                "wam_results_total": {
+                    "type": "int",
+                    "description": "The total count of wikis available for provided params",
+                    "required": true
+                },
+                "wam_index_date": {
+                    "type": "int",
+                    "description": "date of received list",
+                    "required": true
+                }
+            }
+        },
+        "WAMItem": {
+            "id": "WAMItem",
+            "properties": {
+                "wiki_id": {
+                    "type": "int",
+                    "description": "An internal identification number for Wikia",
+                    "required": true
+                },
+                "wam": {
+                    "type": "float",
+                    "description": "WAM score",
+                    "required": true
+                },
+                "wam_rank": {
+                    "type": "int",
+                    "description": "WAM ranking",
+                    "required": true
+                },
+                "hub_wam_rank": {
+                    "type": "int",
+                    "description": "Wiki wam rank within its hub",
+                    "required": true
+                },
+                "peak_wam_rank": {
+                    "type": "int",
+                    "description": "the peak WAM Rank achieved by this Wiki",
+                    "required": true
+                },
+                "peak_hub_wam_rank": {
+                    "type": "int",
+                    "description": "peak WAM Rank within its Hub",
+                    "required": true
+                },
+                "top_1k_days": {
+                    "type": "int",
+                    "description": "the number of days that the Wiki has been in the top 1000 Wikis",
+                    "required": true
+                },
+                "top_1k_weeks": {
+                    "type": "int",
+                    "description": "the number of weeks that the Wiki has been in the top 1000 Wikis",
+                    "required": true
+                },
+                "first_peak": {
+                    "type": "string",
+                    "description": "the first date that the Wiki achieved its peak_wam_rank",
+                    "required": true
+                },
+                "last_peak": {
+                    "type": "string",
+                    "description": "the last time that the Wiki was at its peak_wam_rank",
+                    "required": true
+                },
+                "hub_name": {
+                    "type": "string",
+                    "description": "hub name",
+                    "required": true
+                },
+                "title": {
+                    "type": "string",
+                    "description": "Wiki title",
+                    "required": true
+                },
+                "url": {
+                    "type": "string",
+                    "description": "The absolute URL of the Wikia",
+                    "required": true
+                },
+                "hub_id": {
+                    "type": "int",
+                    "description": "An internal identification number for Hub",
+                    "required": true
+                },
+                "wam_change": {
+                    "type": "float",
+                    "description": "wam score change from wam_previous_day",
+                    "required": true
+                },
+                "wam_is_new": {
+                    "type": "int",
+                    "description": "1 if wiki wasn't classified on $wam_previous_day, 0 if this wiki was in index",
+                    "required": true
+                },
+                "wiki_image": {
+                    "type": "string",
+                    "description": "The absolute URL of the Wikia image",
+                    "required": false
+                },
+                "admins": {
+                    "type": "Array",
+                    "description": "Wiki admins list",
+                    "required": false,
+                    "items": {
+                        "$ref": "AdminItem"
+                    }
+                }
+            }
+        },
+        "AdminItem": {
+            "id": "AdminItem",
+            "properties": {
+                "avatarUrl": {
+                    "type": "string",
+                    "description": "The absolute URL of the User avatar image",
+                    "required": true
+                },
+                "edits": {
+                    "type": "int",
+                    "description": "Number of edits",
+                    "required": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Admin name",
+                    "required": true
+                },
+                "userPageUrl": {
+                    "type": "string",
+                    "description": "The absolute URL of the User page",
+                    "required": true
+                },
+                "userContributionsUrl": {
+                    "type": "string",
+                    "description": "The absolute URL of the User contributions page",
+                    "required": true
+                },
+                "userId": {
+                    "type": "string",
+                    "description": "An internal identification number for User",
+                    "required": "int"
+                },
+                "since": {
+                    "type": "string",
+                    "description": "Join date",
+                    "required": true
+                }
+            }
+        },
+        "MinMaxResultSet": {
+            "id": "MinMaxResultSet",
+            "properties": {
+                "min_max_dates": {
+                    "type": "MinMaxDatesItem",
+                    "description": "Object containing minimal and maximal dates for wam index results",
+                    "required": true
+                }
+            }
+        },
+        "MinMaxDatesItem": {
+            "id": "MinMaxDatesItem",
+            "properties": {
+                "max_date": {
+                    "type": "int",
+                    "description": "The Unix timestamp (in seconds) for maximal date of index",
+                    "required": true
+                },
+                "min_date": {
+                    "type": "int",
+                    "description": "The Unix timestamp (in seconds) for minimal date of index",
+                    "required": true
+                }
+            }
+        }
+    }
+}

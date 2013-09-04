@@ -1,0 +1,61 @@
+{
+    "basePath": "http://www.wikia.com",
+    "swaggerVersion": "1.1",
+    "apiVersion": "0.2",
+    "resourcePath": "SearchSuggestionsApi",
+    "apis": [
+        {
+            "path": "/wikia.php?controller=SearchSuggestionsApi&method=getList",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "summary": "Finds suggested phrases for chosen query",
+                    "nickname": "getList",
+                    "responseClass": "SearchSuggestionsPhrases",
+                    "parameters": [
+                        {
+                            "name": "query",
+                            "description": "Search term for suggestions",
+                            "allowMultiple": false,
+                            "dataType": "string",
+                            "paramType": "query",
+                            "required": true,
+                            "defaultValue": ""
+                        }
+                    ],
+                    "errorResponses": [
+                        {
+                            "reason": "Search Suggestions extension not available",
+                            "code": 404
+                        }
+                    ]
+                }
+            ],
+            "description": "Controller to find suggested phrases for chosen query"
+        }
+    ],
+    "models": {
+        "SearchSuggestionsPhrases": {
+            "id": "SearchSuggestionsPhrases",
+            "properties": {
+                "items": {
+                    "type": "Array",
+                    "description": "Standard container name for element collection (list)",
+                    "items": {
+                        "$ref": "SearchSuggestionsItems"
+                    }
+                }
+            }
+        },
+        "SearchSuggestionsItems": {
+            "id": "SearchSuggestionsItems",
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "description": "Searching article title",
+                    "required": true
+                }
+            }
+        }
+    }
+}
