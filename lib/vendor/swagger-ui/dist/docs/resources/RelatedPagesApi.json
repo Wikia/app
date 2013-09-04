@@ -1,5 +1,5 @@
 {
-    "basePath": "http://muppet.wikia.com",
+    "basePath": "http://www.wikia.com",
     "swaggerVersion": "1.1",
     "apiVersion": "0.2",
     "resourcePath": "RelatedPagesApi",
@@ -49,14 +49,14 @@
             "properties": {
                 "items": {
                     "type": "Array",
-                    "description": "The related page results for the provided ID",
+                    "description": "Standard container name for element collection (list)",
                     "items": {
                         "$ref": "RelatedPage"
                     }
                 },
                 "basepath": {
                     "type": "string",
-                    "description": "Base URL for current domain"
+                    "description": "Common URL prefix for relative URLs"
                 }
             }
         },
@@ -65,7 +65,7 @@
             "properties": {
                 "url": {
                     "type": "string",
-                    "description": "URL to article without domain part",
+                    "description": "The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response.",
                     "required": true
                 },
                 "title": {
@@ -75,12 +75,12 @@
                 },
                 "id": {
                     "type": "int",
-                    "description": "Article ID",
+                    "description": "An internal identification number for Article",
                     "required": true
                 },
                 "imgUrl": {
                     "type": "string",
-                    "description": "URL for article image",
+                    "description": "The absolute URL of the image",
                     "required": true
                 }
             }

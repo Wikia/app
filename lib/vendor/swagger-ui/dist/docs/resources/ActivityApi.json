@@ -1,5 +1,5 @@
 {
-    "basePath": "http://muppet.wikia.com",
+    "basePath": "http://www.wikia.com",
     "swaggerVersion": "1.1",
     "apiVersion": "0.2",
     "resourcePath": "ActivityApi",
@@ -52,7 +52,7 @@
             "properties": {
                 "items": {
                     "type": "Array",
-                    "description": "A list of each individual event, ordered by recency descending",
+                    "description": "Standard container name for element collection (list)",
                     "required": true,
                     "items": {
                         "$ref": "ActivityResponseItem"
@@ -60,7 +60,7 @@
                 },
                 "basepath": {
                     "type": "string",
-                    "description": "The base path of the request made. Used to construct absolute URLs",
+                    "description": "Common URL prefix for relative URLs",
                     "required": true
                 }
             }

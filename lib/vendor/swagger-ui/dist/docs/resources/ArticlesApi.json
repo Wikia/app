@@ -1,5 +1,5 @@
 {
-    "basePath": "http://muppet.wikia.com",
+    "basePath": "http://www.wikia.com",
     "swaggerVersion": "1.1",
     "apiVersion": "0.2",
     "resourcePath": "ArticlesApi",
@@ -94,7 +94,7 @@
                         },
                         {
                             "name": "namespaces",
-                            "description": "The integer namespace values to filter the results by, comma-separated",
+                            "description": "Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
                             "allowMultiple": true,
                             "dataType": "Array",
                             "paramType": "query",
@@ -154,7 +154,7 @@
                         },
                         {
                             "name": "namespaces",
-                            "description": "The integer namespace values to filter the results by, comma-separated",
+                            "description": "Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
                             "allowMultiple": true,
                             "dataType": "Array",
                             "paramType": "query",
@@ -205,7 +205,7 @@
                     "parameters": [
                         {
                             "name": "namespaces",
-                            "description": "The integer namespace values to filter the results by, comma-separated",
+                            "description": "Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
                             "allowMultiple": true,
                             "dataType": "Array",
                             "paramType": "query",
@@ -247,7 +247,7 @@
                     "parameters": [
                         {
                             "name": "namespaces",
-                            "description": "The integer namespace values to filter the results by, comma-separated",
+                            "description": "Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
                             "allowMultiple": true,
                             "dataType": "Array",
                             "paramType": "query",
@@ -307,7 +307,7 @@
                         },
                         {
                             "name": "namespaces",
-                            "description": "The integer namespace values to filter the results by, comma-separated",
+                            "description": "Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
                             "allowMultiple": true,
                             "dataType": "Array",
                             "paramType": "query",
@@ -336,7 +336,7 @@
             "properties": {
                 "items": {
                     "type": "Array",
-                    "description": "A list of each unexpanded top article in the result set, sorted by pageview descending",
+                    "description": "Standard container name for element collection (list)",
                     "required": true,
                     "items": {
                         "$ref": "UnexpandedArticle"
@@ -344,7 +344,7 @@
                 },
                 "basepath": {
                     "type": "string",
-                    "description": "Base path of current wiki; used for constructing absolute URLs from relative ones",
+                    "description": "Common URL prefix for relative URLs",
                     "required": true
                 }
             }
@@ -354,7 +354,7 @@
             "properties": {
                 "id": {
                     "type": "int",
-                    "description": "Article ID",
+                    "description": "An internal identification number for Article",
                     "required": true
                 },
                 "title": {
@@ -364,7 +364,7 @@
                 },
                 "url": {
                     "type": "string",
-                    "description": "The relative URL path of the article (combine with the basepath attribute of the response to create an absolute URL)",
+                    "description": "The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response.",
                     "required": true
                 },
                 "ns": {
@@ -379,7 +379,7 @@
             "properties": {
                 "items": {
                     "type": "Array",
-                    "description": "A list of each expanded top article in the result set, sorted by pageview descending",
+                    "description": "Standard container name for element collection (list)",
                     "required": true,
                     "items": {
                         "$ref": "ExpandedArticle"
@@ -387,7 +387,7 @@
                 },
                 "basepath": {
                     "type": "string",
-                    "description": "Base path of current wiki; used for constructing absolute URLs from relative ones",
+                    "description": "Common URL prefix for relative URLs",
                     "required": true
                 }
             }
@@ -397,7 +397,7 @@
             "properties": {
                 "id": {
                     "type": "int",
-                    "description": "Article ID",
+                    "description": "An internal identification number for Article",
                     "required": true
                 },
                 "title": {
@@ -407,7 +407,7 @@
                 },
                 "url": {
                     "type": "string",
-                    "description": "The reltive URL of the article (combine with the basepath attribute of the response to create an absolute URL)",
+                    "description": "The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response.",
                     "required": true
                 },
                 "ns": {
@@ -437,7 +437,7 @@
                 },
                 "thumbnail": {
                     "type": "string",
-                    "description": "The absolute URL of the thumbnail for this article"
+                    "description": "The absolute URL of the thumbnail"
                 },
                 "original_dimensions": {
                     "type": "OriginalDimension",
@@ -450,7 +450,7 @@
             "properties": {
                 "id": {
                     "type": "int",
-                    "description": "The ID of the revision",
+                    "description": "An internal identification number for Revision",
                     "required": true
                 },
                 "user": {
@@ -460,12 +460,12 @@
                 },
                 "user_id": {
                     "type": "int",
-                    "description": "The ID of the user who made the revision",
+                    "description": "An internal identification number for User",
                     "required": true
                 },
                 "timestamp": {
                     "type": "int",
-                    "description": "The Unix timestamp in seconds of the date the revision was made",
+                    "description": "The Unix timestamp (in seconds) that the revision was made",
                     "required": true
                 }
             }
@@ -490,7 +490,7 @@
             "properties": {
                 "items": {
                     "type": "Array",
-                    "description": "A list of each wikia for given hub or language with their top articles",
+                    "description": "Standard container name for element collection (list)",
                     "required": true,
                     "items": {
                         "$ref": "HubArticleResult"
@@ -521,7 +521,7 @@
             "properties": {
                 "id": {
                     "type": "int",
-                    "description": "Wikia ID",
+                    "description": "An internal identification number for Wikia",
                     "required": true
                 },
                 "name": {
@@ -546,7 +546,7 @@
             "properties": {
                 "id": {
                     "type": "int",
-                    "description": "Article ID",
+                    "description": "An internal identification number for Article",
                     "required": true
                 },
                 "ns": {
@@ -561,7 +561,7 @@
             "properties": {
                 "items": {
                     "type": "Array",
-                    "description": "A list of each unexpanded top article in the result set, sorted by pageview descending",
+                    "description": "Standard container name for element collection (list)",
                     "required": true,
                     "items": {
                         "$ref": "UnexpandedArticle"
@@ -574,7 +574,7 @@
                 },
                 "basepath": {
                     "type": "string",
-                    "description": "The base path of the request made. Used to construct absolute URLs",
+                    "description": "Common URL prefix for relative URLs",
                     "required": true
                 }
             }
@@ -584,7 +584,7 @@
             "properties": {
                 "items": {
                     "type": "Array",
-                    "description": "A list of each unexpanded top article in the result set, sorted by pageview descending",
+                    "description": "Standard container name for element collection (list)",
                     "required": true,
                     "items": {
                         "$ref": "ExpandedArticle"
@@ -597,7 +597,7 @@
                 },
                 "basepath": {
                     "type": "string",
-                    "description": "Base path of current wiki; used for constructing absolute URLs from relative ones",
+                    "description": "Common URL prefix for relative URLs",
                     "required": true
                 }
             }

@@ -1,0 +1,121 @@
+{
+    "basePath": "http://www.wikia.com",
+    "swaggerVersion": "1.1",
+    "apiVersion": "0.2",
+    "resourcePath": "WikiaHubsApi",
+    "apis": [
+        {
+            "path": "/wikia.php?controller=WikiaHubsApi&method=getModuleData",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "summary": " Get explore module data from given date and vertical",
+                    "nickname": "getModuleData",
+                    "responseClass": "WikiaHubsResultSet",
+                    "parameters": [
+                        {
+                            "name": "module",
+                            "description": "Module id",
+                            "allowMultiple": false,
+                            "dataType": "int",
+                            "paramType": "query",
+                            "required": true
+                        },
+                        {
+                            "name": "vertical",
+                            "description": "Vertical id",
+                            "allowMultiple": false,
+                            "dataType": "int",
+                            "paramType": "query",
+                            "required": true
+                        },
+                        {
+                            "name": "ts",
+                            "description": "The Unix timestamp (in seconds)",
+                            "allowMultiple": false,
+                            "dataType": "int",
+                            "paramType": "query",
+                            "required": false
+                        },
+                        {
+                            "name": "lang",
+                            "description": "Language",
+                            "allowMultiple": false,
+                            "dataType": "string",
+                            "paramType": "query",
+                            "required": false,
+                            "defaultValue": "en"
+                        }
+                    ],
+                    "errorResponses": [
+                        {
+                            "reason": "Module, vertical or timestamp not valid",
+                            "code": 400
+                        }
+                    ]
+                }
+            ],
+            "description": "Get explore module data from given date and vertical"
+        }
+    ],
+    "models": {
+        "WikiaHubsResultSet": {
+            "id": "WikiaHubsResultSet",
+            "properties": {
+                "data": {
+                    "type": "HubsData",
+                    "description": "Wrapping object",
+                    "required": true
+                }
+            }
+        },
+        "HubsData": {
+            "id": "HubsData",
+            "properties": {
+                "slides": {
+                    "type": "Array",
+                    "description": "Slides collection",
+                    "required": true,
+                    "items": {
+                        "$ref": "SlideItem"
+                    }
+                }
+            }
+        },
+        "SlideItem": {
+            "id": "SlideItem",
+            "properties": {
+                "photoUrl": {
+                    "type": "string",
+                    "description": "The absolute URL of the image",
+                    "required": true
+                },
+                "strapline": {
+                    "type": "string",
+                    "description": "Headline text",
+                    "required": true
+                },
+                "shortDesc": {
+                    "type": "string",
+                    "description": "Short description",
+                    "required": true
+                },
+                "longDesc": {
+                    "type": "string",
+                    "description": "Long description",
+                    "required": true
+                },
+                "url": {
+                    "type": "string",
+                    "description": "The absolute URL of the page",
+                    "required": true
+                },
+                "photoName": {
+                    "type": "string",
+                    "description": "Image name",
+                    "required": true
+                }
+            }
+        }
+    }
+}
