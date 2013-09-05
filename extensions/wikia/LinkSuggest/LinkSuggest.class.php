@@ -143,7 +143,7 @@ class LinkSuggest {
 		$exactMatchRow = null;
 
 		$queryLower = strtolower($query);
-		$sql1Measurement = T::start(__FUNCTION__ . "\\sql-1");
+		$sql1Measurement = T::start([ __FUNCTION__ , "sql-1" ]);
 		$res = $db->select(
 			array( 'querycache', 'page' ),
 			array( 'page_namespace', 'page_title', 'page_is_redirect' ),
@@ -188,7 +188,7 @@ class LinkSuggest {
 							AND qc_type IS NULL
 						LIMIT ".($wgLinkSuggestLimit * 3); // we fetch 3 times more results to leave out redirects to the same page
 
-			$sql2Measurement = T::start(__FUNCTION__ . "\\sql-2");
+			$sql2Measurement = T::start([ __FUNCTION__, "sql-2" ]);
 			$res = $db->query($sql, __METHOD__);
 
 			self::formatResults($db, $res, $query, $redirects, $results, $exactMatchRow);
