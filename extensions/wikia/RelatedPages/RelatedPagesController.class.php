@@ -8,7 +8,7 @@ class RelatedPagesController extends WikiaController {
 		$this->skipRendering = false;
 	}
 
-	public function executeIndex( $params = null ) {
+	public function index( $params = null ) {
 		global $wgTitle, $wgContentNamespaces, $wgRequest, $wgMemc, $wgRelatedPagesAddAfterSection;
 
 		$altTitle = $this->request->getVal('altTitle', null);
@@ -64,10 +64,20 @@ class RelatedPagesController extends WikiaController {
 				$this->addAfterSection = intval($wgRelatedPagesAddAfterSection);
 			}
 		}
-		
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
-			$this->overrideTemplate( 'WikiaMobileIndex' );
+
+		// data for mustache template
+		$this->data = [];
+
+		if ( !$this->skipRendering || $this->app->checkSkin( 'wikiamobile' ) ) {
+			$this->data = [
+				"mobileSkin" => ( $this->app->checkSkin( 'wikiamobile' ) ) ? true : false,
+				"addAfterSection" => ( !empty($this->addAfterSection) ) ? $this->addAfterSection : false,
+				"relatedPagesHeading" => wfMessage( 'wikiarelatedpages-heading' )->inContentLanguage()->text()
+			];
 		}
+
+		$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_MUSTACHE);
+
 	}
 
 	static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages) {
