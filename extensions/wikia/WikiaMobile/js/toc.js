@@ -1,7 +1,6 @@
 /*global define */
 
 //init toc
-
 define('toc', ['track', 'sections', 'wikia.window', 'jquery'], function toc(track, sections, w, $){
 	'use strict';
 
@@ -31,7 +30,7 @@ define('toc', ['track', 'sections', 'wikia.window', 'jquery'], function toc(trac
 
 	function init(){
 		//init only if toc is on a page
-		table = $('#toc.toc');
+		table = $body.find('#toc.toc');
 
 		if(table.length){
 			d.getElementById('toctitle').insertAdjacentHTML('afterbegin', '<span class=chev></span>');
