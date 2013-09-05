@@ -266,7 +266,7 @@ $(function() {
 	 * @private function
 	 *
 	 * @description Checks node for data-attr 'listingType' value
-	 * @param jQuery object containing node with data-attr 'listingType'
+	 * @param $node jQuery object containing node with data-attr 'listingType'
 	 * @returns String
 	 */
 
