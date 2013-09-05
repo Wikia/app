@@ -10,7 +10,8 @@ var AdLogicShortPage = function (window, document, log) {
 			PREFOOTER_LEFT_BOXAD: preFootersThreshold,
 			PREFOOTER_RIGHT_BOXAD: preFootersThreshold
 		},
-		oneColumnThreshold = 1024,
+		// skins/oasis/css/core/layout.scss: $width-outside: 1030px;
+		oneColumnThreshold = 1008,
 		slotsOnlyOnWidePages = {
 			TOP_BUTTON_WIDE: oneColumnThreshold,
 			TOP_RIGHT_BOXAD: oneColumnThreshold,
