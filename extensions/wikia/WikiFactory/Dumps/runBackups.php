@@ -33,12 +33,12 @@ function runBackups( $from, $to, $full, $options ) {
 	/**
 	 * shortcut for full & current together
 	 */
-	$both = isset( $options[ "both" ] ) ? true : false;
+	$both = isset( $options[ "both" ] );
 
 	/**
 	 * store backup in another folder, not available for users
 	 */
-	$hide = isset( $options[ "hide" ] ) ? true : false;
+	$hide = isset( $options[ "hide" ] );
 
 	/**
 	 * store backup in the system tmp dir
@@ -46,7 +46,9 @@ function runBackups( $from, $to, $full, $options ) {
 	$basedir = isset( $options['tmp'] ) ? sys_get_temp_dir() : '';
 
 	/**
-	 
+	 * send backup to Amazon S3 and delete the local copy
+	 */
+	$s3 = isset( $options['s3'] );
 
 	/**
 	 * silly trick, if we have id defined we are defining $from & $to from it
