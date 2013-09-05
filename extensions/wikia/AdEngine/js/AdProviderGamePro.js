@@ -25,15 +25,10 @@ var AdProviderGamePro = function(adLogicPageLevelParamsLegacy, ScriptWriter, tra
 		return false;
 	}
 
-	// adapted for GP + simplified copy of AdConfig.DART.getUrl
 	function getUrl(slotname) {
 		log(['getUrl', slotname], 5, 'AdProviderGamePro');
 
-		var url = 'http://' +
-			'ad-emea' +
-			'.doubleclick.net/' +
-			'adj' + '/' +
-			'ow-wikia.com' + '/' + 'wka.' + window.cityShort + ';' +
+		var url = 'http://ad-emea.doubleclick.net/N7503/adj/DE-OW-netzwerk/wikia;' +
 			's1=' + '_' + window.wgDBname + ';' +
 			'pos=' + slotMap[slotname].pos + ';' +
 			adLogicPageLevelParamsLegacy.getCustomKeyValues() +

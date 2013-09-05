@@ -5,93 +5,64 @@
  * @param track.js track
  */
 /* global wgTitle */
-require(['throbber', 'track', 'wikia.nirvana'], function (throbber, track, nirvana) {
+require(['throbber', 'track', 'wikia.nirvana', 'wikia.window'], function (throbber, track, nirvana, window) {
 	'use strict';
 
-	var d = document,
-		clickEvent = 'click',
-		expAll = d.getElementById('expAll'),
-		elements,
-		wkCatExh = d.getElementById('wkCatExh'),
-		categorySection = d.getElementsByClassName('alphaSec')[0],
-		i,
-		l;
+	var d = window.document,
+		expAll = $(d.getElementById('expAll')),
+		elements;
 
-	if (expAll) {
-		elements = d.querySelectorAll('.alphaSec .artSec, .collSec, .catlinks');
-		l = elements.length;
+	if (expAll.length) {
+		elements = $('.alphaSec .artSec, .collSec, .catlinks');
 
-		expAll.addEventListener(clickEvent, function() {
-			if (this.className.indexOf('exp') > -1) {
-				this.className = this.className.replace(' exp', '');
-
-				for(i = 0; i < l; i++){
-					elements[i].className = elements[i].className.replace(/ open(?!\S)/g, '');
-				}
-			} else {
-				this.className += ' exp';
-
-				for(i = 0; i < l; i++){
-					elements[i].className += ' open';
-				}
+		expAll.on('click', function(){
+			if($(this).toggleClass('exp').hasClass('exp')) {
+				elements.addClass('open');
+			}else {
+				elements.removeClass('open');
 			}
 		});
 	}
 
-	if (wkCatExh) {
-		wkCatExh.addEventListener(clickEvent, function (ev) {
-			var t = ev.target;
-			if (t.tagName == 'A') {
-				track.event('category', track.IMAGE_LINK, {
-					label: 'exhibition',
-					href: t.href
-				},
-				ev);
-			}
+	$(d.getElementById('wkCatExh')).on('click', 'a', function(event){
+		track.event('category', track.IMAGE_LINK, {
+			label: 'exhibition',
+			href: this.href
+		}, event);
+		console.log('a')
+	});
 
+	$(d.getElementsByClassName('alphaSec'))
+		.on('click', 'a.cld', function(event){
+			track.event('category', track.TEXT_LINK, {
+				label: 'category',
+				href: this.href
+			}, event);
+		}).on('click', 'a[data-batch]', function(event){
+			onClick($(this), event);
 		});
-	}
-
-	if (categorySection) {
-		categorySection.addEventListener(clickEvent, function (ev) {
-			var t = ev.target;
-
-			if (t.tagName == 'A' && t.parentElement.className.indexOf('cld') > -1) {
-				ev.preventDefault();
-				track.event('category', track.TEXT_LINK, {
-					label: 'category',
-					href: t.href
-				},
-				ev);
-			} else if(t.className.indexOf('pag') > -1) {
-				onClick.call(t, ev);
-			}
-		});
-	}
 
 	/**
 	 * @param MouseEvent event
 	 */
-	function onClick(event) {
-		event.preventDefault();
-		var self = this,
-			forward = (self.className.indexOf('pagMore') > -1),
-			parent = self.parentElement,
-			prev = (forward) ? parent.getElementsByClassName('pagLess')[0] : self,
-			prevBatch = ~~(prev.getAttribute('data-batch')),
-			next = (forward) ? self : parent.getElementsByClassName('pagMore')[0],
-			nextBatch = prevBatch + 2,
-			batch = (forward) ? nextBatch : prevBatch,
+	function onClick(element, event) {
+		var forward = element.addClass('active').hasClass('pagMore'),
 			add = (forward ? 1 : -1),
-			id = parent.id,
-			container = parent.getElementsByTagName('ul')[0];
+			parent = element.parent(),
+			prev = (forward ? parent.find('.pagLess') : element),
+			prevBatch = parseInt(prev.attr('data-batch'), 10),
+			next = (forward ? element : parent.find('.pagMore')),
+			nextBatch = prevBatch + 2,
+			batch = (forward ? nextBatch : prevBatch),
+			id = parent[0].id,
+			container = parent.find('ul');
 
-		prev.setAttribute('data-batch', prevBatch + add);
-		next.setAttribute('data-batch', nextBatch + add);
+		event.preventDefault();
 
-		throbber.show(self, {size: '40px'});
+		prev.attr('data-batch', prevBatch + add);
+		next.attr('data-batch', nextBatch + add);
 
-		self.className += ' active';
+		throbber.show(element[0], {size: '40px'});
 
 		nirvana.sendRequest({
 			controller: 'WikiaMobile',
@@ -106,20 +77,18 @@ require(['throbber', 'track', 'wikia.nirvana'], function (throbber, track, nirva
 			}
 		}).done(
 			function (result) {
-				container.parentElement.removeChild(container);
-				next.insertAdjacentHTML('beforebegin', result);
+				container.remove();
+				prev.removeClass('active').toggleClass('visible', batch > 1);
+				next.before(result).removeClass('active').toggleClass('visible', batch < parseInt(parent.attr('data-batches'), 10));
 
 				if (forward) {
-					parent.previousElementSibling.scrollIntoView();
+					parent.prev()[0].scrollIntoView();
 					track.event('category', track.PAGINATE, {label: 'next'});
 				} else {
 					track.event('category', track.PAGINATE, {label: 'previous'});
 				}
 
-				throbber.hide(self);
-
-				prev.className = 'pagLess' + (batch > 1 ? ' visible' : '');
-				next.className = 'pagMore' + (batch < ~~(parent.getAttribute('data-batches')) ? ' visible' : '');
+				throbber.hide(element[0]);
 			}
 		);
 	}

@@ -327,12 +327,19 @@ $messages['tl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Тест
  */
 $messages['uk'] = array(
 	'cacheepoch-desc' => 'Надає інтерфейс для зміни wgCacheEpoch у вікі',
+	'cacheepoch' => 'Інтерфейс кешу Epoch',
+	'cacheepoch-header' => 'Збільшити wgCacheEpoch',
+	'cacheepoch-value' => 'Поточне значення wgCacheEpoch "$1". Натисніть кнопку, щоб задати його згідно поточного часу.',
 	'cacheepoch-submit' => 'Оновити значення',
+	'cacheepoch-updated' => 'wgCacheEpoch оновлено до "$1".',
+	'cacheepoch-not-updated' => 'Не вдалося оновити wgCacheEpoch.',
 	'cacheepoch-wf-reason' => 'Значення оновлене за допомогою Special:CacheEpoch',
+	'cacheepoch-no-wf' => 'WikiFactory на цій вікі не увімкнено. Не вдається змінити wgUserData.',
 );
 
 /** Vietnamese (Tiếng Việt)

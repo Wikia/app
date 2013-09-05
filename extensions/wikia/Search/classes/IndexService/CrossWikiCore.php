@@ -111,18 +111,19 @@ class CrossWikiCore extends AbstractWikiService
 	protected function getVisualizationInfo() {
 		$response = [];
 		$service = $this->getService();
+
+		$message = $service->getSimpleMessage( 'wikiasearch2-crosswiki-description', array( $service->getGlobal( 'Sitename' ) ) );
+		$ds = Utilities::field( 'description' );
+		$ds = $ds == 'description' ? 'description_txt' : $ds;
+		$response[$ds] = $message;
+		$response['description_txt'] = $message;
 		$vizInfo = $service->getVisualizationInfoForWikiId( $this->getWikiId() );
 		if (! empty( $vizInfo ) ) {
 			$response['image_s'] = $vizInfo['image'];
 			if ( isset( $vizInfo['desc'] ) ) {
-				$description = $vizInfo['desc'];
-			} else {
-				$description = $service->getSimpleMessage( 'wikiasearch2-crosswiki-description', array( $service->getGlobal( 'Sitename' ) ) );
+				$response[$ds] = $vizInfo['desc'];
+				$response['description_txt'] = $vizInfo['desc'];
 			}
-			$response['description_txt'] = $description;
-			$ds = Utilities::field( 'description' );
-			$ds = $ds == 'description' ? 'description_txt' : $ds;
-			$response[$ds] = $description;
 			foreach ( $vizInfo['flags'] as $flag => $bool ) {
 				$response[$flag.'_b'] = $bool ? 'true' : 'false';
 			}
@@ -164,7 +165,7 @@ class CrossWikiCore extends AbstractWikiService
 				'cat_title',
 				'cat_hidden = 0',
 				__METHOD__,
-				[ 'ORDER BY' => 'cat_pages DESC' ]
+				[ 'LIMIT' => 50, 'ORDER BY' => 'cat_pages DESC' ]
 				);
 		while ( $result = $dbr->fetchObject( $query ) ) {
 			$categories[] = str_replace( '_', ' ', $result->cat_title );
