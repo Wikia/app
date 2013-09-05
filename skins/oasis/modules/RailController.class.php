@@ -21,7 +21,6 @@ class RailController extends WikiaController {
 
 	public function executeLazy() {
 		wfProfileIn(__METHOD__);
-		// TODO do not make request if there is no more modules to load
 
 		$this->railModuleList = $this->filterModules((new BodyController)->getRailModuleList(), true);
 
