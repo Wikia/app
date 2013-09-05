@@ -40,6 +40,13 @@ function runBackups( $from, $to, $full, $options ) {
 	 */
 	$hide = isset( $options[ "hide" ] ) ? true : false;
 
+	/**
+	 * store backup in the system tmp dir
+	 */
+	$basedir = isset( $options['tmp'] ) ? sys_get_temp_dir() : '';
+
+	/**
+	 
 
 	/**
 	 * silly trick, if we have id defined we are defining $from & $to from it
@@ -111,9 +118,12 @@ function runBackups( $from, $to, $full, $options ) {
 		 * build command
 		 */
 		$status  = false;
-		$basedir = getDirectory( $row->city_dbname, $hide );
+		
+		if ( '' == $basedir ) {
+			$basedir = getDirectory( $row->city_dbname, $hide );
+		}
 		if( $full || $both ) {
-			$path = sprintf("%s/pages_full.xml.gz", $basedir );
+			$path = sprintf("%s/%s_pages_full.xml.gz", $basedir, $row->city_dbname );
 			$time = wfTime();
 			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} {$path}", true, true );
 			$cmd = array(
@@ -133,7 +143,7 @@ function runBackups( $from, $to, $full, $options ) {
 			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} status: {$status}, time: {$time}", true, true );
 		}
 		if( !$full || $both ) {
-			$path = sprintf("%s/pages_current.xml.gz", $basedir );
+			$path = sprintf("%s/%s_pages_current.xml.gz", $basedir, $row->city_dbname );
 			$time = wfTime();
 			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} {$path}", true, true);
 			$cmd = array(
@@ -151,33 +161,6 @@ function runBackups( $from, $to, $full, $options ) {
 			wfShellExec( implode( " ", $cmd ), $status );
 			$time = Wikia::timeDuration( wfTime() - $time );
 			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} status: {$status}, time: {$time}", true, true);
-		}
-		/**
-		 * generate index.json
-	     */
-		$jsonfile = sprintf("%s/index.json", $basedir );
-		$json = array();
-
-		/**
-		 * open dir and read info about files
-		 */
-		if( is_dir( $basedir ) ) {
-			if ( $dh = opendir( $basedir ) ) {
-				while( ( $file = readdir( $dh ) ) !== false ) {
-					$fullpath = $basedir . "/" . $file;
-					if( is_file( $fullpath ) ) {
-						$json[ $file ] = array(
-							"name" => $file,
-							"timestamp" => filectime( $fullpath ),
-							"mwtimestamp" => wfTimestamp( TS_MW, filectime( $fullpath ) )
-						);
-					}
-				}
-				closedir( $dh ); 
-			}
-		}
-		if( count( $json ) ) {
-			file_put_contents( $jsonfile, json_encode( $json ) );
 		}
 	}
 }
