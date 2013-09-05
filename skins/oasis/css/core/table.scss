@@ -32,41 +32,32 @@ table.wikitable {
 }
 
 .WikiaArticle {
-	.table-wrapper {
-		overflow: auto;
+	.table-is-wide {
+		clear: both;
+		position: relative;
 
-		&.table-is-floated,
-		&.table-is-wide {
-			overflow: visible;
+		&:before {
+			@include box-shadow( -15px, 0, 20px, $color-page-border, true, -15px );
+			content: "";
+			height: 100%;
+			pointer-events: none;
+			position: absolute;
+			right: 0;
+			width: 20px;
+			z-index: 2;
 		}
 
-		&.table-is-wide {
-			clear: both;
-			position: relative;
+		// Wide tables cannot be floated
+		// Must use important here to override inline styles :'(
+		table {
+			float: none !important;
+		}
 
-			&:before {
-				@include box-shadow( -15px, 0, 20px, $color-page-border, true, -15px );
-				content: "";
-				height: 100%;
-				pointer-events: none;
-				position: absolute;
-				right: 0;
-				width: 20px;
-				z-index: 2;
-			}
-
-			// Wide tables cannot be floated
-			// Must use important here to override inline styles :'(
-			table {
-				float: none !important;
-			}
-
-			// This second element is needed because of stacking order rules.
-			// Otherwise, tables with background colors will overlap the box
-			// shadow applied above.
-			.table-scrollable {
-				overflow: auto;
-			}
+		// This second element is needed because of stacking order rules.
+		// Otherwise, tables with background colors will overlap the box
+		// shadow applied above.
+		.table-scrollable {
+			overflow: auto;
 		}
 	}
 }

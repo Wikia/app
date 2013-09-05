@@ -12,6 +12,7 @@
 	padding: 0 $width-gutter;
 	position: relative;
 	min-height: 250px;
+	word-wrap: break-word;
 	z-index: 1;
 
 	//whatever article has we should clear it so it won't collapse into comments or other features underneeth it
