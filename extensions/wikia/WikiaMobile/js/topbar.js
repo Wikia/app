@@ -5,7 +5,7 @@
  * @author Jakub "Student" Olek
  */
 
-define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('ads'), 'track', 'throbber', 'wikia.window'], function (qs, loader, toc, ads, track, throbber, w) {
+define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track', 'throbber', 'wikia.window'], function (qs, loader, toc, $, track, throbber, w) {
 	'use strict';
 
 	var	d = w.document,
@@ -365,7 +365,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 	}
 
 	function hidePage(){
-		ads && ads.unfix();
+		$.event.trigger('ads:unfix');
 
 		if(d.documentElement.className.indexOf('hidden') === -1) {
 			d.documentElement.className += ' hidden';
@@ -373,7 +373,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 	}
 
 	function showPage(){
-		ads && ads.fix();
+		$.event.trigger('ads:fix');
 
 		navBar.className = '';
 		d.documentElement.className = d.documentElement.className.replace(' hidden', '');
