@@ -22,7 +22,15 @@ class RailController extends WikiaController {
 	public function executeLazy() {
 		wfProfileIn(__METHOD__);
 
-		$this->railModuleList = $this->filterModules((new BodyController)->getRailModuleList(), true);
+		$railModules = $this->filterModules((new BodyController)->getRailModuleList(), true);
+		$this->railLazyContent = '';
+		krsort($railModules);
+		foreach ($railModules as $railModule) {
+			$this->railLazyContent .= $this->app->renderView($railModule[0], $railModule[1], $railModule[2]);
+		}
+
+		$this->css = array_keys($this->app->wg->Out->styles);
+		$this->js = $this->app->wg->Out->getBottomScripts();
 
 		wfProfileOut(__METHOD__);
 	}

@@ -1,24 +1,28 @@
-$(
-	function() {
-		var rail = $('#WikiaRail');
+$(function() {
+	var rail = $('#WikiaRail');
 
-		if (rail.find('.loading').exists()) {
-			$.nirvana.sendRequest({
-				controller: 'RailController',
-				method: 'lazy',
-				data: {
-					'title': wgTitle,
-					'namespace': wgNamespaceNumber
-					// TODO fix forum rail
-					// TODO fix related videos rail (ugly hack in RelatedVideos.hooks.php)
-				},
-				type: 'get',
-				format: 'html',
-				callback: function(data) {
-					rail.find('.loading').remove().end().append(data);
-					AIC2.init();
-				}
-			});
-		}
+	if (rail.find('.loading').exists()) {
+		$.nirvana.sendRequest({
+			controller: 'RailController',
+			method: 'lazy',
+			data: {
+				'title': wgTitle,
+				'namespace': wgNamespaceNumber
+				// TODO fix forum rail
+				// TODO fix related videos rail (ugly hack in RelatedVideos.hooks.php)
+			},
+			type: 'get',
+			format: 'json',
+			callback: function(data) {
+				require(['wikia.loader'], function(loader) {
+					loader({
+						type: loader.CSS,
+						resources: data.css
+					});
+				});
+				$('#WikiaRail').find('.loading').remove().end().append(data.railLazyContent + data.js);
+				AIC2.init();
+			}
+		});
 	}
-);
+});
