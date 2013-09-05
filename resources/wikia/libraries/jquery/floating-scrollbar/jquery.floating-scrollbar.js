@@ -7,6 +7,7 @@
  * http://benalman.com/about/license/
  */
 
+// TODO: remove all the changes for WikiaBar when it is removed.
 (function($, window){
   'use strict';
   var // A few reused jQuery objects.
@@ -23,7 +24,17 @@
 
       // Create the floating scrollbar.
       scroller = $('<div id="floating-scrollbar"><div/></div>'),
-      scrollerInner = scroller.children();
+      scrollerInner = scroller.children(),
+      // Wikia change - begin - @author kflorence
+      heightFromBottom = 0;
+      // Wikia change - end
+
+  // Wikia change - begin - @author kflorence
+  function getHeightFromBottom() {
+    var wikiaBarWrapper = $( '#WikiaBarWrapper' );
+    return wikiaBarWrapper.length && !wikiaBarWrapper.hasClass( 'hidden' ) ?
+      wikiaBarWrapper.height() : 0;
+  }
 
   // Hide or show the floating scrollbar.
   function setState( state ) {
@@ -49,7 +60,9 @@
       var elem = $(this),
           top = elem.offset().top,
           bottom = top + elem.height(),
-          viewportBottom = win.scrollTop() + win.height(),
+          // Wikia change - begin - @author kflorence
+          viewportBottom = win.scrollTop() + win.height() - heightFromBottom,
+          // Wikia change - end
           topOffset = 30;
 
       if ( top + topOffset < viewportBottom && bottom > viewportBottom ) {
@@ -59,7 +72,10 @@
     });
 
     // Abort if no elements were found.
-    if ( !current ) { setState(); return; }
+    if ( !current ) {
+      setState();
+      return;
+    }
 
     // Test to see if the current element has a scrollbar.
     var scroll = current.scrollLeft(),
@@ -70,7 +86,10 @@
     current.scrollLeft(scroll);
 
     // Abort if the element doesn't have a scrollbar.
-    if ( widthInner <= widthOuter ) { setState(); return; }
+    if ( widthInner <= widthOuter ) {
+      setState();
+      return;
+    }
 
     // Show the floating scrollbar.
     setState(true);
@@ -86,6 +105,9 @@
     // Adjust the floating scrollbar as-necessary.
     scroller
       .css({
+        // Wikia change - begin - @author kflorence
+        bottom: heightFromBottom,
+        // Wikia change - end
         left: current.offset().left - win.scrollLeft(),
         width: widthOuter
       })
@@ -138,8 +160,14 @@
       // Add these elements to the list.
       elems = elems.add(this);
     }
+
+    // Wikia change - begin - @author kflorence
+    heightFromBottom = getHeightFromBottom();
+    // Wikia change - end
+
     // Update.
     update();
+
     // Make chainable.
     return this;
   };
@@ -148,4 +176,12 @@
   // the DOM before monitored elements, changing their vertical position.
   $.floatingScrollbarUpdate = update;
 
+  // Wikia change - begin - @author kflorence
+  $(function() {
+    $( '#WikiaBarWrapper' ).on( 'toggled', function() {
+      heightFromBottom = getHeightFromBottom();
+      update();
+    });
+  });
+  // Wikia change - end
 })(jQuery, this);
