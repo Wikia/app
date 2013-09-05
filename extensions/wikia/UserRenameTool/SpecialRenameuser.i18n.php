@@ -46,6 +46,8 @@ Please go back and try again.',
 	'userrenametool-error-cannot-rename-account' => 'Renaming the user account on the shared global database failed.',
 	'userrenametool-error-cannot-create-block' => 'Creation of Phalanx block failed.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Unexpected error occurred, check logs or try again.',
+	'userrenametool-warnings-characters' => 'New username contains illegal characters!',
+	'userrenametool-warnings-maxlength' => 'New username\'s length cannot exceed 255 characters!',
 	'userrenametool-warn-repeat' => 'Attention! The user "<nowiki>$1</nowiki>" has already been renamed to "<nowiki>$2</nowiki>".
 Continue processing only if you need to update some missing information.',
 	'userrenametool-warn-table-missing' => 'Table "<nowiki>$2</nowiki>" does not exist in database "<nowiki>$1</nowiki>."',
