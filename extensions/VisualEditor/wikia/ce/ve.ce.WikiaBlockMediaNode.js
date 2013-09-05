@@ -158,7 +158,7 @@ ve.ce.WikiaBlockMediaNode.prototype.getImageElement = function () {
  */
 ve.ce.WikiaBlockMediaNode.prototype.getMagnifyElement = function () {
 	// It's inside a protected node, so user can't see href/title.
-	return this.$$( '<a>' ).addClass( 'internal sprite details magnify' );
+	return this.$$( '<a>' ).addClass( 'internal sprite details magnify ve-no-shield' );
 };
 
 /**
