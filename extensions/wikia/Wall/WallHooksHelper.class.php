@@ -893,8 +893,11 @@ class WallHooksHelper {
 				$class = '';
 
 				$articleLink = ' <a href="'.$link.'" class="'.$class.'" >'.$title.'</a> '.wfMsg(static::getMessagePrefix($rc->getAttribute('rc_namespace')) . '-new-message', array($wallUrl, $wallOwner));
+
 				# Bolden pages watched by this user
-				if( $watched ) {
+				# Users don't follow threads/boards but their specific comments
+				$user = $app->wg->User;
+				if ( $wm->isWatched( $user ) || $wm->isWallWatched( $user ) ) {
 					$articleLink = '<strong class="mw-watched">'.$articleLink.'</strong>';
 				}
 			}
