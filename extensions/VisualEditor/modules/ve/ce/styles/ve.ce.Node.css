@@ -19,8 +19,8 @@
 
 /* ve.ce.ProtectedNode */
 
-.ve-ce-protectedNode,
-.ve-ce-protectedNode * {
+.ve-ce-protectedNode, 
+.ve-ce-protectedNode *:not(.no-shield):not(.ve-ce-protectedNode-shield) {
 	position: relative !important;
 	top: 0 !important;
 	left: 0 !important;
