@@ -271,8 +271,6 @@ class CommentsIndex extends WikiaModel {
 	 * @return object $comment
 	 */
 	public static function newFromId( $commentId, $parentPageId = 0 ) {
-		$app = F::App();
-
 		wfProfileIn( __METHOD__ );
 
 		$sqlWhere = array( 'comment_id' => $commentId );
@@ -286,7 +284,7 @@ class CommentsIndex extends WikiaModel {
 
 		if( empty($row) ) {
 			$db = wfGetDB( DB_MASTER );
-			$row = self::selectRow( $db, $sqlWhere );	
+			$row = self::selectRow( $db, $sqlWhere );
 		}
 
 		if ( $row ) {
@@ -300,7 +298,6 @@ class CommentsIndex extends WikiaModel {
 		}
 
 		wfProfileOut( __METHOD__ );
-
 		return $comment;
 	}
 	
