@@ -1457,4 +1457,53 @@ class ArticleComment {
 		$app = F::app();
 		return $app->wg->EnableMiniEditorExtForArticleComments && $app->checkSkin( 'oasis' );
 	}
+
+	/**
+	 * @param Article $article
+	 * @param Title $title
+	 * @param User $user
+	 * @param Array $permission_errors
+	 *
+	 * @return true because it's a hook
+	 */
+	static public function onBeforeDeletePermissionErrors( &$article, &$title, &$user, &$permission_errors ) {
+		$errors = [];
+		foreach( $permission_errors as $errorArr ) {
+			$errors[] = $errorArr[0];
+		}
+
+		if( self::isCommentingEnabled() &&
+			$user->isAllowed( 'commentdelete' ) &&
+			ArticleComment::isTitleComment( $title ) &&
+			self::isBadAccessError( $errors )
+		) {
+		// ok, somebody with commentdelete right is removing an article comment or a blog comment
+			$permission_errors = [];
+		}
+
+		return true;
+	}
+
+	/**
+	 * @desc Helper method returning true or false depending on fact if ArticleComments or Blogs are enabled
+	 *
+	 * @return bool
+	 */
+	static private function isCommentingEnabled() {
+		global $wgEnableArticleCommentsExt, $wgEnableBlogArticles;
+
+		return !empty($wgEnableArticleCommentsExt) || !empty($wgEnableBlogArticles);
+	}
+
+	/**
+	 * @desc Checks if $errors array have badaccess-groups or badaccess-group0 string
+	 *
+	 * @param Array $errors
+	 *
+	 * @return bool
+	 */
+	static private function isBadAccessError( $errors ) {
+		return in_array( 'badaccess-groups', $errors ) || in_array( 'badaccess-group0', $errors );
+	}
+
 }
