@@ -36,7 +36,7 @@ class DumpsOnDemandCron extends Maintenance {
         
         global $IP, $wgWikiaLocalSettingsPath;
         
-        $sCommand = sprintf( 'SERVER_ID=177 php %s/extensions/wikia/WikiFactory/Dumps/runBackups.php --conf %s --id=%d --both ');
+        $sCommand = sprintf( 'SERVER_ID=177 php %s/extensions/wikia/WikiFactory/Dumps/runBackups.php --conf %s --id=%d --both ', $IP, $wgWikiaLocalSettingsPath, $sWikiaId );
         
         wfShellExec( $sCommand, $iStatus );
 
