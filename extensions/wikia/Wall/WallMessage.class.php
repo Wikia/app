@@ -549,7 +549,7 @@ class WallMessage {
 		wfProfileIn(__METHOD__);
 		$id = $this->getMessagePageId();
 
-		$mcacheKey = __METHOD__ . '-message-page-url-' . $id;
+		$mcacheKey = wfMemcKey( 'message-page-url-' . $id );
 		$messagePageUrl = WikiaDataAccess::cache(
 			$mcacheKey,
 			24 * 3600, // 24h
