@@ -284,8 +284,7 @@ class Masthead {
 		$file = array_pop( $parts );
 
 		// make avatars as JPG intead of PNGs / GIF
-		// TODO: THIS IS ONLY FOR DEVBOX "png", replace to "jpg" before final story commit; REASON: Can't upload avatar to devbox, selected default one (jpg), T want thumbs in PNG to notice if this code works
-		$file = substr_replace( $file , 'png', strrpos( $file , '.' ) + 1 );
+		$file = substr_replace( $file , 'jpg', strrpos( $file , '.' ) + 1 );
 
 		return sprintf( "%s/%dpx-%s", $url, $width, $file );
 	}
