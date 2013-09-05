@@ -54,7 +54,7 @@ class TouchStormHooks extends WikiaObject {
 		$curNS = $app->wg->Title->getNamespace();
 
 		// Set the default location to the file page
-		$tsLocation = $app->wg->TouchStormLocation ? $app->wg->TouchStormLocation : 'file';
+		$tsLocation = $app->wg->TouchStormLocation;
 
 		// Make sure the TouchStorm location matches the current location
 		return (($curNS == NS_FILE) && preg_match('/file/', $tsLocation)) ||

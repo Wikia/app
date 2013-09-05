@@ -3,7 +3,7 @@
 /**
  * File Page
  *
- * @author Garth Webb, Hyun Lim, Liz Lee, Saipetch Kongkatong
+ * @author Garth Webb, Ken Kouot, Liz Lee, Saipetch Kongkatong
  *
  */
 
