@@ -989,11 +989,7 @@ $config['videopagetool_scss'] = array(
 	'assets' => array(
 		'//skins/oasis/css/modules/CorporateDatepicker.scss',
 		'//extensions/wikia/VideoPageTool/css/VideoPageTool.scss',
-		// TODO: Don't actually source from MarketingToolbox
-		'//extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox.scss',
-		'//extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Dashboard.scss',
-		'//extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Footer.scss',
-		'//extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Header.scss'
+		'//extensions/wikia/VideoPageTool/css/VideoPageTool_Header.scss'
 	)
 );
 

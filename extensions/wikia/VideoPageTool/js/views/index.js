@@ -1,6 +1,7 @@
 define('vpt.views.index', [
 	'vpt.views.datepicker'
 ], function(Datepicker) {
+	'use strict';
 
 	function VPTIndex() {
 		this.init();
@@ -8,7 +9,7 @@ define('vpt.views.index', [
 
 	VPTIndex.prototype = {
 		init: function() {
-			this.$regionSelect = $('#marketingToolboxRegionSelect');
+			this.$regionSelect = $('#VideoPageToolRegionSelect');
 			this.defaultLanguage = this.$regionSelect.data('defaultLanguage');
 			this.bindEvents();
 			this.renderDatepicker();

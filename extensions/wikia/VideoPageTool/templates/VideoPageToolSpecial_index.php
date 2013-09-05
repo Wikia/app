@@ -7,10 +7,10 @@
 	'Header'
 ) ?>
 
-<div class="marketingToolbox WikiaGrid">
+<div id="VPTDashboard" class="WikiaGrid">
 	<div class="grid-2">
 		<h2><?= wfMessage('videopagetool-language-title'); ?></h2>
-		<select id="marketingToolboxRegionSelect" data-default-language="<?= $language ?>">
+		<select id="VideoPageToolRegionSelect" data-default-language="<?= $language ?>">
 			<option value="placeholder"><?= wfMessage('videopagetool-language-select-default-value'); ?></option>
 			<? asort( $languages ); ?>
 			<? foreach ( $languages as $langCode => $langName ): ?>
