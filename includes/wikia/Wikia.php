@@ -1890,7 +1890,7 @@ class Wikia {
 		if ( $request->getVal('title','') === '' ) {
 			$title = Title::newMainPage();
 		} else {
-			$title = Title::newFromText($request->getVal('title', 'AJAX'));
+			$title = Title::newFromText($request->getVal('title', 'AJAX'), $request->getVal('namespace', NS_MAIN));
 			if (!$title instanceof Title) {
 				$title = Title::makeTitle( NS_MAIN, 'AJAX' );
 			}
