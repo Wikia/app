@@ -28,6 +28,8 @@ $messages['en'] = array(
 	'userrenametool-confirm' => 'Yes, rename the user',
 	'userrenametool-submit' => 'Change username',
 
+	'userrenametool-error-antispoof-conflict' => 'There is a similarity conflict for "<nowiki>$1</nowiki>".',
+	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof is not installed.',
 	'userrenametool-errordoesnotexist' => 'The user "<nowiki>$1</nowiki>" does not exist.',
 	'userrenametool-errorexists' => 'The user "<nowiki>$1</nowiki>" already exists.',
 	'userrenametool-errorinvalid' => '"<nowiki>$1</nowiki>" is not a valid username.',
@@ -100,6 +102,8 @@ $messages['qqq'] = array(
 	'userrenametool-reserve' => 'Option to block the old username (after it has been renamed) from being used again.',
 	'userrenametool-warnings' => '{{Identical|Warning}}',
 	'userrenametool-submit' => '{{Identical|Submit}}',
+	'userrenametool-error-antispoof-conflict' => 'Message to show when similarity conflict occurs for new username.',
+	'userrenametool-error-antispoof-notinstalled' => 'Message to show when AntiSpoof extension is not installed.',
 	'userrenametool-error-cannot-create-block' => 'When this user rename tool is running, a block is supposed to be put in place to prevent the user from being able to edit to prevent data corruption. This message appears as a warning that the block was not able to be added automatically and that the user will need to be blocked manually.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Process failed on some point, detailed info with path to file and number of line can be found in logs',
 	'userrenametool-info-wiki-finished' => '',
