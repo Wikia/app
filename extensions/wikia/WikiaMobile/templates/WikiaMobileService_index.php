@@ -29,7 +29,7 @@
 <head>
 	<meta http-equiv=Content-Type content="<?= "{$mimeType};charset={$charSet}" ;?>">
 	<?= $cssLinks ;?>
-	<title><?= htmlspecialchars( $pageTitle ) ;?></title>
+	<title><?= $pageTitle ;?></title>
 	<?= $headLinks ;?>
 	<?= $headItems ;?>
 	<?= $globalVariablesScript ;?>
