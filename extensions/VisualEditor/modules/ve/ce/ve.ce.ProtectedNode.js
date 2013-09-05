@@ -89,11 +89,11 @@ ve.ce.ProtectedNode.prototype.onProtectedSetup = function () {
 		if ( this.nodeType === Node.ELEMENT_NODE ) {
 			/** 
 			 * These elements should not get sheilds:
-			 * 1. An element with class 'no-shield'
+			 * 1. An element with class 've-no-shield'
 			 * 2. A non-floated element that is not the main protectedNode
 			 */
 			if (
-				$this.hasClass( 'no-shield' ) ||
+				$this.hasClass( 've-no-shield' ) ||
 				(
 					( $this.css( 'float' ) === 'none' || $this.css( 'float' ) === '' ) &&
 					!$this.hasClass( 've-ce-protectedNode' )

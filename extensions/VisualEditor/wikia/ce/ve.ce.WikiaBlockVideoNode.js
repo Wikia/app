@@ -73,7 +73,7 @@ ve.ce.WikiaBlockVideoNode.prototype.getOverlayElement = function ( title, width 
 		.css( 'max-width', width );
 
 	$title = this.$$( '<span>' )
-		.addClass( 'info-overlay-title no-shield' )
+		.addClass( 'info-overlay-title ve-no-shield' )
 		.css( 'width', width - 60 )
 		.text( title );
 
@@ -103,7 +103,7 @@ ve.ce.WikiaBlockVideoNode.prototype.getPlayButtonElement = function () {
 
 	$wrapper = this.$$( '<div>' )
 		.addClass( 'Wikia-video-play-button' )
-		.addClass( 'no-shield' )
+		.addClass( 've-no-shield' )
 		.css({
 			'line-height': this.model.getAttribute( 'height' ) + 'px',
 			'width': width
