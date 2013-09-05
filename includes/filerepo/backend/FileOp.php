@@ -11,7 +11,7 @@
  *
  * Methods called from attemptBatch() should avoid throwing exceptions at all costs.
  * FileOp objects should be lightweight in order to support large arrays in memory.
- * 
+ *
  * @ingroup FileBackend
  * @since 1.19
  */
@@ -74,7 +74,7 @@ abstract class FileOp {
 	/**
 	 * Attempt a series of file operations.
 	 * Callers are responsible for handling file locking.
-	 * 
+	 *
 	 * $opts is an array of options, including:
 	 * 'force'      : Errors that would normally cause a rollback do not.
 	 *                The remaining operations are still attempted if any fail.
@@ -85,10 +85,10 @@ abstract class FileOp {
 	 * The resulting Status will be "OK" unless:
 	 *     a) unexpected operation errors occurred (network partitions, disk full...)
 	 *     b) significant operation errors occured and 'force' was not set
-	 * 
+	 *
 	 * @param $performOps Array List of FileOp operations
 	 * @param $opts Array Batch operation options
-	 * @return Status 
+	 * @return Status
 	 */
 	final public static function attemptBatch( array $performOps, array $opts ) {
 		$status = Status::newGood();
@@ -99,6 +99,7 @@ abstract class FileOp {
 		$n = count( $performOps );
 		if ( $n > self::MAX_BATCH_SIZE ) {
 			$status->fatal( 'backend-fail-batchsize', $n, self::MAX_BATCH_SIZE );
+			WikiaPrivateLog::getChannel( 'filesystem' )->send( [__CLASS__, 'max_batch_size exceeded', $status->getXML(), $performOps], true );
 			return $status;
 		}
 
@@ -111,6 +112,7 @@ abstract class FileOp {
 			$subStatus = $fileOp->precheck( $predicates );
 			$status->merge( $subStatus );
 			if ( !$subStatus->isOK() ) { // operation failed?
+				WikiaPrivateLog::getChannel( 'filesystem' )->send( [__CLASS__, "batch precheck failed at index {$index}", $status->getXML(), $performOps], true );
 				$status->success[$index] = false;
 				++$status->failCount;
 				if ( !$ignoreErrors ) {
@@ -148,6 +150,7 @@ abstract class FileOp {
 				for ( $i = ($index + 1); $i < count( $performOps ); $i++ ) {
 					$performOps[$i]->logFailure( 'attempt_aborted' );
 				}
+				WikiaPrivateLog::getChannel( 'filesystem' )->send( [__CLASS__, "batch attempt failed at index {$index}", $status->getXML(), $performOps], true );
 				return $status; // bail out
 			}
 		}
@@ -157,7 +160,7 @@ abstract class FileOp {
 
 	/**
 	 * Get the value of the parameter with the given name
-	 * 
+	 *
 	 * @param $name string
 	 * @return mixed Returns null if the parameter is not set
 	 */
@@ -167,8 +170,8 @@ abstract class FileOp {
 
 	/**
 	 * Check if this operation failed precheck() or attempt()
-	 * 
-	 * @return bool 
+	 *
+	 * @return bool
 	 */
 	final public function failed() {
 		return $this->failed;
@@ -177,7 +180,7 @@ abstract class FileOp {
 	/**
 	 * Get a new empty predicates array for precheck()
 	 *
-	 * @return Array 
+	 * @return Array
 	 */
 	final public static function newPredicates() {
 		return array( 'exists' => array(), 'sha1' => array() );
@@ -197,6 +200,7 @@ abstract class FileOp {
 		$status = $this->doPrecheck( $predicates );
 		if ( !$status->isOK() ) {
 			$this->failed = true;
+			WikiaPrivateLog::getChannel( 'filesystem' )->send( [__CLASS__, 'precheck failed', $predicates, $this->params, $this->backend] );
 		}
 		return $status;
 	}
@@ -217,13 +221,14 @@ abstract class FileOp {
 		if ( !$status->isOK() ) {
 			$this->failed = true;
 			$this->logFailure( 'attempt' );
+			WikiaPrivateLog::getChannel( 'filesystem' )->send( [__CLASS__, 'attempt failed', $this->params, $this->backend] );
 		}
 		return $status;
 	}
 
 	/**
 	 * Get the file operation parameters
-	 * 
+	 *
 	 * @return Array (required params list, optional params list)
 	 */
 	protected function allowedParams() {
@@ -266,7 +271,7 @@ abstract class FileOp {
 	 * Check for errors with regards to the destination file already existing.
 	 * This also updates the destSameAsSource and sourceSha1 member variables.
 	 * A bad status will be returned if there is no chance it can be overwritten.
-	 * 
+	 *
 	 * @param $predicates Array
 	 * @return Status
 	 */
@@ -313,10 +318,10 @@ abstract class FileOp {
 
 	/**
 	 * Check if a file will exist in storage when this operation is attempted
-	 * 
+	 *
 	 * @param $source string Storage path
 	 * @param $predicates Array
-	 * @return bool 
+	 * @return bool
 	 */
 	final protected function fileExists( $source, array $predicates ) {
 		if ( isset( $predicates['exists'][$source] ) ) {
@@ -329,10 +334,10 @@ abstract class FileOp {
 
 	/**
 	 * Get the SHA-1 of a file in storage when this operation is attempted
-	 * 
+	 *
 	 * @param $source string Storage path
 	 * @param $predicates Array
-	 * @return string|false 
+	 * @return string|false
 	 */
 	final protected function fileSha1( $source, array $predicates ) {
 		if ( isset( $predicates['sha1'][$source] ) ) {
@@ -345,7 +350,7 @@ abstract class FileOp {
 
 	/**
 	 * Log a file operation failure and preserve any temp files
-	 * 
+	 *
 	 * @param $action string
 	 * @return void
 	 */
@@ -410,7 +415,7 @@ class FileOpScopedPHPTimeout {
 			set_time_limit( max( 1, $this->oldTimeout - (int)$elapsed ) );
 			// If each scoped timeout is for less than one second, we end up
 			// restoring the original timeout without any decrease in value.
-			// Thus web scripts in an infinite loop can run forever unless we 
+			// Thus web scripts in an infinite loop can run forever unless we
 			// take some measures to prevent this. Track total time and calls.
 			self::$totalElapsed += $elapsed;
 			--self::$stackDepth;

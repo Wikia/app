@@ -17,23 +17,23 @@
  *
  * This class defines the methods as abstract that subclasses must implement.
  * Outside callers can assume that all backends will have these functions.
- * 
+ *
  * All "storage paths" are of the format "mwstore://backend/container/path".
  * The paths use UNIX file system (FS) notation, though any particular backend may
  * not actually be using a local filesystem. Therefore, the paths are only virtual.
- * 
+ *
  * Backend contents are stored under wiki-specific container names by default.
  * For legacy reasons, this has no effect for the FS backend class, and per-wiki
  * segregation must be done by setting the container paths appropriately.
- * 
+ *
  * FS-based backends are somewhat more restrictive due to the existence of real
  * directory files; a regular file cannot have the same name as a directory. Other
  * backends with virtual directories may not have this limitation. Callers should
  * store files in such a way that no files and directories are under the same path.
- * 
+ *
  * Methods should avoid throwing exceptions at all costs.
  * As a corollary, external dependencies should be kept to a minimum.
- * 
+ *
  * @ingroup FileBackend
  * @since 1.19
  */
@@ -47,7 +47,7 @@ abstract class FileBackend {
 	/**
 	 * Create a new backend instance from configuration.
 	 * This should only be called from within FileBackendGroup.
-	 * 
+	 *
 	 * $config includes:
 	 *     'name'        : The unique name of this backend.
 	 *                     This should consist of alphanumberic, '-', and '_' characters.
@@ -57,7 +57,7 @@ abstract class FileBackend {
 	 *     'lockManager' : Registered name of a file lock manager to use.
 	 *     'readOnly'    : Write operations are disallowed if this is a non-empty string.
 	 *                     It should be an explanation for the backend being read-only.
-	 * 
+	 *
 	 * @param $config Array
 	 */
 	public function __construct( array $config ) {
@@ -80,7 +80,7 @@ abstract class FileBackend {
 	 * Get the unique backend name.
 	 * We may have multiple different backends of the same type.
 	 * For example, we can have two Swift backends using different proxies.
-	 * 
+	 *
 	 * @return string
 	 */
 	final public function getName() {
@@ -89,7 +89,7 @@ abstract class FileBackend {
 
 	/**
 	 * Check if this backend is read-only
-	 * 
+	 *
 	 * @return bool
 	 */
 	final public function isReadOnly() {
@@ -98,7 +98,7 @@ abstract class FileBackend {
 
 	/**
 	 * Get an explanatory message if this backend is read-only
-	 * 
+	 *
 	 * @return string|false Returns falls if the backend is not read-only
 	 */
 	final public function getReadOnlyReason() {
@@ -110,10 +110,10 @@ abstract class FileBackend {
 	 * Callers supply an ordered list of operations to perform as a transaction.
 	 * Files will be locked, the stat cache cleared, and then the operations attempted.
 	 * If any serious errors occur, all attempted operations will be rolled back.
-	 * 
+	 *
 	 * $ops is an array of arrays. The outer array holds a list of operations.
 	 * Each inner array is a set of key value pairs that specify an operation.
-	 * 
+	 *
 	 * Supported operations and their parameters:
 	 * a) Create a new file in storage with the contents of a string
 	 *     array(
@@ -157,7 +157,7 @@ abstract class FileBackend {
 	 *     array(
 	 *         'op'                  => 'null',
 	 *     )
-	 * 
+	 *
 	 * Boolean flags for operations (operation-specific):
 	 * 'ignoreMissingSource' : The operation will simply succeed and do
 	 *                         nothing if the source file does not exist.
@@ -165,7 +165,7 @@ abstract class FileBackend {
 	 * 'overwriteSame'       : An error will not be given if a file already
 	 *                         exists at the destination that has the same
 	 *                         contents as the new contents to be written there.
-	 * 
+	 *
 	 * $opts is an associative of boolean flags, including:
 	 * 'force'               : Errors that would normally cause a rollback do not.
 	 *                         The remaining operations are still attempted if any fail.
@@ -175,19 +175,19 @@ abstract class FileBackend {
 	 * 'allowStale'          : Don't require the latest available data.
 	 *                         This can increase performance for non-critical writes.
 	 *                         This has no effect unless the 'force' flag is set.
-	 * 
+	 *
 	 * Remarks on locking:
 	 * File system paths given to operations should refer to files that are
 	 * already locked or otherwise safe from modification from other processes.
 	 * Normally these files will be new temp files, which should be adequate.
-	 * 
+	 *
 	 * Return value:
 	 * This returns a Status, which contains all warnings and fatals that occured
 	 * during the operation. The 'failCount', 'successCount', and 'success' members
 	 * will reflect each operation attempted. The status will be "OK" unless:
 	 *     a) unexpected operation errors occurred (network partitions, disk full...)
 	 *     b) significant operation errors occured and 'force' was not set
-	 * 
+	 *
 	 * @param $ops Array List of operations to execute in order
 	 * @param $opts Array Batch operation options
 	 * @return Status
@@ -316,10 +316,10 @@ abstract class FileBackend {
 	 * Prepare a storage directory for usage.
 	 * This will create any required containers and parent directories.
 	 * Backends using key/value stores only need to create the container.
-	 * 
+	 *
 	 * $params include:
 	 *     dir : storage directory
-	 * 
+	 *
 	 * @param $params Array
 	 * @return Status
 	 */
@@ -341,12 +341,12 @@ abstract class FileBackend {
 	 * files whereas key/value store backends might restrict container
 	 * access to the auth user that represents end-users in web request.
 	 * This is not guaranteed to actually do anything.
-	 * 
+	 *
 	 * $params include:
 	 *     dir       : storage directory
 	 *     noAccess  : try to deny file access
 	 *     noListing : try to deny file listing
-	 * 
+	 *
 	 * @param $params Array
 	 * @return Status
 	 */
@@ -370,10 +370,10 @@ abstract class FileBackend {
 	 * Delete a storage directory if it is empty.
 	 * Backends using key/value stores may do nothing unless the directory
 	 * is that of an empty container, in which case it should be deleted.
-	 * 
+	 *
 	 * $params include:
 	 *     dir : storage directory
-	 * 
+	 *
 	 * @param $params Array
 	 * @return Status
 	 */
@@ -392,11 +392,11 @@ abstract class FileBackend {
 	/**
 	 * Check if a file exists at a storage path in the backend.
 	 * This returns false if only a directory exists at the path.
-	 * 
+	 *
 	 * $params include:
 	 *     src    : source storage path
 	 *     latest : use the latest available data
-	 * 
+	 *
 	 * @param $params Array
 	 * @return bool|null Returns null on failure
 	 */
@@ -404,11 +404,11 @@ abstract class FileBackend {
 
 	/**
 	 * Get the last-modified timestamp of the file at a storage path.
-	 * 
+	 *
 	 * $params include:
 	 *     src    : source storage path
 	 *     latest : use the latest available data
-	 * 
+	 *
 	 * @param $params Array
 	 * @return string|false TS_MW timestamp or false on failure
 	 */
@@ -417,11 +417,11 @@ abstract class FileBackend {
 	/**
 	 * Get the contents of a file at a storage path in the backend.
 	 * This should be avoided for potentially large files.
-	 * 
+	 *
 	 * $params include:
 	 *     src    : source storage path
 	 *     latest : use the latest available data
-	 * 
+	 *
 	 * @param $params Array
 	 * @return string|false Returns false on failure
 	 */
@@ -429,11 +429,11 @@ abstract class FileBackend {
 
 	/**
 	 * Get the size (bytes) of a file at a storage path in the backend.
-	 * 
+	 *
 	 * $params include:
 	 *     src    : source storage path
 	 *     latest : use the latest available data
-	 * 
+	 *
 	 * @param $params Array
 	 * @return integer|false Returns false on failure
 	 */
@@ -446,11 +446,11 @@ abstract class FileBackend {
 	 *     mtime  : the last-modified timestamp (TS_MW)
 	 *     size   : the file size (bytes)
 	 * Additional values may be included for internal use only.
-	 * 
+	 *
 	 * $params include:
 	 *     src    : source storage path
 	 *     latest : use the latest available data
-	 * 
+	 *
 	 * @param $params Array
 	 * @return Array|false|null Returns null on failure
 	 */
@@ -458,11 +458,11 @@ abstract class FileBackend {
 
 	/**
 	 * Get a SHA-1 hash of the file at a storage path in the backend.
-	 * 
+	 *
 	 * $params include:
 	 *     src    : source storage path
 	 *     latest : use the latest available data
-	 * 
+	 *
 	 * @param $params Array
 	 * @return string|false Hash string or false on failure
 	 */
@@ -471,11 +471,11 @@ abstract class FileBackend {
 	/**
 	 * Get the properties of the file at a storage path in the backend.
 	 * Returns FSFile::placeholderProps() on failure.
-	 * 
+	 *
 	 * $params include:
 	 *     src    : source storage path
 	 *     latest : use the latest available data
-	 * 
+	 *
 	 * @param $params Array
 	 * @return Array
 	 */
@@ -487,12 +487,12 @@ abstract class FileBackend {
 	 * Appropriate HTTP headers (Status, Content-Type, Content-Length)
 	 * must be sent if streaming began, while none should be sent otherwise.
 	 * Implementations should flush the output buffer before sending data.
-	 * 
+	 *
 	 * $params include:
 	 *     src     : source storage path
 	 *     headers : additional HTTP headers to send on success
 	 *     latest  : use the latest available data
-	 * 
+	 *
 	 * @param $params Array
 	 * @return Status
 	 */
@@ -505,16 +505,16 @@ abstract class FileBackend {
 	 *    The temporary copy will have the same extension as the source.
 	 * b) An original of the file at a storage path in the backend.
 	 * Temporary files may be purged when the file object falls out of scope.
-	 * 
+	 *
 	 * Write operations should *never* be done on this file as some backends
 	 * may do internal tracking or may be instances of FileBackendMultiWrite.
 	 * In that later case, there are copies of the file that must stay in sync.
 	 * Additionally, further calls to this function may return the same file.
-	 * 
+	 *
 	 * $params include:
 	 *     src    : source storage path
 	 *     latest : use the latest available data
-	 * 
+	 *
 	 * @param $params Array
 	 * @return FSFile|null Returns null on failure
 	 */
@@ -524,11 +524,11 @@ abstract class FileBackend {
 	 * Get a local copy on disk of the file at a storage path in the backend.
 	 * The temporary copy will have the same file extension as the source.
 	 * Temporary files may be purged when the file object falls out of scope.
-	 * 
+	 *
 	 * $params include:
 	 *     src    : source storage path
 	 *     latest : use the latest available data
-	 * 
+	 *
 	 * @param $params Array
 	 * @return TempFSFile|null Returns null on failure
 	 */
@@ -536,14 +536,14 @@ abstract class FileBackend {
 
 	/**
 	 * Get an iterator to list out all stored files under a storage directory.
-	 * If the directory is of the form "mwstore://backend/container", 
+	 * If the directory is of the form "mwstore://backend/container",
 	 * then all files in the container should be listed.
 	 * If the directory is of form "mwstore://backend/container/dir",
 	 * then all files under that container directory should be listed.
 	 * Results should be storage paths relative to the given directory.
-	 * 
+	 *
 	 * Storage backends with eventual consistency might return stale data.
-	 * 
+	 *
 	 * $params include:
 	 *     dir : storage path directory
 	 *
@@ -563,9 +563,9 @@ abstract class FileBackend {
 	/**
 	 * Lock the files at the given storage paths in the backend.
 	 * This will either lock all the files or none (on failure).
-	 * 
+	 *
 	 * Callers should consider using getScopedFileLocks() instead.
-	 * 
+	 *
 	 * @param $paths Array Storage paths
 	 * @param $type integer LockManager::LOCK_* constant
 	 * @return Status
@@ -576,7 +576,7 @@ abstract class FileBackend {
 
 	/**
 	 * Unlock the files at the given storage paths in the backend.
-	 * 
+	 *
 	 * @param $paths Array Storage paths
 	 * @param $type integer LockManager::LOCK_* constant
 	 * @return Status
@@ -589,10 +589,10 @@ abstract class FileBackend {
 	 * Lock the files at the given storage paths in the backend.
 	 * This will either lock all the files or none (on failure).
 	 * On failure, the status object will be updated with errors.
-	 * 
+	 *
 	 * Once the return value goes out scope, the locks will be released and
 	 * the status updated. Unlock fatals will not change the status "OK" value.
-	 * 
+	 *
 	 * @param $paths Array Storage paths
 	 * @param $type integer LockManager::LOCK_* constant
 	 * @param $status Status Status to update on lock/unlock
@@ -605,7 +605,7 @@ abstract class FileBackend {
 	/**
 	 * Check if a given path is a "mwstore://" path.
 	 * This does not do any further validation or any existence checks.
-	 * 
+	 *
 	 * @param $path string
 	 * @return bool
 	 */
@@ -614,7 +614,7 @@ abstract class FileBackend {
 	}
 
 	/**
-	 * Split a storage path into a backend name, a container name, 
+	 * Split a storage path into a backend name, a container name,
 	 * and a relative file path. The relative path may be the empty string.
 	 * This does not do any path normalization or traversal checks.
 	 *
@@ -629,7 +629,7 @@ abstract class FileBackend {
 				if ( count( $parts ) == 3 ) {
 					return $parts; // e.g. "backend/container/path"
 				} else {
-					return array( $parts[0], $parts[1], '' ); // e.g. "backend/container" 
+					return array( $parts[0], $parts[1], '' ); // e.g. "backend/container"
 				}
 			}
 		}
@@ -639,9 +639,9 @@ abstract class FileBackend {
 	/**
 	 * Normalize a storage path by cleaning up directory separators.
 	 * Returns null if the path is not of the format of a valid storage path.
-	 * 
+	 *
 	 * @param $storagePath string
-	 * @return string|null 
+	 * @return string|null
 	 */
 	final public static function normalizeStoragePath( $storagePath ) {
 		list( $backend, $container, $relPath ) = self::splitStoragePath( $storagePath );
@@ -680,7 +680,7 @@ abstract class FileBackend {
 				strpos( $path, '../' ) === 0 ||
 				strpos( $path, '/./' ) !== false ||
 				strpos( $path, '/../' ) !== false
-			) { 
+			) {
 				return null;
 			}
 		}
@@ -691,7 +691,7 @@ abstract class FileBackend {
 	 * Get the parent storage directory of a storage path.
 	 * This returns a path like "mwstore://backend/container",
 	 * "mwstore://backend/container/...", or null if there is no parent.
-	 * 
+	 *
 	 * @param $storagePath string
 	 * @return string|null
 	 */
@@ -703,7 +703,7 @@ abstract class FileBackend {
 
 	/**
 	 * Get the final extension from a storage or FS path
-	 * 
+	 *
 	 * @param $path string
 	 * @return string
 	 */
@@ -718,11 +718,11 @@ abstract class FileBackend {
  *
  * This class defines the methods as abstract that subclasses must implement.
  * Outside callers should *not* use functions with "Internal" in the name.
- * 
+ *
  * The FileBackend operations are implemented using basic functions
  * such as storeInternal(), copyInternal(), deleteInternal() and the like.
  * This class is also responsible for path resolution and sanitization.
- * 
+ *
  * @ingroup FileBackend
  * @since 1.19
  */
@@ -743,8 +743,8 @@ abstract class FileBackendStore extends FileBackend {
 	 * Get the maximum allowable file size given backend
 	 * medium restrictions and basic performance constraints.
 	 * Do not call this function from places outside FileBackend and FileOp.
-	 * 
-	 * @return integer Bytes 
+	 *
+	 * @return integer Bytes
 	 */
 	final public function maxFileSizeInternal() {
 		return $this->maxFileSize;
@@ -763,12 +763,12 @@ abstract class FileBackendStore extends FileBackend {
 	/**
 	 * Create a file in the backend with the given contents.
 	 * Do not call this function from places outside FileBackend and FileOp.
-	 * 
+	 *
 	 * $params include:
 	 *     content       : the raw file contents
 	 *     dst           : destination storage path
 	 *     overwrite     : overwrite any file that exists at the destination
-	 * 
+	 *
 	 * @param $params Array
 	 * @return Status
 	 */
@@ -792,12 +792,12 @@ abstract class FileBackendStore extends FileBackend {
 	/**
 	 * Store a file into the backend from a file on disk.
 	 * Do not call this function from places outside FileBackend and FileOp.
-	 * 
+	 *
 	 * $params include:
 	 *     src           : source path on disk
 	 *     dst           : destination storage path
 	 *     overwrite     : overwrite any file that exists at the destination
-	 * 
+	 *
 	 * @param $params Array
 	 * @return Status
 	 */
@@ -821,12 +821,12 @@ abstract class FileBackendStore extends FileBackend {
 	/**
 	 * Copy a file from one storage path to another in the backend.
 	 * Do not call this function from places outside FileBackend and FileOp.
-	 * 
+	 *
 	 * $params include:
 	 *     src           : source storage path
 	 *     dst           : destination storage path
 	 *     overwrite     : overwrite any file that exists at the destination
-	 * 
+	 *
 	 * @param $params Array
 	 * @return Status
 	 */
@@ -846,11 +846,11 @@ abstract class FileBackendStore extends FileBackend {
 	/**
 	 * Delete a file at the storage path.
 	 * Do not call this function from places outside FileBackend and FileOp.
-	 * 
+	 *
 	 * $params include:
 	 *     src                 : source storage path
 	 *     ignoreMissingSource : do nothing if the source file does not exist
-	 * 
+	 *
 	 * @param $params Array
 	 * @return Status
 	 */
@@ -870,12 +870,12 @@ abstract class FileBackendStore extends FileBackend {
 	/**
 	 * Move a file from one storage path to another in the backend.
 	 * Do not call this function from places outside FileBackend and FileOp.
-	 * 
+	 *
 	 * $params include:
 	 *     src           : source storage path
 	 *     dst           : destination storage path
 	 *     overwrite     : overwrite any file that exists at the destination
-	 * 
+	 *
 	 * @param $params Array
 	 * @return Status
 	 */
@@ -1273,7 +1273,7 @@ abstract class FileBackendStore extends FileBackend {
 	}
 
 	/**
-	 * @copydoc FileBackend::getFileList() 
+	 * @copydoc FileBackend::getFileList()
 	 */
 	final public function getFileList( array $params ) {
 		list( $fullCont, $dir, $shard ) = $this->resolveStoragePath( $params['dir'] );
@@ -1296,7 +1296,7 @@ abstract class FileBackendStore extends FileBackend {
 	 * Do not call this function from places outside FileBackend
 	 *
 	 * @see FileBackendStore::getFileList()
-	 * 
+	 *
 	 * @param $container string Resolved container name
 	 * @param $dir string Resolved path relative to container
 	 * @param $params Array
@@ -1306,7 +1306,7 @@ abstract class FileBackendStore extends FileBackend {
 
 	/**
 	 * Get the list of supported operations and their corresponding FileOp classes.
-	 * 
+	 *
 	 * @return Array
 	 */
 	protected function supportedOperations() {
@@ -1326,7 +1326,7 @@ abstract class FileBackendStore extends FileBackend {
 	 *
 	 * The result must have the same number of items as the input.
 	 * An exception is thrown if an unsupported operation is requested.
-	 * 
+	 *
 	 * @param $ops Array Same format as doOperations()
 	 * @return Array List of FileOp objects
 	 * @throws MWException
@@ -1378,6 +1378,7 @@ abstract class FileBackendStore extends FileBackend {
 			$scopeLockS = $this->getScopedFileLocks( $filesLockSh, LockManager::LOCK_UW, $status );
 			$scopeLockE = $this->getScopedFileLocks( $filesLockEx, LockManager::LOCK_EX, $status );
 			if ( !$status->isOK() ) {
+				WikiaPrivateLog::getChannel( 'filesystem' )->send( [__CLASS__, 'cannot lock files', $status->getXML(), $opts, $filesLockSh, $this], true );
 				wfProfileOut( __METHOD__ );
 				return $status; // abort
 			}
@@ -1419,9 +1420,9 @@ abstract class FileBackendStore extends FileBackend {
 
 	/**
 	 * Clears any additional stat caches for storage paths
-	 * 
+	 *
 	 * @see FileBackend::clearCache()
-	 * 
+	 *
 	 * @param $paths Array Storage paths (optional)
 	 * @return void
 	 */
@@ -1429,7 +1430,7 @@ abstract class FileBackendStore extends FileBackend {
 
 	/**
 	 * Prune the inexpensive cache if it is too big to add an item
-	 * 
+	 *
 	 * @return void
 	 */
 	protected function trimCache() {
@@ -1441,7 +1442,7 @@ abstract class FileBackendStore extends FileBackend {
 
 	/**
 	 * Prune the expensive cache if it is too big to add an item
-	 * 
+	 *
 	 * @return void
 	 */
 	protected function trimExpensiveCache() {
@@ -1454,12 +1455,12 @@ abstract class FileBackendStore extends FileBackend {
 	/**
 	 * Check if a container name is valid.
 	 * This checks for for length and illegal characters.
-	 * 
+	 *
 	 * @param $container string
 	 * @return bool
 	 */
 	final protected static function isValidContainerName( $container ) {
-		// This accounts for Swift and S3 restrictions while leaving room 
+		// This accounts for Swift and S3 restrictions while leaving room
 		// for things like '.xxx' (hex shard chars) or '.seg' (segments).
 		// This disallows directory separators or traversal characters.
 		// Note that matching strings URL encode to the same string;
@@ -1582,9 +1583,9 @@ abstract class FileBackendStore extends FileBackend {
 
 	/**
 	 * Get a list of full container shard suffixes for a container
-	 * 
+	 *
 	 * @param $container string
-	 * @return Array 
+	 * @return Array
 	 */
 	final protected function getContainerSuffixes( $container ) {
 		$shards = array();
@@ -1600,9 +1601,9 @@ abstract class FileBackendStore extends FileBackend {
 
 	/**
 	 * Get the full container name, including the wiki ID prefix
-	 * 
+	 *
 	 * @param $container string
-	 * @return string 
+	 * @return string
 	 */
 	final protected function fullContainerName( $container ) {
 		if ( $this->wikiId != '' ) {
@@ -1616,9 +1617,9 @@ abstract class FileBackendStore extends FileBackend {
 	 * Resolve a container name, checking if it's allowed by the backend.
 	 * This is intended for internal use, such as encoding illegal chars.
 	 * Subclasses can override this to be more restrictive.
-	 * 
+	 *
 	 * @param $container string
-	 * @return string|null 
+	 * @return string|null
 	 */
 	protected function resolveContainerName( $container ) {
 		return $container;

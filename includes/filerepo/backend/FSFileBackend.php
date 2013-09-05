@@ -7,11 +7,11 @@
 
 /**
  * Class for a file system (FS) based file backend.
- * 
+ *
  * All "containers" each map to a directory under the backend's base directory.
  * For backwards-compatibility, some container paths can be set to custom paths.
  * The wiki ID will not be used in any custom paths, so this should be avoided.
- * 
+ *
  * Having directories with thousands of files will diminish performance.
  * Sharding can be accomplished by using FileRepo-style hash paths.
  *
@@ -75,7 +75,7 @@ class FSFileBackend extends FileBackendStore {
 
 	/**
 	 * Sanity check a relative file system path for validity
-	 * 
+	 *
 	 * @param $path string Normalized relative path
 	 * @return bool
 	 */
@@ -94,14 +94,14 @@ class FSFileBackend extends FileBackendStore {
 	/**
 	 * Given the short (unresolved) and full (resolved) name of
 	 * a container, return the file system path of the container.
-	 * 
+	 *
 	 * @param $shortCont string
 	 * @param $fullCont string
-	 * @return string|null 
+	 * @return string|null
 	 */
 	protected function containerFSRoot( $shortCont, $fullCont ) {
 		if ( isset( $this->containerPaths[$shortCont] ) ) {
-			return $this->containerPaths[$shortCont]; 
+			return $this->containerPaths[$shortCont];
 		} elseif ( isset( $this->basePath ) ) {
 			return "{$this->basePath}/{$fullCont}";
 		}
@@ -110,7 +110,7 @@ class FSFileBackend extends FileBackendStore {
 
 	/**
 	 * Get the absolute file system path for a storage path
-	 * 
+	 *
 	 * @param $storagePath string Storage path
 	 * @return string|null
 	 */
@@ -133,6 +133,7 @@ class FSFileBackend extends FileBackendStore {
 	public function isPathUsableInternal( $storagePath ) {
 		$fsPath = $this->resolveToFSPath( $storagePath );
 		if ( $fsPath === null ) {
+			WikiaPrivateLog::getChannel( 'filesystem' )->send( [__CLASS__, 'path not usable', $storagePath, $this], true );
 			return false; // invalid
 		}
 		$parentDir = dirname( $fsPath );
@@ -496,6 +497,9 @@ class FSFileBackend extends FileBackendStore {
 	protected function chmod( $path ) {
 		wfSuppressWarnings();
 		$ok = chmod( $path, $this->fileMode );
+		if ( $ok === false ) {
+			WikiaPrivateLog::getChannel( 'filesystem' )->send( [__CLASS__, 'cannot chmod a file', $path, $this], true );
+		}
 		wfRestoreWarnings();
 
 		return $ok;
@@ -553,11 +557,11 @@ class FSFileBackendFileList implements Iterator {
 				# RecursiveDirectoryIterator extends FilesystemIterator.
 				# FilesystemIterator::SKIP_DOTS default is inconsistent in PHP 5.3.x.
 				$flags = FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::SKIP_DOTS;
-				$this->iter = new RecursiveIteratorIterator( 
+				$this->iter = new RecursiveIteratorIterator(
 					new RecursiveDirectoryIterator( $dir, $flags ) );
 			} else { // PHP < 5.3
 				# RecursiveDirectoryIterator extends DirectoryIterator
-				$this->iter = new RecursiveIteratorIterator( 
+				$this->iter = new RecursiveIteratorIterator(
 					new RecursiveDirectoryIterator( $dir ) );
 			}
 		} catch ( UnexpectedValueException $e ) {
