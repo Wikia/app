@@ -1370,3 +1370,10 @@ $config['special_css_js'] = array(
 		'//resources/wikia/libraries/mustache/jquery.mustache.js'
 	)
 );
+
+$config['touchstorm_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => array(
+		'//extensions/wikia/TouchStorm/css/TouchStorm.scss'
+	)
+);
