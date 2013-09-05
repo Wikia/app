@@ -20,15 +20,7 @@ class RailController extends WikiaController {
 		wfProfileIn(__METHOD__);
 		// TODO do not make request if there is no more modules to load
 
-		$railModules = $this->filterModules((new BodyController)->getRailModuleList(), true);
-		$this->railLazyContent = '';
-		krsort($railModules);
-		foreach ($railModules as $railModule) {
-			$this->railLazyContent .= $this->app->renderView($railModule[0], $railModule[1], $railModule[2]);
-		}
-
-		$this->css = array_keys($this->app->wg->Out->styles);
-		$this->js = $this->app->wg->Out->getBottomScripts();
+		$this->railModuleList = $this->filterModules((new BodyController)->getRailModuleList(), true);
 
 		wfProfileOut(__METHOD__);
 	}

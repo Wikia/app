@@ -11,7 +11,6 @@ class ChatRailController extends WikiaController {
 	 */
 	public function executePlaceholder() {
 		$this->response->addAsset('extensions/wikia/Chat2/js/ChatEntryPoint.js');
-		$this->response->addAsset('extensions/wikia/Chat2/css/ChatEntryPoint.scss');
 	}
 
 	public function executeAnonLoginSuccess() {

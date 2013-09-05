@@ -9,15 +9,9 @@ $(
 			// TODO fix related videos rail (ugly hack in RelatedVideos.hooks.php)
 		},
 		type: 'get',
-		format: 'json',
+		format: 'html',
 		callback: function(data) {
-			require(['wikia.loader'], function(loader) {
-				loader({
-					type: loader.CSS,
-					resources: data.css
-				});
-			});
-			$('#WikiaRail').find('.loading').remove().end().append(data.railLazyContent + data.js);
+			$('#WikiaRail').find('.loading').remove().end().append(data);
 			AIC2.init();
 		}
 	})
