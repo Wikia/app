@@ -253,6 +253,20 @@ class RenameUserProcess {
 
 		$this->addInternalLog("title: old={$oun} new={$nun}");
 
+		//AntiSpoof test
+
+		$dir = '/usr/wikia/source/app/extensions/AntiSpoof/';
+		if ( file_exists( $dir . 'AntiSpoof_body.php' ) && file_exists( $dir . 'SpoofUser.php' ) ) {
+			require_once( $dir . 'AntiSpoof_body.php' );
+			require_once( $dir . 'SpoofUser.php' );
+			$oNewSpoofUser = new SpoofUser( $nun );
+			if ( !$oNewSpoofUser -> isLegal() ) {
+				$this->addWarning( wfMessage( 'userrenametool-error-antispoof-conflict', $nun ) );
+			}
+		} else {
+			$this->addError( wfMessage( 'userrenametool-error-antispoof-notinstalled' ) );
+		}
+
 		//Invalid old user name entered
 		if(!$oun){
 			$this->addError( wfMessage('userrenametool-errorinvalid', $this->mRequestData->oldUsername)->inContentLanguage()->text() );
