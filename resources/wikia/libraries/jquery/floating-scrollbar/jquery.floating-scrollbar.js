@@ -177,11 +177,10 @@
   $.floatingScrollbarUpdate = update;
 
   // Wikia change - begin - @author kflorence
-  $(function() {
-    $( '#WikiaBarWrapper' ).on( 'toggled', function() {
-      heightFromBottom = getHeightFromBottom();
-      update();
-    });
+  win.on( 'WikiaBarStateChanged WikiaBarReady', function() {
+    heightFromBottom = getHeightFromBottom();
+    update();
   });
   // Wikia change - end
+
 })(jQuery, this);
