@@ -535,7 +535,6 @@ class WallMessage {
 	}
 
 	public function getMessagePageId() {
-
 		if($this->isMain()){
 			$id = $this->getId();
 		} else {
@@ -546,28 +545,29 @@ class WallMessage {
 		return $id;
 	}
 
-	public function getMessagePageUrl($withoutAnchor = false) {
-
+	public function getMessagePageUrl( $withoutAnchor = false ) {
 		wfProfileIn(__METHOD__);
-		//local cache consider cache this in memc
-		if(!empty($this->messagePageUrl)) {
-			wfProfileOut(__METHOD__);
-			return $this->messagePageUrl[$withoutAnchor];
-		}
-
 		$id = $this->getMessagePageId();
 
-		$postFix = $this->getPageUrlPostFix();
-		$postFix = empty($postFix) ? "":('#'.$postFix);
-		$title = Title::newFromText($id, NS_USER_WALL_MESSAGE);
+		$mcacheKey = __METHOD__ . '-message-page-url-' . $id;
+		$messagePageUrl = WikiaDataAccess::cache(
+			$mcacheKey,
+			24 * 3600, // 24h
+			function() use ( $id ) {
+				$postFix = $this->getPageUrlPostFix();
+				$postFix = empty( $postFix ) ? '' : ( '#' . $postFix );
+				$title = Title::newFromText( $id, NS_USER_WALL_MESSAGE );
 
-		$this->messagePageUrl = array();
+				$messagePageUrl = array();
+				$messagePageUrl[true] = $title->getFullUrl();
+				$messagePageUrl[false] = $messagePageUrl[true] . $postFix;
 
-		$this->messagePageUrl[true] = $title->getFullUrl();
-		$this->messagePageUrl[false] = $this->messagePageUrl[true].$postFix;
+				return $messagePageUrl;
+			}
+		);
 
 		wfProfileOut(__METHOD__);
-		return $this->messagePageUrl[$withoutAnchor];
+		return $messagePageUrl[$withoutAnchor];
 	}
 
 	public function getArticleId(&$articleData = null) {
