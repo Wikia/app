@@ -62,9 +62,11 @@ class VideoPageToolHelper extends WikiaModel {
 	/**
 	 * get video data
 	 * @param string $videoTitle
+	 * @param string $displayTitle
+	 * @param string $description
 	 * @return array $video
 	 */
-	public function getVideoData( $videoTitle ) {
+	public function getVideoData( $videoTitle, $displayTitle = '', $description = '' ) {
 		wfProfileIn( __METHOD__ );
 
 		$video = array();
@@ -74,18 +76,24 @@ class VideoPageToolHelper extends WikiaModel {
 			$file = wfFindFile( $title );
 			if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
 				$videoTitle = $title->getText();
+				if ( empty( $displayTitle ) ) {
+					$displayTitle = $videoTitle;
+				}
 
 				// get thumbnail
 				$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
 				$videoThumb = $thumb->toHtml();
 
 				// get description
-				$videoHandlerHelper = new VideoHandlerHelper();
-				$description = $videoHandlerHelper->getVideoDescription( $file );
+				if ( empty( $description ) ) {
+					$videoHandlerHelper = new VideoHandlerHelper();
+					$description = $videoHandlerHelper->getVideoDescription( $file );
+				}
 
 				$video = array(
 					'videoTitle' => $videoTitle,
-					'displayTitle' => $videoTitle,
+					'videoKey' => $title->getDBKey(),
+					'displayTitle' => $displayTitle,
 					'videoThumb' => $videoThumb,
 					'description' => $description,
 				);

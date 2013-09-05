@@ -4,8 +4,8 @@ CREATE TABLE IF NOT EXISTS `vpt_program` (
   `publish_date` datetime NOT NULL,
   `is_published` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`program_id`),
-  UNIQUE KEY `program` (`region`, `publish_date`),
-  KEY `publish_date` (`publish_date`, `region`, `is_published`)
+  UNIQUE KEY `program` (`language`, `publish_date`),
+  KEY `publish_date` (`publish_date`, `language`, `is_published`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `vpt_asset` (
