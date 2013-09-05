@@ -3,7 +3,7 @@ jQuery(function( $ ) {
 	'use strict';
 
 	var $article = $( '#WikiaArticle' ),
-		scrollableTemplate = '<div class="table-scrollable" />';
+		scrollableTemplate = '<div class="table-scrollable">';
 
 	// Scans tables inside of the article and applies overflow hint styles
 	// on any tables that are wider than the article content area.
@@ -18,6 +18,8 @@ jQuery(function( $ ) {
 			if ( isWide && !$table.parent( '.table-scrollable' ).length ) {
 				$table.wrap( scrollableTemplate );
 			}
+
+			$table.parent( '.table-scrollable' ).floatingScrollbar( isWide );
 		});
 	}
 

@@ -2,19 +2,15 @@
  * jQuery Floating Scrollbar - v0.5 - 09/05/2013
  * http://benalman.com/
  *
- * For examples, see:
- * http://jsfiddle.net/cowboy/45rEs/show/
- *
  * Copyright (c) 2011 "Cowboy" Ben Alman
  * Dual licensed under the MIT and GPL licenses.
  * http://benalman.com/about/license/
  */
 
-(function($){
+(function($, window){
   'use strict';
-
   var // A few reused jQuery objects.
-      win = $(this),
+      win = $(window),
 
       // All the elements being monitored.
       elems = $([]),
@@ -152,4 +148,4 @@
   // the DOM before monitored elements, changing their vertical position.
   $.floatingScrollbarUpdate = update;
 
-})(jQuery);
+})(jQuery, this);

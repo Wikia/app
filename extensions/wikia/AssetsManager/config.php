@@ -194,6 +194,7 @@ $config['oasis_jquery'] = array(
 		'//resources/wikia/libraries/jquery/timeago/jquery.timeago.js',
 		'//resources/wikia/libraries/jquery/store/jquery.store.js',
 		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
+		'//resources/wikia/libraries/jquery/floating-scrollbar/jquery.floating-scrollbar.js',
 
 		// Wikia plugins
 		'//resources/wikia/jquery.wikia.js',
@@ -325,7 +326,6 @@ $config['gameguides_scss'] = array(
 		'//extensions/wikia/GameGuides/css/GameGuides.scss'
 	)
 );
-
 
 //this combines couple of WikiaMobile groups to make it possible to load all js via one request
 //also unfortunately loads bit more than needed not to change WikiaMobile assets too much
