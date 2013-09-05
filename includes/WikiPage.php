@@ -1291,6 +1291,12 @@ class WikiPage extends Page {
 			$summary = self::getAutosummary( $oldtext, $text, $flags );
 		}
 
+		// <Wikia>
+		if ( is_string( $user ) ) {
+			error_log( "MOLI: " . __METHOD__ . ": invalid User : " . print_r( $user, true ) );
+			Wikia::debugBacktrace( "MOLI: invalid User:" );
+		}
+		// </Wikia>
 		$editInfo = $this->prepareTextForEdit( $text, null, $user );
 		$text = $editInfo->pst;
 		$newsize = strlen( $text );

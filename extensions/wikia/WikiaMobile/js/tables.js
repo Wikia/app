@@ -1,144 +1,95 @@
-define('tables', ['events', 'track', 'wikia.window'], function(ev, track, w){
+/* global Features */
+define('tables', ['events', 'track', 'wikia.window', 'jquery'], function(ev, track, w, $){
 	'use strict';
 
 	var d = w.document,
 		pageContent = d.getElementById('mw-content-text') || d.getElementById('wkMainCnt'),
 		realWidth = pageContent.offsetWidth,
-		inited = false,
-		handledTables = [];
+		initialized = false,
+		handledTables = $();
 
-	function wrap(elm){
-		var wrapper = d.createElement('div'),
-			parent = elm.parentElement;
+	function check(){
+		var table,
+			isWrapped,
+			isBig,
+			x = 0,
+			y = handledTables.length;
 
-		wrapper.className = 'bigTable';
-		wrapper.appendChild(elm.cloneNode(true));
+		realWidth = pageContent.offsetWidth;
 
-		parent.replaceChild(wrapper, elm);
-		//keep references to parent and wrapper as cloning nodes does not copy parentElement properties
-		elm.parent = parent;
-		elm.wrapper = wrapper;
-		elm.isWrapped = true;
-	}
+		for(; x < y; x++){
+			table = handledTables.eq(x);
+			isBig = table.width() > realWidth;
+			isWrapped = table.parent().is('.bigTable');
 
-	function unwrap(elm){
-		elm.parent.replaceChild(elm, elm.wrapper);
-		elm.isWrapped = false;
-	}
+			if(isBig && !isWrapped){
+				table.wrap('<div class="bigTable" />');
+			}else if(!isBig && isWrapped){
+				table = table.unwrap()[0];
 
-	function removeScripts(elm){
-		var scripts = elm.getElementsByTagName('script'),
-			script,
-			i = 0;
-
-		while(script = scripts[i++]){
-			script.parentElement.removeChild(script);
+				if(table.wkScroll) {
+					table.wkScroll.destroy();
+					table.wkScroll = null;
+				}
+			}
 		}
 	}
 
 	function process(tables){
-		var	l = tables.length,
-			i = 0;
+		//if the table width is bigger than any screen dimension (device can rotate)
+		//or taller than the allowed vertical size, then wrap it and/or add it to
+		//the list of handled tables for speeding up successive calls
+		handledTables = tables.add(handledTables);
 
-		for(; i < l; i++){
-			var table = tables[i],
-				rows = table.getElementsByTagName('tr'),
-				rowsLength = rows.length;
+		tables.filter(function(index, element){
+			var tr = $(element).find('tr'),
+				trLength = tr.length,
+				correctRows = 0,
+				l,
+				i = 0;
 
-			//find infobox like tables
-			if(rowsLength > 2){
-				var correctRows = 0,
-					cellLength,
-					row;
+			if(trLength > 2) {
+				//sample only the first X rows
+				tr = tr.slice(0,9);
+				l = tr.length;
 
-				for(var j = 0; j < rowsLength; j++) {
-					row = rows[j];
-					cellLength = row.cells.length;
-
-					//sample only the first X rows
-					if(cellLength > 2 || j == 9){
-						break;
-					}
-
-					if(cellLength == 2){
+				for(; i < l; i++) {
+					if(tr[i].cells.length === 2){
 						correctRows++;
 					}
 				}
-
-				if(correctRows > Math.floor(rowsLength/2)) {
-					table.className += ' infobox';
-				}
 			}
 
-			//if the table width is bigger than any screen dimension (device can rotate)
-			//or taller than the allowed vertical size, then wrap it and/or add it to
-			//the list of handled tables for speeding up successive calls
-			//NOTE: tables with 100% width have the same width of the screen, check the size of the first row instead
-			if(rowsLength > 0) {
-				var firstRowWidth = rows[0].offsetWidth;
+			return correctRows > Math.floor(trLength/2);
+		}).addClass('infobox');
 
-				table.computedWidth = firstRowWidth;
-				if(firstRowWidth > realWidth){
-					//remove scripts to avoid re-parsing
-					removeScripts(table);
-					wrap(table);
-					table.wasWrapped = true;
-				}
-			}
 
-			handledTables.push(table);
-		}
+		tables.filter(function(index, element){
+			return $(element).width() > realWidth;
+		}).wrap('<div class="bigTable" />');
 
-		if(!inited && handledTables.length > 0){
-			inited = true;
-			w.addEventListener('viewportsize', function(){
-				var table,
-					isWrapped,
-					isBig,
-					wasWrapped;
+		if(!initialized && handledTables.length > 0){
+			initialized = true;
 
-				realWidth = pageContent.offsetWidth;
-
-				for(var x = 0, y = handledTables.length; x < y; x++){
-					table = handledTables[x];
-					isWrapped = table.isWrapped;
-					wasWrapped = table.wasWrapped;
-					isBig = (table.computedWidth > realWidth);
-
-					if(!isWrapped && isBig){
-						if(!wasWrapped){
-							table.wasWrapped = true;
-							//remove scripts to avoid re-parsing
-							removeScripts(table);
-						}
-
-						wrap(table);
-					}else if(isWrapped && !isBig){
-						unwrap(table);
-					}
-				}
-			});
+			w.addEventListener('viewportsize', check);
 
 			if(!Features.overflow){
-				d.body.addEventListener(ev.touch, function(ev){
-					var t = ev.target;
+				$(d.body).on(ev.touch, '.bigTable', function(){
+					var table = this.getElementsByTagName('table')[0];
 
-					if(~t.className.indexOf('bigTable')){
-						if(!t.wkScroll) {
-							new w.iScroll(t, function(){
-								track.event('tables', track.SWIPE);
-							});
-							t.wkScroll = true;
-							t.className += ' active';
-						}
+					if(!table.wkScroll) {
+						table.wkScroll = new w.iScroll(this, function(){
+							track.event('tables', track.SWIPE);
+						});
+						this.className += ' active';
 					}
-
-				}, true);
+				});
 			}
 		}
 	}
 
 	return {
-		process: process
+		process: process,
+		check: check
 	};
 });

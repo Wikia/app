@@ -145,7 +145,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		$languages = $helper->getLanguages();
 		if ( !array_key_exists( $language, $languages ) ) {
 			$this->result = 'error';
-			$this->msg = wfMessage( 'videopagetool-error-invalid-language' );
+			$this->msg = wfMessage( 'videopagetool-error-invalid-language' )->plain();
 			$this->info = array();
 			return;
 		}
@@ -155,7 +155,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		$eDate = getdate( $endTime );
 		if ( !checkdate($sDate['mon'], $sDate['mday'], $sDate['year'] ) || !checkdate($eDate['mon'], $eDate['mday'], $eDate['year'] )  ) {
 			$this->result = 'error';
-			$this->msg = wfMessage( 'videopagetool-error-invalid-date' );
+			$this->msg = wfMessage( 'videopagetool-error-invalid-date' )->plain();
 			$this->info = array();
 			return;
 		}
@@ -218,6 +218,63 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 			'description' => 'description...',
 		);
 		$this->videos = $videos;
+	}
+
+	/**
+	 * get video data
+	 * @requestParam string url
+	 * @responseParam string result [ok/error]
+	 * @responseParam string msg - result message
+	 * @responseParam array video
+	 */
+	public function getVideoData() {
+		$url = $this->getVal( 'url', '' );
+
+		$video = array();
+
+		if ( empty( $url ) ) {
+			$this->result = 'error';
+			$this->msg = wfMessage( 'videos-error-invalid-video-url' )->plain();
+			return;
+		}
+
+		if ( preg_match( '/.+\/wiki\/File:(.+)$/i', $url, $matches ) ) {
+			$helper = new VideoPageToolHelper();
+			$video = $helper->getVideoData( $matches[1] );
+		}
+
+		if ( empty( $video ) ) {
+			$this->result = 'error';
+			$this->msg = wfMessage( 'videohandler-unknown-title' )->plain();
+			$this->video = $video;
+		} else {
+			$this->result = 'ok';
+			$this->msg = '';
+			$this->video = $video;
+		}
+	}
+
+	/*
+	 * Render header
+	 */
+
+	public function executeHeader($data) {
+		$this->response->addAsset('/extensions/wikia/VideoPageTool/css/VideoPageTool.scss');
+
+		/*
+		 * TODO: imported function from SpecialMarketingToolbox, not sure if we need it
+		 */
+		
+		// $optionalDataKeys = array('date', 'moduleName', 'sectionName', 'verticalName',
+		// 	'regionName', 'lastEditor', 'lastEditTime');
+
+		// foreach ($optionalDataKeys as $key) {
+		// 	if (isset($data[$key])) {
+		// 		$this->$key = $data[$key];
+		// 	}
+		// }
+
+		$this->dashboardHref = SpecialPage::getTitleFor('VideoPageTool')->getLocalURL();
 	}
 
 }

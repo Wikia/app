@@ -22,7 +22,6 @@ define('vpt.views.datepicker', [
 	DatepickerView.prototype = {
 		init: function() {
 			var that = this;
-			// TODO: not a fan of how this callback chain requires a specific order, change this
 			// Bootstrap the collection
 			this.collection
 				.collectData( this.currDate.getFullYear(), this.currDate.getMonth() + 1 )
@@ -33,8 +32,8 @@ define('vpt.views.datepicker', [
 		},
 		state: {
 			// private constants used to track state of a date entry
-			_notPublished: 2,
-			_published: 1
+			_notPublished: 1,
+			_published: 0
 		},
 		render: function() {
 			this.$el.text('').datepicker({
@@ -57,23 +56,22 @@ define('vpt.views.datepicker', [
 		},
 		beforeShowDay: function(date) {
 			var tdClassName,
-					tooltip,
 					dayStatus;
 
 			tdClassName = '';
-			tooltip = '';
 			dayStatus = this.collection.getStatus(date);
 
-			if (dayStatus) {
+			if (dayStatus !== undefined) {
+				// response sends back a string, parse it to int
+				dayStatus = parseInt(dayStatus, 10);
 				if (dayStatus === this.state._notPublished ) {
 					tdClassName = 'inProg';
 				} else if (dayStatus === this.state._published ) {
 					tdClassName = 'published';
 				}
-				// tooltip = this.tooltipMessages[dayStatus];
 			}
 
-			return [true, tdClassName, tooltip];
+			return [true, tdClassName ];
 		},
 		onChangeMonthYear: function(year, month) {
 			return this.collection.collectData(year, month);
@@ -92,7 +90,7 @@ define('vpt.views.datepicker', [
 
 			qs(loc.origin + pathname + 'edit')
 				.setVal({
-						region: this.collection.language,
+						language: this.collection.language,
 						date: timestamp
 				})
 				.goTo();

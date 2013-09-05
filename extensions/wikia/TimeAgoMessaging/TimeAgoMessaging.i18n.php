@@ -578,14 +578,22 @@ $messages['tl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Тест
  */
 $messages['uk'] = array(
 	'timeagomessaging-desc' => 'Забезпечує i18n для додатка jquery.timeago.js',
+	'timeago-year' => '{{PLURAL:$1|$1 рік|$1 роки|$1 років}} тому',
+	'timeago-month' => '{{PLURAL:$1|$1 місяць|$1 місяці|$1 місяців}} тому',
 	'timeago-day' => '{{PLURAL:$1|день|$1 дні|$1 днів}} тому',
 	'timeago-hour' => '{{PLURAL:$1|годину|$1 години|$1 годин}} тому',
 	'timeago-minute' => '{{PLURAL:$1|хвилину|$1 хвилини|$1 хвилин}} тому',
 	'timeago-second' => 'хвилину тому',
+	'timeago-day-from-now' => '{{PLURAL:$1|день|$1 дні|$1 днів}} назад',
+	'timeago-hour-from-now' => '{{PLURAL:$1|годину|$1 години|$1 годин}} назад',
+	'timeago-minute-from-now' => '{{PLURAL:$1|хвилину|$1 хвилини|$1 хвилин}} назад',
+	'timeago-month-from-now' => '{{PLURAL:$1|$1 місяць|$1 місяці|$1 місяців}} назад',
+	'timeago-second-from-now' => 'хвилин тому',
 );
 
 /** Vietnamese (Tiếng Việt)

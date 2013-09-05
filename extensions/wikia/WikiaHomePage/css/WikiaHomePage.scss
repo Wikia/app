@@ -859,6 +859,11 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 						background-position: 0px -485px;
 						width: 240px;
 					}
+                    &.wikiahomepage-community-image-pl {
+                        background-position: 0px -630px;
+                        width: 250px;
+                        height: 54px;
+                    }
 					&.wikiahomepage-highlight-image {
 						background-position: 0px -50px;
 						bottom: 0;
@@ -875,6 +880,9 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					&.wikiahomepage-highlight-image-fr {
 						background-position: 0 -534px;
 					}
+                    &.wikiahomepage-highlight-image-pl {
+                        background-position: 0 -685px;
+                    }
 				}
 			}
 			p {
@@ -996,6 +1004,9 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 		&.fr .sprite.edit-pencil {
 			background-position: -72px -171px;
 		}
+		&.pl .sprite.edit-pencil {
+			background-position: -96px -171px;
+		}
 		a {
 			background-image: url(/extensions/wikia/WikiaHomePage/images/community-sprite.png); /* $wgCdnStylePath */
 			display: block;
@@ -1013,6 +1024,9 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 			}
 			&.fr {
 				background-position: -72px -171px;
+			}
+			&.pl {
+				background-position: -96px -171px;
 			}
 		}
 		li {

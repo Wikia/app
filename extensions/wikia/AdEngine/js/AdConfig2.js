@@ -1,22 +1,30 @@
 var AdConfig2 = function (
 	// regular dependencies
-	log, window, document, Geo, adLogicShortPage, abTest
+	log,
+	window,
+	document,
+	Geo,
+	adLogicShortPage,
+	abTest,
 
 	// adProviders
-	, adProviderAdDriver2
-	, adProviderEvolve
-	, adProviderGamePro
-	, adProviderLater
-	, adProviderNull
+	adProviderAdDriver2,
+	adProviderGpt,
+	adProviderEvolve,
+	adProviderGamePro,
+	adProviderLater,
+	adProviderNull
 ) {
 	'use strict';
 
-	var log_group = 'AdConfig2'
-		, city_lang = window.wgContentLanguage
-		, country = Geo.getCountryCode()
-		, defaultHighValueSlots, highValueSlots
-		, slotsOnlyOnLongPages
-		, getProvider;
+	var log_group = 'AdConfig2',
+		city_lang = window.wgContentLanguage,
+		country = Geo.getCountryCode(),
+		defaultHighValueSlots,
+		highValueSlots,
+		slotsOnlyOnLongPages,
+		getProvider,
+		dartProvider = window.wgAdDriverUseFullGpt ? adProviderGpt : adProviderAdDriver2;
 
 	defaultHighValueSlots = {
 		'CORP_TOP_LEADERBOARD':true,
@@ -74,10 +82,10 @@ var AdConfig2 = function (
 			return adProviderEvolve;
 		}
 		if (slot[2] === 'AdDriver2') {
-			return adProviderAdDriver2;
+			return dartProvider;
 		}
 		if (slot[2] === 'AdDriver') {
-			return adProviderAdDriver2;
+			return dartProvider;
 		}
 		if (slot[2] === 'Liftium2') {
 			return adProviderLater;
@@ -111,8 +119,8 @@ var AdConfig2 = function (
 		}
 
 		// Non-high-value slots goes to ad provider Later, so GamePro can grab them later
-		if (highValueSlots[slotname] && adProviderAdDriver2.canHandleSlot(slot)) {
-			return adProviderAdDriver2;
+		if (highValueSlots[slotname] && dartProvider.canHandleSlot(slot)) {
+			return dartProvider;
 		}
 
 		return adProviderLater;

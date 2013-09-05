@@ -1,6 +1,7 @@
 define('vpt.views.index', [
 	'vpt.views.datepicker'
 ], function(Datepicker) {
+	'use strict';
 
 	function VPTIndex() {
 		this.init();
@@ -8,8 +9,10 @@ define('vpt.views.index', [
 
 	VPTIndex.prototype = {
 		init: function() {
-			this.$regionSelect = $('#marketingToolboxRegionSelect');
+			this.$regionSelect = $('#VideoPageToolRegionSelect');
+			this.defaultLanguage = this.$regionSelect.data('defaultLanguage');
 			this.bindEvents();
+			this.renderDatepicker();
 		},
 		bindEvents: function() {
 			var that = this;
@@ -18,8 +21,8 @@ define('vpt.views.index', [
 			});
 		},
 		renderDatepicker: function(evt) {
-			//TODO: should value always be a 2 char lang code?
-			var value = evt.target.value;
+			var value = evt ? evt.target.value : this.defaultLanguage;
+			
 			// don't render if placeholder is chosen (for first time)
 			if (value === 'placeholder') {
 				return false;
