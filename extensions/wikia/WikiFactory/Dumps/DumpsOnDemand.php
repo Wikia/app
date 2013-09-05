@@ -171,4 +171,26 @@ class DumpsOnDemand {
                     __METHOD__
             );
 	}
+
+	static public function getPath( $sName ) {
+		/*
+		 * Get the actual name:
+		 *    * 'muppet' for 'muppet.xml.gz'
+		 *    * 'muppet' for 'muppet'
+		 *    * 'htaccess' for '.htaccess'
+		 * The name will be in $aMatches[1].
+		 */
+		$aMatches = array();
+		preg_match( '/^\.?([^.]*)\.?.*/u', $sName, $aMatches );
+
+		/* Create the path:
+		 *    * 'm/mu/muppet' for 'muppet'
+		 *    * 'm/mm/m' for 'm'
+		 */
+		$sPath = $aMatches[1][0] . DIRECTORY_SEPARATOR . $aMatches[1][0];
+		$sPath .= ( empty( $aMatches[1][1] ) )? $aMatches[1][0] : $aMatches[1][1];
+		$sPath .= DIRECTORY_SEPARATOR . $sName;
+		return $sPath;
+	}
+
 }
