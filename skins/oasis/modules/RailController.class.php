@@ -9,9 +9,12 @@ class RailController extends WikiaController {
 	public function executeIndex($params) {
 		wfProfileIn(__METHOD__);
 
-		$this->railModuleList = $this->filterModules(isset($params['railModuleList']) ? $params['railModuleList'] : []);
+		$railModules = isset($params['railModuleList']) ? $params['railModuleList'] : [];
+
+		$this->railModuleList = $this->filterModules($railModules);
 		$this->isGridLayoutEnabled = BodyController::isGridLayoutEnabled();
 		$this->isAside = $this->wg->RailInAside;
+		$this->loadLazyRail = $railModules > $this->railModuleList;
 
 		wfProfileOut(__METHOD__);
 	}
