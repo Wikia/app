@@ -44,10 +44,10 @@ files = [
 	'extensions/wikia/WikiaMobile/js/tables.js',
 	'extensions/wikia/WikiaMobile/js/throbber.js',
 	'extensions/wikia/WikiaMobile/js/toast.js',
+	'extensions/wikia/WikiaMobile/js/track.js',
 	'extensions/wikia/WikiaMobile/js/toc.js',
 	'extensions/wikia/WikiaMobile/js/topbar.js',
 	'extensions/wikia/WikiaMobile/js/features.js',
-	'extensions/wikia/WikiaMobile/js/track.js',
 	'extensions/wikia/WikiaMobile/js/spec/integration/*.spec.js',
 
 	//core modules
