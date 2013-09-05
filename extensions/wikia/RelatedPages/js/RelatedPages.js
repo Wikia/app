@@ -1,113 +1,73 @@
-RelatedPages = {
-	module: false,
+require(['sloth', 'wikia.nirvana', 'wikia.window', 'wikia.loader', 'wikia.mustache'], function(sloth, nirvana, w, loader, mustache){
+	'use strict';
 
-	log: function(msg) {
-		$().log(msg, 'RelatedPages');
-	},
-	init: function() {
-		$(window).unbind('scroll', RelatedPages.updateScroll);
+	var relatedPages = $('#wkRelPag');
 
-		this.module = $('.RelatedPagesModule').first();
-
-		// there's no Related Pages module on this page
-		if (!this.module.exists()) {
-			return;
+	if(relatedPages.length > 0) {
+		var element  = $('#wkMainCntFtr')[0]; // sloth don't accept jQuery objects
+		if(!element) {
+			element = $('#wkRelPag')[0]; // sloth don't accept jQuery objects
 		}
 
-		// add click handler for article snippets (BugId:1322)
-		this.module.find('.articleSnippet').
-			css('cursor', 'pointer').
-			bind('click', function(ev) {
-				var target = $(this),
-					href = target.next('.more').attr('href');
-	
-				if (href) {
-					window.location = href;
-				}
-			});
+		sloth({
+			on: element,
+			threshold: 100,
+			callback: function() {
 
-		var content = $('#WikiaArticle');
-		var contentWidth = content.width();
+				$.when(
+					nirvana.getJson(
+						'RelatedPagesApi',
+						'getList',
+						{
+							ids: w.wgArticleId
+						}
+					),
+					loader({
+						type: loader.MULTI,
+						resources: {
+							mustache: 'extensions/wikia/RelatedPages/templates/RelatedPages_item.mustache'
+						}
 
-		// move the module after (at least) #x <h2> section (RT #84264)
-		// TODO: is the following code stil needed?
-		var addAfter = parseInt(this.module.attr('data-add-after-section'));
+					})
+				).done(
+					function(data, resources) {
 
-		// module is configured to stay at the bottom of the page
-		if (!addAfter) {
-			return;
-		}
+						var items = data[0].items,
+							pages = items && items[w.wgArticleId],
+							mustacheData = {
+								imgWidth: (w.skin === 'mobile' ? 100 : 200),
+								imgHeight: (w.skin === 'mobile' ? 50 : 100)
+						},
+							artImgPlaceholder = (w.skin === 'mobile' ? w.wgCdnRootUrl + '/extensions/wikia/WikiaMobile/images/read_placeholder.png' : '');
 
-		// get 2nd level headings
-		var sections = content.find('.mw-headline').parent().filter('h2');
 
-		//this.log('found ' + sections.length + ' section(s)');
+						console.log(pages);
 
-		// find section without collision
-		var sectionMatch = false;
+						if (pages && pages.length) {
+							var page,
+								ul = relatedPages.children('ul'),
+								lis = '',
+								i = 0;
 
-		sections.slice(addAfter).each(function() {
-			var node = $(this);
-			if (node.width() > contentWidth - 10) {
-				sectionMatch = node;
-				// stop each loop
-				return false;
+							while(page = pages[i++]) {
+
+								mustacheData.pageUrl = page.url;
+								mustacheData.pageTitle = page.title;
+								mustacheData.imgUrl = (page.imgUrl ? page.imgUrl : artImgPlaceholder);
+								mustacheData.artSnippet = page.text;
+
+								lis += mustache.render(resources.mustache[0], mustacheData);
+							}
+
+							ul.append(lis);
+
+							if (w.skin === 'mobile') {
+								relatedPages.addClass('show');
+							}
+						}
+					}
+				);
 			}
 		});
-
-		// section found - move Related Pages module before it
-		if (sectionMatch) {
-			var sectionId = sections.index(sectionMatch) + 1;
-
-			this.log('moving before #' + sectionId + ' section (' + sectionMatch.children().first().text() + ')');
-			this.module.insertBefore( sectionMatch.prev() /* RT #72977 */);
-		}
-		// sections found, but none without collision
-		else if (sections.length > addAfter) {
-			this.log('collision detected');
-		}
-		// not enough sections found
-		else {
-			this.log('article is too short (less than ' + addAfter + ' sections)');
-		}
-
-		//var time = (new Date()).getTime() - start;
-		//this.log('done in ' + time + ' ms');
-	},
-
-	scroll_threshold: 300,
-
-	attachLazyLoaderEvents: function() {
-		if (RelatedPages.module.exists()) {
-			$(window).bind('scroll', RelatedPages.updateScroll);
-			RelatedPages.updateScroll(); // check if we are already in the visible area
-		}
-	},
-
-	updateScroll: function() {
-		//RelatedPages.log('updated after scroll');
-		var fold = $(window).height() + $(window).scrollTop();
-		var topVal = RelatedPages.module.offset().top;
-
-		if(topVal > 0 && topVal < (fold + RelatedPages.scroll_threshold)) {
-			RelatedPages.lazyLoadImages();
-		}
-	},
-
-	lazyLoadImages: function() {
-		RelatedPages.log('loading RelatedPages images');
-		var images = RelatedPages.module.find('img').filter('[data-src]');
-		images.each(function() {
-			var image = $(this);
-			image.
-				attr('src', image.attr('data-src')).
-				removeAttr('data-src');
-		});
-		$(window).unbind('scroll', RelatedPages.updateScroll);
 	}
-};
-
-$(function() {
-	    RelatedPages.init();
-	    RelatedPages.attachLazyLoaderEvents();
 });

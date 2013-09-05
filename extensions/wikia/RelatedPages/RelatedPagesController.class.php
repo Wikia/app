@@ -58,11 +58,6 @@ class RelatedPagesController extends WikiaController {
 					$this->skipRendering = true;
 				}
 			}
-
-			// RT #84264
-			if ( !empty( $wgRelatedPagesAddAfterSection ) && is_numeric( $wgRelatedPagesAddAfterSection ) ) {
-				$this->addAfterSection = intval($wgRelatedPagesAddAfterSection);
-			}
 		}
 
 		// data for mustache template
@@ -70,8 +65,7 @@ class RelatedPagesController extends WikiaController {
 
 		if ( !$this->skipRendering || $this->app->checkSkin( 'wikiamobile' ) ) {
 			$this->data = [
-				"mobileSkin" => ( $this->app->checkSkin( 'wikiamobile' ) ) ? true : false,
-				"addAfterSection" => ( !empty($this->addAfterSection) ) ? $this->addAfterSection : false,
+				"mobileSkin" => $this->app->checkSkin( 'wikiamobile' ),
 				"relatedPagesHeading" => wfMessage( 'wikiarelatedpages-heading' )->inContentLanguage()->text()
 			];
 		}
