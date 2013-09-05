@@ -31,6 +31,7 @@ jQuery(function( $ ) {
 
 // TODO: get rid of everything below here once the old table handling method
 // is completely phased out (have to wait for article caches to update).
+// Also, don't forget to get rid the the styles in /skins/oasis/css/core/table.scss
 (function($) {
 var WikiaWideTables = {
 	settings: {

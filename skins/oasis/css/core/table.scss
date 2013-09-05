@@ -158,6 +158,7 @@ table.jquery-tablesorter.sortable th.headerSort .chevron {
 	}
 }
 
+// TODO: remove these styles when the old style of handling wide tables goes away in tables.js
 .WikiaWideTablesWrapper {
 	position: relative;
 	&.border {
