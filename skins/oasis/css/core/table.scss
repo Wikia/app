@@ -35,8 +35,13 @@ table.wikitable {
 	.table-wrapper {
 		overflow: auto;
 
+		&.table-is-floated,
 		&.table-is-wide {
 			overflow: visible;
+		}
+
+		&.table-is-wide {
+			clear: both;
 			position: relative;
 
 			&:before {
@@ -48,6 +53,12 @@ table.wikitable {
 				right: 0;
 				width: 20px;
 				z-index: 2;
+			}
+
+			// Wide tables cannot be floated
+			// Must use important here to override inline styles :'(
+			table {
+				float: none !important;
 			}
 
 			// This second element is needed because of stacking order rules.

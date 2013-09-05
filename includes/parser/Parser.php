@@ -886,14 +886,7 @@ class Parser {
 		# RTE - end
 
 		// Wikia change - begin - @author kflorence
-		$tableOpen = '<table';
-		$tableClose = '</table>';
-
-		// Table wrapping div is only used outside of RTE
-		if ( empty( $wgRTEParserEnabled ) ) {
-			$tableOpen = '<div class="table-wrapper">' . $tableOpen;
-			$tableClose = $tableClose . '</div>';
-		}
+		$tableClose = '</table>' . ( empty( $wgRTEParserEnabled ) ? '</div>' : '' );
 		// Wikia change - end
 
 		$lines = StringUtils::explode( "\n", $text );
@@ -955,7 +948,9 @@ class Parser {
 				$attributes = Sanitizer::fixTagAttributes( $attributes , 'table' );
 
 				// Wikia change - begin - @author kflorence
-				$outLine = str_repeat( '<dl><dd>' , $indent_level ) . "{$tableOpen}{$attributes}>";
+				$outLine = str_repeat( '<dl><dd>' , $indent_level )
+					. ( empty( $wgRTEParserEnabled ) ? Sanitizer::getTableWrapperOpeningTag( $attributes ) : '' )
+					. "<table{$attributes}>";
 				// Wikia change - end
 
 				# RTE (Rich Text Editor) - begin
@@ -1144,7 +1139,7 @@ class Parser {
 
 		# special case: don't return empty table
 		// Wikia change - begin - @author kflorence
-		if ( $out === "{$tableOpen}>\n<tr><td></td></tr>\n{$tableClose}" ) {
+		if ( strpos( $out, "<table>\n<tr><td></td></tr>\n</table>" ) !== false ) {
 			// Wikia change - end
 			$out = '';
 		}

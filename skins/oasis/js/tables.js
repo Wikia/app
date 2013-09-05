@@ -1,5 +1,7 @@
 // Use the table overflow technique (VE-164)
 jQuery(function( $ ) {
+	'use strict';
+
 	var $article = $( '#WikiaArticle' ),
 		scrollableTemplate = '<div class="table-scrollable" />';
 

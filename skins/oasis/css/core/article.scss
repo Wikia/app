@@ -7,6 +7,8 @@
 
 .WikiaArticle {
 	@include bodytext;
+	// Prevent content from escaping the article area
+	overflow-x: hidden;
 	padding: 0 $width-gutter;
 	position: relative;
 	min-height: 250px;

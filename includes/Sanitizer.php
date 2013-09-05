@@ -599,11 +599,13 @@ class Sanitizer {
 		}
 
 		// Wikia change - start - @author kflorence
-		// Only for Oasis
+		// Wrap tables so we can properly control their overflow
 		// TODO: make this work for WikiaMobile
 		if ( F::app()->checkSkin( 'oasis' ) && empty( $wgRTEParserEnabled ) ) {
-			// Wrap tables so we can properly control their overflow
-			$text = preg_replace( '/<table\b[^>]*>/i', '<div class="table-wrapper">$0', $text );
+			$text = preg_replace_callback( '/<table(\b[^>]*)>/i', function( $matches ) {
+				ChromePhp::log($matches);
+				return Sanitizer::getTableWrapperOpeningTag( $matches[ 1 ] ) . $matches[ 0 ];
+			}, $text );
 			$text = preg_replace( '/<\/table>/i', '$0</div>', $text );
 		}
 		// Wikia change - end
@@ -1854,4 +1856,25 @@ class Sanitizer {
 
 		return (bool) preg_match( $HTML5_email_regexp, $addr );
 	}
+
+	/**
+	 * Wikia change - begin
+	 *
+	 * The opening tag for wrapping tables.
+	 *
+	 * This function checks for the float property in table attributes and
+	 * adds a 'table-is-floated' class if they are found. This way, floated
+	 * tables may be handled properly in stylesheets.
+	 *
+	 * @author kflorence
+	 *
+	 * @param $attributes String A string containing the tables attributes
+	 * @return String
+	 */
+	public static function getTableWrapperOpeningTag( $attributes = '' ) {
+		return '<div class="table-wrapper'
+			. ( preg_match( "/float\s*?:\s*?(?:left|right)/i", $attributes ) ? ' table-is-floated' : '' )
+			. '">';
+	}
+	/* Wikia change - end */
 }
