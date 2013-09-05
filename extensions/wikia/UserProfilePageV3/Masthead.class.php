@@ -283,9 +283,6 @@ class Masthead {
 		$parts = explode( "/", $url );
 		$file = array_pop( $parts );
 
-		// make avatars as JPG intead of PNGs / GIF
-		$file = substr_replace( $file , 'jpg', strrpos( $file , '.' ) + 1 );
-
 		return sprintf( "%s/%dpx-%s", $url, $width, $file );
 	}
 
