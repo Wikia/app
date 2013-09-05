@@ -143,6 +143,10 @@ function runBackups( $from, $to, $full, $options ) {
 			wfShellExec( implode( " ", $cmd ), $status );
 			$time = Wikia::timeDuration( wfTime() - $time );
 			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} status: {$status}, time: {$time}", true, true );
+			if ( $s3 ) {
+				DumpsOnDemand::putToAmazonS3( $path, !$hide );
+			}
+
 		}
 		if( !$full || $both ) {
 			$path = sprintf("%s/%s_pages_current.xml.gz", $basedir, $row->city_dbname );
@@ -163,6 +167,9 @@ function runBackups( $from, $to, $full, $options ) {
 			wfShellExec( implode( " ", $cmd ), $status );
 			$time = Wikia::timeDuration( wfTime() - $time );
 			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} status: {$status}, time: {$time}", true, true);
+			if ( $s3 ) {
+				DumpsOnDemand::putToAmazonS3( $path, !$hide );
+			}
 		}
 	}
 }
