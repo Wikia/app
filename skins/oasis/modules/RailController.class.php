@@ -26,9 +26,8 @@ class RailController extends WikiaController {
 			$this->railLazyContent .= $this->app->renderView($railModule[0], $railModule[1], $railModule[2]);
 		}
 
-		global $wgOut;
-		$this->css = array_keys($wgOut->styles);
-		$this->js = $wgOut->getBottomScripts();
+		$this->css = array_keys($this->app->wg->Out->styles);
+		$this->js = $this->app->wg->Out->getBottomScripts();
 
 		wfProfileOut(__METHOD__);
 	}
