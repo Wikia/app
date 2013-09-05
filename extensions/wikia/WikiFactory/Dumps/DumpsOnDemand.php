@@ -207,7 +207,7 @@ class DumpsOnDemand {
 		$sPath = wfEscapeShellArg( $sPath );
 		$sCmd = 'sudo /usr/bin/s3cmd -c /root/.s3cfg';
 		$sCmd .= ($bPublic)? ' --acl-public' : '';
-		$sCmd .= "put {$sPath} {$sDestination}";
+		$sCmd .= " put {$sPath} {$sDestination}";
 		wfShellExec( $sCmd, $iStatus );
 		$time = Wikia::timeDuration( wfTime() - $time );
 		Wikia::log( __METHOD__, "info", "Put {$sPath} to Amazon S3 storage: status: {$iStatus}, time: {$time}", true, true);
