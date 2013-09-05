@@ -6,7 +6,7 @@
  * @author Jakub Olek <jolek@wikia-inc.com>
  *
  */
-define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana', 'wikia.deferred', 'wikia.log'], function loader(window, mw, nirvana, Deferred, log){
+define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana', 'jquery', 'wikia.log'], function loader(window, mw, nirvana, $, log){
 	'use strict';
 
 	var loader,
@@ -24,7 +24,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 		createElement = function(type, options){
 			var element = doc.createElement(type);
 
-			return options ? window.$.extend(element, options) : element;
+			return options ? $.extend(element, options) : element;
 		},
 		getUrl = function(path, type, params){
 			if(~path.indexOf('__am') || ~path.search(/^https?:/i)) {
@@ -43,7 +43,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				return window.wgCdnRootUrl + window.wgAssetsManagerQuery.
 					replace('%1$s', type).
 					replace('%2$s', path.replace(slashRegex, '')). // remove first slash
-					replace('%3$s', params ? encodeURIComponent(window.$.param(params)) : '-').
+					replace('%3$s', params ? encodeURIComponent($.param(params)) : '-').
 					replace('%4$d', window.wgStyleVersion);
 			}
 		},
@@ -329,7 +329,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 
 			if(send){
 				if(typeof options.params == 'object'){
-					options = window.$.extend(options, options.params);
+					options = $.extend(options, options.params);
 					delete options.params;
 				}
 
@@ -344,7 +344,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 					function(resources, event) {
 						// "register" JS messages
 						if (resources.messages) {
-							window.wgMessages = window.$.extend(window.wgMessages, resources.messages);
+							window.wgMessages = $.extend(window.wgMessages, resources.messages);
 						}
 
 						complete(event, resources);
@@ -382,7 +382,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 			var assetsLength = remaining = arguments.length,
 				matches,
 				remaining,
-				dfd = new Deferred(),
+				dfd = $.Deferred(),
 				failed = [],
 				func,
 				result,
@@ -512,6 +512,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 
 			return dfd.promise();
 		};
+
 
 		//list of types:
 		loader.JS = 'js';

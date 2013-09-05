@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Measurements\Time as T;
+
 /**
  * LinkSuggest main class
  *
@@ -49,6 +51,7 @@ class LinkSuggest {
 
 	static function getLinkSuggest(WebRequest $request) {
 		global $wgContLang, $wgContentNamespaces, $wgMemc, $wgLinkSuggestLimit;
+		$measurement = T::start(__FUNCTION__);
 		wfProfileIn(__METHOD__);
 
 		$isMobile = F::app()->checkSkin( 'wikiamobile' );
@@ -66,7 +69,7 @@ class LinkSuggest {
 		if (strlen($query) < 3) {
 			// enforce minimum character limit on server side
 			$out = self::getEmptyResponse($request->getText('format'));
-		} else if (false && $cached = $wgMemc->get($key)) {
+		} else if ($cached = $wgMemc->get($key)) {
 			$out = $cached;
 		}
 
@@ -140,7 +143,7 @@ class LinkSuggest {
 		$exactMatchRow = null;
 
 		$queryLower = strtolower($query);
-
+		$sql1Measurement = T::start([ __FUNCTION__ , "sql-1" ]);
 		$res = $db->select(
 			array( 'querycache', 'page' ),
 			array( 'page_namespace', 'page_title', 'page_is_redirect' ),
@@ -157,7 +160,7 @@ class LinkSuggest {
 		);
 
 		self::formatResults($db, $res, $query, $redirects, $results, $exactMatchRow);
-
+		$sql1Measurement->stop();
 		if (count($namespaces) > 0) {
 			$commaJoinedNamespaces = count($namespaces) > 1 ?  array_shift($namespaces) . ', ' . implode(', ', $namespaces) : $namespaces[0];
 		}
@@ -185,9 +188,11 @@ class LinkSuggest {
 							AND qc_type IS NULL
 						LIMIT ".($wgLinkSuggestLimit * 3); // we fetch 3 times more results to leave out redirects to the same page
 
+			$sql2Measurement = T::start([ __FUNCTION__, "sql-2" ]);
 			$res = $db->query($sql, __METHOD__);
 
 			self::formatResults($db, $res, $query, $redirects, $results, $exactMatchRow);
+			$sql2Measurement->stop();
 		}
 
 		if ($exactMatchRow !== null) {

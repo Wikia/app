@@ -85,6 +85,14 @@ $messages['fi'] = array(
 	'centralhelpsearch-placeholder' => 'Etsi ohjeita...',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'centralhelpsearch-desc' => 'Loyv innlimanina av einum formulari fyri at leita í Community Central Help',
+	'centralhelpsearch-placeholder' => 'Leita í Help...',
+);
+
 /** French (français)
  * @author Gomoko
  */

@@ -111,6 +111,14 @@ $messages['fi'] = array(
 	'randomwiki' => 'Satunnainen wiki',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'randomwiki-desc' => 'Letur brúkarar granska eina tilvildarliga wiki',
+	'randomwiki' => 'Tilvildarlig Wiki',
+);
+
 /** French (français)
  * @author Peter17
  */
