@@ -84,6 +84,9 @@ class Property extends AbstractAnnotation
                 Logger::warning('Unexcepted items for type "'.$this->type.'" in parameter "'.$this->name.'", expecting type "Array", "List" or "Set"');
                 $this->items = null;
             } else {
+                if ( !isset($this->items->type) ) {
+                    return false;
+                }
                 Swagger::checkDataType($this->items->type);
             }
         }
