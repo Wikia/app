@@ -3,14 +3,23 @@ var AdLogicShortPage = function (window, document, log) {
 
 	var logGroup = 'ext.wikia.adengine.logic.shortpage',
 		initCalled = false,
-		hasPreFootersThreshold = 2400,
+		preFootersThreshold = 2400,
 		slotsOnlyOnLongPages = {
 			LEFT_SKYSCRAPER_2: 2400,
-			LEFT_SKYSCRAPER_3: 8300,
-			PREFOOTER_LEFT_BOXAD: hasPreFootersThreshold,
-			PREFOOTER_RIGHT_BOXAD: hasPreFootersThreshold
+			LEFT_SKYSCRAPER_3: 4000,
+			PREFOOTER_LEFT_BOXAD: preFootersThreshold,
+			PREFOOTER_RIGHT_BOXAD: preFootersThreshold
+		},
+		oneColumnThreshold = 1024,
+		slotsOnlyOnWidePages = {
+			TOP_BUTTON_WIDE: oneColumnThreshold,
+			TOP_RIGHT_BOXAD: oneColumnThreshold,
+			LEFT_SKYSCRAPER_2: oneColumnThreshold,
+			LEFT_SKYSCRAPER_3: oneColumnThreshold,
+			INCONTENT_BOXAD_1: oneColumnThreshold
 		},
 		pageHeight,
+		pageWidth,
 		wrappedAds = {};
 
 	/**
@@ -20,9 +29,19 @@ var AdLogicShortPage = function (window, document, log) {
 	 * @returns {boolean}
 	 */
 	function shouldBeShown(slotname) {
-		var res = pageHeight && !(slotsOnlyOnLongPages[slotname] && pageHeight < slotsOnlyOnLongPages[slotname]);
-		log(['shouldBeShown', slotname, res], 'debug', logGroup);
-		return res;
+		var longEnough = false,
+			wideEnough = false;
+
+		if (pageHeight) {
+			longEnough = !slotsOnlyOnLongPages[slotname] || pageHeight > slotsOnlyOnLongPages[slotname];
+		}
+		if (pageWidth) {
+			wideEnough = !slotsOnlyOnWidePages[slotname] || pageWidth > slotsOnlyOnWidePages[slotname];
+		}
+
+		log(['shouldBeShown', slotname, 'longEnough', longEnough, 'wideEnough', wideEnough], 'debug', logGroup);
+
+		return longEnough && wideEnough;
 	}
 
 	/**
@@ -113,6 +132,7 @@ var AdLogicShortPage = function (window, document, log) {
 		var slotname;
 
 		pageHeight = document.documentElement.scrollHeight;
+		pageWidth = document.documentElement.scrollWidth;
 
 		for (slotname in wrappedAds) {
 			if (wrappedAds.hasOwnProperty(slotname)) {
@@ -144,7 +164,7 @@ var AdLogicShortPage = function (window, document, log) {
 		log(['isApplicable', slotinfo], 'debug', logGroup);
 
 		var slotname = slotinfo[0];
-		return !!(slotsOnlyOnLongPages[slotname]);
+		return !!(slotsOnlyOnLongPages[slotname] || slotsOnlyOnWidePages[slotname]);
 	}
 
 	/**
@@ -154,7 +174,7 @@ var AdLogicShortPage = function (window, document, log) {
 	 */
 	function hasPreFooters() {
 		log('hasPreFooters', 'debug', logGroup);
-		return pageHeight < hasPreFootersThreshold;
+		return pageHeight < preFootersThreshold;
 	}
 
 	/**

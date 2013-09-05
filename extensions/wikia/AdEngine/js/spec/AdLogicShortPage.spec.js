@@ -5,7 +5,7 @@ describe('AdLogicShortPage', function(){
 			var slot = [slotName],
 				windowMock = {addEventListener: function() {}},
 				logMock = function() {},
-				documentMock = {documentElement: {scrollHeight: pageLength}},
+				documentMock = {documentElement: {scrollHeight: pageLength, scrollWidth: 1280}},
 				adLogicShortPage = AdLogicShortPage(windowMock, documentMock, logMock),
 				fillInSlotCalled = false,
 				providerMock = {fillInSlot: function() { fillInSlotCalled = true; }};
