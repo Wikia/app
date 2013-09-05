@@ -1,4 +1,6 @@
-describe("Toc module", function() {
+describe('Toc module', function() {
+	'use strict';
+
 	var sections = {
 			open: function(){}
 		},
@@ -7,7 +9,7 @@ describe("Toc module", function() {
 			CLICK: ''
 		},
 		body = getBody(),
-		window = {
+		windowMock = {
 			document: {
 				body: body,
 				getElementById: function(id){
@@ -15,30 +17,32 @@ describe("Toc module", function() {
 				}
 			}
 		},
-		toc = modules.toc(track, sections, window, jQuery);
+		toc = modules.toc(track, sections, windowMock, jQuery);
 
 	it('should be defined', function(){
-			expect(toc).toBeDefined();
-			expect(typeof toc.init).toEqual('function');
-			expect(typeof toc.open).toEqual('function');
-			expect(typeof toc.close).toEqual('function');
+		expect(toc).toBeDefined();
+		expect(typeof toc.init).toEqual('function');
+		expect(typeof toc.open).toEqual('function');
+		expect(typeof toc.close).toEqual('function');
 	});
 
 	it('should init', function(done){
+		var d = windowMock.document;
+
 		body.innerHTML = '<div id="mw-content-text"><table id="toc" class="toc"><div id="toctitle"></div></table></div>';
 
-			toc.init();
+		toc.init();
 
-			expect(window.document.body.className).toMatch('hasToc');
+		expect(d.body.className).toMatch('hasToc');
 
-			var chev = window.document.getElementById('toctitle').querySelectorAll('.chev');
-			expect(chev.length).toEqual(1);
+		var chev = d.getElementById('toctitle').querySelectorAll('.chev');
+		expect(chev.length).toEqual(1);
 	});
 
 	it('should open/close toc', function(){
-		body.innerHTML = '<div id="mw-content-text"><table id="toc" class="toc"><div id="toctitle"></div></table></div>';
+		var d = windowMock.document;
 
-		var d = window.document;
+		body.innerHTML = '<div id="mw-content-text"><table id="toc" class="toc"><div id="toctitle"></div></table></div>';
 
 		toc.init();
 		toc.open();
