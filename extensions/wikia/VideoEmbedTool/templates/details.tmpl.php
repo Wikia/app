@@ -6,6 +6,7 @@ global $wgExtensionsPath;
 ?>
 	<div id="VideoEmbedThumb" class="VideoEmbedThumb">
 		<script type="text/javascript">
+			// TODO: This doesn't seem to be the prescribed way to create a js global
 			window.VETPlayerParams = <?= $props['code'] ?>;
 		</script>
 		<p><?= wfMessage( 'vet-preview' ) ?></p>
@@ -81,14 +82,16 @@ global $wgExtensionsPath;
 	</div>
 	<? if( $screenType == 'details' ): ?>
 		<div class="input-group button-group addVideoDetailsFormControls">
-			<input class="wikia-button v-float-right" type="submit" value="<?= wfMessage('vet-insert2') ?>" />
+			<? if ($showAddVideoBtn): ?>
+				<input class="wikia-button v-float-right" type="submit" value="<?= wfMessage('vet-insert2')->text() ?>" />
+			<? endif; ?>
 		</div>
 		<input id="VideoEmbedId" type="hidden" value="<?= isset($props['id']) ? urlencode($props['id']) : '' ?>" />
 		<input id="VideoEmbedProvider" type="hidden" value="<?= urlencode($props['provider']) ?>" />
 		<input id="VideoEmbedMetadata" type="hidden" value="<?= isset($props['metadata']) ? urlencode($props['metadata']) : '' ?>" />
 	<? else: // $screenType == 'edit' ?>
 		<div class="input-group button-group">
-			<input class="wikia-button v-float-right" type="submit" value="<?= wfMessage('vet-update') ?>"/>
+			<input class="wikia-button v-float-right" type="submit" value="<?= wfMessage('vet-update')->text() ?>"/>
 		</div>
 		<div id="VideoReplaceLink" class="VideoReplaceLink"><?= wfMessage('vet-video-replace-link', $props['href'])->parse(); ?></div>
 		<input id="VideoEmbedHref" type="hidden" value="<?= htmlspecialchars($props['href']) ?>" />

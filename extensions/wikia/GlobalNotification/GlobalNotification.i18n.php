@@ -27,6 +27,21 @@ $messages['ar'] = array(
 	'globalnotification-general-ajax-failure' => 'تعذر على المتصفح الدخول إلى ويكيا.  حاول مرة أخرى لاحقاً.',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'globalnotification-desc' => 'ইভেন্টের জন্য সিস্টেম বিজ্ঞপ্তি প্রদর্শন যেমন AJAX (এজেএএক্স) ব্যর্থতা হিসেবে',
+	'globalnotification-general-ajax-failure' => 'ব্রাউজার উইকিয়ার সাথে সংযোগ করতে পারে নি। দয়া করে পরে আবার চেষ্টা করুন।',
+);
+
+/** Breton (brezhoneg)
+ * @author Fohanno
+ */
+$messages['br'] = array(
+	'globalnotification-general-ajax-failure' => "Ar medeer ne oa ket evit kevreañ ouzh  ar Wikia. Esaeit en-dro diwezhatoc'h.",
+);
+
 /** Catalan (català)
  * @author Marcmpujol
  */
@@ -68,6 +83,14 @@ $messages['fi'] = array(
 	'globalnotification-general-ajax-failure' => 'Yhteyden muodostaminen Wikian palvelimille epäonnistui. Yritä myöhemmin uudelleen.',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'globalnotification-desc' => 'Vísir boð frá skipanini fyri hendingar sum eitt nú AJAX feilir',
+	'globalnotification-general-ajax-failure' => 'Brovsarin fekk ikki samband við Wikia. Royn aftur seinni.',
+);
+
 /** French (français)
  * @author Wyz
  */
@@ -82,6 +105,14 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'globalnotification-desc' => 'Extensión do sistema de notificación de Wikia. Mostra as notificación do sistema para os eventos como fallos no funcionamento do AJAX',
 	'globalnotification-general-ajax-failure' => 'O navegador non puido conectar con Wikia. Inténteo máis tarde.',
+);
+
+/** Hebrew (עברית)
+ * @author Amire80
+ */
+$messages['he'] = array(
+	'globalnotification-desc' => 'הצגת הודעות מערכת לאירועים כגון כשלי AJAX',
+	'globalnotification-general-ajax-failure' => 'הדפדפן לא הצליח להתחבר לוויקיה. נא לנסות שוב.',
 );
 
 /** Hungarian (magyar)

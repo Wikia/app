@@ -411,7 +411,8 @@ class AdEngine2Controller extends WikiaController {
 		$vars['wgAdsShowableOnPage'] = self::areAdsShowableOnPage();
 		$vars['wgShowAds'] = self::areAdsShowableOnPage();
 
-		$vars['wgAdDriverUseGpt'] = $req->getBool('usegpt', (bool) $wg->AdDriverUseGpt);
+		$vars['wgAdDriverUseFullGpt'] = $req->getBool('usefullgpt', (bool) $wg->AdDriverUseFullGpt);
+		$vars['wgAdDriverUseNewGptZones'] = $req->getBool('usenewgptzones', (bool) $wg->AdDriverUseNewGptZones);
 		$vars['wgAdVideoTargeting'] = $req->getBool('videotargeting', (bool) $wg->AdVideoTargeting);
 		$vars['wgAdDriverStartLiftiumOnLoad'] = $req->getBool('liftiumonload', (bool) $wg->LiftiumOnLoad);
 
@@ -546,7 +547,9 @@ class AdEngine2Controller extends WikiaController {
 			}
 		}
 
-		$attribs['class'] .= ' exitstitial';
+		if (isset($attribs['class'])) {
+			$attribs['class'] .= ' exitstitial';
+		}
 	}
 
 	static private function getExitstitialUrlsWhiteList() {

@@ -40,7 +40,7 @@ class VideoEmbedToolController extends WikiaController {
 			$result = array(
 					'searchQuery' => $service->getSuggestionQuery(),
 					'caption' => wfMsg( 'vet-suggestions' ),
-					'totalItemCount' => 0,
+					'totalItemCount' => $response['totalItemCount'],
 					'nextStartFrom' => $response['nextStartFrom'],
 					'currentSetItemCount' => count($response['items']),
 					'items' => $response['items']

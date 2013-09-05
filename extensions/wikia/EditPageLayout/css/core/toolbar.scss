@@ -1,4 +1,4 @@
-#EditPageToolbar {
+.EditPageToolbar {
 	@include box-shadow(0, 4px, 2px, $color-epl-gradient-shadow, false, 0);
 	@include linear-gradient($color-epl-gradient, top, $color-epl-gradient-light, 50%, $color-epl-gradient-dark, 100%);
 	@include clearfix;
@@ -15,9 +15,11 @@
 			padding-top: 5px;
 		}
 	}
+
 	.editpage-toolbar .cke_buttons {
 		padding: 2px 0 1px;
 	}
+
 	.cke_toolbar_expand {
 		> a {
 			color: $color-text;
@@ -58,6 +60,17 @@
 		margin-left: 10px;
 	}
 
+	.cke_toolbar_format {
+		margin-right: 30px;
+		padding-top: 0;
+
+		.cke_button a,
+		.cke_rcombo a,
+		.cke_separator {
+			margin-top: 5px;
+		}
+	}
+
 	.cke_toolbar_widescreen {
 		@include clearfix;
 		border-top: solid 1px $color-page-border;
@@ -89,7 +102,7 @@
 		@include linear-gradient($color-epl-separator, top, $color-epl-separator-tips, 0%, $color-epl-separator, 10%, $color-epl-separator, 90%, $color-epl-separator-tips, 100%);
 		display: inline-block;
 		float: left;
-		height: 30px;
+		height: 29px;
 		margin: -1px 5px;
 		width: 1px;
 	}

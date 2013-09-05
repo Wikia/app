@@ -9,6 +9,9 @@ class PageHeaderController extends WikiaController {
 
 	var $content_actions;
 
+	/* @var SkinTemplate */
+	private $skinTemplate;
+
 	public function init() {
 		$this->isMainPage = null;
 		$this->likes = null;
@@ -19,7 +22,9 @@ class PageHeaderController extends WikiaController {
 		$this->actionName = null;
 		$this->dropdown = null;
 
-		$skinVars = $this->app->getSkinTemplateObj()->data;
+		$this->skinTemplate = $this->app->getSkinTemplateObj();
+
+		$skinVars = $this->skinTemplate->data;
 		$this->content_actions = $skinVars['content_actions'];
 		$this->displaytitle = $skinVars['displaytitle']; // if true - don't encode HTML
 		$this->title = $skinVars['title'];
@@ -52,8 +57,15 @@ class PageHeaderController extends WikiaController {
 			!$wgTitle->isNamespaceProtected($wgUser) ) {
 			// force login to edit page that is not protected
 			$this->content_actions['edit'] = $this->content_actions['viewsource'];
-			$this->content_actions['edit']['text'] = wfMsg('edit');
+			$this->content_actions['edit']['text'] = wfMessage('edit')->text();
 			unset($this->content_actions['viewsource']);
+		}
+
+		// If cascade protected, show viewsource button - BugId:VE-89
+		if ( isset( $this->content_actions['edit'] ) && $wgTitle->isCascadeProtected() ) {
+			$this->content_actions['viewsource'] = $this->content_actions['edit'];
+			$this->content_actions['viewsource']['text'] = wfMessage('viewsource')->text();
+			unset($this->content_actions['edit']);
 		}
 
 		// PvX's rate (RT #76386)
@@ -140,6 +152,9 @@ class PageHeaderController extends WikiaController {
 		wfProfileIn(__METHOD__);
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
+
+		// check for video add button permissions
+		$this->showAddVideoBtn = $wgUser->isAllowed('videoupload');
 
 		// page namespace
 		$ns = $wgTitle->getNamespace();
@@ -299,6 +314,10 @@ class PageHeaderController extends WikiaController {
 					$this->tallyMsg = wfMessage('specialvideos-wiki-videos-tally',$mediaService->getTotalVideos())->parse();
 				}
 
+				if ( $wgTitle->isSpecial('LicensedVideoSwap') ) {
+					$this->pageType = "";
+				}
+
 				break;
 
 			case NS_CATEGORY:
@@ -314,7 +333,7 @@ class PageHeaderController extends WikiaController {
 		$this->pageSubject = $skin->subPageSubtitle();
 
 		if ( in_array($wgTitle->getNamespace(), BodyController::getUserPagesNamespaces() ) ) {
-			$title = explode(':', $this->title);
+			$title = explode(':', $this->title, 2); // User:Foo/World_Of_Warcraft:_Residers_in_Shadows (BAC-494)
 			if(count($title) >= 2 && $wgTitle->getNsText() == str_replace(' ', '_', $title[0]) ) // in case of error page (showErrorPage) $title is just a string (cannot explode it)
 				$this->title = $title[1];
 		}
@@ -360,19 +379,21 @@ class PageHeaderController extends WikiaController {
 			 * this adds links which automatically convert the content to that variant
 			 *
 			 * @author tor@wikia-inc.com
+			 * @author macbre@wikia-inc.com
 			 */
-			if ( $wgContLang->hasVariants() ) {
-				foreach ( $wgContLang->getVariants() as $variant ) {
-					if ( $variant != $wgContLang->getCode() ) {
-						$subtitle[] = Xml::element(
-							'a',
-							array(
-								'href' => $wgTitle->getLocalUrl( array( 'variant' => $variant ) ),
-								'rel' => 'nofollow'
-							),
-							$wgContLang->getVariantname( $variant )
-						);
-					}
+			$variants = $this->skinTemplate->get('content_navigation')['variants'];
+
+			if ( !empty($variants) ) {
+				foreach ( $variants as $variant ) {
+					$subtitle[] = Xml::element(
+						'a',
+						array(
+							'href' => $variant['href'],
+							'rel' => 'nofollow',
+							'id' => $variant['id']
+						),
+						$variant['text']
+					);
 				}
 			}
 

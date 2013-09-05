@@ -76,7 +76,7 @@
 			this.protocol = loc.protocol;
 			this.link = loc.host;
 			// found in DAR-744: IE returns bad pathname (no initial '/')
-			// when <a> element is screated in javascript
+			// when <a> element is created in javascript
 			this.path = (loc.pathname.charAt(0) != '/' ? '/' : '') + loc.pathname;
 
 			this.hash = loc.hash.substr(1);
@@ -278,7 +278,7 @@
 		p.goTo = function () {
 			l.href = this.toString();
 		};
-		
+
 		/**
 		 * Updates the URL without navigating away from the page
 		 *

@@ -1056,19 +1056,6 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 					}
 				}
 
-				// Make encoding work with UTF8 - NOTE: We do not apply this again to a result that the doHyphens/lastHyphen trick grabbed because that has already been encoded.
-				$retVal['artist'] = utf8_encode($retVal['artist']);
-				$retVal['song'] = utf8_encode($retVal['song']);
-				$retVal['lyrics'] = utf8_encode($retVal['lyrics']);
-				// Haven't run this test in a while.  Commenting out for now.
-				//if(isset($_GET['test']) && $_GET['test']=="encoding"){
-				//	$isUTF = utf8_compliant("$artist:$song:$lyrics");
-				//	print "UTF8: ".($isUTF?"true":"false")."<br/>";
-				//	print "UTF8-artist: ".(utf8_compliant($artist)?"true":"false")."<br/>";
-				//	print "UTF8-song: ".(utf8_compliant($song)?"true":"false")."<br/>";
-				//	print "UTF8-lyrics: ".(utf8_compliant($lyrics)?"true":"false")."<br/>";
-				//}
-
 				// Determine if this result was from the takedown list (must be done before truncating to a snippet, below).
 				$retVal['isOnTakedownList'] = (0 < preg_match("/\{\{gracenote[ _]takedown\}\}/", $retVal['lyrics']));
 
@@ -1096,6 +1083,11 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 						//$retVal['lyrics'] = $DENIED_NOTICE . $retVal['url'] . $urlLink . $DENIED_NOTICE_SUFFIX;
 					}
 				}
+
+				// Make encoding work with UTF8 - NOTE: We do not apply this again to a result that the doHyphens/lastHyphen trick grabbed because that has already been encoded.
+				$retVal['artist'] = utf8_encode($retVal['artist']);
+				$retVal['song'] = utf8_encode($retVal['song']);
+				$retVal['lyrics'] = utf8_encode($retVal['lyrics']);
 			}
 		}
 
@@ -2280,8 +2272,12 @@ function lw_getPage($pageTitle, &$finalName='', $debug=false, $page_namespace=NS
 				/* @var $article WikiPage */
 				if($article->isRedirect()){
 					$reTitle = $article->followRedirect(); // follows redirects recursively
-					/* @var $reTitle Title */
-					$article = Article::newFromId($reTitle->getArticleID());
+					if ($reTitle instanceof Title) {
+						$article = Article::newFromId($reTitle->getArticleID());
+					}
+					else {
+						$article = null;
+					}
 				}
 				if( is_object($article) ){
 					$finalName = $article->getTitle()->getDBkey();

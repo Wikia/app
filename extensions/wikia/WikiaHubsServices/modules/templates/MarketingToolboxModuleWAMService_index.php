@@ -14,7 +14,7 @@
 		<? endif ?>
 	</div>
 	<div class="search">
-		<form method="get" action="index.php?title=Special:Search" class="WikiaSearch" id="WikiaSearch">
+		<form method="get" action="<?= $specialSearchUrl; ?>" class="WikiaSearch" id="WikiaSearch">
 			<input type="text" value="" accesskey="f" autocomplete="off" placeholder="<?= wfMessage('wikiahubs-search-placeholder')->text(); ?>" name="search" id="HubSearch" />
 			<input type="hidden" value="0" name="fulltext" />
 			<? if (!empty($searchHubName)): ?>

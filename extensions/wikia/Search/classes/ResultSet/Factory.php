@@ -25,21 +25,10 @@ class Factory
 		if ( $searchConfig === null ) {
 			throw new \Exception( 'An instance of Wikia\Search\Config must be set in the dependency container at a mininum in order to instantiate a result set.' );
 		}
-		
-		$parent = $container->getParent();
-		$metaposition = $container->getMetaposition();
 		$result = $container->getResult();
-		$wikiMatch = $container->getWikiMatch();
-		
 		$terminal = 'Base';
 		if ( $result === null || $result instanceof Solarium_Result_Select_Empty ) {
 			$terminal = 'EmptySet';
-		} else if ( $parent === null && $searchConfig->getInterWiki() ) {
-			$terminal = 'GroupingSet';
-		} else if ( $parent !== null && $metaposition !== null ) {
-			$terminal = 'Grouping';
-		} else if ( $parent !== null && $wikiMatch !== null ) {
-			$terminal = 'MatchGrouping';
 		}
 		return (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\\Search\\ResultSet\\' . $terminal, [ $container ] );
 	}

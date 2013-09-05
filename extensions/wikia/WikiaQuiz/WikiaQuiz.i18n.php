@@ -581,6 +581,16 @@ $messages['fa'] = array(
 	'wikiaquiz-game-finish-button' => 'پایان',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'wikiaquiz-desc' => 'Veitir ein lættan máta at upprætta og skipa spurnakappingum',
+	'wikiaquiz-createquiz-headline' => 'Upprætta spurnakapping',
+	'wikiaquiz-editquiz-headline' => 'Ritsjórna spurnakapping',
+	'wikiaquiz-title-label' => 'Heiti',
+);
+
 /** French (français)
  * @author Cmarget
  * @author Crochet.david
@@ -1197,7 +1207,7 @@ $messages['mk'] = array(
 	'wikiaquiz-game-email-placeholder' => 'вашеиме@вашапошта.com',
 	'wikiaquiz-game-email-button' => 'Испраќај ми бесплатни работи',
 	'wikiaquiz-game-email-valid-please' => 'Внесете важечка е-пошта.',
-	'wikiaquiz-game-email-token-mismatch' => 'Упс! Жетонот не се совпаѓа',
+	'wikiaquiz-game-email-token-mismatch' => 'Упс! Шифрата не се совпаѓа',
 	'wikiaquiz-game-email-subject' => 'Ви благодариме за учеството!',
 	'wikiaquiz-game-email-body' => 'Оваа е потврдна порака. Го примивме поднесеното и ќе ве известиме ако победите!',
 	'wikiaquiz-game-email-error' => 'Се појави грешка при испраќањето на поракава: $1',
@@ -1564,6 +1574,7 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Caio1478
  * @author Hamilton Abreu
+ * @author Luckas
  */
 $messages['pt'] = array(
 	'wikiaquiz-desc' => 'Uma forma fácil de criar e gerir testes',
@@ -1585,7 +1596,7 @@ $messages['pt'] = array(
 	'wikiaquiz-questions-label' => 'Perguntas',
 	'wikiaquiz-answers-label' => 'Respostas',
 	'wikiaquiz-answer-label' => 'Resposta',
-	'wikiaquiz-correct-label' => 'Correcta?',
+	'wikiaquiz-correct-label' => 'Correta?',
 	'wikiaquiz-addnewitem-label' => 'Acrescentar um elemento',
 	'wikiaquiz-cancel-label' => 'Cancelar',
 	'wikiaquiz-publish-label' => 'Publicar',
@@ -1594,7 +1605,7 @@ $messages['pt'] = array(
 	'wikiaquiz-error-invalid-question' => 'O texto da pergunta é inválido.',
 	'wikiaquiz-error-invalid-image' => 'A imagem é inválida: $1',
 	'wikiaquiz-error-missing-answers' => 'Tem de dar pelo menos uma resposta.',
-	'wikiaquiz-error-invalid-correct-answer' => 'Tem de escolher uma resposta correcta.',
+	'wikiaquiz-error-invalid-correct-answer' => 'Tem de escolher uma resposta correta.',
 	'wikiaquiz-error-invalid-quiz' => 'O nome do teste é inválido.',
 	'wikiaquiz-error-invalid-article' => 'A identificação do artigo é inválida.',
 	'wikiaquiz-error-invalid-article-with-details' => 'O artigo é inválido: $1',
@@ -1605,7 +1616,7 @@ $messages['pt'] = array(
 	'wikiaquiz-game-question-label' => 'PERGUNTA',
 	'wikiaquiz-game-next-button' => 'Próxima Pergunta',
 	'wikiaquiz-game-finish-button' => 'Terminar',
-	'wikiaquiz-game-correct-label' => 'Correcto! Muito bem.',
+	'wikiaquiz-game-correct-label' => 'Correto! Muito bem.',
 	'wikiaquiz-game-incorrect-label' => 'ERRADO.',
 	'wikiaquiz-game-congratulations' => 'Muito bem, $1!',
 	'wikiaquiz-game-congratulations-anon' => 'Muito bem!',
@@ -1649,10 +1660,16 @@ $messages['roa-tara'] = array(
 	'wikiaquiz-title-label' => 'Titole',
 	'wikiaquiz-titlescreentext-label' => "Teste d'u titole d'u quadre",
 	'wikiaquiz-fbrecommendationtext-label' => "Descrizione d'a raccomandazione de Feisbuk",
+	'wikiaquiz-titlescreenimages-label' => "Titole de le immaggine d'u scherme",
+	'wikiaquiz-moreinfoheading-label' => "Cchiù 'mbormaziune in testate",
+	'wikiaquiz-requireemail-label' => "Cirche a 'u sciucatore de sckaffà 'n'indirizze email quanne 'u scioche spicce",
+	'wikiaquiz-moreinfolinks-label' => "Cchiù 'mbormaziune sus a le collegaminde",
 	'wikiaquiz-moreinfoarticle-label' => 'Vôsce',
 	'wikiaquiz-moreinfolinktext-label' => "Teste d'u collegamende",
 	'wikiaquiz-question-label' => 'Domande',
 	'wikiaquiz-image-label' => 'Immaggine (opzionale)',
+	'wikiaquiz-video-label' => 'Video (opzionale, Immaggine ca sostituisce)',
+	'wikiaquiz-explanation-label' => "Spiegazione d'a resposte (opzionale)",
 	'wikiaquiz-quiz-label' => 'Quiz',
 	'wikiaquiz-questions-label' => 'Domande',
 	'wikiaquiz-answers-label' => 'Resposte',
@@ -1661,18 +1678,39 @@ $messages['roa-tara'] = array(
 	'wikiaquiz-addnewitem-label' => "Aggiunge 'na vôscia nove",
 	'wikiaquiz-cancel-label' => 'Annulle',
 	'wikiaquiz-publish-label' => 'Pubbleche',
+	'wikiaquiz-error-duplicate-quiz' => "'Nu quiz cu quidde nome ggià esiste.",
+	'wikiaquiz-error-duplicate-question' => "'Na domande cu quidde nome ggià esiste.",
+	'wikiaquiz-error-invalid-question' => "'U teste d'a domande jè invalide.",
 	'wikiaquiz-error-invalid-image' => "L'immaggine jè invalide: $1",
 	'wikiaquiz-error-invalid-video' => "'U video jè invalide: $1",
+	'wikiaquiz-error-missing-answers' => "Tu à dà almene 'na resposte.",
+	'wikiaquiz-error-invalid-correct-answer' => "Tu ha specificà 'na resposte corrette.",
+	'wikiaquiz-error-invalid-quiz' => "'U nome d'u quiz jè invalide.",
+	'wikiaquiz-error-invalid-article' => "ID d'a vôsce jè invalide.",
+	'wikiaquiz-error-invalid-article-with-details' => "'A vôsce jè invalide: $1",
+	'wikiaquiz-game-start-button' => 'Accuminze a sciucà',
 	'wikiaquiz-game-cadence-3' => 'Pronde',
 	'wikiaquiz-game-cadence-2' => "'Mboste",
 	'wikiaquiz-game-cadence-1' => 'Veje!',
 	'wikiaquiz-game-question-label' => 'DOMANDE',
 	'wikiaquiz-game-next-button' => 'Prossema domande',
 	'wikiaquiz-game-finish-button' => 'Spicce',
+	'wikiaquiz-game-correct-label' => 'Corrette! Sì forte.',
+	'wikiaquiz-game-incorrect-label' => 'SBAGLIATE. Vatinne.',
 	'wikiaquiz-game-congratulations' => 'A uerre sì tu, $1!',
 	'wikiaquiz-game-congratulations-anon' => 'A uerre sì tu!',
 	'wikiaquiz-game-your-score' => "'U PUNDEGGE TUNE JE'",
 	'wikiaquiz-game-continue-button' => 'Condinue',
+	'wikiaquiz-game-thanks' => 'Grazie pe avè sciucate!',
+	'wikiaquiz-game-provide-email' => "Pe piacere mitte l'indirizze email tune",
+	'wikiaquiz-game-email-placeholder' => 'yourname@youremail.com',
+	'wikiaquiz-game-email-button' => "Manname 'a robba aggratis",
+	'wikiaquiz-game-email-valid-please' => "Pe piacere mitte 'n'indirizze email valide.",
+	'wikiaquiz-game-email-token-mismatch' => "Ue! 'U gettone non ge corrisponne",
+	'wikiaquiz-game-email-subject' => 'Grazie pa conferma toje!',
+	'wikiaquiz-game-email-body' => "Queste jè 'na mail de conferme. Nuje amme ricevute 'a conferma toje e pò te decime ce sì 'u vingitore!",
+	'wikiaquiz-game-email-error' => "Ha assute 'n'errore quanne ste mannave st'email: $1",
+	'wikiaquiz-game-challenge' => 'Sfide le amice tue a sciucà!',
 	'wikiaquiz-game-mute' => 'Citte',
 );
 
@@ -2014,17 +2052,30 @@ $messages['tl'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
+	'wikiaquiz-desc' => 'Забезпечує простий спосіб створення та керування вікторинами',
+	'wikiaquiz-createquiz-headline' => 'Створити вікторину',
+	'wikiaquiz-editquiz-headline' => 'Редагувати вікторину',
+	'wikiaquiz-createquizarticle-headline' => 'Створити питання та відповіді опитування',
+	'wikiaquiz-editquizarticle-headline' => 'Редагувати питання та відповіді вікторини',
 	'wikiaquiz-title-label' => 'Назва',
 	'wikiaquiz-titlescreentext-label' => 'Назва для відображення на екрані',
+	'wikiaquiz-fbrecommendationtext-label' => 'Опис рекомендацій Facebook',
+	'wikiaquiz-titlescreenimages-label' => 'Зображення основного екрану',
+	'wikiaquiz-moreinfoheading-label' => 'Додаткові відомості',
+	'wikiaquiz-requireemail-label' => 'Вимагається від гравців ввести адресу електронної пошти в кінці гри',
+	'wikiaquiz-moreinfolinks-label' => 'Подробиці у посиланнях',
 	'wikiaquiz-moreinfoarticle-label' => 'Стаття',
 	'wikiaquiz-moreinfolinktext-label' => 'Текст посилання',
 	'wikiaquiz-question-label' => 'Запитання',
 	'wikiaquiz-image-label' => "Зображення (необов'язково)",
 	'wikiaquiz-video-label' => "Відео (необов'язково, заміняє зображення)",
 	'wikiaquiz-explanation-label' => "Пояснення відповіді (необов'язково)",
+	'wikiaquiz-quiz-label' => 'Вікторина',
 	'wikiaquiz-questions-label' => 'Запитання',
 	'wikiaquiz-answers-label' => 'Відповіді',
 	'wikiaquiz-answer-label' => 'Відповідь',
@@ -2032,6 +2083,16 @@ $messages['uk'] = array(
 	'wikiaquiz-addnewitem-label' => 'Додати новий пункт',
 	'wikiaquiz-cancel-label' => 'Скасувати',
 	'wikiaquiz-publish-label' => 'Опублікувати',
+	'wikiaquiz-error-duplicate-quiz' => "Вікторина з таким ім'ям вже існує.",
+	'wikiaquiz-error-duplicate-question' => "Питання з таким ім'ям вже існує.",
+	'wikiaquiz-error-invalid-question' => 'Текст запитання є неприпустимим.',
+	'wikiaquiz-error-invalid-image' => 'Зображення є неприпустимим:$1',
+	'wikiaquiz-error-invalid-video' => 'Відео є неприпустимим:$1',
+	'wikiaquiz-error-missing-answers' => 'Потрібно вказати принаймні одну відповідь.',
+	'wikiaquiz-error-invalid-correct-answer' => 'Необхідно вказати одну правильну відповідь.',
+	'wikiaquiz-error-invalid-quiz' => 'Назва вікторини невірна.',
+	'wikiaquiz-error-invalid-article' => 'Код статті невірний.',
+	'wikiaquiz-error-invalid-article-with-details' => 'Стаття є неприпустима: $1',
 	'wikiaquiz-game-start-button' => 'Розпочати гру',
 	'wikiaquiz-game-cadence-3' => 'Приготуватися',
 	'wikiaquiz-game-cadence-2' => 'Увага',
@@ -2043,9 +2104,18 @@ $messages['uk'] = array(
 	'wikiaquiz-game-incorrect-label' => 'Невірно.',
 	'wikiaquiz-game-congratulations' => 'Чудова робота, $1!',
 	'wikiaquiz-game-congratulations-anon' => 'Чудова робота!',
+	'wikiaquiz-game-your-score' => 'ВАША ОЦІНКА',
 	'wikiaquiz-game-continue-button' => 'Продовжити',
 	'wikiaquiz-game-thanks' => 'Дякуємо за гру!',
 	'wikiaquiz-game-provide-email' => 'Будь ласка, введіть Вашу адресу електронної пошти',
+	'wikiaquiz-game-email-placeholder' => 'yourname@youremail.com',
+	'wikiaquiz-game-email-button' => 'Надіслати мені безкоштовний матеріал',
+	'wikiaquiz-game-email-valid-please' => 'Будь ласка, введіть справжню адресу електронної пошти.',
+	'wikiaquiz-game-email-token-mismatch' => 'Йой! Знак не збігається',
+	'wikiaquiz-game-email-subject' => 'Дякуємо за вашу заявку!',
+	'wikiaquiz-game-email-body' => 'Це підтвердження по електронній пошті. Ми отримали вашу заявку і повідомимо вам, якщо ви переможець!',
+	'wikiaquiz-game-email-error' => 'Виникла помилка під час надсилання на цю електронну пошту: $1',
+	'wikiaquiz-game-challenge' => 'Киньте виклик своїм друзям, щоб грати!',
 	'wikiaquiz-game-mute' => 'Без звуку',
 );
 

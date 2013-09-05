@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\Test\QueryService\Select\AbstractSelect
  */
 namespace Wikia\Search\Test\QueryService\Select;
-use Wikia, ReflectionProperty, ReflectionMethod;
+use Wikia, ReflectionProperty, ReflectionMethod, Wikia\Search\Utilities;
 /**
  * Tests core functionality shared by other Select instances
  */
@@ -33,11 +33,6 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 				$mockSelect
 		);
 		$this->assertAttributeInstanceOf(
-				'Wikia\Search\ResultSet\Factory',
-				'resultSetFactory',
-				$mockSelect
-		);
-		$this->assertAttributeInstanceOf(
 				'Wikia\Search\MediaWikiService',
 				'service',
 				$mockSelect
@@ -51,10 +46,10 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
 		                   ->setMethods( array( 'getResults' ) )
 		                   ->getMock();
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
+		
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
-		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( array( 'getMatch', 'prepareRequest', 'prepareResponse', 'sendSearchRequestToClient' ) )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( array( 'getMatch', 'prepareRequest', 'prepareResponse', 'sendSearchRequestToClient', 'getConfig' ) )
 		                   ->getMockForAbstractClass();
 		
 		$mockResponse = $this->getMockBuilder( 'Solarium_Result_Select' )
@@ -84,6 +79,11 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'prepareResponse' )
 		    ->will   ( $this->returnValue( $mockResponse ) )
 		;
+		$mockSelect
+		    ->expects( $this->at( 4 ) )
+		    ->method ( 'getConfig' )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'getResults' )
@@ -102,15 +102,19 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
 		                   ->setMethods( array( 'hasMatch', 'getMatch' ) )
 		                   ->getMock();
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
-		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( array( 'extractMatch' ) )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( array( 'extractMatch', 'getConfig' ) )
 		                   ->getMockForAbstractClass();
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
 
+		$mockSelect
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getConfig' )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
 		$mockConfig
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'hasMatch' )
@@ -132,6 +136,11 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		;
 		$mockSelect
 		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getConfig' )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockSelect
+		    ->expects( $this->at( 1 ) )
 		    ->method ( 'extractMatch' )
 		    ->will   ( $this->returnValue( $mockMatch ) )
 		;
@@ -149,11 +158,15 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
 		                   ->setMethods( array( 'hasMatch', 'getMatch' ) )
 		                   ->getMock();
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
-		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( array() )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( array( 'getConfig' ) )
 		                   ->getMockForAbstractClass();
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'getConfig' )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
 		$mockConfig
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'hasMatch' )
@@ -175,7 +188,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'client' => $mockClient ) );
 		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\AbstractSelect' )
 		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( array( 'registerComponents', 'getFormulatedQuery' ) )
+		                   ->setMethods( array( 'registerComponents', 'getQuery', 'registerQueryParams' ) )
 		                   ->getMockForAbstractClass();
 		$mockQuery = $this->getMockBuilder( '\Solarium_Query_Select' )
 		                  ->disableOriginalConstructor()
@@ -193,12 +206,19 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		;
 		$mockSelect
 		    ->expects( $this->at( 0 ) )
-		    ->method ( 'registerComponents' )
+		    ->method ( 'registerQueryParams' )
 		    ->with   ( $mockQuery )
+		    ->will   ( $this->returnValue( $mockSelect ) )
 		;
 		$mockSelect
 		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getFormulatedQuery' )
+		    ->method ( 'registerComponents' )
+		    ->with   ( $mockQuery )
+		    ->will   ( $this->returnValue( $mockSelect ) )
+		;
+		$mockSelect
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'getQuery' )
 		    ->will   ( $this->returnValue( 'foo:bar' ) )
 		;
 		$mockQuery
@@ -212,21 +232,6 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		$this->assertEquals(
 				$mockQuery,
 				$getSelect->invoke( $mockSelect )
-		);
-	}
-	
-	/**
-	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getBoostQueryString 
-	 */
-	public function testGetBoostQueryString() {
-		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\AbstractSelect' )
-		                   ->disableOriginalConstructor()
-		                   ->setMethods( array() )
-		                   ->getMockForAbstractClass();
-		$get = new ReflectionMethod( 'Wikia\Search\QueryService\Select\AbstractSelect', 'getBoostQueryString' );
-		$get->setAccessible( true );
-		$this->assertEmpty(
-				$get->invoke( $mockSelect )
 		);
 	}
 	
@@ -253,23 +258,34 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerQueryParams 
 	 */
 	public function testRegisterQueryParams() {
-		$mockQuery = $this->getMockBuilder( '\Solarium_Query_select' )
+		$mockQuery = $this->getMockBuilder( '\Solarium_Query_Select' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'addFields', 'removeField', 'setStart', 'setRows', 'addSort', 'addParam' ) )
 		                  ->getMock();
 		$config = new Wikia\Search\Config();
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $config ) );
 		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\AbstractSelect' )
-		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( array( null ) )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( array( 'getConfig', 'getRequestedFields' ) )
 		                   ->getMockForAbstractClass();
+		
+		$mockSelect
+		    ->expects( $this->any() )
+		    ->method ( 'getConfig' )
+		    ->will   ( $this->returnValue( $config ) )
+		;
 		
 		// we'll just use default values.
 		$sort = $config->getSort();
-		$fields = $config->getRequestedFields();
 		$start = $config->getStart();
 		$length = $config->getLength();
 		
+		$fields = [ 'foo', 'bar', 'baz' ];
+		
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'getRequestedFields' )
+		    ->will   ( $this->returnValue( $fields ) )
+		;
 		$mockQuery
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'addFields' )
@@ -325,14 +341,18 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
 		                   ->setMethods( array( 'setFilterQuery', 'getFilterQueries' ) )
 		                   ->getMock();
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\AbstractSelect' )
-		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( array( 'getFilterQueryString', 'registerFilterQueryForMatch' ) )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( array( 'getFilterQueryString', 'registerFilterQueryForMatch', 'getConfig' ) )
 		                   ->getMockForAbstractClass();
 		
 		$mockSelect
-		    ->expects( $this->at( 0 ) )
+		    ->expects( $this->any() )
+		    ->method ( 'getConfig' )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockSelect
+		    ->expects( $this->at( 1 ) )
 		    ->method ( 'getFilterQueryString' )
 		    ->will   ( $this->returnValue( 'fqstring' )  )
 		;
@@ -342,7 +362,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		    ->with   ( 'fqstring' )
 		;
 		$mockSelect
-		    ->expects( $this->at( 0 ) )
+		    ->expects( $this->at( 1 ) )
 		    ->method ( 'registerFilterQueryForMatch' )
 		;
 		$mockConfig
@@ -584,12 +604,16 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
                            ->disableOriginalConstructor()
                            ->setMethods( array( 'getPage', 'setStart', 'getLength' ) )
                            ->getMock();
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\AbstractSelect' )
-		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( array( null ) )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( array( 'getConfig' ) )
 		                   ->getMockForAbstractClass();
 		
+		$mockSelect
+		    ->expects( $this->any() )
+		    ->method ( 'getConfig' )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
 		$mockConfig
 		    ->expects( $this->any() )
 		    ->method ( 'getPage' )
@@ -623,10 +647,9 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		                      ->getMock();
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'hasMatch', 'setQuery' ) );
 		
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'service' => $mockService ) ); 
 		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\AbstractSelect' )
-		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( array( 'sendSearchRequestToClient' ) )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( array( 'sendSearchRequestToClient', 'getConfig', 'getService' ) )
 		                   ->getMockForAbstractClass();
 		
 		$mockResult = $this->getMockBuilder( 'Solarium_Result_Select' )
@@ -642,6 +665,16 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		                      ->setMethods( array( 'getQuery' ) )
 		                      ->getMock();
 		
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'getConfig' )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'getService' )
+		    ->will   ( $this->returnValue( $mockService ) )
+		;
 		$mockService
 		    ->expects( $this->once() )
 		    ->method ( 'getGlobal' )
@@ -695,12 +728,10 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::prepareResponse
 	 */
 	public function testPrepareResponse() {
-		$mockFactory = $this->getMockBuilder( 'Wikia\Search\ResultSet\Factory' )
-		                    ->disableOriginalConstructor()
-		                    ->setMethods( array( 'get' ) )
-		                    ->getMock();
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'setResults', 'setResultsFound', 'getPage', 'getQuery' ) );
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSanitizedQuery' ), array( 'foo' ) );
+		
+		$mockResultSetFactory = $this->getMock( 'Wikia\Search\ResultSet\Factory', [ 'get' ] );
 		
 		$mockResult = $this->getMockBuilder( 'Solarium_Result_Select' )
 		                   ->disableOriginalConstructor()
@@ -712,55 +743,43 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		                      ->setMethods( array( 'getResultsFound' ) )
 		                      ->getMock();
 		
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'resultSetFactory' => $mockFactory ) ); 
 		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\AbstractSelect' )
-		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( array( 'spellcheckResult' ) )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( array( 'spellcheckResult', 'getConfig' ) )
 		                   ->getMockForAbstractClass();
+		
+		$mockResultSetFactory
+		    ->expects( $this->once() )
+		    ->method ( 'get' )
+		    ->will   ( $this->returnValue( $mockResultSet ) )
+		;
 		$mockSelect
 		    ->expects( $this->once() )
 		    ->method ( 'spellcheckResult' )
 		    ->with   ( $mockResult )
 		;
-		$mockFactory
+		$mockSelect
 		    ->expects( $this->once() )
-		    ->method ( 'get' )
-		    ->will   ( $this->returnValue( $mockResultSet ) )
-		;
-		$mockResultSet
-		    ->expects( $this->once() )
-		    ->method ( 'getResultsFound' )
-		    ->will   ( $this->returnValue( 10 ) )
-		;
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'setResults' )
-		    ->with   ( $mockResultSet )
+		    ->method ( 'getConfig' )
 		    ->will   ( $this->returnValue( $mockConfig ) )
 		;
 		$mockConfig
 		    ->expects( $this->once() )
-		    ->method ( 'getPage' )
-		    ->will   ( $this->returnValue( 1 ) )
+		    ->method ( 'setResults' )
+		    ->will   ( $this->returnValue( $mockConfig ) )
 		;
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getQuery' )
-	        ->will   ( $this->returnValue( $mockQuery ) )
-        ;
-		$mockQuery
-		    ->expects( $this->once() )
-		    ->method ( 'getSanitizedQuery' )
-		    ->will   ( $this->returnValue( 'foo' ) )
-		;
-		$reflspell = new ReflectionMethod( 'Wikia\Search\QueryService\Select\AbstractSelect', 'prepareResponse' );
+		
+		$this->proxyClass( 'Wikia\Search\ResultSet\Factory', $mockResultSetFactory );
+		$this->mockApp();
+		
+		$reflspell = new ReflectionMethod( $mockSelect, 'prepareResponse' );
 		$reflspell->setAccessible( true );
-		$reflspell->invoke( $mockSelect, $mockResult );
+		$reflspell->invoke( $mockSelect, $mockResult ); // weirdness
 	}
 	
 	/**
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getFilterQueryString
-	 */
+	 *@todo move to correct query service
 	public function testGetFilterQueryString() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCityId', 'getNamespaces' ) );
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) ); 
@@ -785,10 +804,11 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 				$reflspell->invoke( $mockSelect )
 		);
 	}
+	*/
 	
 	/**
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerDismax
-	 */
+	 * @todo move ot correct query service
 	public function testRegisterDismax() {
 		$mockQuery = $this->getMockBuilder( 'Solarium_Query_Select' )
 		                  ->disableOriginalConstructor()
@@ -905,7 +925,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 				$mockSelect,
 				$funcRefl->invoke( $mockSelect, $mockQuery )
 		);
-	}
+	}*/
 	
 	/**
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::searchAsApi
@@ -1060,45 +1080,6 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getFormulatedQuery
-	 */
-	public function testGetFormulatedQuery() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', [ 'getQuery' ] );
-		
-		$dc = new \Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
-		
-		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
-		                   ->setConstructorArgs( [ $dc ] )
-		                   ->setMethods( array( 'getQueryClausesString' ) )
-		                   ->getMock();
-		
-		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getSolrQuery' ], [ 'foo' ] );
-		
-		$mockSelect
-		    ->expects( $this->once() )
-		    ->method ( 'getQueryClausesString' )
-		    ->will   ( $this->returnValue( 'foo' ) )
-		;
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getQuery' )
-		    ->will   ( $this->returnValue( $mockQuery ) )
-		;
-		$mockQuery
-		    ->expects( $this->once() )
-		    ->method ( 'getSolrQuery' )
-		    ->with   ( 10 )
-		    ->will   ( $this->returnValue( 'bar' ) )
-		;
-		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\OnWiki', 'getFormulatedQuery' );
-		$method->setAccessible( true );
-		$this->assertEquals(
-				'+(foo) AND (bar)',
-				$method->invoke( $mockSelect )
-		);
-	}
-	
-	/**
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::extractWikiMatch
 	 */
 	public function testExtractWikiMatchWithMatch() {
@@ -1113,9 +1094,11 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		                   ->getMock();
 		
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
-		                  ->setMethods( [ 'getId' ] )
+		                  ->setMethods( [ 'getId', 'getResult' ] )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
+		
+		$mockResult = $this->getMock( 'Wikia\Search\Result', [ 'offsetGet' ] );
 		
 		$mockMwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getWikiMatchByHost', 'getWikiId' ] );
 		
@@ -1157,6 +1140,17 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getId' )
 		    ->will   ( $this->returnValue( 321 ) )
 		;
+		$mockMatch
+		    ->expects( $this->once() )
+		    ->method ( 'getResult' )
+		    ->will   ( $this->returnValue( $mockResult ) )
+		;
+		$mockResult
+		    ->expects( $this->once() )
+		    ->method ( 'offsetGet' )
+		    ->with   ( 'articles_i' )
+		    ->will   ( $this->returnValue( 50 ) )
+		;
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'setWikiMatch' )
@@ -1171,6 +1165,94 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		$extract->setAccessible( true );
 		$this->assertEquals(
 				$mockMatch,
+				$extract->invoke( $mockService )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::extractWikiMatch
+	 */
+	public function testExtractWikiMatchWithMatchUnder50Articles() {
+		$mockService = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( [ 'getService', 'getConfig' ] )
+		                    ->getMockForAbstractClass();
+		
+		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( [ 'getQuery', 'setWikiMatch', 'getWikiMatch' ] )
+		                   ->getMock();
+		
+		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
+		                  ->setMethods( [ 'getId', 'getResult' ] )
+		                  ->disableOriginalConstructor()
+		                  ->getMock();
+		
+		$mockResult = $this->getMock( 'Wikia\Search\Result', [ 'offsetGet' ] );
+		
+		$mockMwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getWikiMatchByHost', 'getWikiId' ] );
+		
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getSanitizedQuery' ], [ 'foo' ] );
+		
+		$mockService
+		    ->expects( $this->once() )
+		    ->method ( 'getConfig' )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockService
+		    ->expects( $this->once() )
+		    ->method ( 'getService' )
+		    ->will   ( $this->returnValue( $mockMwService ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getQuery' )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+		;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'getSanitizedQuery' )
+		    ->will   ( $this->returnValue( 'foo bar 123' ) )
+		;
+		$mockMwService
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiMatchByHost' )
+		    ->with   ( 'foobar123' )
+		    ->will   ( $this->returnValue( $mockMatch ) )
+		;
+		$mockMwService
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiId' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$mockMatch
+		    ->expects( $this->once() )
+		    ->method ( 'getId' )
+		    ->will   ( $this->returnValue( 321 ) )
+		;
+		$mockMatch
+		    ->expects( $this->once() )
+		    ->method ( 'getResult' )
+		    ->will   ( $this->returnValue( $mockResult ) )
+		;
+		$mockResult
+		    ->expects( $this->once() )
+		    ->method ( 'offsetGet' )
+		    ->with   ( 'articles_i' )
+		    ->will   ( $this->returnValue( 49 ) )
+		;
+		$mockConfig
+		    ->expects( $this->never() )
+		    ->method ( 'setWikiMatch' )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiMatch' )
+		    ->will   ( $this->returnValue( null ) )
+		;
+		$extract = new ReflectionMethod( $mockService, 'extractWikiMatch' );
+		$extract->setAccessible( true );
+		$this->assertNull(
 				$extract->invoke( $mockService )
 		);
 	}
@@ -1250,5 +1332,177 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		);
 	}
 
+	/**
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getRequestedFields
+	 */
+	public function testGetRequestedFields() {
+		$mockService = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( [ 'getConfig' ] )
+		                    ->getMockForAbstractClass();
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', [ 'getRequestedFields' ] );
+		$attr = new ReflectionProperty( $mockService, 'requestedFields' );
+		$attr->setAccessible( true );
+		$attr->setValue( $mockService, [ 'html' ] );
+		$get = new ReflectionMethod( $mockService, 'getRequestedFields' );
+		$get->setAccessible( true );
+		$mockService
+		    ->expects( $this->once() )
+		    ->method ( 'getConfig' )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getRequestedFields' )
+		    ->will   ( $this->returnValue( [ 'title' ] ) )
+		;
+		$this->assertEquals(
+				[ Utilities::field( 'html' ), Utilities::field( 'title' ) ],
+				$get->invoke( $mockService )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getFilterQueryString
+	 */
+	public function testGetFilterQueryString() {
+		$mockService = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( [ null ] )
+		                    ->getMockForAbstractClass();
+		$fqs = new ReflectionMethod( $mockService, 'getFilterQueryString' );
+		$fqs->setAccessible( true );
+		$this->assertEquals(
+				'',
+				$fqs->invoke( $mockService )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getConfig
+	 */
+	public function testGetConfig() {
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( [ null ] )
+		                    ->getMockForAbstractClass();
+		$config = new Wikia\Search\Config;
+		$cnf = new ReflectionProperty( $mockSelect, 'config' );
+		$cnf->setAccessible( true );
+		$cnf->setValue( $mockSelect, $config );
+		$get = new ReflectionMethod( $mockSelect, 'getConfig' );
+		$get->setAccessible( true );
+		$this->assertEquals(
+				$config,
+				$get->invoke( $mockSelect )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getService
+	 */
+	public function testGetService() {
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( [ null ] )
+		                    ->getMockForAbstractClass();
+		$service = new Wikia\Search\MediaWikiService;
+		$svc = new ReflectionProperty( $mockSelect, 'service' );
+		$svc->setAccessible( true );
+		$svc->setValue( $mockSelect, $service );
+		$get = new ReflectionMethod( $mockSelect, 'getService' );
+		$get->setAccessible( true );
+		$this->assertEquals(
+				$service,
+				$get->invoke( $mockSelect )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getClient
+	 */
+	public function testGetClient() {
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( [ 'setCoreInClient' ] )
+		                   ->getMockForAbstractClass();
+		
+		$mockClient = $this->getMockBuilder( '\Solarium_Client' )
+		                   ->disableOriginalConstructor()
+		                   ->getMock();
+		
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'setCoreInClient' )
+		;
+		
+		$attr = new ReflectionProperty( $mockSelect, 'client' );
+		$attr->setAccessible( true );
+		$attr->setValue( $mockSelect, $mockClient );
+		
+		$get = new ReflectionMethod( $mockSelect, 'getClient' );
+		$get->setAccessible( true );
+		
+		$this->assertAttributeEmpty(
+				'coreSetInClient',
+				$mockSelect
+		);
+		$this->assertEquals(
+				$mockClient,
+				$get->invoke( $mockSelect )
+		);
+		$set = new ReflectionProperty( $mockSelect, 'coreSetInClient' );
+		$set->setAccessible( true );
+		$set->setValue( $mockSelect, true );
+		$this->assertEquals(
+				$mockClient,
+				$get->invoke( $mockSelect )
+		); 
+	}
+	
+	/**
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::setCoreInClient
+	 */
+	public function testSetCoreInClient() {
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( [ null ] )
+		                   ->getMockForAbstractClass();
+		
+		$mockClient = $this->getMockBuilder( '\Solarium_Client' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( [ 'getOptions', 'setOptions' ] )
+		                   ->getMock();
+		
+		$before = [ 'foo' => 'bar', 'adapteroptions' => [ 'path' => 'whatever', 'baz' => 'qux' ] ];
+		$after = [ 'foo' => 'bar', 'adapteroptions' => [ 'path' => '/solr/main', 'baz' => 'qux' ] ];
+		
+		$mockClient
+		    ->expects( $this->once() )
+		    ->method ( 'getOptions' )
+		    ->will   ( $this->returnValue( $before ) )
+		;
+		$mockClient
+		    ->expects( $this->once() )
+		    ->method ( 'setOptions' )
+		    ->with   ( $after, true )
+		;
+		
+		$client = new ReflectionProperty( $mockSelect, 'client' );
+		$client->setAccessible( true );
+		$client->setValue( $mockSelect, $mockClient );
+		
+		$set = new ReflectionMethod( $mockSelect, 'setCoreInClient' );
+		$set->setAccessible( true );
+		$this->assertEquals(
+				$mockSelect,
+				$set->invoke( $mockSelect )
+		);
+		$this->assertAttributeEquals(
+				true,
+				'coreSetInClient',
+				$mockSelect
+		);
+	}
 	
 }

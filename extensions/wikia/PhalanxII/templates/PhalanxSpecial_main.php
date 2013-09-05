@@ -73,14 +73,23 @@
 						<div class="left-spacer"><?php echo wfMsg( 'phalanx-label-type' ) ?></div>
 						<div class="phalanx-block-types">
 <?php
-						foreach($blockTypes as $typeId => $typeName) {
-							$typeName = str_replace('_', '-', $typeName);
+						foreach($typeSections as $section => $types) {
 ?>
-							<label title="<?= wfMsg("phalanx-help-type-{$typeName}"); ?>">
-								<?= Xml::check('wpPhalanxType[]', ($type === $typeId), array('value' => $typeId)); ?>
-								<?= wfMsg("phalanx-type-{$typeName}"); ?>
+							<fieldset>
+								<legend><?= wfMessage("phalanx-section-type-{$section}")->plain() ?></legend>
+<?php
+							foreach($types as $typeId) {
+								$typeName = str_replace('_', '-', $blockTypes[$typeId]);
+?>
+								<label title="<?= wfMsg("phalanx-help-type-{$typeName}"); ?>">
+									<?= Xml::check('wpPhalanxType[]', isset($data['type'][$typeId]), array('value' => $typeId)); ?>
+									<?= wfMsg("phalanx-type-{$typeName}"); ?>
 
-							</label>
+								</label>
+<?php
+							}
+?>
+							</fieldset>
 <?php
 						}
 ?>
@@ -113,6 +122,9 @@
 
 			<fieldset>
 				<legend><?php echo wfMsg( 'phalanx-legend-listing' ) ?></legend>
+
+				<?= wfMessage('phalanx-filters-intro', 'Special:Log/phalanx')->parse() ?>
+
 				<form id="phalanx-filters" method="get" action="<?= $action ?>">
 					<div id="phalanx-check-options">
 						<label for="wpPhalanxCheckBlocker"><?php echo wfMsg( 'phalanx-view-blocker' ) ?></label>

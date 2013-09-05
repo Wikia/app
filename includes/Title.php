@@ -2007,6 +2007,25 @@ class Title {
 				$blockExpiry = $wgLang->timeanddate( wfTimestamp( TS_MW, $blockExpiry ), true );
 			}
 
+			# Wikia change - begin
+			# @author macbre (BAC-535)
+			$blocker = $block->getBlocker();
+			if ($blocker instanceof User) {
+				// user groups to be displayed instead of user name
+				$groups = [
+					'staff',
+					'vstf',
+				];
+				$blockerGroups = $blocker->getEffectiveGroups();
+
+				foreach($groups as $group) {
+					if (in_array($group, $blockerGroups)) {
+						$link = wfMessage("group-$group")->plain();
+					}
+				}
+			}
+			# Wikia change - end
+
 			$intended = strval( $user->mBlock->getTarget() );
 
 			$errors[] = array( ( $block->mAuto ? 'autoblockedtext' : 'blockedtext' ), $link, $reason, $ip, $name,
@@ -4283,7 +4302,9 @@ class Title {
 		}
 
 		list( $name, $lang ) = MessageCache::singleton()->figureMessage( $wgContLang->lcfirst( $this->getText() ) );
-		$message = wfMessage( $name )->inLanguage( $lang )->useDatabase( false );
+		/* Wikia change - skip fixing whitespaces, want to preserve nbsp's */
+		$message = wfMessage( $name )->inLanguage( $lang )->useDatabase( false )->fixWhitespace( false );
+		/* Wikia change end */
 
 		if ( $message->exists() ) {
 			return $message->plain();
@@ -4533,7 +4554,7 @@ class Title {
 	 * $wgLang (such as special pages, which are in the user language).
 	 *
 	 * @since 1.18
-	 * @return object Language
+	 * @return Language
 	 */
 	public function getPageLanguage() {
 		global $wgLang;

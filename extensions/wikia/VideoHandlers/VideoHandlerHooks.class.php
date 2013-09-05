@@ -3,25 +3,25 @@ class VideoHandlerHooks {
 
 	const VIDEO_WIKI = 298117;
 
-	static public function  WikiaVideoNewImagesBeforeQuery( &$where ) {
+	static public function WikiaVideoNewImagesBeforeQuery( &$where ) {
 		$where[] = 'img_media_type != \'VIDEO\'';
 		$where[] = 'img_major_mime != \'video\'';
 		$where[] = 'img_media_type != \'swf\'';
 		return true;
 	}
 
-	static public function WikiaVideo_isMovable($result, $index) {
+	static public function WikiaVideo_isMovable( $result, $index ) {
 		return true;
 	}
 
-	static public function WikiaVideoParserBeforeStrip($parser, &$text, $strip_state) {
+	static public function WikiaVideoParserBeforeStrip( $parser, &$text, $strip_state ) {
 
 		global $wgWikiaVideoGalleryId, $wgRTEParserEnabled;
 
 		$wgWikiaVideoGalleryId = 0;
 
 		// macbre: don't touch anything when parsing for RTE
-		if (!empty($wgRTEParserEnabled)) {
+		if ( !empty($wgRTEParserEnabled) ) {
 			return true;
 		}
 		// fix for RT #22010
@@ -47,10 +47,11 @@ class VideoHandlerHooks {
 	 *
 	 * @param WikiaLocalFileShared $oFile
 	 * @param WikiaLocalFileShared $oOldFile
+	 * @return bool
 	 */
-	static public function onFileRevertFormBeforeUpload( $oFile, $oOldFile ){
+	static public function onFileRevertFormBeforeUpload( $oFile, $oOldFile ) {
 
-		if ( $oOldFile->isVideo() ){
+		if ( $oOldFile->isVideo() ) {
 			$oFile->forceMime( $oOldFile->mime );
 			$oFile->setVideoId( $oOldFile->getVideoId() );
 		}
@@ -75,7 +76,7 @@ class VideoHandlerHooks {
 		return true;
 	}
 
-	static public function onSetupAfterCache() {
+	static public function onSetupAfterCache( ) {
 		global $wgUploadDirectory, $wgUploadBaseUrl,
 			$wgUploadPath, $wgHashedUploadDirectory,
 			$wgThumbnailScriptPath, $wgGenerateThumbnailOnParse,
@@ -99,8 +100,8 @@ class VideoHandlerHooks {
 		return true;
 	}
 
-	static public function onLinkerMakeThumbLink2FileOriginalSize ( $file, &$width ){
-		if ( WikiaFileHelper::isVideoFile( $file ) ){
+	static public function onLinkerMakeThumbLink2FileOriginalSize( $file, &$width ) {
+		if ( WikiaFileHelper::isVideoFile( $file ) ) {
 			$width = WikiaFileHelper::maxWideoWidth;
 		};
 		return true;
@@ -110,7 +111,7 @@ class VideoHandlerHooks {
 	 * @param Parser $parser
 	 * @return bool
 	 */
-	static public function initParserHook(&$parser) {
+	static public function initParserHook( &$parser ) {
 		$parser->setHook('videogallery', array($parser, 'renderImageGallery'));
 		return true;
 	}
@@ -168,14 +169,14 @@ class VideoHandlerHooks {
 		return false;
 	}
 
-	static public function convertOldInterwikiToNewInterwiki(&$parser, &$text) {
+	static public function convertOldInterwikiToNewInterwiki( &$parser, &$text ) {
 		global $wgRTEParserEnabled;
-		if($wgRTEParserEnabled) {
+		if ( $wgRTEParserEnabled ) {
 			return true;
 		}
 
 		$newtext = preg_replace_callback('/\{\{:wikiavideo:([^}]*)\}\}/', 'VideoHandlerHooks::convertOldInterwikiToNewInterwikiCB', $text);
-		if(!empty($newtext)) {
+		if ( !empty($newtext) ) {
 			$text = $newtext;
 		}
 
@@ -191,4 +192,31 @@ class VideoHandlerHooks {
 
 		return true;
 	}
+
+	/**
+	 * Hook: get redirected file from foreign repo
+	 * @param RepoGroup $repos
+	 * @param Title $title
+	 * @param array $options
+	 * @param boolean $useCache
+	 * @param File|false $file
+	 * @param File $cacheEntry
+	 * @return true
+	 */
+	public function onFindRedirectedFile( $repos, $title, $options, $useCache, &$file, &$cacheEntry ) {
+		$redirect = RepoGroup::singleton()->getLocalRepo()->checkRedirect( $title );
+		if ( $redirect instanceof Title && $redirect->getNamespace() == NS_FILE && $title->getDBKey() != $redirect->getDBKey() ) {
+			foreach ( $repos as $repo ) {
+				if ( $repo->allowRedirect) {
+					$file = $repo->findfile( $redirect, $options );
+					if ( $file && $useCache ) {
+						$cacheEntry = $file;
+					}
+				}
+			}
+		}
+
+		return true;
+	}
+
 }

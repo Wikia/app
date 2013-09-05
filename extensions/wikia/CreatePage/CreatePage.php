@@ -104,12 +104,13 @@ function wfCreatePageSetupVars(Array &$vars ) {
 }
 
 function wfCreatePageLoadPreformattedContent( $editpage ) {
-	global $wgRequest, $wgEnableVideoToolExt;
+	global $wgRequest, $wgEnableVideoToolExt, $wgUser;
 
 	if( !$editpage->textbox1 ) {
 		if ( $wgRequest->getCheck( 'useFormat' ) ) {
-			if ( $wgEnableVideoToolExt ) {
-				$editpage->textbox1 = wfMsgForContentNoTrans( 'createpage-with-video' );
+			// if user has proper permissions, show Create Page with Video panel
+			if ( $wgEnableVideoToolExt && $wgUser->isAllowed('videoupload') ) {
+					$editpage->textbox1 = wfMsgForContentNoTrans( 'createpage-with-video' );
 			} else {
 				$editpage->textbox1 = wfMsgForContentNoTrans( 'newpagelayout' );
 			}

@@ -1,10 +1,10 @@
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/core/layout";
-@import "../../../../skins/oasis/css/mixins/bodytext";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/gradient";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/core/layout";
+@import "skins/oasis/css/mixins/bodytext";
 
 $radius-user-profile-masthead: 5px;
 
@@ -17,27 +17,27 @@ $y-user-profile-masthead-links-icon: -17px;
 $color-masthead: $color-page;
 @if lightness($color-page) < 50 {
 	$y-user-profile-masthead-links-icon: 0;
-	$color-masthead: mix($color-buttons, $color-page, 30%); /* logic from Wall */
+	$color-masthead: mix($color-buttons, $color-page, 30%); // logic from Wall
 	@if lightness($color-masthead) < 30 {
-		$color-masthead: mix($color-buttons, $color-page, 40%); /* logic from Wall */
+		$color-masthead: mix($color-buttons, $color-page, 40%); // logic from Wall
 	}
 }
 
 $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%), 40%);
 
-/* Temporary - waiting for UI Styleguide team */
+// Temporary - waiting for UI Styleguide team
 @import "modalFix";
 
 
 .WikiaUserPagesHeader {
 	@if $page-opacity == 100 {
-		@include linear-gradient($color-user-profile-gradient-bottom, top, $color-page, 0%, $color-user-profile-gradient-bottom, 100%); 
+		@include linear-gradient($color-user-profile-gradient-bottom, top, $color-page, 0%, $color-user-profile-gradient-bottom, 100%);
 	}
 	&.WikiaBlogPostHeader, &.WikiaBlogListingHeader {
 		background: transparent;
 		padding: 0 10px 6px;
 		position: relative;
-		
+
 		// Largely copied from _UserPagesHeader.scss
 		h1 {
 			display: inline;
@@ -99,19 +99,19 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 		@include border-radius-sw($radius-user-profile-masthead);
 		@include border-radius-se($radius-user-profile-masthead);
 		@include box-shadow(0px, 2px, 10px, rgba(0,0,0,.25));
-		
-		@include clearfix;	
+
+		@include clearfix;
 		background: $color-masthead;
 		margin-left: 165px;
 		margin-bottom: 20px;
 		position: relative;
-		
+
 		&:hover {
 			#userIdentityBoxEdit {
 				display: block;
 			}
 		}
-		
+
 		>div {
 			float: left;
 			padding: 20px 25px;
@@ -155,7 +155,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			}
 		}
 	}
-	
+
 	.masthead-info-lower {
 		position: relative;
 		&:before {
@@ -171,7 +171,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			width: 1px;
 		}
 	}
-	
+
 	.tally {
 		margin-bottom: 25px;
 		em {
@@ -183,7 +183,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 		@include clearfix;
 		li {
 			float: left;
-			margin-right: 1em;		
+			margin-right: 1em;
 		}
 		.icon {
 			@include border-radius(50px);
@@ -196,10 +196,10 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 				background-position: 0 $y-user-profile-masthead-links-icon;
 			}
 			&.website {
-				background-position: -16px $y-user-profile-masthead-links-icon;			
+				background-position: -16px $y-user-profile-masthead-links-icon;
 			}
 			&.facebook {
-				background-position: -32px $y-user-profile-masthead-links-icon;			
+				background-position: -32px $y-user-profile-masthead-links-icon;
 			}
 		}
 		.zero {
@@ -208,7 +208,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 				background-color: $color-alternate-text;
 			}
 		}
-	}	
+	}
 
 	.wikis {
 		margin-top: 13px;
@@ -235,7 +235,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			}
 		}
 	}
-	
+
 	.details {
 		@include bodytext;
 		font-size: 14px;
@@ -253,13 +253,13 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			text-transform: uppercase;
 		}
 	}
-	
+
 	&.zero-state {
 		.masthead-info > div {
 			padding-top: 10px;
 			padding-bottom: 10px;
 		}
-		
+
 		#userIdentityBoxEdit {
 			display: block;
 		}
@@ -282,7 +282,19 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 	text-align: right;
 }
 
-.WikiaRail,	/* remove this override after grid layout transition */
-.WikiaRail.grid-2 {	/* keep this after transition, but not this comment itself */
+.WikiaRail,	// remove this override after grid layout transition
+.WikiaRail.grid-2 {	// keep this after transition, but not this comment itself
 	padding-top: 10px;
+}
+
+@if ( $responsive-layout-enabled ) {
+	// TODO: To be changed when final proposal for new search placement for small screens layout will be decided
+	@media screen and (max-width: 1023px) {
+		.UserProfileMastheadSearch {
+			display: none;
+		}
+		.UserProfileMasthead {
+			padding-top: 10px;
+		}
+	}
 }

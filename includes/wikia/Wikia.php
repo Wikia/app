@@ -27,7 +27,6 @@ $wgHooks['AllowNotifyOnPageChange']  [] = "Wikia::allowNotifyOnPageChange";
 $wgHooks['AfterInitialize']          [] = "Wikia::onAfterInitialize";
 $wgHooks['UserMailerSend']           [] = "Wikia::onUserMailerSend";
 $wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
-$wgHooks['PageHistoryLineEnding']    [] = "Wikia::onPageHistoryLineEnding";
 $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
 $wgHooks['AjaxAddScript'][] = 'Wikia::onAjaxAddScript';
 
@@ -53,6 +52,7 @@ class Wikia {
 	const VARNISH_STAGING_HEADER = 'X-Staging';
 	const VARNISH_STAGING_PREVIEW = 'preview';
 	const VARNISH_STAGING_VERIFY = 'verify';
+	const HEX_CHARS = '0123456789abcdef';
 
 	private static $vars = array();
 	private static $cachedLinker;
@@ -451,7 +451,7 @@ class Wikia {
 	 * @example Wikia::debugBacktrace(__METHOD__);
 	 * @author Piotr Molski <moli@wikia-inc.com>
 	 *
-	 * @param String $method - use __METHOD__
+	 * @param String $method - use __METHOD__ as default
 	 */
 	static public function debugBacktrace($method) {
 		$backtrace = wfDebugBacktrace();
@@ -480,7 +480,7 @@ class Wikia {
 		$msg = "***** END *****";
 		Wikia::log($method, false, $msg, true /* $force */);
 	}
-
+	
 	/**
 	 * get staff person responsible for language
 	 *
@@ -1752,7 +1752,7 @@ class Wikia {
 		$key = wfSharedMemcKey('const_values', $name);
 		$value = $wgMemc->get($key);
 
-		if ( is_null($value) ) {
+		if ( !is_numeric($value) ) {
 			$dbr = wfGetDB( DB_SLAVE, array(), 'specials' );
 
 			$oRes = $dbr->select('const_values', array('val'), array( 'name' =>  $name ), __METHOD__ );
@@ -1790,12 +1790,27 @@ class Wikia {
 	 * mcache=readonly disables memcache writes for the duration of the request
 	 * TODO: allow disabling specific keys?
 	 */
-	static public function onBeforeInitializeMemcachePurge($title, $unused, $output, $user, WebRequest $request, $wiki ) {
-		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads, $wgAllowMemcacheWrites;
-		$mcachePurge = $request->getVal("mcache", null);
+	static public function onBeforeInitializeMemcachePurge( $title, $unused, $output, $user, WebRequest $request, $wiki ) {
+		self::setUpMemcachePurge( $request, $user );
+		return true;
+	}
 
-		if ($wgAllowMemcacheDisable && $mcachePurge !== null) {
-			switch( $mcachePurge ) {
+	/**
+	 * Control memcache behavior
+	 *
+	 * @param WebRequest $request
+	 */
+	static public function setUpMemcachePurge( WebRequest $request, $user ) {
+		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads, $wgAllowMemcacheWrites, $wgDevelEnvironment;
+
+		if ( !$user->isAllowed( 'mcachepurge' ) && empty( $wgDevelEnvironment ) ) {
+			return true;
+		}
+
+		$mcachePurge = $request->getVal( 'mcache', null );
+
+		if ( $wgAllowMemcacheDisable && $mcachePurge !== null ) {
+			switch ( $mcachePurge ) {
 				case 'writeonly':
 					$wgAllowMemcacheReads = false;
 					$wgAllowMemcacheWrites = true;
@@ -1812,7 +1827,6 @@ class Wikia {
 					break;
 			}
 		}
-		return true;
 	}
 
 	// Hook to Construct a tag for newrelic
@@ -1861,15 +1875,6 @@ class Wikia {
 		if ( $title instanceof Title ) {
 			$title->getArticleID( Title::GAID_FOR_UPDATE );
 		}
-		return true;
-	}
-
-	/**
-	 * Fix for bugid:38093
-	 * Chrome bug: No "Undo" links on Recent Changes
-	 */
-	public static function onPageHistoryLineEnding( $HistoryActionObj, $row , &$s, $classes ) {
-		$s = '<span dir="auto">'.$s.'</span>';
 		return true;
 	}
 
@@ -2026,6 +2031,35 @@ class Wikia {
 				$s = $mExtUser->getLocalUser( false );
 			}
 		}
+
+		return true;
+	}
+
+	/**
+	 * @param $user User
+	 */
+	public static function invalidateUser( $user, $disabled = false, $ajax = false ) {
+		global $wgExternalAuthType;
+
+		if ( $disabled ) {
+			$user->setEmail( '' );
+			$user->setPassword( wfGenerateToken() . self::HEX_CHARS );
+			$user->setOption( 'disabled', 1 );
+			$user->setOption( 'disabled_date', wfTimestamp( TS_DB ) );
+			$user->mToken = null;
+			$user->invalidateEmail();
+			if ( $ajax ) {
+				global $wgRequest;
+				$wgRequest->setVal('action', 'ajax');
+			}
+			$user->saveSettings();
+		}
+		$id = $user->getId();
+		// delete the record from all the secondary clusters
+		if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
+			ExternalUser_Wikia::removeFromSecondaryClusters( $id );
+		}
+		$user->invalidateCache();
 
 		return true;
 	}

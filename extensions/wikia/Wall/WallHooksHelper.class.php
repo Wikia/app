@@ -15,8 +15,8 @@ class WallHooksHelper {
 	static public function onUserIsBlockedFrom($user, $title, &$blocked, &$allowUsertalk) {
 
 		if ( !$user->mHideName && $allowUsertalk && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
-			$wm =  WallMessage::newFromTitle($title);
-			if($wm->getWallOwner()->getName() === $user->getName()){
+			// wall owner is in it's name
+			if ( $title->getBaseText() === $user->getName() ) {
 				$blocked = false;
 				wfDebug( __METHOD__ . ": self-user wall page, ignoring any blocks\n" );
 			}
@@ -1979,15 +1979,24 @@ class WallHooksHelper {
 		return true;
 	}
 
+	/**
+	 * @param $title Title
+	 * @param $unused
+	 * @param $output
+	 * @param $user
+	 * @param $request
+	 * @param $mediawiki
+	 * @return bool
+	 */
 	static public function onBeforeInitialize( $title, $unused, $output, $user, $request, $mediawiki ) {
 		global $wgHooks;
 		if( !empty($title) && $title->isSpecial('Allpages') ) {
-			$wgHooks['AfterLanguageGetNamespaces'][] = 'WallHooksHelper::onAfterLanguageGetNamespaces';
+			$wgHooks['LanguageGetNamespaces'][] = 'WallHooksHelper::onLanguageGetNamespaces';
 		}
 		return true;
 	}
 
-	static public function onAfterLanguageGetNamespaces( &$namespaces ) {
+	static public function onLanguageGetNamespaces( &$namespaces ) {
 		wfProfileIn(__METHOD__);
 		$app = F::App();
 		$title = $app->wg->Title;

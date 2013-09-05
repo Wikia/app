@@ -6,7 +6,7 @@
  * Copyright (c) 2012 Arnold Daniels <arnold@jasny.net>
  * Based on 'jQuery Smart Web App Banner' by Kurt Zenisek @ kzeni.com
  */
-define('smartbanner', ['wikia.window', 'wikia.cookies', 'wikia.utils', 'track'], function smartbanner(window, cookie, util, track){
+define('smartbanner', ['wikia.window', 'wikia.cookies', 'jquery', 'track'], function smartbanner(window, cookie, $, track){
 	'use strict';
 
 	var html = window.document.documentElement,
@@ -19,7 +19,8 @@ define('smartbanner', ['wikia.window', 'wikia.cookies', 'wikia.utils', 'track'],
 		},
 		hide = function(){
 			html.className = html.className.replace(' sb-shown', '');
-		};
+		},
+		link;
 
 	return function(options) {
 		var meta,
@@ -38,7 +39,13 @@ define('smartbanner', ['wikia.window', 'wikia.cookies', 'wikia.utils', 'track'],
 		if(meta = document.querySelector(type == 'android' ? 'meta[name="google-play-app"]' : 'meta[name="apple-itunes-app"]')){
 			appId = /app-id=([^\s,]+)/.exec(meta.getAttribute('content'))[1];
 
-			options = util.extend(defaults, options);
+			options = $.extend(defaults, options);
+
+			if(type == 'android'){
+				link = 'https://play.google.com/store/apps/details?id=' + appId + '&referrer=utm_source%3Dwikia%26utm_medium%3Dsmartbanner%26utm_term%3D' + window.wgDBname;
+			}else{
+				link = 'https://itunes.apple.com/' + options.appStoreLanguage + '/app/id' + appId;
+			}
 
 			document.body.insertAdjacentHTML('afterbegin', Mustache.render(options.template, {
 				type: type,
@@ -46,7 +53,7 @@ define('smartbanner', ['wikia.window', 'wikia.cookies', 'wikia.utils', 'track'],
 				author: options.author || '',
 				inStore: options.price ? options.price.toUpperCase() + ' - ' + (type == 'android' ? options.inGooglePlay : options.inAppStore) : '',
 				gloss: options.iconGloss === null ? type == 'ios' : options.iconGloss,
-				link: (options.url ? options.url : (type == 'android' ? 'market://details?id=' : ('https://itunes.apple.com/' + window.wgUserLanguage + '/app/id')) + appId),
+				link: (options.url ? options.url : link),
 				button: options.button || 'VIEW',
 				icon: options.icon
 			}));
@@ -60,7 +67,7 @@ define('smartbanner', ['wikia.window', 'wikia.cookies', 'wikia.utils', 'track'],
 				if (~className.indexOf('sb-button')) {
 					hide();
 
-					cookie.set('sb-installed', 1, util.extend(cookieData, {
+					cookie.set('sb-installed', 1, $.extend(cookieData, {
 						expires: options.daysReminder * 86400
 					}));
 
@@ -71,7 +78,7 @@ define('smartbanner', ['wikia.window', 'wikia.cookies', 'wikia.utils', 'track'],
 				}else if(~className.indexOf('sb-close') || ~className.indexOf('sb-close-btn')) {
 					hide();
 
-					cookie.set('sb-closed', 1, util.extend(cookieData, {
+					cookie.set('sb-closed', 1, $.extend(cookieData, {
 						expires: options.daysHidden * 86400
 					}));
 

@@ -111,10 +111,11 @@ class JSMessages {
 			if ( is_array( $msg ) ) {
 				var_dump( $msg );
 			}
-			if ( substr( $msg, 0, $patternLen ) === $pattern ) {
-				$ret[$msg] = wfMessage( $msg )->inLanguage( $langCode )->parse();
+			if (substr($msg, 0, $patternLen) === $pattern) {
+				$ret[$msg] = wfmsgExt($msg, array('language' => $langCode));
 			}
 		}
+
 
 		wfProfileOut($fname);
 		return $ret;
@@ -191,10 +192,11 @@ class JSMessages {
 				}
 				// single message
 				else {
-					$msg = wfMessage( $message )->exists();
+					$msg = wfMsgGetKey($message, true /* $useDB */);
 
-					if ( $msg ) {
-						$msg = wfMessage( $message )->parse();
+					// check for not existing message
+					if ($msg == htmlspecialchars("<{$message}>")) {
+						$msg = false;
 					}
 
 					$ret[ $message ] = $msg;

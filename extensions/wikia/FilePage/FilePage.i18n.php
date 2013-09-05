@@ -42,7 +42,9 @@ $messages['qqq'] = array(
 * $1 is the provider name.',
 	'video-page-expires' => 'After the date specified, the video content will no longer be available to view. Parameters:
 * $1 is a date',
-	'video-page-views' => 'Shows total number of views (plays) of the video. $1 is a number of views (integer)',
+	'video-page-views' => 'Shows total number of views (plays) of the video. Parameters:
+* $1 - a number of views (integer)
+{{Identical|View}}',
 	'video-page-see-more-info' => 'Label to uncollapse UI that shows more info',
 	'video-page-see-less-info' => 'Label to collapse UI that shows more info',
 	'video-page-description-heading' => 'Description heading',
@@ -53,7 +55,8 @@ $messages['qqq'] = array(
 	'file-page-tab-about' => 'Navigation tab label for the "about" section on a File Page.
 {{Identical|About}}',
 	'file-page-tab-history' => 'Navigation tab label for the "File History" section on a File Page.',
-	'file-page-tab-metadata' => 'Navigation tab label for the "Metadata" section on a File Page.',
+	'file-page-tab-metadata' => 'Navigation tab label for the "Metadata" section on a File Page.
+{{Identical|Metadata}}',
 	'file-page-more-links' => 'A link to the full list of pages that have links to the file on this file page',
 );
 
@@ -110,9 +113,28 @@ Skrivit amañ an deskrivadur.',
 
 /** Catalan (català)
  * @author Luckas
+ * @author Marcmpujol
  */
 $messages['ca'] = array(
+	'filepage-desc' => "Modificación de l'espai MediaWiki de fitxers per a suport de vídeo",
+	'video-page-file-list-header' => 'Apareix en aquestes pàgines',
+	'video-page-global-file-list-header' => 'Apareix en aquests wikis',
+	'video-page-from-provider' => 'De $1',
+	'video-page-expires' => 'Expira el $1',
+	'video-page-views' => '$1 {{PLURAL:$1|Vista|Vistes}}',
+	'video-page-see-more-info' => 'Mostrar més informació',
+	'video-page-see-less-info' => 'Mostrar menys informació',
 	'video-page-description-heading' => 'Descripció',
+	'video-page-description-zero-state' => 'Encara no hi ha cap descripció.',
+	'video-page-add-description-link-text' => 'Afegir una descripció.',
+	'video-page-default-description-header-and-text' => '==Descripció==
+Introdueix la descripció aquí.',
+	'video-page-file-list-pagination' => '$1 de $2',
+	'file-page-replace-button' => 'Substituir',
+	'file-page-tab-about' => 'Sobre',
+	'file-page-tab-history' => 'Historial del fitxer',
+	'file-page-tab-metadata' => 'Metadades',
+	'file-page-more-links' => 'Veure llista completa',
 );
 
 /** Danish (dansk)
@@ -180,19 +202,56 @@ Escribe la descripción aquí.',
 );
 
 /** Estonian (eesti)
+ * @author KalmerE.
  * @author Luckas
  */
 $messages['et'] = array(
+	'video-page-file-list-header' => 'Esineb sellel lehel',
+	'video-page-global-file-list-header' => 'Esineb selles vikis',
 	'video-page-description-heading' => 'Kirjeldus',
+	'file-page-more-links' => 'Vaata täielikku nimekirja',
 );
 
 /** Finnish (suomi)
  * @author Nike
+ * @author Ville96
  */
 $messages['fi'] = array(
+	'video-page-description-heading' => 'Kuvaus',
+	'video-page-description-zero-state' => 'Kuvausta ei ole vielä.',
 	'video-page-add-description-link-text' => 'Lisää kuvaus.',
 	'video-page-default-description-header-and-text' => '== Kuvaus ==
 Lisää kuvaus tähän.',
+	'file-page-replace-button' => 'Korvaa',
+	'file-page-tab-about' => 'Tietoja',
+	'file-page-tab-history' => 'Tiedoston historia',
+	'file-page-tab-metadata' => 'Sisältökuvaukset',
+	'file-page-more-links' => 'Katso koko lista',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'filepage-desc' => 'Broyting av standard MediaWiki fílusíðuni fyri video-hjálp',
+	'video-page-file-list-header' => 'Verður víst á hesum síðum',
+	'video-page-global-file-list-header' => 'Verður víst á hesum wikium',
+	'video-page-from-provider' => 'Frá $1',
+	'video-page-expires' => 'Innihaldið gongur út hin $1',
+	'video-page-views' => '$1 {{PLURAL:$1|Sýning|Sýningar}}',
+	'video-page-see-more-info' => 'Vís meira kunning',
+	'video-page-see-less-info' => 'Vís minni kunning',
+	'video-page-description-heading' => 'Frágreiðing',
+	'video-page-description-zero-state' => 'Tað er ongin frágreiðing enn.',
+	'video-page-add-description-link-text' => 'Skriva eina frágreiðing.',
+	'video-page-default-description-header-and-text' => '==Frágreiðing==
+Skriva eina frágreiðing her.',
+	'video-page-file-list-pagination' => '$1 av $2',
+	'file-page-replace-button' => 'Skift út',
+	'file-page-tab-about' => 'Um',
+	'file-page-tab-history' => 'Fílusøgan',
+	'file-page-tab-metadata' => 'Metadáta',
+	'file-page-more-links' => 'Sí allan listan',
 );
 
 /** French (français)
@@ -284,6 +343,7 @@ $messages['hu'] = array(
  * @author C5st4wr6ch
  */
 $messages['id'] = array(
+	'filepage-desc' => 'Modifikasi dari halaman berkas MediaWiki standar untuk dukungan video',
 	'video-page-file-list-header' => 'Muncul pada halaman-halaman ini',
 	'video-page-global-file-list-header' => 'Muncul pada wiki ini',
 	'video-page-from-provider' => 'Dari $1',
@@ -292,6 +352,8 @@ $messages['id'] = array(
 	'video-page-default-description-header-and-text' => '==Deskripsi==
 Masukkan deskripsi di sini.',
 	'video-page-file-list-pagination' => '$1 dari $2',
+	'file-page-tab-metadata' => 'Metadata',
+	'file-page-more-links' => 'Lihat daftar lengkap',
 );
 
 /** Italian (italiano)
@@ -306,6 +368,7 @@ $messages['it'] = array(
  */
 $messages['lb'] = array(
 	'video-page-from-provider' => 'Vu(n) $1',
+	'video-page-see-more-info' => 'Méi Informatioune weisen',
 	'video-page-description-heading' => 'Beschreiwung',
 	'video-page-description-zero-state' => 'Et ass nach keng Beschreiwung do.',
 	'video-page-add-description-link-text' => 'Eng Beschreiwung derbäisetzen.',
@@ -317,14 +380,47 @@ Gitt d'Beschreiwung hei an.",
 	'file-page-more-links' => 'Ganz Lëscht weisen',
 );
 
+/** Lithuanian (lietuvių)
+ * @author Mantak111
+ */
+$messages['lt'] = array(
+	'video-page-description-heading' => 'Aprašymas',
+	'video-page-description-zero-state' => 'Čia nėra aprašymo kol kas.',
+	'video-page-add-description-link-text' => 'Pridėti aprašymą.',
+	'video-page-default-description-header-and-text' => '==Aprašymas==
+Įveskite aprašymą čia.',
+	'video-page-file-list-pagination' => '$1 iš $2',
+	'file-page-replace-button' => 'Pakeisti',
+	'file-page-tab-about' => 'Apie',
+	'file-page-tab-history' => 'Failų istorija',
+	'file-page-tab-metadata' => 'Metaduomenys',
+	'file-page-more-links' => 'Žiūrėti visą sąrašą',
+);
+
 /** Macedonian (македонски)
+ * @author Bjankuloski06
  * @author M4r51n
  */
 $messages['mk'] = array(
+	'filepage-desc' => 'Измена на стандардната податотечна страница за видеоподдршка',
+	'video-page-file-list-header' => 'Се јавува на следниве страници',
+	'video-page-global-file-list-header' => 'Се јавува на следниве викија',
+	'video-page-from-provider' => 'Од $1',
+	'video-page-expires' => 'Содржината истекува на $1',
+	'video-page-views' => '$1 {{PLURAL:$1|преглед|прегледи}}',
 	'video-page-see-more-info' => 'Прикажи повеќе информации',
+	'video-page-see-less-info' => 'Помалку информации',
 	'video-page-description-heading' => 'Опис',
+	'video-page-description-zero-state' => 'Сè уште нема опис',
+	'video-page-add-description-link-text' => 'Дајте опис.',
+	'video-page-default-description-header-and-text' => '==Опис==
+Тука внесете го описот.',
+	'video-page-file-list-pagination' => '$1 од $2',
 	'file-page-replace-button' => 'Замени',
 	'file-page-tab-about' => 'За програмот',
+	'file-page-tab-history' => 'Историја на податотеката',
+	'file-page-tab-metadata' => 'Метаподатоци',
+	'file-page-more-links' => 'Целосен список',
 );
 
 /** Malay (Bahasa Melayu)
@@ -350,6 +446,32 @@ Berikan keterangan di sini.',
 	'file-page-tab-history' => 'Sejarah Fail',
 	'file-page-tab-metadata' => 'Metadata',
 	'file-page-more-links' => 'Lihat senarai penuh',
+);
+
+/** Norwegian Bokmål (norsk bokmål)
+ * @author Event
+ * @author Laaknor
+ */
+$messages['nb'] = array(
+	'filepage-desc' => 'Modifisering av standard MediaWiki-filside for videostøtte.',
+	'video-page-file-list-header' => 'Vises på disse sidene',
+	'video-page-global-file-list-header' => 'Vises på disse wikiene',
+	'video-page-from-provider' => 'Fra $1',
+	'video-page-expires' => 'Innhold går ut på $1',
+	'video-page-views' => '$1 {{PLURAL:$1|visning|visninger}}',
+	'video-page-see-more-info' => 'Vis mer informasjon',
+	'video-page-see-less-info' => 'Vis mindre informasjon',
+	'video-page-description-heading' => 'Beskrivelse',
+	'video-page-description-zero-state' => 'Det er ingen beskrivelse ennå.',
+	'video-page-add-description-link-text' => 'Legg til en beskrivelse.',
+	'video-page-default-description-header-and-text' => '== Beskrivelse ==
+Legg inn beskrivelse her.',
+	'video-page-file-list-pagination' => '$1 av $2',
+	'file-page-replace-button' => 'Erstatt',
+	'file-page-tab-about' => 'Om',
+	'file-page-tab-history' => 'Filhistorikk',
+	'file-page-tab-metadata' => 'Metadata',
+	'file-page-more-links' => 'Se fullstendig liste',
 );
 
 /** Dutch (Nederlands)
@@ -457,11 +579,25 @@ Insira a descrição aqui.',
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'filepage-desc' => "Cangiaminde d'a pàgene d'u file standàrd de MediaUicchi pe supportà le video",
+	'video-page-file-list-header' => 'Iesse sus a aste pàggene',
+	'video-page-global-file-list-header' => 'Iesse sus a ste uicchi',
 	'video-page-from-provider' => 'Da $1',
 	'video-page-expires' => "Condenute ca scade 'u $1",
 	'video-page-views' => '$1 {{PLURAL:$1|Viste}}',
+	'video-page-see-more-info' => "Fà vedè cchiù 'mbormaziune",
+	'video-page-see-less-info' => "Fà vedè mene 'mbormaziune",
+	'video-page-description-heading' => 'Descrizione',
+	'video-page-description-zero-state' => "Non ge stè angore 'na descrizione.",
+	'video-page-add-description-link-text' => "Aggiunge 'na descrizione.",
+	'video-page-default-description-header-and-text' => "== Descrizione ==
+Mitte 'a descrizione aqquà.",
 	'video-page-file-list-pagination' => '$1 de $2',
 	'file-page-replace-button' => 'Sostituisce',
+	'file-page-tab-about' => 'Sus a',
+	'file-page-tab-history' => 'Cunde',
+	'file-page-tab-metadata' => 'Metadata',
+	'file-page-more-links' => "'Ndruche l'elenghe comblete",
 );
 
 /** Russian (русский)
@@ -506,17 +642,49 @@ Ange en beskrivning här.',
 	'file-page-more-links' => 'Se hela listan',
 );
 
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'filepage-desc' => 'Video desteği için standart MediaWiki dosya sayfasının modifikasyonu',
+	'video-page-file-list-header' => 'Bu sayfalarda görüntülenir',
+	'video-page-global-file-list-header' => 'Bu wiki üzerinde görünür',
+	'video-page-from-provider' => 'Gönderen $1',
+	'video-page-expires' => 'İçeriğin son kullanma tarihi $1',
+	'video-page-views' => '$1 {{PLURAL:$1|Görünüm|Görünümler}}',
+	'video-page-see-more-info' => 'Daha fazla bilgi göster',
+	'video-page-see-less-info' => 'Daha az bilgi göster',
+	'video-page-description-heading' => 'Açıklama',
+	'video-page-description-zero-state' => 'Henüz hiçbir açıklama yoktur.',
+	'video-page-add-description-link-text' => 'Bir açıklama ekleyin.',
+	'video-page-default-description-header-and-text' => '== Açıklama ==
+Açıklamasını buraya girin.',
+	'video-page-file-list-pagination' => "$1, $2'de",
+	'file-page-replace-button' => 'Değiştir',
+	'file-page-tab-about' => 'Hakkında',
+	'file-page-tab-history' => 'Dosya Geçmişi',
+	'file-page-tab-metadata' => 'Metaveri',
+	'file-page-more-links' => 'Tam listesine bakın',
+);
+
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Ата
  */
 $messages['uk'] = array(
 	'filepage-desc' => 'Модифікація стандартної MediaWiki-сторінки файлу для підтримки відео',
+	'video-page-file-list-header' => "З'являється на цих сторінках",
+	'video-page-global-file-list-header' => "З'являється на цих вікі",
 	'video-page-from-provider' => 'З $1',
+	'video-page-expires' => 'Вміст закінчується на $1',
 	'video-page-views' => '$1 {{PLURAL:$1|перегляд|перегляди|переглядів}}',
 	'video-page-see-more-info' => 'Показати додаткову інформацію',
 	'video-page-see-less-info' => 'Показати менше інформації',
 	'video-page-description-heading' => 'Опис',
 	'video-page-description-zero-state' => 'Ще немає опису.',
+	'video-page-add-description-link-text' => 'Додати опис',
+	'video-page-default-description-header-and-text' => '= = Опис = =
+Введіть опис тут.',
 	'video-page-file-list-pagination' => '$1 з $2',
 	'file-page-replace-button' => 'Замінити',
 	'file-page-tab-about' => 'Про файл',
@@ -549,9 +717,11 @@ $messages['ur'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Kuailong
+ * @author Liuxinyu970226
  * @author Qiyue2001
  */
 $messages['zh-hans'] = array(
+	'video-page-from-provider' => '来自$1',
 	'video-page-views' => '$1次浏览',
 	'video-page-see-more-info' => '显示更多信息',
 	'video-page-see-less-info' => '显示较少信息',
@@ -560,6 +730,7 @@ $messages['zh-hans'] = array(
 	'video-page-add-description-link-text' => '添加说明。',
 	'video-page-default-description-header-and-text' => '==说明==
 在这里输入说明。',
+	'video-page-file-list-pagination' => '$2的$1',
 	'file-page-replace-button' => '取代',
 	'file-page-tab-about' => '关于',
 	'file-page-tab-history' => '文件历史',

@@ -206,6 +206,58 @@ Parameters:
 {{Identical|Add photo}}',
 );
 
+/** Breton (brezhoneg)
+ * @author Fohanno
+ */
+$messages['br'] = array(
+	'managewikiahome' => 'Merañ pajenn degemer Wikia',
+	'manage-wikia-home-collections-success' => 'Enrollet eo bet an dastumadoù.',
+	'manage-wikia-home-collections-add-success' => "Ouzhpennet eo bet ar wiki d'an dastumad.",
+	'manage-wikia-home-collections-add-failure-already-exists' => 'Emañ ar wiki en dastumad-mañ dija.',
+	'manage-wikia-home-collections-remove-success' => 'Tennet eo bet ar wiki eus an dastumad.',
+	'manage-wikia-home-collections-invalid-action' => "N'eus ket eus an ober-se.",
+	'manage-wikia-home-verticals-proportions' => 'Niver a wikioù dre vannoù',
+	'manage-wikia-home-error-wikifactory-failure' => "C'hoarvezet ez eus un dra bennak a-dreuz en ur enrollañ an argemmennoù. Esaeit en-dro, mar plij.",
+	'manage-wikia-home-change-button' => 'Kemm',
+	'manage-wikia-home-wikis-in-visualization-heading' => 'Roll a wikioù da welet',
+	'manage-wikia-home-wiki-filter' => 'Sil',
+	'manage-wikia-home-wiki-filter-reset' => 'Diverkañ',
+	'manage-wikia-home-wiki-list-id' => 'Id',
+	'manage-wikia-home-wiki-list-vertical' => 'A-hed',
+	'manage-wikia-home-wiki-list-headline' => 'Anv ar wiki',
+	'manage-wikia-home-wiki-list-blocked' => 'Stanket',
+	'manage-wikia-home-wiki-list-official' => 'Ofisiel',
+	'manage-wikia-home-wiki-list-collection' => 'Dastumadoù',
+	'manage-wikia-home-wiki-list-blocked-no' => 'Ket',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Ya',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Ket',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Ya',
+	'manage-wikia-home-wiki-list-official-no' => 'Ket',
+	'manage-wikia-home-wiki-list-official-yes' => 'Ya',
+	'manage-wikia-home-wiki-list-disabled-collection' => 'Dastumad diweredekaet',
+	'manage-wikia-home-wiki-list-all-collections' => 'An holl zastumadoù',
+	'manage-wikia-home-modal-title' => 'Cheñch statud ar wiki',
+	'manage-wikia-home-modal-title-collection' => 'Aozañ ar wiki en dastumad',
+	'manage-wikia-home-modal-content-add-collection' => "Ha fellout a ra deoc'h ouzhpennañ ar wiki-mañ d'an dastumad ?",
+	'manage-wikia-home-modal-content-remove-collection' => "Ha fellout a ra deoc'h tennañ ar wiki-mañ eus an dastumad ?",
+	'manage-wikia-home-modal-content-add-blocked-wiki-warning' => "Ne c'hallit ket ouzhpennañ wikioù stanket d'un dastumad.",
+	'manage-wikia-home-modal-content-blocked-wiki-in-collection-warning' => "Ne zlefe ket ar wiki-mañ bezañ en dastumad abalamour m'eo stanket. Tennet e vo eus an dastumad.",
+	'manage-wikia-home-modal-content-blocked-wiki-title' => 'Stanket eo ar wiki-mañ',
+	'manage-wikia-home-modal-content-removed-blocked-in-collection' => "E-barzh un dastumad emañ ar wiki-mañ ha ne c'hall ket bezañ stanket.",
+	'manage-wikia-home-modal-too-many-wikis-in-collection' => "Ne c'hallit ket ouzhpennañ muioc'h a wikioù d'an dastumad-mañ.",
+	'manage-wikia-home-modal-button-no' => 'Ket',
+	'manage-wikia-home-modal-button-yes' => 'Ya',
+	'manage-wikia-home-modal-button-okay' => 'Mat eo',
+	'manage-wikia-home-collections-setup-header' => 'Arventenniñ an dastumadoù',
+	'manage-wikia-home-collections-setup-save-button' => 'Enrollañ',
+	'manage-wikia-home-collections-enabled-field-label' => 'Gweredekaet',
+	'manage-wikia-home-collections-name-field-label' => 'Anv an dastumad',
+	'manage-wikia-home-collections-sponsor-url-field-label' => 'URL ar sponsor',
+	'manage-wikia-home-collections-sponsor-image-field-label' => 'Skeudenn ar sponsor',
+	'manage-wikia-home-collections-wikis-in-collection' => 'Wikioù: $1 diwar $2',
+	'manage-wikia-home-collection-add-file-button' => "Ouzhpennañ ul luc'hskeudenn",
+);
+
 /** Bosnian (bosanski)
  * @author CERminator
  */
@@ -215,6 +267,80 @@ $messages['bs'] = array(
 	'manage-wikia-home-collections-add-failure-image' => '$1 ne može biti dodato u ovu kolekciju jer je njena osnovna slika odbijena.',
 	'manage-wikia-home-collections-remove-success' => 'Wiki uspješno uklonjena iz kolekcije.',
 	'manage-wikia-home-collections-invalid-action' => 'Ova akcija ne postoji.',
+);
+
+/** Catalan (català)
+ * @author Roxas Nobody 15
+ */
+$messages['ca'] = array(
+	'managewikiahome' => 'Administrar',
+	'manage-wikia-home-wrong-rights' => 'Vostè probablement no esta connectat  o no teniu permisos per utilitzar aquesta pàgina especial.',
+	'manage-wikia-home-wikis-in-slots-heading' => 'Organització de Espais',
+	'manage-wikia-home-wikis-in-slots-total' => "L'import total de Espais:$1",
+	'manage-wikia-home-visualization-wikis' => 'Wikis Corporatius amb previsualització:',
+	'manage-wikia-home-wikis-in-slots-success' => "Espais de Nom s'ha canviat.",
+	'manage-wikia-home-collections-success' => "Les col·leccions s'han guardat.",
+	'manage-wikia-home-collections-add-success' => 'Wiki afegit correctament a la col·lecció.',
+	'manage-wikia-home-collections-add-failure-already-exists' => 'Wiki ja existeix en aquesta col·lecció.',
+	'manage-wikia-home-collections-add-failure-image' => '$1no acumulable a aquesta col·lecció perquè la imatge principal ha estat rebutjada.',
+	'manage-wikia-home-collections-remove-success' => 'Wiki afegit correctament a la col·lecció.',
+	'manage-wikia-home-collections-invalid-action' => 'Aquesta acció no existeix.',
+	'manage-wikia-home-verticals-proportions' => 'Nombre de wikis per vertical',
+	'manage-wikia-home-error-invalid-total-no-of-slots' => "Quantitat no vàlida de espais en total ( $1 ). Si us plau, assegureu-vos que la suma de cada centre de ranures iguals de l'import total de ranures ( $2 ).",
+	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'No es permet un nombre negatiu de espais',
+	'manage-wikia-home-error-wikifactory-failure' => "Alguna cosa va sortir malament durant les variables d'estalvi. Intenteu-ho novament.",
+	'manage-wikia-home-collections-validation-error' => 'Hi havia un error mentre es guardaba, comproveu que heu introduït.',
+	'manage-wikia-home-change-button' => 'Canvi',
+	'manage-wikia-home-wikis-in-visualization-heading' => 'Llista dels wikis en visualització',
+	'manage-wikia-home-wiki-name-filter' => 'Comenceu a escriure el nom del wiki i la llista tindrà més curt:',
+	'manage-wikia-home-wiki-filter' => 'Filtre',
+	'manage-wikia-home-wiki-filter-reset' => 'Neteja',
+	'manage-wikia-home-wiki-list-id' => 'Id',
+	'manage-wikia-home-wiki-list-vertical' => 'Vertical',
+	'manage-wikia-home-wiki-list-headline' => 'Nom del wiki',
+	'manage-wikia-home-wiki-list-blocked' => 'Bloquejat',
+	'manage-wikia-home-wiki-list-promoted' => 'Promogut',
+	'manage-wikia-home-wiki-list-official' => 'Oficial',
+	'manage-wikia-home-wiki-list-collection' => 'Col·leccions',
+	'manage-wikia-home-wiki-list-blocked-no' => 'No',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Sí',
+	'manage-wikia-home-wiki-list-promoted-no' => 'No',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Sí',
+	'manage-wikia-home-wiki-list-official-no' => 'No',
+	'manage-wikia-home-wiki-list-official-yes' => 'Sí',
+	'manage-wikia-home-wiki-list-disabled-collection' => 'Col·lecció deshabilitada',
+	'manage-wikia-home-wiki-list-all-collections' => 'Totes les col·leccions',
+	'manage-wikia-home-wiki-list-all-verticals' => 'Tots verticals',
+	'manage-wikia-home-modal-title' => "Canviar l'estat del wiki",
+	'manage-wikia-home-modal-title-collection' => 'Editar wiki de col·lecció',
+	'manage-wikia-home-modal-content-add-blocked' => "Voleu excloure aquesta wiki d'aparèixer en la visualització de wiki?",
+	'manage-wikia-home-modal-content-remove-blocked' => 'Voleu incloure aquest wiki en la visualització de wiki?',
+	'manage-wikia-home-modal-content-add-promoted' => 'Voleu promoure aquest wiki en la visualització de wiki?',
+	'manage-wikia-home-modal-content-remove-promoted' => 'Voleu donar de baixa aquest wiki en la visualització de wiki?',
+	'manage-wikia-home-modal-content-add-official' => "Voleu afegir un logotip oficial d'aquest wiki en la visualització de wiki?",
+	'manage-wikia-home-modal-content-remove-official' => 'Voleu treure el logo oficial wiki per aquest wiki en la visualització de wiki?',
+	'manage-wikia-home-modal-content-add-collection' => 'Voleu afegir aquest wiki a la col·lecció?',
+	'manage-wikia-home-modal-content-remove-collection' => 'Voleu suprimir aquest wiki de la col·lecció?',
+	'manage-wikia-home-modal-content-add-blocked-wiki-warning' => 'No es poden afegir wikis bloquejats a una col·lecció.',
+	'manage-wikia-home-modal-content-blocked-wiki-in-collection-warning' => 'Aquest wiki no hauria de ser en col·lecció perquè està bloquejat. Es traurà de la col·lecció.',
+	'manage-wikia-home-modal-content-blocked-wiki-title' => 'Aquest wiki està bloquejat',
+	'manage-wikia-home-modal-content-removed-blocked-in-collection' => 'Aquesta wiki és actualment part de la col·lecció i no pot ser bloquejat.',
+	'manage-wikia-home-modal-too-many-wikis-in-collection' => 'No es poden afegir wikis bloquejats a una col·lecció.',
+	'manage-wikia-home-modal-button-no' => 'No',
+	'manage-wikia-home-modal-button-yes' => 'Sí',
+	'manage-wikia-home-modal-button-okay' => "D'acord",
+	'manage-wikia-home-collections-setup-header' => 'Organització de Col·leccions',
+	'manage-wikia-home-collections-setup-save-button' => 'Guardar',
+	'manage-wikia-home-collections-enabled-field-label' => 'Activat',
+	'manage-wikia-home-collections-name-field-label' => 'Nom de la col·lecció',
+	'manage-wikia-home-collections-sponsor-url-field-label' => 'Patrocinador URL',
+	'manage-wikia-home-collections-sponsor-hero-image-field-label' => "Imatge de l'heroi",
+	'manage-wikia-home-collections-sponsor-image-field-label' => 'Imatge del patrocinador',
+	'manage-wikia-home-collections-wikis-in-collection' => 'Wikis:  $1  de$2',
+	'manage-wikia-home-collections-invalid-wikis-number' => 'Aquesta col·lecció no serà visible a la pàgina principal corporativa fins allà  {{PLURAL:$1| és un wiki|are  $1  wikis}} que tenia assignat.',
+	'manage-wikia-home-collection-hero-image-tooltip' => 'Aquesta imatge ha de ser  $1 px ×  $2 px',
+	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Aquesta imatge ha de ser  $1 px ×  $2 px',
+	'manage-wikia-home-collection-add-file-button' => 'Afegir una foto',
 );
 
 /** German (Deutsch)
@@ -388,6 +514,40 @@ $messages['es'] = array(
 	'manage-wikia-home-collection-add-file-button' => 'Añadir una imagen',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'manage-wikia-home-change-button' => 'Broyt',
+	'manage-wikia-home-wikis-in-visualization-heading' => 'Listi yvir wikiir í visualisering',
+	'manage-wikia-home-wiki-name-filter' => 'Byrja við at skriva eitt wiki-navn, so verður listin styttri:',
+	'manage-wikia-home-wiki-filter' => 'Filtur',
+	'manage-wikia-home-wiki-filter-reset' => 'Rudda',
+	'manage-wikia-home-wiki-list-id' => 'Id',
+	'manage-wikia-home-wiki-list-vertical' => 'Loddrætt',
+	'manage-wikia-home-wiki-list-headline' => 'Wiki-navn',
+	'manage-wikia-home-wiki-list-blocked' => 'Sperrað',
+	'manage-wikia-home-wiki-list-blocked-no' => 'Nei',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Ja',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Nei',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Ja',
+	'manage-wikia-home-wiki-list-official-no' => 'Nei',
+	'manage-wikia-home-wiki-list-official-yes' => 'Ja',
+	'manage-wikia-home-wiki-list-disabled-collection' => 'Ger savnið óvirkið',
+	'manage-wikia-home-wiki-list-all-collections' => 'Øll søvn',
+	'manage-wikia-home-modal-content-blocked-wiki-title' => 'Henda wikiin er sperrað',
+	'manage-wikia-home-modal-button-no' => 'Nei',
+	'manage-wikia-home-modal-button-yes' => 'Ja',
+	'manage-wikia-home-modal-button-okay' => 'Í lagi',
+	'manage-wikia-home-collections-setup-save-button' => 'Goym',
+	'manage-wikia-home-collections-enabled-field-label' => 'Gjørt virkið',
+	'manage-wikia-home-collections-name-field-label' => 'Navnið á savninum',
+	'manage-wikia-home-collections-wikis-in-collection' => 'Wikiir: $1 av $2',
+	'manage-wikia-home-collection-hero-image-tooltip' => 'Henda myndin eigur at vera $1px × $2px',
+	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Henda myndin eigur at vera $1px × $2px',
+	'manage-wikia-home-collection-add-file-button' => 'Innset eina mynd',
+);
+
 /** French (français)
  * @author Gomoko
  * @author Wyz
@@ -557,6 +717,22 @@ $messages['id'] = array(
 	'manage-wikia-home-collection-add-file-button' => 'Tambahkan foto',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'manage-wikia-home-change-button' => 'Änneren',
+	'manage-wikia-home-wiki-list-blocked-no' => 'Neen',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Jo',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Neen',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Jo',
+	'manage-wikia-home-wiki-list-official-no' => 'Neen',
+	'manage-wikia-home-wiki-list-official-yes' => 'Jo',
+	'manage-wikia-home-modal-button-no' => 'Neen',
+	'manage-wikia-home-modal-button-yes' => 'Jo',
+	'manage-wikia-home-collections-setup-save-button' => 'Späicheren',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -629,6 +805,32 @@ $messages['ms'] = array(
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Gambar ini seharusnya berukuran $1px × $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Gambar ini seharusnya berukuran $1px × $2px',
 	'manage-wikia-home-collection-add-file-button' => 'Tambah gambar',
+);
+
+/** Norwegian Bokmål (norsk bokmål)
+ * @author Event
+ * @author Laaknor
+ */
+$messages['nb'] = array(
+	'manage-wikia-home-wrong-rights' => 'Du er sannsynligvis utlogget eller du har ikke rettigheter for å bruke denne spesialsiden.',
+	'manage-wikia-home-wiki-filter' => 'Filter',
+	'manage-wikia-home-wiki-filter-reset' => 'Tøm',
+	'manage-wikia-home-wiki-list-id' => 'ID',
+	'manage-wikia-home-wiki-list-vertical' => 'Vertikal',
+	'manage-wikia-home-wiki-list-headline' => 'Wikinavn',
+	'manage-wikia-home-wiki-list-blocked' => 'Blokkert',
+	'manage-wikia-home-wiki-list-official' => 'Offisiell',
+	'manage-wikia-home-wiki-list-collection' => 'Samlinger',
+	'manage-wikia-home-wiki-list-blocked-no' => 'Nei',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Ja',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Nei',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Ja',
+	'manage-wikia-home-wiki-list-official-no' => 'Nei',
+	'manage-wikia-home-wiki-list-official-yes' => 'Ja',
+	'manage-wikia-home-wiki-list-disabled-collection' => 'Deaktivert samling',
+	'manage-wikia-home-wiki-list-all-collections' => 'Alle samlinger',
+	'manage-wikia-home-wiki-list-all-verticals' => 'Alle vertikale',
+	'manage-wikia-home-modal-content-blocked-wiki-title' => 'Denne wikien er blokkert',
 );
 
 /** Dutch (Nederlands)
@@ -802,10 +1004,34 @@ $messages['ps'] = array(
 	'manage-wikia-home-collection-add-file-button' => 'يو انځور ورګډول',
 );
 
+/** Portuguese (português)
+ * @author Luckas
+ */
+$messages['pt'] = array(
+	'manage-wikia-home-wiki-filter-reset' => 'Limpar',
+	'manage-wikia-home-wiki-list-official' => 'Oficial',
+	'manage-wikia-home-wiki-list-collection' => 'Coleções',
+	'manage-wikia-home-wiki-list-blocked-no' => 'Não',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Sim',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Não',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Sim',
+	'manage-wikia-home-wiki-list-official-no' => 'Não',
+	'manage-wikia-home-wiki-list-official-yes' => 'Sim',
+	'manage-wikia-home-modal-button-no' => 'Não',
+	'manage-wikia-home-modal-button-yes' => 'Sim',
+	'manage-wikia-home-modal-button-okay' => 'Aceitar',
+	'manage-wikia-home-collections-setup-save-button' => 'Salvar',
+	'manage-wikia-home-collections-name-field-label' => 'Nome da coleção',
+	'manage-wikia-home-collections-sponsor-url-field-label' => 'URL do patrocinador',
+);
+
 /** Brazilian Portuguese (português do Brasil)
  * @author Luckas
  */
 $messages['pt-br'] = array(
+	'manage-wikia-home-wiki-filter-reset' => 'Limpar',
+	'manage-wikia-home-wiki-list-id' => 'Id',
+	'manage-wikia-home-wiki-list-vertical' => 'Vertical',
 	'manage-wikia-home-wiki-list-blocked' => 'Bloqueado',
 	'manage-wikia-home-wiki-list-promoted' => 'Promovido',
 	'manage-wikia-home-wiki-list-official' => 'Oficial',
@@ -830,7 +1056,60 @@ $messages['pt-br'] = array(
 	'manage-wikia-home-collection-add-file-button' => 'Adicionar uma foto',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'managewikiahome' => "Gestisce 'a Pàgena Prengepàle de Uicchia",
+	'manage-wikia-home-wikis-in-slots-heading' => "'Mbostazione de le spazie",
+	'manage-wikia-home-wikis-in-slots-total' => 'Numere totale de spazie: $1',
+	'manage-wikia-home-visualization-wikis' => 'Uicchi corporate cu visualizzazzione:',
+	'manage-wikia-home-wikis-in-slots-success' => 'Numere de spazie ca onne state cangiate.',
+	'manage-wikia-home-collections-success' => 'Le collezziune onne state reggistrate.',
+	'manage-wikia-home-collections-invalid-action' => "Quedde azione non g'esiste.",
+	'manage-wikia-home-verticals-proportions' => 'Numere de uicchi pe verticale',
+	'manage-wikia-home-change-button' => 'Cange',
+	'manage-wikia-home-wikis-in-visualization-heading' => 'Elenghe de le uicchi in visualizzazzione',
+	'manage-wikia-home-wiki-filter' => 'Filtre',
+	'manage-wikia-home-wiki-filter-reset' => 'Pulizze',
+	'manage-wikia-home-wiki-list-id' => 'Id',
+	'manage-wikia-home-wiki-list-vertical' => 'Verticale',
+	'manage-wikia-home-wiki-list-headline' => "Nome d'a Uicchi",
+	'manage-wikia-home-wiki-list-blocked' => 'Bloccate',
+	'manage-wikia-home-wiki-list-promoted' => 'Promosse',
+	'manage-wikia-home-wiki-list-official' => 'Ufficiale',
+	'manage-wikia-home-wiki-list-collection' => 'Collezziune',
+	'manage-wikia-home-wiki-list-blocked-no' => 'None',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Sìne',
+	'manage-wikia-home-wiki-list-promoted-no' => 'None',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Sìne',
+	'manage-wikia-home-wiki-list-official-no' => 'None',
+	'manage-wikia-home-wiki-list-official-yes' => 'Sìne',
+	'manage-wikia-home-wiki-list-disabled-collection' => 'Collezzione disabbilitate',
+	'manage-wikia-home-wiki-list-all-collections' => 'Tutte le collezziune',
+	'manage-wikia-home-wiki-list-all-verticals' => 'Tutte le verticale',
+	'manage-wikia-home-modal-title' => "Cange 'u state d'a uicchi",
+	'manage-wikia-home-modal-title-collection' => "cange 'a uicchi jndr'à collezzione",
+	'manage-wikia-home-modal-content-blocked-wiki-title' => 'Sta uicchi jè bloccate',
+	'manage-wikia-home-modal-too-many-wikis-in-collection' => "Non ge puè aggiungere otre uicchi jndr'à sta collezzione.",
+	'manage-wikia-home-modal-button-no' => 'None',
+	'manage-wikia-home-modal-button-yes' => 'Sìne',
+	'manage-wikia-home-modal-button-okay' => 'Apposte',
+	'manage-wikia-home-collections-setup-header' => "'Mbostazione de le collezziune",
+	'manage-wikia-home-collections-setup-save-button' => 'Reggìstre',
+	'manage-wikia-home-collections-enabled-field-label' => 'Abbilitate',
+	'manage-wikia-home-collections-name-field-label' => "Nome d'a collezzione",
+	'manage-wikia-home-collections-sponsor-url-field-label' => "URL d'u sponsor",
+	'manage-wikia-home-collections-sponsor-hero-image-field-label' => "Immaggine de l'eroe",
+	'manage-wikia-home-collections-sponsor-image-field-label' => "Immaggine d'u sponsor",
+	'manage-wikia-home-collections-wikis-in-collection' => 'Uicchi: $1 de $2',
+	'manage-wikia-home-collection-hero-image-tooltip' => "St'immaggine avessa essere $1px × $2px",
+	'manage-wikia-home-collection-sponsor-image-tooltip' => "St'immaggine avessa essere $1px × $2px",
+	'manage-wikia-home-collection-add-file-button' => "Aggiunge 'na fote",
+);
+
 /** Swedish (svenska)
+ * @author Jopparn
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -842,10 +1121,10 @@ $messages['sv'] = array(
 	'manage-wikia-home-visualization-wikis' => 'Kollektiva wikis med visualisering:',
 	'manage-wikia-home-wikis-in-slots-success' => 'Antalet platser har ändrats.',
 	'manage-wikia-home-collections-success' => 'Samlingar har sparats.',
-	'manage-wikia-home-collections-add-success' => 'Wiki lades till i samlingen.',
+	'manage-wikia-home-collections-add-success' => 'Wiki lades framgångsrikt till i samlingen.',
 	'manage-wikia-home-collections-add-failure-already-exists' => 'Wiki finns redan i denna samling',
 	'manage-wikia-home-collections-add-failure-image' => '$1 kan inte läggas till i denna samling eftersom dess huvudbild har avvisats.',
-	'manage-wikia-home-collections-remove-success' => 'Wiki togs bort från samlingen.',
+	'manage-wikia-home-collections-remove-success' => 'Wiki togs framgångsrikt bort från samlingen.',
 	'manage-wikia-home-collections-invalid-action' => 'Denna åtgärd finns inte.',
 	'manage-wikia-home-verticals-proportions' => 'Antal wikis per vertikalplan',
 	'manage-wikia-home-error-invalid-total-no-of-slots' => 'Ogiltig totalt antal platser ($1). Se till att summan av varje navigationsplats är lika med totala antalet platser ($2).',
@@ -899,8 +1178,123 @@ $messages['sv'] = array(
 	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Hjältebild',
 	'manage-wikia-home-collections-sponsor-image-field-label' => 'Sponsorbild',
 	'manage-wikia-home-collections-wikis-in-collection' => 'Wikis: $1 av $2',
-	'manage-wikia-home-collections-invalid-wikis-number' => 'Denna samling kommer inte att synas på den kollektiva huvudsidan förrän {{PLURAL:$1|$1 wiki|$1 wikis}} har tilldelats på den.',
+	'manage-wikia-home-collections-invalid-wikis-number' => 'Denna samling kommer inte att synas på den kollektiva huvudsidan förrän det {{PLURAL:$1|är en wiki|är $1 wikis}} tilldelade till den.',
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Denna bild ska vara $1px × $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Denna bild ska vara $1px × $2px',
 	'manage-wikia-home-collection-add-file-button' => 'Lägg till ett foto',
+);
+
+/** Ukrainian (українська)
+ * @author Andriykopanytsia
+ */
+$messages['uk'] = array(
+	'managewikiahome' => 'Управління Будинком Вікія',
+	'manage-wikia-home-wrong-rights' => 'Ви, ймовірно, вийшли або не маєте дозволу на використання цієї спеціальної сторінки.',
+	'manage-wikia-home-wikis-in-slots-heading' => 'Установки слотів',
+	'manage-wikia-home-wikis-in-slots-total' => 'Загальне число слотів:$1',
+	'manage-wikia-home-visualization-wikis' => 'Корпоративні вікі з візуалізацією:',
+	'manage-wikia-home-wikis-in-slots-success' => 'Числа слотів вже змінено.',
+	'manage-wikia-home-collections-success' => 'Збірки вже збережено.',
+	'manage-wikia-home-collections-add-success' => 'Вікі успішно додано до збірки.',
+	'manage-wikia-home-collections-add-failure-already-exists' => 'Вікі вже існує в цій збірці.',
+	'manage-wikia-home-collections-add-failure-image' => '$1 не може бути додано до цієї збірки, тому що основне  зображення було відхилено.',
+	'manage-wikia-home-collections-remove-success' => 'Вікі успішно вилучено із збірки.',
+	'manage-wikia-home-collections-invalid-action' => 'Ця дія не існує.',
+	'manage-wikia-home-verticals-proportions' => 'Число вікі на вертикалі',
+	'manage-wikia-home-error-invalid-total-no-of-slots' => 'Неприпустиме число слотів ($1). Будь ласка, переконайтеся, що сума слотів з кожного концентратора  рівна загальному числу слотів ($2).',
+	'manage-wikia-home-error-negative-slots-number-not-allowed' => "Не допускається від'ємне число слотів",
+	'manage-wikia-home-error-wikifactory-failure' => 'Щось пішло не так під час збереження змінних. Будь ласка, спробуйте ще раз.',
+	'manage-wikia-home-collections-validation-error' => 'Сталася помилка під час збереження, будь ласка, перевірте, що ви ввели.',
+	'manage-wikia-home-change-button' => 'Змінити',
+	'manage-wikia-home-wikis-in-visualization-heading' => 'Список вікі у візуалізації',
+	'manage-wikia-home-wiki-name-filter' => 'Почніть вводити назву вікі і список стане коротшим:',
+	'manage-wikia-home-wiki-filter' => 'Фільтр',
+	'manage-wikia-home-wiki-filter-reset' => 'Очистити',
+	'manage-wikia-home-wiki-list-id' => 'ID',
+	'manage-wikia-home-wiki-list-vertical' => 'Вертикаль',
+	'manage-wikia-home-wiki-list-headline' => 'Назва вікі',
+	'manage-wikia-home-wiki-list-blocked' => 'Заблоковано',
+	'manage-wikia-home-wiki-list-promoted' => 'Популяризоване',
+	'manage-wikia-home-wiki-list-official' => 'Офіційний',
+	'manage-wikia-home-wiki-list-collection' => 'Колекції',
+	'manage-wikia-home-wiki-list-blocked-no' => 'Ні',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Так',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Ні',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Так',
+	'manage-wikia-home-wiki-list-official-no' => 'Ні',
+	'manage-wikia-home-wiki-list-official-yes' => 'Так',
+	'manage-wikia-home-wiki-list-disabled-collection' => 'Вимкнена збірка',
+	'manage-wikia-home-wiki-list-all-collections' => 'Всі колекції',
+	'manage-wikia-home-wiki-list-all-verticals' => 'Всі вертикалі',
+	'manage-wikia-home-modal-title' => 'Змінити статус вікі',
+	'manage-wikia-home-modal-title-collection' => 'Редагувати вікі в колекції',
+	'manage-wikia-home-modal-content-add-blocked' => 'Ви хочете виключити цей вікі від появи у вікі візуалізації?',
+	'manage-wikia-home-modal-content-remove-blocked' => 'Ви хочете включити цей вікі у вікі візуалізацію?',
+	'manage-wikia-home-modal-content-add-promoted' => 'Ви хочете популяризувати цю вікі у вікі візуалізації?',
+	'manage-wikia-home-modal-content-remove-promoted' => 'Ви хочете припинити популяризувати цю вікі у вікі візуалізації?',
+	'manage-wikia-home-modal-content-add-official' => 'Ви хочете додати офіційний логотип для цього вікі у вікі візуалізації?',
+	'manage-wikia-home-modal-content-remove-official' => 'Ви хочете вилучити логотип офіційного вікі для цієї вікі у вікі візуалізації?',
+	'manage-wikia-home-modal-content-add-collection' => 'Ви хочете додати це вікі до збірки?',
+	'manage-wikia-home-modal-content-remove-collection' => 'Ви хочете вилучити це вікі із збірки?',
+	'manage-wikia-home-modal-content-add-blocked-wiki-warning' => 'Ви не можете додати заблоковане вікі для збірки.',
+	'manage-wikia-home-modal-content-blocked-wiki-in-collection-warning' => 'Ця вікі не повинно бути в колекції, тому що воно заблоковане. Воно буде видучене з колекції.',
+	'manage-wikia-home-modal-content-blocked-wiki-title' => 'Цей вікі заблоковано',
+	'manage-wikia-home-modal-content-removed-blocked-in-collection' => 'Цей вікі в даний час є частиною збірки і не може бути заблокованим.',
+	'manage-wikia-home-modal-too-many-wikis-in-collection' => 'Не можна додати більше вікі до цієї збірки.',
+	'manage-wikia-home-modal-button-no' => 'Ні',
+	'manage-wikia-home-modal-button-yes' => 'Так',
+	'manage-wikia-home-modal-button-okay' => 'Гаразд',
+	'manage-wikia-home-collections-setup-header' => 'Установки колекції',
+	'manage-wikia-home-collections-setup-save-button' => 'Зберегти',
+	'manage-wikia-home-collections-enabled-field-label' => 'Увімкнено',
+	'manage-wikia-home-collections-name-field-label' => 'Назва колекції',
+	'manage-wikia-home-collections-sponsor-url-field-label' => 'Спонсорська URL',
+	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Величезне зображення',
+	'manage-wikia-home-collections-sponsor-image-field-label' => 'Спонсорське зображення',
+	'manage-wikia-home-collections-wikis-in-collection' => 'Вікі: $1 з $2',
+	'manage-wikia-home-collections-invalid-wikis-number' => 'Ця колекція не буде видно на головній корпоративній сторінці корпоративних, поки {{PLURAL:$1|одне вікі не буде приписаним до неї| $1 вікі не будуть приписані до неї}}.',
+	'manage-wikia-home-collection-hero-image-tooltip' => 'Це зображення має бути $1px × $2px',
+	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Це зображення має бути $1px × $2px',
+	'manage-wikia-home-collection-add-file-button' => 'Додати фото',
+);
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hans'] = array(
+	'managewikiahome' => '管理Wikia首页',
+	'manage-wikia-home-wikis-in-slots-heading' => '插槽部署',
+	'manage-wikia-home-wikis-in-slots-total' => '插槽总计：$1',
+	'manage-wikia-home-change-button' => '更改',
+	'manage-wikia-home-wiki-filter' => '过滤器',
+	'manage-wikia-home-wiki-filter-reset' => '清除',
+	'manage-wikia-home-wiki-list-id' => '身份',
+	'manage-wikia-home-wiki-list-vertical' => '垂直',
+	'manage-wikia-home-wiki-list-headline' => '维基名字',
+	'manage-wikia-home-wiki-list-blocked' => '已封禁',
+	'manage-wikia-home-wiki-list-promoted' => '已提权',
+	'manage-wikia-home-wiki-list-official' => '官方',
+	'manage-wikia-home-wiki-list-collection' => '收藏',
+	'manage-wikia-home-wiki-list-blocked-no' => '否',
+	'manage-wikia-home-wiki-list-blocked-yes' => '是',
+	'manage-wikia-home-wiki-list-promoted-no' => '否',
+	'manage-wikia-home-wiki-list-promoted-yes' => '是',
+	'manage-wikia-home-wiki-list-official-no' => '否',
+	'manage-wikia-home-wiki-list-official-yes' => '是',
+	'manage-wikia-home-wiki-list-disabled-collection' => '已取消收藏',
+	'manage-wikia-home-wiki-list-all-collections' => '所有收藏',
+	'manage-wikia-home-wiki-list-all-verticals' => '所有垂直',
+	'manage-wikia-home-modal-content-blocked-wiki-title' => '本维基被封禁',
+	'manage-wikia-home-modal-button-no' => '否',
+	'manage-wikia-home-modal-button-yes' => '是',
+	'manage-wikia-home-modal-button-okay' => '好',
+	'manage-wikia-home-collections-setup-header' => '收集设置',
+	'manage-wikia-home-collections-setup-save-button' => '保存',
+	'manage-wikia-home-collections-enabled-field-label' => '已启用',
+	'manage-wikia-home-collections-name-field-label' => '收藏名称',
+	'manage-wikia-home-collections-sponsor-url-field-label' => '赞助商连接',
+	'manage-wikia-home-collections-sponsor-hero-image-field-label' => '英雄形象',
+	'manage-wikia-home-collections-sponsor-image-field-label' => '赞助商图像',
+	'manage-wikia-home-collections-wikis-in-collection' => '维基:$2的$1',
+	'manage-wikia-home-collection-add-file-button' => '添加图片',
 );

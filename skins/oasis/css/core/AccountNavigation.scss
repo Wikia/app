@@ -8,7 +8,7 @@
 	list-style: none;
 	position: absolute;
 	top: 1px;
-	right: 15px;
+	right: 20px;
 	li {
 		border: 0;
 		height: 29px;
@@ -57,10 +57,10 @@
 		@include menu-heavy;
 		@include box-shadow(0, 5px, 10px, rgba(0, 0, 0, 0.5));
 		display: block;
-		top: -9999px;
 		padding: 0px;
+		right: 0;
+		top: -9999px;
 		&.show {
-			right: 0;
 			top: 33px;
 		}
 		> li {

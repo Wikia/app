@@ -230,7 +230,7 @@ class DataMartService extends Service {
 	 *
 	 * @return array $topWikis [ array( wikiId => pageviews ) ]
 	 */
-	public static function getTopWikisByPageviews ($periodId, $limit = 200, Array $langs = null, $hub = null, $public = null) {
+	public static function getTopWikisByPageviews ($periodId, $limit = 200, Array $langs = [], $hub = null, $public = null) {
 		$app = F::app();
 		wfProfileIn(__METHOD__);
 
@@ -448,6 +448,95 @@ class DataMartService extends Service {
 		return $events;
 	}
 
+	/**
+	 * Gets user edits by user and wiki id
+	 * It will be used in WAM and Interstitials
+	 * @param integer|array $userIds
+	 * @param integer $wikiId
+	 * @return array $events [ array( 'user_id' => array() ) ]
+	 * Note: number of edits includes number of creates
+	 */
+	public static function getUserEditsByWikiId ($userIds, $wikiId = null) {
+		$app = F::app();
+		$periodId = self::PERIOD_ID_WEEKLY;
+		// Every weekly rollup is made on Sundays. We need date of penultimate Sunday.
+		// We dont get penultimate date of rollup from database, becasuse of performance issue
+		$rollupDate = date("Y-m-d", strtotime("Sunday 1 week ago"));
+
+		wfProfileIn(__METHOD__);
+
+		if ( empty($userIds) ) {
+			return false;
+		}
+
+		if ( empty($wikiId) ) {
+			$wikiId = $app->wg->CityId;
+		}
+
+		// this is made because memcache key has character limit and a long
+		// list of user ids can be passed so we need to have it shorter
+		$userIdsKey = self::makeUserIdsMemCacheKey($userIds);
+
+		$events = WikiaDataAccess::cacheWithLock(
+			wfSharedMemcKey('datamart', 'user_edits', $wikiId, $userIdsKey, $periodId, $rollupDate),
+			86400 /* 24 hours */,
+			function () use ($app, $wikiId, $userIds, $periodId, $rollupDate) {
+				$events = [];
+				if (!empty($app->wg->StatsDBEnabled)) {
+					$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+
+					$table = 'rollup_wiki_namespace_user_events';
+
+					$vars = [
+						'user_id',
+						'sum(creates) creates',
+						'sum(edits) edits',
+						'sum(deletes) deletes',
+						'sum(undeletes) undeletes'
+					];
+
+					$conds = [
+						'period_id' => $periodId,
+						'wiki_id' => $wikiId,
+						'time_id' => $rollupDate,
+						'user_id' => $userIds
+					];
+
+					$options = [
+						'GROUP BY' => 'user_id'
+					];
+
+					$result = $db->select(
+						$table,
+						$vars,
+						$conds,
+						__METHOD__,
+						$options
+					);
+
+					while ($row = $db->fetchRow($result)) {
+						$events[$row['user_id']] = [
+							'creates' => $row['creates'],
+							'edits' => $row['creates'] + $row['edits'],
+							'deletes' => $row['deletes'],
+							'undeletes' => $row['undeletes'],
+						];
+					}
+				}
+				return $events;
+			}
+		);
+
+		wfProfileOut(__METHOD__);
+
+		return $events;
+	}
+
+	private static function makeUserIdsMemCacheKey($userIds) {
+		$idsKey = md5(implode(',', $userIds));
+		return $idsKey;
+	}
+
 	// get daily edits
 	public static function getEditsDaily ($startDate, $endDate = null, $wikiId = null) {
 		$edits = self::getEventsByWikiId(self::PERIOD_ID_DAILY, $startDate, $endDate, $wikiId, 'edits');
@@ -507,7 +596,7 @@ class DataMartService extends Service {
 			$cacheVersion,
 			$wikiId,
 			$limitUsed,
-			( !empty( $keyToken ) ) ? md5( $keyToken ) : null,
+			( $keyToken !== '' ) ? md5( $keyToken ) : null,
 			$excludeNamespaces
 		);
 

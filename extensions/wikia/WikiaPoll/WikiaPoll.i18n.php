@@ -37,10 +37,12 @@ $messages['qqq'] = array(
 	'wikiapoll-question' => 'Used as a title. Parameter:
 * $1 is the poll question without a question mark.',
 	'wikiapoll-thanks-for-vote' => 'Thank you to voting user.',
-	'wikiapoll-vote' => 'Button text to vote in a poll.',
+	'wikiapoll-vote' => 'Button text to vote in a poll.
+{{Identical|Vote}}',
 	'wikiapoll-votes' => 'Parameter:
 * $1 is the number of votes cast.',
-	'wikiapoll-createpoll-headline' => 'Headline for Create Poll Special Page',
+	'wikiapoll-createpoll-headline' => 'Headline for Create Poll Special Page.
+{{Identical|Create poll}}',
 	'wikiapoll-editpoll-headline' => 'Headline for Edit Poll Special Page',
 	'wikiapoll-question-label' => 'Form Label for Special Page.
 {{Identical|Question}}',
@@ -51,7 +53,8 @@ $messages['qqq'] = array(
 	'wikiapoll-error-invalid-title' => 'Error message when title of poll is invalid/empty',
 	'wikiamobile-wikiapoll-open-poll' => 'Text on a button to open poll in a modal',
 	'wikiamobile-wikiapoll-thanks-voting' => 'Message displayed to a user after voting',
-	'wikiamobile-wikiapoll-poll' => 'Title of a modal',
+	'wikiamobile-wikiapoll-poll' => 'Title of a modal.
+{{Identical|Poll}}',
 	'wikiamobile-wikiapoll-user-voted' => 'Message displayed to a user after voting instead of wikiamobile-wikiapoll-open-poll button',
 );
 
@@ -949,7 +952,9 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
 	'wikiapoll-desc' => 'Забезпечує простий спосіб створення та керування опитуваннями',
@@ -966,6 +971,7 @@ $messages['uk'] = array(
 	'wikiapoll-publish-label' => 'Опублікувати',
 	'wikiapoll-error-duplicate' => 'Опитування з такою назвою вже існує.',
 	'wikiapoll-error-invalid-title' => 'Текст запитання є неприпустимим.',
+	'wikiamobile-wikiapoll-open-poll' => 'Що ви думаєте?',
 	'wikiamobile-wikiapoll-thanks-voting' => 'Дякуємо за участь у голосуванні!',
 	'wikiamobile-wikiapoll-poll' => 'Опитування',
 	'wikiamobile-wikiapoll-user-voted' => 'Ви проголосували за $1',

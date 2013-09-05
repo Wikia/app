@@ -52,12 +52,21 @@ define("WPP_WALL_ACTIONREASON", 12);
 define("WPP_WALL_REMOVE", 13);
 define("WPP_WALL_POSTEDBYBOT", 14);
 
-//Content worning
+//Content warning
 define("WPP_CONTENT_WARNING", 15);
 
 //More wall flags
 define("WPP_WALL_QUOTE_OF", 16);
 
-//Forum Order 
+//Forum Order
 define("WPP_WALL_ORDER_INDEX", 17);
 
+// License video swap status
+define( "WPP_LVS_STATUS", 18 );
+define( "WPP_LVS_SUGGEST", 19 );
+define( "WPP_LVS_SUGGEST_DATE", 20 );
+define( "WPP_LVS_EMPTY_SUGGEST", 21 );
+
+// Any types listed in this array will not have their values serialized
+// This should only be used for properties that are simple strings or integers
+$wgWPPNotSerialized = array( WPP_LVS_SUGGEST_DATE, WPP_LVS_EMPTY_SUGGEST );

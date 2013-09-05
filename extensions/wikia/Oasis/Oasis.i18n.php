@@ -3520,6 +3520,9 @@ $1 przesyła Ci stronę {{SITENAME}} z Wikia:
       $2
 Miłej lektury!
 - zespół Wikia',
+	'oasis-community-social-twitter-link' => 'https://twitter.com/wikia_pl',
+	'oasis-community-social-facebook-link' => 'https://www.facebook.com/wikiapl',
+	'oasis-community-social-googleplus-link' => '',
 );
 
 /** Piedmontese (Piemontèis)

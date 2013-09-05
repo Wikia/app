@@ -1,5 +1,5 @@
 <section class="Search this-wiki WikiaGrid clearfix">
-	<form class="WikiaSearch" id="search-v2-form" action="<?=$pageUrl;?>">
+	<form class="WikiaSearch" id="search-v2-form" action="<?=$specialSearchUrl;?>">
 		<div class="SearchInput">
 			<?php if(!empty($advancedSearchBox)) : ?>
 				<p class="advanced-link"><a href="#" id="advanced-link"><?= wfMessage('searchprofile-advanced') ?></a></p>
@@ -22,9 +22,6 @@
 		<?php echo $tabs; ?>
 
 		<div class="results-wrapper grid-3 alpha">
-			<?php if(!empty($wikiMatch)):?>
-				<?=$wikiMatch?>
-			<?php endif; ?>
 			<?php if(!empty($results)): ?>
 				<?php if( $resultsFound > 0 ): ?>
 					<p class="result-count subtle">
@@ -33,6 +30,9 @@
 						<?php else: ?>
 							<?= wfMsg('wikiasearch2-results-for', '<strong>'.$query.'</strong>'); ?>
 						<?php endif; ?>
+						<?php if(!empty($wikiMatch)):?>
+							<?=$wikiMatch?>
+						<?php endif; ?>			
 						<?php if ( isset($hub) && $hub ) : ?>
 							<?= wfMsg('wikiasearch2-onhub', $hub)?>
 							|
@@ -50,14 +50,36 @@
 					<ul class="Results">
 					<?php $pos = 0; ?>
 					<?php foreach( $results as $result ): ?>
-						<?php
+						<?php 
 							$pos++;
-							echo $app->getView( 'WikiaSearch', ( $result->getVar( 'ns' ) === 0 ) ? $resultView : WikiaSearchController::WIKIA_DEFAULT_RESULT, array(
-							  'result' => $result,
-							  'gpos' => 0,
-							  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
-							  'query' => $query
-							));
+							if ( $result['ns'] === 0 ) {
+								echo $app->getView( 'WikiaSearch', $resultView, array(
+									  'result' => $result,
+									  'gpos' => 0,
+									  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
+									  'query' => $query
+									));
+								continue;
+							} else if ( $result['ns'] === 14 && empty( $categorySeen ) && !empty( $categoryModule ) ) {
+								$categorySeen = true;
+								$topArticles = $app->sendRequest( 'WikiaSearch', 'categoryTopArticles', array(
+									  'result' => $result,
+									  'gpos' => 0,
+									  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
+									  'query' => $query,
+									), true);
+								if (count($topArticles->getVal('pages'))>0) {
+									echo $topArticles->toString();
+									continue;
+								} 							
+							}
+							// display standard view instead
+							echo $app->getView( 'WikiaSearch', WikiaSearchController::WIKIA_DEFAULT_RESULT, array(
+									'result' => $result,
+									'gpos' => 0,
+									'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
+									'query' => $query
+								));
 						?>
 					<?php endforeach; ?>
 					</ul>
@@ -77,6 +99,7 @@
 			</div>
 			<div class="SearchAdsTopWrapper grid-2 alpha">
 				<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')); ?>
+				<?= $topWikiArticles ?>
 				<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2')); ?>
 				<div id="WikiaAdInContentPlaceHolder"></div>
 			</div>

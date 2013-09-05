@@ -8,6 +8,7 @@
 @import "skins/oasis/css/mixins/multiple-box-shadow";
 @import "skins/oasis/css/mixins/opacity";
 @import "skins/oasis/css/mixins/wordmark";
+@import "extensions/wikia/UserLogin/mixins/tooltip-icon";
 
 // Colors
 @import "core/colors";
@@ -39,21 +40,25 @@ body {
 	}
 }
 
-#WikiaPage {
+.WikiaPage {
 	border-bottom: none;
 	margin: 0 auto;
 	padding: 0;
 	z-index: auto;
 }
 
+.WikiaMainContent {
+	float: none;
+}
+
 // remove global header shadow
-#WikiaHeader {
+.WikiaHeader {
 	nav:before {
 		background: none;
 	}
 }
 
-#EditPage {
+.EditPage {
 	@include clearfix;
 	background: $color-epl-page-secondary;
 	overflow: hidden;
@@ -73,14 +78,14 @@ body {
 	}
 }
 
-#EditPageMain {
+.EditPageMain {
 	float: left;
 
 	// - 1px for #EditPageRail border. Fixes BugId:16911.
 	width: $width-outside - $width-rail-epl - 1px;
 }
 
-#EditPageRail {
+.EditPageRail {
 	// Special variable with shadow details to be passed to multiple-box-shadow mixin -- check multiple-box-shadow.scss for details
 	$EditPageRailShadow: -2px 2px 2px $color-epl-gradient-shadow, -1px 0 0 $color-page-border;
 	@include multiple-box-shadow($EditPageRailShadow);
@@ -90,8 +95,9 @@ body {
 	width: $width-rail-epl;
 
 	// Make sure the box shadow of #EditPageRail is layered on top of #EditPageMain
+	// and the loading status indicator (z-index: 100)
 	position: relative;
-	z-index: 2;
+	z-index: 101;
 
 	.rail-auto-height {
 		position: relative; // IE 7 needs this
@@ -103,7 +109,7 @@ body {
 	}
 }
 
-#EditPageEditorWrapper {
+.EditPageEditorWrapper {
 	padding-left: 10px;
 
 	&.hasPreloads {
@@ -177,7 +183,7 @@ body {
 	}
 }
 
-#EditPageEditor {
+.EditPageEditor {
 	position: relative;
 
 	&.noFooter {
@@ -254,10 +260,10 @@ body {
 
 		.loading-background {
 			z-index: 100;
-			//@include opacity(75);
 			display: block;
 			left: 0;
-			right: 0;
+			// Don't overlap wide mode toggle left border
+			right: 1px;
 			top: 0;
 			bottom: 0;
 		}
@@ -298,8 +304,23 @@ body {
 		top: 50%;
 	}
 	&.preview {
+		> h1 {
+			float: left;
+			margin-right: 20px;
+		}
+		> form {
+			float: left;
+			margin-top: 20px;
+			position: relative;
+		}
+		.tooltip-icon {
+			@include tooltip-icon;
+			right: -17px;
+			top: 6px;
+		}
 		.modalContent {
 			border-color: transparent;
+			clear: both;
 			padding: 0;
 			.ArticlePreview {
 				border: 1px solid $color-page-border;
@@ -307,13 +328,11 @@ body {
 				min-height: 320px;
 				padding: 10px;
                 .global-notification {
-                    /* FB#48494 - change nav2 error styling for modal preview */
+                    // FB#48494 - change nav2 error styling for modal preview
                     width: auto;
                 }
 			}
-			/**
-			 *	FB#8087 - styling for interlanguage links in RTE popup preview
-			 */
+			// FB#8087 - styling for interlanguage links in RTE popup preview
 			.WikiaArticleInterlang {
 			    h3 {
 			        margin: 2px 14px 0 0;
@@ -344,16 +363,12 @@ body {
 	display: none;
 }
 
-#editform {
-	position: relative;
-}
-
 .EditPagePermissionError {
-	#EditPageToolbar {
+	.EditPageToolbar {
 		height: 38px;
 	}
 
-	#EditPageRail {
+	.EditPageRail {
 		> .module {
 			display: none;
 			&.module_page_controls {
@@ -370,7 +385,7 @@ body {
 		}
 	}
 	.editpage-sourcewidemode-on {
-		#EditPageRail {
+		.EditPageRail {
 			> .module_page_controls {
 				display: none !important;
 			}
@@ -378,7 +393,7 @@ body {
 	}
 }
 
-/* modal dialog (page title, captcha) */
+// modal dialog (page title, captcha)
 #HiddenFieldsDialog {
 	input {
 		display: block;
@@ -389,6 +404,10 @@ body {
 	}
 }
 
+.editpage-widemode-trigger {
+	display: none;
+}
+
 // TODO: try to "hide" stuff listed below in PHP
 .templatesUsed,
 .printfooter,
@@ -397,14 +416,6 @@ body {
 .mw-editTools,
 .plb-edit-page-make-layout {
 	display: none;
-}
-
-#EditPageHeader h1 {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    width: 300px;
-
 }
 
 .mw-toolbar-editbutton {

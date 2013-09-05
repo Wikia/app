@@ -65,7 +65,10 @@
 			<div id="VET-preview-close" class="VET-preview-close">
 				<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" class="sprite close" alt="Close">
 			</div>
-			<a id="VET-add-from-preview" href="" class="wikia-button VET-add-from-preview"><?= wfMsg('vet-add-from-preview') ?></a>
+			<!-- add video button -->
+			<?php if($showAddVideoBtn): ?>
+				<a id="VET-add-from-preview" href="" class="wikia-button VET-add-from-preview"><?= wfMessage('vet-add-from-preview')->text() ?></a>
+			<?php endif; ?>
 			<div id="VET-video-wrapper" class="VET-video-wrapper"></div>
 		</div>
 		<div class="VET-suggestions-wrapper" id="VET-suggestions-wrapper">

@@ -43,6 +43,7 @@ $messages['br'] = array(
 	'minieditor-new-heading' => 'Krouiñ ur gemennadenn nevez',
 	'minieditor-placeholder-new' => 'Skrivit ho kemennadenn amañ',
 	'minieditor-reply' => 'Respont',
+	'minieditor-placeholder-reply' => "Respont d'ar gemennadenn amañ",
 );
 
 /** Catalan (català)
@@ -102,6 +103,17 @@ $messages['fi'] = array(
 	'minieditor-message-edit' => 'Tämä on olemassa oleva viesti',
 	'minieditor-reply' => 'Vastaus',
 	'minieditor-placeholder-reply' => 'Vastaa viestiin tässä',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'minieditor-specialpage-title' => 'MiniEditor Royndarsíða',
+	'minieditor-new-heading' => 'Upprætta eitt nýtt boð',
+	'minieditor-placeholder-new' => 'Skriva títt boð her',
+	'minieditor-reply' => 'Svara',
+	'minieditor-placeholder-reply' => 'Svara boðnum her',
 );
 
 /** French (français)
@@ -363,6 +375,7 @@ $messages['tzm'] = array(
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
+ * @author SteveR
  * @author Ua2004
  */
 $messages['uk'] = array(

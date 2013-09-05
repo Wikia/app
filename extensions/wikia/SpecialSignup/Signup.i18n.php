@@ -308,6 +308,7 @@ $messages['tzm'] = array(
 /** Ukrainian (українська)
  * @author Pig1995z
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
 	'signup-desc' => 'Додає псевдонім [[{{#Special:Signup}}]] для  [[{{#Special:UserLogin}}/signup]]',

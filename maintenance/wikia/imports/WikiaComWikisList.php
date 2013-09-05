@@ -150,11 +150,11 @@ class WikiaComWikisListImport {
 	}
 
 	public function loadDataAndUpdateDatabase() {
-		global $wgCityId;
+		global $wgLanguageCode;
 		wfProfileIn(__METHOD__);
 
 		if( !$this->options->overwrittenLang ) {
-			$wikisVisualizationLangCode = WikiFactory::getVarValueByName('wgLanguageCode', $wgCityId);
+			$wikisVisualizationLangCode = $wgLanguageCode;
 		} else {
 			$wikisVisualizationLangCode = $this->options->overwrittenLang;
 		}

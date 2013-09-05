@@ -135,10 +135,10 @@ class WikiFactory {
 	 * @access public
 	 * @static
 	 *
-	 * @param string	$table	table name
-	 * @param string	$column	column name default false
+	 * @param string $table - table name
+	 * @param bool|string $column - column name default false
 	 *
-	 * @return string	table name with database
+	 * @return string - table name with database
 	 */
 	static public function table( $table, $column = false ) {
 		global $wgExternalSharedDB;
@@ -252,7 +252,7 @@ class WikiFactory {
 	 * @return boolean: true - added, false otherwise
 	 */
 	static public function addDomain( $city_id, $domain ) {
-		global $wgMemc,$wgWikicitiesReadOnly;
+		global $wgWikicitiesReadOnly;
 
 		if( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
@@ -496,11 +496,12 @@ class WikiFactory {
 	 * @author eloy@wikia
 	 * @static
 	 *
-	 * @param integer $cv_variable_id		variable id in city_variables_pool
-	 * @param integer $city_id		wiki id in city list
-	 * @param mixed $value			new value for variable
-	 * @param string $reason		optional extra reason text
+	 * @param integer $cv_variable_id variable id in city_variables_pool
+	 * @param integer $city_id        wiki id in city list
+	 * @param mixed $value            new value for variable
+	 * @param string $reason          optional extra reason text
 	 *
+	 * @throws WikiFactoryDuplicateWgServer
 	 * @return boolean: transaction status
 	 */
 	static public function setVarById( $cv_variable_id, $city_id, $value, $reason=null ) {
@@ -763,7 +764,7 @@ class WikiFactory {
 	 * @param integer $wiki: wiki id in city list
 	 * @param string $reason: optional reason text
 	 *
-	 * @throws a DBQueryError if there is an error with the deletion.
+	 * @throws DBQueryError|Exception
 	 * @return boolean true on success, false on failure
 	 */
 	static public function removeVarById( $variable_id, $wiki, $reason=null ) {
@@ -830,11 +831,11 @@ class WikiFactory {
 	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
 	 * @static
 	 *
-	 * @param integer	$cv_id	variable id in city_variables_pool
-	 * @param integer	$wiki	wiki id in city_list
-	 * @param boolean	$master	choose between master and slave connection
+	 * @param integer $cv_id: variable id in city_variables_pool
+	 * @param $city_id
+	 * @param boolean $master: choose between master and slave connection
 	 *
-	 * @return mixed	variable data from from city_variables & city_variables_pool
+	 * @return mixed: variable data from from city_variables & city_variables_pool
 	 */
 	static public function getVarById( $cv_id, $city_id, $master = false ) {
 		return self::loadVariableFromDB( $cv_id, false, $city_id, $master );
@@ -937,7 +938,7 @@ class WikiFactory {
 	/**
 	 * substVariables
 	 *
-	 * metod for resolving variable values uses in other variables
+	 * method for resolving variable values uses in other variables
 	 * i.e.
 	 *	'$wgUploadPath/6/64/Favicon.ico'
 	 * will be resolved to
@@ -1118,7 +1119,7 @@ class WikiFactory {
 
 	}
 
-	 	/**
+	/**
 	 * getWikiByID
 	 *
 	 * get wiki params from city_lists (shared database)
@@ -1127,7 +1128,7 @@ class WikiFactory {
 	 * @author eloy@wiki
 	 *
 	 * @param integer $id: wiki id in city_list
-	 *
+	 * @param bool $master
 	 * @return mixed: database row with wiki params
 	 */
 	static public function getWikiByID( $id, $master = false ) {
@@ -1304,7 +1305,7 @@ class WikiFactory {
 	 * @author eloy@wikia-inc.com
 	 * @static
 	 *
-	 * @param string $file file name with stored information
+	 * @param string $file: file name with stored information
 	 * @param string $timestamp: timestamp of last change
 	 *
 	 * @return unserialized structure
@@ -1392,7 +1393,7 @@ class WikiFactory {
 	 * @author eloy@wikia
 	 * @static
 	 *
-	 * @param integer $wiki: wiki id in city list
+	 * @param $city_id: wiki id in city list
 	 *
 	 * @return string - variables key for memcached
 	 */
@@ -1496,6 +1497,7 @@ class WikiFactory {
 
 	/**
 	 * Given a city_id, removes the domain-data array from memcached.
+	 * @param $city_id
 	 */
 	static public function clearDomainCache( $city_id ){
 		global $wgMemc;
@@ -1722,9 +1724,10 @@ class WikiFactory {
 	 * @access public
 	 * @static
 	 *
-	 * @param integer	$city_public	status in city_list
-	 * @param integer	$city_id		wikia identifier in city_list
+	 * @param integer $city_public    status in city_list
+	 * @param integer $city_id        wikia identifier in city_list
 	 *
+	 * @param string $reason
 	 * @return string: HTML form
 	 */
 	static public function setPublicStatus( $city_public, $city_id, $reason = "" ) {
@@ -1836,6 +1839,7 @@ class WikiFactory {
 	 * @param integer $wikiId wiki id
 	 * @param integer $flags close flags
 	 * @param string  $reason [optional] reason text
+	 * @return string
 	 */
 	static public function disableWiki( $wikiId, $flags, $reason = '' ) {
 		self::setFlags( $wikiId, $flags );
@@ -1854,13 +1858,10 @@ class WikiFactory {
 	 * @access private
 	 * @static
 	 *
-	 * @param integer	$cv_id		variable id in city_variables_pool
-	 * @param string	$cv_name	variable name in city_variables_pool
-	 * @param integer	$city_id	wiki id in city_list
-	 * @param boolean	$master		use master or slave connection
-	 *
-	 *
-	 * @param integer $wiki: identifier from city_list
+	 * @param integer $cv_id        variable id in city_variables_pool
+	 * @param string $cv_name    variable name in city_variables_pool
+	 * @param integer $city_id    wiki id in city_list
+	 * @param boolean $master        use master or slave connection
 	 *
 	 * @return string: path to file or null if id is not a number
 	 */
@@ -2040,11 +2041,12 @@ class WikiFactory {
 	 * @static
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
-	 * @param integer	$type	type of message, use constants from class
-	 * @param string	$msg	message to be logged
-	 * @param integer	$city_id default false	wiki id from city_list
+	 * @param integer $type    type of message, use constants from class
+	 * @param string $msg    message to be logged
+	 * @param bool|int $city_id default false    wiki id from city_list
 	 *
-	 * @return boolean	status of insert operation
+	 * @param null $variable_id
+	 * @return boolean    status of insert operation
 	 */
 	static public function log( $type, $msg, $city_id = false, $variable_id = null ) {
 		global $wgUser, $wgCityId, $wgWikicitiesReadOnly;
@@ -2211,6 +2213,7 @@ class WikiFactory {
 	 * @static
 	 *
 	 * @param integer	$city_id	source Wiki ID
+	 * @return bool
 	 */
 	static public function copyToArchive( $city_id ) {
 		global $wgExternalArchiveDB, $wgWikicitiesReadOnly;
@@ -2613,14 +2616,14 @@ class WikiFactory {
 	 * @access public
 	 * @static
 	 *
-	 * @param cv_name string - name of the variable.
-	 * @param cv_variabe_type string - type of the variable, must be one of the values in WikiFactory::types.
-	 * @param cv_access_level integer - key from the WikiFactory::$levels array representing the access-level.
-	 * @param group integer - the cv_group_id of the group this variable belongs in from the city_variables_groups table.
-	 * @param cv_description string - human-readable description of what the variable is used for.  If this is an empty
+	 * @param string $cv_name - name of the variable.
+	 * @param $cv_variable_type - type of the variable, must be one of the values in WikiFactory::types.
+	 * @param int $cv_access_level - key from the WikiFactory::$levels array representing the access-level.
+	 * @param $cv_variable_group - the cv_group_id of the group this variable belongs in from the city_variables_groups table.
+	 * @param string $cv_description - human-readable description of what the variable is used for.  If this is an empty
 	 *                                string, then "(unknown)" will be substituted.
-	 *
-	 * @throws a DBQueryError if there is an error with any of the queries used.
+	 * @param bool $cv_is_unique
+	 * @throws DBQueryError|Exception
 	 * @return boolean true on success, false on failure
 	 */
 	static public function createVariable($cv_name, $cv_variable_type, $cv_access_level, $cv_variable_group, $cv_description, $cv_is_unique = false){
@@ -2672,15 +2675,15 @@ class WikiFactory {
 	 * @access public
 	 * @static
 	 *
-	 * @param cv_variable_id integer - the id of the variable to change.
-	 * @param cv_name string - new name of the variable.
-	 * @param cv_variabe_type string - CURRENTLY IGNORED!  Doesn't seem like a good idea to have this value be changable.
-	 * @param cv_access_level integer - key from the WikiFactory::$levels array representing the new access-level.
-	 * @param group integer - the new cv_group_id of the group this variable belongs in from the city_variables_groups table.
-	 * @param cv_description string - new human-readable description of what the variable is used for.  If this is an empty
+	 * @param int $cv_variable_id - the id of the variable to change.
+	 * @param string $cv_name - new name of the variable.
+	 * @param string $cv_variable_type - CURRENTLY IGNORED!  Doesn't seem like a good idea to have this value be changable.
+	 * @param int $cv_access_level  - key from the WikiFactory::$levels array representing the new access-level.
+	 * @param int $cv_variable_group - the new cv_group_id of the group this variable belongs in from the city_variables_groups table.
+	 * @param string $cv_description - new human-readable description of what the variable is used for.  If this is an empty
 	 *                                string, then "(unknown)" will be substituted.
 	 *
-	 * @throws a DBQueryError if there is an error with any of the queries used.
+	 * @throws DBQueryError|Exception
 	 * @return boolean true on success, false on failure
 	 */
 	static public function changeVariable($cv_variable_id, $cv_name, $cv_variable_type, $cv_access_level, $cv_variable_group, $cv_description){
@@ -2733,7 +2736,8 @@ class WikiFactory {
 	 * @access public
 	 *
 	 * @param WikiPage $article
-	 *
+	 * @param $user
+	 * @return bool
 	 */
 	static public function updateCityDescription (&$article, &$user ) {
 		global $wgCityId;
@@ -2812,9 +2816,10 @@ class WikiFactory {
 	 * @author nef@wikia-inc.com, federico@wikia-inc.com
 	 * @static
 	 *
-	 * @param int $varId the varjable ID as defined in the city_variables table
-	 * @param mixed $val the value to search for
-	 * @param bool $cond the SQL operator to use for matching the value, 'LIKE' and 'NOT LIKE' are accepted (% signs are added automatically), 'IS' and 'IS NOT' too
+	 * @param int $varID: the varjable ID as defined in the city_variables table
+	 * @param mixed $val: the value to search for
+	 * @param bool $cond: the SQL operator to use for matching the value, 'LIKE' and 'NOT LIKE' are accepted (% signs are added automatically), 'IS' and 'IS NOT' too
+	 *
 	 * @return array an array containing the list of city ID's matching the variable's value, an empty array if none matches
 	 */
 	static function getCityIDsFromVarValue( $varID, $val, $cond ) {
@@ -2932,17 +2937,22 @@ class WikiFactory {
 	 * @static
 	 *
 	 * @param string $cluster cluster name
+	 * @return bool
 	 */
 	static public function isValidCluster( $cluster ) {
-		return in_array( $cluster. self::$clusters );
+		return in_array( $cluster, self::$clusters );
 	}
 
 	/**
 	 * fetching wiki list with selected variable set to $val
 	 * @param unknown_type $varId
 	 * @param unknown_type $type
+	 * @param $selectedCond
 	 * @param unknown_type $val
-	 * @param unknown_type $likeVal
+	 * @param string $likeVal
+	 * @param null $offset
+	 * @param null $limit
+	 * @return array
 	 */
 
 	static public function getListOfWikisWithVar($varId, $type, $selectedCond ,$val, $likeVal = '', $offset = null, $limit = null) {
@@ -2959,7 +2969,7 @@ class WikiFactory {
 		$varId = mysql_real_escape_string($varId);
 		$aWhere = array('city_id = cv_city_id');
 
-                $aOptions = array( 'ORDER BY' => 'city_sitename' );
+		$aOptions = array( 'ORDER BY' => 'city_title ASC' );
 
                 if ( isset( $limit ) ) {
                     $aOptions['LIMIT'] = $limit;
@@ -2995,12 +3005,14 @@ class WikiFactory {
 	}
 
 	/**
-	* fetching a number of wikis with select variable set to $val
-	* @param integer $varId
-	* @param string $type
-	* @param mixed $val
-	* @param string $likeVal
-	*/
+	 * fetching a number of wikis with select variable set to $val
+	 * @param integer $varId
+	 * @param string $type
+	 * @param $selectedCond
+	 * @param mixed $val
+	 * @param string $likeVal
+	 * @return
+	 */
 
 	static public function getCountOfWikisWithVar( $varId, $type, $selectedCond ,$val, $likeVal = '' ) {
 		global $wgExternalSharedDB;

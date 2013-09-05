@@ -5,12 +5,13 @@
 @import "../mixins/gradient";
 
 .WikiaHeader {
+	@include box-shadow(0, 0, 10px, $color-page-shadow);
 	@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
 	border-top: 3px solid #000;
 	color: $color-header-text;
 	margin: 0 auto;
+	min-width: 1050px;
 	position: relative;
-	width: $wikiaheader-width;
 	z-index: $zTop;
 	-webkit-font-smoothing: antialiased; // prevents text flickering when css transformations in progress
 	h1 {
@@ -60,40 +61,17 @@
 			top: -5px;
 		}
 	}
-	.banner-corner-left,
-	.banner-corner-right {
-		border-width: 3px;
-		bottom: -6px;
-	}
-	.banner-corner-left {
-		border-color: $color-header $color-header transparent transparent;
-		left: 0;
-	}
-	.banner-corner-right {
-		border-color: $color-header transparent transparent $color-header;
-		right: 0;
+	.page-width-container {
+		margin: 0 auto;
+		position: relative;
+		width: $wikiaheader-width;
 	}
 }
 
-/**
- * IMPORTANT (21-Aug-2012, FB:45031): Integrate this code into base css above after transition.
- * This is currently an override depending on skin switch.
- */
-.oasis-split-skin {
-	.WikiaHeader {
-		@include box-shadow(0, 0, 10px, $color-page-shadow);
-		min-width: 1050px;
-		width: auto;
-		.banner-corner-left,
-		.banner-corner-right {
-			display: none;
-		}
-		.page-width-container {
-			margin: 0 auto;
-			position: relative;
-			width: $wikiaheader-width;
-		}
-	}
+body.global-header-fixed-at-top .WikiaHeader {
+	position: fixed;
+	top: 0;
+	width: 100%;
 }
 
 .GlobalNavigation {

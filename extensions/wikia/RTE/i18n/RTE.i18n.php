@@ -96,6 +96,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -118,15 +119,17 @@ $messages['br'] = array(
 	'enablerichtexteditor' => 'Gweredekaat an embanner nevez', # Fuzzy
 	'rte-enablerichtexteditormessage' => 'Gweredekaet eo bet an aozer testennoù araokaet (Rich Text Editor)',
 	'rte-first-run-notice' => "Degaset hon eus un nebeut gwelladennoù d'an embanner. Evit gouzout hiroc'h, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lennit ar c'hemenn].",
+	'prefs-rte' => 'Aozer testenn pinvidikaet',
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author BroOk
  * @author Marcmpujol
  */
 $messages['ca'] = array(
 	'rte-desc' => 'CKeditor integrat per MediaWiki',
-	'rte-no-js-fallback' => "L'editor de text enriquit no funciona si el JavaScript està desactivat. Si us plau, activa'l en les opcions del teu navegador, o visita les teves [[Especial:Preferències|preferències]] per canviar l'antic editor de MediaWiki", # Fuzzy
+	'rte-no-js-fallback' => "L'editor de text enriquit no funciona si el JavaScript està desactivat. Si us plau, activa'l en les opcions del teu navegador, o visita les teves [[Special:Preferences|preferences]] per canviar a l'antic editor de MediaWiki",
 	'rte-edgecase-info-title' => 'Requereix mode font',
 	'rte-edgecase-info' => "L'editor de text enriquit s'ha desactivat perquè la pàgina conté un codi complex.",
 	'rte-edgecase-comment' => 'Comentaris HTML',
@@ -143,6 +146,13 @@ $messages['ca'] = array(
 	'rte-enablerichtexteditormessage' => 'Editor de text enriquit habilitat!',
 	'rte-first-run-notice' => "Hem fet algunes millores en l'editor. Per obtenir més informació [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news llegir l'anunci].",
 	'prefs-rte' => 'Editor de text enriquit',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'prefs-rte' => 'Визуальни йозан тадар (RTE)',
 );
 
 /** Czech (česky)
@@ -580,9 +590,9 @@ $messages['pms'] = array(
  */
 $messages['pt'] = array(
 	'rte-desc' => 'Integração do CKeditor no MediaWiki',
-	'rte-no-js-fallback' => 'O editor de texto enriquecido não funciona com o JavaScript desactivado. Active-o nas opções do browser, ou mude as suas [[Special:Preferences|preferências]] para o editor antigo do MediaWiki.',
+	'rte-no-js-fallback' => 'O editor de texto enriquecido não funciona com o JavaScript desativado. Ative-o nas opções do browser, ou mude as suas [[Special:Preferences|preferências]] para o editor antigo do MediaWiki.',
 	'rte-edgecase-info-title' => 'É necessário o modo de código fonte',
-	'rte-edgecase-info' => 'A edição de texto enriquecido foi desactivada porque a página contém código complexo.',
+	'rte-edgecase-info' => 'A edição de texto enriquecido foi desativada porque a página contém código complexo.',
 	'rte-edgecase-comment' => 'comentários HTML',
 	'rte-edgecase-triplecurls' => 'parâmetros de predefinições',
 	'rte-edgecase-nowysiwyg' => 'o comando "sem WYSIWYG"',
@@ -631,6 +641,9 @@ $messages['pt-br'] = array(
  */
 $messages['roa-tara'] = array(
 	'rte-edgecase-comment' => 'Commende HTML',
+	'rte-edgecase-triplecurls' => "parametre d'u template",
+	'rte-edgecase-nowysiwyg' => 'non g\'è \'nu comande "WYSIWYG"',
+	'rte-edgecase-redirect' => 'redirezione',
 );
 
 /** Russian (русский)
@@ -748,14 +761,29 @@ $messages['tr'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author NickK
  * @author Тест
  */
 $messages['uk'] = array(
+	'rte-desc' => 'Інтеграція CKeditor у MediaWiki',
+	'rte-no-js-fallback' => 'Текстовий редактор не працює при вимкненому JavaScript. Будь ласка, або увімкніть його в налаштуваннях браузера, або змініть ваші [[Special:Preferences|налаштування]], щоб переключитися на старий редактор MediaWiki',
+	'rte-edgecase-info-title' => 'Потрібний режим джерела',
+	'rte-edgecase-info' => 'Покращений редактор тексту відключений, оскільки стаття містить складний код.',
+	'rte-edgecase-comment' => 'HTML коментарі',
 	'rte-edgecase-triplecurls' => 'параметри шаблону',
+	'rte-edgecase-nowysiwyg' => 'команда "немає WYSIWYG"',
+	'rte-edgecase-complex-description' => 'зовнішня URL або шаблон у описі посилання',
+	'rte-edgecase-template-with-link' => 'шаблон з посиланням як параметр',
 	'rte-edgecase-syntax' => 'недозволений синтаксис',
+	'rte-edgecase-image-with-link' => 'зображення з посиланням в описі',
 	'rte-edgecase-redirect' => 'перенаправлення',
+	'rte-edgecase-templateintable' => 'таблиця з викликом шаблону у визначенні',
 	'rte-edgecase-unclosed-tags' => 'незакритий HTML-тег',
+	'enablerichtexteditor' => 'Дозволити редагування в візуальному режимі (на додаток до режиму джерела)',
+	'rte-enablerichtexteditormessage' => 'Покращений редактор тексту включений!',
+	'rte-first-run-notice' => 'Ми зробили кілька поліпшень в редакторі. Щоб дізнатися більше,[http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news відвідайте сторінку] з описом змін.',
+	'prefs-rte' => 'Візуальний текстовий редактор (RTE)',
 );
 
 /** Chinese (中文)

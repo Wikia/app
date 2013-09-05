@@ -1,18 +1,19 @@
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/forms";
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/menus";
-@import "../../../../skins/oasis/css/mixins/opacity";
-@import "../../../../skins/oasis/css/mixins/transition";
-@import "../../../../skins/oasis/css/mixins/wordmark";
-@import "../../../../skins/oasis/css/core/layout";
-@import "../../../../skins/oasis/css/core/color";
-@import "../../Listusers/css/table";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/forms";
+@import "skins/oasis/css/mixins/gradient";
+@import "skins/oasis/css/mixins/menus";
+@import "skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/mixins/transition";
+@import "skins/oasis/css/mixins/wordmark";
+@import "skins/oasis/css/core/layout";
+@import "skins/oasis/css/core/color";
+@import "extensions/wikia/Listusers/css/table";
 
 $admin-dashboard-content-width: 690px;
 $admin-dashboard-header-height: 40px;
+$admin-dashboard-rail-width: $width-rail + 40px;
 $base-z: 5;
 
 // What mix color should be used to "darken" and "lighten"?
@@ -92,7 +93,7 @@ $color-highlight-column: rgba($color-page, 0);
 	border: 0;
 	padding: 10px 0 0 0;
 	position: absolute;
-	right: $width-outside - $admin-dashboard-content-width;
+	right: if( $responsive-layout-enabled, $admin-dashboard-rail-width, $width-outside - $admin-dashboard-content-width );
 	top: $admin-dashboard-header-height - $nav-height - 11px;
 	z-index: $base-z - 	1;
 	&.expanded {
@@ -114,7 +115,7 @@ $color-highlight-column: rgba($color-page, 0);
 		text-decoration: none;
 		&.active {
 			background: $color-admin-tab-active;
-			top: 0px;
+			top: 0;
 		}
 		&:hover {
 			cursor: pointer;
@@ -138,12 +139,17 @@ $color-highlight-column: rgba($color-page, 0);
 
 .AdminDashboard {
 	position: relative;
+
+	@if ( $responsive-layout-enabled ) {
+		overflow: hidden;
+	}
+
 	ul, ol {
 		margin: 0;
 		list-style: none;
 	}
-	.admin-dashboard-content {
 
+	.admin-dashboard-content {
 		.control-section {
 			header {
 				@include clearfix;
@@ -154,7 +160,7 @@ $color-highlight-column: rgba($color-page, 0);
 				font-style: italic;
 				padding: 5px 20px 0;
 				position: absolute;
-				width: $admin-dashboard-content-width - 40px;
+				width: if( $responsive-layout-enabled, 100%, $admin-dashboard-content-width - 40px );
 				h1 {
 					color: $color-admin-header-text;
 					float: left;
@@ -167,13 +173,13 @@ $color-highlight-column: rgba($color-page, 0);
 				@include linear-gradient($color-admin-content-highlight, top, $color-admin-content-highlight, 10%, $color-admin-content-shadow, 100%);
 				font-size: 11px;
 				line-height: 13px;
-				padding: 3.2em 15px 0; /* note: keep top padding relative to font size, change this if font-size changes for two-line control description */
+				padding: 3.2em 15px 0; // note: keep top padding relative to font size, change this if font-size changes for two-line control description
 				text-align: center;
 				@include clearfix;
 				.control {
 					cursor: pointer;
 					float: left;
-				/* 115px visual height */
+				// 115px visual height
 					height: 95px;
 					line-height: 12px;
 					padding: 20px 3px 0;
@@ -184,10 +190,10 @@ $color-highlight-column: rgba($color-page, 0);
 						border: 1px solid $color-admin-icon-border;
 						display: block;
 						height: 50px;
-						margin: 0px auto 5px;
+						margin: 0 auto 5px;
 						width: 50px;
 						.icon {
-							background-image: url(/extensions/wikia/AdminDashboard/images/icons.png); /* $wgCdnStylePath */
+							background-image: url(/extensions/wikia/AdminDashboard/images/icons.png); // $wgCdnStylePath
 							background-repeat: no-repeat;
 							display: block;
 							height: 50px;
@@ -247,6 +253,9 @@ $color-highlight-column: rgba($color-page, 0);
 							&.addvideo {
 								background-position: -850px 0;
 							}
+							&.licensedvideoswap {
+								background-position: -950px 0;
+							}
 						}
 					}
 					&:hover {
@@ -300,11 +309,11 @@ $color-highlight-column: rgba($color-page, 0);
 		font-size: 12px;
 		font-style: italic;
 		margin: 0 -12px 7px -5px;
-		/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+		// temp transition code until grid is fully rolled out, remove and integrate after transition
 		.WikiaGrid & {
 			margin: 0 -10px 7px -10px;
 		}
-		/* end temp transistion code */
+		// end temp transistion code
 	}
 }
 
@@ -331,24 +340,31 @@ $color-highlight-column: rgba($color-page, 0);
 	@include box-shadow(1px, 1px, 1px, $color-admin-article-box-shadow);
 	border-bottom: 1px solid $color-admin-article-border;
 	border-right: 1px solid $color-admin-article-border;
-	float: left;
+	@if ( not $responsive-layout-enabled ) {
+		float: left;
+	}
 	padding: 20px 0 0 0;
 	position: relative;
-	width: $admin-dashboard-content-width;
 	z-index: $base-z;
+	width: if( $responsive-layout-enabled, 100%, $admin-dashboard-content-width );
+
 	&.AdminDashboardChromedArticle {
 		@include box-shadow(0, 0, 0, $color-body);
+		border-bottom: 0;
+		border-right: 0;
 		float: none;
 		padding: 0 12px 0 5px;
-		width: $width-outside - 18px;
+		width: if( $responsive-layout-enabled, auto, $width-outside - 18px );
 	}
 	fieldset {
 		border: solid 1px $color-links;
 	}
 }
 
-.oasis-one-column .WikiaMainContent {
-	width: 690px;
+@if ( not $responsive-layout-enabled ) {
+	.WikiaMainContent {
+		width: 690px;
+	}
 }
 
 .WikiaGrid {
@@ -357,72 +373,72 @@ $color-highlight-column: rgba($color-page, 0);
 		margin: 0 10px;
 		width: $width-outside - 20px;
 	}
-}
-.oasis-one-column .WikiaGrid .WikiaMainContent.grid-6 {
-	margin-left: 0;
-	width: inherit;
+
+	.WikiaMainContent.grid-6 {
+		margin-left: 0;
+		width: inherit;
+	}
 }
 
 .WikiHeader {
 	height: 75px;
 	margin-bottom: 10px;
 	padding-bottom: 0;
-	.shadow-mask {
-		display: none;
-	}
-	>nav {
-		bottom: 0;
-	}
-	>.buttons {
-		bottom: auto;
-		top: 15px;
-	}
-	.WikiaSearch {
-		bottom: 0;
-		position: absolute;
-		right: 10px;
-		input[type=text] {
-			width: 250px;
-		}
-	}
 	h1:before {
 		display: none;
 	}
-	.wordmark {
-		bottom: 0;
-		position: absolute;
+	.shadow-mask {
+		display: none;
+	}
+	@if ( not $responsive-layout-enabled ) {
+		>.buttons {
+			bottom: auto;
+			top: 15px;
+		}
+		.WikiaSearch {
+			bottom: 0;
+			position: absolute;
+			right: 10px;
+			input[type=text] {
+				width: 250px;
+			}
+		}
+		.wordmark {
+			bottom: 0;
+			position: absolute;
+		}
 	}
 }
 
-/* Module overwrites */
-/* ListUser overwrite */
+// Module overwrites
+// ListUser overwrite
 .WikiaArticle .lu_fieldset {
 	white-space: normal;
 }
 
-/* Upload overwrite */
+// Upload overwrite
 #wpUploadDescription {
 	width: 100%;
 }
 
 .QuickStatsWidget {
-/* make this reusable later */
-/* ng -> not global */
+// make this reusable later
+// ng -> not global
 	.WikiaDataTable {
-		@include linear-gradient($color-admin-header-shadow, top, $color-admin-header-highlight, 40%, $color-admin-header-shadow, 100%); /* ng */
-		border: 1px solid $color-admin-rail-border; /* ng */
+		@include linear-gradient($color-admin-header-shadow, top, $color-admin-header-highlight, 40%, $color-admin-header-shadow, 100%); // ng
+		border: 1px solid $color-admin-rail-border; // ng
 		th, td {
 			&:first-child {
-				color: $color-alternate-text; /* ng */
+				color: $color-alternate-text; // ng
 			}
 			&:nth-child(2) {
-				color: $color-alternate-text; /* ng */
+				color: $color-alternate-text; // ng
 				@include linear-gradient($color-page, left, $color-admin-header-shadow, 0%, $color-admin-header-highlight, 15%, $color-admin-header-highlight, 85%, $color-admin-header-shadow, 100%);
 			}
 		}
 		thead {
 			th {
-				color: $color-text; /* ng */
+				color: $color-text; // ng
 				&:nth-child(2) {
 					padding: 0;
 				}
@@ -430,19 +446,19 @@ $color-highlight-column: rgba($color-page, 0);
 		}
 		.totals {
 			td {
-				background: $color-page; /* ng */
-				color: $color-text; /* ng */
+				background: $color-page; // ng
+				color: $color-text; // ng
 				&:first-child {
 					.pointer {
-						background: $color-totals; /* ng */
-						color: $color-totals-text; /* ng */
+						background: $color-totals; // ng
+						color: $color-totals-text; // ng
 						&:before {
-							border-left: 10px solid $color-alternate-text; /* ng */
+							border-left: 10px solid $color-alternate-text; // ng
 						}
 					}
 				}
 				&:nth-child(2) {
-					color: $color-alternate-text; /* ng */
+					color: $color-alternate-text; // ng
 					border-color: transparent;
 					@include linear-gradient($color-page, left, $color-admin-header-shadow, 0%, $color-admin-header-highlight, 15%, $color-admin-header-highlight, 85%, $color-admin-header-shadow, 100%);
 					padding: 0;
@@ -452,7 +468,7 @@ $color-highlight-column: rgba($color-page, 0);
 		tbody {
 			tr {
 				td {
-					border-top: 1px solid $color-admin-rail-border; /* ng */
+					border-top: 1px solid $color-admin-rail-border; // ng
 					&:nth-child(2) {
 						border-color: transparent;
 					}
@@ -461,23 +477,43 @@ $color-highlight-column: rgba($color-page, 0);
 		}
 	}
 	.highlight-top {
-		background: -moz-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* FF3.6+ */
-		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $color-admin-header-shadow), color-stop(25%, $color-highlight-column)); /* Chrome,Safari4+ */
-		background: -webkit-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* Chrome10+,Safari5.1+ */
-		background: -o-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* Opera 11.10+ */
-		background: -ms-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* IE10+ */
-		background: linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* W3C */
+		// TODO: replace this with a proper linear-gradient mixin
+		background: -webkit-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%);
+		background: linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%);
 		display: block;
 		padding: 10px 10px 7px 0;
 	}
 	.highlight-bottom {
-		background: -moz-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* FF3.6+ */
-		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $color-admin-header-shadow), color-stop(25%, $color-highlight-column)); /* Chrome,Safari4+ */
-		background: -webkit-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* Chrome10+,Safari5.1+ */
-		background: -o-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* Opera 11.10+ */
-		background: -ms-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* IE10+ */
-		background: linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* W3C */
+		// TODO: replace this with a proper linear-gradient mixin
+		background: -webkit-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%);
+		background: linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%);
 		display: block;
 		padding: 10px 10px 7px 0;
+	}
+}
+
+@if ( $responsive-layout-enabled ) {
+	// TODO: To be changed when final proposal for new search placement for small screens layout will be decided
+	@media screen and (max-width: 1023px) {
+		.adm-dash-search {
+			display: none;
+		}
+	}
+
+	.page-Special_AdminDashboard .WikiaMainContentContainer {
+		margin-right: $admin-dashboard-rail-width;
+		padding: 0;
+	}
+
+	.WikiaMainContentContainer {
+		padding: 0;
+	}
+
+	.AdminDashboardGeneralHeader.AdminDashboardArticleHeader {
+		margin: 0 -10px 10px -10px;
+	}
+
+	.WikiaArticle.AdminDashboardChromedArticle {
+		padding: 0 10px;
 	}
 }

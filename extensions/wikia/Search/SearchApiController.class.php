@@ -69,8 +69,8 @@ class SearchApiController extends WikiaApiController {
 		$items = array();
 		foreach( $resultSet->getResults() as $result ) {
 			$items[] = array(
-				'id' => (int) $result->getHeader( 'wid' ),
-				'language' => $result->getHeader( 'lang' ),
+				'id' => (int) $result['id'],
+				'language' => $result['lang_s'],
 			);
 		}
 
@@ -157,7 +157,6 @@ class SearchApiController extends WikiaApiController {
 			->setPage( $request->getVal( 'batch', 1 ) )
 			->setRank( $request->getVal( 'rank', 'default' ) )
 			->setInterWiki( true )
-			->setRequestedFields( array_merge( $searchConfig->getRequestedFields(), [ 'lang' ] ) ) 
 			->setLanguageCode( $request->getVal( 'lang' ) )
 		;
 		return $searchConfig;
