@@ -17,7 +17,12 @@ define('wikia.videohandler.ooyala', ['wikia.window', require.optional('ext.wikia
 	return function(params, vb) {
 		var containerId = vb.timeStampId( params.playerId ),
 			started = false,
-			createParams = { width: params.width + 'px', height: params.height + 'px', autoplay: params.autoPlay };
+			createParams = {
+				width: params.width + 'px',
+				height: params.height + 'px',
+				autoplay: params.autoPlay,
+				wmode: 'transparent'
+			};
 
 		function onCreate(player) {
 			var messageBus = player.mb;

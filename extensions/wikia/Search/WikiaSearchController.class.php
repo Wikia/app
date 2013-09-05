@@ -41,7 +41,19 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @var int
 	 */
 	const VARNISH_CACHE_TIME = 43200;
-	
+
+	/**
+	 * On what max position title can occur and still snippet will be cutted shorter
+	 * @var int
+	 */
+	const SNIPPET_SUBSTR = 9;
+
+	/**
+	 * Used for changing mem cache key for top articles snippet (after changed will end up in purging cache)
+	 * @var string
+	 */
+	const TOP_ARTICLES_CACHE = 1;
+
 	/**
 	 * Responsible for instantiating query services based on config.
 	 * @var Wikia\Search\QueryService\Factory
@@ -78,10 +90,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->handleArticleMatchTracking( $searchConfig );
 			$search->search();
 		}
-		
+
 		$this->setPageTitle( $searchConfig );
 		$this->setResponseValuesFromConfig( $searchConfig );
-		$this->setVarnishCacheTime( self::VARNISH_CACHE_TIME );
+		//$this->setVarnishCacheTime( self::VARNISH_CACHE_TIME );
 	}
 
 	/**
@@ -101,18 +113,23 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				}
 			}
 			if (! empty( $ids ) ) {
-				$params = [ 'ids' => implode( ',', $ids ), 'height' => 80, 'width' => 80 ];
+				$params = [ 'ids' => implode( ',', $ids ), 'height' => 80, 'width' => 80, 'abstract' => 120 ];
 				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
 				foreach ( $detailResponse['items'] as $id => $item ) {
 					if (! empty( $item['thumbnail'] ) ) {
+						$item['thumbnailSize'] = "small";
 						//get the first one image from imageServing as it needs other size
 						if ( empty( $pages ) ) {
 							$is = new ImageServing( [ $id ], 300, 150 );
 							$result = $is->getImages( 1 );
-							$item[ 'thumbnail' ] = $result[ $id ][ 0 ][ 'url' ];
+							if(! empty( $result[ $id ][ 0 ][ 'url' ] ) ) {
+								$item[ 'thumbnail' ] = $result[ $id ][ 0 ][ 'url' ];
+								$item['thumbnailSize'] = "large";
+							}
 						}
 						//render date
 						$item[ 'date' ] = $wgLang->date( $item[ 'revision' ][ 'timestamp' ] );
+						$item = $this->processArticleItem( $item, 100 );
 						$pages[] = $item;
 					}
 				}
@@ -156,7 +173,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    $this->setVal( 'label',     $label );
 	    $this->setVal( 'tooltip',   $tooltip );
 	}
-	
+
 	/**
 	 * Delivers a JSON response for video searches
 	 */
@@ -168,12 +185,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    	->setNamespaces     ( array(NS_FILE) )
 	    	->setVideoSearch    ( true )
 	    ;
-		$wikiaSearch = $this->queryServiceFactory->getFromConfig( $searchConfig ); 
+		$wikiaSearch = $this->queryServiceFactory->getFromConfig( $searchConfig );
 	    $this->getResponse()->setFormat( 'json' );
 	    $this->getResponse()->setData( $wikiaSearch->searchAsApi() );
 
 	}
-	
+
 	/**
 	 * Delivers a JSON response for videos matching a provided title
 	 * Expects query param "title" for the title value.
@@ -192,11 +209,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$queryService = $this->queryServiceFactory->getFromConfig( $searchConfig );
 		if ( ( $minDuration = $this->getVal( 'minseconds' ) ) && ( $maxDuration = $this->getVal( 'maxseconds' ) ) ) {
 			$queryService->setMinDuration( $minDuration)->setMaxDuration( $maxDuration );
-		} 
+		}
 		$this->getResponse()->setFormat( 'json' );
 		$this->getResponse()->setData( $queryService->searchAsApi() );
 	}
-	
+
 	/**
 	 * Given a "title" parameter, tests if there's a near match, and then returns the canonical title
 	 */
@@ -215,14 +232,108 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	/**
+	 * Powers the category page view
+	 */
+	public function categoryTopArticles() {
+		$pages = [];
+		$category = '';
+		$result = $this->getVal( 'result' );
+		if (! empty( $result ) ) {
+			try {
+				$category = $result['title'];
+				$colonSploded = explode( ':', $category );
+				$namespace = (new Wikia\Search\MediaWikiService)->getNamespaceIdForString( $colonSploded[0] );
+				// remove "Category:", since it doesn't work with ArticlesApiController
+				$category = ( is_int( $namespace ) && $namespace == NS_CATEGORY )
+				         ? implode( ':', array_slice( $colonSploded, 1 ) )
+				         : $category;
+				//@todo use single API call here when expansion is released
+				$pageData = $this->app->sendRequest( 'ArticlesApiController', 'getTop', [ 'namespaces' => 0, 'category' => $category ] )->getData();
+				$ids = [];
+				$counter = 0;
+				foreach ( $pageData['items'] as $pageDatum ) {
+					$ids[] = $pageDatum['id'];
+					if ( $counter++ >= 9 ) {
+						break;
+					}
+				}
+				if (! empty( $ids ) ) {
+					$params = [ 'ids' => implode( ',', $ids ), 'height' => 50, 'width' => 50, 'abstract' => 150 ];
+					$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
+					foreach ( $detailResponse['items'] as $item ) {
+						$processed = $this->processArticleItem( $item );
+						if ( !empty( $processed ) ) {
+							$pages[] = $processed;
+						}
+					}
+				}
+			} catch ( Exception $e ) { } // ignoring api errors for gracefulness
+		}
+		//limit number of results
+		$pages = array_slice( $pages, 0, 3 );
+
+		$this->setVal( 'category', $category );
+		$this->setVal( 'pages', $pages );
+		$this->setVal( 'result', $result );
+		$this->setVal( 'gpos', $this->getVal( 'gpos' ) );
+		$this->setVal( 'pos', $this->getVal( 'pos' ) );
+		$this->setVal( 'query', $this->getVal( 'query' ) );
+	}
+
+	/**
 	 * Controller Helper Methods
 	 *----------------------------------------------------------------------------------*/
 
+	protected function processArticleItem( $item, $maxlen = 150 ) {
+		if ( empty( $item['thumbnail'] ) ) {
+			//add placeholder
+			$item['thumbnail'] = '';
+		}
+		//sanitize strings first
+		$trimTitle = trim( strtolower( $item[ 'title' ] ) );
+		$bracketPos = strpos( $trimTitle, '(' );
+		if ( $bracketPos !== false ) {
+			$trimTitleWObrackets = substr( $trimTitle, 0, $bracketPos - 1 );
+		}
+		$normSpacesAbs = preg_replace( '|\s+|', ' ', $item[ 'abstract' ] );
+		$lowerAbstract = strtolower( $normSpacesAbs );
+
+		if ( !empty( $trimTitle ) ) {
+			$pos = strpos( $lowerAbstract, $trimTitle );
+			if ( $pos !== false ) {
+				if ( $pos <= static::SNIPPET_SUBSTR ) {
+					$cutIn = $pos + strlen( $trimTitle );
+				}
+			} elseif ( isset( $trimTitleWObrackets ) ) {
+				$pos = strpos( $lowerAbstract, $trimTitleWObrackets );
+				if ( $pos !== false && $pos <= static::SNIPPET_SUBSTR ) {
+					$cutIn = $pos + strlen( $trimTitleWObrackets );
+				}
+			}
+		}
+		//dont substr if next char is alphanumeric
+		$splitted = str_split( $lowerAbstract );
+		if ( isset( $cutIn ) && ( ctype_punct( $splitted[ $cutIn ] ) || ctype_space( $splitted[ $cutIn ] ) ) ) {
+			$item['abstract'] = substr( $normSpacesAbs, $cutIn );
+		} elseif ( !empty( $item[ 'abstract' ] ) ) {
+			$item['abstract'] = ' - ' . preg_replace( '|^[^\pL\pN\p{Pi}"]+|', '', $normSpacesAbs );
+		}
+		if ( !empty( $item[ 'abstract' ] ) ) {
+			$maxlen -= strlen( $trimTitle );
+			if ( $maxlen > 0 ) {
+				$item[ 'abstract' ] = wfShortenText( $item[ 'abstract' ], $maxlen, true );
+			} else {
+				$item[ 'abstract' ] = '';
+			}
+			return $item;
+		}
+		return null;
+	}
 	/**
 	 * Called in index action.
 	 * Based on an article match and various settings, generates tracking events and routes user to appropriate page.
 	 * @param  Wikia\Search\Config $searchConfig
-	 * @return boolean true if on page 1 and not routed, false if not on page 1 
+	 * @return boolean true if on page 1 and not routed, false if not on page 1
 	 */
 	protected function handleArticleMatchTracking( Wikia\Search\Config $searchConfig ) {
 		if ( $searchConfig->getPage() != 1 ) {
@@ -232,13 +343,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $searchConfig->hasArticleMatch() ) {
 			$article = Article::newFromID( $searchConfig->getArticleMatch()->getId() );
 			$title = $article->getTitle();
-			$track = new Track();
 			if ( $this->getVal('fulltext', '0') === '0') {
 				wfRunHooks( 'SpecialSearchIsgomatch', array( $title, $query ) );
-				$track->event( 'search_start_gomatch', array( 'sterm' => $query, 'rver' => 0 ) );
 				$this->response->redirect( $title->getFullUrl() );
-			} else {
-				$track->event( 'search_start_match', array( 'sterm' => $query, 'rver' => 0 ) );
 			}
 		} else {
 			$title = Title::newFromText( $query );
@@ -277,7 +384,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 		return $searchConfig;
 	}
-	
+
 	/**
 	 * Sets values for the view to work with during index method.
 	 * @param Wikia\Search\Config $searchConfig
@@ -325,7 +432,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$topWikiArticlesHtml = '';
 		if (! $searchConfig->getInterWiki() && $wgLanguageCode == 'en' ) {
 			$dbname = $this->wg->DBName;
-			$cacheKey = wfMemcKey( __CLASS__, 'WikiaSearch', 'topWikiArticles', $this->wg->CityId );
+			$cacheKey = wfMemcKey( __CLASS__, 'WikiaSearch', 'topWikiArticles', $this->wg->CityId, static::TOP_ARTICLES_CACHE );
 			$topWikiArticlesHtml = WikiaDataAccess::cache(
 				$cacheKey,
 				86400 * 5, // 5 days, one business week
@@ -336,7 +443,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 		$this->setVal( 'topWikiArticles', $topWikiArticlesHtml );
 	}
-	
+
 	/**
 	 * Includes wiki match partial for non cross-wiki searches
 	 * @param Wikia\Search\Config $searchConfig
@@ -344,14 +451,15 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	protected function registerWikiMatch( Wikia\Search\Config $searchConfig ) {
 		$matchResult = $searchConfig->getWikiMatch()->getResult();
 		if ( $matchResult !== null ) {
+			$matchResult['onWikiMatch'] = true;
 			$this->setVal(
 					'wikiMatch',
-					$this->getApp()->getView( 'WikiaSearch', 'CrossWiki_result', [ 'result' => $matchResult, 'pos' => -1 ] ) 
+					$this->getApp()->getView( 'WikiaSearch', 'CrossWiki_result', [ 'result' => $matchResult, 'pos' => -1 ] )
 					);
 			$this->resultsFound++;
 		}
 	}
-	
+
 	/**
 	 * Sets the page title during index method.
 	 * @param Wikia\Search\Config $searchConfig
@@ -375,7 +483,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Called in index action. Sets the SearchConfigs namespaces based on MW-core NS request style.
 	 * @see    WikiSearchControllerTest::testSetNamespacesFromRequest
 	 * @param  Wikia\Search\Config $searchConfig
-	 * @param  User $user 
+	 * @param  User $user
 	 * @return boolean true
 	 */
 	protected function setNamespacesFromRequest( $searchConfig, User $user ) {
@@ -432,14 +540,23 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Called in index action to handle overriding template for different abTests
 	 */
 	protected function handleLayoutAbTest( $abGroup, $ns = null ) {
+		$abs = explode( ',', $abGroup );
 		//check if template for ab test exists
-		if( $abGroup !== null && $this->templateExists( $abGroup ) ) {
-			//set name depending on abGroup
-			$this->setVal( 'resultView', $abGroup );
-		} else {
-			//defaults to result
-			$this->setVal( 'resultView', static::WIKIA_DEFAULT_RESULT );
+		$view = static::WIKIA_DEFAULT_RESULT;
+		$categoryModule = false;
+		if ( !empty( $abs ) ) {
+			//set ab for category
+			if ( in_array( 47, $abs ) ) {
+				$categoryModule = true;
+			}
+			foreach( $abs as $abGroup ) {
+				if ( $this->templateExists( $abGroup ) ) {
+					$view = $abGroup;
+				}
+			}
 		}
+		$this->setVal( 'resultView', $view );
+		$this->setVal( 'categoryModule', $categoryModule );
 		return true;
 	}
 

@@ -356,6 +356,7 @@ div#userloginErrorBox3 {
 		position: relative;
 		.tooltip-icon {
 			@include tooltip-icon;
+			right: -16px;
 		}
 	}
 }

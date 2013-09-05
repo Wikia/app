@@ -140,6 +140,7 @@ $messages['cs'] = array(
 /** German (Deutsch)
  * @author Alphakilo
  * @author Claudia Hattitten
+ * @author Metalhead64
  * @author PtM
  */
 $messages['de'] = array(
@@ -158,6 +159,7 @@ $messages['de'] = array(
 	'stafflog-filter-type-piggyback' => 'Huckepack',
 	'stafflog-filter-type-renameuser' => 'Nutzer-Umbenennungen',
 	'stafflog-filter-type-wikifactory' => 'Wiki Status',
+	'action-stafflog' => 'das zentralisierte Mitarbeiter-Log zu betrachten',
 );
 
 /** Zazaki (Zazaki)
@@ -391,6 +393,7 @@ $messages['nl'] = array(
 	'stafflog-filter-type-piggyback' => 'Piggyback',
 	'stafflog-filter-type-renameuser' => 'Hernoemde gebruikers',
 	'stafflog-filter-type-wikifactory' => 'Wikistatus',
+	'action-stafflog' => 'het gecentraliseerde staflogboek te bekijken',
 );
 
 /** Polish (polski)
@@ -415,6 +418,7 @@ $messages['pl'] = array(
 	'stafflog-filter-type-piggyback' => 'Piggyback',
 	'stafflog-filter-type-renameuser' => 'Zmiany nazwy użytkownika',
 	'stafflog-filter-type-wikifactory' => 'Stan wiki',
+	'action-stafflog' => 'Wyświetlanie centralnego staff-logu',
 );
 
 /** Piedmontese (Piemontèis)
@@ -578,16 +582,28 @@ $messages['tl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  * @author Тест
  */
 $messages['uk'] = array(
+	'stafflog-desc' => 'Централізоване журналювання для співробітників',
+	'stafflog' => 'Журнал співробітника',
 	'stafflog-blockmsg' => '$1 $2 спробував заблокувати користувача-співробітника $3 у вікі $4. Причина: $5',
+	'stafflog-piggybackloginmsg' => 'Вхід $1 — учасник $2 увійшов як $3',
+	'stafflog-piggybacklogoutmsg' => 'Вихід $1 — користувач $2 вийшов з облікового запису $3',
+	'right-stafflog' => 'Може переглядати журнал співробітника',
+	'stafflog-wiki-status-change' => '$1 {{GENDER:$1|змінив|змінила}} статус $2 на $3. Причина:$4',
 	'stafflog-filter-label' => 'Фільтр',
 	'stafflog-filter-user' => 'Користувач:',
 	'stafflog-filter-type' => 'Тип:',
 	'stafflog-filter-apply' => 'Застосувати фільтр',
 	'stafflog-filter-type-block' => 'Блокування',
+	'stafflog-filter-type-piggyback' => 'Вхід',
+	'stafflog-filter-type-renameuser' => 'Перейменування користувача',
+	'stafflog-filter-type-wikifactory' => 'Статус вікі',
+	'action-stafflog' => 'переглядати журнал централізованого персоналу',
 );
 
 /** Simplified Chinese (中文（简体）‎)

@@ -42,15 +42,77 @@ abstract class VideoFeedIngester {
 	public $reupload = false;
 
 	abstract public function import($content='', $params=array());
+
+	/**
+	 * Create a list of category names to add to the new file page
+	 * @param array $data - Video data
+	 * @param $addlCategories - Any additional categories to add
+	 * @return array - A list of category names
+	 */
+	abstract public function generateCategories( $data, $addlCategories );
+
 	/**
 	 * Generate name for video.
 	 * Note: The name is not sanitized for use as filename or article title.
 	 * @param array $data video data
 	 * @return string video name
 	 */
-	abstract protected function generateName(array $data);
-	abstract protected function generateMetadata(array $data, &$errorMsg);
-	abstract protected function generateCategories(array $data, $addlCategories);
+	protected function generateName( $data ) {
+		wfProfileIn( __METHOD__ );
+
+		$name = $data['titleName'];
+
+		wfProfileOut( __METHOD__ );
+
+		return $name;
+	}
+
+	/**
+	 * generate the metadata we consider interesting for this video
+	 * Note: metadata is array instead of object because it's stored in the database as a serialized array,
+	 *       and serialized objects would have more version issues.
+	 * @param array $data - Video data
+	 * @param $errorMsg - Store any error we encounter
+	 * @return array|int - An associative array of meta data or zero on error
+	 */
+	public function generateMetadata( $data, &$errorMsg ) {
+		if ( empty( $data['videoId'] ) ) {
+			$errorMsg = 'no video id exists';
+			return 0;
+		}
+
+		$metadata = array(
+			'videoId'        => $data['videoId'],
+			'altVideoId'     => isset( $data['altVideoId'] ) ? $data['altVideoId'] : '',
+			'hd'             => isset( $data['hd'] ) ? $data['hd'] : 0,
+			'duration'       => isset( $data['duration'] ) ? $data['duration'] : '',
+			'published'      => isset( $data['published'] ) ? $data['published'] : '',
+			'thumbnail'      => isset( $data['thumbnail'] ) ? $data['thumbnail'] : '',
+			'description'    => isset( $data['description'] ) ? $data['description'] : '',
+			'name'           => isset( $data['name'] ) ? $data['name'] : '',
+			'type'           => isset( $data['type'] ) ? $data['type'] : '',
+			'category'       => isset( $data['category'] ) ? $data['category'] : '',
+			'keywords'       => isset( $data['keywords'] ) ? $data['keywords'] : '',
+			'industryRating' => isset( $data['industryRating'] ) ? $data['industryRating'] : '',
+			'ageGate'        => isset( $data['ageGate'] ) ? $data['ageGate'] : 0,
+			'ageRequired'    => isset( $data['ageRequired'] ) ? $data['ageRequired'] : 0,
+			'provider'       => isset( $data['provider'] ) ? $data['provider'] : '',
+			'language'       => isset( $data['language'] ) ? $data['language'] : '',
+			'subtitle'       => isset( $data['subtitle'] ) ? $data['subtitle'] : '',
+			'genres'         => isset( $data['genres'] ) ? $data['genres'] : '',
+			'actors'         => isset( $data['actors'] ) ? $data['actors'] : '',
+			'targetCountry'  => isset( $data['targetCountry'] ) ? $data['targetCountry'] : '',
+			'series'         => isset( $data['series'] ) ? $data['series'] : '',
+			'season'         => isset( $data['season'] ) ? $data['season'] : '',
+			'episode'        => isset( $data['episode'] ) ? $data['episode'] : '',
+			'characters'     => isset( $data['characters'] ) ? $data['characters'] : '',
+			'resolution'     => isset( $data['resolution'] ) ? $data['resolution'] : '',
+			'aspectRatio'    => isset( $data['aspectRatio'] ) ? $data['aspectRatio'] : '',
+			'expirationDate' => isset( $data['expirationDate'] ) ? $data['expirationDate'] : '',
+		);
+
+		return $metadata;
+	}
 
 	/**
 	 *  If  $this->filterByProviderVideoId  is not empty, the ingestion script will only upload the videos
@@ -108,7 +170,7 @@ abstract class VideoFeedIngester {
 			return 0;
 		}
 
-		$this->filterKeywords( $data['tags'] );
+		$this->filterKeywords( $data['keywords'] );
 
 		$debug = !empty($params['debug']);
 		$remoteAsset = !empty( $params['remoteAsset'] );
@@ -119,7 +181,7 @@ abstract class VideoFeedIngester {
 				print ":: $line\n";
 			}
 		}
-		$addlCategories = !empty($params['addlCategories']) ? $params['addlCategories'] : array();
+		$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
 
 		$id = $data['videoId'];
 		$name = $this->generateName($data);
@@ -175,15 +237,18 @@ abstract class VideoFeedIngester {
 			return 0;
 		}
 
+		// create category names to add to the new file page
+		$categories = $this->generateCategories( $data, $addlCategories );
+
 		// create remote asset (ooyala)
 		if ( $remoteAsset ) {
+			$metadata['pageCategories'] = implode( ', ', $categories );
 			$result = $this->createRemoteAsset( $id, $name, $metadata, $debug );
 			wfProfileOut( __METHOD__ );
 			return $result;
 		}
 
 		// prepare wiki categories string (eg [[Category:MyCategory]] )
-		$categories = $this->generateCategories($data, $addlCategories);
 		$categories[] = wfMessage( 'videohandler-category' )->inContentLanguage()->text();
 		$categories = array_unique( $categories );
 		$categoryStr = '';
@@ -569,7 +634,7 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
-	 * check if video is blacklisted ( titleName, description, keywords, tags )
+	 * check if video is blacklisted ( titleName, description, keywords, name )
 	 * @param array $data
 	 * @return boolean
 	 */
@@ -582,8 +647,8 @@ abstract class VideoFeedIngester {
 			if ( array_key_exists('keywords', $data) ) {
 				$keys[] = 'keywords';
 			}
-			if ( array_key_exists('tags', $data) ) {
-				$keys[] = 'tags';
+			if ( array_key_exists( 'name', $data ) ) {
+				$keys[] = 'name';
 			}
 			foreach ( $keys as $key ) {
 				if ( preg_match($regex, str_replace('-', ' ', $data[$key])) ) {
@@ -661,11 +726,11 @@ abstract class VideoFeedIngester {
 				break;
 			case 'redband':
 			case 'red band':
-				$stdRating = 'red band';
+				$stdRating = 'Redband';
 				break;
 			case 'greenband':
 			case 'green band':
-				$stdRating = 'green band';
+				$stdRating = 'Greenband';
 				break;
 			default: $stdRating = $rating;
 		}
@@ -683,7 +748,7 @@ abstract class VideoFeedIngester {
 			case 'M':
 			case 'R':
 			case 'TV-MA':
-			case 'red band':
+			case 'Redband':
 				$ageRequired = 17;
 				break;
 			case 'AO':
@@ -702,32 +767,236 @@ abstract class VideoFeedIngester {
 	 * @return string $category
 	 */
 	public function getCategory( $cat ) {
-		switch( $cat ) {
-			case 'Movie':
-			case 'Movies':
-			case 'Movie Interview':
-			case 'Movie Behind the Scenes':
-			case 'Movie SceneOrSample':
-			case 'Movie Alternate Version':
+		$cat = trim( $cat );
+		switch( strtolower( $cat ) ) {
+			case 'movie':
+			case 'movie interview':
+			case 'movie behind the scenes':
+			case 'movie sceneorsample':
+			case 'movie alternate version':
+			case 'theatrical';
 				$category = 'Movies';
 				break;
-			case 'TV':
-			case 'Series':
-			case 'Season':
-			case 'Episode':
-			case 'TV Show':
-			case 'Episodic Interview':
-			case 'Episodic Behind the Scenes':
-			case 'Episodic SceneOrSample':
-			case 'Episodic Alternate Version':
+			case 'series':
+			case 'season':
+			case 'episode':
+			case 'tv show':
+			case 'episodic interview':
+			case 'episodic behind the scenes':
+			case 'episodic sceneorsample':
+			case 'episodic alternate version':
+			case 'tv trailer':
 				$category = 'TV';
 				break;
-			case 'Game':
-			case 'Games':
-			case 'Games SceneOrSample':
-				$category = 'Gaming';
+			case 'game':
+			case 'gaming':
+			case 'games scenerrsample':
+			case 'video game':
+				$category = 'Games';
 				break;
-			default: $category = 'Others';
+			case 'movie fan-made':
+			case 'game fan-made':
+			case 'song fan-made':
+			case 'other fan-made':
+			case 'episodic fan-made':
+				$category = 'Fan-Made';
+				break;
+			case 'live event':
+			case 'live event interview':
+			case 'live event behind the scenes':
+			case 'live event sceneorsample':
+			case 'live event alternate version':
+			case 'live event fan-made':
+				$category = 'Live Event';
+				break;
+			case 'mind & body':
+			case 'personal care & style':
+				$category = 'Beauty';
+				break;
+			case 'performing arts':
+				$category = 'Arts';
+				break;
+			case 'crafts & hobbies':
+				$category = 'Crafts';
+				break;
+			case 'sports & fitness':
+			case 'health & nutrition':
+				$category = 'Health';
+				break;
+			case 'business & finance':
+				$category = 'Business';
+				break;
+			case 'first aid & safety':
+				$category = 'Safety';
+				break;
+			case 'kids':
+			case 'pets':
+			case 'parenting & family':
+				$category = 'Family';
+				break;
+			case 'careers & education':
+				$category = 'Education';
+				break;
+			case 'sex & relationships':
+				$category = 'Relationships';
+				break;
+			case 'language & reference':
+				$category = 'Reference';
+				break;
+			case 'cars & transportation':
+				$category = 'Auto';
+				break;
+			case 'holidays & celebrations':
+				$category = 'Holidays';
+				break;
+			case 'religion & spirituality':
+				$category = 'Religion';
+				break;
+			case 'none':
+			case 'not set':
+			case 'home video':
+			case 'open-ended':
+			case 'other interview':
+			case 'other behind the scenes':
+			case 'other sceneorsample':
+			case 'other alternate version':
+				$category = '';
+				break;
+			default: $category = $cat;
+		}
+
+		return $category;
+	}
+
+	/**
+	 * get standard type
+	 * @param string $type
+	 * @return string $stdType
+	 */
+	public function getStdType( $type ) {
+		$type = trim( $type );
+		switch( strtolower( $type ) ) {
+			case 'movie behind the scenes':
+			case 'episodic behind the scenes':
+			case 'other behind the scenes':
+			case 'live event behind the scenes':
+				$stdType = 'Behind the Scenes';
+				break;
+			case 'movie fan-made':
+			case 'game fan-made':
+			case 'song fan-made':
+			case 'other fan-made':
+			case 'episodic fan-made':
+			case 'live event fan-made':
+				$stdType = 'Fan-Made';
+				break;
+			case 'game':
+				$stdType = 'Games';
+				break;
+			case 'movie interview':
+			case 'episodic interview':
+			case 'other interview':
+			case 'live event interview':
+			case 'song interview':
+				$stdType = 'Interview';
+				break;
+			case 'movie':
+				$stdType = 'Movies';
+				break;
+			case 'movie sceneorsample':
+			case 'extra (clip)':
+				$stdType = 'Clip';
+				break;
+			case 'trailer':
+				$stdType = 'Trailer';
+				break;
+			case 'none':
+			case 'not set':
+			case 'song sceneorsample':
+			case 'song behind the scenes':
+			case 'movie alternate version':
+			case 'games sceneorsample':
+			case 'game alternate version':
+			case 'episodic sceneorsample':
+			case 'episodic alternate version':
+			case 'other sceneorsample':
+			case 'other alternate version':
+			case 'live event sceneorsample':
+			case 'live event alternate version':
+				$stdType = '';
+				break;
+			default: $stdType = $type;
+		}
+
+		return $stdType;
+	}
+
+	/**
+	 * get standard genre
+	 * @param string $genre
+	 * @return string $stdGenre
+	 */
+	public function getStdGenre( $genre ) {
+		$genre = trim( $genre );
+		switch( strtolower( $genre ) ) {
+			case 'parenting & family':
+				$stdGenre = 'Parenting';
+				break;
+			case 'health & nutrition':
+				$stdGenre = 'Nutrition';
+				break;
+			case 'technology':
+			case 'environment':
+			case 'food & drink':
+			case 'entertainment':
+			case 'house & garden':
+			case 'performing arts':
+			case 'crafts & hobbies':
+			case 'business & finance':
+			case 'first aid & safety':
+			case 'careers & education':
+			case 'sex & relationships':
+			case 'language & reference':
+			case 'cars & transportation':
+			case 'personal care & style':
+			case 'holidays & celebrations':
+			case 'religion & spirituality':
+			case 'games':
+			case 'music':
+			case 'other':
+			case 'comedy':
+			case 'travel':
+			case 'fashion':
+			case 'education':
+				$stdGenre = '';
+				break;
+			case 'sports & fitness':
+				$stdGenre = 'Fitness';
+				break;
+			default: $stdGenre = $genre;
+		}
+
+		return $stdGenre;
+	}
+
+	/**
+	 * get standard page category
+	 * @param string $cat
+	 * @return string $category
+	 */
+	public function getStdPageCategory( $cat ) {
+		$cat = trim( $cat );
+		switch( strtolower( $cat ) ) {
+			case 'clip':
+				$category = 'Clips';
+				break;
+			case 'trailer':
+				$category = 'Trailers';
+				break;
+			case 'none':
+				$category = '';
+				break;
+			default: $category = $cat;
 		}
 
 		return $category;
@@ -737,9 +1006,10 @@ abstract class VideoFeedIngester {
 	 * get CLDR code (return the original value if code not found)
 	 * @param string $value
 	 * @param string $type [language|country]
+	 * @param boolean $code
 	 * @return string $value
 	 */
-	public function getCldrCode( $value, $type = 'language' ) {
+	public function getCldrCode( $value, $type = 'language', $code = true ) {
 		$value = trim( $value );
 		if ( !empty( $value ) ) {
 			if ( empty( self::$CLDR_NAMES ) ) {
@@ -754,9 +1024,15 @@ abstract class VideoFeedIngester {
 			// $languageNames, $countryNames comes from cldr extension
 			$paramName = ( $type == 'country' ) ? 'countryNames' : 'languageNames';
 			if ( !empty( self::$CLDR_NAMES[$paramName] ) ) {
-				$code = array_search( $value, self::$CLDR_NAMES[$paramName] );
-				if ( $code != false ) {
-					$value = $code;
+				if ( $code ) {
+					$code = array_search( $value, self::$CLDR_NAMES[$paramName] );
+					if ( $code != false ) {
+						$value = $code;
+					}
+				} else {
+					if ( array_key_exists( $value, self::$CLDR_NAMES[$paramName] ) ) {
+						$value = self::$CLDR_NAMES[$paramName][$value];
+					}
 				}
 			}
 		}
@@ -765,14 +1041,14 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
-	 * unique array and convert to string
+	 * get unique array (case insensitive)
 	 * @param array $arr
-	 * @return string
+	 * @return array $unique
 	 */
-	public function uniqueArrayToString( $arr ) {
+	public function getUniqueArray( $arr ) {
 		$lower = array_map( 'strtolower', $arr );
 		$unique = array_intersect_key( $arr, array_unique( $lower ) );
-		return implode( ', ', $unique );
+		return $unique;
 	}
 
 }

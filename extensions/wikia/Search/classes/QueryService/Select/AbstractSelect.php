@@ -384,16 +384,6 @@ abstract class AbstractSelect
 		$container = new ResultSet\DependencyContainer( array( 'result' => $result, 'config' => $config ) );
 		$results = (new ResultSet\Factory)->get( $container );
 		$config->setResults( $results );
-		
-		if( $config->getPage() == 1 ) {
-			\Track::event(
-					( $results->getResultsFound() > 0 ? 'search_start' : 'search_start_nomatch' ),
-					array(
-							'sterm' => $config->getQuery()->getSanitizedQuery(), 
-							'stype' => $this->searchType 
-							)
-					);
-		}
 	}
 	
 	/**

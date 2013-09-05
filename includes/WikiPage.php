@@ -1291,6 +1291,12 @@ class WikiPage extends Page {
 			$summary = self::getAutosummary( $oldtext, $text, $flags );
 		}
 
+		// <Wikia>
+		if ( is_string( $user ) ) {
+			error_log( "MOLI: " . __METHOD__ . ": invalid User : " . print_r( $user, true ) );
+			Wikia::debugBacktrace( "MOLI: invalid User:" );
+		}
+		// </Wikia>
 		$editInfo = $this->prepareTextForEdit( $text, null, $user );
 		$text = $editInfo->pst;
 		$newsize = strlen( $text );
@@ -2117,6 +2123,10 @@ class WikiPage extends Page {
 
 		# Clear the cached article id so the interface doesn't act like we exist
 		$this->mTitle->resetArticleID( 0 );
+		
+		# Wikia change here
+		$this->setCachedLastEditTime( wfTimestampNow() );
+		# Wikia 
 	}
 
 	/**
