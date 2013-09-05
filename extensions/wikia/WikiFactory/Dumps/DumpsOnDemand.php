@@ -205,7 +205,7 @@ class DumpsOnDemand {
 			. DumpsOnDemand::getPath( basename( $sPath ) )
 		);
 		$sPath = wfEscapeShellArg( $sPath );
-		$sCmd = 'sudo /usr/bin/s3cmd -c /root/.s3cfg';
+		$sCmd = 'sudo /usr/bin/s3cmd -c /root/.s3cfg --add-header=Content-Disposition:attachment';
 		$sCmd .= ($bPublic)? ' --acl-public' : '';
 		$sCmd .= " put {$sPath} {$sDestination}";
 		wfShellExec( $sCmd, $iStatus );
