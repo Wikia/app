@@ -25,9 +25,7 @@ ve.inheritClass( ve.dm.WikiaBlockMediaNode, ve.dm.MWBlockImageNode );
 
 ve.dm.WikiaBlockMediaNode.static.toDataElement = function ( domElements, converter ) {
 	var dataElement = ve.dm.MWBlockImageNode.static.toDataElement.call(
-			this,
-			domElements,
-			converter
+			this, domElements, converter
 		),
 		mwDataJSON = domElements[0].getAttribute( 'data-mw' ),
 		mwData = JSON.parse( mwDataJSON );
