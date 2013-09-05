@@ -19,10 +19,16 @@ class RailController extends WikiaController {
 	public function executeLazy() {
 		wfProfileIn(__METHOD__);
 
-		$this->railModuleList = $this->filterModules((new BodyController)->getRailModuleList(), true);
+		$railModules = $this->filterModules((new BodyController)->getRailModuleList(), true);
+		$this->railLazyContent = '';
+		krsort($railModules);
+		foreach ($railModules as $railModule) {
+			$this->railLazyContent .= $this->app->renderView($railModule[0], $railModule[1], $railModule[2]);
+		}
 
-		$this->isGridLayoutEnabled = BodyController::isGridLayoutEnabled();
-		$this->isAside = $this->wg->RailInAside;
+		global $wgOut;
+		$this->css = array_keys($wgOut->styles);
+		$this->js = $wgOut->getBottomScripts();
 
 		wfProfileOut(__METHOD__);
 	}

@@ -6,9 +6,16 @@ $(
 			'title': wgTitle
 		},
 		type: 'get',
-		format: 'html',
+		format: 'json',
 		callback: function(data) {
-			$('#WikiaRail').append(data).find('.loading').remove();
+			require(['wikia.loader'], function(loader) {
+				loader({
+					type: loader.CSS,
+					resources: data.css
+				});
+			});
+			$('#WikiaRail').find('.loading').remove().end().append(data.railLazyContent + data.js);
+			AIC2.init();
 		}
 	})
 );
