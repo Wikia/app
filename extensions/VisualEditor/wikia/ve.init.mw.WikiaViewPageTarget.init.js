@@ -160,7 +160,7 @@
 		},
 
 		setupSectionLinks: function () {
-			$( '#mw-content-text .editsection a' ).click( init.onEditSectionLinkClick )
+			$( '#mw-content-text .editsection a' ).click( init.onEditSectionLinkClick );
 		},
 
 		onEditTabClick: function ( e ) {
