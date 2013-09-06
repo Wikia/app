@@ -157,25 +157,3 @@ table.jquery-tablesorter.sortable th.headerSort .chevron {
 		border-color: transparent transparent $color-text;
 	}
 }
-
-// TODO: remove these styles when the old style of handling wide tables goes away in tables.js
-.WikiaWideTablesWrapper {
-	position: relative;
-	&.border {
-		border-right: 1px dashed $color-page-border;
-	}
-	>.table {
-		overflow: hidden;
-	}
-	>.popout {
-		cursor: pointer;
-		position: absolute;
-		right: -12px;
-		top: 0;
-		&.float {
-			position: fixed;
-			left: 50%;
-			right: auto;
-		}
-	}
-}

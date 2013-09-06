@@ -885,15 +885,6 @@ class Parser {
 		global $wgRTEParserEnabled;
 		# RTE - end
 
-		// Wikia change - begin - @author kflorence
-		$tableOpen = '<table';
-		$tableClose = '</table>';
-		if ( empty( $wgRTEParserEnabled ) ) {
-			$tableOpen = '<div class="table-wrapper">' . $tableOpen;
-			$tableClose = $tableClose . '</div>';
-		}
-		// Wikia change - end
-
 		$lines = StringUtils::explode( "\n", $text );
 		$out = '';
 		$td_history = array(); # Is currently a td tag open?
@@ -952,10 +943,7 @@ class Parser {
 				# RTE - end
 				$attributes = Sanitizer::fixTagAttributes( $attributes , 'table' );
 
-				// Wikia change - begin - @author kflorence
-				$outLine = str_repeat( '<dl><dd>' , $indent_level ) . "{$tableOpen}{$attributes}>";
-				// Wikia change - end
-
+				$outLine = str_repeat( '<dl><dd>' , $indent_level ) . "<table{$attributes}>";
 				# RTE (Rich Text Editor) - begin
 				$outLine = $RTEcomment.$outLine;
 				$RTEcomment = null;
@@ -971,9 +959,7 @@ class Parser {
 				continue;
 			} elseif ( substr( $line , 0 , 2 ) === '|}' ) {
 				# We are ending a table
-				// Wikia change - begin - @author kflorence
-				$line = $tableClose . substr( $line , 2 );
-				// Wikia chnage - end
+				$line = '</table>' . substr( $line , 2 );
 				$last_tag = array_pop( $last_tag_history );
 
 				if ( !array_pop( $has_opened_tr ) ) {
@@ -1130,9 +1116,7 @@ class Parser {
 				$out .= "<tr><td></td></tr>\n" ;
 			}
 
-			// Wikia change - begin - @author kflorence
-			$out .= "{$tableClose}\n";
-			// Wikia change - end
+			$out .= "</table>\n";
 		}
 
 		# Remove trailing line-ending (b/c)
@@ -1141,11 +1125,9 @@ class Parser {
 		}
 
 		# special case: don't return empty table
-		// Wikia change - begin - @author kflorence
-		if ( $out === "{$tableOpen}>\n<tr><td></td></tr>\n{$tableClose}" ) {
+		if ( $out === "<table>\n<tr><td></td></tr>\n</table>" ) {
 			$out = '';
 		}
-		// Wikia change - end
 
 		wfProfileOut( __METHOD__ );
 

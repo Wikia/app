@@ -597,16 +597,6 @@ class Sanitizer {
 				}
 			}
 		}
-
-		// Wikia change - start - @author kflorence
-		// Wrap tables so we can properly control their overflow
-		// TODO: make this work for WikiaMobile
-		if ( F::app()->checkSkin( 'oasis' ) && empty( $wgRTEParserEnabled ) ) {
-			$text = preg_replace( '/<table\b[^>]*>/i', '<div class="table-wrapper">$0', $text );
-			$text = preg_replace( '/<\/table>/i', '$0</div>', $text );
-		}
-		// Wikia change - end
-
 		wfProfileOut( __METHOD__ );
 		return $text;
 	}
@@ -735,7 +725,7 @@ class Sanitizer {
 					$value = "{$value}px";
 				}
 			}
-
+			
 			/* Wikia change */
 			/* bugId::34438 mirror table alignment behavior as it would be in HTML4 */
 			if ($attribute === 'align' && $element === 'table') {
