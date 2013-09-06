@@ -72,10 +72,10 @@ class ImageTweaksHooks {
 				$zoomIcon,
 				(
 					self::$isOasis &&
-						!empty( $wgEnableOasisPictureAttribution ) &&
-						!empty( $file ) &&
-						//BugId: 3734 Remove picture attribution for thumbnails 99px wide and under
-						$outerWidth >= 102
+					!empty( $wgEnableOasisPictureAttribution ) &&
+					!empty( $file ) &&
+					//BugId: 3734 Remove picture attribution for thumbnails 99px wide and under
+					$outerWidth >= 102
 				),
 				( !empty( $file ) ) ? $file->getUser() : null
 			);
@@ -145,9 +145,9 @@ class ImageTweaksHooks {
 
 		if (
 			/**
-			* Images SEO project
-			* @author: Marooned
-			*/
+			 * Images SEO project
+			 * @author: Marooned
+			 */
 			(
 				empty( $options['custom-url-link'] ) &&
 				empty( $options['custom-title-link'] ) &&
@@ -286,9 +286,16 @@ class ImageTweaksHooks {
 				unset( $imageAttribs['alt'] );
 			}
 
+			//Not all 'files' have getProviderName defined
+			if ( is_callable( [ $file, 'getProviderName' ] ) ) {
+				$provider = $file->getProviderName();
+			} else {
+				$provider = '';
+			}
+
 			$imageParams = array(
 				'type' => 'video',
-				'provider' => $file->getProviderName(),
+				'provider' => $provider,
 				'full' => $imageAttribs['src']
 			);
 
@@ -300,15 +307,14 @@ class ImageTweaksHooks {
 				$imageParams['capt'] = 1;
 			}
 
-			if ( $file instanceof File ) {
-				// TODO: this resizes every video thumbnail with a width over 64px regardless of where it appears.
-				// We may want to add the ability to allow custom image widths (like on the file page history table for example)
-				$size = WikiaMobileMediaService::calculateMediaSize( $file->getWidth(), $file->getHeight() );
-				$thumb = $file->transform( $size );
-				$imageAttribs['src'] = wfReplaceImageServer( $thumb->getUrl(), $file->getTimestamp() );
-				$imageAttribs['width'] = $size['width'];
-				$imageAttribs['height'] = $size['height'];
-			}
+			// TODO: this resizes every video thumbnail with a width over 64px regardless of where it appears.
+			// We may want to add the ability to allow custom image widths (like on the file page history table for example)
+			$size = WikiaMobileMediaService::calculateMediaSize( $file->getWidth(), $file->getHeight() );
+			$thumb = $file->transform( $size );
+			$imageAttribs['src'] = wfReplaceImageServer( $thumb->getUrl(), $file->getTimestamp() );
+			$imageAttribs['width'] = $size['width'];
+			$imageAttribs['height'] = $size['height'];
+
 
 			$data = [
 				'attributes' => $imageAttribs,
@@ -318,19 +324,17 @@ class ImageTweaksHooks {
 				'isSmall' => WikiaMobileMediaService::isSmallImage($imageAttribs['width'], $imageAttribs['height'])
 			];
 
-			if ( $file instanceof File ) {
-				$title = $file->getTitle()->getDBKey();
-				$titleText = $file->getTitle()->getText();
-				$views = MediaQueryService::getTotalVideoViewsByTitle( $title );
+			$title = $file->getTitle()->getDBKey();
+			$titleText = $file->getTitle()->getText();
+			$views = MediaQueryService::getTotalVideoViewsByTitle( $title );
 
-				$data['content'] = Xml::element(
-					'span',
-					array( 'class' => 'videoInfo' ),
-					"{$titleText} (" . $file->getHandler()->getFormattedDuration() .
-						", " . wfMessage( 'wikiamobile-video-views-counter', $views )->inContentLanguage()->text() .
-						')'
-				);
-			}
+			$data['content'] = Xml::element(
+				'span',
+				[ 'class' => 'videoInfo' ],
+				"{$titleText} (" . $file->getHandler()->getFormattedDuration() .
+				", " . wfMessage( 'wikiamobile-video-views-counter', $views )->inContentLanguage()->text() .
+				')'
+			);
 
 			$html = F::app()->sendRequest(
 				'WikiaMobileMediaService',

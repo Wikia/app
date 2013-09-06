@@ -4,7 +4,8 @@
  * @todo once VID-555 is fixed, look into adding tracking for the global usage section
  */
 
-require(['track', 'jquery'], function(track, $) {
+require(['track', 'jquery', 'wikia.videoBootstrap', 'wikia.window'], function(track, $, VideoBootstrap, window) {
+	'use strict';
 
 	// Play video
 	var filePageContainer = document.getElementById('file');
@@ -16,7 +17,7 @@ require(['track', 'jquery'], function(track, $) {
 	 * Tracking
 	 */
 	$(document).on('sections:open', function(event, section){
-		var id = section.previousElementSibling.id,
+		var id = section.prev()[0].id,
 			label;
 
 		switch(id) {
@@ -36,4 +37,4 @@ require(['track', 'jquery'], function(track, $) {
 
 		track.event( 'file-page', track.CLICK, { label: label } );
 	});
-} );
+});

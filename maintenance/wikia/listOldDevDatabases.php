@@ -1,4 +1,14 @@
 <?php
+/**
+ * This script connects to each cluster and loops through all the databases
+ * - it skips anything matching wikicities*
+ * - it skips databases with no revision table (basically non-wiki dbs)
+ * It then tries to connect to the db using the normal MW db function
+ * If it fails, that database is considered to be "missing".  Basically that
+ *   means there is no entry in city_list for that database so it's orphaned
+ * When finished, it prints out the list of missing dbs, and sorts the rest
+ *   based on the most recent revision
+ */
 
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( "commandLine.inc" );
@@ -22,6 +32,7 @@ foreach ($cluster_dbs as $cluster) {
 
 		try {
 			$wiki_db = wfGetDB(DB_SLAVE, array(), $row->Database);
+			// skip any non-wiki databases
 			if (! $wiki_db->tableExists('revision')) continue;
 		} catch (Exception $e) {
 			// This database does not exist in wikicities
