@@ -1,0 +1,69 @@
+@import "skins/oasis/css/mixins/arrow";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/core/color";
+
+/*
+ * Temporary styling for the TouchStorm right rail module
+ * Currently have no control over 3rd party markup or styles
+ * So the css below breaks style and naming conventions
+ */
+.veeseoRA2VWwikiaV1 {
+	// clearfix
+	&:after, &:before {
+		width: 100%;
+		clear: both;
+		content: ' ';
+		display: table;
+	}
+
+	.veeseoRCWInlineVHeadline {
+		font-size: 18px;
+		font-weight: bold;
+		margin-top: 0px;
+		margin-bottom: 25px;
+		padding-left: 2px;
+    }
+
+	// hide veeseo logo
+	.veeseoRCWInlineVLogoImg { display: none; }
+
+	// contains title and clip information
+	.veeseoRCWInlineVItem {
+		clear: both;
+		margin-bottom: 10px;
+		overflow: hidden;
+
+		& > span {
+			display: block;
+			float: left;
+			width: 50%;
+			
+			p { 
+				// style the <p> to look like a link because
+				// veeseo doesn't let us change markup
+				// and doesn't use semantic markup ~_~
+				cursor: pointer;
+				color: $color-links;
+				font-weight: bold;
+
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+
+	// contains thumbnail
+	.veeseoRCWInlineVDivItem {
+		float: left;
+		margin-right: 5%;
+		width: 45%;
+
+		img {
+			cursor: pointer;
+			height: auto;
+			width: 100%;
+		}
+	}
+}
