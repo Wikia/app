@@ -36,9 +36,7 @@ require(['sloth', 'wikia.nirvana', 'wikia.window', 'wikia.loader', 'wikia.mustac
 								imgWidth: (isMobileSkin ? 100 : 200),
 								imgHeight: (isMobileSkin ? 50 : 100)
 						},
-							artImgPlaceholder = (isMobileSkin ? w.wgCdnRootUrl + '/extensions/wikia/WikiaMobile/images/read_placeholder.png' : '');
-
-						console.log(items);
+						artImgPlaceholder = (isMobileSkin ? w.wgCdnRootUrl + '/extensions/wikia/WikiaMobile/images/read_placeholder.png' : '');
 
 						if (pages && pages.length) {
 							var page,
