@@ -22,6 +22,9 @@
 * Directory Structure
 * AMD
 * Prefix jQuery objects with $
+
+### Style Rules
+#### Prefixing jQuery objects
 All variables referencing jQuery objects, should be prefixed with a $. For example:
 
 ```javascript
