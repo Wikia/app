@@ -55,15 +55,26 @@ class RelatedPagesController extends WikiaController {
 				}
 			}
 
+			$isMobileSkin = $this->app->checkSkin( 'wikiamobile' );
 			// data for mustache template
 			$this->data = [
-				"mobileSkin" => $this->app->checkSkin( 'wikiamobile' ),
+				"mobileSkin" => $isMobileSkin,
 				"relatedPagesHeading" => wfMessage( 'wikiarelatedpages-heading' )->inContentLanguage()->text()
 			];
 
-			$this->response->addAsset( 'relatedpages_js' );
+			if( !$isMobileSkin ) {
+				$this->response->addAsset( 'relatedpages_js' );
+			}
+
 			$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_MUSTACHE);
 		}
+	}
+
+	static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages) {
+		$jsStaticPackages[] = 'relatedpages_js';
+		//css is in WikiaMobile.scss as AM can't concatanate scss files currently
+
+		return true;
 	}
 
 	/**
