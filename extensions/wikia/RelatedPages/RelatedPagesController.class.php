@@ -61,15 +61,9 @@ class RelatedPagesController extends WikiaController {
 				"relatedPagesHeading" => wfMessage( 'wikiarelatedpages-heading' )->inContentLanguage()->text()
 			];
 
+			$this->response->addAsset( 'relatedpages_js' );
 			$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_MUSTACHE);
 		}
-	}
-
-	static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages) {
-		$jsStaticPackages[] = 'wikiamobile_relatedpages_js';
-		//css is in WikiaMobile.scss as AM can't concatanate scss files currently
-
-		return true;
 	}
 
 	/**

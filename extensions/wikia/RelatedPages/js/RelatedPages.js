@@ -5,7 +5,7 @@ require(['sloth', 'wikia.nirvana', 'wikia.window', 'wikia.loader', 'wikia.mustac
 		isMobileSkin = (w.skin === 'wikiamobile' ? true : false);
 
 	if( relatedPages.length > 0 ) {
-		var element = $('#wkRelPag')[0], // sloth don't accept jQuery objects
+		var element = $('#wkRelPagHead')[0], // sloth don't accept jQuery objects
 			controller = 'RelatedPagesApi',
 			method = 'getList';
 
