@@ -41,17 +41,25 @@ class VideoPageToolHelper extends WikiaModel {
 	/**
 	 * get left menu items
 	 * @param string $selected [featured/trending/fan]
+	 * @param string $language
+	 * @param string $date [timestamp]
 	 * @return array $leftMenuItems
 	 */
-	public function getLeftMenuItems( $selected ) {
+	public function getLeftMenuItems( $selected, $language, $date ) {
 		$sections = $this->getSections();
+		$query = array(
+			'language' => $language,
+			'date' => $date,
+			'section' => $selected,
+		);
 
 		$leftMenuItems = array();
 		foreach( $sections as $key => $value ) {
+			$query['section'] = $key;
 			$leftMenuItems[] = array(
 				'title' => $value,
 				'anchor' => $value,
-				'href' => '#', // TODO: get the URL
+				'href' => $this->wg->title->getLocalURL( $query ),
 				'selected' => ($selected == $key),
 			);
 		}

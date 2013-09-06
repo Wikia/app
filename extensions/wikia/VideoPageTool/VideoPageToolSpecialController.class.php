@@ -93,7 +93,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 
 		$videos = array();
 
-		$this->leftMenuItems = $helper->getLeftMenuItems( $section );
+		$this->leftMenuItems = $helper->getLeftMenuItems( $section, $language, $date );
 		$this->moduleView = $this->app->renderView( 'VideoPageToolSpecial', $section, array( 'videos' => $videos, 'date' => $date, 'language' => $language ) );
 
 		$this->section = $section;
@@ -265,7 +265,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		/*
 		 * TODO: imported function from SpecialMarketingToolbox, not sure if we need it
 		 */
-		
+
 		// $optionalDataKeys = array('date', 'moduleName', 'sectionName', 'verticalName',
 		// 	'regionName', 'lastEditor', 'lastEditTime');
 
