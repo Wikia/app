@@ -1,8 +1,24 @@
 # Wikia JavaScript Coding Conventions
 
 ## Language Rules
-* Early returns
-* Semi-colons
+### Early returns
+Try to avoid early returns
+
+### Semi-colons
+Always use semicolons at the end of every simple statement.  No more than one statement per line.
+```javascript
+// bad:
+var x = y
+myFunc()
+
+// also bad:
+var x = y; myFunc();
+
+// good:
+var x = y;
+myFunc();
+```
+
 * Function declaration within blocks
 * Error handling and custom exception handling
 * Delete Operator
