@@ -13,12 +13,12 @@
 * Structure
 * Commenting
 * Naming Conventions
-** vars
-** modules
-** folders
-** files
-** constants
-** casing
+	* vars
+	* modules
+	* folders
+	* files
+	* constants
+	* casing
 * Directory Structure
 * AMD
 * Prefix jQuery objects with $
