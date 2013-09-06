@@ -1,7 +1,8 @@
 jQuery(function( $ ) {
 	'use strict';
 
-	var $article = $( '#WikiaArticle' ),
+	var $scrollbar,
+		$article = $( '#WikiaArticle' ),
 		$tables = $article.find( 'table' ),
 		$wikiaBarWrapper = $( '#WikiaBarWrapper' ),
 		template = '<div class="table-wrapper"><div class="table-scrollable"></div></div>';
@@ -28,12 +29,17 @@ jQuery(function( $ ) {
 	// TODO: remove this when WikiaBar goes away
 	function updateFloatingScrollbar() {
 		var isVisible = $wikiaBarWrapper.length && !$wikiaBarWrapper.hasClass( 'hidden' );
-		$( '#floating-scrollbar' ).css( 'bottom', isVisible ? $wikiaBarWrapper.height() : 0 );
-		$.floatingScrollbarUpdate();
+
+		// Cache when available
+		if ( !$scrollbar || !$scrollbar.length ) {
+			$scrollbar = $( '#floating-scrollbar' );
+		}
+
+		$scrollbar.css( 'bottom', isVisible ? $wikiaBarWrapper.height() : 0 );
 	}
 
 	$( window )
-		// Listen for window resizes and check again for wide tables
 		.on( 'resize', $.debounce( 100, scan ) )
-		.on( 'WikiaBarStateChanged WikiaBarReady', updateFloatingScrollbar );
+		.on( 'WikiaBarStateChanged WikiaBarReady', updateFloatingScrollbar )
+		.one( 'floatingScrollbarUpdate', updateFloatingScrollbar );
 });

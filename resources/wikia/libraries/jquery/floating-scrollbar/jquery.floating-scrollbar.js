@@ -50,7 +50,10 @@
       var elem = $(this),
           top = elem.offset().top,
           bottom = top + elem.height(),
-          viewportBottom = win.scrollTop() + win.height(),
+          // Wikia change - begin - @author kflorence
+          scrollerBottom = parseInt( scroller.css( 'bottom' ), 10 ),
+          viewportBottom = win.scrollTop() + win.height() - scrollerBottom,
+          // Wikia change - end
           topOffset = 30;
 
       if ( top + topOffset < viewportBottom && bottom > viewportBottom ) {
@@ -97,6 +100,10 @@
         width: widthOuter
       })
       .scrollLeft(scroll);
+
+    // Wikia change - begin @author kflorence
+    win.triggerHandler( 'floatingScrollbarUpdate' );
+    // Wikia change - end
 
     scrollerInner.width(widthInner);
   }
