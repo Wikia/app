@@ -22,16 +22,19 @@ var AdLogicShortPage = function (window, document, log) {
 		 *
 		 * @see skins/oasis/css/core/responsive.scss
 		 */
-		oneColumnMediaQuery = 'screen and (max-width: 1023px)',
-		slotsToHideOnOneColumnLayout = {
-			TOP_BUTTON_WIDE: true,
-			'TOP_BUTTON_WIDE.force': true,
-			TOP_RIGHT_BOXAD: true,
-			LEFT_SKYSCRAPER_2: true,
-			LEFT_SKYSCRAPER_3: true,
-			INCONTENT_BOXAD_1: true
+		mediaQueriesToCheck = {
+			oneColumn: 'screen and (max-width: 1023px)',
+			noTopButton: 'screen and (max-width: 1030px)'
 		},
-		layout, // "oneColumn" or "standard"
+		slotsToHideOnMediaQuery = {
+			TOP_BUTTON_WIDE: 'noTopButton',
+			'TOP_BUTTON_WIDE.force': 'noTopButton',
+			TOP_RIGHT_BOXAD: 'oneColumn',
+			LEFT_SKYSCRAPER_2: 'oneColumn',
+			LEFT_SKYSCRAPER_3: 'oneColumn',
+			INCONTENT_BOXAD_1: 'oneColumn'
+		},
+		mediaQueriesMet,
 		matchMedia;
 
 	function matchMediaMoz(query) {
@@ -51,13 +54,19 @@ var AdLogicShortPage = function (window, document, log) {
 	 */
 	function shouldBeShown(slotname) {
 		var longEnough = false,
-			wideEnough = false;
+			wideEnough = false,
+			conflictingMediaQuery;
 
 		if (pageHeight) {
 			longEnough = !slotsOnlyOnLongPages[slotname] || pageHeight > slotsOnlyOnLongPages[slotname];
 		}
-		if (layout) {
-			wideEnough = !slotsToHideOnOneColumnLayout[slotname] || layout !== 'oneColumn';
+		if (mediaQueriesMet) {
+			if (slotsToHideOnMediaQuery[slotname]) {
+				conflictingMediaQuery = slotsToHideOnMediaQuery[slotname];
+				wideEnough = !mediaQueriesMet[conflictingMediaQuery];
+			} else {
+				wideEnough = true;
+			}
 		}
 
 		log(['shouldBeShown', slotname, 'longEnough', longEnough, 'wideEnough', wideEnough], 'debug', logGroup);
@@ -150,16 +159,27 @@ var AdLogicShortPage = function (window, document, log) {
 	 * No logging here, it needs to be super fast
 	 */
 	function onResize() {
-		var slotname;
+		var slotname,
+			mediaQueryIndex;
 
 		pageHeight = document.documentElement.scrollHeight;
 
 		if (window.wgOasisResponsive) {
 			if (matchMedia) {
-				layout = matchMedia(oneColumnMediaQuery) ? 'oneColumn' : 'standard';
+				mediaQueriesMet = {};
+				for (mediaQueryIndex in mediaQueriesToCheck) {
+					if (mediaQueriesToCheck.hasOwnProperty(mediaQueryIndex)) {
+						mediaQueriesMet[mediaQueryIndex] = matchMedia(mediaQueriesToCheck[mediaQueryIndex]);
+					}
+				}
 			}
 		} else {
-			layout = 'standard';
+			mediaQueriesMet = {};
+			for (mediaQueryIndex in mediaQueriesToCheck) {
+				if (mediaQueriesToCheck.hasOwnProperty(mediaQueryIndex)) {
+					mediaQueriesMet[mediaQueryIndex] = false;
+				}
+			}
 		}
 
 		for (slotname in wrappedAds) {
@@ -192,7 +212,7 @@ var AdLogicShortPage = function (window, document, log) {
 		log(['isApplicable', slotinfo], 'debug', logGroup);
 
 		var slotname = slotinfo[0];
-		return !!(slotsOnlyOnLongPages[slotname] || slotsToHideOnOneColumnLayout[slotname]);
+		return !!(slotsOnlyOnLongPages[slotname] || slotsToHideOnMediaQuery[slotname]);
 	}
 
 	/**
