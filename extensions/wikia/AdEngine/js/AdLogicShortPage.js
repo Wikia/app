@@ -1,3 +1,5 @@
+// TODO: Rename this module, it's not only about short page anymore
+// TODO: More unit tests
 var AdLogicShortPage = function (window, document, log) {
 	'use strict';
 
