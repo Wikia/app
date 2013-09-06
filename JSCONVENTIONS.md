@@ -22,4 +22,9 @@
 * Directory Structure
 * AMD
 * Prefix jQuery objects with $
+All variables referencing jQuery objects, should be prefixed with a $. For example:
+
+```javascript
+var $div = $('div');
+```
 
