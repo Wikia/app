@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `vpt_program` (
 CREATE TABLE IF NOT EXISTS `vpt_asset` (
   `asset_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `program_id` int(10) unsigned NOT NULL,
-  `section` tinyint(4) NOT NULL DEFAULT '1',
+  `section` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
   `order` tinyint(4) NOT NULL DEFAULT '1',
   `data` blob NOT NULL,
   `updated_by` int(10) unsigned NOT NULL,
