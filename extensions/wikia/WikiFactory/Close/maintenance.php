@@ -49,6 +49,7 @@ class CloseWikiMaintenance {
 	 * @access public
 	 */
 	public function execute() {
+        
 		global $wgUploadDirectory, $wgDBname, $IP;
 
 		$first     = isset( $this->mOptions[ "first" ] ) ? true : false;
@@ -116,8 +117,8 @@ class CloseWikiMaintenance {
 				list ( $remote  ) = explode( ":", $this->mTarget, 2 );
 
 				$script = ( $hide )
-					? "--script='../extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$row->city_id}'"
-					: "--script='../extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$row->city_id} --hide'";
+					? "--script='../extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$row->city_id} --tmp --s3'"
+					: "--script='../extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$row->city_id} --hide --tmp --s3'";
 
 				$cmd  = array(
 					"/usr/wikia/backend/bin/run_maintenance",
@@ -125,13 +126,9 @@ class CloseWikiMaintenance {
 					$script
 				);
 
-				$dump = wfEscapeShellArg(
-					"/usr/bin/ssh",
-					$remote,
-					implode( " ", $cmd )
-				);
-				$this->log( $dump );
-				$output = wfShellExec( $dump, $retval );
+                $cmd = '/usr/wikia/backend/bin/run_maintenance --id=177 ' . wfEscapeShellArg( $script );
+				$this->log( $cmd );
+				$output = wfShellExec( $cmd, $retval );
 				$xdumpok = empty( $retval ) ? true : false;
 				/**
 				 * reset flag
@@ -141,62 +138,14 @@ class CloseWikiMaintenance {
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
 				if( $dbname && $folder ) {
 					$source = $this->tarFiles( $folder, $dbname );
-
-					$target = DumpsOnDemand::getUrl( $dbname, "images.tar", $this->mTarget );
-					if( $hide ) {
-						/**
-						 * different path for hidden dumps
-						 */
-						$target = str_replace( "dumps", "dumps-hidden", $target );
-					}
-
-					if( $source && $target ) {
-						$cmd = wfEscapeShellArg(
-							"/usr/bin/rsync",
-							"-axpr",
-							"--quiet",
-							"--owner",
-							"--group",
-							"--chmod=g+w",
-							$source,
-							escapeshellcmd( $target )
-						);
-						$output = wfShellExec( $cmd, $retval );
+					if( $source ) {
+                        $retval = DumpsOnDemand::putToAmazonS3( $source, !$hide );
 						if( $retval > 0 ) {
-							$this->log( "{$cmd} command failed." );
-							/**
-							 * creating directory attempt
-							 */
-							list( $remote, $path ) = explode( ":", $target, 2 );
-							$mkdir = wfEscapeShellArg(
-								"/usr/bin/ssh",
-								$remote,
-								escapeshellcmd( "mkdir -p " . dirname( $path ) )
-							);
-							$output = wfShellExec( $mkdir, $retval );
-							if( $retval == 0 ) {
-								$this->log( dirname( $path ) . " created on {$remote}" );
-								$output = wfShellExec( $cmd, $retval );
-								if( $retval == 0 ) {
-									$this->log(  "{$source} copied to {$target}" );
-									unlink( $source );
-									/**
-									 * reset flag
-									 */
-									$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | WikiFactory::FLAG_HIDE_DB_IMAGES;
-								}
-							}
-							else {
-								/**
-								 * actually it's better to die than remove
-								 * images later without backup
-								 */
-								echo "Can't copy images to remote host. Please, fix that and rerun";
-								die( 1 );
-							}
-						}
-						else {
-							$this->log( "{$source} copied to {$target}" );
+							$this->log( "putToAmazonS3 command failed." );
+							echo "Can't copy images to remote host. Please, fix that and rerun";
+							die( 1 );
+						} else {
+							$this->log( "{$source} copied to S3 Amazon" );
 							unlink( $source );
 							$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | WikiFactory::FLAG_HIDE_DB_IMAGES;
 						}
@@ -329,7 +278,7 @@ class CloseWikiMaintenance {
 		/**
 		 * @name dumpfile
 		 */
-		$tarfile = sprintf( "/tmp/{$dbname}-images.tar" );
+		$tarfile = sprintf( "/tmp/{$dbname}_images.tar" );
 		if( file_exists( $tarfile ) ) {
 			@unlink( $tarfile );
 		}
