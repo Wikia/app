@@ -166,12 +166,17 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 	}
 }
 
+html {
+	overflow-y: auto;
+}
+
 body {
 	min-width: $width-outside-min;
+	position: relative;
 
 	@if ( $background-is-dynamic ) {
 		background: $color-body;
-		overflow-x: hidden;
+		overflow: hidden;
 
 		&:after,
 		&:before {
@@ -357,6 +362,7 @@ body > .global-notification,
 // END - main page tag fixes
 
 @media screen and (max-width: $breakpoint-min) {
+	html,
 	body {
 		overflow-x: auto;
 	}
