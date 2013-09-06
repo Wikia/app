@@ -218,10 +218,10 @@ class WikiaMobileService extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		$this->handleMessages();
-		$this->handleAssets();
 		$this->handleAds();
 		$this->handleSmartBanner();
 		$this->handleContent();
+		$this->handleAssets();
 		$this->handleTracking();
 
 		//We were able to push all JS to bottom of a page
