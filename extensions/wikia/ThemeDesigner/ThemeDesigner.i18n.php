@@ -70,7 +70,7 @@ please enter the name of the wiki to save.',
  * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'action-themedesigner' => 'Text displayed mid-sentence in the permission error when ThemeDesigner is accessed without proper permissions.',
+	'action-themedesigner' => '{{doc-action|themedesigner}}',
 	'themedesigner-or' => '"or", as in, either Text Wordmark *or* Graphic Wordmark.
 {{Identical|Or}}',
 	'themedesigner-desc' => '{{desc}}',
