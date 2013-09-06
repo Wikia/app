@@ -4,13 +4,10 @@ require(['sloth', 'wikia.nirvana', 'wikia.window', 'wikia.loader', 'wikia.mustac
 	var relatedPages = $('#wkRelPag'),
 		isMobileSkin = (w.skin === 'wikiamobile' ? true : false);
 
-	if(relatedPages.length > 0) {
-		var element = $('#wkMainCntFtr')[0], // sloth don't accept jQuery objects
+	if( relatedPages.length > 0 ) {
+		var element = $('#wkRelPag')[0], // sloth don't accept jQuery objects
 			controller = 'RelatedPagesApi',
 			method = 'getList';
-		if(!element) {
-			element = $('#wkRelPag')[0]; // sloth don't accept jQuery objects
-		}
 
 		sloth({
 			on: element,
@@ -35,27 +32,27 @@ require(['sloth', 'wikia.nirvana', 'wikia.window', 'wikia.loader', 'wikia.mustac
 							mustacheData = {
 								imgWidth: (isMobileSkin ? 100 : 200),
 								imgHeight: (isMobileSkin ? 50 : 100)
-						},
-						artImgPlaceholder = (isMobileSkin ? w.wgCdnRootUrl + '/extensions/wikia/WikiaMobile/images/read_placeholder.png' : '');
+							},
+							artImgPlaceholder = (isMobileSkin ? w.wgCdnRootUrl + '/extensions/wikia/WikiaMobile/images/read_placeholder.png' : '');
 
-						if (pages && pages.length) {
+						if( pages && pages.length ) {
 							var page,
 								ul = relatedPages.children('ul'),
 								lis = '',
 								i = 0;
 
-							while(page = pages[i++]) {
+							while( page = pages[i++] ) {
 								mustacheData.pageUrl = page.url;
 								mustacheData.pageTitle = page.title;
-								mustacheData.imgUrl = (page.imgUrl ? page.imgUrl : artImgPlaceholder);
+								mustacheData.imgUrl = ( page.imgUrl ? page.imgUrl : artImgPlaceholder );
 								mustacheData.artSnippet = page.text;
 
-								lis += mustache.render(data.mustache[0], mustacheData);
+								lis += mustache.render( data.mustache[0], mustacheData );
 							}
 
 							ul.append(lis);
 
-							if (isMobileSkin) {
+							if( isMobileSkin ) {
 								relatedPages.addClass('show');
 							}
 						}

@@ -510,7 +510,8 @@ $config['wikiamobile_relatedpages_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		'//extensions/wikia/RelatedPages/js/RelatedPages.wikiamobile.js'
+		'//resources/wikia/libraries/mustache/mustache.js',
+		'//extensions/wikia/RelatedPages/js/RelatedPages.js'
 	)
 );
 
