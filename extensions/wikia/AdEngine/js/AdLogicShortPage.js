@@ -3,6 +3,11 @@ var AdLogicShortPage = function (window, document, log) {
 
 	var logGroup = 'ext.wikia.adengine.logic.shortpage',
 		initCalled = false,
+		wrappedAds = {},
+
+		/**
+		 * Slots based on page length
+		 */
 		preFootersThreshold = 2400,
 		slotsOnlyOnLongPages = {
 			LEFT_SKYSCRAPER_2: 2400,
@@ -10,18 +15,33 @@ var AdLogicShortPage = function (window, document, log) {
 			PREFOOTER_LEFT_BOXAD: preFootersThreshold,
 			PREFOOTER_RIGHT_BOXAD: preFootersThreshold
 		},
-		// skins/oasis/css/core/layout.scss: $width-outside: 1030px;
-		oneColumnThreshold = 1008,
-		slotsOnlyOnWidePages = {
-			TOP_BUTTON_WIDE: oneColumnThreshold,
-			TOP_RIGHT_BOXAD: oneColumnThreshold,
-			LEFT_SKYSCRAPER_2: oneColumnThreshold,
-			LEFT_SKYSCRAPER_3: oneColumnThreshold,
-			INCONTENT_BOXAD_1: oneColumnThreshold
-		},
 		pageHeight,
-		pageWidth,
-		wrappedAds = {};
+
+		/**
+		 * Slots based on screen width
+		 *
+		 * @see skins/oasis/css/core/responsive.scss
+		 */
+		oneColumnMediaQuery = 'screen and (max-width: 1023px)',
+		slotsToHideOnOneColumnLayout = {
+			TOP_BUTTON_WIDE: true,
+			'TOP_BUTTON_WIDE.force': true,
+			TOP_RIGHT_BOXAD: true,
+			LEFT_SKYSCRAPER_2: true,
+			LEFT_SKYSCRAPER_3: true,
+			INCONTENT_BOXAD_1: true
+		},
+		layout, // "oneColumn" or "standard"
+		matchMedia;
+
+	function matchMediaMoz(query) {
+		return window.matchMedia(query).matches;
+	}
+
+	// Chose proper implementation of machMedia
+	matchMedia = window.matchMedia && matchMediaMoz;
+	matchMedia = matchMedia || (window.styleMedia && window.styleMedia.matchMedium);
+	matchMedia = matchMedia || (window.media && window.media.matchMedium);
 
 	/**
 	 * Logic to check for given slot on every window resize
@@ -36,8 +56,8 @@ var AdLogicShortPage = function (window, document, log) {
 		if (pageHeight) {
 			longEnough = !slotsOnlyOnLongPages[slotname] || pageHeight > slotsOnlyOnLongPages[slotname];
 		}
-		if (pageWidth) {
-			wideEnough = !slotsOnlyOnWidePages[slotname] || pageWidth > slotsOnlyOnWidePages[slotname];
+		if (layout) {
+			wideEnough = !slotsToHideOnOneColumnLayout[slotname] || layout !== 'oneColumn';
 		}
 
 		log(['shouldBeShown', slotname, 'longEnough', longEnough, 'wideEnough', wideEnough], 'debug', logGroup);
@@ -133,7 +153,14 @@ var AdLogicShortPage = function (window, document, log) {
 		var slotname;
 
 		pageHeight = document.documentElement.scrollHeight;
-		pageWidth = document.documentElement.scrollWidth;
+
+		if (window.wgOasisResponsive) {
+			if (matchMedia) {
+				layout = matchMedia(oneColumnMediaQuery) ? 'oneColumn' : 'standard';
+			}
+		} else {
+			layout = 'standard';
+		}
 
 		for (slotname in wrappedAds) {
 			if (wrappedAds.hasOwnProperty(slotname)) {
@@ -165,7 +192,7 @@ var AdLogicShortPage = function (window, document, log) {
 		log(['isApplicable', slotinfo], 'debug', logGroup);
 
 		var slotname = slotinfo[0];
-		return !!(slotsOnlyOnLongPages[slotname] || slotsOnlyOnWidePages[slotname]);
+		return !!(slotsOnlyOnLongPages[slotname] || slotsToHideOnOneColumnLayout[slotname]);
 	}
 
 	/**

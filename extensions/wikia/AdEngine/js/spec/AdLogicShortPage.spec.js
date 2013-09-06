@@ -3,7 +3,7 @@ describe('AdLogicShortPage', function(){
 
 		function isPageTooShortForSlot(slotName, pageLength) {
 			var slot = [slotName],
-				windowMock = {addEventListener: function() {}},
+				windowMock = {addEventListener: function() {}, styleMedia: {matchMedium: function() {return true;}}},
 				logMock = function() {},
 				documentMock = {documentElement: {scrollHeight: pageLength, scrollWidth: 1280}},
 				adLogicShortPage = AdLogicShortPage(windowMock, documentMock, logMock),
