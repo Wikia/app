@@ -1,10 +1,13 @@
 require(['sloth', 'wikia.nirvana', 'wikia.window', 'wikia.loader', 'wikia.mustache'], function(sloth, nirvana, w, loader, mustache){
 	'use strict';
 
-	var relatedPages = $('#wkRelPag');
+	var relatedPages = $('#wkRelPag'),
+		isMobileSkin = (w.skin === 'wikiamobile' ? true : false);
 
 	if(relatedPages.length > 0) {
-		var element  = $('#wkMainCntFtr')[0]; // sloth don't accept jQuery objects
+		var element = $('#wkMainCntFtr')[0], // sloth don't accept jQuery objects
+			controller = 'RelatedPagesApi',
+			method = 'getList';
 		if(!element) {
 			element = $('#wkRelPag')[0]; // sloth don't accept jQuery objects
 		}
@@ -13,35 +16,29 @@ require(['sloth', 'wikia.nirvana', 'wikia.window', 'wikia.loader', 'wikia.mustac
 			on: element,
 			threshold: 100,
 			callback: function() {
-
-				$.when(
-					nirvana.getJson(
-						'RelatedPagesApi',
-						'getList',
-						{
-							ids: w.wgArticleId
-						}
-					),
-					loader({
-						type: loader.MULTI,
-						resources: {
-							mustache: 'extensions/wikia/RelatedPages/templates/RelatedPages_item.mustache'
-						}
-
-					})
-				).done(
-					function(data, resources) {
-
-						var items = data[0].items,
+				loader({
+					type: loader.MULTI,
+					resources: {
+						mustache: 'extensions/wikia/RelatedPages/templates/RelatedPages_item.mustache',
+						templates: [{
+							controller: controller,
+							method: method,
+							params: {
+								ids: w.wgArticleId
+							}
+						}]
+					}
+				}).done(
+					function(data) {
+						var items = JSON.parse(data.templates[controller + '_' + method]).items,
 							pages = items && items[w.wgArticleId],
 							mustacheData = {
-								imgWidth: (w.skin === 'mobile' ? 100 : 200),
-								imgHeight: (w.skin === 'mobile' ? 50 : 100)
+								imgWidth: (isMobileSkin ? 100 : 200),
+								imgHeight: (isMobileSkin ? 50 : 100)
 						},
-							artImgPlaceholder = (w.skin === 'mobile' ? w.wgCdnRootUrl + '/extensions/wikia/WikiaMobile/images/read_placeholder.png' : '');
+							artImgPlaceholder = (isMobileSkin ? w.wgCdnRootUrl + '/extensions/wikia/WikiaMobile/images/read_placeholder.png' : '');
 
-
-						console.log(pages);
+						console.log(items);
 
 						if (pages && pages.length) {
 							var page,
@@ -50,18 +47,17 @@ require(['sloth', 'wikia.nirvana', 'wikia.window', 'wikia.loader', 'wikia.mustac
 								i = 0;
 
 							while(page = pages[i++]) {
-
 								mustacheData.pageUrl = page.url;
 								mustacheData.pageTitle = page.title;
 								mustacheData.imgUrl = (page.imgUrl ? page.imgUrl : artImgPlaceholder);
 								mustacheData.artSnippet = page.text;
 
-								lis += mustache.render(resources.mustache[0], mustacheData);
+								lis += mustache.render(data.mustache[0], mustacheData);
 							}
 
 							ul.append(lis);
 
-							if (w.skin === 'mobile') {
+							if (isMobileSkin) {
 								relatedPages.addClass('show');
 							}
 						}
