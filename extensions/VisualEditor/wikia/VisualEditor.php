@@ -70,10 +70,12 @@ $wgHooks['ResourceLoaderTestModules'][] = 'Wikia_onResourceLoaderTestModules';
 function Wikia_onResourceLoaderTestModules( array &$testModules, ResourceLoader &$resourceLoader ) {
 	$testModules['qunit']['ext.visualEditor.wikiaTest'] = array(
 		'scripts' => array(
-			'test/test.js'
+			'test/dm/ve.dm.wikiaExample.js',
+			'test/dm/ve.dm.WikiaConverter.test.js'
 		),
 		'dependencies' => array(
-			'ext.visualEditor.test'
+			'ext.visualEditor.test',
+			'ext.visualEditor.wikiaCore',
 		),
 		'localBasePath' => dirname( __FILE__ ),
 		'remoteExtPath' => 'VisualEditor/wikia'
