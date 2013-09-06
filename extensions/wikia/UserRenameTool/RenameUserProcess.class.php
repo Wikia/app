@@ -239,7 +239,7 @@ class RenameUserProcess {
 	protected function setup() {
 		wfProfileIn(__METHOD__);
 
-		global $wgContLang, $wgCapitalLinks;
+		global $wgContLang, $wgCapitalLinks, $IP;
 
 		//Sanitize input data
 		$oldnamePar = trim(str_replace('_', ' ', $this->mRequestData->oldUsername));
@@ -255,7 +255,7 @@ class RenameUserProcess {
 
 		//AntiSpoof test
 
-		$dir = '/usr/wikia/source/app/extensions/AntiSpoof/';
+		$dir = "$IP/extensions/AntiSpoof/";
 		if ( file_exists( $dir . 'AntiSpoof_body.php' ) && file_exists( $dir . 'SpoofUser.php' ) ) {
 			require_once( $dir . 'AntiSpoof_body.php' );
 			require_once( $dir . 'SpoofUser.php' );
