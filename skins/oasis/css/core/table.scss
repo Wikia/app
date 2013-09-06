@@ -2,6 +2,8 @@
 @import "../mixins/box-shadow";
 @import "../mixins/gradient";
 
+$color-table-overflow-shadow: mix( $color-page-shadow, $color-page, 50% );
+
 // RT #70017: wikitable class for skinning normal tables
 table.wikitable {
 	background: darken($color-page, 2%);
@@ -34,10 +36,11 @@ table.wikitable {
 .WikiaArticle {
 	.table-is-wide {
 		clear: both;
+		margin-top: 1em;
 		position: relative;
 
 		&:before {
-			@include box-shadow( -15px, 0, 20px, $color-page-border, true, -15px );
+			@include box-shadow( -15px, 0, 20px, $color-table-overflow-shadow, true, -15px );
 			content: "";
 			height: 100%;
 			pointer-events: none;
@@ -51,6 +54,7 @@ table.wikitable {
 		// Must use important here to override inline styles :'(
 		table {
 			float: none !important;
+			margin-top: 0 !important;
 		}
 
 		// This second element is needed because of stacking order rules.
