@@ -1,16 +1,14 @@
 # Wikia .editorconfig
+# Please keep these in alphabetical order.
 # Download the plugin for your editor/IDE of choice from http://editorconfig.org/#download
 root = true
 
 [**.js]
-indent_style = tab
-indent_size = tab
-end_of_line = lf
 charset = utf-8
-trim_trailing_whitespace = true
+end_of_line = lf
+indent_size = tab
+indent_style = tab
 insert_final_newline = true
-
+max_line_length = 120 # Vim
 # tab_width = SET INDIVIDUALLY
-
-# VIM only features
-max_line_length = 120
+trim_trailing_whitespace = true

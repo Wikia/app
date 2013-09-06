@@ -763,30 +763,10 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getConfig' )
 		    ->will   ( $this->returnValue( $mockConfig ) )
 		;
-		$mockResultSet
-		    ->expects( $this->once() )
-		    ->method ( 'getResultsFound' )
-		    ->will   ( $this->returnValue( 10 ) )
-		;
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'setResults' )
 		    ->will   ( $this->returnValue( $mockConfig ) )
-		;
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getPage' )
-		    ->will   ( $this->returnValue( 1 ) )
-		;
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getQuery' )
-	        ->will   ( $this->returnValue( $mockQuery ) )
-        ;
-		$mockQuery
-		    ->expects( $this->once() )
-		    ->method ( 'getSanitizedQuery' )
-		    ->will   ( $this->returnValue( 'foo' ) )
 		;
 		
 		$this->proxyClass( 'Wikia\Search\ResultSet\Factory', $mockResultSetFactory );

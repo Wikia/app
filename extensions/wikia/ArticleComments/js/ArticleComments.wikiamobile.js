@@ -5,7 +5,7 @@
  * @author Jakub 'Student' Olek
  **/
 
-require(['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload'], function(throbber, toast, modal, track, msg, lazyload){
+require(['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload', 'jquery'], function(throbber, toast, modal, track, msg, lazyload, $){
 	"use strict";
 	/** @private **/
 
@@ -252,44 +252,29 @@ require(['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload'], funct
 		loadPrev.addEventListener(clickEvent, clickHandler, true);
 	}
 
-	wkArtCom.addEventListener(clickEvent, function(ev){
-		var t = ev.target,
-			className = t.className;
-
-		if(className.indexOf('viewAll') > -1){
-			openModal(t);
+	$(wkArtCom)
+		.on('click', '.viewAll', function(){
+			openModal(this);
 			track.event('article-comments', track.CLICK, {
 				label: 'open'
 			});
-		}else if(className.indexOf('cmnRpl') > -1){
-			if(!loginRequired(ev)){
-				openModal(t, true);
+		})
+		.on('click', '.cmnRpl', function(event){
+			if(!loginRequired(event)){
+				openModal(this, true);
 				track.event('article-comments', track.CLICK, {
 					label: 'open'
 				});
 			}
-		}else if(className.indexOf('avatar') > -1){
+		})
+		.on('click', '.avatar', function(){
 			track.event('article-comments', track.IMAGE_LINK, {
 				label: 'avatar',
-				href: t.parentElement.href
-			},
-			ev);
-		}
-	});
+				href: this.parentElement.href
+			},ev);
+		});
 
-	d.body.addEventListener('submit', function(ev){
-		var t = ev.target;
-
-		if(t.className.indexOf('commFrm') > -1){
-			post(ev);
-		}
-	});
-
-	d.body.addEventListener(clickEvent, function(ev){
-		var t = ev.target;
-
-		if(t.matchesSelector('.commFrm textarea')){
-			loginRequired(ev);
-		}
-	});
+	$(d.body)
+		.on(clickEvent, '.commFrm textarea', loginRequired)
+		.on('submit', '.commFrm', post);
 });

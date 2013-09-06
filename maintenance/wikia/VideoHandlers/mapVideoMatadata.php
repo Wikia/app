@@ -28,11 +28,11 @@ function mapMetadata( $videoTitle, $ingester, $data ) {
 	}
 
 	// get name
+	$keywords = array();
 	if ( empty( $data['name'] ) && !empty( $data['keywords'] ) ) {
-		$keywords = array();
 		foreach ( explode( ',' , $data['keywords'] ) as $keyword ) {
 			$keyword = trim( $keyword );
-			if ( empty( $keyword ) ) {
+			if ( empty( $keyword ) || strtolower( $keyword ) == 'the' ) {
 				continue;
 			}
 
@@ -63,12 +63,9 @@ function mapMetadata( $videoTitle, $ingester, $data ) {
 		}
 
 
-		if ( count( $keywords ) == 1 ) {
-			$data['name'] = array_pop( $keywords );
-		} else {
-			$skip++;
-			echo "$videoTitle...SKIPPED. (cannot map keywords to name (Keywords: $data[keywords])).\n";
-			return false;
+		if ( !empty( $keywords ) && count( $keywords ) < 5 ) {
+			$data['name'] = implode( ', ', $keywords );
+			$keywords = array();
 		}
 	}
 
@@ -87,7 +84,7 @@ function mapMetadata( $videoTitle, $ingester, $data ) {
 			$data['keywords'] = preg_replace( '/,([^\s])/', ', $1', $data['tags'] );
 		}
 	} else {
-		$data['keywords'] = '';
+		$data['keywords'] = implode( ', ', $keywords );
 	}
 
 	// get rating
@@ -125,6 +122,10 @@ function mapMetadata( $videoTitle, $ingester, $data ) {
 
 	// map additional metadata (per provider)
 	$provider = strtolower( $metadata['provider'] );
+	// use iva function for ooyala
+	if ( strstr( $provider, '/' ) ) {
+		$provider = 'iva';
+	}
 	if ( in_array( $provider, $extraMapping ) ) {
 		$function = 'mapMetadata'.ucfirst( $provider );
 		$function( $ingester, $data, $metadata );
@@ -170,7 +171,9 @@ function mapMetadataIva( $ingester, $data, &$metadata ) {
 	}
 
 	$metadata['category'] = $ingester->getCategory( $metadata['category'] );
-	$metadata['type'] = $ingester->getStdType( $metadata['category'] );
+	if ( !empty( $data['category'] ) ) {
+		$metadata['type'] = $ingester->getStdType( $data['category'] );
+	}
 
 	// add page categories to metadata
 	$metadata['pageCategories'] = empty( $data['pageCategories'] ) ? '' : $data['pageCategories'];
@@ -260,7 +263,13 @@ if ( empty( $ingestionData ) ) {
 }
 
 // keywords for page categories
-$categories = array( 'International', 'Foreign', 'Movies', 'TV', 'Gaming', 'Games', 'Others' );
+$categories = array(
+	'International', 'Foreign', 'Movies', 'TV', 'Gaming', 'Games', 'Others', 'Entertainment', 'Trailers', 'Webinars', 'Support',
+	'Community', 'Clips', 'Anime', 'Gameplay', 'Books', 'Trailer', 'Television', 'Interviews', 'SciFi', 'Featurettes', 'Featurette',
+	'Community Support', 'How-to', 'How To', 'Intro', 'Comedy', 'Animation', 'Overhaul', 'Wikia Webinars', 'Epic', 'SOE', 'EA', 'Konami',
+	'ubisoft', 'WBIE', 'Comics', 'Comic-Con', 'Food', 'Walkthroughs', 'Walkthrough', 'Remake', 'Expert Showcase', 'Wikia Productions',
+	'Adventure', 'Pixar',
+);
 
 // providers that require extra mapping
 $extraMapping = array( 'iva', 'realgravity', 'ign', 'anyclip' );

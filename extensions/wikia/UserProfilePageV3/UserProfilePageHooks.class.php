@@ -38,7 +38,7 @@ class UserProfilePageHooks {
 	}
 
 	//WikiaMobile hook to add assets so they are minified and concatenated
-	static public function onWikiaMobileAssetsPackages( &$jsHeadPackages, &$jsBodyPackages, &$scssPackages){
+	static public function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages){
 		$wg = F::app()->wg;
 		if ( $wg->Title->getNamespace() === NS_USER ) {
 			$scssPackages[] = 'userprofilepage_scss_wikiamobile';

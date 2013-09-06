@@ -368,11 +368,21 @@ $messages['tl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
 	'userdata' => 'Отримати дані користувача',
+	'userdata-userid-label' => 'Надати ID користувача:',
 	'userdata-submit' => 'Отримати дані',
+	'specialuserdata-desc' => 'Надає інтерфейс для зміни wgUserData у вікі.',
+	'userdata-header' => 'Збільшити wgUserData',
+	'userdata-value' => 'Поточне значення wgUserData є " $1 ". Натисніть кнопку, щоб встановити поточну позначку часу.',
+	'userdata-updated' => 'wgUserData оновлено до "$1".',
+	'userdata-not-updated' => 'Не вдалося оновити wgUserData.',
+	'userdata-wf-reason' => 'Значення оновлені за допомогою [[Special:UserData|UserData]]',
+	'userdata-no-wf' => 'WikiFactory на цій вікі не увімкнено. Не вдається змінити wgUserData.',
 );
 
 /** Simplified Chinese (中文（简体）‎)
