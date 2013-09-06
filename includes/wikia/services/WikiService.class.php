@@ -396,7 +396,7 @@ class WikiService extends WikiaModel {
 	 * @return array most active admins from last week ordered desc
 	 */
 	public function getMostActiveAdmins($wikiId, $avatarSize) {
-		$edits = $ids = [];
+		$edits = $ids = $lastRevision = [];
 		$admins = $this->getWikiAdmins($wikiId, $avatarSize);
 		$ids = array_map(function($item) { return $item['userId']; }, $admins);
 
