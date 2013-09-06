@@ -376,7 +376,7 @@ class RelatedPages {
 		global $wgRequest;
 
 		if ( $out->isArticle() && $wgRequest->getVal( 'diff' ) === null ) {
-			$text .= F::app()->renderView( 'RelatedPages', 'Index' );
+			$text .= F::app()->renderView( 'RelatedPagesController', 'index' );
 		}
 
 		return true;
