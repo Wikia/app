@@ -4,5 +4,6 @@ class TouchStormController extends WikiaController {
 		/* Nothing happens here.  This method exists just so the default
 		   template action builds the TouchStorm_Index.php file
 		 */
+		$this->response->addAsset('touchstorm_scss');
 	}
 }
