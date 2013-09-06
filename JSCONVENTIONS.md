@@ -31,7 +31,9 @@ myFunc();
 We are using jQuery's guidelines: http://contribute.jquery.org/style-guide/js/
 
 #### Prefixing jQuery objects
-All variables referencing jQuery objects, should be prefixed with a $. For example:
+All variables referencing jQuery objects, should be prefixed with a $. 
+
+Example:
 
 ```javascript
 var $div = $('div');
@@ -50,5 +52,4 @@ var $div = $('div');
 	* casing
 * Directory Structure
 * AMD
-* Prefix jQuery objects with $
 
