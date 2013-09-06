@@ -34,7 +34,6 @@ We are using jQuery's guidelines: http://contribute.jquery.org/style-guide/js/
 All variables referencing jQuery objects, should be prefixed with a $. 
 
 Example:
-
 ```javascript
 var $div = $('div');
 ```
