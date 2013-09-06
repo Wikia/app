@@ -3,6 +3,8 @@
 <form id="WikiaSearch" class="WikiaSearch<?= empty($noautocomplete) ? '' : ' noautocomplete' ?>" action="<?= $specialSearchUrl; ?>" method="get">
 	<input type="text" name="search" placeholder="<?= $placeholder ?>" autocomplete="off" accesskey="f" value="<?= htmlspecialchars( $searchterm ) ?>">
 	<input type="hidden" name="fulltext" value="<?= $fulltext ?>">
+	<input type="hidden" name="<?= "ns".NS_MAIN; ?>" value="1">
+	<input type="hidden" name="<?= "ns".NS_CATEGORY; ?>" value="1">
 	<input type="submit">
 	<button class="wikia-button"><img src="<?= $wg->BlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
 </form>

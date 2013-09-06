@@ -165,7 +165,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	    $stParams = array_merge( array( 'search' => $term ), $opt );
 
-	    $title = SpecialPage::getTitleFor( 'WikiaSearch' );
+	    $title = SpecialPage::getTitleFor( 'Search' );
 
 	    $this->setVal( 'class',     str_replace( ' ', '-', strtolower( $label ) ) );
 	    $this->setVal( 'href',      $title->getLocalURL( $stParams ) );
@@ -370,7 +370,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setLimit                   ( $this->getVal( 'limit', $resultsPerPage ) )
 			->setPage                    ( $this->getVal( 'page', 1) )
 			->setRank                    ( $this->getVal( 'rank', 'default' ) )
-			->setAdvanced                ( $this->getRequest()->getBool( 'advanced', false ) )
 			->setHub                     ( $this->getVal( 'hub', false ) )
 			->setInterWiki               ( $this->isCorporateWiki() )
 			->setVideoSearch             ( $this->getVal( 'videoSearch', false ) )
@@ -602,7 +601,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$this->setVal( 'namespaces', 			$config->getNamespaces() );
 		$this->setVal( 'searchableNamespaces', 	$searchableNamespaces );
-		$this->setVal( 'advanced', 				$config->getAdvanced() );
 	}
 
 	/**
@@ -674,19 +672,19 @@ class WikiaSearchController extends WikiaSpecialPageController {
 						? ( $page + self::PAGES_PER_WINDOW )
 						: $config->getNumPages() ) ;
 
+		$pageTitle = SpecialPage::getTitleFor( 'Search' );
+
 		$this->setVal( 'query', 			$config->getQuery()->getSanitizedQuery() );
 		$this->setVal( 'pagesNum', 			$config->getNumPages() );
 		$this->setVal( 'currentPage', 		$page );
 		$this->setVal( 'windowFirstPage', 	$windowFirstPage );
 		$this->setVal( 'windowLastPage', 	$windowLastPage );
-		$this->setVal( 'pageTitle', 		$this->wg->Title );
+		$this->setVal( 'pageTitle', 		$pageTitle );
 		$this->setVal( 'crossWikia', 		$config->getInterWiki() );
 		$this->setVal( 'resultsCount', 		$config->getResultsFound() );
 		$this->setVal( 'namespaces', 		$config->getNamespaces() );
-		$this->setVal( 'advanced', 			$config->getAdvanced() );
 		$this->setVal( 'limit', 			$config->getLimit() );
 		$this->setVal( 'filters',			$config->getPublicFilterKeys() );
-		$this->setVal( 'rank', 				$config->getRank() );
 		$this->setVal( 'by_category', 		$this->getVal('by_category', false) );
 
 	}

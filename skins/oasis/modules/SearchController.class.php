@@ -7,7 +7,7 @@
 
 class SearchController extends WikiaController {
 	public function executeIndex() {
-		$this->setVal('specialSearchUrl', SpecialPage::getTitleFor( 'WikiaSearch' )->getFullUrl());
+		$this->setVal('specialSearchUrl', SpecialPage::getTitleFor( 'Search' )->getFullUrl());
 		$this->searchterm = $this->wg->request->getVal('search');
 		if ( !isset( $this->searchterm ) ) {
 			$this->searchterm = $this->request->getVal( 'search' );
