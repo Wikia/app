@@ -342,6 +342,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 	}
 	.video-addon-results {
 		display: none;
+		margin-bottom: 15px;
 	}
 	.video-addon-results ul {
 		list-style: none;
@@ -349,6 +350,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 	}
 	.video-addon-results li {
 		display: inline;
+
 		a.video-thumbnail {
 			margin: 1px;
 		}
