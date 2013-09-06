@@ -1116,10 +1116,6 @@ class LocalFile extends File {
 		$wikiPage = new WikiFilePage( $descTitle );
 		$wikiPage->setFile( $this );
 
-		# start wikia code
-		wfRunHooks( 'Image::RecordUpload:article', array( &$article, $descTitle ) ) ;
-		# end wikia code
-
 		# Add the log entry
 		$log = new LogPage( 'upload' );
 		$action = $reupload ? 'overwrite' : 'upload';

@@ -16,6 +16,11 @@ class WikiService extends WikiaModel {
 	const FLAG_OFFICIAL = 16;
 
 	static $botGroups = array('bot', 'bot-global');
+	static $excludedWikiaUsers = array(
+		22439, //Wikia
+		1458396, //Abuse filter
+	);
+
 	protected $cityVisualizationObject = null;
 	protected $wikisModel;
 
@@ -23,13 +28,15 @@ class WikiService extends WikiaModel {
 	 * get list of wiki founder/admin/bureaucrat id
 	 * Note: also called from maintenance script.
 	 *
-	 * @param integer $wikiId
-	 * @param bool    $useMaster
-	 * @param bool    $excludeBots
+	 * @param integer $wikiId - wiki Id (default: current wiki Id)
+	 * @param bool    $useMaster - flag that describes if we should use masted DB (default: false)
+	 * @param bool    $excludeBots - flag that describes if bots should be excluded from admins list (default: false)
+	 * @param integer $limit - admins limit
+	 * @param bool    $includeFounder - flag that describes if founder user should be added to admins list (default: true)
 	 *
 	 * @return array of $userIds
 	 */
-	public function getWikiAdminIds( $wikiId = 0, $useMaster = false, $excludeBots = false, $limit = null ) {
+	public function getWikiAdminIds( $wikiId = 0, $useMaster = false, $excludeBots = false, $limit = null, $includeFounder = true ) {
 		wfProfileIn( __METHOD__ );
 
 		$userIds = array();
@@ -38,7 +45,9 @@ class WikiService extends WikiaModel {
 			$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 			$wiki = WikiFactory::getWikiById($wikiId);
 			if ( !empty($wiki) && $wiki->city_public == 1 ) {
-				$userIds[] = $wiki->city_founding_user;
+				if ($includeFounder) {
+					$userIds[] = $wiki->city_founding_user;
+				}
 
 				// get admin and bureaucrat
 				if ( empty($this->wg->EnableAnswers) ) {
@@ -320,6 +329,8 @@ class WikiService extends WikiaModel {
 				$date = getdate(strtotime('2005-06-01'));
 			}
 
+			$userInfo['lastRevision'] = $stats['lastRevision'];
+
 			$userInfo['since'] = F::App()->wg->Lang->getMonthAbbreviation($date['mon']) . ' ' . $date['year'];
 		}
 
@@ -364,7 +375,7 @@ class WikiService extends WikiaModel {
 			function () use ($wikiId, $avatarSize, $limit) {
 				$admins = array();
 				try {
-					$admins = $this->getWikiAdminIds($wikiId, false, true, $limit);
+					$admins = $this->getWikiAdminIds($wikiId, false, true, $limit, false);
 					$checkUserCallback = function ($user) { return true; };
 					foreach ($admins as &$admin) {
 						$userInfo = $this->getUserInfo($admin, $wikiId, $avatarSize, $checkUserCallback);
@@ -376,6 +387,42 @@ class WikiService extends WikiaModel {
 				return $admins;
 			}
 		);
+	}
+
+	/**
+	 * @param int wiki id
+	 * @param int avatar size
+	 *
+	 * @return array most active admins from last week ordered desc
+	 */
+	public function getMostActiveAdmins($wikiId, $avatarSize) {
+		$edits = $ids = $lastRevision = [];
+		$admins = $this->getWikiAdmins($wikiId, $avatarSize);
+		$ids = array_map(function($item) { return $item['userId']; }, $admins);
+
+		$adminsEdits = DataMartService::getUserEditsByWikiId( $ids, $wikiId);
+
+		foreach($admins as $key => $admin) {
+			$userEdits = 0;
+			if(empty($admin['userId']) || in_array($admin['userId'], self::$excludedWikiaUsers)) {
+				unset($admins[$key]);
+				continue;
+			}
+			if(isset($adminsEdits[$admin['userId']])) {
+				$userEdits = $this->countAdminEdits($adminsEdits[$admin['userId']]);
+			}
+			$edits[$key] = $admins[$key]['edits'] = $userEdits;
+			$lastRevision[$key] = $admins[$key]['lastRevision'];
+		}
+
+		array_multisort($edits, SORT_DESC, $lastRevision, SORT_DESC,  $admins);
+		return $admins;
+	}
+
+	private function countAdminEdits($edits) {
+		$editsCount = 0;
+		$editsCount += (int)$edits['edits'] + (int)$edits['deletes'] + (int)$edits['undeletes'];
+		return $editsCount;
 	}
 
 	/** DEPRACATED will be removed */

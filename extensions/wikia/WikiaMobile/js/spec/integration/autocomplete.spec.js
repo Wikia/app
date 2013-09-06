@@ -2,7 +2,7 @@
 describe("Autocomplete module", function () {
 	'use strict';
 
-	var auto = modules.autocomplete();
+	var auto = modules.autocomplete(jQuery);
 
 	it('should be defined', function(){
 		expect(auto).toBeDefined();
@@ -91,6 +91,6 @@ describe("Autocomplete module", function () {
 
 		expect(input.value).toEqual('');
 		expect(list.innerHTML).toEqual('');
-		expect(clear.className).toEqual('clsIco hide');
+		expect(clear.className).toEqual('hide');
 	});
 });

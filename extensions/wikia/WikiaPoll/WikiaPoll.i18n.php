@@ -37,7 +37,8 @@ $messages['qqq'] = array(
 	'wikiapoll-question' => 'Used as a title. Parameter:
 * $1 is the poll question without a question mark.',
 	'wikiapoll-thanks-for-vote' => 'Thank you to voting user.',
-	'wikiapoll-vote' => 'Button text to vote in a poll.',
+	'wikiapoll-vote' => 'Button text to vote in a poll.
+{{Identical|Vote}}',
 	'wikiapoll-votes' => 'Parameter:
 * $1 is the number of votes cast.',
 	'wikiapoll-createpoll-headline' => 'Headline for Create Poll Special Page.
@@ -951,7 +952,9 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
 	'wikiapoll-desc' => 'Забезпечує простий спосіб створення та керування опитуваннями',
@@ -968,6 +971,7 @@ $messages['uk'] = array(
 	'wikiapoll-publish-label' => 'Опублікувати',
 	'wikiapoll-error-duplicate' => 'Опитування з такою назвою вже існує.',
 	'wikiapoll-error-invalid-title' => 'Текст запитання є неприпустимим.',
+	'wikiamobile-wikiapoll-open-poll' => 'Що ви думаєте?',
 	'wikiamobile-wikiapoll-thanks-voting' => 'Дякуємо за участь у голосуванні!',
 	'wikiamobile-wikiapoll-poll' => 'Опитування',
 	'wikiamobile-wikiapoll-user-voted' => 'Ви проголосували за $1',

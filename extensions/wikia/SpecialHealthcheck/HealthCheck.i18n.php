@@ -104,6 +104,13 @@ $messages['fi'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Toimintosivu]] palvelimen tilan tarkastukseen',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'healthcheck-desc' => 'Ein [[Special:HealthCheck|serstøk síða]] fyri at kanna status á ambætaranum',
+);
+
 /** French (français)
  * @author IAlex
  */

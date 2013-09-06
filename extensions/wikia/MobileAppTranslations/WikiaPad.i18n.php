@@ -311,6 +311,7 @@ $messages['ku-latn'] = array(
  */
 $messages['lb'] = array(
 	'main-tab-search' => 'Sichen',
+	'tab-discover-no-network-dialog-close-button' => 'OK',
 );
 
 /** Macedonian (македонски)
@@ -588,6 +589,7 @@ $messages['ug-arab'] = array(
 /** Ukrainian (українська)
  * @author Base
  * @author Steve.rusyn
+ * @author SteveR
  * @author Ua2004
  */
 $messages['uk'] = array(
