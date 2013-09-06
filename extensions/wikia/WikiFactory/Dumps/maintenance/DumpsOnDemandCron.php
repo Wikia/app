@@ -1,4 +1,6 @@
 <?php
+include __DIR__ . '/../../../../../maintenance/Maintenance.php';
+
 class DumpsOnDemandCron extends Maintenance {
     
     const PIDFILE = '/var/run/MediaWikiDumpsOnDemandCron.pid';
@@ -16,7 +18,7 @@ class DumpsOnDemandCron extends Maintenance {
 
         file_put_contents( self::PIDFILE, getmypid() );
 
-        $oDB = wfGetDB( DB_SLAVE, array(), $wgSharedDB );
+        $oDB = wfGetDB( DB_SLAVE, array(), 'wikicities' );
         $sWikiaId = (string) $oDB->selectField(
                 'dumps',
                 'dump_wiki_id',
@@ -27,17 +29,17 @@ class DumpsOnDemandCron extends Maintenance {
                     'LIMIT' => 1
                 )
         );
-        
-        if ( !$sWikiaId ) {
+
+	if ( !$sWikiaId ) {
             // No pending requests.
             unlink( self::PIDFILE );
             exit( 0 );
         }
-        
+
         global $IP, $wgWikiaLocalSettingsPath;
-        
-        $sCommand = sprintf( 'SERVER_ID=177 php %s/extensions/wikia/WikiFactory/Dumps/runBackups.php --conf %s --id=%d --both ', $IP, $wgWikiaLocalSettingsPath, $sWikiaId );
-        
+
+        $sCommand = sprintf( 'SERVER_ID=177 php %s/extensions/wikia/WikiFactory/Dumps/runBackups.php --conf %s --id=%d --both --tmp --s3', $IP, $wgWikiaLocalSettingsPath, $sWikiaId );
+
         wfShellExec( $sCommand, $iStatus );
 
         if ( $iStatus ) {
@@ -45,7 +47,7 @@ class DumpsOnDemandCron extends Maintenance {
             exit( $iStatus );
         }
 
-        $oDB = wfGetDB( DB_MASTER, array(), $wgSharedDB );
+        $oDB = wfGetDB( DB_MASTER, array(), 'wikicities' );
 
         $oDB->update(
             'dumps',
