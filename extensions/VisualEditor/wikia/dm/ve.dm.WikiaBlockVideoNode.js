@@ -22,7 +22,7 @@ ve.inheritClass( ve.dm.WikiaBlockVideoNode, ve.dm.WikiaBlockMediaNode );
 
 /* Static Properties */
 
-ve.dm.MWBlockImageNode.static.rdfaToType = {
+ve.dm.WikiaBlockVideoNode.static.rdfaToType = {
 	'mw:Video/Thumb': 'thumb',
 	'mw:Video/Frame': 'frame',
 	'mw:Video/Frameless': 'frameless',
