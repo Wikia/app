@@ -10,15 +10,15 @@ CREATE TABLE lvs_usage_stats (
 
     -- Types of videos on the wiki
     premium_videos    integer,
-    nonpremium_videos integer,
+    external_videos   integer,
     swappable_videos  integer,
     total_suggestions integer,
 
     -- User actions taken on the wiki
     kept_videos       integer,
     swapped_videos    integer,
-    swap_close_videos integer,
-    swap_exact_videos integer,
+    close_swap_videos integer,
+    exact_swap_videos integer,
 
     -- Other data of interest as a JSON
     data              blob,
