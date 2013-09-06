@@ -38,7 +38,7 @@ var $div = $('div');
 ```
 
 ### Still do be defined
-* White space
+* White space (we want to transcribe jQuery's conventions as much as possible so we can tweak them on our end)
 * Structure
 * Commenting
 * Naming Conventions
