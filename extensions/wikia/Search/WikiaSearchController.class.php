@@ -256,7 +256,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		       ->setStart( $this->getVal( 'next', 0 ) );
 		
 		$results = $this->queryServiceFactory->getFromConfig( $config )->searchAsApi( [ 'url', 'id', 'pageid', 'wid', 'title' ], true );
-		$dimensions = [ 'width' => 125, 'height' => 94 ];
+		$dimensions = [ 'width' => 120, 'height' => 90 ];
 		$service = new \Wikia\Search\MediaWikiService();
 		foreach ( $results['items'] as &$result ) {
 			if (! isset( $result['thumbnail'] ) ) {
