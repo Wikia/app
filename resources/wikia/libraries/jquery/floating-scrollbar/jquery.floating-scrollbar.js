@@ -51,7 +51,7 @@
           top = elem.offset().top,
           bottom = top + elem.height(),
           // Wikia change - begin - @author kflorence
-          scrollerBottom = parseInt( scroller.css( 'bottom' ), 10 ),
+          scrollerBottom = parseInt( scroller.css( 'bottom' ) || 0, 10 ),
           viewportBottom = win.scrollTop() + win.height() - scrollerBottom,
           // Wikia change - end
           topOffset = 30;
