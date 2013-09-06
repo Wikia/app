@@ -12,6 +12,7 @@ CREATE TABLE lvs_usage_stats (
     premium_videos    integer,
     nonpremium_videos integer,
     swappable_videos  integer,
+    total_suggestions integer,
 
     -- User actions taken on the wiki
     kept_videos       integer,
