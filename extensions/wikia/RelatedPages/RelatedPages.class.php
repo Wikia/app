@@ -367,16 +367,18 @@ class RelatedPages {
 	 * @param int $articleId Article ID
 	 * @param int $length snippet length (in characters)
 	 */
-	public function getArticleSnippet( $articleId, $length = 100 ) {
+	public function getArticleSnippet( $articleId ) {
 		$service = new ArticleService( $articleId );
 		return $service->getTextSnippet();
 	}
 
 	public static function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
 		global $wgRequest;
-		if ( $out->isArticle() && $wgRequest->getVal( 'diff' ) === null && !( F::app()->checkSkin( 'wikiamobile' ) ) ) {
+
+		if ( $out->isArticle() && $wgRequest->getVal( 'diff' ) === null ) {
 			$text .= F::app()->renderView( 'RelatedPages', 'Index' );
 		}
+
 		return true;
 	}
 
