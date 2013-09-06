@@ -7,9 +7,9 @@
  * http://benalman.com/about/license/
  */
 
-// TODO: remove all the changes for WikiaBar when it is removed.
 (function($, window){
   'use strict';
+
   var // A few reused jQuery objects.
       win = $(window),
 
@@ -24,17 +24,7 @@
 
       // Create the floating scrollbar.
       scroller = $('<div id="floating-scrollbar"><div/></div>'),
-      scrollerInner = scroller.children(),
-      // Wikia change - begin - @author kflorence
-      heightFromBottom = 0;
-      // Wikia change - end
-
-  // Wikia change - begin - @author kflorence
-  function getHeightFromBottom() {
-    var wikiaBarWrapper = $( '#WikiaBarWrapper' );
-    return wikiaBarWrapper.length && !wikiaBarWrapper.hasClass( 'hidden' ) ?
-      wikiaBarWrapper.height() : 0;
-  }
+      scrollerInner = scroller.children();
 
   // Hide or show the floating scrollbar.
   function setState( state ) {
@@ -60,9 +50,7 @@
       var elem = $(this),
           top = elem.offset().top,
           bottom = top + elem.height(),
-          // Wikia change - begin - @author kflorence
-          viewportBottom = win.scrollTop() + win.height() - heightFromBottom,
-          // Wikia change - end
+          viewportBottom = win.scrollTop() + win.height(),
           topOffset = 30;
 
       if ( top + topOffset < viewportBottom && bottom > viewportBottom ) {
@@ -105,9 +93,6 @@
     // Adjust the floating scrollbar as-necessary.
     scroller
       .css({
-        // Wikia change - begin - @author kflorence
-        bottom: heightFromBottom,
-        // Wikia change - end
         left: current.offset().left - win.scrollLeft(),
         width: widthOuter
       })
@@ -161,10 +146,6 @@
       elems = elems.add(this);
     }
 
-    // Wikia change - begin - @author kflorence
-    heightFromBottom = getHeightFromBottom();
-    // Wikia change - end
-
     // Update.
     update();
 
@@ -175,12 +156,5 @@
   // Call this to force an update, for instance, if elements were inserted into
   // the DOM before monitored elements, changing their vertical position.
   $.floatingScrollbarUpdate = update;
-
-  // Wikia change - begin - @author kflorence
-  win.on( 'WikiaBarStateChanged WikiaBarReady', function() {
-    heightFromBottom = getHeightFromBottom();
-    update();
-  });
-  // Wikia change - end
 
 })(jQuery, this);

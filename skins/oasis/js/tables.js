@@ -3,6 +3,7 @@ jQuery(function( $ ) {
 
 	var $article = $( '#WikiaArticle' ),
 		$tables = $article.find( 'table' ),
+		$wikiaBarWrapper = $( '#WikiaBarWrapper' ),
 		template = '<div class="table-wrapper"><div class="table-scrollable"></div></div>';
 
 	// Scans tables inside of the article and applies overflow hint styles
@@ -24,6 +25,15 @@ jQuery(function( $ ) {
 
 	scan();
 
-	// Listen for window resizes and check again for wide tables
-	$( window ).on( 'resize', $.debounce( 100, scan ) );
+	// TODO: remove this when WikiaBar goes away
+	function updateFloatingScrollbar() {
+		var isVisible = $wikiaBarWrapper.length && !$wikiaBarWrapper.hasClass( 'hidden' );
+		$( '#floating-scrollbar' ).css( 'bottom', isVisible ? $wikiaBarWrapper.height() : 0 );
+		$.floatingScrollbarUpdate();
+	}
+
+	$( window )
+		// Listen for window resizes and check again for wide tables
+		.on( 'resize', $.debounce( 100, scan ) )
+		.on( 'WikiaBarStateChanged WikiaBarReady', updateFloatingScrollbar );
 });
