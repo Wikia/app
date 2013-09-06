@@ -29,7 +29,7 @@ class RailController extends WikiaController {
 			$this->railLazyContent .= $this->app->renderView($railModule[0], $railModule[1], $railModule[2]);
 		}
 
-		// TODO add <div id="WikiaAdInContentPlaceHolder"></div>
+		$this->railLazyContent .= Html::element('div', ['id' => 'WikiaAdInContentPlaceHolder']);
 
 		$this->css = array_keys($this->app->wg->Out->styles);
 		$this->js = $this->app->wg->Out->getBottomScripts();
