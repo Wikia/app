@@ -40,34 +40,31 @@ class RelatedPagesController extends WikiaController {
 			// skip, if module was already rendered
 			$relatedPages->isRendered();
 
-		if ( !$this->skipRendering ) {
-			$mKey = wfMemcKey('mOasisRelatedPages', $articleid );
-			//$this->pages = $wgMemc->get($mKey);
-			$this->srcAttrName = $this->app->checkSkin( 'monobook' ) ? 'src' : 'data-src';
-
-			if ( empty($this->pages) ) {
-				$this->pages = $relatedPages->get( $articleid );
-
-				if ( count( $this->pages ) > 0) {
-					$wgMemc->set( $mKey, $this->pages, 3 * 3600 );
-				} else {
-					$this->skipRendering = true;
-				}
-			}
-
-			$isMobileSkin = $this->app->checkSkin( 'wikiamobile' );
-			// data for mustache template
-			$this->data = [
-				"mobileSkin" => $isMobileSkin,
-				"relatedPagesHeading" => wfMessage( 'wikiarelatedpages-heading' )->inContentLanguage()->text()
-			];
-
-			if( !$isMobileSkin ) {
-				$this->response->addAsset( 'relatedpages_js' );
-			}
-
-			$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_MUSTACHE);
+		if ( $this->skipRendering ) {
+			return false;
 		}
+
+		$mKey = wfMemcKey('mOasisRelatedPages', $articleid );
+		$this->srcAttrName = $this->app->checkSkin( 'monobook' ) ? 'src' : 'data-src';
+
+		if ( empty($this->pages) ) {
+			$this->pages = $relatedPages->get( $articleid );
+				if ( count( $this->pages ) > 0) {
+				$wgMemc->set( $mKey, $this->pages, 3 * 3600 );
+			} else {
+				$this->skipRendering = true;
+			}
+		}
+
+		$isMobileSkin = $this->app->checkSkin( 'wikiamobile' );
+		// data for mustache template
+		$this->data = [ 'mobileSkin' => $isMobileSkin ];
+
+		if( !$isMobileSkin ) {
+			$this->response->addAsset( 'relatedpages_js' );
+		}
+
+		$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_MUSTACHE);
 	}
 
 	static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages) {
