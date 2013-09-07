@@ -63,6 +63,9 @@ $label-padding: 10px 10px 10px 0px;
 }
 
 .VPTForms {
+	.hidden {
+		display: none;
+	}
 
 	// Form container styles
 	.form-box {
@@ -149,14 +152,13 @@ $label-padding: 10px 10px 10px 0px;
 		.video-thumb {
 			@include box-sizing-border-box;
 			background: $color-page-border-subtle;
-			border: 1px solid $color-page-border;
+			outline: 1px solid $color-page-border;
 			clear: left;
 			float: right;
 			height: 100px;
 			margin-top: 5px;
-			padding: 10px 5px 10px 10px;
 			position: relative;
-			width: 30%;
+			width: 179px;
 		}
 		// validation
 		label.error {

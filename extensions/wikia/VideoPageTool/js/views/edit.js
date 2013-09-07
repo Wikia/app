@@ -6,7 +6,11 @@ define( 'vpt.views.edit', [
 		this.$form = $( '.vpt-form' );
 		this.validator = this.$form.validate({
 			//debug:false,
-			onkeyup: true
+			submitHandler: function( form ) {
+				// actually submit the form manually after hijacking the submit event for validation below
+console.log(form);
+				//form.submit();
+			}
 		});
 		// all elements to be validated - jQuery validate doesn't support arrays of form names inputs like "names[]" :(
 		this.$formFields = this.$form.find( '.video_description, .video_display_title, .video_url' );
@@ -33,7 +37,7 @@ define( 'vpt.views.edit', [
 					min: that.descriptionMinLength,
 					container: $container
 				});
-			})
+			});
 		},
 		initAddVideo: function() {
 			this.$form.find( '.add-video-button' ).each( function() {
@@ -89,24 +93,27 @@ define( 'vpt.views.edit', [
 				var $this = $( this ),
 					minLength = $this.is( '.video_description' ) ? that.descriptionMinLength : 0;
 
-				$this.rules( "add", {
+				$this.rules( 'add', {
 					required: true,
 					minlength: minLength,
 					messages: {
 						required: $.msg( 'htmlform-required' ),
+						// Dynamically calculate the character length in the error message as you type.
+						// Note: onkeyup needs to be set to false for this to work properly
 						minlength: function( len, elem ) {
 							var charsToGo = that.descriptionMinLength - $( elem ).val().length;
-console.log(charsToGo);
 							return [ $.msg( 'videopagetool-description-minlength-error', len, charsToGo ) ];
 						}
 					},
-					onkeyup: true
+					onkeyup: false
 				});
 			});
 
-			this.$form.on( 'submit', function() {
+			this.$form.on( 'submit', function( e ) {
+				e.preventDefault();
+
 				that.$formFields.each( function() {
-					that.validator.element( $(this) )
+					that.validator.element( $(this) );
 				});
 			});
 		},
@@ -120,15 +127,28 @@ console.log(charsToGo);
 					title: $.msg( 'videopagetool-confirm-clear-title' ),
 					content: $.msg( 'videopagetool-confirm-clear-message' ),
 					onOk: function() {
-						// Clear all form input values
-						that.$form[0].reset();
-						// Also clear all error messages for better UX
-						that.$formFields.removeClass( 'error' ).next( '.error' ).remove();
+						that.clearFeaturedVideoForm();
 					},
 					width: 700
 				});
 
 			});
+		},
+		/*
+		 * This reset is very specific to this form since it covers reverting titles and thumbnails
+		 * @todo: we may want to just create a default empty version of the form and hide it if it's not needed.
+		 * That way we could just replace all the HTML to its default state without worrying about clearing every form
+		 * field.
+		 */
+		clearFeaturedVideoForm: function() {
+			// Clear all form input values.
+			this.$form.find( 'input:text, input:hidden, textarea' ).val( '' );
+			// Reset video title
+			this.$form.find( '.video-name' ).text( $.msg( 'videopagetool-video-title-default-text' ) );
+			// Rest the video thumb
+			this.$form.find( '.video-thumb' ).html( '' );
+			// Also clear all error messages for better UX
+			this.$formFields.removeClass( 'error' ).next( '.error' ).remove();
 		}
 	};
 

@@ -35,5 +35,6 @@ JSMessages::registerPackage('VideoPageTool', array(
 	'videopagetool-confirm-clear-title',
 	'videopagetool-confirm-clear-message',
 	'videopagetool-description-minlength-error',
+	'videopagetool-video-title-default-text',
 ));
 
