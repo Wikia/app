@@ -339,7 +339,7 @@ function WMU_loadMainFromView() {
 
 			WMU_indicator(1, false);
 			if($('#ImageQuery').length) {
-				$('#ImageQuery').focus();
+				$('#ImageQuery').focusNoScroll();
 			}
 			var cookieMsg = document.cookie.indexOf("wmumainmesg=");
 			if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
@@ -476,7 +476,9 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 		if(WMU_refid != null && WMU_wysiwygStart == 2) {
 			WMU_loadDetails();
 		} else {
-			if($('#ImageQuery').length) $('#ImageQuery').focus();
+			if( $('#ImageQuery').length) {
+				$('#ImageQuery').focusNoScroll();
+			}
 		}
 		return;
 	}
@@ -521,7 +523,9 @@ function WMU_loadMain() {
 	var callback = function(html) {
 		$('#ImageUploadMain').html(html);
 		WMU_indicator(1, false);
-		if($('#ImageQuery').length) $('#ImageQuery').focus();
+		if( $('#ImageQuery').length && $('#ImageQuery').is(':visible') ) {
+			$('#ImageQuery').focusNoScroll();
+		} 
 		var cookieMsg = document.cookie.indexOf("wmumainmesg=");
 		if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
 			$('#ImageUploadTextCont').hide();
@@ -593,7 +597,9 @@ function WMU_changeSource(e) {
 			$('#WMU_results_' + WMU_curSourceId).hide();
 			$('#WMU_results_' + sourceId).show();
 
-			if($('#ImageQuery').length) $('#ImageQuery').focus();
+			if($('#ImageQuery').length) {
+				$('#ImageQuery').focusNoScroll();
+			}
 
 			WMU_track({
 				label: sourceId == 0 ? 'find-this-wiki' : 'find-flickr'
