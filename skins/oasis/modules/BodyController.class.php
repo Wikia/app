@@ -150,9 +150,10 @@ class BodyController extends WikiaController {
 		if ($wgEnableForumExt && $wgIsForum) {
 			$railModuleList = array (
 				1500 => array('Search', 'Index', null),
+				1490 => array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')),
 				1002 => array('Forum', 'forumRelatedThreads', null),
 				1001 => array('Forum', 'forumActivityModule', null),
-				1490 => array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')),
+				1000 => array('ChatRail', 'Placeholder', null),
 			);
 			wfProfileOut(__METHOD__);
 			return $railModuleList;
