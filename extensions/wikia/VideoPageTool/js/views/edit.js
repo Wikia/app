@@ -10,7 +10,7 @@ define( 'vpt.views.edit', [
 		});
 		// all elements to be validated - jQuery validate doesn't support arrays of form names inputs like "names[]" :(
 		this.$formFields = this.$form.find( '.video_description, .video_display_title, .video_url' );
-		this.descriptionMinLength = 20;
+		this.descriptionMinLength = 200;
 		this.init();
 	};
 
