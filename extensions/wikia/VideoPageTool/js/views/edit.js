@@ -2,13 +2,19 @@ define( 'vpt.views.edit', [
 	'jquery'
 ], function( $ ) {
 
-	function VPTEdit() {
+	'use strict';
+
+	var VPTEdit = function() {
 		this.$form = $( '.vpt-form' );
-		this.validator = this.$form.validate({debug:false});
+		this.$submit = $( '#feature-videos-submit' );
+		this.validator = this.$form.validate({
+			//debug:false,
+		});
 		// all elements to be validated - jQuery validate doesn't support arrays of form names inputs like "names[]" :(
 		this.$formFields = this.$form.find( '.video_description, .video_display_title, .video_url' );
+		this.descriptionMinLength = 200;
 		this.init();
-	}
+	};
 
 	VPTEdit.prototype = {
 		init: function() {
@@ -29,7 +35,7 @@ define( 'vpt.views.edit', [
 
 				$this.addVideoButton({
 					callbackAfterSelect: function( url, vet ) {
-						// TODO: ajax request - send url, get back thumbnail html, title, description.  Hard coded for now
+						// TODO: ajax request - send url, get back thumbnail html, title, description.  Hard coded for now.
 
 						var title = 'test title',
 							description = 'test description',
@@ -68,18 +74,41 @@ define( 'vpt.views.edit', [
 
 			// add a rule to each element because validator can't handle array inputs by default (i.e. video_description[])
 			this.$formFields.each( function() {
-				$( this ).rules( "add", {
+				var $this = $( this ),
+					minLength = $this.is( '.video_description' ) ? that.descriptionMinLength : 0;
+
+				$this.rules( 'add', {
 					required: true,
+					minlength: minLength,
 					messages: {
-						required: $.msg( 'htmlform-required' )
-					}
+						required: $.msg( 'htmlform-required' ),
+						// Dynamically calculate the character length in the error message as you type.
+						// Note: onkeyup needs to be set to false for this to work properly
+						minlength: function( len, elem ) {
+							var charsToGo = that.descriptionMinLength - $( elem ).val().length;
+							return [ $.msg( 'videopagetool-description-minlength-error', len, charsToGo ) ];
+						}
+					},
+					onkeyup: false
 				});
 			});
 
-			this.$form.on( 'submit', function() {
+			this.$form.on( 'submit', function( e ) {
+				e.preventDefault();
+
+				// This is a bit of a hack to deal with jQuery validate's inability to handle input arrays
+				var allValid = true;
+
 				that.$formFields.each( function() {
-					that.validator.element( $(this) )
+					if ( !( that.validator.element( $( this ) ) ) ) {
+						allValid = false;
+					}
 				});
+
+				if( allValid ) {
+					// call submit on the DOM element to prevent retriggering the jQuery event
+					that.$form[0].submit();
+				}
 			});
 		},
 		initReset: function() {
@@ -92,15 +121,28 @@ define( 'vpt.views.edit', [
 					title: $.msg( 'videopagetool-confirm-clear-title' ),
 					content: $.msg( 'videopagetool-confirm-clear-message' ),
 					onOk: function() {
-						// Clear all form input values
-						that.$form[0].reset();
-						// Also clear all error messages for better UX
-						that.$formFields.removeClass('error' ).next( '.error' ).remove();
+						that.clearFeaturedVideoForm();
 					},
 					width: 700
 				});
 
 			});
+		},
+		/*
+		 * This reset is very specific to this form since it covers reverting titles and thumbnails
+		 * @todo: we may want to just create a default empty version of the form and hide it if it's not needed.
+		 * That way we could just replace all the HTML to its default state without worrying about clearing every form
+		 * field.
+		 */
+		clearFeaturedVideoForm: function() {
+			// Clear all form input values.
+			this.$form.find( 'input:text, input:hidden, textarea' ).val( '' );
+			// Reset video title
+			this.$form.find( '.video-name' ).text( $.msg( 'videopagetool-video-title-default-text' ) );
+			// Rest the video thumb
+			this.$form.find( '.video-thumb' ).html( '' );
+			// Also clear all error messages for better UX
+			this.$formFields.removeClass( 'error' ).next( '.error' ).remove();
 		}
 	};
 
