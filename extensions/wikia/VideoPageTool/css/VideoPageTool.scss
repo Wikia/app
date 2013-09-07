@@ -63,10 +63,6 @@ $label-padding: 10px 10px 10px 0px;
 }
 
 .VPTForms {
-	.hidden {
-		display: none;
-	}
-
 	// Form container styles
 	.form-box {
 		@include clearfix;
@@ -147,7 +143,6 @@ $label-padding: 10px 10px 10px 0px;
 		.video-thumb {
 			@include box-sizing-border-box;
 			background: $color-page-border-subtle;
-			outline: 1px solid $color-page-border;
 			clear: left;
 			float: right;
 			height: 100px;
