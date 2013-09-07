@@ -20,20 +20,6 @@ define( 'vpt.views.edit', [
 			this.initReset();
 			this.initSwitcher();
 			this.initAddVideo();
-			//this.initCharCounters();
-		},
-		initCharCounters: function() {
-			var that = this;
-
-			this.$form.find( '.video_description' ).each( function() {
-				var $this = $( this ),
-					$container = $this.siblings( '.char-count' );
-
-				$this.charCounter({
-					min: that.descriptionMinLength,
-					container: $container
-				});
-			});
 		},
 		initAddVideo: function() {
 			this.$form.find( '.add-video-button' ).each( function() {

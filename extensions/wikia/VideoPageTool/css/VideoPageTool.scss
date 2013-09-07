@@ -130,11 +130,6 @@ $label-padding: 10px 10px 10px 0px;
 		}
 	}
 
-	// CharCounter
-	.counter-success {
-		color: green;
-	}
-
 	// Featured video form styles
 	.featured-video {
 		.input-group {
@@ -170,10 +165,6 @@ $label-padding: 10px 10px 10px 0px;
 		}
 		.url-group label.error {
 			float: none;
-		}
-		.char-count {
-			float: right;
-			clear: right;
 		}
 	}
 }
