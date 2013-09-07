@@ -6,8 +6,8 @@
 		// TODO: there's probably still some work to sync this up with the controller properly
 		$video = $videos[ $x ];
 		$videoTitle = $video[ 'videoTitle' ];
+		$videoTitleClass = ''; // TODO: make sure this logic is in the controller - videoTitle ? "" : "alternative";
 		$displayTitle = $video[ 'displayTitle' ]; // TODO: if there's no display title, make sure we send the default text (videopagetool-video-title-default-text)
-		$displayTitleClass = 'alternative'; // TODO: make sure this logic is in the controller too
 		$videoDescription = $video[ 'description' ];
 		$videoKey = $video[ 'videoKey' ];
 		$videoThumb = $video[ 'videoThumb' ];
@@ -18,13 +18,13 @@
 			<span class="count"><?= $x ?>.</span>
 			<div class="input-group url-group">
 				<button class="add-video-button"><?= wfMessage( 'videopagetool-button-add-video' )->text() ?></button>
-				<p class="video-name <?= $displayTitleClass ?>"><?= $displayTitle  ?></p>
-				<input type="hidden" name="video_url" class="video_url" id="video_url_<?= $x ?>" value="<?= $videoKey ?>">
+				<p class="video-name <?= $videoTitleClass ?>"><?= $videoTitle  ?></p>
+				<input type="hidden" name="videoKey" class="videoKey" id="videoKey_<?= $x ?>" value="<?= $videoKey ?>">
 			</div>
 			<div class="video-thumb"><?= $videoThumb ?></div>
 			<div class="input-group border">
 				<label for="video_display_title_<?= $x ?>"><?= wfMessage( 'videopagetool-label-display-title' )->text() ?></label>
-				<input class="video_display_title" id="video_display_title_<?= $x ?>" type="text" name="display_title[]" value="<?= $videoTitle ?>">
+				<input class="video_display_title" id="video_display_title_<?= $x ?>" type="text" name="display_title[]" value="<?= $displayTitle ?>">
 			</div>
 			<div class="input-group">
 				<label for="video_description_<?= $x ?>"><?= wfMessage( 'videopagetool-label-video-description' )->text() ?></label>
