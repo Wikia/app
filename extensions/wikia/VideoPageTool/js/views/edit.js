@@ -2,6 +2,8 @@ define( 'vpt.views.edit', [
 	'jquery'
 ], function( $ ) {
 
+	'use strict';
+
 	var VPTEdit = function() {
 		this.$form = $( '.vpt-form' );
 		this.$submit = $( '#feature-videos-submit' );
