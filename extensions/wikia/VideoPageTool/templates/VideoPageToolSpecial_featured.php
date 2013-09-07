@@ -3,10 +3,7 @@
 	<? for( $x = 1; $x <= 5; $x++ ): ?>
 
 		<?
-
-		// Assume if we have anything in $videos array, we have everything, since all fields are required
-		// TODO: maybe this should be done on the controller side...
-
+		// TODO: there's probably still some work to sync this up with the controller properly
 		$video = $videos[ $x ];
 		$videoTitle = $video[ 'videoTitle' ];
 		$displayTitle = $video[ 'displayTitle' ]; // TODO: if there's no display title, make sure we send the default text (videopagetool-video-title-default-text)
