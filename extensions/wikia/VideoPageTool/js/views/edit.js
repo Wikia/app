@@ -4,13 +4,9 @@ define( 'vpt.views.edit', [
 
 	var VPTEdit = function() {
 		this.$form = $( '.vpt-form' );
+		this.$submit = $( '#feature-videos-submit' );
 		this.validator = this.$form.validate({
 			//debug:false,
-			submitHandler: function( form ) {
-				// actually submit the form manually after hijacking the submit event for validation below
-console.log(form);
-				//form.submit();
-			}
 		});
 		// all elements to be validated - jQuery validate doesn't support arrays of form names inputs like "names[]" :(
 		this.$formFields = this.$form.find( '.video_description, .video_display_title, .video_url' );
@@ -112,9 +108,19 @@ console.log(form);
 			this.$form.on( 'submit', function( e ) {
 				e.preventDefault();
 
+				// This is a bit of a hack to deal with jQuery validate's inability to handle input arrays
+				var allValid = true;
+
 				that.$formFields.each( function() {
-					that.validator.element( $(this) );
+					if ( !( that.validator.element( $( this ) ) ) ) {
+						allValid = false;
+					}
 				});
+
+				if( allValid ) {
+					// call submit on the DOM element to prevent retriggering the jQuery event
+					that.$form[0].submit();
+				}
 			});
 		},
 		initReset: function() {
