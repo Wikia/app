@@ -21,6 +21,7 @@ QUnit.test( 'Verify rendered content', function( assert ) {
 		test,
 		testCase,
 		testCases,
+		tl,
 		$fixture = $( '#qunit-fixture' ),
 		expectCount = 0,
 		tests = [
@@ -34,10 +35,9 @@ QUnit.test( 'Verify rendered content', function( assert ) {
 					}
 				]
 			}
-		],
-		tl = tests.length;
+		];
 
-	for ( ti = 0; ti < tl; ti++ ) {
+	for ( ti = 0, tl = tests.length; ti < tl; ti++ ) {
 		test = tests[ ti ];
 		testCases = test.cases;
 
