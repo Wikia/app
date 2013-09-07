@@ -174,15 +174,6 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	 */
 	public function featured() {
 		// TODO: this is way hard coded
-		/*$video = array(
-			'videoTitle' => 'Video Title',
-			'videoKey' => 'Video_Title',
-			'videoThumb' => '',
-			'displayTitle' => 'Display Title',
-			'description' => 'description...',
-		);
-
-		$videos[0] = $videos[1] = $videos[2] = $videos[3] = $videos[4] = $video;*/
 
 		$videos = array (
 			1 =>
