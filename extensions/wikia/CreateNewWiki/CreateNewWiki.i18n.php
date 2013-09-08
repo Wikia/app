@@ -9,7 +9,7 @@ $messages = array();
 
 $messages['en'] = array(
 	// general messages
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wiki creation wizard]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Wiki creation wizard]',
 	'cnw-next' => 'Next',
 	'cnw-back' => 'Back',
 	'cnw-or' => 'or',
@@ -197,7 +197,7 @@ $messages['af'] = array(
  * @author زكريا
  */
 $messages['ar'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|صانع الويكيات]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki صانع الويكيات]',
 	'cnw-next' => 'التالي',
 	'cnw-back' => 'رجوع',
 	'cnw-or' => 'أو',
@@ -264,7 +264,7 @@ $messages['ar'] = array(
  * @author Wikimistusik
  */
 $messages['avk'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Tcicesiki va redura va wiki]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Tcicesiki va redura va wiki]',
 	'cnw-next' => 'Radim-',
 	'cnw-back' => 'Dim-',
 	'cnw-or' => 'ok',
@@ -336,7 +336,7 @@ $messages['az'] = array(
  * @author Mucalexx
  */
 $messages['bar'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistent zan Dastejn vahram Wiki]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Assistent zan Dastejn vahram Wiki]',
 	'cnw-next' => 'Naxde',
 	'cnw-back' => 'Zruck',
 	'cnw-or' => 'óder',
@@ -352,7 +352,7 @@ $messages['bar'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Съветник за създаване на уики]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Съветник за създаване на уики]',
 	'cnw-next' => 'Продължаване',
 	'cnw-back' => 'Връщане',
 	'cnw-or' => 'или',
@@ -409,7 +409,7 @@ $messages['bg'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Skoazeller evit krouiñ wikioù]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Skoazeller evit krouiñ wikioù]',
 	'cnw-next' => "War-lerc'h",
 	'cnw-back' => 'Distreiñ',
 	'cnw-or' => 'pe',
@@ -475,7 +475,7 @@ $messages['br'] = array(
  * @author Marcmpujol
  */
 $messages['ca'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistent de creació de wikis]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Assistent de creació de wikis]',
 	'cnw-next' => 'Següent',
 	'cnw-back' => 'Enrere',
 	'cnw-or' => 'o',
@@ -611,7 +611,7 @@ $messages['cy'] = array(
  * @author Tiin
  */
 $messages['de'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistent zum Erstellen eines Wikis]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Assistent zum Erstellen eines Wikis]',
 	'cnw-next' => 'Nächste',
 	'cnw-back' => 'Zurück',
 	'cnw-or' => 'oder',
@@ -690,7 +690,7 @@ $messages['de-formal'] = array(
  * @author Mirzali
  */
 $messages['diq'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wikiyo newe vırazdar]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Wikiyo newe vırazdar]',
 	'cnw-next' => 'Ver şo',
 	'cnw-back' => 'Peyser',
 	'cnw-or' => 'ya na',
@@ -730,7 +730,7 @@ $messages['diq'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Asistente de creación de wikis]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Asistente de creación de wikis]',
 	'cnw-next' => 'Siguiente',
 	'cnw-back' => 'Atrás',
 	'cnw-or' => 'o',
@@ -825,7 +825,7 @@ $messages['fa'] = array(
  * @author VezonThunder
  */
 $messages['fi'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Ohjattu wikin luonti]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Ohjattu wikin luonti]',
 	'cnw-next' => 'Seuraava',
 	'cnw-back' => 'Takaisin',
 	'cnw-or' => 'tai',
@@ -892,7 +892,7 @@ $messages['fi'] = array(
  * @author EileenSanda
  */
 $messages['fo'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Vegleiðing í at upprætta eina Wiki]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Vegleiðing í at upprætta eina Wiki]',
 	'cnw-next' => 'Næsta',
 	'cnw-back' => 'Aftur',
 	'cnw-or' => 'ella',
@@ -937,7 +937,7 @@ $messages['fo'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistant de création de wiki]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Assistant de création de wiki]',
 	'cnw-next' => 'Suite',
 	'cnw-back' => 'Retour',
 	'cnw-or' => 'ou',
@@ -1006,7 +1006,7 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Asistente para a creación de wikis]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Asistente para a creación de wikis]',
 	'cnw-next' => 'Seguinte',
 	'cnw-back' => 'Volver',
 	'cnw-or' => 'ou',
@@ -1076,7 +1076,7 @@ $messages['gl'] = array(
  * @author שומבלע
  */
 $messages['he'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|אשף יצירת ויקי]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki אשף יצירת ויקי]',
 	'cnw-next' => 'הבא',
 	'cnw-back' => 'הקודם',
 	'cnw-or' => 'או',
@@ -1129,7 +1129,7 @@ $messages['he'] = array(
  * @author TK-999
  */
 $messages['hu'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wikikészítő varázsló]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Wikikészítő varázsló]',
 	'cnw-next' => 'Következő',
 	'cnw-back' => 'Vissza',
 	'cnw-or' => 'vagy',
@@ -1196,7 +1196,7 @@ $messages['hu'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistente pro crear wikis]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Assistente pro crear wikis]',
 	'cnw-next' => 'Sequente',
 	'cnw-back' => 'Retornar',
 	'cnw-or' => 'o',
@@ -1291,7 +1291,7 @@ $messages['inh'] = array(
  * @author Minerva Titani
  */
 $messages['it'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Procedura guidata per la creazione di una wiki]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Procedura guidata per la creazione di una wiki]',
 	'cnw-next' => 'Avanti',
 	'cnw-back' => 'Indietro',
 	'cnw-or' => 'o',
@@ -1360,7 +1360,7 @@ $messages['it'] = array(
  * @author Wrightbus
  */
 $messages['ja'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|ウィキ作成ウィザード]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki ウィキ作成ウィザード]',
 	'cnw-next' => '次へ',
 	'cnw-back' => '戻る',
 	'cnw-or' => 'または',
@@ -1467,7 +1467,7 @@ $messages['km'] = array(
  * @author 한글화담당
  */
 $messages['ko'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|위키 만들기 마법사]]',
+	'createnewwiki-desc' => '[[http://www.wikia.com/Special:CreateNewWiki 위키 만들기 마법사]',
 	'cnw-next' => '다음',
 	'cnw-back' => '뒤로',
 	'cnw-or' => '또는',
@@ -1601,7 +1601,7 @@ $messages['lt'] = array(
  * @author Rancher
  */
 $messages['mk'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Помошник за создавање на вики]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Помошник за создавање на вики]',
 	'cnw-next' => 'Следно',
 	'cnw-back' => 'Назад',
 	'cnw-or' => 'или',
@@ -1700,7 +1700,7 @@ $messages['ml'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Pendeta penciptaan Wiki]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Pendeta penciptaan Wiki]',
 	'cnw-next' => 'Berikutnya',
 	'cnw-back' => 'Sebelumnya',
 	'cnw-or' => 'atau',
@@ -1771,7 +1771,7 @@ $messages['ms'] = array(
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Veiviser for opprettelse av wiki]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Veiviser for opprettelse av wiki]',
 	'cnw-next' => 'Neste',
 	'cnw-back' => 'Tilbake',
 	'cnw-or' => 'eller',
@@ -1839,7 +1839,7 @@ $messages['nb'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wiki Wizard wiki aanmaken]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Wiki Wizard wiki aanmaken]',
 	'cnw-next' => 'Volgende',
 	'cnw-back' => 'Vorige',
 	'cnw-or' => 'of',
@@ -1944,7 +1944,7 @@ $messages['pfl'] = array(
  * @author Woytecr
  */
 $messages['pl'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Kreator tworzenia wiki]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Kreator tworzenia wiki]',
 	'cnw-next' => 'Dalej',
 	'cnw-back' => 'Wstecz',
 	'cnw-or' => 'lub',
@@ -2014,7 +2014,7 @@ $messages['pl'] = array(
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Creassion guidà ëd Wiki]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Creassion guidà ëd Wiki]',
 	'cnw-next' => 'Apress',
 	'cnw-back' => 'André',
 	'cnw-or' => 'o',
@@ -2125,7 +2125,7 @@ $messages['ps'] = array(
  * @author SandroHc
  */
 $messages['pt'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistente de criação de wikis]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Assistente de criação de wikis]',
 	'cnw-next' => 'Seguinte',
 	'cnw-back' => 'Anterior',
 	'cnw-or' => 'ou',
@@ -2194,7 +2194,7 @@ $messages['pt'] = array(
  * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistente de criação de wikis]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Assistente de criação de wikis]',
 	'cnw-next' => 'Próximo',
 	'cnw-back' => 'Voltar',
 	'cnw-or' => 'ou',
@@ -2297,7 +2297,7 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
-	'createnewwiki-desc' => "[[Special:CreateNewWiki|Procedure de ccrejazione d'a Uicchi]]",
+	'createnewwiki-desc' => "[http://www.wikia.com/Special:CreateNewWiki Procedure de ccrejazione d'a Uicchi]",
 	'cnw-next' => 'Prossime',
 	'cnw-back' => 'Rrete',
 	'cnw-or' => 'o',
@@ -2341,7 +2341,7 @@ $messages['roa-tara'] = array(
  * @author Kuzura
  */
 $messages['ru'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Мастер создания вики]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Мастер создания вики]',
 	'cnw-next' => 'Далее',
 	'cnw-back' => 'Назад',
 	'cnw-or' => 'или',
@@ -2408,7 +2408,7 @@ $messages['ru'] = array(
  * @author Rancher
  */
 $messages['sr-ec'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Помоћник за стварање викија]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Помоћник за стварање викија]',
 	'cnw-next' => 'Следеће',
 	'cnw-back' => 'Назад',
 	'cnw-or' => 'или',
@@ -2473,7 +2473,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Guide för att skapa en wiki]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Guide för att skapa en wiki]',
 	'cnw-next' => 'Nästa',
 	'cnw-back' => 'Tillbaka',
 	'cnw-or' => 'eller',
@@ -2570,7 +2570,7 @@ $messages['te'] = array(
  * @author AnakngAraw
  */
 $messages['tl'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Madyikerong panlikha ng Wiki]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Madyikerong panlikha ng Wiki]',
 	'cnw-next' => 'Susunod',
 	'cnw-back' => 'Bumalik',
 	'cnw-or' => 'o',
@@ -2657,7 +2657,7 @@ $messages['tly'] = array(
  * @author Suelnur
  */
 $messages['tr'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wiki oluşturma sihirbazı]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Wiki oluşturma sihirbazı]',
 	'cnw-next' => 'Sonraki',
 	'cnw-back' => 'Geri',
 	'cnw-or' => 'ya da',
@@ -2726,7 +2726,7 @@ $messages['tr'] = array(
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Вики ясау остаханәсе]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Вики ясау остаханәсе]',
 	'cnw-next' => 'Киләсе',
 	'cnw-back' => 'Артка',
 	'cnw-or' => 'яки',
@@ -2795,7 +2795,7 @@ $messages['tt-cyrl'] = array(
  * @author Ua2004
  */
 $messages['uk'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Майстер створення вікі]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Майстер створення вікі]',
 	'cnw-next' => 'Далі',
 	'cnw-back' => 'Назад',
 	'cnw-or' => 'або',
@@ -2876,7 +2876,7 @@ $messages['vep'] = array(
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Thuật sĩ tạo Wiki]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Thuật sĩ tạo Wiki]',
 	'cnw-next' => 'Tiếp theo',
 	'cnw-back' => 'Trở lại',
 	'cnw-or' => 'hoặc',
@@ -2942,7 +2942,7 @@ $messages['vi'] = array(
 /** Chinese (中文)
  */
 $messages['zh'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wiki creation wizard]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Wiki creation wizard]',
 	'cnw-next' => 'Next',
 	'cnw-back' => 'Back',
 	'cnw-or' => 'or',
@@ -3000,7 +3000,7 @@ $messages['zh'] = array(
  * @author 乌拉跨氪
  */
 $messages['zh-hans'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|维基创建向导]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki 维基创建向导]',
 	'cnw-next' => '下一步',
 	'cnw-back' => '上一步',
 	'cnw-or' => '或',
@@ -3064,7 +3064,7 @@ $messages['zh-hans'] = array(
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wiki 創建嚮導]]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki Wiki 創建嚮導]',
 	'cnw-next' => '下一步',
 	'cnw-back' => '前一步',
 	'cnw-or' => '或者',
