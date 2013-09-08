@@ -1467,7 +1467,7 @@ $messages['km'] = array(
  * @author 한글화담당
  */
 $messages['ko'] = array(
-	'createnewwiki-desc' => '[[http://www.wikia.com/Special:CreateNewWiki 위키 만들기 마법사]',
+	'createnewwiki-desc' => '[http://www.wikia.com/Special:CreateNewWiki 위키 만들기 마법사]',
 	'cnw-next' => '다음',
 	'cnw-back' => '뒤로',
 	'cnw-or' => '또는',
