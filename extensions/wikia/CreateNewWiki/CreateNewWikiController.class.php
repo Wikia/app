@@ -145,8 +145,9 @@ class CreateNewWikiController extends WikiaController {
 		{
 			// do nothing
 			$this->status = 'error';
-			$this->statusMsg = wfMsg('cnw-error-general');
-			$this->statusHeader = wfMsg('cnw-error-general-heading');
+			// VOLDEV-10: Parse the HTML in the message
+			$this->statusMsg = wfMessage( 'cnw-error-general' )->text();
+			$this->statusHeader = wfMessage( 'cnw-error-general-heading' )->text();
 		} else {
 			/*
 			$stored_answer = $this->getStoredAnswer();
