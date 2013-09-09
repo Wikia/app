@@ -111,8 +111,18 @@ New value:
 	 <textarea name="varValue" id="varValue"><?php if( isset( $variable->cv_value ) ) echo var_export( unserialize( $variable->cv_value ), 1) ?></textarea><br />
 
 <?php endif ?>
-	<br/>By tag: <input type="text" name="tagName" id="tagName" value="" size="30" /> (Apply this value to wikis with this tag)
-	<br/>Reason: <input type="text" id="wk-reason" name="reason" value="" size="30" /> (optional, reason text or ticket number)
+	<div class="clearfix">
+		<div class="wf-variable-form-inline-group wf-variable-form-left">
+			<label for="reason">
+			<strong>Reason</strong> (optional, reason text or ticket number) :</label>
+			<input type="text" id="wk-reason" name="reason" value="" size="30" />
+		</div>
+		<div class="wf-variable-form-inline-group wf-variable-form-right">
+			<label for="tagName">
+			<strong>By tag</strong> (apply this value to wikis with this tag) :</label>
+			<input type="text" name="tagName" id="tagName" value="" size="30" />
+		</div>
+	</div>
 	<br/><input type="button" id="wk-submit" name="submit" value="<?= wfMsg('wikifactory-button-saveparse'); ?>" onclick="$Factory.Variable.tagCheck();" />
 	&nbsp;<input type="button" class="wikia-button red" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="$Factory.Variable.tagCheck('remove');" /><br/>
 	&nbsp;<span id="wf-variable-parse">&nbsp;</span>
