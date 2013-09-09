@@ -308,8 +308,6 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	 */
 
 	public function executeHeader($data) {
-		$this->response->addAsset('/extensions/wikia/VideoPageTool/css/VideoPageTool.scss');
-
 		/*
 		 * TODO: imported function from SpecialMarketingToolbox, not sure if we need it
 		 */

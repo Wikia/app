@@ -9,16 +9,14 @@ $color-toolbox-datepicker-inprog-background: #d4ecf7;
 $label-padding: 10px 10px 10px 0px;
 
 #VPTDashboard {
+	@include clearfix;
 	background-color: $color-article-thumb-background;
 	border: 1px solid $color-tab-background-top;
-
-	@include clearfix;
 
 	h2 {
 		border-bottom: none;
 		margin-bottom: 30px;
 		float: left;
-
 	}
 
 	&>div:not(:first-child) {
@@ -53,7 +51,7 @@ $label-padding: 10px 10px 10px 0px;
 		width: 320px;
 	}
 
-	#VideoPageToolRegionSelect {
+	select {
 		width: 100%;
 	}
 
