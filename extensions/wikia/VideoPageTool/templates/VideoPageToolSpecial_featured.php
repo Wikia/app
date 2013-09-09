@@ -17,18 +17,17 @@
 			<span class="count"><?= $x ?>.</span>
 			<div class="input-group url-group">
 				<button class="add-video-button"><?= wfMessage( 'videopagetool-button-add-video' )->text() ?></button>
-				<p class="video-name <?= $videoTitleClass ?>"><?= $videoTitle  ?></p>
-				<input type="hidden" name="videoKey" class="videoKey" id="videoKey_<?= $x ?>" value="<?= $videoKey ?>">
+				<p class="video-title <?= $videoTitleClass ?>"><?= $videoTitle  ?></p>
+				<input type="hidden" name="video_key" class="video-key" id="video-key-<?= $x ?>" value="<?= $videoKey ?>">
 			</div>
 			<div class="video-thumb"><?= $videoThumb ?></div>
 			<div class="input-group border">
-				<label for="video_display_title_<?= $x ?>"><?= wfMessage( 'videopagetool-label-display-title' )->text() ?></label>
-				<input class="video_display_title" id="video_display_title_<?= $x ?>" type="text" name="display_title[]" value="<?= $displayTitle ?>">
+				<label for="display-title-<?= $x ?>"><?= wfMessage( 'videopagetool-label-display-title' )->text() ?></label>
+				<input class="display-title" id="display-title-<?= $x ?>" type="text" name="display_title[]" value="<?= $displayTitle ?>">
 			</div>
 			<div class="input-group">
-				<label for="video_description_<?= $x ?>"><?= wfMessage( 'videopagetool-label-video-description' )->text() ?></label>
-				<textarea class="video_description" id="video_description_<?= $x ?>" placeholder="<?= wfMessage( 'videopagetool-placeholder-video-description' )->text() ?>" name="description[]"><?= $videoDescription ?></textarea>
-				<p class="alternative char-count"><!-- TODO: add char counter here --></p>
+				<label for="description-<?= $x ?>"><?= wfMessage( 'videopagetool-label-video-description' )->text() ?></label>
+				<textarea class="description" id="description-<?= $x ?>" placeholder="<?= wfMessage( 'videopagetool-placeholder-video-description' )->text() ?>" name="description[]"><?= $videoDescription ?></textarea>
 			</div>
 			<button class="secondary navigation nav-up">
 				<img class="chevron chevron-up" src="<?= $wg->BlankImgUrl ?>">

@@ -82,6 +82,7 @@ class VideoPageToolHelper extends WikiaModel {
 			$file = wfFindFile( $title );
 			if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
 				$videoTitle = $title->getText();
+				$videoKey = $title->getDBKey();
 
 				// get thumbnail
 				$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
@@ -93,6 +94,7 @@ class VideoPageToolHelper extends WikiaModel {
 
 				$video = array(
 					'videoTitle' => $videoTitle,
+					'videoKey' => $videoKey,
 					'displayTitle' => $videoTitle,
 					'videoThumb' => $videoThumb,
 					'description' => $description,

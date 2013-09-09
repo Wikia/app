@@ -27,29 +27,48 @@ define( 'vpt.views.edit', [
 			this.$form.find( '.add-video-button' ).each( function() {
 				var $this = $( this ),
 					$box = $this.closest( '.form-box' ),
-					$urlInput = $this.siblings( '.video_url' ),
-					$titleDisplay = $this.siblings( '.video-name' ),
-					$titleInput = $box.find( '.video_display_title' ),
-					$descInput = $box.find( '.video_description' ),
+					$videoKeyInput = $this.siblings( '.video-key' ),
+					$videoTitle = $this.siblings( '.video-title' ),
+					$displayTitleInput = $box.find( '.display-title' ),
+					$descInput = $box.find( '.description' ),
 					$thumb = $box.find( '.video-thumb' );
 
 				$this.addVideoButton({
 					callbackAfterSelect: function( url, vet ) {
-						// TODO: ajax request - send url, get back thumbnail html, title, description.  Hard coded for now.
 
-						var title = 'test title',
-							description = 'test description',
-							thumbHtml = '<a href="/wiki/File:007_James_Bond_Everything_or_Nothing_(VG)_(2004)_-_PS2-Gamecube-X-Box" data-external="0" data-ref="File:007_James_Bond_Everything_or_Nothing_(VG)_(2004)_-_PS2-Gamecube-X-Box" class="video image lightbox" style="overlay:hidden;height:84px;margin-bottom:6px;padding-top:3px;"><div class="timer">01:40</div><div class="Wikia-video-play-button" style="line-height:84px;width:150px;"><img class="sprite play small" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"></div><img alt="" src="http://images.liz.wikia-dev.com/__cb20120524192151/video151/images/thumb/5/52/007_James_Bond_Everything_or_Nothing_%28VG%29_%282004%29_-_PS2-Gamecube-X-Box/150px-007_James_Bond_Everything_or_Nothing_%28VG%29_%282004%29_-_PS2-Gamecube-X-Box.jpg" width="150" height="84" data-video-name="007 James Bond Everything or Nothing (VG) (2004) - PS2-Gamecube-X-Box" data-video-key="007_James_Bond_Everything_or_Nothing_%28VG%29_%282004%29_-_PS2-Gamecube-X-Box" data-src="http://images.liz.wikia-dev.com/__cb20120524192151/video151/images/thumb/5/52/007_James_Bond_Everything_or_Nothing_%28VG%29_%282004%29_-_PS2-Gamecube-X-Box/150px-007_James_Bond_Everything_or_Nothing_%28VG%29_%282004%29_-_PS2-Gamecube-X-Box.jpg" class="Wikia-video-thumb"></a>';
+						$.nirvana.sendRequest({
+							controller: 'VideoPageToolSpecial',
+							method: 'getVideoData',
+							type: 'GET',
+							format: 'json',
+							data: {
+								url: url
+							},
+							callback: function( json ) {
+								if( json.result === 'ok' ) {
 
-						// update input value and remove any error messages that might be there.
-						$urlInput.val( url ).removeClass('error' ).next( '.error' ).remove();
-						$titleDisplay.removeClass( 'alternative' ).text( title );
-						$titleInput.val( title );
-						$descInput.val( description );
-						$thumb.html( thumbHtml );
+									var video = json.video;
 
-						// close VET modal and return false to prevent the second window from opening
-						vet.close();
+									// update input value and remove any error messages that might be there.
+									$videoKeyInput
+										.val( video.videoKey )
+										.removeClass( 'error' )
+										.next( '.error' )
+										.remove();
+									$videoTitle.removeClass( 'alternative' )
+										.text( video.videoTitle );
+									$displayTitleInput.val( video.displayTitle );
+									$descInput.val( video.description );
+									$thumb.html( video.videoThumb );
+									// close VET modal
+									vet.close();
+								} else {
+									window.GlobalNotification.show( json.msg, 'error' );
+								}
+							}
+						});
+
+						// Don't move on to second VET screen.  We're done.
 						return false;
 					}
 				});
