@@ -2,6 +2,8 @@
 
 class RelatedPagesController extends WikiaController {
 
+	const MEMC_KEY = 'mRelatedPages';
+
 	public function init() {
 		$this->addAfterSection = null;
 		$this->pages = array();
@@ -44,7 +46,7 @@ class RelatedPagesController extends WikiaController {
 			return false;
 		}
 
-		$mKey = wfMemcKey('mOasisRelatedPages', $articleid );
+		$mKey = wfMemcKey(self::MEMC_KEY, $articleid );
 		$this->srcAttrName = $this->app->checkSkin( 'monobook' ) ? 'src' : 'data-src';
 
 		if ( empty($this->pages) ) {
@@ -91,7 +93,7 @@ class RelatedPagesController extends WikiaController {
 	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
 		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		global $wgMemc;
-		$mKey = wfMemcKey('mOasisRelatedPages', $article->mTitle->getArticleId());
+		$mKey = wfMemcKey(self::MEMC_KEY, $article->mTitle->getArticleId());
 		$wgMemc->delete($mKey);
 		return true;
 	}
