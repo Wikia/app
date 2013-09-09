@@ -1,6 +1,6 @@
 // TODO: Rename this module, it's not only about short page anymore
 // TODO: More unit tests
-var AdLogicShortPage = function (window, document, log) {
+var AdLogicShortPage = function (window, document, log, slotTweaker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adengine.logic.shortpage',
@@ -32,6 +32,7 @@ var AdLogicShortPage = function (window, document, log) {
 			TOP_BUTTON_WIDE: 'noTopButton',
 			'TOP_BUTTON_WIDE.force': 'noTopButton',
 			TOP_RIGHT_BOXAD: 'oneColumn',
+			HOME_TOP_RIGHT_BOXAD: 'oneColumn',
 			LEFT_SKYSCRAPER_2: 'oneColumn',
 			LEFT_SKYSCRAPER_3: 'oneColumn',
 			INCONTENT_BOXAD_1: 'oneColumn'
@@ -77,47 +78,6 @@ var AdLogicShortPage = function (window, document, log) {
 	}
 
 	/**
-	 * Hide an ad
-	 *
-	 * @param ad one of the wrappedAds
-	 */
-	function hide(ad) {
-		var slot = document.getElementById(ad.slotname),
-			slotStyle = slot.style;
-
-		log(['hide', ad], 'info', logGroup);
-
-		ad.lastDisplayValue = slotStyle.display;
-		ad.state = 'hidden';
-
-		slotStyle.display = 'none';
-	}
-
-	/**
-	 * Show an ad
-	 *
-	 * @param ad one of the wrappedAds
-	 */
-	function show(ad) {
-		log(['show', ad], 'info', logGroup);
-
-		ad.state = 'shown';
-		document.getElementById(ad.slotname).style.display = ad.lastDisplayValue;
-	}
-
-	/**
-	 * Load an ad from the wrapped provider
-	 *
-	 * @param ad one of the wrappedAds
-	 */
-	function load(ad) {
-		log(['load', ad], 'info', logGroup);
-
-		ad.state = 'shown';
-		ad.provider.fillInSlot(ad.slotinfo);
-	}
-
-	/**
 	 * Refresh an ad and show/hide based on the changed window size
 	 * No logging here, it needs to be super fast
 	 *
@@ -125,14 +85,31 @@ var AdLogicShortPage = function (window, document, log) {
 	 */
 	function refresh(ad) {
 		if (shouldBeShown(ad.slotname)) {
-			if (ad.state === 'none') {
-				load(ad);
+			if (ad.state === 'none' || ad.state === 'ready') {
+				log(['Loading ad in slot ' + ad.slotname, ad], 'info', logGroup);
+
+				slotTweaker.show(ad.slotname, true);
+				ad.provider.fillInSlot(ad.slotinfo);
+				ad.state = 'shown';
+
 			} else if (ad.state === 'hidden') {
-				show(ad);
+				log(['Reshowing slot ' + ad.slotname, ad], 'info', logGroup);
+
+				slotTweaker.show(ad.slotname, true);
+				ad.state = 'shown';
 			}
 		} else {
-			if (ad.state === 'shown') {
-				hide(ad);
+			if (ad.state === 'none') {
+				log(['Hiding empty slot ' + ad.slotname, ad], 'info', logGroup);
+
+				slotTweaker.hide(ad.slotname, true);
+				ad.state = 'ready';
+
+			} else if (ad.state === 'shown') {
+				log(['Hiding slot ' + ad.slotname, ad], 'info', logGroup);
+
+				slotTweaker.hide(ad.slotname, true);
+				ad.state = 'hidden';
 			}
 		}
 	}
@@ -153,6 +130,7 @@ var AdLogicShortPage = function (window, document, log) {
 			slotinfo: slotinfo,
 			provider: provider
 		};
+
 		refresh(wrappedAds[slotname]);
 	}
 

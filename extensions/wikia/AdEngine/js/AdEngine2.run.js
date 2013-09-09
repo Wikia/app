@@ -46,13 +46,13 @@
 	adEngine = AdEngine2(log, LazyQueue);
 
 	// Construct various helpers
+	slotTweaker = SlotTweaker(log, document, window);
 	dartUrl = DartUrl();
 	adLogicDartSubdomain = AdLogicDartSubdomain(Geo);
 	adLogicHighValueCountry = AdLogicHighValueCountry(window);
-	adLogicShortPage = AdLogicShortPage(window, document, log);
+	adLogicShortPage = AdLogicShortPage(window, document, log, slotTweaker);
 	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux, adLogicShortPage, abTest);
 	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
-	slotTweaker = SlotTweaker(log, document, window);
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
 	wikiaDart = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl, adLogicDartSubdomain);
 	wikiaGpt = WikiaGptHelper(log, window, document, adLogicPageLevelParams);
