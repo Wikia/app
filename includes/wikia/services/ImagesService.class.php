@@ -86,20 +86,32 @@ class ImagesService extends Service {
 		return array('src' => $imageSrc, 'page' => $imagePage);
 	}
 
+	/**
+	 * @desc Returns thumbnail's new URL
+	 *
+	 * @param String $thumbUrl original thumb's URL
+	 * @param String $overrideFormat replace thumb's format with specified
+	 *
+	 * @return String new URL
+	 */
+	public static function overrideThumbnailFormat($thumbUrl, $overrideFormat) {
+		return substr_replace( $thumbUrl , $overrideFormat, strrpos( $thumbUrl , '.' ) + 1 );
+	}
+
 	public static function getThumbUrlFromFileUrl($fileUrl, $destSize, $overrideFormat = null) {
 		$url = str_replace('/images/', '/images/thumb/', $fileUrl);
 
 		$parts = explode( "/", $url );
 		$file = array_pop( $parts );
 
-		if ( is_numeric( $destSize ) ){
+		if ( is_numeric( $destSize ) ) {
 			$destSize = $destSize + 'px';
 		}
 
 		$thumbUrl = sprintf( "%s/%s-%s", $url, $destSize, $file );
 
 		if ( !empty($overrideFormat) ) {
-			$thumbUrl = substr_replace( $thumbUrl , $overrideFormat, strrpos( $thumbUrl , '.' ) + 1 );
+			$thumbUrl = self::overrideThumbnailFormat($thumbUrl, $overrideFormat);
 		}
 
 		return $thumbUrl;

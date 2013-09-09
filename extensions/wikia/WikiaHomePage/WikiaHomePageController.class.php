@@ -188,7 +188,7 @@ class WikiaHomePageController extends WikiaController {
 			foreach($wikiBatch as &$batchPromotedDemoted) {
 				foreach($batchPromotedDemoted as &$batch) {
 					// replace image thumbnails with JPG
-					$batch['image'] =substr_replace( $batch['image'] , 'jpg', strrpos( $batch['image'] , '.' ) + 1 );
+					$batch['image'] = ImagesServing::overrideThumbnailFormat($batch['image'], 'jpg');
 				}
 			}
 		}
