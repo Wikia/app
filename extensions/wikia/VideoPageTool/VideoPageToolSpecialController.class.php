@@ -72,6 +72,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string msg - result message
 	 */
 	public function edit() {
+
 		JSMessages::enqueuePackage( 'VideoPageTool', JSMessages::EXTERNAL );
 
 		$date = $this->getVal( 'date', date( 'Y-M-d' ) );

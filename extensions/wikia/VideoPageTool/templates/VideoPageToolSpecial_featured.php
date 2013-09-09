@@ -1,4 +1,4 @@
-<form class="WikiaForm vpt-form" method="post" action="#">
+<form class="WikiaForm vpt-form" method="post">
 
 	<? for( $x = 1; $x <= count($videos); $x++ ): ?>
 
@@ -18,12 +18,12 @@
 			<div class="input-group url-group">
 				<button class="add-video-button"><?= wfMessage( 'videopagetool-button-add-video' )->text() ?></button>
 				<p class="video-title <?= $videoTitleClass ?>"><?= $videoTitle  ?></p>
-				<input type="hidden" name="video_key" class="video-key" id="video-key-<?= $x ?>" value="<?= $videoKey ?>">
+				<input type="hidden" name="videoKey" class="video-key" id="video-key-<?= $x ?>" value="<?= $videoKey ?>">
 			</div>
 			<div class="video-thumb"><?= $videoThumb ?></div>
 			<div class="input-group border">
 				<label for="display-title-<?= $x ?>"><?= wfMessage( 'videopagetool-label-display-title' )->text() ?></label>
-				<input class="display-title" id="display-title-<?= $x ?>" type="text" name="display_title[]" value="<?= $displayTitle ?>">
+				<input class="display-title" id="display-title-<?= $x ?>" type="text" name="displayTitle[]" value="<?= $displayTitle ?>">
 			</div>
 			<div class="input-group">
 				<label for="description-<?= $x ?>"><?= wfMessage( 'videopagetool-label-video-description' )->text() ?></label>
