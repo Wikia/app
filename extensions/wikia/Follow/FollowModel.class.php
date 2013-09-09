@@ -6,6 +6,7 @@
 class FollowModel {
         static public $ajaxListLimit = 600;
         static public $specialPageListLimit = 15;
+	static $cache;
 
     /**
 	 * getWatchList -- get data for followed pages include see all
@@ -87,85 +88,95 @@ class FollowModel {
 
 		$res = $db->query( implode(" union ",$queryArray) );
 		$out_data = array();
-		while ($row =  $db->fetchRow( $res ) ) {
-			$title = Title::makeTitle( $row['wl_namespace'], $row['wl_title'] );
-			$row['url'] = $title->getFullURL();
-			$row['hideurl'] = $wgServer.$wgScript."?action=ajax&rs=wfAjaxWatch&rsargs[]=".$title->getPrefixedURL()."&rsargs[]=u";
-			$row['wl_title'] = str_replace("_"," ",$row['wl_title'] );
-			if (defined('NS_BLOG_ARTICLE') && $row['wl_namespace'] == NS_BLOG_ARTICLE) {
-				$explode = explode("/", $row['wl_title']);
-				if ( count($explode) > 1) {
-					$row['wl_title'] = $explode[1];
-					$row['by_user'] =  $explode[0];
+		if( empty( static::$cache['out_data'] ) ) {
+			while ($row =  $db->fetchRow( $res ) ) {
+				$title = Title::makeTitle( $row['wl_namespace'], $row['wl_title'] );
+				$row['url'] = $title->getFullURL();
+				$row['hideurl'] = $wgServer.$wgScript."?action=ajax&rs=wfAjaxWatch&rsargs[]=".$title->getPrefixedURL()."&rsargs[]=u";
+				$row['wl_title'] = str_replace("_"," ",$row['wl_title'] );
+				if (defined('NS_BLOG_ARTICLE') && $row['wl_namespace'] == NS_BLOG_ARTICLE) {
+					$explode = explode("/", $row['wl_title']);
+					if ( count($explode) > 1) {
+						$row['wl_title'] = $explode[1];
+						$row['by_user'] =  $explode[0];
+					}
 				}
-			}
-			if ( defined( 'NS_WIKIA_FORUM_BOARD_THREAD' ) && $row['wl_namespace'] == NS_WIKIA_FORUM_BOARD_THREAD ) {
-				$wallMessage = WallMessage::newFromTitle( $title );
-				$wallMessage->load();
-				$row['wl_title'] = $wallMessage->getMetaTitle();
-				$row['wl_title_obj'] = Title::newFromText( $wallMessage->getID(), NS_USER_WALL_MESSAGE );
-				$row['on_board'] = Xml::tags(
-					'a',
-					array(
-						'href' => $wallMessage->getWallUrl(),
-						'title' => $wallMessage->getArticleTitle()->getText()
-					),
-					$wallMessage->getArticleTitle()->getText()
-				);
-			}
+				if ( defined( 'NS_WIKIA_FORUM_BOARD_THREAD' ) && $row['wl_namespace'] == NS_WIKIA_FORUM_BOARD_THREAD ) {
+					$wallMessage = WallMessage::newFromTitle( $title );
+					$wallMessage->load();
+					$row['wl_title'] = $wallMessage->getMetaTitle();
+					$row['wl_title_obj'] = Title::newFromText( $wallMessage->getID(), NS_USER_WALL_MESSAGE );
+					$row['on_board'] = Xml::tags(
+						'a',
+						array(
+							'href' => $wallMessage->getWallUrl(),
+							'title' => $wallMessage->getArticleTitle()->getText()
+						),
+						$wallMessage->getArticleTitle()->getText()
+					);
+				}
 
-			if ( in_array($row['wl_namespace'], $wgContentNamespaces) && (NS_MAIN != $row['wl_namespace']) ) {
-				$ttile = Title::makeTitle($row['wl_namespace'], "none");
-				$row['other_namespace'] = $ttile->getNsText();
-			}
+				if ( in_array($row['wl_namespace'], $wgContentNamespaces) && (NS_MAIN != $row['wl_namespace']) ) {
+					$ttile = Title::makeTitle($row['wl_namespace'], "none");
+					$row['other_namespace'] = $ttile->getNsText();
+				}
 
-			if( $show_deleted_pages ) {
-				$out_data[$namespaces[ $row['wl_namespace'] ]][] = $row;
-			} else {
-				if( $title->isKnown() ||  $title->getNamespace() == NS_USER_WALL) {
+				if( $show_deleted_pages ) {
 					$out_data[$namespaces[ $row['wl_namespace'] ]][] = $row;
+				} else {
+					if( $title->isKnown() ||  $title->getNamespace() == NS_USER_WALL) {
+						$out_data[$namespaces[ $row['wl_namespace'] ]][] = $row;
+					}
 				}
 			}
 
+			static::$cache['out_data'] = $out_data;
+		} else {
+			$out_data = static::$cache['out_data'];
 		}
 
-		/**
-		 * Wall Logic
-		 *
-		 * When you fallow tread the fallowing is marked in NS_USER_WALL_MESSAGE, NS_USER_WALL
-		 * so we will skip NS_USER_WALL with are subpage to filter out this.
-		 */
+		if( empty( static::$cache['out'] ) ) {
+			/**
+			 * Wall Logic
+			 *
+			 * When you fallow tread the fallowing is marked in NS_USER_WALL_MESSAGE, NS_USER_WALL
+			 * so we will skip NS_USER_WALL with are subpage to filter out this.
+			 */
+			$con = " wl_user = " . $user_id . " and wl_namespace in (" . implode( ',', $namespaces_keys ) . ")";
+			//special case for Wall to avoid subpages
+			//THIS hack will be removed after runing script with will clear all notification copy
+			$con .= (" and ( not wl_namespace = ".NS_USER_WALL."  or (wl_namespace = ".NS_USER_WALL."  and not wl_title like '%/%' and wl_wikia_addedtimestamp > '2012-01-31' ))");
 
-		$con = " wl_user = " . $user_id . " and wl_namespace in (" . implode( ',', $namespaces_keys ) . ")";
-		//special case for Wall to avoid subpages
-		//THIS hack will be removed after runing script with will clear all notification copy
-		$con .= (" and ( not wl_namespace = ".NS_USER_WALL."  or (wl_namespace = ".NS_USER_WALL."  and not wl_title like '%/%' and wl_wikia_addedtimestamp > '2012-01-31' ))");
 
+			$res = $db->select(
+				array( 'watchlist' ),
+				array( 'wl_namespace',
+					   'count(wl_title) as cnt' ),
+				$con,
+				__METHOD__,
+				array(
+					'ORDER BY' 	=> 'wl_wikia_addedtimestamp desc,wl_title',
+					'GROUP BY' => 'wl_namespace'
+				)
+			);
 
-		$res = $db->select(
-			array( 'watchlist' ),
-			array( 'wl_namespace',
-				   'count(wl_title) as cnt' ),
-			$con,
-			__METHOD__,
-			array(
-				'ORDER BY' 	=> 'wl_wikia_addedtimestamp desc,wl_title',
-				'GROUP BY' => 'wl_namespace'
-			)
-		);
+			while ($row =  $db->fetchRow( $res ) ) {
+				$ns = $namespaces[$row['wl_namespace']];
+				if ( !empty($out[$ns]) ) {
+					$out[$ns]['count'] += $row['cnt'];
+				} else {
+					$out[$ns] = array('ns' => $ns,'count' => $row['cnt'], 'data' => (empty($out_data[$ns]) ? array() : $out_data[$ns]));
+				}
 
-		while ($row =  $db->fetchRow( $res ) ) {
-			$ns = $namespaces[$row['wl_namespace']];
-			if ( !empty($out[$ns]) ) {
-				$out[$ns]['count'] += $row['cnt'];
-			} else {
-				$out[$ns] = array('ns' => $ns,'count' => $row['cnt'], 'data' => (empty($out_data[$ns]) ? array() : $out_data[$ns]));
+				$out[$ns]['show_more'] = 0;
+				if ( $out[$ns]['count']  > $limit ) {
+					$out[$ns]['show_more'] = 1;
+				}
 			}
 
-			$out[$ns]['show_more'] = 0;
-			if ( $out[$ns]['count']  > $limit ) {
-				$out[$ns]['show_more'] = 1;
-			}
+			static::$cache['out'] = $out;
+		} else {
+			$out = static::$cache['out'];
 		}
 
 		foreach ($order as $key => $value) {
