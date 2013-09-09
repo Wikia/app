@@ -1,7 +1,7 @@
 <?php
 $messages['en'] = [
 	'css' => 'Cascading Style Sheets',
-	'action-specialcss' => 'edit CSS',
+	'action-editinterface' => 'edit the user interface',
 	'special-css-title' => 'CSS Editor',
 
 	'special-css-minor-edit-label' => 'Minor edit',
