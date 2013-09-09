@@ -28,7 +28,7 @@
 		<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
 		<div class="ml15">
 			<h2><?= wfMessage('videopagetool-date-title'); ?></h2>
-			<div id="date-picker"><?=wfMessage('videopagetool-tooltip-calendar-placeholder')?></div>
+			<div class="date-picker"><?=wfMessage('videopagetool-tooltip-calendar-placeholder')?></div>
 		</div>
 	</div>
 </div>
