@@ -26,28 +26,7 @@ class DumpsOnDemand {
 	static public function customSpecialStatistics( &$specialpage, &$text ) {
 		global $wgOut, $wgDBname, $wgLang, $wgRequest, $wgTitle, $wgUser, $wgCityId, $wgHTTPProxy;
 
-		/**
-		 * read json file with dumps information
-		 */
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$index = array();
-		$proxy = array();
-		if( isset( $wgHTTPProxy) && $wgHTTPProxy ) {
-			$proxy[ "proxy" ] = $wgHTTPProxy;
-		}
-		else {
-			$proxy[ "noProxy" ] = true;
-		}
-
-		$url = self::getUrl( $wgDBname, "index.json" );
-		$json = Http::get( $url, 5, $proxy );
-		if( $json ) {
-			wfDebug( __METHOD__ . ": getting informations about last dump from $url succeded\n" );
-			$index = (array )json_decode( $json );
-		}
-		else {
-			wfDebug( __METHOD__ . ": getting informations about last dump from $url failed\n" );
-		}
 
 		/**
 		 * get last dump request timestamp
@@ -63,18 +42,19 @@ class DumpsOnDemand {
 		$tmpl->set( "title", $wgTitle );
 		$tmpl->set( "isAnon", $wgUser->isAnon() );
 
+		$sTimestamp = self::getLatestDumpTimestamp( $wgCityId );
+		if ( empty( $sTimestamp ) ) {
+			$sTimestamp = wfMessage( 'dump-database-last-unknown' )->escaped();
+		}
+
 		$tmpl->set( "curr", array(
-			"url" => self::getUrl( $wgDBname, "pages_current.xml.gz" ),
-			"timestamp" => !empty( $index["pages_current.xml.gz"]->mwtimestamp )
-				? $wgLang->timeanddate( $index[ "pages_current.xml.gz"]->mwtimestamp )
-				: wfMessage( 'dump-database-last-unknown' )->escaped()
+			"url" => 's3://wikia_xml_dumps/' . self::getPath( "{$wgDBname}_pages_current.xml.gz" ),
+			"timestamp" => $sTimestamp
 		));
 
 		$tmpl->set( "full", array(
-			"url" => self::getUrl( $wgDBname, "pages_full.xml.gz" ),
-			"timestamp" => !empty( $index[ "pages_full.xml.gz" ]->mwtimestamp )
-				? $wgLang->timeanddate( $index[ "pages_full.xml.gz" ]->mwtimestamp )
-				: wfMessage( 'dump-database-last-unknown' )->escaped()
+			"url" => 's3://wikia_xml_dumps/' . self::getPath( "{$wgDBname}_pages_full.xml.gz" ),
+			"timestamp" => $sTimestamp
 		));
 
 		// The Community Central's value of the wgDumpRequestBlacklist variable contains an array of users who are not allowed to request dumps with this special page.
@@ -83,7 +63,6 @@ class DumpsOnDemand {
 		$bIsAllowed = $wgUser->isAllowed( 'dumpsondemand' ) && !in_array( $wgUser->getName(), $aDumpRequestBlacklist );
 		$tmpl->set( 'bIsAllowed', $bIsAllowed );
 
-		$tmpl->set( "index", $index );
 		$text .= $tmpl->render( "dod" );
 
 		if( $wgRequest->wasPosted() && $bIsAllowed ) {
@@ -211,5 +190,35 @@ class DumpsOnDemand {
 		wfShellExec( $sCmd, $iStatus );
 		$time = Wikia::timeDuration( wfTime() - $time );
 		Wikia::log( __METHOD__, "info", "Put {$sPath} to Amazon S3 storage: status: {$iStatus}, time: {$time}", true, true);
+		return $iStatus;
+	}
+
+	/**
+	 * Gets the timestamp of the latest dump.
+	 */
+	static public function getLatestDumpTimestamp( $iWikiaId ) {
+		global $wgMemc;
+		$sKey = wfSharedMemcKey( $iWikiaId, 'latest_dump_timestamp' );
+		$sTimestamp = $wgMemc->get( $sKey );
+		if ( !$sTimestamp ) {
+			$oDB = wfGetDB( DB_SLAVE, array(), 'wikicities' );
+			$sTimestamp = (string) $oDB->selectField(
+				'dumps',
+				'dump_completed',
+				array(
+					'dump_completed IS NOT NULL',
+					'dump_wiki_id' => $iWikiaId
+				),
+				__METHOD__,
+				array(
+					'ORDER BY' => 'dump_completed DESC',
+					'LIMIT' => 1
+				)
+			);
+			if ( $sTimestamp ) {
+				$wgMemc->set( $sKey, $sTimestamp, 7*24*60*60 ); // a week
+			}
+		}
+		return $sTimestamp;
 	}
 }
