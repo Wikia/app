@@ -99,7 +99,7 @@ class UserProfilePageHooks {
 			return true;
 		}
 
-		if ( $app->checkSkin( 'wikiamobile' ) ) {
+		if ( $app->checkSkin( 'wikiamobile' ) && !$user->isAnon()) {
 			$wg->Out->prependHTML( $app->renderView( 'UserProfilePage', 'index' ) );
 			return true;
 		}
