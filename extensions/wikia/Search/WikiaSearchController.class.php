@@ -454,7 +454,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$matchResult['onWikiMatch'] = true;
 			$this->setVal(
 					'wikiMatch',
-					$this->getApp()->getView( 'WikiaSearch', 'CrossWiki_result', [ 'result' => $matchResult, 'pos' => -1 ] )
+					$this->getApp()->getView( 'WikiaSearch', 'exactResult', [ 'result' => $matchResult, 'pos' => 'wiki' ] )
 					);
 			$this->resultsFound++;
 		}
