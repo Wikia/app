@@ -174,16 +174,64 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	 */
 	public function featured() {
 		// TODO: this is way hard coded
-		$video = array(
-			'videoTitle' => 'Video Title',
-			'videoKey' => 'Video_Title',
-			'videoThumb' => '',
-			'displayTitle' => 'Display Title',
-			'description' => 'description...',
-			'url' => 'http://sktest123.liz.wikia-dev.com/wiki/File:Ooyala_Test',
-		);
 
-		$videos[0] = $videos[1] = $videos[2] = $videos[3] = $videos[4] = $video;
+		$videos = array (
+			1 =>
+			array (
+				'videoTitle' => 'World War Z (2013) - Home Video Trailer 2 for World War Z',
+				'videoKey' => 'World_War_Z_(2013)_-_Home_Video_Trailer_2_for_World_War_Z',
+				'displayTitle' => 'World War Z (2013) - Home Video Trailer 2 for World War Z',
+				'videoThumb' => '<a href="/wiki/File:World_War_Z_(2013)_-_Home_Video_Trailer_2_for_World_War_Z" itemprop="video" itemscope="" itemtype="http://schema.org/VideoObject" class="video image lightbox"><div class="Wikia-video-play-button" style="line-height:100px;width:179px;"><img class="sprite play " src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" /></div><img alt="" src="http://images.saipetch.wikia-dev.com/__cb20130809003122/video151/images/thumb/a/a1/World_War_Z_%282013%29_-_Home_Video_Trailer_2_for_World_War_Z/179px-World_War_Z_%282013%29_-_Home_Video_Trailer_2_for_World_War_Z.jpg" width="179" height="100" data-video-name="World War Z (2013) - Home Video Trailer 2 for World War Z" data-video-key="World_War_Z_%282013%29_-_Home_Video_Trailer_2_for_World_War_Z" itemprop="thumbnail" class="Wikia-video-thumb" /></a>',
+				'description' => 'World War Z description here...',
+				'displayTitleClass' => '',
+				'updatedBy' => 'Saipetch',
+				'updatedAt' => '2013-09-04 00:41:00',
+			),
+			2 =>
+			array (
+				'videoTitle' => 'Dark Souls 2 Announcement Trailer',
+				'videoKey' => 'Dark_Souls_2_Announcement_Trailer',
+				'displayTitle' => 'Dark Souls 2 Announcement Trailer',
+				'videoThumb' => '<a href="/wiki/File:Dark_Souls_2_Announcement_Trailer" itemprop="video" itemscope="" itemtype="http://schema.org/VideoObject" class="video image lightbox"><div class="Wikia-video-play-button" style="line-height:100px;width:179px;"><img class="sprite play " src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" /></div><img alt="" src="http://images.saipetch.wikia-dev.com/__cb20121210202318/video151/images/thumb/c/ca/Dark_Souls_2_Announcement_Trailer/179px-Dark_Souls_2_Announcement_Trailer.jpg" width="179" height="100" data-video-name="Dark Souls 2 Announcement Trailer" data-video-key="Dark_Souls_2_Announcement_Trailer" itemprop="thumbnail" class="Wikia-video-thumb" /></a>',
+				'description' => 'Dark Souls description here...',
+				'displayTitleClass' => '',
+				'updatedBy' => 'Saipetch',
+				'updatedAt' => '2013-09-04 00:41:00',
+			),
+			3 =>
+			array (
+				'videoTitle' => 'World War Z (2013) - Home Video Trailer 2 for World War Z',
+				'videoKey' => 'World_War_Z_(2013)_-_Home_Video_Trailer_2_for_World_War_Z',
+				'displayTitle' => 'World War Z (2013) - Home Video Trailer 2 for World War Z',
+				'videoThumb' => '<a href="/wiki/File:World_War_Z_(2013)_-_Home_Video_Trailer_2_for_World_War_Z" itemprop="video" itemscope="" itemtype="http://schema.org/VideoObject" class="video image lightbox"><div class="Wikia-video-play-button" style="line-height:100px;width:179px;"><img class="sprite play " src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" /></div><img alt="" src="http://images.saipetch.wikia-dev.com/__cb20130809003122/video151/images/thumb/a/a1/World_War_Z_%282013%29_-_Home_Video_Trailer_2_for_World_War_Z/179px-World_War_Z_%282013%29_-_Home_Video_Trailer_2_for_World_War_Z.jpg" width="179" height="100" data-video-name="World War Z (2013) - Home Video Trailer 2 for World War Z" data-video-key="World_War_Z_%282013%29_-_Home_Video_Trailer_2_for_World_War_Z" itemprop="thumbnail" class="Wikia-video-thumb" /></a>',
+				'description' => 'World War Z description here...',
+				'displayTitleClass' => '',
+				'updatedBy' => 'Saipetch',
+				'updatedAt' => '2013-09-04 00:41:00',
+			),
+			4 =>
+			array (
+				'videoTitle' => 'World War Z (2013) - Home Video Trailer 2 for World War Z',
+				'videoKey' => 'World_War_Z_(2013)_-_Home_Video_Trailer_2_for_World_War_Z',
+				'displayTitle' => 'World War Z (2013) - Home Video Trailer 2 for World War Z',
+				'videoThumb' => '<a href="/wiki/File:World_War_Z_(2013)_-_Home_Video_Trailer_2_for_World_War_Z" itemprop="video" itemscope="" itemtype="http://schema.org/VideoObject" class="video image lightbox"><div class="Wikia-video-play-button" style="line-height:100px;width:179px;"><img class="sprite play " src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" /></div><img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" width="179" height="100" data-video-name="World War Z (2013) - Home Video Trailer 2 for World War Z" data-video-key="World_War_Z_%282013%29_-_Home_Video_Trailer_2_for_World_War_Z" itemprop="thumbnail" class="Wikia-video-thumb lzy lzyPlcHld" data-src="http://images.saipetch.wikia-dev.com/__cb20130809003122/video151/images/thumb/a/a1/World_War_Z_%282013%29_-_Home_Video_Trailer_2_for_World_War_Z/179px-World_War_Z_%282013%29_-_Home_Video_Trailer_2_for_World_War_Z.jpg" onload="if(typeof ImgLzy==&quot;object&quot;){ImgLzy.load(this)}" /><noscript><img src="http://images.saipetch.wikia-dev.com/__cb20130809003122/video151/images/thumb/a/a1/World_War_Z_%282013%29_-_Home_Video_Trailer_2_for_World_War_Z/179px-World_War_Z_%282013%29_-_Home_Video_Trailer_2_for_World_War_Z.jpg" width="179" height="100" data-video-name="World War Z (2013) - Home Video Trailer 2 for World War Z" data-video-key="World_War_Z_%282013%29_-_Home_Video_Trailer_2_for_World_War_Z" itemprop="thumbnail" class="Wikia-video-thumb" /></noscript></a>',
+				'description' => 'World War Z description here...',
+				'displayTitleClass' => '',
+				'updatedBy' => 'Saipetch',
+				'updatedAt' => '2013-09-04 00:41:00',
+			),
+			5 =>
+			array (
+				'videoTitle' => 'Dark Souls 2 Announcement Trailer',
+				'videoKey' => 'Dark_Souls_2_Announcement_Trailer',
+				'displayTitle' => 'Dark Souls 2 Announcement Trailer',
+				'videoThumb' => '<a href="/wiki/File:Dark_Souls_2_Announcement_Trailer" itemprop="video" itemscope="" itemtype="http://schema.org/VideoObject" class="video image lightbox"><div class="Wikia-video-play-button" style="line-height:100px;width:179px;"><img class="sprite play " src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" /></div><img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" width="179" height="100" data-video-name="Dark Souls 2 Announcement Trailer" data-video-key="Dark_Souls_2_Announcement_Trailer" itemprop="thumbnail" class="Wikia-video-thumb lzy lzyPlcHld" data-src="http://images.saipetch.wikia-dev.com/__cb20121210202318/video151/images/thumb/c/ca/Dark_Souls_2_Announcement_Trailer/179px-Dark_Souls_2_Announcement_Trailer.jpg" onload="if(typeof ImgLzy==&quot;object&quot;){ImgLzy.load(this)}" /><noscript><img src="http://images.saipetch.wikia-dev.com/__cb20121210202318/video151/images/thumb/c/ca/Dark_Souls_2_Announcement_Trailer/179px-Dark_Souls_2_Announcement_Trailer.jpg" width="179" height="100" data-video-name="Dark Souls 2 Announcement Trailer" data-video-key="Dark_Souls_2_Announcement_Trailer" itemprop="thumbnail" class="Wikia-video-thumb" /></noscript></a>',
+				'description' => 'Dark Souls description here...',
+				'displayTitleClass' => '',
+				'updatedBy' => 'Saipetch',
+				'updatedAt' => '2013-09-04 00:41:00',
+			),
+		);
 
 		$this->videos = $videos;
 		$this->date = $this->getVal( 'date' );

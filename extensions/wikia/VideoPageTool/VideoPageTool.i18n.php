@@ -26,7 +26,7 @@ $messages['en'] = array(
 	'videopagetool-button-clear' => 'Clear all',
 	'videopagetool-confirm-clear-title' => 'Clear form',
 	'videopagetool-confirm-clear-message' => 'Are you sure you want to clear the entire contents of the form?',
-
+	'videopagetool-description-minlength-error' => 'Oops! Your text needs to be at least $1 characters. $2 characters to go.',
 	'videopagetool-language-title' => 'Language',
 	'videopagetool-language-select-default-value' => 'Choose your language',
 	'videopagetool-date-title' => 'Date',
@@ -34,7 +34,6 @@ $messages['en'] = array(
 	'videopagetool-tooltip-current-date' => 'Current Date',
 	'videopagetool-tooltip-published' => 'Published',
 	'videopagetool-tooltip-in-progress' => 'In Progress',
-
 	'videopagetool-header-dashboard' => 'Dashboard',
 );
 
@@ -57,7 +56,7 @@ $messages['qqq'] = array(
 	'videopagetool-button-clear' => 'button text for clearing the entire contents of a form',
 	'videopagetool-confirm-clear-title' => 'Title text that appears in a confirmation modal after the reset form button is clicked.',
 	'videopagetool-confirm-clear-message' => 'message text that appears in a confirmation modal after the reset form button is clicked.',
-
+	'videopagetool-description-minlength-error' => 'error message for a form entry that is not long enough',
 	'videopagetool-language-title' => 'Title for language selection dropdown',
 	'videopagetool-language-select-default-value' => 'Default value for language select dropdown',
 	'videopagetool-date-title' => 'Title for date picker calendar',
@@ -65,6 +64,5 @@ $messages['qqq'] = array(
 	'videopagetool-tooltip-current-date' => 'Current Date',
 	'videopagetool-tooltip-published' => 'Published',
 	'videopagetool-tooltip-in-progress' => 'In Progress',
-
 	'videopagetool-header-dashboard' => 'Title for dashboard page',
 );

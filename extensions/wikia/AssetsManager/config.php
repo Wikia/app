@@ -968,6 +968,7 @@ $config['videopagetool_js'] = array(
 		'//resources/jquery.ui/jquery.ui.datepicker.js',
 		'//resources/jquery/jquery.validate.js',
 		'//extensions/wikia/VideoPageTool/js/models/datepicker.js',
+		// TODO: probably move this jQuery plugin to /resources at some point
 		'//extensions/wikia/VideoPageTool/js/views/switcher.js',
 		'//extensions/wikia/VideoPageTool/js/views/datepicker.js',
 		'//extensions/wikia/VideoPageTool/js/views/index.js',
