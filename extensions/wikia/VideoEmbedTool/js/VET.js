@@ -257,7 +257,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 	function VET_loadMain(searchOrder) {
 		var callback = function(data) {
 			$('#VideoEmbedMain').html(data.responseText);
-			$('#VideoEmbedUrl').focus();
+			$('#VideoEmbedUrl').focusNoScroll();
 			VET_updateHeader();
 
 			// macbre: RT #19150
