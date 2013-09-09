@@ -135,7 +135,7 @@ class BodyController extends WikiaController {
 			$wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableWikiAnswers, $wgEnableHuluVideoPanel,
 			$wgEnableWallEngine, $wgRequest,
-			$wgEnableForumExt, $wgIsForum;
+			$wgEnableForumExt;
 
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
@@ -147,7 +147,7 @@ class BodyController extends WikiaController {
 		$huluVideoPanelKey = $wgUser->isAnon() ? 1390 : 1280;
 
 		// Forum Extension
-		if ($wgEnableForumExt && $wgIsForum) {
+		if ($wgEnableForumExt && ForumHelper::isForum()) {
 			$railModuleList = array (
 				1500 => array('Search', 'Index', null),
 				1002 => array('Forum', 'forumRelatedThreads', null),
@@ -440,7 +440,7 @@ class BodyController extends WikiaController {
 		}
 
 		// Forum Extension
-		if (!empty($this->wg->EnableForumExt) && !empty($this->wg->IsForum)) {
+		if (!empty($this->wg->EnableForumExt) && ForumHelper::isForum()) {
 			$this->wg->SuppressPageHeader = true;
 		}
 
