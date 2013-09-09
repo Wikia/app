@@ -242,16 +242,16 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 *  
 	 */
 	public function combinedMediaSearch() {
-		global $wgServer;
 		$request = $this->getRequest();
 		$query = $request->getVal( 'q' );
 		if ( empty( $query ) ) {
 			throw new Exception( "Please include a query value for parameter 'q'" );
 		}
 		$config = new Wikia\Search\Config;
+		$videoOnly = (bool) $request->getVal( 'videoOnly', false );
 		$config->setQuery( $query )
 		       ->setCombinedMediaSearch( true )
-		       ->setCombinedMediaSearchIsVideoOnly( (bool) $request->getVal( 'videoOnly', false ) )
+		       ->setCombinedMediaSearchIsVideoOnly( $videoOnly )
 		       ->setLimit( 4 )
 		       ->setStart( $this->getVal( 'next', 0 ) );
 		
@@ -263,6 +263,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				$result['thumbnail'] = $service->getThumbnailHtmlFromFileTitle( $result['title'], $dimensions );
 			}
 		}
+		$title = SpecialPage::getTitleFor("Search");
+		$results['videoUrl'] = $title->getLocalURL( [
+			'ns6' => 1,
+			'fulltext' => 'Search',
+			'search' => $query,
+			'filters[]' => $videoOnly ? 'is_video' : ''
+		] );
 
 		$response = $this->getResponse();
 		$response->setFormat( 'json' );
