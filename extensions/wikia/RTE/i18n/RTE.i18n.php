@@ -532,6 +532,30 @@ $messages['nl-informal'] = array(
 	'rte-no-js-fallback' => 'De uitgebreide tekstverwerker werkt niet als JavaScript is uitgeschakeld. Schakel JavaScript in in je browser of schakel in je [[Special:Preferences| voorkeuren]] terug naar de oude tekstverwerker voor MediaWiki.',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'rte-desc' => 'Integracion de CKeditor per MediaWiki',
+	'rte-no-js-fallback' => "L'editor de tèxte enriquesit fonciona pas amb JavaScript desactivat. Siá activatz-lo dins las opcions de vòstre navigador o visitar [[Special:Preferences|preferéncias]] per passar a l'ancien editor de MediaWiki",
+	'rte-edgecase-info-title' => 'Mòde font requesit',
+	'rte-edgecase-info' => "L'edicion en tèxte enriquesit es estada desactivada perque la pagina conten de còde complèxe.",
+	'rte-edgecase-comment' => 'comentaris HTML',
+	'rte-edgecase-triplecurls' => 'paramètres del modèl',
+	'rte-edgecase-nowysiwyg' => 'la comanda « pas de WYSIWYG »',
+	'rte-edgecase-complex-description' => "una URL extèrna o un modèl al dintre d'una descripcion de ligam",
+	'rte-edgecase-template-with-link' => 'un modèl amb un ligam coma paramètre',
+	'rte-edgecase-syntax' => 'sintaxi pas permesa',
+	'rte-edgecase-image-with-link' => 'imatge amb un ligam dins sa descripcion',
+	'rte-edgecase-redirect' => 'redireccion',
+	'rte-edgecase-templateintable' => 'un tablèu amb un apèl de modèl dins sa definicion',
+	'rte-edgecase-unclosed-tags' => 'balisa HTML pas tampada',
+	'enablerichtexteditor' => 'Activar l’edicion en mòde visual (en complement del mòde font)',
+	'rte-enablerichtexteditormessage' => 'Editor de tèxte enriquesit activat !',
+	'rte-first-run-notice' => "Avèm aportat qualques melhoraments a l'editor. Per ne saber mai, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news legissètz l'anonci].",
+	'prefs-rte' => 'Editor de tèxte enriquesit',
+);
+
 /** Polish (polski)
  * @author Holek
  * @author Sovq

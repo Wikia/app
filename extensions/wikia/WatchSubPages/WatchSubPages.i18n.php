@@ -96,6 +96,14 @@ $messages['fi'] = array(
 	'tog-watchlistsubpages' => 'Seuraa alasivuja',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'wikia-watchsubpages-desc' => 'Fylg undirsíðum sjálvvirkandi',
+	'tog-watchlistsubpages' => 'Fylg undirsíðum',
+);
+
 /** French (français)
  * @author Sherbrooke
  */
@@ -198,6 +206,14 @@ $messages['nb'] = array(
 $messages['nl'] = array(
 	'wikia-watchsubpages-desc' => "Subpagina's automatisch volgen",
 	'tog-watchlistsubpages' => "Subpagina's volgen",
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'wikia-watchsubpages-desc' => 'Seguiment automatic de las sospaginas',
+	'tog-watchlistsubpages' => 'Seguir las sospaginas',
 );
 
 /** Polish (polski)

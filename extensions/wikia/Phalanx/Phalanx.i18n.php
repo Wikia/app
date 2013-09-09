@@ -335,6 +335,7 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author Roxas Nobody 15
  */
 $messages['ca'] = array(
@@ -436,7 +437,7 @@ Si us plau [[especial: Contact|contact Wikia]] sobre el problema.<br>El blocker 
 	'phalanx-email-rule-log-header' => "Es tracta d'un registre de canvis en les regles per al correu electrònic Phalanx.",
 	'phalanx-rule-log-add' => 'Regla de Phalanx posada: $1',
 	'phalanx-rule-log-edit' => 'Regla de Phalanx editada: $1',
-	'phalanx-rule-log-delete' => 'Regla de Phalanx suprimit:$1',
+	'phalanx-rule-log-delete' => 'Regla de Phalanx suprimida: $1',
 	'phalanx-rule-log-details' => 'Filtre: " $1 ", tipus: " $2 ", raó: " $3 "',
 	'phalanx-stats-table-wiki-id' => 'Wiki ID',
 	'phalanx-stats-table-wiki-name' => 'Nom del wiki',

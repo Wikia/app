@@ -365,6 +365,20 @@ $messages['nl-informal'] = array(
 	'contentfeeds-firstfewarticles-tag-header' => "Maak je eerste pagina's aan!",
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'contentfeeds-desc' => 'Provesís d’informacion rica e a jorn gràcias a de balisas nombrosas o « fluxes ».',
+	'contentfeeds-newimages-rss-title' => 'Flux RSS per {{#Special:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'Flux de $1',
+	'contentfeeds-firstfewarticles-tag-header' => 'Creatz vòstras primièras paginas !',
+	'contentfeeds-firstfewarticles-tag-title' => 'Títol',
+	'contentfeeds-firstfewarticles-tag-next' => 'Seguent',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Error : lo títol de la pagina es necessari',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error : lo còs de la pagina es necessari',
+);
+
 /** Pälzisch (Pälzisch)
  * @author Manuae
  */

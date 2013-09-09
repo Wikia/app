@@ -192,6 +192,15 @@ $messages['nl'] = array(
 	'scribeeventsrecords' => 'Regels',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'scribe-desc' => '[[Special:Scribeevents|Aisina]] per cercar un títol de pagina especific a travèrs los wikis',
+	'scribeevents' => 'Eveniments recents',
+	'scribeeventsrecords' => 'Enregistraments',
+);
+
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq

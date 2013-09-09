@@ -201,6 +201,21 @@ $messages['nl'] = array(
 	'cacheepoch-no-wf' => 'WikiFactory is niet ingeschakeld voor deze wiki. Het is niet mogelijk wgCacheEpoch aan te passen.',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'cacheepoch-desc' => 'Provesís una interfàcia que permet de cambiar wgCacheEpoch per un wiki.',
+	'cacheepoch' => "Interfàcia d'escondedor Epoch",
+	'cacheepoch-header' => 'Aumentar wgCacheEpoch',
+	'cacheepoch-value' => 'La valor actuala de wgCacheEpoch es « $1 ». Quichatz sul boton per la definir a la valor del timestamp actual.',
+	'cacheepoch-submit' => 'Metre a jorn la valor',
+	'cacheepoch-updated' => 'wgCacheEpoch mes a jorn amb « $1 ».',
+	'cacheepoch-not-updated' => 'Fracàs de la mesa a jorn de wgCacheEpoch.',
+	'cacheepoch-wf-reason' => 'Valor mesa a jorn via Special:CacheEpoch',
+	'cacheepoch-no-wf' => 'WikiFactory es pas activat sus aqueste wiki. Impossible de modificar wgCacheEpoch.',
+);
+
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
