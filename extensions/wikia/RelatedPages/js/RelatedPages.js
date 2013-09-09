@@ -1,4 +1,4 @@
-require( [ 'sloth', 'wikia.nirvana', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'JSMessages' ], function( sloth, nirvana, w, loader, mustache, msg ){
+require( [ 'sloth', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'JSMessages' ], function( sloth, w, loader, mustache, msg ){
 	'use strict';
 
 	var isMobileSkin = (w.skin === 'wikiamobile' ? true : false);
@@ -58,11 +58,15 @@ require( [ 'sloth', 'wikia.nirvana', 'wikia.window', 'wikia.loader', 'wikia.must
 								mustacheData.relatedPages.push( relatedPage );
 							}
 
-							$placeholder.append( mustache.render( data.mustache[0], mustacheData ) );
-						} else {
 							if( !isMobileSkin ) {
-								$placeholder.remove();
+								$placeholder.after( mustache.render( data.mustache[0], mustacheData ) );
+							} else {
+								$placeholder.prepend( mustache.render( data.mustache[0], mustacheData ) );
 							}
+						}
+
+						if( !isMobileSkin ) {
+							$placeholder.remove();
 						}
 					}
 				);
