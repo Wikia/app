@@ -57,7 +57,7 @@ class AnalyticsProviderIVWTest extends WikiaBaseTest {
 			array('http://de.community.wikia.com/wiki/Community_Deutschland', 'RC_WIKIA_COMMUNITY'),
 			array('http://de.community.wikia.com/wiki/Blog%3AWikia_Deutschland_News', 'RC_WIKIA_COMMUNITY'),
 
-			array('http://de.wikia.com/index.php?search=elder&fulltext=Search', 'RC_WIKIA_SEARCH'),
+			array('http://de.wikia.com/Spezial:Suche?search=elder&fulltext=Search', 'RC_WIKIA_SEARCH'),
 
 			array('http://de.elderscrolls.wikia.com/wiki/Elder_Scrolls_Wiki', 'RC_WIKIA_UGCGAMES'),
 			array('http://de.swtor.wikia.com/wiki/Star_Wars_-_The_Old_Republic_Wiki', 'RC_WIKIA_UGCGAMES'),

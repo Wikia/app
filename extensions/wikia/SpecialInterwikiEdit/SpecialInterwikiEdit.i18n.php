@@ -216,6 +216,19 @@ $messages['fi'] = array(
 	'iwedit-success' => '<p>Linkin luominen onnistui.</p>',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'interwikiedit' => 'Interwiki-rættari',
+	'iwedit-title' => 'Interwiki-rættari',
+	'iwedit-language-interwikis' => 'bert mál-interwiki leinkjur',
+	'iwedit-all-interwikis' => 'allar interwiki-leinkjur',
+	'iwedit-update' => 'Dagfør',
+	'iwedit-error' => '<p>Ein feilur hendi.</p>',
+	'iwedit-success' => '<p>Leinkja er upprættað.</p>',
+);
+
 /** French (français)
  * @author Peter17
  * @author Wyz

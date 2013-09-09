@@ -54,9 +54,13 @@ $messages['en'] = array(
 	'wikiasearch2-sort-duration' => 'Duration',
 	'wikiasearch2-choose-category' => 'Choose Category',
 	'wikiasearch2-crosswiki-description' => '$1 is a community site that anyone can contribute to. Discover, share and add your knowledge!',
-	'wikiasearch2-exact-result' => 'Results for $1 from Wikia',
+	'wikiasearch2-exact-result' => 'Result for $1 from Wikia',
+
 
 	'wikiasearch2-top-module-title' => 'What\'s hot now',
+	'wikiasearch2-top-module-test-1' => 'Top pages',
+	'wikiasearch2-top-module-test-2' => 'Popular articles',
+	'wikiasearch2-top-module-test-3' => 'What\'s hot now',
 	'wikiasearch2-top-module-edit' => 'Last edited on $1',
 
 	'wikiamobile-wikiasearch2-next' => 'Next',

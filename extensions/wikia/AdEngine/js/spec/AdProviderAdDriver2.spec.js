@@ -1,21 +1,23 @@
 describe('AdProviderAdDriver2', function(){
-	it('Leaderboard experiment works as expected in low value countries', function() {
+	it('Leaderboard works as expected in low value countries', function() {
 		var wikiaDartMock = {getUrl: function() {return 'http://example.org/'}},
 			dartCalled,
 			liftiumCalled,
-			scriptWriterMock = {injectScriptByUrl: function() {
-				dartCalled = true;
-			}},
+			scriptWriterMock,
 			trackerMock = {track: function() {}},
 			logMock = function() {},
-			windowMock = {adslots2: {push: function() {liftiumCalled = true;}}},
+			windowMock = {adslots2: {push: function() {
+				liftiumCalled = true;
+			}}},
 			GeoMock = {getCountryCode: function() {}},
 			slotTweakerMock,
-			cacheStorageMock,
+			cacheStorageMock = {set: function() {}, get: function() {}, del: function() {}},
 			adLogicHighValueCountryMock = {},
 			adLogicDartSubdomainMock = {getSubdomain: function() {return 'sub';}},
-			abTestMock,
-			adProviderAdDriver2;
+			adProviderAdDriver2,
+			wikiaGptMock = {pushAd: function () {
+				dartCalled = true;
+			}};
 
 		dartCalled = false;
 		liftiumCalled = false;
@@ -30,51 +32,38 @@ describe('AdProviderAdDriver2', function(){
 			windowMock,
 			GeoMock,
 			slotTweakerMock,
-			cacheStorageMock = {set: function() {}, get: function() {}, del: function() {}},
+			cacheStorageMock,
 			adLogicHighValueCountryMock,
 			adLogicDartSubdomainMock,
-			abTestMock = {
-				getGroup: function(exp) {
-					if (exp === 'LEADERBOARD_TESTS') {
-						return 'SOME_GROUP';
-					}
-				}
-			}
+			wikiaGptMock
 		);
 
 		adProviderAdDriver2.fillInSlot(['TOP_LEADERBOARD']);
-		expect(dartCalled).toBeTruthy('DART called when user in low value country and in experiment');
-		expect(liftiumCalled).toBeFalsy('Liftium not called when user in low value country and in experiment');
-
-		dartCalled = false;
-		liftiumCalled = false;
-		abTestMock.getGroup = function() {};
-		adProviderAdDriver2.fillInSlot(['TOP_LEADERBOARD']);
-		expect(dartCalled).toBeFalsy('DART not called when user in low value country and not in experiment');
-		expect(liftiumCalled).toBeTruthy('Liftium called when user in low value country and not in experiment');
+		expect(dartCalled).toBeFalsy('DART not called when user in low value country');
+		expect(liftiumCalled).toBeTruthy('Liftium called when user in low value country');
 	});
 
 
-	it('Leaderboard experiment works as expected in high value countries', function() {
+	it('Leaderboard works as expected in high value countries', function() {
 		var wikiaDartMock = {getUrl: function() {return 'http://example.org/'}},
 			dartCalled,
 			liftiumCalled,
-			scriptWriterMock = {injectScriptByUrl: function() {
-				dartCalled = true;
-			}},
+			scriptWriterMock,
 			trackerMock = {track: function() {}},
 			logMock = function() {},
-			windowMock = {adslots2: {push: function() {liftiumCalled = true;}}},
+			windowMock = {adslots2: {push: function() {
+				liftiumCalled = true;
+			}}},
 			GeoMock = {getCountryCode: function() {}},
 			slotTweakerMock,
-			cacheStorageMock,
+			cacheStorageMock = {set: function() {}, get: function() {}, del: function() {}},
 			adLogicHighValueCountryMock = {},
 			adLogicDartSubdomainMock = {getSubdomain: function() {return 'sub';}},
-			abTestMock,
-			adProviderAdDriver2;
+			adProviderAdDriver2,
+			wikiaGptMock = {pushAd: function () {
+				dartCalled = true;
+			}};
 
-		dartCalled = false;
-		liftiumCalled = false;
 		adLogicHighValueCountryMock.isHighValueCountry = function() {return true;};
 		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
 
@@ -86,27 +75,16 @@ describe('AdProviderAdDriver2', function(){
 			windowMock,
 			GeoMock,
 			slotTweakerMock,
-			cacheStorageMock = {set: function() {}, get: function() {return 8;}, del: function() {}},
+			cacheStorageMock,
 			adLogicHighValueCountryMock,
 			adLogicDartSubdomainMock,
-			abTestMock = {
-				getGroup: function(exp) {
-					if (exp === 'LEADERBOARD_TESTS') {
-						return 'SOME_GROUP';
-					}
-				}
-			}
+			wikiaGptMock
 		);
-
-		adProviderAdDriver2.fillInSlot(['TOP_LEADERBOARD']);
-		expect(dartCalled).toBeTruthy('DART called when user in high value country (but exceeded number of DART calls) and in experiment');
-		expect(liftiumCalled).toBeFalsy('Liftium not called when user in high value country (but exceeded number of DART calls) and in experiment');
 
 		dartCalled = false;
 		liftiumCalled = false;
-		abTestMock.getGroup = function() {};
 		adProviderAdDriver2.fillInSlot(['TOP_LEADERBOARD']);
-		expect(dartCalled).toBeFalsy('DART not called when user in high value country (but exceeded number of DART calls) and not in experiment');
-		expect(liftiumCalled).toBeTruthy('Liftium called when user in high value country (but exceeded number of DART calls) and not in experiment');
+		expect(liftiumCalled).toBeFalsy('Liftium not called when user in high value country (and not exceeded number of DART calls)');
+		expect(dartCalled).toBeTruthy('DART called when user in high value country (and not exceeded number of DART calls)');
 	});
 });

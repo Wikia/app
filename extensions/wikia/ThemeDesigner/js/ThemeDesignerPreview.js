@@ -21,10 +21,12 @@ var ThemeDesignerPreview = {
 
 	loadSASS: function(settings) {
 		var paths = [
-				'/skins/oasis/css/oasis.scss',
-				'/skins/oasis/css/core/responsive.scss'
+				'/skins/oasis/css/oasis.scss'
 			],
 			urls = [];
+		if ( wgOasisResponsive ) {
+			paths.push( '/skins/oasis/css/core/responsive.scss' );
+		}
 
 		$.each(paths, function(i, path) {
 			urls.push($.getSassCommonURL(path, settings));

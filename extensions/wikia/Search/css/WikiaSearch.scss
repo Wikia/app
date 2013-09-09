@@ -325,8 +325,8 @@ $form-negative-side-padding: $form-side-padding*-1;
 		}
 		.result-description {
 			float: left;
-			padding-left: 30px;
-			width: 310px;
+			padding-left: 21px;
+			width: 295px;
 			@include box-sizing;
 		}
 		a.image {
@@ -437,6 +437,13 @@ $form-negative-side-padding: $form-side-padding*-1;
 	overflow: hidden;
 	padding: 14px 14px 4px 14px;
 	width: 300px;
+	//ab test classes
+	.header-test-2 {
+		display: none;
+	}
+	.header-test-3 {
+		display: none;
+	}
 	.top-wiki-main {
 		border: none;
 		margin: 0 0 15px 0;
@@ -454,6 +461,8 @@ $form-negative-side-padding: $form-side-padding*-1;
 		.top-wiki-article-text {
 			float: left;
 			margin-bottom: 0;
+			position: relative;
+			top: -4px;
 			width: 205px;
 		}
 		.top-wiki-article-thumbnail {
@@ -478,6 +487,27 @@ $form-negative-side-padding: $form-side-padding*-1;
 			margin: 0;
 			width: 300px;
 		}
+	}
+}
+
+//category module
+.category-articles {
+	overflow: hidden;
+	margin: 10px 0 0 10px;
+	.category-article {
+		margin: 5px 0 5px 0;
+		min-height: 50px;
+	}
+	.category-articles-thumb {
+		float: left;
+		overflow: hidden;
+		width: 50px;
+		height: 50px;
+	}
+	.category-articles-text {
+		overflow: hidden;
+		padding: 0 0 0 10px;
+		white-space: normal;
 	}
 }
 

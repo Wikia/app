@@ -151,13 +151,17 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 		document.body.addEventListener(clickEvent, function(event){
 			var t = event.target,
-				className = t.className;
+				className = t.className,
+				isSmall = (className.indexOf('small') > -1),
+				isMedia = (className.indexOf('media') > -1);
 
-			//if this image is a linked image don't open modal
-			if(className.indexOf('media') > -1){
+			if(isSmall || isMedia) {
 				event.preventDefault();
 				event.stopPropagation();
+			}
 
+			//if this image is a linked image don't open modal
+			if(isMedia){
 				!inited && setup();
 
 				if(className.indexOf('Wikia-video-thumb') > -1) {track.event('video', track.CLICK, {label: 'article'});}

@@ -30,8 +30,6 @@
 	.board-description {
 		clear: both;
 		color: $color-alternate-text;
-		font-size: 13px;
-		line-height: 23px;
 		margin-top: 5px;
 	}
 
@@ -209,10 +207,8 @@
 		margin: 0;
 
 		h4 {
-			font-size: 13px;
 			font-weight: normal;
-			line-height: 16px;
-			margin: 0 0 5px 0;
+			margin: 0 0 3px 0;
 			overflow: hidden;
 			white-space: nowrap;
 			text-overflow: ellipsis;
@@ -224,14 +220,12 @@
 			margin: 0;
 
 			li {
-				font-size: 12px;
 				float: left;
-				line-height: 15px;
 				margin: 0;
 				width: 70px;
 
 				&.threads {
-					width: 85px;
+					width: 95px;
 				}
 
 				&.follow {

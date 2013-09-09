@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Controller to fetch information about articles
  *
@@ -491,11 +490,11 @@ class ArticlesApiController extends WikiaApiController {
 			'width' => $this->request->getInt( static::PARAMETER_WIDTH, static::DEFAULT_WIDTH ),
 			'height' => $this->request->getInt( static::PARAMETER_HEIGHT, static::DEFAULT_HEIGHT ),
 			'length' => $this->request->getInt( static::PARAMETER_ABSTRACT, static::DEFAULT_ABSTRACT_LEN ),
-			'titleKeys' => $this->request->getVal( self::PARAMETER_TITLES, null )
+			'titleKeys' => $this->request->getArray( self::PARAMETER_TITLES )
 		];
 	}
 
-	protected function getArticlesDetails( $articleIds, $articleKeys = null, $width = 0, $height = 0, $abstract = 0, $strict = false ) {
+	protected function getArticlesDetails( $articleIds, $articleKeys = [], $width = 0, $height = 0, $abstract = 0, $strict = false ) {
 		$articles = is_array( $articleIds ) ? $articleIds : [ $articleIds ];
 		$ids = [];
 		$collection = [];
@@ -517,15 +516,11 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		if ( !empty( $articleKeys ) ) {
-			$paramtitles = explode( ',', $articleKeys );
+			foreach ( $articleKeys as $titleKey ) {
+				$titleObj = Title::newFromDbKey( $titleKey );
 
-			if ( count( $paramtitles ) > 0 ) {
-				foreach ( $paramtitles as $titleKey ) {
-					$titleObj = Title::newFromDbKey( $titleKey );
-
-					if ( $titleObj instanceof Title && $titleObj->exists() ) {
-						$titles[] = $titleObj;
-					}
+				if ( $titleObj instanceof Title && $titleObj->exists() ) {
+					$titles[] = $titleObj;
 				}
 			}
 		}

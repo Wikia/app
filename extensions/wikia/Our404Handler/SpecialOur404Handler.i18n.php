@@ -255,6 +255,14 @@ Artikkelia '''$1''' ei löytynyt.
 * Mennäksesi tämän sivuston etusivulle, napsauta linkkiä: [{{SERVER}} {{SITENAME}}]",
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'our404handler' => 'Feilur 404: Síðan varð ikki funnin!',
+	'our404handler-oops' => 'Hetta eru ikki síðurnar, ið tú leitar eftir. Vinarliga far víðari.',
+);
+
 /** French (français)
  * @author Peter17
  * @author Polytherion
@@ -511,6 +519,14 @@ Rencana '''$1''' tidak dapat dijumpai.
 * Anda boleh mencuba rencana [[$2]]
 * Anda boleh menggunakan ruangan carian di sebelah kiri laman
 * Untuk ke laman utama tapak ini, klik pautan ini: [{{SERVER}} {{SITENAME}}]",
+);
+
+/** Neapolitan (Napulitano)
+ * @author Chelin
+ */
+$messages['nap'] = array(
+	'our404handler' => 'Errore 404: Paggena nun truovata!',
+	'our404handler-oops' => "Chiste nun song 'e paggene cca stavi circando. Prosegue, ppe favore.",
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -839,6 +855,7 @@ Bài viết '''$1''' không tìm thấy.
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Liuxinyu970226
  * @author Wilsonmess
  */
 $messages['zh-hans'] = array(
@@ -848,7 +865,7 @@ $messages['zh-hans'] = array(
 
 找不到名为'''$1'''的页面。
 
-*或许这些页面会对您有所帮助：[[$2]]；
+*您可以尝试标题[[$2]]
 *或许您可以使用左上方的搜索框进行搜索；
 *若您想访问本站主页，点击这个链接：[{{SERVER}} {{SITENAME}}]",
 );

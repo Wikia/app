@@ -23,64 +23,8 @@ class RealgravityApiWrapper extends IngestionApiWrapper {
 		return '';
 	}
 
-	protected function getOriginalDescription() {
-		if ( !empty($this->metadata['description']) ) {
-			return $this->metadata['description'];
-		}
-
-		return '';
-	}
-
-	protected function getVideoDuration() {
-		if ( !empty($this->metadata['duration']) ) {
-			return $this->metadata['duration'];
-		}
-
-		return '';
-	}
-
 	public function getAspectRatio() {
 		return self::$aspectRatio;
-	}
-
-	protected function getAltVideoId() {
-		if ( !empty($this->metadata['altVideoId']) ) {
-			return $this->metadata['altVideoId'];
-		}
-
-		return '';
-	}
-
-	protected function getVideoPublished() {
-		if ( !empty($this->metadata['published']) ) {
-			return $this->metadata['published'];
-		}
-
-		return '';
-	}
-
-	protected function getVideoCategory() {
-		if ( !empty($this->metadata['category']) ) {
-			return $this->metadata['category'];
-		}
-
-		return '';
-	}
-
-	protected function getVideoKeywords() {
-		if ( !empty($this->metadata['keywords']) ) {
-			return $this->metadata['keywords'];
-		}
-
-		return '';
-	}
-
-	protected function getVideoTags() {
-		if ( !empty($this->metadata['tags']) ) {
-			return $this->metadata['tags'];
-		}
-
-		return '';
 	}
 
 }
