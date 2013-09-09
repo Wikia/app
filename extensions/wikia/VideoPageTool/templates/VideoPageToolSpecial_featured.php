@@ -1,6 +1,6 @@
 <form class="WikiaForm vpt-form" method="post" action="#">
 
-	<? for( $x = 1; $x <= 5; $x++ ): ?>
+	<? for( $x = 1; $x <= count($videos); $x++ ): ?>
 
 		<?
 		// TODO: there's probably still some work to sync this up with the controller properly
@@ -11,7 +11,6 @@
 		$videoDescription = $video[ 'description' ];
 		$videoKey = $video[ 'videoKey' ];
 		$videoThumb = $video[ 'videoThumb' ];
-
 		?>
 
 		<div class="form-box featured-video with-nav">
