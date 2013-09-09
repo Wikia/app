@@ -172,7 +172,6 @@ html {
 
 body {
 	min-width: $width-outside-min;
-	position: relative;
 
 	@if ( $background-is-dynamic ) {
 		background: $color-body;
