@@ -3,6 +3,7 @@
  * Class definition for Wikia\Search\QueryService\Select\Dismax\CombinedMedia
  */
 namespace Wikia\Search\QueryService\Select\Dismax;
+use Solarium_Query_Select;
 use Wikia\Search\Utilities;
 /**
  * This class is responsible for providing videos and (optionally) images 
@@ -43,4 +44,13 @@ class CombinedMedia extends AbstractDismax
 		}
 		return empty( $topics ) ? sprintf( '"%s"', trim( preg_replace( '/\bwiki\b/', '', strtolower( $service->getGlobal( 'Sitename' ) ) ) ) ) : implode( ' OR ', $topics );
 	}
+
+	protected function registerQueryParams(Solarium_Query_Select $query) {
+		parent::registerQueryParams($query);
+		$config = $this->getConfig();
+		$query->setRows ( $config->getLimit() * 2 );
+		return $this;
+	}
+
+
 }
