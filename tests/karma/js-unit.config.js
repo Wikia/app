@@ -48,7 +48,6 @@ files = [
 	'resources/wikia/modules/stringhelper.js',
 	'resources/wikia/modules/thumbnailer.js',
 	'resources/wikia/modules/uniqueId.js',
-	'resources/wikia/modules/csspropshelper.js',
 	'resources/wikia/modules/spec/*.spec.js',
 
 	//Advertisment
