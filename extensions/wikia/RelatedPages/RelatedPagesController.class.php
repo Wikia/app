@@ -15,7 +15,7 @@ class RelatedPagesController extends WikiaController {
 
 		$altTitle = $this->request->getVal('altTitle', null);
 		$title = empty($altTitle) ? $wgTitle : $altTitle;
-		$articleid = $title->getArticleId();
+		$articleId = $title->getArticleId();
 		$relatedPages = RelatedPages::getInstance();
 		$categories = $this->request->getVal( 'categories' );
 
@@ -46,11 +46,11 @@ class RelatedPagesController extends WikiaController {
 			return false;
 		}
 
-		$mKey = wfMemcKey(self::MEMC_KEY, $articleid );
+		$mKey = wfMemcKey(self::MEMC_KEY, $articleId );
 		$this->srcAttrName = $this->app->checkSkin( 'monobook' ) ? 'src' : 'data-src';
 
 		if ( empty($this->pages) ) {
-			$this->pages = $relatedPages->get( $articleid );
+			$this->pages = $relatedPages->get( $articleId );
 				if ( count( $this->pages ) > 0) {
 				$wgMemc->set( $mKey, $this->pages, 3 * 3600 );
 			} else {
