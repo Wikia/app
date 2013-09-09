@@ -28,7 +28,8 @@ require( [ 'sloth', 'wikia.nirvana', 'wikia.window', 'wikia.loader', 'wikia.must
 							params: {
 								ids: w.wgArticleId
 							}
-						}]
+						}],
+						messages: 'RelatedPages'
 					}
 				}).done(
 					function(data) {
