@@ -134,7 +134,7 @@ class BodyController extends WikiaController {
 		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces,
 			$wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableWikiAnswers, $wgEnableHuluVideoPanel,
-			$wgEnableGamingCalendarExt, $wgEnableWallEngine, $wgRequest,
+			$wgEnableWallEngine, $wgRequest,
 			$wgEnableForumExt, $wgIsForum;
 
 		$namespace = $wgTitle->getNamespace();
@@ -289,19 +289,6 @@ class BodyController extends WikiaController {
 		$railModuleList[1440] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD'));
 		$railModuleList[1291] = array('Ad', 'Index', array('slotname' => 'MIDDLE_RIGHT_BOXAD'));
 		$railModuleList[1100] = array('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2'));
-
-		/**
-		 * Michał Roszka <michal@wikia-inc.com>
-		 *
-		 * SSW Gaming Calendar
-		 *
-		 * This is most likely going to be replaced with something similar to:
-		 *
-		 * $railModuleList[1260] = array( 'Ad', 'Index', array( 'slotname' => 'GAMING_CALENDAR_RAIL' ) );
-		 */
-		if ( !empty( $wgEnableGamingCalendarExt ) ) {
-			$railModuleList[1430] = array( 'GamingCalendarRail', 'Index', array( ) );
-		}
 
 		unset($railModuleList[1450]);
 
