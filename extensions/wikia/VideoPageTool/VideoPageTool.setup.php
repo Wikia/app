@@ -14,13 +14,20 @@ $dir = dirname(__FILE__) . '/';
 
 //classes
 $wgAutoloadClasses['VideoPageToolSpecialController'] = $dir.'VideoPageToolSpecialController.class.php';
+$wgAutoloadClasses['VideoPageController'] =  $dir . 'VideoPageController.class.php';
 $wgAutoloadClasses['VideoPageToolHelper'] =  $dir . 'VideoPageToolHelper.class.php';
+$wgAutoloadClasses['VideoPageToolHooks'] =  $dir . 'VideoPageToolHooks.class.php';
+$wgAutoloadClasses['VideoPageArticle'] =  $dir . 'VideoPageArticle.class.php';
+$wgAutoloadClasses['VideoPagePage'] =  $dir . 'VideoPagePage.class.php';
 
 // i18n mapping
 $wgExtensionMessagesFiles['VideoPageTool'] = $dir.'VideoPageTool.i18n.php';
 
 // special pages
 $wgSpecialPages['VideoPageTool'] = 'VideoPageToolSpecialController';
+
+// hooks
+$wgHooks['ArticleFromTitle'][] = 'VideoPageToolHooks::onArticleFromTitle';
 
 // permissions
 $wgGroupPermissions['*']['videopagetool'] = false;
