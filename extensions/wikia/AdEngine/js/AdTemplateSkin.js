@@ -1,4 +1,4 @@
-/*global define*/
+/*global define, Image*/
 define('ext.wikia.adengine.template.skin', ['wikia.document', 'wikia.window', 'wikia.log'], function (document, window, log) {
 	'use strict';
 
@@ -9,6 +9,7 @@ define('ext.wikia.adengine.template.skin', ['wikia.document', 'wikia.window', 'w
 	 *   skinImage
 	 *   backgroundColor
 	 *   destUrl
+	 *   pixels
 	 * }
 	 */
 	function show(params) {
@@ -21,11 +22,43 @@ define('ext.wikia.adengine.template.skin', ['wikia.document', 'wikia.window', 'w
 			i,
 			len,
 			pixelElement,
-			pixelUrl;
+			pixelUrl,
+			body = document.getElementsByTagName('body')[0],
+			head = document.getElementsByTagName('head')[0],
+			style = document.createElement('style'),
+			responsiveLink = document.createElement('link'),
+			imagePreload = new Image();
 
 		params = params || {};
 
-		adSkinStyle.background = 'url("' + params.skinImage + '") no-repeat top center #' + params.backgroundColor;
+		if (window.wgOasisResponsive) {
+			responsiveLink.rel = 'stylesheet';
+			responsiveLink.href = window.wgCdnRootUrl +
+				'/__am/' + window.wgStyleVersion + '/sass/' +
+				'color-body%3D%2523' + params.backgroundColor + '%26' +
+				'background-image%3DNA%26' +
+				'background-fixed%3Dtrue%26' +
+				'background-tiled%3Dfalse%26' +
+				'background-image-height%3D800%26' +
+				'background-image-width%3D1700%26' +
+				'widthType%3D2' +
+				'//skins/oasis/css/core/responsive.scss';
+
+			style.textContent = 'body:after, body:before {' +
+				'  background-image:url(' + params.skinImage + ');' +
+				'}';
+
+			// Preload skin image, so it effectively download in parallel to the CSS
+			imagePreload.src = params.skinImage;
+
+			// Append the necessary CSS
+			head.appendChild(responsiveLink);
+			head.appendChild(style);
+
+		} else {
+			adSkinStyle.background = 'url("' + params.skinImage + '") no-repeat top center #' + params.backgroundColor;
+		}
+
 		adSkinStyle.position = 'fixed';
 		adSkinStyle.height = '100%';
 		adSkinStyle.width = '100%';
