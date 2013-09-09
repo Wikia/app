@@ -10,12 +10,12 @@
 
 		<? if( !empty( $error ) ): ?>
 			<? // TODO: Error message goes here ?>
-			<p class="error">Error</p>
+			<p class="error" id="vpt-form-error">Error</p>
 		<? endif; ?>
 
 		<? if( !empty( $success ) ): ?>
 			<? // TODO: Success message goes here ?>
-			<p class="success">Success</p>
+			<p class="success" id="vpt-form-success">Success</p>
 		<? endif; ?>
 
 		<?= $moduleView ?>

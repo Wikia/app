@@ -7,11 +7,9 @@ define( 'vpt.views.edit', [
 	var VPTEdit = function() {
 		this.$form = $( '.vpt-form' );
 		this.$submit = $( '#feature-videos-submit' );
-		this.validator = this.$form.validate({
-			//debug:false,
-		});
+		this.validator = this.$form.validate();
 		// all elements to be validated - jQuery validate doesn't support arrays of form names inputs like "names[]" :(
-		this.$formFields = this.$form.find( '.video_description, .video_display_title, .video_url' );
+		this.$formFields = this.$form.find( '.description, .display-title, .video-key' );
 		this.descriptionMinLength = 200;
 		this.init();
 	};
@@ -91,10 +89,11 @@ define( 'vpt.views.edit', [
 		initValidate: function() {
 			var that = this;
 
-			// add a rule to each element because validator can't handle array inputs by default (i.e. video_description[])
+			// Add a rule to each element because validator can't handle array inputs by default
+			// (i.e. video_description[])
 			this.$formFields.each( function() {
 				var $this = $( this ),
-					minLength = $this.is( '.video_description' ) ? that.descriptionMinLength : 0;
+					minLength = $this.is( '.description' ) ? that.descriptionMinLength : 0;
 
 				$this.rules( 'add', {
 					required: true,
@@ -112,23 +111,36 @@ define( 'vpt.views.edit', [
 				});
 			});
 
+			// Manually do form validation on submit
 			this.$form.on( 'submit', function( e ) {
 				e.preventDefault();
 
-				// This is a bit of a hack to deal with jQuery validate's inability to handle input arrays
-				var allValid = true;
-
-				that.$formFields.each( function() {
-					if ( !( that.validator.element( $( this ) ) ) ) {
-						allValid = false;
-					}
-				});
-
-				if( allValid ) {
+				if( that.checkFields() ) {
 					// call submit on the DOM element to prevent retriggering the jQuery event
 					that.$form[0].submit();
 				}
 			});
+
+			// If the back end has thrown an error, run the front end validation on page load
+			if( $( '#vpt-form-error' ).length ) {
+				this.checkFields();
+			}
+		},
+		/*
+		 * This is a bit of a hack to deal with jQuery validate's inability to handle input arrays
+		 * @return BOOL Is the form valid
+		 */
+		checkFields: function() {
+			var that = this,
+				allValid = true;
+
+			this.$formFields.each( function() {
+				if ( !( that.validator.element( $( this ) ) ) ) {
+					allValid = false;
+				}
+			});
+
+			return allValid;
 		},
 		initReset: function() {
 			var that = this;
