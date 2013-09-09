@@ -2,35 +2,36 @@
 
 	/**
 	 * Maintenance script to 
-	 *    - remove old temp users (user's registered date > 30 days)
+	 *    - remove old not confirmed users (user's registered date > 30 days)
 	 *    - run reminder process: get list of wikis and send reminder for each wiki
 	 *    - send reminder (user's registered date = 7 days) for current wiki ONLY
 	 * @author Hyun
 	 * @author Saipetch
+	 * @author Kamil Koterba
 	 */
 
 	/**
-	 * get list of wikis for sending reminder (user's registered date = 7 days)
-	 * @param string $condition
+	 * Get list of wikis for sending reminder (user's registered date = 7 days)
+	 * 
 	 * @return array $wikis
 	 */
-	function getWikis( $condition ) {
+	function getWikis() {
 		global $wgExternalSharedDB;
 
 		wfProfileIn( __METHOD__ );
 
 		$wikis = array();
 
-		$db = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+		$db = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$result = $db->select(
-			'user_temp',
-			array( 'distinct user_wiki_id' ),
-			array( $condition ),
+			'user_properties',
+			array( 'distinct up_value' ),
+			array( 'up_property = "'. UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME .'"'),
 			__METHOD__
 		);
 
 		while ( $row = $db->fetchObject($result) ) {
-			$wikis[] = $row->user_wiki_id;
+			$wikis[] = $row->up_value;
 		}
 		$db->freeResult( $result );
 
@@ -39,109 +40,134 @@
 		return $wikis;
 	}
 
+
 	/**
-	 * get minimum/maximum user id
-	 * @param integer $fromUserId
-	 * @param integer $toUserId
-	 * @param string $condition
+	 * Get IDs of users to send reminder
+	 * Conditions
+	 * - user email not authenticated
+	 * - users created on current wiki ($wgCityId)
+	 * - users signed up 7 days ago
+	 * - users with NotConfirmedSignup property set to 1
+	 * 
+	 * @return $recepients Array of Users
 	 */
-	function getScope( &$fromUserId, &$toUserId, $condition ) {
-		global $wgExternalSharedDB;
+	function getRecipientsForCurrentWiki() {
+		global $wgCityId, $wgExternalSharedDB;
 
 		wfProfileIn( __METHOD__ );
 
-		$db = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-		$row = $db->selectRow(
-			array( 'user_temp' ),
-			array( 'min(user_id) fromUserId, max(user_id) toUserId' ),
-			array( $condition ),
-			__METHOD__
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$res = $dbr->select(
+			array( '`user`', 'user_properties'),
+			array( 'user_id' ),
+			array(/* WHERE */
+				'user_email_authenticated' => NULL,
+				'up_property' => UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME,
+				'up_value' => $wgCityId,
+				'date(user_registration) = curdate() - interval 7 day'
+			),
+			__METHOD__,
+			array(),
+			array(
+				'user_properties' => array( 'INNER JOIN', 'user_id = up_user' )
+			)
 		);
 
-		if ( $row ) {
-			if ( empty($fromUserId) && !empty($row->fromUserId) ) {
-				$fromUserId = $row->fromUserId - 1;
-			}
-			if ( empty($toUserId) && !empty($row->toUserId) ) {
-				$toUserId = $row->toUserId;
+		$recepients = array();
+
+		foreach ( $res as $userItem ) {
+			$user = User::newFromId( $userItem->user_id );
+			if ( $user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
+				$recepients[] = $user;
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
+
+		return $recepients;
 	}
 
+
 	/**
-	 * get list of temp user's name for the option
-	 * @param integer $fromUserId
-	 * @param integer $toUserId
-	 * @param string $condition
-	 * @return array $users 
+	 * Get users that weren't confirmed after signup for 30 days
+	 * Conditions
+	 * - user email not authenticated
+	 * - NotConfirmedSignup property set to 1
+	 * - users signed up > 30 days ago
+	 * 
+	 * @return $oldUnconfirmed Array of Users
 	 */
-	function getTempUsers( $fromUserId, $toUserId, $condition ) {
+	function getOldUnconfirmedUsers() {
 		global $wgExternalSharedDB;
 
 		wfProfileIn( __METHOD__ );
 
-		$users = array();
-		$where = $condition." and user_id > $fromUserId and user_id <= $toUserId ";
-
-		$db = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-		$result = $db->select(
-			'user_temp',
-			array( 'user_name' ),
-			array( $where ),
-			__METHOD__
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$res = $dbr->select(
+			array( '`user`', 'user_properties'),//added `` to use central DB instead of cluster DB
+			array( 'user_id' ),
+			array(/* WHERE */
+				'user_email_authenticated' => NULL,
+				'up_property' => UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME,
+				'up_value' => 1,
+				'date(user_registration) < curdate() - interval 30 day'
+			),
+			__METHOD__,
+			array(),
+			array(
+				'user_properties' => array( 'INNER JOIN', 'user_id = up_user' )
+			)
 		);
+		$oldUnconfirmed = array();
 
-		while ( $row = $db->fetchObject($result) ) {
-			$users[] = $row->user_name;
+		foreach ( $res as $userItem ) {
+			$user = User::newFromId( $userItem->user_id );
+			$oldUnconfirmed[] = $user;
 		}
-		$db->freeResult( $result );
 
 		wfProfileOut( __METHOD__ );
 
-		return $users;
+		return $oldUnconfirmed;
 	}
 
+
 	/**
-	 * remove user from user_temp table
-	 * @param integer $fromUserId
-	 * @param integer $toUserId
-	 * @param integer $range 
-	 * @param string $condition
+	 * Remove users that weren't confirmed for 30days after signup
+	 * 
 	 */
-	function removeOldTempUser( $fromUserId, $toUserId, $range, $condition ) {
+	function removeOldUnconfirmed() {
+		global $wgExternalSharedDB;
+
 		wfProfileIn( __METHOD__ );
 
 		if ( wfReadOnly() ) {
 			echo "Error: Read Only Mode.\n";
 		} else {
-			// get scope
-			if ( empty($fromUserId) || empty($toUserId) ) {
-				getScope( $fromUserId, $toUserId, $condition );
-			}
+			// get users for removal
+			$users = getOldUnconfirmedUsers();
 
-			// remove old temp user
+			// remove old unconfirmed users
 			$cnt = 0;
-			do {
-				$to = ( $toUserId - $fromUserId > $range ) ? $fromUserId + $range : $toUserId ;
-				echo "Removing temp user (UserId $fromUserId to $to):\n";
-				$users = getTempUsers( $fromUserId, $to, $condition );
-				$cnt = $cnt + count($users);
-				foreach ( $users as $username ) {
-					$tempUser = TempUser::getTempUserFromName( $username );
-					$id = $tempUser->getId();
-					$tempUser->removeFromDatabase();
-					
-					// remove spoof normalization record from the database
-					$spoof = new SpoofUser( $username );
-					$spoof->removeRecord();
-					
-					echo "\tRemoved temp user (id=$id) from database.\n";
+			foreach( $users as $user ) {
+				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+				$userId = $user->getId();
+				$username = $user->getName();
+				$dbw->delete( '`user`', array( 'user_id' => $userId ), __METHOD__ );
+				$dbw->delete( 'user_properties', array( 'up_user' => $userId ), __METHOD__ );
+
+				if ( !$dbw->affectedRows() ) {
+					echo "\tError: Didn't remove user (id=$userId) from database.\n";
+					continue;
 				}
 
-				$fromUserId = $to;
-			} while ( $fromUserId < $toUserId );
+				$dbw->commit();
+
+				// remove spoof normalization record from the database
+				$spoof = new SpoofUser( $username );
+				$spoof->removeRecord();
+				$cnt++;
+				echo "\tRemoved temp user (id=$userId) from database.\n";
+			}
 
 			echo "Total $cnt temp users removed from database.\n";
 		}
@@ -150,53 +176,35 @@
 	}
 
 	/**
-	 * send confirmation reminder
-	 * @param integer $fromUserId
-	 * @param integer $toUserId
-	 * @param integer $range 
-	 * @param string $condition
+	 * Send confirmation reminder emails for users that signed up on current wiki 7 days ago
 	 */
-	function sendReminder( $fromUserId, $toUserId, $range, $condition ) {
+	function sendReminder() {
 		global $wgCityId, $wgServer;
 
 		wfProfileIn( __METHOD__ );
 
-		$condition .= " and user_wiki_id = ".$wgCityId;
-
-		// get scope
-		if ( empty($fromUserId) || empty($toUserId) ) {
-			getScope( $fromUserId, $toUserId, $condition );
-		}
-
 		// update url
 		$wgServer = WikiFactory::getVarValueByName( 'wgServer', $wgCityId );
 
+		$users = getRecipientsForCurrentWiki();
+
 		$cnt = 0;
-		do {
-			$to = ( $toUserId - $fromUserId > $range ) ? $fromUserId + $range : $toUserId ;
-			echo "WikiId $wgCityId: Sending reminder (UserId $fromUserId to $to)...\n";
-			$users = getTempUsers( $fromUserId, $to, $condition );
-			foreach ( $users as $username ) {
-				$tempUser = TempUser::getTempUserFromName( $username );
+		foreach ( $users as $user ) {
 
-				// send reminder email
-				$user = $tempUser->mapTempUserToUser();
-				$userLoginHelper = (new UserLoginHelper);
-				$result = $userLoginHelper->sendConfirmationReminderEmail( $user );
+			// send reminder email
+			$userLoginHelper = (new UserLoginHelper);
+			$result = $userLoginHelper->sendConfirmationReminderEmail( $user );
 
-				if( !$result->isGood() ) {
-					echo "Error: Cannot Send reminder to temp user (id=".$tempUser->getId().", email=".$tempUser->getEmail()."): ".$result->getMessage()."\n";
-				} else {
-					$tempUser->saveSettingsTempUserToUser( $user );
-					$cnt++;
-					echo "Sent reminder to temp user (id=".$tempUser->getId().", email=".$tempUser->getEmail().").\n";
-				}
+			if( !$result->isGood() ) {
+				echo "Error: Cannot send reminder to user (id=".$user->getId().", email=".$user->getEmail()."): ".$result->getMessage()."\n";
+			} else {
+				$cnt++;
+				echo "Sent reminder to user (id=".$user->getId().", email=".$user->getEmail().").\n";
 			}
 
-			$fromUserId = $to;
-		} while ( $fromUserId < $toUserId );
+		}
 
-		echo "WikiId $wgCityId: Total $cnt confirmation reminder emails sent.\n";
+		echo "WikiId $wgCityId: ". sizeof( $users ) ." of total $cnt confirmation reminder emails sent.\n";
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -208,48 +216,26 @@
 	require_once( "commandLine.inc" );
 
 	if ( isset($options['help']) || !(isset($options['cleanup']) || isset($options['reminder']) || isset($options['wiki_reminder'])) ) {
-		die( "Usage: php maintenance.php [--from_userid] [--to_userid] [--range] [--cleanup] [--reminder] [--wiki_reminder] [--help]
-		--from_userid		from user id
-		--to_userid			to user id
-		--range				range of user (default = 10000)
+		die( "Usage: php maintenance.php [--cleanup] [--reminder] [--wiki_reminder] [--help]
 		--cleanup			remove older temp user (user's registered date is older than 30 days)
 		--reminder			send reminder (user's registered date = 7 days ago) for ALL wikis
 		--wiki_reminder		send reminder for CURRENT wiki only
 		--help				you are reading it right now\n\n" );
 	}
 
-	if ( isset($options['range']) && !is_numeric($options['range']) ) {
-		die( "Error: Invalid range." );
-	}
-
-	if ( isset($options['from_userid']) && !is_numeric($options['from_userid']) ) {
-		die( "Error: Invalid from_userid." );
-	}
-
-	if ( isset($options['to_userid']) && !is_numeric($options['to_userid']) ) {
-		die( "Error: Invalid to_userid." );
-	}
-
 	if ( empty($wgCityId) ) {
 		die( "Error: Invalid wiki id." );
 	}
 
-	$range = (isset($options['range'])) ? intval($options['range']) : 10000 ;
-	$fromUserId = (isset($options['from_userid'])) ? intval($options['from_userid']) : 0 ;
-	$toUserId = (isset($options['to_userid'])) ? intval($options['to_userid']) : 0 ;
-
-	$cleanupCondition = "date(user_registration) < curdate() - interval 30 day";
-	$reminderCondition = "date(user_registration) = curdate() - interval 7 day";
-
 	// remove old temp user
 	if ( isset($options['cleanup']) ) {
-		removeOldTempUser( $fromUserId, $toUserId, $range, $cleanupCondition );
+		removeOldUnconfirmed();
 	}
 
 	// send reminder for all wikis
 	if ( isset($options['reminder']) ) {
 		// get list of wikis
-		$wikis = getWikis( $reminderCondition );
+		$wikis = getWikis();
 
 		// send reminder for each wiki
 		foreach( $wikis as $wikiId) {
@@ -267,5 +253,5 @@
 
 	// send reminder for current wiki
 	if ( isset($options['wiki_reminder']) ) {
-		sendReminder( $fromUserId, $toUserId, $range, $reminderCondition );
+		sendReminder();
 	}
