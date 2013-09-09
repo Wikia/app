@@ -7,7 +7,7 @@ class ForumHelper {
 		if ($wgTitle instanceof Title) {
 			if ($wgTitle->isSpecial('Forum') || in_array($wgTitle->getNamespace(), self::$forumNamespaces)) {
 				return true;
-			} else if ($wgTitle->getNamespace() == NS_USER_WALL_MESSAGE) {
+			} else if ($wgTitle->getNamespace() === NS_USER_WALL_MESSAGE) {
 				$mainTitle = Title::newFromId($wgTitle->getText());
 				return in_array($mainTitle->getNamespace(), self::$forumNamespaces);
 			}
