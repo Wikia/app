@@ -86,6 +86,25 @@ class ImagesService extends Service {
 		return array('src' => $imageSrc, 'page' => $imagePage);
 	}
 
+	public static function getThumbUrlFromFileUrl($fileUrl, $destSize, $overrideFormat = null) {
+		$url = str_replace('/images/', '/images/thumb/', $fileUrl);
+
+		$parts = explode( "/", $url );
+		$file = array_pop( $parts );
+
+		if ( is_numeric( $destSize ) ){
+			$destSize = $destSize + 'px';
+		}
+
+		$thumbUrl = sprintf( "%s/%s-%s", $url, $destSize, $file );
+
+		if ( !empty($overrideFormat) ) {
+			$thumbUrl = substr_replace( $thumbUrl , $overrideFormat, strrpos( $thumbUrl , '.' ) + 1 );
+		}
+
+		return $thumbUrl;
+	}
+
 	/**
 	 * @desc Returns image's thumbnail's url and its sizes if $destImageWidth given it can be scaled
 	 *
