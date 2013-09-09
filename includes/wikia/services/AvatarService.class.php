@@ -84,6 +84,10 @@ class AvatarService extends Service {
 
 	/**
 	 * Get URL for avatar
+	 *
+	 * @param string|User $user user name
+	 * @param int $avatarSize
+	 * @return String avatar's URL
 	 */
 	static function getAvatarUrl($user, $avatarSize = 20) {
 		wfProfileIn(__METHOD__);
@@ -92,7 +96,7 @@ class AvatarService extends Service {
 		if( $user instanceof User ) {
 			$key = "{$user->getName()}::{$avatarSize}";
 		} else {
-		//assumes $user is a string with user name
+			//assumes $user is a string with user name
 			$key = "{$user}::{$avatarSize}";
 		}
 
