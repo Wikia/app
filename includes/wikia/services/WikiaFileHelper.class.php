@@ -497,6 +497,23 @@ class WikiaFileHelper extends Service {
 	}
 
 	/**
+	 * @param Title $title
+	 * @param int $width
+	 * @param int $height
+	 * @param bool $force16x9Ratio
+	 * @return string|false
+	 */
+	public static function  getVideoThumbnailHtml( Title $title, $width=150, $height=75, $force16x9Ratio=false ) {
+		$arr = [];
+		self::inflateArrayWithVideoData( $arr, $title, $width, $height, $force16x9Ratio );
+		if( !empty($arr['thumbnail']) ) {
+			return $arr['thumbnail'];
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * Convert thumbnail to different size.
 	 *
 	 * This is just a PHP port of JS Wikia.Thumbnailer.getThumbURL(), see thumbnailer.js for more details

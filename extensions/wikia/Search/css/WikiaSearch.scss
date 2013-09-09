@@ -340,6 +340,24 @@ $form-negative-side-padding: $form-side-padding*-1;
 	.searchmatch {
 		font-weight: bold;
 	}
+	.video-addon-results {
+		display: none;
+		img {
+			display: inline-block;
+		}
+	}
+	.video-addon-results ul {
+		list-style: none;
+		margin: 0;
+	}
+	.video-addon-results li {
+		display: inline;
+
+		a.video-thumbnail {
+			margin: 1px;
+			position: relative;
+		}
+	}
 
 	// Search pagination
 	.wikia-paginator {

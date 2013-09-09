@@ -50,8 +50,11 @@
 					<ul class="Results">
 					<?php $pos = 0; ?>
 					<?php foreach( $results as $result ): ?>
-						<?php 
+						<?php
 							$pos++;
+							if ( ( $pos == 3 || $pos == 7 ) && $mediaData ):
+								echo '<li class="result video-addon-results video-addon-results-before-' . $pos . '">' . $app->getView( 'WikiaSearch', 'mediadata', array( 'mediaData' => $mediaData, 'query' => $query ) ) . '</li>';
+							endif;
 							if ( $result['ns'] === 0 ) {
 								echo $app->getView( 'WikiaSearch', $resultView, array(
 									  'result' => $result,
