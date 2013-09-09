@@ -40,8 +40,6 @@ ve.ce.WikiaBlockMediaNode = function VeCeWikiaBlockMediaNode( model, config ) {
 	ve.ce.FocusableNode.call( this );
 	ve.ce.RelocatableNode.call( this );
 	ve.ce.MWResizableNode.call( this );
-
-	this.$resizable = this.$image;
 };
 
 /* Inheritance */
@@ -217,14 +215,12 @@ ve.ce.WikiaBlockMediaNode.prototype.update = function ( replaceRoot ) {
 	if ( replaceRoot ) {
 		this.emit( 'teardown' );
 		this.$.replaceWith( $root );
-		this.$ = $root;
-		this.emit( 'setup' );
-	} else {
-		this.$ = $root;
 	}
 
+	this.$ = $root;
 	this.$anchor = this.getAnchorElement().appendTo( this.$thumb );
 	this.$image = this.getImageElement().appendTo( this.$anchor );
+	this.$resizable = this.$image;
 
 	if ( type !== 'none' ) {
 		this.$magnify = this.getMagnifyElement().appendTo( this.$thumb );
@@ -243,5 +239,11 @@ ve.ce.WikiaBlockMediaNode.prototype.update = function ( replaceRoot ) {
 		}
 	} else {
 		this.$magnify = null;
+	}
+
+	// This should be called last so the listeners will get the same DOM
+	// structure they do on initialization.
+	if ( replaceRoot ) {
+		this.emit( 'setup' );
 	}
 };
