@@ -4,6 +4,15 @@ class ImagesService extends Service {
 	const FILE_DATA_COMMENT_OPION_NAME = 'comment';
 	const FILE_DATA_DESC_OPION_NAME = 'description';
 
+	const EXT_JPG  = '.jpg';
+	const EXT_JPEG = '.jpeg';
+	const EXT_PNG  = '.png';
+	const EXT_GIF  = '.gif';
+
+	public static function allowedExtensionList() {
+		return [self::EXT_GIF, self::EXT_PNG. self::EXT_JPG, self::EXT_JPEG];
+	}
+
 	/**
 	 * get image thumbnail
 	 * @param integer $wikiId
@@ -90,31 +99,55 @@ class ImagesService extends Service {
 	 * @desc Returns thumbnail's new URL
 	 *
 	 * @param String $thumbUrl original thumb's URL
-	 * @param String $overrideFormat replace thumb's format with specified
+	 * @param String $newExtension desired file extension (format). One of: EXT_JPG, EXT_JPEG, EXT_PNG, EXT_GIF
 	 *
 	 * @return String new URL
 	 */
-	public static function overrideThumbnailFormat($thumbUrl, $overrideFormat) {
-		return substr_replace( $thumbUrl , $overrideFormat, strrpos( $thumbUrl , '.' ) + 1 );
-	}
-
-	public static function getThumbUrlFromFileUrl($fileUrl, $destSize, $overrideFormat = null) {
-		$url = str_replace('/images/', '/images/thumb/', $fileUrl);
-
-		$parts = explode( "/", $url );
-		$file = array_pop( $parts );
-
-		if ( is_numeric( $destSize ) ) {
-			$destSize = $destSize + 'px';
-		}
-
-		$thumbUrl = sprintf( "%s/%s-%s", $url, $destSize, $file );
-
-		if ( !empty($overrideFormat) ) {
-			$thumbUrl = self::overrideThumbnailFormat($thumbUrl, $overrideFormat);
+	public static function overrideThumbnailFormat($thumbUrl, $newExtension) {
+		if ( in_array($newExtension, self::allowedExtensionList()) ) {
+			$thumbUrl .= $newExtension;
 		}
 
 		return $thumbUrl;
+	}
+
+	/**
+	 * @desc Returns thumbnail's URL made from normal image URL
+	 *
+	 * @param String $imageUrl original image's URL
+	 * @param String|Integer $destSize desitination's size; can be width."px" or width."x".height
+	 * @param String $newExtension desired file extension (format). One of: EXT_JPG, EXT_JPEG, EXT_PNG, EXT_GIF
+	 *
+	 * @return String new URL
+	 */
+	public static function getThumbUrlFromFileUrl($imageUrl, $destSize, $newExtension = null) {
+		if ( strpos($imageUrl, '/images/thumb/') === false ) {
+			$url = str_replace('/images/', '/images/thumb/', $imageUrl);
+		} else {
+			$url = $imageUrl;
+		}
+
+
+		/**
+		 * url is virtual base for thumbnail, so
+		 *
+		 * - get last part of path
+		 * - add it as thumbnail file prefixed with widthpx
+		 */
+		$parts = explode( "/", $url );
+		$file = array_pop( $parts );
+
+		if ( ctype_digit( (string)$destSize ) ) {
+			$destSize .= 'px';
+		}
+
+		$url = sprintf( "%s/%s-%s", $url, $destSize, $file );
+
+		if ( !empty($newExtension) ) {
+			$url = self::overrideThumbnailFormat($url, $newExtension);
+		}
+
+		return $url;
 	}
 
 	/**
