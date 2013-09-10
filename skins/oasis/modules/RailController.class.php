@@ -35,15 +35,13 @@ class RailController extends WikiaController {
 		$this->css = array_keys($this->app->wg->Out->styles);
 		$this->js = $this->app->wg->Out->getBottomScripts();
 
-		if ($wgUser->isAnon()) {
-			$this->response->setCacheValidity(
-				86400 /* 24h */,
-				86400 /* 24h */,
-				array(
-					WikiaResponse::CACHE_TARGET_VARNISH
-				)
-			);
-		}
+		$this->response->setCacheValidity(
+			86400 /* 24h */,
+			86400 /* 24h */,
+			array(
+				WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
 
 		wfProfileOut(__METHOD__);
 	}
