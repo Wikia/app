@@ -119,6 +119,7 @@ class ImagesService extends Service {
 	 * @return String new URL
 	 */
 	public static function overrideThumbnailFormat($thumbUrl, $newExtension) {
+
 		if ( in_array($newExtension, self::$allowedExtensionsList) && !self::imageUrlHasExtension($thumbUrl, $newExtension) ) {
 			$thumbUrl .= $newExtension;
 		}
@@ -170,10 +171,11 @@ class ImagesService extends Service {
 	 *
 	 * @param String $fileName filename with or without namespace string
 	 * @param Integer $imageWidth optional parameter
+	 * @param String $newExtension desired file extension (format). One of: EXT_JPG, EXT_JPEG, EXT_PNG, EXT_GIF
 	 *
 	 * @return stdClass to the image's thumbnail
 	 */
-	public static function getLocalFileThumbUrlAndSizes($fileName, $destImageWidth = 0) {
+	public static function getLocalFileThumbUrlAndSizes($fileName, $destImageWidth = 0, $newExtension = null) {
 		$app = F::app();
 
 		$results = new stdClass();
@@ -203,6 +205,10 @@ class ImagesService extends Service {
 				self::calculateScaledImageSizes($imageWidth, $imageWidth, $foundFile->getHeight());
 
 			$results->url = $foundFile->createThumb($sizes->width);
+
+			if ( !empty($newExtension) ) {
+				$results->url = self::getThumbUrlFromFileUrl($results->url, $sizes->width, $newExtension);
+			}
 
 			$results->width = intval($sizes->width);
 			$results->height = intval($sizes->height);
