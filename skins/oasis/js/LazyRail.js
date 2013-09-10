@@ -8,8 +8,7 @@ $(function() {
 			data: {
 				'title': wgTitle,
 				'namespace': wgNamespaceNumber
-				// TODO fix forum rail
-				// TODO fix related videos rail (ugly hack in RelatedVideos.hooks.php)
+				// TODO fix related videos rail
 			},
 			type: 'get',
 			format: 'json',
