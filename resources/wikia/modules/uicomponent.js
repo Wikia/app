@@ -7,7 +7,7 @@
  *
  */
 
-define('wikia.ui.component',['wikia.mustache'], function uicomponent(mustache) {
+define('wikia.ui.component', ['wikia.mustache'], function uicomponent(mustache) {
 	'use strict';
 
 	/**

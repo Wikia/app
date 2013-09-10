@@ -8,7 +8,20 @@
  *
  */
 
-define('wikia.ui.factory', ['wikia.nirvana', 'wikia.window', 'wikia.deferred', 'wikia.loader', 'wikia.ui.component'], function uifactory(nirvana, window, Deferred, loader, UIComponent){
+define('wikia.ui.factory', [
+	'wikia.nirvana',
+	'wikia.window',
+	'wikia.deferred',
+	'wikia.loader',
+	'wikia.ui.component'
+], function uifactory(
+	nirvana,
+	window,
+	Deferred,
+	loader,
+	UIComponent
+) {
+
 	'use strict';
 
 	/**
