@@ -6,15 +6,15 @@ class RelatedPagesController extends WikiaController {
 
 	public function init() {
 		$this->addAfterSection = null;
-		$this->pages = array();
+		$this->pages = [];
 		$this->skipRendering = false;
 	}
 
 	public function index( $params = null ) {
 		global $wgTitle, $wgContentNamespaces, $wgRequest, $wgMemc;
 
-		$altTitle = $this->request->getVal('altTitle', null);
-		$title = empty($altTitle) ? $wgTitle : $altTitle;
+		$altTitle = $this->request->getVal( 'altTitle', null );
+		$title = empty( $altTitle ) ? $wgTitle : $altTitle;
 		$articleId = $title->getArticleId();
 		$relatedPages = RelatedPages::getInstance();
 		$categories = $this->request->getVal( 'categories' );
@@ -46,10 +46,10 @@ class RelatedPagesController extends WikiaController {
 			return false;
 		}
 
-		$mKey = wfMemcKey(self::MEMC_KEY, $articleId );
+		$mKey = wfMemcKey( self::MEMC_KEY, $articleId );
 		$this->srcAttrName = $this->app->checkSkin( 'monobook' ) ? 'src' : 'data-src';
 
-		if ( empty($this->pages) ) {
+		if ( empty( $this->pages ) ) {
 			$this->pages = $relatedPages->get( $articleId );
 				if ( count( $this->pages ) > 0) {
 				$wgMemc->set( $mKey, $this->pages, 3 * 3600 );
@@ -58,15 +58,11 @@ class RelatedPagesController extends WikiaController {
 			}
 		}
 
-		$isMobileSkin = $this->app->checkSkin( 'wikiamobile' );
-		// data for mustache template
-		$this->data = [ 'mobileSkin' => $isMobileSkin ];
-
-		if( !$isMobileSkin ) {
+		if( !$this->app->checkSkin( 'wikiamobile' ) ) {
 			$this->response->addAsset( 'relatedpages_js' );
 		}
 
-		$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_MUSTACHE);
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
 	static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages) {
@@ -92,9 +88,9 @@ class RelatedPagesController extends WikiaController {
 	 */
 	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
 		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
-		global $wgMemc;
-		$mKey = wfMemcKey(self::MEMC_KEY, $article->mTitle->getArticleId());
-		$wgMemc->delete($mKey);
+		F::app()->wg->Memc->delete(
+			wfMemcKey( self::MEMC_KEY, $article->mTitle->getArticleId() )
+		);
 		return true;
 	}
 }

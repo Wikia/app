@@ -373,10 +373,8 @@ class RelatedPages {
 	}
 
 	public static function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
-		global $wgRequest;
-
-		if ( $out->isArticle() && $wgRequest->getVal( 'diff' ) === null ) {
-			$text .= F::app()->renderView( 'RelatedPagesController', 'index' );
+		if ( $out->isArticle() && F::app()->wg->Request->getVal( 'diff' ) === null ) {
+			JSMessages::enqueuePackage( 'RelatedPages', JSMessages::INLINE );
 		}
 
 		return true;

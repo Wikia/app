@@ -1,75 +1,86 @@
-require( [ 'sloth', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'JSMessages' ], function( sloth, w, loader, mustache, msg ){
+require( [ 'sloth', 'wikia.window', 'jquery' ], function( sloth, w, $ ){
 	'use strict';
 
-	var isMobileSkin = (w.skin === 'wikiamobile' ? true : false);
+	var isMobileSkin = w.skin === 'wikiamobile',
+		//#WikiaArticleFooter for oasis or #wkRltdCnt for mobile
+		$placeholder = $(isMobileSkin ? '#wkRltdCnt' : '#WikiaArticleFooter'),
+		element = $placeholder[0], // $placeholder[0] because sloth doesn't accept jQuery objects
+		cacheKey = 'RelatedPagesAssets',
+		articleId = w.wgArticleId;
 
-	var $placeholder = $('#RelatedPagesPlaceholder'),
-		element = ( $placeholder[0] ) ? $placeholder[0] : false, // $placeholder[0] because sloth doesn't accept jQuery objects
-		controller = 'RelatedPagesApi',
-		method = 'getList';
+	function loadTemplate(){
+		var dfd = new $.Deferred();
 
-	if( isMobileSkin ) {
-		$placeholder = $('#wkRltdCnt');
-		element = $placeholder[0]; // sloth doesn't accept jQuery objects
+		require(['wikia.loader', 'wikia.cache'], function(loader, cache) {
+			var template = cache.getVersioned(cacheKey);
+
+			if(template) {
+				dfd.resolve(template);
+			} else {
+				loader({
+					type: loader.MULTI,
+					resources: {
+						mustache: 'extensions/wikia/RelatedPages/templates/RelatedPages_section.mustache'
+					}
+				}).done(function(data){
+					template = data.mustache[0];
+
+					dfd.resolve(template);
+
+					cache.setVersioned(cacheKey, template, 604800); //7days
+				});
+			}
+
+		});
+
+		return dfd.promise();
 	}
 
-	if( element ) {
+	if( element && articleId ) {
 		sloth({
 			on: element,
 			threshold: 100,
 			callback: function() {
-				loader({
-					type: loader.MULTI,
-					resources: {
-						mustache: 'extensions/wikia/RelatedPages/templates/RelatedPages_section.mustache',
-						templates: [{
-							controller: controller,
-							method: method,
-							params: {
-								ids: w.wgArticleId
+				require(['wikia.mustache', 'JSMessages', 'wikia.nirvana'], function(mustache, msg, nirvana){
+					$.when(
+						nirvana.getJson(
+							'RelatedPagesApi',
+							'getList',
+							{ ids: [articleId] }
+						),
+						loadTemplate()
+					).done(function(data ,template){
+						data = data[0];
+
+						var items = data && data.items,
+							pages = items && items[articleId],
+							relatedPages =  [],
+							artImgPlaceholder = (isMobileSkin ? w.wgCdnRootUrl + '/extensions/wikia/WikiaMobile/images/read_placeholder.png' : ''),
+							page,
+							mustacheData;
+
+						if( pages && pages.length ) {
+							while( page = pages.shift() ) {
+								relatedPages.push( {
+									pageUrl: page.url,
+									pageTitle: page.title,
+									imgUrl: ( page.imgUrl ? page.imgUrl : artImgPlaceholder ),
+									snippet: page.text
+								} );
 							}
-						}],
-						messages: 'RelatedPages'
-					}
-				}).done(
-					function(data) {
-						var items = JSON.parse(data.templates[controller + '_' + method]).items,
-							pages = items && items[w.wgArticleId],
+
 							mustacheData = {
 								relatedPagesHeading: msg( 'wikiarelatedpages-heading' ),
 								imgWidth: (isMobileSkin ? 100 : 200),
 								imgHeight: (isMobileSkin ? 50 : 100),
 								mobileSkin: isMobileSkin,
-								relatedPages: []
-							},
-							artImgPlaceholder = (isMobileSkin ? w.wgCdnRootUrl + '/extensions/wikia/WikiaMobile/images/read_placeholder.png' : '');
+								pages: relatedPages
+							};
 
-						if( pages && pages.length ) {
-							var page,
-								i = 0;
-
-							while( page = pages[i++] ) {
-								var relatedPage = {};
-								relatedPage.pageUrl = page.url;
-								relatedPage.pageTitle = page.title;
-								relatedPage.imgUrl = ( page.imgUrl ? page.imgUrl : artImgPlaceholder );
-								relatedPage.artSnippet = page.text;
-
-								mustacheData.relatedPages.push( relatedPage );
-							}
-
-							if( !isMobileSkin ) {
-								$placeholder.after( mustache.render( data.mustache[0], mustacheData ) );
-							} else {
-								$placeholder.prepend( mustache.render( data.mustache[0], mustacheData ) );
-							}
+							$placeholder.prepend( mustache.render( template, mustacheData ) );
 						}
-
-						if( !isMobileSkin ) {
-							$placeholder.remove();
-						}
-					}
-				);
+					});
+				});
 			}
 		});
 	}

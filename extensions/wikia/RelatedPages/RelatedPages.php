@@ -31,4 +31,4 @@ $wgAutoloadClasses['RelatedPagesController'] = $dir . 'RelatedPagesController.cl
 
 // messages
 $wgExtensionMessagesFiles['RelatedPages'] = $dir . 'RelatedPages.i18n.php';
-(new JSMessages())->registerPackage( 'RelatedPages', [ 'wikiarelatedpages-heading' ] );
+JSMessages::registerPackage( 'RelatedPages', [ 'wikiarelatedpages-heading' ] );
