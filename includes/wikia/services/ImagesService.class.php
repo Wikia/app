@@ -9,8 +9,13 @@ class ImagesService extends Service {
 	const EXT_PNG  = '.png';
 	const EXT_GIF  = '.gif';
 
+	private static $aAllowedExtensionsList = null;
 	public static function allowedExtensionList() {
-		return [self::EXT_GIF, self::EXT_PNG. self::EXT_JPG, self::EXT_JPEG];
+		if ( is_null( self::$aAllowedExtensionsList ) ) {
+			self::$aAllowedExtensionsList = [self::EXT_GIF, self::EXT_PNG. self::EXT_JPG, self::EXT_JPEG];
+		}
+
+		return self::$aAllowedExtensionsList;
 	}
 
 	/**
