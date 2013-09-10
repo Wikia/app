@@ -1,22 +1,17 @@
-var WikiaSearchApp = {
-	searchForm: false,
-	searchField: false,
+WikiaSearchApp = (function() {
 
-	ads: false,
-
-	track: Wikia.Tracker.buildTrackingFunction({
-		trackingMethod: 'internal'
-	}),
-
-	init : function() {
-		this.searchForm = $('#WikiaSearch');
-		this.searchFormBottom = $('#search');
+	function WikiaSearchApp(id) {
+		this.id = id;
+		this.searchForm = $(id);
+		// make autocomplete sticked to right, but only under inputbox (not button on it's right)
+		// 4 is border + padding of autocomplete container
+		this.positionRight = this.searchForm.innerWidth() - this.searchForm.children('input:first-child').outerWidth() + 4;
 		this.searchField = this.searchForm.children('input[placeholder]');
 
 		// RT #141437 - hide HOME_TOP_RIGHT_BOXAD when showing search suggestions
 		this.ads = $("[id$='TOP_RIGHT_BOXAD']");
 
-		if(!this.searchForm.hasClass('noautocomplete')) {
+		if ( !this.searchForm.hasClass('noautocomplete') ) {
 			this.searchField.bind({
 				'suggestShow': $.proxy(this.hideAds, this),
 				'suggestHide': $.proxy(this.showAds, this)
@@ -25,62 +20,70 @@ var WikiaSearchApp = {
 			// load autosuggest code on first focus
 			this.searchField.one('focus', $.proxy(this.initSuggest, this));
 		}
-	},
+	}
 
-	hideAds: function() {
+	WikiaSearchApp.prototype.track = Wikia.Tracker.buildTrackingFunction({
+		trackingMethod: 'internal'
+	});
+
+	WikiaSearchApp.prototype.hideAds = function() {
 		this.ads.each(function() {
 			$(this).children().css('margin-left', '-9999px');
 		});
-	},
+	};
 
-	showAds: function() {
+	WikiaSearchApp.prototype.showAds = function() {
 		this.ads.each(function() {
 			$(this).children().css('margin-left', 'auto');
 		});
-	},
+	};
 
 	// download necessary dependencies (AutoComplete plugin) and initialize search suggest feature for #search_field
-	initSuggest: function() {
+	WikiaSearchApp.prototype.initSuggest = function() {
 		$.when(
-			$.loadJQueryAutocomplete()
-		).then($.proxy(function() {
-			this.searchField.autocomplete({
-				serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
-				onSelect: $.proxy(function(value, data, event) {
-					var valueEncoded = encodeURIComponent(value.replace(/ /g, '_')),
+				$.loadJQueryAutocomplete()
+			).then($.proxy(function() {
+				this.searchField.autocomplete({
+					serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
+					onSelect: $.proxy(function(value, data, event) {
+						var valueEncoded = encodeURIComponent(value.replace(/ /g, '_')),
 						// slashes can't be urlencoded because they break routing
-						location = wgArticlePath.
-							replace(/\$1/, valueEncoded).
-							replace(encodeURIComponent('/'), '/');
+							location = wgArticlePath.
+								replace(/\$1/, valueEncoded).
+								replace(encodeURIComponent('/'), '/');
 
-					this.track({
-						eventName: 'search_start_suggest',
-						sterm: valueEncoded,
-						rver: 0
-					});
+						this.track({
+							eventName: 'search_start_suggest',
+							sterm: valueEncoded,
+							rver: 0
+						});
 
-					// Respect modifier keys to allow opening in a new window (BugId:29401)
-					if (event.button === 1 || event.metaKey || event.ctrlKey) {
-						window.open(location);
+						// Respect modifier keys to allow opening in a new window (BugId:29401)
+						if (event.button === 1 || event.metaKey || event.ctrlKey) {
+							window.open(location);
 
-						// Prevents hiding the container
-						return false;
-					} else {
-						window.location.href = location;
-					}
-				}, this),
-				appendTo: '#WikiaSearch',
-				deferRequestBy: 400,
-				minLength: 3,
-				maxHeight: 1000,
-				selectedClass: 'selected',
-				width: '270px',
-				skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
-			});
-		}, this));
-	}
-};
+							// Prevents hiding the container
+							return false;
+						} else {
+							window.location.href = location;
+						}
+					}, this),
+					appendTo: this.id,
+					deferRequestBy: 400,
+					minLength: 3,
+					maxHeight: 1000,
+					selectedClass: 'selected',
+					width: '100%',
+					positionRight: this.positionRight + 'px',
+					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
+				});
+			}, this));
+	};
+
+	return WikiaSearchApp;
+})();
 
 $(function() {
-	WikiaSearchApp.init();
+	new WikiaSearchApp('#WikiaSearch');
+	new WikiaSearchApp('#HeaderWikiaSearch');
 });
