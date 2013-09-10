@@ -1,10 +1,20 @@
 require( [ 'sloth', 'wikia.window', 'jquery' ], function( sloth, w, $ ){
 	'use strict';
 
-	var isMobileSkin = w.skin === 'wikiamobile',
-		//#WikiaArticleFooter for oasis or #wkRltdCnt for mobile
-		$placeholder = $(isMobileSkin ? '#wkRltdCnt' : '#WikiaArticleFooter'),
-		element = $placeholder[0], // $placeholder[0] because sloth doesn't accept jQuery objects
+	var $placeholder = $( '#mw-data-after-content' ),
+		isMobileSkin = false;
+
+	switch( w.skin ) {
+		case 'wikiamobile':
+			$placeholder = $( '#wkRltdCnt' );
+			isMobileSkin = true;
+			break;
+		case 'oasis':
+			$placeholder = $( '#WikiaArticleFooter' );
+			break;
+	}
+
+	var element = $placeholder[0], // $placeholder[0] because sloth doesn't accept jQuery objects
 		cacheKey = 'RelatedPagesAssets',
 		articleId = w.wgArticleId;
 

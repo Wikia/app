@@ -1,4 +1,7 @@
 .RelatedPagesModule ul {
+	display: block;
+	clear: both;
+	height: 115px;
 	list-style: none;
 }
 
