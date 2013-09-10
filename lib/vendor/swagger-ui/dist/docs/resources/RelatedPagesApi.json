@@ -34,8 +34,12 @@
                     ],
                     "errorResponses": [
                         {
-                            "reason": "Related Pages extension not available",
+                            "reason": "Related Pages extension not available on this domain",
                             "code": 404
+                        },
+                        {
+                            "reason": "Ids param should be not empty and comma separated numbers only",
+                            "code": 400
                         }
                     ]
                 }

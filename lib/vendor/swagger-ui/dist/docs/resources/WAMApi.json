@@ -180,6 +180,12 @@
                             "paramType": "query",
                             "required": false
                         }
+                    ],
+                    "errorResponses": [
+                        {
+                            "reason": "Invalid parameters passed",
+                            "code": 400
+                        }
                     ]
                 }
             ],
