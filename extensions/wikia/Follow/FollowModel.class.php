@@ -6,7 +6,6 @@
 class FollowModel {
 	static public $ajaxListLimit = 600;
 	static public $specialPageListLimit = 15;
-	static $cache;
 	static $namespaces = [
 		NS_CATEGORY => 'wikiafollowedpages-special-heading-category',
 		NS_PROJECT => 'wikiafollowedpages-special-heading-project' ,
@@ -48,19 +47,11 @@ class FollowModel {
 			'wikiafollowedpages-special-heading-board'
 		);
 
-		if( empty( static::$cache['out_data'] ) ) {
-			$out_data = static::getWatchListArray( $user_id, $from, $limit, $show_deleted_pages );
-			static::$cache['out_data'] = $out_data;
-		} else {
-			$out_data = static::$cache['out_data'];
-		}
-
-		if( empty( static::$cache['out'] ) ) {
-			$out = static::getWatchListCount( $user_id, $limit, $out_data );
-			static::$cache['out'] = $out;
-		} else {
-			$out = static::$cache['out'];
-		}
+		$out = static::getWatchListCount(
+			$user_id,
+			$limit,
+			static::getWatchListArray( $user_id, $from, $limit, $show_deleted_pages )
+		);
 
 		foreach ($order as $key => $value) {
 			if (!empty($out[$value]) ) {
@@ -187,11 +178,11 @@ class FollowModel {
 	 *
 	 * @param Integer $user_id
 	 * @param Integer $limit
-	 * @param Array $out_data result array from static::getWatchListArray()
+	 * @param Array $watchedPages result array from static::getWatchListArray()
 	 *
 	 * @return array
 	 */
-	private function getWatchListCount( $user_id, $limit, $out_data ) {
+	private function getWatchListCount( $user_id, $limit, $watchedPages ) {
 		wfProfileIn( __METHOD__ );
 		$db = wfGetDB( DB_SLAVE );
 		$namespaces_keys = array_keys( static::$namespaces );
@@ -226,7 +217,7 @@ class FollowModel {
 			if ( !empty($out[$ns]) ) {
 				$out[$ns]['count'] += $row['cnt'];
 			} else {
-				$out[$ns] = array('ns' => $ns,'count' => $row['cnt'], 'data' => (empty($out_data[$ns]) ? array() : $out_data[$ns]));
+				$out[$ns] = array('ns' => $ns,'count' => $row['cnt'], 'data' => ( empty( $watchedPages[$ns] ) ? array() : $watchedPages[$ns] ) );
 			}
 
 			$out[$ns]['show_more'] = 0;
