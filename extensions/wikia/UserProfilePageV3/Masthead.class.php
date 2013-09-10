@@ -282,6 +282,7 @@ class Masthead {
 		 */
 		$parts = explode( "/", $url );
 		$file = array_pop( $parts );
+
 		return sprintf( "%s/%dpx-%s", $url, $width, $file );
 	}
 
