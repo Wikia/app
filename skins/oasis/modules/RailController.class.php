@@ -5,13 +5,15 @@
 class RailController extends WikiaController {
 
 	const LAZY_LOADING_BEAKPOINT = 1440; // TOP_RIGHT_BOXAD
+	const FILTER_LAZY_MODULES = true;
+	const FILTER_NON_LAZY_MODULES = false;
 
 	public function executeIndex($params) {
 		wfProfileIn(__METHOD__);
 
 		$railModules = isset($params['railModuleList']) ? $params['railModuleList'] : [];
 
-		$this->railModuleList = $this->filterModules($railModules);
+		$this->railModuleList = $this->filterModules($railModules, self:: FILTER_NON_LAZY_MODULES);
 		$this->isGridLayoutEnabled = BodyController::isGridLayoutEnabled();
 		$this->isAside = $this->wg->RailInAside;
 		$this->loadLazyRail = $railModules > $this->railModuleList;
@@ -19,15 +21,21 @@ class RailController extends WikiaController {
 		wfProfileOut(__METHOD__);
 	}
 
+	/**
+	 * Entry point for lazy loading right rail
+	 */
 	public function executeLazy() {
 		wfProfileIn(__METHOD__);
-		global $wgUser;
 
-		$railModules = $this->filterModules((new BodyController)->getRailModuleList(), true);
+		$railModules = $this->filterModules((new BodyController)->getRailModuleList(), self::FILTER_LAZY_MODULES);
 		$this->railLazyContent = '';
 		krsort($railModules);
 		foreach ($railModules as $railModule) {
-			$this->railLazyContent .= $this->app->renderView($railModule[0], $railModule[1], $railModule[2]);
+			$this->railLazyContent .= $this->app->renderView(
+				$railModule[0], /* Controller */
+				$railModule[1], /* Method */
+				$railModule[2] /* array of params */
+			);
 		}
 
 		$this->railLazyContent .= Html::element('div', ['id' => 'WikiaAdInContentPlaceHolder']);
@@ -46,8 +54,15 @@ class RailController extends WikiaController {
 		wfProfileOut(__METHOD__);
 	}
 
-	private function filterModules($moduleList, $lazy = false) {
-		$lazyChecker = ($lazy) ? [$this, 'modulesLazyCheck'] : [$this, 'modulesNotLazyCheck'];
+	/**
+	 * Method that filters array of right rail modules into array of only lazy module or non lazy modules
+	 *
+	 * @param $moduleList
+	 * @param $lazy
+	 * @return array
+	 */
+	private function filterModules($moduleList, $lazy) {
+		$lazyChecker = ($lazy == self::FILTER_LAZY_MODULES) ? [$this, 'modulesLazyCheck'] : [$this, 'modulesNotLazyCheck'];
 		$out = [];
 		foreach ($moduleList as $key => $val) {
 			if ($lazyChecker($key)) {
