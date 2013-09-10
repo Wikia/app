@@ -9,7 +9,7 @@
 	<h2 id=wkRelPagHead>{{relatedPagesHeading}}</h2>
 {{/mobileSkin}}
 <ul {{#mobileSkin}}class="wkLst artSec open"{{/mobileSkin}}>
-	{{#relatedPages}}
+	{{#pages}}
 		<li>
 			<a href="{{pageUrl}}" title="{{pageTitle}}">
 				{{#imgUrl}}
@@ -25,6 +25,6 @@
 			{{pageTitle}}
 			</a>
 		</li>
-	{{/relatedPages}}
+	{{/pages}}
 </ul>
 </section>

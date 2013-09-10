@@ -50,9 +50,7 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function( sloth, w, $ ){
 						),
 						loadTemplate()
 					).done(function(data ,template){
-						data = data[0];
-
-						var items = data && data.items,
+						var items = data[0] && data[0].items,
 							pages = items && items[articleId],
 							relatedPages =  [],
 							artImgPlaceholder = (isMobileSkin ? w.wgCdnRootUrl + '/extensions/wikia/WikiaMobile/images/read_placeholder.png' : ''),

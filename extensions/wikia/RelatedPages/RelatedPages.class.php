@@ -372,12 +372,51 @@ class RelatedPages {
 		return $service->getTextSnippet();
 	}
 
+	/**
+	 * @param OutputPage $out
+	 * @param            $text
+	 *
+	 * Add needed messages to page and add JS assets
+	 *
+	 * @return bool
+	 */
 	public static function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
-		if ( $out->isArticle() && F::app()->wg->Request->getVal( 'diff' ) === null ) {
+		$app = F::app();
+		$wg = $app->wg;
+		$request = $app->wg->Request;
+		$title = $wg->Title;
+
+		if ( $out->isArticle() && $request->getVal( 'action', 'view') == 'view' ) {
 			JSMessages::enqueuePackage( 'RelatedPages', JSMessages::INLINE );
+
+			if(
+				!(Wikia::isMainPage() || !empty( $title ) && !in_array( $title->getNamespace(), $wg->ContentNamespaces )) &&
+				!$app->checkSkin( 'wikiamobile' )
+			) {
+				$scripts = AssetsManager::getInstance()->getURL( 'relatedpages_js' );
+
+				foreach( $scripts as $script ){
+					$wg->Out->addScript( "<script src='{$script}'></script>" );
+				}
+			}
 		}
 
 		return true;
 	}
 
+	/**
+	 * @param $jsStaticPackages
+	 * @param $jsExtensionPackages
+	 * @param $scssPackages
+	 *
+	 * Adds assets for RelatedPages on wikiamobile
+	 *
+	 * @return bool
+	 */
+	public static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages) {
+		$jsStaticPackages[] = 'relatedpages_js';
+		//css is in WikiaMobile.scss as AM can't concatanate scss files currently
+
+		return true;
+	}
 }
