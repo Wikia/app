@@ -1,3 +1,6 @@
+// TODO: split out functionality like featured video validation into it's own module once we have a better idea of
+// what other JS features we're going to need.  For now, everything is in this edit.js file
+
 define( 'vpt.views.edit', [
 	'jquery'
 ], function( $ ) {
