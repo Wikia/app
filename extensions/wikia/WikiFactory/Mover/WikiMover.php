@@ -55,7 +55,7 @@ class WikiMover {
 	 * @param $source integer source id from city_list
 	 * @param $target integer target id from city_list ,
 	 *
-	 * @return new WikiMover object
+	 * @return WikiMover object
 	 *
 	 */
 	public static function newFromIDs( $source, $target ) {
@@ -78,7 +78,7 @@ class WikiMover {
 	 * @param $target string - target database name from city_list
 	 * @param $params mixed default null -
 	 *
-	 * @return new WikiMover object
+	 * @return WikiMover object
 	 */
 	public static function newFromNames( $source, $target, $params = null ) {
 		$oMover = new WikiMover;
@@ -966,7 +966,7 @@ class WikiMover {
 	 *
 	 * @param $wantarray bolean defaul false - return array or string
 	 *
-	 * @return string or array with log or empty if there is no any
+	 * @return string|array with log or empty if there is no any
 	 */
 	public function getLog( $wantarray = false ) {
 		if (is_array($this->mInternalLogger)) {
