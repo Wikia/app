@@ -24,6 +24,8 @@ class Masthead {
 
 	/**
 	 * avatars from mediawiki message
+	 *
+	 * @var array $mDefaultAvatars
 	 */
 	public $mDefaultAvatars = false;
 
@@ -259,15 +261,7 @@ class Masthead {
 	 *
 	 * @return string -- url to Avatar
 	 */
-	public function getThumbnail( $width, $inPurgeFormat = false, $avoidUpscaling = false ) {
-		if( $avoidUpscaling && file_exists( $this->getFullPath() ) ) {
-			list( $imageWidth ) = getimagesize( $this->getFullPath() );
-
-			if( $width > $imageWidth ) {
-					$width = $imageWidth;
-			}
-		}
-
+	public function getThumbnail( $width, $inPurgeFormat = false ) {
 		if($inPurgeFormat){
 			$url = $this->getPurgeUrl( '/thumb/' );
 		} else {
@@ -308,7 +302,6 @@ class Masthead {
 		if (!empty($this->avatarUrl)) {
 			$hasAvatar = true;
 		} else {
-			global $wgBlogAvatarPath;
 			$url = $this->mUser->getOption( AVATAR_USER_OPTION_NAME );
 			if( ( $url ) && ( strpos( $url, '/' ) !== false ) ){
 				// uploaded file
