@@ -33,6 +33,14 @@ class RelatedPages {
 		$this->categories = $categories;
 	}
 
+	private static function followRedirect( &$title ) {
+		$redirect = (new WikiPage( $title ))->getRedirectTarget();
+
+		if ( !empty( $redirect ) ) {
+			$title = $redirect;
+		}
+	}
+
 	/**
 	 * @param $titleOrId Title|int Title object or article ID
 	 * @return array|null
@@ -43,6 +51,8 @@ class RelatedPages {
 
 			if( !empty( $title ) ) {
 				$categories = [];
+
+				self::followRedirect( $title );
 
 				foreach( $title->getParentCategories() as $category => $title ) {
 					$titleObj = Title::newFromText( $category, NS_CATEGORY );

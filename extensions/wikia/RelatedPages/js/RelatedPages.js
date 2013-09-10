@@ -39,7 +39,7 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function( sloth, w, $ ){
 	if( element && articleId ) {
 		sloth({
 			on: element,
-			threshold: 100,
+			threshold: 200,
 			callback: function() {
 				require(['wikia.mustache', 'JSMessages', 'wikia.nirvana'], function(mustache, msg, nirvana){
 					$.when(
