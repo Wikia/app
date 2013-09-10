@@ -28,10 +28,10 @@ class VideoPageArticle extends Article {
 		// Get all the MW stuff out of the way first
 		parent::view();
 
-		//render hub page
-		$app = F::app();
-		$app->wg->Out->clearHTML();
-		$app->wg->Out->addHTML( $app->sendRequest('VideoPageController', 'index') );
+		// Wipe any existing content and output the Video Page
+		$out = $this->getContext()->getOutput();
+		$out->clearHTML();
+		$out->addHTML( F::app()->sendRequest('VideoPageController', 'index') );
 		wfProfileOut(__METHOD__);
 	}
 }
