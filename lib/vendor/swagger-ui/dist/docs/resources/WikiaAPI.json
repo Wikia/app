@@ -1,0 +1,66 @@
+{
+    "basePath": "http://www.wikia.com/wikia.php",
+    "swaggerVersion": "1.1",
+    "apiVersion": "0.2",
+    "resourcePath": "ActivityApi",
+    "apis": [
+        {
+            "path": "",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "summary": "Fetches latest activity information",
+                    "nickname": "getLatestActivity",
+                    "parameters": [
+                        {
+                            "name": "controller",
+                            "description": "Controller used",
+                            "allowMultiple": false,
+                            "dataType": "string",
+                            "paramType": "query",
+                            "required": true,
+                            "defaultValue": "ActivityApi"
+                        },
+                        {
+                            "name": "method",
+                            "description": "Method used",
+                            "allowMultiple": false,
+                            "dataType": "string",
+                            "paramType": "query",
+                            "required": true,
+                            "defaultValue": "getLatestActivity"
+                        },
+                        {
+                            "name": "limit",
+                            "description": "Maximal result count",
+                            "allowMultiple": false,
+                            "dataType": "int",
+                            "paramType": "query",
+                            "required": false,
+                            "defaultValue": "10"
+                        },
+                        {
+                            "name": "namespaces",
+                            "description": "Namespaces filtering",
+                            "allowMultiple": false,
+                            "dataType": "Array",
+                            "paramType": "query",
+                            "required": false,
+                            "defaultValue": "0"
+                        },
+                        {
+                            "name": "allowDuplicates",
+                            "description": "Set if duplicate values are allowed",
+                            "allowMultiple": false,
+                            "dataType": "boolean",
+                            "paramType": "query",
+                            "required": false,
+                            "defaultValue": true
+                        }
+                    ]
+                }
+            ],
+            "description": "Controller for acquiring information about latest user activity on current wiki"
+        }
+    ]
+}

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Controller to fetch informations about wikis
  *
@@ -44,6 +45,7 @@ class WikisApiController extends WikiaApiController {
 	 *
 	 * @example http://www.wikia.com/wikia.php?controller=WikisApi&method=getList&hub=Gaming&lang=en
 	 */
+
 	public function getList() {
 		$hub = trim( $this->request->getVal( 'hub', null ) );
 		$langs = $this->request->getArray( self::PARAMETER_LANGUAGES );
@@ -96,6 +98,7 @@ class WikisApiController extends WikiaApiController {
 	 *
 	 * @example http://www.wikia.com/wikia.php?controller=WikisApi&method=getByString&string=call+of+duty&hub=Gaming&lang=en
 	 */
+
 	public function getByString() {
 		wfProfileIn( __METHOD__ );
 
@@ -160,6 +163,8 @@ class WikisApiController extends WikiaApiController {
 	 * @example &ids=159,831,3125&width=100
 	 * @example &ids=159,831,3125&height=100&width=100&snippet=25
 	 */
+
+
 	public function getDetails() {
 		wfProfileIn( __METHOD__ );
 		$ids = $this->request->getVal( self::PARAMETER_WIKI_IDS, null );

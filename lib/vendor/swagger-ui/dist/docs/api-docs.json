@@ -1,0 +1,50 @@
+{
+    "apiVersion": "0.2",
+    "swaggerVersion": "1.1",
+    "apis": [
+        {
+            "path": "/../resources/ActivityApi.{format}",
+            "description": "Acquire information about the latest user activity on the current wiki"
+        },
+        {
+            "path": "/../resources/ArticlesApi.{format}",
+            "description": "Fetch top articles for the current wiki"
+        },
+        {
+            "path": "/../resources/NavigationApi.{format}",
+            "description": "Fetches wiki navigation"
+        },
+        {
+            "path": "/../resources/RelatedPagesApi.{format}",
+            "description": "Controller to fetch related pages for given article ID"
+        },
+        {
+            "path": "/../resources/SearchApi.{format}",
+            "description": "Fetches results for cross-wiki search for submitted query. As a result you get a list of Wikis."
+        },
+        {
+            "path": "/../resources/SearchSuggestionsApi.{format}",
+            "description": "Controller to find suggested phrases for chosen query"
+        },
+        {
+            "path": "/../resources/StatsApi.{format}",
+            "description": "Controller to get statistical information about the current wiki"
+        },
+        {
+            "path": "/../resources/UserApi.{format}",
+            "description": "Get details about one or more user"
+        },
+        {
+            "path": "/../resources/WAMApi.{format}",
+            "description": "A method to get WAM score starting and last available dates"
+        },
+        {
+            "path": "/../resources/WikiaHubsApi.{format}",
+            "description": "Get explore module data from given date and vertical"
+        },
+        {
+            "path": "/../resources/WikisApi.{format}",
+            "description": "Finds wikis which name or topic match a keyword optionally filtering by vertical (hub) and/or language"
+        }
+    ]
+}

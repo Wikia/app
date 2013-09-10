@@ -1,0 +1,268 @@
+{
+    "basePath": "http://www.wikia.com",
+    "swaggerVersion": "1.1",
+    "apiVersion": "0.2",
+    "resourcePath": "SearchApi",
+    "apis": [
+        {
+            "path": "/wikia.php?controller=SearchApi&method=getCrossWiki",
+            "operations": [
+                {
+                    "httpMethod": "get",
+                    "summary": "Fetches results for cross-wiki search.",
+                    "nickname": "getCrossWiki",
+                    "responseClass": "CrossWikiSearchResultSet",
+                    "parameters": [
+                        {
+                            "name": "query",
+                            "description": "The query to use for the search",
+                            "allowMultiple": false,
+                            "dataType": "string",
+                            "paramType": "query",
+                            "required": true,
+                            "defaultValue": ""
+                        },
+                        {
+                            "name": "lang",
+                            "description": "The two chars wiki language code, (eg.: en, de, fr)",
+                            "allowMultiple": false,
+                            "dataType": "string",
+                            "paramType": "query",
+                            "required": true,
+                            "defaultValue": "en"
+                        },
+                        {
+                            "name": "rank",
+                            "description": "The ranking to use in fetching the list of results, one of default, newest, oldest, recently-modified, stable, most-viewed, freshest, stalest",
+                            "allowMultiple": false,
+                            "dataType": "string",
+                            "paramType": "query",
+                            "required": false,
+                            "allowableValues": {
+                                "valueType": "LIST",
+                                "values": [
+                                    "newest",
+                                    "oldest",
+                                    "recently-modified",
+                                    "stable",
+                                    "most-viewed",
+                                    "freshest",
+                                    "stalest"
+                                ]
+                            },
+                            "defaultValue": ""
+                        },
+                        {
+                            "name": "limit",
+                            "description": "The number of items per batch (page)",
+                            "allowMultiple": false,
+                            "dataType": "int",
+                            "paramType": "query",
+                            "required": false,
+                            "defaultValue": "25"
+                        },
+                        {
+                            "name": "batch",
+                            "description": "The batch (page) of results to fetch",
+                            "allowMultiple": false,
+                            "dataType": "int",
+                            "paramType": "query",
+                            "required": false,
+                            "defaultValue": ""
+                        }
+                    ],
+                    "errorResponses": [
+                        {
+                            "reason": "Query or lang parameters missing",
+                            "code": 400
+                        }
+                    ]
+                }
+            ],
+            "description": "Fetches results for cross-wiki search for submitted query. As a result you get a list of Wikis."
+        },
+        {
+            "path": "/wikia.php?controller=SearchApi&method=getList",
+            "operations": [
+                {
+                    "httpMethod": "get",
+                    "summary": "Do search for given phrase",
+                    "nickname": "getList",
+                    "responseClass": "localWikiSearchResultSet",
+                    "parameters": [
+                        {
+                            "name": "query",
+                            "description": "The query to use for the search",
+                            "allowMultiple": false,
+                            "dataType": "string",
+                            "paramType": "query",
+                            "required": true,
+                            "defaultValue": ""
+                        },
+                        {
+                            "name": "type",
+                            "description": "The search type, either articles (default) or videos. For 'videos' value, this parameter should be used with namespaces parameter (namespaces needs to be set to 6)",
+                            "allowMultiple": false,
+                            "dataType": "string",
+                            "paramType": "query",
+                            "required": false,
+                            "allowableValues": {
+                                "valueType": "LIST",
+                                "values": [
+                                    "videos"
+                                ]
+                            }
+                        },
+                        {
+                            "name": "rank",
+                            "description": "The ranking to use in fetching the list of results, one of default, newest, oldest, recently-modified, stable, most-viewed, freshest, stalest",
+                            "allowMultiple": false,
+                            "dataType": "string",
+                            "paramType": "query",
+                            "required": false,
+                            "allowableValues": {
+                                "valueType": "LIST",
+                                "values": [
+                                    "newest",
+                                    "oldest",
+                                    "recently-modified",
+                                    "stable",
+                                    "most-viewed",
+                                    "freshest",
+                                    "stalest"
+                                ]
+                            },
+                            "defaultValue": ""
+                        },
+                        {
+                            "name": "limit",
+                            "description": "The number of items per batch",
+                            "allowMultiple": false,
+                            "dataType": "int",
+                            "paramType": "query",
+                            "required": false,
+                            "defaultValue": "25"
+                        },
+                        {
+                            "name": "batch",
+                            "description": "The batch (page) of results to fetch",
+                            "allowMultiple": false,
+                            "dataType": "int",
+                            "paramType": "query",
+                            "required": false,
+                            "defaultValue": ""
+                        },
+                        {
+                            "name": "namespaces",
+                            "description": "Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
+                            "allowMultiple": false,
+                            "dataType": "string",
+                            "paramType": "query",
+                            "required": false,
+                            "defaultValue": "0,14"
+                        }
+                    ],
+                    "errorResponses": [
+                        {
+                            "reason": "Query parameter is missing or namespaces parameter is not numeric",
+                            "code": 400
+                        },
+                        {
+                            "reason": "Results not found",
+                            "code": 404
+                        }
+                    ]
+                }
+            ],
+            "description": "search local wikia for given phrase. should not be used directly on www.wikia.com. use on specific wikia instead. for example muppets.wikia.com"
+        }
+    ],
+    "models": {
+        "localWikiSearchResultSet": {
+            "id": "localWikiSearchResultSet",
+            "properties": {
+                "total": {
+                    "type": "int",
+                    "description": "Total number of results",
+                    "required": true
+                },
+                "batches": {
+                    "type": "int",
+                    "description": "Number of batches (pages) of results",
+                    "required": true
+                },
+                "currentBatch": {
+                    "type": "int",
+                    "description": "The index of the current batch (page)",
+                    "required": true
+                },
+                "next": {
+                    "type": "int",
+                    "description": "The amount of items in the next batch (page)",
+                    "required": true
+                },
+                "items": {
+                    "type": "Array",
+                    "description": "Standard container name for element collection (list)",
+                    "required": true,
+                    "items": {
+                        "$ref": "localWikiSearchResult"
+                    }
+                }
+            }
+        },
+        "localWikiSearchResult": {
+            "id": "localWikiSearchResult",
+            "properties": {
+                "id": {
+                    "type": "int",
+                    "description": "An internal identification number for Article",
+                    "required": true
+                },
+                "title": {
+                    "type": "string",
+                    "description": "Article title",
+                    "required": true
+                },
+                "url": {
+                    "type": "string",
+                    "description": "The absolute URL of the Article",
+                    "required": true
+                },
+                "ns": {
+                    "type": "int",
+                    "description": "Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
+                    "required": true
+                }
+            }
+        },
+        "CrossWikiSearchResultSet": {
+            "id": "CrossWikiSearchResultSet",
+            "properties": {
+                "items": {
+                    "type": "Array",
+                    "description": "Standard container name for element collection (list)",
+                    "required": true,
+                    "items": {
+                        "$ref": "CrossWikiSearchResult"
+                    }
+                }
+            }
+        },
+        "CrossWikiSearchResult": {
+            "id": "CrossWikiSearchResult",
+            "properties": {
+                "id": {
+                    "type": "int",
+                    "description": "An internal identification number for Wikia",
+                    "required": true
+                },
+                "language": {
+                    "type": "string",
+                    "description": "Language of the site",
+                    "required": true
+                }
+            }
+        }
+    }
+}
