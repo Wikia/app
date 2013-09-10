@@ -70,7 +70,7 @@ use Swagger\Annotations as SWG;
  * 	)
  *
  * @SWG\Api(
- * 	path="/wikia.php?controller=ActivityApi&method=getData",
+ * 	path="/wikia.php?controller=NavigationApi&method=getData",
  * 	description="Fetches wiki navigation",
  * 	@SWG\Operations(
  * 		@SWG\Operation(

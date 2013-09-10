@@ -398,7 +398,7 @@ use Swagger\Annotations as SWG;
  * 			),
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
- * 					name="keyword",
+ * 					name="string",
  * 					description="Search term",
  * 					paramType="query",
  * 					required="true",
@@ -468,7 +468,7 @@ use Swagger\Annotations as SWG;
  * 			),
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
- * 					name="keyword",
+ * 					name="string",
  * 					description="Search term",
  * 					paramType="query",
  * 					required="true",
