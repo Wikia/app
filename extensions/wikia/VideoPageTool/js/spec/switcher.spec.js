@@ -39,7 +39,7 @@ describe('Form box switcher', function () {
 		expect( switcher.$boxes.length ).toBe( count );
 	});
 
-	it( 'Disables the top most arrow', function() {
+	it( 'disables the top most arrow', function() {
 		var $topMostArrow = $elem.find( '.form-box' ).first().find( '.nav-up' );
 
 		expect( $topMostArrow.attr( 'disabled' ) ).toBe( 'disabled' );
@@ -51,12 +51,12 @@ describe('Form box switcher', function () {
 		expect( $bottomMostArrow.attr( 'disabled' ) ).toBe( 'disabled' );
 	});
 
-	it( 'Disables only two arrows', function() {
+	it( 'disables only two arrows', function() {
 		expect( $elem.find( ':disabled' ).length ).toBe( 2 );
 	});
 
 
-	it( 'Switches down', function() {
+	it( 'switches down', function() {
 		buildDOM();
 
 		$elem.find( '.form-box' ).first().find( '.nav-down' ).click();
@@ -68,7 +68,7 @@ describe('Form box switcher', function () {
 
 	});
 
-	it( 'Switches up', function() {
+	it( 'switches up', function() {
 		buildDOM();
 
 		$elem.find( '.form-box' ).last().find( '.nav-up' ).click();
