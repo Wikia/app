@@ -15,6 +15,7 @@ define('vpt.models.validator', [ 'jquery' ], function( $ ) {
 			this.$formFields.each( this.addRules );
 			this.$form.on( 'submit', $.proxy( this.onSubmit, this ) );
 		},
+
 		/*
 		 * @param {jQuery} $elem Form input to set the rule on
 		 * @param {string} rule Rule property exactly as defined by the jQuery validator plugin
@@ -23,6 +24,7 @@ define('vpt.models.validator', [ 'jquery' ], function( $ ) {
 		setRule: function( $elem, rule, value ) {
 			$elem.data( rule, value );
 		},
+
 		/*
 		 * Add a rule to each element because validator can't handle array inputs by default (i.e. video_description[])
 		 */
@@ -45,14 +47,18 @@ define('vpt.models.validator', [ 'jquery' ], function( $ ) {
 				onkeyup: false
 			});
 		},
+
+		/*
+		 * call submit on the DOM element to prevent retriggering the jQuery event
+		 */
 		onSubmit: function( e ) {
 			e.preventDefault();
 
 			if( this.formIsValid() ) {
-				// call submit on the DOM element to prevent retriggering the jQuery event
 				this.$form[0].submit();
 			}
 		},
+
 		/*
 		 * This is a bit of a hack to deal with jQuery validate's inability to handle input arrays
 		 * @return BOOL Is the form valid
@@ -69,6 +75,10 @@ define('vpt.models.validator', [ 'jquery' ], function( $ ) {
 
 			return isValid;
 		},
+
+		/*
+		 * Remove any error messages and classes added to the form by the validator
+		 */
 		clearErrors: function() {
 			this.$formFields.removeClass( 'error' ).next( '.error' ).remove();
 		}
