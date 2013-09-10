@@ -658,7 +658,7 @@ $messages['ja'] = array(
 	/* picker */
 	'specialcontact-intro-main-head' => "<big>助けが必要? 心配しないで,　ウィキアコミュニティーがあなたのお手伝いをさせていただきます。!</big><br/>ページの内容を変えたりあなたのアカウント内容の変更したりとウィキアの使用方法は下記のリンクから情報を得ることができます。。",
 	'specialcontact-intro-main-local' => '', #(this is meant to be blank)
-	'specialcontact-intro-main-foot' => "'''このページで充分な回答は得られましたか?''' そうでなければ [[Special:contact/general|contact us]] で問題点を解決しましょう。またいつでも '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]]  もしくは '''[[w:c:community:Forum:Community_Central_Forum|community help forums]]'''. 管理者からのヘルプもしくはアドバイスが欲しい場合は, ここから [[w:c:community:Admin_Central:Main_Page|Founder & Admin Central]].",
+	'specialcontact-intro-main-foot' => "'''このページで充分な回答は得られましたか?''' そうでなければ [[Special:contact/general|連絡をとる]] で問題点を解決しましょう。またいつでも '''[[w:c:community:Help:Index|ヘルプページ]]''', [[w:c:community:Blog:Wikia_Staff_Blog|スタッフブログ]]  もしくは '''[[w:c:community:Forum:Community_Central_Forum|コミュニティーヘルプフォーラム]]'''. 管理者からのヘルプもしくはアドバイスが欲しい場合は, ここから [[w:c:community:Admin_Central:Main_Page|管理者のページ]].",
 
 
 	'specialcontact-secheader-onwiki' => "このウィキアページについての質問",
@@ -754,7 +754,7 @@ $messages['ja'] = array(
 	'specialcontact-intro-using-wikia' => "あなたはウィキアコミュニティーの一員です。ウィキアのページを編集することができます。編集のお手伝いが必要な場合は[[Help:Getting_Started|help pages here]]を参照にしてください。編集の仕方、フォーマットを詳しく説明しております。
 
 ウィキアのページをはじめるにあたって質問がある場合、[[Special:ListAdmins|contacting your local admins]].
-コミュニティーメンバーに質問がある場合、[[w:c:community:Forum:Community_Central_Forum|community help forum]].
+コミュニティーメンバーに質問がある場合、[[w:c:community:Forum:Community_Central_Forum|コミュニティーヘルプフォーラム]].
 
 ウィキアページを壊すということはございませんので編集作業を恐れずに楽しんでください。!",
 	'specialcontact-intro-feedback' => "フィードバックがほしい場合? ウィキアはいつでもユーザーからのご意見ご感想をお待ちしております。こちらからお願いします。 [[Special:WikiaLabs|there]].
@@ -786,7 +786,7 @@ $messages['ja'] = array(
 楽しんでね!",
 	'specialcontact-intro-features' => "ウィキアはそのページに沿った様々な機能を提供しています。
 
-あなたが管理者ウィキアのページで機能がうまく生じていないと思うのであれば、コミュニティーメンバーにその機能を終了してもいいかの確認をしてください。メンバーが同意したのであれば、こちらの [[Special:WikiFeatures|Wiki Features]] このページから [[Special:AdminDashboard|Admin Dashboard]] 機能が無効になるようにしてください。リストの中に機能を無効にすることがなければ大変お手数ですがこちらから [[Special:Contact/general|contact us]] リクエストを出してください。
+あなたが管理者ウィキアのページで機能がうまく生じていないと思うのであれば、コミュニティーメンバーにその機能を終了してもいいかの確認をしてください。メンバーが同意したのであれば、こちらの [[Special:WikiFeatures|Wiki Features]] このページから [[Special:AdminDashboard|Admin Dashboard]] 機能が無効になるようにしてください。リストの中に機能を無効にすることがなければ大変お手数ですがこちらから [[Special:Contact/general|連絡をとる]] リクエストを出してください。
 
 管理者でまだ開発中の新しい機能を試したい方はここからお願いします。 [[Special:WikiFeatures|Wiki Features]].
 
@@ -807,7 +807,7 @@ $messages['ja'] = array(
 ",
 
 	/* non-form footer */
-	'specialcontact-noform-footer' => "'''このページで充分な回答は得られましたか?''' そうでなければ [[Special:contact/general|contact us]] で問題点を解決しましょう。またいつでも '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]]  もしくは '''[[w:c:community:Forum:Community_Central_Forum|community help forums]]'''. 管理者からのヘルプもしくはアドバイスが欲しい場合は, ここから [[w:c:community:Admin_Central:Main_Page|Founder & Admin Central]].",
+	'specialcontact-noform-footer' => "'''このページで充分な回答は得られましたか?''' そうでなければ [[Special:contact/general|連絡をとる]] で問題点を解決しましょう。またいつでも '''[[w:c:community:Help:Index|ヘルプページ]]''', [[w:c:community:Blog:Wikia_Staff_Blog|スタッフブログ]]  もしくは '''[[w:c:community:Forum:Community_Central_Forum|コミュニティーヘルプフォーラム]]'''. 管理者からのヘルプもしくはアドバイスが欲しい場合は, ここから [[w:c:community:Admin_Central:Main_Page|管理者のページ]].",
 
 	/* form */
 	'specialcontact-username' => 'あなたのユーザー名',
@@ -856,20 +856,20 @@ $messages['ja'] = array(
 
 	/* after */
 	'specialcontact-submitcomplete' => 'ウィキアにご連絡いただきましてありがとうございます。お返事に2から3日ほどお時間をいただいておりますことをご了承ください。また、こちらのページ
-[[w:c:community:Forum:Community_Central_Forum|Community Forum]] と [[w:c:community:Help:Index|Help pages]]をご確認ください。ウィキアの最新ニュースはここで確認することができます。  [[w:c:community:Blog:Wikia_Staff_Blog |Staff Blog]]. 楽しんでね!',
+[[w:c:community:Forum:Community_Central_Forum|コミュニティーヘルプフォーラム]] と [[w:c:community:Help:Index|ヘルプページ]]をご確認ください。ウィキアの最新ニュースはここで確認することができます。  [[w:c:community:Blog:Wikia_Staff_Blog |スタッフブログ]]. 楽しんでね!',
 );
 
 $messages['zh'] = array(
 	/* special page */
 	'contact' => '联系维基',
 	'specialcontact-wikia' => '联系维基',
-	'specialcontact-pagetitle' => '联系维基社区支持团队',
+	'specialcontact-pagetitle' => '联系维基',
 
 	/* picker */
 	'specialcontact-intro-main-head' => "<big>在这里，维基社区发展和支持团队会帮您解决所有问题。</big><br/>
 点击下面的链接了解如何使用维基以及如何更改您的维基主页或者个人帐户。",
 	'specialcontact-intro-main-local' => '', #(this is meant to be blank)
-	'specialcontact-intro-main-foot' => "'''这里有您寻找的答案吗？如果没有，请[[Special:contact/general|联系我们]]，告诉我们您遇到的相关问题。您也可以登陆我们的'''[[w:c:community:Help:Index|帮助中心]]'''或者[[w:c:community:Blog:Wikia_Staff_Blog|员工博客]]进行查询，或者去'''[[w:c:community:Forum:Community_Central_Forum|社区帮助论坛]]'''进行提问。如果您希望得到维基主页管理员的帮助或者建议，请访问[[w:c:community:Admin_Central:Main_Page|维基管理员中心]]进行查看。",
+	'specialcontact-intro-main-foot' => "'''请问我们帮您解决问题了吗？如果没有，请[[Special:contact/general|联系我们]]，告诉我们您遇到的相关问题。您也可以登陆我们的'''[[w:c:community:Help:Index|帮助中心]]'''或者[[w:c:community:Blog:Wikia_Staff_Blog|员工博客]]进行查询，或者去'''[[w:c:community:Forum:Community_Central_Forum|社区帮助论坛]]'''进行提问。如果您希望得到维基主页管理员的帮助或者建议，请访问[[w:c:community:Admin_Central:Main_Page|维基管理员中心]]进行查看。",
 
 
 	'specialcontact-secheader-onwiki' => "关于维基的问题",
