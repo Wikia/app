@@ -49,6 +49,10 @@ var AdLogicShortPage = function (window, document, log, slotTweaker) {
 	matchMedia = matchMedia || (window.styleMedia && window.styleMedia.matchMedium);
 	matchMedia = matchMedia || (window.media && window.media.matchMedium);
 
+	if (!matchMedia) {
+		log('No working matchMedia implementation found', 'user', logGroup);
+	}
+
 	/**
 	 * Logic to check for given slot on every window resize
 	 *
@@ -71,8 +75,6 @@ var AdLogicShortPage = function (window, document, log, slotTweaker) {
 				wideEnough = true;
 			}
 		}
-
-		log(['shouldBeShown', slotname, 'longEnough', longEnough, 'wideEnough', wideEnough], 'debug', logGroup);
 
 		return longEnough && wideEnough;
 	}
