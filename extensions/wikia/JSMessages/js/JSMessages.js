@@ -174,7 +174,7 @@
 						break;
 					}
 				}
-				Plurals.pluralRules[lang] = ruleFunction;   // cache it for we won't search for it again
+				Plurals.pluralRules[lang] = ruleFunction;   // cache it so we won't search for it again
 			}
 			return Plurals.pluralRules[lang];
 		},
