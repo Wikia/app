@@ -1,4 +1,4 @@
-ddescribe("JSMessages", function () {
+describe("JSMessages", function () {
 	'use strict';
 
 	var async = new AsyncSpec(this),
