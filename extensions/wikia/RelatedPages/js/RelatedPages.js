@@ -1,8 +1,7 @@
 require( [ 'sloth', 'wikia.window', 'jquery' ], function( sloth, w, $ ){
 	'use strict';
 
-	var $placeholder = $( '#mw-data-after-content' ),
-		isMobileSkin = false;
+	var $placeholder, isMobileSkin = false;
 
 	switch( w.skin ) {
 		case 'wikiamobile':
@@ -12,12 +11,19 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function( sloth, w, $ ){
 		case 'oasis':
 			$placeholder = $( '#WikiaArticleFooter' );
 			break;
+		case 'monobook':
+			$placeholder = $( '#mw-data-after-content' )
+			break;
 	}
 
 	var element = $placeholder[0], // $placeholder[0] because sloth doesn't accept jQuery objects
 		cacheKey = 'RelatedPagesAssets',
 		articleId = w.wgArticleId;
 
+	/**
+	 * Checks if template is cached in LocalStorage and if not loads it by using loader
+	 * @returns {$.Deferred}
+	 */
 	function loadTemplate(){
 		var dfd = new $.Deferred();
 
