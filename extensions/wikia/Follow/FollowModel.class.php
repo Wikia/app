@@ -20,7 +20,7 @@ class FollowModel {
 	];
 
 	/**
-	 * getWatchList -- get data for followed pages include see all
+	 * getWatchList -- get data for followed pages
 	 *
 	 * @static
 	 * @access public
@@ -74,6 +74,11 @@ class FollowModel {
 		return $order;
 	}
 
+	/**
+	 * @desc Prepares list of namespaces which should be taken into consideration in selecting the list from DB
+	 *
+	 * @param String $namespace_head
+	 */
 	private function prepareNamespaces( $namespace_head ) {
 		global $wgContentNamespaces, $wgEnableBlogArticles, $wgEnableForumExt;
 		wfProfileIn( __METHOD__ );
@@ -101,6 +106,16 @@ class FollowModel {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * @desc Gets pages from watchlist depending on given parameters; The result list is grouped by static::$namespaces
+	 *
+	 * @param Integer $user_id
+	 * @param Integer $from
+	 * @param Integer $limit
+	 * @param Boolean $show_deleted_pages
+	 *
+	 * @return Array
+	 */
 	private function getWatchListArray( $user_id, $from, $limit, $show_deleted_pages ) {
 		global $wgServer, $wgScript, $wgContentNamespaces;
 		wfProfileIn( __METHOD__ );
@@ -167,6 +182,15 @@ class FollowModel {
 		return $out_data;
 	}
 
+	/**
+	 * @desc Gets amount of watchlist elements grouped by static::$namespaces
+	 *
+	 * @param Integer $user_id
+	 * @param Integer $limit
+	 * @param Array $out_data result array from static::getWatchListArray()
+	 *
+	 * @return array
+	 */
 	private function getWatchListCount( $user_id, $limit, $out_data ) {
 		wfProfileIn( __METHOD__ );
 		$db = wfGetDB( DB_SLAVE );
@@ -216,19 +240,19 @@ class FollowModel {
 	}
 
 	/**
-	 * getUserPageWatchList -- getdata for box on user page
+	 * @desc getUserPageWatchList -- getdata for box on user page
+	 *
+	 * @param Integer $user_id
 	 *
 	 * @static
 	 * @access public
 	 *
-	 *
-	 * @return bool
+	 * @return Array
 	 */
 	static function getUserPageWatchList($user_id) {
 		global $wgContentNamespaces, $wgEnableBlogArticles;
 
 		$NS = array();
-
 		if ( !empty($wgEnableBlogArticles) ) {
 			$NS[] = NS_BLOG_ARTICLE;
 		}
@@ -251,7 +275,6 @@ class FollowModel {
 		);
 
 		$watchlist = array();
-
 		while ($row = $db->fetchRow( $res ) ) {
 			$title = Title::makeTitle( $row['wl_namespace'], $row['wl_title'] );
 			$row['url'] = $title->getFullURL();
@@ -267,6 +290,7 @@ class FollowModel {
 			}
 			$watchlist[] = $row;
 		}
+
 		wfProfileOut( __METHOD__ );
 		return $watchlist;
 	}
