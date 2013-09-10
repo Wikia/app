@@ -1459,32 +1459,6 @@ class ArticleComment {
 	}
 
 	/**
-	 * @param Article $article
-	 * @param Title $title
-	 * @param User $user
-	 * @param Array $permission_errors
-	 *
-	 * @return true because it's a hook
-	 */
-	static public function onBeforeDeletePermissionErrors( &$article, &$title, &$user, &$permission_errors ) {
-		$errors = [];
-		foreach( $permission_errors as $errorArr ) {
-			$errors[] = $errorArr[0];
-		}
-
-		if( self::isCommentingEnabled() &&
-			$user->isAllowed( 'commentdelete' ) &&
-			ArticleComment::isTitleComment( $title ) &&
-			self::isBadAccessError( $errors )
-		) {
-		// ok, somebody with commentdelete right is removing an article comment or a blog comment
-			$permission_errors = [];
-		}
-
-		return true;
-	}
-
-	/**
 	 * @desc Helper method returning true or false depending on fact if ArticleComments or Blogs are enabled
 	 *
 	 * @return bool
@@ -1493,6 +1467,31 @@ class ArticleComment {
 		global $wgEnableArticleCommentsExt, $wgEnableBlogArticles;
 
 		return !empty($wgEnableArticleCommentsExt) || !empty($wgEnableBlogArticles);
+	}
+
+	/**
+	 * @desc Enables article and blog comments deletion for users who have commentdelete right but don't have delete
+	 *
+	 * @param Article $article
+	 * @param Title $title
+	 * @param User $user
+	 * @param Array $permission_errors
+	 *
+	 * @return true because it's a hook
+	 */
+	static public function onBeforeDeletePermissionErrors( &$article, &$title, &$user, &$permission_errors ) {
+		if( self::isCommentingEnabled() &&
+			$user->isAllowed( 'commentdelete' ) &&
+			ArticleComment::isTitleComment( $title )
+		) {
+			foreach( $permission_errors as $key => $errorArr ) {
+				if( self::isBadAccessError( $errorArr ) ) {
+					unset( $permission_errors[$key] );
+				}
+			}
+		}
+
+		return true;
 	}
 
 	/**
