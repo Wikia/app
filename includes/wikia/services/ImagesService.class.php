@@ -12,7 +12,7 @@ class ImagesService extends Service {
 	private static $aAllowedExtensionsList = null;
 	public static function allowedExtensionList() {
 		if ( is_null( self::$aAllowedExtensionsList ) ) {
-			self::$aAllowedExtensionsList = [self::EXT_GIF, self::EXT_PNG. self::EXT_JPG, self::EXT_JPEG];
+			self::$aAllowedExtensionsList = [self::EXT_GIF, self::EXT_PNG, self::EXT_JPG, self::EXT_JPEG];
 		}
 
 		return self::$aAllowedExtensionsList;
