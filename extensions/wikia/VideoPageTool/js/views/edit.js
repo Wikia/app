@@ -2,13 +2,17 @@ define( 'vpt.views.edit', [
 	'jquery'
 ], function( $ ) {
 
-	function VPTEdit() {
+	'use strict';
+
+	var VPTEdit = function() {
 		this.$form = $( '.vpt-form' );
-		this.validator = this.$form.validate({debug:false});
+		this.$submit = $( '#feature-videos-submit' );
+		this.validator = this.$form.validate();
 		// all elements to be validated - jQuery validate doesn't support arrays of form names inputs like "names[]" :(
-		this.$formFields = this.$form.find( '.video_description, .video_display_title, .video_url' );
+		this.$formFields = this.$form.find( '.description, .display-title, .video-key' );
+		this.descriptionMinLength = 200;
 		this.init();
-	}
+	};
 
 	VPTEdit.prototype = {
 		init: function() {
@@ -21,29 +25,48 @@ define( 'vpt.views.edit', [
 			this.$form.find( '.add-video-button' ).each( function() {
 				var $this = $( this ),
 					$box = $this.closest( '.form-box' ),
-					$urlInput = $this.siblings( '.video_url' ),
-					$titleDisplay = $this.siblings( '.video-name' ),
-					$titleInput = $box.find( '.video_display_title' ),
-					$descInput = $box.find( '.video_description' ),
+					$videoKeyInput = $this.siblings( '.video-key' ),
+					$videoTitle = $this.siblings( '.video-title' ),
+					$displayTitleInput = $box.find( '.display-title' ),
+					$descInput = $box.find( '.description' ),
 					$thumb = $box.find( '.video-thumb' );
 
 				$this.addVideoButton({
 					callbackAfterSelect: function( url, vet ) {
-						// TODO: ajax request - send url, get back thumbnail html, title, description.  Hard coded for now
 
-						var title = 'test title',
-							description = 'test description',
-							thumbHtml = '<a href="/wiki/File:007_James_Bond_Everything_or_Nothing_(VG)_(2004)_-_PS2-Gamecube-X-Box" data-external="0" data-ref="File:007_James_Bond_Everything_or_Nothing_(VG)_(2004)_-_PS2-Gamecube-X-Box" class="video image lightbox" style="overlay:hidden;height:84px;margin-bottom:6px;padding-top:3px;"><div class="timer">01:40</div><div class="Wikia-video-play-button" style="line-height:84px;width:150px;"><img class="sprite play small" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"></div><img alt="" src="http://images.liz.wikia-dev.com/__cb20120524192151/video151/images/thumb/5/52/007_James_Bond_Everything_or_Nothing_%28VG%29_%282004%29_-_PS2-Gamecube-X-Box/150px-007_James_Bond_Everything_or_Nothing_%28VG%29_%282004%29_-_PS2-Gamecube-X-Box.jpg" width="150" height="84" data-video-name="007 James Bond Everything or Nothing (VG) (2004) - PS2-Gamecube-X-Box" data-video-key="007_James_Bond_Everything_or_Nothing_%28VG%29_%282004%29_-_PS2-Gamecube-X-Box" data-src="http://images.liz.wikia-dev.com/__cb20120524192151/video151/images/thumb/5/52/007_James_Bond_Everything_or_Nothing_%28VG%29_%282004%29_-_PS2-Gamecube-X-Box/150px-007_James_Bond_Everything_or_Nothing_%28VG%29_%282004%29_-_PS2-Gamecube-X-Box.jpg" class="Wikia-video-thumb"></a>';
+						$.nirvana.sendRequest({
+							controller: 'VideoPageToolSpecial',
+							method: 'getVideoData',
+							type: 'GET',
+							format: 'json',
+							data: {
+								url: url
+							},
+							callback: function( json ) {
+								if( json.result === 'ok' ) {
 
-						// update input value and remove any error messages that might be there.
-						$urlInput.val( url ).removeClass('error' ).next( '.error' ).remove();
-						$titleDisplay.removeClass( 'alternative' ).text( title );
-						$titleInput.val( title );
-						$descInput.val( description );
-						$thumb.html( thumbHtml );
+									var video = json.video;
 
-						// close VET modal and return false to prevent the second window from opening
-						vet.close();
+									// update input value and remove any error messages that might be there.
+									$videoKeyInput
+										.val( video.videoKey )
+										.removeClass( 'error' )
+										.next( '.error' )
+										.remove();
+									$videoTitle.removeClass( 'alternative' )
+										.text( video.videoTitle );
+									$displayTitleInput.val( video.displayTitle );
+									$descInput.val( video.description );
+									$thumb.html( video.videoThumb );
+									// close VET modal
+									vet.close();
+								} else {
+									window.GlobalNotification.show( json.msg, 'error' );
+								}
+							}
+						});
+
+						// Don't move on to second VET screen.  We're done.
 						return false;
 					}
 				});
@@ -66,21 +89,58 @@ define( 'vpt.views.edit', [
 		initValidate: function() {
 			var that = this;
 
-			// add a rule to each element because validator can't handle array inputs by default (i.e. video_description[])
+			// Add a rule to each element because validator can't handle array inputs by default
+			// (i.e. video_description[])
 			this.$formFields.each( function() {
-				$( this ).rules( "add", {
+				var $this = $( this ),
+					minLength = $this.is( '.description' ) ? that.descriptionMinLength : 0;
+
+				$this.rules( 'add', {
 					required: true,
+					minlength: minLength,
 					messages: {
-						required: $.msg( 'htmlform-required' )
-					}
+						required: $.msg( 'htmlform-required' ),
+						// Dynamically calculate the character length in the error message as you type.
+						// Note: onkeyup needs to be set to false for this to work properly
+						minlength: function( len, elem ) {
+							var charsToGo = that.descriptionMinLength - $( elem ).val().length;
+							return [ $.msg( 'videopagetool-description-minlength-error', len, charsToGo ) ];
+						}
+					},
+					onkeyup: false
 				});
 			});
 
-			this.$form.on( 'submit', function() {
-				that.$formFields.each( function() {
-					that.validator.element( $(this) )
-				});
+			// Manually do form validation on submit
+			this.$form.on( 'submit', function( e ) {
+				e.preventDefault();
+
+				if( that.checkFields() ) {
+					// call submit on the DOM element to prevent retriggering the jQuery event
+					that.$form[0].submit();
+				}
 			});
+
+			// If the back end has thrown an error, run the front end validation on page load
+			if( $( '#vpt-form-error' ).length ) {
+				this.checkFields();
+			}
+		},
+		/*
+		 * This is a bit of a hack to deal with jQuery validate's inability to handle input arrays
+		 * @return BOOL Is the form valid
+		 */
+		checkFields: function() {
+			var that = this,
+				allValid = true;
+
+			this.$formFields.each( function() {
+				if ( !( that.validator.element( $( this ) ) ) ) {
+					allValid = false;
+				}
+			});
+
+			return allValid;
 		},
 		initReset: function() {
 			var that = this;
@@ -92,15 +152,28 @@ define( 'vpt.views.edit', [
 					title: $.msg( 'videopagetool-confirm-clear-title' ),
 					content: $.msg( 'videopagetool-confirm-clear-message' ),
 					onOk: function() {
-						// Clear all form input values
-						that.$form[0].reset();
-						// Also clear all error messages for better UX
-						that.$formFields.removeClass('error' ).next( '.error' ).remove();
+						that.clearFeaturedVideoForm();
 					},
 					width: 700
 				});
 
 			});
+		},
+		/*
+		 * This reset is very specific to this form since it covers reverting titles and thumbnails
+		 * @todo: we may want to just create a default empty version of the form and hide it if it's not needed.
+		 * That way we could just replace all the HTML to its default state without worrying about clearing every form
+		 * field.
+		 */
+		clearFeaturedVideoForm: function() {
+			// Clear all form input values.
+			this.$form.find( 'input:text, input:hidden, textarea' ).val( '' );
+			// Reset video title
+			this.$form.find( '.video-name' ).text( $.msg( 'videopagetool-video-title-default-text' ) );
+			// Rest the video thumb
+			this.$form.find( '.video-thumb' ).html( '' );
+			// Also clear all error messages for better UX
+			this.$formFields.removeClass( 'error' ).next( '.error' ).remove();
 		}
 	};
 

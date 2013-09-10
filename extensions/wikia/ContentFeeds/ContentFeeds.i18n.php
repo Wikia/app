@@ -175,6 +175,16 @@ $messages['fi'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Virhe: Sivun runko on pakollinen',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'contentfeeds-firstfewarticles-tag-header' => 'Upprætta tínar fyrstu síður!',
+	'contentfeeds-firstfewarticles-tag-title' => 'Heiti',
+	'contentfeeds-firstfewarticles-tag-next' => 'Næsta',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Feilur: Síðuheitið er kravt',
+);
+
 /** French (français)
  */
 $messages['fr'] = array(
@@ -438,6 +448,9 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'contentfeeds-desc' => 'Dèje date ricche de \'mbormaziune attraverse le diverse tag o "feed"',
+	'contentfeeds-newimages-rss-title' => 'RSS Feed pe {{#Special:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'Feed da $1',
 	'contentfeeds-firstfewarticles-tag-header' => 'Ccreje le prime pàggene tune!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Titole',
 	'contentfeeds-firstfewarticles-tag-next' => 'Prossime',
@@ -531,11 +544,19 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
+	'contentfeeds-desc' => 'Забезпечує багату і актуальну інформацію за допомогою різних міток або каналів',
+	'contentfeeds-newimages-rss-title' => 'RSS-канал для {{#Special:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'Канал з $1',
+	'contentfeeds-firstfewarticles-tag-header' => 'Створіть ваші перші кілька сторінок!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Заголовок',
 	'contentfeeds-firstfewarticles-tag-next' => 'Далі',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Помилка: назва сторінки потрібна',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Помилка: текст сторінки потрібний',
 );
 
 /** Veps (vepsän kel’)

@@ -72,6 +72,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string msg - result message
 	 */
 	public function edit() {
+
 		JSMessages::enqueuePackage( 'VideoPageTool', JSMessages::EXTERNAL );
 
 		$date = $this->getVal( 'date', strtotime( date( 'Y-M-d' ) ) );
@@ -103,7 +104,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 
 		$videos = $videoTool->getData();
 
-		$this->leftMenuItems = $helper->getLeftMenuItems( $section );
+		$this->leftMenuItems = $helper->getLeftMenuItems( $section, $language, $date );
 		$this->moduleView = $this->app->renderView( 'VideoPageToolSpecial', $section, array( 'videos' => $videos, 'date' => $date, 'language' => $language ) );
 
 		$this->section = $section;
@@ -251,6 +252,27 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 			$this->msg = '';
 			$this->video = $video;
 		}
+	}
+
+	/*
+	 * Render header
+	 */
+
+	public function executeHeader($data) {
+		/*
+		 * TODO: imported function from SpecialMarketingToolbox, not sure if we need it
+		 */
+
+		// $optionalDataKeys = array('date', 'moduleName', 'sectionName', 'verticalName',
+		// 	'regionName', 'lastEditor', 'lastEditTime');
+
+		// foreach ($optionalDataKeys as $key) {
+		// 	if (isset($data[$key])) {
+		// 		$this->$key = $data[$key];
+		// 	}
+		// }
+
+		$this->dashboardHref = SpecialPage::getTitleFor('VideoPageTool')->getLocalURL();
 	}
 
 }

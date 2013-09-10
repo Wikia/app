@@ -3,14 +3,14 @@
 ?>
 
 <?= $app->renderView(
-	'MarketingToolbox',
+	'VideoPageToolSpecial',
 	'Header'
 ) ?>
 
-<div class="marketingToolbox WikiaGrid">
+<div id="VPTDashboard" class="WikiaGrid">
 	<div class="grid-2">
 		<h2><?= wfMessage('videopagetool-language-title'); ?></h2>
-		<select id="marketingToolboxRegionSelect" data-default-language="<?= $language ?>">
+		<select id="VideoPageToolRegionSelect" data-default-language="<?= $language ?>">
 			<option value="placeholder"><?= wfMessage('videopagetool-language-select-default-value'); ?></option>
 			<? asort( $languages ); ?>
 			<? foreach ( $languages as $langCode => $langName ): ?>
@@ -28,7 +28,7 @@
 		<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
 		<div class="ml15">
 			<h2><?= wfMessage('videopagetool-date-title'); ?></h2>
-			<div id="date-picker"><?=wfMessage('videopagetool-tooltip-calendar-placeholder')?></div>
+			<div class="date-picker"><?=wfMessage('videopagetool-tooltip-calendar-placeholder')?></div>
 		</div>
 	</div>
 </div>

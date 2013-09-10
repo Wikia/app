@@ -237,12 +237,24 @@ body >a >img[src$="noad.gif"] {
 }
 
 // Right rail ads centering
-#LEFT_SKYSCRAPER_2, #INCONTENT_BOXAD_1 {
+#LEFT_SKYSCRAPER_2 {
 	font-size: 0;
-	margin-left: 15px;
-	margin-right: 15px;
 	text-align: center;
 	> div, > iframe {
 		display: inline-block;
+	}
+}
+
+// Floating medrec
+#WikiaAdInContentPlaceHolder {
+	position: absolute;
+	#INCONTENT_BOXAD_1 {
+		height: 250px;
+		width: 300px;
+		position: relative;
+		@if ( not $responsive-layout-enabled ) {
+			margin-left: 15px;
+			margin-right: 15px;
+		}
 	}
 }
