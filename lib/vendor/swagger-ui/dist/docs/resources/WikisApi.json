@@ -14,7 +14,7 @@
                     "responseClass": "UnexpandedWikiaResultSet",
                     "parameters": [
                         {
-                            "name": "keyword",
+                            "name": "string",
                             "description": "Search term",
                             "allowMultiple": false,
                             "dataType": "string",
@@ -67,8 +67,12 @@
                     ],
                     "errorResponses": [
                         {
-                            "reason": "Number of languages exceeded",
+                            "reason": "Number of languages exceeded or keyword is missing",
                             "code": 400
+                        },
+                        {
+                            "reason": "Results not found",
+                            "code": 404
                         }
                     ]
                 }
@@ -85,7 +89,7 @@
                     "responseClass": "ExpandedWikiaResultSet",
                     "parameters": [
                         {
-                            "name": "keyword",
+                            "name": "string",
                             "description": "Search term",
                             "allowMultiple": false,
                             "dataType": "string",
@@ -138,8 +142,12 @@
                     ],
                     "errorResponses": [
                         {
-                            "reason": "Number of languages exceeded",
+                            "reason": "Number of languages exceeded or keyword is missing",
                             "code": 400
+                        },
+                        {
+                            "reason": "Results not found",
+                            "code": 404
                         }
                     ]
                 }
@@ -190,7 +198,7 @@
                     ],
                     "errorResponses": [
                         {
-                            "reason": "Number of languages exceeded",
+                            "reason": "Ids parameter is missing",
                             "code": 400
                         }
                     ]

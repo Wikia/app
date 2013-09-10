@@ -34,7 +34,7 @@
                     ],
                     "errorResponses": [
                         {
-                            "reason": "Invalid parameter or category",
+                            "reason": "Ids parameter is missing",
                             "code": 400
                         },
                         {

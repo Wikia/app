@@ -5,7 +5,7 @@
     "resourcePath": "NavigationApi",
     "apis": [
         {
-            "path": "/wikia.php?controller=ActivityApi&method=getData",
+            "path": "/wikia.php?controller=NavigationApi&method=getData",
             "operations": [
                 {
                     "httpMethod": "GET",

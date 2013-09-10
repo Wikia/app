@@ -73,12 +73,8 @@
                     ],
                     "errorResponses": [
                         {
-                            "reason": "invalid parameters",
+                            "reason": "Query or lang parameters missing",
                             "code": 400
-                        },
-                        {
-                            "reason": "results not found",
-                            "code": 404
                         }
                     ]
                 }
@@ -168,11 +164,11 @@
                     ],
                     "errorResponses": [
                         {
-                            "reason": "invalid parameters",
+                            "reason": "Query parameter is missing or namespaces parameter is not numeric",
                             "code": 400
                         },
                         {
-                            "reason": "results not found",
+                            "reason": "Results not found",
                             "code": 404
                         }
                     ]
