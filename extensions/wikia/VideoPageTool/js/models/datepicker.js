@@ -4,6 +4,8 @@
  */
 define('vpt.models.datepicker', [], function() {
 
+	'use strict';
+
 	function Datepicker(params) {
 		this.language = params.language;
 		this.controller = params.controller;
