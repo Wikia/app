@@ -178,11 +178,9 @@
 		 * @returns {string} Proper plural form
 		 */
 		getPlural: function(forms, ruleFunction, n) {
-			var plural = ruleFunction(n);
-			// prevent from running out of the forms array bounds
-			if (plural < 0) {
-				plural = 0;
-			} else if (plural >= forms.length) {
+			var plural = isNaN(n) ? -1 : ruleFunction(n);  // in case of a missing cardinality, force using the last form
+			// in case of doubts, MW uses the last plural form
+			if ((plural < 0) || (plural >= forms.length)) {
 				plural = forms.length - 1;
 			}
 			return forms[plural];
@@ -202,14 +200,11 @@
 		 */
 		process: function(msg, msgArguments, language) {
 			msg = msg.replace(/\{\{PLURAL:\$(\d+)\|([^\{\}]+)\}\}/gi, function(wholeMsg, variable, forms) {
-				if ((variable < 1) || (variable > msgArguments.length)) { // no argument was passed
-					return wholeMsg;
-				}
-				var cardinality = msgArguments[variable - 1];
-				if (typeof cardinality !== "number") { // try converting it to a number
-					cardinality = parseInt(cardinality);
-					if (isNaN(cardinality)) {
-						return wholeMsg;
+				var cardinality = NaN;      // used in case of a missing argument or invalid argument value
+				if ((variable > 0) && (variable <= msgArguments.length)) {
+					cardinality = msgArguments[variable - 1];
+					if (typeof cardinality !== "number") { // try converting it to a number
+						cardinality = parseInt(cardinality);    // if it's not a number, it will be a NaN
 					}
 				}
 				return Plurals.getPlural(forms.split('|'), Plurals.getPluralRuleFunction(language), cardinality);

@@ -81,6 +81,16 @@ describe("JSMessages", function () {
 		expect(msg('caseInsensitivePlural', 2)).toBe('two');
 	});
 
+	it('PLURAL without parameter uses the last form', function() {
+		window.wgUserLanguage = 'en';
+		expect(msg('defaultPlural')).toBe('$1 multiple');
+	});
+
+	it('PLURAL with non numerical parameter uses the last form', function() {
+		window.wgUserLanguage = 'en';
+		expect(msg('defaultPlural', 'foo')).toBe('foo multiple');
+	});
+
 	it('default value is returned for unknown message', function() {
 		window.wgUserLanguage = defaultLang;
 		expect(msg('unknown')).toBe('unknown');
