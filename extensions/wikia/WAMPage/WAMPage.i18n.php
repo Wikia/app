@@ -251,7 +251,7 @@ WAM aktualizowany jest codziennie, a 5000 najwyżej ocenionych wiki dodawanych j
 ===Kiedy rozpoczęto liczenie WAM?===
 	WAM jest liczony od 1 stycznia 2012.
 ===Gdzie znaleźć WAM?===
-	Można go zaleźć na tej stronie, na stronach hubów - [[w:c:en:Video Games|Gry]], [[w:c:en:Entertainment|Rozrywka]] i [[w:c:en:Lifestyle|Lifestyle]] i w podglądzie poszczególnych wiki na stronie głównej Wikii.
+	Można go zaleźć na tej stronie, na stronach hubów - [[w:c:pl:Gry|Gry]], [[w:c:pl:Rozrywka|Rozrywka]] i [[w:c:pl:Lifestyle|Lifestyle]] i w podglądzie poszczególnych wiki na stronie głównej Wikii.
 ===Czy mogę publikować punktację WAM na mojej wiki?===
 	Tak. Zachęcamy użytkowników do publikacji punktacji na wiki, jednak prosimy o dodanie linka zwrotnego do strony rankingu.
 ===Gdzie mogę dowiedzieć się więcej?===
