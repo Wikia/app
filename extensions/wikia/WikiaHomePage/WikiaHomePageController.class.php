@@ -188,7 +188,7 @@ class WikiaHomePageController extends WikiaController {
 			foreach($wikiBatch as &$batchPromotedDemoted) {
 				foreach($batchPromotedDemoted as &$batch) {
 					// replace image thumbnails with JPG
-					$batch['image'] = ImagesService::overrideThumbnailFormat($batch['image'], 'jpg');
+					$batch['image'] = ImagesService::overrideThumbnailFormat($batch['image'], ImagesService::EXT_JPG);
 				}
 			}
 		}
@@ -457,7 +457,7 @@ class WikiaHomePageController extends WikiaController {
 							? $sliderData['data']['slides'][0]['photoUrl']
 							: null;
 
-						$hubImages[$hubId] = ImagesService::getThumbUrlFromFileUrl($fileUrl, '330px', 'jpg'); // 330px - width of the image
+						$hubImages[$hubId] = ImagesService::getThumbUrlFromFileUrl($fileUrl, 330, ImagesService::EXT_JPG); // 330px - width of the image
 					}
 
 					return $hubImages;
