@@ -71,10 +71,10 @@ class WikiaCollectionsModel extends WikiaModel {
 				$list = $this->getList($langCode);
 				foreach ($list as &$collection) {
 					if (!empty($collection['sponsor_hero_image'])) {
-						$collection['sponsor_hero_image'] = ImagesService::getLocalFileThumbUrlAndSizes($collection['sponsor_hero_image']);
+						$collection['sponsor_hero_image'] = ImagesService::getLocalFileThumbUrlAndSizes($collection['sponsor_hero_image'], ImagesService::EXT_JPG);
 					}
 					if (!empty($collection['sponsor_image'])) {
-						$collection['sponsor_image'] = ImagesService::getLocalFileThumbUrlAndSizes($collection['sponsor_image']);
+						$collection['sponsor_image'] = ImagesService::getLocalFileThumbUrlAndSizes($collection['sponsor_image'], ImagesService::EXT_JPG);
 					}
 
 					$collection['wikis'] = $this->getWikisFromCollection($collection['id']);
