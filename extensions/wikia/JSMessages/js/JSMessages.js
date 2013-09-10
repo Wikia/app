@@ -42,6 +42,10 @@
 			if (window.wgMessages) {
 				ret = window.wgMessages[key] || ret;
 
+				// the is a small design flaw in JSMessages - it can fetch messages for both, user language and content
+				// language (although nobody uses the later method right now). But all of them are stored in the same
+				// window.wgMessages so there is no way to determine message language. We assume the user language here,
+				// but we might want to improve it in the future.
 				ret = Plurals.process(ret, arguments, window.wgUserLanguage);
 
 				// replace $1, $2, $3, ...  with parameters provided
