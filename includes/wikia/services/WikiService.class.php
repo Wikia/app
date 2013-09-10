@@ -359,10 +359,10 @@ class WikiService extends WikiaModel {
 				
 				if ($file instanceof File && $file->exists()) {
 					$imageServing = new ImageServing(null, $imageWidth, $imageHeight);
-                   	$images[$row->city_id] = ImagesService::overrideThumbnailFormat(
-                    	$imageServing->getUrl($row->city_main_image, $file->getWidth(), $file->getHeight()),
+					$images[$row->city_id] = ImagesService::overrideThumbnailFormat(
+						$imageServing->getUrl( $row->city_main_image, $file->getWidth(), $file->getHeight() ),
 						ImagesService::EXT_JPG
-                   	);
+					);
 				}
 			}
 		} catch(Exception $e) {
