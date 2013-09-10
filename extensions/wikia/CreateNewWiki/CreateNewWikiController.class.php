@@ -123,6 +123,11 @@ class CreateNewWikiController extends WikiaController {
 
 		$params = $wgRequest->getArray('data');
 
+        //CE-315
+        if($params['wLanguage'] != 'en'){
+            $params['wAllAges'] = null;
+        }
+
 		if ( !empty($params) &&
 			(!empty($params['wikiName']) && !empty($params['wikiDomain']) ) )
 		{

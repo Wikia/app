@@ -1,4 +1,6 @@
 <?php
+error_reporting(0);
+
 	$selectedLang = empty($params['wikiLanguage']) ? $wg->LanguageCode : $params['wikiLanguage'];
 ?>
 <section id="CreateNewWiki">
@@ -155,7 +157,8 @@
 	?>
 					<option value="3"><?= wfMessage('autocreatewiki-category-other')->escaped() ?></option>
 				</select>
-				<div class="checkbox">
+
+		        <div class="checkbox" id="all-ages-div" <?php echo empty($selectedLang) || $selectedLang === 'en' ? '':'style=display:none' ?> >
 					<input type="checkbox" name="all-ages" value="1">
 					<?= $app->renderView(
 						'WikiaStyleGuideTooltipIcon',
@@ -167,6 +170,7 @@
 					);
 					?>
 				</div>
+
 
 				<nav class="back-controls">
 					<input type="button" value="<?= wfMessage('cnw-back')->escaped() ?>" class="secondary back">
