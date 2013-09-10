@@ -389,7 +389,7 @@ jQuery(function($){
 					category: category,
 					label: 'result-' + ($(e.currentTarget).hasClass('video') ? 'video' : 'photo')
 				});
-			}).on('mousedown', '.video-addon-results > h1 > a', function() {
+			}).on('mousedown', '.video-addon-results > h1 > a', function(e) {
 				track({
 					browserEvent: e,
 					category: category,
