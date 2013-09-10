@@ -262,7 +262,7 @@ class ImagesServiceTest extends WikiaBaseTest {
 				'imageUrl' => 'http://images2.wikia.nocookie.net/__cb20130906174203/corp/images/a/a5/W-Live_Games_Hubslider_330x210-1.jpeg',
 				'destSize' => '100x100',
 				'newExtension' => ImagesService::EXT_JPG,
-				'expected' => 'http://images2.wikia.nocookie.net/__cb20130906174203/corp/images/thumb/a/a5/W-Live_Games_Hubslider_330x210-1.jpg/100x100-W-Live_Games_Hubslider_330x210-1.jpeg'
+				'expected' => 'http://images2.wikia.nocookie.net/__cb20130906174203/corp/images/thumb/a/a5/W-Live_Games_Hubslider_330x210-1.jpeg/100x100-W-Live_Games_Hubslider_330x210-1.jpeg'
 			],
 		];
 	}

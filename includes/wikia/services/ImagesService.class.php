@@ -9,14 +9,7 @@ class ImagesService extends Service {
 	const EXT_PNG  = '.png';
 	const EXT_GIF  = '.gif';
 
-	private static $aAllowedExtensionsList = null;
-	public static function allowedExtensionList() {
-		if ( is_null( self::$aAllowedExtensionsList ) ) {
-			self::$aAllowedExtensionsList = [self::EXT_GIF, self::EXT_PNG, self::EXT_JPG, self::EXT_JPEG];
-		}
-
-		return self::$aAllowedExtensionsList;
-	}
+	public static $allowedExtensionsList = [self::EXT_GIF, self::EXT_PNG, self::EXT_JPG, self::EXT_JPEG];
 
 	/**
 	 * get image thumbnail
@@ -101,6 +94,23 @@ class ImagesService extends Service {
 	}
 
 	/**
+	 * @desc Check for image extension
+	 *
+	 * @param String $imageUrl original image's URL
+	 * @param String $extension extension
+	 *
+	 * @return Boolean
+	 */
+	public static function imageUrlHasExtension($imageUrl, $extension) {
+		$fileExt = strtolower( '.' . pathinfo( $imageUrl, PATHINFO_EXTENSION ) );
+		$extension = strtolower( $extension );
+
+		static $jpegExtList = [self::EXT_JPG, self::EXT_JPEG];
+
+		return ($fileExt == $extension) || ( in_array($fileExt, $jpegExtList) && in_array($extension, $jpegExtList) );
+	}
+
+	/**
 	 * @desc Returns thumbnail's new URL
 	 *
 	 * @param String $thumbUrl original thumb's URL
@@ -109,7 +119,7 @@ class ImagesService extends Service {
 	 * @return String new URL
 	 */
 	public static function overrideThumbnailFormat($thumbUrl, $newExtension) {
-		if ( in_array($newExtension, self::allowedExtensionList()) ) {
+		if ( in_array($newExtension, self::$allowedExtensionsList) && !self::imageUrlHasExtension($thumbUrl, $newExtension) ) {
 			$thumbUrl .= $newExtension;
 		}
 
