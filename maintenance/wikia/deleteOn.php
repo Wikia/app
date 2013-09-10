@@ -16,7 +16,7 @@
 
 $oldCwd = getcwd();
 ini_set( "include_path", dirname(__FILE__)."/.." );
-$optionsWithArgs = array( 'u', 'r', 'i', 't', 'id' );
+$optionsWithArgs = array( 'u', 'r', 'i', 't', 'id', 's' );
 require_once( 'commandLine.inc' );
 
 chdir( $oldCwd );
@@ -40,6 +40,8 @@ if ( isset( $options['i'] ) ) {
 	$interval = $options['i'];
 }
 
+$suppress = isset( $options['s'] );
+
 $wgUser = User::newFromName( $user );
 if ( !$wgUser ) {
 	print "Invalid username\n";
@@ -53,52 +55,52 @@ if ( $wgUser->isAnon() ) {
 
 $dbw = wfGetDB( DB_MASTER );
 
-	if ( isset( $options['id'] ) ) {
-		$page = Title::newFromId( $options['id'] );
-	} else {
-		$page = Title::newFromText( $options['t'] );
-	}
-	if ( is_null( $page ) ) {
-		print "Invalid title or page does not exist\n";
-		exit (1) ;
-	}
-	if( !$page->exists() ) {
-		print "Skipping nonexistent page '" . $page->getPrefixedText () . "'\n";
-		exit (1) ;
-	}
+if ( isset( $options['id'] ) ) {
+	$page = Title::newFromId( $options['id'] );
+} else {
+	$page = Title::newFromText( $options['t'] );
+}
+if ( is_null( $page ) ) {
+	print "Invalid title or page does not exist\n";
+	exit (1) ;
+}
+if( !$page->exists() ) {
+	print "Skipping nonexistent page '" . $page->getPrefixedText () . "'\n";
+	exit (1) ;
+}
 
-	$wgTitle = $page; // this cannot be NULL
+$wgTitle = $page; // this cannot be NULL
 
-	print $page->getPrefixedText();
-	$dbw->begin();
-	$nspace = $page->getNamespace();
-	$success = 0; $removed = 0;
-	if ( in_array( $nspace, array(NS_IMAGE, NS_FILE) ) ) {
-		$file = wfLocalFile( $page );
-		if ( $file ) {
-			$oldimage = null; // Must be passed by reference
-			$success = FileDeleteForm::doDelete( $page, $file, $oldimage, $reason, false )->isOK();
-			$removed = 1;
-		} 
+print $page->getPrefixedText();
+$dbw->begin();
+$nspace = $page->getNamespace();
+$success = 0; $removed = 0;
+if ( in_array( $nspace, array(NS_IMAGE, NS_FILE) ) ) {
+	$file = wfLocalFile( $page );
+	if ( $file ) {
+		$oldimage = null; // Must be passed by reference
+		$success = FileDeleteForm::doDelete( $page, $file, $oldimage, $reason, $suppress )->isOK();
+		$removed = 1;
 	}
+}
 
-	if ( $removed == 0 ) {
-		$page_id = $page->getArticleID();
-		$art = new Article( $page );
-		$success = $art->doDeleteArticle( $reason );
-		if ( $success ) {
-			wfRunHooks('ArticleDeleteComplete', array(&$art, &$wgUser, $reason, $page_id));
-		}
-	}
-	$dbw->commit();
-
+if ( $removed == 0 ) {
+	$page_id = $page->getArticleID();
+	$art = new Article( $page );
+	$success = $art->doDeleteArticle( $reason, $suppress );
 	if ( $success ) {
-		print "\n";
-	} else {
-		print " FAILED\n";
+		wfRunHooks('ArticleDeleteComplete', array(&$art, &$wgUser, $reason, $page_id));
 	}
+}
+$dbw->commit();
 
-	if ( $interval ) {
-		sleep( $interval );
-	}
-	wfWaitForSlaves( 5 );
+if ( $success ) {
+	print "\n";
+} else {
+	print " FAILED\n";
+}
+
+if ( $interval ) {
+	sleep( $interval );
+}
+wfWaitForSlaves( 5 );
