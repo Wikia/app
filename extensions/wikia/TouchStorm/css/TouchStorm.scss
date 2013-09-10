@@ -2,6 +2,7 @@
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/opacity";
 @import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/layout";
 
 /*
  * Temporary styling for the TouchStorm right rail module
@@ -18,11 +19,17 @@
 	}
 
 	.veeseoRCWInlineVHeadline {
-		font-size: 18px;
-		font-weight: bold;
-		margin-top: 0px;
-		margin-bottom: 25px;
-		padding-left: 2px;
+			font-size: 18px;
+			font-weight: bold;
+			margin-top: 0px;
+			margin-bottom: 25px;
+			padding-left: 2px;
+
+			@if ( $responsive-layout-enabled ) {
+				font-size: 20px;
+				font-weight: normal;
+			}
+
     }
 
 	// hide veeseo logo
@@ -67,3 +74,4 @@
 		}
 	}
 }
+
