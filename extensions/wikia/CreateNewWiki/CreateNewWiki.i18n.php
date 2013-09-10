@@ -70,7 +70,7 @@ $messages['en'] = array(
 	'cnw-welcome-instruction2' => 'You\'ll see this button throughout your wiki, use it any time you want to add a new page.',
 	'cnw-welcome-help' => 'Find answers, advice, and more on <a href="http://community.wikia.com">Community Central</a>.',
 	// error messages
-	'cnw-error-general' => 'Oops, something went wrong on our side!  Please try again, or <a href="/Special:Contact">contact us</a> for help.',
+	'cnw-error-general' => 'Oops, something went wrong on our side!  Please try again, or [[Special:Contact|contact us]] for help.',
 	'cnw-error-general-heading' => 'Our apologies',
 	'cnw-badword-header' => 'Whoa there',
 	'cnw-badword-msg' => 'Hi, please refrain from using these bad words or banned words in your Wiki Description: $1',
