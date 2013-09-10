@@ -388,6 +388,7 @@ jQuery(function($){
 					browserEvent: e,
 					category: category,
 					label: 'result-' + ($(e.currentTarget).hasClass('video') ? 'video' : 'photo')
+						+ ( ( $(e.currentTarget).parents('.video-addon-results').size() > 0 ) ? '-video-addon' : '' ) // video addon ab tests
 				});
 			}).on('mousedown', '.video-addon-results > h1 > a', function(e) {
 				track({
