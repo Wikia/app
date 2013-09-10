@@ -172,10 +172,10 @@ html {
 
 body {
 	min-width: $width-outside-min;
-
 	@if ( $background-is-dynamic ) {
 		background: $color-body;
 		overflow: hidden;
+		position: relative;
 
 		&:after,
 		&:before {
