@@ -1,6 +1,6 @@
 // TODO: Rename this module, it's not only about short page anymore
 // TODO: More unit tests
-var AdLogicShortPage = function (window, document, log, slotTweaker) {
+var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adengine.logic.shortpage',

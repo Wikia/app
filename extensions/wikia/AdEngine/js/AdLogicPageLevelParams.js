@@ -2,7 +2,7 @@ var AdLogicPageLevelParams = function (
 	log,
 	window,
 	Krux,             // optional
-	adLogicShortPage, // optional
+	adLogicPageDimensions, // optional
 	abTest            // optional
 ) {
 	'use strict';
@@ -151,7 +151,7 @@ var AdLogicPageLevelParams = function (
 			ab: getAb()
 		};
 
-		if (adLogicShortPage && adLogicShortPage.hasPreFooters()) {
+		if (adLogicPageDimensions && adLogicPageDimensions.hasPreFooters()) {
 			params.hasp = 'yes';
 		} else {
 			params.hasp = 'no';

@@ -4,7 +4,7 @@ var AdConfig2 = function (
 	window,
 	document,
 	Geo,
-	adLogicShortPage,
+	adLogicPageDimensions,
 	abTest,
 
 	// adProviders
@@ -112,8 +112,8 @@ var AdConfig2 = function (
 		var provider = getBackEndProvider(slot);
 
 		// Check if we should apply page length checking for that slot
-		if (adLogicShortPage.isApplicable(slot)) {
-			return adLogicShortPage.getProxy(provider);
+		if (adLogicPageDimensions.isApplicable(slot)) {
+			return adLogicPageDimensions.getProxy(provider);
 		}
 
 		return provider;
