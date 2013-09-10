@@ -28,8 +28,8 @@ var WikiBuilder = {
 		this.wikiLanguage = $('#NameWiki select[name=wiki-language]');
 		this.wikiCategory = $('#DescWiki select[name=wiki-category]');
 		this.wikiAllAges = $('#DescWiki input[name=all-ages]');
-        this.allAgesDiv = $('#all-ages-div');
-        this.descWikiSubmitError = $('#DescWiki .submit-error');
+		this.allAgesDiv = $('#all-ages-div');
+		this.descWikiSubmitError = $('#DescWiki .submit-error');
 		this.nextButtons = this.wb.find('nav .next');
 		this.finishSpinner = $('#CreateNewWiki .finish-status');
 		this.descWikiNext = $('#DescWiki nav .next');

@@ -1,6 +1,4 @@
 <?php
-error_reporting(0);
-
 	$selectedLang = empty($params['wikiLanguage']) ? $wg->LanguageCode : $params['wikiLanguage'];
 ?>
 <section id="CreateNewWiki">
