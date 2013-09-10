@@ -155,14 +155,23 @@
 		 */
 		getPluralRuleFunction: function(lang) {
 			if (typeof Plurals.pluralRules[lang] === "undefined") { //search for language plural rule function
-				var ruleFunction = Plurals.defaultPluralRule;       // default function
-				var langRegexp = new RegExp('(?:^| )'+lang+'(?: |$)');
-				for (var langKey in Plurals.pluralRules) {
-					if (Plurals.pluralRules.hasOwnProperty(langKey)){
-						if (langRegexp.test(langKey)) {
-							ruleFunction = Plurals.pluralRules[langKey];
-							break;
+				var ruleFunction = Plurals.defaultPluralRule,       // default function
+					langs = [lang], mainLanguage = lang.split('-'), i;
+				if (mainLanguage.length > 1) {
+					langs.push(mainLanguage[0]);
+				}
+				for (i = 0; i < langs.length; i++) {
+					var langRegexp = new RegExp('(?:^| )'+langs[i]+'(?: |$)');
+					for (var langKey in Plurals.pluralRules) {
+						if (Plurals.pluralRules.hasOwnProperty(langKey)){
+							if (langRegexp.test(langKey)) {
+								ruleFunction = Plurals.pluralRules[langKey];
+								break;
+							}
 						}
+					}
+					if (ruleFunction != Plurals.defaultPluralRule) {
+						break;
 					}
 				}
 				Plurals.pluralRules[lang] = ruleFunction;   // cache it for we won't search for it again

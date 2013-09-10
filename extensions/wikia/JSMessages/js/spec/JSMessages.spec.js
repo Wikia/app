@@ -91,9 +91,11 @@ describe("JSMessages", function () {
 		expect(msg('defaultPlural', 'foo')).toBe('foo multiple');
 	});
 
-	it('default value is returned for unknown message', function() {
-		window.wgUserLanguage = defaultLang;
-		expect(msg('unknown')).toBe('unknown');
+	it('if there is no rule for language sub-code, use the general language rule', function() {
+		window.wgUserLanguage = 'pl-PL';
+		expect(msg('plural', 1)).toBe('Na imprezie jest 1 slon');
+		expect(msg('plural', 2)).toBe('Na imprezie sa 2 slonie');
+		expect(msg('plural', 8)).toBe('Na imprezie jest 8 sloni');
 	});
 
 	async.it('package with messages is properly loaded and applied', function(done) {
