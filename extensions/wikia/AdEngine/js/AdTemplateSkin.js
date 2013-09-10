@@ -27,21 +27,26 @@ define('ext.wikia.adengine.template.skin', ['wikia.document', 'wikia.window', 'w
 			head = document.getElementsByTagName('head')[0],
 			style = document.createElement('style'),
 			responsiveLink = document.createElement('link'),
-			imagePreload = new Image();
+			imagePreload = new Image(),
+			sassParams;
 
 		params = params || {};
 
 		if (window.wgOasisResponsive) {
+			sassParams = [
+				'color-body=#' + params.backgroundColor,
+				'background-image=NA',
+				'background-fixed=true',
+				'background-tiled=false',
+				'background-image-height=800',
+				'background-image-width=1700',
+				'widthType=2'
+			];
+
 			responsiveLink.rel = 'stylesheet';
 			responsiveLink.href = window.wgCdnRootUrl +
 				'/__am/' + window.wgStyleVersion + '/sass/' +
-				'color-body%3D%2523' + params.backgroundColor + '%26' +
-				'background-image%3DNA%26' +
-				'background-fixed%3Dtrue%26' +
-				'background-tiled%3Dfalse%26' +
-				'background-image-height%3D800%26' +
-				'background-image-width%3D1700%26' +
-				'widthType%3D2' +
+				encodeURIComponent(sassParams.join('&')) +
 				'//skins/oasis/css/core/responsive.scss';
 
 			style.textContent = 'body:after, body:before {' +
