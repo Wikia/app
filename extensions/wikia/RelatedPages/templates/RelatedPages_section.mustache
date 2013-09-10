@@ -1,35 +1,30 @@
-<section id="wkRelPag" class="RelatedPagesModule noprint{{#mobileSkin}} show{{/mobileSkin}}">
-
-	{{#mobileSkin}}
-		<h1 id="wkRelPagHead" class="collSec addChev open">
-			{{relatedPagesHeading}}
-			<span class="chev"></span>
-		</h1>
-	{{/mobileSkin}}
-
-	{{^mobileSkin}}
-		<h2 id="wkRelPagHead">{{relatedPagesHeading}}</h2>
-	{{/mobileSkin}}
-
-	<ul {{#mobileSkin}}class="wkLst artSec open"{{/mobileSkin}}>
-		{{#relatedPages}}
-			<li>
-				<a href="{{pageUrl}}" title="{{pageTitle}}">
-					{{#imgUrl}}
-						<img src="{{imgUrl}}" alt="{{pageTitle}}" width="{{imgWidth}}" height="{{imgHeight}}" />
-					{{/imgUrl}}
-					{{#artSnippet}}
-						<div class="articleSnippet">
-							<p>{{artSnippet}}</p>
-						</div>
-					{{/artSnippet}}
-				{{^mobileSkin}}
-				</a>
-				<a href="{{pageUrl}}" title="{{pageTitle}}" class="more">
-				{{/mobileSkin}}
-					{{pageTitle}}
-				</a>
-			</li>
-		{{/relatedPages}}
-	</ul>
+<section id=wkRelPag class="RelatedPagesModule noprint{{#mobileSkin}} show{{/mobileSkin}}">
+{{#mobileSkin}}
+	<h1 id=wkRelPagHead class="collSec addChev open">
+		{{relatedPagesHeading}}
+		<span class=chev></span>
+	</h1>
+{{/mobileSkin}}
+{{^mobileSkin}}
+	<h2 id=wkRelPagHead>{{relatedPagesHeading}}</h2>
+{{/mobileSkin}}
+<ul {{#mobileSkin}}class="wkLst artSec open"{{/mobileSkin}}>
+	{{#pages}}
+		<li>
+			<a href="{{pageUrl}}" title="{{pageTitle}}">
+				{{#imgUrl}}
+				<img src="{{imgUrl}}" alt="{{pageTitle}}" width="{{imgWidth}}" height="{{imgHeight}}" />
+				{{/imgUrl}}
+				{{#artSnippet}}
+				<div class=articleSnippet><p>{{artSnippet}}</p></div>
+				{{/artSnippet}}
+			{{^mobileSkin}}
+			</a>
+			<a href="{{pageUrl}}" title="{{pageTitle}}" class=more>
+			{{/mobileSkin}}
+			{{pageTitle}}
+			</a>
+		</li>
+	{{/pages}}
+</ul>
 </section>
