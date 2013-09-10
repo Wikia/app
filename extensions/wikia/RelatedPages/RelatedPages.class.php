@@ -429,4 +429,9 @@ class RelatedPages {
 
 		return true;
 	}
+
+	public static function onSkinAfterContent( &$text ){
+		$text = '<!-- RelatedPages -->';
+		return true;
+	}
 }

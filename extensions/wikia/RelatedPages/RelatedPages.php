@@ -23,6 +23,7 @@ global $wgHooks;
 
 array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'RelatedPages::onOutputPageBeforeHTML' );
 $wgHooks['WikiaMobileAssetsPackages'][] = 'RelatedPages::onWikiaMobileAssetsPackages';
+$wgHooks['SkinAfterContent'][] = 'RelatedPages::onSkinAfterContent';
 
 // classes
 $wgAutoloadClasses['RelatedPages'] = $dir . 'RelatedPages.class.php';
