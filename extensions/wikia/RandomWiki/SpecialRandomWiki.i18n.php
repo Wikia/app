@@ -111,6 +111,14 @@ $messages['fi'] = array(
 	'randomwiki' => 'Satunnainen wiki',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'randomwiki-desc' => 'Letur brúkarar granska eina tilvildarliga wiki',
+	'randomwiki' => 'Tilvildarlig Wiki',
+);
+
 /** French (français)
  * @author Peter17
  */
@@ -234,6 +242,14 @@ $messages['nb'] = array(
 $messages['nl'] = array(
 	'randomwiki-desc' => 'Laat gebruikers een willekeurige wiki ontdekken',
 	'randomwiki' => 'Willekeurige wiki',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'randomwiki-desc' => "Permet als utilizaires d’explorar un wiki a l'azard",
+	'randomwiki' => "Un wiki a l'azard",
 );
 
 /** Deitsch (Deitsch)

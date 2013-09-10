@@ -42,60 +42,57 @@ RedisStorage.prototype = {
 				errback();
 			}
 			
-		}, errorMsg, errback);		
+		}, errorMsg, errback);
 	},
 		
-	createChatRoom: function(cityId, roomName, roomTopic, extraDataString, type, users, callback, errback) {
+	createChatRoom: function(cityId, extraDataString, type, users, callback, errback) {
 		var self = this;
-		self._incr(self.config.getKey_nextRoomId(), function(roomId) {
-			// Create the room.
-			var roomKey = self.config.getKey_room( roomId );
-			var extraData = {};
-			if(extraDataString){
-				try{
-					extraData = JSON.parse( extraDataString );
-				} catch(e){
-					logger.error("Error: while parsing extraDataString. Error is: ", e);
-					extraData = {};
+		self._incr(
+			self.config.getKey_nextRoomId(), function(roomId) {
+				// Create the room.
+				var roomKey = self.config.getKey_room( roomId );
+				var extraData = {};
+				if(extraDataString){
+					try{
+						extraData = JSON.parse( extraDataString );
+					} catch(e){
+						logger.error("Error: while parsing extraDataString. Error is: ", e);
+						extraData = {};
+					}
 				}
-			}
-			// Store the room in redis.
-			self._hmset(roomKey, {
-				'room_id': roomId,
-				'room_name': roomName,
-				'room_topic': roomTopic,
-				'wgCityId': cityId,
-				'wgServer': extraData.wgServer,
-				'wgArticlePath': extraData.wgArticlePath
-			});
-			
-			// Add the room to the list of rooms on this wiki.
-			self._rpush(self.config.getKey_listOfRooms(cityId, type, users), roomId);
-			var result = {
-				'roomId': roomId,
-				'roomName': roomName,
-				'roomTopic': roomTopic
-			};
-			// todo: analize the code below, because the success callback
-			// is called and then in an asynchronous way errorCallback
-			// can be called several times
-			callback(result);
-			if(type == 'private') {
-				for(var index in users) {
-					self._hset( self.config.getKey_usersAllowedInPrivRoom( roomId ), 
-						users[index], users[index], null,
-						'Error: when save users list of chat room "'+ cityId + '": %error%',
-						function(errorMsg) {
-							errback(errorMsg);
-							return true;
-						}
-					);
+				// Store the room in redis.
+				self._hmset(roomKey, {
+					'room_id': roomId,
+					'wgCityId': cityId,
+					'wgServer': extraData.wgServer,
+					'wgArticlePath': extraData.wgArticlePath
+				});
+
+				// Add the room to the list of rooms on this wiki.
+				self._rpush(self.config.getKey_listOfRooms(cityId, type, users), roomId);
+				var result = {
+					'roomId': roomId
+				};
+				// todo: analize the code below, because the success callback
+				// is called and then in an asynchronous way errorCallback
+				// can be called several times
+				callback(result);
+				if(type == 'private') {
+					for(var index in users) {
+						self._hset( self.config.getKey_usersAllowedInPrivRoom( roomId ),
+							users[index], users[index], null,
+							'Error: when save users list of chat room "'+ cityId + '": %error%',
+							function(errorMsg) {
+								errback(errorMsg);
+								return true;
+							}
+						);
+					}
 				}
-			}			
-		},
-		'Error: while getting length of list of rooms for wiki with cityId "'+ cityId + '": %error%',
-		errback
-		);		
+			},
+			'Error: while getting length of list of rooms for wiki with cityId "'+ cityId + '": %error%',
+			errback
+		);
 	},
 	
 	getRoomData: function(roomId, key, callback, errback) {

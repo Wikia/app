@@ -178,6 +178,15 @@ $messages['nl'] = array(
 	'site-layout' => 'Sitevormgevingen',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'skinchooser-desc' => "Permet als utilizaires de causir d'abilhatges dins lors preferéncias",
+	'new-look' => 'Wikia',
+	'site-layout' => 'Aparéncias del site',
+);
+
 /** Polish (polski)
  * @author Cloudissimo
  * @author Sovq

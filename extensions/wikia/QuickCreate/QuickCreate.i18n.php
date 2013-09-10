@@ -239,7 +239,7 @@ $messages['nl'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'quickcreate-desc' => 'Apond un boton de creacion de pagina novèla amb la capacitat de connexion pels utilizaires anonims', # Fuzzy
+	'quickcreate-desc' => 'Apond un boton de creacion de pagina novèla amb una demanda de connexion pels utilizaires anonims',
 	'quickcreate' => 'Prepausatz vòstra recèpta',
 );
 
@@ -340,6 +340,7 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
+ * @author SteveR
  * @author Ua2004
  * @author Тест
  */

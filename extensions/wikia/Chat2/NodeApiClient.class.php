@@ -39,12 +39,10 @@ class NodeApiClient {
 	 *
 	 * If the chat doesn't exist, creates it.
 	 *
-	 * @param roomName - will be filled with the name of the chat (a string stored in VARCHAR(255), so it's reasonable length)
-	 * @param roomTopic - will be filled with the topic of the chat (a string stored in a blob, so it might be fairly large).
 	 * @param roomUsers - for private chats: an array of users who are in the room. TODO: Document what formatat these users are in (user ids? db_keys?)
 	 */
-	static public function getDefaultRoomId(&$roomName, &$roomTopic, $roomType = "open", $roomUsers = array() ){
-		global $wgCityId, $wgSitename, $wgServer, $wgArticlePath, $wgMemc;
+	static public function getDefaultRoomId( $roomType = "open", $roomUsers = [] ){
+		global $wgCityId, $wgServer, $wgArticlePath;
 		wfProfileIn(__METHOD__);
 
 		if(empty($roomData)){ // TODO: FIXME: What is this testing? Isn't it ALWAYS empty? - SWC 20110905
@@ -61,8 +59,6 @@ class NodeApiClient {
 				"wgCityId" => $wgCityId,
 				"roomType" => $roomType,
 				"roomUsers" => json_encode($roomUsers),
-				"defaultRoomName" => $wgSitename,
-				"defaultRoomTopic" => wfMsg('chat-default-topic', $wgSitename),
 				"extraDataString" => $extraDataString
 			));
 			
@@ -71,8 +67,6 @@ class NodeApiClient {
 
 		if(isset($roomData->{'roomId'})){
 			$roomId = $roomData->{'roomId'};
-			$roomName = $roomData->{'roomName'};
-			$roomTopic = $roomData->{'roomTopic'};
 		} else {
 			// FIXME: How should we handle it if there is no roomId?
 		}

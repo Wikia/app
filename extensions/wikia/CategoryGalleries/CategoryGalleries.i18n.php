@@ -212,6 +212,13 @@ $messages['nl'] = array(
 	'categorygalleries-desc' => "Geeft een galerij met pagina's weer op categoriepagina's",
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'categorygalleries-desc' => 'Aficha una galariá de paginas sus las paginas de categoria',
+);
+
 /** Polish (polski)
  * @author Matma Rex
  * @author Sovq

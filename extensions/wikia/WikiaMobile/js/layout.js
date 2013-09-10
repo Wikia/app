@@ -1,12 +1,11 @@
-/* global wgStyleVersion*/
+/* global Features */
 /**
- * @define layout
- * @requires section, media, cache
+ * @requires section, media, cache, wikia.loader, lazyload, jquery, sloth
  *
  * Layout handling of WikiaMobile
  * ie. Sections, Images, Galleries etc.
  */
-define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.loader', 'lazyload', 'wikia.utils'], function(sections, media, cache, loader, lazyload, $) {
+require(['sections', 'media', require.optional('wikia.cache'), 'wikia.loader', 'lazyload', 'jquery', 'sloth'], function(sections, media, cache, loader, lazyload, $, sloth) {
 	'use strict';
 
 	//init sections
@@ -16,7 +15,6 @@ define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.l
 		images = d.getElementsByClassName('media'),
 		selector = 'table:not(.toc):not(.infobox)',
 		tables = d.querySelectorAll(selector),
-		lazyLoadedSections = [],
 		tablesProcessedSections = [],
 		tablesModule,
 		tablesKey = 'wideTables',
@@ -38,33 +36,24 @@ define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.l
 			}
 
 			require([require.optional('tables')], function(t){
-				t && t.process($.not('.artSec table, table table', tables));
-
-				//image Lazyloading	(load images outside any section)
-				//if there are tables to wrap this should be done after they are processed
-				lazyload(d.getElementsByClassName('noSect'));
+				t && t.process($(selector).not('.artSec table, table table'));
 
 				//make it available for sections on open so tables can be processed as well
 				tablesModule = t;
 			});
 		};
 
-
-
-	sections.addEventListener('open', function(){
-		var index = ~~this.getAttribute('data-index');
+	$(document).on('sections:open', function(event, section){
+		var index = ~~section.attr('data-index');
 
 		if(tablesModule && !tablesProcessedSections[index]){
-			tablesModule.process($.not('table table', this.querySelectorAll(selector)));
+			//without fake I get DOM Exception 12
+			tablesModule.process(section.find(selector).not('table table,fake'));
 
 			tablesProcessedSections[index] = true;
 		}
 
-		if(!lazyLoadedSections[index]){
-			lazyload(this.getElementsByClassName('lazy'));
-
-			lazyLoadedSections[index] = true;
-		}
+		sloth();
 	});
 
 	//tables
@@ -85,11 +74,14 @@ define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.l
 				}
 			}).done(process);
 		}
-	} else {
-		//if there are no tables on a page we can go to lazyloading images
-		lazyload(d.getElementsByClassName('noSect'));
 	}
 
 	//init media
 	media.init(images);
+
+	sloth({
+		on: document.getElementsByClassName('lazy'),
+		threshold: 300,
+		callback: lazyload
+	});
 });

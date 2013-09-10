@@ -321,6 +321,10 @@ $messages['oc'] = array(
 	'taskmanager' => 'Afichar e gerir los prètzfaches de rèire plan',
 	'taskmanager_title' => 'Afichar e gerir los prètzfaches de rèire plan',
 	'taskmanager_tasklist' => 'Tornar a la lista dels prètzfaches',
+	'right-taskmanager' => 'Pòt afichar los prètzfaches en rèire plan',
+	'right-taskmanager-action' => 'Pòt gerir los prètzfaches en rèire plan',
+	'taskmanager-invert' => 'Inversar la seleccion',
+	'action-taskmanager' => 'afichar e gerir los prètzfaches de rèire plan',
 );
 
 /** Polish (polski)
@@ -474,11 +478,18 @@ $messages['tr'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
+	'taskmanager' => 'Показ і управління фоновими завданнями',
+	'taskmanager_title' => 'Показ і управління фоновими завданнями',
 	'taskmanager_tasklist' => 'Повернутися до списку завдань',
+	'right-taskmanager' => 'Можна відображати фонові завдання',
+	'right-taskmanager-action' => 'Можна управляти фоновими завданнями',
 	'taskmanager-invert' => 'Інвертувати виділення',
+	'action-taskmanager' => 'показ і управління фоновими завданнями',
 );
 
 /** Simplified Chinese (中文（简体）‎)
