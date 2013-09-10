@@ -82,7 +82,7 @@ $messages['pl'] = [
 
 $messages['qqq'] = [
 	'css' => 'Name of the link to Special:CSS page on Special:SpacialPages list; more about CSS: https://en.wikipedia.org/wiki/Cascading_Style_Sheets',
-	'action-specialcss' => 'Action name displayed in MW permission error message',
+	'action-editinterface' => '{{doc-action|editinterface}}',
 	'special-css-title' => 'Page title visible in the title bar of a browser or on the browser tab',
 
 	'special-css-summary-placeholder' => 'Placeholder text for summary field. Disappears when user starts typing',
