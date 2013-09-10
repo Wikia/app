@@ -4,11 +4,11 @@
  * Data model
  */
 class FollowModel {
-        static public $ajaxListLimit = 600;
-        static public $specialPageListLimit = 15;
+	static public $ajaxListLimit = 600;
+	static public $specialPageListLimit = 15;
 	static $cache;
 
-    /**
+	/**
 	 * getWatchList -- get data for followed pages include see all
 	 *
 	 * @static
@@ -32,7 +32,6 @@ class FollowModel {
 			NS_VIDEO => 'wikiafollowedpages-special-heading-media',
 			NS_USER_WALL => 'wikiafollowedpages-special-heading-wall',
 		);
-
 
 		if ( !empty($wgEnableBlogArticles) ) {
 			$namespaces[NS_BLOG_ARTICLE] = 'wikiafollowedpages-special-heading-blogs';
