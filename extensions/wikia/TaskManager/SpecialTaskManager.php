@@ -31,7 +31,6 @@ require_once( $dir . "/BatchTask.php" );
 extAddBatchTask( $dir."/Tasks/CloseWikiTask.php", "closewiki", "CloseWikiTask" );
 extAddBatchTask( $dir."/Tasks/MultiRestoreTask.php", "multirestore", "MultiRestoreTask" );
 extAddBatchTask( $dir."/Tasks/ImageGrabberTask.php", "imagegrabber", "ImageGrabberTask" );
-extAddBatchTask( $dir."/Tasks/ImageImporterTask.php", "imageimporter", "ImageImporterTask" );
 extAddBatchTask( $dir."/Tasks/PageGrabberTask.php", "pagegrabber", "PageGrabberTask" );
 extAddBatchTask( $dir."/Tasks/PageGrabberDumpTask.php", "pagegrabberdump", "PageGrabberDumpTask" );
 extAddBatchTask( $dir."/Tasks/PageImporterTask.php", "pageimporter", "PageImporterTask" );
