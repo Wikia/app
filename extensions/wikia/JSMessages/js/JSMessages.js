@@ -175,6 +175,7 @@
 		 */
 		getPlural: function(forms, ruleFunction, n) {
 			var plural = ruleFunction(n);
+			// prevent from running out of the forms array bounds
 			if (plural < 0) {
 				plural = 0;
 			} else if (plural >= forms.length) {
