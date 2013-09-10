@@ -146,7 +146,7 @@ class CreateNewWikiController extends WikiaController {
 			// do nothing
 			$this->status = 'error';
 			// VOLDEV-10: Parse the HTML in the message
-			$this->statusMsg = wfMessage( 'cnw-error-general' )->text();
+			$this->statusMsg = wfMessage( 'cnw-error-general' )->parse();
 			$this->statusHeader = wfMessage( 'cnw-error-general-heading' )->text();
 		} else {
 			/*
@@ -192,8 +192,8 @@ class CreateNewWikiController extends WikiaController {
 			$cityId = $createWiki->getWikiInfo('city_id');
 			if(empty($cityId)) {
 				$this->status = 'backenderror';
-				$this->statusMsg = wfMsg('cnw-error-general');
-				$this->statusHeader = wfMsg('cnw-error-general-heading');
+				$this->statusMsg = wfMessage( 'cnw-error-general' )->parse();
+				$this->statusHeader = wfMessage( 'cnw-error-general-heading' )->text();
 				trigger_error("Failed to create new wiki: $error_code " . $params['wName'] . " " . $params['wLanguage'] . " " . $wgRequest->getIP(), E_USER_WARNING);
 			} else {
 				if ( isset($params['wAllAges']) && !empty( $params['wAllAges'] ) ) {

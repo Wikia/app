@@ -209,7 +209,7 @@
 		'currentstep':'<?= $currentStep ?>',
 		'skipwikiaplus':'<?= $skipWikiaPlus ?>',
 		'descriptionplaceholder':'<?= wfMessage('cnw-desc-placeholder')->escaped() ?>',
-		'cnw-error-general':'<?= wfMessage('cnw-error-general')->escaped() ?>',
+		'cnw-error-general':'<?= wfMessage( 'cnw-error-general' )->parse() ?>',
 		'cnw-error-general-heading':'<?= wfMessage('cnw-error-general-heading')->escaped() ?>',
 		'cnw-keys': <?= json_encode($keys) ?>
 	};
