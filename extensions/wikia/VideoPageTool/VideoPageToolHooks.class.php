@@ -5,9 +5,7 @@ class VideoPageToolHooks {
 		wfProfileIn(__METHOD__);
 		$app = F::app();
 
-		$dbKeyName = $title->getDBKey();
-
-		if ( VideoPageController::onHomePage($dbKeyName) && VideoPageController::onVideoWiki() ) {
+		if ( $title->isMainPage() ) {
 			$app->wg->SuppressPageHeader = true;
 			$app->wg->SuppressWikiHeader = true;
 			$app->wg->SuppressRail = true;
