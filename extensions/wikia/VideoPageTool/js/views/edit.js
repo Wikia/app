@@ -130,7 +130,7 @@ define( 'vpt.views.edit', [
 			// Clear all form input values.
 			this.$form.find( 'input:text, input:hidden, textarea' ).val( '' );
 			// Reset video title
-			this.$form.find( '.video-name' ).text( $.msg( 'videopagetool-video-title-default-text' ) );
+			this.$form.find( '.video-title' ).text( $.msg( 'videopagetool-video-title-default-text' ) ).addClass( 'alternative' );
 			// Rest the video thumb
 			this.$form.find( '.video-thumb' ).html( '' );
 			// Also clear all error messages for better UX
