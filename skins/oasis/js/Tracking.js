@@ -389,6 +389,12 @@ jQuery(function($){
 					category: category,
 					label: 'result-' + ($(e.currentTarget).hasClass('video') ? 'video' : 'photo')
 				});
+			}).on('mousedown', 'video-addon-results', function() {
+				track({
+					browserEvent: e,
+					category: category,
+					label: 'video-addon-results-header'
+				});
 			});
 		}
 		if ( $topModule.length ) {
