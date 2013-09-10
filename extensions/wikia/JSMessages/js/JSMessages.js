@@ -116,9 +116,11 @@
 
 	// private module for plural support
 	var Plurals = {
+		// Default function used as a fallback for languages not listed in pluralRules
 		defaultPluralRule: function(n) {
 			return (n != 1) ? 1 : 0;
 		},
+		// Language-specific functions. One method can be common for several languages specified in the key
 		pluralRules: {
 			'ay bo cgg dz fa id ja jbo ka kk km ko ky lo ms su th tr tt ug uz vi wo zh zh-hans zh-hant zh-tw': function() {return 0;},
 			'ach ak am arn br fil fr gun ln mfe mg mi nso oc pt-br ti wa': function(n) {return (n > 1) ? 1 : 0;},

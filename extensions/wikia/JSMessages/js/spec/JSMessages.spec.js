@@ -70,8 +70,8 @@ describe("JSMessages", function () {
 
 	it('passing string as a plural argument is working', function() {
 		window.wgUserLanguage = 'klingon';
-		expect(msg('defaultPlural', "1")).toBe('1 single');
-		expect(msg('defaultPlural', "2")).toBe('2 multiple');
+		expect(msg('defaultPlural', '1')).toBe('1 single');
+		expect(msg('defaultPlural', '2')).toBe('2 multiple');
 	});
 
 	it('default value is returned for unknown message', function() {
