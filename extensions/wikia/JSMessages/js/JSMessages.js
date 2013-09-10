@@ -201,7 +201,7 @@
 		 * @returns {string} Message with a plurals being replaced with a proper forms
 		 */
 		process: function(msg, msgArguments, language) {
-			msg = msg.replace(/\{\{PLURAL:\$(\d+)\|([^\{\}]+)\}\}/g, function(wholeMsg, variable, forms) {
+			msg = msg.replace(/\{\{PLURAL:\$(\d+)\|([^\{\}]+)\}\}/gi, function(wholeMsg, variable, forms) {
 				if ((variable < 1) || (variable > msgArguments.length)) { // no argument was passed
 					return wholeMsg;
 				}

@@ -10,7 +10,8 @@ describe("JSMessages", function () {
 				plural: 'Na imprezie {{PLURAL:$1|jest $1 slon|sa $1 slonie|jest $1 sloni}}',
 				pluralComplex: '{{PLURAL:$1|$1 arbuz|$1 arbuzy|$1 arbuzow}} i {{PLURAL:$2|$2 melon|$2 melony|$2 melonow}}',
 				defaultPlural: '{{PLURAL:$1|$1 single|$1 multiple}}',
-				sharedPlural: '{{PLURAL:$1|one|two|five}}'
+				sharedPlural: '{{PLURAL:$1|one|two|five}}',
+				caseInsensitivePlural: '{{pLuRaL:$1|one|two}}'
 			},
 			wgUserLanguage: 'foo',
 			wgJSMessagesCB: 123
@@ -72,6 +73,12 @@ describe("JSMessages", function () {
 		window.wgUserLanguage = 'klingon';
 		expect(msg('defaultPlural', '1')).toBe('1 single');
 		expect(msg('defaultPlural', '2')).toBe('2 multiple');
+	});
+
+	it('PLURAL keyword in a message in case insensitive', function() {
+		window.wgUserLanguage = 'en';
+		expect(msg('caseInsensitivePlural', 1)).toBe('one');
+		expect(msg('caseInsensitivePlural', 2)).toBe('two');
 	});
 
 	it('default value is returned for unknown message', function() {
