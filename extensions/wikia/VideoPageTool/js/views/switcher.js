@@ -15,6 +15,8 @@
 
 ( function( $ ) {
 
+	'use strict';
+
 	var Switcher = function( $element, options ) {
 		var defaults = {
 			up: '.nav-up',
@@ -43,29 +45,32 @@
 		bindEvents: function() {
 			var that = this;
 
-			this.upArrows.on( 'click', function( e ) {
-				e.preventDefault();
+			this.upArrows.on( 'click', this.handleUpClick );
+			this.downArrows.on( 'click', this.handleDownClick );
 
-				var $box = $( this ).parent(),
-					$prev = $box.prev();
-				$box.insertBefore( $prev );
-
+			this.$elem.on( 'switched.switcher', function( e, data ) {
 				that.updateDisabled();
-
-				that.options.onChange && that.options.onChange( $box, $prev );
+				// Call extension's onChange callback
+				that.options.onChange && that.options.onChange( data.box, data.elem );
 			});
+		},
+		handleUpClick: function( e ) {
+			e.preventDefault();
 
-			this.downArrows.on( 'click', function( e ) {
-				e.preventDefault();
+			var $box = $( this ).parent(),
+				$prev = $box.prev();
+			$box.insertBefore( $prev );
 
-				var $box = $( this ).parent(),
-					$next = $box.next();
-				$box.insertAfter( $next );
+			$box.parent().trigger( 'switched.switcher', { box: $box, elem: $prev } );
+		},
+		handleDownClick: function( e ) {
+			e.preventDefault();
 
-				that.updateDisabled();
+			var $box = $( this ).parent(),
+				$next = $box.next();
+			$box.insertAfter( $next );
 
-				that.options.onChange && that.options.onChange( $box, $next );
-			});
+			$box.parent().trigger( 'switched.switcher', { box: $box, elem: $next } );
 		},
 		// Disable up button for first box and down button for last box
 		updateDisabled: function() {
@@ -87,7 +92,7 @@
 	$.fn.switcher = function( options ) {
 		return this.each( function() {
 			var $this = $( this );
-			$this.data("switcher", new Switcher( $this, options ))
+			$this.data('switcher', new Switcher( $this, options ))
 		});
 	};
 
