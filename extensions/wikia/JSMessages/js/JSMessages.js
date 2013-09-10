@@ -17,7 +17,7 @@
 	 *		msg.getForContent('foo');
 	 *  })
 	 *
-	 * or as a compatability support
+	 * or as a compatibility support
 	 *
 	 * $.msg();
 	 * $.getMessages();
@@ -143,8 +143,9 @@
 		},
 		/**
 		 * Return a function, which based on cardinality, returns the position of the plural form
-		 * @param lang string - language code
-		 * @return function - function which takes an integer parameter and returns a plural definition number
+		 *
+		 * @param {string} lang Language code
+		 * @return {function(number): number} Function for determining plural form number
 		 */
 		getPluralRuleFunction: function(lang) {
 			if (typeof Plurals.pluralRules[lang] === "undefined") { //search for language plural rule function
@@ -165,10 +166,10 @@
 		/**
 		 * Return a plural form based on the cardinality
 		 *
-		 * @param forms array of plural forms
-		 * @param ruleFunction function which based on the cardinality, returns a plural form number
-		 * @param n integer cardinality
-		 * @returns string proper plural form
+		 * @param {Array.<string>} forms Plural forms
+		 * @param {function(number): number} ruleFunction Function which based on the cardinality, returns a plural form number
+		 * @param {number} n Cardinality passed to ruleFunction
+		 * @returns {string} Proper plural form
 		 */
 		getPlural: function(forms, ruleFunction, n) {
 			var plural = ruleFunction(n);
@@ -180,16 +181,17 @@
 			return forms[plural];
 		},
 		/**
-		 * Process plural forms within a message
+		 * Process plural forms within a message. In case there is a problem with the parameters or the message
+		 * itself, the {{PLURAL}} tag is not replaced.
 		 *
 		 * For example if the message is 'User $1 has {{PLURAL:$2|one edit|$2 edits}}' the result is
 		 * * for arguments ['Joe', 1] -> 'User $1 has one edit'
 		 * * for arguments ['John', 100] -> 'User $1 has $2 edits'
 		 *
-		 * @param msg string message containing plural pattern {{PLURAL:$<number>|<plural forms>}}
-		 * @param msgArguments array message arguments
-		 * @param language string language code
-		 * @returns string message with a plurals being replaced with a proper forms
+		 * @param {string} msg Message containing plural pattern {{PLURAL:$<number>|<plural forms>}}
+		 * @param {Array.<string|number>} msgArguments Message arguments
+		 * @param {string} language Language code
+		 * @returns {string} Message with a plurals being replaced with a proper forms
 		 */
 		process: function(msg, msgArguments, language) {
 			msg = msg.replace(/\{\{PLURAL:\$(\d+)\|([^\{\}]+)\}\}/g, function(wholeMsg, variable, forms) {
