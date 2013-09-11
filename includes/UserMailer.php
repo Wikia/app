@@ -652,8 +652,14 @@ class EmailNotification {
 					if ( $watchingUser->getOption( 'enotifwatchlistpages' ) &&
 						( !$minorEdit || $watchingUser->getOption( 'enotifminoredits' ) ) &&
 						$watchingUser->isEmailConfirmed() &&
-						$watchingUser->getID() != $userTalkId &&
-						!$watchingUser->getBoolOption( 'unsubscribed' ) )
+						$watchingUser->getID() != $userTalkId
+						/**
+						* WIKIA CHANGE begin - @author adam.karminski@wikia-inc.com
+						**/
+						&& !$watchingUser->getBoolOption( 'unsubscribed' ) )
+						/**
+						* WIKIA CHANGE end
+						**/
 					{
 						$this->compose( $watchingUser );
 					}
