@@ -170,7 +170,7 @@ ve.ce.WikiaBlockMediaNode.prototype.getThumbElement = function () {
 		align = this.model.getAttribute( 'align' ),
 		type = this.model.getAttribute( 'type' );
 
-	if ( type === 'none' ) {
+	if ( type === 'none' || type === 'frameless' ) {
 		$thumb = this.$$( '<div>' ).addClass( this.getCssClass( type, align ) );
 
 	// Type "frame" or "thumb"
