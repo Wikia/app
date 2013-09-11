@@ -109,6 +109,7 @@ class AdminDashboardLogic {
 				"WDACReview",
 				"WhereIsExtension",
 				"WikiActivity",
+				"WikiaConfirmEmail",
 				"WikiaHubsV2",
 				"WikiaSearch",
 				"WikiaStyleGuide",
