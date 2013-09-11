@@ -34,7 +34,7 @@ var getOutputHTML = function( type, align, size ) {
 				'</figcaption>',
 				'<img class="ve-ce-protectedNode-shield" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">',
 			'</figure>'
-		];		
+		];
 	}
 	return out.join( '' );
 };
@@ -65,7 +65,7 @@ var getInputHTML = function( type, align, size ) {
 	}
 
 	if ( classes.length > 0 ) {
-		classAttr = 'class="' + classes.join( ' ' ) + '" '; 
+		classAttr = 'class="' + classes.join( ' ' ) + '" ';
 	}
 
 	return [
@@ -92,7 +92,7 @@ QUnit.test( 'Verify rendered content - alternative', function( assert ) {
 		documentModel,
 		nodeView,
 		attribute,
-		item, 
+		item,
 		items = [],
 		expectCount = 0;
 
@@ -110,7 +110,7 @@ QUnit.test( 'Verify rendered content - alternative', function( assert ) {
 			}
 		}
 	}
-	
+
 	for ( i = 0; i < items.length; i++ ) {
 		doc = ve.createDocumentFromHtml( '<body>' + items[i].input + '</body>' );
 		target =  new ve.init.sa.Target( $( '#qunit-fixture' ), doc );

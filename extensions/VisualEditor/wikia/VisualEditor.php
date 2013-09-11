@@ -45,7 +45,7 @@ $wgResourceModules += array(
 			'ce/ve.ce.WikiaBlockMediaNode.js',
 			'ce/ve.ce.WikiaBlockImageNode.js',
 			'ce/ve.ce.WikiaBlockVideoNode.js',
-			'ce/ve.ce.WikiaInlineVideoNode.js'
+			'ce/ve.ce.WikiaInlineVideoNode.js',
 			'ce/ve.ce.WikiaMediaCaptionNode.js',
 		),
 		'styles' => array (
