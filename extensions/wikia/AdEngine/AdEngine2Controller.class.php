@@ -4,8 +4,11 @@
  * AdEngine II Controller
  */
 class AdEngine2Controller extends WikiaController {
-	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
-	const ASSET_GROUP_ADENGINE = 'adengine2_js';
+	const ASSET_GROUP_CORE = 'oasis_shared_core_js';        // Load Ad Engine assets after this group if not adsInHead
+	const ASSET_GROUP_ADENGINE = 'adengine2_js';            // Name of group for the Ad Engine assets
+
+	const ASSET_GROUP_SHARED = 'oasis_shared_js';           // Load Liftium assets after this group
+	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';           // Name of group for the Liftium assets
 
 	const AD_LEVEL_NONE = 'none';           // show no ads
 	const AD_LEVEL_LIMITED = 'limited';     // show some ads (logged in users on main page)
@@ -283,7 +286,6 @@ class AdEngine2Controller extends WikiaController {
 	 * Register global JS variables bottom (migrated from wfAdEngineSetupJSVars)
 	 *
 	 * @param array $vars
-	 * @param array $scripts
 	 *
 	 * @return bool
 	 */
@@ -445,8 +447,10 @@ class AdEngine2Controller extends WikiaController {
 	 */
 	static public function onOasisSkinAssetGroups(&$jsAssets) {
 		$coreGroupIndex = array_search(self::ASSET_GROUP_CORE, $jsAssets);
-		if ($coreGroupIndex === false) {
-			// Do nothing. oasis_shared_core_js must be present for ads to work
+		$sharedGroupIndex = array_search(self::ASSET_GROUP_SHARED, $jsAssets);
+
+		if ($coreGroupIndex === false || $sharedGroupIndex === false) {
+			// Do nothing. oasis_shared_core_js and oasis_shared_js must be present for ads to work
 			return true;
 		}
 
@@ -454,6 +458,11 @@ class AdEngine2Controller extends WikiaController {
 			// Add ad asset to JavaScripts loaded on bottom (with regular JavaScripts)
 			array_splice($jsAssets, $coreGroupIndex + 1, 0, self::ASSET_GROUP_ADENGINE);
 		}
+
+		// Add Liftium asset to JavaScript loaded od bottom
+		$liftiumGroup = self::ASSET_GROUP_LIFTIUM;
+		array_splice($jsAssets, $sharedGroupIndex + 1, 0, $liftiumGroup);
+
 		return true;
 	}
 
