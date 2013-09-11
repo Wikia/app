@@ -1,4 +1,4 @@
-define('vpt.models.validator', [ 'jquery' ], function( $ ) {
+define( 'vpt.models.validator', [ 'jquery' ], function( $ ) {
 
 	'use strict';
 
