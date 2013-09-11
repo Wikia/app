@@ -20,6 +20,7 @@ define( 'vpt.views.edit', [
 			this.initSwitcher();
 			this.initAddVideo();
 		},
+
 		initAddVideo: function() {
 			this.$form.find( '.add-video-button' ).each( function() {
 				var $this = $( this ),
@@ -71,6 +72,7 @@ define( 'vpt.views.edit', [
 				});
 			});
 		},
+
 		initSwitcher: function() {
 			this.$form.switcher({
 				onChange: function( $elem, $switched ) {
@@ -85,6 +87,7 @@ define( 'vpt.views.edit', [
 				}
 			});
 		},
+
 		initValidator: function() {
 
 			this.validator = new Validator({
@@ -93,7 +96,7 @@ define( 'vpt.views.edit', [
 			});
 
 			// Set min length rule for description textarea
-			this.validator.setRule( this.$formFields.filter( '.description' ), 'minlength', 200 )
+			this.validator.setRule( this.$formFields.filter( '.description' ), 'maxlength', 200 )
 
 			this.$formFields.each( this.validator.addRules );
 			this.$form.on( 'submit', this.validator.onSubmit );
@@ -103,6 +106,7 @@ define( 'vpt.views.edit', [
 				this.validator.checkFields();
 			}
 		},
+
 		initReset: function() {
 			var that = this;
 
@@ -120,6 +124,7 @@ define( 'vpt.views.edit', [
 
 			});
 		},
+
 		/*
 		 * This reset is very specific to this form since it covers reverting titles and thumbnails
 		 * @todo: we may want to just create a default empty version of the form and hide it if it's not needed.
@@ -128,11 +133,18 @@ define( 'vpt.views.edit', [
 		 */
 		clearFeaturedVideoForm: function() {
 			// Clear all form input values.
-			this.$form.find( 'input:text, input:hidden, textarea' ).val( '' );
+			this.$form.find( 'input:text, input:hidden, textarea' )
+				.val( '' );
+
 			// Reset video title
-			this.$form.find( '.video-title' ).text( $.msg( 'videopagetool-video-title-default-text' ) ).addClass( 'alternative' );
+			this.$form.find( '.video-title' )
+				.text( $.msg( 'videopagetool-video-title-default-text' ) )
+				.addClass( 'alternative' );
+
 			// Rest the video thumb
-			this.$form.find( '.video-thumb' ).html( '' );
+			this.$form.find( '.video-thumb' )
+				.html( '' );
+
 			// Also clear all error messages for better UX
 			this.validator.clearErrors();
 		}
