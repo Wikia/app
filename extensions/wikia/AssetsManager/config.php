@@ -30,6 +30,8 @@ $config['liftium_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/liftium/Liftium.js',
+		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
+
 		// TODO: get rid of those:
 		'//extensions/wikia/AdEngine/liftium/Wikia.Athena.js',
 		'//extensions/wikia/AdEngine/liftium/Wikia.AQ.js',
@@ -94,8 +96,6 @@ $config['oasis_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdEngine2.configLateAds.js',
 
 		'#group_liftium_ads_js',
-
-		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
 	),
 );
 
