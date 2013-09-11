@@ -7,6 +7,9 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'VisualEditor for Wikia'
 );
 
+// Register files
+$wgExtensionMessagesFiles['VisualEditorWikia'] = dirname( __FILE__ ) . '/VisualEditor.i18n.php';
+
 // Register resource loader modules
 $wgResourceModules += array(
 	'ext.visualEditor.wikiaViewPageTarget.init' => array(
@@ -32,8 +35,47 @@ $wgResourceModules += array(
 		),
 		'localBasePath' => dirname( __FILE__ ),
 		'remoteExtPath' => 'VisualEditor/wikia'
-	)
+	),
+	'ext.visualEditor.wikiaCore' => array(
+		'scripts' => array(
+			'ui/tools/ve.ui.IconTextButtonTool.js',
+			'ui/tools/buttons/ve.ui.WikiaMediaInsertButtonTool.js',
+		),
+		'styles' => 'ui/styles/ve.ui.Tool.css',
+		'messages' => array(
+			'visualeditor-wikiamediainsertbuttontool-label',
+		),
+		'dependencies' => array(
+			'ext.visualEditor.core'
+		),
+		'localBasePath' => dirname( __FILE__ ) . '/modules',
+		'remoteExtPath' => 'VisualEditor/wikia',
+	),
+	'ext.visualEditor.iconsRaster' => array(
+		'styles' => array(
+			'ui/styles/ve.ui.Icons-raster.css',
+		),
+		'dependencies' => array(
+			'ext.visualEditor.core'
+		),
+		'localBasePath' => dirname( __FILE__ ) . '/modules',
+		'remoteExtPath' => 'VisualEditor/wikia',
+	),
+	'ext.visualEditor.iconsVector' => array(
+		'styles' => array(
+			'ui/styles/ve.ui.Icons-vector.css',
+		),
+		'dependencies' => array(
+			'ext.visualEditor.core'
+		),
+		'localBasePath' => dirname( __FILE__ ) . '/modules',
+		'remoteExtPath' => 'VisualEditor/wikia',
+	),
 );
+
+$wgVisualEditorPluginModules[] = 'ext.visualEditor.wikiaCore';
+//$wgVisualEditorPluginModules[] = 'ext.visualEditor.iconsRaster';
+$wgVisualEditorPluginModules[] = 'ext.visualEditor.iconsVector';
 
 // Register hooks
 $wgHooks['ResourceLoaderTestModules'][] = 'Wikia_onResourceLoaderTestModules';
