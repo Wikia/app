@@ -24,16 +24,8 @@ class VideoPageToolAsset extends WikiaModel {
 		'updated_at' => 'updatedAt',
 	);
 
-	public function __construct( $data = array() ) {
-		parent::__construct();
-
-		foreach ( $data as $key => $value ) {
-			$this->$key = $value;
-		}
-	}
-
 	/**
-	 * get asset id
+	 * Get asset id
 	 * @return integer
 	 */
 	public function getAssetId() {
@@ -41,7 +33,7 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
-	 * get program id
+	 * Get program id
 	 * @return integer
 	 */
 	public function getProgramId() {
@@ -49,7 +41,7 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
-	 * get section
+	 * Get section
 	 * @return string
 	 */
 	public function getSection() {
@@ -57,7 +49,7 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
-	 * get order
+	 * Get order
 	 * @return integer
 	 */
 	public function getOrder() {
@@ -65,7 +57,7 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
-	 * get data
+	 * Get data
 	 * @return string
 	 */
 	public function getData() {
@@ -73,7 +65,7 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
-	 * get updated by [userId]
+	 * Get updated by [userId]
 	 * @return integer
 	 */
 	public function getUpdatedBy(){
@@ -81,7 +73,7 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
-	 * get updated at [timestamp]
+	 * Get updated at [timestamp]
 	 * @return string
 	 */
 	public function getUpdatedAt(){
@@ -89,33 +81,107 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
-	 * get formatted updated at
+	 * Get formatted updated at
 	 * @return string
 	 */
 	public function getFormattedUpdatedAt() {
 		return $this->wg->lang->timeanddate( $this->updatedAt, true );
 	}
 
-	public static function newFromSection( $section ) {
-		$className = get_class().ucfirst( $section );
-
-		return new $className();
+	/**
+	 * Set program id
+	 * @param integer $value
+	 */
+	public function setProgramId( $value ) {
+		$this->programId = $value;
 	}
 
-	protected static function newFromRow( $row ) {
-		$className = get_class().ucfirst( $row->section );
-		$asset = new $className();
+	/**
+	 * Set section
+	 * @param string $value
+	 */
+	public function setSection( $value ) {
+		$this->section = $value;
+	}
 
-		foreach ( static::$fields as $fieldName => $varName ) {
-			$asset->$varName = $row->$fieldName;
-		}
-		$asset->unserializeData( $asset->data );
+	/**
+	 * Set order
+	 * @param integer $value
+	 */
+	public function setOrder( $value ) {
+		$this->order = $value;
+	}
+
+	/**
+	 * Get class name from section
+	 * @param string $section
+	 * @return string $className
+	 */
+	public static function getClassNameFromSection( $section ) {
+		$className = get_class().ucfirst( $section );
+
+		return $className;
+	}
+
+	/**
+	 * Get asset object from a row from table
+	 * @param array $row
+	 * @return object $asset
+	 */
+	public static function newFromRow( $row ) {
+		$className = self::getClassNameFromSection( $row->section );
+		$asset = new $className();
+		$asset->loadFromRow( $row );
 
 		return $asset;
 	}
 
 	/**
-	 * update to the database
+	 * Load data from database
+	 */
+	protected function loadFromDatabase() {
+		$db = wfGetDB( DB_SLAVE );
+
+		$row = $db->selectRow(
+			array( 'vpt_asset' ),
+			array( '*' ),
+			array(
+				'program_id' => $programId,
+				'section' => $section,
+				'`order`' => $order,
+			),
+			__METHOD__
+		);
+
+		if ( $row ) {
+			$this->loadFromRow( $row );
+			$this->saveToCache();
+		}
+	}
+
+	/**
+	 * Load data from a row from the table
+	 * @param array $row
+	 */
+	protected function loadFromRow( $row ) {
+		foreach ( static::$fields as $fieldName => $varName ) {
+			$this->$varName = $row->$fieldName;
+		}
+		$this->unserializeData( $this->data );
+	}
+
+	/**
+	 * Load data from cache
+	 * @param array $cache
+	 */
+	protected function loadFromCache( $cache ) {
+		foreach ( static::$fields as $varName ) {
+			$this->$varName = $cache[$varName];
+		}
+	}
+
+	/**
+	 * Update to the database
 	 * @return boolean $affected
 	 */
 	protected function updateToDatabase() {
@@ -160,7 +226,7 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
-	 * add video to database
+	 * Add video to database
 	 * @return boolean $affected
 	 */
 	protected function addToDatabase() {
@@ -204,6 +270,10 @@ class VideoPageToolAsset extends WikiaModel {
 		return $affected;
 	}
 
+	/**
+	 * Save asset
+	 * @return boolean
+	 */
 	public function save() {
 		wfProfileIn( __METHOD__ );
 
@@ -229,7 +299,7 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
-	 * serialize data
+	 * Serialize data
 	 * @return array
 	 */
 	protected function serializeData() {
@@ -254,34 +324,33 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
-	 * get memcache key
-	 * @param integer $assetId
+	 * Get memcache key
 	 * @return string
 	 */
-	protected static function getMemcKey( $assetId ) {
-		return wfMemcKey( 'videopagetool', 'asset', $assetId );
+	protected function getMemcKey() {
+		return wfMemcKey( 'videopagetool', 'asset', $this->assetId );
 	}
 
 	/**
-	 * save to cache
+	 * Save to cache
 	 */
 	protected function saveToCache() {
 		foreach ( self::$fields as $varName ) {
 			$cache[$varName] = $this->$varName;
 		}
 
-		$this->wg->Memc->set( self::getMemcKey( $this->assetId ), $cache, 60*60*24*7 );
+		$this->wg->Memc->set( $this->getMemcKey(), $cache, 60*60*24*7 );
 	}
 
 	/**
-	 * clear cache
+	 * Clear cache
 	 */
 	protected function invalidateCache() {
-		$this->wg->Memc->delete( self::getMemcKey( $this->assetId ) );
+		$this->wg->Memc->delete( $this->getMemcKey() );
 	}
 
 	/**
-	 * get program object
+	 * Get program object
 	 * @return VideoPageToolProgram
 	 */
 	public function getProgram() {
@@ -293,15 +362,15 @@ class VideoPageToolAsset extends WikiaModel {
 	/**
 	 * Get assets by section
 	 * @param integer $programId
-	 * @param integer $sectionId
-	 * @return type
+	 * @param string $section
+	 * @return array $assets
 	 */
-	public static function getAssetsBySection( $programId, $sectionId ) {
+	public static function getAssetsBySection( $programId, $section ) {
 		wfProfileIn( __METHOD__ );
 
 		$app = F::App();
 
-		$memKey = self::getMemcKeyAssetsBySection( $programId, $sectionId );
+		$memKey = self::getMemcKeyAssetsBySection( $programId, $section );
 		$data = $app->wg->Memc->get( $memKey );
 		if ( !is_array( $data ) ) {
 			$db = wfGetDB( DB_SLAVE );
@@ -311,9 +380,10 @@ class VideoPageToolAsset extends WikiaModel {
 				array( '*' ),
 				array(
 					'program_id' => $programId,
-					'section' => $sectionId,
+					'section' => $section,
 				),
-				__METHOD__
+				__METHOD__,
+				array( 'ORDER BY' => '`order`' )
 			);
 
 			$data = array();
@@ -325,8 +395,8 @@ class VideoPageToolAsset extends WikiaModel {
 		}
 
 		$assets = array();
-		foreach( $data as $row ) {
-			$assets[] = self::newFromRow( $row );
+		foreach ( $data as $row ) {
+			$assets[$row->order] = self::newFromRow( $row );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -335,8 +405,9 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
-	 * get memcache key for assets by section
+	 * Get memcache key for assets by section
 	 * @param integer $programId
+	 * @param string $section
 	 * @return string
 	 */
 	protected static function getMemcKeyAssetsBySection( $programId, $section ) {
@@ -344,15 +415,16 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
-	 * clear cache for assets by section
+	 * Clear cache for assets by section
 	 * @param integer $programId
+	 * @param string $section
 	 */
 	protected function invalidateCacheAssetsBySection( $programId, $section ) {
 		$this->wg->Memc->delete( self::getMemcKeyAssetsBySection( $programId, $section ) );
 	}
 
 	/**
-	 * get asset data (used in template)
+	 * Get asset data (used in template)
 	 * @return array $assetData
 	 */
 	public function getAssetData() {
@@ -364,7 +436,7 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
-	 * get default asset data (used in template)
+	 * Get default asset data (used in template)
 	 * @return array $assetData
 	 */
 	public static function getDefaultAssetData() {
@@ -373,6 +445,29 @@ class VideoPageToolAsset extends WikiaModel {
 		$assetData['updatedAt'] = $app->wg->lang->timeanddate( wfTimestamp(), true );
 
 		return $assetData;
+	}
+
+	/**
+	 * Format form data
+	 * @param array $formValues
+	 * @param string $errMsg
+	 * @return array $data
+	 */
+	public static function formatFormData( $formValues, &$errMsg ) {
+		$data = array();
+		for ( $i = 0; $i < STATIC::$REQUIRED_ROWS; $i++ ) {
+			foreach ( STATIC::$dataFields as $formFieldName => $varName ) {
+				if ( empty( $formValues[$formFieldName][$i] ) ) {
+					$errMsg = wfMessage( 'videopagetool-error-empty-input' )->plain();
+					return false;
+				}
+
+				$order = $i + 1;	// because input data start from 0
+				$data[$order][$varName] = $formValues[$formFieldName][$i];
+			}
+		}
+
+		return $data;
 	}
 
 }

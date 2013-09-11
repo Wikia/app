@@ -87,22 +87,32 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 			$section = VideoPageToolHelper::DEFAULT_SECTION;
 		}
 
-		$videoTool = VideoPageTool::newFromSection( $section, $language, $date );
+		$program = VideoPageToolProgram::newProgram( $language, $date );
+		$assets = $program->getAssetsBySection( $section );
+		if ( empty( $assets ) ) {
+			$videos = $helper->getDefaultValuesBySection( $section );
+		} else {
+			foreach( $assets as $order => $asset ) {
+				$videos[$order] = $asset->getAssetData();
+			}
+		}
 
-		if ($this->request->wasPosted()) {
+		if ( $this->request->wasPosted() ) {
 			// Do form validation and saving here
 			$formValues = $this->request->getParams();
-			if ( $videoTool->validateForm( $formValues ) ) {
-				$formValues = $videoTool->formatFormData( $formValues );
-				$result = $videoTool->saveData( $formValues );
+			$errMsg = '';
+			$data = $program->formatFormData( $section, $formValues, $errMsg );
+			if ( empty( $errMsg ) ) {
+				$result = $program->saveAssetsBySection( $section, $data );
 				if ( $result ) {
 					$this->result = 'ok';
 					$this->msg = '';
 				}
+			} else {
+				$this->error = 'error';
+				$this->msg = $errMsg;
 			}
 		}
-
-		$videos = $videoTool->getData();
 
 		$this->leftMenuItems = $helper->getLeftMenuItems( $section, $language, $date );
 		$this->moduleView = $this->app->renderView( 'VideoPageToolSpecial', $section, array( 'videos' => $videos, 'date' => $date, 'language' => $language ) );
@@ -276,4 +286,3 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	}
 
 }
-

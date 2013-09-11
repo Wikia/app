@@ -13,8 +13,8 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 
 	// required data field -- array( FormFieldName => varName )
 	protected static $dataFields = array(
-		'video_key'     => 'title',
-		'display_title' => 'displayTitle',
+		'videoKey'     => 'title',
+		'displayTitle' => 'displayTitle',
 		'description'   => 'description',
 	);
 
@@ -52,31 +52,6 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 		$defaultData = array_merge( $data, parent::getDefaultAssetData() );
 
 		return $defaultData;
-	}
-
-	/**
-	 * Validate form
-	 * @param array $formValues
-	 * @return boolean
-	 */
-	public static function validateForm( $formValues ) {
-		return true;
-	}
-
-	/**
-	 * Format form data
-	 * @param array $formValues
-	 * @return array
-	 */
-	public static function formatFormData( $formValues ) {
-		for ( $i = 0; $i < self::$REQUIRED_ROWS; $i++ ) {
-			foreach ( self::$dataFields as $formFieldName => $varName ) {
-				$order = $i + 1;	// because input data start from 0
-				$data[$order][$varName] = $formValues[$formFieldName][$i];
-			}
-		}
-
-		return $data;
 	}
 
 }

@@ -17,16 +17,8 @@ class VideoPageToolProgram extends WikiaModel {
 		'is_published' => 'isPublished',
 	);
 
-	public function __construct( $data = array() ) {
-		parent::__construct();
-
-		foreach ( $data as $key => $value ) {
-			$this->$key = $value;
-		}
-	}
-
 	/**
-	 * get program id
+	 * Get program id
 	 * @return integer
 	 */
 	public function getProgramId() {
@@ -34,7 +26,7 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * get language
+	 * Get language
 	 * @return string
 	 */
 	public function getLanguage() {
@@ -42,7 +34,7 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * get publish date
+	 * Get publish date
 	 * @return string [timestamp]
 	 */
 	public function getPublishDate() {
@@ -50,7 +42,7 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * get formatted publish date
+	 * Get formatted publish date
 	 * @return string
 	 */
 	public function getFormattedPublishDate() {
@@ -58,7 +50,7 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * check if program is published
+	 * Check if program is published
 	 * @return boolean
 	 */
 	public function isPublished() {
@@ -66,15 +58,15 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * check if program exists
+	 * Check if program exists
 	 * @return boolean
 	 */
 	public function exists() {
-		return !empty( $this->getProgramId() );
+		return ( $this->getProgramId() > 0 );
 	}
 
 	/**
-	 * set program id
+	 * Set program id
 	 * @param integer $value
 	 */
 	protected function setProgramId( $value ) {
@@ -82,7 +74,7 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * set language
+	 * Set language
 	 * @param string $value
 	 */
 	protected function setLanguage( $value ) {
@@ -90,7 +82,7 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * set public date
+	 * Set public date
 	 * @param string $value [timestamp]
 	 */
 	protected function setPublishDate( $value ) {
@@ -98,7 +90,7 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * set isPublished
+	 * Set isPublished
 	 * @param boolean $isPublished
 	 */
 	protected function setIsPublished( $value ) {
@@ -106,43 +98,24 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * get program object from language and publish date
+	 * Get program object from language and publish date
 	 * @param string $language
 	 * @param integer $publishDate
-	 * @return object|null $program
+	 * @return object $program
 	 */
 	public static function newProgram( $language, $publishDate ) {
 		wfProfileIn( __METHOD__ );
 
-		$app = F::App();
+		$program = new self();
+		$program->setLanguage( $language );
+		$program->setPublishDate( $publishDate );
 
-		$memKey = self::getMemcKey( $language, $publishDate );
-		$programData = $app->wg->Memc->get( $memKey );
+		$memKey = $program->getMemcKey();
+		$programData = $program->wg->Memc->get( $memKey );
 		if ( is_array( $programData ) ) {
-			$program = new self( $programData );
+			$program->loadFromCache( $programData );
 		} else {
-			$db = wfGetDB( DB_SLAVE );
-
-			$row = $db->selectRow(
-				array( 'vpt_program' ),
-				array(
-					'program_id',
-					'language',
-					'unix_timestamp(publish_date) as publish_date',
-					'is_published',
-				),
-				array(
-					'language' => $language,
-					'publish_date' => date( 'Y-m-d', $publishDate ),
-				),
-				__METHOD__
-			);
-
-			$program = null;
-			if ( $row ) {
-				$program = self::newFromRow( $row );
-				$program->saveToCache();
-			}
+			$program->loadFromDatabase();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -150,21 +123,62 @@ class VideoPageToolProgram extends WikiaModel {
 		return $program;
 	}
 
-	/**
-	 * get program object from row
-	 * @param object $row
+ 	/**
+	 * Get program object from a row from table
+	 * @param array $row
 	 * @return array $program
 	 */
-	protected static function newFromRow( $row ) {
-		$data = array();
-		foreach ( static::$fields as $fieldName => $varName ) {
-			$data[$varName] = $row->$fieldName;
-		}
-
-		$class = get_class();
-		$program = new $class( $data );
-
+	public static function newFromRow( $row ) {
+		$program = new self();
+		$program->loadFromRow( $row );
 		return $program;
+	}
+
+	/**
+	 * Load data from database
+	 */
+	protected function loadFromDatabase() {
+		$db = wfGetDB( DB_SLAVE );
+
+		$row = $db->selectRow(
+			array( 'vpt_program' ),
+			array(
+				'program_id',
+				'language',
+				'unix_timestamp(publish_date) as publish_date',
+				'is_published',
+			),
+			array(
+				'language' => $this->language,
+				'publish_date' => date( 'Y-m-d', $this->publishDate ),
+			),
+			__METHOD__
+		);
+
+		if ( $row ) {
+			$this->loadFromRow( $row );
+			$this->saveToCache();
+		}
+	}
+
+	/**
+	 * Load data from a row from the table
+	 * @param array $row
+	 */
+	protected function loadFromRow( $row ) {
+		foreach ( static::$fields as $fieldName => $varName ) {
+			$this->$varName = $row->$fieldName;
+		}
+	}
+
+	/**
+	 * Load data from cache
+	 * @param array $cache
+	 */
+	protected function loadFromCache( $cache ) {
+		foreach ( static::$fields as $varName ) {
+			$this->$varName = $cache[$varName];
+		}
 	}
 
 	/**
@@ -249,17 +263,15 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * get memcache key
-	 * @param string $language
-	 * @param string $publishDate [timestamp]
+	 * Get memcache key
 	 * @return string
 	 */
-	protected static function getMemcKey( $language, $publishDate ) {
-		return wfMemcKey( 'videopagetool', 'program', $language, $publishDate );
+	protected function getMemcKey() {
+		return wfMemcKey( 'videopagetool', 'program', $this->language, $this->publishDate );
 	}
 
 	/**
-	 * save to cache
+	 * Save to cache
 	 */
 	protected function saveToCache() {
 		$cache = array();
@@ -267,18 +279,18 @@ class VideoPageToolProgram extends WikiaModel {
 			$cache[$varName] = $this->$varName;
 		}
 
-		$this->wg->Memc->set( self::getMemcKey( $this->language, $this->publishDate ), $cache, 60*60*24*7 );
+		$this->wg->Memc->set( $this->getMemcKey(), $cache, 60*60*24*7 );
 	}
 
 	/**
-	 * clear cache
+	 * Clear cache
 	 */
 	protected function invalidateCache() {
-		$this->wg->Memc->delete( self::getMemcKey( $this->language, $this->publishDate ) );
+		$this->wg->Memc->delete( $this->getMemcKey() );
 	}
 
 	/**
-	 * add program
+	 * Add program
 	 * @return boolean
 	 */
 	public function addProgram() {
@@ -313,6 +325,44 @@ class VideoPageToolProgram extends WikiaModel {
 	public function getAssetsBySection( $section ) {
 		$assets = VideoPageToolAsset::getAssetsBySection( $this->programId, $section );
 		return $assets;
+	}
+
+	/**
+	 * Save assets by section
+	 * @param string $section
+	 * @param array $assets
+	 * @return boolean
+	 */
+	public function saveAssetsBySection( $section, $assets ) {
+		wfProfileIn( __METHOD__ );
+
+		if ( empty( $this->language ) || empty( $this->publishDate ) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		$result = true;
+
+		// save program
+		if ( !$this->exists() ) {
+			$result = $this->addToDatabase();
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $result;
+	}
+
+	/**
+	 * Format form data
+	 * @param array $formValues
+	 * @param string $errMsg
+	 * @return array $data
+	 */
+	public function formatFormData( $section, $formValues, &$errMsg ) {
+		$className = VideoPageToolAsset::getClassNameFromSection( $section );
+		$data = $className::formatFormData( $formValues, $errMsg );
+
+		return $data;
 	}
 
 }

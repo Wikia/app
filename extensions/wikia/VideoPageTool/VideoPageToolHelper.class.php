@@ -163,4 +163,19 @@ class VideoPageToolHelper extends WikiaModel {
 		return wfMemcKey( 'videopagetool', 'programs', $language, $startDate );
 	}
 
+	/**
+	 * get default values by section
+	 * @param string $section
+	 * @return array $values
+	 */
+	public function getDefaultValuesBySection( $section ) {
+		$className = VideoPageToolAsset::getClassNameFromSection( $section );
+		$values = array();
+		for( $i = 1; $i <= $className::$REQUIRED_ROWS; $i++ ) {
+			$values[$i] = $className::getDefaultAssetData();
+		}
+
+		return $values;
+	}
+
 }
