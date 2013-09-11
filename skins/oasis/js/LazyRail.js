@@ -21,6 +21,10 @@ $(function() {
 				});
 				$('#WikiaRail').find('.loading').remove().end().append(data.railLazyContent + data.js);
 				AIC2.init();
+				if (window.wgEnableLightboxExt) {
+					LightboxLoader.init();
+					LightboxLoader.loadFromURL();
+				}
 			}
 		});
 	}
