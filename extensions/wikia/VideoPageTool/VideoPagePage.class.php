@@ -12,7 +12,7 @@ class VideoPagePage extends WikiPage {
 		return true;
 	}
 
-	public function getID() {
+	public function getId() {
 		return -1;
 	}
 }

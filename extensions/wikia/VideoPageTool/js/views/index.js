@@ -22,7 +22,7 @@ define('vpt.views.index', [
 		},
 		renderDatepicker: function(evt) {
 			var value = evt ? evt.target.value : this.defaultLanguage;
-			
+
 			// don't render if placeholder is chosen (for first time)
 			if (value === 'placeholder') {
 				return false;
@@ -50,6 +50,9 @@ define('vpt.views.index', [
 });
 
 require(['vpt.views.index'], function(IndexView) {
+
+	'use strict';
+
 	$(function() {
 		new IndexView();
 	});

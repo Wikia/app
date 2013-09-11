@@ -1,22 +1,21 @@
 define( 'vpt.views.edit', [
-	'jquery'
-], function( $ ) {
+	'jquery',
+	'vpt.models.validator'
+], function( $, Validator ) {
 
 	'use strict';
 
 	var VPTEdit = function() {
 		this.$form = $( '.vpt-form' );
 		this.$submit = $( '#feature-videos-submit' );
-		this.validator = this.$form.validate();
 		// all elements to be validated - jQuery validate doesn't support arrays of form names inputs like "names[]" :(
 		this.$formFields = this.$form.find( '.description, .display-title, .video-key' );
-		this.descriptionMinLength = 200;
 		this.init();
 	};
 
 	VPTEdit.prototype = {
 		init: function() {
-			this.initValidate();
+			this.initValidator();
 			this.initReset();
 			this.initSwitcher();
 			this.initAddVideo();
@@ -86,61 +85,23 @@ define( 'vpt.views.edit', [
 				}
 			});
 		},
-		initValidate: function() {
-			var that = this;
+		initValidator: function() {
 
-			// Add a rule to each element because validator can't handle array inputs by default
-			// (i.e. video_description[])
-			this.$formFields.each( function() {
-				var $this = $( this ),
-					minLength = $this.is( '.description' ) ? that.descriptionMinLength : 0;
-
-				$this.rules( 'add', {
-					required: true,
-					minlength: minLength,
-					messages: {
-						required: $.msg( 'htmlform-required' ),
-						// Dynamically calculate the character length in the error message as you type.
-						// Note: onkeyup needs to be set to false for this to work properly
-						minlength: function( len, elem ) {
-							var charsToGo = that.descriptionMinLength - $( elem ).val().length;
-							return [ $.msg( 'videopagetool-description-minlength-error', len, charsToGo ) ];
-						}
-					},
-					onkeyup: false
-				});
+			this.validator = new Validator({
+				form: this.$form,
+				formFields: this.$formFields
 			});
 
-			// Manually do form validation on submit
-			this.$form.on( 'submit', function( e ) {
-				e.preventDefault();
+			// Set min length rule for description textarea
+			this.validator.setRule( this.$formFields.filter( '.description' ), 'minlength', 200 )
 
-				if( that.checkFields() ) {
-					// call submit on the DOM element to prevent retriggering the jQuery event
-					that.$form[0].submit();
-				}
-			});
+			this.$formFields.each( this.validator.addRules );
+			this.$form.on( 'submit', this.validator.onSubmit );
 
 			// If the back end has thrown an error, run the front end validation on page load
 			if( $( '#vpt-form-error' ).length ) {
-				this.checkFields();
+				this.validator.checkFields();
 			}
-		},
-		/*
-		 * This is a bit of a hack to deal with jQuery validate's inability to handle input arrays
-		 * @return BOOL Is the form valid
-		 */
-		checkFields: function() {
-			var that = this,
-				allValid = true;
-
-			this.$formFields.each( function() {
-				if ( !( that.validator.element( $( this ) ) ) ) {
-					allValid = false;
-				}
-			});
-
-			return allValid;
 		},
 		initReset: function() {
 			var that = this;
@@ -169,11 +130,11 @@ define( 'vpt.views.edit', [
 			// Clear all form input values.
 			this.$form.find( 'input:text, input:hidden, textarea' ).val( '' );
 			// Reset video title
-			this.$form.find( '.video-name' ).text( $.msg( 'videopagetool-video-title-default-text' ) );
+			this.$form.find( '.video-title' ).text( $.msg( 'videopagetool-video-title-default-text' ) ).addClass( 'alternative' );
 			// Rest the video thumb
 			this.$form.find( '.video-thumb' ).html( '' );
 			// Also clear all error messages for better UX
-			this.$formFields.removeClass( 'error' ).next( '.error' ).remove();
+			this.validator.clearErrors();
 		}
 	};
 
@@ -181,6 +142,9 @@ define( 'vpt.views.edit', [
 });
 
 require(['vpt.views.edit'], function(EditView) {
+
+	'use strict';
+
 	$(function() {
 		new EditView();
 	});
