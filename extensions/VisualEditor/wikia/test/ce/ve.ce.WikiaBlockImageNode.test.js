@@ -210,7 +210,9 @@ QUnit.test( 'Verify rendered content', function( assert ) {
 			}
 		];
 
-	function makeAssertion( testCase, msg ) {
+	function makeAssertion( testCase ) {
+		var msg = JSON.stringify( testCase.data ) || 'default';
+
 		// TODO: figure out a better way to remove debug styles
 		node.$.find( '.ve-ce-generated-wrapper' ).removeAttr( 'style' );
 		assert.equalDomElement( node.$[ 0 ], $( testCase.html )[ 0 ], test.type + ' - ' + msg );
@@ -233,7 +235,6 @@ QUnit.test( 'Verify rendered content', function( assert ) {
 		// Get the node
 		node = documentView.documentNode.children[ 0 ];
 
-		// TODO: test inverses
 		for ( ci = 0, cl = testCases.length; ci < cl; ci++ ) {
 			testCase = testCases[ ci ];
 
@@ -241,7 +242,15 @@ QUnit.test( 'Verify rendered content', function( assert ) {
 				surfaceModel.change( ve.dm.Transaction.newFromAttributeChanges( documentModel, node.getOffset(), testCase.data ) );
 			}
 
-			makeAssertion( testCase, JSON.stringify( testCase.data ) || 'default' );
+			makeAssertion( testCase );
+
+			// Test inverse
+			if ( ci > 0 ) {
+				surfaceModel.undo();
+				// TODO: more useful msg
+				makeAssertion( testCases[ ci - 1 ] );
+				surfaceModel.redo();
+			}
 		}
 	}
 
