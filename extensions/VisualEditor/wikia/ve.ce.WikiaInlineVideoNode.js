@@ -3,7 +3,7 @@
  */
 
 /**
- * ContentEditable Wikai video node.
+ * ContentEditable Wikia video node.
  *
  * @class
  * @extends ve.ce.MWInlineImageNode
