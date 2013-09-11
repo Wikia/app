@@ -67,7 +67,7 @@ $messages['en'] = array(
 	'wikiamobile-wikiasearch2-prev' => 'Previous',
 	'wikiamobile-wikiasearch2-results-count-of' => ' of $1 {{PLURAL:$1|result|results}}',
 	
-	'wikiasearch2-video-results' => 'Videos for $1 from this wiki'
+	'wikiasearch2-video-results' => 'Videos for $1 from this wiki & Wikia video library'
 );
 
 /** Message documentation (Message documentation)
@@ -104,7 +104,7 @@ $messages['qqq'] = array(
 	'wikiasearch2-crosswiki-description' => 'Used to display a generic description of a wiki for cross-wiki search results',
 	'wikiasearch2-top-module-title' => 'Top module header title on search page',
 	'wikiasearch2-top-module-edit' => 'Article last edit string containing date',
-	'wikiasearch2-video-results' => 'List on-wiki in a search'
+	'wikiasearch2-video-results' => 'List on-wiki and premium videos in a search'
 );
 
 /** Afrikaans (Afrikaans)
