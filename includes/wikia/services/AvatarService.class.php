@@ -123,6 +123,9 @@ class AvatarService extends Service {
 			// the anonymous user behavior (BugId:22190)
 			$avatarUrl = wfReplaceImageServer($avatarUrl,  ($cb > 0) ? $cb : "0");
 
+			// make avatars as JPG intead of PNGs / GIF
+			$avatarUrl = ImagesService::overrideThumbnailFormat($avatarUrl, ImagesService::EXT_JPG);
+
 			$avatarsCache[$key] = $avatarUrl;
 		}
 
