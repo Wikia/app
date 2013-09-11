@@ -255,10 +255,7 @@ class RenameUserProcess {
 
 		//AntiSpoof test
 
-		$dir = "$IP/extensions/AntiSpoof/";
-		if ( file_exists( $dir . 'AntiSpoof_body.php' ) && file_exists( $dir . 'SpoofUser.php' ) ) {
-			require_once( $dir . 'AntiSpoof_body.php' );
-			require_once( $dir . 'SpoofUser.php' );
+		if ( class_exists( 'SpoofUser' ) ) {
 			$oNewSpoofUser = new SpoofUser( $nun );
 			if ( !$oNewSpoofUser -> isLegal() ) {
 				$this->addWarning( wfMessage( 'userrenametool-error-antispoof-conflict', $nun ) );
