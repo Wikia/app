@@ -15,10 +15,10 @@
 
 		<div class="form-box featured-video with-nav">
 			<span class="count"><?= $x ?>.</span>
-			<div class="input-group url-group">
+			<div class="input-group video-key-group">
 				<button class="add-video-button"><?= wfMessage( 'videopagetool-button-add-video' )->text() ?></button>
 				<p class="video-title <?= $videoTitleClass ?>"><?= $videoTitle  ?></p>
-				<input type="hidden" name="videoKey" class="video-key" id="video-key-<?= $x ?>" value="<?= $videoKey ?>">
+				<input type="hidden" name="videoKey[]" class="video-key" id="video-key-<?= $x ?>" value="<?= $videoKey ?>">
 			</div>
 			<div class="video-thumb"><?= $videoThumb ?></div>
 			<div class="input-group border">
