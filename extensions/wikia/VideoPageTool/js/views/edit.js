@@ -7,7 +7,6 @@ define( 'vpt.views.edit', [
 
 	var VPTEdit = function() {
 		this.$form = $( '.vpt-form' );
-		this.$submit = $( '#feature-videos-submit' );
 		// all elements to be validated - jQuery validate doesn't support arrays of form names inputs like "names[]" :(
 		this.$formFields = this.$form.find( '.description, .display-title, .video-key' );
 		this.init();
@@ -95,8 +94,8 @@ define( 'vpt.views.edit', [
 				formFields: this.$formFields
 			});
 
-			// Set min length rule for description textarea
-			this.validator.setRule( this.$formFields.filter( '.description' ), 'maxlength', 200 )
+			// Set max length rule for description textarea
+			this.validator.setRule( this.$formFields.filter( '.description' ), 'maxlength', 200 );
 
 			this.$formFields.each( this.validator.addRules );
 			this.$form.on( 'submit', this.validator.onSubmit );
