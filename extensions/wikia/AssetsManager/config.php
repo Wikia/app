@@ -1335,3 +1335,28 @@ $config['touchstorm_scss'] = array(
 		'//extensions/wikia/TouchStorm/css/TouchStorm.scss'
 	)
 );
+
+// FIXME: paths to dist
+$config['api_docs_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//lib/vendor/swagger-ui/dist/lib/jquery-1.8.0.min.js',
+		'//lib/vendor/swagger-ui/dist/lib/jquery.wiggle.min.js',
+		'//lib/vendor/swagger-ui/dist/lib/jquery.ba-bbq.min.js',
+		'//lib/vendor/swagger-ui/dist/lib/jquery.slideto.min.js',
+		'//lib/vendor/swagger-ui/dist/lib/highlight.7.3.pack.js',
+		'//lib/vendor/swagger-ui/dist/lib/handlebars-1.0.rc.1.js',
+		'//lib/vendor/swagger-ui/dist/lib/underscore-min.js',
+		'//lib/vendor/swagger-ui/dist/lib/backbone-min.js',
+		'//lib/vendor/swagger-ui/dist/lib/swagger.js',
+		'//lib/vendor/swagger-ui/dist/swagger-ui.js',
+	)
+);
+
+$config['api_docs_css'] = array(
+	'type' => AssetsManager::TYPE_CSS,
+	'assets' => array(
+		'//lib/vendor/swagger-ui/dist/css/hightlight.default.css',
+		'//lib/vendor/swagger-ui/dist/css/screen.css',
+	)
+);
