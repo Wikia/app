@@ -1170,6 +1170,12 @@ $wgAdDriverUseNewGptZones = false;
 $wgAdDriverUseFullGpt = false;
 
 /**
+ * @name $wgAdDriverUseLiftium2013
+ * Whether to use the new version of Liftium a.k.a Liftium2013 a.k.a Liftium.js drop-in
+ */
+$wgAdDriverUseLiftium2013 = false;
+
+/**
  * @name $wgAdVideoTargeting
  * Enables page-level video ad targeting
  */

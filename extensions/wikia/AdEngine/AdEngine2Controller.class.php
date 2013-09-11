@@ -9,6 +9,7 @@ class AdEngine2Controller extends WikiaController {
 
 	const ASSET_GROUP_SHARED = 'oasis_shared_js';           // Load Liftium assets after this group
 	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';           // Name of group for the Liftium assets
+	const ASSET_GROUP_LIFTIUM_2013 = 'liftium_2013_ads_js'; // Name of group for the alternative Liftium assets (if wgAdDriverUseLiftium2013 or ?useliftium2013=1)
 
 	const AD_LEVEL_NONE = 'none';           // show no ads
 	const AD_LEVEL_LIMITED = 'limited';     // show some ads (logged in users on main page)
@@ -438,6 +439,12 @@ class AdEngine2Controller extends WikiaController {
 		return true;
 	}
 
+	static public function useLiftium2013() {
+		$wg = F::app()->wg;
+		$req = $wg->Request;
+		return $req->getBool('useliftium2013', (bool) $wg->AdDriverUseLiftium2013);
+	}
+
 	/**
 	 * Modify assets appended to the bottom of the page
 	 *
@@ -460,7 +467,7 @@ class AdEngine2Controller extends WikiaController {
 		}
 
 		// Add Liftium asset to JavaScript loaded od bottom
-		$liftiumGroup = self::ASSET_GROUP_LIFTIUM;
+		$liftiumGroup = self::useLiftium2013() ? self::ASSET_GROUP_LIFTIUM_2013 : self::ASSET_GROUP_LIFTIUM;
 		array_splice($jsAssets, $sharedGroupIndex + 1, 0, $liftiumGroup);
 
 		return true;
