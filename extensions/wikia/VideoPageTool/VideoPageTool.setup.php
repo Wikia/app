@@ -22,6 +22,8 @@ $wgAutoloadClasses['VideoPagePage'] =  $dir . 'VideoPagePage.class.php';
 $wgAutoloadClasses['VideoPageToolProgram'] =  $dir . 'model/VideoPageToolProgram.class.php';
 $wgAutoloadClasses['VideoPageToolAsset'] =  $dir . 'model/VideoPageToolAsset.class.php';
 $wgAutoloadClasses['VideoPageToolAssetFeatured'] =  $dir . 'model/VideoPageToolAssetFeatured.class.php';
+$wgAutoloadClasses['VideoPageToolAssetTrending'] =  $dir . 'model/VideoPageToolAssetTrending.class.php';
+$wgAutoloadClasses['VideoPageToolAssetFan'] =  $dir . 'model/VideoPageToolAssetFan.class.php';
 
 // i18n mapping
 $wgExtensionMessagesFiles['VideoPageTool'] = $dir.'VideoPageTool.i18n.php';

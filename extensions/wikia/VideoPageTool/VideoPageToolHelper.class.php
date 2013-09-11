@@ -50,7 +50,6 @@ class VideoPageToolHelper extends WikiaModel {
 		$query = array(
 			'language' => $language,
 			'date' => $date,
-			'section' => $selected,
 		);
 
 		$leftMenuItems = array();
@@ -111,56 +110,6 @@ class VideoPageToolHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $video;
-	}
-
-	/**
-	 * get list of programs
-	 * @param string $language
-	 * @param string $startDate [yyyy-mm-dd]
-	 * @param string $endDate [yyyy-mm-dd]
-	 * @return array $programs [array( date => status ); date = yyyy-mm-dd; status = 0 (not published)/ 1 (published)]
-	 */
-	public function getPrograms( $language, $startDate, $endDate ) {
-		wfProfileIn( __METHOD__ );
-
-		$memKey = $this->getMemKeyPrograms( $language, $startDate );
-		$programs = $this->wg->Memc->get( $memKey );
-		if ( empty( $programs )) {
-			$db = wfGetDB( DB_SLAVE );
-
-			$result = $db->select(
-				array( 'vpt_program' ),
-				array( "date_format( publish_date, '%Y-%m-%d' ) publish_date, is_published" ),
-				array(
-					'language' => $language,
-					"publish_date >= '$startDate'",
-					"publish_date < '$endDate'",
-				),
-				__METHOD__,
-				array( 'ORDER BY' => 'publish_date' )
-			);
-
-			$programs = array();
-			while ( $row = $db->fetchObject($result) ) {
-				$programs[$row->publish_date] = $row->is_published;
-			}
-
-			$this->wg->Memc->set( $memKey, $programs, 60*60*24 );
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $programs;
-	}
-
-	/**
-	 * get memcache key for programs
-	 * @param string $language
-	 * @param string $startDate [yyyy-mm-dd]
-	 * @return string
-	 */
-	public function getMemKeyPrograms( $language, $startDate ) {
-		return wfMemcKey( 'videopagetool', 'programs', $language, $startDate );
 	}
 
 	/**

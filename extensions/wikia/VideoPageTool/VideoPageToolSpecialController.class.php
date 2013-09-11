@@ -183,7 +183,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		$info = $helper->getPrograms( $language, date( 'Y-m-d', $startTime ), date( 'Y-m-d', $endTime ) );
+		$info = VideoPageToolProgram::getPrograms( $language, date( 'Y-m-d', $startTime ), date( 'Y-m-d', $endTime ) );
 
 		$this->result = 'ok';
 		$this->msg = '';
