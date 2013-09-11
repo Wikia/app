@@ -124,6 +124,12 @@ $label-padding: 10px 10px 10px 0px;
 		}
 	}
 
+	.hint {
+		color: $color-alternate-text;
+		float: right;
+		width: 70%;
+	}
+
 	// Featured video form styles
 	.featured-video {
 		.input-group {

@@ -49,7 +49,8 @@ define( 'vpt.models.validator', [ 'jquery' ], function( $ ) {
 				messages: {
 					required: $.msg( 'htmlform-required' ),
 					// Dynamically calculate the character length in the error message as you type.
-					// Note: onkeyup needs to be set to false for this to work properly
+					// Note: onkeyup needs to be set to false for this to work properly. Also, this is only used
+					// in IE9 since it doesn't support the maxlength attribute on textareas
 					maxlength: function( len, elem ) {
 						var charsToGo =  $( elem ).val().length - maxlength;
 						return [ $.msg( 'videopagetool-description-maxlength-error', len, charsToGo ) ];

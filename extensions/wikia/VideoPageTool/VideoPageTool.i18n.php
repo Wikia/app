@@ -36,6 +36,7 @@ $messages['en'] = array(
 	'videopagetool-tooltip-published' => 'Published',
 	'videopagetool-tooltip-in-progress' => 'In Progress',
 	'videopagetool-header-dashboard' => 'Dashboard',
+	'videopagetool-hint-description-maxlength' => '$1 characters max',
 );
 
 $messages['qqq'] = array(
