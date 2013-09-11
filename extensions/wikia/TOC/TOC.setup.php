@@ -25,3 +25,6 @@ $wgAutoloadClasses['TOCHooksHelper'] =  $dir . 'TOCHooksHelper.class.php';
 $wgExtensionMessagesFiles['TOC'] = $dir.'TOC.i18n.php';
 
 // register hooks
+//$wgHooks['Parser::disableMWTOC'][] = 'TOCHooksHelper::onDisableMWTOC';
+$wgHooks['Linker::overwriteTOC'][] = 'TOCHooksHelper::onOverwriteTOC';
+
