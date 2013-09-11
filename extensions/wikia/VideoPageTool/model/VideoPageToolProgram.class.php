@@ -111,9 +111,9 @@ class VideoPageToolProgram extends WikiaModel {
 		$program->setPublishDate( $publishDate );
 
 		$memKey = $program->getMemcKey();
-		$programData = $program->wg->Memc->get( $memKey );
-		if ( is_array( $programData ) ) {
-			$program->loadFromCache( $programData );
+		$data = $program->wg->Memc->get( $memKey );
+		if ( is_array( $data ) ) {
+			$program->loadFromCache( $data );
 		} else {
 			$program->loadFromDatabase();
 		}
@@ -339,9 +339,15 @@ class VideoPageToolProgram extends WikiaModel {
 		}
 
 		// save assets
+		$time = time();
+		$userId = $this->wg->User->getId();
 		$assetList = array();
 		foreach ( $assets as $order => $asset ) {
-			$assetObj = VideoPageToolAsset::newAsset( $this->programId, $section, $order, $asset );
+			$assetObj = VideoPageToolAsset::newAsset( $this->programId, $section, $order );
+			$assetObj->setData( $asset );
+			$assetObj->setUpdatedAt( $time );
+			$assetObj->setUpdatedBy( $userId );
+
 			$status = $assetObj->save();
 			if ( !$status->isGood() ) {
 				$db->rollback();
@@ -356,8 +362,8 @@ class VideoPageToolProgram extends WikiaModel {
 
 		// save cache
 		$this->saveToCache();
-		foreach ( $assetList as $asset ) {
-			$asset->saveToCache();
+		foreach ( $assetList as $assetObj ) {
+			$assetObj->saveToCache();
 		}
 
 		wfProfileOut( __METHOD__ );

@@ -65,16 +65,16 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
-	 * Get updated by [userId]
-	 * @return integer
+	 * Get updated by
+	 * @return integer [userId]
 	 */
 	public function getUpdatedBy(){
 		return $this->updatedBy;
 	}
 
 	/**
-	 * Get updated at [timestamp]
-	 * @return string
+	 * Get updated at
+	 * @return string [timestamp]
 	 */
 	public function getUpdatedAt(){
 		return $this->updatedAt;
@@ -132,12 +132,28 @@ class VideoPageToolAsset extends WikiaModel {
 	 * Set data
 	 * @param array $value
 	 */
-	protected function setData( $value ) {
+	public function setData( $value ) {
 		foreach ( STATIC::$dataFields as $field ) {
 			if ( property_exists( $this, $field ) ) {
 				$this->$field = $value[$field];
 			}
 		}
+	}
+
+	/**
+	 * set updated at
+	 * @param string $value [timestamp]
+	 */
+	public function setUpdatedAt( $value ) {
+		$this->updatedAt = $value;
+	}
+
+	/**
+	 * set updated by
+	 * @param integer $value [userId]
+	 */
+	public function setUpdatedBy( $value ) {
+		$this->updatedBy = $value;
 	}
 
 	/**
@@ -156,10 +172,9 @@ class VideoPageToolAsset extends WikiaModel {
 	 * @param integer $programId
 	 * @param string $section
 	 * @param integer $order
-	 * @param array $data
 	 * @return Object $asset
 	 */
-	public static function newAsset( $programId, $section, $order, $data = array() ) {
+	public static function newAsset( $programId, $section, $order ) {
 		wfProfileIn( __METHOD__ );
 
 		$className = self::getClassNameFromSection( $section );
@@ -167,14 +182,11 @@ class VideoPageToolAsset extends WikiaModel {
 		$asset->setProgramId( $programId );
 		$asset->setSection( $section );
 		$asset->setOrder( $order );
-		if ( !empty( $data) ) {
-			$asset->setData( $data );
-		}
 
 		$memKey = $asset->getMemcKey();
-		$assetData = $asset->wg->Memc->get( $memKey );
-		if ( is_array( $assetData ) ) {
-			$asset->loadFromCache( $assetData );
+		$data = $asset->wg->Memc->get( $memKey );
+		if ( is_array( $data ) ) {
+			$asset->loadFromCache( $data );
 		} else {
 			$asset->loadFromDatabase();
 		}
@@ -260,17 +272,14 @@ class VideoPageToolAsset extends WikiaModel {
 		$db->update(
 			'vpt_asset',
 			array(
-				'program_id' => $this->programId,
-				'section' => $this->section,
-				'order' => $this->order,
 				'data' => $data,
 				'updated_by' => $this->updatedBy,
-				'updated_at' => $this->udpatedAt,
+				'updated_at' => $db->timestamp( $this->updatedAt ),
 			),
 			array(
 				'program_id' => $this->programId,
 				'section' => $this->section,
-				'order' => $this->order,
+				'`order`' => $this->order,
 			),
 			__METHOD__
 		);
@@ -308,10 +317,10 @@ class VideoPageToolAsset extends WikiaModel {
 				'asset_id' => $assetId,
 				'program_id' => $this->programId,
 				'section' => $this->section,
-				'order' => $this->order,
+				'`order`' => $this->order,
 				'data' => $data,
 				'updated_by' => $this->updatedBy,
-				'updated_at' => $this->udpatedAt,
+				'updated_at' => $db->timestamp( $this->udpatedAt ),
 			),
 			__METHOD__,
 			'IGNORE'
@@ -363,7 +372,8 @@ class VideoPageToolAsset extends WikiaModel {
 		foreach ( STATIC::$dataFields as $field ) {
 			$data[$field] = $this->$field;
 		}
-		return serialize( $data );
+
+		return json_encode( $data );
 	}
 
 	/**
@@ -386,7 +396,7 @@ class VideoPageToolAsset extends WikiaModel {
 	/**
 	 * Save to cache
 	 */
-	protected function saveToCache() {
+	public function saveToCache() {
 		foreach ( self::$fields as $varName ) {
 			$cache[$varName] = $this->$varName;
 		}
