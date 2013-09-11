@@ -239,7 +239,7 @@ class RenameUserProcess {
 	protected function setup() {
 		wfProfileIn(__METHOD__);
 
-		global $wgContLang, $wgCapitalLinks, $IP;
+		global $wgContLang, $wgCapitalLinks;
 
 		//Sanitize input data
 		$oldnamePar = trim(str_replace('_', ' ', $this->mRequestData->oldUsername));
