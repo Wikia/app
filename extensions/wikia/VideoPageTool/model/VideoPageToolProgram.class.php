@@ -182,17 +182,15 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * Add to database
-	 * @return integer|false $result - return program id if the program is inserted
+	 * Add program to database
+	 * @return Status
 	 */
 	protected function addToDatabase() {
 		wfProfileIn( __METHOD__ );
 
-		$result = false;
-
 		if ( wfReadOnly() ) {
 			wfProfileOut( __METHOD__ );
-			return $result;
+			return Status::newFatal( wfMessage( 'videos-error-readonly' )->plain() );
 		}
 
 		$db = wfGetDB( DB_MASTER );
@@ -213,27 +211,23 @@ class VideoPageToolProgram extends WikiaModel {
 
 		if ( $db->affectedRows() > 0 ) {
 			$this->setProgramId( $db->insertId() );
-			$this->saveToCache();
-			$result = true;
 		}
-
-		$db->commit();
 
 		wfProfileOut( __METHOD__ );
 
-		return $result;
+		return Status::newGood();
 	}
 
 	/**
 	 * Update program to database
-	 * @return boolean $affected
+	 * @return Status
 	 */
-	protected function updateProgramToDatabase() {
+	protected function updateToDatabase() {
 		wfProfileIn( __METHOD__ );
 
 		if ( wfReadOnly() ) {
 			wfProfileOut( __METHOD__ );
-			return false;
+			return Status::newFatal( wfMessage( 'videos-error-readonly' )->plain() );
 		}
 
 		$db = wfGetDB( DB_MASTER );
@@ -248,18 +242,9 @@ class VideoPageToolProgram extends WikiaModel {
 			__METHOD__
 		);
 
-		$affected = ( $db->affectedRows() > 0 );
-
-		$db->commit();
-
-		// clear cache
-		if ( $affected ) {
-			$this->invalidateCache();
-		}
-
 		wfProfileOut( __METHOD__ );
 
-		return $affected;
+		return Status::newGood();
 	}
 
 	/**
@@ -290,21 +275,13 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * Add program
-	 * @return boolean
-	 */
-	public function addProgram() {
-		return $this->addToDatabase();
-	}
-
-	/**
 	 * Publish program
 	 * @return boolean
 	 */
 	public function publishProgram() {
 		$this->setIsPublished( true );
 
-		return $this->updateProgramToDatabase();
+		return $this->updateToDatabase();
 	}
 
 	/**
@@ -314,7 +291,7 @@ class VideoPageToolProgram extends WikiaModel {
 	public function unpublishProgram() {
 		$this->setIsPublished( false );
 
-		return $this->updateProgramToDatabase();
+		return $this->updateToDatabase();
 	}
 
 	/**
@@ -331,25 +308,61 @@ class VideoPageToolProgram extends WikiaModel {
 	 * Save assets by section
 	 * @param string $section
 	 * @param array $assets
-	 * @return boolean
+	 * @param boolean $setPublish
+	 * @return Status
 	 */
-	public function saveAssetsBySection( $section, $assets ) {
+	public function saveAssetsBySection( $section, $assets, $setPublish = false ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( $this->language ) || empty( $this->publishDate ) ) {
 			wfProfileOut( __METHOD__ );
-			return false;
+			return Status::newFatal( wfMessage( 'videopagetool-error-missing-parameter' )->plain() );
 		}
 
-		$result = true;
+		$db = wfGetDB( DB_MASTER );
+
+		$db->begin();
+
+		$status = Status::newGood();
 
 		// save program
 		if ( !$this->exists() ) {
-			$result = $this->addToDatabase();
+			$status = $this->addToDatabase();
+		} else if ( $setPublish ) {
+			$status = $this->updateToDatabase();
+		}
+
+		if ( !$status->isGood() ) {
+			$db->rollback();
+			wfProfileOut( __METHOD__ );
+			return $status;
+		}
+
+		// save assets
+		$assetList = array();
+		foreach ( $assets as $order => $asset ) {
+			$assetObj = VideoPageToolAsset::newAsset( $this->programId, $section, $order, $asset );
+			$status = $assetObj->save();
+			if ( !$status->isGood() ) {
+				$db->rollback();
+				wfProfileOut( __METHOD__ );
+				return $status;
+			}
+
+			$assetList[$order] = $assetObj;
+		}
+
+		$db->commit();
+
+		// save cache
+		$this->saveToCache();
+		foreach ( $assetList as $asset ) {
+			$asset->saveToCache();
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $result;
+
+		return $status;
 	}
 
 	/**

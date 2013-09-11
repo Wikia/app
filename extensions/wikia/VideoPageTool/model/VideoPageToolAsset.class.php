@@ -89,10 +89,26 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
+	 * Check if asset exists
+	 * @return boolean
+	 */
+	public function exists() {
+		return ( $this->getAssetId() > 0 );
+	}
+
+	/**
+	 * Set asset id
+	 * @param type $value
+	 */
+	protected function setAssetId( $value ) {
+		$this->assetId = $value;
+	}
+
+	/**
 	 * Set program id
 	 * @param integer $value
 	 */
-	public function setProgramId( $value ) {
+	protected function setProgramId( $value ) {
 		$this->programId = $value;
 	}
 
@@ -100,7 +116,7 @@ class VideoPageToolAsset extends WikiaModel {
 	 * Set section
 	 * @param string $value
 	 */
-	public function setSection( $value ) {
+	protected function setSection( $value ) {
 		$this->section = $value;
 	}
 
@@ -108,8 +124,20 @@ class VideoPageToolAsset extends WikiaModel {
 	 * Set order
 	 * @param integer $value
 	 */
-	public function setOrder( $value ) {
+	protected function setOrder( $value ) {
 		$this->order = $value;
+	}
+
+	/**
+	 * Set data
+	 * @param array $value
+	 */
+	protected function setData( $value ) {
+		foreach ( STATIC::$dataFields as $field ) {
+			if ( property_exists( $this, $field ) ) {
+				$this->$field = $value[$field];
+			}
+		}
 	}
 
 	/**
@@ -121,6 +149,39 @@ class VideoPageToolAsset extends WikiaModel {
 		$className = get_class().ucfirst( $section );
 
 		return $className;
+	}
+
+	/**
+	 * Get asset object from program id, section and order
+	 * @param integer $programId
+	 * @param string $section
+	 * @param integer $order
+	 * @param array $data
+	 * @return Object $asset
+	 */
+	public static function newAsset( $programId, $section, $order, $data = array() ) {
+		wfProfileIn( __METHOD__ );
+
+		$className = self::getClassNameFromSection( $section );
+		$asset = new $className( $programId, $section, $order );
+		$asset->setProgramId( $programId );
+		$asset->setSection( $section );
+		$asset->setOrder( $order );
+		if ( !empty( $data) ) {
+			$asset->setData( $data );
+		}
+
+		$memKey = $asset->getMemcKey();
+		$assetData = $asset->wg->Memc->get( $memKey );
+		if ( is_array( $assetData ) ) {
+			$asset->loadFromCache( $assetData );
+		} else {
+			$asset->loadFromDatabase();
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $asset;
 	}
 
 	/**
@@ -146,9 +207,9 @@ class VideoPageToolAsset extends WikiaModel {
 			array( 'vpt_asset' ),
 			array( '*' ),
 			array(
-				'program_id' => $programId,
-				'section' => $section,
-				'`order`' => $order,
+				'program_id' => $this->programId,
+				'section' => $this->section,
+				'`order`' => $this->order,
 			),
 			__METHOD__
 		);
@@ -181,121 +242,116 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
-	 * Update to the database
-	 * @return boolean $affected
+	 * Update asset to the database
+	 * @return Status
 	 */
 	protected function updateToDatabase() {
 		wfProfileIn( __METHOD__ );
 
-		$affected = false;
-		if ( !wfReadOnly() ) {
-			$db = wfGetDB( DB_MASTER );
-
-			$data = $this->serializeData();
-
-			$db->update(
-				'vpt_asset',
-				array(
-					'program_id' => $this->programId,
-					'section' => $this->section,
-					'order' => $this->order,
-					'data' => $data,
-					'updated_by' => $this->updatedBy,
-					'updated_at' => $this->udpatedAt,
-				),
-				array(
-					'program_id' => $this->programId,
-					'section' => $this->section,
-					'order' => $this->order,
-				),
-				__METHOD__
-			);
-
-			$affected = ( $db->affectedRows() > 0 );
-
-			$db->commit();
-
-			if ( $affected ) {
-				$this->saveToCache();
-			}
+		if ( wfReadOnly() ) {
+			wfProfileOut( __METHOD__ );
+			return Status::newFatal( wfMessage( 'videos-error-readonly' )->plain() );
 		}
+
+		$db = wfGetDB( DB_MASTER );
+
+		$data = $this->serializeData();
+
+		$db->update(
+			'vpt_asset',
+			array(
+				'program_id' => $this->programId,
+				'section' => $this->section,
+				'order' => $this->order,
+				'data' => $data,
+				'updated_by' => $this->updatedBy,
+				'updated_at' => $this->udpatedAt,
+			),
+			array(
+				'program_id' => $this->programId,
+				'section' => $this->section,
+				'order' => $this->order,
+			),
+			__METHOD__
+		);
 
 		wfProfileOut( __METHOD__ );
 
-		return $affected;
+		return Status::newGood();
 	}
 
 	/**
-	 * Add video to database
-	 * @return boolean $affected
+	 * Add asset to database
+	 * @return Status
 	 */
 	protected function addToDatabase() {
 		wfProfileIn( __METHOD__ );
 
-		$affected = false;
-		if ( !wfReadOnly() ) {
-			$db = wfGetDB( DB_MASTER );
+		if ( wfReadOnly() ) {
+			wfProfileOut( __METHOD__ );
+			return Status::newFatal( wfMessage( 'videos-error-readonly' )->plain() );
+		}
 
-			if ( empty($this->updatedAt) ) {
-				$this->updatedAt = $db->timestamp();
-			}
+		$db = wfGetDB( DB_MASTER );
 
-			$data = $this->serializeData();
+		$assetId = $db->nextSequenceValue( 'video_vpt_asset_seq' );
 
-			$db->insert(
-				'vpt_asset',
-				array(
-					'program_id' => $this->programId,
-					'section' => $this->section,
-					'order' => $this->order,
-					'data' => $data,
-					'updated_by' => $this->updatedBy,
-					'updated_at' => $this->udpatedAt,
-				),
-				__METHOD__,
-				'IGNORE'
-			);
+		if ( empty( $this->updatedAt ) ) {
+			$this->updatedAt = $db->timestamp();
+		}
 
-			$affected = ( $db->affectedRows() > 0 );
+		$data = $this->serializeData();
 
-			$db->commit();
+		$db->insert(
+			'vpt_asset',
+			array(
+				'asset_id' => $assetId,
+				'program_id' => $this->programId,
+				'section' => $this->section,
+				'order' => $this->order,
+				'data' => $data,
+				'updated_by' => $this->updatedBy,
+				'updated_at' => $this->udpatedAt,
+			),
+			__METHOD__,
+			'IGNORE'
+		);
 
-			if ( $affected ) {
-				$this->saveToCache();
-			}
+		if ( $db->affectedRows() > 0 ) {
+			$this->setAssetId( $db->insertId() );
 		}
 
 		wfProfileOut( __METHOD__ );
 
-		return $affected;
+		return Status::newGood();
 	}
 
 	/**
 	 * Save asset
-	 * @return boolean
+	 * @return Status
 	 */
 	public function save() {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( $this->programId ) || empty( $this->section ) || empty( $this->order ) ) {
 			wfProfileOut( __METHOD__ );
-			return false;
+			return Status::newFatal( wfMessage( 'videopagetool-error-missing-parameter' )->plain() );
 		}
 
-		if ( $this->exists ) {
-			$result = $this->updateToDatabase();
+		if ( $this->exists() ) {
+			$status = $this->updateToDatabase();
 		} else {
-			$result = $this->addToDatabase();
+			$status = $this->addToDatabase();
 		}
 
-		if ( $result ) {
-			$this->saveToCache();
+		if ( $status->isGood() ) {
+			$this->invalidateCache();
 			$this->invalidateCacheAssetsBySection( $this->programId, $this->section );
 		}
 
 		wfProfileOut( __METHOD__ );
 
-		return $result;
+		return $status;
 	}
 
 	/**
@@ -316,11 +372,7 @@ class VideoPageToolAsset extends WikiaModel {
 	 */
 	protected function unserializeData( $serializedData ) {
 		$data = json_decode( $serializedData, true );
-		foreach ( STATIC::$dataFields as $field ) {
-			if ( property_exists( $this, $field ) ) {
-				$this->$field = $data[$field];
-			}
-		}
+		$this->setData( $data );
 	}
 
 	/**
@@ -328,7 +380,7 @@ class VideoPageToolAsset extends WikiaModel {
 	 * @return string
 	 */
 	protected function getMemcKey() {
-		return wfMemcKey( 'videopagetool', 'asset', $this->assetId );
+		return wfMemcKey( 'videopagetool', 'asset', $this->programId, $this->section, $this->order );
 	}
 
 	/**
@@ -458,7 +510,7 @@ class VideoPageToolAsset extends WikiaModel {
 		for ( $i = 0; $i < STATIC::$REQUIRED_ROWS; $i++ ) {
 			foreach ( STATIC::$dataFields as $formFieldName => $varName ) {
 				if ( empty( $formValues[$formFieldName][$i] ) ) {
-					$errMsg = wfMessage( 'videopagetool-error-empty-input' )->plain();
+					$errMsg = wfMessage( 'videohandler-error-missing-parameter', $formFieldName )->plain();
 					return false;
 				}
 

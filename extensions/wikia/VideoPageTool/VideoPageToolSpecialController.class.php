@@ -98,15 +98,17 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		}
 
 		if ( $this->request->wasPosted() ) {
-			// Do form validation and saving here
 			$formValues = $this->request->getParams();
 			$errMsg = '';
 			$data = $program->formatFormData( $section, $formValues, $errMsg );
 			if ( empty( $errMsg ) ) {
-				$result = $program->saveAssetsBySection( $section, $data );
-				if ( $result ) {
+				$status = $program->saveAssetsBySection( $section, $data );
+				if ( $status->isGood() ) {
 					$this->result = 'ok';
 					$this->msg = '';
+				} else {
+					$this->error = 'error';
+					$this->msg = $status->getMessage();
 				}
 			} else {
 				$this->error = 'error';
