@@ -94,7 +94,7 @@ class ImagesService extends Service {
 	}
 
 	/**
-	 * @desc Check for image extension
+	 * @desc Check if image file has extension
 	 *
 	 * @param String $imageUrl original image's URL
 	 * @param String $extension extension
