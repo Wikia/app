@@ -179,6 +179,29 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 						error();
 					}
 				} else {
+
+
+
+					// ADEN-502 HACK STARTS HERE
+					log('Detecting passBack in slot ' + slotname, 1, logGroup);
+					var hasPassBack = false;
+					try {
+						hasPassBack = document.getElementById(slotnameGpt).getElementsByTagName('iframe')[0].contentDocument.getElementById('passbackIframe');
+					} catch (e) {
+					}
+					if (hasPassBack) {
+						log('passback in slot ' + slotname, 1, logGroup);
+						document.getElementById(slotnameGpt).style.display = 'none';
+						if (typeof error === 'function') {
+							error();
+							return;
+						}
+					}
+					// ADEN-502 HACK ENDS HERE
+
+
+
+
 					log(['doneCallback', slotname, 'running success callback'], 4, logGroup);
 					if (typeof success === 'function') {
 						success();
