@@ -160,7 +160,7 @@
 				if (mainLanguage.length > 1) {
 					langs.push(mainLanguage[0]);
 				}
-				for (i = 0; i < langs.length; i++) {
+				for (i = 0; (i < langs.length) && (ruleFunction === Plurals.defaultPluralRule); i++) {
 					var langRegexp = new RegExp('(?:^| )'+langs[i]+'(?: |$)');
 					for (var langKey in Plurals.pluralRules) {
 						if (Plurals.pluralRules.hasOwnProperty(langKey)){
@@ -169,9 +169,6 @@
 								break;
 							}
 						}
-					}
-					if (ruleFunction != Plurals.defaultPluralRule) {
-						break;
 					}
 				}
 				Plurals.pluralRules[lang] = ruleFunction;   // cache it so we won't search for it again
