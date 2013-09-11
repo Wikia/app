@@ -18,19 +18,13 @@
  * @mixins ve.ce.MWResizableNode
  *
  * @constructor
- * @param {ve.dm.WikiaBlockMediaNode} model Model to observe
+ * @param {ve.ce.WikiaBlockMediaNode} model Model to observe
  * @param {Object} [config] Config options
  */
 ve.ce.WikiaBlockMediaNode = function VeCeWikiaBlockMediaNode( model, config ) {
 
 	// Parent constructor
 	ve.ce.BranchNode.call( this, model, config );
-
-	// Properties
-	this.$anchor = null;
-	this.$image = null;
-	this.$magnify = null;
-	this.$thumb = null;
 
 	// Initialize
 	this.update();
@@ -85,6 +79,77 @@ ve.ce.WikiaBlockMediaNode.static.cssClasses = {
 /* Methods */
 
 /**
+ * Builds the anchor element.
+ *
+ * @method
+ * @returns {jQuery} The properly scoped jQuery object
+ */
+ve.ce.WikiaBlockMediaNode.prototype.createAnchor = function () {
+	return this.$$( '<a>' )
+		// Images and videos both have this class
+		.addClass( 'image' )
+		.attr( 'href', this.model.getAttribute( 'href' ) );
+};
+
+/**
+ * Builds the image element.
+ *
+ * @method
+ * @returns {jQuery} The properly scoped jQuery object
+ */
+ve.ce.WikiaBlockMediaNode.prototype.createImage = function () {
+	return this.$$( '<img>' )
+		.attr( 'src', this.model.getAttribute( 'src' ) )
+		.attr( 'width', this.model.getAttribute( 'width' ) )
+		.attr( 'height', this.model.getAttribute( 'height' ) );
+};
+
+/**
+ * Builds the magnify element.
+ *
+ * @method
+ * @returns {jQuery} The properly scoped jQuery object
+ */
+ve.ce.WikiaBlockMediaNode.prototype.createMagnify = function () {
+	// It's inside a protected node, so user can't see href/title.
+	return this.$$( '<a>' ).addClass( 'internal sprite details magnify ve-no-shield' );
+};
+
+/**
+ * Builds the thumb element.
+ *
+ * @method
+ * @returns {jQuery} The properly scoped jQuery object
+ */
+ve.ce.WikiaBlockMediaNode.prototype.createThumb = function () {
+	var $thumb,
+		align = this.model.getAttribute( 'align' ),
+		type = this.model.getAttribute( 'type' );
+
+	if ( type === 'frameless' || type === 'none' ) {
+		$thumb = this.$$( '<div>' ).addClass( this.getCssClass( type, align ) );
+
+	// Type "frame" or "thumb"
+	} else {
+		$thumb = this.$$( '<figure>' )
+			.addClass( 'thumb thumbinner ' + this.getCssClass( 'default', align ) )
+			.css( 'width', parseInt( this.model.getAttribute( 'width' ), 10 ) + 2 );
+	}
+
+	return $thumb;
+};
+
+/**
+ * Builds the root wrapping element.
+ *
+ * @method
+ * @returns {jQuery} The properly scoped jQuery object
+ */
+ve.ce.WikiaBlockMediaNode.prototype.createRoot = function () {
+	return this.$$( '<div>' ).addClass( 'center' );
+};
+
+/**
  * Get the right CSS class to use for alignment
  * @param {string} type 'none' or 'default'
  * @param {string} alignment 'left', 'right', 'center', 'none' or 'default'
@@ -112,118 +177,44 @@ ve.ce.WikiaBlockMediaNode.prototype.onAttributeChange = function () {
 	this.update( true );
 };
 
-/** */
-ve.ce.WikiaBlockMediaNode.prototype.setupSlugs = function () {
-	// Intentionally empty
-};
-
-/** */
-ve.ce.WikiaBlockMediaNode.prototype.onSplice = function () {
-	// Intentionally empty
-};
-
 /**
- * Builds the anchor element.
+ * Intentionally empty
  *
  * @method
- * @returns {jQuery} The properly scoped jQuery object
  */
-ve.ce.WikiaBlockMediaNode.prototype.getAnchorElement = function () {
-	return this.$$( '<a>' )
-		// Images and videos both have this class
-		.addClass( 'image' )
-		.attr( 'href', this.model.getAttribute( 'href' ) );
-};
+ve.ce.WikiaBlockMediaNode.prototype.setupSlugs = function () {};
 
 /**
- * Builds the image element.
+ * Intentionally empty
  *
  * @method
- * @returns {jQuery} The properly scoped jQuery object
  */
-ve.ce.WikiaBlockMediaNode.prototype.getImageElement = function () {
-	return this.$$( '<img>' )
-		.attr( 'src', this.model.getAttribute( 'src' ) )
-		.attr( 'width', this.model.getAttribute( 'width' ) )
-		.attr( 'height', this.model.getAttribute( 'height' ) );
-};
+ve.ce.WikiaBlockMediaNode.prototype.onSplice = function () {};
 
 /**
- * Builds the magnify element.
- *
- * @method
- * @returns {jQuery} The properly scoped jQuery object
- */
-ve.ce.WikiaBlockMediaNode.prototype.getMagnifyElement = function () {
-	// It's inside a protected node, so user can't see href/title.
-	return this.$$( '<a>' ).addClass( 'internal sprite details magnify ve-no-shield' );
-};
-
-/**
- * Builds the thumb element.
- *
- * @method
- * @returns {jQuery} The properly scoped jQuery object
- */
-ve.ce.WikiaBlockMediaNode.prototype.getThumbElement = function () {
-	var $thumb,
-		align = this.model.getAttribute( 'align' ),
-		type = this.model.getAttribute( 'type' );
-
-	if ( type === 'none' || type === 'frameless' ) {
-		$thumb = this.$$( '<div>' ).addClass( this.getCssClass( type, align ) );
-
-	// Type "frame" or "thumb"
-	} else {
-		$thumb = this.$$( '<figure>' )
-			.addClass( 'thumb thumbinner ' + this.getCssClass( 'default', align ) )
-			.css( 'width', parseInt( this.model.getAttribute( 'width' ), 10 ) + 2 );
-	}
-
-	return $thumb;
-};
-
-/**
- * Builds the wrapper element.
- *
- * @method
- * @returns {jQuery} The properly scoped jQuery object
- */
-ve.ce.WikiaBlockMediaNode.prototype.getWrapperElement = function () {
-	return this.$$( '<div>' ).addClass( 'center' );
-};
-
-/**
- * Builds the view from scratch.
+ * Creates and updates the view.
  *
  * @emits setup
  * @emits teardown
  * @method
  */
 ve.ce.WikiaBlockMediaNode.prototype.update = function ( replaceRoot ) {
-	var $root, captionModel, captionView,
+	var $anchor, $image, $root, $thumb, captionModel, captionView,
 		type = this.model.getAttribute( 'type' );
 
-	this.$thumb = this.getThumbElement();
+	$thumb = this.createThumb();
 
 	if ( this.model.getAttribute( 'align' ) === 'center' ) {
-		$root = this.getWrapperElement().append( this.$thumb );
+		$root = this.createRoot().append( $thumb );
 	} else {
-		$root = this.$thumb;
+		$root = $thumb;
 	}
 
-	if ( replaceRoot ) {
-		this.emit( 'teardown' );
-		this.$.replaceWith( $root );
-	}
+	$anchor = this.createAnchor().appendTo( $thumb );
+	$image = this.createImage().appendTo( $anchor );
 
-	this.$ = $root;
-	this.$anchor = this.getAnchorElement().appendTo( this.$thumb );
-	this.$image = this.getImageElement().appendTo( this.$anchor );
-	this.$resizable = this.$image;
-
-	if ( type !== 'none' ) {
-		this.$magnify = this.getMagnifyElement().appendTo( this.$thumb );
+	if ( type !== 'frameless' && type !== 'none' ) {
+		$thumb.append( this.createMagnify() );
 
 		// Caption
 		if ( this.model.children.length === 1 ) {
@@ -232,18 +223,25 @@ ve.ce.WikiaBlockMediaNode.prototype.update = function ( replaceRoot ) {
 			captionModel.connect( this, { 'update': 'onModelUpdate' } );
 			this.children.push( captionView );
 			captionView.attach( this );
-			captionView.$.appendTo( this.$thumb );
+			captionView.$.appendTo( $thumb );
 			if ( this.live !== captionView.isLive() ) {
 				captionView.setLive( this.live );
 			}
 		}
-	} else {
-		this.$magnify = null;
 	}
+
+	// Update references for mixins
+	this.$image = $image;
+	this.$resizable = $image;
 
 	// This should be called last so the listeners will get the same DOM
 	// structure they do on initialization.
 	if ( replaceRoot ) {
+		this.emit( 'teardown' );
+		this.$.replaceWith( $root );
+		this.$ = $root;
 		this.emit( 'setup' );
+	} else {
+		this.$ = $root;
 	}
 };

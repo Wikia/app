@@ -42,11 +42,12 @@ $wgResourceModules += array(
 			'dm/ve.dm.WikiaBlockImageNode.js',
 			'dm/ve.dm.WikiaBlockVideoNode.js',
 			'dm/ve.dm.WikiaInlineVideoNode.js',
+			'ce/ve.ce.WikiaMediaCaptionNode.js',
 			'ce/ve.ce.WikiaBlockMediaNode.js',
 			'ce/ve.ce.WikiaBlockImageNode.js',
+			'ce/ve.ce.WikiaVideoNode.js',
 			'ce/ve.ce.WikiaBlockVideoNode.js',
 			'ce/ve.ce.WikiaInlineVideoNode.js',
-			'ce/ve.ce.WikiaMediaCaptionNode.js',
 		),
 		'styles' => array (
 			'ui/styles/ve.ui.Surface.css',
