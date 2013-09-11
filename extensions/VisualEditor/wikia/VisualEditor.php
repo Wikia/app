@@ -32,8 +32,21 @@ $wgResourceModules += array(
 		),
 		'localBasePath' => dirname( __FILE__ ),
 		'remoteExtPath' => 'VisualEditor/wikia'
+	),
+	'ext.visualEditor.wikiaCore' => array(
+		'scripts' => array(
+			've.dm.WikiaInlineVideoNode.js',
+			've.ce.WikiaInlineVideoNode.js'
+		),
+		'dependencies' => array(
+			'ext.visualEditor.core'
+		),
+		'localBasePath' => dirname( __FILE__ ) . '/modules',
+		'remoteExtPath' => 'VisualEditor/wikia',
 	)
 );
+
+$wgVisualEditorPluginModules[] = 'ext.visualEditor.wikiaCore';
 
 // Register hooks
 $wgHooks['ResourceLoaderTestModules'][] = 'Wikia_onResourceLoaderTestModules';
