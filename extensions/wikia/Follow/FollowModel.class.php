@@ -128,10 +128,9 @@ class FollowModel {
 			$isWall = $value == NS_USER_WALL;
 
 			$queryArray[] = "(select wl_namespace, wl_title from watchlist where wl_user = " . $user_id . " and wl_namespace = " . $value
+				// special case for Wall to avoid sub-pages
 				. ( $isWall ? " and not wl_title like '%/%' " : '' )
-				//THIS hack will be removed after runing script with will clear all notification copy
-				. ( $value == NS_USER_WALL ? " and wl_wikia_addedtimestamp > '2012-01-31'  " : '' )
-				." ORDER BY wl_wikia_addedtimestamp desc limit " . $from . "," . $limit . ")";
+				. " ORDER BY wl_wikia_addedtimestamp desc limit " . $from . "," . $limit . ")";
 		}
 
 		$res = $db->query( implode(" union ",$queryArray) );
@@ -202,9 +201,8 @@ class FollowModel {
 		 * so we will skip NS_USER_WALL with are subpage to filter out this.
 		 */
 		$con = " wl_user = " . $user_id . " and wl_namespace in (" . implode( ',', $namespaces_keys ) . ")";
-		//special case for Wall to avoid subpages
-		//THIS hack will be removed after runing script with will clear all notification copy
-		$con .= (" and ( not wl_namespace = ".NS_USER_WALL."  or (wl_namespace = ".NS_USER_WALL."  and not wl_title like '%/%' and wl_wikia_addedtimestamp > '2012-01-31' ))");
+		// special case for Wall to avoid sub-pages
+		$con .= ( " and ( not wl_namespace = ".NS_USER_WALL."  or ( wl_namespace = ".NS_USER_WALL."  and not wl_title like '%/%' ) )" );
 
 
 		$res = $db->select(
