@@ -24,6 +24,11 @@ ve.inheritClass( ve.dm.MWInlineImageNode, ve.dm.LeafNode );
 
 /* Static Properties */
 
+ve.dm.MWInlineImageNode.static.rdfaToType = {
+	'mw:Image': 'inline',
+	'mw:Image/Frameless': 'frameless'
+};
+
 ve.dm.MWInlineImageNode.static.isContent = true;
 
 ve.dm.MWInlineImageNode.static.name = 'mwInlineImage';
@@ -34,10 +39,9 @@ ve.dm.MWInlineImageNode.static.storeHtmlAttributes = {
 
 ve.dm.MWInlineImageNode.static.matchTagNames = [ 'span' ];
 
-ve.dm.MWInlineImageNode.static.matchRdfaTypes = [
-	'mw:Image',
-	'mw:Image/Frameless'
-];
+ve.dm.MWInlineImageNode.static.getMatchRdfaTypes = function () {
+	return Object.keys( this.rdfaToType );
+};
 
 ve.dm.MWInlineImageNode.static.toDataElement = function ( domElements ) {
 	var $span = $( domElements[0] ),
@@ -47,6 +51,7 @@ ve.dm.MWInlineImageNode.static.toDataElement = function ( domElements ) {
 		classes = $span.attr( 'class' ),
 		recognizedClasses = [],
 		attributes = {
+			type: this.rdfaToType[typeofAttr],
 			src: $img.attr( 'src' ),
 			resource: $img.attr( 'resource' ),
 			originalClasses: classes
@@ -64,16 +69,6 @@ ve.dm.MWInlineImageNode.static.toDataElement = function ( domElements ) {
 
 	// Extract individual classes
 	classes = typeof classes === 'string' ? classes.trim().split( /\s+/ ) : [];
-
-	// Type
-	switch ( typeofAttr ) {
-		case 'mw:Image':
-			attributes.type = 'inline';
-			break;
-		case 'mw:Image/Frameless':
-			attributes.type = 'frameless';
-			break;
-	}
 
 	// Vertical alignment
 	if ( classes.indexOf( 'mw-valign-middle' ) !== -1 ) {
@@ -119,7 +114,7 @@ ve.dm.MWInlineImageNode.static.toDataElement = function ( domElements ) {
 	// Store unrecognized classes so we can restore them on the way out
 	attributes.unrecognizedClasses = ve.simpleArrayDifference( classes, recognizedClasses );
 
-	return { 'type': 'mwInlineImage', 'attributes': attributes };
+	return { 'type': this.name, 'attributes': attributes };
 };
 
 ve.dm.MWInlineImageNode.static.toDomElements = function ( data, doc ) {
@@ -127,18 +122,19 @@ ve.dm.MWInlineImageNode.static.toDomElements = function ( data, doc ) {
 		span = doc.createElement( 'span' ),
 		img = doc.createElement( 'img' ),
 		classes = [],
-		originalClasses = data.attributes.originalClasses;
+		originalClasses = data.attributes.originalClasses,
+		rdfa;
 
 	ve.setDomAttributes( img, data.attributes, [ 'src', 'width', 'height', 'resource' ] );
 
-	switch ( data.attributes.type  ) {
-		case 'inline':
-			span.setAttribute( 'typeof', 'mw:Image' );
-			break;
-		case 'frameless':
-			span.setAttribute( 'typeof', 'mw:Image/Frameless' );
-			break;
+	if ( !this.typeToRdfa ) {
+		this.typeToRdfa = {};
+		for ( rdfa in this.rdfaToType ) {
+			this.typeToRdfa[this.rdfaToType[rdfa]] = rdfa;
+		}
 	}
+
+	span.setAttribute( 'typeof', this.typeToRdfa[data.attributes.type] );
 
 	if ( data.attributes.defaultSize ) {
 		classes.push( 'mw-default-size' );

@@ -7,7 +7,8 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'VisualEditor for Wikia'
 );
 
-// Register resource loader modules
+/* ResourceLoader Modules */
+
 $wgResourceModules += array(
 	'ext.visualEditor.wikiaViewPageTarget.init' => array(
 		'scripts' => 'init/ve.init.mw.WikiaViewPageTarget.init.js',
@@ -40,10 +41,12 @@ $wgResourceModules += array(
 			'dm/ve.dm.WikiaBlockMediaNode.js',
 			'dm/ve.dm.WikiaBlockImageNode.js',
 			'dm/ve.dm.WikiaBlockVideoNode.js',
+			'dm/ve.dm.WikiaInlineVideoNode.js',
 			'ce/ve.ce.WikiaBlockMediaNode.js',
 			'ce/ve.ce.WikiaBlockImageNode.js',
 			'ce/ve.ce.WikiaBlockVideoNode.js',
-			'ce/ve.ce.WikiaMediaCaptionNode.js'
+			'ce/ve.ce.WikiaInlineVideoNode.js'
+			'ce/ve.ce.WikiaMediaCaptionNode.js',
 		),
 		'styles' => array (
 			'ui/styles/ve.ui.Surface.css',
@@ -64,7 +67,8 @@ JSMessages::registerPackage( 'VisualEditor', array(
 	'videohandler-video-views',
 ));
 
-// Register hooks
+/* Hooks */
+
 $wgHooks['ResourceLoaderTestModules'][] = 'Wikia_onResourceLoaderTestModules';
 
 function Wikia_onResourceLoaderTestModules( array &$testModules, ResourceLoader &$resourceLoader ) {

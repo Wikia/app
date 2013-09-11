@@ -31,7 +31,7 @@ module.exports = function ( grunt ) {
 			all: ['modules/ve/test/index-phantomjs-tmp.html']
 		},
 		watch: {
-			files: ['<%= jshint.all %>', '<%= csslint.all %>', '<%= qunit.all %>', '.{jshintrc,jshintignore,csslintrc}'],
+			files: ['<%= jshint.all %>', '<%= csslint.all %>', '.{jshintrc,jshintignore,csslintrc}'],
 			tasks: ['test']
 		}
 	} );
