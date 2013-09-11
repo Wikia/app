@@ -1354,9 +1354,17 @@ $config['api_docs_js'] = array(
 );
 
 $config['api_docs_css'] = array(
-	'type' => AssetsManager::TYPE_CSS,
+	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => array(
+		'//extensions/wikia/ApiDocs/css/ApiDocs.scss',
 		'//lib/vendor/swagger-ui/dist/css/hightlight.default.css',
 		'//lib/vendor/swagger-ui/dist/css/screen.css',
+	)
+);
+
+$config['api_docs_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => array(
+		'//extensions/wikia/ApiDocs/css/ApiDocs.scss',
 	)
 );

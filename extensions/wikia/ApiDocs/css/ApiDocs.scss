@@ -1,0 +1,36 @@
+body {
+	font-family: Helvetica-Light, Helvetica, Arial, sans-serif;
+}
+
+//main wrapper for all apis and methods
+.swagger-ui-wrap {
+	max-width: 960px;
+	margin: auto;
+
+	h4 {
+		color: royalblue;//change for variable
+	}
+
+	ul {
+		list-style-type: none;
+	}
+
+	.sandbox {
+		padding-left: 40px;
+		table {
+			border-spacing: 0px;
+			tbody tr:nth-child(odd) {
+				background-color: lightgray;
+			}
+			td, tr {
+				font-weight: normal;
+				padding: 5px;
+				text-align: center;
+			}
+			thead th:not(:first-child):not(:last-child), tbody td:not(:first-child):not(:last-child) {
+				border-right: solid 1px gray;
+			}
+		}
+	}
+}
+
