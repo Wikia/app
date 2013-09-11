@@ -652,7 +652,8 @@ class EmailNotification {
 					if ( $watchingUser->getOption( 'enotifwatchlistpages' ) &&
 						( !$minorEdit || $watchingUser->getOption( 'enotifminoredits' ) ) &&
 						$watchingUser->isEmailConfirmed() &&
-						$watchingUser->getID() != $userTalkId )
+						$watchingUser->getID() != $userTalkId &&
+						!$watchingUser->getBoolOption( 'unsubscribed' ) )
 					{
 						$this->compose( $watchingUser );
 					}
