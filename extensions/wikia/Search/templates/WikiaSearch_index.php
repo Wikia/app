@@ -52,7 +52,7 @@
 					<?php foreach( $results as $result ): ?>
 						<?php
 							$pos++;
-							if ( ( $pos == 3 || $pos == 7 ) && $mediaData ):
+							if ( ( $pos == 3 || $pos == 7 ) && isset( $mediaData ) ):
 								echo '<li class="result video-addon-results video-addon-results-before-' . $pos . '">' . $app->getView( 'WikiaSearch', 'mediadata', array( 'mediaData' => $mediaData, 'query' => $query ) ) . '</li>';
 							endif;
 							if ( $result['ns'] === 0 ) {

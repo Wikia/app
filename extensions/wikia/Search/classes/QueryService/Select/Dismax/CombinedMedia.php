@@ -48,7 +48,7 @@ class CombinedMedia extends AbstractDismax
 	protected function registerQueryParams(Solarium_Query_Select $query) {
 		parent::registerQueryParams($query);
 		$config = $this->getConfig();
-		$query->setRows ( $config->getLimit() * 2 );
+		$query->setRows ( $config->getLimit() * 2 ); // fetch more results because we will filter them out later. FIXME: we shuld have more elegant way of handling this
 		return $this;
 	}
 

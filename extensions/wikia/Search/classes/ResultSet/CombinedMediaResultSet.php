@@ -23,6 +23,9 @@ class CombinedMediaResultSet extends Base
 		if( ( sizeof( $this->titleSet ) >= $this->searchConfig->getLimit() ) ||
 			isset($this->titleSet[$result->getTitle()]) ) {
 			return $this;
+		} else if ( wfFindFile( \Title::newFromText($result->getTitle(), NS_FILE) ) === false) {
+			// file is deleted on this wiki
+			return $this;
 		} else {
 			$this->titleSet[$result->getTitle()] = true;
 			return parent::addResult($result);
