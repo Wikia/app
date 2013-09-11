@@ -97,17 +97,18 @@ class ImagesService extends Service {
 	 * @desc Check if image file has extension
 	 *
 	 * @param String $imageUrl original image's URL
-	 * @param String $extension extension
+	 * @param String $desiredExtension extension
 	 *
 	 * @return Boolean
 	 */
-	public static function imageUrlHasExtension($imageUrl, $extension) {
+	public static function imageUrlHasExtension($imageUrl, $desiredExtension) {
 		$fileExt = strtolower( '.' . pathinfo( $imageUrl, PATHINFO_EXTENSION ) );
-		$extension = strtolower( $extension );
+		$desiredExtension = strtolower( $desiredExtension );
 
 		static $jpegExtList = [self::EXT_JPG, self::EXT_JPEG];
 
-		return ($fileExt == $extension) || ( in_array($fileExt, $jpegExtList) && in_array($extension, $jpegExtList) );
+		// we check if image's extension is in ['.jpeg', '.jpg'] and desired extension is in ['.jpeg', '.jpg'] too - we don't need conversion then
+		return ($fileExt == $desiredExtension) || ( in_array($fileExt, $jpegExtList) && in_array($desiredExtension, $jpegExtList) );
 	}
 
 	/**
