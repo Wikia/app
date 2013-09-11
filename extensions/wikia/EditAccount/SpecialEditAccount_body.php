@@ -288,31 +288,50 @@ class EditAccount extends SpecialPage {
 	 * @return Boolean: true on success, false on failure
 	 */
 	function setPassword( $pass, $changeReason = '' ) {
-		if ( $this->mUser->setPassword( $pass ) ) {
-			global $wgUser, $wgTitle;
+		try {
+			// wrap in try/catch in case of PasswordException
 
-			// Save the new settings
-			if ( $this->mTempUser ) {
-				$this->mTempUser->setPassword( $this->mUser->mPassword );
-				$this->mTempUser->updateData();
-				$this->mTempUser->saveSettingsTempUserToUser( $this->mUser );
-				$this->mUser->mName = $this->mTempUser->getName();
+			if ( $this->mUser->setPassword( $pass ) ) {
+				global $wgUser, $wgTitle;
+
+				// Save the new settings
+				if ( $this->mTempUser ) {
+					$this->mTempUser->setPassword( $this->mUser->mPassword );
+					$this->mTempUser->updateData();
+					$this->mTempUser->saveSettingsTempUserToUser( $this->mUser );
+					$this->mUser->mName = $this->mTempUser->getName();
+				} else {
+					$this->mUser->saveSettings();
+				}
+
+				// Log what was done
+				$log = new LogPage( 'editaccnt' );
+				$log->addEntry( 'passchange', $wgTitle, $changeReason, array( $this->mUser->getUserPage() ) );
+
+				// And finally, inform the user that everything went as planned
+				$this->mStatusMsg = wfMsg( 'editaccount-success-pass', $this->mUser->mName );
+				return true;
 			} else {
-				$this->mUser->saveSettings();
+				// We have errors, let's inform the user about those
+				$this->mStatusMsg = wfMsg( 'editaccount-error-pass', $this->mUser->mName );
+				return false;
 			}
 
-			// Log what was done
-			$log = new LogPage( 'editaccnt' );
-			$log->addEntry( 'passchange', $wgTitle, $changeReason, array( $this->mUser->getUserPage() ) );
+		} catch ( PasswordError $err ) {
 
-			// And finally, inform the user that everything went as planned
-			$this->mStatusMsg = wfMsg( 'editaccount-success-pass', $this->mUser->mName );
-			return true;
-		} else {
-			// We have errors, let's inform the user about those
-			$this->mStatusMsg = wfMsg( 'editaccount-error-pass', $this->mUser->mName );
+			// recreating logic from User->setPassword here, would rather not but best solution atm
+			global $wgMinimalPasswordLength;
+			$valid = $this->mUser->getPasswordValidity( $pass );
+			if ( is_array( $valid ) ) {
+				$message = array_shift( $valid );
+				$params = $valid;
+			} else {
+				$message = $valid;
+				$params = array( $wgMinimalPasswordLength );
+			}
+			$this->mStatusMsg = wfMsgExt( $message, array( 'parsemag' ), $params );
 			return false;
-		}
+	 }
 	}
 
 	/**
