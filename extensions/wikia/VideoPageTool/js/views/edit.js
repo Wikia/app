@@ -52,11 +52,16 @@ define( 'vpt.views.edit', [
 										.removeClass( 'error' )
 										.next( '.error' )
 										.remove();
-									$videoTitle.removeClass( 'alternative' )
+									$videoTitle
+										.removeClass( 'alternative' )
 										.text( video.videoTitle );
-									$displayTitleInput.val( video.displayTitle );
-									$descInput.val( video.description );
+									$displayTitleInput
+										.val( video.displayTitle )
+										.trigger( 'keyup' ); // for validation
+									$descInput.val( video.description )
+										.trigger( 'keyup' ); // for validation
 									$thumb.html( video.videoThumb );
+
 									// close VET modal
 									vet.close();
 								} else {
