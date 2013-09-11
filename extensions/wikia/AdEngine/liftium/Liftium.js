@@ -177,6 +177,17 @@ Liftium.buildChain = function(slotname) {
 	for (var i = 0, l = Liftium.config.sizes[size].length; i < l; i++){
 		var t = Liftium.clone(Liftium.config.sizes[size][i]);
 		if (Liftium.isValidCriteria(t, slotname)){
+
+
+
+			// ADEN-502 HACK STARTS HERE
+			if (t.network_name === 'DART') {
+				continue;
+			}
+			// ADEN-502 HACK ENDS HERE
+
+
+
 			Liftium.config.sizes[size][i].inChain = true;
 			Liftium.chain[slotname].push(t);
 			networks.push(t.network_name + ", #" + t.tag_id);
