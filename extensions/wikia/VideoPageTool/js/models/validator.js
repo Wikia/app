@@ -54,7 +54,7 @@ define('vpt.models.validator', [ 'jquery' ], function( $ ) {
 		onSubmit: function( e ) {
 			e.preventDefault();
 
-			if( this.formIsValid() ) {
+			if ( this.formIsValid() ) {
 				this.$form[0].submit();
 			}
 		},
