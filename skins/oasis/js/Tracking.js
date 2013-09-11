@@ -384,13 +384,14 @@ jQuery(function($){
 					trackingMethod: 'both'
 				});
 			}).on('mousedown', '.image', function(e) {
+				var $currentTarget = $(e.currentTarget);
 				track({
 					browserEvent: e,
 					category: category,
-					label: 'result-' + ($(e.currentTarget).hasClass('video') ? 'video' : 'photo')
-						+ ( ( $(e.currentTarget).parents('.video-addon-results').size() > 0 ) ? '-video-addon' : '' ) // video addon ab tests
+					label: 'result-' + ($currentTarget.hasClass('video') ? 'video' : 'photo')
+						+ ( ( $currentTarget.parents('.video-addon-results').length > 0 ) ? '-video-addon' : '' ) // video addon ab tests
 				});
-			}).on('mousedown', '.video-addon-results > h1 > a', function(e) {
+			}).on('mousedown', '.video-addon-seach-video', function(e) {
 				track({
 					browserEvent: e,
 					category: category,
