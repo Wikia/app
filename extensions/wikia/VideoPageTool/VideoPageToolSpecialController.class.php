@@ -44,7 +44,6 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		// Change the <title> attribute and the <h1> for the page
 		$this->getContext()->getOutput()->setPageTitle( wfMessage( 'videopagetool-page-title' )->plain() );
 
-		$date = $this->getVal( 'date', date( 'Y-M-d' ) );
 		$language = $this->getVal( 'language', VideoPageToolHelper::DEFAULT_LANGUAGE );
 
 		$subpage = $this->getSubpage();
@@ -74,7 +73,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	public function edit() {
 		JSMessages::enqueuePackage( 'VideoPageTool', JSMessages::EXTERNAL );
 
-		$date = $this->getVal( 'date', strtotime( date( 'Y-M-d' ) ) );
+		$time = $this->getVal( 'date', time() );
 		$language = $this->getVal( 'language', VideoPageToolHelper::DEFAULT_LANGUAGE );
 		$section = $this->getVal( 'section', VideoPageToolHelper::DEFAULT_SECTION );
 
@@ -82,6 +81,9 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		$success = $this->getVal( 'success', '' );
 
 		$helper = new VideoPageToolHelper();
+
+		// get date
+		$date = strtotime( date( 'Y-M-d', $time ) );
 
 		// validate section - set to DEFAULT_SECTION if not exists
 		$sections = $helper->getSections();

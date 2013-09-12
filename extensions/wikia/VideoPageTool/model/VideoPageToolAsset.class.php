@@ -230,7 +230,7 @@ class VideoPageToolAsset extends WikiaModel {
 
 		$row = $db->selectRow(
 			array( 'vpt_asset' ),
-			array( '*' ),
+			array( '*, unix_timestamp(updated_at) as updated_at' ),
 			array(
 				'program_id' => $this->programId,
 				'section' => $this->section,
@@ -480,7 +480,7 @@ class VideoPageToolAsset extends WikiaModel {
 
 			$result = $db->select(
 				array( 'vpt_asset' ),
-				array( '*' ),
+				array( '*, unix_timestamp(updated_at) as updated_at' ),
 				array(
 					'program_id' => $programId,
 					'section' => $section,

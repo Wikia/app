@@ -147,12 +147,7 @@ class VideoPageToolProgram extends WikiaModel {
 
 		$row = $db->selectRow(
 			array( 'vpt_program' ),
-			array(
-				'program_id',
-				'language',
-				'unix_timestamp(publish_date) as publish_date',
-				'is_published',
-			),
+			array( '*, unix_timestamp(publish_date) as publish_date' ),
 			array(
 				'language' => $this->language,
 				'publish_date' => date( 'Y-m-d', $this->publishDate ),
