@@ -1,15 +1,29 @@
 //colors variables
 $blue-c1: #0a5fa3;
-$lightGray-c2: #f9f9f9;
 $midGray-c3: #e6e6e6;
 $gray-c4: #676767;
 $darkGray-c5: #333333;
+
+@mixin inputs {
+	color: $darkGray-c5;
+	font-weight: normal;
+	height: 25px;
+	width: 155px;
+}
 
 body {
 	color: $gray-c4;
 	font-family: Helvetica-Light, Helvetica, Arial, sans-serif;
 	font-size: 14px;
 	font-weight: light;
+}
+
+input {
+	@include inputs;
+}
+
+select {
+	@include inputs;
 }
 
 //hack for strongs, and b displaying as normal, try changing template
@@ -46,11 +60,8 @@ strong, b {
 	width: 776px;
 	table {
 		border-spacing: 0px;
-		input {
-			width: 155px;
-		}
 		tbody tr:nth-child(odd) {
-			background-color: $lightGray-c2;
+			background-color: $midGray-c3;
 		}
 		td {
 			padding: 10px;
@@ -59,14 +70,14 @@ strong, b {
 			text-align: center;
 		}
 		th {
-			border-bottom: solid 1px $midGray-c3;
+			border-bottom: solid 1px $gray-c4;
 			color: $darkGray-c5;
 			font-size: 14px;
 			font-weight: bold;
 			text-align: center;
 		}
 		thead th:not(:first-child):not(:last-child), tbody td:not(:first-child):not(:last-child) {
-			border-right: solid 1px $midGray-c3;
+			border-right: solid 1px $gray-c4;
 		}
 		tr {
 			height: 70px;
