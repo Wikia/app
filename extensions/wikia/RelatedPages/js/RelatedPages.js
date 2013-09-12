@@ -12,7 +12,7 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function( sloth, w, $ ){
 			$placeholder = $( '#WikiaArticleFooter' );
 			break;
 		case 'monobook':
-			$placeholder = $( '#mw-data-after-content' )
+			$placeholder = $( '#mw-data-after-content' );
 			break;
 	}
 
