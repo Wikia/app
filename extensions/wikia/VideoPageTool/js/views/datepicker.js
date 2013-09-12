@@ -65,7 +65,7 @@ define('vpt.views.datepicker', [
 				// response sends back a string, parse it to int
 				dayStatus = parseInt(dayStatus, 10);
 				if (dayStatus === this.state._notPublished ) {
-					tdClassName = 'inProg';
+					tdClassName = 'in-prog';
 				} else if (dayStatus === this.state._published ) {
 					tdClassName = 'published';
 				}

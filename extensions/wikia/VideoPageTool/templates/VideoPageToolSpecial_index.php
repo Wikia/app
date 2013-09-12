@@ -44,7 +44,7 @@
 				<a>&nbsp;&nbsp;</a>
 				<?= wfMessage('videopagetool-tooltip-published'); ?>
 			</td>
-			<td class="inProg">
+			<td class="in-prog">
 				<a>&nbsp;&nbsp;</a>
 				<?= wfMessage('videopagetool-tooltip-in-progress'); ?>
 			</td>
