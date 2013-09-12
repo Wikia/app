@@ -4,6 +4,13 @@ $midGray-c3: #e6e6e6;
 $gray-c4: #676767;
 $darkGray-c5: #333333;
 
+@mixin boxHeader {
+	color: $blue-c1;
+	font-size: 17.5px;
+	font-weight: bold;
+	margin: 25px 0;
+}
+
 @mixin inputs {
 	color: $darkGray-c5;
 	font-weight: normal;
@@ -22,13 +29,13 @@ input {
 	@include inputs;
 }
 
-select {
-	@include inputs;
-}
-
 //hack for strongs, and b displaying as normal, try changing template
 strong, b {
 	font-weight: inherit;
+}
+
+select {
+	@include inputs;
 }
 
 //main wrapper for all apis and methods
@@ -37,9 +44,7 @@ strong, b {
 	margin: auto;
 
 	h4 {
-		color: $blue-c1;
-		font-size: 17.5px;
-		font-weight: bold;
+		@include boxHeader;
 	}
 
 	ul {
@@ -47,40 +52,42 @@ strong, b {
 	}
 }
 
+//response content type box
 .content-type {
-	padding-left: 40px;
+	padding-left: 90px;
 	label {
-		color: $blue-c1;
+		@include boxHeader;
 		display: block;
 	}
 }
 
+//parameters and errors box
 .sandbox {
 	margin-left: 90px;
 	width: 776px;
 	table {
 		border-spacing: 0px;
-		tbody tr:nth-child(odd) {
-			background-color: $midGray-c3;
-		}
-		td {
-			padding: 10px;
-		}
-		td:nth-child(4), td:nth-child(5) {
-			text-align: center;
-		}
-		th {
-			border-bottom: solid 1px $gray-c4;
-			color: $darkGray-c5;
-			font-size: 14px;
-			font-weight: bold;
-			text-align: center;
-		}
-		thead th:not(:first-child):not(:last-child), tbody td:not(:first-child):not(:last-child) {
-			border-right: solid 1px $gray-c4;
-		}
-		tr {
-			height: 70px;
-		}
+	}
+	tbody tr:nth-child(odd) {
+		background-color: $midGray-c3;
+	}
+	td {
+		padding: 10px;
+	}
+	td:nth-child(4), td:nth-child(5) {
+		text-align: center;
+	}
+	th {
+		border-bottom: solid 1px $gray-c4;
+		color: $darkGray-c5;
+		font-size: 14px;
+		font-weight: bold;
+		text-align: center;
+	}
+	th:not(:first-child):not(:last-child), td:not(:first-child):not(:last-child) {
+		border-right: solid 1px $gray-c4;
+	}
+	tr {
+		height: 70px;
 	}
 }
