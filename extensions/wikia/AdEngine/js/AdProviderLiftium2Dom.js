@@ -1,5 +1,5 @@
 // TODO: remove Wikia.Tracker dependency
-var AdProviderLiftium2Dom = function (tracker, log, document, slotTweaker, Liftium, scriptWriter) {
+var AdProviderLiftium2Dom = function (tracker, log, document, slotTweaker, Liftium, scriptWriter, window) {
 	'use strict';
 
 	var logGroup = 'AdProviderLiftium2'
@@ -20,11 +20,9 @@ var AdProviderLiftium2Dom = function (tracker, log, document, slotTweaker, Lifti
 		'LEFT_SKYSCRAPER_3': {'size':'160x600'},
 		'TEST_TOP_RIGHT_BOXAD': {'size':'300x250'},
 		'TEST_HOME_TOP_RIGHT_BOXAD': {'size':'300x250'},
-		'TOP_BUTTON': {'size':'242x90'},
 		'TOP_BUTTON_WIDE': {'size':'292x90'},
 
 		// TOP_BUTTON after TOP_LEADERBOARD hack:
-		'TOP_BUTTON.force':'hack',
 		'TOP_BUTTON_WIDE.force':'hack',
 
 		'TOP_LEADERBOARD':{'size':'728x90'},
@@ -63,8 +61,8 @@ var AdProviderLiftium2Dom = function (tracker, log, document, slotTweaker, Lifti
 		}
 		if (slot[0].indexOf('LEADERBOARD') !== -1) {
 			log('LEADERBOARD-ish slot handled by Liftium. Running the forced TOP_BUTTON(_WIDE) now', 2, logGroup);
-			fillInSlot(['TOP_BUTTON.force']);
-			fillInSlot(['TOP_BUTTON_WIDE.force']);
+
+			window.adslots2.push(['TOP_BUTTON_WIDE.force', null, 'Liftium2']);
 		}
 		// END of hack
 		if (!document.getElementById(slot[0])) {
