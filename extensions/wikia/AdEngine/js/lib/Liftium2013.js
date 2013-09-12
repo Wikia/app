@@ -3,9 +3,9 @@
 // Loading of this one instead of the regular extensions/wikia/AdEngine/liftium/Liftium.js
 // is trigger with wgAdDriverUseLiftium2013 or ?useliftium2013=1 URL param
 
-// For now, this is just a copy of Liftium.js with the following console.log added:
+// For now, this is just a copy of Liftium.js with the following secret var statement added:
 
-console.log('Liftium 2013 activated!');
+var Liftium2013 = true;
 
 /* Ad Network Optimizer written in Javascript */
 
