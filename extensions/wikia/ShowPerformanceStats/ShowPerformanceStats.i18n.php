@@ -90,6 +90,16 @@ $messages['fi'] = array(
 	'performancestat-total' => 'Yhteensä: $1 s',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'showperformancestats-desc' => 'Veitir menniskja-lesbar hagtøl um úrslit',
+	'performancestat-total' => 'Tilsamans: $1s',
+	'performancestat-apache' => 'Apache: $1s',
+	'performancestat-cpu' => 'CPU: $1s',
+);
+
 /** French (français)
  * @author Wyz
  */
@@ -304,6 +314,7 @@ $messages['tl'] = array(
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
+ * @author SteveR
  * @author Ua2004
  */
 $messages['uk'] = array(

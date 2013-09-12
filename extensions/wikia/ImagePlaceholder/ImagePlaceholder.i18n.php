@@ -180,6 +180,15 @@ $messages['fi'] = array(
 	'imgplc-notinhistory' => 'Et voi lisätä kuvaa historiatilassa.',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'imgplc-add-image' => 'Legg afturat mynd',
+	'imgplc-add-video' => 'Legg afturat video',
+	'imgplc-image' => 'Mynd',
+);
+
 /** French (français)
  * @author Gomoko
  * @author Peter17
@@ -315,9 +324,18 @@ $messages['ku-latn'] = array(
  */
 $messages['lb'] = array(
 	'imgplc-add-image' => 'Bild derbäisetzen',
+	'imgplc-add-video' => 'Video derbäisetzen',
 	'imgplc-placeholder' => 'Reservéiert Plaz',
 	'imgplc-image' => 'Bild',
 	'imgplc-notinhistory' => 'Dir kënnt am Historique Modus kee Bild derbäisetzen',
+);
+
+/** Lithuanian (lietuvių)
+ * @author Mantak111
+ */
+$messages['lt'] = array(
+	'imgplc-add-image' => 'Pridėti vaizdą',
+	'imgplc-add-video' => 'Pridėti Video',
 );
 
 /** Macedonian (македонски)
@@ -544,11 +562,16 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
 	'imgplc-add-image' => 'Додати зображення',
+	'imgplc-add-video' => 'Додати відео',
+	'imgplc-placeholder' => 'Заповнювач',
 	'imgplc-image' => 'Зображення',
+	'imgplc-notinhistory' => 'Не можна додати зображення в режимі історії.',
+	'imgplc-notinhistory-video' => 'Не можна додати відео в режимі історії.',
 );
 
 /** Vietnamese (Tiếng Việt)

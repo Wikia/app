@@ -26,7 +26,7 @@ class WikiaLocalFile extends LocalFile {
 	 * @param String $name - The name of the file
 	 * @param String $archiveName - The archive name of the file, typically a concatenation of
 	 *                              the archive date and the original file name.
-	 * @param FileRepo $repo - The file repo this file is in.
+	 * @param WikiaForeignDBViaLBRepo $repo - The file repo this file is in.
 	 * @return WikiaLocalFile - A new WikiaLocalFile object
 	 */
 	static function newFromArchiveTitle( $name, $archiveName, $repo ) {
@@ -48,6 +48,7 @@ class WikiaLocalFile extends LocalFile {
 			return null;
 		}
 
+		/* @var $file WikiaLocalFile */
 		$file = new static( $title, $repo );
 		$file->loadFromRow( $row, 'oi_' );
 		return $file;
@@ -59,6 +60,7 @@ class WikiaLocalFile extends LocalFile {
 	 */
 	static function newFromRow( $row, $repo ) {
 		$title = Title::makeTitle( NS_FILE, $row->img_name );
+		/* @var $file LocalFile */
 		$file = new static( $title, $repo );
 		$file->loadFromRow( $row );
 		return $file;
@@ -137,6 +139,9 @@ class WikiaLocalFile extends LocalFile {
 	// No everything can be transparent, because __CALL skips already defined methods.
 	// These methods work as a layer of communication between this class and SharedLogic
 
+	/**
+	 * @return VideoHandler
+	 */
 	function getHandler(){
 		wfProfileIn( __METHOD__ );
 		if ( !isset( $this->handler ) ) {

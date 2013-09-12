@@ -337,7 +337,7 @@ class UserStatsService extends WikiaModel {
 
 		$res = $dbr->selectRow(
 			'revision',
-			array('min(rev_timestamp) AS date, count(*) AS edits'),
+			array('min(rev_timestamp) AS date, max(rev_timestamp) AS last_revision,  count(*) AS edits'),
 			array('rev_user' => $this->userId),
 			__METHOD__
 		);
@@ -346,6 +346,7 @@ class UserStatsService extends WikiaModel {
 			$stats = array(
 				'edits' => intval($res->edits),
 				'date' => $res->date,
+				'lastRevision' => $res->last_revision
 			);
 		}
 
