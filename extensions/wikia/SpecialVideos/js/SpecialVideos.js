@@ -30,32 +30,29 @@ var SpecialVideos = {
 		var addVideoButton = $('.addVideo');
 		if( $.isFunction( $.fn.addVideoButton ) ) {
 			addVideoButton.addVideoButton({
-				// TODO: add vet as second param in the callback function so you don't have to require it here
-				callbackAfterSelect: function(url) {
-					require(['wikia.vet'], function(vet) {
-						$.nirvana.postJson(
-							// controller
-							'VideosController',
-							// method
-							'addVideo',
-							// data
-							{ url: url },
-							// success callback
-							function( formRes ) {
-								GlobalNotification.hide();
-								if ( formRes.error ) {
-									GlobalNotification.show( formRes.error, 'error' );
-								} else {
-									vet.close();
-									(new Wikia.Querystring()).setVal('sort', 'recent').goTo();
-								}
-							},
-							// error callback
-							function() {
-								GlobalNotification.show( $.msg('vet-error-while-loading'), 'error' );
+				callbackAfterSelect: function(url, VET) {
+					$.nirvana.postJson(
+						// controller
+						'VideosController',
+						// method
+						'addVideo',
+						// data
+						{ url: url },
+						// success callback
+						function( formRes ) {
+							window.GlobalNotification.hide();
+							if ( formRes.error ) {
+								window.GlobalNotification.show( formRes.error, 'error' );
+							} else {
+								VET.close();
+								(new Wikia.Querystring()).setVal('sort', 'recent').goTo();
 							}
-						);
-					});
+						},
+						// error callback
+						function() {
+							window.GlobalNotification.show( $.msg('vet-error-while-loading'), 'error' );
+						}
+					);
 					// Don't move on to second VET screen.  We're done.
 					return false;
 				}
