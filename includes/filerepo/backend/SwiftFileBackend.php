@@ -466,9 +466,6 @@ error_log( __METHOD__ . ": getContainer( $fullCont ) =  " . print_r( $contObj, t
 			);
 		} catch ( NoSuchContainerException $e ) {
 		} catch ( NoSuchObjectException $e ) {
-		} catch ( CloudFilesException $e ) { // some other exception?
-			$stat = null;
-			$this->handleException( $e, null, __METHOD__, $params );
 		}
 
 		return $stat;
