@@ -280,23 +280,31 @@ class AutomatedDeadWikisDeletionMaintenance {
 
 		$db = wfGetDB(DB_SLAVE,array(),$wgExternalSharedDB);
 		$where = array(
-			'city_public' => 1,
-			'city_flags & 512 = 0',
+			'l.city_public' => 1,
+			'l.city_flags & 512 = 0',
 			// it could be -55 days, but leaving the margin for TZs
-			"city_created < \"".wfTimestamp(TS_DB,strtotime(self::$FETCH_TIME_LIMIT))."\""
+			"l.city_created < \"".wfTimestamp(TS_DB,strtotime(self::$FETCH_TIME_LIMIT))."\"",
+			"(v.city_flags IS NULL OR v.city_flags & " . WikisModel::FLAG_OFFICIAL . " = 0)",
 		);
 		if (!is_null($this->from))
-			$where[] = "city_id >= ".intval($this->from);
+			$where[] = "l.city_id >= ".intval($this->from);
 		if (!is_null($this->to))
-			$where[] = "city_id <= ".intval($this->to);
+			$where[] = "l.city_id <= ".intval($this->to);
 		$res = $db->select(
-			'city_list',
-			array( 'city_id', 'city_dbname', 'city_url', 'city_public' ),
+			array(
+				'l' => 'city_list',
+				'v' => 'city_visualization',
+			),
+			array( 'l.city_id', 'l.city_dbname', 'l.city_url', 'l.city_public' ),
 			$where,
 			__METHOD__,
 			array(
 //				'ORDER BY' => 'city_id DESC',
-				'ORDER BY' => 'city_id',
+				'ORDER BY' => 'l.city_id',
+				'DISTINCT',
+			),
+			array( // join conditions
+				'v' => array( 'LEFT JOIN', 'l.city_id = v.city_id' ),
 			)
 		);
 		
