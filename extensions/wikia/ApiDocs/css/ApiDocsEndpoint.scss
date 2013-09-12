@@ -6,6 +6,7 @@ $endpointHeight: 51px;
 	.heading {
 		border: 1px solid $lightGray-c2;
 		clear: both;
+		display: block;
 		height: $endpointHeight;
 
 		.http_method {
@@ -17,19 +18,25 @@ $endpointHeight: 51px;
 			margin-right: 20px;
 			text-align: center;
 			width: 90px;
-			> a {
-				color: white;
-				font-size: 12px;
-				font-weight: bold;
-				text-transform: uppercase;
-			}
+			color: white;
+			font-size: 12px;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+
+		.summary {
+			color: $darkGray-c5;
+			font-size: 17.5px;
+			line-height: 27.5px;
+			display: block;
 		}
 
 		.path {
-			> a {
+			color: $gray-c4;
+			font-size: 14px;
+			b {
 				color: $darkGray-c5;
-				font-size: 17.5px;
-				line-height: 27.5px;
+				font-weight: bold;
 			}
 		}
 
