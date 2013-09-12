@@ -12,13 +12,13 @@ class VideoPageController extends WikiaController {
 	 * Return display content for any of the supported modules, one of:
 	 *
 	 *  - featured
-	 *  - latest
+	 *  - category
 	 *  - fan
 	 *  - popular
 	 *
 	 * Example controller request:
 	 *
-	 *   /wikia.php?controller=VideoPageController&method=getModule&moduleName=latest
+	 *   /wikia.php?controller=VideoPageController&method=getModule&moduleName=category
 	 *
 	 * @requestParam moduleName - The name of the module to display
 	 * @return bool
@@ -47,9 +47,9 @@ class VideoPageController extends WikiaController {
 	}
 
 	/**
-	 * Displays the latest module
+	 * Displays the category module
 	 */
-	public function handleLatest() {
+	public function handleCategory() {
 
 	}
 

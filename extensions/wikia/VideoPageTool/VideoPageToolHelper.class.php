@@ -10,7 +10,7 @@ class VideoPageToolHelper extends WikiaModel {
 
 	public static $requiredRows = array(
 		'featured' => 5,
-		'trending' => 4,
+		'category' => 4,
 		'fan'      => 4,
 	);
 
@@ -21,7 +21,7 @@ class VideoPageToolHelper extends WikiaModel {
 	public function getSections() {
 		$sections = array(
 			'featured' => wfMessage( 'videopagetool-section-featured' )->plain(),
-			'trending' => wfMessage( 'videopagetool-section-trending' )->plain(),
+			'category' => wfMessage( 'videopagetool-section-category' )->plain(),
 			'fan' => wfMessage( 'videopagetool-section-fan' )->plain(),
 		);
 
@@ -46,7 +46,7 @@ class VideoPageToolHelper extends WikiaModel {
 
 	/**
 	 * get left menu items
-	 * @param string $selected [featured/trending/fan]
+	 * @param string $selected [featured/category/fan]
 	 * @param array $sections
 	 * @param string $language
 	 * @param string $date [timestamp]

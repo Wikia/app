@@ -67,7 +67,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	 * Edit page
 	 * @requestParam string language
 	 * @requestParam string date [yyyy-mm-dd]
-	 * @requestParam string section [featured/trending/fan]
+	 * @requestParam string section [featured/category/fan]
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
 	 */
@@ -228,11 +228,11 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Trending videos template
+	 * Category videos template
 	 * @requestParam array videos
 	 * @responseParam array videos
 	 */
-	public function trending() {
+	public function category() {
 		$videos[] = array(
 			'categoryName' => 'Category Name',
 			'displayTitle' => 'Title',

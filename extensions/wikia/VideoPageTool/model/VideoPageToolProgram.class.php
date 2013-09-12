@@ -317,8 +317,10 @@ class VideoPageToolProgram extends WikiaModel {
 	public static function getPrograms( $language, $startDate, $endDate ) {
 		wfProfileIn( __METHOD__ );
 
+		$app = F::app();
+
 		$memKey = self::getMemcKeyPrograms( $language, $startDate );
-		$programs = $this->wg->Memc->get( $memKey );
+		$programs = $app->wg->Memc->get( $memKey );
 		if ( empty( $programs )) {
 			$db = wfGetDB( DB_SLAVE );
 
@@ -339,7 +341,7 @@ class VideoPageToolProgram extends WikiaModel {
 				$programs[$row->publish_date] = $row->is_published;
 			}
 
-			$this->wg->Memc->set( $memKey, $programs, 60*60*24 );
+			$app->wg->Memc->set( $memKey, $programs, 60*60*24 );
 		}
 
 		wfProfileOut( __METHOD__ );

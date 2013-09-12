@@ -1,4 +1,4 @@
 <form class="WikiaForm" method="post">
-	<div class="form-box trending-video">
+	<div class="form-box category-video">
 	</div>
 </form>
