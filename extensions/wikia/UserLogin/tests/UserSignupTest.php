@@ -64,6 +64,12 @@
 			$this->setUpRequest( $requestParams );
 			$this->setUpMockObject( 'User', $mockUserParams, true );
 
+			$objectName = 'ExternalUser_Wikia';
+			$mockObject = true;
+			$this->mockClass( $objectName, $mockObject, 'initFromName' );
+			$this->mockClass( $objectName, $mockObject, 'getLocalUser' );
+			$this->mockClass( $objectName, (isset($objectParams['params']['mId']) ? $objectParams['params']['mId'] : 0), 'getId' );
+
 			if ( !is_null($mockUserLoginFormParams) ) {
 				$this->setUpMockObject( 'UserLoginForm', $mockUserLoginFormParams, true, null, array(), false );
 			}

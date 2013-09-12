@@ -88,6 +88,8 @@ abstract class UserLoginBaseTest extends WikiaBaseTest {
 				$this->mockClass( $objectName, $mockObject, 'newFromConfirmationCode' );
 				$this->mockClass( $objectName, $mockObject, 'newFromSession' );
 				$this->mockClass( $objectName, $mockObject, 'newFromRow' );
+				$this->mockClass( $objectName, true, 'loadOptions' );
+				$this->mockClass( $objectName, (isset($objectParams['params']['mId']) ? $objectParams['params']['mId'] : 0), 'idFromName' );
 			}
 			if ( $objectName == 'TempUser' ) {
 				$this->mockClass( $objectName, $mockObject, 'getTempUserFromName' );
@@ -155,7 +157,7 @@ abstract class UserLoginBaseTest extends WikiaBaseTest {
 	 * or default empty Message object mock
 	 *
 	 * requre $this->returnMessageMap and $this->emptyMessageMock to be set by mockWfMessage
-	 * 
+	 *
 	 * @return $returnVal Message
 	 */
 	public function messageMockCallback() {
