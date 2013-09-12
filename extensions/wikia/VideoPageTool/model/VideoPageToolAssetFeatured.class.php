@@ -27,7 +27,7 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 			return self::getDefaultAssetData();
 		}
 
-		$data['displayTitleClass'] = '';
+		$data['videoTitleClass'] = '';
 
 		$assetData = array_merge( $data, parent::getAssetData() );
 
@@ -40,12 +40,12 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 	 */
 	public static function getDefaultAssetData() {
 		$data = array(
-			'videoTitle' => '',
+			'videoTitle' => wfMessage( 'videopagetool-video-title-default-text' )->text(),
 			'videoKey' => '',
 			'videoThumb' => '',
-			'displayTitle' => wfMessage( 'videopagetool-video-title-default-text' )->text(),
+			'displayTitle' => '',
 			'description' => '',
-			'displayTitleClass' => 'alternative',
+			'videoTitleClass' => 'alternative',
 		);
 		$defaultData = array_merge( $data, parent::getDefaultAssetData() );
 

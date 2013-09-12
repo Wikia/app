@@ -3,14 +3,7 @@
 	<? for( $x = 1; $x <= count($videos); $x++ ): ?>
 
 		<?
-			// TODO: there's probably still some work to sync this up with the controller properly
 			$video = $videos[ $x ];
-			$videoTitle = $video[ 'videoTitle' ];
-			$videoTitleClass = ''; // TODO: make sure this logic is in the controller - videoTitle ? "" : "alternative";
-			$displayTitle = $video[ 'displayTitle' ]; // TODO: if there's no display title, make sure we send the default text (videopagetool-video-title-default-text)
-			$videoDescription = $video[ 'description' ];
-			$videoKey = $video[ 'videoKey' ];
-			$videoThumb = $video[ 'videoThumb' ];
 			$descriptionMaxLength = "200";
 		?>
 
@@ -18,17 +11,17 @@
 			<span class="count"><?= $x ?>.</span>
 			<div class="input-group video-key-group">
 				<button class="add-video-button"><?= wfMessage( 'videopagetool-button-add-video' )->text() ?></button>
-				<p class="video-title <?= $videoTitleClass ?>"><?= $videoTitle  ?></p>
-				<input type="hidden" name="videoKey[]" class="video-key" id="video-key-<?= $x ?>" value="<?= $videoKey ?>">
+				<p class="video-title <?= $video[ 'videoTitleClass' ] ?>"><?= $video[ 'videoTitle' ]  ?></p>
+				<input type="hidden" name="videoKey[]" class="video-key" id="video-key-<?= $x ?>" value="<?= $video[ 'videoKey' ] ?>">
 			</div>
-			<div class="video-thumb"><?= $videoThumb ?></div>
+			<div class="video-thumb"><?= $video[ 'videoThumb' ] ?></div>
 			<div class="input-group border">
 				<label for="display-title-<?= $x ?>"><?= wfMessage( 'videopagetool-label-display-title' )->text() ?></label>
-				<input class="display-title" id="display-title-<?= $x ?>" type="text" name="displayTitle[]" value="<?= $displayTitle ?>">
+				<input class="display-title" id="display-title-<?= $x ?>" type="text" name="displayTitle[]" value="<?= $video[ 'displayTitle' ] ?>">
 			</div>
 			<div class="input-group">
 				<label for="description-<?= $x ?>"><?= wfMessage( 'videopagetool-label-video-description' )->text() ?></label>
-				<textarea maxlength="<?= $descriptionMaxLength ?>" class="description" id="description-<?= $x ?>" placeholder="<?= wfMessage( 'videopagetool-placeholder-video-description' )->text() ?>" name="description[]"><?= $videoDescription ?></textarea>
+				<textarea maxlength="<?= $descriptionMaxLength ?>" class="description" id="description-<?= $x ?>" placeholder="<?= wfMessage( 'videopagetool-placeholder-video-description' )->text() ?>" name="description[]"><?= $video[ 'description' ] ?></textarea>
 				<p class="hint"><?= wfMessage( 'videopagetool-hint-description-maxlength', $descriptionMaxLength )->plain() ?></p>
 			</div>
 			<button class="secondary navigation nav-up">
