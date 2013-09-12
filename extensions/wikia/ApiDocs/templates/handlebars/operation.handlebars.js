@@ -79,7 +79,7 @@ function program11(depth0,data) {
     + escapeExpression(((stack1 = depth0.httpMethod),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "_"
     + escapeExpression(((stack1 = depth0.number),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "_content' style='display:none'>\n                ";
+    + "_content'>\n                ";
   stack2 = helpers['if'].call(depth0, depth0.notes, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\n                ";

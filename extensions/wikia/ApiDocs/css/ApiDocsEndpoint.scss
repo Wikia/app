@@ -1,4 +1,6 @@
 $endpointHeight: 51px;
+$endpointSummaryLineHeight: 17.5px;
+$endpointUrlLineHeight: 14px;
 
 .endpoint {
 	margin: 10px 0;
@@ -14,7 +16,7 @@ $endpointHeight: 51px;
 			display: block;
 			float: left;
 			height: $endpointHeight;
-			line-height: 53px;
+			line-height: $endpointHeight;
 			margin-right: 20px;
 			text-align: center;
 			width: 90px;
@@ -26,17 +28,20 @@ $endpointHeight: 51px;
 
 		.summary {
 			color: $darkGray-c5;
-			font-size: 17.5px;
-			line-height: 27.5px;
+			font-size: $endpointSummaryLineHeight;
+			line-height: $endpointSummaryLineHeight + 20px;
 			display: block;
 		}
 
 		.path {
 			color: $gray-c4;
-			font-size: 14px;
+			font-size: $endpointUrlLineHeight;
+			line-height: $endpointUrlLineHeight;
+
 			b {
 				color: $darkGray-c5;
 				font-weight: bold;
+				line-height: $endpointUrlLineHeight;
 			}
 		}
 
@@ -48,6 +53,10 @@ $endpointHeight: 51px;
 			height: $endpointHeight;
 			width: $endpointHeight;
 		}
+	}
+
+	.content {
+		display: none;
 	}
 }
 
