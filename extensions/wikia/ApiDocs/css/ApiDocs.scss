@@ -36,6 +36,16 @@ strong, b {
 
 select {
 	@include inputs;
+	-moz-border-radius: 2px;
+	-webkit-appearance: none;
+	background-color: #ffffff;
+	background-image: url(/extensions/wikia/ApiDocs/files/arrow-01.png); /* base64 */
+	background-position: 136px 10px;
+	background-repeat: no-repeat;
+	border: solid 1px $gray-c4;
+	border-radius: 2px;
+	overflow: hidden;
+	padding: 0 10px;
 }
 
 //main wrapper for all apis and methods
@@ -58,6 +68,10 @@ select {
 	label {
 		@include boxHeader;
 		display: block;
+	}
+	select {
+		width: 210px;
+		background-position: 192px 10px;
 	}
 }
 
