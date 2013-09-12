@@ -1,5 +1,6 @@
 //colors variables
 $blue-c1: #0a5fa3;
+$lightGray-c2: #f9f9f9;
 $midGray-c3: #e6e6e6;
 $gray-c4: #676767;
 $darkGray-c5: #333333;
@@ -11,9 +12,19 @@ $darkGray-c5: #333333;
 	margin: 25px 0;
 }
 
+@mixin buttons {
+	-moz-border-radius: 2px;
+	background-color: $blue-c1;
+	border: solid 1px $blue-c1;
+	border-radius: 2px;
+	color: #ffffff;
+	font-size: 12px;
+	font-weight: bold;
+}
+
 @mixin inputs {
 	-moz-border-radius: 2px;
-	border: solid 1px $gray-c4;
+	border: solid 1px $midGray-c3;
 	border-radius: 2px;
 	color: $darkGray-c5;
 	font-weight: normal;
@@ -84,25 +95,32 @@ select {
 		border-spacing: 0px;
 	}
 	tbody tr:nth-child(odd) {
-		background-color: $midGray-c3;
+		background-color: $lightGray-c2;
 	}
 	td {
-		padding: 10px;
+		padding: 0 15px;
 	}
 	td:nth-child(4), td:nth-child(5) {
+		padding: 0;
 		text-align: center;
 	}
 	th {
-		border-bottom: solid 1px $gray-c4;
+		border-bottom: solid 1px $midGray-c3;
 		color: $darkGray-c5;
 		font-size: 14px;
 		font-weight: bold;
 		text-align: center;
 	}
 	th:not(:first-child):not(:last-child), td:not(:first-child):not(:last-child) {
-		border-right: solid 1px $gray-c4;
+		border-right: solid 1px $midGray-c3;
 	}
 	tr {
 		height: 70px;
+	}
+}
+
+.sandbox_header {
+	input {
+		@include buttons;
 	}
 }
