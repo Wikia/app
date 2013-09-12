@@ -684,6 +684,7 @@ class FileRepo {
 	 * @return FileRepoStatus
 	 */
 	public function storeBatch( $triplets, $flags = 0 ) {
+error_log( __METHOD__ . "\n", 3, "/tmp/moli.log" );
 		$backend = $this->backend; // convenience
 
 		$status = $this->newGood();
@@ -692,6 +693,7 @@ class FileRepo {
 		$sourceFSFilesToDelete = array(); // cleanup for disk source files
 		// Validate each triplet and get the store operation...
 		foreach ( $triplets as $triplet ) {
+error_log( __METHOD__ . ": triplet = " . print_r( $triplet, true )  . " \n", 3, "/tmp/moli.log" );
 			list( $srcPath, $dstZone, $dstRel ) = $triplet;
 			wfDebug( __METHOD__
 				. "( \$src='$srcPath', \$dstZone='$dstZone', \$dstRel='$dstRel' )\n"
@@ -925,6 +927,7 @@ class FileRepo {
 	 * @return FileRepoStatus
 	 */
 	public function publishBatch( $triplets, $flags = 0 ) {
+error_log( __METHOD__ . "\n", 3, "/tmp/moli.log" );
 		$backend = $this->backend; // convenience
 
 		// Try creating directories
@@ -939,6 +942,7 @@ class FileRepo {
 		$sourceFSFilesToDelete = array(); // cleanup for disk source files
 		// Validate each triplet and get the store operation...
 		foreach ( $triplets as $i => $triplet ) {
+error_log( __METHOD__ . ": triplet = " . print_r( $triplet, true )  . " \n", 3, "/tmp/moli.log" );
 			list( $srcPath, $dstRel, $archiveRel ) = $triplet;
 			// Resolve source to a storage path if virtual
 			if ( substr( $srcPath, 0, 9 ) == 'mwrepo://' ) {
@@ -1098,6 +1102,7 @@ class FileRepo {
 	 * @return FileRepoStatus
 	 */
 	public function deleteBatch( $sourceDestPairs ) {
+error_log( __METHOD__ . "\n", 3, "/tmp/moli.log" );
 		$backend = $this->backend; // convenience
 
 		// Try creating directories

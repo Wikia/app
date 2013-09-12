@@ -54,11 +54,19 @@ class FileBackendGroup {
 		// Register explicitly defined backends
 		$this->register( $wgFileBackends );
 
+error_log( __METHOD__ .": wgFileBackends = " . print_r( $wgFileBackends, true ) . "\n", 3, "/tmp/moli.log" );
+
 		$autoBackends = array();
 		// Automatically create b/c backends for file repos...
 		$repos = array_merge( $wgForeignFileRepos, array( $wgLocalFileRepo ) );
+
+error_log( __METHOD__ .": backends = " . print_r( $this->backends, true ) . " \n", 3, "/tmp/moli.log" );
+error_log( __METHOD__ .": wgForeignFileRepos = " . print_r( $wgForeignFileRepos, true ) . "\n", 3, "/tmp/moli.log" );
+error_log( __METHOD__ .": wgLocalFileRepo = " . print_r( $wgLocalFileRepo, true ) . "\n", 3, "/tmp/moli.log" );
+	
 		foreach ( $repos as $info ) {
 			$backendName = $info['backend'];
+error_log( __METHOD__ .": backendName = $backendName \n", 3, "/tmp/moli.log" );
 			if ( is_object( $backendName ) || isset( $this->backends[$backendName] ) ) {
 				continue; // already defined (or set to the object for some reason)
 			}
@@ -91,6 +99,8 @@ class FileBackendGroup {
 
 		// Register implicitly defined backends
 		$this->register( $autoBackends );
+
+error_log( __METHOD__ .": backends (2) = " . print_r( $this->backends, true ) . " \n", 3, "/tmp/moli.log" );
 	}
 
 	/**
@@ -128,6 +138,7 @@ class FileBackendGroup {
 	 * @throws MWException
 	 */
 	public function get( $name ) {
+error_log( __METHOD__ . ": name = $name \n", 3, "/tmp/moli.log" );
 		if ( !isset( $this->backends[$name] ) ) {
 			throw new MWException( "No backend defined with the name `$name`." );
 		}
@@ -147,6 +158,7 @@ class FileBackendGroup {
 	 * @return FileBackend|null Backend or null on failure
 	 */
 	public function backendFromPath( $storagePath ) {
+error_log( __METHOD__ . ": storagePath: {$storagePath} \n", 3, "/tmp/moli.log" );
 		list( $backend, $c, $p ) = FileBackend::splitStoragePath( $storagePath );
 		if ( $backend !== null && isset( $this->backends[$backend] ) ) {
 			return $this->get( $backend );

@@ -220,11 +220,12 @@ class CF_Http
                 sprintf("%s: %s", AUTH_USER_HEADER, $user),
                 sprintf("%s: %s", AUTH_KEY_HEADER, $pass),
                 );
-	    $path[] = $host;
+			$path[] = $host;
         }
-	$path[] = "v1.0";
+		$path[] = "v1";
         $url = implode("/", $path);
-
+error_log( __METHOD__ . ": url = $url \n", 3, "/tmp/moli.log" );
+error_log( __METHOD__ . ": headers = " . print_r( $headers, true ). " \n", 3, "/tmp/moli.log" );
         $curl_ch = curl_init();
         if (!is_null($this->cabundle_path)) {
             curl_setopt($curl_ch, CURLOPT_SSL_VERIFYPEER, True);
@@ -1200,6 +1201,7 @@ class CF_Http
     private function _auth_hdr_cb($ch, $header)
     {
         preg_match("/^HTTP\/1\.[01] (\d{3}) (.*)/", $header, $matches);
+error_log( __METHOD__ . ": matches = " . print_r( $matches, true ) . "\n", 3, "/tmp/moli.log" );
         if (isset($matches[1])) {
             $this->response_status = $matches[1];
         }

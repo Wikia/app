@@ -336,6 +336,7 @@ class FSFileBackend extends FileBackendStore {
 	 * @see FileBackendStore::doPrepareInternal()
 	 */
 	protected function doPrepareInternal( $fullCont, $dirRel, array $params ) {
+error_log( __METHOD__ ."\n", 3, "/tmp/moli.log" );
 		$status = Status::newGood();
 		list( $b, $shortCont, $r ) = FileBackend::splitStoragePath( $params['dir'] );
 		$contRoot = $this->containerFSRoot( $shortCont, $fullCont ); // must be valid

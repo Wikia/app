@@ -48,12 +48,18 @@ class SwiftFileBackend extends FileBackendStore {
 	public function __construct( array $config ) {
 		parent::__construct( $config );
 		// Required settings
+error_log ( __METHOD__ . ": config = " . print_r( $config, true ) . "\n", 3, "/tmp/moli.log" );
 		$this->auth = new CF_Authentication(
 			$config['swiftUser'], 
 			$config['swiftKey'], 
 			null, // account; unused
 			$config['swiftAuthUrl'] 
 		);
+		/* <Wikia> */
+		if ( !empty( $config['debug'] ) ) {
+			$this->auth->setDebug( $config['debug'] );
+		}
+		/* </Wikia> */
 		// Optional settings
 		$this->authTTL = isset( $config['swiftAuthTTL'] )
 			? $config['swiftAuthTTL']
@@ -321,7 +327,9 @@ class SwiftFileBackend extends FileBackendStore {
 
 		// (a) Check if container already exists
 		try {
+error_log( __METHOD__ . ": $fullCont, $dir, params = " . print_r( $params, true ) . "\n", 3, "/tmp/moli.log" );
 			$contObj = $this->getContainer( $fullCont );
+error_log( __METHOD__ . ": getContainer( $fullCont ) =  " . print_r( $contObj, true ) . "\n", 3, "/tmp/moli.log" );
 			// NoSuchContainerException not thrown: container must exist
 			return $status; // already exists
 		} catch ( NoSuchContainerException $e ) {
@@ -697,6 +705,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @throws InvalidResponseException
 	 */
 	protected function getConnection() {
+#error_log( __METHOD__ . ": conn = {$this->conn} is false =  " . intval($this->conn === false) . "\n", 3, "/tmp/moli.log" );
 		if ( $this->conn === false ) {
 			throw new InvalidResponseException; // failed last attempt
 		}
@@ -709,12 +718,17 @@ class SwiftFileBackend extends FileBackendStore {
 		if ( $this->conn === null ) {
 			$this->connContainers = array();
 			try {
+error_log( __METHOD__ . ": authenticate\n", 3, "/tmp/moli.log" );
 				$this->auth->authenticate();
+error_log( __METHOD__ . ": authenticate = " . print_r( $this->auth, true ) . "\n", 3, "/tmp/moli.log" );
 				$this->conn = new CF_Connection( $this->auth );
+error_log( __METHOD__ . ": conn = " . print_r( $this->conn, true ) . "\n", 3, "/tmp/moli.log" );
 				$this->connStarted = time();
 			} catch ( AuthenticationException $e ) {
+error_log( __METHOD__ . ": AuthenticationException = " . print_r( $e->getMessage(), true ) . "\n", 3, "/tmp/moli.log" );
 				$this->conn = false; // don't keep re-trying
 			} catch ( InvalidResponseException $e ) {
+error_log( __METHOD__ . ": InvalidResponseException = " . print_r( $e->getMessage(), true ) . "\n", 3, "/tmp/moli.log" );
 				$this->conn = false; // don't keep re-trying
 			}
 		}
@@ -740,7 +754,9 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @return CF_Container
 	 */
 	protected function getContainer( $container, $reCache = false ) {
+error_log( __METHOD__ . ": getContainer( $container ), reCache =  " . print_r( $reCache, true ) . "\n", 3, "/tmp/moli.log" );
 		$conn = $this->getConnection(); // Swift proxy connection
+error_log( __METHOD__ . ": conn =  " . print_r( $conn, true ) . "\n", 3, "/tmp/moli.log" );
 		if ( $reCache ) {
 			unset( $this->connContainers[$container] ); // purge cache
 		}

@@ -132,6 +132,8 @@ class SpecialUpload extends SpecialPage {
 	 * Special page entry point
 	 */
 	public function execute( $par ) {
+error_log ( __METHOD__ . ": par = " . print_r( $par, true ) . "\n", 3, "/tmp/moli.log" );
+		
 		$this->setHeaders();
 		$this->outputHeader();
 
@@ -418,6 +420,7 @@ class SpecialUpload extends SpecialPage {
 		}
 
 		$this->mLocalFile = $this->mUpload->getLocalFile();
+error_log ( __METHOD__ . ": mLocalFile = " . print_r( $this->mLocalFile, true ) . "\n", 3, "/tmp/moli.log" );
 
 		// Check warnings if necessary
 		if( !$this->mIgnoreWarning ) {

@@ -80,7 +80,7 @@ class VideoHandlerHooks {
 		global $wgUploadDirectory, $wgUploadBaseUrl,
 			$wgUploadPath, $wgHashedUploadDirectory,
 			$wgThumbnailScriptPath, $wgGenerateThumbnailOnParse,
-			$wgLocalFileRepo, $wgDeletedDirectory;
+			$wgLocalFileRepo, $wgDeletedDirectory, $wgDBname;
 
 		$wgLocalFileRepo = array(
 			'class' => 'WikiaLocalRepo',
@@ -94,7 +94,13 @@ class VideoHandlerHooks {
 			'transformVia404' => !$wgGenerateThumbnailOnParse,
 			'deletedDir' => $wgDeletedDirectory, // TODO: check me
 			'deletedHashLevels' => $wgLocalFileRepo['deletedHashLevels'], // TODO: check me,
-			'backend' => 'local-backend'
+			'backend' => 'ceph-backend', #'local-backend',
+			'zones' => array(
+				'public' => array( 'container' => $wgDBname, 'url' => 'http://s3.dfs-s1', 'directory' => 'images' ),
+				'temp'   => array( 'container' => $wgDBname, 'directory' => $wgDBname . 'images/temp' ),
+				'thumb'  => array( 'container' => $wgDBname, 'url' => 'http://s3.dfs-s1', 'directory' => 'images/thumb' ),
+				'deleted'=> array( 'container' => $wgDBname, 'url' => 'http://s3.dfs-s1', 'directory' => 'images/archive' )
+			)
 		);
 
 		return true;

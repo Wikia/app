@@ -162,8 +162,8 @@ $wgLocalisationCacheConf[ "manualRecache" ] = !array_key_exists( 'rebuildmessage
 $wgRC2UDPEnabled = false;
 
 // static assets host
-$wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
-$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
+if ( empty( $wgCdnRootUrl ) ) $wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
+if ( empty( $wgDevBoxImageServerOverride ) ) $wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
 
 // macbre: generate proper paths for static assets on devboxes (BugId:6809)
 $wgCdnStylePath = "{$wgCdnRootUrl}/__cb{$wgStyleVersion}"; // paths for images requested from CSS/SASS
