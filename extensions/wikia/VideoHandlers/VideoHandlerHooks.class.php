@@ -80,7 +80,7 @@ class VideoHandlerHooks {
 		global $wgUploadDirectory, $wgUploadBaseUrl,
 			$wgUploadPath, $wgHashedUploadDirectory,
 			$wgThumbnailScriptPath, $wgGenerateThumbnailOnParse,
-			$wgLocalFileRepo, $wgDeletedDirectory, $wgDBname;
+			$wgLocalFileRepo, $wgDeletedDirectory, $wgEnableCephFileBackend;
 
 		$wgLocalFileRepo = array(
 			'class' => 'WikiaLocalRepo',
@@ -94,14 +94,19 @@ class VideoHandlerHooks {
 			'transformVia404' => !$wgGenerateThumbnailOnParse,
 			'deletedDir' => $wgDeletedDirectory, // TODO: check me
 			'deletedHashLevels' => $wgLocalFileRepo['deletedHashLevels'], // TODO: check me,
-			'backend' => 'ceph-backend', #'local-backend',
-			'zones' => array(
+			'backend' => 'local-backend',
+		);
+		
+		if ( !empty( $wgEnableCephFileBackend ) ) {
+			global $wgDBname;
+			$wgLocalFileRepo['backend'] = 'ceph-backend';
+			$wgLocalFileRepo['zones'] = array(
 				'public' => array( 'container' => $wgDBname, 'url' => 'http://s3.dfs-s1', 'directory' => 'images' ),
-				'temp'   => array( 'container' => $wgDBname, 'directory' => $wgDBname . 'images/temp' ),
+				'temp'   => array( 'container' => $wgDBname, 'url' => 'http://s3.dfs-s1', 'directory' => 'images/temp' ),
 				'thumb'  => array( 'container' => $wgDBname, 'url' => 'http://s3.dfs-s1', 'directory' => 'images/thumb' ),
 				'deleted'=> array( 'container' => $wgDBname, 'url' => 'http://s3.dfs-s1', 'directory' => 'images/archive' )
-			)
-		);
+			);
+		}
 
 		return true;
 	}
