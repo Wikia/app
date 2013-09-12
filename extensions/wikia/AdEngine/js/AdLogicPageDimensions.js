@@ -1,5 +1,3 @@
-// TODO: Rename this module, it's not only about short page anymore
-// TODO: More unit tests
 var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	'use strict';
 
@@ -44,9 +42,13 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 		return window.matchMedia(query).matches;
 	}
 
+	function matchMediaIe(query) {
+		return window.styleMedia.matchMedium(query);
+	}
+
 	// Chose proper implementation of machMedia
 	matchMedia = window.matchMedia && matchMediaMoz;
-	matchMedia = matchMedia || (window.styleMedia && window.styleMedia.matchMedium);
+	matchMedia = matchMedia || (window.styleMedia && window.styleMedia.matchMedium && matchMediaIe);
 	matchMedia = matchMedia || (window.media && window.media.matchMedium);
 
 	if (!matchMedia) {
