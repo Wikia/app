@@ -26,14 +26,14 @@ ve.ce.WikiaBlockMediaNode = function VeCeWikiaBlockMediaNode( model, config ) {
 	// Parent constructor
 	ve.ce.BranchNode.call( this, model, config );
 
-	// Initialize
-	this.update();
-
 	// Mixin constructors
 	ve.ce.ProtectedNode.call( this );
 	ve.ce.FocusableNode.call( this );
 	ve.ce.RelocatableNode.call( this );
 	ve.ce.MWResizableNode.call( this );
+
+	// Initialize
+	this.update();
 };
 
 /* Inheritance */
