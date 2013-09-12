@@ -2348,6 +2348,30 @@ class MediaWikiServiceTest extends BaseTest
 			$service->getThumbnailHtml( 0, array( 'width' => 1, 'height' => 1 ) )
 		);
 	}
+	/**
+	 * @covers Wikia\Search\MediaWikiService::getThumbnailHtmlFromPageTitle
+	 */
+	public function testGetThumbnailHtmlFromFileTitle() {
+		$service = $this->service->setMethods( null )->getMock();
+		$title = $this->getMock( 'Title' );
+
+		$this->getStaticMethodMock( 'Title', 'newFromText' )
+			->expects( $this->once() )
+			->method( 'newFromText' )
+			->with( 'x', NS_FILE )
+			->will( $this->returnValue($title) );
+
+		$this->getStaticMethodMock( 'WikiaFileHelper', 'getVideoThumbnailHtml' )
+			->expects( $this->once() )
+			->method( 'getVideoThumbnailHtml' )
+			->with( $title, 12, 13, false )
+			->will( $this->returnValue( 'bar' ) );
+
+		$this->assertEquals(
+			'bar',
+			$service->getThumbnailHtmlFromFileTitle( 'x', array( 'width' => 12, 'height' => 13 ) )
+		);
+	}
 	
 	/**
 	 * @covers Wikia\Search\MediaWikiService::getVideoViewsForPageId
