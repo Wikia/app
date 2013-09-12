@@ -1340,25 +1340,39 @@ $config['touchstorm_scss'] = array(
 $config['api_docs_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//lib/vendor/swagger-ui/dist/lib/jquery-1.8.0.min.js',
-		'//lib/vendor/swagger-ui/dist/lib/jquery.wiggle.min.js',
-		'//lib/vendor/swagger-ui/dist/lib/jquery.ba-bbq.min.js',
-		'//lib/vendor/swagger-ui/dist/lib/jquery.slideto.min.js',
-		'//lib/vendor/swagger-ui/dist/lib/highlight.7.3.pack.js',
-		'//lib/vendor/swagger-ui/dist/lib/handlebars-1.0.rc.1.js',
-		'//lib/vendor/swagger-ui/dist/lib/underscore-min.js',
-		'//lib/vendor/swagger-ui/dist/lib/backbone-min.js',
-		'//lib/vendor/swagger-ui/dist/lib/swagger.js',
-		'//lib/vendor/swagger-ui/dist/swagger-ui.js',
-	)
-);
+		'//extensions/wikia/ApiDocs/js/lib/jquery-1.8.0.min.js',
+		'//extensions/wikia/ApiDocs/js/lib/jquery.wiggle.min.js',
+		'//extensions/wikia/ApiDocs/js/lib/jquery.ba-bbq.min.js',
+		'//extensions/wikia/ApiDocs/js/lib/jquery.slideto.min.js',
+		'//extensions/wikia/ApiDocs/js/lib/highlight.7.3.pack.js',
+		'//extensions/wikia/ApiDocs/js/lib/handlebars-1.0.0.js',
+		'//extensions/wikia/ApiDocs/js/lib/underscore-min.js',
+		'//extensions/wikia/ApiDocs/js/lib/backbone-min.js',
+		'//extensions/wikia/ApiDocs/js/lib/swagger.js',
 
-$config['api_docs_css'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => array(
-		'//extensions/wikia/ApiDocs/css/ApiDocs.scss',
-		'//lib/vendor/swagger-ui/dist/css/hightlight.default.css',
-		'//lib/vendor/swagger-ui/dist/css/screen.css',
+		'//extensions/wikia/ApiDocs/js/doc.js',
+		'//extensions/wikia/ApiDocs/js/HeaderView.js',
+		'//extensions/wikia/ApiDocs/js/OperationView.js',
+		'//extensions/wikia/ApiDocs/js/StatusCodeView.js',
+		'//extensions/wikia/ApiDocs/js/ParameterView.js',
+		'//extensions/wikia/ApiDocs/js/SignatureView.js',
+		'//extensions/wikia/ApiDocs/js/MainView.js',
+		'//extensions/wikia/ApiDocs/js/ResourceView.js',
+		'//extensions/wikia/ApiDocs/js/ContentTypeView.js',
+		'//extensions/wikia/ApiDocs/js/SwaggerUi.js',
+
+		'//extensions/wikia/ApiDocs/templates/handlebars/content_type.handlebars.js',
+		'//extensions/wikia/ApiDocs/templates/handlebars/main.handlebars.js',
+		'//extensions/wikia/ApiDocs/templates/handlebars/operation.handlebars.js',
+		'//extensions/wikia/ApiDocs/templates/handlebars/param.handlebars.js',
+		'//extensions/wikia/ApiDocs/templates/handlebars/param_list.handlebars.js',
+		'//extensions/wikia/ApiDocs/templates/handlebars/param_readonly.handlebars.js',
+		'//extensions/wikia/ApiDocs/templates/handlebars/param_readonly_required.handlebars.js',
+		'//extensions/wikia/ApiDocs/templates/handlebars/param_required.handlebars.js',
+		'//extensions/wikia/ApiDocs/templates/handlebars/resource.handlebars.js',
+		'//extensions/wikia/ApiDocs/templates/handlebars/signature.handlebars.js',
+		'//extensions/wikia/ApiDocs/templates/handlebars/status_code.handlebars.js',
+
 	)
 );
 

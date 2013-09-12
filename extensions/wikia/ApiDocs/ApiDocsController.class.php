@@ -20,7 +20,6 @@ class ApiDocsController extends WikiaController {
 
 		$js = AssetsManager::getInstance()->getURL( 'api_docs_js', $type, false );
 		$this->setVal( 'js', $js );
-//		$css = AssetsManager::getInstance()->getURL( 'api_docs_css', $type, false );
 		$css = AssetsManager::getInstance()->getURL( 'api_docs_scss', $type, false );
 		$this->setVal( 'css', $css );
 	}
