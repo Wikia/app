@@ -44,10 +44,14 @@ var ChatEntryPoint = {
 		var chatWhosHere = $('.ChatModule .chat-whos-here'),
 			itemsShown = (window.wgOasisResponsive) ? 5 : 6;
 
-		chatWhosHere.find('.carousel-container').carousel({
-			nextClass: 'arrow-right',
-			prevClass: 'arrow-left',
-			itemsShown: itemsShown
+		// as we can have several chat modules on the page (in rail and in the article), we should
+		// create a separate carousel for each of them
+		chatWhosHere.find('.carousel-container').each(function() {
+			$(this).carousel({
+				nextClass: 'arrow-right',
+				prevClass: 'arrow-left',
+				itemsShown: itemsShown
+			});
 		});
 
 		// TODO: abstract this because we use this pattern in a few places: i.e. hovering over popover will not close it
