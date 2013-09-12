@@ -1,3 +1,8 @@
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/reset";
+@import "skins/oasis/css/core/sprite";
+@import "skins/oasis/css/core/GlobalHeader";
+
 //colors variables
 $blue-c1: #0a5fa3;
 $lightGray-c2: #f9f9f9;
@@ -123,4 +128,9 @@ select {
 	input {
 		@include buttons;
 	}
+}
+
+// header
+#header > nav {
+	text-align: center;
 }

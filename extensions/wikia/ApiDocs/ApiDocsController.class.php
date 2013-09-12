@@ -20,7 +20,7 @@ class ApiDocsController extends WikiaController {
 
 		$js = AssetsManager::getInstance()->getURL( 'api_docs_js', $type, false );
 		$this->setVal( 'js', $js );
-		$css = AssetsManager::getInstance()->getURL( 'api_docs_scss', $type, false );
+		$css = [ AssetsManager::getInstance()->getSassCommonURL( '//extensions/wikia/ApiDocs/css/ApiDocs.scss', true, ['color-header' => '#004c7f']) ];
 		$this->setVal( 'css', $css );
 	}
 
