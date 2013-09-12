@@ -1129,7 +1129,7 @@ error_log( __METHOD__ . ": status = " . print_r( $status, true ) . "\n", 3, "/tm
 	/**
 	 * @see FileBackend::getFileStat()
 	 */
-	final public function getFileStat( array $params ) {
+/*	final public function getFileStat( array $params ) {
 		wfProfileIn( __METHOD__ );
 		$path = self::normalizeStoragePath( $params['src'] );
 		if ( $path === null ) {
@@ -1153,8 +1153,45 @@ error_log( __METHOD__ . ": status = " . print_r( $status, true ) . "\n", 3, "/tm
 		}
 		wfProfileOut( __METHOD__ );
 		return $stat;
-	}
+	}*/
+	final public function getFileStat( array $params ) {
+		wfProfileIn( __METHOD__ );
+		$path = self::normalizeStoragePath( $params['src'] );
+		if ( $path === null ) {
+			wfProfileOut( __METHOD__ );
+			return false; // invalid storage path
+		}
+		$latest = !empty( $params['latest'] );
+		if ( isset( $this->cache[$path]['stat'] ) ) {
+			// If we want the latest data, check that this cached
+			// value was in fact fetched with the latest available data.
+			if ( !$latest || !empty( $this->cache[$path]['stat']['latest'] ) ) {
+				wfProfileOut( __METHOD__ );
+				return $this->cache[$path]['stat'];
+			} elseif ( in_array( $this->cache[$path]['stat'], array( 'NOT_EXIST', 'NOT_EXIST_LATEST' ) ) ) {
+				if ( !$latest || $this->cache[$path]['stat'] === 'NOT_EXIST_LATEST' ) {
+					return false;
+				}
+			}
+		}
+		$stat = $this->doGetFileStat( $params );
+		if ( is_array( $stat ) ) { // don't cache negatives
+			$this->trimCache(); // limit memory
+			$this->cache[$path]['stat'] = $stat;
+			$this->cache[$path]['stat']['latest'] = $latest;
+		} elseif ( $stat === false ) { // file does not exist
+			#$this->cheapCache->set( $path, 'stat', $latest ? 'NOT_EXIST_LATEST' : 'NOT_EXIST' );
+			#$this->cheapCache->set( $path, 'sha1', // the SHA-1 must be false too
 
+			$this->cache[$path]['stat'] = $latest ? 'NOT_EXIST_LATEST' : 'NOT_EXIST';
+			wfDebug( __METHOD__ . ": File $path does not exist.\n" );
+		} else { // an error occurred
+			wfDebug( __METHOD__ . ": Could not stat file $path.\n" );
+		}
+		wfProfileOut( __METHOD__ );
+		return $stat;
+	}
+	
 	/**
 	 * @see FileBackendStore::getFileStat()
 	 */

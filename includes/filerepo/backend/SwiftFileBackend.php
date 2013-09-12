@@ -461,16 +461,14 @@ error_log( __METHOD__ . ": getContainer( $fullCont ) =  " . print_r( $contObj, t
 			$stat = array(
 				// Convert dates like "Tue, 03 Jan 2012 22:01:04 GMT" to TS_MW
 				'mtime' => wfTimestamp( TS_MW, $srcObj->last_modified ),
-				'size'  => $srcObj->content_length,
-				'sha1'  => $srcObj->metadata['Sha1base36']
+				'size' => (int)$srcObj->content_length,
+				'sha1' => $srcObj->getMetadataValue( 'Sha1base36' )
 			);
 		} catch ( NoSuchContainerException $e ) {
 		} catch ( NoSuchObjectException $e ) {
-		} catch ( InvalidResponseException $e ) {
+		} catch ( CloudFilesException $e ) { // some other exception?
 			$stat = null;
-		} catch ( Exception $e ) { // some other exception?
-			$stat = null;
-			$this->logException( $e, __METHOD__, $params );
+			$this->handleException( $e, null, __METHOD__, $params );
 		}
 
 		return $stat;
@@ -485,9 +483,11 @@ error_log( __METHOD__ . ": getContainer( $fullCont ) =  " . print_r( $contObj, t
 	 * @throws Exception cloudfiles exceptions
 	 */
 	protected function addMissingMetadata( CF_Object $obj, $path ) {
-		if ( isset( $obj->metadata['Sha1base36'] ) ) {
+		if ( $obj->getMetadataValue( 'Sha1base36' ) !== null ) {
 			return true; // nothing to do
 		}
+		wfProfileIn( __METHOD__ );
+		trigger_error( "$path was not stored with SHA-1 metadata.", E_USER_WARNING );
 		$status = Status::newGood();
 		$scopeLockS = $this->getScopedFileLocks( array( $path ), LockManager::LOCK_UW, $status );
 		if ( $status->isOK() ) {
@@ -495,13 +495,16 @@ error_log( __METHOD__ . ": getContainer( $fullCont ) =  " . print_r( $contObj, t
 			if ( $tmpFile ) {
 				$hash = $tmpFile->getSha1Base36();
 				if ( $hash !== false ) {
-					$obj->metadata['Sha1base36'] = $hash;
+					$obj->setMetadataValues( array( 'Sha1base36' => $hash ) );
 					$obj->sync_metadata(); // save to Swift
+					wfProfileOut( __METHOD__ );
 					return true; // success
 				}
 			}
 		}
-		$obj->metadata['Sha1base36'] = false;
+		trigger_error( "Unable to set SHA-1 metadata for $path", E_USER_WARNING );
+		$obj->setMetadataValues( array( 'Sha1base36' => false ) );
+		wfProfileOut( __METHOD__ );
 		return false; // failed
 	}
 
@@ -647,6 +650,8 @@ error_log( __METHOD__ . ": getContainer( $fullCont ) =  " . print_r( $contObj, t
 				}
 			}
 		} catch ( NoSuchContainerException $e ) {
+			$tmpFile = null;
+		} catch ( NoSuchObjectException $e ) {
 			$tmpFile = null;
 		} catch ( InvalidResponseException $e ) {
 			$tmpFile = null;
