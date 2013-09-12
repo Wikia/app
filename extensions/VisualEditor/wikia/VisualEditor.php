@@ -40,6 +40,7 @@ $wgResourceModules += array(
 		'scripts' => array(
 			'ui/tools/ve.ui.IconTextButtonTool.js',
 			'ui/tools/buttons/ve.ui.WikiaMediaInsertButtonTool.js',
+			'ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
 		),
 		'styles' => 'ui/styles/ve.ui.Tool.css',
 		'messages' => array(

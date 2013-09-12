@@ -1,8 +1,5 @@
 /*!
  * VisualEditor UserInterface WikiaMediaInsertButtonTool class.
- *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
- * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
@@ -34,7 +31,7 @@ ve.ui.WikiaMediaInsertButtonTool.static.label = ve.msg( 'visualeditor-wikiamedia
 
 ve.ui.WikiaMediaInsertButtonTool.static.titleMessage = 'visualeditor-dialogbutton-media-tooltip';
 
-ve.ui.WikiaMediaInsertButtonTool.static.dialog = 'mwMediaInsert';
+ve.ui.WikiaMediaInsertButtonTool.static.dialog = 'wikiaMediaInsert';
 
 /* Registration */
 
