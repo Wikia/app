@@ -299,9 +299,6 @@ class AdEngine2Controller extends WikiaController {
 
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
-		if (!empty($wgNoExternals)) {
-			$vars["wgNoExternals"] = $wgNoExternals;
-		}
 		if (!empty($wgEnableAdsInContent)) {
 			$vars["wgEnableAdsInContent"] = $wgEnableAdsInContent;
 		}
@@ -398,6 +395,9 @@ class AdEngine2Controller extends WikiaController {
 	 */
 	static public function onWikiaSkinTopScripts(&$vars, &$scripts) {
 		wfProfileIn(__METHOD__);
+
+		global $wgNoExternals;
+
 		$wg = F::app()->wg;
 
 		$req = $wg->Request;
@@ -430,6 +430,11 @@ class AdEngine2Controller extends WikiaController {
 		$vars['adDriver2ForcedStatus'] = array();
 
 		$vars['wgWikiDirectedAtChildren'] = (bool) $wg->WikiDirectedAtChildrenByStaff;
+
+		$wgNoExternals = $req->getBool('noexternals', $wgNoExternals);
+		if (!empty($wgNoExternals)) {
+			$vars["wgNoExternals"] = $wgNoExternals;
+		}
 
 		wfProfileOut(__METHOD__);
 
