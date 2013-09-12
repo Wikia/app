@@ -8,14 +8,10 @@
 	</div>
 	<div class="grid-4">
 
-		<? if( !empty( $error ) ): ?>
-			<? // TODO: Error message goes here ?>
-			<p class="error" id="vpt-form-error">Error</p>
-		<? endif; ?>
-
-		<? if( !empty( $success ) ): ?>
-			<? // TODO: Success message goes here ?>
-			<p class="success" id="vpt-form-success">Success</p>
+		<? if ( $result == 'error' ): ?>
+			<p class="error" id="vpt-form-error"><?= $msg ?></p>
+		<? elseif ( $result == 'ok' ): ?>
+			<p class="success" id="vpt-form-success"><?= $msg ?></p>
 		<? endif; ?>
 
 		<?= $moduleView ?>
