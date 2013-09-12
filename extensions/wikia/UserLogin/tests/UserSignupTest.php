@@ -473,7 +473,7 @@
 		/**
 		 * @dataProvider sendConfirmationEmailDataProvider
 		 */
-		public function testSendConfirmationEmail( $mockWebRequestParams, $params, $mockEmailAuth, $mockUserParams, $mockSessionParams, $mockCacheParams, $mockMsgExt, $expResult, $expMsg, $expMsgEmail, $expErrParam, $expHeading, $expSubheading ) {
+		public function testSendConfirmationEmail( $mockWebRequestParams, $params, $mockEmailAuth, $mockUserParams, $mockSessionParams, $mockCacheParams, $mockMessagesMap, $mockMsgExt, $expResult, $expMsg, $expMsgEmail, $expErrParam, $expHeading, $expSubheading ) {
 			// setup
 			$this->setUpMockObject( 'WebRequest', $mockWebRequestParams, false, 'wgRequest');
 			$this->setUpMockObject( 'User', $mockUserParams, true );
@@ -491,6 +491,7 @@
 			}
 
 			$this->mockGlobalVariable( 'wgEmailAuthentication', $mockEmailAuth );
+			$this->mockWfMessage( $mockMessagesMap );
 
 			if ( is_int($mockCacheParams) ) {
 				$mockCacheParams = array(
@@ -536,11 +537,16 @@
 			$mockUser1 = null;
 			$mockSession1 = null;
 			$mockCache1 = null;
-			$mockMsgExt1 = wfMessage( 'usersignup-confirmation-email-sent', self::TEST_USERNAME )->parse();
-			$expMsg1 = wfMessage( 'usersignup-confirmation-email-sent', self::TEST_USERNAME )->parse();
+			$mockMessagesMap1 = array(
+				array('usersignup-confirmation-email-sent', self::TEST_USERNAME),
+				array('usersignup-confirmation-heading'),
+				array('usersignup-confirmation-subheading'),
+			);
+			$mockMsgExt1 = 'usersignup-confirmation-email-sent';
+			$expMsg1 = 'usersignup-confirmation-email-sent';
 			$expMsgEmail1 = '';
-			$expHeading1 = wfMessage( 'usersignup-confirmation-heading' )->escaped();
-			$expSubheading1 = wfMessage( 'usersignup-confirmation-subheading' )->escaped();
+			$expHeading1 = 'usersignup-confirmation-heading';
+			$expSubheading1 = 'usersignup-confirmation-subheading';
 
 			// GET + temp user exists + not pass byemail
 			$mockUser2 = array(
@@ -565,10 +571,15 @@
 				'username' => self::TEST_USERNAME,
 				'byemail' => 1,
 			);
-			$mockMsgExt3 = wfMessage( 'usersignup-account-creation-email-sent', self::TEST_USERNAME, self::TEST_USERNAME )->parse();
+			$mockMessagesMap3 = array(
+				array('usersignup-account-creation-email-sent', self::TEST_USERNAME, self::TEST_USERNAME),
+				array('usersignup-account-creation-heading'),
+				array('usersignup-account-creation-subheading', self::TEST_USERNAME),
+			);
+			$mockMsgExt3 = 'usersignup-account-creation-email-sent';
 			$expMsg3 = $mockMsgExt3;
-			$expHeading3 = wfMessage( 'usersignup-account-creation-heading' )->escaped();
-			$expSubheading3 = wfMessage( 'usersignup-account-creation-subheading', self::TEST_USERNAME )->escaped();
+			$expHeading3 = 'usersignup-account-creation-heading';
+			$expSubheading3 = 'usersignup-account-creation-subheading';
 
 			// GET + temp user exists + pass byemail
 
@@ -592,15 +603,25 @@
 				'username' => '',
 				'action' => 'resendconfirmation',
 			);
-			$expMsg101 = wfMessage( 'userlogin-error-noname' )->escaped();
-			$expHeading101 = wfMessage( 'usersignup-confirmation-heading-email-resent' )->escaped();
+			$mockMessagesMap101 = array(
+				array('userlogin-error-noname'),
+				array('usersignup-confirmation-heading-email-resent'),
+				array('usersignup-confirmation-subheading'),
+			);
+			$expMsg101 = 'userlogin-error-noname';
+			$expHeading101 = 'usersignup-confirmation-heading-email-resent';
 
 			// error - temp user does not exist ( POST + action = resendconfirmation )
 			$params102 = array(
 				'username' => self::TEST_USERNAME,
 				'action' => 'resendconfirmation',
 			);
-			$expMsg102 = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
+			$mockMessagesMap102 = array(
+				array('userlogin-error-nosuchuser'),
+				array('usersignup-confirmation-heading-email-resent'),
+				array('usersignup-confirmation-subheading'),
+			);
+			$expMsg102 = 'userlogin-error-nosuchuser';
 
 			// error - temp user id does not match with one in $_SESSION ( POST + action = resendconfirmation )
 			$mockUser3 = array(
@@ -622,14 +643,24 @@
 			$mockSession103 = array(
 				'notConfirmedUserId' => 123,
 			);
-			$expMsg103 = wfMessage( 'usersignup-error-invalid-user' )->escaped();
+			$mockMessagesMap103 = array(
+				array('usersignup-error-invalid-user'),
+				array('usersignup-confirmation-heading-email-resent'),
+				array('usersignup-confirmation-subheading'),
+			);
+			$expMsg103 = 'usersignup-error-invalid-user';
 
 			// error - $wgEmailAuthentication == false ( POST + action = resendconfirmation )
 			$mockSession104 = array(
 				'notConfirmedUserId' => 11,
 			);
 			$mockEmailAuth104 = false;
-			$expMsg104 = wfMessage( 'usersignup-error-invalid-email' )->escaped();
+			$mockMessagesMap104 = array(
+				array('usersignup-error-invalid-email'),
+				array('usersignup-confirmation-heading-email-resent'),
+				array('usersignup-confirmation-subheading'),
+			);
+			$expMsg104 = 'usersignup-error-invalid-email';
 
 			// error - invalid email ( POST + action = resendconfirmation )
 			$mockEmailAuth105 = true;
@@ -667,7 +698,12 @@
 					)
 				)
 			);
-			$expMsg106 = wfMessage( 'usersignup-error-already-confirmed' )->escaped();
+			$mockMessagesMap106 = array(
+				array('usersignup-error-already-confirmed'),
+				array('usersignup-confirmation-heading-email-resent'),
+				array('usersignup-confirmation-subheading'),
+			);
+			$expMsg106 = 'usersignup-error-already-confirmed';
 
 			// error - pending email + email sent exceed limit ( POST + action = resendconfirmation )
 			$mockUser6 = array(
@@ -690,7 +726,12 @@
 				)
 			);
 			$mockCache107 = 1;
-			$expMsg107 = wfMessage( 'usersignup-error-throttled-email' )->escaped();
+			$mockMessagesMap107 = array(
+				array('usersignup-error-throttled-email'),
+				array('usersignup-confirmation-heading-email-resent'),
+				array('usersignup-confirmation-subheading'),
+			);
+			$expMsg107 = 'usersignup-error-throttled-email';
 
 			// error - email sent == limit ( POST + action = resendconfirmation )
 			$mockCache108 = 0;
@@ -698,7 +739,12 @@
 			// success - email sent < limit ( POST + action = resendconfirmation )
 			$mockCache109 = -1;
 			$status109 = Status::newGood();
-			$expMsg7 = wfMessage( 'usersignup-confirmation-email-sent', self::TEST_EMAIL )->parse();
+			$mockMessagesMap7 = array(
+				array('usersignup-confirmation-email-sent', self::TEST_EMAIL),
+				array('usersignup-confirmation-heading-email-resent'),
+				array('usersignup-confirmation-subheading'),
+			);
+			$expMsg7 = 'usersignup-confirmation-email-sent';
 			$mockUser7 = array(
 				'load' => null,
 				'loadFromDatabase' => null,
@@ -725,38 +771,38 @@
 
 			return array (
 				'GET + temp user does not exist + not pass byemail' =>
-				array($mockWebRequest1, $params1, $mockEmailAuth1, $mockUser1, $mockSession1, $mockCache1, $mockMsgExt1, 'ok', $expMsg1, $expMsgEmail1, '', $expHeading1, $expSubheading1),
+				array($mockWebRequest1, $params1, $mockEmailAuth1, $mockUser1, $mockSession1, $mockCache1, $mockMessagesMap1, $mockMsgExt1, 'ok', $expMsg1, $expMsgEmail1, '', $expHeading1, $expSubheading1),
 				'GET + temp user exists + not pass byemail' =>
-				array($mockWebRequest1, $params1, $mockEmailAuth1, $mockUser1, $mockSession1, $mockCache1, $mockMsgExt1, 'ok', $expMsg1, $expMsgEmail1, '', $expHeading1, $expSubheading1),
+				array($mockWebRequest1, $params1, $mockEmailAuth1, $mockUser1, $mockSession1, $mockCache1, $mockMessagesMap1, $mockMsgExt1, 'ok', $expMsg1, $expMsgEmail1, '', $expHeading1, $expSubheading1),
 				'GET + temp user does not exist + pass byemail' =>
-				array($mockWebRequest1, $params3, $mockEmailAuth1, $mockUser1, $mockSession1, $mockCache1, $mockMsgExt3, 'ok', $expMsg3, $expMsgEmail1, '', $expHeading3, $expSubheading3),
+				array($mockWebRequest1, $params3, $mockEmailAuth1, $mockUser1, $mockSession1, $mockCache1, $mockMessagesMap3, $mockMsgExt3, 'ok', $expMsg3, $expMsgEmail1, '', $expHeading3, $expSubheading3),
 				'GET + temp user exists + pass byemail' =>
-				array($mockWebRequest1, $params3, $mockEmailAuth1, $mockUser2, $mockSession1, $mockCache1, $mockMsgExt3, 'ok', $expMsg3, $expMsgEmail1, '', $expHeading3, $expSubheading3),
+				array($mockWebRequest1, $params3, $mockEmailAuth1, $mockUser2, $mockSession1, $mockCache1, $mockMessagesMap3, $mockMsgExt3, 'ok', $expMsg3, $expMsgEmail1, '', $expHeading3, $expSubheading3),
 				'POST + temp user does not exist + empty action' =>
-				array($mockWebRequest5, $params5, $mockEmailAuth1, $mockUser1, $mockSession1, $mockCache1, $mockMsgExt1, 'ok', $expMsg1, $expMsgEmail1, '', $expHeading1, $expSubheading1),
+				array($mockWebRequest5, $params5, $mockEmailAuth1, $mockUser1, $mockSession1, $mockCache1, $mockMessagesMap1, $mockMsgExt1, 'ok', $expMsg1, $expMsgEmail1, '', $expHeading1, $expSubheading1),
 				'POST + temp user exist + empty action' =>
-				array($mockWebRequest5, $params5, $mockEmailAuth1, $mockUser2, $mockSession1, $mockCache1, $mockMsgExt1, 'ok', $expMsg1, $expMsgEmail1, '', $expHeading1, $expSubheading1),
+				array($mockWebRequest5, $params5, $mockEmailAuth1, $mockUser2, $mockSession1, $mockCache1, $mockMessagesMap1, $mockMsgExt1, 'ok', $expMsg1, $expMsgEmail1, '', $expHeading1, $expSubheading1),
 
 				// test resend confirmation email
 				'error - empty username ( POST + action = resendconfirmation )' =>
-				array($mockWebRequest101, $params101, $mockEmailAuth1, $mockUser1, $mockSession1, $mockCache1, '', 'error', $expMsg101, $expMsgEmail1, '', $expHeading101, $expSubheading1),
+				array($mockWebRequest101, $params101, $mockEmailAuth1, $mockUser1, $mockSession1, $mockCache1, $mockMessagesMap101, '', 'error', $expMsg101, $expMsgEmail1, '', $expHeading101, $expSubheading1),
 				'error - temp user does not exist ( POST + action = resendconfirmation )' =>
-				array($mockWebRequest101, $params102, $mockEmailAuth1, $mockUser1, $mockSession1, $mockCache1, '', 'error', $expMsg102, $expMsgEmail1, '', $expHeading101, $expSubheading1),
+				array($mockWebRequest101, $params102, $mockEmailAuth1, $mockUser1, $mockSession1, $mockCache1, $mockMessagesMap102, '', 'error', $expMsg102, $expMsgEmail1, '', $expHeading101, $expSubheading1),
 				'error - temp user id does not match with one in $_SESSION ( POST + action = resendconfirmation )' =>
-				array($mockWebRequest101, $params102, $mockEmailAuth1, $mockUser3, $mockSession103, $mockCache1, '', 'invalidsession', $expMsg103, $expMsgEmail1, '', $expHeading101, $expSubheading1),
+				array($mockWebRequest101, $params102, $mockEmailAuth1, $mockUser3, $mockSession103, $mockCache1, $mockMessagesMap103, '', 'invalidsession', $expMsg103, $expMsgEmail1, '', $expHeading101, $expSubheading1),
 				'error - $wgEmailAuthentication == false ( POST + action = resendconfirmation )' =>
-				array($mockWebRequest101, $params102, $mockEmailAuth104, $mockUser3, $mockSession104, $mockCache1, '', 'error', $expMsg104, $expMsgEmail1, '', $expHeading101, $expSubheading1),
+				array($mockWebRequest101, $params102, $mockEmailAuth104, $mockUser3, $mockSession104, $mockCache1, $mockMessagesMap104, '', 'error', $expMsg104, $expMsgEmail1, '', $expHeading101, $expSubheading1),
 
 				'error - invalid email ( POST + action = resendconfirmation )' =>
-				array($mockWebRequest101, $params102, $mockEmailAuth105, $mockUser4, $mockSession104, $mockCache1, '', 'error', $expMsg104, $expMsgEmail1, '', $expHeading101, $expSubheading1),
+				array($mockWebRequest101, $params102, $mockEmailAuth105, $mockUser4, $mockSession104, $mockCache1, $mockMessagesMap104, '', 'error', $expMsg104, $expMsgEmail1, '', $expHeading101, $expSubheading1),
 				'error - email is confirmed ( POST + action = resendconfirmation )' =>
-				array($mockWebRequest101, $params102, $mockEmailAuth105, $mockUser5, $mockSession104, $mockCache1, '', 'error', $expMsg106, $expMsgEmail1, '', $expHeading101, $expSubheading1),
+				array($mockWebRequest101, $params102, $mockEmailAuth105, $mockUser5, $mockSession104, $mockCache1, $mockMessagesMap106, '', 'error', $expMsg106, $expMsgEmail1, '', $expHeading101, $expSubheading1),
 				'error - pending email + email sent exceed limit ( POST + action = resendconfirmation )' =>
-				array($mockWebRequest101, $params102, $mockEmailAuth105, $mockUser6, $mockSession104, $mockCache107, '', 'error', $expMsg107, $expMsgEmail1, '', $expHeading101, $expSubheading1),
+				array($mockWebRequest101, $params102, $mockEmailAuth105, $mockUser6, $mockSession104, $mockCache107, $mockMessagesMap107, '', 'error', $expMsg107, $expMsgEmail1, '', $expHeading101, $expSubheading1),
 				'error - email sent == limit ( POST + action = resendconfirmation )' =>
-				array($mockWebRequest101, $params102, $mockEmailAuth105, $mockUser6, $mockSession104, $mockCache108, '', 'error', $expMsg107, $expMsgEmail1, '', $expHeading101, $expSubheading1),
+				array($mockWebRequest101, $params102, $mockEmailAuth105, $mockUser6, $mockSession104, $mockCache108, $mockMessagesMap107, '', 'error', $expMsg107, $expMsgEmail1, '', $expHeading101, $expSubheading1),
 				'success - email sent < limit ( POST + action = resendconfirmation )' =>
-				array($mockWebRequest101, $params102, $mockEmailAuth105, $mockUser7, $mockSession104, $mockCache109, $mockMsgExt1, 'ok', $expMsg7, $expMsgEmail1, '', $expHeading101, $expSubheading1),
+				array($mockWebRequest101, $params102, $mockEmailAuth105, $mockUser7, $mockSession104, $mockCache109, $mockMessagesMap7, $mockMsgExt1, 'ok', $expMsg7, $expMsgEmail1, '', $expHeading101, $expSubheading1),
 			);
 		}
 
