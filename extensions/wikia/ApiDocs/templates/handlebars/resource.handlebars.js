@@ -10,21 +10,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
     + escapeExpression(((stack1 = depth0.name),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "' onclick=\"Docs.toggleEndpointListForResource('"
     + escapeExpression(((stack1 = depth0.name),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "');\">/"
+    + "');\">\n            /"
     + escapeExpression(((stack1 = depth0.name),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</a>\n    </h2>\n    <ul class='options'>\n        <li>\n            <a href='#!/"
-    + escapeExpression(((stack1 = depth0.name),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "' id='endpointListTogger_"
-    + escapeExpression(((stack1 = depth0.name),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "'\n               onclick=\"Docs.toggleEndpointListForResource('"
-    + escapeExpression(((stack1 = depth0.name),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "');\">Show/Hide</a>\n        </li>\n        <li>\n            <a href='#' onclick=\"Docs.collapseOperationsForResource('"
-    + escapeExpression(((stack1 = depth0.name),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "'); return false;\">\n                List Operations\n            </a>\n        </li>\n        <li>\n            <a href='#' onclick=\"Docs.expandOperationsForResource('"
-    + escapeExpression(((stack1 = depth0.name),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "'); return false;\">\n                Expand Operations\n            </a>\n        </li>\n        <li>\n            <a href='"
-    + escapeExpression(((stack1 = depth0.url),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "'>Raw</a>\n        </li>\n    </ul>\n</div>\n<ul class='endpoints' id='"
+    + "\n            <span class=\"description\">"
+    + escapeExpression(((stack1 = depth0.desription),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</span>\n\n            <span class=\"collapse-button\">collapse</span>\n            <span class=\"expand-button\">expand</span>\n        </a>\n    </h2>\n</div>\n<ul class='endpoints' id='"
     + escapeExpression(((stack1 = depth0.name),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "_endpoint_list' style='display:none'>\n\n</ul>\n";
   return buffer;
