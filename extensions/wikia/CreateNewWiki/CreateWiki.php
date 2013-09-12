@@ -40,8 +40,8 @@ class CreateWiki {
 
 	const IMGROOT              = "/images/";
 	const IMAGEURL             = "http://images.wikia.com/";
-	const CREATEWIKI_LOGO      = "/images/c/central/images/2/22/Wiki_Logo_Template.png";
-	const CREATEWIKI_ICON      = "/images/c/central/images/6/64/Favicon.ico";
+	const CREATEWIKI_LOGO      = "http://images.wikia.com/central/images/2/22/Wiki_Logo_Template.png";
+	const CREATEWIKI_ICON      = "http://images.wikia.com/central/images/6/64/Favicon.ico";
 	const DEFAULT_STAFF        = "Angela";
 	const DEFAULT_USER         = 'Default';
 	const DEFAULT_DOMAIN       = "wikia.com";
@@ -259,27 +259,29 @@ class CreateWiki {
 		/**
 		 * create image folder
 		 */
-		wfMkdirParents( "{$this->mNewWiki->images_dir}" );
-		wfDebugLog( "createwiki", __METHOD__ . ": Folder {$this->mNewWiki->images_dir} created\n", true );
+		global $wgEnableCephFileBackend;
+		if (empty($wgEnableCephFileBackend)) {
+			wfMkdirParents( "{$this->mNewWiki->images_dir}" );
+			wfDebugLog( "createwiki", __METHOD__ . ": Folder {$this->mNewWiki->images_dir} created\n", true );
+		}
 
 		/**
 		 * copy default logo & favicon
 		 */
-		wfMkdirParents( "{$this->mNewWiki->images_logo}" );
-		wfMkdirParents( "{$this->mNewWiki->images_icon}" );
+		$uploader = User::newFromName('CreateWiki script');
 
-		if ( file_exists( self::CREATEWIKI_LOGO ) ) {
-			copy( self::CREATEWIKI_LOGO, "{$this->mNewWiki->images_logo}/Wiki.png" );
-			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has been copied\n", true );
+		$res = ImagesService::uploadImageFromUrl(self::CREATEWIKI_LOGO, (object) ['name' => 'Wiki.png'], $uploader);
+		if ($res['status'] === true) {
+			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has been uploaded\n", true );
 		} else {
-			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has not been copied\n", true );
+			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has not been uploaded - " . print_r($res['errors'], true) . "\n", true );
 		}
 
-		if ( file_exists( self::CREATEWIKI_ICON ) ) {
-			copy( self::CREATEWIKI_ICON, "{$this->mNewWiki->images_icon}/Favicon.ico" );
-			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has been copied\n", true );
+		$res = ImagesService::uploadImageFromUrl(self::CREATEWIKI_ICON, (object) ['name' => 'Favicon.ico'], $uploader);
+		if ( $res['status'] == true ) {
+			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has been uploaded\n", true );
 		} else {
-			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has not been copied\n", true );
+			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has not been uploaded - " . print_r($res['errors'], true) . "\n", true );
 		}
 
 		/**
@@ -600,8 +602,6 @@ class CreateWiki {
 
 		$this->mNewWiki->images_dir = self::IMGROOT  . $this->mNewWiki->images_dir . "/images";
 		$this->mNewWiki->images_url = self::IMAGEURL . $this->mNewWiki->images_url . "/images";
-		$this->mNewWiki->images_logo = sprintf("%s/%s", $this->mNewWiki->images_dir, "b/bc" );
-		$this->mNewWiki->images_icon = sprintf("%s/%s", $this->mNewWiki->images_dir, "6/64" );
 		$this->mNewWiki->domain = sprintf("%s.%s", $this->mNewWiki->subdomain, $this->mDefSubdomain);
 		$this->mNewWiki->url = sprintf( "http://%s.%s/", $this->mNewWiki->subdomain, $this->mDefSubdomain );
 		$this->mNewWiki->dbname = $this->prepareDatabaseName( $this->mNewWiki->name, $this->mLanguage );
