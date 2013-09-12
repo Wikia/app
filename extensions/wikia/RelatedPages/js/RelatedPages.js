@@ -79,7 +79,7 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function( sloth, w, $ ){
 									pageUrl: page.url,
 									pageTitle: page.title,
 									imgUrl: ( page.imgUrl ? page.imgUrl : artImgPlaceholder ),
-									snippet: page.text
+									artSnippet: page.text
 								} );
 							}
 
