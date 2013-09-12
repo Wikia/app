@@ -3,14 +3,15 @@
 	<? for( $x = 1; $x <= count($videos); $x++ ): ?>
 
 		<?
-		// TODO: there's probably still some work to sync this up with the controller properly
-		$video = $videos[ $x ];
-		$videoTitle = $video[ 'videoTitle' ];
-		$videoTitleClass = ''; // TODO: make sure this logic is in the controller - videoTitle ? "" : "alternative";
-		$displayTitle = $video[ 'displayTitle' ]; // TODO: if there's no display title, make sure we send the default text (videopagetool-video-title-default-text)
-		$videoDescription = $video[ 'description' ];
-		$videoKey = $video[ 'videoKey' ];
-		$videoThumb = $video[ 'videoThumb' ];
+			// TODO: there's probably still some work to sync this up with the controller properly
+			$video = $videos[ $x ];
+			$videoTitle = $video[ 'videoTitle' ];
+			$videoTitleClass = ''; // TODO: make sure this logic is in the controller - videoTitle ? "" : "alternative";
+			$displayTitle = $video[ 'displayTitle' ]; // TODO: if there's no display title, make sure we send the default text (videopagetool-video-title-default-text)
+			$videoDescription = $video[ 'description' ];
+			$videoKey = $video[ 'videoKey' ];
+			$videoThumb = $video[ 'videoThumb' ];
+			$descriptionMaxLength = "200";
 		?>
 
 		<div class="form-box featured-video with-nav">
@@ -27,7 +28,8 @@
 			</div>
 			<div class="input-group">
 				<label for="description-<?= $x ?>"><?= wfMessage( 'videopagetool-label-video-description' )->text() ?></label>
-				<textarea class="description" id="description-<?= $x ?>" placeholder="<?= wfMessage( 'videopagetool-placeholder-video-description' )->text() ?>" name="description[]"><?= $videoDescription ?></textarea>
+				<textarea maxlength="<?= $descriptionMaxLength ?>" class="description" id="description-<?= $x ?>" placeholder="<?= wfMessage( 'videopagetool-placeholder-video-description' )->text() ?>" name="description[]"><?= $videoDescription ?></textarea>
+				<p class="hint"><?= wfMessage( 'videopagetool-hint-description-maxlength', $descriptionMaxLength )->plain() ?></p>
 			</div>
 			<button class="secondary navigation nav-up">
 				<img class="chevron chevron-up" src="<?= $wg->BlankImgUrl ?>">

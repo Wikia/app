@@ -1,3 +1,9 @@
+/*
+ * Uses jQuery Validation Plugin for validating admin forms
+ * @author lizlux
+ * @see http://jqueryvalidation.org/
+ */
+
 define( 'vpt.models.validator', [ 'jquery' ], function( $ ) {
 
 	'use strict';
@@ -17,12 +23,17 @@ define( 'vpt.models.validator', [ 'jquery' ], function( $ ) {
 		},
 
 		/*
+		 * Add a validation rule to an element.
+		 *
+		 * Note: this only supports maxlength for now but we can make this more versatile once we start needing
+		 * more rules. Possibly add a getRule() method.
+		 *
 		 * @param {jQuery} $elem Form input to set the rule on
 		 * @param {string} rule Rule property exactly as defined by the jQuery validator plugin
 		 * @param {string|function} value Value to send to the jQuery validator rule
 		 */
 		setRule: function( $elem, rule, value ) {
-			$elem.data( rule, value );
+			$elem.data( 'rule-' + rule, value );
 		},
 
 		/*
@@ -30,18 +41,19 @@ define( 'vpt.models.validator', [ 'jquery' ], function( $ ) {
 		 */
 		addRules: function() {
 			var $this = $( this ),
-				minlength = $this.data( 'minlength' ) || 0;
+				maxlength = $this.data( 'rule-maxlength' ) || false;
 
 			$this.rules( 'add', {
 				required: true,
-				minlength: minlength,
+				maxlength: maxlength,
 				messages: {
 					required: $.msg( 'htmlform-required' ),
 					// Dynamically calculate the character length in the error message as you type.
-					// Note: onkeyup needs to be set to false for this to work properly
-					minlength: function( len, elem ) {
-						var charsToGo = minlength - $( elem ).val().length;
-						return [ $.msg( 'videopagetool-description-minlength-error', len, charsToGo ) ];
+					// Note: onkeyup needs to be set to false for this to work properly. Also, this is only used
+					// in IE9 since it doesn't support the maxlength attribute on textareas
+					maxlength: function( len, elem ) {
+						var charsToGo =  $( elem ).val().length - maxlength;
+						return [ $.msg( 'videopagetool-description-maxlength-error', len, charsToGo ) ];
 					}
 				},
 				onkeyup: false

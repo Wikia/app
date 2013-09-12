@@ -29,7 +29,7 @@ $messages['en'] = array(
 	'videopagetool-button-clear' => 'Clear all',
 	'videopagetool-confirm-clear-title' => 'Clear form',
 	'videopagetool-confirm-clear-message' => 'Are you sure you want to clear the entire contents of the form?',
-	'videopagetool-description-minlength-error' => 'Oops! Your text needs to be at least $1 characters. $2 characters to go.',
+	'videopagetool-description-maxlength-error' => 'Oops! Your text can be no longer than $1 characters. Please remove $2 characters.',
 	'videopagetool-language-title' => 'Language',
 	'videopagetool-language-select-default-value' => 'Choose your language',
 	'videopagetool-date-title' => 'Date',
@@ -39,6 +39,7 @@ $messages['en'] = array(
 	'videopagetool-tooltip-in-progress' => 'In Progress',
 	'videopagetool-header-dashboard' => 'Dashboard',
 	'videopagetool-success-save' => 'Your changes have been saved',
+	'videopagetool-hint-description-maxlength' => '$1 characters max',
 );
 
 $messages['qqq'] = array(
