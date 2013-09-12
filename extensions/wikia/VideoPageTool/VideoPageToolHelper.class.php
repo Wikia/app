@@ -8,6 +8,12 @@ class VideoPageToolHelper extends WikiaModel {
 	const THUMBNAIL_WIDTH = 180;
 	const THUMBNAIL_HEIGHT = 100;
 
+	public static $requiredRows = array(
+		'featured' => 5,
+		'trending' => 4,
+		'fan'      => 4,
+	);
+
 	/**
 	 * get list of sections
 	 * @return array $sections
@@ -41,16 +47,15 @@ class VideoPageToolHelper extends WikiaModel {
 	/**
 	 * get left menu items
 	 * @param string $selected [featured/trending/fan]
+	 * @param array $sections
 	 * @param string $language
 	 * @param string $date [timestamp]
 	 * @return array $leftMenuItems
 	 */
-	public function getLeftMenuItems( $selected, $language, $date ) {
-		$sections = $this->getSections();
+	public function getLeftMenuItems( $selected, $sections, $language, $date ) {
 		$query = array(
 			'language' => $language,
 			'date' => $date,
-			'section' => $selected,
 		);
 
 		$leftMenuItems = array();
@@ -68,11 +73,34 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
+	 * get url of the next munu item
+	 * @param array $leftMenuItems
+	 * @return string
+	 */
+	public function getNextMenuItemUrl( $leftMenuItems ) {
+		$next = 0;
+		foreach ( $leftMenuItems as $key => $item ) {
+			if ( $item['selected'] ) {
+				$next = $key;
+				break;
+			}
+		}
+
+		if ( $next < count( $leftMenuItems ) - 1 ) {
+			$next++;
+		}
+
+		return $leftMenuItems[$next]['href'];
+	}
+
+	/**
 	 * get video data
 	 * @param string $videoTitle
+	 * @param string $displayTitle
+	 * @param string $description
 	 * @return array $video
 	 */
-	public function getVideoData( $videoTitle ) {
+	public function getVideoData( $videoTitle, $displayTitle = '', $description = '' ) {
 		wfProfileIn( __METHOD__ );
 
 		$video = array();
@@ -82,20 +110,24 @@ class VideoPageToolHelper extends WikiaModel {
 			$file = wfFindFile( $title );
 			if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
 				$videoTitle = $title->getText();
-				$videoKey = $title->getDBKey();
+				if ( empty( $displayTitle ) ) {
+					$displayTitle = $videoTitle;
+				}
 
 				// get thumbnail
 				$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
 				$videoThumb = $thumb->toHtml();
 
 				// get description
-				$videoHandlerHelper = new VideoHandlerHelper();
-				$description = $videoHandlerHelper->getVideoDescription( $file );
+				if ( empty( $description ) ) {
+					$videoHandlerHelper = new VideoHandlerHelper();
+					$description = $videoHandlerHelper->getVideoDescription( $file );
+				}
 
 				$video = array(
 					'videoTitle' => $videoTitle,
-					'videoKey' => $videoKey,
-					'displayTitle' => $videoTitle,
+					'videoKey' => $title->getDBKey(),
+					'displayTitle' => $displayTitle,
 					'videoThumb' => $videoThumb,
 					'description' => $description,
 				);
@@ -108,53 +140,73 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
-	 * get list of programs
-	 * @param string $language
-	 * @param string $startDate [yyyy-mm-dd]
-	 * @param string $endDate [yyyy-mm-dd]
-	 * @return array $programs [array( date => status ); date = yyyy-mm-dd; status = 0 (not published)/ 1 (published)]
+	 * get default values by section
+	 * @param string $section
+	 * @return array $values
 	 */
-	public function getPrograms( $language, $startDate, $endDate ) {
-		wfProfileIn( __METHOD__ );
-
-		$memKey = $this->getMemKeyPrograms( $language, $startDate );
-		$programs = $this->wg->Memc->get( $memKey );
-		if ( empty( $programs )) {
-			$db = wfGetDB( DB_SLAVE );
-
-			$result = $db->select(
-				array( 'vpt_program' ),
-				array( "date_format( publish_date, '%Y-%m-%d' ) publish_date, is_published" ),
-				array(
-					'language' => $language,
-					"publish_date >= '$startDate'",
-					"publish_date < '$endDate'",
-				),
-				__METHOD__,
-				array( 'ORDER BY' => 'publish_date' )
-			);
-
-			$programs = array();
-			while ( $row = $db->fetchObject($result) ) {
-				$programs[$row->publish_date] = $row->is_published;
-			}
-
-			$this->wg->Memc->set( $memKey, $programs, 60*60*24 );
+	public function getDefaultValuesBySection( $section ) {
+		$className = VideoPageToolAsset::getClassNameFromSection( $section );
+		$values = array();
+		for( $i = 1; $i <= self::$requiredRows[$section]; $i++ ) {
+			$values[$i] = $className::getDefaultAssetData();
 		}
 
-		wfProfileOut( __METHOD__ );
-
-		return $programs;
+		return $values;
 	}
 
 	/**
-	 * get memcache key for programs
-	 * @param string $language
-	 * @param string $startDate [yyyy-mm-dd]
-	 * @return string
+	 * Validate form field
+	 * @param string $formFieldName
+	 * @param string $value
+	 * @param string $errMsg
+	 * @return boolean
 	 */
-	public function getMemKeyPrograms( $language, $startDate ) {
-		return wfMemcKey( 'videopagetool', 'programs', $language, $startDate );
+	public function validateFormField( $formFieldName, $value, &$errMsg ) {
+		if ( empty( $value ) ) {
+			$errMsg = wfMessage( 'videohandler-error-missing-parameter', $formFieldName )->plain();
+			return false;
+		}
+
+		$methodName = 'validate'.ucfirst( $formFieldName );
+		if ( method_exists( $this, $methodName ) ) {
+			return $this->$methodName( $value, $errMsg );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Validate video
+	 * @param string $videoTitle
+	 * @param string $errMsg
+	 * @return boolean
+	 */
+	public function validateVideoKey( $videoTitle, &$errMsg ) {
+		$title = Title::newFromText( $videoTitle, NS_FILE );
+		if ( $title instanceof Title ) {
+			$file = wfFindFile( $title );
+			if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
+				return true;
+			}
+		}
+
+		$errMsg = wfMessage( 'videohandler-error-video-no-exist' )->plain();
+
+		return false;
+	}
+
+	/**
+	 * Validate description
+	 * @param string $description
+	 * @param string $errMsg
+	 */
+	public function validateDescriptiion( $description, &$errMsg ) {
+		if ( strlen( $description ) > 200 ) {
+			$errMsg = wfMessage( 'videopagetool-error-invalid-description' )->plain();
+			return false;
+		}
+
+		return true;
 	}
 
 }

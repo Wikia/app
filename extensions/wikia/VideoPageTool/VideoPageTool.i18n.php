@@ -12,7 +12,9 @@ $messages['en'] = array(
 	'videopagetool-error-permission' => 'You cannot access this tool.',
 	'videopagetool-error-invalid-language' => 'Invalid language',
 	'videopagetool-error-invalid-date' => 'Invalid date',
+	'videopagetool-error-missing-parameter' => 'Required parameter is missing',
 	'videopagetool-error-invalid-module' => 'Invalid module',
+	'videopagetool-error-invalid-description' => 'The description is too long (200 characters limit)',
 	'videopagetool-section-featured' => 'Featured',
 	'videopagetool-section-trending' => 'Trending Video',
 	'videopagetool-section-fan' => 'Wikia Fan Media',
@@ -36,6 +38,7 @@ $messages['en'] = array(
 	'videopagetool-tooltip-published' => 'Published',
 	'videopagetool-tooltip-in-progress' => 'In Progress',
 	'videopagetool-header-dashboard' => 'Dashboard',
+	'videopagetool-success-save' => 'Your changes have been saved',
 	'videopagetool-hint-description-maxlength' => '$1 characters max',
 );
 
@@ -44,6 +47,8 @@ $messages['qqq'] = array(
 	'videopagetool-error-permission' => 'This text appears if user does not have permission to access the tool.',
 	'videopagetool-error-invalid-language' => 'This text appears if the language is invalid.',
 	'videopagetool-error-invalid-date' => 'This text appears if the date is invalid.',
+	'videopagetool-error-invalid-description' => 'This text appears if the description is too long.',
+	'videopagetool-error-missing-parameter' => 'This text appears if the required parameter is missing',
 	'videopagetool-error-invalid-module' => 'Error text when code requests a Video Page module that does not exist',
 	'videopagetool-section-featured' => 'Link title for the left menu item',
 	'videopagetool-section-trending' => 'Link title for the left menu item',
@@ -68,4 +73,5 @@ $messages['qqq'] = array(
 	'videopagetool-tooltip-published' => 'Published',
 	'videopagetool-tooltip-in-progress' => 'In Progress',
 	'videopagetool-header-dashboard' => 'Title for dashboard page',
+	'videopagetool-success-save' => 'This text appears if your changes have been saved successfully',
 );
