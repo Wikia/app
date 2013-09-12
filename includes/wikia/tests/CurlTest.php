@@ -21,7 +21,7 @@ $wgAutoloadClasses['Curl']  =  $IP.'/includes/wikia/Curl.php';
  */
 class CurlTest extends PHPUnit_Framework_TestCase {
 	const CURL_TIMEOUT        = 10;
-	const TEST_VALID_URL      = 'http://wikia.com';
+	const TEST_VALID_URL      = 'http://www.wikia.com/Wikia';
 	const TEST_INVALID_HANDLE = 6.6260693;
 
 	private $proxy = null;
@@ -77,21 +77,6 @@ class CurlTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(self::TEST_VALID_URL, $curl->getinfo(CURLINFO_EFFECTIVE_URL));
 	}
 
-	function testCurlWrapperCanDoHttpQueries() {
-		$curl = new Curl(self::TEST_VALID_URL);
-		$curl->setopt(CURLOPT_PROXY, $this->proxy);
-		$this->assertTrue($curl->setopt(CURLOPT_RETURNTRANSFER, 1));
-		$this->assertTrue($curl->setopt_array(array(
-			CURLOPT_TIMEOUT        => self::CURL_TIMEOUT,
-			CURLOPT_FOLLOWLOCATION => true
-		)));
-
-		$result = $curl->exec();
-		$this->assertStringStartsWith('<!doctype html', strtolower($result));
-
-		$curl->close();
-		$this->assertFalse($curl->hasHandle());
-	}
 
 	function testSettingInvalidHandleTypeThrowsException() {
 		$curl = new Curl();

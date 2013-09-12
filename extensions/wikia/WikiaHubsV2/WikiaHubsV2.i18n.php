@@ -228,6 +228,47 @@ $messages['es'] = array(
 );
 
 $messages['pl'] = [
+	// general
+	'wikiahubs-button-cancel' => 'Anuluj',
+	'wikiahubs-search-placeholder' => 'Szukaj na Wikii',
+
+	// suggest article
+	'wikiahubs-suggest-article-header' => 'Zasugeruj artykuł',
+	'wikiahubs-suggest-article-submit-button' => 'Prześlij',
+	'wikiahubs-suggest-article-what-article' => 'Czym chcesz się podzielić? (link, maks. 255 znaków)',
+	'wikiahubs-suggest-article-reason' => 'Dlaczego ten artykuł jest dobry? (Maks. 140 znaków)',
+	'wikiahubs-suggest-article-success' => 'Dzięki za zasugerowanie artykułu, nasi edytorzy przyjrzą się zgłoszeniu. Zajrzyj wkrótce aby zobaczyć artykuł na stronie.!',
+	'wikiahubs-error-invalid-article-url-length' => 'Adres URL artykułu musi mieć co najmniej 10 znaków',
+	'wikiahubs-error-invalid-reason-length' => 'Komentarz musi mieć od 1 do 140 znaków',
+
+	// wikia hubs
+	'wikiahubs-vertical-VideoGames' => 'Gry',
+	'wikiahubs-vertical-Entertainment' => 'Rozrywka',
+	'wikiahubs-vertical-Lifestyle' => 'Lifestyle',
+
+	//WAM
+	'wikiahubs-wam-header' => 'Punktacja WAM',
+	'wikiahubs-wam-see-full-wam-ranking' => 'Dowiedz się więcej o WAM',
+	'wikiahubs-wam-top-wikis-headline' => 'Najpopularniejsze wiki w kategorii $1',
+	'wikiahubs-wam-rank' => 'Pozycja',
+	'wikiahubs-wam-score' => 'Punktacja WAM',
+	'wikiahubs-wam-wiki-url' => 'Nazwa wiki',
+
+	// from the community
+	'wikiahubs-from-community-promoted' => 'Wypromuj wiki',
+	'wikiahubs-from-community-caption' => 'Od [$1 $2] na [$3 $4]',
+	'wikiahubs-from-community-headline' => 'Od społeczności',
+
+	//featured video
+	'wikiahubs-sponsored-by' => 'Sponsorowany przez $1',
+
+	// 404 page
+	'wikiahubs-404-title' => 'Nie udało się odnaleźć poszukiwanej strony.',
+	'wikiahubs-404-message' => 'Nie udało się odnaleźć strony. [[$1|Kliknij tutaj]] aby wrócić do strony portalu.',
+
+	// off-shot pages
+	'wikiahubs-popular-videos' => 'Popularne filmy',
+
 	// social icons
 	'wikiahubs-social-twitter-link-VideoGames' => 'https://twitter.com/wikia_pl',
 	'wikiahubs-social-facebook-link-VideoGames' => 'https://www.facebook.com/wikiapl',

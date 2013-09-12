@@ -210,6 +210,14 @@ $messages['nl'] = array(
 	'paginator-back' => 'Vorige',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'paginator-next' => 'Seguent',
+	'paginator-back' => 'Precedent',
+);
+
 /** Pälzisch (Pälzisch)
  * @author Manuae
  */

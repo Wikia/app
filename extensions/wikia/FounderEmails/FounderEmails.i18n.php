@@ -729,6 +729,7 @@ Skipailh Wikia',
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author BroOk
  * @author CuBaN VeRcEttI
  * @author Marcmpujol
@@ -983,7 +984,7 @@ Hi ha un munt de coses que succeeix en el seu wiki avui! Passar per $MYHOMEURL p
 	'founderemails-email-3-day-explore-content' => 'No tinguis por a visitar altres wikis per veure com han treballat les seves pàgines principals, articles i més. Aquí hi ha algunes de les nostres favorites: <a style="color:#2a87d5;text-decoration:none;" href="http://es.memory-alpha.org"> Memory Alpha </ a>, <a style = "color: # 2a87d5; text-decoration: none;" href = "http://es.ben10.wikia.com"> Ben 10 </ a>, <a style = "color: # 2a87d5; text-decoration : none; "href =" http://es.gta.wikia.com "> Grand Theft Encyclopedia </ a>.',
 	'founderemails-email-3-day-explore-button' => 'Explorar',
 	'founderemails-email-3-day-wikiahelps-text' => 'Necessita ajuda per esbrinar com funciona alguna cosa? Sempre estem aquí per a vostè! Vine a demanar-nos ajuda i assessorament a <a style="color:#2a87d5;text-decoració:none;" href="http://community.wikia.com">community.wikia.com</a>.',
-	'founderemails-email-3-day-wikiahelps-signature' => "Manten el bon treball!<br/>L'Equip De Wikia", # Fuzzy
+	'founderemails-email-3-day-wikiahelps-signature' => "Bona feina!<br />L'Equip De Wikia",
 	'founderemails-email-10-day-heading' => "Com t'està anant \$nom d'USUARI?",
 	'founderemails-email-10-day-congratulations' => 'Wow, el temps vola! Que ja han estat 10 dies des que vau començar a $HDWIKINAME.',
 	'founderemails-email-10-day-tips-heading' => 'Involucra altres en el teu projecte i mostra a tots el gran treball que has estat fent! Aquí hi ha algunes maneres de difondre:',
@@ -994,19 +995,19 @@ Hi ha un munt de coses que succeeix en el seu wiki avui! Passar per $MYHOMEURL p
 	'founderemails-email-10-day-join-heading' => 'Unir-se a llocs web similars.',
 	'founderemails-email-10-day-join-content' => "Pregunta a les persones en altres fòrums o llocs web relacionats amb el teu tema a la recerca d'ajuda. Si és possible, l'administrador, pots veure si estan interesandos en fer un intercanvi d'enllaç - ells posarien teu enllaç a la wiki al seu lloc web si tu poses el seu enllaç al teu wiki.",
 	'founderemails-email-10-day-wikiahelps-text' => 'Vostè també pot demanar altres Wikians per ajudar a la teva wiki amb la publicació en fòrums a <a style="color:#2a87d5;text-decoració:none;" href="http://community.wikia.com">community.wikia.com</a>.',
-	'founderemails-email-10-day-wikiahelps-signature' => "Mantingui el bon treball!<br>L'equip de Wikia", # Fuzzy
+	'founderemails-email-10-day-wikiahelps-signature' => "Bona feina!<br />L'equip de Wikia",
 	'founderemails-email-views-digest-subject' => 'Visites avui a $WIKINAME',
-	'founderemails-email-views-digest-body' => 'Hola $ USERNAME,
+	'founderemails-email-views-digest-body' => 'Hola $USERNAME,
 
-Avui $ WIKINAME va ser visitada per $ 1 {{PLURAL: $ 1 | persona | persones}}.
+Avui $WIKINAME ha estat visitada per $1 {{PLURAL:$1|persona|persones}}.
 
-Estigues afegint contingut nou i promovent el teu wiki per animar més persones a llegir, editar i córrer la veu.
+Continua afegint contingut nou i millorant la teva viqui per animar més persones a llegir, editar i córrer la veu.
 
-$ WIKIURL
+$WIKIURL
 
-- L\'Equip de Wikia', # Fuzzy
+- L\'Equip de Wikia',
 	'founderemails-email-views-digest-greeting' => 'Hola $USERNAME,',
-	'founderemails-email-views-digest-headline' => 'Avui $ WIKINAME va ser visitada per $ UNIQUEVIEWS persones.', # Fuzzy
+	'founderemails-email-views-digest-headline' => 'Avui $WIKINAME ha estat visitada per $1 {{PLURAL:$1|persona|persones}}.',
 	'founderemails-email-views-digest-content' => 'Seguir afegint nous continguts i promoure el seu wiki per animar més gent a llegir, editar i difondre la paraula.',
 	'founderemails-email-views-digest-signature' => "L'Equip De Wikia",
 	'founderemails-email-views-digest-button' => 'Afegeix més pàgines',
@@ -1044,7 +1045,7 @@ Sempre pots fer-li un cop d'ull a la Wiki Activitat per a tots els canvis existe
 	'founderemails-email-complete-digest-button' => 'Anar a la Wikia Activitat',
 	'founderemails-pref-joins' => 'Envia\'m un correu electrònic quan algú s\'uneix <span class="notranslate" traduir="no">$1</span>',
 	'founderemails-pref-edits' => 'Envia\'m un correu electrònic quan algú edita <span class="notranslate" traduir="no">$1</span>',
-	'founderemails-pref-views-digest' => 'Enviar-me un correu electrònic cada quantes vegades $ 1 ha estat visitada', # Fuzzy
+	'founderemails-pref-views-digest' => "Envieu-me un correu electrònic diari dient-me quantes vegades s'ha visitat $1",
 	'founderemails-pref-complete-digest' => 'Envieu-me diàriament un recull de l\'activitat en <span class="notranslate" traduir="no">$1</span>',
 	'founderemails-pref-joins-v2' => "...algú s'uneix a",
 	'founderemails-pref-edits-v2' => '...algú edita',
@@ -5617,6 +5618,19 @@ Er gebeurt veel op je wiki vandaag! Kom naar $MYHOMEURL om te kijken wat er alle
 	'founderemails-email-10-day-email-content' => 'E-mail andere mensen die geïnteresseerd zijn in je onderwerp of die je willen helpen, zoals een schoolvriend of een collega. Je kunt ook bepaalde afbeeldingen die worden gebruikt in je wiki e-mailen via de knop "E-mail".',
 	'founderemails-email-10-day-join-content' => 'Vraag mensen op andere forums of websites over je onderwerp om hulp door daar berichten te plaatsen. Neem als het mogelijk is contact op met de beheerders en vraag of ze geïnteresseerd zijn in het uitwisselen van koppelingen. Zij zetten dan een koppeling naar jouw website op hun website, en andersom.',
 	'founderemails-email-10-day-wikiahelps-text' => 'Je kunt ook andere Wikianen om hulp bij je wiki vragen door berichten te plaatsen in de forums op <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>.',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'founderemails-desc' => 'Ajuda los fondators en los informant dels cambiaments sus lor wiki',
+	'tog-founderemailsenabled' => 'Me mandar de mesas a jorn per corrièr electronic sus çò que fan las autras personas (fondators unicament)',
+	'founderemails-email-user-registered-subject' => 'Una novèla persona a rejunt $WIKINAME',
+	'founderemails-email-user-registered-greeting' => 'Bonjorn $USERNAME,',
+	'founderemails-email-user-registered-signature' => 'L’equipa Wikia',
+	'founderemails-email-user-registered-button' => 'Lor desirar la benvenguda',
+	'founderemails-email-0-days-passed-subject' => 'Benvenguda sus Wikia !',
 );
 
 /** Pälzisch (Pälzisch)

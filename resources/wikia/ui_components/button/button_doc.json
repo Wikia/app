@@ -1,0 +1,191 @@
+{
+	"name": "styleguide-name-buttons",
+	"description": "styleguide-description-button",
+	"types": {
+		"link": {
+			"description" : "styleguide-description-link-button",
+			"params" : {
+				"href" : {
+					"templateVar" : "href",
+					"type" : "string",
+					"description" : "styleguide-description-link-button-href"
+				},
+				"title" : {
+					"templateVar" : "title",
+					"type" : "string",
+					"description" : "styleguide-description-link-button-title"
+				},
+				"text" : {
+					"templateVar" : "value",
+					"type" : "string",
+					"description" : "styleguide-description-link-button-text"
+				},
+				"size" : {
+					"templateVar" : "class",
+					"type" : "enum",
+					"value" : {
+						"0" : "small",
+						"1" : "normal",
+						"2" : "big"
+					},
+					"description" : "styleguide-description-link-button-size"
+				},
+				"style" : {
+					"templateVar" : "class",
+					"type" : "enum",
+					"value" : {
+						"0" : "primary",
+						"1" : "secondary"
+					},
+					"description" : "styleguide-description-link-button-style"
+				},
+				"target" : {
+					"templateVar" : "target",
+					"type" : "string",
+					"description" : "styleguide-description-link-button-target"
+				},
+				"id" : {
+					"templateVar" : "id",
+					"type" : "string",
+					"description" : "styleguide-description-link-button-id"
+				},
+				"data" : {
+					"templateVar" : "data",
+					"type" : "object",
+					"objectVar" : {
+						"0" : "key",
+						"1" : "value"
+					},
+					"description" : "styleguide-description-link-button-data"
+				}
+
+			}
+		},
+		"input" : {
+			"description" : "styleguide-description-input-button",
+			"params" : {
+				"type" : {
+					"templateVar" : "type",
+					"type" : "enum",
+					"value" : {
+						"0" : "submit",
+						"1" : "button",
+						"2" : "reset"
+					},
+					"description" : "styleguide-description-input-button-type"
+				},
+				"name" : {
+					"templateVar" : "name",
+					"type" : "string",
+					"description" : "styleguide-description-input-button-name"
+				},
+				"value" : {
+					"templateVar" : "value",
+					"type" : "string",
+					"description" : "styleguide-description-input-button-value"
+				},
+				"size" : {
+					"templateVar" : "class",
+					"type" : "enum",
+					"value" : {
+						"0" : "small",
+						"1" : "normal",
+						"2" : "big"
+					},
+					"description" : "styleguide-description-input-button-size"
+				},
+				"style" : {
+					"templateVar" : "class",
+					"type" : "enum",
+					"value" : {
+						"0" : "primary",
+						"1" : "secondary"
+					},
+					"description" : "styleguide-description-input-button-style"
+				},
+				"id" : {
+					"templateVar" : "id",
+					"type" : "string",
+					"description" : "styleguide-description-input-button-id"
+				},
+				"disabled" : {
+					"templateVar" : "disabled",
+					"type" : "boolean",
+					"description" : "styleguide-description-input-button-disabled"
+				},
+				"data" : {
+					"templateVar" : "data",
+					"type" : "object",
+					"objectVar" : {
+						"0" : "key",
+						"1" : "value"
+					},
+					"description" : "styleguide-description-input-button-data"
+				}
+			}
+		},
+		"button" : {
+			"description" : "styleguide-description-simple-button",
+			"params" : {
+				"type" : {
+					"templateVar" : "type",
+					"type" : "enum",
+					"value" : {
+						"0" : "submit",
+						"1" : "button",
+						"2" : "reset"
+					},
+					"description" : "styleguide-description-simple-button-type"
+				},
+				"name" : {
+					"templateVar" : "name",
+					"type" : "string",
+					"description" : "styleguide-description-simple-button-name"
+				},
+				"value" : {
+					"templateVar" : "value",
+					"type" : "string",
+					"description" : "styleguide-description-simple-button-value"
+				},
+				"size" : {
+					"templateVar" : "class",
+					"type" : "enum",
+					"value" : {
+						"0" : "small",
+						"1" : "normal",
+						"2" : "big"
+					},
+					"description" : "styleguide-description-simple-button-size"
+				},
+				"style" : {
+					"templateVar" : "class",
+					"type" : "enum",
+					"value" : {
+						"0" : "primary",
+						"1" : "secondary"
+					},
+					"description" : "styleguide-description-simple-button-style"
+				},
+				"id" : {
+					"templateVar" : "id",
+					"type" : "string",
+					"description" : "styleguide-description-simple-button-id"
+				},
+				"disabled" : {
+					"templateVar" : "disabled",
+					"type" : "boolean",
+					"description" : "styleguide-description-simple-button-disabled"
+				},
+				"data" : {
+					"templateVar" : "data",
+					"type" : "object",
+					"objectVar" : {
+						"0" : "key",
+						"1" : "value"
+					},
+					"description" : "styleguide-description-simple-button-data"
+				}
+			}
+		}
+	}
+}
