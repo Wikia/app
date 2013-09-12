@@ -20,6 +20,9 @@ $(function() {
 					});
 				});
 				$('#WikiaRail').find('.loading').remove().end().append(data.railLazyContent + data.js);
+				if ( window.Wikia && window.Wikia.initRailTracking ) {
+					Wikia.initRailTracking();
+				}
 				AIC2.init();
 				if (window.wgEnableLightboxExt) {
 					LightboxLoader.init();
