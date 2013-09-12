@@ -79,6 +79,97 @@ select {
 	}
 }
 
+//apis and methods headings
+.resource {
+	border-top: solid 1px $midGray-c3;
+	width: 960px;
+	h2 {
+		margin: 0;
+		a {
+			color: $blue-c1;
+			display: block;
+			font-size: 24px;
+			font-weight: bold;
+			height: 56px;
+			margin: 0;
+			padding: 15px 0 15px 15px;
+			position: relative;
+			text-decoration:none;
+		}
+	}
+	a .collapse-button {
+		background-color: $midGray-c3;
+		background-image: url(/extensions/wikia/ApiDocs/files/collapse2.png); /* base64 */
+		background-position: center;
+		background-repeat: no-repeat;
+		border: solid 1px $midGray-c3;
+		border-top: none;
+		color: $darkGray-c5;
+		display: none;
+		float: right;
+		font-size: 12px;
+		font-weight: bold;
+		height: 27px;
+		padding-top: 59px;
+		position: absolute;
+		right: 0;
+		text-align: center;
+		top: 0;
+		width: 85px;
+	}
+	a .expand-button {
+		background-color: #ffffff;
+		background-image: url(/extensions/wikia/ApiDocs/files/collapse2.png); /* base64 */
+		background-position: center;
+		background-repeat: no-repeat;
+		border: solid 1px $midGray-c3;
+		border-top: none;
+		color: $gray-c4;
+		display: block;
+		float: right;
+		font-size: 12px;
+		font-weight: bold;
+		height: 27px;
+		padding-top: 59px;
+		position: absolute;
+		right: 0;
+		text-align: center;
+		top: 0;
+		width: 85px;
+	}
+	.description {
+		color: $gray-c4;
+		display: block;
+		font-size: 14px;
+		font-weight: normal;
+		padding-top: 10px;
+	}
+}
+.resource:last-child {
+	border-bottom: solid 1px $midGray-c3;
+}
+//after toggle,
+//.resource
+.active {
+	h2 {
+		a {
+			color: #ffffff;
+			background-color: $blue-c1;
+			border-bottom: solid 1px $midGray-c3;
+			margin-bottom: 20px;
+		}
+		.collapse-button {
+			display: block;
+		}
+		.expand-button {
+			display: none;
+		}
+	}
+	.description {
+		color: #ffffff;
+	}
+}
+
 //response content type box
 .content-type {
 	padding-left: 90px;
@@ -124,6 +215,7 @@ select {
 	}
 }
 
+//try it out and hide button
 .sandbox_header {
 	input {
 		@include buttons;
