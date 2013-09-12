@@ -2,56 +2,81 @@ $endpointHeight: 51px;
 $endpointSummaryLineHeight: 17.5px;
 $endpointUrlLineHeight: 14px;
 
+.endpoints {
+	clear: both;
+	padding-top: 20px; /* use padding to make jquery slide smooth. */
+}
+
 .endpoint {
 	margin: 10px 0;
 
 	.heading {
-		border: 1px solid $lightGray-c2;
+		border: 1px solid $midGray-c3;
 		clear: both;
 		display: block;
 		height: $endpointHeight;
+	}
 
+	.http_method {
+		@include transition( all, 0.2s, ease-in-out, 0);
+		background-color: $midGray-c3;
+		color: $gray-c4;
+		display: block;
+		float: left;
+		height: $endpointHeight;
+		line-height: $endpointHeight;
+		margin-right: 20px;
+		text-align: center;
+		width: 90px;
+		font-size: 12px;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+
+	.summary {
+		color: $darkGray-c5;
+		display: block;
+		font-size: $endpointSummaryLineHeight;
+		line-height: $endpointSummaryLineHeight;
+		padding-top: 10px;
+		padding-bottom: 3px;
+	}
+
+	.path {
+		color: $gray-c4;
+		font-size: $endpointUrlLineHeight;
+		line-height: $endpointUrlLineHeight;
+
+		b {
+			color: $darkGray-c5;
+			font-weight: bold;
+			line-height: $endpointUrlLineHeight;
+		}
+	}
+
+	.collapse-expand-button {
+		@include transition( background-color, 0.2s, ease-in-out, 0);
+		background-color: white;
+		background-position: center;
+		background-repeat: no-repeat;
+		border-left: 1px solid $midGray-c3;
+		display: block;
+		float:right;
+		height: $endpointHeight;
+		width: $endpointHeight;
+		padding: 0;
+	}
+
+
+	&.active {
 		.http_method {
 			background-color: $blue-c1;
-			display: block;
-			float: left;
-			height: $endpointHeight;
-			line-height: $endpointHeight;
-			margin-right: 20px;
-			text-align: center;
-			width: 90px;
 			color: white;
-			font-size: 12px;
-			font-weight: bold;
-			text-transform: uppercase;
 		}
 
-		.summary {
-			color: $darkGray-c5;
-			font-size: $endpointSummaryLineHeight;
-			line-height: $endpointSummaryLineHeight + 20px;
+		.collapse-expand-button {
 			display: block;
-		}
-
-		.path {
-			color: $gray-c4;
-			font-size: $endpointUrlLineHeight;
-			line-height: $endpointUrlLineHeight;
-
-			b {
-				color: $darkGray-c5;
-				font-weight: bold;
-				line-height: $endpointUrlLineHeight;
-			}
-		}
-
-		.collapse-button {
-			background-color: $lightGray-c2;
-			border-left: 1px solid $lightGray-c2;
-			display: block;
-			float:right;
-			height: $endpointHeight;
-			width: $endpointHeight;
+			background-color: $midGray-c3;
 		}
 	}
 

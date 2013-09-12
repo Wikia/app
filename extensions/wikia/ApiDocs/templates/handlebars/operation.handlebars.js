@@ -65,7 +65,7 @@ function program11(depth0,data) {
     + escapeExpression(((stack1 = depth0.number),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "' class=\"heading toggleOperation\">\n                <h3>\n                  <span class='http_method'>\n                    "
     + escapeExpression(((stack1 = depth0.httpMethod),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\n                  </span>\n                  <span class=\"collapse-button\"></span>\n                  <span class=\"summary\">\n                      ";
+    + "\n                  </span>\n                  <span class=\"collapse-expand-button\"></span>\n                  <span class=\"summary\">\n                      ";
   stack2 = ((stack1 = depth0.summary),typeof stack1 === functionType ? stack1.apply(depth0) : stack1);
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\n                  </span>\n                  <span class='path'>\n                      <b>URL:</b> ";

@@ -57,6 +57,8 @@ class ApiDocsService {
 	}
 
 	function getDoc( $name ) {
-		return $this->swagger->getResource( $name, false, false );
+		return \WikiaDataAccess::cache( wfMemcKey( 'ApiDocsService', $name ), 60, function() use($name) {
+			return $this->swagger->getResource( $name, false, false );
+		} );
 	}
 }

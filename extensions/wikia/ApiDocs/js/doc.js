@@ -174,10 +174,12 @@ var Docs = {
 	},
 
 	expandOperation: function(elem) {
+		elem.parents('.endpoint').addClass('active');
 		elem.slideDown();
 	},
 
 	collapseOperation: function(elem) {
+		elem.parents('.endpoint').removeClass('active');
 		elem.slideUp();
 	}
 
