@@ -99,7 +99,7 @@ MiniEditor.Wall.NewMessageForm = $.createClass(Wall.settings.classBindings.newMe
 		var title = this.messageTitle.val();
 
 		if (title.length > 0) {
-			this.messageTitle.val(title.trim());
+			this.messageTitle.val($.trim(title));
 		}
 	}
 });
