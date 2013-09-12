@@ -1,0 +1,45 @@
+$endpointHeight: 51px;
+
+.endpoint {
+	margin: 10px 0;
+
+	.heading {
+		border: 1px solid $lightGray-c2;
+		clear: both;
+		height: $endpointHeight;
+
+		.http_method {
+			background-color: $blue-c1;
+			display: block;
+			float: left;
+			height: $endpointHeight;
+			line-height: 53px;
+			margin-right: 20px;
+			text-align: center;
+			width: 90px;
+			> a {
+				color: white;
+				font-size: 12px;
+				font-weight: bold;
+				text-transform: uppercase;
+			}
+		}
+
+		.path {
+			> a {
+				color: $darkGray-c5;
+				font-size: 17.5px;
+				line-height: 27.5px;
+			}
+		}
+
+		.collapse-button {
+			background-color: $lightGray-c2;
+			border-left: 1px solid $lightGray-c2;
+			display: block;
+			float:right;
+			height: $endpointHeight;
+			width: $endpointHeight;
+		}
+	}
+}

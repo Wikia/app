@@ -75,7 +75,7 @@ function program11(depth0,data) {
     + escapeExpression(((stack1 = depth0.number),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "' class=\"toggleOperation\">"
     + escapeExpression(((stack1 = depth0.path),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</a>\n                  </span>\n                </h3>\n                <ul class='options'>\n                    <li>\n                    <a href='#!/"
+    + "</a>\n                  </span>\n                  <span class=\"collapse-button\"></span>\n                </h3>\n                <ul class='options'>\n                    <li>\n                    <a href='#!/"
     + escapeExpression(((stack1 = depth0.resourceName),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "/"
     + escapeExpression(((stack1 = depth0.nickname),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
