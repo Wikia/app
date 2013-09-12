@@ -25,6 +25,8 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 	}
 
 	function testUploadAndRemove() {
+		global $wgDBname;
+
 		// upload an image
 		$res = ImagesService::uploadImageFromUrl(self::URL, (object) [
 			'name' => $this->fileName,
@@ -35,10 +37,18 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$this->assertTrue($res['status'], 'Upload should end up successfully');
 		$this->assertInternalType('integer', $res['page_id'], 'Page ID should be returned');
 
-		// verify that it's accessible via HTTP
 		$info = ImagesService::getImageOriginalUrl($this->app->wg->CityId, $res['page_id']);
-
 		$this->assertInternalType('string', $info['src'], 'Image URL should be returned');
+
+		// check the path - should look like /firefly/images/9/93/Test-1378975563.jpg
+		$hash = md5($this->fileName);
+		$this->assertStringEndsWith(
+			sprintf('%s/images/%s/%s/%s', $wgDBname, $hash{0}, $hash{0}.$hash{1}, $this->fileName),
+			$info['src'],
+			'Path should contain a valid hash'
+		);
+
+		// verify that it's accessible via HTTP
 		$this->assertTrue(Http::get($info['src']) !== false, 'Uploaded image should return HTTP 200');
 
 		// now, remove it...
