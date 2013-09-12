@@ -2711,15 +2711,8 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$mockController
 			->expects( $this->at( $controllerIncr++ ) )
 			->method ( 'setVal' )
-			->with   ( 'mediaData', $mockMediaData )
-		;
-		/*
-		$mockController
-			->expects( $this->at( $controllerIncr++ ) )
-			->method ( 'setVal' )
 			->with   ( 'topWikiArticles', $this->any() )
 		;
-		*/
 		
 		$reflWg = new ReflectionProperty( 'WikiaSearchController', 'wg' );
 		$reflWg->setAccessible( true );
