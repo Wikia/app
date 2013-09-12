@@ -115,7 +115,10 @@ class VideoPageToolProgram extends WikiaModel {
 		if ( is_array( $data ) ) {
 			$program->loadFromCache( $data );
 		} else {
-			$program->loadFromDatabase();
+			$result = $program->loadFromDatabase();
+			if ( $result ) {
+				$program->saveToCache();
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -138,6 +141,8 @@ class VideoPageToolProgram extends WikiaModel {
 	 * Load data from database
 	 */
 	protected function loadFromDatabase() {
+		wfProfileIn( __METHOD__ );
+
 		$db = wfGetDB( DB_SLAVE );
 
 		$row = $db->selectRow(
@@ -157,8 +162,13 @@ class VideoPageToolProgram extends WikiaModel {
 
 		if ( $row ) {
 			$this->loadFromRow( $row );
-			$this->saveToCache();
+			wfProfileOut( __METHOD__ );
+			return true;
 		}
+
+		wfProfileOut( __METHOD__ );
+
+		return false;
 	}
 
 	/**
@@ -441,13 +451,15 @@ class VideoPageToolProgram extends WikiaModel {
 
 	/**
 	 * Format form data
+	 * @param string $section
+	 * @param integer $requiredRows
 	 * @param array $formValues
 	 * @param string $errMsg
 	 * @return array $data
 	 */
-	public function formatFormData( $section, $formValues, &$errMsg ) {
+	public function formatFormData( $section, $requiredRows, $formValues, &$errMsg ) {
 		$className = VideoPageToolAsset::getClassNameFromSection( $section );
-		$data = $className::formatFormData( $formValues, $errMsg );
+		$data = $className::formatFormData( $requiredRows, $formValues, $errMsg );
 
 		return $data;
 	}

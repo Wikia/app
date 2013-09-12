@@ -134,7 +134,7 @@ class VideoPageToolAsset extends WikiaModel {
 	 */
 	public function setData( $value ) {
 		foreach ( STATIC::$dataFields as $field ) {
-			if ( property_exists( $this, $field ) ) {
+			if ( property_exists( $this, $field ) && array_key_exists( $field, $value ) ) {
 				$this->$field = $value[$field];
 			}
 		}
@@ -172,13 +172,20 @@ class VideoPageToolAsset extends WikiaModel {
 	 * @param integer $programId
 	 * @param string $section
 	 * @param integer $order
-	 * @return Object $asset
+	 * @param array $data
+	 * @return Object|null $asset
 	 */
 	public static function newAsset( $programId, $section, $order ) {
 		wfProfileIn( __METHOD__ );
 
 		$className = self::getClassNameFromSection( $section );
 		$asset = new $className( $programId, $section, $order );
+
+		if ( empty( $programId ) || empty( $section ) || empty( $order ) ) {
+			wfProfileOut( __METHOD__ );
+			return null;
+		}
+
 		$asset->setProgramId( $programId );
 		$asset->setSection( $section );
 		$asset->setOrder( $order );
@@ -188,7 +195,10 @@ class VideoPageToolAsset extends WikiaModel {
 		if ( is_array( $data ) ) {
 			$asset->loadFromCache( $data );
 		} else {
-			$asset->loadFromDatabase();
+			$result = $asset->loadFromDatabase();
+			if ( $result ) {
+				$asset->saveToCache();
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -211,8 +221,11 @@ class VideoPageToolAsset extends WikiaModel {
 
 	/**
 	 * Load data from database
+	 * @return boolean
 	 */
 	protected function loadFromDatabase() {
+		wfProfileIn( __METHOD__ );
+
 		$db = wfGetDB( DB_SLAVE );
 
 		$row = $db->selectRow(
@@ -228,8 +241,13 @@ class VideoPageToolAsset extends WikiaModel {
 
 		if ( $row ) {
 			$this->loadFromRow( $row );
-			$this->saveToCache();
+			wfProfileOut( __METHOD__ );
+			return true;
 		}
+
+		wfProfileOut( __METHOD__ );
+
+		return false;
 	}
 
 	/**
@@ -240,7 +258,7 @@ class VideoPageToolAsset extends WikiaModel {
 		foreach ( static::$fields as $fieldName => $varName ) {
 			$this->$varName = $row->$fieldName;
 		}
-		$this->unserializeData( $this->data );
+		$this->setSerializedData( $this->data );
 	}
 
 	/**
@@ -345,6 +363,23 @@ class VideoPageToolAsset extends WikiaModel {
 	public function save() {
 		wfProfileIn( __METHOD__ );
 
+		$status = $this->saveToDatabase();
+		if ( $status->isGood() ) {
+			$this->saveToCache();
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $status;
+	}
+
+	/**
+	 * Save asset to database
+	 * @return Status
+	 */
+	public function saveToDatabase() {
+		wfProfileIn( __METHOD__ );
+
 		if ( empty( $this->programId ) || empty( $this->section ) || empty( $this->order ) ) {
 			wfProfileOut( __METHOD__ );
 			return Status::newFatal( wfMessage( 'videopagetool-error-missing-parameter' )->plain() );
@@ -383,10 +418,10 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
-	 * Unserialize data
+	 * Unserialize and set to data
 	 * @param type $serializedData
 	 */
-	protected function unserializeData( $serializedData ) {
+	protected function setSerializedData( $serializedData ) {
 		$data = json_decode( $serializedData, true );
 		$this->setData( $data );
 	}
@@ -517,19 +552,20 @@ class VideoPageToolAsset extends WikiaModel {
 
 	/**
 	 * Format form data
+	 * @param integer $requiredRows
 	 * @param array $formValues
 	 * @param string $errMsg
 	 * @return array $data
 	 */
-	public static function formatFormData( $formValues, &$errMsg ) {
+	public static function formatFormData( $requiredRows, $formValues, &$errMsg ) {
 		$data = array();
-		for ( $i = 0; $i < STATIC::$REQUIRED_ROWS; $i++ ) {
+		for ( $i = 0; $i < $requiredRows; $i++ ) {
 			foreach ( STATIC::$dataFields as $formFieldName => $varName ) {
-				if ( empty( $formValues[$formFieldName][$i] ) ) {
-					$errMsg = wfMessage( 'videohandler-error-missing-parameter', $formFieldName )->plain();
-					return false;
-				}
+				// validate form
+				$helper = new VideoPageToolHelper();
+				$helper->validateFormField( $formFieldName, $formValues[$formFieldName][$i], $errMsg );
 
+				// format data
 				$order = $i + 1;	// because input data start from 0
 				$data[$order][$varName] = $formValues[$formFieldName][$i];
 			}

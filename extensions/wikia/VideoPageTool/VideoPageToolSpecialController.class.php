@@ -72,7 +72,6 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string msg - result message
 	 */
 	public function edit() {
-
 		JSMessages::enqueuePackage( 'VideoPageTool', JSMessages::EXTERNAL );
 
 		$date = $this->getVal( 'date', strtotime( date( 'Y-M-d' ) ) );
@@ -106,7 +105,8 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		if ( $this->request->wasPosted() ) {
 			$formValues = $this->request->getParams();
 			$errMsg = '';
-			$data = $program->formatFormData( $section, $formValues, $errMsg );
+			$requiredRows = VideoPageToolHelper::$requiredRows[$section];
+			$data = $program->formatFormData( $section, $requiredRows, $formValues, $errMsg );
 			if ( empty( $errMsg ) ) {
 				$status = $program->saveAssetsBySection( $section, $data );
 				if ( $status->isGood() ) {
@@ -118,6 +118,14 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 					$msg = $status->getMessage();
 				}
 			} else {
+				// update original asset data
+				foreach ( $data as $order => $row ) {
+					foreach ( $row as $name => $value ) {
+						if ( !empty( $videos[$order][$name] ) ) {
+							$videos[$order][$name] = $value;
+						}
+					}
+				}
 				$result = 'error';
 				$msg = $errMsg;
 			}

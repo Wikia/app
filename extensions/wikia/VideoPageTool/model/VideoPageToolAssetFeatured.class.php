@@ -9,8 +9,6 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 	protected $displayTitle;
 	protected $description;
 
-	public static $REQUIRED_ROWS = 5;
-
 	// required data field -- array( FormFieldName => varName )
 	protected static $dataFields = array(
 		'videoKey'     => 'title',
