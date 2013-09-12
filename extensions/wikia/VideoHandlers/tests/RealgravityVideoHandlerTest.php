@@ -16,6 +16,7 @@
 		/**
 		 * compare embed code from API and VideoHandler
 		 * please contact video team if test is failed
+		 * @group Broken
 		 */
 		public function testEmbedCode() {
 			// test
