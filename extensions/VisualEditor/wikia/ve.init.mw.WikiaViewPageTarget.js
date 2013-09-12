@@ -52,13 +52,13 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 		],
 		'exclude': [
 			'structure/indent',
-			'structure/outdent'		
+			'structure/outdent'
 		]
 	},
 	{
 		'include': [ 'insertMedia' ]
 	},
-	{ 
+	{
 		'include': [ 'object' ],
 		'exclude': [ 'object/mediaInsert' ]
 	}
