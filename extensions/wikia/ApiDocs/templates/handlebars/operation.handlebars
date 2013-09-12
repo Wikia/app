@@ -1,22 +1,20 @@
 
     <ul class='operations' >
       <li class='{{httpMethod}} operation' id='{{resourceName}}_{{nickname}}_{{httpMethod}}_{{number}}'>
-            <div class='heading'>
+            <a href='#!/{{resourceName}}/{{nickname}}_{{httpMethod}}_{{number}}' class="heading toggleOperation">
                 <h3>
                   <span class='http_method'>
-                    <a href='#!/{{resourceName}}/{{nickname}}_{{httpMethod}}_{{number}}' class="toggleOperation">{{httpMethod}}</a>
-                  </span>
-                  <span class='path'>
-                    <a href='#!/{{resourceName}}/{{nickname}}_{{httpMethod}}_{{number}}' class="toggleOperation">{{path}}</a>
+                    {{httpMethod}}
                   </span>
                   <span class="collapse-button"></span>
+                  <span class="summary">
+                      {{{summary}}}
+                  </span>
+                  <span class='path'>
+                      <b>URL:</b> {{{path}}}
+                  </span>
                 </h3>
-                <ul class='options'>
-                    <li>
-                    <a href='#!/{{resourceName}}/{{nickname}}_{{httpMethod}}_{{number}}' class="toggleOperation">{{{summary}}}</a>
-                    </li>
-                </ul>
-            </div>
+            </a>
             <div class='content' id='{{resourceName}}_{{nickname}}_{{httpMethod}}_{{number}}_content' style='display:none'>
                 {{#if notes}}
                 <h4>Implementation Notes</h4>

@@ -55,7 +55,7 @@ function program11(depth0,data) {
     + escapeExpression(((stack1 = depth0.httpMethod),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "_"
     + escapeExpression(((stack1 = depth0.number),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "'>\n            <div class='heading'>\n                <h3>\n                  <span class='http_method'>\n                    <a href='#!/"
+    + "'>\n            <a href='#!/"
     + escapeExpression(((stack1 = depth0.resourceName),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "/"
     + escapeExpression(((stack1 = depth0.nickname),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -63,30 +63,15 @@ function program11(depth0,data) {
     + escapeExpression(((stack1 = depth0.httpMethod),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "_"
     + escapeExpression(((stack1 = depth0.number),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "' class=\"toggleOperation\">"
+    + "' class=\"heading toggleOperation\">\n                <h3>\n                  <span class='http_method'>\n                    "
     + escapeExpression(((stack1 = depth0.httpMethod),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</a>\n                  </span>\n                  <span class='path'>\n                    <a href='#!/"
-    + escapeExpression(((stack1 = depth0.resourceName),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "/"
-    + escapeExpression(((stack1 = depth0.nickname),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "_"
-    + escapeExpression(((stack1 = depth0.httpMethod),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "_"
-    + escapeExpression(((stack1 = depth0.number),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "' class=\"toggleOperation\">"
-    + escapeExpression(((stack1 = depth0.path),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</a>\n                  </span>\n                  <span class=\"collapse-button\"></span>\n                </h3>\n                <ul class='options'>\n                    <li>\n                    <a href='#!/"
-    + escapeExpression(((stack1 = depth0.resourceName),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "/"
-    + escapeExpression(((stack1 = depth0.nickname),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "_"
-    + escapeExpression(((stack1 = depth0.httpMethod),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "_"
-    + escapeExpression(((stack1 = depth0.number),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "' class=\"toggleOperation\">";
+    + "\n                  </span>\n                  <span class=\"collapse-button\"></span>\n                  <span class=\"summary\">\n                      ";
   stack2 = ((stack1 = depth0.summary),typeof stack1 === functionType ? stack1.apply(depth0) : stack1);
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "</a>\n                    </li>\n                </ul>\n            </div>\n            <div class='content' id='"
+  buffer += "\n                  </span>\n                  <span class='path'>\n                      <b>URL:</b> ";
+  stack2 = ((stack1 = depth0.path),typeof stack1 === functionType ? stack1.apply(depth0) : stack1);
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\n                  </span>\n                </h3>\n            </a>\n            <div class='content' id='"
     + escapeExpression(((stack1 = depth0.resourceName),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "_"
     + escapeExpression(((stack1 = depth0.nickname),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
