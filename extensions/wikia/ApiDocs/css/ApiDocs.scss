@@ -65,6 +65,10 @@ select {
 	width: 155px;
 }
 
+.content {
+	margin-left: 90px;
+}
+
 //main wrapper for all apis and methods
 .swagger-ui-wrap {
 	max-width: 960px;
@@ -156,23 +160,21 @@ select {
 			color: #ffffff;
 			background-color: $blue-c1;
 			border-bottom: solid 1px $midGray-c3;
-			margin-bottom: 20px;
 		}
 		.collapse-button {
 			display: block;
+		}
+		.description {
+			color: #ffffff;
 		}
 		.expand-button {
 			display: none;
 		}
 	}
-	.description {
-		color: #ffffff;
-	}
 }
 
 //response content type box
 .content-type {
-	padding-left: 90px;
 	label {
 		@include boxHeader;
 		display: block;
@@ -185,7 +187,6 @@ select {
 
 //parameters and errors box
 .sandbox {
-	margin-left: 90px;
 	width: 776px;
 	table {
 		border-spacing: 0px;
