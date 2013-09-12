@@ -158,8 +158,7 @@ HoverMenu.prototype.showNav = function(parent) {
 
 	if (nav.exists()) {
 		nav.addClass("show");
-
-		nav.trigger('hover-menu-shown');
+		nav.trigger('hovermenu-shown');
 
 		// spotlights displaying
 		if (this.selector == '#GlobalNavigation') {
@@ -181,7 +180,7 @@ HoverMenu.prototype.hideNav = function() {
 	nav.removeClass("show");
 
 	if (nav.exists()) {
-		nav.trigger('hover-menu-hidden');
+		nav.trigger('hovermenu-hidden');
 	}
 };
 

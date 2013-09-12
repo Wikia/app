@@ -43,17 +43,17 @@ $(function () {
 	function hoverMenuTrackingHandler(ev) {
 		var element = $(ev.target);
 
-		if (element.hasClass('GlobalNavigation') || element.parents('.GlobalNavigation').exists()) { // hubs menu
+		if (element.parents('.GlobalNavigation').exists()) { // hubs menu
 			track({
 				action: Wikia.Tracker.ACTIONS.HOVER,
 				label: 'hubs-menu-open'
 			});
-		} else if (element.hasClass('.AccountNavigation') || element.parents('.AccountNavigation').exists()) { // user menu
+		} else if (element.parents('.AccountNavigation').exists()) { // user menu
 			track({
 				action: Wikia.Tracker.ACTIONS.HOVER,
 				label: 'user-menu-open'
 			});
-		} else if (element.hasClass('.WallNotifications') || element.parents('.WallNotifications').exists()) { // notifications
+		} else if (element.parents('.WallNotifications').exists()) { // notifications
 			track({
 				action: Wikia.Tracker.ACTIONS.HOVER,
 				label: 'notifications-menu-open'
@@ -68,7 +68,7 @@ $(function () {
 	if (isSampledPV()) {
 		Wikia.log( 'Global nav tracking enabled', 'info', 'GlobalNav' );
 		$('#WikiaHeader').on('click', clickTrackingHandler);
-		$('#WikiaHeader').on('hover-menu-shown', hoverMenuTrackingHandler);
+		$('#WikiaHeader').on('hovermenu-shown', hoverMenuTrackingHandler);
 	} else {
 		Wikia.log( 'Global nav tracking disabled', 'info', 'GlobalNav' );
 	}
