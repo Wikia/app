@@ -1,5 +1,20 @@
+//colors variables
+$blue-c1: #0a5fa3;
+$lightGray-c2: #f9f9f9;
+$midGray-c3: #e6e6e6;
+$gray-c4: #676767;
+$darkGray-c5: #333333;
+
 body {
+	color: $gray-c4;
 	font-family: Helvetica-Light, Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	font-weight: light;
+}
+
+//hack for strongs, and b displaying as normal, try changing template
+strong, b {
+	font-weight: inherit;
 }
 
 //main wrapper for all apis and methods
@@ -8,29 +23,53 @@ body {
 	margin: auto;
 
 	h4 {
-		color: royalblue;//change for variable
+		color: $blue-c1;
+		font-size: 17.5px;
+		font-weight: bold;
 	}
 
 	ul {
 		list-style-type: none;
 	}
+}
 
-	.sandbox {
-		padding-left: 40px;
-		table {
-			border-spacing: 0px;
-			tbody tr:nth-child(odd) {
-				background-color: lightgray;
-			}
-			td, tr {
-				font-weight: normal;
-				padding: 5px;
-				text-align: center;
-			}
-			thead th:not(:first-child):not(:last-child), tbody td:not(:first-child):not(:last-child) {
-				border-right: solid 1px gray;
-			}
-		}
+.content-type {
+	padding-left: 40px;
+	label {
+		color: $blue-c1;
+		display: block;
 	}
 }
 
+.sandbox {
+	margin-left: 90px;
+	width: 776px;
+	table {
+		border-spacing: 0px;
+		input {
+			width: 155px;
+		}
+		tbody tr:nth-child(odd) {
+			background-color: $lightGray-c2;
+		}
+		td {
+			padding: 10px;
+		}
+		td:nth-child(4), td:nth-child(5) {
+			text-align: center;
+		}
+		th {
+			border-bottom: solid 1px $midGray-c3;
+			color: $darkGray-c5;
+			font-size: 14px;
+			font-weight: bold;
+			text-align: center;
+		}
+		thead th:not(:first-child):not(:last-child), tbody td:not(:first-child):not(:last-child) {
+			border-right: solid 1px $midGray-c3;
+		}
+		tr {
+			height: 70px;
+		}
+	}
+}
