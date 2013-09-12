@@ -2704,14 +2704,15 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->will   ( $this->returnValue( $mockMediaResponse ) )
 		;
 		$mockMediaResponse
-			->expects( /* $this->at( $controllerIncr++ ) */ $this->once() )
+			->expects( $this->once() )
 			->method ( 'getData' )
 			->will   ( $this->returnValue( $mockMediaData ) )
 		;
+		$this->mockStaticMethod('WikiaDataAccess', 'cache', 'foo');
 		$mockController
 			->expects( $this->at( $controllerIncr++ ) )
 			->method ( 'setVal' )
-			->with   ( 'topWikiArticles', $this->any() )
+			->with   ( 'topWikiArticles', 'foo' )
 		;
 		
 		$reflWg = new ReflectionProperty( 'WikiaSearchController', 'wg' );
