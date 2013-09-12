@@ -284,9 +284,11 @@ class VideoPageToolAsset extends WikiaModel {
 			__METHOD__
 		);
 
+		$affected = $db->affectedRows();
+
 		wfProfileOut( __METHOD__ );
 
-		return Status::newGood();
+		return Status::newGood( $affected );
 	}
 
 	/**
@@ -326,13 +328,14 @@ class VideoPageToolAsset extends WikiaModel {
 			'IGNORE'
 		);
 
-		if ( $db->affectedRows() > 0 ) {
+		$affected = $db->affectedRows();
+		if ( $affected > 0 ) {
 			$this->setAssetId( $db->insertId() );
 		}
 
 		wfProfileOut( __METHOD__ );
 
-		return Status::newGood();
+		return Status::newGood( $affected );
 	}
 
 	/**
@@ -351,6 +354,9 @@ class VideoPageToolAsset extends WikiaModel {
 			$status = $this->updateToDatabase();
 		} else {
 			$status = $this->addToDatabase();
+			if ( $status->isGood() && $status->value == 0 ) {
+				$status = $this->updateToDatabase();
+			}
 		}
 
 		if ( $status->isGood() ) {

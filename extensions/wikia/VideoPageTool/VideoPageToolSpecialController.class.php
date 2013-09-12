@@ -79,6 +79,9 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		$language = $this->getVal( 'language', VideoPageToolHelper::DEFAULT_LANGUAGE );
 		$section = $this->getVal( 'section', VideoPageToolHelper::DEFAULT_SECTION );
 
+		// for save message
+		$success = $this->getVal( 'success', '' );
+
 		$helper = new VideoPageToolHelper();
 
 		// validate section - set to DEFAULT_SECTION if not exists
@@ -86,6 +89,9 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		if ( !array_key_exists( $section, $sections ) ) {
 			$section = VideoPageToolHelper::DEFAULT_SECTION;
 		}
+
+		// get left menu items
+		$leftMenuItems = $helper->getLeftMenuItems( $section, $sections, $language, $date );
 
 		$program = VideoPageToolProgram::newProgram( $language, $date );
 		$assets = $program->getAssetsBySection( $section );
@@ -104,19 +110,31 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 			if ( empty( $errMsg ) ) {
 				$status = $program->saveAssetsBySection( $section, $data );
 				if ( $status->isGood() ) {
-					$this->result = 'ok';
-					$this->msg = '';
+					$nextUrl = $helper->getNextMenuItemUrl( $leftMenuItems ).'&success=1';
+					$this->getContext()->getOutput()->redirect( $nextUrl );
+					return true;
 				} else {
-					$this->error = 'error';
-					$this->msg = $status->getMessage();
+					$result = 'error';
+					$msg = $status->getMessage();
 				}
 			} else {
-				$this->error = 'error';
-				$this->msg = $errMsg;
+				$result = 'error';
+				$msg = $errMsg;
+			}
+		} else {
+			if ( empty( $success ) ) {
+				$result = '';
+				$msg = '';
+			} else {
+				$result = 'ok';
+				$msg = wfMessage( 'videopagetool-success-save' )->plain();
 			}
 		}
 
-		$this->leftMenuItems = $helper->getLeftMenuItems( $section, $language, $date );
+		$this->result = $result;
+		$this->msg = $msg;
+
+		$this->leftMenuItems = $leftMenuItems;
 		$this->moduleView = $this->app->renderView( 'VideoPageToolSpecial', $section, array( 'videos' => $videos, 'date' => $date, 'language' => $language ) );
 
 		$this->section = $section;

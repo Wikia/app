@@ -41,12 +41,12 @@ class VideoPageToolHelper extends WikiaModel {
 	/**
 	 * get left menu items
 	 * @param string $selected [featured/trending/fan]
+	 * @param array $sections
 	 * @param string $language
 	 * @param string $date [timestamp]
 	 * @return array $leftMenuItems
 	 */
-	public function getLeftMenuItems( $selected, $language, $date ) {
-		$sections = $this->getSections();
+	public function getLeftMenuItems( $selected, $sections, $language, $date ) {
 		$query = array(
 			'language' => $language,
 			'date' => $date,
@@ -64,6 +64,27 @@ class VideoPageToolHelper extends WikiaModel {
 		}
 
 		return $leftMenuItems;
+	}
+
+	/**
+	 * get url of the next munu item
+	 * @param array $leftMenuItems
+	 * @return string
+	 */
+	public function getNextMenuItemUrl( $leftMenuItems ) {
+		$next = 0;
+		foreach ( $leftMenuItems as $key => $item ) {
+			if ( $item['selected'] ) {
+				$next = $key;
+				break;
+			}
+		}
+
+		if ( $next < count( $leftMenuItems ) - 1 ) {
+			$next++;
+		}
+
+		return $leftMenuItems[$next]['href'];
 	}
 
 	/**

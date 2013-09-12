@@ -37,6 +37,7 @@ $messages['en'] = array(
 	'videopagetool-tooltip-published' => 'Published',
 	'videopagetool-tooltip-in-progress' => 'In Progress',
 	'videopagetool-header-dashboard' => 'Dashboard',
+	'videopagetool-success-save' => 'Your changes have been saved',
 );
 
 $messages['qqq'] = array(
@@ -69,4 +70,5 @@ $messages['qqq'] = array(
 	'videopagetool-tooltip-published' => 'Published',
 	'videopagetool-tooltip-in-progress' => 'In Progress',
 	'videopagetool-header-dashboard' => 'Title for dashboard page',
+	'videopagetool-success-save' => 'This text appears if your changes have been saved successfully',
 );

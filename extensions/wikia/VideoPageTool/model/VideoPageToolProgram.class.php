@@ -209,13 +209,14 @@ class VideoPageToolProgram extends WikiaModel {
 			'IGNORE'
 		);
 
-		if ( $db->affectedRows() > 0 ) {
+		$affected = $db->affectedRows();
+		if ( $affected > 0 ) {
 			$this->setProgramId( $db->insertId() );
 		}
 
 		wfProfileOut( __METHOD__ );
 
-		return Status::newGood();
+		return Status::newGood( $affected );
 	}
 
 	/**
@@ -242,9 +243,11 @@ class VideoPageToolProgram extends WikiaModel {
 			__METHOD__
 		);
 
+		$affected = $db->affectedRows();
+
 		wfProfileOut( __METHOD__ );
 
-		return Status::newGood();
+		return Status::newGood( $affected );
 	}
 
 	/**
