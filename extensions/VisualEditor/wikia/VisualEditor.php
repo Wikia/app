@@ -65,6 +65,7 @@ $wgVisualEditorPluginModules[] = 'ext.visualEditor.wikiaCore';
 /* Messages */
 
 JSMessages::registerPackage( 'VisualEditor', array(
+	'oasis-content-picture-added-by',
 	'videohandler-video-views',
 ));
 
