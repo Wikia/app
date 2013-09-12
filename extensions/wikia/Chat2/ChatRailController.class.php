@@ -10,6 +10,7 @@ class ChatRailController extends WikiaController {
 	 * Render placeholder. Content will be ajax-loaded for freshness
 	 */
 	public function executePlaceholder() {
+		$this->response->addAsset('extensions/wikia/Chat2/js/ChatEntryPoint.js');
 	}
 
 	public function executeAnonLoginSuccess() {

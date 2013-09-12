@@ -30,5 +30,4 @@ $wgAutoloadClasses[ 'TouchStormController' ] = $dir . 'TouchStormController.clas
 $wgExtensionMessagesFiles['TouchStorm'] = $dir . 'TouchStorm.i18n.php' ;
 
 // hooks
-$wgHooks['BeforePageDisplay'][] = 'TouchStormHooks::onBeforePageDisplay';
 $wgHooks['GetRailModuleList'][] = 'TouchStormHooks::onGetRailModuleList';
