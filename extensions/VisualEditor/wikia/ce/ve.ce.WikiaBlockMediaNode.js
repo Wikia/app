@@ -230,10 +230,6 @@ ve.ce.WikiaBlockMediaNode.prototype.update = function ( replaceRoot ) {
 		}
 	}
 
-	// Update references for mixins
-	this.$image = $image;
-	this.$resizable = $image;
-
 	// This should be called last so the listeners will get the same DOM
 	// structure they do on initialization.
 	if ( replaceRoot ) {
@@ -244,4 +240,9 @@ ve.ce.WikiaBlockMediaNode.prototype.update = function ( replaceRoot ) {
 	} else {
 		this.$ = $root;
 	}
+
+	// Update references for mixins
+	this.$image = $image;
+	this.$resizable = $image;
+	this.$focusable = this.$;
 };
