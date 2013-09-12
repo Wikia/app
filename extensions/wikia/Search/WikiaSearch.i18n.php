@@ -67,7 +67,7 @@ $messages['en'] = array(
 	'wikiamobile-wikiasearch2-prev' => 'Previous',
 	'wikiamobile-wikiasearch2-results-count-of' => ' of $1 {{PLURAL:$1|result|results}}',
 	
-	'wikiasearch2-video-results' => 'Videos for $1 from this wiki & Wikia video library'
+	'wikiasearch2-video-results' => 'Videos for \'$1\''
 );
 
 /** Message documentation (Message documentation)
