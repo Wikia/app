@@ -29,8 +29,3 @@
 	overflow: hidden;
 	width: 190px;
 }
-
-/* sloth JS lib won't fire the event if the heigh of element === 0 */
-#mw-data-after-content {
-	height: 1px;
-}
