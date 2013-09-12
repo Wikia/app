@@ -12,6 +12,7 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 
 	private $origUser;
 	private $fileName;
+	private $hash;
 
 	protected function setUp() {
 		global $wgUser;
@@ -21,12 +22,11 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$wgUser = User::newFromName('WikiaBot');
 
 		$this->fileName = str_replace('$1', time(), self::FILENAME);
+		$this->hash = md5($this->fileName);
 		wfDebug(__METHOD__ . " - {$this->fileName}\n");
 	}
 
 	function testUploadAndRemove() {
-		global $wgDBname;
-
 		// upload an image
 		$res = ImagesService::uploadImageFromUrl(self::URL, (object) [
 			'name' => $this->fileName,
@@ -40,16 +40,34 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$info = ImagesService::getImageOriginalUrl($this->app->wg->CityId, $res['page_id']);
 		$this->assertInternalType('string', $info['src'], 'Image URL should be returned');
 
-		// check the path - should look like /firefly/images/9/93/Test-1378975563.jpg
-		$hash = md5($this->fileName);
+		// check the path - /firefly/images/9/93/Test-1378975563.jpg
 		$this->assertStringEndsWith(
-			sprintf('%s/images/%s/%s/%s', $wgDBname, $hash{0}, $hash{0}.$hash{1}, $this->fileName),
+			sprintf('/%s/images/%s/%s/%s', $this->app->wg->DBname, $this->hash{0}, $this->hash{0}.$this->hash{1}, $this->fileName),
 			$info['src'],
 			'Path should contain a valid hash'
 		);
 
 		// verify that it's accessible via HTTP
 		$this->assertTrue(Http::get($info['src']) !== false, 'Uploaded image should return HTTP 200');
+
+		// check thumbnail
+		$thumb = ImagesService::getImageSrc($this->app->wg->CityId, $res['page_id'], 120);
+		$this->assertInternalType('string', $thumb['src'], 'Thumbnail URL should be returned');
+
+		// check the path - /firefly/images/thumb/5/53/Test-1378979336.jpg/120px-0%2C451%2C0%2C294-Test-1378979336.jpg
+		$this->assertContains(
+			sprintf('/%s/images/thumb/%s/%s/%s/120px-', $this->app->wg->DBname, $this->hash{0}, $this->hash{0}.$this->hash{1}, $this->fileName),
+			$thumb['src'],
+			'Path should contain a valid hash'
+		);
+
+		$this->assertStringEndsWith(
+			$this->fileName,
+			$thumb['src'],
+			'Path should end with file name'
+		);
+
+		$this->assertTrue(Http::get($thumb['src']) !== false, 'Thumbnail should return HTTP 200');
 
 		// now, remove it...
 		/* @var LocalFile $file */
