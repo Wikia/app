@@ -532,7 +532,7 @@ WikiaHomePageRemix.prototype = {
 		var nextCollectionId;
 		var out;
 
-		for (collectionId in this.shownCollections) {
+		for (collectionId in Object.keys(this.shownCollections)) {
 			if (!this.shownCollections[collectionId]) {
 				nextCollectionId = collectionId;
 				break;
