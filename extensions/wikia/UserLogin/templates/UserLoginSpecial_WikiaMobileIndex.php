@@ -23,7 +23,6 @@ if ( !empty( $result ) ) {
 	<div id=wkLgnMsg><?= $msg ;?></div>
 	<? endif;?>
 	<? if ( !$recoverPassword ) : ?>
-	<div id=fb-root></div>
 	<?= $app->renderView( 'UserLoginSpecial', 'Providers' ) ;?>
 	<? endif;?>
 	<form method=post action="<?= $formPostAction ?>">

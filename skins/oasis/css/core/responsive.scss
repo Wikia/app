@@ -252,7 +252,6 @@ body > .global-notification,
 }
 
 .WikiaMainContentContainer {
-	background-color: $color-page;
 	margin-right: $width-rail + $width-padding;
 	padding: 0 $width-padding;
 }
@@ -287,7 +286,7 @@ body > .global-notification,
 
 .WikiaRail {
 	overflow: hidden;
-	padding: 0 10px 0 0;
+	padding: 0 10px 10px 0;
 }
 
 // START - edit page fixes
@@ -470,8 +469,6 @@ body > .global-notification,
 
 @media screen and (max-width: $breakpoint-content) {
 	body {
-		background: $color-page;
-
 		&:after,
 		&:before {
 			display: none;

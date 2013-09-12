@@ -73,7 +73,7 @@ var AdminDashboard = {
 			AdminDashboard.ui.showSection(el.data('section'));
 		});
 
- 		$("a[data-tracking]").on("click", function(e) {
+		$("#AdminDashboard").on("click", "a[data-tracking]", function(e) {
 			var t = $(this);
 			AdminDashboard.track(Wikia.Tracker.ACTIONS.CLICK, t.data('tracking'), null, {href: t.attr('href')}, e);
  		});

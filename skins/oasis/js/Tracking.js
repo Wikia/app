@@ -392,14 +392,14 @@ jQuery(function($){
 			});
 		}
 		if ( $topModule.length ) {
-			$topModule.on('mousedown', '.top-wiki-article-thumbnail', function(e){
+			$topModule.on('mousedown', '.top-wiki-article-thumbnail a', function(e){
 				var el = $(e.currentTarget);
 				track({
 					browserEvent: e,
 					category: category,
 					label: 'top-module-thumb-' + el.data('pos')
 				});
-			}).on('mousedown', '.top-wiki-article-text', function(e) {
+			}).on('mousedown', '.top-wiki-article-text a', function(e) {
 				var el = $(e.currentTarget);
 				track({
 					browserEvent: e,

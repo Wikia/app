@@ -165,7 +165,7 @@ class CrossWikiCore extends AbstractWikiService
 				'cat_title',
 				'cat_hidden = 0',
 				__METHOD__,
-				[ 'ORDER BY' => 'cat_pages DESC' ]
+				[ 'LIMIT' => 50, 'ORDER BY' => 'cat_pages DESC' ]
 				);
 		while ( $result = $dbr->fetchObject( $query ) ) {
 			$categories[] = str_replace( '_', ' ', $result->cat_title );

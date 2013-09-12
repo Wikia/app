@@ -298,8 +298,8 @@ $wgAutoloadClasses['UserService']  =  $IP.'/includes/wikia/services/UserService.
 $wgAutoloadClasses['MustacheService'] = $IP . '/includes/wikia/services/MustacheService.class.php';
 $wgAutoloadClasses['RevisionService'] = $IP . '/includes/wikia/services/RevisionService.class.php';
 $wgAutoloadClasses['InfoboxesService'] = $IP . '/includes/wikia/services/InfoboxesService.class.php';
+$wgAutoloadClasses['RenderContentOnlyHelper'] = $IP . '/includes/wikia/RenderContentOnlyHelper.class.php';
 $wgAutoloadClasses['SolrDocumentService'] = $IP . '/includes/wikia/services/SolrDocumentService.class.php';
-
 $wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormBuilderService.class.php';
 
 // data models
@@ -355,6 +355,14 @@ $wgAutoloadClasses['LeftMenuController'] = $IP.'/skins/oasis/modules/LeftMenuCon
 
 // Sass-related classes
 $wgAutoloadClasses['SassService']              = $IP.'/includes/wikia/services/sass/SassService.class.php';
+
+// Wikia Style Guide
+$wgAutoloadClasses['Wikia\UI\Factory'] = $IP . '/includes/wikia/ui/Factory.class.php';
+$wgAutoloadClasses['Wikia\UI\Component'] = $IP . '/includes/wikia/ui/Component.class.php';
+$wgAutoloadClasses['Wikia\UI\TemplateException'] = $IP . '/includes/wikia/ui/exceptions/TemplateException.class.php';
+$wgAutoloadClasses['Wikia\UI\DataException'] = $IP . '/includes/wikia/ui/exceptions/DataException.class.php';
+$wgAutoloadClasses['Wikia\UI\UIFactoryApiController'] = $IP . '/includes/wikia/ui/UIFactoryApiController.class.php';
+
 
 // Register \Wikia\Sass namespace
 spl_autoload_register( function( $class ) {
@@ -552,7 +560,6 @@ $wgSkipSkins = array(
 		'lostbook',
 		'quartz',
 		'monaco_old',
-		'wikiaapp',
 		'smartphone',
 		'efmonaco',
 		'answers',
@@ -652,6 +659,7 @@ $wgExternalArchiveDB = 'archive';
 $wgStatsDB = 'stats';
 $wgKnowledgeDB = 'dataknowledge';
 $wgDatamartDB = 'statsdb_mart';
+$wgDWStatsDB = 'statsdb';
 $wgStatsDBEnabled = true;
 $wgExternalWikiaStatsDB = 'wikiastats';
 $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see wfSharedMemcKey
@@ -934,7 +942,7 @@ $wgSpecialEditCountExludedUsernames = array(
 /**
  * List of mobile skins
  */
-$wgMobileSkins = array( 'wikiaapp', 'wikiamobile' );
+$wgMobileSkins = array( 'wikiamobile' );
 
 /**
  * variable for disabling memcached deleted key replication
@@ -1149,6 +1157,19 @@ $wgEnableJavaScriptErrorLogging = false;
 $wgEnableAdEngineExt = true;
 
 /**
+ * @name $wgAdDriverUseNewGptZones
+ * Whether to use zones with slot name included (true) in GPT tags or not (false)
+ */
+$wgAdDriverUseNewGptZones = false;
+
+/**
+ * @name $wgAdDriverUseFullGpt
+ * Whether to use full GPT (true) or mixed GPT for roadbloack and legacy DART calls for other slots (false)
+ * If true, $wgAdDriverUseNewGptZones is meaningless (assumed true) as full GPT requires unique zone names
+ */
+$wgAdDriverUseFullGpt = false;
+
+/**
  * @name $wgAdVideoTargeting
  * Enables page-level video ad targeting
  */
@@ -1165,4 +1186,3 @@ $wgHooks['IsTrustedProxy'][] = 'TrustedProxyService::onIsTrustedProxy';
  * Enables verbose logging from chat
  */
 //$wgChatDebugEnabled = true;
-
