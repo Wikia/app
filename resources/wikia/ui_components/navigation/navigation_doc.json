@@ -1,0 +1,25 @@
+{
+	"name": "styleguide-name-navigation",
+	"description": "styleguide-description-navigation",
+	"types": {
+		"default": {
+			"params" : {
+				"elements" : {
+					"templateVar" : "elements",
+					"type" : "object",
+					"objectVar" : {
+						"name": "string",
+						"link": "string",
+						"class": "string"
+					},
+					"description" : "styleguide-description-navigation-elements"
+				},
+				"classes" : {
+					"templateVar" : "classes",
+					"type" : "array",
+					"description" : "styleguide-description-navigation-classes"
+				}
+			}
+		}
+	}
+}

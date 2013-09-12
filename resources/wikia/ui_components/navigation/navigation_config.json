@@ -1,0 +1,12 @@
+{
+	"templateVars": {
+		"default": {
+			"required": [ "elements" ],
+			"optional": [ "classes" ]
+		}
+	},
+	"dependencies": {
+		"js": [],
+		"css": [ "resources/wikia/ui_components/navigation/css/navigation_default.scss" ]
+	}
+}
