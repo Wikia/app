@@ -1,7 +1,7 @@
 <section class="ChatModule <?=($isEntryPoint)?'ChatEntryPoint':'module'?> ChatModuleUninitialized">
 	<div class="chat-contents">
 		<h1 class="chat-headline">
-			<span class="chat-live"> </span>
+			<span class="chat-live" data-msg-id="chat-live2"> </span>
 			<span class="chat-total"> </span>
 		</h1>
 		<p class="chat-name"> </p>
@@ -36,7 +36,7 @@
 										<li class="contribs">
 											<a href="">
 												<span class="icon">&nbsp;</span>
-												<span class="label"> </span>
+												<span class="label" data-msg-id="chat-user-menu-contribs"> </span>
 											</a>
 										</li>
 									</ul>

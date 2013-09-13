@@ -49,11 +49,11 @@ var ChatEntryPoint = {
 
 	// fill-in the whole module template
 	processModuleTemplate: function($t) {
+		var items = [], i;
 		$t.find('.chat-contents').
 			addClass((window.wgWikiaChatUsers.length) ? 'chat-room-active' :  'chat-room-empty').
 			addClass((window.wgUserName) ? 'chat-user-logged-in' :  'chat-user-anonymous');
 		$t.find('.chat-total').html(window.wgWikiaChatUsers.length);
-		$t.find('.chat-live').html($.msg('chat-live2'));
 		$t.find('p.chat-name').html(window.wgSiteName);
 		if (!window.wgUserName) {
 			$t.find('div.chat-join button').addClass('loginToChat');
@@ -64,7 +64,6 @@ var ChatEntryPoint = {
 			//
 			var $carousel = $t.find('ul.carousel');
 			var $u = $carousel.find('>li');
-			var items = [], i;
 			for( i=0 ; i < window.wgWikiaChatUsers.length ; i++ ) {
 				items.push(ChatEntryPoint.fillUserTemplate($u.clone(),window.wgWikiaChatUsers[i]));
 			}
@@ -78,6 +77,13 @@ var ChatEntryPoint = {
 		} else {
 			$t.find('.carousel-container img.avatar.currentUser').remove();
 		}
+		// fill the messages
+		$t.find('*').each(function() {
+			var msgId = $(this).data('msg-id');
+			if (msgId) {
+				$(this).html($.msg(msgId));
+			}
+		});
 	},
 
 	// based on the template and user information, return a filled-in element
@@ -91,10 +97,7 @@ var ChatEntryPoint = {
 			$t.find('.since').remove();
 		}
 		$t.find('li.profilepage a').attr('href', user.profileUrl);
-		var $label = $t.find('li.profilepage .label');
-		$label.html($.msg($label.data('msg-id')));
 		$t.find('li.contribs a').attr('href', user.contribsUrl);
-		$t.find('li.contribs .label').html($.msg('chat-user-menu-contribs'));
 		return $t;
 	},
 
