@@ -439,7 +439,7 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Articlea\Search\ResultSet\Base::prependArticleMatchIfExists
+	 * @covers Wikia\Search\ResultSet\Base::prependArticleMatchIfExists
 	 */
 	public function testPrependArticleMatchNoMatch() {
 		$this->prepareMocks( [ 'addMatchResult' ], [ 'hasArticleMatch', 'getArticleMatch' ] );
@@ -465,7 +465,7 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Articlea\Search\ResultSet\Base::prependArticleMatchIfExists
+	 * @covers Wikia\Search\ResultSet\Base::prependArticleMatchIfExists
 	 */
 	public function testPrependArticleMatchWithMatch() {
 		$this->prepareMocks( [ 'addMatchResult' ], [ 'hasArticleMatch', 'getArticleMatch' ] );
