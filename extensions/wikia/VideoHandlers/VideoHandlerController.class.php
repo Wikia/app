@@ -143,19 +143,21 @@ class VideoHandlerController extends WikiaController {
 					$error = $status->getMessage();
 				}
 			} else {
+				$article = null;
 				if ( $title->exists() ) {
 					$article = Article::newFromID( $title->getArticleID() );
 				} else {
 					$botUser = User::newFromName( 'WikiaBot' );
 					$flags = EDIT_NEW | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT;
 
+					// @FIXME Set $article here after calling addCategoryVideos so that the doDeleteArticle call below works properly
 					$videoHandlerHelper = new VideoHandlerHelper();
 					$status = $videoHandlerHelper->addCategoryVideos( $title, $botUser, $flags );
 				}
 
-				if ( !$article->doDeleteArticle( $reason, $suppress, 0, true, $error ) ) {
+				if ( is_object($article) && !$article->doDeleteArticle( $reason, $suppress, 0, true, $error ) ) {
 					if ( empty($error) ) {
-						$error = wfMessage( 'videohandler-remove-error-unknow' )->text();
+						$error = wfMessage( 'videohandler-remove-error-unknown' )->text();
 					}
 				}
 			}
