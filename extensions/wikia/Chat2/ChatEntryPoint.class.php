@@ -91,7 +91,7 @@ class ChatEntryPoint {
 				// Gets array of users currently in chat to populate rail module and user stats menus
 				$chattersIn = NodeApiClient::getChatters();
 				foreach( $chattersIn as $i => $val ) {
-					$chatters[ $i ] = WikiaDataAccess::cache( wfMemcKey( 'chatavatars', $val ), 60 * 60, function() use ( $wgEnableWallExt, $val ) {
+					$chatters[ $i ] = WikiaDataAccess::cache( wfMemcKey( 'chatavatars', $val, 'v2' ), 60 * 60, function() use ( $wgEnableWallExt, $val ) {
 						$chatter = [ 'username' => $val,
 							'avatarUrl' => AvatarService::getAvatarUrl( $val, ChatRailController::AVATAR_SIZE)
 						];
