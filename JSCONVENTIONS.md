@@ -19,6 +19,9 @@ var x = y;
 myFunc();
 ```
 
+### Function declarations within blocks
+Do not do this
+
 ### Still to be defined
 * Function declaration within blocks
 * Error handling and custom exception handling
