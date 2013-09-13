@@ -1344,10 +1344,3 @@ $config['toc_js'] = array(
 		'//extensions/wikia/TOC/js/tocWikiaArticle.js'
 	)
 );
-
-$config['oasis_toc_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => array(
-		'//extensions/wikia/TOC/css/toc.scss'
-	)
-);
