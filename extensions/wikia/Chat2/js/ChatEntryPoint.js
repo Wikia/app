@@ -92,7 +92,7 @@ var ChatEntryPoint = {
 		}
 		$t.find('li.profilepage a').attr('href', user.profileUrl);
 		var $label = $t.find('li.profilepage .label');
-		$label.html($.msg($label.text()));
+		$label.html($.msg($label.data('msg-id')));
 		$t.find('li.contribs a').attr('href', user.contribsUrl);
 		$t.find('li.contribs .label').html($.msg('chat-user-menu-contribs'));
 		return $t;

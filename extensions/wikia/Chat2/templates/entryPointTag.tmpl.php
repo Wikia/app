@@ -30,7 +30,7 @@
 										<li class="profilepage <?= $profileType ?>">
 											<a href="">
 												<span class="icon">&nbsp;</span>
-												<span class="label"><?= 'chat-user-menu-' . $profileType ?></span>
+												<span class="label" data-msg-id="<?= 'chat-user-menu-' . $profileType ?>"></span>
 											</a>
 										</li>
 										<li class="contribs">
