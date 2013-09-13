@@ -54,7 +54,7 @@ $messages['en'] = array(
 	'wikiasearch2-sort-duration' => 'Duration',
 	'wikiasearch2-choose-category' => 'Choose Category',
 	'wikiasearch2-crosswiki-description' => '$1 is a community site that anyone can contribute to. Discover, share and add your knowledge!',
-	'wikiasearch2-exact-result' => 'Results for $1 from Wikia',
+	'wikiasearch2-exact-result' => 'Result for $1 from Wikia',
 
 
 	'wikiasearch2-top-module-title' => 'What\'s hot now',
@@ -65,7 +65,9 @@ $messages['en'] = array(
 
 	'wikiamobile-wikiasearch2-next' => 'Next',
 	'wikiamobile-wikiasearch2-prev' => 'Previous',
-	'wikiamobile-wikiasearch2-results-count-of' => ' of $1 {{PLURAL:$1|result|results}}'
+	'wikiamobile-wikiasearch2-results-count-of' => ' of $1 {{PLURAL:$1|result|results}}',
+	
+	'wikiasearch2-video-results' => 'Videos for \'$1\''
 );
 
 /** Message documentation (Message documentation)
@@ -101,7 +103,8 @@ $messages['qqq'] = array(
 	'wikiasearch2-videos-M' => 'Parameters: $1 - number of Videos above 1000000',
 	'wikiasearch2-crosswiki-description' => 'Used to display a generic description of a wiki for cross-wiki search results',
 	'wikiasearch2-top-module-title' => 'Top module header title on search page',
-	'wikiasearch2-top-module-edit' => 'Article last edit string containing date'
+	'wikiasearch2-top-module-edit' => 'Article last edit string containing date',
+	'wikiasearch2-video-results' => 'List on-wiki and premium videos in a search'
 );
 
 /** Afrikaans (Afrikaans)

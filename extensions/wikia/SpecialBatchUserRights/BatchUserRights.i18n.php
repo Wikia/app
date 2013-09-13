@@ -405,6 +405,24 @@ Nu wordt er niets uitgevoerd.
 De rest van de pagina kan uitgevoerd worden zodat je eenvoudig kunt zien of een van de gebruikersnamen niet geladen kon worden.',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'batchuserrights' => 'Dreches d’utilizaires per lòts',
+	'batchuserrights-desc' => 'Permet d’apondre un o mantun utilizaire a un grop en una sola accion',
+	'batchuserrights-names' => "Noms d’utilizaires d'apondre a aqueste grop (un per linha) :",
+	'batchuserrights-intro' => "Aquesta pagina permet d’apondre un grop de mantun utilizaire a l'encòp.
+Per de rasons de seguretat, la lista dels gropes utilizables es definida dins la configuracion de l’extension e pòt pas èsser cambiada dempuèi l’interfàcia del wiki.
+Se volètz autorizar l’apondon per lòts per de gropes mai, demandatz lor apondon a un administrator del sistèma.",
+	'batchuserrights-single-progress-update' => '{{PLURAL:$1|grop apondut|gropes aponduts}} a <strong>$2</strong>.',
+	'batchuserrights-add-groups' => 'Apondon {{PLURAL:$1|d’un utilizaire|de $1 utilizaires}} {{PLURAL:$2|al grop seguent|als gropes seguents}} : <strong>$3</strong>.',
+	'batchuserrights-userload-error' => "Impossible de cargar l’utilizaire « '''$1''' ».",
+	'batchuserrights-no-groups' => "Avètz pas causit cap de grop.
+Cap d'accion serà pas efectuada.
+La rèsta de la pagina se cargarà normalament çò que vos permetrà de veire se certans noms d’utilizaires pòdon pas èsser cargats.",
+);
+
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq

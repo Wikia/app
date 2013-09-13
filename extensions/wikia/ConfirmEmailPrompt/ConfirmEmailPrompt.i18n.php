@@ -169,6 +169,14 @@ $messages['nl'] = array(
 	'confirmemailprompt-error' => 'Is dit uw e-mailadres: <strong>$1</strong>? [[$2|Bevestig het]] of [[$3|wijzig het]].',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'confirmemailprompt-desc' => 'Aficha un messatge d’avertiment se un utilizaire a una adreça de corrièr electronic qu’es pas estada confirmada',
+	'confirmemailprompt-error' => 'Es vòstra adreça de corrièr electronic : <strong>$1</strong> ? [[$2|Confirmar]] o [[$3|la cambiar]].',
+);
+
 /** Polish (polski)
  * @author Woytecr
  */

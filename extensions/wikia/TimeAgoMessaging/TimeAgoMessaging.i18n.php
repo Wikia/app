@@ -396,6 +396,24 @@ $messages['nl'] = array(
 	'timeago-second-from-now' => 'over een minuut',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'timeagomessaging-desc' => 'Supòrt del i18n pel plugin jquery.timeago.js',
+	'timeago-year' => 'i a {{PLURAL:$1|un an|$1 ans}}',
+	'timeago-month' => 'i a {{PLURAL:$1|un mes|$1 meses}}',
+	'timeago-day' => '{{PLURAL:$1|la velha|i a $1 jorns}}',
+	'timeago-hour' => 'i a {{PLURAL:$1|una ora|$1 oras}}',
+	'timeago-minute' => 'i a {{PLURAL:$1|una minuta|$1 minutas}}',
+	'timeago-second' => 'i a una minuta',
+	'timeago-day-from-now' => "{{PLURAL:$1|un jorn|$1 jorns}} a partir d'ara",
+	'timeago-hour-from-now' => "{{PLURAL:$1|una ora|$1 oras}} a partir d'ara",
+	'timeago-minute-from-now' => "{{PLURAL:$1|una minuta|$1 minutas}} a partir d'ara",
+	'timeago-month-from-now' => "{{PLURAL:$1|un mes|$1 meses}} a partir d'ara",
+	'timeago-second-from-now' => "una minuta a partir d'ara",
+);
+
 /** Polish (polski)
  * @author Sovq
  */

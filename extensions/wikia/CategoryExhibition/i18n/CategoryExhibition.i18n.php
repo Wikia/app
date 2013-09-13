@@ -459,8 +459,15 @@ $messages['nl'] = array(
  */
 $messages['oc'] = array(
 	'category-exhibition-sorttype' => 'Tipe de triada :',
+	'category-exhibition-alphabetical' => 'Alfabetic',
 	'category-exhibition-mostvisited' => 'Los mai visitats',
 	'category-exhibition-recentedits' => 'Modificats recentament',
+	'category-exhibition-page-header' => 'Paginas dins la categoria « $1 »',
+	'category-exhibition-subcategories-header' => 'Soscategorias',
+	'category-exhibition-media-header' => 'Mèdia dins la categoria « $1 »',
+	'category-exhibition-blogs-header' => 'Article de blog',
+	'category-exhibition-display-old' => 'Afichatge de la categoria en lista',
+	'category-exhibition-display-new' => 'Afichatge de la categoria en exposicion',
 );
 
 /** Polish (polski)

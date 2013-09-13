@@ -22,7 +22,7 @@
 
 	while(i--) {
 		link = links[i];
-		path = link.pathname;
+		path = link.pathname || link.href;
 		parent = link.parentElement;
 		notAllowed = ((link.host && link.host !== host) || path === '/wikia.php') &&
 			parent.className.indexOf('thumb') === -1;
@@ -43,6 +43,7 @@
 				link.className += ' disabled';
 			}
 		}
+
 	}
 
 	//handling clicking on a link

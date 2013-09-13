@@ -26,6 +26,8 @@ require(['wikia.querystring', require.optional('topbar'), require.optional('toc'
 		});
 
 		$(d.getElementById('wkFllSite')).on('click', function(event){
+			var skin = this.getAttribute('data-skin') || 'oasis';
+
 			event.preventDefault();
 			event.stopPropagation();
 			cookies.set('mobilefullsite', 'true');

@@ -118,6 +118,15 @@ $messages['nl'] = array(
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 en nog $2',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'wikiastyleguide-dropdown-all' => 'Totes',
+	'wikiastyleguide-dropdown-select-all' => 'Seleccionar tot',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 e $2 que demòran',
+);
+
 /** Polish (polski)
  * @author Sovq
  */

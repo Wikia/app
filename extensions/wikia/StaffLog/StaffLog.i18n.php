@@ -98,6 +98,7 @@ $messages['bs'] = array(
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author Marcmpujol
  */
 $messages['ca'] = array(
@@ -116,6 +117,7 @@ $messages['ca'] = array(
 	'stafflog-filter-type-piggyback' => 'Personificar',
 	'stafflog-filter-type-renameuser' => "Canviar el nom d'usuari",
 	'stafflog-filter-type-wikifactory' => 'Estat del wiki',
+	'action-stafflog' => "mostra l'historial centralitzat",
 );
 
 /** Czech (česky)
@@ -394,6 +396,28 @@ $messages['nl'] = array(
 	'stafflog-filter-type-renameuser' => 'Hernoemde gebruikers',
 	'stafflog-filter-type-wikifactory' => 'Wikistatus',
 	'action-stafflog' => 'het gecentraliseerde staflogboek te bekijken',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'stafflog-desc' => 'Identificacion centralizada pel personal',
+	'stafflog' => 'StaffLog',
+	'stafflog-blockmsg' => '$1 $2 a ensajat de blocar l’emplegat $3 sul wiki $4. Motiu : $5',
+	'stafflog-piggybackloginmsg' => '$1 Accès superpausat - utilizaire $2 connectat en tant que $3',
+	'stafflog-piggybacklogoutmsg' => '$1 Accès superpausat - utilizaire $2 desconnectat del compte $3',
+	'right-stafflog' => 'Pòt afichar lo jornal de l’equipa d’administracion',
+	'stafflog-wiki-status-change' => "$1 a cambiat l'estatut de $2 en $3. Motiu : $4",
+	'stafflog-filter-label' => 'Filtre',
+	'stafflog-filter-user' => 'Utilizaire :',
+	'stafflog-filter-type' => 'Tipe :',
+	'stafflog-filter-apply' => 'Aplicar lo filtre',
+	'stafflog-filter-type-block' => 'Blocatges',
+	'stafflog-filter-type-piggyback' => 'Accès superpausat',
+	'stafflog-filter-type-renameuser' => "Cambiaments de noms d'utilizaire",
+	'stafflog-filter-type-wikifactory' => 'Estatut del wiki',
+	'action-stafflog' => 'veire lo jornal de l’equipa d’administracion',
 );
 
 /** Polish (polski)

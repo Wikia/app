@@ -1,7 +1,7 @@
 $.loadJQueryAIM = function(){
 	return {
 		done: function(func) {
-			func();
+
 		}
 	};
 };

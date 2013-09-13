@@ -52,6 +52,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'activityindicator-message' => '{{Identical|Loading}}',
+	'window-category-load-batch' => '{{Identical|More}}',
 	'window-article-button-close' => '{{Identical|Close}}',
 	'window-article-menu-search-label' => '{{Identical|Search}}',
 );
@@ -695,6 +696,7 @@ $messages['pt-br'] = array(
 	'window-article-button-back' => 'Voltar',
 	'window-article-menu-search-label' => 'Pesquisar',
 	'window-article-menu-cancel-label' => 'Cancelar',
+	'searchbar-hint' => 'Pesquisar %s...',
 	'alert-download-updated-wikis-button-ok' => 'Ok',
 );
 

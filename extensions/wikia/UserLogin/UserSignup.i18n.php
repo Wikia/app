@@ -512,6 +512,7 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author Marcmpujol
  * @author Toniher
  */
@@ -614,9 +615,41 @@ Para ver las noticias más recientes en Wikia, visita http://es.wikia.com
 	'usersignup-welcome-email-learn-basic-content' => "Aconsegueix un tutorial ràpid sobre els conceptes bàsics de Wikia; com editar una pàgina, el teu perfil d'usuari, canviar les teves preferències i molt més.",
 	'usersignup-welcome-email-learn-basic-button' => "Fes-li un cop d'ull!",
 	'usersignup-welcome-email-explore-wiki-heading' => 'Explora més wikis.',
+	'usersignup-welcome-email-explore-wiki-content' => 'Hi ha milers de viquis a Wikia, trobeu-ne més que us interessin a algun dels nostres centres: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Videojocs</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Entreteniment</a>, o <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Estil de vida</a>.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Anar a ca.wikia.com',
 	'usersignup-welcome-email-content' => 'Vols més informació? Troba consells i respostes en la comunitat de Wikia <a style="color:#2C85D5;" href="http://ca.wikia.com">Wikia en Català</a>.',
 	'usersignup-welcome-email-signature' => "L'Equip de Wikia",
+	'usersignup-welcome-email-body' => 'Hola $USERNAME,
+
+Et donem la benvinguda a Wikia i a {{SITENAME}}! Aquí tens algunes coses que pots fer per començar.
+
+Edita el teu perfil.
+
+Afegeix una foto al perfil i una petita descripció sobre tu mateix al teu perfil de {{SITENAME}}.
+
+Vés a $EDITPROFILEURL
+
+Aprèn els conceptes bàsics.
+
+Visita un breu tutorial sobre els conceptes bàsics de Wikia: com editar una pàgina, el teu perfil d\'usuari, canviar les teves preferències, i més.
+
+Comprova-ho ($LEARNBASICURL)
+
+Explora més viquis.
+
+Hi ha milers de viquis a Wikia, troba les que et poden interessar a algun dels nostres centres: Videojocs (http://www.wikia.com/Video_Games), Entreteniment (http://www.wikia.com/Entertainment), o Estil de vida (http://www.wikia.com/Lifestyle).
+
+Vés a $EXPLOREWIKISURL
+
+Necessites més informació? Troba consells, respostes i la comunitat Wikia a la Central de la Comunitat (http://www.community.wikia.com). Que t\'ho passis bè editant!
+
+L\'equip de Wikia
+
+
+___________________________________________
+
+Per veure les últimes actualitzacions a Wikia, visita http://community.wikia.com
+Vols controlar quins correus electrònics vols rebre? Vés a: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Uneix-te avui a Wikia',
 	'usersignup-heading-byemail' => 'Crear un compte per algú altre',
 	'usersignup-marketing-wikia' => 'Comença a col·laborar amb milions de persones de tot el mon qui es reuneixen per compartir el que coneixen i estimen.',

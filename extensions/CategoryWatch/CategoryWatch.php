@@ -164,8 +164,8 @@ class CategoryWatch {
 			$watchingUser   = User::newFromId( $row[0] );
 			$timecorrection = $watchingUser->getOption( 'timecorrection' );
 			$editdate       = $wgLang->timeanddate( wfTimestampNow(), true, false, $timecorrection );
-
-			if ( $watchingUser->getOption( 'enotifwatchlistpages' ) && $watchingUser->isEmailConfirmed() ) {
+			
+			if ( $watchingUser->getOption( 'enotifwatchlistpages' ) && $watchingUser->isEmailConfirmed() && !$watchingUser->getBoolOption( 'unsubscribed' ) ) {
 				$to      = new MailAddress( $watchingUser );
 				$subject = wfMsg( 'categorywatch-emailsubject', $page );
 				$body    = wfMsgForContent( 'enotif_body' );
