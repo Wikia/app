@@ -154,13 +154,14 @@ class ChatHelper {
 	 * Prepare a pre-rendered chat entry point for logged-in users
 	 */
 	public static function onMakeGlobalVariablesScript(&$vars) {
-		global $wgUser;
+		global $wgUser, $wgLang;
 		if ($wgUser->isLoggedIn()) {
 			$vars[ 'wgWikiaChatUsers' ] = ChatEntryPoint::getChatUsersInfo();
 			if ( empty( $vars[ 'wgWikiaChatUsers' ] ) ) {
 				// we will need it to attract user to join chat
 				$vars[ 'wgWikiaChatProfileAvatarUrl' ] = AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
 			}
+			$vars['wgWikiaChatMonts'] = $wgLang->getMonthAbbreviationsArray();
 		} else {
 			$vars[ 'wgWikiaChatUsers' ] = '';
 		}
