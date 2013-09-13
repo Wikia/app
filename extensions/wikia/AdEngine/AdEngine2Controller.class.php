@@ -299,9 +299,6 @@ class AdEngine2Controller extends WikiaController {
 
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
-		if (!empty($wgNoExternals)) {
-			$vars["wgNoExternals"] = $wgNoExternals;
-		}
 		if (!empty($wgEnableAdsInContent)) {
 			$vars["wgEnableAdsInContent"] = $wgEnableAdsInContent;
 		}
