@@ -15,9 +15,13 @@
 				{{#imgUrl}}
 				<img src="{{imgUrl}}" alt="{{pageTitle}}" width="{{imgWidth}}" height="{{imgHeight}}" />
 				{{/imgUrl}}
-				{{#artSnippet}}
-				<div class=articleSnippet><p>{{artSnippet}}</p></div>
-				{{/artSnippet}}
+
+				{{^mobileSkin}}
+					{{#artSnippet}}
+						<div class=articleSnippet><p>{{artSnippet}}</p></div>
+					{{/artSnippet}}
+				{{/mobileSkin}}
+
 				{{pageTitle}}
 			</a>
 		</li>
