@@ -23,7 +23,7 @@ myFunc();
 * Function declaration within blocks
 * Error handling and custom exception handling
 * Delete Operator
-* Modifying prototypes of built in objects
+* Modifying prototypes of built-in objects
 
 ## Style Rules
 
@@ -38,7 +38,7 @@ Example:
 var $div = $('div');
 ```
 
-### Still do be defined
+### Still to be defined
 * White space (we want to transcribe jQuery's conventions as much as possible so we can tweak them on our end)
 * Structure
 * Commenting
