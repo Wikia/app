@@ -35,7 +35,10 @@ Do not do this
 We are using jQuery's guidelines: http://contribute.jquery.org/style-guide/js/
 
 #### Prefixing jQuery objects
-All variables referencing jQuery objects, should be prefixed with a $. 
+All variables referencing jQuery objects, should be prefixed with a $.
+
+#### Comments
+We use JSDoc style comments.
 
 Example:
 ```javascript
