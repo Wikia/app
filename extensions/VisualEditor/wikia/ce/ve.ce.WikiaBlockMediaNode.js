@@ -63,6 +63,7 @@ ve.ce.WikiaBlockMediaNode.static.transition = false;
 
 ve.ce.WikiaBlockMediaNode.static.cssClasses = {
 	'default': {
+		'default': 'tright',
 		'left': 'tleft',
 		'right': 'tright',
 		'center' : 'tnone',
@@ -100,8 +101,8 @@ ve.ce.WikiaBlockMediaNode.prototype.createAnchor = function () {
 ve.ce.WikiaBlockMediaNode.prototype.createImage = function () {
 	return this.$$( '<img>' )
 		.attr( 'src', this.model.getAttribute( 'src' ) )
-		.attr( 'width', this.model.getAttribute( 'width' ) )
-		.attr( 'height', this.model.getAttribute( 'height' ) );
+		.attr( 'height', this.model.getAttribute( 'height' ) )
+		.attr( 'width', this.model.getAttribute( 'width' ) );
 };
 
 /**
@@ -113,6 +114,16 @@ ve.ce.WikiaBlockMediaNode.prototype.createImage = function () {
 ve.ce.WikiaBlockMediaNode.prototype.createMagnify = function () {
 	// It's inside a protected node, so user can't see href/title.
 	return this.$$( '<a>' ).addClass( 'internal sprite details magnify ve-no-shield' );
+};
+
+/**
+ * Builds the root wrapping element.
+ *
+ * @method
+ * @returns {jQuery} The properly scoped jQuery object
+ */
+ve.ce.WikiaBlockMediaNode.prototype.createRoot = function () {
+	return this.$$( '<div>' ).addClass( 'center' );
 };
 
 /**
@@ -137,16 +148,6 @@ ve.ce.WikiaBlockMediaNode.prototype.createThumb = function () {
 	}
 
 	return $thumb;
-};
-
-/**
- * Builds the root wrapping element.
- *
- * @method
- * @returns {jQuery} The properly scoped jQuery object
- */
-ve.ce.WikiaBlockMediaNode.prototype.createRoot = function () {
-	return this.$$( '<div>' ).addClass( 'center' );
 };
 
 /**
