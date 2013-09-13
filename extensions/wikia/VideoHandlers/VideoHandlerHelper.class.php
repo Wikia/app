@@ -282,6 +282,16 @@ class VideoHandlerHelper extends WikiaModel {
 		return $videoDetail;
 	}
 
+	/**
+	 * Same as 'VideoHandlerHelper::getVideoDetail' but retrieves information from an external wiki
+	 * Typically used to get premium video info from video.wikia.com when on another wiki.
+	 * @param $dbName - The DB name of the wiki that should be used to find video details
+	 * @param $title - The title of the video to get details for
+	 * @param $thumbWidth - The width of the thumbnail to return
+	 * @param $thumbHeight - The height of the thumbnail to return
+	 * @param $postedInArticles - Cap on number of "posted in" article details to return
+	 * @return null|array - As associative array of video information
+	 */
 	public function getVideoDetailFromWiki($dbName, $title, $thumbWidth, $thumbHeight, $postedInArticles) {
 		$params = array('controller'   .'='. 'VideoHandler',
 						'method'       .'='. 'getVideoDetail',
