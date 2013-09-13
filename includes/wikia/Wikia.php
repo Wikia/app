@@ -1026,7 +1026,7 @@ class Wikia {
 	 * add entries to software info
 	 */
 	static public function softwareInfo( &$software ) {
-		global $wgCityId, $wgDBcluster, $wgWikiaDatacenter;
+		global $wgCityId, $wgDBcluster, $wgWikiaDatacenter, $wgLocalFileRepo;
 
 		if( !empty( $wgCityId ) ) {
 			$info = "city_id: {$wgCityId}";
@@ -1040,6 +1040,7 @@ class Wikia {
 		if( !empty( $wgWikiaDatacenter ) ) {
 			$info .= ", dc: $wgWikiaDatacenter";
 		}
+		$info .= ", file_repo: {$wgLocalFileRepo['backend']}";
 
 		$software[ "Internals" ] = $info;
 
