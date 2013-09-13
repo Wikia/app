@@ -1,0 +1,79 @@
+//apis and methods headings
+.resource {
+	border-top: solid 1px $midGray-c3;
+	clear: both;
+	width: 960px;
+
+	h2 {
+		margin: 0;
+		a {
+			color: $blue-c1;
+			display: block;
+			font-weight: bold;
+			height: 86px;
+			margin: 0;
+			position: relative;
+			text-decoration:none;
+		}
+
+		.api-name {
+			font-size: 24px;
+			line-height: 54px;
+			margin-left: 15px;
+		}
+	}
+	.collapse-button,
+	.expand-button {
+		background-position: center;
+		background-repeat: no-repeat;
+		border: none;
+		border-left: solid 1px $midGray-c3;
+		color: $gray-c4;
+		display: block;
+		float: right;
+		font-size: 12px;
+		font-weight: bold;
+		height: 27px;
+		padding-top: 59px;
+		text-align: center;
+		width: 85px;
+	}
+	.collapse-button {
+		background-color: $midGray-c3;
+		display: none;
+	}
+	.expand-button {
+		background-color: #ffffff;
+	}
+
+	.description {
+		color: $gray-c4;
+		display: block;
+		font-size: 14px;
+		font-weight: normal;
+		padding-top: 10px;
+	}
+}
+.resource:last-child {
+	border-bottom: solid 1px $midGray-c3;
+}
+//after toggle,
+//.resource
+.active {
+	h2 {
+		a {
+			color: #ffffff;
+			background-color: $blue-c1;
+			border-bottom: solid 1px $midGray-c3;
+		}
+	}
+	.collapse-button {
+		display: block;
+	}
+	.expand-button {
+		display: none;
+	}
+	.description {
+		color: #ffffff;
+	}
+}

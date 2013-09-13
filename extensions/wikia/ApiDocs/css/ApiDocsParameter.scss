@@ -1,0 +1,30 @@
+//parameters and errors box
+.sandbox {
+	width: 776px;
+	table {
+		border-spacing: 0px;
+	}
+	tbody tr:nth-child(odd) {
+		background-color: $lightGray-c2;
+	}
+	td {
+		padding: 0 15px;
+	}
+	td:nth-child(4), td:nth-child(5) {
+		padding: 0;
+		text-align: center;
+	}
+	th {
+		border-bottom: solid 1px $midGray-c3;
+		color: $darkGray-c5;
+		font-size: 14px;
+		font-weight: bold;
+		text-align: center;
+	}
+	th:not(:first-child):not(:last-child), td:not(:first-child):not(:last-child) {
+		border-right: solid 1px $midGray-c3;
+	}
+	tr {
+		height: 70px;
+	}
+}

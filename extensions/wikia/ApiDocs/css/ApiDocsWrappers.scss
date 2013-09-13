@@ -1,0 +1,17 @@
+.content {
+	margin-left: 90px;
+}
+
+//main wrapper for all apis and methods
+.swagger-ui-wrap {
+	max-width: 960px;
+	margin: auto;
+
+	h4 {
+		@include boxHeader;
+	}
+
+	ul {
+		list-style-type: none;
+	}
+}
