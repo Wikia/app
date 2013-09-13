@@ -1335,3 +1335,19 @@ $config['touchstorm_scss'] = array(
 		'//extensions/wikia/TouchStorm/css/TouchStorm.scss'
 	)
 );
+
+$config['toc_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//resources/wikia/libraries/mustache/mustache.js',
+		'//extensions/wikia/TOC/js/modules/toc.js',
+		'//extensions/wikia/TOC/js/tocWikiaArticle.js'
+	)
+);
+
+$config['oasis_toc_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => array(
+		'//extensions/wikia/TOC/css/toc.scss'
+	)
+);

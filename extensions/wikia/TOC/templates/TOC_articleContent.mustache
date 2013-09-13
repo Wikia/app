@@ -1,0 +1,26 @@
+{{#sections}}
+	<li>
+		<a href="#{{id}}">{{title}}</a>
+			{{#wrapper}}
+				{{#sections}}
+					<li>
+						<a href="#{{id}}">{{title}}</a>
+						{{#wrapper}}
+							{{#sections}}
+	                            <li>
+	                                <a href="#{{id}}">{{title}}</a>
+	                                {{#wrapper}}
+		                                {{#sections}}
+											<li>
+	                                            <a href="#{{id}}">{{title}}</a>
+	                                        </li>
+		                                {{/sections}}
+	                                {{/wrapper}}
+	                            </li>
+							{{/sections}}
+						{{/wrapper}}
+					</li>
+				{{/sections}}
+			{{/wrapper}}
+	</li>
+{{/sections}}

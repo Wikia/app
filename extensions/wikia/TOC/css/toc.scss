@@ -1,0 +1,26 @@
+.toc {
+	display: inline-block;
+
+	ol {
+		counter-reset: item;
+
+	}
+
+	> ol {
+		display: none;
+		margin: 0;
+	}
+
+	&.show > ol {
+		display: block;
+	}
+
+	li {
+		display: block;
+
+		&:before {
+			content: counters(item, ".") " ";
+			counter-increment: item;
+		}
+	}
+}
