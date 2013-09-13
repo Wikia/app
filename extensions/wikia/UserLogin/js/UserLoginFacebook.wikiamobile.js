@@ -26,7 +26,6 @@ require(['track', 'wikia.querystring', 'toast', 'wikia.nirvana', 'JSMessages', '
 
 		window.FB.login(
 			function(response){
-				console.log(response)
 				if(response && response.status === 'connected'){
 					// now check FB account (is it connected with Wikia account?)
 					nirvana.postJson('FacebookSignup', 'index').done(
