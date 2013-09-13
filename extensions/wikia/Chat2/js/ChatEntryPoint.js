@@ -6,52 +6,104 @@ var ChatEntryPoint = {
 
 	init: function() {
 		// check if content was pre-rendered to JS variable
-		if (wgWikiaChatModuleContent) {
+		if (window.wgWikiaChatUsers) {
 			ChatEntryPoint.initEntryPoint();
 		} else if ( ! ChatEntryPoint.loading ) {
 			// if we're not loading yet - start it
 			ChatEntryPoint.loading = true;
-			ChatEntryPoint.loadEntryPoint();
+			ChatEntryPoint.loadChatUsers();
 		}
 	},
 
-	loadEntryPoint: function() {
-		// load the chat entry point content using Ajax
+	loadChatUsers: function() {
+		// load the chat users info using Ajax
 		//var currentTime = new Date();
 		//var minuteTimestamp = currentTime.getFullYear() + currentTime.getMonth() + currentTime.getDate() + currentTime.getHours() + currentTime.getMinutes();
 		$.nirvana.sendRequest({
 			controller: 'ChatRailController',
-			method: 'Contents',
+			method: 'GetUsers',
 			type: 'GET',
-			format: 'html',
-			data: {
-				//cb: minuteTimestamp
-			},
-			callback: ChatEntryPoint.entryPointLoaded
+			format: 'json',
+			/*data: {
+				cb: minuteTimestamp
+			},*/
+			callback: function(content) {
+				// cache the result
+				window.wgWikiaChatUsers = content.users;
+				ChatEntryPoint.initEntryPoint();
+			}
 		});
 	},
 
-	entryPointLoaded: function(content) {
-		// cache the result
-		wgWikiaChatModuleContent = content;
-		ChatEntryPoint.initEntryPoint();
+	initEntryPoint: function() {
+		if (typeof window.wgWikiaChatUsers === 'string') {
+			// for logged-in users the information about chat users is serialized into JS global variable
+			window.wgWikiaChatUsers = window.wgWikiaChatUsers.length ? JSON.parse(window.wgWikiaChatUsers) : [];
+		}
+		// in case the module is embedded in the article, we can have several modules on the page. work on them one by one
+		$('.ChatModuleUninitialized').each(function() {
+			ChatEntryPoint.processModuleTemplate($(this));
+			$(this).removeClass('ChatModuleUninitialized');
+		});
 	},
 
-	initEntryPoint: function() {
-		// remove the ChatModuleUninitialized so we don't initialize the same element more than once
-		$(".ChatModuleUninitialized").html(wgWikiaChatModuleContent).removeClass("ChatModuleUninitialized");
+	// fill-in the whole module template
+	processModuleTemplate: function($t) {
+		$t.find('.chat-contents').
+			addClass((window.wgWikiaChatUsers.length) ? 'chat-room-active' :  'chat-room-empty').
+			addClass((window.wgUserName) ? 'chat-user-logged-in' :  'chat-user-anonymous');
+		$t.find('.chat-total').html(window.wgWikiaChatUsers.length);
+		$t.find('.chat-live').html($.msg('chat-live2'));
+		$t.find('p.chat-name').html(window.wgSiteName);
+		if (!window.wgUserName) {
+			$t.find('div.chat-join button').addClass('loginToChat');
+		}
+		$t.find('div.chat-join button').html((window.wgWikiaChatUsers.length) ? $.msg('chat-join-the-chat') : $.msg('chat-start-a-chat'));
 
-		var chatWhosHere = $('.ChatModule .chat-whos-here'),
-			itemsShown = (window.wgOasisResponsive) ? 5 : 6;
+		if (window.wgWikiaChatUsers.length) {
+			//
+			var $carousel = $t.find('ul.carousel');
+			var $u = $carousel.find('>li');
+			var items = [], i;
+			for( i=0 ; i < window.wgWikiaChatUsers.length ; i++ ) {
+				items.push(ChatEntryPoint.fillUserTemplate($u.clone(),window.wgWikiaChatUsers[i]));
+			}
+			$carousel.html(items);
+			ChatEntryPoint.initCarousel($t.find('.chat-whos-here'));
+		} else {
+			$t.find('ul.carousel').remove();
+		}
+		if (window.wgWikiaChatProfileAvatarUrl) {
+			$t.find('.carousel-container img.avatar.currentUser').attr('src', window.wgWikiaChatProfileAvatarUrl);
+		} else {
+			$t.find('.carousel-container img.avatar.currentUser').remove();
+		}
+	},
 
-		// as we can have several chat modules on the page (in rail and in the article), we should
-		// create a separate carousel for each of them
-		chatWhosHere.find('.carousel-container').each(function() {
-			$(this).carousel({
-				nextClass: 'arrow-right',
-				prevClass: 'arrow-left',
-				itemsShown: itemsShown
-			});
+	// based on the template and user information, return a filled-in element
+	fillUserTemplate: function($t, user) {
+		$t.find('img.avatar').attr('data-src', user.avatarUrl);
+		$t.find('.username').html(user.username);
+		$t.find('.edits').html($.msg('chat-edit-count', user.editCount));
+		if (user.showSince) {
+			$t.find('.since').html($.msg('chat-member-since', window.wgMonthNamesShort[user.since_month] + ' ' + user.since_year));
+		} else {
+			$t.find('.since').remove();
+		}
+		$t.find('li.profilepage a').attr('href', user.profileUrl);
+		var $label = $t.find('li.profilepage .label');
+		$label.html($.msg($label.text()));
+		$t.find('li.contribs a').attr('href', user.contribsUrl);
+		$t.find('li.contribs .label').html($.msg('chat-user-menu-contribs'));
+		return $t;
+	},
+
+	// change the user list into the carousel
+	initCarousel: function($el) {
+		$el.find('.carousel-container').carousel({
+			nextClass: 'arrow-right',
+			prevClass: 'arrow-left',
+			itemsShown: (window.wgOasisResponsive) ? 5 : 6
 		});
 
 		// TODO: abstract this because we use this pattern in a few places: i.e. hovering over popover will not close it
@@ -63,7 +115,7 @@ var ChatEntryPoint = {
 			}, 300);
 		}
 
-		chatWhosHere.find('.chatter').popover({
+		$el.find('.chatter').popover({
 			trigger: "manual",
 			placement: "bottom",
 			content: function() {
@@ -73,9 +125,9 @@ var ChatEntryPoint = {
 			}
 
 		}).on('mouseenter', function() {
-			clearTimeout(popoverTimeout);
-			$('.popover').remove();
-			$(this).popover('show');
+				clearTimeout(popoverTimeout);
+				$('.popover').remove();
+				$(this).popover('show');
 
 		}).on('mouseleave', function() {
 			var $this = $(this);
@@ -83,13 +135,13 @@ var ChatEntryPoint = {
 			$('.popover').mouseenter(function() {
 				clearTimeout(popoverTimeout);
 			}).mouseleave(function() {
-				setPopoverTimeout($this);
-			});
+					setPopoverTimeout($this);
+				});
 		});
 	},
 
-	onClickChatButton: function(isLoggedIn, linkToSpecialChat) {
-		if (isLoggedIn) {
+	onClickChatButton: function(linkToSpecialChat) {
+		if (window.wgUserName) {
 			window.open(linkToSpecialChat, 'wikiachat', window.wgWikiaChatWindowFeatures);
 		} else {
 			UserLoginModal.show({
@@ -135,7 +187,7 @@ var ChatEntryPoint = {
 	}
 };
 
-if ( typeof wgWikiaChatModuleContent!=="undefined" ) {
+if ( typeof wgWikiaChatUsers!=="undefined" ) {
     $(function() {
 		ChatEntryPoint.init();
 		$('body').on('click', '.WikiaChatLink', function(event) {
