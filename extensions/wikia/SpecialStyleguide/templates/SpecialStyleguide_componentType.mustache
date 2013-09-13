@@ -17,12 +17,14 @@
 					<td>{{templateVar}}</td>
 					<td>{{type}}</td>
 					<td>
-						{{#object}}
-							{{>SpecialStyleguide_componentParamObject}}
-						{{/object}}
-						{{#value}}
-							{{>SpecialStyleguide_componentParamValue}}
-						{{/value}}
+						<table>
+							{{#object}}
+								{{>SpecialStyleguide_componentParamObject}}
+							{{/object}}
+							{{#value}}
+								{{>SpecialStyleguide_componentParamValue}}
+							{{/value}}
+						</table>
 					</td>
 					<td>{{description}}</td>
 				</tr>
