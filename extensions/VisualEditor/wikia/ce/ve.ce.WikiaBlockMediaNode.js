@@ -63,7 +63,6 @@ ve.ce.WikiaBlockMediaNode.static.transition = false;
 
 ve.ce.WikiaBlockMediaNode.static.cssClasses = {
 	'default': {
-		'default': 'tright',
 		'left': 'tleft',
 		'right': 'tright',
 		'center' : 'tnone',
@@ -138,7 +137,7 @@ ve.ce.WikiaBlockMediaNode.prototype.createThumb = function () {
 		type = this.model.getAttribute( 'type' );
 
 	if ( type === 'frameless' || type === 'none' ) {
-		$thumb = this.$$( '<div>' ).addClass( this.getCssClass( type, align ) );
+		$thumb = this.$$( '<div>' ).addClass( this.getCssClass( 'none', align ) );
 
 	// Type "frame" or "thumb"
 	} else {
