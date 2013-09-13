@@ -1,0 +1,57 @@
+div.response {
+	background:$lightGray-c2;
+	margin-top:25px;
+	padding-bottom:15px;
+	padding-left:15px;
+	padding-right:15px;
+	width:746px;
+	h4 {
+		margin-bottom:15px;
+	}
+}
+
+div.request_url {
+	background:$main-bgcolor;
+	border:1px solid $midGray-c3;
+	line-height:40px;
+	height:50px;
+	margin-bottom:15px;
+	margin-top:15px;
+	overflow-x:auto;
+	overflow-y:hidden;
+	width:566px;
+}
+
+
+div.response_top {
+	overflow:hidden;
+	div.container_left {
+		float:left;
+	}
+	div.container_right {
+		float:right;
+	}
+}
+
+div.response_code {
+	@include inputs;
+	background:$main-bgcolor;
+	line-height:25px;
+}
+
+div.response_body {
+	background:$main-bgcolor;
+	border:1px solid $midGray-c3;
+	width:100%;
+	margin-bottom:30px;
+	max-height:500px;
+	overflow:auto;
+}
+
+
+div.response_headers {
+	background:$main-bgcolor;
+	border:1px solid $midGray-c3;
+	overflow:auto;
+	width:100%;
+}

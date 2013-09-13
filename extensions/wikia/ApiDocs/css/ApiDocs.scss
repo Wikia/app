@@ -5,6 +5,7 @@
 @import "skins/oasis/css/core/GlobalHeader";
 
 //colors variables
+$main-bgcolor: #ffffff;
 $blue-c1: #0a5fa3;
 $lightGray-c2: #f9f9f9;
 $midGray-c3: #e6e6e6;
@@ -93,3 +94,5 @@ select {
 @import "ApiDocsResponseClass";
 @import "ApiDocsResponseType";
 @import "ApiDocsWrappers";
+@import "ApiDocsTry";
+@import "ApiDocsHighlight";
