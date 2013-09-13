@@ -5,7 +5,10 @@ class VideoPageController extends WikiaController {
 	 * Display the Video Home Page
 	 */
 	public function index() {
-
+		$this->featuredContent = $this->sendSelfRequest('handleFeatured');
+		$this->categoryContent = $this->sendSelfRequest('handleCategory');
+		$this->fanContent = $this->sendSelfRequest('handleFan');
+		$this->popularContent = $this->sendSelfRequest('handlePopular');
 	}
 
 	/**
@@ -28,7 +31,6 @@ class VideoPageController extends WikiaController {
 		$handler = 'handle'.ucfirst(strtolower($name));
 
 		if ( method_exists( __CLASS__, $handler ) ) {
-			$this->overrideTemplate( $name );
 			$this->forward( __CLASS__, $handler );
 			return true;
 		} else {
@@ -43,6 +45,7 @@ class VideoPageController extends WikiaController {
 	 * Displays the featured module
 	 */
 	public function handleFeatured() {
+		$this->overrideTemplate( 'featured' );
 
 	}
 
@@ -50,6 +53,7 @@ class VideoPageController extends WikiaController {
 	 * Displays the category module
 	 */
 	public function handleCategory() {
+		$this->overrideTemplate( 'category' );
 
 	}
 
@@ -57,6 +61,7 @@ class VideoPageController extends WikiaController {
 	 * Displays the fan module
 	 */
 	public function handleFan() {
+		$this->overrideTemplate( 'fan' );
 
 	}
 
@@ -64,6 +69,7 @@ class VideoPageController extends WikiaController {
 	 * Displays the popular module
 	 */
 	public function handlePopular() {
+		$this->overrideTemplate( 'popular' );
 
 	}
 }
