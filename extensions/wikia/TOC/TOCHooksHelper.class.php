@@ -14,7 +14,6 @@ class TOCHooksHelper {
 	public static function onOasisSkinAssetGroups( &$assetsArray ) {
 
 		$assetsArray[] = 'toc_js';
-		//$assetsArray[] = 'oasis_toc_scss';
 
 		return true;
 	}
@@ -22,7 +21,6 @@ class TOCHooksHelper {
 	public static function onMonobookSkinAssetGroups( &$assetsArray ) {
 
 		$assetsArray[] = 'toc_js';
-		//$assetsArray[] = 'oasis_toc_scss';
 
 		return true;
 	}
