@@ -7,6 +7,12 @@
 class ChatEntryPoint {
 
 	/**
+	 * TTL for chat users list. This cache is purged when a new user joins the chat, but we don't purge it when
+	 * user leaves chat. That's why this cache time is pretty short
+	 */
+	const CHAT_USER_LIST_CACHE = 60;
+
+	/**
 	 * @brief This function set parseTag hook
 	 */
 	static public function onParserFirstCallInit( Parser &$parser ) {
@@ -74,7 +80,9 @@ class ChatEntryPoint {
 		wfProfileIn( __METHOD__ );
 		$chatters = [];
 		if( empty( $wgReadOnly ) ) {
-			$chatters = WikiaDataAccess::cache( self::getChatUsersMemcKey(), 60, function() {
+			// cache the whole response
+			// individual users are cached anyway, but still we gain performance making just one memcache request instead of several
+			$chatters = WikiaDataAccess::cache( self::getChatUsersMemcKey(), ChatEntryPoint::CHAT_USER_LIST_CACHE, function() {
 				global $wgEnableWallExt;
 				$chatters = [];
 				// Gets array of users currently in chat to populate rail module and user stats menus
