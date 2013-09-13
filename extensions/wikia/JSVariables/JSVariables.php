@@ -60,7 +60,7 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 	$vars['wgStyleVersion'] = (string)($wg->StyleVersion);
 
 	$wg->NoExternals = $wg->Request->getBool('noexternals', $wg->NoExternals);
-	if (!empty($wgNoExternals)) {
+	if (!empty($wg->NoExternals)) {
 		$vars["wgNoExternals"] = $wg->NoExternals;
 	}
 
