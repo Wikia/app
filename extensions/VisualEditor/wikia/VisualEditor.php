@@ -78,6 +78,7 @@ function Wikia_onResourceLoaderTestModules( array &$testModules, ResourceLoader 
 		'scripts' => array(
 			'test/dm/ve.dm.wikiaExample.js',
 			'test/dm/ve.dm.WikiaConverter.test.js',
+			'test/ce/ve.ce.wikiaExample.js',
 			'test/ce/ve.ce.WikiaBlockImageNode.test.js'
 		),
 		'dependencies' => array(
