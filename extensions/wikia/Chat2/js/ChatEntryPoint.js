@@ -58,7 +58,7 @@ var ChatEntryPoint = {
 		if (!window.wgUserName) {
 			$t.find('div.chat-join button').addClass('loginToChat');
 		}
-		$t.find('div.chat-join button').html((window.wgWikiaChatUsers.length) ? $.msg('chat-join-the-chat') : $.msg('chat-start-a-chat'));
+		$t.find('div.chat-join button').data('msg-id', window.wgWikiaChatUsers.length ? 'chat-join-the-chat' : 'chat-start-a-chat');
 
 		if (window.wgWikiaChatUsers.length) {
 			//
@@ -78,26 +78,28 @@ var ChatEntryPoint = {
 			$t.find('.carousel-container img.avatar.currentUser').remove();
 		}
 		// fill the messages
-		$t.find('*').each(function() {
-			var msgId = $(this).data('msg-id');
-			if (msgId) {
-				$(this).html($.msg(msgId));
-			}
+		$t.find('[data-msg-id]').each(function() {
+			var $e = $(this);
+			$e.html($.msg($e.data('msg-id'), $e.data('msg-param')));
 		});
 	},
 
 	// based on the template and user information, return a filled-in element
 	fillUserTemplate: function($t, user) {
-		$t.find('img.avatar').attr('data-src', user.avatarUrl);
-		$t.find('.username').html(user.username);
-		$t.find('.edits').html($.msg('chat-edit-count', user.editCount));
 		if (user.showSince) {
-			$t.find('.since').html($.msg('chat-member-since', window.wgMonthNamesShort[user.since_month] + ' ' + user.since_year));
+			var months = window.wgWikiaChatMonts || window.wgMonthNamesShort;
+			$t.find('.since').data('msg-param', months[user.since_month] + ' ' + user.since_year);
 		} else {
 			$t.find('.since').remove();
 		}
-		$t.find('li.profilepage a').attr('href', user.profileUrl);
-		$t.find('li.contribs a').attr('href', user.contribsUrl);
+		$t.find('[data-user-prop]').each(function() {
+			var $e = $(this), attr = $e.data('user-attr'), p = $e.data('user-prop');
+			if (attr) {
+				$e.attr(attr, user[p]);
+			} else {
+				$e.html(user[p]);
+			}
+		});
 		return $t;
 	},
 

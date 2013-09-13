@@ -6,7 +6,7 @@
 		</h1>
 		<p class="chat-name"> </p>
 		<div class="chat-join">
-			<button onclick="ChatEntryPoint.onClickChatButton('<?= $linkToSpecialChat ?>')"> </button>
+			<button data-msg-id="" onclick="ChatEntryPoint.onClickChatButton('<?= $linkToSpecialChat ?>')"> </button>
 		</div>
 		<div class="chat-whos-here">
 			<span class="arrow-left"><img src="<?= $blankImgUrl ?>" /></span>
@@ -15,26 +15,26 @@
 				<div>
 					<ul class="carousel">
 						<li class="chatter">
-							<img src="<?= $blankImgUrl ?>" data-src="todo_avatar_url" class="avatar" width="32" height="32" />
+							<img src="<?= $blankImgUrl ?>" data-user-attr="data-src" data-user-prop="avatarUrl" class="avatar" width="32" height="32" />
 							<div class="UserStatsMenu">
 								<div class="info">
-									<img src="<?= $blankImgUrl ?>" data-src="todo_avatar_url" class="avatar" width="24" height="24" />
+									<img src="<?= $blankImgUrl ?>" data-user-attr="data-src" data-user-prop="avatarUrl" class="avatar" width="24" height="24" />
 									<ul>
-										<li class="username"> </li>
-										<li class="edits"> </li>
-										<li class="since"> </li>
+										<li class="username" data-user-prop="username"> </li>
+										<li class="edits" data-msg-id="chat-edit-count" data-user-attr="data-msg-param" data-user-prop="editCount"> </li>
+										<li class="since" data-msg-id="chat-member-since"> </li>
 									</ul>
 								</div>
 								<div class="actions">
 									<ul class="regular-actions">
 										<li class="profilepage <?= $profileType ?>">
-											<a href="">
+											<a data-user-attr="href" data-user-prop="profileUrl">
 												<span class="icon">&nbsp;</span>
 												<span class="label" data-msg-id="<?= 'chat-user-menu-' . $profileType ?>"></span>
 											</a>
 										</li>
 										<li class="contribs">
-											<a href="">
+											<a data-user-attr="href" data-user-prop="contribsUrl">
 												<span class="icon">&nbsp;</span>
 												<span class="label" data-msg-id="chat-user-menu-contribs"> </span>
 											</a>
