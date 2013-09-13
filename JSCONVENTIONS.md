@@ -1,27 +1,14 @@
 # Wikia JavaScript Coding Conventions
 
+### [Language Rules](#language-rules)
 * [Early returns](#early-returns)
 * [Semi-colons](#semi-colons)
 * [Function-declarations within blocks](#function-declarations-within-blocks)
+### [Still to be defined](#still-to-be-defined)
 
-## Language Rules
+### Language Rules
 #### Early returns
 Try to avoid early returns
-```javascript
-// bad:
-function isZero( num ) {
-	if ( num === 0 ) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
-// good:
-function isZero( num ) {
-	return num === 0 ? true : false;
-}
-```
 
 #### Semi-colons
 Always use semicolons at the end of every simple statement.  No more than one statement per line.
@@ -41,12 +28,6 @@ myFunc();
 ### Function declarations within blocks
 Do not do this
 
-### Still to be defined
-* Function declaration within blocks
-* Error handling and custom exception handling
-* Delete Operator
-* Modifying prototypes of built-in objects
-
 ## Style Rules
 
 #### White space guidelines
@@ -61,6 +42,9 @@ var $div = $('div');
 ```
 
 ### Still to be defined
+* Error handling and custom exception handling
+* Delete Operator
+* Modifying prototypes of built-in objects
 * White space (we want to transcribe jQuery's conventions as much as possible so we can tweak them on our end)
 * Structure
 * Commenting
