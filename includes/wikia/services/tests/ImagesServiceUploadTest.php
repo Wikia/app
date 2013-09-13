@@ -48,7 +48,7 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		);
 
 		// verify that it's accessible via HTTP
-		$this->assertTrue(Http::get($info['src']) !== false, 'Uploaded image should return HTTP 200');
+		$this->assertTrue(Http::get($info['src']) !== false, 'Uploaded image should return HTTP 200 - ' . $info['src']);
 
 		// check thumbnail
 		$thumb = ImagesService::getImageSrc($this->app->wg->CityId, $res['page_id'], 120);
@@ -67,7 +67,7 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 			'Path should end with file name'
 		);
 
-		$this->assertTrue(Http::get($thumb['src']) !== false, 'Thumbnail should return HTTP 200');
+		$this->assertTrue(Http::get($thumb['src']) !== false, 'Thumbnail should return HTTP 200 - ' . $thumb['src']);
 
 		// now, remove it...
 		/* @var LocalFile $file */

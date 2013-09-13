@@ -165,6 +165,10 @@ $wgRC2UDPEnabled = false;
 if ( empty( $wgCdnRootUrl ) ) $wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
 if ( empty( $wgDevBoxImageServerOverride ) ) $wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
 
+if (!empty($wgEnableCephFileBackend)) {
+	$wgDevBoxImageServerOverride = 's3.dfs-s1';
+}
+
 // macbre: generate proper paths for static assets on devboxes (BugId:6809)
 $wgCdnStylePath = "{$wgCdnRootUrl}/__cb{$wgStyleVersion}"; // paths for images requested from CSS/SASS
 $wgStylePath = "{$wgCdnStylePath}/skins";
