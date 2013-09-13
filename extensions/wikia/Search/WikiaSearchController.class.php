@@ -230,6 +230,51 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$response->setFormat( 'json' );
 		$response->setData( $entityResponse );
 	}
+	
+	/**
+	 * JSON service that supports the access of video (and optionally photo) content from both 
+	 * the current and premium video wiki.
+	 * 
+	 *  Request params:
+	 *  -- q (required) the query
+	 *  -- videoOnly (optional) whether to only include videos (false by default)
+	 *  -- next (optional) pagination value
+	 *  
+	 */
+	public function combinedMediaSearch() {
+		$request = $this->getRequest();
+		$query = $request->getVal( 'q' );
+		if ( empty( $query ) ) {
+			throw new Exception( "Please include a query value for parameter 'q'" );
+		}
+		$config = new Wikia\Search\Config;
+		$videoOnly = (bool) $request->getVal( 'videoOnly', false );
+		$config->setQuery( $query )
+		       ->setCombinedMediaSearch( true )
+		       ->setCombinedMediaSearchIsVideoOnly( $videoOnly )
+		       ->setLimit( 4 )
+		       ->setStart( $this->getVal( 'next', 0 ) );
+		
+		$results = $this->queryServiceFactory->getFromConfig( $config )->searchAsApi( [ 'url', 'id', 'pageid', 'wid', 'title' ], true );
+		$dimensions = [ 'width' => 120, 'height' => 90 ];
+		$service = new \Wikia\Search\MediaWikiService();
+		foreach ( $results['items'] as &$result ) {
+			if (! isset( $result['thumbnail'] ) ) {
+				$result['thumbnail'] = $service->getThumbnailHtmlFromFileTitle( $result['title'], $dimensions );
+			}
+		}
+		$title = SpecialPage::getTitleFor("Search");
+		$results['videoUrl'] = $title->getLocalURL( [
+			'ns6' => 1,
+			'fulltext' => 'Search',
+			'search' => $query,
+			'filters[]' => $videoOnly ? 'is_video' : ''
+		] );
+
+		$response = $this->getResponse();
+		$response->setFormat( 'json' );
+		$response->setData( $results );
+	}
 
 	/**
 	 * Powers the category page view
@@ -424,8 +469,16 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'hasArticleMatch',       $searchConfig->hasArticleMatch() );
 		$this->setVal( 'isMonobook',            ( $this->wg->User->getSkin() instanceof SkinMonobook ) );
 		$this->setVal( 'isCorporateWiki',       $this->isCorporateWiki() );
-		$this->setVal( 'wgExtensionsPath',      $wgExtensionsPath);
-
+		$this->setVal( 'wgExtensionsPath',      $this->wg->ExtensionsPath);
+		if ( in_array( 0, $searchConfig->getNamespaces() ) && !in_array( 6, $searchConfig->getNamespaces() ) ) {
+			$combinedMediaResult = $this->sendSelfRequest( 'combinedMediaSearch',
+				array( 'q' => $searchConfig->getQuery()->getSanitizedQuery(), 'videoOnly' => true ) )->getData();
+			if ( isset($combinedMediaResult) && sizeof($combinedMediaResult['items']) == 4 ) {
+				$this->setVal( 'mediaData', $combinedMediaResult );
+			}
+		} else {
+			$this->setVal( 'mediaData', [] );
+		}
 		if ( $this->wg->OnWikiSearchIncludesWikiMatch && $searchConfig->hasWikiMatch() ) {
 			$this->registerWikiMatch( $searchConfig );
 		}
@@ -454,7 +507,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$matchResult['onWikiMatch'] = true;
 			$this->setVal(
 					'wikiMatch',
-					$this->getApp()->getView( 'WikiaSearch', 'CrossWiki_result', [ 'result' => $matchResult, 'pos' => -1 ] )
+					$this->getApp()->getView( 'WikiaSearch', 'exactResult', [ 'result' => $matchResult, 'pos' => 'wiki' ] )
 					);
 			$this->resultsFound++;
 		}

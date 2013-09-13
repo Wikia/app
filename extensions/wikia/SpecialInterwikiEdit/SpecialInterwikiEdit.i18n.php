@@ -421,6 +421,7 @@ $messages['nl'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
+	'interwikiedit' => 'Editor Interwiki',
 	'iwedit-title' => 'Editor Interwiki',
 	'iwedit-language-interwikis' => 'interwikis de lengas solament',
 	'iwedit-all-interwikis' => 'totes los interwikis',

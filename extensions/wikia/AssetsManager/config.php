@@ -69,7 +69,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParamsLegacy.js',
-		'//extensions/wikia/AdEngine/js/AdLogicShortPage.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
 
@@ -191,6 +191,7 @@ $config['oasis_jquery'] = array(
 		'//resources/wikia/libraries/jquery/carousel/jquery.wikia.carousel.js',
 		'//resources/wikia/libraries/jquery/modal/jquery.wikia.modal.js',
 		'//resources/wikia/libraries/jquery/expirystorage/jquery.expirystorage.js',
+		'//resources/wikia/libraries/jquery/focusNoScroll/jquery.focusNoScroll.js',
 
 		// libraries loaders
 		'//resources/wikia/libraries/jquery/getResources/jquery.wikia.getResources.js',
@@ -259,8 +260,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/CategorySelect/js/CategorySelect.view.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
-		'//resources/wikia/modules/csspropshelper.js',
-		'//extensions/wikia/EditPreview/js/preview.js',
 
 		// oasis specific files
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
@@ -1356,6 +1355,18 @@ $config['special_css_js'] = array(
 		'//extensions/wikia/SpecialCss/js/SpecialCss.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/libraries/mustache/jquery.mustache.js'
+	)
+);
+
+/* UI repo JS API */
+$config['ui_repo_api_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//resources/wikia/modules/nirvana.js',
+		'//resources/wikia/modules/deferred.js',
+		'//resources/wikia/modules/uifactory.js',
+		'//resources/wikia/libraries/mustache/mustache.js',
+		'//resources/wikia/modules/uicomponent.js'
 	)
 );
 

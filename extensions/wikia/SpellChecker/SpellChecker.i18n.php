@@ -125,6 +125,7 @@ $messages['cy'] = array(
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author LWChris
+ * @author Purodha
  */
 $messages['de'] = array(
 	'spellchecker-desc' => 'Stellt Rechtschreibprüfung Schnittstelle für bezauberndes PHP-Modul bereit',
@@ -136,8 +137,8 @@ $messages['de'] = array(
 	'spellchecker-info-spellcheck-text' => 'Zu prüfender Text',
 	'spellchecker-info-spellcheck-languages' => 'Sprache',
 	'spellchecker-info-spellcheck-submit' => 'Rechtschreibung prüfen',
-	'spellchecker-info-spellcheck-is-correct' => 'Das Wort "$1" ist richtig geschrieben',
-	'spellchecker-info-spellcheck-suggestions' => 'Vorschläge für "$1": $2',
+	'spellchecker-info-spellcheck-is-correct' => 'Das Wort „$1“ ist richtig geschrieben',
+	'spellchecker-info-spellcheck-suggestions' => 'Vorschläge für „$1“: $2',
 );
 
 /** Zazaki (Zazaki)
@@ -248,6 +249,19 @@ $messages['ia'] = array(
  */
 $messages['inh'] = array(
 	'spellchecker-info-spellcheck-languages' => 'Мотт',
+);
+
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'spellchecker-info-languages' => 'De verfööschbaare Schprooche ($1)',
+	'spellchecker-info-provider' => 'Aanbeeder',
+	'spellchecker-info-dictionaries' => 'de verfööschbaare Wööterbööscher',
+	'spellchecker-info-spellcheck-text' => 'Dä Täx zom Prööve',
+	'spellchecker-info-spellcheck-languages' => 'Schprooch',
+	'spellchecker-info-spellcheck-submit' => 'de Ottojrafih prööve',
+	'spellchecker-info-spellcheck-is-correct' => 'Dat Woot „$1“ es reschtesch jeschrevve.',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)

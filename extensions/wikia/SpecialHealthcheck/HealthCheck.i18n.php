@@ -215,6 +215,13 @@ $messages['nl'] = array(
 	'healthcheck-desc' => 'Een [[Special:HealthCheck|speciale pagina]] voor de controle van de serverstatus',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'healthcheck-desc' => "Una [[Special:HealthCheck|pagina especiala]] per verificar l'estat dels servidors",
+);
+
 /** Polish (polski)
  * @author Sp5uhe
  */

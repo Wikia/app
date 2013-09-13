@@ -32,6 +32,7 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'places-in-category' => '$1 is a category name',
@@ -40,6 +41,7 @@ $messages['qqq'] = array(
 	'places-editor-search' => 'Label for submit button that handles a search string. {{Identical|Search}}',
 	'places-editor-title-create-new' => 'Title of places editor modal when creating a new geotag',
 	'places-editor-title-edit' => 'Title of places editor modal when editing an existing geotag',
+	'places-geolocation-modal-error-title' => '{{Identical|Error}}',
 );
 
 /** Arabic (العربية)

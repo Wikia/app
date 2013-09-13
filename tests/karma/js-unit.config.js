@@ -48,7 +48,9 @@ files = [
 	'resources/wikia/modules/stringhelper.js',
 	'resources/wikia/modules/thumbnailer.js',
 	'resources/wikia/modules/uniqueId.js',
-	'resources/wikia/modules/csspropshelper.js',
+	//UI Repo JS API
+	'resources/wikia/modules/uicomponent.js',
+	'resources/wikia/modules/uifactory.js',
 	'resources/wikia/modules/spec/*.spec.js',
 
 	//Advertisment
@@ -59,7 +61,7 @@ files = [
 	'extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 	'extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
 	'extensions/wikia/AdEngine/js/AdLogicPageLevelParamsLegacy.js',
-	'extensions/wikia/AdEngine/js/AdLogicShortPage.js',
+	'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 	'extensions/wikia/AdEngine/js/AdProviderAdDriver2.js',
 	'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 	'extensions/wikia/AdEngine/js/AdProviderGamePro.js',

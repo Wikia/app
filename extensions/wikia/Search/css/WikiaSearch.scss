@@ -325,8 +325,8 @@ $form-negative-side-padding: $form-side-padding*-1;
 		}
 		.result-description {
 			float: left;
-			padding-left: 30px;
-			width: 310px;
+			padding-left: 21px;
+			width: 295px;
 			@include box-sizing;
 		}
 		a.image {
@@ -340,6 +340,27 @@ $form-negative-side-padding: $form-side-padding*-1;
 	.searchmatch {
 		font-weight: bold;
 	}
+	.video-addon-results {
+		display: none;
+
+		img {
+			display: inline-block;
+		}
+		ul {
+			list-style: none;
+			margin: 0;
+		}
+		li {
+			 display: inline;
+		 }
+		.video-thumbnail {
+			margin: 1px;
+			position: relative;
+		}
+
+	}
+
+
 
 	// Search pagination
 	.wikia-paginator {

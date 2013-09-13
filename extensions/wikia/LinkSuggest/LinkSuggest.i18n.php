@@ -280,7 +280,9 @@ $messages['nn'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
+	'linksuggest-desc' => 'Prepausa de ligams als contributors en edicion',
 	'tog-disablelinksuggest' => 'Afichar pas la suggestion de ligam en mòde font',
+	'tog-redirected-from' => '&ndash; Redirigit dempuèi $1',
 );
 
 /** Polish (polski)

@@ -91,11 +91,6 @@ $wgGroupPermissions['sysop'][ 'blog-articles-protect' ] = true;
 $wgGroupPermissions['staff'][ 'blog-articles-protect' ] = true;
 $wgGroupPermissions['helper'][ 'blog-articles-protect' ] = true;
 
-$wgGroupPermissions['*'][ 'blog-auto-follow' ] = false;
-$wgGroupPermissions['sysop'][ 'blog-auto-follow' ] = false;
-$wgGroupPermissions['staff'][ 'blog-auto-follow' ] = true;
-$wgGroupPermissions['helper'][ 'blog-auto-follow' ] = false;
-
 // special pages
 $wgAutoloadClasses['CreateBlogListingPage'] = __DIR__ . '/SpecialCreateBlogListingPage.php';
 $wgSpecialPages['CreateBlogListingPage'] = 'CreateBlogListingPage';
