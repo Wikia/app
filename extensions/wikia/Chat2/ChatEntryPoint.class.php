@@ -22,7 +22,10 @@ class ChatEntryPoint {
 		return true;
 	}
 
-
+	/**
+	 * @param $isEntryPoint - set to true for chat entry point embeded in the article, false for rail module
+	 * Return an array of variables needed to render chat entry point template
+	 */
 	static public function getEntryPointTemplateVars( $isEntryPoint ) {
 		global $wgEnableWallExt, $wgBlankImgUrl;
 		return [
