@@ -16,7 +16,14 @@
 					<td>{{templateVar}}</td>
 					<td>{{templateVar}}</td>
 					<td>{{type}}</td>
-					<td>{{valueObject}}</td>
+					<td>
+						{{#object}}
+							{{>SpecialStyleguide_componentParamObject}}
+						{{/object}}
+						{{#value}}
+							{{>SpecialStyleguide_componentParamValue}}
+						{{/value}}
+					</td>
 					<td>{{description}}</td>
 				</tr>
 			{{/typeParams}}

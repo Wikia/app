@@ -182,11 +182,11 @@ class StyleguideComponents {
 			$params->description = $this->prepareMessage( $param[ 'description' ] );
 
 			if( !empty( $param['objectVar'] ) ) {
-				$params->valueObject = $this->prepareObjectData( $param['objectVar'] );
+				$params->object = $this->prepareObjectData( $param['objectVar'] );
 			}
 
 			if( !empty( $param['value'] ) ) {
-				$params->valueObject = $this->prepareValuetData( $param['value'] );
+				$params->value = $this->prepareValueData( $param['value'] );
 			}
 
 			$result[] = $params;
@@ -196,13 +196,26 @@ class StyleguideComponents {
 	}
 
 	private function prepareObjectData( $objectVar ) {
-		$result = print_r( $objectVar, true );
+		$result = [];
+
+		foreach( $objectVar as $key => $type ) {
+			$objectRow = new stdClass();
+			$objectRow->key = $key;
+			$objectRow->type = $type;
+			$result[] = $objectRow;
+		}
 
 		return $result;
 	}
 
-	private function prepareValuetData( $value ) {
-		$result = print_r( $value, true );
+	private function prepareValueData( $value ) {
+		$result = [];
+
+		foreach( $value as $option ) {
+			$valueRow = new stdClass();
+			$valueRow->option = $option;
+			$result[] = $valueRow;
+		}
 
 		return $result;
 	}
