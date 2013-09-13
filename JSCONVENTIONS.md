@@ -1,13 +1,27 @@
 # Wikia JavaScript Coding Conventions
 
-### [Language Rules](#language-rules)
 * [Early returns](#early-returns)
 * [Semi-colons](#semi-colons)
 * [Function-declarations within blocks](#function-declarations-within-blocks)
 
-### Language Rules
+## Language Rules
 #### Early returns
 Try to avoid early returns
+```javascript
+// bad:
+function isZero( num ) {
+	if ( num === 0 ) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+// good:
+function isZero( num ) {
+	return num === 0 ? true : false;
+}
+```
 
 #### Semi-colons
 Always use semicolons at the end of every simple statement.  No more than one statement per line.
