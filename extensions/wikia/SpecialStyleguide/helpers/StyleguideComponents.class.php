@@ -127,15 +127,17 @@ class StyleguideComponents {
 		foreach( static::$componentsNames as $componentName ) {
 			$component = [];
 			$componentDocumentation = $this->loadComponentDocumentationAsArray( $componentName );
+			// todo: load component samples
 			$component = $this->prepareMainMessages( $component, $componentDocumentation );
 
 			// add unique id so after clicking on the components list's link page jumps to the right anchor
 			$componentConfig['id'] = Sanitizer::escapeId( $componentName, ['noninitial'] );
 
 			if ( isset( $componentDocumentation['types'] ) ) {
-				$component['types'] = print_r( $componentDocumentation['types'], true);
+				$component['types'] = $this->prepareTypesDocumentation( $componentDocumentation['types'] );
 			}
 
+			// todo: similiar logic to types for samples
 			$components[] = $component;
 		}
 
@@ -150,10 +152,59 @@ class StyleguideComponents {
 	 * @return mixed
 	 */
 	private function prepareMainMessages( $component, $messages ) {
-		$component['name'] = $this->prepareMessage( $messages[ self::COMPONENT_NAME_MSG_KEY ] );
-		$component['description'] = $this->prepareMessage( $messages[ self::COMPONENT_DESC_MSG_KEY] );
+		$component[ 'name' ] = $this->prepareMessage( $messages[ self::COMPONENT_NAME_MSG_KEY ] );
+		$component[ 'description' ] = $this->prepareMessage( $messages[ self::COMPONENT_DESC_MSG_KEY] );
 
 		return $component;
+	}
+
+	private function prepareTypesDocumentation( $typesFromFile ) {
+		$result = [];
+
+		foreach( $typesFromFile as $typeName => $typeFromFile ) {
+			$type = new stdClass();
+			$type->typeName = $typeName;
+			$type->typeParams = $this->prepareParamDocumentation( $typeFromFile[ 'params' ] );
+
+			$result[] = $type;
+		}
+
+		return $result;
+	}
+
+	private function prepareParamDocumentation( &$paramsFromFile ) {
+		$result = [];
+
+		foreach( $paramsFromFile as $param ) {
+			$params = new stdClass();
+			$params->templateVar = $param[ 'templateVar' ];
+			$params->type = $param[ 'type' ];
+			$params->description = $this->prepareMessage( $param[ 'description' ] );
+
+			if( !empty( $param['objectVar'] ) ) {
+				$params->valueObject = $this->prepareObjectData( $param['objectVar'] );
+			}
+
+			if( !empty( $param['value'] ) ) {
+				$params->valueObject = $this->prepareValuetData( $param['value'] );
+			}
+
+			$result[] = $params;
+		}
+
+		return $result;
+	}
+
+	private function prepareObjectData( $objectVar ) {
+		$result = print_r( $objectVar, true );
+
+		return $result;
+	}
+
+	private function prepareValuetData( $value ) {
+		$result = print_r( $value, true );
+
+		return $result;
 	}
 
 	/**

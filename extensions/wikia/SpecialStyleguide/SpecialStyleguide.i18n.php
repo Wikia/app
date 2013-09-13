@@ -41,6 +41,13 @@ $messages['en'] = array(
 	// Components
 	'styleguide-components-header' => 'Components',
 	'styleguide-components-header-tagline' => 'Wikia UI styleguide re-usable elements',
+	'styleguide-examples-headline' => 'Examples',
+	'styleguide-types-headline' => 'Accepted configuration values',
+	'styleguide-types-param-cell-headline' => 'Parameter',
+	'styleguide-types-template-var-cell-headline' => 'Template variable',
+	'styleguide-types-type-cell-headline' => 'Type',
+	'styleguide-types-value-object-cell-headline' => 'value/object',
+	'styleguide-types-desc-cell-headline' => 'Description',
 );
 
 $messages['pl'] = array(

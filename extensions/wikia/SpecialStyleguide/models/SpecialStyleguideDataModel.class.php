@@ -91,6 +91,13 @@ class SpecialStyleguideDataModel {
 				]
 			],
 			'components' => [
+				'exampleHeadline' => wfMessage( 'styleguide-examples-headline' )->plain(),
+				'typesHeadline' => wfMessage( 'styleguide-types-headline' )->plain(),
+				'paramCellHeadline' => wfMessage( 'styleguide-types-param-cell-headline' )->plain(),
+				'templateVarCellHeadline' => wfMessage( 'styleguide-types-template-var-cell-headline' )->plain(),
+				'typeCellHeadline' => wfMessage( 'styleguide-types-type-cell-headline' )->plain(),
+				'valueObjectCellHeadline' => wfMessage( 'styleguide-types-value-object-cell-headline' )->plain(),
+				'descCellHeadline' => wfMessage( 'styleguide-types-desc-cell-headline' )->plain(),
 				'componentsList' => $this->sortComponents( $helper->getAllComponents() )
 			]
 		];
