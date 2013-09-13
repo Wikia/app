@@ -90,6 +90,8 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 
 		$packages = array( 'monobook_js' );
 
+		wfRunHooks('MonobookSkinAssetGroups', array(&$packages));
+
 		$srcs = AssetsManager::getInstance()->getURL( $packages );
 
 		foreach($srcs as $src) {
