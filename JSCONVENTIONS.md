@@ -4,6 +4,7 @@
 * [Early returns](#early-returns)
 * [Semi-colons](#semi-colons)
 * [Function-declarations within blocks](#function-declarations-within-blocks)
+
 ### [Still to be defined](#still-to-be-defined)
 
 ### Language Rules
