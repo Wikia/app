@@ -936,8 +936,8 @@ class CF_Container
      *
      * Constructor for Container
      *
-     * @param obj $cfs_auth CF_Authentication instance
-     * @param obj $cfs_http HTTP connection manager
+     * @param CF_Authentication $cfs_auth instance
+     * @param CF_Http $cfs_http HTTP connection manager
      * @param string $name name of Container
      * @param int $count number of Objects stored in this Container
      * @param int $bytes number of bytes stored in this Container
@@ -1897,7 +1897,7 @@ class CF_Object
     /**
      * Class constructor
      *
-     * @param obj $container CF_Container instance
+     * @param CF_Container $container CF_Container instance
      * @param string $name name of Object
      * @param boolean $force_exists if set, throw an error if Object doesn't exist
      * @param boolean $dohead if set, do a HEAD request to get object metadata
@@ -2575,12 +2575,14 @@ class CF_Object
         list($status, $reason, $etag, $last_modified, $content_type,
             $content_length, $metadata, $manifest, $headers) =
                 $this->container->cfs_http->head_object($this,$hdrs);
+
         #if ($status == 401 && $this->_re_auth()) {
         #    return $this->_initialize();
         #}
         if ($status == 404) {
             return False;
         }
+
         if ($status < 200 || $status > 299) {
             throw new InvalidResponseException("Invalid response (".$status."): "
                 . $this->container->cfs_http->get_error());
