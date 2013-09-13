@@ -48,7 +48,7 @@ body {
 	overflow-y: scroll; // otherwise we will have jump effect durring slidedown
 }
 
-input {
+input[type='text'] {
 	@include inputs;
 }
 
@@ -73,10 +73,10 @@ select {
 
 //try it out and hide button
 .sandbox_header {
-	margin-top: 25px;
-	input {
+	margin-top:25px;
+/*	input {
 		@include buttons;
-	}
+	}*/
 }
 
 .resource.active div.heading .collapse-expand-button,
@@ -105,3 +105,4 @@ h1 {
 @import "ApiDocsWrappers";
 @import "ApiDocsTry";
 @import "ApiDocsHighlight";
+@import "ApiDocsButtons";

@@ -24,7 +24,7 @@ function program3(depth0,data) {
 function program5(depth0,data) {
   
   
-  return "\n                    <h4>Parameters</h4>\n                    <table class='fullwidth'>\n                        <thead>\n                        <tr>\n                            <th>Parameter</th>\n                            <th>Value</th>\n                            <th>Description</th>\n                            <th>Parameter Type</th>\n                            <th>Data Type</th>\n                        </tr>\n                        </thead>\n                        <tbody class=\"operation-params\">\n\n                        </tbody>\n                    </table>\n                    ";
+  return "\n                    <h4>Parameters</h4>\n                    <table class='fullwidth'>\n                        <thead>\n                        <tr>\n                            <th>Parameter</th>\n                            <th>Value</th>\n                            <th>Description</th>\n                            <th>Parameter Type</th>\n                            <th>Data Type</th>\n                        </tr>\n\n                        </thead>\n                        <tbody class=\"operation-params\">\n\n                        </tbody>\n                    </table>\n                    ";
   }
 
 function program7(depth0,data) {
@@ -42,7 +42,7 @@ function program9(depth0,data) {
 function program11(depth0,data) {
   
   
-  return "\n                    <div class='sandbox_header'>\n                        <input class='submit' name='commit' type='button' value='Try it out!' />\n                        <a href='#' class='response_hider' style='display:none'>Hide Response</a>\n                        <img alt='Throbber' class='response_throbber' src='images/throbber.gif' style='display:none' />\n                    </div>\n                    ";
+  return "\n                    <div class='sandbox_header'>\n                        <input class='submit bt_large_blue' name='commit' type='button' value='Try it out!' />\n                        <a href='#' class='response_hider' style='display:none'>Hide Response</a>\n                        <img alt='Throbber' class='response_throbber' src='images/throbber.gif' style='display:none' />\n                    </div>\n                    ";
   }
 
   buffer += "\n    <ul class='operations' >\n      <li class='"
@@ -94,7 +94,7 @@ function program11(depth0,data) {
   buffer += "\n                    ";
   stack2 = helpers['if'].call(depth0, depth0.isReadOnly, {hash:{},inverse:self.program(11, program11, data),fn:self.program(9, program9, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n                </form>\n                <div class='response' style='display:none'>\n                    <div class=\"response_top\">\n                        <div class='container_left'>\n                            <h4>Request URL</h4>\n                            <div class='block request_url'></div>\n                        </div>\n                        <div class='container_right'>\n                            <h4>Response Code</h4>\n                            <div class='block response_code'></div>\n                        </div>\n                    </div>\n                    <h4>Response Body</h4>\n                    <div class='block response_body'></div>\n                    <h4>Response Headers</h4>\n                    <div class='block response_headers'></div>\n                </div>\n            </div>\n        </li>\n    </ul>\n";
+  buffer += "\n                </form>\n                <div class='response' style='display:none'>\n                    <div class=\"response_top\">\n                        <div class='container_left'>\n                            <h4>Request URL</h4>\n                            <div class='block request_url'></div>\n                        </div>\n                        <div class='container_right'>\n                            <h4>Response Code</h4>\n                            <div class='block response_code'></div>\n                        </div>\n                    </div>\n                    <input class='copy bt_medium_blue'  type='button' value='Copy URL' />\n                    <h4>Response Body</h4>\n                    <div class='block response_body'></div>\n                    <h4>Response Headers</h4>\n                    <div class='block response_headers'></div>\n                </div>\n            </div>\n        </li>\n    </ul>\n";
   return buffer;
   });
 })();

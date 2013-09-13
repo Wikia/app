@@ -39,6 +39,7 @@
                             <th>Parameter Type</th>
                             <th>Data Type</th>
                         </tr>
+
                         </thead>
                         <tbody class="operation-params">
 
@@ -63,7 +64,7 @@
                     {{#if isReadOnly}}
                     {{else}}
                     <div class='sandbox_header'>
-                        <input class='submit' name='commit' type='button' value='Try it out!' />
+                        <input class='submit bt_large_blue' name='commit' type='button' value='Try it out!' />
                         <a href='#' class='response_hider' style='display:none'>Hide Response</a>
                         <img alt='Throbber' class='response_throbber' src='images/throbber.gif' style='display:none' />
                     </div>
@@ -80,6 +81,7 @@
                             <div class='block response_code'></div>
                         </div>
                     </div>
+                    <input class='copy bt_medium_blue'  type='button' value='Copy URL' />
                     <h4>Response Body</h4>
                     <div class='block response_body'></div>
                     <h4>Response Headers</h4>

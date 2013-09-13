@@ -15,6 +15,7 @@
 		OperationView.prototype.events = {
 			'submit .sandbox': 'submitOperation',
 			'click .submit': 'submitOperation',
+			'click .copy':'copyOperation',
 			'click .response_hider': 'hideResponse',
 			'click .toggleOperation': 'toggleOperationContent'
 		};
@@ -86,6 +87,34 @@
 			});
 			return $('.operation-status', $(this.el)).append(statusCodeView.render().el);
 		};
+
+		OperationView.prototype.copyOperation = function(e) {
+			console.log(this.el);
+			objs = ($(this.el).find(".request_url pre"));
+			if(objs.length && objs[0].innerHTML)
+			{
+				var s = objs[0].innerHTML;
+				//--clipboard
+				// ie
+				if (window.clipboardData && clipboardData.setData) {
+					clipboardData.setData('text', s);
+				}
+				// others
+				else {
+					var flashcopier = 'flashcopier';
+					if(!document.getElementById(flashcopier)) {
+						var divholder = document.createElement('div');
+						divholder.id = flashcopier;
+						document.body.appendChild(divholder);
+					}
+					document.getElementById(flashcopier).innerHTML = '';
+					var divinfo = '<embed src="extensions/wikia/ApiDocs/files/_clipboard.swf" FlashVars="clipboard='+encodeURIComponent(s)+'" width="0" height="0" type="application/x-shockwave-flash"></embed>';
+					document.getElementById(flashcopier).innerHTML = divinfo;
+				}
+			}
+
+			//--
+		}
 
 		OperationView.prototype.submitOperation = function(e) {
 			var bodyParam, consumes, error_free, form, headerParams, invocationUrl, isFileUpload, isFormPost, map, o, obj, param, paramContentTypeField, responseContentTypeField, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref, _ref1, _ref2, _ref3, _ref4,
@@ -281,7 +310,7 @@
 					}
 					return _results;
 				})())[0];
-				type = type === void 0 ? 'other' : type;
+				type = type === void 0 ? 'other' : type;http://gebrauchtwagen.lexus.de/go.to/modix/3,2,qb5yvdu/advanced.html?version=460
 				fromTo = lastType + '->' + type;
 				lastType = type;
 				padding = '';
