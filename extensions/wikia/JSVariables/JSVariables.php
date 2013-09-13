@@ -59,6 +59,11 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 	// PER-58: moved wgStyleVersion to <head>
 	$vars['wgStyleVersion'] = (string)($wg->StyleVersion);
 
+	$wg->NoExternals = $wg->Request->getBool('noexternals', $wg->NoExternals);
+	if (!empty($wgNoExternals)) {
+		$vars["wgNoExternals"] = $wg->NoExternals;
+	}
+
 	$scripts .= Html::inlineScript("var wgNow = new Date();") .	"\n";
 
 	return true;
