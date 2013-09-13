@@ -79,7 +79,6 @@ class ChatEntryPoint {
 				$chatters = [];
 				// Gets array of users currently in chat to populate rail module and user stats menus
 				$chattersIn = NodeApiClient::getChatters();
-				$chattersIn = ["Wozniakjacek", "Hilleyb", " NeptuNooo", "NeptuNtester", "AndLuk", "Aleal"];
 				foreach( $chattersIn as $i => $val ) {
 					$chatters[ $i ] = WikiaDataAccess::cache( wfMemcKey( 'chatavatars', $val, 'v2' ), 60 * 60, function() use ( $wgEnableWallExt, $val ) {
 						$chatter = [ 'username' => $val,
