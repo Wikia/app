@@ -325,7 +325,7 @@ class GameGuidesController extends WikiaController {
 		);
 
 		//when apps will be updated this won't be needed anymore
-		$this->response->setVal( 'cb', $hash );
+		$this->response->setVal( 'cb', $this->wg->StyleVersion );
 	}
 
 	/**

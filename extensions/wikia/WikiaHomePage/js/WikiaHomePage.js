@@ -470,7 +470,9 @@ WikiaHomePageRemix.prototype = {
 		this.remixCount = 0;
 		this.shownCollections = {};
 		for (collectionId in this.collectionsWikisStack) {
-			this.shownCollections[collectionId] = false;
+			if (this.collectionsWikisStack.hasOwnProperty(collectionId)) {
+				this.shownCollections[collectionId] = false;
+			}
 		}
 
 		var lsData = $.storage.get(this.COLLECTIONS_LS_KEY);
@@ -532,8 +534,8 @@ WikiaHomePageRemix.prototype = {
 		var nextCollectionId;
 		var out;
 
-		for (collectionId in Object.keys(this.shownCollections)) {
-			if (!this.shownCollections[collectionId]) {
+		for (collectionId in this.shownCollections) {
+			if (this.shownCollections.hasOwnProperty(collectionId) && !this.shownCollections[collectionId]) {
 				nextCollectionId = collectionId;
 				break;
 			}

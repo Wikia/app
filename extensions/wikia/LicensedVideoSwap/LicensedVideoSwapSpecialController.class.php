@@ -81,7 +81,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// for monobook users, specify wikia skin in querystring
 		$queryArr = [];
-		if( $skin == "monobook" ) {
+		if ( $skin == "monobook" ) {
 			$queryArr["useskin"] = "wikia";
 		}
 

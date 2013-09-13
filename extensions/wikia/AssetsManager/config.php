@@ -953,6 +953,47 @@ $config['VET_js'] = array(
 	)
 );
 
+/**
+ * @name VideoPageTool
+ * @description Assets for the VideoPageTool, same styles as SpecialMarketingToolbox
+ * @TODO: decide if we want to split the js/css into two different packages for index and edit pages
+ */
+
+$config['videopagetool_js'] = array(
+	'skin' => array( 'oasis' ),
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//resources/jquery.ui/jquery.ui.core.js',
+		'//resources/jquery.ui/jquery.ui.datepicker.js',
+		'//resources/jquery/jquery.validate.js',
+		'//extensions/wikia/VideoPageTool/js/models/validator.js',
+		'//extensions/wikia/VideoPageTool/js/models/datepicker.js',
+		// TODO: probably move this jQuery plugin to /resources at some point
+		'//extensions/wikia/VideoPageTool/js/views/switcher.js',
+		'//extensions/wikia/VideoPageTool/js/views/datepicker.js',
+		'//extensions/wikia/VideoPageTool/js/views/index.js',
+		'//extensions/wikia/VideoPageTool/js/views/edit.js',
+	)
+);
+
+$config['videopagetool_css'] = array(
+	'skin' => array( 'oasis' ),
+	'type' => AssetsManager::TYPE_CSS,
+	'assets' => array(
+		'//resources/jquery.ui/themes/default/jquery.ui.datepicker.css'
+	)
+);
+
+$config['videopagetool_scss'] = array(
+	'skin' => array( 'oasis' ),
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => array(
+		'//skins/oasis/css/modules/CorporateDatepicker.scss',
+		'//extensions/wikia/VideoPageTool/css/VideoPageTool.scss',
+		'//extensions/wikia/VideoPageTool/css/VideoPageTool_Header.scss'
+	)
+);
+
 /** UserLogin **/
 $config['userlogin_scss_wikiamobile'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
