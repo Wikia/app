@@ -228,9 +228,10 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @param integer $thumbWidth
 	 * @param integer $thumbHeight
 	 * @param integer $postedInArticles
+	 * @param bool $isLocal
 	 * @return array $videoDetail
 	 */
-	public function getVideoDetail( $videoInfo, $thumbWidth, $thumbHeight, $postedInArticles ) {
+	public function getVideoDetail( $videoInfo, $thumbWidth, $thumbHeight, $postedInArticles, $isLocal = true ) {
 		wfProfileIn( __METHOD__ );
 
 		$videoDetail = array();
@@ -260,7 +261,7 @@ class VideoHandlerHelper extends WikiaModel {
 				$videoDetail = array(
 					'title' => $title->getDBKey(),
 					'fileTitle' => $title->getText(),
-					'fileUrl' => $title->getLocalUrl(),
+					'fileUrl' => ($isLocal ? $title->getLocalUrl() : $title->getFullURL()),
 					'thumbUrl' => $thumbUrl,
 					'userName' => $userName,
 					'userUrl' => $userUrl,
@@ -279,6 +280,34 @@ class VideoHandlerHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $videoDetail;
+	}
+
+	public function getVideoDetailFromWiki($dbName, $title, $thumbWidth, $thumbHeight, $postedInArticles) {
+		$params = array('controller'   .'='. 'VideoHandler',
+						'method'       .'='. 'getVideoDetail',
+						'fileTitle'    .'='. urlencode($title),
+						'thumbWidth'   .'='. $thumbWidth,
+						'thumbHeight'  .'='. $thumbHeight,
+						'articleLimit' .'='. $postedInArticles,
+						'format'       .'='. 'json',
+		);
+
+
+		$url = WikiFactory::DBtoURL($dbName);
+		$url = WikiFactory::getLocalEnvURL($url);
+		$url .= '/wikia.php?'.implode('&', $params);
+
+		$out = Http::get($url);
+		if ( !$out ) {
+			return null;
+		}
+
+		$data = json_decode($out, true);
+		if ( !empty($data['detail']) ) {
+			return $data['detail'];
+		} else {
+			return null;
+		}
 	}
 
 	/**

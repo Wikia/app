@@ -194,4 +194,18 @@ class VideoHandlerController extends WikiaController {
 		$this->fileExists = $fileExists;
 	}
 
+	public function getVideoDetail() {
+		$fileTitle = $this->getVal( 'fileTitle', '' );
+		$thumbWidth = $this->getVal( 'thumbWidth', '250' );
+		$thumbHeight = $this->getVal( 'thumbHeight', '250' );
+		$articleLimit = $this->getVal( 'articleLimit', '10' );
+
+		$helper = new VideoHandlerHelper();
+		$videoDetail = $helper->getVideoDetail( array('title' => $fileTitle),
+												$thumbWidth,
+												$thumbHeight,
+												$articleLimit,
+												false );
+		$this->detail = $videoDetail;
+	}
 }
