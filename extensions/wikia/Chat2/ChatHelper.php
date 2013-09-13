@@ -157,6 +157,7 @@ class ChatHelper {
 		global $wgUser;
 		$vars['wgWikiaChatModuleContent'] = ( $wgUser->isAnon() ) ? '' : F::app()->sendRequest('ChatRail', 'Contents' )->toString();
 		$vars['wgWikiaChatWindowFeatures'] = ChatRailController::CHAT_WINDOW_FEATURES;
+
 		return true;
 	}
 
@@ -200,6 +201,7 @@ class ChatHelper {
 				break;
 			}
 		}
+		JSMessages::enqueuePackage('ChatEntryPoint', JSMessages::INLINE);
 
 		wfProfileOut(__METHOD__);
 		return true;
