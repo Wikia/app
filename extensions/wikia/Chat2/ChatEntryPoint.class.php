@@ -58,7 +58,16 @@ class ChatEntryPoint {
 	}
 
 	/**
-	 * todo - doc...
+	 * Return information about users present in the chat channel. This method has its internal cache. Method returns
+	 * an array, where each of the users is described by the following attributes:
+	 * * username - chatter login
+	 * * avatarUrl - chatter avatar url
+	 * * editCount - number of chatter's edits
+	 * * showSince - flag indicating if we can display the information when the chatter joined the wiki
+	 * * since_year && since_month - month and year, when chatter joined this wiki
+	 * * profileUrl - link to chatter talk page (or message wall, if it's enabled)
+	 * * contribsUrl - link to chatter contribution page
+	 * @return array array containing chatters info
 	 */
 	static public function getChatUsersInfo() {
 		global $wgReadOnly;
