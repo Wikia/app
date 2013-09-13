@@ -57,12 +57,15 @@ strong, b {
 
 select {
 	@include inputs;
+	-moz-appearance: none;
 	-webkit-appearance: none;
 	background-color: #ffffff;
 	background-image: url(/extensions/wikia/ApiDocs/files/arrow-01.png); /* base64 */
 	background-position: 134px 10px;
 	background-repeat: no-repeat;
 	overflow: hidden;
+	text-indent: 1px;
+	text-overflow: '';
 	width: 155px;
 }
 
