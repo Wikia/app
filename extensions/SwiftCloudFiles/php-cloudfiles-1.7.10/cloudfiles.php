@@ -373,7 +373,7 @@ class CF_Connection
      * If the environement variable RACKSPACE_SERVICENET is defined it will
      * force to connect via the servicenet.
      *
-     * @param obj $cfs_auth previously authenticated CF_Authentication instance
+     * @param CF_Authentication $cfs_auth previously authenticated CF_Authentication instance
      * @param boolean $servicenet enable/disable access via Rackspace servicenet.
      * @throws AuthenticationException not authenticated
      */
@@ -525,7 +525,7 @@ class CF_Connection
      * $conn->delete_container("my photos");
      * </code>
      *
-     * @param string|obj $container container name or instance
+     * @param string|CF_Container $container container name or instance
      * @return boolean <kbd>True</kbd> if successfully deleted
      * @throws SyntaxException missing proper argument
      * @throws InvalidResponseException invalid response
@@ -590,7 +590,7 @@ class CF_Connection
      * </code>
      *
      * @param string $container_name name of the remote Container
-     * @return container CF_Container instance
+     * @return CF_Container instance
      * @throws NoSuchContainerException thrown if no remote Container
      * @throws InvalidResponseException unexpected response
      */
@@ -1516,8 +1516,8 @@ class CF_Container
      * $images->copy_object_to("disco_dancing.jpg","container_target");
      * </code>
      *
-     * @param obj $obj name or instance of Object to copy
-     * @param obj $container_target name or instance of target Container
+     * @param CF_Object $obj name or instance of Object to copy
+     * @param CF_Container $container_target name or instance of target Container
      * @param string $dest_obj_name name of target object (optional - uses source name if omitted)
      * @param array $metadata metadata array for new object (optional)
      * @param array $headers header fields array for the new object (optional)
@@ -1590,8 +1590,8 @@ class CF_Container
      * $images->copy_object_from("disco_dancing.jpg","container_source");
      * </code>
      *
-     * @param obj $obj name or instance of Object to copy
-     * @param obj $container_source name or instance of source Container
+     * @param CF_Object $obj name or instance of Object to copy
+     * @param CF_Container $container_source name or instance of source Container
      * @param string $dest_obj_name name of target object (optional - uses source name if omitted)
      * @param array $metadata metadata array for new object (optional)
      * @param array $headers header fields array for the new object (optional)
@@ -1665,8 +1665,8 @@ class CF_Container
      * $images->move_object_to("disco_dancing.jpg","container_target");
      * </code>
      *
-     * @param obj $obj name or instance of Object to move
-     * @param obj $container_target name or instance of target Container
+     * @param CF_Object $obj name or instance of Object to move
+     * @param CF_Container $container_target name or instance of target Container
      * @param string $dest_obj_name name of target object (optional - uses source name if omitted)
      * @param array $metadata metadata array for new object (optional)
      * @param array $headers header fields array for the new object (optional)
@@ -1705,8 +1705,8 @@ class CF_Container
      * $images->move_object_from("disco_dancing.jpg","container_target");
      * </code>
      *
-     * @param obj $obj name or instance of Object to move
-     * @param obj $container_source name or instance of target Container
+     * @param CF_Object $obj name or instance of Object to move
+     * @param CF_Container $container_source name or instance of target Container
      * @param string $dest_obj_name name of target object (optional - uses source name if omitted)
      * @param array $metadata metadata array for new object (optional)
      * @param array $headers header fields array for the new object (optional)
@@ -1745,8 +1745,8 @@ class CF_Container
      * $images->delete_object("disco_dancing.jpg");
      * </code>
      *
-     * @param obj $obj name or instance of Object to delete
-     * @param obj $container name or instance of Container in which the object resides (optional)
+     * @param CF_Object $obj name or instance of Object to delete
+     * @param CF_Container $container name or instance of Container in which the object resides (optional)
      * @return boolean <kbd>True</kbd> if successfully removed
      * @throws SyntaxException invalid Object name
      * @throws NoSuchObjectException remote Object does not exist
@@ -2620,4 +2620,3 @@ class CF_Object
  * c-hanging-comment-ender-p: nil
  * End:
  */
-?>
