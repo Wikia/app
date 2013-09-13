@@ -581,7 +581,10 @@ class WikiaHomePageHelper extends WikiaModel {
 			$title = Title::newFromText($imageName, NS_IMAGE);
 			$file = wfFindFile($title);
 
-			$imageUrl = $this->getImageUrlFromFile($file, $requestedWidth, $requestedHeight);
+			$imageUrl = ImagesService::overrideThumbnailFormat(
+				$this->getImageUrlFromFile($file, $requestedWidth, $requestedHeight),
+				ImagesService::EXT_JPG
+			);
 		}
 
 		wfProfileOut(__METHOD__);
