@@ -1333,7 +1333,7 @@ class CF_Container
      *
      * @param string $obj_name name of storage Object
      * @param array $hdrs user-defined headers (X-Newest: true, etc.)
-     * @return obj CF_Object instance
+     * @return CF_Object instance
      */
     function create_object($obj_name=NULL, $hdrs=array())
     {
@@ -1363,7 +1363,7 @@ class CF_Container
      *
      * @param string $obj_name name of storage Object
      * @param array $hdrs user-defined headers (X-Newest: true, etc.)
-     * @return obj CF_Object instance
+     * @return CF_Object instance
      */
     function get_object($obj_name=NULL, $hdrs=array())
     {
