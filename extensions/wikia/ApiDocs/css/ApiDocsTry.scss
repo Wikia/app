@@ -46,6 +46,9 @@ div.response_body {
 	margin-bottom:30px;
 	max-height:500px;
 	overflow:auto;
+	pre {
+		padding:15px;
+	}
 }
 
 
@@ -54,4 +57,11 @@ div.response_headers {
 	border:1px solid $midGray-c3;
 	overflow:auto;
 	width:100%;
+
+	pre {
+		padding:15px;
+		b{
+			font-weight:bold;
+		}
+	}
 }

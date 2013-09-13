@@ -319,7 +319,8 @@
 			response_body = pre;
 			$(".response_code", $(this.el)).html("<pre>" + data.status + "</pre>");
 			$(".response_body", $(this.el)).html(response_body);
-			$(".response_headers", $(this.el)).html("<pre>" + data.getAllResponseHeaders() + "</pre>");
+			var headers=data.getAllResponseHeaders().replace(/^([a-z0-9_-]+:)/mgi,'<b>$1</b>');
+			$(".response_headers", $(this.el)).html("<pre>" + headers + "</pre>");
 			$(".response", $(this.el)).slideDown();
 			$(".response_hider", $(this.el)).show();
 			$(".response_throbber", $(this.el)).hide();
