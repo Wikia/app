@@ -22,11 +22,8 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	 * If no subpage, calendar template will render
 	 * Otherwise, form template will render
 	 * @requestParam string language
-	 * @requestParam string date [yyyy-mm-dd]
 	 * @responseParam array languages - list of languages
 	 * @responseParam string language - current language
-	 * @responseParam string result [ok/error]
-	 * @responseParam string msg - result message
 	 */
 	public function index() {
 		$this->response->addAsset('videopagetool_js');
@@ -55,11 +52,6 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		$helper = new VideoPageToolHelper();
 		$this->languages = $helper->getLanguages();
 		$this->language = $language;
-
-		$response = $this->sendSelfRequest( 'getCalendarInfo', array( 'language' => $language ) );
-		$this->calendarInfo = $response->getVal( 'info', array() );
-		$this->result = $response->getVal( 'result', '' );
-		$this->msg = $response->getVal( 'msg', '' );
 	}
 
 	/**
