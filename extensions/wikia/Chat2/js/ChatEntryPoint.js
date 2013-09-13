@@ -49,6 +49,8 @@ var ChatEntryPoint = {
 
 	// fill-in the whole module template
 	processModuleTemplate: function($t) {
+		//@todo - right now it's a custom html-based template, all the login for inserting variables in here
+		// once the mustache is loaded on every page, rewrite the template and remove most of the code below
 		var items = [], i;
 		$t.find('.chat-contents').
 			addClass((window.wgWikiaChatUsers.length) ? 'chat-room-active' :  'chat-room-empty').
