@@ -20,7 +20,7 @@ class ChatHelper {
 		wfProfileIn(__METHOD__);
 
 		// Above spotlights, below everything else. BugzId: 4597.
-		$modules[1175] = array('ChatRail', 'Placeholder', null);
+		$modules[1175] = array('ChatRail', 'placeholder', null);
 
 		wfProfileOut(__METHOD__);
 		return true;
@@ -155,8 +155,15 @@ class ChatHelper {
 	 */
 	public static function onMakeGlobalVariablesScript(&$vars) {
 		global $wgUser;
-		$vars['wgWikiaChatModuleContent'] = ( $wgUser->isAnon() ) ? '' : F::app()->sendRequest('ChatRail', 'Contents' )->toString();
-		$vars['wgWikiaChatWindowFeatures'] = ChatRailController::CHAT_WINDOW_FEATURES;
+		if ($wgUser->isLoggedIn()) {
+			$vars[ 'wgWikiaChatUsers' ] = ChatEntryPoint::getChatUsersInfo();
+			if ( empty( $vars[ 'wgWikiaChatUsers' ] ) ) {
+				// we will need it to attract user to join chat
+				$vars[ 'wgWikiaChatProfileAvatarUrl' ] = AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
+			}
+		} else {
+			$vars[ 'wgWikiaChatUsers' ] = '';
+		}
 
 		return true;
 	}
@@ -217,17 +224,17 @@ class ChatHelper {
 			if(Chat::getBanInformation($wgCityId, $user) !== false ) {
 				$dir = "change";
 				LogEventsList::showLogExtract(
-				$wgOut,
-				'chatban',
-				$nt->getPrefixedText(),
-				'',
-				array(
+					$wgOut,
+					'chatban',
+					$nt->getPrefixedText(),
+					'',
+					array(
 						'lim' => 1,
 						'showIfEmpty' => false,
 						'msgKey' => array(
 							'chat-contributions-ban-notice',
 							$nt->getText() # Support GENDER in 'sp-contributions-blocked-notice'
-							),
+						),
 						'offset' => '' # don't use $wgRequest parameter offset
 					)
 				);
@@ -294,7 +301,7 @@ class ChatHelper {
 			$link = "[[User:{$targetUser->getName()}]]";
 		} else {
 			$link = $skin->userLink( $id, $title->getText() )
-							.$skin->userToolLinks( $id, $title->getText(), false );
+				.$skin->userToolLinks( $id, $title->getText(), false );
 		}
 
 		$time = "";
