@@ -281,7 +281,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 		$db = wfGetDB(DB_SLAVE,array(),$wgExternalSharedDB);
 		$where = array(
 			'l.city_public' => 1,
-			'l.city_flags & 512 = 0',
+			'l.city_flags & ' . WikiFactory::FLAG_PROTECTED . ' = 0',
 			// it could be -55 days, but leaving the margin for TZs
 			"l.city_created < \"".wfTimestamp(TS_DB,strtotime(self::$FETCH_TIME_LIMIT))."\"",
 			"(v.city_flags IS NULL OR v.city_flags & " . WikisModel::FLAG_OFFICIAL . " = 0)",
