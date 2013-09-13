@@ -98,13 +98,19 @@ class VideoHandlerHooks {
 		);
 		
 		if ( !empty( $wgEnableCephFileBackend ) ) {
-			global $wgDBname;
+			global $wgDBname, $wgLanguageCode;
+			
+			$container = $wgDBname;
+			if ( $wgLanguageCode != 'en' ) { 
+				$container .= sprintf( "/%s", $wgLanguageCode );
+			}
+
 			$wgLocalFileRepo['backend'] = 'ceph-backend';
-			$wgLocalFileRepo['zones'] = array(
-				'public' => array( 'container' => $wgDBname, 'url' => 'http://s3.dfs-s1', 'directory' => 'images' ),
-				'temp'   => array( 'container' => $wgDBname, 'url' => 'http://s3.dfs-s1', 'directory' => 'images/temp' ),
-				'thumb'  => array( 'container' => $wgDBname, 'url' => 'http://s3.dfs-s1', 'directory' => 'images/thumb' ),
-				'deleted'=> array( 'container' => $wgDBname, 'url' => 'http://s3.dfs-s1', 'directory' => 'images/archive' )
+			$wgLocalFileRepo['zones'] = array (
+				'public' => array( 'container' => $container, 'url' => 'http://s3.dfs-s1', 'directory' => 'images' ),
+				'temp'   => array( 'container' => $container, 'url' => 'http://s3.dfs-s1', 'directory' => 'images/temp' ),
+				'thumb'  => array( 'container' => $container, 'url' => 'http://s3.dfs-s1', 'directory' => 'images/thumb' ),
+				'deleted'=> array( 'container' => $container, 'url' => 'http://s3.dfs-s1', 'directory' => 'images/archive' )
 			);
 		}
 

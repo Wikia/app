@@ -24,6 +24,7 @@ class SwiftFileBackend extends FileBackendStore {
 	protected $auth; // Swift authentication handler
 	protected $authTTL; // integer seconds
 	protected $swiftAnonUser; // string; username to handle unauthenticated requests
+	protected $swiftTimeout; // integer; number of seconds timeout consistent with php-cloudfiles
 	protected $maxContCacheSize = 100; // integer; max containers with entries
 
 	/** @var CF_Connection */
@@ -44,6 +45,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 *                         'levels' : the number of hash levels (and digits)
 	 *                         'repeat' : hash subdirectories are prefixed with all the 
 	 *                                    parent hash directory names (e.g. "a/ab/abc")
+	 *	  swiftTimeout       : number of seconds timeout consistent with php-cloudfiles. Default: 10
 	 */
 	public function __construct( array $config ) {
 		parent::__construct( $config );
@@ -53,12 +55,15 @@ error_log ( __METHOD__ . ": config = " . print_r( $config, true ) . "\n", 3, "/t
 			$config['swiftUser'], 
 			$config['swiftKey'], 
 			null, // account; unused
-			$config['swiftAuthUrl'] 
+			$config['swiftAuthUrl']
 		);
 		/* <Wikia> */
 		if ( !empty( $config['debug'] ) ) {
 			$this->auth->setDebug( $config['debug'] );
 		}
+		$this->swiftTimeout = isset ( $config['swiftTimeout'] ) 
+			? intval( $config['swiftTimeout'] )
+			: 10;
 		/* </Wikia> */
 		// Optional settings
 		$this->authTTL = isset( $config['swiftAuthTTL'] )
@@ -333,6 +338,7 @@ error_log( __METHOD__ . ": getContainer( $fullCont ) =  " . print_r( $contObj, t
 			// NoSuchContainerException not thrown: container must exist
 			return $status; // already exists
 		} catch ( NoSuchContainerException $e ) {
+error_log( __METHOD__ . ": NoSuchContainerException\n", 3, "/tmp/moli.log" );
 			// NoSuchContainerException thrown: container does not exist
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
@@ -346,13 +352,23 @@ error_log( __METHOD__ . ": getContainer( $fullCont ) =  " . print_r( $contObj, t
 		// (b) Create container as needed
 		try {
 			$contObj = $this->createContainer( $fullCont );
+error_log( __METHOD__ . ": createContainer() =  " . print_r( $contObj, true ) . "\n", 3, "/tmp/moli.log" );
+error_log( __METHOD__ . ": is swiftAnonUser =  " . print_r( $this->swiftAnonUser, true ) . "\n", 3, "/tmp/moli.log" );
+			// Make container public to end-users...
 			if ( $this->swiftAnonUser != '' ) {
-				// Make container public to end-users...
 				$status->merge( $this->setContainerAccess(
 					$contObj,
 					array( $this->auth->username, $this->swiftAnonUser ), // read
+					array( $this->auth->username, $this->swiftAnonUser ) // write
+				) );
+			} else {
+error_log( __METHOD__ . ": setContainerAccess r:* \n", 3, "/tmp/moli.log" );
+				$status->merge( $this->setContainerAccess(
+					$contObj,
+					array( $this->auth->username, '.r:*' ), // read
 					array( $this->auth->username ) // write
 				) );
+error_log( __METHOD__ . ": statsu = " . print_r( $status, true ). " \n", 3, "/tmp/moli.log" );
 			}
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
@@ -700,11 +716,12 @@ error_log( __METHOD__ . ": getContainer( $fullCont ) =  " . print_r( $contObj, t
 		CF_Container $contObj, array $readGrps, array $writeGrps
 	) {
 		$creds = $contObj->cfs_auth->export_credentials();
-
+error_log( __METHOD__ .": creds = " . print_r( $creds, true ) . "\n", 3, "/tmp/moli.log" );
 		$url = $creds['storage_url'] . '/' . rawurlencode( $contObj->name );
+error_log( __METHOD__ .": url = " . print_r( $url, true ) . "\n", 3, "/tmp/moli.log" );
 
 		// Note: 10 second timeout consistent with php-cloudfiles
-		$req = new CurlHttpRequest( $url, array( 'method' => 'POST', 'timeout' => 10 ) );
+		$req = new CurlHttpRequest( $url, array( 'method' => 'POST', 'timeout' => $this->swiftTimeout ) );
 		$req->setHeader( 'X-Auth-Token', $creds['auth_token'] );
 		$req->setHeader( 'X-Container-Read', implode( ',', $readGrps ) );
 		$req->setHeader( 'X-Container-Write', implode( ',', $writeGrps ) );
