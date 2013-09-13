@@ -34,31 +34,29 @@ var AdminDashboard = {
 
 		if( $.fn.addVideoButton ) { //FB#68272
 			addVideoButton.addVideoButton({
-				callbackAfterSelect: function(url) {
-					require(['wikia.vet'], function(vet) {
-						$.nirvana.postJson(
-							// controller
-							'VideosController',
-							// method
-							'addVideo',
-							// data
-							{ url: url },
-							// success callback
-							function( formRes ) {
-								GlobalNotification.hide();
-								if ( formRes.error ) {
-									GlobalNotification.show( formRes.error, 'error' );
-								} else {
-									vet.close();
-									window.location = addVideoButtonReturnUrl;
-								}
-							},
-							// error callback
-							function() {
-								GlobalNotification.show( $.msg('vet-error-while-loading'), 'error' );
+				callbackAfterSelect: function(url, VET) {
+					$.nirvana.postJson(
+						// controller
+						'VideosController',
+						// method
+						'addVideo',
+						// data
+						{ url: url },
+						// success callback
+						function( formRes ) {
+							GlobalNotification.hide();
+							if ( formRes.error ) {
+								GlobalNotification.show( formRes.error, 'error' );
+							} else {
+								VET.close();
+								window.location = addVideoButtonReturnUrl;
 							}
-						);
-					});
+						},
+						// error callback
+						function() {
+							GlobalNotification.show( $.msg('vet-error-while-loading'), 'error' );
+						}
+					);
 					// Don't move on to second VET screen.  We're done.
 					return false;
 				}
@@ -75,6 +73,7 @@ var AdminDashboard = {
 
 		$("#AdminDashboard").on("click", "a[data-tracking]", function(e) {
 			var t = $(this);
+			// TODO: VID-816 AddVideo button doesn't stop at VET b/c href is in the tracking call
 			AdminDashboard.track(Wikia.Tracker.ACTIONS.CLICK, t.data('tracking'), null, {href: t.attr('href')}, e);
  		});
 	},
