@@ -74,9 +74,7 @@ class ChatEntryPoint {
 		wfProfileIn( __METHOD__ );
 		$chatters = [];
 		if( empty( $wgReadOnly ) ) {
-			$key = wfMemcKey( 'chatusers' );
-
-			$chatters = WikiaDataAccess::cache( $key, 60, function() {
+			$chatters = WikiaDataAccess::cache( self::getChatUsersMemcKey(), 60, function() {
 				global $wgEnableWallExt;
 				$chatters = [];
 				// Gets array of users currently in chat to populate rail module and user stats menus
