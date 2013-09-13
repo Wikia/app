@@ -4,9 +4,10 @@
 	clear: both;
 	width: 960px;
 
-	h2 {
+	.heading {
 		margin: 0;
 		a {
+			@include transition( all, 0.2s, ease-in-out, 0);
 			color: $blue-c1;
 			display: block;
 			font-weight: bold;
@@ -15,11 +16,17 @@
 			position: relative;
 			text-decoration:none;
 		}
-
 		.api-name {
 			font-size: 24px;
 			line-height: 54px;
 			margin-left: 15px;
+		}
+		.description {
+			color: $gray-c4;
+			display: block;
+			font-size: 14px;
+			font-weight: normal;
+			padding-top: 10px;
 		}
 	}
 	.collapse-button,
@@ -45,14 +52,6 @@
 	.expand-button {
 		background-color: #ffffff;
 	}
-
-	.description {
-		color: $gray-c4;
-		display: block;
-		font-size: 14px;
-		font-weight: normal;
-		padding-top: 10px;
-	}
 }
 .resource:last-child {
 	border-bottom: solid 1px $midGray-c3;
@@ -60,11 +59,15 @@
 //after toggle,
 //.resource
 .active {
-	h2 {
+	.heading {
 		a {
+			@include transition( all, 0.2s, ease-in-out, 0);
 			color: #ffffff;
 			background-color: $blue-c1;
 			border-bottom: solid 1px $midGray-c3;
+		}
+		.description {
+			color: #ffffff;
 		}
 	}
 	.collapse-button {
@@ -72,8 +75,5 @@
 	}
 	.expand-button {
 		display: none;
-	}
-	.description {
-		color: #ffffff;
 	}
 }
