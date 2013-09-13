@@ -44,19 +44,12 @@ $wgResourceModules += array(
 			'ui/tools/buttons/ve.ui.WikiaMediaInsertButtonTool.js',
 			'ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
 		),
-		'styles' => 'ui/styles/ve.ui.Tool.css',
+		'styles' => array(
+			'ui/styles/ve.ui.Tool.css',
+			'ui/styles/ve.ui.Icons-vector.css',
+		),
 		'messages' => array(
 			'visualeditor-wikiamediainsertbuttontool-label',
-		),
-		'dependencies' => array(
-			'ext.visualEditor.core'
-		),
-		'localBasePath' => dirname( __FILE__ ) . '/modules',
-		'remoteExtPath' => 'VisualEditor/wikia',
-	),
-	'ext.visualEditor.iconsRaster' => array(
-		'styles' => array(
-			'ui/styles/ve.ui.Icons-raster.css',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core'
@@ -77,8 +70,6 @@ $wgResourceModules += array(
 );
 
 $wgVisualEditorPluginModules[] = 'ext.visualEditor.wikiaCore';
-//$wgVisualEditorPluginModules[] = 'ext.visualEditor.iconsRaster';
-$wgVisualEditorPluginModules[] = 'ext.visualEditor.iconsVector';
 
 // Register hooks
 $wgHooks['ResourceLoaderTestModules'][] = 'Wikia_onResourceLoaderTestModules';
