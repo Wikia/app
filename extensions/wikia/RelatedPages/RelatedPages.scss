@@ -62,8 +62,3 @@
 		margin: 0;
 	}
 }
-
-/* sloth JS lib won't fire the event if the height of element === 0 */
-#WikiaArticleFooter {
-	height: 1px;
-}

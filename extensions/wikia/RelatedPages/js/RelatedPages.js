@@ -12,7 +12,7 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function( sloth, w, $ ){
 			$placeholder = $( '#WikiaArticleFooter' );
 			break;
 		case 'monobook':
-			$placeholder = $( '#mw-data-after-content' );
+			$placeholder = $( '#mw-data-after-content' )
 			break;
 	}
 
@@ -91,9 +91,6 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function( sloth, w, $ ){
 								pages: relatedPages
 							};
 
-							// sloth JS lib won't fire the event if the height of element === 0
-							// that's because in CSS we gave to the elements height === 1px
-							$placeholder.css( 'height', 'auto' );
 							$placeholder.prepend( mustache.render( template, mustacheData ) );
 						}
 					});
