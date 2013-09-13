@@ -45,10 +45,11 @@ class ApiDocsService {
 				];
 			}
 			/** @var \Swagger\Annotations\Resource $resource  */
-			$cb = ($this->pathBuilder);
+			$cb = $this->pathBuilder;
 			$path = $cb( $resource->resourcePath );
 
 			$result['apis'][] = array(
+				'readableName' => $resource->resourcePath,
 				'path' => $path,
 				'description' => $resource->apis[0]->description
 			);
