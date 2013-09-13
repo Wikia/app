@@ -30,10 +30,14 @@
 			display: inline-block;
 		}
 	}
+	a:hover {
+		text-decoration: none;
+	}
 	.articleSnippet {
 		height: 100px;
 		overflow: hidden;
 		width: 190px;
+		color: $color-text;
 		// quotes
 		&:before {
 			content: '\201C';
@@ -54,6 +58,9 @@
 	.more {
 		display: block;
 		margin: 5px 0;
+		&:hover {
+			text-decoration: underline;
+		}
 	}
 }
 
