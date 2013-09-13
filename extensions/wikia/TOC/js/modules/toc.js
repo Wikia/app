@@ -4,16 +4,17 @@ define('wikia.toc',['jquery', 'wikia.loader', 'wikia.mustache'], function($, loa
 	/**
 	 *  Create TOC data structure
 	 *
-	 *  @param {Object} $headers - jQuery selector object with all headers for TOC
+	 *  @param {Array} headers - array of nodes of all headers for TOC
 	 *  @param {function(object)} createSection - function that returns object for single TOC element
-	 *         and takes jQuery selector as parameter. The returned object must have 'sections: []' param.
+	 *         and takes single DOM header element as parameter. The returned object must have 'sections: []' param.
 	 *
-	 *         example: function createTOCSection($header) {
-	 *                      $header = $header.children('.mw-headline');
+	 *         example: function createTOCSection(header) {
+	 *
+	 *                      header = $(header).children('.mw-headline');
 	 *
 	 *                      return {
-	 *                          title: $header.text(),
-	 *                          id: $header.attr('id'),
+	 *                          title: header.text(),
+	 *                          id: header.attr('id'),
 	 *                          sections: [] // This is required !!!!!!
 	 *                      }
 	 *                  }
@@ -21,7 +22,7 @@ define('wikia.toc',['jquery', 'wikia.loader', 'wikia.mustache'], function($, loa
 	 *  @returns {Object} - TOC data structure of all the subsections
 	 */
 
-	function getData($headers, createSection) {
+	function getData(headers, createSection) {
 
 		var toc = {
 				sections: []
@@ -30,10 +31,10 @@ define('wikia.toc',['jquery', 'wikia.loader', 'wikia.mustache'], function($, loa
 			pos = 1,
 			i;
 
-		for (i = 0; i < $headers.length; i++) {
+		for (i = 0; i < headers.length; i++) {
 
-			var header = $headers[i],
-				obj = createSection($(header)),
+			var header = headers[i],
+				obj = createSection(header),
 				tempoPos = parseInt(header.nodeName.slice(1), 10);
 
 			// skip corrupted TOC section element

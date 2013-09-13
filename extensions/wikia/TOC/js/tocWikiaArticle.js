@@ -21,23 +21,23 @@ require(['jquery', 'wikia.toc'], function($, toc) {
 
 	/**
 	 *
-	 * @param {Object} $header - jQuery selector object for single article header
+	 * @param {Object} header - Node element object for single article header
 	 *
 	 * @returns {Boolean|Object} - returns false for non Wikia Article related headers
 	 *                             (example lazy loaded discussion thread)
 	 *                             or custom TOC single section object.
 	 */
 
-	function createTOCSection($header) {
-		$header = $header.children('.mw-headline');
+	function createTOCSection(header) {
+		header = $(header).children('.mw-headline');
 
-		if ($header.length === 0) {
+		if (header.length === 0) {
 			return false;
 		}
 
 		return {
-			title: $header.text(),
-			id: $header.attr('id'),
+			title: header.text(),
+			id: header.attr('id'),
 			sections: []
 		};
 	}
@@ -51,7 +51,7 @@ require(['jquery', 'wikia.toc'], function($, toc) {
 
 	function renderTOC($target) {
 		var $container = $target.parents('#toc').children('ol'),
-			$headers = $target.parents('div.WikiaArticle').find('h2, h3, h4, h5'),
+			$headers = $target.parents('#mw-content-text').find('h2, h3, h4, h5'),
 			data = toc.getData($headers, createTOCSection);
 
 		data.wrapper = wrapper;
