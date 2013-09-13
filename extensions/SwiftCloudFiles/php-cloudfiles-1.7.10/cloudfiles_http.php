@@ -753,11 +753,11 @@ error_log( __METHOD__ . ": headers = " . print_r( $headers, true ). " \n", 3, "/
 
         if (!$return_code) {
             $this->error_str .= ": Failed to obtain valid HTTP response.";
-            return array($return_code0,$this->error_str,NULL);
+            return array($return_code,$this->error_str,NULL);
         }
         if ($return_code == 404) {
             $this->error_str = "Object not found.";
-            return array($return_code0,$this->error_str,NULL);
+            return array($return_code,$this->error_str,NULL);
         }
         if (($return_code < 200) || ($return_code > 299
                 && $return_code != 412 && $return_code != 304)) {
@@ -1418,7 +1418,7 @@ error_log( __METHOD__ . ": matches = " . print_r( $matches, true ) . "\n", 3, "/
 
         return $hdrs;
     }
-    
+
     private function _send_request($conn_type, $url_path, $hdrs=NULL, $method="GET", $force_new=False)
     {
         $this->_init($conn_type, $force_new);

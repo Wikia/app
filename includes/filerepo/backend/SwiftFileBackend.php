@@ -457,7 +457,7 @@ error_log( __METHOD__ . ": getContainer( $fullCont ) =  " . print_r( $contObj, t
 		try {
 			$contObj = $this->getContainer( $srcCont );
 			$srcObj = $contObj->get_object( $srcRel, $this->headersFromParams( $params ) );
-			$this->addMissingMetadata( $srcObj, $params['src'] );
+			#$this->addMissingMetadata( $srcObj, $params['src'] ); // macbre - causes infinite loop / sha1 is stored in doStoreInternal()
 			$stat = array(
 				// Convert dates like "Tue, 03 Jan 2012 22:01:04 GMT" to TS_MW
 				'mtime' => wfTimestamp( TS_MW, $srcObj->last_modified ),
@@ -465,7 +465,9 @@ error_log( __METHOD__ . ": getContainer( $fullCont ) =  " . print_r( $contObj, t
 				'sha1' => $srcObj->getMetadataValue( 'Sha1base36' )
 			);
 		} catch ( NoSuchContainerException $e ) {
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( NoSuchObjectException $e ) {
+			$this->logException( $e, __METHOD__, $params );
 		}
 
 		return $stat;
@@ -509,12 +511,19 @@ error_log( __METHOD__ . ": getContainer( $fullCont ) =  " . print_r( $contObj, t
 	 * @see FileBackend::getFileContents()
 	 */
 	public function getFileContents( array $params ) {
+		static $existsCache = [];
+
 		list( $srcCont, $srcRel ) = $this->resolveStoragePathReal( $params['src'] );
 		if ( $srcRel === null ) {
 			return false; // invalid storage path
 		}
 
+		if (isset($existsCache[ $params['src'] ])) {
+			return $existsCache[ $params['src'] ];
+		}
+
 		if ( !$this->fileExists( $params ) ) {
+			$existsCache[ $params['src'] ] = null;
 			return null;
 		}
 
@@ -648,10 +657,13 @@ error_log( __METHOD__ . ": getContainer( $fullCont ) =  " . print_r( $contObj, t
 			}
 		} catch ( NoSuchContainerException $e ) {
 			$tmpFile = null;
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( NoSuchObjectException $e ) {
 			$tmpFile = null;
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( InvalidResponseException $e ) {
 			$tmpFile = null;
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( Exception $e ) { // some other exception?
 			$tmpFile = null;
 			$this->logException( $e, __METHOD__, $params );
