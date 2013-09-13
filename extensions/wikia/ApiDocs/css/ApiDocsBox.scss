@@ -7,7 +7,7 @@
 	.heading {
 		margin: 0;
 		a {
-			@include transition( all, 0.2s, ease-in-out, 0);
+			@include transition( background-color, 0.2s, ease-in-out, 0);
 			color: $blue-c1;
 			display: block;
 			font-weight: bold;
@@ -61,7 +61,6 @@
 .active {
 	.heading {
 		a {
-			@include transition( all, 0.2s, ease-in-out, 0);
 			color: #ffffff;
 			background-color: $blue-c1;
 			border-bottom: solid 1px $midGray-c3;
