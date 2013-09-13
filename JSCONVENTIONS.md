@@ -1,5 +1,9 @@
 # Wikia JavaScript Coding Conventions
 
+* [Early returns](#early-returns)
+* [Semi-colons](#semi-colons)
+* [Function-declarations within blocks](#function-declarations-within-blocks)
+
 ## Language Rules
 #### Early returns
 Try to avoid early returns
