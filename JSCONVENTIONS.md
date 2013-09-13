@@ -1,10 +1,11 @@
 # Wikia JavaScript Coding Conventions
 
+### [Language Rules](#language-rules)
 * [Early returns](#early-returns)
 * [Semi-colons](#semi-colons)
 * [Function-declarations within blocks](#function-declarations-within-blocks)
 
-## Language Rules
+### Language Rules
 #### Early returns
 Try to avoid early returns
 
