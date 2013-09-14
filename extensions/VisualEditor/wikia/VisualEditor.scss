@@ -1,0 +1,10 @@
+@import "skins/oasis/css/core/color";
+
+.ve-ui-frame-body,
+.ve-ui-popupWidget-body {
+	background: $color-page;
+}
+
+.ve-ui-window-title {
+	color: $color-text;
+}
