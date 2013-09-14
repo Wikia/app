@@ -18,7 +18,7 @@ ve.ce.wikiaExample.data = {
 			'right'
 		],
 		'height': [
-			null,
+			1,
 			100
 		],
 		'type': [
@@ -28,18 +28,56 @@ ve.ce.wikiaExample.data = {
 			'thumb'
 		],
 		'width': [
-			null,
+			2,
 			200
 		]
 	}
 };
 
-ve.ce.wikiaExample.assertEqualNodeView = function ( assert, nodeView, test ) {
-	var message = JSON.stringify( test.attributes ) || 'default';
 
+// TODO: put this in ve.test.utils.js ?
+// TODO: make options into a hash, add 'join' and 'pair' options
+ve.ce.wikiaExample.getAssertMessageFromAttributes = function ( prefix, changes, suffix ) {
+	var key,
+		parts = [];
+
+	suffix = suffix || '';
+
+	if ( ve.isPlainObject( prefix ) ) {
+		changes = prefix;
+		prefix = '';
+	}
+
+	for ( key in changes ) {
+		parts.push( key + ': ' + changes[ key ] );
+	}
+
+	return prefix + parts.join( ', ' ) + suffix;
+};
+
+// TODO: move this to ve.test.utils.js ?
+ve.ce.wikiaExample.getAttributeChanges = function ( first, second, copyOver ) {
+	var diff = {},
+		key;
+
+	for ( key in second ) {
+		if ( key === null ) {
+			continue;
+		} else if ( first[ key ] !== second[ key ] ) {
+			diff[ key ] = second[ key ];
+		} else if ( copyOver === true ) {
+			diff[ key ] = first[ key ];
+		}
+	}
+
+	return diff;
+};
+
+// TODO: put this in ve.test.utils.js ?
+ve.ce.wikiaExample.assertEqualNodeView = function ( assert, nodeView, HTML, message ) {
 	// TODO: figure out a better way to remove debug styles
 	nodeView.$.find( '.ve-ce-generated-wrapper' ).removeAttr( 'style' );
-	assert.equalDomElement( nodeView.$[ 0 ], $( test.HTML )[ 0 ], message );
+	assert.equalDomElement( nodeView.$[ 0 ], $( HTML )[ 0 ], message );
 
 	return 1;
 };
@@ -120,7 +158,7 @@ ve.ce.wikiaExample.getImageHTMLDOM = (function () {
 				attributes.type !== 'none' ? '/' + ucFirst( attributes.type ) : ''
 			);
 
-		if ( attributes.height === null && attributes.width === null ) {
+		if ( attributes.height === 1 && attributes.width === 2 ) {
 			$mock.addClass( 'mw-default-size' );
 		}
 
@@ -132,8 +170,8 @@ ve.ce.wikiaExample.getImageHTMLDOM = (function () {
 			.attr( 'typeof', typeOf )
 			.find( 'img[src="Bar"]' )
 				.attr({
-					height: attributes.height || 1,
-					width: attributes.width || 2
+					height: attributes.height,
+					width: attributes.width
 				});
 
 		return $mock[ 0 ].outerHTML;
@@ -185,14 +223,12 @@ ve.ce.wikiaExample.getImageHTML = (function () {
 			alignType = (
 				attributes.type === 'frameless' ||
 				attributes.type === 'none'
-			) ? 'none' : 'default',
-			height = attributes.height || 1,
-			width = attributes.width || 2;
+			) ? 'none' : 'default';
 
 		$mock.addClass( ve.ce.wikiaExample.getAlignClass( $mock, attributes ) );
 
 		if ( alignType !== 'none' ) {
-			$mock.css( 'width', ( width + 2 ) + 'px' );
+			$mock.css( 'width', ( attributes.width + 2 ) + 'px' );
 		} else {
 			$mock.removeAttr( 'style' );
 		}
@@ -208,11 +244,11 @@ ve.ce.wikiaExample.getImageHTML = (function () {
 			.append( mocks.shield )
 			.find( 'img[src="Bar"]' )
 				.attr({
-					height: height,
-					width: width
+					height: attributes.height,
+					width: attributes.width
 				});
 
-		if ( width >= 102 ) {
+		if ( attributes.width >= 102 ) {
 			$mock.find( 'figcaption' ).append( mocks.attribution );
 		}
 
