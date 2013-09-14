@@ -1,0 +1,25 @@
+@import "responsive";
+
+.featured-video {
+	background: black;
+
+	ul.featured-video-slider {
+		margin: 0 auto;
+		width: 1000px;
+		&, li {
+			list-style: none;
+			padding: 0;
+		}
+	}
+	@media ( max-width: 1000px ) { // todo: use dynamic breakpoint
+		ul.featured-video-slider {
+			&, li {
+				width: 100%;
+			}
+			img {
+				width: 100%;
+			}
+		}
+
+	}
+}

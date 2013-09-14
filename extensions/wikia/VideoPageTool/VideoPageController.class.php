@@ -22,6 +22,8 @@ class VideoPageController extends WikiaController {
 	 * Display the Video Home Page
 	 */
 	public function index() {
+		$this->response->addAsset('videopage_scss');
+
 		$program = $this->getProgram();
 
 		$this->curProgram = $program;

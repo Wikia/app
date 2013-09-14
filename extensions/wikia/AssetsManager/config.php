@@ -968,7 +968,6 @@ $config['videopagetool_js'] = array(
 		'//resources/jquery/jquery.validate.js',
 		'//extensions/wikia/VideoPageTool/js/models/validator.js',
 		'//extensions/wikia/VideoPageTool/js/models/datepicker.js',
-		// TODO: probably move this jQuery plugin to /resources at some point
 		'//extensions/wikia/VideoPageTool/js/views/switcher.js',
 		'//extensions/wikia/VideoPageTool/js/views/datepicker.js',
 		'//extensions/wikia/VideoPageTool/js/views/index.js',
@@ -989,8 +988,16 @@ $config['videopagetool_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => array(
 		'//skins/oasis/css/modules/CorporateDatepicker.scss',
-		'//extensions/wikia/VideoPageTool/css/VideoPageTool.scss',
-		'//extensions/wikia/VideoPageTool/css/VideoPageTool_Header.scss'
+		'//extensions/wikia/VideoPageTool/css/Admin/VideoPageTool.scss',
+		'//extensions/wikia/VideoPageTool/css/Admin/VideoPageTool_Header.scss'
+	)
+);
+
+$config['videopage_scss'] = array(
+	'skin' => array( 'oasis' ),
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => array(
+		'//extensions/wikia/VideoPageTool/css/HomePage/featured.scss',
 	)
 );
 
