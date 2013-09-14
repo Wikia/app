@@ -1,14 +1,40 @@
 <?php
 
 class VideoPageController extends WikiaController {
+
+	var $program;
+
+	/**
+	 * Get the current program object or load it if it hasn't been loaded yet
+	 * @return object
+	 */
+	public function getProgram() {
+		if ( !$this->program ) {
+			$lang = F::App()->wg->LanguageCode;
+
+			$this->program = VideoPageToolProgram::newProgramNearestToday( $lang );
+		}
+
+		return $this->program;
+	}
+
 	/**
 	 * Display the Video Home Page
 	 */
 	public function index() {
-		$this->featuredContent = $this->sendSelfRequest('handleFeatured');
-		$this->categoryContent = $this->sendSelfRequest('handleCategory');
-		$this->fanContent = $this->sendSelfRequest('handleFan');
-		$this->popularContent = $this->sendSelfRequest('handlePopular');
+		$program = $this->getProgram();
+
+		$this->curProgram = $program;
+
+		if ( $program->exists() ) {
+			$this->haveCurrentProgram = true;
+			$this->featuredContent = $this->sendSelfRequest('handleFeatured');
+			$this->categoryContent = $this->sendSelfRequest('handleCategory');
+			$this->fanContent = $this->sendSelfRequest('handleFan');
+			$this->popularContent = $this->sendSelfRequest('handlePopular');
+		} else {
+			$this->haveCurrentProgram = false;
+		}
 	}
 
 	/**
@@ -46,7 +72,9 @@ class VideoPageController extends WikiaController {
 	 */
 	public function handleFeatured() {
 		$this->overrideTemplate( 'featured' );
+		$program = $this->getProgram();
 
+		$this->assets = $program->getAssetsBySection( 'featured' );
 	}
 
 	/**
@@ -54,7 +82,9 @@ class VideoPageController extends WikiaController {
 	 */
 	public function handleCategory() {
 		$this->overrideTemplate( 'category' );
+		$program = $this->getProgram();
 
+		$this->assets = $program->getAssetsBySection( 'category' );
 	}
 
 	/**
@@ -62,7 +92,9 @@ class VideoPageController extends WikiaController {
 	 */
 	public function handleFan() {
 		$this->overrideTemplate( 'fan' );
+		$program = $this->getProgram();
 
+		$this->assets = $program->getAssetsBySection( 'fan' );
 	}
 
 	/**

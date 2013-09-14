@@ -5,6 +5,9 @@
  */
 class VideoPageToolProgram extends WikiaModel {
 
+	const OBJECT_CACHE_TTL = 604800; // One week
+	const DATE_CACHE_TTL = 86400;    // One day
+
 	protected $programId = 0;
 	protected $language = 'en';
 	protected $publishDate;
@@ -91,10 +94,28 @@ class VideoPageToolProgram extends WikiaModel {
 
 	/**
 	 * Set isPublished
-	 * @param boolean $isPublished
+	 * @param $value
 	 */
 	protected function setIsPublished( $value ) {
 		$this->isPublished = (int) $value;
+	}
+
+	/**
+	 * Given a language, finds the program object nearest (or equal to) to today's date
+	 * @param $lang
+	 * @return object
+	 */
+	public static function newProgramNearestToday( $lang ) {
+		wfProfileIn( __METHOD__ );
+
+		// Figure out what the nearest date to today is
+		$nearestDate = self::loadNearestDate( $lang );
+
+		// Load the program with this nearest date
+		$program = self::newProgram( $lang, $nearestDate );
+
+		wfProfileOut( __METHOD__ );
+		return $program;
 	}
 
 	/**
@@ -187,6 +208,44 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
+	 * Returns the nearest program date to today for a given language
+	 * @param $language
+	 * @return null|string
+	 */
+	protected function loadNearestDate( $language ) {
+		wfProfileIn( __METHOD__ );
+
+		$date = date('Y-m-d');
+		$nearestKey = wfMemcKey( 'videopagetool', 'nearest-date', $language, $date );
+		$nearestDate = F::app()->wg->Memc->get( $nearestKey );
+
+		if ( !$nearestDate ) {
+			$db = wfGetDB( DB_SLAVE );
+
+			$row = $db->selectRow(
+				array( 'vpt_program' ),
+				array( 'unix_timestamp(publish_date) as publish_date' ),
+				array(
+					'language' => $language,
+					'publish_date <= '.$db->addQuotes(date( 'Y-m-d' )),
+				),
+				__METHOD__
+			);
+
+			if ( $row ) {
+				$nearestDate = $row->publish_date;
+
+				// Cache this for at most one day
+				F::app()->wg->Memc->set( $nearestKey, $nearestDate, self::DATE_CACHE_TTL );
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $nearestDate;
+	}
+
+	/**
 	 * Add program to database
 	 * @return Status
 	 */
@@ -272,7 +331,7 @@ class VideoPageToolProgram extends WikiaModel {
 			$cache[$varName] = $this->$varName;
 		}
 
-		$this->wg->Memc->set( $this->getMemcKey(), $cache, 60*60*24*7 );
+		$this->wg->Memc->set( $this->getMemcKey(), $cache, self::OBJECT_CACHE_TTL );
 	}
 
 	/**
@@ -373,7 +432,10 @@ class VideoPageToolProgram extends WikiaModel {
 	 * @return array $assets
 	 */
 	public function getAssetsBySection( $section ) {
-		$assets = VideoPageToolAsset::getAssetsBySection( $this->programId, $section );
+		$assets = array();
+		if ( $this->exists() ) {
+			$assets = VideoPageToolAsset::getAssetsBySection( $this->programId, $section );
+		}
 		return $assets;
 	}
 

@@ -1,7 +1,13 @@
-<?= $featuredContent ?>
+Publish date: <?= $curProgram->getPublishDate() ?>
 
-<?= $categoryContent ?>
+<? if ( $haveCurrentProgram ): ?>
+	<?= $featuredContent ?>
 
-<?= $fanContent ?>
+	<?= $categoryContent ?>
 
-<?= $popularContent ?>
+	<?= $fanContent ?>
+
+	<?= $popularContent ?>
+<? else: ?>
+	<h1>No current program</h1>
+<? endif; ?>
