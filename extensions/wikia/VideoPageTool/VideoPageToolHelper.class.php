@@ -8,6 +8,9 @@ class VideoPageToolHelper extends WikiaModel {
 	const THUMBNAIL_WIDTH = 180;
 	const THUMBNAIL_HEIGHT = 100;
 
+	const MAX_THUMBNAIL_WIDTH = 1000;
+	const MAX_THUMBNAIL_HEIGHT = 1000;
+
 	public static $requiredRows = array(
 		'featured' => 5,
 		'category' => 4,
@@ -117,6 +120,8 @@ class VideoPageToolHelper extends WikiaModel {
 				// get thumbnail
 				$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
 				$videoThumb = $thumb->toHtml();
+				$largeThumb = $file->transform( array( 'width' => self::MAX_THUMBNAIL_WIDTH, 'height' => self::MAX_THUMBNAIL_HEIGHT ) );
+				$largeThumbUrl = $largeThumb->getUrl();
 
 				// get description
 				if ( empty( $description ) ) {
@@ -129,6 +134,7 @@ class VideoPageToolHelper extends WikiaModel {
 					'videoKey' => $title->getDBKey(),
 					'displayTitle' => $displayTitle,
 					'videoThumb' => $videoThumb,
+					'largeThumbUrl' => $largeThumbUrl,
 					'description' => $description,
 				);
 			}

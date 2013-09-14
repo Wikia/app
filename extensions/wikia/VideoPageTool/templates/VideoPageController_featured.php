@@ -2,6 +2,6 @@
 <ul>
 <? foreach ( $assets as $featured ): ?>
 	<? $videoData = $featured->getAssetData() ?>
-	<li><?= $featured->getOrder() ?> - <?= $videoData['videoThumb'] ?><?= $videoData['videoTitle'] ?></li>
+	<li><?= $featured->getOrder() ?> - <?= $videoData['videoThumb'] ?><?= $videoData['videoTitle'] ?> : <?= $videoData['largeThumbUrl'] ?></li>
 <? endforeach; ?>
 </ul>
