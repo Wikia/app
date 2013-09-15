@@ -51,23 +51,22 @@ var ChatEntryPoint = {
 	processModuleTemplate: function($t) {
 		//@todo - right now it's a custom html-based template, all the login for inserting variables in here
 		// once the mustache is loaded on every page, rewrite the template and remove most of the code below
-		var items = [], i;
+		var items = [], i, cnt = window.wgWikiaChatUsers.length, img = window.wgWikiaChatProfileAvatarUrl;
 		$t.find('.chat-contents').
-			addClass((window.wgWikiaChatUsers.length) ? 'chat-room-active' :  'chat-room-empty').
+			addClass((cnt) ? 'chat-room-active' :  'chat-room-empty').
 			addClass((window.wgUserName) ? 'chat-user-logged-in' :  'chat-user-anonymous');
-		$t.find('.chat-total').html(window.wgWikiaChatUsers.length);
+		$t.find('.chat-total').html(cnt);
 		$t.find('p.chat-name').html(window.wgSiteName);
 		if (!window.wgUserName) {
 			$t.find('div.chat-join button').addClass('loginToChat');
 		}
 		// we use attr instead of data because we want it to be present in dom (needed for css selector)
-		$t.find('div.chat-join button').attr('data-msg-id', window.wgWikiaChatUsers.length ? 'chat-join-the-chat' : 'chat-start-a-chat');
+		$t.find('div.chat-join button').attr('data-msg-id', cnt ? 'chat-join-the-chat' : 'chat-start-a-chat');
 
-		if (window.wgWikiaChatUsers.length) {
-			//
+		if (cnt) {
 			var $carousel = $t.find('ul.carousel');
 			var $u = $carousel.find('>li');
-			for( i=0 ; i < window.wgWikiaChatUsers.length ; i++ ) {
+			for( i=0 ; i < cnt ; i++ ) {
 				items.push(ChatEntryPoint.fillUserTemplate($u.clone(),window.wgWikiaChatUsers[i]));
 			}
 			$carousel.html(items);
@@ -75,8 +74,8 @@ var ChatEntryPoint = {
 		} else {
 			$t.find('ul.carousel').remove();
 		}
-		if (window.wgWikiaChatProfileAvatarUrl) {
-			$t.find('.carousel-container img.avatar.currentUser').attr('src', window.wgWikiaChatProfileAvatarUrl);
+		if (img) {
+			$t.find('.carousel-container img.avatar.currentUser').attr('src', img);
 		} else {
 			$t.find('.carousel-container img.avatar.currentUser').remove();
 		}
@@ -92,15 +91,16 @@ var ChatEntryPoint = {
 		if (user.showSince) {
 			var months = window.wgWikiaChatMonts || window.wgMonthNamesShort;
 			user.since = months[user.since_month] + ' ' + user.since_year;
-		} else {
-			$t.find('.since').remove();
 		}
 		$t.find('[data-user-prop]').each(function() {
-			var $e = $(this), attr = $e.data('user-attr'), p = $e.data('user-prop');
+			var $e = $(this), attr = $e.data('user-attr'), p = $e.data('user-prop'), v = user[p];
+			if (typeof v === "undefined") {
+				$e.remove();
+			} else
 			if (attr) {
-				$e.attr(attr, user[p]);
+				$e.attr(attr, v);
 			} else {
-				$e.html(user[p]);
+				$e.html(v);
 			}
 		});
 		return $t;
