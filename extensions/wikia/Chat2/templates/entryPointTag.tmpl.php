@@ -22,7 +22,7 @@
 									<ul>
 										<li class="username" data-user-prop="username"> </li>
 										<li class="edits" data-msg-id="chat-edit-count" data-user-attr="data-msg-param" data-user-prop="editCount"> </li>
-										<li class="since" data-msg-id="chat-member-since"> </li>
+										<li class="since" data-msg-id="chat-member-since" data-user-attr="data-msg-param" data-user-prop="since"> </li>
 									</ul>
 								</div>
 								<div class="actions">

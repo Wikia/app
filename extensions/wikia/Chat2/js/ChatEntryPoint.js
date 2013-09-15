@@ -91,7 +91,7 @@ var ChatEntryPoint = {
 	fillUserTemplate: function($t, user) {
 		if (user.showSince) {
 			var months = window.wgWikiaChatMonts || window.wgMonthNamesShort;
-			$t.find('.since').data('msg-param', months[user.since_month] + ' ' + user.since_year);
+			user.since = months[user.since_month] + ' ' + user.since_year;
 		} else {
 			$t.find('.since').remove();
 		}
