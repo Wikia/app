@@ -60,7 +60,8 @@ var ChatEntryPoint = {
 		if (!window.wgUserName) {
 			$t.find('div.chat-join button').addClass('loginToChat');
 		}
-		$t.find('div.chat-join button').data('msg-id', window.wgWikiaChatUsers.length ? 'chat-join-the-chat' : 'chat-start-a-chat');
+		// we use attr instead of data because we want it to be present in dom (needed for css selector)
+		$t.find('div.chat-join button').attr('data-msg-id', window.wgWikiaChatUsers.length ? 'chat-join-the-chat' : 'chat-start-a-chat');
 
 		if (window.wgWikiaChatUsers.length) {
 			//

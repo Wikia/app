@@ -6,7 +6,7 @@
 		</h1>
 		<p class="chat-name"> </p>
 		<div class="chat-join">
-			<button data-msg-id="" onclick="ChatEntryPoint.onClickChatButton('<?= $linkToSpecialChat ?>')"> </button>
+			<button onclick="ChatEntryPoint.onClickChatButton('<?= $linkToSpecialChat ?>')"> </button>
 		</div>
 		<div class="chat-whos-here">
 			<span class="arrow-left"><img src="<?= $blankImgUrl ?>" /></span>
