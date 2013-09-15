@@ -79,7 +79,7 @@ var ChatEntryPoint = {
 		} else {
 			$t.find('.carousel-container img.avatar.currentUser').remove();
 		}
-		// fill the messages
+		// process i18n the messages
 		$t.find('[data-msg-id]').each(function() {
 			var $e = $(this);
 			$e.html($.msg($e.data('msg-id'), $e.data('msg-param')));
