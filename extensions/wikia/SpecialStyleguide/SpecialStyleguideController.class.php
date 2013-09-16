@@ -94,4 +94,15 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 			->setData( $this->model->getPartOfSectionData( $sectionArray ) )
 			->render( 'SpecialStyleguide_' . $templateSectionName . '.mustache' );
 	}
+
+	/**
+	 * @desc Creates an array with params for \Wikia\UI\Component
+	 *
+	 * @todo finish it...
+	 * @return Array
+	 */
+	public function getTOCData() {
+		$components = new StyleguideComponents();
+		$this->components = $components->getComponentsNames();
+	}
 }

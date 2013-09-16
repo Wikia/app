@@ -362,4 +362,12 @@ class StyleguideComponents {
 		return true;
 	}
 
+	/**
+	 * @desc Returns an array of components names - the array shouldn't empty if the constructor was called before
+	 *
+	 * @return Array|null
+	 */
+	public function getComponentsNames() {
+		return static::$componentsNames;
+	}
 }
