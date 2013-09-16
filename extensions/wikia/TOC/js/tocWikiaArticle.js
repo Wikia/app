@@ -1,7 +1,8 @@
-require(['jquery', 'wikia.toc'], function($, toc) {
+require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
+	'use strict';
 
-	var templateURL = 'extensions/wikia/TOC/templates/TOC_articleContent.mustache',
-		hasTOC = false;
+	var hasTOC = false, // flag - TOC is already created
+		cacheKey = 'TOCAssets'; // Local Storage key
 
 	/**
 	 * Wraps subsections of TOC with <ol> element
@@ -43,6 +44,47 @@ require(['jquery', 'wikia.toc'], function($, toc) {
 	}
 
 	/**
+	 * load mustache template or get it from Local Storage
+	 *
+	 * @return {Object} - promise with mustache template
+	 */
+
+	function loadTemplate() {
+		var dfd = new $.Deferred();
+
+		require(['wikia.loader', 'wikia.cache'], function(loader, cache) {
+			var template = cache.getVersioned(cacheKey);
+
+			if(template) {
+				dfd.resolve(template);
+			} else {
+				require(['wikia.throbber'], function(throbber) {
+					var toc = $('#toc');
+
+					throbber.show(toc);
+
+					loader({
+						type: loader.MULTI,
+						resources: {
+							mustache: 'extensions/wikia/TOC/templates/TOC_articleContent.mustache'
+						}
+					}).done(function(data) {
+						template = data.mustache[0];
+
+						dfd.resolve(template);
+
+						cache.setVersioned(cacheKey, template, 604800); //7days
+
+						throbber.remove(toc);
+					});
+				});
+			}
+		});
+
+		return dfd.promise();
+	}
+
+	/**
 	 * Render TOC for article or preview
 	 *
 	 * @param {Object} $target - jQuery selector object for event target
@@ -51,14 +93,30 @@ require(['jquery', 'wikia.toc'], function($, toc) {
 
 	function renderTOC($target) {
 		var $container = $target.parents('#toc').children('ol'),
-			$headers = $target.parents('#mw-content-text').find('h2, h3, h4, h5'),
-			data = toc.getData($headers, createTOCSection);
+			$headers = $('#mw-content-text').find('h2, h3, h4, h5'),
+			data = toc.getData($headers, createTOCSection),
+			html = '';
 
 		data.wrapper = wrapper;
 
-		toc.render(templateURL, data).done(function(data) {
-			$container.append(data);
+		loadTemplate().done(function(template) {
+			html += mustache.render(template, data);
+			$container.append(html);
+
 			hasTOC = true;
+		});
+	}
+
+	/**
+	 * Set Cookie for hidden TOC
+	 *
+	 * @param {?Number} isHidden - accepts 'null' or 1
+	 */
+
+	function setTOCCookie(isHidden) {
+		$.cookie('mw_hidetoc', isHidden, {
+			expires: 30,
+			path: '/'
 		});
 	}
 
@@ -71,18 +129,23 @@ require(['jquery', 'wikia.toc'], function($, toc) {
 
 	function showHideTOC($target) {
 		var tocWrapper = $target.parents('#toc'),
-			targetLabel;
+			targetLabel,
+			tocCookie;
 
 		tocWrapper.toggleClass('show');
 
 		if (tocWrapper.hasClass('show')) {
 			targetLabel = $target.data('hide');
+			tocCookie = null;
 		} else {
 			targetLabel = $target.data('show');
+			tocCookie = 1;
 		}
 
 		$target.text(targetLabel);
 		$target.attr('title', targetLabel);
+
+		setTOCCookie(tocCookie);
 	}
 
 	/** Attach events */
@@ -92,10 +155,21 @@ require(['jquery', 'wikia.toc'], function($, toc) {
 
 		var $target = $(event.target);
 
-		showHideTOC($target);
-
 		if (!hasTOC) {
 			renderTOC($target);
 		}
+
+		showHideTOC($target);
 	});
+
+	/** Auto expand TOC in article for logged-in users with hideTOC cookie set to 'null'  */
+	if (window.wgUserName !== null && $.cookie('mw_hidetoc') === null) {
+		var $showLink = $('#togglelink');
+
+		if (!hasTOC) {
+			renderTOC($showLink);
+		}
+
+		showHideTOC($showLink);
+	}
 });

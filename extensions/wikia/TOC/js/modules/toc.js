@@ -1,4 +1,4 @@
-define('wikia.toc',['jquery', 'wikia.loader', 'wikia.mustache'], function($, loader, mustache) {
+define('wikia.toc', function() {
 	'use strict';
 
 	/**
@@ -29,16 +29,18 @@ define('wikia.toc',['jquery', 'wikia.loader', 'wikia.mustache'], function($, loa
 			},
 			stack = [toc],
 			pos = 1,
-			i;
+			i,
+			headersLength = headers.length;
 
-		for (i = 0; i < headers.length; i++) {
+		for (i = 0; i < headersLength; i++) {
 
 			var header = headers[i],
 				obj = createSection(header),
-				tempoPos = parseInt(header.nodeName.slice(1), 10);
+				tempoPos = parseInt(header.nodeName.slice(1), 10),
+				sections = obj.sections;
 
 			// skip corrupted TOC section element
-			if (obj === false || typeof obj.sections  === 'undefined' || !(obj.sections instanceof Array)) {
+			if (obj === false || typeof sections  === 'undefined' || !(sections instanceof Array)) {
 				continue;
 			}
 
@@ -58,36 +60,9 @@ define('wikia.toc',['jquery', 'wikia.loader', 'wikia.mustache'], function($, loa
 		return stack[0];
 	}
 
-	/**
-	 *  Renders TOC HTML
-	 *
-	 *  @param  {String} templateUrl - URL for the mustache TOC template
-	 *  @param {Object} data - object with variables for mustache template
-	 *  @returns {Object} - promise with TOC HTML
-	 */
-
-	function render(templateUrl, data) {
-
-		var deferred = new $.Deferred;
-
-		loader({
-			type: loader.MULTI,
-			resources: {
-				mustache: templateUrl
-			}
-		}).done(function(resources) {
-			var html = mustache.render(resources.mustache[0], data);
-			deferred.resolve(html);
-		});
-
-		return deferred.promise();
-	}
-
-
 	/** PUBLIC API */
 	return {
-		getData: getData,
-		render: render
+		getData: getData
 	}
 
 });
