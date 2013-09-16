@@ -9,5 +9,5 @@ $messages['en'] = array(
 );
 
 $messages['qqq'] = array(
-	'visualeditor-wikiamediainsertbuttontool-label' => 'Call-to-action text rendered in the toolbar button for opening the dialog to add media items to the article';
+	'visualeditor-wikiamediainsertbuttontool-label' => 'Call-to-action text rendered in the toolbar button for opening the dialog to add media items to the article'
 );
