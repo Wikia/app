@@ -194,9 +194,19 @@ ve.ce.WikiaBlockMediaNode.prototype.onSplice = function () {};
 /**
  * Creates and updates the view.
  *
+ * @description
+ *
+ * Update is called on initialization and any time an attribute changes. If the
+ * replaceRoot parameter is provided, the root jQuery object (this.$) will be
+ * replaced with an updated version instead of just being a pointer to it.
+ * References to the old jQuery objects will need to be updated at this point
+ * so as not to break mixins.
+ *
  * @emits setup
  * @emits teardown
+ *
  * @method
+ * @param {Boolean} replaceRoot Whether or not to replace the root element
  */
 ve.ce.WikiaBlockMediaNode.prototype.update = function ( replaceRoot ) {
 	var $anchor, $image, $root, $thumb, captionModel, captionView,
@@ -208,6 +218,14 @@ ve.ce.WikiaBlockMediaNode.prototype.update = function ( replaceRoot ) {
 		$root = this.createRoot().append( $thumb );
 	} else {
 		$root = $thumb;
+	}
+
+	if ( replaceRoot ) {
+		this.emit( 'teardown' );
+		this.$.replaceWith( $root );
+		this.$ = $root;
+	} else {
+		this.$ = $root;
 	}
 
 	$anchor = this.createAnchor().appendTo( $thumb );
@@ -230,19 +248,14 @@ ve.ce.WikiaBlockMediaNode.prototype.update = function ( replaceRoot ) {
 		}
 	}
 
-	// This should be called last so the listeners will get the same DOM
-	// structure they do on initialization.
-	if ( replaceRoot ) {
-		this.emit( 'teardown' );
-		this.$.replaceWith( $root );
-		this.$ = $root;
-		this.emit( 'setup' );
-	} else {
-		this.$ = $root;
-	}
-
 	// Update references for mixins
+	this.$focusable = this.$;
 	this.$image = $image;
 	this.$resizable = $image;
-	this.$focusable = this.$;
+
+	// This should be called last so the listeners will get the same DOM
+	// structure and jQuery object references they do on initialization.
+	if ( replaceRoot ) {
+		this.emit( 'setup' );
+	}
 };

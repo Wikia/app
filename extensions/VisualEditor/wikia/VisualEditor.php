@@ -79,7 +79,8 @@ function Wikia_onResourceLoaderTestModules( array &$testModules, ResourceLoader 
 			'test/dm/ve.dm.wikiaExample.js',
 			'test/dm/ve.dm.WikiaConverter.test.js',
 			'test/ce/ve.ce.wikiaExample.js',
-			'test/ce/ve.ce.WikiaBlockImageNode.test.js'
+			'test/ce/ve.ce.WikiaBlockImageNode.test.js',
+			'test/ce/ve.ce.WikiaBlockVideoNode.test.js',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.test',

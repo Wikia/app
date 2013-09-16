@@ -180,13 +180,14 @@ ve.ce.wikiaExample.getBlockMediaHTMLDOM = (function () {
 })();
 
 /**
- * Get the mocked HTML output for a block image node.
+ * Get the mocked HTML output for a block media node.
+ * Anything shared between block media types should go in here.
  *
  * @method
  * @param {Object} attributes The attributes from which to build the mock.
  * @returns {String} The mocked HTML.
  */
-ve.ce.wikiaExample.getBlockImageHTML = (function () {
+ve.ce.wikiaExample.getBlockMediaHTML = (function () {
 	var mocks = {};
 
 	mocks.attribution = [
@@ -252,6 +253,60 @@ ve.ce.wikiaExample.getBlockImageHTML = (function () {
 		if ( attributes.width >= 102 ) {
 			$mock.find( 'figcaption' ).append( mocks.attribution );
 		}
+
+		return $mock[ 0 ].outerHTML;
+	};
+})();
+
+
+/**
+ * Get the mocked HTML output for a block image node.
+ *
+ * @method
+ * @param {Object} attributes The attributes from which to build the mock.
+ * @returns {String} The mocked HTML.
+ */
+ ve.ce.wikiaExample.getBlockImageHTML = ve.ce.wikiaExample.getBlockMediaHTML;
+
+/**
+ * Get the mocked HTML output for a block video node.
+ *
+ * @method
+ * @param {Object} attributes The attributes from which to build the mock.
+ * @returns {String} The mocked HTML.
+ */
+ve.ce.wikiaExample.getBlockVideoHTML = (function () {
+	var mocks = {};
+
+	// TODO: mock video information overlay
+	//mocks.overlay = [].join( '' );
+
+	mocks.playButton = [
+		'<div class="Wikia-video-play-button ve-no-shield" style="">',
+			'<img class="sprite play" src="">',
+		'</div>'
+	].join( '' );
+
+	return function ( attributes ) {
+		var $mock = $( ve.ce.wikiaExample.getBlockMediaHTML( attributes ) ),
+			$playButton = $( mocks.playButton ),
+			size = ( attributes.width <= 170 ? 'small' : attributes.width > 360 ? 'large' : '' );
+
+		$playButton
+			.css({
+				'line-height': attributes.height + 'px',
+				'width': attributes.width
+			})
+			.find( 'img' )
+				.addClass( size )
+				.attr( 'src', mw.config.get( 'wgBlankImgUrl' ) );
+
+		$mock
+			.find( 'img[src="Bar"]' )
+			.addClass( 'Wikia-video-thumb' )
+			.parent()
+				.addClass( 'video' )
+				.prepend( $playButton );
 
 		return $mock[ 0 ].outerHTML;
 	};
