@@ -4,11 +4,16 @@ $endpointUrlLineHeight: 14px;
 
 .endpoints {
 	clear: both;
-	padding-top: 20px; /* use padding to make jquery slide smooth. */
+	padding-top: 10px; /* use padding to make jquery slide smooth. */
 }
 
 .endpoint {
-	margin: 10px 0;
+	margin: 5px 0;
+	margin-left: 30px;
+
+	&:last-child {
+		margin-bottom: 35px;
+	}
 
 	.heading {
 		@include transition( background-color, 0.2s, ease-in-out, 0);
@@ -27,13 +32,14 @@ $endpointUrlLineHeight: 14px;
 		color: $gray-c4;
 		display: block;
 		float: left;
-		height: $endpointHeight;
-		line-height: $endpointHeight;
+		height: $endpointHeight - 28px;
+		line-height: 15px;
 		margin-right: 20px;
 		text-align: center;
-		width: 90px;
+		width: 35px;
 		font-size: 12px;
 		font-weight: bold;
+		padding: 14px 10px;
 		text-transform: uppercase;
 	}
 
@@ -64,7 +70,9 @@ $endpointUrlLineHeight: 14px;
 		background-color: white;
 		background-position: center;
 		background-repeat: no-repeat;
+		border-top: none;
 		border-left: 1px solid $midGray-c3;
+		border-bottom: 1px solid $midGray-c3;
 		display: block;
 		float:right;
 		height: $endpointHeight;
@@ -73,11 +81,12 @@ $endpointUrlLineHeight: 14px;
 	}
 
 
+	&.active .http_method,
+	&:hover .http_method {
+		background-color: $blue-c1;
+		color: white;
+	}
 	&.active {
-		.http_method {
-			background-color: $blue-c1;
-			color: white;
-		}
 
 		.collapse-expand-button {
 			display: block;

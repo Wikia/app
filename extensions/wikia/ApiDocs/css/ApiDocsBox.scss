@@ -1,12 +1,12 @@
 //apis and methods headings
-$resourceHeadingHeight: 67px;
+$resourceHeadingHeight: 65px;
 
 .resource {
 	clear: both;
 	width: 960px;
 
-	&.active .collapse-expand-button,
-	&:hover .collapse-expand-button {
+	&.active div.heading .collapse-expand-button,
+	&:hover div.heading .collapse-expand-button {
 		background-color: $midGray-c3;
 	}
 	&.active .heading-name-and-description,
