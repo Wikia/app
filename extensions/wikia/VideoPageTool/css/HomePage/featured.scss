@@ -3,27 +3,53 @@
 
 .featured-video {
 	background: black;
-
-	ul.featured-video-slider {
+	width: 100%;
+	.featured-video-slider{
+		position: relative;
 		margin: 0 auto;
-		&, li {
+		ul {
 			list-style: none;
-			padding: 0;
+			margin: 0;
+		}
+		li {
+			list-style: none;
+		}
+		// Large Images
+		.bx-viewport {
+			position: relative;
+			overflow: hidden;
+		}
+		.bxslider {
+			position: relative;
+			li {
+				float: left;
+				position: relative;
+			}
+			img {
+				width: 100%;
+			}
+		}
+		// Thumbnails
+		.bx-pager {
+			bottom: 10px;
+		}
+		.thumbs {
+			a {
+				display: block;
+				float: left;
+				margin: 0 5px;
+				padding: 3px;
+			}
 		}
 	}
-	ul.featured-video-slider {
-		li, img {
-			@include box-sizing-border-box;
-			width: 100%;
-		}
-	}
+
 	@media ( min-width: $breakpoint-small ) {
-		ul.featured-video-slider {
+		.featured-video-slider {
 			width: $breakpoint-small - $width-gutter;
 		}
 	}
 	@media ( max-width: $breakpoint-small ) {
-		ul.featured-video-slider {
+		.featured-video-slider {
 			width: 100%;
 		}
 	}
