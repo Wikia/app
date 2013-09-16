@@ -79,7 +79,7 @@ select {
 	}
 }
 
-.resource.active .collapse-expand-button,
+.resource.active div.heading .collapse-expand-button,
 .endpoint.active .collapse-expand-button {
 	background-image: url(/extensions/wikia/ApiDocs/files/collapse_up.png); /* base64 */
 }
