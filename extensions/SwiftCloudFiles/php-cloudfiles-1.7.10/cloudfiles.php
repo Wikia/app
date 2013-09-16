@@ -202,8 +202,7 @@ class CF_Authentication
     function authenticate($version=DEFAULT_CF_API_VERSION)
     {
         list($status,$reason,$surl,$curl,$atoken) = 
-                $this->cfs_http->authenticate($this->username, $this->api_key,
-                $this->account_name, $this->auth_host);
+                $this->cfs_http->authenticate($this->username, $this->api_key, $this->auth_host);
 
         if ($status == 401) {
             throw new AuthenticationException("Invalid username or access key.");
@@ -241,15 +240,12 @@ class CF_Authentication
          */
 	function load_cached_credentials($auth_token, $storage_url, $cdnm_url)
     {
-        if(!$storage_url || !$cdnm_url)
-        {
-                throw new SyntaxException("Missing Required Interface URL's!");
-                return False;
-        }
-        if(!$auth_token)
-        {
-                throw new SyntaxException("Missing Auth Token!");
-                return False;
+        if ( !$storage_url || !$cdnm_url ) {
+			throw new SyntaxException("Missing Required Interface URL's!");
+			return false;
+        } elseif( !$auth_token ) {
+			throw new SyntaxException("Missing Auth Token!");
+			return false;
         }
 
         $this->storage_url = $storage_url;

@@ -32,6 +32,9 @@ class SwiftFileBackend extends FileBackendStore {
 	protected $connStarted = 0; // integer UNIX timestamp
 	protected $connContainers = array(); // container object cache
 
+	/** @var BagOStuff */
+	protected $srvCache;
+	
 	/**
 	 * @see FileBackendStore::__construct()
 	 * Additional $config params include:
@@ -75,13 +78,22 @@ error_log ( __METHOD__ . ": config = " . print_r( $config, true ) . "\n", 3, "/t
 		$this->shardViaHashLevels = isset( $config['shardViaHashLevels'] )
 			? $config['shardViaHashLevels']
 			: '';
+		/* <Wikia> */
+		// caching credentials 
+		if ( !empty( $config['cacheAuthInfo'] ) && $config['cacheAuthInfo'] === true ) {
+			$this->srvCache = wfGetMainCache();
+		}
+		$this->srvCache = $this->srvCache ? $this->srvCache : new EmptyBagOStuff();
+		/* </Wikia> */
 	}
 
 	/**
 	 * @see FileBackendStore::resolveContainerPath()
 	 */
 	protected function resolveContainerPath( $container, $relStoragePath ) {
-		if ( strlen( urlencode( $relStoragePath ) ) > 1024 ) {
+		if ( !mb_check_encoding( $relStoragePath, 'UTF-8' ) ) { // mb_string required by CF
+			return null; // not UTF-8, makes it hard to use CF and the swift HTTP API
+		} elseif ( strlen( urlencode( $relStoragePath ) ) > 1024 ) {
 			return null; // too long for Swift
 		}
 		return $relStoragePath;
@@ -100,7 +112,9 @@ error_log ( __METHOD__ . ": config = " . print_r( $config, true ) . "\n", 3, "/t
 			$this->getContainer( $container );
 			return true; // container exists
 		} catch ( NoSuchContainerException $e ) {
+			$this->logException( $e, __METHOD__, array( 'path' => $storagePath ) );
 		} catch ( InvalidResponseException $e ) {
+			$this->logException( $e, __METHOD__, array( 'path' => $storagePath ) );
 		} catch ( Exception $e ) { // some other exception?
 			$this->logException( $e, __METHOD__, array( 'path' => $storagePath ) );
 		}
@@ -131,9 +145,11 @@ error_log ( __METHOD__ . ": config = " . print_r( $config, true ) . "\n", 3, "/t
 			}
 		} catch ( NoSuchContainerException $e ) {
 			$status->fatal( 'backend-fail-create', $params['dst'] );
+			$this->logException( $e, __METHOD__, $params );
 			return $status;
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 			return $status;
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-internal', $this->name );
@@ -160,8 +176,10 @@ error_log ( __METHOD__ . ": config = " . print_r( $config, true ) . "\n", 3, "/t
 			$obj->write( $params['content'] );
 		} catch ( BadContentTypeException $e ) {
 			$status->fatal( 'backend-fail-contenttype', $params['dst'] );
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-internal', $this->name );
 			$this->logException( $e, __METHOD__, $params );
@@ -193,9 +211,11 @@ error_log ( __METHOD__ . ": config = " . print_r( $config, true ) . "\n", 3, "/t
 			}
 		} catch ( NoSuchContainerException $e ) {
 			$status->fatal( 'backend-fail-copy', $params['src'], $params['dst'] );
+			$this->logException( $e, __METHOD__, $params );
 			return $status;
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 			return $status;
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-internal', $this->name );
@@ -226,10 +246,13 @@ error_log ( __METHOD__ . ": config = " . print_r( $config, true ) . "\n", 3, "/t
 			$obj->load_from_filename( $params['src'], True ); // calls $obj->write()
 		} catch ( BadContentTypeException $e ) {
 			$status->fatal( 'backend-fail-contenttype', $params['dst'] );
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( IOException $e ) {
 			$status->fatal( 'backend-fail-copy', $params['src'], $params['dst'] );
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-internal', $this->name );
 			$this->logException( $e, __METHOD__, $params );
@@ -283,8 +306,10 @@ error_log ( __METHOD__ . ": config = " . print_r( $config, true ) . "\n", 3, "/t
 			$sContObj->copy_object_to( $srcRel, $dContObj, $dstRel );
 		} catch ( NoSuchObjectException $e ) { // source object does not exist
 			$status->fatal( 'backend-fail-copy', $params['src'], $params['dst'] );
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-internal', $this->name );
 			$this->logException( $e, __METHOD__, $params );
@@ -310,12 +335,15 @@ error_log ( __METHOD__ . ": config = " . print_r( $config, true ) . "\n", 3, "/t
 			$sContObj->delete_object( $srcRel );
 		} catch ( NoSuchContainerException $e ) {
 			$status->fatal( 'backend-fail-delete', $params['src'] );
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( NoSuchObjectException $e ) {
 			if ( empty( $params['ignoreMissingSource'] ) ) {
 				$status->fatal( 'backend-fail-delete', $params['src'] );
+				$this->logException( $e, __METHOD__, $params );
 			}
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-internal', $this->name );
 			$this->logException( $e, __METHOD__, $params );
@@ -349,6 +377,7 @@ error_log( __METHOD__ . ": NoSuchContainerException\n", 3, "/tmp/moli.log" );
 			// NoSuchContainerException thrown: container does not exist
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 			return $status;
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-internal', $this->name );
@@ -372,13 +401,14 @@ error_log( __METHOD__ . ": is swiftAnonUser =  " . print_r( $this->swiftAnonUser
 error_log( __METHOD__ . ": setContainerAccess r:* \n", 3, "/tmp/moli.log" );
 				$status->merge( $this->setContainerAccess(
 					$contObj,
-					array( $this->auth->username, '.r:*' ), // read
+					array( $this->auth->username, '*' ), // read
 					array( $this->auth->username ) // write
 				) );
 error_log( __METHOD__ . ": statsu = " . print_r( $status, true ). " \n", 3, "/tmp/moli.log" );
 			}
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 			return $status;
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-internal', $this->name );
@@ -414,6 +444,7 @@ error_log( __METHOD__ . ": statsu = " . print_r( $status, true ). " \n", 3, "/tm
 				}
 			} catch ( InvalidResponseException $e ) {
 				$status->fatal( 'backend-fail-connect', $this->name );
+				$this->logException( $e, __METHOD__, $params );
 			} catch ( Exception $e ) { // some other exception?
 				$status->fatal( 'backend-fail-internal', $this->name );
 				$this->logException( $e, __METHOD__, $params );
@@ -441,6 +472,7 @@ error_log( __METHOD__ . ": statsu = " . print_r( $status, true ). " \n", 3, "/tm
 			return $status; // ok, nothing to do
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 			return $status;
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-internal', $this->name );
@@ -456,6 +488,7 @@ error_log( __METHOD__ . ": statsu = " . print_r( $status, true ). " \n", 3, "/tm
 				return $status; // race?
 			} catch ( InvalidResponseException $e ) {
 				$status->fatal( 'backend-fail-connect', $this->name );
+				$this->logException( $e, __METHOD__, $params );
 				return $status;
 			} catch ( Exception $e ) { // some other exception?
 				$status->fatal( 'backend-fail-internal', $this->name );
@@ -557,6 +590,7 @@ error_log( __METHOD__ . ": statsu = " . print_r( $status, true ). " \n", 3, "/tm
 			$data = $obj->read( $this->headersFromParams( $params ) );
 		} catch ( NoSuchContainerException $e ) {
 		} catch ( InvalidResponseException $e ) {
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( Exception $e ) { // some other exception?
 			$this->logException( $e, __METHOD__, $params );
 		}
@@ -590,6 +624,7 @@ error_log( __METHOD__ . ": statsu = " . print_r( $status, true ). " \n", 3, "/tm
 		} catch ( NoSuchContainerException $e ) {
 		} catch ( NoSuchObjectException $e ) {
 		} catch ( InvalidResponseException $e ) {
+			$this->logException( $e, __METHOD__, array( 'cont' => $fullCont, 'dir' => $dir ) );
 		} catch ( Exception $e ) { // some other exception?
 			$this->logException( $e, __METHOD__, array( 'cont' => $fullCont, 'dir' => $dir ) );
 		}
@@ -627,6 +662,7 @@ error_log( __METHOD__ . ": statsu = " . print_r( $status, true ). " \n", 3, "/tm
 			return $status;
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 			return $status;
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-stream', $params['src'] );
@@ -640,6 +676,7 @@ error_log( __METHOD__ . ": statsu = " . print_r( $status, true ). " \n", 3, "/tm
 			$obj->stream( $output, $this->headersFromParams( $params ) );
 		} catch ( InvalidResponseException $e ) { // 404? connection problem?
 			$status->fatal( 'backend-fail-stream', $params['src'] );
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-stream', $params['src'] );
 			$this->logException( $e, __METHOD__, $params );
@@ -726,9 +763,10 @@ error_log( __METHOD__ . ": statsu = " . print_r( $status, true ). " \n", 3, "/tm
 error_log( __METHOD__ .": creds = " . print_r( $creds, true ) . "\n", 3, "/tmp/moli.log" );
 		$url = $creds['storage_url'] . '/' . rawurlencode( $contObj->name );
 error_log( __METHOD__ .": url = " . print_r( $url, true ) . "\n", 3, "/tmp/moli.log" );
+error_log( __METHOD__ .": timeout = " . $this->swiftTimeout . "\n", 3, "/tmp/moli.log" );
 
 		// Note: 10 second timeout consistent with php-cloudfiles
-		$req = new CurlHttpRequest( $url, array( 'method' => 'POST', 'timeout' => $this->swiftTimeout, 'noProxy' => true ) );
+		$req = MWHttpRequest::factory( $url, array( 'method' => 'POST', 'timeout' => $this->swiftTimeout, 'noProxy' => true ) );
 		$req->setHeader( 'X-Auth-Token', $creds['auth_token'] );
 		$req->setHeader( 'X-Container-Read', implode( ',', $readGrps ) );
 		$req->setHeader( 'X-Container-Write', implode( ',', $writeGrps ) );
@@ -754,22 +792,34 @@ error_log( __METHOD__ .": url = " . print_r( $url, true ) . "\n", 3, "/tmp/moli.
 		}
 		// Authenticate with proxy and get a session key...
 		if ( $this->conn === null ) {
-			$this->connContainers = array();
-			try {
-error_log( __METHOD__ . ": authenticate\n", 3, "/tmp/moli.log" );
-				$this->auth->authenticate();
-error_log( __METHOD__ . ": authenticate = " . print_r( $this->auth, true ) . "\n", 3, "/tmp/moli.log" );
-				$this->conn = new CF_Connection( $this->auth );
-error_log( __METHOD__ . ": conn = " . print_r( $this->conn, true ) . "\n", 3, "/tmp/moli.log" );
-				$this->connStarted = time();
-			} catch ( AuthenticationException $e ) {
+			$this->connStarted = 0;
+			$cacheKey = $this->getCredsCacheKey( $this->auth->username );
+error_log( __METHOD__ . ": getCredsCacheKey({$this->auth->username}) = $cacheKey \n", 3, "/tmp/moli.log" );
+			$creds = $this->srvCache->get( $cacheKey ); // credentials
+error_log( __METHOD__ . ": creds = " . print_r(  $creds, true ) . " \n", 3, "/tmp/moli.log" );
+			if ( is_array( $creds ) ) { // cache hit
+				$this->auth->load_cached_credentials( $creds['auth_token'], $creds['storage_url'], $creds['cdnm_url'] );
+				$this->connStarted = time() - ceil( $this->authTTL / 2 ); // skew for worst case
+			} else { // cache miss
+				try {
+error_log( __METHOD__ . ": this->auth->authenticate() \n", 3, "/tmp/moli.log" );
+					$this->auth->authenticate();
+					$creds = $this->auth->export_credentials();
+					$this->conn = new CF_Connection( $this->auth );
+					$this->srvCache->add( $cacheKey, $creds, ceil( $this->authTTL / 2 ) ); // cache
+					$this->connStarted = time();
+				} catch ( AuthenticationException $e ) {
 error_log( __METHOD__ . ": AuthenticationException = " . print_r( $e->getMessage(), true ) . "\n", 3, "/tmp/moli.log" );
-				$this->conn = false; // don't keep re-trying
-			} catch ( InvalidResponseException $e ) {
+					$this->conn = false; // don't keep re-trying
+					$this->logException( $e, __METHOD__, $creds );
+				} catch ( InvalidResponseException $e ) {
 error_log( __METHOD__ . ": InvalidResponseException = " . print_r( $e->getMessage(), true ) . "\n", 3, "/tmp/moli.log" );
-				$this->conn = false; // don't keep re-trying
+					$this->conn = false; // don't keep re-trying
+					$this->logException( $e, __METHOD__, $creds );
+				}
 			}
 		}
+
 		if ( !$this->conn ) {
 			throw new InvalidResponseException; // auth/connection problem
 		}
@@ -783,6 +833,16 @@ error_log( __METHOD__ . ": InvalidResponseException = " . print_r( $e->getMessag
 		$this->connContainers = array(); // clear container object cache
 	}
 
+	/**
+	 * Get the cache key for a container
+	 *
+	 * @param string $username
+	 * @return string
+	 */
+	private function getCredsCacheKey( $username ) {
+		return wfMemcKey( 'backend', $this->getName(), 'usercreds', $username );
+	}
+	
 	/**
 	 * Get a Swift container object, possibly from process cache.
 	 * Use $reCache if the file count or byte count is needed.
@@ -837,6 +897,19 @@ error_log( __METHOD__ . ": conn =  " . print_r( $conn, true ) . "\n", 3, "/tmp/m
 	}
 
 	/**
+	 * Close the connection to the Swift proxy
+	 *
+	 * @return void
+	 */
+	protected function closeConnection() {
+		if ( $this->conn ) {
+			$this->conn->close(); // close active cURL handles in CF_Http object
+			$this->conn = null;
+			$this->connStarted = 0;
+		}
+	}
+	
+	/**
 	 * Log an unexpected exception for this backend
 	 * 
 	 * @param $e Exception
@@ -845,6 +918,11 @@ error_log( __METHOD__ . ": conn =  " . print_r( $conn, true ) . "\n", 3, "/tmp/m
 	 * @return void
 	 */
 	protected function logException( Exception $e, $func, array $params ) {
+		if ( $e instanceof InvalidResponseException ) { // possibly a stale token
+			$this->srvCache->delete( $this->getCredsCacheKey( $this->auth->username ) );
+			$this->closeConnection(); // force a re-connect and re-auth next time
+		}
+		
 		wfDebugLog( 'SwiftBackend',
 			get_class( $e ) . " in '{$func}' (given '" . serialize( $params ) . "')" .
 			( $e instanceof InvalidResponseException

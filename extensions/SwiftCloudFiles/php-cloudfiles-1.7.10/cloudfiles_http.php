@@ -204,50 +204,43 @@ class CF_Http
 
     # Uses separate cURL connection to authenticate
     #
-    function authenticate($user, $pass, $acct=NULL, $host=NULL)
-    {
-        $path = array();
-        if (isset($acct)){
-            $headers = array(
-                sprintf("%s: %s", AUTH_USER_HEADER_LEGACY, $user),
-                sprintf("%s: %s", AUTH_KEY_HEADER_LEGACY, $pass),
-                );
-            $path[] = $host;
-            $path[] = rawurlencode(sprintf("v%d",$this->api_version));
-            $path[] = rawurlencode($acct);
-        } else {
-            $headers = array(
-                sprintf("%s: %s", AUTH_USER_HEADER, $user),
-                sprintf("%s: %s", AUTH_KEY_HEADER, $pass),
-                );
-			$path[] = $host;
-        }
-		$path[] = "v1";
-        $url = implode("/", $path);
-error_log( __METHOD__ . ": url = $url \n", 3, "/tmp/moli.log" );
-error_log( __METHOD__ . ": headers = " . print_r( $headers, true ). " \n", 3, "/tmp/moli.log" );
-        $curl_ch = curl_init();
-        if (!is_null($this->cabundle_path)) {
-            curl_setopt($curl_ch, CURLOPT_SSL_VERIFYPEER, True);
-            curl_setopt($curl_ch, CURLOPT_CAINFO, $this->cabundle_path);
-        }
-        curl_setopt($curl_ch, CURLOPT_VERBOSE, $this->dbug);
-        curl_setopt($curl_ch, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($curl_ch, CURLOPT_MAXREDIRS, 4);
-        curl_setopt($curl_ch, CURLOPT_HEADER, 0);
-        curl_setopt($curl_ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($curl_ch, CURLOPT_USERAGENT, USER_AGENT);
-        curl_setopt($curl_ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($curl_ch, CURLOPT_HEADERFUNCTION,array(&$this,'_auth_hdr_cb'));
-        curl_setopt($curl_ch, CURLOPT_CONNECTTIMEOUT, 10);
-        curl_setopt($curl_ch, CURLOPT_URL, $url);
-        curl_exec($curl_ch);
-        curl_close($curl_ch);
+    public function authenticate( $user, $pass, $host = NULL ) {
+		$path = array( );
+		$headers = array(
+			sprintf( "%s: %s", AUTH_USER_HEADER, $user ),
+			sprintf( "%s: %s", AUTH_KEY_HEADER, $pass ),
+		);
+		$path[] = $host;
+		$path[] = "v1.0";
+		$url = implode( "/", $path );
 
-        return array($this->response_status, $this->response_reason,
-            $this->storage_url, $this->cdnm_url, $this->auth_token);
-    }
+		$curl_ch = curl_init();
+		if ( !is_null( $this->cabundle_path ) ) {
+			curl_setopt( $curl_ch, CURLOPT_SSL_VERIFYPEER, True );
+			curl_setopt( $curl_ch, CURLOPT_CAINFO, $this->cabundle_path );
+		}
+		curl_setopt( $curl_ch, CURLOPT_VERBOSE, $this->dbug );
+		curl_setopt( $curl_ch, CURLOPT_FOLLOWLOCATION, 1 );
+		curl_setopt( $curl_ch, CURLOPT_NOPROXY, "");
+		curl_setopt( $curl_ch, CURLOPT_MAXREDIRS, 4 );
+		curl_setopt( $curl_ch, CURLOPT_HEADER, 0 );
+		curl_setopt( $curl_ch, CURLOPT_HTTPHEADER, $headers );
+		curl_setopt( $curl_ch, CURLOPT_USERAGENT, USER_AGENT );
+		curl_setopt( $curl_ch, CURLOPT_RETURNTRANSFER, TRUE );
+		curl_setopt( $curl_ch, CURLOPT_HEADERFUNCTION, array( &$this, '_auth_hdr_cb' ) );
+		curl_setopt( $curl_ch, CURLOPT_CONNECTTIMEOUT, 10 );
+		curl_setopt( $curl_ch, CURLOPT_TIMEOUT, 10 );
+		curl_setopt( $curl_ch, CURLOPT_URL, $url );
+		if ( curl_exec( $curl_ch ) === false ) {
+			$this->response_reason = "(curl error: " . curl_errno( $curl_ch ) . ") ";
+			$this->response_reason .= curl_error( $curl_ch );
+		}
+		curl_close( $curl_ch );
 
+		return array( $this->response_status, $this->response_reason,
+			$this->storage_url, $this->cdnm_url, $this->auth_token );
+	}
+	
     # (CDN) GET /v1/Account
     #
     function list_cdn_containers($enabled_only)
