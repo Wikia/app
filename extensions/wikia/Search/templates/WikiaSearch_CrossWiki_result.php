@@ -3,7 +3,13 @@
 	$image = $result['image_s'];
 	$isOnWikiMatch = isset($result['onWikiMatch']) && $result['onWikiMatch'];
 	if (! empty( $image ) ) {
-		$imageURL = ImagesService::overrideThumbnailFormat( ImagesService::getImageSrcByTitle( (new CityVisualization)->getTargetWikiId( $result['lang_s'] ), $result['image_s'], 180, 120 ), ImagesService::EXT_JPG );
+		const THUMB_WIDTH  = 180;
+		const THUMB_HEIGHT = 120;
+
+		$targetWikiId = (new CityVisualization)->getTargetWikiId( $result['lang_s'] );
+		$imageURL = ImagesService::getImageSrcByTitle( $targetWikiId, $result['image_s'], THUMB_WIDTH, THUMB_HEIGHT );
+		$imageURL = ImagesService::overrideThumbnailFormat( $imageURL, ImagesService::EXT_JPG );
+
 		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-thumb"';
 	}
 	if ( empty( $imageURL ) ) {
