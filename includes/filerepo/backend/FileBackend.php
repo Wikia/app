@@ -1374,7 +1374,7 @@ error_log( __METHOD__ . ": status = " . print_r( $status, true ) . "\n", 3, "/tm
 	 * An exception is thrown if an unsupported operation is requested.
 	 * 
 	 * @param $ops Array Same format as doOperations()
-	 * @return Array List of FileOp objects
+	 * @return FileOp[] List of FileOp objects
 	 * @throws MWException
 	 */
 	final public function getOperations( array $ops ) {
