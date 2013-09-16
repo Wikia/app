@@ -1,16 +1,16 @@
 <?php
-
 /**
- * VideoPageTool
+ * VideoPageAdminSpecialController
  * @author Garth Webb
  * @author Kenneth Kouot
  * @author Liz Lee
  * @author Saipetch Kongkatong
  */
-class VideoPageToolSpecialController extends WikiaSpecialPageController {
+
+class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 
 	public function __construct() {
-		parent::__construct( 'VideoPageTool', '', false );
+		parent::__construct( 'VideoPageAdmin', '', false );
 	}
 
 	public function init() {
@@ -137,7 +137,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		$this->msg = $msg;
 
 		$this->leftMenuItems = $leftMenuItems;
-		$this->moduleView = $this->app->renderView( 'VideoPageToolSpecial', $section, array( 'videos' => $videos, 'date' => $date, 'language' => $language ) );
+		$this->moduleView = $this->app->renderView( 'VideoPageAdminSpecial', $section, array( 'videos' => $videos, 'date' => $date, 'language' => $language ) );
 
 		$this->section = $section;
 		// TODO: not sure if these are needed in edit(), just in the sub views like "featured" etc.

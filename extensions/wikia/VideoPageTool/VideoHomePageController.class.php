@@ -1,6 +1,9 @@
 <?php
+/**
+ * Class VideoHomePageController
+ */
 
-class VideoPageController extends WikiaController {
+class VideoHomePageController extends WikiaController {
 
 	var $program;
 
@@ -47,7 +50,7 @@ class VideoPageController extends WikiaController {
 	 *
 	 * Example controller request:
 	 *
-	 *   /wikia.php?controller=VideoPageController&method=getModule&moduleName=category
+	 *   /wikia.php?controller=VideoHomePageController&method=getModule&moduleName=category
 	 *
 	 * @requestParam moduleName - The name of the module to display
 	 * @return bool

@@ -34,7 +34,7 @@ define( 'vpt.views.edit', [
 					callbackAfterSelect: function( url, vet ) {
 
 						$.nirvana.sendRequest({
-							controller: 'VideoPageToolSpecial',
+							controller: 'VideoPageAdminSpecial',
 							method: 'getVideoData',
 							type: 'GET',
 							format: 'json',
