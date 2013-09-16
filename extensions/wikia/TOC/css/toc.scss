@@ -1,5 +1,14 @@
 .toc {
 	display: inline-block;
+	position: relative;
+
+	> div {
+		padding: 2px;
+	}
+
+	h2 {
+		padding-right: 5px;
+	}
 
 	ol {
 		counter-reset: item;
