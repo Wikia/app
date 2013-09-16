@@ -100,13 +100,13 @@ ve.dm.MWBlockImageNode.static.toDataElement = function ( domElements, converter 
 	if ( $caption.length === 0 ) {
 		return [
 			{ 'type': this.name, 'attributes': attributes },
-			{ 'type': this.childNodeTypes[0] },
-			{ 'type': '/' + this.childNodeTypes[0] },
+			{ 'type': this.captionNodeType },
+			{ 'type': '/' + this.captionNodeType },
 			{ 'type': '/' + this.name }
 		];
 	} else {
 		return [ { 'type': this.name, 'attributes': attributes } ].
-			concat( converter.getDataFromDomRecursionClean( $caption[0], { 'type': this.childNodeTypes[0] } ) ).
+			concat( converter.getDataFromDomRecursionClean( $caption[0], { 'type': this.captionNodeType } ) ).
 			concat( [ { 'type': '/' + this.name } ] );
 	}
 };
