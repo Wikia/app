@@ -32,8 +32,8 @@ define('vpt.views.datepicker', [
 		},
 		state: {
 			// private constants used to track state of a date entry
-			_notPublished: 1,
-			_published: 0
+			_notPublished: 0,
+			_published: 1
 		},
 		render: function() {
 			this.$el.text('').datepicker({
