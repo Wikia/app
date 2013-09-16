@@ -5,13 +5,16 @@
 QUnit.module( 've.ce.WikiaBlockImageNode', {
 	setup: function() {
 		var a,
-			data = ve.ce.wikiaExample.data[ 'mw:Image' ],
+			data,
 			h,
 			t,
 			w;
 
 		this.$fixture = $( '#qunit-fixture' );
 		this.permutations = [];
+		this.type = 'mw:Image';
+
+		data = ve.ce.wikiaExample.data[ this.type ];
 
 		// TODO: make this less fugly
 		for ( a = 0; a < data.align.length; a++ ) {
@@ -32,6 +35,7 @@ QUnit.module( 've.ce.WikiaBlockImageNode', {
 	teardown: function() {
 		this.$fixture = null;
 		this.permutations = null;
+		this.type = null;
 	}
 } );
 
@@ -58,7 +62,7 @@ QUnit.test( 'HTMLDOM to NodeView', function ( assert ) {
 		attributesDiffed = ve.ce.wikiaExample.getAttributeChanges( previousAttributes, attributes );
 
 		doc = ve.createDocumentFromHtml(
-			ve.ce.wikiaExample.getImageHTMLDOM( attributes )
+			ve.ce.wikiaExample.getBlockMediaHTMLDOM( this.type, attributes )
 		);
 
 		target = new ve.init.sa.Target( this.$fixture, doc );
@@ -100,7 +104,7 @@ QUnit.test( 'NodeView changes', function ( assert ) {
 		expectCount = 0;
 
 	doc = ve.createDocumentFromHtml(
-		ve.ce.wikiaExample.getImageHTMLDOM( previousAttributes )
+		ve.ce.wikiaExample.getBlockMediaHTMLDOM( this.type, previousAttributes )
 	);
 
 	target = new ve.init.sa.Target( this.$fixture, doc );

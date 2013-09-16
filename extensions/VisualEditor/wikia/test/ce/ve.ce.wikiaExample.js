@@ -34,6 +34,8 @@ ve.ce.wikiaExample.data = {
 	}
 };
 
+// mw:Video is the same for now
+ve.ce.wikiaExample.data[ 'mw:Video' ] = ve.ce.wikiaExample.data[ 'mw:Image' ];
 
 // TODO: put this in ve.test.utils.js ?
 // TODO: make options into a hash, add 'join' and 'pair' options
@@ -127,13 +129,13 @@ ve.ce.wikiaExample.getAlignClass = (function () {
 })();
 
 /**
- * Get the mocked HTMLDOM output for an image node.
+ * Get the mocked HTMLDOM output for a block media node.
  *
  * @method
  * @param {Object} attributes The attributes from which to build the mock.
  * @returns {String} The mocked HTML.
  */
-ve.ce.wikiaExample.getImageHTMLDOM = (function () {
+ve.ce.wikiaExample.getBlockMediaHTMLDOM = (function () {
 	var alignClasses = {
 			'center': 'mw-halign-center',
 			'left': 'mw-halign-left',
@@ -145,14 +147,13 @@ ve.ce.wikiaExample.getImageHTMLDOM = (function () {
 				'<a href="Foo"><img src="Bar" resource="FooBar"></a>',
 				'<figcaption>abc</figcaption>',
 			'</figure>'
-		].join( '' ),
-		type = 'mw:Image';
+		].join( '' );
 
 	function ucFirst( str ) {
 		return str.charAt( 0 ).toUpperCase() + str.slice( 1 );
 	}
 
-	return function( attributes ) {
+	return function( type, attributes ) {
 		var $mock = $( mock ),
 			typeOf = type + (
 				attributes.type !== 'none' ? '/' + ucFirst( attributes.type ) : ''
