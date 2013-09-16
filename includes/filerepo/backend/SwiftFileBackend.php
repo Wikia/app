@@ -336,6 +336,13 @@ error_log( __METHOD__ . ": $fullCont, $dir, params = " . print_r( $params, true 
 			$contObj = $this->getContainer( $fullCont );
 error_log( __METHOD__ . ": getContainer( $fullCont ) =  " . print_r( $contObj, true ) . "\n", 3, "/tmp/moli.log" );
 			// NoSuchContainerException not thrown: container must exist
+
+			$status = $this->setContainerAccess(
+				$contObj,
+				array( '.r:*' ), // read
+				array( $this->auth->username ) // write
+			);
+
 			return $status; // already exists
 		} catch ( NoSuchContainerException $e ) {
 error_log( __METHOD__ . ": NoSuchContainerException\n", 3, "/tmp/moli.log" );
