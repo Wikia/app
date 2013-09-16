@@ -6,7 +6,7 @@
  * UserInterface MediaWiki media insert button tool.
  *
  * @class
- * @extends ve.ui.DialogButtonTool
+ * @extends ve.ui.IconTextButtonTool
  *
  * @constructor
  * @param {ve.ui.Toolbar} toolbar
