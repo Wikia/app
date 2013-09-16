@@ -2,6 +2,8 @@
  * VisualEditor ContentEditable Wikia example data sets.
  */
 
+/* global mw: false */
+
 /**
  * @namespace
  * @ignore
