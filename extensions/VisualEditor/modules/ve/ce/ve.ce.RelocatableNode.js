@@ -31,7 +31,7 @@ ve.ce.RelocatableNode = function VeCeRelocatableNode() {
 	// Initialization
 	this.$relocatableMarker
 		.addClass( 've-ce-relocatableNode-marker' )
-		.attr( 'src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' )
+		.attr( 'src', 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' )
 		.on( {
 			'dragstart': ve.bind( this.onRelocatableDragStart, this ),
 			'dragend': ve.bind( this.onRelocatableDragEnd, this )
@@ -129,8 +129,8 @@ ve.ce.RelocatableNode.prototype.setRelocatableMarkerSizeAndPosition = function (
 	);
 
 	this.$relocatableMarker.css( {
-		'height': this.$.height(),
-		'width': this.$.width(),
+		'height': this.$.outerHeight(),
+		'width': this.$.outerWidth(),
 		'top': offset.top,
 		'left': offset.left
 	} );
