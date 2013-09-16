@@ -1,20 +1,27 @@
 <?php
 
-//use \Wikia\Api\Docs;
+use Wikia\ApiDocs\Services\ApiDocsServiceFactory;
+use Wikia\ApiDocs\Services\IApiDocsService;
 
 class ApiDocsController extends WikiaController {
 	const TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
-
-	private $swagger;
+	/**
+	 * @var IApiDocsService
+	 */
 	private $docsService;
 
+	/**
+	 *
+	 */
 	public function __construct() {
-		//parent::__construct( 'ApiDocs', 'ApiDocs' );
-		global $IP;
-		$this->swagger = \Swagger\Swagger::discover( $IP . "/includes/wikia/api/" );
-		$this->docsService = new \Wikia\ApiDocs\Services\ApiDocsService( $this->swagger, function( $x ) { return "/wikia.php?controller=ApiDocs&method=api&api=" . $x; } );
+		parent::__construct(  );
+
+		$this->docsService = (new ApiDocsServiceFactory)->getApiDocsService();
 	}
 
+	/**
+	 *
+	 */
 	public function index() {
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 
@@ -24,6 +31,9 @@ class ApiDocsController extends WikiaController {
 		$this->setVal( 'css', $css );
 	}
 
+	/**
+	 *
+	 */
 	public function api() {
 		$api = $this->getVal("api");
 
@@ -33,6 +43,9 @@ class ApiDocsController extends WikiaController {
 		$this->getResponse()->setData( $apiDoc );
 	}
 
+	/**
+	 *
+	 */
 	public function apiList() {
 
 		$this->getResponse()->setFormat("json");

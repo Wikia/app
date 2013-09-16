@@ -2,37 +2,38 @@
 
 namespace Wikia\ApiDocs\Services;
 
-class ApiDocsService {
+/**
+ * Class ApiDocsService
+ * @package Wikia\ApiDocs\Services
+ * Don't create directly @see Wikia\ApiDocs\Services\ApiDocsServiceFactory
+ */
+class ApiDocsService implements IApiDocsService {
 	/**
 	 * @var \Swagger\Swagger
+	 * Original swagger object
 	 */
 	private $swagger;
 
 	/**
-	 * @var callable
+	 * @var callable used by getDocList to generate api paths
+	 * i.e. function( $x ) { return "/wikia.php?controller=ApiDocs&method=api&api=" . $x; }
 	 */
 	private $pathBuilder;
 
+
 	/**
-	 * @param  /Swagger/Swagger $swagger
+	 * @param /Swagger/Swagger $swagger
 	 * @param callable $pathBuilder
-	 * @internal param $ /Swagger/Swagger $swagger
 	 */
 	function __construct( $swagger, $pathBuilder ) {
 		$this->swagger = $swagger;
 		$this->pathBuilder = $pathBuilder;
-
-		$errors = [];
-
-		\Swagger\Logger::getInstance()->log = function ($entry, $type) use (&$errors) {
-			$type = $type === E_USER_NOTICE ? 'INFO' : 'WARN';
-			if ($entry instanceof \Exception) {
-				$entry = $entry->getMessage();
-			}
-			$errors[] = '[' . $type . '] ' . $entry . "\n";
-		};
 	}
 
+	/**
+	 * Returns list of available APIs.
+	 * @return array
+	 */
 	function getDocList() {
 
 		$result = [];
@@ -57,9 +58,24 @@ class ApiDocsService {
 		return $result;
 	}
 
+	/**
+	 * Returns api docs for given API name.
+	 * @param string $name
+	 * @return array
+	 */
 	function getDoc( $name ) {
-		return \WikiaDataAccess::cache( wfMemcKey( 'ApiDocsService', $name ), 60, function() use($name) {
-			return $this->swagger->getResource( $name, false, false );
-		} );
+		return $this->swagger->getResource( $name, false, false );
 	}
 }
+
+/*
+$errors = [];
+
+\Swagger\Logger::getInstance()->log = function ($entry, $type) use (&$errors) {
+	$type = $type === E_USER_NOTICE ? 'INFO' : 'WARN';
+	if ($entry instanceof \Exception) {
+		$entry = $entry->getMessage();
+	}
+	$errors[] = '[' . $type . '] ' . $entry . "\n";
+};
+*/
