@@ -11,3 +11,5 @@ Publish date: <?= $curProgram->getPublishDate() ?>
 <? else: ?>
 	<h1>No current program</h1>
 <? endif; ?>
+
+<?= $app->renderPartial('VideoHomePageController', 'partners') ?>

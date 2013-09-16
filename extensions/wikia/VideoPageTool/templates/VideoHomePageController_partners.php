@@ -1,5 +1,5 @@
 <section class="partners">
-	<h1 class="partners-title"><?= wfMessage( 'videohomepage-partners-title' )->plain() ?></h1>
+	<h1 class="partners-title"><?= wfMessage( 'videohomepage-partner-section-title' )->plain() ?></h1>
 	<ul>
 		<li>
 			<a class="ico-anyclip" href=""></a>
