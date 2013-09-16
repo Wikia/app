@@ -121,7 +121,7 @@ class ImagesService extends Service {
 	 */
 	public static function overrideThumbnailFormat($thumbUrl, $newExtension) {
 
-		if ( in_array($newExtension, self::$allowedExtensionsList) && !self::imageUrlHasExtension($thumbUrl, $newExtension) ) {
+		if ( !empty($thumbUrl) && in_array($newExtension, self::$allowedExtensionsList) && !self::imageUrlHasExtension($thumbUrl, $newExtension) ) {
 			$thumbUrl .= $newExtension;
 		}
 
