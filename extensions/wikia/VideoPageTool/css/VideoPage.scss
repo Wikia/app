@@ -1,0 +1,14 @@
+#HOME_TOP_RIGHT_BOXAD { display: none }
+.partners {
+
+	& > ul {
+		margin: 0 auto;
+
+		& > li {
+			display: inline-block;
+			width: 16.3%;
+			text-align: center;
+		}
+	}
+}
+
