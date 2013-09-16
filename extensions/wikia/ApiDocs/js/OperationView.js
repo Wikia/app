@@ -90,8 +90,6 @@
 
 		OperationView.prototype.copyOperation = function(e) {
 			var copy = ($(this.el).find(".copy"));
-			console.log("CCCCOPY");
-
 			if(copy.length)
 			{
 				$(copy[0]).zclip({
@@ -100,8 +98,6 @@
 				});
 			}
 
-
-			//--
 		}
 
 		OperationView.prototype.submitOperation = function(e) {
