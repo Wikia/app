@@ -1,0 +1,21 @@
+.ve-ui-iconTextButtonTool {
+	color: #555;
+	padding-left: .5em;
+	padding-right: .5em;
+	width: auto;
+}
+
+.ve-ui-iconTextButtonTool:hover {
+	text-decoration: none;
+}
+
+.ve-ui-iconTextButtonTool-icon {
+	display: inline-block;
+	margin-right: .3em;
+	vertical-align: middle;
+}
+
+.ve-ui-iconTextButtonTool-label {
+	font-size: .8em;
+	vertical-align: middle;
+}
