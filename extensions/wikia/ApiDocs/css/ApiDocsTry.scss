@@ -69,3 +69,16 @@ div.response_headers {
 		}
 	}
 }
+
+
+div.response_throbber{
+	width:24px;
+	height:24px;
+	background:url('/extensions/wikia/ApiDocs/images/loading2.gif') no-repeat; /* $wgCdnStylePath */
+	position:relative;
+	top:5px;
+	left:5px;
+	display:inline-block;
+
+
+}
