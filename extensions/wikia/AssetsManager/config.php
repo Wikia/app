@@ -1003,7 +1003,7 @@ $config['videohomepage_scss'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => array(
-		'//extensions/wikia/VideoPageTool/css/VideoPage.scss'
+		'//extensions/wikia/VideoPageTool/css/VideoHomePage.scss'
 	)
 );
 
