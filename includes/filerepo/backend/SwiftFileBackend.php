@@ -721,7 +721,7 @@ error_log( __METHOD__ .": creds = " . print_r( $creds, true ) . "\n", 3, "/tmp/m
 error_log( __METHOD__ .": url = " . print_r( $url, true ) . "\n", 3, "/tmp/moli.log" );
 
 		// Note: 10 second timeout consistent with php-cloudfiles
-		$req = new CurlHttpRequest( $url, array( 'method' => 'POST', 'timeout' => $this->swiftTimeout ) );
+		$req = new CurlHttpRequest( $url, array( 'method' => 'POST', 'timeout' => $this->swiftTimeout, 'noProxy' => true ) );
 		$req->setHeader( 'X-Auth-Token', $creds['auth_token'] );
 		$req->setHeader( 'X-Container-Read', implode( ',', $readGrps ) );
 		$req->setHeader( 'X-Container-Write', implode( ',', $writeGrps ) );
