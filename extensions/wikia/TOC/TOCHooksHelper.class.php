@@ -24,5 +24,4 @@ class TOCHooksHelper {
 
 		return true;
 	}
-
 }

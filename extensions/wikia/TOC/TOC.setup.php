@@ -28,4 +28,3 @@ $wgExtensionMessagesFiles['TOC'] = $dir.'TOC.i18n.php';
 $wgHooks['Linker::overwriteTOC'][] = 'TOCHooksHelper::onOverwriteTOC';
 $wgHooks['MonobookSkinAssetGroups'][] = 'TOCHooksHelper::onMonobookSkinAssetGroups';
 $wgHooks['OasisSkinAssetGroups'][] = 'TOCHooksHelper::onOasisSkinAssetGroups';
-
