@@ -959,7 +959,7 @@ $config['VET_js'] = array(
  * @TODO: decide if we want to split the js/css into two different packages for index and edit pages
  */
 
-$config['videopagetool_js'] = array(
+$config['videopageadmin_js'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -975,7 +975,7 @@ $config['videopagetool_js'] = array(
 	)
 );
 
-$config['videopagetool_css'] = array(
+$config['videopageadmin_css'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_CSS,
 	'assets' => array(
@@ -983,7 +983,7 @@ $config['videopagetool_css'] = array(
 	)
 );
 
-$config['videopagetool_scss'] = array(
+$config['videopageadmin_scss'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => array(
