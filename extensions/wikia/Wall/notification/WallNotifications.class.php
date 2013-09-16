@@ -104,6 +104,7 @@ class WallNotifications {
 	}
 
 	public function getCounts($userId) {
+		wfProfileIn(__METHOD__);
 		$wikiList = $this->getWikiList($userId);
 
 		// prefetch data
@@ -125,7 +126,7 @@ class WallNotifications {
 			if( $wiki['unread'] > 0 || $wiki['id'] == $this->app->wg->CityId )
 				$output[] = $wiki;
 		}
-
+		wfProfileOut(__METHOD__);
 		return $output;
 	}
 
