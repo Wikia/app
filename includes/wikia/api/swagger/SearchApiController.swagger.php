@@ -93,7 +93,7 @@ use Swagger\Annotations as SWG;
  * 	)
  * 
  * @SWG\Api(
- * 	path="/wikia.php?controller=SearchApi&method=getList",
+ * 	path="/api/v1/Search/List",
  * 	description="Search local Wikia for given phrase. Should not be used directly on www.wikia.com.",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -167,7 +167,7 @@ use Swagger\Annotations as SWG;
  * )
  * 
  * @SWG\Api(
- * 	path="/wikia.php?controller=SearchApi&method=getCrossWiki",
+ * 	path="/api/v1/Search/CrossWiki",
  * 	description="Get results for cross-wiki search for submitted query. As a result you get a list of Wikis",
  * 	@SWG\Operations(
  * 		@SWG\Operation(

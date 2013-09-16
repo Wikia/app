@@ -27,7 +27,7 @@ use Swagger\Annotations as SWG;
  * 	)
  * 
  * @SWG\Api(
- * 	path="/wikia.php?controller=SearchSuggestionsApi&method=getList",
+ * 	path="/api/v1/SearchSuggestions/List",
  * 	description="Controller to find suggested phrases for chosen query",
  * 	@SWG\Operations(
  * 		@SWG\Operation(

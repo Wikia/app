@@ -61,7 +61,7 @@ use Swagger\Annotations as SWG;
  * 	)
  * 
  * @SWG\Api(
- * 	path="/wikia.php?controller=StatsApi&method=getData",
+ * 	path="/api/v1/Stats/Data",
  * 	description="Controller to get statistical information about the current wiki",
  * 	@SWG\Operations(
  * 		@SWG\Operation(

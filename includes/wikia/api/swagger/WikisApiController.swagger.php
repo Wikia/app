@@ -280,7 +280,7 @@ use Swagger\Annotations as SWG;
  * 	)
  * 
  * @SWG\Api(
- * 	path="/wikia.php?controller=WikisApi&method=getList",
+ * 	path="/api/v1/Wikis/List",
  * 	description="Get the top wikis by pageviews",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -332,7 +332,7 @@ use Swagger\Annotations as SWG;
  * )
  * 
  * @SWG\Api(
- * 	path="/wikia.php?controller=WikisApi&method=getList&expand=1",
+ * 	path="/api/v1/Wikis/List?expand=1",
  * 	description="Get the top wikis by pageviews (extended response)",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -384,7 +384,7 @@ use Swagger\Annotations as SWG;
  * )
  * 
  * @SWG\Api(
- * 	path="/wikia.php?controller=WikisApi&method=getByString",
+ * 	path="/api/v1/Wikis/ByString",
  * 	description="Get wikis which name or topic match a keyword",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -454,7 +454,7 @@ use Swagger\Annotations as SWG;
  * )
  * 
  * @SWG\Api(
- * 	path="/wikia.php?controller=WikisApi&method=getByString&expand=1",
+ * 	path="/api/v1/Wikis/ByString?expand=1",
  * 	description="Get wikis which name or topic match a keyword (extended version)",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -524,7 +524,7 @@ use Swagger\Annotations as SWG;
  * )
  * 
  * @SWG\Api(
- * 	path="/wikia.php?controller=WikisApi&method=getDetails",
+ * 	path="/api/v1/Wikis/Details",
  * 	description="Get information about wikis",
  * 	@SWG\Operations(
  * 		@SWG\Operation(

@@ -270,7 +270,7 @@ use Swagger\Annotations as SWG;
  * 	)
  * 
  * @SWG\Api(
- * 	path="/wikia.php?controller=ArticlesApi&method=getTop",
+ * 	path="/api/v1/Articles/Top",
  * 	description="Get the most viewed articles on this wiki",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -306,7 +306,7 @@ use Swagger\Annotations as SWG;
  * 	)
  * )
  * @SWG\Api(
- * 	path="/wikia.php?controller=ArticlesApi&method=getTop&expand=1",
+ * 	path="/api/v1/Articles/Top?expand=1",
  * 	description="Get the most viewed articles for this wiki (expanded results)",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -344,7 +344,7 @@ use Swagger\Annotations as SWG;
  * 
  * 
  * @SWG\Api(
- * 	path="/wikia.php?controller=ArticlesApi&method=getTopByHub",
+ * 	path="api/v1/Articles/TopByHub",
  * 	description="View the most popular wikis in a given hub. Available only on the www.wikia.com main domain.",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -391,7 +391,7 @@ use Swagger\Annotations as SWG;
  * 
  * 
  * @SWG\Api(
- * 	path="/wikia.php?controller=ArticlesApi&method=getList",
+ * 	path="/api/v1/Articles/List",
  * 	description="Get the most viewed articles for the current wiki",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -445,7 +445,7 @@ use Swagger\Annotations as SWG;
  * 	)
  * )
  * @SWG\Api(
- * 	path="/wikia.php?controller=ArticlesApi&method=getList&expand=1",
+ * 	path="/api/v1/Articles/List?expand=1",
  * 	description="Get a list of pages on the current wiki",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -500,7 +500,7 @@ use Swagger\Annotations as SWG;
  * )
  * 
  * @SWG\Api(
- * 		path="/wikia.php?controller=ArticlesApi&method=getDetails",
+ * 		path="/api/v1/Articles/Details",
  * 		description="Get top articles for the current wiki",
  * 		@SWG\Operations(
  * 			@SWG\Operation(

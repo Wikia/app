@@ -66,7 +66,7 @@ use Swagger\Annotations as SWG;
  * 	)
  * 
  * @SWG\Api(
- * 	path="/wikia.php?controller=WikiaHubsApi&method=getModuleData",
+ * 	path="/api/v1/WikiaHubs/ModuleData",
  * 	description="Get explore module data from given date and vertical",
  * 	@SWG\Operations(
  * 		@SWG\Operation(

@@ -50,7 +50,7 @@ use Swagger\Annotations as SWG;
  * 	)
  * 
  * @SWG\Api(
- * 	path="/wikia.php?controller=RelatedPagesApi&method=getList",
+ * 	path="/api/v1/RelatedPages/List",
  * 	description="API to get related pages for given article ID",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
