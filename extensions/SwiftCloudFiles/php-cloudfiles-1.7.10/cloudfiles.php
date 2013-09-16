@@ -240,7 +240,7 @@ class CF_Authentication
          */
 	function load_cached_credentials($auth_token, $storage_url, $cdnm_url)
     {
-        if ( !$storage_url || !$cdnm_url ) {
+        if ( !$storage_url && !$cdnm_url ) {
 			throw new SyntaxException("Missing Required Interface URL's!");
 			return false;
         } elseif( !$auth_token ) {

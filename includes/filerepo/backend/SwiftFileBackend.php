@@ -364,13 +364,6 @@ error_log( __METHOD__ . ": $fullCont, $dir, params = " . print_r( $params, true 
 			$contObj = $this->getContainer( $fullCont );
 error_log( __METHOD__ . ": getContainer( $fullCont ) =  " . print_r( $contObj, true ) . "\n", 3, "/tmp/moli.log" );
 			// NoSuchContainerException not thrown: container must exist
-
-			$status = $this->setContainerAccess(
-				$contObj,
-				array( '.r:*' ), // read
-				array( $this->auth->username ) // write
-			);
-
 			return $status; // already exists
 		} catch ( NoSuchContainerException $e ) {
 error_log( __METHOD__ . ": NoSuchContainerException\n", 3, "/tmp/moli.log" );
@@ -787,12 +780,11 @@ error_log( __METHOD__ .": timeout = " . $this->swiftTimeout . "\n", 3, "/tmp/mol
 		}
 		// Session keys expire after a while, so we renew them periodically
 		if ( $this->conn && ( time() - $this->connStarted ) > $this->authTTL ) {
-			$this->conn->close(); // close active cURL connections
-			$this->conn = null;
+error_log( __METHOD__ . ": closeConnection: " . intval( time() - $this->connStarted ) . " \n", 3, "/tmp/moli.log" );
+			$this->closeConnection();
 		}
 		// Authenticate with proxy and get a session key...
 		if ( $this->conn === null ) {
-			$this->connStarted = 0;
 			$cacheKey = $this->getCredsCacheKey( $this->auth->username );
 error_log( __METHOD__ . ": getCredsCacheKey({$this->auth->username}) = $cacheKey \n", 3, "/tmp/moli.log" );
 			$creds = $this->srvCache->get( $cacheKey ); // credentials
@@ -805,8 +797,8 @@ error_log( __METHOD__ . ": creds = " . print_r(  $creds, true ) . " \n", 3, "/tm
 error_log( __METHOD__ . ": this->auth->authenticate() \n", 3, "/tmp/moli.log" );
 					$this->auth->authenticate();
 					$creds = $this->auth->export_credentials();
-					$this->conn = new CF_Connection( $this->auth );
-					$this->srvCache->add( $cacheKey, $creds, ceil( $this->authTTL / 2 ) ); // cache
+error_log( __METHOD__ . ": srvCache set (" . print_r( $creds, true ) . " => " .  ceil( $this->authTTL / 2 ) . "\n", 3, "/tmp/moli.log" );
+					$this->srvCache->set( $cacheKey, $creds, ceil( $this->authTTL / 2 ) ); // cache
 					$this->connStarted = time();
 				} catch ( AuthenticationException $e ) {
 error_log( __METHOD__ . ": AuthenticationException = " . print_r( $e->getMessage(), true ) . "\n", 3, "/tmp/moli.log" );
@@ -818,6 +810,9 @@ error_log( __METHOD__ . ": InvalidResponseException = " . print_r( $e->getMessag
 					$this->logException( $e, __METHOD__, $creds );
 				}
 			}
+			
+			$this->conn = new CF_Connection( $this->auth );
+			error_log( __METHOD__ . ": conn = " . print_r( $this->conn, true ) . " \n", 3, "/tmp/moli.log" );
 		}
 
 		if ( !$this->conn ) {
@@ -903,6 +898,7 @@ error_log( __METHOD__ . ": conn =  " . print_r( $conn, true ) . "\n", 3, "/tmp/m
 	 */
 	protected function closeConnection() {
 		if ( $this->conn ) {
+			$this->srvCache->delete( $this->getCredsCacheKey( $this->auth->username ) );
 			$this->conn->close(); // close active cURL handles in CF_Http object
 			$this->conn = null;
 			$this->connStarted = 0;
@@ -919,7 +915,6 @@ error_log( __METHOD__ . ": conn =  " . print_r( $conn, true ) . "\n", 3, "/tmp/m
 	 */
 	protected function logException( Exception $e, $func, array $params ) {
 		if ( $e instanceof InvalidResponseException ) { // possibly a stale token
-			$this->srvCache->delete( $this->getCredsCacheKey( $this->auth->username ) );
 			$this->closeConnection(); // force a re-connect and re-auth next time
 		}
 		
