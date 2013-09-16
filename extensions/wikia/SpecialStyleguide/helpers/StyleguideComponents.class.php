@@ -215,7 +215,7 @@ class StyleguideComponents {
 
 		foreach( $typesFromFile as $typeName => $typeFromFile ) {
 			$type = new stdClass();
-			$type->typeName = $typeName;
+			$type->typeName = wfMessage( 'styleguide-types-type-headline' )->params( $typeName )->parse();
 			$type->typeParams = $this->prepareParamDocumentation( $typeFromFile[ 'params' ] );
 
 			$result[] = $type;

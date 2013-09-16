@@ -98,6 +98,7 @@ class SpecialStyleguideDataModel {
 				'typeCellHeadline' => wfMessage( 'styleguide-types-type-cell-headline' )->plain(),
 				'valueObjectCellHeadline' => wfMessage( 'styleguide-types-value-object-cell-headline' )->plain(),
 				'descCellHeadline' => wfMessage( 'styleguide-types-desc-cell-headline' )->plain(),
+				'showParametersLink' => wfMessage( 'styleguide-show-parameters' )->plain(),
 				'componentsList' => $this->sortComponents( $helper->getAllComponents() )
 			]
 		];

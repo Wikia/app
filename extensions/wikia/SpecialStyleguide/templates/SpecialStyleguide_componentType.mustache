@@ -1,34 +1,32 @@
-<h4>{{typeName}}</h4>
-<div>
-	<table class="wikitable">
-		<thead>
+<h4>{{typeName}} <a href="#" class="toggleParameters">{{showParametersLink}}</a></h4>
+<table class="wikitable styleguide-component-params">
+	<thead>
+		<tr>
+			<th>{{paramCellHeadline}}</th>
+			<th>{{templateVarCellHeadline}}</th>
+			<th>{{typeCellHeadline}}</th>
+			<th>{{valueObjectCellHeadline}}</th>
+			<th>{{descCellHeadline}}</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#typeParams}}
 			<tr>
-				<th>{{paramCellHeadline}}</th>
-				<th>{{templateVarCellHeadline}}</th>
-				<th>{{typeCellHeadline}}</th>
-				<th>{{valueObjectCellHeadline}}</th>
-				<th>{{descCellHeadline}}</th>
+				<td>{{templateVar}}</td>
+				<td>{{templateVar}}</td>
+				<td>{{type}}</td>
+				<td>
+					<table class="wikitable">
+						{{#object}}
+							{{>SpecialStyleguide_componentParamObject}}
+						{{/object}}
+						{{#value}}
+							{{>SpecialStyleguide_componentParamValue}}
+						{{/value}}
+					</table>
+				</td>
+				<td>{{description}}</td>
 			</tr>
-		</thead>
-		<tbody>
-			{{#typeParams}}
-				<tr>
-					<td>{{templateVar}}</td>
-					<td>{{templateVar}}</td>
-					<td>{{type}}</td>
-					<td>
-						<table class="wikitable">
-							{{#object}}
-								{{>SpecialStyleguide_componentParamObject}}
-							{{/object}}
-							{{#value}}
-								{{>SpecialStyleguide_componentParamValue}}
-							{{/value}}
-						</table>
-					</td>
-					<td>{{description}}</td>
-				</tr>
-			{{/typeParams}}
-		</tbody>
-	</table>
-</div>
+		{{/typeParams}}
+	</tbody>
+</table>

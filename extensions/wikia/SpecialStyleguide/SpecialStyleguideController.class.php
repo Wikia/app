@@ -23,7 +23,6 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 		RenderContentOnlyHelper::setRenderContentVar( true );
 		RenderContentOnlyHelper::setRenderContentLevel( RenderContentOnlyHelper::LEAVE_NAV_ONLY );
 		$this->response->addAsset( 'ui_repo_api_js' );
-		$this->response->addAsset( 'extensions/wikia/SpecialStyleguide/js/SpecialStyleguide.js' );
 		$this->response->addAsset( 'extensions/wikia/SpecialStyleguide/css/SpecialStyleguide.scss' );
 
 		$this->wg->Out->setPageTitle( wfMessage( 'styleguide-pagetitle' )->plain() );
@@ -48,6 +47,10 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 					'body' => $this->getSectionContent( 'components' ),
 					'footer' => $this->getSectionContent( 'footer' ),
 				];
+
+				$this->response->addAsset('extensions/wikia/SpecialStyleguide/js/SpecialStyleguide.js');
+				(new JSMessages())->enqueuePackage('SpecialStyleguide', JSMessages::EXTERNAL);
+
 				break;
 			default:
 				$data = [
