@@ -52,6 +52,17 @@ input[type='text'] {
 	@include inputs;
 }
 
+input.copy_in,
+input.copy_in:focus{
+	@include inputs;
+	font-family: monospace;
+
+	border:none;
+	width:100%;
+	outline: none;
+	height:auto;
+}
+
 //hack for strongs, and b displaying as normal, try changing template
 strong, b {
 	font-weight: inherit;

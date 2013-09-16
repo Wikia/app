@@ -15,7 +15,7 @@
 		OperationView.prototype.events = {
 			'submit .sandbox': 'submitOperation',
 			'click .submit': 'submitOperation',
-			'mouseenter .copy': 'copyOperation',
+			'click .copy': 'copyOperation',
 			'click .response_hider': 'hideResponse',
 			'click .toggleOperation': 'toggleOperationContent'
 		};
@@ -89,15 +89,19 @@
 		};
 
 		OperationView.prototype.copyOperation = function(e) {
-			var copy = ($(this.el).find(".copy"));
+
+			$(this.el).find('input.copy_in').focus().select()
+			/*var copy = ($(this.el).find(".copy"));
 			if(copy.length)
 			{
 				$(copy[0]).zclip({
 					path:'extensions/wikia/ApiDocs/files/ZeroClipboard.swf',
-						copy:function(){return $(this).attr('data-URL');}
+					copy:function(){return $(this).attr('data-URL');},
+					beforeCopy:function(){$(this).parent().find('input.copy_in').focus().select()}
+
 				});
 			}
-
+*/
 		}
 
 		OperationView.prototype.submitOperation = function(e) {
@@ -185,9 +189,11 @@
 				log("bodyParam = " + bodyParam);
 				headerParams = null;
 				invocationUrl = this.model.supportHeaderParams() ? (headerParams = this.model.getHeaderParams(map), this.model.urlify(map, false)) : this.model.urlify(map, true);
-				$("input.copy", $(this.el)).attr("data-url",invocationUrl);
+				//$("input.copy", $(this.el)).attr("data-url",invocationUrl);
 				log('submitting ' + invocationUrl);
-				$(".request_url", $(this.el)).html("<pre>" + invocationUrl + "</pre>");
+	            var tmpobj = $(".request_url input", $(this.el));
+				var _w = (invocationUrl.length*0.7) + 'em';
+				tmpobj.val(invocationUrl).css('width',_w);
 				$(".response_throbber", $(this.el)).show();
 				obj = {
 					type: this.model.httpMethod,

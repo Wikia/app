@@ -10,16 +10,19 @@ div.response {
 	}
 }
 
-div.request_url {
+.request_url {
 	background:$main-bgcolor;
 	border:1px solid $midGray-c3;
-	line-height:40px;
+	line-height:50px;
 	height:50px;
 	margin-bottom:15px;
-	margin-top:15px;
+	margin-top:0px;
 	overflow-x:auto;
 	overflow-y:hidden;
 	width:566px;
+	font-family: monospace;
+	resize:none;
+	padding-left:15px;
 }
 
 
@@ -36,7 +39,8 @@ div.response_top {
 div.response_code {
 	@include inputs;
 	background:$main-bgcolor;
-	line-height:25px;
+	line-height:50px;
+	height:50px;
 }
 
 div.response_body {
