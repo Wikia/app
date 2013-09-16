@@ -45,6 +45,7 @@ body {
 	font-family: Helvetica-Light, Helvetica, Arial, sans-serif;
 	font-size: 14px;
 	font-weight: light;
+	overflow-y: scroll; // otherwise we will have jump effect durring slidedown
 }
 
 input {
@@ -78,12 +79,11 @@ select {
 	}
 }
 
-.collapse-button,
+.resource.active div.heading .collapse-expand-button,
 .endpoint.active .collapse-expand-button {
 	background-image: url(/extensions/wikia/ApiDocs/files/collapse_up.png); /* base64 */
 }
 
-.expand-button,
 .collapse-expand-button {
 	background-image: url(/extensions/wikia/ApiDocs/files/collapse_down.png); /* base64 */
 }

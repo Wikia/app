@@ -1,57 +1,99 @@
 //apis and methods headings
+$resourceHeadingHeight: 67px;
+
 .resource {
-	border-top: solid 1px $midGray-c3;
 	clear: both;
 	width: 960px;
 
-	.heading {
-		margin: 0;
-		a {
-			@include transition( background-color, 0.2s, ease-in-out, 0);
-			color: $blue-c1;
-			display: block;
-			font-weight: bold;
-			height: 86px;
-			margin: 0;
-			position: relative;
-			text-decoration:none;
-		}
-		.api-name {
-			font-size: 24px;
-			line-height: 54px;
-			margin-left: 15px;
-		}
-		.description {
-			color: $gray-c4;
-			display: block;
-			font-size: 14px;
-			font-weight: normal;
-			margin-left: 15px;
-		}
-	}
-	.collapse-button,
-	.expand-button {
-		background-position: center;
-		background-repeat: no-repeat;
-		border: none;
-		border-left: solid 1px $midGray-c3;
-		color: $gray-c4;
-		display: block;
-		float: right;
-		font-size: 12px;
-		font-weight: bold;
-		height: 27px;
-		padding-top: 59px;
-		text-align: center;
-		width: 85px;
-	}
-	.collapse-button {
+	&.active .collapse-expand-button,
+	&:hover .collapse-expand-button {
 		background-color: $midGray-c3;
+	}
+	&.active .heading-name-and-description,
+	&:hover .heading-name-and-description {
+		border-color: $blue-c1;
+		background-color: $blue-c1;
+
+		.api-name,
+		.description {
+			color: white;
+		}
+
+		&:last-child {
+			border-bottom: solid 1px $midGray-c3;
+		}
+	}
+
+	.collapse-text,
+	.expand-text {
+		margin-top: 44px;
+	}
+
+	.collapse-text {
 		display: none;
 	}
-	.expand-button {
-		background-color: #ffffff;
+	.expand-text {
+		display: block;
 	}
+	&.active {
+		.collapse-text {
+			display: block;
+		}
+		.expand-text {
+			display: none;
+		}
+	}
+}
+
+.heading {
+	margin: 0;
+	a {
+		@include transition( background-color, 0.2s, ease-in-out, 0);
+		color: $blue-c1;
+		display: block;
+		font-weight: bold;
+		height: $resourceHeadingHeight;
+		margin: 0;
+		position: relative;
+		text-decoration:none;
+	}
+	.api-name {
+		display: block;
+		font-size: 24px;
+		line-height: 24px;
+		margin-left: 15px;
+		padding-bottom: 5px;
+		padding-top: 10px;
+	}
+	.description {
+		color: $gray-c4;
+		display: block;
+		font-size: 14px;
+		font-weight: normal;
+		margin-left: 15px;
+	}
+	.heading-name-and-description {
+		border-top: solid 1px $midGray-c3;
+		display: block;
+		height: $resourceHeadingHeight;
+		margin-right: $resourceHeadingHeight;
+	}
+
+	.collapse-expand-button {
+		 background-position: 50% 45%;
+		 background-repeat: no-repeat;
+		 border: none;
+		 border-left: solid 1px $midGray-c3;
+		 border-top: solid 1px $midGray-c3;
+		 color: $gray-c4;
+		 display: block;
+		 float: right;
+		 font-size: 12px;
+		 font-weight: bold;
+		 height: $resourceHeadingHeight;
+		 text-align: center;
+		 width: $resourceHeadingHeight - 1px;
+	 }
 }
 .resource:last-child {
 	border-bottom: solid 1px $midGray-c3;
@@ -61,9 +103,7 @@
 .active {
 	.heading {
 		a {
-			color: #ffffff;
-			background-color: $blue-c1;
-			border-bottom: solid 1px $midGray-c3;
+			background: none; // FIXME
 		}
 		.description {
 			color: #ffffff;
