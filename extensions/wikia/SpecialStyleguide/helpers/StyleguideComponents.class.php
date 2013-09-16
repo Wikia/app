@@ -21,6 +21,14 @@ class StyleguideComponents {
 	const DOCUMENTATION_FILE_SUFFIX = '_doc.json';
 
 	/**
+	 * @desc Component's sample file suffix
+	 * Example: button component documentation file should be named button_sample.json
+	 *
+	 * @var String
+	 */
+	const SAMPLE_FILE_SUFFIX = '_sample.json';
+
+	/**
 	 * @desc Component's messages/i18n file suffix
 	 * Example: button i18n file should be named button.i18n.php
 	 *
@@ -100,7 +108,22 @@ class StyleguideComponents {
 	}
 
 	/**
-	 * @desc
+	 * @desc Returns full sample file's path
+	 *
+	 * @param string $name component's name
+	 *
+	 * @return string full file path
+	 */
+	public function getComponentSampleFileFullPath( $name ) {
+		return $this->uiFactory->getComponentsDir() .
+		$name .
+		DIRECTORY_SEPARATOR .
+		$name .
+		self::SAMPLE_FILE_SUFFIX;
+	}
+
+	/**
+	 * @desc Loads component's documentation file as array ($componentName_doc.json)
 	 *
 	 * @param String $componentName
 	 * @return Array
@@ -109,11 +132,30 @@ class StyleguideComponents {
 		wfProfileIn( __METHOD__ );
 
 		$docFile = $this->getComponentDocumentationFileFullPath( $componentName );
-		$docFileContent = $this->uiFactory->loadFileContent( $docFile );
-		$docInArray = $this->uiFactory->loadFromJSON( $docFileContent );
+		$docInArray = $this->loadFileAsArray( $docFile );
 
 		wfProfileOut( __METHOD__ );
 		return $docInArray;
+	}
+
+	private function loadComponentSampleAsArray( $componentName ) {
+		wfProfileIn( __METHOD__ );
+
+		$sampleFile = $this->getComponentSampleFileFullPath( $componentName );
+		$sampleInArray = $this->loadFileAsArray( $sampleFile );
+
+		wfProfileOut( __METHOD__ );
+		return $sampleInArray;
+	}
+
+	private function loadFileAsArray( $filePath ) {
+		wfProfileIn( __METHOD__ );
+
+		$fileContent = $this->uiFactory->loadFileContent( $filePath );
+		$inArray = $this->uiFactory->loadFromJSON( $fileContent );
+
+		wfProfileOut( __METHOD__ );
+		return $inArray;
 	}
 
 	/**
@@ -127,17 +169,20 @@ class StyleguideComponents {
 		foreach( static::$componentsNames as $componentName ) {
 			$component = [];
 			$componentDocumentation = $this->loadComponentDocumentationAsArray( $componentName );
-			// todo: load component samples
+			$componentSamples = $this->loadComponentSampleAsArray( $componentName );
 			$component = $this->prepareMainMessages( $component, $componentDocumentation );
 
 			// add unique id so after clicking on the components list's link page jumps to the right anchor
 			$componentConfig['id'] = Sanitizer::escapeId( $componentName, ['noninitial'] );
 
-			if ( isset( $componentDocumentation['types'] ) ) {
+			if( isset( $componentDocumentation['types'] ) ) {
 				$component['types'] = $this->prepareTypesDocumentation( $componentDocumentation['types'] );
 			}
 
-			// todo: similiar logic to types for samples
+			if( !empty( $componentSamples ) ) {
+				$component[ 'examples' ] = $this->prepareExamplesDocumentation( $componentName, $componentSamples );
+			}
+
 			$components[] = $component;
 		}
 
@@ -174,6 +219,33 @@ class StyleguideComponents {
 			$type->typeParams = $this->prepareParamDocumentation( $typeFromFile[ 'params' ] );
 
 			$result[] = $type;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @desc Creates an array of stdObjects {description: "", markup: ""} for each sample loaded from $componentName_sample.json file
+	 *
+	 * @param String $componentName
+	 * @param Array $samplesArray
+	 *
+	 * @return Array
+	 */
+	private function prepareExamplesDocumentation( $componentName, $samplesArray ) {
+		$result = [];
+		/** @var \Wikia\UI\Component $component */
+		$component = \Wikia\UI\Factory::getInstance()->init( $componentName );
+
+		foreach( $samplesArray as $sampleArray ) {
+			$sample = new stdClass();
+			$sample->description = $this->prepareMessage( $sampleArray['description'] );
+
+			if( !empty( $sampleArray['params'] ) ) {
+				$sample->markup = $component->render( $sampleArray['params'] );
+			}
+
+			$result[] = $sample;
 		}
 
 		return $result;
