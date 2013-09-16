@@ -1,11 +1,14 @@
 <div class='heading'>
     <h2>
         <a href='#!/{{name}}' onclick="Docs.toggleEndpointListForResource('{{name}}');">
-            <span class="collapse-button">collapse</span>
-            <span class="expand-button">expand</span>
-
-            <span class="api-name">/{{readableName}}</span>
-            <span class="description">{{description}}</span>
+            <span class="collapse-expand-button">
+                <span class="collapse-text">collapse</span>
+                <span class="expand-text">expand</span>
+            </span>
+            <span class="heading-name-and-description">
+                <span class="api-name">/{{readableName}}</span>
+                <span class="description">{{description}}</span>
+            </span>
         </a>
     </h2>
 </div>
