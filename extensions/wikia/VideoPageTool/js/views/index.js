@@ -40,7 +40,7 @@ define('vpt.views.index', [
 			this.datepicker = new Datepicker({
 				el: '#VPTDashboard .date-picker',
 				language: value,
-				controller: 'VideoPageToolSpecial',
+				controller: 'VideoPageAdminSpecial',
 				method: 'getCalendarInfo'
 			});
 		}

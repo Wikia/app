@@ -1,12 +1,12 @@
 <?php
 /**
- * Class VideoPageArticle
+ * Class VideoHomePageArticle
  *
  * This is a fake article object so we can fool MediaWiki into showing our custom VideoPage content in place of
  * a normal article page call
  */
 
-class VideoPageArticle extends Article {
+class VideoHomePageArticle extends Article {
 
 	public function __construct( $title ) {
 		wfProfileIn(__METHOD__);
@@ -14,7 +14,7 @@ class VideoPageArticle extends Article {
 		parent::__construct($title);
 
 		// This fake page object is necessary to complete the deceit
-		$this->mPage = new VideoPagePage($title);
+		$this->mPage = new VideoHomePagePage($title);
 
 		wfProfileOut(__METHOD__);
 	}
@@ -31,7 +31,7 @@ class VideoPageArticle extends Article {
 		// Wipe any existing content and output the Video Page
 		$out = $this->getContext()->getOutput();
 		$out->clearHTML();
-		$out->addHTML( F::app()->sendRequest('VideoPageController', 'index') );
+		$out->addHTML( F::app()->sendRequest('VideoHomePageController', 'index') );
 		wfProfileOut(__METHOD__);
 	}
 }
