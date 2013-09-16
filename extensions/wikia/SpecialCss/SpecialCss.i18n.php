@@ -57,7 +57,7 @@ $messages['ru'] = [
 
 $messages['pl'] = [
 	'css' => 'Kaskadowe arkusze stylów',
-	'action-specialcss' => 'edycja CSS',
+	'action-editinterface' => 'edytowania interfejsu użytkownika',
 
 	'special-css-title' => 'CSS Edytor',
 
