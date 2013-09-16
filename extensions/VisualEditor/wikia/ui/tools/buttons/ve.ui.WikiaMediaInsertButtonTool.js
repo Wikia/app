@@ -23,11 +23,11 @@ ve.inheritClass( ve.ui.WikiaMediaInsertButtonTool, ve.ui.IconTextButtonTool );
 
 /* Static Properties */
 
-ve.ui.WikiaMediaInsertButtonTool.static.name = 'insertMeda';
+ve.ui.WikiaMediaInsertButtonTool.static.name = 'insertMedia';
 
 ve.ui.WikiaMediaInsertButtonTool.static.icon = 'media';
 
-ve.ui.WikiaMediaInsertButtonTool.static.label = ve.msg( 'visualeditor-wikiamediainsertbuttontool-label' );
+ve.ui.WikiaMediaInsertButtonTool.static.labelMessage = 'visualeditor-wikiamediainsertbuttontool-label';
 
 ve.ui.WikiaMediaInsertButtonTool.static.titleMessage = 'visualeditor-dialogbutton-media-tooltip';
 

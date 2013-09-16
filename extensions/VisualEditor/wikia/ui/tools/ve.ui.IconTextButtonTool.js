@@ -13,7 +13,7 @@
  * @param {Object} [config] Config options
  */
 ve.ui.IconTextButtonTool = function VeUiIconTextButtonTool( toolbar, config ) {
-	var label = this.constructor.static.label;
+	var label = ve.msg( this.constructor.static.labelMessage );
 
 	// Parent constructor
 	ve.ui.DialogButtonTool.call( this, toolbar, config );
@@ -33,28 +33,3 @@ ve.ui.IconTextButtonTool = function VeUiIconTextButtonTool( toolbar, config ) {
 
 ve.inheritClass( ve.ui.IconTextButtonTool, ve.ui.DialogButtonTool );
 
-/* Static Properties */
-
-ve.ui.IconTextButtonTool.static.label = 'zzz';
-
-/* Methods */
-
-/**
- * Set the label.
- *
- * If the label value is empty, undefined or only contains whitespace an empty label will be used.
- *
- * @method
- * @param {jQuery|string} [value] Label text
- * @chainable
- */
-ve.ui.IconTextButtonTool.prototype.setLabel = function ( value ) {
-	if ( typeof value === 'string' && value.length && /[^\s]*/.test( value ) ) {
-		this.$labelText.text( value );
-	} else if ( value instanceof jQuery ) {
-		this.$labelText.empty().append( value );
-	} else {
-		this.$labelText.html( '&nbsp;' );
-	}
-	return this;
-};
