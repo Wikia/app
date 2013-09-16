@@ -12,7 +12,9 @@
 			echo F::app()->renderView($callSpec[0], $callSpec[1], $callSpec[2]);
 		}
 	?>
-	<div id="WikiaAdInContentPlaceHolder"></div>
+	<? if ($loadLazyRail): ?>
+		<div class="loading"></div>
+	<? endif ?>
 
 </div>
 <? if ( $isAside ): ?>
