@@ -22,6 +22,7 @@ ve.inheritClass( ve.dm.VeDmWikiaMediaCaptionNode, ve.dm.MWImageCaptionNode );
 /* Static Properties */
 
 ve.dm.VeDmWikiaMediaCaptionNode.static.name = 'wikiaMediaCaption';
+
 ve.dm.VeDmWikiaMediaCaptionNode.static.parentNodeTypes = [
 	'wikiaBlockImage',
 	'wikiaBlockVideo'

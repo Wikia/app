@@ -41,6 +41,8 @@ ve.dm.MWBlockImageNode.static.handlesOwnChildren = true;
 
 ve.dm.MWBlockImageNode.static.childNodeTypes = [ 'mwImageCaption' ];
 
+ve.dm.MWBlockImageNode.static.captionNodeType = 'mwImageCaption';
+
 ve.dm.MWBlockImageNode.static.matchTagNames = [ 'figure' ];
 
 ve.dm.MWBlockImageNode.static.getMatchRdfaTypes = function () {
