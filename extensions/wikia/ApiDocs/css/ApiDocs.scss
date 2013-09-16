@@ -88,6 +88,14 @@ select {
 	background-image: url(/extensions/wikia/ApiDocs/files/collapse_down.png); /* base64 */
 }
 
+h1 {
+	font-family: Helvetica-Light, Helvetica, Arial, sans-serif;
+	font-size: 38px;
+	margin: 0 auto;
+	margin-bottom:30px;
+	width: 960px;
+}
+
 @import "ApiDocsBox";
 @import "ApiDocsEndpoint";
 @import "ApiDocsHeader";
