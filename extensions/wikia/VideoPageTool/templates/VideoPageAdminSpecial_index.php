@@ -4,7 +4,7 @@
 
 <?= $app->renderView(
 	'VideoPageAdminSpecial',
-	'header'
+	'Header'
 ) ?>
 
 <div id="VPTDashboard" class="WikiaGrid">
