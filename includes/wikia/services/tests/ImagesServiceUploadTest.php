@@ -37,53 +37,46 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$this->assertTrue($res['status'], 'Upload should end up successfully');
 		$this->assertInternalType('integer', $res['page_id'], 'Page ID should be returned');
 
-		$info = ImagesService::getImageOriginalUrl($this->app->wg->CityId, $res['page_id']);
-		$this->assertInternalType('string', $info['src'], 'Image URL should be returned');
-
-		Wikia::log(__METHOD__, 'getImageOriginalUrl', json_encode($info));
+		/* @var LocalFile $file */
+		$file = wfFindFile($this->fileName);
+		$this->assertInstanceOf('LocalFile', $file);
+		$image = $file->getUrl();
 
 		// check the path - /firefly/images/9/93/Test-1378975563.jpg
 		$this->assertStringEndsWith(
 			sprintf('/%s/images/%s/%s/%s', $this->app->wg->DBname, $this->hash{0}, $this->hash{0}.$this->hash{1}, $this->fileName),
-			$info['src'],
+			$image,
 			'Path should contain a valid hash'
 		);
 
 		// verify that it's accessible via HTTP
-		$this->assertTrue(Http::get($info['src'], 'default', ['noProxy' => true]) !== false, 'Uploaded image should return HTTP 200 - ' . $info['src']);
+		$this->assertTrue(Http::get($image, 'default', ['noProxy' => true]) !== false, 'Uploaded image should return HTTP 200 - ' . $image);
 
 		// check thumbnail
-		$thumb = ImagesService::getImageSrc($this->app->wg->CityId, $res['page_id'], 120);
-		$this->assertInternalType('string', $thumb['src'], 'Thumbnail URL should be returned');
-
-		Wikia::log(__METHOD__, 'getImageSrc', json_encode($info));
+		$thumb = $file->createThumb(120);
 
 		// check the path - /firefly/images/thumb/5/53/Test-1378979336.jpg/120px-0%2C451%2C0%2C294-Test-1378979336.jpg
 		$this->assertContains(
 			sprintf('/%s/images/thumb/%s/%s/%s/120px-', $this->app->wg->DBname, $this->hash{0}, $this->hash{0}.$this->hash{1}, $this->fileName),
-			$thumb['src'],
+			$thumb,
 			'Path should contain a valid hash'
 		);
 
 		$this->assertStringEndsWith(
 			$this->fileName,
-			$thumb['src'],
+			$thumb,
 			'Path should end with file name'
 		);
 
 		# TODO: thumbnailer doesn't work currently
-		#$this->assertTrue(Http::get($thumb['src'], 'default', ['noProxy' => true]) !== false, 'Thumbnail should return HTTP 200 - ' . $thumb['src']);
+		#$this->assertTrue(Http::get($thumb, 'default', ['noProxy' => true]) !== false, 'Thumbnail should return HTTP 200 - ' . $thumb);
 
 		// now, remove it...
-		/* @var LocalFile $file */
-		$file = wfFindFile($this->fileName);
-		$this->assertInstanceOf('LocalFile', $file);
-
 		$status = $file->delete('Test cleanup');
 		$this->assertTrue($status->isOK(), 'Deleting failed');
 
 		// verify that removed image is not accessible via HTTP
-		$this->assertFalse(Http::get($info['src'], 'default', ['noProxy' => true]), 'Removed image should return HTTP 404');
+		$this->assertTrue(Http::get($image, 'default', ['noProxy' => true]) === false, 'Removed image should return HTTP 404 - ' . $image);
 	}
 
 	protected function tearDown() {
