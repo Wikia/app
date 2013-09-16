@@ -9,7 +9,7 @@ class VideoHomePageController extends WikiaController {
 
 	/**
 	 * Get the current program object or load it if it hasn't been loaded yet
-	 * @return object
+	 * @return VideoPageToolProgram
 	 */
 	public function getProgram() {
 		if ( !$this->program ) {
