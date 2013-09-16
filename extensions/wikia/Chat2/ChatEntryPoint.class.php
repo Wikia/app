@@ -98,7 +98,7 @@ class ChatEntryPoint {
 
 						// get stats for edit count and member since
 						$user = User::newFromName( $val );
-						if( is_object( $user ) ) {
+						if( $user instanceof User ) {
 							$userStatsService = new UserStatsService( $user->getId() );
 							$stats = $userStatsService->getStats();
 

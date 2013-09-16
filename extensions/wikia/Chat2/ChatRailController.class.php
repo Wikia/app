@@ -14,7 +14,7 @@ class ChatRailController extends WikiaController {
 			$this->setVal( $name, $value );
 		}
 
-		// As most the markup for this is the same as for the chat parset tag, we're reusing the tag template
+		// As most the markup for this is the same as for the chat parser tag, we're reusing the tag template
 		$this->response->getView()->setTemplatePath( dirname( __FILE__ ) .'/templates/entryPointTag.tmpl.php' );
 	}
 
