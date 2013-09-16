@@ -158,6 +158,13 @@ class StyleguideComponents {
 		return $component;
 	}
 
+	/**
+	 * @desc Creates an stdObject instance for mustache template for each component's type
+	 *
+	 * @param Array $typesFromFile
+	 *
+	 * @return array of stdObject instances
+	 */
 	private function prepareTypesDocumentation( $typesFromFile ) {
 		$result = [];
 
@@ -172,7 +179,14 @@ class StyleguideComponents {
 		return $result;
 	}
 
-	private function prepareParamDocumentation( &$paramsFromFile ) {
+	/**
+	 * @desc Creates rows for each parameter for each component's type parameter
+	 *
+	 * @param Array $paramsFromFile
+	 *
+	 * @return Array of stdObject instances
+	 */
+	private function prepareParamDocumentation( $paramsFromFile ) {
 		$result = [];
 
 		foreach( $paramsFromFile as $param ) {
@@ -195,6 +209,12 @@ class StyleguideComponents {
 		return $result;
 	}
 
+	/**
+	 * @desc Creates {key: '', type: ''} structure for each object type parameter
+	 *
+	 * @param Array $objectVar
+	 * @return array
+	 */
 	private function prepareObjectData( $objectVar ) {
 		$result = [];
 
@@ -208,6 +228,12 @@ class StyleguideComponents {
 		return $result;
 	}
 
+	/**
+	 * @desc Creates {option: ''} structure for each value/enum type parameter
+	 *
+	 * @param Array $value
+	 * @return Array
+	 */
 	private function prepareValueData( $value ) {
 		$result = [];
 
@@ -249,7 +275,7 @@ class StyleguideComponents {
 	/**
 	 * Include components messages files when recompiling the language cache
 	 *
-	 * @param $$extensionMessagesFiles - array with extensions' messages files
+	 * @param $extensionMessagesFiles - array with extensions' messages files
 	 *
 	 * @return bool hook run status
 	 */
