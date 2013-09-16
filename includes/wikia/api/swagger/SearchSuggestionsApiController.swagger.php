@@ -32,7 +32,7 @@ use Swagger\Annotations as SWG;
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Finds suggested phrases for chosen query",
+ * 			summary="Find suggested phrases for chosen query",
  * 			nickname="getList",
  * 			responseClass="SearchSuggestionsPhrases",
  * 			@SWG\ErrorResponses(

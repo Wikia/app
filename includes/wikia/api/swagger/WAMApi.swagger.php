@@ -210,11 +210,11 @@ use Swagger\Annotations as SWG;
  * 
  * @SWG\Api(
  * 	path="/wikia.php?controller=WAMApi&method=getWAMIndex",
- * 	description="A method to get WAM index (list of wikis with their WAM ranks)",
+ * 	description="Get WAM index (list of wikis with their WAM ranks)",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="A method to get WAM index (list of wikis with their WAM ranks)",
+ * 			summary="Get WAM index (list of wikis with their WAM ranks)",
  * 			nickname="getWAMIndex",
  * 			responseClass="WAMResultSet",
  * 			@SWG\ErrorResponses(
@@ -376,11 +376,11 @@ use Swagger\Annotations as SWG;
  * 
  * @SWG\Api(
  * 	path="/wikia.php?controller=WAMApi&method=getMinMaxWamIndexDate",
- * 	description="A method to get WAM score starting and last available dates",
+ * 	description="Get WAM score starting and last available dates",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="A method to get WAM score starting and last available dates",
+ * 			summary="Get WAM score starting and last available dates",
  * 			nickname="getMinMaxWamIndexDate",
  * 			responseClass="MinMaxResultSet"
  * 		)

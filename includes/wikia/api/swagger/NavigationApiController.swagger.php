@@ -71,11 +71,11 @@ use Swagger\Annotations as SWG;
  *
  * @SWG\Api(
  * 	path="/wikia.php?controller=NavigationApi&method=getData",
- * 	description="Fetches wiki navigation",
+ * 	description="Get wiki navigation links",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Fetches wiki navigation",
+ * 			summary="Get wiki navigation links (the main menu of given wiki)",
  * 			nickname="getData",
  * 			responseClass="NavigationResultSet"
  * 		)

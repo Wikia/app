@@ -53,11 +53,11 @@ use Swagger\Annotations as SWG;
  * 
  * @SWG\Api(
  * 	path="/wikia.php?controller=ActivityApi&method=getLatestActivity",
- * 	description="Acquire information about the latest user activity on the current wiki",
+ * 	description="Get information about the latest user activity on the current wiki",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Fetches latest activity information",
+ * 			summary="Get latest activity information",
  * 			nickname="getLatestActivity",
  * 			responseClass="ActivityResponseResult",
  * 			@SWG\Parameters(

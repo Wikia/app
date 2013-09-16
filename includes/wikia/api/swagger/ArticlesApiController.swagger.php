@@ -271,11 +271,11 @@ use Swagger\Annotations as SWG;
  * 
  * @SWG\Api(
  * 	path="/wikia.php?controller=ArticlesApi&method=getTop",
- * 	description="Fetch the most viewed articles on this wiki",
+ * 	description="Get the most viewed articles on this wiki",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Fetch the most viewed articles on this wiki",
+ * 			summary="Get the most viewed articles on this wiki",
  * 			nickname="getTop",
  * 			responseClass="UnexpandedArticleResultSet",
  * 			@SWG\ErrorResponses(
@@ -307,11 +307,11 @@ use Swagger\Annotations as SWG;
  * )
  * @SWG\Api(
  * 	path="/wikia.php?controller=ArticlesApi&method=getTop&expand=1",
- * 	description="Fetch the most viewed articles for this wiki, with additional information provided for each article",
+ * 	description="Get the most viewed articles for this wiki (expanded results)",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Fetch the most viewed articles for this wiki, with additional information for each article",
+ * 			summary="Get the most viewed articles for this wiki (expanded results)",
  * 			nickname="getTop",
  * 			responseClass="ExpandedArticleResultSet",
  * 			@SWG\ErrorResponses(
@@ -349,7 +349,7 @@ use Swagger\Annotations as SWG;
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Get the top articles by pageviews for a hub optionally filtering by namespace and/or language",
+ * 			summary="Get the top articles by pageviews for a hub",
  * 			nickname="getTopByHub",
  * 			responseClass="HubArticleResultSet",
  * 			@SWG\ErrorResponses(
@@ -424,7 +424,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="limit",
- * 					description="The maximum number of results to fetch",
+ * 					description="The maximum number of results to get",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -446,11 +446,11 @@ use Swagger\Annotations as SWG;
  * )
  * @SWG\Api(
  * 	path="/wikia.php?controller=ArticlesApi&method=getList&expand=1",
- * 	description="Fetch a list of pages on the current wiki",
+ * 	description="Get a list of pages on the current wiki",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Fetch a list of pages on the current wiki",
+ * 			summary="Get a list of pages on the current wiki",
  * 			nickname="getList",
  * 			responseClass="ExpandedListArticleResultSet",
  * 			@SWG\ErrorResponses(
@@ -478,7 +478,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="limit",
- * 					description="The maximum number of results to fetch",
+ * 					description="The maximum number of results to get",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -501,7 +501,7 @@ use Swagger\Annotations as SWG;
  * 
  * @SWG\Api(
  * 		path="/wikia.php?controller=ArticlesApi&method=getDetails",
- * 		description="Fetch top articles for the current wiki",
+ * 		description="Get top articles for the current wiki",
  * 		@SWG\Operations(
  * 			@SWG\Operation(
  * 				httpMethod="GET",

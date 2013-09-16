@@ -69,7 +69,7 @@ use Swagger\Annotations as SWG;
  *		@SWG\Operations(
  *			@SWG\Operation(
  *				httpMethod="GET",
- *				summary="Fetch details about selected users",
+ *				summary="Get details about selected users",
  *				nickname="getDetails",
  *				responseClass="UserResultSet",
  *				@SWG\ErrorResponses(

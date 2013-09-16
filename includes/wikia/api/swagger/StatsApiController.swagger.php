@@ -66,7 +66,7 @@ use Swagger\Annotations as SWG;
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Gets statistical information about the current wiki",
+ * 			summary="Get statistical information about the current wiki",
  * 			nickname="getData",
  * 			responseClass="Stats",
  * 			@SWG\ErrorResponses(

@@ -281,11 +281,11 @@ use Swagger\Annotations as SWG;
  * 
  * @SWG\Api(
  * 	path="/wikia.php?controller=WikisApi&method=getList",
- * 	description="Get the top wikis by pageviews optionally filtering by vertical (hub) and/or language",
+ * 	description="Get the top wikis by pageviews",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Get the top wikis by pageviews optionally filtering by vertical (hub) and/or language",
+ * 			summary="Get the top wikis by pageviews",
  * 			nickname="getList",
  * 			responseClass="UnexpandedWikiaResultSet",
  * 			@SWG\ErrorResponses(
@@ -333,11 +333,11 @@ use Swagger\Annotations as SWG;
  * 
  * @SWG\Api(
  * 	path="/wikia.php?controller=WikisApi&method=getList&expand=1",
- * 	description="Get the top wikis by pageviews optionally filtering by vertical (hub) and/or language",
+ * 	description="Get the top wikis by pageviews (extended response)",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Get the top wikis by pageviews optionally filtering by vertical (hub) and/or language",
+ * 			summary="Get the top wikis by pageviews (extended response)",
  * 			nickname="getList",
  * 			responseClass="ExpandedWikiaResultSet",
  * 			@SWG\ErrorResponses(
@@ -385,11 +385,11 @@ use Swagger\Annotations as SWG;
  * 
  * @SWG\Api(
  * 	path="/wikia.php?controller=WikisApi&method=getByString",
- * 	description="Finds wikis which name or topic match a keyword optionally filtering by vertical (hub) and/or language",
+ * 	description="Get wikis which name or topic match a keyword",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Finds wikis which name or topic match a keyword optionally filtering by vertical (hub) and/or language",
+ * 			summary="Get wikis which name or topic match a keyword",
  * 			nickname="getByString",
  * 			responseClass="UnexpandedWikiaResultSet",
  * 			@SWG\ErrorResponses(
@@ -455,11 +455,11 @@ use Swagger\Annotations as SWG;
  * 
  * @SWG\Api(
  * 	path="/wikia.php?controller=WikisApi&method=getByString&expand=1",
- * 	description="Finds wikis which name or topic match a keyword optionally filtering by vertical (hub) and/or language",
+ * 	description="Get wikis which name or topic match a keyword (extended version)",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Finds wikis which name or topic match a keyword optionally filtering by vertical (hub) and/or language",
+ * 			summary="Get wikis which name or topic match a keyword (extended response)",
  * 			nickname="getByString",
  * 			responseClass="ExpandedWikiaResultSet",
  * 			@SWG\ErrorResponses(
@@ -525,11 +525,11 @@ use Swagger\Annotations as SWG;
  * 
  * @SWG\Api(
  * 	path="/wikia.php?controller=WikisApi&method=getDetails",
- * 	description="Gets the information about wikis",
+ * 	description="Get information about wikis",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Gets the information about wikis",
+ * 			summary="Get information about wikis",
  * 			nickname="getDetails",
  * 			responseClass="WikiaDetailsResultSet",
  * 			@SWG\ErrorResponses(
