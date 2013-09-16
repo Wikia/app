@@ -4,13 +4,19 @@
 $alter-background-color: mix($color-page, #000, 90%);
 $page-width: 1030px;
 
-body {
+.mw-special-Styleguide {
 	background-image: none;
+	background-color: $color-page;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 14px;
 	line-height: 22px;
 	padding-bottom: 0;
 	text-rendering: optimizeLegibility;
+
+	&:before,
+	&:after {
+		background-image: none;
+	}
 }
 
 h1 {
