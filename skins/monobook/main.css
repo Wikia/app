@@ -148,6 +148,21 @@ pre {
 	font-size: 94%;
 }
 
+/* Wikia changes to TOC */
+#toc {
+    display: inline-block;
+}
+#toc h2 {
+    padding-right: 5px;;
+}
+#toc > div {
+    padding: 5px;
+}
+#toc.show > ol {
+    display: none;
+}
+/* End of Wikia changes */
+
 .mw-warning {
 	margin-left: 50px;
 	margin-right: 50px;
