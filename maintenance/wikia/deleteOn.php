@@ -16,7 +16,7 @@
 
 $oldCwd = getcwd();
 ini_set( "include_path", dirname(__FILE__)."/.." );
-$optionsWithArgs = array( 'u', 'r', 'i', 't', 'id', 's' );
+$optionsWithArgs = array( 'u', 'r', 'i', 't', 'id' );
 require_once( 'commandLine.inc' );
 
 chdir( $oldCwd );
