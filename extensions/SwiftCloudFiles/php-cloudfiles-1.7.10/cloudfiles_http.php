@@ -221,7 +221,6 @@ class CF_Http
 		}
 		curl_setopt( $curl_ch, CURLOPT_VERBOSE, $this->dbug );
 		curl_setopt( $curl_ch, CURLOPT_FOLLOWLOCATION, 1 );
-		curl_setopt( $curl_ch, CURLOPT_NOPROXY, "");
 		curl_setopt( $curl_ch, CURLOPT_MAXREDIRS, 4 );
 		curl_setopt( $curl_ch, CURLOPT_HEADER, 0 );
 		curl_setopt( $curl_ch, CURLOPT_HTTPHEADER, $headers );
