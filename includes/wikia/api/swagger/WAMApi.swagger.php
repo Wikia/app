@@ -38,7 +38,7 @@ use Swagger\Annotations as SWG;
  * 		type="Array",
  * 		items="$ref:WAMItem",
  * 		required=true,
- * 		description="Collection of wam index ordered by ranking"
+ * 		description="Collection of WAM index ordered by ranking"
  * 	)
  * 	@SWG\Property(
  * 		name="wam_results_total",
@@ -76,7 +76,7 @@ use Swagger\Annotations as SWG;
  * 		name="hub_wam_rank",
  * 		type="int",
  * 		required="true",
- * 		description="Wiki wam rank within its hub"
+ * 		description="Wiki WAM rank within its hub"
  * 	)
  * 	@SWG\Property(
  * 		name="peak_wam_rank",
@@ -112,7 +112,7 @@ use Swagger\Annotations as SWG;
  * 		name="last_peak",
  * 		type="string",
  * 		required="true",
- * 		description="the last time that the Wiki was at its peak_wam_rank"
+ * 		description="the last date that the Wiki was at its peak_wam_rank"
  * 	)
  * 	@SWG\Property(
  * 		name="hub_name",
@@ -142,13 +142,13 @@ use Swagger\Annotations as SWG;
  * 		name="wam_change",
  * 		type="float",
  * 		required="true",
- * 		description="wam score change from wam_previous_day"
+ * 		description="WAM score change from wam_previous_day"
  * 	)
  * 	@SWG\Property(
  * 		name="wam_is_new",
  * 		type="int",
  * 		required="true",
- * 		description="1 if wiki wasn't classified on $wam_previous_day, 0 if this wiki was in index"
+ * 		description="1 if wiki was not classified on $wam_previous_day, 0 if this wiki was in index"
  * 	)
  * 	@SWG\Property(
  * 		name="wiki_image",

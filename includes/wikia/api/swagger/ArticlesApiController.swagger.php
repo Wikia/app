@@ -294,7 +294,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="category",
- * 					description="Specifying a title corresponding to an existing for this value will display only articles that pertain to this category",
+ * 					description="Return only articles belonging to the provided valid category title",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -330,7 +330,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="category",
- * 					description="Specifying a title corresponding to an existing for this value will display only articles that pertain to this category",
+ * 					description="Return only articles belonging to the provided valid category title",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -406,7 +406,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="category",
- * 					description="Return only articles belonging to the provided valid category",
+ * 					description="Return only articles belonging to the provided valid category title",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -460,7 +460,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="category",
- * 					description="Return only articles belonging to the provided valid category",
+ * 					description="Return only articles belonging to the provided valid category title",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",

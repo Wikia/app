@@ -250,7 +250,7 @@ use Swagger\Annotations as SWG;
  * 		name="images",
  * 		type="int",
  * 		required="true",
- * 		description="Number of total images pn Wikia"
+ * 		description="Number of total images on Wikia"
  * 	)
  * 	@SWG\Property(
  * 		name="videos",
@@ -441,7 +441,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="includeDomain",
- * 					description="Wheter to include wikis' domains as search targets or not",
+ * 					description="Whether to include wikis' domains as search targets or not",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -511,7 +511,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="includeDomain",
- * 					description="Wheter to include wikis' domains as search targets or not",
+ * 					description="Whether to include wikis' domains as search targets or not",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
