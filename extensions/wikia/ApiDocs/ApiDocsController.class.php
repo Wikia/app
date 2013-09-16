@@ -47,8 +47,23 @@ class ApiDocsController extends WikiaController {
 	 *
 	 */
 	public function apiList() {
+		$docs = $this->docsService->getDocList();
+
+		$thisWikiDocs = [];
+		// FIXME - find permanent solution
+		foreach ( $this->wg->WikiaApiControllers as $controller => $file ) {
+			foreach ( $docs['apis'] as $doc ) {
+				if ( $doc['readableName'] . "Controller" == $controller ) {
+					if ( class_exists($controller) ) {
+						$thisWikiDocs[] = $doc;
+						break;
+					}
+				}
+			}
+		}
+		$docs['apis'] = $thisWikiDocs;
 
 		$this->getResponse()->setFormat("json");
-		$this->getResponse()->setData( $this->docsService->getDocList() );
+		$this->getResponse()->setData( $docs );
 	}
 }
