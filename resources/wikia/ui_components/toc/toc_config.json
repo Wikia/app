@@ -4,5 +4,9 @@
 			"required": ["sections"],
 			"optional": ["classes", "ids", ""]
 		}
+	},
+	"dependencies": {
+		"js": [],
+		"css": ["resources/wikia/ui_components/toc/css/toc_default.scss"]
 	}
 }
