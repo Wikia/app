@@ -899,6 +899,7 @@ class UserIdentityBox {
 
 			$this->user->saveSettings();
 			$this->app->wg->Memc->delete( $this->getMemcUserIdentityDataKey() );
+			Wikia::invalidateUser( $this->user );
 		}
 	}
 
