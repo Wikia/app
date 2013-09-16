@@ -994,6 +994,19 @@ $config['videopagetool_scss'] = array(
 	)
 );
 
+/*
+ * @name videohomepage
+ * @description Assets for http://video.wikia.com/
+ */
+
+$config['videohomepage_scss'] = array(
+	'skin' => array( 'oasis' ),
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => array(
+		'//extensions/wikia/VideoPageTool/css/VideoPage.scss'
+	)
+);
+
 /** UserLogin **/
 $config['userlogin_scss_wikiamobile'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
