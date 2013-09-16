@@ -222,7 +222,10 @@ input.bt_large_blue {
 
 input.bt_large_blue:hover,
 input.bt_medium_blue:hover,
-input.bt_small_blue:hover
+input.bt_small_blue:hover,
+input.bt_large_blue.hover,
+input.bt_medium_blue.hover,
+input.bt_small_blue.hover
 {
 	@include button_blue_hover;
 }

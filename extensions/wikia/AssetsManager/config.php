@@ -1350,6 +1350,8 @@ $config['api_docs_js'] = array(
 		'//extensions/wikia/ApiDocs/js/lib/backbone-min.js',
 		'//extensions/wikia/ApiDocs/js/lib/swagger.js',
 
+		'//extensions/wikia/ApiDocs/js/jquery.zclip.min.js',
+
 		'//extensions/wikia/ApiDocs/js/doc.js',
 		'//extensions/wikia/ApiDocs/js/HeaderView.js',
 		'//extensions/wikia/ApiDocs/js/OperationView.js',

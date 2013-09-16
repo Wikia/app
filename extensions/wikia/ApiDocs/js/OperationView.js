@@ -15,7 +15,7 @@
 		OperationView.prototype.events = {
 			'submit .sandbox': 'submitOperation',
 			'click .submit': 'submitOperation',
-			'click .copy':'copyOperation',
+			'mouseenter .copy': 'copyOperation',
 			'click .response_hider': 'hideResponse',
 			'click .toggleOperation': 'toggleOperationContent'
 		};
@@ -89,29 +89,17 @@
 		};
 
 		OperationView.prototype.copyOperation = function(e) {
-			console.log(this.el);
-			objs = ($(this.el).find(".request_url pre"));
-			if(objs.length && objs[0].innerHTML)
+			var copy = ($(this.el).find(".copy"));
+			console.log("CCCCOPY");
+
+			if(copy.length)
 			{
-				var s = objs[0].innerHTML;
-				//--clipboard
-				// ie
-				if (window.clipboardData && clipboardData.setData) {
-					clipboardData.setData('text', s);
-				}
-				// others
-				else {
-					var flashcopier = 'flashcopier';
-					if(!document.getElementById(flashcopier)) {
-						var divholder = document.createElement('div');
-						divholder.id = flashcopier;
-						document.body.appendChild(divholder);
-					}
-					document.getElementById(flashcopier).innerHTML = '';
-					var divinfo = '<embed src="extensions/wikia/ApiDocs/files/_clipboard.swf" FlashVars="clipboard='+encodeURIComponent(s)+'" width="0" height="0" type="application/x-shockwave-flash"></embed>';
-					document.getElementById(flashcopier).innerHTML = divinfo;
-				}
+				$(copy[0]).zclip({
+					path:'extensions/wikia/ApiDocs/files/ZeroClipboard.swf',
+						copy:function(){return $(this).attr('data-URL');}
+				});
 			}
+
 
 			//--
 		}
@@ -201,6 +189,7 @@
 				log("bodyParam = " + bodyParam);
 				headerParams = null;
 				invocationUrl = this.model.supportHeaderParams() ? (headerParams = this.model.getHeaderParams(map), this.model.urlify(map, false)) : this.model.urlify(map, true);
+				$("input.copy", $(this.el)).attr("data-url",invocationUrl);
 				log('submitting ' + invocationUrl);
 				$(".request_url", $(this.el)).html("<pre>" + invocationUrl + "</pre>");
 				$(".response_throbber", $(this.el)).show();
