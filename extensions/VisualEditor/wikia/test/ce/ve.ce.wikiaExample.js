@@ -180,13 +180,13 @@ ve.ce.wikiaExample.getBlockMediaHTMLDOM = (function () {
 })();
 
 /**
- * Get the mocked HTML output for an image node.
+ * Get the mocked HTML output for a block image node.
  *
  * @method
  * @param {Object} attributes The attributes from which to build the mock.
  * @returns {String} The mocked HTML.
  */
-ve.ce.wikiaExample.getImageHTML = (function () {
+ve.ce.wikiaExample.getBlockImageHTML = (function () {
 	var mocks = {};
 
 	mocks.attribution = [

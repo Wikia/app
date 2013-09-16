@@ -76,7 +76,7 @@ QUnit.test( 'HTMLDOM to NodeView', function ( assert ) {
 		expectCount += ve.ce.wikiaExample.assertEqualNodeView(
 			assert,
 			nodeView,
-			ve.ce.wikiaExample.getImageHTML( attributes ),
+			ve.ce.wikiaExample.getBlockImageHTML( attributes ),
 			ve.ce.wikiaExample.getAssertMessageFromAttributes( 'Attributes: ', attributes )
 		);
 
@@ -118,7 +118,7 @@ QUnit.test( 'NodeView changes', function ( assert ) {
 	expectCount += ve.ce.wikiaExample.assertEqualNodeView(
 		assert,
 		nodeView,
-		ve.ce.wikiaExample.getImageHTML( previousAttributes ),
+		ve.ce.wikiaExample.getBlockImageHTML( previousAttributes ),
 		ve.ce.wikiaExample.getAssertMessageFromAttributes( 'Default: ', previousAttributes )
 	);
 
@@ -138,7 +138,7 @@ QUnit.test( 'NodeView changes', function ( assert ) {
 		expectCount += ve.ce.wikiaExample.assertEqualNodeView(
 			assert,
 			nodeView,
-			ve.ce.wikiaExample.getImageHTML( attributesMerged ),
+			ve.ce.wikiaExample.getBlockImageHTML( attributesMerged ),
 			ve.ce.wikiaExample.getAssertMessageFromAttributes( 'Changes: ', attributesDiffed )
 		);
 
