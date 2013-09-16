@@ -28,6 +28,13 @@
 			font-weight: normal;
 			margin-left: 15px;
 		}
+		&:hover {
+			background-color: $blue-c1;
+			a,
+			a > .description{
+				color: white;
+			}
+		}
 	}
 	.collapse-button,
 	.expand-button {

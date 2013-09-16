@@ -11,10 +11,14 @@ $endpointUrlLineHeight: 14px;
 	margin: 10px 0;
 
 	.heading {
+		@include transition( background-color, 0.2s, ease-in-out, 0);
 		border: 1px solid $midGray-c3;
 		clear: both;
 		display: block;
 		height: $endpointHeight;
+		&:hover {
+			background-color: $midGray-c3;
+		}
 	}
 
 	.http_method {
@@ -37,6 +41,7 @@ $endpointUrlLineHeight: 14px;
 		color: $darkGray-c5;
 		display: block;
 		font-size: $endpointSummaryLineHeight;
+		font-weight: bold;
 		line-height: $endpointSummaryLineHeight;
 		padding-top: 10px;
 		padding-bottom: 3px;
