@@ -17,6 +17,12 @@ $page-width: 1030px;
 	&:after {
 		background-image: none;
 	}
+
+	.toc {
+		width: 200px;
+		float: left;
+		margin-right: 50px;
+	}
 }
 
 h1 {
