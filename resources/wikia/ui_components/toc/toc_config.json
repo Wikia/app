@@ -1,0 +1,8 @@
+{
+	"templateVars": {
+		"default": {
+			"required": ["sections"],
+			"optional": ["classes", "ids", ""]
+		}
+	}
+}
