@@ -3,7 +3,7 @@ use Swagger\Annotations as SWG;
 
 /**
  *	@SWG\Resource(
- *		apiVersion="0.2",
+ *		apiVersion="1",
  *		swaggerVersion="1.1",
  *		resourcePath="UserApi",
  *		basePath="http://www.wikia.com"
