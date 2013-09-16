@@ -6,12 +6,12 @@ SpecialStyleguide.prototype = {
 			function() {
 				var $link = $(this);
 				$link.text( $.msg( 'styleguide-hide-parameters' ) );
-				$link.parent().next( '.styleguide-component-params' ).show();
+				$link.closest('h4').next( '.styleguide-component-params' ).show();
 			},
 			function() {
 				var $link = $(this);
 				$link.text( $.msg( 'styleguide-show-parameters' ) );
-				$link.parent().next( '.styleguide-component-params' ).hide();
+				$link.closest('h4').next( '.styleguide-component-params' ).hide();
 			}
 		);
 	}
