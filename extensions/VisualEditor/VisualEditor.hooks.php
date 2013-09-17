@@ -27,7 +27,7 @@ class VisualEditorHooks {
 
 		// Wikia change - begin
 		JSMessages::enqueuePackage( 'VisualEditor', JSMessages::INLINE );
-		// Wikia chnage - end
+		// Wikia change - end
 
 		// Add tab messages to the init init module
 		foreach ( $wgVisualEditorTabMessages as $msg ) {
