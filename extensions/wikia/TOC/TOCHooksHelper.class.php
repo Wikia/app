@@ -19,7 +19,7 @@ class TOCHooksHelper {
 		return true;
 	}
 
-	/** Ad TOC js assets to Oasis */
+	/** Add TOC js assets to Oasis */
 
 	public static function onOasisSkinAssetGroups( &$assetsArray ) {
 
@@ -28,7 +28,7 @@ class TOCHooksHelper {
 		return true;
 	}
 
-	/** Ad TOC js assets to Monobook */
+	/** Add TOC js assets to Monobook */
 
 	public static function onMonobookSkinAssetGroups( &$assetsArray ) {
 
