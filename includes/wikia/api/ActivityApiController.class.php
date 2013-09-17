@@ -1,6 +1,5 @@
 <?php
 
-/** Controller for acquiring information about latest user activity on current wiki */
 
 class ActivityApiController extends WikiaApiController {
 	private $revisionService;

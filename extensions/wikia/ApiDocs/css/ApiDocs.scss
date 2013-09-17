@@ -1,0 +1,120 @@
+@import "skins/oasis/css/mixins/transition";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/reset";
+@import "skins/oasis/css/core/sprite";
+@import "skins/oasis/css/core/GlobalHeader";
+
+//colors variables
+$main-bgcolor: #ffffff;
+$blue-c1: #0a5fa3;
+$lightGray-c2: #f9f9f9;
+$midGray-c3: #e6e6e6;
+$gray-c4: #676767;
+$darkGray-c5: #333333;
+
+@mixin boxHeader {
+	color: $blue-c1;
+	font-size: 17.5px;
+	font-weight: bold;
+	margin: 25px 0;
+}
+
+@mixin buttons {
+	-moz-border-radius: 2px;
+	background-color: $blue-c1;
+	border: solid 1px $blue-c1;
+	border-radius: 2px;
+	color: #ffffff;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+@mixin inputs {
+	-moz-border-radius: 2px;
+	border: solid 1px $midGray-c3;
+	border-radius: 2px;
+	color: $darkGray-c5;
+	font-weight: normal;
+	height: 25px;
+	padding: 0 10px;
+	width: 133px;
+}
+
+body {
+	color: $gray-c4;
+	font-family: Helvetica-Light, Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	font-weight: light;
+	overflow-y: scroll; // otherwise we will have jump effect durring slidedown
+}
+
+input[type='text'] {
+	@include inputs;
+}
+
+input.copy_in,
+input.copy_in:focus{
+	@include inputs;
+	font-family: monospace;
+
+	border:none;
+	width:100%;
+	outline: none;
+	height:auto;
+}
+
+//hack for strongs, and b displaying as normal, try changing template
+strong, b {
+	font-weight: inherit;
+}
+
+select {
+	@include inputs;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	background-color: #ffffff;
+	background-image: url(/extensions/wikia/ApiDocs/files/arrow-01.png); /* base64 */
+	background-position: 134px 10px;
+	background-repeat: no-repeat;
+	overflow: hidden;
+	text-indent: 1px;
+	text-overflow: '';
+	width: 155px;
+}
+
+//try it out and hide button
+.sandbox_header {
+	margin-top:25px;
+/*	input {
+		@include buttons;
+	}*/
+}
+
+.resource.active div.heading .collapse-expand-button,
+.endpoint.active .collapse-expand-button {
+	background-image: url(/extensions/wikia/ApiDocs/files/collapse_up.png); /* base64 */
+}
+
+.collapse-expand-button {
+	background-image: url(/extensions/wikia/ApiDocs/files/collapse_down.png); /* base64 */
+}
+
+h1 {
+	font-family: Helvetica-Light, Helvetica, Arial, sans-serif;
+	font-size: 38px;
+	margin: 0 auto;
+	margin-bottom:30px;
+	width: 960px;
+}
+
+
+@import "ApiDocsBox";
+@import "ApiDocsEndpoint";
+@import "ApiDocsHeader";
+@import "ApiDocsParameter";
+@import "ApiDocsResponseClass";
+@import "ApiDocsResponseType";
+@import "ApiDocsWrappers";
+@import "ApiDocsTry";
+@import "ApiDocsHighlight";
+@import "ApiDocsButtons";
