@@ -117,7 +117,7 @@ ve.ce.wikiaExample.getAlignClass = (function () {
  * @param {Object} attributes The attributes from which to build the mock.
  * @returns {String} The mocked HTML.
  */
-ve.ce.wikiaExample.getBlockMediaHTML = (function () {
+ve.ce.wikiaExample.getBlockMediaHtml = (function () {
 	var mocks = {};
 
 	mocks.attribution = [
@@ -192,7 +192,7 @@ ve.ce.wikiaExample.getBlockMediaHTML = (function () {
  * @param {Object} attributes The attributes from which to build the mock.
  * @returns {String} The mocked HTML.
  */
- ve.ce.wikiaExample.getBlockImageHTML = ve.ce.wikiaExample.getBlockMediaHTML;
+ ve.ce.wikiaExample.getBlockImageHtml = ve.ce.wikiaExample.getBlockMediaHtml;
 
 /**
  * Get the mocked HTML output for a block video node.
@@ -201,9 +201,9 @@ ve.ce.wikiaExample.getBlockMediaHTML = (function () {
  * @param {Object} attributes The attributes from which to build the mock.
  * @returns {String} The mocked HTML.
  */
-ve.ce.wikiaExample.getBlockVideoHTML = function ( attributes ) {
-	return ve.ce.wikiaExample.getVideoHTML(
-		ve.ce.wikiaExample.getBlockMediaHTML( attributes ),
+ve.ce.wikiaExample.getBlockVideoHtml = function ( attributes ) {
+	return ve.ce.wikiaExample.getVideoHtml(
+		ve.ce.wikiaExample.getBlockMediaHtml( attributes ),
 		attributes
 	);
 };
@@ -216,7 +216,7 @@ ve.ce.wikiaExample.getBlockVideoHTML = function ( attributes ) {
  * @param {Object} attributes The attributes from which to build the mock.
  * @returns {String} The mocked HTML.
  */
-ve.ce.wikiaExample.getInlineMediaHTML = (function () {
+ve.ce.wikiaExample.getInlineMediaHtml = (function () {
 	var mocks = {};
 
 	mocks.frameless = [
@@ -247,9 +247,9 @@ ve.ce.wikiaExample.getInlineMediaHTML = (function () {
  * @param {Object} attributes The attributes from which to build the mock.
  * @returns {String} The mocked HTML.
  */
-ve.ce.wikiaExample.getInlineVideoHTML = function ( attributes ) {
-	return ve.ce.wikiaExample.getVideoHTML(
-		ve.ce.wikiaExample.getInlineMediaHTML( attributes ),
+ve.ce.wikiaExample.getInlineVideoHtml = function ( attributes ) {
+	return ve.ce.wikiaExample.getVideoHtml(
+		ve.ce.wikiaExample.getInlineMediaHtml( attributes ),
 		attributes
 	);
 };
@@ -261,7 +261,7 @@ ve.ce.wikiaExample.getInlineVideoHTML = function ( attributes ) {
  * @param {Object} attributes The attributes from which to build the mock.
  * @returns {String} The mocked HTML.
  */
-ve.ce.wikiaExample.getMediaHTMLDOM = (function () {
+ve.ce.wikiaExample.getMediaHtmlDom = (function () {
 	var alignClasses = {
 			'center': 'mw-halign-center',
 			'left': 'mw-halign-left',
@@ -322,7 +322,7 @@ ve.ce.wikiaExample.getMediaHTMLDOM = (function () {
  * @param {Object} attributes The attributes from which to build the mock.
  * @returns {String} The mocked HTML.
  */
-ve.ce.wikiaExample.getVideoHTML = (function () {
+ve.ce.wikiaExample.getVideoHtml = (function () {
 	var mocks = {};
 
 	mocks.playButton = [

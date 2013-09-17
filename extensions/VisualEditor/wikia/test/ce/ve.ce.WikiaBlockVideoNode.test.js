@@ -44,7 +44,7 @@ QUnit.test( 'HTMLDOM to NodeView', function ( assert ) {
 		attributesDiffed = ve.wikiaTest.utils.getAttributeChanges( previousAttributes, attributes );
 
 		doc = ve.createDocumentFromHtml(
-			ve.ce.wikiaExample.getMediaHTMLDOM( this.displayType, this.rdfaType, attributes )
+			ve.ce.wikiaExample.getMediaHtmlDom( this.displayType, this.rdfaType, attributes )
 		);
 
 		target = new ve.init.sa.Target( this.$fixture, doc );
@@ -58,7 +58,7 @@ QUnit.test( 'HTMLDOM to NodeView', function ( assert ) {
 		expectCount += ve.wikiaTest.utils.assertEqualNodeView(
 			assert,
 			nodeView,
-			ve.ce.wikiaExample.getBlockVideoHTML( attributes ),
+			ve.ce.wikiaExample.getBlockVideoHtml( attributes ),
 			ve.wikiaTest.utils.getAssertMessageFromAttributes( 'Attributes: ', attributes )
 		);
 
@@ -86,7 +86,7 @@ QUnit.test( 'NodeView changes', function ( assert ) {
 		expectCount = 0;
 
 	doc = ve.createDocumentFromHtml(
-		ve.ce.wikiaExample.getMediaHTMLDOM( this.displayType, this.rdfaType, previousAttributes )
+		ve.ce.wikiaExample.getMediaHtmlDom( this.displayType, this.rdfaType, previousAttributes )
 	);
 
 	target = new ve.init.sa.Target( this.$fixture, doc );
@@ -100,7 +100,7 @@ QUnit.test( 'NodeView changes', function ( assert ) {
 	expectCount += ve.wikiaTest.utils.assertEqualNodeView(
 		assert,
 		nodeView,
-		ve.ce.wikiaExample.getBlockVideoHTML( previousAttributes ),
+		ve.ce.wikiaExample.getBlockVideoHtml( previousAttributes ),
 		ve.wikiaTest.utils.getAssertMessageFromAttributes( 'Default: ', previousAttributes )
 	);
 
@@ -120,7 +120,7 @@ QUnit.test( 'NodeView changes', function ( assert ) {
 		expectCount += ve.wikiaTest.utils.assertEqualNodeView(
 			assert,
 			nodeView,
-			ve.ce.wikiaExample.getBlockVideoHTML( attributesMerged ),
+			ve.ce.wikiaExample.getBlockVideoHtml( attributesMerged ),
 			ve.wikiaTest.utils.getAssertMessageFromAttributes( 'Changes: ', attributesDiffed )
 		);
 
