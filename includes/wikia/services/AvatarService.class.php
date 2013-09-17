@@ -5,6 +5,9 @@ class AvatarService extends Service {
 	const AVATAR_SIZE_MEDIUM = 50;
 	const AVATAR_SIZE_LARGE = 150;
 
+	// Smallest size for avatar where's gain from replacing pngs >> jpgs
+	const PERFORMANCE_JPEG_THRESHOLD = 20;
+
 	/**
 	 * Internal method for getting user object with caching
 	 */
@@ -123,8 +126,10 @@ class AvatarService extends Service {
 			// the anonymous user behavior (BugId:22190)
 			$avatarUrl = wfReplaceImageServer($avatarUrl,  ($cb > 0) ? $cb : "0");
 
-			// make avatars as JPG intead of PNGs / GIF
-			$avatarUrl = ImagesService::overrideThumbnailFormat($avatarUrl, ImagesService::EXT_JPG);
+			// make avatars as JPG intead of PNGs / GIF but only when it will be a gain (most likely)
+			if ($avatarSize > self::PERFORMANCE_JPEG_THRESHOLD) {
+				$avatarUrl = ImagesService::overrideThumbnailFormat($avatarUrl, ImagesService::EXT_JPG);
+			}
 
 			$avatarsCache[$key] = $avatarUrl;
 		}
