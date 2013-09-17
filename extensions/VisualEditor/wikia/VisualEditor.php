@@ -38,6 +38,7 @@ $wgResourceModules += array(
 	),
 	'ext.visualEditor.wikiaCore' => array(
 		'scripts' => array(
+			'dm/ve.dm.WikiaMediaCaptionNode.js',
 			'dm/ve.dm.WikiaBlockMediaNode.js',
 			'dm/ve.dm.WikiaBlockImageNode.js',
 			'dm/ve.dm.WikiaBlockVideoNode.js',

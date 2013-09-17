@@ -33,7 +33,7 @@ ve.inheritClass( ve.ce.WikiaMediaCaptionNode, ve.ce.BranchNode );
 
 /* Static Properties */
 
-ve.ce.WikiaMediaCaptionNode.static.name = 'mwImageCaption';
+ve.ce.WikiaMediaCaptionNode.static.name = 'wikiaMediaCaption';
 
 ve.ce.WikiaMediaCaptionNode.static.tagName = 'figcaption';
 
