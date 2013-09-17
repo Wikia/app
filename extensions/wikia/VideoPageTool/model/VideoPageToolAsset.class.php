@@ -465,7 +465,7 @@ class VideoPageToolAsset extends WikiaModel {
 	 * Get assets by section
 	 * @param integer $programId
 	 * @param string $section
-	 * @return array $assets
+	 * @return array An array of VideoPageToolAsset objects
 	 */
 	public static function getAssetsBySection( $programId, $section ) {
 		wfProfileIn( __METHOD__ );
