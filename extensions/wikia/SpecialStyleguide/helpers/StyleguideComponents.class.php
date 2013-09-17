@@ -191,7 +191,7 @@ class StyleguideComponents {
 			$component = $this->prepareMainMessages( $component, $componentDocumentation );
 
 			// add unique id so after clicking on the components list's link page jumps to the right anchor
-			$componentConfig['id'] = Sanitizer::escapeId( $componentName, ['noninitial'] );
+			$component['id'] = Sanitizer::escapeId( $componentName, ['noninitial'] );
 
 			if( isset( $componentDocumentation['types'] ) ) {
 				$component['types'] = $this->prepareTypesDocumentation( $componentDocumentation['types'] );
