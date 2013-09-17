@@ -832,7 +832,8 @@ error_log( __METHOD__ . ": InvalidResponseException = " . print_r( $e->getMessag
 	 * @see FileBackendStore::doClearCache()
 	 */
 	protected function doClearCache( array $paths = null ) {
-		$this->connContainers = array(); // clear container object cache
+		// macbre: commented this out to reduce number of HEAD requests checking the existance of containers
+		#$this->connContainers = array(); // clear container object cache
 	}
 
 	/**
