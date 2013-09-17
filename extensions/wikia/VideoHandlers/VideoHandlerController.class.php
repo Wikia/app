@@ -212,8 +212,8 @@ class VideoHandlerController extends WikiaController {
 		$videoDetail = $helper->getVideoDetail( array('title' => $fileTitle),
 												$thumbWidth,
 												$thumbHeight,
-												$articleLimit,
-												false );
+												$articleLimit
+		);
 		$this->detail = $videoDetail;
 	}
 }
