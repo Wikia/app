@@ -141,33 +141,35 @@ class ImagesService extends Service {
 	 * @return String new URL
 	 */
 	public static function getThumbUrlFromFileUrl($imageUrl, $destSize, $newExtension = null) {
-		if ( strpos($imageUrl, '/images/thumb/') === false ) {
-			$url = str_replace('/images/', '/images/thumb/', $imageUrl);
-		} else {
-			$url = $imageUrl;
+		if (!empty($imageUrl)) {
+			if ( strpos($imageUrl, '/images/thumb/') === false ) {
+				$imageUrl = str_replace('/images/', '/images/thumb/', $imageUrl);
+			} else {
+				$imageUrl = $imageUrl;
+			}
+
+
+			/**
+			 * url is virtual base for thumbnail, so
+			 *
+			 * - get last part of path
+			 * - add it as thumbnail file prefixed with widthpx
+			 */
+			$parts = explode( "/", $imageUrl );
+			$file = array_pop( $parts );
+
+			if ( ctype_digit( (string)$destSize ) ) {
+				$destSize .= 'px';
+			}
+
+			$imageUrl = sprintf( "%s/%s-%s", $imageUrl, $destSize, $file );
+
+			if ( !empty($newExtension) ) {
+				$imageUrl = self::overrideThumbnailFormat($imageUrl, $newExtension);
+			}
 		}
 
-
-		/**
-		 * url is virtual base for thumbnail, so
-		 *
-		 * - get last part of path
-		 * - add it as thumbnail file prefixed with widthpx
-		 */
-		$parts = explode( "/", $url );
-		$file = array_pop( $parts );
-
-		if ( ctype_digit( (string)$destSize ) ) {
-			$destSize .= 'px';
-		}
-
-		$url = sprintf( "%s/%s-%s", $url, $destSize, $file );
-
-		if ( !empty($newExtension) ) {
-			$url = self::overrideThumbnailFormat($url, $newExtension);
-		}
-
-		return $url;
+		return $imageUrl;
 	}
 
 	/**
