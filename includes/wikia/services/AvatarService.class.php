@@ -5,6 +5,11 @@ class AvatarService extends Service {
 	const AVATAR_SIZE_MEDIUM = 50;
 	const AVATAR_SIZE_LARGE = 150;
 
+	// When avatar's width/height is greater than 20px, it will be smaller
+	// after converting to JPGs from original format (PNGs / GIFs).
+	// It was measured in DAR-1935 (Jira).
+	const PERFORMANCE_JPEG_THRESHOLD = 20;
+
 	/**
 	 * Internal method for getting user object with caching
 	 */
@@ -126,6 +131,11 @@ class AvatarService extends Service {
 			// treats them differently o_O  Setting this to string zero matches
 			// the anonymous user behavior (BugId:22190)
 			$avatarUrl = wfReplaceImageServer($avatarUrl,  ($cb > 0) ? $cb : "0");
+
+			// make avatars as JPG intead of PNGs / GIF but only when it will be a gain (most likely)
+			if (intval($avatarSize) > self::PERFORMANCE_JPEG_THRESHOLD) {
+				$avatarUrl = ImagesService::overrideThumbnailFormat($avatarUrl, ImagesService::EXT_JPG);
+			}
 
 			$avatarsCache[$key] = $avatarUrl;
 		}

@@ -132,6 +132,15 @@ $messages['gl'] = array(
 	'adengine-exitstitial-button' => 'Saltar este anuncio',
 );
 
+/** Hungarian (magyar)
+ * @author Liteon
+ */
+$messages['hu'] = array(
+	'adengine-exitstitial-redirecting' => 'Az Ön böngészője másodperceken belül átirányítja Önt a kívánt oldalra.',
+	'adengine-exitstitial-go-back' => 'Vissza',
+	'adengine-exitstitial-button' => 'Hirdetés átugrása',
+);
+
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
  */
@@ -235,6 +244,16 @@ $messages['nl'] = array(
 	'adengine-exitstitial-redirecting' => 'Uw browser leidt u over een paar seconden om naar de pagina die u gevraagd.',
 	'adengine-exitstitial-go-back' => 'Wilt u terug?',
 	'adengine-exitstitial-button' => 'Advertentie overslaan',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'adengine-exitstitial-title-template' => 'Sètz a mand de quitar $1…',
+	'adengine-exitstitial-redirecting' => 'Vòstre navigador vos redirigirà cap a la pagina demandada dins qualques segondas.',
+	'adengine-exitstitial-go-back' => 'Volètz tornar en arrièr ?',
+	'adengine-exitstitial-button' => 'Passar aquesta publicitat',
 );
 
 /** Polish (polski)

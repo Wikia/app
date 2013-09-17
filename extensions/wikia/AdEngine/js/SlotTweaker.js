@@ -2,7 +2,7 @@ var SlotTweaker = function(log, document, window) {
 	'use strict';
 
 	var logGroup = 'SlotTweaker'
-		, addDefaultHeight, removeClass, removeDefaultHeight, hide, removeTopButtonIfNeeded
+		, addDefaultHeight, removeClass, removeDefaultHeight, hide, show, removeTopButtonIfNeeded
 		, defaultHeightClass = 'default-height'
 		, rclass = /[\t\r\n]/g
 		, isLeaderboard, isStandardLeaderboardSize, adjustLeaderboardSize
@@ -84,13 +84,31 @@ var SlotTweaker = function(log, document, window) {
 		}
 	};
 
-	hide = function(slotname) {
+	hide = function(slotname, usingClass) {
+		log('hide ' + slotname + (usingClass ? ' using class hidden' : ' using display: none'), 6, logGroup);
+
 		var slot = document.getElementById(slotname);
 
-		log('hide ' + slotname, 6, logGroup);
+		if (slot) {
+			if (usingClass) {
+				slot.className += ' hidden';
+			} else {
+				slot.style.display = 'none';
+			}
+		}
+	};
+
+	show = function(slotname, usingClass) {
+		log('hide ' + slotname + (usingClass ? ' using class hidden' : ' using display: none'), 6, logGroup);
+
+		var slot = document.getElementById(slotname);
 
 		if (slot) {
-			slot.style.display = 'none';
+			if (usingClass) {
+				removeClass(slot, 'hidden');
+			} else {
+				throw 'Showing slot not based on hidden class unsupported';
+			}
 		}
 	};
 
@@ -99,6 +117,7 @@ var SlotTweaker = function(log, document, window) {
 		removeDefaultHeight: removeDefaultHeight,
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		adjustLeaderboardSize: adjustLeaderboardSize,
-		hide: hide
+		hide: hide,
+		show: show
 	};
 };

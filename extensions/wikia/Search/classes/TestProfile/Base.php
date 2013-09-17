@@ -79,6 +79,7 @@ class Base
 		    	return $this->interWikiQueryFields;
 		    case '\\Wikia\\Search\\QueryService\\Select\\Dismax\\Video':
 		    case '\\Wikia\\Search\\QueryService\\Select\\Dismax\\VideoEmbedTool':
+		    case '\\Wikia\\Search\\QueryService\\Select\\Dismax\\CombinedMedia':
 		    	return $this->videoQueryFields;
 		}
 		return $this->defaultQueryFields;

@@ -22,6 +22,9 @@
 		<?php echo $tabs; ?>
 
 		<div class="results-wrapper grid-3 alpha">
+			<?php if(!empty($wikiMatch)):?>
+				<?=$wikiMatch?>
+			<?php endif; ?>
 			<?php if(!empty($results)): ?>
 				<?php if( $resultsFound > 0 ): ?>
 					<p class="result-count subtle">
@@ -30,9 +33,6 @@
 						<?php else: ?>
 							<?= wfMsg('wikiasearch2-results-for', '<strong>'.$query.'</strong>'); ?>
 						<?php endif; ?>
-						<?php if(!empty($wikiMatch)):?>
-							<?=$wikiMatch?>
-						<?php endif; ?>			
 						<?php if ( isset($hub) && $hub ) : ?>
 							<?= wfMsg('wikiasearch2-onhub', $hub)?>
 							|
@@ -50,8 +50,11 @@
 					<ul class="Results">
 					<?php $pos = 0; ?>
 					<?php foreach( $results as $result ): ?>
-						<?php 
+						<?php
 							$pos++;
+							if ( ( $pos == 3 || $pos == 7 ) && isset( $mediaData ) ):
+								echo '<li class="result video-addon-results video-addon-results-before-' . $pos . '">' . $app->getView( 'WikiaSearch', 'mediadata', array( 'mediaData' => $mediaData, 'query' => $query ) ) . '</li>';
+							endif;
 							if ( $result['ns'] === 0 ) {
 								echo $app->getView( 'WikiaSearch', $resultView, array(
 									  'result' => $result,

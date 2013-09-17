@@ -262,7 +262,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 				function(){
 					require(['autocomplete'], function(sug){
 						sug({
-							url: wgServer + '/api.php?action=opensearch',
+							url: w.wgServer + '/api.php?action=opensearch',
 							input: searchInput,
 							list: searchSug,
 							clear: d.getElementById('wkClear')
@@ -325,8 +325,13 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 
 					form.setAttribute('action',
 						qs(form.getAttribute('action'))
-							.setVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/)) ? wgMainPageTitle : wgPageName))
-							.setHash(hash)
+							.setVal('returnto',
+								encodeURIComponent(w.wgCanonicalSpecialPageName &&
+									w.wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/) ?
+										w.wgMainPageTitle :
+										w.wgPageName
+								)
+							).setHash(hash)
 							.toString()
 					);
 

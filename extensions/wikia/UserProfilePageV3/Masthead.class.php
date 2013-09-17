@@ -268,15 +268,7 @@ class Masthead {
 			$url = $this->getUrl( '/thumb/' );
 		}
 
-		/**
-		 * returned url is virtual base for thumbnail, so
-		 *
-		 * - get last part of path
-		 * - add it as thumbnail file prefixed with widthpx
-		 */
-		$parts = explode( "/", $url );
-		$file = array_pop( $parts );
-		return sprintf( "%s/%dpx-%s", $url, $width, $file );
+		return ImagesService::getThumbUrlFromFileUrl($url, $width);
 	}
 
 	/**

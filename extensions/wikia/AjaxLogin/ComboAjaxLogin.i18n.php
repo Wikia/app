@@ -225,6 +225,7 @@ Klaskit en-dro pe [[Special:Contact|kasit keloù]].',
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author BroOk
  * @author Marcmpujol
  * @author Roxas Nobody 15
@@ -250,13 +251,13 @@ $messages['ca'] = array(
 	'comboajaxlogin-connectdirections' => "Introduïu el vostre nom d'usuari de Wikia i contrasenya aquí - connectarem per art de màgia els comptes de Wikia i Facebook.
 
 Una vegada ho facis, pots iniciar sessió fàcilment amb qualsevol botó Facebook Connect.",
-	'comboajaxlogin-post-not-understood' => "Hi va haver un error en la forma d'aquest formulari quan va ser construït.
-Si Us Plau proveu de nou o [[Special:Contactar|informeu d'aquesta]].", # Fuzzy
-	'comboajaxlogin-readonlytext' => '<h2>Em sap greu!</h2>
-<p>No podeu crear un compte en el moment - hauria de ser amunt i corrent una altra vegada en breu. Aquí és el que està succeint:<br><em>$1</em></p>
-<p>Si us plau comprovi <a href="http://twitter.com/wikia">Twitter</a> o <a href="http://facebook.com/wikia">Facebook</a> per a més informació.
-<br>
-(Si ja teniu un compte, podeu <a href="#">iniciar la sessió</a> com normal, però no podrà editar.)</p>', # Fuzzy
+	'comboajaxlogin-post-not-understood' => "Hi ha hagut un error en la forma com es va construir aquest formulari.
+Si us plau, intenteu-ho de nou o [[Special:Contact|informeu d'aquest error]].",
+	'comboajaxlogin-readonlytext' => '<h2>Ho sentim!</h2>
+<p>No podeu crear un compte en aquest moment - hauríem d\'estar en línia i donant servei en breu. Això és el que està passant:<br /><em>$1</em></p>
+<p>Si us plau, comprova a <a href="http://twitter.com/wikia">Twitter</a> o a <a href="http://facebook.com/wikia">Facebook</a> per a més informació.
+<br />
+(Si ja teniu un compte, podeu <a href="#">iniciar la sessió</a> com sempre, però no podreu editar.)</p>',
 	'comboajaxlogin-ajaxerror' => 'Wikia no està responent. Si us plau, comproveu la connexió de xarxa.',
 );
 
@@ -1127,6 +1128,7 @@ Als je al een gebruiker hebt, kan je <a href="#">aanmelden</a> zoals altijd, maa
 $messages['oc'] = array(
 	'comboajaxlogin-desc' => "Bóstia de dinamica que permeton als utilizaires de se connectar, se rapelar de lor senhal e d'enregistrar d'utilizaires",
 	'comboajaxlogin-createlog' => 'Se connectar o crear un compte',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Se connectar amb Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Retorn',
 	'comboajaxlogin-connectmarketing-forward' => 'Abans de començar &raquo;',
 );

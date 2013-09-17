@@ -52,6 +52,16 @@ $messages['br'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
+/** Catalan (català)
+ * @author Alvaro Vidal-Abarca
+ */
+$messages['ca'] = array(
+	'showperformancestats-desc' => 'Retorna estadístiques de rendiment en format llegible per persones',
+	'performancestat-total' => 'Total: $1 s',
+	'performancestat-apache' => 'Apache: $1 s',
+	'performancestat-cpu' => 'CPU: $1 s',
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  */
@@ -151,6 +161,16 @@ $messages['it'] = array(
 	'performancestat-cpu' => 'CPU: $1',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'showperformancestats-desc' => 'Zeisch en Zosammefassong von dem ßööver singe Leistonge.',
+	'performancestat-total' => 'Jesamp: $1s',
+	'performancestat-apache' => 'der Wäbßööver: $1s',
+	'performancestat-cpu' => 'dä Prozässor: $1s',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
@@ -204,6 +224,16 @@ $messages['nl'] = array(
 	'performancestat-total' => 'Totaal: $1s',
 	'performancestat-apache' => 'Apache: $1s',
 	'performancestat-cpu' => 'CPU: $1s',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'showperformancestats-desc' => "Tòrna d'estatisticas de performància legiblas per l’òme",
+	'performancestat-total' => 'Total : $1s',
+	'performancestat-apache' => 'Apache : $1s',
+	'performancestat-cpu' => 'Processor : $1s',
 );
 
 /** Polish (polski)

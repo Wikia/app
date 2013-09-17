@@ -384,10 +384,18 @@ jQuery(function($){
 					trackingMethod: 'both'
 				});
 			}).on('mousedown', '.image', function(e) {
+				var $currentTarget = $(e.currentTarget);
 				track({
 					browserEvent: e,
 					category: category,
-					label: 'result-' + ($(e.currentTarget).hasClass('video') ? 'video' : 'photo')
+					label: 'result-' + ($currentTarget.hasClass('video') ? 'video' : 'photo')
+						+ ( ( $currentTarget.parents('.video-addon-results').length > 0 ) ? '-video-addon' : '' ) // video addon ab tests
+				});
+			}).on('mousedown', '.video-addon-seach-video', function(e) {
+				track({
+					browserEvent: e,
+					category: category,
+					label: 'video-addon-results-header'
 				});
 			});
 		}

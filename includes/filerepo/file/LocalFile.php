@@ -1895,6 +1895,14 @@ class LocalFileRestoreBatch {
 				continue;
 			}
 
+			// Wikia change - begin
+			// @author macbre (BAC-526)
+			// check whether the file was deleted with "suppress" flag (and obey it)
+			if( !$this->unsuppress && ( $row->fa_deleted & Revision::DELETED_TEXT ) ) {
+				return Status::newFatal('undelete-error');
+			}
+			// Wikia change - end
+
 			$deletedRel = $this->file->repo->getDeletedHashPath( $row->fa_storage_key ) . $row->fa_storage_key;
 			$deletedUrl = $this->file->repo->getVirtualUrl() . '/deleted/' . $deletedRel;
 
