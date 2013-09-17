@@ -78,7 +78,7 @@ function updateMetadata( $videoId, $metadata ) {
 }
 
 /**
- * remove field from Custom Metadata
+ * remove field from Custom Metadata if the field is empty
  * @global integer $skipped
  * @global integer $failed
  * @global boolean $dryRun
@@ -198,7 +198,7 @@ if ( isset( $options['help'] ) ) {
 	die( "Usage: php maintenance.php [--help] [--age=123] [--dry-run] [--player=xyz] [extra=abc] [--remove=age_required]
 	--age                          set age_required value in metadata
 	--player                       set player id
-	--remove                       remove field from custom metadata
+	--remove                       remove field from custom metadata (only if the field is empty)
 	--extra                        extra conditions to get video assets from ooyala
 	--dry-run                      dry run
 	--help                         you are reading it right now\n\n" );
