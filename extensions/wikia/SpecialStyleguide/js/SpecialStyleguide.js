@@ -1,37 +1,54 @@
-var SpecialStyleguide = function() {};
+require(['jquery'], function($) {
 
-SpecialStyleguide.prototype = {
-	CLASS_HIDDEN: 'hidden',
-	CLASS_SHOWN: 'shown',
+	var $toc = $('#styleguideTOC');
 
-	init: function() {
-		$( '.toggleParameters' ).click( $.proxy( function( event ) {
-			event.preventDefault();
+	/**
+	 * Fix / unfix TOC position
+	 */
 
-			var $link = $( event.target ),
-				$paramsTable = $link.closest('h4').next( '.styleguide-component-params'),
-				previousClass = '',
-				currentClass = '',
-				message = '';
+	if ($toc.length) {
+		require(['wikia.window'], function(w) {
 
-			if( $paramsTable.hasClass( this.CLASS_HIDDEN ) ) {
-				currentClass = this.CLASS_SHOWN;
-				previousClass = this.CLASS_HIDDEN;
-				message = $.msg( 'styleguide-hide-parameters' );
-			} else {
-				currentClass = this.CLASS_HIDDEN;
-				previousClass = this.CLASS_SHOWN;
-				message = $.msg( 'styleguide-show-parameters' );
+			var tocOffset = $toc.offset(),
+				TOC_TOP_MARGIN = 10; // top margin of fixed TOC set in CSS
+
+			function setTOCPosition() {
+
+				if($('body').scrollTop() >= tocOffset.top - TOC_TOP_MARGIN) {
+					$toc.addClass('toc-fixed');
+				} else {
+					$toc.removeClass('toc-fixed');
+				}
 			}
 
-			$link.text( message );
-			$paramsTable.removeClass( previousClass );
-			$paramsTable.addClass( currentClass );
-		}, this) );
+			var throttled = $.throttle( 200, setTOCPosition);
+			$(w).on('scroll', throttled);
+		});
 	}
-};
 
-var SpecialStyleguideInstance = new SpecialStyleguide();
-$(function () {
-	SpecialStyleguideInstance.init();
+	/**
+	 * Show hide Style guide section
+	 *
+	 * @param {Object} $target - jQuery selector (show/hide link) that gives context to which element should be show / hide
+	 */
+
+	function showHideSections($target) {
+		var	$section = $target.parent().next(),
+			linkLabel;
+
+		$section.toggleClass('shown');
+
+		linkLabel = ($section.hasClass('shown') ? $.msg( 'styleguide-hide-parameters' ) : $.msg( 'styleguide-show-parameters' ));
+		$target.text(linkLabel);
+
+	}
+
+	/** Attach events */
+
+	// show / hide Style guide sections
+	$('body').on('click', '#mw-content-text section .toggleParameters', function(event) {
+		event.preventDefault();
+
+		showHideSections($(event.target));
+	});
 });
