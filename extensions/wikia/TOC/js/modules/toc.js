@@ -24,11 +24,12 @@ define('wikia.toc', function() {
 
 	function getData(headers, createSection) {
 
-		var toc = {
+		var MAXHEADER = 2, // <h2> is the highest article header
+			toc = {
 				sections: []
 			},
 			stack = [toc],
-			pos = 1,
+			pos = MAXHEADER - 1,
 			i,
 			headersLength = headers.length;
 
@@ -57,7 +58,7 @@ define('wikia.toc', function() {
 			stack[stack.length - 2].sections.push(stack[stack.length - 1]);
 		}
 
-		return stack[0];
+		return toc;
 	}
 
 	/** PUBLIC API */
