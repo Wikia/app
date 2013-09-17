@@ -319,6 +319,12 @@ h2 {
 
 	.styleguide-component-params {
 		font-size: 14px;
-		display: none;
+
+		&.hidden {
+			display: none;
+		}
+		&.shown {
+			display: block;
+		}
 	}
 }
