@@ -5,7 +5,7 @@ class AvatarService extends Service {
 	const AVATAR_SIZE_MEDIUM = 50;
 	const AVATAR_SIZE_LARGE = 150;
 
-	// Smallest size for avatar where's gain from replacing pngs >> jpgs
+	// Smallest size for avatar where's gain from replacing PNGs/GIFs with JPGs
 	const PERFORMANCE_JPEG_THRESHOLD = 20;
 
 	/**
