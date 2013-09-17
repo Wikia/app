@@ -3,15 +3,33 @@
 $(function() {
 	'use strict';
 
-	var pagerIdx = 0;
-	$( '#featured-video-bx-pager li' ).children( 'a' ).each( function() {
-		$( this ).addClass( 'no-lightbox' ).attr( 'data-slide-index', pagerIdx );
-		pagerIdx += 1;
+	var $sliderWrapper = $( '#featured-video-slider' ),
+		$featuredBXSlider = $( '#featured-video-bxslider' ),
+		$featuredThumbs = $( '#featured-video-thumbs' ),
+		$sliderControls;
+
+	$featuredThumbs.find( 'a' ).each( function() {
+		$( this )
+			.addClass( 'no-lightbox' )
+			.on( 'click', function( e ) {
+				e.preventDefault();
+			})
+		.find( '.Wikia-video-play-button' )
+			.css( 'width', 'inherit' );
 	});
-	$('#featured-video-bxslider').bxSlider({
-		autoControls: true
+
+	$featuredBXSlider.bxSlider({
+		autoControls: true,
+		onSliderLoad: function() {
+			$sliderControls = $sliderWrapper.find( '.bx-pager' ).on( 'mouseenter', function() {
+				$featuredThumbs.slideDown();
+			});
+
+			$featuredThumbs.on( 'mouseleave', function() {
+				$( this ).slideUp();
+			});
+		}
 		//video: true, // TODO: add video support?
-		//pagerCustom: '#featured-video-bx-pager'
 	});
 
 });

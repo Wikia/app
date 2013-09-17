@@ -34,11 +34,23 @@
 			bottom: 10px;
 		}
 		.thumbs {
+			display: none;
+			background: #3a3a3a;
+			bottom: 0;
+			position: absolute;
+			width: 100%;
 			a {
-				display: block;
+				display: inline-block;
 				float: left;
-				margin: 0 5px;
-				padding: 3px;
+				margin: 10px 0;
+				text-align: center;
+				width: 20%;
+				img {
+					max-width: 98%;
+				}
+				.Wikia-video-play-button {
+					width: 100%
+				}
 			}
 		}
 	}
