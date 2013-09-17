@@ -21,7 +21,7 @@ files = [
 
 	//JSMessages
 	'extensions/wikia/JSMessages/js/JSMessages.js',
-	'extensions/wikia/JSMessages/js/spec/JSMessages.spec.js',
+	'extensions/wikia/JSMessages/js/spec/JSMessages.config.spec.js',
 
 	//WikiaMobile
 	'extensions/wikia/WikiaMobile/js/events.js',
@@ -34,7 +34,11 @@ files = [
 	'extensions/wikia/WikiaMobile/js/throbber.js',
 	'extensions/wikia/WikiaMobile/js/topbar.js',
 	'extensions/wikia/WikiaMobile/js/track.js',
-	'extensions/wikia/WikiaMobile/js/spec/*.spec.js',
+	'extensions/wikia/WikiaMobile/js/spec/*.config.spec.js',
+
+    //WikiaMobile WikiText Editor
+    'extensions/wikia/WikiaMobileEditor/js/config.js',
+    'extensions/wikia/WikiaMobileEditor/js/spec/*',
 
 	//core modules
 	'resources/wikia/modules/aim.js',
@@ -48,6 +52,7 @@ files = [
 	'resources/wikia/modules/stringhelper.js',
 	'resources/wikia/modules/thumbnailer.js',
 	'resources/wikia/modules/uniqueId.js',
+
 	//UI Repo JS API
 	'resources/wikia/modules/uicomponent.js',
 	'resources/wikia/modules/uifactory.js',
@@ -72,11 +77,11 @@ files = [
 	'extensions/wikia/AdEngine/js/EvolveHelper.js',
 	'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 	'extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
-	'extensions/wikia/AdEngine/js/spec/*.spec.js',
+	'extensions/wikia/AdEngine/js/spec/*.config.spec.js',
 
 	//PhalanxII
 	'extensions/wikia/PhalanxII/js/modules/phalanx.js',
-	'extensions/wikia/PhalanxII/spec/*.spec.js',
+	'extensions/wikia/PhalanxII/spec/*.config.spec.js',
 
 	//Wikia HomePage
 	'extensions/wikia/WikiaHomePage/js/spec/WikiaHomePage.mocks.js',

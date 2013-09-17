@@ -518,6 +518,9 @@ include_once( "$IP/extensions/wikia/ArticleSummary/ArticleSummary.setup.php" );
 include_once( "$IP/extensions/wikia/FilePage/FilePage.setup.php" );
 include_once( "$IP/extensions/wikia/CityVisualization/CityVisualization.setup.php" );
 
+//a good place to start - this should be in DefualtSettings in config
+include_once( "$IP/extensions/wikia/WikiaMobileEditor/WikiaMobileEditor.setup.php" );
+
 /**
  * @name $wgSkipSkins
  *
