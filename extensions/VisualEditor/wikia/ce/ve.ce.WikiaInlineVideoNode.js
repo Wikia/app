@@ -13,7 +13,7 @@
  * @mixins ve.ce.WikiaVideoNode
  *
  * @constructor
- * @param {ve.ce.WikiaInlineVideoNode} model Model to observe
+ * @param {ve.dm.WikiaInlineVideoNode} model Model to observe
  * @param {Object} [config] Config options
  */
 ve.ce.WikiaInlineVideoNode = function VeCeWikiaInlineVideoNode( model, config ) {

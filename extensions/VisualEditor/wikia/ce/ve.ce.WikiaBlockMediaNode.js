@@ -18,7 +18,7 @@
  * @mixins ve.ce.MWResizableNode
  *
  * @constructor
- * @param {ve.ce.WikiaBlockMediaNode} model Model to observe
+ * @param {ve.dm.WikiaBlockMediaNode} model Model to observe
  * @param {Object} [config] Config options
  */
 ve.ce.WikiaBlockMediaNode = function VeCeWikiaBlockMediaNode( model, config ) {

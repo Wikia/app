@@ -13,7 +13,7 @@
  * @class
  * @extends ve.ce.BranchNode
  * @constructor
- * @param {ve.ce.WikiaMediaCaptionNode} model Model to observe
+ * @param {ve.dm.WikiaMediaCaptionNode} model Model to observe
  * @param {Object} [config] Config options
  */
 ve.ce.WikiaMediaCaptionNode = function VeCeWikiaMediaCaptionNode( model, config ) {

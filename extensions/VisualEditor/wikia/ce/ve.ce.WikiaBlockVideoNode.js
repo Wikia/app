@@ -13,7 +13,7 @@
  * @mixins ve.ce.WikiavideoNode
  *
  * @constructor
- * @param {ve.ce.WikiaBlockVideoNode} model Model to observe
+ * @param {ve.dm.WikiaBlockVideoNode} model Model to observe
  * @param {Object} [config] Config options
  */
 ve.ce.WikiaBlockVideoNode = function VeCeWikiaBlockVideoNode( model, config ) {
