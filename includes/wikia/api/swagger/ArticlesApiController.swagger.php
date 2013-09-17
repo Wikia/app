@@ -344,7 +344,7 @@ use Swagger\Annotations as SWG;
  * 
  * 
  * @SWG\Api(
- * 	path="api/v1/Articles/TopByHub",
+ * 	path="/api/v1/Articles/TopByHub",
  * 	description="View the most popular wikis in a given hub. Available only on the www.wikia.com main domain.",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
