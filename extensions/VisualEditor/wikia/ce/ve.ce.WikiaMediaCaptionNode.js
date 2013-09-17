@@ -22,6 +22,7 @@ ve.ce.WikiaMediaCaptionNode = function VeCeWikiaMediaCaptionNode( model, config 
 
 	// Properties
 	this.$attribution = null;
+	this.minWidth = 102;
 
 	// DOM changes
 	this.$.addClass( 'thumbcaption' );
@@ -91,7 +92,7 @@ ve.ce.WikiaMediaCaptionNode.prototype.onSplice = function () {
 	// This logic is from the function onThumbnailAfterProduceHTML() in ImageTweaksHooks.class.php
 	if (
 		parentModel.getAttribute( 'attribution' ) !== undefined &&
-		parentModel.getAttribute( 'width' ) >= 102
+		parentModel.getAttribute( 'width' ) >= this.minWidth
 	) {
 		this.$attribution = this.createAttribution().appendTo( this.$ );
 	}

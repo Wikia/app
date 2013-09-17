@@ -23,6 +23,10 @@ ve.ce.WikiaVideoNode = function VeCeWikiaVideoNode( $image ) {
 	this.$image = $image || this.$image || this.$;
 	this.$wikiaVideoElements = $( [] );
 
+	this.minWidth = 320;
+	this.smallWidth = 170;
+	this.largeWidth = 360;
+
 	// Events
 	this.connect( this, {
 		'setup': 'onWikiaVideoSetup',
@@ -77,7 +81,9 @@ ve.ce.WikiaVideoNode.prototype.createPlayButton = function () {
 	var $image, $wrapper,
 		width = this.model.getAttribute( 'width' ),
 		// This logic is from the function videoPlayButtonOverlay() in WikiaFileHelper.class.php
-		size = ( width <= 170 ? 'small' : width > 360 ? 'large' : '' );
+		size = (
+			width <= this.smallWidth ? 'small' : this.largeWidth > 360 ? 'large' : ''
+		);
 
 	$wrapper = this.$$( '<div>' )
 		.addClass( 'Wikia-video-play-button ve-no-shield' )
@@ -120,7 +126,7 @@ ve.ce.WikiaVideoNode.prototype.onWikiaVideoSetup = function () {
 
 		// Information overlay
 		// This logic is from the function videoInfoOverlay() in WikiaFileHelper.class.php
-		if ( width > 230 && title ) {
+		if ( title && width > this.minWidth ) {
 			this.$wikiaVideoElements.add(
 				this.createOverlay().appendTo( $parent )
 			);
