@@ -11,23 +11,23 @@
  * @param {number} [length] Length of content data in document
  * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.VeDmWikiaMediaCaptionNode = function VeDmWikiaMediaCaptionNode( length, element ) {
+ve.dm.VeWikiaMediaCaptionNode = function VeDmWikiaMediaCaptionNode( length, element ) {
 	ve.dm.MWImageCaptionNode.call( this, length, element );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.VeDmWikiaMediaCaptionNode, ve.dm.MWImageCaptionNode );
+ve.inheritClass( ve.dm.VeWikiaMediaCaptionNode, ve.dm.MWImageCaptionNode );
 
 /* Static Properties */
 
-ve.dm.VeDmWikiaMediaCaptionNode.static.name = 'wikiaMediaCaption';
+ve.dm.VeWikiaMediaCaptionNode.static.name = 'wikiaMediaCaption';
 
-ve.dm.VeDmWikiaMediaCaptionNode.static.parentNodeTypes = [
+ve.dm.VeWikiaMediaCaptionNode.static.parentNodeTypes = [
 	'wikiaBlockImage',
 	'wikiaBlockVideo'
 ];
 
 /* Registration */
 
-ve.dm.modelRegistry.register( ve.dm.VeDmWikiaMediaCaptionNode );
+ve.dm.modelRegistry.register( ve.dm.VeWikiaMediaCaptionNode );
