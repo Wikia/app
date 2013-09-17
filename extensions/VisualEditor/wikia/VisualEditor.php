@@ -77,11 +77,13 @@ $wgHooks['ResourceLoaderTestModules'][] = 'Wikia_onResourceLoaderTestModules';
 function Wikia_onResourceLoaderTestModules( array &$testModules, ResourceLoader &$resourceLoader ) {
 	$testModules['qunit']['ext.visualEditor.wikiaTest'] = array(
 		'scripts' => array(
+			'test/ve.wikiaTest.utils.js',
 			'test/dm/ve.dm.wikiaExample.js',
 			'test/dm/ve.dm.WikiaConverter.test.js',
 			'test/ce/ve.ce.wikiaExample.js',
 			'test/ce/ve.ce.WikiaBlockImageNode.test.js',
 			'test/ce/ve.ce.WikiaBlockVideoNode.test.js',
+			'test/ce/ve.ce.WikiaInlineVideoNode.test.js',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.test',

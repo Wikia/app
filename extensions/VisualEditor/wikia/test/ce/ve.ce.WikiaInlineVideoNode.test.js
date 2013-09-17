@@ -1,12 +1,12 @@
 /*!
- * VisualEditor ContentEditable WikiaBlockImageNode tests.
+ * VisualEditor ContentEditable WikiaInlineVideoNode tests.
  */
 
-QUnit.module( 've.ce.WikiaBlockImageNode', {
+QUnit.module( 've.ce.WikiaInlineVideoNode', {
 	setup: function() {
 		this.$fixture = $( '#qunit-fixture' );
-		this.displayType = 'block';
-		this.rdfaType = 'mw:Image';
+		this.displayType = 'inline';
+		this.rdfaType = 'mw:Video';
 
 		this.permutations = ve.wikiaTest.utils.getMediaTestPermutations(
 			this.displayType,
@@ -53,12 +53,12 @@ QUnit.test( 'HTMLDOM to NodeView', function ( assert ) {
 		surfaceView = surface.getView();
 		documentModel = surfaceModel.getDocument();
 		documentView = surfaceView.getDocument();
-		nodeView = documentView.documentNode.children[ 0 ];
+		nodeView = documentView.getDocumentNode().getChildren()[ 0 ].getChildren()[ 0 ];
 
 		expectCount += ve.wikiaTest.utils.assertEqualNodeView(
 			assert,
 			nodeView,
-			ve.ce.wikiaExample.getBlockImageHTML( attributes ),
+			ve.ce.wikiaExample.getInlineVideoHTML( attributes ),
 			ve.wikiaTest.utils.getAssertMessageFromAttributes( 'Attributes: ', attributes )
 		);
 
@@ -95,12 +95,12 @@ QUnit.test( 'NodeView changes', function ( assert ) {
 	surfaceView = surface.getView();
 	documentModel = surfaceModel.getDocument();
 	documentView = surfaceView.getDocument();
-	nodeView = documentView.documentNode.children[ 0 ];
+	nodeView = documentView.getDocumentNode().getChildren()[ 0 ].getChildren()[ 0 ];
 
 	expectCount += ve.wikiaTest.utils.assertEqualNodeView(
 		assert,
 		nodeView,
-		ve.ce.wikiaExample.getBlockImageHTML( previousAttributes ),
+		ve.ce.wikiaExample.getInlineVideoHTML( previousAttributes ),
 		ve.wikiaTest.utils.getAssertMessageFromAttributes( 'Default: ', previousAttributes )
 	);
 
@@ -120,7 +120,7 @@ QUnit.test( 'NodeView changes', function ( assert ) {
 		expectCount += ve.wikiaTest.utils.assertEqualNodeView(
 			assert,
 			nodeView,
-			ve.ce.wikiaExample.getBlockImageHTML( attributesMerged ),
+			ve.ce.wikiaExample.getInlineVideoHTML( attributesMerged ),
 			ve.wikiaTest.utils.getAssertMessageFromAttributes( 'Changes: ', attributesDiffed )
 		);
 

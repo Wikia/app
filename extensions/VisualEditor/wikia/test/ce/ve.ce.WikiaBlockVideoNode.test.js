@@ -4,38 +4,20 @@
 
 QUnit.module( 've.ce.WikiaBlockVideoNode', {
 	setup: function() {
-		var a,
-			data,
-			h,
-			t,
-			w;
-
 		this.$fixture = $( '#qunit-fixture' );
-		this.permutations = [];
-		this.type = 'mw:Video';
+		this.displayType = 'block';
+		this.rdfaType = 'mw:Video';
 
-		data = ve.ce.wikiaExample.data[ this.type ];
-
-		// TODO: make this less fugly
-		for ( a = 0; a < data.align.length; a++ ) {
-			for ( h = 0; h < data.height.length; h++ ) {
-				for ( t = 0; t < data.type.length; t++ ) {
-					for ( w = 0; w < data.width.length; w++ ) {
-						this.permutations.push({
-							align: data.align[ a ],
-							height: data.height[ h ],
-							type: data.type[ t ],
-							width: data.width[ w ]
-						});
-					}
-				}
-			}
-		}
+		this.permutations = ve.wikiaTest.utils.getMediaTestPermutations(
+			this.displayType,
+			this.rdfaType
+		);
 	},
 	teardown: function() {
 		this.$fixture = null;
+		this.displayType = null;
 		this.permutations = null;
-		this.type = null;
+		this.rdfaType = null;
 	}
 } );
 
@@ -59,10 +41,10 @@ QUnit.test( 'HTMLDOM to NodeView', function ( assert ) {
 
 	for ( i = 0, l = this.permutations.length; i < l; i++ ) {
 		attributes = this.permutations[ i ];
-		attributesDiffed = ve.ce.wikiaExample.getAttributeChanges( previousAttributes, attributes );
+		attributesDiffed = ve.wikiaTest.utils.getAttributeChanges( previousAttributes, attributes );
 
 		doc = ve.createDocumentFromHtml(
-			ve.ce.wikiaExample.getBlockMediaHTMLDOM( this.type, attributes )
+			ve.ce.wikiaExample.getMediaHTMLDOM( this.displayType, this.rdfaType, attributes )
 		);
 
 		target = new ve.init.sa.Target( this.$fixture, doc );
@@ -73,11 +55,11 @@ QUnit.test( 'HTMLDOM to NodeView', function ( assert ) {
 		documentView = surfaceView.getDocument();
 		nodeView = documentView.documentNode.children[ 0 ];
 
-		expectCount += ve.ce.wikiaExample.assertEqualNodeView(
+		expectCount += ve.wikiaTest.utils.assertEqualNodeView(
 			assert,
 			nodeView,
 			ve.ce.wikiaExample.getBlockVideoHTML( attributes ),
-			ve.ce.wikiaExample.getAssertMessageFromAttributes( 'Attributes: ', attributes )
+			ve.wikiaTest.utils.getAssertMessageFromAttributes( 'Attributes: ', attributes )
 		);
 
 		previousAttributes = attributes;
@@ -104,7 +86,7 @@ QUnit.test( 'NodeView changes', function ( assert ) {
 		expectCount = 0;
 
 	doc = ve.createDocumentFromHtml(
-		ve.ce.wikiaExample.getBlockMediaHTMLDOM( this.type, previousAttributes )
+		ve.ce.wikiaExample.getMediaHTMLDOM( this.displayType, this.rdfaType, previousAttributes )
 	);
 
 	target = new ve.init.sa.Target( this.$fixture, doc );
@@ -115,17 +97,17 @@ QUnit.test( 'NodeView changes', function ( assert ) {
 	documentView = surfaceView.getDocument();
 	nodeView = documentView.documentNode.children[ 0 ];
 
-	expectCount += ve.ce.wikiaExample.assertEqualNodeView(
+	expectCount += ve.wikiaTest.utils.assertEqualNodeView(
 		assert,
 		nodeView,
 		ve.ce.wikiaExample.getBlockVideoHTML( previousAttributes ),
-		ve.ce.wikiaExample.getAssertMessageFromAttributes( 'Default: ', previousAttributes )
+		ve.wikiaTest.utils.getAssertMessageFromAttributes( 'Default: ', previousAttributes )
 	);
 
 	for ( i = 1, l = this.permutations.length; i < l; i++ ) {
 		attributes = this.permutations[ i ];
-		attributesDiffed = ve.ce.wikiaExample.getAttributeChanges( previousAttributes, attributes );
-		attributesMerged = ve.ce.wikiaExample.getAttributeChanges( previousAttributes, attributes, true );
+		attributesDiffed = ve.wikiaTest.utils.getAttributeChanges( previousAttributes, attributes );
+		attributesMerged = ve.wikiaTest.utils.getAttributeChanges( previousAttributes, attributes, true );
 
 		surfaceModel.change(
 			ve.dm.Transaction.newFromAttributeChanges(
@@ -135,11 +117,11 @@ QUnit.test( 'NodeView changes', function ( assert ) {
 			)
 		);
 
-		expectCount += ve.ce.wikiaExample.assertEqualNodeView(
+		expectCount += ve.wikiaTest.utils.assertEqualNodeView(
 			assert,
 			nodeView,
 			ve.ce.wikiaExample.getBlockVideoHTML( attributesMerged ),
-			ve.ce.wikiaExample.getAssertMessageFromAttributes( 'Changes: ', attributesDiffed )
+			ve.wikiaTest.utils.getAssertMessageFromAttributes( 'Changes: ', attributesDiffed )
 		);
 
 		previousAttributes = attributesMerged;

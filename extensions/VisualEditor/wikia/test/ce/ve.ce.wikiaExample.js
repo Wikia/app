@@ -11,79 +11,58 @@
 ve.ce.wikiaExample = {};
 
 ve.ce.wikiaExample.data = {
-	'mw:Image': {
-		'align': [
-			'center',
-			'default',
-			'left',
-			'none',
-			'right'
-		],
-		'height': [
-			1,
-			100
-		],
-		'type': [
-			'frame',
-			'frameless',
-			'none',
-			'thumb'
-		],
-		'width': [
-			2,
-			200
-		]
+	'block': {
+		'mw:Image': {
+			'align': [
+				'center',
+				'default',
+				'left',
+				'none',
+				'right'
+			],
+			'height': [
+				1,
+				100
+			],
+			'type': [
+				'frame',
+				'frameless',
+				'none',
+				'thumb'
+			],
+			'width': [
+				2,
+				200
+			]
+		}
+	},
+	'inline': {
+		'mw:Video': {
+			'align': [
+				'none'
+			],
+			// not supported?
+			'height': [
+				1
+			],
+			'type': [
+				'frameless',
+				'none'
+			],
+			// not supported?
+			'width': [
+				2
+			]
+		}
 	}
 };
 
 // mw:Video is the same for now
-ve.ce.wikiaExample.data[ 'mw:Video' ] = ve.ce.wikiaExample.data[ 'mw:Image' ];
+ve.ce.wikiaExample.data.block[ 'mw:Video' ] = ve.ce.wikiaExample.data.block[ 'mw:Image' ];
 
-// TODO: put this in ve.test.utils.js ?
-// TODO: make options into a hash, add 'join' and 'pair' options
-ve.ce.wikiaExample.getAssertMessageFromAttributes = function ( prefix, changes, suffix ) {
-	var key,
-		parts = [];
-
-	suffix = suffix || '';
-
-	if ( ve.isPlainObject( prefix ) ) {
-		changes = prefix;
-		prefix = '';
-	}
-
-	for ( key in changes ) {
-		parts.push( key + ': ' + changes[ key ] );
-	}
-
-	return prefix + parts.join( ', ' ) + suffix;
-};
-
-// TODO: move this to ve.test.utils.js ?
-ve.ce.wikiaExample.getAttributeChanges = function ( first, second, copyOver ) {
-	var diff = {},
-		key;
-
-	for ( key in second ) {
-		if ( key === null ) {
-			continue;
-		} else if ( first[ key ] !== second[ key ] ) {
-			diff[ key ] = second[ key ];
-		} else if ( copyOver === true ) {
-			diff[ key ] = first[ key ];
-		}
-	}
-
-	return diff;
-};
-
-// TODO: put this in ve.test.utils.js ?
-ve.ce.wikiaExample.assertEqualNodeView = function ( assert, nodeView, HTML, message ) {
-	// TODO: figure out a better way to remove debug styles
-	nodeView.$.find( '.ve-ce-generated-wrapper' ).removeAttr( 'style' );
-	assert.equalDomElement( nodeView.$[ 0 ], $( HTML )[ 0 ], message );
-
-	return 1;
+// Re-usable HTML fragments
+ve.ce.wikiaExample.html = {
+	'shield': '<img class="ve-ce-protectedNode-shield" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">'
 };
 
 /**
@@ -128,58 +107,7 @@ ve.ce.wikiaExample.getAlignClass = (function () {
 			return cssClasses[ attributes.type ][ attributes.align ];
 		}
 	};
-})();
-
-/**
- * Get the mocked HTMLDOM output for a block media node.
- *
- * @method
- * @param {Object} attributes The attributes from which to build the mock.
- * @returns {String} The mocked HTML.
- */
-ve.ce.wikiaExample.getBlockMediaHTMLDOM = (function () {
-	var alignClasses = {
-			'center': 'mw-halign-center',
-			'left': 'mw-halign-left',
-			'none': 'mw-halign-none',
-			'right': 'mw-halign-right'
-		},
-		mock = [
-			'<figure data-mw=\'{"attribution":{"username":"Foo","avatar":"Foo.png"}}\'>',
-				'<a href="Foo"><img src="Bar" resource="FooBar"></a>',
-				'<figcaption>abc</figcaption>',
-			'</figure>'
-		].join( '' );
-
-	function ucFirst( str ) {
-		return str.charAt( 0 ).toUpperCase() + str.slice( 1 );
-	}
-
-	return function( type, attributes ) {
-		var $mock = $( mock ),
-			typeOf = type + (
-				attributes.type !== 'none' ? '/' + ucFirst( attributes.type ) : ''
-			);
-
-		if ( attributes.height === 1 && attributes.width === 2 ) {
-			$mock.addClass( 'mw-default-size' );
-		}
-
-		if ( attributes.align !== 'default' ) {
-			$mock.addClass( alignClasses[ attributes.align ] );
-		}
-
-		$mock
-			.attr( 'typeof', typeOf )
-			.find( 'img[src="Bar"]' )
-				.attr({
-					height: attributes.height,
-					width: attributes.width
-				});
-
-		return $mock[ 0 ].outerHTML;
-	};
-})();
+} )();
 
 /**
  * Get the mocked HTML output for a block media node.
@@ -198,9 +126,6 @@ ve.ce.wikiaExample.getBlockMediaHTML = (function () {
 			$.msg( 'oasis-content-picture-added-by', '<a href="/wiki/User:Foo">Foo</a>' ),
 		'</div>'
 	].join( '' );
-
-	mocks.shield = '<img class="ve-ce-protectedNode-shield" ' +
-		'src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">';
 
 	mocks.frame = [
 		'<figure class="thumb thumbinner" style="">',
@@ -245,7 +170,7 @@ ve.ce.wikiaExample.getBlockMediaHTML = (function () {
 		$mock
 			.addClass( 've-ce-branchNode ve-ce-protectedNode' )
 			.attr( 'contenteditable', false )
-			.append( mocks.shield )
+			.append( ve.ce.wikiaExample.html.shield )
 			.find( 'img[src="Bar"]' )
 				.attr({
 					height: attributes.height,
@@ -258,8 +183,7 @@ ve.ce.wikiaExample.getBlockMediaHTML = (function () {
 
 		return $mock[ 0 ].outerHTML;
 	};
-})();
-
+} )();
 
 /**
  * Get the mocked HTML output for a block image node.
@@ -277,11 +201,129 @@ ve.ce.wikiaExample.getBlockMediaHTML = (function () {
  * @param {Object} attributes The attributes from which to build the mock.
  * @returns {String} The mocked HTML.
  */
-ve.ce.wikiaExample.getBlockVideoHTML = (function () {
+ve.ce.wikiaExample.getBlockVideoHTML = function ( attributes ) {
+	return ve.ce.wikiaExample.getVideoHTML(
+		ve.ce.wikiaExample.getBlockMediaHTML( attributes ),
+		attributes
+	);
+};
+
+/**
+ * Get the mocked HTML output for an linline media node.
+ * Anything shared between inline media types should go in here.
+ *
+ * @method
+ * @param {Object} attributes The attributes from which to build the mock.
+ * @returns {String} The mocked HTML.
+ */
+ve.ce.wikiaExample.getInlineMediaHTML = (function () {
 	var mocks = {};
 
-	// TODO: mock video information overlay
-	//mocks.overlay = [].join( '' );
+	mocks.frameless = [
+		'<a class="image ve-ce-mwInlineImageNode ve-ce-leafNode ve-ce-protectedNode" contenteditable="false">',
+			'<img src="Bar" width="" height="">',
+			ve.ce.wikiaExample.html.shield,
+		'</a>'
+	].join( '' );
+
+	mocks.none = mocks.frameless;
+
+	return function ( attributes ) {
+		var $mock = $( mocks[ attributes.type ] );
+
+		$mock.find( 'img[src="Bar"]' ).attr({
+			height: attributes.height,
+			width: attributes.width
+		});
+
+		return $mock[ 0 ].outerHTML;
+	};
+} )();
+
+/**
+ * Get the mocked HTML output for an inline video node.
+ *
+ * @method
+ * @param {Object} attributes The attributes from which to build the mock.
+ * @returns {String} The mocked HTML.
+ */
+ve.ce.wikiaExample.getInlineVideoHTML = function ( attributes ) {
+	return ve.ce.wikiaExample.getVideoHTML(
+		ve.ce.wikiaExample.getInlineMediaHTML( attributes ),
+		attributes
+	);
+};
+
+/**
+ * Get the mocked HTMLDOM output for a media node.
+ *
+ * @method
+ * @param {Object} attributes The attributes from which to build the mock.
+ * @returns {String} The mocked HTML.
+ */
+ve.ce.wikiaExample.getMediaHTMLDOM = (function () {
+	var alignClasses = {
+			'center': 'mw-halign-center',
+			'left': 'mw-halign-left',
+			'none': 'mw-halign-none',
+			'right': 'mw-halign-right'
+		},
+		mock = {};
+
+	mock.block = [
+		'<figure data-mw=\'{"attribution":{"username":"Foo","avatar":"Foo.png"}}\'>',
+			'<a href="Foo"><img src="Bar" resource="FooBar"></a>',
+			'<figcaption>abc</figcaption>',
+		'</figure>'
+	].join( '' );
+
+	mock.inline = [
+		'<span data-mw=\'{"attribution":{"username":"Foo","avatar":"Foo.png"}}\'>',
+			'<a href="Foo"><img src="Bar" resource="FooBar"></a>',
+		'</span>'
+	].join( '' );
+
+	function ucFirst( str ) {
+		return str.charAt( 0 ).toUpperCase() + str.slice( 1 );
+	}
+
+	return function( displayType, rdfaType, attributes ) {
+		var $mock = $( mock[ displayType ] ),
+			typeOf = rdfaType + (
+				attributes.type !== 'none' ? '/' + ucFirst( attributes.type ) : ''
+			);
+
+		if ( attributes.height === 1 && attributes.width === 2 ) {
+			$mock.addClass( 'mw-default-size' );
+		}
+
+		if ( attributes.align !== 'default' ) {
+			$mock.addClass( alignClasses[ attributes.align ] );
+		}
+
+		$mock
+			.attr( 'typeof', typeOf )
+			.find( 'img[src="Bar"]' )
+				.attr({
+					height: attributes.height,
+					width: attributes.width
+				});
+
+		return $mock[ 0 ].outerHTML;
+	};
+} )();
+
+/**
+ * Get the mocked HTML output for a video node.
+ * Anything shared between block and inline videos should go here.
+ *
+ * @method
+ * @param {String} mock The base mock to inherit from.
+ * @param {Object} attributes The attributes from which to build the mock.
+ * @returns {String} The mocked HTML.
+ */
+ve.ce.wikiaExample.getVideoHTML = (function () {
+	var mocks = {};
 
 	mocks.playButton = [
 		'<div class="Wikia-video-play-button ve-no-shield" style="">',
@@ -289,8 +331,8 @@ ve.ce.wikiaExample.getBlockVideoHTML = (function () {
 		'</div>'
 	].join( '' );
 
-	return function ( attributes ) {
-		var $mock = $( ve.ce.wikiaExample.getBlockMediaHTML( attributes ) ),
+	return function ( mock, attributes ) {
+		var $mock = $( mock ),
 			$playButton = $( mocks.playButton ),
 			size = ( attributes.width <= 170 ? 'small' : attributes.width > 360 ? 'large' : '' );
 
@@ -312,4 +354,4 @@ ve.ce.wikiaExample.getBlockVideoHTML = (function () {
 
 		return $mock[ 0 ].outerHTML;
 	};
-})();
+} )();
