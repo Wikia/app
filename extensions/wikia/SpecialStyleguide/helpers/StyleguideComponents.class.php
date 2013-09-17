@@ -46,6 +46,9 @@ class StyleguideComponents {
 	 */
 	private $uiFactory;
 
+	/**
+	 * @desc Constructor creates instance of Wikia\UI\Factory and loads components names from FS
+	 */
 	public function __construct() {
 		$this->uiFactory = Wikia\UI\Factory::getInstance();
 
@@ -138,6 +141,12 @@ class StyleguideComponents {
 		return $docInArray;
 	}
 
+	/**
+	 * @desc Loads component's sample file as array ($componentName_sample.json)
+	 *
+	 * @param String $componentName name of the component
+	 * @return Array
+	 */
 	private function loadComponentSampleAsArray( $componentName ) {
 		wfProfileIn( __METHOD__ );
 
@@ -148,6 +157,15 @@ class StyleguideComponents {
 		return $sampleInArray;
 	}
 
+	/**
+	 * @desc Generic method re-used in other methods to load a file as array
+	 *
+	 * @see StyleguideComponents::loadComponentDocumentationAsArray()
+	 * @see StyleguideComponents::loadComponentSampleAsArray()
+	 *
+	 * @param String $filePath full path to a file
+	 * @return Array
+	 */
 	private function loadFileAsArray( $filePath ) {
 		wfProfileIn( __METHOD__ );
 
