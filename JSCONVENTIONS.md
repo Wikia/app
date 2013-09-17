@@ -48,7 +48,22 @@ myFunc();
 ```
 
 ### Function declarations within blocks
-Do not do this
+Don't declare functions within blocks like loops and conditionals as this will often lead to unintended consequences. 
+```javascript
+// bad: 
+if ( someBool ) {
+    function myFunc() {
+        // code 
+    }
+}
+
+// also bad:
+while ( condition ) {
+    function myFunc() {
+        // code
+    }
+}
+```
 
 ## Style Rules
 
