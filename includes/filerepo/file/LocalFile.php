@@ -1262,6 +1262,10 @@ class LocalFile extends File {
 			// Force regeneration of the name and hashpath
 			unset( $this->name );
 			unset( $this->hashPath );
+			// Wikia change - begin
+			// @author macbre
+			unset( $this->url );
+			// Wikia change - end
 			// Purge the new image
 			$this->purgeEverything();
 		}
