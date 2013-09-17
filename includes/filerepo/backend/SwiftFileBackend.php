@@ -364,6 +364,13 @@ error_log( __METHOD__ . ": $fullCont, $dir, params = " . print_r( $params, true 
 			$contObj = $this->getContainer( $fullCont );
 error_log( __METHOD__ . ": getContainer( $fullCont ) =  " . print_r( $contObj, true ) . "\n", 3, "/tmp/moli.log" );
 			// NoSuchContainerException not thrown: container must exist
+
+			$status->merge( $this->setContainerAccess(
+				$contObj,
+				array( '.r:*' ), // read
+				array( $this->auth->username, $this->swiftAnonUser ) // write
+			) );
+
 			return $status; // already exists
 		} catch ( NoSuchContainerException $e ) {
 error_log( __METHOD__ . ": NoSuchContainerException\n", 3, "/tmp/moli.log" );
@@ -394,7 +401,7 @@ error_log( __METHOD__ . ": is swiftAnonUser =  " . print_r( $this->swiftAnonUser
 error_log( __METHOD__ . ": setContainerAccess r:* \n", 3, "/tmp/moli.log" );
 				$status->merge( $this->setContainerAccess(
 					$contObj,
-					array( $this->auth->username, '*' ), // read
+					array( '.r:*' ), // read
 					array( $this->auth->username ) // write
 				) );
 error_log( __METHOD__ . ": statsu = " . print_r( $status, true ). " \n", 3, "/tmp/moli.log" );
@@ -418,30 +425,24 @@ error_log( __METHOD__ . ": statsu = " . print_r( $status, true ). " \n", 3, "/tm
 	protected function doSecureInternal( $fullCont, $dir, array $params ) {
 		$status = Status::newGood();
 
-		if ( $this->swiftAnonUser != '' ) {
-			// Restrict container from end-users...
-			try {
-				// doPrepareInternal() should have been called,
-				// so the Swift container should already exist...
-				$contObj = $this->getContainer( $fullCont ); // normally a cache hit
-				// NoSuchContainerException not thrown: container must exist
-				if ( !isset( $contObj->mw_wasSecured ) ) {
-					$status->merge( $this->setContainerAccess(
-						$contObj,
-						array( $this->auth->username ), // read
-						array( $this->auth->username ) // write
-					) );
-					// @TODO: when php-cloudfiles supports container
-					// metadata, we can make use of that to avoid RTTs
-					$contObj->mw_wasSecured = true; // avoid useless RTTs
-				}
-			} catch ( InvalidResponseException $e ) {
-				$status->fatal( 'backend-fail-connect', $this->name );
-				$this->logException( $e, __METHOD__, $params );
-			} catch ( Exception $e ) { // some other exception?
-				$status->fatal( 'backend-fail-internal', $this->name );
-				$this->logException( $e, __METHOD__, $params );
-			}
+		try {
+			// doPrepareInternal() should have been called,
+			// so the Swift container should already exist...
+			$contObj = $this->getContainer( $fullCont ); // normally a cache hit
+			// NoSuchContainerException not thrown: container must exist
+
+			// Make container private to end-users...
+			$status->merge( $this->setContainerAccess(
+				$contObj,
+				array( $this->auth->username ), // read
+				array( $this->auth->username ) // write
+			) );
+		} catch ( InvalidResponseException $e ) {
+			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
+		} catch ( Exception $e ) { // some other exception?
+			$status->fatal( 'backend-fail-internal', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 		}
 
 		return $status;
