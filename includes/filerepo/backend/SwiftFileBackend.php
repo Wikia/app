@@ -332,30 +332,6 @@ error_log( __METHOD__ . ": srcCont = {$srcCont}, srcRel = {$srcRel} \n", 3, "/tm
 			return $status;
 		}
 
-global $wgDBname;
-$msg = "backtrace (' . $wgDBname . ') \n";
-$backtrace = wfDebugBacktrace();
-foreach( $backtrace as $call ) {
-	if( isset( $call['file'] ) ) {
-		$f = explode( DIRECTORY_SEPARATOR, $call['file'] );
-		$file = $f[count($f)-1];
-	} else {
-		$file = '-';
-	}
-	if( isset( $call['line'] ) ) {
-		$line = $call['line'];
-	} else {
-		$line = '-';
-	}
-	$msg .= "$file line $line calls ";
-
-	if( !empty( $call['class'] ) ) $msg .= $call['class'] . '::';
-	$msg .= $call['function'] . '()';
-
-	$msg .= "\n";
-}
-echo $msg; exit;
-
 		try {
 			$sContObj = $this->getContainer( $srcCont );
 error_log( __METHOD__ . ": sContObj = " . print_r( $sContObj, true ) . " \n", 3, "/tmp/moli.log" );
