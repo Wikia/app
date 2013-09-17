@@ -5,7 +5,7 @@ class AvatarService extends Service {
 	const AVATAR_SIZE_MEDIUM = 50;
 	const AVATAR_SIZE_LARGE = 150;
 
-	// Smallest size for avatar where's gain from replacing PNGs/GIFs with JPGs
+	// There's gain in image size only if avatar's width/height is greater than 20px (See Jira/DAR-1935).
 	const PERFORMANCE_JPEG_THRESHOLD = 20;
 
 	/**
