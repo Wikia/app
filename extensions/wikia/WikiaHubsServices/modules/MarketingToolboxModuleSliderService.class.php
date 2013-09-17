@@ -169,7 +169,7 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleEditable
 	}
 
 	public function getImageData( $image ) {
-		return ImagesService::getLocalFileThumbUrlAndSizes($image);
+		return ImagesService::getLocalFileThumbUrlAndSizes($image, 0, ImagesService::EXT_JPG);
 
 	}
 }
