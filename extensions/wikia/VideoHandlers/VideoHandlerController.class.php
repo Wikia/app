@@ -12,16 +12,16 @@ class VideoHandlerController extends WikiaController {
 
 		$error = '';
 		if ( empty($title) ) {
-			$error = wfmsgForContent('videohandler-error-missing-parameter', 'title');
+			$error = wfMessage('videohandler-error-missing-parameter', 'title')->inContentLanguage()->text();
 		} else {
 			if ( empty($width) ) {
-				$error = wfmsgForContent('videohandler-error-missing-parameter', 'width');
+				$error = wfMessage('videohandler-error-missing-parameter', 'width')->inContentLanguage()->text();
 			}
 			else {
 				$title = Title::newFromText($title, NS_FILE);
 				$file = ($title instanceof Title) ? wfFindFile($title) : false;
 				if ( $file === false ) {
-					$error = wfmsgForContent('videohandler-error-video-no-exist');
+					$error = wfMessage('videohandler-error-video-no-exist')->inContentLanguage()->text();
 				} else {
 					$videoId = $file->getVideoId();
 					$assetUrl = $file->getPlayerAssetUrl();
@@ -196,4 +196,26 @@ class VideoHandlerController extends WikiaController {
 		$this->fileExists = $fileExists;
 	}
 
+	/**
+	 * Exposes the VideoHandlerHelper::getVideoDetail method from this controller
+	 * @requestParam string|fileTitle - The title of the file to get details for
+	 * @requestParam int|thumbWidth - The width of the video thumbnail to return
+	 * @requestParam int|thumbHeight - The height of the video thumbnail to return
+	 * @requestParam int|articleLimit - The number of "posted in" article detail records to return
+	 * @responseParam array|detail - The video details
+	 */
+	public function getVideoDetail() {
+		$fileTitle = $this->getVal( 'fileTitle', '' );
+		$thumbWidth = $this->getVal( 'thumbWidth', '250' );
+		$thumbHeight = $this->getVal( 'thumbHeight', '250' );
+		$articleLimit = $this->getVal( 'articleLimit', '10' );
+
+		$helper = new VideoHandlerHelper();
+		$videoDetail = $helper->getVideoDetail( array('title' => $fileTitle),
+												$thumbWidth,
+												$thumbHeight,
+												$articleLimit
+		);
+		$this->detail = $videoDetail;
+	}
 }
