@@ -10,6 +10,7 @@
 
 		a {
 			border-left: 4px solid $color-page;
+			color: $color-header;
 			display: table-cell;
 			height: 40px;
 			padding: 0 20px 0 16px;
@@ -18,7 +19,7 @@
 		}
 
 		&.active a {
-			border-color: $color-links;
+			border-color: $color-header
 		}
 	}
 }
