@@ -1,6 +1,8 @@
 define('wikia.toc', function() {
 	'use strict';
 
+	var MAXHEADER = 2; // <h2> is the highest article header
+
 	/**
 	 *  Create TOC data structure
 	 *
@@ -24,20 +26,19 @@ define('wikia.toc', function() {
 
 	function getData(headers, createSection) {
 
-		var MAXHEADER = 2, // <h2> is the highest article header
-			toc = {
+		var toc = {
 				sections: []
-			},
+			}, // set base object for TOC data structure
 			stack = [toc],
-			pos = MAXHEADER - 1,
+			pos = MAXHEADER - 1, // set starting position
 			i,
 			headersLength = headers.length;
 
 		for (i = 0; i < headersLength; i++) {
 
 			var header = headers[i],
-				obj = createSection(header),
-				tempoPos = parseInt(header.nodeName.slice(1), 10),
+				obj = createSection(header), // create section object from HTML header node
+				tempoPos = parseInt(header.nodeName.slice(1), 10), // get position from header node (exp. <h2>)
 				sections = obj.sections;
 
 			// skip corrupted TOC section element
@@ -48,14 +49,14 @@ define('wikia.toc', function() {
 			if (tempoPos > pos) {
 				tempoPos = pos + 1; // fix pos problem with header 1,3 => 1,2
 			} else {
-				var itemsToRemove = pos - tempoPos + 1;
+				var itemsToRemove = pos - tempoPos + 1; // (+1) at least one item need to be removed from stack
 
 				stack.splice(-itemsToRemove);
 			}
 
 			pos = tempoPos; // update current position
-			stack.push(obj);
-			stack[stack.length - 2].sections.push(stack[stack.length - 1]);
+			stack.push(obj); // add object as last element of the stack
+			stack[stack.length - 2].sections.push(stack[stack.length - 1]); // add last object from stack to sections array of its parent
 		}
 
 		return toc;
