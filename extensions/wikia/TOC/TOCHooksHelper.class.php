@@ -19,12 +19,16 @@ class TOCHooksHelper {
 		return true;
 	}
 
+	/** Ad TOC js assets to Oasis */
+
 	public static function onOasisSkinAssetGroups( &$assetsArray ) {
 
 		$assetsArray[] = 'toc_js';
 
 		return true;
 	}
+
+	/** Ad TOC js assets to Monobook */
 
 	public static function onMonobookSkinAssetGroups( &$assetsArray ) {
 
