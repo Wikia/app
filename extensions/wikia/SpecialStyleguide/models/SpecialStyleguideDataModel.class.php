@@ -180,7 +180,7 @@ class SpecialStyleguideDataModel {
 
 		foreach ($components as $component) {
 			$section = [
-				"id" => '',
+				"id" => $component["id"],
 				"title" => $component["name"]
 			];
 			$sections[] = $section;
