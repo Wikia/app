@@ -214,6 +214,11 @@ $wgAutoloadClasses[ 'SnappytvVideoHandler'] =  $dir . '/handlers/SnappytvVideoHa
 $wgAutoloadClasses[ 'SnappytvApiWrapper'] =  $dir . '/apiwrappers/SnappytvApiWrapper.class.php' ;
 $wgMediaHandlers['video/snappytv'] = 'SnappytvVideoHandler';
 
+$wgAutoloadClasses['UstreamVideoHandler'] =  $dir . '/handlers/UstreamVideoHandler.class.php';
+$wgAutoloadClasses['UstreamApiWrapper'] =  $dir . '/apiwrappers/UstreamApiWrapper.class.php';
+$wgMediaHandlers['video/ustream'] = 'UstreamVideoHandler';
+
+
 /**
  * Feed ingesters
  */
@@ -251,4 +256,5 @@ $wgVideoMigrationProviderMap = array(
 	28 => 'Ooyala',
 	29 => 'Iva',
 	30 => 'Snappytv',
+	31 => 'Ustream',
 );

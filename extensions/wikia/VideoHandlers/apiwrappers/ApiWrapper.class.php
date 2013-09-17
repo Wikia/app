@@ -93,7 +93,7 @@ abstract class ApiWrapper {
 	}
 
 	public function getMimeType() {
-		return 'video/'.$this->getProvider();
+		return 'video/'.strtolower( $this->getProvider() );
 	}
 
 	public function getVideoId() {
