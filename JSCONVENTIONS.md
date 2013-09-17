@@ -12,7 +12,25 @@
 
 ## Language Rules
 #### Early returns
-Try to avoid early returns
+Try to avoid early returns.  It makes the code easier to read. 
+```javascript
+// not best practice
+function() {
+    if ( someBool ) {
+        return true;
+    }
+    return false;
+}
+
+// better
+function() {
+    var myBool = false;
+    if ( someBool ) {
+        myBool = true;
+    }
+    return myBool;
+}
+```
 
 #### Semi-colons
 Always use semicolons at the end of every simple statement.  No more than one statement per line.
