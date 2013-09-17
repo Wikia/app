@@ -1102,9 +1102,8 @@ error_log( __METHOD__ . ": triplet = " . print_r( $triplet, true )  . " \n", 3, 
 	 * @return FileRepoStatus
 	 */
 	public function deleteBatch( $sourceDestPairs ) {
-error_log( __METHOD__ . "\n", 3, "/tmp/moli.log" );
 		$backend = $this->backend; // convenience
-
+error_log( __METHOD__ . ": " . print_r( $backend, true ) . "\n", 3, "/tmp/moli.log" );
 		// Try creating directories
 		$status = $this->initZones( array( 'public', 'deleted' ) );
 		if ( !$status->isOK() ) {
@@ -1115,8 +1114,10 @@ error_log( __METHOD__ . "\n", 3, "/tmp/moli.log" );
 
 		$operations = array();
 		// Validate filenames and create archive directories
+error_log( __METHOD__ . ": " . print_r( $sourceDestPairs, true ) . "\n", 3, "/tmp/moli.log" );
 		foreach ( $sourceDestPairs as $pair ) {
 			list( $srcRel, $archiveRel ) = $pair;
+error_log( __METHOD__ . ": srcRel = $srcRel, archiveRel = $archiveRel\n", 3, "/tmp/moli.log" );
 			if ( !$this->validateFilename( $srcRel ) ) {
 				throw new MWException( __METHOD__.':Validation error in $srcRel' );
 			}
@@ -1127,12 +1128,17 @@ error_log( __METHOD__ . "\n", 3, "/tmp/moli.log" );
 			$publicRoot = $this->getZonePath( 'public' );
 			$srcPath = "{$publicRoot}/$srcRel";
 
+error_log( __METHOD__ . ": srcPath = $srcPath\n", 3, "/tmp/moli.log" );
+
 			$deletedRoot = $this->getZonePath( 'deleted' );
 			$archivePath = "{$deletedRoot}/{$archiveRel}";
 			$archiveDir = dirname( $archivePath ); // does not touch FS
 
+error_log( __METHOD__ . ": archiveDir = $archiveDir\n", 3, "/tmp/moli.log" );
+
 			// Create destination directories
 			if ( !$backend->prepare( array( 'dir' => $archiveDir ) )->isOK() ) {
+error_log( __METHOD__ . ": !backend->prepare($archiveDir)\n", 3, "/tmp/moli.log" );
 				return $this->newFatal( 'directorycreateerror', $archiveDir );
 			}
 			$this->initDeletedDir( $archiveDir );

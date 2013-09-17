@@ -110,7 +110,8 @@ class VideoHandlerHooks {
 				'public' => array( 'container' => $container, 'url' => 'http://s3.dfs-s1', 'directory' => 'images' ),
 				'temp'   => array( 'container' => $container, 'url' => 'http://s3.dfs-s1', 'directory' => 'images/temp' ),
 				'thumb'  => array( 'container' => $container, 'url' => 'http://s3.dfs-s1', 'directory' => 'images/thumb' ),
-				'deleted'=> array( 'container' => $container, 'url' => 'http://s3.dfs-s1', 'directory' => 'images/archive' )
+				'deleted'=> array( 'container' => $container, 'url' => 'http://s3.dfs-s1', 'directory' => 'images/deleted' ),
+				'archive'=> array( 'container' => $container, 'url' => 'http://s3.dfs-s1', 'directory' => 'images/archive' )
 			);
 		}
 

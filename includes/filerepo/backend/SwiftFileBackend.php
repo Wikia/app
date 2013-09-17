@@ -322,16 +322,43 @@ error_log ( __METHOD__ . ": config = " . print_r( $config, true ) . "\n", 3, "/t
 	 * @see FileBackendStore::doDeleteInternal()
 	 */
 	protected function doDeleteInternal( array $params ) {
+error_log( __METHOD__ . ": params = " . print_r( $params, true ) . "\n", 3, "/tmp/moli.log" );
 		$status = Status::newGood();
 
 		list( $srcCont, $srcRel ) = $this->resolveStoragePathReal( $params['src'] );
+error_log( __METHOD__ . ": srcCont = {$srcCont}, srcRel = {$srcRel} \n", 3, "/tmp/moli.log" );
 		if ( $srcRel === null ) {
 			$status->fatal( 'backend-fail-invalidpath', $params['src'] );
 			return $status;
 		}
 
+global $wgDBname;
+$msg = "backtrace (' . $wgDBname . ') \n";
+$backtrace = wfDebugBacktrace();
+foreach( $backtrace as $call ) {
+	if( isset( $call['file'] ) ) {
+		$f = explode( DIRECTORY_SEPARATOR, $call['file'] );
+		$file = $f[count($f)-1];
+	} else {
+		$file = '-';
+	}
+	if( isset( $call['line'] ) ) {
+		$line = $call['line'];
+	} else {
+		$line = '-';
+	}
+	$msg .= "$file line $line calls ";
+
+	if( !empty( $call['class'] ) ) $msg .= $call['class'] . '::';
+	$msg .= $call['function'] . '()';
+
+	$msg .= "\n";
+}
+echo $msg; exit;
+
 		try {
 			$sContObj = $this->getContainer( $srcCont );
+error_log( __METHOD__ . ": sContObj = " . print_r( $sContObj, true ) . " \n", 3, "/tmp/moli.log" );
 			$sContObj->delete_object( $srcRel );
 		} catch ( NoSuchContainerException $e ) {
 			$status->fatal( 'backend-fail-delete', $params['src'] );
@@ -423,6 +450,9 @@ error_log( __METHOD__ . ": statsu = " . print_r( $status, true ). " \n", 3, "/tm
 	 * @see FileBackendStore::doSecureInternal()
 	 */
 	protected function doSecureInternal( $fullCont, $dir, array $params ) {
+error_log(__METHOD__.":fullCont=" . print_r( $fullCont, true ) . "\n", 3, "/tmp/moli.log" );
+error_log(__METHOD__.":dir=" . print_r( $dir, true ) . "\n", 3, "/tmp/moli.log" );
+error_log(__METHOD__.":params=" . print_r( $params, true ) . "\n", 3, "/tmp/moli.log" );
 		$status = Status::newGood();
 
 		try {
