@@ -203,7 +203,7 @@
       this.path = this.api.resourcePath != null ? this.api.resourcePath : resourceObj.path;
       this.description = resourceObj.description;
       parts = this.path.split("/");
-      this.name = parts[parts.length - 1].replace('.{format}', '');
+      this.name = resourceObj.readableName; //parts[parts.length - 1].replace('.{format}', '');
       this.readableName = resourceObj.readableName;
       this.basePath = this.api.basePath;
       console.log('bp: ' + this.basePath);
@@ -614,9 +614,11 @@
         includeApiKey = true;
       }
 //		url = this.resource.basePath + this.pathJson();
-		url = window.location.origin + this.pathJson();
 
-      _ref = this.parameters;
+		url = window.location.origin ? window.location.origin: window.location.protocol + "//" + window.location.hostname ;
+
+		url +=  this.pathJson();
+	    _ref = this.parameters;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         param = _ref[_i];
         if (param.paramType === 'path') {
