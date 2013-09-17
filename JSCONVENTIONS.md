@@ -1,13 +1,16 @@
 # Wikia JavaScript Coding Conventions
 
-### [Language Rules](#language-rules)
-* [Early returns](#early-returns)
-* [Semi-colons](#semi-colons)
-* [Function-declarations within blocks](#function-declarations-within-blocks)
+## TOC
+* [Language Rules](#language-rules)
+  * [Early returns](#early-returns)
+  * [Semi-colons](#semi-colons)
+  * [Function-declarations within blocks](#function-declarations-within-blocks)
+* [Style Rules](#style-rules)
+  * [White space guidelines](#white-space-guidelines)
+  * [Prefixing jQuery objects](#prefixing-jquery-objects)
+* [Still to be defined](#still-to-be-defined)
 
-### [Still to be defined](#still-to-be-defined)
-
-### Language Rules
+## Language Rules
 #### Early returns
 Try to avoid early returns
 
@@ -37,13 +40,14 @@ We are using jQuery's guidelines: http://contribute.jquery.org/style-guide/js/
 #### Prefixing jQuery objects
 All variables referencing jQuery objects, should be prefixed with a $.
 
-#### Comments
-We use JSDoc style comments.
-
-Example:
 ```javascript
+// $div is a jQuery object
 var $div = $('div');
 ```
+
+
+#### Comments
+We use JSDoc style comments.
 
 ### Still to be defined
 * Error handling and custom exception handling
