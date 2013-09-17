@@ -1,5 +1,9 @@
 define('device', function(){
 
+    function getHeight(){
+        return window.innerHeight;
+    }
+
     function hasTouch(){
         return ('ontouchstart' && 'ontouchmove' && 'ontouchend')in document.documentElement;
     }
@@ -26,6 +30,8 @@ define('device', function(){
     }
 
     return {
-        handlesAnimatedMenu: handlesAnimatedMenu
+        handlesAnimatedMenu: handlesAnimatedMenu,
+        getHeight: getHeight,
+        androidVersion: androidVersion
     }
 });

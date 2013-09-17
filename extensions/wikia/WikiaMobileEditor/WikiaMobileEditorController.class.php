@@ -12,7 +12,9 @@ class WikiaMobileEditorController extends WikiaController{
 	 */
 	public static function onWikiaMobileAssetsPackages( &$head, &$body, &$scss ){
 
-		if ( F::app()->wg->Request->getVal( 'action' ) == 'edit' ) {
+        $action = F::app()->wg->Request->getVal( 'action' );
+
+		if ( $action == 'edit' || $action == 'submit') {
 			$body[] = 'wikiamobile_editor_js';
 			$scss[] = 'wikiamobile_editor_scss';
 		}

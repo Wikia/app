@@ -1,8 +1,9 @@
-define('config', ['pubsub', 'wikia.loader', 'wikia.mustache', 'toast'], function(pubsub, loader, mustache, toast){
+define('config', ['pubsub', 'wikia.loader', 'wikia.mustache', 'toast', 'editor'], function(pubsub, loader, mustache, toast, editor){
    'use strict';
     var configObj,
         activeTags = {},
         maxItems = 20,
+        activeChb = 0,
         startMsg = 'Use checkboxes in tag lists below to add items to the animated menu. You can also define custom tags.'
 
     function ConfigObj(wrapSection){
@@ -202,6 +203,35 @@ define('config', ['pubsub', 'wikia.loader', 'wikia.mustache', 'toast'], function
         return false;
     }
 
+    pubsub.subscribe('checkSnippet', function(evt){
+        if(editor.editArea.value[editor.editArea.selectionStart-1] != '!') return;
+        if(!editor.snippets.active){
+            editor.snippets.active = true;
+            return;
+        }
+        evt.preventDefault();
+        var posStart = editor.editArea.selectionEnd - 1,
+            posEnd = posStart,
+            text = editor.editArea.value,
+            abbr,
+            tag;
+        while(posStart){
+            posStart -=1;
+            if(text[posStart] == " " || text[posStart] == "\n") return;
+            if(text[posStart] === '!') break;
+        }
+        abbr = text.substring(posStart+1, posEnd);
+        if(abbr != '')tag = findTag(abbr);
+        else return;
+        if(tag){
+            text = text.replace('!'+abbr+'!', '');
+            editor.editArea.value = text;
+            editor.editArea.setSelectionRange(posStart, posStart);
+            editor.insertTags(tag.tag);
+            editor.snippets.active = false;
+        }
+    });
+
     function isFirstCharValid(tag){
         return (tagStarts.indexOf(tag.substring(0,1)) != -1);
     }
@@ -218,8 +248,7 @@ define('config', ['pubsub', 'wikia.loader', 'wikia.mustache', 'toast'], function
                 for(var i = 0; i < links.length; i++){
                     links[i].addEventListener('click', function(evt){
                         evt.preventDefault();
-                        pubsub.publish('insert',
-                            findTag(this.parentElement.getElementsByTagName('input')[0].name).tag);
+                        editor.insertTags(findTag(this.parentElement.getElementsByTagName('input')[0].id).tag);
                     });
                 }
             }
@@ -231,14 +260,14 @@ define('config', ['pubsub', 'wikia.loader', 'wikia.mustache', 'toast'], function
         Object.keys(tags).forEach(function(tagGr){ //tu foricz
             if(tags.hasOwnProperty(tagGr) && typeof tags[tagGr] === 'object'){
                 html+='<section class ="tagSection show" data-tagType="'+tagGr+'">';
-                html+='<h1 class="collSec addChev">'+tagGr+'</h1>';
+                html+='<h1 class="collSec addChev">'+tagGr.toUpperCase()+'</h1>';
                 html+='<ul class="wkLst artSec">';
                 Object.keys(tags[tagGr]).forEach(function(tag){ //i tu foricz
                     if(tags[tagGr].hasOwnProperty(tag)){
                         html+='<li>';
-                        html+='<input type="checkbox" class="tagChb" name="'+tags[tagGr][tag].abbr+'">';
+                        html+='<input type="checkbox" class="tagChb" id="'+tags[tagGr][tag].abbr+'">';
                         if(tagGr != 'Custom'){
-                            html+='<label for="'+tags[tagGr][tag].abbr+'">'+tag+' (!'+tags[tagGr][tag].abbr+ '!) </label>';
+                            html+='<label for="'+tags[tagGr][tag].abbr+'">'+tag+' <small>!'+tags[tagGr][tag].abbr+ '!</small> </label>';
                             html+='<a href="">'+tags[tagGr][tag].display+'</a>';
                         }
                         else{
@@ -252,7 +281,6 @@ define('config', ['pubsub', 'wikia.loader', 'wikia.mustache', 'toast'], function
             }
         });
         html+='<p class="warning">Warning! You picked wrong number of tags for the animated menu (0 or >20)</p>';
-        html+= '<button type="button" class="save wkBtn">Reload animated menu</button>';
         return html;
     }
 
@@ -264,6 +292,60 @@ define('config', ['pubsub', 'wikia.loader', 'wikia.mustache', 'toast'], function
     function fold(section){
         section.ul.classList.add('off');
         section.toggle.innerText = 'expand';
+    }
+
+    function waitForChecked(){
+        configObj.wrapper.addEventListener('click', function(evt){
+            var el = evt.target;
+            if( el.nodeName === 'INPUT' && el.type === 'checkbox'){
+                var fields = el.parentElement.getElementsByClassName('tagInput');
+                if(fields[0] && fields[0].classList.contains('tagInput')){
+                    if(fields[0].value && fields[1].value){
+                        var abbr = fields[0].value,
+                            tag = fields[1].value,
+                            name = fields[0].name;
+                        tags['Custom'][name].tag = tag;
+                        tags['Custom'][name].abbr = abbr;
+                        onChecked(el, tags['Custom'][name]);
+                    }
+                    else{
+                        toast.show('Please, fill the tag information fields first');
+                        el.checked = false;
+                    }
+                    return;
+                }
+                onChecked(el, findTag(el.id));
+            }
+            if(el.nodeName === 'LABEL'){
+                onChecked(el.parentElement.getElementById(el.getAttribute('for')), findTag(el.getAttribute('for')));
+                return;
+            }
+        });
+    }
+
+    function onChecked(box, tag){
+        if(box.checked){
+            activeChb++;
+            if(activeChb > maxItems){
+                toast.show('You reached the limit of ' + maxItems + ' items in the menu. Uncheck some of the previously'
+                    + ' chosen checkboxes to add this one', {error: true});
+            }
+            else{
+                pubsub.publish('addTag', tag);
+                if(maxItems === activeChb)
+                toast.show('Tag was added to the animated menu. You fullfilled all the places.');
+                else
+                toast.show('Tag was added to the animated menu. You still have '
+                + (maxItems - activeChb) + ' places remaining in the menu.');
+            }
+        }
+        else{
+            activeChb--;
+            pubsub.publish('removeTag', tag.abbr);
+            toast.show('Tag was deleted from the animated menu. You now have '
+                + (maxItems - activeChb) + ' places remaining in the menu.');
+        }
+
     }
 
     function getActive(){ //returns elements with checkboxes in 'active' state
@@ -278,7 +360,7 @@ define('config', ['pubsub', 'wikia.loader', 'wikia.mustache', 'toast'], function
 
     function setActiveTags(activeChb){
         for(var i = 0; i < activeChb.length; i++){
-            curChb = activeChb[i];
+            var curChb = activeChb[i];
             if(curChb.parentElement.getElementsByClassName('tagInput')[0]){
                 var abbr = curChb.parentElement.getElementsByTagName('input')[1].value,
                     tag = curChb.parentElement.getElementsByTagName('input')[2].value,
@@ -328,10 +410,9 @@ define('config', ['pubsub', 'wikia.loader', 'wikia.mustache', 'toast'], function
         return !!(checker <= maxItems && checker > 0);
     }
 
-    function watchForSubmit(){
-        configObj.submit.addEventListener('click', function(evt){
-            evt.preventDefault();
-            onUpdate();
+    function checkBoxEnabler(){
+        configObj.wrapper.addEventListener('click', function(evt){
+           // if()
         });
     }
 
@@ -355,11 +436,12 @@ define('config', ['pubsub', 'wikia.loader', 'wikia.mustache', 'toast'], function
             onUpdate();
         }
         initializeLinks();
-        watchForSubmit();
         toast.show(startMsg);
+        waitForChecked();
     }
     return {
         init : init,
-        findTag: findTag
+        findTag: findTag,
+        maxItems: maxItems
     }
 });

@@ -1,13 +1,117 @@
-define('menu', ['pubsub', 'editor', 'device'], function(pubsub, editor, device){
+define('menu', ['pubsub', 'editor', 'device', 'config'], function(pubsub, editor, device, config){
 
     var menuLeft,
         menuRight,
-        rMin = 50,
-        rMax = 100,
+        rMin = 60,
+        rMax = 110,
         minMove = 20,
+        draggable = false,
+        dragFlag = false,
         wrapper = document.getElementsByClassName('wrapper')[0],
         shadow = wrapper.getElementsByClassName('shadow')[0],
-        tags = JSON.parse(localStorage.getItem('tags')) || {};
+        userTags = {},
+        defaultTags = {
+            'b' : {
+                tag : "''_$''",
+                abbr : 'b',
+                display : "'' ''"
+            },
+            'i' : {
+                tag : "'''_$'''",
+                abbr : 'i',
+                display : "''' '''"
+            },
+            'sm' : {
+                tag : "<small>_$</small>",
+                abbr : 'sm',
+                display : '&lt;small&gt;&lt;/small&gt;'
+            },
+            'sup' : {
+                tag : "<sup>_$</sup>",
+                abbr : 'sup',
+                display : '&lt;sup&gt;&lt;/sup&gt;'
+            },
+            'sub' : {
+                tag : "<sub>_$</sub>",
+                abbr : 'sub',
+                display : '&lt;sub&gt;&lt;/sub&gt;'
+            },
+            'h2' : {
+                tag : "==_$==",
+                abbr : 'h2',
+                display : 'Level 2 Headline'
+            },
+            'qte' : {
+                tag : "<blockquote>_$</blockquote>",
+                abbr : 'qte',
+                display : 'Blockquote'
+            },
+            'int' : {
+                tag : "[[_$]]",
+                abbr : 'int',
+                display : '[[]]'
+            },
+            'ext' : {
+                tag : "[http://_$ title]",
+                abbr : 'ext',
+                display : '[http:// title]'
+            },
+            'file' : {
+                tag : "[[File:_$]]",
+                abbr : 'file',
+                display : '[[File:]]'
+            },
+            'med' : {
+                tag : "[Media:_$]",
+                abbr : 'med',
+                display : '[Media:]'
+            },
+            'math' : {
+                tag : "<math>_$</math>",
+                abbr : 'math',
+                display : '&lt;math&gt;_$&lt;/math&gt;'
+            },
+            'ign' : {
+                tag : "<nowiki>_$</nowiki>",
+                abbr : 'ign',
+                display : '&lt;nowiki&gt;&lt;/nowiki&gt;'
+            },
+            'usr' : {
+                tag : "~~~~",
+                abbr : 'usr',
+                display : 'Username and time'
+            },
+            'hrzl' : {
+                tag : "----",
+                abbr : 'hrzl',
+                display : '----'
+            },
+            'str' : {
+                tag : "<strike>_$</strike>",
+                abbr : 'str',
+                display : '&lt;strike&gt;_$&lt;/strike&gt;'
+            },
+            'hdn' : {
+                tag : "<!-- _$ -->",
+                abbr : 'hdn',
+                display : '&lt;!-- _$ --&gt;'
+            },
+            'cat' : {
+                tag : "[[Category:_$]]",
+                abbr : 'cat',
+                display : '[[Category:]]'
+            },
+            'red' : {
+                tag : "#REDIRECT[[_$]]",
+                abbr : 'red',
+                display : 'REDIRECT[[]]'
+            },
+            'ref' : {
+                tag : "<ref>_$</ref>",
+                abbr : 'ref',
+                display : '&lt;ref&gt;&lt;/ref&gt;'
+            }
+        }
 
     function menuObj(wrapperId){ //constructor for menu object, parameter = div wrapper for menu
         var myWrapper = document.getElementById(wrapperId);
@@ -33,7 +137,7 @@ define('menu', ['pubsub', 'editor', 'device'], function(pubsub, editor, device){
         menuRight.other = menuLeft;
     }
 
-    function waitForTouch(menus){
+    function waitForTouch(){
             document.addEventListener('touchstart', function(evt){
                 if(evt.target.classList.contains('master')){
                     var curMenu = evt.target.parentElement.classList.contains('left') ? menuLeft : menuRight;
@@ -42,49 +146,92 @@ define('menu', ['pubsub', 'editor', 'device'], function(pubsub, editor, device){
             });
     }
 
+    function onDrag(event){
+        distance = event.touches[0].pageY;
+        if(distance > 50 && distance < (window.innerHeight - 50))
+        menuLeft.wrapper.style.webkitTransform
+            = menuRight.wrapper.style.webkitTransform
+            = 'translate(0,' + (distance - getMasterPosition(menuLeft).y) + 'px)';
+    }
+
+    function onDragEnd(event){
+        this.removeEventListener('touchmove', onDrag);
+        this.removeEventListener('touchend', onDragEnd);
+        draggable = false;
+        dragFlag = false;
+    }
+
+    function touchEndBeforeDrag(){
+        draggable = false;
+        this.removeEventListener('touchend', touchEndBeforeDrag);
+    }
+
     function onTouchStart(event, menu){
         event.preventDefault();
         if(menu.other.primary.expanded || menu.other.secondary.expanded){
             switchMenu(menu.other);
+            draggable = true;
+            menu.wrapper.addEventListener('touchend', touchEndBeforeDrag);
+            setTimeout(function(){
+                if(draggable){
+                    menu.wrapper.removeEventListener('touchend', touchEndBeforeDrag);
+                    menu.other.wrapper.removeEventListener('touchmove', onTouchMove);
+                    menu.other.wrapper.removeEventListener('touchend', onTouchEnd);
+                    if(!menu.other.primary.ul.classList.contains('minified')) menu.other.primary.ul.classList.add('minified');
+                    if(!menu.other.secondary.ul.classList.contains('minified')) menu.other.secondary.ul.classList.add('minified');
+                    menu.other.primary.expanded = menu.other.secondary.expanded = false;
+                    menu.master.addEventListener('touchmove', onDrag);
+                    menu.master.addEventListener('touchend', onDragEnd);
+                }
+            }, 1000)
         }
         else{
             switchMenu(menu);
+            menu.other.master.innerHTML = '<span class="turnLeft">⇧</span>';
+            menu.master.innerHTML = '<span>x</span>';
+            menu.master.classList.add('reversed');
             addListeners(menu);
         }
     }
 
     function addListeners(menu){
-        menu.wrapper.addEventListener('touchmove', function tm(event){
-            moveShadow(event);
-            var x = event.changedTouches[0].clientX - getMasterPosition(menu).x,
-                y = getMasterPosition(menu).y - event.changedTouches[0].clientY;
-            event.preventDefault();
-            if(Math.sqrt(x*x + y*y) > minMove){
-                onMoveOut(menu, event.changedTouches[0]);
-            }
-        });
-
-        menu.wrapper.addEventListener('touchend', function te(event){
-            event.preventDefault();
-            onTouchEnd(menu, event.changedTouches[0]);
-            this.removeEventListener('touchend', te);
-            this.removeEventListener('touchmove');
-        });
+        menu.wrapper.addEventListener('touchmove', onTouchMove);
+        menu.wrapper.addEventListener('touchend', onTouchEnd);
     }
 
-    function onTouchEnd(menu, changedTouch){
+    function onTouchMove(event){
+        var menu = (event.srcElement === menuLeft.master) ? menuLeft : menuRight;
+        //moveShadow(event);
+        var x = event.changedTouches[0].clientX - getMasterPosition(menu).x,
+            y = getMasterPosition(menu).y - event.changedTouches[0].clientY;
+        event.preventDefault();
+        if(Math.sqrt(x*x + y*y) > minMove){
+            onMoveOut(menu, event.changedTouches[0]);
+        }
+    }
+
+    function onTouchEnd(event){
+        event.preventDefault();
+        debugger;
+        var menu = (event.srcElement === menuLeft.master) ? menuLeft : menuRight;
         var x = event.changedTouches[0].clientX - getMasterPosition(menu).x,
             y = getMasterPosition(menu).y - event.changedTouches[0].clientY,
             r = Math.sqrt(x*x+y*y);
         if(r > rMin && r < rMax){
-            var activeElement = getActiveElement(menu, changedTouch.clientX, changedTouch.clientY);
+            var activeElement = getActiveElement(menu, event.changedTouches[0].clientX, event.changedTouches[0].clientY);
             if(activeElement)action(activeElement);
         }
         reset(menu);
+        menu.other.master.innerHTML = '<span>+</span>';
+        menu.master.innerHTML = '<span>+</span>'
+        menu.master.classList.remove('reversed');
+        shadow.classList.remove('shadowOn');
+        this.removeEventListener('touchend', onTouchEnd);
+        this.removeEventListener('touchmove', onTouchMove);
     }
 
     function action(li){
-        pubsub.publish('insert', li.getAttribute('data-tag')); //TODO -> tag preparation!
+        editor.insertTags(li.getAttribute('data-tag')); //TODO -> tag preparation!
     }
 
     function onMoveOut(menu, changedTouch){
@@ -96,25 +243,26 @@ define('menu', ['pubsub', 'editor', 'device'], function(pubsub, editor, device){
         }
     }
 
-    function hold(){
-        var bound = editor.editArea.getBoundingClientRect();
-        if(window.innerHeight - bound.top > 80
-            && bound.bottom > 10){
-                //if(!wrapper.classList.contains('on'))wrapper.classList.add('on');
-                if(wrapper.classList.contains('off'))wrapper.classList.remove('off');
+    function onScreenChange(evt){
+        var inView = true,
+            bound = editor.editArea.getBoundingClientRect();
+        if(!(window.innerHeight - bound.top > 80 && bound.bottom > 10)){
+            inView = false;
         }
-        else{
-            if(!wrapper.classList.contains('off')){
-                wrapper.classList.add('off');
-            }
+        if(evt && evt.type == 'scroll') {
+            menuRight.wrapper.style.bottom += window.scrollY + 'px';
+            menuLeft.wrapper.style.bottom += window.scrollY + 'px';
         }
+        if((window.innerHeight < 150 || !inView) && !wrapper.classList.contains('off'))wrapper.classList.add('off');
+        if(window.innerHeight > 150 && inView && wrapper.classList.contains('off'))wrapper.classList.remove('off');
+        //menuLeft.wrapper.style.top = menuRight.wrapper.style.top = (window.innerHeight - 120) + 'px';
     }
 
-    function watchForScroll(){
-        hold();
-        window.addEventListener('scroll', function(){
-            hold();
-        });
+    function watchForScreenChange(){
+        onScreenChange();
+        window.addEventListener('scroll', onScreenChange);
+        window.addEventListener('deviceorientation', onScreenChange);
+        window.addEventListener('viewportsize', onScreenChange);
     }
 
     function getActiveElement(menu, offsetLeft, offsetTop){
@@ -164,7 +312,7 @@ define('menu', ['pubsub', 'editor', 'device'], function(pubsub, editor, device){
 
     function moveShadow(evt){
         if(!shadow.classList.contains('shadowOn'))shadow.classList.add('shadowOn');
-        shadow.style.webkitTransform = 'translate(' + (evt.targetTouches[0].pageX-25) + 'px, ' + (evt.targetTouches[0].pageY-25) + 'px)';
+        shadow.style.webkitTransform = 'translate(' + (evt.touches[0].pageX-25) + 'px, ' + (evt.touches[0].pageY-25) + 'px)';
     }
 
     function switchMenu(menu){
@@ -201,13 +349,20 @@ define('menu', ['pubsub', 'editor', 'device'], function(pubsub, editor, device){
         ul.expanded = false;
     }
 
-    pubsub.subscribe('menuUpdate', function(activeTags){
-        attachTags(activeTags);
+    pubsub.subscribe('addTag', function(tag){
+        userTags[tag.abbr] = tag;
+        localStorage.setItem('tags', JSON.stringify(userTags));
+        attachTags();
+    });
+
+    pubsub.subscribe('removeTag', function(abbr){
+        delete userTags[abbr];
+        attachTags();
     });
 
     function updateButton (li, tag){
         li.setAttribute('data-tag', tag.tag);
-        li.getElementsByTagName('a')[0].innerText = tag.abbr;
+        li.getElementsByTagName('a')[0].innerHTML = tag.abbr.toUpperCase();
     }
 
     function getLi(index){
@@ -225,15 +380,21 @@ define('menu', ['pubsub', 'editor', 'device'], function(pubsub, editor, device){
         return menuRight.secondary.elements[index];
     }
 
-    function attachTags(tags){
+    function attachTags(){
         var i = 0, currentLi;
-        for(var key in tags){
-            currentLi = getLi(i);
-            if(tags.hasOwnProperty(key) && currentLi){
-                updateButton(currentLi, tags[key]);
+        for(var userTag in userTags){
+            if(userTags[userTag] && userTags.hasOwnProperty(userTag) && i < config.maxItems){
+                currentLi = getLi(i);
+                updateButton(currentLi, userTags[userTag]);
                 i++;
             }
         }
+        for(var defTag in defaultTags)
+            if(defaultTags.hasOwnProperty(defTag) && i < config.maxItems && !userTags[defTag]){
+                currentLi = getLi(i);
+                updateButton(currentLi, defaultTags[defTag]);
+                i++;
+            }
     }
 
     function activateStaticMenu(){
@@ -241,34 +402,25 @@ define('menu', ['pubsub', 'editor', 'device'], function(pubsub, editor, device){
         for(menu in menus){
             if(menus.hasOwnProperty(menu)){
                 menus[menu].master.addEventListener('click', function(evt){
-                    myMenu = this.parentElement.classList.contains('left')? 'left' : 'right';
-                    evt.preventDefault();
-                    if(menus[myMenu].other.primary.expanded){
-                        menus[myMenu].other.primary.expanded = false;
-                        menus[myMenu].other.primary.ul.classList.add('minified');
+                    myMenu = this.parentElement.classList.contains('left')? menuLeft : menuRight;
+                    if(myMenu.other.primary.expanded || myMenu.other.secondary.expanded)return;
+                    if(myMenu.primary.expanded){
+                        myMenu.primary.ul.classList.add('minified');
+                        myMenu.primary.expanded = false;
+                        myMenu.secondary.ul.classList.remove('minified');
+                        myMenu.master.innerHTML = '<span>x</span>';
+                        myMenu.secondary.expanded = true;
                         return;
                     }
-                    else {
-                        if(menus[myMenu].other.secondary.expanded){
-                            menus[myMenu].other.secondary.expanded = false;
-                            menus[myMenu].other.secondary.ul.classList.add('minified');
-                            return;
-                        }
-                    }
-                    if(menus[myMenu].primary.expanded){
-                        menus[myMenu].primary.expanded = false;
-                        menus[myMenu].primary.ul.classList.add('minified');
-                        menus[myMenu].secondary.expanded = true;
-                        menus[myMenu].secondary.ul.classList.remove('minified');
+                    if(myMenu.secondary.expanded){
+                        myMenu.secondary.ul.classList.add('minified');
+                        myMenu.master.innerHTML = '<span class>+</span>';
+                        myMenu.secondary.expanded = false;
                         return;
                     }
-                    if(menus[myMenu].secondary.expanded){
-                        menus[myMenu].secondary.expanded = false;
-                        menus[myMenu].secondary.ul.classList.add('minified');
-                    }
-                    menus[myMenu].primary.expanded = true;
-                    menus[myMenu].primary.ul.classList.remove('minified');
-                    return;
+                    myMenu.primary.ul.classList.remove('minified');
+                    myMenu.master.innerHTML = '<span>⇧</span>';
+                    myMenu.primary.expanded = true;
                 });
                 var lis = menus[menu].wrapper.getElementsByTagName('li');
                 for(var i = 0; i < lis.length; i++){
@@ -289,11 +441,31 @@ define('menu', ['pubsub', 'editor', 'device'], function(pubsub, editor, device){
         }
     }
 
+    function getStoredTags(){
+        var tags = JSON.parse(localStorage.getItem('tags')),
+            i = 0;
+        if(tags){
+            for(var key in tags){
+                if(tags.hasOwnProperty(key)){
+                    defaultTags[key] = tags[key];
+                    i++;
+                }
+            }
+            for(var uKey in defaultTags){
+                if(userTags.hasOwnProperty('uKey') && i){
+                    delete userTags[uKey];
+                    i--;
+                }
+            }
+        }
+        attachTags();
+    }
+
     function init(){
         build('menuLeft', 'menuRight');
-        attachTags(tags);
-        watchForScroll();
-        if(device.handlesAnimatedMenu()){
+        watchForScreenChange();
+        getStoredTags();
+        if(!device.handlesAnimatedMenu()){
             wrapper.classList.add('fancy');
             waitForTouch([menuLeft, menuRight]);
         }
