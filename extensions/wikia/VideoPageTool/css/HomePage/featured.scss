@@ -1,12 +1,20 @@
 @import "skins/oasis/css/mixins/box-sizing-border-box";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/opacity";
 @import "skins/oasis/css/core/responsive";
+@import "skins/oasis/css/mixins/transition";
+
+$play-button-overloay-fade-duration: 400ms;
 
 .featured-video {
+	@include clearfix;
 	background: black;
+	max-height: 565px;
 	width: 100%;
 	.featured-video-slider{
 		position: relative;
 		margin: 0 auto;
+		visibility: hidden;
 		ul {
 			list-style: none;
 			margin: 0;
@@ -23,11 +31,15 @@
 			position: relative;
 			li {
 				float: left;
+				margin-top: 0;
 				position: relative;
 			}
 			img {
 				width: 100%;
 			}
+		}
+		.bx-controls-direction a {
+			background: blue; // hack for now until sprite gets setup
 		}
 		// Thumbnails
 		.bx-pager {
@@ -49,7 +61,14 @@
 					max-width: 98%;
 				}
 				.Wikia-video-play-button {
-					width: 100%
+					@include transition-shorthand(opacity $play-button-overloay-fade-duration ease-out);
+					@include opacity(0);
+					width: 100%;
+				}
+				&:hover .Wikia-video-play-button {
+					@include opacity(100);
+					@include transition-shorthand(opacity $play-button-overloay-fade-duration ease-out);
+					visibility: visible;
 				}
 			}
 		}

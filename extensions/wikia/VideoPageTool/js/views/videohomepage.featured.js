@@ -21,6 +21,8 @@ $(function() {
 	$featuredBXSlider.bxSlider({
 		autoControls: true,
 		onSliderLoad: function() {
+			$sliderWrapper.css( 'visibility', 'visible' );
+
 			$sliderControls = $sliderWrapper.find( '.bx-pager' ).on( 'mouseenter', function() {
 				$featuredThumbs.slideDown();
 			});
