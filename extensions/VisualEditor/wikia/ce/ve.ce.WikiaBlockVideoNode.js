@@ -9,8 +9,8 @@
  * ContentEditable Wikia video node.
  *
  * @class
- * @extends ve.ce.WikiaBlockVideoNode
- * @mixins ve.ce.WikiavideoNode
+ * @extends ve.ce.WikiaBlockMediaNode
+ * @mixins ve.ce.WikiaVideoNode
  *
  * @constructor
  * @param {ve.dm.WikiaBlockVideoNode} model Model to observe
