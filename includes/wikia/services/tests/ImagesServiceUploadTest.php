@@ -23,7 +23,42 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 
 		$this->fileName = str_replace('$1', time(), self::FILENAME);
 		$this->hash = md5($this->fileName);
-		wfDebug(__METHOD__ . " - {$this->fileName}\n");
+	}
+
+	// check the path - /firefly/images/9/93/Test-1378975563.jpg
+	private function checkImage(LocalFile $image) {
+		$hash = md5($image->getName());
+		$url = $image->getUrl();
+
+		$this->assertStringEndsWith(
+			sprintf('/%s/images/%s/%s/%s', $this->app->wg->DBname, $hash{0}, $hash{0}.$hash{1}, $image->getName()),
+			$url,
+			'Path should contain a valid hash'
+		);
+
+		// verify that it's accessible via HTTP
+		$this->assertTrue(Http::get($url, 'default', ['noProxy' => true]) !== false, 'Uploaded image should return HTTP 200 - ' . $url);
+	}
+
+	// check the path - /firefly/images/thumb/5/53/Test-1378979336.jpg/120px-0%2C451%2C0%2C294-Test-1378979336.jpg
+	private function checkThumbnail(LocalFile $image) {
+		$hash = md5($image->getName());
+		$thumb = $image->createThumb(120);
+
+		$this->assertContains(
+			sprintf('/%s/images/thumb/%s/%s/%s/120px-', $this->app->wg->DBname, $hash{0}, $hash{0}.$hash{1}, $image->getName()),
+			$thumb,
+			'Path should contain a valid hash'
+		);
+
+		$this->assertStringEndsWith(
+			$image->getName(),
+			$thumb,
+			'Path should end with file name'
+		);
+
+		# TODO: thumbnailer doesn't work currently
+		#$this->assertTrue(Http::get($thumb, 'default', ['noProxy' => true]) !== false, 'Thumbnail should return HTTP 200 - ' . $thumb);
 	}
 
 	function testUploadAndRemove() {
@@ -42,34 +77,8 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$this->assertInstanceOf('LocalFile', $file);
 		$image = $file->getUrl();
 
-		// check the path - /firefly/images/9/93/Test-1378975563.jpg
-		$this->assertStringEndsWith(
-			sprintf('/%s/images/%s/%s/%s', $this->app->wg->DBname, $this->hash{0}, $this->hash{0}.$this->hash{1}, $this->fileName),
-			$image,
-			'Path should contain a valid hash'
-		);
-
-		// verify that it's accessible via HTTP
-		$this->assertTrue(Http::get($image, 'default', ['noProxy' => true]) !== false, 'Uploaded image should return HTTP 200 - ' . $image);
-
-		// check thumbnail
-		$thumb = $file->createThumb(120);
-
-		// check the path - /firefly/images/thumb/5/53/Test-1378979336.jpg/120px-0%2C451%2C0%2C294-Test-1378979336.jpg
-		$this->assertContains(
-			sprintf('/%s/images/thumb/%s/%s/%s/120px-', $this->app->wg->DBname, $this->hash{0}, $this->hash{0}.$this->hash{1}, $this->fileName),
-			$thumb,
-			'Path should contain a valid hash'
-		);
-
-		$this->assertStringEndsWith(
-			$this->fileName,
-			$thumb,
-			'Path should end with file name'
-		);
-
-		# TODO: thumbnailer doesn't work currently
-		#$this->assertTrue(Http::get($thumb, 'default', ['noProxy' => true]) !== false, 'Thumbnail should return HTTP 200 - ' . $thumb);
+		$this->checkImage($file);
+		$this->checkThumbnail($file);
 
 		// now, remove it...
 		$status = $file->delete('Test cleanup');
