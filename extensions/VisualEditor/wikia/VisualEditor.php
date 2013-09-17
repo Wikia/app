@@ -7,6 +7,9 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'VisualEditor for Wikia'
 );
 
+// Register files
+$wgExtensionMessagesFiles['VisualEditorWikia'] = dirname( __FILE__ ) . '/VisualEditor.i18n.php';
+
 // Register resource loader modules
 $wgResourceModules += array(
 	'ext.visualEditor.wikiaViewPageTarget.init' => array(
@@ -36,14 +39,34 @@ $wgResourceModules += array(
 	'ext.visualEditor.wikiaCore' => array(
 		'scripts' => array(
 			've.dm.WikiaInlineVideoNode.js',
-			've.ce.WikiaInlineVideoNode.js'
+			've.ce.WikiaInlineVideoNode.js',
+			'ui/tools/ve.ui.IconTextButtonTool.js',
+			'ui/tools/buttons/ve.ui.WikiaMediaInsertButtonTool.js',
+			'ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
+		),
+		'styles' => array(
+			'ui/styles/ve.ui.Tool.css',
+			'ui/styles/ve.ui.Icons-vector.css',
+		),
+		'messages' => array(
+			'visualeditor-wikiamediainsertbuttontool-label',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core'
 		),
 		'localBasePath' => dirname( __FILE__ ) . '/modules',
 		'remoteExtPath' => 'VisualEditor/wikia',
-	)
+	),
+	'ext.visualEditor.iconsVector' => array(
+		'styles' => array(
+			'ui/styles/ve.ui.Icons-vector.css',
+		),
+		'dependencies' => array(
+			'ext.visualEditor.core'
+		),
+		'localBasePath' => dirname( __FILE__ ) . '/modules',
+		'remoteExtPath' => 'VisualEditor/wikia',
+	),
 );
 
 $wgVisualEditorPluginModules[] = 'ext.visualEditor.wikiaCore';
