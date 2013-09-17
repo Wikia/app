@@ -698,7 +698,6 @@ class CF_Http
     #
     function head_container($container_name)
     {
-
         if ($container_name == "") {
             $this->error_str = "Container name not set.";
             return False;
@@ -1434,9 +1433,8 @@ error_log( __METHOD__ . ": matches = " . print_r( $matches, true ) . "\n", 3, "/
         case "POST":
             curl_setopt($this->connections[$conn_type],
                 CURLOPT_CUSTOMREQUEST, "POST");
-        default:
             break;
-        }        
+        }
 
         curl_setopt($this->connections[$conn_type],
                     CURLOPT_HTTPHEADER, $headers);
@@ -1448,9 +1446,14 @@ error_log( __METHOD__ . ": matches = " . print_r( $matches, true ) . "\n", 3, "/
             $this->error_str = "(curl error: "
                 . curl_errno($this->connections[$conn_type]) . ") ";
             $this->error_str .= curl_error($this->connections[$conn_type]);
+
+			wfDebug(__METHOD__ . "::error - {$this->error_str}\n");
             return False;
         }
-        return curl_getinfo($this->connections[$conn_type], CURLINFO_HTTP_CODE);
+        $code = curl_getinfo($this->connections[$conn_type], CURLINFO_HTTP_CODE);
+
+		wfDebug(__METHOD__ . ' - ' . json_encode([$conn_type, $url_path, $hdrs, "HTTP {$code}"]) . "\n");
+		return $code;
     }
     
     function close()
