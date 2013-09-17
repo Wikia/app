@@ -267,21 +267,18 @@ abstract class VideoHandler extends BitmapHandler {
 		return (!empty($metadata['duration']) ? $metadata['duration'] : null);
 	}
 
+	/**
+	 * get formatted duration
+	 * @return string
+	 */
 	public function getFormattedDuration() {
-
-		$metadata = $this->getMetadata(true);
-		if (!empty($metadata['duration'])) {
-
+		$metadata = $this->getMetadata( true );
+		if ( !empty( $metadata['duration'] ) ) {
 			$sec = $metadata['duration'];
-
-			if ( (int)$sec == $sec ) {
-
-				$hms = WikiaFileHelper::formatDuration($sec);
-
-				return $hms;
-
+			if ( is_numeric( $sec ) ) {
+				$formattedDuration = WikiaFileHelper::formatDuration( $sec );
+				return $formattedDuration;
 			} else {
-
 				return $metadata['duration'];
 			}
 		}
