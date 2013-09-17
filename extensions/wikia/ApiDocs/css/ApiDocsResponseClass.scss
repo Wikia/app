@@ -1,0 +1,45 @@
+.model-signature {
+	ul.signature-nav {
+		height: 64px;
+		list-style: none;
+		margin: 0px;
+		padding: 0px;
+
+		li a {
+			color: $gray-c4;
+			border-bottom: 1px solid $midGray-c3;
+			display:block;
+			float:left;
+			font-size:17.5px;
+			font-weight: bold;
+			margin-right:10px;
+			height:26px;
+			padding-top:8px;
+			text-align: center;
+			text-decoration: none;
+			width:388px;
+		}
+
+		li a.selected {
+			background-color: $midGray-c3;
+			color: $darkGray-c5;
+		}
+	}
+}
+
+.signature-container {
+	font-size: 14px;
+
+	div.description div {
+		padding-left: 30px;
+	}
+	.strong {
+		font-weight: bold;
+	}
+	.propName {
+		font-weight: bold;
+	}
+	.propType {
+		color:$blue-c1;
+	}
+}
