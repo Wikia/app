@@ -8,6 +8,7 @@
 * [Style Rules](#style-rules)
   * [White space guidelines](#white-space-guidelines)
   * [Prefixing jQuery objects](#prefixing-jquery-objects)
+  * [Comments](#comments)
 * [Still to be defined](#still-to-be-defined)
 
 ## Language Rules
@@ -85,7 +86,7 @@ In general, the jQuery style guide encourages liberal spacing for improved human
 - New line at the end of each file.
 - If the entire file is wrapped in a closure, the function body is not indented.
 
-#### Bad Examples
+##### Bad Examples
 
 ```js
 
@@ -96,7 +97,7 @@ for(var i=0;i<100;i++) object[array[i]] = someFn(i);
 
 ```
 
-#### Good Examples
+##### Good Examples
 
 ```js
 var i = 0;
@@ -125,7 +126,7 @@ try {
 ```
 
 
-#### Objects
+##### Objects
 
 Object declarations can be made on a single line if they are short (remember the line length limits). When an object declaration is too long to fit on one line, there must be one property per line. Property names only need to be quoted if they are reserved words or contain special characters:
 
@@ -146,7 +147,7 @@ var map = {
 ```
 
 
-#### Arrays and Function Calls
+##### Arrays and Function Calls
 
 Always include extra spaces around elements and arguments:
 
@@ -188,7 +189,7 @@ foo( data, function() {
 ```
 
 
-#### Multi-line Statements
+##### Multi-line Statements
 
 When a statement is too long to fit on one line, line breaks must occur after an operator.
 
@@ -220,7 +221,7 @@ When a conditional is too long to fit on one line, successive lines must be inde
 ```
 
 
-#### Chained Method Calls
+##### Chained Method Calls
 
 When a chain of method calls is too long to fit on one line, there must be one call per line, with the first call on a separate line from the object the methods are called on. If the method changes the context, an extra level of indentation must be used.
 
@@ -269,12 +270,12 @@ function makeCookies( flavor ) {
 
 We use JSDoc style comments above function declarations and at the top of files because they make code clear and easy to read, and we'd like to be able to generate JSDocs at some point.  For examples of syntax you can check out  [these examples](http://usejsdoc.org/#JSDoc_Examples).
 
-#### Required Anotations
+##### Required JSDoc Anotations (when applicable)
 * @desc
 * @param
 * @return
 
-#### Recommended Anotations 
+##### Recommended JSDoc Anotations 
 * @author (at the top of a file)
 * @see (for links to documentation)
 
