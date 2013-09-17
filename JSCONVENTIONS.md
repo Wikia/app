@@ -245,7 +245,38 @@ var $div = $('div');
 
 
 ### Comments
-We use JSDoc style comments.
+Comment early and often!
+
+For comments inside functions, use inline comments.  For comments about functions and documents, use JSDoc style block comments. 
+
+```javascript
+/* @desc This function bakes cookies
+ * @param {string} flavor The flavor of the cookie
+ * @return {object} cookie The delicious cookie
+ */
+function makeCookies( flavor ) {
+    // create the cookie
+    var cookie = {
+        type: flavor,
+        tastiness: delicious
+    }
+    
+    // do more stuff annotated by inline comments ...
+
+    return cookie;
+}
+```
+
+We use JSDoc style comments above function declarations and at the top of files because they make code clear and easy to read, and we'd like to be able to generate JSDocs at some point.  For examples of syntax you can check out  [these examples](http://usejsdoc.org/#JSDoc_Examples).
+
+#### Required Anotations
+* @desc
+* @param
+* @return
+
+#### Recommended Anotations 
+* @author (at the top of a file)
+* @see (for links to documentation)
 
 ## Still to be defined
 * Error handling and custom exception handling
