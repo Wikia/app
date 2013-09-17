@@ -94,14 +94,12 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 	function renderTOC($target) {
 		var $container = $target.parents('#toc').children('ol'),
 			$headers = $('#mw-content-text').find('h2, h3, h4, h5'),
-			data = toc.getData($headers, createTOCSection),
-			html = '';
+			data = toc.getData($headers, createTOCSection);
 
 		data.wrapper = wrapper;
 
 		loadTemplate().done(function(template) {
-			html += mustache.render(template, data);
-			$container.append(html);
+			$container.append(mustache.render(template, data));
 
 			hasTOC = true;
 		});
