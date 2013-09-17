@@ -217,7 +217,7 @@
 		 *                Please speak with a tracking team lead before introducing new event names.
 		 *            href (deprecated)
 		 *                The href string for a link. This was used by outbound links
-		 *                to ensure tracking execution. Where posible, use mousedown instead of click
+		 *                to ensure tracking execution. Where posible, bind to "mousedown" instead of "click"
 		 *                to prevent navigation before tracking calls go through.
 		 *            label (optional for GA tracking)
 		 *                The label for the event.
