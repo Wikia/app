@@ -40,7 +40,7 @@ QUnit.test( 'HTMLDOM to NodeView', function ( assert ) {
 		expectCount = 0;
 
 	for ( i = 0, l = this.permutations.length; i < l; i++ ) {
-		attributes = this.permutations[ i ];
+		attributes = this.permutations[i];
 		attributesDiffed = ve.wikiaTest.utils.getAttributeChanges( previousAttributes, attributes );
 
 		doc = ve.createDocumentFromHtml(
@@ -53,7 +53,7 @@ QUnit.test( 'HTMLDOM to NodeView', function ( assert ) {
 		surfaceView = surface.getView();
 		documentModel = surfaceModel.getDocument();
 		documentView = surfaceView.getDocument();
-		nodeView = documentView.getDocumentNode().getChildren()[ 0 ].getChildren()[ 0 ];
+		nodeView = documentView.getDocumentNode().getChildren()[0].getChildren()[0];
 
 		expectCount += ve.wikiaTest.utils.assertEqualNodeView(
 			assert,
@@ -78,7 +78,7 @@ QUnit.test( 'NodeView changes', function ( assert ) {
 		i,
 		l,
 		nodeView,
-		previousAttributes = this.permutations[ 0 ],
+		previousAttributes = this.permutations[0],
 		surface,
 		surfaceModel,
 		surfaceView,
@@ -95,7 +95,7 @@ QUnit.test( 'NodeView changes', function ( assert ) {
 	surfaceView = surface.getView();
 	documentModel = surfaceModel.getDocument();
 	documentView = surfaceView.getDocument();
-	nodeView = documentView.getDocumentNode().getChildren()[ 0 ].getChildren()[ 0 ];
+	nodeView = documentView.getDocumentNode().getChildren()[0].getChildren()[0];
 
 	expectCount += ve.wikiaTest.utils.assertEqualNodeView(
 		assert,
@@ -105,7 +105,7 @@ QUnit.test( 'NodeView changes', function ( assert ) {
 	);
 
 	for ( i = 1, l = this.permutations.length; i < l; i++ ) {
-		attributes = this.permutations[ i ];
+		attributes = this.permutations[i];
 		attributesDiffed = ve.wikiaTest.utils.getAttributeChanges( previousAttributes, attributes );
 		attributesMerged = ve.wikiaTest.utils.getAttributeChanges( previousAttributes, attributes, true );
 
