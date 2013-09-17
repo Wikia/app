@@ -52,22 +52,22 @@ ve.wikiaTest.utils.getAttributeChanges = function ( first, second, copyOver ) {
 
 // TODO: make this actually recursive
 ve.wikiaTest.utils.getMediaTestPermutations = function ( displayType, rdfaType ) {
-	var a,
-		data = ve.ce.wikiaExample.data[ displayType ][ rdfaType ],
-		h,
-		permutations = [],
-		t,
-		w;
+	var data = ve.ce.wikiaExample.data[ displayType ][ rdfaType ],
+		i,
+		j,
+		k,
+		l,
+		permutations = [];
 
-	for ( a = 0; a < data.align.length; a++ ) {
-		for ( h = 0; h < data.height.length; h++ ) {
-			for ( t = 0; t < data.type.length; t++ ) {
-				for ( w = 0; w < data.width.length; w++ ) {
+	for ( i = 0; i < data.align.length; i++ ) {
+		for ( j = 0; j < data.height.length; j++ ) {
+			for ( k = 0; k < data.type.length; k++ ) {
+				for ( l = 0; l < data.width.length; l++ ) {
 					permutations.push({
-						align: data.align[ a ],
-						height: data.height[ h ],
-						type: data.type[ t ],
-						width: data.width[ w ]
+						align: data.align[ i ],
+						height: data.height[ j ],
+						type: data.type[ k ],
+						width: data.width[ l ]
 					});
 				}
 			}
