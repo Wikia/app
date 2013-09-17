@@ -127,7 +127,7 @@ class AvatarService extends Service {
 			$avatarUrl = wfReplaceImageServer($avatarUrl,  ($cb > 0) ? $cb : "0");
 
 			// make avatars as JPG intead of PNGs / GIF but only when it will be a gain (most likely)
-			if ($avatarSize > self::PERFORMANCE_JPEG_THRESHOLD) {
+			if (intval($avatarSize) > self::PERFORMANCE_JPEG_THRESHOLD) {
 				$avatarUrl = ImagesService::overrideThumbnailFormat($avatarUrl, ImagesService::EXT_JPG);
 			}
 
