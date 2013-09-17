@@ -38,32 +38,57 @@ $wgResourceModules += array(
 	),
 	'ext.visualEditor.wikiaCore' => array(
 		'scripts' => array(
+
+			// dm
 			'dm/ve.dm.WikiaMediaCaptionNode.js',
 			'dm/ve.dm.WikiaBlockMediaNode.js',
 			'dm/ve.dm.WikiaBlockImageNode.js',
 			'dm/ve.dm.WikiaBlockVideoNode.js',
 			'dm/ve.dm.WikiaInlineVideoNode.js',
+
+			// ce
 			'ce/ve.ce.WikiaMediaCaptionNode.js',
 			'ce/ve.ce.WikiaBlockMediaNode.js',
 			'ce/ve.ce.WikiaBlockImageNode.js',
 			'ce/ve.ce.WikiaVideoNode.js',
 			'ce/ve.ce.WikiaBlockVideoNode.js',
 			'ce/ve.ce.WikiaInlineVideoNode.js',
+
+			// ui
+			'ui/tools/ve.ui.IconTextButtonTool.js',
+			'ui/tools/buttons/ve.ui.WikiaMediaInsertButtonTool.js',
+			'ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
 		),
-		'styles' => array (
-			'ui/styles/ve.ui.Surface.css',
+		'styles' => array(
+			'ui/styles/ve.ui.Tool.css',
+			'ui/styles/ve.ui.Icons-vector.css',
+		),
+		'messages' => array(
+			'visualeditor-wikiamediainsertbuttontool-label',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core'
 		),
 		'localBasePath' => dirname( __FILE__ ) . '/modules',
 		'remoteExtPath' => 'VisualEditor/wikia',
-	)
+	),
+	'ext.visualEditor.iconsVector' => array(
+		'styles' => array(
+			'ui/styles/ve.ui.Icons-vector.css',
+		),
+		'dependencies' => array(
+			'ext.visualEditor.core'
+		),
+		'localBasePath' => dirname( __FILE__ ) . '/modules',
+		'remoteExtPath' => 'VisualEditor/wikia',
+	),
 );
 
 $wgVisualEditorPluginModules[] = 'ext.visualEditor.wikiaCore';
 
 /* Messages */
+
+$wgExtensionMessagesFiles['VisualEditorWikia'] = dirname( __FILE__ ) . '/VisualEditor.i18n.php';
 
 JSMessages::registerPackage( 'VisualEditor', array(
 	'oasis-content-picture-added-by',
@@ -77,9 +102,14 @@ $wgHooks['ResourceLoaderTestModules'][] = 'Wikia_onResourceLoaderTestModules';
 function Wikia_onResourceLoaderTestModules( array &$testModules, ResourceLoader &$resourceLoader ) {
 	$testModules['qunit']['ext.visualEditor.wikiaTest'] = array(
 		'scripts' => array(
+			// util
 			'test/ve.wikiaTest.utils.js',
+
+			// dm
 			'test/dm/ve.dm.wikiaExample.js',
 			'test/dm/ve.dm.WikiaConverter.test.js',
+
+			// ce
 			'test/ce/ve.ce.wikiaExample.js',
 			'test/ce/ve.ce.WikiaBlockImageNode.test.js',
 			'test/ce/ve.ce.WikiaBlockVideoNode.test.js',
