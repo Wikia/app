@@ -12,7 +12,6 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 
 	private $origUser;
 	private $fileName;
-	private $hash;
 
 	protected function setUp() {
 		global $wgUser;
@@ -22,7 +21,6 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$wgUser = User::newFromName('WikiaBot');
 
 		$this->fileName = str_replace('$1', time(), self::FILENAME);
-		$this->hash = md5($this->fileName);
 	}
 
 	// check the path - /firefly/images/9/93/Test-1378975563.jpg
@@ -61,6 +59,10 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		#$this->assertTrue(Http::get($thumb, 'default', ['noProxy' => true]) !== false, 'Thumbnail should return HTTP 200 - ' . $thumb);
 	}
 
+	private function assertReturns404($url, $msg) {
+		$this->assertTrue(Http::get($url, 'default', ['noProxy' => true]) === false, "{$msg} - {$url}");
+	}
+
 	function testUploadAndRemove() {
 		// upload an image
 		$res = ImagesService::uploadImageFromUrl(self::URL, (object) [
@@ -75,17 +77,29 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		/* @var LocalFile $file */
 		$file = wfFindFile($this->fileName);
 		$this->assertInstanceOf('LocalFile', $file);
-		$image = $file->getUrl();
+
+		$this->checkImage($file);
+		$this->checkThumbnail($file);
+
+		// now, move it...
+		$oldUrl = $file->getUrl();
+
+		$target = Title::newFromText('New' . $this->fileName, NS_FILE);
+		$status = $file->move($target);
+
+		$this->assertTrue($status->isOK(), 'Move failed');
+		$this->assertReturns404($oldUrl, 'Old image (before move) should return HTTP 404');
 
 		$this->checkImage($file);
 		$this->checkThumbnail($file);
 
 		// now, remove it...
+		$oldUrl = $file->getUrl();
 		$status = $file->delete('Test cleanup');
 		$this->assertTrue($status->isOK(), 'Deleting failed');
 
 		// verify that removed image is not accessible via HTTP
-		$this->assertTrue(Http::get($image, 'default', ['noProxy' => true]) === false, 'Removed image should return HTTP 404 - ' . $image);
+		$this->assertReturns404($oldUrl, 'Removed image should return HTTP 404');
 	}
 
 	protected function tearDown() {
