@@ -29,7 +29,7 @@ define('wikia.toc', function() {
 		var toc = {
 				sections: []
 			}, // set base object for TOC data structure
-			stack = [toc],
+			stack = [toc.sections],
 			pos = MAXHEADER - 1, // set starting position
 			i,
 			headersLength = headers.length;
@@ -55,8 +55,8 @@ define('wikia.toc', function() {
 			}
 
 			pos = tempoPos; // update current position
-			stack.push(obj); // add object as last element of the stack
-			stack[stack.length - 2].sections.push(stack[stack.length - 1]); // add last object from stack to sections array of its parent
+			stack[stack.length - 1].push(obj); // add object to sections array of its parent
+			stack.push(obj.sections); // add object sections array to the stack
 		}
 
 		return toc;
