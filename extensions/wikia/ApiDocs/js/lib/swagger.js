@@ -203,7 +203,7 @@
       this.path = this.api.resourcePath != null ? this.api.resourcePath : resourceObj.path;
       this.description = resourceObj.description;
       parts = this.path.split("/");
-      this.name = parts[parts.length - 1].replace('.{format}', '');
+      this.name = resourceObj.readableName; //parts[parts.length - 1].replace('.{format}', '');
       this.readableName = resourceObj.readableName;
       this.basePath = this.api.basePath;
       console.log('bp: ' + this.basePath);
