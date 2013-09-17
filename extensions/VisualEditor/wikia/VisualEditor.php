@@ -62,6 +62,7 @@ $wgResourceModules += array(
 		'styles' => array(
 			'ui/styles/ve.ui.Tool.css',
 			'ui/styles/ve.ui.Icons-vector.css',
+			'ui/styles/ve.ui.Surface.css'
 		),
 		'messages' => array(
 			'visualeditor-wikiamediainsertbuttontool-label',
