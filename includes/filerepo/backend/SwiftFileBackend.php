@@ -53,7 +53,6 @@ class SwiftFileBackend extends FileBackendStore {
 	public function __construct( array $config ) {
 		parent::__construct( $config );
 		// Required settings
-error_log ( __METHOD__ . ": config = " . print_r( $config, true ) . "\n", 3, "/tmp/moli.log" );
 		$this->auth = new CF_Authentication(
 			$config['swiftUser'], 
 			$config['swiftKey'], 
@@ -322,11 +321,9 @@ error_log ( __METHOD__ . ": config = " . print_r( $config, true ) . "\n", 3, "/t
 	 * @see FileBackendStore::doDeleteInternal()
 	 */
 	protected function doDeleteInternal( array $params ) {
-error_log( __METHOD__ . ": params = " . print_r( $params, true ) . "\n", 3, "/tmp/moli.log" );
 		$status = Status::newGood();
 
 		list( $srcCont, $srcRel ) = $this->resolveStoragePathReal( $params['src'] );
-error_log( __METHOD__ . ": srcCont = {$srcCont}, srcRel = {$srcRel} \n", 3, "/tmp/moli.log" );
 		if ( $srcRel === null ) {
 			$status->fatal( 'backend-fail-invalidpath', $params['src'] );
 			return $status;
@@ -334,7 +331,6 @@ error_log( __METHOD__ . ": srcCont = {$srcCont}, srcRel = {$srcRel} \n", 3, "/tm
 
 		try {
 			$sContObj = $this->getContainer( $srcCont );
-error_log( __METHOD__ . ": sContObj = " . print_r( $sContObj, true ) . " \n", 3, "/tmp/moli.log" );
 			$sContObj->delete_object( $srcRel );
 		} catch ( NoSuchContainerException $e ) {
 			$status->fatal( 'backend-fail-delete', $params['src'] );
@@ -363,9 +359,7 @@ error_log( __METHOD__ . ": sContObj = " . print_r( $sContObj, true ) . " \n", 3,
 
 		// (a) Check if container already exists
 		try {
-error_log( __METHOD__ . ": $fullCont, $dir, params = " . print_r( $params, true ) . "\n", 3, "/tmp/moli.log" );
 			$contObj = $this->getContainer( $fullCont );
-error_log( __METHOD__ . ": getContainer( $fullCont ) =  " . print_r( $contObj, true ) . "\n", 3, "/tmp/moli.log" );
 			// NoSuchContainerException not thrown: container must exist
 
 			$status->merge( $this->setContainerAccess(
@@ -376,7 +370,6 @@ error_log( __METHOD__ . ": getContainer( $fullCont ) =  " . print_r( $contObj, t
 
 			return $status; // already exists
 		} catch ( NoSuchContainerException $e ) {
-error_log( __METHOD__ . ": NoSuchContainerException\n", 3, "/tmp/moli.log" );
 			// NoSuchContainerException thrown: container does not exist
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
@@ -391,8 +384,6 @@ error_log( __METHOD__ . ": NoSuchContainerException\n", 3, "/tmp/moli.log" );
 		// (b) Create container as needed
 		try {
 			$contObj = $this->createContainer( $fullCont );
-error_log( __METHOD__ . ": createContainer() =  " . print_r( $contObj, true ) . "\n", 3, "/tmp/moli.log" );
-error_log( __METHOD__ . ": is swiftAnonUser =  " . print_r( $this->swiftAnonUser, true ) . "\n", 3, "/tmp/moli.log" );
 			// Make container public to end-users...
 			if ( $this->swiftAnonUser != '' ) {
 				$status->merge( $this->setContainerAccess(
@@ -401,13 +392,11 @@ error_log( __METHOD__ . ": is swiftAnonUser =  " . print_r( $this->swiftAnonUser
 					array( $this->auth->username, $this->swiftAnonUser ) // write
 				) );
 			} else {
-error_log( __METHOD__ . ": setContainerAccess r:* \n", 3, "/tmp/moli.log" );
 				$status->merge( $this->setContainerAccess(
 					$contObj,
 					array( '.r:*' ), // read
 					array( $this->auth->username ) // write
 				) );
-error_log( __METHOD__ . ": statsu = " . print_r( $status, true ). " \n", 3, "/tmp/moli.log" );
 			}
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
@@ -426,9 +415,6 @@ error_log( __METHOD__ . ": statsu = " . print_r( $status, true ). " \n", 3, "/tm
 	 * @see FileBackendStore::doSecureInternal()
 	 */
 	protected function doSecureInternal( $fullCont, $dir, array $params ) {
-error_log(__METHOD__.":fullCont=" . print_r( $fullCont, true ) . "\n", 3, "/tmp/moli.log" );
-error_log(__METHOD__.":dir=" . print_r( $dir, true ) . "\n", 3, "/tmp/moli.log" );
-error_log(__METHOD__.":params=" . print_r( $params, true ) . "\n", 3, "/tmp/moli.log" );
 		$status = Status::newGood();
 
 		try {
@@ -760,10 +746,7 @@ error_log(__METHOD__.":params=" . print_r( $params, true ) . "\n", 3, "/tmp/moli
 		CF_Container $contObj, array $readGrps, array $writeGrps
 	) {
 		$creds = $contObj->cfs_auth->export_credentials();
-error_log( __METHOD__ .": creds = " . print_r( $creds, true ) . "\n", 3, "/tmp/moli.log" );
 		$url = $creds['storage_url'] . '/' . rawurlencode( $contObj->name );
-error_log( __METHOD__ .": url = " . print_r( $url, true ) . "\n", 3, "/tmp/moli.log" );
-error_log( __METHOD__ .": timeout = " . $this->swiftTimeout . "\n", 3, "/tmp/moli.log" );
 
 		// Note: 10 second timeout consistent with php-cloudfiles
 		$req = MWHttpRequest::factory( $url, array( 'method' => 'POST', 'timeout' => $this->swiftTimeout, 'noProxy' => true ) );
@@ -781,45 +764,36 @@ error_log( __METHOD__ .": timeout = " . $this->swiftTimeout . "\n", 3, "/tmp/mol
 	 * @throws InvalidResponseException
 	 */
 	protected function getConnection() {
-#error_log( __METHOD__ . ": conn = {$this->conn} is false =  " . intval($this->conn === false) . "\n", 3, "/tmp/moli.log" );
 		if ( $this->conn === false ) {
 			throw new InvalidResponseException; // failed last attempt
 		}
 		// Session keys expire after a while, so we renew them periodically
 		if ( $this->conn && ( time() - $this->connStarted ) > $this->authTTL ) {
-error_log( __METHOD__ . ": closeConnection: " . intval( time() - $this->connStarted ) . " \n", 3, "/tmp/moli.log" );
 			$this->closeConnection();
 		}
 		// Authenticate with proxy and get a session key...
 		if ( $this->conn === null ) {
 			$cacheKey = $this->getCredsCacheKey( $this->auth->username );
-error_log( __METHOD__ . ": getCredsCacheKey({$this->auth->username}) = $cacheKey \n", 3, "/tmp/moli.log" );
 			$creds = $this->srvCache->get( $cacheKey ); // credentials
-error_log( __METHOD__ . ": creds = " . print_r(  $creds, true ) . " \n", 3, "/tmp/moli.log" );
 			if ( is_array( $creds ) ) { // cache hit
 				$this->auth->load_cached_credentials( $creds['auth_token'], $creds['storage_url'], $creds['cdnm_url'] );
 				$this->connStarted = time() - ceil( $this->authTTL / 2 ); // skew for worst case
 			} else { // cache miss
 				try {
-error_log( __METHOD__ . ": this->auth->authenticate() \n", 3, "/tmp/moli.log" );
 					$this->auth->authenticate();
 					$creds = $this->auth->export_credentials();
-error_log( __METHOD__ . ": srvCache set (" . print_r( $creds, true ) . " => " .  ceil( $this->authTTL / 2 ) . "\n", 3, "/tmp/moli.log" );
 					$this->srvCache->set( $cacheKey, $creds, ceil( $this->authTTL / 2 ) ); // cache
 					$this->connStarted = time();
 				} catch ( AuthenticationException $e ) {
-error_log( __METHOD__ . ": AuthenticationException = " . print_r( $e->getMessage(), true ) . "\n", 3, "/tmp/moli.log" );
 					$this->conn = false; // don't keep re-trying
 					$this->logException( $e, __METHOD__, $creds );
 				} catch ( InvalidResponseException $e ) {
-error_log( __METHOD__ . ": InvalidResponseException = " . print_r( $e->getMessage(), true ) . "\n", 3, "/tmp/moli.log" );
 					$this->conn = false; // don't keep re-trying
 					$this->logException( $e, __METHOD__, $creds );
 				}
 			}
 			
 			$this->conn = new CF_Connection( $this->auth );
-			error_log( __METHOD__ . ": conn = " . print_r( $this->conn, true ) . " \n", 3, "/tmp/moli.log" );
 		}
 
 		if ( !$this->conn ) {
@@ -855,9 +829,7 @@ error_log( __METHOD__ . ": InvalidResponseException = " . print_r( $e->getMessag
 	 * @return CF_Container
 	 */
 	protected function getContainer( $container, $reCache = false ) {
-error_log( __METHOD__ . ": getContainer( $container ), reCache =  " . print_r( $reCache, true ) . "\n", 3, "/tmp/moli.log" );
 		$conn = $this->getConnection(); // Swift proxy connection
-error_log( __METHOD__ . ": conn =  " . print_r( $conn, true ) . "\n", 3, "/tmp/moli.log" );
 		if ( $reCache ) {
 			unset( $this->connContainers[$container] ); // purge cache
 		}
@@ -926,12 +898,14 @@ error_log( __METHOD__ . ": conn =  " . print_r( $conn, true ) . "\n", 3, "/tmp/m
 			$this->closeConnection(); // force a re-connect and re-auth next time
 		}
 		
-		wfDebugLog( 'SwiftBackend',
-			get_class( $e ) . " in '{$func}' (given '" . serialize( $params ) . "')" .
-			( $e instanceof InvalidResponseException
-				? ": {$e->getMessage()}"
-				: ""
-			)
+		Wikia::log( 
+			__METHOD__, 
+			'SwiftFileBackend exception', 
+			get_class( $e ) . " in '{$func}' (given '" . serialize( $params ) . "')" . 
+				( $e instanceof InvalidResponseException
+					? ": {$e->getMessage()}"
+					: ""
+				)
 		);
 	}
 }

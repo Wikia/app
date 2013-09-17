@@ -684,7 +684,6 @@ class FileRepo {
 	 * @return FileRepoStatus
 	 */
 	public function storeBatch( $triplets, $flags = 0 ) {
-error_log( __METHOD__ . "\n", 3, "/tmp/moli.log" );
 		$backend = $this->backend; // convenience
 
 		$status = $this->newGood();
@@ -693,7 +692,6 @@ error_log( __METHOD__ . "\n", 3, "/tmp/moli.log" );
 		$sourceFSFilesToDelete = array(); // cleanup for disk source files
 		// Validate each triplet and get the store operation...
 		foreach ( $triplets as $triplet ) {
-error_log( __METHOD__ . ": triplet = " . print_r( $triplet, true )  . " \n", 3, "/tmp/moli.log" );
 			list( $srcPath, $dstZone, $dstRel ) = $triplet;
 			wfDebug( __METHOD__
 				. "( \$src='$srcPath', \$dstZone='$dstZone', \$dstRel='$dstRel' )\n"
@@ -927,7 +925,6 @@ error_log( __METHOD__ . ": triplet = " . print_r( $triplet, true )  . " \n", 3, 
 	 * @return FileRepoStatus
 	 */
 	public function publishBatch( $triplets, $flags = 0 ) {
-error_log( __METHOD__ . "\n", 3, "/tmp/moli.log" );
 		$backend = $this->backend; // convenience
 
 		// Try creating directories
@@ -942,7 +939,6 @@ error_log( __METHOD__ . "\n", 3, "/tmp/moli.log" );
 		$sourceFSFilesToDelete = array(); // cleanup for disk source files
 		// Validate each triplet and get the store operation...
 		foreach ( $triplets as $i => $triplet ) {
-error_log( __METHOD__ . ": triplet = " . print_r( $triplet, true )  . " \n", 3, "/tmp/moli.log" );
 			list( $srcPath, $dstRel, $archiveRel ) = $triplet;
 			// Resolve source to a storage path if virtual
 			if ( substr( $srcPath, 0, 9 ) == 'mwrepo://' ) {
@@ -1103,7 +1099,6 @@ error_log( __METHOD__ . ": triplet = " . print_r( $triplet, true )  . " \n", 3, 
 	 */
 	public function deleteBatch( $sourceDestPairs ) {
 		$backend = $this->backend; // convenience
-error_log( __METHOD__ . ": " . print_r( $backend, true ) . "\n", 3, "/tmp/moli.log" );
 		// Try creating directories
 		$status = $this->initZones( array( 'public', 'deleted' ) );
 		if ( !$status->isOK() ) {
@@ -1114,10 +1109,8 @@ error_log( __METHOD__ . ": " . print_r( $backend, true ) . "\n", 3, "/tmp/moli.l
 
 		$operations = array();
 		// Validate filenames and create archive directories
-error_log( __METHOD__ . ": " . print_r( $sourceDestPairs, true ) . "\n", 3, "/tmp/moli.log" );
 		foreach ( $sourceDestPairs as $pair ) {
 			list( $srcRel, $archiveRel ) = $pair;
-error_log( __METHOD__ . ": srcRel = $srcRel, archiveRel = $archiveRel\n", 3, "/tmp/moli.log" );
 			if ( !$this->validateFilename( $srcRel ) ) {
 				throw new MWException( __METHOD__.':Validation error in $srcRel' );
 			}
@@ -1128,17 +1121,12 @@ error_log( __METHOD__ . ": srcRel = $srcRel, archiveRel = $archiveRel\n", 3, "/t
 			$publicRoot = $this->getZonePath( 'public' );
 			$srcPath = "{$publicRoot}/$srcRel";
 
-error_log( __METHOD__ . ": srcPath = $srcPath\n", 3, "/tmp/moli.log" );
-
 			$deletedRoot = $this->getZonePath( 'deleted' );
 			$archivePath = "{$deletedRoot}/{$archiveRel}";
 			$archiveDir = dirname( $archivePath ); // does not touch FS
 
-error_log( __METHOD__ . ": archiveDir = $archiveDir\n", 3, "/tmp/moli.log" );
-
 			// Create destination directories
 			if ( !$backend->prepare( array( 'dir' => $archiveDir ) )->isOK() ) {
-error_log( __METHOD__ . ": !backend->prepare($archiveDir)\n", 3, "/tmp/moli.log" );
 				return $this->newFatal( 'directorycreateerror', $archiveDir );
 			}
 			$this->initDeletedDir( $archiveDir );

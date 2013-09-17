@@ -1192,7 +1192,6 @@ class CF_Http
     private function _auth_hdr_cb($ch, $header)
     {
         preg_match("/^HTTP\/1\.[01] (\d{3}) (.*)/", $header, $matches);
-error_log( __METHOD__ . ": matches = " . print_r( $matches, true ) . "\n", 3, "/tmp/moli.log" );
         if (isset($matches[1])) {
             $this->response_status = $matches[1];
         }

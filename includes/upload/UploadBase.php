@@ -776,9 +776,7 @@ abstract class UploadBase {
 	 */
 	public function stashFile() {
 		// was stashSessionFile
-error_log ( __METHOD__ . ": local repo = " . print_r( RepoGroup::singleton()->getLocalRepo(), true ) . "\n", 3, "/tmp/moli.log" );
 		$stash = RepoGroup::singleton()->getLocalRepo()->getUploadStash();
-error_log ( __METHOD__ . ": stash = " . print_r( $stash, true ) . "\n", 3, "/tmp/moli.log" );
 		$file = $stash->stashFile( $this->mTempPath, $this->getSourceType() );
 		$this->mLocalFile = $file;
 		return $file;

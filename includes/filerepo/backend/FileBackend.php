@@ -622,16 +622,13 @@ abstract class FileBackend {
 	 * @return Array (backend, container, rel object) or (null, null, null)
 	 */
 	final public static function splitStoragePath( $storagePath ) {
-error_log ( __METHOD__ . ": storagePath = $storagePath \n", 3 , "/tmp/moli.log" );
 		if ( self::isStoragePath( $storagePath ) ) {
 			// Remove the "mwstore://" prefix and split the path
 			$parts = explode( '/', substr( $storagePath, 10 ), 3 );
 			if ( count( $parts ) >= 2 && $parts[0] != '' && $parts[1] != '' ) {
 				if ( count( $parts ) == 3 ) {
-					error_log ( __METHOD__ . ": parts = " . print_r( $parts, true ) . " \n", 3 , "/tmp/moli.log" );
 					return $parts; // e.g. "backend/container/path"
 				} else {
-					error_log ( __METHOD__ . ": parts(else) = " . print_r( $parts, true ) . " \n", 3 , "/tmp/moli.log" );
 					return array( $parts[0], $parts[1], '' ); // e.g. "backend/container" 
 				}
 			}
@@ -982,12 +979,8 @@ abstract class FileBackendStore extends FileBackend {
 	 */
 	final protected function doPrepare( array $params ) {
 		wfProfileIn( __METHOD__ );
-error_log( __METHOD__ . ": params = " . print_r( $params, true ) . "\n", 3, "/tmp/moli.log" );
 		$status = Status::newGood();
 		list( $fullCont, $dir, $shard ) = $this->resolveStoragePath( $params['dir'] );
-error_log( __METHOD__ . ": fullCont = " . print_r( $fullCont, true ) . "\n", 3, "/tmp/moli.log" );
-error_log( __METHOD__ . ": dir = " . print_r( $dir, true ) . "\n", 3, "/tmp/moli.log" );
-error_log( __METHOD__ . ": shard = " . print_r( $shard, true ) . "\n", 3, "/tmp/moli.log" );
 		if ( $dir === null ) {
 			$status->fatal( 'backend-fail-invalidpath', $params['dir'] );
 			wfProfileOut( __METHOD__ );
@@ -995,18 +988,15 @@ error_log( __METHOD__ . ": shard = " . print_r( $shard, true ) . "\n", 3, "/tmp/
 		}
 
 		if ( $shard !== null ) { // confined to a single container/shard
-error_log( __METHOD__ . ": doPrepareInternal\n", 3, "/tmp/moli.log" );
 			$status->merge( $this->doPrepareInternal( $fullCont, $dir, $params ) );
 		} else { // directory is on several shards
 			wfDebug( __METHOD__ . ": iterating over all container shards.\n" );
 			list( $b, $shortCont, $r ) = self::splitStoragePath( $params['dir'] );
-error_log( __METHOD__ . ": splitStoragePath: $b, $shortCont, $r\n", 3, "/tmp/moli.log" );
 			foreach ( $this->getContainerSuffixes( $shortCont ) as $suffix ) {
 				$status->merge( $this->doPrepareInternal( "{$fullCont}{$suffix}", $dir, $params ) );
 			}
 		}
 
-error_log( __METHOD__ . ": status = " . print_r( $status, true ) . "\n", 3, "/tmp/moli.log" );
 		wfProfileOut( __METHOD__ );
 		return $status;
 	}
@@ -1528,25 +1518,19 @@ error_log( __METHOD__ . ": status = " . print_r( $status, true ) . "\n", 3, "/tm
 	 */
 	final protected function resolveStoragePath( $storagePath ) {
 		list( $backend, $container, $relPath ) = self::splitStoragePath( $storagePath );
-error_log ( __METHOD__ . ": $backend, $container, $relPath => name = " . $this->name . " \n", 3 , "/tmp/moli.log" );
 		if ( $backend === $this->name ) { // must be for this backend
 			$relPath = self::normalizeContainerPath( $relPath );
-error_log ( __METHOD__ . ": newRelPath = $relPath \n", 3 , "/tmp/moli.log" );			
 			if ( $relPath !== null ) {
 				// Get shard for the normalized path if this container is sharded
 				$cShard = $this->getContainerShard( $container, $relPath );
-error_log ( __METHOD__ . ": cShard = $cShard \n", 3 , "/tmp/moli.log" );			
 				// Validate and sanitize the relative path (backend-specific)
 				$relPath = $this->resolveContainerPath( $container, $relPath );
-error_log ( __METHOD__ . ": relPath = $relPath \n", 3 , "/tmp/moli.log" );	
 				if ( $relPath !== null ) {
 					// Prepend any wiki ID prefix to the container name
 					$container = $this->fullContainerName( $container );
-error_log ( __METHOD__ . ": container = $container \n", 3, "/tmp/moli.log" );	
 					if ( self::isValidContainerName( $container ) ) {
 						// Validate and sanitize the container name (backend-specific)
 						$container = $this->resolveContainerName( "{$container}{$cShard}" );
-error_log ( __METHOD__ . ": container(2) = $container \n", 3, "/tmp/moli.log" );
 						if ( $container !== null ) {
 							return array( $container, $relPath, $cShard );
 						}
