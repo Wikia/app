@@ -539,6 +539,23 @@ abstract class ApiWrapper {
 		return '';
 	}
 
+	/**
+	 * check if valid permisions
+	 * @return boolean
+	 */
+	protected static function isValidPermission() {
+		$user = F::app()->wg->User;
+		if ( !$user->isLoggedIn() ) {
+			return false;
+		}
+
+		if ( !$user->isAllowed( 'uploadpremiumvideo' ) ) {
+			return false;
+		}
+
+		return true;
+	}
+
 }
 
 class EmptyResponseException extends Exception {

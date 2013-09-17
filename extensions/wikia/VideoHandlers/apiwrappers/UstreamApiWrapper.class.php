@@ -14,6 +14,12 @@ class UstreamApiWrapper extends ApiWrapper {
 	public static function newFromUrl( $url ) {
 		wfProfileIn( __METHOD__ );
 
+		// check permission
+		if ( !self::isValidPermission() ) {
+			wfProfileOut( __METHOD__ );
+			return null;
+		}
+
 		if ( preg_match( '/recorded\/(\d+)/', $url, $matches ) ) {
 			$videoId = $matches[1];
 			if ( is_numeric( $videoId ) ) {
@@ -144,7 +150,7 @@ class UstreamApiWrapper extends ApiWrapper {
 	 */
 	protected function getApiUrl() {
 		$apiUrl = str_replace( '$1', $this->videoId, static::$API_URL );
-		$apiUrl = str_replace( '$2', F::app()->wg->UstreamApiConfig['AppKey'], $apiUrl );
+		$apiUrl = str_replace( '$2', F::app()->wg->UstreamApiConfig['appKey'], $apiUrl );
 
 		return $apiUrl;
 	}
