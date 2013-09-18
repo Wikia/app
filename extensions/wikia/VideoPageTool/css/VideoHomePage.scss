@@ -1,6 +1,12 @@
 @import 'mixins/_sprite-VideoPageTool.scss';
 
+/*
+ * TODO: Do not release with the definition below
+ * @description This is a temporary way to disable the ad on the video wiki homepage so
+ * that I can start development on it's various modules
+ */
 #HOME_TOP_RIGHT_BOXAD { display: none !important;  }
+
 .partners {
 
 	& > ul {
