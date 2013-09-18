@@ -21,6 +21,10 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$wgUser = User::newFromName('WikiaBot');
 
 		$this->fileName = str_replace('$1', time(), self::FILENAME);
+
+		// debug
+		global $wgLocalFileRepo;
+		echo "Files repository in use: '{$wgLocalFileRepo['backend']}'\n";
 	}
 
 	// check the path - /firefly/images/9/93/Test-1378975563.jpg
