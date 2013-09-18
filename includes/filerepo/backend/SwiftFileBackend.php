@@ -897,7 +897,11 @@ class SwiftFileBackend extends FileBackendStore {
 		if ( $e instanceof InvalidResponseException ) { // possibly a stale token
 			$this->closeConnection(); // force a re-connect and re-auth next time
 		}
-		
+
+		if ( $e instanceof NoSuchObjectException ) {
+			return;
+		}
+
 		Wikia::log( 
 			__METHOD__, 
 			'SwiftFileBackend exception', 
