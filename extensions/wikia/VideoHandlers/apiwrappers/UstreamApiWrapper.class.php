@@ -15,17 +15,15 @@ class UstreamApiWrapper extends ApiWrapper {
 		wfProfileIn( __METHOD__ );
 
 		// check permission
-		if ( !self::isValidPermission() ) {
+		if ( !self::isAllowed() ) {
 			wfProfileOut( __METHOD__ );
 			return null;
 		}
 
 		if ( preg_match( '/recorded\/(\d+)/', $url, $matches ) ) {
 			$videoId = $matches[1];
-			if ( is_numeric( $videoId ) ) {
-				wfProfileOut( __METHOD__ );
-				return new static( $videoId );
-			}
+			wfProfileOut( __METHOD__ );
+			return new static( $videoId );
 		}
 
 		wfProfileOut( __METHOD__ );

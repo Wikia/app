@@ -543,7 +543,7 @@ abstract class ApiWrapper {
 	 * check if valid permisions
 	 * @return boolean
 	 */
-	protected static function isValidPermission() {
+	protected static function isAllowed() {
 		$user = F::app()->wg->User;
 		if ( !$user->isLoggedIn() ) {
 			return false;
