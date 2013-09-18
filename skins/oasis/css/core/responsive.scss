@@ -166,12 +166,16 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 	}
 }
 
+html {
+	overflow-y: auto;
+}
+
 body {
 	min-width: $width-outside-min;
-
 	@if ( $background-is-dynamic ) {
 		background: $color-body;
-		overflow-x: hidden;
+		overflow: hidden;
+		position: relative;
 
 		&:after,
 		&:before {
