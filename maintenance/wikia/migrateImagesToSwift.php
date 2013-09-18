@@ -85,10 +85,12 @@ class MigrateImagesToSwift extends Maintenance {
 	 * Add $wgUploadDirectory as a prefix to get full local path to archived image
 	 *
 	 * @param $$row array image data
-	 * @return string image path
+	 * @return string|bool image path or false if storage_key is empty
 	 */
 	private function getRemovedImagePath(Array $row) {
 		$hash = $row['storage_key'];
+
+		if ($hash === '') return false;
 
 		return sprintf(
 			'deleted/%s/%s/%s/%s',
@@ -135,6 +137,8 @@ class MigrateImagesToSwift extends Maintenance {
 	 * @param $path array image info
 	 */
 	private function copyFile($path, Array $row) {
+		if ($path === false) return;
+
 		$this->migratedImagesSize += $row['size'];
 		$this->migratedImagesCnt++;
 	}
