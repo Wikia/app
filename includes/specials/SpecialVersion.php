@@ -345,7 +345,7 @@ class SpecialVersion extends SpecialPage {
 
 		if ( count( $wgFileExtensions ) ) {
 			$out .= $this->openExtType('File extensions allowed for upload');
-			$out .= '<tr><td colspan="3">' . $this->listToText( $wgFileExtensions ) . "</td></tr>\n";
+			$out .= '<tr><td colspan="4">' . $this->listToText( $wgFileExtensions ) . "</td></tr>\n";
 		}
 
 		if ( count( $wgSkinExtensionFunctions ) ) {
