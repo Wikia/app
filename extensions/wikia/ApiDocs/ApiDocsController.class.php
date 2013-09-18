@@ -53,7 +53,7 @@ class ApiDocsController extends WikiaController {
 		// FIXME - find permanent solution
 		foreach ( $this->wg->WikiaApiControllers as $controller => $file ) {
 			foreach ( $docs['apis'] as $doc ) {
-				if ( $doc['readableName'] . "Controller" == $controller ) {
+				if ( $doc['readableName'] . "ApiController" == $controller ) {
 					if ( class_exists($controller) ) {
 						$thisWikiDocs[] = $doc;
 						break;
