@@ -5,26 +5,38 @@
  * @author Jakub "Student" Olek
  */
 
-define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track', 'throbber', 'wikia.window'], function (qs, loader, toc, $, track, throbber, w) {
+define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track', 'throbber', 'wikia.window', 'navigation.wiki'],
+	function (qs, loader, toc, $, track, throbber, w, wikiNav) {
 	'use strict';
 
 	var	d = w.document,
 		wkPrfTgl = d.getElementById('wkPrfTgl'),
 		navBar = d.getElementById('wkTopNav'),
-		navigationTgl = d.getElementById('wkNavTgl'),
 		wkPrf = d.getElementById('wkPrf'),
 		searchInput = d.getElementById('wkSrhInp'),
 		searchSug = d.getElementById('wkSrhSug'),
 		searchForm = d.getElementById('wkSrhFrm'),
 		searchTgl = d.getElementById('wkSrhTgl'),
-		wkNavMenu,
-		wikiNavHeader,
-		wikiNavH1,
-		wikiNavLink,
-		lvl2Link,
 		barSetUp = false,
-		navSetUp = false,
 		searchInit = false;
+
+	wikiNav.init($(d.getElementById('wkNav')));
+
+	$('#wkNavTgl').on('click', function(ev){
+		ev.preventDefault();
+
+		var nav = $(navBar);
+
+		if(!nav.toggleClass('nav-open').hasClass('nav-open')){
+			$.event.trigger('nav:close');
+
+			showPage();
+		}else{
+			reset();
+
+			$.event.trigger('nav:open');
+		}
+	});
 
 	function setupTopBar() {
 		//close WikiNav on back button
@@ -103,139 +115,6 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 		}
 	});
 	//end search setup
-
-	//navigation setup
-	function setupNav(){
-		wkNavMenu = d.getElementById('wkNavMenu');
-
-		//replace menu from bottom to topBar - the faster the better
-		d.getElementById('wkNav').replaceChild(wkNavMenu, d.getElementById('wkWikiNav'));
-
-		wikiNavHeader = wkNavMenu.getElementsByTagName('header')[0];
-		wikiNavH1 = wikiNavHeader.getElementsByTagName('h1')[0];
-		wikiNavLink = d.getElementById('wkNavLink');
-
-		wikiNavH1.className = '';
-
-		//add chevrons to all elements that have child lists
-		var uls = wkNavMenu.querySelectorAll('ul ul'),
-			i = uls.length;
-
-		while(i){
-			uls[--i].parentElement.className += ' cld';
-		}
-
-		d.getElementById('lvl1').addEventListener('click', function(event) {
-			var t = event.target;
-
-			if(t.className.indexOf('cld') > -1) {
-				event.preventDefault();
-
-				var element = t.childNodes[0],
-					href = element.href;
-
-				t.getElementsByTagName('ul')[0].className += ' cur';
-
-				handleHeaderLink(href);
-
-				if(wkNavMenu.className === 'cur1'){
-					wikiNavH1.innerText = element.innerText;
-					lvl2Link = href;
-					track.event('wikinav', track.CLICK, {
-						label: 'level-2'
-					});
-					wkNavMenu.className = 'cur2';
-					wikiNavH1.className = 'anim';
-				}else{
-					track.event('wikinav', track.CLICK, {
-						label: 'level-3'
-					});
-
-					wkNavMenu.className = 'cur3';
-					wikiNavH1.className = 'animNext';
-
-					setTimeout(function(){
-						wikiNavH1.innerText = element.innerText;
-					}, 250);
-				}
-			}
-		});
-
-		d.getElementById('wkNavBack').addEventListener('click', function() {
-			if(wkNavMenu.className === 'cur2') {
-				setTimeout(function(){
-					wkNavMenu.querySelector('.lvl2.cur').className = 'lvl2';
-				}, 501);
-				track.event('wikinav', track.CLICK, {
-					label: 'level-1'
-				});
-				wkNavMenu.className = 'cur1';
-				wikiNavH1.className = 'animBack';
-			} else {
-				setTimeout(function(){
-					wkNavMenu.querySelector('.lvl3.cur').className = 'lvl3';
-					wikiNavH1.className = '';
-				}, 501);
-
-				wikiNavH1.className = 'animBack';
-				setTimeout(function(){
-					wikiNavH1.innerText = wkNavMenu.querySelector('.lvl2.cur').previousSibling.innerText;
-				}, 250);
-
-
-				handleHeaderLink(lvl2Link);
-
-				track.event('wikinav', track.CLICK, {
-					label: 'level-2'
-				});
-				wkNavMenu.className = 'cur2';
-			}
-		});
-
-		wikiNavLink.addEventListener('click', function(){
-			track.event('wikinav', track.CLICK, {
-				label: 'header-' + wkNavMenu.className.slice(3)
-			});
-		});
-
-		navSetUp = true;
-	}
-
-	navigationTgl && navigationTgl.addEventListener('click', function(event){
-		event.preventDefault();
-		if(navBar.className.indexOf('fllNav') > -1){
-			closeDropDown();
-		}else{
-			openNav();
-		}
-	});
-
-	function openNav(){
-		!navSetUp && setupNav();
-		reset();
-		track.event('wikinav', track.CLICK, {
-			label: 'level-1'
-		});
-		wkNavMenu.className = 'cur1';
-		navBar.className = 'fllNav';
-	}
-
-	function closeNav(){
-		if(navBar.className.indexOf('fllNav') > -1){
-			//track('nav/close');
-			showPage();
-		}
-	}
-
-	function handleHeaderLink(link){
-		if(link) {
-			wikiNavLink.href = link;
-			wikiNavLink.style.display = 'block';
-		} else {
-			wikiNavLink.style.display = 'none';
-		}
-	}
-	//end navigation setup
 
 	//profile/login setup
 	if(wkPrfTgl){
@@ -348,7 +227,6 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 	}
 
 	function closeDropDown() {
-		closeNav();
 		closeProfile();
 		closeSearch();
 		if(qs().getHash() === '#topbar') {
@@ -390,7 +268,6 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 		openProfile: openProfile,
 		openSearch: openSearch,
 		closeProfile: closeProfile,
-		closeNav: closeNav,
 		closeSearch: closeSearch,
 		closeDropDown: closeDropDown
 	};

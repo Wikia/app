@@ -475,6 +475,7 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/media.js',
 		'//extensions/wikia/WikiaMobile/js/sections.js',
 		'//extensions/wikia/WikiaMobile/js/layout.js',
+		'//extensions/wikia/WikiaMobile/js/navigation.wiki.js',
 		'//extensions/wikia/WikiaMobile/js/topbar.js',
 		'//extensions/wikia/WikiaMobile/js/popover.js',
 		'//extensions/wikia/WikiaMobile/js/hide_url_bar.js',
