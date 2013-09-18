@@ -17,12 +17,13 @@
  * @param {Object} [config] Config options
  */
 ve.ce.WikiaMediaCaptionNode = function VeCeWikiaMediaCaptionNode( model, config ) {
-	// Parent constructor
-	ve.ce.BranchNode.call( this, model, config );
 
 	// Properties
 	this.$attribution = null;
 	this.minWidth = 102;
+
+	// Parent constructor
+	ve.ce.BranchNode.call( this, model, config );
 
 	// DOM changes
 	this.$.addClass( 'thumbcaption' );
@@ -82,6 +83,7 @@ ve.ce.WikiaMediaCaptionNode.prototype.onSplice = function () {
 	var parentModel = this.model.parent;
 
 	if ( this.$attribution ) {
+		// TODO: detach instead of remove?
 		this.$attribution.remove();
 		this.$attribution = null;
 	}
