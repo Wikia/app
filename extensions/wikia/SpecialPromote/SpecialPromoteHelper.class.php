@@ -428,67 +428,66 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	protected function checkWikiStatus($WikiId, $langCode) {
+		$wikiStatus = [
+			'hasImagesRejected' => false,
+			'hasImagesInReview' => false,
+			'isApproved' => false,
+			'isAutoApproved' => false
+		];
+
 		$visualization = new CityVisualization();
-		$wikiDataVisualization = $visualization->getWikiDataForVisualization($WikiId, $langCode);
-		$mainImage = $this->getMainImage();
-		$additionalImages = $this->getAdditionalImages();
-		$hasImagesRejected = false;
-		$hasImagesInReview = false;
+		$corpWikis = $visualization->getVisualizationWikisData();
 
-		if (!empty($wikiDataVisualization['main_image'])) {
-			$isFeatured = true;
+		if (isset($corpWikis[$langCode])) {
+			$wikiDataVisualization = $visualization->getWikiDataForVisualization($WikiId, $langCode);
+			$mainImage = $this->getMainImage();
+			$additionalImages = $this->getAdditionalImages();
+
+			if (!empty($wikiDataVisualization['main_image'])) {
+				$wikiStatus['isFeatured'] = true;
+			}
+
+			$imageStatuses = array();
+			if($mainImage) {
+				$imageStatuses []= $mainImage['review_status'];
+			}
+			if ($additionalImages) {
+				foreach($additionalImages as $image) {
+					$imageStatuses []= $image['review_status'];
+				}
+			}
+
+			foreach($imageStatuses as $status) {
+				switch($status) {
+					case ImageReviewStatuses::STATE_REJECTED:
+						$wikiStatus['hasImagesRejected'] = true;
+						break;
+					case ImageReviewStatuses::STATE_UNREVIEWED:
+					case ImageReviewStatuses::STATE_IN_REVIEW:
+					case ImageReviewStatuses::STATE_QUESTIONABLE:
+					case ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW:
+					$wikiStatus['hasImagesInReview'] = true;
+						break;
+				}
+			}
 		} else {
-			$isFeatured = false;
+			$wikiStatus['isAutoApproved'] = true;
 		}
 
-		$imageStatuses = array();
-		if($mainImage) {
-			$imageStatuses []= $mainImage['review_status'];
-		}
-		if ($additionalImages) {
-			foreach($additionalImages as $image) {
-				$imageStatuses []= $image['review_status'];
-			}
-		}
-
-		foreach($imageStatuses as $status) {
-			switch($status) {
-				case ImageReviewStatuses::STATE_REJECTED:
-					$hasImagesRejected = true;
-					break;
-				case ImageReviewStatuses::STATE_UNREVIEWED:
-				case ImageReviewStatuses::STATE_IN_REVIEW:
-				case ImageReviewStatuses::STATE_QUESTIONABLE:
-				case ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW:
-					$hasImagesInReview = true;
-					break;
-			}
-		}
-
-		return array(
-			"hasImagesRejected" => $hasImagesRejected,
-			"hasImagesInReview" => $hasImagesInReview,
-			"isFeatured" => $isFeatured
-		);
+		return $wikiStatus;
 	}
 
 	public function getWikiStatusMessage($WikiId, $langCode) {
 		$wikiStatus = $this->checkWikiStatus($WikiId, $langCode);
-
-		if ($wikiStatus["hasImagesRejected"]) {
-			$wikiStatusMessage = wfMsgExt('promote-statusbar-rejected',array('parsemag', 'parseinline'));
-		}
-		elseif ($wikiStatus["hasImagesInReview"]) {
-			$wikiStatusMessage = wfMsgExt('promote-statusbar-inreview',array('parsemag', 'parseinline'));
-		}
-		elseif ($wikiStatus["isFeatured"]) {
-			$wikiStatusMessage = wfMsgExt(
-				'promote-statusbar-approved',
-				array('parsemag', 'parseinline'),
-				$this->wg->Sitename
-			);
-		}
-		else {
+		if ($wikiStatus['isAutoApproved']) {
+			$wikiStatusMessage = wfMessage('promote-statusbar-auto-approved')->parse();
+		} else if ($wikiStatus["hasImagesRejected"]) {
+			$wikiStatusMessage = wfMessage('promote-statusbar-rejected')->parse();
+		} else if ($wikiStatus["hasImagesInReview"]) {
+			$wikiStatusMessage = wfMessage('promote-statusbar-inreview')->parse();
+		} else if ($wikiStatus["isFeatured"]) {
+			$wikiStatusMessage = wfMessage('promote-statusbar-approved', $this->wg->Sitename)->parse();
+		} else {
 			$wikiStatusMessage = null;
 		}
 		return $wikiStatusMessage;
