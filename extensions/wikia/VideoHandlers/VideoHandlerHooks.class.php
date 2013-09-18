@@ -96,14 +96,16 @@ class VideoHandlerHooks {
 			'deletedHashLevels' => $wgLocalFileRepo['deletedHashLevels'], // TODO: check me,
 			'backend' => 'local-backend',
 		);
-		
+
+		global $wgFSSwiftContainer, $wgDBname, $wgLanguageCode;
+		$wgFSSwiftContainer = $wgDBname;
+		if ( $wgLanguageCode != 'en' ) {
+			$wgFSSwiftContainer .= sprintf( "/%s", $wgLanguageCode );
+		}
+
 		if ( !empty( $wgEnableCephFileBackend ) ) {
-			global $wgDBname, $wgLanguageCode;
-			
-			$container = $wgDBname;
-			if ( $wgLanguageCode != 'en' ) { 
-				$container .= sprintf( "/%s", $wgLanguageCode );
-			}
+			global $wgFSSwiftContainer;
+			$container = $wgFSSwiftContainer;
 
 			$wgLocalFileRepo['backend'] = 'ceph-backend';
 			$wgLocalFileRepo['zones'] = array (

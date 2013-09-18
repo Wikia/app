@@ -18,6 +18,18 @@ class MigrateImagesToSwift extends Maintenance {
 
 	const REASON = 'Images migration script';
 
+	/* @var bool $isDryRun */
+	private $isDryRun;
+
+	private $swiftServer;
+	private $swiftConfig;
+	private $swiftToken;
+	/* @var CF_Connection $swiftConn */
+	private $swiftConn;
+	/* @var CF_Container $swiftConntainer */
+	private $swiftContainer;
+	private $swiftContainerName;
+
 	private $migratedImagesCnt = 0;
 	private $migratedImagesSize = 0;
 	private $notExistingImages = [];
@@ -30,6 +42,80 @@ class MigrateImagesToSwift extends Maintenance {
 		$this->addOption( "dry-run", "Do not move any files, just list them" );
 		$this->addOption( "verbose", "Be more noisy" );
 		$this->mDescription = 'Copies files from file system to distributed storage';
+	}
+
+	/**
+	 * Set up the config variables
+	 */
+	private function init() {
+		global $wgUploadDirectory, $wgFSSwiftConfig, $wgDBname;
+
+		$this->isDryRun = $this->hasOption('dry-run');
+
+		$this->swiftConfig = $wgFSSwiftConfig;
+		$this->swiftServer = 'http://' . parse_url($wgFSSwiftConfig['swiftAuthUrl'], PHP_URL_HOST);
+		$this->swiftContainerName = explode('/', trim($wgUploadDirectory, '/'))[2];
+
+		$this->output("Migrating images on {$wgDBname} - <{$wgUploadDirectory}> -> <{$this->swiftServer}/{$this->swiftContainerName}>...\n");
+	}
+
+	/**
+	 * Connects to Swift and grab the container
+	 *
+	 * @return bool success?
+	 */
+	private function connectToSwift() {
+		$auth = new CF_Authentication(
+			$this->swiftConfig['swiftUser'],
+			$this->swiftConfig['swiftKey'],
+			null,
+			$this->swiftConfig['swiftAuthUrl']
+		);
+
+		try {
+			$auth->authenticate();
+			$this->swiftConn = new CF_Connection( $auth );
+		}
+		catch(Exception $ex) {
+			Wikia::log(__METHOD__, '::exception', $ex->getMessage());
+			return false;
+		}
+
+		$this->swiftToken = $auth->auth_token;
+
+		return true;
+	}
+
+	/**
+	 * Get (created if necessary) the container
+	 * 
+	 * @param $containerName string container name
+	 * @return CF_Container object
+	 */
+	private function getContainer($containerName) {
+		try {
+			$container = $this->swiftConn->get_container($containerName);
+		}
+		catch(NoSuchContainerException $ex) {
+			$container =  $this->swiftConn->create_container($containerName);
+		}
+		catch(Exception $ex) {
+			Wikia::log(__METHOD__, '::exception', $ex->getMessage());
+			return false;
+		}
+
+		// set public ACL
+		// http://s3.dfs-s1/swift/v1/firefly
+		$url = "{$this->swiftServer}/swift/v1/{$containerName}";
+
+		/* @var $req CurlHttpRequest */
+		$req = MWHttpRequest::factory( $url, array( 'method' => 'POST', 'noProxy' => true ) );
+		$req->setHeader( 'X-Auth-Token', $this->swiftToken );
+		$req->setHeader( 'X-Container-Read', '.r:*' );
+
+		$status = $req->execute();
+
+		return $status->isOK() ? $container : false;
 	}
 
 	/**
@@ -139,22 +225,33 @@ class MigrateImagesToSwift extends Maintenance {
 	private function copyFile($path, Array $row) {
 		if ($path === false) return;
 
+		$this->swiftConn;
+
 		$this->migratedImagesSize += $row['size'];
 		$this->migratedImagesCnt++;
 	}
 
 	public function execute() {
-		global $wgDBname, $wgEnableCephFileBackend, $wgUploadDirectory;
-
+		$this->init();
 		$dbr = $this->getDB( DB_SLAVE );
-		$isDryRun = $this->hasOption('dry-run');
 
-		$this->output("Migrating images on {$wgDBname} - <{$wgUploadDirectory}>...\n");
-
+		// one migration is enough
+		global $wgEnableCephFileBackend;
 		if (!empty($wgEnableCephFileBackend)) {
 			#$this->error('$wgEnableCephFileBackend = true - new files storage enabled on this wiki!', 1);
 		}
 
+		// connect to Swift
+		if (!$this->connectToSwift()) {
+			$this->error('Can\'t connect to Swift', 2);
+		}
+
+		// get / create container
+		if (($this->swiftContainer = $this->getContainer($this->swiftContainerName)) === false) {
+			$this->error('Can\'t get Swift container', 3);
+		}
+
+		// get images count
 		$tables = [
 			'filearchive',
 			'image',
