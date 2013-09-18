@@ -283,7 +283,9 @@ class SpecialPromoteHelper extends WikiaObject {
 
 		$modifiedFiles = $this->extractModifiedFiles($files);
 		if (!empty($modifiedFiles)) {
-			$visualizationModel->saveImagesForReview($cityId, $langCode, $modifiedFiles);
+			$corpWikis = $visualizationModel->getVisualizationWikisData();
+			$imageReviewState = isset($corpWikis[$langCode]) ? ImageReviewStatuses::STATE_UNREVIEWED : ImageReviewStatuses::STATE_AUTO_APPROVED;
+			$visualizationModel->saveImagesForReview($cityId, $langCode, $modifiedFiles, $imageReviewState);
 		}
 
 		$updateData['city_main_image'] = $files['mainImage']['name'];
@@ -436,42 +438,39 @@ class SpecialPromoteHelper extends WikiaObject {
 		];
 
 		$visualization = new CityVisualization();
-		$corpWikis = $visualization->getVisualizationWikisData();
+		$wikiDataVisualization = $visualization->getWikiDataForVisualization($WikiId, $langCode);
+		$mainImage = $this->getMainImage();
+		$additionalImages = $this->getAdditionalImages();
 
-		if (isset($corpWikis[$langCode])) {
-			$wikiDataVisualization = $visualization->getWikiDataForVisualization($WikiId, $langCode);
-			$mainImage = $this->getMainImage();
-			$additionalImages = $this->getAdditionalImages();
+		if (!empty($wikiDataVisualization['main_image'])) {
+			$wikiStatus['isApproved'] = true;
+		}
 
-			if (!empty($wikiDataVisualization['main_image'])) {
-				$wikiStatus['isFeatured'] = true;
+		$imageStatuses = array();
+		if($mainImage) {
+			$imageStatuses []= $mainImage['review_status'];
+		}
+		if ($additionalImages) {
+			foreach($additionalImages as $image) {
+				$imageStatuses []= $image['review_status'];
 			}
+		}
 
-			$imageStatuses = array();
-			if($mainImage) {
-				$imageStatuses []= $mainImage['review_status'];
+		foreach($imageStatuses as $status) {
+			switch($status) {
+				case ImageReviewStatuses::STATE_REJECTED:
+					$wikiStatus['hasImagesRejected'] = true;
+					break;
+				case ImageReviewStatuses::STATE_UNREVIEWED:
+				case ImageReviewStatuses::STATE_IN_REVIEW:
+				case ImageReviewStatuses::STATE_QUESTIONABLE:
+				case ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW:
+				$wikiStatus['hasImagesInReview'] = true;
+					break;
+				case ImageReviewStatuses::STATE_AUTO_APPROVED:
+					$wikiStatus['isAutoApproved'] = true;
+					break;
 			}
-			if ($additionalImages) {
-				foreach($additionalImages as $image) {
-					$imageStatuses []= $image['review_status'];
-				}
-			}
-
-			foreach($imageStatuses as $status) {
-				switch($status) {
-					case ImageReviewStatuses::STATE_REJECTED:
-						$wikiStatus['hasImagesRejected'] = true;
-						break;
-					case ImageReviewStatuses::STATE_UNREVIEWED:
-					case ImageReviewStatuses::STATE_IN_REVIEW:
-					case ImageReviewStatuses::STATE_QUESTIONABLE:
-					case ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW:
-					$wikiStatus['hasImagesInReview'] = true;
-						break;
-				}
-			}
-		} else {
-			$wikiStatus['isAutoApproved'] = true;
 		}
 
 		return $wikiStatus;
@@ -485,7 +484,7 @@ class SpecialPromoteHelper extends WikiaObject {
 			$wikiStatusMessage = wfMessage('promote-statusbar-rejected')->parse();
 		} else if ($wikiStatus["hasImagesInReview"]) {
 			$wikiStatusMessage = wfMessage('promote-statusbar-inreview')->parse();
-		} else if ($wikiStatus["isFeatured"]) {
+		} else if ($wikiStatus["isApproved"]) {
 			$wikiStatusMessage = wfMessage('promote-statusbar-approved', $this->wg->Sitename)->parse();
 		} else {
 			$wikiStatusMessage = null;
