@@ -68,12 +68,16 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 	}
 
 	function testUploadAndRemove() {
+		$time = microtime(true);
+
 		// upload an image
 		$res = ImagesService::uploadImageFromUrl(self::URL, (object) [
 			'name' => $this->fileName,
 			'comment' => __CLASS__,
 			'description' => __CLASS__
 		]);
+
+		Wikia::log(__METHOD__ , 'upload', sprintf('took %.4f sec', microtime(true) - $time));
 
 		$this->assertTrue($res['status'], 'Upload should end up successfully');
 		$this->assertInternalType('integer', $res['page_id'], 'Page ID should be returned');
@@ -86,10 +90,13 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$this->checkThumbnail($file);
 
 		// now, move it...
+		$time = microtime(true);
 		$oldUrl = $file->getUrl();
 
 		$target = Title::newFromText('New' . $this->fileName, NS_FILE);
 		$status = $file->move($target);
+
+		Wikia::log(__METHOD__ , 'move', sprintf('took %.4f sec', microtime(true) - $time));
 
 		$this->assertTrue($status->isOK(), 'Move failed');
 		$this->assertReturns404($oldUrl, 'Old image (before move) should return HTTP 404');
@@ -98,9 +105,12 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$this->checkThumbnail($file);
 
 		// now, remove it...
+		$time = microtime(true);
 		$oldUrl = $file->getUrl();
 		$status = $file->delete('Test cleanup');
 		$this->assertTrue($status->isOK(), 'Deleting failed');
+
+		Wikia::log(__METHOD__ , 'delete', sprintf('took %.4f sec', microtime(true) - $time));
 
 		// verify that removed image is not accessible via HTTP
 		$this->assertReturns404($oldUrl, 'Removed image should return HTTP 404');
