@@ -614,3 +614,31 @@ $form-negative-side-padding: $form-side-padding*-1;
 .mw-search-formheader { // Quick style fix for now. Will fix tomorrow
 	@include clearfix;
 }
+
+@if ( $responsive-layout-enabled ) {
+	.Search.this-wiki .SearchAdsTopWrapper {
+		padding: 0 0 10px 0;
+	}
+
+	.WikiaRail {
+		.top-wiki-articles {
+			width: 270px;
+			.top-wiki-article-text {
+				width: 180px;
+			}
+
+			.hot-article {
+				width: 270px;
+				.top-wiki-article-text,
+				.top-wiki-article-thumbnail {
+					width: 270px;
+				}
+			}
+		}
+
+		#TOP_RIGHT_BOXAD,
+		#CORP_TOP_RIGHT_BOXAD {
+			padding: 0;
+		}
+	}
+}
