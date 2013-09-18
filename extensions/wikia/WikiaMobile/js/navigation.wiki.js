@@ -44,42 +44,34 @@ define('navigation.wiki', ['wikia.window', 'wikia.nirvana', 'track'],
 
 				handleHeaderLink(href);
 
-				if($wkNavMenu.hasClass('cur1')){
-					$wikiNavH1.text($element.text());
-					lvl2Link = href;
-
-					trackLevel(2);
-
-					$wkNavMenu.removeClass().addClass('cur2');
-					$wikiNavH1.removeClass().addClass('anim');
-				} else {
+				if($wkNavMenu.hasClass('cur2')){
 					trackLevel(3);
 
-					$wkNavMenu.removeClass().addClass('cur3');
-					$wikiNavH1.removeClass().addClass('animNext');
+					$wkNavMenu.addClass('cur3');
+					$wikiNavH1.addClass('animNext');
 
 					window.setTimeout(function(){
 						$wikiNavH1.text($element.text());
 					}, ANIMATION_TIME);
+
+				} else {
+					trackLevel(2);
+
+					$wikiNavH1.text($element.text());
+					lvl2Link = href;
+
+					$wkNavMenu.addClass('cur2');
+					$wikiNavH1.removeClass().addClass('anim');
 				}
 			}).on('click', '#wkNavBack', function(){
-				if($wkNavMenu.hasClass('cur2')) {
-					trackLevel(1);
+				if($wkNavMenu.hasClass('cur3')) {
+					trackLevel(2);
 
-					$wkNavMenu.removeClass().addClass('cur1');
 					$wikiNavH1.removeClass().addClass('animBack');
-
-					window.setTimeout(function(){
-						$wkNavMenu.find('.lvl2.cur').removeClass('cur');
-					}, ANIMATION_TIME * 2);
-				} else {
-					$wikiNavH1.addClass('animBack');
 
 					handleHeaderLink(lvl2Link);
 
-					trackLevel(2);
-
-					$wkNavMenu.removeClass().addClass('cur2');
+					$wkNavMenu.removeClass('cur3');
 
 					window.setTimeout(function(){
 						$wikiNavH1.text($wkNavMenu.find('.lvl2.cur').prev().text());
@@ -88,6 +80,15 @@ define('navigation.wiki', ['wikia.window', 'wikia.nirvana', 'track'],
 					window.setTimeout(function(){
 						$wkNavMenu.find('.lvl3.cur').removeClass('cur');
 						$wikiNavH1.removeClass();
+					}, ANIMATION_TIME * 2);
+				} else {
+					trackLevel(1);
+
+					$wkNavMenu.removeClass('cur2');
+					$wikiNavH1.removeClass().addClass('animBack');
+
+					window.setTimeout(function(){
+						$wkNavMenu.find('.lvl2.cur').removeClass('cur');
 					}, ANIMATION_TIME * 2);
 				}
 			});

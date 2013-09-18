@@ -12,6 +12,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 	var	d = w.document,
 		wkPrfTgl = d.getElementById('wkPrfTgl'),
 		navBar = d.getElementById('wkTopNav'),
+		$navBar = $(navBar),
 		wkPrf = d.getElementById('wkPrf'),
 		searchInput = d.getElementById('wkSrhInp'),
 		searchSug = d.getElementById('wkSrhSug'),
@@ -25,12 +26,10 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 	$('#wkNavTgl').on('click', function(ev){
 		ev.preventDefault();
 
-		var nav = $(navBar);
-
-		if(!nav.toggleClass('nav-open').hasClass('nav-open')){
-			$.event.trigger('nav:close');
-
+		if(!$navBar.toggleClass('nav-open').hasClass('nav-open')){
 			showPage();
+
+			$.event.trigger('nav:close');
 		}else{
 			reset();
 
@@ -85,7 +84,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 		setTimeout(function(){
 			navBar.style.width = '100%';
 			searchInput.focus();
-		},50);
+		}, 50);
 
 	}
 
@@ -238,11 +237,6 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 
 	function closeProfile(){
 		if(navBar.className.indexOf('prf') > -1){
-			/*if(wgUserName){
-				track('profile/close');
-			}else{
-				track('login/close');
-			}*/
 			showPage();
 		}
 	}
