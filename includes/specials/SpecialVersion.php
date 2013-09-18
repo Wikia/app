@@ -350,7 +350,9 @@ class SpecialVersion extends SpecialPage {
 
 		if ( count( $wgSkinExtensionFunctions ) ) {
 			$out .= $this->openExtType( wfMsg( 'version-skin-extension-functions' ), 'skin-extension-functions' );
+			// wikia change start
 			$out .= '<tr><td colspan="4">' . $this->listToText( $wgSkinExtensionFunctions ) . "</td></tr>\n";
+			// wikia change end
 		}
 
 		$out .= Xml::closeElement( 'table' );
