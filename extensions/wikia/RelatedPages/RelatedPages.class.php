@@ -33,6 +33,14 @@ class RelatedPages {
 		$this->categories = $categories;
 	}
 
+	private static function followRedirect( &$title ) {
+		$redirect = (new WikiPage( $title ))->getRedirectTarget();
+
+		if ( !empty( $redirect ) ) {
+			$title = $redirect;
+		}
+	}
+
 	/**
 	 * @param $titleOrId Title|int Title object or article ID
 	 * @return array|null
@@ -43,6 +51,8 @@ class RelatedPages {
 
 			if( !empty( $title ) ) {
 				$categories = [];
+
+				self::followRedirect( $title );
 
 				foreach( $title->getParentCategories() as $category => $title ) {
 					$titleObj = Title::newFromText( $category, NS_CATEGORY );
@@ -367,17 +377,61 @@ class RelatedPages {
 	 * @param int $articleId Article ID
 	 * @param int $length snippet length (in characters)
 	 */
-	public function getArticleSnippet( $articleId, $length = 100 ) {
+	public function getArticleSnippet( $articleId ) {
 		$service = new ArticleService( $articleId );
 		return $service->getTextSnippet();
 	}
 
+	/**
+	 * @param OutputPage $out
+	 * @param            $text
+	 *
+	 * Add needed messages to page and add JS assets
+	 *
+	 * @return bool
+	 */
 	public static function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
-		global $wgRequest;
-		if ( $out->isArticle() && $wgRequest->getVal( 'diff' ) === null && !( F::app()->checkSkin( 'wikiamobile' ) ) ) {
-			$text .= F::app()->renderView( 'RelatedPages', 'Index' );
+		$app = F::app();
+		$wg = $app->wg;
+		$request = $app->wg->Request;
+		$title = $wg->Title;
+
+		if ( $out->isArticle() && $request->getVal( 'action', 'view') == 'view' ) {
+			JSMessages::enqueuePackage( 'RelatedPages', JSMessages::INLINE );
+
+			if(
+				!(Wikia::isMainPage() || !empty( $title ) && !in_array( $title->getNamespace(), $wg->ContentNamespaces )) &&
+				!$app->checkSkin( 'wikiamobile' )
+			) {
+				$scripts = AssetsManager::getInstance()->getURL( 'relatedpages_js' );
+
+				foreach( $scripts as $script ){
+					$wg->Out->addScript( "<script src='{$script}'></script>" );
+				}
+			}
 		}
+
 		return true;
 	}
 
+	/**
+	 * @param $jsStaticPackages
+	 * @param $jsExtensionPackages
+	 * @param $scssPackages
+	 *
+	 * Adds assets for RelatedPages on wikiamobile
+	 *
+	 * @return bool
+	 */
+	public static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages) {
+		$jsStaticPackages[] = 'relatedpages_js';
+		//css is in WikiaMobile.scss as AM can't concatanate scss files currently
+
+		return true;
+	}
+
+	public static function onSkinAfterContent( &$text ){
+		$text = '<!-- RelatedPages -->';
+		return true;
+	}
 }

@@ -7,6 +7,8 @@ $config['oasis_shared_core_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_wikia_js',
+		'//resources/wikia/libraries/sloth/sloth.js',
+		'//resources/wikia/libraries/mustache/mustache.js'
 	),
 );
 
@@ -103,7 +105,6 @@ $config['oasis_noads_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/VideoHandlers/js/VideoHandlers.js',
-		'//extensions/wikia/RelatedPages/js/RelatedPages.js',
 		'//extensions/wikia/CreatePage/js/CreatePage.js',
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 		'//extensions/wikia/Lightbox/js/LightboxLoader.js',
@@ -503,14 +504,6 @@ $config['wikiamobile_smartbanner_init_js'] = [
 	]
 ];
 
-$config['wikiamobile_relatedpages_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
-		'//extensions/wikia/RelatedPages/js/RelatedPages.wikiamobile.js'
-	)
-);
-
 $config['wikiamobile_tables_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
@@ -713,7 +706,15 @@ $config['filepage_scss_wikiamobile'] = array(
 	)
 );
 
-
+$config['relatedpages_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis', 'monobook', 'wikiamobile' ],
+	'assets' => array(
+		'//resources/wikia/libraries/sloth/sloth.js',
+		'//resources/wikia/libraries/mustache/mustache.js',
+		'//extensions/wikia/RelatedPages/js/RelatedPages.js'
+	)
+);
 
 /** EditPageLayout **/
 $config['rte'] = array(
