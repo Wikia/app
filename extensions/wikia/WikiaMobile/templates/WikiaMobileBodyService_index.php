@@ -14,7 +14,6 @@
 	<?= $pageHeaderContent ;?>
 	<article id=wkMainCnt>
 		<?= $bodyContent ;?>
-		<?= $navMenu ;?>
 		<footer id=wkMainCntFtr>
 			<nav id=wkRltdCnt>
 			<?= !empty( $categoryLinks ) ? $categoryLinks : ''; ?>
