@@ -42,7 +42,10 @@ define('sloth', function(){
 					addEvent();
 				}, debounce);
 
-				wTop = win.scrollY;
+				// in IE10 window.scrollY doesn't work
+				// but window.pageYOffset is basically the same
+				// https://developer.mozilla.org/en-US/docs/Web/API/window.scrollY
+				wTop = win.scrollY || win.pageYOffset;
 				wBottom = wTop + win.innerHeight;
 
 				while(i--){

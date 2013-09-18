@@ -17,7 +17,6 @@
 		<?= $navMenu ;?>
 		<footer id=wkMainCntFtr>
 			<nav id=wkRltdCnt>
-			<?= !empty( $relatedPages ) ? $relatedPages  : ''; ?>
 			<?= !empty( $categoryLinks ) ? $categoryLinks : ''; ?>
 			</nav>
 			<?= !empty( $afterContentHookText ) ? $afterContentHookText : ''; ?>
