@@ -21,4 +21,9 @@ class WikiaMobileController extends WikiaController{
 		$this->request->setInternal( true );
 		$this->forward( 'WikiaMobileCategoryService', 'getBatch' );
 	}
+
+	public function getNavigation(){
+		$this->request->setInternal( true );
+		$this->forward( 'WikiaMobileNavigationService', 'navMenu' );
+	}
 }
