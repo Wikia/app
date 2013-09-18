@@ -2,15 +2,15 @@
 
 class LicensedWikisService extends WikiaModel {
 
-	public function getLicensedWikis() {
+	public function getCommercialUseNotAllowedWikis() {
 
 	}
 
-	public function isLicensedById( $wikiId ) {
+	public function isCommercialUseAllowedById( $wikiId ) {
 
 	}
 
-	public function isLicensedByHostName( $hostName ) {
+	public function isCommercialUseAllowedByHostName( $hostName ) {
 
 	}
 
