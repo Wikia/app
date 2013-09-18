@@ -4,7 +4,7 @@
 		<? foreach( $partners as $partnerKey=>$partner ) { ?>
 		<li>
 			<a class="ico-<?= $partnerKey ?>" href="<?= $partner[ 'url' ] ?>"></a>
-			<a class="partner-link" href=""><?= wfMessage( 'videohomepage-partner-name-' . $partnerKey )->plain() ?></a>
+			<a class="partner-link" href="<?= $partner['url'] ?>"><?= wfMessage( 'videohomepage-partner-name-' . $partnerKey )->plain() ?></a>
 		</li>
 		<? } ?>
 	</ul>
