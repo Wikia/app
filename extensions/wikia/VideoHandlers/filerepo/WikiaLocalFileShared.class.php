@@ -101,6 +101,14 @@ class WikiaLocalFileShared  {
 		return $this->metaValue('description');
 	}
 
+	/**
+	 * get duration from metadata
+	 * @return string
+	 */
+	public function getMetadataDuration() {
+		return $this->metaValue('duration');
+	}
+
 	public function getProviderDetailUrl() {
 		wfProfileIn( __METHOD__ );
 		$handler = $this->oFile->getHandler();
