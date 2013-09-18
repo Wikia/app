@@ -8,116 +8,107 @@ define('navigation.wiki', ['wikia.window', 'wikia.nirvana', 'track'],
 		$wikiNavH1,
 		$wikiNavLink,
 		lvl2Link,
-		navSetUp = false;
+		ANIMATION_TIME = 250;
 
 	$(d).on('nav:open', function(){
-
-		track.event('wikinav', track.CLICK, {
-			label: 'level-1'
-		});
+		trackLevel(1);
 
 		$wkNavMenu.removeClass().addClass('cur1');
 	});
 
-	function init(navMenu){
-		$wkNavMenu = navMenu;
-
-		nirvana
-			.sendRequest({
-				type: 'GET',
-				controller: 'WikiaMobileController',
-				method: 'getNavigation',
-				format: 'html'
-			}).done(function(nav){
-				if(nav) {
-					$wkNavMenu = navMenu.html(nav).find('#wkNavMenu');
-					setupNav();
-				}
-			});
+	function trackLevel(level) {
+		track.event('wikinav', track.CLICK, {
+			label: 'level-' + level
+		});
 	}
 
-	function setupNav(){
-		$wikiNavHeader = $wkNavMenu.find('header');
-		$wikiNavH1 = $wikiNavHeader.find('h1').removeClass();
-		$wikiNavLink = $(d.getElementById('wkNavLink'));
+	function setup(navHtml, wkNav){
+		if(navHtml && wkNav) {
+			$wkNavMenu = wkNav.html(navHtml).find('#wkNavMenu');
 
-		//add chevrons to all elements that have child lists
-		$wkNavMenu.find('ul ul').parent().addClass('cld');
+			$wikiNavHeader = $wkNavMenu.find('header');
+			$wikiNavH1 = $wikiNavHeader.find('h1').removeClass();
+			$wikiNavLink = $(d.getElementById('wkNavLink'));
 
-		$wkNavMenu.on('click', '.cld', function(event){
-			event.stopPropagation();
+			//add chevrons to all elements that have child lists
+			$wkNavMenu.find('ul ul').parent().addClass('cld');
 
-			var $this = $(this),
-				$element = $this.children().first(),
-				href = $element.attr('href');
+			$wkNavMenu.on('click', '.cld', function(event){
+				event.stopPropagation();
 
-			$this.find('ul').first().addClass('cur');
+				var $this = $(this),
+					$element = $this.children().first(),
+					href = $element.attr('href');
 
-			handleHeaderLink(href);
+				$this.find('ul').first().addClass('cur');
 
-			if($wkNavMenu.hasClass('cur1')){
-				$wikiNavH1.text($element.text());
-				lvl2Link = href;
+				handleHeaderLink(href);
 
-				track.event('wikinav', track.CLICK, {
-					label: 'level-2'
-				});
-
-				$wkNavMenu.removeClass().addClass('cur2');
-				$wikiNavH1.removeClass().addClass('anim');
-			} else {
-				track.event('wikinav', track.CLICK, {
-					label: 'level-3'
-				});
-
-				$wkNavMenu.removeClass().addClass('cur3');
-				$wikiNavH1.removeClass().addClass('animNext');
-
-				setTimeout(function(){
+				if($wkNavMenu.hasClass('cur1')){
 					$wikiNavH1.text($element.text());
-				}, 250);
-			}
-		});
+					lvl2Link = href;
 
+					trackLevel(2);
 
-		d.getElementById('wkNavBack').addEventListener('click', function() {
-			if($wkNavMenu.hasClass('cur2')) {
-				setTimeout(function(){
-					$wkNavMenu.find('.lvl2.cur').removeClass().addClass('lvl2');
-				}, 501);
-				track.event('wikinav', track.CLICK, {
-					label: 'level-1'
-				});
-				$wkNavMenu.removeClass().addClass('cur1');
-				$wikiNavH1.removeClass().addClass('animBack');
-			} else {
-				setTimeout(function(){
-					$wkNavMenu.find('.lvl3.cur').removeClass().addClass('lvl3');
-					$wikiNavH1.removeClass();
-				}, 501);
+					$wkNavMenu.removeClass().addClass('cur2');
+					$wikiNavH1.removeClass().addClass('anim');
+				} else {
+					trackLevel(3);
 
-				$wikiNavH1.addClass('animBack');
-				setTimeout(function(){
-					$wikiNavH1.text($wkNavMenu.find('.lvl2.cur').prev().text());
-				}, 250);
+					$wkNavMenu.removeClass().addClass('cur3');
+					$wikiNavH1.removeClass().addClass('animNext');
 
-				handleHeaderLink(lvl2Link);
+					window.setTimeout(function(){
+						$wikiNavH1.text($element.text());
+					}, ANIMATION_TIME);
+				}
+			}).on('click', '#wkNavBack', function(){
+				if($wkNavMenu.hasClass('cur2')) {
+					trackLevel(1);
 
-				track.event('wikinav', track.CLICK, {
-					label: 'level-2'
-				});
+					$wkNavMenu.removeClass().addClass('cur1');
+					$wikiNavH1.removeClass().addClass('animBack');
 
-				$wkNavMenu.removeClass().addClass('cur2');
-			}
-		});
+					window.setTimeout(function(){
+						$wkNavMenu.find('.lvl2.cur').removeClass('cur');
+					}, ANIMATION_TIME * 2);
+				} else {
+					$wikiNavH1.addClass('animBack');
 
-		$wikiNavLink.on('click', function(){
-			track.event('wikinav', track.CLICK, {
-				label: 'header-' + $wkNavMenu[0].className.slice(3)
+					handleHeaderLink(lvl2Link);
+
+					trackLevel(2);
+
+					$wkNavMenu.removeClass().addClass('cur2');
+
+					window.setTimeout(function(){
+						$wikiNavH1.text($wkNavMenu.find('.lvl2.cur').prev().text());
+					}, ANIMATION_TIME);
+
+					window.setTimeout(function(){
+						$wkNavMenu.find('.lvl3.cur').removeClass('cur');
+						$wikiNavH1.removeClass();
+					}, ANIMATION_TIME * 2);
+				}
 			});
-		});
 
-		navSetUp = true;
+			$wikiNavLink.on('click', function(){
+				track.event('wikinav', track.CLICK, {
+					label: 'header-' + $wkNavMenu[0].className.slice(3)
+				});
+			});
+		}
+	}
+
+	function init(navMenu){
+		nirvana.sendRequest({
+			type: 'GET',
+			controller: 'WikiaMobileController',
+			method: 'getNavigation',
+			format: 'html'
+		}).done(function(navHtml){
+			setup(navHtml, navMenu);
+		});
 	}
 
 	function handleHeaderLink(link){
@@ -130,9 +121,6 @@ define('navigation.wiki', ['wikia.window', 'wikia.nirvana', 'track'],
 	}
 
 	return {
-		init: init,
-		open: open,
-		close: close
-		//isOpen: isOpen
+		init: init
 	};
 });
