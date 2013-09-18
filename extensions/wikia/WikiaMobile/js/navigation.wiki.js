@@ -35,35 +35,38 @@ require(['wikia.window', 'wikia.nirvana', 'track', 'wikia.cache'],
 			//add chevrons to all elements that have child lists
 			$wkNavMenu.find('ul ul').parent().addClass('cld');
 
-			$wkNavMenu.on('click', '.cld', function(event){
+			$wkNavMenu.on('click', 'li', function(event){
 				var $this = $(this),
 					$element = $this.children().first(),
+					hasChildren = $this.hasClass('cld'),
 					href = $element.attr('href');
 
 				event.stopPropagation();
 
-				$this.find('ul').first().addClass('cur');
+				if(hasChildren) {
+					$this.find('ul').first().addClass('cur');
 
-				handleHeaderLink(href);
+					handleHeaderLink(href);
 
-				if($wkNavMenu.hasClass('cur2')){
-					trackLevel(3);
+					if($wkNavMenu.hasClass('cur2')){
+						trackLevel(3);
 
-					$wkNavMenu.addClass('cur3');
-					$wikiNavH1.addClass('animNext');
+						$wkNavMenu.addClass('cur3');
+						$wikiNavH1.addClass('animNext');
 
-					window.setTimeout(function(){
+						window.setTimeout(function(){
+							$wikiNavH1.text($element.text());
+						}, ANIMATION_TIME);
+
+					} else {
+						trackLevel(2);
+
 						$wikiNavH1.text($element.text());
-					}, ANIMATION_TIME);
+						lvl2Link = href;
 
-				} else {
-					trackLevel(2);
-
-					$wikiNavH1.text($element.text());
-					lvl2Link = href;
-
-					$wkNavMenu.addClass('cur2');
-					$wikiNavH1.removeClass().addClass('anim');
+						$wkNavMenu.addClass('cur2');
+						$wikiNavH1.removeClass().addClass('anim');
+					}
 				}
 			}).on('click', '#wkNavBack', function(){
 				if($wkNavMenu.hasClass('cur3')) {
