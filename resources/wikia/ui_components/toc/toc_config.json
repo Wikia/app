@@ -6,7 +6,7 @@
 		}
 	},
 	"dependencies": {
-		"js": [],
+		"js": ["resources/wikia/ui_components/toc/js/toc.js"],
 		"css": ["resources/wikia/ui_components/toc/css/toc_default.scss"]
 	}
 }
