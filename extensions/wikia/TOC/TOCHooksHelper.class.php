@@ -19,11 +19,23 @@ class TOCHooksHelper {
 		return true;
 	}
 
+	/** Add assets */
+
+	private static function addAssets( &$assetsArray ) {
+
+		$title = F::app()->wg->title;
+
+		if ( !$title->isSpecialPage() ) {
+			$assetsArray[] = 'toc_js';
+		}
+		return true;
+	}
+
 	/** Add TOC js assets to Oasis */
 
 	public static function onOasisSkinAssetGroups( &$assetsArray ) {
 
-		$assetsArray[] = 'toc_js';
+		self::addAssets( $assetsArray );
 
 		return true;
 	}
@@ -32,7 +44,7 @@ class TOCHooksHelper {
 
 	public static function onMonobookSkinAssetGroups( &$assetsArray ) {
 
-		$assetsArray[] = 'toc_js';
+		self::addAssets( $assetsArray );
 
 		return true;
 	}
