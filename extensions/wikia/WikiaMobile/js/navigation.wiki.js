@@ -1,5 +1,5 @@
-define('navigation.wiki', ['wikia.window', 'wikia.nirvana', 'track'],
-	function(window, nirvana, track){
+require(['wikia.window', 'wikia.nirvana', 'track', 'wikia.cache'],
+	function(window, nirvana, track, cache){
 	'use strict';
 
 	var d = window.document,
@@ -12,8 +12,10 @@ define('navigation.wiki', ['wikia.window', 'wikia.nirvana', 'track'],
 
 	$(d).on('nav:open', function(){
 		trackLevel(1);
-
-		$wkNavMenu.removeClass().addClass('cur1');
+	}).on('nav:close', function(){
+		if($wkNavMenu){
+			$wkNavMenu.removeClass('cur2 cur3');
+		}
 	});
 
 	function trackLevel(level) {
@@ -22,9 +24,9 @@ define('navigation.wiki', ['wikia.window', 'wikia.nirvana', 'track'],
 		});
 	}
 
-	function setup(navHtml, wkNav){
-		if(navHtml && wkNav) {
-			$wkNavMenu = wkNav.html(navHtml).find('#wkNavMenu');
+	function setup(navHtml){
+		if(navHtml) {
+			$wkNavMenu = $('#wkNav').html(navHtml).find('#wkNavMenu');
 
 			$wikiNavHeader = $wkNavMenu.find('header');
 			$wikiNavH1 = $wikiNavHeader.find('h1').removeClass();
@@ -34,11 +36,11 @@ define('navigation.wiki', ['wikia.window', 'wikia.nirvana', 'track'],
 			$wkNavMenu.find('ul ul').parent().addClass('cld');
 
 			$wkNavMenu.on('click', '.cld', function(event){
-				event.stopPropagation();
-
 				var $this = $(this),
 					$element = $this.children().first(),
 					href = $element.attr('href');
+
+				event.stopPropagation();
 
 				$this.find('ul').first().addClass('cur');
 
@@ -101,27 +103,34 @@ define('navigation.wiki', ['wikia.window', 'wikia.nirvana', 'track'],
 		}
 	}
 
-	function init(navMenu){
-		nirvana.sendRequest({
-			type: 'GET',
-			controller: 'WikiaMobileController',
-			method: 'getNavigation',
-			format: 'html'
-		}).done(function(navHtml){
-			setup(navHtml, navMenu);
-		});
-	}
-
 	function handleHeaderLink(link){
 		if(link) {
-			$wikiNavLink.attr('href', link);
-			$wikiNavLink.show();
+			$wikiNavLink.attr('href', link).show();
 		} else {
 			$wikiNavLink.hide();
 		}
 	}
 
-	return {
-		init: init
-	};
+	$(function(){
+		var CACHE_KEY = 'wkNavigation';
+
+		setTimeout(function(){
+			var navHtml = cache.getVersioned(CACHE_KEY);
+
+			if(navHtml) {
+				setup(navHtml);
+			}else{
+				nirvana.sendRequest({
+					type: 'GET',
+					controller: 'WikiaMobileController',
+					method: 'getNavigation',
+					format: 'html'
+				}).done(function(navHtml){
+					cache.setVersioned(CACHE_KEY, navHtml, 10800);
+
+					setup(navHtml);
+				});
+			}
+		}, 200); //do this on load but give browser some time to finish
+	});
 });

@@ -5,8 +5,8 @@
  * @author Jakub "Student" Olek
  */
 
-define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track', 'throbber', 'wikia.window', 'navigation.wiki'],
-	function (qs, loader, toc, $, track, throbber, w, wikiNav) {
+define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track', 'throbber', 'wikia.window'],
+	function (qs, loader, toc, $, track, throbber, w) {
 	'use strict';
 
 	var	d = w.document,
@@ -21,19 +21,18 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 		barSetUp = false,
 		searchInit = false;
 
-	wikiNav.init($(d.getElementById('wkNav')));
-
 	$('#wkNavTgl').on('click', function(ev){
 		ev.preventDefault();
 
-		if(!$navBar.toggleClass('nav-open').hasClass('nav-open')){
+		if($navBar.hasClass('nav-open')){
 			showPage();
 
-			$.event.trigger('nav:close');
+			$.event.trigger('nav:open');
 		}else{
 			reset();
+			$navBar.removeClass().addClass('nav-open');
 
-			$.event.trigger('nav:open');
+			$.event.trigger('nav:close');
 		}
 	});
 
@@ -42,7 +41,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 		if ('onhashchange' in w) {
 			w.addEventListener('hashchange', function() {
 				if (!qs().getHash() && navBar.className) {
-					closeDropDown();
+					close();
 				}
 			}, false);
 		}
@@ -88,12 +87,6 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 
 	}
 
-	function closeSearch(){
-		if(navBar.className.indexOf('srhOpn') > -1){
-			showPage();
-		}
-	}
-
 	searchForm && searchForm.addEventListener('submit', function(ev){
 		if(searchInput.value === '') {
 			ev.preventDefault();
@@ -107,7 +100,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 	searchTgl && searchTgl.addEventListener('click', function(event){
 		event.preventDefault();
 		if(navBar.className.indexOf('srhOpn') > -1){
-			closeDropDown();
+			close();
 		}else{
 			initAutocomplete();
 			openSearch();
@@ -123,7 +116,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 		wkPrfTgl.addEventListener('click', function(event){
 			event.preventDefault();
 			if(navBar.className.indexOf('prf') > -1){
-				closeDropDown();
+				close();
 			}else{
 				openProfile();
 			}
@@ -225,9 +218,9 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 		}
 	}
 
-	function closeDropDown() {
-		closeProfile();
-		closeSearch();
+	function close() {
+		showPage();
+
 		if(qs().getHash() === '#topbar') {
 			var pos = w.scrollY;
 			w.history.back();
@@ -235,25 +228,17 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 		}
 	}
 
-	function closeProfile(){
-		if(navBar.className.indexOf('prf') > -1){
-			showPage();
-		}
-	}
-
 	function hidePage(){
 		$.event.trigger('ads:unfix');
 
-		if(d.documentElement.className.indexOf('hidden') === -1) {
-			d.documentElement.className += ' hidden';
-		}
+		$('html').addClass('hidden');
 	}
 
 	function showPage(){
 		$.event.trigger('ads:fix');
 
-		navBar.className = '';
-		d.documentElement.className = d.documentElement.className.replace(' hidden', '');
+		$navBar.removeClass();
+		$('html').removeClass('hidden');
 	}
 
 	return {
@@ -261,8 +246,6 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 		openLogin: openLogin,
 		openProfile: openProfile,
 		openSearch: openSearch,
-		closeProfile: closeProfile,
-		closeSearch: closeSearch,
-		closeDropDown: closeDropDown
+		close: close
 	};
 });
