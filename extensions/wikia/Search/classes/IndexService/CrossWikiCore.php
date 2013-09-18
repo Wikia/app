@@ -34,7 +34,7 @@ class CrossWikiCore extends AbstractWikiService
 				$this->getCategories(),
 				$this->getVisualizationInfo(),
 				$this->getTopArticles(),
-				$this->getLicenseName()
+				$this->getLicenseInformation()
 				);
 	}
 	
@@ -188,7 +188,7 @@ class CrossWikiCore extends AbstractWikiService
 	 * Get license info this wiki
 	 * @return array
 	 */
-	protected function getLicenseName() {
+	protected function getLicenseInformation() {
 		$licensedWikiService = new \LicensedWikisService();
 		if( $licensedWikiService->isCommercialUseAllowedById( $this->getWikiId() ) ) {
 			return [
