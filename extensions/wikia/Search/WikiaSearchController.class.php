@@ -471,7 +471,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'isCorporateWiki',       $this->isCorporateWiki() );
 		$this->setVal( 'wgExtensionsPath',      $this->wg->ExtensionsPath);
 		$sanitizedQuery = $searchConfig->getQuery()->getSanitizedQuery();
-		if ( strlen($sanitizedQuery)>1 && in_array( 0, $searchConfig->getNamespaces() ) && !in_array( 6, $searchConfig->getNamespaces() ) ) {
+		if ( strlen($sanitizedQuery)>0 && in_array( 0, $searchConfig->getNamespaces() ) && !in_array( 6, $searchConfig->getNamespaces() ) ) {
 			$combinedMediaResult = $this->sendSelfRequest( 'combinedMediaSearch',
 				array( 'q' => $sanitizedQuery, 'videoOnly' => true ) )->getData();
 			if ( isset($combinedMediaResult) && sizeof($combinedMediaResult['items']) == 4 ) {
