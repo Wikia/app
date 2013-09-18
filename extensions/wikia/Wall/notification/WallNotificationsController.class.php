@@ -119,7 +119,7 @@ class WallNotificationsController extends WikiaController {
 	}
 
 	private function areNotificationsSuppressedByExtensions() {
-		$suppressed = F::app()->wg->atCreateNewWikiPage;
+		$suppressed = $this->app->wg->atCreateNewWikiPage || !$this->app->wg->User->isAllowed( 'read' );
 		return !empty($suppressed);
 	}
 
