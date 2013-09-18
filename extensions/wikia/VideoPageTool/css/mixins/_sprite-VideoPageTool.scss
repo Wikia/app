@@ -1,0 +1,184 @@
+
+// @autosprite-start
+@mixin sprite-VideoPageTool-base() {
+	background-color: transparent;
+	background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool.png'); /* wgCdnStylePath */
+	background-repeat: no-repeat;
+}
+@mixin sprite-VideoPageTool-base-embed() {
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+@mixin sprite-VideoPageTool($imageName,$width: 0,$height: 0,$offset-x: 0,$offset-y: 0) {
+	$image-x: -1;
+	$image-y: -1;
+	$image-width: -1;
+	$image-height: -1;
+	// @autosprite-image-details: ico-anyclip.png@72,0,7f5a01073cdd282c51e020c86cdbed16
+	@if $imageName == 'ico-anyclip' {
+		$image-x: 72px;
+		$image-y: 0px;
+		$image-width: 82px;
+		$image-height: 30px;
+	}
+	// @autosprite-image-details: ico-ign.png@166,0,7a185b3a2f9e2f21ed500b0172b5b5bc
+	@if $imageName == 'ico-ign' {
+		$image-x: 166px;
+		$image-y: 0px;
+		$image-width: 76px;
+		$image-height: 23px;
+	}
+	// @autosprite-image-details: ico-iva.png@254,0,7510e435a389e8b25d0f900917c75a59
+	@if $imageName == 'ico-iva' {
+		$image-x: 254px;
+		$image-y: 0px;
+		$image-width: 85px;
+		$image-height: 38px;
+	}
+	// @autosprite-image-details: ico-ooyala.png@351,0,179f4581bea111361206a824e53faf97
+	@if $imageName == 'ico-ooyala' {
+		$image-x: 351px;
+		$image-y: 0px;
+		$image-width: 107px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: ico-realgravity.png@470,0,8dfc0bd1320db439073c67169fd1ed66
+	@if $imageName == 'ico-realgravity' {
+		$image-x: 470px;
+		$image-y: 0px;
+		$image-width: 36px;
+		$image-height: 36px;
+	}
+	// @autosprite-image-details: ico-screenplay.png@518,0,cf4f575536b5f71cd83107c9648c674f
+	@if $imageName == 'ico-screenplay' {
+		$image-x: 518px;
+		$image-y: 0px;
+		$image-width: 35px;
+		$image-height: 40px;
+	}
+	@if $image-x != -1 {
+		$position-x: 0px - $image-x;
+		$position-y: 0px - $image-y;
+		@if $width > 0 {
+			$position-x: $position-x + ( $width - $image-width ) / 2;
+		}
+		@if $height > 0 {
+			$position-y: $position-y + ( $height - $image-height ) / 2;
+		}
+		@if $offset-x != 0 {
+			$position-x: $position-x + $offset-x;
+		}
+		@if $offset-y != 0 {
+			$position-y: $position-y + $offset-y;
+		}
+		background-position: $position-x $position-y;
+	}
+}
+@mixin sprite-VideoPageTool-embed($imageName,$width: 0,$height: 0,$offset-x: 0,$offset-y: 0) {
+	$image-width: -1;
+	$image-height: -1;
+	// @autosprite-image-details: ico-anyclip.png@72,0,7f5a01073cdd282c51e020c86cdbed16
+	@if $imageName == 'ico-anyclip' {
+		$image-width: 82px;
+		$image-height: 30px;
+		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico-anyclip.png'); /* base64 */
+	}
+	// @autosprite-image-details: ico-ign.png@166,0,7a185b3a2f9e2f21ed500b0172b5b5bc
+	@if $imageName == 'ico-ign' {
+		$image-width: 76px;
+		$image-height: 23px;
+		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico-ign.png'); /* base64 */
+	}
+	// @autosprite-image-details: ico-iva.png@254,0,7510e435a389e8b25d0f900917c75a59
+	@if $imageName == 'ico-iva' {
+		$image-width: 85px;
+		$image-height: 38px;
+		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico-iva.png'); /* base64 */
+	}
+	// @autosprite-image-details: ico-ooyala.png@351,0,179f4581bea111361206a824e53faf97
+	@if $imageName == 'ico-ooyala' {
+		$image-width: 107px;
+		$image-height: 18px;
+		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico-ooyala.png'); /* base64 */
+	}
+	// @autosprite-image-details: ico-realgravity.png@470,0,8dfc0bd1320db439073c67169fd1ed66
+	@if $imageName == 'ico-realgravity' {
+		$image-width: 36px;
+		$image-height: 36px;
+		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico-realgravity.png'); /* base64 */
+	}
+	// @autosprite-image-details: ico-screenplay.png@518,0,cf4f575536b5f71cd83107c9648c674f
+	@if $imageName == 'ico-screenplay' {
+		$image-width: 35px;
+		$image-height: 40px;
+		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico-screenplay.png'); /* base64 */
+	}
+	@if $image-width != -1 {
+		$position-x: 0px;
+		$position-y: 0px;
+		@if $width > 0 {
+			$position-x: $position-x + ( $width - $image-width ) / 2;
+		}
+		@if $height > 0 {
+			$position-y: $position-y + ( $height - $image-height ) / 2;
+		}
+		@if $offset-x != 0 {
+			$position-x: $position-x + $offset-x;
+		}
+		@if $offset-y != 0 {
+			$position-y: $position-y + $offset-y;
+		}
+		background-position: $position-x $position-y;
+	}
+}
+@mixin sprite-VideoPageTool-full($imageName, $width: 0, $height: 0,$offset-x: 0,$offset-y: 0) {
+	@include sprite-VideoPageTool-base;
+	@include sprite-VideoPageTool($imageName,$width,$height,$offset-x,$offset-y);
+}
+@mixin sprite-VideoPageTool-full-embed($imageName, $width: 0, $height: 0,$offset-x: 0,$offset-y: 0) {
+	@include sprite-VideoPageTool-base-embed;
+	@include sprite-VideoPageTool-embed($imageName,$width,$height,$offset-x,$offset-y);
+}
+@mixin sprite-VideoPageTool-deep($width: 0,$height: 0) {
+	@include sprite-VideoPageTool-base;
+	&.ico-anyclip {
+		@include sprite-VideoPageTool('ico-anyclip',$width,$height);
+	}
+	&.ico-ign {
+		@include sprite-VideoPageTool('ico-ign',$width,$height);
+	}
+	&.ico-iva {
+		@include sprite-VideoPageTool('ico-iva',$width,$height);
+	}
+	&.ico-ooyala {
+		@include sprite-VideoPageTool('ico-ooyala',$width,$height);
+	}
+	&.ico-realgravity {
+		@include sprite-VideoPageTool('ico-realgravity',$width,$height);
+	}
+	&.ico-screenplay {
+		@include sprite-VideoPageTool('ico-screenplay',$width,$height);
+	}
+}
+@mixin sprite-VideoPageTool-deep-embed($width: 0,$height: 0) {
+	@include sprite-VideoPageTool-base-embed;
+	&.ico-anyclip {
+		@include sprite-VideoPageTool-embed('ico-anyclip',$width,$height);
+	}
+	&.ico-ign {
+		@include sprite-VideoPageTool-embed('ico-ign',$width,$height);
+	}
+	&.ico-iva {
+		@include sprite-VideoPageTool-embed('ico-iva',$width,$height);
+	}
+	&.ico-ooyala {
+		@include sprite-VideoPageTool-embed('ico-ooyala',$width,$height);
+	}
+	&.ico-realgravity {
+		@include sprite-VideoPageTool-embed('ico-realgravity',$width,$height);
+	}
+	&.ico-screenplay {
+		@include sprite-VideoPageTool-embed('ico-screenplay',$width,$height);
+	}
+}
+// @autosprite-end
