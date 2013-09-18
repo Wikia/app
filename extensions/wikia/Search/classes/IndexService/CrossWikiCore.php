@@ -190,9 +190,11 @@ class CrossWikiCore extends AbstractWikiService
 	 */
 	protected function getLicenseName() {
 		$licensedWikiService = new \LicensedWikisService();
-		return [
-			"commercial_use_allowed_i" => $licensedWikiService->isCommercialUseAllowedById( $this->getWikiId() ) ? 1 : 0,
-		];
+		if( $licensedWikiService->isCommercialUseAllowedById( $this->getWikiId() ) ) {
+			return [
+				"commercial_use_allowed_b" =>  "false",
+			];
+		} else { return []; }
 	}
 	
 	/**
