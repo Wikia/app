@@ -27,12 +27,12 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 		if($navBar.hasClass('nav-open')){
 			showPage();
 
-			$.event.trigger('nav:open');
+			$.event.trigger('nav:close');
 		}else{
 			reset();
 			$navBar.removeClass().addClass('nav-open');
 
-			$.event.trigger('nav:close');
+			$.event.trigger('nav:open');
 		}
 	});
 
