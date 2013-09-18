@@ -40,6 +40,15 @@ $messages['en'] = array(
 	'videopagetool-header-dashboard' => 'Dashboard',
 	'videopagetool-success-save' => 'Your changes have been saved',
 	'videopagetool-hint-description-maxlength' => '$1 characters max',
+
+	// Home Page Section: Partners
+	'videohomepage-partner-section-title' => 'Our Partners',
+	'videohomepage-partner-name-anyclip' => 'anyclip',
+	'videohomepage-partner-name-ign' => 'IGN',
+	'videohomepage-partner-name-iva' => 'IVA',
+	'videohomepage-partner-name-ooyala' => 'Ooyala',
+	'videohomepage-partner-name-realgravity' => 'Realgravity',
+	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 
 $messages['qqq'] = array(
@@ -74,4 +83,13 @@ $messages['qqq'] = array(
 	'videopagetool-tooltip-in-progress' => 'In Progress',
 	'videopagetool-header-dashboard' => 'Title for dashboard page',
 	'videopagetool-success-save' => 'This text appears if your changes have been saved successfully',
+
+	// Home Page Section: Partners
+	'videohomepage-partner-section-title' => 'Title for section that links to videos from our content partners',
+	'videohomepage-partner-name-anyclip' => 'This text is the name of a partner: anyclip',
+	'videohomepage-partner-name-ign' => 'This text is the name of a partner: IGN',
+	'videohomepage-partner-name-iva' => 'This text is the name of a partner: IVA',
+	'videohomepage-partner-name-ooyala' => 'This text is the name of a partner: Ooyala',
+	'videohomepage-partner-name-realgravity' => 'This text is the name of a partner: Realgravity',
+	'videohomepage-partner-name-screenplay' => 'This text is the name of a partner: Screenplay',
 );
