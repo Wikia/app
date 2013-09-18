@@ -367,107 +367,110 @@ body > .global-notification,
 }
 
 @media screen and (max-width: $breakpoint-small) {
-	// START - main page tag fixes
-	.home-top-right-ads {
-		display: none;
-	}
-
-	.lcs-container {
-		margin-right: 0;
-	}
-
-	.main-page-tag-lcs {
-		float: none;
-		margin-right: 0;
-	}
-
-	.main-page-tag-rcs {
-		float: none;
-		width: auto;
-	}
-	// END - main page tag fixes
-
-	.WikiaArticle {
-		min-height: auto;
-	}
-
-	.WikiaMainContent {
-		float: none;
-		margin-right: 0;
-	}
-
-	.WikiaMainContentContainer {
-		margin-right: 0;
-	}
-
-	.WikiaRail {
-		float: none;
-		padding: 0 10px;
-		width: auto;
-	}
-
-	.WikiaHeader li.start-a-wiki {
-		display: none;
-	}
-
-	.WikiHeader {
-		min-height: 154px;
-		padding-top: 0;
-
-		> nav {
-			left: 0;
-			top: 85px;
+	// ABTesting: DAR-1859
+	body:not(.keep-rail-on-right) {
+		// START - main page tag fixes
+		.home-top-right-ads {
+			display: none;
 		}
 
-		.buttons {
-			top: 87px;
-		}
-	}
-
-	.WikiNav li.nav-item:first-child {
-		margin-left: 10px;
-	}
-
-	.WikiHeaderSearch {
-		display: block;
-		left: 280px;
-		position: absolute;
-		right: 10px;
-		top: 12px;
-		width: auto;
-
-		input[type="text"] {
-			@include box-sizing( border-box );
-			font-size: 15pt;
-			height: 40px !important;
-			left: 0;
+		.lcs-container {
 			margin-right: 0;
-			position: absolute;
-			right: 53px;
+		}
+
+		.main-page-tag-lcs {
+			float: none;
+			margin-right: 0;
+		}
+
+		.main-page-tag-rcs {
+			float: none;
 			width: auto;
-			width: calc(100% - 53px); // <-- CSS3!
+		}
+		// END - main page tag fixes
+
+		.WikiaArticle {
+			min-height: auto;
 		}
 
-		.wikia-button {
-			height: 40px !important;
+		.WikiaMainContent {
+			float: none;
+			margin-right: 0;
+		}
+
+		.WikiaMainContentContainer {
+			margin-right: 0;
+		}
+
+		.WikiaRail {
+			float: none;
+			padding: 0 10px;
+			width: auto;
+		}
+
+		.WikiaHeader li.start-a-wiki {
+			display: none;
+		}
+
+		.WikiHeader {
+			min-height: 154px;
+			padding-top: 0;
+
+			> nav {
+				left: 0;
+				top: 85px;
+			}
+
+			.buttons {
+				top: 87px;
+			}
+		}
+
+		.WikiNav li.nav-item:first-child {
+			margin-left: 10px;
+		}
+
+		.WikiHeaderSearch {
+			display: block;
+			left: 280px;
 			position: absolute;
-			right: 0;
+			right: 10px;
+			top: 12px;
+			width: auto;
+
+			input[type="text"] {
+				@include box-sizing( border-box );
+				font-size: 15pt;
+				height: 40px !important;
+				left: 0;
+				margin-right: 0;
+				position: absolute;
+				right: 53px;
+				width: auto;
+				width: calc(100% - 53px); // <-- CSS3!
+			}
+
+			.wikia-button {
+				height: 40px !important;
+				position: absolute;
+				right: 0;
+			}
 		}
-	}
 
-	// TODO: clean up all the wikinav2/oasis-one-column styles...
-	.wikinav2.oasis-one-column .WikiaPageHeader {
-		padding-right: 0;
+		// TODO: clean up all the wikinav2/oasis-one-column styles...
+		.wikinav2.oasis-one-column .WikiaPageHeader {
+			padding-right: 0;
 
-		.tally {
-			right: 0;
+			.tally {
+				right: 0;
+			}
 		}
-	}
 
-	.WikiaSearchHeader .WikiaSearch,
-	.WikiaRail .WikiaSearch,
-	.WikiaPageHeader .WikiaSearch {
-		display: none;
+		.WikiaSearchHeader .WikiaSearch,
+		.WikiaRail .WikiaSearch,
+		.WikiaPageHeader .WikiaSearch {
+			display: none;
+		}
 	}
 }
 
