@@ -8,7 +8,7 @@ var hookRightRailImpression = function (label) {
 			callback: function(element) {
 				Wikia.Tracker.track({
 					action: Wikia.Tracker.ACTIONS.IMPRESSION,
-					category: 'right-rail-abtesting',
+					category: 'abtest-right-rail',
 					label: label,
 					trackingMethod: 'both'
 				}, {});
@@ -29,8 +29,11 @@ $(function () {
         $('html').addClass('keep-rail-on-right');
 	    hookRightRailImpression('static');
         break;
-    default:
-        // no changes in behaviour
+	case "CONTROL":
+		// it's control group, do nothing (just track)
 		hookRightRailImpression('control');
+		break;
+    default:
+        // don't track
 	}
 });
