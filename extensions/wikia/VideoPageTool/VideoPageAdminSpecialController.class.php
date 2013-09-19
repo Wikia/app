@@ -57,7 +57,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	/**
 	 * Edit page
 	 * @requestParam string language
-	 * @requestParam string date [yyyy-mm-dd]
+	 * @requestParam string date [timestamp]
 	 * @requestParam string section [featured/category/fan]
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
@@ -212,7 +212,11 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 
 	/**
 	 * Featured videos template
+	 * @requestParam string date [timestamp]
+	 * @requestParam string language
 	 * @requestParam array videos
+	 * @responseParam string date [timestamp]
+	 * @responseParam string language
 	 * @responseParam array videos
 	 */
 	public function featured() {
@@ -223,20 +227,26 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 
 	/**
 	 * Category videos template
-	 * @requestParam array videos
-	 * @responseParam array videos
+	 * @requestParam string date [timestamp]
+	 * @requestParam string language
+	 * @requestParam array video
+	 * @responseParam string date [timestamp]
+	 * @responseParam string language
+	 * @responseParam array $categories
 	 */
 	public function category() {
-		$videos[] = array(
-			'categoryName' => 'Category Name',
-			'displayTitle' => 'Title',
-		);
-		$this->videos = $videos;
+		$this->categories = $this->getVal( 'videos', array() );
+		$this->date = $this->getVal( 'date' );
+		$this->language = $this->getVal( 'language' );
 	}
 
 	/**
 	 * Fan videos template
+	 * @requestParam string date [timestamp]
+	 * @requestParam string language
 	 * @requestParam array videos
+	 * @responseParam string date [timestamp]
+	 * @responseParam string language
 	 * @responseParam array videos
 	 */
 	public function fan() {
@@ -250,6 +260,8 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			'description' => 'description...',
 		);
 		$this->videos = $videos;
+		$this->date = $this->getVal( 'date' );
+		$this->language = $this->getVal( 'language' );
 	}
 
 	/**
@@ -295,6 +307,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 */
 	public function getCategoryData() {
 		$categoryName = $this->getVal( 'categoryKey', '' );
+
 		if ( empty( $categoryName ) ) {
 			$this->result = 'error';
 			$this->msg = wfMessage( 'videopagetool-error-invalid-category' )->plain();
@@ -311,7 +324,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		$helper = new VideoPageToolHelper();
 		$data = $helper->getCategoryData( $title );
 
-		if ( empty( $category ) ) {
+		if ( empty( $data ) ) {
 			$this->result = 'error';
 			$this->msg = wfMessage( 'videopagetool-unknown-category' )->plain();
 			$this->data = $data;

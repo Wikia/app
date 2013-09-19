@@ -53,7 +53,7 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 	 */
 	public static function getDefaultAssetData() {
 		$data = array(
-			'videoTitle'      => wfMessage( 'videopagetool-video-title-default-text' )->text(),
+			'videoTitle'      => wfMessage( 'videopagetool-video-title-default-text' )->plain(),
 			'videoKey'        => '',
 			'videoThumb'      => '',
 			'largeThumbUrl'   => '',
