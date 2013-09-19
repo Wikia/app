@@ -28,6 +28,7 @@ class MigrateImagesToSwift extends Maintenance {
 	private $swiftPathPrefix; // e.g. "pl/images"
 	private $swiftContainerName;
 
+	private $imagesCnt = 0;
 	private $migratedImagesCnt = 0;
 	private $migratedImagesSize = 0;
 
@@ -48,6 +49,11 @@ class MigrateImagesToSwift extends Maintenance {
 		// Swift server and config
 		$this->swiftConfig = $wgFSSwiftConfig;
 		$this->swiftServer = 'http://' . parse_url($wgFSSwiftConfig['swiftAuthUrl'], PHP_URL_HOST);
+
+		$port = intval(parse_url($wgFSSwiftConfig['swiftAuthUrl'], PHP_URL_PORT));
+		if ($port) {
+			$this->swiftServer .= ':' . $port;
+		}
 
 		// parse upload paths and generate proper container mapping
 		// wgFSSwiftContainer: poznan/pl
@@ -109,6 +115,7 @@ class MigrateImagesToSwift extends Maintenance {
 		// set public ACL
 		// http://s3.dfs-s1/swift/v1/firefly
 		$url = "{$this->swiftServer}/swift/v1/{$containerName}";
+		wfDebug(__METHOD__ . ": {$url}\n");
 
 		/* @var $req CurlHttpRequest */
 		$req = MWHttpRequest::factory( $url, array( 'method' => 'POST', 'noProxy' => true ) );
@@ -144,7 +151,7 @@ class MigrateImagesToSwift extends Maintenance {
 			$object->load_from_filename($localFile);
 		}
 		catch(Exception $ex) {
-			Wikia::log(__METHOD__, 'exception', $ex->getMessage());
+			Wikia::log(__METHOD__, 'exception - ' . $localFile, $ex->getMessage());
 			return false;
 		}
 
@@ -238,6 +245,16 @@ class MigrateImagesToSwift extends Maintenance {
 		$this->migratedImagesCnt++;
 
 		$this->store($wgUploadDirectory . '/' . $path, $path);
+
+		// "progress bar"
+		if ($this->migratedImagesCnt % 5 === 0) {
+			$this->output(sprintf(
+				"%d%%: %s/%s\r",
+				round($this->migratedImagesCnt / $this->imagesCnt * 100),
+				$this->migratedImagesCnt,
+				$this->imagesCnt
+			));
+		}
 	}
 
 	public function execute() {
@@ -283,7 +300,11 @@ class MigrateImagesToSwift extends Maintenance {
 		foreach($tables as $table) {
 			$count = $dbr->selectField($table, 'count(*)');
 			$this->output("* {$table}:\t{$count}\n");
+
+			$this->imagesCnt += $count;
 		}
+
+		$this->output("\n{$this->imagesCnt} image(s) will be migrated...\n");
 
 		// prepare the list of files to migrate to new storage
 		// (a) current revisions of images
@@ -333,12 +354,12 @@ class MigrateImagesToSwift extends Maintenance {
 		// summary
 		$time = time() - $time;
 
-		$this->output(sprintf("\nMigrated files: %d (%.2f GB) in %d sec (%.2f ms per file / %d ms per MB)\n",
+		$this->output(sprintf("\nMigrated files: %d (%.4f GB) in %d sec (%.2f ms per file / %.2f s per MB)\n",
 			$this->migratedImagesCnt,
 			$this->migratedImagesSize / 1024 / 1024 / 1024,
 			$time,
 			$time / $this->migratedImagesCnt * 1000,
-			$time / ($this->migratedImagesSize / 1024 / 1024) * 1000
+			$time / ($this->migratedImagesSize / 1024 / 1024)
 		));
 
 		// update wiki configuration
