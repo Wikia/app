@@ -578,7 +578,6 @@ class UserLoginHelper extends WikiaModel {
 	 * It can be removed after TempUser global disable
 	 *
 	 * @param $username String User Name
-	 * @param $clear Bool resets static value for username
 	 * @return bool
 	 */
 	public static function isTempUser( $username ) {
