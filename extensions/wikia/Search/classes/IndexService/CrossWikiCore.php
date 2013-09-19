@@ -191,8 +191,6 @@ class CrossWikiCore extends AbstractWikiService
 	protected function getLicensedWikisService(){
 
 		return  new \LicensedWikisService();
-
-
 	}
 
 	/**
