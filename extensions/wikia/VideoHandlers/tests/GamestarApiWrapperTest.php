@@ -27,7 +27,6 @@
 		 * please contact video team if test is failed
 		 *
 		 * @group Infrastructure
-		 * @group Broken
 		 */
 		public function testgetDataFromValidHtmlResponse() {
 			// setup

@@ -49,9 +49,6 @@ class CurlTest extends PHPUnit_Framework_TestCase {
 		$this->assertArrayHasKey('version_number', $version);
 	}
 
-	/**
-	 * @group Broken
-	 */
 	function testEnsureGettingErrorReturnsCorrectInfo() {
 		$curl = new Curl(self::TEST_VALID_URL);
 
