@@ -177,7 +177,6 @@ h2 {
 		background-color: $color-page;
 		width: 200px;
 		float: left;
-		margin-right: 50px;
 	}
 
 	.toc-fixed {
@@ -190,6 +189,7 @@ h2 {
 		font-size: 2.25rem;
 		list-style: decimal inside;
 		margin-left: 250px;
+		margin-right: 0;
 		width: 694px;
 	}
 }
