@@ -74,6 +74,27 @@ $wgExtensionCredits['parserhook'][] = array(
 	'version' => $DPLVersion
 );
 
+// Wikia change start
+$wgHooks['PageRenderingHash'][] = 'dynamicPageList_onPageRenderingHash';
+
+function dynamicPageList_onPageRenderingHash( &$hash ) {
+	global $wgRequest;
+
+	$offset = $wgRequest->getVal( 'DPL_offset' );
+	$count = $wgRequest->getVal( 'DPL_count' );
+
+	if ( $offset !== null ) {
+		$hash .= "!{$offset}";
+	}
+
+	if ( $count !== null ) {
+		$hash .= "!{$count}";
+	}
+
+	return true;
+}
+// Wikia change end
+
 require_once( 'DPLSetup.php' );
 
 ExtDynamicPageList::$DPLVersion = $DPLVersion;
