@@ -9,6 +9,7 @@
 class UserLoginHelper extends WikiaModel {
 
 	protected static $instance = NULL;
+	protected static $isTempUser = array();
 
 	const LIMIT_EMAIL_CHANGES = 5;
 	const LIMIT_EMAILS_SENT = 5;
@@ -563,12 +564,16 @@ class UserLoginHelper extends WikiaModel {
 		$user->setOption( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, null );
 		$user->saveSettings();
 		$user->saveToCache();
-		UserLoginHelper::isTempUser( $user->getName(), true );
+		UserLoginHelper::clearIsTempUserStatic( $user->getName() );
 		return true;
 	}
 
 	/**
 	 * Function that helps to determine whether we have to do with TempUser case
+	 *
+	 * It uses self::$isTempUser static value to store result of funtion
+	 * to prevent many invokes of TempUser::getTempUserFromName
+	 *
 	 * It's a function for transitional state of getting rid of TempUser
 	 * It can be removed after TempUser global disable
 	 *
@@ -576,30 +581,32 @@ class UserLoginHelper extends WikiaModel {
 	 * @param $clear Bool resets static value for username
 	 * @return bool
 	 */
-	public static function isTempUser( $username, $clear = false ) {
+	public static function isTempUser( $username ) {
 		global $wgDisableTempUser;
-		static $isTempUser;
-
 		if ( !empty( $wgDisableTempUser ) ) {
 			return false;
 		}
 
-		if ( $clear ) {
-			$isTempUser[$username] = null;
-			return null;
+		if ( isset( self::$isTempUser[$username] ) ) {
+			return self::$isTempUser[$username];
 		}
-
-		if ( isset( $isTempUser[$username] ) ) {
-			return $isTempUser[$username];
-		}
-
 		$tempuser = TempUser::getTempUserFromName( $username );
 		if ( $tempuser != false ) {
-			$isTempUser[$username] = true;
+			self::$isTempUser[$username] = true;
 		} else {
-			$isTempUser[$username] = false;
+			self::$isTempUser[$username] = false;
 		}
-		return $isTempUser[$username];
+		return self::$isTempUser[$username];
+	}
+
+	/**
+	 * Clears static isTempUser value for provided user name
+	 * isTempUser static var is used by isTempUser function
+	 *
+	 * @param $username String User Name
+	 */
+	public static function clearIsTempUserStatic( $username ) {
+		self::$isTempUser[$username] = null;
 	}
 
 
