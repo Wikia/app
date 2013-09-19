@@ -49,6 +49,10 @@ class LicensedWikisService extends WikiaModel {
 		return true;
 	}
 
+	public function isCommercialUseAllowedForThisWiki() {
+		return $this->isCommercialUseAllowedById( $this->wg->cityId );
+	}
+
 	public function isCommercialUseAllowedByHostName( $hostName ) {
 		$list = $this->getCommercialUseNotAllowedWikis();
 		foreach ( $list as $wiki ) {
