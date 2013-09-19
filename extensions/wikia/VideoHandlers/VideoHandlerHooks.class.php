@@ -97,11 +97,12 @@ class VideoHandlerHooks {
 			'backend' => 'local-backend',
 		);
 
-		global $wgFSSwiftContainer, $wgDBname, $wgLanguageCode;
-		$wgFSSwiftContainer = $wgDBname;
-		if ( $wgLanguageCode != 'en' ) {
-			$wgFSSwiftContainer .= sprintf( "/%s", $wgLanguageCode );
-		}
+		// TODO: move to wikia.php
+		// $wgUploadPath: http://images.wikia.com/poznan/pl/images
+		// $wgFSSwiftContainer: poznan/pl
+		global $wgFSSwiftContainer;
+		$path = trim(parse_url($wgUploadPath, PHP_URL_PATH), '/');;
+		$wgFSSwiftContainer = substr($path, 0, -7);
 
 		if ( !empty( $wgEnableCephFileBackend ) ) {
 			global $wgFSSwiftContainer;
