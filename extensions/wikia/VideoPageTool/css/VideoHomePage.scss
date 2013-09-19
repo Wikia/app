@@ -8,64 +8,79 @@
  */
 #HOME_TOP_RIGHT_BOXAD { display: none !important;  }
 
-.partners {
+.WikiaVideo {
 
-	& > ul {
-		margin: 0 auto;
+	.wv-sprite {
+		@include sprite-VideoPageTool-base();
+	}
 
-		& > li {
+	.wv-logo {
+		@extend .wv-sprite;
+		@include sprite-VideoPageTool('logo-wikiavideo');
+		height: 37px;
+		width: 187px;
+	}
+
+	// Branding Partners
+	.partners {
+
+		& > ul {
+			margin: 0 auto;
+
+			& > li {
+				display: inline-block;
+				width: 16.3%;
+				text-align: center;
+			}
+		}
+
+		.partner-link {
+			display: block;
+			font-weight: bold;
+		}
+
+		
+		// Icon classes for partner sprites
+			
+
+		[class^="ico-"] {
+			@extend .wv-sprite;
 			display: inline-block;
-			width: 16.3%;
-			text-align: center;
+			margin-bottom: 14px;
+		}
+
+		.ico-anyclip {
+			@include sprite-VideoPageTool('ico-anyclip');
+			height: 30px;
+			width: 82px;
+		}
+
+		.ico-ign {
+			@include sprite-VideoPageTool('ico-ign');
+			height: 23px;
+			width: 76px;
+		}
+		.ico-iva {
+			@include sprite-VideoPageTool('ico-iva', 0, 0, 0, 5px);
+			height: 38px;
+			width: 85px;
+		}
+		.ico-ooyala {
+			@include sprite-VideoPageTool('ico-ooyala');
+			height: 18px;
+			width: 107px;
+		}
+
+		.ico-realgravity { 
+			@include sprite-VideoPageTool('ico-realgravity'); 
+			height: 36px;
+			width: 36px;
+		}
+
+		.ico-screenplay { 
+			@include sprite-VideoPageTool('ico-screenplay'); 
+			height: 40px;
+			width: 35px;
 		}
 	}
-
-	.partner-link {
-		display: block;
-		font-weight: bold;
-	}
-
-	/*
-	 * Icon classes for partner sprites
-	 */	
-	[class^="ico-"] {
-		@include sprite-VideoPageTool-base();
-		display: inline-block;
-		margin-bottom: 14px;
-	}
-
-	.ico-anyclip {
-		@include sprite-VideoPageTool('ico-anyclip');
-		height: 30px;
-		width: 82px;
-	}
-
-	.ico-ign {
-		@include sprite-VideoPageTool('ico-ign');
-		height: 23px;
-		width: 76px;
-	}
-	.ico-iva {
-		@include sprite-VideoPageTool('ico-iva', 0, 0, 0, 5px);
-		height: 38px;
-		width: 85px;
-	}
-	.ico-ooyala {
-		@include sprite-VideoPageTool('ico-ooyala');
-		height: 18px;
-		width: 107px;
-	}
-
-	.ico-realgravity { 
-		@include sprite-VideoPageTool('ico-realgravity'); 
-		height: 36px;
-		width: 36px;
-	}
-
-	.ico-screenplay { 
-		@include sprite-VideoPageTool('ico-screenplay'); 
-		height: 40px;
-		width: 35px;
-	}
 }
-
