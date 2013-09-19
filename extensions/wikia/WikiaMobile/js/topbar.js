@@ -9,7 +9,8 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 	function (qs, loader, toc, $, track, throbber, w) {
 	'use strict';
 
-	var	d = w.document,
+	var	$html = $('html'),
+		d = w.document,
 		wkPrfTgl = d.getElementById('wkPrfTgl'),
 		navBar = d.getElementById('wkTopNav'),
 		$navBar = $(navBar),
@@ -17,7 +18,6 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 		searchInput = d.getElementById('wkSrhInp'),
 		searchSug = d.getElementById('wkSrhSug'),
 		searchForm = d.getElementById('wkSrhFrm'),
-		searchTgl = d.getElementById('wkSrhTgl'),
 		barSetUp = false,
 		searchInit = false;
 
@@ -97,9 +97,10 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 		}
 	});
 
-	searchTgl && searchTgl.addEventListener('click', function(event){
+	$('#wkSrhTgl').on('click', function(event){
 		event.preventDefault();
-		if(navBar.className.indexOf('srhOpn') > -1){
+
+		if($navBar.hasClass('srhOpn')){
 			close();
 		}else{
 			initAutocomplete();
@@ -115,7 +116,8 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 		wkPrfTgl.href = '';
 		wkPrfTgl.addEventListener('click', function(event){
 			event.preventDefault();
-			if(navBar.className.indexOf('prf') > -1){
+
+			if($navBar.hasClass('prf')){
 				close();
 			}else{
 				openProfile();
@@ -141,18 +143,15 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 					});
 				}
 			);
+
 			searchInit = true;
 		}
 	}
 
-	//hash - hash to be set to after returnto query
-	//used in ie. ArticleComments.wikiamobile.js
 	function openProfile(hash){
 		reset();
 
-		if(w.wgUserName){
-			//track('profile/open');
-		}else{
+		if(!w.wgUserName){
 			openLogin(hash);
 		}
 
@@ -163,8 +162,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 		if(wkPrf.className.indexOf('loaded') === -1){
 			throbber.show(wkPrf, {center: true});
 
-			loader(
-			{
+			loader({
 				type: loader.LIBRARY,
 				resources: 'facebook'
 			},{
@@ -231,14 +229,14 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 	function hidePage(){
 		$.event.trigger('ads:unfix');
 
-		$('html').addClass('hidden');
+		$html.addClass('hidden');
 	}
 
 	function showPage(){
 		$.event.trigger('ads:fix');
 
 		$navBar.removeClass();
-		$('html').removeClass('hidden');
+		$html.removeClass('hidden');
 	}
 
 	return {
