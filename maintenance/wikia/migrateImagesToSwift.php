@@ -44,16 +44,11 @@ class MigrateImagesToSwift extends Maintenance {
 	 * Set up the config variables
 	 */
 	private function init() {
-		global $wgUploadDirectory, $wgFSSwiftContainer, $wgFSSwiftConfig, $wgDBname;
+		global $wgUploadDirectory, $wgFSSwiftContainer, $wgFSSwiftConfig, $wgFSSwiftServer, $wgDBname;
 
 		// Swift server and config
 		$this->swiftConfig = $wgFSSwiftConfig;
-		$this->swiftServer = 'http://' . parse_url($wgFSSwiftConfig['swiftAuthUrl'], PHP_URL_HOST);
-
-		$port = intval(parse_url($wgFSSwiftConfig['swiftAuthUrl'], PHP_URL_PORT));
-		if ($port) {
-			$this->swiftServer .= ':' . $port;
-		}
+		$this->swiftServer = 'http://' . $wgFSSwiftServer;
 
 		// parse upload paths and generate proper container mapping
 		// wgFSSwiftContainer: poznan/pl

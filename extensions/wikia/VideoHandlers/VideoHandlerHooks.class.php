@@ -105,16 +105,16 @@ class VideoHandlerHooks {
 		$wgFSSwiftContainer = substr($path, 0, -7);
 
 		if ( !empty( $wgEnableCephFileBackend ) ) {
-			global $wgFSSwiftContainer;
+			global $wgFSSwiftContainer, $wgFSSwiftServer;
 			$container = $wgFSSwiftContainer;
 
 			$wgLocalFileRepo['backend'] = 'ceph-backend';
 			$wgLocalFileRepo['zones'] = array (
-				'public' => array( 'container' => $container, 'url' => 'http://dfs.images.wikia.com:6081', 'directory' => 'images' ),
-				'temp'   => array( 'container' => $container, 'url' => 'http://dfs.images.wikia.com:6081', 'directory' => 'images/temp' ),
-				'thumb'  => array( 'container' => $container, 'url' => 'http://dfs.images.wikia.com:6081', 'directory' => 'images/thumb' ),
-				'deleted'=> array( 'container' => $container, 'url' => 'http://dfs.images.wikia.com:6081', 'directory' => 'images/deleted' ),
-				'archive'=> array( 'container' => $container, 'url' => 'http://dfs.images.wikia.com:6081', 'directory' => 'images/archive' )
+				'public' => array( 'container' => $container, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images' ),
+				'temp'   => array( 'container' => $container, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/temp' ),
+				'thumb'  => array( 'container' => $container, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/thumb' ),
+				'deleted'=> array( 'container' => $container, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/deleted' ),
+				'archive'=> array( 'container' => $container, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/archive' )
 			);
 		}
 
