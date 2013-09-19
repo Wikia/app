@@ -606,12 +606,16 @@ class SpecialConnect extends SpecialPage {
 		FBConnectDB::addFacebookID($user, $fb_user);
 		// Update the user with settings from Facebook
 		$user->updateFromFacebook();
+
+		// Wikia changes start
 		// Setup the session
 		global $wgSessionStarted;
 		if (!$wgSessionStarted) {
 			wfSetupSession();
 		}
 		$user->setCookies();
+		// Wikia changes end
+
 		// Store the user in the global user object
 		$wgUser = $user;
 
