@@ -253,12 +253,12 @@ class EditAccount extends SpecialPage {
 				$this->mUser->setEmail( $email );
 				if ( $email != '' ) {
 					if ( !empty( $wgEnableUserLoginExt ) ) {//Clear not confirmed signup flag
-						UserLoginHelper::removeNotConfirmedFlag( $user );
+						UserLoginHelper::removeNotConfirmedFlag( $this->mUser );
 					}
 					$this->mUser->confirmEmail();
 					$this->mUser->setOption( 'new_email', null );
 				} else {
-					if ( !empty( $wgEnableUserLoginExt ) && $user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
+					if ( !empty( $wgEnableUserLoginExt ) && $this->mUser->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
 						//User not confirmed on signup can't has empty email
 						//@TODO introduce new message since usecase here is same as temp user empty email but it's not temp user anymore
 						$this->mStatusMsg = wfMsg( 'editaccount-error-tempuser-email' );
