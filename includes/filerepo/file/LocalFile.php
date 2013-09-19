@@ -1244,6 +1244,15 @@ class LocalFile extends File {
 	 */
 	function move( $target ) {
 		wfDebugLog( 'imagemove', "Got request to move {$this->name} to " . $target->getText() );
+
+		// Wikia change - begin
+		// @author macbre
+		global $wgUploadMaintenance;
+		if (!empty($wgUploadMaintenance)) {
+			return Status::newFatal('filedelete-maintenance');
+		}
+		// Wikia change - end
+
 		$this->lock(); // begin
 
 		$batch = new LocalFileMoveBatch( $this, $target );
