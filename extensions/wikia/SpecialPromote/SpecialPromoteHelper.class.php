@@ -283,8 +283,9 @@ class SpecialPromoteHelper extends WikiaObject {
 
 		$modifiedFiles = $this->extractModifiedFiles($files);
 		if (!empty($modifiedFiles)) {
-			$corpWikis = $visualizationModel->getVisualizationWikisData();
-			$imageReviewState = isset($corpWikis[$langCode]) ? ImageReviewStatuses::STATE_UNREVIEWED : ImageReviewStatuses::STATE_AUTO_APPROVED;
+			$imageReviewState = $visualizationModel->isCorporateLang($langCode)
+				? ImageReviewStatuses::STATE_UNREVIEWED
+				: ImageReviewStatuses::STATE_AUTO_APPROVED;
 			$visualizationModel->saveImagesForReview($cityId, $langCode, $modifiedFiles, $imageReviewState);
 		}
 
@@ -479,7 +480,7 @@ class SpecialPromoteHelper extends WikiaObject {
 	public function getWikiStatusMessage($WikiId, $langCode) {
 		$wikiStatus = $this->checkWikiStatus($WikiId, $langCode);
 		if ($wikiStatus['isAutoApproved']) {
-			$wikiStatusMessage = wfMessage('promote-statusbar-auto-approved')->parse();
+			$wikiStatusMessage = wfMessage('promote-statusbar-auto-approved', $this->wg->Sitename)->parse();
 		} else if ($wikiStatus["hasImagesRejected"]) {
 			$wikiStatusMessage = wfMessage('promote-statusbar-rejected')->parse();
 		} else if ($wikiStatus["hasImagesInReview"]) {

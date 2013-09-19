@@ -833,6 +833,11 @@ class CityVisualization extends WikiaModel {
 		return array_keys($this->getCorporateSitesList());
 	}
 
+	public function isCorporateLang($langCode) {
+		$corpWikis = $this->getVisualizationWikisData();
+		return isset($corpWikis[$langCode]);
+	}
+
 	/**
 	 * @param Array $sites reference to an array with lists from WikiFactory::getListOfWikisWithVar()
 	 */

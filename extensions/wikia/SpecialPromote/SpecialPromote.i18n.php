@@ -13,8 +13,10 @@ $messages['en'] = array(
 
 	'promote-title' => 'Promote',
 	'promote-introduction-header' => 'Promote your wiki on wikia.com',
+	'promote-nocorp-introduction-header' => 'Promote $1',
 
 	'promote-introduction-copy' => "This page allows you to promote your wiki by making it eligible to appear on [http://www.wikia.com wikia.com]! Add images and a summary to introduce your wiki to visitors on Wikia's main page. Find more tips [http://help.wikia.com/wiki/Help:Promote here].",
+	'promote-nocorp-introduction-copy' => "Add images and a summary to let visitors know what this wiki is all about and encourage them to visit. We'll use this information to promote your wiki in search results, Wikia mobile apps, and more. Find more tips on how to use this tool [http://community.wikia.com/wiki/Help:Promote here].",
 
 	'promote-description' => 'Description',
 	'promote-description-header' => 'Headline',
@@ -25,7 +27,8 @@ $messages['en'] = array(
 
 	'promote-upload' => 'Add Images',
 	'promote-upload-main-photo-header' => 'Main Image',
-	'promote-upload-main-photo-explanation' => "This image defines your wiki.  It will be the main image we use to represent your wiki on wikia.com so make sure it's a great one! Don't forget, you can always update this image so it's current and most represents your wiki.",
+	'promote-upload-main-photo-explanation' => "This image defines your wiki. It will be the main image we use to represent your wiki on wikia.com so make sure it's a great one! Don't forget, you can always update this image so it's current and most represents your wiki.",
+	'promote-nocorp-upload-main-photo-explanation' => "This will be the main image we use to represent your wiki, so make sure it's a great one! This image can always be updated later so it stays current.",
 	'promote-upload-additional-photos-header' => 'Additional Images',
 	'promote-upload-additional-photos-explanation' => 'Adding more images makes your wiki look more interesting and engaging to potential visitors.You can add up to nine images here, and we strongly recommend you hit the limit!',
 
@@ -57,7 +60,7 @@ $messages['en'] = array(
 	'promote-manual-upload-error' => 'This file cannot be uploaded manually. Please use Admin Upload Tool.',
 	'promote-wrong-rights' => "Darn, looks like you don't have permission to access this page. Make sure you're logged in!",
 
-	 'promote-image-rejected' => 'Rejected',
+	'promote-image-rejected' => 'Rejected',
 	'promote-image-accepted' => 'Accepted',
 	'promote-image-in-review' => 'In review',
 
@@ -65,6 +68,7 @@ $messages['en'] = array(
 	'promote-statusbar-inreview' => 'Some of your images are currently in review and will appear on [http://www.wikia.com wikia.com] after they\'re approved.  This can take 2-4 business days, so we\'ll update you here when we\'re done.',
 	'promote-statusbar-approved' => 'Woohoo! $1 is promoted on [http://www.wikia.com wikia.com]!',
 	'promote-statusbar-rejected' => 'One or more of your images was not approved. [[Special:Contact|Find out why]]',
+	'promote-statusbar-auto-approved' => 'Woohoo! $1 is being promoted!',
 
 	'promote-error-oasis-only' => 'This page is not supported under your skin. Please [[Special:Preferences|switch to the Wikia skin]] to access this feature.',
 
@@ -323,8 +327,10 @@ $messages['qqq'] = array(
 	'promote' => 'Promote page heading',
 
 	'promote-title' => 'Promote page title',
-	'promote-introduction-header' => 'Promote page header inviting admin to promote his/her wiki',
-	'promote-introduction-copy' => 'Promote page explanatory copy and invitation to fill in wiki data',
+	'promote-introduction-header' => 'Promote page header inviting admin to promote his/her wiki on corporate wiki',
+	'promote-nocorp-introduction-header' => 'Promote page header inviting admin to promote his/her wiki [not on corporate wikis]. This message is displayed when there is no corp wiki in wikis content lang.',
+	'promote-introduction-copy' => 'Promote page explanatory copy and invitation to fill in wiki data that will be used to promote wiki on corporate wiki',
+	'promote-nocorp-introduction-copy' => 'Promote page explanatory copy and invitation to fill in wiki data that will be used to promote wiki [not on corporate wikis]. This message is displayed when there is no corp wiki in wikis content lang.',
 
 	'promote-description' => 'Title inviting to describe the wiki',
 	'promote-description-header' => 'Label for wiki headline input field',
@@ -335,7 +341,8 @@ $messages['qqq'] = array(
 
 	'promote-upload' => 'Title inviting to add images',
 	'promote-upload-main-photo-header' => 'Label for main wiki image',
-	'promote-upload-main-photo-explanation' => 'Explanatory text for main wiki image',
+	'promote-upload-main-photo-explanation' => 'Explanatory text for main wiki image.',
+	'promote-nocorp-upload-main-photo-explanation' => 'Explanatory text for main wiki image. This message is displayed when there is no corp wiki in wikis content lang.',
 	'promote-upload-additional-photos-header' => 'Label for additional images section',
 	'promote-upload-additional-photos-explanation' => 'Explanatory text for additional optional images section',
 	'promote-upload-form-modal-cancel' => 'Cancel (close) image upload modal',
@@ -370,6 +377,7 @@ $messages['qqq'] = array(
 	'promote-image-rejected' => 'Information about image rejection',
 	'promote-image-accepted' => 'Information about image approval',
 	'promote-image-in-review' => 'Information about image being in review',
+	'promote-statusbar-auto-approved' => 'Information about image auto approval - when there is no corporate wiki in that language',
 
 	'promote-statusbar-icon' => 'Text on the status icon at the top of the special:promote page',
 	'promote-statusbar-inreview' => 'Status information when wiki is in review',

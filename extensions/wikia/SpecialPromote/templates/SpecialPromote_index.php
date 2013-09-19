@@ -11,8 +11,18 @@
 		</div>
 	<? endif; ?>
 	<p class='introduction plainlinks'>
-		<strong><?= wfMessage('promote-introduction-header')->text(); ?></strong><br/>
-		<?= wfMessage('promote-introduction-copy')->parse(); ?>
+		<strong>
+			<? if ($isCorpLang) : ?>
+				<?= wfMessage('promote-introduction-header')->text(); ?>
+			<? else: ?>
+				<?= wfMessage('promote-nocorp-introduction-header', $wg->Sitename)->text(); ?>
+			<? endif ?>
+		</strong><br/>
+		<? if ($isCorpLang) : ?>
+			<?= wfMessage('promote-introduction-copy')->parse(); ?>
+		<? else: ?>
+			<?= wfMessage('promote-nocorp-introduction-copy')->parse(); ?>
+		<? endif ?>
 	</p>
 	<fieldset>
 		<legend><?= wfMessage('promote-description')->text(); ?></legend>
@@ -87,7 +97,13 @@
 						data-image-type="main" />
 				<? endif; ?>
 			</div>
-			<span class='explanatory-copy'><?= wfMessage('promote-upload-main-photo-explanation')->text(); ?></span>
+			<span class='explanatory-copy'>
+				<? if ($isCorpLang) : ?>
+					<?= wfMessage('promote-upload-main-photo-explanation')->text(); ?>
+				<? else: ?>
+					<?= wfMessage('promote-nocorp-upload-main-photo-explanation')->text(); ?>
+				<? endif ?>
+			</span>
 		</div>
 		<div class='input-group more-images required'>
 			<label><?= wfMessage('promote-upload-additional-photos-header')->text(); ?></label>
