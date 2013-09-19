@@ -159,7 +159,7 @@ class WallNotifications {
 		$key = $this->getKey($userId, 'LIST');
 		$val = $this->app->getGlobal('wgMemc')->get($key);
 
-		if(empty($val)) {
+		if( false === $val ) {
 			$val = $this->loadWikiListFromDB($userId);
 			$this->app->getGlobal('wgMemc')->set($key, $val);
 		}
