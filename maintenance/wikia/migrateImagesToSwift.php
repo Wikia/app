@@ -272,7 +272,7 @@ class MigrateImagesToSwift extends Maintenance {
 		WikiFactory::setVarByName('wgEnableUploads',     $wgCityId, false, self::REASON);
 		WikiFactory::setVarByName('wgUploadMaintenance', $wgCityId, true,  self::REASON);
 
-		$this->output('Uploads and image operations disabled');
+		$this->output("Uploads and image operations disabled\n\n");
 
 		// get images count
 		$tables = [
@@ -346,14 +346,14 @@ class MigrateImagesToSwift extends Maintenance {
 		// enable Swift storage via WikiFactory
 		WikiFactory::setVarByName('wgEnableCephFileBackend', $wgCityId, true, self::REASON);
 
-		$this->output('New storage enabled');
+		$this->output("\nNew storage enabled\n");
 
 		// enable uploads via WikiFactory
 		// wgEnableUploads = true / wgUploadMaintenance = false (remove values from WF to give them the default value)
 		WikiFactory::removeVarByName('wgEnableUploads',     $wgCityId, self::REASON);
 		WikiFactory::removeVarByName('wgUploadMaintenance', $wgCityId, self::REASON);
 
-		$this->output('Uploads and image operations enabled');
+		$this->output("\nUploads and image operations enabled\n");
 
 		/**
 		$this->output(sprintf("\nNot existing files: %d\n* %s\n",
