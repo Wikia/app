@@ -54,10 +54,8 @@ class WantedFilesPageWikia extends WantedFilesPage {
 	 */
 	public function formatResult( $skin, $result ) {
 		$title = Title::makeTitleSafe( $result->namespace, $result->title );
-		if ( $title instanceof Title ) {
-			if ( $title->isKnown() ) {
-				return '';
-			}
+		if ( $title instanceof Title && $title->isKnown() ) {
+			return '';
 		}
 
 		return parent::formatResult( $skin, $result );
