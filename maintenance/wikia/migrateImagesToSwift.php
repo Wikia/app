@@ -18,9 +18,6 @@ class MigrateImagesToSwift extends Maintenance {
 
 	const REASON = 'Images migration script';
 
-	/* @var bool $isDryRun */
-	private $isDryRun;
-
 	private $swiftServer;
 	private $swiftConfig;
 	private $swiftToken;
@@ -40,8 +37,6 @@ class MigrateImagesToSwift extends Maintenance {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->addOption( "dry-run", "Do not move any files, just list them" );
-		$this->addOption( "verbose", "Be more noisy" );
 		$this->mDescription = 'Copies files from file system to distributed storage';
 	}
 
@@ -50,8 +45,6 @@ class MigrateImagesToSwift extends Maintenance {
 	 */
 	private function init() {
 		global $wgUploadDirectory, $wgFSSwiftContainer, $wgFSSwiftConfig, $wgDBname;
-
-		$this->isDryRun = $this->hasOption('dry-run');
 
 		// Swift server and config
 		$this->swiftConfig = $wgFSSwiftConfig;
@@ -231,35 +224,6 @@ class MigrateImagesToSwift extends Maintenance {
 		);
 	}
 
-	private function logEntry(Array $row, $path) {
-		global $wgUploadDirectory;
-
-		if ($this->hasOption('verbose')) {
-			$this->output(sprintf("\n* %s - %.2f kB <%s/%s>",
-				$row['name'],
-				$row['size'] / 1024,
-				$wgUploadDirectory,
-				$path
-			));
-		}
-	}
-
-	/**
-	 * Assert that given file exists on the disk
-	 *
-	 * @param $path string path to a file
-	 * @return bool
-	 */
-	private function assertFileExists($path) {
-		if (!file_exists($path)) {
-			$this->notExistingImages[] = $path;
-			$this->error("\n\n###### {$path} does not exist!");
-			return false;
-		}
-
-		return true;
-	}
-
 	/**
 	 * Copy given file to Swift storage
 	 *
@@ -334,11 +298,7 @@ class MigrateImagesToSwift extends Maintenance {
 
 		while($row = $res->fetchRow()) {
 			$path = $this->getImagePath($row);
-			$this->logEntry($row, $path);
-
-			#if ($this->assertFileExists($wgUploadDirectory . '/' . $path)) {
-				$this->copyFile($path, $row);
-			#}
+			$this->copyFile($path, $row);
 		}
 
 		// (b) old revisions of images
@@ -353,11 +313,7 @@ class MigrateImagesToSwift extends Maintenance {
 
 		while($row = $res->fetchRow()) {
 			$path = $this->getOldImagePath($row);
-			$this->logEntry($row, $path);
-
-			#if ($this->assertFileExists($wgUploadDirectory . '/' . $path)) {
-				$this->copyFile($path, $row);
-			#}
+			$this->copyFile($path, $row);
 		}
 
 		// (c) deleted images
@@ -372,11 +328,7 @@ class MigrateImagesToSwift extends Maintenance {
 
 		while($row = $res->fetchRow()) {
 			$path = $this->getRemovedImagePath($row);
-			$this->logEntry($row, $path);
-
-			#if ($this->assertFileExists($wgUploadDirectory . '/' . $path)) {
-				$this->copyFile($path, $row);
-			#}
+			$this->copyFile($path, $row);
 		}
 
 		// summary
