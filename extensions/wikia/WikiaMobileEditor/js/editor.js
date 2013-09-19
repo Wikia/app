@@ -56,24 +56,17 @@ define('editor', ['pubsub', 'wikia.nirvana'], function(pubsub, nirvana){
     function endTags(){
         var char = editArea.value[editArea.selectionStart-1];
         if(char != '<' && char != '>') return;
-        if(!snippets.tagsActive && editArea.value[editArea.selectionStart-1] === '<'){
+        if(!snippets.tagsActive || editArea.value[editArea.selectionStart-1] === '<'){
             snippets.tagsActive = true;
             return;
         }
-        var posEnd = editArea.selectionStart-1,
-            posStart = posEnd,
-            abbr = '';
-        while(posStart){
-            if(editArea[posStart] == " " || editArea[posStart] == "\n") return;
-            if(editArea[posStart] === '<') break;
-            abbr = editArea.value[posStart] + abbr;
-            posStart--;
-        }
-        if(abbr){
-            editArea.setSelectionRange(posEnd+1, posEnd+1);
-            insertTags('</'+abbr+'>');
-            snippets.tagsActive = false;
-        }
+        var text = editArea.value.substring(0, editArea.selectionEnd);
+        var text2 = editArea.value.substring(editArea.selectionEnd, editArea.value.length);
+        var firstPart = text.substring(0, text.lastIndexOf('<'));
+        var secondPart = text.substring(text.lastIndexOf('<')+1, text.lastIndexOf('>'));
+        editArea.value = firstPart + '<' + secondPart + '></' + secondPart + '>' + text2;
+        snippets.tagsActive = false;
+        editArea.selectionStart = editArea.selectionEnd = firstPart.length + secondPart.length + 2;
     }
 
     function watchForSnippets(){
@@ -96,6 +89,7 @@ define('editor', ['pubsub', 'wikia.nirvana'], function(pubsub, nirvana){
         }
         if(editArea.value[editArea.selectionEnd-1] === ']'){
             suggestions.active = false;
+            hideSuggestions();
         }
         var text = editArea.value.substring(0, editArea.selectionEnd);
         var phrase = text.substring(text.lastIndexOf('[')+1, editArea.selectionEnd);
@@ -115,9 +109,9 @@ define('editor', ['pubsub', 'wikia.nirvana'], function(pubsub, nirvana){
     }
 
     function getSuggestions(query){
-        data = {};
+        var data = {};
         data.query = query;
-        nirvana.getJson('SearchApi', 'getList', data).done(function(data){/*, function(data){*/
+        nirvana.getJson('SearchSuggestionsApi', 'getList', data).done(function(data){/*, function(data){*/
             if(typeof data !== 'error'){
                 var suggs = [];
                 var limit = (data.items.length < 3) ? data.items.length : 3;
@@ -133,18 +127,22 @@ define('editor', ['pubsub', 'wikia.nirvana'], function(pubsub, nirvana){
     }
 
     function initSuggestions(){
-        document.addEventListener('click', function(){
+        suggestionBox.addEventListener('click', function(){
+            hideSuggestions();
             if(event.target.classList.contains('suggestion')){
-                editArea.focus();
                 var text = editArea.value.substring(0, caret-1);
                 var text2 = editArea.value.substring(caret, editArea.value.length);
+                var befLength = editArea.value.length;
+                var aftLength = 0;
                 debugger;
                 text = text.substring(0, text.lastIndexOf('[')+1);
                 editArea.value = text + text2;
-                editArea.selectionStart = editArea.selectionEnd = caret;
+                aftLength = editArea.value.length;
+                editArea.selectionStart = editArea.selectionEnd = caret - (befLength - aftLength);
                 insertTags(event.target.innerHTML + ']]');
             }
-            hideSuggestions();
+            suggestions.active = false;
+            editArea.focus();
         });
     }
 
@@ -155,8 +153,8 @@ define('editor', ['pubsub', 'wikia.nirvana'], function(pubsub, nirvana){
             suggestionBox.innerHTML += '<li class="suggestion">' + suggs[i] + '</li>';
         }
         suggestionBox.style.top = (getTextHeight() + editArea.getBoundingClientRect().top) + 'px';
-
         if(suggestionBox.classList.contains('off'))suggestionBox.classList.remove('off');
+        editArea.selectionStart = editArea.selectionEnd = caret;
     }
 
     function hideSuggestions(){

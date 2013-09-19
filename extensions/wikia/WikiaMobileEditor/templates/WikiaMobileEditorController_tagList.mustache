@@ -2,7 +2,9 @@
 	<h2 class=collSec>{{name}}</h2>
 	<section class=artSec>
 		{{#tags}}
-			{{.}}
+			<input type=checkbox id={{}}>
+			<label for={{}}> {{}} <small>!{{}}!</label>
+			<a href=#> {{}} </a>
 		{{/tags}}
 	</section>
 {{/tagSections}}
