@@ -127,7 +127,10 @@ require(['wikia.window', 'wikia.nirvana', 'track', 'wikia.cache'],
 					type: 'GET',
 					controller: 'WikiaMobileController',
 					method: 'getNavigation',
-					format: 'html'
+					format: 'html',
+					data: {
+						lang: window.wgUserLanguage
+					}
 				}).done(function(navHtml){
 					cache.setVersioned(CACHE_KEY, navHtml, 10800);
 

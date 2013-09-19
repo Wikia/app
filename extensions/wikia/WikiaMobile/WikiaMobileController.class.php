@@ -23,7 +23,12 @@ class WikiaMobileController extends WikiaController{
 	}
 
 	public function getNavigation(){
+		global $wgLang;
 		$this->request->setInternal( true );
+
+		//set proper language so this can be properly cached
+		$wgLang = Language::factory( $this->request->getVal( 'lang', $this->wg->ContLang ) );
+
 		$this->forward( 'WikiaMobileNavigationService', 'navMenu' );
 	}
 }
