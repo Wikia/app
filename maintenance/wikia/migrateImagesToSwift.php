@@ -32,6 +32,8 @@ class MigrateImagesToSwift extends Maintenance {
 	private $migratedImagesCnt = 0;
 	private $migratedImagesSize = 0;
 
+	private $time = 0;
+
 	/**
 	 * Set script options
 	 */
@@ -244,10 +246,12 @@ class MigrateImagesToSwift extends Maintenance {
 		// "progress bar"
 		if ($this->migratedImagesCnt % 5 === 0) {
 			$this->output(sprintf(
-				"%d%%: %s/%s\r",
+				"%d%%: %s/%s - %.2f files/sec, %.2f kB/s      \r",
 				round($this->migratedImagesCnt / $this->imagesCnt * 100),
 				$this->migratedImagesCnt,
-				$this->imagesCnt
+				$this->imagesCnt,
+				($this->imagesCnt) / (time() - $this->time),
+				($this->migratedImagesSize / 1024) / (time() - $this->time)
 			));
 		}
 	}
@@ -267,7 +271,7 @@ class MigrateImagesToSwift extends Maintenance {
 			#$this->error("\$wgEnableUploads = false - migration is already running on {$wgDBname} wiki!", 1);
 		}
 
-		$time = time();
+		$this->time = time();
 
 		// connect to Swift
 		if (!$this->connectToSwift()) {
@@ -304,7 +308,7 @@ class MigrateImagesToSwift extends Maintenance {
 		// prepare the list of files to migrate to new storage
 		// (a) current revisions of images
 		// @see http://www.mediawiki.org/wiki/Image_table
-		$this->output("\nA) Getting list of current revisions of images - /images\n");
+		$this->output("\nA) Current revisions of images - /images\n");
 
 		$res = $dbr->select('image', [
 			'img_name AS name',
@@ -318,7 +322,7 @@ class MigrateImagesToSwift extends Maintenance {
 
 		// (b) old revisions of images
 		// @see http://www.mediawiki.org/wiki/Oldimage_table
-		$this->output("\nB) Getting list of current revisions of images - /archive\n");
+		$this->output("\nB) Old revisions of images - /archive\n");
 
 		$res = $dbr->select('oldimage', [
 			'oi_name AS name',
@@ -333,7 +337,7 @@ class MigrateImagesToSwift extends Maintenance {
 
 		// (c) deleted images
 		// @see http://www.mediawiki.org/wiki/Filearchive_table
-		$this->output("\nC) Getting list of removed images - /deleted\n");
+		$this->output("\nC) Deleted images - /deleted\n");
 
 		$res = $dbr->select('filearchive', [
 			'fa_name AS name',
@@ -347,14 +351,13 @@ class MigrateImagesToSwift extends Maintenance {
 		}
 
 		// summary
-		$time = time() - $time;
-
-		$this->output(sprintf("\nMigrated files: %d (%.4f GB) in %d sec (%.2f ms per file / %.2f s per MB)\n",
+		$this->output(sprintf("\nMigrated files: %d (%d MB) in %d min %d sec (%.2f files/sec, %.2f kB/s)\n",
 			$this->migratedImagesCnt,
-			$this->migratedImagesSize / 1024 / 1024 / 1024,
-			$time,
-			$time / $this->migratedImagesCnt * 1000,
-			$time / ($this->migratedImagesSize / 1024 / 1024)
+			round($this->migratedImagesSize / 1024 / 1024),
+			floor((time() - $this->time) / 60),
+			(time() - $this->time) % 60,
+			($this->imagesCnt) / (time() - $this->time),
+			($this->migratedImagesSize / 1024) / (time() - $this->time)
 		));
 
 		// update wiki configuration
