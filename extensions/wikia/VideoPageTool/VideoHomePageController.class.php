@@ -41,6 +41,35 @@ class VideoHomePageController extends WikiaController {
 		} else {
 			$this->haveCurrentProgram = false;
 		}
+
+		$this->partners = $this->buildPartnerCategoryUrls();
+	}
+
+	/**
+	 * @description Builds slug and localized URLs for each of our partner category pages
+	 * @return array
+	 */
+	public function buildPartnerCategoryUrls() {
+		$partners = array();
+		// keys are lowercase as they are used to compose CSS & i18n keys
+		$partners[ 'anyclip' ] = array( 'label' => 'AnyClip' );
+		$partners[ 'ign' ] = array( 'label' => 'IGN' );
+		$partners[ 'iva' ] = array( 'label' => 'IVA' );
+		$partners[ 'screenplay' ] = array( 'label' => 'Screenplay' );
+		$partners[ 'ooyala' ] = array( 'label' => 'Ooyala' );
+		$partners[ 'realgravity' ] = array( 'label' => 'RealGravity' );
+
+		// get localized namespace
+		$catNamespaceString = F::app()->wg->ContLang->getFormattedNsText( NS_CATEGORY );
+
+		foreach( $partners as &$partner ) {
+			$partner['url'] = Title::newFromText( $catNamespaceString . ':' . $partner['label'] )->getFullUrl();
+		}
+
+		// sort by keys, views need to be alphabetized
+		ksort($partners);
+
+		return $partners;
 	}
 
 	/**
