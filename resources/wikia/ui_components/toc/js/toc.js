@@ -10,8 +10,10 @@ define('wikia.ui.toc', ['jquery', 'wikia.window'], function($, w) {
 		var $w = $(w),
 			$toc = $(toc),
 			$sectionLinks = $toc.find('li > a'),
+			bodyHeight = $('body').outerHeight(),
 			sections = [],
-			ACTIVE_CLASS = 'active'; // const for the css class use for highlighting current section
+			ACTIVE_CLASS = 'active', // const for the css class use for highlighting current section
+			OFFSET = 10; // const scroll tolerance for styping which section is in position
 
 		/**
 		 * Creates array of section objects with section ID and offset top position
@@ -24,7 +26,7 @@ define('wikia.ui.toc', ['jquery', 'wikia.window'], function($, w) {
 			for (i = 0; i < length; i++) {
 				var sectionObj = {};
 
-				sectionObj.id = $($sectionLinks[i]).attr('href'),
+				sectionObj.id = $($sectionLinks[i]).attr('href');
 				sectionObj.pos = ( $(sectionObj.id).length ? $(sectionObj.id).offset().top : null );
 
 				sections.push(sectionObj);
@@ -37,14 +39,20 @@ define('wikia.ui.toc', ['jquery', 'wikia.window'], function($, w) {
 
 		function checkPosition() {
 			var wScrollPos = $w.scrollTop(),
+				wHeight = $w.height(),
 				i,
 				length = sections.length;
+
+			if (wScrollPos >= bodyHeight - wHeight) {
+				highlightActiveSection(getActiveSection(sections[length - 1].id));
+				return;
+			}
 
 			for  (i= 0; i < length; i ++) {
 				var currentSection = sections[i],
 					nextSection = sections[i + 1];
 
-				if(currentSection.pos !== null && wScrollPos >= currentSection.pos && ((nextSection && wScrollPos <= nextSection.pos) || (sections.indexOf(currentSection) === length - 1))) {
+				if(currentSection.pos !== null && wScrollPos >= currentSection.pos - OFFSET && ((nextSection && wScrollPos <= nextSection.pos - OFFSET) || (sections.indexOf(currentSection) === length - 1))) {
 					highlightActiveSection(getActiveSection(currentSection.id));
 					break;
 				}
@@ -86,7 +94,7 @@ define('wikia.ui.toc', ['jquery', 'wikia.window'], function($, w) {
 			$w.on('scroll', throttled);
 
 			$toc.on('click', 'li', function(event) {
-				highlightActiveSection($(event.target));
+				highlightActiveSection($(event.currentTarget));
 			});
 		}
 	}
