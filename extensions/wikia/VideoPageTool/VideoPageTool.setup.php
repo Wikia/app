@@ -37,6 +37,7 @@ $wgSpecialPages['VideoPageAdmin'] = 'VideoPageAdminSpecialController';
 
 // hooks
 $wgHooks['ArticleFromTitle'][] = 'VideoPageToolHooks::onArticleFromTitle';
+$wgHooks['ArticlePurge'][] = 'VideoPageToolHooks::onArticlePurge';
 
 // permissions
 $wgGroupPermissions['*']['videopagetool'] = false;

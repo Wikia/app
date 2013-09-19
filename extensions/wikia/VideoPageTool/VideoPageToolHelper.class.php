@@ -8,12 +8,17 @@ class VideoPageToolHelper extends WikiaModel {
 	const THUMBNAIL_WIDTH = 180;
 	const THUMBNAIL_HEIGHT = 100;
 
+	const THUMBNAIL_CATEGORY_WIDTH = 160;
+	const THUMBNAIL_CATEGORY_HEIGHT = 92;
+
 	const MAX_THUMBNAIL_WIDTH = 1000;
 	const MAX_THUMBNAIL_HEIGHT = 1000;
 
+	const CACHE_TTL_CATEGORY_DATA = 86400;    // One day
+
 	public static $requiredRows = array(
 		'featured' => 5,
-		'category' => 4,
+		'category' => 3,
 		'fan'      => 4,
 	);
 
@@ -143,6 +148,55 @@ class VideoPageToolHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $video;
+	}
+
+	public function getCategoryData( $categoryTitle ) {
+		wfProfileIn( __METHOD__ );
+
+		$data = array();
+		if ( class_exists( 'CategoryDataService' ) ) {
+			$memcKey = $this->getMemcKeyCategoryData( $categoryTitle->getText() );
+			$data = $this->wg->memc->get( $memcKey );
+			if ( !is_array( $data ) ) {
+				$categoryData = CategoryDataService::getRecentlyEdited( $categoryTitle->getDBkey(), NS_FILE );
+				$data = array();
+				foreach ( array_keys( $categoryData ) as $pageId ) {
+					$title = Title::newFromID( $pageId );
+					$file = wfFindFile( $title );
+					if ( $file instanceof File  && $file->exists() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
+						$thumb = $file->transform( array( 'width' => self::THUMBNAIL_CATEGORY_WIDTH, 'height' => self::THUMBNAIL_CATEGORY_HEIGHT ) );
+						$videoThumb = $thumb->toHtml();
+						$data[] = array(
+							'title' => $title->getText(),
+							'url'   => $title->getFullURL(),
+							'thumb' => $videoThumb,
+						);
+					}
+				}
+
+				$this->wg->memc->set( $memcKey, $data, self::CACHE_TTL_CATEGORY_DATA );
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $data;
+	}
+
+	/**
+	 * Get memcache key for Category Data
+	 * @return string
+	 */
+	public function getMemcKeyCategoryData( $categoryName ) {
+		$categoryName = md5( $categoryName );
+		return wfMemcKey( 'videopagetool', 'categorydata', $categoryName );
+	}
+
+	/**
+	 * Clear cache for Category Data
+	 */
+	protected function invalidateCacheCategoryData( $categoryName ) {
+		$this->wg->Memc->delete( $this->getMemcKey( $categoryName ) );
 	}
 
 	/**

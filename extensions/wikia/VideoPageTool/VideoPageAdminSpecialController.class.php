@@ -286,6 +286,43 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		}
 	}
 
+	/**
+	 * get category data
+	 * @requestParam string categoryKey
+	 * @responseParam string $result [ok/error]
+	 * @responseParam string $msg - result message
+	 * @responseParam array $data
+	 */
+	public function getCategoryData() {
+		$categoryName = $this->getVal( 'categoryKey', '' );
+		if ( empty( $categoryName ) ) {
+			$this->result = 'error';
+			$this->msg = wfMessage( 'videopagetool-error-invalid-category' )->plain();
+			return;
+		}
+
+		$title = Title::newFromText( $categoryName, NS_CATEGORY );
+		if ( empty( $title ) ) {
+			$this->result = 'error';
+			$this->msg = wfMessage( 'videopagetool-unknown-category' )->plain();
+			return;
+		}
+
+		$helper = new VideoPageToolHelper();
+		$data = $helper->getCategoryData( $title );
+
+		if ( empty( $category ) ) {
+			$this->result = 'error';
+			$this->msg = wfMessage( 'videopagetool-unknown-category' )->plain();
+			$this->data = $data;
+		} else {
+			$this->result = 'ok';
+			$this->msg = '';
+			$this->data = $data;
+		}
+
+	}
+
 	/*
 	 * Render header
 	 */
