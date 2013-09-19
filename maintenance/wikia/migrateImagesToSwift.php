@@ -49,7 +49,7 @@ class MigrateImagesToSwift extends Maintenance {
 	 * Set up the config variables
 	 */
 	private function init() {
-		global $wgUploadDirectory, $wgFSSwiftConfig, $wgDBname;
+		global $wgUploadDirectory, $wgFSSwiftContainer, $wgFSSwiftConfig, $wgDBname;
 
 		$this->isDryRun = $this->hasOption('dry-run');
 
@@ -58,13 +58,10 @@ class MigrateImagesToSwift extends Maintenance {
 		$this->swiftServer = 'http://' . parse_url($wgFSSwiftConfig['swiftAuthUrl'], PHP_URL_HOST);
 
 		// parse upload paths and generate proper container mapping
-		// $wgUploadDirectory: /images/p/poznan/pl/images
+		// wgFSSwiftContainer: poznan/pl
 		// swiftContainerName: poznan
 		// swiftPathPrefix: /pl/images
-		$path = trim($wgUploadDirectory, '/');
-		if (substr($path, 0, 7) == 'images/') {
-			$path = substr($path, 9); // remove /p/ prefix as well
-		}
+		$path = $wgFSSwiftContainer . '/images';
 
 		list($this->swiftContainerName, $this->swiftPathPrefix) = explode('/', $path, 2);
 		$this->swiftPathPrefix = $this->swiftPathPrefix . '/';
