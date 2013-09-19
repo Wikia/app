@@ -8,7 +8,7 @@ $(function () {
 	switch (group) {
     case "STATIC":
         // don't let right rail to fall down
-        $('body').addClass('keep-rail-on-right');
+        $('html').addClass('keep-rail-on-right');
         break;
     default:
         // no changes in behaviour

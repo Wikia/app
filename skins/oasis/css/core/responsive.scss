@@ -170,6 +170,16 @@ html {
 	overflow-y: auto;
 }
 
+// ABTesting: DAR-1859: START
+html.keep-rail-on-right {
+	overflow-x: scroll;
+
+	body {
+		min-width: 1058px;
+	}
+}
+// ABTesting: DAR-1859: END
+
 body {
 	min-width: $width-outside-min;
 	@if ( $background-is-dynamic ) {
@@ -367,8 +377,10 @@ body > .global-notification,
 }
 
 @media screen and (max-width: $breakpoint-small) {
-	// ABTesting: DAR-1859
-	body:not(.keep-rail-on-right) {
+	// ABTesting: DAR-1859: START
+	html:not(.keep-rail-on-right) {
+	// ABTesting: DAR-1859: END
+
 		// START - main page tag fixes
 		.home-top-right-ads {
 			display: none;
@@ -471,49 +483,60 @@ body > .global-notification,
 		.WikiaPageHeader .WikiaSearch {
 			display: none;
 		}
+
+	// ABTesting: DAR-1859: START
 	}
+	// ABTesting: DAR-1859: END
 }
 
 @media screen and (max-width: $breakpoint-content) {
-	body {
-		&:after,
-		&:before {
-			display: none;
+	// ABTesting: DAR-1859: START
+	html:not(.keep-rail-on-right) {
+	// ABTesting: DAR-1859: END
+
+		body {
+			&:after,
+			&:before {
+				display: none;
+			}
 		}
-	}
 
-	.WikiHeader .WikiNav {
-		right: 0;
+		.WikiHeader .WikiNav {
+			right: 0;
 
-		.navbackground img {
-			display: none;
+			.navbackground img {
+				display: none;
+			}
 		}
-	}
 
-	.WikiaHeader .page-width-container {
-		width: auto;
-	}
-
-	.global-notification {
-		width: 100%;
-		&.float {
-			left: 0;
-			margin-left: 0;
+		.WikiaHeader .page-width-container {
+			width: auto;
 		}
-	}
 
-	.WikiaPage {
-		border: 0;
-		width: auto;
-	}
+		.global-notification {
+			width: 100%;
+			&.float {
+				left: 0;
+				margin-left: 0;
+			}
+		}
 
-	.WikiaPageContentWrapper {
-		padding-top: 20px;
-	}
+		.WikiaPage {
+			border: 0;
+			width: auto;
+		}
 
-	.WikiaTopAds {
-		width: 100%;
+		.WikiaPageContentWrapper {
+			padding-top: 20px;
+		}
+
+		.WikiaTopAds {
+			width: 100%;
+		}
+
+	// ABTesting: DAR-1859: START
 	}
+	// ABTesting: DAR-1859: END
 }
 
 @media screen and (min-width: $breakpoint-fluid) {
