@@ -740,6 +740,18 @@ class CityVisualization extends WikiaModel {
 		);
 	}
 
+	public function removeImageFromReviewByName($cityId, $imageName, $langCode) {
+		$dbm = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$dbm->delete(
+			self::CITY_VISUALIZATION_IMAGES_TABLE_NAME,
+			array(
+				'city_id' => $cityId,
+				'image_name' => $imageName,
+				'city_lang_code' => $langCode
+			)
+		);
+	}
+
 	protected function getImagesFromReviewTable($cityId, $langCode) {
 		wfProfileIn(__METHOD__);
 
