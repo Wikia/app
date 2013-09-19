@@ -26,8 +26,10 @@ class WikiaMobileController extends WikiaController{
 		global $wgLang;
 		$this->request->setInternal( true );
 
+		$lang = $this->request->getVal( 'lang' );
+
 		//set proper language so this can be properly cached
-		$wgLang = Language::factory( $this->request->getVal( 'lang', $this->wg->ContLang ) );
+		$wgLang = !empty( $lang ) ? Language::factory( $lang ) : $this->wg->Lang;
 
 		$this->forward( 'WikiaMobileNavigationService', 'navMenu' );
 	}
