@@ -30,7 +30,6 @@ class MigrateImagesToSwift extends Maintenance {
 
 	private $migratedImagesCnt = 0;
 	private $migratedImagesSize = 0;
-	private $notExistingImages = [];
 
 	/**
 	 * Set script options
@@ -355,12 +354,6 @@ class MigrateImagesToSwift extends Maintenance {
 
 		$this->output("\nUploads and image operations enabled\n");
 
-		/**
-		$this->output(sprintf("\nNot existing files: %d\n* %s\n",
-				count($this->notExistingImages),
-				implode("\n* ", $this->notExistingImages)
-		));
-		**/
 		$this->output("\nDone!\n");
 	}
 }
