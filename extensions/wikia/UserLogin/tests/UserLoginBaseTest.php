@@ -146,7 +146,7 @@ abstract class UserLoginBaseTest extends WikiaBaseTest {
 			->method( 'wfMessage' )
 			->will( $this->returnCallback(
 					array($this, 'messageMockCallback')
-				)
+				) /* using returnCallback instead of returnValueMap because need to return default value */
 			);
 
 	}
