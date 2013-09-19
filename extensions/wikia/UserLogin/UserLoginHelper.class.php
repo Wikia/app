@@ -252,34 +252,32 @@ class UserLoginHelper extends WikiaModel {
 					return $result;
 				}
 			}
-		} else {
-			//TempUser part
-			/* @var $tempUser TempUser */
-			$tempUser = TempUser::getTempUserFromName( $username );
-		}
 
-		//IF session is invalid, set invalidsession result and redirect to login page
-		if ( !$this->isTempUser( $username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
+			//IF session is invalid, set invalidsession result and redirect to login page
 			if ( !(isset($_SESSION['notConfirmedUserId']) && $_SESSION['notConfirmedUserId'] == $user->getId()) ) {
 				$result['result'] = 'invalidsession';
 				$result['msg'] = wfMessage( 'usersignup-error-invalid-user' )->escaped();
 				return $result;
 			}
-		} else {
-			if ( !(isset($_SESSION['tempUserId']) && $_SESSION['tempUserId'] == $tempUser->getId()) ) {
-				$result['result'] = 'invalidsession';
-				$result['msg'] = wfMessage( 'usersignup-error-invalid-user' )->escaped();
-				return $result;
-			}
-		}
 
-		if ( !$this->isTempUser( $username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
 			if ( !$this->wg->EmailAuthentication || !Sanitizer::validateEmail($user->getEmail()) ) {//Why throw an invalid email error when wgEmailAuthentication is off?
 				$result['result'] = 'error';
 				$result['msg'] = wfMessage( 'usersignup-error-invalid-email' )->escaped();
 				return $result;
 			}
+
 		} else {
+			//TempUser part
+			/* @var $tempUser TempUser */
+			$tempUser = TempUser::getTempUserFromName( $username );
+
+			//IF session is invalid, set invalidsession result and redirect to login page
+			if ( !(isset($_SESSION['tempUserId']) && $_SESSION['tempUserId'] == $tempUser->getId()) ) {
+				$result['result'] = 'invalidsession';
+				$result['msg'] = wfMessage( 'usersignup-error-invalid-user' )->escaped();
+				return $result;
+			}
+
 			if ( !$this->wg->EmailAuthentication || !Sanitizer::validateEmail($tempUser->getEmail()) ) {//Why throw an invalid email error when wgEmailAuthentication is off?
 				$result['result'] = 'error';
 				$result['msg'] = wfMessage( 'usersignup-error-invalid-email' )->escaped();
@@ -564,7 +562,7 @@ class UserLoginHelper extends WikiaModel {
 		$user->setOption( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, null );
 		$user->saveSettings();
 		$user->saveToCache();
-		UserLoginHelper::clearIsTempUserStatic( $user->getName() );
+		self::clearIsTempUserStatic( $user->getName() );
 		return true;
 	}
 
