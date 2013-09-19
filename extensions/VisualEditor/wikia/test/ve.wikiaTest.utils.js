@@ -137,6 +137,73 @@
 		QUnit.expect( testCases.length );
 	};
 
+	utils.media.runNodeViewTransactionTests = function ( assert, displayType, rdfaType, callback ) {
+		var $fixture = $( '#qunit-fixture' ),
+			current,
+			diff,
+			doc,
+			documentModel,
+			documentView,
+			getHtml,
+			i,
+			media = ve.ce.wikiaExample.media,
+			merged,
+			nodeView,
+			previous,
+			surface,
+			surfaceModel,
+			testCases = utils.getTestCases( media.data.testCases[ displayType ][ rdfaType ] );
+
+		getHtml = media[ displayType ][ rdfaType ].getHtml;
+		previous = testCases[0];
+
+		doc = ve.createDocumentFromHtml(
+			media.getHtmlDom( displayType, rdfaType, previous )
+		);
+
+		surface = new ve.init.sa.Target( $fixture, doc ).surface;
+		surfaceModel = surface.getModel();
+		documentModel = surfaceModel.getDocument();
+		documentView = surface.getView().getDocument();
+		nodeView = callback( documentView.getDocumentNode() );
+
+		// Strip out debug styles
+		nodeView.$.find( '.ve-ce-generated-wrapper' ).removeAttr( 'style' );
+
+		assert.equalDomStructure(
+			nodeView.$,
+			getHtml( previous ),
+			'Starting with attributes: ' + utils.getObjectDescription( previous )
+		);
+
+		for ( i = 1; i < testCases.length; i++ ) {
+			current = testCases[i];
+			diff = utils.getObjectDiff( previous, current );
+			merged = ve.extendObject( {}, previous, current, true );
+
+			surfaceModel.change(
+				ve.dm.Transaction.newFromAttributeChanges(
+					documentModel,
+					nodeView.getOffset(),
+					diff
+				)
+			);
+
+			// Strip out debug styles
+			nodeView.$.find( '.ve-ce-generated-wrapper' ).removeAttr( 'style' );
+
+			assert.equalDomStructure(
+				nodeView.$,
+				getHtml( merged ),
+				'Attributes changed: ' + utils.getObjectDescription( diff )
+			);
+
+			previous = merged;
+		}
+
+		QUnit.expect( testCases.length );
+	};
+
 	/**
 	 * Exports
 	 * @namespace

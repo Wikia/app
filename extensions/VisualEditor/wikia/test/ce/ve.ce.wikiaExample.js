@@ -95,6 +95,7 @@
 			'</div>'
 	};
 
+	media.html.block.none = media.html.block.frameless;
 	media.html.block.thumb = media.html.block.frame;
 
 	media.html.inline = {
