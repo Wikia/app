@@ -117,7 +117,7 @@ abstract class AbstractService
 				$result['errors'][] = $pageId;
 			}
 		}
-	//	die();
+
 		$result['contents'] = $documents;
 		wfProfileOut(__METHOD__);
 		return $result;
