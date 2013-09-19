@@ -12,7 +12,6 @@
 				<label for="display-title-<?= $x ?>"><?= wfMessage( 'videopagetool-category-label-name' )->plain() ?></label>
 				<input class="category-name" id="category-name-<?= $x ?>" type="text" name="categoryName[]" value="<?= $category[ 'categoryName' ] ?>">
 				<button><?= wfMessage( 'videopagetool-button-search' )->plain() ?></button>
-				<input type="hidden" name="categoryKey[]" class="category-key" id="category-key-<?= $x ?>" value="<?= $category[ 'categoryKey' ] ?>">
 			</div>
 			<div class="input-group border">
 				<label for="display-title-<?= $x ?>"><?= wfMessage( 'videopagetool-category-label-display-title' )->plain() ?></label>

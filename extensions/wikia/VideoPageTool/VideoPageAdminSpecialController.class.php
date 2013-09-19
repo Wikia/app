@@ -300,13 +300,13 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 
 	/**
 	 * get category data
-	 * @requestParam string categoryKey
+	 * @requestParam string categoryName
 	 * @responseParam string $result [ok/error]
 	 * @responseParam string $msg - result message
 	 * @responseParam array $data
 	 */
 	public function getCategoryData() {
-		$categoryName = $this->getVal( 'categoryKey', '' );
+		$categoryName = $this->getVal( 'categoryName', '' );
 
 		if ( empty( $categoryName ) ) {
 			$this->result = 'error';

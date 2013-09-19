@@ -269,4 +269,21 @@ class VideoPageToolHelper extends WikiaModel {
 		return true;
 	}
 
+	/**
+	 * Validate category
+	 * @param string $categoryName
+	 * @param string $errMsg
+	 * @return boolean
+	 */
+	public function validateCategoryName( $categoryName, &$errMsg ) {
+		$title = Title::newFromText( $categoryName, NS_CATEGORY );
+		if ( $title instanceof Title ) {
+			return true;
+		}
+
+		$errMsg = wfMessage( 'videopagetool-unknown-category' )->plain();
+
+		return false;
+	}
+
 }

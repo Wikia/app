@@ -5,12 +5,12 @@
  */
 class VideoPageToolAssetCategory extends VideoPageToolAsset {
 
-	protected $title;
+	protected $categoryName;
 	protected $displayTitle;
 
 	// required data field -- array( FormFieldName => varName )
 	protected static $dataFields = array(
-		'categoryKey'  => 'title',
+		'categoryName'  => 'categoryName',
 		'displayTitle' => 'displayTitle',
 	);
 
@@ -20,20 +20,18 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 	 *
 	 * The associative array data returned has the keys:
 	 *     categoryName => Human readable title, e.g. "Soul Bubbles Nintendo DS"
-	 *     categoryKey  => DBKey of the title, e.g. "Soul_Bubbles_Nintendo_DS"
 	 *     displayTitle => Preferred title entered via Admin tool, e.g. "Soul Bubbles on Nintendo DS"
 	 *     updatedBy    => Name of the user who updated this asset last
 	 *     updatedAt    => Date this asset was last updated, e.g. "17:04, September 13, 2013"
 	 */
 	public function getAssetData() {
-		$title = Title::newFromText( $this->title, NS_CATEGORY );
+		$title = Title::newFromText( $this->categoryName, NS_CATEGORY );
 		if ( empty( $title ) ) {
 			return self::getDefaultAssetData();
 		}
 
 		$data = array(
 			'categoryName' => $title->getText(),
-			'categoryKey'  => $title->getDBKey(),
 			'displayTitle' => $this->displayTitle,
 		);
 
@@ -49,7 +47,6 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 	public static function getDefaultAssetData() {
 		$data = array(
 			'categoryName' => wfMessage( 'videopagetool-category-name' )->plain(),
-			'categoryKey'  => '',
 			'displayTitle' => wfMessage( 'videopagetool-category-display-title' )->plain(),
 		);
 		$defaultData = array_merge( $data, parent::getDefaultAssetData() );
