@@ -84,11 +84,11 @@ function dynamicPageList_onPageRenderingHash( &$hash ) {
 	$count = $wgRequest->getVal( 'DPL_count' );
 
 	if ( $offset !== null ) {
-		$hash .= "!{$offset}";
+		$hash .= "!DPL_offset={$offset}";
 	}
 
 	if ( $count !== null ) {
-		$hash .= "!{$count}";
+		$hash .= "!DPL_count={$count}";
 	}
 
 	return true;
