@@ -9,6 +9,21 @@ class VideoHandlerController extends WikiaController {
 		$title = $this->getVal('fileTitle', '');
 		$width = $this->getVal('width', '');
 		$autoplay = $this->getVal( 'autoplay', false );
+		$premium = $this->getVal('premium', '');
+
+		if ( $premium ) {
+			$response = ApiService::foreignCall( F::app()->wg->WikiaVideoRepoDBName,
+											 	 array("controller" => __CLASS__,
+													   "method"     => 'getEmbedCode',
+													   "fileTitle"  => $title,
+													   "width"      => $width,
+													   "autoplay"   => $autoplay),
+												 ApiService::WIKIA );
+			$this->setVal('videoId', $response['videoId']);
+			$this->setVal('asset', $response['asset']);
+			$this->setVal('embedCode', $response['embedCode']);
+			return;
+		}
 
 		$error = '';
 		if ( empty($title) ) {
