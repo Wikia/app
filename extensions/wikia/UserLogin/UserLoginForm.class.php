@@ -66,11 +66,6 @@ class UserLoginForm extends LoginForm {
 			return false;
 		}
 
-		// Wipe the initial password and mail a temporary one
-		$u->setPassword( null );
-		$u->saveSettings();
-		$result = $this->mailPasswordInternal( $u, false, 'createaccount-title', 'createaccount-text' );
-
 		// add log
 		$userLoginHelper = (new UserLoginHelper);
 		$userLoginHelper->addNewUserLogEntry( $u, true );
