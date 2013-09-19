@@ -2,7 +2,7 @@
  * VisualEditor ContentEditable WikiaInlineVideoNode tests.
  */
 
-QUnit.module( 've.ce.WikiaInlineVideoNode' );
+QUnit.module( 've.ce.WikiaInlineVideoNode', ve.wikiaTest.utils.disableDebugModeForTests() );
 
 /* Tests */
 

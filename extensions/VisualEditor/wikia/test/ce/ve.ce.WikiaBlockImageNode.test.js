@@ -2,7 +2,7 @@
  * VisualEditor ContentEditable WikiaBlockImageNode tests.
  */
 
-QUnit.module( 've.ce.WikiaBlockImageNode' );
+QUnit.module( 've.ce.WikiaBlockImageNode', ve.wikiaTest.utils.disableDebugModeForTests() );
 
 /* Tests */
 

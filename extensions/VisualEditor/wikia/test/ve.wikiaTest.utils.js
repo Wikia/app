@@ -14,6 +14,23 @@
 	 * @method
 	 * @static
 	 */
+	utils.disableDebugModeForTests = function () {
+		var debug;
+		return {
+			setup: function() {
+				debug = ve.debug;
+				ve.debug = false;
+			},
+			teardown: function() {
+				ve.debug = debug;
+			}
+		};
+	};
+
+	/**
+	 * @method
+	 * @static
+	 */
 	utils.getObjectDescription = function ( obj, joinStr, pairStr ) {
 		var key,
 			parts = [];
@@ -86,6 +103,14 @@
 	 * @method
 	 * @static
 	 */
+	utils.stripDebugStyles = function ( obj ) {
+		return $( obj );
+	};
+
+	/**
+	 * @method
+	 * @static
+	 */
 	utils.ucFirst = function ( str ) {
 		return str.charAt( 0 ).toUpperCase() + str.slice( 1 );
 	};
@@ -121,9 +146,6 @@
 			documentModel = surface.getModel().getDocument();
 			documentView = surface.getView().getDocument();
 			nodeView = callback( documentView.getDocumentNode() );
-
-			// Strip out debug styles
-			nodeView.$.find( '.ve-ce-generated-wrapper' ).removeAttr( 'style' );
 
 			assert.equalDomStructure(
 				nodeView.$,
@@ -167,9 +189,6 @@
 		documentView = surface.getView().getDocument();
 		nodeView = callback( documentView.getDocumentNode() );
 
-		// Strip out debug styles
-		nodeView.$.find( '.ve-ce-generated-wrapper' ).removeAttr( 'style' );
-
 		assert.equalDomStructure(
 			nodeView.$,
 			getHtml( previous ),
@@ -188,9 +207,6 @@
 					diff
 				)
 			);
-
-			// Strip out debug styles
-			nodeView.$.find( '.ve-ce-generated-wrapper' ).removeAttr( 'style' );
 
 			assert.equalDomStructure(
 				nodeView.$,
