@@ -184,15 +184,28 @@ class CrossWikiCore extends AbstractWikiService
 				);
 	}
 
+
+	/**
+	 * @return \LicensedWikisService
+	 */
+	protected function getLicensedWikisService(){
+
+		return  new \LicensedWikisService();
+
+
+	}
+
 	/**
 	 * Get license info this wiki
 	 * @return array
 	 */
-	protected function getLicenseInformation() {
-		$licensedWikiService = new \LicensedWikisService();
+	protected function getLicenseInformation( ) {
+
+		$licensedWikiService = $this->getLicensedWikisService();
+
 		if( $licensedWikiService->isCommercialUseAllowedById( $this->getWikiId() ) ) {
 			return [
-				"commercial_use_allowed_b" =>  "false",
+				"commercial_use_allowed_b" =>  false,
 			];
 		} else { return []; }
 	}
