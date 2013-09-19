@@ -606,6 +606,12 @@ class SpecialConnect extends SpecialPage {
 		FBConnectDB::addFacebookID($user, $fb_user);
 		// Update the user with settings from Facebook
 		$user->updateFromFacebook();
+		// Setup the session
+		global $wgSessionStarted;
+		if (!$wgSessionStarted) {
+			wfSetupSession();
+		}
+		$user->setCookies();
 		// Store the user in the global user object
 		$wgUser = $user;
 
