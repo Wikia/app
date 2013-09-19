@@ -250,7 +250,7 @@ class MigrateImagesToSwift extends Maintenance {
 				round($this->migratedImagesCnt / $this->imagesCnt * 100),
 				$this->migratedImagesCnt,
 				$this->imagesCnt,
-				($this->imagesCnt) / (time() - $this->time),
+				($this->migratedImagesCnt) / (time() - $this->time),
 				($this->migratedImagesSize / 1024) / (time() - $this->time)
 			));
 		}
@@ -351,11 +351,10 @@ class MigrateImagesToSwift extends Maintenance {
 		}
 
 		// summary
-		$this->output(sprintf("\nMigrated files: %d (%d MB) in %d min %d sec (%.2f files/sec, %.2f kB/s)\n",
+		$this->output(sprintf("\nMigrated files: %d (%d MB) in %.2f min (%.2f files/sec, %.2f kB/s)\n",
 			$this->migratedImagesCnt,
 			round($this->migratedImagesSize / 1024 / 1024),
-			floor((time() - $this->time) / 60),
-			(time() - $this->time) % 60,
+			(time() - $this->time) / 60,
 			($this->imagesCnt) / (time() - $this->time),
 			($this->migratedImagesSize / 1024) / (time() - $this->time)
 		));
