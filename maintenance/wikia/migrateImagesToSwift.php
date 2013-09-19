@@ -278,13 +278,18 @@ class MigrateImagesToSwift extends Maintenance {
 	}
 
 	public function execute() {
+		global $wgCityId;
 		$this->init();
 		$dbr = $this->getDB( DB_SLAVE );
 
 		// one migration is enough
-		global $wgEnableCephFileBackend;
+		global $wgEnableCephFileBackend, $wgEnableUploads, $wgDBname;
 		if (!empty($wgEnableCephFileBackend)) {
-			#$this->error('$wgEnableCephFileBackend = true - new files storage enabled on this wiki!', 1);
+			#$this->error("\$wgEnableCephFileBackend = true - new files storage enabled on {$wgDBname} wiki!", 1);
+		}
+
+		if (empty($wgEnableUploads)) {
+			#$this->error("\$wgEnableUploads = false - migration is already running on {$wgDBname} wiki!", 1);
 		}
 
 		$time = time();
@@ -298,6 +303,12 @@ class MigrateImagesToSwift extends Maintenance {
 		if (($this->swiftContainer = $this->getContainer($this->swiftContainerName)) === false) {
 			$this->error('Can\'t get Swift container', 3);
 		}
+
+		// block uploads via WikiFactory
+		WikiFactory::setVarByName('wgEnableUploads',     $wgCityId, false, self::REASON);
+		WikiFactory::setVarByName('wgUploadMaintenance', $wgCityId, true,  self::REASON);
+
+		$this->output('Uploads and image operations disabled');
 
 		// get images count
 		$tables = [
@@ -378,6 +389,19 @@ class MigrateImagesToSwift extends Maintenance {
 			$time / $this->migratedImagesCnt * 1000,
 			$time / ($this->migratedImagesSize / 1024 / 1024) * 1000
 		));
+
+		// update wiki configuration
+		// enable Swift storage via WikiFactory
+		WikiFactory::setVarByName('wgEnableCephFileBackend', $wgCityId, true, self::REASON);
+
+		$this->output('New storage enabled');
+
+		// enable uploads via WikiFactory
+		// wgEnableUploads = true / wgUploadMaintenance = false (remove values from WF to give them the default value)
+		WikiFactory::removeVarByName('wgEnableUploads',     $wgCityId, self::REASON);
+		WikiFactory::removeVarByName('wgUploadMaintenance', $wgCityId, self::REASON);
+
+		$this->output('Uploads and image operations enabled');
 
 		/**
 		$this->output(sprintf("\nNot existing files: %d\n* %s\n",
