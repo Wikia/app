@@ -13,6 +13,15 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	 */
 	const FIRST_EDIT_REVISION_THRESHOLD = 2;
 
+	/**
+	 * Constansts for describing Users edit status for purpose of sending founder notification
+	 * on first edit
+	 */
+	const NO_EDITS = 0;
+	const FIRST_EDIT = 1;
+	const MULTIPLE_EDITS = 2;
+
+
 	public function __construct( Array $data = array() ) {
 		parent::__construct( 'edit' );
 		$this->setData( $data );
@@ -171,17 +180,20 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	}
 
 	/**
-	 * Returns number of edit events (excluding profile page
-	 * edits), limited by FIRST_EDIT_REVISION_THRESHOLD
+	 * Returns whether the user made no edits, first edit
+	 * or multiple edits (excluding profile page edits)
 	 *
 	 * @param User $user
 	 * @param bool $useMasterDb
-	 * @returns int
+	 * @returns int one of:
+	 * 		FounderEmailsEditEvent::NO_EDITS
+	 * 		FounderEmailsEditEvent::FIRST_EDIT
+	 * 		FounderEmailsEditEvent::MULTIPLE_EDITS
 	 */
-	static public function countRecentEditEvents($user, $useMasterDb = false ) {
+	static public function getUserEditsStatus($user, $useMasterDb = false ) {
 		wfProfileIn(__METHOD__);
 
-		$editCount = 0;
+		$recentEditsCount = 0;
 		$dbr = wfGetDB( $useMasterDb ? DB_MASTER : DB_SLAVE );
 
 		$conditions = [
@@ -211,12 +223,12 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		);
 
 		while($row = $dbr->FetchObject($dbResult)) {
-			$editCount++;
+			$recentEditsCount++;
 		}
 
 		wfProfileOut( __METHOD__ );
 
-		return $editCount;
+		return $recentEditsCount;
 	}
 
 	public static function register( $oRecentChange ) {
@@ -244,16 +256,23 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 				return true;
 			}
 
-			$recentEditEventCount = self::countRecentEditEvents( $editor, true );
-			if( $recentEditEventCount >= 1) {
-				// flag that we should not send this email anymore; either first email
-				// is sent out, or there was more than 1 edit so we will never need to
-				// send it again
-				$editor->setOption( $firstEditNotificationSentPropKey, true );
-				$editor->saveSettings();
-			}
-			if( $recentEditEventCount == 1) {
-				$isRegisteredUserFirstEdit = true;
+			$userEditStatus = self::getUserEditsStatus( $editor, true );
+			/*
+ 				If there is at least one edit, flag that we should not send this email anymore;
+				either first email is sent out as a result of this request,
+				or there was more than 1 edit so we will never need to send it again
+			 */
+			switch($userEditStatus) {
+				case self::NO_EDITS:
+					break;
+				case self::FIRST_EDIT:
+					$isRegisteredUserFirstEdit = true;
+					$editor->setOption( $firstEditNotificationSentPropKey, true );
+					$editor->saveSettings();
+					break;
+				case self::MULTIPLE_EDITS:
+					$editor->setOption( $firstEditNotificationSentPropKey, true );
+					$editor->saveSettings();
 			}
 
 		} else {
