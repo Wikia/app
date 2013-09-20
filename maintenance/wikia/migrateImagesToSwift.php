@@ -164,6 +164,7 @@ class MigrateImagesToSwift extends Maintenance {
 			}
 
 			if (is_string($sha1Hash)) {
+				$object->metadata = []; // clear metadata for existing images - avoid exception with too long headers
 				$object->setMetadataValues([
 					'Sha1base36' => $sha1Hash
 				]);
