@@ -189,10 +189,10 @@
 		$users = getRecipientsForCurrentWiki();
 
 		$cnt = 0;
+		$userLoginHelper = (new UserLoginHelper);
 		foreach ( $users as $user ) {
 
 			// send reminder email
-			$userLoginHelper = (new UserLoginHelper);
 			$result = $userLoginHelper->sendConfirmationReminderEmail( $user );
 
 			if( !$result->isGood() ) {
