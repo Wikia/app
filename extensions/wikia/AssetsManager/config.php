@@ -463,6 +463,7 @@ $config['wikiamobile_js_body_full'] = array(
 
 		//modules
 		'//resources/wikia/libraries/sloth/sloth.js',
+		'//resources/wikia/modules/thumbnailer.js',
 		'//extensions/wikia/WikiaMobile/js/lazyload.js',
 		'//extensions/wikia/WikiaMobile/js/track.js',
 		'//extensions/wikia/WikiaMobile/js/events.js',
@@ -475,11 +476,11 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/media.js',
 		'//extensions/wikia/WikiaMobile/js/sections.js',
 		'//extensions/wikia/WikiaMobile/js/layout.js',
+		'//extensions/wikia/WikiaMobile/js/navigation.wiki.js',
 		'//extensions/wikia/WikiaMobile/js/topbar.js',
 		'//extensions/wikia/WikiaMobile/js/popover.js',
 		'//extensions/wikia/WikiaMobile/js/hide_url_bar.js',
 		'//extensions/wikia/WikiaMobile/js/share.js',
-		'//resources/wikia/modules/thumbnailer.js',
 
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
