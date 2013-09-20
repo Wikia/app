@@ -75,8 +75,8 @@ var WikiaSearch = {
 		categoryInput.on('change', function() {
 			var isDisabled = !$(this).is(':checked');
 			categoryOptions.attr('disabled', isDisabled);
-			
-			if(isDisabled) {
+
+			if(isDisabled && categoryOptions.val().length > 0) {
 				// Refresh search results
 				searchForm.submit();
 			}
