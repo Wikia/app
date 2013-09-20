@@ -452,6 +452,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				'by_category'	=> $this->getVal( 'by_category', false ),
 				'filters'       => $this->getVal( 'filters', array() ),
 				);
+
+		$isMonobook = $this->app->checkSkin( 'monobook') ;
+
 		$this->setVal( 'results',               $searchConfig->getResults() );
 		$this->setVal( 'resultsFound',          $searchConfig->getResultsFound() );
 		$this->setVal( 'resultsFoundTruncated', $searchConfig->getTruncatedResultsNum( true ) );
@@ -467,7 +470,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'namespaces',            $searchConfig->getNamespaces() );
 		$this->setVal( 'hub',                   $searchConfig->getHub() );
 		$this->setVal( 'hasArticleMatch',       $searchConfig->hasArticleMatch() );
-		$this->setVal( 'isMonobook',            ( $this->wg->User->getSkin() instanceof SkinMonobook ) );
+		$this->setVal( 'isMonobook',            $isMonobook );
 		$this->setVal( 'isCorporateWiki',       $this->isCorporateWiki() );
 		$this->setVal( 'wgExtensionsPath',      $this->wg->ExtensionsPath);
 		$sanitizedQuery = $searchConfig->getQuery()->getSanitizedQuery();
@@ -486,14 +489,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$topWikiArticlesHtml = '';
 
 		if (! $searchConfig->getInterWiki() && $wgLanguageCode == 'en'
-			&& !F::app()->checkSkin( 'monobook' )) {
+			&& !$isMonobook) {
 			$dbname = $this->wg->DBName;
 			$cacheKey = wfMemcKey( __CLASS__, 'WikiaSearch', 'topWikiArticles', $this->wg->CityId, static::TOP_ARTICLES_CACHE );
 			$topWikiArticlesHtml = WikiaDataAccess::cache(
 				$cacheKey,
 				86400 * 5, // 5 days, one business week
 				function () {
-					return F::app()->renderView( 'WikiaSearchController', 'topWikiArticles' );
+					return $this->app->renderView( 'WikiaSearchController', 'topWikiArticles' );
 				}
 			);
 		}
