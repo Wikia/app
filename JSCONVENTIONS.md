@@ -69,6 +69,15 @@ while ( condition ) {
 ### Try/catch blocks
 Avoid using try/catch blocks in performance critical functions and inside loops.
 
+### Switch Statements
+
+The usage of `switch` statements is generally discouraged, but can be useful when there are a large number of cases - especially when multiple cases can be handled by the same block, or fall-through logic (the `default` case) can be leveraged.
+
+When using `switch` statements:
+
+- Use a `break` for each case other than `default`.
+- Align `case` statements with the `switch`.
+
 ## Style Rules
 
 ### White space guidelines
