@@ -30,6 +30,7 @@ class MigrateImagesToSwift extends Maintenance {
 
 	private $imagesCnt = 0;
 	private $migratedImagesCnt = 0;
+	private $migratedImagesFailedCnt = 0;
 	private $migratedImagesSize = 0;
 
 	private $time = 0;
@@ -112,7 +113,7 @@ class MigrateImagesToSwift extends Maintenance {
 		// set public ACL
 		// http://s3.dfs-s1/swift/v1/firefly
 		$url = "{$this->swiftServer}/swift/v1/{$containerName}";
-		wfDebug(__METHOD__ . ": {$url}\n");
+		wfDebug(__METHOD__ . "::setACL: {$url}\n");
 
 		/* @var $req CurlHttpRequest */
 		$req = MWHttpRequest::factory( $url, array( 'method' => 'POST', 'noProxy' => true ) );
@@ -129,23 +130,42 @@ class MigrateImagesToSwift extends Maintenance {
 	 *
 	 * @param $localFile string path to a local file
 	 * @param $remotePath string remote path
+	 * @param $mimeType string|bool MIME type of uploaded file to be set (false = try to detect it)
 	 * @return CF_Object|bool object instance or false
 	 */
-	private function store($localFile, $remotePath) {
+	private function store($localFile, $remotePath, $mimeType = false) {
 		$remotePath = $this->swiftPathPrefix . $remotePath;
 
 		wfDebug(__METHOD__ . ": {$localFile} -> {$remotePath}\n");
 
-		#var_dump($localFile);var_dump($remotePath);
-
 		$time = microtime(true);
 
 		try {
+			$fp = @fopen($localFile, 'r');
+			if (!$fp) {
+				Wikia::log(__METHOD__, 'fopen', "{$localFile} doesn't exist");
+				return false;
+			}
+
+			// check file size - sending empty file results in "HTTP 411 MissingContentLengh"
+			$size = fstat($fp)['size'];
+			if ($size === 0) {
+				Wikia::log(__METHOD__, 'fstat', "{$localFile} is empty");
+				return false;
+			}
+
 			$object = $this->swiftContainer->create_object($remotePath);
+
+			// medata
+			if (is_string($mimeType)) {
+				$object->content_type = $mimeType;
+			}
 			$object->setMetadataValues([
-				'Sha1base36' => wfBaseConvert( sha1( @file_get_contents($localFile) ), 16, 36, 31 )
+				'Sha1base36' => wfBaseConvert( sha1( file_get_contents($localFile) ), 16, 36, 31 )
 			]);
-			$object->load_from_filename($localFile);
+
+			// calls fclose($fp) internally
+			$object->write($fp, $size);
 		}
 		catch(Exception $ex) {
 			Wikia::log(__METHOD__, 'exception - ' . $localFile, $ex->getMessage());
@@ -241,22 +261,29 @@ class MigrateImagesToSwift extends Maintenance {
 		$this->migratedImagesSize += $row['size'];
 		$this->migratedImagesCnt++;
 
-		$this->store($wgUploadDirectory . '/' . $path, $path);
+		$mime = "{$row['major_mime']}/{$row['minor_mime']}";
+		$res = $this->store($wgUploadDirectory . '/' . $path, $path, $mime);
+
+		if ($res === false) {
+			$this->migratedImagesFailedCnt++;
+		}
 
 		// "progress bar"
 		if ($this->migratedImagesCnt % 5 === 0) {
 			// estimate remaining time
 			$filesPerSec = ($this->migratedImagesCnt) / (time() - $this->time);
-			$remainingSeconds = round($filesPerSec * ($this->imagesCnt - $this->migratedImagesCnt));
+			$remainingSeconds = round(($this->imagesCnt - $this->migratedImagesCnt) / $filesPerSec);
+			$remainingMinutes = floor($remainingSeconds / 60);
 
 			$this->output(sprintf(
-				"%d%%: %s/%s - %.2f files/sec, %.2f kB/s [ETA %d min %02d sec]     \r",
+				"%d%%: %s/%s - %.2f files/sec, %.2f kB/s [ETA %d h %02d min %02d sec]     \r",
 				round($this->migratedImagesCnt / $this->imagesCnt * 100),
 				$this->migratedImagesCnt,
 				$this->imagesCnt,
 				$filesPerSec,
 				($this->migratedImagesSize / 1024) / (time() - $this->time),
-				floor($remainingSeconds / 60),
+				floor($remainingMinutes / 60),
+				$remainingMinutes % 60,
 				$remainingSeconds % 60
 			));
 		}
@@ -321,6 +348,8 @@ class MigrateImagesToSwift extends Maintenance {
 		$res = $dbr->select('image', [
 			'img_name AS name',
 			'img_size AS size',
+			'img_major_mime AS major_mime',
+			'img_minor_mime AS minor_mime',
 		]);
 
 		while($row = $res->fetchRow()) {
@@ -336,6 +365,8 @@ class MigrateImagesToSwift extends Maintenance {
 			'oi_name AS name',
 			'oi_archive_name AS archived_name',
 			'oi_size AS size',
+			'oi_major_mime AS major_mime',
+			'oi_minor_mime AS minor_mime',
 		]);
 
 		while($row = $res->fetchRow()) {
@@ -351,6 +382,8 @@ class MigrateImagesToSwift extends Maintenance {
 			'fa_name AS name',
 			'fa_storage_key AS storage_key',
 			'fa_size AS size',
+			'fa_major_mime AS major_mime',
+			'fa_minor_mime AS minor_mime',
 		]);
 
 		while($row = $res->fetchRow()) {
@@ -359,9 +392,10 @@ class MigrateImagesToSwift extends Maintenance {
 		}
 
 		// summary
-		$report = sprintf('Migrated files: %d (%d MB) in %d min (%.2f files/sec, %.2f kB/s)',
+		$report = sprintf('Migrated %d files (%d MB) with %d fails in %d min (%.2f files/sec, %.2f kB/s)',
 			$this->migratedImagesCnt,
 			round($this->migratedImagesSize / 1024 / 1024),
+			$this->migratedImagesFailedCnt,
 			ceil((time() - $this->time) / 60),
 			floor($this->imagesCnt) / (time() - $this->time),
 			($this->migratedImagesSize / 1024) / (time() - $this->time)
