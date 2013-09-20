@@ -484,7 +484,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->registerWikiMatch( $searchConfig );
 		}
 		$topWikiArticlesHtml = '';
-		if (! $searchConfig->getInterWiki() && $wgLanguageCode == 'en' ) {
+
+		if (! $searchConfig->getInterWiki() && $wgLanguageCode == 'en'
+			&& !F::app()->checkSkin( 'monobook' )) {
 			$dbname = $this->wg->DBName;
 			$cacheKey = wfMemcKey( __CLASS__, 'WikiaSearch', 'topWikiArticles', $this->wg->CityId, static::TOP_ARTICLES_CACHE );
 			$topWikiArticlesHtml = WikiaDataAccess::cache(
