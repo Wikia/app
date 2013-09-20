@@ -17,7 +17,7 @@ class WallNotifications {
 	private $removedEntities;
 	private $notUniqueUsers = array(); //used for sicen read email.
 	public function __construct() {
-		$this->app = F::App();
+		$this->app = F::app();
 		$this->removedEntities = array();
 	}
 
