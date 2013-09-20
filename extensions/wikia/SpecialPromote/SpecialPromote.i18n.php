@@ -34,7 +34,6 @@ $messages['en'] = array(
 
 	'promote-publish' => 'Publish',
 
-	'promote-upload-tool' => 'Admin Upload Tool',
 	'promote-add-photo' => 'Add a photo',
 	'promote-remove-photo' => 'Remove',
 	'promote-modify-photo' => 'Modify',
@@ -99,7 +98,6 @@ $messages['de'] = array(
 
 	'promote-publish' => 'Veröffentlichen',
 
-	'promote-upload-tool' => 'Admin-Upload',
 	'promote-add-photo' => 'Bild hinzufügen',
 	'promote-remove-photo' => 'Entfernen',
 	'promote-modify-photo' => 'Ändern',
@@ -161,7 +159,6 @@ $messages['fr'] = array(
 
 	'promote-publish' => 'Publier',
 
-	'promote-upload-tool' => 'Outil d\'importation administrateur',
 	'promote-add-photo' => 'Ajouter une photo',
 	'promote-remove-photo' => 'Retirer',
 	'promote-modify-photo' => 'Modifier',
@@ -225,7 +222,6 @@ $messages['es'] = array(
 
 	'promote-publish' => 'Publicar',
 
-	'promote-upload-tool' => 'Herramienta de subida para administradores',
 	'promote-add-photo' => 'Añadir una imagen',
 	'promote-remove-photo' => 'Borrar',
 	'promote-modify-photo' => 'Modificar',
@@ -287,7 +283,6 @@ $messages['es'] = array(
 
 	'promote-publish' => 'Publicar',
 
-	'promote-upload-tool' => 'Herramienta de subida para administradores',
 	'promote-add-photo' => 'Añadir una imagen',
 	'promote-remove-photo' => 'Borrar',
 	'promote-modify-photo' => 'Modificar',
@@ -349,7 +344,6 @@ $messages['qqq'] = array(
 
 	'promote-publish' => 'Label for publish button',
 
-	'promote-upload-tool' => 'Admin Upload Tool name',
 	'promote-add-photo' => 'Label for add a photo button',
 	'promote-remove-photo' => 'Label for image removal',
 	'promote-modify-photo' => 'Label for image modification',

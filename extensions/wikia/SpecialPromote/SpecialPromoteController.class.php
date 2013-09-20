@@ -47,7 +47,6 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 
 		JSMessages::enqueuePackage('SpecialPromote', JSMessages::EXTERNAL);
 
-		$this->helper->loadWikiInfo();
 		$this->minHeaderLength = $this->helper->getMinHeaderLength();
 		$this->maxHeaderLength = $this->helper->getMaxHeaderLength();
 		$this->minDescriptionLength = $this->helper->getMinDescriptionLength();

@@ -46,11 +46,14 @@ class SpecialPromoteHelper extends WikiaObject {
 		return self::MAX_DESCRIPTION_LENGTH;
 	}
 
-	public function loadWikiInfo() {
-		$this->wikiInfo = $this->homePageHelper->getWikiInfoForSpecialPromote($this->wg->cityId, $this->wg->contLang->getCode());
+	protected function loadWikiInfo() {
+		if (empty($this->wikiInfo)) {
+			$this->wikiInfo = $this->homePageHelper->getWikiInfoForSpecialPromote($this->wg->cityId, $this->wg->contLang->getCode());
+		}
 	}
 
 	public function getWikiHeadline() {
+		$this->loadWikiInfo();
 		if (!empty($this->wikiInfo['headline'])) {
 			return $this->wikiInfo['headline'];
 		} else {
@@ -59,6 +62,7 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	public function getWikiDesc() {
+		$this->loadWikiInfo();
 		if (!empty($this->wikiInfo['description'])) {
 			return $this->wikiInfo['description'];
 		} else {
@@ -67,6 +71,7 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	public function getMainImage() {
+		$this->loadWikiInfo();
 		if (!empty($this->wikiInfo['images']) && !empty($this->wikiInfo['images'][0])) {
 			$mainImageName = $this->wikiInfo['images'][0];
 			return $this->homePageHelper->getImageData($mainImageName, self::LARGE_IMAGE_WIDTH, self::LARGE_IMAGE_HEIGHT);
@@ -76,6 +81,7 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	public function getAdditionalImages() {
+		$this->loadWikiInfo();
 		if (!empty($this->wikiInfo ['images']) && !empty($this->wikiInfo['images'][0])) {
 			$imagesNames = array_slice($this->wikiInfo['images'], 1);
 			$images = array();
@@ -86,6 +92,17 @@ class SpecialPromoteHelper extends WikiaObject {
 		} else {
 			return false;
 		}
+	}
+
+	public function getAdditionalImagesNames() {
+		$additionalImages = $this->getAdditionalImages();
+		$out = [];
+		if (!empty($additionalImages)) {
+			foreach($additionalImages as $image) {
+				$out[] = $image['image_filename'];
+			}
+		}
+		return $out;
 	}
 
 	public function uploadImage($upload) {
@@ -244,8 +261,11 @@ class SpecialPromoteHelper extends WikiaObject {
 		$cityId = $this->wg->cityId;
 		$contentLang = $this->wg->contLang->getCode();
 		$files = array('additionalImages' => array());
+		$originalAdditionImagesNames = $this->getAdditionalImagesNames();
 
 		$visualizationModel = new CityVisualization();
+		$isCorpLang = $visualizationModel->isCorporateLang($langCode);
+
 
 		foreach ($data as $fileType => $dataContent) {
 			switch ($fileType) {
@@ -283,7 +303,7 @@ class SpecialPromoteHelper extends WikiaObject {
 
 		$modifiedFiles = $this->extractModifiedFiles($files);
 		if (!empty($modifiedFiles)) {
-			$imageReviewState = $visualizationModel->isCorporateLang($langCode)
+			$imageReviewState = $isCorpLang
 				? ImageReviewStatuses::STATE_UNREVIEWED
 				: ImageReviewStatuses::STATE_AUTO_APPROVED;
 			$visualizationModel->saveImagesForReview($cityId, $langCode, $modifiedFiles, $imageReviewState);
@@ -295,7 +315,7 @@ class SpecialPromoteHelper extends WikiaObject {
 			foreach( $files['additionalImages'] as $image ) {
 				if( empty($image['deleted']) ) {
 					$additionalImageNames[] = $image['name'];
-				} else {
+				} else if ( in_array($image['deletedname'], $originalAdditionImagesNames) ) {
 					$deletedFiles[$contentLang][$cityId][] = array(
 						'city_id' => $cityId,
 						'name' => $image['deletedname']
@@ -307,7 +327,9 @@ class SpecialPromoteHelper extends WikiaObject {
 		}
 
 		if( !empty($deletedFiles) ) {
-			$this->createRemovalTask($deletedFiles);
+			if ($isCorpLang) {
+				$this->createRemovalTask($deletedFiles);
+			}
 			$visualizationModel->deleteImagesFromReview($cityId, $langCode, $deletedFiles);
 		}
 
