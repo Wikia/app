@@ -54,6 +54,8 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 		!stopScrolling && wkPrfTgl.scrollIntoView();
 		toc.close();
 
+		$.event.trigger('nav:close');
+
 		var query = qs(),
 			hash = query.getHash();
 
