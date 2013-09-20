@@ -363,6 +363,7 @@ $messages['qqq'] = array(
 	'promote-error-too-many-images' => 'Information about exceeding maxim number of additional images',
 	'promote-error-upload-type' => 'Information about wrong file upload type passed to form (internal error)',
 	'promote-error-upload-form' => 'Information about wrong file upload type passed in upload request (internal error)',
+	'promote-error-oasis-only' => 'Message that informs user that Promote tool is only available on oasis skin',
 
 	'promote-manual-file-size-error' => 'Information about minimum main image size',
 	'promote-manual-upload-error' => 'Information about the restriction to upload visualization images by means other than Admin Upload Tool',
