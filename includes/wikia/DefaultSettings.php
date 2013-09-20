@@ -882,13 +882,6 @@ $wgABTests = array();
 $wgApiRunJobsPerRequest = 20;
 
 /**
- * default configuration for paypal payments
- *
- */
-$wgPayPalPaymentDBName = 'paypal';
-$wgPayPalUrl = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';
-
-/**
  * sets memcached timeout back to what it was in mw1.15
  */
 
