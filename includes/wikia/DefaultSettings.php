@@ -887,8 +887,6 @@ $wgApiRunJobsPerRequest = 20;
  */
 $wgPayPalPaymentDBName = 'paypal';
 $wgPayPalUrl = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';
-$wgPayflowProAPIUrl = 'https://pilot-payflowpro.paypal.com';
-$wgPayflowProCredentials = array();
 
 /**
  * sets memcached timeout back to what it was in mw1.15
