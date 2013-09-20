@@ -281,7 +281,7 @@ class MigrateImagesToSwift extends Maintenance {
 			$elapsed = time() - $this->time;
 
 			// estimate remaining time
-			$filesPerSec = ($elapsed) ? ($this->migratedImagesCnt) / ($elapsed) : 0;
+			$filesPerSec = ($elapsed) ? ($this->migratedImagesCnt) / ($elapsed) : 1;
 			$remainingSeconds = round(($this->imagesCnt - $this->migratedImagesCnt) / $filesPerSec);
 			$remainingMinutes = floor($remainingSeconds / 60);
 
