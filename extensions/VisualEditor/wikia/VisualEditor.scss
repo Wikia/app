@@ -1,12 +1,6 @@
 // Oasis color
 @import "skins/oasis/css/core/color";
 
-// Opposite button color (use this as the mixing value to darken, lighten towards the opposite of button darkness)
-$color-button-opposite: #000;
-@if lightness($color-buttons) < 50 {
-	$color-button-opposite: #fff;
-}
-
 /*
  * Fixes background colors in inspectors and dialogs
  * Fixes width problems inherited from Oasis responsive breakpoints
@@ -29,19 +23,4 @@ $color-button-opposite: #000;
  */
 .ve-init-mw-viewPageTarget-surface .ve-ui-menuWidget {
 	font-size: .8em;
-}
-
-/*
- * Fixes toolbar background and bottom border color
- */
-.ve-ui-toolbar-bar {
-	background: $color-buttons;
-	border-bottom-color: $color-alternate-text;
-}
-
-/*
- * Fixes color for active tool
- */
-.ve-ui-buttonTool-active:not(.ve-ui-widget-disabled) {
-	background: mix($color-buttons, $color-button-opposite, 80%);
 }
