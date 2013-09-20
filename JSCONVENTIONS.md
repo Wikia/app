@@ -259,7 +259,7 @@ function makeCookies( flavor ) {
     // create the cookie
     var cookie = {
         type: flavor,
-        tastiness: delicious
+        tastiness: 'delicious'
     }
     
     // do more stuff annotated by inline comments ...
