@@ -1,3 +1,4 @@
+@import 'skins/oasis/css/core/color';
 @import 'mixins/_sprite-VideoPageTool.scss';
 
 /*
@@ -6,19 +7,50 @@
  * that I can start development on it's various modules
  * https://wikia-inc.atlassian.net/browse/VID-829
  */
-#HOME_TOP_RIGHT_BOXAD { display: none !important;  }
+#HOME_TOP_RIGHT_BOXAD, .SelfServeUrl { display: none !important;  }
 
 .WikiaVideo {
-
 	.wv-sprite {
 		@include sprite-VideoPageTool-base();
 	}
 
-	.wv-logo {
-		@extend .wv-sprite;
-		@include sprite-VideoPageTool('logo-wikiavideo');
-		height: 37px;
-		width: 187px;
+	.main-header {
+		margin-top: 33px;
+		margin-bottom: 22px;
+		font-size: 16px;
+		font-weight: bold;
+		text-transform: uppercase;
+		position: relative;
+
+		.wv-logo {
+			@extend .wv-sprite;
+			@include sprite-VideoPageTool('logo-wikiavideo');
+			display: block;
+			height: 37px;
+			margin-left: 10px;
+			width: 187px;
+			transform: translateX(-20px);
+			-webkit-transform: translateX(-20px);
+			-moz-transform: translateX(-20px);
+		}
+
+		.discover {
+			color: $color-links;
+			text-align: right;
+			span {
+				display: inline-block;
+				padding-left: 120px;
+				vertical-align: -10px;
+			}
+		}
+
+		.search-container {
+			form {
+				padding-top: 5px;
+				position: absolute;
+				right: 10px;
+			}
+		}
 	}
 
 	// Branding Partners
