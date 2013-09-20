@@ -254,7 +254,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 					'email' => $this->email
 				);
 
-				$response = $this->sendSelfRequest( 'changeTempUserEmail', $params );
+				$response = $this->sendSelfRequest( 'changeUnconfirmedUserEmail', $params );
 
 				$this->result = $response->getVal( 'result','' );
 
@@ -294,7 +294,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string msg - result messages
 	 * @responseParam string errParam - error param
 	 */
-	public function changeTempUserEmail() {
+	public function changeUnconfirmedUserEmail() {
 
 		//get new email from request
 		$email = $this->request->getVal( 'email', '' );
