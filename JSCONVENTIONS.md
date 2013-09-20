@@ -66,6 +66,9 @@ while ( condition ) {
 }
 ```
 
+### Try/catch blocks
+Avoid using try/catch blocks in performance critical functions and inside loops.
+
 ## Style Rules
 
 ### White space guidelines
@@ -281,7 +284,6 @@ We use JSDoc style comments above function declarations and at the top of files 
 
 ## Still to be defined
 * Error handling and custom exception handling (handle this later)
-* No try/catch within loops (language rule) 
 * Delete Operator
   * Try to avoid using the delete operator
   * Doesn't actually clean up memory
