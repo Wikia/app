@@ -1,6 +1,18 @@
 <?php
 
 class FounderEmailsEditEvent extends FounderEmailsEvent {
+
+	/**
+	 * Name of user property that holds information about whether first edit notification was sent
+	 */
+	const FIRST_EDIT_NOTIFICATION_SENT_PROP_NAME = 'founderemails-first-edit-notification-sent';
+
+	/**
+	 * Minimum number of non-profile edit revisions needed to determine if user made only
+	 * one edit on a wiki
+	 */
+	const FIRST_EDIT_REVISION_THRESHOLD = 2;
+
 	public function __construct( Array $data = array() ) {
 		parent::__construct( 'edit' );
 		$this->setData( $data );
@@ -158,6 +170,55 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		return false;
 	}
 
+	/**
+	 * Returns number of edit events (excluding profile page
+	 * edits), limited by FIRST_EDIT_REVISION_THRESHOLD
+	 *
+	 * @param User $user
+	 * @param bool $useMasterDb
+	 * @returns int
+	 */
+	static public function countRecentEditEvents($user, $useMasterDb = false ) {
+		wfProfileIn(__METHOD__);
+
+		$editCount = 0;
+		$dbr = wfGetDB( $useMasterDb ? DB_MASTER : DB_SLAVE );
+
+		$conditions = [
+			'rev_user' => $user->getId(),
+		];
+
+		$userPageId = $user->getUserPage()->getArticleID();
+
+		if($userPageId) {
+			$conditions[] = "page_id != $userPageId";
+		}
+
+		$dbResult = $dbr->select(
+			[ 'revision', 'page' ],
+			[ 'rev_id' ],
+			$conditions,
+			__METHOD__,
+			[
+				'LIMIT' => self::FIRST_EDIT_REVISION_THRESHOLD,
+				'ORDER BY' => 'rev_timestamp DESC'
+			],
+			[ 'page' => [
+					'left join',
+					[ 'revision.rev_page = page.page_id' ]
+				]
+			]
+		);
+
+		while($row = $dbr->FetchObject($dbResult)) {
+			$editCount++;
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $editCount;
+	}
+
 	public static function register( $oRecentChange ) {
 		global $wgUser, $wgCityId;
 		wfProfileIn( __METHOD__ );
@@ -175,12 +236,26 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			$editor = ( $wgUser->getId() == $oRecentChange->getAttribute( 'rc_user' ) ) ? $wgUser : User::newFromID( $oRecentChange->getAttribute( 'rc_user' ) );
 			$isRegisteredUser = true;
 
-			if ( class_exists( 'Masthead' ) ) {
-				$userStats = Masthead::getUserStatsData( $editor->getName(), true );
-				if ( $userStats['editCount'] == 1 ) {
-					$isRegisteredUserFirstEdit = true;
-				}
+			// if first edit email was already sent no need to process further
+			$firstEditNotificationSentPropKey = self::FIRST_EDIT_NOTIFICATION_SENT_PROP_NAME . '-' . $wgCityId;
+			$wasNotificationSent = $editor->getOption( $firstEditNotificationSentPropKey );
+			if ( !empty( $wasNotificationSent ) ) {
+				wfProfileOut( __METHOD__ );
+				return true;
 			}
+
+			$recentEditEventCount = self::countRecentEditEvents( $editor, true );
+			if( $recentEditEventCount >= 1) {
+				// flag that we should not send this email anymore; either first email
+				// is sent out, or there was more than 1 edit so we will never need to
+				// send it again
+				$editor->setOption( $firstEditNotificationSentPropKey, true );
+				$editor->saveSettings();
+			}
+			if( $recentEditEventCount == 1) {
+				$isRegisteredUserFirstEdit = true;
+			}
+
 		} else {
 			// Anon user
 			$editor = ( $wgUser->getName() == $oRecentChange->getAttribute( 'rc_user_text' ) ) ? $wgUser : User::newFromName( $oRecentChange->getAttribute( 'rc_user_text' ), false );
