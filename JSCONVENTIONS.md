@@ -280,8 +280,8 @@ We use JSDoc style comments above function declarations and at the top of files 
 * @see (for links to documentation)
 
 ## Still to be defined
-* Error handling and custom exception handling
-* No try/catch within loops  
+* Error handling and custom exception handling (handle this later)
+* No try/catch within loops (language rule) 
 * Delete Operator
 * Modifying prototypes of built-in objects
 * White space (we want to transcribe jQuery's conventions as much as possible so we can tweak them on our end)
