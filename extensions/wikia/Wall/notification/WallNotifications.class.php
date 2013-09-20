@@ -31,7 +31,22 @@ class WallNotifications {
 		wfProfileIn(__METHOD__);
 
 		$memcSync = $this->getCache($userId, $wikiId);
-		$list = $this->getData($memcSync, $userId, $wikiId);
+
+		// try fetching the list of notifications from memcache
+		$list = $memcSync->get();
+		if(empty($list) && !is_array($list)) {
+			// nothing in the cache, so use the db as a fallback and store the result in cache
+			$callback = function() use( $userId, $wikiId, &$list ) {
+				$list = $this->rebuildData( $userId, $wikiId );
+				return $list;
+			};
+
+			// this memcache data is synchronized so we're making sure nothing else is modifying it at the same time
+			// we're using the same callback when we cannot aquire the lock, as we want to have the list of notifications
+			// even if we won't be able to store it in the cache
+			$this->lockAndSetData( $memcSync, $callback, $callback);
+		}
+
 		if(empty($list)) {
 			wfProfileOut(__METHOD__);
 			return array();
@@ -990,4 +1005,45 @@ class WallNotifications {
 		}
 		return $this->cachedUsers[$userId];
 	}
+
+	/**
+	 * Modify the shared memcache entry after locking it. After this function gets the lock, it calls the $getDataCallback,
+	 * which should return the value to be put into the memcache. In case the lock cannot be acquired, $lockFailCallback
+	 * is called
+	 * If the $getDataCallback returns null or false, no memcache data is set
+	 * @param $memcSync - MemcacheSync instance
+	 * @param $getDataCallback - callback returning the data to be put in the memcache entry.
+	 * @param $lockFailCallback -
+	 */
+	protected function lockAndSetData( $memcSync, $getDataCallback, $lockFailCallback ) {
+		// Try to update the data $count times before giving up
+		$count = 5;
+		while ($count--) {
+			if( $memcSync->lock() ) {
+				$data = $getDataCallback();
+				$success = false;
+				// Make sure we have data
+				if (isset($data)) {
+					// See if we can set it successfully
+					if ($this->setData($memcSync, $data)) {
+						$success = true;
+					}
+				} else {
+					// If there's no data don't bother doing anything
+					$success = true;
+				}
+				$memcSync->unlock();
+				if ( $success ) {
+					break;
+				}
+			} else {
+				$this->random_msleep( $count );
+			}
+		}
+		// If count is -1 it means we left the above loop failing to update
+		if ($count == -1) {
+			$lockFailCallback();
+		}
+	}
+
 }
