@@ -248,17 +248,15 @@ class MigrateImagesToSwift extends Maintenance {
 			// estimate remaining time
 			$filesPerSec = ($this->migratedImagesCnt) / (time() - $this->time);
 			$remainingSeconds = round($filesPerSec * ($this->imagesCnt - $this->migratedImagesCnt));
-			$remainingMinutes = floor($remainingSeconds / 60);
 
 			$this->output(sprintf(
-				"%d%%: %s/%s - %.2f files/sec, %.2f kB/s [ETA %d h %02d min %02d sec]     \r",
+				"%d%%: %s/%s - %.2f files/sec, %.2f kB/s [ETA %d min %02d sec]     \r",
 				round($this->migratedImagesCnt / $this->imagesCnt * 100),
 				$this->migratedImagesCnt,
 				$this->imagesCnt,
 				$filesPerSec,
 				($this->migratedImagesSize / 1024) / (time() - $this->time),
-				floor($remainingMinutes / 60),
-				$remainingMinutes % 60,
+				floor($remainingSeconds / 60),
 				$remainingSeconds % 60
 			));
 		}
@@ -361,11 +359,11 @@ class MigrateImagesToSwift extends Maintenance {
 		}
 
 		// summary
-		$report = sprintf('Migrated files: %d (%d MB) in %.2f min (%.2f files/sec, %.2f kB/s)',
+		$report = sprintf('Migrated files: %d (%d MB) in %d min (%.2f files/sec, %.2f kB/s)',
 			$this->migratedImagesCnt,
 			round($this->migratedImagesSize / 1024 / 1024),
-			(time() - $this->time) / 60,
-			($this->imagesCnt) / (time() - $this->time),
+			ceil((time() - $this->time) / 60),
+			floor($this->imagesCnt) / (time() - $this->time),
 			($this->migratedImagesSize / 1024) / (time() - $this->time)
 		);
 
