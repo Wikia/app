@@ -22,6 +22,7 @@ ve.ui.LabeledElement = function VeUiLabeledElement( $label, config ) {
 
 	// Properties
 	this.$label = $label;
+	this.label = null;
 
 	// Initialization
 	this.$label.addClass( 've-ui-labeledElement-label' );
@@ -38,14 +39,26 @@ ve.ui.LabeledElement = function VeUiLabeledElement( $label, config ) {
  * @chainable
  */
 ve.ui.LabeledElement.prototype.setLabel = function ( value ) {
-	if ( typeof value === 'string' && value.length && /[^\s]*/.test( value ) ) {
+	if ( typeof value === 'string' && value.trim() ) {
 		this.$label.text( value );
+		this.label = value;
 	} else if ( value instanceof jQuery ) {
 		this.$label.empty().append( value );
+		this.label = value;
 	} else {
 		this.$label.html( '&nbsp;' );
+		this.label = null;
 	}
 	return this;
+};
+
+/**
+ * Get label value as plain text.
+ *
+ * @return {string} Label text
+ */
+ve.ui.LabeledElement.prototype.getLabelText = function () {
+	return this.$label.text();
 };
 
 /**

@@ -37,6 +37,7 @@ ve.ce.ImageNode = function VeCeImageNode( model, config ) {
 	// Initialization
 	this.$image
 		.addClass( 've-ce-imageNode' )
+		.attr( 'alt', this.model.getAttribute( 'alt' ) )
 		.attr( 'src', this.model.getAttribute( 'src' ) )
 		.css( {
 			'width': this.model.getAttribute( 'width' ),

@@ -26,7 +26,7 @@ ve.inheritClass( ve.dm.LanguageAnnotation, ve.dm.Annotation );
 
 /* Static Properties */
 
-ve.dm.LanguageAnnotation.static.name = 'language';
+ve.dm.LanguageAnnotation.static.name = 'meta/language';
 
 ve.dm.LanguageAnnotation.static.matchTagNames = [ 'span' ];
 
@@ -38,7 +38,7 @@ ve.dm.LanguageAnnotation.static.applyToAppendedContent = false;
 
 ve.dm.LanguageAnnotation.static.toDataElement = function ( domElements ) {
 	return {
-		'type': 'language',
+		'type': 'meta/language',
 		'attributes': {
 			'lang': domElements[0].getAttribute( 'lang' ),
 			'dir': domElements[0].getAttribute( 'dir' )

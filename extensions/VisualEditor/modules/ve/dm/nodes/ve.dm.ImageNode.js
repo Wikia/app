@@ -33,6 +33,7 @@ ve.dm.ImageNode.static.matchTagNames = [ 'img' ];
 
 ve.dm.ImageNode.static.toDataElement = function ( domElements ) {
 	var $node = $( domElements[0] ),
+		alt = $node.attr( 'alt' ),
 		width = $node.attr( 'width' ),
 		height = $node.attr( 'height' );
 
@@ -40,6 +41,7 @@ ve.dm.ImageNode.static.toDataElement = function ( domElements ) {
 		'type': 'image',
 		'attributes': {
 			'src': $node.attr( 'src' ),
+			'alt': alt !== undefined ? alt : null,
 			'width': width !== undefined && width !== '' ? Number( width ) : null,
 			'height': height !== undefined && height !== '' ? Number( height ) : null
 		}
@@ -48,7 +50,7 @@ ve.dm.ImageNode.static.toDataElement = function ( domElements ) {
 
 ve.dm.ImageNode.static.toDomElements = function ( dataElement, doc ) {
 	var domElement = doc.createElement( 'img' );
-	ve.setDomAttributes( domElement, dataElement.attributes, [ 'src', 'width', 'height' ] );
+	ve.setDomAttributes( domElement, dataElement.attributes, [ 'alt', 'src', 'width', 'height' ] );
 	return [ domElement ];
 };
 

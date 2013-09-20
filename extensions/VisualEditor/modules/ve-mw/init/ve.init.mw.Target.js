@@ -20,6 +20,8 @@
  *  revision id here. Defaults to loading the latest version (see #load).
  */
 ve.init.mw.Target = function VeInitMwTarget( $container, pageName, revisionId ) {
+	var conf = mw.config.get( 'wgVisualEditorConfig' );
+
 	// Parent constructor
 	ve.init.Target.call( this, $container );
 
@@ -33,7 +35,9 @@ ve.init.mw.Target = function VeInitMwTarget( $container, pageName, revisionId ) 
 	this.submitUrl = ( new mw.Uri( mw.util.wikiGetlink( this.pageName ) ) )
 		.extend( { 'action': 'submit' } );
 	this.modules = [
-			mw.config.get( 'wgVisualEditorConfig' ).enableExperimentalCode ?
+			( mw.config.get( 'wgUserName' ) === null ?
+				conf.defaultUserOptions.experimental :
+				mw.user.options.get( 'visualeditor-enable-experimental', conf.defaultUserOptions.experimental ) ) ?
 				'ext.visualEditor.experimental' : 'ext.visualEditor.core',
 			'ext.visualEditor.data'
 		]

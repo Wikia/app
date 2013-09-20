@@ -23,8 +23,10 @@ ve.inheritClass( ve.ui.WikiaMediaInsertDialog, ve.ui.MWDialog );
 
 /* Static Properties */
 
+ve.ui.WikiaMediaInsertDialog.static.name = 'wikiaMediaInsert';
+
 ve.ui.WikiaMediaInsertDialog.static.icon = 'media';
 
 /* Registration */
 
-ve.ui.dialogFactory.register( 'wikiaMediaInsert', ve.ui.WikiaMediaInsertDialog );
+ve.ui.dialogFactory.register( ve.ui.WikiaMediaInsertDialog );

@@ -6,17 +6,19 @@
  */
 
 /**
- * ContentEditable relocatable node.
+ * ContentEditable protected node.
  *
  * @class
  * @abstract
  *
  * @constructor
+ * @param {jQuery} [$phantomable=this.$] Element to show a phantom for
  */
-ve.ce.ProtectedNode = function VeCeProtectedNode() {
+ve.ce.ProtectedNode = function VeCeProtectedNode( $phantomable ) {
 	// Properties
 	this.$phantoms = $( [] );
 	this.$shields = $( [] );
+	this.$phantomable = $phantomable || this.$;
 	this.isSetup = false;
 
 	// Events
@@ -87,7 +89,7 @@ ve.ce.ProtectedNode.prototype.onProtectedSetup = function () {
 	this.$.add( this.$.find( '*' ) ).each( function () {
 		var $this = $( this );
 		if ( this.nodeType === Node.ELEMENT_NODE ) {
-			/** 
+			/**
 			 * These elements should not get sheilds:
 			 * 1. An element with class 've-no-shield'
 			 * 2. A non-floated element that is not the main protectedNode
@@ -96,7 +98,9 @@ ve.ce.ProtectedNode.prototype.onProtectedSetup = function () {
 				$this.hasClass( 've-no-shield' ) ||
 				(
 					( $this.css( 'float' ) === 'none' || $this.css( 'float' ) === '' ) &&
-					!$this.hasClass( 've-ce-protectedNode' )
+					!$this.hasClass( 've-ce-protectedNode' ) &&
+					// Phantoms are built off shields, so make sure $phantomable has a shield
+					!$this.is( node.$phantomable )
 				)
 			) {
 				return;
@@ -223,7 +227,7 @@ ve.ce.ProtectedNode.prototype.createPhantoms = function () {
 	var $phantomTemplate = this.constructor.static.$phantomTemplate,
 		surface = this.root.getSurface();
 
-	this.$.find( '.ve-ce-protectedNode-shield' ).each(
+	this.$phantomable.find( '.ve-ce-protectedNode-shield' ).each(
 		ve.bind( function () {
 			this.$phantoms = this.$phantoms.add(
 				$phantomTemplate.clone().on( 'mousedown', ve.bind( this.onPhantomMouseDown, this ) )
@@ -245,7 +249,7 @@ ve.ce.ProtectedNode.prototype.createPhantoms = function () {
  * @method
  */
 ve.ce.ProtectedNode.prototype.positionPhantoms = function () {
-	this.$.find( '.ve-ce-protectedNode-shield' ).each(
+	this.$phantomable.find( '.ve-ce-protectedNode-shield' ).each(
 		ve.bind( function ( i, element ) {
 			var $shield = $( element ),
 				offset = ve.Element.getRelativePosition(

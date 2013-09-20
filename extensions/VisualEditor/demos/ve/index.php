@@ -52,6 +52,7 @@ $html = file_get_contents( $page );
 		<link rel=stylesheet href="../../modules/ve/ui/styles/ve.ui.Frame.css">
 		<link rel=stylesheet href="../../modules/ve/ui/styles/ve.ui.Window.css">
 		<link rel=stylesheet href="../../modules/ve/ui/styles/ve.ui.Toolbar.css">
+		<link rel=stylesheet href="../../modules/ve/ui/styles/ve.ui.ToolGroup.css">
 		<link rel=stylesheet href="../../modules/ve/ui/styles/ve.ui.Tool.css">
 		<link rel=stylesheet href="../../modules/ve/ui/styles/ve.ui.Element.css">
 		<link rel=stylesheet href="../../modules/ve/ui/styles/ve.ui.Layout.css">
@@ -124,6 +125,7 @@ $html = file_get_contents( $page );
 		<script src="../../modules/ve/ve.LeafNode.js"></script>
 		<script src="../../modules/ve/ve.Element.js"></script>
 		<script src="../../modules/ve/ve.Document.js"></script>
+		<script src="../../modules/ve/ve.EventSequencer.js"></script>
 		<script src="../../modules/ve/dm/ve.dm.js"></script>
 		<script src="../../modules/ve/dm/ve.dm.Model.js"></script>
 		<script src="../../modules/ve/dm/ve.dm.ModelRegistry.js"></script>
@@ -218,7 +220,9 @@ $html = file_get_contents( $page );
 		<script src="../../modules/ve/ce/annotations/ve.ce.LinkAnnotation.js"></script>
 		<script src="../../modules/ve/ce/annotations/ve.ce.TextStyleAnnotation.js"></script>
 		<script src="../../modules/ve/ui/ve.ui.js"></script>
+		<script src="../../modules/ve/ui/elements/ve.ui.ClippableElement.js"></script>
 		<script src="../../modules/ve/ui/elements/ve.ui.LabeledElement.js"></script>
+		<script src="../../modules/ve/ui/elements/ve.ui.IconedElement.js"></script>
 		<script src="../../modules/ve/ui/elements/ve.ui.GroupElement.js"></script>
 		<script src="../../modules/ve/ui/elements/ve.ui.FlaggableElement.js"></script>
 		<script src="../../modules/ve/ui/ve.ui.Surface.js"></script>
@@ -273,25 +277,18 @@ $html = file_get_contents( $page );
 		<script src="../../modules/ve/ui/layouts/ve.ui.PanelLayout.js"></script>
 		<script src="../../modules/ve/ui/layouts/ve.ui.StackPanelLayout.js"></script>
 		<script src="../../modules/ve/ui/dialogs/ve.ui.PagedDialog.js"></script>
-		<script src="../../modules/ve/ui/tools/ve.ui.ButtonTool.js"></script>
-		<script src="../../modules/ve/ui/tools/ve.ui.AnnotationButtonTool.js"></script>
-		<script src="../../modules/ve/ui/tools/ve.ui.DialogButtonTool.js"></script>
-		<script src="../../modules/ve/ui/tools/ve.ui.InspectorButtonTool.js"></script>
-		<script src="../../modules/ve/ui/tools/ve.ui.IndentationButtonTool.js"></script>
-		<script src="../../modules/ve/ui/tools/ve.ui.ListButtonTool.js"></script>
-		<script src="../../modules/ve/ui/tools/ve.ui.DropdownTool.js"></script>
-		<script src="../../modules/ve/ui/tools/buttons/ve.ui.BoldButtonTool.js"></script>
-		<script src="../../modules/ve/ui/tools/buttons/ve.ui.ItalicButtonTool.js"></script>
-		<script src="../../modules/ve/ui/tools/buttons/ve.ui.ClearButtonTool.js"></script>
-		<script src="../../modules/ve/ui/tools/buttons/ve.ui.LinkButtonTool.js"></script>
-		<script src="../../modules/ve/ui/tools/buttons/ve.ui.CodeButtonTool.js"></script>
-		<script src="../../modules/ve/ui/tools/buttons/ve.ui.BulletButtonTool.js"></script>
-		<script src="../../modules/ve/ui/tools/buttons/ve.ui.NumberButtonTool.js"></script>
-		<script src="../../modules/ve/ui/tools/buttons/ve.ui.IndentButtonTool.js"></script>
-		<script src="../../modules/ve/ui/tools/buttons/ve.ui.OutdentButtonTool.js"></script>
-		<script src="../../modules/ve/ui/tools/buttons/ve.ui.RedoButtonTool.js"></script>
-		<script src="../../modules/ve/ui/tools/buttons/ve.ui.UndoButtonTool.js"></script>
-		<script src="../../modules/ve/ui/tools/dropdowns/ve.ui.FormatDropdownTool.js"></script>
+		<script src="../../modules/ve/ui/tools/ve.ui.AnnotationTool.js"></script>
+		<script src="../../modules/ve/ui/tools/ve.ui.ClearAnnotationTool.js"></script>
+		<script src="../../modules/ve/ui/tools/ve.ui.DialogTool.js"></script>
+		<script src="../../modules/ve/ui/tools/ve.ui.FormatTool.js"></script>
+		<script src="../../modules/ve/ui/tools/ve.ui.HistoryTool.js"></script>
+		<script src="../../modules/ve/ui/tools/ve.ui.IndentationTool.js"></script>
+		<script src="../../modules/ve/ui/tools/ve.ui.InspectorTool.js"></script>
+		<script src="../../modules/ve/ui/tools/ve.ui.ListTool.js"></script>
+		<script src="../../modules/ve/ui/toolgroups/ve.ui.BarToolGroup.js"></script>
+		<script src="../../modules/ve/ui/toolgroups/ve.ui.PopupToolGroup.js"></script>
+		<script src="../../modules/ve/ui/toolgroups/ve.ui.ListToolGroup.js"></script>
+		<script src="../../modules/ve/ui/toolgroups/ve.ui.MenuToolGroup.js"></script>
 		<script src="../../modules/ve/ui/inspectors/ve.ui.AnnotationInspector.js"></script>
 		<script src="../../modules/ve/ui/inspectors/ve.ui.LinkInspector.js"></script>
 		<!-- jquery.uls.data -->
@@ -317,7 +314,7 @@ $html = file_get_contents( $page );
 					ve.createDocumentFromHtml( <?php echo json_encode( $html ) ?> )
 				);
 				$( '.ve-ce-documentNode' ).focus();
-				// ve.instances[0].getDialogs().open( 'mwMeta' );
+				// ve.instances[0].getDialogs().open( 'meta' );
 			} );
 		</script>
 

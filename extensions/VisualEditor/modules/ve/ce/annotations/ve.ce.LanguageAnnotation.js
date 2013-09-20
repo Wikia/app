@@ -37,7 +37,7 @@ ve.inheritClass( ve.ce.LanguageAnnotation, ve.ce.Annotation );
 
 /* Static Properties */
 
-ve.ce.LanguageAnnotation.static.name = 'language';
+ve.ce.LanguageAnnotation.static.name = 'meta/language';
 
 ve.ce.LanguageAnnotation.static.tagName = 'span';
 

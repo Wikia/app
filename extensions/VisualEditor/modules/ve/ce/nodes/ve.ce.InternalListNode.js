@@ -18,8 +18,8 @@ ve.ce.InternalListNode = function VeCeInternalListNode( model, config ) {
 	// Parent constructor
 	ve.ce.BranchNode.call( this, model, config );
 
-	// TODO: render nothing
-	this.$.hide();
+	// An internal list has no rendering
+	this.$ = $( [] );
 };
 
 /* Inheritance */
@@ -29,8 +29,6 @@ ve.inheritClass( ve.ce.InternalListNode, ve.ce.BranchNode );
 /* Static Properties */
 
 ve.ce.InternalListNode.static.name = 'internalList';
-
-ve.ce.InternalListNode.static.tagName = 'span';
 
 /* Methods */
 

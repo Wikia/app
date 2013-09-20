@@ -36,6 +36,16 @@ ve.inheritClass( ve.ui.Inspector, ve.ui.Window );
 ve.ui.Inspector.static.titleMessage = 've-ui-inspector-title';
 
 /**
+ * Symbolic name of dialog.
+ *
+ * @abstract
+ * @static
+ * @property {string}
+ * @inheritable
+ */
+ve.ui.Inspector.static.name = '';
+
+/**
  * The inspector comes with a remove button
 
  * @static

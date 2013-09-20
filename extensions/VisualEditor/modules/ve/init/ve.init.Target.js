@@ -30,45 +30,34 @@ ve.mixinClass( ve.init.Target, ve.EventEmitter );
 /* Static Properties */
 
 ve.init.Target.static.toolbarGroups = [
+
+	{ 'include': [ 'undo', 'redo' ] },
 	{
-		'include': [ 'history' ],
-		'promote': [
-			'history/undo',
-			'history/redo'
-		]
+		'type': 'menu',
+		'include': [ { 'group': 'format' } ],
+		'promote': [ 'paragraph' ],
+		'demote': [ 'preformatted', 'heading1' ]
 	},
-	{
-		'include': [ 'format' ],
-		'promote': [ 'format/convert' ]
-	},
-	{
-		'include': [ 'textStyle', 'meta', 'utility/clear' ],
-		'promote': [
-			'textStyle/bold',
-			'textStyle/italic',
-			'meta/link'
-		],
-		'demote': [ 'utility/clear' ]
-	},
-	{
-		'include': [ 'structure' ],
-		'promote': [
-			'structure/number',
-			'structure/bullet',
-			'structure/outdent',
-			'structure/indent'
-		]
-	},
-	{ 'include': [ 'object' ] }
+	{ 'include': [ 'bold', 'italic', 'link', 'clear' ] },
+	{ 'include': [ 'number', 'bullet', 'outdent', 'indent' ] },
+	{ 'include': '*' }
 ];
 
 ve.init.Target.static.surfaceCommands = [
-	'history/undo',
-	'history/redo',
-	'textStyle/bold',
-	'textStyle/italic',
-	'meta/link',
-	'utility/clear',
-	'structure/indent',
-	'structure/outdent'
+	'undo',
+	'redo',
+	'bold',
+	'italic',
+	'link',
+	'clear',
+	'indent',
+	'outdent',
+	'paragraph',
+	'heading1',
+	'heading2',
+	'heading3',
+	'heading4',
+	'heading5',
+	'heading6',
+	'preformatted'
 ];

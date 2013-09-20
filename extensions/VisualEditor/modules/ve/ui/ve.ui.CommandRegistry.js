@@ -52,3 +52,28 @@ ve.ui.CommandRegistry.prototype.register = function ( name, action, method ) {
 /* Initialization */
 
 ve.ui.commandRegistry = new ve.ui.CommandRegistry();
+
+/* Registrations */
+
+ve.ui.commandRegistry.register( 'bold', 'annotation', 'toggle', 'textStyle/bold' );
+ve.ui.commandRegistry.register( 'italic', 'annotation', 'toggle', 'textStyle/italic' );
+ve.ui.commandRegistry.register( 'code', 'annotation', 'toggle', 'textStyle/code' );
+ve.ui.commandRegistry.register( 'strikethrough', 'annotation', 'toggle', 'textStyle/strike' );
+ve.ui.commandRegistry.register( 'underline', 'annotation', 'toggle', 'textStyle/underline' );
+ve.ui.commandRegistry.register( 'subscript', 'annotation', 'toggle', 'textStyle/subscript' );
+ve.ui.commandRegistry.register( 'superscript', 'annotation', 'toggle', 'textStyle/superscript' );
+ve.ui.commandRegistry.register( 'clear', 'annotation', 'clearAll' );
+ve.ui.commandRegistry.register( 'indent', 'indentation', 'increase' );
+ve.ui.commandRegistry.register( 'outdent', 'indentation', 'decrease' );
+ve.ui.commandRegistry.register( 'link', 'inspector', 'open', 'link' );
+ve.ui.commandRegistry.register( 'language', 'inspector', 'open', 'language' );
+ve.ui.commandRegistry.register( 'redo', 'history', 'redo' );
+ve.ui.commandRegistry.register( 'undo', 'history', 'undo' );
+ve.ui.commandRegistry.register( 'paragraph', 'format', 'convert', 'paragraph' );
+ve.ui.commandRegistry.register( 'heading1', 'format', 'convert', 'heading', { 'level': 1 } );
+ve.ui.commandRegistry.register( 'heading2', 'format', 'convert', 'heading', { 'level': 2 } );
+ve.ui.commandRegistry.register( 'heading3', 'format', 'convert', 'heading', { 'level': 3 } );
+ve.ui.commandRegistry.register( 'heading4', 'format', 'convert', 'heading', { 'level': 4 } );
+ve.ui.commandRegistry.register( 'heading5', 'format', 'convert', 'heading', { 'level': 5 } );
+ve.ui.commandRegistry.register( 'heading6', 'format', 'convert', 'heading', { 'level': 6 } );
+ve.ui.commandRegistry.register( 'preformatted', 'format', 'convert', 'preformatted' );

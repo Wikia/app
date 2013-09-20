@@ -56,6 +56,22 @@ QUnit.test( 'onTransact', function ( assert ) {
 				'msg': 'Transaction inserting, replacing and removing text'
 			},
 			{
+				'calls': [
+					[ 'pushRetain', 1 ],
+					[
+						'pushReplace', doc, 1, 9,
+						[ 'f', 'O', 'O', 'b', 'A', 'R', 'b', 'A', 'Z' ],
+						[
+							undefined,
+							[ ve.dm.example.withMetaMetaData[9][0], ve.dm.example.withMetaMetaData[7][0] ],
+							undefined, undefined, undefined, [ ve.dm.example.withMetaMetaData[4][0] ],
+							undefined, undefined, undefined
+						]
+					]
+				],
+				'msg': 'Transaction replacing text and metadata at the same time'
+			},
+			{
 				// delta: 0
 				'calls': [
 					[ 'pushRetainMetadata', 1 ],
@@ -106,7 +122,6 @@ QUnit.test( 'onTransact', function ( assert ) {
 					[ 'pushRetain', 1 ],
 					[ 'pushReplaceMetadata', [ ve.dm.example.withMetaMetaData[9][0] ], [] ],
 					[ 'pushRetain', 2 ],
-					[ 'pushRetainMetadata', 2 ],
 					// The two operations below have to be in this order because of bug 46138
 					[ 'pushReplace', doc, 11, 0, [ { 'type': 'paragraph' }, 'a', 'b', 'c', { 'type': '/paragraph' } ] ],
 					[ 'pushReplaceMetadata', [], [ comment ] ]
@@ -116,21 +131,21 @@ QUnit.test( 'onTransact', function ( assert ) {
 	];
 	// HACK: This works because most transactions above don't change the document length, and the
 	// ones that do change it cancel out
-	QUnit.expect( cases.length*( 4*doc.metadata.getTotalDataLength() + 2 ) );
+	QUnit.expect( cases.length*( 8*doc.metadata.getTotalDataLength() + 2 ) );
 
 	for ( i = 0; i < cases.length; i++ ) {
 		tx = new ve.dm.Transaction();
 		for ( j = 0; j < cases[i].calls.length; j++ ) {
 			tx[cases[i].calls[j][0]].apply( tx, cases[i].calls[j].slice( 1 ) );
 		}
-		doc = ve.dm.example.createExampleDocument( 'withMeta' ),
+		doc = ve.dm.example.createExampleDocument( 'withMeta' );
 		surface = new ve.dm.Surface( doc );
 		list = new ve.dm.MetaList( surface );
 		// Test both the transaction-via-surface and transaction-via-document flows
 		surface.change( tx );
-		assertItemsMatchMetadata( assert, doc.metadata, list, cases[i].msg, false );
+		assertItemsMatchMetadata( assert, doc.metadata, list, cases[i].msg, true );
 		doc.rollback( tx );
-		assertItemsMatchMetadata( assert, doc.metadata, list, cases[i].msg + ' (rollback)', false );
+		assertItemsMatchMetadata( assert, doc.metadata, list, cases[i].msg + ' (rollback)', true );
 	}
 } );
 

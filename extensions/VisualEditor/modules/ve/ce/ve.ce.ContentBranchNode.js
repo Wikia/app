@@ -158,7 +158,10 @@ ve.ce.ContentBranchNode.prototype.getRenderedContents = function () {
  */
 ve.ce.ContentBranchNode.prototype.renderContents = function () {
 	var i, len, node, rendered;
-	if ( this.root instanceof ve.ce.DocumentNode && !this.root.getSurface().isRenderingEnabled() ) {
+	if (
+		this.root instanceof ve.ce.DocumentNode &&
+		this.root.getSurface().isRenderingLocked()
+	) {
 		return;
 	}
 

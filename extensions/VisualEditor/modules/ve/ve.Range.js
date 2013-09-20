@@ -9,13 +9,15 @@
  * Range.
  *
  * @class
- * @constructor
- * @param {number} from Starting offset
- * @param {number} [to=from] Ending offset
+ *
  * @property {number} from Starting offset
  * @property {number} to Ending offset
  * @property {number} start Starting offset (the lesser of #to and #from)
  * @property {number} end Ending offset (the greater of #to and #from)
+ *
+ * @constructor
+ * @param {number} from Starting offset
+ * @param {number} [to=from] Ending offset
  */
 ve.Range = function VeRange( from, to ) {
 	this.from = from || 0;
@@ -29,7 +31,6 @@ ve.Range = function VeRange( from, to ) {
 /**
  * Create a new range that's a translated version of another.
  *
- * @method
  * @param {ve.Range} range Range to base new range on
  * @param {number} distance Distance to move range by
  * @returns {ve.Range} New translated range
@@ -41,7 +42,6 @@ ve.Range.newFromTranslatedRange = function ( range, distance ) {
 /**
  * Create a range object that covers all of the given ranges.
  *
- * @method
  * @param {Array} ranges Array of ve.Range objects (at least one)
  * @param {boolean} backwards Return a backwards range
  * @returns {ve.Range} Range that spans all of the given ranges
@@ -74,7 +74,6 @@ ve.Range.newCoveringRange = function ( ranges, backwards ) {
 /**
  * Get a clone.
  *
- * @method
  * @returns {ve.Range} Clone of range
  */
 ve.Range.prototype.clone = function () {
@@ -84,7 +83,6 @@ ve.Range.prototype.clone = function () {
 /**
  * Check if an offset is within the range.
  *
- * @method
  * @param {number} offset Offset to check
  * @returns {boolean} If offset is within the range
  */
@@ -95,7 +93,6 @@ ve.Range.prototype.containsOffset = function ( offset ) {
 /**
  * Get the length of the range.
  *
- * @method
  * @returns {number} Length of range
  */
 ve.Range.prototype.getLength = function () {
@@ -105,7 +102,7 @@ ve.Range.prototype.getLength = function () {
 /**
  * Gets a range with reversed direction.
  *
- * @method
+ * @returns {ve.Range} A new range
  */
 ve.Range.prototype.flip = function () {
 	return new ve.Range( this.to, this.from );
@@ -114,8 +111,7 @@ ve.Range.prototype.flip = function () {
 /**
  * Check if two ranges are equal, taking direction into account.
  *
- * @method
- * @param {ve.Range}
+ * @param {ve.Range} other
  * @returns {boolean}
  */
 ve.Range.prototype.equals = function ( other ) {
@@ -125,8 +121,7 @@ ve.Range.prototype.equals = function ( other ) {
 /**
  * Check if two ranges are equal, ignoring direction.
  *
- * @method
- * @param {ve.Range}
+ * @param {ve.Range} other
  * @returns {boolean}
  */
 ve.Range.prototype.equalsSelection = function ( other ) {
@@ -136,8 +131,7 @@ ve.Range.prototype.equalsSelection = function ( other ) {
 /**
  * Create a new range with a limited length.
  *
- * @method
- * @param {number} Length of the new range (negative for left-side truncation)
+ * @param {number} length Length of the new range (negative for left-side truncation)
  * @returns {ve.Range} A new range
  */
 ve.Range.prototype.truncate = function ( length ) {
@@ -157,7 +151,6 @@ ve.Range.prototype.truncate = function ( length ) {
  *
  * A collapsed range has equal start and end values making its length zero.
  *
- * @method
  * @returns {boolean} Range is collapsed
  */
 ve.Range.prototype.isCollapsed = function () {
@@ -167,7 +160,6 @@ ve.Range.prototype.isCollapsed = function () {
 /**
  * Check if the range is backwards, i.e. from > to
  *
- * @method
  * @returns {boolean} Range is backwards
  */
 ve.Range.prototype.isBackwards = function () {

@@ -31,6 +31,7 @@ ve.ui.Toolbar = function VeUiToolbar( options ) {
 
 	// Properties
 	this.groups = [];
+	this.tools = {};
 	this.$bar = this.$$( '<div>' );
 	this.$actions = this.$$( '<div>' );
 	this.initialized = false;
@@ -74,15 +75,42 @@ ve.ui.Toolbar.prototype.initialize = function () {
 /**
  * Setup toolbar.
  *
+ * Tools can be specified in the following ways:
+ *  - A specific tool: `{ 'name': 'tool-name' }` or `'tool-name'`
+ *  - All tools in a group: `{ 'group': 'group-name' }`
+ *  - All tools: `'*'` - Using this will make the group a list with a "More" label by default
+ *
  * @method
- * @param {Object[]} groups List of tool group configurations
+ * @param {Object.<string,Array>} groups List of tool group configurations
+ * @param {Array|string} [groups.include] Tools to include
+ * @param {Array|string} [groups.exclude] Tools to exclude
+ * @param {Array|string} [groups.promote] Tools to promote to the beginning
+ * @param {Array|string} [groups.demote] Tools to demote to the end
  */
 ve.ui.Toolbar.prototype.setup = function ( groups ) {
-	var i, len,
-		items = [];
+	var i, len, type, group,
+		items = [],
+		// TODO: Use a registry instead
+		defaultType = 'bar',
+		constructors = {
+			'bar': ve.ui.BarToolGroup,
+			'list': ve.ui.ListToolGroup,
+			'menu': ve.ui.MenuToolGroup
+		};
 
 	for ( i = 0, len = groups.length; i < len; i++ ) {
-		items.push( new ve.ui.ToolGroup( this, ve.extendObject( { '$$': this.$$ }, groups[i] ) ) );
+		group = groups[i];
+		if ( group.include === '*' ) {
+			// Apply defaults to catch-all groups
+			if ( !group.type ) {
+				group.type = 'list';
+			}
+			if ( !group.label ) {
+				group.label = 'visualeditor-toolbar-more';
+			}
+		}
+		type = constructors[group.type] ? group.type : defaultType;
+		items.push( new constructors[type]( this, ve.extendObject( { '$$': this.$$ }, group ) ) );
 	}
 	this.addItems( items );
 };
@@ -100,4 +128,16 @@ ve.ui.Toolbar.prototype.destroy = function () {
 		this.items[i].destroy();
 	}
 	this.$.remove();
+};
+
+ve.ui.Toolbar.prototype.isToolAvailable = function ( name ) {
+	return !this.tools[name];
+};
+
+ve.ui.Toolbar.prototype.reserveTool = function ( name ) {
+	this.tools[name] = true;
+};
+
+ve.ui.Toolbar.prototype.releaseTool = function ( name ) {
+	delete this.tools[name];
 };

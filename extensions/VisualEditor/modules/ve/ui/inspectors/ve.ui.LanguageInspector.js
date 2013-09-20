@@ -33,6 +33,8 @@ ve.inheritClass( ve.ui.LanguageInspector, ve.ui.AnnotationInspector );
 
 /* Static properties */
 
+ve.ui.LanguageInspector.static.name = 'language';
+
 ve.ui.LanguageInspector.static.icon = 'language';
 
 ve.ui.LanguageInspector.static.titleMessage = 'visualeditor-languageinspector-title';
@@ -96,8 +98,8 @@ ve.ui.LanguageInspector.prototype.onSetup = function () {
 	// This will be called only if the annotation doesn't already exist, setting
 	// the default value as the current language/dir of the selected text.
 	if ( fragDOM ) {
-		this.initLang = fragDOM.$.closest('[lang]').attr('lang');
-		this.initDir = fragDOM.$.closest('[dir]').css('direction');
+		this.initLang = fragDOM.$.closest( '[lang]' ).attr( 'lang' );
+		this.initDir = fragDOM.$.closest( '[dir]' ).css( 'direction' );
 	}
 
 	// Parent method
@@ -117,7 +119,7 @@ ve.ui.LanguageInspector.prototype.onClose = function ( action ) {
 
 	// Set the annotation with the new attributes:
 	this.annotation = new ve.dm.LanguageAnnotation( {
-		'type': 'language',
+		'type': 'meta/language',
 		'attributes': attrs
 	} );
 
@@ -201,7 +203,7 @@ ve.ui.LanguageInspector.prototype.setAnnotation = function ( annotation ) {
  */
 ve.ui.LanguageInspector.prototype.getAnnotationFromText = function () {
 	return new ve.dm.LanguageAnnotation( {
-		'type': 'language',
+		'type': 'meta/language',
 		'attributes': {
 			'lang': this.initLang,
 			'dir': this.initDir
@@ -225,4 +227,4 @@ ve.ui.LanguageInspector.prototype.getLanguageFromAnnotation = function ( annotat
 
 /* Registration */
 
-ve.ui.inspectorFactory.register( 'language', ve.ui.LanguageInspector );
+ve.ui.inspectorFactory.register( ve.ui.LanguageInspector );

@@ -68,6 +68,8 @@ ve.ui.OptionWidget.static.selectable = true;
 
 ve.ui.OptionWidget.static.highlightable = true;
 
+ve.ui.OptionWidget.static.scrollIntoViewOnSelect = false;
+
 /* Methods */
 
 /**
@@ -122,6 +124,9 @@ ve.ui.OptionWidget.prototype.setSelected = function ( state ) {
 		this.selected = !!state;
 		if ( this.selected ) {
 			this.$.addClass( 've-ui-optionWidget-selected' );
+			if ( this.constructor.static.scrollIntoViewOnSelect ) {
+				this.scrollElementIntoView();
+			}
 		} else {
 			this.$.removeClass( 've-ui-optionWidget-selected' );
 		}

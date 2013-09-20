@@ -16,7 +16,7 @@ ve.ui.IconTextButtonTool = function VeUiIconTextButtonTool( toolbar, config ) {
 	var label = ve.msg( this.constructor.static.labelMessage );
 
 	// Parent constructor
-	ve.ui.DialogButtonTool.call( this, toolbar, config );
+	ve.ui.DialogTool.call( this, toolbar, config );
 
 	// Properties
 	this.$label = this.$$( '<span>' ).addClass( 've-ui-iconTextButtonTool-label' ).text( label );
@@ -31,5 +31,5 @@ ve.ui.IconTextButtonTool = function VeUiIconTextButtonTool( toolbar, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.IconTextButtonTool, ve.ui.DialogButtonTool );
+ve.inheritClass( ve.ui.IconTextButtonTool, ve.ui.DialogTool );
 

@@ -42,6 +42,18 @@ ve.ui.Dialog = function VeUiDialog( surface, config ) {
 
 ve.inheritClass( ve.ui.Dialog, ve.ui.Window );
 
+/* Static Properties */
+
+/**
+ * Symbolic name of dialog.
+ *
+ * @abstract
+ * @static
+ * @property {string}
+ * @inheritable
+ */
+ve.ui.Dialog.static.name = '';
+
 /* Methods */
 
 /**

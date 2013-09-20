@@ -48,3 +48,10 @@ Then(/^a non\-existing link appears in the diff view$/) do
     page.internal_diff_view.should match Regexp.escape('[[DoesNotExist|Editing]]')
   end
 end
+
+When(/^I enter (.+) into link Content box$/) do |content|
+  on(VisualEditorPage) do |page|
+    page.link_textfield_element.when_present
+    page.link_textfield_element.send_keys(content)
+  end
+end

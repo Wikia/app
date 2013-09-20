@@ -6,7 +6,7 @@
  */
 
 /**
- * ContentEditable resizable node.
+ * ContentEditable focusable node.
  *
  * Focusable elements have a special treatment by ve.ce.Surface. When the user selects only a single
  * node, if it is focusable, the surface will set the focusable node's focused state. Other systems,
@@ -22,7 +22,7 @@
  * @abstract
  *
  * @constructor
- * @param {jQuery} [$focusable] Primary element user is focusing on
+ * @param {jQuery} [$focusable=this.$] Primary element user is focusing on
  */
 ve.ce.FocusableNode = function VeCeFocusableNode( $focusable ) {
 	// Properties
@@ -135,11 +135,11 @@ ve.ce.FocusableNode.prototype.setFocused = function ( value ) {
 		this.focused = value;
 		if ( this.focused ) {
 			this.emit( 'focus' );
-			this.$.addClass( 've-ce-node-focused' );
+			this.$focusable.addClass( 've-ce-node-focused' );
 			this.createHighlight();
 		} else {
 			this.emit( 'blur' );
-			this.$.removeClass( 've-ce-node-focused' );
+			this.$focusable.removeClass( 've-ce-node-focused' );
 			this.clearHighlight();
 		}
 	}
@@ -151,7 +151,7 @@ ve.ce.FocusableNode.prototype.setFocused = function ( value ) {
  * @method
  */
 ve.ce.FocusableNode.prototype.createHighlight = function () {
-	this.$.find( '*' ).add( this.$ ).each(
+	this.$focusable.find( '*' ).add( this.$focusable ).each(
 		ve.bind( function( i, element ) {
 			var offset, $element = $( element );
 			if ( !$element.is( ':visible' ) ) {

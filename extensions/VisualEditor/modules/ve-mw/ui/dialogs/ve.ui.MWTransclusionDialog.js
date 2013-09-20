@@ -57,6 +57,8 @@ ve.mixinClass( ve.ui.MWTransclusionDialog, ve.ui.PagedDialog );
 
 /* Static Properties */
 
+ve.ui.MWTransclusionDialog.static.name = 'transclusion';
+
 ve.ui.MWTransclusionDialog.static.titleMessage = 'visualeditor-dialog-transclusion-title';
 
 ve.ui.MWTransclusionDialog.static.icon = 'template';
@@ -607,4 +609,4 @@ ve.ui.MWTransclusionDialog.prototype.getPlaceholderPage = function ( placeholder
 
 /* Registration */
 
-ve.ui.dialogFactory.register( 'mwTransclusion', ve.ui.MWTransclusionDialog );
+ve.ui.dialogFactory.register( ve.ui.MWTransclusionDialog );

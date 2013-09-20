@@ -127,7 +127,8 @@ ve.dm.MWBlockImageNode.static.toDomElements = function ( data, doc, converter ) 
 
 	if ( !this.typeToRdfa ) {
 		this.typeToRdfa = {};
-		for( rdfa in this.rdfaToType ) {
+
+		for ( rdfa in this.rdfaToType ) {
 			this.typeToRdfa[this.rdfaToType[rdfa]] = rdfa;
 		}
 	}

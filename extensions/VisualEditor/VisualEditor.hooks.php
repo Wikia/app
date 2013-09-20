@@ -174,7 +174,9 @@ class VisualEditorHooks {
 	 */
 	public static function onDoEditSectionLink( $skin, $title, $section, $tooltip, &$result, $lang ) {
 		// Only do this if the user has VE enabled
+		// (and we're not in parserTests)
 		if (
+			isset( $GLOBALS[ 'wgVisualEditorInParserTests' ] ) ||
 			!$skin->getUser()->getOption( 'visualeditor-enable' ) ||
 			$skin->getUser()->getOption( 'visualeditor-betatempdisable' )
 		) {
@@ -234,6 +236,19 @@ class VisualEditorHooks {
 		return true;
 	}
 
+	public static function onGetBetaPreferences( $user, &$preferences ) {
+		global $wgExtensionAssetsPath;
+
+		$preferences['visualeditor-enable-experimental'] = array(
+			'version' => '1.0',
+			'label-message' => 'visualeditor-preference-experimental-label',
+			'desc-message' => 'visualeditor-preference-experimental-description',
+			'info-link' => 'visualeditor-preference-experimental-info-link',
+			'discussion-link' => 'visualeditor-preference-experimental-discussion-link',
+			'screenshot' => $wgExtensionAssetsPath . '/VisualEditor/logo-experimental.png',
+		);
+	}
+
 	public static function onListDefinedTags( &$tags ) {
 		$tags[] = 'visualeditor';
 		$tags[] = 'visualeditor-needcheck';
@@ -277,8 +292,9 @@ class VisualEditorHooks {
 			'namespaces' => $wgVisualEditorNamespaces,
 			'pluginModules' => $wgVisualEditorPluginModules,
 			'defaultUserOptions' => array(
-				'enable' => $wgDefaultUserOptions['visualeditor-enable'],
 				'betatempdisable' => $wgDefaultUserOptions['visualeditor-betatempdisable'],
+				'enable' => $wgDefaultUserOptions['visualeditor-enable'],
+				'experimental' => $wgDefaultUserOptions['visualeditor-enable-experimental'],
 			),
 			'skins' => self::$supportedSkins,
 			'tabPosition' => $wgVisualEditorTabPosition,
@@ -373,5 +389,12 @@ class VisualEditorHooks {
 		);
 
 		return true;
+	}
+
+	/**
+	 * Ensures that we know whether we're running inside a parser test.
+	 */
+	public static function onParserTestGlobals( array &$settings ) {
+		$settings['wgVisualEditorInParserTests'] = true;
 	}
 }
