@@ -304,7 +304,6 @@ We use JSDoc style comments above function declarations and at the top of files 
   * jQuery code assumes no built in object prototypes are modified
   * Modifying builtins like Object.prototype and Array.prototype are strictly forbidden. Modifying other builtins like Function.prototype is less dangerous but still leads to hard to debug issues in production and should be avoided.
 * Structure
-* Commenting
 * Naming Conventions
 	* vars
 	* modules
