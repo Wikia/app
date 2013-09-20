@@ -33,7 +33,7 @@ class ImageLightbox {
 			return array();
 		}
 
-		if ( F::build( 'WikiaFileHelper' )->isFileTypeVideo( $image ) ) {
+		if ( WikiaFileHelper::isFileTypeVideo( $image ) ) {
 			if ( !empty($wgTitle) ) {
 				wfProfileOut(__METHOD__);
 				return self::videoLightbox($image);
@@ -78,7 +78,7 @@ class ImageLightbox {
 		$linkStdEncoded = rawurlencode($linkStd);
 		$linkDescription = wfMsg('lightbox-share-description', $currentTitle->getText(), $wgSitename);
 		$shareButtons = array();
-		$shareNetworks = F::build( 'SocialSharingService' )->getNetworks( array(
+		$shareNetworks = SocialSharingService::getInstance()->getNetworks( array(
 			'facebook',
 			'twitter',
 			'stumbleupon',
@@ -162,17 +162,6 @@ class ImageLightbox {
 			$maxWidth = $wgRequest->getInt('maxwidth', 500);
 
 			$embedCode = $image->getEmbedCode( $maxWidth, true, true );
-			$asset = $image->getPlayerAssetUrl();
-
-			if ( empty($asset) ) {
-				// $image->getEmbedCode returns normal html
-				$html = $embedCode;
-				$jsonData = '';
-			} else {
-				// $image->getEmbedCode returns json
-				$html = ''; // You can still add here some code, it will be displayed under the video
-				$jsonData = $embedCode;
-			}
 
 			$tmpl = new EasyTemplate(dirname(__FILE__));
 
@@ -200,17 +189,15 @@ class ImageLightbox {
 			));
 
 			$htmlUnderPlayer = $tmpl->render('VideoLightbox');
-			$html .= $htmlUnderPlayer;
 
 			$res = array(
-				'html' => $html,
-				'jsonData' => $jsonData,
+				'html' => $htmlUnderPlayer,
+				'embedCode' => $embedCode,
 				'title' => $wgTitle->getText(),
 				'titleKey' => $wgTitle->getDBKey(),
 				'type' => 'video',
 				'provider' => $image->getProviderName(),
 				'width' => $maxWidth,
-				'asset' => $asset
 			);
 
 			wfProfileOut(__METHOD__);

@@ -13,14 +13,14 @@ class PhotoPopSpecialPageController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
-		$this->model = F::build( 'PhotoPopModel' );
+		$this->model = (new PhotoPopModel);
 	}
 
 	public function index() {
-		$this->wg->Out->setPageTitle( $this->wf->Msg( 'photopop-setup-title' ) );
+		$this->wg->Out->setPageTitle( wfMsg( 'photopop-setup-title' ) );
 		$this->response->addAsset( 'extensions/wikia/PhotoPop/css/PhotoPopSpecialPage.scss' );
 
-		if( $this->wf->ReadOnly() ) {
+		if( wfReadOnly() ) {
 			$this->wg->Out->readOnlyPage();
 			return;
 		}
@@ -53,10 +53,10 @@ class PhotoPopSpecialPageController extends WikiaSpecialPageController {
 		$icon = trim( $this->request->getVal( 'icon' ) );
 		$watermark = trim( $this->request->getVal( 'watermark' ) );
 		$iconUrl = null;
-		$currentCategory = $this->wf->Msg( 'photpop-category-none' );
+		$currentCategory = wfMsg( 'photpop-category-none' );
 		$currentCategoryUrl = null;
-		$currentIconUrl = $this->wf->BlankImgUrl();
-		$currentWatermarkUrl = $this->wf->BlankImgUrl();
+		$currentIconUrl = wfBlankImgUrl();
+		$currentWatermarkUrl = wfBlankImgUrl();
 		$cat = null;
 		$message = null;
 		$errors = array(
@@ -70,7 +70,7 @@ class PhotoPopSpecialPageController extends WikiaSpecialPageController {
 		$game = $this->model->getSettings( $this->wg->CityId );
 
 		if ( !empty( $game ) ){
-			$cat = F::build( 'Category', array( $game->category ), 'newFromName' );
+			$cat = Category::newFromName( $game->category );
 
 			if ( $cat instanceof Category ) {
 				$currentCategory = $cat->getName();
@@ -89,33 +89,33 @@ class PhotoPopSpecialPageController extends WikiaSpecialPageController {
 
 		if ( $this->request->wasPosted() ) {
 			if ( !empty( $category ) ) {
-				$cat = F::build( 'Category', array( $category ), 'newFromName' );
+				$cat = Category::newFromName( $category );
 
 				if ( !( $cat instanceof Category && $cat->getID() !== false ) ) {
-					$errors['category'][] = $this->wf->Msg( 'photopop-error-category-non-existing' );
+					$errors['category'][] = wfMsg( 'photopop-error-category-non-existing' );
 				} else {
 					$rounds = $this->getData($cat->getName());
 				}
 
 			} else {
-				$errors['category'][] = $this->wf->Msg( 'photopop-error-field-compulsory' );
+				$errors['category'][] = wfMsg( 'photopop-error-field-compulsory' );
 			}
 
 			if ( !empty( $icon ) ) {
 				$iconUrl = $this->model->getImageUrl( $icon );
 
 				if ( empty( $iconUrl ) ) {
-					$errors['icon'][] = $this->wf->Msg( 'photopop-error-file-non-existing' );
+					$errors['icon'][] = wfMsg( 'photopop-error-file-non-existing' );
 				}
 			} else {
-				$errors['icon'][] = $this->wf->Msg( 'photopop-error-field-compulsory' );
+				$errors['icon'][] = wfMsg( 'photopop-error-field-compulsory' );
 			}
 
 			if ( !empty( $watermark ) ) {
 				$watermarkUrl = $this->model->getImageUrl( $watermark );
 
 				if ( empty( $watermark ) ) {
-					$errors['icon'][] = $this->wf->Msg( 'photopop-error-file-non-existing' );
+					$errors['icon'][] = wfMsg( 'photopop-error-file-non-existing' );
 				}
 			}
 
@@ -125,9 +125,9 @@ class PhotoPopSpecialPageController extends WikiaSpecialPageController {
 					$currentCategoryUrl = $cat->getTitle()->getLocalURL();
 					$currentIconUrl = $iconUrl;
 					$currentWatermarkUrl = $watermarkUrl;
-					$message = $this->wf->Msg( 'photopop-settings-saved' );
+					$message = wfMsg( 'photopop-settings-saved' );
 				} else {
-					$errors['db'][] = $this->wf->Msg( 'photopop-error-db-error' );
+					$errors['db'][] = wfMsg( 'photopop-error-db-error' );
 				}
 			}
 		}

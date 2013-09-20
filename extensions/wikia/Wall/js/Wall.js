@@ -44,7 +44,8 @@ var Wall = $.createClass(Object, {
 			.on('click', '.follow', this.proxy(this.switchWatch))
 			.on('keydown', 'textarea', this.proxy(this.focusButton))
 			.on('click', '.edit-notifyeveryone', this.proxy(this.editNotifyEveryone))
-			.on('click', '.close-thread, .reopen-thread', this.proxy(this.doThreadChange))
+			.on('click', '.close-thread', this.proxy(this.confirmAction))
+			.on('click', '.reopen-thread', this.proxy(this.doThreadChange))
 			.on('click', '.votes', this.proxy(this.showVotersModal))
 			.on('click', '.vote', this.proxy(this.vote))
 			.on('click', '.quote-button', this.proxy(this.quote))
@@ -453,7 +454,7 @@ var Wall = $.createClass(Object, {
 			$('#WikiaConfirmOk').attr('disabled', 'disabled');
 		}
 
-		$('textarea.wall-action-reason').bind('keydown keyup change', function(e) {
+ 		$('textarea.wall-action-reason').bind('keydown keyup change', function(e) {
 			var target = $(e.target);
 			if(target.val().length > 0) {
 				$('#WikiaConfirmOk').removeAttr('disabled');
@@ -472,6 +473,9 @@ var Wall = $.createClass(Object, {
 
 	doAction: function(id, mode, msg, target, formdata){
 		switch(mode) {
+			case 'close':
+				this.doThreadChangeSendRequest(id, 'close', formdata);
+			break;
 			case 'restore':
 				this.doRestore(id, target, formdata);
 			break;
@@ -508,6 +512,28 @@ var Wall = $.createClass(Object, {
 		});
 	},
 
+	doThreadChangeSendRequest: function(id, newState, formdata){
+		$.nirvana.sendRequest({
+			controller: 'WallExternalController',
+			method: 'changeThreadStatus',
+			format: 'json',
+			data: {
+				msgid: id,
+				newState: newState,
+				formdata: formdata
+			},
+			callback: this.proxy(function(json) {
+				if(json.status) {
+					if(typeof window.UserLoginAjaxForm === 'function') {
+						window.UserLoginAjaxForm.prototype.reloadPage();
+					} else {
+						window.location.reload();
+					}
+				}
+			})
+		});
+	},
+
 	doThreadChange: function(e) {
 		e.preventDefault();
 		var target = $(e.target);
@@ -519,24 +545,7 @@ var Wall = $.createClass(Object, {
 			newState = 'close';
 		}
 		if (id && newState) {
-			$.nirvana.sendRequest({
-				controller: 'WallExternalController',
-				method: 'changeThreadStatus',
-				format: 'json',
-				data: {
-					msgid: id,
-					newState: newState
-				},
-				callback: this.proxy(function(json) {
-					if(json.status) {
-						if(UserLoginAjaxForm) {
-							UserLoginAjaxForm.prototype.reloadPage();
-						} else {
-							window.location.reload();
-						}
-					}
-				})
-			});
+			this.doThreadChangeSendRequest(id, newState, {});
 		}
 	},
 

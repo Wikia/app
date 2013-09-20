@@ -5,7 +5,6 @@ class LyricFindControllerTest extends WikiaBaseTest {
 	public function setUp() {
 		$this->setupFile = __DIR__ . '/../LyricFind.setup.php';
 		parent::setUp();
-		$this->mockApp();
 	}
 
 	/**

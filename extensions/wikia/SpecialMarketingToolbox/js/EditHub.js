@@ -26,10 +26,9 @@ EditHub.prototype = {
 		$('.MarketingToolboxMain #marketing-toolbox-removeall').click($.proxy(this.popularVideosRemoveAll, this));
 		$('.MarketingToolboxMain .vet-show').each(function() {
 			var $this = $(this);
-			
-			$this.addVideoButton({
-				callbackAfterSelect: function(url) {
 
+			$this.addVideoButton({
+				callbackAfterSelect: function(url, VET) {
 					$.nirvana.sendRequest({
 						controller: 'MarketingToolboxController',
 						method: 'getVideoDetails',
@@ -56,7 +55,7 @@ EditHub.prototype = {
 										.html(response.videoData.videoThumb);
 
 									// Close VET modal
-									VET_loader.modal.closeModal();
+									VET.close();
 								}
 								else if (wgMarketingToolboxModuleIdSelected == wgMarketingToolboxModuleIdPopularVideos) {
 									$.when(
@@ -66,7 +65,7 @@ EditHub.prototype = {
 										})
 									).done(function(libData, packagesData) {
 										initThis.popularVideosAdd(packagesData[0].mustache[0], response);
-										VET_loader.modal.closeModal();
+										VET.close();
 									});
 								}
 							}

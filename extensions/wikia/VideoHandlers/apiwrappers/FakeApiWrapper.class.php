@@ -7,7 +7,7 @@ class FakeApiWrapper extends ApiWrapper {
 
 		$app = F::app();
 		
-		$dbr = $app->wf->GetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		
 		$meta = $dbr->selectField(
 			'image',

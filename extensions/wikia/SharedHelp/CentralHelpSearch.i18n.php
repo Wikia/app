@@ -29,6 +29,13 @@ $messages['az'] = array(
 	'centralhelpsearch-placeholder' => 'Arayış üzrə axtarış...',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'centralhelpsearch-placeholder' => 'সাহায্য অনুসন্ধান করুন...',
+);
+
 /** Breton (brezhoneg)
  * @author Gwenn-Ael
  */
@@ -76,6 +83,14 @@ $messages['es'] = array(
 $messages['fi'] = array(
 	'centralhelpsearch-desc' => 'Sallii lomakkeen sisällyttämisen etsintää Community Central Help',
 	'centralhelpsearch-placeholder' => 'Etsi ohjeita...',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'centralhelpsearch-desc' => 'Loyv innlimanina av einum formulari fyri at leita í Community Central Help',
+	'centralhelpsearch-placeholder' => 'Leita í Help...',
 );
 
 /** French (français)
@@ -172,6 +187,14 @@ $messages['nl'] = array(
 	'centralhelpsearch-placeholder' => 'Zoek in Help &hellip;',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'centralhelpsearch-desc' => "Permet l'inclusion d'un formulari per recercar dins l'Ajuda centrala de la comunautat",
+	'centralhelpsearch-placeholder' => "Recercar dins l'ajuda&hellip;",
+);
+
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
@@ -244,6 +267,14 @@ $messages['tl'] = array(
 $messages['tt-cyrl'] = array(
 	'centralhelpsearch-desc' => 'Вики Җәмгыяте Белешмәлеге буенча эзләү формасын кушуны рөхсәт итү',
 	'centralhelpsearch-placeholder' => 'Белешмәлек буенча эзләү ...',
+);
+
+/** Ukrainian (українська)
+ * @author Ua2004
+ */
+$messages['uk'] = array(
+	'centralhelpsearch-desc' => 'Дозволити включення форми для пошуку довідки',
+	'centralhelpsearch-placeholder' => 'Пошук довідки...',
 );
 
 /** Simplified Chinese (中文（简体）‎)

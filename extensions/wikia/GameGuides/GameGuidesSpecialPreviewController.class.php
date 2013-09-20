@@ -11,7 +11,7 @@ class GameGuidesSpecialPreviewController extends WikiaSpecialPageController {
 			return false;  // skip rendering
 		}
 
-		$this->wg->Out->setSubtitle( $this->wf->Message( 'wikiagameguides-preview-description' )->parse() );
+		$this->wg->Out->setSubtitle( wfMessage( 'wikiagameguides-preview-description' )->parse() );
 
 		$titles = array_unique( explode( '/', $this->getPar() ) );
 
@@ -35,7 +35,8 @@ class GameGuidesSpecialPreviewController extends WikiaSpecialPageController {
 				'renderFullPage',
 				array(
 					'allinone' => 1,
-					'page' => $title
+					'page' => $title,
+					'cb' => $this->wg->StyleVersion
 				)
 			);
 		}

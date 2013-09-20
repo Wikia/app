@@ -1,5 +1,5 @@
 
-var WikiaDartHelper = function (log, adLogicPageLevelParams, dartUrl) {
+var WikiaDartHelper = function (log, adLogicPageLevelParams, dartUrl, adLogicDartSubdomain) {
 	'use strict';
 
 	var logGroup = 'WikiaDartHelper',
@@ -31,7 +31,7 @@ var WikiaDartHelper = function (log, adLogicPageLevelParams, dartUrl) {
 			localTile,
 			localOrd = params.ord || ord,
 			url,
-			subdomain = params.subdomain,
+			subdomain = params.subdomain || (adLogicDartSubdomain && adLogicDartSubdomain.getSubdomain()),
 			pageParams = adLogicPageLevelParams.getPageLevelParams(),
 			name,
 			value;
@@ -94,3 +94,10 @@ var WikiaDartHelper = function (log, adLogicPageLevelParams, dartUrl) {
 		getUrl: getUrl
 	};
 };
+
+(function (context) {
+	'use strict';
+	if (context.define && context.define.amd) {
+		context.define('ext.wikia.adengine.darthelper', ['wikia.log', 'wikia.adlogicpageparams', 'wikia.darturl', 'ext.wikia.adengine.adlogic.subdomain'], context.WikiaDartHelper);
+	}
+}(this));

@@ -27,14 +27,14 @@ var AdminDashboard = {
 		}, function() {
 			AdminDashboard.tooltip.text('');
 		}).click(AdminDashboard.handleControlClick);
-		
+
 		// init addVideo jQuery plugin
 		var addVideoButton = AdminDashboard.cc.find('.addVideoButton'),
 			addVideoButtonReturnUrl = addVideoButton.data('return-url');
 
 		if( $.fn.addVideoButton ) { //FB#68272
 			addVideoButton.addVideoButton({
-				callbackAfterSelect: function(url) {
+				callbackAfterSelect: function(url, VET) {
 					$.nirvana.postJson(
 						// controller
 						'VideosController',
@@ -48,7 +48,7 @@ var AdminDashboard = {
 							if ( formRes.error ) {
 								GlobalNotification.show( formRes.error, 'error' );
 							} else {
-								VET_loader.modal.closeModal();
+								VET.close();
 								window.location = addVideoButtonReturnUrl;
 							}
 						},
@@ -70,6 +70,21 @@ var AdminDashboard = {
 			AdminDashboard.ui.selectTab(el);
 			AdminDashboard.ui.showSection(el.data('section'));
 		});
+
+		$('#AdminDashboard').on('mousedown', 'a[data-tracking]', function(e) {
+			var t = $(this);
+			AdminDashboard.track(Wikia.Tracker.ACTIONS.CLICK, t.data('tracking'), null, {}, e);
+ 		});
+	},
+	track: function (action, label, value, params, event) {
+		Wikia.Tracker.track({
+			category: 'admin-dashboard',
+			action: action,
+			browserEvent: event,
+			label: label,
+			trackingMethod: 'both',
+			value: value
+		}, params);
 	},
 	handleControlClick: function(e) {
 		var modal = $(this).data('modal');

@@ -19,7 +19,6 @@ class BacklinkText extends AbstractService
 	 * @see \Wikia\Search\IndexService\AbstractService::execute()
 	 */
 	public function execute() {
-		$service = $this->getService();
 		$docIdSeparated = $this->getCurrentDocumentId() . ' |';
 		$config = new Config;
 		$config->setDirectLuceneQuery( true )
@@ -36,7 +35,7 @@ class BacklinkText extends AbstractService
 			foreach ( $resultSet as $result ) {
 				foreach ( $result['outbound_links_txt'] as $link ) {
 					if ( substr( $link, 0, strlen( $docIdSeparated ) ) == $docIdSeparated ) {
-						$backlinks[] = implode( ' | ', array_slice( explode( ' | ', $link ) ), 1 );
+						$backlinks[] = implode( ' | ', array_slice( explode( ' | ', $link ), 1 ) );
 					}
 				}
 			}

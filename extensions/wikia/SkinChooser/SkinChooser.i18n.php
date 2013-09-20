@@ -30,6 +30,15 @@ $messages['br'] = array(
 	'new-look' => 'Wikia',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'skinchooser-desc' => "Permet als usuaris triar l'aparença del wiki en les seves preferències",
+	'new-look' => 'Wikia',
+	'site-layout' => 'Dissenys del lloc',
+);
+
 /** Czech (česky)
  * @author Darth Daron
  * @author Dontlietome7
@@ -169,6 +178,15 @@ $messages['nl'] = array(
 	'site-layout' => 'Sitevormgevingen',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'skinchooser-desc' => "Permet als utilizaires de causir d'abilhatges dins lors preferéncias",
+	'new-look' => 'Wikia',
+	'site-layout' => 'Aparéncias del site',
+);
+
 /** Polish (polski)
  * @author Cloudissimo
  * @author Sovq
@@ -208,6 +226,7 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
@@ -259,6 +278,15 @@ $messages['tl'] = array(
 	'skinchooser-desc' => 'Nagpapahintulot sa mga tagagamit na pumili ng mga pabalat sa loob ng kanilang mga nais',
 	'new-look' => 'Wikia',
 	'site-layout' => 'Mga Latag ng Pook',
+);
+
+/** Ukrainian (українська)
+ * @author Ua2004
+ */
+$messages['uk'] = array(
+	'skinchooser-desc' => 'Дозволяє користувачам вибирати скіни в налаштуваннях',
+	'new-look' => 'Wikia',
+	'site-layout' => 'Оформлення сайту',
 );
 
 /** Uzbek (oʻzbekcha)

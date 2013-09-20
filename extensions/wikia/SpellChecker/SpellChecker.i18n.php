@@ -18,9 +18,11 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'spellchecker-info' => 'Special page description',
+	'spellchecker-info-spellcheck-languages' => '{{Identical|Language}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -38,6 +40,23 @@ $messages['af'] = array(
 	'spellchecker-info-spellcheck-submit' => 'Toets spelling',
 	'spellchecker-info-spellcheck-is-correct' => 'Die woord "$1" is korrek gespel',
 	'spellchecker-info-spellcheck-suggestions' => 'Spelvoorstelle vir "$1": $2',
+);
+
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'spellchecker-desc' => 'يوفر واجهة للتحقق الإملائي لوحدة PHP',
+	'enablespellchecker' => 'تشغيل المدقق الإملائي في الوضع المرئي',
+	'spellchecker-info' => 'معلومات المدقق الإملائي',
+	'spellchecker-info-languages' => 'اللغات المتوفرة ($1)',
+	'spellchecker-info-provider' => 'الموفر',
+	'spellchecker-info-dictionaries' => 'القواميس المتوفرة',
+	'spellchecker-info-spellcheck-text' => 'النص الذي سيدقق',
+	'spellchecker-info-spellcheck-languages' => 'اللغة',
+	'spellchecker-info-spellcheck-submit' => 'تدقيق إملائي',
+	'spellchecker-info-spellcheck-is-correct' => 'الكلمة "$1" مكتوبة بشكل صحيح',
+	'spellchecker-info-spellcheck-suggestions' => 'اقترحات لغوية من أجل "$1": $2',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -71,6 +90,14 @@ $messages['br'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Kinnigoù reizhskrivañ evit "$1" : $2',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'spellchecker-info-languages' => 'Лелолуш долу меттанаш ($1)',
+	'spellchecker-info-spellcheck-languages' => 'Мотт',
+);
+
 /** Czech (česky)
  * @author Darth Daron
  */
@@ -98,6 +125,7 @@ $messages['cy'] = array(
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author LWChris
+ * @author Purodha
  */
 $messages['de'] = array(
 	'spellchecker-desc' => 'Stellt Rechtschreibprüfung Schnittstelle für bezauberndes PHP-Modul bereit',
@@ -109,8 +137,8 @@ $messages['de'] = array(
 	'spellchecker-info-spellcheck-text' => 'Zu prüfender Text',
 	'spellchecker-info-spellcheck-languages' => 'Sprache',
 	'spellchecker-info-spellcheck-submit' => 'Rechtschreibung prüfen',
-	'spellchecker-info-spellcheck-is-correct' => 'Das Wort "$1" ist richtig geschrieben',
-	'spellchecker-info-spellcheck-suggestions' => 'Vorschläge für "$1": $2',
+	'spellchecker-info-spellcheck-is-correct' => 'Das Wort „$1“ ist richtig geschrieben',
+	'spellchecker-info-spellcheck-suggestions' => 'Vorschläge für „$1“: $2',
 );
 
 /** Zazaki (Zazaki)
@@ -221,6 +249,19 @@ $messages['ia'] = array(
  */
 $messages['inh'] = array(
 	'spellchecker-info-spellcheck-languages' => 'Мотт',
+);
+
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'spellchecker-info-languages' => 'De verfööschbaare Schprooche ($1)',
+	'spellchecker-info-provider' => 'Aanbeeder',
+	'spellchecker-info-dictionaries' => 'de verfööschbaare Wööterbööscher',
+	'spellchecker-info-spellcheck-text' => 'Dä Täx zom Prööve',
+	'spellchecker-info-spellcheck-languages' => 'Schprooch',
+	'spellchecker-info-spellcheck-submit' => 'de Ottojrafih prööve',
+	'spellchecker-info-spellcheck-is-correct' => 'Dat Woot „$1“ es reschtesch jeschrevve.',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -380,11 +421,12 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
  * @author Waldir
  */
 $messages['pt'] = array(
 	'spellchecker-desc' => 'Fornece uma interface de verificação ortográfica para o módulo PHP enchant',
-	'enablespellchecker' => 'Activar o corretor ortográfico no modo visual',
+	'enablespellchecker' => 'Ativar o corretor ortográfico no modo visual',
 	'spellchecker-info' => 'Informação do corretor ortográfico',
 	'spellchecker-info-languages' => 'Línguas disponíveis ($1)',
 	'spellchecker-info-provider' => 'Fornecedor',
@@ -392,7 +434,7 @@ $messages['pt'] = array(
 	'spellchecker-info-spellcheck-text' => 'Texto para ser verificado',
 	'spellchecker-info-spellcheck-languages' => 'Língua',
 	'spellchecker-info-spellcheck-submit' => 'Verificar ortografia',
-	'spellchecker-info-spellcheck-is-correct' => 'A palavra "$1" está escrita correctamente',
+	'spellchecker-info-spellcheck-is-correct' => 'A palavra "$1" está escrita corretamente',
 	'spellchecker-info-spellcheck-suggestions' => 'Sugestões de ortografia para "$1": $2',
 );
 
@@ -412,6 +454,23 @@ $messages['pt-br'] = array(
 	'spellchecker-info-spellcheck-submit' => 'Verificar ortografia',
 	'spellchecker-info-spellcheck-is-correct' => 'A palavra "$1" está escrita corretamente',
 	'spellchecker-info-spellcheck-suggestions' => 'Sugestões de ortografia para "$1": $2',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'spellchecker-desc' => "Dèje 'n'inderfacce de verifiche d'a pronunge pe le module PHP 'ngandate",
+	'enablespellchecker' => "Abbilite 'u verificatore de pronunge jndr'à 'nu mode visuale",
+	'spellchecker-info' => "'Mbormaziune d'u verificatore de pronunge",
+	'spellchecker-info-languages' => 'Lènghe disponibbile ($1)',
+	'spellchecker-info-provider' => 'Fornitore',
+	'spellchecker-info-dictionaries' => 'Dizionarie disponibbile',
+	'spellchecker-info-spellcheck-text' => 'Teste da verificà',
+	'spellchecker-info-spellcheck-languages' => 'Lènghe',
+	'spellchecker-info-spellcheck-submit' => "Verifiche d'a pronunge",
+	'spellchecker-info-spellcheck-is-correct' => '\'A parole "$1" jè pronugiate bbone',
+	'spellchecker-info-spellcheck-suggestions' => 'Suggereminde de pronunge pe "$1": $2',
 );
 
 /** Russian (русский)
@@ -495,13 +554,22 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
+	'spellchecker-desc' => 'РНР модуль забезпечує інтерфейс для перевірки орфографії',
+	'enablespellchecker' => 'Увімкнути перевірку правопису у візуальному режимі',
+	'spellchecker-info' => 'Інформація про перевірку орфографії',
 	'spellchecker-info-languages' => 'Доступні мови ($1)',
 	'spellchecker-info-provider' => 'Постачальник',
+	'spellchecker-info-dictionaries' => 'Доступні словники',
+	'spellchecker-info-spellcheck-text' => 'Текст для перевірки',
 	'spellchecker-info-spellcheck-languages' => 'Мова',
 	'spellchecker-info-spellcheck-submit' => 'Перевірка правопису',
+	'spellchecker-info-spellcheck-is-correct' => 'Слово "$1" написане вірно',
+	'spellchecker-info-spellcheck-suggestions' => 'Варіанти написання для "$1":$2',
 );
 
 /** Vietnamese (Tiếng Việt)

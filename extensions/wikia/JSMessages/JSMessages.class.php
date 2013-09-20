@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Use F::build('JSMessages')->registerPackage() to register messages package to be used in JS.
+ * Use JSMessages::registerPackage() to register messages package to be used in JS.
  *
- * Require messages to be accessible via JS using F::build('JSMessages')->enqueuePackage() method.
+ * Require messages to be accessible via JS using JSMessages::enqueuePackage() method.
  */
 
 class JSMessages {
@@ -12,30 +12,15 @@ class JSMessages {
 	const INLINE = 1;
 	const EXTERNAL = 2;
 
-	// application
-	private $app;
-
-	// instance of JSMessagesHelper class
-	private $helper;
-
 	// queue of messages packages to emit as JS script and inline
-	private $queue = array();
+	static private $queue = array( 'inline' => array(), 'external' => array() );
 
 	// list of registered message packages
-	private $packages = array();
+	static private $packages = array();
 
 	// cache for all message keys
-	private $allMessageKeys = null;
+	static private $allMessageKeys = null;
 
-	function __construct() {
-		$this->app = F::app();
-		$this->helper = F::build('JSMessagesHelper');
-
-		$this->queue = array(
-			'inline' => array(),
-			'external' => array(),
-		);
-	}
 
 	/**
 	 * Debug logging
@@ -43,8 +28,8 @@ class JSMessages {
 	 * @param string $method - name of the method
 	 * @param string $msg - log message to be added
 	 */
-	private function log($method, $msg) {
-		$this->app->wf->debug($method  . ": {$msg}\n");
+	static private function log($method, $msg) {
+		wfDebug($method  . ": {$msg}\n");
 	}
 
 	/**
@@ -55,9 +40,9 @@ class JSMessages {
 	 * @param string $packageName - name of the package
 	 * @param array $messages - list of messages in the package
 	 */
-	public function registerPackage($packageName, $messages) {
-		$this->log(__METHOD__, $packageName);
-		$this->packages[$packageName] = $messages;
+	static public function registerPackage($packageName, $messages) {
+		self::log(__METHOD__, $packageName);
+		self::$packages[$packageName] = $messages;
 	}
 
 	/**
@@ -66,14 +51,14 @@ class JSMessages {
 	 * @param string $name - package name
 	 * @param int $mode - how to emit messages (inline / external)
 	 */
-	public function enqueuePackage($package, $mode) {
+	static public function enqueuePackage($package, $mode) {
 		wfProfileIn(__METHOD__);
 
 		// add to proper queue
 		$queueName = ($mode == self::INLINE) ? 'inline' : 'external';
-		$this->queue[$queueName][] = $package;
+		self::$queue[$queueName][] = $package;
 
-		$this->log(__METHOD__ , "{$package} (added to '{$queueName}' queue)");
+		self::log(__METHOD__ , "{$package} (added to '{$queueName}' queue)");
 		wfProfileOut(__METHOD__);
 	}
 
@@ -84,11 +69,11 @@ class JSMessages {
 	 *
 	 * @return string A string containing the package as an inline-able tag to use in templates
 	 */
-	public function printPackages( Array $packages ) {
+	static public function printPackages( Array $packages ) {
 		wfProfileIn(__METHOD__);
 
 		$pkgs = implode(',', $packages);
-		$ret = '<script>' . $this->app->sendRequest( 'JSMessages', 'getMessages', array( 'packages' => $pkgs ), true )->toString() . '</script>';
+		$ret = '<script>' . F::app()->sendRequest( 'JSMessages', 'getMessages', array( 'packages' => $pkgs ), true )->toString() . '</script>';
 
 		wfProfileOut(__METHOD__);
 
@@ -103,31 +88,31 @@ class JSMessages {
 	 * @param string $pattern - pattern to match against ALL messages in the system
 	 * @return array - key/value list of matching messages
 	 */
-	private function resolveMessagesPattern($pattern) {
+	static private function resolveMessagesPattern($pattern) {
 		$fname = __METHOD__ . "::$pattern";
 		wfProfileIn($fname);
 
-		$this->log(__METHOD__, $pattern);
+		self::log(__METHOD__, $pattern);
 
 		$pattern = substr($pattern, 0, -1);
 		$patternLen = strlen($pattern);
 
 		// get list of all messages loaded by MW
-		$lang = $this->app->wf->GetLangObj(false /* $langCode */);
+		$lang = wfGetLangObj(false /* $langCode */);
 		$langCode = $lang->getCode();
 
 		if($lang instanceof StubUserLang) {
 			$lang = $lang->_newObject();
 		}
-		$messageKeys = $this->getAllMessageKeys($lang);
+		$messageKeys = self::getAllMessageKeys( $lang );
 
 		$ret = array();
-		foreach($messageKeys as $msg) {
+		foreach( $messageKeys as $msg ) {
 			if ( is_array( $msg ) ) {
-				var_dump($msg);
+				var_dump( $msg );
 			}
 			if (substr($msg, 0, $patternLen) === $pattern) {
-				$ret[$msg] = $this->app->wf->msgExt($msg, array('language' => $langCode));
+				$ret[$msg] = wfmsgExt($msg, array('language' => $langCode));
 			}
 		}
 
@@ -142,21 +127,21 @@ class JSMessages {
 	 * @param Language $lang - Language object to get all messages from
 	 * @return array - list of all message keys
 	 */
-	private function getAllMessageKeys(Language $lang) {
+	static private function getAllMessageKeys(Language $lang) {
 		wfProfileIn(__METHOD__);
 
-		if (is_null($this->allMessageKeys)) {
+		if (is_null(self::$allMessageKeys)) {
 			wfProfileIn(__METHOD__ . '::miss');
 			$messageKeys = $lang->getAllMessageKeys();
-			$this->allMessageKeys = $messageKeys['messages'];
+			self::$allMessageKeys = $messageKeys['messages'];
 
 			$langCode = $lang->getCode();
 
 			// append legacy data
 			if (isset(Language::$dataCache->legacyData[$langCode]['messages'])) {
-				$this->allMessageKeys = array_unique(
+				self::$allMessageKeys = array_unique(
 					array_keys( Language::$dataCache->legacyData[$langCode]['messages']),
-					$this->allMessageKeys
+					self::$allMessageKeys
 				);
 			}
 
@@ -164,7 +149,7 @@ class JSMessages {
 		}
 
 		wfProfileOut(__METHOD__);
-		return $this->allMessageKeys;
+		return self::$allMessageKeys;
 	}
 
 	/**
@@ -176,15 +161,15 @@ class JSMessages {
 	 * @param boolean $allowWildcards - can packages with wildcard be added?
 	 * @return array - key/value array of messages
 	 */
-	private function getPackage($name, $allowWildcards = true) {
+	static private function getPackage($name, $allowWildcards = true) {
 		wfProfileIn(__METHOD__);
 		$ret = null;
 
-		if (isset($this->packages[$name])) {
-			$this->log(__METHOD__, $name);
+		if (isset(self::$packages[$name])) {
+			self::log(__METHOD__, $name);
 
 			// get messages
-			$messages = $this->packages[$name];
+			$messages = self::$packages[$name];
 			$ret = array();
 
 			foreach($messages as $message) {
@@ -192,7 +177,7 @@ class JSMessages {
 				if (substr($message, -1) == '*') {
 					// BugId:18482
 					if ($allowWildcards) {
-						$msgs = $this->resolveMessagesPattern($message);
+						$msgs = self::resolveMessagesPattern($message);
 
 						if (!empty($msgs)) {
 							$ret = array_merge($ret, $msgs);
@@ -207,14 +192,16 @@ class JSMessages {
 				}
 				// single message
 				else {
-					$msg = $this->app->wf->MsgGetKey($message, true /* $useDB */);
+					//@todo - this removes the {{PLURAL prefix, so plurals won't work in JS
+					//on the other hand we cannot simply set $transform to true, as we want the wiki links to be parsed
+					$msg = wfMsgGetKey($message, true /* $useDB */);
 
 					// check for not existing message
 					if ($msg == htmlspecialchars("<{$message}>")) {
 						$msg = false;
 					}
 
-					$ret[$message] = $msg;
+					$ret[ $message ] = $msg;
 				}
 			}
 		}
@@ -233,11 +220,11 @@ class JSMessages {
 	 * @param boolean $allowWildcards - can packages with wildcard be added?
 	 * @return array - key/value array of messages
 	 */
-	public function getPackages($packages, $allowWildcards = true) {
+	static public function getPackages($packages, $allowWildcards = true) {
 		$messages = array();
 
 		foreach($packages as $packageName) {
-			$packageMessages = $this->getPackage($packageName, $allowWildcards);
+			$packageMessages = self::getPackage($packageName, $allowWildcards);
 
 			if (is_array($packageMessages)) {
 				$messages = array_merge($messages, $packageMessages);
@@ -252,27 +239,27 @@ class JSMessages {
 	 *   - JS object in <head> section of the page (INLINE mode)
 	 *   - JS requested via <script> tag at the bottom of the page (EXTERNAL mode)
 	 */
-	public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin) {
+	static public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin) {
 		wfProfileIn(__METHOD__);
-		$this->log(__METHOD__, 'preparing list of inline messages...');
+		self::log(__METHOD__, 'preparing list of inline messages...');
 
 		// get items to be rendered as a variable in <head> section
-		$packages = $this->queue['inline'];
+		$packages = self::$queue['inline'];
 
 		if (!empty($packages)) {
-			$vars['wgMessages'] = $this->getPackages($packages, false /* don't allow wildcards in INLINE mode (BugId:18482) */);
+			$vars['wgMessages'] = self::getPackages($packages, false /* don't allow wildcards in INLINE mode (BugId:18482) */);
 		}
 
 		// messages cache buster used by JSMessages (BugId:6324)
-		$vars['wgJSMessagesCB'] = $this->helper->getMessagesCacheBuster();
+		$vars['wgJSMessagesCB'] = JSMessagesHelper::getMessagesCacheBuster();
 
-		$this->log(__METHOD__, 'preparing list of external packages...');
+		self::log(__METHOD__, 'preparing list of external packages...');
 
-		$url = $this->getExternalPackagesUrl();
+		$url = self::getExternalPackagesUrl();
 
 		if ($url != "") {
 			// request a script
-			$this->app->wg->Out->addScript(Html::linkedScript($url));
+			F::app()->wg->Out->addScript(Html::linkedScript($url));
 		}
 
 		wfProfileOut(__METHOD__);
@@ -286,11 +273,13 @@ class JSMessages {
 	 *
 	 * @return string - URL to "dynamic" JS file with messages
 	 */
-	public function getExternalPackagesUrl() {
+	static public function getExternalPackagesUrl() {
 		wfProfileIn( __METHOD__ );
 
+		$wg = F::app()->wg;
+
 		// get items to be loaded via JS file
-		$packages = $this->queue['external'];
+		$packages = self::$queue['external'];
 		$url = '';
 
 		if (!empty($packages)) {
@@ -298,7 +287,7 @@ class JSMessages {
 			sort($packages);
 
 			// /wikia.php?controller=HelloWorld&method=index&format=html
-			$url = $this->app->wf->AppendQuery($this->app->wg->ScriptPath . '/wikia.php', array(
+			$url = wfAppendQuery($wg->ScriptPath . '/wikia.php', array(
 				'controller' => 'JSMessages',
 				'method' => 'getMessages',
 				'format' => 'html',
@@ -307,10 +296,10 @@ class JSMessages {
 				'packages' => implode(',', $packages),
 
 				// cache separately for different languages
-				'uselang' => $this->app->wg->Lang->getCode(),
+				'uselang' => $wg->Lang->getCode(),
 
 				// cache buster
-				'cb' => $this->helper->getMessagesCacheBuster(),
+				'cb' => JSMessagesHelper::getMessagesCacheBuster(),
 			));
 		}
 

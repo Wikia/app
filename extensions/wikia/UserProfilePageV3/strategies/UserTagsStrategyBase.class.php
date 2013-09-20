@@ -58,7 +58,7 @@ abstract class UserTagsStrategyBase {
 	protected function isFounder() {
 		wfProfileIn(__METHOD__);
 
-		$wiki = F::build('WikiFactory', array($this->app->wg->CityId), 'getWikiById');
+		$wiki = WikiFactory::getWikiById($this->app->wg->CityId);
 		if( intval($wiki->city_founding_user) === $this->user->GetId() ) {
 			// mech: BugId 18248
 			$founder = $this->isUserInGroup(self::WIKIA_GROUP_SYSOP_NAME) || $this->isUserInGroup(self::WIKIA_GROUP_BUREAUCRAT_NAME);
@@ -134,7 +134,7 @@ abstract class UserTagsStrategyBase {
 		$result = '';
 		$group = $this->getUsersHighestGroup($this->user);
 		if( $group ) {
-			$result = $this->app->wf->Msg('user-identity-box-group-' . $group);
+			$result = wfMsg('user-identity-box-group-' . $group);
 		}
 
 		/* See if user is banned from chat */

@@ -20,25 +20,24 @@ $wgExtensionCredits['specialpage'][] = array(
 /**
  * @var WikiaApp
  */
-$app = F::app();
 $dir = dirname( __FILE__ );
 
 /**
  * classes
  */
-$app->registerClass('GamingMapsHooks', $dir . '/GamingMapsHooks.class.php');
-$app->registerClass('GamingMaps', $dir . '/GamingMaps.class.php');
+$wgAutoloadClasses['GamingMapsHooks'] =  $dir . '/GamingMapsHooks.class.php';
+$wgAutoloadClasses['GamingMaps'] =  $dir . '/GamingMaps.class.php';
 
 /**
  * controllers
  */
-$app->registerClass('GamingMapsController', $dir . '/GamingMapsController.class.php');
+$wgAutoloadClasses['GamingMapsController'] =  $dir . '/GamingMapsController.class.php';
 
 
 /**
  * hooks
  */
-$app->registerHook('ParserFirstCallInit', 'GamingMapsHooks', 'onParserFirstCallInit');
+$wgHooks['ParserFirstCallInit'][] = 'GamingMapsHooks::onParserFirstCallInit';
 
 
 /**
@@ -49,4 +48,4 @@ $wgAPIModules['places'] = 'WikiaApiPlaces';
 /**
  * messages
  */
-$app->registerExtensionMessageFile('GamingMaps', $dir . '/GamingMaps.i18n.php');
+$wgExtensionMessagesFiles['GamingMaps'] = $dir . '/GamingMaps.i18n.php';

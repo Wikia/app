@@ -17,9 +17,8 @@ class DefaultContentTest extends BaseTest
 		$dynamicField = \Wikia\Search\Utilities::field( 'html' );
 		$mockService = $this->getMock( 'Wikia\Search\MediaWikiService', array( 'getGlobal' ) );
 		$utils = $this->getMock( 'Wikia\Search\Utilities', array( 'field' ) );
-		$this->proxyClass( 'Wikia\Search\MediaWikiService', $mockService );
-		$this->proxyClass( 'Wikia\Search\Utilities', $utils );
-		$this->mockApp();
+		$this->mockClass( 'Wikia\Search\MediaWikiService', $mockService );
+		$this->mockClass( 'Wikia\Search\Utilities', $utils );
 		$dc = new DefaultContent();
 		$field = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'field' );
 		$field->setAccessible( true );
@@ -55,7 +54,7 @@ class DefaultContentTest extends BaseTest
 	 * @covers Wikia\Search\IndexService\DefaultContent::execute
 	 */
 	public function testExecute() {
-		$methods = [ 'getService', 'field', 'getPageContentFromParseResponse', 'getCategoriesFromParseResponse', 'getHeadingsFromParseResponse', 'getOutboundLinks' ];
+		$methods = [ 'getService', 'field', 'getPageContentFromParseResponse', 'getCategoriesFromParseResponse', 'getHeadingsFromParseResponse', 'getOutboundLinks', 'pushNolangTxt', 'getNolangTxt' ];
 		$service = $this->getMock( 'Wikia\Search\IndexService\DefaultContent', $methods, array() );
 		$mwMethods = [
 				'getParseResponseFrompageId', 'getTitleStringFromPageId', 'getUrlFromPageId',
@@ -151,12 +150,24 @@ class DefaultContentTest extends BaseTest
 		;
 		$service
 		    ->expects( $this->at( 1 ) )
+		    ->method ( 'pushNoLangTxt' )
+		    ->with   ( "my title" )
+		    ->will   ( $this->returnValue( $service ) )
+		;
+		$service
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'pushNoLangTxt' )
+		    ->with   ( "my title" )
+		    ->will   ( $this->returnValue( $service ) )
+		;
+		$service
+		    ->expects( $this->at( 3 ) )
 		    ->method ( 'field' )
 		    ->with   ( 'title' )
 		    ->will   ( $this->returnValue( 'title_en' ) )
 		;
 		$service
-		    ->expects( $this->at( 2 ) )
+		    ->expects( $this->at( 4 ) )
 		    ->method ( 'field' )
 		    ->with   ( 'wikititle' )
 		    ->will   ( $this->returnValue( 'wikititle_en' ) )
@@ -184,6 +195,11 @@ class DefaultContentTest extends BaseTest
 		    ->method ( 'getOutboundLinks' )
 		    ->will   ( $this->returnValue( [ 'outbound_links_txt' => [ '123_321|hey', '123_456|ho' ] ] ) )
 		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getNolangTxt' )
+		    ->will   ( $this->returnValue( [ 'nolang_txt' => [ 'foo' ] ] ) )
+		;
 		$cpid = new \ReflectionProperty( 'Wikia\Search\IndexService\AbstractService', 'currentPageId' );
 		$cpid->setAccessible( true );
 		$cpid->setValue( $service, 123 );
@@ -204,7 +220,8 @@ class DefaultContentTest extends BaseTest
 				'page_images' => 2,
 				'iscontent' => 'true',
 				'is_main_page' => 'false',
-				'outbound_links_txt' => [ '123_321|hey', '123_456|ho' ]
+				'outbound_links_txt' => [ '123_321|hey', '123_456|ho' ],
+				'nolang_txt' => [ 'foo' ]
 				];
 		$this->assertEquals(
 				$expectedResult,
@@ -265,7 +282,7 @@ class DefaultContentTest extends BaseTest
 	 */
 	public function testGetOutboundLinks() {
 		$mockMwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal' ] );
-		$mockHooks = $this->getMock( 'Wikia\Search\Hooks', [ 'popLinks' ] );
+		$mockHooks = $this->getStaticMethodMock( 'Wikia\Search\Hooks', 'popLinks' );
 		$mockService = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
 		                    ->setMethods( [ 'getService', 'getCurrentDocumentId' ] )
 		                    ->disableOriginalConstructor()
@@ -295,8 +312,6 @@ class DefaultContentTest extends BaseTest
 		    ->method ( 'popLinks' )
 		    ->will   ( $this->returnValue( $backlinks ) )
 		;
-		$this->proxyClass( 'Wikia\Search\Hooks', $mockHooks );
-		$this->mockApp();
 		$get = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'getOutboundLinks' );
 		$get->setAccessible( true );
 		$this->assertEquals(
@@ -349,7 +364,7 @@ class DefaultContentTest extends BaseTest
 	 * @covers Wikia\Search\IndexService\DefaultContent::prepValuesFromHtml
 	 */
 	public function testPrepValuesFromHtml() {
-		$service = $this->getMock( 'Wikia\Search\IndexService\DefaultContent', array( 'field' ) );
+		$service = $this->getMock( 'Wikia\Search\IndexService\DefaultContent', array( 'field', 'pushNolangTxt' ) );
 		$prep = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'prepValuesFromHtml' );
 		$prep->setAccessible( true );
 		$service
@@ -357,6 +372,11 @@ class DefaultContentTest extends BaseTest
 		    ->method ( 'field' )
 		    ->with   ( 'html' )
 		    ->will   ( $this->returnValue( 'html_en' ) )
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'pushNoLangTxt' )
+		    ->withAnyParameters()
 		;
 		$html = <<<ENDIT
 This is a very long example so we can do some counts and stuff.
@@ -563,15 +583,19 @@ ENDIT;
 	public function testExtractInfoBoxes() {
 		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
 		                ->disableOriginalConstructor()
-		                ->setMethods( null )
+		                ->setMethods( [ 'removeGarbageFromDom' ] )
 		                ->getMock();
 		$dom = $this->getMockBuilder( 'simple_html_dom' )
 		            ->disableOriginalConstructor()
 		            ->setMethods( [ 'find'  ] )
 		            ->getMock();
+		$dom2 = $this->getMockBuilder( 'simple_html_dom' )
+		            ->disableOriginalConstructor()
+		            ->setMethods( [ 'find', 'save', 'load'  ] )
+		            ->getMock();
 		$node = $this->getMockBuilder( 'simple_html_dom_node' )
 		             ->disableOriginalConstructor()
-		             ->setMethods( [ '__get', 'find' ] )
+		             ->setMethods( [ '__get', 'find', 'outertext' ] )
 		             ->getMock();
 		$result = array();
 		$extract = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'extractInfoboxes' );
@@ -583,7 +607,27 @@ ENDIT;
 		    ->will   ( $this->returnValue( array( $node ) ) )
 		;
 		$node
+		    ->expects( $this->at( 0 ) ) 
+		    ->method ( 'outertext' )
+		    ->will   ( $this->returnValue( 'foo' ) )
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'removeGarbageFromDom' )
+		    ->with   ( $dom2 ) // commented out due to wikia mock proxy
+		;
+		$dom2
 		    ->expects( $this->at( 0 ) )
+		    ->method ( 'save' )
+		    ->will   ( $this->returnValue( 'foo' ) )
+		;
+		$dom2
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'load' )
+		    ->with   ( 'foo' )
+		;
+		$dom2
+		    ->expects( $this->at( 2 ) )
 		    ->method ( 'find' )
 		    ->with   ( 'tr' )
 		    ->will   ( $this->returnValue( array( $node ) ) )
@@ -606,9 +650,66 @@ ENDIT;
 		    ->with   ( 'plaintext' )
 		    ->will   ( $this->returnValue( 'value' ) )
 		;
+		$this->mockClass( 'simple_html_dom', $dom2 );
 		$this->assertEquals(
-				[ 'infoboxes_txt' => [ 'here is my key | value' ] ],
+				[ 'infoboxes_txt' => [ 'infobox_1 | here is my key | value' ] ],
 				$extract->invoke( $service, $dom, $result )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\IndexService\DefaultContent::pushNolangTxt
+	 * @covers Wikia\Search\IndexService\DefaultContent::getNolangTxt
+	 */
+	public function testPushAndGetNolangTxt() {
+		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( null )
+		                ->getMock();
+		$push = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'pushNolangTxt' );
+		$push->setAccessible( true );
+		$get = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'getNolangTxt' );
+		$get->setAccessible( true );
+		$this->assertAttributeEquals(
+				[],
+				'nolang_txt',
+				$service
+		);
+		$this->assertEquals(
+				$service,
+				$push->invoke( $service, 'foo' )
+		);
+		$this->assertAttributeEquals(
+				['foo'],
+				'nolang_txt',
+				$service
+		);
+		$this->assertEquals(
+				[ 'nolang_txt' => [ 'foo' ] ],
+				$get->invoke( $service )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\IndexService\DefaultContent::reinitialize
+	 */
+	public function testReinitialize() {
+		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( null )
+		                ->getMock();
+		$nolang = new ReflectionProperty( $service, 'nolang_txt' );
+		$nolang->setAccessible( true );
+		$nolang->setValue( $service, [ 1, 2, 3, 4, 5 ] );
+		$reinitialize = new ReflectionMethod( $service, 'reinitialize' );
+		$reinitialize->setAccessible( true );
+		$this->assertEquals(
+				$service,
+				$reinitialize->invoke( $service )
+		);
+		$this->assertAttributeEmpty(
+				'nolang_txt',
+				$service
 		);
 	}
 }

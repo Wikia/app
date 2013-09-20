@@ -1,4 +1,4 @@
-#EditPage {
+.EditPage {
 	.cke_panel_dropdown {
 		@include box-shadow(0, 0, 8px, $color-page-border);
 		color: $color-text;
@@ -14,7 +14,7 @@
 	.cke_panelbutton, .cke_modulebutton {
 		float: left;
 	}
-		
+
 	// Rich combo, module buttons
 	.cke_rcombo, .cke_panelbutton, .cke_modulebutton {
 		&.cke_opened {

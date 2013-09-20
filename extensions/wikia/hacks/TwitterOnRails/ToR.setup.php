@@ -12,12 +12,8 @@ $app = F::app();
 /**
  * classes
  */
-$app->registerClass('ToRController', $dir . 'ToRController.class.php');
+$wgAutoloadClasses['ToRController'] =  $dir . 'ToRController.class.php';
 
-/**
- * Factory config
- */
-F::addClassConstructor( 'ToRController', array( 'app' => $app ) );
 
 /**
  * message files

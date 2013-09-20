@@ -175,7 +175,6 @@ var ImageLightbox = {
 		// for Video Thubnails:
 		var targetChildImg = target.find('img').eq(0);
 		if ( targetChildImg.length > 0 && targetChildImg.hasClass('Wikia-video-thumb') ) {
-
 			if ( target.attr('data-video-name') ) {
 
 				imageName = 'File:' + target.attr('data-video-name');
@@ -264,17 +263,15 @@ var ImageLightbox = {
 			'videoInline': 1
 		}, function(res) {
 			jQuery(parentTag).siblings('span.Wikia-video-title-bar').eq(0).remove();
-			if (res && ( res.html || res.jsonData ) ) {
-				if (res.asset) {
-					$.getScript(res.asset, function() {
-						wrapperTag.find('a').hide();
-						wrapperTag.append( '<div id="'+res.jsonData.id+'" style="width:'+imageWidth+'px; height:'+imageHeight+'px; display: inline-block;" class="Wikia-video-enabledEmbedCode"></div>');
-						$('body').append('<script>' + res.jsonData.script + ' loadJWPlayer(); </script>');
-					});
-				} else {
-                    wrapperTag.find('a').hide();
-                    wrapperTag.append('<div  class="Wikia-video-enabledEmbedCode">'+res.html+'</div>');
-				}
+			if (res.embedCode) {
+				wrapperTag.find('a').hide();
+
+				var element = $('<div  class="Wikia-video-enabledEmbedCode"></div>').append(wrapperTag);
+
+				require(['wikia.videoBootstrap'], function (VideoBootstrap) {
+					new VideoBootstrap(element[0], res.embedCode, 'imageLightbox');
+				});
+
 				ImageLightbox.doViewTracking(res.titleKey, res.type, res.provider);
 			}
 		});
@@ -296,6 +293,7 @@ var ImageLightbox = {
 
 	// fetch data and show lightbox
 	fetchLightbox: function(imageName, caption, showShareTools, timestamp) {
+
 		var self = this;
 		this.log(imageName);
 
@@ -328,24 +326,17 @@ var ImageLightbox = {
 			't': timestamp,
             'showEmbedCodeInstantly' : this.showEmbedCodeInstantly,
             'wikiAddress' : this.wikiAddress
-    }, function(res) {
-			if (res && ( res.html || res.jsonData ) ) {
-				if (res.asset) {
-					$.getScript(res.asset, function() {
-						self.showLightbox(res.title, '<div id="'+res.jsonData.id+'"></div>'+res.html, caption, res.width, res.titleKey, res.type, res.provider, function(){
+        }, function(res) {
+			if (res) {
+				if (res.embedCode) {
 
-
-							if ( typeof(res.jsonData.events) == "undefined" || typeof(res.jsonData.events.onReady) == "undefined" ) {
-								res.jsonData.events = {
-									onReady: function() {
-										self.setTopPosition();
-									}
-								};
-							}
-							$('body').append('<script>' + res.jsonData.script + ' loadJWPlayer(); </script>');
-							self.setTopPosition();
+						// Handle video lightbox
+						self.showLightbox(res.title, '<div id="ImageLightboxVideoEmbed"></div>'+res.html, caption, res.width, res.titleKey, res.type, res.provider, function(){
+							require(['wikia.videoBootstrap'], function (VideoBootstrap) {
+								new VideoBootstrap(document.getElementById('ImageLightboxVideoEmbed'), res.embedCode, 'imageLightbox');
+							});
 						});
-					});
+
 				} else {
 					self.showLightbox(res.title, res.html, caption, res.width, res.titleKey, res.type, res.provider);
 					self.setTopPosition();

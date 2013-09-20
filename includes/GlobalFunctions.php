@@ -1310,6 +1310,8 @@ function wfMessageFallback( /*...*/ ) {
 }
 
 /**
+ * @deprecated since 1.18
+ *
  * Get a message from anywhere, for the current user language.
  *
  * Use wfMsgForContent() instead if the message should NOT
@@ -1327,24 +1329,30 @@ function wfMessageFallback( /*...*/ ) {
  * @return String
  */
 function wfMsg( $key ) {
+	wfDeprecated( __METHOD__, '1.18' );
 	$args = func_get_args();
 	array_shift( $args );
 	return wfMsgReal( $key, $args );
 }
 
 /**
+ * @deprecated since 1.18
+ *
  * Same as above except doesn't transform the message
  *
  * @param $key String
  * @return String
  */
 function wfMsgNoTrans( $key ) {
+	wfDeprecated( __METHOD__, '1.18' );
 	$args = func_get_args();
 	array_shift( $args );
 	return wfMsgReal( $key, $args, true, false, false );
 }
 
 /**
+ * @deprecated since 1.18
+ *
  * Get a message from anywhere, for the current global language
  * set with $wgLanguageCode.
  *
@@ -1368,6 +1376,8 @@ function wfMsgNoTrans( $key ) {
  * @return String
  */
 function wfMsgForContent( $key ) {
+	wfDeprecated( __METHOD__, '1.18' );
+
 	global $wgForceUIMsgAsContentMsg;
 	$args = func_get_args();
 	array_shift( $args );
@@ -1381,12 +1391,16 @@ function wfMsgForContent( $key ) {
 }
 
 /**
+ * @deprecated since 1.18
+ *
  * Same as above except doesn't transform the message
  *
  * @param $key String
  * @return String
  */
 function wfMsgForContentNoTrans( $key ) {
+	wfDeprecated( __METHOD__, '1.18' );
+
 	global $wgForceUIMsgAsContentMsg;
 	$args = func_get_args();
 	array_shift( $args );
@@ -1400,6 +1414,8 @@ function wfMsgForContentNoTrans( $key ) {
 }
 
 /**
+ * @deprecated since 1.18
+ *
  * Really get a message
  *
  * @param $key String: key to get.
@@ -1411,6 +1427,7 @@ function wfMsgForContentNoTrans( $key ) {
  */
 function wfMsgReal( $key, $args, $useDB = true, $forContent = false, $transform = true ) {
 	wfProfileIn( __METHOD__ );
+	wfDeprecated( __METHOD__, '1.18' );
 	$message = wfMsgGetKey( $key, $useDB, $forContent, $transform );
 	$message = wfMsgReplaceArgs( $message, $args );
 	wfProfileOut( __METHOD__ );
@@ -1418,6 +1435,8 @@ function wfMsgReal( $key, $args, $useDB = true, $forContent = false, $transform 
 }
 
 /**
+ * @deprecated since 1.18
+ *
  * Fetch a message string value, but don't replace any keys yet.
  *
  * @param $key String
@@ -1428,6 +1447,8 @@ function wfMsgReal( $key, $args, $useDB = true, $forContent = false, $transform 
  * @return string
  */
 function wfMsgGetKey( $key, $useDB = true, $langCode = false, $transform = true ) {
+	wfDeprecated( __METHOD__, '1.18' );
+
 	wfRunHooks( 'NormalizeMessageKey', array( &$key, &$useDB, &$langCode, &$transform ) );
 
 	$cache = MessageCache::singleton();
@@ -1469,6 +1490,8 @@ function wfMsgReplaceArgs( $message, $args ) {
 }
 
 /**
+ * @deprecated since 1.18
+ *
  * Return an HTML-escaped version of a message.
  * Parameter replacements, if any, are done *after* the HTML-escaping,
  * so parameters may contain HTML (eg links or form controls). Be sure
@@ -1480,12 +1503,15 @@ function wfMsgReplaceArgs( $message, $args ) {
  * @return string
  */
 function wfMsgHtml( $key ) {
+	wfDeprecated( __METHOD__, '1.18' );
 	$args = func_get_args();
 	array_shift( $args );
 	return wfMsgReplaceArgs( htmlspecialchars( wfMsgGetKey( $key ) ), $args );
 }
 
 /**
+ * @deprecated since 1.18
+ *
  * Return an HTML version of message
  * Parameter replacements, if any, are done *after* parsing the wiki-text message,
  * so parameters may contain HTML (eg links or form controls). Be sure
@@ -1497,6 +1523,7 @@ function wfMsgHtml( $key ) {
  * @return string
  */
 function wfMsgWikiHtml( $key ) {
+	wfDeprecated( __METHOD__, '1.18' );
 	$args = func_get_args();
 	array_shift( $args );
 	return wfMsgReplaceArgs(
@@ -1506,6 +1533,8 @@ function wfMsgWikiHtml( $key ) {
 }
 
 /**
+ * @deprecated since 1.18
+ *
  * Returns message in the requested format
  * @param $key String: key of the message
  * @param $options Array: processing rules. Can take the following options:
@@ -1526,6 +1555,7 @@ function wfMsgWikiHtml( $key ) {
  */
 function wfMsgExt( $key, $options ) {
 	wfProfileIn(__METHOD__);
+	wfDeprecated( __METHOD__, '1.18' );
 	$args = func_get_args();
 	array_shift( $args );
 	array_shift( $args );
@@ -3549,7 +3579,10 @@ function &wfGetLBFactory() {
  * @return File, or false if the file does not exist
  */
 function wfFindFile( $title, $options = array() ) {
-	return RepoGroup::singleton()->findFile( $title, $options );
+	wfProfileIn(__METHOD__);
+	$file = RepoGroup::singleton()->findFile( $title, $options );
+	wfProfileOut(__METHOD__);
+	return $file;
 }
 
 /**
@@ -3557,7 +3590,7 @@ function wfFindFile( $title, $options = array() ) {
  * Returns a valid placeholder object if the file does not exist.
  *
  * @param $title Title|String
- * @return File|null A File, or null if passed an invalid Title
+ * @return LocalFile|null A File, or null if passed an invalid Title
  */
 function wfLocalFile( $title ) {
 	return RepoGroup::singleton()->getLocalRepo()->newFile( $title );

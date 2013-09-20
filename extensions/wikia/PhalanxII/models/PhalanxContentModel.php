@@ -1,14 +1,21 @@
 <?php
 
 class PhalanxContentModel extends PhalanxModel {
+
+	/* @var Title $title */
 	protected $title = null;
 	const SPAM_WHITELIST_TITLE = 'Spam-whitelist';
 	const SPAM_WHITELIST_NS_TITLE = 'Mediawiki:Spam-whitelist';
 
+	/**
+	 * @param Title $title
+	 * @param string $lang
+	 * @param int $id
+	 */
 	public function __construct( $title, $lang = null, $id = 0 ) {
 		parent::__construct( __CLASS__, array( 'title' => $title, 'lang' => $lang, 'id' => $id ) );
 	}
-	
+
 	public function isOk() { 
 		return ( 
 			$this->wg->User->isAllowed( 'phalanxexempt' ) || 
@@ -18,16 +25,16 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 
 	public function getText() {
-		return preg_replace( '/\s+/', ' ', preg_replace( '/[^\PP]+/', '', ( !is_null( $this->text ) ) ? $this->text : $this->title->getFullText() ) );
+		return !is_null( $this->text ) ? $this->text : $this->title->getFullText();
 	}
 
 	public function buildWhiteList() {
 		wfProfileIn( __METHOD__ );
 
 		$whitelist = array();
-		$content = $this->wf->msgForContent( self::SPAM_WHITELIST_TITLE );
+		$content = wfMsgForContent( self::SPAM_WHITELIST_TITLE );
 		
-		if ( $this->wf->emptyMsg( self::SPAM_WHITELIST_TITLE, $content ) ) {
+		if ( wfemptyMsg( self::SPAM_WHITELIST_TITLE, $content ) ) {
 			wfProfileOut( __METHOD__ );
 			return $whitelist;
 		}
@@ -37,9 +44,9 @@ class PhalanxContentModel extends PhalanxModel {
 			foreach ( $content as $regex ) {
 				$regex = str_replace( '/', '\/', preg_replace('|\\\*/|', '/', $regex) );
 				$regex = "/https?:\/\/+[a-z0-9_.-]*$regex/i";
-				$this->wf->suppressWarnings();
+				wfsuppressWarnings();
 				$regexValid = preg_match($regex, '');
-				$this->wf->restoreWarnings();
+				wfrestoreWarnings();
 				if ( $regexValid === false ) continue;
 				$whitelist[] = $regex;
 			}
@@ -52,12 +59,12 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 	
 	public function displayBlock() {
-		$this->wg->Out->setPageTitle( $this->wf->msg( 'spamprotectiontitle' ) );
+		$this->wg->Out->setPageTitle( wfMsg( 'spamprotectiontitle' ) );
 		$this->wg->Out->setRobotPolicy( 'noindex,nofollow' );
 		$this->wg->Out->setArticleRelated( false );
 		$this->wg->Out->addHTML( Html::openElement( 'div', array( 'id' => 'spamprotected_summary' ) ) );
 		$this->wg->Out->addWikiMsg( 'spamprotectiontext' );
-		$this->wg->Out->addHTML( Html::element( 'p', array(), $this->wf->Msg( 'phalanx-stats-table-id' ) . " #{$this->block->id}" ) );
+		$this->wg->Out->addHTML( Html::element( 'p', array(), wfMsg( 'phalanx-stats-table-id' ) . " #{$this->block->id}" ) );
 		$this->wg->Out->addWikiMsg( 'spamprotectionmatch', "<nowiki>{$this->block->text}</nowiki>" );
 		$this->wg->Out->addWikiMsg( 'phalanx-content-spam-summary' );
 		$this->wg->Out->returnToMain( false, $this->title );
@@ -66,15 +73,15 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 	
 	public function contentBlock() {
-		$msg = $this->wf->msgExt( 'spamprotectionmatch', 'parseinline', "<nowiki>{$this->block->text} (Block #{$this->block->id})</nowiki>" ); 
+		$msg = "{$this->block->text} (Block #{$this->block->id})";
 		$this->logBlock();
 		return $msg;
 	}
 	
 	public function reasonBlock() {
-		$msg = $this->wf->msgExt( 'phalanx-title-move-summary', 'parseinline' );
-		$msg .= Html::element( 'p', array(), $this->wf->Msg( 'phalanx-stats-table-id' ) . " #{$this->block->id}" );
-		$msg .= $this->wf->msgExt( 'spamprotectionmatch', 'parseinline', "<nowiki>{$this->block->text}</nowiki>" );
+		$msg = wfMsgExt( 'phalanx-title-move-summary', 'parseinline' );
+		$msg .= Html::element( 'p', array(), wfMsg( 'phalanx-stats-table-id' ) . " #{$this->block->id}" );
+		$msg .= wfMsgExt( 'spamprotectionmatch', 'parseinline', "<nowiki>{$this->block->text}</nowiki>" );
 		$this->logBlock();
 		
 		return $msg;

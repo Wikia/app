@@ -9,7 +9,7 @@
  * @file ParserHook.php
  * @ingroup Validator
  *
- * @licence GNU GPL v3 or later
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  * @author Daniel Werner
  * 
@@ -216,7 +216,7 @@ abstract class ParserHook {
 	}
 
 	/**
-	 * returns an array with the names for the parser hook.
+	 * Returns an array with the names for the parser hook.
 	 *
 	 * @since 0.4
 	 *
@@ -509,7 +509,7 @@ abstract class ParserHook {
 			'names' => $this->getNames(),
 			'description' => $this->getDescription(),
 			'message' => $this->getMessage(),
-			'parameters' => $this->getParameterInfo( $type ),
+			'parameters' => ParamDefinition::getCleanDefinitions( $this->getParameterInfo( $type ) ),
 			'defaults' => $this->getDefaultParameters( $type ),
 		);
 	}

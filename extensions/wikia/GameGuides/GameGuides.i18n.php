@@ -24,14 +24,79 @@ $messages['en'] = array(
 	'wikiagameguides-content-description-categories' => 'Add wiki "Categories" and rename them as you\'d like them to appear in Game Guides with "Game Guide Names".',
 	'wikiagameguides-content-description-tag' => 'Does it make sense to group categories under a game series installment? Add a category "Tag," and drag and drop wiki categories under it.',
 	'wikiagameguides-content-description-organize' => 'Feel free to delete or add more lines, and reorder them by dragging and dropping.',
-	'wikiagameguides-content-description-no-tag' => 'Categories without tag or with empty tag will be shown as last in Game Guides.'
+	'wikiagameguides-content-description-no-tag' => 'Categories without tag or with empty tag will be shown as last in Game Guides.',
+
+	//Sponsored Videos Managment Tools
+	'wikiagameguides-sponsored-description-language' => 'Highlighted row is a language',
+	'wikiagameguides-sponsored-description-wiki' => 'First input is for Wiki URL',
+	'wikiagameguides-sponsored-description-title' => 'Second input is for Video Title',
+	'wikiagameguides-sponsored-description-url' => 'Third input is for Video URL',
+
+	'wikiagameguides-sponsored-title' => 'Wikia Game Guides Sponsored Videos Tool',
+	'wikiagameguides-sponsored-add-video' => 'Add video',
+	'wikiagameguides-sponsored-add-language' => 'Add Language',
+
+	'wikiagameguides-sponsored-video-name' => 'Video URL',
+	'wikiagameguides-sponsored-wiki-url' => 'Wiki URL',
+	'wikiagameguides-sponsored-language' => 'Language',
+	'wikiagameguides-sponsored-video-title' => 'Video Title',
+	'wikiagameguides-sponsored-duplicate-entry' => 'This filed is duplicated',
+	'wikiagameguides-sponsored-required-entry' => 'This field is required',
+	'wikiagameguides-sponsored-empty-language' => 'Language can not be empty',
+	'wikiagameguides-sponsored-orphaned-video' => 'Video has to have a language',
+	'wikiagameguides-sponsored-delete-videos-are-you-sure' => 'Are you sure you want to erase everything?',
+	'wikiagameguides-sponsored-video-does-not-exist' => 'This video does not exist',
+	'wikiagameguides-sponsored-video-is-not-ooyala' => 'This video is not provided by Ooyala'
 );
 
 /** Message documentation (Message documentation)
  */
 $messages['qqq'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides is the name of a product, do not translate on a per-word basis',
-	'wikiagameguides-content-title' => 'tilte of a page',
+
+
+	//Preview page
+	'wikiagameguides-preview-description' => 'Message displayed on GameGuidesPreview page indicating that what user see is just a preview',
+
+	//Content Managment tool
+	'wikiagameguides-content-title' => 'title of a page',
+	'wikiagameguides-content-category' => 'table header above category inputs',
+	'wikiagameguides-content-tag' => 'table header on tag inputs',
+	'wikiagameguides-content-name' => 'table header on game guide name inputs',
+	'wikiagameguides-content-add-tag' => 'message on add tag button - to add a Tag to a list',
+	'wikiagameguides-content-add-category' => 'message on add category button - to add a category to a tag',
+	'wikiagameguides-content-save' => 'Save button - to save list of tags and categories',
+	'wikiagameguides-content-category-error' => 'Message shown to a user when he tries to save a category that do not exist',
+	'wikiagameguides-content-required-entry' => 'Message shown to a user next to an input that is required',
+	'wikiagameguides-content-duplicate-entry' => 'Message shown to a user next to an input that has duplicated content',
+	'wikiagameguides-content-empty-tag' => 'Message shown to a a user if he has not added any categories to a tag',
+
+	'wikiagameguides-content-description-categories' => 'Message describing a purpose and usage of the tool',
+	'wikiagameguides-content-description-tag' => 'Message describing a purpose and usage of the tool',
+	'wikiagameguides-content-description-organize' => 'Message describing a purpose and usage of the tool',
+	'wikiagameguides-content-description-no-tag' => 'Message describing a purpose and usage of the tool',
+
+	//Sponsored Videos Managment Tools
+	'wikiagameguides-sponsored-description-language' => 'Message describing a purpose and usage of a tool',
+	'wikiagameguides-sponsored-description-wiki' => 'Message describing a purpose and usage of the tool',
+	'wikiagameguides-sponsored-description-title' => 'Message describing a purpose and usage of the tool',
+	'wikiagameguides-sponsored-description-url' => 'Message describing a purpose and usage of the tool',
+
+	'wikiagameguides-sponsored-title' => 'Title of Wikia Game Guides Sponsored Videos Tool page',
+	'wikiagameguides-sponsored-add-video' => 'Message on an add a video button',
+	'wikiagameguides-sponsored-add-language' => 'Message on an add a language button',
+
+	'wikiagameguides-sponsored-video-name' => 'Placeholder on an input',
+	'wikiagameguides-sponsored-wiki-url' => 'Placeholder on an input',
+	'wikiagameguides-sponsored-language' => 'Placeholder on an input',
+	'wikiagameguides-sponsored-video-title' => 'Placeholder on an input',
+	'wikiagameguides-sponsored-duplicate-entry' => 'Popup message next to an input with duplicate content',
+	'wikiagameguides-sponsored-required-entry' => 'Popup message next to an input that is left empty and is required',
+	'wikiagameguides-sponsored-empty-language' => 'Popup message next to an input that is empty and should be filled with a language code',
+	'wikiagameguides-sponsored-orphaned-video' => 'Popup message next to a row of a video that is not assigned to any language',
+	'wikiagameguides-sponsored-delete-videos-are-you-sure' => 'Popup message that asks if user is sure to delete all data',
+	'wikiagameguides-sponsored-video-does-not-exist' => 'Popup message next to an input with a video that do not exist',
+	'wikiagameguides-sponsored-video-is-not-ooyala' => 'Popup message next to an input with a video that is not provided by ooyala video provider'
 );
 
 /** Asturian (asturianu)

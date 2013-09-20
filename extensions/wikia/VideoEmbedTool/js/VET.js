@@ -1,17 +1,13 @@
-/*global UserLogin, WikiaEditor*/
-
 /*
  * Author: Inez Korczynski, Bartek Lapinski, Hyun Lim, Liz Lee
  */
 
 
-/*
- * Variables
- */
-(function($, window) {
+define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function (VideoBootstrap, $, window) {
+
 	var VET_panel = null;
 	var VET_curSourceId = 0;
-	var VET_lastQuery = new Array();
+	var VET_lastQuery = [];
 	var VET_jqXHR = {
 		abort: function() {
 			// empty function so if statements will not have to be embedded everywhere
@@ -34,6 +30,7 @@
 	var VET_MIN_WIDTH = 100;
 	var VET_DEFAULT_WIDTH = 335;
 	var VET_thumbSize = VET_DEFAULT_WIDTH;	// variable that can change later, defaulted to DEFAULT
+	var VET_videoInstance = null;
 
 	var VET_tracking = Wikia.Tracker.buildTrackingFunction( Wikia.trackEditorComponent, {
 		action: Wikia.Tracker.ACTIONS.CLICK,
@@ -45,49 +42,50 @@
 	function VET_editVideo() {
 		$('#VideoEmbedMain').hide();
 
-		var callback = function(o) {
-			var data = VET_embedPresets;
+		var callback = function(data) {
+			var presets = VET_embedPresets;
 
-			VET_displayDetails(o.responseText, data);
+			VET_displayDetails(data.responseText, presets);
 
 			$('#VideoEmbedBack').hide();
 
 			setTimeout(function() {
-				if ( data.thumb || data.thumbnail ) {
+				if ( presets.thumb || presets.thumbnail ) {
 		             $("#VideoEmbedThumbOption").prop('checked', true);
 		             $('#VET_StyleThumb').addClass('selected');
 		        }  else {
-		        	 $('#VideoEmbedSizeRow > div').children('input').removeClass('show');
-					 $('#VideoEmbedSizeRow > div').children('p').addClass('show');
+		        	 var sizeDiv = $('#VideoEmbedSizeRow > div');
+		        	 sizeDiv.children('input').removeClass('show');
+					 sizeDiv.children('p').addClass('show');
 		        	 $("#VideoEmbedThumbOption").prop('checked', false);
 		             $("#VideoEmbedNoThumbOption").prop('checked', true);
 		             $('#VET_StyleThumb').removeClass('selected');
 		             $('#VET_StyleNoThumb').addClass('selected');
 		        }
 
-				if(data.align && data.align == 'left') {
+				if(presets.align && presets.align == 'left') {
 					$('#VideoEmbedLayoutLeft').attr('checked', 'checked').parent().addClass('selected');
-				} else if (data.align && data.align == 'center') {
+				} else if (presets.align && presets.align == 'center') {
 					$('#VideoEmbedLayoutCenter').attr('checked', 'checked').parent().addClass('selected');
 				} else {
 					$('#VideoEmbedLayoutRight').attr('checked', 'checked').parent().addClass('selected');
 				}
 
-				if(data.width) {
-					VET_readjustSlider( data.width );
-					$('#VideoEmbedManualWidth').val( data.width );
+				if(presets.width) {
+					VET_readjustSlider( presets.width );
+					$('#VideoEmbedManualWidth').val( presets.width );
 				}
 
 			}, 200);
-			if(data.caption) {
-				$('#VideoEmbedCaption').val(data.caption);
+			if(presets.caption) {
+				$('#VideoEmbedCaption').val(presets.caption);
 			}
 
 			// show width slider
 			VET_toggleSizing(true);
 
 			// show alignment row
-			$( '#VideoEmbedLayoutRow' ).css('display', '');
+			$( '#VideoEmbedLayoutRow' ).show();
 
 			// make replace video link to open in new window / tab
 			$('#VideoReplaceLink a').first().attr('target', '_blank');
@@ -152,8 +150,9 @@
 					extraData.align = 'right';
 				}
 
-				if ($('#VideoEmbedCaption').val()) {
-					 extraData.caption = $('#VideoEmbedCaption').val();
+				var caption = $('#VideoEmbedCaption').val();
+				if (caption) {
+					 extraData.caption = caption;
 				}
 
 				if(VET_callbackAfterEmbed) {
@@ -200,13 +199,13 @@
 		if( enable ) {
 			$( '#VideoEmbedThumbOption' ).attr('disabled', false);
 			$( '#VideoEmbedNoThumbOption' ).attr('disabled', false);
-			$( '#VideoEmbedWidthRow' ).css('display', '');
-			$( '#VideoEmbedSizeRow' ).css('display', '');
+			$( '#VideoEmbedWidthRow' ).show();
+			$( '#VideoEmbedSizeRow' ).show();
 		} else {
 			$( '#VideoEmbedThumbOption' ).attr('disabled', true);
-			$( '#VideoEmbedNoThumbOption' ).css('disabled', true);
-			$( '#VideoEmbedWidthRow' ).css('display', 'none');
-			$( '#VideoEmbedSizeRow' ).css('display', 'none');
+			$( '#VideoEmbedNoThumbOption' ).attr('disabled', true);
+			$( '#VideoEmbedWidthRow' ).hide();
+			$( '#VideoEmbedSizeRow' ).hide();
 		}
 	}
 
@@ -224,14 +223,14 @@
 	}
 
 	function VET_readjustSlider( value ) {
-		$('#VideoEmbedSlider').slider && $('#VideoEmbedSlider').slider({
+		var elem = $('#VideoEmbedSlider');
+		elem.slider && elem.slider({
 			value: value
 		});
 	}
 
 	function VET_show( options ) {
-
-		/* set options */
+		/* set vars for this instance of VET */
 		VET_options = options;
 		VET_embedPresets = options.embedPresets;
 		VET_wysiwygStart = options.startPoint || 1;
@@ -256,14 +255,16 @@
 
 	/* ajax call for first screen (aka video search) */
 	function VET_loadMain(searchOrder) {
-		var callback = function(o) {
-			$('#VideoEmbedMain').html(o.responseText);
-			$('#VideoEmbedUrl').focus();
+		var callback = function(data) {
+			$('#VideoEmbedMain').html(data.responseText);
+			$('#VideoEmbedUrl').focusNoScroll();
 			VET_updateHeader();
 
 			// macbre: RT #19150
-			if ( window.wgEnableAjaxLogin == true && $('#VideoEmbedLoginMsg').exists() ) {
-				$('#VideoEmbedLoginMsg').click(openLogin).css('cursor', 'pointer').log('VET: ajax login enabled');
+			// TODO: figure out if this is being used anymore
+			var loginMsg = $('#VideoEmbedLoginMsg');
+			if ( window.wgEnableAjaxLogin == true && loginMsg.length ) {
+				loginMsg.click(openLogin).css('cursor', 'pointer').log('VET: ajax login enabled');
 			}
 
 			// Add suggestions and search to VET
@@ -314,9 +315,12 @@
 		VET_switchScreen('Details');
 		$('#VideoEmbedBack').css('display', 'inline');
 
-		// wlee: responseText could include <script>. Use jQuery to parse
-		// and execute this script
-		$('#VideoEmbed' + VET_curScreen).html(responseText);
+		$('#VideoEmbedDetails').html(responseText);
+
+		var element = $('#VideoEmbedThumb .video-embed');
+
+		VET_videoInstance = new VideoBootstrap(element[0], window.VETPlayerParams, 'vetDetails');
+
 		VET_updateHeader();
 
 
@@ -380,7 +384,7 @@
 
 		e.preventDefault();
 
-		var params = new Array();
+		var params = [];
 
 		if( !$('#VideoEmbedName').length || $('#VideoEmbedName').val() == '' ) {
 	 		GlobalNotification.show( $.msg('vet-warn3'), 'error', null, VET_notificationTimout );
@@ -391,8 +395,7 @@
 		params.push('provider='+$('#VideoEmbedProvider').val());
 
 		if( $( '#VideoEmbedMetadata' ).length ) {
-			var metadata = new Array();
-			metadata = $( '#VideoEmbedMetadata' ).val().split( "," );
+			var metadata = $( '#VideoEmbedMetadata' ).val().split( "," );
 			for( var i=0; i < metadata.length; i++ ) {
 				params.push( 'metadata' + i  + '=' + metadata[i] );
 			}
@@ -417,14 +420,10 @@
 			params.push('caption=' + encodeURIComponent( $('#VideoEmbedCaption').val() ) );
 		}
 
-		/* Allow extensions to add extra params to ajax call
-		 * So far only used by article placeholders
-		 * Making this event driven is tricky because there can be more than 'add video' element on a page.
-		 *   ex: MiniEditor and Article Placeholder
-		 */
+		// Allow extensions to add extra params to ajax call
 		params = params.concat(VET_options.insertFinalVideoParams || []);
 
-		var callback = function(o, status) {
+		var callback = function(data, status) {
 			if(status == 'error') {
 				GlobalNotification.show( $.msg('vet-insert-error'), 'error', null, VET_notificationTimout );
 			} else if (status == 'success') {
@@ -434,13 +433,13 @@
 				}
 				switch($.trim(screenType)) {
 					case 'error':
-						o.responseText = o.responseText.replace(/<script.*script>/, "" );
-						GlobalNotification.show( o.responseText, 'error', null, VET_notificationTimout );
+						data.responseText = data.responseText.replace(/<script.*script>/, "" );
+						GlobalNotification.show( data.responseText, 'error', null, VET_notificationTimout );
 						break;
 					case 'summary':
 						VET_switchScreen('Summary');
-						$('#VideoEmbedBack').css('display', 'none');
-						$('#VideoEmbed' + VET_curScreen).html(o.responseText);
+						$('#VideoEmbedBack').hide();
+						$('#VideoEmbed' + VET_curScreen).html(data.responseText);
 						VET_updateHeader();
 
 						if ( !$( '#VideoEmbedCreate'  ).length && !$( '#VideoEmbedReplace' ).length ) {
@@ -469,9 +468,9 @@
 
 							VET_callbackAfterEmbed(options);
 						} else {
-							$( '#VideoEmbedSuccess' ).css('display', 'none');
-							$( '#VideoEmbedTag' ).css('display', 'none');
-							$( '#VideoEmbedPageSuccess' ).css('display', 'block');
+							$( '#VideoEmbedSuccess' ).hide();
+							$( '#VideoEmbedTag' ).hide();
+							$( '#VideoEmbedPageSuccess' ).show();
 						}
 						break;
 					default:
@@ -491,6 +490,9 @@
 	}
 
 	function VET_switchScreen(to) {
+		if ( VET_videoInstance ) {
+			VET_videoInstance.clearTimeoutTrack();
+		}
 		VET_prevScreen = VET_curScreen;
 		VET_curScreen = to;
 		$('#VideoEmbedBody').find('.VET_screen').hide();
@@ -501,13 +503,13 @@
 		// in any case we want to stop the video
 		$('#VideoEmbedThumb').children().remove();
 		if(VET_curScreen == 'Main') {
-			$('#VideoEmbedBack').css('display', 'none');
+			$('#VideoEmbedBack').hide();
 		}
 
 		// macbre: move back button on Oasis
 		if( to == "Details" ) {
 			setTimeout(function() {
-				VET_moveBackButton($('.VideoEmbedNoBorder.addVideoDetailsFormControls').find('input'));
+				VET_moveBackButton($('.addVideoDetailsFormControls').find('input'));
 			}, 50);
 		}
 	}
@@ -527,20 +529,21 @@
 	}
 
 	function VET_close() {
-		VET_switchScreen('Main');
 		window.VETbackButton = false;
+
+		VET_loader.modal.closeModal();
 
 		VET_tracking({
 			action: Wikia.Tracker.ACTIONS.CLOSE
 		});
 
-		VET_loader.modal.closeModal();
-
 		if ($.isFunction(VET_options.onClose)) {
 			VET_options.onClose();
 		}
 
-		UserLogin.refreshIfAfterForceLogin();
+		VET_switchScreen('Main');
+
+		window.UserLogin.refreshIfAfterForceLogin();
 	}
 
 	/*
@@ -549,19 +552,19 @@
 	 */
 	function VET_sendQueryEmbed(query) {
 		// If callbackAfterSelect returns false, end here. Otherwise, move on to the next screen.
-		if(VET_callbackAfterSelect(query) !== false) {
-			var callback = function(o) {
+		if(VET_callbackAfterSelect(query, VET) !== false) {
+			var callback = function(data) {
 				var screenType = VET_jqXHR.getResponseHeader('X-screen-type');
 				if(typeof screenType == "undefined") {
 					screenType = VET_jqXHR.getResponseHeader('X-Screen-Type');
 				}
 
 				if( 'error' == $.trim(screenType) ) {
-					GlobalNotification.show( o.responseText, 'error', null, VET_notificationTimout );
+					GlobalNotification.show( data.responseText, 'error', null, VET_notificationTimout );
 				} else {
 					// attach handlers - close preview on VET modal close (IE bug fix)
 					VETExtended.cachedSelectors.closePreviewBtn.click();
-					VET_displayDetails(o.responseText);
+					VET_displayDetails(data.responseText);
 				}
 
 			};
@@ -683,6 +686,12 @@
 			// attach handlers - close preview
 			this.cachedSelectors.previewWrapper.on('click', '#VET-preview-close', function(event) {
 				event.preventDefault();
+
+				// Closing a video instance, clear the tracking timeout
+				if ( VET_videoInstance ) {
+					VET_videoInstance.clearTimeoutTrack();
+				}
+
 				that.cachedSelectors.previewWrapper.stop().slideUp('slow', function() {
 					that.cachedSelectors.videoWrapper.children().remove();
 					that.removeInPreview();
@@ -908,15 +917,10 @@
 		// METHOD: show preview of the selected video
 		showVideoPreview: function(data) {
 			var previewWrapper = this.cachedSelectors.previewWrapper,
-				videoWrapper = this.cachedSelectors.videoWrapper;
-			if ( data.playerAsset && data.playerAsset.length > 0 ) { // screenplay special case
-				$.getScript(data.playerAsset, function() {
-					videoWrapper.html( '<div id="'+data.videoEmbedCode.id+'" class="Wikia-video-enabledEmbedCode"></div>');
-					$('body').append('<script>' + data.videoEmbedCode.script + ' loadJWPlayer(); </script>');
-				});
-			} else {
-				videoWrapper.html('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>');
-			}
+				videoWrapper = this.cachedSelectors.videoWrapper,
+				embedWrapper = $('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>').appendTo(videoWrapper.html(""));
+
+			VET_videoInstance = new VideoBootstrap(embedWrapper[0], data.videoEmbedCode, 'vetPreview');
 
 			// expand preview is hidden
 			if (!previewWrapper.is(':visible')) {
@@ -1134,8 +1138,10 @@
 
 
 	// globally available functions
-	// TODO: Create VET namespace for these
-	window.VET_show = VET_show;
-	window.VET_close = VET_close;
-	window.VETExtended = VETExtended;
-})(jQuery, window);
+	var VET = {
+		show: VET_show,
+		close: VET_close
+	};
+
+	return VET;
+});

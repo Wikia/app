@@ -1,7 +1,7 @@
 <?php
 /*
  * @author Bartek Łapiński
- * 
+ *
  * Note: This includes video and image placeholders
  */
 
@@ -34,28 +34,15 @@ $wgExtensionFunctions[] = 'ImagePlaceholder_init';
  */
 $wgExtensionMessagesFiles['ImagePlaceholder'] = $dir.'/ImagePlaceholder.i18n.php';
 
-F::build('JSMessages')->registerPackage('ImagePlaceholder', array('imgplc-*'));
-F::build('JSMessages')->enqueuePackage('ImagePlaceholder', JSMessages::EXTERNAL);
+JSMessages::registerPackage('ImagePlaceholder', array('imgplc-*'));
+JSMessages::enqueuePackage('ImagePlaceholder', JSMessages::EXTERNAL);
 
-$wgHooks['Parser::FetchTemplateAndTitle'][] = 'ImagePlaceholderFetchTemplateAndTitle';
 $wgHooks['ImageBeforeProduceHTML'][] = 'ImagePlaceholderImageBeforeProduceHTML';
 $wgHooks['ParserBeforeStrip'][] = 'ImagePlaceholderParserBeforeStrip';
 
 // this is a custom hook defined in Parser.php, of course required for it to work
 $wgHooks['BeforeParserMakeImageLinkObjOptions'][] = 'ImagePlaceholderBeforeParserMakeImageLinkObjOptions';
 $wgHooks['ParserShouldAddTrackingCategory'][] = 'ImagePlaceholderParserShouldAddTrackingCategory';
-
-function ImagePlaceholderFetchTemplateAndTitle( &$text, &$finalTitle ) {
-        global $wgContLang, $wgWikiaImagesFoundInTemplates;
-        $img_tag = $wgContLang->getFormattedNsText( NS_FILE ) . ':' . wfMsg( 'imgplc-placeholder' );
-
-        if ($text !== false) {
-                $count = 0;
-                $text = str_replace( $img_tag, 'File:Template_Placeholder', $text, $count );
-                $wgWikiaImagesFoundInTemplates += $count;
-        }
-        return true;
-}
 
 function ImagePlaceholder_init() {
 	global $wgAutoloadClasses;
@@ -91,6 +78,11 @@ function ImagePlaceholderBeforeParserMakeImageLinkObjOptions( Parser $parser, Ti
 		return true;
 	}
 	global $wgContLang;
+
+	// TODO: This part of code, along with the ImagePlaceholderTranslateNsImage()
+	// function has to be refined once Video and Image namespaces
+	// are properly translated.
+
 	$plc_tag = $wgContLang->getFormattedNsText( NS_FILE ) . ':' . wfMsgForContent( 'imgplc-placeholder' );
 	$ns_img = ImagePlaceholderTranslateNsImage();
 	$img_tag = $ns_img . ':' . wfMsgForContent( 'imgplc-placeholder' );
@@ -247,7 +239,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	if( $isvideo ) {
 		$additionalClass .= ' wikiaVideoPlaceholder';
 	} else {
-		$additionalClass .= ' wikiaImagePlaceholder';	
+		$additionalClass .= ' wikiaImagePlaceholder';
 	}
 
 	// render HTML (RT #21087)
@@ -259,7 +251,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 
 	// ImagePlaceholders still use id attribute, videos use data-id attribute. Images should be updated to match videos at some point
 	if(!$isvideo) {
-		$wrapperAttribs['id'] = "WikiaImagePlaceholder{$wgWikiaImagePlaceholderId}";  
+		$wrapperAttribs['id'] = "WikiaImagePlaceholder{$wgWikiaImagePlaceholderId}";
 	}
 
 	if (isset($refid)) {
@@ -283,7 +275,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 		'data-caption' => htmlspecialchars($caption),
 		'data-width' => $width,
 	);
-	
+
 	if( !$isvideo ) { // image placeholder
 		$linkAttrs = array_merge($linkAttrs, array(
 			'data-link' => htmlspecialchars($link),
@@ -305,7 +297,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 
 	// increase counter
 	if($isvideo) {
-		$wgWikiaVideoPlaceholderId++;	
+		$wgWikiaVideoPlaceholderId++;
 	} else {
 		$wgWikiaImagePlaceholderId++;
 	}
@@ -327,7 +319,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 			)
 		));
 	} else {
-		$out .= F::build('JSSnippets')->addToStack(
+		$out .= JSSnippets::addToStack(
 			array( '/extensions/wikia/ImagePlaceholder/js/MediaPlaceholder.js' ),
 			array(),
 			'MediaPlaceholder.init'
@@ -340,10 +332,10 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 
 /* Used by WMU and VET. Match a placeholder image in the given $text.  The $box parameter determines
  * which placeholder is returned if there are more than one on the page.
- * 
+ *
  * @param string $text Article text to check agains placeholder wikitext
  * @param int $box Index of placeholder to be replaced in case there's more than one on a page
- * @param bool $isVideo Check placeholder for existence of "|video"  
+ * @param bool $isVideo Check placeholder for existence of "|video"
  */
 
 function MediaPlaceholderMatch ( $text, $box = 0, $isVideo = false ) {
@@ -364,7 +356,7 @@ function MediaPlaceholderMatch ( $text, $box = 0, $isVideo = false ) {
 
 	// Get the placeholder text in both the content language and in english
 	$placeholder_msg = wfMsgForContent( 'imgplc-placeholder' );
-	$en_placeholder_msg = wfMsgReal( 'imgplc-placeholder', array(), 'en');
+	$en_placeholder_msg = wfMsgReal( 'imgplc-placeholder', array(), true, 'en');
 
 	$placeholder = '(?:' . implode('|', array(
 			$ns_vid . ':' . $placeholder_msg,
@@ -377,24 +369,24 @@ function MediaPlaceholderMatch ( $text, $box = 0, $isVideo = false ) {
 	// Make sure we have matches and that there exists a match at index $box
 	if ( is_array($matches) ) {
 		$matchArr = $matches[0];
-		
+
 		for( $x = 0; $x < count( $matchArr ); $x++ ) {
 			$match = $matchArr[$x];
 			if( $isVideo ) {
 				if ( !preg_match( '/\|video/', $match[0] ) ) {
 					array_splice($matchArr, $x, 1);
-				}	
+				}
 			} else {
 				if ( preg_match( '/video/', $match[0] ) ) {
 					array_splice($matchArr, $x, 1);
-				}		
+				}
 			}
 		}
 		if ( count($matchArr) > $box ) {
 			return $matchArr[$box];
 		}
 	}
-	
+
 	return null;
 }
 

@@ -90,11 +90,11 @@ $categoryselect-color-placeholder: darken( $color-epl-input, 2% );
 }
 
 // Hide until moved to the right rail via JavaScript
-#EditPageMain .CategorySelect {
+.EditPageMain .CategorySelect {
 	display: none;
 }
 
 // Unhide for widescreen mode
-.editpage-visualwidemode #EditPageMain .CategorySelect {
+.EditPageToolbar .CategorySelect {
 	display: block;
 }

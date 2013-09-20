@@ -17,8 +17,8 @@
 		</ul>
 	<? endif ;?>
 	<ul>
-		<li><a href="?useskin=<?= $defaultSkin ?>" id=wkFllSite data-skin="<?= $defaultSkin ?>"><?= $wf->Msg('mobile-full-site') ;?></a></li>
+		<li><a href="?useskin=<?= $defaultSkin ?>" id=wkFllSite data-skin="<?= $defaultSkin ?>"><?= wfMsg('mobile-full-site') ;?></a></li>
 		<li><?= $copyrightLink ;?></li>
-		<li><a href="<?= $feedbackLink ;?>" target=_blank><?= $wf->Msg('wikiamobile-feedback') ;?></a></li>
+		<li><a href="<?= $feedbackLink ;?>" target=_blank><?= wfMsg('wikiamobile-feedback') ;?></a></li>
 	</ul>
 </footer>

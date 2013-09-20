@@ -24,13 +24,12 @@ class AssetsManagerSassBuilderTest extends WikiaBaseTest {
 			->method('set')
 			->will($this->returnValue(true));
 		$this->mockGlobalVariable('wgMemc', $mock_memc);
-		$this->mockApp();
 
-		$request = F::build('WebRequest');
+		$request = new WebRequest();
 		$request->setVal('oid', self::SASS_FILE);
 		$request->setVal('cb', $this->cb);
 
-		$builder = F::build('AssetsManagerSassBuilder', array($request));
+		$builder = new AssetsManagerSassBuilder($request);
 
 		$this->assertContains('#foo', $builder->getContent());
 

@@ -95,7 +95,7 @@
 		loadTime: false,
 
 		// Used for image tools (modify/remove)
-        overlayNode: $('<div id="RTEOverlay">'),
+        overlayNode: $('<div id="RTEOverlay" class="rte-overlay">'),
 
 		// use firebug / opera console to log events / dump objects
 		log: function(msg) {

@@ -24,7 +24,7 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleEditable
 			);
 
 			$fields['strapline' . $i] = array(
-				'label' => $this->wf->msg('marketing-toolbox-hub-module-slider-strapline'),
+				'label' => wfMsg('marketing-toolbox-hub-module-slider-strapline'),
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
@@ -38,7 +38,7 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleEditable
 			);
 
 			$fields['shortDesc' . $i] = array(
-				'label' => $this->wf->msg('marketing-toolbox-hub-module-slider-short-description'),
+				'label' => wfMsg('marketing-toolbox-hub-module-slider-short-description'),
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
@@ -52,7 +52,7 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleEditable
 			);
 
 			$fields['longDesc' . $i] = array(
-				'label' => $this->wf->msg('marketing-toolbox-hub-module-slider-long-description'),
+				'label' => wfMsg('marketing-toolbox-hub-module-slider-long-description'),
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
@@ -66,7 +66,7 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleEditable
 			);
 
 			$fields['url' . $i] = array(
-				'label' => $this->wf->msg('marketing-toolbox-hub-module-slider-url'),
+				'label' => wfMsg('marketing-toolbox-hub-module-slider-url'),
 				'validator' => new WikiaValidatorToolboxUrl(
 					array(
 						'required' => true
@@ -169,7 +169,7 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleEditable
 	}
 
 	public function getImageData( $image ) {
-		return ImagesService::getLocalFileThumbUrlAndSizes($image);
+		return ImagesService::getLocalFileThumbUrlAndSizes($image, 0, ImagesService::EXT_JPG);
 
 	}
 }

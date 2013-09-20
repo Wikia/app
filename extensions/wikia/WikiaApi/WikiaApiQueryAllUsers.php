@@ -22,7 +22,7 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
 
-		$memkey = sprintf("%s-%s-%d", __METHOD__, $this->params['group'], $this->mCityId);
+		$memkey = sprintf( "%s-%s-%d", __METHOD__, implode("-", (array)$this->params['group'] ), $this->mCityId );
 		$data = $wgMemc->get( $memkey );
 		if ( empty($data) && !empty( $wgStatsDBEnabled ) ) {
 			$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);

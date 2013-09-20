@@ -1,4 +1,7 @@
 <?php
+
+$fallback = 'zh-hans';
+
 #Related to visitor skins: Slate.php and Smoke.php
 $messages = array_merge( $messages, array(
 'login_greeting' => "歡迎來到「Wikia」, [[User:$1|$1]]!",

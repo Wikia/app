@@ -100,10 +100,10 @@ abstract class WikiaApiController extends WikiaController {
 	 * }
 	 */
 	protected function requireKey() {
-		//defined in /lib/ApiGate/config.php
+		//defined in /lib/vendor/ApiGate/config.php
 		global $APIGATE_HEADER_REQUIRES_API;
 
-		//@see ApiGate::requiresApiKey in /lib/ApiGate/ApiGate.class.php
+		//@see ApiGate::requiresApiKey in /lib/vendor/ApiGate/ApiGate.class.php
 		//Note: this is kinda silly, since if the requirement for a key
 		//is not cached in Varnish yet, then the API method will run anyways
 		//even if the request doesn't have a valid key... pretty dangerous

@@ -29,7 +29,7 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 			$eventData = $events[rand( 0, count( $events ) -1 )];
 
 			$founderEmailObj = FounderEmails::getInstance();
-			$wikiService = F::build( 'WikiService' );
+			$wikiService = (new WikiService);
 			$user_ids = $wikiService->getWikiAdminIds();
 			$foundingWiki = WikiFactory::getWikiById($wgCityId);
 

@@ -58,19 +58,19 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		$enabled = $this->getVal('enabled', null);
 		$feature = $this->getVal('feature', null);
 
-		$this->wf->runHooks( 'WikiFeatures::onToggleFeature' );
+		wfrunHooks( 'WikiFeatures::onToggleFeature' );
 
 		// check user permission
 		if(!$this->wg->User->isAllowed( 'wikifeatures' )) {
 			$this->setVal('result', 'error');
-			$this->setVal('error', $this->wf->Msg('wikifeatures-error-permission'));
+			$this->setVal('error', wfMsg('wikifeatures-error-permission'));
 			return;
 		}
 
 		// check if feature given is actually something we allow setting
 		if ( !in_array( $feature, $this->wg->WikiFeatures['normal'] ) && !in_array( $feature, $this->wg->WikiFeatures['labs'] ) ) {
 			$this->setVal('result', 'error');
-			$this->setVal('error', $this->wf->Msg('wikifeatures-error-invalid-parameter', $feature));
+			$this->setVal('error', wfMsg('wikifeatures-error-invalid-parameter', $feature));
 			return;
 		}
 
@@ -78,14 +78,14 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		$wg_value = WikiFactory::getVarByName($feature, $this->wg->CityId);
 		if (($enabled != 'true' && $enabled != 'false') || empty($feature) || empty($wg_value)) {
 			$this->setVal('result', 'error');
-			$this->setVal('error', $this->wf->Msg('wikifeatures-error-invalid-parameter', $feature));
+			$this->setVal('error', wfMsg('wikifeatures-error-invalid-parameter', $feature));
 			return;
 		}
 
 		$enabled = ($enabled == 'true');
 
 		$logMsg = "set extension option: $feature = ".var_export($enabled, TRUE);
-		$log = F::build( 'LogPage', array( 'wikifeatures' ) );
+		$log = new LogPage( 'wikifeatures' );
 		$log->addEntry( 'wikifeatures', SpecialPage::getTitleFor('WikiFeatures'), $logMsg, array() );
 		WikiFactory::setVarByName($feature, $this->wg->CityId, $enabled, "WikiFeatures");
 
@@ -97,13 +97,13 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		$this->wg->Memc->delete(WikiFeaturesHelper::getInstance()->getMemcKeyNumActiveWikis($feature));
 
 
-		$this->wf->runHooks( 'WikiFeatures::afterToggleFeature', array($feature, $enabled) );
+		wfrunHooks( 'WikiFeatures::afterToggleFeature', array($feature, $enabled) );
 
 		$this->setVal('result', 'ok');
 	}
 
 /**
- * Save a fogbugz ticket
+ * Does some validation and hands user's feedback over so we had a chance to know it.
  * @requestParam type $category
  * @requestParam type $message
  * @responseParam string result [OK/error]
@@ -119,22 +119,22 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 
 		if( !$user->isLoggedIn() ) {
 			$this->result = 'error';
-			$this->error = $this->wf->Msg('wikifeatures-error-permission');
+			$this->error = wfMsg('wikifeatures-error-permission');
 		}
 
 		// TODO: validate feature_id
 		if ( !array_key_exists($feature, WikiFeaturesHelper::$feedbackAreaIDs) ) {
 			$this->result = 'error';
-			$this->error = $this->wf->Msg('wikifeatures-error-invalid-parameter', 'feature');
+			$this->error = wfMsg('wikifeatures-error-invalid-parameter', 'feature');
 		} else if ( !array_key_exists($category, WikiFeaturesHelper::$feedbackCategories) || $category == 0) {
 			$this->result = 'error';
-			$this->error = $this->wf->Msg('wikifeatures-error-invalid-category');
+			$this->error = wfMsg('wikifeatures-error-invalid-category');
 		} else if ( !$message || strlen($message) < 10 || strlen($message) > 1000 ) {
 			$this->result = 'error';
-			$this->error = $this->wf->Msg('wikifeatures-error-message');
+			$this->error = wfMsg('wikifeatures-error-message');
 		} else if( WikiFeaturesHelper::getInstance()->isSpam($user->getName(), $feature) ) {
 			$this->result = 'error';
-			$this->error = $this->wf->Msg('wikifeatures-error-spam-attempt');
+			$this->error = wfMsg('wikifeatures-error-spam-attempt');
 		}
 
 		// Passed validations, actually do something useful

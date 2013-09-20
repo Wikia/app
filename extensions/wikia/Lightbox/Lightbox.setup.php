@@ -6,18 +6,17 @@
  *
  */ 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 //classes
-$app->registerClass('LightboxController', $dir . 'LightboxController.class.php');
+$wgAutoloadClasses['LightboxController'] =  $dir . 'LightboxController.class.php';
 
 // hooks
-$app->registerHook('MakeGlobalVariablesScript', 'LightboxController', 'onMakeGlobalVariablesScript');
+$wgHooks['MakeGlobalVariablesScript'][] = 'LightboxController::onMakeGlobalVariablesScript';
 
-//$app->registerHook('ArticleEditUpdates', 'LightboxController', 'onArticleEditUpdates');
+//$wgHooks['ArticleEditUpdates'][] = 'LightboxController::onArticleEditUpdates';
 
 // i18n mapping
 $wgExtensionMessagesFiles['Lightbox'] = $dir . 'Lightbox.i18n.php';
 
-F::build('JSMessages')->registerPackage('Lightbox', array(
+JSMessages::registerPackage('Lightbox', array(
 	'lightbox-carousel-more-items',
 ));

@@ -125,11 +125,10 @@ class WallNotificationsTest extends WikiaBaseTest {
 			)
 		);
 
+		// Data Set #0
 		$tests[] = array( null, null, $uniqueId, $entityKey, $authorId, $isReply, $read, $dataS, $dataF );
 
 		$dataS = $dataF;
-
-		$entityKey = '404_102';
 
 		$dataF = array(
 			'notification' => array(
@@ -146,7 +145,7 @@ class WallNotificationsTest extends WikiaBaseTest {
 				),
 				$uniqueId => array(
 					'read' => $read,
-					'list' => array( 1 => array('entityKey' => $entityKey, 'authorId' => $authorId, 'isReply' => $isReply ) ),
+					'list' => array( 0 => array('entityKey' => $entityKey, 'authorId' => $authorId, 'isReply' => $isReply ) ),
 					'last' => 2,
 					'count' => 1,
 					'notifyeveryone' => $notifyeveryone
@@ -154,6 +153,9 @@ class WallNotificationsTest extends WikiaBaseTest {
 			)
 		);
 
+		$entityKey = '404_102';
+
+		// Data Set #1
 		$tests[] = array( null, null, $uniqueId, $entityKey, $authorId, $isReply, $read, $dataS, $dataF );
 
 		$authorId2 = 7777;
@@ -186,6 +188,7 @@ class WallNotificationsTest extends WikiaBaseTest {
 			)
 		);
 
+		// Data Set #2
 		$tests[] = array( null, null, $uniqueId, $entityKey2, $authorId2, $isReply, $read, $dataS, $dataF );
 
 		$dataS = $dataF;
@@ -220,6 +223,7 @@ class WallNotificationsTest extends WikiaBaseTest {
 			)
 		);
 
+		// Data Set #3
 		$tests[] = array( null, null, $uniqueId, $entityKey3, $authorId3, $isReply, $read, $dataS, $dataF );
 
 		$dataS = $dataF;
@@ -254,11 +258,10 @@ class WallNotificationsTest extends WikiaBaseTest {
 			)
 		);
 
+		// Data Set #4
 		$tests[] = array( null, null, $uniqueId, $entityKey4, $authorId4, $isReply, $read, $dataS, $dataF );
 
 		$dataS = $dataF;
-
-		$entityKey5 = '404_106';
 
 		$dataF = array(
 			'notification' => array(
@@ -278,7 +281,7 @@ class WallNotificationsTest extends WikiaBaseTest {
 					'list' => array(
 						0 => array('entityKey' => $entityKey2, 'authorId' => $authorId2, 'isReply' => $isReply ),
 						1 => array('entityKey' => $entityKey3, 'authorId' => $authorId3, 'isReply' => $isReply ),
-						3 => array('entityKey' => $entityKey5, 'authorId' => $authorId4, 'isReply' => $isReply )
+						2 => array('entityKey' => $entityKey4, 'authorId' => $authorId4, 'isReply' => $isReply )
 					),
 					'last' => 5,
 					'count' => 4,
@@ -287,6 +290,9 @@ class WallNotificationsTest extends WikiaBaseTest {
 			)
 		);
 
+		$entityKey5 = '404_106';
+
+		// Data Set #5
 		$tests[] = array( null, null, $uniqueId, $entityKey5, $authorId4, $isReply, $read, $dataS, $dataF );
 
 		return $tests;

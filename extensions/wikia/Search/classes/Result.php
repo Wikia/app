@@ -50,12 +50,32 @@ class Result extends ReadWrite {
 	}
 	
 	/**
-	 * Get the text found via highlighting fields
+	 * Get the string value of a given field. If it's multi-valued, we implode it on whitespace.
+	 * Defaults to "text", which we set from highlighting for certain searches.
 	 * @see    WikiaSearchResultTest::testTextFieldMethods
+	 * @param string|null $field allows us to assert the value must be text, not an array
+	 * @param int|null $wordLimit allows us to ellipsize
 	 * @return string
 	 */
-	public function getText() {
-		return isset( $this->_fields['text'] ) ? $this->_fields['text'] : ''; 
+	public function getText( $field = 'text', $wordLimit = null ) {
+		$text = isset( $this->_fields[$field] ) ? $this->_fields[$field] : '';
+		$textAsString = is_array( $text ) ? implode( " ", $text ) : $text;
+		if ( $wordLimit !== null ) {
+			$wordsExploded = explode( ' ', $textAsString );
+			$textAsString = implode( ' ', array_slice( $wordsExploded, 0, $wordLimit ) );
+			if ( count( $wordsExploded ) > $wordLimit ) {
+				$textAsString = $this->fixSnippeting( $textAsString, true );
+			} 
+		}
+		return $textAsString;
+	}
+	
+	/**
+	 * Get the hub name, translated to content language
+	 * @return string
+	 */
+	public function getHub() {
+		return wfMessage('hub-'.$this->getText( 'hub_s' ))->text(); 
 	}
 
 	/**
@@ -173,18 +193,29 @@ class Result extends ReadWrite {
 		return $text;
 	}
 
-	/**
-	 * Returns the thumbnail html
-	 * @return string
-	 */
-	public function getThumbnailHtml() {
+	public function getThumbnailUrl() {
+		wfProfileIn( __METHOD__ );
 		if (! isset( $this['thumbnail'] ) ) {
 			try {
-				$this['thumbnail'] = $this->service->getThumbnailHtmlForPageId( $this['pageid'] );
+				$this['thumbnail'] = $this->service->getThumbnailUrl( $this['pageid'] );
 			} catch ( \Exception $e ) {
 				$this['thumbnail'] = '';
 			}
 		}
+		wfProfileOut( __METHOD__ );
+		return $this['thumbnail'];
+	}
+
+	public function getThumbnailHtml() {
+		wfProfileIn( __METHOD__ );
+		if (! isset( $this['thumbnail'] ) ) {
+			try {
+				$this['thumbnail'] = $this->service->getThumbnailHtml( $this['pageid'] );
+			} catch ( \Exception $e ) {
+				$this['thumbnail'] = '';
+			}
+		}
+		wfProfileOut( __METHOD__ );
 		return $this['thumbnail'];
 	}
 
@@ -202,13 +233,14 @@ class Result extends ReadWrite {
 
 	/**
 	 * Helper method for turning results into nested arrays for JSON encoding
-	 * @param array $keys list of fields you want in your json output
+	 * @param array $keys list of fields you want in your json output. You can use associative arrays to map from key to mapped value.
 	 * @return array
 	 */
 	public function toArray( $keys ) {
 		$array = array();
-		foreach ( $keys as $key ) {
-			$array[$key] = $this[$key];
+		foreach ( $keys as $key => $mapped  ) {
+			$key = is_int( $key ) ? $mapped : $key;
+			$array[$mapped] = $this[$key];
 		}
 		return $array;
 	}
@@ -220,7 +252,8 @@ class Result extends ReadWrite {
 	 */
 	public function offsetGet( $key ) {
 		$value = null;
-		$nolangKey = array_shift( explode( '_', $key ) );
+		$keyParts = explode( '_', $key );
+		$nolangKey = reset( $keyParts );
 		switch ( $nolangKey ) {
 		    case 'title':
 		    	$value = $this->getTitle(); break;
@@ -230,6 +263,10 @@ class Result extends ReadWrite {
 		    	$value = $this->getVideoViews(); break;
 		    default:
 		    	$value = parent::offsetGet( Utilities::field( $nolangKey ) );
+		    	// e.g. infoboxes_txt
+		    	if ( empty( $value ) ) {
+		    		$value = parent::offsetGet( $key );
+		    	}
 		}
 		return $value;
 	}

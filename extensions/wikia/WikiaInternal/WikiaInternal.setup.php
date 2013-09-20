@@ -8,26 +8,21 @@ EOT;
 	exit( 1 );
 }
 
-$app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 /**
  * classes
  */
-$app->registerClass('WikiaInternalHooks', $dir . 'WikiaInternalHooks.class.php');
+$wgAutoloadClasses['WikiaInternalHooks'] =  $dir . 'WikiaInternalHooks.class.php';
 
 /**
  * hooks
  */
-$app->registerHook('AfterCheckInitialQueries', 'WikiaInternalHooks', 'onAfterCheckInitialQueries');
+$wgHooks['AfterCheckInitialQueries'][] = 'WikiaInternalHooks::onAfterCheckInitialQueries';
 
 /**
 * message files
 */
-$app->registerExtensionMessageFile('WikiaInternal', $dir . 'WikiaInternal.i18n.php');
+$wgExtensionMessagesFiles['WikiaInternal'] = $dir . 'WikiaInternal.i18n.php';
 
 
-/**
- * Factory config
- */
-F::addClassConstructor( 'WikiaInternalHooks', array( 'app' => $app ) );

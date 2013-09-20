@@ -2,5 +2,5 @@
 
 require( "../../../maintenance/commandLine.inc" );
 
-$helper = F::build( 'ImageReviewHelper' );
+$helper = (new ImageReviewHelper);
 $helper->resetAbandonedWork();

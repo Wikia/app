@@ -5,7 +5,7 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleE
 	public function getFormFields() {
 		return array(
 			'header' => array(
-				'label' => $this->wf->msg('marketing-toolbox-hub-module-popular-videos-header'),
+				'label' => wfMsg('marketing-toolbox-hub-module-popular-videos-header'),
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,

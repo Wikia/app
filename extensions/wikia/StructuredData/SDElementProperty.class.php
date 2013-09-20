@@ -22,7 +22,7 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 			$this->type = $type;
 		}
 		else {
-			$this->type = F::build( 'SDElementPropertyType' );
+			$this->type = (new SDElementPropertyType);
 		}
 	}
 
@@ -142,12 +142,12 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 	public function getWrappedValue() {
 		if ( is_null( $this->_value ) ) {
 			if ( !$this->isCollection()) {
-				$this->_value = F::build( 'SDElementPropertyValue', array( 'type' => $this->getType(), 'value' => $this->value, 'propertyName' => $this->getName() ) );
+				$this->_value = new SDElementPropertyValue( $this->getType(), $this->value, $this->getName() );
 
 			} else {
 				$this->_value = array();
 				foreach($this->getCurrentValue() as $value) {
-					$this->_value[] = F::build( 'SDElementPropertyValue', array( 'type' => $this->getType(), 'value' => $value, 'propertyName' => $this->getName() ) );
+					$this->_value[] = new SDElementPropertyValue( $this->getType(), $value, $this->getName() );
 				}
 			}
 		}
@@ -183,7 +183,7 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 		$type = $subject->getContext()->getType( $this->name );
 		$guessType = true;
 		if($type) {
-			$this->type = F::build( 'SDElementPropertyType', array( 'name' => $type['name'], 'range' => $type['range'] ) );
+			$this->type = new SDElementPropertyType( $type['name'], $type['range'] );
 			$guessType = false;
 		}
 
@@ -199,7 +199,7 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 						$this->getType()->setName( $propertyDescription->range[0]->id );
 					}
 				}
-				$this->getType()->setRange( F::build( 'SDElementPropertyTypeRange', array( 'data' => $propertyDescription->range ) ) );
+				$this->getType()->setRange( new SDElementPropertyTypeRange( $propertyDescription->range ) );
 			} else {
 
 				if ( $guessType && ( !in_array( $this->getName(), array( 'schema:relatedTo', 'callofduty:team', 'wikia:characterIn') ) ) )  {

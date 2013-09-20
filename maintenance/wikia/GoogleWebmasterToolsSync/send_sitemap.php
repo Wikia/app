@@ -3,18 +3,18 @@
 
 $optionsWithArgs = array( 'i' );
 
-require_once( __DIR__."/configure_log_file.php" );
+require_once( __DIR__."/common.php" );
 GWTLogHelper::notice( __FILE__ . " script starts.");
 
 try {
 	if( !isset($options['i']) ) {
 		GWTLogHelper::error( "Specify wiki id (-i)" );
-		die(1);
+		die();
 	}
 
 	$service = new GWTService();
 	GWTLogHelper::notice("wiki_id: " . $options["i"] );
-	$wiki = $service->getWikiRepository()->oneByWikiId( $options['i'] );
+	$wiki = $service->getWikiRepository()->getById( $options['i'] );
 	if( !$wiki ) {
 		GWTLogHelper::error( "No wiki for " . $options['i'] . "\n" );
 		die(1);

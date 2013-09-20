@@ -4,14 +4,15 @@
  * Item parameter manipulation base class. This is for manipulations
  * that apply to individual values, which can either be the whole value
  * of a non-list parameter, or a single item of a list parameter.
- * 
+ *
+ * @deprecated since 0.5, removal in 0.7
  * @since 0.4
  * 
  * @file ItemParameterManipulation.php
  * @ingroup Validator
  * @ingroup ParameterManipulations
  * 
- * @licence GNU GPL v3 or later
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 abstract class ItemParameterManipulation extends ParameterManipulation {
@@ -20,14 +21,14 @@ abstract class ItemParameterManipulation extends ParameterManipulation {
 	 * Manipulate an actual value.
 	 * 
 	 * @param string $value
-	 * @param Parameter $parameter
+	 * @param Param $parameter
 	 * @param array $parameters
 	 * 
 	 * @since 0.4
 	 * 
 	 * @return mixed
 	 */	
-	protected abstract function doManipulation( &$value, Parameter $parameter, array &$parameters );	
+	protected abstract function doManipulation( &$value, Parameter $parameter, array &$parameters );
 	
 	/**
 	 * Constructor.
@@ -61,7 +62,8 @@ abstract class ItemParameterManipulation extends ParameterManipulation {
 			}
 		}
 		else {
-			$this->doManipulation( $parameter->getValue(), $parameter, $parameters );
+			$value = &$parameter->getValue();
+			$this->doManipulation( $value, $parameter, $parameters );
 		}	
 	}
 	

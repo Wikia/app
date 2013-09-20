@@ -8,7 +8,6 @@ class ShareButtonsTest extends WikiaBaseTest {
 		parent::setUp();
 
 		$this->mockGlobalVariable('wgTitle', Title::newMainPage());
-		$this->mockApp();
 	}
 
 	public function testFactoryWithDefaults() {
@@ -84,7 +83,7 @@ class ShareButtonsTest extends WikiaBaseTest {
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
 		
-		$titleUrlString = '/wiki/ParŽnt_Page?/This_is_a_tŽst!';
+		$titleUrlString = "/wiki/Par\x8ent_Page?/This_is_a_t\x8est!";
 		
 		$mockTitle
 		    ->expects    ( $this->any() )
@@ -99,7 +98,6 @@ class ShareButtonsTest extends WikiaBaseTest {
 		
 		$this->mockGlobalVariable('wgServer', 'http://foo.wikia.com' );
 	    $this->mockGlobalVariable('wgTitle', $mockTitle);
-	    $this->mockApp();
 	    $twitter = ShareButton::factory( 'Twitter' );
 	    
         $getUrl = new ReflectionMethod( 'ShareButton', 'getUrl' );

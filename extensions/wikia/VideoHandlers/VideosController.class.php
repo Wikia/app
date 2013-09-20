@@ -8,24 +8,24 @@ class VideosController extends WikiaController {
 	 * @responseParam string html
 	 * @responseParam string error - error message
 	 */
-	public function addVideo() {
+	public function addVideo( ) {
 		if ( !$this->wg->User->isLoggedIn() ) {
-			$this->error = $this->wf->Msg( 'videos-error-not-logged-in' );
+			$this->error = wfMsg( 'videos-error-not-logged-in' );
 			return;
 		}
 
 		$url = urldecode( $this->getVal( 'url', '' ) );
 		if ( empty( $url ) ) {
-			$this->error = $this->wf->Msg( 'videos-error-no-video-url' );
+			$this->error = wfMsg( 'videos-error-no-video-url' );
 			return;
 		}
 
 		if ( $this->wg->User->isBlocked() ) {
-			$this->error = $this->wf->Msg( 'videos-error-blocked-user' );
+			$this->error = wfMsg( 'videos-error-blocked-user' );
 			return;
 		}
 
-		$videoService = F::build( 'VideoService' );
+		$videoService = new VideoService();
 		$retval = $videoService->addVideo( $url );
 
 		if ( !is_array($retval) ) {

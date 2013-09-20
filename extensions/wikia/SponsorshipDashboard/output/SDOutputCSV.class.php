@@ -18,7 +18,8 @@ class SponsorshipDashboardOutputCSV extends SponsorshipDashboardOutputTable {
 
 	static function newFromReport( $oReport ){
 		// get_class here will return self::$__CLASS__
-		$obj = F::build( get_class() );
+		$class = get_class();
+		$obj = new $class; /* @var $obj SponsorshipDashboardOutputCSV */
 		$obj->set( $oReport );
 		return $obj;
 	}
@@ -59,7 +60,7 @@ class SponsorshipDashboardOutputCSV extends SponsorshipDashboardOutputTable {
 		$this->sourceData = array_reverse( $aData );
 		$this->sourceLabels = array_reverse( $aLabel );
 
-		$oTmpl = F::build( 'EasyTemplate', array( ( dirname( __FILE__ )."/templates/" ) ) ); /** @var $oTmpl EasyTemplate */
+		$oTmpl = new EasyTemplate( dirname( __FILE__ )."/templates/" );
 		$oTmpl->set_vars(
 			array(
 				'data'			=> $this->sourceData,

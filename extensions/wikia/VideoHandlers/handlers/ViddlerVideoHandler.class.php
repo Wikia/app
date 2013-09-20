@@ -25,13 +25,14 @@ EOT;
 EOT;
 		}
 		$html .= <<<EOT
-	<param name="movie" value="$url" />
+	<param name="movie" value="{$url}" />
 	<param name="allowScriptAccess" value="always" />
 	<param name="allowFullScreen" value="true" />
 	<embed src="$url" $sizeString type="application/x-shockwave-flash" allowScriptAccess="always"{$flashVars} allowFullScreen="true" name="viddler_$embedVideoId"></embed>
 </object>
 EOT;
-		return $html;
+
+		return array( 'html' => $html );
 	}
 
 }

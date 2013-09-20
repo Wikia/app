@@ -99,8 +99,9 @@ HoverMenu.prototype.handleShowNav = function(event) {
 	if ($(event.relatedTarget).closest(this.selector).length == 0) {
 
 		//Delay before showing subnav.
+		var currentTarget = event.currentTarget;
 		this.mouseoverTimer = setTimeout($.proxy(function() {
-			this.showNav(event.currentTarget);
+			this.showNav(currentTarget);
 		}, this), this.settings.mouseoverDelay);
 
 		this.mouseoverTimerRunning = true;
@@ -150,12 +151,14 @@ HoverMenu.prototype.mouseout = function(event) {
 };
 
 HoverMenu.prototype.showNav = function(parent) {
-	var nav = $(parent).children('ul');
+	var event,
+	nav = $(parent).children('ul');
 	window.HoverMenuGlobal.hideAll();
 	this.mouseoverTimerRunning = false;
 
 	if (nav.exists()) {
 		nav.addClass("show");
+		nav.trigger('hovermenu-shown');
 
 		// spotlights displaying
 		if (this.selector == '#GlobalNavigation') {
@@ -172,7 +175,13 @@ HoverMenu.prototype.showNav = function(parent) {
 };
 
 HoverMenu.prototype.hideNav = function() {
-	this.menu.find(".subnav").removeClass("show");
+	var event,
+		nav = this.menu.find(".subnav");
+	nav.removeClass("show");
+
+	if (nav.exists()) {
+		nav.trigger('hovermenu-hidden');
+	}
 };
 
 /**

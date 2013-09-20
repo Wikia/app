@@ -3,7 +3,6 @@
  * @var WikiaApp
  */
 
-$app = F::app();
 $dir = dirname( __FILE__ );
 if ( empty( $wgWikiaVideoRepoCategoryPath ) ){
 	$wgWikiaVideoRepoCategoryPath = '';
@@ -12,47 +11,46 @@ if ( empty( $wgWikiaVideoRepoCategoryPath ) ){
 /**
  * classes
  */
-$app->registerClass('RelatedVideosHookHandler', $dir . '/RelatedVideos.hooks.php');
-$app->registerClass('RelatedVideosElement', $dir . '/models/RelatedVideos.model.php');
-$app->registerClass('RelatedVideosData', $dir . '/RelatedVideosData.class.php');
-$app->registerClass('RelatedVideosService', $dir. '/RelatedVideosService.class.php');
-$app->registerClass('RelatedVideosNamespaceData', $dir . '/RelatedVideosNamespaceData.class.php');
-$app->registerClass('RelatedVideosEmbededData', $dir . '/RelatedVideosEmbededData.class.php');
-$app->registerClass('RelatedVideosRailController', $dir . '/RelatedVideosRailController.class.php');
+$wgAutoloadClasses['RelatedVideosHookHandler'] =  $dir . '/RelatedVideos.hooks.php';
+$wgAutoloadClasses['RelatedVideosElement'] =  $dir . '/models/RelatedVideos.model.php';
+$wgAutoloadClasses['RelatedVideosData'] =  $dir . '/RelatedVideosData.class.php';
+$wgAutoloadClasses['RelatedVideosService'] =  $dir. '/RelatedVideosService.class.php';
+$wgAutoloadClasses['RelatedVideosNamespaceData'] =  $dir . '/RelatedVideosNamespaceData.class.php';
+$wgAutoloadClasses['RelatedVideosEmbededData'] =  $dir . '/RelatedVideosEmbededData.class.php';
+$wgAutoloadClasses['RelatedVideosRailController'] =  $dir . '/RelatedVideosRailController.class.php';
 
 /**
  * controllers
  */
-$app->registerClass('RelatedVideosController', $dir . '/RelatedVideosController.class.php');
-$app->registerClass('RelatedHubsVideosController', $dir . '/RelatedHubsVideosController.class.php');
+$wgAutoloadClasses['RelatedVideosController'] =  $dir . '/RelatedVideosController.class.php';
+$wgAutoloadClasses['RelatedHubsVideosController'] =  $dir . '/RelatedHubsVideosController.class.php';
 
 /**
  * hooks
  */
-$app->registerHook('BeforePageDisplay', 'RelatedVideosHookHandler', 'onBeforePageDisplay' );
+$wgHooks['BeforePageDisplay'][] = 'RelatedVideosHookHandler::onBeforePageDisplay';
 
 define('RELATEDVIDEOS_POSITION', 'RELATEDVIDEOS_POSITION');
-$app->registerHook('LanguageGetMagic', 'RelatedVideosHookHandler', 'onLanguageGetMagic' );
-$app->registerHook('InternalParseBeforeLinks', 'RelatedVideosHookHandler', 'onInternalParseBeforeLinks' );
+$wgHooks['LanguageGetMagic'][] = 'RelatedVideosHookHandler::onLanguageGetMagic';
+$wgHooks['InternalParseBeforeLinks'][] = 'RelatedVideosHookHandler::onInternalParseBeforeLinks';
 
 if( !empty( $wgRelatedVideosOnRail ) ) {
-	$app->registerHook('GetRailModuleList', 'RelatedVideosHookHandler', 'onGetRailModuleList');
+	$wgHooks['GetRailModuleList'][] = 'RelatedVideosHookHandler::onGetRailModuleList';
 } else {
 	array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'RelatedVideosHookHandler::onOutputPageBeforeHTML' );
 }
 
-$app->registerHook('ArticleSaveComplete', 'RelatedVideosHookHandler', 'onArticleSaveComplete');
-$app->registerHook( 'FileDeleteComplete', 'RelatedVideosHookHandler', 'onFileDeleteComplete' );
-$app->registerHook( 'FileUndeleteComplete', 'RelatedVideosHookHandler', 'onFileUndeleteComplete' );
-$app->registerHook( 'SpecialMovepageAfterMove', 'RelatedVideosHookHandler', 'onFileRenameComplete' );
-$app->registerHook( 'ArticleDeleteComplete', 'RelatedVideosHookHandler', 'onArticleDeleteComplete' );
-$app->registerHook( 'UndeleteComplete', 'RelatedVideosHookHandler', 'onUndeleteComplete' );
+$wgHooks['ArticleSaveComplete'][] = 'RelatedVideosHookHandler::onArticleSaveComplete';
+$wgHooks['FileDeleteComplete'][] = 'RelatedVideosHookHandler::onFileDeleteComplete';
+$wgHooks['FileUndeleteComplete'][] = 'RelatedVideosHookHandler::onFileUndeleteComplete';
+$wgHooks['SpecialMovepageAfterMove'][] = 'RelatedVideosHookHandler::onFileRenameComplete';
+$wgHooks['ArticleDeleteComplete'][] = 'RelatedVideosHookHandler::onArticleDeleteComplete';
+$wgHooks['UndeleteComplete'][] = 'RelatedVideosHookHandler::onUndeleteComplete';
 
 /**
  * messages
  */
-$app->registerExtensionMessageFile( 'RelatedVideos', $dir . '/RelatedVideos.i18n.php' );
-F::addClassConstructor( 'RelatedVideosController', array( 'app' => $app ) );
+$wgExtensionMessagesFiles['RelatedVideos'] = $dir . '/RelatedVideos.i18n.php' ;
 
 /**
  * extension related configuration

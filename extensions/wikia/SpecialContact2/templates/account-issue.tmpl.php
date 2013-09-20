@@ -26,7 +26,7 @@ echo wfMsgExt( 'specialcontact-intro-account-issue', array( 'parse' ) );
 </p>
 
 <p>
-<label for="wpDescription"><?= wfmsg( 'specialcontact-label-account-issue-description' ) ?></label>
+<label for="wpDescription"><?= wfMsg( 'specialcontact-label-account-issue-description' ) ?></label>
 <textarea name="wpDescription"></textarea>
 </p>
 

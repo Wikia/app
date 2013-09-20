@@ -14,6 +14,9 @@ class WikiaLocalFileShared  {
 	var $embedCodeMaxHeight = false;
 	var $metadata = null;
 
+	/**
+	 * @param $oWikiaLocalFile WikiaLocalFile
+	 */
 	function __construct( $oWikiaLocalFile ){
 		$this->oFile = $oWikiaLocalFile;
 	}
@@ -57,8 +60,9 @@ class WikiaLocalFileShared  {
 			}
 			$handler->setThumbnailImage( $this->oFile->transform( array( 'width' => $width ) ) );
 			$this->trackingArticleId = false;
-			$embed = $handler->getEmbed( $this->trackingArticleId, $width, $autoplay, $isAjax, $postOnload );
-			$res = $embed;
+			$res = $handler->getEmbed( $this->trackingArticleId, $width, $autoplay, $isAjax, $postOnload );
+			$res['title'] = $this->oFile->getTitle()->getDBKey();
+			$res['provider'] = $this->getProviderName();
 		} else {
 			$this->trackingArticleId = false;
 			$res = false;
@@ -197,6 +201,7 @@ class WikiaLocalFileShared  {
 			// We must create the proper video handler ourselves.
 			$type = $this->oFile->getMimeType();
 			$class = $wgMediaHandlers[$type];
+			/* @var $handler VideoHandler */
 			$handler = new $class();
 			$handler->setVideoId( $this->oFile->videoId );
 

@@ -184,13 +184,16 @@ $messages['en'] = array(
 	'scavengerhunt-facebook-description' => 'Facebook sharing text',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'scavengerhunt-desc' => '{{desc}}',
+	'scavengerhunt-list-enabled' => '{{Identical|Enabled}}',
+	'scavengerhunt-list-disabled' => '{{Identical|Disabled}}',
 	'scavengerhunt-label-general' => '{{Identical|General}}',
 	'scavengerhunt-button-delete' => '{{Identical|Delete}}',
+	'scavengerhunt-label-clue-size' => '{{Identical|Font size}}',
 	'scavengerhunt-editor-tip-entry-form-email' => '{{doc-singularthey}}',
 	'scavengerhunt-editor-tip-entry-form-username' => '{{doc-singularthey}}',
 );
@@ -210,14 +213,82 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Meno25
  * @author OsamaK
  */
 $messages['ar'] = array(
+	'scavengerhunt-desc' => 'يسمح بإنشاء لعبة مطاردة كنوز في الويكي',
+	'scavengerhunt' => 'منشئ صيد الكنوز',
+	'scavengerhunt-common-modal-title' => 'صيد الكنوز',
+	'scavengerhunt-list-header-name' => 'اسم اللعبة',
+	'scavengerhunt-list-header-is-enabled' => 'مشغلة؟ (انقر لكي تشغل)',
+	'scavengerhunt-list-header-actions' => 'الإجراءات',
+	'scavengerhunt-list-enabled' => 'مشغلة',
+	'scavengerhunt-list-disabled' => 'معطلة',
 	'scavengerhunt-list-edit' => 'تعديل',
+	'scavengerhunt-label-dialog-check' => '(إظهار المحرر المرئي - مازال في طور الإنشاء، لا يعمل حتى الآن)',
+	'scavengerhunt-label-image-check' => '(إظهار الصورة)',
+	'scavengerhunt-label-general' => 'عام',
 	'scavengerhunt-label-name' => 'الاسم:',
+	'scavengerhunt-label-landing-title' => 'اسم الصفحة المقصودة (عنوان المقالة على أي ويكي):',
+	'scavengerhunt-label-landing-button-text' => 'نص زر الصفحة المقصودة:',
+	'scavengerhunt-label-landing-button-x' => 'زر موقع X في الصفحة المقصودة:',
+	'scavengerhunt-label-landing-button-y' => 'زر موقع Y قي الصفحة المقصودة:',
+	'scavengerhunt-label-starting-clue' => 'انبثاق فكرة الانطلاق',
+	'scavengerhunt-label-starting-clue-title' => 'عنوان الانبثاق:',
+	'scavengerhunt-label-starting-clue-text' => 'نص الانبثاق:',
+	'scavengerhunt-label-starting-clue-image' => 'الصورة المنبثقة (عنوان URL):',
+	'scavengerhunt-label-starting-clue-button-text' => 'نص زر الانبثاق:',
+	'scavengerhunt-label-starting-clue-button-target' => 'هدف زر الانبثاق (عنوان URL):',
+	'scavengerhunt-label-article' => 'المقالة (صفحة داخل اللعبة)',
+	'scavengerhunt-label-article-title' => 'عنوان الصفحة (URL المقالة في أي ويكي):',
+	'scavengerhunt-label-article-hidden-image' => 'الصورة المخفية:',
+	'scavengerhunt-label-article-clue-title' => 'إشارة العنوان المنبثق:',
+	'scavengerhunt-label-article-clue-text' => 'إشارة النص المنبثق:',
+	'scavengerhunt-label-article-clue-image' => 'أشارة الصورة المنبثقة (عنوان URL):',
+	'scavengerhunt-label-article-clue-button-text' => 'زر إشارة النص المنبثق:',
+	'scavengerhunt-label-article-clue-button-target' => 'هدف زر الإشارة المنبثقة (عنوان URL):',
+	'scavengerhunt-label-entry-form' => 'نموذج الإدخال',
+	'scavengerhunt-label-entry-form-title' => 'عنوان الانبثاق:',
+	'scavengerhunt-label-entry-form-text' => 'نص الانبثاق:',
+	'scavengerhunt-label-entry-form-image' => 'الصورة المنبثقة (عنوان URL):',
+	'scavengerhunt-label-entry-form-question' => 'سؤال منبثق:',
+	'scavengerhunt-label-entry-form-button-text' => 'نص الزر:',
+	'scavengerhunt-label-goodbye' => 'إنبثاق الوداع',
+	'scavengerhunt-label-goodbye-title' => 'عنوان الانبثاق:',
+	'scavengerhunt-label-goodbye-text' => 'الرسالة المنبثقة:',
+	'scavengerhunt-label-goodbye-image' => 'الصورة المنبثقة (عنوان URL):',
+	'scavengerhunt-button-add' => 'إضافة لعبة',
+	'scavengerhunt-button-save' => 'حفظ',
+	'scavengerhunt-button-disable' => 'تعطيل',
+	'scavengerhunt-button-enable' => 'تشغيل',
+	'scavengerhunt-button-delete' => 'حذف',
+	'scavengerhunt-button-export' => 'التصدير إلى CSV',
+	'scavengerhunt-button-add-section' => 'إضافة خطوة أخرى في الصيد',
+	'scavengerhunt-button-remove-section' => 'إزالة هذه الخطوة',
+	'scavengerhunt-form-error' => 'الرجاء تصحيح الأخطاء التالية:',
+	'scavengerhunt-form-error-no-sprite-image' => 'يرجى إعطاء المسار الكامل لملف الصورة',
 	'scavengerhunt-entry-form-name' => 'اسمك:',
 	'scavengerhunt-entry-form-email' => 'عنوان بريدك الإلكتروني:',
+	'scavengerhunt-label-sprite-X' => 'موضع العنصر',
+	'scavengerhunt-game-has-been-deleted' => 'تم حذف لعبة الصيد',
+	'scavengerhunt-game-more-to-go' => 'مازال فقط #',
+	'scavengerhunt-label-progress-bar' => 'شريط التقدم',
+	'scavengerhunt-quit-game-content' => 'هل أنت متأكد حقاً بأنك تريد إنهاء "صيد الكنوز"؟',
+	'scavengerhunt-switch-game-content' => 'هل تريد إنهاء مسابقة "صيد الكنوز" الحالية وبدء واحدة جديدة؟',
+	'scavengerhunt-quit-game-button-quit' => 'خروج',
+	'scavengerhunt-quit-game-button-cancel' => 'إلغاء',
+	'scavengerhunt-quit-game-button-stay' => 'الاستمرار في اللعب',
+	'scavengerhunt-label-entry-form-email' => 'البريد الإلكتروني للمستخدم',
+	'scavengerhunt-label-entry-form-username' => 'اسم المستخدم',
+	'scavengerhunt-label-clue-color' => 'لون الخط',
+	'scavengerhunt-label-clue-size' => 'حجم الخط',
+	'scavengerhunt-label-clue-font' => 'زخارف الخط',
+	'scavengerhunt-label-article-congrats' => 'رسالة التهنئة',
+	'scavengerhunt-label-facebook' => 'مشاركة في الفيسبوك',
+	'scavengerhunt-facebook-image' => 'صورة المشاركة في الفيسبوك',
+	'scavengerhunt-facebook-description' => 'نص المشاركة في الفيسبوك',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -262,25 +333,45 @@ $messages['br'] = array(
 	'scavengerhunt-list-enabled' => 'Gweredekaet',
 	'scavengerhunt-list-disabled' => 'Diweredekaet',
 	'scavengerhunt-list-edit' => 'kemmañ',
+	'scavengerhunt-label-image-check' => '(diskouez ar skeudenn)',
 	'scavengerhunt-label-general' => 'Hollek',
 	'scavengerhunt-label-name' => 'Anv :',
 	'scavengerhunt-label-article-title' => 'Titl ar bajenn (URL ar pennad e forzh peseurt wiki) :',
 	'scavengerhunt-label-article-hidden-image' => 'Skeudenn kuzhet :',
+	'scavengerhunt-label-entry-form-button-text' => 'Testenn ar bouton :',
 	'scavengerhunt-button-add' => "Ouzhpennañ ur c'hoari",
 	'scavengerhunt-button-save' => 'Enrollañ',
 	'scavengerhunt-button-disable' => 'Diweredekaat',
 	'scavengerhunt-button-enable' => 'Gweredekaat',
 	'scavengerhunt-button-delete' => 'Dilemel',
+	'scavengerhunt-button-export' => 'Ezporzhiañ da CVS',
+	'scavengerhunt-form-error' => 'Reizhit ar fazioù-mañ, mar plij :',
+	'scavengerhunt-form-error-article-hidden-image' => "Ebarzhit an holl chomlec'hioù evit ar skeudennoù kuzhet, mar plij.",
+	'scavengerhunt-form-error-invalid-url' => 'Pourchasit un URL gwiriek, mar plij.',
 	'scavengerhunt-entry-form-name' => "Hoc'h anv :",
 	'scavengerhunt-entry-form-email' => "Ho chomlec'h postel :",
+	'scavengerhunt-label-sprite-X' => "Lec'hiadur an elfenn",
+	'scavengerhunt-game-more-to-go' => "# hepken d'ober.",
 	'scavengerhunt-label-progress-bar' => 'Barrenn mont war-raok',
 	'scavengerhunt-quit-game-button-quit' => 'Kuitaat',
 	'scavengerhunt-quit-game-button-cancel' => 'Nullañ',
+	'scavengerhunt-quit-game-button-stay' => "Kenderc'hel da c'hoari",
 	'scavengerhunt-label-entry-form-email' => 'Postel an implijer',
 	'scavengerhunt-label-entry-form-username' => 'Anv implijer',
 	'scavengerhunt-label-clue-color' => 'Liv ar font',
 	'scavengerhunt-label-clue-size' => 'Ment ar font',
+	'scavengerhunt-label-clue-font' => 'Kinkladurioù ar font',
 	'scavengerhunt-label-article-congrats' => "Kemennadenn gourc'hemennoù",
+	'scavengerhunt-label-facebook' => 'Rannañ Facebook',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'scavengerhunt-form-error-no-landing-title' => 'Дехар до, дӀаязъе (URL-адрес) агӀона цӀе.',
+	'scavengerhunt-label-progressBarHintLabel' => 'Координаташ хьехар',
+	'scavengerhunt-label-entry-form-username' => 'Декъашхочун цӀе',
 );
 
 /** Czech (česky)
@@ -1164,6 +1255,17 @@ $messages['ia'] = array(
 	'scavengerhunt-facebook-description' => 'Texto de Facebook pro divider',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'scavengerhunt-game-more-to-go' => 'Hanya # lebih banyak untuk pergi.',
+	'scavengerhunt-label-entry-form-username' => 'Nama Pengguna',
+	'scavengerhunt-label-clue-color' => 'Warna font',
+	'scavengerhunt-editor-tip-landing-button-text' => 'Ini adalah label teks pada tombol \'mulai\' (misalnya, "Klik di sini untuk mulai berburu!")',
+	'scavengerhunt-editor-tip-starting-clue-button-target' => 'Ini adalah alamat dari halaman dengan item pertama.',
+);
+
 /** Italian (italiano)
  * @author Lexaeus 94
  */
@@ -1211,19 +1313,25 @@ $messages['ku-latn'] = array(
 $messages['lb'] = array(
 	'scavengerhunt-list-header-name' => 'Numm vum Spill',
 	'scavengerhunt-list-header-actions' => 'Aktiounen',
+	'scavengerhunt-list-enabled' => 'Aktivéiert',
+	'scavengerhunt-list-disabled' => 'Desaktivéiert',
 	'scavengerhunt-list-edit' => 'änneren',
 	'scavengerhunt-label-dialog-check' => '(visuellen Editeur weisen - pre-alpha, fonctionnéiert nach net)',
 	'scavengerhunt-label-image-check' => '(Bild weisen)',
+	'scavengerhunt-label-general' => 'Allgemeng',
 	'scavengerhunt-label-name' => 'Numm:',
 	'scavengerhunt-label-article-hidden-image' => 'Verstopptent Bild:',
 	'scavengerhunt-button-add' => 'E Spill derbäisetzen',
 	'scavengerhunt-button-save' => 'Späicheren',
 	'scavengerhunt-button-disable' => 'Ausschalten',
+	'scavengerhunt-button-enable' => 'Aschalten',
 	'scavengerhunt-button-delete' => 'Läschen',
 	'scavengerhunt-button-export' => 'Als CSV exportéieren',
+	'scavengerhunt-button-remove-section' => 'Dëse Schrëtt ewechhuelen',
 	'scavengerhunt-form-error' => 'Verbessert w.e.g. dës Feeler:',
 	'scavengerhunt-entry-form-name' => 'Ären Numm:',
 	'scavengerhunt-entry-form-email' => 'Är Mailadress:',
+	'scavengerhunt-quit-game-button-quit' => 'Erausgoen',
 	'scavengerhunt-quit-game-button-cancel' => 'Ofbriechen',
 	'scavengerhunt-label-entry-form-username' => 'Benotzernumm',
 );
@@ -1312,7 +1420,7 @@ $messages['mk'] = array(
 	'scavengerhunt-game-has-been-enabled' => 'Одбраната „Потрага“ е овозможена.',
 	'scavengerhunt-game-has-been-disabled' => 'Одбраната „Потрага“ е оневозможена.',
 	'scavengerhunt-game-has-not-been-saved' => 'Оваа „Потрага“ не е зачувана.',
-	'scavengerhunt-edit-token-mismatch' => 'Несовпаѓање во жетонот на уредувањето - обидете се повторно',
+	'scavengerhunt-edit-token-mismatch' => 'Несовпаѓање во шифрата на уредувањето — обидете се повторно',
 	'scavengerhunt-entry-form-name' => 'Вашето име:',
 	'scavengerhunt-entry-form-email' => 'Ваша е-пошта:',
 	'scavengerhunt-entry-form-submit' => 'Поднеси',
@@ -1765,8 +1873,8 @@ $messages['nl'] = array(
 	'scavengerhunt-form-error-clueColor' => 'Geef een geldige kleur op in de notatie #XXX',
 	'scavengerhunt-game-has-been-created' => 'Er is een nieuwe speurtocht aangemaakt.',
 	'scavengerhunt-game-has-been-saved' => 'De speurtocht is opgeslagen.',
-	'scavengerhunt-game-has-been-enabled' => 'De aangegeven speurtocht is ingeschakeld.',
-	'scavengerhunt-game-has-been-disabled' => 'De aangegeven speurtocht is uitgeschakeld.',
+	'scavengerhunt-game-has-been-enabled' => 'De opgegeven speurtocht is ingeschakeld.',
+	'scavengerhunt-game-has-been-disabled' => 'De opgegeven speurtocht is uitgeschakeld.',
 	'scavengerhunt-game-has-not-been-saved' => 'De speurtocht is niet opgeslagen.',
 	'scavengerhunt-edit-token-mismatch' => 'Er is een probleem opgetreden met uw bewerkingstoken. Probeer het opnieuw.',
 	'scavengerhunt-entry-form-name' => 'Uw naam:',
@@ -1814,7 +1922,7 @@ $messages['nl'] = array(
 	'scavengerhunt-editor-tip-starting-clue-button-target' => 'Dit is het adres van de pagina met het eerste item.',
 	'scavengerhunt-editor-tip-startPopupSprite' => 'Als in het dialoogvenster voor de beginaanwijzing een afbeelding nodig is, geef hier dan de coördinaten op.',
 	'scavengerhunt-editor-tip-articleTitle' => 'Dit is de locatie van de pagina met het volgende item.',
-	'scavengerhunt-editor-tip-spriteNotFound' => 'In dit gedeelte wordt de afbeelding aangegeven die verschijnt als aanwijzing.',
+	'scavengerhunt-editor-tip-spriteNotFound' => 'In dit gedeelte wordt de afbeelding opgegeven die verschijnt als aanwijzing.',
 	'scavengerhunt-editor-tip-spriteInProgressBar' => 'In dit gedeelte geeft u het pictogram op dat u wilt weergeven in de voortgangsbalk zodra het item is gevonden.',
 	'scavengerhunt-editor-tip-spriteInProgressBarHover' => 'In dit gedeelte geeft u het pictogram op dat u wilt weergeven in de voortgangsbalk als de muisaanwijzer er overheen gaat.',
 	'scavengerhunt-editor-tip-spriteInProgressBarNotFound' => 'In dit gedeelte geeft u het pictogram op dat u wilt weergeven in de voortgangsbalk als een item nog niet is gevonden.',
@@ -2019,6 +2127,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
  * @author Malafaya
  * @author Rhaijin
  * @author SandroHc
@@ -2028,9 +2137,9 @@ $messages['pt'] = array(
 	'scavengerhunt' => 'Interface da Caça ao Tesouro',
 	'scavengerhunt-list-header-name' => 'Nome do jogo',
 	'scavengerhunt-list-header-is-enabled' => 'Em?',
-	'scavengerhunt-list-header-actions' => 'Acções',
-	'scavengerhunt-list-enabled' => 'Activado',
-	'scavengerhunt-list-disabled' => 'Desactivado',
+	'scavengerhunt-list-header-actions' => 'Ações',
+	'scavengerhunt-list-enabled' => 'Ativado',
+	'scavengerhunt-list-disabled' => 'Desativado',
 	'scavengerhunt-list-edit' => 'editar',
 	'scavengerhunt-label-dialog-check' => '(mostrar editor visual - pré-alfa, ainda não funciona)',
 	'scavengerhunt-label-image-check' => '(mostrar imagem)',
@@ -2063,9 +2172,9 @@ $messages['pt'] = array(
 	'scavengerhunt-label-goodbye-text' => 'Mensagem da janela:',
 	'scavengerhunt-label-goodbye-image' => 'Imagem da janela (endereço URL):',
 	'scavengerhunt-button-add' => 'Adicionar um jogo',
-	'scavengerhunt-button-save' => 'Gravar',
-	'scavengerhunt-button-disable' => 'Desactivar',
-	'scavengerhunt-button-enable' => 'Activar',
+	'scavengerhunt-button-save' => 'Salvar',
+	'scavengerhunt-button-disable' => 'Desativar',
+	'scavengerhunt-button-enable' => 'Ativar',
 	'scavengerhunt-button-delete' => 'Eliminar',
 	'scavengerhunt-button-export' => 'Exportar para CSV',
 	'scavengerhunt-form-error' => 'Corrija os seguintes erros, por favor:',
@@ -2073,9 +2182,9 @@ $messages['pt'] = array(
 	'scavengerhunt-form-error-invalid-title' => 'O título de página "$1" não foi encontrado.',
 	'scavengerhunt-form-error-landing-button-text' => 'Por favor insira o texto do botão página inicial.',
 	'scavengerhunt-form-error-landing-button-position' => 'Por favor, digite a posição de botão de página inicial.',
-	'scavengerhunt-form-error-starting-clue' => 'Preencha todos os campos da secção da pista inicial, por favor.',
-	'scavengerhunt-form-error-entry-form' => 'Preencha todos os campos da secção do formulário de entrada.',
-	'scavengerhunt-form-error-goodbye' => 'Preencha todos os campos da secção da janela de despedida, por favor.',
+	'scavengerhunt-form-error-starting-clue' => 'Preencha todos os campos da seção da pista inicial, por favor.',
+	'scavengerhunt-form-error-entry-form' => 'Preencha todos os campos da seção do formulário de entrada.',
+	'scavengerhunt-form-error-goodbye' => 'Preencha todos os campos da seção da janela de despedida, por favor.',
 	'scavengerhunt-form-error-no-article-title' => 'Introduza todos os títulos de artigos, por favor.',
 	'scavengerhunt-form-error-duplicated-article-title' => 'As etapas de caça não podem ter títulos duplicados',
 	'scavengerhunt-form-error-article-hidden-image' => 'Introduza todos os endereços das imagens ocultas, por favor.',
@@ -2086,18 +2195,23 @@ $messages['pt'] = array(
 	'scavengerhunt-form-error-finishPopupSprite-sprite-empty' => 'Adeus, dimensões de sprite de pop-up é inválido',
 	'scavengerhunt-game-has-been-created' => 'Foi criado um jogo novo de Caça ao Tesouro.',
 	'scavengerhunt-game-has-been-saved' => 'O jogo da Caça ao Tesouro foi gravado.',
-	'scavengerhunt-game-has-been-enabled' => 'O jogo seleccionado de Caça ao Tesouro foi activado.',
-	'scavengerhunt-game-has-been-disabled' => 'O jogo seleccionado de Caça ao Tesouro foi desactivado.',
+	'scavengerhunt-game-has-been-enabled' => 'O jogo selecionado de Caça ao Tesouro foi ativado.',
+	'scavengerhunt-game-has-been-disabled' => 'O jogo selecionado de Caça ao Tesouro foi desativado.',
 	'scavengerhunt-game-has-not-been-saved' => 'O jogo da Caça ao Tesouro não foi gravado.',
 	'scavengerhunt-edit-token-mismatch' => 'Foi detectada uma incompatibilidade nas etiquetas de edição - tente novamente, por favor.',
 	'scavengerhunt-entry-form-name' => 'O seu nome:',
 	'scavengerhunt-entry-form-email' => 'Correio electrónico:',
 	'scavengerhunt-entry-form-submit' => 'Enviar entrada',
+	'scavengerhunt-label-progress-bar' => 'Barra de progresso',
 	'scavengerhunt-quit-game-button-quit' => 'Sair',
 	'scavengerhunt-quit-game-button-cancel' => 'Cancelar',
+	'scavengerhunt-label-entry-form-username' => 'Nome de usuário',
+	'scavengerhunt-label-clue-color' => 'Cor da fonte',
+	'scavengerhunt-label-clue-size' => 'Tamanho da fonte',
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
@@ -2149,17 +2263,27 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'scavengerhunt-list-header-name' => "Nome d'u sciuèche",
+	'scavengerhunt-list-header-is-enabled' => 'Abbilitate? (cazze pe cangià)',
 	'scavengerhunt-list-header-actions' => 'Aziune',
 	'scavengerhunt-list-enabled' => 'Abbilitate',
 	'scavengerhunt-list-disabled' => 'Disabbilitate',
 	'scavengerhunt-list-edit' => 'cange',
+	'scavengerhunt-label-image-check' => "(fà vedè l'immaggine)",
 	'scavengerhunt-label-general' => 'Generale',
 	'scavengerhunt-label-name' => 'Nome:',
 	'scavengerhunt-label-entry-form-button-text' => "Teste d'u buttone:",
+	'scavengerhunt-button-add' => "Aggiunge 'nu sciuèche",
 	'scavengerhunt-button-save' => 'Reggìstre',
+	'scavengerhunt-button-disable' => 'Disabbilite',
+	'scavengerhunt-button-enable' => 'Abbilite',
 	'scavengerhunt-button-delete' => 'Scangìlle',
 	'scavengerhunt-button-export' => "Esporte jndr'à CSV",
+	'scavengerhunt-button-add-section' => "Aggiunge 'n'otre passe jndr'à Caccia",
+	'scavengerhunt-button-remove-section' => 'Live stu passe',
+	'scavengerhunt-form-error' => 'Pe piacere corregge le errore seguende:',
 	'scavengerhunt-entry-form-name' => "'U nome tue:",
+	'scavengerhunt-label-progress-bar' => 'Barre de progressione',
 	'scavengerhunt-quit-game-button-cancel' => 'Annulle',
 );
 
@@ -2670,34 +2794,162 @@ $messages['tly'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
+	'scavengerhunt-desc' => 'Дозволяє створити гру полювання на сміття у вікі',
+	'scavengerhunt' => 'Будівник полювання на сміття',
+	'scavengerhunt-common-modal-title' => 'Полювання на сміття',
 	'scavengerhunt-list-header-name' => 'Назва гри',
+	'scavengerhunt-list-header-is-enabled' => 'Увімкнено? (натисніть, щоб увімкнути або вимкнути)',
 	'scavengerhunt-list-header-actions' => 'Дії',
 	'scavengerhunt-list-enabled' => 'Увімкнено',
 	'scavengerhunt-list-disabled' => 'Вимкнено',
 	'scavengerhunt-list-edit' => 'редагувати',
+	'scavengerhunt-label-dialog-check' => '(показати візуальний редактор - pre-alpha, поки що не працює)',
 	'scavengerhunt-label-image-check' => '(показати зображення)',
 	'scavengerhunt-label-general' => 'Основні',
 	'scavengerhunt-label-name' => 'Назва:',
+	'scavengerhunt-label-landing-title' => 'Назва цільової сторінки (URL статті на будь-якій вікі):',
+	'scavengerhunt-label-landing-button-text' => 'Текст кнопки на цільовій сторінці:',
+	'scavengerhunt-label-landing-button-x' => 'Позиція X кнопки на цільовій сторінці:',
+	'scavengerhunt-label-landing-button-y' => 'Позиція Y кнопки на цільовій сторінці:',
+	'scavengerhunt-label-starting-clue' => 'Спливна початкова підказка',
+	'scavengerhunt-label-starting-clue-title' => 'Спливаючий заголовок:',
+	'scavengerhunt-label-starting-clue-text' => 'Спливаючий текст:',
+	'scavengerhunt-label-starting-clue-image' => 'Спливаюче зображення (URL-адреса):',
+	'scavengerhunt-label-starting-clue-button-text' => 'Спливаючий текст кнопки:',
+	'scavengerhunt-label-starting-clue-button-target' => 'Ціль спливної кнопки (URL-адресв):',
+	'scavengerhunt-label-article' => 'Стаття (ігрова сторінка)',
+	'scavengerhunt-label-article-title' => 'Заголовок сторінки (URL статті на будь-якій вікі):',
+	'scavengerhunt-label-article-hidden-image' => 'Приховане зображення:',
+	'scavengerhunt-label-article-clue-title' => 'Заголовок спливної підказки:',
+	'scavengerhunt-label-article-clue-text' => 'Текст спливної підказки:',
+	'scavengerhunt-label-article-clue-image' => 'Зображення спливної підказки (URL-адрес):',
+	'scavengerhunt-label-article-clue-button-text' => 'Текст кнопки спливної підказки:',
+	'scavengerhunt-label-article-clue-button-target' => 'Ціль кнопки спливної підказки(URL-адреса):',
+	'scavengerhunt-label-entry-form' => 'Форма вводу',
+	'scavengerhunt-label-entry-form-title' => 'Спливний заголовок:',
+	'scavengerhunt-label-entry-form-text' => 'Текст спливного вікна:',
+	'scavengerhunt-label-entry-form-image' => 'Спливне зображення (URL-адреса):',
+	'scavengerhunt-label-entry-form-question' => 'Спливаюче питання:',
+	'scavengerhunt-label-entry-form-button-text' => 'Текст кнопки:',
+	'scavengerhunt-label-goodbye' => 'Спливаюче прощання',
+	'scavengerhunt-label-goodbye-title' => 'Спливаючий заголовок:',
+	'scavengerhunt-label-goodbye-text' => 'Спливаюче повідомлення:',
+	'scavengerhunt-label-goodbye-image' => 'Спливаюче зображення (URL-адреса):',
+	'scavengerhunt-button-add' => 'Додати гру',
 	'scavengerhunt-button-save' => 'Зберегти',
 	'scavengerhunt-button-disable' => 'Вимкнути',
 	'scavengerhunt-button-enable' => 'Увімкнути',
 	'scavengerhunt-button-delete' => 'Видалити',
+	'scavengerhunt-button-export' => 'Експорт до CSV',
+	'scavengerhunt-button-add-section' => 'Додати ще один крок у полюванні',
+	'scavengerhunt-button-remove-section' => 'Вилучити цей крок',
+	'scavengerhunt-form-error' => 'Виправте такі помилки:',
+	'scavengerhunt-form-error-no-landing-title' => "Будь ласка, введіть ім'я цільової сторінки (з вірною URL-адресою).",
+	'scavengerhunt-form-error-invalid-title' => 'Наступний заголовок сторінки не знайдено: "$1".',
+	'scavengerhunt-form-error-landing-button-text' => 'Будь ласка, вкажіть текст кнопки цільової сторінки.',
+	'scavengerhunt-form-error-landing-button-position' => 'Будь ласка, вкажіть позицію кнопки цільової сторінки.',
+	'scavengerhunt-form-error-starting-clue' => 'Будь ласка, заповніть всі поля в розділі початкової підказки.',
+	'scavengerhunt-form-error-entry-form' => 'Будь ласка, заповніть всі поля в розділі форми вводу.',
+	'scavengerhunt-form-error-goodbye' => 'Будь ласка, заповніть всі поля в розділі спливне прощання.',
+	'scavengerhunt-form-error-no-article-title' => 'Будь ласка, введіть всі заголовки статей (як допустимі URL-адреси).',
+	'scavengerhunt-form-error-duplicated-article-title' => 'Кроки полювання не можуть дублювати назви',
+	'scavengerhunt-form-error-article-hidden-image' => 'Будь ласка, введіть всі адреси для прихованих зображень.',
+	'scavengerhunt-form-error-article-clue' => 'Будь ласка, заповніть всю інформацію про підказки у статті.',
+	'scavengerhunt-form-error-clue' => 'Будь ласка, заповніть всі відомості про привітання у статті.',
+	'scavengerhunt-form-error-progressBarHintLabel-sprite-empty' => 'Будь ласка, виберіть відповідні розміри для етикетки підказки.',
+	'scavengerhunt-form-error-startPopupSprite-sprite-empty' => 'Розміри етикетки початкового спливного повідомлення невірні',
+	'scavengerhunt-form-error-finishPopupSprite-sprite-empty' => 'Розміри етикетки прощального спливного повідомлення невірні',
+	'scavengerhunt-form-error-progressBarBackgroundSprite-sprite-empty' => 'Розміри етикетки смуги поступу невірні',
+	'scavengerhunt-form-error-progressBarExitSprite-sprite-empty' => 'Розміри етикетки кнопки виходу у смузі поступу невірні',
+	'scavengerhunt-form-error-article-spriteNotFound-sprite-empty' => 'Будь ласка, виберіть правильні розміри для етикетки елементів Полювання на сміття',
+	'scavengerhunt-form-error-article-spriteInProgressBar-sprite-empty' => 'Будь ласка, виберіть відповідні розміри для етикетки рядки поступу Полювання на сміття',
+	'scavengerhunt-form-error-article-spriteInProgressBarHover-sprite-empty' => 'Будь ласка, виберіть належні розміри для спливних елементів смуги поступу Полювання на сміття.',
+	'scavengerhunt-form-error-no-sprite-image' => 'Будь ласка, дайте повний шлях до файлу зображення',
+	'scavengerhunt-form-error-article-spriteInProgressBarNotFound-sprite-empty' => 'Будь ласка, виберіть належні розміри для смуги поступу Полювання на сміття.',
+	'scavengerhunt-form-error-no-articles' => 'Полювання повинна мати принаймні один ключ до розгадки/статтю.',
+	'scavengerhunt-form-error-invalid-url' => 'Укажіть вірну URL-адресу.',
+	'scavengerhunt-form-error-clueColor' => 'Будь ласка, вкажіть колір в #XXX нотації',
+	'scavengerhunt-game-has-been-created' => 'Створено нову гру полювання на сміття.',
+	'scavengerhunt-game-has-been-saved' => 'Збережено гру полювання на сміття.',
+	'scavengerhunt-game-has-been-enabled' => 'Вибрана гра Полювання на сміття була активована.',
+	'scavengerhunt-game-has-been-disabled' => 'Вибрана гра Полювання на сміття була відключена.',
+	'scavengerhunt-game-has-not-been-saved' => 'Гра Полювання на сміття не була збережена.',
+	'scavengerhunt-edit-token-mismatch' => 'Невідповідність маркера редагування - спробуйте знову.',
 	'scavengerhunt-entry-form-name' => "Ваше ім'я:",
 	'scavengerhunt-entry-form-email' => 'Ваша адреса електронної пошти:',
+	'scavengerhunt-entry-form-submit' => 'Відправити запис',
+	'scavengerhunt-label-sprite-img' => 'Шлях до зображення',
+	'scavengerhunt-label-sprite-X' => 'Позиція елемента',
+	'scavengerhunt-label-sprite-X1' => 'Спрайт зверху зліва',
+	'scavengerhunt-label-sprite-X2' => 'Спрайт знизу справа',
+	'scavengerhunt-game-has-been-deleted' => 'Гра полювання була видалена',
+	'scavengerhunt-game-more-to-go' => 'Лише # кроків.',
+	'scavengerhunt-label-progress-bar' => 'Рядок поступу',
+	'scavengerhunt-quit-game-content' => 'Ви дійсно впевнені, що хочете вийти з полювання на сміття?',
+	'scavengerhunt-switch-game-content' => 'Хочете вийти з поточної гри полювання на сміття і почати ще одну нову?',
 	'scavengerhunt-quit-game-button-quit' => 'Вихід',
 	'scavengerhunt-quit-game-button-cancel' => 'Скасувати',
+	'scavengerhunt-quit-game-button-stay' => 'Продовжувати грати',
+	'scavengerhunt-label-progressBarHintLabel' => 'Координати підказки',
 	'scavengerhunt-label-entry-form-email' => 'Електронна адреса користувача',
 	'scavengerhunt-label-entry-form-username' => 'Ім’я користувача',
+	'scavengerhunt-label-progressBarBackgroundSprite' => 'Тло смуги поступу',
+	'scavengerhunt-label-progressBarExitSprite' => 'Координати кнопки виходу',
+	'scavengerhunt-label-spriteNotFound' => 'Координати спрайту полювання',
+	'scavengerhunt-label-spriteInProgressBar' => 'Координати спрайту елемента смуги поступу',
+	'scavengerhunt-label-spriteInProgressBarHover' => 'Координати спрайту смуги поступу при наведенні',
+	'scavengerhunt-label-spriteInProgressBarNotFound' => 'Елемент смуги поступу не знайдено',
+	'scavengerhunt-label-startPopupSprite' => 'Координати спрайту спливного зображення',
+	'scavengerhunt-label-finishPopupSprite' => 'Координати спрайту спливного зображення',
 	'scavengerhunt-label-clue-color' => 'Колір шрифту',
 	'scavengerhunt-label-clue-size' => 'Розмір шрифту',
+	'scavengerhunt-label-clue-font' => 'Прикраси шрифту',
+	'scavengerhunt-label-article-congrats' => 'Вітальне повідомлення',
+	'scavengerhunt-label-facebook' => 'Обмін на Facebook',
+	'scavengerhunt-editor-tip-name' => "Це ім'я, яке відображається у списку всіх полювань.",
+	'scavengerhunt-editor-tip-landing-title' => 'Це сторінка, з якої користувачі починають Полювання.',
+	'scavengerhunt-editor-tip-landing-button-text' => 'Це текст напису на кнопці „Почати“ (наприклад, "Натисніть тут, щоб почати полювання!")',
+	'scavengerhunt-editor-tip-sprite-img' => 'Це посилання на файл, який містить усі зображення для полювання. Для уникнення розкриття зображення для користувачів вікі, розмістіть його на зовнішній URL-адресі.',
+	'scavengerhunt-editor-tip-progressBarBackgroundSprite' => 'Використовувати ці координати, щоб вказати:<br />
+(1) розташування файлу спрайтів<br />
+(2) яка частина файлу спрайтів є активним елементом зображення.',
+	'scavengerhunt-editor-tip-progressBarExitSprite' => 'ПРИМІТКА: всі координати задаються щодо точки відліку в нижньому правому куті сторінки',
+	'scavengerhunt-editor-tip-starting-clue-title' => 'Це назва модального діалогового вікно, яке починає Полювання.',
+	'scavengerhunt-editor-tip-starting-clue-text' => 'Це текст, який орієнтує гравця і почне Полювання.',
+	'scavengerhunt-editor-tip-starting-clue-button-text' => 'Цей текст є міткою на кнопці, яка переносить користувача на сторінку з першим пунктом.',
+	'scavengerhunt-editor-tip-starting-clue-button-target' => 'Це адреса сторінки з першим пунктом.',
+	'scavengerhunt-editor-tip-startPopupSprite' => 'Якщо потрібне зображення в діалоговому вікні початкової підказки, то введіть тут координати.',
+	'scavengerhunt-editor-tip-articleTitle' => 'Це розташування сторінки з наступним елементом.',
+	'scavengerhunt-editor-tip-spriteNotFound' => 'Цей розділ визначає зображення для підказки.',
+	'scavengerhunt-editor-tip-spriteInProgressBar' => "У цьому розділі визначається значок смуги поступу, що з'являється після того, як елемент був знайдений.",
+	'scavengerhunt-editor-tip-spriteInProgressBarHover' => 'У цьому розділі визначається значок смуги поступу при наведенні мишки.',
+	'scavengerhunt-editor-tip-spriteInProgressBarNotFound' => "Цей розділ визначає значок, який з'явиться у смузі поступу, коли елемент ще не був знайдений.",
+	'scavengerhunt-editor-tip-article-title' => 'Це розташування сторінки з наступним елементом.',
+	'scavengerhunt-editor-tip-entry-form-title' => 'Це назва спливаючого діалогового вікна в кінці полювання.',
+	'scavengerhunt-editor-tip-entry-form-text' => 'Це текст спливаючого діалогового вікна в кінці полювання.',
+	'scavengerhunt-editor-tip-entry-form-question' => 'Якщо ви хочете відобразити вільне текстове поле для гравців, щоб відповісти на питання або ввести коментар, то, будь ласка, введіть тут текст. Якщо ви не хочете, щоб це поле, то залишіть його порожнім.',
+	'scavengerhunt-editor-tip-entry-form-email' => "Це текст, який відображатиме вказівки користувачеві для   введення своєї адреси електронної пошти. Примітка: Це поле не є обов'язковим; якщо залишити порожнім, то поле не буде відображатися користувачу.",
+	'scavengerhunt-editor-tip-entry-form-username' => "Це текст, який інструктує користувача ввести своє ім'я користувача. ПРИМІТКА: це поле є необов'язковим; якщо залишити порожнім, то поле не буде відображатися",
+	'scavengerhunt-editor-tip-finishPopupSprite' => 'Якщо ви хочете відображати зображення в остаточному спливному повідомленні, то визначте його тут.',
+	'scavengerhunt-editor-tip-goodbye-title' => 'Це заголовок фінального спливного повідомлення від Полювання.',
+	'scavengerhunt-editor-tip-goodbye-text' => 'Це текст фінального спливного повідомлення від Полювання.',
+	'scavengerhunt-editor-tip-clue-color' => 'Кольори повинні мати шістнадцятковий запис як #F00.',
+	'scavengerhunt-editor-tip-entry-form-button-text' => "Цей текст для кнопки, яка з'являється на діалоговому вікні в кінці полювання.",
+	'scavengerhunt-editor-tip-facebook-image' => "Шлях до зображення у стилі MediaWiki на цільовій сторінці вікі. Приклад: 'Some_image_example.png'",
+	'scavengerhunt-editor-tip-facebook-description' => 'Текст, який відображатиметься в обміні повідомленнями',
+	'scavengerhunt-facebook-image' => 'Facebook обмін зображенням',
+	'scavengerhunt-facebook-description' => 'Facebook обмін текстом',
 );
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Liuxinyu970226
  * @author Sam Wang
  */
 $messages['zh-hans'] = array(
@@ -2713,6 +2965,7 @@ $messages['zh-hans'] = array(
 	'scavengerhunt-label-image-check' => '（显示图像）',
 	'scavengerhunt-label-general' => '简单介绍',
 	'scavengerhunt-label-name' => '名：',
+	'scavengerhunt-label-goodbye' => '再见弹出菜单',
 	'scavengerhunt-button-add' => '添加一个游戏',
 	'scavengerhunt-button-save' => '保存',
 	'scavengerhunt-button-disable' => '禁用',
@@ -2723,7 +2976,19 @@ $messages['zh-hans'] = array(
 	'scavengerhunt-entry-form-email' => '您的电子邮件地址：',
 	'scavengerhunt-quit-game-button-quit' => '退出',
 	'scavengerhunt-quit-game-button-cancel' => '取消',
+	'scavengerhunt-quit-game-button-stay' => '保持游戏',
+	'scavengerhunt-label-entry-form-email' => '用户电邮',
 	'scavengerhunt-label-entry-form-username' => '用户名',
 	'scavengerhunt-label-clue-color' => '字体颜色',
 	'scavengerhunt-label-clue-size' => '字体大小',
+	'scavengerhunt-label-facebook' => 'Facebook分享',
+	'scavengerhunt-facebook-image' => 'Facebook分享的图片',
+	'scavengerhunt-facebook-description' => 'Facebook分享的文本',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Justincheng12345
+ */
+$messages['zh-hant'] = array(
+	'scavengerhunt-entry-form-email' => '您的電郵地址：',
 );

@@ -162,7 +162,8 @@
 			});
 		}
 
-		if ( window.wgEnableVideoToolExt ) {
+		// Check to see if wiki allows embedding videos, as well as checking user permissions
+		if ( window.wgEnableVideoToolExt && window.showAddVideoBtn) {
 			mediawikiButtons.push({
 				imageFile: extensionsPath + '/wikia/VideoEmbedTool/images/button_vet.png',
 				speedTip: $.msg('vet-imagebutton'),

@@ -113,7 +113,7 @@ class FBConnectHooks {
 			}
 		}
 
-		if( !F::app()->checkSkin( array( 'wikiamobile', 'wikiaapp' ), $sk ) ){
+		if( !F::app()->checkSkin( array( 'wikiamobile' ), $sk ) ){
 			// If the user's language is different from the default language, use the correctly localized facebook code.
 			// NOTE: Can't use wgLanguageCode here because the same FBConnect config can run for many wgLanguageCode's on one site (such as Wikia).
 			if($fbScriptEnableLocales){
@@ -195,7 +195,7 @@ STYLE;
 		global $fbScript, $wgNoExternals;
 		wfProfileIn(__METHOD__);
 
-		if( !empty($fbScript) && empty($wgNoExternals) && ( !in_array( $skin->getSkinName(), array( 'wikiaapp' ) ) ) ){
+		if( !empty($fbScript) && empty($wgNoExternals) ){
 			$js = <<<HTML
 <!-- Facebook integration -->
 <div id="fb-root"></div>
@@ -728,7 +728,7 @@ HTML;
 	 * clear facebook session
 	 */
 	public static function UserLogout(&$user){
-		F::build('FBConnectAPI')->logout();
+		(new FBConnectAPI)->logout();
 		return true;
 	}
 }

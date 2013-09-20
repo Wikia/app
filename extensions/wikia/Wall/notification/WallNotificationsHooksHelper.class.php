@@ -8,7 +8,7 @@ class WallNotificationsHooksHelper {
 	 *
 	 * @author Liz Lee
 	 */
-	public function onSkinAfterBottomScripts(Skin $skin, &$text) {
+	static public function onSkinAfterBottomScripts(Skin $skin, &$text) {
 		$app = F::App();
 		$user = $app->wg->User;
 
@@ -25,7 +25,7 @@ class WallNotificationsHooksHelper {
 	 *
 	 **/
 
-	public function onMakeGlobalVariablesScript( Array &$vars ){
+	static public function onMakeGlobalVariablesScript( Array &$vars ){
 		$user =	F::app()->wg->User;
 		if( $user->isLoggedIn() ) {
 			$response = F::app()->sendRequest( 'WallNotificationsExternalController', 'getUpdateCounts', array() );
@@ -43,13 +43,13 @@ class WallNotificationsHooksHelper {
 	 * @author Tomasz Odrobny
 	 * @author Piotrek Bablok
 	 */
-	public function onPersonalUrls(&$personalUrls, &$title) {
+	static public function onPersonalUrls(&$personalUrls, &$title) {
 		$app = F::App();
 		$user = $app->wg->User;
 		if( $user instanceof User && $user->isLoggedIn() ) {
 			if($app->wg->User->getSkin()->getSkinName() == 'monobook') {
 				$personalUrls['wall-notifications'] = array(
-						'text'=>$app->wf->Msg('wall-notifications'),
+						'text'=>wfMsg('wall-notifications'),
 						//'text'=>print_r($app->wg->User->getSkin(),1),
 						'href'=>'#',
 						'class'=>'wall-notifications-monobook ',

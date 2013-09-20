@@ -7,7 +7,7 @@ $messages['en'] = array(
 	'wikiarelatedpages-heading' => 'Read more',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author The Evil IP address
  */
 $messages['qqq'] = array(
@@ -231,6 +231,14 @@ $messages['nl'] = array(
 	'wikiarelatedpages-heading' => 'Meer lezen',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'wikiarelatedpages-desc' => 'Apond una lista de paginas ligadas a d’autras paginas',
+	'wikiarelatedpages-heading' => 'Per ne saber mai',
+);
+
 /** Polish (polski)
  * @author Sovq
  * @author Sp5uhe
@@ -333,8 +341,10 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Ua2004
  */
 $messages['uk'] = array(
+	'wikiarelatedpages-desc' => "Додає на сторінки список пов'язаних сторінок",
 	'wikiarelatedpages-heading' => 'Читати далі',
 );
 

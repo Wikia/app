@@ -43,6 +43,7 @@
 $wikiahomepage-line-height: 16px;
 $color-wikiahome-border-primary-brand-color: #c7d1d8;
 
+
 .WikiaHomePage {
 	@include clearfix;
 	clear: both;
@@ -227,7 +228,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					padding: 9px 40px 15px 13px;
 					position: absolute;
 					.arrow {
-						background: url("/extensions/wikia/WikiaHomePage/images/community-sprite.png") no-repeat 0 -147px; /* $wgCdnStylePath */
+						background-position: 0 -155px;
 						height: 23px;
 						margin-right: 1px;
 						position: relative;
@@ -238,7 +239,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 						@include box-shadow(0, 0, 5px, #aaa, false, 0);
 						@include linear-gradient(white, top, white, 35%, #ddd, 100%);
 						.arrow {
-							background-position: -23px -147px;
+							background-position: -23px -155px;
 						}
 					}
 					&:active {
@@ -484,10 +485,10 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 						cursor: pointer;
 						text-decoration: none;
 						.previcon {
-							background-position: -202px -144px;
+							background-position: -202px -152px;
 						}
 						.visicon {
-							background-position: -139px -143px;
+							background-position: -139px -151px;
 						}
 					}
 					img {
@@ -499,10 +500,10 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 						top: -2px;
 					}
 					.previcon {
-						background: url("/extensions/wikia/WikiaHomePage/images/community-sprite.png") no-repeat -171px -144px; /* $wgCdnStylePath */
+						background-position: -171px -152px;
 					}
 					.visicon {
-						background: url("/extensions/wikia/WikiaHomePage/images/community-sprite.png") no-repeat -108px -143px; /* $wgCdnStylePath */
+						background-position: -108px -151px;
 					}
 				}
 			}
@@ -671,7 +672,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 				position: relative;
 				vertical-align: middle;
 				.preview-grey {
-					background: url("/extensions/wikia/WikiaHomePage/images/community-sprite.png") no-repeat -239px -147px; /* $wgCdnStylePath */
+					background-position: -239px -155px;
 					width: 20px;
 					height: 19px;
 					position: absolute;
@@ -819,7 +820,6 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 						.wikiahomepage-community-social-twitter,
 						.wikiahomepage-community-social-facebook,
 						.wikiahomepage-community-social-googleplus {
-							background-image: url(/extensions/wikia/WikiaHomePage/images/community-sprite.png); /* $wgCdnStylePath */
 							height: 32px;
 							margin-right: 12px;
 							width: 32px;
@@ -839,41 +839,21 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					}
 				}
 				.wikiahomepage-community-hero-image {
-					background-image: url(/extensions/wikia/WikiaHomePage/images/community-sprite.png); /* $wgCdnStylePath */
 					position: absolute;
+
 					&.wikiahomepage-community-image {
 						background-position: 0px 0px;
-						height: 50px;
-						left: 46px;
+						height: 54px;
+						left: 45px;
 						top: 26px;
-						width: 235px;
-					}
-					&.wikiahomepage-community-image-de {
-						background-position: 0px -194px;
-						height: 52px;
-					}
-					&.wikiahomepage-community-image-es {
-						background-position: 0px -341px;
-					}
-					&.wikiahomepage-community-image-fr {
-						background-position: 0px -485px;
-						width: 240px;
+						width: 243px;
 					}
 					&.wikiahomepage-highlight-image {
-						background-position: 0px -50px;
+						background-position: 0px -54px;
 						bottom: 0;
 						height: 95px;
 						left: 17px;
 						width: 312px;
-					}
-					&.wikiahomepage-highlight-image-de {
-						background-position: 0 -246px;
-					}
-					&.wikiahomepage-highlight-image-es {
-						background-position: 0 -390px;
-					}
-					&.wikiahomepage-highlight-image-fr {
-						background-position: 0 -534px;
 					}
 				}
 			}
@@ -981,38 +961,42 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 		right: 0;
 		top: 0;
 		.sprite.edit-pencil {
-			background-image: url(/extensions/wikia/WikiaHomePage/images/community-sprite.png); /* $wgCdnStylePath */
 			width: 24px;
 		}
 		&.de .sprite.edit-pencil {
-			background-position: -24px -171px;
+			background-position: -24px -179px;
 		}
 		&.en .sprite.edit-pencil {
-			background-position: 0 -171px;
+			background-position: 0 -179px;
 		}
 		&.es .sprite.edit-pencil {
-			background-position: -48px -171px;
+			background-position: -48px -179px;
 		}
 		&.fr .sprite.edit-pencil {
-			background-position: -72px -171px;
+			background-position: -72px -179px;
+		}
+		&.pl .sprite.edit-pencil {
+			background-position: -96px -179px;
 		}
 		a {
-			background-image: url(/extensions/wikia/WikiaHomePage/images/community-sprite.png); /* $wgCdnStylePath */
 			display: block;
 			height: 18px;
 			padding: 0;
 			width: 24px;
 			&.de {
-				background-position: -24px -171px;
+				background-position: -24px -179px;
 			}
 			&.en {
-				background-position: 0 -171px;
+				background-position: 0 -179px;
 			}
 			&.es {
-				background-position: -48px -171px;
+				background-position: -48px -179px;
 			}
 			&.fr {
-				background-position: -72px -171px;
+				background-position: -72px -179px;
+			}
+			&.pl {
+				background-position: -96px -179px;
 			}
 		}
 		li {
@@ -1021,6 +1005,27 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 		}
 	}
 }
+
+@each $lang in en de es fr pl {
+	html[lang="#{$lang}"] {
+		.wikiahomepage-community-social-wikia-blog,
+		.wikiahomepage-community-social-twitter,
+		.wikiahomepage-community-social-facebook,
+		.wikiahomepage-community-social-googleplus,
+		.wikiahomepage-community-hero-image,
+		.remix .arrow,
+		.wikia-slot .previewVisit .previcon,
+		.wikia-slot .previewVisit .visicon,
+		.WikiPreviewInterstitial .preview-grey,
+		.wikiahomepage-footer .wikia-menu-button.secondary .sprite.edit-pencil,
+		.wikiahomepage-footer .wikia-menu-button.secondary a {
+			background-image: url("/extensions/wikia/WikiaHomePage/images/community-sprite-#{$lang}.png"); /* $wgCdnStylePath */
+			background-repeat: no-repeat;
+		}
+	}
+}
+
+
 
 .page-Wikia .start-a-wiki {
 	display: none;

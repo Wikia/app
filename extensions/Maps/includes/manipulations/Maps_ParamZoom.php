@@ -1,15 +1,16 @@
 <?php
 
 /**
- * Parameter manipulation for zoom levels that overides the default in case of multiple locations.
+ * Parameter manipulation for zoom levels that overrides the default in case of multiple locations.
  * 
  * @since 0.7
  * 
  * @file Maps_ParamZoom.php
  * @ingroup Maps
  * @ingroup ParameterManipulations
- * 
- * @author Jeroen De Dauw
+ *
+ * @licence GNU GPL v2+
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class MapsParamZoom extends ItemParameterManipulation {
 

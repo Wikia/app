@@ -22,7 +22,7 @@ class WikiDataSource extends WikiaObject {
 		$this->id = $id;
 
 		if ($this->wg->CityId == $id) {
-			$this->db = $this->wf->GetDB(DB_SLAVE);
+			$this->db = wfGetDB(DB_SLAVE);
 			$this->dbname = $this->wg->DBname;
 		} else {
 			// find db name
@@ -32,7 +32,7 @@ class WikiDataSource extends WikiaObject {
 			}
 	
 			// open db connection (and check if db really exists)
-			$db = $this->wf->GetDB(DB_SLAVE, array(), $dbname);
+			$db = wfGetDB(DB_SLAVE, array(), $dbname);
 			if ( !is_object($db) ) {
 				throw new Exception("Could not connect to wiki database {$dbname}");
 			}

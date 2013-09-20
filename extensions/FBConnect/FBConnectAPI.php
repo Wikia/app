@@ -48,12 +48,12 @@ class FBConnectAPI {
 		global $fbAppId, $fbAppSecret;
 		// Construct a new Facebook object on first time access
 		if ( is_null(self::$__Facebook) && self::isConfigSetup() ) {
-			self::$__Facebook = F::build('Facebook3', array(array(
+			self::$__Facebook = new Facebook3(array(
 				'appId'  =>  $fbAppId,
 				'secret' => $fbAppSecret
-			)));
+			));
 
-			self::$__Facebook->api_client = F::build('FacebookRestClient', array($fbAppId, $fbAppSecret, null));
+			self::$__Facebook->api_client = new FacebookRestClient($fbAppId, $fbAppSecret, null);
 			//Facebook( $fbAppId, $fbAppSecret );
 			if (!self::$__Facebook) {
 				error_log('Could not create facebook client.');

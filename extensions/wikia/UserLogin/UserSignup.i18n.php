@@ -282,7 +282,8 @@ $messages['qqq'] = array(
 	'usersignup-confirm-email-change-email-content' => 'Change email heading.',
 	'usersignup-confirm-email-change-email' => 'Action link to open a dialog to change email.',
 	'usersignup-confirm-email-new-email-label' => 'Label for email input.',
-	'usersignup-confirm-email-update' => 'Button to submit e-mail address update form.',
+	'usersignup-confirm-email-update' => 'Button to submit email address update form.
+{{Identical|Update}}',
 	'usersignup-confirm-email-tooltip' => '{{doc-singularthey}}
 Tooltip letting user know they can change their email.  Tooltip is on the same line as {{msg-w|usersignup-confirm-email-change-email-content}}',
 	'usersignup-resend-email-heading-success' => 'Validation message telling the user the email has been re-sent.',
@@ -335,7 +336,8 @@ Tooltip letting user know they can change their email.  Tooltip is on the same l
 	'usersignup-marketing-creativity' => 'Third marketing blurb on right side of Special:UserSignup.',
 	'usersignup-createaccount-byemail' => 'Button label on signup form for Special:UserSignup?byemail=1 to create account for others.',
 	'usersignup-error-captcha' => 'Error message for captcha failure.',
-	'usersignup-account-creation-heading' => 'Page heading for confirm page when byemail=1 is used.',
+	'usersignup-account-creation-heading' => 'Page heading for confirm page when byemail=1 is used.
+{{Identical|Success}}',
 	'usersignup-account-creation-subheading' => 'Page subheading for confirm page when byemail=1 is used. Parameters:
 * $1 is an e-mail address.',
 	'usersignup-account-creation-email-sent' => '{{doc-singularthey}}
@@ -343,7 +345,8 @@ Page content for confirm page when byemail=1 is used.  Parameters:
 * $1 is e-mail address sent to,
 * $2 is the user name that the account has been created for.',
 	'usersignup-account-creation-email-subject' => 'Confirmation email subject for people receiving the account when byemail=1 is used.',
-	'usersignup-account-creation-email-greeting' => 'Confirmation email greeting for people receiving the account when byemail=1 is used.',
+	'usersignup-account-creation-email-greeting' => 'Confirmation email greeting for people receiving the account when byemail=1 is used.
+{{Identical|Hello}}',
 	'usersignup-account-creation-email-content' => 'Confirmation email body for people receiving the account when byemail=1 is used.  $USERNAME is user name, $NEWPASSWORD is new password for the user to use.',
 	'usersignup-account-creation-email-signature' => 'Confirmation email signature for people receiving the account when byemail=1 is used.',
 	'usersignup-account-creation-email-body' => 'Text-only version of confirmation email for people receiving the account when byemail=1 is used.  $2 is username, $3 is the new password.',
@@ -360,7 +363,92 @@ Page content for confirm page when byemail=1 is used.  Parameters:
  * @author Achraf94
  */
 $messages['ar'] = array(
+	'usersignup-page-title' => 'سجل في ويكيا',
+	'usersignup-page-captcha-label' => 'كلمة ضبابية',
+	'usersignup-error-username-length' => 'عفوا، اسم المستخدم الخاص بك لا يمكن أن يتكون من أكثر من {{PLURAL:$1|حرف واحد|$1 حرف}}.',
+	'usersignup-error-invalid-user' => 'مستخدم غير صحيح. الرجاء تسجيل الدخول أولاً.',
+	'usersignup-error-invalid-email' => 'الرجاء إدخال عنوان بريد إلكتروني صحيح.',
+	'usersignup-error-symbols-in-username' => 'عفوا، يجب أن يتضمن اسم المستخدم الخاص بك فقط الأحرف والأرقام.',
+	'usersignup-error-empty-email' => 'عفوا، يرجى ملء خانة عنوان البريد الإلكتروني الخاص بك.',
+	'usersignup-error-empty-username' => 'عفوا، يرجى ملء خانة اسم المستخدم.',
+	'usersignup-error-already-confirmed' => 'لقد أكدت لك بالفعل عنوان البريد الإلكتروني هذا.',
+	'usersignup-error-throttled-email' => 'عفوا، لقد طلبت إرسال العديد من رسائل التأكيد الإلكترونية اليوم. حاول مرة أخرى بعد فترة قصيرة.',
+	'usersignup-error-too-many-changes' => 'لقد وصلت إلى الحد الأقصى لتغيير البريد الإلكتروني اليوم. الرجاء المحاولة مرة أخرى لاحقاً.',
+	'usersignup-error-password-length' => 'عفوا، كلمة المرور طويلة جداً. الرجاء اختيار كلمة مرور تحوي 50 حرفاً أو أقل.',
+	'usersignup-error-confirmed-user' => 'يبدو بأنك قد أكدت بالفعل عنوان البريد الإلكتروني الخاص بك ل $1 !  قم بزيارة [$2 صفحتك الخاصة].',
+	'usersignup-facebook-heading' => 'إنهاء التسجيل',
+	'usersignup-facebook-create-account' => 'أنشئ حسابا',
+	'usersignup-facebook-email-tooltip' => 'إذا كنت ترغب في استخدام عنوان بريد إلكتروني مختلف يمكنك تغييره لاحقاً في التفضيلات الخاصة بك.',
+	'usersignup-facebook-have-an-account-heading' => 'لديك حساب؟',
+	'usersignup-facebook-have-an-account' => 'اربط حساب ويكيا الخاص بك مع الفيسبوك عوض ذلك',
+	'usersignup-facebook-proxy-email' => 'بريد فيسبوك إلكتروني مجهول',
+	'usersignup-user-pref-emailconfirmlink' => 'طلب جديد لتأكيد البريد الإلكتروني',
+	'usersignup-user-pref-confirmemail_send' => 'إعادة إرسال رسالة تأكيد لبريدي الإلكتروني',
+	'usersignup-user-pref-emailauthenticated' => 'شكرا! تم تأكيد بريدك الإلكتروني في $2 على الساعة $3.',
+	'usersignup-user-pref-emailnotauthenticated' => 'تحقق من البريد الإلكتروني الخاص بك وانقر فوق رابط التأكيد للانتهاء من تغيير البريد الإلكتروني الخاص بك إلى: $1',
+	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => 'أوه، لا! عنوان البريد الإلكتروني الخاص بك غير مؤكد. لن تعمل ميزات البريد الإلكتروني حتى تقوم بتأكيد عنوان البريد الإلكتروني الخاص بك.',
+	'usersignup-user-pref-reconfirmation-email-sent' => 'سوف تنتهي تقريبا! لقد أرسلنا رسالة تأكيد البريد إلكتروني جديدة إلى $1 . قم بالتحقق من البريد الإلكتروني الخاص بك وانقر فوق الرابط للانتهاء من تأكيد عنوان البريد الإلكتروني الخاص بك.',
+	'usersignup-user-pref-noemailprefs' => 'يبدو أنه ليس لدينا عنوان بريد إلكتروني عنك. الرجاء إدخال عنوان البريد إلكتروني المذكور أعلاه.',
+	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => 'أوه، لا! عنوان البريد الإلكتروني الخاص بك غير مؤكد. لقد أرسلنا لك رسالة إلكترونية، انقر فوق الرابط هناك للتأكيد.',
+	'usersignup-user-pref-confirmemail_noemail' => 'يبدو أنه ليس لدينا عنوان بريد إلكتروني عنك. لإدخال البريد قم بزيارة  [[Special:Preferences|صفحة تفضيلاتك]].',
+	'usersignup-confirm-page-title' => 'تأكيد بريدك الإلكتروني',
+	'usersignup-confirm-email-resend-email' => 'أرسل لي رسالة تأكيد أخرى للبريد الإلكتروني',
+	'usersignup-confirm-email-change-email-content' => 'أريد أن استخدم عنوان بريد إلكتروني مختلف.',
+	'usersignup-confirm-email-change-email' => 'تغيير عنوان البريد الإلكتروني الخاص بي',
+	'usersignup-confirm-email-new-email-label' => 'البريد الإلكتروني الجديد',
+	'usersignup-confirm-email-update' => 'تحديث',
+	'usersignup-confirm-email-tooltip' => 'هل قمت بإدخال عنوان بريد إلكتروني ولا يمكنك تأكيده، أم تريد استخدام عنوان بريد الكتروني مختلف؟ لا تقلق، استخدم الرابط في الأسفل لتغيير عنوان بريدك الإلكتروني و الحصول على رسالة تأكيد جديدة.',
+	'usersignup-resend-email-heading-success' => 'تم إرسال بريد إلكتروني جديد',
+	'usersignup-resend-email-heading-failure' => 'لم يتم إرسال البريد',
+	'usersignup-confirm-page-heading-confirmed-user' => 'مبروك!',
+	'usersignup-confirm-page-subheading-confirmed-user' => 'بريدك مأكد بالفعل',
+	'usersignup-confirmation-heading' => 'يتم التأكيد',
+	'usersignup-confirmation-heading-email-resent' => 'تم إرسال بريد إلكتروني جديد',
+	'usersignup-confirmation-subheading' => 'التحقق من البريد الإلكتروني الخاص بك',
+	'usersignup-confirmation-email-sent' => "لقد أرسلنا رسالة بالبريد الإلكتروني إلى '''$1'''.
+
+انقر فوق رابط التأكيد في بريدك الإلكتروني للانتهاء من إنشاء حسابك.",
+	'usersignup-confirmation-email_subject' => 'هناك تقريبا! قم بالتأكيد على حسابك في ويكيا',
+	'usersignup-confirmation-email-greeting' => 'مرحباً $USERNAME،',
+	'usersignup-confirmation-email-signature' => 'فريق ويكيا',
+	'usersignup-reconfirmation-email_subject' => 'تأكيد تغيير عنوان البريد الإلكتروني الخاص بك على ويكيا',
+	'usersignup-reconfirmation-email-greeting' => 'مرحبا يا $USERNAME',
+	'usersignup-reconfirmation-email-signature' => 'فريق ويكيا',
+	'usersignup-welcome-email-subject' => 'مرحبا بك في ويكيا يا $USERNAME!',
+	'usersignup-welcome-email-greeting' => 'مرحبا يا $USERNAME',
+	'usersignup-welcome-email-heading' => 'نحن سعداء بالترحيب بك في ويكيا و {{SITENAME}}! إليك بعض الأشياء التي يمكنك القيام بها للبدأ.',
 	'usersignup-welcome-email-edit-profile-heading' => 'تعديل صفحتك الشخصية',
+	'usersignup-welcome-email-edit-profile-content' => 'إضافة صور شخصية وبضع المعلومات الصغيرة عن نفسك في صفحتك الشخصية في {{SITENAME}}.',
+	'usersignup-welcome-email-edit-profile-button' => 'انتقل إلى الصفحة الشخصية',
+	'usersignup-welcome-email-learn-basic-heading' => 'تعلم الأساسيات.',
+	'usersignup-welcome-email-learn-basic-content' => 'أحصل على تعليم سريع حول أساسيات ويكيا: كيفية تحرير صفحة، صفحتك الشخصية، تغيير تفضيلاتك، و المزيد.',
+	'usersignup-welcome-email-learn-basic-button' => 'التحقق من ذلك',
+	'usersignup-welcome-email-explore-wiki-heading' => 'اكتشاف المزيد من الويكيات',
+	'usersignup-welcome-email-explore-wiki-content' => 'هناك الآلاف من الويكيات في ويكيا، إبحث عن أكثر الويكيات التي تهمك بالتوجه إلى إحدى محاورنا:  <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">ألعاب الفيديو</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">الترفيه</a>, or <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">أساليب الحياة</a>.',
+	'usersignup-welcome-email-explore-wiki-button' => 'اذهب إلى wikia.com',
+	'usersignup-welcome-email-content' => 'تريد المزيد من المعلومات؟ إبحث عن نصائح، أجوبة في مجتمع ويكيا في <a style="color:#2C85D5;" href="http://community.wikia.com">مركز المجتمع</a>. تحريرا سعيدا!',
+	'usersignup-welcome-email-signature' => 'فريق ويكيا',
+	'usersignup-heading' => 'إنضم لويكيا الآن',
+	'usersignup-heading-byemail' => 'إنشاء حساب لشخص آخر',
+	'usersignup-marketing-wikia' => 'تعاون مع الملايين من الأشخاص الذين يأتون من جميع أنحاء العالم لتقاسم معرفتهم و محبتهم.',
+	'usersignup-marketing-login' => 'أنت مستخدم بالفعل؟ [[Special:UserLogin|قم بتسجيل الدخول]]',
+	'usersignup-marketing-benefits' => 'كن جزءا من شيء ضخم',
+	'usersignup-marketing-community-heading' => 'تعاون',
+	'usersignup-marketing-community' => 'إكتشاف موضوعات تتدرج من ألعاب الفيديو إلى الأفلام و التلفاز. تعرف على أشخاص يشاركونك في الهوايات.',
+	'usersignup-marketing-global-heading' => 'أنشئ',
+	'usersignup-marketing-global' => 'أنشئ ويكي، إبدأ صغيرا، وانموا كبيرا، بمساعدة الآخرين.',
+	'usersignup-marketing-creativity-heading' => 'كن أصليا',
+	'usersignup-marketing-creativity' => 'استخدم ويكيا لتعبر عن إبداعك عبر التصويتات و قوائم أفضل 10، الصور و شرائط الفيديو، التطبيقات والمزيد.',
+	'usersignup-createaccount-byemail' => 'إنشاء حساب لشخص آخر',
+	'usersignup-error-captcha' => 'لم تطابق الكلمة التي قمت بإدخالها بالكلمة في المربع، حاول مرة أخرى!',
+	'usersignup-account-creation-heading' => 'نجاح!',
+	'usersignup-account-creation-subheading' => 'لقد أرسلنا رسالة بالبريد إلكتروني إلى $1',
+	'usersignup-account-creation-email-subject' => 'تم إنشاء حساب لك في ويكيا!',
+	'usersignup-account-creation-email-greeting' => 'أهلاّ بك',
+	'usersignup-account-creation-email-signature' => 'فريق ويكيا',
+	'usersignup-confirmation-reminder-email_subject' => 'لا تكن غريبا...',
+	'usersignup-confirmation-reminder-email-greeting' => 'مرحبا يا $USERNAME',
+	'usersignup-confirmation-reminder-email-signature' => 'فريق ويكيا',
 	'usersignup-facebook-problem' => 'هناك مشكلة في الاتصال مع فيسبوك. الرجاء المحاولة مرة أخرى لاحقاً.',
 );
 
@@ -424,6 +512,7 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author Marcmpujol
  * @author Toniher
  */
@@ -526,9 +615,41 @@ Para ver las noticias más recientes en Wikia, visita http://es.wikia.com
 	'usersignup-welcome-email-learn-basic-content' => "Aconsegueix un tutorial ràpid sobre els conceptes bàsics de Wikia; com editar una pàgina, el teu perfil d'usuari, canviar les teves preferències i molt més.",
 	'usersignup-welcome-email-learn-basic-button' => "Fes-li un cop d'ull!",
 	'usersignup-welcome-email-explore-wiki-heading' => 'Explora més wikis.',
+	'usersignup-welcome-email-explore-wiki-content' => 'Hi ha milers de viquis a Wikia, trobeu-ne més que us interessin a algun dels nostres centres: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Videojocs</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Entreteniment</a>, o <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Estil de vida</a>.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Anar a ca.wikia.com',
 	'usersignup-welcome-email-content' => 'Vols més informació? Troba consells i respostes en la comunitat de Wikia <a style="color:#2C85D5;" href="http://ca.wikia.com">Wikia en Català</a>.',
 	'usersignup-welcome-email-signature' => "L'Equip de Wikia",
+	'usersignup-welcome-email-body' => 'Hola $USERNAME,
+
+Et donem la benvinguda a Wikia i a {{SITENAME}}! Aquí tens algunes coses que pots fer per començar.
+
+Edita el teu perfil.
+
+Afegeix una foto al perfil i una petita descripció sobre tu mateix al teu perfil de {{SITENAME}}.
+
+Vés a $EDITPROFILEURL
+
+Aprèn els conceptes bàsics.
+
+Visita un breu tutorial sobre els conceptes bàsics de Wikia: com editar una pàgina, el teu perfil d\'usuari, canviar les teves preferències, i més.
+
+Comprova-ho ($LEARNBASICURL)
+
+Explora més viquis.
+
+Hi ha milers de viquis a Wikia, troba les que et poden interessar a algun dels nostres centres: Videojocs (http://www.wikia.com/Video_Games), Entreteniment (http://www.wikia.com/Entertainment), o Estil de vida (http://www.wikia.com/Lifestyle).
+
+Vés a $EXPLOREWIKISURL
+
+Necessites més informació? Troba consells, respostes i la comunitat Wikia a la Central de la Comunitat (http://www.community.wikia.com). Que t\'ho passis bè editant!
+
+L\'equip de Wikia
+
+
+___________________________________________
+
+Per veure les últimes actualitzacions a Wikia, visita http://community.wikia.com
+Vols controlar quins correus electrònics vols rebre? Vés a: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Uneix-te avui a Wikia',
 	'usersignup-heading-byemail' => 'Crear un compte per algú altre',
 	'usersignup-marketing-wikia' => 'Comença a col·laborar amb milions de persones de tot el mon qui es reuneixen per compartir el que coneixen i estimen.',
@@ -596,6 +717,13 @@ ___________________________________________
 Per veure els darrers esdeveniments a Wikia, visita http://ca.wikia.com
 Vols controlar els correus que reps? Vés a: {{fullurl: {{ns:special}}:Preferències}}",
 	'usersignup-facebook-problem' => 'Hi ha hagut un problema de comunicació amb Facebook. Si us plau, torna-ho a provar altre cop més tard.',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'usersignup-confirm-email-update' => 'Карлаяккха',
 );
 
 /** Czech (česky)
@@ -2106,7 +2234,7 @@ $messages['mk'] = array(
 	'usersignup-confirm-page-subheading-confirmed-user' => 'Веќе сте потврдени',
 	'usersignup-confirmation-heading' => 'Речиси е готово',
 	'usersignup-confirmation-heading-email-resent' => 'Новата порака е испратена',
-	'usersignup-confirmation-subheading' => 'Проверете ги ја е-поштата',
+	'usersignup-confirmation-subheading' => 'Проверете си ја е-поштата',
 	'usersignup-confirmation-email-sent' => "Ви испративме порака на '''$1'''.
 
 Стиснете на потврдната врска во пораката за да го довршите создавањето на сметката.",
@@ -2693,9 +2821,9 @@ $messages['nl'] = array(
 	'usersignup-page-captcha-label' => 'Wazig woord',
 	'usersignup-error-username-length' => 'Uw gebruikersnaam mag niet meer dan {{PLURAL:$1|één teken|$1 tekens}} lang zijn.',
 	'usersignup-error-invalid-user' => 'Ongeldige gebruiker. Meld u eerst aan.',
-	'usersignup-error-invalid-email' => 'Voer alstublieft een geldig e-mailadres in.',
+	'usersignup-error-invalid-email' => 'Geef een geldig e-mailadres op.',
 	'usersignup-error-symbols-in-username' => 'Uw gebruikersnaam mag alleen maar letters en cijfers bevatten.',
-	'usersignup-error-empty-email' => 'Geef alstublieft een e-mailadres op.',
+	'usersignup-error-empty-email' => 'Geef een e-mailadres op.',
 	'usersignup-error-empty-username' => 'Geef een gebruikersnaam op.',
 	'usersignup-error-already-confirmed' => 'U hebt dit e-mailadres al bevestigd.',
 	'usersignup-error-throttled-email' => 'U hebt vandaag te vaak een bevestigingse-mail aangevraagd. Wat even voor het opnieuw te proberen.',
@@ -3097,63 +3225,64 @@ Chcesz zmienić ustawienia otrzymywanych powiadomień? Zajrzyj tutaj: {{fullurl:
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
 	'usersignup-page-title' => 'Intra an Wikia',
-	'usersignup-page-captcha-label' => 'Paròla Confondùa',
-	'usersignup-error-username-length' => 'Contacc, tò nòm utent a peul pa esse pi che {{PLURAL:$1|un caràter|$1 caràter}}.',
-	'usersignup-error-invalid-user' => 'Utent pa bon. Për piasì prima intra.',
+	'usersignup-page-captcha-label' => 'Paròla tërbola',
+	'usersignup-error-username-length' => 'Atension, sò stanòm a peul pa esse pi longh che {{PLURAL:$1|un caràter|$1 caràter}}.',
+	'usersignup-error-invalid-user' => "Utent pa bon. Për piasì, ch'a intra prima ant ël sistema.",
 	'usersignup-error-invalid-email' => "Për piasì anseriss n'adrëssa ëd pòsta eletrònica bon-a.",
-	'usersignup-error-symbols-in-username' => 'Contacc, tò nòm utent a peul mach conten-e litre e nùmer.',
-	'usersignup-error-empty-email' => 'Contacc, për piasì ampiniss toa adrëssa email.',
-	'usersignup-error-empty-username' => 'Contacc, për piasì vemp ël camp dël nòm utent.',
-	'usersignup-error-already-confirmed' => "It l'has già confirmà st'adrëssa email.",
-	'usersignup-error-throttled-email' => "Contacc, it l'has ciamà ëd mandete tròpe email ëd confirma ancheuj. Preuva torna da sì un pòch.",
-	'usersignup-error-too-many-changes' => "It ses rivà al lìmit màssim ëd cambi d'email ancheuj. Për piasì preuva torna pi tard.",
+	'usersignup-error-symbols-in-username' => 'Atension, sò stranòm a peul mach conten-e litre e gifre.',
+	'usersignup-error-empty-email' => "Atension, për piasì ch'a buta soa adrëssa ëd pòsta eletrònica.",
+	'usersignup-error-empty-username' => "Atension, për piasì ch'a compila ël camp ëd lë stranòm.",
+	'usersignup-error-already-confirmed' => "A l'ha già confirmà st'adrëssa ëd pòsta eletrònica.",
+	'usersignup-error-throttled-email' => "Atension, a l'ha ciamà ëd mandeje tròpi mëssagi ëd confirma ancheuj. Ch'a preuva torna da-sì un pòch.",
+	'usersignup-error-too-many-changes' => "A l'é rivà al lìmit màssim ëd cambi ëd pòsta eletrònica ancheuj. Për piasì, ch'a preuva torna pi tard.",
 	'usersignup-error-password-length' => "Contacc, toa ciav a l'é tròp longa. Për piasì sern na ciav ch'a sia 50 caràter o men.",
-	'usersignup-error-confirmed-user' => "A smija com it l'avèisse già confirmà toa adrëssa email për $1! Contròla tò [$2 profil utent].",
+	'usersignup-error-confirmed-user' => "A smijërìa che chiel a l'abia già confirmà soa adrëssa ëd pòsta eletrònica për $1! Ch'a contròla sò [$2 profil utent].",
 	'usersignup-facebook-heading' => 'Finiss ëd Registrete',
 	'usersignup-facebook-create-account' => 'Creé un cont',
-	'usersignup-facebook-email-tooltip' => "S'it veule dovré n'adrëssda email diferenta it peule cangela pi tard ant ij tò Gust.",
+	'usersignup-facebook-email-tooltip' => "S'a veul dovré n'adrëssa ëd pòsta eletrònica diferenta a peul modifichela pi tard ant ij sò Gust.",
 	'usersignup-facebook-have-an-account-heading' => 'Ha-lo già un cont?',
-	'usersignup-facebook-have-an-account' => 'Colega tò nòm utent ëd Wikia già esistent con Facebook, anvece.',
-	'usersignup-facebook-proxy-email' => 'Email anònima ëd Facebook',
-	'usersignup-user-pref-emailconfirmlink' => 'Ciama un neuv corel ëd conferma',
-	'usersignup-user-pref-confirmemail_send' => 'Torna mandé mè corel ëd conferma',
-	'usersignup-user-pref-emailauthenticated' => "Mersì! Tò corel a l'é stàit confermà ël $2 a $3.",
-	'usersignup-user-pref-emailnotauthenticated' => 'Contròla toa email e sgnaca ël colegament ëd conferma për finì ëd cangé toa email a: $1',
-	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => "Oh, nò! Toa email a l'é pa confermà. Le funsion d'email a travajeran pa fin che it conferme pa toa adrëssa email.",
-	'usersignup-user-pref-reconfirmation-email-sent' => "It-i ses quase! I l'oma mandate na neuva email ëd conferma a $1. Contròla toa email dzor ël colegament për finì ëd confermé toa adrëssa email.",
-	'usersignup-user-pref-noemailprefs' => "A smija com s'i l'avèisso pa n'adrëssa email për ti. Për piasì anseriss n'adrëssa email sì-dzora.",
-	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => "Oh, nò! toa email a l'é pa confermà. I l'oma mandate n'email, gnaca ël colegament ëd conferma lì për confermé.",
-	'usersignup-user-pref-confirmemail_noemail' => "A smija com s'i l'avèisso pa n'adrëssa email për ti. Và ai [[Special:Preferences|tò gust]] për anserine un-a.",
-	'usersignup-confirm-page-title' => 'Conferma toa email',
-	'usersignup-confirm-email-resend-email' => "Mandme n'àutra email ëd conferma",
-	'usersignup-confirm-email-change-email-content' => "I veui dovré n'adrëssa email diferenta.",
-	'usersignup-confirm-email-change-email' => "Cangia mia adrëssa d'email",
-	'usersignup-confirm-email-new-email-label' => 'Neuva email',
+	'usersignup-facebook-have-an-account' => "Ch'a lija pitòst sò stranòm ëd Wikia già esistent con Facebook.",
+	'usersignup-facebook-proxy-email' => 'Mëssagi anònim ëd Facebook',
+	'usersignup-user-pref-emailconfirmlink' => 'Ciamé na neuva pòsta eletrònica ëd conferma',
+	'usersignup-user-pref-confirmemail_send' => 'Mandé torna mia pòsta eletrònica ëd conferma',
+	'usersignup-user-pref-emailauthenticated' => "Mersì! Soa adrëssa ëd pòste eletrònica a l'é stàita confermà ël $2 a $3.",
+	'usersignup-user-pref-emailnotauthenticated' => "Ch'a contròla soa pòsta eletrònica e ch'a sgnaca la liura ëd conferma për finì ëd cangé soa adrëssa a: $1",
+	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => "Oh, nò! Soa adrëssa ëd pòsta eletrònica a l'é pa confermà. Le fonsionalità ëd pòsta eletrònica a marcëran pa fin che a conferma nen soa adrëssa ëd pòsta eletrònica.",
+	'usersignup-user-pref-reconfirmation-email-sent' => "Tòst al bon! I l'oma mandaje un neuv mëssagi ëd conferma a $1. Ch'a contròla soa pòsta eletrònica e ch'a sgnaca an sla liura për livré ëd confermé soa adrëssa ëd pòsta eletrònica.",
+	'usersignup-user-pref-noemailprefs' => "A smijërìa ch'i l'oma pa n'adrëssa ëd pòsta eletrònica për chiel. Për piasì, ch'a buta n'adrëssa ëd pòsta eletrònica sì-dzora.",
+	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => "Oh, nò! Soa adrëssa ëd pòsta eletrònica a l'é pa confermà. I l'oma mandaje un mëssagi, ch'a sgnaca an sla liura ëd conferma ambelelà për confermé.",
+	'usersignup-user-pref-confirmemail_noemail' => "A smijërìa ch'i l'oma pa n'adrëssa ëd pòsta eletrònica për chiel. Ch'a vada ant ij [[Special:Preferences|sò gust]] për butene un-a.",
+	'usersignup-confirm-page-title' => "Ch'a conferma soa adrëssa ëd pòsta eletrònica",
+	'usersignup-confirm-email-resend-email' => "Mandeme n'àutr mëssagi ëd conferma",
+	'usersignup-confirm-email-change-email-content' => "I veuj dovré n'adrëssa ëd pòsta eletrònica diferenta.",
+	'usersignup-confirm-email-change-email' => 'Cangé mia adrëssa ëd pòsta eletrònica',
+	'usersignup-confirm-email-new-email-label' => 'Neuva pòsta eletrònica',
 	'usersignup-confirm-email-update' => 'Agiorna',
-	'usersignup-confirm-email-tooltip' => "It l'has-to anserì n'adrëssa email ch'it peule pa confermé, o it veus-to dovré n'adëssa email diferenta? Sagrinte pa, dòvra ël colegamnt sota për cangé toa adrëssa email e avèj n'email ëd conferma neuva.",
-	'usersignup-resend-email-heading-success' => 'Neuva email mandà',
-	'usersignup-resend-email-heading-failure' => 'Email pa rimandà',
+	'usersignup-confirm-email-tooltip' => "Ha-lo butà n'adrëssa ëd pòsta eletrònica ch'a peule pa confermé, o a veul dovré n'adrëssa ëd pòsta eletrònica diferenta? Ch'as sagrin-a nen, ch'a deuvra la liura sì-sota për modifiché soa adrëssa ëd pòsta eletrònica e avèj un neuv mëssagi ëd conferma.",
+	'usersignup-resend-email-heading-success' => 'Neuv mëssagi mandà',
+	'usersignup-resend-email-heading-failure' => 'Mëssagi nen mandà torna',
 	'usersignup-confirm-page-heading-confirmed-user' => 'Congratulassion!',
 	'usersignup-confirm-page-subheading-confirmed-user' => 'It ses già confermà',
 	'usersignup-confirmation-heading' => 'Almanch sì',
-	'usersignup-confirmation-heading-email-resent' => 'Neuva email mandà',
-	'usersignup-confirmation-subheading' => 'Contròla toa email',
-	'usersignup-confirmation-email-sent' => "I l'oma mandà n'email a '''$1'''.
+	'usersignup-confirmation-heading-email-resent' => 'Mëssagi neuv mandà',
+	'usersignup-confirmation-subheading' => "Ch'a contròla soa pòsta eletrònica",
+	'usersignup-confirmation-email-sent' => "I l'oma mandà un mëssagi a '''$1'''.
 
-Sgnaca ël colegament an toa email për finì ëd creé tò cont.",
+Ch'a sgnaca an sla liura ëd conferma an soa pòsta eletrònica për livré la creassion ëd sò cont.",
 	'usersignup-confirmation-email_subject' => 'Almanch sì! Conferma tò cont Wikia',
 	'usersignup-confirmation-email-greeting' => 'Cerea $USERNAME,',
-	'usersignup-confirmation-email-content' => 'It ses a un pass da creé tò cont dzor Wikia! Sgnaca ël colegament sota për confermé toa adrëssa email e ancaminé.
+	'usersignup-confirmation-email-content' => 'A l\'é a un pass da creé sò cont dzor Wikia! Ch\'a sgnaca an sla liura sì-sota për confermé soa adrëssa ëd pòsta eletrònica e ancaminé.
 
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
 	'usersignup-confirmation-email-signature' => "L'Echip ëd Wikia",
 	'usersignup-confirmation-email_body' => "Cerea $2,
 
-It ses a un pass da creé tò cont dzor Wikia! Sgnaca ël colegament sota për confermé toa adrëssa email e ancaminé.
+A l'é a un pass da creé sò cont dzor Wikia! Ch'a sgnaca an sla liura sì-sota për confermé soa adrëssa ëd pòsta eletrònica e ancaminé.
 
 $3
 
@@ -3162,69 +3291,69 @@ L'Echip ëd Wikia
 
 ___________________________________________
 
-Për controlé j'ùltime neuve dzor Wikia, vìsita http://community.wikia.com
-It veus-to controlé che email it arseive? Và a : {{fullurl:{{ns:special}}:Preferences}}",
-	'usersignup-reconfirmation-email-sent' => "Toa adrëssa email a l'é stàita cangià a $1. I l'oma mandate na neuva email ëd conferma. Për piasì conferma l'adrëssa email neuva.",
-	'usersignup-reconfirmation-email_subject' => 'Conferma cambi ëd toa adrëssa email dzor Wikia',
+Për controlé le neuve dzor Wikia, ch'a vìsita http://community.wikia.com
+Veul-lo controlé che mëssagi a arsèiv? Ch'a vada a : {{fullurl:{{ns:special}}:Preferences}}",
+	'usersignup-reconfirmation-email-sent' => "Soa adrëssa eletrònica a l'é stàita modificà a $1. I l'oma mandaje un neuv mëssagi ëd conferma. Për piasì, ch'a conferma la neuva adrëssa ëd pòsta eletrònica.",
+	'usersignup-reconfirmation-email_subject' => 'Confirmé ël cambi ëd soa adrëssa ëd pòsta eletrònica dzor Wikia',
 	'usersignup-reconfirmation-email-greeting' => 'Cerea $USERNAME',
-	'usersignup-reconfirmation-email-content' => 'Për piasì sgnaca ël colegament sota për confermé tò cambi d\'adrëssa email dzor Wikia.
+	'usersignup-reconfirmation-email-content' => 'Për piasì, ch\'a sgnaca an sla liura sì-sota për confermé sò cambiament d\'adrëssa ëd pòste eletrònica dzor Wikia.
 
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
 
-It continueras a arseive email a toa veja adrëssa email fin che it conferme nen costa.',
+A continuërà a arsèive dij mëssagi a soa veja adrëssa ëd pòsta eletrònica fin che a confirma nen costa-sì.',
 	'usersignup-reconfirmation-email-signature' => "L'Echip ëd Wikia",
 	'usersignup-reconfirmation-email_body' => "Cerea $2,
 
-Për piasì sgnaca ël colegament sota për confermé tò cambi d'adrëssa email dzor Wikia.
+Për piasì, ch'a sgnaca an sla liura sì-sota për confermé ël cangiament ëd soa adrëssa ëd pòsta eletrònica dzor Wikia.
 
 $3
 
-It continueras a arseive email a tò vej adrëssa email fin che it conferme nen costa.
+A continuërà a arsèive dij mëssagi a soa veja adrëssa ëd pòsta eletrònica fin che a confirma nen costa-sì.
 
 L'Echip ëd Wikia
 
 
 ___________________________________________
 
-Për controlé j'ùltime neuve dzor Wikia, vìsita http://community.wikia.com
-It veus-to controlé che email it arseive? Và a: {{fullurl:{{ns:special}}:Preferences}}",
+Për controlé le neuve dzor Wikia, ch'a vìsita http://community.wikia.com
+Veul-lo controlé che mëssagi a arsèiv? Ch'a vada a: {{fullurl:{{ns:special}}:Preferences}}",
 	'usersignup-welcome-email-subject' => 'Bin ëvnù dzor Wikia, $USERNAME!',
 	'usersignup-welcome-email-greeting' => 'Cerea $USERNAME',
-	'usersignup-welcome-email-heading' => "I soma content ëd dete ël bin ëvnù a Wikia e {{SITENAME}}! Belessì a-i son quaich còse ch'it peule fé për ancaminé.",
+	'usersignup-welcome-email-heading' => 'I soma content ëd deje ël bin-ëvnù su Wikia e {{SITENAME}}! Valà dle ròbe che a peul fé për ancaminé.',
 	'usersignup-welcome-email-edit-profile-heading' => 'Modìfica tò profil.',
-	'usersignup-welcome-email-edit-profile-content' => 'Gionta na fòto ëd profil e pòche ròbe leste a propòsit ëd ti dzor tò profil ëd {{SITENAME}}.',
+	'usersignup-welcome-email-edit-profile-content' => "Ch'a gionta na fòto për sò profil e chèiche cite anformassion su chiel dzora sò profil su {{SITENAME}}.",
 	'usersignup-welcome-email-edit-profile-button' => 'Và al profil',
 	'usersignup-welcome-email-learn-basic-heading' => 'Ampara le bas.',
-	'usersignup-welcome-email-learn-basic-content' => 'Pija un tutorial lest dzor le bas ëd Wikia: com modifiché na pagina, tò profil utent, cangia ij tò gust, e àutr.',
+	'usersignup-welcome-email-learn-basic-content' => "Oten-e un cors ësvicc an sle base ëd Wikia: com modifiché na pàgina, sò profil utent, nodifiché ij sò gust e d'àutr.",
 	'usersignup-welcome-email-learn-basic-button' => 'Contròla',
-	'usersignup-welcome-email-explore-wiki-heading' => 'Esplora pi wiki.',
-	'usersignup-welcome-email-explore-wiki-content' => 'A-i son milen-e ëd wiki dzor Wikia, treuva ch\'at anteresso da la vos d\'un dij nòst sénter: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Gieugh Video</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Divertiment</a>, o <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Stil ëd vita</a>.',
+	'usersignup-welcome-email-explore-wiki-heading' => "Ch'a esplora pi 'd wiki.",
+	'usersignup-welcome-email-explore-wiki-content' => 'A-i son milen-e ëd wiki dzor Wikia, ch\'a treuva d\'àutre wiki ch\'a j\'anteresso an andasendie da un dij nòstri sénter: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Videogieugh</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Divertiment</a>, o <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Stil ëd vita</a>.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Và a wikia.com',
-	'usersignup-welcome-email-content' => 'It veus-to pi anformassion? Treuva consèj, arspòste, e la comunità Wikia a <a style="color:#2C85D5;" href="http://community.wikia.com">Communità Sentral</a>. Bon travaj!',
-	'usersignup-welcome-email-signature' => 'Il Team di Wikia',
+	'usersignup-welcome-email-content' => 'Veul-lo pi d\'anformassion? Ch\'a treuva dij consèj, dle rispòste, e la comunità ëd Wikia al <a style="color:#2C85D5;" href="http://community.wikia.com">sènter dla comunità</a>. Bon travaj!',
+	'usersignup-welcome-email-signature' => "L'echip ëd Wikia",
 	'usersignup-welcome-email-body' => "Cerea \$USERNAME,
 
-I soma content ëd dete ël bin ëvnù a Wikia e {{SITENAME}}! Belessì a-i son dle còse ch'it peule fé për ancaminé.
+I soma content ëd deje ël bin-ëvnù su Wikia e {{SITENAME}}! Belessì a-i son dle còse ch'a peul fé për ancaminé.
 
-Modìfica tò profil.
+Modifiché sò profil.
 
-Gionta na fòto al profil a pòche ròbe leste a propòsit ëd ti dzor tò profil ëd {{SITENAME}}.
+Gionté na fòto al profil a chèiche cite anformassion a propòsit ëd chiel dzora sò profil ëd {{SITENAME}}.
 
-Và a \$EDITPROFILEURL
+Andé a \$EDITPROFILEURL
 
-Ampara le bas.
+Amprende le base.
 
-Pija un tutorial lest dzor le bas ëd Wikia: com modifiché na pagina, tò profil utent, cangé ij tò gust, e àutr.
+Lese un cors lest dzora le base ëd Wikia: com modifiché na pàgina, sò profil utent, cangé ij sò gust e d'àutr.
 
-Contròla (\$LEARNBASICURL)
+Dé n'ociada a (\$LEARNBASICURL)
 
-Esplora pi wiki.
+Esploré d'àutre wiki.
 
-A-i son milen-e ëd wiki dzor Wikia, treuva pi wiki ch'at anteresso da la vos d'un dij nòst sénter: Gieugh Video (http://www.wikia.com/Video_Games), Divertiment (http://www.wikia.com/Entertainment), o Stil ëd Vita(http://www.wikia.com/Lifestyle).
+A-i son milen-e ëd wiki dzor Wikia, ch'a treuva d'àutre wiki ch'a j'anteresso andasend a un dij nòstri sénter: Videogieugh (http://www.wikia.com/Video_Games), Divertiment (http://www.wikia.com/Entertainment), o Stil ëd Vita(http://www.wikia.com/Lifestyle).
 
-Và a \$EXPLOREWIKISURL
+Andé a \$EXPLOREWIKISURL
 
-It veus-to pi anformassion? Treuva consèj, arspòste, e la comunità Wikia a Comunità Sentral (http://www.community.wikia.com). Bon travaj!
+Veul-lo pi d'anformassion? Ch'a treuva dij consèj, dle rispòste, e la comunità Wikia al sènter dla Comunità (http://www.community.wikia.com). Bon travaj!
 
 L'Echip Wikia
 
@@ -3233,75 +3362,75 @@ ___________________________________________
 
 Për controlé j'ùltime neuve dzor Wikia, vìsita http://community.wikia.com
 It veus-to controlé che email it arseive? Và a: {{fullurl:{{ns:special}}:Preferences}}",
-	'usersignup-heading' => 'Uniss-te a Wikia Ancheuj',
-	'usersignup-heading-byemail' => 'Crea un cont për quaidun àutr',
-	'usersignup-marketing-wikia' => "Ancamin-a a colaboré con milion ëd përson-e da tut ël mond ch'a ven-o ansema a condivide lòn ch'a san e a-j pias.",
-	'usersignup-marketing-login' => "Già n'utent? [[Special:UserLogin|Intra]]",
-	'usersignup-marketing-benefits' => 'Esse na part ëd quaicòs ëd gròss',
+	'usersignup-heading' => "Ch'as gionza a Wikia Ancheuj",
+	'usersignup-heading-byemail' => "Creé un cont për quaidun d'àutr",
+	'usersignup-marketing-wikia' => "Ch'a ancamin-a a colaboré con dij milion ëd përson-e da tut ël mond ch'as radun-o për partagé lòn ch'a san e a-j pias.",
+	'usersignup-marketing-login' => "Già utent? [[Special:UserLogin|Ch'a intra ant ël sistema]]",
+	'usersignup-marketing-benefits' => 'Fé part ëd quaicòs dë stragròss',
 	'usersignup-marketing-community-heading' => 'Colàbora',
-	'usersignup-marketing-community' => "Dëscheuvr e esplora dij soget ch'a van da gieugh video a film e tv. Ancontra përson-e con ij midem anteressi e passion.",
+	'usersignup-marketing-community' => "Ch'a dëscheurva e ch'a esplora dij soget ch'a van dai videogieugh ai film e a la television. Ch'a rancontra dle përson-e con dj'anteresse e passion ch'a smijo ai sò.",
 	'usersignup-marketing-global-heading' => 'Crea',
-	'usersignup-marketing-global' => "Ancamin-a na wiki. Ancamin-a cita, ven gròssa, con l'agiut ëd j'àutr.",
+	'usersignup-marketing-global' => "Ch'a ancamin-a na wiki. Ch'a ancamin-a dossman, peui ch'a la fasa chërse, con l'agiut ëd j'àutri.",
 	'usersignup-marketing-creativity-heading' => 'Esse original',
-	'usersignup-marketing-creativity' => 'Dòvra Wikia për esprime toa creatività con sondagi e liste dij prim 10, galarìe ëd fòto e video, aplicassion e ëd pi.',
-	'usersignup-createaccount-byemail' => 'Crea un cont për quaidun àutr',
+	'usersignup-marketing-creativity' => "Ch'a deuvra Wikia për esprime soa creatività con dij sondagi e dle liste dij prim 10, dle galarìe ëd fòto e filmà, dj'aplicassion e d'àutr ancor.",
+	'usersignup-createaccount-byemail' => "Creé un cont për quaidun d'àutr",
 	'usersignup-error-captcha' => "la paròla ch'it l'has anserì a corispond pa la paròla ant la casela, preuva torna!",
 	'usersignup-account-creation-heading' => 'Da bin!',
-	'usersignup-account-creation-subheading' => "I l'oma mandà n'email a $1",
-	'usersignup-account-creation-email-sent' => "It l'has ancaminà ël process ëd creassion dël cont për $2. I l'oma mandà n'email a $1 con na ciav temporania e un colegament ëd conferma.
+	'usersignup-account-creation-subheading' => "I l'oma mandà un mëssagi a $1",
+	'usersignup-account-creation-email-sent' => "A l'ha ancaminà ël process ëd creassion dël cont për $2. I l'oma mandà un mëssagi a $1 con na ciav temporania e na liura ëd conferma.
 
 
-$2 a dovrà sgnaché dzor ël colegament ant l'email ch'i l'oma mandaje për confermé sò cont e cangé soa ciav temporania për finé ëd creé sò cont.
+$2 a dovrà sgnaché dzora la liura ant ël mëssagi ch'i l'oma mandaje për confermé sò cont e cangé soa ciav temporania për livré ëd creé sò cont.
 
 
-[{{fullurl:{{ns:special}}:UserSignup|byemail=1}} Creé pi cont] dzor {{SITENAME}}",
+[{{fullurl:{{ns:special}}:UserSignup|byemail=1}} Creé pi 'd cont] dzor {{SITENAME}}",
 	'usersignup-account-creation-email-subject' => "Un cont a l'é stàit creà për ti dzor Wikia!",
 	'usersignup-account-creation-email-greeting' => 'Cerea,',
-	'usersignup-account-creation-email-content' => 'Un cont a l\'é stàit creà për ti dzor {{SITENAME}}. Për acede a tò cont e cangé toa ciav temporania sgnaca ël colegament sota e intra con nòm utent "$USERNAME" e ciav "$NEWPASSWORD".
+	'usersignup-account-creation-email-content' => 'Un cont a l\'é stàit creà për chiel dzor {{SITENAME}}. Për acede a sò cont e cangé soa ciav temporania ch\'a sgnaca an sla liura sì-sota e ch\'a intra ant ël sistema con lë stranòm utent «$USERNAME» e la ciav «$NEWPASSWORD».
 
-Pëp piasì intra a <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a>
+Për piasì, ch\'a intra ant ël sistema a <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a>
 
-S\'it veule pa che sto cont a sia creà it peule semplicement ignoré sta email o contaté nòsta echip Comunità d\'Apògg con qualsëssìa custion.',
+S\'a veul pa che ës cont a sia creà a peule bele mach ignoré ës mëssagi o contaté nòstra echip d\'agiut për qualsëssìa chestion.',
 	'usersignup-account-creation-email-signature' => "L'Echip ëd Wikia",
-	'usersignup-account-creation-email-body' => 'Cerea,
+	'usersignup-account-creation-email-body' => "Cerea,
 
-Un cont a l\'é stàit creà për ti dzor {{SITENAME}}. Për acede a tò cont e cangé toa ciav temporania sgnaca ël colegament sota e intra con nòm utent "$2" e ciav "$3".
+Un cont a l'é stàit creà për chiel dzor {{SITENAME}}. Për acede a sò cont e cangé soa ciav temporania ch'a sgnaca an sla liura sì-sota e ch'a intra ant ël sistema con lë stranòm «$2» e la ciav «$3».
 
-Për piasì intra a {{fullurl:{{ns:special}}:UserLogin}}
+Për piasì, ch'a intra ant ël sistema a {{fullurl:{{ns:special}}:UserLogin}}
 
-S\'it veule pa che sto cont a sia creà it peule semplicement ignoré sta email o contaté nòsta echip Comunità d\'Apògg con qualsëssìa custion.
+S'a veul pa che 's cont a sia creà a peul bele mach ignoré ës mëssagi o contaté nòstra echip d'agiut për qualsëssìa chestion.
 
-L\'Echip Wikia
+L'Echip Wikia
 
 
 ___________________________________________
 
-Për controlé j\'ùltime neuve dzor Wikia, vìsita http://community.wikia.com
-It veus-to controlé che eamil it arseive? Và a: {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-confirmation-reminder-email_subject' => 'Esse pa un foresté...',
+Për controlé le neuve dzora Wikia, ch'a vìsita http://community.wikia.com
+Veul-lo controlé che mëssagi a arsèiv? Andé su: {{fullurl:{{ns:special}}:Preferences}}",
+	'usersignup-confirmation-reminder-email_subject' => "Ch'a sia nen në strangé...",
 	'usersignup-confirmation-reminder-email-greeting' => 'Cerea $USERNAME',
-	'usersignup-confirmation-reminder-email-content' => 'A l\'é passaje pòchi di, ma a smija ch\'it l\'abie pa anco\' finì ëd creé tò cont dzor Wikia. A l\'é belfé. Sgnaca mach ël colegament ëd conferma sota:
+	'usersignup-confirmation-reminder-email-content' => 'A son passaje vàire di, ma a smija ch\'a l\'abia ancor nen finì ëd creé sò cont dzora Wikia. A l\'é belfé. Ch\'a sgnaca mach an sla liura ëd conferma sì-sota:
 
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
 
-S\'it conferma pa an 23 di tò nòm utent, $USERNAME, a vnirà torna disponìbilk, parèj speta pa!',
+S\'a conferma pa an 23 di sò stranòm d\'utent, $USERNAME, ciel-sì a vnirà torna disponìbil, parèj ch\'a speta nen!',
 	'usersignup-confirmation-reminder-email-signature' => "L'Echip ëd Wikia",
 	'usersignup-confirmation-reminder-email_body' => "Cerea \$2,
 
-A l'é passaje pòchi di, ma a smija ch'it l'abie pa anco' finì ëd creé tò cont dzor Wikia. A l'é belfé. Sgnaca mach ël colegament ëd conferma sota:
+A son passaje vàire di, ma a smija ch'a l'abia ancor nen livrà ëd creé sò cont dzora Wikia. A l'é belfé. Ch'a sgnaca mach an sla liura ëd conferma sì-sota:
 
 \$3
 
-S'it conferme pa an 23 di tò nòm utent, \$USERNAME, a vnirà torna disponìbilk, parèj speta pa!
+S'a conferme nen an 23 di sò stranòm d'utent, \$USERNAME, cost-sì a vnirà torna disponìbil, parèj ch'a speta nen!
 
 L'Echip Wikia
 
 
 ___________________________________________
 
-Për controlé j'ùltime neuve dzor Wikia, vìsita http://community.wikia.com
-It veus-to controlé che eamil it arseive? Và a: {{fullurl:{{ns:special}}:Preferences}}",
-	'usersignup-facebook-problem' => "A l'é stàit-ie un problem ëd comunicassion con facebook. Për piasì preuva torna pi tard.",
+Për controlé le neuve dzora Wikia, ch'a vìsita http://community.wikia.com
+Veul-lo controlé che mëssagi a arsèiv? Ch'a vada su: {{fullurl:{{ns:special}}:Preferences}}",
+	'usersignup-facebook-problem' => "A-i é staje un problema ëd comunicassion con Facebook. Për piasì, ch'a preuva torna pi tard.",
 );
 
 /** Pashto (پښتو)
@@ -3327,6 +3456,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Luckas
  * @author SandroHc
  */
 $messages['pt'] = array(
@@ -3339,17 +3469,28 @@ $messages['pt'] = array(
 	'usersignup-resend-email-heading-failure' => 'E-mail não re-enviado',
 	'usersignup-confirm-page-heading-confirmed-user' => 'Parabéns!',
 	'usersignup-confirm-page-subheading-confirmed-user' => 'Já estás confirmado',
+	'usersignup-confirmation-heading' => 'Quase lá',
 	'usersignup-confirmation-heading-email-resent' => 'Novo e-mail enviado',
+	'usersignup-confirmation-email-greeting' => 'Olá $USERNAME,',
+	'usersignup-reconfirmation-email-greeting' => 'Olá $USERNAME',
+	'usersignup-reconfirmation-email-signature' => 'A equipe da Wikia',
+	'usersignup-welcome-email-greeting' => 'Olá $USERNAME',
+	'usersignup-welcome-email-edit-profile-heading' => 'Editar seu perfil.',
+	'usersignup-welcome-email-learn-basic-heading' => 'Aprenda o básico.',
+	'usersignup-welcome-email-explore-wiki-heading' => 'Explorar mais wikis.',
+	'usersignup-welcome-email-explore-wiki-button' => 'Ir para wikia.com',
 	'usersignup-marketing-community-heading' => 'Colabora',
 	'usersignup-marketing-global-heading' => 'Cria',
 	'usersignup-marketing-creativity-heading' => 'Sê original',
 	'usersignup-account-creation-heading' => 'Sucesso!',
 	'usersignup-account-creation-email-greeting' => 'Olá,',
+	'usersignup-confirmation-reminder-email_subject' => 'Não seja um estranho...',
 	'usersignup-confirmation-reminder-email-greeting' => 'Olá $USERNAME',
 	'usersignup-confirmation-reminder-email-signature' => 'A Equipa da Wikia',
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
@@ -3374,14 +3515,22 @@ $messages['pt-br'] = array(
  */
 $messages['roa-tara'] = array(
 	'usersignup-page-title' => 'Join Uicchia',
+	'usersignup-page-captcha-label' => 'Parole Sfocate',
+	'usersignup-error-username-length' => "Pizze, 'u nome utende tune non ge pò essere cchiù de {{PLURAL:$1|'nu carattere|$1 carattere}}.",
+	'usersignup-error-invalid-user' => 'Utende invalide. Pe piacere tràse apprime.',
 	'usersignup-confirm-email-new-email-label' => 'Mail nove',
 	'usersignup-confirm-email-update' => 'Aggiorne',
 	'usersignup-confirm-page-heading-confirmed-user' => 'Comblimende!',
 	'usersignup-confirmation-heading-email-resent' => 'Email nove mannate',
 	'usersignup-confirmation-subheading' => "Condrolle l'email toje",
 	'usersignup-confirmation-email-greeting' => 'Cià $USERNAME,',
+	'usersignup-reconfirmation-email-greeting' => 'Cià $USERNAME',
+	'usersignup-welcome-email-greeting' => 'Cià $USERNAME',
 	'usersignup-marketing-community-heading' => 'Collabbore',
 	'usersignup-marketing-global-heading' => 'Ccreje',
+	'usersignup-account-creation-email-greeting' => 'Cià,',
+	'usersignup-confirmation-reminder-email-greeting' => 'Cià $USERNAME',
+	'usersignup-confirmation-reminder-email-signature' => "'A Squadre Uicchia",
 );
 
 /** Russian (русский)
@@ -3743,7 +3892,7 @@ Vill du kontrollera vilka e-postmeddelanden du får? Gå till: {{fullurl:{{ns:sp
 	'usersignup-marketing-creativity' => 'Använd Wikia för att uttrycka din kreativitet med omröstningar och Topp 10-listor, foto- och videogallerier, applikationer och mer.',
 	'usersignup-createaccount-byemail' => 'Skapa ett konto för någon annan',
 	'usersignup-error-captcha' => 'Ordet du skrev in stämde inte överens med ordet i rutan, försök igen!',
-	'usersignup-account-creation-heading' => 'Succé!',
+	'usersignup-account-creation-heading' => 'Åtgärden genomfördes!',
 	'usersignup-account-creation-subheading' => 'Vi har skickat ett e-postmeddelande till $1',
 	'usersignup-account-creation-email-sent' => 'Du har börjat på att skapa ett konto för $2. Vi har skickat ett e-postmeddelande till $1 med ett tillfälligt lösenord och en bekräftelselänk.
 
@@ -4039,6 +4188,7 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Wildream
  */
 $messages['uk'] = array(
@@ -4108,6 +4258,140 @@ ___________________________________________
 	'usersignup-reconfirmation-email-sent' => 'Вашу адресу електронної пошти було змінено на $1. Ми відправили вам нового листа з підтвердженням електронною поштою. Будь ласка, підтвердіть нову адресу електронної пошти.',
 	'usersignup-reconfirmation-email_subject' => 'Підтвердити зміну адресі вашої електронної пошти на Вікія',
 	'usersignup-reconfirmation-email-greeting' => 'Привіт, $USERNAME,',
+	'usersignup-reconfirmation-email-content' => 'Будь-ласка, натисніть на посилання нижче, щоб підтвердити зміну адреси електронної пошти на Вікії.
+
+<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
+
+Ви будете продовжувати отримувати електронну пошту на ваш стару адресу до тих пір, поки ви це не підтвердите.',
+	'usersignup-reconfirmation-email-signature' => 'Команда Вікія',
+	'usersignup-reconfirmation-email_body' => 'Привіт $2,
+
+Будь Ласка натисніть на посилання нижче, щоб підтвердити зміну адреси електронної пошти на Вікії.
+
+$3
+
+Ви будете продовжувати отримувати електронну пошту на ваш старий адресу до тих пір, поки ви це підтвердити.
+
+ Команда Вікія
+
+
+___________________________________________
+
+Щоб ознайомитися з останніми подіями на Вікія, відвідайте http://community.wikia.com
+Хочете налаштувати пошту, яку ви отримуєте? Перейдіть до: {{fullurl:{{ns:special}}:Установки}}',
+	'usersignup-welcome-email-subject' => 'Ласкаво просимо на Вікія, $USERNAME!',
+	'usersignup-welcome-email-greeting' => 'Здоровеньки були, $USERNAME',
+	'usersignup-welcome-email-heading' => "Ми раді вітати вас на Вікія та {{ім'я сайту}}! Ось декілька речей, які ви можете зробити, щоб почати роботу.",
+	'usersignup-welcome-email-edit-profile-heading' => 'Відредагуйте ваш профіль.',
+	'usersignup-welcome-email-edit-profile-content' => 'Додати фото у профіль і кілька фактів про себе у вашому профілі на {{SITENAME}}.',
+	'usersignup-welcome-email-edit-profile-button' => 'Перейти до профілю',
+	'usersignup-welcome-email-learn-basic-heading' => 'Ознайомтеся з основами.',
+	'usersignup-welcome-email-learn-basic-content' => 'Перегляньте швидкий підручник з основ Вікія: як редагувати сторінки, ваш профіль користувача, змінювати особисті налаштування тощо.',
+	'usersignup-welcome-email-learn-basic-button' => 'Перейти до',
+	'usersignup-welcome-email-explore-wiki-heading' => 'Дослідіть інші вікі.',
+	'usersignup-welcome-email-explore-wiki-content' => 'На Вікія знаходяться тисячі вікій, знайдіть інші вікії, які, можливо, зацікавлять вас: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Відеоігри</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Кіно і Серіали</a>, or <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Стиль життя</a>.',
+	'usersignup-welcome-email-explore-wiki-button' => 'Перейти до wikia.com',
+	'usersignup-welcome-email-content' => 'Хочете отримати більше інформації? Знайдіть консультації, відповіді та спільноту Вікія у <a style="color:#2C85D5;" href="http://community.wikia.com">Центрі спільноті</a>. Щасливого редагування!',
+	'usersignup-welcome-email-signature' => 'Команда Вікія',
+	'usersignup-welcome-email-body' => 'Привіт, $USERNAME
+
+Ми раді вітати вас на Вікія та на {{SITENAME}}! Ось декілька порад, які допоможуть вам почати.
+
+Відредагуйте свій профіль.
+
+Додайте у свій профіль на {{SITENAME}} зображення і декілька фактів про себе.
+
+Перейти до $EDITPROFILEURL
+
+Вивчіть основи.
+
+Посмотрите краткое руководство по Викия: как редактировать страницы, профайл участника, изменить личные настройки и другое.
+
+Перейти к ($LEARNBASICURL)
+
+Досліджуйте інші вікії.
+
+На Вікія знаходяться тисячі вікій, знайдіть інші вікії, які, можливо, зацікавлять вас: Відеоігри (http://www.wikia.com/Video_Games), Кіно і серіали (http://www.wikia.com/Entertainment) або Захоплення (http://www.wikia.com/Lifestyle).
+
+Перейти до $EXPLOREWIKISURL
+
+Потрібна додаткова інформація? На Центральній Вікі (http://www.community.wikia.com) можна знайти поради, відповіді на питання та інших учасників спільноти Вікія. Щасливого редагування!
+
+Команда Вікія
+
+
+___________________________________________
+
+Щоб перевірити останні події на Вікія, відвідайте http://community.wikia.com
+Хочете налаштувати розсилку листів? Перейдіть до {{fullurl:{{ns:special}}:Preferences}}',
+	'usersignup-heading' => 'Приєднатися до Вікія сьогодні',
+	'usersignup-heading-byemail' => 'Створити обліковий запис для когось іншого',
+	'usersignup-marketing-wikia' => 'Почніть співпрацю з мільйонам людей з усього світу, які зібралися разом, щоб робити те, що вони знають і люблять.',
+	'usersignup-marketing-login' => 'Вже користувач? [[Special:UserLogin|Ввійти]]',
+	'usersignup-marketing-benefits' => 'Будьте частиною чогось величезного',
+	'usersignup-marketing-community-heading' => 'Співпрацюйте',
+	'usersignup-marketing-community' => 'Відкрийте для себе і вивчайте різні теми, починаючи від відео-ігор, кіно і телебачення. Зустрічайте людей зі схожими інтересами і пристрастями.',
+	'usersignup-marketing-global-heading' => 'Створити',
+	'usersignup-marketing-global' => 'Розпочніть вікі. Починайте з малого, виплекайте велике за допомогою інших людей.',
+	'usersignup-marketing-creativity-heading' => 'Будьте оригінальним',
+	'usersignup-marketing-creativity' => 'Використовуйте Wikia, щоб висловити свій творчий потенціал за допомогою опитувань і рейтингових списків, фото та відео галерей, програми та багато іншого.',
+	'usersignup-createaccount-byemail' => 'Створити обліковий запис для когось іншого',
+	'usersignup-error-captcha' => 'Введене вами слово не збігається з словом у вікно, спробуйте ще раз!',
+	'usersignup-account-creation-heading' => 'Успіх!',
+	'usersignup-account-creation-subheading' => 'Ми відправили лист на $1',
+	'usersignup-account-creation-email-sent' => 'Ви почали процес створення облікового запису $2. Ми відправили вам лист на $1 з тимчасовим паролем та посиланням для підтвердження.
+
+
+$2, вам потрібно натиснути на посилання у цьому листі, щоб підтвердити свій обліковий запис та змінити тимчавий пароль на інший для завершення створення облікового запису.
+
+
+[{{fullurl:{{ns:special}}:UserSignup|byemail=1}} Створити інший обліковий запис] на {{SITENAME}}',
+	'usersignup-account-creation-email-subject' => 'Обліковий запис створено для вас на Вікія!',
+	'usersignup-account-creation-email-greeting' => 'Привіт,',
+	'usersignup-account-creation-email-content' => 'Обліковий запис на {{SITENAME}} створений. Для доступу до облікового запису та зміни тимчасового паролю, натисніть на посилання нижче і введіть своє ім\'я користувача "$USERNAME" і пароль "$NEWPASSWORD".
+
+Будь ласка, перейдіть до <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a>
+
+Якщо ви не хочете, щоб цей обліковий запис був створений, то ви можете знехтувати цим повідомленням або зв\'язатися з нашою командою підтримки спільноти з будь-якого питання.',
+	'usersignup-account-creation-email-signature' => 'Команда Вікія',
+	'usersignup-account-creation-email-body' => 'Привіт,
+
+Обліковий запис на {{SITENAME}} створено. Для доступу до облікового запису та зміни тимчасового паролю натисніть на посилання нижче і введіть своє ім\'я учасника "$2" та пароль "$3".
+
+Будь ласка, перейдіть до {{fullurl:{{ns:special}}:UserLogin}}
+
+Якщо ви не хочете, щоб цей обліковий запис було створено, ви можете знехтувати цим повідомленням або зв\'язатися з нашою командою підтримки спільноти з будь-якого питання.
+
+Команда Вікія
+
+
+___________________________________________
+
+Для перевірки останніх подій на Вікія відвідайте http://community.wikia.com
+Хочете налаштувати отримання розсилки листів? Перейдіть на {{fullurl:{{ns:special}}:Preferences}}',
+	'usersignup-confirmation-reminder-email_subject' => 'Не будьте чужим...',
+	'usersignup-confirmation-reminder-email-greeting' => 'Привіт $USERNAME',
+	'usersignup-confirmation-reminder-email-content' => 'Минуло кілька днів, але, схоже, ви ще не закінчили створення облікового запису на Wikia поки. Це легко. Просто натисніть на посилання для підтвердження нижче:
+
+<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
+
+Якщо ви не підтвердите протягом 23 днів ваше ім\'я користувача $USERNAME, то воно знову стане доступним для інших, тому не чекайте!',
+	'usersignup-confirmation-reminder-email-signature' => 'Команда Вікія',
+	'usersignup-confirmation-reminder-email_body' => "Hi $2,
+
+Пройшло кілька днів, але, схоже, ви ще не закінчили створення облікового запису на Wikia поки. Це легко. Просто натисніть на посилання для підтвердження нижче:
+
+$3
+
+Якщо ви не підтвердите протягом 23 днів ваше ім'я користувача, $2, то воно знову стане доступним, тому не чекайте!
+
+ Команда Вікія
+
+
+___________________________________________
+ Ознайомтеся з останніми подіями на Вікія, відвідавши http://community.wikia.com
+Хочете налаштувати отримання розсилки листів? Перейдіть на:  {{fullurl:{{ns:special}}:Preferences}}",
+	'usersignup-facebook-problem' => "Сталася помилка з'єднання з Facebook. Будь ласка, спробуйте ще раз пізніше.",
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -4315,9 +4599,18 @@ ___________________________________________
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Simon Shek
  */
 $messages['zh-hant'] = array(
 	'usersignup-page-title' => '加入 Wikia',
+	'usersignup-page-captcha-label' => '模糊單詞',
+	'usersignup-error-username-length' => '哎呀，您的用戶名不能超過 {{PLURAL:$1|一個字符| $1 字符}}。',
+	'usersignup-error-invalid-user' => '無效用戶，請先登錄。',
+	'usersignup-error-invalid-email' => '請輸入有效的電子郵件地址。',
+	'usersignup-error-symbols-in-username' => '哎呀，您的用戶名只能包含字母和數位。',
+	'usersignup-error-empty-email' => '哎呀，請填寫您的電子郵件地址。',
+	'usersignup-error-empty-username' => '哎呀，請填寫用戶名。',
+	'usersignup-error-already-confirmed' => '你已經確認該電子郵件地址。',
 	'usersignup-confirm-email-new-email-label' => '新電子郵件',
 	'usersignup-confirm-email-update' => '更新',
 	'usersignup-resend-email-heading-failure' => '電子郵件未重新發送',
@@ -4325,4 +4618,5 @@ $messages['zh-hant'] = array(
 	'usersignup-confirmation-heading' => '快完成了。',
 	'usersignup-confirmation-heading-email-resent' => '新電子郵件已發送',
 	'usersignup-confirmation-subheading' => '請檢查您的電子郵件',
+	'usersignup-marketing-global-heading' => '建立',
 );

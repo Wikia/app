@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Controller for Wikia's Special:Version page
@@ -6,8 +6,7 @@
  * @author relwell
  *
  */
-class WikiaSpecialVersionController extends WikiaSpecialPageController 
-{
+class WikiaSpecialVersionController extends WikiaSpecialPageController {
 	/**
 	 * The special page class
 	 * @var $version WikiaSpecialVersion
@@ -18,33 +17,37 @@ class WikiaSpecialVersionController extends WikiaSpecialPageController
 	 * Constructor method. Overrides the original Special:Version page.
 	 */
 	public function __construct() {
-		$this->version = F::build( 'WikiaSpecialVersion' );
-		
+		$this->version = (new WikiaSpecialVersion);
+
 		parent::__construct( 'Version' );
 	}
-	
+
 	public function index() {
-		$title = F::build( 'Title', array( 'Version', NS_SPECIAL ), 'newFromText' );
-		$popts = F::build('ParserOptions', array( RequestContext::getMain() ), 'newFromContext' );
+		$title = Title::newFromText( 'Version', NS_SPECIAL );
+		$popts = ParserOptions::newFromContext( RequestContext::getMain() );
 
 		$this->wg->Title = $title;
-		$this->app->wg->Out->setPageTitle( $title );
-		
+		$this->specialPage->setHeaders();
+
 		$softwareListPrepped = array();
 		foreach ( $this->version->getSoftwareList() as $key => $val ) {
-			$softwareListPrepped[$this->wg->Parser->parse( $key, $title, $popts )->getText()] = $this->wg->Parser->parse( $val, $title, $popts ) ->getText();
+			$softwareListPrepped[$this->wg->Parser->parse( $key, $title, $popts )->getText()] = $this->wg->Parser->parse( $val, $title, $popts )->getText();
 		}
 
 		$this->setVal( 'copyRightAndAuthorList', $this->wg->Parser->parse( $this->version->getCopyrightAndAuthorList(), $title, $popts )->getText() );
 		$this->setVal( 'softwareInformation', $this->wg->Parser->parse( $this->version->softwareInformation(), $title, $popts )->getText() );
 		$this->setVal( 'extensionCredit', $this->wg->Parser->parse( $this->version->getExtensionCredits(), $title, $popts )->getText() );
 		$this->setVal( 'ip', str_replace( '--', ' - ', htmlspecialchars( $this->getContext()->getRequest()->getIP() ) ) );
-		$this->setVal( 'wikiaVersion', $this->version->getWikiaVersion() );
-		$this->setVal( 'versionLicenseMessage', $this->wf->Message( 'version-license' ) );
-		$this->setVal( 'versionLicenseInfoMessage', $this->wf->Message( 'version-license-info' ) );
-		$this->setVal( 'versionSoftwareMessage', $this->wf->Message( 'version-software' ) );
-		$this->setVal( 'versionSoftwareProductMessage', $this->wf->Message( 'version-software-product' ) );
-		$this->setVal( 'versionSoftwareVersionMessage', $this->wf->Message( 'version-software-version' ) );
+		$this->setVal( 'wikiaCodeMessage', wfMessage( 'wikia-version-code' )->text() );
+		$this->setVal( 'wikiaCodeVersion', $this->version->getWikiaCodeVersion() );
+		$this->setVal( 'wikiaConfigMessage', wfMessage( 'wikia-version-config' )->text() );
+		$this->setVal( 'wikiaConfigVersion', $this->version->getWikiaConfigVersion() );
+		$this->setVal( 'versionLicenseMessage', wfMessage( 'version-license' )->text() );
+		$this->setVal( 'versionLicenseInfoMessage', wfMessage( 'version-license-info' )->parse() );
+		$this->setVal( 'versionSoftwareMessage', wfMessage( 'version-software' )->text() );
+		$this->setVal( 'versionSoftwareProductMessage', wfMessage( 'version-software-product' )->text() );
+		$this->setVal( 'versionSoftwareVersionMessage', wfMessage( 'version-software-version' )->text() );
 		$this->setVal( 'versionSoftwareList', $softwareListPrepped );
+
 	}
 }

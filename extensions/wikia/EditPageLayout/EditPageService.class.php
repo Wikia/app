@@ -52,10 +52,10 @@ class EditPageService extends Service {
 
 		$originalWikitext = $wikitext;
 
-		// If CategorySelect is enabled, add categories to wikitext
 		if ( !empty( $wg->EnableCategorySelectExt ) ) {
+		// if CategorySelect is enabled, add categories to wikitext
 			$categories = $wg->Request->getVal( 'categories', '' );
-			$wikitext .= CategorySelect::changeFormat( $categories, 'json', 'wikitext' );
+			$wikitext .= CategoryHelper::changeFormat( $categories, 'json', 'wikitext' );
 		}
 
 		// call preSaveTransform so signatures, {{subst:foo}}, etc. will work
@@ -93,7 +93,9 @@ class EditPageService extends Service {
 		// create "fake" EditPage
 		$editPage = new EditPage($article);
 
-		$editPage->textbox1 = $wikitext;
+		// rtrim is a fix for https://wikia-inc.atlassian.net/browse/MAIN-152
+		// To understand better look at "$this->textbox1 = $this->safeUnicodeInput( $request, 'wpTextbox1' );" in EditPage.php
+		$editPage->textbox1 = rtrim( $wikitext );
 		$editPage->edittime = null;
 		$editPage->section = $section > 0 ? $section : '';
 

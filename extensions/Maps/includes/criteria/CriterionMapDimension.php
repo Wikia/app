@@ -14,7 +14,7 @@
 class CriterionMapDimension extends ItemParameterCriterion {
 	
 	/**
-	 * Indicates if the prarameter is for width or height.
+	 * Indicates if the parameter is for width or height.
 	 * 
 	 * @since 0.7
 	 * 
@@ -24,8 +24,10 @@ class CriterionMapDimension extends ItemParameterCriterion {
 	
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @since 0.7
+	 *
+	 * @param string $dimension
 	 */
 	public function __construct( $dimension ) {
 		parent::__construct();

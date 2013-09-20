@@ -20,10 +20,10 @@
 ?>
 	<div class="neutral modalToolbar">
 		<button class="secondary cancel">
-			<?= $wf->Msg('cancel') ?>
+			<?= wfMsg('cancel') ?>
 		</button>
 		<button class="submit">
-			<?= $wf->Msg('wall-action-move-thread-ok') ?>
+			<?= wfMsg('wall-action-move-thread-ok') ?>
 		</button>
 	</div>
 </section>

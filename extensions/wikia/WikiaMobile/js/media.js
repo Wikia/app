@@ -4,8 +4,8 @@
  *
  * @author Jakub "Student" Olek
  */
-define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require.optional('popover'), 'track', require.optional('share'), require.optional('wikia.cache'), 'wikia.loader', 'wikia.nirvana'],
-	function(msg, modal, throbber, qs, popover, track, share, cache, loader, nirvana){
+define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require.optional('popover'), 'track', require.optional('share'), require.optional('wikia.cache'), 'wikia.loader', 'wikia.nirvana', 'wikia.videoBootstrap', 'wikia.media.class', 'toast'],
+	function(msg, modal, throbber, QueryString, popover, track, share, cache, loader, nirvana, VideoBootstrap, Media, toast){
 	'use strict';
 	/** @private **/
 
@@ -14,15 +14,18 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		})(document.createElement('div').style),
 		images = [],
 		elements,
-		pages = [],
 		videoCache = {},
 		pager,
-		currentImage,
-		currentImageStyle,
-		imagesLength = 0,
+		lastNum = 0,
+		currentNum = 0,
+		currentMedia,
+		currentWrapper,
+		currentWrapperStyle,
 		wkMdlImages,
-		current = 0,
-		shrImg = qs().getVal('file'),
+		qs = QueryString(),
+		shrImg = qs.getVal('file'),
+		// index of shared file in array of videos/images on page
+		shrImgIdx = -1,
 		shareBtn,
 		clickEvent = 'click',
 		sharePopOver,
@@ -52,41 +55,35 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		startD,
 		galleryInited = false,
 		inited,
-		supportedVideos = window.supportedVideos || [];
+		// Video view click source tracking. Default, before lightbox is opened, is "embed".  Other possible values are "share" and "lightbox".
+		clickSource = "embed",
+		videoInstance,
+		events = {},
+		skip = [];
 
-	//Media object that holds all data needed to display it in modal/gallery
-	function Media(elem, data, length, i){
-		this.element = elem;
-		this.url = data.full;
-
-		if(data.name) {this.name = data.name;}
-		if(data.thumb) {this.thumb = data.thumb;}
-		if(data.med) {this.med = data.med;}
-		if(data.capt) {this.caption = data.capt;}
-		if(data.type === 'video') {
-			this.isVideo = true;
-			//some providers come with a 'subname' like ooyala/wikiawebinar
-			this.supported = ~supportedVideos.indexOf((data.provider || '').split('/')[0]);
-		}
-
-		if(length > 1){
-			this.length = length;
-			this.number = i;
+	function trigger(event, data){
+		if(events[event]){
+			events[event].forEach(function(func) {
+				func.call(func, data);
+			});
 		}
 	}
 
 	function setup(){
 		var	name,
 			i = 0,
+			imagesLength = 0,
 			element,
 			imageData,
 			j,
-			l;
+			l,
+			data;
 
 		//loop that gets all media from a page
 		while(element = elements[i++]) {
-			var params = element.getAttribute('data-params') || false,
-				data = JSON.parse(params);
+			var params = element.getAttribute('data-params') || false;
+
+			data = JSON.parse(params);
 
 			if(data && data instanceof Array){
 				j = 0;
@@ -98,47 +95,73 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				while(imageData = data[j++]){
 					name = imageData.name;
 
-					if (name === shrImg) {shrImg = imagesLength;}
+					if (name === shrImg) {
+							shrImgIdx = imagesLength;
+					}
 
-					images[images.length] = new Media(element, imageData, l, j);
-
-					//create pages for modal
-					pages[imagesLength++] = '<section><img src=' + imageData.full + '></section>';
+					images[imagesLength] = new Media({
+						element: element,
+						image: imageData,
+						length: l,
+						number: j,
+						imgNum: imagesLength++
+					});
 				}
 			}
 		}
 
-		if(imagesLength > 1) {
+		elements = null;
+
+		data = {
+			images: images,
+			skip: skip
+		};
+
+		trigger('setup', data);
+
+		if(images.length > 1) {
 			content = '<div class=chnImg id=prvImg></div>' + content + '<div class=chnImg id=nxtImg></div>';
 			toolbar += '<div id=wkGalTgl></div>';
 		}
 
 		//this function should not run twice
 		inited = true;
-		elements = null;
 	}
 
-	function init(images){
+	function init(elementList){
 
-		elements = images;
+		elements = elementList;
 
-		//if url contains image=imageName - setup and find the image
+		//if url contains file=fileName - setup and find the image/video
 		if(shrImg) {
-			setTimeout(function(){
-				!inited && setup();
-				openModal(shrImg);
-			}, 2000);
+			!inited && setup();
+			if ( shrImgIdx > -1 ) {
+				// file specified in querystring exists on the page - show it in a modal
+				// after a short delay so the user will know they are on an article page
+				setTimeout(function(){
+					clickSource = "share";
+					openModal(shrImgIdx);
+				}, 2000);
+			} else {
+				// file specified in querystring doesn't exist on the page
+				toast.show( msg('wikiamobile-shared-file-not-available') );
+				qs.removeVal('file' ).replaceState();
+			}
 		}
 
 		document.body.addEventListener(clickEvent, function(event){
 			var t = event.target,
-				className = t.className;
+				className = t.className,
+				isSmall = (className.indexOf('small') > -1),
+				isMedia = (className.indexOf('media') > -1);
 
-			//if this image is a linked image don't open modal
-			if(className.indexOf('media') > -1){
+			if(isSmall || isMedia) {
 				event.preventDefault();
 				event.stopPropagation();
+			}
 
+			//if this image is a linked image don't open modal
+			if(isMedia){
 				!inited && setup();
 
 				if(className.indexOf('Wikia-video-thumb') > -1) {track.event('video', track.CLICK, {label: 'article'});}
@@ -151,35 +174,45 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 	function handleError(msg){
 		modal.setCaption(msg || '');
 		modal.showUI();
-		currentImageStyle.webkitTransform = 'scale(1)';
-		currentImage.className += ' imgPlcHld';
+		//for a support of not prefixed transform refer to:
+		//http://caniuse.com/#feat=transforms2d
+		currentWrapperStyle.webkitTransform = 'scale(1)';
+		currentWrapper.className += ' imgPlcHld';
 	}
 
-	function setVideo(title, html) {
-		videoCache[title] = html;
-		currentImage.innerHTML = html;
+	function embedVideo(image, data, cs) {
+		videoInstance = new VideoBootstrap(image, data, cs);
+		// Future video/image views will come from modal
+		clickSource = 'lightbox';
 	}
 
 	function setupImage(){
-		var image = images[current],
-			video;
+		var video,
+			imgTitle = currentMedia.name,
+			// cache value for clickSource to prevent race conditions
+			cs = clickSource,
+			// grab the querystring for the current url
+			currQS = QueryString();
 
-		throbber.remove(currentImage);
+		throbber.remove(currentWrapper);
 
-		modal.setCaption(getCaption(current));
+		modal.setCaption(getCaption());
 
-		if(image.isVideo) {// video
-			var imgTitle = image.name;
+		// If a video uses a timeout for tracking, clear it
+		if ( videoInstance ) {
+			videoInstance.clearTimeoutTrack();
+		}
 
+		if(currentMedia.type == Media.types.VIDEO) {
 			zoomable = false;
 
 			if(videoCache[imgTitle]){
-				currentImage.innerHTML = videoCache[imgTitle];
+				embedVideo(currentWrapper, videoCache[imgTitle], cs);
 			}else{
-				if(image.supported) {
-					currentImage.innerHTML = '';
+				if(currentMedia.supported) {
+					currentWrapper.innerHTML = '';
 
-					throbber.show(currentImage, {
+					throbber.show(currentWrapper, {
 						center: true
 					});
 
@@ -187,48 +220,64 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 						'VideoHandler',
 						'getEmbedCode',
 						{
-							articleId: wgArticleId,
 							fileTitle: imgTitle,
-							width: document.width - 100
+							width: window.innerWidth - 100,
+							autoplay: 1
 						}
 					).done(
 						function(data) {
-							throbber.remove(currentImage);
+							throbber.remove(currentWrapper);
 
 							if(data.error){
 								handleError(data.error);
 							}else{
-								setVideo(imgTitle, "<div class=player>" + data.embedCode + "</div>");
+								var videoData = data.embedCode;
+
+								if(videoData.html) {
+									videoData.html = "<div class=player>" + videoData.html + "</div>";
+								}
+
+								videoCache[imgTitle] = videoData;
+
+								embedVideo(currentWrapper, videoData, cs);
 							}
 						}
 					);
 				} else {
-					setVideo(imgTitle, "<div class=not-supported><span>" +
+					var html = "<div class=not-supported><span>" +
 						msg('wikiamobile-video-not-friendly-header') + "</span>" +
-						currentImage.innerHTML + "<span>" +
+						currentWrapper.innerHTML + "<span>" +
 						msg('wikiamobile-video-not-friendly') +
-						'</span></div>');
+						'</span></div>';
+
+					videoCache[imgTitle] = {
+						html: html
+					};
+
+					currentWrapper.innerHTML = html;
 				}
 			}
-		}else{
+			// update url for sharing
+			currQS.setVal( 'file', imgTitle, true ).replaceState();
+		}else if(currentMedia.type == Media.types.IMAGE){
 			var img = new Image();
-			img.src = image.url;
+			img.src = currentMedia.url;
 
 			zoomable = true;
 
 			if(!img.complete){
 				img.onload = function(){
-					throbber.remove(currentImage);
+					throbber.remove(currentWrapper);
 
-					var image = currentImage.getElementsByTagName('img')[0];
+					var image = currentWrapper.getElementsByTagName('img')[0];
 					origW = image.width;
 					origH = image.height;
 				};
 
 				img.onerror = function(){
-					throbber.remove(currentImage);
+					throbber.remove(currentWrapper);
 
-					var image = currentImage.getElementsByTagName('img')[0];
+					var image = currentWrapper.getElementsByTagName('img')[0];
 
 					if(image) {
 						image.parentElement.removeChild(image);
@@ -237,15 +286,36 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 					handleError(msg('wikiamobile-image-not-loaded'));
 				};
 
-				throbber.show(currentImage, {
+				throbber.show(currentWrapper, {
 					center: true
 				});
 			}else{
-				img = currentImage.getElementsByTagName('img')[0];
+				img = currentWrapper.getElementsByTagName('img')[0];
 				origW = img.width;
 				origH = img.height;
 			}
+			// update url for sharing
+			currQS.setVal( 'file', imgTitle, true ).replaceState();
+		} else if(currentMedia.type){//custom
+			var data = {
+					currentNum: currentNum,
+					wrapper: currentWrapper,
+					zoomable: zoomable
+				};
+
+			trigger(currentMedia.type, data);
+
+			//If anything was changed in event listeners
+			//change it in media module as well
+			if(data.zoomable != zoomable){
+				zoomable = data.zoomable
+			}
+			// We're showing an ad or other custom media type.  Don't support sharing.
+			currQS.removeVal( 'file' ).replaceState();
 		}
+
+		// Future video/image views will come from modal
+		clickSource = 'lightbox';
 
 		//remove any left videos from DOM
 		//videos tend to be heavy on resources we shouldn't have more than one at a time
@@ -254,24 +324,27 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		}
 	}
 
-	function getCaption(num){
-		var img = images[num],
-			cap = img.caption,
-			number = img.number,
-			length = img.length,
+	function getCaption(){
+		var cap = currentMedia.caption,
+			number = currentMedia.number,
+			length = currentMedia.length,
 			figCap;
 
 		if(typeof cap !== 'string'){
 			if(cap) {
-				//if caption is not a string and img.caption is set to true grab it from DOM
-				figCap = img.element.parentElement.parentElement.getElementsByClassName('thumbcaption')[0];
+				if(typeof cap == 'function') {
+					cap = cap();
+				} else {
+					//if caption is not a string and img.caption is set to true grab it from DOM
+					figCap = currentMedia.element.parentElement.parentElement.getElementsByClassName('thumbcaption')[0];
 
-				cap = figCap ? figCap.innerHTML : '';
-				//and then cache it in media object
-				img.caption = cap;
+					cap = figCap ? figCap.innerHTML : '';
+					//and then cache it in media object
+					currentMedia.caption = cap;
+				}
 			}else{
 				cap = '';
-				img.caption = '';
+				currentMedia.caption = '';
 			}
 		}
 
@@ -286,14 +359,16 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		touched = false;
 		ev.preventDefault();
 
-		if(zoomed){
-			resetZoom();
-		}else{
-			currentZoom = 2;
-			currentImageStyle[transform] = 'scale(2)';
-		}
+		if(ev.target.className.indexOf('chnImg') == -1) {
+			if(zoomed){
+				resetZoom();
+			}else{
+				currentZoom = 2;
+				currentWrapperStyle[transform] = 'scale(2)';
+			}
 
-		onZoom();
+			onZoom();
+		}
 	}
 
 	function onZoom(state){
@@ -366,7 +441,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				dx = (imgW <= widthFll) ? 0 : ~~(Math.max(-xMax, Math.min(xMax, (-(touch.clientX * currentZoom - startX) + sx) / currentZoom)));
 				dy = (imgH <= heightFll) ? 0 : ~~(Math.max(-yMax, Math.min(yMax, (-(touch.clientY * currentZoom - startY) + sy) / currentZoom)));
 
-				currentImageStyle[transform] = 'scale(' + currentZoom + ') translate(' + -dx / currentZoom + 'px,' + -dy / currentZoom + 'px)';
+				currentWrapperStyle[transform] = 'scale(' + currentZoom + ') translate(' + -dx / currentZoom + 'px,' + -dy / currentZoom + 'px)';
 
 				modal.hideUI();
 			}
@@ -390,7 +465,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 						if(newZoom > 1){
 							currentZoom = newZoom;
 
-							currentImageStyle[transform] = 'scale(' + newZoom + ')';
+							currentWrapperStyle[transform] = 'scale(' + newZoom + ')';
 
 							onZoom(true);
 						}else{
@@ -416,7 +491,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 	function resetZoom(){
 		currentZoom = 1;
-		currentImageStyle && (currentImageStyle[transform] = '');
+		if(currentWrapperStyle) currentWrapperStyle[transform] = '';
 	}
 
 	function addZoom(){
@@ -429,11 +504,47 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		wrapper.removeEventListener('touchstart', onStart);
 	}
 
-	function refresh(){
-		currentImage = wkMdlImages.getElementsByClassName('current')[0];
-		currentImageStyle = currentImage.style;
+	function toggleGallery(show){
+		var gallery = document.getElementById('wkGalTgl');
 
+		if(gallery) {
+			gallery.style.display = show ? 'block' : 'none';
+		}
+	}
+
+	function refresh(){
+		currentWrapper = wkMdlImages.getElementsByClassName('current')[0];
+		currentWrapperStyle = currentWrapper.style;
+
+		// GameGuides has no share button
+		if( shareBtn ) {
+			shareBtn.style.display = 'block';
+		}
+		toggleGallery(true);
 		setupImage();
+	}
+
+	function getMediaNumber(num, reverse) {
+		var add = 0;
+		//count how many images have to be skipped
+		//to correctly get to an image
+		//also support reverse lookup
+		skip.every(function(val){
+			if(reverse) {
+				if(val < num){
+					add--;
+					return true;
+
+				}
+			}else {
+				if(val <= num){
+					num++;
+					return true;
+				}
+			}
+		});
+
+		return num + add;
 	}
 
 	function openModal(num){
@@ -441,7 +552,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			galleryData,
 			ttl = 604800; //7days
 
-		current = ~~num;
+		currentNum = getMediaNumber(~~num);
+		currentMedia = images[currentNum];
 
 		modal.open({
 			content: content,
@@ -450,6 +562,10 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			onClose: function(){
 				pager.cleanup();
 				removeZoom();
+				// remove file=title from URL
+				qs.removeVal('file' ).replaceState();
+				// reset tracking clickSource
+				clickSource = "embed";
 			},
 			onResize: function(ev){
 				resetZoom();
@@ -457,7 +573,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				widthFll = ev.width;
 				heightFll = ev.height;
 
-				var image = currentImage.getElementsByTagName('img')[0];
+				var image = currentWrapper.getElementsByTagName('img')[0];
 
 				if(image) {
 					origW = image.width;
@@ -472,7 +588,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 		wrapper = modal.getWrapper();
 
-		if(imagesLength > 1 && !galleryInited) {
+		if(images.length > 1 && !galleryInited) {
 			//in GG all assets are loaded upfront
 			if(Features.gameguides) {
 				require(['mediagallery'], function(mg){
@@ -524,22 +640,29 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			pager = pg({
 				wrapper: wrapper,
 				container: wkMdlImages,
-				pages: pages,
-				pageNumber: current,
+				pages: images,
+				pageNumber: currentNum,
 				setCancel: function(){
 					return (zoomed || zooming);
 				},
 				onStart: function(){
 					zoomable = false;
 				},
-				onEnd: function(n){
+				onEnd: function(image, page, currentPageNum){
 					zoomable = true;
+
+					currentMedia = image;
+					lastNum = currentNum;
+					currentNum = currentPageNum;
+
 					//make sure user changed page
-					if(current !== n) {
+					if(currentNum !== lastNum) {
 						track.event('modal', track.PAGINATE, {
-							label: current > n ? 'previous' : 'next'
+							label: currentNum > lastNum ? 'next' : 'previous'
 						});
-						current = n;
+
+						currentWrapper = page;
+
 						sharePopOver && sharePopOver.close();
 						refresh();
 					}
@@ -559,14 +682,14 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			}
 
 			//handling next/previous image
-			if(imagesLength > 1){
+			if(images.length > 1){
 				document.getElementById('nxtImg').addEventListener('click', tap);
 				document.getElementById('prvImg').addEventListener('click', tap);
 			}
 
 			addZoom();
 
-			//setupImage and get references to currentImage and it's style property
+			//setupImage and get references to currentWrapper and it's style property
 			refresh();
 		});
 
@@ -581,7 +704,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			},
 			open: function(ev){
 				ev.stopPropagation();
-				sharePopOver && sharePopOver.changeContent(share(images[current].name));
+				sharePopOver && sharePopOver.changeContent(share(images[currentNum].name));
 				track.event('share', track.CLICK, {
 					label: 'open'
 				});
@@ -598,17 +721,52 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 	return {
 		openModal: openModal,
-		getImages: function(){
+		getMedia: function(whiteList){
 			!inited && setup();
-			return images;
+
+			if(whiteList && whiteList instanceof Array) {
+				return images.filter(function(media){
+					return whiteList.indexOf(media.type) != -1;
+				});
+			}else {
+				return images
+			}
+
 		},
 		getCurrent: function(){
-			return current;
+			return currentNum;
+		},
+		getCurrentDisplayable: function(){
+			return getMediaNumber(currentNum, true);
 		},
 		hideShare: function(){
 			if(shareBtn) {shareBtn.style.display = 'none';}
 		},
 		init: init,
-		cleanup: removeZoom
+		cleanup: removeZoom,
+		on: function(event, func){
+			if(!events.hasOwnProperty(event)){
+				events[event] = [func]
+			}else{
+				events[event].push(func)
+			}
+		},
+		remove: function(event, func){
+			if(events.hasOwnProperty(event)){
+				events[event] = events[event].filter(function(callback){
+					return callback != func;
+				})
+			}
+
+		},
+		skip: function(){
+			if(currentNum - lastNum > 0) {
+				pager.next();
+			}else{
+				pager.prev();
+			}
+		},
+		toggleGallery: toggleGallery,
+		resetZoom: resetZoom
 	};
 });

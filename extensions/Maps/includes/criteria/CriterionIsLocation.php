@@ -39,6 +39,11 @@ class CriterionIsLocation extends ItemParameterCriterion {
 	 * @see ItemParameterCriterion::validate
 	 */	
 	protected function doValidation( $value, Parameter $parameter, array $parameters ) {
+		//Empty string. e.g no coordinates given
+		if(empty($value)){
+			return true;
+		}
+
 		if ( $this->metaDataSeparator !== false ) {
 			$parts = explode( $this->metaDataSeparator, $value );
 			$value = $parts[0];

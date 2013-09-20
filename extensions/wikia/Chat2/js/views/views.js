@@ -112,9 +112,13 @@ var ChatView = Backbone.View.extend({
 
 
 		if(this.model.get('text') == ''){
-			$().log("Found an i18n message with msg name " + this.model.get('wfMsg') + " and params: " + this.model.get('msgParams'));
-			var params = this.model.get('msgParams');
-			params.unshift(this.model.get('wfMsg'));
+			var params = this.model.get('msgParams'),
+				msgId = this.model.get('wfMsg');
+			if (!params || !msgId) {
+				return this;
+			}
+			$().log("Found an i18n message with msg name " + msgId + " and params: " + params);
+			params.unshift(msgId);
 			var i18nText = $.msg.apply(null, params);
 			this.model.set({text: i18nText});
 			$().log("Message translated to: " + i18nText);

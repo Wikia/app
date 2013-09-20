@@ -10,7 +10,7 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 		
 		this.messageSubmit.bind('click', this.proxy(this.postNewMessage));
 		this.messagePreview.bind('click', this.proxy(this.showPreview));
-		
+
 		this.initEvents();
 	},
 
@@ -71,7 +71,8 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 	},
 
 	getTitle: function() {
-		var title = !this.messageTitle.hasClass('placeholder') && this.messageTitle.val().length > 0;
+		var msgTitleVal = $.trim(this.messageTitle.val()), // prevent titles containing only whitespace
+			title = !this.messageTitle.hasClass('placeholder') && msgTitleVal.length > 0;
 		return title ? this.messageTitle.val():'';
 	},
 	
@@ -92,7 +93,7 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 	},
 
 	getMessageBody: function() {
-		return this.messageBody.val();
+		return $.trim(this.messageBody.val());
 	},
 
 	showPreview: function(e) {
@@ -161,7 +162,7 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 
 	postNewMessage_ChangeText: function() {
 		// check if both topic and content are filled
-		var topic_str = this.messageTitle.val();
+		var topic_str = $.trim(this.messageTitle.val());
 		var topic = !this.messageTitle.hasClass('placeholder') && topic_str.length > 0;
 		this.postNewMessage_ChangeText_handleContent();
 		if (topic && this.messageSubmit.html() == $.msg('wall-button-to-submit-comment-no-topic')) {
@@ -183,7 +184,8 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 	},
 	
 	canSubmit: function() {
-		return !this.messageBody.hasClass('placeholder') && this.messageBody.val().length > 0;
+		var message = this.getMessageBody();
+		return !this.messageBody.hasClass('placeholder') && message.length > 0;
 	},
 
 	postNewMessage_focus: function(e) {
@@ -195,6 +197,10 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 
 	postNewMessage_blur: function() {
 		var content = this.canSubmit();
+		var title = this.messageTitle.val();
+		if (title.length > 0) {
+			this.messageTitle.val($.trim(title));
+		}
 		if(!content) {
 			this.buttons.hide();
 			this.messageSubmit.attr('disabled', 'disabled');

@@ -1,0 +1,250 @@
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/responsive";
+@import "skins/oasis/css/core/layout";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/mixins/box-sizing";
+@import "skins/oasis/css/mixins/gradient";
+@import "skins/oasis/css/mixins/opacity";
+
+$edit-box-color: mix($color-page, #000, 95%);
+@if $is-dark-wiki {
+	$edit-box-color: mix($color-page, #fff, 95%);
+}
+
+.cssEditorForm {
+	padding-top: 5px;
+}
+
+.css-editor {
+	float: left;
+	margin-right: -350px;
+	width: 100%;
+
+	.css-editor-wrapper {
+		margin-right: 350px;
+	}
+
+	.editor-changes-info-wrapper > div:last-child {
+		margin-bottom: 10px;
+	}
+
+	.css-diff {
+		border: 1px solid $color-page-border;
+		max-height: 400px;
+		overflow: auto;
+		padding: 10px;
+		@include box-sizing();
+	}
+
+	.css-editor-container {
+		@include box-sizing();
+		min-height: 250px;
+		font-size: 13px;
+		padding: 0;
+	}
+}
+
+.WikiaArticle {
+	.wikia-menu-button ul {
+		list-style: none outside none;
+	}
+}
+
+.css-side-bar {
+	float: right;
+	width: 330px;
+
+	.css-edit-box {
+		background-color: $edit-box-color;
+		font-size: 13px;
+		margin-bottom: 10px;
+		padding: 15px;
+
+		.css-minor-label {
+			float: right;
+			font-size: 10px;
+		}
+
+		.css-publish-button {
+			border: none;
+			// fix for touch devices, because in touchScreen.scss height is set to 30px !important
+			height: 20px !important;
+		}
+
+		.drop {
+			border-left: 1px solid $color-buttons;
+		}
+
+		.edit-summary {
+			border: 1px solid $color-page-border;
+			@include border-radius(4px);
+			@include box-sizing();
+			clear: both;
+			margin: 5px 0;
+			padding: 5px;
+			resize: none;
+			width: 100%;
+		}
+
+		#minorEdit {
+			float: left;
+		}
+
+		.talk {
+			margin-left: 15px;
+		}
+	}
+
+	.widget-box {
+		border: 1px solid $color-page-border;
+		margin-bottom: 10px;
+	}
+
+	.community-updates {
+		margin: 10px 0;
+		overflow: hidden;
+		padding-bottom: 15px;
+
+		h2 {
+			border-bottom: 1px solid $color-page-border;
+			color: $color-links;
+			margin: 0;
+			padding: 15px;
+		}
+
+		blockquote {
+			margin: 0;
+		}
+
+		.avatar {
+			float: left;
+			margin: 0 15px 15px 0;
+		}
+	}
+
+	.community-updates-list {
+		border-bottom: 1px solid $color-page-border;
+		height: 440px;
+		list-style: none;
+		margin: 0;
+		margin-bottom: 15px;
+		overflow-y: scroll;
+		padding: 0;
+	}
+
+	.community-update-item {
+		border-bottom: 1px solid $color-page-border;
+		margin: 0;
+		padding: 15px;
+
+		h4 {
+			font-size: 13px;
+			font-weight: bold;
+			line-height: 13px;
+			margin: 0;
+		}
+
+		span {
+			@include clearfix;
+			color: $color-alternate-text;
+			font-size: 11px;
+		}
+
+		& > a {
+
+			font-size: 11px;
+			&:after {
+				background-image: none;
+				color: $color-links;
+				content: '>';
+				display: inline;
+				position: relative;
+				right: -3px;
+			}
+		}
+
+		&:last-child {
+			border: none;
+		}
+	}
+
+	.see-all-link {
+		display: inline-block;
+		float: right;
+		padding-right: 20px;
+		text-align: right;
+
+		&:after {
+			color: $color-links;
+			content: '>';
+			display: inline;
+			position: relative;
+			right: -3px;
+			top: -1px;
+		}
+	}
+
+	.education-links {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		li {
+			padding: 15px;
+		}
+
+		h2 {
+			border: none;
+			margin-top: 0;
+		}
+
+		strong {
+			display: block;
+		}
+	}
+}
+
+.css-footer {
+	clear: both;
+}
+
+.diffContent {
+	position: relative;
+	min-height: 120px;
+
+	.loading {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+	}
+}
+
+@if ( $responsive-layout-enabled ) {
+	@media screen and (max-width: $breakpoint-small) {
+		.css-editor,
+		.css-side-bar {
+			float: none;
+			width: auto;
+		}
+
+		.css-editor {
+			margin-right: 0;
+			.css-editor-wrapper {
+				margin-right: 0;
+			}
+		}
+
+		.css-side-bar {
+			.editSummary,
+			.edit-summary {
+				display: block;
+			}
+		}
+
+		.css-edit-box {
+			margin-top: 10px;
+		}
+	}
+}

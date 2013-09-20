@@ -1,6 +1,5 @@
 <?php
 
-/** Controller for acquiring information about latest user activity on current wiki */
 
 class ActivityApiController extends WikiaApiController {
 	private $revisionService;
@@ -17,7 +16,7 @@ class ActivityApiController extends WikiaApiController {
 	 *
 	 * @requestParam int  $limit [OPTIONAL] maximal result count
 	 * @requestParam array $namespaces [OPTIONAL] [0] by default
-	 * @requestParam bool $allowDuplicates [OPTIONAL] false by default
+	 * @requestParam bool $allowDuplicates [OPTIONAL] 1 by default
 	 *
 	 * @responseParam array latest revision information
 	 *
@@ -29,7 +28,7 @@ class ActivityApiController extends WikiaApiController {
 	public function getLatestActivity() {
 		$limit = $this->getRequest()->getInt("limit", 10);
 		$namespaces = $this->getRequest()->getArray("namespaces", array("0"));
-		$allowDuplicates = $this->getRequest()->getBool("allowDuplicates", false);
+		$allowDuplicates = $this->getRequest()->getBool("allowDuplicates", true);
 
 		$items = $this->revisionService->getLatestRevisions($limit, $namespaces, $allowDuplicates);
 

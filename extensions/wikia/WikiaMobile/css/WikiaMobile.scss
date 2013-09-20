@@ -20,6 +20,7 @@
 @import 'image_placeholder';
 @import 'throbber';
 @import "form";
+@import '../../RelatedPages/css/RelatedPages.wikiamobile';
 
 //mixins
 @import "mixins/transition.scss";
@@ -88,28 +89,30 @@ a {
 }
 
 #wkPage {
-	//I want page to be at least 305px long to be able to show share
-	min-height: 305px;
+	//I want page to be at least 405px long to be able to show share and search suggestions
+	min-height: 405px;
 	background-color: white;
 	padding: $page-padding;
 }
 
+//fixes for fluid content
 #wkMainCnt{
-	//fixes for fluid content
 	.tvetnone {
 		width: 100% !important;
 		text-align: center;
     }
+}
 
+#mw-content-text {
 	//don't let iframes,objects be wider than a screen (videos)
-	iframe[width], object {
+	> iframe[width], > object {
 		width: 75% !important;
 		height: auto;
 		margin: 0 auto;
 		display: block;
 	}
-	//end of fluiding thead content
 }
+//end of fluiding thead content
 
 blockquote {
 	border-left: 1px solid $border-color;

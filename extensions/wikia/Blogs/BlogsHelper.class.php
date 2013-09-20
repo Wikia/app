@@ -101,12 +101,10 @@ class BlogsHelper {
 		$ns = $element->page_namespace;
 
 		if( $ns == NS_BLOG_ARTICLE ) {
-			$app = F::app();
-
 			$title = Title::newFromText( $element->page_title, $ns );
 			$userBlog = Title::newFromText( $title->getBaseText(), $ns );
 
-			$link = $app->wf->MsgExt(
+			$link = wfMsgExt(
 				'blog-file-page',
 				array ('parsemag'),
 				$title->getLocalURL(),

@@ -5,20 +5,33 @@
  * @author Jakub Olek <bukaj.kelo(at)gmail.com>
  */
 class WikiaMobileAdService extends WikiaService {
-				
-	public function index() {
-		wfProfileIn( __METHOD__ );
 
-		// TODO: Use AdEngine logic:
-		// if ($this->wg->EnableAdEngineExt
-		//     && AdEngine2Controller::getAdLevelForPage === AdEngine2Controller::LEVEL_ALL
-		// )
-		// or move the whole thing to a separate AdEngine2 view
+	public function shouldLoadAssets() {
+		// Append ad code for anonymous users
+		// They'll get the ad eventually
+		return $this->wg->user->isAnon();
+	}
 
-		if ( $this->wg->Title->isSpecialPage() ) {
-			$this->skipRendering();
-		}
+	public function shouldShowAds() {
+		// Show ads only for anon users on all but special pages
+		// TODO: unify with desktop logic, like this:
+		// AdEngine2Controller::getAdLevelForPage() === AdEngine2Controller::LEVEL_ALL
+		return $this->shouldLoadAssets() && !$this->wg->Title->isSpecialPage();
+	}
 
-		wfProfileOut( __METHOD__ );
+	public function floating() {
+		return $this->shouldShowAds();
+	}
+
+	public function topLeaderBoard() {
+		return $this->shouldShowAds();
+	}
+
+	public function inContent() {
+		return $this->shouldShowAds();
+	}
+
+	public function modalInterstitial() {
+		return $this->shouldShowAds();
 	}
 }

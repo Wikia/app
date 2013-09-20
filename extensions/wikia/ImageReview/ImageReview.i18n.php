@@ -18,6 +18,9 @@ $messages['en'] = array(
 
 	'imagereview-imagepage-header' => 'Image Review history',
 	'imagereview-imagepage-not-in-queue' => 'Warning: this image has not been added to the review queue.',
+	'imagereview-imagepage-table-header-reviewer' => 'Reviewer',
+	'imagereview-imagepage-table-header-state' => 'State',
+	'imagereview-imagepage-table-header-time' => 'Time',
 );
 
 $messages['pl'] = array(

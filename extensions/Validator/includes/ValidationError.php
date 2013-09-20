@@ -8,7 +8,7 @@
  * @file Validator_Error.php
  * @ingroup Validator
  *
- * @licence GNU GPL v3 or later
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class ValidationError {
@@ -151,14 +151,14 @@ class ValidationError {
 	 * @return integer Element of the ValidationError::ACTION_ enum
 	 */
 	public function getAction() {
-		global $egErrorActions;
+		$errorActions = ValidatorSettings::get( 'errorActions' );
 
 		if ( $this->severity === self::SEVERITY_FATAL ) {
 			// This action should not be configurable, as lowering it would break in the Validator class.
 			return self::ACTION_DEMAND;
 		}
-		elseif ( array_key_exists( $this->severity, $egErrorActions ) ) {
-			return $egErrorActions[$this->severity];
+		elseif ( array_key_exists( $this->severity, $errorActions ) ) {
+			return $errorActions[$this->severity];
 		}
 		else {
 			throw new Exception( "No action associated with error severity '$this->severity'" );

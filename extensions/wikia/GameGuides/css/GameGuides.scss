@@ -24,18 +24,29 @@
 @import "../../WikiaMobile/css/mediagallery";
 @import '../../WikiaMobile/css/throbber';
 
+//main colors
 $mainGreen: #8CA038;
-$halfMainGreen: rgba(171,197,97,.5);
+$halfMainGreen: rgba(171,197,97, .5);
 
-$sectionGrey: rgb(41, 41, 41);
+//light mode
+$lightBackgroundColor: white;
+$lightTextColor: rgb(58, 58, 58);
+$lightHeaderColor: rgb(140, 160, 56);
+$lightLinkColor: $lightHeaderColor;
+$lightChevronsColor: rgb(204, 204, 204);
+$lightSectionGrey: rgb(170, 170, 170);
 
-$linkColor: rgb(172,172,172);
-$textColor: rgb(233,233,233);
-
-$backgroundColor: rgb(20,20,20);
+//dark mode
+$darkBackgroundColor: rgb(20, 20, 20);
+$darkLinkColor: rgb(172, 172, 172);
+$darkTextColor: rgb(233, 233, 233);
+$darkHeaderColor: $darkTextColor;
+$darkChevronsColor: $lightChevronsColor;
+$darkSectionGrey: rgb(41, 41, 41);
 
 html {
-	background: $backgroundColor;
+	background-color: $darkBackgroundColor;
+	color: $darkTextColor;
 
 	font-size: 1em;
 
@@ -44,6 +55,10 @@ html {
 	-webkit-backface-visibility: hidden;
 	-webkit-transform: translateZ(0);
 
+	&.light {
+		background-color: $lightBackgroundColor;
+		color: $lightTextColor;
+	}
 
 	&.serif {
 		font-family: Palatino, "GGSerif", "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
@@ -59,11 +74,7 @@ html {
 }
 
 body {
-	background: $backgroundColor;
-
 	padding: 10px 20px;
-
-	color: $textColor;
 
 	line-height: 1.7em;
 
@@ -75,18 +86,23 @@ h1, h2, h3{
 	font-weight: 100;
 }
 
-#mw-content-text {
-	background: $backgroundColor;
-}
-
 #pageName {
-	color: $textColor;
+	color: $darkHeaderColor;
+
+	.light & {
+		color: $lightHeaderColor;
+	}
+
 	font-weight: 800;
 	font-size: 1.2em;
 }
 
 h2, h3, .collSec {
-	color: $textColor;
+	color: $darkTextColor;
+
+	.light & {
+		color: $lightTextColor;
+	}
 }
 
 .collSec {
@@ -101,11 +117,17 @@ h2, h3, .collSec {
 	background-repeat: no-repeat;
 	background-position: 100% 100%;
 	background-size: 300% 1px;
-	background-image: -webkit-gradient(linear, left top, right top, color-stop( 30%, $mainGreen ), color-stop( 50%, $sectionGrey ));
-	background-image: -webkit-linear-gradient(left, $mainGreen 30%, $sectionGrey 50%);
-	background-image: linear-gradient(to right, $mainGreen 30%, $sectionGrey 50%);
+	background-image: -webkit-gradient(linear, left top, right top, color-stop( 30%, $mainGreen ), color-stop( 50%, $darkSectionGrey ));
+	background-image: -webkit-linear-gradient(left, $mainGreen 30%, $darkSectionGrey 50%);
+	background-image: linear-gradient(to right, $mainGreen 30%, $darkSectionGrey 50%);
 
-	-webkit-transition: background-position .3s linear, color .3s;
+	.light & {
+		background-image: -webkit-gradient(linear, left top, right top, color-stop( 30%, $mainGreen ), color-stop( 50%, $lightSectionGrey ));
+		background-image: -webkit-linear-gradient(left, $mainGreen 30%, $lightSectionGrey 50%);
+		background-image: linear-gradient(to right, $mainGreen 30%, $lightSectionGrey 50%);
+	}
+
+	-webkit-transition: background-position .3s linear;
 	-webkit-transition-delay: .1s;
 
 	-webkit-transform: translateZ(0);
@@ -126,19 +148,28 @@ h2, h3, .collSec {
 
 a {
 	text-decoration: none;
+	color: $darkTextColor;
 
-	color: $textColor;
 	pointer-events: none;
 
 	img:not(.media), span {
 		pointer-events: none;
 	}
 
+	.light & {
+		color: $lightTextColor;
+	}
+
 	&:not(.external):not(.extiw):not(.disabled) {
-		color: $linkColor;
+		color: $darkLinkColor;
+		border-bottom: 1px dotted $darkLinkColor;
+
 		pointer-events: auto;
 
-		border-bottom: 1px dotted $linkColor;
+		.light & {
+			color: $lightLinkColor;
+			border-bottom-color:  $lightLinkColor;
+		}
 
 		*:not(.media) {
 			//slow
@@ -177,11 +208,19 @@ $width: 1.5;
 	width: 0;
 	height: 0;
 	border: $size + px solid;
-	border-color: $textColor transparent transparent transparent;
+	border-color: $darkChevronsColor transparent transparent transparent;
 
 	-webkit-transition: -webkit-transform .3s;
 	-webkit-transition-delay: .1s;
 	-webkit-transform-origin: 50% 25%;
+
+	.light & {
+		border-top-color: $lightChevronsColor;
+
+		&:after {
+			border-top-color: $lightBackgroundColor;
+		}
+	}
 
 	&:after {
 		content: '';
@@ -193,7 +232,7 @@ $width: 1.5;
 		height: 0;
 
 		border: ( $size - $width ) + px solid;
-		border-color: $backgroundColor transparent transparent transparent;
+		border-color: $darkBackgroundColor transparent transparent transparent;
 	}
 }
 
@@ -220,11 +259,14 @@ table {
 
 	background-color: #222;
 
+	.light & {
+		background-color: $lightBackgroundColor;
+	}
+
 	font-size: .8em;
 
 	-webkit-transition: border .2s;
-	-moz-transition: border .2s;
-	-o-transtion: border .2s;
+	transition: border .2s;
 
 	table {
 		pointer-events: none;
@@ -258,16 +300,18 @@ figure {
 		background: none;
 
 		white-space: normal;
-		color: rgb(187, 187, 187);
+		color: $darkTextColor;
+
+		.light & {
+			color: $lightTextColor;
+		}
 	}
 }
 
-.imgPlcHld, wkSlider img, .lazy {
+.imgPlcHld, .wkSlider img, .lazy {
 	background-image: url('/extensions/wikia/GameGuides/images/img_placeholder_light.png'); /* base64 */
 	background-repeat: no-repeat;
 	background-position: center;
-
-	background-color: #1E1E1E;
 }
 
 .lazy {
@@ -279,8 +323,16 @@ figure {
 	}
 }
 
-.galPlc.img, .galPlcHld {
+//this is rather long selector but at least image is transfered once
+.galPlc.img,
+.galPlcHld,
+.light .imgPlcHld,
+.light .wkSlider img,
+.light .lazy {
 	background-image: url('/extensions/wikia/GameGuides/images/img_placeholder_dark.png'); /* base64 */
+}
+
+.galPlc.img, .galPlcHld {
 	background-repeat: no-repeat;
 	background-position: center;
 

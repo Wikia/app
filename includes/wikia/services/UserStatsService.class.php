@@ -31,7 +31,7 @@ class UserStatsService extends WikiaModel {
 	 * Get cache key for given entry
 	 */
 	private function getKey($entry) {
-		return $this->wf->MemcKey('services', 'userstats', $entry, $this->userId);
+		return wfMemcKey('services', 'userstats', $entry, $this->userId);
 	}
 
 	/**
@@ -232,12 +232,12 @@ class UserStatsService extends WikiaModel {
 
 			// populate 'member since' date if it's not set (i.e. it's the first edit)
 			if ( empty( $stats['date'] ) && $stats['edits'] == 1 ) {
-				$stats['date'] = $this->wf->TimestampNow();
+				$stats['date'] = wfTimestampNow();
 			}
 
 			$this->wg->Memc->set($key, $stats, self::CACHE_TTL);
 
-			$this->wf->Debug(__METHOD__ . ": user #{$this->userId}\n");
+			wfDebug(__METHOD__ . ": user #{$this->userId}\n");
 		}
 
 		wfProfileOut(__METHOD__);
@@ -256,10 +256,10 @@ class UserStatsService extends WikiaModel {
 		$stats = $this->wg->memc->get($key);
 		if (empty($stats)) {
 			wfProfileIn(__METHOD__ . '::miss');
-			$this->wf->Debug(__METHOD__ . ": cache miss\n");
+			wfDebug(__METHOD__ . ": cache miss\n");
 
 			// get edit points / first edit date
-			$dbr = $this->wf->GetDB(DB_SLAVE);
+			$dbr = wfGetDB(DB_SLAVE);
 			$stats = $this->doStatsQuery($dbr);
 
 			// TODO: get likes
@@ -274,7 +274,7 @@ class UserStatsService extends WikiaModel {
 
 		// allow other extensions to update edits points
 		$stats['points'] = isset($stats['edits']) ? $stats['edits'] : 0;
-		$this->wf->RunHooks('Masthead::editCounter', array(&$stats['points'], User::newFromId($this->userId)));
+		wfRunHooks('Masthead::editCounter', array(&$stats['points'], User::newFromId($this->userId)));
 
 		wfProfileOut(__METHOD__);
 		return $stats;
@@ -297,13 +297,13 @@ class UserStatsService extends WikiaModel {
 
 		if( empty($stats) ) {
 			wfProfileIn(__METHOD__ . '::miss');
-			$this->wf->Debug(__METHOD__ . ": cache miss\n");
+			wfDebug(__METHOD__ . ": cache miss\n");
 
 			$wikiDbName = WikiFactory::IDtoDB($wikiId);
 
 			if( !empty($wikiDbName) ) {
 				// get edit points / first edit date
-				$dbr = $this->wf->GetDB( DB_SLAVE, array(), $wikiDbName );
+				$dbr = wfGetDB( DB_SLAVE, array(), $wikiDbName );
 				$stats = $this->doStatsQuery($dbr);
 
 				// TODO: get likes
@@ -319,7 +319,7 @@ class UserStatsService extends WikiaModel {
 
 		// allow other extensions to update edits points
 		$stats['points'] = isset($stats['edits']) ? $stats['edits'] : 0;
-		$this->wf->RunHooks('Masthead::editCounter', array(&$stats['points'], User::newFromId($this->userId)));
+		wfRunHooks('Masthead::editCounter', array(&$stats['points'], User::newFromId($this->userId)));
 
 		wfProfileOut(__METHOD__);
 		return $stats;
@@ -337,7 +337,7 @@ class UserStatsService extends WikiaModel {
 
 		$res = $dbr->selectRow(
 			'revision',
-			array('min(rev_timestamp) AS date, count(*) AS edits'),
+			array('min(rev_timestamp) AS date, max(rev_timestamp) AS last_revision,  count(*) AS edits'),
 			array('rev_user' => $this->userId),
 			__METHOD__
 		);
@@ -346,6 +346,7 @@ class UserStatsService extends WikiaModel {
 			$stats = array(
 				'edits' => intval($res->edits),
 				'date' => $res->date,
+				'lastRevision' => $res->last_revision
 			);
 		}
 

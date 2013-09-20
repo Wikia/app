@@ -15,7 +15,7 @@ $messages['en'] = array(
 	'quickcreate' => 'submit your recipe',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author Umherirrender
  */
 $messages['qqq'] = array(
@@ -46,6 +46,14 @@ $messages['be-tarask'] = array(
 $messages['br'] = array(
 	'quickcreate-desc' => 'Ouzhpennañ ur bouton krouiñ pajennoù nevez gant ar barregezh kevreañ evit an implijerien dizanv', # Fuzzy
 	'quickcreate' => 'kinnigit ho rekipe',
+);
+
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'quickcreate-desc' => 'Afegeix un botó crear nova pàgina amb inici de sessió pels usuaris anònims',
+	'quickcreate' => 'envia la teva recepta',
 );
 
 /** Chechen (нохчийн)
@@ -120,9 +128,10 @@ $messages['gl'] = array(
 );
 
 /** Hebrew (עברית)
+ * @author Inkbug
  */
 $messages['he'] = array(
-	'quickcreate-desc' => 'הוספת לחצן ליצירת דפים חדשים עם אפשרות כניסה למשתמשים אלמוניים', # Fuzzy
+	'quickcreate-desc' => 'הוספת לחצן יצירת דפים חדשים עם בקשת כניסה למשתמשים אלמוניים',
 	'quickcreate' => 'שליחת המתכון שלך',
 );
 
@@ -230,7 +239,7 @@ $messages['nl'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'quickcreate-desc' => 'Apond un boton de creacion de pagina novèla amb la capacitat de connexion pels utilizaires anonims', # Fuzzy
+	'quickcreate-desc' => 'Apond un boton de creacion de pagina novèla amb una demanda de connexion pels utilizaires anonims',
 	'quickcreate' => 'Prepausatz vòstra recèpta',
 );
 
@@ -331,10 +340,12 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
+ * @author SteveR
+ * @author Ua2004
  * @author Тест
  */
 $messages['uk'] = array(
-	'quickcreate-desc' => 'Додає кнопку створення нової сторінки з можливістю увійти в систему для анонімних користувачів', # Fuzzy
+	'quickcreate-desc' => 'Додає кнопку "Створити нову сторінку" з можливістю авторизації для анонімних користувачів',
 	'quickcreate' => 'надіслати свій рецепт',
 );
 

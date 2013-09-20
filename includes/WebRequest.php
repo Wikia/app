@@ -1026,7 +1026,7 @@ HTML;
 	/**
 	 * Work out the IP address based on various globals
 	 * For trusted proxies, use the XFF client IP (first of the chain)
-	 * 
+	 *
 	 * @since 1.19
 	 *
 	 * @return string
@@ -1047,10 +1047,10 @@ HTML;
 		$ip = $this->getRawIP();
 
 		# short circuit XFF Check, and keep us from needing to know fastly IPS
-		if ( $wgClientIPHeader ) { 
+		if ( $wgClientIPHeader ) {
 			$trustedHeaderIp = $this->getHeader( $wgClientIPHeader ) ;
 			if ( $trustedHeaderIp !== false ) {
-				$ip = $trustedHeaderIp;	
+				$ip = $trustedHeaderIp;
 				$foundTrustedHeader = true;
 			}
 		}
@@ -1058,7 +1058,7 @@ HTML;
 		# Append XFF
 		$forwardedFor = $this->getHeader( 'X-Forwarded-For' );
 		if ( $forwardedFor !== false && $foundTrustedHeader === false ) {
-		# wikia change end 
+		# wikia change end
 			$ipchain = array_map( 'trim', explode( ',', $forwardedFor ) );
 			$ipchain = array_reverse( $ipchain );
 			if ( $ip ) {
@@ -1092,6 +1092,16 @@ HTML;
 		$this->ip = $ip;
 		return $ip;
 	}
+
+	/* Wikia change begin - @author grunny */
+	/**
+	 * @param string $ip
+	 * @return void
+	 */
+	public function setIP( $ip ) {
+		$this->ip = $ip;
+	}
+	/* Wikia change end */
 }
 
 /**

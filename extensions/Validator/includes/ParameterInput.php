@@ -6,7 +6,6 @@
  * 
  * Based on 'addOptionInput' from Special:Ask in SMW 1.5.6.
  * 
- * TODO: support lists (now only done when values are restricted to an array)
  * TODO: nicify HTML
  * 
  * @since 0.4.6
@@ -14,7 +13,7 @@
  * @file ParameterInput.php
  * @ingroup Validator
  * 
- * @licence GNU GPL v3 or later
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class ParameterInput {
@@ -22,9 +21,9 @@ class ParameterInput {
 	/**
 	 * The parameter to print an input for.
 	 * 
-	 * @since O.4.6
+	 * @since O.5
 	 * 
-	 * @var Parameter
+	 * @var IParamDefinition
 	 */
 	protected $param;
 	
@@ -42,24 +41,43 @@ class ParameterInput {
 	/**
 	 * Name for the input.
 	 * 
-	 * @since 0.6.4
+	 * @since 0.4.6
 	 * 
 	 * @var string
 	 */
 	protected $inputName;
+
+	/**
+	 * Name for the input class.
+	 *
+	 * @since 0.5
+	 *
+	 * @var string
+	 */
+	protected $inputClass;
 	
 	/**
 	 * Constructor.
 	 * 
 	 * @since 0.4.6
 	 * 
-	 * @param Parameter $param
+	 * @param IParamDefinition|Parameter|array $param
 	 * @param mixed $currentValue
 	 */
-	public function __construct( Parameter $param, $currentValue = false ) {
-		$this->param = $param;
+	public function __construct( $param, $currentValue = false ) {
+		if ( $param instanceof IParamDefinition ) {
+			$this->param = $param;
+		}
+		elseif ( is_array( $param ) ) {
+			$this->param = ParamDefinition::newFromArray( $param );
+		}
+		else { // Compat code, will go in 0.7
+			$this->param = ParamDefinition::newFromParameter( $param );
+		}
+
 		$this->currentValue = $currentValue;
 		$this->inputName = $param->getName();
+		$this->inputClass = '';
 	}
 	
 	/**
@@ -76,7 +94,7 @@ class ParameterInput {
 	/**
 	 * Sets the name for the input; defaults to the name of the parameter.
 	 * 
-	 * @since 0.6.4
+	 * @since 0.4.6
 	 * 
 	 * @param string $name
 	 */
@@ -84,6 +102,17 @@ class ParameterInput {
 		$this->inputName = $name;
 	}
 	
+	/**
+	 * Sets the class for the input
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $name
+	 */
+	public function setInputClass( $class ) {
+		$this->inputClass = $class;
+	}
+
 	/**
 	 * Returns the HTML for the parameter input.
 	 * 
@@ -93,7 +122,12 @@ class ParameterInput {
 	 */
 	public function getHtml() {
 		$valueList = array();
-		
+
+		if ( is_array( $this->param->getAllowedValues() ) ) {
+			$valueList[] = $this->param->getAllowedValues();
+		}
+
+		// Compat code, will got in 0.7
         foreach ( $this->param->getCriteria() as $criterion ) {
     		if ( $criterion instanceof CriterionInArray ) {
     			$valueList[] = $criterion->getAllowedValues();
@@ -101,7 +135,9 @@ class ParameterInput {
         }
 
         if ( count( $valueList ) > 0 ) {
+			// Compat code, will got in 0.7
         	$valueList = count( $valueList ) > 1 ? call_user_func_array( 'array_intersect', $valueList ) : $valueList[0];
+
         	$html = $this->param->isList() ? $this->getCheckboxListInput( $valueList ) : $this->getSelectInput( $valueList );
         }
         else {
@@ -155,7 +191,8 @@ class ParameterInput {
 			$this->getValueToUse(),
 			'text',
 			array(
-				'size' => 6
+				'size' => 6,
+				'class' => $this->inputClass
 			)
 		);
 	}
@@ -173,7 +210,8 @@ class ParameterInput {
 			$this->getValueToUse(),
 			'text',
 			array(
-				'size' => 32
+				'size' => 32,
+				'class' => $this->inputClass
 			)
 		);
 	}

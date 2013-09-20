@@ -17,7 +17,7 @@ $messages['en'] = array(
 	'sharedhelp-searchprofile-tooltip' => 'Search Help pages',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author The Evil IP address
  */
 $messages['qqq'] = array(
@@ -27,10 +27,14 @@ $messages['qqq'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Malhargan
  */
 $messages['ar'] = array(
+	'sharedhelp-desc' => 'تأخذ صفحات من [[w:c:Help|ويكي المساعدة]] وتدرجها في نطاق ال{{ns:help}} في هذه الويكي',
 	'sharedhelp-autotalkcreate-summary' => 'إنشاء صفحة نقاش تلقائيا',
+	'sharedhelp-searchprofile' => 'صفحات المساعدة',
+	'sharedhelp-searchprofile-tooltip' => 'البحث في صفحات المساعدة',
 );
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
@@ -50,6 +54,16 @@ $messages['br'] = array(
 	'sharedhelp-desc' => "Kemer a ra pajennoù [[w:c:Help|skoazell Wikia]] hag ensoc'hañ a ra anezho en esaouenn anv {{ns:help}} eus ar wiki-mañ",
 	'sharedhelp-autotalkcreate-summary' => 'Pajenn gaozeal krouet ent emgefreek',
 	'sharedhelp-searchprofile' => 'Pajennoù skoazell',
+);
+
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'sharedhelp-desc' => "Pren pàgines de [[w:c:Help|Help Wikia]] i incereix-los en l'espai de nom {{ns:help}} en aquest wiki",
+	'sharedhelp-autotalkcreate-summary' => 'Pàgina de discussió creada automàticament',
+	'sharedhelp-searchprofile' => "Pàgines d'ajuda",
+	'sharedhelp-searchprofile-tooltip' => "Cercar pàgines d'ajuda",
 );
 
 /** Czech (česky)
@@ -180,6 +194,8 @@ $messages['ja'] = array(
 $messages['ksh'] = array(
 	'sharedhelp-desc' => 'Nimmb Sigge us däm <i lang="en">[[w:c:Help|Help Wikia]]</i> un deiht se en et {{ns:help}}-Appachtemang en heh däm Wikis erin.',
 	'sharedhelp-autotalkcreate-summary' => 'Klaafsigg automattesch aanjelaat',
+	'sharedhelp-searchprofile' => 'Hölpsigge',
+	'sharedhelp-searchprofile-tooltip' => 'En de Hölpsigge söhke',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -237,6 +253,16 @@ $messages['nl'] = array(
 	'sharedhelp-searchprofile-tooltip' => "Hulppagina's zoeken",
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'sharedhelp-desc' => "Pren de paginas de [[w:c:Help|l’ajuda de Wikia]] e las inserís dins l’espaci de nom {{ns:help}} d'aqueste wiki",
+	'sharedhelp-autotalkcreate-summary' => 'Pagina de discussion creada automaticament',
+	'sharedhelp-searchprofile' => "Paginas d'ajuda",
+	'sharedhelp-searchprofile-tooltip' => "Recercar dins las paginas d'ajuda",
+);
+
 /** Polish (polski)
  * @author Sovq
  * @author Sp5uhe
@@ -268,10 +294,12 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
  */
 $messages['pt'] = array(
 	'sharedhelp-desc' => 'Insere páginas da [[w:c:Help|Help Wikia]] no espaço nominal {{ns:help}} desta wiki',
 	'sharedhelp-autotalkcreate-summary' => 'Página de discussão criada automaticamente',
+	'sharedhelp-searchprofile' => 'Páginas de ajuda',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -328,12 +356,15 @@ $messages['tl'] = array(
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
+ * @author SteveR
+ * @author Ua2004
  * @author Тест
  */
 $messages['uk'] = array(
 	'sharedhelp-desc' => 'Бере сторінки з [[w:c:Help|Help Wikia]] і додає їх до простору назв {{ns:help}} цієї вікі',
 	'sharedhelp-autotalkcreate-summary' => 'Сторінку обговорення створено автоматично',
 	'sharedhelp-searchprofile' => 'Сторінки довідки',
+	'sharedhelp-searchprofile-tooltip' => 'Пошук у довідці',
 );
 
 /** Simplified Chinese (中文（简体）‎)

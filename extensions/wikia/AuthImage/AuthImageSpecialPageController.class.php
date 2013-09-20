@@ -59,7 +59,7 @@ class AuthImageSpecialPageController extends WikiaSpecialPageController {
 					}
 					echo $thumb_request->getContent();
 				} else {
-					$this->wf->debug("Cannot generate auth thumb");
+					wfdebug("Cannot generate auth thumb");
 					$this->_access_forbidden( 'img-auth-accessdenied', 'img-auth-nofile', $img );
 				}
 			} else {
@@ -67,7 +67,7 @@ class AuthImageSpecialPageController extends WikiaSpecialPageController {
 				$filename = realpath( sprintf( "%s/%s", $this->wg->UploadDirectory, $img ) );
 				$stat = @stat( $filename );
 				if ( $stat ) {
-					$this->wf->ResetOutputBuffers();
+					wfResetOutputBuffers();
 					$fileinfo = finfo_open(FILEINFO_MIME_TYPE);
 					$imageType = finfo_file( $fileinfo, $filename);
 
@@ -89,12 +89,12 @@ class AuthImageSpecialPageController extends WikiaSpecialPageController {
 	}
 
 	private function _access_forbidden( $msg1, $msg2, $img ) {
-		$msgHdr = htmlspecialchars( $this->wf->Msg( $msg1 ) );
-		$detailMsg = htmlspecialchars( $this->wf->Msg( ( $this->wg->ImgAuthDetails ? $msg2 : 'badaccess-group0'), $img ) );
+		$msgHdr = htmlspecialchars( wfMsg( $msg1 ) );
+		$detailMsg = htmlspecialchars( wfMsg( ( $this->wg->ImgAuthDetails ? $msg2 : 'badaccess-group0'), $img ) );
 
-		$header = $this->wf->MsgExt( $msg1, array('language' => 'en') );
-		$message = $this->wf->MsgExt( $msg2, array('language' => 'en'), $img );
-		$this->wf->DebugLog( __METHOD__, "access forbidden header: $header, Msg: $message");
+		$header = wfMsgExt( $msg1, array('language' => 'en') );
+		$message = wfMsgExt( $msg2, array('language' => 'en'), $img );
+		wfDebugLog( __METHOD__, "access forbidden header: $header, Msg: $message");
 
 		header( 'HTTP/1.0 403 Forbidden' );
 		header( 'Cache-Control: no-cache' );

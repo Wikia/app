@@ -1,0 +1,134 @@
+@import "skins/oasis/css/mixins/arrow";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/core/color";
+
+.page-listings {
+	@include clearfix;
+	clear: both;
+	ul {
+		list-style: none;
+		margin: 0;
+	}
+	.page-list-pagination {
+		display: none;
+		float: right;
+		font-size: 12px;
+		.arrow {
+			cursor: pointer;
+			position: relative;
+			top: -1px;
+			&.disabled {
+				@include opacity(50);
+			}
+			&.left {
+				@include arrow(6px, $color-buttons, 'left');
+				margin-right: 8px;
+			}
+			&.right {
+				@include arrow(6px, $color-buttons, 'right');
+				margin-left: 8px;
+			}
+		}
+	}
+	.page-listing {
+		@include clearfix;
+		margin: 15px 0 0;
+	}
+	.page-list-content {
+		position: relative;
+	}
+	.page-listing-image {
+		background-color: black;
+		display: block;
+		height: 90px;
+		width: 160px;
+		img {
+			display: block;
+			height: 90px;
+			margin: 0 auto;
+			max-width: 160px;
+			&.no-image {
+				background-color: #f0f0f0;
+				background-image: url(/extensions/wikia/VideoHandlers/images/Brackets.png);	/* base64 */
+				background-position: 50px 25px;
+				background-repeat: no-repeat;
+				height: 90px;
+				width: 160px;
+			}
+		}
+	}
+	.page-listing-snippet {
+		margin: 0;
+	}
+	.page-listing-title {
+		margin: 5px 0 0;
+	}
+	.see-more-link {
+		float: right;
+	}
+}
+
+
+.more-info-wrapper {
+	display: none;
+}
+
+.WikiaArticle .video-page-caption {
+	@include clearfix;
+	border-bottom: solid 1px $color-headline-border;
+	margin: 10px 0;
+	padding-bottom: 15px;
+
+	p {
+		line-height: 20px;
+		margin: 0;
+	}
+	.video-provider {
+		float: left;
+	}
+	.video-views {
+		float: right;
+		font-size: 18px;
+		margin: 0;
+	}
+	.expire-date {
+		clear: both;
+		font-size: 11px;
+		line-height: 11px;
+		padding-top: 10px;
+	}
+}
+
+table.mw_metadata {
+	margin: 10px 0;
+
+	&.collapsed tr.collapsable {
+		display: table-row;
+	}
+	.mw-metadata-show-hide-extended {
+		display: none;
+	}
+}
+
+.WikiaArticle .mw-upload-links-box {
+	margin-left: 0;
+	margin-top: 0;
+	padding-left: 0;
+	list-style: none;
+}
+
+ul.tabs {
+	margin: 20px 0;
+}
+
+/* monobook styling */
+.skin-monobook {
+	.page-listing .grid-1 {
+		float: left;
+		margin-right: 10px;
+	}
+	ul.tabs {
+		display: none;
+	}
+}

@@ -94,13 +94,30 @@ class AdEngine2Controller extends WikiaController {
 			return $pageLevel;
 		}
 
+		// Override ad level for a (set of) specific page(s)
+		// Use case: sponsor ads on a landing page targeted to Wikia editors (=logged in)
+		if ($wg->Title &&
+			!empty($wg->PagesWithNoAdsForLoggedInUsersOverriden) &&
+			in_array($wg->Title->getDBkey(), $wg->PagesWithNoAdsForLoggedInUsersOverriden))
+		{
+			$pageLevel = self::AD_LEVEL_CORPORATE;
+			if (!empty($wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL) &&
+				in_array($wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL, array(
+					self::AD_LEVEL_NONE, self::AD_LEVEL_LIMITED, self::AD_LEVEL_CORPORATE, self::AD_LEVEL_ALL
+				)))
+			{
+				$pageLevel = $wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL;
+			}
+			return $pageLevel;
+		}
+
 		// And no other ads
 		$pageLevel = self::AD_LEVEL_NONE;
 		return $pageLevel;
 	}
 
 	public static function getAdLevelForSlot($slotname) {
-		if ($slotname === 'INVISIBLE_1') {
+		if ($slotname === 'INVISIBLE_1' || $slotname === 'INVISIBLE_SKIN') {
 			return self::AD_LEVEL_CORPORATE;
 		}
 
@@ -287,7 +304,7 @@ class AdEngine2Controller extends WikiaController {
 	 *
 	 * @return bool
 	 */
-	public function onMakeGlobalVariablesScript(array &$vars) {
+	static public function onMakeGlobalVariablesScript(array &$vars) {
 		wfProfileIn(__METHOD__);
 
 		global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC,
@@ -299,9 +316,6 @@ class AdEngine2Controller extends WikiaController {
 
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
-		if (!empty($wgNoExternals)) {
-			$vars["wgNoExternals"] = $wgNoExternals;
-		}
 		if (!empty($wgEnableAdsInContent)) {
 			$vars["wgEnableAdsInContent"] = $wgEnableAdsInContent;
 		}
@@ -363,7 +377,7 @@ class AdEngine2Controller extends WikiaController {
 	 *
 	 * @return bool
 	 */
-	public function onWikiaSkinTopScriptsLegacy(&$vars, &$scripts) {
+	static public function onWikiaSkinTopScriptsLegacy(&$vars, &$scripts) {
 		global $wgCityId, $wgEnableKruxTargeting, $wgNoExternals;
 
 		wfProfileIn(__METHOD__);
@@ -396,10 +410,11 @@ class AdEngine2Controller extends WikiaController {
 	 *
 	 * @return bool
 	 */
-	public function onWikiaSkinTopScripts(&$vars, &$scripts) {
+	static public function onWikiaSkinTopScripts(&$vars, &$scripts) {
 		wfProfileIn(__METHOD__);
+		$wg = F::app()->wg;
 
-		$req = $this->wg->Request;
+		$req = $wg->Request;
 
 		// AdEngine2.js
 		$vars['adslots2'] = array();
@@ -410,18 +425,25 @@ class AdEngine2Controller extends WikiaController {
 		$vars['wgAdsShowableOnPage'] = self::areAdsShowableOnPage();
 		$vars['wgShowAds'] = self::areAdsShowableOnPage();
 
-		$vars['wgAdDriverUseGpt'] = $req->getBool('usegpt', (bool) $this->wg->AdDriverUseGpt);
-		$vars['wgAdDriverStartLiftiumOnLoad'] = $req->getBool('liftiumonload', (bool) $this->wg->LiftiumOnLoad);
+		$vars['wgAdDriverUseFullGpt'] = $req->getBool('usefullgpt', (bool) $wg->AdDriverUseFullGpt);
+		$vars['wgAdDriverUseNewGptZones'] = $req->getBool('usenewgptzones', (bool) $wg->AdDriverUseNewGptZones);
+		$vars['wgAdVideoTargeting'] = $req->getBool('videotargeting', (bool) $wg->AdVideoTargeting);
+		$vars['wgAdDriverStartLiftiumOnLoad'] = $req->getBool('liftiumonload', (bool) $wg->LiftiumOnLoad);
 
 		// Used to hop by DART ads
 		$vars['adDriverLastDARTCallNoAds'] = array();
 
 		// WikiaDartHelper.js
-		if (!empty($this->wg->DartCustomKeyValues)) {
-			$vars['wgDartCustomKeyValues'] = $this->wg->DartCustomKeyValues;
+		if (!empty($wg->DartCustomKeyValues)) {
+			$vars['wgDartCustomKeyValues'] = $wg->DartCustomKeyValues;
 		}
 		$cat = self::getCachedCategory();
 		$vars['cityShort'] = $cat['short'];
+
+		// 3rd party code (eg. dart collapse slot template) can force AdDriver2 to respect unusual slot status
+		$vars['adDriver2ForcedStatus'] = array();
+
+		$vars['wgWikiDirectedAtChildren'] = (bool) $wg->WikiDirectedAtChildrenByStaff;
 
 		wfProfileOut(__METHOD__);
 
@@ -435,7 +457,7 @@ class AdEngine2Controller extends WikiaController {
 	 *
 	 * @return bool
 	 */
-	public function onOasisSkinAssetGroups(&$jsAssets) {
+	static public function onOasisSkinAssetGroups(&$jsAssets) {
 		$coreGroupIndex = array_search(self::ASSET_GROUP_CORE, $jsAssets);
 		if ($coreGroupIndex === false) {
 			// Do nothing. oasis_shared_core_js must be present for ads to work
@@ -456,7 +478,7 @@ class AdEngine2Controller extends WikiaController {
 	 *
 	 * @return bool
 	 */
-	public function onOasisSkinAssetGroupsBlocking(&$jsAssets) {
+	static public function onOasisSkinAssetGroupsBlocking(&$jsAssets) {
 		if (self::areAdsInHead()) {
 			// Add ad asset to JavaScripts loaded on top (in <head>)
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE;
@@ -464,7 +486,7 @@ class AdEngine2Controller extends WikiaController {
 		return true;
 	}
 
-	public function onWikiaSkinTopModules(&$scriptModules, $skin) {
+	static public function onWikiaSkinTopModules(&$scriptModules, $skin) {
 		if (self::areAdsInHead() || AnalyticsProviderAmazonDirectTargetedBuy::isEnabled()) {
 			$scriptModules[] = 'wikia.cookies';
 			$scriptModules[] = 'wikia.geo';
@@ -491,9 +513,9 @@ class AdEngine2Controller extends WikiaController {
 	 *
 	 * @return bool
 	 */
-	public function onLinkEnd($skin, Title $target, array $options, &$text, array &$attribs, &$ret) {
+	static public function onLinkEnd($skin, Title $target, array $options, &$text, array &$attribs, &$ret) {
 		if ($target->isExternal()) {
-			$this->handleExternalLink($attribs['href'], $attribs);
+			static::handleExternalLink($attribs['href'], $attribs);
 		}
 		return true;
 	}
@@ -508,8 +530,8 @@ class AdEngine2Controller extends WikiaController {
 	 *
 	 * @return bool
 	 */
-	public function onLinkerMakeExternalLink(&$url, &$text, &$link, &$attribs) {
-		$this->handleExternalLink($url, $attribs);
+	static function onLinkerMakeExternalLink(&$url, &$text, &$link, &$attribs) {
+		static::handleExternalLink($url, $attribs);
 		return true;
 	}
 
@@ -522,34 +544,39 @@ class AdEngine2Controller extends WikiaController {
 	 *
 	 * @return null
 	 */
-	private function handleExternalLink($url, &$attribs) {
-		if (!$this->wg->EnableOutboundScreenExt
-			|| $this->wg->RTEParserEnabled    // skip logic when in FCK
-			|| empty($this->wg->Title)        // setup functions can call MakeExternalLink before wgTitle is set RT#144229
-			|| $this->wg->User->isLoggedIn()  // logged in users have no exit stitial ads
+	static private function handleExternalLink($url, &$attribs) {
+		$wg = F::app()->wg;
+		if (!$wg->EnableOutboundScreenExt
+			|| $wg->RTEParserEnabled    // skip logic when in FCK
+			|| empty($wg->Title)        // setup functions can call MakeExternalLink before wgTitle is set RT#144229
+			|| $wg->User->isLoggedIn()  // logged in users have no exit stitial ads
 			|| strpos($url, 'http://') !== 0
 		) {
 			return;
 		}
 
-		foreach ($this->getExitstitialUrlsWhiteList() as $whiteListedUrl) {
+		foreach (static::getExitstitialUrlsWhiteList() as $whiteListedUrl) {
 			if (preg_match('/' . preg_quote($whiteListedUrl) . '/i', $url)) {
 				return;
 			}
 		}
 
-		$attribs['class'] .= ' exitstitial';
+		if (isset($attribs['class'])) {
+			$attribs['class'] .= ' exitstitial';
+		}
 	}
 
-	private function getExitstitialUrlsWhiteList() {
+	static private function getExitstitialUrlsWhiteList() {
 		static $whiteList = null;
+
+		$wg = F::app()->wg;
 
 		if (is_array($whiteList)) {
 			return $whiteList;
 		}
 
 		$whiteList = [];
-		$whiteListContent = $this->wf->MsgExt('outbound-screen-whitelist', array('language' => 'en'));
+		$whiteListContent = wfMsgExt('outbound-screen-whitelist', array('language' => 'en'));
 
 		if (!empty($whiteListContent)) {
 			$lines = explode("\n", $whiteListContent);
@@ -560,13 +587,13 @@ class AdEngine2Controller extends WikiaController {
 			}
 		}
 
-		$wikiDomains = WikiFactory::getDomains($this->wg->CityId);
+		$wikiDomains = WikiFactory::getDomains($wg->CityId);
 		if ($wikiDomains !== false) {
 			$whiteList = array_merge($wikiDomains, $whiteList);
 		}
 
 		// Devboxes run on different domains than just what is in WikiFactory.
-		if ($this->wg->DevelEnvironment && !empty($_SERVER['SERVER_NAME'])) {
+		if ($wg->DevelEnvironment && !empty($_SERVER['SERVER_NAME'])) {
 			array_unshift($whiteList, $_SERVER['SERVER_NAME']);
 		}
 

@@ -485,8 +485,9 @@ class Phalanx {
 				break;
 			}
 		}
-
-		PhalanxShadowing::check($text);
+		
+		$expected_id = (isset($matchingBlockData) && $matchingBlockData['id']) ? $matchingBlockData['id'] : 0;
+		PhalanxShadowing::check($text, $expected_id);
 
 		wfProfileOut( __METHOD__ );
 		return $result;

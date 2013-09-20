@@ -77,7 +77,7 @@ class RelatedVideosNamespaceData {
 			return;
 		}
 
-		$article = F::build( 'Article', array( $title ) );
+		$article = new Article( $title );
 		$status = $article->doEdit( '', 'Article created', EDIT_NEW, false, F::app()->wg->user);
 
 		wfProfileOut( __METHOD__ );
@@ -132,8 +132,27 @@ class RelatedVideosNamespaceData {
 				return;
 			}
 
-			// parse wikitext with RelatedVideos NS data (stored as wikitext list)
-			$content = $article->getContent();
+			// Get the content of the article, bypassing any user permission checks (we're using this
+			// page as a datastore so the same checks do not apply)
+			$page = $article->getPage();
+			if ( empty($page) ) {
+				wfDebug(__METHOD__ . ": RelatedVideos NS page doesn't exist\n");
+				wfProfileOut(__METHOD__);
+				return;
+			}
+			$rev = $page->getRevision();
+			if ( empty($rev) ) {
+				wfDebug(__METHOD__ . ": RelatedVideos NS revision doesn't exist\n");
+				wfProfileOut(__METHOD__);
+				return;
+			}
+			$content = $rev->getText( Revision::RAW );
+			if ( $content === false ) {
+				wfDebug(__METHOD__ . ": Problem retrieving RelatedVideos NS revision text\n");
+				wfProfileOut(__METHOD__);
+				return;
+			}
+
 			$lines = explode( "\n", $content );
 			$lists = array();
 			$lists[ self::BLACKLIST_MARKER ] = array();
@@ -335,7 +354,7 @@ class RelatedVideosNamespaceData {
 		}
 
 		// managing WikiActivity
-		$oTmpTitle = F::build( 'Title', array( $newEntry['title'], NS_VIDEO), 'newFromText');
+		$oTmpTitle = Title::newFromText( $newEntry['title'], NS_VIDEO);
 		if ( $list == self::WHITELIST_MARKER ){
 			$summary = wfMsg('related-videos-wiki-summary-whitelist', array( $oTmpTitle->getText(), $oTmpTitle->getFullText() ));
 		} else {
@@ -359,7 +378,7 @@ class RelatedVideosNamespaceData {
 		$content = $this->serialize();
 
 		if ( $this->mId ) {
-			$title = F::build( 'Title', array( $this->mId ), 'newFromID' );
+			$title = Title::newFromID( $this->mId );
 		} elseif ( $this->mTitle ) {
 			$title = $this->mTitle;
 		} else {
@@ -367,7 +386,7 @@ class RelatedVideosNamespaceData {
 			return wfMsg('related-videos-error-unknown', 76543);
 		}
 
-		$article = F::build('Article', array($title)); /* @var $article Article */
+		$article = new Article($title);
 
 		if ( empty( $summary )){
 			$summary = wfMsg( 'related-videos-update-summary-' . strtolower( $list ) );

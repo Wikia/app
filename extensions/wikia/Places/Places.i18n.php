@@ -32,6 +32,7 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'places-in-category' => '$1 is a category name',
@@ -40,14 +41,31 @@ $messages['qqq'] = array(
 	'places-editor-search' => 'Label for submit button that handles a search string. {{Identical|Search}}',
 	'places-editor-title-create-new' => 'Title of places editor modal when creating a new geotag',
 	'places-editor-title-edit' => 'Title of places editor modal when editing an existing geotag',
+	'places-geolocation-modal-error-title' => '{{Identical|Error}}',
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author ترجمان05
  */
 $messages['ar'] = array(
 	'places' => 'أماكن في هذا الويكي',
+	'places-desc' => 'يوفر دعم مرشد  <nowiki><place> و <places></nowiki> ليحدد جغرافيا الصفحات، كما يضع [[Special:Places|خريطة بالأماكن المحددة]]',
+	'places-in-category' => 'الأماكن في تصنيف $1',
+	'places-on-map' => '{{PLURAL:$1|مكان واحد|$1 أماكن}} على هذه الخريطة',
+	'places-editor-search' => 'بحث',
+	'places-editor-title-create-new' => 'إضافة علامة جغرافية',
+	'places-editor-title-edit' => 'تعديل علامة جغرافية',
+	'places-editor-show-my-location' => 'خذني إلى مكاني',
+	'places-editor-geoposition' => 'الموقع الجغرافي الحالي:',
+	'places-geolocation-button-label' => 'إضافة مكان',
+	'places-geolocation-modal-add-title' => 'إضافة مكان',
 	'places-geolocation-modal-error-title' => 'خطأ',
+	'places-error-no-article' => 'يجب أن تحدد صفحة',
+	'places-error-place-already-exists' => 'تم تحديد الموقع الجغرافي لهذه الصفحة بالفعل',
+	'places-updated-geolocation' => 'إضافة علامة جغرافية لهذه الصفحة',
+	'places-category-switch' => 'تعطيل تحديد الموقع الجغرافي',
+	'places-category-switch-off' => 'تمكين تحديد الموقع الجغرافي',
 );
 
 /** Breton (brezhoneg)
@@ -55,12 +73,49 @@ $messages['ar'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'places-in-category' => "Lec'hioù er rummad $1",
+	'places-on-map' => '{{PLURAL:$1|$1 plas|$1 plas}} war ar gartenn-mañ', # Fuzzy
 	'places-editor-search' => 'Klask',
 	'places-editor-geoposition' => "Geolec'hiadur a-vremañ :",
 	'places-geolocation-button-label' => "Ouzhpennañ ul lec'hiadur",
 	'places-geolocation-modal-add-title' => "Ouzhpennañ ul lec'hiadur",
 	'places-geolocation-modal-error-title' => 'Fazi',
 	'places-error-no-article' => "Ret eo deoc'h diferiñ ur bajenn",
+);
+
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'places' => 'Llocs en aquest wiki',
+	'places-desc' => "Proporciona funcions de l'analitzador <nowiki><place> i <places></nowiki> per geoetiquetar pàgines i un [[Special:Places|mapa de tots els llocs etiquetats]]",
+	'places-in-category' => 'Llocs en la categoria $1',
+	'places-on-map' => '{{PLURAL:$1|$1 lloc|$1 llocs}} en aquest mapa',
+	'places-modal-go-to-special' => 'Mostrant {{PLURAL:$1|$1 lloc|$1 llocs}} ([[Special:Places|veure tots]])',
+	'places-toolbar-button-tooltip' => 'Fes clic per afegir una geoetiqueta a aquesta pàgina',
+	'places-toolbar-button-address' => 'Si us plau, proporciona una adreça per utilitzar-la com una geoetiqueta en aquesta pàgina',
+	'places-editor-search' => 'Cercar',
+	'places-editor-title-create-new' => 'Afegir una geoetiqueta',
+	'places-editor-title-edit' => 'Editar una geoetiqueta',
+	'places-editor-show-my-location' => "Portar'm fins la meva ubicació",
+	'places-editor-geoposition' => 'Ubicació actual:',
+	'places-geolocation-button-label' => 'Afegir ubicació',
+	'places-geolocation-modal-add-title' => 'Afegir ubicació',
+	'places-geolocation-modal-error-title' => 'Error',
+	'places-geolocation-modal-error' => "S'ha produït un error mentre s'intentava determinar la teva ubicació:<br />$1",
+	'places-geolocation-modal-not-available' => 'Oops! Aquesta característica està actualment disponible només en dispositius mòbils.<br /><br />Vols provar-lo? Simplement visita aquesta pàgina utilitzant un dispositiu mòbil de la teva elecció.',
+	'places-error-no-article' => "Has d'especificar una pàgina",
+	'places-error-place-already-exists' => 'Aquesta pàgina ja ha estat geoetiquetada',
+	'places-updated-geolocation' => 'Geoetiqueta aquesta pàgina',
+	'places-category-switch' => 'Desactivar les geoetiquetes',
+	'places-category-switch-off' => 'Activar les geoetiquetes',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'places-editor-search' => 'Лаха',
 );
 
 /** Czech (česky)
@@ -384,7 +439,7 @@ $messages['nb'] = array(
  */
 $messages['nl'] = array(
 	'places' => 'Plaatsen op deze wiki',
-	'places-desc' => "Voegt de parserhooks <nowiki><place> en <places></nowiki> toe voor het geotaggen van pagina's en een [[Special:Places|kaart met alle aangegeven plaatsen]]",
+	'places-desc' => "Voegt de parserhooks <nowiki><place> en <places></nowiki> toe voor het geotaggen van pagina's en een [[Special:Places|kaart met alle opgegeven plaatsen]]",
 	'places-in-category' => 'Plaatsen in de categorie $1',
 	'places-on-map' => '{{PLURAL:$1|Eén plaats|$1 plaatsen}} op deze kaart',
 	'places-modal-go-to-special' => '{{PLURAL:$1|Eén plaats|$1 plaatsen}} weergegeven ([[Special:Places|allemaal weergeven]])',
@@ -444,31 +499,32 @@ $messages['pl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
 	'places' => 'Pòst dzor sta wiki',
-	'places-desc' => 'A dà <nowiki><place> e <places></nowiki> ganci ëd parser për geo tichëtté dle pagine e na [[Special:Places|carta ëd tute le pagine tichëttà]]',
+	'places-desc' => 'A forniss dle tichëtte <nowiki><place> e <places></nowiki> për marché da na mira geogràfica le pàgine e na [[Special:Places|carta ëd tute le pàgine marcà]]',
 	'places-in-category' => 'A piassa an $1 categorìe',
 	'places-on-map' => '{{PLURAL:$1|$1 pòst}} dzor sta carta',
-	'places-modal-go-to-special' => 'Mosté {{PLURAL:$1|$1 pòst}} ([[Special:Places|varda tut]])',
-	'places-toolbar-button-tooltip' => 'Sgnaca për gionté na geo tichëtta a sta pagina',
-	'places-toolbar-button-address' => "Për piasì dà l'adrëssa da dovré com na geo tichëtta për sta pagina",
+	'places-modal-go-to-special' => 'Smon-e {{PLURAL:$1|$1 pòst}} ([[Special:Places|vëdde tut]])',
+	'places-toolbar-button-tooltip' => "Ch'a sgnaca për gionté na tichëtta geogràfica a sta pàgina",
+	'places-toolbar-button-address' => "Për piasì, ch'a buta l'adrëssa da dovré com tichëtta geogràfica për costa pàgina",
 	'places-editor-search' => 'Sërca',
-	'places-editor-title-create-new' => 'Gionta na geotichëtta',
-	'places-editor-title-edit' => 'Modìfica na geotichëtta',
+	'places-editor-title-create-new' => 'Gionta na tichëtta geogràfica',
+	'places-editor-title-edit' => 'Modifiché na tichëtta geogràfica',
 	'places-editor-show-my-location' => 'Pòrtme a mia locassion',
 	'places-editor-geoposition' => 'Geolocassion corenta:',
 	'places-geolocation-button-label' => 'Gionté na locassion',
 	'places-geolocation-modal-add-title' => 'Gionté na locassion',
 	'places-geolocation-modal-error-title' => 'Eror',
-	'places-geolocation-modal-error' => "A j'era n'eror an provand a determiné toa posission:<br />$1",
-	'places-geolocation-modal-not-available' => "Contacc! Sta funsion a l'é al moment disponibla mach su dispositis sacociàbij.<br /><br />It veus-to deje na preuva? Vìsita mach sta pagina dovrand tò dispositiv sacociàbil ch'it veule.",
-	'places-error-no-article' => 'It deuve specifiché na pagina',
-	'places-error-place-already-exists' => "Sta pagina a l'é già geo tichëttà",
-	'places-updated-geolocation' => 'Geotichëtta sta pagina',
-	'places-category-switch' => 'Disabìlita geotichëttatura',
-	'places-category-switch-off' => 'Abìlita geotichëttatura',
+	'places-geolocation-modal-error' => "A-i é staje n'eror an provand a determiné soa posission:<br />$1",
+	'places-geolocation-modal-not-available' => "Contacc! Sta funsion a l'é al moment disponìbil mach su dij dispositiv sacociàbij.<br /><br />Veul-lo fé na preuva? Ch'a vìsita mach sta pàgina dovrand ël dispositiv sacociàbil ch'a veul.",
+	'places-error-no-article' => 'A dev specifiché na pàgina',
+	'places-error-place-already-exists' => "Costa pàgina a l'é già marcà da na mira geogràfica",
+	'places-updated-geolocation' => 'Marché sta pàgina da na mira geogràfica',
+	'places-category-switch' => 'Disabilité la marcadura geogràfica',
+	'places-category-switch-off' => 'Abilité la marcadura geogràfica',
 );
 
 /** Pashto (پښتو)
@@ -476,17 +532,24 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'places-editor-search' => 'پلټل',
+	'places-geolocation-button-label' => 'ځای ورګډول',
+	'places-geolocation-modal-add-title' => 'ځای ورګډول',
 	'places-geolocation-modal-error-title' => 'تېروتنه',
 );
 
 /** Portuguese (português)
+ * @author Luckas
  * @author Malafaya
  */
 $messages['pt'] = array(
+	'places-editor-search' => 'Pesquisar',
+	'places-geolocation-button-label' => 'Adicionar localização',
+	'places-geolocation-modal-add-title' => 'Adicionar localização',
 	'places-geolocation-modal-error-title' => 'Erro',
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
@@ -503,6 +566,10 @@ $messages['roa-tara'] = array(
 	'places' => 'Luèche sus a sta uicchi',
 	'places-in-category' => "Luèche jndr'à categorije $1",
 	'places-editor-search' => 'Cirche',
+	'places-editor-title-create-new' => "Aggiunge 'nu geotag",
+	'places-editor-title-edit' => "Cange 'nu geotag",
+	'places-geolocation-button-label' => "Aggiunge 'na località",
+	'places-geolocation-modal-add-title' => "Aggiunge 'na località",
 	'places-geolocation-modal-error-title' => 'Errore',
 );
 
@@ -618,12 +685,33 @@ $messages['tl'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
 	'places' => 'Місця на цій wiki',
+	'places-desc' => 'Забезпечує <nowiki><place> і <places></nowiki> аналізує закладки для геоміток на сторінках та на [[Special:Places|карті всіх сторінок з мітками]]',
+	'places-in-category' => 'Місця в категорії $1',
+	'places-on-map' => '{{PLURAL:$1|$1 місце|$1 місця|$1 місць}} на цій карті',
+	'places-modal-go-to-special' => 'Показано {{PLURAL:$1|$1 місце|$1 місця|$1 місць}} ([[Special:Places|побачити усе]])',
+	'places-toolbar-button-tooltip' => 'Натисніть, щоб додати геомітку на цій сторінці',
+	'places-toolbar-button-address' => 'Будь ласка, вкажіть адресу для використання геоміток для цієї сторінки',
 	'places-editor-search' => 'Пошук',
+	'places-editor-title-create-new' => 'Додати геомітку',
+	'places-editor-title-edit' => 'Редагувати геомітку',
+	'places-editor-show-my-location' => "Прив'язати мене до мого розташування",
+	'places-editor-geoposition' => 'Поточне розташування:',
+	'places-geolocation-button-label' => 'Додати розташування',
+	'places-geolocation-modal-add-title' => 'Додати розташування',
 	'places-geolocation-modal-error-title' => 'Помилка',
+	'places-geolocation-modal-error' => 'Виникла помилка під час спроби визначити вашу позицію:<br />$1',
+	'places-geolocation-modal-not-available' => 'На жаль! Наразі ця функція доступна тільки на мобільних пристроях.<br /><br />Хочете спробувати? Просто зайдіть на цю сторінку за допомогою вашого мобільного пристрою.',
+	'places-error-no-article' => 'Ви повинні вказати сторінку',
+	'places-error-place-already-exists' => 'Ця сторінка вже є геоміткою',
+	'places-updated-geolocation' => 'Додати геомітку на цю сторінку',
+	'places-category-switch' => 'Вимкнути додавання геоміток',
+	'places-category-switch-off' => 'Увімкнути додавання геоміток',
 );
 
 /** Walloon (walon)

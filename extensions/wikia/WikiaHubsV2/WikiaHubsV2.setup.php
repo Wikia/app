@@ -9,7 +9,6 @@
  */
 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'WikiaHubs V2',
@@ -18,33 +17,33 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version' => 1.0
 );
 
-$app->registerClass('WikiaHubsV2Page', $dir . 'WikiaHubsV2Page.class.php');
+$wgAutoloadClasses['WikiaHubsV2Page'] =  $dir . 'WikiaHubsV2Page.class.php';
 
 // constroller classes
-$app->registerClass('WikiaHubsV2Controller', $dir . 'WikiaHubsV2Controller.class.php');
-$app->registerClass('WikiaHubsV2SuggestController', $dir . 'WikiaHubsV2SuggestController.class.php');
+$wgAutoloadClasses['WikiaHubsV2Controller'] =  $dir . 'WikiaHubsV2Controller.class.php';
+$wgAutoloadClasses['WikiaHubsV2SuggestController'] =  $dir . 'WikiaHubsV2SuggestController.class.php';
 
 // hook classes
-$app->registerClass('WikiaHubsV2Mobile', $dir . 'hooks/WikiaHubsV2MobileHooks.php');
-$app->registerClass('WikiaHubsV2Hooks', $dir . 'hooks/WikiaHubsV2Hooks.php');
+$wgAutoloadClasses['WikiaHubsV2Hooks'] =  $dir . 'hooks/WikiaHubsV2Hooks.php';
 
 // model classes
-$app->registerClass('WikiaHubsV2Article', $dir . 'models/WikiaHubsV2Article.class.php');
-$app->registerClass('WikiaHubsV2Model', $dir . 'models/WikiaHubsV2Model.class.php');
-$app->registerClass('WikiaHubsV2HooksModel', $dir . 'models/WikiaHubsV2HooksModel.class.php');
+$wgAutoloadClasses['WikiaHubsV2Article'] =  $dir . 'models/WikiaHubsV2Article.class.php';
+$wgAutoloadClasses['WikiaHubsV2Model'] =  $dir . 'models/WikiaHubsV2Model.class.php';
+$wgAutoloadClasses['WikiaHubsV2HooksModel'] =  $dir . 'models/WikiaHubsV2HooksModel.class.php';
 
-$app->registerClass('WikiaHubsV2SuggestModel', $dir . 'models/WikiaHubsV2SuggestModel.class.php');
+$wgAutoloadClasses['WikiaHubsV2SuggestModel'] =  $dir . 'models/WikiaHubsV2SuggestModel.class.php';
 
-$app->registerClass('WikiaHubsParserHelper', $dir . 'WikiaHubsParserHelper.class.php');
+$wgAutoloadClasses['WikiaHubsParserHelper'] =  $dir . 'WikiaHubsParserHelper.class.php';
 
 // i18n mapping
-$app->registerExtensionMessageFile('WikiaHubsV2', $dir.'WikiaHubsV2.i18n.php');
+$wgExtensionMessagesFiles['WikiaHubsV2'] = $dir.'WikiaHubsV2.i18n.php';
 
 // hooks
-$app->registerHook('WikiaMobileAssetsPackages', 'WikiaHubsV2Mobile', 'onWikiaMobileAssetsPackages');
-$app->registerHook('ArticleFromTitle', 'WikiaHubsV2Hooks', 'onArticleFromTitle');
-$app->registerHook('WikiaCanonicalHref', 'WikiaHubsV2Hooks', 'onWikiaCanonicalHref');
-$app->registerHook('ParserFirstCallInit', 'WikiaHubsV2Hooks', 'onParserFirstCallInit');
+$wgHooks['ArticleFromTitle'][] = 'WikiaHubsV2Hooks::onArticleFromTitle';
+$wgHooks['WikiaCanonicalHref'][] = 'WikiaHubsV2Hooks::onWikiaCanonicalHref';
+$wgHooks['ParserFirstCallInit'][] = 'WikiaHubsV2Hooks::onParserFirstCallInit';
+
+$wgWikiaApiControllers['WikiaHubsApiController'] = "{$IP}/includes/wikia/api/WikiaHubsApiController.class.php";
 
 // foreign file repo
 $wgForeignFileRepos[] = array(

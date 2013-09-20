@@ -12,7 +12,7 @@ class InWikiGameHelper {
 	 * @param Array $modules right rail modules array
 	 * @return bool return true because it's a hook
 	 */
-	public function onGetRailModuleList(&$modules) {
+	static public function onGetRailModuleList(&$modules) {
 		wfProfileIn(__METHOD__);
 
 		$modules[1400] = array('InWikiGameRail', 'Index', null);

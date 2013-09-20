@@ -5,7 +5,6 @@
 *
 */
 
-$app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 /**
@@ -16,19 +15,19 @@ $wgDefaultUserOptions['watchdeletion'] = 1;
 /**
  * classes
  */
-$app->registerClass('UserPreferencesV2', $dir . 'UserPreferencesV2.class.php');
+$wgAutoloadClasses['UserPreferencesV2'] =  $dir . 'UserPreferencesV2.class.php';
 
 /**
  * hooks
  */
-$app->registerHook('GetPreferences', 'UserPreferencesV2', 'onGetPreferences');
-$app->registerHook('SpecialPreferencesBeforeResetUserOptions', 'UserPreferencesV2', 'onSpecialPreferencesBeforeResetUserOptions');
-$app->registerHook('SpecialPreferencesAfterResetUserOptions', 'UserPreferencesV2', 'onSpecialPreferencesAfterResetUserOptions');
-$app->registerHook('PreferencesTrySetUserEmail', 'UserPreferencesV2', 'onPreferencesTrySetUserEmail');
-$app->registerHook('SavePreferences', 'UserPreferencesV2', 'onSavePreferences');
-$app->registerHook('UserGetDefaultOptions', 'UserPreferencesV2', 'onUserGetDefaultOptions');
+$wgHooks['GetPreferences'][] = 'UserPreferencesV2::onGetPreferences';
+$wgHooks['SpecialPreferencesBeforeResetUserOptions'][] = 'UserPreferencesV2::onSpecialPreferencesBeforeResetUserOptions';
+$wgHooks['SpecialPreferencesAfterResetUserOptions'][] = 'UserPreferencesV2::onSpecialPreferencesAfterResetUserOptions';
+$wgHooks['PreferencesTrySetUserEmail'][] = 'UserPreferencesV2::onPreferencesTrySetUserEmail';
+$wgHooks['SavePreferences'][] = 'UserPreferencesV2::onSavePreferences';
+$wgHooks['UserGetDefaultOptions'][] = 'UserPreferencesV2::onUserGetDefaultOptions';
 
 /**
  * messages
  */
-$app->registerExtensionMessageFile('UserPreferencesV2', $dir . '/UserPreferencesV2.i18n.php');
+$wgExtensionMessagesFiles['UserPreferencesV2'] = $dir . '/UserPreferencesV2.i18n.php';

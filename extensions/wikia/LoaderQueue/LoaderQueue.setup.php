@@ -18,5 +18,5 @@ $wgResourceModules['ext.wikia.loaderQueue'] = array(
 	'remoteExtPath' => 'wikia/LoaderQueue'
 );
 
-$app->registerClass('LoaderQueueHooks', __DIR__ . '/LoaderQueueHooks.class.php');
-$app->registerHook('WikiaSkinTopScripts', 'LoaderQueueHooks', 'onWikiaSkinTopScripts');
+$wgAutoloadClasses['LoaderQueueHooks'] =  __DIR__ . '/LoaderQueueHooks.class.php';
+$wgHooks['WikiaSkinTopScripts'][] = 'LoaderQueueHooks::onWikiaSkinTopScripts';

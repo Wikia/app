@@ -48,9 +48,9 @@ $wgExtensionMessagesFiles[ 'HAWelcome' ] = __DIR__ . '/HAWelcome.i18n.php';
 /**
  * @global Array The list of hooks.
  * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
- * @see http://www.mediawiki.org/wiki/Manual:Hooks/RevisionInsertComplete
+ * @see http://www.mediawiki.org/wiki/Manual:Hooks/ArticleSaveComplete
  */
-$wgHooks['RevisionInsertComplete'][] = 'HAWelcomeJob::onRevisionInsertComplete';
+$wgHooks['ArticleSaveComplete'][] = 'HAWelcomeJob::onArticleSaveComplete';
 /**
  * @type String Command name for the job aka type of the job.
  * @see http://www.mediawiki.org/wiki/Manual:RunJobs.php
@@ -96,26 +96,42 @@ class HAWelcomeJob extends Job {
 	/**
 	 * Enqueues a job based on a few simple preliminary checks.
 	 *
-	 * Called after a revision is inserted into the database.
+	 * Called once an article has been saved.
 	 *
+	 * @param $oArticle Object The WikiPage object for the contribution.
+	 * @param $oUser Object The User object for the contribution.
+	 * @param $sText String The contributed text.
+	 * @param $sSummary String The summary for the contribution.
+	 * @param $iMinorEdit Integer Indicates whether a contribution has been marked as a minor one.
+	 * @param $nWatchThis Null Not used as of MW 1.8
+	 * @param $nSectionAnchor Null Not used as of MW 1.8
+	 * @param $iFlags Integer Bitmask flags for the edit.
 	 * @param $oRevision Object The Revision object.
-	 * @param $sData String URL to external object.
-	 * @param $sFlags String Flags for this revision.
+	 * @param $oStatus Object The Status object returned by Article::doEdit().
+	 * @param $iBaseRevId Integer The ID of the revision, the current edit is based on (or Boolean False).
 	 * @return Boolean True so the calling method would continue.
 	 * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
-	 * @see http://www.mediawiki.org/wiki/Manual:Hooks/RevisionInsertComplete
+	 * @see http://www.mediawiki.org/wiki/Manual:Hooks/ArticleSaveComplete
 	 * @since MediaWiki 1.19.4
 	 * @internal
 	 */
-	public static function onRevisionInsertComplete( &$oRevision, $sData, $sFlags ) {
+	public static function onArticleSaveComplete( &$oArticle, &$oUser, $sText, $sSummary, $iMinorEdit, $nWatchThis, $nSectionAnchor, &$iFlags, $oRevision, $oStatus, $iBaseRevId ) {
 		wfProfileIn( __METHOD__ );
+
+		if ( is_null( $oRevision ) ) {
+			// if oRevision is null, that means we're dealing with a null edit (no content change)
+			// and therefore we don't have to welcome anybody
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+
 		/** @global Boolean Show PHP Notices. Set via WikiFactory. */
 		global $wgHAWelcomeNotices;
 		/** @type Interget Store the original error reporting level. */
 		$iErrorReporting = error_reporting();
 		error_reporting( E_ALL );
 		// Abort if the feature has been disabled by the admin of the wiki.
-		if ( in_array( trim( wfMessage( 'welcome-user' )->text() ), array( '@disabled', '-' ) ) ) {
+		if ( in_array( trim( wfMessage( 'welcome-user' )->inContentLanguage()->text() ), array( '@disabled', '-' ) ) ) {
 			if ( !empty( $wgHAWelcomeNotices ) ) {
 				trigger_error( sprintf( '%s Terminated. The feature has been disabled.', __METHOD__ ) , E_USER_NOTICE );
 			}
@@ -282,7 +298,7 @@ class HAWelcomeJob extends Job {
 		$iErrorReporting = error_reporting();
 		error_reporting( E_ALL );
 		// Complete the job if the feature has been disabled by the admin of the wiki.
-		if ( in_array( trim( wfMessage( 'welcome-user' )->text() ), array( '@disabled', '-' ) ) ) {
+		if ( in_array( trim( wfMessage( 'welcome-user' )->inContentLanguage()->text() ), array( '@disabled', '-' ) ) ) {
 			if ( $this->bShowNotices ) {
 				trigger_error( sprintf( '%s Terminated. The feature has been disabled.', __METHOD__ ) , E_USER_NOTICE );
 			}
@@ -312,7 +328,7 @@ class HAWelcomeJob extends Job {
 		global $wgEnableWallExt;
 		$this->bMessageWallExt = ! empty( $wgEnableWallExt );
 		/** @type String The user-level configuration of the feature. */
-		$sSwitches = wfMessage( 'welcome-enabled' )->text();
+		$sSwitches = wfMessage( 'welcome-enabled' )->inContentLanguage()->text();
 		// Override the default switches with user's values.
 		foreach ( $this->aSwitches as $sSwitch => $bValue ) {
 			if ( false !== strpos( $sSwitches, $sSwitch ) ) {
@@ -322,7 +338,7 @@ class HAWelcomeJob extends Job {
 		// Refresh the sender data.
 		$this->setSender();
 		// If possible, mark edits as if they were made by a bot.
-		if ( $this->oSender->isAllowed( 'bot' ) || '@bot' == trim( wfMessage( 'welcome-bot' )->text() ) ) {
+		if ( $this->oSender->isAllowed( 'bot' ) || '@bot' == trim( wfMessage( 'welcome-bot' )->inContentLanguage()->text() ) ) {
 			if ( $this->bShowNotices ) {
 				trigger_error( sprintf( '%s All edits will be marked as if they were made by a bot.', __METHOD__ ) , E_USER_NOTICE );
 			}
@@ -387,6 +403,7 @@ class HAWelcomeJob extends Job {
 	 * @internal
 	 */
 	public function sendMessage() {
+		global $wgUser;
 		wfProfileIn( __METHOD__ );
 		if ( $this->bShowNotices ) {
 			trigger_error( sprintf( '%s Start.', __METHOD__ ) , E_USER_NOTICE );
@@ -398,17 +415,12 @@ class HAWelcomeJob extends Job {
 			}
 			// See: extensions/wikia/Wall/WallMessage.class.php
 			/** @type Mixed|Boolean The WallMessage object or logical false. */
-			$mWallMessage = F::build(
-				'WallMessage',
-				array(
-					$this->sMessage, $this->sRecipientName, $this->oSender,
-					wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), false, array(), false, false
-				),
-				'buildNewMessageAndPost'
+			$mWallMessage = WallMessage::buildNewMessageAndPost(
+                $this->sMessage, $this->sRecipientName, $wgUser,
+                wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), false, array(), false, false
 			);
-			// Moved from the previous implementation. The relevant code
-			// of the Wall extension has - as expected - no documentation
-			// whatsoever.
+			// Sets the sender of the message when the actual message
+			// was posted by the welcome bot
 			if ( $mWallMessage ) {
 				$mWallMessage->setPostedAsBot( $this->oSender );
 				$mWallMessage->sendNotificationAboutLastRev();
@@ -453,8 +465,9 @@ class HAWelcomeJob extends Job {
 		// Is recipient a registered user?
 		$sMessageKey .= $this->iRecipientId
 			? 'user'  : 'anon';
-		// Is sender a staff member?
-		$sMessageKey .= in_array( 'staff', $this->oSender->getEffectiveGroups() )
+		// Is sender a staff member and not a local admin?
+		$senderGroups = $this->oSender->getEffectiveGroups();
+		$sMessageKey .= ( in_array( 'staff', $senderGroups ) && !in_array( 'sysop', $senderGroups ) )
 			? '-staff' : '';
 		if ( $this->bShowNotices ) {
 			trigger_error( sprintf( '%s Message key is %s.', __METHOD__, $sMessageKey ) , E_USER_NOTICE );
@@ -464,7 +477,7 @@ class HAWelcomeJob extends Job {
 		// Article Comments and Message Wall hook up to this event.
 		wfRunHooks( 'HAWelcomeGetPrefixText' , array( &$sPrefixedText, $this->title ) );
 		// Determine the key for the signature.
-		$sSignatureKey = in_array( 'staff', $this->oSender->getEffectiveGroups() )
+		$sSignatureKey = ( in_array( 'staff', $senderGroups ) && !in_array( 'sysop', $senderGroups ) )
 			? 'staffsig-text' : 'signature';
 		// Determine the full signature.
 		$sFullSignature = wfMessage(
@@ -508,7 +521,7 @@ class HAWelcomeJob extends Job {
 			trigger_error( sprintf( '%s Start.', __METHOD__ ) , E_USER_NOTICE );
 		}
 		/** @type String Get the user-level setting. */
-		$sSender = trim( wfMessage( 'welcome-user' )->inContentLanguage() );
+		$sSender = trim( wfMessage( 'welcome-user' )->inContentLanguage()->text() );
 		if ( $this->bShowNotices ) {
 			trigger_error( sprintf( '%s The user level setting is: %s.', __METHOD__, $sSender ) , E_USER_NOTICE );
 		}

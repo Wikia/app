@@ -11,14 +11,16 @@ $messages['en'] = array(
 	'minieditor-placeholder-reply' => 'Reply to the message here',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'minieditor-specialpage-title' => 'Browser title for the page',
 	'minieditor-new-heading' => 'Heading of a form area',
 	'minieditor-placeholder-new' => 'Placeholder text, showin in an input field, disappears when clicked',
 	'minieditor-message-edit' => 'Notification text shown when a message is being edited (as opposed to created)',
-	'minieditor-reply' => 'Button text for replying to a message',
+	'minieditor-reply' => 'Button text for replying to a message.
+{{Identical|Reply}}',
 	'minieditor-placeholder-reply' => 'Placeholder text, showin in an input field, disappears when clicked',
 );
 
@@ -41,6 +43,7 @@ $messages['br'] = array(
 	'minieditor-new-heading' => 'Krouiñ ur gemennadenn nevez',
 	'minieditor-placeholder-new' => 'Skrivit ho kemennadenn amañ',
 	'minieditor-reply' => 'Respont',
+	'minieditor-placeholder-reply' => "Respont d'ar gemennadenn amañ",
 );
 
 /** Catalan (català)
@@ -102,6 +105,17 @@ $messages['fi'] = array(
 	'minieditor-placeholder-reply' => 'Vastaa viestiin tässä',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'minieditor-specialpage-title' => 'MiniEditor Royndarsíða',
+	'minieditor-new-heading' => 'Upprætta eitt nýtt boð',
+	'minieditor-placeholder-new' => 'Skriva títt boð her',
+	'minieditor-reply' => 'Svara',
+	'minieditor-placeholder-reply' => 'Svara boðnum her',
+);
+
 /** French (français)
  * @author Wyz
  */
@@ -148,6 +162,13 @@ $messages['ia'] = array(
 	'minieditor-message-edit' => 'Isto es un message existente',
 	'minieditor-reply' => 'Responder',
 	'minieditor-placeholder-reply' => 'Responde al message hic',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'minieditor-reply' => 'Balas',
 );
 
 /** Italian (italiano)
@@ -272,6 +293,7 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author JM Pessanha
+ * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
@@ -283,10 +305,26 @@ $messages['pt-br'] = array(
 	'minieditor-placeholder-reply' => 'Responder a mensagem aqui',
 );
 
+/** Romanian (română)
+ * @author Minisarm
+ */
+$messages['ro'] = array(
+	'minieditor-specialpage-title' => 'Pagină demonstrativă a MiniEditorului',
+	'minieditor-new-heading' => 'Creare mesaj nou',
+	'minieditor-placeholder-new' => 'Introduceți mesajul dumneavoastră aici',
+	'minieditor-message-edit' => 'Acesta este un mesaj existent',
+	'minieditor-reply' => 'Răspuns',
+	'minieditor-placeholder-reply' => 'Răspundeți mesajului aici',
+);
+
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'minieditor-specialpage-title' => 'Pàgene de demo de MiniEditor',
+	'minieditor-new-heading' => "Ccreje 'nu messàgge nuève",
+	'minieditor-placeholder-new' => "Mitte 'u messàgge tune aqquà",
+	'minieditor-message-edit' => "Quiste jè 'nu messàgge esistende",
 	'minieditor-reply' => 'Respunne',
 	'minieditor-placeholder-reply' => "Respunne a 'u messàgge aqquà",
 );
@@ -337,11 +375,16 @@ $messages['tzm'] = array(
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
+ * @author SteveR
+ * @author Ua2004
  */
 $messages['uk'] = array(
+	'minieditor-specialpage-title' => 'Демо-сторінка MiniEditor',
 	'minieditor-new-heading' => 'Створити нове повідомлення',
 	'minieditor-placeholder-new' => 'Введіть ваше повідомлення тут',
+	'minieditor-message-edit' => 'Це існуюче повідомлення',
 	'minieditor-reply' => 'Відповісти',
+	'minieditor-placeholder-reply' => 'Відповідь на повідомлення тут',
 );
 
 /** Simplified Chinese (中文（简体）‎)

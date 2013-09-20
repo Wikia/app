@@ -38,7 +38,7 @@ if ( $isLoggedIn ) {
 </p>
 
 <p>
-<label for="wpDescription"><?= wfmsg( 'specialcontact-label-bad-ad-description' ) ?></label>
+<label for="wpDescription"><?= wfMsg( 'specialcontact-label-bad-ad-description' ) ?></label>
 <textarea name="wpDescription"></textarea>
 </p>
 

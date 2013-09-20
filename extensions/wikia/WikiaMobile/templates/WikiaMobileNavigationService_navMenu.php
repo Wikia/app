@@ -8,10 +8,11 @@
  * @var $blacklist
  */
 ?>
-<nav class=cur1 id=wkNavMenu<? if ( !empty( $parseErrors ) ) :?> data-error="<?= implode( '; ', $parseErrors ) ;?>"<? endif ;?>>
+<header class="wkPrfHead up"><?= wfMessage('wikiamobile-menu')->text() ?></header>
+<nav id=wkNavMenu<? if ( !empty( $parseErrors ) ) :?> data-error="<?= implode( '; ', $parseErrors ) ;?>"<? endif ;?>>
 	<header>
-		<button id=wkNavBack class=wkBtn><?= $wf->MsgExt( 'wikiamobile-back', array( 'parseinline' ) );?></button>
-		<h1 class='collSec addChev'><?= $wf->MsgForContent( 'wikiamobile-menu' ); ?></h1>
+		<button id=wkNavBack class=wkBtn><?= wfMessage( 'wikiamobile-back' )->text(); ?></button>
+		<h1 class='collSec addChev'></h1>
 		<a id=wkNavLink class=chvRgt></a>
 	</header>
 <ul id=lvl1 class=wkLst>

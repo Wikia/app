@@ -9,11 +9,7 @@
 class WikiFeaturesHelper extends WikiaModel {
 
 	protected static $instance = NULL;
-	protected $fogbugzService = NULL;
 
-	const FOGBUGZ_PROJECT_ID = 24;  // This is the "Product Feedback" Project ID in Fogbugz
-	const FOGBUGZ_CASE_TITLE = 'WikiFeatures Feedback - Project: ';
-	const FOGBUGZ_CASE_TAG = 'WikiFeaturesFeedback';
 	const FEEDBACK_FREQUENCY = 60;
 
 	/**
@@ -69,7 +65,7 @@ class WikiFeaturesHelper extends WikiaModel {
 
 		if (isset($this->wg->WikiFeatures['normal']) && is_array($this->wg->WikiFeatures['normal'])) {
 			//allow adding features in runtime
-			$this->wf->runHooks( 'WikiFeatures::onGetFeatureNormal' );
+			wfrunHooks( 'WikiFeatures::onGetFeatureNormal' );
 
 			foreach ($this->wg->WikiFeatures['normal'] as $feature) {
 				$list[] = array(
@@ -111,7 +107,7 @@ class WikiFeaturesHelper extends WikiaModel {
 		$memKey = $this->getMemcKeyNumActiveWikis($feature);
 		$num = $this->wg->Memc->get($memKey);
 		if ( !is_numeric($num) ) {
-			$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+			$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 			$result = $db->selectRow(
 				array('city_variables_pool', 'city_variables'),
@@ -142,7 +138,7 @@ class WikiFeaturesHelper extends WikiaModel {
 	 * @return string
 	 */
 	public function getMemcKeyNumActiveWikis($feature) {
-		return $this->wf->SharedMemcKey('wikifeatures', 'active_wikis', $feature);
+		return wfSharedMemcKey('wikifeatures', 'active_wikis', $feature);
 	}
 
 	protected function getFeatureEnabled($feature) {
@@ -181,7 +177,7 @@ class WikiFeaturesHelper extends WikiaModel {
 	public function isSpam($userName, $feature) {
 
 		// it didn't work without urlencode($userName) maybe because of multibyte signs
-		$memcKey = $this->wf->MemcKey('wikifeatures', urlencode($userName), $feature, 'spamCheckTime' );
+		$memcKey = wfMemcKey('wikifeatures', urlencode($userName), $feature, 'spamCheckTime' );
 		$result = $this->wg->Memc->get($memcKey);
 
 		if( empty($result) ) {
@@ -193,33 +189,18 @@ class WikiFeaturesHelper extends WikiaModel {
 	}
 
 
-	public function getFogbugzService() {
-		if( $this->fogbugzService == null ) {
-			$this->fogbugzService = F::build(
-					'FogbugzService', array(
-						$this->wg->fogbugzAPIConfig['apiUrl'],
-						$this->wg->fogbugzAPIConfig['username'],
-						$this->wg->fogbugzAPIConfig['password'],
-						$this->app->getGlobal( 'wgHTTPProxy' )
-					)
-				);
-		}
-		return $this->fogbugzService;
-	}
-
-
 	/**
 	 * Helper that actually sends the feedback to a specified e-mail address
 	 *
 	 * @param string $feature name of the feature
 	 * @param string $message feedback message
 	 * @param User $user user object
-	 * @param integer $feedbackCat feedback category which is defined above in $feedbackCategories property (equals piority in FogBugz: 4-7)
+	 * @param integer $feedbackCat feedback category which is defined above in $feedbackCategories property
 	 */
 	public function sendFeedback( $feature, $user, $message, $category, $priority = 5 ) {
 
 		$areaId = self::$feedbackAreaIDs[$feature];
-		$title = self::FOGBUGZ_CASE_TITLE . $feature .' - '.self::$feedbackCategories[$category]['title'];
+		$title = $feature .' - '.self::$feedbackCategories[$category]['title'];
 
 		$message = <<<MSG
 User name: {$user->getName()}

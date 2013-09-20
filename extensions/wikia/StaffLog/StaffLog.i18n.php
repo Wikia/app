@@ -18,10 +18,12 @@ $messages['en'] = array(
 	'stafflog-filter-type-piggyback' => 'Piggyback',
 	'stafflog-filter-type-renameuser' => 'User renames',
 	'stafflog-filter-type-wikifactory' => 'Wiki status',
+	'action-stafflog' => 'view the centralized staff log',
 );
 
 /** Message documentation (Message documentation)
  * @author Erdemaslancan
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'stafflog-desc' => '{{desc}}',
@@ -42,12 +44,36 @@ $messages['qqq'] = array(
 * $2 is the user name of the acting user
 * $3 is the user ID of the "victim"
 * $4 is the user name of the "victim".',
+	'right-stafflog' => '{{doc-right|stafflog}}',
 	'stafflog-wiki-status-change' => 'Log entry. Parameters:
 * $1 is the name of the acting user,
 * $2 is the name of the wiki of which the status was changed,
 * $3 is the new status of the wiki,
 * $4 is the reason of the change.',
-	'stafflog-filter-user' => '',
+	'stafflog-filter-label' => '{{Identical|Filter}}',
+	'stafflog-filter-user' => '{{Identical|User}}',
+	'action-stafflog' => '{{doc-action|stafflog}}',
+);
+
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'stafflog-desc' => 'تسجيل مركزي للموظفين',
+	'stafflog' => 'سجل فريق العمل',
+	'stafflog-blockmsg' => 'حاول $1 $2 منع المستخدم الموظف $3 في ويكي $4. السبب: $5',
+	'stafflog-piggybackloginmsg' => 'استعارة حساب $1 - دخول المستخدم $2 باسم المستخدم $3',
+	'stafflog-piggybacklogoutmsg' => 'استعارة حساب $1 - انتهاء المستخدم $2 من استعمال حساب $3',
+	'right-stafflog' => 'يمكن له عرض سجلات فريق العمل (الموظفين)',
+	'stafflog-wiki-status-change' => 'قام $1 بتغيير حالة $2 ل$3. السبب: $4',
+	'stafflog-filter-label' => 'مرشح',
+	'stafflog-filter-user' => 'المستخدم:',
+	'stafflog-filter-type' => 'النوع:',
+	'stafflog-filter-apply' => 'تطبيق المرشح',
+	'stafflog-filter-type-block' => 'عمليات المنع',
+	'stafflog-filter-type-piggyback' => 'استعارة حساب',
+	'stafflog-filter-type-renameuser' => 'إعادة تسمية المستخدم',
+	'stafflog-filter-type-wikifactory' => 'حالة الويكي',
 );
 
 /** Breton (brezhoneg)
@@ -72,6 +98,7 @@ $messages['bs'] = array(
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author Marcmpujol
  */
 $messages['ca'] = array(
@@ -90,6 +117,7 @@ $messages['ca'] = array(
 	'stafflog-filter-type-piggyback' => 'Personificar',
 	'stafflog-filter-type-renameuser' => "Canviar el nom d'usuari",
 	'stafflog-filter-type-wikifactory' => 'Estat del wiki',
+	'action-stafflog' => "mostra l'historial centralitzat",
 );
 
 /** Czech (česky)
@@ -114,6 +142,7 @@ $messages['cs'] = array(
 /** German (Deutsch)
  * @author Alphakilo
  * @author Claudia Hattitten
+ * @author Metalhead64
  * @author PtM
  */
 $messages['de'] = array(
@@ -132,6 +161,7 @@ $messages['de'] = array(
 	'stafflog-filter-type-piggyback' => 'Huckepack',
 	'stafflog-filter-type-renameuser' => 'Nutzer-Umbenennungen',
 	'stafflog-filter-type-wikifactory' => 'Wiki Status',
+	'action-stafflog' => 'das zentralisierte Mitarbeiter-Log zu betrachten',
 );
 
 /** Zazaki (Zazaki)
@@ -144,6 +174,14 @@ $messages['diq'] = array(
 	'stafflog-filter-type' => 'Babet:',
 	'stafflog-filter-type-block' => 'Bloki',
 	'stafflog-filter-type-wikifactory' => 'Wiki weziyet',
+);
+
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'stafflog-desc' => 'Centralised logging for staff',
+	'action-stafflog' => 'view the centralised staff log',
 );
 
 /** Spanish (español)
@@ -165,9 +203,11 @@ $messages['es'] = array(
 	'stafflog-filter-type-piggyback' => 'Personificar',
 	'stafflog-filter-type-renameuser' => 'Cambiar nombre de usuario',
 	'stafflog-filter-type-wikifactory' => 'Estado del wiki',
+	'action-stafflog' => 'ver el registro del staff centralizado',
 );
 
 /** French (français)
+ * @author Gomoko
  * @author Peter17
  * @author Wyz
  */
@@ -187,6 +227,7 @@ $messages['fr'] = array(
 	'stafflog-filter-type-piggyback' => 'Accès superposé',
 	'stafflog-filter-type-renameuser' => 'Renommages d’utilisateur',
 	'stafflog-filter-type-wikifactory' => 'Statut du wiki',
+	'action-stafflog' => 'voir le journal de l’équipe d’administration',
 );
 
 /** Galician (galego)
@@ -208,6 +249,7 @@ $messages['gl'] = array(
 	'stafflog-filter-type-piggyback' => 'Acceso non autorizado',
 	'stafflog-filter-type-renameuser' => 'Cambios no nome de usuario',
 	'stafflog-filter-type-wikifactory' => 'Estado do wiki',
+	'action-stafflog' => 'ver o rexistro centralizado do persoal',
 );
 
 /** Hungarian (magyar)
@@ -287,6 +329,7 @@ $messages['mk'] = array(
 	'stafflog-filter-type-piggyback' => 'На ушка',
 	'stafflog-filter-type-renameuser' => 'Преименувања на корисници',
 	'stafflog-filter-type-wikifactory' => 'Статус на викито',
+	'action-stafflog' => 'преглед на централизираниот девник на персоналот',
 );
 
 /** Malay (Bahasa Melayu)
@@ -308,6 +351,7 @@ $messages['ms'] = array(
 	'stafflog-filter-type-piggyback' => 'Gendong',
 	'stafflog-filter-type-renameuser' => 'Penukaran nama pengguna',
 	'stafflog-filter-type-wikifactory' => 'Status wiki',
+	'action-stafflog' => 'melihat log kakitangan terpusat',
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -351,6 +395,29 @@ $messages['nl'] = array(
 	'stafflog-filter-type-piggyback' => 'Piggyback',
 	'stafflog-filter-type-renameuser' => 'Hernoemde gebruikers',
 	'stafflog-filter-type-wikifactory' => 'Wikistatus',
+	'action-stafflog' => 'het gecentraliseerde staflogboek te bekijken',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'stafflog-desc' => 'Identificacion centralizada pel personal',
+	'stafflog' => 'StaffLog',
+	'stafflog-blockmsg' => '$1 $2 a ensajat de blocar l’emplegat $3 sul wiki $4. Motiu : $5',
+	'stafflog-piggybackloginmsg' => '$1 Accès superpausat - utilizaire $2 connectat en tant que $3',
+	'stafflog-piggybacklogoutmsg' => '$1 Accès superpausat - utilizaire $2 desconnectat del compte $3',
+	'right-stafflog' => 'Pòt afichar lo jornal de l’equipa d’administracion',
+	'stafflog-wiki-status-change' => "$1 a cambiat l'estatut de $2 en $3. Motiu : $4",
+	'stafflog-filter-label' => 'Filtre',
+	'stafflog-filter-user' => 'Utilizaire :',
+	'stafflog-filter-type' => 'Tipe :',
+	'stafflog-filter-apply' => 'Aplicar lo filtre',
+	'stafflog-filter-type-block' => 'Blocatges',
+	'stafflog-filter-type-piggyback' => 'Accès superpausat',
+	'stafflog-filter-type-renameuser' => "Cambiaments de noms d'utilizaire",
+	'stafflog-filter-type-wikifactory' => 'Estatut del wiki',
+	'action-stafflog' => 'veire lo jornal de l’equipa d’administracion',
 );
 
 /** Polish (polski)
@@ -375,6 +442,7 @@ $messages['pl'] = array(
 	'stafflog-filter-type-piggyback' => 'Piggyback',
 	'stafflog-filter-type-renameuser' => 'Zmiany nazwy użytkownika',
 	'stafflog-filter-type-wikifactory' => 'Stan wiki',
+	'action-stafflog' => 'Wyświetlanie centralnego staff-logu',
 );
 
 /** Piedmontese (Piemontèis)
@@ -411,6 +479,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
  * @author Malafaya
  */
 $messages['pt'] = array(
@@ -420,11 +489,16 @@ $messages['pt'] = array(
 	'stafflog-piggybackloginmsg' => 'Personificação $1 - utilizador $2 autenticou-se como $3',
 	'stafflog-piggybacklogoutmsg' => 'Personificação $1 - utilizador $2 saiu da conta $3',
 	'right-stafflog' => 'Pode ver o Registo da Equipa',
+	'stafflog-filter-label' => 'Filtro',
 	'stafflog-filter-user' => 'Utilizador:',
+	'stafflog-filter-type' => 'Tipo:',
+	'stafflog-filter-apply' => 'Aplicar filtro',
+	'stafflog-filter-type-block' => 'Bloqueios',
 );
 
 /** Brazilian Portuguese (português do Brasil)
  * @author JM Pessanha
+ * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
@@ -440,6 +514,28 @@ $messages['pt-br'] = array(
 	'stafflog-filter-type' => 'Tipo:',
 	'stafflog-filter-apply' => 'Aplicar filtro',
 	'stafflog-filter-type-block' => 'Bloqueios',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'stafflog-desc' => 'Trasute cendralizzate pe staff',
+	'stafflog' => 'StaffLog',
+	'stafflog-blockmsg' => "$1 $2 ha pruvate a bloccà l'utende d'u staff $3 sus a uicchi $4. Mutive: $5",
+	'stafflog-piggybackloginmsg' => '$1 Piggyback - utende $2 trase cumme a $3',
+	'stafflog-piggybacklogoutmsg' => "$1 Piggyback - utene $2 iesse da 'u cunde $3",
+	'right-stafflog' => "Puè 'ndrucà l'archivije d'u staff",
+	'stafflog-wiki-status-change' => "$1 cangiate 'u state de $2 jndr'à $3. Mutive: $4",
+	'stafflog-filter-label' => 'Filtre',
+	'stafflog-filter-user' => 'Utende:',
+	'stafflog-filter-type' => 'Tipe:',
+	'stafflog-filter-apply' => "Appleche 'u filtre",
+	'stafflog-filter-type-block' => 'Blocche',
+	'stafflog-filter-type-piggyback' => 'Piggyback',
+	'stafflog-filter-type-renameuser' => "Renomene l'utende",
+	'stafflog-filter-type-wikifactory' => "State d'a uicchi",
+	'action-stafflog' => "'mdruche l'archivije cendralizzate d'u staff",
 );
 
 /** Russian (русский)
@@ -485,6 +581,7 @@ $messages['sv'] = array(
 	'stafflog-filter-type-piggyback' => 'Ryggridning',
 	'stafflog-filter-type-renameuser' => 'Användarnamnbyten',
 	'stafflog-filter-type-wikifactory' => 'Wiki-status',
+	'action-stafflog' => 'visa centraliserade personalloggen',
 );
 
 /** Tagalog (Tagalog)
@@ -509,23 +606,37 @@ $messages['tl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  * @author Тест
  */
 $messages['uk'] = array(
+	'stafflog-desc' => 'Централізоване журналювання для співробітників',
+	'stafflog' => 'Журнал співробітника',
 	'stafflog-blockmsg' => '$1 $2 спробував заблокувати користувача-співробітника $3 у вікі $4. Причина: $5',
+	'stafflog-piggybackloginmsg' => 'Вхід $1 — учасник $2 увійшов як $3',
+	'stafflog-piggybacklogoutmsg' => 'Вихід $1 — користувач $2 вийшов з облікового запису $3',
+	'right-stafflog' => 'Може переглядати журнал співробітника',
+	'stafflog-wiki-status-change' => '$1 {{GENDER:$1|змінив|змінила}} статус $2 на $3. Причина:$4',
 	'stafflog-filter-label' => 'Фільтр',
 	'stafflog-filter-user' => 'Користувач:',
 	'stafflog-filter-type' => 'Тип:',
 	'stafflog-filter-apply' => 'Застосувати фільтр',
 	'stafflog-filter-type-block' => 'Блокування',
+	'stafflog-filter-type-piggyback' => 'Вхід',
+	'stafflog-filter-type-renameuser' => 'Перейменування користувача',
+	'stafflog-filter-type-wikifactory' => 'Статус вікі',
+	'action-stafflog' => 'переглядати журнал централізованого персоналу',
 );
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author StephDC
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'stafflog-blockmsg' => '$1 $2 试图封禁在维基系统 $4 上面的员工用户 $3，理由为 $5',
 	'stafflog-filter-label' => '过滤器',
 	'stafflog-filter-user' => '用户：',
 	'stafflog-filter-type' => '类型：',

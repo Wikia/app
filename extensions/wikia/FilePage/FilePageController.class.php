@@ -21,9 +21,7 @@ class FilePageController extends WikiaController {
 
 		$seeMoreLink = '';
 		$seeMoreText = '';
-		$heading = '';               // The message to use for the section header
 		$shortenedSummary = array(); // A subset of the data returned to show immediately
-		$fileList = array();         // The list of other articles to show based on $shortenedSummary
 
 		$type = $this->getVal('type', 'local');
 
@@ -109,7 +107,7 @@ class FilePageController extends WikiaController {
 		$summary = $this->getVal('summary', '');
 		$type = $this->getVal('type', '');
 		$result = array();
-		if(empty($summary) || empty($type)) {
+		if ( empty($summary) || empty($type) ) {
 			$this->result = $result;
 			return;
 		}
@@ -124,7 +122,9 @@ class FilePageController extends WikiaController {
 
 		foreach($expandedSummary as $wiki => $articles) {
 			foreach($articles as $article) {
-				$result[] = $article;
+				if ( !empty($article['url']) ) {
+					$result[] = $article;
+				}
 			}
 		}
 
@@ -134,7 +134,11 @@ class FilePageController extends WikiaController {
 
 	private function nameToTitle ( $dbName ) {
 		$wikiData = WikiFactory::getWikiByDB($dbName);
-		return $wikiData->city_title;
+		if ( empty($wikiData) ) {
+			return '';
+		} else {
+			return $wikiData->city_title;
+		}
 	}
 
 	/**
@@ -198,7 +202,7 @@ class FilePageController extends WikiaController {
 		$expireDate = $this->getVal( 'expireDate', '' );
 		if ( !empty($expireDate) ) {
 			$date = $this->wg->Lang->date( $expireDate );
-			$expireDate = $this->wf->Message( 'video-page-expires', $date )->text();
+			$expireDate = wfMessage( 'video-page-expires', $date )->text();
 		}
 
 		$this->provider = ucwords($provider);
@@ -359,6 +363,11 @@ class FilePageController extends WikiaController {
 	 * Figure out what articles include this file from any wiki
 	 */
 	public function getGlobalUsage () {
+		if ( empty( $this->wg->EnableGlobalUsageExt ) ) {
+			$this->summary = array();
+			return;
+		}
+
 		$fileTitle = $this->getVal('fileTitle', '');
 		$titleObj = empty($fileTitle) ? $this->wg->Title : Title::newFromText($fileTitle);
 
@@ -416,6 +425,9 @@ class FilePageController extends WikiaController {
 	}
 
 	private function addSummary ( $data, $summaryFunc ) {
+		// Copy results into a new array to make sure we only return
+		// wikis that gave full summaries
+		$fullData = array();
 
 		// Iterate through each wiki DB name in the data
 		foreach ($data as $dbName => $articles) {
@@ -434,15 +446,33 @@ class FilePageController extends WikiaController {
 				// Loop with indexes so we can change $data in place
 				for ($i = 0; $i < count($articles); $i++) {
 					$info = $articles[$i];
-					$extraInfo = $extraData[$info['id']];
+
+					if ( empty($extraData[$info['id']]) ) {
+						continue;
+					} else {
+						$extraInfo = $extraData[$info['id']];
+					}
+
+					if ( !is_array($extraInfo) ) {
+						continue;
+					}
+
+					// Let the wall code clean up any links to the user wall or forums
+					wfRunHooks( 'FormatForumLinks', array( &$extraInfo, $info['title'], $info['namespace_id']) );
+
+					// Clean up any type of comment on any article page
+					$cleanedText = preg_replace('/\/@comment-.+-[0-9]+$/', '', $extraInfo['titleText']);
+					if ( !empty($cleanedText) ) {
+						$extraInfo['titleText'] = $cleanedText;
+					}
 
 					$articles[$i] = array_merge($info, $extraInfo);
 				}
 
-				$data[$dbName] = $articles;
+				$fullData[$dbName] = $articles;
 			}
 		}
 
-		return $data;
+		return $fullData;
 	}
 }

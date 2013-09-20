@@ -73,7 +73,8 @@ class AbTestingController extends WikiaController {
 				);
 				$styles = '/*SASS*/' . $sassService->getCss();
 			} catch (Exception $e) {
-				$styles = $input['styles'];
+				$styles = "/* SASS processing failed */\n\n";
+				$styles .= $input['styles'];
 			}
 			$result['styles'] = $styles;
 		}

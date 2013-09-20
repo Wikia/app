@@ -26,7 +26,7 @@ class EditPageNotices implements IteratorAggregate {
 
 	public function add( $notice, $id = false ) {
 		if (!($notice instanceof EditPageNotice)) {
-			$notice = F::build('EditPageNotice',array($notice,$id));
+			$notice = new EditPageNotice($notice,$id);
 		}
 
 		if ($this->isBlacklisted($notice->getMessageId())) {
@@ -89,11 +89,11 @@ class EditPageNotices implements IteratorAggregate {
 	static public function newFromArray( $notices ) {
 		$obj = new self();
 		foreach ($notices as $text)
-			$obj->add(F::build('EditPageNotice',array($text)));
+			$obj->add(new EditPageNotice($text));
 		return $obj;
 	}
 
 	private function log($method, $msg) {
-		F::app()->wf->debug("{$method}: {$msg}\n");
+		wfDebug("{$method}: {$msg}\n");
 	}
 }

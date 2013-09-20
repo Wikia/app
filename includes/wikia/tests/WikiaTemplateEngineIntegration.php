@@ -1,11 +1,11 @@
 <?php
 /**
- * @ingroup mwabstract
+ * @group Integration
  *
  * Integration test for Wikia Teamplate System.
  *
  * Covers:
- * * Wikia\Template\Engne
+ * * Wikia\Template\Engine
  * * Wikia\Template\PHPEngine and its integration with FS I/O
  * * Wikia\Template\MustacheEngine and its integration with the Mustache PHP extension
  *

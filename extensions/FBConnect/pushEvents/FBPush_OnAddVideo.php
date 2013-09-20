@@ -21,6 +21,12 @@ class FBPush_OnAddVideo extends FBConnectPushEvent {
 	public static function articleCountVideoDiff(&$article,&$user,&$newText){
 		global $wgContentNamespaces, $wgSitename;
 		wfProfileIn(__METHOD__);
+
+		if ( !self::checkUserOptions(__CLASS__) ) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
+
 		if( !in_array($article->getTitle()->getNamespace(), $wgContentNamespaces) ) {
 			wfProfileOut(__METHOD__);
 			return true;

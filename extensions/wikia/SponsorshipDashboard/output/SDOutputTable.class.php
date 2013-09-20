@@ -63,7 +63,7 @@ class SponsorshipDashboardOutputTable extends SponsorshipDashboardOutputFormatte
 		$this->sourceData = array_reverse( $aData );
 		$this->sourceLabels = array_reverse( $aLabel );
 
-		$oTmpl = F::build( 'EasyTemplate', array( ( dirname( __FILE__ )."/templates/" ) ) ); /** @var $oTmpl EasyTemplate */
+		$oTmpl = new EasyTemplate( dirname( __FILE__ )."/templates/" );
 		$oTmpl->set_vars(
 			array(
 				'data'			=> $this->sourceData,

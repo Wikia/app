@@ -1,59 +1,55 @@
 <?php
 	// get wiki thumbnail and thumbnail tracking
-	$image = $resultSet->getHeader( 'image' );
+	$image = $result['image_s'];
+	$isOnWikiMatch = isset($result['onWikiMatch']) && $result['onWikiMatch'];
 	if (! empty( $image ) ) {
-		$imageURL = (new WikiaHomePageHelper)->getImageUrl( $image, 180, 120 );
+		$thumbWidth  = 180;
+		$thumbHeight = 120;
+
+		$targetWikiId = (new CityVisualization)->getTargetWikiId( $result['lang_s'] );
+		$imageURL = ImagesService::getImageSrcByTitle( $targetWikiId, $result['image_s'], $thumbWidth, $thumbHeight );
+		$imageURL = ImagesService::overrideThumbnailFormat( $imageURL, ImagesService::EXT_JPG );
+
 		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-thumb"';
-	} else {
+	}
+	if ( empty( $imageURL ) ) {
 		// display placeholder image if no thumbnail
-		$imageURL = $wgExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png';
+		$imageURL = $wg->ExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png';
 		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-no-thumb"';
 	}
 
-	$pagesMsg = $resultSet->getArticlesCountMsg();
-	$imgMsg = $resultSet->getImagesCountMsg();
-	$videoMsg =  $resultSet->getVideosCountMsg();
+	$service = new Wikia\Search\MediaWikiService();
+
+	$pagesMsg = $service->shortnumForMsg( $result['articles_i']?:0, 'wikiasearch2-pages' );
+	$imgMsg = $service->shortnumForMsg( $result['images_i']?:0, 'wikiasearch2-images' );
+	$videoMsg = $service->shortnumForMsg( $result['videos_i']?:0, 'wikiasearch2-videos' );
+	$title = ( $sn = $result->getText( 'sitename_txt' ) ) ? $sn : $result->getText( 'headline_txt' );
+	$url = $result->getText( 'url' );
 ?>
 
-<?php if($resultSet->getResultsFound() > 1): ?>
-	<?php if ( $resultSet->getHeader('wikititle') ): ?>
-		<li class="result">
-			<?php
-			$trackingData = 'class="result-link" data-pos="' . $pos . '" data-event="search_click_wiki"';
-			?>
-			<a href="<?= $resultSet->getHeader('url'); ?>" title="<?= $resultSet->getHeader('wikititle'); ?>" <?=
-				$thumbTracking ?>>
-				<img src="<?= $imageURL; ?>" alt="<?= $resultSet->getHeader('wikititle'); ?>" class="wikiPromoteThumbnail"
-					/>
-			</a>
-			<div class=" result-description">
+<li class="result">
+	<?php
+	$suffix = $result['exactWikiMatch'] ? "match" : "wiki";
+	$trackingData = 'class="result-link" data-pos="' . $pos . '" data-event="search_click_' . $suffix . '"';
+	?>
+	<a href="<?= $url ?>" title="<?= $title ?>" <?=
+		$thumbTracking ?>>
+		<img src="<?= $imageURL; ?>" alt="<?= $title ?>" class="wikiPromoteThumbnail"
+			/>
+	</a>
+	<div class=" result-description">
 
-				<h1>
-					<a href="<?= $resultSet->getHeader('url'); ?>" <?=$trackingData;?> ><?= $resultSet->getHeader
-							('wikititle'); ?></a>
-				</h1>
+		<h1>
+			<a href="<?= $url ?>" <?=$trackingData;?> ><?= $title ?></a>
+		</h1>
 
-				<p class="hub subtle"><?= strtoupper( $resultSet->getHeader( 'hub' ) ); ?></p>
-				<p class="description"><?= $resultSet->getDescription(); ?></p>
+		<p class="hub subtle"><?= strtoupper($result->getHub()); ?></p>
+		<p class="description"><?= $result->getText( Wikia\Search\Utilities::field( 'description' ), $isOnWikiMatch ? 16 : 60 ); ?></p>
 
-				<ul class="wiki-statistics subtle">
-					<li><?= $pagesMsg ?></li>
-					<li><?= $imgMsg ?></li>
-					<li><?= $videoMsg ?></li>
-				</ul>
-			</div>
-		</li>
-	<?php endif; ?>
-<?php else: ?>
-	<?= $app->getView( 'WikiaSearch', 'CrossWiki_exactResult', array(
-		'resultSet' => $resultSet,
-		'pos' => $pos,
-		'query' => $query,
-		'rank' =>  $resultSet->getHeader('cityRank'),
-		'imageURL' => $imageURL,
-		'thumbTracking' => $thumbTracking,
-		'pagesMsg' => $pagesMsg,
-		'imgMsg' => $imgMsg,
-		'videoMsg' => $videoMsg
-		)); ?>
-<?php endif; ?>
+		<ul class="wiki-statistics subtle">
+			<li><?= $pagesMsg ?></li>
+			<li><?= $imgMsg ?></li>
+			<li><?= $videoMsg ?></li>
+		</ul>
+	</div>
+</li>

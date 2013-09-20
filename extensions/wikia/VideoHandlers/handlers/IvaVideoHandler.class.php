@@ -15,11 +15,11 @@ class IvaVideoHandler extends VideoHandler {
 		$url .= "&options=DangDang&autostart={$autoPlayStr}&playlist=none&width={$width}&height={$height}";
 		$sizeString = $this->getSizeString( $width, $height );
 
-		$embed = <<<EOT
+		$html = <<<EOT
 <iframe $sizeString src='{$url}' frameborder='0' scrolling='no'></iframe>
 EOT;
 
-		return $embed;
+		return array( 'html' => $html );
 	}
 
 }

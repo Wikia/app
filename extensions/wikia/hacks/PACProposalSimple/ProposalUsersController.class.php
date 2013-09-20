@@ -15,7 +15,7 @@ class ProposalUsersController extends WikiaSpecialPageController  {
 	}
 
 	public function get() {
-		$users = F::build( 'ProposalUsers' );
+		$users = (new ProposalUsers);
 
 		$wikiId = $this->getVal( 'wikiId' );
 		if( !empty($wikiId) ) {

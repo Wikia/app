@@ -49,7 +49,8 @@ class Base64Filter extends Filter {
 			return false;
 		}
 
-		$ext = end(explode('.', $fileName));
+		$parts = explode('.', $fileName);
+		$ext = end($parts);
 
 		switch ($ext) {
 			case 'gif':

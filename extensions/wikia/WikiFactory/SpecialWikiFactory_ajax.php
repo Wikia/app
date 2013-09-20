@@ -371,12 +371,16 @@ function axWFactoryDomainCRUD($type="add") {
             $sInfo .= "<em>Action cancelled</em>";
             break;
         case "setmain":
-				$setmain = WikiFactory::setmainDomain( $city_id, $sDomain );
-				if ( $setmain ) {
-					$sInfo .= "Success: Domain <em>{$sDomain}</em> set as main.";
-				} else {
-					$sInfo .= "Failed: Domain <em>{$sDomain}</em> was not set as main.";
-				}
+						try {
+							$setmain = WikiFactory::setmainDomain( $city_id, $sDomain );
+							if ( $setmain ) {
+								$sInfo .= "Success: Domain <em>{$sDomain}</em> set as main.";
+							} else {
+								$sInfo .= "Failed: Domain <em>{$sDomain}</em> was not set as main.";
+							}
+						} catch (WikiFactoryDuplicateWgServer $error) {
+							$sInfo .= "Failed: " . $error->getMessage();
+						}
             break;
     }
     #--- get actuall domain list

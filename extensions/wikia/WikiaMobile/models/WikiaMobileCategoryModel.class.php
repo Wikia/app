@@ -72,11 +72,11 @@ class WikiaMobileCategoryModel extends WikiaModel{
 	}
 
 	private function getItemsCollectionCacheKey( $categoryId ){
-		return $this->wf->memcKey( __CLASS__, 'ItemsCollection', $categoryId, self::CACHE_VERSION );
+		return wfmemcKey( __CLASS__, 'ItemsCollection', $categoryId, self::CACHE_VERSION );
 	}
 
 	private function getExhibitionItemsCacheKey( $titleText ){
-		return $this->wf->memcKey( __CLASS__, 'Exhibition', md5( $titleText ), self::CACHE_VERSION );
+		return wfmemcKey( __CLASS__, 'Exhibition', md5( $titleText ), self::CACHE_VERSION );
 	}
 
 	public function purgeItemsCollectionCache( $categoryName ){
@@ -96,11 +96,12 @@ class WikiaMobileCategoryViewer extends CategoryViewer{
 	private $items;
 	private $count;
 
+	const LIMIT = 5000;
+
 	function __construct( Category $category ){
 		parent::__construct( $category->getTitle(), RequestContext::getMain() );
 
-		//get all the members in the category
-		$this->limit = null;
+		$this->limit = self::LIMIT; # BAC-265
 
 		$this->items = [];
 		$this->count = 0;

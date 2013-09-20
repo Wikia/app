@@ -37,10 +37,12 @@ $messages['qqq'] = array(
 	'wikiapoll-question' => 'Used as a title. Parameter:
 * $1 is the poll question without a question mark.',
 	'wikiapoll-thanks-for-vote' => 'Thank you to voting user.',
-	'wikiapoll-vote' => 'Button text to vote in a poll.',
+	'wikiapoll-vote' => 'Button text to vote in a poll.
+{{Identical|Vote}}',
 	'wikiapoll-votes' => 'Parameter:
 * $1 is the number of votes cast.',
-	'wikiapoll-createpoll-headline' => 'Headline for Create Poll Special Page',
+	'wikiapoll-createpoll-headline' => 'Headline for Create Poll Special Page.
+{{Identical|Create poll}}',
 	'wikiapoll-editpoll-headline' => 'Headline for Edit Poll Special Page',
 	'wikiapoll-question-label' => 'Form Label for Special Page.
 {{Identical|Question}}',
@@ -51,7 +53,8 @@ $messages['qqq'] = array(
 	'wikiapoll-error-invalid-title' => 'Error message when title of poll is invalid/empty',
 	'wikiamobile-wikiapoll-open-poll' => 'Text on a button to open poll in a modal',
 	'wikiamobile-wikiapoll-thanks-voting' => 'Message displayed to a user after voting',
-	'wikiamobile-wikiapoll-poll' => 'Title of a modal',
+	'wikiamobile-wikiapoll-poll' => 'Title of a modal.
+{{Identical|Poll}}',
 	'wikiamobile-wikiapoll-user-voted' => 'Message displayed to a user after voting instead of wikiamobile-wikiapoll-open-poll button',
 );
 
@@ -616,6 +619,30 @@ $messages['nl'] = array(
 	'wikiamobile-wikiapoll-user-voted' => 'U hebt gestemd voor "$1"',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'wikiapoll-desc' => 'Provesís un mejan aisit de crear e de gerir de sondatges',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 persona a|$1 personas an}} voté',
+	'wikiapoll-question' => '$1 ?',
+	'wikiapoll-thanks-for-vote' => 'Mercé !',
+	'wikiapoll-vote' => 'Votar !',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 vòte|$1 vòtes}}',
+	'wikiapoll-createpoll-headline' => 'Crear un sondatge',
+	'wikiapoll-editpoll-headline' => 'Modificar lo sondatge',
+	'wikiapoll-question-label' => 'Question',
+	'wikiapoll-addnewitem-label' => 'Apondre un element novèl',
+	'wikiapoll-cancel-label' => 'Anullar',
+	'wikiapoll-publish-label' => 'Publicar',
+	'wikiapoll-error-duplicate' => 'Un sondatge que pòrta aqueste nom existís ja.',
+	'wikiapoll-error-invalid-title' => 'L’intitulat de la question es pas valid.',
+	'wikiamobile-wikiapoll-open-poll' => 'Qué ne pensatz ?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Mercés per vòstre vòte !',
+	'wikiamobile-wikiapoll-poll' => 'Sondatge',
+	'wikiamobile-wikiapoll-user-voted' => 'Avètz votat per $1',
+);
+
 /** Polish (polski)
  * @author Sovq
  * @author Woytecr
@@ -642,24 +669,25 @@ $messages['pl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'wikiapoll-desc' => 'A dà na manera belfé ëd creé e gestì dij sondagi',
+	'wikiapoll-desc' => 'A smon na manera sempia ëd creé e gestì dij sondagi',
 	'wikiapoll-people-voted' => "{{PLURAL:$1|$1 përson-a|$1 përson-e}} a l'han votà",
 	'wikiapoll-question' => '$1?',
 	'wikiapoll-thanks-for-vote' => 'Mersì!',
 	'wikiapoll-vote' => "Ch'a vota!",
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 vot}}',
-	'wikiapoll-createpoll-headline' => 'Crea Sondagi',
-	'wikiapoll-editpoll-headline' => 'Modìfica Sondagi',
+	'wikiapoll-createpoll-headline' => 'Creé un Sondagi',
+	'wikiapoll-editpoll-headline' => 'Modifiché ël Sondagi',
 	'wikiapoll-question-label' => 'Domanda',
 	'wikiapoll-addnewitem-label' => "Gionta n'element neuv",
 	'wikiapoll-cancel-label' => 'Scancela',
 	'wikiapoll-publish-label' => 'Pùblica',
 	'wikiapoll-error-duplicate' => 'Un sondagi con col nòm a esist già.',
-	'wikiapoll-error-invalid-title' => "Test ëd la custion a l'é pa bon.",
-	'wikiamobile-wikiapoll-open-poll' => "Lòn ch'it pensës-to?",
+	'wikiapoll-error-invalid-title' => 'Ël test ëd la chestion a va nen bin.',
+	'wikiamobile-wikiapoll-open-poll' => "Lòn ch'a na pensa?",
 	'wikiamobile-wikiapoll-thanks-voting' => 'Mersì për avèj votà!',
 	'wikiamobile-wikiapoll-poll' => 'Sondagi',
 	'wikiamobile-wikiapoll-user-voted' => "It l'has votà për $1",
@@ -687,6 +715,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
  * @author SandroHc
  * @author Waldir
  */
@@ -705,6 +734,7 @@ $messages['pt'] = array(
 	'wikiapoll-publish-label' => 'Publicar',
 	'wikiapoll-error-duplicate' => 'Já existe um inquérito com esse nome.',
 	'wikiapoll-error-invalid-title' => 'O texto da pergunta é inválido.',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Obrigado por votar!',
 	'wikiamobile-wikiapoll-poll' => 'Votação',
 	'wikiamobile-wikiapoll-user-voted' => 'Votas-te para $1',
 );
@@ -749,6 +779,30 @@ $messages['ro'] = array(
 	'wikiapoll-publish-label' => 'Publică',
 	'wikiapoll-error-duplicate' => 'Un sondaj cu acel nume există deja.',
 	'wikiapoll-error-invalid-title' => 'Textul întrebării este invalid.',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'wikiapoll-desc' => "Dèje 'nu mode 'nderra-'nderre de ccrejà e gestì le sondagge",
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 crestiane}} onne vutate',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Grazie!',
+	'wikiapoll-vote' => 'Vote!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 vote}}',
+	'wikiapoll-createpoll-headline' => "Ccreje 'u sondagge",
+	'wikiapoll-editpoll-headline' => "Cange 'u sondagge",
+	'wikiapoll-question-label' => 'Domande',
+	'wikiapoll-addnewitem-label' => "Aggiunge 'na vôscia nove",
+	'wikiapoll-cancel-label' => 'Annulle',
+	'wikiapoll-publish-label' => 'Pubbleche',
+	'wikiapoll-error-duplicate' => "'Nu sondagge cu quidde nome ggià esiste.",
+	'wikiapoll-error-invalid-title' => "'U teste d'a domande jè invalide.",
+	'wikiamobile-wikiapoll-open-poll' => 'A ce ste pinze?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Grazie pu vote!',
+	'wikiamobile-wikiapoll-poll' => 'Sondagge',
+	'wikiamobile-wikiapoll-user-voted' => 'Tu è vutate pe "$1"',
 );
 
 /** Russian (русский)
@@ -922,7 +976,9 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
 	'wikiapoll-desc' => 'Забезпечує простий спосіб створення та керування опитуваннями',
@@ -939,6 +995,7 @@ $messages['uk'] = array(
 	'wikiapoll-publish-label' => 'Опублікувати',
 	'wikiapoll-error-duplicate' => 'Опитування з такою назвою вже існує.',
 	'wikiapoll-error-invalid-title' => 'Текст запитання є неприпустимим.',
+	'wikiamobile-wikiapoll-open-poll' => 'Що ви думаєте?',
 	'wikiamobile-wikiapoll-thanks-voting' => 'Дякуємо за участь у голосуванні!',
 	'wikiamobile-wikiapoll-poll' => 'Опитування',
 	'wikiamobile-wikiapoll-user-voted' => 'Ви проголосували за $1',

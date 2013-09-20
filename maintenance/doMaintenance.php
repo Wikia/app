@@ -69,7 +69,9 @@ require_once( MWInit::compiledPath( 'includes/profiler/Profiler.php' ) );
 if ( !defined( 'MW_COMPILED' ) ) {
 	require_once( "$IP/includes/Defines.php" );
 }
-require_once( MWInit::compiledPath( 'includes/DefaultSettings.php' ) );
+# Wikia change - comment out the next line since we include DefaultSettings.php
+# in LocalSettings.php
+#require_once( MWInit::compiledPath( 'includes/DefaultSettings.php' ) );
 
 if ( defined( 'MW_CONFIG_CALLBACK' ) ) {
 	# Use a callback function to configure MediaWiki

@@ -7,7 +7,7 @@ $messages['en'] = array(
 	'signup' => 'Signup',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author Shirayuki
  */
 $messages['qqq'] = array(
@@ -17,13 +17,15 @@ $messages['qqq'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Malhargan
  */
 $messages['ar'] = array(
+	'signup-desc' => 'يضيف اسم مستعار [[{{#Special:Signup}}]] ل[[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'إنشاء حساب',
 );
 
-/** Assamese (অসমীয়া)
+/** Assamese (অসমীয়া)
  * @author Bishnu Saikia
  */
 $messages['as'] = array(
@@ -159,6 +161,14 @@ $messages['ja'] = array(
 	'signup' => 'Signup',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'signup-desc' => 'Deiht dä zohsäzlejje Name [[{{#Special:Signup}}]] för [[{{#Special:UserLogin}}/signup]] en et Wiki.',
+	'signup' => 'Aanmälde',
+);
+
 /** Macedonian (македонски)
  */
 $messages['mk'] = array(
@@ -188,7 +198,15 @@ $messages['nl'] = array(
 	'signup' => 'Registreren',
 );
 
-/** Oriya (ଓଡ଼ିଆ)
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'signup-desc' => 'Apond l’aliàs [[{{#Special:Signup}}]] per [[{{#Special:UserLogin}}/signup]]',
+	'signup' => 'Connexion',
+);
+
+/** Oriya (ଓଡ଼ିଆ)
  * @author Odisha1
  * @author Psubhashish
  */
@@ -306,6 +324,7 @@ $messages['tzm'] = array(
 /** Ukrainian (українська)
  * @author Pig1995z
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
 	'signup-desc' => 'Додає псевдонім [[{{#Special:Signup}}]] для  [[{{#Special:UserLogin}}/signup]]',
@@ -332,7 +351,9 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Simon Shek
  */
 $messages['zh-hant'] = array(
+	'signup-desc' => '添加[[{{#Special:Signup}}]]為[[{{#Special:UserLogin}}/signup]]別名',
 	'signup' => '註冊',
 );

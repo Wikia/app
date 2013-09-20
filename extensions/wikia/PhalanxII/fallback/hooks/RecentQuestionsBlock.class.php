@@ -12,7 +12,7 @@
  */
 
 class RecentQuestionsBlock {
-	function filterWordsTest( $question ) {
+	public static function filterWordsTest( $question ) {
 		wfProfileIn( __METHOD__ );
 
 		$text = preg_replace('/\pP+/', '', $question);

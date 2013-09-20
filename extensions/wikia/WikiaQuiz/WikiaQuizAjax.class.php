@@ -13,7 +13,7 @@ class WikiaQuizAjax {
 
 		// create article in NS_WIKIA_QUIZ
 		$title = trim($wgRequest->getVal ('title'));
-		$title_object = F::build('Title', array($title, NS_WIKIA_QUIZ), 'newFromText');
+		$title_object = Title::newFromText($title, NS_WIKIA_QUIZ);
 
 		if (is_object ($title_object) && $title_object->exists() ) {
 			$res = array (
@@ -35,7 +35,7 @@ class WikiaQuizAjax {
 					);
 			}
 			else {
-				$article = F::build('Article', array($title_object));
+				$article = new Article($title_object);
 				$status = $article->doEdit($content, 'Quiz Created', EDIT_NEW, false, $wgUser);
 				$title_object = $article->getTitle();
 
@@ -66,7 +66,7 @@ class WikiaQuizAjax {
 		$res = array();
 
 		$quizId = $wgRequest->getInt ('quizId');
-		$quiz = F::build('WikiaQuiz', array($quizId), 'newFromId');
+		$quiz = WikiaQuiz::newFromId($quizId);
 
 		if (empty($quiz) || !$quiz->exists()) {
 			$res = array (
@@ -113,7 +113,7 @@ class WikiaQuizAjax {
 		$wgUser = F::app()->getGlobal('wgUser');
 
 		$title = $wgRequest->getVal ('question');
-		$title_object = F::build('Title', array($title, NS_WIKIA_QUIZARTICLE), 'newFromText');
+		$title_object = Title::newFromText($title, NS_WIKIA_QUIZARTICLE);
 
 		if (is_object ($title_object) && $title_object->exists() ) {
 			$res = array (
@@ -135,7 +135,7 @@ class WikiaQuizAjax {
 					);
 			}
 			else {
-				$article = F::build('Article', array($title_object));
+				$article = new Article($title_object);
 				$status = $article->doEdit($content, 'Quiz Article Created', EDIT_NEW, false, $wgUser);
 				$title_object = $article->getTitle();
 
@@ -166,12 +166,12 @@ class WikiaQuizAjax {
 		$res = array();
 
 		$quizElementId = $wgRequest->getInt ('quizElementId');
-		$quizElement = F::build('WikiaQuizElement', array($quizElementId), 'newFromId');
+		$quizElement = WikiaQuizElement::newFromId($quizElementId);
 
 //		$newTitle = $wgRequest->getVal ('question');
-//		$newTitleObject = F::build('Title', array($newTitle, NS_WIKIA_QUIZARTICLE), 'newFromText');
+//		$newTitleObject = Title::newFromText($newTitle, NS_WIKIA_QUIZARTICLE);
 //		if (is_object($newTitleObject)) {
-//			$newArticle = F::build('Article', array($newTitleObject));
+//			$newArticle = new Article($newTitleObject);
 //		}
 
 		// validation
@@ -239,7 +239,7 @@ class WikiaQuizAjax {
 		);
 		$id = $wgRequest->getInt ('quizElementId', 0);
 		if ($id != 0) {
-			$article_object = F::build('Article', array($id), 'newFromID');
+			$article_object = Article::newFromID($id);
 			$title_object = $article_object->getTitle();
 		}
 
@@ -315,7 +315,7 @@ class WikiaQuizAjax {
 					$quizContent .= WikiaQuiz::MOREINFOLINK_MARKER . $articleName . WikiaQuiz::MOREINFOLINK_TEXT_MARKER . $moreInfoLinkText . "\n";
 				}
 				else {
-					$title_object = F::build('Title', array($articleName), 'newFromText');
+					$title_object = Title::newFromText($articleName);
 					if (is_object ($title_object) && $title_object->exists() ) {
 						$quizContent .= WikiaQuiz::MOREINFOLINK_MARKER . $articleName . WikiaQuiz::MOREINFOLINK_TEXT_MARKER . $moreInfoLinkText . "\n";
 					}
@@ -338,11 +338,11 @@ class WikiaQuizAjax {
 				continue;
 			}
 
-			$title_object = F::build('Title', array($question, NS_WIKIA_QUIZARTICLE), 'newFromText');
+			$title_object = Title::newFromText($question, NS_WIKIA_QUIZARTICLE);
 
 			if (is_object ($title_object) && $title_object->exists() ) {
 				// update category tag
-				$article = F::build('Article', array($title_object));
+				$article = new Article($title_object);
 				$content = $article->getContent();
 				$newContent = null;
 
@@ -369,7 +369,7 @@ class WikiaQuizAjax {
 			else {
 				// create question
 				$content = self::getCategoryText($title, $index);
-				$article = F::build('Article', array($title_object));
+				$article = new Article($title_object);
 				$status = $article->doEdit($content, 'Quiz Article Created', EDIT_NEW, false, $wgUser);
 				//@todo check status
 			}
@@ -384,8 +384,8 @@ class WikiaQuizAjax {
 					$question = trim($element['title']);
 					if ($question) {
 						if (!array_key_exists($question, $questionKeys)) {
-							$title_object = F::build('Title', array($question, NS_WIKIA_QUIZARTICLE), 'newFromText');
-							$article = F::build('Article', array($title_object));
+							$title_object = Title::newFromText($question, NS_WIKIA_QUIZARTICLE);
+							$article = new Article($title_object);
 							$content = $article->getContent();
 							$content = preg_replace($patternCategory, '', $content);
 							$status = $article->doEdit($content, 'Quiz Question and Answers Updated', EDIT_UPDATE, false, $wgUser);
@@ -556,7 +556,7 @@ class WikiaQuizAjax {
 				}
 
 				// store an email
-				$entry = F::build('EmailsStorage')->newEntry(EmailsStorage::QUIZ);
+				$entry = (new EmailsStorage)->newEntry(EmailsStorage::QUIZ);
 				$entry->setPageId($quizId);
 				$entry->setEmail($email);
 				$ret['entryId'] = $entry->store();

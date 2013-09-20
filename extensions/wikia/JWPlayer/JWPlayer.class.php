@@ -33,7 +33,7 @@ class JWPlayer {
 
 	public function __construct($videoId) {
 		$this->videoId = $videoId;
-		$this->playerId = 'player-' . $this->videoId . '-' . mt_rand();
+		$this->playerId = 'player-' . $this->videoId . '-' . mt_rand() . '-';
 	}
 
 	/**
@@ -53,37 +53,32 @@ class JWPlayer {
 	public function getEmbedCode() {
 		$jwplayerjs = self::getJavascriptPlayerUrl();
 
-		if ($this->ajax) {
-			$code = array('id'=>$this->playerId, 'script'=>$this->getCombinedScript());
-		}
-		else {
-			$script = $this->getCombinedScript();
-
-			$code = <<<EOT
+		$html = <<<EOT
 <div id="{$this->playerId}"></div>
-<script type="text/javascript">
-EOT;
-			if (!$this->postOnload) {
-				$code .= <<<EOT
-	wgAfterContentAndJS.push( function() {
-EOT;
-			}
-
-			$code .= <<<EOT
-		$script
-		$.getScript("$jwplayerjs", loadJWPlayer);
 EOT;
 
-			if (!$this->postOnload) {
-				$code .= <<<EOT
-	});
-EOT;
-			}
+		$jwScript = <<<EOT
+var playerId = "{$this->playerId}",
+	time = new Date().getTime(),
+	container = document.getElementById(playerId),
+	newId = playerId + time;
+	container.id = newId;
 
-			$code .= <<<EOT
-</script>
 EOT;
-		}
+
+		$jwScript .= $this->getCombinedScript();
+
+		$code = array(
+			'html' => $html,
+			'jsParams' => array(
+				'jwScript' => $jwScript,
+			),
+			'init' => 'wikia.videohandler.jwplayer',
+			'scripts' => array(
+				$jwplayerjs,
+				"extensions/wikia/JWPlayer/js/JWPlayer.js"
+			),
+		);
 
 		return $code;
 	}
@@ -102,6 +97,7 @@ EOT;
 			$script .= $this->getScript('normal');
 		}
 		$script = str_replace('"' . self::GOOGIMA_DATA_TOKEN . '"', self::GOOGIMA_DATA_VARIABLE, $script);
+		$script = str_replace('"' . $this->playerId . '"', 'newId', $script);
 
 		return $script;
 	}
@@ -112,28 +108,27 @@ EOT;
 		switch ($mode) {
 			case 'normal':
 				$jwplayerConfigJSON = json_encode_jsfunc( $this->getPlayerConfig($this->url, $mode) );
-				$script = "loadJWPlayer = function() { jwplayer(\"{$this->playerId}\").setup($jwplayerConfigJSON); };\n";
+				$script = "jwplayer(\"{$this->playerId}\").setup($jwplayerConfigJSON);\n";
 				break;
 			case 'preroll':
 				$file = self::getAssetUrl(F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . self::$BLANK_MP4, self::JWPLAYER_VERSION);
 				$prerollPlayerConfigJSON = json_encode_jsfunc( $this->getPlayerConfig($file, $mode) );
-				$script = "loadJWPlayer = function() { jwplayer(\"{$this->playerId}\").setup($prerollPlayerConfigJSON); };\n";
+				$script = "jwplayer(\"{$this->playerId}\").setup($prerollPlayerConfigJSON);\n";
 				break;
 			case 'agegate':
 				$agegatePlayerConfigJSON = json_encode_jsfunc( $this->getPlayerConfig($this->url, $mode) );
-				$script = "loadAgegatePlayer = function() { jwplayer(\"{$this->playerId}\").setup($agegatePlayerConfigJSON); };\n";
+				$script = "jwplayer(\"{$this->playerId}\").setup($agegatePlayerConfigJSON);\n";
 				break;
 			case 'ad':
 				$googimaDataVariable = self::GOOGIMA_DATA_VARIABLE;
-				$jwplayerAdMessage = F::app()->wf->Msg('jwplayer-ad-message');
+				$jwplayerAdMessage = wfMsg('jwplayer-ad-message');
 				$script = <<<EOT
-if (!window.wgUserName || window.wgUserShowAds) {
+if (window.wikiaDartHelper && (!window.wgUserName || window.wgUserShowAds)) {
 	var jwplayer_ad_tag = wikiaDartHelper.getUrl({
 		slotname: 'JWPLAYER',
 		slotsize: '320x240',
 		adType: 'pfadx',
-		src: 'jwplayer',
-		subdomain: AdLogicDartSubdomain(Geo).getSubdomain()
+		src: 'jwplayer'
 	});
 	$googimaDataVariable = {
         'ad.position': 'pre',
@@ -246,7 +241,7 @@ EOT;
 		}
 
 		$plugins = array('gapro-1'=>array('accountid'=>self::VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID),
-						'timeslidertooltipplugin-2'=>array(),
+						'timeslidertooltipplugin-3'=>array(),
                         // wlee 2012/04/14: turning off infobox.js due to a conflict with pre-roll ads (https://wikia.fogbugz.com/default.asp?20871)
 						//self::getAssetUrl(F::app()->wg->ExtensionsPath.self::$JWPLAYER_DIR.self::$JWPLAYER_JS_PLUGINS_DIR .'infobox.js', self::INFOBOX_VERSION)=>array('title'=>htmlspecialchars($this->title))
 						);
@@ -278,9 +273,9 @@ EOT;
 		// NOTE: this code must be before the thumb section
 		if ($this->ageGate && $canDisplayAgegate) {
 			$agegateOptions = array(
-			    'cookielife'=>60*24*365,	// cookielife in minutes
-			    'message'=>F::app()->wf->Msg('jwplayer-agegate-message'),
-			    'minage'=>17
+			    'cookielife' => 60*24*365,	// cookielife in minutes
+			    'message' => wfMsg('jwplayer-agegate-message'),
+			    'minage' => 17
 			    );
 			$plugins['agegate-3'] = $agegateOptions;
 		}

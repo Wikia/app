@@ -3,7 +3,8 @@
 /**
  * Parameter manipulation for assigning the value to the result of one
  * or more functions with as only argument the value itself.
- * 
+ *
+ * @deprecated since 0.5, removal in 0.7
  * @since 0.4.2
  * 
  * @file ParamManipulationFunctions.php

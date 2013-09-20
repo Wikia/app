@@ -1,15 +1,21 @@
 This is the install file for the Maps extension.
 	
-Extension page on mediawiki.org: http://www.mediawiki.org/wiki/Extension:Maps
-Latest version of the install file: http://svn.wikimedia.org/viewvc/mediawiki/trunk/extensions/Maps/INSTALL?view=co
+Extension page on mediawiki.org: https://www.mediawiki.org/wiki/Extension:Maps
+Latest version of the install file: https://gerrit.wikimedia.org/r/gitweb?p=mediawiki/extensions/Maps.git;a=blob;f=INSTALL
 
 
 == Requirements ==
 
 Maps requires:
 
+* MediaWiki 1.18 or above
+* PHP 5.3 or above
+* Validator 0.4.13 or above
+
+Not up to specs yet? Maybe you can use Maps 1.0.x which requires:
+
 * MediaWiki 1.17 or above
-* PHP 5.2 or above, 5.3 or above recommended
+* PHP 5.2 or above
 * Validator 0.4.11 or above
 
 == Download ==

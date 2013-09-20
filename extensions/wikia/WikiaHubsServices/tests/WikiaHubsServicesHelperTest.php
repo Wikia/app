@@ -18,20 +18,28 @@ class WikiaHubsServicesHelperTest extends WikiaBaseTest {
 		$globalTitleMock->expects($this->once())
 			->method('purgeSquid');
 
-		$hubsHelperMock = $this->getMockClass(
-			'WikiaHubsServicesHelper',
-			array('getCorporateWikiIdByLang', 'getMainPageNameByWikiId', 'getGlobalTitleFromText')
-		);
+		$corporateModelMock = $this->getMock('WikiaCorporateModel', array('getCorporateWikiIdByLang'));
 
-		$hubsHelperMock::staticExpects($this->any())
+		$corporateModelMock->expects($this->any())
 			->method('getCorporateWikiIdByLang')
 			->will($this->returnValue($wikiId));
 
-		$hubsHelperMock::staticExpects($this->any())
+		$hubsHelperMockClass = $this->getMockClass(
+			'WikiaHubsServicesHelper',
+			array('getMainPageNameByWikiId', 'getGlobalTitleFromText')
+		);
+
+		$hubsHelperMock = $this->getMock($hubsHelperMockClass, array('getCorporateModel'));
+
+		$hubsHelperMock->expects($this->any())
+			->method('getCorporateModel')
+			->will($this->returnValue($corporateModelMock));
+
+		$hubsHelperMockClass::staticExpects($this->any())
 			->method('getMainPageNameByWikiId')
 			->will($this->returnValue($mainPageName));
 
-		$hubsHelperMock::staticExpects($this->any())
+		$hubsHelperMockClass::staticExpects($this->any())
 			->method('getGlobalTitleFromText')
 			->with(
 				$this->equalTo($mainPageName),
@@ -39,9 +47,7 @@ class WikiaHubsServicesHelperTest extends WikiaBaseTest {
 			)
 			->will($this->returnValue($globalTitleMock));
 
-		$hubsHelperMock::purgeHomePageVarnish($lang);
-
-
+		$hubsHelperMock->purgeHomePageVarnish($lang);
 	}
 
 	public function purgeHomePageVarnishDataProvider() {
@@ -60,16 +66,24 @@ class WikiaHubsServicesHelperTest extends WikiaBaseTest {
 		$globalTitleMock->expects($this->once())
 			->method('purgeSquid');
 
-		$hubsHelperMock = $this->getMockClass(
-			'WikiaHubsServicesHelper',
-			array('getCorporateWikiIdByLang', 'getHubName', 'getGlobalTitleFromText')
-		);
+		$corporateModelMock = $this->getMock('WikiaCorporateModel', array('getCorporateWikiIdByLang'));
 
-		$hubsHelperMock::staticExpects($this->any())
+		$corporateModelMock->expects($this->any())
 			->method('getCorporateWikiIdByLang')
 			->will($this->returnValue($wikiId));
 
-		$hubsHelperMock::staticExpects($this->any())
+		$hubsHelperMockClass = $this->getMockClass(
+			'WikiaHubsServicesHelper',
+			array('getHubName', 'getGlobalTitleFromText')
+		);
+
+		$hubsHelperMock = $this->getMock($hubsHelperMockClass, array('getCorporateModel'));
+
+		$hubsHelperMock->expects($this->any())
+			->method('getCorporateModel')
+			->will($this->returnValue($corporateModelMock));
+
+		$hubsHelperMockClass::staticExpects($this->any())
 			->method('getHubName')
 			->with(
 				$this->equalTo($wikiId),
@@ -77,7 +91,7 @@ class WikiaHubsServicesHelperTest extends WikiaBaseTest {
 			)
 			->will($this->returnValue($hubName));
 
-		$hubsHelperMock::staticExpects($this->any())
+		$hubsHelperMockClass::staticExpects($this->any())
 			->method('getGlobalTitleFromText')
 			->with(
 				$this->equalTo($hubName),
@@ -85,7 +99,7 @@ class WikiaHubsServicesHelperTest extends WikiaBaseTest {
 			)
 			->will($this->returnValue($globalTitleMock));
 
-		$hubsHelperMock::purgeHubVarnish($lang, $verticalId);
+		$hubsHelperMock->purgeHubVarnish($lang, $verticalId);
 	}
 
 	public function purgeHubVarnish() {

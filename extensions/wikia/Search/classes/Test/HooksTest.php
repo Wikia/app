@@ -17,8 +17,8 @@ class HooksTest extends BaseTest {
 		$hooks		= new Hooks;
 
 		$mockTitle	= $this->getMock( 'Title', array( 'isSpecial' ) );
-		$jsHead		= array();
-		$jsBody		= array();
+		$jsStatic		= array();
+		$jsExtension	= array();
 		$cssPkg		= array();
 
 		$mockTitle
@@ -35,9 +35,8 @@ class HooksTest extends BaseTest {
 		;
 
 		$this->mockGlobalVariable( 'wgTitle', $mockTitle );
-		$this->mockApp();
 		$this->assertTrue(
-				$hooks->onWikiaMobileAssetsPackages( $jsHead, $jsBody, $cssPkg ),
+				$hooks->onWikiaMobileAssetsPackages( $jsStatic, $jsExtension, $cssPkg ),
 				'As a hook, Wikia\Search\Hooks::onWikiaMobileAssetsPackages must return true.'
 		);
 		$this->assertEmpty(
@@ -82,8 +81,7 @@ class HooksTest extends BaseTest {
 		    ->with   ( 123 )
 		    ->will   ( $this->returnValue( true ) )
 		;
-		$this->proxyClass( 'Wikia\Search\Indexer', $mockIndexer );
-		$this->mockApp();
+		$this->mockClass( 'Wikia\Search\Indexer', $mockIndexer );
 		$this->assertTrue(
 				$mockHooks->onArticleDeleteComplete( $mockArticle, $mockUser, 'why not', 123 )
 		);
@@ -124,8 +122,7 @@ class HooksTest extends BaseTest {
 		    ->with   ( array( 123 ) )
 		    ->will   ( $this->returnValue( true ) )
 		;
-		$this->proxyClass( 'Wikia\Search\Indexer', $mockIndexer );
-		$this->mockApp();
+		$this->mockClass( 'Wikia\Search\Indexer', $mockIndexer );
 		$whatevs = array();
 		$whatevs2 = 0;
 		$this->assertTrue(
@@ -154,8 +151,7 @@ class HooksTest extends BaseTest {
 		    ->with   ( array( 123 ) )
 		    ->will   ( $this->returnValue( true ) )
 		;
-		$this->proxyClass( 'Wikia\Search\Indexer', $mockIndexer );
-		$this->mockApp();
+		$this->mockClass( 'Wikia\Search\Indexer', $mockIndexer );
 		$whatevs = array();
 		$whatevs2 = 0;
 		$this->assertTrue(
@@ -176,8 +172,7 @@ class HooksTest extends BaseTest {
 		;
 		$status = 0;
 		$wid = 123;
-		$this->proxyClass( 'Wikia\Search\Indexer', $mockIndexer );
-		$this->mockApp();
+		$this->mockClass( 'Wikia\Search\Indexer', $mockIndexer );
 		$this->assertTrue(
 				$hooks->onWikiFactoryPublicStatusChange( $status, $wid, 'why not' )
 		);
@@ -187,8 +182,7 @@ class HooksTest extends BaseTest {
 		    ->will   ( $this->returnValue( true ) )
 		;
 		$status = 1;
-		$this->proxyClass( 'Wikia\Search\Indexer', $mockIndexer );
-		$this->mockApp();
+		$this->mockClass( 'Wikia\Search\Indexer', $mockIndexer );
 		$this->assertTrue(
 				$hooks->onWikiFactoryPublicStatusChange( $status, $wid, 'why not' )
 		);
@@ -253,8 +247,7 @@ class HooksTest extends BaseTest {
 		$attribs = [];
 		$ret = false;
 		$expected = '123_456 | foo';
-		$this->proxyClass( 'Wikia\Search\MediaWikiService', $mockService );
-		$this->mockApp();
+		$this->mockClass( 'Wikia\Search\MediaWikiService', $mockService );
 		$this->assertTrue(
 				\Wikia\Search\Hooks::onLinkEnd( $mockSkin, $mockTitle, $options, $text, $attribs, $ret )
 		);

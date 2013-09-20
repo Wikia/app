@@ -138,12 +138,21 @@ class MenuButtonController extends WikiaController {
 		// modify edit URL if the action is edit
 		if ( $this->actionName == 'edit' &&
 			isset($data['action']['href']) /* BugId:12613 */ &&
-			!$wgTitle->userCan( 'edit' ) ) {
-				$signUpTitle = SpecialPage::getTitleFor('SignUp');
-				$loginUrl = $this->createLoginURL(!empty($data['dropdown']) ? 'action=edit' : '');
-				$data['action']['href'] = $signUpTitle->getLocalUrl($loginUrl);
-				$this->action = $data['action'];
-				$this->class .= ' loginToEditProtectedPage';
+			!$wgTitle->userCan( 'edit' ) &&
+			!$wgUser->isBlocked() /* CE-18 */
+		) {
+			$signUpTitle = SpecialPage::getTitleFor('SignUp');
+			$loginUrl = $this->createLoginURL(!empty($data['dropdown']) ? 'action=edit' : '');
+			$data['action']['href'] = $signUpTitle->getLocalUrl($loginUrl);
+			$this->action = $data['action'];
+			$this->class .= ' loginToEditProtectedPage';
+		}
+
+		if ( $this->actionName == 'submit' ) {
+			$data['class'] = 'wikia-menu-button-submit';
+			if ( empty($action['class']) ) {
+				$action['class'] = '';
+			}
 		}
 
 		if(!empty($data['class'])) {

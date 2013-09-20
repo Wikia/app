@@ -26,6 +26,9 @@ var Lightbox = {
 	to: 0, // timestamp for getting wiki images
 
 	makeLightbox: function(params) {
+		// Allow other extensions to react when a Lightbox is opened.  Used in FilePage.
+		$(window).trigger('lightboxOpened');
+
 		Lightbox.includeLatestPhotos = !$('#LatestPhotosModule .carousel-container').length; // if we don't have latest photos in the DOM, request them from back end
 		Lightbox.openModal = params.modal;
 
@@ -47,6 +50,8 @@ var Lightbox = {
 
 		Lightbox.openModal.aggregateViewCount = 0;
 		Lightbox.openModal.clickSource = clickSource;
+		// This is a temporary duplication of clicksource tracking until we switch over to the video-player-stats version
+		Lightbox.openModal.vbClickSource = clickSource;
 
 		// Check screen height for future interactions
 		Lightbox.shortScreen = $(window).height() < LightboxLoader.defaults.height + LightboxLoader.defaults.topOffset ? true : false;
@@ -67,27 +72,16 @@ var Lightbox = {
 		// Set up carousel
 		Lightbox.setUpCarousel();
 
-		// callback to finish lighbox loading
-		var updateCallback = function(json) {
-			LightboxLoader.cache.details[Lightbox.current.key] = json;
-			Lightbox.updateMedia();
-			Lightbox.showOverlay();
-			Lightbox.hideOverlay(3000);
+		LightboxLoader.cache.details[Lightbox.current.title] = Lightbox.initialFileDetail;
+		Lightbox.updateMedia();
+		Lightbox.showOverlay();
+		Lightbox.hideOverlay(3000);
 
-			LightboxLoader.lightboxLoading = false;
+		LightboxLoader.lightboxLoading = false;
 
-			/* tracking after lightbox has fully loaded */
-			var trackingTitle = Lightbox.current.key;
-			LightboxTracker.track(Wikia.Tracker.ACTIONS.IMPRESSION, '', Lightbox.current.placeholderIdx, {title: trackingTitle, 'carousel-type': trackingCarouselType});
-		};
-
-		// Update modal with main image/video content
-		if(Lightbox.current.type == 'image') {
-			updateCallback(Lightbox.initialFileDetail);
-		} else {
-			// normalize for jwplayer
-			LightboxLoader.normalizeMediaDetail(Lightbox.initialFileDetail, updateCallback);
-		}
+		/* tracking after lightbox has fully loaded */
+		var trackingTitle = Lightbox.current.key;
+		LightboxTracker.track(Wikia.Tracker.ACTIONS.IMPRESSION, '', Lightbox.current.placeholderIdx, {title: trackingTitle, 'carousel-type': trackingCarouselType});
 
 		// attach event handlers
 		Lightbox.bindEvents();
@@ -98,7 +92,6 @@ var Lightbox = {
 		Lightbox.openModal.moreInfoTemplate = $('#LightboxMoreInfoTemplate');
 		Lightbox.openModal.shareTemplate = $('#LightboxShareTemplate');
 		Lightbox.openModal.progressTemplate = $('#LightboxCarouselProgressTemplate');
-		Lightbox.openModal.videoTemplate = $("#LightboxVideoTemplate");
 		Lightbox.openModal.headerTemplate = $("#LightboxHeaderTemplate");
 		Lightbox.openModal.headerAdTemplate = $("#LightboxHeaderAdTemplate");
 
@@ -320,6 +313,7 @@ var Lightbox = {
 
 					// Set all future click sources to Lightbox rather than DOM element
 					Lightbox.openModal.clickSource = LightboxTracker.clickSource.LB;
+					Lightbox.openModal.vbClickSource = LightboxTracker.clickSource.LB;
 				}, 500);
 
 			});
@@ -403,24 +397,19 @@ var Lightbox = {
 	video: {
 		trackingTimeout: false,
 		renderVideo: function(data) {
-			// render mustache template
-			var renderedResult = Lightbox.openModal.videoTemplate.mustache(data);
-
 			Lightbox.openModal.media
 				.addClass('video-media')
-				.html(renderedResult)
 				.css('line-height','normal');
 
-			if(data.playerScript) {
-				$('body').append('<script>' + data.playerScript + '</script>');
-			}
-
+			require(['wikia.videoBootstrap'], function (VideoBootstrap) {
+				LightboxLoader.videoInstance = new VideoBootstrap(Lightbox.openModal.media[0], data.videoEmbedCode, Lightbox.openModal.vbClickSource);
+				Lightbox.openModal.vbClickSource = LightboxTracker.clickSource.LB;
+			});
 		},
 		destroyVideo: function() {
 			Lightbox.openModal.media.html('');
 		},
 		updateLightbox: function(data) {
-
 			// Set lightbox css
 			var css = {
 				height: LightboxLoader.defaults.height
@@ -541,6 +530,9 @@ var Lightbox = {
 			// Show special header for ads
 			Lightbox.renderAdHeader();
 
+			// For interstitial ads, always show the overlay
+			Lightbox.showOverlay();
+
 			// Show the ad
 			$('#' + this.getSlotName()).show();
 
@@ -659,6 +651,12 @@ var Lightbox = {
 	},
 	hideOverlay: function(delay) {
 		var overlay = Lightbox.openModal;
+
+		// If an interstitial ad is being shown, do not hideOverlay
+		if (Lightbox.ads.adIsShowing) {
+			return;
+		}
+
 		if(!overlay.hasClass('overlay-hidden') && overlay.data('overlayactive')) {
 			clearTimeout(Lightbox.eventTimers.overlay);
 			Lightbox.eventTimers.overlay = setTimeout(
@@ -681,6 +679,11 @@ var Lightbox = {
 	},
 	updateMedia: function() {
 		Lightbox.openModal.media.html("").startThrobbing();
+
+		// If a video uses a timeout for tracking, clear it
+		if ( LightboxLoader.videoInstance ) {
+			LightboxLoader.videoInstance.clearTimeoutTrack();
+		}
 
 		var key = Lightbox.current.key;
 		var type = Lightbox.current.type;
@@ -845,7 +848,7 @@ var Lightbox = {
 				var key = mediaArr[idx].key;
 				if(!key) {
 					key = mediaArr[idx].title.replace(/ /g, '_');
-					LightboxLoader.handleOldDom();
+					LightboxLoader.handleOldDom(1);
 				}
 				Lightbox.current.key = key.toString(); // Added toString() for edge cases where titles are numbers
 				Lightbox.current.type = mediaArr[idx].type;
@@ -1057,7 +1060,7 @@ var Lightbox = {
 
 				if(!thumbs.length) {
 					thumbs = article.find('.image, .lightbox').find('img').add(article.find('.thumbimage'));
-					LightboxLoader.handleOldDom();
+					LightboxLoader.handleOldDom(2);
 				}
 
 				thumbs.each(function() {
@@ -1088,7 +1091,7 @@ var Lightbox = {
 
 					if(!key) {
 						key = title && title.replace(/ /g, '_');
-						LightboxLoader.handleOldDom();
+						LightboxLoader.handleOldDom(2);
 					}
 
 					if(key) {
@@ -1148,7 +1151,7 @@ var Lightbox = {
 
 					if(!key) {
 						key = title.replace(/ /g, '_');
-						LightboxLoader.handleOldDom();
+						LightboxLoader.handleOldDom(3);
 					}
 
 					thumbArr.push({
@@ -1182,7 +1185,6 @@ var Lightbox = {
 			if(cached.length) {
 				thumbArr = cached;
 			} else {
-
 				var thumbs = $("#LatestPhotosModule .thumbimage"),
 					keys = []; // array to check for title dupes
 
@@ -1194,7 +1196,7 @@ var Lightbox = {
 
 					if(!key) {
 						key = title && title.replace(/ /g, '_');
-						LightboxLoader.handleOldDom();
+						LightboxLoader.handleOldDom(4);
 					}
 
 					if(key) {
@@ -1252,13 +1254,6 @@ var Lightbox = {
 					}
 
 					var thumbArr = json.thumbs;
-
-					for(thumb in thumbArr) {
-						if(!thumb.key) {
-							thumb.key = thumb.title && thumb.title.replace(/ /g, '_');
-							LightboxLoader.handleOldDom();
-						}
-					}
 
 					// Add thumbs to wikiPhotos cache
 					LightboxLoader.cache.wikiPhotos = LightboxLoader.cache.wikiPhotos.concat(thumbArr);
@@ -1371,6 +1366,12 @@ var Lightbox = {
 
 				if(typeof clickSource != 'undefined') {
 					// Click source is already set so we don't have to look for it.
+					break;
+				}
+
+				// Hubs
+				if(window.wgWikiaHubType) {
+					clickSource = VPS.HUBS;
 					break;
 				}
 

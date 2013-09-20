@@ -16,10 +16,13 @@
 		<input type="text" name="image" value="<?= htmlspecialchars($data['imageShort']) ?>">
 	</div>
 
+<? /* Video is broken and has been for a while.  Commenting this out so users don't get the idea they can use it.
 	<label><?= wfMsg('wikiaquiz-video-label') ?></label>
 	<div class="video">
 		<input type="text" name="video" value="<?= htmlspecialchars($data['videoName']) ?>">
 	</div>
+*/ ?>
+	<input type="hidden" name="video">
 
 	<label><?= wfMsg('wikiaquiz-explanation-label') ?></label>
 	<div class="explanation">

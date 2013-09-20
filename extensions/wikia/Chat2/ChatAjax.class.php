@@ -22,7 +22,7 @@ class ChatAjax {
 	 * If the user is not allowed to chat, an error message is returned (which can be shown to the user).
 	 */
 	static public function getUserInfo(){
-		global $wgMemc, $wgServer, $wgArticlePath, $wgRequest, $wgCityId, $wgContLang, $wgIP;
+		global $wgMemc, $wgServer, $wgArticlePath, $wgRequest, $wgCityId, $wgContLang;
 		wfProfileIn( __METHOD__ );
 
 		$data = $wgMemc->get( $wgRequest->getVal('key'), false );
@@ -82,6 +82,9 @@ class ChatAjax {
 
 		// If the user can chat, dig up some other stats which are a little more expensive to compute.
 		if($retVal['canChat']){
+			// new user joins the chat, purge the cache
+			ChatEntryPoint::purgeChatUsersCache();
+
 			$userStatsService = new UserStatsService($user->getId());
 			$stats = $userStatsService->getStats();
 
@@ -134,12 +137,8 @@ class ChatAjax {
 		global $wgRequest;
 		wfProfileIn( __METHOD__ );
 
-		// TODO: change this
-		$roomName = 'private room name';
-		$roomTopic = 'private room topic';
-
 		$users = json_decode($wgRequest->getVal('users'));
-		$roomId = NodeApiClient::getDefaultRoomId($roomName, $roomTopic, 'private', $users );
+		$roomId = NodeApiClient::getDefaultRoomId( 'private', $users );
 
 		wfProfileOut( __METHOD__ );
 		return array("id" => $roomId);
@@ -212,7 +211,7 @@ class ChatAjax {
 	 * returns "error" => [error message].
 	 */
 	static public function giveChatMod() {
-		global $wgRequest, $wgUser, $wgMemc;
+		global $wgRequest, $wgUser;
 		wfProfileIn( __METHOD__ );
 
 		$promottingUser = $wgUser;
@@ -220,11 +219,11 @@ class ChatAjax {
 		$retVal = array();
 		$PARAM_NAME = "userToPromote";
 		$userToPromote = $wgRequest->getVal( $PARAM_NAME );
-		if(empty($userToPromote)){
+		if( empty( $userToPromote) ) {
 			$retVal["error"] = wfMsg('chat-missing-required-parameter', $PARAM_NAME);
 		} else {
-			$result = Chat::promoteChatModerator($userToPromote, $promottingUser);
-			if($result === true){
+			$result = Chat::promoteChatModerator( $userToPromote, $promottingUser );
+			if( $result === true ) {
 				$retVal["success"] = true;
 			} else {
 				$retVal["error"] = $result;

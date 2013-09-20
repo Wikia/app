@@ -5,50 +5,43 @@
  * @author Federico "Lox" Lucignano
  */
 $dir = dirname( __FILE__ );
-$app = F::app();
 
 /**
  * classes
  */
-$app->registerClass(
-	array(
-		'GameGuidesController',
-		'GameGuidesWrongAPIVersionException'
-	),
-	"{$dir}/GameGuidesController.class.php"
-);
-
-$app->registerClass( 'GameGuidesModel', "{$dir}/GameGuidesModel.class.php" );
+$wgAutoloadClasses['GameGuidesController'] = "{$dir}/GameGuidesController.class.php";
+$wgAutoloadClasses['GameGuidesWrongAPIVersionException'] = "{$dir}/GameGuidesController.class.php";
+$wgAutoloadClasses['GameGuidesModel'] =  "{$dir}/GameGuidesModel.class.php" ;
 
 /**
  * message files
  */
-$app->registerExtensionMessageFile('GameGuides', "{$dir}/GameGuides.i18n.php");
+$wgExtensionMessagesFiles['GameGuides'] = "{$dir}/GameGuides.i18n.php";
 
 
 //Special Page to preview page in GameGuide style
-$app->registerClass( 'GameGuidesSpecialPreviewController', "{$dir}/GameGuidesSpecialPreviewController.class.php" );
-$app->registerSpecialPage( 'GameGuidesPreview', 'GameGuidesSpecialPreviewController' );
+$wgAutoloadClasses['GameGuidesSpecialPreviewController'] =  "{$dir}/GameGuidesSpecialPreviewController.class.php" ;
+$wgSpecialPages['GameGuidesPreview'] = 'GameGuidesSpecialPreviewController';
 
 $wgGroupPermissions['*']['gameguidespreview'] = false;
 $wgGroupPermissions['staff']['gameguidespreview'] = true;
 $wgGroupPermissions['sysop']['gameguidespreview'] = true;
 
 //Special Page for Content Managment Tool
-$app->registerClass( 'GameGuidesSpecialContentController', "{$dir}/GameGuidesSpecialContentController.class.php" );
-$app->registerSpecialPage( 'GameGuidesContent', 'GameGuidesSpecialContentController' );
+$wgAutoloadClasses[ 'GameGuidesSpecialContentController'] =  "{$dir}/GameGuidesSpecialContentController.class.php" ;
+$wgSpecialPages[ 'GameGuidesContent' ] =  'GameGuidesSpecialContentController';
 
 $wgGroupPermissions['*']['gameguidescontent'] = false;
 $wgGroupPermissions['staff']['gameguidescontent'] = true;
 
-if ( $app->wg->GameGuidesContentForAdmins ) {
+if ( $wgGameGuidesContentForAdmins ) {
 	$wgGroupPermissions['sysop']['gameguidescontent'] = true;
 }
 
 $wgGroupPermissions['*']['gameguidescontent-switchforadmins'] = false;
 $wgGroupPermissions['staff']['gameguidescontent-switchforadmins'] = true;
 
-F::build( 'JSMessages' )->registerPackage( 'GameGuidesContentMsg', [
+JSMessages::registerPackage( 'GameGuidesContentMsg', [
 	'wikiagameguides-content-category',
 	'wikiagameguides-content-tag',
 	'wikiagameguides-content-name',
@@ -58,15 +51,36 @@ F::build( 'JSMessages' )->registerPackage( 'GameGuidesContentMsg', [
 	'wikiagameguides-content-empty-tag'
 ] );
 
+//Special Page for Sponsored Videos Managment Tool
+$wgAutoloadClasses['GameGuidesSpecialSponsoredController'] = "{$dir}/GameGuidesSpecialSponsoredController.class.php";
+$wgSpecialPages['GameGuidesSponsored'] ='GameGuidesSpecialSponsoredController';
+
+$wgGroupPermissions['*']['gameguidessponsored'] = false;
+$wgGroupPermissions['staff']['gameguidessponsored'] = true;
+
+JSMessages::registerPackage( 'GameGuidesSponsoredMsg', [
+	'wikiagameguides-sponsored-video',
+	'wikiagameguides-sponsored-language',
+	'wikiagameguides-sponsored-video-title',
+	'wikiagameguides-sponsored-duplicate-entry',
+	'wikiagameguides-sponsored-required-entry',
+	'wikiagameguides-sponsored-empty-language',
+	'wikiagameguides-sponsored-orphaned-video',
+	'wikiagameguides-sponsored-delete-videos-are-you-sure',
+	'wikiagameguides-sponsored-video-does-not-exist',
+	'wikiagameguides-sponsored-video-is-not-ooyala'
+] );
+
 //hooks
-$app->registerHook( 'GameGuidesContentSave', 'GameGuidesController', 'onGameGuidesContentSave' );
-$app->registerHook( 'TitleGetSquidURLs', 'GameGuidesController', 'onTitleGetSquidURLs' );
+$wgHooks['GameGuidesContentSave'][] = 'GameGuidesController::onGameGuidesContentSave';
+$wgHooks['GameGuidesSponsoredVideosSave'][] = 'GameGuidesController::onGameGuidesSponsoredSave';
+$wgHooks['TitleGetSquidURLs'][] = 'GameGuidesController::onTitleGetSquidURLs';
 //add Game Guides Content to WikiFeatures
-$app->registerHook( 'WikiFeatures::onGetFeatureNormal', 'GameGuidesSpecialContentController', 'onWikiFeatures' );
-$app->registerHook( 'WikiFeatures::onToggleFeature', 'GameGuidesSpecialContentController', 'onWikiFeatures' );
+$wgHooks['WikiFeatures::onGetFeatureNormal'][] = 'GameGuidesSpecialContentController::onWikiFeatures';
+$wgHooks['WikiFeatures::onToggleFeature'][] = 'GameGuidesSpecialContentController::onWikiFeatures';
 
 //minimal package of messages in Game Gudes
-F::build( 'JSMessages' )->registerPackage( 'GameGuides', array(
+JSMessages::registerPackage( 'GameGuides', array(
 	'wikiamobile-hide-section',
 	'wikiamobile-image-not-loaded',
 	'wikiamobile-video-not-friendly',

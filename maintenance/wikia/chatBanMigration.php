@@ -23,10 +23,6 @@ if (isset($options['help'])) {
 	die( "migrating the ban status from old system to new system" );
 }
 
-
-if ( WikiFactory::getVarValueByName("wgChatBanMigrated", $wgCityId ) ) {
-//	die( "migrating the ban status from old system to new system" );	 
-}
 $db = wfGetDB(DB_SLAVE, array());
 
 /*

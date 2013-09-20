@@ -13,7 +13,7 @@ class SDElementPropertyType {
 		$this->name = $name;
 
 		if( !empty($rawRange) ) {
-			$this->range = F::build( 'SDElementPropertyTypeRange', array( 'data' => $rawRange ) );
+			$this->range = new SDElementPropertyTypeRange( $rawRange );
 		}
 	}
 

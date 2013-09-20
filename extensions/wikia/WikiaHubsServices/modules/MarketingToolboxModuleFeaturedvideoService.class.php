@@ -36,7 +36,7 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleE
 				)
 			),
 			'header' => array(
-				'label' => $this->wf->msg('marketing-toolbox-hub-module-featured-video-header'),
+				'label' => wfMsg('marketing-toolbox-hub-module-featured-video-header'),
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
@@ -49,7 +49,7 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleE
 				)
 			),
 			'articleUrl' => array(
-				'label' => $this->wf->msg('marketing-toolbox-hub-module-featured-video-article-url'),
+				'label' => wfMsg('marketing-toolbox-hub-module-featured-video-article-url'),
 				'validator' => new WikiaValidatorToolboxUrl(
 					array(
 						'required' => true
@@ -63,7 +63,7 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleE
 				),
 			),
 			'description' => array(
-				'label' => $this->wf->msg('marketing-toolbox-hub-module-featured-video-desc'),
+				'label' => wfMsg('marketing-toolbox-hub-module-featured-video-desc'),
 				'validator' => new WikiaValidatorString(),
 				'type' => 'textarea',
 				'attributes' => array(

@@ -1,12 +1,12 @@
 <div class="module-box grid-4 alpha sponsored-image">
 	<div class="grid-3 alpha">
-		<input type="button" class="wmu-show" value="<?= $wf->Message('marketing-toolbox-edithub-sponsored-image')->text() ?>" />
+		<input type="button" class="wmu-show" value="<?= wfMessage('marketing-toolbox-edithub-sponsored-image')->text() ?>" />
 		<span class="filename-placeholder alternative">
 			<? $field = $form->getField($fieldName); ?>
 			<?php if( !empty($field['value']) ): ?>
 				<?= $field['value']; ?>
 			<?php else: ?>
-				<?= $wf->message('marketing-toolbox-edithub-file-name')->text() ?>
+				<?= wfMessage('marketing-toolbox-edithub-file-name')->text() ?>
 			<?php endif ?>
 		</span>
 		<?= $form->renderField($fieldName);?>
@@ -21,7 +21,7 @@
 		</div>
 	</div>
 	<p class="alternative">
-		<?= $wf->Message('marketing-toolbox-hub-module-sponsored-image-tip')->parse() ?>
+		<?= wfMessage('marketing-toolbox-hub-module-sponsored-image-tip')->parse() ?>
 	</p>
-	<input class="secondary remove-sponsored-image" type="button" value="<?= $wf->Message('marketing-toolbox-edithub-remove')->text() ?>" />
+	<input class="secondary remove-sponsored-image" type="button" value="<?= wfMessage('marketing-toolbox-edithub-remove')->text() ?>" />
 </div>

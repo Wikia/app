@@ -2,7 +2,7 @@
 
 class PhalanxPager extends ReverseChronologicalPager {
 	protected $app = null;
-	private $id = 0;
+	protected $id = 0;
 	private $pInx = '';
 
 	public function __construct() {
@@ -20,7 +20,7 @@ class PhalanxPager extends ReverseChronologicalPager {
 			$this->mSearchFilter = array($type);
 		}
 
-		$this->mTitle = F::build( 'Title', array( 'Phalanx/stats', NS_SPECIAL ), 'newFromText' );
+		$this->mTitle = Title::newFromText( 'Phalanx/stats', NS_SPECIAL );
 		$this->mSkin = RequestContext::getMain()->getSkin();
 
 		$this->phalanxPage = SpecialPage::getTitleFor('Phalanx');
@@ -93,7 +93,7 @@ class PhalanxPager extends ReverseChronologicalPager {
 		}
 
 		if (isset($row->p_author_id)) {
-			$author = F::build('User', array( $row->p_author_id ), 'newFromId');
+			$author = User::newFromId( $row->p_author_id );
 			$authorName = $author->getName();
 		}
 		else {
@@ -103,7 +103,7 @@ class PhalanxPager extends ReverseChronologicalPager {
 		$statsUrl = sprintf( "%s/%s", $this->phalanxStatsPage->getLocalUrl(), $row->p_id );
 
 		$html  = Html::openElement( 'li', array( 'id' => 'phalanx-block-' . $row->p_id ) );
-		$html .= Html::element( 'b', array('class' => 'blockContent'), htmlspecialchars( $row->p_text ) );
+		$html .= Html::element( 'b', array('class' => 'blockContent'), $row->p_text );
 		$html .= sprintf( " (%s%s%s) ",
 			( !empty($row->p_regex) ? 'regex' : 'plain' ),
 			( !empty($row->p_case)  ? ',case' : '' ),
@@ -115,28 +115,28 @@ class PhalanxPager extends ReverseChronologicalPager {
 			Html::element( 'a', array(
 				'class' => 'modify',
 				'href' => $this->phalanxPage->getLocalUrl( array( 'id' => $row->p_id ) )
-			), $this->app->wf->Msg('phalanx-link-modify') ),
+			), wfMsg('phalanx-link-modify') ),
 			Html::element( 'a', array(
 				'class' => 'stats',
 				'href' => $statsUrl
-			), $this->app->wf->Msg('phalanx-link-stats') )
+			), wfMsg('phalanx-link-stats') )
 		);
 
 		/* remove block button - handled via AJAX */
 		$html .= Html::element( 'button', array(
 			'class' => 'unblock',
 			'data-id' => $row->p_id,
-		), $this->app->wf->Msg('phalanx-link-unblock') );
+		), wfMsg('phalanx-link-unblock') );
 
 		$html .= Html::element('br');
 
 		/* types */
-		$html .= $this->app->wf->Msg('phalanx-display-row-blocks', implode( ', ', Phalanx::getTypeNames( $row->p_type ) ) );
+		$html .= wfMsg('phalanx-display-row-blocks', implode( ', ', Phalanx::getTypeNames( $row->p_type ) ) );
 
 		/* created */
 		if (isset($row->p_timestamp)) {
 			$html .= sprintf( " &bull; %s ",
-				$this->app->wf->MsgExt( 'phalanx-display-row-created', array('parseinline'),
+				wfMsgExt( 'phalanx-display-row-created', array('parseinline'),
 					$authorName,
 					$this->app->wg->Lang->timeanddate( $row->p_timestamp )
 				)
@@ -146,11 +146,11 @@ class PhalanxPager extends ReverseChronologicalPager {
 		/* valid till */
 		if (property_exists($row, 'p_expire')) {
 			if (is_null($row->p_expire)) {
-				$html .= sprintf( " &bull; %s ", $this->app->wf->Msg('phalanx-display-row-expire-infinity'));
+				$html .= sprintf( " &bull; %s ", wfMsg('phalanx-display-row-expire-infinity'));
 			}
 			else if (is_numeric($row->p_expire)) {
 				$html .= sprintf( " &bull; %s ",
-					$this->app->wf->Msg( 'phalanx-display-row-expire', $this->app->wg->Lang->timeanddate( $row->p_expire ))
+					wfMsg( 'phalanx-display-row-expire', $this->app->wg->Lang->timeanddate( $row->p_expire ))
 				);
 			}
 		}

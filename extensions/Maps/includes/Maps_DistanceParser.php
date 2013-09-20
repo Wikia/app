@@ -7,8 +7,9 @@
  * @ingroup Maps
  * 
  * @since 0.6
- * 
- * @author Jeroen De Dauw
+ *
+ * @licence GNU GPL v2+
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class MapsDistanceParser {
 	

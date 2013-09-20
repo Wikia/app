@@ -13,7 +13,7 @@
 
 $wgAvailableRights[] = 'mailerlog';
 $wgGroupPermissions['staff']['mailerlog'] = true;
-$wgSpecialPages[ "MailerLog" ] = "SpecialMailerLog";
+$wgSpecialPages['MailerLog'] = 'SpecialMailerLog';
 
 class SpecialMailerLog extends UnlistedSpecialPage {
 	private static $link_cache = array();

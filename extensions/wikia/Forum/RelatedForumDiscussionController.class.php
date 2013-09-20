@@ -29,12 +29,12 @@ class RelatedForumDiscussionController extends WikiaController {
 
 		$this->content = $content;
 		// common data
-		$this->sectionHeading = $this->wf->Msg('forum-related-discussion-heading', $this->wg->Title->getText());
-		$this->newPostButton = $this->wf->Msg('forum-related-discussion-new-post-button');
+		$this->sectionHeading = wfMsg('forum-related-discussion-heading', $this->wg->Title->getText());
+		$this->newPostButton = wfMsg('forum-related-discussion-new-post-button');
 		$topicTitle = Title::newFromText( $this->wg->Title->getPrefixedText(), NS_WIKIA_FORUM_TOPIC_BOARD );
 		$this->newPostUrl = $topicTitle->getFullUrl('openEditor=1');
-		$this->newPostTooltip = $this->wf->Msg('forum-related-discussion-new-post-tooltip', $this->wg->Title->getText());
-		$this->blankImgUrl = $this->wf->BlankImgUrl();
+		$this->newPostTooltip = wfMsg('forum-related-discussion-new-post-tooltip', $this->wg->Title->getText());
+		$this->blankImgUrl = wfBlankImgUrl();
 	}
 
 	public function relatedForumDiscussion() {
@@ -43,11 +43,11 @@ class RelatedForumDiscussionController extends WikiaController {
 		// set template data
 		$topicTitle = Title::newFromText( $this->wg->Title->getPrefixedText(), NS_WIKIA_FORUM_TOPIC_BOARD );
 		$this->seeMoreUrl = $topicTitle->getFullUrl();
-		$this->seeMoreText = $this->wf->Msg('forum-related-discussion-see-more');
+		$this->seeMoreText = wfMsg('forum-related-discussion-see-more');
 	}
 
 	public function zeroState() {
-		$this->creative = $this->wf->MsgExt('forum-related-discussion-zero-state-creative', 'parseinline');
+		$this->creative = wfMsgExt('forum-related-discussion-zero-state-creative', 'parseinline');
 	}
 
 	public function checkData() {
@@ -89,7 +89,7 @@ class RelatedForumDiscussionController extends WikiaController {
 
 		foreach($ids as $id) {
 			$key = wfMemcKey( __CLASS__, 'getData', $id );
-			WikiaDataAccess::cacheWithLockPurge($key);
+			WikiaDataAccess::cachePurge($key);
 			$requestsParams[] = array('articleId' => $id);
 		}
 
@@ -98,7 +98,7 @@ class RelatedForumDiscussionController extends WikiaController {
 
 	private function getData($id) {
 		$key = wfMemcKey( __CLASS__, 'getData', $id );
-		return WikiaDataAccess::cacheWithLock( $key, 24*60*60, function() use ($id) {
+		return WikiaDataAccess::cache( $key, 24*60*60, function() use ($id) {
 			$wlp = new WallRelatedPages();
 			$messages = $wlp->getArticlesRelatedMessgesSnippet($id, 2, 2 );
 			return $messages;

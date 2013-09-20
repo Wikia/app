@@ -16,6 +16,7 @@ var LightboxLoader = {
 	inlineVideoLinks: $(),	// jquery array of inline video links
 	lightboxLoading: false,
 	inlineVideoLoading: [],
+	videoInstance: null,
 	pageAds: $('#TOP_RIGHT_BOXAD'), // if more ads start showing up over lightbox, add them here
 	defaults: {
 		// start with default modal options
@@ -47,6 +48,10 @@ var LightboxLoader = {
 			LightboxLoader.pageAds.css('visibility','visible');
 			// Reset tracking
 			Lightbox.clearTrackingTimeouts();
+			// If a video uses a timeout for tracking, clear it
+			if ( LightboxLoader.videoInstance ) {
+				LightboxLoader.videoInstance.clearTimeoutTrack();
+			}
 		}
 	},
 	videoThumbWidthThreshold: 400,
@@ -68,7 +73,7 @@ var LightboxLoader = {
 					parent,
 					isVideo;
 
-				if($this.hasClass('link-internal') || $this.hasClass('link-external')) {
+				if( $this.hasClass('link-internal') || $this.hasClass('link-external') || $thumb.attr('data-shared-help') || $this.hasClass( 'no-lightbox' ) ) {
 					return;
 				}
 
@@ -104,18 +109,19 @@ var LightboxLoader = {
 					// might be old/cached DOM.  TODO: delete this when cache is flushed
 					fileKey = $this.attr('data-image-name') || $this.attr('data-video-name');
 					fileKey = fileKey ? fileKey.replace(/ /g, '_') : fileKey;
-					LightboxLoader.handleOldDom();
+					LightboxLoader.handleOldDom(5);
 				}
 
 				if(!fileKey) {
-					LightboxLoader.handleOldDom();
+					LightboxLoader.handleOldDom(5);
 					return;
 				}
 
 				// Display video inline, don't open lightbox
 				isVideo = $this.children('.Wikia-video-play-button').length;
-				if(isVideo && $thumb.width() > that.videoThumbWidthThreshold && !$this.hasClass('force-lightbox')) {
-					LightboxLoader.displayInlineVideo($this, $thumb, fileKey, LightboxTracker.clickSource.EMBED);
+				if(isVideo && $thumb.width() >= that.videoThumbWidthThreshold && !$this.hasClass('force-lightbox')) {
+					var clickSource = window.wgWikiaHubType ? LightboxTracker.clickSource.HUBS : LightboxTracker.clickSource.EMBED;
+					LightboxLoader.displayInlineVideo($this, $thumb, fileKey, clickSource);
 					return;
 				}
 
@@ -194,6 +200,8 @@ var LightboxLoader = {
 
 	},
 	displayInlineVideo: function(target, targetChildImg, mediaTitle, clickSource) {
+		var self = this;
+
 		if($.inArray(mediaTitle, LightboxLoader.inlineVideoLoading) > -1) {
 			return;
 		}
@@ -205,14 +213,12 @@ var LightboxLoader = {
 			height: targetChildImg.height(),
 			width: targetChildImg.width()
 		}, function(json) {
-			//retrieve DOM reference
-			var	embedCode = json['videoEmbedCode'];
-			target.hide().after(embedCode);
+			var	embedCode = json['videoEmbedCode'],
+				inlineDiv = $('<div class="inline-video"></div>').insertAfter(target.hide());
 
-			// if player script, run it
-			if(json.playerScript) {
-				$('body').append('<script>' + json.playerScript + '</script>');
-			}
+			require(['wikia.videoBootstrap'], function (VideoBootstrap) {
+				self.videoInstance = new VideoBootstrap(inlineDiv[0], embedCode, clickSource);
+			});
 
 			// save references for inline video removal later
 			LightboxLoader.inlineVideoLinks = target.add(LightboxLoader.inlineVideoLinks);
@@ -243,13 +249,11 @@ var LightboxLoader = {
 				format: 'json',
 				data: mediaParams,
 				callback: function(json) {
-					LightboxLoader.normalizeMediaDetail(json, function(json) {
-						// Don't cache videos played inline because width will be off for lightbox version bugid-42269
-						if(!nocache) {
-							LightboxLoader.cache.details[title] = json;
-						}
-						callback(json);
-					});
+					// Don't cache videos played inline because width will be off for lightbox version bugid-42269
+					if(!nocache) {
+						LightboxLoader.cache.details[title] = json;
+					}
+					callback(json);
 				}
 			});
 		}
@@ -263,23 +267,6 @@ var LightboxLoader = {
 		return deferred;
 	},
 
-	/* function to normalize backend deficiencies */
-	normalizeMediaDetail: function(json, callback) {
-		/* normalize JWPlayer instances */
-		var embedCode = json['videoEmbedCode'];
-
-		/* embedCode can be a json object, not a html.  It is implied that only JWPlayer (Screenplay) items do this. */
-		if(typeof embedCode === 'object') {
-			var playerJson = embedCode;	// renaming to keep my sanity
-			$.getScript(json['playerAsset'], function() {
-				json['videoEmbedCode'] = '<div id="' + playerJson['id'] + '"></div>';
-				json['playerScript'] = playerJson['script'] + ' loadJWPlayer();';
-				callback(json);
-			});
-		} else {
-			callback(json);
-		}
-	},
 	loadFromURL: function() {
 		var fileTitle = window.Wikia.Querystring().getVal('file'),
 			openModal = $('#LightboxModal');
@@ -313,10 +300,13 @@ var LightboxLoader = {
 		}
 	},
 	isOldDom: null,
-	handleOldDom: function() {
+	/*
+	 * @param {integer} type Value map: { itemClick:1, articleMedia:2, relatedVideos:3, latestPhotos:4, fromClick:5 }
+	 */
+	handleOldDom: function(type) {
 		if(LightboxLoader.isOldDom === null) {
 			$().log("Send old DOM tracking", "Lightbox");
-			LightboxTracker.track(Wikia.Tracker.ACTIONS.VIEW, 'old-dom', null, null, 'ga');
+			LightboxTracker.track(Wikia.Tracker.ACTIONS.VIEW, 'old-dom', type, null, 'internal');
 		}
 		LightboxLoader.isOldDom = true;
 	}
@@ -346,6 +336,7 @@ LightboxTracker = {
 		SV: 'specialVideos',
 		LB: 'lightbox',
 		SHARE: 'share',
+		HUBS: 'hubs',
 		OTHER: 'other'
 	}
 };

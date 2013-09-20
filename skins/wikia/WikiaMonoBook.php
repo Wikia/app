@@ -90,6 +90,8 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 
 		$packages = array( 'monobook_js' );
 
+		wfRunHooks('MonobookSkinAssetGroups', array(&$packages));
+
 		$srcs = AssetsManager::getInstance()->getURL( $packages );
 
 		foreach($srcs as $src) {
@@ -147,13 +149,13 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 		else {
 			$toolbox = '';
 		}
-
+		$staffBlogLinkText = wfMessage( 'wikia_messages' )->escaped();
 		$html = <<<HTML
 	<div class="portlet" id="p-wikicities-nav">
 		<h5>$toolboxTitle</h5>
 		<div class="pBody">$toolbox
 			<ul>
-				<li><a href="http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog">Wikia messages:</a><br />$wikiaMessages</li>
+				<li><a href="http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog">$staffBlogLinkText:</a><br />$wikiaMessages</li>
 			</ul>
 		</div>
 	</div>
@@ -175,7 +177,7 @@ HTML;
 		}
 
 		if( empty( $ret ) ) {
-			$ret = wfMsgExt( 'shared-News_box', array('parseinline', 'content') );
+			$ret = wfMessage( 'shared-News_box' )->parse();
 			if( $cacheWikiaMessages ) {
 				$wgMemc->set( $memcKey, $ret, 60*60 );
 			}
@@ -185,18 +187,22 @@ HTML;
 	}
 
 	protected function buildWikicitiesNavUrls () {
-		global $wgWikicitiesNavLinks, $wgMemc;
+		global $wgWikicitiesNavLinks, $wgMemc, $wgLang, $wgContLang;
 		wfProfileIn( __METHOD__ );
-
-		$result = $wgMemc->get( wfMemcKey( 'wikiaNavUrls' ) );
-		if ( empty ( $result ) ) {
+		$cacheWikicitiesNavUrls = $wgLang->getCode() == $wgContLang->getCode();
+		if( $cacheWikicitiesNavUrls ) {
+			$memcKey = wfMemcKey( 'wikiaNavUrls', $wgLang->getCode() );
+			$result = $wgMemc->get( $memcKey );
+		}
+		
+		if( empty( $result ) ) {
 			$result = array();
 			if(isset($wgWikicitiesNavLinks) && is_array($wgWikicitiesNavLinks)) {
 				foreach ( $wgWikicitiesNavLinks as $link ) {
-					$text = wfMsg( $link['text'] );
+					$text = wfMessage( $link['text'] )->text();
 					wfProfileIn( __METHOD__.'::'.$link['text'] );
 					if ($text != '-') {
-						$dest = wfMsgForContent( $link['href'] );
+						$dest = wfMessage( $link['href'] )->text();
 						wfProfileIn( __METHOD__.'::'.$link['text'].'::2' );
 						$result[] = array(
 						'text' => $text,
@@ -208,9 +214,11 @@ HTML;
 					wfProfileOut( __METHOD__.'::'.$link['text'] );
 				}
 			}
-			$wgMemc->set( wfMemcKey( 'wikiaNavUrls' ), $result, 60*60 );
+			if( $cacheWikicitiesNavUrls ) {
+				$wgMemc->set( $memcKey, $result, 60*60 );
+			}
 		}
-
+		
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}

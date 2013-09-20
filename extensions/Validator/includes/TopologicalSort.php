@@ -14,10 +14,8 @@
  * 
  * @author Eddie Haber
  * @author Jeroen De Dauw
- * 
- * TODO: fix conventions further
- * TODO: include/load class
- * TODO: Use in revised version of Validator class
+ *
+ * TODO: handle dependency loops and other crap more nicely
  */
 class TopologicalSort {
 	
@@ -60,7 +58,9 @@ class TopologicalSort {
 		$sorted = array();
 		while ( count( $nodes ) > 0 ) {
 			// check for circular reference
-			if ( count( $root_nodes ) == 0 ) return false;
+			if ( $root_nodes === array() ) {
+				return array();
+			}
 				
 				
 			// remove this node from root_nodes
@@ -157,7 +157,7 @@ class TSNode {
 	public $children = array();
 	public $parents = array();
 	
-	public function TSNode( $name = '' ) {
+	public function __construct( $name = '' ) {
 		$this->name = $name;
 	}
 }

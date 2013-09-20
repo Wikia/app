@@ -107,11 +107,11 @@ Wikia.Dropdown = $.createClass(Observable, {
 
 	onClick: function(event) {
 		var $target = $(event.target);
-		
+
 		if($target.is(this.getItems().find('label'))) {
 			return;
 		}
-		
+
 		if (!this.settings.onClick || this.settings.onClick() !== false) {
 			if (!this.isOpen()) {
 				this.open();
@@ -120,7 +120,7 @@ Wikia.Dropdown = $.createClass(Observable, {
 
 		this.fire('click', event);
 	},
-	
+
 	onChange: function(event) {
 		var $target = $(event.target);
 
@@ -129,6 +129,10 @@ Wikia.Dropdown = $.createClass(Observable, {
 		if ($.isFunction(this.settings.onChange)) {
 			this.settings.onChange.call(this, event, $target);
 		}
+
+		// Since this is for single (not multi) select, mark one item as selected
+		this.getSelectedItems().removeClass('selected');
+		$target.parent().addClass('selected');
 
 		this.$selectedItemsList.text(value);
 

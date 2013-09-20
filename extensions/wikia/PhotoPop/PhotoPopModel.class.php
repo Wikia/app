@@ -83,11 +83,11 @@ class PhotoPopModel extends WikiaModel{
 	public function getGameContents( $categoryName, $imageWidth, $imageHeight ) {
 		wfProfileIn( __METHOD__ );
 
-		$cacheKey = $this->wf->memcKey( __METHOD__, $categoryName );
+		$cacheKey = wfMemcKey( __METHOD__, $categoryName );
 		$contents = $this->loadFromCache( $cacheKey );
 
 		if ( empty( $contents ) ) {
-			$category = F::build( 'Category', array( $categoryName ), 'newFromName' );
+			$category = Category::newFromName( $categoryName );
 
 			if ( $category instanceof Category && $category->getID() !== false ) {
 				$articles = Array();
@@ -144,14 +144,14 @@ class PhotoPopModel extends WikiaModel{
 			return null;
 		}
 
-		$title = F::build( 'Title', array( $titleName, NS_FILE ), 'newFromText' );
+		$title = Title::newFromText( $titleName, NS_FILE );
 		$contents = null;
 
 		if ( $title instanceof Title && $title->exists() ) {
-			$file = $this->wf->FindFile($title);
+			$file = wfFindFile($title);
 
 			if ( !empty( $file ) ) {
-				$contents = $this->wf->ReplaceImageServer( $file->getFullUrl() );
+				$contents = wfReplaceImageServer( $file->getFullUrl() );
 			}
 		}
 
@@ -212,7 +212,7 @@ class PhotoPopModel extends WikiaModel{
 
 	private function getGlobalCacheKey( $token ){
 		//using wfForeignMemcKey to get  global key that can be accessed/purged from wherever
-		return $this->wf->ForeignMemcKey( '', self::MEMCHACHE_KEY_PREFIX, $token );
+		return wfForeignMemcKey( '', self::MEMCHACHE_KEY_PREFIX, $token );
 	}
 
 	private function loadFromCache( $key ){

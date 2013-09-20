@@ -13,27 +13,27 @@
 		}
 	} else {
 		if ($error) { ?>
-		<span id="VET_error_box"><?= $error ?></span>
+		<span id="VET_error_box" class="VET_error_box"><?= $error ?></span>
 		<?php } ?>
 		<div class="input-group">
 			<label for="VideoEmbedUrl" class="with-info-p"><?= wfMsg('vet-url-label') ?></label>
 			<div>
-				<p><?= wfMsg( 'vet-description' ) ?> <a id="vet-see-all" href="http://help.wikia.com/wiki/Help:Video_Embed_Tool" target="_blank"><?= wfMsg( 'vet-see-all' ) ?></a></p>
-				<input id="VideoEmbedUrl" name="wpVideoEmbedUrl" type="text" />
+				<p><?= wfMessage('vet-description')->parse(); ?></p>
+				<input id="VideoEmbedUrl" class="VideoEmbedUrl" name="wpVideoEmbedUrl" type="text" />
 			</div>
 		</div>
 	<?php } ?>
-		<a id="VideoEmbedUrlSubmit" class="wikia-button" style="display: block; "><?= wfMsg('vet-upload-btn') ?></a>
+		<a id="VideoEmbedUrlSubmit" class="wikia-button VideoEmbedUrlSubmit" style="display: block; "><?= wfMsg('vet-upload-btn') ?></a>
 	</form>
 	<form action="" class="WikiaForm VET-search" id="VET-search-form">
 		<div class="input-group">
 			<label for="VET-search-field"><?= wfMsg( 'vet-search-label' ) ?></label>
 			<input type="text" class="VET-search-field" id="VET-search-field" name="VET-search-field" placeholder="<?= wfMsg( 'vet-search-placeholder' ) ?>" />
-			<input type="submit" id="VET-search-submit" class="wikia-button" value="<?= wfMsg( 'vet-search-label' ) ?>" />
+			<input type="submit" id="VET-search-submit" class="wikia-button VET-search-submit" value="<?= wfMsg( 'vet-search-label' ) ?>" />
 		</div>
-		<div id="VET-search-filter">
+		<div class="VET-search-filter">
 
-			<div class="WikiaDropdown MultiSelect" id="VET-search-dropdown" data-selected="<?php echo($vet_premium_videos_search_enabled) ? 'premium' : 'local';  ?>"> <? // <- VET.js takes value from here ?>
+			<div class="WikiaDropdown MultiSelect VET-search-dropdown" id="VET-search-dropdown" data-selected="<?php echo($vet_premium_videos_search_enabled) ? 'premium' : 'local';  ?>"> <? // <- VET.js takes value from here ?>
 				<div class="selected-items">
 					<?php if ($vet_premium_videos_search_enabled) : ?>
 						<span class="selected-items-list" data-sort="premium"><?=wfMsg( 'vet-video-wiki' ) ?></span>
@@ -65,7 +65,10 @@
 			<div id="VET-preview-close" class="VET-preview-close">
 				<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" class="sprite close" alt="Close">
 			</div>
-			<a id="VET-add-from-preview" href="" class="wikia-button VET-add-from-preview"><?= wfMsg('vet-add-from-preview') ?></a>
+			<!-- add video button -->
+			<?php if($showAddVideoBtn): ?>
+				<a id="VET-add-from-preview" href="" class="wikia-button VET-add-from-preview"><?= wfMessage('vet-add-from-preview')->text() ?></a>
+			<?php endif; ?>
 			<div id="VET-video-wrapper" class="VET-video-wrapper"></div>
 		</div>
 		<div class="VET-suggestions-wrapper" id="VET-suggestions-wrapper">

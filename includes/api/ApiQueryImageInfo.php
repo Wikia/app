@@ -167,7 +167,7 @@ class ApiQueryImageInfo extends ApiQueryBase {
 
 			$data = $this->getResultData();
 			foreach ( $data['query']['pages'] as $pageid => $arr ) {
-				if ( !isset( $arr['imagerepository'] ) ) {
+				if ( is_numeric($pageid) && !isset( $arr['imagerepository'] ) ) {
 					$result->addValue(
 						array( 'query', 'pages', $pageid ),
 						'imagerepository', ''

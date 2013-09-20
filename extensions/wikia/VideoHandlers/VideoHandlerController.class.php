@@ -1,53 +1,52 @@
 <?php
 
+/**
+ * Class VideoHandlerController
+ */
 class VideoHandlerController extends WikiaController {
 
-	public function getEmbedCode() {
-		$articleId = $this->getVal('articleId', '');
+	public function getEmbedCode( ) {
 		$title = $this->getVal('fileTitle', '');
 		$width = $this->getVal('width', '');
-		$autoplay = $this->getVal('autoplay', false);
+		$autoplay = $this->getVal( 'autoplay', false );
 
 		$error = '';
-		if (empty($title)) {
-			$error = $this->wf->msgForContent('videohandler-error-missing-parameter', 'title');
-		}
-		else {
-			if (empty($width)) {
-				$error = $this->wf->msgForContent('videohandler-error-missing-parameter', 'width');
+		if ( empty($title) ) {
+			$error = wfmsgForContent('videohandler-error-missing-parameter', 'title');
+		} else {
+			if ( empty($width) ) {
+				$error = wfmsgForContent('videohandler-error-missing-parameter', 'width');
 			}
 			else {
 				$title = Title::newFromText($title, NS_FILE);
 				$file = ($title instanceof Title) ? wfFindFile($title) : false;
-				if ($file === false) {
-					$error = $this->wf->msgForContent('videohandler-error-video-no-exist');
-				}
-				else {
+				if ( $file === false ) {
+					$error = wfmsgForContent('videohandler-error-video-no-exist');
+				} else {
 					$videoId = $file->getVideoId();
 					$assetUrl = $file->getPlayerAssetUrl();
-					$embedCode = $file->getEmbedCode($articleId, $width, $autoplay, true);
+					$embedCode = $file->getEmbedCode($width, $autoplay, true);
 					$this->setVal('videoId', $videoId);
 					$this->setVal('asset', $assetUrl);
 					$this->setVal('embedCode', $embedCode);
-					//@todo support json embed code
 				}
 			}
 		}
 
-		if (!empty($error)) {
+		if ( !empty($error) ) {
 			$this->setVal('error', $error);
 		}
 	}
 
-	public function getSanitizedOldVideoTitleString(){
+	public function getSanitizedOldVideoTitleString( ) {
 		$sTitle = $this->getVal( 'videoText', '' );
 
 		$prefix = '';
-		if ( strpos( $sTitle, ':' ) === 0 ){
+		if ( strpos( $sTitle, ':' ) === 0 ) {
 			$sTitle = substr( $sTitle, 1);
 			$prefix = ':';
 		}
-		if ( empty( $sTitle ) ){
+		if ( empty( $sTitle ) ) {
 			$this->setVal( 'error', 1 );
 		}
 
@@ -65,13 +64,13 @@ class VideoHandlerController extends WikiaController {
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
 	 */
-	public function removeVideo() {
+	public function removeVideo( ) {
 		wfProfileIn( __METHOD__ );
 
 		$videoTitle = $this->getVal( 'title', '' );
 		if ( empty($videoTitle) ) {
 			$this->result = 'error';
-			$this->msg = $this->wf->Message( 'videos-error-empty-title' )->text();
+			$this->msg = wfMessage( 'videos-error-empty-title' )->text();
 			wfProfileOut( __METHOD__ );
 			return;
 		}
@@ -79,7 +78,7 @@ class VideoHandlerController extends WikiaController {
 		// check if user is logged in
 		if ( !$this->wg->User->isLoggedIn() ) {
 			$this->result = 'error';
-			$this->msg = $this->wf->Message( 'videos-error-not-logged-in' )->text();
+			$this->msg = wfMessage( 'videos-error-not-logged-in' )->text();
 			wfProfileOut( __METHOD__ );
 			return;
 		}
@@ -87,15 +86,15 @@ class VideoHandlerController extends WikiaController {
 		// check if user is blocked
 		if ( $this->wg->User->isBlocked() ) {
 			$this->result = 'error';
-			$this->msg = $this->wf->Message( 'videos-error-blocked-user' )->text();
+			$this->msg = wfMessage( 'videos-error-blocked-user' )->text();
 			wfProfileOut( __METHOD__ );
 			return;
 		}
 
 		// check if read-only
-		if ( $this->wf->ReadOnly() ) {
+		if ( wfReadOnly() ) {
 			$this->result = 'error';
-			$this->msg = $this->wf->Message( 'videos-error-readonly' )->text();
+			$this->msg = wfMessage( 'videos-error-readonly' )->text();
 			wfProfileOut( __METHOD__ );
 			return;
 		}
@@ -103,13 +102,13 @@ class VideoHandlerController extends WikiaController {
 		$error = '';
 
 		$title = Title::newFromText( $videoTitle, NS_FILE );
-		$file = ( $title instanceof Title ) ? $this->wf->Findfile( $title ) : false;
+		$file = ( $title instanceof Title ) ? wfFindfile( $title ) : false;
 		if ( $file instanceof File && WikiaFileHelper::isFileTypeVideo($file) ) {
 			// check permissions
 			$permissionErrors = $title->getUserPermissionsErrors( 'delete', $this->wg->User );
 			if ( count( $permissionErrors ) ) {
 				$this->result = 'error';
-				$this->msg = $this->wf->Message( 'videos-error-permissions' )->text();
+				$this->msg = wfMessage( 'videos-error-permissions' )->text();
 				wfProfileOut( __METHOD__ );
 				return;
 			}
@@ -117,14 +116,14 @@ class VideoHandlerController extends WikiaController {
 			$reason = '';
 			$suppress = false;
 			if ( $file->isLocal() ) {
-				$status = Status::newFatal( 'cannotdelete', $this->wf->EscapeWikiText( $title->getPrefixedText() ) );
+				$status = Status::newFatal( 'cannotdelete', wfEscapeWikiText( $title->getPrefixedText() ) );
 				$page = WikiPage::factory( $title );
-				$dbw = $this->wf->GetDB( DB_MASTER );
+				$dbw = wfGetDB( DB_MASTER );
 				try {
 					// delete the associated article first
 					if ( $page->doDeleteArticleReal( $reason, $suppress, 0, false ) >= WikiPage::DELETE_SUCCESS ) {
 						$status = $file->delete( $reason, $suppress );
-						if( $status->isOK() ) {
+						if ( $status->isOK() ) {
 							$dbw->commit();
 						} else {
 							$dbw->rollback();
@@ -139,7 +138,7 @@ class VideoHandlerController extends WikiaController {
 				if ( $status->isOK() ) {
 					$oldimage = null;
 					$user = $this->wg->User;
-					$this->wf->RunHooks( 'FileDeleteComplete', array( &$file, &$oldimage, &$page, &$user, &$reason ) );
+					wfRunHooks( 'FileDeleteComplete', array( &$file, &$oldimage, &$page, &$user, &$reason ) );
 				} else if ( !empty($error) ) {
 					$error = $status->getMessage();
 				}
@@ -156,23 +155,43 @@ class VideoHandlerController extends WikiaController {
 
 				if ( !$article->doDeleteArticle( $reason, $suppress, 0, true, $error ) ) {
 					if ( empty($error) ) {
-						$error = $this->wf->Message( 'videohandler-remove-error-unknow' )->text();
+						$error = wfMessage( 'videohandler-remove-error-unknow' )->text();
 					}
 				}
 			}
 		} else {
-			$error = $this->wf->Message( 'videohandler-error-video-no-exist' )->text();
+			$error = wfMessage( 'videohandler-error-video-no-exist' )->text();
 		}
 
 		if ( empty($error) ) {
 			$this->result = 'ok';
-			$this->msg = $this->wf->Message( 'videohandler-remove-video-modal-success', $title )->text();
+			$this->msg = wfMessage( 'videohandler-remove-video-modal-success', $title )->text();
 		} else {
 			$this->result = 'error';
 			$this->msg = $error;
 		}
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * check if the file exists
+	 * @requestParam string fileTitle
+	 * @responseParam boolean $fileExists
+	 */
+	public function fileExists() {
+		$fileExists = false;
+
+		$fileTitle = $this->getVal( 'fileTitle', '' );
+		$title = Title::newFromText( $fileTitle, NS_FILE );
+		if ( $title instanceof Title ) {
+			$file = wfFindFile( $title );
+			if ( $file instanceof File && $file->exists() ) {
+				$fileExists = true;
+			}
+		}
+
+		$this->fileExists = $fileExists;
 	}
 
 }

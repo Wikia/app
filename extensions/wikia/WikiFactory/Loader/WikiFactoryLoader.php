@@ -9,7 +9,7 @@
  * @todo change use of mIsWikiaActive to a series of isClosed, isDeleted, etc. methods
  */
 
-ini_set( "include_path", "{$IP}:{$IP}/includes:{$IP}/languages:{$IP}/lib:.:" );
+ini_set( "include_path", "{$IP}:{$IP}/includes:{$IP}/languages:{$IP}/lib/vendor:.:" );
 ini_set( "cgi.fix_pathinfo", 1);
 
 require_once( "$IP/includes/Defines.php" );
@@ -32,7 +32,9 @@ if( !function_exists("wfProfileIn") ) {
  */
 function wfUnserializeHandler( $errno, $errstr ) {
 	global $_variable_key, $_variable_value;
-	error_log( $_SERVER['SERVER_NAME'] . " ($_variable_key=$_variable_value): $errno, $errstr" );
+
+	$serverMame = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '';
+	error_log("$serverMame ($_variable_key=$_variable_value): $errno, $errstr");
 }
 
 class WikiFactoryLoader {
@@ -59,8 +61,8 @@ class WikiFactoryLoader {
 	 * @access public
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
-	 * @param integer $id default null	explicite set wiki id
-	 * @param string $server_name default false	explicite set server name
+	 * @param integer $id default null    explicit set wiki id
+	 * @param bool|string $server_name default false    explicit set server name
 	 *
 	 * @return WikiFactoryLoader object
 	 */
@@ -194,7 +196,8 @@ class WikiFactoryLoader {
 	 *
 	 * @todo change new Database to LoadBalancer factory
 	 *
-	 * @return Database	database handler
+	 * @param int $type
+	 * @return Database    database handler
 	 */
 	public function getDB( $type = DB_SLAVE ) {
 		global $wgDBserver, $wgDBuser, $wgDBpassword;
@@ -599,6 +602,8 @@ class WikiFactoryLoader {
 			);
 			while( $oRow = $dbr->fetchObject( $oRes ) ) {
 				#--- some magic, rewritting path, etc legacy data
+				global $_variable_key, $_variable_value;
+
 				set_error_handler( "wfUnserializeHandler" );
 				$_variable_key = $oRow->cv_name;
 				$_variable_value = $oRow->cv_value;
@@ -704,7 +709,6 @@ class WikiFactoryLoader {
 		 * transfer configuration variables from database to GLOBALS
 		 */
 		if( is_array($this->mVariables) ) {
-			global $_variable_key, $_variable_value;
 			foreach ($this->mVariables as $key => $value) {
 				$tValue = $value;
 				#--- check, maybe there are variables in variable

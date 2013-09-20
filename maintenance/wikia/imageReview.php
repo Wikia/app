@@ -27,7 +27,7 @@ $updated = 0;
 
 $sizeOfPack = 3;
 
-$lastRun = WikiFactory::getVarValueByName( 'wgImageReviewImportLastRun', $wgCityId );
+$lastRun = $wgImageReviewImportLastRun;
 
 if(!empty($lastRun)) {
 	$startFrom = $lastRun - 60*60;

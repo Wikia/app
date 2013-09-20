@@ -14,11 +14,22 @@ $messages['en'] = array(
 	'scribeeventsrecords' => 'Records',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author Purodha
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'scribe-desc' => '{{desc}}',
+	'scribeeventsrecords' => '{{Identical|Record}}',
+);
+
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'scribe-desc' => '[[Special:Scribeevents|أداة]] للبحث عن عنوان صفحة محددة عبر الويكيات',
+	'scribeevents' => 'الأحداث الأخيرة',
+	'scribeeventsrecords' => 'سجلات',
 );
 
 /** Breton (brezhoneg)
@@ -77,6 +88,14 @@ $messages['fi'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Työkalu]] jolla etsiä tietyn sivun otsikkoa kaikista wikeistä',
 	'scribeevents' => 'Viimeisimmät tapahtumat',
 	'scribeeventsrecords' => 'Tiedotteet',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'scribe-desc' => '[[Special:Scribeevents|Tól]] til at leita eftir einum serstakum síðuheiti tvørtur um wikiir',
+	'scribeevents' => 'Nýligar hendingar',
 );
 
 /** French (français)
@@ -171,6 +190,15 @@ $messages['nl'] = array(
 	'scribe-desc' => "[[Special:Scribeevents|Hulpmiddel]] om een paginanaam te zoeken in meerdere wiki's",
 	'scribeevents' => 'Recente gebeurtenissen',
 	'scribeeventsrecords' => 'Regels',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'scribe-desc' => '[[Special:Scribeevents|Aisina]] per cercar un títol de pagina especific a travèrs los wikis',
+	'scribeevents' => 'Eveniments recents',
+	'scribeeventsrecords' => 'Enregistraments',
 );
 
 /** Polish (polski)
@@ -270,8 +298,11 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
+ * @author SteveR
+ * @author Ua2004
  */
 $messages['uk'] = array(
+	'scribe-desc' => '[[Special:Scribeevents|Інструмент]] для пошуку конкретної назви сторінки у вікі',
 	'scribeevents' => 'Останні події',
 	'scribeeventsrecords' => 'Записи',
 );

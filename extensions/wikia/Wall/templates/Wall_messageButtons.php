@@ -78,6 +78,7 @@
 
 		if($canClose) {
 			$dropdown[] = array(
+				'attr' => 'data-mode="close"',
 				'class' => 'close-thread',
 				'href' => '#',
 				'text' => wfMsg('wall-message-close-thread'),
@@ -122,7 +123,7 @@
 		<a href="#" class="quote-button"><?= wfMsg('wall-message-quote-button') ?></a>
 		
 		<? if( $canClose ): ?>
-		 	<a href="#" class="close-thread"> <?= wfMsg('wall-message-close-thread'); ?> </a>
+		 	<a href="#" class="close-thread" data-mode="close"> <?= wfMsg('wall-message-close-thread'); ?> </a>
 		 <? endif; ?>
 		 
 		<? if( $canReopen): ?>

@@ -236,7 +236,7 @@ class AjaxPollClass {
 		$before = '<!-- AjaxPoll #'. self::$mCount .' -->';
 
 		// load CSS/JS only when needed
-		$before .= F::build('JSSnippets')->addToStack(
+		$before .= JSSnippets::addToStack(
 			array(
 				'/extensions/wikia/AjaxPoll/css/AjaxPoll.scss',
 				'/extensions/wikia/AjaxPoll/js/AjaxPoll.js'

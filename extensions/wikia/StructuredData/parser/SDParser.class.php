@@ -3,30 +3,45 @@
  * @author ADi
  */
 class SDParser {
+
+	protected static $instance = null;
+
 	/**
 	 * @var StructuredData
 	 */
 	protected $structuredData = null;
 
-	public function __construct( StructuredData $structuredData ) {
+	public function __construct( StructuredData $structuredData = null) {
+		if( is_null( $structuredData ) ) {
+			$structuredData = new StructuredData();
+		}
 		$this->structuredData = $structuredData;
 	}
 
-	public function onParserFirstCallInit( Parser &$parser ) {
-		$parser->setHook( 'datalist', array( $this, 'datalistParserHook' ) );
-		$parser->setHook( 'data', array( $this, 'dataParserHook' ) );
+	static public function getInstance() {
+		if( is_null(self::$instance) ) {
+			self::$instance = new SDParser();
+		}
+		return self::$instance;
+	}
+
+	static public function onParserFirstCallInit( Parser &$parser ) {
+		$instance = self::getInstance();
+		$parser->setHook( 'datalist', array( $instance, 'datalistParserHook' ) );
+		$parser->setHook( 'data', array( $instance, 'dataParserHook' ) );
 		return true;
 	}
 
-	public function onParserFirstCallInitParserFunctionHook( Parser &$parser ) {
-		$parser->setFunctionHook('data', array( $this, 'dataParserFunction') );
+	static public function onParserFirstCallInitParserFunctionHook( Parser &$parser ) {
+		$instance = self::getInstance();
+		$parser->setFunctionHook('data', array( $instance, 'dataParserFunction') );
 		return true;
 	}
 
 	public function getListFromStringPath( $path ) {
 		$result = array();
 
-		$dataTag = F::build( 'SDParserTag', array( 'parser' => $this, 'tagRawContent' => $path, 'args' => array( 'renderMode' => SDParserTag::RENDER_MODE_OBJECT ) ));
+		$dataTag = new SDParserTag( $this, $path, array( 'renderMode' => SDParserTag::RENDER_MODE_OBJECT ) );
 		$values = $dataTag->render();
 
 		if( !is_array( $values ) ) {
@@ -68,7 +83,7 @@ class SDParser {
 		$args['parser'] = $parser;
 		$args['frame'] = $frame;
 
-		$tag = F::build( 'SDParserTag', array( 'parser' => $this, 'tagRawContent' => $input, 'args' => $args ) );
+		$tag = new SDParserTag( $this, $input, $args );
 
 		return $tag->render();
 	}

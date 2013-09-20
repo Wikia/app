@@ -37,12 +37,12 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 		return $url;
 	}
 
-	public function import( $content='', $params=array() ) {
+	public function import( $content = '', $params = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		$articlesCreated = 0;
 		$debug = !empty( $params['debug'] );
-		$addlCategories = !empty( $params['addlCategories'] ) ? $params['addlCategories'] : array();
+		$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
 
 		$doc = new DOMDocument( '1.0', 'UTF-8' );
 		@$doc->loadXML( $content );
@@ -50,11 +50,11 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 		$numItems = $items->length;
 		print( "Found $numItems items...\n" );
 
-		for( $i=0; $i<$numItems; $i++ ) {
-			$item = $items->item($i);
+		for ( $i = 0; $i < $numItems; $i++ ) {
+			$item = $items->item( $i );
 
 			// check for video name
-			$elements = $item->getElementsByTagName('title');
+			$elements = $item->getElementsByTagName( 'title' );
 			if ( $elements->length > 0 ) {
 				$clipData['titleName'] = html_entity_decode( $elements->item(0)->textContent );
 				$clipData['uniqueName'] = $clipData['titleName'];
@@ -68,19 +68,19 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 			// check for video id
 			$elements = $item->getElementsByTagNameNS( 'http://search.yahoo.com/mrss/', 'embed' );
 			if ( $elements->length > 0 ) {
-				foreach( $elements->item(0)->getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'param') as $element ) {
+				foreach ( $elements->item(0)->getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'param') as $element ) {
 					if ( $element->getAttribute('name') == 'clipId' ) {
 						$clipData['videoId'] = $element->textContent;
 					}
 				}
 			}
 
-			if ( !array_key_exists('videoId', $clipData) ) {
+			if ( !array_key_exists( 'videoId', $clipData ) ) {
 				print "ERROR: videoId NOT found for {$clipData['titleName']} - {$clipData['description']}.\n";
 				continue;
 			}
 
-			if ( empty($clipData['videoId']) ) {
+			if ( empty( $clipData['videoId'] ) ) {
 				print "ERROR: Empty videoId for {$clipData['titleName']} - {$clipData['description']}.\n";
 				continue;
 			}
@@ -94,39 +94,45 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 				continue;
 			}
 
+			$clipData['ageRequired'] = 0;
+
 			$this->getTitleName( $clipData['titleName'], $clipData['videoId'] );
 
-			$clipData['published'] = $item->getElementsByTagName('pubDate')->item(0)->textContent;
+			$clipData['published'] = strtotime( $item->getElementsByTagName('pubDate')->item(0)->textContent );
 			$clipData['videoUrl'] = $item->getElementsByTagName('link')->item(0)->textContent;
 
 			$elements = $item->getElementsByTagNameNS( 'http://search.yahoo.com/mrss/', 'thumbnail' );
 			$clipData['thumbnail'] = ( $elements->length > 0 ) ? $elements->item(0)->getAttribute('url') : '' ;
 
 			$elements = $item->getElementsByTagNameNS( 'http://search.yahoo.com/mrss/', 'keywords' );
-			$clipData['tags'] = ( $elements->length > 0 ) ? $elements->item(0)->textContent : '' ;
+			$clipData['keywords'] = ( $elements->length > 0 ) ? $elements->item(0)->textContent : '' ;
 
 			$elements = $item->getElementsByTagNameNS( 'http://search.yahoo.com/mrss/', 'category' );
 			if ( $elements->length > 0 ) {
-				$clipData['category'] = $elements->item(0)->textContent;
-				$clipData['keywords'] = $elements->item(0)->getAttribute('label');
+				$clipData['category'] = $this->getCategory( $elements->item(0)->textContent );
+				if ( !empty( $clipData['category'] ) && $clipData['category'] == 'Movies' ) {
+					$clipData['type'] = 'Clip';
+				}
+
+				$clipData['name'] = $elements->item(0)->getAttribute('label');
 			}
 
 			$elements = $item->getElementsByTagNameNS( 'http://search.yahoo.com/mrss/', 'content' );
 			if ( $elements->length > 0 ) {
-				$clipData['language'] = $elements->item(0)->getAttribute('lang');
+				$clipData['language'] = $this->getCldrCode( $elements->item(0)->getAttribute('lang'), 'language', false );
 				$clipData['duration'] = $elements->item(0)->getAttribute('duration');
 			}
 
 			$genres = array();
 			$elements = $item->getElementsByTagName( 'genre' );
-			foreach( $elements as $element ) {
+			foreach ( $elements as $element ) {
 				$genres[] = $element->textContent;
 			}
 			$clipData['genres'] = implode( ', ', $genres );
 
 			$actors = array();
 			$elements = $item->getElementsByTagNameNS( 'http://search.yahoo.com/mrss/', 'credit' );
-			foreach( $elements as $element ) {
+			foreach ( $elements as $element ) {
 				if ( $element->getAttribute('role') == 'actor' ) {
 					$actors[] = $element->textContent;
 				}
@@ -134,14 +140,15 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 			$clipData['actors'] = implode( ', ', $actors );
 
 			$clipData['hd'] = 0;
+			$clipData['provider'] = 'anyclip';
 
 			$msg = '';
-			if ( $this->isClipTypeBlacklisted($clipData) ) {
+			if ( $this->isClipTypeBlacklisted( $clipData ) ) {
 				if ( $debug ) {
 					print "Skipping {$clipData['titleName']} - {$clipData['description']}. On clip type blacklist\n";
 				}
 			} else {
-				$createParams = array( 'addlCategories'=>$addlCategories, 'debug'=>$debug );
+				$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug );
 				$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
 			}
 
@@ -155,18 +162,23 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 		return $articlesCreated;
 	}
 
-	public function generateCategories(array $data, $addlCategories) {
+	/**
+	 * Create a list of category names to add to the new file page
+	 * @param array $data
+	 * @param array $categories
+	 * @return array $categories
+	 */
+	public function generateCategories( $data, $categories ) {
 		wfProfileIn( __METHOD__ );
 
-		$categories = !empty($addlCategories) ? $addlCategories : array();
 		$categories[] = 'AnyClip';
 		$categories[] = 'Entertainment';
-		if ( stristr($data['titleName'], 'trailer') ) {
+		if ( stristr( $data['titleName'], 'trailer' ) ) {
 			$categories[] = 'Trailers';
 		}
 
-		if ( !empty($data['keywords']) ) {
-			$categories[] = $data['keywords'];
+		if ( !empty( $data['name'] ) ) {
+			$categories[] = $data['name'];
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -174,43 +186,29 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 		return $categories;
 	}
 
-	protected function generateName( array $data ) {
-		wfProfileIn( __METHOD__ );
-
-		$name = $data['titleName'];
-
-		wfProfileOut( __METHOD__ );
-
-		return $name;
-	}
-
-	protected function generateMetadata( array $data, &$errorMsg ) {
-		if ( empty($data['videoId']) ) {
-			$errorMsg = 'no video id exists';
+	/**
+	 * generate metadata
+	 * @param array $data
+	 * @param sring $errorMsg
+	 * @return array|int $metadata or 0 on error
+	 */
+	public function generateMetadata( $data, &$errorMsg ) {
+		$metadata = parent::generateMetadata( $data, $errorMsg );
+		if ( empty( $metadata ) ) {
 			return 0;
 		}
 
-		$metadata = array(
-			'videoId' => $data['videoId'],
-			'hd' => $data['hd'],
-			'duration' => $data['duration'],
-			'published' => strtotime($data['published']),
-			'ageGate' => $data['ageGate'],
-			'thumbnail' => $data['thumbnail'],
-			'videoUrl' => $data['videoUrl'],
-			'category' => $data['category'],
-			'description' => $data['description'],
-			'keywords' => $data['keywords'],
-			'tags' => $data['tags'],
-			'language' => $data['language'],
-			'genres' => $data['genres'],
-			'actors' => $data['actors'],
-			'uniqueName' => $data['uniqueName'],
-		);
+		$metadata['videoUrl'] = empty( $data['videoUrl'] ) ? '' : $data['videoUrl'];
+		$metadata['uniqueName'] = empty( $data['uniqueName'] ) ? '' : $data['uniqueName'];
 
 		return $metadata;
 	}
 
+	/**
+	 * get title
+	 * @param string $titleName
+	 * @param string $code - video id
+	 */
 	protected function getTitleName( &$titleName, $code ) {
 		wfProfileIn( __METHOD__ );
 
@@ -221,9 +219,9 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 			$response = $req->getContent();
 			$content = json_decode( $response, true );
 
-			$title = AnyclipApiWrapper::getVideoName( $content );
+			$title = AnyclipApiWrapper::getClipName( $content );
 
-			if ( !empty($title) ) {
+			if ( !empty( $title ) ) {
 				$titleName = $title;
 			}
 		}

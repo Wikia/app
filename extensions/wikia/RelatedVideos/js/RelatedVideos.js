@@ -83,8 +83,7 @@ var RelatedVideos = {
 			relatedVideosModule.on( 'click', '.scrollleft', this.scrollleft );
 
 			relatedVideosModule.find('.addVideo').addVideoButton({
-				callbackAfterSelect: function(url) {
-
+				callbackAfterSelect: function(url, VET) {
 					RelatedVideos.track({
 						action: Wikia.Tracker.ACTIONS.ADD,
 						label: 'add-video-success',
@@ -107,7 +106,7 @@ var RelatedVideos = {
 							if ( formRes.error ) {
 								RelatedVideos.showError( formRes.error );
 							} else {
-								VET_loader.modal.closeModal();
+								VET.close();
 								RelatedVideos.injectCarouselElement( formRes.html );
 							}
 						},

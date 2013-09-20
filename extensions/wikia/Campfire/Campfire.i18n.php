@@ -7,7 +7,7 @@ $messages['en'] = array(
 	'campfire-licensed-under' => 'Licensed under $1',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  */
 $messages['qqq'] = array(
 	'campfire-page-header' => 'Message that formats H1 page title presentation in Campfire skin.
@@ -43,6 +43,21 @@ $messages['ast'] = array(
 $messages['az'] = array(
 	'campfire-page-header' => '$1 dən $2',
 	'campfire-licensed-under' => '$1 lisenziyası altındadır',
+);
+
+/** Bikol Central (Bikol Central)
+ * @author Geopoet
+ */
+$messages['bcl'] = array(
+	'campfire-page-header' => '$1 gikan sa $2',
+	'campfire-licensed-under' => 'Lisensiyado sa lindong kan $1',
+);
+
+/** Bulgarian (български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'campfire-page-header' => '$1 от $2',
 );
 
 /** Breton (brezhoneg)
@@ -107,6 +122,14 @@ $messages['fi'] = array(
 	'campfire-licensed-under' => 'Lisensoitu $1',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'campfire-page-header' => '$1 frá $2',
+	'campfire-licensed-under' => 'Undir lisensinum $1',
+);
+
 /** French (français)
  * @author Wyz
  */
@@ -137,6 +160,13 @@ $messages['hu'] = array(
 $messages['ia'] = array(
 	'campfire-page-header' => '$1 de $2',
 	'campfire-licensed-under' => 'Sub licentia $1',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'campfire-page-header' => '$1 dari $2',
 );
 
 /** Italian (italiano)
@@ -185,6 +215,14 @@ $messages['nb'] = array(
 $messages['nl'] = array(
 	'campfire-page-header' => '$1 van $2',
 	'campfire-licensed-under' => 'Gelicenseerd onder $1',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'campfire-page-header' => '$1 (de $2)',
+	'campfire-licensed-under' => 'Jos licéncia $1',
 );
 
 /** Polish (polski)
@@ -262,9 +300,12 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
+ * @author SteveR
+ * @author Ua2004
  */
 $messages['uk'] = array(
 	'campfire-page-header' => '$1 з $2',
+	'campfire-licensed-under' => 'Під ліцензією $1',
 );
 
 /** Vietnamese (Tiếng Việt)

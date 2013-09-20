@@ -23,8 +23,6 @@ class SharingToolbarControllerTest extends WikiaBaseTest
 			$this->mockGlobalVariable($name, $value);
 		}
 
-		$this->mockApp();
-
 		$testController = new SharingToolbarController();
 		$this->assertEquals($testController->shareButton(), $returnValue);
 	}

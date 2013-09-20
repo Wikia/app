@@ -26,7 +26,7 @@ $messages['qqq'] = array(
  * @author Achraf94
  */
 $messages['ar'] = array(
-	'staffpowers-ipblock-abort' => 'لا يمكن منع أو حظر فريق عمل ويكيا، أو مساعدي ويكيا أو أعضاء فريق مكافحة الرسائل المزعجة (سبام). الرجاء استخدام [[خاص:Contact|نموذج الاتصال]] للإبلاغ عن أي مسائل أو مشاكل مع موظفينا.', # Fuzzy
+	'staffpowers-ipblock-abort' => 'لا يمكن منع أو حظر فريق عمل ويكيا، أو مساعدي ويكيا أو أعضاء فريق مكافحة الرسائل المزعجة (سبام). الرجاء استخدام [[Special:Contact|نموذج الاتصال]] للإبلاغ عن أي مسائل أو مشاكل مع موظفينا.',
 );
 
 /** Catalan (català)
@@ -72,6 +72,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'staffpowers-ipblock-abort' => 'Non é posible bloquear o persoal de Wikia, os axudantes de Wikia ou os nosos voluntarios da forza de loita contra o spam. Utilice o [[Special:Contact|formulario de contacto]] para informar de calquera problema co noso persoal.',
+);
+
+/** Hebrew (עברית)
+ * @author Inkbug
+ */
+$messages['he'] = array(
+	'staffpowers-ipblock-abort' => 'חסימת צוות Wikia, עוזרי Wikia, או חברים של ה־Volunteer Spam Task Force user team (VSTF) אינה אפשרית. בבקשה השתמשו [[Special:Contact|בטופס יצירת הקשר]] כדי לדווח על בעיות עם הצוות שלנו.',
 );
 
 /** Hungarian (magyar)
@@ -130,6 +137,13 @@ $messages['nl'] = array(
 	'staffpowers-ipblock-abort' => 'Het blokkeren van medewerkers van Wikia, Wikia-hulpjes of leden van ons Volunteer Spam Task Force gebruikersteam (VSTF) is niet mogelijk. Gebruik het [[Special:Contact|contactformulier]]  om problemen met onze medewerkers aan ons door te geven.',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'staffpowers-ipblock-abort' => "Blocar de membres del staff de Wikia, d'Assistents o de membres de l’equipa VSTF es pas possible. Utilizatz lo [[Special:Contact|formulari de contacte]] per senhalar tot problèma amb nòstra equipa.",
+);
+
 /** Polish (polski)
  * @author Sovq
  * @author Sp5uhe
@@ -186,6 +200,13 @@ $messages['sv'] = array(
  */
 $messages['tl'] = array(
 	'staffpowers-ipblock-abort' => 'Hindi maaari ang Pagharang sa Tauhan ng Wikia, Mga Katulong ng Wikia, o mga kasapi sa aming pangkat ng tagagamit ng Nagkukusang Loob na Puwersang Panggawaing Pambasura (Volunteer Spam Task Force o VSTF). Paki gamitin ang  [[Special:Contact|pormularyo ng pakikipag-ugnayan]] upang makapag-ulat sa aming tauhan ng anumang mga paksa o mga suliranin.',
+);
+
+/** Ukrainian (українська)
+ * @author Andriykopanytsia
+ */
+$messages['uk'] = array(
+	'staffpowers-ipblock-abort' => "Заблокувати співробітників Вікія, помічників Вікія або членів нашої команди користувачів-добровольців по боротбі з спамом (VSTF) - неможливо. Будь ласка, використовуйте  [[Special:Contact|контактну форму]], щоб повідомити про будь-яку проблему, пов'язану з нашими співробітниками.",
 );
 
 /** Vietnamese (Tiếng Việt)

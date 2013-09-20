@@ -7,8 +7,9 @@
  * 
  * @file Maps_Layer.php
  * @ingroup Maps
- * 
- * @author Jeroen De Dauw
+ *
+ * @licence GNU GPL v2+
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 abstract class MapsLayer {
 

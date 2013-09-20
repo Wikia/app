@@ -8,8 +8,10 @@ class MarketingToolboxModel extends WikiaModel {
 	const FORM_THUMBNAIL_SIZE = 149;
 	const FORM_FIELD_PREFIX = 'MarketingToolbox';
 
-	const CACHE_KEY = 'HubsV2v1.00';
+	const CACHE_KEY = 'HubsV2v1.01';
 	const CACHE_KEY_LAST_PUBLISHED_TIMESTAMP = 'lastPublishedTimestamp';
+
+	const STRTOTIME_MIDNIGHT = '00:00';
 
 	protected $statuses = array();
 	protected $modules = array();
@@ -56,14 +58,14 @@ class MarketingToolboxModel extends WikiaModel {
 		$this->modulesCount = count($this->editableModules);
 
 		$this->sections = array(
-			self::SECTION_HUBS => $this->wf->msg('marketing-toolbox-section-hubs-button')
+			self::SECTION_HUBS => wfMsg('marketing-toolbox-section-hubs-button')
 		);
 
 		$this->verticals = array(
 			self::SECTION_HUBS => array(
-				WikiFactoryHub::CATEGORY_ID_GAMING => $this->wf->msg('marketing-toolbox-section-games-button'),
-				WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => $this->wf->msg('marketing-toolbox-section-entertainment-button'),
-				WikiFactoryHub::CATEGORY_ID_LIFESTYLE => $this->wf->msg('marketing-toolbox-section-lifestyle-button'),
+				WikiFactoryHub::CATEGORY_ID_GAMING => wfMsg('marketing-toolbox-section-games-button'),
+				WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => wfMsg('marketing-toolbox-section-entertainment-button'),
+				WikiFactoryHub::CATEGORY_ID_LIFESTYLE => wfMsg('marketing-toolbox-section-lifestyle-button'),
 			)
 		);
 
@@ -99,7 +101,7 @@ class MarketingToolboxModel extends WikiaModel {
 	}
 	
 	public function getModuleName($moduleId) {
-		return $this->wf->msg('marketing-toolbox-hub-module-' . $this->modules[$moduleId]);
+		return wfMsg('marketing-toolbox-hub-module-' . $this->modules[$moduleId]);
 	}
 
 	public function getNotTranslatedModuleName($moduleId) {
@@ -107,7 +109,7 @@ class MarketingToolboxModel extends WikiaModel {
 	}
 
 	public function getCalendarData($langCode, $verticalId, $beginTimestamp, $endTimestamp) {
-		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 		$conds = array(
 			'lang_code' => $langCode,
 			'vertical_id' => $verticalId,
@@ -148,7 +150,7 @@ class MarketingToolboxModel extends WikiaModel {
 	 * @return array
 	 */
 	public function getCorporateWikisLanguages() {
-		$visualizationModel = F::build('CityVisualization');
+		$visualizationModel = new CityVisualization();
 		$wikisData = $visualizationModel->getVisualizationWikisData();
 
 		$regions = array();
@@ -172,7 +174,7 @@ class MarketingToolboxModel extends WikiaModel {
 		$videoData = array();
 		$title = Title::newFromText($fileName, NS_FILE);
 		if (!empty($title)) {
-			$file = $this->wf->findFile($title);
+			$file = wffindFile($title);
 		}
 		if (!empty($file)) {
 			$htmlParams = array(
@@ -186,7 +188,7 @@ class MarketingToolboxModel extends WikiaModel {
 
 			$videoData['videoThumb'] = $thumb->toHtml($htmlParams);
 			$videoData['videoTimestamp'] = $file->getTimestamp();
-			$videoData['videoTime'] = $this->wf->TimeFormatAgo($videoData['videoTimestamp']);
+			$videoData['videoTime'] = wfTimeFormatAgo($videoData['videoTimestamp']);
 
 			$meta = unserialize($file->getMetadata());
 			$videoData['duration'] = isset($meta['duration']) ? $meta['duration'] : null;
@@ -337,7 +339,7 @@ class MarketingToolboxModel extends WikiaModel {
 	 * @return array
 	 */
 	protected function getModuleList($langCode, $sectionId, $verticalId, $timestamp) {
-		$lastPublishTimestamp = $this->getLastPublishedTimestamp($langCode, $sectionId, $verticalId);
+		$lastPublishTimestamp = $this->getLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp);
 
 		if ($lastPublishTimestamp) {
 			$out = $this->getModulesDataFromDb($langCode, $sectionId, $verticalId, $lastPublishTimestamp);
@@ -374,7 +376,7 @@ class MarketingToolboxModel extends WikiaModel {
 	 * @param int $timestamp
 	 */
 	public function checkModulesSaved($langCode, $verticalId, $timestamp) {
-		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 		$hubDate = date('Y-m-d', $timestamp);
 
@@ -409,9 +411,9 @@ class MarketingToolboxModel extends WikiaModel {
 		$results->success = null;
 		$results->errorMsg = null;
 		
-		if( $this->wf->ReadOnly() ) {
+		if( wfReadOnly() ) {
 			$results->success = false;
-			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-read-only');
+			$results->errorMsg = wfMsg('marketing-toolbox-module-publish-error-read-only');
 
 			wfProfileOut(__METHOD__);
 			return $results;
@@ -439,13 +441,13 @@ class MarketingToolboxModel extends WikiaModel {
 		wfProfileIn(__METHOD__);
 		if( !$this->checkModulesSaved($langCode, $verticalId, $timestamp) ) {
 			$results->success = false;
-			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-modules-not-saved');
+			$results->errorMsg = wfMsg('marketing-toolbox-module-publish-error-modules-not-saved');
 
 			wfProfileOut(__METHOD__);
 			return;
 		}
 
-		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$mdb = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 		$hubDate = date('Y-m-d', $timestamp);
 
 		$changes = array(
@@ -465,7 +467,7 @@ class MarketingToolboxModel extends WikiaModel {
 			$results->success = true;
 		} else {
 			$results->success = false;
-			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-db-error');
+			$results->errorMsg = wfMsg('marketing-toolbox-module-publish-error-db-error');
 		}
 
 		$actualPublishedTimestamp = $this->getLastPublishedTimestamp($langCode, self::SECTION_HUBS, $verticalId);
@@ -488,7 +490,7 @@ class MarketingToolboxModel extends WikiaModel {
 	 * @return array
 	 */
 	protected function getModulesDataFromDb($langCode, $sectionId, $verticalId, $timestamp, $moduleId = null) {
-		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 		$conds = array(
 			'lang_code' => $langCode,
 			'vertical_id' => $verticalId,
@@ -550,8 +552,8 @@ class MarketingToolboxModel extends WikiaModel {
 	 *
 	 */
 	public function saveModule($langCode, $sectionId, $verticalId, $timestamp, $moduleId, $data, $editorId) {
-		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
-		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		$mdb = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 		$updateData = array(
 			'module_data' => json_encode($data),
@@ -594,11 +596,11 @@ class MarketingToolboxModel extends WikiaModel {
 		if ($timestamp === null) {
 			$timestamp = time();
 		}
-		$timestamp = strtotime('00:00', $timestamp);
+		$timestamp = strtotime(self::STRTOTIME_MIDNIGHT, $timestamp);
 
-		if ($timestamp == strtotime('00:00')) {
+		if ($timestamp == strtotime(self::STRTOTIME_MIDNIGHT)) {
 			$lastPublishedTimestamp = WikiaDataAccess::cache(
-				$this->getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId),
+				$this->getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp),
 				6 * 60 * 60,
 				function () use ($langCode, $sectionId, $verticalId, $timestamp, $useMaster) {
 					return $this->getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp, $useMaster);
@@ -612,11 +614,11 @@ class MarketingToolboxModel extends WikiaModel {
 	}
 
 	protected function purgeLastPublishedTimestampCache($langCode, $sectionId, $verticalId) {
-		$this->wg->Memc->delete($this->getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId));
+		$this->wg->Memc->delete($this->getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId, strtotime(self::STRTOTIME_MIDNIGHT)));
 	}
 
 	public function getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp, $useMaster = false) {
-		$sdb = $this->wf->GetDB(
+		$sdb = wfGetDB(
 			($useMaster) ? DB_MASTER : DB_SLAVE,
 			array(),
 			$this->wg->ExternalSharedDB
@@ -647,7 +649,8 @@ class MarketingToolboxModel extends WikiaModel {
 	 * @return String
 	 */
 	public function getHubUrl($langCode, $verticalId) {
-		$wikiId = WikiaHubsServicesHelper::getCorporateWikiIdByLang($langCode);
+		$corporateModel = new WikiaCorporateModel();
+		$wikiId = $corporateModel->getCorporateWikiIdByLang($langCode);
 		$hubName = WikiaHubsServicesHelper::getHubName($wikiId, $verticalId);
 
 		$title = GlobalTitle::newFromText($hubName, NS_MAIN, $wikiId);
@@ -701,12 +704,13 @@ class MarketingToolboxModel extends WikiaModel {
 		return $table;
 	}
 
-	protected function getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId) {
-		return F::app()->wf->SharedMemcKey(
+	protected function getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp) {
+		return wfSharedMemcKey(
 			self::CACHE_KEY,
 			$langCode,
 			$sectionId,
 			$verticalId,
+			$timestamp,
 			self::CACHE_KEY_LAST_PUBLISHED_TIMESTAMP
 		);
 	}

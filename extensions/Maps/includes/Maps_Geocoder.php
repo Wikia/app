@@ -7,8 +7,9 @@
  * 
  * @file Maps_Geocoder.php
  * @ingroup Maps
- * 
- * @author Jeroen De Dauw
+ *
+ * @licence GNU GPL v2+
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 abstract class MapsGeocoder {
 
@@ -46,7 +47,7 @@ abstract class MapsGeocoder {
 	 * 
 	 * @since 0.7
 	 * 
-	 * @param string $address
+	 * @param string $response
 	 * 
 	 * @return array
 	 */	
@@ -89,7 +90,9 @@ abstract class MapsGeocoder {
 	 * Returns if the geocoder has a certain alias.
 	 * 
 	 * @since 0.7
-	 * 
+	 *
+	 * @param string $alias
+	 *
 	 * @return boolean
 	 */
 	public function hasAlias( $alias ) {

@@ -1,6 +1,5 @@
 <?php
 
-$app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 $wgExtensionCredits['specialpage'][] = array(
@@ -12,7 +11,7 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $wgExtensionMessagesFiles['VisualStatsAliases'] = $dir . 'VisualStats.alias.php';
 
-$app->registerClass('VisualStats', $dir . 'VisualStats.class.php');
-$app->registerClass('VisualStatsSpecialController', $dir . 'VisualStatsSpecialController.class.php');
-$app->registerSpecialPage('VisualStats', 'VisualStatsSpecialController');
-$app->registerExtensionMessageFile('VisualStats', $dir . 'VisualStats.i18n.php');
+$wgAutoloadClasses['VisualStats'] =  $dir . 'VisualStats.class.php';
+$wgAutoloadClasses['VisualStatsSpecialController'] =  $dir . 'VisualStatsSpecialController.class.php';
+$wgSpecialPages['VisualStats'] = 'VisualStatsSpecialController';
+$wgExtensionMessagesFiles['VisualStats'] = $dir . 'VisualStats.i18n.php';

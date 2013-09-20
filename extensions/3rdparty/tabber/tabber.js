@@ -297,8 +297,6 @@ tabberObj.prototype.init = function(e)
 		this.onLoad({tabber:this});
 	}
 
-	$(".wikiahubs-newstabs").click(this.clickTrackingHandler);
-
 	return this;
 };
 

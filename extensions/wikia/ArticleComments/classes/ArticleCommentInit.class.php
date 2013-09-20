@@ -355,9 +355,9 @@ class ArticleCommentInit {
 
 	//when comments are enabled on the current namespace make the WikiaMobile skin enriched assets
 	//while keeping the response size (assets minification) and the number of external requests low (aggregation)
-	static public function onWikiaMobileAssetsPackages( Array &$jsHeadPackages, Array &$jsBodyPackages, Array &$scssPackages ){
+	static public function onWikiaMobileAssetsPackages( Array &$jsStaticPackages, Array &$jsExtensionPackages, Array &$scssPackages ){
 		if ( self::ArticleCommentCheck() ) {
-			$jsBodyPackages[] = 'articlecomments_init_js_wikiamobile';
+			$jsExtensionPackages[] = 'articlecomments_init_js_wikiamobile';
 		}
 
 		return true;
@@ -382,7 +382,7 @@ class ArticleCommentInit {
 		if ( $ns == NS_TALK && ArticleComment::isTitleComment( $title ) ) {
 			$parentTitle = reset( explode( '/', $element->page_title) ); // getBaseText returns me parent comment for subcomment
 
-			$link = $app->wf->MsgExt(
+			$link = wfMsgExt(
 				'article-comments-file-page',
 				array ('parsemag'),
 				$title->getLocalURL(),
@@ -397,7 +397,7 @@ class ArticleCommentInit {
 			$titleNames = explode( '/', $baseText );
 			$userBlog = Title::newFromText( $titleNames[0], NS_BLOG_ARTICLE );
 
-			$link = $app->wf->MsgExt(
+			$link = wfMsgExt(
 				'article-blog-comments-file-page',
 				array ('parsemag'),
 				$title->getLocalURL(),
@@ -430,7 +430,7 @@ class ArticleCommentInit {
 	
 	public static function getCommentByAnonMsg() {
 		if( is_null(self::$commentByAnonMsg) ) {
-			self::$commentByAnonMsg = F::app()->wf->Message( 'article-comments-anonymous' )->text();
+			self::$commentByAnonMsg = wfMessage( 'article-comments-anonymous' )->text();
 		}
 		
 		return self::$commentByAnonMsg;

@@ -34,4 +34,4 @@ $wgGroupPermissions['staff']['commentcsv'] = true;
 
 $wgAutoloadClasses['CommentCSV'] = $dir . '/CommentCSV.class.php';
 
-$wgHooks['UnknownAction'][] = array( 'CommentCSV::onCommentCSVDownload' );
+$wgHooks['UnknownAction'][] = 'CommentCSV::onCommentCSVDownload';

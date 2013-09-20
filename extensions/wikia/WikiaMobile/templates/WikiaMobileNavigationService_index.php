@@ -39,30 +39,27 @@
 	<div id=wkSrh>
 		<form id=wkSrhFrm action="<?= SpecialPage::getSafeTitleFor( 'Search' )->getLocalURL(); ?>" method=get class=wkForm>
 			<input type=hidden name=fulltext value=Search>
-			<input id=wkSrhInp type=text name=search placeholder="<?= $wf->Msg( 'wikiamobile-search-this-wiki' ); ?>" value="<?= $wg->request->getVal( 'search', '' ); ?>" required=required autocomplete=off autofocus>
+			<input id=wkSrhInp type=text name=search placeholder="<?= wfMessage( 'wikiamobile-search-this-wiki')->text(); ?>" value="<?= $wg->request->getVal( 'search', '' ); ?>" required=required autocomplete=off autofocus>
 			<div id=wkClear class='clsIco hide'></div>
-			<input id=wkSrhSub class='wkBtn main' type=submit value='<?= $wf->Msg( 'wikiamobile-search' ); ?>'>
+			<input id=wkSrhSub class='wkBtn main' type=submit value='<?= wfMessage( 'wikiamobile-search' )->text(); ?>'>
 		</form>
 		<ul id=wkSrhSug class=wkLst></ul>
 	</div>
-	<div id=wkNav>
-		<header class="wkPrfHead up"><?= $wf->Msg('wikiamobile-menu') ?></header>
-		<nav id=wkWikiNav></nav>
-	</div>
+	<div id=wkNav></div>
 	<? if ( $wg->EnableUserLoginExt ) : ?>
 	<div id=wkPrf>
 		<header class="wkPrfHead<?= ( !$loggedIn ) ? ' up' : '' ?>">
 		<? if( $loggedIn ) {
 			echo $userName;
 		} else {
-			echo $wf->Msg( 'userlogin-login-heading' );
+			echo wfMessage( 'userlogin-login-heading' )->text();
 		}
 		?>
 		</header>
 	<? if ( $loggedIn ) :?>
 		<ul class=wkLst>
-			<li><a class=chg href="<?= AvatarService::getUrl( $userName ) ;?>"><?= $wf->Msg( 'wikiamobile-profile' ); ?></a></li>
-			<li><a class=logout href="<?= str_replace( "$1", SpecialPage::getSafeTitleFor( 'UserLogout' )->getPrefixedText() . '?returnto=' . $wg->Title->getPrefixedURL(), $wg->ArticlePath ) ;?>"><?= $wf->Msg('logout'); ?></a></li>
+			<li><a class=chg href="<?= AvatarService::getUrl( $userName ) ;?>"><?= wfMsg( 'wikiamobile-profile' ); ?></a></li>
+			<li><a class=logout href="<?= str_replace( "$1", SpecialPage::getSafeTitleFor( 'UserLogout' )->getPrefixedText() . '?returnto=' . $wg->Title->getPrefixedURL(), $wg->ArticlePath ) ;?>"><?= wfMsg('logout'); ?></a></li>
 		</ul>
 	<? endif; ?>
 	</div>

@@ -33,7 +33,7 @@ class WikiaView {
 	 * @param string $format
 	 */
 	public static function newFromControllerAndMethodName( $controllerName, $methodName, Array $data = array(), $format = WikiaResponse::FORMAT_HTML ) {
-		$response = F::build( 'WikiaResponse', array( $format ) );
+		$response = new WikiaResponse( $format );
 		$response->setControllerName( $controllerName );
 		$response->setMethodName( $methodName );
 		$response->setData( $data );
@@ -92,8 +92,8 @@ class WikiaView {
 	protected function buildTemplatePath( $controllerClass, $methodName, $forceRebuild = false ) {
 		wfProfileIn(__METHOD__);
 		if( ( $this->templatePath == null ) || $forceRebuild ) {
+			global $wgAutoloadClasses;
 			$app = F::app();
-			$autoloadClasses = $app->wg->AutoloadClasses;
 
 			if ( !empty( $this->response ) ) {
 				$extension = $this->response->getTemplateEngine();
@@ -109,12 +109,12 @@ class WikiaView {
 				$controllerClass = $app->getControllerClassName( $controllerBaseName );
 			}
 
-			if( empty( $autoloadClasses[$controllerClass] ) ) {
+			if( empty( $wgAutoloadClasses[$controllerClass] ) ) {
 				throw new WikiaException( "Invalid controller or service name: {$controllerClass}" );
 			}
 
 			// First we look for BaseName_MethodName
-			$dirName = dirname( $autoloadClasses[$controllerClass] );
+			$dirName = dirname( $wgAutoloadClasses[$controllerClass] );
 			$basePath = "{$dirName}/templates/{$controllerBaseName}_{$methodName}";
 			$templatePath = "{$basePath}.$extension";
 			$templateExists = file_exists( $templatePath );

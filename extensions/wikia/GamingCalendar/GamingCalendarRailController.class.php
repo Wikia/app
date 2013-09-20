@@ -13,7 +13,7 @@ class GamingCalendarRailController extends WikiaController {
 		F::app()->wg->out->addScript( "<script src=\"{$extPath}/wikia/GamingCalendar/js/GamingCalendar.js\"></script>" );
 		F::app()->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/GamingCalendar/css/GamingCalendar.scss' ) );
 		$catName = WikiFactoryHub::getInstance()->getCategoryName($wgCityId);
-		$this->moduleTitle = F::app()->wf->msgForContent( 'gamingcalendar-heading', $catName );
+		$this->moduleTitle = wfMsgForContent( 'gamingcalendar-heading', $catName );
 		wfProfileOut( __METHOD__ );
     }
     

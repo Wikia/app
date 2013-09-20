@@ -49,7 +49,7 @@
 			<label><?= wfMsg('wikifeatures-feedback-type-label') ?></label>
 			<select name="feedback">
 			<?php foreach (WikiFeaturesHelper::$feedbackCategories as $i => $cat) {
-				echo "<option value=\"$i\">{$wf->Msg($cat['msg'])}</option>";
+				echo "<option value=\"$i\">".wfMsg($cat['msg'])."</option>";
 			} ?>
 			</select>
 		</div>

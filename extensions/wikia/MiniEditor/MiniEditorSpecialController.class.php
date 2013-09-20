@@ -15,7 +15,7 @@ class MiniEditorSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		$this->wg->Out->setPageTitle( $this->wf->msg( 'minieditor-specialpage-title' ) );
+		$this->wg->Out->setPageTitle( wfMsg( 'minieditor-specialpage-title' ) );
 
 		if ( !$this->wg->User->isAllowed( 'minieditor-specialpage' ) ) {
 			$this->displayRestrictionError();

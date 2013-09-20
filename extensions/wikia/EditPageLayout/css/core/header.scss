@@ -1,4 +1,4 @@
-#EditPageHeader {
+.EditPageHeader {
 	@include box-shadow(0, -4px, 2px, $color-epl-header-shadow, true, 0);
 	background-color: $color-epl-header;
 	border-bottom: 1px solid $color-page-border;
@@ -22,6 +22,7 @@
 			max-height: $height-epl-header;
 		}
 	}
+
 	> h2 {
 		color: $color-epl-header-text;
 		font-size: 14px;
@@ -30,13 +31,17 @@
 		margin: 0;
 		padding: 0;
 	}
+
 	> h1 {
 		display: inline-block;
 		float: left;
 		font-size: 19px;
 		line-height: 17px;
+		overflow: hidden;
 		padding: 0;
-		zoom: 1; // ie
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 300px;
 		> a {
 			color: $color-epl-header-text;
 		}
@@ -47,7 +52,7 @@
 }
 
 // "edit title" button
-#EditPageTitle {
+.EditPageTitle {
 	cursor: pointer;
 	display: none;
 	font-size: 11px;
@@ -60,14 +65,14 @@
 }
 
 // JS enabled pencil button - it should only be visible when hovered over #EditPageHeader
-#EditPageHeader:hover {
+.EditPageHeader:hover {
 	> #EditPageTitle.enabled {
 		display: inline;
 	}
 }
 
-/* Need [Help]? */
-#HelpLink {
+// Need [Help]?
+.HelpLink {
 	bottom: 25px;
 	color: $color-epl-header-text;
 	position: absolute;
@@ -77,8 +82,8 @@
 	}
 }
 
-/* (X) notifications */
-#NotificationsLink {
+// (X) notifications
+.NotificationsLink {
 	bottom: 5px;
 	line-height: 13px;
 	position: absolute;

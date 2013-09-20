@@ -310,7 +310,7 @@ class CategoryExhibitionSection {
 		}
 
 		$oMemCache = F::App()->wg->memc;
-		$sKey = F::App()->wf->sharedMemcKey(
+		$sKey = wfSharedMemcKey(
 			'category_exhibition_category_cache_1',
 			$pageId,
 			F::App()->wg->cityId,

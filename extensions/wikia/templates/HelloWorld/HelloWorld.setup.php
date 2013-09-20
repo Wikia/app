@@ -6,39 +6,38 @@
  *
  */
 
-$app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 /**
  * classes
  */
-$app->registerClass('HelloWorld', $dir . 'HelloWorld.class.php');
+$wgAutoloadClasses['HelloWorld'] =  $dir . 'HelloWorld.class.php';
 
 /**
  * hooks
  */
-//$app->registerHook('OutputPageBeforeHTML', 'HelloWorld', 'onOutputPageBeforeHTML');
+//$wgHooks['OutputPageBeforeHTML'][] = 'HelloWorld::onOutputPageBeforeHTML';
 
 /**
  * controllers
  */
-$app->registerClass('HelloWorldController', $dir . 'HelloWorldController.class.php');
-$app->registerClass('HelloWorldSpecialController', $dir . 'HelloWorldSpecialController.class.php');
+$wgAutoloadClasses['HelloWorldController'] =  $dir . 'HelloWorldController.class.php';
+$wgAutoloadClasses['HelloWorldSpecialController'] =  $dir . 'HelloWorldSpecialController.class.php';
 
 /**
  * special pages
  */
-$app->registerSpecialPage('HelloWorld', 'HelloWorldSpecialController');
+$wgSpecialPages['HelloWorld'] = 'HelloWorldSpecialController';
 
 /**
  * message files
  */
-$app->registerExtensionMessageFile('HelloWorld', $dir . 'HelloWorld.i18n.php');
+$wgExtensionMessagesFiles['HelloWorld'] = $dir . 'HelloWorld.i18n.php';
 
 /**
  * setup functions
  */
-$app->registerExtensionFunction('wfExtensionInit');
+$wgExtensionFunctions[] = 'wfExtensionInit';
 
 function wfExtensionInit() {
 	// place extension init stuff here

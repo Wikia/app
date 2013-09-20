@@ -10,7 +10,7 @@ $messages['en'] = array(
 	'imgplc-notinhistory-video' => 'You cannot add a video in history mode.',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author Shirayuki
  */
 $messages['qqq'] = array(
@@ -77,6 +77,18 @@ $messages['br'] = array(
 	'imgplc-image' => 'Skeudenn',
 	'imgplc-notinhistory' => "Ne c'helloc'h ket ouzhpennañ poltriji er mod istor.",
 	'imgplc-notinhistory-video' => "Ne c'helloc'h ket ouzhpennañ videoioù er mod istor.",
+);
+
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'imgplc-add-image' => 'Afegir imatge',
+	'imgplc-add-video' => 'Afegir vídeo',
+	'imgplc-placeholder' => 'Posicionador',
+	'imgplc-image' => 'Imatge',
+	'imgplc-notinhistory' => 'No es pot afegir una imatge en el mode historial.',
+	'imgplc-notinhistory-video' => 'No es pot afegir un vídeo en el mode historial.',
 );
 
 /** Czech (česky)
@@ -168,6 +180,15 @@ $messages['fi'] = array(
 	'imgplc-notinhistory' => 'Et voi lisätä kuvaa historiatilassa.',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'imgplc-add-image' => 'Legg afturat mynd',
+	'imgplc-add-video' => 'Legg afturat video',
+	'imgplc-image' => 'Mynd',
+);
+
 /** French (français)
  * @author Gomoko
  * @author Peter17
@@ -196,13 +217,16 @@ $messages['gl'] = array(
 
 /** Hebrew (עברית)
  * @author 0ftal
+ * @author Inkbug
  * @author שומבלע
  */
 $messages['he'] = array(
 	'imgplc-add-image' => 'הוסף תמונה',
+	'imgplc-add-video' => 'הוסף וידאו',
 	'imgplc-placeholder' => 'מציין מיקום',
 	'imgplc-image' => 'תמונה',
 	'imgplc-notinhistory' => 'לא ניתן להוסיף תמונה במצב היסטוריה.',
+	'imgplc-notinhistory-video' => 'לא ניתן להוסיף וידאו במצב היסטוריה.',
 );
 
 /** Upper Sorbian (hornjoserbsce)
@@ -236,6 +260,15 @@ $messages['ia'] = array(
 	'imgplc-notinhistory' => 'Non es possibile adder imagines in modo de historia.',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'imgplc-add-video' => 'Tambahkan Video',
+	'imgplc-notinhistory' => 'Anda tidak dapat menambahkan sebuah gambar pada mode riwayat.',
+	'imgplc-notinhistory-video' => 'Anda tidak dapat menambahkan sebuah video pada mode riwayat.',
+);
+
 /** Italian (italiano)
  * @author Pietrodn
  */
@@ -260,12 +293,13 @@ $messages['ja'] = array(
 
 /** Korean (한국어)
  * @author 아라
+ * @author 한글화담당
  */
 $messages['ko'] = array(
 	'imgplc-add-image' => '그림 추가',
 	'imgplc-placeholder' => '플레이스홀더',
 	'imgplc-image' => '그림',
-	'imgplc-notinhistory' => '역사 모드에서 그림을 더할 수 없습니다.',
+	'imgplc-notinhistory' => '역사 모드에서 그림을 추가할 수 없습니다.',
 );
 
 /** Colognian (Ripoarisch)
@@ -290,9 +324,18 @@ $messages['ku-latn'] = array(
  */
 $messages['lb'] = array(
 	'imgplc-add-image' => 'Bild derbäisetzen',
+	'imgplc-add-video' => 'Video derbäisetzen',
 	'imgplc-placeholder' => 'Reservéiert Plaz',
 	'imgplc-image' => 'Bild',
 	'imgplc-notinhistory' => 'Dir kënnt am Historique Modus kee Bild derbäisetzen',
+);
+
+/** Lithuanian (lietuvių)
+ * @author Mantak111
+ */
+$messages['lt'] = array(
+	'imgplc-add-image' => 'Pridėti vaizdą',
+	'imgplc-add-video' => 'Pridėti Video',
 );
 
 /** Macedonian (македонски)
@@ -416,9 +459,11 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
  */
 $messages['pt'] = array(
 	'imgplc-add-image' => 'Adicionar Imagem',
+	'imgplc-add-video' => 'Adicionar vídeo',
 	'imgplc-placeholder' => 'Espaço reservado',
 	'imgplc-image' => 'Imagem',
 	'imgplc-notinhistory' => 'Não pode adicionar uma imagem no modo histórico.',
@@ -517,11 +562,16 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
 	'imgplc-add-image' => 'Додати зображення',
+	'imgplc-add-video' => 'Додати відео',
+	'imgplc-placeholder' => 'Заповнювач',
 	'imgplc-image' => 'Зображення',
+	'imgplc-notinhistory' => 'Не можна додати зображення в режимі історії.',
+	'imgplc-notinhistory-video' => 'Не можна додати відео в режимі історії.',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -540,4 +590,12 @@ $messages['zh-hans'] = array(
 	'imgplc-image' => '照片',
 	'imgplc-notinhistory' => '您不能在历史模式中添加图片。',
 	'imgplc-notinhistory-video' => '您不能在历史模式中添加视频。',
+);
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Tcshek
+ */
+$messages['zh-hk'] = array(
+	'imgplc-add-image' => '加入圖像',
+	'imgplc-image' => '圖像',
 );

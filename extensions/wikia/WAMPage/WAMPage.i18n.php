@@ -48,7 +48,7 @@ Please contact community support at [mailto:support@wikia-inc.com support@wikia-
 	'wam-index-header-admins' => 'Admins',
 	'wampage-breadcrumb-back-to-wam' => 'WAM Score',
 	'wam-index-header-peak-rank' => 'Peak Rank',
-	'wam-index-no-results' => 'No Results Found',
+	'wam-index-no-results' => 'The wiki you searched for is not in the top 5000 for the date you selected. WAM rankings are updated daily, so check back frequently. [mailto:support@wikia-inc.com Contact Wikia Community Support] if you have any questions.',
 	'wam-index-filter-search-placeholder' => 'Search',
 	'wam-index-filter-sort-label' => 'Vertical',
 	'wam-index-filter-date-label' => 'Date',
@@ -62,7 +62,8 @@ $messages['qqq'] = array(
 	'wampage-header-faq' => 'Header of the /wam/faq page on corporate wiki',
 	'wampage-content' => 'Content of the /wam page on corporate wiki',
 	'wampage-faq' => 'Content of the /wam/faq page on corporate wiki',
-	'wampage-breadcrumb-back-to-wam' => 'Content of an anchor which goes back to WAM page on corporate wiki. There is a "<" sign before this text.'
+	'wampage-breadcrumb-back-to-wam' => 'Content of an anchor which goes back to WAM page on corporate wiki. There is a "<" sign before this text.',
+	'wam-index-no-results' => 'Information displayed in the table when there are no results found. It contains link to e-mail address of our support team',
 );
 
 
@@ -108,7 +109,7 @@ Veuillez contacter le support de la communauté via [mailto:support@wikia-inc.co
 	'wam-index-header-admins' => 'Administrateurs',
 	'wampage-breadcrumb-back-to-wam' => 'Classement WAM',
 	'wam-index-header-peak-rank' => 'Pos. max. atteinte',
-	'wam-index-no-results' => 'Aucun résultat trouvé',
+	'wam-index-no-results' => 'Le wiki que vous recherchez ne se trouve pas dans le top 5000 à la date indiquée. Le classement WAM est actualisé tous les jours, aussi revenez vérifier régulièrement. [mailto:support@wikia-inc.com Contactez le support de la communauté Wikia] si vous avez des questions.',
 	'wam-index-filter-search-placeholder' => 'Rechercher',
 	'wam-index-filter-sort-label' => 'Thème',
 	'wam-index-filter-date-label' => 'Date',
@@ -166,7 +167,7 @@ Dem Community-Team unter [mailto:support@wikia-inc.com support@wikia-inc.com].',
 	'wam-index-header-admins' => 'Admins',
 	'wampage-breadcrumb-back-to-wam' => 'WAM-Punktzahl',
 	'wam-index-header-peak-rank' => 'Höchster Rang',
-	'wam-index-no-results' => 'Keine Ergebnisse gefunden',
+	'wam-index-no-results' => 'Das von dir ausgesuchte Wiki ist zu dem von dir ausgewähltem Datum nicht in den Top-5000 vertreten. Die WAM-Rangfolge wird täglich neu berechnet - schau also bald noch mal vorbei. Bitte [mailto:support@wikia-inc.com kontaktiere den Community-Support von Wikia], wenn du offene Fragen hast.',
 	'wam-index-filter-search-placeholder' => 'Suche',
 	'wam-index-filter-sort-label' => 'Hub',
 	'wam-index-filter-date-label' => 'Datum',
@@ -218,11 +219,56 @@ Por favor, ponte en contacto con el equipo de soporte comunitario en [mailto:sup
 	'wam-index-header-admins' => 'Administradores',
 	'wampage-breadcrumb-back-to-wam' => 'Puntuación WAM',
 	'wam-index-header-peak-rank' => 'Puesto más alto',
-	'wam-index-no-results' => 'No se encontraron resultados',
+	'wam-index-no-results' => 'El wiki que buscas no se encuentra entre los 5000 mejores wikis en la fecha que seleccionaste. La puntuación en WAM se actualiza diariamente, así que no olvides revisarla con frecuencia. [mailto:support@wikia-inc.com Contacta con el equipo de soporte comunitario de Wikia] si tienes cualquier pregunta.',
 	'wam-index-filter-search-placeholder' => 'Buscar',
 	'wam-index-filter-sort-label' => 'Categoría',
 	'wam-index-filter-date-label' => 'Fecha',
 	'wam-index-filter-lang-label' => 'Idioma',
 	'wam-index-filter-language-default' => 'Todos',
 	'wam-index-filter-vertical-default' => 'Todas',
+);
+
+$messages['pl'] = array(
+	'wampage-header' => 'WAM',
+	'wam-Gaming' => 'Gry',
+	'wam-Entertainment' => 'Rozrywka',
+	'wam-Lifestyle' => 'Lifestyle',
+	'wampage-header-wam' => 'Co to jest WAM?',
+	'wampage-header-faq' => 'FAQ',
+	'wampage-content' => 'Wikia Activity Monitor (WAM) to wskaźnik stanu wiki. Został stworzony przez Wikię aby uchwycić szereg niezależnych informacji dotyczących danej wiki w jednym indeksie.
+
+WAM aktualizowany jest codziennie, a 5000 najwyżej ocenionych wiki dodawanych jest do rankingu ogólnego i rankingów dla odrębnych kategorii. Pozycja w rankingu zależy od wielu czynników, które nieustannie się zmieniają, więc aby być na bieżąco z aktualnymi trendami, należy regularnie śledzić ranking. Odwiedź 3 huby - [[Gry]], [[Rozrywka]] i [[Lifestyle]] - aby dowiedzieć się więcej o wiki z poszczególnych kategorii.
+
+[[$1|FAQ]]',
+	'wampage-faq' => '__NOTOC____NOEDITSECTION__===Jak liczony jest WAM?===
+	WAM to wypadkowa liczby odwiedzających, edytorów i edycji na wiki. Nie chcemy zdradzać zbyt wielu szczegółów, gdyż nie chcemy aby edytorzy próbowali bezpośrednio wpływać na wyniki. Zapewniamy jednak, że wliczone zostały wszystkie czynniki pozwalające poprawnie ocenić aktywne projekty.
+===Czemu powinno mnie to interesować?===
+	Na Wikii wierzymy, że wiedza to siła. Zawsze staraliśmy się otwarcie publikować dostępne statystyki i dane - WAM reprezentuje krok naprzód w sposobie porównywania społeczności Wikii. Stanowić może ważne źródło informacji dla założycieli, administratorów i edytorów. Może także pomóc w zidentyfikowaniu istotnych zmian, które wpływają na pozycję w rankingu.
+===Jak polepszyć pozycję WAM?===
+	WAM to skomplikowany algorytm i nie ma jednego, prostego sposobu aby natychmiastowo podnieść pozycję wiki w rankingu. Są jednak kroki, które można podjąć aby przybliżyć ten cel. Sugerujemy [[w:c:spolecznosc:Blog_użytkownika:Sovq/Daj_innym_się_znaleźć|rozpocząć od przyciągnięcia nowych czytelników]]. Wiki mające dużą liczbę aktywnych edytorów i edycji mają lepszą ocenę WAM. Nie należy jednak próbować "oszukać" tego mechanizmu. Im bardziej wartościowa jest zawartość wiki, tym większa szansa na to, że znajdzie dużą liczbę czytelników.
+
+	Zachęcamy także do [[w:c:spolecznosc:Pomoc:Zawartość|zapoznania się ze stronami pomocy]], które pomogą zrozumieć jakie zmiany mogą być korzystne dla wiki, jak komunikować się z innymi edytorami i czego na wiki brakuje.
+===Kiedy rozpoczęto liczenie WAM?===
+	WAM jest liczony od 1 stycznia 2012.
+===Gdzie znaleźć WAM?===
+	Można go zaleźć na tej stronie, na stronach hubów - [[w:c:pl:Gry|Gry]], [[w:c:pl:Rozrywka|Rozrywka]] i [[w:c:pl:Lifestyle|Lifestyle]] i w podglądzie poszczególnych wiki na stronie głównej Wikii.
+===Czy mogę publikować punktację WAM na mojej wiki?===
+	Tak. Zachęcamy użytkowników do publikacji punktacji na wiki, jednak prosimy o dodanie linka zwrotnego do strony rankingu.
+===Gdzie mogę dowiedzieć się więcej?===
+	Skontaktuj się z nami poprzez [mailto:support@wikia-inc.com support@wikia-inc.com].',
+	'wam-index-header-rank' => 'Pozycja',
+	'wam-index-header-score' => 'Punktacja WAM',
+	'wam-index-header-wiki-name' => 'URL Wiki',
+	'wam-index-header-vertical' => 'Kategoria',
+	'wam-index-header-vertical-rank' => 'Pozycja w kategorii',
+	'wam-index-header-admins' => 'Administratorzy',
+	'wampage-breadcrumb-back-to-wam' => 'Punktacja WAM',
+	'wam-index-header-peak-rank' => 'Najwyższa pozycja',
+	'wam-index-no-results' => 'Brak wyników',
+	'wam-index-filter-search-placeholder' => 'Szukaj',
+	'wam-index-filter-sort-label' => 'Kategoria',
+	'wam-index-filter-date-label' => 'Data',
+	'wam-index-filter-lang-label' => 'Język',
+	'wam-index-filter-language-default' => 'Wszystkie',
+	'wam-index-filter-vertical-default' => 'Wszystkie',
 );

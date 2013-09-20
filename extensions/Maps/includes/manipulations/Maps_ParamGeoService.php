@@ -9,8 +9,9 @@
  * @file Maps_ParamGeoService.php
  * @ingroup Maps
  * @ingroup ParameterManipulations
- * 
- * @author Jeroen De Dauw
+ *
+ * @licence GNU GPL v2+
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class MapsParamGeoService extends ItemParameterManipulation {
 	
@@ -37,11 +38,11 @@ class MapsParamGeoService extends ItemParameterManipulation {
 	 * @since 0.7.5
 	 */	
 	public function doManipulation( &$value, Parameter $parameter, array &$parameters ) {
-		global $egMapsDefaultGeoService, $egMapsUserGeoOverrides;
+		global $egMapsDefaultGeoService;
 		static $validatedDefault = false;		
 
 		if ( !MapsGeocoders::canGeocode() ) {
-			throw new Exception( 'There are no geocoders registered, so no geocoding can happen.' );
+			throw new MWException( 'There are no geocoders registered, so no geocoding can happen.' );
 		}
 		
 		// Get rid of any aliases.
@@ -57,9 +58,11 @@ class MapsParamGeoService extends ItemParameterManipulation {
 		if ( $value === '' || !array_key_exists( $value, MapsGeocoders::$registeredGeocoders ) ) {
 			if ( !$validatedDefault ) {
 				if ( !array_key_exists( $egMapsDefaultGeoService, MapsGeocoders::$registeredGeocoders ) ) {
-					$egMapsDefaultGeoService = array_shift( array_keys( MapsGeocoders::$registeredGeocoders ) );
+					$geoServices = array_keys( MapsGeocoders::$registeredGeocoders );
+					$egMapsDefaultGeoService = array_shift( $geoServices );
+
 					if ( is_null( $egMapsDefaultGeoService ) ) {
-						throw new Exception( 'Tried to geocode while there are no geocoders available at ' . __METHOD__  );
+						throw new MWException( 'Tried to geocode while there are no geocoders available at ' . __METHOD__  );
 					}
 				}
 			}
@@ -68,7 +71,7 @@ class MapsParamGeoService extends ItemParameterManipulation {
 				$value = $egMapsDefaultGeoService;
 			}
 			else {
-				throw new Exception( 'Attempt to use the default geocoder while it does not exist.' );
+				throw new MWException( 'Attempt to use the default geocoder while it does not exist.' );
 			}
 		}		
 	}

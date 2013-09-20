@@ -18,15 +18,15 @@ class ScreenplayVideoHandler extends VideoHandler {
 
 		if ( $app->checkSkin( 'wikiamobile' ) ) {
 			$url = $this->getEmbedUrl();
-			$fileObj = $app->wf->FindFile( $this->getTitle() );
+			$fileObj = wfFindFile( $this->getTitle() );
 			$poster = '';
 
 			if ( $fileObj instanceof File ) {
 				$thumb = $fileObj->transform( array( 'width' => $width, 'height' => $height ) );
-				$poster = ' poster="' . $app->wf->ReplaceImageServer( $thumb->getUrl(), $fileObj->getTimestamp() ) . '"';
+				$poster = ' poster="' . wfReplaceImageServer( $thumb->getUrl(), $fileObj->getTimestamp() ) . '"';
 			}
 
-			$result = '<video controls ' . $poster . '><source src="' . $url . '">' . $app->wf->Msg( 'wikiamobile-unsupported-video-download', $url ) . '</video>';
+			$result = array( 'html' => '<video controls ' . $poster . '><source src="' . $url . '">' . wfMsg( 'wikiamobile-unsupported-video-download', $url ) . '</video>' );
 		} else {
 			$metadata = $this->getMetadata( true );
 			$file = $this->getStreamUrl( $metadata );

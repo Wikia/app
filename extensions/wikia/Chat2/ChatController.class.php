@@ -6,7 +6,7 @@ class ChatController extends WikiaController {
 	const CHAT_AVATAR_DIMENSION = 41;
 
 	public function executeIndex() {
-		global $wgUser, $wgDevelEnvironment, $wgRequest, $wgCityId, $wgFavicon, $wgOut;
+		global $wgUser, $wgFavicon, $wgOut, $wgHooks, $wgSitename;
 		wfProfileIn( __METHOD__ );
 
 		// String replacement logic taken from includes/Skin.php
@@ -15,18 +15,19 @@ class ChatController extends WikiaController {
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 
 		// add messages (fetch them using <script> tag)
-		F::build('JSMessages')->enqueuePackage('Chat', JSMessages::EXTERNAL); // package defined in Chat_setup.php
+		JSMessages::enqueuePackage('Chat', JSMessages::EXTERNAL); // package defined in Chat_setup.php
 
-		$this->jsMessagePackagesUrl = F::build('JSMessages')->getExternalPackagesUrl();
+		$this->jsMessagePackagesUrl = JSMessages::getExternalPackagesUrl();
 		// Variables for this user
 		$this->username = $wgUser->getName();
 		$this->avatarUrl = AvatarService::getAvatarUrl($this->username, ChatController::CHAT_AVATAR_DIMENSION);
 
 		// Find the chat for this wiki (or create it, if it isn't there yet).
-		$roomName = $roomTopic = "";
-		$this->roomId = (int) NodeApiClient::getDefaultRoomId($roomName, $roomTopic);
-		$this->roomName = $roomName;
-		$this->roomTopic = $roomTopic;
+		$this->roomId = (int) NodeApiClient::getDefaultRoomId();
+
+		// we overwrite here data from redis since it causes a bug DAR-1532
+		$this->roomName = $wgSitename;
+		$this->roomTopic = wfMsg('chat-default-topic', $wgSitename);
 
  		$this->chatkey = Chat::echoCookies();
 		// Set the hostname of the node server that the page will connect to.
@@ -54,7 +55,8 @@ class ChatController extends WikiaController {
 			$this->bodyClasses .= ' can-give-chat-mod ';
 		}
 
-		$this->app->registerHook('MakeGlobalVariablesScript', 'ChatController', 'onMakeGlobalVariablesScript', array(), false, $this);
+		// set up global js variables just for the chat page
+		$wgHooks['MakeGlobalVariablesScript'][] = array($this, 'onMakeGlobalVariablesScript');
 
 		$wgOut->getResourceLoader()->getModule( 'mediawiki' );
 

@@ -9,7 +9,8 @@
  * @ingroup Maps
  * @ingroup ParameterManipulations
  *
- * @author Jeroen De Dauw
+ * @licence GNU GPL v2+
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class MapsParamDimension extends ItemParameterManipulation {
 
@@ -24,6 +25,8 @@ class MapsParamDimension extends ItemParameterManipulation {
 
 	/**
 	 * Constructor.
+	 *
+	 * @param string $dimension
 	 *
 	 * @since 0.7
 	 */

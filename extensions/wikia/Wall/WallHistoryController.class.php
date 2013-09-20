@@ -7,7 +7,7 @@ class WallHistoryController extends WallController {
 	}
 	
 	public function index() {
-		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL); 
+		JSMessages::enqueuePackage('Wall', JSMessages::EXTERNAL);
 		$title = $this->app->wg->Title;
 		
 		$this->isThreadLevel = $this->request->getVal('threadLevelHistory', false);
@@ -16,7 +16,7 @@ class WallHistoryController extends WallController {
 		
 		if( $this->isThreadLevel ) {
 			$threadId = intval($title->getDBkey());
-			$title = F::build('Title', array($threadId), 'newFromId');
+			$title = Title::newFromId($threadId);
 		}
 		
 		$this->historyPreExecute();
@@ -40,7 +40,7 @@ class WallHistoryController extends WallController {
 		}
 		
 		if( $this->isThreadLevel ) {
-			$wallMessage = F::build('WallMessage', array($title));
+			$wallMessage = new WallMessage($title);
 			$wallMessage->load();
 			$wallOwnerUser = $wallMessage->getWallOwner();
 			
@@ -63,7 +63,7 @@ class WallHistoryController extends WallController {
 			$this->response->setVal('wallHistoryUrl', $wallMessage->getMessagePageUrl(true).'?action=history&sort='.$sort);
 		} else {			
 			$perPage = 100;
-			$wallHistory = F::build( 'WallHistory' );
+			$wallHistory = (new WallHistory);
 			$wallHistory->setPage($page, $perPage);
 			$sort = $this->getSortingSelected();
 			if( $title->exists() ) {
@@ -165,11 +165,11 @@ class WallHistoryController extends WallController {
 			}
 			
 			$title = $value['title'];
-			$wm = F::build('WallMessage', array($title));
+			$wm = new WallMessage($title);
 			$user = $value['user'];
 			$username = $user->getName();
 
-			$url = F::build( 'Title', array( $username, $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK ), 'newFromText' )->getFullUrl();
+			$url = Title::newFromText( $username, $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK )->getFullUrl();
 			
 			if( $user->isAnon() ) {
 				$name = wfMsg('oasis-anon-user');
@@ -203,7 +203,7 @@ class WallHistoryController extends WallController {
 				$history[$key]['msgurl'] = $messagePageUrl;
 				
 				$msgUser = $wm->getUser();
-				$history[$key]['msguserurl'] = F::build( 'Title', array( $msgUser->getName(), NS_USER_WALL ), 'newFromText' )->getFullUrl();
+				$history[$key]['msguserurl'] = Title::newFromText( $msgUser->getName(), NS_USER_WALL )->getFullUrl();
 				$history[$key]['msgusername'] = $msgUser->getName();
 			
 				

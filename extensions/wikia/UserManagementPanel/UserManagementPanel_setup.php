@@ -9,8 +9,8 @@
 $dir = dirname(__FILE__);
 
 // autoloaded classes
-$app->registerClass('SpecialUserManagementController', $dir . '/SpecialUserManagementController.class.php' );
-$app->registerSpecialPage('UserManagement', 'SpecialUserManagementController');
+$wgAutoloadClasses['SpecialUserManagementController'] =  $dir . '/SpecialUserManagementController.class.php' ;
+$wgSpecialPages['UserManagement'] = 'SpecialUserManagementController';
 
 // i18n
 $wgExtensionMessagesFiles['UserManagementPanel'] = $dir.'/UserManagementPanel.i18n.php';

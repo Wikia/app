@@ -1,15 +1,16 @@
 <?php
 
 /**
- * Class holding information and functionallity specific to OpenLayers.
- * This infomation and features can be used by any mapping feature. 
+ * Class holding information and functionality specific to OpenLayers.
+ * This information and features can be used by any mapping feature.
  * 
  * @since 0.1
  * 
  * @file Maps_OpenLayers.php
  * @ingroup MapsOpenLayers
- * 
- * @author Jeroen De Dauw
+ *
+ * @licence GNU GPL v2+
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class MapsOpenLayers extends MapsMappingService {
 	
@@ -33,8 +34,8 @@ class MapsOpenLayers extends MapsMappingService {
 	public function addParameterInfo( array &$params ) {
 		global $egMapsOLLayers, $egMapsOLControls, $egMapsResizableByDefault;
 		
-		$params['zoom']->addCriteria( new CriterionInRange( 0, 19 ) );
-		$params['zoom']->setDefault( self::getDefaultZoom() );		
+		$params['zoom']->setRange( 0, 19 );
+		$params['zoom']->setDefault( self::getDefaultZoom() );
 		
 		$params['controls'] = new ListParameter( 'controls' );
 		$params['controls']->setDefault( $egMapsOLControls );
@@ -53,7 +54,15 @@ class MapsOpenLayers extends MapsMappingService {
 		
 		$params['resizable'] = new Parameter( 'resizable', Parameter::TYPE_BOOLEAN );
 		$params['resizable']->setDefault( $egMapsResizableByDefault, false );	
-		$params['resizable']->setMessage( 'maps-par-resizable' );	
+		$params['resizable']->setMessage( 'maps-par-resizable' );
+
+		$params['searchmarkers'] = new Parameter(
+			'searchmarkers' ,
+			Parameter::TYPE_STRING
+		);
+		$params['searchmarkers']->setDefault( '' );
+		$params['searchmarkers']->addCriteria( new CriterionSearchMarkers() );
+		$params['searchmarkers']->setDoManipulationOfDefault( false );
 	}
 	
 	/**
@@ -103,7 +112,9 @@ class MapsOpenLayers extends MapsMappingService {
 
 	/**
 	 * Returns the names of all supported dynamic layers.
-	 * 
+	 *
+	 * @param boolean $includeGroups
+	 *
 	 * @return array
 	 */
 	public static function getLayerNames( $includeGroups = false ) {
@@ -143,6 +154,17 @@ class MapsOpenLayers extends MapsMappingService {
 			parent::getResourceModules(),
 			array( 'ext.maps.openlayers' )
 		);
+	}
+
+	/**
+	 * Returns a list of all config variables that should be passed to the JS.
+	 *
+	 * @since 1.0.1
+	 *
+	 * @return array
+	 */
+	public function getConfigVariables() {
+		return array_merge( parent::getConfigVariables(), array( 'egMapsScriptPath' => $GLOBALS['egMapsScriptPath'] ) );
 	}
 	
 }

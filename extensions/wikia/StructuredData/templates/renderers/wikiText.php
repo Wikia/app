@@ -56,7 +56,7 @@ foreach ( $values as $i => $propertyValue ) {
 /*if ( $context == SD_CONTEXT_DEFAULT ) {
 	echo '<button class="add-wikiText-SDObj-from-article" data-displayed-object="' . $object->getName() .
 		'" data-object-id="'.$params['objectId'].'" data-prop-name="'.$params['propName'].'">' . wfMsg('structureddata-add-trivia-from-article-btn') . '</button>';
-	echo F::build('JSSnippets')->addToStack(
+	echo JSSnippets::addToStack(
 		array('/extensions/wikia/StructuredData/js/StructuredDataInArticle.js')
 	);
 }*/

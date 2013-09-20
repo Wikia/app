@@ -47,6 +47,8 @@ $messages['qqq'] = array(
 	'multilookupnext' => '{{Identical|Next}}',
 	'multilookupprevious' => '{{Identical|Previous}}',
 	'multilookupwiki' => '{{Identical|Wiki}}',
+	'multilookupwikiurl' => '{{Identical|URL}}',
+	'multilookupwikititle' => '{{Identical|Title}}',
 	'right-multilookup' => '{{doc-right|multilookup|ns=Wikia}}',
 	'action-multilookup' => '{{doc-action|multilookup}}',
 );
@@ -74,12 +76,28 @@ Kontroleer die gegewe IP-adres; u met moontlik \'n invoerfout gemaak.</p>',
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author OsamaK
  */
 $messages['ar'] = array(
 	'multilookupgo' => 'اذهب',
+	'multilookupnext' => 'التالي',
+	'multilookupprevious' => 'السابق',
+	'multilookupnbrresult' => 'عدد النتائج:',
+	'multilookupinvalidresults' => 'نتائج غير صحيحة!',
+	'multilookupnoresultfound' => 'لم يتم العثور على نتائج',
+	'multilookupwiki' => 'الويكي',
+	'multilookuplink' => 'رابط المساهمات',
+	'multilookupdetails' => 'شاهد  التفاصيل',
+	'multilookuplastedit' => 'آخر تحرير من عنوان IP هذا:',
+	'multilookupwikidbname' => 'اسم قاعدة البيانات',
 	'multilookupwikiurl' => 'المسار',
 	'multilookupwikititle' => 'العنوان',
+	'multilookupwikioptions' => 'الخيارات',
+	'multilookuplastedithdr' => 'آخر تعديل',
+	'multilookuprecordspager' => "عرض من '''$1''' إلى '''$2''' من مجموع '''$3''' سجلا.",
+	'right-multilookup' => 'البحث عن معلومات حول المستخدمين في عدة ويكيات',
+	'action-multilookup' => 'البحث عن معلومات حول المستخدمين في عدة ويكيات',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -181,9 +199,12 @@ $messages['ca'] = array(
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
+	'multilookupnoresultfound' => 'ХӀума ца карийна',
 	'multilookuplink' => 'Къинхьегаме хьажориг',
+	'multilookupwikititle' => 'Корта',
 );
 
 /** Czech (česky)
@@ -824,6 +845,17 @@ $messages['ro'] = array(
 	'multilookuplastedithdr' => 'Ultima modificare',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'multilookupgo' => 'Véje',
+	'multilookupwiki' => 'Uicchi',
+	'multilookupwikiurl' => 'URL',
+	'multilookupwikititle' => 'Titole',
+	'multilookupwikioptions' => 'Opziune',
+);
+
 /** Russian (русский)
  * @author Eleferen
  * @author Kuzura
@@ -987,20 +1019,37 @@ $messages['ttt'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  * @author Тест
  */
 $messages['uk'] = array(
+	'specialmultiplelookup-desc' => 'Забезпечує пошук інформації про користувачів з декількох вікі',
+	'multilookup' => 'Множинний пошук',
+	'multilookupstitle' => 'Множинний пошук',
+	'multilookupselectuser' => 'Шукати облікові записи за цією IP-адресу на декількох вікі',
 	'multilookupgo' => 'Перейти',
+	'multilookupnotspecify' => 'Ви ще не вказали IP-адресу.',
 	'multilookupnext' => 'наступні',
 	'multilookupprevious' => 'попередні',
 	'multilookupnbrresult' => 'Кількість результатів:',
+	'multilookupinvalidresults' => 'Неприпустимі результати!',
 	'multilookupnoresultfound' => 'Нічого не знайдено!',
 	'multilookupwiki' => 'Вікі',
+	'multilookuplink' => 'Посилання на внески',
+	'multilookupdetails' => 'Докладніше див.',
+	'multilookuplistwikiainfo' => 'Перелік вікі, де сторінки змінено користувачами з IP-адресами<b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">IP „<b>$1</b>“ не існує. Перевірте вказану IP на можливі одруківки.</p>',
+	'multilookuplastedit' => 'Останнє редагування з цієї IP-адреси:',
+	'multilookupwikidbname' => 'Назва БД',
 	'multilookupwikiurl' => 'URL',
 	'multilookupwikititle' => 'Назва',
 	'multilookupwikioptions' => 'Параметри',
 	'multilookuplastedithdr' => 'Останнє редагування',
+	'multilookuprecordspager' => "Показано від '''$1''' до '''$2''' із '''$3''' записів.",
+	'right-multilookup' => 'Переглянути відомості про користувачів в декількох вікі',
+	'action-multilookup' => 'перегляд відомостей про користувачів в декількох вікі',
 );
 
 /** Yiddish (ייִדיש)

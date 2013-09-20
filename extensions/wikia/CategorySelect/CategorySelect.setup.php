@@ -20,22 +20,21 @@ $wgExtensionCredits[ 'other' ][] = array(
 	'description-msg' => 'categoryselect-desc',
 );
 
-$app = F::app();
 $dir = dirname( __FILE__ ) . '/';
 
 // Classes
-$app->registerClass( 'CategorySelect', $dir . 'CategorySelect.class.php' );
-$app->registerClass( 'CategorySelectController', $dir . 'CategorySelectController.class.php' );
-$app->registerClass( 'CategorySelectHooksHelper', $dir . 'CategorySelectHooksHelper.class.php' );
+$wgAutoloadClasses[ 'CategorySelectController'] =  $dir . 'CategorySelectController.class.php' ;
+$wgAutoloadClasses[ 'CategorySelectHelper'] =  $dir . 'CategorySelectHelper.class.php' ;
+$wgAutoloadClasses[ 'CategorySelectHooksHelper'] =  $dir . 'CategorySelectHooksHelper.class.php' ;
 
 // Hooks
-$app->registerHook( 'GetPreferences', 'CategorySelectHooksHelper', 'onGetPreferences' );
-$app->registerHook( 'MediaWikiPerformAction', 'CategorySelectHooksHelper', 'onMediaWikiPerformAction' );
+$wgHooks['GetPreferences'][] = 'CategorySelectHooksHelper::onGetPreferences';
+$wgHooks['MediaWikiPerformAction'][] = 'CategorySelectHooksHelper::onMediaWikiPerformAction';
 
 // Messages
-$app->registerExtensionMessageFile( 'CategorySelect', $dir . 'CategorySelect.i18n.php' );
+$wgExtensionMessagesFiles['CategorySelect'] = $dir . 'CategorySelect.i18n.php' ;
 
-F::build( 'JSMessages' )->registerPackage( 'CategorySelect', array(
+JSMessages::registerPackage( 'CategorySelect', array(
 	'categoryselect-button-save',
 	'categoryselect-category-add',
 	'categoryselect-category-edit',

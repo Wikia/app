@@ -30,7 +30,7 @@ Wikia
 	"globalwatchlist-no-blog-page-found" => "No blog page found.",
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author The Evil IP address
  */
 $messages['qqq'] = array(
@@ -45,6 +45,36 @@ $messages['af'] = array(
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|opmerking|opmerkings}})',
 	'globalwatchlist-no-page-found' => 'Geen bladsy gevind nie.',
 	'globalwatchlist-no-blog-page-found' => 'Geen blog-bladsy gevind nie.',
+);
+
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'globalwatchlist-desc' => 'يرسل رسائل الموجز الأسبوعي عبر البريد الإلكتروني مرفقة بالصفحات المراقبة في كل الويكيات',
+	'tog-watchlistdigest' => 'أرسل لي الموجز الأسبوعي للصفحاتي المراقبة',
+	'tog-watchlistdigestclear' => 'وضع علامة زيارة على كافة الصفحات من الموجز الأسبوعي',
+	'globalwatchlist-see-more' => 'الرجاء التحقق من قوائم المراقبة المحلية للمزيد من التغييرات',
+	'globalwatchlist-digest-email-subject' => 'الموجز الأسبوعي',
+	'globalwatchlist-digest-email-body' => 'عزيزي $1،
+
+هذه قائمة بالصفحات التابعة لقائمة مراقبتك في ويكيا والتي تم تعديلها منذ زيارتك الأخيرة لها.
+
+$2
+
+هذه قائمة بصفحات المدونة التابعة لقائمة مراقبتك في ويكيا والتي تم تعديلها أو التعليق عليها منذ زيارتك الأخيرة لها.
+
+$3
+
+يرجى زيارتها والمساهمة...
+
+ويكيا
+
+* لتغيير تفضيلاتك المتعلقة بإشعارات الموجز الأسبوعي قم بزيارة http://www.wikia.com/wiki/Special:Preferences
+* لوضع علامة زيارة على كافة الصفحات من الموجز الأسبوعي، راجع الخيار في علامة التبويب "قائمة المراقبة" في صفحة تفضيلاتك.',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|تعليق|تعليقات}})',
+	'globalwatchlist-no-page-found' => 'لم يتم العثور على الصفحة.',
+	'globalwatchlist-no-blog-page-found' => 'لم يتم العثور على صفحة المدونة.',
 );
 
 /** Bulgarian (български)
@@ -85,6 +115,37 @@ Wikia
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 evezhiadenn{{PLURAL:$2||}})',
 	'globalwatchlist-no-page-found' => 'Pajenn ebet kavet.',
 	'globalwatchlist-no-blog-page-found' => "N'eo bet kavet pajenn blog ebet.",
+);
+
+/** Catalan (català)
+ * @author Alvaro Vidal-Abarca
+ * @author Roxas Nobody 15
+ */
+$messages['ca'] = array(
+	'globalwatchlist-desc' => 'Envia setmanalment digerir e-mails amb watchlisted pàgines en tots els wikis',
+	'tog-watchlistdigest' => 'Envieu-me per correu electrònic un Butlletí Setmanal de la cistella de Seguiment',
+	'tog-watchlistdigestclear' => 'Marcar totes les pàgines de la meva llista de seguiment Setmanal com a visitades',
+	'globalwatchlist-see-more' => 'Si us plau, comprovi la llista de canvis locals per a més canvis',
+	'globalwatchlist-digest-email-subject' => 'Recull Setmanal',
+	'globalwatchlist-digest-email-body' => 'Benvolgut / da $1,
+
+Aquest és un llistat de les pàgines de la vostra llista de seguiment de Wikia que han estat editades des de la darrera visita.
+
+$2
+
+Aquest és un llistat de les pàgines de blocs incloses la vostra llista de seguiment Wikia que han estat editades o en les que s\'ha comentat des de l\'última vegada que les vas visitar.
+
+$3
+
+Si us plau visita-les i edita-les freqüentment ...
+
+Wikia
+
+* Per canviar les preferències de notificacions de la vostra llista de seguiment, per favor, visita http://www.wikia.com/wiki/Special:Preferences
+* Per tenir les pàgines d\'aquest Butlletí Setmanal com visitades vegeu a la pestanya de "Seguiment" en les vostres Preferències',
+	'globalwatchlist-blog-page-title-comment' => '$1( $2  {{PLURAL:$2| comment|comments}})',
+	'globalwatchlist-no-page-found' => 'Cap pàgina trobada.',
+	'globalwatchlist-no-blog-page-found' => "No s'ha trobat el fitxer del registre.",
 );
 
 /** Czech (česky)
@@ -247,6 +308,18 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Blogisivua ei löytynyt.',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'globalwatchlist-desc' => 'Sendir t-post samandráttir einaferð um vikuna við eftirlitssíðum á øllum wikium',
+	'tog-watchlistdigest' => 'Send mær ein Vikuligan eftirlitssamandrátt (Weekly Watchlist Digest)',
+	'tog-watchlistdigestclear' => 'Merk allar síður frá mínum viku-eftirlits-samandrátti sum vitjaðar',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|viðmerking|viðmerkingar}})',
+	'globalwatchlist-no-page-found' => 'Ongin síða funnin.',
+	'globalwatchlist-no-blog-page-found' => 'Ongin bloggsíða funnin.',
+);
+
 /** French (français)
  * @author IAlex
  * @author Peter17
@@ -379,6 +452,29 @@ Wikia
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|commento|commentos}})',
 	'globalwatchlist-no-page-found' => 'Nulle pagina trovate.',
 	'globalwatchlist-no-blog-page-found' => 'Nulle pagina de blog trovate.',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'globalwatchlist-digest-email-body' => 'Halo $1,
+
+Ini adalah daftar halaman pada pantauan Wikia Anda yang telah disunting sejak Anda terkhir mengunjunginya.
+
+$2
+
+
+Ini adalah daftar halaman blog pada pantauan Wikia Anda yang telah disunting sejak Anda terkhir mengunjunginya.
+
+$3
+
+Silakan berkunjung dan sering menyunting...
+
+Wikia
+
+* Untuk mengubah preferensi untuk pemberitahuan pantauan, silakan kunjungi http://www.wikia.com/wiki/Special:Preferences
+* Untuk menandai seluruh halaman dari Weekly Digest ini sebagai telah dikunjungi, lihat pilihan dalam tab "Pantauan" dari halaman preferensi Anda',
 );
 
 /** Italian (italiano)
@@ -553,7 +649,7 @@ $messages['nl'] = array(
 	'globalwatchlist-desc' => "Stuurt wekelijks e-mails met pagina's op volglijsten van alle wiki's",
 	'tog-watchlistdigest' => 'Mij wekelijks een samenvatting van mijn volglijst e-mailen',
 	'tog-watchlistdigestclear' => "Alle pagina's op mijn wekelijkse samenvatting als bezocht markeren",
-	'globalwatchlist-see-more' => 'Controleer alstublieft uw lokale volglijst op meer wijzigingen',
+	'globalwatchlist-see-more' => 'Controleer uw lokale volglijst op meer wijzigingen',
 	'globalwatchlist-digest-email-subject' => 'Wekelijkse samenvatting',
 	'globalwatchlist-digest-email-body' => 'Hallo $1.
 
@@ -565,7 +661,7 @@ Dit is een lijst met blogpagina\'s op uw volglijst bij Wikia die zijn bewerkt of
 
 $3
 
-Bezoek ze alstublieft en bewerk ze als nodig.
+Bezoek ze en bewerk ze als nodig.
 
 Groet, Wikia
 
@@ -580,7 +676,7 @@ Groet, Wikia
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
-	'globalwatchlist-see-more' => 'Controleer alsjeblieft je lokale volglijst op meer wijzigingen',
+	'globalwatchlist-see-more' => 'Controleer je lokale volglijst op meer wijzigingen',
 	'globalwatchlist-digest-email-body' => 'Hoi $1.
 
 Dit is een lijst met pagina\'s op je volglijst bij Wikia die zijn bewerkt sinds je ze hebt bezocht.
@@ -591,7 +687,7 @@ Dit is een lijst met blogpagina\'s op je volglijst bij Wikia die zijn bewerkt of
 
 $3
 
-Bezoek ze alsjeblieft en bewerk ze als nodig.
+Bezoek ze en bewerk ze als nodig.
 
 Groet, Wikia
 
@@ -754,7 +850,30 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'globalwatchlist-desc' => "manne ogne sumane 'nu riepiloghe cu l'email cu le pàggene da condrollà sus a tutte le uicchi",
+	'tog-watchlistdigest' => "Manname 'na mail cu 'nu riepiloghe d'a sumane de le pàggene condrollate",
+	'tog-watchlistdigestclear' => "Signe tutte le pàggene da 'u Riepiloghe d'a sumàne de le pàggene condrollate cumme visitate",
+	'globalwatchlist-see-more' => 'Pe piacere verifiche le pàggene condrollate locale tune pe cchiù cangiaminde',
 	'globalwatchlist-digest-email-subject' => "Riepiloghe d'a sumane",
+	'globalwatchlist-digest-email-body' => "Care \$1,
+
+Queste jè 'n'elenghe de pàggene sus 'a le pàggene condrollate d'a Uicchia toje ca onne state cangiate da quanne tu l'è viste l'urtema vote.
+
+\$2
+
+Quiste jè 'n'elenghe de pàggene d'u blog sus 'a le pàggene condrollate d'a Uicchia toje ca onne state cangiate da quanne tu l'è viste l'urtema vote.
+
+\$3
+
+Pe piacere visitale e cangiale spesse...
+
+Uicchia
+
+* Pe cangià le preferenze tune sus a le notifiche de le pàggene condrollate, pe piacere visite  http://www.wikia.com/wiki/Special:Preferences
+* Pe signà tutte le pàggene de stu riepiloghe sumanale cumme visitate, 'ndruche l'opzione jndr'à schede \"Pàggene condrollate\" d'a pàgene de le Preferenze tune",
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|commende}})',
+	'globalwatchlist-no-page-found' => 'Nisciuna pàgene acchiate.',
+	'globalwatchlist-no-blog-page-found' => 'Nisciuna pàgene de blog acchiate.',
 );
 
 /** Russian (русский)
@@ -885,6 +1004,7 @@ Wikia
 );
 
 /** Ukrainian (українська)
+ * @author Ua2004
  * @author Ата
  */
 $messages['uk'] = array(
@@ -893,6 +1013,23 @@ $messages['uk'] = array(
 	'tog-watchlistdigestclear' => 'Позначити усі сторінки з тижневого дайджесту списку спостереження як відвідані',
 	'globalwatchlist-see-more' => 'Для додаткових змін перевірте, будь ласка, Ваші місцеві списки спостереження',
 	'globalwatchlist-digest-email-subject' => 'Щотижневий дайджест',
+	'globalwatchlist-digest-email-body' => 'Шановний(-а) $1!
+
+Ось список сторінок з вашого списку спостереження Wikia, які було змінено з моменту Вашого останнього візиту.
+
+$2
+
+
+Ось список сторінок блоґу з вашого списку спостереження Wikia, які було змінено чи прокоментовано з моменту Вашого останнього візиту.
+
+$3
+
+Відвідайте ці сторінки, якщо бажаєте...
+
+Wikia
+
+* Щоб вимкнути сповіщення про сторінки зі списку спостереження, перейдіть сюди: http://www.wikia.com/wiki/Special:Preferences
+* Щоб позначити усі сторінки з цього листа прочитаними, зайдіть на вкладку "Список спостереження" на сторінці ваших налаштувань',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|коментар|коментарі|коментарів}})',
 	'globalwatchlist-no-page-found' => 'Сторінки не знайдено.',
 	'globalwatchlist-no-blog-page-found' => 'Сторінки блогу не знайдено.',

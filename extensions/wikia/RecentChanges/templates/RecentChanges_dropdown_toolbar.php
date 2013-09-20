@@ -1,3 +1,3 @@
 <div class="toolbar">
-	<label><input type="checkbox" name="select-all" class="select-all" value="all"><?= $wf->Msg('recentchanges-dropdown-select-all') ?></label>
+	<label><input type="checkbox" name="select-all" class="select-all" value="all"><?= wfMessage( 'recentchanges-dropdown-select-all' )->escaped() ?></label>
 </div>

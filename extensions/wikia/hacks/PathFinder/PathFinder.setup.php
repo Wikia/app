@@ -34,7 +34,7 @@ $app->wg->append(
 /**
  * dependencies
  */
-require_once( "{$IP}/lib/predis/Predis.php" );//Redis
+require_once( "{$IP}/lib/vendor/predis/Predis.php" );//Redis
 require_once( "{$IP}/includes/wikia/S3Command.class.php" );//Amazon S3
 
 /**
@@ -72,7 +72,7 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/PathFinderDataSet.class.php", 'PathF
 /**
  * special pages
  */
-$app->wg->set( 'wgSpecialPages', 'PathFinderSpecialController', 'PathFinder' );
+$wgSpecialPages['PathFinder'] = 'PathFinderSpecialController';
 
 /**
  * message files
@@ -100,8 +100,8 @@ function efPathFinderOnBeforePageDisplayAddButton( $article, $row ) {
 	if( $app->wg->DevelEnvironment && !in_array( $title->getNamespace(), $app->wg->PathFinderExcludeNamespaces ) && get_class( $app->wg->User->getSkin() ) == 'SkinOasis' ) {
 		$specialTitle = Title::newFromText( 'PathFinder', NS_SPECIAL );
 		$script = "<script>$('#WikiaPageHeader ul.commentslikes').append('<li><a href=\"{$specialTitle->getLocalURL()}/{$title->getPrefixedUrl()}\" " .
-			"class=\"wikia-button secondary\" >" . $app->wf->Msg( 'pathfinder-find-path' ) . "</a></li>');</script>";
-		
+			"class=\"wikia-button secondary\" >" . wfMsg( 'pathfinder-find-path' ) . "</a></li>');</script>";
+
 		$app->wg->Out->addScript( $script );
 	}
 

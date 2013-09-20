@@ -16,7 +16,7 @@
 		<? endif; ?>
 	</section>
 	<script>
-		var VideoPageSummary = VideoPageSummary || {};
-		VideoPageSummary['<?= $type ?>'] = <?= json_encode($summary) ?>;
+		var FilePageSummary = FilePageSummary || {};
+		FilePageSummary[<?= json_encode($type) ?>] = <?= json_encode($summary) ?>;
 	</script>
 <? endif; ?>

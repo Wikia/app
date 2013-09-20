@@ -20,8 +20,13 @@ class FBPush_OnWatchArticle extends FBConnectPushEvent {
 	
 	
 	public static function onWatchArticleComplete(&$user, &$article ){
-		global $wgContentNamespaces, $wgSitename, $wgRequest;
-		wfProfileIn(__METHOD__); 
+		global $wgSitename, $wgRequest;
+		wfProfileIn(__METHOD__);
+
+		if ( !self::checkUserOptions(__CLASS__) ) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
 
 		if ( $wgRequest->getVal('action','') == 'submit' ) {
 			wfProfileOut(__METHOD__);

@@ -290,9 +290,8 @@ class IndexerTest extends BaseTest
 		    ->expects( $this->once() )
 		    ->method ( 'reindexPage' )
 		;
-		$this->proxyClass( 'ScribeProducer', $sp );
-		$this->proxyClass( 'WikiDataSource', $dataSource );
-		$this->mockApp();
+		$this->mockClass( 'ScribeProducer', $sp );
+		$this->mockClass( 'WikiDataSource', $dataSource );
 		$indexer->reindexWiki( 123 );
 		$dataSource
 		    ->expects( $this->at( 0 ) )

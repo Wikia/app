@@ -13,24 +13,32 @@ class VideoService extends WikiaModel {
 	public function addVideo( $url ) {
 		wfProfileIn( __METHOD__ );
 
+		if ( !$this->wg->User->isAllowed('videoupload') ) {
+			wfProfileOut( __METHOD__ );
+			return wfMessage('videos-error-admin-only')->plain();
+		}
+
 		if ( empty( $url ) ) {
 			wfProfileOut( __METHOD__ );
-			return $this->wf->Msg('videos-error-no-video-url');
+			return wfMessage('videos-error-no-video-url')->text();
 		}
 
 		try {
 			if ( WikiaFileHelper::isVideoStoredAsFile() ) {
 				// is it a WikiLink?
-				$title = Title::newFromText($url);
+				$title = Title::newFromText($url, NS_FILE);
 				if ( !$title || !WikiaFileHelper::isTitleVideo($title) ) {
-					$title = Title::newFromText( str_replace(array('[[',']]'),array('',''),$url) );
+					$title = Title::newFromText( str_replace(array('[[',']]'),array('',''),$url), NS_FILE );
 				}
 				if ( !$title || !WikiaFileHelper::isTitleVideo($title) ) {
-					if ( ($pos = strpos($url,'Video:')) !== false ) {
-						$title = Title::newFromText( substr($url,$pos) );
-					}
-					elseif ( ($pos = strpos($url,'File:')) !== false ) {
-						$title = Title::newFromText( substr($url,$pos) );
+					$transFileNS = wfMessage('nstab-image')->inContentLanguage()->text();
+
+					if ( ($pos = strpos($url, 'Video:')) !== false ) {
+						$title = Title::newFromText( substr($url,$pos), NS_FILE );
+					} elseif ( ($pos = strpos($url, 'File:')) !== false ) {
+						$title = Title::newFromText( substr($url,$pos), NS_FILE );
+					} elseif ( ($pos = strpos($url, $transFileNS.':')) !== false ) {
+						$title = Title::newFromText( substr($url,$pos), NS_FILE );
 					}
 				}
 				if ( $title && WikiaFileHelper::isTitleVideo($title) ) {
@@ -39,10 +47,19 @@ class VideoService extends WikiaModel {
 					$videoProvider = '';
 					wfRunHooks( 'AddPremiumVideo', array( $title ) );
 				} else {
+					if ( empty( $this->wg->allowNonPremiumVideos ) ) {
+						wfProfileOut( __METHOD__ );
+						return wfMessage( 'videohandler-non-premium' )->parse();
+					}
 					list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
 				}
+
+				// Add a default description if available and one doesn't already exist
+				$file = wfFindFile( $videoTitle );
+				$vHelper = new VideoHandlerHelper();
+				$vHelper->addDefaultVideoDescription( $file );
 			} else {
-				throw new Exception( $this->wf->Msg('videos-error-old-type-video') );
+				throw new Exception( wfMessage( 'videos-error-old-type-video' )->text() );
 			}
 		} catch ( Exception $e ) {
 			wfProfileOut( __METHOD__ );
@@ -60,9 +77,9 @@ class VideoService extends WikiaModel {
 	 * @throws Exception
 	 */
 	protected function addVideoVideoHandlers( $url ) {
-		$title = F::build( 'VideoFileUploader', array($url), 'URLtoTitle' );
+		$title = VideoFileUploader::URLtoTitle( $url );
 		if ( !$title ) {
-			throw new Exception( $this->wf->Msg('videos-error-invalid-video-url') );
+			throw new Exception( wfMessage('videos-error-invalid-video-url')->text() );
 		}
 
 		return array( $title, $title->getArticleID(), null );

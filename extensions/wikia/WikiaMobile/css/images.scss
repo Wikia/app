@@ -14,6 +14,8 @@ figure{
 
 	a {
 		display: inline-block;
+		//This will make link as big as images inside and not bigger so we can safly assume that clicks happen only on img tag
+		overflow: hidden;
 	}
 }
 
@@ -86,7 +88,7 @@ img {
 	}
 
 	&.loaded {
-		background-image: none;
+		background-image: none !important;
 		background-color: transparent;
 		opacity: 1;
 		width: auto;

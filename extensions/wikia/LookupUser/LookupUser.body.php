@@ -194,7 +194,7 @@ EOT
 			$options = array();
 			if (!empty($aUsers) && is_array($aUsers)) {
 				foreach ($aUsers as $id => $userName) {
-					$options[] = XML::option( $userName, $userName, ($userName == $userTarget) );
+					$options[] = Xml::option( $userName, $userName, ($userName == $userTarget) );
 				}
 			}
 			$selectForm = Xml::openElement( 'select', array( 'id' => 'email_user', 'name' => "email_user" ) );

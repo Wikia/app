@@ -31,12 +31,12 @@ $app->wg->append(
 	'parserhook'
 );
 
-$app->registerHook( 'ParserFirstCallInit', 'MobileContentParser', 'onParserFirstCallInit' );
+$wgHooks['ParserFirstCallInit'][] = 'MobileContentParser::onParserFirstCallInit';
 
 /**
  * services
  */
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/MobileContentParser.class.php", 'MobileContentParser' );
+$wgAutoloadClasses['MobileContentParser'] = "{$dir}/MobileContentParser.class.php";
 
 // allow for override in DefaultSettings
-if ( empty( $app->wg->mobileSkins ) ) $app->wg->mobileSkins = array(  'wikiphone', 'wikiaapp', 'wikiamobile' );
+if ( empty( $app->wg->mobileSkins ) ) $app->wg->mobileSkins = array( 'wikiphone', 'wikiamobile' );

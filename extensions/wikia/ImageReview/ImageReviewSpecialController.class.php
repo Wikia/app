@@ -212,7 +212,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	}
 
 	protected function getHelper() {
-		return F::build( 'ImageReviewHelper' );
+		return new ImageReviewHelper();
 	}
 
 	protected function getBaseUrl() {

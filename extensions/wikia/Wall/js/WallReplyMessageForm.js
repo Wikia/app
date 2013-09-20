@@ -70,15 +70,12 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 			hasContent = target.val() != '';
 		
 		var wraper = target.closest(this.replyWrapper);
-		
 		if (hasContent && !target.hasClass('placeholder') && !target.hasClass('content')) {
 			target.addClass('content');
-			
 			wraper.find(this.replyButton).removeAttr('disabled');
 			wraper.find(this.replyPreviewButton).removeAttr('disabled');
 		} else if (!hasContent) {
 			target.removeClass('content');
-			
 			wraper.find(this.replyButton).attr('disabled', true);
 			wraper.find(this.replyPreviewButton).attr('disabled', true);
 		}
@@ -103,6 +100,7 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 		replyWrapper.removeClass('loading');
 		replyWrapper.find(this.replyBody).removeAttr('disabled');
 		replyWrapper.find(this.replyButton).removeAttr('disabled');
+		replyWrapper.find(this.replyPreviewButton).removeAttr('disabled');
 	},
 
 	replyToMessage: function(e) {

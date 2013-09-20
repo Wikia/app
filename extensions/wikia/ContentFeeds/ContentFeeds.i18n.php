@@ -13,12 +13,14 @@ $messages['en'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error: Page body is required'
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'contentfeeds-desc' => "Description of extension as listed on [[Special:Version]].
 For an explanation of 'rich information' see [[:w:en:Media richness theory|Wikipedia]].",
 	'contentfeeds-newimages-rss-desc' => 'Outputs information about the source of the feed entry for attribution reasons. $1 is the URL of the page',
+	'contentfeeds-firstfewarticles-tag-title' => '{{Identical|Title}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -38,9 +40,14 @@ $messages['af'] = array(
  * @author Achraf94
  */
 $messages['ar'] = array(
+	'contentfeeds-desc' => 'يقدم معلومات غنية ومحدثة من خلال العلامات المتنوعة أو مايعرف ب"التغذية"',
+	'contentfeeds-newimages-rss-title' => 'تغذية آر إس إس الخاصة ب{{#Special:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'تغذية من $1',
 	'contentfeeds-firstfewarticles-tag-header' => 'قم بإنشاء أول صفحاتك!',
 	'contentfeeds-firstfewarticles-tag-title' => 'الإسم',
 	'contentfeeds-firstfewarticles-tag-next' => 'التالي',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'خطأ: عنوان الصفحة مطلوب',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'خطأ: محتوى الصفحة مطلوب',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -69,6 +76,20 @@ $messages['br'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => "War-lerc'h",
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Fazi : rekis eo titl ar bajenn',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fazi : rekis eo korf ar bajenn',
+);
+
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'contentfeeds-desc' => 'Proporciona informació enriquida i actualitzada a través de varies etiquetes o "feeds"',
+	'contentfeeds-newimages-rss-title' => 'Font RSS per {{#Special:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'Font de $1',
+	'contentfeeds-firstfewarticles-tag-header' => 'Crea les teves primeres pàgines!',
+	'contentfeeds-firstfewarticles-tag-title' => 'Títol',
+	'contentfeeds-firstfewarticles-tag-next' => 'Següent',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Error: El títol de la pàgina és necessari',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error: El cos de la pàgina és necessari',
 );
 
 /** Czech (česky)
@@ -154,6 +175,16 @@ $messages['fi'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Virhe: Sivun runko on pakollinen',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'contentfeeds-firstfewarticles-tag-header' => 'Upprætta tínar fyrstu síður!',
+	'contentfeeds-firstfewarticles-tag-title' => 'Heiti',
+	'contentfeeds-firstfewarticles-tag-next' => 'Næsta',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Feilur: Síðuheitið er kravt',
+);
+
 /** French (français)
  */
 $messages['fr'] = array(
@@ -207,6 +238,14 @@ $messages['ia'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Sequente',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Error: Titulo de pagina es requirite',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error: Texto de pagina es requirite',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Judul',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Kesalahan: Judul halaman disyaratkan',
 );
 
 /** Italian (italiano)
@@ -326,6 +365,20 @@ $messages['nl-informal'] = array(
 	'contentfeeds-firstfewarticles-tag-header' => "Maak je eerste pagina's aan!",
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'contentfeeds-desc' => 'Provesís d’informacion rica e a jorn gràcias a de balisas nombrosas o « fluxes ».',
+	'contentfeeds-newimages-rss-title' => 'Flux RSS per {{#Special:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'Flux de $1',
+	'contentfeeds-firstfewarticles-tag-header' => 'Creatz vòstras primièras paginas !',
+	'contentfeeds-firstfewarticles-tag-title' => 'Títol',
+	'contentfeeds-firstfewarticles-tag-next' => 'Seguent',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Error : lo títol de la pagina es necessari',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error : lo còs de la pagina es necessari',
+);
+
 /** Pälzisch (Pälzisch)
  * @author Manuae
  */
@@ -371,9 +424,10 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Luckas
  */
 $messages['pt'] = array(
-	'contentfeeds-desc' => 'Fornece informação actualizada através de vários elementos ou "feeds"',
+	'contentfeeds-desc' => 'Fornece informação atualizada através de vários elementos ou "feeds"',
 	'contentfeeds-newimages-rss-title' => 'Feed RSS para {{#Special:NewFiles}}',
 	'contentfeeds-newimages-rss-desc' => 'Feed de $1',
 	'contentfeeds-firstfewarticles-tag-header' => 'Crie as suas primeiras páginas!',
@@ -408,7 +462,14 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'contentfeeds-desc' => 'Dèje date ricche de \'mbormaziune attraverse le diverse tag o "feed"',
+	'contentfeeds-newimages-rss-title' => 'RSS Feed pe {{#Special:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'Feed da $1',
+	'contentfeeds-firstfewarticles-tag-header' => 'Ccreje le prime pàggene tune!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Titole',
+	'contentfeeds-firstfewarticles-tag-next' => 'Prossime',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => "Errore: Jè richieste 'u titole d'a pàgene",
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => "Errore: Jè richieste 'u cuèrpe d'a pàgene",
 );
 
 /** Russian (русский)
@@ -497,11 +558,19 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
+	'contentfeeds-desc' => 'Забезпечує багату і актуальну інформацію за допомогою різних міток або каналів',
+	'contentfeeds-newimages-rss-title' => 'RSS-канал для {{#Special:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'Канал з $1',
+	'contentfeeds-firstfewarticles-tag-header' => 'Створіть ваші перші кілька сторінок!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Заголовок',
 	'contentfeeds-firstfewarticles-tag-next' => 'Далі',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Помилка: назва сторінки потрібна',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Помилка: текст сторінки потрібний',
 );
 
 /** Veps (vepsän kel’)
@@ -541,4 +610,13 @@ $messages['zh-hans'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => '下一页',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => '错误：需要页面标题',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => '错误：需要页面内容',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Radish10cm
+ */
+$messages['zh-hant'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => '標題',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => '錯誤: 頁面標題是必要的',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => '錯誤: 頁面主體是必需的',
 );

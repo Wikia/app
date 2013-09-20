@@ -1,18 +1,24 @@
 /**
- * JavasSript for Google Maps v3 maps in the Maps extension.
- * @see http://www.mediawiki.org/wiki/Extension:Maps
- * 
+ * JavaScript for Google Maps v3 maps in the Maps extension.
+ * @see https://www.mediawiki.org/wiki/Extension:Maps
+ *
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw <jeroendedauw at gmail dot com>
  */
-jQuery(document).ready(function() {
-	if ( typeof google != 'undefined' ) {
-		for ( i in window.mwmaps.googlemaps3 ) {
-			jQuery( '#' + i ).googlemaps( window.mwmaps.googlemaps3[i] );
+(function( $, mw ) {
+
+	$( document ).ready( function() {
+
+		if ( typeof google === 'undefined' ) {
+			$( '.maps-googlemaps3' ).text( mw.msg( 'maps-googlemaps3-incompatbrowser' ) );
 		}
-	}
-	else {
-		for ( i in window.mwmaps.googlemaps3 ) {
-			jQuery( '#' + i ).text( mediaWiki.msg( 'maps-load-failed' ) + ' ' + mediaWiki.msg( 'maps-googlemaps3-incompatbrowser' ) );
+		else {
+			$( '.maps-googlemaps3' ).each( function() {
+				var $this = $( this );
+				$this.googlemaps( $.parseJSON( $this.find( 'div').text() ) );
+			} );
 		}
-	}	
-});
+
+	} );
+
+})( window.jQuery, mediaWiki );

@@ -6,7 +6,7 @@ $messages['en'] = array(
 	'healthcheck-desc' => 'A [[Special:HealthCheck|special page]] for server state checking',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author The Evil IP address
  */
 $messages['qqq'] = array(
@@ -102,6 +102,13 @@ $messages['eu'] = array(
  */
 $messages['fi'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Toimintosivu]] palvelimen tilan tarkastukseen',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'healthcheck-desc' => 'Ein [[Special:HealthCheck|serstøk síða]] fyri at kanna status á ambætaranum',
 );
 
 /** French (français)
@@ -206,6 +213,13 @@ $messages['nb'] = array(
  */
 $messages['nl'] = array(
 	'healthcheck-desc' => 'Een [[Special:HealthCheck|speciale pagina]] voor de controle van de serverstatus',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'healthcheck-desc' => "Una [[Special:HealthCheck|pagina especiala]] per verificar l'estat dels servidors",
 );
 
 /** Polish (polski)

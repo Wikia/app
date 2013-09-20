@@ -20,7 +20,7 @@ class MapsParamGMap3Typestyle extends ItemParameterManipulation {
 	 * @since 1.0
 	 */	
 	public function doManipulation( &$value, Parameter $parameter, array &$parameters ) {
-		$value = MapsGoogleMaps3::$tyepControlStyles[strtolower( $value )];
+		$value = MapsGoogleMaps3::$typeControlStyles[strtolower( $value )];
 	}
 	
 }

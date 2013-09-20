@@ -60,11 +60,13 @@ class CodeLintJs extends CodeLint {
 	 * @return string output from jslint
 	 */
 	protected function runJsLint($fileName, Array $params = array()) {
+		global $IP;
+
 		// generate path to "wrapper" script running jslint
-		$runScript = dirname(__FILE__) . '/../js/run-jslint.js';
+		$runScript = __DIR__ . '/../js/run-jslint.js';
 
 		// generate path to jslint.js
-		$libDirectory = F::app()->getGlobal('IP') . '/lib';
+		$libDirectory = "$IP/lib/vendor";
 		$params['jslint'] = "{$libDirectory}/jslint/jslint.js";
 
 		// file to perform lint on

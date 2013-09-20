@@ -51,7 +51,7 @@ class SpecialCustomEditPage extends SpecialPage {
 	 * Log utility
 	 */
 	protected function log($method, $data) {
-		$data = !is_array($data) ? print_r($data, true) : $data;
+		$data = !is_string($data) ? print_r($data, true) : $data;
 
 		wfDebug("{$method}: {$data}\n");
 	}
@@ -276,7 +276,7 @@ class SpecialCustomEditPage extends SpecialPage {
 	 * initialize article edit page
 	 */
 	protected function initializeEditPage() {
-		$helper = new EditPageLayoutHelper();
+		$helper = EditPageLayoutHelper::getInstance();
 
 		$editPage = $helper->setupEditPage($this->mEditedArticle, $this->fullScreen, get_class($this) );
 
@@ -460,7 +460,7 @@ class SpecialCustomEditPage extends SpecialPage {
 					$categories = $this->request->getVal( 'categories', '' );
 
 					if ( !empty( $categories ) ) {
-						$wikitext .= CategorySelect::changeFormat( $categories, 'json', 'wikitext' );
+						$wikitext .= CategoryHelper::changeFormat( $categories, 'json', 'wikitext' );
 					}
 				}
 

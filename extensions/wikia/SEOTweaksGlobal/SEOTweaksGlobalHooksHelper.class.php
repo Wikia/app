@@ -5,7 +5,7 @@
  * Date: 28.02.13 14:45
  */
 
-class SEOTweaksGlobalHooksHelper extends WikiaModel {
+class SEOTweaksGlobalHooksHelper {
 
 	const MAX_WIDTH = 500;
 
@@ -14,7 +14,7 @@ class SEOTweaksGlobalHooksHelper extends WikiaModel {
 	 * @param $file File
 	 * @return string|false
 	 */
-	protected function getThumbFromFile( $file ) {
+	static protected function getThumbFromFile( $file ) {
 		$width = $file->getWidth();
 		$width = $width > self::MAX_WIDTH ? self::MAX_WIDTH : $width;
 		$thumbObj = $file->transform( array( 'width' => $width ), 0 );
@@ -22,8 +22,8 @@ class SEOTweaksGlobalHooksHelper extends WikiaModel {
 		return false;
 	}
 
-	protected function makeKey( $title ) {
-		return $this->wf->memcKey( 'OpenGraphTitleImage', md5( $title->getDBKey() ) );
+	static protected function makeKey( $title ) {
+		return wfMemcKey( 'OpenGraphTitleImage', md5( $title->getDBKey() ) );
 	}
 
 	/**
@@ -31,7 +31,7 @@ class SEOTweaksGlobalHooksHelper extends WikiaModel {
 	 * @param $title
 	 * @return null|Title
 	 */
-	protected function getFirstArticleImage( $title ) {
+	static protected function getFirstArticleImage( $title ) {
 		$imageServing = new ImageServing( array( $title->getArticleID() ), self::MAX_WIDTH );
 		$out = $imageServing->getImages( 1 );
 		if ( !empty( $out ) ) {
@@ -47,24 +47,25 @@ class SEOTweaksGlobalHooksHelper extends WikiaModel {
 	 * @param $title Title
 	 * @return bool
 	 */
-	public function onOpenGraphMetaHeaders( &$meta, $title ) {
+	static public function onOpenGraphMetaHeaders( &$meta, $title ) {
+		global $wgMemc;
 
 		if ( !empty( $title ) && $title instanceof Title && !$title->isMainPage() ) {
 			$namespace = $title->getNamespace();
 			if ( $namespace == NS_USER ) {
 				return true;
 			}
-			$cacheKey = $this->makeKey( $title );
-			$imageUrl = $this->wg->memc->get( $cacheKey );
+			$cacheKey = self::makeKey( $title );
+			$imageUrl = $wgMemc->get( $cacheKey );
 
 			if ( is_null( $imageUrl ) || $imageUrl === false ) {    // not in memcache
 				if ( $namespace != NS_FILE ) {
-					$title = $this->getFirstArticleImage( $title );
+					$title = self::getFirstArticleImage( $title );
 				}
 				if ( !empty( $title ) ) {
-					$file = F::app()->wf->findFile( $title );
+					$file = wfFindFile( $title );
 					if ( !empty( $file ) ) {
-						$thumb = $this->getThumbFromFile( $file );
+						$thumb = self::getThumbFromFile( $file );
 						if ( !empty( $thumb ) ) $meta["og:image"] = $thumb;
 					}
 				}
@@ -75,12 +76,25 @@ class SEOTweaksGlobalHooksHelper extends WikiaModel {
 					// processing again
 					$imageUrl = '';
 				}
-				$this->wg->memc->set( $cacheKey, $imageUrl );
+				$wgMemc->set( $cacheKey, $imageUrl );
 			}
 
 			if ( !empty( $imageUrl ) ) { // only when there is a thumbnail url
 				$meta['og:image'] = $imageUrl;
 			}
+		}
+		return true;
+	}
+
+	static public function onArticleRobotPolicy( &$policy, Title $title ) {
+
+		$ns = MWNamespace::getSubject( $title->getNamespace() );
+
+		if ( in_array( $ns, array( NS_MEDIAWIKI, NS_TEMPLATE ) ) ) {
+			$policy = array(
+				'index'  => 'noindex',
+				'follow' => 'follow'
+			);
 		}
 		return true;
 	}

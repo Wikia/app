@@ -6,7 +6,7 @@
  *
  * @example
  * //AMD
- * require(['log'], function (log) { log(123, log.levels.info, 'MyLogGroup'); });
+ * require(['wikia.log'], function (log) { log(123, log.levels.info, 'MyLogGroup'); });
  *
  * //JS Namespace
  * Wikia.log(123, Wikia.log.levels.info, 'MyLogGroup');
@@ -14,6 +14,10 @@
  * //To allow the messages to be printed to the console add log_level=X to the
  * //URL querystring, where X is one of the values in the levels hash (either the hash key or it's value)
  * //e.g. http://glee.wikia.com/wiki/Rachel_Berry?log_level=info
+ * //e.g. http://glee.wikia.com/wiki/Rachel_Berry?log_level=info&log_group=MyLogGroup
+ *
+ * // The higher the log_level, the more messages will be logged.  If you want all messages,
+ * // use ?log_level=10 or ?log_level=trace_l3 (they are the same)
  *
  * @see  printMessage for a list of parameters and their description
  */
@@ -29,8 +33,8 @@
 		error: 6,
 		debug: 7,
 		trace: 8,
-		trace_l2: 9,
-		trace_l3: 10
+		trace_l2: 9, // trace level 2
+		trace_l3: 10 // trace level 3
 	};
 
 	function logger() {

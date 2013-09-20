@@ -8,17 +8,16 @@
  * 
  */
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
 //classes
-$app->registerClass('SEOTweaksHooksHelper', $dir . 'SEOTweaksHooksHelper.class.php');
+$wgAutoloadClasses['SEOTweaksHooksHelper'] =  $dir . 'SEOTweaksHooksHelper.class.php';
 
 // hooks
-$app->registerHook('BeforePageDisplay', 'SEOTweaksHooksHelper', 'onBeforePageDisplay');
-$app->registerHook('AfterInitialize', 'SEOTweaksHooksHelper', 'onAfterInitialize');
-$app->registerHook('ImagePageAfterImageLinks', 'SEOTweaksHooksHelper', 'onImagePageAfterImageLinks');
-$app->registerHook('BeforeParserMakeImageLinkObjOptions', 'SEOTweaksHooksHelper', 'onBeforeParserMakeImageLinkObjOptions');
-$app->registerHook('ArticleViewHeader', 'SEOTweaksHooksHelper', 'onArticleViewHeader');
+$wgHooks['BeforePageDisplay'][] = 'SEOTweaksHooksHelper::onBeforePageDisplay';
+$wgHooks['AfterInitialize'][] = 'SEOTweaksHooksHelper::onAfterInitialize';
+$wgHooks['ImagePageAfterImageLinks'][] = 'SEOTweaksHooksHelper::onImagePageAfterImageLinks';
+$wgHooks['BeforeParserMakeImageLinkObjOptions'][] = 'SEOTweaksHooksHelper::onBeforeParserMakeImageLinkObjOptions';
+$wgHooks['ArticleViewHeader'][] = 'SEOTweaksHooksHelper::onArticleViewHeader';
 
 // messages
-$app->registerExtensionMessageFile('SEOTweaks', $dir . 'SEOTweaks.i18n.php');
+$wgExtensionMessagesFiles['SEOTweaks'] = $dir . 'SEOTweaks.i18n.php';

@@ -12,10 +12,17 @@ if( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $wgHooks['ParserFirstCallInit'][] = 'wfMainPageTag';
-/// Set to "true" once the right column parser tag has run. Used to establish the order in which the column tags were called.
+
+// Set to "true" once the right column parser tag has run. Used to establish the order in which the column tags were called.
 $wfMainPageTag_rcs_called = false;
-/// Set to "true" once the left column parser tag has run. Used to establish the order in which the column tags were called.
+
+// Set to "true" once the left column parser tag has run. Used to establish the order in which the column tags were called.
 $wfMainPageTag_lcs_called = false;
+
+// Open tag count; Counts mainpage tag openings to avoid more closing tags than opening tags
+// Note: this does not check the order of the tags
+$wgMainPageTag_count = 0;
+
 
 /**
  * Set hooks for each of the three parser tags
@@ -36,11 +43,17 @@ function wfMainPageTag( &$parser ) {
  * @param Parser $parser The parent parser (a Parser object); more advanced extensions use this to obtain the contextual Title, parse wiki text, expand braces, register link relationships and dependencies, etc.
  */
 function wfMainPageTag_rcs( $input, $args, $parser ) {
-	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called, $wgOasisGrid;
-	if(!$wfMainPageTag_lcs_called) {
+	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called, $wgMainPageTag_count;
+
+	if ( !$wfMainPageTag_lcs_called ) {
 		$wfMainPageTag_rcs_called = true;
 	}
-	$html = '<div class="main-page-tag-rcs'.(empty($wgOasisGrid) ? '' : ' grid-2').'"><div>';
+
+	$wgMainPageTag_count++;
+
+	$isGridLayoutEnabled = F::app()->checkSkin( 'oasis' ) && BodyController::isGridLayoutEnabled();
+	$html = '<div class="main-page-tag-rcs' . ( $isGridLayoutEnabled ? ' grid-2' : '' ) . '"><div class="rcs-container">';
+
 	return $html;
 }
 
@@ -52,38 +65,55 @@ function wfMainPageTag_rcs( $input, $args, $parser ) {
  * @param array $parser The parent parser (a Parser object); more advanced extensions use this to obtain the contextual Title, parse wiki text, expand braces, register link relationships and dependencies, etc.
  */
 function wfMainPageTag_lcs( $input, $args, $parser ) {
-	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called, $wgOasisGrid;
+	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called, $wgMainPageTag_count;
+
 	$wfMainPageTag_lcs_called = true;
+	$wgMainPageTag_count++;
 
-	if ( !isset( $args['gutter'] ) ) {
-		$args['gutter'] = '10';
-	}
+	$isOasis = F::app()->checkSkin( 'oasis' );
+	$isGridLayoutEnabled = $isOasis && BodyController::isGridLayoutEnabled();
+	$isResponsiveLayoutEnabled = $isOasis && BodyController::isResponsiveLayoutEnabled();
+	$gutter = isset( $args['gutter'] ) ? str_replace( 'px', '', $args['gutter'] ) : 10;
 
-	$args['gutter'] = str_replace('px', '', $args['gutter']);
 	$html = '<div class="main-page-tag-lcs ';
-	
-	if ( !empty($wgOasisGrid) ) {
+
+	if ( $isGridLayoutEnabled ) {
 		$html .= 'grid-4 alpha ';
 	}
 
 	if ( $wfMainPageTag_rcs_called ) {
-		$html .= 'main-page-tag-lcs-collapsed" style="padding-right: '. $args['gutter'] .'px"><div>';
+		$html .= 'main-page-tag-lcs-collapsed"';
+
+		if ( !$isResponsiveLayoutEnabled ) {
+			$html .= ' style="padding-right: '. $gutter .'px"';
+		}
+
+		$html .= '><div class="lcs-container">';
 	} else {
-		$gutter = 300 + $args['gutter'];
+		$gutter += 300;
 		$html .= 'main-page-tag-lcs-exploded" ';
-		if ( F::app()->checkSkin( 'oasis' ) && !empty($wgOasisGrid) ) {
-			$html .= '><div>';
+		if ( $isGridLayoutEnabled || $isResponsiveLayoutEnabled ) {
+			$html .= '><div class="lcs-container">';
 		} else {
-			$html .= 'style="margin-right: -'. $gutter .'px; "><div style="margin-right: '. $gutter .'px;">';
+			$html .= 'style="margin-right: -'. $gutter .'px; "><div class="lcs-container" style="margin-right: '. $gutter .'px;">';
 		}
 	}
+
 	return $html;
 }
 
 /**
  * Inserts the necessary HTML to end either left or right column
+ * only if there was a column start tag parsed
  */
 function wfMainPageTag_ec( $input, $args, $parser ) {
-	$html = '</div></div>';
+	global $wgMainPageTag_count;
+
+	$html = '';
+	if ( $wgMainPageTag_count > 0 ) {
+		$html .= '</div></div>';
+		$wgMainPageTag_count--;
+	}
+
 	return $html;
 }

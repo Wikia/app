@@ -85,7 +85,7 @@ $.fn.extend({
 
 				// or use width provided
 				if (typeof options.width != 'undefined') {
-					modalWidth = options.width + 30 /* padding */;
+					modalWidth = options.width + 40 /* padding */;
 				}
 			} else {
 				modalWidth = 'auto';
@@ -185,8 +185,6 @@ $.fn.extend({
 		var blackout = $('<div>').addClass('blackout').attr('data-opacity', blackoutOpacity);
 
 		blackout
-			.height($(document).height())
-			.width($(document).width())
 			.css({zIndex: zIndex})
 			.fadeTo("fast", blackoutOpacity)
 			.bind("click", function() {
@@ -244,7 +242,7 @@ $.fn.extend({
 
 		blackout.fadeOut("fast", function() {
 			$(this).remove();
-			var callback = settings && settings.onAfterClose ? settings.onAfterClose : false;
+			var callback = settings && settings.onAfterClose;
 			if($.isFunction(callback)) {
 				callback();
 			}
@@ -267,7 +265,7 @@ $.fn.extend({
 			opacity: 0
 		}, "fast", function() {
 			$(this).hide();
-			var callback = settings && settings.onAfterClose ? settings.onAfterClose : false;
+			var callback = settings && settings.onAfterClose;
 			if($.isFunction(callback)) {
 				callback();
 			}
@@ -290,8 +288,6 @@ $.fn.extend({
 			blackoutOpacity = 0.65;
 		}
 		blackout
-			.height($(document).height())
-			.width($(document).width())
 			.css({
 				display: 'block',
 				opacity: blackoutOpacity,

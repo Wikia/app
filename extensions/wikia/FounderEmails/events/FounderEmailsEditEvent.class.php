@@ -37,7 +37,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 
 			$foundingWiki = WikiFactory::getWikiById($wgCityId);
 			$founderEmailObj = FounderEmails::getInstance();
-			$wikiService = F::build( 'WikiService' );
+			$wikiService = (new WikiService);
 			$user_ids = $wikiService->getWikiAdminIds();
 			$emailParams = array(
 				'$EDITORNAME' => $eventData['data']['editorName'],

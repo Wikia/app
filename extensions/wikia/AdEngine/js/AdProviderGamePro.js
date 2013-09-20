@@ -5,6 +5,7 @@ var AdProviderGamePro = function(adLogicPageLevelParamsLegacy, ScriptWriter, tra
 		slotMap = {
 			'HOME_TOP_LEADERBOARD': {'size': '728x90', 'tile': 1, 'pos': 'leadfull', 'dcopt': 'ist'},
 			'HOME_TOP_RIGHT_BOXAD': {'size': '300x250,300x600', 'tile': 3, 'pos': 'mpu'},
+			'HUB_TOP_LEADERBOARD': {'size': '728x90', 'tile': 1, 'pos': 'leadfull', 'dcopt': 'ist'},
 			'LEFT_SKYSCRAPER_2': {'size': '160x600', 'tile': 2, 'pos': 'sky'},
 			'PREFOOTER_LEFT_BOXAD': {'size': '300x250', 'tile': 4, 'pos': 'mpu2'},
 			'TOP_LEADERBOARD': {'size': '728x90', 'tile': 1, 'pos': 'leadfull', 'dcopt': 'ist'},
@@ -24,15 +25,10 @@ var AdProviderGamePro = function(adLogicPageLevelParamsLegacy, ScriptWriter, tra
 		return false;
 	}
 
-	// adapted for GP + simplified copy of AdConfig.DART.getUrl
 	function getUrl(slotname) {
 		log(['getUrl', slotname], 5, 'AdProviderGamePro');
 
-		var url = 'http://' +
-			'ad-emea' +
-			'.doubleclick.net/' +
-			'adj' + '/' +
-			'ow-wikia.com' + '/' + 'wka.' + window.cityShort + ';' +
+		var url = 'http://ad-emea.doubleclick.net/N7503/adj/DE-OW-netzwerk/wikia;' +
 			's1=' + '_' + window.wgDBname + ';' +
 			'pos=' + slotMap[slotname].pos + ';' +
 			adLogicPageLevelParamsLegacy.getCustomKeyValues() +

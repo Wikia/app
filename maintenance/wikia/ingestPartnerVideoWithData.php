@@ -1,10 +1,11 @@
 <?php
-
-///////////////////////////////////////////////////////////////////////////
-////// ingestPartnerVideoWithData.php                                //////
-////// ingest video from all premium partners using WikiFactory data //////
-////// Author: William Lee (wlee@wikia-inc.com)                      //////
-///////////////////////////////////////////////////////////////////////////
+/**
+ * ingestPartnerVideoWithData.php
+ *
+ * Ingest video from all premium partners using WikiFactory data
+ *
+ * @author William Lee (wlee@wikia-inc.com)
+ */
 
 ini_set( 'display_errors', 'stdout' );
 
@@ -13,7 +14,8 @@ $optionsWithArgs = array( 'u', 's', 'e', 'i' );
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( 'commandLine.inc' );
 
-if ( isset( $options['h'] ) ) {
+// commandLine.inc transforms -h and --help into 'help'
+if ( isset( $options['help'] ) ) {
 	print <<<EOT
 Import video from a partner
 
@@ -27,10 +29,11 @@ Options:
   -r				Reingest videos (overwrite existing)
   -i <time>			Do not reingest videos if they were uploaded in the last <time> seconds
   -a				get all videos
-  
+  --ra				use ooyala remote asset to ingest video
+
 Args:
   provider          Partner to import video from. Int defined in VideoPage.php.
-                    If none is specified, script will ingest content from all 
+                    If none is specified, script will ingest content from all
 		    supported premium providers.
 
 
@@ -38,59 +41,50 @@ EOT;
 	exit( 1 );
 }
 
-$userName = isset( $options['u'] ) ? $options['u'] : 'Wikia Video Library';
-// default date range - start: three days ago, end: tomorrow
-$now = date_create();
+// Calculate default date range - start: yesterday, end: tomorrow
 $di = new DateInterval('P1D');
-date_add($now, $di);
-$endDateTS = isset( $options['e'] ) ? $options['e'] : date_timestamp_get($now);
-$di = new DateInterval('P2D');
-date_sub($now, $di); // for some reason, this subtracts twice the date interval!
-$startDateTS = isset( $options['s'] ) ? $options['s'] : date_timestamp_get($now);
-$debug = isset($options['d']);
-$reupload = isset($options['r']);
-$ignoreRecent = isset($options['i']) ? $options['i'] : 0;
-$getAllVideos = isset($options['a']);
+$defaultStart = date_create();
+$defaultEnd   = date_create();
+date_add($defaultEnd, $di);
+date_sub($defaultStart, $di);
 
-// INPUT VALIDATION
+// Read input parameters
+$userName     = isset( $options['u'] ) ? $options['u'] : 'Wikia Video Library';
+$endDateTS    = isset( $options['e'] ) ? $options['e'] : date_timestamp_get($defaultEnd);
+$startDateTS  = isset( $options['s'] ) ? $options['s'] : date_timestamp_get($defaultStart);
+$debug        = isset( $options['d'] );
+$reupload     = isset( $options['r'] );
+$ignoreRecent = isset( $options['i'] ) ? $options['i'] : 0;
+$getAllVideos = isset( $options['a'] );
+$remoteAsset  = isset( $options['ra'] );
+$provider     = empty( $args[0] ) ? '' : strtolower($args[0]);
 
-$wgUser = User::newFromName( $userName );
-if ( !$wgUser ) {
-	die("Invalid username\n");
-}
-if ( $wgUser->isAnon() ) {
-//	$wgUser->addToDatabase();
-}
-$wgUser->load();
-
-$providersVideoFeed = array();
-$provider = !empty($args[0]) ? strtolower($args[0]) : '';
-if (empty($provider)) {
-	$providersVideoFeed = VideoFeedIngester::$PROVIDERS_DEFAULT;
-}
-elseif (array_search($provider, VideoFeedIngester::$PROVIDERS) !== false) {
-	$providersVideoFeed = array( $provider );
-}
-else {
-	die("unknown provider $provider. aborting.\n");
+// Make it clear when we're in debug mode
+if ( $debug ) {
+	echo("== DEBUG MODE ==\n");
 }
 
-// BEGIN MAIN
+// Populate $wgUser
+loadUser( $userName );
 
+// Determine which providers to pull from
+$providersVideoFeed = loadProviders( $provider );
+
+// Loop through each provider and ingest video metadata
 foreach ($providersVideoFeed as $provider) {
 	print("Starting import for provider $provider...\n");
 
-	$feedIngester = VideoFeedIngester::getInstance($provider); /* @var $feedIngester VideoFeedIngester */
+	$feedIngester = VideoFeedIngester::getInstance( $provider );
 	$feedIngester->reupload = $reupload;
 
 	// get WikiFactory data
 	$ingestionData = $feedIngester->getWikiIngestionData();
-	if (empty($ingestionData)) {
+	if ( empty($ingestionData) ) {
 		die("No ingestion data found in wikicities. Aborting.");
 	}
 
-
-	// open file
+	// When necessary download a list of resources into $file and reformat
+	// the start and end date for each provider
 	$file = '';
 	$startDate = $endDate = '';
 	switch ($provider) {
@@ -112,6 +106,7 @@ foreach ($providersVideoFeed as $provider) {
 			$file = $feedIngester->downloadFeed( $getAllVideos );
 			break;
 		case VideoFeedIngester::PROVIDER_OOYALA:
+			// no file needed
 			$startDate = date('Y-m-d', $startDateTS).'T00:00:00Z';
 			$endDate = date('Y-m-d', $endDateTS).'T00:00:00Z';
 			break;
@@ -119,12 +114,20 @@ foreach ($providersVideoFeed as $provider) {
 			// no file needed
 			$startDate = date('Y-m-d', $startDateTS);
 			$endDate = date('Y-m-d', $endDateTS);
+			$remoteAsset = true;
 			break;
 		default:
 	}
 
-	$params = array('debug'=>$debug, 'startDate'=>$startDate, 'endDate'=>$endDate, 'ignorerecent'=>$ignoreRecent);
-	if (!empty($ingestionData['keyphrases'])) {
+	$params = array(
+		'debug' => $debug,
+		'startDate' => $startDate,
+		'endDate' => $endDate,
+		'ignorerecent' => $ignoreRecent,
+		'remoteAsset' => $remoteAsset,
+	);
+
+	if ( !empty($ingestionData['keyphrases']) ) {
 		$params['keyphrasesCategories'] = $ingestionData['keyphrases'];
 	}
 
@@ -133,4 +136,29 @@ foreach ($providersVideoFeed as $provider) {
 	print "Created $numCreated articles!\n\n";
 }
 
-// END OF MAIN
+function loadUser( $userName ) {
+	global $wgUser;
+
+	$wgUser = User::newFromName( $userName );
+	if ( !$wgUser ) {
+		die("Invalid username\n");
+	}
+	if ( $wgUser->isAnon() ) {
+//		$wgUser->addToDatabase();
+	}
+	$wgUser->load();
+}
+
+function loadProviders ( $provider ) {
+
+	if ( empty($provider) ) {
+		$providersVideoFeed = VideoFeedIngester::$PROVIDERS_DEFAULT;
+	} elseif (array_search($provider, VideoFeedIngester::$PROVIDERS) !== false) {
+		$providersVideoFeed = array( $provider );
+	} else {
+		die("unknown provider $provider. aborting.\n");
+	}
+
+	return $providersVideoFeed;
+}
+

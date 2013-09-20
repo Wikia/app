@@ -7,10 +7,11 @@
 /*global Geo, Wikia */
 /*global ghostwriter, Krux */
 /*global AdConfig2, AdEngine2, DartUrl, EvolveHelper, SlotTweaker, ScriptWriter */
-/*global WikiaDartHelper, WikiaGptHelper */
-/*global AdProviderAdDriver2, AdProviderEvolve, AdProviderGamePro, AdProviderLater, AdProviderNull */
-/*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdLogicShortPage, AdLogicPageLevelParams */
+/*global WikiaDartHelper, WikiaGptHelper, WikiaFullGptHelper */
+/*global AdProviderAdDriver2, AdProviderEvolve, AdProviderGpt, AdProviderGamePro, AdProviderLater, AdProviderNull */
+/*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdLogicPageDimensions, AdLogicPageLevelParams */
 /*global AdLogicPageLevelParamsLegacy */
+/*global require*/
 /*jslint newcap:true */
 
 (function (log, tracker, window, ghostwriter, document, Geo, LazyQueue, Cookies, Cache, Krux, abTest) {
@@ -23,13 +24,15 @@
 		adLogicHighValueCountry,
 		adLogicPageLevelParams,
 		adLogicPageLevelParamsLegacy,
-		adLogicShortPage,
+		adLogicPageDimensions,
 		scriptWriter,
 		dartUrl,
 		wikiaDart,
 		wikiaGpt,
+		wikiaFullGpt,
 		evolveHelper,
 		adProviderAdDriver2,
+		adProviderGpt,
 		adProviderEvolve,
 		adProviderGamePro,
 		adProviderLater,
@@ -43,20 +46,22 @@
 	adEngine = AdEngine2(log, LazyQueue);
 
 	// Construct various helpers
+	slotTweaker = SlotTweaker(log, document, window);
 	dartUrl = DartUrl();
 	adLogicDartSubdomain = AdLogicDartSubdomain(Geo);
 	adLogicHighValueCountry = AdLogicHighValueCountry(window);
-	adLogicShortPage = AdLogicShortPage(document);
-	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux, adLogicShortPage, abTest);
+	adLogicPageDimensions = AdLogicPageDimensions(window, document, log, slotTweaker);
+	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux, adLogicPageDimensions, abTest);
 	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
-	slotTweaker = SlotTweaker(log, document, window);
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
-	wikiaDart = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl);
+	wikiaDart = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl, adLogicDartSubdomain);
 	wikiaGpt = WikiaGptHelper(log, window, document, adLogicPageLevelParams);
+	wikiaFullGpt = WikiaFullGptHelper(log, window, document, adLogicPageLevelParams);
 	evolveHelper = EvolveHelper(log, window);
 
 	// Construct Ad Providers
-	adProviderAdDriver2 = AdProviderAdDriver2(wikiaDart, scriptWriter, tracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, adLogicDartSubdomain, abTest, wikiaGpt, document);
+	adProviderAdDriver2 = AdProviderAdDriver2(wikiaDart, scriptWriter, tracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, adLogicDartSubdomain, wikiaGpt);
+	adProviderGpt = AdProviderGpt(tracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaFullGpt);
 	adProviderEvolve = AdProviderEvolve(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, document, Krux, evolveHelper, slotTweaker);
 	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, slotTweaker);
 	adProviderNull = AdProviderNull(log, slotTweaker);
@@ -71,11 +76,12 @@
 		window,
 		document,
 		Geo,
-		adLogicShortPage,
+		adLogicPageDimensions,
 		abTest,
 
 		// AdProviders:
 		adProviderAdDriver2,
+		adProviderGpt,
 		adProviderEvolve,
 		adProviderGamePro,
 		adProviderLater,
@@ -101,7 +107,6 @@
 			return wikiaDart.getUrl({
 				slotname: slotname,
 				slotsize: slotsize,
-				subdomain: adLogicDartSubdomain.getSubdomain(),
 				adType: 'adi',
 				src: 'liftium'
 			});
@@ -163,5 +168,19 @@
 
 	// Register window.wikiaDartHelper so jwplayer can use it
 	window.wikiaDartHelper = wikiaDart;
+
+	// Custom ads (skins, footer, etc)
+	// TODO: loadable modules
+	window.loadCustomAd = function (params) {
+		log('loadCustomAd', 'debug', module);
+
+		var adModule = 'ext.wikia.adengine.template.' + params.type;
+		log('loadCustomAd: loading ' + adModule, 'debug', module);
+
+		require([adModule], function (adTemplate) {
+			log('loadCustomAd: module ' + adModule + ' required', 'debug', module);
+			adTemplate.show(params);
+		});
+	};
 
 }(Wikia.log, Wikia.Tracker, window, ghostwriter, document, Geo, Wikia.LazyQueue, Wikia.Cookies, Wikia.Cache, Krux, Wikia.AbTest));

@@ -2,7 +2,8 @@
 
 /**
  * Parameter manipulation converting the value into a list by joining the items together.
- * 
+ *
+ * @deprecated since 0.5, removal in 0.7
  * @since 0.4
  * 
  * @file ParamManipulationImplode.php

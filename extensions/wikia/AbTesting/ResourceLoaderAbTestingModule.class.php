@@ -10,7 +10,7 @@ class ResourceLoaderAbTestingModule extends ResourceLoaderModule {
 
 	protected function getAbTesting() {
 		if ( empty( $this->abTesting ) ) {
-			$this->abTesting = new AbTesting();
+			$this->abTesting = AbTesting::getInstance();
 		}
 		return $this->abTesting;
 	}

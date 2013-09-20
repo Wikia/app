@@ -9,10 +9,10 @@ describe('AdLogicPageLevelParams', function(){
 				wgContentLanguage: 'xx'
 			},
 			documentMock,
-			adLogicShortPageMock,
+			adLogicPageDimensionsMock,
 			kruxMock,
 			abTestMock,
-			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock),
+			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock),
 			params = adLogicPageLevelParams.getPageLevelParams();
 
 		expect(params.s0).toBe('vertical');
@@ -24,50 +24,50 @@ describe('AdLogicPageLevelParams', function(){
 	it('getPageLevelParams hostprefix and domain params', function() {
 		var logMock = function() {},
 			windowMock = {location: {}},
-			adLogicShortPageMock,
+			adLogicPageDimensionsMock,
 			kruxMock,
 			abTestMock,
 			adLogicPageLevelParams,
 			params;
 
 		windowMock.location.hostname = 'an.example.org';
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.dmn).toBe('exampleorg');
 		expect(params.hostpre).toBe('an');
 
 		windowMock.location.hostname = 'fallout.wikia.com';
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.dmn).toBe('wikiacom');
 		expect(params.hostpre).toBe('fallout');
 
 		windowMock.location.hostname = 'www.wikia.com';
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.dmn).toBe('wikiacom');
 		expect(params.hostpre).toBe('www');
 
 		windowMock.location.hostname = 'www.wowwiki.com';
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.dmn).toBe('wowwikicom');
 		expect(params.hostpre).toBe('www');
 
 		windowMock.location.hostname = 'wowwiki.com';
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.dmn).toBe('wowwikicom');
 		expect(params.hostpre).toBe('wowwiki');
 
 		windowMock.location.hostname = 'www.bbc.co.uk';
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.dmn).toBe('bbccouk');
 		expect(params.hostpre).toBe('www');
 
 		windowMock.location.hostname = 'externaltest.fallout.wikia.com';
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.dmn).toBe('wikiacom');
 		expect(params.hostpre).toBe('externaltest');
@@ -77,28 +77,28 @@ describe('AdLogicPageLevelParams', function(){
 		var undef,
 			logMock = function() {},
 			windowMock = {location: {hostname: 'an.example.org'}},
-			adLogicShortPageMock,
+			adLogicPageDimensionsMock,
 			kruxMock,
 			abTestMock,
 			adLogicPageLevelParams,
 			params;
 
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.wpage).toBe(undef, 'undef');
 
 		windowMock.wgPageName = 'Muppet_Wiki';
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.wpage).toBe('muppet_wiki', 'Muppet_Wiki');
 
 		windowMock.wgPageName = 'Assassin\'s_Creed_Wiki';
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.wpage).toBe('assassin\'s_creed_wiki', 'Assassin\'s_Creed_Wiki');
 
 		windowMock.wgPageName = 'Военная_база_Марипоза';
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.wpage).toBe('военная_база_марипоза', 'Военная_база_Марипоза');
 	});
@@ -106,10 +106,10 @@ describe('AdLogicPageLevelParams', function(){
 	it('getPageLevelParams default DB name', function() {
 		var logMock = function() {},
 			windowMock = {location: {hostname: 'an.example.org'}},
-			adLogicShortPageMock,
+			adLogicPageDimensionsMock,
 			kruxMock,
 			abTestMock,
-			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock),
+			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock),
 			params = adLogicPageLevelParams.getPageLevelParams();
 
 		expect(params.s1).toBe('_wikia', 's1=_wikia');
@@ -118,18 +118,18 @@ describe('AdLogicPageLevelParams', function(){
 	it('getPageLevelParams language', function() {
 		var logMock = function() {},
 			windowMock = {location: {hostname: 'an.example.org'}},
-			adLogicShortPageMock,
+			adLogicPageDimensionsMock,
 			kruxMock,
 			abTestMock,
 			adLogicPageLevelParams,
 			params;
 
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.lang).toBe('unknown', 'lang=unknown');
 
 		windowMock.wgContentLanguage = 'xyz';
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.lang).toBe('xyz', 'lang=xyz');
 	});
@@ -140,10 +140,10 @@ describe('AdLogicPageLevelParams', function(){
 				location: {hostname: 'an.example.org'},
 				wikiaPageType: 'pagetype'
 			},
-			adLogicShortPageMock,
+			adLogicPageDimensionsMock,
 			kruxMock,
 			abTestMock,
-			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock),
+			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock),
 			params = adLogicPageLevelParams.getPageLevelParams();
 
 		expect(params.s2).toBe('pagetype', 's2=pagetype');
@@ -155,10 +155,10 @@ describe('AdLogicPageLevelParams', function(){
 				location: {hostname: 'an.example.org'},
 				wgArticleId: 678
 			},
-			adLogicShortPageMock,
+			adLogicPageDimensionsMock,
 			kruxMock,
 			abTestMock,
-			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock),
+			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock),
 			params = adLogicPageLevelParams.getPageLevelParams();
 
 		expect(params.artid).toBe('678', 'artid=678');
@@ -167,18 +167,18 @@ describe('AdLogicPageLevelParams', function(){
 	it('getPageLevelParams has pre footers', function() {
 		var logMock = function() {},
 			windowMock = {location: {hostname: 'an.example.org'}},
-			adLogicShortPageMockTrue = {hasPreFooters: function() {return true;}},
-			adLogicShortPageMockFalse = {hasPreFooters: function() {return false;}},
+			adLogicPageDimensionsMockTrue = {hasPreFooters: function() {return true;}},
+			adLogicPageDimensionsMockFalse = {hasPreFooters: function() {return false;}},
 			kruxMock,
 			abTestMock,
 			adLogicPageLevelParams,
 			params;
 
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMockTrue, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMockTrue, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.hasp).toBe('yes', 'yes');
 
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMockFalse, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMockFalse, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.hasp).toBe('no', 'no');
 	});
@@ -189,10 +189,10 @@ describe('AdLogicPageLevelParams', function(){
 				location: {hostname: 'an.example.org'},
 				wgDartCustomKeyValues: 'key1=value1;key2=value2;key3=value3;key3=value4'
 			},
-			adLogicShortPageMock = {hasPreFooters: function() {return true;}},
+			adLogicPageDimensionsMock = {hasPreFooters: function() {return true;}},
 			kruxMock,
 			abTestMock,
-			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock),
+			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock),
 			params = adLogicPageLevelParams.getPageLevelParams();
 
 		expect(params.key1).toEqual(['value1'], 'key1=value1');
@@ -206,10 +206,10 @@ describe('AdLogicPageLevelParams', function(){
 				location: {hostname: 'an.example.org'},
 				amzn_targs: 'amzn_300x250=1;amzn_728x90=1;'
 			},
-			adLogicShortPageMock = {hasPreFooters: function() {return true;}},
+			adLogicPageDimensionsMock = {hasPreFooters: function() {return true;}},
 			kruxMock,
 			abTestMock,
-			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock),
+			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock),
 			params = adLogicPageLevelParams.getPageLevelParams();
 
 		expect(params.amzn_300x250).toEqual(['1']);
@@ -236,21 +236,21 @@ describe('AdLogicPageLevelParams', function(){
 			windowMock = {
 				location: {hostname: 'an.example.org'}
 			},
-			adLogicShortPageMock,
+			adLogicPageDimensionsMock,
 			kruxMock = {},
 			abTestMock,
 			adLogicPageLevelParams,
 			params;
 
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMockNone, adLogicShortPageMock, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMockNone, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.ksgmnt).toEqual(kruxMockNone.segments, 'No segments');
 
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMockFew, adLogicShortPageMock, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMockFew, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.ksgmnt).toEqual(kruxMockFew.segments, 'A few segments');
 
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMockLots, adLogicShortPageMock, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMockLots, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.ksgmnt).toEqual(kruxMock27.segments, 'A lot of segments (stripped to first 27 segments)');
 	});
@@ -261,24 +261,24 @@ describe('AdLogicPageLevelParams', function(){
 				location: {hostname: 'an.example.org'},
 				wgCategories: []
 			},
-			adLogicShortPageMock,
+			adLogicPageDimensionsMock,
 			kruxMock,
 			abTestMock,
 			adLogicPageLevelParams,
 			params,
 			undef;
 
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.cat).toBeFalsy('No categories');
 
 		windowMock.wgCategories = ['Category', 'Another Category'];
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.cat).toEqual(['category', 'another_category'], 'Two categories');
 
 		windowMock.wgCategories = ['A Category', 'Another Category', 'Yet Another Category', 'Aaaand One More'];
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.cat).toEqual(['a_category', 'another_category', 'yet_another_category'], '4 categories stripped down to first 3');
 	});
@@ -286,7 +286,7 @@ describe('AdLogicPageLevelParams', function(){
 	it('getPageLevelParams abTest info', function() {
 		var logMock = function() {},
 			windowMock = {location: {hostname: 'an.example.org'}},
-			adLogicShortPageMock,
+			adLogicPageDimensionsMock,
 			kruxMock,
 			abTestMock = {
 				getExperiments: function() {
@@ -303,16 +303,16 @@ describe('AdLogicPageLevelParams', function(){
 			params,
 			abParamEmpty;
 
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.ab).toEqual(['17_34', '19_45', '76_112'], 'ab params passed');
 
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMockEmpty);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMockEmpty);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		abParamEmpty = !params.ab || params.ab.length === 0;
 		expect(abParamEmpty).toBeTruthy('no ab param passed when no experiment is active');
 
-		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMockNone);
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMockNone);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		abParamEmpty = !params.ab || params.ab.length === 0;
 		expect(abParamEmpty).toBeTruthy('no ab param passed when AbTesting is not passed to module');
@@ -333,9 +333,9 @@ describe('AdLogicPageLevelParams', function(){
 				wikiaPageIsHub: true
 			},
 			kruxMock,
-			adLogicShortPageMock = {hasPreFooters: function() {return true;}},
+			adLogicPageDimensionsMock = {hasPreFooters: function() {return true;}},
 			abTestMock,
-			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock),
+			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock),
 			params = adLogicPageLevelParams.getPageLevelParams();
 
 		expect(params.s0).toBe('hub');
@@ -359,9 +359,9 @@ describe('AdLogicPageLevelParams', function(){
 				wikiaPageIsHub: true
 			},
 			kruxMock,
-			adLogicShortPageMock = {hasPreFooters: function() {return true;}},
+			adLogicPageDimensionsMock = {hasPreFooters: function() {return true;}},
 			abTestMock,
-			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock),
+			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock),
 			params = adLogicPageLevelParams.getPageLevelParams();
 
 		expect(	params.s0).toBe('hub');
@@ -385,9 +385,9 @@ describe('AdLogicPageLevelParams', function(){
 				wikiaPageIsHub: true
 			},
 			kruxMock,
-			adLogicShortPageMock = {hasPreFooters: function() {return true;}},
+			adLogicPageDimensionsMock = {hasPreFooters: function() {return true;}},
 			abTestMock,
-			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock),
+			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock),
 			params = adLogicPageLevelParams.getPageLevelParams();
 
 		expect(params.s0).toBe('hub');
@@ -397,5 +397,29 @@ describe('AdLogicPageLevelParams', function(){
 		expect(params.hostpre).toBe('www');
 		expect(params.lang).toBe('en');
 		expect(params.hasp).toBe('yes');
+	});
+
+	it('getPageLevelParams Krux segments on regular and on COPPA wiki', function() {
+		var logMock = function() {},
+			kruxMockFew = {segments: ['kxsgmntA', 'kxsgmntB', 'kxsgmntC', 'kxsgmntD']},
+			windowMockRegular = {
+				location: {hostname: 'an.example.org'}
+			},
+			windowMockCOPPA = {
+				location: {hostname: 'an.example.org'},
+				wgWikiDirectedAtChildren: true
+			},
+			adLogicPageDimensionsMock,
+			abTestMock,
+			adLogicPageLevelParams,
+			params;
+
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMockRegular, kruxMockFew, adLogicPageDimensionsMock, abTestMock);
+		params = adLogicPageLevelParams.getPageLevelParams();
+		expect(params.ksgmnt).toEqual(kruxMockFew.segments, 'Krux on regular wiki');
+
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMockCOPPA, kruxMockFew, adLogicPageDimensionsMock, abTestMock);
+		params = adLogicPageLevelParams.getPageLevelParams();
+		expect(params.ksgmnt).toBeUndefined('No Krux on COPPA wiki');
 	});
 });

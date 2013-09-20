@@ -204,7 +204,7 @@ class WallThread {
 		});
 		
 		// get last post info
-		$revision = F::build( 'Revision', array( $data->rev_id ), 'newFromId' );
+		$revision = Revision::newFromId( $data->rev_id );
 		if ( $revision instanceof Revision ) {
 			$title = $revision->getTitle();
 			$wallMessage = WallMessage::newFromId($title->getArticleId());

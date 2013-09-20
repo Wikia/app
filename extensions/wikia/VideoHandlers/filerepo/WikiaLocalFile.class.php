@@ -22,11 +22,45 @@ class WikiaLocalFile extends LocalFile {
 	}
 
 	/**
+	 * Creates a new WikiaLocalFile object from an archived version of a file in the oldimage table
+	 * @param String $name - The name of the file
+	 * @param String $archiveName - The archive name of the file, typically a concatenation of
+	 *                              the archive date and the original file name.
+	 * @param WikiaForeignDBViaLBRepo $repo - The file repo this file is in.
+	 * @return WikiaLocalFile - A new WikiaLocalFile object
+	 */
+	static function newFromArchiveTitle( $name, $archiveName, $repo ) {
+
+		// Query master for the chance that a revert happens before a video saved to oldimage replicates
+		$dbr = $repo->getMasterDB();
+		$res = $dbr->select( 'oldimage', '*',
+			array( 'oi_name'         => $name,
+				   'oi_archive_name' => $archiveName ),
+			__METHOD__
+		);
+		$row = $dbr->fetchObject( $res );
+		if (empty($row)) {
+			return null;
+		}
+
+		$title = Title::makeTitle( NS_FILE, $row->oi_name );
+		if (empty($title)) {
+			return null;
+		}
+
+		/* @var $file WikiaLocalFile */
+		$file = new static( $title, $repo );
+		$file->loadFromRow( $row, 'oi_' );
+		return $file;
+	}
+
+	/**
 	 * Create a LocalFile from a title
 	 * Do not call this except from inside a repo class.
 	 */
 	static function newFromRow( $row, $repo ) {
 		$title = Title::makeTitle( NS_FILE, $row->img_name );
+		/* @var $file LocalFile */
 		$file = new static( $title, $repo );
 		$file->loadFromRow( $row );
 		return $file;
@@ -97,7 +131,7 @@ class WikiaLocalFile extends LocalFile {
 
 	protected function getLocalFileLogic() {
 		if ( empty( $this->oLocalFileLogic ) ){
-			$this->oLocalFileLogic = F::build( 'WikiaLocalFileShared', array( $this ) );
+			$this->oLocalFileLogic = new WikiaLocalFileShared( $this );
 		}
 		return $this->oLocalFileLogic;
 	}
@@ -105,6 +139,9 @@ class WikiaLocalFile extends LocalFile {
 	// No everything can be transparent, because __CALL skips already defined methods.
 	// These methods work as a layer of communication between this class and SharedLogic
 
+	/**
+	 * @return VideoHandler
+	 */
 	function getHandler(){
 		wfProfileIn( __METHOD__ );
 		if ( !isset( $this->handler ) ) {

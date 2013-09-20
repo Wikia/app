@@ -1,7 +1,7 @@
 <?php
 	$seocounter = 0;
 	/* @var $homePageHelper WikiaHomePageHelper */
-	$homePageHelper = F::build('WikiaHomePageHelper');
+	$homePageHelper = new WikiaHomePageHelper();
 ?>
 <div id="WikiPreviewInterstitialMask" class="WikiPreviewInterstitialMask hidden">
 	<section class="WikiPreviewInterstitial" class="hidden">
@@ -16,18 +16,19 @@
 		<div class="grid-1 alpha remix">
 			<h2><?= wfMsg('wikiahome-visualisation-remix-mixitup'); ?></h2>
 			<h3><?= wfMsg('wikiahome-visualisation-remix-mixituptext'); ?></h3>
-			<a href="#" class="wikia-button secondary remix-button <?= ( !$areCollectionsAvailable ? 'chevron-not-visible' : '' ); ?>">
+			<a href="#" class="wikia-button secondary remix-button <?= ( empty($collectionsList) ? 'chevron-not-visible' : '' ); ?>">
 				<img src="<?= $wg->BlankImgUrl; ?>" class="arrow" />
 				<?= wfMsg('wikiahome-visualisation-remix-button'); ?>
 			</a>
 			
-			<?php if( $areCollectionsAvailable ): ?>
+			<?php if( !empty($collectionsList) ): ?>
 				<a href="#" class="wikia-button collections-button">
 					<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
 				</a>
 				<ul class="WikiaMenuElement collections-dropdown">
-					<?php foreach($collectionsList as $collection): ?>
-						<li class="collection-link" data-collection-id="<?= $collection['id']; ?>"><?= $collection['name']; ?></li>
+					<?php foreach($collectionsList as $collectionId =>$collection): ?>
+
+						<li class="collection-link" data-collection-id="<?= $collectionId; ?>"><?= $collection['name']; ?></li>
 					<?php endforeach; ?>
 				</ul>
 			<?php endif; ?>

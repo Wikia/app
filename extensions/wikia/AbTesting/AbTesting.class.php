@@ -25,38 +25,47 @@ class AbTesting extends WikiaObject {
 		self::FLAG_LIMIT_TO_SPECIAL_WIKIS => 'limit_to_special_wikis',
 	);
 
-	static protected $initialized = false;
+	static protected $instance = null;
 
-	function __construct() {
-		parent::__construct();
-
-		if ( !self::$initialized ) {
-			// Nirvana singleton, please use F::build
-			F::setInstance( __CLASS__, $this );
-			self::$initialized = true;
+	static function getInstance() {
+		if( is_null(self::$instance) ) {
+			self::$instance = new AbTesting();
 		}
+		return self::$instance;
 	}
 
 	// Keeping the response size (assets minification) and the number of external requests low (aggregation)
-	public function onWikiaMobileAssetsPackages( Array &$jsHeadPackages, Array &$jsBodyPackages, Array &$scssPackages ) {
-		array_unshift( $jsHeadPackages, 'abtesting' );
+	static public function onWikiaMobileAssetsPackages( Array &$jsStaticPackages, Array &$jsExtensionPackages, Array &$scssPackages ) {
+		array_unshift( $jsStaticPackages, 'abtesting' );
 		return true;
 	}
 
-	public function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
+	static public function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
 		array_unshift( $jsAssetGroups, 'abtesting' );
 		return true;
 	}
 
-	public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
-		if ( $this->app->checkSkin( 'oasis', $skin ) ) {
-			$scripts .= ResourceLoader::makeCustomLink($this->wg->out, array( 'wikia.ext.abtesting' ), 'scripts') . "\n";
+	static public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
+		$app = F::app();
+		$wg = $app->wg;
+
+		if ( $app->checkSkin( 'wikiamobile', $skin ) ) {
+			//Add this mock as wikia.ext.abtesting relies on it and on WikiaMobile there is no mw object
+			//This will need some treatment if we add more abtesting to WikiaMobile
+			$scripts .= '<script>var mw = {loader: {state: function(){}}}</script>';
 		}
+
+		if ( $app->checkSkin( ['oasis', 'wikiamobile'], $skin ) ) {
+			$scripts .= ResourceLoader::makeCustomLink( $wg->out, array( 'wikia.ext.abtesting' ), 'scripts' ) . "\n";
+		}
+
+
+
 		return true;
 	}
 
 	protected function getMemcKey() {
-		return $this->wf->sharedMemcKey('abtesting','config',self::VERSION);
+		return wfSharedMemcKey('abtesting','config',self::VERSION);
 	}
 
 	protected function getFlagsInObject( $flags ) {
@@ -126,16 +135,8 @@ class AbTesting extends WikiaObject {
 		return sprintf("Wikia.AbTestConfig = %s;\n",json_encode($expConfig));
 	}
 
-	/* gets config from Cache if available
-	   otherwise generates it using helper function
-	*/
 	protected function getConfig() {
-		$memcKey = $this->getMemcKey();
-//		$data = $this->wg->memc->get($memcKey);
-		if ( empty( $data ) ) {
-			$data = $this->generateConfigObj();
-		}
-		return $data;
+		return $this->generateConfigObj();
 	}
 
 	protected function generateConfigObj() {

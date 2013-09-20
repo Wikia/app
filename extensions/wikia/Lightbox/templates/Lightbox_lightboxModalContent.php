@@ -51,14 +51,10 @@
 		<img src="{{imageUrl}}" height="{{imageHeight}}" >
 	</script>
 
-	<script id="LightboxVideoTemplate" class="template" type="text/template">
-		{{{videoEmbedCode}}}
-	</script>
-
 	<script id="LightboxHeaderTemplate" class="template" type="text/template">
 		<button class="share-button secondary"><?= wfMsg('lightbox-header-share-button') ?></button>
 		<a href="{{fileUrl}}" class="wikia-button more-info-button secondary"><?= wfMsg('lightbox-header-more-info-button') ?></a>
-		
+
 		<div id="lightbox-add-to-article" class="lightbox-add-to-article">
 			<button class="article-add-button secondary"><?= wfMsg('lightbox-header-add-video-button') ?></button>
 			<input class="lightbox-article-input" />

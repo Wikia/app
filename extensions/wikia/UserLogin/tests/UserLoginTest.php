@@ -1,6 +1,8 @@
 <?php
 
-	class UserLoginTest extends WikiaBaseTest {
+	require_once __DIR__ . '/UserLoginBaseTest.php';
+
+	class UserLoginTest extends UserLoginBaseTest {
 		const TEST_CITY_ID = 79860;
 		const TEST_USERNAME = 'WikiaUser';
 
@@ -12,76 +14,16 @@
 		}
 
 		protected function setUpMock() {
-			$mock_cache = $this->getMock('stdClass', array('set', 'delete'));
-			$mock_cache->expects($this->any())
-						->method('set');
-			$mock_cache->expects($this->any())
-						->method('delete');
+			// mock cache
+			$memcParams = array(
+				'set' => null,
+				'get' => null,
+				'delete' => null
+			);
 
-			$this->mockGlobalVariable('wgMemc', $mock_cache);
+			$this->setUpMockObject( 'stdClass', $memcParams, false, 'wgMemc' );
+
 			$this->mockGlobalVariable('wgCityId', self::TEST_CITY_ID);
-
-			$this->mockApp();
-		}
-
-		protected function setUpMockObject( $objectName, $objectParams=null, $needSetInstance=false, $globalVarName=null, $objectValues=array(), $callOriginalConstructor=true ) {
-			$mockObject = $objectParams;
-			if ( is_array($objectParams) ) {
-				$methods = array_keys( $objectParams );
-
-				if ( $callOriginalConstructor ) {
-					$mockObject = $this->getMock( $objectName, $methods, $objectValues );
-				} else {
-					$mockObject = $this->getMock( $objectName, $methods, $objectValues, '', false );
-				}
-
-				foreach( $objectParams as $method => $value ) {
-					if ( $value === null ) {
-						$mockObject->expects( $this->any() )
-									->method( $method );
-					} else if ( is_array($value) && array_key_exists('mockExpTimes', $value) && array_key_exists('mockExpValues', $value) ) {
-						if ( $value['mockExpValues'] == null ) {
-							$mockObject->expects( $this->exactly($value['mockExpTimes']) )
-										->method( $method );
-						} else {
-							$mockObject->expects( $this->exactly($value['mockExpTimes']) )
-										->method( $method )
-										->will( $this->returnValue($value['mockExpValues']) );
-
-						}
-					} else {
-						$mockObject->expects( $this->any() )
-									->method( $method )
-									->will( $this->returnValue($value) );
-					}
-				}
-			}
-
-			if ( !empty($globalVarName) ) {
-				$this->mockGlobalVariable( $globalVarName, $mockObject );
-			}
-
-			if ( $needSetInstance ) {
-				$this->mockClass( $objectName, $mockObject );
-			}
-		}
-
-		protected function setUpRequest( $params=array() ) {
-			F::unsetInstance('WebRequest');
-			$wgRequest = F::build('WebRequest', $params);
-			foreach( $params as $key => $value ) {
-				$wgRequest->setVal( $key, $value );
-			}
-			$this->mockGlobalVariable('wgRequest', $wgRequest);
-		}
-
-		protected function setUpMobileSkin( $mobileSkin ) {
-			$this->skinOrg = RequestContext::getMain()->getSkin();
-			RequestContext::getMain()->setSkin( $mobileSkin );
-		}
-
-		protected function tearDownMobileSkin() {
-			RequestContext::getMain()->setSkin( $this->skinOrg );
 		}
 
 		/**
@@ -98,7 +40,10 @@
 			}
 
 			$mockMsgExtCount = ( $expResult == 'unconfirm' ) ? 1 : 0 ;
-			$this->mockGlobalFunction( 'MsgExt', $expMsg, $mockMsgExtCount );
+			$this->getGlobalFunctionMock( 'wfMsgExt' )
+				->expects( $this->exactly( $mockMsgExtCount ) )
+				->method( 'wfMsgExt' )
+				->will( $this->returnValue( $expMsg ) );
 
 			$this->setUpMock();
 
@@ -106,13 +51,13 @@
 			$response = $this->app->sendRequest( 'UserLoginSpecial', 'login' );
 
 			$responseData = $response->getVal( 'result' );
-			$this->assertEquals( $expResult, $responseData );
+			$this->assertEquals( $expResult, $responseData, 'result' );
 
 			$responseData = $response->getVal( 'msg' );
-			$this->assertEquals( $expMsg, $responseData );
+			$this->assertEquals( $expMsg, $responseData, 'msg' );
 
 			$responseData = $response->getVal( 'errParam' );
-			$this->assertEquals( $expErrParam, $responseData );
+			$this->assertEquals( $expErrParam, $responseData, 'errParam' );
 		}
 
 		public function testWikiaMobileLoginTemplate() {
@@ -141,7 +86,7 @@
 
 			$this->setUpMobileSkin( $mobileSkin );
 
-			$response = $this->app->sendRequest( 'UserLoginSpecial', 'index', array( 'format' => 'html', 'action' => $this->app->wf->Msg( 'resetpass_submit' ) ) );
+			$response = $this->app->sendRequest( 'UserLoginSpecial', 'index', array( 'format' => 'html', 'action' => wfMsg( 'resetpass_submit' ) ) );
 			$response->toString();//triggers set up of template path
 
 			$this->assertEquals(
@@ -310,6 +255,7 @@
 				array($reqParams101, $mockLoginFormParams107, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'resetpass', null),
 				// error - EMPTY_PASS
 				array($reqParams101, $mockLoginFormParams108, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg108, $expErrParam8),
+
 				// error - WRONG_PASS
 				array($reqParams101, $mockLoginFormParams109, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg109, $expErrParam8),
 				// error - CLOSED_ACCOUNT_FLAG account (WRONG_PASS)
@@ -320,6 +266,7 @@
 				array($reqParams101, $mockLoginFormParams112, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg109, $expErrParam8),
 				// error - CREATE_BLOCKED
 				array($reqParams101, $mockLoginFormParams113, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg113),
+
 				// error - NOT_EXISTS
 				array($reqParams101, $mockLoginFormParams114, $mockUserParams1, $mockTempUserParams114, $mockHelperParams1, 'error', $expMsg105, $expErrParam1),
 				// error - NOT_EXISTS - Temp User account with password throttled
@@ -330,6 +277,7 @@
 				array($reqParams101, $mockLoginFormParams114, $mockUserParams117, $mockTempUserParams116, $mockHelperParams116, 'resetpass', null),
 				// unconfirm - NOT_EXISTS - Temp User account with temporary password
 				array($reqParams101, $mockLoginFormParams114, $mockUserParams118, $mockTempUserParams116, $mockHelperParams118, 'unconfirm', $expMsg118),
+
 				// SUCCESS
 				array($reqParams101, $mockLoginFormParams120, $mockUserParams120, $mockTempUserParams1, $mockHelperParams120, 'ok', null),
 			);
@@ -357,10 +305,10 @@
 			$response = $this->app->sendRequest( 'UserLoginSpecial', 'mailPassword' );
 
 			$responseData = $response->getVal( 'result' );
-			$this->assertEquals( $expResult, $responseData );
+			$this->assertEquals( $expResult, $responseData, 'result' );
 
 			$responseData = $response->getVal( 'msg' );
-			$this->assertEquals( $expMsg, $responseData );
+			$this->assertEquals( $expMsg, $responseData, 'msg' );
 
 		}
 
@@ -477,10 +425,10 @@
 			$response = $this->app->sendRequest( 'UserLoginSpecial', 'changePassword', $params );
 
 			$responseData = $response->getVal( 'result' );
-			$this->assertEquals( $expResult, $responseData );
+			$this->assertEquals( $expResult, $responseData, 'result' );
 
 			$responseData = $response->getVal( 'msg' );
-			$this->assertEquals( $expMsg, $responseData );
+			$this->assertEquals( $expMsg, $responseData, 'msg' );
 		}
 
 		public function changePasswordDataProvider() {

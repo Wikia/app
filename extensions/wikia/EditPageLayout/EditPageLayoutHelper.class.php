@@ -19,10 +19,27 @@ class EditPageLayoutHelper {
 	/* @var $editPage EditPageLayout */
 	public $editPage;
 
-	function __construct() {
+	static private $instance;
+
+	private function __construct() {
 		$this->app = F::app();
-		$this->out = $this->app->getGlobal('wgOut');
-		$this->request = $this->app->getGlobal('wgRequest');
+		$this->out = $this->app->wg->Out;
+		$this->request = $this->app->wg->Request;
+	}
+
+	static function getInstance() {
+		if (!isset(self::$instance)) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
+
+	function getJsVars() {
+		return $this->jsVars;
+	}
+
+	function getRequest() {
+		return $this->request;
 	}
 
 	/**
@@ -33,14 +50,16 @@ class EditPageLayoutHelper {
 	 * @author macbre
 	 */
 	function setupEditPage(Article $editedArticle, $fullScreen = true, $class = false) {
+		global $wgHooks;
+
 		wfProfileIn(__METHOD__);
 
 		$user = $this->app->wg->User;
 
 		// don't render edit area when we're in read only mode
-		if ($this->app->runFunction('wfReadOnly')) {
+		if (wfReadOnly()) {
 			// set correct page title
-			$this->out->setPageTitle($this->app->runFunction('wfMsg', 'editing', $this->app->getGlobal('wgTitle')->getPrefixedText()));
+			$this->out->setPageTitle(wfMsg('editing', $this->app->getGlobal('wgTitle')->getPrefixedText()));
 			wfProfileOut(__METHOD__);
 			return false;
 		}
@@ -53,10 +72,13 @@ class EditPageLayoutHelper {
 		}
 
 		// Disable custom JS while loading the edit page on MediaWiki JS pages and user subpages (BugID: 41449)
-		if ( ( $editedArticle->getTitle()->getNamespace() === NS_MEDIAWIKI
-			&& substr( $editedArticle->getTitle()->getText(), -3 ) === '.js' )
-			|| ( $editedArticle->getTitle()->getNamespace() === NS_USER
-			&& preg_match( '/^' . preg_quote( $user->getName(), '/' ) . '\/.*\.js$/', $editedArticle->getTitle()->getText() ) )
+		$editedArticleTitle     = $editedArticle->getTitle();
+		$editedArticleTitleNS   = $editedArticleTitle->getNamespace();
+		$editedArticleTitleText = $editedArticleTitle->getText();
+		if ( ( $editedArticleTitleNS === NS_MEDIAWIKI
+			&& substr( $editedArticleTitleText, -3 ) === '.js' )
+			|| ( $editedArticleTitleNS === NS_USER
+			&& preg_match( '/^' . preg_quote( $user->getName(), '/' ) . '\/.*\.js$/', $editedArticleTitleText ) )
 		) {
 			$this->out->disallowUserJs();
 		}
@@ -101,12 +123,10 @@ class EditPageLayoutHelper {
 		$this->addJsVariable('wgCopywarn', $this->editPage->getCopyrightNotice());
 
 		// extra hooks for edit page
-		$this->app->registerHook('MakeGlobalVariablesScript', 'EditPageLayoutHelper', 'onMakeGlobalVariablesScript', array(), false, $this);
-		$this->app->registerHook('SkinGetPageClasses', 'EditPageLayoutHelper', 'onSkinGetPageClasses', array(), false, $this);
+		$wgHooks['MakeGlobalVariablesScript'][] = 'EditPageLayoutHooks::onMakeGlobalVariablesScript';
+		$wgHooks['SkinGetPageClasses'][] = 'EditPageLayoutHooks::onSkinGetPageClasses';
 
-		F::setInstance('EditPageLayoutHelper', $this );
-
-		$this->editPage->setHelper( $this );
+		$this->helper = self::getInstance();
 
 		wfProfileOut(__METHOD__);
 		return $this->editPage;
@@ -126,7 +146,7 @@ class EditPageLayoutHelper {
 		// on edit page so it will make proper list of modules
 		$action = $this->request->setVal('action',null);
 		$diff = $this->request->setVal('diff',null);
-		$railModuleList = F::build('BodyController')->getRailModuleList();
+		$railModuleList = (new BodyController)->getRailModuleList();
 		$this->request->setVal('action',$action);
 		$this->request->setVal('diff',$diff);
 
@@ -154,181 +174,7 @@ class EditPageLayoutHelper {
 		$this->jsVars[$name] = $value;
 	}
 
-	function onAlternateEditPageClass(&$editPage) {
-		// apply only for Oasis
-		if ( $this->app->checkSkin( 'oasis' ) ) {
-			$instance = $this->setupEditPage($this->app->getGlobal('wgArticle'));
 
-			// $instance will be false in read-only mode (BugId:9460)
-			if (!empty($instance)) {
-				$editPage = $instance;
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Add wgIsEditPage global JS variable on edit pages
-	 */
-	function onMakeGlobalVariablesScript(Array &$vars) {
-		$this->app->wf->RunHooks('EditPageMakeGlobalVariablesScript', array(&$vars));
-
-		foreach( $this->jsVars as $key => $value ) {
-			$vars[$key] = $value;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Add CSS class to <body> element when there's an conflict edit or undo revision is about to be performed
-	 */
-	function onSkinGetPageClasses(&$classes) {
-		if ($this->editPage->isConflict || $this->editPage->formtype == 'diff') {
-			$classes .= ' EditPageScrollable';
-		}
-
-		if (!empty($this->editPage->mHasPermissionError)) {
-			$classes .= ' EditPagePermissionError';
-		}
-
-		return true;
-	}
-
-	/**
-	 * Reverse parse wikitext when performing diff for edit conflict
-	 */
-	function onEditPageBeforeConflictDiff(&$editform, &$out ) {
-		if (class_exists('RTE') && $this->request->getVal('RTEMode') == 'wysiwyg') {
-			$editform->textbox2 = RTE::HtmlToWikitext($editform->textbox2);
-		}
-
-		return true;
-	}
-
-	/**
-	 * Get warning note shown when preview mode is forced and add it to the nofitication area
-	 */
-	function onEditPageGetPreviewNote($editform, &$note) {
-		if (($this->editPage instanceof EditPageLayout) && ($note != '')) {
-			$this->editPage->addEditNotice($note);
-		}
-
-		return true;
-	}
-
-	/**
-	 * Apply user preferences changes
-	 */
-	function onGetPreferences($user, &$defaultPreferences) {
-		// modify sections for the following user options
-		$prefs = array(
-			// General
-			'enablerichtext' => 'general',
-			'disablespellchecker' => 'general',
-
-			// Starting an edit
-			'editsection' => 'starting-an-edit',
-			'editsectiononrightclick' => 'starting-an-edit',
-			'editondblclick' => 'starting-an-edit',
-			'createpagedefaultblank' => 'starting-an-edit',
-			'createpagepopupdisabled' => 'starting-an-edit',
-
-			// Editing experience
-			'minordefault' => 'editing-experience',
-			'forceeditsummary' => 'editing-experience',
-			'disablecategoryselect' => 'editing-experience',
-			'editwidth' => 'editing-experience',
-			'disablelinksuggest' => 'editing-experience', // handled in wfLinkSuggestGetPreferences()
-
-			// Monobook layout only
-			'showtoolbar' => 'monobook-layout',
-			'previewontop' => 'monobook-layout',
-			'previewonfirst' => 'monobook-layout',
-
-			// Size of editing window (Monobook layout only)
-			'cols' => 'editarea-size',
-			'rows' => 'editarea-size',
-		);
-
-		// move checkboxes / inputs to different section on "Editing" tab
-		foreach($prefs as $name => $section) {
-			if (isset($defaultPreferences[$name])) {
-				$defaultPreferences[$name]['section'] = 'editing/' . $section;
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Grab notices added by core via LogEventsList class
-	 *
-	 * @param $s String Notice to be emitted
-	 * @param $types String or Array
-	 * @param $page String The page title to show log entries for
-	 * @param $user String The user who made the log entries
-	 * @param $param array Associative Array with the following additional options:
-	 * - lim Integer Limit of items to show, default is 50
-	 * - conds Array Extra conditions for the query (e.g. "log_action != 'revision'")
-	 * - showIfEmpty boolean Set to false if you don't want any output in case the loglist is empty
-	 *   if set to true (default), "No matching items in log" is displayed if loglist is empty
-	 * - msgKey Array If you want a nice box with a message, set this to the key of the message.
-	 *   First element is the message key, additional optional elements are parameters for the key
-	 *   that are processed with wgMsgExt and option 'parse'
-	 * - offset Set to overwrite offset parameter in $wgRequest
-	 *   set to '' to unset offset
-	 * - wrap String: Wrap the message in html (usually something like "<div ...>$1</div>").
-	 * @return boolean return false, so notice will not be emitted by core, but by EditPageLayout code
-	 */
-	function onLogEventsListShowLogExtract($s, $types, $page, $user, $param) {
-		if ($this->editPage instanceof EditPageLayout) {
-			if (!empty($s)) {
-				$this->editPage->addEditNotice($s, $param['msgKey'][0]);
-			}
-
-			// don't emit notices on the screen - they will be handled by addEditNotice()
-			return false;
-		}
-
-		// don't touch things outside the edit page (BugId:9379)
-		return true;
-	}
-
-	/**
-	 * Modify HTML before edit page textarea
-	 *
-	 * @param $editPage EditPage edit page instance
-	 * @param $hidden boolean not used
-	 * @return boolean return true
-	 */
-	function onBeforeDisplayingTextbox(EditPage $editPage, &$hidden) {
-		if ( $this->app->checkSkin( 'oasis' ) ) {
-			$this->out->addHtml('<div class="editpage-editarea" data-space-type="editarea">');
-		}
-
-		return true;
-	}
-
-	/**
-	 * Modify HTML after edit page textarea
-	 *
-	 * @param $editPage EditPage edit page instance
-	 * @param $hidden boolean not used
-	 * @return boolean return true
-	 */
-	function onAfterDisplayingTextbox(EditPage $editPage, &$hidden) {
-		if ( $this->app->checkSkin( 'oasis') ) {
-			$html = $this->app->getView('EditPageLayout', 'Loader', array(
-						'loadingText' => wfMsg('wikia-editor-loadingStates-loading', '')
-					))->render();
-			$html .= '</div>';
-			$this->out->addHtml($html);
-		}
-
-		return true;
-	}
 
 	/**
 	 * Get static assets for AssetsManager group

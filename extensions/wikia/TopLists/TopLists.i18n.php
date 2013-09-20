@@ -126,12 +126,18 @@ Head to Wikia to check out the changes! $1
  */
 $messages['qqq'] = array(
 	'toplists-desc' => '{{desc}}',
+	'right-toplists-create-edit-list' => '{{doc-right|toplists-create-edit-list}}',
+	'right-toplists-create-item' => '{{doc-right|toplists-create-item}}',
+	'right-toplists-edit-item' => '{{doc-right|toplists-edit-item}}',
+	'right-toplists-delete-item' => '{{doc-right|toplists-delete-item}}',
 	'toplists-category' => 'The name for the category that lists all the Top 10 Lists on a wiki',
 	'action-toplists-create-edit-list' => '{{doc-action|toplists-create-edit}}',
 	'toplists-editor-remove-item-tooltip' => '{{Identical|Remove item}}',
 	'toplists-create-button' => '{{Identical|Create list}}',
 	'toplits-image-browser-selected-picture' => '$1 is the title of the image page.',
+	'toplists-image-browser-upload-btn' => '{{Identical|Choose}}',
 	'toplists-list-vote-up' => 'Keep this as short as possible. Everything exceeding allowed lenght will be cutted out!',
+	'toplists-seconds' => '{{Identical|Second}}',
 	'toplists-minutes' => '{{Identical|Minute}}',
 	'toplists-create-button-msg' => '{{Identical|Create list}}',
 	'toplists-oasis-only' => 'Displayed to users who try to edit or create Top 10 lists in a skin other than the Wikia skin.',
@@ -144,33 +150,36 @@ $messages['qqq'] = array(
  * @author OsamaK
  */
 $messages['ar'] = array(
-	'toplists-desc' => 'أكبر 10 قوائم',
+	'toplists-desc' => 'قائمة أفضل 10',
 	'right-toplists-create-edit-list' => 'إنشاء وتحرير صفحات قائمة أفضل 10',
 	'right-toplists-create-item' => 'إنشاء وإضافة عناصر إلى صفحة قائمة أفضل 10',
 	'right-toplists-edit-item' => 'تحرير العناصر الموجودة في صفحة قائمة أفضل 10',
 	'right-toplists-delete-item' => 'حذف العناصر من صفحة قائمة أفضل 10',
 	'createtoplist' => 'إنشاء قائمة جديدة  بأفضل 10',
 	'edittoplist' => 'تحرير قائمة أفضل 10',
-	'toplists-category' => 'أكبر 10 قوائم',
+	'toplists-category' => 'قوائم أفضل 10',
 	'toplists-error-invalid-title' => 'النص المعطى غير صحيح.',
 	'toplists-error-invalid-picture' => 'الصورة المحددة غير صالحة.',
 	'toplists-error-title-exists' => 'هذه الصفحة موجودة بالفعل. يمكنك الذهاب إلى <a href="<span class=" notranslate"="">$2 "الهدف =" _blank ">$1</a> أو قم بتوفير اسم مختلف.',
 	'toplists-error-title-spam' => 'النص يحتوي على بعض الكلمات المعرفة كدعاية.',
 	'toplists-error-article-blocked' => 'عذراً غير مسموح لك إنشاء صفحة بهذا الاسم.',
-	'toplists-error-article-not-exists' => '" $1 "غير موجود. هل تريد <a href="<span class="notranslate">$ 2 "الهدف =" _blank "> إنشائه</a> ؟', # Fuzzy
-	'toplists-error-picture-not-exists' => '" $1 "غير موجود. هل تريد <a href="<span class="notranslate">$ 2 "الهدف =" _blank "> إنشائه</a> ؟', # Fuzzy
+	'toplists-error-article-not-exists' => '"$1" غير موجودة. هل تريد a href="$2" target="_blank">إنشائها</a>؟',
+	'toplists-error-picture-not-exists' => '"$1" غير موجودة. هل تريد <a href="$2" target="_blank">تحميلها</a>؟',
 	'toplists-error-duplicated-entry' => 'لا يمكنك استخدام نفس الاسم أكثر من مرة.',
 	'toplists-error-empty-item-name' => 'لا يمكن أن يكون اسم عنصر القائمة فارغة.',
 	'toplists-item-cannot-delete' => 'فشل في حذف هذا البند.',
 	'toplists-error-image-already-exists' => 'صورة مع نفس الاسم موجود مسبقا.',
-	'toplists-error-add-item-anon' => 'لا يسمح للمستخدمين المجهولين إضافة قوائم. الرجاء <a class="ajaxLogin" id="login" href="<span class="notranslate">$ 1 ">تسجيل الدخول</a> أو <a class="ajaxLogin" id="signup" href="<span class="notranslate">$ 2 "> تسجيل حساب جديد</a> .', # Fuzzy
+	'toplists-error-add-item-anon' => 'لا يسمح للمستخدمين المجهولين إضافة عناصر  للقوائم. الرجاء <a class="ajaxLogin" id="login" href="<span class="notranslate">$1 ">تسجيل الدخول</a> أو <a class="ajaxLogin" id="signup" href="<span class="notranslate">$2 "> تسجيل حساب جديد</a> .',
 	'toplists-error-add-item-permission' => 'خطأ في إذن الوصول: الحساب الخاص بك لم يتم منح الحق في إنشاء عناصر جديدة.',
-	'toplists-error-add-item-list-not-exists' => '"$1" لا توجد في قائمة أعلى 10',
+	'toplists-error-add-item-list-not-exists' => '"$1" لا توجد في قائمة أفضل 10',
 	'toplists-upload-error-unknown' => 'حدث خطأ أثناء معالجة طلب التحميل. يرجى المحاولة مرة أخرى.',
+	'action-toplists-create-edit-list' => 'أنشئ و عدل صفحات قوائم أفضل 10',
 	'toplists-editor-title-label' => 'اسم القائمة',
 	'toplists-editor-title-placeholder' => 'أدخل اسما للقائمة',
 	'toplists-editor-related-article-label' => 'الصفحة ذات الصلة <small>(اختياري، لكن حدد صورة)</small>',
 	'toplists-editor-related-article-placeholder' => 'أدخل اسم الصفحة الحالية',
+	'toplists-editor-description-label' => 'وصف قصير لقائمة أفضل 10',
+	'toplists-editor-description-placeholder' => 'أدخل وصفاً',
 	'toplists-editor-image-browser-tooltip' => 'أضف صورة',
 	'toplists-editor-remove-item-tooltip' => 'أزل العنصر',
 	'toplists-editor-drag-item-tooltip' => 'اسحب لتغيير الطلب',
@@ -179,6 +188,7 @@ $messages['ar'] = array(
 	'toplists-create-button' => 'أنشئ قائمة',
 	'toplists-update-button' => 'احفظ القائمة',
 	'toplists-cancel-button' => 'إلغاء',
+	'toplists-items-removed' => 'تمت إزالة {{PLURAL:$1|عنصر واحد|$1 عناصر}}',
 	'toplists-items-nochange' => 'لا يوجد تغيير في العناصر',
 	'toplits-image-browser-no-picture-selected' => 'ليست هناك صورة مختارة',
 	'toplits-image-browser-clear-picture' => 'صورة واضحة',
@@ -192,15 +202,30 @@ $messages['ar'] = array(
 	'toplists-item-remove-summary' => 'تمت إزالة البند من القائمة',
 	'toplists-item-restored' => 'تم استعادة عنصر',
 	'toplists-list-related-to' => 'المتعلقة بما يلي :',
-	'toplists-list-created-by' => 'بواسطة [[مستخدم:$1|$1]]', # Fuzzy
+	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />تصويت|$1<br />تصويتا}}',
+	'toplists-list-created-by' => 'بواسطة [[User:$1|$1]]',
 	'toplists-list-vote-up' => 'التصويت حتى',
+	'toplists-list-hotitem-count' => '$1 {{PLURAL:$1|تصويت}} في $2',
 	'toplists-list-add-item-label' => 'أضف عنصرًا',
 	'toplists-list-add-item-name-label' => 'الحفاظ على القائمة مستمرة...',
 	'toplists-list-item-voted' => 'صوت',
-	'toplists-createpage-dialog-label' => 'قائمة أكبر 10',
-	'toplists-email-subject' => 'لقد تم تغيير قائمة أعلى 10',
-	'toplists-create-heading' => '<em>جديدة!</em> إنشاء أفضل عشرة خاصة بك',
+	'toplists-createpage-dialog-label' => 'قائمة أفضل 10',
+	'toplists-email-subject' => 'لقد تم تغيير قائمة أفضل 10',
+	'toplists-email-body' => 'مرحبا من ويكيا!
+
+لقد تم تغيير قائمة <a href="$1>$2</a> في ويكيا.
+
+$3
+
+التوجه إلى ويكيا للتحقق من التغييرات! $1
+
+-ويكيا
+
+يمكنك  <a href="$4">إلغاء الإشتراك</a> من خلال التغييرات  للقائمة.',
+	'toplists-msg-fb-OnRateArticle-short' => 'صوت على قائمة أفضل 10 في $WIKINAME!',
+	'toplists-create-heading' => '<em>خاصية جديدة!</em> إنشاء قائمة أفضل عشرة خاصة بك',
 	'toplists-create-button-msg' => 'إنشاء قائمة',
+	'toplists-oasis-only' => 'إنشاء وتحرير قوائم أفضل 10 ليس متوفرا في مونوبوك. إذا كنت ترغب في استخدام هذه الميزة، يرجى تبديل تفضيلاتك لمظهر ويكيا.',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -319,6 +344,23 @@ Gellout a rit <a href="$4">paouez da resevout</a> kemmoù ar roll-mañ.',
 	'toplists-msg-fb-OnRateArticle-short' => 'en deus votet war ur roll Top 10 list war $WIKINAME !',
 	'toplists-create-heading' => "<em>Nevez!</em> Savit ho roll Top 10 deoc'h-c'hwi",
 	'toplists-create-button-msg' => 'Sevel ur roll',
+);
+
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'toplists-desc' => 'Els 10 millors',
+	'right-toplists-create-edit-list' => 'Crea i edita pàgines dels 10 millors',
+	'right-toplists-create-item' => 'Crea y afegeix elements a una pàgina dels 10 millors',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'toplists-editor-related-article-placeholder' => 'ДӀаязъе йолуш йолу агӀона цӀе',
+	'toplists-update-button' => 'МогӀам Ӏалашбар',
 );
 
 /** Czech (česky)
@@ -525,6 +567,13 @@ $messages['diq'] = array(
 	'toplists-days' => '($1 {{PLURAL:$1|roce|roci}})',
 	'toplists-weeks' => '$1 {{PLURAL: $1|hefte|heftey}}',
 	'toplists-create-button-msg' => 'Liste vırazê',
+);
+
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'toplists-error-title-spam' => 'The supplied text contains some words recognised as spam.',
 );
 
 /** Spanish (español)
@@ -1790,6 +1839,7 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author GTNS
  * @author Hamilton Abreu
+ * @author Luckas
  * @author SandroHc
  * @author Waldir
  */
@@ -1803,7 +1853,7 @@ $messages['pt'] = array(
 	'edittoplist' => 'Editar lista Top 10',
 	'toplists-category' => 'Listas Top 10',
 	'toplists-error-invalid-title' => 'O texto fornecido não é válido.',
-	'toplists-error-invalid-picture' => 'A imagem seleccionada não é válida.',
+	'toplists-error-invalid-picture' => 'A imagem selecionada não é válida.',
 	'toplists-error-title-exists' => 'Esta página já existe. Pode ir para <a href="$2" target="_blank">$1</a> ou fornecer um nome diferente.',
 	'toplists-error-title-spam' => 'O texto introduzido contém algumas palavras identificadas como spam.',
 	'toplists-error-article-blocked' => 'Não pode criar uma página com este nome. Desculpe.',
@@ -1832,11 +1882,11 @@ $messages['pt'] = array(
 	'toplists-cancel-button' => 'Cancelar',
 	'toplists-items-removed' => '$1 {{PLURAL:$1|elemento removido|elementos removidos}}',
 	'toplists-items-created' => '$1 {{PLURAL:$1|elemento criado|elementos criados}}',
-	'toplists-items-updated' => '$1 {{PLURAL:$1|elemento actualizado|elementos actualizados}}',
+	'toplists-items-updated' => '$1 {{PLURAL:$1|elemento atualizado|elementos atualizados}}',
 	'toplists-items-nochange' => 'Não foi alterado nenhum elemento',
-	'toplits-image-browser-no-picture-selected' => 'Não foi seleccionada nenhuma imagem',
+	'toplits-image-browser-no-picture-selected' => 'Não foi selecionada nenhuma imagem',
 	'toplits-image-browser-clear-picture' => 'Limpar imagem',
-	'toplits-image-browser-selected-picture' => 'Seleccionada neste momento: $1',
+	'toplits-image-browser-selected-picture' => 'Selecionada neste momento: $1',
 	'toplists-image-browser-upload-btn' => 'Escolher',
 	'toplists-image-browser-upload-label' => 'Faça o upload de uma',
 	'toplists-list-creation-summary' => 'A criar uma lista, $1',
@@ -1877,6 +1927,7 @@ Pode <a href="$4">cancelar a subscrição</a> de alterações à lista.',
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
@@ -1913,11 +1964,44 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'toplists-desc' => 'Le megghie 10',
+	'right-toplists-create-edit-list' => "Ccreje e cange l'elenghe de le megghie 10 pàggene",
+	'edittoplist' => 'Cange le megghie 10',
+	'toplists-category' => 'Le megghie 10',
+	'toplists-error-invalid-title' => "'U teste scritte non g'è valide.",
+	'toplists-error-invalid-picture' => "'A fote scacchiate non g'è valide.",
 	'toplists-create-button' => "ccreje 'n'elenghe",
 	'toplists-update-button' => "Reggìstre l'elenghe",
 	'toplists-cancel-button' => 'Annulle',
+	'toplists-items-removed' => '$1 {{PLURAL:$1|vôsce}} luate',
+	'toplists-items-created' => '$1 {{PLURAL:$1|vôsce}} ccrejate',
+	'toplists-items-updated' => '$1 {{PLURAL:$1|vôsce}} aggiornate',
+	'toplists-items-nochange' => 'Nisciuna vôsce cangiate',
+	'toplits-image-browser-no-picture-selected' => 'Nisciuna fote scacchiate',
+	'toplits-image-browser-clear-picture' => "Pulizze 'a fote",
+	'toplits-image-browser-selected-picture' => 'Scacchiate pe mò: $1',
 	'toplists-image-browser-upload-btn' => 'Scacchie',
+	'toplists-image-browser-upload-label' => "Careche 'u tune",
+	'toplists-list-creation-summary' => "Stoche a ccreje 'n'elenghe, $1",
+	'toplists-list-update-summary' => "Stoche aggiorne 'n'elenghe, $1",
+	'toplists-item-creation-summary' => "Stoche a ccreje 'n'elenghe de vôsce",
+	'toplists-item-update-summary' => "Stoche aggiorne 'n'elenghe de vôsce",
+	'toplists-item-remove-summary' => "Vôsce luate da l'elenghe",
+	'toplists-item-restored' => 'Vôsce repristinate',
+	'toplists-list-related-to' => 'Riferite a:',
+	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />vote}}',
+	'toplists-list-created-by' => 'da [[User:$1|$1]]',
+	'toplists-list-vote-up' => 'Vote',
+	'toplists-list-hotitem-count' => "$1 {{PLURAL:$1|vote}} jndr'à $2",
+	'toplists-list-add-item-label' => "Aggiunge 'na vôsce",
 	'toplists-list-item-voted' => 'Vutate',
+	'toplists-createpage-dialog-label' => 'Le megghie 10',
+	'toplists-seconds' => '$1 {{PLURAL:$1|seconde}}',
+	'toplists-minutes' => '$1 {{PLURAL:$1|minute}}',
+	'toplists-hours' => '$1 {{PLURAL:$1|ore}}',
+	'toplists-days' => '$1 {{PLURAL:$1|sciurne}}',
+	'toplists-weeks' => '$1 {{PLURAL: $1|sumàne}}',
+	'toplists-create-button-msg' => "Ccreje 'n'elenghe",
 );
 
 /** Russian (русский)
@@ -2264,30 +2348,95 @@ $messages['tr'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Pig1995z
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
 	'toplists-desc' => 'Список Топ 10',
 	'right-toplists-create-edit-list' => 'Створення і редагування сторінок списку топ-10',
 	'right-toplists-create-item' => 'Створення і додавання елементів на сторінку списку топ-10',
+	'right-toplists-edit-item' => 'Редагувати елементи на сторінці списку 10 найпопулярніших',
+	'right-toplists-delete-item' => 'Вилучити елементи зі сторінки списку 10 найпопулярніших',
+	'createtoplist' => 'Створити новий список 10 найпопулярніших',
+	'edittoplist' => 'Редагувати список 10 найпопулярніших',
+	'toplists-category' => 'Списки 10 найпопулярніших',
+	'toplists-error-invalid-title' => 'Прикладений текст є неприпустимим.',
+	'toplists-error-invalid-picture' => 'Обране зображення є неприпустимим.',
+	'toplists-error-title-exists' => 'Ця сторінка вже існує. Ви можете перейти до <a href="$2" target="_blank">$1</a> або вказати інше ім\'я.',
+	'toplists-error-title-spam' => 'Прикладений текст містить кілька слів, розпізнаних як спам.',
+	'toplists-error-article-blocked' => 'Вам не дозволено створити сторінку з таким іменем. Вибачте.',
+	'toplists-error-article-not-exists' => '"$1" не існує. Ви хочете <a href="$2" target="_blank"> створити його</a>?',
+	'toplists-error-picture-not-exists' => '"$1" не існує. Ви хочете <a href="$2" target="_blank">завантажити його</a>?',
+	'toplists-error-duplicated-entry' => "Не можна використовувати однакове ім'я більше одного разу.",
+	'toplists-error-empty-item-name' => "Ім'я існуючого елемента не може бути порожнім.",
+	'toplists-item-cannot-delete' => 'Не вдалося видалити цей елемент.',
+	'toplists-error-image-already-exists' => 'Зображення з такою назвою вже існує.',
+	'toplists-error-add-item-anon' => 'Анонімні користувачі не зможуть додавати елементи в списки. Будь ласка, <a class="ajaxLogin" id="login" href="$1">увійдіть</a> або <a href="$2">зареєструйте новий обліковий запис</a>.',
+	'toplists-error-add-item-permission' => 'Помилка дозволів: обліковому запису не надано право на створення нових елементів.',
+	'toplists-error-add-item-list-not-exists' => 'Список 10 популярних з назвою "$1" не існує.',
+	'toplists-upload-error-unknown' => 'Сталася помилка під час обробки запиту. Будь ласка, спробуйте ще раз.',
+	'action-toplists-create-edit-list' => 'створити та редагувати список 10 популярних сторінок',
 	'toplists-editor-title-label' => "Ім'я списку",
 	'toplists-editor-title-placeholder' => "Введіть ім'я списку",
+	'toplists-editor-related-article-label' => "Пов'язані сторінки <small>(необов'язково, але вибирає зображення)</small>",
+	'toplists-editor-related-article-placeholder' => 'Введіть існуючу назву сторінки',
+	'toplists-editor-description-label' => 'Короткий опис списку 10 популярних',
 	'toplists-editor-description-placeholder' => 'Введіть опис',
 	'toplists-editor-image-browser-tooltip' => 'Додати зображення',
 	'toplists-editor-remove-item-tooltip' => 'Видалити елемент',
+	'toplists-editor-drag-item-tooltip' => 'Перетягніть, щоб змінити порядок',
 	'toplists-editor-add-item-label' => 'Додати новий елемент',
 	'toplists-editor-add-item-tooltip' => 'Додати новий елемент до списку',
 	'toplists-create-button' => 'Створити список',
 	'toplists-update-button' => 'Зберегти список',
 	'toplists-cancel-button' => 'Скасувати',
+	'toplists-items-removed' => 'Вилучено $1 {{PLURAL:$1|елемент|елементи|елементів}}',
+	'toplists-items-created' => 'Створено: $1 {{PLURAL:$1|елемент|елементи|елементів}}',
+	'toplists-items-updated' => 'Оновлено: $1 {{PLURAL:$1|елемент|елементи|елементів}}',
+	'toplists-items-nochange' => 'Немає змінених елементів',
+	'toplits-image-browser-no-picture-selected' => 'Немає вибраних зображень',
+	'toplits-image-browser-clear-picture' => 'Очистити зображення',
+	'toplits-image-browser-selected-picture' => 'Зараз вибрано: $1',
 	'toplists-image-browser-upload-btn' => 'Вибрати',
+	'toplists-image-browser-upload-label' => 'Завантажити своє власне',
+	'toplists-list-creation-summary' => 'Створення списку, $1',
+	'toplists-list-update-summary' => 'Оновлення списку, $1',
+	'toplists-item-creation-summary' => 'Створення елемента списку',
+	'toplists-item-update-summary' => 'Оновлення елемента списку',
+	'toplists-item-remove-summary' => 'Елемент видалено зі списку',
+	'toplists-item-restored' => 'Відновлено елемент',
+	'toplists-list-related-to' => "Пов'язано з:",
+	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />голос|$1<br />голоси|$1<br />голосів}}',
+	'toplists-list-created-by' => 'від [[User:$1|$1]]',
+	'toplists-list-vote-up' => 'Голосувати за',
+	'toplists-list-hotitem-count' => '$1 {{PLURAL:$1|голос|голоси|голосів}} за $2',
+	'toplists-list-add-item-label' => 'Додати елемент',
+	'toplists-list-add-item-name-label' => 'Список збирається...',
+	'toplists-list-item-voted' => 'Проголосували',
+	'toplists-createpage-dialog-label' => 'Список 10 найпопулярніших',
+	'toplists-email-subject' => 'Список 10 популярних був змінений',
+	'toplists-email-body' => 'Вітання із Вікії!
+
+Список <a href="$1">$2</a> на Вікії вже змінено.
+
+ $3
+
+Перейдіть на Вікія для перевірки змін! $1
+
+- Вікія
+
+Ви можете <a href="$4">відписатися</a> від змін у списку.',
 	'toplists-seconds' => '$1 {{PLURAL:$1|секунда|секунди|секунд}}',
 	'toplists-minutes' => '$1 {{PLURAL:$1|хвилина|хвилини|хвилин}}',
 	'toplists-hours' => '$1 {{PLURAL:$1|година|години|годин}}',
 	'toplists-days' => '$1 {{PLURAL:$1|день|дні|днів}}',
 	'toplists-weeks' => '$1 {{PLURAL:$1|тиждень|тижня|тижнів}}',
+	'toplists-msg-fb-OnRateArticle-short' => 'проголосував(ла) за список 10 популярних на $WIKINAME!',
+	'toplists-create-heading' => '<em>Новинка!</em> Створіть свою власну першу десятку популярних',
 	'toplists-create-button-msg' => 'Створити список',
+	'toplists-oasis-only' => 'Створення та редагування списків 10 популярних недоступне в Monobook. Якщо ви хотіли б скористатися цією функцією, то, будь ласка, перемкніть ваші налаштування на оболонку Вікія.',
 );
 
 /** Simplified Chinese (中文（简体）‎)

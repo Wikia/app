@@ -135,9 +135,9 @@ class Premigrate {
 				try {
 					$className = ucfirst( $provider ) . 'ApiWrapper';
 					if(is_subclass_of($className, 'PseudoApiWrapper')) {
-						$apiWrapper = F::build( $className, array( $videoName ) );
+						$apiWrapper = new $className( $videoName );
 					} else {
-						$apiWrapper = F::build( $className, array( $videoOrgId ) );
+						$apiWrapper = new $className( $videoOrgId );
 					}
 					$meta = $apiWrapper->getMetadata();
 					if( $retries == 0 ) {
@@ -158,7 +158,7 @@ class Premigrate {
 					if(!is_subclass_of($className, 'PseudoApiWrapper')) {
 						// if a video failed that used regular provider
 						// just get fake metadata (from old entry)
-						$apiWrapper = F::build( 'FakeApiWrapper', array( $videoName ) );
+						$apiWrapper = new FakeApiWrapper( $videoName );
 						$meta = $apiWrapper->getMetadata();
 					}
 					break;
@@ -171,7 +171,7 @@ class Premigrate {
 					if(!is_subclass_of($className, 'PseudoApiWrapper')) {
 						// if a video failed that used regular provider
 						// just get fake metadata (from old entry)
-						$apiWrapper = F::build( 'FakeApiWrapper', array( $videoName ) );
+						$apiWrapper = new FakeApiWrapper( $videoName );
 						$meta = $apiWrapper->getMetadata();
 					}
 					break;
@@ -190,7 +190,7 @@ class Premigrate {
 					if(!is_subclass_of($className, 'PseudoApiWrapper')) {
 						// if a video failed that used regular provider
 						// just get fake metadata (from old entry)
-						$apiWrapper = F::build( 'FakeApiWrapper', array( $videoName ) );
+						$apiWrapper = new FakeApiWrapper( $videoName );
 						$meta = $apiWrapper->getMetadata();
 					}
 					break;
@@ -207,7 +207,7 @@ class Premigrate {
 					if(!is_subclass_of($className, 'PseudoApiWrapper')) {
 						// if a video failed that used regular provider
 						// just get fake metadata (from old entry)
-						$apiWrapper = F::build( 'FakeApiWrapper', array( $videoName ) );
+						$apiWrapper = new FakeApiWrapper( $videoName );
 						$meta = $apiWrapper->getMetadata();
 					}
 					break;

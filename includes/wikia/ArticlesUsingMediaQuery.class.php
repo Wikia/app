@@ -10,6 +10,8 @@ class ArticlesUsingMediaQuery {
 	private $app;
 	private $memc;
 
+	const IMAGELINKS_LIMIT = 500;
+
 	/*
 	 * @param Title $fileTitle
 	 */
@@ -42,7 +44,10 @@ class ArticlesUsingMediaQuery {
 			array( 'page_namespace', 'page_title' ),
 			array( 'il_to' => $this->fileTitle->getDBKey(), 'il_from = page_id' ),
 			__METHOD__,
-			array( 'ORDER BY' => 'page_namespace ASC' )
+			[
+				'LIMIT' => self::IMAGELINKS_LIMIT, # BAC-265
+				'ORDER BY' => 'page_namespace ASC'
+			]
 		);
 
 		$data = array() ;

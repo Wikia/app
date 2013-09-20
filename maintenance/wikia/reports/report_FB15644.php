@@ -45,7 +45,7 @@ class report_FB15644 {
             if ( in_array( $oRow->city_dbname, $exceptions ) ) {
 		continue;
 	    }
-            $tmpDbObj = F::app()->wf->getDb( DB_SLAVE, array(), $oRow->city_dbname );
+            $tmpDbObj = wfGetDB( DB_SLAVE, array(), $oRow->city_dbname );
             
             // SELECT rev_timestamp, rev_user_text, rc_user_text FROM revision
             // JOIN recentchanges ON rc_this_oldid = rev_id AND rc_user <> rev_user;
@@ -82,7 +82,7 @@ class report_FB15644 {
 
 // the work...
 $d = new report_FB15644(
-        F::app()->wf->getDb( DB_MASTER, array(), 'wikicities' )
+        wfGetDB( DB_MASTER, array(), 'wikicities' )
 );
 $d->execute();
 exit( 0 );

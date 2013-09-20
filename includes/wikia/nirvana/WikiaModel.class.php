@@ -15,22 +15,22 @@ abstract class WikiaModel extends WikiaObject {
 	/* Handy helper functions for getting a database connection */
 
 	public function getDB( $db_type = DB_SLAVE ) {
-		return $this->wf->GetDB( $db_type );
+		return wfGetDB( $db_type );
 	}
 
 	public function getWikiDB( $db_type = DB_SLAVE, $db_name = false ) {
-		return $this->wf->GetDB( $db_type, array(), $db_name );
+		return wfGetDB( $db_type, array(), $db_name );
 	}
 
 	public function getSharedDB( $db_type = DB_SLAVE ) {
-	   return $this->wf->GetDB( $db_type, array(), $this->wg->ExternalSharedDB );
+	   return wfGetDB( $db_type, array(), $this->wg->ExternalSharedDB );
 	}
 	
 	public function getDatawareDB( $db_type = DB_SLAVE ) {
-		return $this->wf->GetDB( $db_type, array(), $this->wg->ExternalDatawareDB );
+		return wfGetDB( $db_type, array(), $this->wg->ExternalDatawareDB );
 	}
 	
 	public function getStatsDB( $db_type = DB_SLAVE ) {
-		return $this->wf->GetDB( $db_type, array(), $this->wg->StatsDB );
+		return wfGetDB( $db_type, array(), $this->wg->StatsDB );
 	}
 }

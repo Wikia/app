@@ -34,7 +34,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		//getLatestRevID
 
-		F::build('JSMessages')->enqueuePackage('Forum', JSMessages::EXTERNAL);
+		JSMessages::enqueuePackage('Forum', JSMessages::EXTERNAL);
 		$this->response->addAsset( 'extensions/wikia/Forum/js/Forum.js' );
 
 		if ( $this->request->getVal( 'showWarning', 0 ) == 1 ) {
@@ -47,22 +47,22 @@ class ForumSpecialController extends WikiaSpecialPageController {
 			$this->forward( 'ForumSpecial', 'editMode' );
 		}
 
-		$this->wg->Out->setPageTitle( $this->wf->msg( 'forum-forum-title', $this->wg->Sitename ) );
+		$this->wg->Out->setPageTitle( wfMsg( 'forum-forum-title', $this->wg->Sitename ) );
 
 		$action = $this->getVal( 'action', '' );
 
-		$this->blurb = $this->wf->MsgExt( 'forum-specialpage-blurb', 'parse' );
-		$this->blurbHeading = $this->wf->Msg( 'forum-specialpage-blurb-heading' );
-		$this->lastPostByMsg = $this->wf->Msg( 'forum-specialpage-board-lastpostby' );
+		$this->blurb = wfMsgExt( 'forum-specialpage-blurb', 'parse' );
+		$this->blurbHeading = wfMsg( 'forum-specialpage-blurb-heading' );
+		$this->lastPostByMsg = wfMsg( 'forum-specialpage-board-lastpostby' );
 		$this->canEdit = $this->wg->User->isAllowed( 'forumadmin' );
 		$this->editUrl = $this->wg->Title->getFullUrl( 'action=editmode' );
 
 		$forum = new Forum();
 
 		if ( $forum->createDefaultBoard() ) {
-			$this->boards = $forum->getBoardList( DB_MASTER, NS_WIKIA_FORUM_BOARD );
+			$this->boards = $forum->getBoardList( DB_MASTER );
 		} else {
-			$this->boards = $forum->getBoardList( DB_SLAVE, NS_WIKIA_FORUM_BOARD );
+			$this->boards = $forum->getBoardList( DB_SLAVE );
 		}
 
 		if ( $forum->haveOldForums() ) {
@@ -92,7 +92,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumBoardEdit.scss' );
 		$this->response->addAsset( 'extensions/wikia/Forum/js/ForumBoardEdit.js' );
 
-		$this->boards = F::build( 'Forum' )->getBoardList();
+		$this->boards = (new Forum)->getBoardList( DB_SLAVE );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -127,7 +127,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		/* backend magic here */
 
 		$this->boardTitle = $board->getTitle()->getText();
-		$this->boardDescription = $board->getDescription(false);
+		$this->boardDescription = $board->getRawDescription();
 
 		wfProfileOut( __METHOD__ );
 	}

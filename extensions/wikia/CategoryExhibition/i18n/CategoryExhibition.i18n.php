@@ -15,7 +15,7 @@ $messages['en'] = array(
 	'category-exhibition-display-new'		=> 'Category Exhibition view'
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author Shirayuki
  */
 $messages['qqq'] = array(
@@ -49,10 +49,25 @@ $messages['ar'] = array(
 	'category-exhibition-recentedits' => 'تحرير مؤخراّ',
 	'category-exhibition-page-header' => 'الصفحات في التصنيف " $1 "',
 	'category-exhibition-subcategories-header' => 'التصنيفات الفرعية',
-	'category-exhibition-media-header' => 'الوسائل في الفئة "$1"',
+	'category-exhibition-media-header' => 'الميديا في تصنيف "$1"',
 	'category-exhibition-blogs-header' => 'المشاركات في المدونة',
 	'category-exhibition-display-old' => 'عرض قائمة التصنيف',
 	'category-exhibition-display-new' => 'عرض معرض التصنيف',
+);
+
+/** Bikol Central (Bikol Central)
+ * @author Geopoet
+ */
+$messages['bcl'] = array(
+	'category-exhibition-sorttype' => 'Tipo nin pagsasalansan:',
+	'category-exhibition-alphabetical' => 'Alpabitikal',
+	'category-exhibition-mostvisited' => 'Mas na pinagbibisita',
+	'category-exhibition-recentedits' => 'Pinakabaguhon na pinagliwat',
+	'category-exhibition-page-header' => 'Mga pahina sa laog kan kategoriya na "$1"',
+	'category-exhibition-subcategories-header' => 'Mga sub-kategoriya',
+	'category-exhibition-media-header' => 'Midya na yaon sa kategoriya na "$1"',
+	'category-exhibition-blogs-header' => 'Mga paskil sa Blog',
+	'category-exhibition-display-old' => 'Pagtanaw sa Listahan nin Kategorya',
 );
 
 /** Bulgarian (български)
@@ -204,6 +219,19 @@ $messages['fi'] = array(
 	'category-exhibition-blogs-header' => 'Blogiartikkelit',
 	'category-exhibition-display-old' => 'Luokkaluettelonäkymä',
 	'category-exhibition-display-new' => 'Luokkanäyttelynäkymä',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'category-exhibition-alphabetical' => 'Í bókstavarøð',
+	'category-exhibition-mostvisited' => 'Mest vitjað',
+	'category-exhibition-recentedits' => 'Nýliga rættað',
+	'category-exhibition-page-header' => 'Síður í bólkinum "$1"',
+	'category-exhibition-subcategories-header' => 'Undirbólkar',
+	'category-exhibition-media-header' => 'Miðlar í bólkinum "$1"',
+	'category-exhibition-blogs-header' => 'Blogginnsløg',
 );
 
 /** French (français)
@@ -426,6 +454,22 @@ $messages['nl'] = array(
 	'category-exhibition-display-new' => 'Categoriepresentatieweergave',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'category-exhibition-sorttype' => 'Tipe de triada :',
+	'category-exhibition-alphabetical' => 'Alfabetic',
+	'category-exhibition-mostvisited' => 'Los mai visitats',
+	'category-exhibition-recentedits' => 'Modificats recentament',
+	'category-exhibition-page-header' => 'Paginas dins la categoria « $1 »',
+	'category-exhibition-subcategories-header' => 'Soscategorias',
+	'category-exhibition-media-header' => 'Mèdia dins la categoria « $1 »',
+	'category-exhibition-blogs-header' => 'Article de blog',
+	'category-exhibition-display-old' => 'Afichatge de la categoria en lista',
+	'category-exhibition-display-new' => 'Afichatge de la categoria en exposicion',
+);
+
 /** Polish (polski)
  * @author Sovq
  */
@@ -463,9 +507,15 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'category-exhibition-sorttype' => 'اوډون ډول:',
 	'category-exhibition-alphabetical' => 'د ابېڅو له مخې',
 	'category-exhibition-mostvisited' => 'ډېر کتل شوی',
+	'category-exhibition-recentedits' => 'وروستي سم شوي',
+	'category-exhibition-page-header' => 'د "$1" وېشنيزې مخونه',
 	'category-exhibition-subcategories-header' => 'څېرمه وېشنيزې',
+	'category-exhibition-media-header' => 'د "$1" وېشنيزې رسنۍ',
+	'category-exhibition-blogs-header' => 'د بلاګ پوستونه',
+	'category-exhibition-display-old' => 'د وېشنيزې لړليک کتل',
 );
 
 /** Portuguese (português)
@@ -511,6 +561,22 @@ $messages['ro'] = array(
 	'category-exhibition-page-header' => 'Pagini din categoria „$1”',
 	'category-exhibition-subcategories-header' => 'Subcategorii',
 	'category-exhibition-blogs-header' => 'Postări pe blog',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'category-exhibition-sorttype' => 'Tipe de ordinamende:',
+	'category-exhibition-alphabetical' => 'Alfabbetiche',
+	'category-exhibition-mostvisited' => 'Cchiù visitate',
+	'category-exhibition-recentedits' => 'Cangiate de recende',
+	'category-exhibition-page-header' => 'Pàggene jndr\'à categorije "$1"',
+	'category-exhibition-subcategories-header' => 'Sottocategorije',
+	'category-exhibition-media-header' => 'Media jndr\'à categorije "$1"',
+	'category-exhibition-blogs-header' => "Messàgge d'u blog",
+	'category-exhibition-display-old' => "Viste de l'elenghe de le categorije",
+	'category-exhibition-display-new' => 'Viste de le Esibbiziune de le Categorije',
 );
 
 /** Russian (русский)
@@ -588,12 +654,19 @@ $messages['tr'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Ua2004
  */
 $messages['uk'] = array(
 	'category-exhibition-sorttype' => 'Тип сортування:',
 	'category-exhibition-alphabetical' => 'Алфавітний',
+	'category-exhibition-mostvisited' => 'Популярні',
+	'category-exhibition-recentedits' => 'Нещодавно відредаговані',
 	'category-exhibition-page-header' => 'Сторінки в категорії "$1"',
 	'category-exhibition-subcategories-header' => 'Підкатегорії',
+	'category-exhibition-media-header' => 'Файли в категорії "$1"',
+	'category-exhibition-blogs-header' => 'Записи у блозі',
+	'category-exhibition-display-old' => 'Подання категорії списком',
+	'category-exhibition-display-new' => 'Подання категорії піктограмами',
 );
 
 /** Simplified Chinese (中文（简体）‎)

@@ -49,9 +49,9 @@ class ImageServingHelper {
 		}
 		wfProfileIn(__METHOD__);
 
-		if( $file instanceof File ||  $file instanceof LocalFile ) {
-			/* @var File $file */
-			$res = " <image mw='".$file->getTitle()->getPartialURL()."' /> ";
+		$placeholder = self::getPlaceholder($file);
+		if($placeholder !== false) {
+			$res = $placeholder;
 		}
 
 		wfProfileOut(__METHOD__);
@@ -59,7 +59,7 @@ class ImageServingHelper {
 	}
 
 	/**
-	 * Replace images from image gallery with some easy to parse tag :
+	 * Replace images from image gallery with some easy to parse tag
 	 *
 	 * @param Parser $parser
 	 * @param WikiaPhotoGallery $ig
@@ -87,26 +87,50 @@ class ImageServingHelper {
 	}
 
 	/**
+	 * Return placeholder than will later be parsed by ImageServing
+	 *
+	 * @param File $file
+	 * @return string|bool placeholder's HTML or false when image doesn't exist
+	 */
+	public static function getPlaceholder($file) {
+		$res = false;
+
+		if( $file instanceof File ||  $file instanceof LocalFile ) {
+			/* @var File $file */
+			$res = " <image mw='".$file->getTitle()->getPartialURL()."' /> ";
+		}
+
+		return $res;
+	}
+
+	/**
 	 * buildIndex - save image index in db
 	 *
 	 * @param int $articleId article ID
 	 * @param array|string $images
 	 * @param $ignoreEmpty boolean
+	 * @param bool $dryRun don't store results in DB (think twice before passing true, used by imageServing.php maintenance script)
 	 * @return mixed|bool set of images extracted from given article
 	 */
-	public static function buildIndex( $articleId, $images, $ignoreEmpty = false ) {
+	public static function buildIndex( $articleId, $images, $ignoreEmpty = false, $dryRun = false ) {
 		wfProfileIn(__METHOD__);
 
-		$app = F::app();
-		$dbw = $app->wf->GetDB(DB_MASTER, array());
-
 		// BugId:95164: limit the number of images to be stored serialized in DB
-		// PHP has an internal limit of 65535 bytes than can be unserialized
+		// keep it under 65535 bytes
 		if (count($images) > self::IMAGES_PER_ARTICLE) {
 			$images = array_slice($images, 0, self::IMAGES_PER_ARTICLE);
 		}
 
 		array_walk( $images, create_function( '&$n', '$n = urldecode( $n );' ) );
+
+		if ($dryRun) {
+			wfProfileOut(__METHOD__);
+			return $images;
+		}
+
+		wfDebug(__METHOD__ . ' - ' . json_encode($images). "\n");
+
+		$dbw = wfGetDB(DB_MASTER, array());
 
 		if( count($images) < 1 ) {
 			if( $ignoreEmpty) {
@@ -141,9 +165,10 @@ class ImageServingHelper {
 	/**
 	 * @param Article $article
 	 * @param bool $ignoreEmpty
+	 * @param bool $dryRun don't store results in DB (think twice before passing true, used by imageServing.php maintenance script)
 	 * @return mixed|bool set of images extracted from given article
 	 */
-	public static function buildAndGetIndex($article, $ignoreEmpty = false ) {
+	public static function buildAndGetIndex($article, $ignoreEmpty = false, $dryRun = false ) {
 		if(!($article instanceof Article)) {
 			return false;
 		}
@@ -160,7 +185,7 @@ class ImageServingHelper {
 		$out = array();
 		preg_match_all("/(?<=(image mw=')).*(?=')/U", $editInfo->output->getText(), $out );
 
-		$images = self::buildIndex($article->getID(), $out[0], $ignoreEmpty);
+		$images = self::buildIndex($article->getID(), $out[0], $ignoreEmpty, $dryRun);
 
 		wfProfileOut(__METHOD__);
 		return $images;

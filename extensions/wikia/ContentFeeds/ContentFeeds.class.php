@@ -71,7 +71,7 @@ class ContentFeeds {
 		$tagBody.= '<a href="http://search.twitter.com/search?q=' . urlencode($phrase) . '" target="_blank">Loading ...</a>';
 		$tagBody.= '</ul>';
 
-		$tagBody .= F::build('JSSnippets')->addToStack(
+		$tagBody .= JSSnippets::addToStack(
 			array( '/extensions/wikia/ContentFeeds/js/ContentFeeds.js' ),
 			array(),
 			'ContentFeeds.getTweets',
@@ -107,7 +107,7 @@ class ContentFeeds {
 		$tagBody.= '<a href="http://twitter.com/' . urlencode($user) . '" target="_blank">Loading ...</a>';
 		$tagBody.= '</ul>';
 
-		$tagBody .= F::build('JSSnippets')->addToStack(
+		$tagBody .= JSSnippets::addToStack(
 			array( '/extensions/wikia/ContentFeeds/js/ContentFeeds.js' ),
 			array(),
 			'ContentFeeds.getUserTweets',

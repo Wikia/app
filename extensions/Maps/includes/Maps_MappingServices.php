@@ -7,13 +7,14 @@
  * 
  * @file Maps_MappingServices.php
  * @ingroup Maps
- * 
- * @author Jeroen De Dauw
+ *
+ * @licence GNU GPL v2+
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 final class MapsMappingServices {
 	
 	/**
-	 * Accociative array containing service identifiers as keys and the names
+	 * Associative array containing service identifiers as keys and the names
 	 * of service classes as values.
 	 * 
 	 * @since 0.6.6
@@ -23,12 +24,12 @@ final class MapsMappingServices {
 	protected static $registeredServices = array();
 	
 	/**
-	 * Accociative with service identifiers as keys containing instances of
+	 * Associative with service identifiers as keys containing instances of
 	 * the mapping service classes. 
 	 * 
 	 * Note: This list only contains the instances, so is not to be used for
 	 * looping over all available services, as not all of them are guaranteed 
-	 * to have an instance already, use $registeredServices for this purpouse.
+	 * to have an instance already, use $registeredServices for this purpose.
 	 * 
 	 * @since 0.6.6
 	 * 
@@ -37,7 +38,7 @@ final class MapsMappingServices {
 	protected static $services = array();
 	
 	/**
-	 * Registeres a service class linked to an identifier. 
+	 * Registers a service class linked to an identifier.
 	 * Also allows automatic registration of a list of features for this service.
 	 * 
 	 * @since 0.6.6
@@ -94,11 +95,11 @@ final class MapsMappingServices {
 					self::$services[$serviceIdentifier] = $service;
 				}
 				else {
-					throw new Exception( 'The service object linked to service identifier ' . $serviceIdentifier . ' does not implement iMappingService.' );
+					throw new MWException( 'The service object linked to service identifier ' . $serviceIdentifier . ' does not implement iMappingService.' );
 				}
 			}
 			else {
-				throw new Exception( 'There is no service object linked to service identifier ' . $serviceIdentifier . '.' );
+				throw new MWException( 'There is no service object linked to service identifier ' . $serviceIdentifier . '.' );
 			}
 		}
 

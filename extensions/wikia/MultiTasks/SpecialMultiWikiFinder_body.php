@@ -172,14 +172,14 @@ class MultiwikifinderPage {
 		$num = 0;
 		$html = array();
 		if ( $this->mShow ) {
-			$wgOut->addHTML( XML::openElement( 'div', array('class' => 'mw-spcontent') ) );
+			$wgOut->addHTML( Xml::openElement( 'div', array('class' => 'mw-spcontent') ) );
 		}
 
 		if ( isset($data) && $data['numrec'] > 0 ) {
 			$num = $data['numrec'];
 
 			if ( $this->mShow ) {
-				$html[] = XML::openElement( 'ol', array('start' => $this->offset + 1, 'class' => 'special' ) );
+				$html[] = Xml::openElement( 'ol', array('start' => $this->offset + 1, 'class' => 'special' ) );
 			}
 
 			if ( $data['numrec'] <= self::ORDER_ROWS ) {
@@ -199,13 +199,17 @@ class MultiwikifinderPage {
 						}
 
 						if ( empty($page_url) || empty($page_server) ) {
-							$skip++; continue;
+							$skip++;
+							continue;
 						}
 					}
 					# check Wiki
 					if ( !empty($city_id) ) {
 						$oWikia = WikiFactory::getWikiByID($city_id) ;
-						if ( empty($oWikia) || empty($oWikia->city_public) ) continue;
+						if ( empty($oWikia) || empty($oWikia->city_public) ) {
+							$skip++;
+							continue;
+						}
 					}
 
 					if (empty($this->mShow)) {
@@ -223,7 +227,7 @@ class MultiwikifinderPage {
 			$num = $num - $skip;
 
 			if( $this->mShow ) {
-				$html[] = XML::closeElement( 'ol' );
+				$html[] = Xml::closeElement( 'ol' );
 			}
 
 		}
@@ -244,7 +248,7 @@ class MultiwikifinderPage {
 
 				$wgOut->addHTML( '<p>' . $paging . '</p>' );
 			} else {
-				$wgOut->addHTML( XML::closeElement( 'div' ) );
+				$wgOut->addHTML( Xml::closeElement( 'div' ) );
 				wfProfileOut( __METHOD__ );
 				return;
 			}
@@ -258,7 +262,7 @@ class MultiwikifinderPage {
 			$wgOut->addHTML( '<p>' . $paging . '</p>' );
 		}
 
-		$wgOut->addHTML( XML::closeElement( 'div' ) );
+		$wgOut->addHTML( Xml::closeElement( 'div' ) );
 
         wfProfileOut( __METHOD__ );
 		return $num;

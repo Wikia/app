@@ -1,0 +1,3 @@
+<?php
+
+$fallback = 'zh-hans';

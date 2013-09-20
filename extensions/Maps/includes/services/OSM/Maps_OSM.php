@@ -1,15 +1,16 @@
 <?php
 
 /**
- * Class holding information and functionallity specific to OSM.
- * This infomation and features can be used by any mapping feature. 
+ * Class holding information and functionality specific to OSM.
+ * This information and features can be used by any mapping feature.
  * 
  * @since 0.6.4
  * 
  * @file Maps_OSM.php
  * @ingroup OSM
- * 
- * @author Jeroen De Dauw
+ *
+ * @licence GNU GPL v2+
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class MapsOSM extends MapsMappingService {
 	

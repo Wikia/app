@@ -57,13 +57,47 @@ class VideoInfoHooksHelper {
 			$videoInfoHelper = new VideoInfoHelper();
 			$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $title, true );
 			if ( !empty($videoInfo) ) {
+				// Sometimes videoInfo doesn't reflect what's actually in the video_info table
+				// so make sure the removed flag is cleared
+				$videoInfo->restoreVideo();
+
 				$affected = $videoInfo->addPremiumVideo( F::app()->wg->User->getId() );
 
 				if ( $affected ) {
+					# Add a log entry
+					$log = new LogPage( 'upload' );
+					$comment = wfMessage('videohandler-log-add-video')->plain();
+					$log->addEntry( 'upload', $title, $comment, array(), F::app()->wg->User );
+
 					$mediaService = new MediaQueryService();
 					$mediaService->clearCacheTotalVideos();
 					$mediaService->clearCacheTotalPremiumVideos();
 				}
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Hook: remove premium video and clear cache
+	 * @param Title $title
+	 * @return true
+	 */
+	public static function onRemovePremiumVideo( $title ) {
+		if ( !VideoInfoHelper::videoInfoExists() ) {
+			return true;
+		}
+
+		if ( $title instanceof Title ) {
+			$videoInfo = VideoInfo::newFromTitle( $title->getDBKey() );
+			if ( !empty( $videoInfo ) && $videoInfo->isPremium() ) {
+				$videoInfo->deleteVideo();
+
+				// clear cache
+				$mediaService = new MediaQueryService();
+				$mediaService->clearCacheTotalVideos();
+				$mediaService->clearCacheTotalPremiumVideos();
 			}
 		}
 
@@ -206,6 +240,8 @@ class VideoInfoHooksHelper {
 		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
 			$videoInfo = VideoInfo::newFromTitle( $title->getDBKey() );
 			if ( empty($videoInfo) ) {
+				$affected = false;
+
 				// add removed video
 				$videoInfoHelper = new VideoInfoHelper();
 				$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $title, true );
@@ -261,6 +297,17 @@ class VideoInfoHooksHelper {
 	 */
 	public static function onForeignFileDeleted( $file, &$isDeleted ) {
 		if ( !VideoInfoHelper::videoInfoExists() ) {
+			return true;
+		}
+
+		// Only report this file as deleted when this request is coming from a file page.  In other
+		// instances (search results from the WVL for example) we want to make sure these videos still appear.
+		// (VideoEmbedTool controller for search in VET, insertVideo method for add video via VET, and
+		// Videos controller and addVideo method for add video in general)
+		$req = F::app()->wg->Request;
+		$controller = $req->getVal( 'controller', '' );
+		$method = $req->getVal( 'method', '' );
+		if ( $controller == 'VideoEmbedTool' || $method == 'insertVideo' || ( $controller == 'Videos' && $method == 'addVideo' ) )  {
 			return true;
 		}
 

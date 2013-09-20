@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'videos' => 'Videos',
 	'specialvideos-html-title' => 'Videos on this wiki - {{SITENAME}}',
 	'specialvideos-page-title' => 'Videos',
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|video on<br /> this wiki|videos on<br /> this wiki}}</span>',
@@ -29,6 +30,7 @@ $messages['en'] = array(
 );
 
 $messages['qqq'] = array(
+	'videos' => 'This is the feature name that shows up in the Wiki Nav menu bar when the Extension is enabled',
 	'specialvideos-html-title' => 'This is the page title for the Special:Videos page',
 	'specialvideos-page-title' => 'This is the h1 (header) text for the Special:Videos page',
 	'specialvideos-wiki-videos-tally' => 'This text displays the number of videos on a wiki',

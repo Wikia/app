@@ -12,6 +12,8 @@
  */
 
 class WallNotifications {
+	private $cachedUsers = array();
+
 	private $removedEntities;
 	private $notUniqueUsers = array(); //used for sicen read email.
 	public function __construct() {
@@ -79,7 +81,7 @@ class WallNotifications {
 			$this->remWikiFromList( $userId, $wikiId );
 		}
 
-		$user = User::newFromId( $userId );
+		$user = $this->getUser( $userId );
 		if( in_array( 'sysop', $user->getEffectiveGroups() ) ) { //TODO: ???
 			$wna = new WallNotificationsAdmin;
 			$unread = array_merge( $wna->getAdminNotifications( $wikiId, $userId ), $unread );
@@ -103,6 +105,15 @@ class WallNotifications {
 
 	public function getCounts($userId) {
 		$wikiList = $this->getWikiList($userId);
+
+		// prefetch data
+		$keys = array();
+		$wno = new WallNotificationsOwner;
+		foreach ($wikiList as $wiki) {
+			$keys[] = $this->getKey($userId,$wiki['id']);
+			$keys[] = $wno->getKey($wiki['id'],$userId);
+		}
+		$this->app->wg->Memc->prefetch($keys);
 
 		$output = array();
 		$total = 0;
@@ -163,6 +174,7 @@ class WallNotifications {
 		} else {
 			$output = array();
 		}
+		WikiFactory::prefetchWikisById(array_keys($val),WikiFactory::PREFETCH_VARIABLES);
 		foreach($val as $wikiId => $wikiSitename) {
 			$output[] = array(
 				'id' => $wikiId,
@@ -240,9 +252,14 @@ class WallNotifications {
 			),
 			__METHOD__
 		);
+		$ids = array();
+		foreach ($res as $row) {
+			$ids[] = $row->wiki_id;
+		}
+		WikiFactory::prefetchWikisById($ids,WikiFactory::PREFETCH_WIKI_METADATA);
 		$output = array();
-		while($row = $db->fetchRow($res)) {
-			$output[ $row['wiki_id'] ] = $sitename = WikiFactory::getWikiByID( $row['wiki_id'] )->city_title;
+		foreach ($ids as $id) {
+			$output[ $id ] = WikiFactory::getWikiByID( $id )->city_title;
 		}
 		return $output;
 	}
@@ -250,7 +267,7 @@ class WallNotifications {
 	protected function groupEntity($list){
 		$grouped = array();
 		foreach(array_reverse($list) as $obj ) {
-			$notif = F::build('WallNotificationEntity', array($obj['entityKey']), 'getById');
+			$notif = WallNotificationEntity::getById($obj['entityKey']);
 			if(!empty($notif))
 				$grouped[] = $notif;
 		}
@@ -335,7 +352,7 @@ class WallNotifications {
 		}
 
 		foreach($watchers as $val){
-			$watcher = User::newFromId($val);
+			$watcher = $this->getUser($val);
 			$mode = $watcher->getOption('enotifwallthread');
 
 			if(!empty($mode) && $watcher->getId() != 0 && (
@@ -487,22 +504,26 @@ class WallNotifications {
 					}
 				}
 
+				$success = false;
 				// Make sure we have data
 				if (isset($data)) {
 					// See if we can set it successfully
 					if ($this->setData($memcSync, $data)) {
-						break;
+						$success = true;
 					}
 				} else {
 					// If there's no data don't bother doing anything
+					$success = true;
+				}
+				$memcSync->unlock();
+				if ( $success ) {
 					break;
 				}
+
 			} else {
 				$this->random_msleep($count);
 			}
 		}
-
-		$memcSync->unlock();
 
 		// If count is -1 it means we left the above loop failing to update
 		if ($count == -1) {
@@ -515,7 +536,7 @@ class WallNotifications {
 		}
 
 		if( $id === 0 ) {
-			$user = User::newFromId( $userId );
+			$user = $this->getUser( $userId );
 			if( $user instanceof User &&
 			    ( in_array( 'sysop', $user->getEffectiveGroups() ) ||
 			      in_array( 'staff', $user->getEffectiveGroups() )	 ) ) {
@@ -559,22 +580,25 @@ class WallNotifications {
 						$data = $this->getData($memcSync, $uId, $wikiId);
 						$this->remNotificationFromData($data, $uniqueId);
 
+						$success = false;
 						// Make sure we have data
 						if (isset($data)) {
 							// See if we can set it successfully
 							if ($this->setData($memcSync, $data)) {
-								break;
+								$success = true;
 							}
 						} else {
 							// If there's no data don't bother doing anything
+							$success = true;
+						}
+						$memcSync->unlock();
+						if ( $success ) {
 							break;
 						}
 					} else {
 						$this->random_msleep($count);
 					}
 				}
-
-				$memcSync->unlock();
 
 				// If count is -1 it means we left the above loop failing to update
 				if ($count == -1) {
@@ -673,23 +697,25 @@ class WallNotifications {
 				$data = $this->getData($memcSync, $userId, $wikiId);
 				$this->addNotificationToData($data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, false, $notifyeveryone );
 
+				$success = false;
 				// Make sure we have data
 				if (isset($data)) {
 					// See if we can set it successfully
 					if ($this->setData($memcSync, $data)) {
-						break;
+						$success = true;
 					}
 				} else {
 					// If there's no data don't bother doing anything
+					$success = true;
+				}
+				$memcSync->unlock();
+				if ( $success ) {
 					break;
 				}
 			} else {
 				$this->random_msleep($count);
 			}
-			$count++;
 		}
-
-		$memcSync->unlock();
 
 		// If count is -1 it means we left the above loop failing to update
 		if ($count == -1) {
@@ -772,16 +798,16 @@ class WallNotifications {
 		}
 
 		// scan relation list, remove element that has the same author
+		// keep the old one, and remove the new one so that the notification link points to the oldest unread message
 		$found = false;
 
 		foreach( $data['relation'][ $uniqueId ]['list'] as $key=>$rel ) {
 			if( $rel['authorId'] == $authorId ) {
-				unset($data['relation'][ $uniqueId ]['list'][$key]);
 				$found = true;
 
 				// keep track of removed elements - we will remove them from db
 				// table after we are done updating in-memory structures
-				$this->removedEntities[] = array( 'user_id' => $userId, 'wiki_id' => $wikiId, 'unique_id'=>$uniqueId, 'entity_key' => $rel['entityKey'] );
+				$this->removedEntities[] = array( 'user_id' => $userId, 'wiki_id' => $wikiId, 'unique_id'=>$uniqueId, 'entity_key' => $entityKey );
 			}
 		}
 
@@ -795,11 +821,10 @@ class WallNotifications {
 			}
 		}
 
-		// add new element
-		$data['relation'][ $uniqueId ]['list'][] = array('entityKey' => $entityKey, 'authorId' => $authorId, 'isReply'=>$isReply);
-
 		// if this was new author increase author count
 		if($found == false){
+			// add new element
+			$data['relation'][ $uniqueId ]['list'][] = array('entityKey' => $entityKey, 'authorId' => $authorId, 'isReply'=>$isReply);
 			$data['relation'][ $uniqueId ]['count'] += 1;
 			$data['relation'][ $uniqueId ]['notifyeveryone'] = $notifyeveryone;
 		}
@@ -931,11 +956,13 @@ class WallNotifications {
 	}
 
 	protected function getCache($userId, $wikiId) {
-		return new MemcacheSync($this->app->wg->Memc, $this->getKey($userId, $wikiId));
+		global $wgMemc;
+		return new MemcacheSync($wgMemc, $this->getKey($userId, $wikiId));
 	}
 
 	public function getDB($master = false){
-		return wfGetDB( $master ? DB_MASTER:DB_SLAVE, array(), $this->app->wg->ExternalDatawareDB );
+		global $wgExternalDatawareDB;
+		return wfGetDB( $master ? DB_MASTER:DB_SLAVE, array(), $wgExternalDatawareDB );
 	}
 
 	public function getLocalDB($master = false){
@@ -943,6 +970,23 @@ class WallNotifications {
 	}
 
 	public function getKey( $userId, $wikiId ){
-		return $this->app->runFunction( 'wfSharedMemcKey', __CLASS__, $userId, $wikiId. 'v30' );
+		return wfSharedMemcKey( __CLASS__, $userId, $wikiId. 'v30' );
+	}
+
+	/**
+	 * Get a user object with a given ID (cached results).
+	 *
+	 * Lots of methods used to construct the objects by themselves even a couple times for the same user.
+	 *
+	 * @author Władysław Bodzek <wladek@wikia-inc.com>
+	 *
+	 * @param $userId int User Id
+	 * @return User User object
+	 */
+	protected function getUser( $userId ) {
+		if ( !array_key_exists($userId,$this->cachedUsers ) ) {
+			$this->cachedUsers[$userId] = User::newFromId($userId);
+		}
+		return $this->cachedUsers[$userId];
 	}
 }

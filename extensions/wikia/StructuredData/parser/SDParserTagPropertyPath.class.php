@@ -47,7 +47,7 @@ class SDParserTagPropertyPath {
 				$valueIndex = $matches[2];
 			}
 
-			return F::build( 'SDParserTagProperty', array( 'name' => $propName, 'elementProperty' => $element->getProperty( $propName ), 'valueIndex' => $valueIndex ) );
+			return new SDParserTagProperty( $propName, $element->getProperty( $propName ), $valueIndex );
 		}
 		return false;
 	}

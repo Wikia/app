@@ -2,13 +2,14 @@
 
 /**
  * Parameter definition class.
- * 
+ * @deprecated since 0.5, removal in 0.7.
+ *
  * @since 0.4
  * 
  * @file Parameter.php
  * @ingroup Validator
  * 
- * @licence GNU GPL v3 or later
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class Parameter {
@@ -121,7 +122,7 @@ class Parameter {
 	 * 
 	 * @var string
 	 */
-	protected $originalName;
+	public $originalName;
 	
 	/**
 	 * The original value as provided by the user. This is mainly retained for
@@ -168,7 +169,7 @@ class Parameter {
 	 * 
 	 * @var boolean
 	 */
-	protected $applyManipulationsToDefault = true;
+	public $applyManipulationsToDefault = true;
 	
 	/**
 	 * Indicates if the parameter was set to it's default.
@@ -235,7 +236,7 @@ class Parameter {
 	protected function cleanCriteria( array &$criteria ) {
 		foreach ( $criteria as $key => &$criterion ) {
 			if ( !$criterion instanceof ParameterCriterion )  {
-				throw new Exception( "$key is not a valid ParameterCriterion." );
+				throw new MWException( "$key is not a valid ParameterCriterion." );
 			}
 		} 
 	}
@@ -356,7 +357,7 @@ class Parameter {
 	 * Validates the parameter value and sets the value to it's default when errors occur.
 	 * 
 	 * @since 0.4
-	 * 
+	 *
 	 * @param array $parameters
 	 */
 	public function validate( array $parameters ) {
@@ -383,14 +384,14 @@ class Parameter {
 	 * Also sets the value to the default when it's not set or invalid, assuming there is a default.
 	 * 
 	 * @since 0.4
-	 * 
+	 *
 	 * @param array $parameters
 	 */	
 	protected function doValidation( array $parameters ) {
 		if ( $this->setCount == 0 ) {
 			if ( $this->isRequired() ) {
 				// This should not occur, so thorw an exception.
-				throw new Exception( 'Attempted to validate a required parameter without first setting a value.' );
+				throw new MWException( 'Attempted to validate a required parameter without first setting a value.' );
 			}
 			else {
 				$this->setToDefault();
@@ -517,8 +518,8 @@ class Parameter {
 	 * @return string
 	 */
 	public function getOriginalName() {
-		if ( $this->setCount == 0 ) {
-			throw new Exception( 'No user imput set to the parameter yet, so the original name does not exist' );
+		if ( $this->setCount == 0 && empty( $this->originalName ) ) {
+			throw new MWException( 'No user input set to the parameter yet, so the original name does not exist' );
 		}		
 		return $this->originalName;
 	}
@@ -532,7 +533,7 @@ class Parameter {
 	 */
 	public function getOriginalValue() {
 		if ( $this->setCount == 0 ) {
-			throw new Exception( 'No user imput set to the parameter yet, so the original value does not exist' );
+			throw new MWException( 'No user input set to the parameter yet, so the original value does not exist' );
 		}
 		return $this->originalValue;
 	}	
@@ -642,10 +643,10 @@ class Parameter {
 		
 		switch( $this->type ) {
 			case self::TYPE_INTEGER:
-				$manipulations[] = new ParamManipulationInteger();
+				//$manipulations[] = new ParamManipulationInteger();
 				break;
 			case self::TYPE_FLOAT: case self::TYPE_NUMBER: 
-				$manipulations[] = new ParamManipulationFloat();
+				//$manipulations[] = new ParamManipulationFloat();
 				break;
 			case self::TYPE_BOOLEAN:
 				$manipulations[] = new ParamManipulationBoolean();
@@ -654,7 +655,7 @@ class Parameter {
 				$manipulations[] = new ParamManipulationTitle();
 				break;
 			case self::TYPE_CHAR: case self::TYPE_STRING: default:
-				$manipulations[] = new ParamManipulationString();
+				//$manipulations[] = new ParamManipulationString();
 		}		
 		
 		return $manipulations;
@@ -679,6 +680,14 @@ class Parameter {
 	 */
 	public function wasSetToDefault() {
 		return $this->defaulted;
+	}
+
+	/**
+	 * @since 0.5
+	 * @param boolean $defaulted
+	 */
+	public function setWasSetToDefault( $defaulted ) {
+		$this->defaulted = $defaulted;
 	}
 	
 	/**

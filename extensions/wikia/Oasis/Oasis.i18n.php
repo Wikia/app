@@ -164,6 +164,7 @@ $messages['en'] = array(
 	'oasis-upload-photos-fewer-options' => 'Fewer Options',
 	'oasis-upload-photos-force' => 'Upload anyway',
 	'oasis-upload-photos-caption' => 'Caption',
+	'oasis-upload-photos-overwrite-file' => 'Overwrite File',
 
 	'oasis-corporatefooter-navigation-header' => 'Wikia Inc Navigation',
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
@@ -298,6 +299,7 @@ Example output: deleted by Avatar 3 hours ago',
 	'oasis-corporatefooter-navigation-header' => 'Corporate Footer navigation header',
 	'oasis-global-page-header' => 'Global (corporate) header for whole HTML page - first <h1> in <body>',
 	'oasis-generic-error' => 'This is a generic error message that shows up when something unexpected went wrong in the code.',
+	'oasis-upload-photos-overwrite-file' => 'Label for the option in the image upload modal to overwrite a file, if a file by the same name already exists on the wiki',
 );
 
 /** Afrikaans (Afrikaans)
@@ -3518,6 +3520,9 @@ $1 przesyła Ci stronę {{SITENAME}} z Wikia:
       $2
 Miłej lektury!
 - zespół Wikia',
+	'oasis-community-social-twitter-link' => 'https://twitter.com/wikia_pl',
+	'oasis-community-social-facebook-link' => 'https://www.facebook.com/wikiapl',
+	'oasis-community-social-googleplus-link' => '',
 );
 
 /** Piedmontese (Piemontèis)

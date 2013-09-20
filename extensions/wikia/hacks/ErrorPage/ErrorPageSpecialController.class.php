@@ -27,7 +27,7 @@ class ErrorPageSpecialController extends WikiaSpecialPageController {
 	
 	// Controllers can all have an optional init method
 	public function init() {
-		//$this->businessLogic = F::build( 'HelloWorld', array( 'currentTitle' => $this->app->wg->Title ) );
+		//$this->businessLogic = new HelloWorld( $this->app->wg->Title );
 	}
 
 	/**
@@ -38,7 +38,7 @@ class ErrorPageSpecialController extends WikiaSpecialPageController {
 	public function index() {
 		$this->wg->Out->setPageTitle( "Trying to cause an error" );
 
-		//$this->wg->Out->setPageTitle( $this->wf->msg( 'helloworld-specialpage-title' ) );
+		//$this->wg->Out->setPageTitle( wfMsg( 'helloworld-specialpage-title' ) );
 		//$this->response->addAsset( 'extensions/wikia/templates/HelloWorld/css/HelloWorld_Oasis.scss' );
 		//$this->response->addAsset( 'extensions/wikia/templates/HelloWorld/js/HelloWorld.js' );
 

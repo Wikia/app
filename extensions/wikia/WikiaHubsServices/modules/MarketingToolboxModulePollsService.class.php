@@ -6,7 +6,7 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleEditableS
 	public function getFormFields() {
 		$fields = array(
 			'pollsTitle' => array(
-				'label' => $this->wf->msg('marketing-toolbox-hub-module-polls-title'),
+				'label' => wfMsg('marketing-toolbox-hub-module-polls-title'),
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
@@ -19,7 +19,7 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleEditableS
 				)
 			),
 			'pollsQuestion' => array(
-				'label' => $this->wf->msg('marketing-toolbox-hub-module-polls-question'),
+				'label' => wfMsg('marketing-toolbox-hub-module-polls-question'),
 				'validator' => new WikiaValidatorString(),
 				'attributes' => array(
 					'class' => 'required'
@@ -33,7 +33,7 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleEditableS
 
 		for ($i = 1; $i <= $mandatoryOptionsLimit; $i++) {
 			$fields['pollsOption' . $i] = array(
-				'label' => $this->wf->msg('marketing-toolbox-hub-module-polls-option-mandatory',$i),
+				'label' => wfMsg('marketing-toolbox-hub-module-polls-option-mandatory',$i),
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
@@ -49,7 +49,7 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleEditableS
 
 		for ($j = $i; $j < $i+$voluntaryOptionsLimit; $j++) {
 			$fields['pollsOption' . $j] = array(
-				'label' => $this->wf->msg('marketing-toolbox-hub-module-polls-option-voluntary',$j),
+				'label' => wfMsg('marketing-toolbox-hub-module-polls-option-voluntary',$j),
 			);
 		}
 

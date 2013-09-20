@@ -1291,6 +1291,12 @@ class WikiPage extends Page {
 			$summary = self::getAutosummary( $oldtext, $text, $flags );
 		}
 
+		// <Wikia>
+		if ( is_string( $user ) ) {
+			error_log( "MOLI: " . __METHOD__ . ": invalid User : " . print_r( $user, true ) );
+			Wikia::debugBacktrace( "MOLI: invalid User:" );
+		}
+		// </Wikia>
 		$editInfo = $this->prepareTextForEdit( $text, null, $user );
 		$text = $editInfo->pst;
 		$newsize = strlen( $text );
@@ -1331,7 +1337,7 @@ class WikiPage extends Page {
 			$changed = ( strcmp( $text, $oldtext ) != 0 );
 
 			if ( $changed ) {
-				$dbw->begin();
+				$dbw->begin(__METHOD__);
 				$revisionId = $revision->insertOn( $dbw );
 
 				# Update page
@@ -1353,7 +1359,7 @@ class WikiPage extends Page {
 					}
 
 					$revisionId = 0;
-					$dbw->rollback();
+					$dbw->rollback(__METHOD__);
 				} else {
 					global $wgUseRCPatrol;
 					wfRunHooks( 'NewRevisionFromEditComplete', array( $this, $revision, $baseRevId, $user, false ) );
@@ -1374,7 +1380,7 @@ class WikiPage extends Page {
 						}
 					}
 					$user->incEditCount();
-					$dbw->commit();
+					$dbw->commit(__METHOD__);
 				}
 			} else {
 				// Bug 32948: revision ID must be set to page {{REVISIONID}} and
@@ -1407,7 +1413,7 @@ class WikiPage extends Page {
 			# Create new article
 			$status->value['new'] = true;
 
-			$dbw->begin();
+			$dbw->begin(__METHOD__);
 
 			# Add the page record; stake our claim on this title!
 			# This will return false if the article already exists
@@ -1455,7 +1461,7 @@ class WikiPage extends Page {
 				}
 			}
 			$user->incEditCount();
-			$dbw->commit();
+			$dbw->commit(__METHOD__);
 
 			# Update links, etc.
 			$this->doEditUpdates( $revision, $user, array( 'created' => true ) );
@@ -2117,6 +2123,10 @@ class WikiPage extends Page {
 
 		# Clear the cached article id so the interface doesn't act like we exist
 		$this->mTitle->resetArticleID( 0 );
+		
+		# Wikia change here
+		$this->setCachedLastEditTime( wfTimestampNow() );
+		# Wikia 
 	}
 
 	/**

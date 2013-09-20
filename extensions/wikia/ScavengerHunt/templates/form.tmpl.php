@@ -2,7 +2,7 @@
 <?php if (!empty($errors)) { ?>
 	<div class="form-errorbox" >
 		<div class="error-head">
-			<img class="sprite error" width="16" height="16" src="<?=F::app()->wf->blankImgUrl(); ?>" alt=""><div><?php
+			<img class="sprite error" width="16" height="16" src="<?= wfBlankImgUrl(); ?>" alt=""><div><?php
 			echo wfMsg('scavengerhunt-form-error');
 			?></div>
 		</div>

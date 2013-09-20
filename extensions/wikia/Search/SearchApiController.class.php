@@ -11,6 +11,7 @@ use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QuerySe
  */
 class SearchApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
+	const CROSS_WIKI_LIMIT = 25;
 
 	const PARAMETER_NAMESPACES = 'namespaces';
 
@@ -38,81 +39,67 @@ class SearchApiController extends WikiaApiController {
 	 * @example &namespaces=14&query=char
 	 */
 	public function getList() {
-		$searchConfig = new Config();
-		$type = $this->request->getVal( 'type', 'articles' );
-		$query = $this->getVal( 'query', null );
-		$rank = $this->request->getVal( 'rank', 'default' );
-		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
-		$batch = $this->request->getVal( 'batch', 1 );
-		$namespaces = $this->request->getArray( 'namespaces', null );
-		$total = 0;
-		$results = [];
-		$batches = 0;
-		$currentBatch = 0;
-		$next = 0;
+		$this->setResponseFromConfig( $this->getConfigFromRequest() );
+	}
 
-		$searchConfig->setQuery( $query )
-			->setCityId( $this->wg->CityId )
-			->setLimit( $limit )
-			->setPage( $batch )
-			->setRank( $rank )
-			->setDebug( false )
-			->setSkipCache( false )
-			->setAdvanced( false )
-			->setHub( false )
-			->setRedirs( false )
-			->setVideoSearch( $type == 'videos' )
-			->setGroupResults( false );
-
-		if ( !empty( $namespaces ) ) {
-			foreach ( $namespaces as &$n ) {
-				if ( is_numeric( $n ) ) {
-					$n = (int) $n;
-				} else {
-					throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
-				}
-			}
-
-			$searchConfig->setNamespaces( $namespaces );
+	/**
+	 * Fetches results for cross-wiki search for submitted query
+	 *
+	 * @requestParam string $query The query to use for the search
+	 * @requestParam string $lang The two chars wiki language code
+	 * @requestParam string $rank [OPTIONAL] The ranking to use in fetching the list of results, one of default, newest, oldest, recently-modified, stable, most-viewed, freshest, stalest
+	 * @requestParam integer $batch [OPTIONAL] The batch/page of results to fetch
+	 * @requestParam integer $limit [OPTIONAL] The number of wiki items per batch
+	 *
+	 * @responseParam array $items The list of results
+	 *
+	 * @example &query=kermit&lang=en
+	 * @example &query=kermit&lang=en&limit=10
+	 * @example &query=kermit&lang=en&limit=2&batch=2
+	 */
+	public function getCrossWiki() {
+		if ( !$this->request->getVal( 'query' ) ) {
+			throw new InvalidParameterApiException( 'query' );
+		}
+		if ( !$this->request->getVal( 'lang' ) ) {
+			throw new InvalidParameterApiException( 'lang' );
 		}
 
-		if ( $searchConfig->getQuery()->hasTerms() ) {
-			$container = new DependencyContainer( array( 'config' => $searchConfig ) );
-			$wikiaSearch = (new Factory)->get( $container );
+		$resultSet = (new Factory)->getFromConfig( $this->getConfigCrossWiki() )->search();
+		$items = array();
+		foreach( $resultSet->getResults() as $result ) {
+			$items[] = array(
+				'id' => (int) $result['id'],
+				'language' => $result['lang_s'],
+			);
+		}
 
-			$resultSet = $wikiaSearch->search( $searchConfig );
-			$total = $searchConfig->getResultsFound();
+		$this->response->setVal( 'items', $items );
+	}
 
-			if ( $total ) {
-				foreach ( $resultSet as $result ) {
-					$results[] = [
-						'id' => $result['pageid'],
-						'title' => $result->getTitle(),
-						'url' => $result->getUrl(),
-						'ns' => $result['ns']
-					];
-				}
-
-				$batches = $searchConfig->getNumPages();
-				$currentBatch = $searchConfig->getPage();
-				$next = max( 0, $total - ( $limit * $currentBatch ) );
-
-				if ( $next > $limit ) {
-					$next = $limit;
-				}
-			} else {
-				throw new NotFoundApiException();
-			}
+	/**
+	 * Sets the response based on values set in config
+	 * @param Wikia\Search\Config $searchConfig
+	 * @param array $fields that will be returned in items array
+	 * @param bool $metadata if true, will return also query statistics
+	 * @throws InvalidParameterApiException if query field in request is missing
+	 */
+	protected function setResponseFromConfig( Wikia\Search\Config $searchConfig ) {
+		if (! $searchConfig->getQuery()->hasTerms() ) {
+			throw new InvalidParameterApiException( 'query' );
 		}
 
 		//Standard Wikia API response with pagination values
-		$this->response->setVal( 'items',	$results );
-		$this->response->setVal( 'next', $next );
-		$this->response->setVal( 'total', $total );
-		$this->response->setVal( 'batches', $batches );
-		$this->response->setVal( 'currentBatch', $currentBatch );
+		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( ['pageid' => 'id', 'title', 'url', 'ns' ], true );
 
-		$this->response->setCacheValidity(
+		if ( empty( $responseValues['items'] ) ) {
+			throw new NotFoundApiException();
+		}
+
+		$response = $this->getResponse();
+		$response->setValues( $responseValues );
+
+		$response->setCacheValidity(
 			86400 /* 24h */,
 			86400 /* 24h */,
 			array(
@@ -120,5 +107,58 @@ class SearchApiController extends WikiaApiController {
 				WikiaResponse::CACHE_TARGET_VARNISH
 			)
 		);
+	}
+	
+	/**
+	 * Validates user-provided namespaces.
+	 * @param Wikia\Search\Config $searchConfig
+	 * @throws InvalidParameterApiException
+	 * @return Wikia\Search\Config
+	 */
+	protected function validateNamespacesForConfig( $searchConfig ) {
+		$namespaces = $this->getRequest()->getArray( 'namespaces', [] );
+		if (! empty( $namespaces ) ) {
+			foreach ( $namespaces as &$n ) {
+				if (! is_numeric( $n ) ) {
+					throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
+				}
+			}
+			
+			$searchConfig->setNamespaces( $namespaces );
+		}
+		return $searchConfig;
+	}
+	
+	/**
+	 * Inspects request and sets config accordingly.
+	 * @return Wikia\Search\Config
+	 */
+	protected function getConfigFromRequest() {
+		$request = $this->getRequest();
+		$searchConfig = new Wikia\Search\Config;
+		$searchConfig->setQuery( $request->getVal( 'query', null ) )
+		             ->setLimit( $request->getInt( 'limit', self::ITEMS_PER_BATCH ) )
+		             ->setPage( $request->getVal( 'batch', 1 ) )
+		             ->setRank( $request->getVal( 'rank', 'default' ) )
+		             ->setVideoSearch( $request->getVal( 'type', 'articles' ) == 'videos' )
+		;
+		return $this->validateNamespacesForConfig( $searchConfig );
+	}
+
+	/**
+	 * Returns wikia Config for cross wiki search build on request data
+	 * @return Wikia\Search\Config
+	 */
+	protected function getConfigCrossWiki() {
+		$request = $this->getRequest();
+		$searchConfig = new Wikia\Search\Config;
+		$searchConfig->setQuery( $request->getVal( 'query', null ) )
+			->setLimit( $request->getInt( 'limit', static::CROSS_WIKI_LIMIT ) )
+			->setPage( $request->getVal( 'batch', 1 ) )
+			->setRank( $request->getVal( 'rank', 'default' ) )
+			->setInterWiki( true )
+			->setLanguageCode( $request->getVal( 'lang' ) )
+		;
+		return $searchConfig;
 	}
 }

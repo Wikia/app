@@ -33,7 +33,12 @@ class FBPush_OnLargeEdit extends FBConnectPushEvent {
 	public static function articleCountWordDiff(&$article,&$user,$newText, $summary,$flag, $fake1, $fake2, &$flags, $revision, &$status, $baseRevId){
 		global $wgContentNamespaces, $wgSitename;
 		wfProfileIn(__METHOD__);
-	
+
+		if ( !self::checkUserOptions(__CLASS__) ) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
+
 		if ( is_null( $revision ) ) {
 			// nothing's changed, quit early
 			wfProfileOut( __METHOD__ );

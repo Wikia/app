@@ -32,7 +32,7 @@ class Hooks
 	 * @param integer $reason
 	 * @param integer $id
 	 */
-	public function onArticleDeleteComplete( &$article, \User &$user, $reason, $id ) {
+	public static function onArticleDeleteComplete( &$article, \User &$user, $reason, $id ) {
 		return (new Indexer)->deleteArticle( $id );
 	}
 	
@@ -50,7 +50,7 @@ class Hooks
 	 * @param int $status
 	 * @param int $baseRevId
 	 */
-	public function onArticleSaveComplete( &$article, &$user, $text, $summary,
+	public static function onArticleSaveComplete( &$article, &$user, $text, $summary,
 	        $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
 		return (new Indexer)->reindexBatch( array( $article->getTitle()->getArticleID() ) );
 	}
@@ -60,7 +60,7 @@ class Hooks
 	 * @param Title $title
 	 * @param int $create
 	 */
-	public function onArticleUndelete( $title, $create ) {
+	public static function onArticleUndelete( $title, $create ) {
 		return (new Indexer)->reindexBatch( array( $title->getArticleID() ) );
 	}
 	
@@ -71,7 +71,7 @@ class Hooks
 	 * @param  string $reason
 	 * @return bool
 	 */
-	public function onWikiFactoryPublicStatusChange( &$city_public, &$city_id, $reason ) {
+	public static function onWikiFactoryPublicStatusChange( &$city_public, &$city_id, $reason ) {
 		return ( $city_public < 1 ) 
 		    ? (new Indexer)->deleteWikiDocs( $city_id )
 		    : (new Indexer)->reindexWiki( $city_id );
@@ -121,9 +121,9 @@ class Hooks
 	 * @param  array $scssPackages
 	 * @return boolean
 	 */
-	public function onWikiaMobileAssetsPackages( &$jsHeadPackages, &$jsBodyPackages, &$scssPackages){
+	public static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages){
 		if( \F::app()->wg->Title->isSpecial( 'Search' ) ) {
-			$jsBodyPackages[] = 'wikiasearch_js_wikiamobile';
+			$jsExtensionPackages[] = 'wikiasearch_js_wikiamobile';
 			$scssPackages[] = 'wikiasearch_scss_wikiamobile';
 		}
 		return true;
@@ -139,7 +139,7 @@ class Hooks
 	 * @param unknown_type $ret
 	 * @return boolean
 	 */
-	public function onLinkEnd( $skin, \Title $target, array $options, &$text, array &$attribs, &$ret ) {
+	public static function onLinkEnd( $skin, \Title $target, array $options, &$text, array &$attribs, &$ret ) {
 		$service = self::$service ?: new MediaWikiService;
 		self::$service = $service;
 		$targetId = $service->getCanonicalPageIdFromPageId( $target->getArticleId() );
@@ -154,7 +154,7 @@ class Hooks
 	 * Returns the current parse's outbound links and reinitializes the array.
 	 * @return array
 	 */
-	public function popLinks() {
+	public static function popLinks() {
 		$links = self::$outboundLinks;
 		self::$outboundLinks = [];
 		return $links;

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This groupe contains all OpenLayers related files of the Maps extension.
+ * This group contains all OpenLayers related files of the Maps extension.
  * 
  * @defgroup MapsOpenLayers OpenLayers
  * @ingroup Maps
@@ -13,7 +13,8 @@
  * @file OpenLayers.php
  * @ingroup MapsOpenLayers
  *
- * @author Jeroen De Dauw
+ * @licence GNU GPL v2+
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
@@ -22,7 +23,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgResourceModules['ext.maps.openlayers'] = array(
 	'dependencies' => array( 'ext.maps.common' ),
-	'localBasePath' => dirname( __FILE__ ),
+	'localBasePath' => __DIR__,
 	'remoteBasePath' => $egMapsScriptPath .  '/includes/services/OpenLayers',	
 	'group' => 'ext.maps',
 	'scripts' =>   array(
@@ -35,13 +36,14 @@ $wgResourceModules['ext.maps.openlayers'] = array(
 		'OpenLayers/theme/default/style.css'
 	),
 	'messages' => array(
-		'maps-markers'
+		'maps-markers',
+        'maps-copycoords-prompt',
 	)			
 );
 
-$wgAutoloadClasses['CriterionOLLayer']	 			= dirname( __FILE__ ) . '/CriterionOLLayer.php';
-$wgAutoloadClasses['MapsOpenLayers'] 				= dirname( __FILE__ ) . '/Maps_OpenLayers.php';
-$wgAutoloadClasses['MapsParamOLLayers'] 			= dirname( __FILE__ ) . '/Maps_ParamOLLayers.php';	
+$wgAutoloadClasses['CriterionOLLayer']	 			= __DIR__ . '/CriterionOLLayer.php';
+$wgAutoloadClasses['MapsOpenLayers'] 				= __DIR__ . '/Maps_OpenLayers.php';
+$wgAutoloadClasses['MapsParamOLLayers'] 			= __DIR__ . '/Maps_ParamOLLayers.php';
 
 $wgHooks['MappingServiceLoad'][] = 'efMapsInitOpenLayers';
 function efMapsInitOpenLayers() {
@@ -49,8 +51,7 @@ function efMapsInitOpenLayers() {
 		'openlayers',
 		'MapsOpenLayers',
 		array(
-			'display_point' => 'MapsBasePointMap',
-			'display_map' => 'MapsBaseMap'
+			'display_map' => 'MapsDisplayMapRenderer',
 		)
 	);
 	

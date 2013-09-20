@@ -46,11 +46,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.7';
 
 	protected $visualizationModel = null;
-
-	protected $excludeUsersFromInterstitial = array(
-		22439, //Wikia
-		1458396, //Abuse filter
-	);
+	protected $collectionsModel;
 
 	public function getNumberOfEntertainmentSlots($lang) {
 		return $this->getVarFromWikiFactory($this->getCorpWikiIdByLang($lang), self::ENTERTAINMENT_SLOTS_VAR_NAME);
@@ -110,10 +106,21 @@ class WikiaHomePageHelper extends WikiaModel {
 	 */
 	protected function getVisualization() {
 		if (empty($this->visualizationModel)) {
-			$this->visualizationModel = F::build('CityVisualization');
+			$this->visualizationModel = new CityVisualization();
 		}
 		return $this->visualizationModel;
 	}
+
+	/**
+	 * @return WikiaCollectionsModel
+	 */
+	protected function getCollectionsModel() {
+		if (empty($this->collectionsModel)) {
+			$this->collectionsModel = new WikiaCollectionsModel();
+		}
+		return $this->collectionsModel;
+	}
+
 
 	/**
 	 * @desc Returns WikiFactory variable's value if not found returns 0 and adds information to logs
@@ -171,7 +178,7 @@ class WikiaHomePageHelper extends WikiaModel {
 
 		$edits = 0;
 		if (!empty($this->wg->StatsDBEnabled)) {
-			$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->StatsDB);
+			$db = wfGetDB(DB_SLAVE, array(), $this->wg->StatsDB);
 
 			$row = $db->selectRow(
 				array('events'),
@@ -192,7 +199,7 @@ class WikiaHomePageHelper extends WikiaModel {
 
 	public function getTotalCommunities() {
 		return WikiaDataAccess::cache(
-			F::app()->wf->MemcKey('total_communities_count', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION, __METHOD__),
+			wfMemcKey('total_communities_count', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION, __METHOD__),
 			24 * 60 * 60,
 			array($this, 'getTotalCommunitiesFromDB')
 		);
@@ -201,7 +208,7 @@ class WikiaHomePageHelper extends WikiaModel {
 
 	public function getTotalCommunitiesFromDB() {
 		wfProfileIn(__METHOD__);
-		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->externalSharedDB);
+		$db = wfGetDB(DB_SLAVE, array(), $this->wg->externalSharedDB);
 		$row = $db->selectRow(
 			array('city_list'),
 			array('count(1) cnt'),
@@ -219,7 +226,7 @@ class WikiaHomePageHelper extends WikiaModel {
 
 	public function getLastDaysNewCommunities() {
 		return WikiaDataAccess::cache(
-			F::app()->wf->MemcKey('communities_created_in_range', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION, __METHOD__),
+			wfMemcKey('communities_created_in_range', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION, __METHOD__),
 			24 * 60 * 60,
 			array($this, 'getLastDaysNewCommunitiesFromDB')
 		);
@@ -233,7 +240,7 @@ class WikiaHomePageHelper extends WikiaModel {
 
 	protected function getNewCommunitiesInRangeFromDB($starttimestamp, $endtimestamp) {
 		wfProfileIn(__METHOD__);
-		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->externalSharedDB);
+		$db = wfGetDB(DB_SLAVE, array(), $this->wg->externalSharedDB);
 		$row = $db->selectRow(
 			array('city_list'),
 			array('count(1) cnt'),
@@ -284,7 +291,7 @@ class WikiaHomePageHelper extends WikiaModel {
 
 		$totalPages = 0;
 		if (!empty($this->wg->StatsDBEnabled)) {
-			$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->StatsDB);
+			$db = wfGetDB(DB_SLAVE, array(), $this->wg->StatsDB);
 
 			$row = $db->selectRow(
 				array('wikia_monthly_stats'),
@@ -312,7 +319,7 @@ class WikiaHomePageHelper extends WikiaModel {
 		$wikiStats = array();
 
 		if (!empty($wikiId)) {
-			$wikiService = F::build('WikiService');
+			$wikiService = new WikiService();
 
 			try {
 				//this try-catch block is here because of devbox environments
@@ -349,32 +356,20 @@ class WikiaHomePageHelper extends WikiaModel {
 	public function getWikiAdminAvatars($wikiId) {
 		$adminAvatars = array();
 		if (!empty($wikiId)) {
-			$wikiService = F::build('WikiService');
+			$wikiService = new WikiService();
 			try {
 				//this try-catch block is here because of devbox environments
 				//where we don't have all wikis imported
-				$admins = $wikiService->getWikiAdminIds($wikiId, false, true);
-				shuffle($admins);
-			} catch (Exception $e) {
-				$admins = array();
-			}
-
-			foreach ($admins as $userId) {
-				$userInfo = $wikiService->getUserInfo($userId, $wikiId, self::AVATAR_SIZE, array($this,'isValidUserForInterstitial'));
-
-				if (!empty($userInfo)) {
-					$userStatService = F::build('UserStatsService', array($userId)); /* @var $userStatService UserStatsService */
-					$userInfo['edits'] = $userStatService->getEditCountWiki($wikiId);
-					if (!empty($adminAvatars[$userInfo['name']])) {
-						$userInfo['edits'] += $adminAvatars[$userInfo['name']]['edits'];
-					}
-
-					$adminAvatars[$userInfo['name']] = $userInfo;
-
-					if (count($adminAvatars) >= self::LIMIT_ADMIN_AVATARS) {
-						break;
-					}
+				$adminAvatars = $wikiService->getMostActiveAdmins($wikiId, self::AVATAR_SIZE);
+				if( count($adminAvatars) > self::LIMIT_ADMIN_AVATARS ) {
+					$adminAvatars = array_slice( $adminAvatars, 0, self::LIMIT_ADMIN_AVATARS );
 				}
+				foreach( $adminAvatars as &$admin ) {
+					$userStatService = new UserStatsService($admin['userId']);
+					$admin['edits'] = $userStatService->getEditCountWiki($wikiId);
+				}
+			} catch (Exception $e) {
+				$adminAvatars = array();
 			}
 		}
 
@@ -390,7 +385,7 @@ class WikiaHomePageHelper extends WikiaModel {
 		$topEditorAvatars = array();
 
 		if (!empty($wikiId)) {
-			$wikiService = F::build('WikiService');
+			$wikiService = new WikiService();
 			try {
 				//this try-catch block is here because of devbox environments
 				//where we don't have all wikis imported
@@ -433,7 +428,7 @@ class WikiaHomePageHelper extends WikiaModel {
 
 		return (
 			!$user->isIP($userName)
-				&& !in_array($userId, $this->excludeUsersFromInterstitial)
+				&& !in_array($userId, WikiService::$excludedWikiaUsers)
 				&& !in_array('bot', $user->getRights())
 				&& !$user->isBlocked()
 				&& !$user->isBlockedGlobally()
@@ -443,7 +438,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	public function getWikiInfoForSpecialPromote($wikiId, $langCode) {
 		wfProfileIn(__METHOD__);
 
-		$dataGetter = F::build('WikiDataGetterForSpecialPromote');
+		$dataGetter = new WikiDataGetterForSpecialPromote();
 		$wikiInfo = $this->getWikiInfo($wikiId, $langCode, $dataGetter);
 
 		wfProfileOut(__METHOD__);
@@ -453,7 +448,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	public function getWikiInfoForVisualization($wikiId, $langCode) {
 		wfProfileIn(__METHOD__);
 
-		$dataGetter = F::build('WikiDataGetterForVisualization');
+		$dataGetter = new WikiDataGetterForVisualization();
 		$wikiInfo = $this->getWikiInfo($wikiId, $langCode, $dataGetter);
 
 		wfProfileOut(__METHOD__);
@@ -486,7 +481,7 @@ class WikiaHomePageHelper extends WikiaModel {
 		);
 
 		if (!empty($wikiId)) {
-			$wiki = F::build('WikiFactory', array($wikiId), 'getWikiById');
+			$wiki = WikiFactory::getWikiById($wikiId);
 			if (!empty($wiki)) {
 				$wikiInfo['url'] = $wiki->city_url . '?redirect=no';
 			}
@@ -524,6 +519,12 @@ class WikiaHomePageHelper extends WikiaModel {
 		return $wikiInfo;
 	}
 
+	public function isWikiBlocked($wikiId, $langCode) {
+		$visualization = $this->getVisualization();
+		$flags = $this->getFlag($wikiId, $langCode);
+		return $visualization->isBlockedWiki($flags);
+	}
+
 	public function getImageDataForSlider($wikiId, $imageName) {
 		$newFilesUrl = $this->getNewFilesUrl($wikiId);
 		$imageData = $this->getImageData($imageName);
@@ -533,7 +534,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	protected function getNewFilesUrl($wikiId) {
-		$globalNewFilesTitle = F::build('GlobalTitle', array('NewFiles', NS_SPECIAL, $wikiId), 'newFromText');
+		$globalNewFilesTitle = GlobalTitle::newFromText('NewFiles', NS_SPECIAL, $wikiId);
 		if ($globalNewFilesTitle instanceof Title) {
 			$newFilesUrl = $globalNewFilesTitle->getFullURL();
 			return $newFilesUrl;
@@ -577,23 +578,32 @@ class WikiaHomePageHelper extends WikiaModel {
 				$imageName = urldecode($imageName);
 			}
 
-			$title = F::build('Title', array($imageName, NS_IMAGE), 'newFromText');
-			$file = $this->wf->FindFile($title);
+			$title = Title::newFromText($imageName, NS_IMAGE);
+			$file = wfFindFile($title);
 
-			if ($file instanceof File && $file->exists()) {
-				$originalWidth = $file->getWidth();
-				$originalHeight = $file->getHeight();
-			}
-
-			if (!empty($originalHeight) && !empty($originalWidth)) {
-				$imageServingParams = $this->getImageServingParamsForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight);
-				$imageServing = F::build('ImageServing', $imageServingParams);
-				$imageUrl = $imageServing->getUrl($file, $originalWidth, $originalHeight);
-			} else {
-				$imageUrl = $this->wg->blankImgUrl;
-			}
+			$imageUrl = ImagesService::overrideThumbnailFormat(
+				$this->getImageUrlFromFile($file, $requestedWidth, $requestedHeight),
+				ImagesService::EXT_JPG
+			);
 		}
 
+		wfProfileOut(__METHOD__);
+		return $imageUrl;
+	}
+
+	public function getImageUrlFromFile($file, $requestedWidth, $requestedHeight) {
+		wfProfileIn(__METHOD__);
+		if ($file instanceof File && $file->exists()) {
+			$originalWidth = $file->getWidth();
+			$originalHeight = $file->getHeight();
+		}
+
+		if (!empty($originalHeight) && !empty($originalWidth)) {
+			$imageServing = $this->getImageServingForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight);
+			$imageUrl = $imageServing->getUrl($file, $originalWidth, $originalHeight);
+		} else {
+			$imageUrl = $this->wg->blankImgUrl;
+		}
 		wfProfileOut(__METHOD__);
 		return $imageUrl;
 	}
@@ -602,7 +612,7 @@ class WikiaHomePageHelper extends WikiaModel {
 		wfProfileIn(__METHOD__);
 		$reviewStatus = false;
 
-		$rowAssigner = F::build('WikiImageReviewStatusRowHelper');
+		$rowAssigner = new WikiImageReviewStatusRowHelper();
 		if ($imageId > 0) {
 			$reviewStatus = $this->getVisualization()->getImageReviewStatus($this->wg->CityId, $imageId, $rowAssigner);
 		}
@@ -620,13 +630,18 @@ class WikiaHomePageHelper extends WikiaModel {
 		wfProfileIn(__METHOD__);
 		$imageId = 0;
 
-		$imageTitle = F::build('Title', array($imageName, NS_FILE), 'newFromText');
+		$imageTitle = Title::newFromText($imageName, NS_FILE);
 		if ($imageTitle instanceof Title) {
 			$imageId = $imageTitle->getArticleID();
 		}
 
 		wfProfileOut(__METHOD__);
 		return $imageId;
+	}
+
+	public function getImageServingForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight) {
+		$params = $this->getImageServingParamsForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight);
+		return new ImageServing($params[0], $params[1], $params[2]);
 	}
 
 	public function getImageServingParamsForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight) {
@@ -665,7 +680,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	public function getWikiBatches($wikiId, $langCode, $numberOfBatches) {
-		$visualization = F::build('CityVisualization');
+		$visualization = new CityVisualization();
 		/** @var CityVisualization $visualization */
 		$batches = $visualization->getWikiBatches($wikiId, $langCode, $numberOfBatches);
 
@@ -848,7 +863,7 @@ class WikiaHomePageHelper extends WikiaModel {
 		wfProfileIn(__METHOD__);
 
 		/* @var $visualization CityVisualization */
-		$visualization = F::build('CityVisualization');
+		$visualization = new CityVisualization();
 		$result = $visualization->setFlag($wikiId, $langCode, $flag);
 
 		if ($result === true) {
@@ -869,11 +884,17 @@ class WikiaHomePageHelper extends WikiaModel {
 		return false;
 	}
 
+	public function getFlag($wikiId, $langCode) {
+		$visualization = $this->getVisualization();
+		$flags = $visualization->getFlag($wikiId, $langCode);
+		return $flags;
+	}
+
 	public function removeFlag($wikiId, $flag, $corpWikiId, $langCode) {
 		wfProfileIn(__METHOD__);
 
 		/* @var $visualization CityVisualization */
-		$visualization = F::build('CityVisualization');
+		$visualization = new CityVisualization();
 		$result = $visualization->removeFlag($wikiId, $langCode, $flag);
 
 		if ($result === true) {
@@ -917,7 +938,12 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	public function getWikisForStaffTool($options) {
-		return $this->getVisualization()->getWikisForStaffTool($options);
+		$wikiList = $this->getVisualization()->getWikisForStaffTool($options);
+
+		foreach ($wikiList as &$wiki) {
+			$wiki->collections = $this->getCollectionsModel()->getCollectionsByCityId($wiki->city_id);
+		}
+		return $wikiList;
 	}
 
 	public function getWamScore($wikiId) {

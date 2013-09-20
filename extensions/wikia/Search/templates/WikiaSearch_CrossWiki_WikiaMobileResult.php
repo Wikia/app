@@ -1,25 +1,13 @@
-<?php if($resultSet->getResultsFound() > 1 ): ?>
-	<?php if ( $resultSet->getHeader('wikititle') ): ?>
-		<li class=group>
-			<p>
-				<a class=groupTitle href="<?= $resultSet->getHeader( 'url' );?>"><?=
-					$resultSet->getHeader( 'wikititle' );?></a>
-				<a class=searchGroup href="<?= 'http://' . $resultSet->getHeader('host')
-					.'/wiki/Special:Search?search='.urlencode
-				($query).'&fulltext=Search';?>"></a>
-			</p>
-			<a class=url href="<?= $resultSet->getHeader( 'url' );?>"><?=$resultSet->getHeader(
-					'host' );?></a>
-			<span class=desc><?= $resultSet->getDescription(); ?></span>
-		</li>
-	<?php endif; ?>
-<?php else : ?>
-	<?= $app->getView( 'WikiaSearch', 'CrossWiki_WikiaMobileExactResult', array(
-		'resultSet' => $resultSet,
-		'gpos' => 0,
-		'pos' => $pos,
-		'query' => $query,
-		'rank' =>  $resultSet->getHeader('cityRank'),
-	)); ?>
-<?php endif; ?>
-
+<?php
+$title = ( $hl = $result->getText( 'headline_txt' ) ) ? $hl : $result->getText( 'sitename_txt' );
+$url = $result['url'];
+?><li class=group>
+	<p>
+		<a class=groupTitle href="<?= $url;?>"><?=$title;?></a>
+		<a class=searchGroup href="<?= $url
+			.'/wiki/Special:Search?search='.urlencode
+		($query).'&fulltext=Search';?>"></a>
+	</p>
+	<a class=url href="<?= $url;?>"><?=parse_url( $url, PHP_URL_HOST );?></a>
+	<span class=desc><?= $result->getText( Wikia\Search\Utilities::field( 'description' ), 60 ); ?></span>
+</li>

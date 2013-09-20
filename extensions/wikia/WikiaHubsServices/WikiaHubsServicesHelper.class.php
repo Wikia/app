@@ -5,6 +5,8 @@ class WikiaHubsServicesHelper
 	const HUBSV2_IMAGES_MEMC_KEY_VER = '1.03';
 	const HUBSV2_IMAGES_MEMC_KEY_PREFIX = 'hubv2images';
 
+	private $corporateModel = null;
+
 	/**
 	 * Get memcache key for hub images on WikiaHomepage
 	 *
@@ -13,7 +15,7 @@ class WikiaHubsServicesHelper
 	 * @return string
 	 */
 	static public function getWikiaHomepageHubsMemcacheKey($lang) {
-		return F::app()->wf->SharedMemcKey(
+		return wfSharedMemcKey(
 			'wikiahomepage',
 			self::HUBSV2_IMAGES_MEMC_KEY_PREFIX,
 			$lang,
@@ -28,8 +30,8 @@ class WikiaHubsServicesHelper
 	 *
 	 * @throws Exception
 	 */
-	public static function purgeHomePageVarnish($lang) {
-		$wikiId = static::getCorporateWikiIdByLang($lang);
+	public function purgeHomePageVarnish($lang) {
+		$wikiId = $this->getCorporateModel()->getCorporateWikiIdByLang($lang);
 
 		$mainPageName = static::getMainPageNameByWikiId($wikiId);
 		$mainPageTitle = static::getGlobalTitleFromText($mainPageName, $wikiId);
@@ -42,10 +44,19 @@ class WikiaHubsServicesHelper
 	 * @param $lang
 	 * @param $verticalId
 	 */
-	public static function purgeHubVarnish($lang, $verticalId) {
-		$wikiId = static::getCorporateWikiIdByLang($lang);
+	public function purgeHubVarnish($lang, $verticalId) {
+		$wikiId = $this->getCorporateModel()->getCorporateWikiIdByLang($lang);
+
 		$hubTitle = static::getGlobalTitleFromText(static::getHubName($wikiId, $verticalId), $wikiId);
 		$hubTitle->purgeSquid();
+	}
+
+	protected function getCorporateModel() {
+		if(empty($this->corporateModel)) {
+			$this->corporateModel = new WikiaCorporateModel();
+		}
+
+		return $this->corporateModel;
 	}
 
 	/**
@@ -65,25 +76,6 @@ class WikiaHubsServicesHelper
 		}
 		return $hubsV2Pages[$verticalId];
 	}
-
-	/**
-	 * Get corporate wikiId by content lang
-	 *
-	 * @param $lang
-	 *
-	 * @return int
-	 *
-	 * @throws Exception
-	 */
-	public static function getCorporateWikiIdByLang($lang) {
-		$visualizationData = static::getVisualizationData();
-		if (!isset($visualizationData[$lang]['wikiId'])) {
-			throw new Exception('Corporate Wiki not defined for this lang');
-		}
-		return $visualizationData[$lang]['wikiId'];
-	}
-
-
 
 	/**
 	 * Get global title
@@ -122,15 +114,6 @@ class WikiaHubsServicesHelper
 		$mainPageName = $response['query']['allmessages'][0]['*'];
 
 		return $mainPageName;
-	}
-
-	/**
-	 * get data about corporate wikis
-	 * @return array
-	 */
-	protected static function getVisualizationData() {
-		$visualizationModel = new CityVisualization();
-		return $visualizationModel->getVisualizationWikisData();
 	}
 
 	/**

@@ -32,7 +32,7 @@ function efSetupComboAjaxLogin() {
 	wfProfileIn( __METHOD__ );
 
 	// register messages package for JS
-	F::build('JSMessages')->registerPackage('ComboAjaxLogin', array(
+	JSMessages::registerPackage('ComboAjaxLogin', array(
 		'comboajaxlogin-ajaxerror',
 	));
 

@@ -54,15 +54,30 @@
 		<h2 class="heading">
 			<?= wfMessage('manage-wikia-home-collections-setup-header')->text() ?>
 		</h2>
-
+		
 		<form method="post" class="WikiaForm" id="collectionsSetupForm">
 			<? for($i=0; $i < WikiaCollectionsModel::COLLECTIONS_COUNT; $i++): ?>
-				<div class="collection-module">
+
+				<?php
+					$enabled = isset($form->getField('enabled')['value'][$i]) ? $form->getField('enabled')['value'][$i] : false;
+					$collectionId = isset($form->getField('id')['value'][$i]) ? $form->getField('id')['value'][$i] : 0;
+					$wikisCounter = isset($wikisPerCollection[$collectionId]) ? $wikisPerCollection[$collectionId] : 0;
+				?>
+				
+				<div class="collection-module" data-collection-id="<?= $collectionId; ?>">
+					<?php if( $enabled && $wikisCounter != WikiaHomePageHelper::SLOTS_IN_TOTAL ): ?>
+						<div class="input-group">
+							<p class="error"><?= wfMessage('manage-wikia-home-collections-invalid-wikis-number')->numParams([WikiaHomePageHelper::SLOTS_IN_TOTAL])->text(); ?></p>
+						</div>
+					<?php endif; ?>
+					
 					<?=$form->renderField('enabled', $i)?>
+					<?=$form->renderField('id', $i)?>
 					<?=$form->renderField('name', $i)?>
+					
 					<div class="image-input-container">
 						<?=$form->renderField('sponsor_hero_image', $i)?>
-						<input type="button" class="wmu-show" value="<?= $wf->Message('manage-wikia-home-collection-add-file-button')->text() ?>" />
+						<input type="button" class="wmu-show" value="<?= wfMessage('manage-wikia-home-collection-add-file-button')->text() ?>" />
 					</div>
 					<p class="alternative">
 						<?= wfMessage('manage-wikia-home-collection-hero-image-tooltip')->numParams(SpecialManageWikiaHomeModel::HERO_IMAGE_WIDTH, SpecialManageWikiaHomeModel::HERO_IMAGE_HEIGHT)->text() ?>
@@ -70,12 +85,16 @@
 
 					<div class="image-input-container">
 						<?=$form->renderField('sponsor_image', $i)?>
-						<input type="button" class="wmu-show" value="<?= $wf->Message('manage-wikia-home-collection-add-file-button')->text() ?>" />
+						<input type="button" class="wmu-show" value="<?= wfMessage('manage-wikia-home-collection-add-file-button')->text() ?>" />
 					</div>
 					<p class="alternative">
 						<?= wfMessage('manage-wikia-home-collection-sponsor-image-tooltip')->numParams(SpecialManageWikiaHomeModel::SPONSOR_IMAGE_WIDTH, SpecialManageWikiaHomeModel::SPONSOR_IMAGE_HEIGHT)->text() ?>
 					</p>
 					<?=$form->renderField('sponsor_url', $i)?>
+
+					<div class="input-group collection-wikis-counter">
+						<p><?= wfMessage('manage-wikia-home-collections-wikis-in-collection')->numParams( [$wikisCounter, WikiaHomePageHelper::SLOTS_IN_TOTAL])->text(); ?></p>
+					</div>
 				</div>
 			<? endfor ?>
 
@@ -89,14 +108,37 @@
 		</h2>
 
 		<form id="wiki-name-filter" class="wiki-name-filter" name="wiki-name-filter" method="get">
-			<p><?= wfMessage('manage-wikia-home-wiki-name-filter')->text(); ?></p>
-			<p><input type="text" id="wiki-name-filer-input" name="wiki-name-filer-input" value="" /></p>
+			<p class="wiki-filter-group">
+				<input type="hidden" name="vl" value="<?= $visualizationLang ?>" />
+                <label><?= wfMessage('manage-wikia-home-wiki-list-headline')->text() ?></label>
+				<input type="text" id="wiki-name-filer-input" name="wiki-name-filer-input" value="<?= $filterOptions['wiki-name-filer-input'] ?>" />
+				<label for="collections-filter"><?= wfMessage('manage-wikia-home-wiki-list-collection')->text() ?></label>
+				<select id="collections-filter" name="collections-filter">
+					<option value="0"><?= wfMessage('manage-wikia-home-wiki-list-all-collections')->text() ?></option>
+					<? foreach ($collectionsList as $collection): ?>
+						<option value="<?= $collection['id'] ?>" <? if ($filterOptions['collections-filter'] == $collection['id']): ?>selected="selected"<? endif ?>><?= $collection['name'] ?></option>
+					<? endforeach ?>
+				</select>
+				<label for="vertical-filter"><?= wfMessage('manage-wikia-home-wiki-list-vertical')->text() ?></label>
+				<select id="vertical-filter" name="vertical-filter">
+					<option value="0"><?= wfMessage('manage-wikia-home-wiki-list-all-verticals')->text() ?></option>
+					<? foreach ($verticals as $id => $vertical): ?>
+						<option value="<?= $id ?>" <? if ($filterOptions['vertical-filter'] == $id): ?>selected="selected"<? endif ?>><?= $vertical ?></option>
+					<? endforeach ?>
+				</select>
+				<label for="wiki-blocked-filter"><input id="wiki-blocked-filter" type="checkbox" name="wiki-blocked-filter" value="1" <? if ($filterOptions['wiki-blocked-filter']): ?>checked="checked"<? endif ?>/> <?= wfMessage('manage-wikia-home-wiki-list-blocked')->text() ?></label>
+				<label for="wiki-promoted-filter"><input id="wiki-promoted-filter" type="checkbox" name="wiki-promoted-filter" value="1" <? if ($filterOptions['wiki-promoted-filter']): ?>checked="checked"<? endif ?>/>  <?= wfMessage('manage-wikia-home-wiki-list-promoted')->text() ?></label>
+				<label for="wiki-official-filter"><input id="wiki-official-filter" type="checkbox" name="wiki-official-filter" value="1" <? if ($filterOptions['wiki-official-filter']): ?>checked="checked"<? endif ?>/> <?= wfMessage('manage-wikia-home-wiki-list-official')->text() ?></label>
+				<input id="wiki-filter-reset" type="reset" value="<?= wfMessage('manage-wikia-home-wiki-filter-reset')->text() ?>"/>
+				<input type="submit" name="wikis-filter" value="<?= wfMessage('manage-wikia-home-wiki-filter')->text() ?>" />
+			</p>
 		</form>
 
 		<div id="wikisWithVisualizationList">
 			<?= $app->renderView('ManageWikiaHome', 'renderWikiListPage', array(
 				'page' => $currentPage,
 				'visualizationLang' => $visualizationLang,
+				'filterOptions' => $filterOptions
 			)); ?>
 		</div>
 	</div>

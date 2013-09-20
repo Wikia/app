@@ -13,7 +13,7 @@
 			<? if ($wg->EnableMiniEditorExtForWall): ?>
 				<?= $app->getView('MiniEditorController', 'Editor_Header')->render() ?>
 			<? endif ?>
-			<textarea class="replyBody" data-space-type="editarea" placeholder="<?= $wf->Msg('forum-thread-reply-placeholder') ?>"></textarea>
+			<textarea class="replyBody" data-space-type="editarea" placeholder="<?= wfMsg('forum-thread-reply-placeholder') ?>"></textarea>
 			<? if ($wg->EnableMiniEditorExtForWall): ?>
 				<?= $app->getView('MiniEditorController', 'Editor_Footer')->render() ?>
 			<? endif ?>

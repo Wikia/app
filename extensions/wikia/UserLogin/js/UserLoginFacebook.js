@@ -64,8 +64,15 @@ var UserLoginFacebook = {
 			if (loginCallback && typeof loginCallback === 'function') {
 				loginCallback();
 			} else {
-				var form = new UserLoginFacebookForm();
-				form.reloadPage();
+				require(['wikia.querystring'], function(qs){
+					var qString = new qs(),
+						returnto = (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/))) ? wgMainPageTitle : null;
+
+					if(returnto) {
+						qString.setPath(wgArticlePath.replace('$1', returnto));
+					}
+					qString.addCb().goTo();
+				});
 			}
 		}
 		else {

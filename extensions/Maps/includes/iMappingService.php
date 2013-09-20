@@ -7,8 +7,9 @@
  * 
  * @file iMappingService.php
  * @ingroup Maps
- * 
- * @author Jeroen De Dauw
+ *
+ * @licence GNU GPL v2+
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 interface iMappingService {
 	
@@ -35,7 +36,7 @@ interface iMappingService {
 	 * 
 	 * @since 0.7
 	 * 
-	 * @return array
+	 * @return array of IParam
 	 */
 	function addParameterInfo( array &$parameterInfo );
 	

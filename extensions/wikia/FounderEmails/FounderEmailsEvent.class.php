@@ -74,7 +74,7 @@ abstract class FounderEmailsEvent {
 	abstract public function enabled ( $wgCityId, $user );
 
 	public function enabled_wiki($wgCityId) {
-		$wikiService = F::build( 'WikiService' );
+		$wikiService = (new WikiService);
 		$user_ids = $wikiService->getWikiAdminIds( $wgCityId );
 		foreach ($user_ids as $user_id) {
 			$user = User::newFromId($user_id);
@@ -125,6 +125,7 @@ abstract class FounderEmailsEvent {
 				__METHOD__
 			);
 			$this->id = $dbw->insertId();
+			wfDebug(__METHOD__ . ": id# {$this->id}\n");
 		} else {
 			$this->id = 0;
 		}

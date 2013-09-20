@@ -8,7 +8,7 @@
  * @file Validator_Describe.php
  * @ingroup Validator
  *
- * @licence GNU GPL v3 or later
+ * @licence GNU GPL v2+
  *
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
@@ -391,14 +391,14 @@ class ValidatorDescribe extends ParserHook {
 	 *
 	 * @since 0.4.3
 	 *
-	 * @param Parameter $parameter
+	 * @param IParamDefinition $parameter
 	 * @param array $defaults
 	 *
 	 * @return string
 	 */
-	protected function getDescriptionRow( Parameter $parameter, array $defaults ) {
+	protected function getDescriptionRow( IParamDefinition $parameter, array $defaults ) {
 		$aliases = $parameter->getAliases();
-		$aliases = count( $aliases ) > 0 ? implode( ', ', $aliases ) : '-';
+		$aliases = empty( $aliases ) ?  '-' : implode( ', ', $aliases );
 
 		$description = $parameter->getMessage();
 		if ( $description === false ) {

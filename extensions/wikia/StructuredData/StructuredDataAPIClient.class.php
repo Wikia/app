@@ -28,7 +28,7 @@ class StructuredDataAPIClient extends WikiaObject {
 	private function initLog() {
 		if ( $this->wg->StructuredDataConfig['debug'] ) {
 			if ( !$this->logfile ) {
-				$tempDir = F::app()->wf->tempDir();
+				$tempDir = wfTempDir();
 				$this->logfile = fopen( $tempDir.'/structured_data.log', 'a+' );
 			}
 			return true;
@@ -192,7 +192,7 @@ class StructuredDataAPIClient extends WikiaObject {
 
 	public function getTemplate( $objectType, $asJson = false ) {
 		$templateUrl = $this->getVocabsPath() . str_replace(':', '/', $objectType) . '?template=true';
-		$templateCacheKey = $this->wf->SharedMemcKey( __METHOD__, $templateUrl );
+		$templateCacheKey = wfSharedMemcKey( __METHOD__, $templateUrl );
 
 		$rawResponse = $this->wg->Memc->get( $templateCacheKey );
 		if( empty( $rawResponse ) ) {

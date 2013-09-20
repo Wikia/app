@@ -17,7 +17,7 @@ class SpellCheckerDictionary extends WikiaObject {
 		// set path to directory with extra dictionaries
 		// @see http://blog.iwanluijks.nl/2010/10/using-enchant-with-php-on-windows-part.html
 		$ip = $this->app->getGlobal('IP');
-		$this->path = "{$ip}/lib/dicts";
+		$this->path = "{$ip}/lib/vendor/dicts";
 
 		enchant_broker_set_dict_path($this->broker, ENCHANT_MYSPELL, $this->path);
 		enchant_broker_set_dict_path($this->broker, ENCHANT_ISPELL, $this->path);

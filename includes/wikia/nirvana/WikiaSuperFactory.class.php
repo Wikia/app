@@ -9,13 +9,14 @@
 abstract class WikiaSuperFactory {
 	protected static $constructors = array();
 	protected static $reflections = array();
-	const APP_OBJECT = 'App';
+	protected static $appInstance;
 
 	/**
 	 * add class constructor
 	 * @param string $className class name
 	 * @param array $params optional params to be set as defaults
 	 * @param string $methodName factory method to call, leave default for "new" operator to be called
+	 * @deprecated
 	 */
 	public static function addClassConstructor($className, Array $params = array(), $methodName = '__construct') {
 		if(!isset(self::$constructors[$className])) {
@@ -32,8 +33,12 @@ abstract class WikiaSuperFactory {
 	 * add predefined instance of given class (useful for mocks or singletons)
 	 * @param string $className class name
 	 * @param mixed $instance instance
+	 * @deprecated
 	 */
 	public static function setInstance($className, $instance) {
+		if ( $className == 'App' || $className == 'WikiaApp' ) {
+			self::$appInstance = $instance;
+		}
 		if(!isset(self::$constructors[$className])) {
 			self::$constructors[$className] = array();
 		}
@@ -44,6 +49,7 @@ abstract class WikiaSuperFactory {
 	/**
 	 * get predefined instance of given class (useful for mocks or singletons)
 	 * @param string $className class name
+	 * @deprecated
 	 *
 	 * @return JSMessages|mixed the class instance or null if one has not been registered
 	 */
@@ -58,6 +64,7 @@ abstract class WikiaSuperFactory {
 	/**
 	 * reset predefined instance of given class (if any)
 	 * @param string $className
+	 * @deprecated
 	 */
 	public static function unsetInstance($className) {
 		if(isset(self::$constructors[$className]) && array_key_exists('INSTANCE', self::$constructors[$className])) {
@@ -131,7 +138,10 @@ abstract class WikiaSuperFactory {
 	 * @return WikiaApp
 	 */
 	public static function app() {
-		return self::build( self::APP_OBJECT );
+		if (!isset(self::$appInstance)) {
+			self::$appInstance = new WikiaApp();
+		}
+		return self::$appInstance;
 	}
 }
 

@@ -5,10 +5,6 @@ class PlacesController extends WikiaController {
 	// avoid having interactive maps with the same ID
 	private static $mapId = 1;
 
-	public function __construct( WikiaApp $app ) {
-		$this->app = $app;
-	}
-
 	/**
 	 * Render static map from given set of attributes
 	 *
@@ -16,7 +12,7 @@ class PlacesController extends WikiaController {
 	 */
 	public function placeFromAttributes(){
 		$attributes = $this->getVal('attributes', array());
-		$oPlaceModel = F::build( 'PlaceModel', array( $attributes ), 'newFromAttributes' );
+		$oPlaceModel = PlaceModel::newFromAttributes( $attributes );
 
 		$this->request->setVal('model', $oPlaceModel);
 		$this->forward( 'Places', 'placeFromModel');
@@ -30,7 +26,7 @@ class PlacesController extends WikiaController {
 		$rteData = $this->getVal('rteData', false);
 
 		if ( empty( $oPlaceModel ) ){
-			$oPlaceModel = F::build('PlaceModel');
+			$oPlaceModel = new PlaceModel();
 		}
 		$this->setVal( 'url', $oPlaceModel->getStaticMapUrl() );
 		$this->setVal( 'align', $oPlaceModel->getAlign() );
@@ -66,10 +62,10 @@ class PlacesController extends WikiaController {
 		$sTitle = $this->getVal('title', '');
 		$sCategoriesText = $this->getVal('category', '');
 
-		$oTitle = F::build( 'Title', array( $sTitle ), 'newFromText' );
+		$oTitle = Title::newFromText( $sTitle );
 		if ( $oTitle instanceof Title ){
-			$oPlacesModel = F::build('PlacesModel');
-			$oMarker = F::build( 'PlaceStorage', array( $oTitle ), 'newFromTitle' )->getModel();
+			$oPlacesModel = new PlacesModel();
+			$oMarker = PlaceStorage::newFromTitle( $oTitle )->getModel();
 			$oMarker->setCategories( $sCategoriesText );
 
 			if( !empty( $sCategoriesText ) ){
@@ -77,13 +73,13 @@ class PlacesController extends WikiaController {
 			} else {
 				$aMarkers = $oPlacesModel->getFromCategoriesByTitle( $oTitle );
 			}
-			$oMarker = F::build( 'PlaceStorage', array( $oTitle ), 'newFromTitle' )->getModel();
+			$oMarker = PlaceStorage::newFromTitle( $oTitle )->getModel();
 
 			$this->setVal('center', $oMarker->getForMap());
 			$this->setVal('markers', $this->prepareMarkers($aMarkers));
 
 			// generate modal caption
-			$this->setVal('caption', $this->wf->msgExt('places-modal-go-to-special', array('parseinline', 'parsemag'), count($this->markers)));
+			$this->setVal('caption', wfMsgExt('places-modal-go-to-special', array('parseinline', 'parsemag'), count($this->markers)));
 		}
 	}
 
@@ -132,7 +128,7 @@ class PlacesController extends WikiaController {
 	 * Create a new place based on geo data provided and store it in the database
 	 */
 	public function saveNewPlaceToArticle(){
-		$oPlaceModel = F::build('PlaceModel');
+		$oPlaceModel = new PlaceModel();
 		$oPlaceModel->setPageId( $this->getVal( 'articleId', 0 ) );
 
 		if ( $oPlaceModel->getPageId() == 0 ){
@@ -162,7 +158,7 @@ class PlacesController extends WikiaController {
 				$oTitle = Title::newFromID( $oPlaceModel->getPageId() );
 
 				if ( ($oTitle instanceof Title ) && $oTitle->exists() ) {
-					$oArticle = F::build( 'Article', array( $oTitle ) );
+					$oArticle = new Article( $oTitle );
 					$sNewContent = $sText . $oArticle->getContent();
 					$status =
 						$oArticle->doEdit(
@@ -188,10 +184,10 @@ class PlacesController extends WikiaController {
 		$oPlaceModel = $this->getVal( 'model', null );
 
 		if ( empty( $oPlaceModel ) || !( $oPlaceModel instanceof PlaceModel ) ) {
-			$oPlaceModel = F::build('PlaceModel');
+			$oPlaceModel = new PlaceModel();
 		}
 
-		$this->setVal( 'oEmptyPlaceModel', F::build('PlaceModel') );
+		$this->setVal( 'oEmptyPlaceModel', (new PlaceModel) );
 		$this->setVal( 'oPlaceModel', $oPlaceModel );
 	}
 
@@ -201,16 +197,8 @@ class PlacesController extends WikiaController {
 	public function getGeolocationButton(){
 
 		if (	$this->app->wg->title->isContentPage() &&
-			F::build(
-				'PlaceStorage',
-				array( $this->app->wg->title ),
-				'newFromTitle'
-			)->getModel()->isEmpty() &&
-			F::build(
-				'PlaceCategory',
-				array( $this->app->wg->title->getFullText() ),
-				'newFromTitle'
-			)->isGeoTaggingEnabledForArticle( $this->app->wg->title )
+			PlaceStorage::newFromTitle( $this->app->wg->title )->getModel()->isEmpty() &&
+			PlaceCategory::newFromTitle( $this->app->wg->title->getFullText() )->isGeoTaggingEnabledForArticle( $this->app->wg->title )
 		){
 
 			$this->setVal(
@@ -221,7 +209,7 @@ class PlacesController extends WikiaController {
 				'jsSnippet',
 				PlacesParserHookHandler::getJSSnippet()
 			);
-			F::build( 'JSMessages' )
+			(new JSMessages)
 				->enqueuePackage(
 					'PlacesGeoLocationModal',
 					JSMessages::INLINE
@@ -246,7 +234,7 @@ class PlacesController extends WikiaController {
 	 * Returns geolocation button params
 	 */
 	private function getGeolocationButtonParams( $refreshCache = false ){
-		$sMemcKey = $this->app->wf->MemcKey(
+		$sMemcKey = wfMemcKey(
 			$this->app->wg->title->getText(),
 			$this->app->wg->title->getNamespace(),
 			'GeolocationButtonParams'
@@ -269,7 +257,7 @@ class PlacesController extends WikiaController {
 		$aMemcResult = $this->app->wg->memc->get( $sMemcKey );
 		$refreshCache = true; // FIXME
 		if ( $refreshCache || empty( $aMemcResult ) ){
-			$oArticle = F::build( 'Article', array( $this->app->wg->title ) );
+			$oArticle = new Article( $this->app->wg->title );
 			$sRawText = $oArticle->getRawText();
 			$aMatches = array();
 			$string = $this->app->wg->contLang->getNsText( NS_IMAGE ) . '|' . MWNamespace::getCanonicalName(NS_IMAGE);

@@ -7,14 +7,14 @@
  */
 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
-//classes
-$app->registerClass('AdminDashboardSpecialPageController', $dir . 'AdminDashboardSpecialPageController.class.php');
-$app->registerClass('AdminDashboardController', $dir . 'AdminDashboardController.class.php');
-$app->registerClass('AdminDashboardLogic', $dir . 'AdminDashboardLogic.class.php');
-$app->registerClass('QuickStatsController', $dir . 'QuickStatsController.class.php');
 
-$app->registerHook('BeforeToolbarMenu', 'AdminDashboardLogic', 'onBeforeToolbarMenu');
+//classes
+$wgAutoloadClasses['AdminDashboardSpecialPageController'] =  $dir . 'AdminDashboardSpecialPageController.class.php';
+$wgAutoloadClasses['AdminDashboardController'] =  $dir . 'AdminDashboardController.class.php';
+$wgAutoloadClasses['AdminDashboardLogic'] =  $dir . 'AdminDashboardLogic.class.php';
+$wgAutoloadClasses['QuickStatsController'] =  $dir . 'QuickStatsController.class.php';
+
+$wgHooks['BeforeToolbarMenu'][] = 'AdminDashboardLogic::onBeforeToolbarMenu';
 
 // i18n mapping
 $wgExtensionMessagesFiles['AdminDashboard'] = $dir . 'AdminDashboard.i18n.php';
@@ -22,7 +22,7 @@ $wgExtensionMessagesFiles['QuickStats'] = $dir . 'QuickStats.i18n.php';
 $wgExtensionMessagesFiles['AdminDashboardAliases'] = $dir . 'AdminDashboard.alias.php';
 
 // special pages
-$app->registerSpecialPage('AdminDashboard', 'AdminDashboardSpecialPageController');
+$wgSpecialPages[ 'AdminDashboard'] = 'AdminDashboardSpecialPageController';
 
 $wgAvailableRights[] = 'admindashboard';
 
@@ -33,6 +33,6 @@ $wgGroupPermissions['bureaucrat']['admindashboard'] = true;
 $wgGroupPermissions['helper']['admindashboard'] = true;
 
 // register messages package for JS (BugId:41451)
-F::build('JSMessages')->registerPackage('AdminDashboard', array(
+JSMessages::registerPackage('AdminDashboard', array(
 	'admindashboard-loading',
 ));

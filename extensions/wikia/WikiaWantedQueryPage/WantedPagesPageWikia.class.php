@@ -50,7 +50,7 @@ class WantedPagesPageWikia extends WantedPagesPage {
 
 		$self = SpecialPage::getTitleFor( $this->getName() );
 		$form = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
-		$form .= '<table><tr><td align="right">' . Xml::label( "Exclude titles", 'excludetitles' ) . '</td>';
+		$form .= '<table><tr><td align="right">' . Xml::label( wfMessage( 'wantedquerypage-wantedpages-excludetitles' )->plain(), 'excludetitles' ) . '</td>';
 		$form .= '<td>' . Xml::input( 'excludetitles', 30, $this->excludeorig, array( 'id' => 'excludetitles' ) ) . '</td></tr>';
 		$form .= '<tr><td></td><td>' . Xml::submitButton( wfMsg( 'allpagessubmit' ) ) . '</td></tr></table>';
 		$form .= Html::hidden( 'offset', $this->offset ) . Html::hidden( 'limit', $this->limit ) . '</form>';

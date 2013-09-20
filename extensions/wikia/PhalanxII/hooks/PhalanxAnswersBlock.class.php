@@ -10,17 +10,26 @@
  */
 
 class PhalanxAnswersBlock extends WikiaObject {
-	function __construct() {
-		parent::__construct();
-		F::setInstance( __CLASS__, $this );
-	}
-	
-	public function badWordsTest( $title ) {
+
+	/**
+	 * Hook handler for CreateDefaultQuestionPageFilter hook
+	 * @see extensions/wikia/Answers/PrefilledDefaultQuestion.php#L15
+	 * @see extensions/wikia/Answers/DefaultQuestion.php#L50
+	 *
+	 * @static
+	 *
+	 * @param Title $title -- instance of Title class
+	 *
+	 * @return Bool -- is word bad or not
+	 */
+	static public function badWordsTest( $title ) {
 		wfProfileIn( __METHOD__ );
 
-		$phalanxModel = F::build('PhalanxContentModel', array( $title, $this->wg->LanguageCode ) );
+		$language = RequestContext::getMain()->getLanguage();
+
+		$phalanxModel = new PhalanxContentModel( $title, $language->getCode() );
 		$ret = $phalanxModel->match_question_title();
-		
+
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}

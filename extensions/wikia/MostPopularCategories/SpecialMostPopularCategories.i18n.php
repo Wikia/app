@@ -70,9 +70,10 @@ $messages['ca'] = array(
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
-	'mostpopularcategories' => 'Массарел гlарайаьлла кадегарш',
+	'mostpopularcategories' => 'Массарел гӀарайаьлла категореш',
 );
 
 /** Czech (česky)
@@ -126,6 +127,13 @@ $messages['fa'] = array(
  */
 $messages['fi'] = array(
 	'mostpopularcategories' => 'Suosituimmat luokat',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'mostpopularcategories' => 'Best dámdu bólkar',
 );
 
 /** French (français)

@@ -13,7 +13,8 @@ $dir = dirname(__FILE__) . '/';
 /**
  * classes
  */
-$app->registerClass('WAMApiController', 			$dir . 'controllers/api/WAMApiController.class.php');
+$wgAutoloadClasses['WAMApiController'] =  			$dir . 'controllers/api/WAMApiController.class.php';
+$wgWikiaApiControllers['WAMApiController'] = 		$dir . 'controllers/api/WAMApiController.class.php';
 
 $wgExtensionCredits['other'][] = array(
 	'name'				=> 'WAM',

@@ -154,6 +154,7 @@ window.Wikia.processStyle = function(css) {
  * Fetch AM group(s)
  *
  * @param groups string or array of AM groups to be fetched
+ * @param callback function function to call when request is completed
  */
 window.Wikia.getAMgroups = function(groups, callback) {
 	return $.getScript($.getAssetManagerGroupUrl(groups), callback);

@@ -31,8 +31,6 @@ class RegexBlockForm extends SpecialPage
 
     /* constructor */
     function __construct () {
-        global $wgRegexBlockMessages;
-
         $this->mPosted = false;
         $this->mAction = "";
         $this->mFilter = $this->mRegexFilter = "";

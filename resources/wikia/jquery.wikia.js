@@ -134,6 +134,11 @@ $.showModal = function(title, content, options) {
 };
 
 // show modal version of confirm()
+	/**
+	 *
+	 * @param options Some possible properties of options are: id, title, content, cancelMsg, okMsg,
+	 * callbackBefore, onOk, callback.  Also, anything that is used by $.fn.makeModal
+	 */
 $.confirm = function(options) {
 	// init options
 	options = (typeof options != 'object') ? {} : options;
@@ -147,8 +152,8 @@ $.confirm = function(options) {
 
 	html += '<p>' + (options.content || '') + '</p>' +
 		'<div class="neutral modalToolbar">' +
-		'<button id="WikiaConfirmCancel" class="wikia-button secondary">' + (options.cancelMsg || 'Cancel') + '</button>' +
-		'<button id="WikiaConfirmOk" class="wikia-button">' + (options.okMsg || 'Ok') + '</button>' +
+		'<button id="WikiaConfirmCancel" class="wikia-button secondary">' + (options.cancelMsg || $.msg( 'cancel' )) + '</button>' +
+		'<button id="WikiaConfirmOk" class="wikia-button">' + (options.okMsg || $.msg( 'ok' )) + '</button>' +
 		'</div>';
 
 	var dialog = $('<div>').
@@ -300,9 +305,6 @@ $.fn.startThrobbing = function() {
 $.fn.stopThrobbing = function() {
 	return this.find('.wikiaThrobber').remove();
 };
-$.stopThrobbing = function() {
-	$('.wikiaThrobber').remove();
-}
 $.preloadThrobber = function() {
 	var img = new Image();
 	img.src = stylepath + '/common/images/ajax.gif';

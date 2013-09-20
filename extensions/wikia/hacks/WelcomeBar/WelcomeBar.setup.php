@@ -21,13 +21,13 @@ $dir = dirname(__FILE__);
 $app = F::app();
 
 // classes
-$app->registerClass('WelcomeBarHooks', $dir . '/WelcomeBarHooks.class.php');
+$wgAutoloadClasses['WelcomeBarHooks'] =  $dir . '/WelcomeBarHooks.class.php';
 
 // hooks
 $app->registerHook('SkinAfterBottomScripts', 'WelcomeBarHooks', 'onSkinAfterBottomScripts');
 
 // i18n
 $app->registerExtensionMessageFile('WelcomeBar', $dir . '/WelcomeBar.i18n.php');
-F::build('JSMessages')->registerPackage('WelcomeBar', array(
+JSMessages::registerPackage('WelcomeBar', array(
 	'welcome-bar-*',
 ));

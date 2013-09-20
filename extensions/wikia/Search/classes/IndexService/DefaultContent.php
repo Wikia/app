@@ -29,7 +29,17 @@ class DefaultContent extends AbstractService
 				'style',
 				];
 	
+	/**
+	 * We remove these selectors since they are unreliable indicators of textual content
+	 * @var
+	 */
 	protected $asideSelectors = [ 'table', 'figure', 'div.noprint', 'div.quote', '.dablink' ];
+	
+	/**
+	 * Stores multivalued nolang_txt field as we add stuff to it.
+	 * @var array
+	 */
+	protected $nolang_txt = [];
 	
 	/**
 	 * Returns the fields required to make the document searchable (specifically, wid and title and body content)
@@ -52,6 +62,9 @@ class DefaultContent extends AbstractService
 		$response   = $response == false ? array() : $response;
 		$titleStr   = $service->getTitleStringFromPageId( $pageId );
 		
+		$this->pushNolangTxt( $titleStr )
+		     ->pushNolangTxt( preg_replace( '/([[:punct:]])/', ' $1 ', $titleStr ) );
+		
 		$pageFields = [
 				'wid'                        => $service->getWikiId(),
 				'pageid'                     => $pageId,
@@ -71,8 +84,17 @@ class DefaultContent extends AbstractService
 				$this->getCategoriesFromParseResponse( $response ),
 				$this->getHeadingsFromParseResponse( $response ),
 				$this->getOutboundLinks(),
-				$pageFields 
+				$pageFields,
+				$this->getNolangTxt()
 				);
+	}
+	
+	/**
+	 * @return Wikia\Search\IndexService\DefaultContent
+	 */
+	protected function reinitialize() {
+		$this->nolang_txt = [];
+		return $this;
 	}
 	
 	/**
@@ -153,6 +175,24 @@ class DefaultContent extends AbstractService
 	}
 	
 	/**
+	 * Add a language-agnostic field value
+	 * @param string $txt
+	 * @return DefaultContent 
+	 */
+	protected function pushNolangTxt( $txt ) {
+		$this->nolang_txt[] = $txt;
+		return $this;
+	}
+	
+	/**
+	 * Returns language-agnostic multi-valued text
+	 * @return array
+	 */
+	protected function getNolangTxt() {
+		return [ 'nolang_txt' => $this->nolang_txt ];
+	}
+	
+	/**
 	 * Allows us to strip and parse HTML
 	 * By the way, if every document on the site was as big as the Jim Henson page,
 	 * then it would take under two minutes to parse them all using this function. 
@@ -176,9 +216,10 @@ class DefaultContent extends AbstractService
 			$paragraphs = $this->getParagraphsFromDom( $dom );
 		}
 		$paragraphString = preg_replace( '/\s+/', ' ', implode( ' ', $paragraphs ) ); // can be empty
-		$words = str_word_count( $paragraphString?:$plaintext, 1 );
+		$words = preg_split( '/[[:space:]]+/', $paragraphString?: $plaintext);
 		$wordCount = count( $words );
 		$upTo100Words = implode( ' ', array_slice( $words, 0, min( array( $wordCount, 100 ) ) ) );
+		$this->pushNolangTxt( $upTo100Words );
 		
 		return  array_merge( $result,
 				[
@@ -197,18 +238,23 @@ class DefaultContent extends AbstractService
 		$result = array();
 		$infoboxes = $dom->find( 'table.infobox' );
 		if ( count( $infoboxes ) > 0 ) {
-			$infobox = $infoboxes[0];
-			$infoboxRows = $infobox->find( 'tr' );
-			
-			if ( $infoboxRows ) {
-				$result['infoboxes_txt'] = [];
-				foreach ( $infoboxRows as $row ) {
-					$infoboxCells = $row->find( 'td' );
-					// we only care about key-value pairs in infoboxes
-					if ( count( $infoboxCells ) == 2 ) {
-						$result['infoboxes_txt'][] = preg_replace( '/\s+/', ' ', $infoboxCells[0]->plaintext . ' | ' . $infoboxCells[1]->plaintext  );
+			$result['infoboxes_txt'] = [];
+			$counter = 1;
+			foreach ( $infoboxes as $infobox ) {
+				$outerText = $infobox->outertext();
+				$infobox = new simple_html_dom( $outerText );
+				$this->removeGarbageFromDom( $infobox );
+				$infobox->load( $infobox->save() );
+				$infoboxRows = $infobox->find( 'tr' );
+				if ( $infoboxRows ) {
+					foreach ( $infoboxRows as $row ) {
+						$infoboxCells = $row->find( 'td' );
+						if ( count( $infoboxCells ) == 2 ) {
+							$result['infoboxes_txt'][] = "infobox_{$counter} | " . preg_replace( '/\s+/', ' ', $infoboxCells[0]->plaintext . ' | ' . $infoboxCells[1]->plaintext  );
+						}
 					}
 				}
+				$counter++;
 			}
 		}
 		return $result;
@@ -216,9 +262,10 @@ class DefaultContent extends AbstractService
 	
 	/**
 	 * Iterates through UI remnants and removes them from the dom.
+	 * Removed type hinting due to testing requirements and WikiaMockProxy
 	 * @param simple_html_dom $dom
 	 */
-	protected function removeGarbageFromDom( simple_html_dom $dom ) {
+	protected function removeGarbageFromDom( $dom ) {
 		foreach ( $this->garbageSelectors as $selector ) {
 			foreach ( $dom->find( $selector ) as $node ) {
 				$node->outertext = ' ';

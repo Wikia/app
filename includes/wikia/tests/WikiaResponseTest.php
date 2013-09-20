@@ -156,7 +156,7 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testViewDefaultRender() {
-		$this->object->setView( F::build( 'WikiaView' ) );
+		$this->object->setView( (new WikiaView) );
 		$this->object->setFormat( 'raw' );
 
 		$output = $this->object->getView()->render( $this->object );

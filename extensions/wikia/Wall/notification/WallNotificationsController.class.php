@@ -82,11 +82,11 @@ class WallNotificationsController extends WikiaController {
 			if($authoruser->getId() > 0) {
 				$displayname = $authoruser->getName();
 			} else {
-				$displayname = $this->app->wf->Msg('oasis-anon-user');
+				$displayname = wfMsg('oasis-anon-user');
 			}
 		} else {
 			//annon
-			$displayname = $this->app->wf->Msg('oasis-anon-user');
+			$displayname = wfMsg('oasis-anon-user');
 		}
 
 		$wall_displayname = $walluser->getName();
@@ -276,9 +276,11 @@ class WallNotificationsController extends WikiaController {
 		$topic = $this->getRequest()->getVal( 'query' );
 		if( !empty( $topic ) ) {
 			/** @var $title title */
-			$title = F::build( 'Title', array( 'text' => $topic ), 'newFromText' );
+			$title = Title::newFromText( $topic );
 
-			$result = (bool) $title->exists();
+			if ( $title instanceof Title ) {
+				$result = (bool) $title->exists();
+			}
 		}
 
 		$this->response->setVal( 'exists' , $result );
