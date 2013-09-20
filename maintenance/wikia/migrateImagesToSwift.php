@@ -131,9 +131,10 @@ class MigrateImagesToSwift extends Maintenance {
 	 * @param $localFile string path to a local file
 	 * @param $remotePath string remote path
 	 * @param $mimeType string|bool MIME type of uploaded file to be set (false = try to detect it)
+	 * @param $sha1Hash string|bool SHA-1 hash of the file contents in base 36 format (false = don't set it)
 	 * @return CF_Object|bool object instance or false
 	 */
-	private function store($localFile, $remotePath, $mimeType = false) {
+	private function store($localFile, $remotePath, $mimeType = false, $sha1Hash = false) {
 		$remotePath = $this->swiftPathPrefix . $remotePath;
 
 		wfDebug(__METHOD__ . ": {$localFile} -> {$remotePath}\n");
@@ -160,9 +161,12 @@ class MigrateImagesToSwift extends Maintenance {
 			if (is_string($mimeType)) {
 				$object->content_type = $mimeType;
 			}
-			$object->setMetadataValues([
-				'Sha1base36' => wfBaseConvert( sha1( file_get_contents($localFile) ), 16, 36, 31 )
-			]);
+
+			if (is_string($sha1Hash)) {
+				$object->setMetadataValues([
+					'Sha1base36' => $sha1Hash
+				]);
+			}
 
 			$object->write($fp, $size);
 			fclose($fp);
@@ -262,7 +266,9 @@ class MigrateImagesToSwift extends Maintenance {
 		$this->migratedImagesCnt++;
 
 		$mime = "{$row['major_mime']}/{$row['minor_mime']}";
-		$res = $this->store($wgUploadDirectory . '/' . $path, $path, $mime);
+		$hash = isset($row['hash']) ? $row['hash'] : false;
+
+		$res = $this->store($wgUploadDirectory . '/' . $path, $path, $mime, $hash);
 
 		if ($res === false) {
 			$this->migratedImagesFailedCnt++;
@@ -348,6 +354,7 @@ class MigrateImagesToSwift extends Maintenance {
 		$res = $dbr->select('image', [
 			'img_name AS name',
 			'img_size AS size',
+			'img_sha1 AS hash',
 			'img_major_mime AS major_mime',
 			'img_minor_mime AS minor_mime',
 		]);
@@ -365,6 +372,7 @@ class MigrateImagesToSwift extends Maintenance {
 			'oi_name AS name',
 			'oi_archive_name AS archived_name',
 			'oi_size AS size',
+			'oi_sha1 AS hash',
 			'oi_major_mime AS major_mime',
 			'oi_minor_mime AS minor_mime',
 		]);
