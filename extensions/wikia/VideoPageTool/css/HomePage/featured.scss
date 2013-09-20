@@ -40,10 +40,15 @@ $play-button-overloay-fade-duration: 400ms;
 				float: left;
 				margin-top: 0;
 				position: relative;
+
+				> img {
+					width: 100%;
+					max-height: 461px;
+				}
 			}
-			img {
-				width: 100%;
-				max-height: 461px;
+			.Wikia-video-play-button {
+				line-height: 461px;
+				width: inherit;
 			}
 		}
 		.bx-controls-direction a {
@@ -100,6 +105,10 @@ $play-button-overloay-fade-duration: 400ms;
 	@media ( max-width: $breakpoint-small ) {
 		.featured-video-slider {
 			width: 100%;
+
+			.bxslider .Wikia-video-play-button {
+				line-height: 400px;
+			}
 		}
 	}
 }

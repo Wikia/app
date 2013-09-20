@@ -34,7 +34,12 @@ define( 'views.videohomepage.featured', [], function() {
 			this.$featuredBXSlider.bxSlider({
 				//autoControls: true,
 				//video: true, // TODO: add video support?
-				onSliderLoad: $.proxy( this.onSliderLoad, this )
+				onSliderLoad: $.proxy( this.onSliderLoad, this ),
+				nextText: '',
+				prevText: '',
+				//auto: true,
+				speed: 400,
+				autoHover: true
 			});
 
 		},

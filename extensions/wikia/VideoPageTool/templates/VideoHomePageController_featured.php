@@ -5,6 +5,9 @@
 			<? foreach ( $assets as $featured ): ?>
 				<? $videoData = $featured->getAssetData() ?>
 				<li>
+					<div class="Wikia-video-play-button">
+						<img class="sprite large play" src="<?= $wg->BlankImgUrl ?>">
+					</div>
 					<img src="<?= $videoData['largeThumbUrl'] ?>">
 				</li>
 			<? endforeach; ?>
