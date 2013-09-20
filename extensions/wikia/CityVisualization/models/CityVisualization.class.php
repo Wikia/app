@@ -845,6 +845,12 @@ class CityVisualization extends WikiaModel {
 		return array_keys($this->getCorporateSitesList());
 	}
 
+	/**
+	 * Return true when there is active Corporate Wiki in that language - like www.wikia.com or de.wikia.com
+	 *
+	 * @param $langCode
+	 * @return bool
+	 */
 	public function isCorporateLang($langCode) {
 		$corpWikis = $this->getVisualizationWikisData();
 		return isset($corpWikis[$langCode]);
