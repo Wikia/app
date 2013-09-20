@@ -15,28 +15,6 @@ class RelatedVideosHookHandler {
 		return true;
 	}
 
-	static public function onBeforePageDisplay( OutputPage $out, $skin ) {
-		wfProfileIn(__METHOD__);
-
-		// don't load it on edit pages (perf improvement)
-		if( F::app()->checkSkin( 'oasis', $skin ) && !BodyController::isEditPage() ) {
-			$assetsManager = AssetsManager::getInstance();
-			$scssPackage = 'relatedvideos_scss';
-			$jsPackage = 'relatedvideos_js';
-
-			foreach ( $assetsManager->getURL( $scssPackage ) as $url ) {
-				$out->addStyle( $url );
-			}
-
-			foreach ( $assetsManager->getURL( $jsPackage ) as $url ) {
-				$out->addScript( "<script src=\"{$url}\"></script>" );
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-		return true;
-	}
-
 	/**
 	 * Purge RelatedVideos namespace article after an edit
 	 *
