@@ -1184,3 +1184,18 @@ $wgHooks['IsTrustedProxy'][] = 'TrustedProxyService::onIsTrustedProxy';
  * Enables verbose logging from chat
  */
 //$wgChatDebugEnabled = true;
+
+/**
+ * @name $wgPagesWithNoAdsForLoggedInUsersOverriden
+ * Override ad level for a (set of) specific page(s)
+ * Use case: sponsor ads on a landing page targeted to Wikia editors (=logged in)
+ * eg. array('Grand_Theft_Auto_V')
+ */
+$wgPagesWithNoAdsForLoggedInUsersOverriden = array();
+
+/**
+ * @name $wgPagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL
+ * Ad level to be forced
+ * Default is 'corporate' (LB+MR+skin only); 'all' may be useful sometimes
+ */
+$wgPagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL = null;
