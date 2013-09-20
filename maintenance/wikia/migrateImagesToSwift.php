@@ -291,6 +291,8 @@ class MigrateImagesToSwift extends Maintenance {
 			$this->error('Can\'t get Swift container', 3);
 		}
 
+		Wikia::log(__CLASS__, false, 'migration started');
+
 		// block uploads via WikiFactory
 		WikiFactory::setVarByName('wgEnableUploads',     $wgCityId, false, self::REASON);
 		WikiFactory::setVarByName('wgUploadMaintenance', $wgCityId, true,  self::REASON);
@@ -359,13 +361,16 @@ class MigrateImagesToSwift extends Maintenance {
 		}
 
 		// summary
-		$this->output(sprintf("\nMigrated files: %d (%d MB) in %.2f min (%.2f files/sec, %.2f kB/s)\n",
+		$report = sprintf('Migrated files: %d (%d MB) in %.2f min (%.2f files/sec, %.2f kB/s)',
 			$this->migratedImagesCnt,
 			round($this->migratedImagesSize / 1024 / 1024),
 			(time() - $this->time) / 60,
 			($this->imagesCnt) / (time() - $this->time),
 			($this->migratedImagesSize / 1024) / (time() - $this->time)
-		));
+		);
+
+		$this->output("\n{$report}\n");
+		Wikia::log(__CLASS__, false, 'migration completed:  ' . $report);
 
 		// update wiki configuration
 		// enable Swift storage via WikiFactory
