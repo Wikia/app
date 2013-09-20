@@ -130,24 +130,6 @@ class LyricFindReport extends Maintenance {
 					__METHOD__
 				);
 
-<<<<<<< HEAD
-				$csvrow = [
-					'Service ID',
-					'Day/Month',
-					'Artist',
-					'Song',
-					'Count',
-					'Track ID'
-				];
-				if ( $this->namespaceId == 220 ) {
-					array_push( $csvrow, 'Gracenote ID');
-				}
-				
-				# report's header
-				$this->addToReport( $csvrow );
-				
-=======
->>>>>>> dev
 				while ( $row = $this->dbr->fetchObject($result) ) {
 					# display progress bar
 					$this->progress( 1 );
@@ -180,17 +162,10 @@ class LyricFindReport extends Maintenance {
 						if ( $this->namespaceId == 220 ) {
 							array_push( $csvrow, $gn_id );
 						}
-<<<<<<< HEAD
-						$this->addToReport( $csvrow );
-						unset( $csvrow );
-					}
-					
-=======
 					}
 					
 					$this->addToReport( $csvrow );
 					unset( $csvrow );
->>>>>>> dev
 					$csvrow = [];
 				}
 				$this->dbr->freeResult( $result );
