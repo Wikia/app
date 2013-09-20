@@ -283,6 +283,10 @@ We use JSDoc style comments above function declarations and at the top of files 
 * Error handling and custom exception handling (handle this later)
 * No try/catch within loops (language rule) 
 * Delete Operator
+  * Try to avoid using the delete operator
+  * Doesn't actually clean up memory
+  * Changing the shape of objects is bad for performance
+  * Better to set the property to null or false
 * Modifying prototypes of built-in objects
 * White space (we want to transcribe jQuery's conventions as much as possible so we can tweak them on our end)
 * Structure
