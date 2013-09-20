@@ -221,8 +221,6 @@ $wgAutoloadClasses[ 'GMetricClient'                   ] = "$IP/lib/vendor/GMetri
 $wgAutoloadClasses[ 'FakeLocalFile'                   ] = "$IP/includes/wikia/FakeLocalFile.class.php";
 $wgAutoloadClasses[ 'WikiaUploadStash'                ] = "$IP/includes/wikia/upload/WikiaUploadStash.class.php";
 $wgAutoloadClasses[ 'WikiaUploadStashFile'            ] = "$IP/includes/wikia/upload/WikiaUploadStashFile.class.php";
-$wgAutoloadClasses[ 'PayflowAPI'                      ] = "$IP/includes/wikia/PayflowAPI.php";
-$wgAutoloadClasses[ 'Curl'                            ] = "$IP/includes/wikia/Curl.php";
 $wgAutoloadClasses[ 'WikiaPageType'                   ] = "$IP/includes/wikia/WikiaPageType.class.php";
 $wgAutoloadClasses[ 'WikiaSkinMonoBook'               ] = "$IP/skins/wikia/WikiaMonoBook.php";
 $wgAutoloadClasses[ 'PaginationController'            ] = "$IP/includes/wikia/services/PaginationController.class.php";
@@ -882,15 +880,6 @@ $wgABTests = array();
  * @see extensions/wikia/WikiaApi/ApiRunJob.php
  */
 $wgApiRunJobsPerRequest = 20;
-
-/**
- * default configuration for paypal payments
- *
- */
-$wgPayPalPaymentDBName = 'paypal';
-$wgPayPalUrl = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';
-$wgPayflowProAPIUrl = 'https://pilot-payflowpro.paypal.com';
-$wgPayflowProCredentials = array();
 
 /**
  * sets memcached timeout back to what it was in mw1.15
