@@ -318,6 +318,68 @@ $messages['es'] = array(
 	'promote-statusbar-rejected' => 'Una o más de tus imágenes no fue aprobada. [[Special:Contact|Pregunta por qué]].',
 );
 
+$messages['pl'] = array(
+	'promote' => 'Promuj',
+
+	'promote-title' => 'Promuj',
+	'promote-introduction-header' => 'Promuj swoją wiki na pl.wikia.com',
+	'promote-nocorp-introduction-header' => 'Promuj $1',
+	'promote-introduction-copy' => 'Wypromuj swoją wiki na [http://www.pl.wikia.com pl.wikia.com] uzupełniając dane na tej stronie. Dodaj opis oraz zdjęcia, aby zaprezentować Twoją wiki na [http://www.pl.wikia.com pl.wikia.com]. Więcej wskazówek znajdziesz [http://help.wikia.com/wiki/Help:Promote tutaj] ',
+	'promote-nocorp-introduction-copy' => 'Dodaj opis oraz zdjęcia, aby opowiedzieć użytkownikom o czym jest Twoja wiki oraz aby zachęcić ich do odwiedzania jej. Podanych przez Ciebie informacji użyjemy, aby wypromować Twoją wiki w wynikach wyszukiwania, aplikacjach mobilnych i innych. Więcej wskazówek jak najefektywniej użyć narzędzia znajdziesz [http://community.wikia.com/wiki/Help:Promote tutaj].',
+
+	'promote-description' => 'Opis',
+	'promote-description-header' => 'Tytuł',
+	'promote-description-header-explanation' => 'Idealne będzie coś tak nieskomplikowanego jak np. "Dowiedz się więcej o Bacon Wiki" bądź "Witam w Bacon Wiki"!',
+
+	'promote-description-about' => 'O czym jest Twoja wiki?',
+	'promote-description-about-explanation' => 'Napisz na jaki temat jest Twoja wiki. Nie bój się szczegółowych opisów! Chodzi przecież o to, aby zainteresować użytkowników Twoją wiki i aby mieć pewność, że dokładnie wiedzą o czym ona jest.',
+
+	'promote-upload' => 'Dodaj zdjęcia',
+	'promote-upload-main-photo-header' => 'Zdjęcie główne',
+	'promote-upload-main-photo-explanation' => 'To zdjęcie opisuje Twoją wiki, jest jej wizytówką. Będzie ono reprezentowało Twoją wiki na pl.wikia.com, więc postaraj się aby było wyjątkowe! Pamiętaj, że w każdej chwili możesz zmienić to zdjęcie, tak aby zawsze oddawało charakter Twojej wiki.',
+	'promote-nocorp-upload-main-photo-explanation' => 'To zdjęcie opisuje Twoją wiki, jest jej wizytówką. Będzie ono reprezentowało Twoją wiki w wynikach wyszukiwania, aplikacjach mobilnych i innych, więc postaraj się aby było wyjątkowe! Pamiętaj, że w każdej chwili możesz je zmienić.',
+	'promote-upload-additional-photos-header' => 'Zdjęcia dodatkowe',
+	'promote-upload-additional-photos-explanation' => 'Im więcej zdjęć dodasz do swojej wikii, tym będzie bardziej interesująca dla innych użytkowników. Maksymalna ilość zdjęć która możesz dodać to 9. Gorąco zachęcamy, do wyczerpywania limitów!',
+	'promote-upload-form-modal-cancel' => 'Anuluj',
+
+	'promote-publish' => 'Opublikuj',
+
+	'promote-add-photo' => 'Dodaj zdjęcie',
+	'promote-remove-photo' => 'Usuń',
+	'promote-modify-photo' => 'Modyfikuj',
+
+	'promote-upload-main-image-form-modal-title' => 'Zdjęcie główne',
+	'promote-upload-main-image-form-modal-copy' => 'Dodaj zdjęcie, które najlepiej reprezentuje Twoją wiki. Dozwolony format pliku to ".png", a minimalne wymiary to 480x320px.',
+	'promote-upload-additional-image-form-modal-title' => 'Więcej zdjęć',
+	'promote-upload-additional-image-form-modal-copy' => 'Dodaj więcej zdjęć, aby bardziej szczegółowo opowiedzieć o swojej wiki. Dozwolony format pliku to ".png", a minimalna wielkość to 480x320.',
+
+	'promote-upload-submit-button' => 'Wyślij',
+
+	'promote-error-less-characters-than-minimum' => 'Ups! Wpisany tekst musi mieć minimum $2 znaków.',
+	'promote-error-more-characters-than-maximum' => 'Ups! Wpisany tekst musi mieć maksimum $2 znaków',
+	'promote-error-upload-unknown-error' => 'Nieznany błąd wysyłania pliku',
+	'promote-error-upload-filetype-error' => 'Poprawny format pliku to ".png"',
+	'promote-error-upload-dimensions-error' => 'Niepoprawne wymiary pliku - zdjęcie musi być nie mniejsze niż 480x320px',
+	'promote-error-too-many-images' => 'Ups! Dodałeś już 9 zdjęć. Jeśli chcesz dodać to zdjęcie, usuń któreś z dotychczas dodanych',
+	'promote-error-upload-type' => 'Ups! Niepoprawny typ wysyłania pliku',
+	'promote-error-upload-form' => 'Niepoprawny typ wysyłania pliku w getUploadForm',
+
+	'promote-manual-file-size-error' => 'Minimalne wymiary zdjęcia głównego to 480x320px',
+	'promote-manual-upload-error' => 'Ten plik nie może zostać dodany ręcznie. W tym celu użyj narzędzia dla administratorów do wysyłania plików',
+	'promote-wrong-rights' => 'Wygląda na to, że nie masz praw aby wejść na tę stronę. Upewnij się, że jesteś zalogowany',
+
+	'promote-image-rejected' => 'Odrzucone',
+	'promote-image-accepted' => 'Zaakceptowane',
+	'promote-image-in-review' => 'Rozpatrywane',
+	'promote-statusbar-auto-approved' => 'Woohoo! $1 jest promowana!',
+
+	'promote-statusbar-icon' => 'Status',
+	'promote-statusbar-inreview' => 'Niektóre zdjęcia, które dodałeś, są obecnie rozpatrywane i zostaną opublikowane na [http://pl.www.wikia.com pl.wikia.com], kiedy przejdą pomyślnie weryfikację. Może to zająć od 2 do 4 dni roboczych. Poinformujemy Cię kiedy proces zostanie zakończony.',
+	'promote-statusbar-approved' => 'Woohoo! $1 jest już promowana na [http://pl.www.wikia.com pl.wikia.com]!',
+	'promote-statusbar-rejected' => 'Jedno lub więcej zdjęć dodanych przez Ciebie nie przeszło weryfikacji pomyślnie. Aby dowiedzieć się dlaczego, przejdź [[Special:Contact|tutaj]]',
+	'promote-error-oasis-only' => 'Ta strona nie jest obsługiwana, w skórce której używasz. Zmień skórkę [[Special:Preferences|tutaj, ]] aby uzyskać dostęp do tej funkcji.',
+);
+
 $messages['qqq'] = array(
 	'promote' => 'Promote page heading',
 
