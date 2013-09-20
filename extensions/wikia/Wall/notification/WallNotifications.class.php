@@ -589,38 +589,17 @@ class WallNotifications {
 			if($this->isCachedData($uId, $wikiId)) {
 				$memcSync = $this->getCache($uId, $wikiId);
 
-				// Try to update the data $count times before giving up
-				$count = 5;
-				while ($count--) {
-					if($memcSync->lock()) {
-						$data = $this->getData($memcSync, $uId, $wikiId);
-						$this->remNotificationFromData($data, $uniqueId);
+				$this->lockAndSetData( $memcSync,
+				function() use( $memcSync, $uId, $wikiId, $uniqueId ) {
+					$data = $this->getData($memcSync, $uId, $wikiId);
+					$this->remNotificationFromData($data, $uniqueId);
 
-						$success = false;
-						// Make sure we have data
-						if (isset($data)) {
-							// See if we can set it successfully
-							if ($this->setData($memcSync, $data)) {
-								$success = true;
-							}
-						} else {
-							// If there's no data don't bother doing anything
-							$success = true;
-						}
-						$memcSync->unlock();
-						if ( $success ) {
-							break;
-						}
-					} else {
-						$this->random_msleep($count);
-					}
-				}
-
-				// If count is -1 it means we left the above loop failing to update
-				if ($count == -1) {
+				},
+				function() use( $memcSync ) {
 					// Delete the cache if we were unable to update to force a rebuild
 					$memcSync->delete();
-				}
+				});
+
 			}
 
 			$this->remNotificationsForUniqueIDDB($uId, $wikiId, $uniqueId, $hide);
