@@ -43,12 +43,8 @@ class OoyalaAsset extends WikiaModel {
 					// set primary thumbnail
 					$resp = $this->setPrimaryThumbnail( $asset['embed_code'] );
 					if ( $resp ) {
-						// set age gate player
-						$resp = $this->setAgeGatePlayer( $asset['embed_code'], $data );
-						if ( $resp ) {
-							// set labels
-							$resp = $this->setLabels( $asset['embed_code'], $data );
-						}
+						// set labels
+						$resp = $this->setLabels( $asset['embed_code'], $data );
 					}
 				}
 			}
@@ -146,14 +142,16 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['published'] ) ) {
 			$metadata['published'] = $data['published'];
 		}
-		if ( !empty( $data['ageGate'] ) ) {
+		// ageGate can be 0
+		if ( isset( $data['ageGate'] ) ) {
 			$metadata['agegate'] = $data['ageGate'];
 		}
-		if ( !empty( $data['tags'] ) ) {
-			$metadata['tags'] = $data['tags'];
-		}
-		if ( !empty( $data['hd'] ) ) {
+		// hd can be 0
+		if ( isset( $data['hd'] ) ) {
 			$metadata['hd'] = $data['hd'];
+		}
+		if ( !empty( $data['name'] ) ) {
+			$metadata['name'] = $data['name'];
 		}
 		if ( !empty( $data['language'] ) ) {
 			$metadata['lang'] = $data['language'];
@@ -161,8 +159,8 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['subtitle'] ) ) {
 			$metadata['subtitle'] = $data['subtitle'];
 		}
-		if ( !empty( $data['trailerRating'] ) ) {
-			$metadata['trailerrating'] = $data['trailerRating'];
+		if ( !empty( $data['type'] ) ) {
+			$metadata['type'] = $data['type'];
 		}
 		if ( !empty( $data['industryRating'] ) ) {
 			$metadata['industryrating'] = $data['industryRating'];
@@ -176,7 +174,8 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['keywords'] ) ) {
 			$metadata['keywords'] = $data['keywords'];
 		}
-		if ( !empty( $data['ageRequired'] ) ) {
+		// ageRequired can be 0
+		if ( isset( $data['ageRequired'] ) ) {
 			$metadata['age_required'] = $data['ageRequired'];
 		}
 		if ( !empty( $data['targetCountry'] ) ) {
@@ -190,6 +189,19 @@ class OoyalaAsset extends WikiaModel {
 		}
 		if ( !empty( $data['episode'] ) ) {
 			$metadata['episode'] = $data['episode'];
+		}
+		if ( !empty( $data['characters'] ) ) {
+			$metadata['characters'] = $data['characters'];
+		}
+		if ( !empty( $data['resolution'] ) ) {
+			$metadata['resolution'] = $data['resolution'];
+		}
+		// ignore if aspectRatio is empty or 0
+		if ( !empty( $data['aspectRatio'] ) ) {
+			$metadata['aspectratio'] = $data['aspectRatio'];
+		}
+		if ( !empty( $data['pageCategories'] ) ) {
+			$metadata['pagecategories'] = $data['pageCategories'];
 		}
 
 		return $metadata;
@@ -365,7 +377,7 @@ class OoyalaAsset extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$resp = true;
-		if ( !empty( $data['ageGate'] ) ) {
+		if ( !empty( $data['ageRequired'] ) ) {
 			$resp = $this->setPlayer( $videoId, OoyalaVideoHandler::OOYALA_PLAYER_ID_AGEGATE );
 		}
 
@@ -384,7 +396,7 @@ class OoyalaAsset extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$params = array();
-		if ( !empty( $data['ageGate'] ) && !empty( $this->wg->OoyalaApiConfig['LabelAgeGate'] ) ) {
+		if ( !empty( $data['ageRequired'] ) && !empty( $this->wg->OoyalaApiConfig['LabelAgeGate'] ) ) {
 			$params[] = $this->wg->OoyalaApiConfig['LabelAgeGate'];
 		}
 
@@ -415,10 +427,10 @@ class OoyalaAsset extends WikiaModel {
 	 * @param array $params
 	 * @return boolean $result
 	 */
-	protected function sendRequest( $method, $reqPath, $params ) {
+	protected function sendRequest( $method, $reqPath, $params = array() ) {
 		wfProfileIn( __METHOD__ );
 
-		$reqBody = json_encode( $params );
+		$reqBody = empty( $params ) ? '' : json_encode( $params );
 
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
 		//print( "Connecting to $url...\n" );
@@ -449,6 +461,19 @@ class OoyalaAsset extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $result;
+	}
+
+	/**
+	 * Send request to Ooyala to delete video
+	 * @param string $videoId
+	 * @return boolean $resp
+	 */
+	public function deleteAsset( $videoId ) {
+		$method = 'DELETE';
+		$reqPath = '/v2/assets/'.$videoId;
+		$resp = $this->sendRequest( $method, $reqPath );
+
+		return $resp;
 	}
 
 }

@@ -94,7 +94,8 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		}
 		$totalVideos = $totalVideos + 1; // adding 'add video' placeholder to video array count
 
-		$sortingOptions = array_merge( $specialVideos->getSortingOptions(), $specialVideos->getFilterOptions() );
+		$videoHelper = new VideoHandlerHelper();
+		$sortingOptions = array_merge( $videoHelper->getSortOptions(), $specialVideos->getFilterOptions() );
 		if ( !array_key_exists( $sort, $sortingOptions ) ) {
 			$sort = 'recent';
 		}

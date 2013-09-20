@@ -233,7 +233,7 @@ class WikiaMobileHooks {
 			}
 
 			//set proper titles for a page
-			$out->setPageTitle( $text . ' <span id=catTtl>' . wfMsgForContent( 'wikiamobile-categories-tagline' ) . '</span>');
+			$out->setPageTitle( $text . ' <span id=catTtl>' . wfMessage( 'wikiamobile-categories-tagline' )->inContentLanguage()->plain() . '</span>');
 			$out->setHTMLTitle( $text );
 
 			//render lists: exhibition and alphabetical
@@ -261,10 +261,7 @@ class WikiaMobileHooks {
 		if ( $title->getNamespace() == NS_CATEGORY ) {
 			$category = Category::newFromTitle( $title );
 
-			/**
-			 * @var $model WikiaMobileCategoryModel
-			 */
-			$model = (new WikiaMobileCategoryModel);
+			$model = new WikiaMobileCategoryModel();
 
 			$model->purgeItemsCollectionCache( $category->getName() );
 			$model->purgeExhibitionItemsCacheKey( $title->getText() );

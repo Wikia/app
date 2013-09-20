@@ -244,6 +244,13 @@ class Config
 	protected $service;
 	
 	/**
+	 * Allows us to specify the use case for Wikia\Search\QueryService\Select\Dismax\CombinedMedia
+	 * By default, it's video-only. We can include images by changing this value to false.
+	 * @var bool
+	 */
+	protected $combinedMediaSearchIsVideoOnly = true;
+	
+	/**
 	 * Constructor method
 	 * @param array $params
 	 */
@@ -480,9 +487,7 @@ class Config
 	 * @return \Wikia\Search\Config provides fluent interface
 	 */
 	public function setWikiMatch( Match\Wiki $wikiMatch ) {
-		if ( $this->getLanguageCode() === $this->getService()->getGlobalForWiki( 'wgLanguageCode', $wikiMatch->getId() ) ) {
-			$this->wikiMatch = $wikiMatch;
-		}
+		$this->wikiMatch = $wikiMatch;
 		return $this;
 	}
 	
@@ -706,12 +711,26 @@ class Config
 	 * @param bool $apply
 	 * @return Wikia\Search\Config
 	 */
-	public function setDirectLuceneQuery( $value ) {
-		return $this->setQueryService( 'Select\\Lucene\\Lucene', $value );
+	public function setDirectLuceneQuery( $apply ) {
+		return $this->setQueryService( 'Select\\Lucene\\Lucene', $apply );
 	}
 	
-	public function setCrossWikiLuceneQuery( $value ) {
-		return $this->setQueryService( 'Select\\Lucene\\CrossWikiLucene', $value );
+	/**
+	 * Sets or unsets combined media search as our query service
+	 * @param bool $apply
+	 * @return Wikia\Search\Config
+	 */
+	public function setCombinedMediaSearch( $apply ) {
+		return $this->setQueryService( 'Select\\Dismax\\CombinedMedia', $apply );
+	}
+	
+	/**
+	 * Sets or unsets crosswiki lucene query as the query service
+	 * @param bool $apply
+	 * @return Wikia\Search\Config
+	 */
+	public function setCrossWikiLuceneQuery( $apply ) {
+		return $this->setQueryService( 'Select\\Lucene\\CrossWikiLucene', $apply );
 	}
 	
 	/**
@@ -719,8 +738,8 @@ class Config
 	 * @param bool $apply
 	 * @return Wikia\Search\Config
 	 */
-	public function setVideoTitleSearch( $value ) {
-		return $this->setQueryService( 'Select\\Dismax\\VideoTitle', $value );
+	public function setVideoTitleSearch( $apply ) {
+		return $this->setQueryService( 'Select\\Dismax\\VideoTitle', $apply );
 	}
 	
 	/**
@@ -1097,5 +1116,23 @@ class Config
 			$this->service = (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\Search\MediaWikiService' );
 		}
 		return $this->service;
+	}
+	
+	/**
+	 * Flag for whether to include images in combined media search query service
+	 * @return bool
+	 */
+	public function getCombinedMediaSearchIsVideoOnly() {
+		return $this->combinedMediaSearchIsVideoOnly;
+	}
+	
+	/**
+	 * Lets us tell the combined media search service whether or not to include images
+	 * @param bool $bool 
+	 * @return Wikia\Search\Config
+	 */
+	public function setCombinedMediaSearchIsVideoOnly( $bool ) {
+		$this->combinedMediaSearchIsVideoOnly = $bool;
+		return $this;
 	}
 }

@@ -1,6 +1,4 @@
 var ThemeDesignerPreview = {
-	link: null,
-
 	init: function() {
 		$("#WikiaArticle .thumbinner")
 			.first()
@@ -9,11 +7,11 @@ var ThemeDesignerPreview = {
 			.first()
 			.html(
 				'<img width="300" src="' + wgExtensionsPath + '/wikia/ThemeDesigner/images/aquarium.jpg">'
-			);	
-			
+			);
+
 		$("#WikiaArticle .thumbinner").append('<div class="picture-attribution"><img width="16" height="16" class="avatar" src="' + wgExtensionsPath + '/wikia/ThemeDesigner/images/td-avatar.jpg">Added by <a>FunnyBunny</a></div>');
 		$("a.new").removeClass("new");
-		
+
 		//no floating footer on preview
 		$(window).unbind("scroll").unbind("resize");
 		$("#WikiaFooter").removeClass("float");
@@ -21,17 +19,37 @@ var ThemeDesignerPreview = {
 		$("body").append('<div id="clickmask" class="clickmask"></div>');
 	},
 
-	loadSASS: function(url) {
+	loadSASS: function(settings) {
+		var paths = [
+				'/skins/oasis/css/oasis.scss'
+			],
+			urls = [];
+		if ( wgOasisResponsive ) {
+			paths.push( '/skins/oasis/css/core/responsive.scss' );
+		}
+
+		$.each(paths, function(i, path) {
+			urls.push($.getSassCommonURL(path, settings));
+		});
+
 		//fade out
 		$("#clickmask").animate({"opacity": 0.65}, "fast", function() {
-			$.getCSS(url, function(link) {
-				//add link to body
-				$('body').append(link);
-				//remove old <link>
-				$(ThemeDesignerPreview.link).remove();
-				//save current <link>
-				ThemeDesignerPreview.link = link;
-				//fade in
+			var styleSheetsToRemove = [];
+
+			// Find duplicate existing stylesheets and queue them for removal
+			$.each(document.styleSheets, function(i, styleSheet) {
+				if (styleSheet) {
+					$.each(paths, function(j, path) {
+						if (styleSheet.href && ~styleSheet.href.indexOf(path)) {
+							styleSheetsToRemove.push(styleSheet.ownerNode);
+						}
+					});
+				}
+			});
+
+			// Load and inject the new stylesheets
+			$.getResources(urls, function() {
+				$(styleSheetsToRemove).remove();
 				$("#clickmask").animate({"opacity": 0}, "fast");
 			});
 		});

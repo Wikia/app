@@ -19,7 +19,16 @@ $messages['en'] = array(
 	'dump-database-request-submit' => 'Send request',
 	'dump-database-request-already-submitted' => 'Dump has been requested recently (less than 7 days ago)',
 	'dump-database-request-requested' => 'Request for database dump sent',
-	'dump-database-info-more' => 'Please <a href="http://community.wikia.com/wiki/Help:Database_download">see</a> for more info'
+	'dump-database-info-more' => 'Please <a href="http://community.wikia.com/wiki/Help:Database_download">see</a> for more info',
+	'dump-database-last-unknown' => 'Unknown'
+);
+
+/** Message documentation (Message documentation)
+ * @author Shirayuki
+ */
+$messages['qqq'] = array(
+	'dump-database-last-unknown' => 'Used when the time of the last database dump request is not known, or if there have been no requests.
+{{Identical|Unknown}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -129,6 +138,7 @@ $messages['bs'] = array(
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author Gemmaa
  */
 $messages['ca'] = array(
@@ -144,6 +154,7 @@ $messages['ca'] = array(
 	'dump-database-request-already-submitted' => "L'abocador ' han demanat recentment (fa menys de 7 dies)",
 	'dump-database-request-requested' => "Sol·licitud d'abocador de base de dades enviat",
 	'dump-database-info-more' => 'Si us plau, <a href="http://community.wikia.com/wiki/Help:Database_download">veure</a> per a més informació',
+	'dump-database-last-unknown' => 'Desconegut',
 );
 
 /** Czech (česky)
@@ -184,6 +195,7 @@ $messages['da'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author Metalhead64
  * @author MtaÄ
  * @author The Evil IP address
  */
@@ -200,6 +212,7 @@ $messages['de'] = array(
 	'dump-database-request-already-submitted' => 'Dump wurde kürzlich (weniger als 7 Tagen) angefordert',
 	'dump-database-request-requested' => 'Anfrage nach Datenbank-Dump gesendet',
 	'dump-database-info-more' => 'Bitte siehe <a href="http://community.wikia.com/wiki/Help:Database_download">hier</a> für weitere Infos.',
+	'dump-database-last-unknown' => 'Unbekannt',
 );
 
 /** Zazaki (Zazaki)
@@ -230,6 +243,7 @@ $messages['el'] = array(
  * @author Bola
  * @author Locos epraix
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'dump-database' => 'Descarga de Base de Datos',
@@ -244,6 +258,7 @@ $messages['es'] = array(
 	'dump-database-request-already-submitted' => 'Se ha solicitado volcado recientemente (hace menos de 7 días)',
 	'dump-database-request-requested' => 'Solicitud para envío de descarga de base de datos',
 	'dump-database-info-more' => 'Por favor, <a href="http://community.wikia.com/wiki/Help:Database_download">ver esto</a> para más información',
+	'dump-database-last-unknown' => 'Desconocido',
 );
 
 /** Basque (euskara)
@@ -312,6 +327,7 @@ $messages['gl'] = array(
 	'dump-database-request-already-submitted' => 'A copia de seguridade solicitouse recentemente (hai menos de 7 días)',
 	'dump-database-request-requested' => 'Enviouse a solicitude da copia da base de datos',
 	'dump-database-info-more' => 'Por favor, <a href="http://community.wikia.com/wiki/Help:Database_download">lea isto</a> para obter máis información',
+	'dump-database-last-unknown' => 'Descoñecido',
 );
 
 /** Hebrew (עברית)
@@ -470,6 +486,7 @@ $messages['lb'] = array(
 	'dump-database' => 'Dumpe vun der Datebank',
 	'dump-database-curr-pages' => 'Aktuell Säiten',
 	'dump-database-request' => 'Eng Aktualisatioun ufroen',
+	'dump-database-last-unknown' => 'Onbekannt',
 );
 
 /** Macedonian (македонски)
@@ -563,6 +580,7 @@ Wikia maakt automatisch back-ups van alle wiki's.",
 	'dump-database-request-already-submitted' => 'Dump is onlangs gevraagd (minder dan 7 dagen geleden)',
 	'dump-database-request-requested' => 'Het verzoek voor de databasedump is ingediend.',
 	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Meer informatie</a>.',
+	'dump-database-last-unknown' => 'Onbekend',
 );
 
 /** Occitan (occitan)
@@ -594,6 +612,7 @@ $messages['pl'] = array(
 	'dump-database-request-already-submitted' => 'Zrzut był pobierany niedawno (mniej niż 7 dni temu)',
 	'dump-database-request-requested' => 'Prośba o zrzut bazy danych przesłana',
 	'dump-database-info-more' => 'Zobacz <a href="http://community.wikia.com/wiki/Help:Database_download">tę stronę</a> aby uzyskać więcej informacji.',
+	'dump-database-last-unknown' => 'Brak danych',
 );
 
 /** Piedmontese (Piemontèis)
@@ -686,6 +705,7 @@ $messages['roa-tara'] = array(
 	'dump-database-request-already-submitted' => "'U dump ha state cercate recendemende (mene de 7 sciurne fa)",
 	'dump-database-request-requested' => "Richieste pu dump d'u database mannate",
 	'dump-database-info-more' => 'Pe piacere <a href="http://community.wikia.com/wiki/Help:Database_download">\'ndruche</a> pe cchiù \'mbormaziune',
+	'dump-database-last-unknown' => 'Scanusciute',
 );
 
 /** Russian (русский)
@@ -739,6 +759,7 @@ $messages['sr-ec'] = array(
 /** Swedish (svenska)
  * @author Per
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'dump-database' => 'Databasdumps',
@@ -753,6 +774,7 @@ $messages['sv'] = array(
 	'dump-database-request-already-submitted' => 'Dump har begärts nyligen (mindre än 7 dagar sedan)',
 	'dump-database-request-requested' => 'Begäran om databasdump har skickats',
 	'dump-database-info-more' => 'Vänligen <a href="http://community.wikia.com/wiki/Help:Database_download">se</a> för mer info',
+	'dump-database-last-unknown' => 'Okänd',
 );
 
 /** Tamil (தமிழ்)
@@ -793,6 +815,7 @@ $messages['tl'] = array(
 
 /** Ukrainian (українська)
  * @author Alex Khimich
+ * @author Andriykopanytsia
  * @author Prima klasy4na
  * @author Ua2004
  * @author Тест
@@ -810,6 +833,7 @@ $messages['uk'] = array(
 	'dump-database-request-already-submitted' => 'Запит на створення дампа було надіслано недавно (менше 7 днів тому)',
 	'dump-database-request-requested' => 'Запит на створення дампу бази даних надіслано.',
 	'dump-database-info-more' => 'Будь ласка, ознайомтесь з детальнішою інформацією <a href="http://community.wikia.com/wiki/Help:Database_download">тут</a>',
+	'dump-database-last-unknown' => 'Невідомо',
 );
 
 /** Simplified Chinese (中文（简体）‎)

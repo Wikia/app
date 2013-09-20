@@ -19,7 +19,7 @@
 	}
 	nav {
 		font-size: 20px;
-		height: 34px;
+		height: $wikiaglobal-nav-height - 3px; // -3 because of border-top
 		>ul>li:last-child {
 			padding: 0;
 		}
@@ -66,6 +66,12 @@
 		position: relative;
 		width: $wikiaheader-width;
 	}
+}
+
+body.global-header-fixed-at-top .WikiaHeader {
+	position: fixed;
+	top: 0;
+	width: 100%;
 }
 
 .GlobalNavigation {

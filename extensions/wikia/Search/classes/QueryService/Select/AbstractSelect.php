@@ -384,16 +384,6 @@ abstract class AbstractSelect
 		$container = new ResultSet\DependencyContainer( array( 'result' => $result, 'config' => $config ) );
 		$results = (new ResultSet\Factory)->get( $container );
 		$config->setResults( $results );
-		
-		if( $config->getPage() == 1 ) {
-			\Track::event(
-					( $results->getResultsFound() > 0 ? 'search_start' : 'search_start_nomatch' ),
-					array(
-							'sterm' => $config->getQuery()->getSanitizedQuery(), 
-							'stype' => $this->searchType 
-							)
-					);
-		}
 	}
 	
 	/**
@@ -434,7 +424,10 @@ abstract class AbstractSelect
 		$service = $this->getService();
 		$wikiMatch = $service->getWikiMatchByHost( $domain );
 		if (! empty( $wikiMatch ) && ( $wikiMatch->getId() !== $service->getWikiId() ) ) {
-			$config->setWikiMatch( $wikiMatch );
+			$result = $wikiMatch->getResult();
+			if ( $result['articles_i'] >= 50 ) {
+				$config->setWikiMatch( $wikiMatch );
+			}
 		}
 		return $config->getWikiMatch();
 	}

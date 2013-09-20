@@ -144,13 +144,13 @@ class SpecialCssModel extends WikiaModel {
 	}
 
 	/**
-	 * @desc Compares passed article id with Wikia.css article id
+	 * @desc Compares passed title with Wikia.css title
 	 *
-	 * @param $articleId
+	 * @param $title
 	 * @return bool
 	 */
-	public function isWikiaCssArticle($articleId) {
-		return ($articleId == $this->getCssFileArticleId() );
+	public function isWikiaCssTitle($title) {
+		return Title::compare($title, $this->getCssFileTitle()) === 0;
 	}
 
 	/**
@@ -610,6 +610,10 @@ class SpecialCssModel extends WikiaModel {
 		$dbName = isset($wgCssUpdatesLangMap[$lang]) ? $wgCssUpdatesLangMap[$lang] : $wgCssUpdatesLangMap[self::CSS_DEFAULT_LANG];
 
 		return $dbName;
+	}
+
+	public function isMinorEditDefault() {
+		return $this->wg->User->getBoolOption('minordefault');
 	}
 
 	/**

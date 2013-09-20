@@ -9,7 +9,7 @@ namespace Wikia\Search;
  * This will allow us to abstract our behavior away from MediaWiki if we want.
  * Public functions should not return instances of classes defined in MediaWiki core.
  * @author relwell
- * @package Search 
+ * @package Search
  */
 class MediaWikiService
 {
@@ -484,16 +484,20 @@ class MediaWikiService
 	public function getWikiMatchByHost( $domain ) {
 		$match = null;
 		if ( $domain !== '' ) {
-		$langCode = $this->getLanguageCode();
-            if ( $langCode === static::WIKI_DEFAULT_LANG_CODE ) {
-                $wikiId = $this->getWikiIdByHost( $domain . '.wikia.com' );
-            } else {
-                $wikiId = ( $interWikiComId = $this->getWikiIdByHost( "{$langCode}.{$domain}.wikia.com" ) ) !== null ? $interWikiComId : $this->getWikiIdByHost( "{$domain}.{$langCode}" );
-            }
-            //exclude wikis which lang does not match current one
-            if ( isset( $wikiId ) && $langCode === $this->getGlobalForWiki( 'wgLanguageCode', $wikiId ) ) {
-                $match = new \Wikia\Search\Match\Wiki( $wikiId, $this );
-            }
+			$langCode = $this->getLanguageCode();
+			if ( $langCode === static::WIKI_DEFAULT_LANG_CODE ) {
+				$wikiId = $this->getWikiIdByHost( $domain . '.wikia.com' );
+			} else {
+				$wikiId = ( $interWikiComId = $this->getWikiIdByHost( "{$langCode}.{$domain}.wikia.com" ) ) !== null ? $interWikiComId : $this->getWikiIdByHost( "{$domain}.{$langCode}" );
+			}
+			
+			if ( isset( $wikiId ) ) {
+				$wiki = $this->getWikiFromWikiId( $wikiId );
+				//exclude wikis which lang does not match current one, and wikis that are closed
+				if ( (! empty( $wiki ) ) && ( $wiki->city_public == 1 ) && $langCode === $wiki->city_lang ) {
+					$match = new \Wikia\Search\Match\Wiki( $wikiId, $this );
+				}
+			}
 		}
 		return $match;
 	}
@@ -699,6 +703,27 @@ class MediaWikiService
 	}
 
 	/**
+	 * @param string $pageTitle
+	 * @param array|null $transformParams
+	 * @return string|null - html of thumbnail with play button
+	 */
+	public function getThumbnailHtmlFromFileTitle( $pageTitle, $transformParams = null ) {
+		$file = null;
+		try {
+			$title = \Title::newFromText( $pageTitle, NS_FILE );
+
+			$transformParams[ 'width' ] = (isset( $transformParams[ 'width' ] ) ) ? $transformParams[ 'width' ] : static::THUMB_DEFAULT_WIDTH;
+			$transformParams[ 'height' ] = (isset( $transformParams[ 'height' ] ) ) ? $transformParams[ 'height' ] : static::THUMB_DEFAULT_HEIGHT;
+
+			return \WikiaFileHelper::getVideoThumbnailHtml( $title, $transformParams['width'], $transformParams['height'], false );
+		} catch ( \Exception $ex ) {
+			// we have some isses on dev box (no starter database).
+			// swallow the exception for now. Should we log this event ?
+			return '';
+		}
+	}
+
+	/**
 	 * Returns the number of video views for a page ID.
 	 * @param int $pageId
 	 * @return string
@@ -860,6 +885,15 @@ class MediaWikiService
 	protected function getTitleKeyFromPageId( $pageId ) {
 		return $this->getTitleFromPageId( $pageId )->getDbKey();
 	}
+
+	/**
+	 * Returns an instance of stdClass with attributes corresponding to rows in the city_list table 
+	 * @param int $wikiId
+	 * @return stdClass
+	 */
+	protected function getWikiFromWikiId( $wikiId ) {
+		return (new \WikiFactory)->getWikiById( $wikiId );
+	}
 	
 	/**
 	 * Give a page id, provide a file
@@ -877,7 +911,7 @@ class MediaWikiService
 	 * Standard interface for this class's services to access a page
 	 * @param int $pageId
 	 * @return Article
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	protected function getPageFromPageId( $pageId ) {
 		wfProfileIn( __METHOD__ );

@@ -9,6 +9,7 @@
 $app = F::app();
 $dir = dirname(__FILE__) . '/';
 
+require_once( $IP . '/lib/vendor/php-nlp-tools/autoloader.php' ); //@TODO find a better place for this
 require_once( $IP . '/lib/vendor/Solarium/Autoloader.php' );
 require_once( $IP . '/lib/vendor/simplehtmldom/simple_html_dom.php' );
 Solarium_Autoloader::register();

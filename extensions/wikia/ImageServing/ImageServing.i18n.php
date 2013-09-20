@@ -164,6 +164,13 @@ $messages['nl'] = array(
 	'imageserving-desc' => "Selecteert afbeeldingen uit een opgegeven verzameling pagina's gebaseerd op visuele eisen",
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'imageserving-desc' => 'Selecciona los images dins un ensemble definit de paginas, en foncion dels besonhs visuals',
+);
+
 /** Polish (polski)
  * @author Sovq
  */

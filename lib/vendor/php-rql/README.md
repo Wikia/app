@@ -5,67 +5,12 @@ A PHP client driver for the RethinkDB query language (ReQL).
 
 PHP-RQL is licensed under the terms of the Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0
 
-Overview
---------
 
-PHP-RQL provides a driver to access RethinkDB databases from PHP code.
+More Information
+----------------
 
-It currently implements the query language and wire protocol of RethinkDB 1.4.x
+...is available on the website: http://php-rql.dnsalias.net
 
-The API of the driver is generally close to that of the official RethinkDB JavaScript driver.
-
-Preliminary documentation is available at: http://dmewes.com/~daniel/php-rql-api/#ph
-(except for the PHP examples, the documentation is a copy of the official RethinkDB API docs)
-
-Requirements
-------------
-
-PHP 5.3
-
-Installing
-----------
-
-* Download the ZIP file of this repository: https://github.com/danielmewes/php-rql/archive/master.zip
-or clone it using git.
-* Unpack it
-* Copy the contents of the src directory (folders protocolbuf and rdb) into the path of your PHP project.
-
-Example
--------
-
-```php
-<?php
-    // Load the driver
-    require_once("rdb/rdb.php");
-
-    // Connect to localhost
-    $conn = r\connect('localhost');
-
-    // Create a test table
-    r\db("test")->tableCreate("tablePhpTest")->run($conn);
-
-    // Insert a document
-    $document = array('someKey' => 'someValue');
-    $result = r\db("test")->table("tablePhpTest")->insert($document)->run($conn);
-    echo "Insert: $result\n";
-
-    // How many documents are in the table?
-    $result = r\db("test")->table("tablePhpTest")->count()->run($conn);
-    echo "Count: $result\n";
-
-    // List the someKey values of the documents in the table (using a mapping-function)
-    $result = r\db("test")->table("tablePhpTest")->map(function($x) {
-            return $x('someKey');
-        })->run($conn);
-            
-    foreach ($result as $doc) {
-        echo "Doc: $doc\n";
-    }
-       
-    // Delete the test table
-    r\db("test")->tableDrop("tablePhpTest")->run($conn);
-?>
-```
 
 Attributions
 ------------

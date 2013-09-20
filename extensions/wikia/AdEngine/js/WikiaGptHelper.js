@@ -124,7 +124,8 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 			slotnameGpt = slotname + '_gpt',
 			slotDiv = document.createElement('div'),
 			sizes = convertSizesToGpt(slotParams.slotsize),
-			params = {};
+			params = {},
+			slotPath = window.wgAdDriverUseNewGptZones ? path + '/' + slotname : path;
 
 		loadGpt();
 
@@ -141,10 +142,10 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 		slotDiv.setAttribute('data-gpt-slot-sizes', JSON.stringify(sizes));
 		document.getElementById(slotname).appendChild(slotDiv);
 
-		log(['googletag.cmd.push', path, sizes, slotnameGpt, params], 4, logGroup);
+		log(['googletag.cmd.push', slotPath, sizes, slotnameGpt, params], 4, logGroup);
 
 		googletag.cmd.push(function () {
-			var slot = googletag.defineSlot(path, sizes, slotnameGpt),
+			var slot = googletag.defineSlot(slotPath, sizes, slotnameGpt),
 				name,
 				value;
 
@@ -178,6 +179,29 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 						error();
 					}
 				} else {
+
+
+
+					// ADEN-502 HACK STARTS HERE
+					log('Detecting passBack in slot ' + slotname, 1, logGroup);
+					var hasPassBack = false;
+					try {
+						hasPassBack = document.getElementById(slotnameGpt).getElementsByTagName('iframe')[0].contentDocument.getElementById('passbackIframe');
+					} catch (e) {
+					}
+					if (hasPassBack) {
+						log('passback in slot ' + slotname, 1, logGroup);
+						document.getElementById(slotnameGpt).style.display = 'none';
+						if (typeof error === 'function') {
+							error();
+							return;
+						}
+					}
+					// ADEN-502 HACK ENDS HERE
+
+
+
+
 					log(['doneCallback', slotname, 'running success callback'], 4, logGroup);
 					if (typeof success === 'function') {
 						success();

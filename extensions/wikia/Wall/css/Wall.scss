@@ -85,7 +85,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 				text-align: right;
 			}
 			> ul { margin-left: 75px; }
-			border: none; // -top: 1px solid $color-wall-border;
+			border: none; // -top: 1px solid $color-page-border-subtle;
 			padding-top: 12px;
 			margin-bottom: 0px;
 		}
@@ -99,7 +99,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 				height: 0px; width: 0px;
 				border-width: 8px;
 				border-style: solid;
-				border-color: transparent transparent $color-wall-border transparent;
+				border-color: transparent transparent $color-page-border-subtle transparent;
 				left: 28px; top: -16px;
 				visibility: visible;
 			}
@@ -126,7 +126,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 			position: relative;
 		}
 	}
-	
+
 	.replies .speech-bubble-message .voting-controls .votes.notlink {
 		display: none;
 	}
@@ -155,7 +155,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 
 	/* only messages, not replies */
 	ul.comments > li.message {
-		border-bottom: 1px solid $color-wall-border;
+		border-bottom: 1px solid $color-page-border-subtle;
 		padding-top: 15px;
 		padding-bottom: 30px;
 
@@ -220,7 +220,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		&:focus { background: $color-wall-input-focus; color: $color-text; }
 	}
 	.new-reply textarea{ height: 30px; line-height: normal; }
-	ul.comments > li.message li.message textarea { border: 1px solid $color-wall-border; }
+	ul.comments > li.message li.message textarea { border: 1px solid $color-page-border-subtle; }
 	ul.comments > li.message > .speech-bubble-message textarea { font-size: 13px; }
 	ul.comments > li.message > .speech-bubble-message textarea.title { font-size: 18px; font-weight: bold; }
 
@@ -262,7 +262,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 			margin-left: 10px;
 		}
 	}
-	
+
 	.toolbar {
 		position: relative;
 		z-index: 2;	/* overlapping with msg-toolbar */
@@ -270,7 +270,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 
 	/* only replies */
 	ul.comments > li.message ul.replies > li {
-		border-top: 1px solid $color-wall-border;
+		border-top: 1px solid $color-page-border-subtle;
 	}
 	ul.comments > li.message li.message {
 		.speech-bubble-message {
@@ -462,7 +462,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 
 	.load-more{
 		//@include border-radius(4px);
-		border-top: 1px solid $color-wall-border;
+		border-top: 1px solid $color-page-border-subtle;
 		//border-bottom: 1px solid $color-page-border;
 		//margin-left:75px;
 		margin: 9px 16px 0px 0px;
@@ -523,11 +523,11 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		margin-left: 5px;
 		min-width: 60px;
 		text-align: center;
-		&:hover { 
+		&:hover {
 			@include opacity(100);
 			background-image: none;
 		}
-		
+
 	}
 
 	.follow.secondary {
@@ -591,7 +591,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	.highlight {
 		display: none;
 	}
-	
+
 	&.Thread {
 		@include clearfix;
 		margin-bottom: 100px;
@@ -749,7 +749,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		display: block;
 		padding: 5px 10px 5px 5px;
 		background: $color-page;
-		border: 1px solid $color-wall-border;
+		border: 1px solid $color-page-border-subtle;
 		position: relative;
 		div.avatar {
 			display: block;
@@ -779,7 +779,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 				z-index: 2;
 			}
 			&:before {
-				border-color: transparent transparent transparent $color-wall-border;
+				border-color: transparent transparent transparent $color-page-border-subtle;
 				right: -20px;
 				z-index: 1;
 			}
@@ -798,7 +798,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	}
 }
 
-.Wall, 
+.Wall,
 .WallPreview {
 	.quote {
 		@include message-quote;
@@ -810,7 +810,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 }
 
 .WallPreview {
-	border: 1px solid $color-wall-border;
+	border: 1px solid $color-page-border-subtle;
 	font-size: 13px;
 	min-height: 300px;
 	position: relative;

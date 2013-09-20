@@ -25,7 +25,10 @@ class WikiaHubsV2Hooks {
 			$app->wg->SuppressWikiHeader = true;
 			$app->wg->SuppressRail = true;
 			$app->wg->SuppressFooter = true;
-			$article = new WikiaHubsV2Article($title, $model->getHubPageId($dbKeyNameSplit[0]), $hubTimestamp);
+			if (!$app->wg->request->wasPosted()) {
+				// don't change article object while saving data
+				$article = new WikiaHubsV2Article($title, $model->getHubPageId($dbKeyNameSplit[0]), $hubTimestamp);
+			}
 		}
 
 		if( $model->isHubsPage($hubName) && self::isOffShotPage($title) ) {
@@ -36,6 +39,7 @@ class WikiaHubsV2Hooks {
 			$am = AssetsManager::getInstance();
 			$app->wg->Out->addStyle($am->getSassCommonURL('extensions/wikia/WikiaHubsV2/css/WikiaHubsV1/WikiaHubs.scss'));
 			$app->wg->Out->addStyle($am->getSassCommonURL('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss'));
+
 		}
 
 		wfProfileOut(__METHOD__);

@@ -15,7 +15,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 			"created_at >= '$params[startDate]'",
 			"created_at < '$params[endDate]'",
 		);
-		$articlesCreated = $this->importVideos( $content, $params );
+		$articlesCreated = $this->importVideos( $params );
 
 		// by time restrictions
 		$params['cond'] = array(
@@ -23,19 +23,21 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 			"time_restrictions.start_date >= '$params[startDate]'",
 			"time_restrictions.start_date < '".gmdate( 'Y-m-d H:i:s', $params['now'] )."'",
 		);
-		$articlesCreated += $this->importVideos( $content, $params );
+		$articlesCreated += $this->importVideos( $params );
 
 		return $articlesCreated;
 	}
 
-	public function importVideos( $content = '', $params = array() ) {
+	/**
+	 * import videos
+	 * @param array $params
+	 * @return integer $articlesCreated
+	 */
+	public function importVideos( $params = array() ) {
 		wfProfileIn( __METHOD__ );
 
-		$addlCategories = !empty($params['addlCategories']) ? $params['addlCategories'] : array();
-		if ( !empty($params['extraCategories']) ) {
-			$addlCategories = array_merge( $addlCategories, $params['extraCategories'] );
-		}
-		$debug = !empty($params['debug']);
+		$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
+		$debug = !empty( $params['debug'] );
 
 		$articlesCreated = 0;
 		$nextPage = '';
@@ -69,54 +71,65 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 			// parse response
 			$response = json_decode( $response, true );
 
-			$videos = empty($response['items']) ? array() : $response['items'] ;
-			$nextPage = empty($response['next_page']) ? '' : $response['next_page'] ;
+			$videos = empty( $response['items'] ) ? array() : $response['items'] ;
+			$nextPage = empty( $response['next_page'] ) ? '' : $response['next_page'] ;
 
 			$numVideos = count( $videos );
-			print("Found $numVideos videos...\n");
+			print( "Found $numVideos videos...\n" );
 
-			foreach( $videos as $video ) {
-				if ( !empty($video['time_restrictions']['start_date']) && strtotime($video['time_restrictions']['start_date']) > $params['now'] ) {
+			foreach ( $videos as $video ) {
+				if ( !empty( $video['time_restrictions']['start_date'] ) && strtotime( $video['time_restrictions']['start_date'] ) > $params['now'] ) {
 					continue;
 				}
 
 				$clipData = array();
-				$clipData['titleName'] = trim($video['name']);
+				$clipData['titleName'] = trim( $video['name'] );
 				$clipData['videoId'] = $video['embed_code'];
 				$clipData['thumbnail'] = $video['preview_image_url'];
 				$clipData['duration'] = $video['duration'] / 1000;
-				$clipData['published'] = empty($video['metadata']['published']) ? '' : $video['metadata']['published'];
-				$clipData['category'] = empty($video['metadata']['category']) ? '' : $video['metadata']['category'];
-				$clipData['keywords'] = empty($video['metadata']['keywords']) ? '' : $video['metadata']['keywords'];
-				$clipData['description'] = trim($video['description']);
-				$clipData['ageGate'] = empty($video['metadata']['agegate']) ? 0 : 1;
+				$clipData['published'] = empty( $video['metadata']['published'] ) ? '' : strtotime( $video['metadata']['published'] );
+				$clipData['name'] = empty( $video['metadata']['name'] ) ? '' : $video['metadata']['name'];
+				$clipData['type'] = empty( $video['metadata']['type'] ) ? '' : $video['metadata']['type'];
+				$clipData['category'] = empty( $video['metadata']['category'] ) ? '' : $video['metadata']['category'];
+				$clipData['keywords'] = empty( $video['metadata']['keywords'] ) ? '' : $video['metadata']['keywords'];
+				$clipData['description'] = trim( $video['description'] );
+
 				$clipData['ageRequired'] = empty( $video['metadata']['age_required'] ) ? 0 : $video['metadata']['age_required'];
-				$clipData['hd'] = empty($video['metadata']['hd']) ? 0 : 1;
-				$clipData['tags'] = empty($video['metadata']['tags']) ? '' : $video['metadata']['tags'];
-				$clipData['industryRating'] = empty($video['metadata']['industryrating']) ? '' : $video['metadata']['industryrating'];
-				$clipData['trailerRating'] = empty($video['metadata']['trailerrating']) ? '' : $video['metadata']['trailerrating'];
+				$clipData['ageGate'] = empty( $clipData['ageRequired'] ) ? 0 : 1;
+
+				$clipData['hd'] = empty( $video['metadata']['hd'] ) ? 0 : 1;
+
+				$clipData['industryRating'] = '';
+				if ( !empty( $video['metadata']['industryrating'] ) ) {
+					$clipData['industryRating'] = $this->getIndustryRating( $video['metadata']['industryrating'] );
+				}
 
 				$clipData['categoryName'] = OoyalaApiWrapper::getProviderName( $video['labels'] );
 				// check for videos under '/Providers/' labels
-				if ( empty($clipData['categoryName']) ) {
+				if ( empty( $clipData['categoryName'] ) ) {
 					print "Skipping {$clipData['titleName']} - {$clipData['description']}. No provider name.\n";
 					continue;
 				}
 				$clipData['provider'] = OoyalaApiWrapper::formatProviderName( $clipData['categoryName'] );
 
-				$clipData['language'] =  empty($video['metadata']['lang']) ? '' : $video['metadata']['lang'];
+				$clipData['language'] =  empty( $video['metadata']['lang'] ) ? '' : $video['metadata']['lang'];
 				$clipData['subtitle'] =  empty( $video['metadata']['subtitle'] ) ? '' : $video['metadata']['subtitle'];
-				$clipData['genres'] = empty($video['metadata']['genres']) ? '' : $video['metadata']['genres'];
-				$clipData['actors'] = empty($video['metadata']['actors']) ? '' : $video['metadata']['actors'];
-				$clipData['startDate'] = empty($video['time_restrictions']['start_date']) ? '' : $video['time_restrictions']['start_date'];
-				$clipData['expirationDate'] = empty($video['metadata']['expirationdate']) ? '' : $video['metadata']['expirationdate'];
-				$clipData['playerId'] = OoyalaApiWrapper::getPlayerId( $clipData['videoId'] );
+				$clipData['genres'] = empty( $video['metadata']['genres'] ) ? '' : $video['metadata']['genres'];
+				$clipData['actors'] = empty( $video['metadata']['actors'] ) ? '' : $video['metadata']['actors'];
+				$clipData['startDate'] = empty( $video['time_restrictions']['start_date'] ) ? '' : strtotime( $video['time_restrictions']['start_date'] );
+				$clipData['expirationDate'] = empty( $video['metadata']['expirationdate'] ) ? '' : strtotime( $video['metadata']['expirationdate'] );
 				$clipData['targetCountry'] = empty( $video['metadata']['targetcountry'] ) ? '' : $video['metadata']['targetcountry'];
 				$clipData['source'] = empty( $video['metadata']['source'] ) ? '' : $video['metadata']['source'];
 				$clipData['sourceId'] = empty( $video['metadata']['sourceid'] ) ? '' : $video['metadata']['sourceid'];
 				$clipData['series'] = empty( $video['metadata']['series'] ) ? '' : $video['metadata']['series'];
 				$clipData['season'] = empty( $video['metadata']['season'] ) ? '' : $video['metadata']['season'];
 				$clipData['episode'] = empty( $video['metadata']['episode'] ) ? '' : $video['metadata']['episode'];
+				$clipData['characters'] = empty( $video['metadata']['characters'] ) ? '' : $video['metadata']['characters'];
+				$clipData['resolution'] = empty( $video['metadata']['resolution'] ) ? '' : $video['metadata']['resolution'];
+				$clipData['aspectRatio'] = empty( $video['metadata']['aspectratio'] ) ? '' : $video['metadata']['aspectratio'];
+
+				// For page categories only. Not store in metadata.
+				$clipData['pageCategories'] = empty( $video['metadata']['pagecategories'] ) ? '' : $video['metadata']['pagecategories'];
 
 				$msg = '';
 				$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug, 'provider' => $clipData['provider'] );
@@ -125,13 +138,19 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 					print "ERROR: $msg\n";
 				}
 			}
-		} while( !empty($nextPage) );
+		} while ( !empty( $nextPage ) );
 
 		wfProfileOut( __METHOD__ );
 
 		return $articlesCreated;
 	}
 
+	/**
+	 * get feed url
+	 * @param array $params
+	 * @param string $nextPage
+	 * @return string $url
+	 */
 	private function initFeedUrl( $params, $nextPage ) {
 		$method = 'GET';
 		$reqPath = '/v2/assets';
@@ -146,77 +165,56 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 	}
 
 
-	public function generateCategories(array $data, $addlCategories) {
+	/**
+	 * Create list of category names to add to the new file page
+	 * @param array $data
+	 * @param array $categories
+	 * @return array $categories
+	 */
+	public function generateCategories( $data, $categories ) {
 		wfProfileIn( __METHOD__ );
 
-		$categories = !empty($addlCategories) ? $addlCategories : array();
-
-		if ( !empty($data['keywords']) ) {
-			$keywords = explode( ',', $data['keywords'] );
-
-			foreach( $keywords as $keyword ) {
-				$categories[] = trim( $keyword );
-			}
+		if ( !empty( $data['name'] ) ) {
+			$categories += array_map( 'trim', explode( ',', $data['name'] ) );
 		}
 
-		if ( !empty($data['categoryName']) ) {
+		if ( !empty( $data['pageCategories'] ) ) {
+			$categories += array_map( 'trim', explode( ',', $data['pageCategories'] ) );
+		}
+
+		// remove 'the' category
+		$key = array_search( 'the', array_map( 'strtolower', $categories ) );
+		if ( $key !== false ) {
+			unset( $categories[$key] );
+		}
+
+		if ( !empty( $data['categoryName'] ) ) {
 			$categories[] = $data['categoryName'];
 		}
 
-		if ( !in_array( 'Ooyala', $categories) ) {
-			$categories[] = 'Ooyala';
-		}
+		$categories[] = 'Ooyala';
 
 		wfProfileOut( __METHOD__ );
 
-		return $categories;
+		return $this->getUniqueArray( $categories );
 	}
 
-	protected function generateName( array $data ) {
-		wfProfileIn( __METHOD__ );
-
-		$name = $data['titleName'];
-
-		wfProfileOut( __METHOD__ );
-
-		return $name;
-	}
-
-	protected function generateMetadata( array $data, &$errorMsg ) {
-		if ( empty( $data['videoId'] ) ) {
-			$errorMsg = 'no video id exists';
+	/**
+	 * generate meatadata
+	 * @param array $data
+	 * @param string $errorMsg
+	 * @return array|integer $metadata or zero on error
+	 */
+	public function generateMetadata( $data, &$errorMsg ) {
+		$metadata = parent::generateMetadata( $data, $errorMsg );
+		if ( empty( $metadata ) ) {
 			return 0;
 		}
 
-		$metadata = array(
-			'videoId'        => $data['videoId'],
-			'hd'             => $data['hd'],
-			'duration'       => $data['duration'],
-			'published'      => empty( $data['published'] ) ? $data['published'] : strtotime( $data['published'] ),
-			'ageGate'        => $data['ageGate'],
-			'ageRequired'    => $data['ageRequired'],
-			'industryRating' => $data['industryRating'],
-			'trailerRating'  => $data['trailerRating'],
-			'thumbnail'      => $data['thumbnail'],
-			'category'       => $data['category'],
-			'description'    => $data['description'],
-			'keywords'       => $data['keywords'],
-			'tags'           => $data['tags'],
-			'provider'       => $data['provider'],
-			'language'       => $data['language'],
-			'subtitle'       => $data['subtitle'],
-			'genres'         => $data['genres'],
-			'actors'         => $data['actors'],
-			'startDate'      => empty( $data['startDate'] ) ? $data['startDate'] : strtotime( $data['startDate'] ),
-			'expirationDate' => empty( $data['expirationDate'] ) ? $data['expirationDate'] : strtotime( $data['expirationDate'] ),
-			'playerId'       => $data['playerId'],
-			'targetCountry'  => $data['targetCountry'],
-			'source'         => $data['source'],
-			'sourceId'       => $data['sourceId'],
-			'series'         => $data['series'],
-			'season'         => $data['season'],
-			'episode'        => $data['episode'],
-		);
+		$metadata['startDate'] = empty( $data['startDate'] ) ? '' :  $data['startDate'];
+		$metadata['source'] = empty( $data['source'] ) ? '' :  $data['source'];
+		$metadata['sourceId'] = empty( $data['sourceId'] ) ? '' :  $data['sourceId'];
+		$metadata['pageCategories'] = empty( $data['pageCategories'] ) ? '' :  $data['pageCategories'];
 
 		return $metadata;
 	}

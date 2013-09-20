@@ -48,11 +48,6 @@ class WikiaHomePageHelper extends WikiaModel {
 	protected $visualizationModel = null;
 	protected $collectionsModel;
 
-	protected $excludeUsersFromInterstitial = array(
-		22439, //Wikia
-		1458396, //Abuse filter
-	);
-
 	public function getNumberOfEntertainmentSlots($lang) {
 		return $this->getVarFromWikiFactory($this->getCorpWikiIdByLang($lang), self::ENTERTAINMENT_SLOTS_VAR_NAME);
 	}
@@ -365,28 +360,16 @@ class WikiaHomePageHelper extends WikiaModel {
 			try {
 				//this try-catch block is here because of devbox environments
 				//where we don't have all wikis imported
-				$admins = $wikiService->getWikiAdminIds($wikiId, false, true);
-				shuffle($admins);
-			} catch (Exception $e) {
-				$admins = array();
-			}
-
-			foreach ($admins as $userId) {
-				$userInfo = $wikiService->getUserInfo($userId, $wikiId, self::AVATAR_SIZE, array($this,'isValidUserForInterstitial'));
-
-				if (!empty($userInfo)) {
-					$userStatService = new UserStatsService($userId);
-					$userInfo['edits'] = $userStatService->getEditCountWiki($wikiId);
-					if (!empty($adminAvatars[$userInfo['name']])) {
-						$userInfo['edits'] += $adminAvatars[$userInfo['name']]['edits'];
-					}
-
-					$adminAvatars[$userInfo['name']] = $userInfo;
-
-					if (count($adminAvatars) >= self::LIMIT_ADMIN_AVATARS) {
-						break;
-					}
+				$adminAvatars = $wikiService->getMostActiveAdmins($wikiId, self::AVATAR_SIZE);
+				if( count($adminAvatars) > self::LIMIT_ADMIN_AVATARS ) {
+					$adminAvatars = array_slice( $adminAvatars, 0, self::LIMIT_ADMIN_AVATARS );
 				}
+				foreach( $adminAvatars as &$admin ) {
+					$userStatService = new UserStatsService($admin['userId']);
+					$admin['edits'] = $userStatService->getEditCountWiki($wikiId);
+				}
+			} catch (Exception $e) {
+				$adminAvatars = array();
 			}
 		}
 
@@ -445,7 +428,7 @@ class WikiaHomePageHelper extends WikiaModel {
 
 		return (
 			!$user->isIP($userName)
-				&& !in_array($userId, $this->excludeUsersFromInterstitial)
+				&& !in_array($userId, WikiService::$excludedWikiaUsers)
 				&& !in_array('bot', $user->getRights())
 				&& !$user->isBlocked()
 				&& !$user->isBlockedGlobally()
@@ -598,19 +581,29 @@ class WikiaHomePageHelper extends WikiaModel {
 			$title = Title::newFromText($imageName, NS_IMAGE);
 			$file = wfFindFile($title);
 
-			if ($file instanceof File && $file->exists()) {
-				$originalWidth = $file->getWidth();
-				$originalHeight = $file->getHeight();
-			}
-
-			if (!empty($originalHeight) && !empty($originalWidth)) {
-				$imageServing = $this->getImageServingForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight);
-				$imageUrl = $imageServing->getUrl($file, $originalWidth, $originalHeight);
-			} else {
-				$imageUrl = $this->wg->blankImgUrl;
-			}
+			$imageUrl = ImagesService::overrideThumbnailFormat(
+				$this->getImageUrlFromFile($file, $requestedWidth, $requestedHeight),
+				ImagesService::EXT_JPG
+			);
 		}
 
+		wfProfileOut(__METHOD__);
+		return $imageUrl;
+	}
+
+	public function getImageUrlFromFile($file, $requestedWidth, $requestedHeight) {
+		wfProfileIn(__METHOD__);
+		if ($file instanceof File && $file->exists()) {
+			$originalWidth = $file->getWidth();
+			$originalHeight = $file->getHeight();
+		}
+
+		if (!empty($originalHeight) && !empty($originalWidth)) {
+			$imageServing = $this->getImageServingForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight);
+			$imageUrl = $imageServing->getUrl($file, $originalWidth, $originalHeight);
+		} else {
+			$imageUrl = $this->wg->blankImgUrl;
+		}
 		wfProfileOut(__METHOD__);
 		return $imageUrl;
 	}

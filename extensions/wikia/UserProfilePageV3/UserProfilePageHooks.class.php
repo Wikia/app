@@ -38,7 +38,7 @@ class UserProfilePageHooks {
 	}
 
 	//WikiaMobile hook to add assets so they are minified and concatenated
-	static public function onWikiaMobileAssetsPackages( &$jsHeadPackages, &$jsBodyPackages, &$scssPackages){
+	static public function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages){
 		$wg = F::app()->wg;
 		if ( $wg->Title->getNamespace() === NS_USER ) {
 			$scssPackages[] = 'userprofilepage_scss_wikiamobile';
@@ -49,7 +49,7 @@ class UserProfilePageHooks {
 	/**
 	 * @brief hook handler
 	 */
-	static public function onSkinTemplateOutputPageBeforeExec($skin, $template) {
+	static public function onSkinTemplateOutputPageBeforeExec( $skin, $template ) {
 		return self::addToUserProfile($skin, $template);
 	}
 	/**
@@ -61,10 +61,11 @@ class UserProfilePageHooks {
 	static function addToUserProfile(&$skin, &$tpl) {
 		wfProfileIn(__METHOD__);
 
-		$wg = F::app()->wg;
+		$app = F::app();
+		$wg = $app->wg;
 
 		// don't output on Oasis
-		if (get_class(RequestContext::getMain()->getSkin()) == 'SkinOasis') {
+		if ( $app->checkSkin( 'oasis' ) ) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}
@@ -95,6 +96,11 @@ class UserProfilePageHooks {
 		$disabledOpt = $user->getOption('disabled');
 		if (!empty($disabledOpt)) {
 			wfProfileOut(__METHOD__);
+			return true;
+		}
+
+		if ( $app->checkSkin( 'wikiamobile' ) && !$user->isAnon()) {
+			$wg->Out->prependHTML( $app->renderView( 'UserProfilePage', 'index' ) );
 			return true;
 		}
 
@@ -135,10 +141,13 @@ class UserProfilePageHooks {
 	/**
 	 * Don't send 404 status for user pages with filled in masthead (bugid:44602)
 	 * @brief hook handler
+	 *
+	 * @param $article Article
 	 */
 	static public function onBeforeDisplayNoArticleText($article) {
 		global $UPPNamespaces;
 		$wg = F::app()->wg;
+
 		$title = $article->getTitle();
 		if ($title instanceof Title && in_array($title->getNamespace(), $UPPNamespaces)) {
 			$user = UserProfilePageHelper::getUserFromTitle($title);

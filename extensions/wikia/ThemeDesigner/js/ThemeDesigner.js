@@ -11,7 +11,7 @@ var ThemeDesigner = {
 
 		// settings history
 		this.history = window.themeHistory;
-		
+
 		$().log(this.history);
 
 		// themes
@@ -189,7 +189,15 @@ var ThemeDesigner = {
 		// handle wordmark editing
 		$("#wordmark-edit").find("button").click(function(event) {
 			event.preventDefault();
-			ThemeDesigner.set("wordmark-text", $("#wordmark-edit").find('input[type="text"]').val());
+			var value = $("#wordmark-edit").find('input[type="text"]').val().trim();
+			if (value.length > 0) {
+				ThemeDesigner.set("wordmark-text", value);
+			} else {
+				$.getMessages('ThemeDesigner', function() {
+					alert($.msg('themedesigner-wordmark-preview-error'));
+				});
+			}
+
 		});
 
 		//graphic wordmark clicking
@@ -369,7 +377,7 @@ var ThemeDesigner = {
 			.addClass(type);
 
 		// clicking away will close picker
-		$("body").bind("click.picker", ThemeDesigner.hidePicker);
+		$("body").bind("click.picker", $.proxy(ThemeDesigner.hidePicker, this));
 		this.themeDesignerPicker.click(function(event) {
 			event.stopPropagation();
 		});
@@ -522,6 +530,10 @@ var ThemeDesigner = {
 				ThemeDesigner.set("theme", "custom");
 				ThemeDesigner.set("background-align", response.backgroundImageAlign);
 				ThemeDesigner.set("background-image-name", response.backgroundImageName);
+				ThemeDesigner.set("background-image-width", response.backgroundImageWidth);
+				ThemeDesigner.set("background-image-height", response.backgroundImageHeight);
+
+				// This should be last, it triggers a CSS reload
 				ThemeDesigner.set("background-image", response.backgroundImageUrl);
 			}
 		}
@@ -545,9 +557,9 @@ var ThemeDesigner = {
 		event.preventDefault();
 		event.stopPropagation();
 		ThemeDesigner.settings = ThemeDesigner.history[$(this).index()]['settings'];
-		
+
 		$().log(ThemeDesigner.settings);
-		
+
 		ThemeDesigner.applySettings(true, true);
 	},
 
@@ -693,8 +705,7 @@ var ThemeDesigner = {
 
 			var settingsToLoad = $.extend({}, ThemeDesigner.settings, window.applicationThemeSettings);
 
-			var sassUrl = $.getSassCommonURL('/skins/oasis/css/oasis.scss', settingsToLoad);
-			document.getElementById('PreviewFrame').contentWindow.ThemeDesignerPreview.loadSASS(sassUrl);
+			document.getElementById('PreviewFrame').contentWindow.ThemeDesignerPreview.loadSASS(settingsToLoad);
 		}
 
 		if(updateSkinPreview) {

@@ -181,6 +181,18 @@ class WikiaHomePageController extends WikiaController {
 	 */
 	protected function getList() {
 		$wikiBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
+
+		//according to CityVisualization:
+		//complexity limited by maximum number of elements ( 5 in $resultingBatches, 2 in $resultingBatch, 17 in $batchPromotedDemoted )
+		foreach($wikiBatches as &$wikiBatch) {
+			foreach($wikiBatch as &$batchPromotedDemoted) {
+				foreach($batchPromotedDemoted as &$batch) {
+					// replace image thumbnails with JPG
+					$batch['image'] = ImagesService::overrideThumbnailFormat($batch['image'], ImagesService::EXT_JPG);
+				}
+			}
+		}
+
 		if (!empty($wikiBatches)) {
 			Wikia::log(__METHOD__, false, ' pulling visualization data from db');
 			$status = 'true';
@@ -441,9 +453,11 @@ class WikiaHomePageController extends WikiaController {
 					foreach ($this->app->wg->WikiaHubsV2Pages as $hubId => $hubName) {
 						$sliderData = $this->getHubSliderData($lang, $hubId);
 
-						$hubImages[$hubId] = isset($sliderData['data']['slides'][0]['photoUrl'])
-								? $sliderData['data']['slides'][0]['photoUrl']
-								: null;
+						$fileUrl = isset($sliderData['data']['slides'][0]['photoUrl'])
+							? $sliderData['data']['slides'][0]['photoUrl']
+							: null;
+
+						$hubImages[$hubId] = ImagesService::getThumbUrlFromFileUrl($fileUrl, 330, ImagesService::EXT_JPG); // 330px - width of the image
 					}
 
 					return $hubImages;
@@ -518,6 +532,21 @@ class WikiaHomePageController extends WikiaController {
 	 */
 	public function getInterstitial() {
 		$wikiId = $this->request->getVal('wikiId', 0);
+		$domain = $this->request->getVal('domain', null);
+
+		if ($wikiId == 0 && $domain != null) {
+			// This is not guaranteed valid for all domains, but the custom domains in use have aliases set up
+			$domain = "$domain.wikia.com";
+			$wikiId = WikiFactory::DomainToId($domain);
+			if ($wikiId == 0) {
+				throw new InvalidParameterApiException("domain");
+			}
+		}
+
+		if ($wikiId == 0) {
+			throw new MissingParameterApiException("wikiId or domain");
+		}
+
 		$this->wikiAdminAvatars = $this->helper->getWikiAdminAvatars($wikiId);
 		$this->wikiTopEditorAvatars = $this->helper->getWikiTopEditorAvatars($wikiId);
 		$tempArray = array();
@@ -546,6 +575,20 @@ class WikiaHomePageController extends WikiaController {
 		}
 
 		$this->imagesSlider = $this->sendRequest('WikiaMediaCarouselController', 'renderSlider', array('data' => $images));
+
+		$wordmarkUrl = '';
+		try {
+			$title = GlobalTitle::newFromText('Wiki-wordmark.png', NS_FILE, $wikiId);
+			if ( $title !== null ) {
+				$file = new GlobalFile($title);
+				if ( $file !== null ) {
+					$wordmarkUrl = $file->getUrl();
+				}
+			}
+		} catch ( Exception $e ) { }
+
+		$this->wordmark = $wordmarkUrl;
+
 	}
 
 	public static function onGetHTMLAfterBody($skin, &$html) {
@@ -573,7 +616,7 @@ class WikiaHomePageController extends WikiaController {
 		return true;
 	}
 
-	public static function onWikiaMobileAssetsPackages(Array &$jsHeadPackages, Array &$jsBodyPackages, Array &$scssPackages) {
+	public static function onWikiaMobileAssetsPackages(Array &$jsStaticPackages, Array &$jsExtensionPackages, Array &$scssPackages) {
 		//this hook is fired only by the WikiaMobile skin, no need to check for what skin is being used
 		if (F::app()->wg->EnableWikiaHomePageExt && WikiaPageType::isMainPage()) {
 			$scssPackages[] = 'wikiahomepage_scss_wikiamobile';
@@ -598,7 +641,7 @@ class WikiaHomePageController extends WikiaController {
 		$railModuleList = [
 			1500 => ['Search', 'Index', null],
 		];
-		
+
 		return true;
 	}
 
@@ -626,12 +669,12 @@ class WikiaHomePageController extends WikiaController {
 		}
 
 	}
-	
+
 	private function getVisualization() {
 		if( is_null($this->visualization) ) {
 			$this->visualization = new CityVisualization();
 		}
-		
+
 		return $this->visualization;
 	}
 }

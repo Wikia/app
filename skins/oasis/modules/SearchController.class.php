@@ -6,9 +6,8 @@
  */
 
 class SearchController extends WikiaController {
-
 	public function executeIndex() {
-
+		$this->setVal('specialSearchUrl', SpecialPage::getTitleFor( 'WikiaSearch' )->getFullUrl());
 		$this->searchterm = $this->wg->request->getVal('search');
 		if ( !isset( $this->searchterm ) ) {
 			$this->searchterm = $this->request->getVal( 'search' );
@@ -21,6 +20,8 @@ class SearchController extends WikiaController {
 		$this->fulltext = $this->wg->User->getOption('enableGoSearch') ? 0 : 'Search';
 		$this->placeholder = wfMsg('Tooltip-search', $this->wg->Sitename);
 		$this->isCrossWikiaSearch = $this->wg->request->getCheck('crossWikiaSearch');
+
+		$this->searchFormId = $this->request->getVal('searchFormId');
 	}
 
 }

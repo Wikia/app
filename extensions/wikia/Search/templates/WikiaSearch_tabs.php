@@ -13,8 +13,7 @@
 				'params' => isset( $profile['parameters'] ) ? $profile['parameters'] + array('fulltext'=>'Search') : array('fulltext'=>'Search') ) );
 			?>
 			<? // Image/Video tab options ?>
-			<? // Only enabled for EN wikis now, will add i18n later ?>
-			<? if( $app->wg->LanguageCode == 'en' && $activeTab == $profileId && $profile['namespaces'][0] == NS_FILE ): ?>
+			<? if( $activeTab == $profileId && $profile['namespaces'][0] == NS_FILE ): ?>
 
 				<div class="search-filter-sort" id="file-search-filter-sort">
 					<div class="search-filter-sort-overlay"></div>
@@ -50,7 +49,9 @@
 					<select name="rank">
 						<option value="default" <? if($form['sort_default']){ ?>selected<? } ?>><?= wfMessage('wikiasearch2-sort-relevancy') ?></option>
 						<option value="newest" <? if($form['sort_newest']){ ?>selected<? } ?>><?= wfMessage('wikiasearch2-sort-publish-date') ?></option>
-						<option value="longest" <? if($form['sort_longest']){ ?>selected<? } ?>><?= wfMessage('wikiasearch2-sort-duration') ?></option>
+						<? if ( isset($form['is_video']) && $form['is_video']==true ) { ?>
+							<option value="longest" <? if($form['sort_longest']){ ?>selected<? } ?>><?= wfMessage('wikiasearch2-sort-duration') ?></option>
+						<? } ?>
 					</select>
 
 				</div>

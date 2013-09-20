@@ -1225,21 +1225,25 @@ function &wfGetSolidCacheStorage( $bucket = false ) {
 /**
  * Set value of wikia article prop list of type is define in
  */
-function wfSetWikiaPageProp($type, $pageID, $value, $dbname = '') {
-	if(empty($dbname)) {
-		$db = wfGetDB(DB_MASTER, array());
+function wfSetWikiaPageProp( $type, $pageID, $value, $dbname = '' ) {
+	if ( empty( $dbname ) ) {
+		$db = wfGetDB( DB_MASTER );
 	} else {
-		$db = wfGetDB(DB_MASTER, array(), $dbname);
+		$db = wfGetDB( DB_MASTER, array(), $dbname );
 	}
 
-	$db->replace('page_wikia_props','',
+	$db->replace(
+		'page_wikia_props',
+		'',
 		array(
-			'page_id' =>  $pageID,
+			'page_id'  => $pageID,
 			'propname' => $type,
-			'props' => serialize($value)
+			'props'    => wfSerializeProp( $type, $value )
 		),
 		__METHOD__
 	);
+
+	$db->commit( __METHOD__ );
 }
 
 
@@ -1247,7 +1251,7 @@ function wfSetWikiaPageProp($type, $pageID, $value, $dbname = '') {
  * Get value of wikia article prop list of type is define in
  */
 function wfGetWikiaPageProp($type, $pageID, $db = DB_SLAVE, $dbname = '') {
-	if(empty($dbname)) {
+	if ( empty($dbname) ) {
 		$db = wfGetDB($db, array());
 	} else {
 		$db = wfGetDB($db, array(), $dbname);
@@ -1256,47 +1260,73 @@ function wfGetWikiaPageProp($type, $pageID, $db = DB_SLAVE, $dbname = '') {
 	$res = $db->select('page_wikia_props',
 		array('props'),
 		array(
-			'page_id' =>  $pageID,
+			'page_id'  =>  $pageID,
 			'propname' => $type,
 		),
 		__METHOD__
 	);
 
-	if($out = $db->fetchRow($res)) {
-		return wfUnserializeProp($out['props']);
+	if ( $out = $db->fetchRow($res) ) {
+		return wfUnserializeProp( $type, $out['props'] );
 	}
 
 	return null;
 }
 
 /**
- * this function can be use when we are doing joins with props table
- * and we want to unserialize multiple rows of result
+ * Only serialize the page property types that require it
+ * @param $type - The property type
+ * @param $data - The data to operate upon
+ * @return string - Returns the database ready version of whatever was passed in
  */
+function wfSerializeProp( $type, $data ) {
+	global $wgWPPNotSerialized;
 
+	// Serialize the value unless we're told not to
+	if ( ! in_array( $type, $wgWPPNotSerialized ) ) {
+		$data = serialize($data);
+	}
 
-function wfUnserializeProp($data) {
-	return unserialize($data);
+	return $data;
+}
+
+/**
+ * Only unserialize the page property types that require it
+ * @param $type - The property type
+ * @param $data - The data to operate upon
+ * @return mixed - Returns the unserialized version of whatever was passed in
+ */
+function wfUnserializeProp( $type, $data ) {
+	global $wgWPPNotSerialized;
+
+	// Unserialize the value unless we're told not to
+	if ( ! in_array( $type, $wgWPPNotSerialized ) ) {
+		$data = unserialize($data);
+	}
+	return $data;
 }
 
 
 /**
  * Delete value of wikia article prop
  */
-function wfDeleteWikiaPageProp($type, $pageID, $dbname = '') {
-	if(empty($dbname)) {
-		$db = wfGetDB(DB_MASTER, array());
+function wfDeleteWikiaPageProp( $type, $pageID, $dbname = '' ) {
+	if ( empty( $dbname ) ) {
+		$db = wfGetDB( DB_MASTER );
 	} else {
-		$db = wfGetDB(DB_MASTER, array(), $dbname);
+		$db = wfGetDB( DB_MASTER, array(), $dbname );
 	}
 
-	$db->delete('page_wikia_props',
+	$db->delete(
+		'page_wikia_props',
 		array(
 			'page_id' =>  $pageID,
 			'propname' => $type,
 		),
 		__METHOD__
 	);
+
+	$db->commit( __METHOD__ );
 }
 
 if (!function_exists('http_build_url')) {

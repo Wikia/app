@@ -7,11 +7,12 @@
  * @author Hyun Lim <hyun@wikia-inc.com>
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
-(function( context ) {
+(function( window ) {
 	'use strict';
 
 	// Depends on tracker.stub.js
-	var trackerStub = context.Wikia.Tracker;
+	var Wikia = window.Wikia,
+			trackerStub = Wikia.Tracker;
 
 	// Adds the info from the second hash into the first.
 	// If the same key is in both, the key in the second object overrides what's in the first object.
@@ -72,7 +73,7 @@
 				if ( browserEvent.button === 1 ) {
 					result = true;
 
-				} else if ( browserEvent.button == 0 ) {
+				} else if ( browserEvent.button === 0 ) {
 					result = true;
 				}
 			}
@@ -95,7 +96,7 @@
 
 			// just-in-case we check if the ctrlKey button isn't pressed to avoid the function
 			// returning true in IE when it's not middle click but ctrl + left mouse button click
-			} else if ( browserEvent && browserEvent.button == 1 && !browserEvent.ctrlKey ) {
+			} else if ( browserEvent && browserEvent.button === 1 && !browserEvent.ctrlKey ) {
 				result = true;
 			}
 
@@ -112,6 +113,16 @@
 		 * @param integer timeout How long to wait before declaring the tracking request as failed (optional)
 		 */
 		function internalTrack( event, data, successCallback /* unused */, errorCallback /* unused */, timeout ) {
+			var head = document.head || document.getElementsByTagName( 'head' )[ 0 ] || document.documentElement,
+					script = document.createElement( 'script' ),
+					callbackDelay = 200,
+					requestUrl = 'http://a.wikia-beacon.com/__track/special/' + encodeURIComponent( event ),
+					requestParameters = [],
+					p,
+					params;
+
+			timeout = timeout || 3000;
+
 			if ( !event ) {
 				Wikia.log( 'missing required argument: event', 'error', logGroup );
 				return;
@@ -124,27 +135,20 @@
 			}
 
 			// Set up params object - this should stay in sync with /extensions/wikia/Track/Track.php
-			var params = {
-				'c': wgCityId,
-				'x': wgDBname,
-				'a': wgArticleId,
-				'lc': wgContentLanguage,
-				'n': wgNamespaceNumber,
+			params = {
+				'c': window.wgCityId,
+				'x': window.wgDBname,
+				'a': window.wgArticleId,
+				'lc': window.wgContentLanguage,
+				'n': window.wgNamespaceNumber,
 				'u': window.trackID || window.wgTrackID || 0,
-				's': skin,
+				's': window.skin,
 				'beacon': window.beacon_id || '',
 				'cb': Math.floor( Math.random() * 99999 )
 			};
 
 			// Add data object to params object
 			extend( params, data );
-			var head = document.head || document.getElementsByTagName( 'head' )[ 0 ] || document.documentElement,
-				script = document.createElement( 'script' ),
-				callbackDelay = 200,
-				timeout = timeout || 3000,
-				requestUrl = 'http://a.wikia-beacon.com/__track/special/' + encodeURIComponent( event ),
-				requestParameters = [],
-				p;
 
 			for( p in params ) {
 				requestParameters.push( encodeURIComponent( p ) + '=' + encodeURIComponent( params[ p ] ) );
@@ -172,12 +176,10 @@
 					// Dereference the script
 					script = undefined;
 
-					var callback;
-
-					if ( !abort && typeof successCallback == 'function' ) {
+					if ( !abort && typeof successCallback === 'function' ) {
 						setTimeout( successCallback, callbackDelay );
 
-					} else if ( abort && typeof errorCallback == 'function' ) {
+					} else if ( abort && typeof errorCallback === 'function' ) {
 						setTimeout( errorCallback, callbackDelay );
 					}
 				}
@@ -194,7 +196,7 @@
 					}
 				}, timeout );
 			}
-		};
+		}
 
 		/**
 		 * Unique entry point to track events to the internal datawarehouse and GA.
@@ -213,9 +215,10 @@
 		 *            eventName (optional)
 		 *                The name of the event. Defaults to "trackingevent".
 		 *                Please speak with a tracking team lead before introducing new event names.
-		 *            href (optional)
-		 *                The href string for a link. This should be used by outbound links
-		 *                to ensure tracking execution.
+		 *            href (deprecated)
+		 *                The href string for a link. This was used by outbound links
+		 *                to ensure tracking execution. Where posible, bind to "mousedown" instead of "click"
+		 *                to prevent navigation before tracking calls go through.
 		 *            label (optional for GA tracking)
 		 *                The label for the event.
 		 *            trackingMethod (required)
@@ -301,12 +304,14 @@
 
 			if ( tracking.ad && gaTrackAdEvent ) {
 				gaTrackAdEvent.apply( null, gaqArgs );
+			} else {
+				if ( tracking.ga && gaTrackEvent ) {
+					gaTrackEvent.apply( null, gaqArgs );
+				}
 
-			} else if ( tracking.ga && gaTrackEvent ) {
-				gaTrackEvent.apply( null, gaqArgs );
-
-			} else if ( tracking.internal ) {
-				internalTrack( eventName, data );
+				if ( tracking.internal ) {
+					internalTrack( eventName, data );
+				}
 			}
 
 			// Handle links which navigate away from the current page
@@ -339,11 +344,11 @@
 	}
 
 	// UMD
-	extend( trackerStub, tracker( context ) );
+	extend( trackerStub, tracker( window ) );
 
 	// AMD
 	require( [ 'wikia.tracker' ], function( trackerStub ) {
-		extend( trackerStub, tracker( context ) );
+		extend( trackerStub, tracker( window ) );
 	});
 
-}(this));
+}(window, undefined));

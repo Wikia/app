@@ -4,12 +4,13 @@
  */
 class UserOneTagStrategy extends UserTagsStrategyBase {
 	protected $groupsRank = array(
-		'authenticated' => 8,
-		'sysop' => 7,
-		'staff' => 6,
-		'helper' => 5,
-		'adminmentor' => 4,
-		'vstf' => 3,
+		'authenticated' => 9,
+		'sysop' => 8,
+		'staff' => 7,
+		'helper' => 6,
+		'adminmentor' => 5,
+		'vstf' => 4,
+		'voldev' => 3,
 		'council' => 2,
 		'chatmoderator' => 1,
 	);

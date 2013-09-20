@@ -1,0 +1,29 @@
+{
+	"name": "styleguide-name-drawer",
+	"description": "styleguide-description-drawer",
+	"types": {
+		"default": {
+			"params" : {
+				"side" : {
+					"templateVar" : "side",
+					"type" : "enum",
+					"value" : {
+						"0" : "left",
+						"1" : "right"
+					},
+					"description" : "styleguide-description-drawer-side"
+				},
+				"content" : {
+					"templateVar" : "content",
+					"type" : "string",
+					"description" : "styleguide-description-drawer-content"
+				},
+				"class" : {
+					"templateVar" : "class",
+					"type" : "string",
+					"description" : "styleguide-description-drawer-class"
+				}
+			}
+		}
+	}
+}

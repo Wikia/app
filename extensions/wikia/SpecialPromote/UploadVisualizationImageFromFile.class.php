@@ -34,19 +34,6 @@ class UploadVisualizationImageFromFile extends UploadFromFile {
 		return $details;
 	}
 
-	public function performUpload() {
-		global $wgUser;
-		return parent::performUpload('', '', false, $wgUser);
-	}
-
-	public function getLocalFile() {
-		if( is_null( $this->mLocalFile ) ) {
-			$this->mLocalFile = new FakeLocalFile( Title::newFromText( 'Temp_file_' . time() . '.jpg', NS_FILE ), RepoGroup::singleton()->getLocalRepo() );
-		}
-
-		return $this->mLocalFile;
-	}
-
 	public function checkWarnings(){
 		$warnings = parent::checkWarnings();
 

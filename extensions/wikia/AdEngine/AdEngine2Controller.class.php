@@ -94,6 +94,23 @@ class AdEngine2Controller extends WikiaController {
 			return $pageLevel;
 		}
 
+		// Override ad level for a (set of) specific page(s)
+		// Use case: sponsor ads on a landing page targeted to Wikia editors (=logged in)
+		if ($wg->Title &&
+			!empty($wg->PagesWithNoAdsForLoggedInUsersOverriden) &&
+			in_array($wg->Title->getDBkey(), $wg->PagesWithNoAdsForLoggedInUsersOverriden))
+		{
+			$pageLevel = self::AD_LEVEL_CORPORATE;
+			if (!empty($wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL) &&
+				in_array($wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL, array(
+					self::AD_LEVEL_NONE, self::AD_LEVEL_LIMITED, self::AD_LEVEL_CORPORATE, self::AD_LEVEL_ALL
+				)))
+			{
+				$pageLevel = $wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL;
+			}
+			return $pageLevel;
+		}
+
 		// And no other ads
 		$pageLevel = self::AD_LEVEL_NONE;
 		return $pageLevel;
@@ -299,9 +316,6 @@ class AdEngine2Controller extends WikiaController {
 
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
-		if (!empty($wgNoExternals)) {
-			$vars["wgNoExternals"] = $wgNoExternals;
-		}
 		if (!empty($wgEnableAdsInContent)) {
 			$vars["wgEnableAdsInContent"] = $wgEnableAdsInContent;
 		}
@@ -411,7 +425,8 @@ class AdEngine2Controller extends WikiaController {
 		$vars['wgAdsShowableOnPage'] = self::areAdsShowableOnPage();
 		$vars['wgShowAds'] = self::areAdsShowableOnPage();
 
-		$vars['wgAdDriverUseGpt'] = $req->getBool('usegpt', (bool) $wg->AdDriverUseGpt);
+		$vars['wgAdDriverUseFullGpt'] = $req->getBool('usefullgpt', (bool) $wg->AdDriverUseFullGpt);
+		$vars['wgAdDriverUseNewGptZones'] = $req->getBool('usenewgptzones', (bool) $wg->AdDriverUseNewGptZones);
 		$vars['wgAdVideoTargeting'] = $req->getBool('videotargeting', (bool) $wg->AdVideoTargeting);
 		$vars['wgAdDriverStartLiftiumOnLoad'] = $req->getBool('liftiumonload', (bool) $wg->LiftiumOnLoad);
 

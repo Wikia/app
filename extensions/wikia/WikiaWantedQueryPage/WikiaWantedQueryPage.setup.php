@@ -15,6 +15,7 @@ $dir = dirname( __FILE__ );
 $wgAutoloadClasses[ 'WantedPagesPageWikia'] = 		$dir . '/WantedPagesPageWikia.class.php' ;
 $wgAutoloadClasses[ 'WantedFilesPageWikia'] = 		$dir . '/WantedFilesPageWikia.class.php' ;
 
+$wgExtensionMessagesFiles['WantedFilesPageWikia'] = $dir . '/WikiaWantedQueryPage.i18n.php';
 /**
  * Overwrite MediaWiki Special:WantedPages with Wikia version
  */

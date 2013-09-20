@@ -31,11 +31,9 @@ class ImageTweaksHooks {
 			$caption = ( !empty( $frameParams['caption'] ) ) ? $frameParams['caption'] : null;
 
 			if( is_object( $thumb ) ) {
-				$width = $thumb->getWidth();
-				$showRibbon = WikiaMobileMediaService::showRibbon( $width, $thumb->getHeight() );
+				$isSmall = WikiaMobileMediaService::isSmallImage( $thumb->getWidth(), $thumb->getHeight() );
 			} else {
-				$width = false;
-				$showRibbon = false;
+				$isSmall = false;
 			}
 
 			$html = F::app()->sendRequest(
@@ -43,11 +41,10 @@ class ImageTweaksHooks {
 				'renderFigureTag',
 				array(
 					'class' => [( $linked ) ? 'link' : 'thumb'],
-					'width' => $width,
 					'content' => $origHTML,
 					//force the caption wrapper to exist if it's a linked image without caption
 					'caption' => ( $linked && empty( $caption ) ) ? '' :  $caption,
-					'showRibbon' => $showRibbon
+					'isSmall' => $isSmall
 				),
 				true
 			)->toString();
@@ -75,10 +72,10 @@ class ImageTweaksHooks {
 				$zoomIcon,
 				(
 					self::$isOasis &&
-						!empty( $wgEnableOasisPictureAttribution ) &&
-						!empty( $file ) &&
-						//BugId: 3734 Remove picture attribution for thumbnails 99px wide and under
-						$outerWidth >= 102
+					!empty( $wgEnableOasisPictureAttribution ) &&
+					!empty( $file ) &&
+					//BugId: 3734 Remove picture attribution for thumbnails 99px wide and under
+					$outerWidth >= 102
 				),
 				( !empty( $file ) ) ? $file->getUser() : null
 			);
@@ -110,11 +107,9 @@ class ImageTweaksHooks {
 			$caption = ( !empty( $frameParams['caption'] ) ) ? $frameParams['caption'] : null;
 
 			if( is_object( $thumb ) ) {
-				$width = $thumb->getWidth();
-				$showRibbon = WikiaMobileMediaService::showRibbon( $width, $thumb->getHeight() );
+				$isSmall = WikiaMobileMediaService::isSmallImage( $thumb->getWidth(), $thumb->getHeight() );
 			} else {
-				$width = false;
-				$showRibbon = false;
+				$isSmall = true;
 			}
 
 			$html = F::app()->sendRequest(
@@ -122,11 +117,10 @@ class ImageTweaksHooks {
 				'renderFigureTag',
 				array(
 					'class' => [( $linked ) ? 'link' : 'thumb'],
-					'width' => $width,
 					'content' => $origHTML,
 					//force the caption wrapper to exist if it's a linked image without caption
 					'caption' => ( $linked && empty( $caption ) ) ? '' : $caption,
-					'showRibbon' => $showRibbon
+					'isSmall' => $isSmall
 				),
 				true
 			)->toString();
@@ -151,9 +145,9 @@ class ImageTweaksHooks {
 
 		if (
 			/**
-			* Images SEO project
-			* @author: Marooned
-			*/
+			 * Images SEO project
+			 * @author: Marooned
+			 */
 			(
 				empty( $options['custom-url-link'] ) &&
 				empty( $options['custom-title-link'] ) &&
@@ -255,7 +249,8 @@ class ImageTweaksHooks {
 						'parameters' => [ $imageParams ],
 						'anchorAttributes' => $linkAttribs,
 						'linked' => !empty( $link ),
-						'noscript' => $contents
+						'noscript' => $contents,
+						'isSmall' => WikiaMobileMediaService::isSmallImage($imageAttribs['width'],  $imageAttribs['height'])
 					],
 					true
 				)->toString();
@@ -291,9 +286,16 @@ class ImageTweaksHooks {
 				unset( $imageAttribs['alt'] );
 			}
 
+			//Not all 'files' have getProviderName defined
+			if ( is_callable( [ $file, 'getProviderName' ] ) ) {
+				$provider = $file->getProviderName();
+			} else {
+				$provider = '';
+			}
+
 			$imageParams = array(
 				'type' => 'video',
-				'provider' => $file->getProviderName(),
+				'provider' => $provider,
 				'full' => $imageAttribs['src']
 			);
 
@@ -305,35 +307,34 @@ class ImageTweaksHooks {
 				$imageParams['capt'] = 1;
 			}
 
-			if ( $file instanceof File ) {
-				// TODO: this resizes every video thumbnail with a width over 64px regardless of where it appears.
-				// We may want to add the ability to allow custom image widths (like on the file page history table for example)
-				$size = WikiaMobileMediaService::calculateMediaSize( $file->getWidth(), $file->getHeight() );
-				$thumb = $file->transform( $size );
-				$imageAttribs['src'] = wfReplaceImageServer( $thumb->getUrl(), $file->getTimestamp() );
-				$imageAttribs['width'] = $size['width'];
-				$imageAttribs['height'] = $size['height'];
-			}
+			// TODO: this resizes every video thumbnail with a width over 64px regardless of where it appears.
+			// We may want to add the ability to allow custom image widths (like on the file page history table for example)
+			$size = WikiaMobileMediaService::calculateMediaSize( $file->getWidth(), $file->getHeight() );
+			$thumb = $file->transform( $size );
+			$imageAttribs['src'] = wfReplaceImageServer( $thumb->getUrl(), $file->getTimestamp() );
+			$imageAttribs['width'] = $size['width'];
+			$imageAttribs['height'] = $size['height'];
+
 
 			$data = [
 				'attributes' => $imageAttribs,
 				'parameters' => [ $imageParams ],
 				'anchorAttributes' => $linkAttribs,
-				'noscript' => $origImg
+				'noscript' => $origImg,
+				'isSmall' => WikiaMobileMediaService::isSmallImage($imageAttribs['width'], $imageAttribs['height'])
 			];
 
-			if ( $file instanceof File ) {
-				$title = $file->getTitle()->getDBKey();
-				$titleText = $file->getTitle()->getText();
+			$title = $file->getTitle()->getDBKey();
+			$titleText = $file->getTitle()->getText();
+			$views = MediaQueryService::getTotalVideoViewsByTitle( $title );
 
-				$data['content'] = Xml::element(
-					'span',
-					array( 'class' => 'videoInfo' ),
-					"{$titleText} (" . $file->getHandler()->getFormattedDuration() .
-						", " . wfMsgForContent( 'wikiamobile-video-views-counter', MediaQueryService::getTotalVideoViewsByTitle( $title ) ) .
-						')'
-				);
-			}
+			$data['content'] = Xml::element(
+				'span',
+				[ 'class' => 'videoInfo' ],
+				"{$titleText} (" . $file->getHandler()->getFormattedDuration() .
+				", " . wfMessage( 'wikiamobile-video-views-counter', $views )->inContentLanguage()->text() .
+				')'
+			);
 
 			$html = F::app()->sendRequest(
 				'WikiaMobileMediaService',
@@ -372,7 +373,7 @@ class ImageTweaksHooks {
 
 			$html .= Xml::openElement( 'div', array( 'class' => 'picture-attribution' ) ) .
 				$avatar .
-				wfMsgExt('oasis-content-picture-added-by', array( 'parsemag' ), $link, $attributeTo ) .
+				wfMessage('oasis-content-picture-added-by', $link, $attributeTo )->text() .
 				Xml::closeElement( 'div' );
 
 			wfProfileOut( __METHOD__ . '::PictureAttribution' );

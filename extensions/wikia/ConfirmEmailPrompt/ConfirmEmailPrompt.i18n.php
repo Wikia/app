@@ -73,6 +73,14 @@ $messages['fi'] = array(
 	'confirmemailprompt-error' => 'Onko tämä sähköpostiosoitteesi: <strong>$1</strong>? [[$2|Vahvista se]] tai [[$3|muuta sitä]].',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'confirmemailprompt-desc' => 'Vísir eini ávaringarboð, um ein brúkari hevur eina óváttaða t-post adressu',
+	'confirmemailprompt-error' => 'Er hetta er tín t-post adressa: <strong>$1</strong>? [[$2|Vátta hana]] ella [[$3|broyt hana]].',
+);
+
 /** French (français)
  * @author Wyz
  */
@@ -110,6 +118,7 @@ $messages['ia'] = array(
  */
 $messages['id'] = array(
 	'confirmemailprompt-desc' => 'Tampilkan pesan peringatan jika seorang pengguna memiliki alamat email yang belum dikonfirmasi',
+	'confirmemailprompt-error' => 'Apakah ini alamat surel Anda: <strong>$1</strong>? [[$2|Konfirmasikan]] atau [[$3|ubah]].',
 );
 
 /** Italian (italiano)
@@ -158,6 +167,14 @@ $messages['nb'] = array(
 $messages['nl'] = array(
 	'confirmemailprompt-desc' => 'Geeft een waarschuwing weer als een gebruiker een niet-bevestigd e-mailadres heeft',
 	'confirmemailprompt-error' => 'Is dit uw e-mailadres: <strong>$1</strong>? [[$2|Bevestig het]] of [[$3|wijzig het]].',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'confirmemailprompt-desc' => 'Aficha un messatge d’avertiment se un utilizaire a una adreça de corrièr electronic qu’es pas estada confirmada',
+	'confirmemailprompt-error' => 'Es vòstra adreça de corrièr electronic : <strong>$1</strong> ? [[$2|Confirmar]] o [[$3|la cambiar]].',
 );
 
 /** Polish (polski)

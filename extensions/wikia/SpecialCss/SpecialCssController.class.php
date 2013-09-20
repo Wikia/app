@@ -70,8 +70,11 @@ class SpecialCssController extends WikiaSpecialPageController {
 		$this->cssUpdatesUrl = $model->getCssUpdatesUrl();
 		$this->dropdown = $this->createButtonLinks();
 		$this->handleAssets();
+		$this->minorDefault = $model->isMinorEditDefault();
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->plain() );
-		
+
+		$this->wg->SuppressSpotlights = true;
+
 		wfProfileOut(__METHOD__);
 		return true;
 	}
@@ -98,7 +101,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 		$this->response->addAsset('/extensions/wikia/SpecialCss/css/SpecialCss.scss');
 		$this->response->addAsset('special_css_js');
 		// This shouldn't be moved to asset manager package because of Ace internal autoloader
-		$this->response->addAsset('/resources/Ace/ace.js');
+		$this->response->addAsset('resources/Ace/ace.js');
 
 		$aceUrl = AssetsManager::getInstance()->getOneCommonURL('/resources/Ace');
 		$aceUrlParts = parse_url($aceUrl);

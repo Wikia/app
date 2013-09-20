@@ -1,5 +1,5 @@
-@import "../../../../skins/oasis/css/mixins/opacity";
-@import "../../../../skins/oasis/css/core/layout";
+@import "skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/core/layout";
 
 .clickmask {
 	@include opacity(0);

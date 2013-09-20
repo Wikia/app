@@ -11,12 +11,12 @@ class SpecialCssHooksTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider testShouldRedirectDataProvider
 	 */
-	public function testShouldRedirect( $isExtensionEnabled, $isCssWikiaArticle, $isSkinRight, $isUserAllowed, $isRedirectExpected, $assertionMessage ) {
+	public function testShouldRedirect( $isExtensionEnabled, $isWikiaCssTitle, $isSkinRight, $isUserAllowed, $isRedirectExpected, $assertionMessage ) {
 
-		$specialCssModelMock = $this->getMock( 'SpecialCssModel', array( 'isWikiaCssArticle' ) );
+		$specialCssModelMock = $this->getMock( 'SpecialCssModel', array( 'isWikiaCssTitle' ) );
 		$specialCssModelMock->expects( $this->any() )
-			->method( 'isWikiaCssArticle' )
-			->will( $this->returnValue( $isCssWikiaArticle ) );
+			->method( 'isWikiaCssTitle' )
+			->will( $this->returnValue( $isWikiaCssTitle ) );
 
 		$userMock = $this->getMock( 'User', array( 'isAllowed' ) );
 		$userMock->expects( $this->any() )

@@ -28,10 +28,11 @@ class VideoInfoHelper extends WikiaModel {
 	}
 
 	/**
-	 * get video data from file
-	 * @param File $file
-	 * @param boolean $premiumOnly
-	 * @return array|null  $video
+	 * This method pulls the data needed for a VideoInfo object from an existing file when the data does not exist
+	 * in the video_info table.  This is used in the case where video_info data wasn't created when the video uploaded.
+	 * @param File $file - The file object to get video info for
+	 * @param boolean $premiumOnly - If true will exit immediately if $file is a local file
+	 * @return array|null - An array of data suitable for passing to the VideoInfo constructor
 	 */
 	public function getVideoDataFromFile( $file, $premiumOnly = false ) {
 		wfProfileIn( __METHOD__ );
@@ -79,7 +80,7 @@ class VideoInfoHelper extends WikiaModel {
 	}
 
 	/**
-	 * get VideoInfo from title
+	 * Get a VideoInfo object given a Title object
 	 * @param Title|string $title
 	 * @param boolean $premiumOnly
 	 * @return VideoInfo|null $videoInfo
@@ -87,11 +88,15 @@ class VideoInfoHelper extends WikiaModel {
 	public function getVideoInfoFromTitle( $title, $premiumOnly = false ) {
 		wfProfileIn( __METHOD__ );
 
-		$videoInfo = null;
+		// Attempt to retrieve this information from the video_info table first
+		$videoInfo = VideoInfo::newFromTitle( $title instanceof Title ? $title->getDBkey() : $title );
 
-		$videoData = $this->getVideoDataFromTitle( $title, $premiumOnly );
-		if ( !empty($videoData) ) {
-			$videoInfo = new VideoInfo( $videoData );
+		// If its not in the DB, recreate it from existing file data
+		if ( empty($videoInfo) ) {
+			$videoData = $this->getVideoDataFromTitle( $title, $premiumOnly );
+			if ( !empty($videoData) ) {
+				$videoInfo = new VideoInfo( $videoData );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -104,7 +109,6 @@ class VideoInfoHelper extends WikiaModel {
 	 * @return array $videoList
 	 */
 	public static function getTotalViewsFromDB() {
-		$app = F::app();
 
 		wfProfileIn( __METHOD__ );
 
@@ -248,15 +252,20 @@ class VideoInfoHelper extends WikiaModel {
 	 * Check if Special Videos Ext is enabled and video_info table exists
 	 */
 	public static function videoInfoExists() {
+		global $wgVideoInfoExists;
+
+		if ( $wgVideoInfoExists !== null ) {
+			return  $wgVideoInfoExists;
+		}
 		$app = F::app();
-		$exists = false;
+		$wgVideoInfoExists = false;
 		if ( !empty($app->wg->enableSpecialVideosExt) ) {
 			$db = wfGetDB( DB_SLAVE );
 			if ( $db->tableExists( 'video_info' ) ) {
-				$exists = true;
+				$wgVideoInfoExists = true;
 			}
 		}
 
-		return $exists;
+		return $wgVideoInfoExists;
 	}
 }

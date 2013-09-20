@@ -135,7 +135,7 @@
 	 */
 	define = function (id, dependencies, definition, defMock) {
 		if (typeof id !== strType) {
-			throw "Module id missing or not a string.";
+			throw "Module id missing or not a string. " + (new Error().stack||'').replace(/\n/g, ' / ');
 		}
 
 		//no dependencies array, it's actually the definition
