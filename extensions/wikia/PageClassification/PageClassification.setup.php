@@ -14,4 +14,4 @@ $wgAutoloadClasses['CommonPrefix'] =  $dir . 'CommonPrefix.class.php';
 /*
  * Special page
  */
-$wgSpecialPages['PageClassification'] = 'PageClassificationController';
+// $wgSpecialPages['PageClassification'] = 'PageClassificationController';
