@@ -291,6 +291,9 @@ We use JSDoc style comments above function declarations and at the top of files 
   * Better to set the property to null or false
   * From google: "In modern JavaScript engines, changing the number of properties on an object is much slower than reassigning the values. The delete keyword should be avoided except when it is necessary to remove a property from an object's iterated list of keys, or to change the result of if (key in obj)."
 * Modifying prototypes of built-in objects
+  * Avoid doing 
+  * jQuery code assumes no built in object prototypes are modified
+  * Modifying builtins like Object.prototype and Array.prototype are strictly forbidden. Modifying other builtins like Function.prototype is less dangerous but still leads to hard to debug issues in production and should be avoided.
 * White space (we want to transcribe jQuery's conventions as much as possible so we can tweak them on our end)
 * Structure
 * Commenting
