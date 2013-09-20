@@ -133,16 +133,16 @@ Object declarations can be made on a single line if they are short (remember the
 ```js
 // Bad
 var map = { ready: 9,
-	when: 4, "you are": 15 };
+	when: 4, 'you are': 15 };
 
 // Good
-var map = { ready: 9, when: 4, "you are": 15 };
+var map = { ready: 9, when: 4, 'you are': 15 };
 
 // Good as well
 var map = {
 	ready: 9,
 	when: 4,
-	"you are": 15
+	'you are': 15
 };
 ```
 
@@ -152,17 +152,17 @@ var map = {
 Always include extra spaces around elements and arguments:
 
 ```js
-array = [ "*" ];
+array = [ '*' ];
 
 array = [ a, b ];
 
 foo( arg );
 
-foo( "string", object );
+foo( 'string', object );
 
 foo( options, object[ property ] );
 
-foo( node, "property", 2 );
+foo( node, 'property', 2 );
 ```
 
 Exceptions:
@@ -171,8 +171,8 @@ Exceptions:
 // Function with a callback, object, or array as the sole argument:
 // No space on either side of the argument
 foo({
-	a: "alpha",
-	b: "beta"
+	a: 'alpha',
+	b: 'beta'
 });
 
 // Function with a callback, object, or array as the first argument:
@@ -195,12 +195,12 @@ When a statement is too long to fit on one line, line breaks must occur after an
 
 ```js
 // Bad
-var html = "<p>The sum of " + a + " and " + b + " plus " + c
-	+ " is " + (a + b + c);
+var html = '<p>The sum of ' + a + ' and ' + b + ' plus ' + c
+	+ ' is ' + (a + b + c);
 
 // Good
-var html = "<p>The sum of " + a + " and " + b + " plus " + c +
-	" is " + (a + b + c);
+var html = '<p>The sum of ' + a + ' and ' + b + ' plus ' + c +
+	' is ' + (a + b + c);
 ```
 
 Lines should be broken into logical groups if it improves readability, such as splitting each expression of a ternary operator onto its own line even if both will fit on a single line.
@@ -227,11 +227,11 @@ When a chain of method calls is too long to fit on one line, there must be one c
 
 ```js
 elements
-	.addClass( "foo" )
+	.addClass( 'foo' )
 	.children()
-		.html( "hello" )
+		.html( 'hello' )
 	.end()
-	.appendTo( "body" );
+	.appendTo( 'body' );
 ```
 
 
@@ -241,7 +241,7 @@ All variables referencing jQuery objects, should be prefixed with a $.
 
 ```javascript
 // $div is a jQuery object
-var $div = $('div');
+var $div = $( 'div' );
 ```
 
 
