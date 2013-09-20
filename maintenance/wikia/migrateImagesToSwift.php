@@ -40,6 +40,7 @@ class MigrateImagesToSwift extends Maintenance {
 	 */
 	public function __construct() {
 		parent::__construct();
+		$this->addOption( 'force', 'Perform the migration even when $wgEnableCephFileBackend = true' );
 		$this->mDescription = 'Copies files from file system to distributed storage';
 	}
 
@@ -297,17 +298,20 @@ class MigrateImagesToSwift extends Maintenance {
 
 	public function execute() {
 		global $wgCityId;
+
 		$this->init();
 		$dbr = $this->getDB( DB_SLAVE );
 
+		$isForced = $this->getOption('force');
+
 		// one migration is enough
 		global $wgEnableCephFileBackend, $wgEnableUploads, $wgDBname;
-		if (!empty($wgEnableCephFileBackend)) {
-			#$this->error("\$wgEnableCephFileBackend = true - new files storage enabled on {$wgDBname} wiki!", 1);
+		if (!empty($wgEnableCephFileBackend) && !$isForced) {
+			$this->error("\$wgEnableCephFileBackend = true - new files storage already enabled on {$wgDBname} wiki!", 1);
 		}
 
-		if (empty($wgEnableUploads)) {
-			#$this->error("\$wgEnableUploads = false - migration is already running on {$wgDBname} wiki!", 1);
+		if (empty($wgEnableUploads) && !$isForced) {
+			$this->error("\$wgEnableUploads = false - migration is already running on {$wgDBname} wiki!", 1);
 		}
 
 		$this->time = time();
