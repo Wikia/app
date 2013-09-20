@@ -164,8 +164,8 @@ class MigrateImagesToSwift extends Maintenance {
 				'Sha1base36' => wfBaseConvert( sha1( file_get_contents($localFile) ), 16, 36, 31 )
 			]);
 
-			// calls fclose($fp) internally
 			$object->write($fp, $size);
+			fclose($fp);
 		}
 		catch(Exception $ex) {
 			Wikia::log(__METHOD__, 'exception - ' . $localFile, $ex->getMessage());
