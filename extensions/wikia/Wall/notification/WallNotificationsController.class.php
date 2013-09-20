@@ -14,19 +14,17 @@ class WallNotificationsController extends WikiaController {
 
 	public function Index() {
 		wfProfileIn( __METHOD__ );
-
+		$loggedIn = $this->wg->User->isLoggedIn();
 		$suppressWallNotifications = $this->areNotificationsSuppressedByExtensions();
-		if( $this->wg->User->isLoggedIn() && !$suppressWallNotifications ) {
+
+		if( $loggedIn && !$suppressWallNotifications ) {
 			$this->response->addAsset( 'extensions/wikia/Wall/js/WallNotifications.js' );
 			$this->response->addAsset( 'extensions/wikia/Wall/css/WallNotifications.scss' );
 			$this->response->setVal( 'prehide', ( empty( $this->wg->EnableWallExt ) && empty( $this->wg->EnableForumExt ) ) );
-
-			$this->response->setVal( 'user', $this->wg->User );
 		}
 
+		$this->response->setVal( 'loggedIn', $loggedIn );
 		$this->response->setVal( 'suppressWallNotifications', $suppressWallNotifications );
-		$this->response->setVal( 'user', $this->wg->User );
-
 		wfProfileOut( __METHOD__ );
 	}
 
