@@ -1,16 +1,22 @@
 <?php
 class WallNotificationsControllerTest extends WikiaBaseTest {
+	private $wgOutmScriptsCached = '';
+
+	public function setUp() {
+		parent::setUp();
+		$this->wgOutmScriptsCached = $this->app->wg->Out->mScripts;
+		$this->app->wg->Out->mScripts = '';
+	}
 
 	/**
 	 * @param $isUserLoggedIn
 	 * @param $isUserAllowed
 	 * @param $wgAtCreateNewWikiPageValue
+	 * @param $expectedInScriptString
 	 *
 	 * @dataProvider indexDataProvider
 	 */
-	public function testIndex( $isUserLoggedIn, $isUserAllowed, $wgAtCreateNewWikiPageValue ) {
-		$this->markTestSkipped( 'Somehow the $wgOut->mScripts has always WallNotifications.js -- I do not know why therefore tests is not ready yet.' );
-
+	public function testIndex( $isUserLoggedIn, $isUserAllowed, $wgAtCreateNewWikiPageValue, $expectedInScriptString ) {
 		$userMock = $this->getMock( 'User', [ 'isLoggedIn', 'isAllowed' ], [], '', false );
 		$userMock->expects( $this->once() )
 			->method( 'isLoggedIn' )
@@ -23,6 +29,12 @@ class WallNotificationsControllerTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgUser', $userMock );
 
 		$this->app->sendRequest( 'WallNotificationsController', 'Index' );
+
+		if( !is_null( $expectedInScriptString ) ) {
+			$this->assertContains( $expectedInScriptString, $this->app->wg->Out->getScript() );
+		} else {
+			$this->assertNotContains( $expectedInScriptString, $this->app->wg->Out->getScript() );
+		}
 	}
 
 	public function indexDataProvider() {
@@ -31,50 +43,58 @@ class WallNotificationsControllerTest extends WikiaBaseTest {
 				'isUserLoggedIn' => true,
 				'isUserAllowed' => true,
 				'wgAtCreateNewWikiPageValue' => null,
+				'expectedInScriptString' => 'WallNotifications.js',
 				'undefined $wgAtCreateNewWikiPage and user IS logged-in and IS allowed to read -- assets ARE added'
 			],
 			[
 				'isUserLoggedIn' => false,
 				'isUserAllowed' => true,
 				'wgAtCreateNewWikiPageValue' => null,
+				'expectedInScriptString' => null,
 				'undefined $wgAtCreateNewWikiPage and user IS NOT logged-in and IS allowed to read -- assets assets ARE NOT added'
 			],
 			[
 				'isUserLoggedIn' => false,
 				'isUserAllowed' => false,
 				'wgAtCreateNewWikiPageValue' => null,
-				'expectedIsUserSet' => false,
+				'expectedInScriptString' => null,
 				'undefined $wgAtCreateNewWikiPage and user IS NOT logged-in and IS NOT allowed to read -- assets assets ARE NOT added'
 			],
 			[
 				'isUserLoggedIn' => false,
 				'isUserAllowed' => false,
 				'wgAtCreateNewWikiPageValue' => true,
-				'expectedIsUserSet' => false,
+				'expectedInScriptString' => null,
 				'A create new wiki page and user IS NOT logged-in and IS NOT allowed to read -- assets assets ARE NOT added'
 			],
 			[
 				'isUserLoggedIn' => true,
 				'isUserAllowed' => true,
 				'wgAtCreateNewWikiPageValue' => true,
-				'expectedIsUserSet' => false,
+				'expectedInScriptString' => null,
 				'A create new wiki page and user IS logged-in and IS allowed to read -- assets ARE NOT added'
 			],
 			[
 				'isUserLoggedIn' => false,
 				'isUserAllowed' => false,
 				'wgAtCreateNewWikiPageValue' => false,
-				'expectedIsUserSet' => false,
+				'expectedInScriptString' => null,
 				'NOT a create new wiki page and user IS NOT logged-in and IS NOT allowed to read -- assets ARE NOT added'
 			],
 			[
 				'isUserLoggedIn' => true,
 				'isUserAllowed' => true,
 				'wgAtCreateNewWikiPageValue' => false,
-				'expectedIsUserSet' => true,
+				'expectedInScriptString' => 'WallNotifications.js',
 				'NOT a create new wiki page and user IS logged-in and IS allowed to read -- assets ARE added'
 			],
 		];
+	}
+
+	public function tearDown() {
+		parent::tearDown();
+		$this->app->wg->Out->mScripts = $this->wgOutmScriptsCached;
+		$this->wgOutmScriptsCached = '';
 	}
 
 }
