@@ -993,15 +993,6 @@ $config['videopageadmin_scss'] = array(
 	)
 );
 
-$config['videohomepage_scss'] = array(
-	'skin' => array( 'oasis' ),
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => array(
-		'//resources/wikia/libraries/jquery/bxslider/jquery.bxslider.scss',
-		'//extensions/wikia/VideoPageTool/css/HomePage/featured.scss',
-	)
-);
-
 $config['videohomepage_js'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_JS,
@@ -1020,7 +1011,9 @@ $config['videohomepage_scss'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => array(
-		'//extensions/wikia/VideoPageTool/css/VideoHomePage.scss'
+		'//extensions/wikia/VideoPageTool/css/VideoHomePage.scss',
+		'//resources/wikia/libraries/jquery/bxslider/jquery.bxslider.scss',
+		'//extensions/wikia/VideoPageTool/css/HomePage/featured.scss',
 	)
 );
 

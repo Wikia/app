@@ -1,37 +1,65 @@
-//alert('loaded');
+define( 'views.videohomepage.featured', [], function() {
 
-$(function() {
 	'use strict';
 
-	var $sliderWrapper = $( '#featured-video-slider' ),
-		$featuredBXSlider = $( '#featured-video-bxslider' ),
-		$featuredThumbs = $( '#featured-video-thumbs' ),
-		$sliderControls;
+	function Featured() {
+		this.$sliderWrapper = $( '#featured-video-slider' );
+		this.$featuredBXSlider = $( '#featured-video-bxslider' );
+		this.$featuredThumbs = $( '#featured-video-thumbs' );
 
-	$featuredThumbs.find( 'a' ).each( function() {
-		$( this )
-			.addClass( 'no-lightbox' )
-			.on( 'click', function( e ) {
-				e.preventDefault();
-			})
-		.find( '.Wikia-video-play-button' )
-			.css( 'width', 'inherit' );
-	});
+		this.init();
+	}
 
-	$featuredBXSlider.bxSlider({
-		autoControls: true,
-		onSliderLoad: function() {
-			$sliderWrapper.css( 'visibility', 'visible' );
+	Featured.prototype = {
+		init: function() {
+			this.fixDOM();
+			this.initSlider();
+		},
+		fixDOM: function() {
+			// TODO: this is a hack, ideally it would be done on the back end
+			this.$featuredThumbs.find( 'a' ).each( function() {
+				$( this )
+					// Don't open lightbox when clicked
+					.addClass( 'no-lightbox' )
+					.on( 'click', function( e ) {
+						e.preventDefault();
+					})
+					// format the play button so it can be responsive
+					.find( '.Wikia-video-play-button' )
+					.css( 'width', 'inherit' );
+			});
+		},
+		initSlider: function() {
 
-			$sliderControls = $sliderWrapper.find( '.bx-pager' ).on( 'mouseenter', function() {
-				$featuredThumbs.slideDown();
+			this.$featuredBXSlider.bxSlider({
+				//autoControls: true,
+				//video: true, // TODO: add video support?
+				onSliderLoad: $.proxy( this.onSliderLoad, this )
 			});
 
-			$featuredThumbs.on( 'mouseleave', function() {
+		},
+		onSliderLoad: function() {
+			var that = this;
+
+			this.$sliderWrapper.css( 'visibility', 'visible' );
+
+			this.$sliderControls = this.$sliderWrapper.find( '.bx-pager' ).on( 'mouseenter', function() {
+				that.$featuredThumbs.slideDown();
+			});
+
+			this.$featuredThumbs.on( 'mouseleave', function() {
 				$( this ).slideUp();
 			});
 		}
-		//video: true, // TODO: add video support?
-	});
+	};
 
+	return Featured;
+});
+
+require( ['views.videohomepage.featured'], function( FeaturedVideoView ) {
+	'use strict';
+
+	$(function() {
+		return new FeaturedVideoView();
+	});
 });
