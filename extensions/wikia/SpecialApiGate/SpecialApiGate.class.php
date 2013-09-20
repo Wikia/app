@@ -34,6 +34,9 @@ class SpecialApiGate extends SpecialPage {
 
 	public function __construct() {
 		parent::__construct( 'ApiGate' );
+		//set apigate link path
+		global $APIGATE_LINK_ROOT;
+		$APIGATE_LINK_ROOT = Title::newFromText( 'ApiGate', NS_SPECIAL)->fixSpecialName()->getFullUrl();
 	}
 
 	/**
@@ -572,7 +575,7 @@ class SpecialApiGate extends SpecialPage {
 		wfProfileIn( __METHOD__ );
 
 		//lets create data source
-		$oSource = F::build( 'SponsorshipDashboardSourceDatabase' , array( $uniqueMemCacheKey ) );
+		$oSource = new SponsorshipDashboardSourceDatabase( $uniqueMemCacheKey );
 
 		// this name will be displayed in on a chart
 		$oSource->serieName = $metricName;
@@ -584,7 +587,7 @@ class SpecialApiGate extends SpecialPage {
 		$oSource->setFrequency( $frequency );
 
 		// so we have the source, lets configure the report object
-		$oReport = F::build( 'SponsorshipDashboardReport' );
+		$oReport = (new SponsorshipDashboardReport);
 		$oReport->name = $chartName;
 
 		// this shows how many steps will be displayed on chart ( counting backwards from now )
@@ -600,7 +603,7 @@ class SpecialApiGate extends SpecialPage {
 		$oReport->lockSources();
 
 		// now is the time for making output. There are chart, raw and table outputs.
-		$oOutput = F::build( 'SponsorshipDashboardOutputChart' );
+		$oOutput = (new SponsorshipDashboardOutputChart);
 		$oOutput->showActionsButton = false;
 		$oOutput->emptyChartMsg = wfMsg( 'apigate-chart-empty' );
 		$oOutput->set( $oReport );

@@ -10,7 +10,6 @@ class LyricFindTrackingTest extends WikiaBaseTest {
 		parent::setUp();
 
 		$this->mockGlobalVariable('wgLyricFindTrackingNamespaces', [self::TEST_NAMESPACE_TRACKED]);
-		$this->mockApp();
 	}
 
 	/**

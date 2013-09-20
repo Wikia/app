@@ -10,7 +10,7 @@ $cmdLineScript = realpath($dir . '../../../commandLine.inc');
 require_once($cmdLineScript);
 
 $imageName = $options['imagename'];
-$user = F::build('User', array('WikiaBot'), 'newFromName');
+$user = User::newFromName('WikiaBot');
 
 if( !($user instanceof User) ) {
 	echo 'ERROR: Could not get bot user object'."\n";

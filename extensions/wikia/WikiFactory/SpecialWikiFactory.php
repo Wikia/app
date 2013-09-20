@@ -38,8 +38,8 @@ require_once( $dir . '/SpecialWikiFactory_ajax.php' );
 require_once( $dir . '/Metrics/SpecialAWCMetrics.php' );
 $wgAutoloadClasses['NewWikisGraphSpecialPageController'] = $dir . '/Metrics/SpecialNewWikisGraph.php';
 $wgSpecialPages['NewWikisGraph'] = 'NewWikisGraphSpecialPageController';
-F::app()->registerClass( 'SpecialNewWikisGraphOutput' , $dir . '/Metrics/output/SpecialNewWikisGraphOutput.class.php' );
-F::app()->registerClass( 'SpecialNewWikisGraphSourceDatabase', $dir . '/Metrics/SpecialNewWikisGraphSourceDatabase.class.php' );
+$wgAutoloadClasses['SpecialNewWikisGraphOutput'] = $dir . '/Metrics/output/SpecialNewWikisGraphOutput.class.php';
+$wgAutoloadClasses['SpecialNewWikisGraphSourceDatabase'] = $dir . '/Metrics/SpecialNewWikisGraphSourceDatabase.class.php';
 
 /**
  * tags

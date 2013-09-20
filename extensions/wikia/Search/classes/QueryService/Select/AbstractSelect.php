@@ -32,6 +32,12 @@ abstract class AbstractSelect
 	const HL_MATCH_POSTFIX = '</span>';
 	
 	/**
+	 * Maximum number of words to use when querying solr
+	 * @var int
+	 */
+	const MAX_QUERY_WORDS = 10;
+	
+	/**
 	 * Sets max collation tries when spellchecking
 	 * @var int
 	 */
@@ -50,10 +56,28 @@ abstract class AbstractSelect
 	const SPELLING_RESULT_COUNT = 20;
 	
 	/**
+	 * This is the core path for articles as documents
+	 * @var string
+	 */
+	const SOLR_CORE_MAIN = 'main';
+	
+	/**
+	 * This is the core path for cross-wiki, or wikis as documents
+	 * @var string
+	 */
+	const SOLR_CORE_CROSSWIKI = 'xwiki';
+	
+	/**
 	 * Used for tracking
 	 * @var string
 	 */
 	protected $searchType;
+	
+	/**
+	 * Which "core" we're using in Solr -- xwiki or main
+	 * @var string
+	 */
+	protected $core = 'main';
 	
 	/**
 	 * Boost functions, used by child classes to increase a document's score based on specific document values
@@ -66,6 +90,12 @@ abstract class AbstractSelect
 	 * @var int
 	 */
 	protected $timeAllowed = 5000;
+	
+	/**
+	 * The field used for highlighting
+	 * @var unknown_type
+	 */
+	protected $highlightingField = 'html';
 	
 	/**
 	 * Responsible for storing configuration values for a search.
@@ -86,13 +116,44 @@ abstract class AbstractSelect
 	protected $client;
 	
 	/**
+	 * A little pre-processing since the client needs to know the core before it's properly configured.
+	 * @var bool
+	 */
+	protected $coreSetInClient = false;
+	
+	/**
+	 * Default requested fields for a main-core search service. 
+	 * @var array
+	 */
+	protected $requestedFields = [
+				'id',
+				'pageid',
+				'wikiarticles',
+				'wikititle',
+				'url',
+				'wid',
+				'canonical',
+				'host',
+				'ns',
+				'indexed',
+				'backlinks',
+				'title',
+				'score',
+				'created',
+				'views',
+				'categories',
+				'hub',
+				'lang',
+			];
+	
+	/**
 	 * Handles dependency injection for all child classes.
 	 * @param DependencyContainer $container
 	 */
 	public function __construct( DependencyContainer $container ) {
 		$this->client = $container->getClient();
+		// this initializes the core assigned to the queryservice by default
 		$this->config = $container->getConfig();
-		$this->resultSetFactory = $container->getResultSetFactory();
 		$this->service = $container->getService();
 	}
 	
@@ -109,7 +170,7 @@ abstract class AbstractSelect
 		$this->prepareRequest()
 		     ->prepareResponse( $this->sendSearchRequestToClient() )
 		;
-		return $this->config->getResults();
+		return $this->getConfig()->getResults();
 	}
 	
 	/**
@@ -117,21 +178,24 @@ abstract class AbstractSelect
 	 * @param array $fields allows us to apply a mapping
 	 * @return array
 	 */
-	public function searchAsApi( $fields = [], $metadata = false ) {
+	public function searchAsApi( $fields = null, $metadata = false ) {
 		$resultSet = $this->search();
+		$config = $this->getConfig();
 		if ( $metadata ) {
-			$total = $this->getconfig()->getResultsFound();
-			$numPages = $this->getConfig()->getNumPages();
-			$limit = $this->getConfig()->getLimit();
+			$total = $config->getResultsFound();
+			$numPages = $config->getNumPages();
+			$limit = $config->getLimit();
 			$response = [
 					'total' => $total,
 					'batches' => $total > 0 ? $numPages : 0,
-					'currentBatch' => $total > 0 ? $this->getConfig()->getPage() : 0,
-					'next' => $total > 0 ? min( [ $numPages * $limit, $this->getConfig()->getStart() + $limit ] ) : 0,
+					'currentBatch' => $total > 0 ? $config->getPage() : 0,
+					'next' => $total > 0 ? min( [ $numPages * $limit, $config->getStart() + $limit ] ) : 0,
 					'items' => $resultSet->toArray( $fields )
 					];
-		} else {
+		} else if ( $fields ) {
 			$response = $resultSet->toArray( $fields );
+		} else {
+			$response = $resultSet->toArray();
 		}
 		return $response;
 	}
@@ -141,8 +205,9 @@ abstract class AbstractSelect
 	 * @return Ambigous <\Wikia\Search\Match\Article, \Wikia\Search\Match\Wiki, \Wikia\Search\false, boolean>
 	 */
 	public function getMatch() {
-		if ( $this->config->hasMatch() ) {
-			return $this->config->getMatch();
+		$config = $this->getConfig();
+		if ( $config->hasMatch() ) {
+			return $config->getMatch();
 		}
 		return $this->extractMatch();
 	}
@@ -160,27 +225,18 @@ abstract class AbstractSelect
 	 * @return \Solarium_Query_Select
 	 */
 	protected function getSelectQuery() {
-		$query = $this->client->createSelect();
+		$query = $this->getClient()->createSelect();
 		$query->setDocumentClass( '\Wikia\Search\Result' );
-		$this->registerComponents( $query );
-		return $query->setQuery( $this->getFormulatedQuery() );
+		$this->registerQueryParams( $query )
+		     ->registerComponents( $query );
+		return $query->setQuery( $this->getQuery() );
 	}
 	
 	/**
-	 * As an edismax query, gives the required query in the first clause of the conjunction, and then the parseable query stuff in the second clause.
+	 * This is abstract because the dismax and lucene query services behave differently here.
 	 * @return string
 	 */
-	protected function getFormulatedQuery() {
-		return sprintf( '+(%s) AND (%s)', $this->getQueryClausesString(), $this->config->getQuery()->getSolrQuery() );
-	}
-	
-	/**
-	 * Prepare boost queries based on the provided instance.
-	 * @return string
-	 */
-	protected function getBoostQueryString() {
-		return '';
-	}
+	abstract protected function getQuery();
 	
 	/**
 	 * Allows us to configure components in child instances.
@@ -197,15 +253,30 @@ abstract class AbstractSelect
 	 * @return Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerQueryParams( Solarium_Query_Select $query ) {
-		$sort = $this->config->getSort();
-		$query->addFields      ( $this->config->getRequestedFields() )
+		$config = $this->getConfig();
+		$sort = $config->getSort();
+		$query->addFields      ( $this->getRequestedFields() )
 		      ->removeField    ('*')
-		      ->setStart       ( $this->config->getStart() )
-		      ->setRows        ( $this->config->getLength() )
+		      ->setStart       ( $config->getStart() )
+		      ->setRows        ( $config->getLength() )
 		      ->addSort        ( $sort[0], $sort[1] )
 		      ->addParam       ( 'timeAllowed', $this->timeAllowed )
 		;
 		return $this;
+	}
+	
+	/**
+	 * For now, this is the union of the default requested fields (usually required for minimum functionality),
+	 * and any fields specifically added by the client code.
+	 * @todo Add support for _removing_ requested fields?
+	 * @return array
+	 */
+	protected function getRequestedFields() {
+		$fields = [];
+		foreach ( array_merge( $this->requestedFields, $this->getConfig()->getRequestedFields() ) as $field ) {
+			$fields[] = Utilities::field( $field );
+		}
+		return $fields;
 	}
 	
 	/**
@@ -214,9 +285,10 @@ abstract class AbstractSelect
 	 * @return Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerFilterQueries( Solarium_Query_Select $query ) {
-		$this->config->setFilterQuery( $this->getFilterQueryString() );
+		$config = $this->getConfig();
+		$config->setFilterQuery( $this->getFilterQueryString() );
 		$this->registerFilterQueryForMatch();
-		$query->addFilterQueries( $this->config->getFilterQueries() );
+		$query->addFilterQueries( $config->getFilterQueries() );
 		return $this;
 	}
 	
@@ -236,7 +308,7 @@ abstract class AbstractSelect
 	 */
 	protected function registerHighlighting( Solarium_Query_Select $query ) {
 		$highlighting = $query->getHighlighting();
-		$highlighting->addField                     ( Utilities::field( 'html' ) )
+		$highlighting->addField                     ( Utilities::field( $this->highlightingField ) )
 		             ->setSnippets                  ( 1 )
 		             ->setRequireFieldMatch         ( true )
 		             ->setFragSize                  ( self::HL_FRAG_SIZE )
@@ -254,13 +326,12 @@ abstract class AbstractSelect
 	 */
 	protected function sendSearchRequestToClient() {
 		try {
-			return $this->client->select( $this->getSelectQuery() );
+			return $this->getClient()->select( $this->getSelectQuery() );
 		} catch ( \Exception $e ) {
 			if ( $this->config->getError() !== null ) {
 				$this->config->setError( $e );
 				return new \Solarium_Result_Select_Empty();
 			} else {
-				
 				$this->config->setSkipBoostFunctions( true )
 				             ->setError( $e );
 
@@ -274,8 +345,9 @@ abstract class AbstractSelect
 	 * @return AbstractSelect
 	 */
 	protected function prepareRequest() {
-		if ( $this->config->getPage() > 1 ) {
-			$this->config->setStart( ( $this->config->getPage() - 1 ) * $this->config->getLength() );
+		$config = $this->getConfig();
+		if ( $config->getPage() > 1 ) {
+			$config->setStart( ( $config->getPage() - 1 ) * $config->getLength() );
 		}
 		return $this;
 	}
@@ -287,11 +359,13 @@ abstract class AbstractSelect
 	 */
 	protected function spellcheckResult( Solarium_Result_Select $result ) {
 		// re-search for spellchecked phrase in the absence of results
-		if ( $this->service->getGlobal( 'WikiaSearchSpellcheckActivated' ) 
+		$service = $this->getService();
+		$config = $this->getConfig();
+		if ( $service->getGlobal( 'WikiaSearchSpellcheckActivated' ) 
 				&& $result->getNumFound() == 0
-				&& !$this->config->hasMatch() ) {
+				&& !$config->hasMatch() ) {
 			if ( $collation = $result->getSpellcheck()->getCollation() ) {
-				$this->config->setQuery( $collation->getQuery() );
+				$config->setQuery( $collation->getQuery() );
 				$result = $this->sendSearchRequestToClient();
 			}
 		}
@@ -306,53 +380,10 @@ abstract class AbstractSelect
 	 */
 	protected function prepareResponse( Solarium_Result_Select $result ) {
 		$this->spellcheckResult( $result );
-		$container = new ResultSet\DependencyContainer( array( 'result' => $result, 'config' => $this->config ) );
-		$results = $this->resultSetFactory->get( $container );
-		
-		$this->config->setResults( $results );
-		
-		if( $this->config->getPage() == 1 ) {
-			\Track::event(
-					( $results->getResultsFound() > 0 ? 'search_start' : 'search_start_nomatch' ),
-					array(
-							'sterm'	=> $this->config->getQuery()->getSanitizedQuery(), 
-							'stype'	=> $this->searchType 
-							)
-					);
-		}
-	}
-	
-	/**
-	 * Returns the fields that should be queried
-	 * @return string 
-	 */
-	abstract protected function getQueryFieldsString();
-	
-	/**
-	 * Registers our query as an extended dismax query.
-	 * @return AbstractSelect
-	 */
-	protected function registerDismax( Solarium_Query_Select $select ) {
-		
-		$queryFieldsString = $this->getQueryFieldsString();
-		$dismax = $select->getDismax()
-		                 ->setQueryFields( $queryFieldsString )
-		                 ->setQueryParser( 'edismax' )
-		;
-		
-		if ( $this->service->isOnDbCluster() ) {
-			$dismax
-				->setPhraseFields		( $queryFieldsString )
-				->setBoostQuery			( $this->getBoostQueryString() )
-				->setMinimumMatch		( $this->config->getMinimumMatch() )
-				->setPhraseSlop			( 3 )
-				->setTie				( 0.01 )
-			;
-			if (! $this->config->getSkipBoostFunctions()  ) {
-			    $dismax->setBoostFunctions( implode(' ', $this->boostFunctions ) );
-			}
-		}
-		return $this;
+		$config = $this->getConfig();
+		$container = new ResultSet\DependencyContainer( array( 'result' => $result, 'config' => $config ) );
+		$results = (new ResultSet\Factory)->get( $container );
+		$config->setResults( $results );
 	}
 	
 	/**
@@ -361,11 +392,7 @@ abstract class AbstractSelect
 	 */
 	protected function getFilterQueryString()
 	{
-		$namespaces = [];
-		foreach ( $this->config->getNamespaces() as $ns ) {
-			$namespaces[] = Utilities::valueForField( 'ns', $ns );
-		}
-		return implode( ' AND ', [ sprintf( '(%s)', implode( ' OR ', $namespaces ) ), Utilities::valueForField( 'wid', $this->config->getCityId() ) ] );
+		return '';
 	}
 	
 	/**
@@ -380,5 +407,52 @@ abstract class AbstractSelect
 	 */
 	protected function getService() {
 		return $this->service;
+	}
+	
+	/**
+	 * Reusable logic for storing matches on a wiki basis. Used in InterWiki and OnWiki Query Services.
+	 * @return Wikia\Search\Match\Wiki|null
+	 */
+	protected function extractWikiMatch() {
+		$config = $this->getConfig();
+		$query = $config->getQuery()->getSanitizedQuery();
+		$domain = preg_replace(
+			'/[^a-zA-Z0-9]/',
+			'',
+			strtolower( $query ) 
+		);
+		$service = $this->getService();
+		$wikiMatch = $service->getWikiMatchByHost( $domain );
+		if (! empty( $wikiMatch ) && ( $wikiMatch->getId() !== $service->getWikiId() ) ) {
+			$result = $wikiMatch->getResult();
+			if ( $result['articles_i'] >= 50 ) {
+				$config->setWikiMatch( $wikiMatch );
+			}
+		}
+		return $config->getWikiMatch();
+	}
+	
+	/**
+	 * This allows internal manipulation of the specific core being queried by this service.
+	 * There is probably a better way to do this, but this is the least disruptive way to handle this somewhat circular dependency.
+	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
+	 */
+	protected function setCoreInClient() {
+		$options = $this->client->getOptions();
+		$options['adapteroptions']['path'] = '/solr/'.$this->core;
+		$this->client->setOptions( $options, true );
+		$this->coreSetInClient = true;
+		return $this;
+	}
+	
+	/**
+	 * Allows lazy loading of internal configuration through accessor method
+	 * @return Solarium_Client
+	 */
+	protected function getClient() {
+		if (! $this->coreSetInClient ) {
+			$this->setCoreInClient();
+		}
+		return $this->client;
 	}
 }

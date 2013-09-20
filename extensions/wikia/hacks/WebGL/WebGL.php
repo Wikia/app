@@ -25,7 +25,7 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $app = F::app();
 $dir = dirname( __FILE__ );
-$app->registerClass('CubeController', $dir . '/CubeController.class.php');
+$wgAutoloadClasses['CubeController'] =  $dir . '/CubeController.class.php';
 /**
  * setup functions
  */

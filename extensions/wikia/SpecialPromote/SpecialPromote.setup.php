@@ -18,28 +18,27 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = dirname(__FILE__) . '/';
 $promoteImageReviewExtDir = dirname(dirname(__FILE__)) . '/ImageReview/modules/PromoteImage/';
-$app = F::app();
 
 // classes
-$app->registerClass('SpecialPromoteController', $dir . 'SpecialPromoteController.class.php');
-$app->registerClass('SpecialPromoteHelper', $dir . 'SpecialPromoteHelper.class.php');
-$app->registerClass('UploadVisualizationImageFromFile', $dir . 'UploadVisualizationImageFromFile.class.php');
+$wgAutoloadClasses['SpecialPromoteController'] =  $dir . 'SpecialPromoteController.class.php';
+$wgAutoloadClasses['SpecialPromoteHelper'] =  $dir . 'SpecialPromoteHelper.class.php';
+$wgAutoloadClasses['UploadVisualizationImageFromFile'] =  $dir . 'UploadVisualizationImageFromFile.class.php';
 
 // needed task
-$app->registerClass('PromoteImageReviewTask', $promoteImageReviewExtDir  . 'PromoteImageReviewTask.php');
+$wgAutoloadClasses['PromoteImageReviewTask'] = $promoteImageReviewExtDir  . 'PromoteImageReviewTask.php';
 
 // hooks
-$app->registerHook('UploadVerification', 'UploadVisualizationImageFromFile', 'UploadVerification');
-$app->registerHook('CityVisualization::wikiDataInserted', 'CityVisualization', 'onWikiDataUpdated');
+$wgHooks['UploadVerification'][] = 'UploadVisualizationImageFromFile::UploadVerification';
+$wgHooks['CityVisualization::wikiDataInserted'][] = 'CityVisualization::onWikiDataUpdated';
 
 // i18n mapping
-$app->registerExtensionMessageFile('SpecialPromote', $dir.'SpecialPromote.i18n.php');
-$app->registerExtensionMessageFile('SpecialPromoteAliases', $dir . 'SpecialPromote.alias.php') ;
+$wgExtensionMessagesFiles['SpecialPromote'] = $dir.'SpecialPromote.i18n.php';
+$wgExtensionMessagesFiles['SpecialPromoteAliases'] = $dir . 'SpecialPromote.alias.php';
 
-F::build('JSMessages')->registerPackage('SpecialPromote', array('promote-*'));
+JSMessages::registerPackage('SpecialPromote', array('promote-*'));
 
 // special pages
-$app->registerSpecialPage('Promote', 'SpecialPromoteController');
+$wgSpecialPages['Promote'] = 'SpecialPromoteController';
 
 $wgAvailableRights[] = 'promote';
 $wgGroupPermissions['*']['promote'] = false;

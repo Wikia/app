@@ -158,6 +158,7 @@ class PhalanxService extends Service {
 
 			$options["postData"] = implode( "&", $postData );
 			wfDebug( __METHOD__ . ": calling $url with POST data " . $options["postData"] ."\n" );
+			wfDebug( __METHOD__ . ": " . json_encode($parameters) ."\n" );
 			$response = Http::post( $url, $options);
 		}
 
@@ -165,6 +166,8 @@ class PhalanxService extends Service {
 			/* service doesn't work */
 			$res = false;
 		} else {
+			wfDebug( __METHOD__ . "::response - {$response}\n" );
+
 			switch ( $action ) {
 				case "stats":
 					$res = ( is_null( $response ) ) ? false : $response;

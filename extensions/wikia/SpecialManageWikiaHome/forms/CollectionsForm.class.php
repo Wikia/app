@@ -12,7 +12,7 @@ class CollectionsForm extends FormBuilderService {
 					'isArray' => true
 				],
 				'name' => [
-					'label' => $this->wf->msg('manage-wikia-home-collections-name-field-label'),
+					'label' => wfMsg('manage-wikia-home-collections-name-field-label'),
 					'validator' => new WikiaValidatorListValue([
 						'validator' => new WikiaValidatorString(
 							array(
@@ -25,7 +25,7 @@ class CollectionsForm extends FormBuilderService {
 					'isArray' => true
 				],
 				'enabled' => [
-					'label' => $this->wf->msg('manage-wikia-home-collections-enabled-field-label'),
+					'label' => wfMsg('manage-wikia-home-collections-enabled-field-label'),
 					'type' => 'checkbox',
 					'validator' => new WikiaValidatorListValue([
 						'validator' => new WikiaValidatorInteger()
@@ -33,14 +33,14 @@ class CollectionsForm extends FormBuilderService {
 					'isArray' => true
 				],
 				'sponsor_url' => [
-					'label' => $this->wf->msg('manage-wikia-home-collections-sponsor-url-field-label'),
+					'label' => wfMsg('manage-wikia-home-collections-sponsor-url-field-label'),
 					'validator' => new WikiaValidatorListValue([
 						'validator' => new WikiaValidatorUrl()
 					]),
 					'isArray' => true
 				],
 				'sponsor_hero_image' => [
-					'label' => $this->wf->msg('manage-wikia-home-collections-sponsor-hero-image-field-label'),
+					'label' => wfMsg('manage-wikia-home-collections-sponsor-hero-image-field-label'),
 					'validator' => new WikiaValidatorListValue([
 						'validator' => new WikiaValidatorFileTitle(
 							array(
@@ -51,7 +51,7 @@ class CollectionsForm extends FormBuilderService {
 					'isArray' => true
 				],
 				'sponsor_image' => [
-					'label' => $this->wf->msg('manage-wikia-home-collections-sponsor-image-field-label'),
+					'label' => wfMsg('manage-wikia-home-collections-sponsor-image-field-label'),
 					'validator' => new WikiaValidatorListValue([
 						'validator' => new WikiaValidatorFileTitle(
 							array(

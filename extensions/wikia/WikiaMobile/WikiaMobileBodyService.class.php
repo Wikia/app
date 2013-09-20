@@ -15,10 +15,10 @@ class WikiaMobileBodyService extends WikiaService {
 		// this hook allows adding extra HTML just after <body> opening tag
 		// append your content to $html variable instead of echoing
 		// (taken from Monaco skin)
-		$this->wf->RunHooks( 'GetHTMLAfterBody', array ( RequestContext::getMain()->getSkin(), &$afterBodyHtml ) );
+		wfRunHooks( 'GetHTMLAfterBody', array ( RequestContext::getMain()->getSkin(), &$afterBodyHtml ) );
 
 		// this hook is needed for SMW's factbox
-		if ( !$this->wf->RunHooks('SkinAfterContent', array( &$afterContentHookText ) ) ) {
+		if ( !wfRunHooks('SkinAfterContent', array( &$afterContentHookText ) ) ) {
 			$afterContentHookText = '';
 		}
 
@@ -29,10 +29,6 @@ class WikiaMobileBodyService extends WikiaService {
 			$this->response->setVal( 'pageHeaderContent', '');
 		}
 		$this->response->setVal('bodyContent', $bodyContent);
-		$this->response->setVal(
-			'relatedPages',
-			(	!empty( $this->wg->EnableRelatedPagesExt ) &&
-				empty( $this->wg->EnableAnswers ) ) ? $this->app->getView( 'RelatedPagesController', 'WikiaMobileIndex' ) : null);
 
 		$this->response->setVal(
 			'categoryLinks',

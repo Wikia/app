@@ -33,7 +33,7 @@ class ImageLightbox {
 			return array();
 		}
 
-		if ( F::build( 'WikiaFileHelper' )->isFileTypeVideo( $image ) ) {
+		if ( WikiaFileHelper::isFileTypeVideo( $image ) ) {
 			if ( !empty($wgTitle) ) {
 				wfProfileOut(__METHOD__);
 				return self::videoLightbox($image);
@@ -78,7 +78,7 @@ class ImageLightbox {
 		$linkStdEncoded = rawurlencode($linkStd);
 		$linkDescription = wfMsg('lightbox-share-description', $currentTitle->getText(), $wgSitename);
 		$shareButtons = array();
-		$shareNetworks = F::build( 'SocialSharingService' )->getNetworks( array(
+		$shareNetworks = SocialSharingService::getInstance()->getNetworks( array(
 			'facebook',
 			'twitter',
 			'stumbleupon',

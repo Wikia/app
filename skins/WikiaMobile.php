@@ -25,11 +25,13 @@ class SkinWikiaMobile extends WikiaSkin {
 		$vars = [];
 		$scripts = '';
 
-		//this is run to grab all global variables
-		$this->wf->runHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
+		$globalVariables['Wikia'] = new StdClass();
 
+		//this is run to grab all global variables
+		wfRunHooks( 'WikiaSkinTopScripts', [ &$vars, &$scripts, $this ] );
 		//send list of supported videos so we can treat not supported ones differently
 		$globalVariables['supportedVideos'] = $this->wg->WikiaMobileSupportedVideos;
+
 
 		//global variables
 		//from Output class

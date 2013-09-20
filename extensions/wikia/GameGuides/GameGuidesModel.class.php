@@ -75,7 +75,7 @@ class GameGuidesModel{
 			$this->storeInCache( $cacheKey , $games );
 		}
 
-		$ret = $this->app->wf->paginateArray( $games, $limit, $batch );
+		$ret = wfPaginateArray( $games, $limit, $batch );
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
@@ -99,14 +99,13 @@ class GameGuidesModel{
 
 		if ( empty( $ret ) ) {
 			$ret = Array();
-			$this->app->wf->loadExtensionMessages( 'GameGuides' );
 
-			$searchTitle = F::build( 'Title', array( 'Search', NS_SPECIAL ), 'newFromText' );
+			$searchTitle = Title::newFromText( 'Search', NS_SPECIAL );
 			$ret[ 'searchURL' ] = $searchTitle->getLocalUrl( array( 'useskin' => GameGuidesController::SKIN_NAME ) );
 			$ret[ 'entries' ] = Array();
 
 			$entries = array_filter(
-				explode( "\n", strip_tags( str_replace( array( '<br>', '<br/>', '<br />' ), "\n" , $this->app->wf->msgForContent( 'wikiagameguides-contents' ) ) ) ),
+				explode( "\n", strip_tags( str_replace( array( '<br>', '<br/>', '<br />' ), "\n" , wfMsgForContent( 'wikiagameguides-contents' ) ) ) ),
 				array( __CLASS__, 'verifyElement')
 			);
 
@@ -145,7 +144,7 @@ class GameGuidesModel{
 		wfProfileIn( __METHOD__ );
 
 		$categoryName = trim( $categoryName );
-		$category = F::build( 'Category', array( $categoryName ), 'newFromName' );
+		$category = Category::newFromName( $categoryName );
 
 		if ( $category ) {
 			$cacheKey = $this->generateCacheKey(
@@ -162,7 +161,7 @@ class GameGuidesModel{
 				foreach( $titles as $title ) {
 					$contents[] = array(
 						'title' => $title->getText(),
-						'url' => $title->getLocalUrl( array( 'useskin' => 'wikiaapp' ) )
+						'url' => $title->getLocalUrl( array( 'useskin' => GameGuidesController::SKIN_NAME ) )
 					);
 				}
 
@@ -173,7 +172,7 @@ class GameGuidesModel{
 			throw new WikiaException( "No data for '{$categoryName}'" );
 		}
 
-		$ret = $this->app->wf->paginateArray( $contents, $limit, $batch );
+		$ret = wfpaginateArray( $contents, $limit, $batch );
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
@@ -196,7 +195,7 @@ class GameGuidesModel{
 		$ret = array();
 
 		if ( !empty( $this->app->wg->EnableWikiaSearchExt ) && !empty( $term ) ) {
-			$this->app->wf->loadExtensionMessages( 'GameGuides' );
+			wfloadExtensionMessages( 'GameGuides' );
 
 			$cacheKey = $this->generateCacheKey(
 				__METHOD__ .
@@ -207,7 +206,7 @@ class GameGuidesModel{
 			$ret = $this->loadFromCache( $cacheKey );
 
 			if ( empty( $ret ) ) {
-				
+
 				$resultSet = $this->getResultSet( $term, $totalLimit );
 
 				$ret['textResults'] = array();
@@ -220,7 +219,7 @@ class GameGuidesModel{
 						try {
 							$textResults[] = array(
 									'textForm' => $result->getTitle(),
-									'urlForm' => $mwService->getLocalUrlForPageId( $result['pageid'], array( 'useskin' => 'wikiaapp' ) )
+									'urlForm' => $mwService->getLocalUrlForPageId( $result['pageid'], array( 'useskin' => GameGuidesController::SKIN_NAME ) )
 									);
 							$count++;
 						} catch ( Exception $e ) {} // result is probably stale/deleted
@@ -237,7 +236,7 @@ class GameGuidesModel{
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
-	
+
 	/**
 	 * Perform a search query against NS_MAIN given a term and total limit
 	 * @param string $term
@@ -254,7 +253,7 @@ class GameGuidesModel{
 	}
 
 	private function generateCacheKey( $token ){
-		return $this->app->wf->memcKey( $token, GameGuidesController::API_VERSION . '.' . GameGuidesController::API_REVISION . '.' . GameGuidesController::API_MINOR_REVISION );
+		return wfMemcKey( $token, GameGuidesController::API_VERSION . '.' . GameGuidesController::API_REVISION . '.' . GameGuidesController::API_MINOR_REVISION );
 	}
 
 	private function loadFromCache( $key ){

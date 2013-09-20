@@ -18,8 +18,8 @@ class ScribeEventProducer {
 		DELETE_CATEGORY_INT			= 3,
 		UNDELETE_CATEGORY_INT		= 4;
 
-	function __construct( WikiaApp $app, $key, $archive = 0 ) {
-		$this->app = $app;
+	function __construct( $key, $archive = 0 ) {
+		$this->app = F::app();
 		switch ( $key ) {
 			case 'edit' 		:
 				$this->mKey = self::EDIT_CATEGORY;
@@ -196,7 +196,7 @@ class ScribeEventProducer {
 			return true;
 		}
 
-		$oUser = F::build('User', array( $username ), 'newFromName');
+		$oUser = User::newFromName( $username );
 		if ( !$oUser instanceof User ) {
 			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid user object" );
 			wfProfileOut( __METHOD__ );
@@ -217,7 +217,7 @@ class ScribeEventProducer {
 			return true;
 		}
 
-		$oRevision = F::build('Revision', array( $oTitle ), 'newFromTitle');
+		$oRevision = Revision::newFromTitle( $oTitle );
 		if ( !is_object($oRevision) && !empty( $redirect_id ) ) {
 			$db = wfGetDB( DB_MASTER );
 			$oRevision = Revision::loadFromPageId( $db, $redirect_id );

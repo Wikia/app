@@ -20,7 +20,6 @@ class WikiaQuizModuleTest extends WikiaBaseTest {
 			->will($this->returnValue(array('foo'=>'bar', 'baz'=>'asdf')));
 		$this->mockClass('WikiaQuizElement', $quizElement);
 
-		$this->mockApp();
 		$response = $this->app->sendRequest('WikiaQuiz', 'executeGetQuizElement');
 		$this->assertNotNull($response->getData());
 	}
@@ -32,7 +31,6 @@ class WikiaQuizModuleTest extends WikiaBaseTest {
 			->will($this->returnValue(null));
 		
 		$this->mockGlobalVariable('wgRequest', $wgRequest);
-		$this->mockApp();
 
 		$response = $this->app->sendRequest('WikiaQuiz', 'executeGetQuizElement');
 		$this->assertNull($response->getVal('data'));

@@ -8,6 +8,7 @@ $color-borders: #CECECE;
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/core/layout";
 
+@import "../../UserLogin/mixins/tooltip-icon";
 @import "../../ThemeDesigner/css/ThemeTab";
 
 .WikiaPage {
@@ -19,10 +20,6 @@ $color-borders: #CECECE;
 
 .CorporateFooter {
 	display: none;
-}
-
-.WikiaHeader {
-	width: $width-outside + 8px;
 }
 
 .WikiaFooter {
@@ -331,7 +328,7 @@ div#userloginErrorBox3 {
 	}
 	textarea {
 		font-size: 17px;
-		height: 220px;
+		height: 170px;
 		padding: 0;
 		resize: none;
 		width: 425px;
@@ -339,9 +336,24 @@ div#userloginErrorBox3 {
 			color: #aaa;
 		}
 	}
+	select {
+		margin-bottom:15px;
+	}
 	label {
 		margin-top: 10px;
 		display: block;
+	}
+	.checkbox {
+		input {
+			vertical-align:middle;
+		}
+	}
+	.tooltip-icon-wrapper {
+		position: relative;
+		.tooltip-icon {
+			@include tooltip-icon;
+			right: -16px;
+		}
 	}
 }
 

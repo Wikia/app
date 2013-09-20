@@ -76,7 +76,7 @@ class ScavengerHuntGameArticle {
 
 	public function setTitle( $title ) {
 		$this->title = $title;
-		$globalTitleObj = (array) F::build('GlobalTitle', array( $this->title ), 'explodeURL');
+		$globalTitleObj = (array) GlobalTitle::explodeURL( $this->title );
 		$this->setArticleName( $globalTitleObj['articleName'] );
 		$this->setWikiId( $globalTitleObj['wikiId'] );
 	}

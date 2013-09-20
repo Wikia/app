@@ -10,8 +10,12 @@
 		<th><?= $versionSoftwareVersionMessage ?></th>
 	</tr>
 	<tr>
-		<td>Wikia</td>
-		<td><?= $wikiaVersion ?></td>
+		<td><?= $wikiaCodeMessage ?></td>
+		<td><?= $wikiaCodeVersion ?></td>
+	</tr>
+	<tr>
+		<td><?= $wikiaConfigMessage ?></td>
+		<td><?= $wikiaConfigVersion ?></td>
 	</tr>
 	<? foreach ( $versionSoftwareList as $name => $version ) : ?>
 	<tr>

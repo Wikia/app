@@ -128,8 +128,9 @@ class ImageServingHelper {
 			return $images;
 		}
 
-		$app = F::app();
-		$dbw = $app->wf->GetDB(DB_MASTER, array());
+		wfDebug(__METHOD__ . ' - ' . json_encode($images). "\n");
+
+		$dbw = wfGetDB(DB_MASTER, array());
 
 		if( count($images) < 1 ) {
 			if( $ignoreEmpty) {

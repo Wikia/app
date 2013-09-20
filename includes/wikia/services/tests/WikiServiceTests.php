@@ -12,8 +12,9 @@ class WikiServiceTests extends WikiaBaseTest {
 		$image42Url = 'http://img42';
 		$imgSize = 123;
 
-		$this->mockGlobalFunction( "message", null, 0 );
-		$this->mockApp();
+		$this->getGlobalFunctionMock( 'wfMessage' )
+			->expects( $this->never() )
+			->method( 'wfMessage' );
 
 		$wikiService = $this->getMock('WikiService', array( 'getWikiDetails', 'getImageSrcByTitle' ));
 		$wikiService->expects($this->exactly(1))
@@ -63,8 +64,11 @@ class WikiServiceTests extends WikiaBaseTest {
 		$image42Url = 'http://img42';
 		$imgSize = 123;
 
-		$this->mockGlobalFunction( "message", $this->mockMessage($description42), 1, ['wikiasearch2-crosswiki-description', 'wiki42'] );
-		$this->mockApp();
+		$this->getGlobalFunctionMock( 'wfMessage' )
+			->expects( $this->exactly( 1 ) )
+			->method( 'wfMessage' )
+			->with( 'wikiasearch2-crosswiki-description', 'wiki42' )
+			->will( $this->returnValue( $description42 ) );
 
 		$wikiService = $this->getMock('WikiService', array( 'getWikiDetails','getImageSrcByTitle' ));
 		$wikiService->expects($this->exactly(1))

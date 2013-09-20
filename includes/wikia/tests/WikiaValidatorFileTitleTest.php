@@ -1,6 +1,6 @@
 <?php
 
-class WikiaValidatorFileTitleTest extends PHPUnit_Framework_TestCase {
+class WikiaValidatorFileTitleTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider filesDataProvider
@@ -12,16 +12,13 @@ class WikiaValidatorFileTitleTest extends PHPUnit_Framework_TestCase {
 			->method('exists')
 			->will($this->returnValue($exists));
 
-		$appMock = new stdClass();
-		$appMock->wf = $this->getMock('stdClass', array('findFile'));
-		$appMock->wf->expects($this->once())
-			->method('findFile')
+		$mockFindFile = $this->getGlobalFunctionMock( 'wfFindFile' );
+		$mockFindFile
+			->expects($this->once())
+			->method('wfFindFile')
 			->will($this->returnValue($fileMock));
 
 		$validator = $this->getMock('WikiaValidatorFileTitle', array('getApp'));
-		$validator->expects($this->once())
-			->method('getApp')
-			->will($this->returnValue($appMock));
 
 		$titleMock = $this->getMock('Title', array('newFromText'));
 

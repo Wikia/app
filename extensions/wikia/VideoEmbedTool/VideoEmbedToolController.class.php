@@ -22,7 +22,7 @@ class VideoEmbedToolController extends WikiaController {
 		if ( $this->wg->VETEnableSuggestions != true ) {
 			// Return empty set if wgVETEnableSuggestions is not enabled
 			$result = array(
-				'caption' => $this->wf->Msg( 'vet-suggestions' ),
+				'caption' => wfMsg( 'vet-suggestions' ),
 				'totalItemCount' => 0,
 				'currentSetItemCount' => 0,
 				'items' => array()
@@ -39,8 +39,8 @@ class VideoEmbedToolController extends WikiaController {
 			
 			$result = array(
 					'searchQuery' => $service->getSuggestionQuery(),
-					'caption' => $this->wf->Msg( 'vet-suggestions' ),
-					'totalItemCount' => 0,
+					'caption' => wfMsg( 'vet-suggestions' ),
+					'totalItemCount' => $response['totalItemCount'],
 					'nextStartFrom' => $response['nextStartFrom'],
 					'currentSetItemCount' => count($response['items']),
 					'items' => $response['items']
@@ -65,7 +65,7 @@ class VideoEmbedToolController extends WikiaController {
 
 		$result = array (
 			'searchQuery' => $phrase,
-			'caption' => $this->wf->MsgExt( ( ( $searchType == 'premium' ) ? 'vet-search-results-WVL' : 'vet-search-results-local' ), array('parsemag'),  $response['totalItemCount'], $phrase ),
+			'caption' => wfMsgExt( ( ( $searchType == 'premium' ) ? 'vet-search-results-WVL' : 'vet-search-results-local' ), array('parsemag'),  $response['totalItemCount'], $phrase ),
 			'totalItemCount' => $response['totalItemCount'],
 			'nextStartFrom' => $response['nextStartFrom'],
 			'currentSetItemCount' => count( $response['items'] ),
@@ -80,7 +80,7 @@ class VideoEmbedToolController extends WikiaController {
 
 		$fileTitle = $this->request->getVal('fileTitle', '');
 		$fileTitle = urldecode($fileTitle);
-		$title = F::build('Title', array($fileTitle, NS_FILE), 'newFromText');
+		$title = Title::newFromText($fileTitle, NS_FILE);
 		if ( !( $title instanceof Title ) ) {
 			return;
 		}

@@ -46,8 +46,8 @@ class UserServiceTest extends WikiaBaseTest {
 		$this->assertEquals( $user, $cachedMemCacheByName );
 
 		//need for deleting form cache test values
-		$sharedIdKey = F::app()->wf->sharedMemcKey( "UserCache:".$user->getId() );
-		$sharedNameKey = F::app()->wf->sharedMemcKey( "UserCache:".$user->getName() );
+		$sharedIdKey = wfSharedMemcKey( "UserCache:".$user->getId() );
+		$sharedNameKey = wfSharedMemcKey( "UserCache:".$user->getName() );
 		//remove user from memcache
 		F::app()->wg->memc->delete( $sharedIdKey );
 		F::app()->wg->memc->delete( $sharedNameKey );

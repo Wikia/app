@@ -12,8 +12,8 @@ class InWikiGameParserTag {
 	 * @param Parser $parser MW Parser instance
 	 * @return bool
 	 */
-	public function onParserFirstCallInit(Parser $parser) {
-		$parser->setHook('inwikigame', array($this, 'renderTag'));
+	static public function onParserFirstCallInit(Parser $parser) {
+		$parser->setHook('inwikigame', 'InWikiGameParserTag::renderTag');
 		return true;
 	}
 
@@ -22,7 +22,7 @@ class InWikiGameParserTag {
 	 * @param $params
 	 * @return string
 	 */
-	public function renderTag($input, $params) {
+	static public function renderTag($input, $params) {
 		$app = F::app();
 
 		$html = F::app()->renderView('InWikiGame', 'Index', array('inWikiGameId' => self::$instanceCounter++));

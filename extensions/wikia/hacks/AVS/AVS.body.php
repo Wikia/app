@@ -20,7 +20,7 @@ class AVS {
 			return wfMsg('avs-wrong-asin');
 		}
 
-		$oTmpl = F::build( 'EasyTemplate', array( dirname( __FILE__ ) . "/templates/" ) );
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 		$oTmpl->set_vars(array(
 		    "data" => array(
@@ -52,7 +52,7 @@ class AVS {
 			return wfMsg('avs-wrong-asin');
 		}
 
-		$oTmpl = F::build( 'EasyTemplate', array( dirname( __FILE__ ) . "/templates/" ) );
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 		$data = array(
 				'align' => $args['align'],
@@ -79,8 +79,6 @@ class AVS {
 
 
 	public static function getAlign($inAlign = "") {
-
-		$inAlign = empty($inAlign) ? $this->getAttrVal( 'align', true):$inAlign;
 
 		$align =  'float' . $inAlign;
 
@@ -117,7 +115,7 @@ class AVSSpecialPage extends SpecialPage {
 			$data[$key]['image-widget-code'] = htmlspecialchars('<avs_image_link align="right" asin="' . $key . '" />');
 		}
 
-		$oTmpl = F::build( 'EasyTemplate', array( dirname( __FILE__ ) . "/templates/" ) );
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 		$oTmpl->set_vars(array(
 		    "data" => $data

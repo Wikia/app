@@ -20,7 +20,7 @@ class UserRollbackSpecialController extends WikiaSpecialPageController {
 		$this->user = $this->app->wg->user;
 		$this->extensionsPath = $this->app->wg->extensionPath;
 
-		$this->rollbackRequest = F::build( 'UserRollbackRequest' );
+		$this->rollbackRequest = (new UserRollbackRequest);
 	}
 
 	/**
@@ -29,7 +29,7 @@ class UserRollbackSpecialController extends WikiaSpecialPageController {
 	 *
 	 */
 	public function index() {
-		$this->wg->Out->setPageTitle( $this->wf->msg( 'userrollback-specialpage-title' ) );
+		$this->wg->Out->setPageTitle( wfMsg( 'userrollback-specialpage-title' ) );
 
 		if ( !$this->user->isAllowed( self::MANAGER_RIGHT )  ) {
 			$this->displayRestrictionError($this->user);
@@ -50,11 +50,11 @@ class UserRollbackSpecialController extends WikiaSpecialPageController {
 					$this->setVal( 'confirmationRequired', true );
 				} else {
 					if ( $this->addTask($this->rollbackRequest) ) {
-						$status = $this->wf->msg( 'userrollback-task-added' );
+						$status = wfMsg( 'userrollback-task-added' );
 						$statusClass = 'successbox';
 						$this->rollbackRequest->clear();
 					} else {
-						$status = $this->wf->msg( 'userrollback-task-add-error' );
+						$status = wfMsg( 'userrollback-task-add-error' );
 						$statusClass = 'errorbox';
 					}
 				}
@@ -81,11 +81,11 @@ class UserRollbackSpecialController extends WikiaSpecialPageController {
 		$users = $request->getUserDetails();
 		foreach ($users as $user) {
 			if ( $user['id'] <= 0 && empty($user['ip']) ) {
-				$errors['users'][] = $this->wf->msg( 'userrollback-user-not-found', $user['name'] );
+				$errors['users'][] = wfMsg( 'userrollback-user-not-found', $user['name'] );
 			}
 		}
 		if (empty($users)) {
-			$errors['users'][] = $this->wf->msg( 'userrollback-no-user-specified' );
+			$errors['users'][] = wfMsg( 'userrollback-no-user-specified' );
 		}
 
 		// validating starting time
@@ -98,7 +98,7 @@ class UserRollbackSpecialController extends WikiaSpecialPageController {
 			}
 		}
 		if ( !$timeOk ) {
-			$errors['time'][] = $this->wf->msg( 'userrollback-invalid-time' );
+			$errors['time'][] = wfMsg( 'userrollback-invalid-time' );
 		}
 
 		return $errors;

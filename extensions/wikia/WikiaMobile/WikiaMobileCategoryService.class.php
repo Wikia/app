@@ -102,7 +102,7 @@ class WikiaMobileCategoryService extends WikiaService {
 			if ( $category instanceof Category ) {
 				$this->initModel();
 
-				$data = $this->wf->PaginateArray(
+				$data = wfPaginateArray(
 					$this->model->getCollection( $category )['items'][$index],
 					WikiaMobileCategoryModel::BATCH_SIZE,
 					$batch

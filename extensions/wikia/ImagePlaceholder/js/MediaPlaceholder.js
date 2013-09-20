@@ -1,12 +1,10 @@
-/* 
+/*
  * @author Liz Lee
- * 
+ *
  * Handle video placeholders that are saved in articles
  *
  */
 
-/*global WMU_show */
- 
 (function($, window) {
 var MediaPlaceholder = {
 
@@ -30,7 +28,7 @@ var MediaPlaceholder = {
 
 		this.setupVideoPlaceholders();
 
-		// TODO: use .wikiaImagePlaceholder instead of .wikiaPlaceholder after 
+		// TODO: use .wikiaImagePlaceholder instead of .wikiaPlaceholder after
 		// all articles have purged (after 14 days)
 		// Then we can remove wikiaVideoPlaceholder check below
 		$('#WikiaArticle').on('click', '.wikiaPlaceholder a', function(e) {
@@ -40,7 +38,7 @@ var MediaPlaceholder = {
 			if($this.parent().parent().hasClass('wikiaVideoPlaceholder')) {
 				return;
 			}
-			
+
 			e.preventDefault();
 
 			// Provide immediate feedback once button is clicked
@@ -60,33 +58,33 @@ var MediaPlaceholder = {
 					])
 				).done(function() {
 					self.imageLoaded = true;
-					
+
 					$this.text(oText);
-					WMU_show( self.getEvent(), -2, props.placeholderIndex, props.align, props.thumb, props.width, props.caption, props.link);
+					window.WMU_show( self.getEvent(), -2, props.placeholderIndex, props.align, props.thumb, props.width, props.caption, props.link);
 				});
 			} else {
 				$this.text(oText);
-				WMU_show( self.getEvent(), -2, props.placeholderIndex, props.align, props.thumb, props.width, props.caption, props.link);				
+				window.WMU_show( self.getEvent(), -2, props.placeholderIndex, props.align, props.thumb, props.width, props.caption, props.link);
 			}
 		});
 	},
-	
+
 	setupVideoPlaceholders: function() {
 		var self = this;
-		
+
 		self.WikiaArticle.find('.wikiaVideoPlaceholder a').each(function() {
-			
+
 			var $this = $(this),
 				props = self.getProps($this);
 
-			$this.removeAddVideoButton().addVideoButton({
+			$this.addVideoButton({
 				embedPresets: props,
 				insertFinalVideoParams: ['placeholder=1', 'box=' + props.placeholderIndex, 'article='+encodeURIComponent( wgTitle ), 'ns='+wgNamespaceNumber],
 				callbackAfterEmbed: self.videoEmbedCallback
 			});
-		});	
+		});
 	},
-	
+
 	videoEmbedCallback: function(embedData) {
 		var placeholders = MediaPlaceholder.WikiaArticle.find('.wikiaVideoPlaceholder a'),
 			// get placeholder to turn into a video thumbnail
@@ -111,6 +109,8 @@ var MediaPlaceholder = {
 
 		// re-bind events
 		MediaPlaceholder.setupVideoPlaceholders();
+
+
 	},
 
 

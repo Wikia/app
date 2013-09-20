@@ -309,7 +309,7 @@ class User {
 			if(!empty($data)) {
 				$_key = wfSharedMemcKey( "user_touched", $this->mId );
 				$_touched = $wgMemc->get( $_key );
-				if($_touched == null){
+				if( empty( $_touched ) ) {
 					$wgMemc->set( $_key, $data['mTouched'] );
 				} else if( $_touched <= $data['mTouched'] ) {
 					$isExpired = false;
@@ -972,7 +972,6 @@ class User {
 	 */
 	private function loadFromSession() {
 		global $wgExternalAuthType, $wgAutocreatePolicy;
-
 		$result = null;
 		wfRunHooks( 'UserLoadFromSession', array( $this, &$result ) );
 		if ( $result !== null ) {
@@ -1084,7 +1083,6 @@ class User {
 		}
 
 		$s = $dbr->selectRow( 'user', '*', array( 'user_id' => $this->mId ), __METHOD__ );
-
 		wfRunHooks( 'UserLoadFromDatabase', array( $this, &$s ) );
 
 		if ( $s !== false ) {
@@ -1996,7 +1994,10 @@ class User {
 			global $wgMemc, $wgSharedDB; # Wikia
 			$wgMemc->delete( wfMemcKey( 'user', 'id', $this->mId ) );
 			# not uncyclo
-			if( !empty( $wgSharedDB ) ) $wgMemc->delete( wfSharedMemcKey( "user_touched", $this->mId ) ); # Wikia
+			if( !empty( $wgSharedDB ) ) {
+				$memckey = wfSharedMemcKey( "user_touched", $this->mId );
+				$wgMemc->delete( $memckey );
+			}
 		}
 	}
 
@@ -2014,12 +2015,19 @@ class User {
 		if( $this->mId ) {
 			$this->mTouched = self::newTouchedTimestamp();
 
-			$dbw = wfGetDB( DB_MASTER );
-			$dbw->update( 'user',
+			#<Wikia>
+            global $wgExternalSharedDB, $wgSharedDB;
+            if( isset( $wgSharedDB ) ) {
+                    $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+            }
+            else {
+                    $dbw = wfGetDB( DB_MASTER );
+            }
+			#</Wikia>
+			$dbw->update( '`user`',
 				array( 'user_touched' => $dbw->timestamp( $this->mTouched ) ),
 				array( 'user_id' => $this->mId ),
 				__METHOD__ );
-
 			$this->clearSharedCache();
 		}
 	}
@@ -3024,14 +3032,6 @@ class User {
 			}
 		}
 
-		/**
-		 * @author Michał Roszka (Mix)
-		 * trap for BugId:17012
-		 */
-		if ( 'Lancer1289' == $this->mName ) {
-			$oTo = $oFrom = new MailAddress( 'mix@wikia-inc.com' );
-			UserMailer::send( $oTo, $oFrom, 'BugId:17012 Occurrence Report', serialize( wfDebugBacktrace() ) );
-		}
 		// wikia change end
 
 		$dbw = wfGetDB( DB_MASTER );

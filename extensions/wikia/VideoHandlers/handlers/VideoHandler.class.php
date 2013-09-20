@@ -54,7 +54,7 @@ abstract class VideoHandler extends BitmapHandler {
 	}
 
 	function normaliseParams( $image, &$params ) {
-		global $wgMaxImageArea, $wgMaxThumbnailArea;
+		global $wgMaxThumbnailArea;
 		wfProfileIn( __METHOD__ );
 		if ( !ImageHandler::normaliseParams( $image, $params ) ) {
 			wfProfileOut( __METHOD__ );
@@ -217,7 +217,7 @@ abstract class VideoHandler extends BitmapHandler {
 	function getApi() {
 		wfProfileIn( __METHOD__ );
 		if ( !empty( $this->videoId ) && empty( $this->api ) ){
-			$this->api = F::build ( $this->apiName, array( $this->videoId ) );
+			$this->api = new $this->apiName( $this->videoId );
 		}
 		wfProfileOut( __METHOD__ );
 		return $this->api;
@@ -276,7 +276,7 @@ abstract class VideoHandler extends BitmapHandler {
 
 			if ( (int)$sec == $sec ) {
 
-				$hms = F::build( 'WikiaFileHelper', array($sec), 'formatDuration' );
+				$hms = WikiaFileHelper::formatDuration($sec);
 
 				return $hms;
 

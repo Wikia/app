@@ -18,18 +18,22 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = dirname(__FILE__);
 
-// WikiaApp
-$app = F::app();
-
 // classes
-$app->registerClass('JSMessages', $dir . '/JSMessages.class.php');
-$app->registerClass('JSMessagesHelper', $dir . '/JSMessagesHelper.class.php');
-$app->registerClass('JSMessagesController', $dir . '/JSMessagesController.class.php');
+$wgAutoloadClasses['JSMessages'] =  $dir . '/JSMessages.class.php';
+$wgAutoloadClasses['JSMessagesHelper'] =  $dir . '/JSMessagesHelper.class.php';
+$wgAutoloadClasses['JSMessagesController'] =  $dir . '/JSMessagesController.class.php';
 
 // hooks
-$app->registerHook('WikiaSkinTopScripts', 'JSMessages', 'onWikiaSkinTopScripts');
-$app->registerHook('MessageCacheReplace', 'JSMessagesHelper', 'onMessageCacheReplace');
+$wgHooks['WikiaSkinTopScripts'][] = 'JSMessages::onWikiaSkinTopScripts';
+$wgHooks['MessageCacheReplace'][] = 'JSMessagesHelper::onMessageCacheReplace';
 
-// register instances
-F::setInstance('JSMessages', new JSMessages());
-F::setInstance('JSMessagesHelper', new JSMessagesHelper());
+
+
+$wgExtensionFunctions[] = function () {
+	// This has to be wrapped in a function so it isn't run before we include GlobalSettings.php
+	JSMessages::registerPackage("ConfirmModal", array(
+		'ok',
+		'cancel'
+	));
+	JSMessages::enqueuePackage("ConfirmModal", JSMessages::EXTERNAL); // We need this to ensure the messages are loaded on every page
+};

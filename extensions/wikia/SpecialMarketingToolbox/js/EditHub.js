@@ -28,8 +28,7 @@ EditHub.prototype = {
 			var $this = $(this);
 
 			$this.addVideoButton({
-				callbackAfterSelect: function(url) {
-
+				callbackAfterSelect: function(url, VET) {
 					$.nirvana.sendRequest({
 						controller: 'MarketingToolboxController',
 						method: 'getVideoDetails',
@@ -56,7 +55,7 @@ EditHub.prototype = {
 										.html(response.videoData.videoThumb);
 
 									// Close VET modal
-									window.VET.close();
+									VET.close();
 								}
 								else if (wgMarketingToolboxModuleIdSelected == wgMarketingToolboxModuleIdPopularVideos) {
 									$.when(
@@ -66,7 +65,7 @@ EditHub.prototype = {
 										})
 									).done(function(libData, packagesData) {
 										initThis.popularVideosAdd(packagesData[0].mustache[0], response);
-										window.VET.close();
+										VET.close();
 									});
 								}
 							}

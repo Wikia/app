@@ -282,7 +282,8 @@ $messages['qqq'] = array(
 	'usersignup-confirm-email-change-email-content' => 'Change email heading.',
 	'usersignup-confirm-email-change-email' => 'Action link to open a dialog to change email.',
 	'usersignup-confirm-email-new-email-label' => 'Label for email input.',
-	'usersignup-confirm-email-update' => 'Button to submit e-mail address update form.',
+	'usersignup-confirm-email-update' => 'Button to submit email address update form.
+{{Identical|Update}}',
 	'usersignup-confirm-email-tooltip' => '{{doc-singularthey}}
 Tooltip letting user know they can change their email.  Tooltip is on the same line as {{msg-w|usersignup-confirm-email-change-email-content}}',
 	'usersignup-resend-email-heading-success' => 'Validation message telling the user the email has been re-sent.',
@@ -335,7 +336,8 @@ Tooltip letting user know they can change their email.  Tooltip is on the same l
 	'usersignup-marketing-creativity' => 'Third marketing blurb on right side of Special:UserSignup.',
 	'usersignup-createaccount-byemail' => 'Button label on signup form for Special:UserSignup?byemail=1 to create account for others.',
 	'usersignup-error-captcha' => 'Error message for captcha failure.',
-	'usersignup-account-creation-heading' => 'Page heading for confirm page when byemail=1 is used.',
+	'usersignup-account-creation-heading' => 'Page heading for confirm page when byemail=1 is used.
+{{Identical|Success}}',
 	'usersignup-account-creation-subheading' => 'Page subheading for confirm page when byemail=1 is used. Parameters:
 * $1 is an e-mail address.',
 	'usersignup-account-creation-email-sent' => '{{doc-singularthey}}
@@ -510,6 +512,7 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author Marcmpujol
  * @author Toniher
  */
@@ -612,9 +615,41 @@ Para ver las noticias más recientes en Wikia, visita http://es.wikia.com
 	'usersignup-welcome-email-learn-basic-content' => "Aconsegueix un tutorial ràpid sobre els conceptes bàsics de Wikia; com editar una pàgina, el teu perfil d'usuari, canviar les teves preferències i molt més.",
 	'usersignup-welcome-email-learn-basic-button' => "Fes-li un cop d'ull!",
 	'usersignup-welcome-email-explore-wiki-heading' => 'Explora més wikis.',
+	'usersignup-welcome-email-explore-wiki-content' => 'Hi ha milers de viquis a Wikia, trobeu-ne més que us interessin a algun dels nostres centres: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Videojocs</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Entreteniment</a>, o <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Estil de vida</a>.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Anar a ca.wikia.com',
 	'usersignup-welcome-email-content' => 'Vols més informació? Troba consells i respostes en la comunitat de Wikia <a style="color:#2C85D5;" href="http://ca.wikia.com">Wikia en Català</a>.',
 	'usersignup-welcome-email-signature' => "L'Equip de Wikia",
+	'usersignup-welcome-email-body' => 'Hola $USERNAME,
+
+Et donem la benvinguda a Wikia i a {{SITENAME}}! Aquí tens algunes coses que pots fer per començar.
+
+Edita el teu perfil.
+
+Afegeix una foto al perfil i una petita descripció sobre tu mateix al teu perfil de {{SITENAME}}.
+
+Vés a $EDITPROFILEURL
+
+Aprèn els conceptes bàsics.
+
+Visita un breu tutorial sobre els conceptes bàsics de Wikia: com editar una pàgina, el teu perfil d\'usuari, canviar les teves preferències, i més.
+
+Comprova-ho ($LEARNBASICURL)
+
+Explora més viquis.
+
+Hi ha milers de viquis a Wikia, troba les que et poden interessar a algun dels nostres centres: Videojocs (http://www.wikia.com/Video_Games), Entreteniment (http://www.wikia.com/Entertainment), o Estil de vida (http://www.wikia.com/Lifestyle).
+
+Vés a $EXPLOREWIKISURL
+
+Necessites més informació? Troba consells, respostes i la comunitat Wikia a la Central de la Comunitat (http://www.community.wikia.com). Que t\'ho passis bè editant!
+
+L\'equip de Wikia
+
+
+___________________________________________
+
+Per veure les últimes actualitzacions a Wikia, visita http://community.wikia.com
+Vols controlar quins correus electrònics vols rebre? Vés a: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Uneix-te avui a Wikia',
 	'usersignup-heading-byemail' => 'Crear un compte per algú altre',
 	'usersignup-marketing-wikia' => 'Comença a col·laborar amb milions de persones de tot el mon qui es reuneixen per compartir el que coneixen i estimen.',
@@ -682,6 +717,13 @@ ___________________________________________
 Per veure els darrers esdeveniments a Wikia, visita http://ca.wikia.com
 Vols controlar els correus que reps? Vés a: {{fullurl: {{ns:special}}:Preferències}}",
 	'usersignup-facebook-problem' => 'Hi ha hagut un problema de comunicació amb Facebook. Si us plau, torna-ho a provar altre cop més tard.',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'usersignup-confirm-email-update' => 'Карлаяккха',
 );
 
 /** Czech (česky)
@@ -2192,7 +2234,7 @@ $messages['mk'] = array(
 	'usersignup-confirm-page-subheading-confirmed-user' => 'Веќе сте потврдени',
 	'usersignup-confirmation-heading' => 'Речиси е готово',
 	'usersignup-confirmation-heading-email-resent' => 'Новата порака е испратена',
-	'usersignup-confirmation-subheading' => 'Проверете ги ја е-поштата',
+	'usersignup-confirmation-subheading' => 'Проверете си ја е-поштата',
 	'usersignup-confirmation-email-sent' => "Ви испративме порака на '''$1'''.
 
 Стиснете на потврдната врска во пораката за да го довршите создавањето на сметката.",
@@ -3850,7 +3892,7 @@ Vill du kontrollera vilka e-postmeddelanden du får? Gå till: {{fullurl:{{ns:sp
 	'usersignup-marketing-creativity' => 'Använd Wikia för att uttrycka din kreativitet med omröstningar och Topp 10-listor, foto- och videogallerier, applikationer och mer.',
 	'usersignup-createaccount-byemail' => 'Skapa ett konto för någon annan',
 	'usersignup-error-captcha' => 'Ordet du skrev in stämde inte överens med ordet i rutan, försök igen!',
-	'usersignup-account-creation-heading' => 'Succé!',
+	'usersignup-account-creation-heading' => 'Åtgärden genomfördes!',
 	'usersignup-account-creation-subheading' => 'Vi har skickat ett e-postmeddelande till $1',
 	'usersignup-account-creation-email-sent' => 'Du har börjat på att skapa ett konto för $2. Vi har skickat ett e-postmeddelande till $1 med ett tillfälligt lösenord och en bekräftelselänk.
 
@@ -4146,6 +4188,7 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Wildream
  */
 $messages['uk'] = array(
@@ -4215,6 +4258,140 @@ ___________________________________________
 	'usersignup-reconfirmation-email-sent' => 'Вашу адресу електронної пошти було змінено на $1. Ми відправили вам нового листа з підтвердженням електронною поштою. Будь ласка, підтвердіть нову адресу електронної пошти.',
 	'usersignup-reconfirmation-email_subject' => 'Підтвердити зміну адресі вашої електронної пошти на Вікія',
 	'usersignup-reconfirmation-email-greeting' => 'Привіт, $USERNAME,',
+	'usersignup-reconfirmation-email-content' => 'Будь-ласка, натисніть на посилання нижче, щоб підтвердити зміну адреси електронної пошти на Вікії.
+
+<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
+
+Ви будете продовжувати отримувати електронну пошту на ваш стару адресу до тих пір, поки ви це не підтвердите.',
+	'usersignup-reconfirmation-email-signature' => 'Команда Вікія',
+	'usersignup-reconfirmation-email_body' => 'Привіт $2,
+
+Будь Ласка натисніть на посилання нижче, щоб підтвердити зміну адреси електронної пошти на Вікії.
+
+$3
+
+Ви будете продовжувати отримувати електронну пошту на ваш старий адресу до тих пір, поки ви це підтвердити.
+
+ Команда Вікія
+
+
+___________________________________________
+
+Щоб ознайомитися з останніми подіями на Вікія, відвідайте http://community.wikia.com
+Хочете налаштувати пошту, яку ви отримуєте? Перейдіть до: {{fullurl:{{ns:special}}:Установки}}',
+	'usersignup-welcome-email-subject' => 'Ласкаво просимо на Вікія, $USERNAME!',
+	'usersignup-welcome-email-greeting' => 'Здоровеньки були, $USERNAME',
+	'usersignup-welcome-email-heading' => "Ми раді вітати вас на Вікія та {{ім'я сайту}}! Ось декілька речей, які ви можете зробити, щоб почати роботу.",
+	'usersignup-welcome-email-edit-profile-heading' => 'Відредагуйте ваш профіль.',
+	'usersignup-welcome-email-edit-profile-content' => 'Додати фото у профіль і кілька фактів про себе у вашому профілі на {{SITENAME}}.',
+	'usersignup-welcome-email-edit-profile-button' => 'Перейти до профілю',
+	'usersignup-welcome-email-learn-basic-heading' => 'Ознайомтеся з основами.',
+	'usersignup-welcome-email-learn-basic-content' => 'Перегляньте швидкий підручник з основ Вікія: як редагувати сторінки, ваш профіль користувача, змінювати особисті налаштування тощо.',
+	'usersignup-welcome-email-learn-basic-button' => 'Перейти до',
+	'usersignup-welcome-email-explore-wiki-heading' => 'Дослідіть інші вікі.',
+	'usersignup-welcome-email-explore-wiki-content' => 'На Вікія знаходяться тисячі вікій, знайдіть інші вікії, які, можливо, зацікавлять вас: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Відеоігри</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Кіно і Серіали</a>, or <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Стиль життя</a>.',
+	'usersignup-welcome-email-explore-wiki-button' => 'Перейти до wikia.com',
+	'usersignup-welcome-email-content' => 'Хочете отримати більше інформації? Знайдіть консультації, відповіді та спільноту Вікія у <a style="color:#2C85D5;" href="http://community.wikia.com">Центрі спільноті</a>. Щасливого редагування!',
+	'usersignup-welcome-email-signature' => 'Команда Вікія',
+	'usersignup-welcome-email-body' => 'Привіт, $USERNAME
+
+Ми раді вітати вас на Вікія та на {{SITENAME}}! Ось декілька порад, які допоможуть вам почати.
+
+Відредагуйте свій профіль.
+
+Додайте у свій профіль на {{SITENAME}} зображення і декілька фактів про себе.
+
+Перейти до $EDITPROFILEURL
+
+Вивчіть основи.
+
+Посмотрите краткое руководство по Викия: как редактировать страницы, профайл участника, изменить личные настройки и другое.
+
+Перейти к ($LEARNBASICURL)
+
+Досліджуйте інші вікії.
+
+На Вікія знаходяться тисячі вікій, знайдіть інші вікії, які, можливо, зацікавлять вас: Відеоігри (http://www.wikia.com/Video_Games), Кіно і серіали (http://www.wikia.com/Entertainment) або Захоплення (http://www.wikia.com/Lifestyle).
+
+Перейти до $EXPLOREWIKISURL
+
+Потрібна додаткова інформація? На Центральній Вікі (http://www.community.wikia.com) можна знайти поради, відповіді на питання та інших учасників спільноти Вікія. Щасливого редагування!
+
+Команда Вікія
+
+
+___________________________________________
+
+Щоб перевірити останні події на Вікія, відвідайте http://community.wikia.com
+Хочете налаштувати розсилку листів? Перейдіть до {{fullurl:{{ns:special}}:Preferences}}',
+	'usersignup-heading' => 'Приєднатися до Вікія сьогодні',
+	'usersignup-heading-byemail' => 'Створити обліковий запис для когось іншого',
+	'usersignup-marketing-wikia' => 'Почніть співпрацю з мільйонам людей з усього світу, які зібралися разом, щоб робити те, що вони знають і люблять.',
+	'usersignup-marketing-login' => 'Вже користувач? [[Special:UserLogin|Ввійти]]',
+	'usersignup-marketing-benefits' => 'Будьте частиною чогось величезного',
+	'usersignup-marketing-community-heading' => 'Співпрацюйте',
+	'usersignup-marketing-community' => 'Відкрийте для себе і вивчайте різні теми, починаючи від відео-ігор, кіно і телебачення. Зустрічайте людей зі схожими інтересами і пристрастями.',
+	'usersignup-marketing-global-heading' => 'Створити',
+	'usersignup-marketing-global' => 'Розпочніть вікі. Починайте з малого, виплекайте велике за допомогою інших людей.',
+	'usersignup-marketing-creativity-heading' => 'Будьте оригінальним',
+	'usersignup-marketing-creativity' => 'Використовуйте Wikia, щоб висловити свій творчий потенціал за допомогою опитувань і рейтингових списків, фото та відео галерей, програми та багато іншого.',
+	'usersignup-createaccount-byemail' => 'Створити обліковий запис для когось іншого',
+	'usersignup-error-captcha' => 'Введене вами слово не збігається з словом у вікно, спробуйте ще раз!',
+	'usersignup-account-creation-heading' => 'Успіх!',
+	'usersignup-account-creation-subheading' => 'Ми відправили лист на $1',
+	'usersignup-account-creation-email-sent' => 'Ви почали процес створення облікового запису $2. Ми відправили вам лист на $1 з тимчасовим паролем та посиланням для підтвердження.
+
+
+$2, вам потрібно натиснути на посилання у цьому листі, щоб підтвердити свій обліковий запис та змінити тимчавий пароль на інший для завершення створення облікового запису.
+
+
+[{{fullurl:{{ns:special}}:UserSignup|byemail=1}} Створити інший обліковий запис] на {{SITENAME}}',
+	'usersignup-account-creation-email-subject' => 'Обліковий запис створено для вас на Вікія!',
+	'usersignup-account-creation-email-greeting' => 'Привіт,',
+	'usersignup-account-creation-email-content' => 'Обліковий запис на {{SITENAME}} створений. Для доступу до облікового запису та зміни тимчасового паролю, натисніть на посилання нижче і введіть своє ім\'я користувача "$USERNAME" і пароль "$NEWPASSWORD".
+
+Будь ласка, перейдіть до <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a>
+
+Якщо ви не хочете, щоб цей обліковий запис був створений, то ви можете знехтувати цим повідомленням або зв\'язатися з нашою командою підтримки спільноти з будь-якого питання.',
+	'usersignup-account-creation-email-signature' => 'Команда Вікія',
+	'usersignup-account-creation-email-body' => 'Привіт,
+
+Обліковий запис на {{SITENAME}} створено. Для доступу до облікового запису та зміни тимчасового паролю натисніть на посилання нижче і введіть своє ім\'я учасника "$2" та пароль "$3".
+
+Будь ласка, перейдіть до {{fullurl:{{ns:special}}:UserLogin}}
+
+Якщо ви не хочете, щоб цей обліковий запис було створено, ви можете знехтувати цим повідомленням або зв\'язатися з нашою командою підтримки спільноти з будь-якого питання.
+
+Команда Вікія
+
+
+___________________________________________
+
+Для перевірки останніх подій на Вікія відвідайте http://community.wikia.com
+Хочете налаштувати отримання розсилки листів? Перейдіть на {{fullurl:{{ns:special}}:Preferences}}',
+	'usersignup-confirmation-reminder-email_subject' => 'Не будьте чужим...',
+	'usersignup-confirmation-reminder-email-greeting' => 'Привіт $USERNAME',
+	'usersignup-confirmation-reminder-email-content' => 'Минуло кілька днів, але, схоже, ви ще не закінчили створення облікового запису на Wikia поки. Це легко. Просто натисніть на посилання для підтвердження нижче:
+
+<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
+
+Якщо ви не підтвердите протягом 23 днів ваше ім\'я користувача $USERNAME, то воно знову стане доступним для інших, тому не чекайте!',
+	'usersignup-confirmation-reminder-email-signature' => 'Команда Вікія',
+	'usersignup-confirmation-reminder-email_body' => "Hi $2,
+
+Пройшло кілька днів, але, схоже, ви ще не закінчили створення облікового запису на Wikia поки. Це легко. Просто натисніть на посилання для підтвердження нижче:
+
+$3
+
+Якщо ви не підтвердите протягом 23 днів ваше ім'я користувача, $2, то воно знову стане доступним, тому не чекайте!
+
+ Команда Вікія
+
+
+___________________________________________
+ Ознайомтеся з останніми подіями на Вікія, відвідавши http://community.wikia.com
+Хочете налаштувати отримання розсилки листів? Перейдіть на:  {{fullurl:{{ns:special}}:Preferences}}",
+	'usersignup-facebook-problem' => "Сталася помилка з'єднання з Facebook. Будь ласка, спробуйте ще раз пізніше.",
 );
 
 /** Simplified Chinese (中文（简体）‎)

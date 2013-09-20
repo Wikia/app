@@ -1,8 +1,5 @@
 <?php namespace r;
 
-require_once('protocolbuf/message/pb_message.php');
-require_once('protocolbuf/parser/pb_parser.php');
-require_once('pb_proto_ql2.php');
 require_once("util.php");
 require_once("datum.php");
 
@@ -36,7 +33,8 @@ class Connection
     }
     
     public function reconnect() {
-        $this->close();
+        if ($this->isOpen())
+            $this->close();
         $this->connect();
     }
     
@@ -48,7 +46,7 @@ class Connection
         $this->defaultDb = new Db($dbName);
     }
     
-    public function run(Query $query, $options) {
+    public function _run(Query $query, $options) {
         if (isset($options) && !is_array($options)) throw new RqlDriverError("Options must be an array.");
         if (!$this->isOpen()) throw new RqlDriverError("Not connected.");
         
@@ -64,24 +62,23 @@ class Connection
         }
         
         // Send the request
-        $pbTerm = $query->getPBTerm();
+        $pbTerm = $query->_getPBTerm();
         $pbQuery = $this->makeQuery();
-        $pbQuery->set_token($token);
-        $pbQuery->set_type(pb\Query_QueryType::PB_START);
-        $pbQuery->set_query($pbTerm);
-        $optsI = 0;
+        $pbQuery->setToken($token);
+        $pbQuery->setType(pb\Query_QueryType::PB_START);
+        $pbQuery->setQuery($pbTerm);
         if (isset($this->defaultDb)) {
             $pair = new pb\Query_AssocPair();
-            $pair->set_key('db');
-            $pair->set_val($this->defaultDb->getPBTerm());
-            $pbQuery->set_global_optargs($optsI++, $pair);
+            $pair->setKey('db');
+            $pair->setVal($this->defaultDb->_getPBTerm());
+            $pbQuery->appendGlobalOptargs($pair);
         }
         if (isset($options)) {
             foreach ($options as $key => $value) {
                 $pair = new pb\Query_AssocPair();
-                $pair->set_key($key);
-                $pair->set_val(nativeToDatum($value)->getPBTerm());
-                $pbQuery->set_global_optargs($optsI++, $pair);
+                $pair->setKey($key);
+                $pair->setVal(nativeToDatum($value)->_getPBTerm());
+                $pbQuery->appendGlobalOptargs($pair);
             }
         }
         $this->sendProtobuf($pbQuery);
@@ -91,81 +88,89 @@ class Connection
         }
         else {
             // Await the response
-            $response = $this->receiveResponse($token);
+            $response = $this->receiveResponse($token, $query);
             
-            if ($response->type() == pb\Response_ResponseType::PB_SUCCESS_PARTIAL) {
+            if ($response->getType() == pb\Response_ResponseType::PB_SUCCESS_PARTIAL) {
                 $this->activeTokens[$token] = true;
             }
             
-            if ($response->type() == pb\Response_ResponseType::PB_SUCCESS_ATOM)
+            if ($response->getType() == pb\Response_ResponseType::PB_SUCCESS_ATOM)
                 return $this->createDatumFromResponse($response);
             else
                 return $this->createCursorFromResponse($response);
         }
     }
     
-    public function continueQuery($token) {
+    public function _continueQuery($token) {
         if (!$this->isOpen()) throw new RqlDriverError("Not connected.");    
         if (!is_numeric($token)) throw new RqlDriverError("Token must be a number.");
         
         // Send the request
         $pbQuery = $this->makeQuery();
-        $pbQuery->set_token($token);
-        $pbQuery->set_type(pb\Query_QueryType::PB_CONTINUE);
+        $pbQuery->setToken($token);
+        $pbQuery->setType(pb\Query_QueryType::PB_CONTINUE);
         $this->sendProtobuf($pbQuery);
         
         // Await the response
         $response = $this->receiveResponse($token);
         
-        if ($response->type() != pb\Response_ResponseType::PB_SUCCESS_PARTIAL) {
+        if ($response->getType() != pb\Response_ResponseType::PB_SUCCESS_PARTIAL) {
             unset($this->activeTokens[$token]);
         }
         
         return $response;
     }
     
-    public function stopQuery($token) {
+    public function _stopQuery($token) {
         if (!$this->isOpen()) throw new RqlDriverError("Not connected.");    
         if (!is_numeric($token)) throw new RqlDriverError("Token must be a number.");
         
         // Send the request
         $pbQuery = $this->makeQuery();
-        $pbQuery->set_token($token);
-        $pbQuery->set_type(pb\Query_QueryType::PB_STOP);
+        $pbQuery->setToken($token);
+        $pbQuery->setType(pb\Query_QueryType::PB_STOP);
         $this->sendProtobuf($pbQuery);
         
         // Await the response (but don't check for errors. the stop response doesn't even have a type)
-        $response = $this->receiveResponse($token, true);
+        $response = $this->receiveResponse($token, null, true);
         
         unset($this->activeTokens[$token]);
         
         return $response;
     }
     
-    private function receiveResponse($token, $noChecks = false) {
+    private function receiveResponse($token, $query = null, $noChecks = false) {
         $responseBuf = $this->receiveProtobuf();
         $response = new pb\Response();
         $response->ParseFromString($responseBuf);
         if (!$noChecks)
-            $this->checkResponse($response, $token);
+            $this->checkResponse($response, $token, $query);
         
         return $response;
     }
     
-    private function checkResponse(pb\Response $response, $token) {
-        if (is_null($response->type())) throw new RqlDriverError("Response message has no type.");
+    private function checkResponse(pb\Response $response, $token, $query = null) {
+        if (is_null($response->getType())) throw new RqlDriverError("Response message has no type.");
         
-        if ($response->token() != $token) {
-            throw new RqlDriverError("Received wrong token. Response does not match the request.");
+        if ($response->getToken() != $token) {
+            throw new RqlDriverError("Received wrong token. Response does not match the request. Expected $token, received " . $response->getToken());
         }
-        
-        // TODO: Add backtrace to RqlUserError        
-        if ($response->type() == pb\Response_ResponseType::PB_CLIENT_ERROR)
-            throw new RqlDriverError("Server says the I am buggy: " . $response->response(0)->r_str());
-        else if ($response->type() == pb\Response_ResponseType::PB_COMPILE_ERROR)
-            throw new RqlUserError("Compile error: " . $response->response(0)->r_str());
-        else if ($response->type() == pb\Response_ResponseType::PB_RUNTIME_ERROR)
-            throw new RqlUserError("Runtime error: " . $response->response(0)->r_str());
+         
+        if ($response->getType() == pb\Response_ResponseType::PB_CLIENT_ERROR) {
+            throw new RqlDriverError("Server says PHP-RQL is buggy: " . $response->getResponseAt(0)->getRStr());
+        }
+        else if ($response->getType() == pb\Response_ResponseType::PB_COMPILE_ERROR) {
+            $backtrace = null;
+            if (!is_null($response->getBacktrace()))
+                $backtrace =  Backtrace::_fromProtobuffer($response->getBacktrace());
+            throw new RqlUserError("Compile error: " . $response->getResponseAt(0)->getRStr(), $query, $backtrace);
+        }
+        else if ($response->getType() == pb\Response_ResponseType::PB_RUNTIME_ERROR) {
+            $backtrace = null;
+            if (!is_null($response->getBacktrace()))
+                $backtrace =  Backtrace::_fromProtobuffer($response->getBacktrace());
+            throw new RqlUserError("Runtime error: " . $response->getResponseAt(0)->getRStr(), $query, $backtrace);
+        }
     }
     
     private function createCursorFromResponse(pb\Response $response) {
@@ -173,7 +178,7 @@ class Connection
     }
     
     private function createDatumFromResponse(pb\Response $response) {
-        $datum = $response->response(0);
+        $datum = $response->getResponseAt(0);
         return protobufToDatum($datum);
     }
     
@@ -190,19 +195,25 @@ class Connection
     }
     
     private function receiveProtobuf() {
-        $responseSize = stream_get_contents($this->socket, 4);
-        if ($responseSize === false) throw new RqlDriverError("Unable to read from socket.");
+        $responseSize = @stream_get_contents($this->socket, 4);
+        if ($responseSize === false || strlen($responseSize) < 4) {
+            $this->close();
+            throw new RqlDriverError("Unable to read from socket. Disconnected.");
+        }
         $responseSize = unpack("V", $responseSize);
         $responseSize = $responseSize[1];
         $responseBuf = stream_get_contents($this->socket, $responseSize);
-        if ($responseBuf === false) throw new RqlDriverError("Unable to read from socket.");
+        if ($responseBuf === false || strlen($responseBuf) < $responseSize) {
+            $this->close();
+            throw new RqlDriverError("Unable to read from socket. Disconnected.");
+        }
         return $responseBuf;
     }
     
     private function connect() {
         if ($this->isOpen()) throw new RqlDriverError("Already connected");
     
-        $this->socket = stream_socket_client("tcp://" . $this->host . ":" . $this->port, $errno, $errstr);
+        $this->socket = @stream_socket_client("tcp://" . $this->host . ":" . $this->port, $errno, $errstr);
         if ($errno != 0 || $this->socket === false) {
             $this->socket = null;
             throw new RqlDriverError("Unable to connect: " . $errstr);
@@ -222,7 +233,10 @@ class Connection
         $bytesWritten = 0;
         while ($bytesWritten < strlen($s)) {
             $result = fwrite($this->socket, substr($s, $bytesWritten));
-            if ($result === false) throw new RqlDriverError("Unable to write to socket");
+            if ($result === false) {
+                $this->close();
+                throw new RqlDriverError("Unable to write to socket. Disconnected.");
+            }
             $bytesWritten += $result;
         }
     }

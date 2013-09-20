@@ -4,10 +4,10 @@ class PopularBlogPostsController extends WikiaController {
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 		
-		$mcKey = $this->wf->MemcKey( "OasisPopularBlogPosts", $this->wg->Lang->getCode() );
+		$mcKey = wfMemcKey( "OasisPopularBlogPosts", $this->wg->Lang->getCode() );
 		$this->body = $this->wg->Memc->get($mcKey);
 		if (empty ($this->body)) {
-			$input = "	<title>" .$this->wf->Msg('oasis-popular-blogs-title') ."</title>
+			$input = "	<title>" .wfMsg('oasis-popular-blogs-title') ."</title>
 						<type>box</type>
 						<order>date</order>";
 

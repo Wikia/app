@@ -29,8 +29,11 @@ class ImageServingScript extends Maintenance {
 		$time = microtime(true);
 
 		$title = Title::newFromText($title);
-		$article = new Article($title);
+		if (!$title->exists()) {
+			$this->error('Given title does not exist', 1);
+		}
 
+		$article = new Article($title);
 		$images = ImageServingHelper::buildAndGetIndex($article, false, $dryRun);
 
 		$time = microtime(true) - $time;

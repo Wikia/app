@@ -15,7 +15,7 @@ class WikiaHubsServicesHelper
 	 * @return string
 	 */
 	static public function getWikiaHomepageHubsMemcacheKey($lang) {
-		return F::app()->wf->SharedMemcKey(
+		return wfSharedMemcKey(
 			'wikiahomepage',
 			self::HUBSV2_IMAGES_MEMC_KEY_PREFIX,
 			$lang,

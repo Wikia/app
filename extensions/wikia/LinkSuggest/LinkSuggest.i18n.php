@@ -40,17 +40,22 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Gwenn-Ael
  */
 $messages['br'] = array(
 	'tog-disablelinksuggest' => 'Chomp hep diskouez al liammoù kinniget', # Fuzzy
+	'tog-redirected-from' => '&ndash; adkaset adalek $1',
 );
 
 /** Catalan (català)
+ * @author Marcmpujol
  * @author Paucabot
  */
 $messages['ca'] = array(
-	'tog-disablelinksuggest' => "No mostris suggeriments d'enllaços", # Fuzzy
+	'linksuggest-desc' => "Suggereix enllaços als editors en mode d'edició",
+	'tog-disablelinksuggest' => "No mostris suggeriments d'enllaços en mode font",
+	'tog-redirected-from' => '&ndash; redirigit des de $1',
 );
 
 /** Czech (česky)
@@ -157,9 +162,11 @@ $messages['ia'] = array(
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
  * @author Bennylin
+ * @author C5st4wr6ch
  */
 $messages['id'] = array(
 	'tog-disablelinksuggest' => 'Jangan menampilkan saran pranala',
+	'tog-redirected-from' => '&ndash; dialihkan dari $1',
 );
 
 /** Italian (italiano)
@@ -217,10 +224,11 @@ $messages['lb'] = array(
 );
 
 /** Latvian (latviešu)
+ * @author Papuass
  * @author Xil
  */
 $messages['lv'] = array(
-	'tog-disablelinksuggest' => 'Neradīt saišu ieteikumus', # Fuzzy
+	'tog-disablelinksuggest' => 'Neradīt saišu ieteikumus izejas koda režīmā',
 );
 
 /** Macedonian (македонски)
@@ -272,7 +280,9 @@ $messages['nn'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'tog-disablelinksuggest' => 'Far pas veire los ligams suggerits', # Fuzzy
+	'linksuggest-desc' => 'Prepausa de ligams als contributors en edicion',
+	'tog-disablelinksuggest' => 'Afichar pas la suggestion de ligam en mòde font',
+	'tog-redirected-from' => '&ndash; Redirigit dempuèi $1',
 );
 
 /** Polish (polski)

@@ -58,7 +58,7 @@ class WikiaBarController extends WikiaController {
 		$vertical = !empty($params['vertical']) ? $params['vertical'] : HubService::getCategoryInfoForCity($this->wg->cityId)->cat_id;
 
 		/** @var $model WikiaBarModel */
-		$model = F::build('WikiaBarModel');
+		$model = new WikiaBarModel();
 		$vertical = $model->mapVerticalToMain($vertical);
 		$model->setLang($lang);
 		$model->setVertical($vertical);

@@ -29,7 +29,7 @@ class Forum extends Walls {
 			$boardInfo = $board->getBoardInfo();
 			$boardInfo['id'] = $title->getArticleID();
 			$boardInfo['name'] = $title->getText();
-			$boardInfo['description'] = $board->getDescription();
+			$boardInfo['description'] = $board->getDescriptionWithoutTemplates();
 			$boardInfo['url'] = $title->getFullURL();
 			$orderIndex = $orderIndexes[$id];
 			$boards[$orderIndex] = $boardInfo;
@@ -47,7 +47,7 @@ class Forum extends Walls {
 	public function getBoardCount( $db = DB_SLAVE ) {
 		wfProfileIn( __METHOD__ );
 
-		$dbw = $this->wf->GetDB( $db );
+		$dbw = wfGetDB( $db );
 
 		// get board list
 		$result = (int)$dbw->selectField(
@@ -73,7 +73,7 @@ class Forum extends Walls {
 		$memKey = $this->getMemKeyTotalThreads( $days );
 		$totalThreads = $this->wg->Memc->get( $memKey );
 		if ( $totalThreads === false ) {
-			$db = $this->wf->GetDB( DB_SLAVE );
+			$db = wfGetDB( DB_SLAVE );
 
 			$sqlWhere = array( 
 				'parent_comment_id' => 0,
@@ -119,7 +119,7 @@ class Forum extends Walls {
 	 * @return string
 	 */
 	protected function getMemKeyTotalThreads( $days ) {
-		return $this->wf->MemcKey( 'forum_total_threads_' . $days );
+		return wfMemcKey( 'forum_total_threads_' . $days );
 	}
 
 	// clear cache for total threads
@@ -137,8 +137,7 @@ class Forum extends Walls {
 		wfProfileIn( __METHOD__ );
 
 		$out = WikiaDataAccess::cache( wfMemcKey( 'Forum_hasAtLeast', $ns, $count ), 24 * 60 * 60/* one day */, function() use ( $ns, $count ) {
-			$app = F::App();
-			$db = $app->wf->GetDB( DB_MASTER );
+			$db = wfGetDB( DB_MASTER );
 			// check if there is more then 5 forum pages (5 is number of forum pages from starter)
 			// limit 6 is faster solution then count(*) and the compare in php
 			$result = $db->select( array( 'page' ), array( 'page_id' ), array( 'page_namespace' => $ns ), __METHOD__, array( 'LIMIT' => $count + 1 ) );
@@ -179,7 +178,7 @@ class Forum extends Walls {
 	public function createOrders() {
 		wfProfileIn( __METHOD__ );
 
-		$dbw = $this->wf->GetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER );
 
 		// get board list
 		$result = $dbw->select(

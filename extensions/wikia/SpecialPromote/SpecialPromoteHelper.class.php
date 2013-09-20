@@ -27,7 +27,7 @@ class SpecialPromoteHelper extends WikiaObject {
 
 	public function __construct() {
 		parent::__construct();
-		$this->homePageHelper = F::build('WikiaHomePageHelper');
+		$this->homePageHelper = new WikiaHomePageHelper();
 	}
 
 	public function getMinHeaderLength() {
@@ -108,10 +108,15 @@ class SpecialPromoteHelper extends WikiaObject {
 					$uploadStatus["errors"] = $this->getUploadWarningMessages($warnings);
 				} else {
 					//save temp file
-					$status = $upload->performUpload();
+					$file = $upload->stashFile();
 
 					$uploadStatus["status"] = "uploadattempted";
-					$uploadStatus["isGood"] = $status->isGood();
+					if ($file instanceof File) {
+						$uploadStatus["isGood"] = true;
+						$uploadStatus["file"] = $file;
+					} else {
+						$uploadStatus["isGood"] = false;
+					}
 				}
 			}
 		}
@@ -216,36 +221,22 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	public function removeTempImage($imageName) {
-		if ($this->isTempImageFile($imageName)) {
-			$this->removeImage($imageName);
+		$file = RepoGroup::singleton()->getLocalRepo()->getUploadStash()->getFile($imageName);
+		if ($file instanceof File) {
+			$file->remove();
 		}
 	}
 
 	public function removeImage($imageName) {
-		$title = F::build('Title', array($imageName, NS_FILE), 'newFromText');
-		$file = F::build('LocalFile', array($title, RepoGroup::singleton()->getLocalRepo()));
+		$title = Title::newFromText($imageName, NS_FILE);
+		$file = new LocalFile($title, RepoGroup::singleton()->getLocalRepo());
 
-		$visualization = F::build('CityVisualization');
+		$visualization = new CityVisualization();
 		$visualization->removeImageFromReview($this->wg->cityId, $title->getArticleId(), $this->wg->contLang->getCode());
 
 		if ($file->exists()) {
 			$file->delete('no longer needed');
 		}
-	}
-
-	public function isTempImageFile($imageName) {
-		if (strpos($imageName, 'Temp_file_') === 0) {
-			return true;
-		}
-		return false;
-	}
-
-	public function isVisualizationFile($imageName) {
-		$uploader = F::build('UploadVisualizationImageFromFile');
-		if ($uploader->isVisualizationImageName($imageName)) {
-			return true;
-		}
-		return false;
 	}
 
 	public function saveVisualizationData($data, $langCode) {
@@ -254,13 +245,13 @@ class SpecialPromoteHelper extends WikiaObject {
 		$contentLang = $this->wg->contLang->getCode();
 		$files = array('additionalImages' => array());
 
-		$visualizationModel = F::build('CityVisualization');
+		$visualizationModel = new CityVisualization();
 
 		foreach ($data as $fileType => $dataContent) {
 			switch ($fileType) {
 				case 'mainImageName':
 					$fileName = $dataContent;
-					if (strpos($fileName, 'Temp_file_') === 0) {
+					if (strpos($fileName, UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME) === false) {
 						$dstFileName = UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME;
 						$files['mainImage'] = $this->moveTmpFile($fileName, $dstFileName);
 						$files['mainImage']['modified'] = true;
@@ -320,7 +311,7 @@ class SpecialPromoteHelper extends WikiaObject {
 		$visualizationModel->updateWikiPromoteDataCache($cityId, $langCode, $updateData);
 
 		/** @var $helper WikiGetDataForVisualizationHelper */
-		$helper = F::build('WikiGetDataForVisualizationHelper');
+		$helper = new WikiGetDataForVisualizationHelper();
 		$this->wg->memc->set($helper->getMemcKey($cityId, $langCode),null);
 		$visualizationModel->regenerateBatches($visualizationModel->getTargetWikiId($langCode), $langCode);
 
@@ -364,7 +355,7 @@ class SpecialPromoteHelper extends WikiaObject {
 		// find all new files
 		$availableKeys = array_diff($allKeys,$keys);
 		foreach($additionalImagesNames as $singleFileName) {
-			if (strpos($singleFileName, 'Temp_file_') === 0) {
+			if (strpos($singleFileName, UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME) === false) {
 				$key = array_shift($availableKeys);
 				$dstFileName = $this->getAdditionalImageName($key);
 
@@ -403,14 +394,14 @@ class SpecialPromoteHelper extends WikiaObject {
 
 
 	protected function moveTmpFile($fileName, $dstFileName) {
-		$temp_file_title = F::build('Title', array($fileName, NS_FILE), 'newFromText'); /** @var $temp_file_title Title */
-		$dst_file_title = F::build('Title', array($dstFileName, NS_FILE), 'newFromText'); /** @var $dst_file_title Title */
 
-		$temp_file = F::build('LocalFile', array($temp_file_title, RepoGroup::singleton()->getLocalRepo())); /** @var $temp_file LocalFile */
-		$file = F::build('LocalFile', array($dst_file_title, RepoGroup::singleton()->getLocalRepo())); /** @var $file LocalFile */
+		$dst_file_title = Title::newFromText($dstFileName, NS_FILE);
+
+		$temp_file = RepoGroup::singleton()->getLocalRepo()->getUploadStash()->getFile($fileName);
+		$file = new LocalFile($dst_file_title, RepoGroup::singleton()->getLocalRepo());
 
 		$file->upload($temp_file->getPath(), '', '');
-		$temp_file->delete('');
+		$temp_file->remove();
 
 		$data = array(
 			'url' => $file->getURL(),
@@ -420,8 +411,8 @@ class SpecialPromoteHelper extends WikiaObject {
 		return $data;
 	}
 
-	public function getImageUrl($imageName, $requestedWidth, $requestedHeight) {
-		return $this->homePageHelper->getImageUrl($imageName, $requestedWidth, $requestedHeight);
+	public function getImageUrl($imageFile, $requestedWidth, $requestedHeight) {
+		return $this->homePageHelper->getImageUrlFromFile($imageFile, $requestedWidth, $requestedHeight);
 	}
 
 	protected function createRemovalTask($taskDeletionList) {
@@ -437,9 +428,8 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	protected function checkWikiStatus($WikiId, $langCode) {
-		$visualization = F::build('CityVisualization');
+		$visualization = new CityVisualization();
 		$wikiDataVisualization = $visualization->getWikiDataForVisualization($WikiId, $langCode);
-		$wikiDataPromote = $visualization->getWikiDataForPromote($WikiId, $langCode);
 		$mainImage = $this->getMainImage();
 		$additionalImages = $this->getAdditionalImages();
 		$hasImagesRejected = false;

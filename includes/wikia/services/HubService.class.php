@@ -143,38 +143,15 @@ class HubService extends Service {
 		$categoryId = null;
 		if (F::app()->wg->EnableWikiaHubsV2Ext) {
 			$categoryId = self::getHubIdForCurrentPageV2();
-		} elseif (F::app()->wg->EnableWikiaHubsExt) {
-			$categoryId = self::getHubIdForCurrentPageV1();
 		}
 		return $categoryId;
-	}
-
-	private static function getHubIdForCurrentPageV1() {
-		$baseText = F::app()->wg->Title->getBaseText();
-
-		/** @var $tmpTitle Title */
-		$tmpTitle = F::build('Title', array($baseText), 'newFromText');
-		$hubsPages = F::app()->wg->WikiaHubsPages;
-
-		if (!empty($hubsPages) && $tmpTitle instanceof Title) {
-			$textTitle = $tmpTitle->getDBKey();
-			if ($textTitle) {
-				foreach ($hubsPages as $hubId => $hubGroup) {
-					if (in_array($textTitle, $hubGroup)) {
-						return $hubId;
-					}
-				}
-			}
-		}
-
-		return false;
 	}
 
 	private static function getHubIdForCurrentPageV2() {
 		$baseText = F::app()->wg->Title->getBaseText();
 
 		/** @var $tmpTitle Title */
-		$tmpTitle = F::build('Title', array($baseText), 'newFromText');
+		$tmpTitle = Title::newFromText($baseText);
 
 		$hubsPages = F::app()->wg->WikiaHubsV2Pages;
 

@@ -147,7 +147,7 @@ define('pager', ['wikia.window'], function (window) {
 				}
 
 				onStartFired = animating = false;
-				onEnd && onEnd(currentPageNum);
+				onEnd && onEnd(pages[currentPageNum], current, currentPageNum);
 			},
 			loadCurrentPage = function(){
 				container.innerHTML = ((currentPageNum > 0) ? pages[currentPageNum-1] :

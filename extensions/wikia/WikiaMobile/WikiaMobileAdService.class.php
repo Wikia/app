@@ -19,9 +19,19 @@ class WikiaMobileAdService extends WikiaService {
 		return $this->shouldLoadAssets() && !$this->wg->Title->isSpecialPage();
 	}
 
-	public function index() {
-		if (!$this->shouldShowAds()) {
-			$this->skipRendering();
-		}
+	public function floating() {
+		return $this->shouldShowAds();
+	}
+
+	public function topLeaderBoard() {
+		return $this->shouldShowAds();
+	}
+
+	public function inContent() {
+		return $this->shouldShowAds();
+	}
+
+	public function modalInterstitial() {
+		return $this->shouldShowAds();
 	}
 }

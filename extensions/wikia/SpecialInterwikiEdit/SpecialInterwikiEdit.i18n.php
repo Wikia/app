@@ -121,6 +121,26 @@ $messages['br'] = array(
 	'iwedit-success' => '<p>Liamm krouet gant berzh.</p>',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'interwikiedit' => "Editor d'interwikis",
+	'iwedit-title' => "Editor d'Interwiki",
+	'iwedit-language-interwikis' => 'només interwikis de llengua',
+	'iwedit-all-interwikis' => 'tots els interwikis',
+	'iwedit-update' => 'Actualitzar',
+	'iwedit-error' => "<p>S'ha produït un error.</p>",
+	'iwedit-success' => "<p>Creació d'enllaç amb èxit.</p>",
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'iwedit-update' => 'Карлаяккха',
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  * @author Utar
@@ -194,6 +214,19 @@ $messages['fi'] = array(
 	'iwedit-update' => 'Päivitä',
 	'iwedit-error' => '<p>Tapahtui virhe.</p>',
 	'iwedit-success' => '<p>Linkin luominen onnistui.</p>',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'interwikiedit' => 'Interwiki-rættari',
+	'iwedit-title' => 'Interwiki-rættari',
+	'iwedit-language-interwikis' => 'bert mál-interwiki leinkjur',
+	'iwedit-all-interwikis' => 'allar interwiki-leinkjur',
+	'iwedit-update' => 'Dagfør',
+	'iwedit-error' => '<p>Ein feilur hendi.</p>',
+	'iwedit-success' => '<p>Leinkja er upprættað.</p>',
 );
 
 /** French (français)
@@ -295,6 +328,14 @@ $messages['ja'] = array(
 	'iwedit-success' => '<p>リンクの作成に成功しました。</p>',
 );
 
+/** Kazakh (Cyrillic script) (қазақша (кирил)‎)
+ * @author Arystanbek
+ */
+$messages['kk-cyrl'] = array(
+	'interwikiedit' => 'Интеруики өңдеуші',
+	'iwedit-title' => 'Интеруики өңдеуші',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
@@ -380,6 +421,7 @@ $messages['nl'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
+	'interwikiedit' => 'Editor Interwiki',
 	'iwedit-title' => 'Editor Interwiki',
 	'iwedit-language-interwikis' => 'interwikis de lengas solament',
 	'iwedit-all-interwikis' => 'totes los interwikis',
@@ -434,7 +476,7 @@ $messages['pt'] = array(
 	'iwedit-all-interwikis' => 'todos os links interwikis',
 	'iwedit-update' => 'Atualizar',
 	'iwedit-error' => '<p>Ocorreu um erro.</p>',
-	'iwedit-success' => '<p>Os links foram criados correctamente.</p>',
+	'iwedit-success' => '<p>Os links foram criados corretamente.</p>',
 );
 
 /** Brazilian Portuguese (português do Brasil)

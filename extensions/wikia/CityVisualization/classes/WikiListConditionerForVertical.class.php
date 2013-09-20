@@ -1,4 +1,5 @@
 <?php
+
 class WikiListConditionerForVertical implements WikiListConditioner {
 	private $contentLang;
 	private $verticalId;
@@ -16,5 +17,9 @@ class WikiListConditionerForVertical implements WikiListConditioner {
 			'city_visualization.city_vertical' => $this->verticalId,
 			'(city_visualization.city_flags & ' . WikisModel::FLAG_BLOCKED . ') != ' . WikisModel::FLAG_BLOCKED,
 		];
+	}
+
+	public function getPromotionCondition( $isPromoted ) {
+		return $isPromoted;
 	}
 }

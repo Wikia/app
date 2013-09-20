@@ -121,7 +121,7 @@ class WikiaWhitelist
 	private $settings = array();
     private static $_oInstance = null;
 
-	private function __construct( $settings ) 
+	function __construct( $settings = array() )
 	{
 		global $wgDBname;
 		

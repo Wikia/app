@@ -8,7 +8,7 @@ class RTEController extends WikiaController {
 		$this->response->setVal('code',RTEAjax::getMessagesScript());
 		$this->response->setContentType( 'text/javascript' );
 
-		$currentCb = F::build('JSMessagesHelper')->getMessagesCacheBuster();
+		$currentCb = (new JSMessagesHelper)->getMessagesCacheBuster();
 		$requestedCb = $this->request->getVal('cb');
 		$key = $currentCb == $requestedCb ? 'versioned' : 'unversioned';
 

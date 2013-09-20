@@ -120,24 +120,10 @@
 			margin:17px 20px;
 		}
 	}
-	section{
-		margin:0 15px;
+	section {
+		margin: 0 10px;
 		border: 1px solid $color-page-border;
 		border-top-width: 0;
-	}
-	section >ul {
-		@include clearfix;
-		@include linear-gradient(false, top, rgba($color-module-shadow, 0), 50%, $color-module-shadow, 100%);
-		list-style: none;
-		margin: 0;
-		padding: 0px 35px 20px;
-		text-align: center;
-		.item-1 {
-			float: left;
-		}
-		.item-2 {
-			float: right;
-		}
 	}
 	&.notoolbar {
 		section {
@@ -156,23 +142,24 @@
 	}
 }
 
-
 .CorporateFooter  {
-	@include clearfix;
-	clear: both;
+	clear: left;
 	font-size: 11px;
 	padding-bottom: 10px;
 	nav {
+		@include clearfix;
 		margin-top: 15px;
-		>h1 {
+		position: relative;
+		> h1 {
 			display: none;
 		}
 	}
 	.WikiaHubBranding {
 		background: transparent;
-		float: left;
-		margin-left: 10px;
+		left: 10px;
 		padding: 1px;
+		position: absolute;
+		top: 0;
 		.wordmark {
 			float: left;
 			position: relative;
@@ -207,25 +194,16 @@
 		background: black;
 	}
 	ul {
-		float: right;
-		list-style: none outside none;
-		margin: {
-			bottom: 7px;
-			left: 0px;
-			right: 10px;
-			top: 8px;
-		}
-		display: inline-block;
-		*width: 1000px; // /** IE 7  **/
+		list-style: none;
+		margin: 0 0 8px 167px;
+		text-align: right;
 
 		li {
-			display: table-cell;
-			*float: left;  // /** IE 7  **/
-			padding: {
-				right: 8px;
-				left: 8px;
-			}
 			border-left: solid 1px $color-links;
+			display: inline-block;
+			margin-top: 8px;
+			padding: 0 8px;
+
 			&:first-child {
 				border: none;
 			}

@@ -40,3 +40,6 @@ CREATE TABLE IF NOT EXISTS `phalanx_stats` (
   `ps_wiki_id` int(9) NOT NULL,
   KEY `ps_blocker_id_idx` (`ps_blocker_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- internal comments for each block (BAC-534)
+ALTER TABLE `phalanx` ADD `p_comment` tinyblob NOT NULL;

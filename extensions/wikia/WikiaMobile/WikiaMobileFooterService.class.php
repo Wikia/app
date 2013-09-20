@@ -33,7 +33,7 @@ class WikiaMobileFooterService extends WikiaService {
 		return str_replace(
 			array( '<p>', '</p>' ),
 			'',
-			$this->wf->MsgExt( $msgName , array( 'parse' ) )
+			wfMsgExt( $msgName , array( 'parse' ) )
 		);
 	}
 }

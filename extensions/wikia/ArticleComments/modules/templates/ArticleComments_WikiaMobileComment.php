@@ -6,7 +6,7 @@
 		<div class=by>
 			<?= $comment['sig'] ;?>
 			<? if( !empty( $comment['isStaff'] ) ) :?>
-			<img class=staff src=<?=$wf->ReplaceImageServer('/extensions/wikia/StaffSig/images/WikiaStaff.png')?> alt=@wikia/></span>
+			<img class=staff src=<?=wfReplaceImageServer('/extensions/wikia/StaffSig/images/WikiaStaff.png')?> alt=@wikia/></span>
 			<? endif ;?>
 		</div>
 		<div class=txt><?= $comment['text'] ?></div>
@@ -26,10 +26,10 @@
 			}
 			echo "</ul>";
 			$count = count( $lvl2 );
-			$reply = "<span class=viewAll>{$wf->Msg('wikiamobile-article-comments-view')} ({$count})</span>";
+			$reply = "<span class=viewAll>".wfMsg('wikiamobile-article-comments-view')." ({$count})</span>";
 		}
 
-		echo "<div class=rpl data-replies={$count}><span class=cmnRpl>{$wf->Msg('article-comments-reply')}</span>{$reply}</div>";
+		echo "<div class=rpl data-replies={$count}><span class=cmnRpl>".wfMsg('article-comments-reply')."</span>{$reply}</div>";
 	}
 ?>
 </li>

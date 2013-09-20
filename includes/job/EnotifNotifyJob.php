@@ -27,6 +27,10 @@ class EnotifNotifyJob extends Job {
 			# FIXME: newFromName could return false on a badly configured wiki.
 			$editor = User::newFromName( $this->params['editor'], false );
 		}
+		if( isset( $this->params['otherParam'] ) && isset( $this->params['otherParam']['childTitleId'] ) ) {
+			$childTitle = Title::newFromId( $this->params['otherParam']['childTitleId'] );
+			$this->params['otherParam']['childTitle'] = $childTitle;
+		}
 		$enotif->actuallyNotifyOnPageChange(
 			$editor,
 			$this->title,
@@ -36,7 +40,7 @@ class EnotifNotifyJob extends Job {
 			$this->params['oldid'],
 			$this->params['watchers'],
 			$this->params['action'],
-			$this->params['othersParam']
+			$this->params['otherParam']
 		);
 		return true;
 	}

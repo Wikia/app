@@ -63,6 +63,23 @@ class ResultTest extends BaseTest {
 				'The text field should be stored after being filtered through Wikia\Search\Result::fixSnippeting.'
 		);
 	}
+	
+	/**
+	 * @covers Wikia\Search\Result::getText
+	 */
+	public function testGetTextWithWordLimit() {
+		$text = "we're no strangers to love. you know the rules and so do i.";
+		$newfields = [ "text" => $text ];
+		$result = new Result( array_merge( $this->defaultFields, $newfields ) );
+		$this->assertEquals(
+				"we're no strangers to love&hellip;",
+				$result->getText( 'text', 5 )
+		);
+		$this->assertEquals(
+				$text,
+				$result->getText( 'text' )
+		);
+	}
 
 	/**
 	 * @covers Wikia\Search\Result::getTitle
@@ -126,7 +143,6 @@ class ResultTest extends BaseTest {
 		$oldCode = $wgLanguageCode;
 		$wgLanguageCode = 'fr';
 		$result = new Result( array( 'title_en' => $languageTitle ) );
-		$this->mockApp();
 		$this->assertEquals(
 		        $languageTitle,
 		        $result->getTitle(),
@@ -167,6 +183,18 @@ class ResultTest extends BaseTest {
 				$result->getUrl(),
 				'Wikia\Search\Result::getUrl should return exactly what was stored in Wikia\Search\Result::setUrl'
 		);
+	}
+	/**
+	 * @covers Wikia\Search\Result::getHub
+	 */ 
+	
+	public function testGetHub() {
+		$result	= new Result( $this->defaultFields );
+		$hubs = [ 'Gaming' => 'Video Games', 'Entertainment' => 'Entertainment', 'Lifestyle' => 'Lifestyle' ];
+		foreach ($hubs as $key => $value) {
+			$result->setField("hub_s", $key);
+			$this->assertEquals($result->getHub(),  $value);
+		}
 	}
 
 	/**
@@ -331,68 +359,6 @@ class ResultTest extends BaseTest {
 		);
 
 	}
-	
-	/**
-	 * @covers Wikia\Search\Result::getThumbnailHtml
-	 */
-	public function testGetThumbnailHtmlNoHtml() {
-		$mockResult = $this->getMockBuilder( 'Wikia\Search\Result' )
-		                   ->setConstructorArgs( array( array( 'pageid' => 123 ) ) )
-		                   ->setMethods( null )
-		                   ->getMock();
-		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
-		                      ->disableOriginalConstructor()
-		                      ->setMethods( array( 'getThumbnailHtmlForPageId' ) )
-		                      ->getMock();
-		$mockException = $this->getMockBuilder( '\Exception' )
-		                      ->disableOriginalConstructor()
-		                      ->getMock();
-		
-		$reflService = new ReflectionProperty( 'Wikia\Search\Result', 'service' );
-		$reflService->setAccessible( true );
-		$reflService->setValue( $mockResult, $mockService );
-		
-		$mockService
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getThumbnailHtmlForPageId' )
-		    ->with   ( 123 )
-		    ->will   ( $this->throwException( $mockException ) )
-		;
-		$this->assertEquals(
-				'',
-				$mockResult->getThumbnailHtml()
-		);
-	}
-	
-	/**
-	 * @covers Wikia\Search\Result::getThumbnailHtml
-	 */
-	public function testGetThumbnailHtmlWithHtml() {
-		$mockResult = $this->getMockBuilder( 'Wikia\Search\Result' )
-		                   ->setConstructorArgs( array( array( 'pageid' => 123 ) ) )
-		                   ->setMethods( null )
-		                   ->getMock();
-		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
-		                      ->disableOriginalConstructor()
-		                      ->setMethods( array( 'getThumbnailHtmlForPageId' ) )
-		                      ->getMock();
-		
-		$reflService = new ReflectionProperty( 'Wikia\Search\Result', 'service' );
-		$reflService->setAccessible( true );
-		$reflService->setValue( $mockResult, $mockService );
-		
-		$img = "<img src='foo.jpg' />";
-		$mockService
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getThumbnailHtmlForPageId' )
-		    ->with   ( 123 )
-		    ->will   ( $this->returnValue( $img ) )
-		;
-		$this->assertEquals(
-				$img,
-				$mockResult->getThumbnailHtml()
-		);
-	}
 
 	/**
 	 * @covers Wikia\Search\Result::getVideoViews
@@ -454,4 +420,88 @@ class ResultTest extends BaseTest {
 				$mockResult->getVideoViews()
 		);
 	}
+	
+	/**
+	 * @covers Wikia\Search\Result::offsetGet
+	 */
+	public function testOffsetGetTitle() {
+		$result = $this->getMock( 'Wikia\\Search\\Result', [ 'getTitle' ] );
+		$result
+		    ->expects( $this->any() )
+		    ->method ( 'getTitle' )
+		    ->will   ( $this->returnValue( 'my title' ) )
+		;
+		$this->assertEquals(
+				'my title',
+				$result['title']
+		);
+		$this->assertEquals(
+				'my title',
+				$result['title_en']
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Result::offsetGet
+	 */
+	public function testOffsetGetText() {
+		$result = $this->getMock( 'Wikia\\Search\\Result', [ 'getText' ] );
+		$result
+		    ->expects( $this->any() )
+		    ->method ( 'getText' )
+		    ->will   ( $this->returnValue( 'my text' ) )
+		;
+		$this->assertEquals(
+				'my text',
+				$result['text']
+		);
+		$this->assertEquals(
+				'my text',
+				$result['text_en']
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Result::offsetGet
+	 */
+	public function testoffsetGetVideoViews() {
+		$result = $this->getMock( 'Wikia\\Search\\Result', [ 'getVideoViews' ] );
+		$result
+		    ->expects( $this->any() )
+		    ->method ( 'getVideoViews' )
+		    ->will   ( $this->returnValue( '1,000' ) )
+		;
+		$this->assertEquals(
+				'1,000',
+				$result['videoViews']
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Result::offsetGet
+	 */
+	public function testOffsetGetDefaultLanguageField() {
+		$result = new Result( [ 'html_en' => 'html', 'wam' => 100 ] );
+		$this->assertEquals(
+				100,
+				$result['wam']
+		);
+		$this->assertEquals(
+				'html',
+				$result['html']
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Result::offsetGet
+	 */
+	public function testOffsetGetDynamicNonLanguageField() {
+		$result = new Result( [ 'infoboxes_txt' => [ 'foo bar' ] ] );
+		$this->assertEquals(
+				[ 'foo bar' ],
+				$result['infoboxes_txt']
+		);
+	}
+	
+	
 }

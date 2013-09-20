@@ -38,7 +38,7 @@ var urlencode = function(str) {
     replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
 };
 
-var requestMW = function(method, roomId, postdata, query, callback, errorcallback) {
+var requestMW = function(method, roomId, postdata, query, handshake, callback, errorcallback) {
 	if(!errorcallback){
 		errorcallback = function() {};
 	}
@@ -56,10 +56,26 @@ var requestMW = function(method, roomId, postdata, query, callback, errorcallbac
 			var wikiHostname = data.replace(/^https?:\/\//i, "");
 			var url = 'http://' + wikiHostname + '/index.php' + query + "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching this (at least on dev boxes) when we don't want it to... so cachebust it.;
 			logger.debug("Making  request to host: " + url);
+
+			// settings HTTP headers' variable
+			var headers = {
+				'content-type': 'application/x-www-form-urlencoded'
+			};
+
+			if( handshake && handshake.headers ) {
+				if( typeof handshake.headers['user-agent'] !== 'undefined' ) {
+					headers['user-agent'] = handshake.headers['user-agent'];
+				}
+
+				if( typeof handshake.headers['x-forwarded-for'] !== 'undefined' ) {
+					headers['x-forwarded-for'] = handshake.headers['x-forwarded-for'];
+				}
+			}
+
 			request({
 			    	method: method,
 			    	//followRedirect: false,
-			    	headers: {'content-type' : 'application/x-www-form-urlencoded'},
+			    	headers: headers,
 			    	body: postdata,
 			    	json: false,
 			    	url: url,
@@ -68,7 +84,7 @@ var requestMW = function(method, roomId, postdata, query, callback, errorcallbac
 			    function (error, response, body) {
 			    	if(error) {
 			    		errorcallback();
-			    		logger.error(error);	
+			    		logger.error(error);
 			    		return ;
 			    	}
 			    	logger.debug(response.statusCode);
@@ -95,7 +111,7 @@ var requestMW = function(method, roomId, postdata, query, callback, errorcallbac
 			    		logger.debug(data);
 			    	}
 			    }
-			);			
+			);
 		}
 	},
 	errorcallback);
@@ -127,8 +143,8 @@ var clearAuthenticateCache = function(roomId, name) {
 	}
 }
 
-WMBridge.prototype.authenticateUser = function(roomId, name, key, address, success, error) {
-        var cacheKey = name + "_" + roomId;  
+WMBridge.prototype.authenticateUser = function(roomId, name, key, handshake, success, error) {
+        var cacheKey = name + "_" + roomId;
         if(authenticateUserCache[cacheKey] && authenticateUserCache[cacheKey].key == key ) {
                 return success(authenticateUserCache[cacheKey].data);
         }
@@ -136,22 +152,21 @@ WMBridge.prototype.authenticateUser = function(roomId, name, key, address, succe
         var requestUrl = getUrl( 'getUserInfo', {
                 roomId: roomId,
                 name: urlencode(name),
-                key: key,
-                address: urlencode(address)
+                key: key
         });
         
         logger.debug(requestUrl);
-	var ts = Math.round((new Date()).getTime() / 1000);                                                                
-	monitoring.incrEventCounter('authenticateUserRequest');
-        requestMW('GET', roomId, {}, requestUrl, function(data){ 
-		authenticateUserCache[cacheKey] = {
-			data: data, 
-			key: key, 
-			ts: ts
-		};
-                success(data);
-        }, error);
-}       
+		var ts = Math.round((new Date()).getTime() / 1000);
+		monitoring.incrEventCounter('authenticateUserRequest');
+		requestMW( 'GET', roomId, {}, requestUrl, handshake, function(data) {
+			authenticateUserCache[cacheKey] = {
+				data: data,
+				key: key,
+				ts: ts
+			};
+			success(data);
+		}, error );
+}
 
 setInterval(function() {
 	var ts = Math.round((new Date()).getTime() / 1000);
@@ -162,7 +177,7 @@ setInterval(function() {
 	}
 }, 5000);
 
-WMBridge.prototype.ban = function(roomId, name, userAddress ,time, reason, key, success, error) {
+WMBridge.prototype.ban = function(roomId, name, handshake ,time, reason, key, success, error) {
 	clearAuthenticateCache(roomId, name);
 	var requestUrl = getUrl('blockOrBanChat', {
 		roomId: roomId,
@@ -171,10 +186,10 @@ WMBridge.prototype.ban = function(roomId, name, userAddress ,time, reason, key, 
 		reason: urlencode(reason),
 		mode: 'global',
 		key: key,
-		userIP: (userAddress && userAddress.address) || ''
+		userIP: (handshake.address && handshake.address.address) || ''
 	});
 
-	requestMW('GET', roomId, {}, requestUrl, function(data){
+	requestMW('GET', roomId, {}, requestUrl, handshake, function(data){
 		// Process response from MediaWiki server and then kick the user from all clients.
 		if(data.error || data.errorWfMsg){
 			error(data);
@@ -185,15 +200,16 @@ WMBridge.prototype.ban = function(roomId, name, userAddress ,time, reason, key, 
 }
 
 
-WMBridge.prototype.giveChatMod = function(roomId, name, key, success, error) {
+WMBridge.prototype.giveChatMod = function(roomId, name, handshake, key, success, error) {
 	clearAuthenticateCache(roomId, name);
 	var requestUrl = getUrl('giveChatMod', {
 		roomId: roomId,
 		userToPromote: urlencode(name),
-		key: key
+		key: key,
+		userIP: (handshake.address && handshake.address.address) || ''
 	});
 
-	requestMW('GET', roomId, {}, requestUrl, function(data){
+	requestMW('GET', roomId, {}, requestUrl, handshake, function(data){
 		// Process response from MediaWiki server and then kick the user from all clients.
 		if(data.error || data.errorWfMsg){
 			error(data);
@@ -216,7 +232,7 @@ var setUsersList = function(roomId, users) {
                 userToSend.push(userName);
         }
 
-        requestMW('POST', roomId, {users: userToSend}, requestUrl, function(data){
+        requestMW('POST', roomId, {users: userToSend}, requestUrl, null, function(data){
 
         });
 }

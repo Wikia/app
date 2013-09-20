@@ -43,21 +43,21 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 
 		if ( $this->code == '' ) {
 			$this->result = 'error';
-			$this->msg = $this->wf->Msg( 'wikiaconfirmemail-error-empty-code' );
+			$this->msg = wfMsg( 'wikiaconfirmemail-error-empty-code' );
 			return;
 		}
 
 		if ( $this->wg->request->wasPosted() ) {
 			if ( $this->username == '' ) {
 				$this->result = 'error';
-				$this->msg = $this->wf->Msg( 'userlogin-error-noname' );
+				$this->msg = wfMsg( 'userlogin-error-noname' );
 				$this->errParam = 'username';
 				return;
 			}
 
 			if ( $this->password == '' ) {
 				$this->result = 'error';
-				$this->msg = $this->wf->Msg( 'userlogin-error-wrongpasswordempty' );
+				$this->msg = wfMsg( 'userlogin-error-wrongpasswordempty' );
 				$this->errParam = 'password';
 				return;
 			}
@@ -65,7 +65,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 			$expUser = User::newFromConfirmationCode( $this->code );
 			if ( !is_object( $expUser ) ) {
 				$this->result = 'error';
-				$this->msg = $this->wf->Msg( 'wikiaconfirmemail-error-invalid-code' );
+				$this->msg = wfMsg( 'wikiaconfirmemail-error-invalid-code' );
 				return;
 			}
 
@@ -74,15 +74,15 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 			if ( $tempUser ) {
 				if ( $tempUser->getId() != $expUser->getId() ) {
 					$this->result = 'error';
-					$this->msg = $this->wf->Msg( 'wikiaconfirmemail-error-user-not-match' );
+					$this->msg = wfMsg( 'wikiaconfirmemail-error-user-not-match' );
 					$this->errParam = 'username';
 					return;
 				}
 
-				$userLoginHelper = F::build( 'UserLoginHelper' );
+				$userLoginHelper = (new UserLoginHelper);
 				if ( $userLoginHelper->isPasswordThrottled($this->username) ) {
 					$this->result = 'error';
-					$this->msg = $this->wf->Msg( 'userlogin-error-login-throttled' );
+					$this->msg = wfMsg( 'userlogin-error-login-throttled' );
 					$this->errParam = 'password';
 					return;
 				}
@@ -107,7 +107,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 					return;
 				} else {
 					$this->result = 'error';
-					$this->msg = $this->wf->Msg( 'userlogin-error-wrongpassword' );
+					$this->msg = wfMsg( 'userlogin-error-wrongpassword' );
 					$this->errParam = 'password';
 					return;
 				}
@@ -117,7 +117,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 			$user = User::newFromName( $this->username );
 			if ( ( !( $user instanceof User ) ) || ( $user->getId() != $expUser->getId() ) ) {
 				$this->result = 'error';
-				$this->msg = $this->wf->Msg( 'wikiaconfirmemail-error-user-not-match' );
+				$this->msg = wfMsg( 'wikiaconfirmemail-error-user-not-match' );
 				$this->errParam = 'username';
 				return;
 			}
@@ -141,7 +141,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 				$user->setOption( 'new_email', null );
 				$user->saveSettings();
 
-				$this->wf->RunHooks( 'ConfirmEmailComplete', array( &$user ) );
+				wfRunHooks( 'ConfirmEmailComplete', array( &$user ) );
 
 				// redirect user
 				$userPage = $user->getUserPage();

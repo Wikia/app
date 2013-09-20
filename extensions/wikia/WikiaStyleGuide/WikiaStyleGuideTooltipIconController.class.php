@@ -13,6 +13,6 @@ class WikiaStyleGuideTooltipIconController extends WikiaController {
 		
 		$this->text = $this->request->getVal('text', '');
 		$this->classes = $this->request->getVal('classes', '');
-		$this->tooltipIconSign = $this->request->getVal('tooltipIconSign', $this->wf->Msg('wikiastyleguide-tooltip-icon-question-mark'));
+		$this->tooltipIconSign = $this->request->getVal('tooltipIconSign', wfMsg('wikiastyleguide-tooltip-icon-question-mark'));
 	}
 }

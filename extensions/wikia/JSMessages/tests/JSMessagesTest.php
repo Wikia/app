@@ -8,7 +8,7 @@ class JSMessagesTest extends WikiaBaseTest {
 
 	public function setUp() {
 		$this->setupFile = dirname(__FILE__) . '/../JSMessages_setup.php';
-		$this->instance = F::build( 'JSMessages' );
+		$this->instance = (new JSMessages);
 		parent::setUp();
 	}
 

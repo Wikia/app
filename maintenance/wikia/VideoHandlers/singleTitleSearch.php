@@ -10,7 +10,7 @@ ini_set('display_errors', 'stderr');
 
 require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 
-class EditCLI extends Maintenance {
+class SingleTitleSearch extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Try to match youtube tags in the wiki with premium video";
@@ -77,6 +77,6 @@ class EditCLI extends Maintenance {
 	}
 }
 
-$maintClass = "EditCLI";
+$maintClass = "SingleTitleSearch";
 require_once( RUN_MAINTENANCE_IF_MAIN );
 

@@ -25,7 +25,7 @@ use Wikia\Sass\Compiler\ExternalRubyCompiler;
  */
 class SassService extends WikiaObject {
 
-	const CACHE_VERSION = 1;
+	const CACHE_VERSION = 1; # SASS caching does not depend on $wgStyleVersion, use this constant to bust SASS cache
 
 	const FILTER_IMPORT_CSS = 1;
 	const FILTER_CDN_REWRITE = 2;
@@ -246,11 +246,12 @@ class SassService extends WikiaObject {
 	public function getCacheKey() {
 		return sprintf("%s%s",
 			$this->getCacheVariant() ? $this->getCacheVariant() . '-' : '',
-			md5(serialize(array(
+			md5(serialize([
 				$this->getHash(),
 				$this->getSassVariables(),
 				$this->getFilters(),
-			)))
+				self::CACHE_VERSION
+			]))
 		);
 	}
 

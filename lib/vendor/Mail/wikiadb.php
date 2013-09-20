@@ -30,7 +30,7 @@ class Mail_wikiadb extends Mail {
 		$wgCityId = ($wgCityId == null?0:$wgCityId); // fake city-id for contractor/staff.
 		// FB:4431 Write mail to archive database now
 		$dbw = wfGetDb(DB_MASTER, array(), $wgExternalDatawareDB);
-		$dbw->begin();
+		$dbw->begin(__METHOD__);
 		foreach ($recipients as $recipient) {
 
 			// TODO: SHOULD WE FILTER BASED ON BLOCKS / SPAMS HERE?  FOR NOW WE WILL LET SENDGRID HANDLE THAT.
@@ -45,7 +45,8 @@ class Mail_wikiadb extends Mail {
 					'city_id' => $wgCityId,
 					'priority' => $priority,
 					'category' => $category,
-				)
+				),
+				__METHOD__
 			);
 			
 			// Add postback token so that we can verify that any postback actually comes from SendGrid.
@@ -56,11 +57,11 @@ class Mail_wikiadb extends Mail {
 				self::$MAIL_TABLE_NAME,
 				array( /* SET */'hdr' => $textHeaders ),
 				array( /* WHERE */'id' => $emailId ),
-				""
+				__METHOD__
 			);
 			wfDebugLog( "enotif", __METHOD__ . ": email added to database with data: $recipient $from {$headers['Subject']}", true );
 		}
-		$dbw->commit();
+		$dbw->commit(__METHOD__);
 
 	}
 }

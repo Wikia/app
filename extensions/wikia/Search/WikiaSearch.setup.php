@@ -9,6 +9,7 @@
 $app = F::app();
 $dir = dirname(__FILE__) . '/';
 
+require_once( $IP . '/lib/vendor/php-nlp-tools/autoloader.php' ); //@TODO find a better place for this
 require_once( $IP . '/lib/vendor/Solarium/Autoloader.php' );
 require_once( $IP . '/lib/vendor/simplehtmldom/simple_html_dom.php' );
 Solarium_Autoloader::register();
@@ -32,21 +33,21 @@ spl_autoload_register( function( $class ) {
 			return true;
 		}
 		return false;
-	}
+	}  
 });
 
 /**
  * Keeping the traditional controller registry for now
  */
-$app->registerClass('WikiaSearchController', $dir . 'WikiaSearchController.class.php');
-$app->registerClass('WikiaSearchIndexerController', $dir . 'WikiaSearchIndexerController.class.php');
-$app->registerClass('WikiaSearchAjaxController', $dir . 'WikiaSearchAjaxController.class.php');
+$wgAutoloadClasses['WikiaSearchController'] =  $dir . 'WikiaSearchController.class.php';
+$wgAutoloadClasses['WikiaSearchIndexerController'] =  $dir . 'WikiaSearchIndexerController.class.php';
+$wgAutoloadClasses['WikiaSearchAjaxController'] =  $dir . 'WikiaSearchAjaxController.class.php';
 
 /**
  * special pages
  */
-$app->registerSpecialPage('WikiaSearch',	'WikiaSearchController');
-$app->registerSpecialPage('Search',			'WikiaSearchController');
+$wgSpecialPages['WikiaSearch'] = 'WikiaSearchController';
+$wgSpecialPages['Search'] = 'WikiaSearchController';
 
 
 
@@ -58,25 +59,25 @@ $app->registerApiController( 'SearchApiController', "{$dir}SearchApiController.c
 /**
  * message files
  */
-$app->registerExtensionMessageFile('WikiaSearch', $dir . 'WikiaSearch.i18n.php' );
+$wgExtensionMessagesFiles['WikiaSearch'] = $dir . 'WikiaSearch.i18n.php' ;
 
 /**
  * preference settings
  */
-$app->registerHook('GetPreferences', 'Wikia\Search\Hooks', 'onGetPreferences');
+$wgHooks['GetPreferences'][] = 'Wikia\Search\Hooks::onGetPreferences';
 
 /**
  * hooks
  */
-$app->registerHook('WikiaMobileAssetsPackages', 'Wikia\Search\Hooks', 'onWikiaMobileAssetsPackages');
+$wgHooks['WikiaMobileAssetsPackages'][] = 'Wikia\Search\Hooks::onWikiaMobileAssetsPackages';
 
 global $wgExternalSharedDB;
 if ( empty( $wgExternalSharedDB ) ) {
-	$app->registerHook('ArticleDeleteComplete', 'Wikia\Search\Hooks', 'onArticleDeleteComplete');
-	$app->registerHook('ArticleSaveComplete', 'Wikia\Search\Hooks', 'onArticleSaveComplete');
-	$app->registerHook('ArticleUndelete', 'Wikia\Search\Hooks', 'onArticleUndelete');
+	$wgHooks['ArticleDeleteComplete'][] = 'Wikia\Search\Hooks::onArticleDeleteComplete';
+	$wgHooks['ArticleSaveComplete'][] = 'Wikia\Search\Hooks::onArticleSaveComplete';
+	$wgHooks['ArticleUndelete'][] = 'Wikia\Search\Hooks::onArticleUndelete';
 } else {
-	$app->registerHook('WikiFactoryPublicStatusChange', 'Wikia\Search\Hooks', 'onWikiFactoryPublicStatusChange');
+	$wgHooks['WikiFactoryPublicStatusChange'][] = 'Wikia\Search\Hooks::onWikiFactoryPublicStatusChange';
 }
 
 $wgExtensionCredits['other'][] = array(

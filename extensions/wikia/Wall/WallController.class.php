@@ -10,18 +10,19 @@ class WallController extends WallBaseController {
 	const WALL_MESSAGE_RELATIVE_TIMESTAMP = 604800; // relative message timestampt for 7 days (improvement 20178)
 
 	public function __construct() {
+		global $wgUserProfileNamespaces;
 		parent::__construct();
-		$this->allowedNamespaces = $this->app->getLocalRegistry()->get('UserProfileNamespaces');
+		$this->allowedNamespaces = $wgUserProfileNamespaces;
 	}
 
 	public function init() {
-		$this->helper = F::build('WallHelper', array());
+		$this->helper = new WallHelper();
 	}
 
 	public function messageDeleted() {
 		$id = $this->app->wg->Title->getText();
 
-		$wm	= F::build('WallMessage', array($id), 'newFromId');
+		$wm	= WallMessage::newFromId($id);
 
 		if(empty($wm)) {
 			$this->response->setVal( 'wallOwner', '');
@@ -109,7 +110,7 @@ class WallController extends WallBaseController {
 	protected function getWallMessage() {
 		$comment = $this->request->getVal('comment');
 		if(($comment instanceof ArticleComment)) {
-			$wallMessage = F::build('WallMessage', array($comment), 'newFromArticleComment' );
+			$wallMessage = WallMessage::newFromArticleComment($comment);
 		} else {
 			$wallMessage = $comment;
 		}
@@ -214,18 +215,18 @@ class WallController extends WallBaseController {
 				//which are needed to click tracking
 				//if you change those keys here, do so in Wall.js file, please
 				$options = array(
-					'nf' => $this->app->wf->Msg('wall-history-sorting-newest-first'),
-					'of' => $this->app->wf->Msg('wall-history-sorting-oldest-first'),
+					'nf' => wfMsg('wall-history-sorting-newest-first'),
+					'of' => wfMsg('wall-history-sorting-oldest-first'),
 				);
 				break;
 			case 'index':
 			default:
 				$options = array(
-					'nt' => $this->app->wf->Msg('wall-sorting-newest-threads'),
-					'ot' => $this->app->wf->Msg('wall-sorting-oldest-threads'),
-					'nr' => $this->app->wf->Msg('wall-sorting-newest-replies'),
-					//'ma' => $this->app->wf->Msg('wall-sorting-most-active'),
-					//'a' => $this->app->wf->Msg('wall-sorting-archived')
+					'nt' => wfMsg('wall-sorting-newest-threads'),
+					'ot' => wfMsg('wall-sorting-oldest-threads'),
+					'nr' => wfMsg('wall-sorting-newest-replies'),
+					//'ma' => wfMsg('wall-sorting-most-active'),
+					//'a' => wfMsg('wall-sorting-archived')
 				);
 				break;
 		}
@@ -254,7 +255,7 @@ class WallController extends WallBaseController {
 		} else {
 			$pageTitle = $this->helper->getTitle(NS_USER_TALK);
 		}
-		$article = F::build('Article', array($pageTitle));
+		$article = new Article($pageTitle);
 		$articleId = $article->getId();
 
 		if( empty($articleId) ) {
@@ -267,7 +268,7 @@ class WallController extends WallBaseController {
 	public function getThread($filterid) {
 		wfProfileIn(__METHOD__);
 
-		$wallthread = F::build('WallThread', array($filterid), 'newFromId');
+		$wallthread = WallThread::newFromId($filterid);
 		$wallthread->loadIfCached();
 
 		$this->threads = array( $filterid => $wallthread );

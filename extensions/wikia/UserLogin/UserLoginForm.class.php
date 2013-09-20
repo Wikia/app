@@ -52,7 +52,7 @@ class UserLoginForm extends LoginForm {
 			return false;
 
 		// send confirmation email
-		$userLoginHelper = F::build( 'UserLoginHelper' );
+		$userLoginHelper = new UserLoginHelper();
 		$result = $userLoginHelper->sendConfirmationEmail( $this->mUsername, $u );
 		$this->mainLoginForm( $result['msg'], $result['result'] );
 
@@ -73,7 +73,7 @@ class UserLoginForm extends LoginForm {
 		$u = $tempUser->mapTempUserToUser( false, $u );
 
 		// add log
-		$userLoginHelper = F::build( 'UserLoginHelper' );
+		$userLoginHelper = (new UserLoginHelper);
 		$userLoginHelper->addNewUserLogEntry( $u, true );
 
 		// mail temporary password
@@ -97,7 +97,7 @@ class UserLoginForm extends LoginForm {
 		}
 
 		// check if exist in tempUser
-		if ( F::build('TempUser', array( $this->mUsername ), 'getTempUserFromName') ) {
+		if ( TempUser::getTempUserFromName( $this->mUsername ) ) {
 			$this->mainLoginForm( wfMsg( 'userlogin-error-userexists' ), 'error', 'username' );
 			return false;
 		}
@@ -116,11 +116,11 @@ class UserLoginForm extends LoginForm {
 		}
 
 		$app = F::app();
-		$result = $app->wf->ValidateUserName( $this->mUsername );
+		$result = wfValidateUserName( $this->mUsername );
 
 		if ( $result === true ) {
 			$msgKey = '';
-			if ( !$app->wf->RunHooks('cxValidateUserName', array($this->mUsername, &$msgKey)) ) {
+			if ( !wfRunHooks('cxValidateUserName', array($this->mUsername, &$msgKey)) ) {
 				$result = $msgKey;
 			}
 		}
@@ -128,11 +128,11 @@ class UserLoginForm extends LoginForm {
 		if ( $result !== true ) {
 			$msg = '';
 			if ( $result == 'userlogin-bad-username-taken' ) {
-				$msg = $app->wf->Msg('userlogin-error-userexists');
+				$msg = wfMsg('userlogin-error-userexists');
 			} else if ( $result == 'userlogin-bad-username-character' ) {
-				$msg = $app->wf->Msg('usersignup-error-symbols-in-username');
+				$msg = wfMsg('usersignup-error-symbols-in-username');
 			} else if ( $result == 'userlogin-bad-username-length' ) {
-				$msg = $app->wf->Msg('usersignup-error-username-length', $app->wg->WikiaMaxNameChars);
+				$msg = wfMsg('usersignup-error-username-length', $app->wg->WikiaMaxNameChars);
 			} else {
 				$msg = $result;
 			}

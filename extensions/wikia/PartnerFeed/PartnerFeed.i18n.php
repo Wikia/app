@@ -31,19 +31,26 @@ $messages['en'] = array(
 	'blog-posts-from-listing'		=> 'from listing: $1',
 	'feed-title-hot-content'		=> 'Hot content - $1',
 	'feed-title-blogcomments'		=> 'Comments to $1',
-	'feed-title-recentchanges'		=> 'Recent changes'
+	'feed-title-recentchanges'		=> 'Recent changes',
+	'partner-feed-error-no-blogpost-found' => '<b>Error:</b> Blog post $1 does not exist.'
 );
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'partner-feed-hotcontent' => 'Both terms "Hub" and "verticals" have the same meaning in this context. The meaning is "Portals", i.e. the grouping of wikis by their theme. Examples of portals are "Gaming", "Entertainment", "Education", "Music", etc.',
+	'partner-feed-recent-changes' => '{{Identical|Recent changes}}',
 	'blog-posts-from-listing' => 'Parameters:
 * $1 is a link to a listing with the listing page title as link description.',
 	'feed-title-hot-content' => 'Parameters:
 * $1 is a hub title.',
 	'feed-title-blogcomments' => 'Parameters:
+* $1 is a blog post title.',
+	'feed-title-recentchanges' => '{{Identical|Recent changes}}',
+	'partner-feed-error-no-blogpost-found' => 'Displayed when the provided blog post does not exist.
+Parameters:
 * $1 is a blog post title.',
 );
 
@@ -81,13 +88,50 @@ $messages['bg'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'partner-feed-earned-badges' => 'Badjoù gounezet nevez zo gant ur Wiki difer',
 	'partner-feed-recent-changes' => 'Kemmoù diwezhañ',
+	'feed-title-blogposts' => 'Blogadennoù nevez',
 	'feed-title-recent-badges' => 'Badjoù diwezhañ',
 	'feed-title-recent-images' => 'Skeudennoù diwezhañ',
 	'all-blog-posts' => 'an holl rummadoù',
 	'blog-posts-from-listing' => 'eus ar roll : $1',
 	'feed-title-blogcomments' => 'Evezhiadenn da $1',
-	'feed-title-recentchanges' => 'Kemmoù graet nevez zo',
+	'feed-title-recentchanges' => 'Kemmoù diwezhañ',
+);
+
+/** Catalan (català)
+ * @author Alvaro Vidal-Abarca
+ * @author Roxas Nobody 15
+ */
+$messages['ca'] = array(
+	'partner-feed-achievements-leaderboard' => 'Taula de líders amb més exits',
+	'partner-feed-earned-badges' => 'Recentment va guanyar insígnies per a un determinat Wiki',
+	'partner-feed-recent-blog-posts' => 'Darreres entrades del bloc relacionades amb la promoció',
+	'partner-feed-latest-images' => "Galeria de les últimes imatges que s'han pujat",
+	'partner-feed-hotcontent' => 'Hub / verticals "Hot Contingut com ordenades per nombre de redactors',
+	'partner-feed-recent-blog-comments' => "Comentaris recents relacionats amb un bloc l'especificat .",
+	'partner-feed-recent-changes' => 'Canvis Recents',
+	'partnerfeed' => 'Partner feed',
+	'error-no-article' => 'Error: No hi ha "article" parametre passat',
+	'feed-title-blogposts' => 'Entrades de blog recents',
+	'feed-title-recent-badges' => 'Insígnies Recents',
+	'feed-title-recent-images' => 'Imatges recents',
+	'feed-title-leaderboard' => 'Taula de Exits',
+	'feed-main-title' => 'Wikia partner feed',
+	'all-blog-posts' => 'totes les categories',
+	'blog-posts-from-listing' => 'des de la llista:$1',
+	'feed-title-hot-content' => 'Contenido Novedós - $1',
+	'feed-title-blogcomments' => 'Comentaris - $1',
+	'feed-title-recentchanges' => 'Canvis Recents',
+	'partner-feed-error-no-blogpost-found' => "<b>Error:</b> L'entrada de bloc $1 no existeix.",
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'partner-feed-recent-changes' => 'Керла нисдарш',
+	'feed-title-recentchanges' => 'Керла нисдарш',
 );
 
 /** Czech (česky)
@@ -104,6 +148,7 @@ $messages['cs'] = array(
  * @author Diebuche
  * @author George Animal
  * @author LWChris
+ * @author Metalhead64
  * @author ✓
  */
 $messages['de'] = array(
@@ -126,6 +171,7 @@ $messages['de'] = array(
 	'feed-title-hot-content' => 'Hot Content - $1',
 	'feed-title-blogcomments' => 'Kommentare zu $1',
 	'feed-title-recentchanges' => 'Letzte Änderungen',
+	'partner-feed-error-no-blogpost-found' => '<b>Fehler:</b> Der Blogbeitrag $1 ist nicht vorhanden.',
 );
 
 /** Zazaki (Zazaki)
@@ -161,6 +207,7 @@ $messages['es'] = array(
 	'feed-title-hot-content' => 'Contenido Novedoso - $1',
 	'feed-title-blogcomments' => 'Comentarios de $1',
 	'feed-title-recentchanges' => 'Cambios recientes',
+	'partner-feed-error-no-blogpost-found' => '<b>Error:</b> La entrada de blog $1 no existe.',
 );
 
 /** Persian (فارسی)
@@ -237,6 +284,7 @@ $messages['gl'] = array(
 	'feed-title-hot-content' => 'Contido popular - $1',
 	'feed-title-blogcomments' => 'Comentario sobre $1',
 	'feed-title-recentchanges' => 'Cambios recentes',
+	'partner-feed-error-no-blogpost-found' => '<b>Erro:</b> A entrada de blogue "$1" non existe.',
 );
 
 /** Hungarian (magyar)
@@ -371,6 +419,14 @@ $messages['ms'] = array(
 	'feed-title-recentchanges' => 'Perubahan terkini',
 );
 
+/** Mazanderani (مازِرونی)
+ * @author محک
+ */
+$messages['mzn'] = array(
+	'partner-feed-recent-changes' => 'تازه دگاردسته‌ئون',
+	'feed-title-recentchanges' => 'تازه دگاردسته‌ئون',
+);
+
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */
@@ -420,6 +476,7 @@ $messages['nl'] = array(
 	'feed-title-hot-content' => 'Populaire inhoud - $1',
 	'feed-title-blogcomments' => 'Opmerkingen bij $1',
 	'feed-title-recentchanges' => 'Recente wijzigingen',
+	'partner-feed-error-no-blogpost-found' => '<b>Fout:</b> Blogbericht $1 bestaat niet.',
 );
 
 /** Polish (polski)
@@ -446,6 +503,7 @@ $messages['pl'] = array(
 	'feed-title-hot-content' => 'Gorące treści - $1',
 	'feed-title-blogcomments' => 'Komentarze do $1',
 	'feed-title-recentchanges' => 'Ostatnie zmiany',
+	'partner-feed-error-no-blogpost-found' => '<b>Błąd:</b> Wpis na blogu $1 nie istnieje.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -606,6 +664,7 @@ $messages['sv'] = array(
 	'feed-title-hot-content' => 'Hett innehåll - $1',
 	'feed-title-blogcomments' => 'Kommentarer till $1',
 	'feed-title-recentchanges' => 'Senaste ändringar',
+	'partner-feed-error-no-blogpost-found' => '<b>Fel:</b> Blogginlägget $1 finns inte.',
 );
 
 /** Tamil (தமிழ்)
@@ -654,6 +713,7 @@ $messages['tl'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Andriykopanytsia
  * @author Ua2004
  * @author Тест
  */
@@ -677,11 +737,13 @@ $messages['uk'] = array(
 	'feed-title-hot-content' => 'Топ контент - $1',
 	'feed-title-blogcomments' => 'Коментарі до $1',
 	'feed-title-recentchanges' => 'Нові редагування',
+	'partner-feed-error-no-blogpost-found' => '<b>Помилка:</b> Повідомлення в блозі  $1  не існує.',
 );
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Liuxinyu970226
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
@@ -691,4 +753,5 @@ $messages['zh-hans'] = array(
 	'feed-title-blogposts' => '最新博客帖子',
 	'feed-title-recent-badges' => '最新徽章',
 	'all-blog-posts' => '全部分类',
+	'blog-posts-from-listing' => '来自列表：$1',
 );

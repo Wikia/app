@@ -55,6 +55,21 @@ $messages['ar'] = array(
 	'category-exhibition-display-new' => 'عرض معرض التصنيف',
 );
 
+/** Bikol Central (Bikol Central)
+ * @author Geopoet
+ */
+$messages['bcl'] = array(
+	'category-exhibition-sorttype' => 'Tipo nin pagsasalansan:',
+	'category-exhibition-alphabetical' => 'Alpabitikal',
+	'category-exhibition-mostvisited' => 'Mas na pinagbibisita',
+	'category-exhibition-recentedits' => 'Pinakabaguhon na pinagliwat',
+	'category-exhibition-page-header' => 'Mga pahina sa laog kan kategoriya na "$1"',
+	'category-exhibition-subcategories-header' => 'Mga sub-kategoriya',
+	'category-exhibition-media-header' => 'Midya na yaon sa kategoriya na "$1"',
+	'category-exhibition-blogs-header' => 'Mga paskil sa Blog',
+	'category-exhibition-display-old' => 'Pagtanaw sa Listahan nin Kategorya',
+);
+
 /** Bulgarian (български)
  * @author DCLXVI
  */
@@ -204,6 +219,19 @@ $messages['fi'] = array(
 	'category-exhibition-blogs-header' => 'Blogiartikkelit',
 	'category-exhibition-display-old' => 'Luokkaluettelonäkymä',
 	'category-exhibition-display-new' => 'Luokkanäyttelynäkymä',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'category-exhibition-alphabetical' => 'Í bókstavarøð',
+	'category-exhibition-mostvisited' => 'Mest vitjað',
+	'category-exhibition-recentedits' => 'Nýliga rættað',
+	'category-exhibition-page-header' => 'Síður í bólkinum "$1"',
+	'category-exhibition-subcategories-header' => 'Undirbólkar',
+	'category-exhibition-media-header' => 'Miðlar í bólkinum "$1"',
+	'category-exhibition-blogs-header' => 'Blogginnsløg',
 );
 
 /** French (français)
@@ -424,6 +452,22 @@ $messages['nl'] = array(
 	'category-exhibition-blogs-header' => 'Blogberichten',
 	'category-exhibition-display-old' => 'Categorielijstweergave',
 	'category-exhibition-display-new' => 'Categoriepresentatieweergave',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'category-exhibition-sorttype' => 'Tipe de triada :',
+	'category-exhibition-alphabetical' => 'Alfabetic',
+	'category-exhibition-mostvisited' => 'Los mai visitats',
+	'category-exhibition-recentedits' => 'Modificats recentament',
+	'category-exhibition-page-header' => 'Paginas dins la categoria « $1 »',
+	'category-exhibition-subcategories-header' => 'Soscategorias',
+	'category-exhibition-media-header' => 'Mèdia dins la categoria « $1 »',
+	'category-exhibition-blogs-header' => 'Article de blog',
+	'category-exhibition-display-old' => 'Afichatge de la categoria en lista',
+	'category-exhibition-display-new' => 'Afichatge de la categoria en exposicion',
 );
 
 /** Polish (polski)

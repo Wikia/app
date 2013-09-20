@@ -15,9 +15,13 @@ class UserProfilePageController extends WikiaController {
 	protected $defaultAvatars = null;
 	protected $defaultAvatarPath = 'http://images.wikia.com/messaging/images/';
 
-	public function __construct(WikiaApp $app) {
+	public function __construct(WikiaApp $app = null) {
+		global $UPPNamespaces;
+		if( is_null( $app ) ) {
+			$app = F::app();
+		}
 		$this->app = $app;
-		$this->allowedNamespaces = $app->getLocalRegistry()->get('UserProfilePageNamespaces');
+		$this->allowedNamespaces = $UPPNamespaces;
 		$this->title = $app->wg->Title;
 	}
 
@@ -49,7 +53,7 @@ class UserProfilePageController extends WikiaController {
 		$useOriginalBody = true;
 
 		if ($user instanceof User) {
-			$this->profilePage = F::build('UserProfilePage', array('user' => $user));
+			$this->profilePage = new UserProfilePage($user);
 			if ($namespace == NS_USER && !$isSubpage) {
 				//we'll implement interview section later
 				//$this->setVal( 'questions', $this->profilePage->getInterviewQuestions( $wikiId, true ) );
@@ -89,11 +93,11 @@ class UserProfilePageController extends WikiaController {
 		$sessionUser = $this->wg->User;
 
 		$this->setRequest(new WikiaRequest($this->app->wg->Request->getValues()));
-		$user = $this->getUserFromTitle();
+		$user = UserProfilePageHelper::getUserFromTitle();
 		/**
 		 * @var $userIdentityBox UserIdentityBox
 		 */
-		$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
+		$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
 		$isUserPageOwner = (!$user->isAnon() && $user->getId() == $sessionUser->getId()) ? true : false;
 
 		if ($isUserPageOwner) {
@@ -115,7 +119,7 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal('zeroStateCssClass', ($userData['showZeroStates']) ? 'zero-state' : '');
 
 		$this->setVal('user', $userData);
-		$this->setVal('deleteAvatarLink', F::build('SpecialPage', array('RemoveUserAvatar'), 'getTitleFor')->getFullUrl('av_user=' . $userData['name']));
+		$this->setVal('deleteAvatarLink', SpecialPage::getTitleFor('RemoveUserAvatar')->getFullUrl('av_user=' . $userData['name']));
 		$this->setVal('canRemoveAvatar', $sessionUser->isAllowed('removeavatar'));
 		$this->setVal('isUserPageOwner', $isUserPageOwner);
 
@@ -135,7 +139,7 @@ class UserProfilePageController extends WikiaController {
 			$this->setVal('reloadUrl', '');
 		}
 
-		$this->response->addAsset('/resources/wikia/modules/aim.js');
+		$this->response->addAsset('resources/wikia/modules/aim.js');
 
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			$this->overrideTemplate( 'WikiaMobileRenderUserIdentityBox' );
@@ -155,7 +159,7 @@ class UserProfilePageController extends WikiaController {
 		$namespace = $this->title->getNamespace();
 
 		$this->setRequest(new WikiaRequest($this->app->wg->Request->getValues()));
-		$user = $this->getUserFromTitle();
+		$user = UserProfilePageHelper::getUserFromTitle();
 
 		/**
 		 * @var $sessionUser User
@@ -180,7 +184,7 @@ class UserProfilePageController extends WikiaController {
 			$actionButtonArray = array(
 				'action' => array(
 					'href' => $this->title->getLocalUrl($editQuery),
-					'text' => $this->wf->Msg('user-action-menu-edit-profile'),
+					'text' => wfMsg('user-action-menu-edit-profile'),
 				),
 				'image' => MenuButtonController::EDIT_ICON,
 				'name' => 'editprofile',
@@ -191,7 +195,7 @@ class UserProfilePageController extends WikiaController {
 				/**
 				 * @var $title Title
 				 */
-				$title = F::build('Title', array($user->getName(), NS_USER_TALK), 'newFromText');
+				$title = Title::newFromText($user->getName(), NS_USER_TALK);
 
 				if ($title instanceof Title) {
 					//sometimes title isn't created, i've tried to reproduce it on my devbox and i couldn't
@@ -200,7 +204,7 @@ class UserProfilePageController extends WikiaController {
 						$actionButtonArray = array(
 							'action' => array(
 								'href' => $this->title->getLocalUrl($editQuery),
-								'text' => $this->wf->Msg('user-action-menu-edit'),
+								'text' => wfMsg('user-action-menu-edit'),
 							),
 							'image' => MenuButtonController::EDIT_ICON,
 							'name' => 'editprofile',
@@ -209,14 +213,14 @@ class UserProfilePageController extends WikiaController {
 						$actionButtonArray = array(
 							'action' => array(
 								'href' => $title->getLocalUrl(array_merge($editQuery, array('section' => 'new'))),
-								'text' => $this->wf->Msg('user-action-menu-leave-message'),
+								'text' => wfMsg('user-action-menu-leave-message'),
 							),
 							'image' => MenuButtonController::MESSAGE_ICON,
 							'name' => 'leavemessage',
 							'dropdown' => array(
 								'edit' => array(
 									'href' => $this->title->getFullUrl($editQuery),
-									'text' => $this->wf->Msg('user-action-menu-edit'),
+									'text' => wfMsg('user-action-menu-edit'),
 								)
 							),
 						);
@@ -229,7 +233,7 @@ class UserProfilePageController extends WikiaController {
 
 					$actionButtonArray = array(
 						'action' => array(
-							'href' => F::build('SpecialPage', array('CreateBlogPage'), 'getTitleFor')->getLocalUrl(!empty($wgCreateBlogPagePreload) ? "preload=$wgCreateBlogPagePreload" : ""),
+							'href' => SpecialPage::getTitleFor('CreateBlogPage')->getLocalUrl(!empty($wgCreateBlogPagePreload) ? "preload=$wgCreateBlogPagePreload" : ""),
 							'text' => wfMsg('blog-create-post-label'),
 						),
 						'image' => MenuButtonController::BLOG_ICON,
@@ -245,11 +249,11 @@ class UserProfilePageController extends WikiaController {
 				/**
 				 * @var $specialMovePage Title
 				 */
-				$specialMovePage = F::build('SpecialPage', array('MovePage'), 'getTitleFor');
+				$specialMovePage = SpecialPage::getTitleFor('MovePage');
 				$renameUrl = $specialMovePage->getLocalUrl() . '/' . $this->title->__toString();
 				$actionButtonArray['dropdown']['rename'] = array(
 					'href' => $renameUrl,
-					'text' => $this->wf->Msg('user-action-menu-rename'),
+					'text' => wfMsg('user-action-menu-rename'),
 				);
 			}
 
@@ -258,26 +262,26 @@ class UserProfilePageController extends WikiaController {
 
 				$actionButtonArray['dropdown']['protect'] = array(
 					'href' => $this->title->getLocalUrl(array('action' => $protectStatus)),
-					'text' => $this->wf->Msg('user-action-menu-' . $protectStatus),
+					'text' => wfMsg('user-action-menu-' . $protectStatus),
 				);
 			}
 
 			if ($canDelete) {
 				$actionButtonArray['dropdown']['delete'] = array(
 					'href' => $this->title->getLocalUrl(array('action' => 'delete')),
-					'text' => $this->wf->Msg('user-action-menu-delete'),
+					'text' => wfMsg('user-action-menu-delete'),
 				);
 			}
 
 			$actionButtonArray['dropdown']['history'] = array(
 				'href' => $this->title->getLocalUrl(array('action' => 'history')),
-				'text' => $this->wf->Msg('user-action-menu-history'),
+				'text' => wfMsg('user-action-menu-history'),
 			);
 		}
 
-		$this->wf->RunHooks('UserProfilePageAfterGetActionButtonData', array(&$actionButtonArray, $namespace, $canRename, $canProtect, $canDelete, $isUserPageOwner));
+		wfRunHooks('UserProfilePageAfterGetActionButtonData', array(&$actionButtonArray, $namespace, $canRename, $canProtect, $canDelete, $isUserPageOwner));
 
-		$actionButton = $this->wf->RenderModule('MenuButton', 'Index', $actionButtonArray);
+		$actionButton = wfRenderModule('MenuButton', 'Index', $actionButtonArray);
 		$this->setVal('actionButton', $actionButton);
 
 		wfProfileOut(__METHOD__);
@@ -306,9 +310,9 @@ class UserProfilePageController extends WikiaController {
 		$isBlocked = empty($isBlocked) ? $sessionUser->getBlockId() : $isBlocked;
 
 		if (($sessionUser->isAnon() && !$canEditProfile) || $isBlocked) {
-			throw new WikiaException($this->wf->msg('userprofilepage-invalid-user'));
+			throw new WikiaException(wfMsg('userprofilepage-invalid-user'));
 		} else {
-			$this->profilePage = F::build('UserProfilePage', array('user' => $sessionUser));
+			$this->profilePage = new UserProfilePage($sessionUser);
 
 			$this->setVal('body', (string)$this->sendSelfRequest('renderLightbox', array('tab' => $selectedTab, 'userId' => $userId)));
 			//we'll implement interview section later
@@ -334,8 +338,8 @@ class UserProfilePageController extends WikiaController {
 		$sessionUser = $this->wg->User;
 
 		$tabs = array(
-			array('id' => 'avatar', 'name' => $this->wf->msg('user-identity-box-avatar')),
-			array('id' => 'about', 'name' => $this->wf->msg('user-identity-box-about-me')),
+			array('id' => 'avatar', 'name' => wfMsg('user-identity-box-avatar')),
+			array('id' => 'about', 'name' => wfMsg('user-identity-box-about-me')),
 			//array( 'id' => 'interview', 'name' => 'User Interview' ), //not yet --nAndy, 2011-06-15
 		);
 
@@ -356,20 +360,20 @@ class UserProfilePageController extends WikiaController {
 	public function saveInterviewAnswers() {
 		wfProfileIn(__METHOD__);
 
-		$user = F::build('User', array($this->getVal('userId')), 'newFromId');
+		$user = User::newFromId($this->getVal('userId'));
 		$wikiId = $this->wg->CityId;
 
 		$answers = json_decode($this->getVal('answers'));
 
 		$status = 'error';
-		$errorMsg = $this->wf->msg('userprofilepage-interview-save-internal-error');
+		$errorMsg = wfMsg('userprofilepage-interview-save-internal-error');
 
 		if (!$user->isAnon() && is_array($answers)) {
-			$this->profilePage = F::build('UserProfilePage', array('user' => $user));
+			$this->profilePage = new UserProfilePage($user);
 
 			if (!$this->profilePage->saveInterviewAnswers($wikiId, $answers)) {
 				$status = 'error';
-				$errorMsg = $this->wf->msg('userprofilepage-interview-save-internal-error');
+				$errorMsg = wfMsg('userprofilepage-interview-save-internal-error');
 			}
 			else {
 				$status = 'ok';
@@ -392,19 +396,19 @@ class UserProfilePageController extends WikiaController {
 	public function saveUserData() {
 		wfProfileIn(__METHOD__);
 
-		$user = F::build('User', array($this->getVal('userId')), 'newFromId');
+		$user = User::newFromId($this->getVal('userId'));
 		$isAllowed = ($this->app->wg->User->isAllowed('editprofilev3') || intval($user->getId()) === intval($this->app->wg->User->getId()));
 
 		$userData = json_decode($this->getVal('data'));
 
 		$status = 'error';
-		$errorMsg = $this->wf->msg('user-identity-box-saving-internal-error');
+		$errorMsg = wfMsg('user-identity-box-saving-internal-error');
 
 		if ($isAllowed && is_object($userData)) {
 			/**
 			 * @var $userIdentityBox UserIdentityBox
 			 */
-			$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
+			$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
 
 			if (!empty($userData->website) && 0 !== strpos($userData->website, 'http')) {
 				$userData->website = 'http://' . $userData->website;
@@ -412,14 +416,14 @@ class UserProfilePageController extends WikiaController {
 
 			if (!$userIdentityBox->saveUserData($userData)) {
 				$status = 'error';
-				$errorMsg = $this->wf->msg('userprofilepage-interview-save-internal-error');
+				$errorMsg = wfMsg('userprofilepage-interview-save-internal-error');
 			} else {
 				$status = 'ok';
 			}
 		}
 
 		if ($isAllowed && is_null($userData)) {
-			$errorMsg = $this->wf->msg('user-identity-box-saving-error');
+			$errorMsg = wfMsg('user-identity-box-saving-error');
 		}
 
 		$this->setVal('status', $status);
@@ -454,9 +458,9 @@ class UserProfilePageController extends WikiaController {
 		wfProfileIn(__METHOD__);
 
 		if (is_null($userId)) {
-			$user = F::build('User', array($this->getVal('userId')), 'newFromId');
+			$user = User::newFromId($this->getVal('userId'));
 		} else {
-			$user = F::build('User', array($userId), 'newFromId');
+			$user = User::newFromId($userId);
 		}
 
 		$isAllowed = ($this->app->wg->User->isAllowed('editprofilev3') || intval($user->getId()) === intval($this->app->wg->User->getId()));
@@ -465,7 +469,7 @@ class UserProfilePageController extends WikiaController {
 			$data = json_decode($this->getVal('data'));
 		}
 
-		$errorMsg = $this->app->wf->msg('userprofilepage-interview-save-internal-error');
+		$errorMsg = wfMsg('userprofilepage-interview-save-internal-error');
 		$result = array('success' => true, 'error' => $errorMsg);
 
 		if ($isAllowed && isset($data->source) && isset($data->file)) {
@@ -480,7 +484,7 @@ class UserProfilePageController extends WikiaController {
 					break;
 				default:
 					array('success' => false, 'error' => $errorMsg);
-					$this->app->wf->msg('userprofilepage-interview-save-internal-error');
+					wfMsg('userprofilepage-interview-save-internal-error');
 					break;
 			}
 
@@ -541,9 +545,9 @@ class UserProfilePageController extends WikiaController {
 
 		$this->response->setContentType('text/html; charset=utf-8');
 
-		$user = F::build('User', array($this->getVal('userId')), 'newFromId');
+		$user = User::newFromId($this->getVal('userId'));
 
-		$errorMsg = $this->wf->msg('userprofilepage-interview-save-internal-error');
+		$errorMsg = wfMsg('userprofilepage-interview-save-internal-error');
 		$result = array('success' => false, 'error' => $errorMsg);
 
 		if (!$user->isAnon() && $this->request->wasPosted()) {
@@ -601,7 +605,7 @@ class UserProfilePageController extends WikiaController {
 		/**
 		 * @var $ioh ImageOperationsHelper
 		 */
-		$ioh = F::build('ImageOperationsHelper');
+		$ioh = new ImageOperationsHelper();
 
 		$out = $ioh->postProcessFile($fileName);
 		if ($out !== true) {
@@ -636,21 +640,21 @@ class UserProfilePageController extends WikiaController {
 	private function validateUpload($errorNo) {
 		switch ($errorNo) {
 			case UPLOAD_ERR_NO_FILE:
-				return $this->wf->msg('user-identity-box-avatar-error-nofile');
+				return wfMsg('user-identity-box-avatar-error-nofile');
 				break;
 
 			case UPLOAD_ERR_CANT_WRITE:
-				return $this->wf->msg('user-identity-box-avatar-error-cantwrite');
+				return wfMsg('user-identity-box-avatar-error-cantwrite');
 				break;
 
 			case UPLOAD_ERR_FORM_SIZE:
-				return $this->wf->msgExt('user-identity-box-avatar-error-size', array('parsemag'), (int)(self::AVATAR_MAX_SIZE / 1024));
+				return wfmsgExt('user-identity-box-avatar-error-size', array('parsemag'), (int)(self::AVATAR_MAX_SIZE / 1024));
 				break;
 			case UPLOAD_ERR_EXTENSION;
 				return wfMsg('userprofilepage-avatar-error-type', $this->wg->Lang->listToText(ImageOperationsHelper::getAllowedMime()));
 				break;
 			case ImageOperationsHelper::UPLOAD_ERR_RESOLUTION:
-				return $this->wf->msg('userprofilepage-avatar-error-resolution');
+				return wfMsg('userprofilepage-avatar-error-resolution');
 				break;
 			default:
 				return wfMsg('user-identity-box-avatar-error');
@@ -664,7 +668,7 @@ class UserProfilePageController extends WikiaController {
 		/**
 		 * @var $oAvatarObj Masthead
 		 */
-		$oAvatarObj = F::build('Masthead', array($user), 'newFromUser');
+		$oAvatarObj = Masthead::newFromUser($user);
 		return $oAvatarObj->getLocalPath();
 	}
 
@@ -696,7 +700,7 @@ class UserProfilePageController extends WikiaController {
 			/**
 			 * @var $oAvatarObj Masthead
 			 */
-			$oAvatarObj = F::build('Masthead', array($userData['user']), 'newFromUser');
+			$oAvatarObj = Masthead::newFromUser($userData['user']);
 			$errorNo = $oAvatarObj->uploadFile($this->wg->Request, 'UPPLightboxAvatar', $errorMsg);
 
 
@@ -728,14 +732,14 @@ class UserProfilePageController extends WikiaController {
 			/**
 			 * @var $oAvatarObj Masthead
 			 */
-			$oAvatarObj = F::build('Masthead', array($user), 'newFromUser');
+			$oAvatarObj = Masthead::newFromUser($user);
 			$oAvatarObj->purgeUrl();
 			$localPath = $this->getLocalPath($user);
 			$errorNo = $oAvatarObj->uploadByUrl($url);
 			/**
 			 * @var $userIdentityBox UserIdentityBox
 			 */
-			$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
+			$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
 			$userData = $userIdentityBox->getFullData();
 			$userData['avatar'] = $localPath;
 			$userIdentityBox->saveUserData($userData);
@@ -755,7 +759,7 @@ class UserProfilePageController extends WikiaController {
 	private function renderAvatarLightbox($userId) {
 		wfProfileIn(__METHOD__);
 
-		$user = F::build('User', array($userId), 'newFromId');
+		$user = User::newFromId($userId);
 
 		$this->setVal('defaultAvatars', $this->getDefaultAvatars());
 		$this->setVal('isUploadsPossible', $this->wg->EnableUploads && $this->wg->User->isAllowed('upload') && is_writeable($this->wg->UploadDirectory));
@@ -763,8 +767,8 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal('avatarName', $user->getOption('avatar'));
 		$this->setVal('userId', $userId);
 		$this->setVal('avatarMaxSize', self::AVATAR_MAX_SIZE);
-		$this->setVal('avatar', F::build('AvatarService', array($user->getName(), self::AVATAR_DEFAULT_SIZE), 'renderAvatar'));
-		$this->setVal('fbAvatarConnectButton', '<fb:login-button perms="user_about_me" onlogin="UserProfilePage.fbConnectAvatar();">' . $this->app->wf->Msg('user-identity-box-connect-to-fb') . '</fb:login-button>');
+		$this->setVal('avatar', AvatarService::renderAvatar($user->getName(), self::AVATAR_DEFAULT_SIZE) );
+		$this->setVal('fbAvatarConnectButton', '<fb:login-button perms="user_about_me" onlogin="UserProfilePage.fbConnectAvatar();">' . wfMsg('user-identity-box-connect-to-fb') . '</fb:login-button>');
 
 		wfProfileOut(__METHOD__);
 	}
@@ -790,11 +794,11 @@ class UserProfilePageController extends WikiaController {
 		}
 
 		$this->defaultAvatars = array();
-		$images = $this->app->runFunction('getMessageForContentAsArray', 'blog-avatar-defaults');
+		$images = getMessageForContentAsArray('blog-avatar-defaults');
 
 		if (is_array($images)) {
 			foreach ($images as $image) {
-				$hash = F::build('FileRepo', array($image, 2), 'getHashPathForLevel');
+				$hash = FileRepo::getHashPathForLevel($image, 2);
 				$this->defaultAvatars[] = array('name' => $image, 'url' => $this->defaultAvatarPath . $thumb . $hash . $image);
 			}
 		}
@@ -811,17 +815,17 @@ class UserProfilePageController extends WikiaController {
 	private function renderAboutLightbox($userId) {
 		wfProfileIn(__METHOD__);
 
-		$user = F::build('User', array($userId), 'newFromId');
+		$user = User::newFromId($userId);
 
 		/**
 		 * @var $userIdentityBox UserIdentityBox
 		 */
-		$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
+		$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
 
 		$userData = $userIdentityBox->getFullData();
 
 		$this->setVal('user', $userData);
-		$this->setVal('fbConnectButton', '<fb:login-button perms="user_about_me,user_birthday,user_location,user_work_history,user_website" onlogin="UserProfilePage.fbConnect();">' . $this->app->wf->Msg('user-identity-box-connect-to-fb') . '</fb:login-button>');
+		$this->setVal('fbConnectButton', '<fb:login-button perms="user_about_me,user_birthday,user_location,user_work_history,user_website" onlogin="UserProfilePage.fbConnect();">' . wfMsg('user-identity-box-connect-to-fb') . '</fb:login-button>');
 
 		$this->setVal('charLimits', array(
 			'name' => UserIdentityBox::USER_NAME_CHAR_LIMIT,
@@ -837,166 +841,8 @@ class UserProfilePageController extends WikiaController {
 		wfProfileOut(__METHOD__);
 	}
 
-	/**
-	 * @brief Return current title object
-	 *
-	 * Return current title, which is later used by getUserFromTitle method
-	 * @return Title
-	 *
-	 */
-	public function getCurrentTitle() {
-		wfProfileIn(__METHOD__);
-		$title = $this->getVal('title');
-
-		if (!empty($title) && is_string($title) && strpos($title, ':') !== false) {
-			$title = F::build('Title', array($title), 'newFromText');
-		}
-
-		if ($title instanceof Title && $title->isRedirect()) {
-			$article = new Article($title);
-			$redirect = Title::newFromRedirectRecurse($article->getContent());
-			if ($redirect instanceof Title) {
-				$title = $redirect;
-			}
-		}
-		wfProfileOut(__METHOD__);
-		return $title;
-	}
-
-	/**
-	 * @brief Get user object from given title
-	 *
-	 * @desc getUserFromTitle() is sometimes called in hooks therefore I added returnUser flag and when
-	 * it is set to true getUserFromTitle() will assign $this->user variable with a user object
-	 *
-	 * @requestParam Title $title title object
-	 * @requestParam Boolean $returnUser a flag set to true or false
-	 *
-	 * @return User
-	 *
-	 * @author ADi
-	 * @author nAndy
-	 */
-	public function getUserFromTitle() {
-		wfProfileIn(__METHOD__);
-		$returnUserInData = (boolean)$this->getVal('returnUser');
-		$title = $this->getCurrentTitle();
-
-		$user = null;
-		if ($title instanceof Title && in_array($title->getNamespace(), $this->allowedNamespaces)) {
-			// get "owner" of this user / user talk / blog page
-			$parts = explode('/', $title->getText());
-		} else {
-			if ($title instanceof Title && $title->getNamespace() == NS_SPECIAL && ($title->isSpecial('Following') || $title->isSpecial('Contributions'))) {
-				$target = $this->getVal('target');
-				$target = (empty($target)) ? $this->app->wg->Request->getVal('target') : $target;
-
-				if (!empty($target)) {
-					// Special:Contributions?target=FooBar (RT #68323)
-					$parts = array($target);
-				} else {
-					// get user this special page referrs to
-					$titleVal = $this->app->wg->Request->getVal('title', false);
-					$parts = explode('/', $titleVal);
-
-					// remove special page name
-					array_shift($parts);
-				}
-
-				if ($title->isSpecial('Following') && !isset($parts[0])) {
-					//following pages are rendered only for profile owners
-					$user = $this->app->wg->User;
-					if ($returnUserInData) {
-						$this->user = $user;
-					}
-
-					wfProfileOut(__METHOD__);
-					return $user;
-				}
-			}
-		}
 
 
-		if (!empty($parts[0])) {
-			$userName = str_replace('_', ' ', $parts[0]);
-			$user = F::build('User', array($userName), 'newFromName');
-		}
-
-		if (!($user instanceof User) && !empty($userName)) {
-			//it should work only for title=User:AAA.BBB.CCC.DDD where AAA.BBB.CCC.DDD is an IP address
-			//in previous user profile pages when IP was passed it returned false which leads to load
-			//"default" oasis data to Masthead; here it couldn't be done because of new User Identity Box
-			$user = F::build('User');
-			$user->mName = $userName;
-			$user->mFrom = 'name';
-		}
-
-		if (!($user instanceof User) && empty($userName)) {
-			//this is in case Blog:Recent_posts or Special:Contribution will be called
-			//then in title there is no username and "default" user instance is $wgUser
-			$user = $this->app->wg->User;
-		}
-
-		if ($returnUserInData) {
-			$this->user = $user;
-		}
-
-		wfProfileOut(__METHOD__);
-		return $user;
-	}
-
-	/**
-	 * Don't send 404 status for user pages with filled in masthead (bugid:44602)
-	 * @brief hook handler
-	 */
-	public function onBeforeDisplayNoArticleText($article) {
-		$this->setRequest( new WikiaRequest( $this->app->wg->Request->getValues() ) );
-		$title = $this->getCurrentTitle();
-		if ($title instanceof Title && in_array($title->getNamespace(), $this->allowedNamespaces)) {
-			$user = $this->getUserFromTitle();
-			if ( $user instanceof User && $user->getId() > 0) {
-				/**
-				 * @var $userIdentityBox UserIdentityBox
-				 */
-				$userIdentityBox = F::build('UserIdentityBox', array( $this->app, $user, self::MAX_TOP_WIKIS ) );
-				$userData = $userIdentityBox->getFullData();
-				if ( is_array( $userData ) && array_key_exists( 'showZeroStates', $userData ) ) {
-					if ( !$userData['showZeroStates'] ) {
-						$this->app->wg->Out->setStatusCode ( 200 );
-					}
-				}
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * @brief hook handler
-	 */
-	public function onSkinTemplateOutputPageBeforeExec($skin, $template) {
-		wfProfileIn(__METHOD__);
-
-		$this->setRequest(new WikiaRequest($this->app->wg->Request->getValues()));
-
-		$user = $this->getUserFromTitle();
-
-		if ($user instanceof User && $user->getId() > 0 ) {
-			$response = $this->app->sendRequest(
-				'UserProfilePage',
-				'index',
-				array(
-					'user' => $user,
-					'userPageBody' => $template->data['bodytext'],
-					'wikiId' => $this->app->wg->CityId,
-				));
-
-			$template->data['bodytext'] = (string)$response;
-		}
-
-		$out = $this->addToUserProfile($skin, $template);
-		wfProfileOut(__METHOD__);
-		return $out;
-	}
 
 	/**
 	 *
@@ -1010,14 +856,14 @@ class UserProfilePageController extends WikiaController {
 
 		$user = $this->app->wg->User;
 
-		$result = array('success' => false, 'error' => $this->wf->Msg('userprofilepage-interview-save-internal-error'));
+		$result = array('success' => false, 'error' => wfMsg('userprofilepage-interview-save-internal-error'));
 		$this->setVal('result', $result);
 
 		if (!$user->isAnon()) {
 			/**
 			 * @var $fbConnectAPI FBConnectAPI
 			 */
-			$fbConnectAPI = F::build('FBConnectAPI');
+			$fbConnectAPI = new FBConnectAPI();
 			$fbUserId = $fbConnectAPI->user();
 
 			$userFbData = $fbConnectAPI->getUserInfo(
@@ -1028,7 +874,7 @@ class UserProfilePageController extends WikiaController {
 			/**
 			 * @var $oAvatarObj Masthead
 			 */
-			$oAvatarObj = F::build('Masthead', array($user), 'newFromUser');
+			$oAvatarObj = Masthead::newFromUser($user);
 			$tmpFile = '';
 			$oAvatarObj->uploadByUrlToTempFile($userFbData['pic_big'], $tmpFile);
 
@@ -1058,9 +904,8 @@ class UserProfilePageController extends WikiaController {
 
 		if (!$user->isAnon()) {
 			/** @var $fb_ids FBConnectDB */
-			$fb_ids = F::build('FBConnectDB', array($user), 'getFacebookIDs');
-			/** @var $fbConnectAPI FBConnectAPI */
-			$fbConnectAPI = F::build('FBConnectOpenGraphAPI');
+			$fb_ids = FBConnectDB::getFacebookIDs($user);
+			$fbConnectAPI = new FBConnectOpenGraphAPI();
 
 			if (count($fb_ids) > 0) {
 				$fbUserId = $fb_ids[0];
@@ -1077,10 +922,10 @@ class UserProfilePageController extends WikiaController {
 
 				$result = array('success' => true, 'fbUser' => $userFbData);
 			} else {
-				$result = array('success' => false, 'error' => $this->app->wf->Msg('user-identity-box-invalid-fb-id-error'));
+				$result = array('success' => false, 'error' => wfMsg('user-identity-box-invalid-fb-id-error'));
 			}
 		} else {
-			$result = array('success' => false, 'error' => $this->wf->Msg('userprofilepage-interview-save-internal-error'));
+			$result = array('success' => false, 'error' => wfMsg('userprofilepage-interview-save-internal-error'));
 		}
 
 		$this->setVal('result', $result);
@@ -1169,14 +1014,14 @@ class UserProfilePageController extends WikiaController {
 		$userId = intval($this->getVal('userId'));
 		$wikiId = intval($this->getVal('wikiId'));
 
-		$user = F::build('User', array($userId), 'newFromId');
+		$user = User::newFromId($userId);
 		$isAllowed = ($this->app->wg->User->isAllowed('editprofilev3') || intval($user->getId()) === intval($this->app->wg->User->getId()));
 
 		if ($isAllowed && $wikiId > 0) {
 			/**
 			 * @var $userIdentityBox UserIdentityBox
 			 */
-			$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
+			$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
 			$success = $userIdentityBox->hideWiki($wikiId);
 
 			$result = array('success' => $success, 'wikis' => $userIdentityBox->getTopWikis());
@@ -1193,12 +1038,9 @@ class UserProfilePageController extends WikiaController {
 	public function onRefreshFavWikis() {
 		$userId = intval($this->getVal('userId'));
 
-		$user = F::build('User', array($userId), 'newFromId');
+		$user = User::newFromId($userId);
 
-		/**
-		 * @var $userIdentityBox UserIdentityBox
-		 */
-		$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
+		$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
 		$result = array('success' => true, 'wikis' => $userIdentityBox->getTopWikis(true));
 
 		$this->setVal('result', $result);
@@ -1227,122 +1069,6 @@ class UserProfilePageController extends WikiaController {
 		wfProfileOut(__METHOD__);
 	}
 
-	/**
-	 * @brief remove User:: from back link
-	 *
-	 * @author Tomek Odrobny
-	 *
-	 * @param $title Title
-	 */
-
-	public function onSkinSubPageSubtitleAfterTitle($title, &$ptext) {
-		if (!empty($title) && $title->getNamespace() == NS_USER) {
-			$ptext = $title->getText();
-		}
-
-		return true;
-	}
-
-	/**
-	 * @brief adds wiki id to cache and fav wikis instantly
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 */
-	public function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
-		if ($revision !== NULL) { // do not count null edits
-			$wikiId = intval($this->app->wg->CityId);
-
-			if ($user instanceof User && $wikiId > 0) {
-				/**
-				 * @var $userIdentityBox UserIdentityBox
-				 */
-				$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
-				$userIdentityBox->addTopWiki($wikiId);
-			}
-		}
-		return true;
-	}
-
-	/**
-	 *
-	 * Monobook fallback for UUP
-	 *
-	 */
-
-	function addToUserProfile(&$skin, &$tpl) {
-		wfProfileIn(__METHOD__);
-
-		global $wgTitle, $wgOut, $wgRequest, $wgExtensionsPath;
-
-		// don't output on Oasis
-		if (get_class(RequestContext::getMain()->getSkin()) == 'SkinOasis') {
-			wfProfileOut(__METHOD__);
-			return true;
-		}
-
-		$action = $wgRequest->getVal('action', 'view');
-		if ($wgTitle->getNamespace() != NS_USER || ($action != 'view' && $action != 'purge')) {
-			wfProfileOut(__METHOD__);
-			return true;
-		}
-
-		// construct object for the user whose page were' on
-		$user = User::newFromName($wgTitle->getDBKey());
-
-		// sanity check
-		if (!is_object($user)) {
-			wfProfileOut(__METHOD__);
-			return true;
-		}
-
-		$user->load();
-
-		// abort if user has been disabled
-		if (defined('CLOSED_ACCOUNT_FLAG') && $user->mRealName == CLOSED_ACCOUNT_FLAG) {
-			wfProfileOut(__METHOD__);
-			return true;
-		}
-		// abort if user has been disabled (v2, both need to be checked for a while)
-		$disabledOpt = $user->getOption('disabled');
-		if (!empty($disabledOpt)) {
-			wfProfileOut(__METHOD__);
-			return true;
-		}
-
-		$html = '';
-
-		$out = array();
-		wfRunHooks('AddToUserProfile', array(&$out, $user));
-
-		if (count($out) > 0) {
-			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/UserProfilePageV3/css/UserprofileMonobook.css");
-
-			$html .= "<div id='profile-content'>";
-			$html .= "<div id='profile-content-inner'>";
-			$html .= $tpl->data['bodytext'];
-			$html .= "</div>";
-			$html .= "</div>";
-
-			$wgOut->addStyle("common/article_sidebar.css");
-
-			$html .= '<div class="article-sidebar">';
-			if (isset($out['UserProfile1'])) {
-				$html .= $out['UserProfile1'];
-			}
-			if (isset($out['achievementsII'])) {
-				$html .= $out['achievementsII'];
-			}
-			if (isset($out['followedPages'])) {
-				$html .= $out['followedPages'];
-			}
-			$html .= '</div>';
-
-			$tpl->data['bodytext'] = $html;
-		}
-		wfProfileOut(__METHOD__);
-		return true;
-	}
-
 	public function removeavatar() {
 		wfProfileIn(__METHOD__);
 		$this->setVal('status', false);
@@ -1369,11 +1095,4 @@ class UserProfilePageController extends WikiaController {
 		return true;
 	}
 
-	//WikiaMobile hook to add assets so they are minified and concatenated
-	public function onWikiaMobileAssetsPackages( &$jsHeadPackages, &$jsBodyPackages, &$scssPackages){
-		if ( $this->app->wg->Title->getNamespace() === NS_USER ) {
-			$scssPackages[] = 'userprofilepage_scss_wikiamobile';
-		}
-		return true;
-	}
 }

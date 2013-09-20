@@ -12,7 +12,7 @@ class EditorUserPropertiesHandler extends WikiaUserPropertiesHandlerBase {
 		$results = new stdClass();
 
 		if ($this->wg->ReadOnly) {
-			$results->error = $this->wf->Msg('db-read-only-mode');
+			$results->error = wfMsg('db-read-only-mode');
 			$results->success = false;
 		} else {
 			$this->throwExceptionForAnons();

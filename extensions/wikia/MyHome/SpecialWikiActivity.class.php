@@ -115,7 +115,7 @@ JS
 
 		// page header: replace subtitle with navigation
 		global $wgHooks;
-		$wgHooks['PageHeaderIndexAfterExecute'][] = array(&$this, 'addNavigation');
+		$wgHooks['PageHeaderIndexAfterExecute'][] = array($this, 'addNavigation');
 
 		wfProfileOut(__METHOD__);
 	}

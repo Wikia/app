@@ -10,22 +10,21 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
 //classes
-$app->registerClass( 'SpecialVideosSpecialController', $dir.'SpecialVideosSpecialController.class.php' );
-$app->registerClass( 'SpecialVideosHelper', $dir.'SpecialVideosHelper.class.php' );
+$wgAutoloadClasses[ 'SpecialVideosSpecialController'] =  $dir.'SpecialVideosSpecialController.class.php' ;
+$wgAutoloadClasses[ 'SpecialVideosHelper'] =  $dir.'SpecialVideosHelper.class.php' ;
 
 // i18n mapping
-$app->registerExtensionMessageFile( 'SpecialVideos', $dir.'SpecialVideos.i18n.php' );
-$app->registerExtensionMessageFile( 'SpecialVideosAliases', $dir.'SpecialVideos.alias.php' );
+$wgExtensionMessagesFiles['SpecialVideos'] = $dir.'SpecialVideos.i18n.php' ;
+$wgExtensionMessagesFiles['SpecialVideosAliases'] = $dir.'SpecialVideos.alias.php' ;
 
 // special pages
-$app->registerSpecialPage( 'Videos', 'SpecialVideosSpecialController' );
+$wgSpecialPages[ 'Videos' ] =  'SpecialVideosSpecialController';
 
-F::build('JSMessages')->registerPackage('SpecialVideos', array(
+JSMessages::registerPackage('SpecialVideos', array(
 	'specialvideos-remove-modal-title',
-	'specialvideos-remove-modal-message',
+	'specialvideos-remove-modal-message'
 ));
 
 $wgGroupPermissions['*']['specialvideosdelete'] = false;

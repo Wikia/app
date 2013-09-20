@@ -4,38 +4,30 @@ class FilePageHooks extends WikiaObject{
 
 	const VIDEO_WIKI = 298117;
 
-	function __construct(){
-		parent::__construct();
-		F::setInstance( __CLASS__, $this );
-	}
-
 	/**
 	 * Determine which FilePage to show based on skin and File type (image/video)
 	 *
 	 * @param Title $oTitle
 	 * @param Article $oArticle
+	 * @return bool true
 	 */
-	public function onArticleFromTitle( &$oTitle, &$oArticle ){
-		global $wgEnableVideoPageRedesign;
-
+	static public function onArticleFromTitle( &$oTitle, &$oArticle ){
 		if ( ( $oTitle instanceof Title ) && ( $oTitle->getNamespace() == NS_FILE ) ){
-
-			if ( F::app()->checkSkin( 'oasis' ) &&  !empty( $wgEnableVideoPageRedesign ) ) {
-				$oArticle = new FilePageTabbed( $oTitle );
-			} else {
-				$oArticle = new FilePageFlat( $oTitle );
-			}
+			$oArticle = WikiaFileHelper::getMediaPage( $oTitle );
 		}
 
 		return true;
 	}
 
 
-
 	/**
-	 * Add JS and CSS to File Page
+	 * Add JS and CSS to File Page (except mobile skin - see onWikiaMobileAssetsPackages)
+	 *
+	 * @param OutputPage $out
+	 * @param $skin
+	 * @return bool
 	 */
-	public function onBeforePageDisplay( OutputPage $out, $skin ) {
+	static public function onBeforePageDisplay( OutputPage $out, $skin ) {
 		global $wgEnableVideoPageRedesign;
 
 		$app = F::app();
@@ -67,13 +59,29 @@ class FilePageHooks extends WikiaObject{
 		return true;
 	}
 
+	/**
+	 * Add assets to mobile file page
+	 *
+	 * @param array $jsHeadPackages
+	 * @param array $jsBodyPackages
+	 * @param array $scssPackages
+	 * @return bool
+	 */
+	static public function onWikiaMobileAssetsPackages( Array &$jsStaticPackages, Array &$jsExtensionPackages, Array &$scssPackages ){
+		if( F::app()->wg->Title->getNamespace() == NS_FILE ) {
+			$jsExtensionPackages[] = 'filepage_js_wikiamobile';
+			$scssPackages[] = 'filepage_scss_wikiamobile';
+		}
+
+		return true;
+	}
 
 	/*
 	 * Add "replace" button to File pages
 	 * Add "remove" action to MenuButtons on premium video file pages
 	 * This button will remove a video from a wiki but keep it on the Video Wiki.
 	 */
-	public function onSkinTemplateNavigation($skin, &$tabs) {
+	static public function onSkinTemplateNavigation($skin, &$tabs) {
 		global $wgUser;
 
 		$app = F::app();
@@ -81,9 +89,9 @@ class FilePageHooks extends WikiaObject{
 		$title = $app->wg->Title;
 
 		if ( ( $title instanceof Title ) && ( $title->getNamespace() == NS_FILE ) && $title->exists() ) {
-			$file = $app->wf->FindFile( $title );
+			$file = wfFindFile( $title );
 			if ( ( $file instanceof File ) && UploadBase::userCanReUpload( $wgUser, $file->getName() ) ) {
-				if ( WikiaFileHelper::isTitleVideo( $title ) ) {
+				if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
 					$uploadTitle = SpecialPage::getTitleFor( 'WikiaVideoAdd' );
 					$href = $uploadTitle->getFullURL( array(
 						'name' => $file->getName()
@@ -109,7 +117,7 @@ class FilePageHooks extends WikiaObject{
 		}
 
 		if ( WikiaFileHelper::isTitleVideo( $title ) ) {
-			$file = $app->wf->FindFile( $title );
+			$file = wfFindFile( $title );
 			if( !$file->isLocal() ) {
 				// Prevent move tab being shown.
 				unset( $tabs['actions']['move'] );
@@ -124,9 +132,9 @@ class FilePageHooks extends WikiaObject{
 	 * @param array $item
 	 * @param string $page
 	 * @param string|false $link
-	 * @return true
+	 * @return bool true
 	 */
-	public function onGlobalUsageFormatItemWikiLink( $item, $page, &$link ) {
+	static public function onGlobalUsageFormatItemWikiLink( $item, $page, &$link ) {
 		$link = WikiFactory::DBtoUrl( $item['wiki'] );
 		if ( $link ) {
 			$link .= 'wiki/'.$page;
@@ -139,9 +147,9 @@ class FilePageHooks extends WikiaObject{
 	/**
 	 * Hook: get wiki link for GlobalUsage
 	 * @param string $wikiName
-	 * @return true
+	 * @return bool true
 	 */
-	public function onGlobalUsageImagePageWikiLink( &$wikiName ) {
+	static public function onGlobalUsageImagePageWikiLink( &$wikiName ) {
 		$wiki = WikiFactory::getWikiByDB( $wikiName );
 		if ( $wiki ) {
 			$wikiName = '['.$wiki->city_url.' '.$wiki->city_title.']';
@@ -153,9 +161,9 @@ class FilePageHooks extends WikiaObject{
 	/**
 	 * Hook: check for video files
 	 * @param array $images
-	 * @return true
+	 * @return bool true
 	 */
-	public function onGlobalUsageLinksUpdateComplete( &$images ) {
+	static public function onGlobalUsageLinksUpdateComplete( &$images ) {
 		$videoFiles = array();
 		foreach( $images as $image ) {
 			$file = wfFindFile( $image );

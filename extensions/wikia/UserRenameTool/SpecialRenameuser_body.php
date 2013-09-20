@@ -26,9 +26,14 @@ class SpecialRenameuser extends SpecialPage {
 	public function execute( $par ) {
 		wfProfileIn(__METHOD__);
 
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgStatsDBEnabled;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgStatsDBEnabled, $wgJsMimeType;
 
 		$this->setHeaders();
+
+		$oAssetsManager = AssetsManager::getInstance();
+
+		$sSrc = $oAssetsManager->getOneCommonURL( '/extensions/wikia/UserRenameTool/js/NewUsernameUrlEncoder.js' );
+        $wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$sSrc}\"></script>" );
 
 		if( wfReadOnly() || !$wgStatsDBEnabled ) {
 			$wgOut->readOnlyPage();
@@ -86,7 +91,7 @@ class SpecialRenameuser extends SpecialPage {
 			if ( $olduser->getOption( 'wasRenamed', 0 ) ) {
 				$errors[] = wfMsg( 'userrenametool-previously-renamed', $oldusername );
 			}
-			$phalanxMatches = PhalanxHelper::testBlock( $oldusername );
+			$phalanxMatches = RenameUserHelper::testBlock( $oldusername );
 			if ( $phalanxMatches !== 'No matches found.' ) {
 				$errors[] = Xml::tags(
 					'p',
@@ -96,7 +101,7 @@ class SpecialRenameuser extends SpecialPage {
 			}
 		}
 		if ( !empty( $newusername ) ) {
-			$phalanxMatches = PhalanxHelper::testBlock( $newusername );
+			$phalanxMatches = RenameUserHelper::testBlock( $newusername );
 			if ( $phalanxMatches !== 'No matches found.' ) {
 				$errors[] = Xml::tags(
 					'p',

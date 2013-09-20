@@ -10,7 +10,7 @@ class WikiaBarHooks {
 			Wikia::log(__METHOD__, '', 'Updating WikiaBar config caches after change');
 			foreach ($value as $vertical => $languages) {
 				foreach ($languages as $language => $content) {
-					$dataMemcKey = $app->wf->SharedMemcKey('WikiaBarContents', $vertical, $language, WikiaBarModel::WIKIA_BAR_MCACHE_VERSION);
+					$dataMemcKey = wfSharedMemcKey('WikiaBarContents', $vertical, $language, WikiaBarModel::WIKIA_BAR_MCACHE_VERSION);
 					Wikia::log(__METHOD__, '', 'Purging ' . $dataMemcKey);
 					$app->wg->memc->set($dataMemcKey, null);
 				}
@@ -25,9 +25,8 @@ class WikiaBarHooks {
 
 		if (self::isWikiaBarConfig($city_id, $cv_name)) {
 			/* @var $validator WikiaBarMessageDataValidator */
-			$validator = F::build('WikiaBarMessageDataValidator');
-			/* @var $model WikiaBarModel */
-			$model = F::build('WikiaBarModel');
+			$validator = new WikiaBarMessageDataValidator();
+			$model = new WikiaBarModel();
 
 			$errorCount = 0;
 			$errors = array();

@@ -22,14 +22,14 @@
 
 		<form id="marketing-toolbox-form" data-module-name="<?= $moduleName ?>" method="post" name="upload-tool" class="WikiaForm" enctype="multipart/form-data">
 			<?=$moduleContent?>
-			
+
 			<div class="submits">
 				<?php if( $selectedModuleId == MarketingToolboxModulePopularvideosService::MODULE_ID ): ?>
-					<input id="marketing-toolbox-removeall" name="removeall" class="secondary" type="button" value="<?= $wf->msg('marketing-toolbox-edithub-removeall-button'); ?>" />
+					<input id="marketing-toolbox-removeall" name="removeall" class="secondary" type="button" value="<?= wfMsg('marketing-toolbox-edithub-removeall-button'); ?>" />
 				<?php else: ?>
-                	<input id="marketing-toolbox-clearall" name="clearall" class="secondary" type="button" value="<?= $wf->msg('marketing-toolbox-edithub-clearall-button'); ?>" />
+                	<input id="marketing-toolbox-clearall" name="clearall" class="secondary" type="button" value="<?= wfMsg('marketing-toolbox-edithub-clearall-button'); ?>" />
 				<?php endif; ?>
-				
+
 				<input type="submit" value="<?= wfMsg('marketing-toolbox-edithub-save-button'); ?>" />
 			</div>
 		</form>

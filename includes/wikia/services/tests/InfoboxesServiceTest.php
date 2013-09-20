@@ -159,8 +159,9 @@ class InfoboxesServiceTest extends WikiaBaseTest
 		
 		$service = $this->getMock( 'InfoboxesService', [ 'getMappedIds' ] );
 		$mapped = [ 123 => [ 123 ], 234 => [ 456, 789 ], 987 => [ 889 ] ];
-		$boxes = [ 'foo | bar' ];
-		$result = [ 123 => [ 'foo' => 'bar' ], 456 => [ 'foo' => 'bar' ], 789 => [ 'foo' => 'bar' ], 889 => [] ];
+		$boxes = [ 'infobox_1 | foo | bar', 'infobox_2 | baz | qux' ];
+		$ib = [ [ 'foo' => 'bar' ], [ 'baz' => 'qux' ] ];
+		$result = [ 123 => $ib, 456 => $ib, 789 => $ib, 889 => [] ];
 		$service
 		    ->expects( $this->once() )
 		    ->method ( 'getMappedIds' )
@@ -186,7 +187,7 @@ class InfoboxesServiceTest extends WikiaBaseTest
 	public function testGetSearchResponse() {
 		$config = $this->getMock( 'Wikia\Search\Config', [ 'setDirectLuceneQuery', 'setRequestedFields', 'setQuery' ] );
 		$service = $this->getMock( 'InfoboxesService', [ 'getIdQueries' ] );
-		$factory = $this->getMock( 'Wikia\Search\QueryService\Factory' );
+		$factory = $this->getMock( 'Wikia\Search\QueryService\Factory', [ 'getFromConfig' ] );
 		$queryService = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Lucene' )
 		                     ->disableOriginalConstructor()
 		                     ->setMethods( [ 'searchAsApi' ] )
@@ -229,9 +230,8 @@ class InfoboxesServiceTest extends WikiaBaseTest
 		    ->will   ( $this->returnValue( $expected ) )
 		;
 		
-		$this->proxyClass( 'Wikia\Search\Config', $config );
-		$this->proxyClass( 'Wikia\Search\QueryService\Factory', $factory );
-		$this->mockApp();
+		$this->mockClass( 'Wikia\Search\Config', $config );
+		$this->mockClass( 'Wikia\Search\QueryService\Factory', $factory );
 		$get = new ReflectionMethod( 'InfoboxesService', 'getSearchResponse' );
 		$get->setAccessible( true );
 		$this->assertEquals(

@@ -19,27 +19,27 @@ $wgExtensionCredits['filepage'][] = array(
 );
 
 $dir = dirname( __FILE__ ) . '/';
-$app = F::app( );
 
 // classes
-$app->registerClass( 'WikiaFilePage', $dir . 'WikiaFilePage.php' );
-$app->registerClass( 'FilePageFlat', $dir . 'FilePageFlat.php' );
-$app->registerClass( 'FilePageTabbed', $dir . 'FilePageTabbed.php' );
-$app->registerClass( 'WikiaWikiFilePage', $dir . 'WikiaWikiFilePage.php'); // Override for WikiFilePage
+$wgAutoloadClasses[ 'WikiaFilePage' ] = $dir . 'WikiaFilePage.php';
+$wgAutoloadClasses[ 'WikiaMobileFilePage' ] = $dir . 'WikiaMobileFilePage.php';
+$wgAutoloadClasses[ 'FilePageTabbed' ] = $dir . 'FilePageTabbed.php';
+$wgAutoloadClasses[ 'WikiaWikiFilePage'] = $dir . 'WikiaWikiFilePage.php'; // Override for WikiFilePage
 
-$app->registerClass( 'FilePageHooks', $dir . 'FilePageHooks.class.php' );
-$app->registerClass( 'FilePageHelper', $dir . 'FilePageHelper.class.php' );
+$wgAutoloadClasses[ 'FilePageHooks' ] = $dir . 'FilePageHooks.class.php';
+$wgAutoloadClasses[ 'FilePageHelper' ] = $dir . 'FilePageHelper.class.php';
 
 // file page controller
-$app->registerClass( 'FilePageController', $dir . 'FilePageController.class.php' );
+$wgAutoloadClasses[ 'FilePageController' ] = $dir . 'FilePageController.class.php';
 
 // i18n mapping
-$app->registerExtensionMessageFile( 'FilePage', $dir . 'FilePage.i18n.php' );
+$wgExtensionMessagesFiles['FilePage'] = $dir . 'FilePage.i18n.php' ;
 
 // hooks
-$app->registerHook( 'ArticleFromTitle', 'FilePageHooks', 'onArticleFromTitle' );
-$app->registerHook( 'SkinTemplateNavigation', 'FilePageHooks', 'onSkinTemplateNavigation' );
-$app->registerHook( 'GlobalUsageFormatItemWikiLink', 'FilePageHooks', 'onGlobalUsageFormatItemWikiLink' );
-$app->registerHook( 'GlobalUsageImagePageWikiLink', 'FilePageHooks', 'onGlobalUsageImagePageWikiLink' );
-$app->registerHook( 'GlobalUsageLinksUpdateComplete', 'FilePageHooks', 'onGlobalUsageLinksUpdateComplete' );
-$app->registerHook( 'BeforePageDisplay', 'FilePageHooks', 'onBeforePageDisplay' );
+$wgHooks['ArticleFromTitle'][] = 'FilePageHooks::onArticleFromTitle';
+$wgHooks['SkinTemplateNavigation'][] = 'FilePageHooks::onSkinTemplateNavigation';
+$wgHooks['GlobalUsageFormatItemWikiLink'][] = 'FilePageHooks::onGlobalUsageFormatItemWikiLink';
+$wgHooks['GlobalUsageImagePageWikiLink'][] = 'FilePageHooks::onGlobalUsageImagePageWikiLink';
+$wgHooks['GlobalUsageLinksUpdateComplete'][] = 'FilePageHooks::onGlobalUsageLinksUpdateComplete';
+$wgHooks['BeforePageDisplay'][] = 'FilePageHooks::onBeforePageDisplay';
+$wgHooks['WikiaMobileAssetsPackages'][] = 'FilePageHooks::onWikiaMobileAssetsPackages';

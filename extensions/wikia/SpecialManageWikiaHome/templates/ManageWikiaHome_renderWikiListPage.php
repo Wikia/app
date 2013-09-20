@@ -17,7 +17,7 @@
 				<?= $wiki->city_id ?>
 			</td>
 			<td>
-				<?= $wiki->city_vertical ?>
+				<?= $verticals[$wiki->city_vertical] ?>
 			</td>
 			<td>
 				<?= $wiki->city_title ?>

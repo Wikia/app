@@ -29,7 +29,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialPromote/css/SpecialPromote.scss'));
 
-		$this->helper = F::build('SpecialPromoteHelper');
+		$this->helper = new SpecialPromoteHelper();
 	}
 
 	public function index() {
@@ -45,7 +45,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 
 		$this->response->addAsset('extensions/wikia/SpecialPromote/js/SpecialPromote.js');
 
-		F::build('JSMessages')->enqueuePackage('SpecialPromote', JSMessages::EXTERNAL);
+		JSMessages::enqueuePackage('SpecialPromote', JSMessages::EXTERNAL);
 
 		$this->helper->loadWikiInfo();
 		$this->minHeaderLength = $this->helper->getMinHeaderLength();
@@ -91,14 +91,14 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 			return false;
 		}
 		wfProfileIn(__METHOD__);
-		$upload = F::build('UploadVisualizationImageFromFile');
+		$upload = new UploadVisualizationImageFromFile();
 
 		$status = $this->helper->uploadImage($upload);
 
 		$result = array();
 
 		if ($status['status'] === 'uploadattempted' && $status['isGood']) {
-			$file = $upload->getLocalFile();
+			$file = $status['file'];
 			$result['uploadType'] = $this->request->getVal('uploadType');
 			$result['imageIndex'] = $this->request->getVal('imageIndex',null);
 
@@ -110,8 +110,8 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 				$height = SpecialPromoteHelper::LARGE_IMAGE_HEIGHT;
 			}
 
-			$result['fileUrl'] = $this->helper->getImageUrl($file->getName(), $width, $height);
-			$result['fileName'] = $file->getName();
+			$result['fileUrl'] = $this->helper->getImageUrl($file, $width, $height);
+			$result['fileName'] = $file->getFileKey();
 
 			if ($result['fileUrl'] == null || $result['fileName'] == null) {
 				$result['errorMessages'] = array(wfMsg('promote-error-unknown-upload-error'));
@@ -128,7 +128,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 	public function saveData() {
 		if( !$this->checkAccess() ) {
 			$this->success = false;
-			$this->error = $this->wf->Msg('promote-wrong-rights');
+			$this->error = wfMsg('promote-wrong-rights');
 			return;
 		}
 

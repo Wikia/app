@@ -39,7 +39,7 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 	 */
 	protected function getTemplate() {
 		// TODO: REFACTOR: Use Nirvana instead of EasyTemplate.
-		return F::build( 'EasyTemplate', array( ( dirname( __FILE__ )."/templates/" ) ) );
+		return new EasyTemplate( ( dirname( __FILE__ )."/templates/" ) );
 	}
 
 	public function getHTML( $setHtmlTitle=true ) {

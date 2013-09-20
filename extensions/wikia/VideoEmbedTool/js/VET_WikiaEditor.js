@@ -2,21 +2,21 @@
 (function(window, $) {
 
 	var VET_WikiaEditor = function(event) {
-		var mode = 'create';
-		var embedPresets = {};
-		var exists = false;
+		var mode = 'create',
+			embedPresets = {},
+			exists = false,
+			// Start on first or second screen of VET
+			startPoint = 1,
+			element = false,
+			onClose = null,
+			triggeredFromRTE = event && event.type === 'rte',
+			callback = null;
 
-		// Start on first or second screen of VET
-		var startPoint = 1;
-
-		var element = false;
 		if (event && event.data && event.data.element) {
 			// Video or Placeholder element was clicked in RTE
 			element = event.data.element;
 		}
 
-		var onClose = null;
-		var triggeredFromRTE = event && event.type === 'rte';
 		if (triggeredFromRTE) {
 			var wikiaEditor = WikiaEditor.getInstance();
 
@@ -45,8 +45,6 @@
 				}
 			}
 		}
-
-		var callback = null;
 
 		if(mode === 'create') {
 			callback = function(embedData) {
@@ -103,7 +101,10 @@
 						if (element) {
 							// update existing video
 							RTE.mediaEditor.update(element, wikitext, embedData);
-							window.VET.close();
+							//
+							require(['wikia.vet'], function(vet) {
+								vet.close();
+							});
 						} else {
 							// add new video
 							RTE.mediaEditor.addVideo(wikitext, embedData);

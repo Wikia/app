@@ -70,7 +70,8 @@ class RandomWikiHelper {
 			self::$mData[ 'hubs' ] = array();
 
 			if ( !empty( $wgStatsDBEnabled ) ) {
-				$wikis = DataMartService::getTopWikisByPageviews( DataMartService::PERIOD_ID_MONTHLY, 200, self::$mLanguage, null, 1 );
+				$langs = array(self::$mLanguage);
+				$wikis = DataMartService::getTopWikisByPageviews( DataMartService::PERIOD_ID_MONTHLY, 200, $langs, null, 1 );
 				$minPageViews = ( isset( self::$pageviewsLimits[ self::$mLanguage ] ) ) ? self::$pageviewsLimits[ self::$mLanguage ] : self::$pageviewsLimits[ 'default' ];
 
 				foreach ( $wikis as $wikiID => $pvCount ) {

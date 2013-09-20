@@ -593,7 +593,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				break;
 		}
 
-		$out .= F::build('JSSnippets')->addToStack(
+		$out .= JSSnippets::addToStack(
 			array( '/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js', ),
 			array(),
 			'WikiaPhotoGalleryView.init'
@@ -783,7 +783,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					$html .= Xml::openElement('div', array('class' => 'wikia-gallery-row'));
 				}
 
-				$html .= Xml::openElement('span', array('class' => 'wikia-gallery-item', 'style' => $itemSpanStyle));
+				$html .= Xml::openElement('div', array('class' => 'wikia-gallery-item', 'style' => $itemSpanStyle));
 
 				$html .= Xml::openElement('div', array('class' => 'thumb', 'style' => $itemDivStyle));
 
@@ -972,7 +972,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					$html .= Xml::closeElement('div');
 				}
 
-				$html .= Xml::closeElement('span'); // /span.wikia-gallery-item
+				$html .= Xml::closeElement('div'); // /div.wikia-gallery-item
 
 				if ($perRow != 'dynamic' && (($index % $perRow) == ($perRow - 1) || $index == (count($this->mFiles) - 1))) {
 					$html .= Xml::closeElement('div');
@@ -1178,7 +1178,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					'data-image-name' => $img->getTitle()->getText(),
 					'data-image-key' => $img->getTitle()->getDBKey(),
 				);
-				if ( $this->mData['images'][$p]['data-caption'] != '' ) {
+				if ( !empty( $this->mData['images'][$p]['data-caption'] ) ) {
 					$thumbAttribs['data-caption'] = $this->mData['images'][$p]['data-caption'];
 				}
 				$thumbHtml = Xml::element('img', $thumbAttribs);
@@ -1272,7 +1272,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$width = "{$params['width']}px";
 		$height = "{$params['height']}px";
 
-		$slideshowHtml .= F::build('JSSnippets')->addToStack(
+		$slideshowHtml .= JSSnippets::addToStack(
 			array(
 				'/resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js',
 				'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js'
@@ -1490,13 +1490,13 @@ class WikiaPhotoGallery extends ImageGallery {
 				$javascriptInitializationFunction = 'WikiaMosaicSliderMasterControl.init';
 			} else {
 				$sliderResources = array(
-					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.css',
+					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.scss',
 					'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.js'
 				);
 				$javascriptInitializationFunction = 'WikiaPhotoGallerySlider.init';
 			}
 
-			$html .= F::build('JSSnippets')->addToStack(
+			$html .= JSSnippets::addToStack(
 				$sliderResources,
 				array(),
 				$javascriptInitializationFunction,
@@ -1504,7 +1504,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			);
 
 			//load WikiaMobile resources if needed using JSSnippets filtering mechanism
-			$html .= F::build('JSSnippets')->addToStack(
+			$html .= JSSnippets::addToStack(
 				array(
 					'wikiaphotogallery_slider_scss_wikiamobile',
 					'wikiaphotogallery_slider_js_wikiamobile'
@@ -1634,7 +1634,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				$html .= Xml::openElement('div', array('class' => 'wikia-gallery-row'));
 			}
 
-			$html .= Xml::openElement('span', array('class' => 'wikia-gallery-item', 'style' => $itemSpanStyle));
+			$html .= Xml::openElement('div', array('class' => 'wikia-gallery-item', 'style' => $itemSpanStyle));
 
 			$html .= Xml::openElement('div', array('class' => 'thumb', 'style' => $itemDivStyle));
 
@@ -1719,7 +1719,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				$html .= Xml::closeElement('div');
 			}
 
-			$html .= Xml::closeElement('span'); // /span.wikia-gallery-item
+			$html .= Xml::closeElement('div'); // /div.wikia-gallery-item
 
 			if ($perRow != 'dynamic' && (($index % $perRow) == ($perRow - 1) || $index == (count($this->mExternalImages) - 1))) {
 				$html .= Xml::closeElement('div');
@@ -1906,7 +1906,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$height = $params['height'];
 		$width = $params['width'];
 
-		$html .= F::build('JSSnippets')->addToStack(
+		$html .= JSSnippets::addToStack(
 			array(
 				'/resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js',
 				'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js'

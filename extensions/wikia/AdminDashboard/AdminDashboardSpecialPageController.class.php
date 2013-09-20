@@ -43,11 +43,13 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 			$this->urlAddVideo = Title::newFromText('WikiaVideoAdd', NS_SPECIAL)->getFullURL();
 			$this->urlAddVideoReturnUrl = SpecialPage::getTitleFor("Videos")->escapeLocalUrl( "sort=recent" );
 		} else {
-			$this->showVideoLink = false;			
+			$this->showVideoLink = false;
 		}
 		$this->urlCreateBlogPage = Title::newFromText('CreateBlogPage', NS_SPECIAL)->getFullURL();
 		$this->urlMultipleUpload = Title::newFromText('MultipleUpload', NS_SPECIAL)->getFullURL();
+		$this->urlLVS = Title::newFromText('LicensedVideoSwap', NS_SPECIAL)->getFullURL();
 		$this->urlGetPromoted = Title::newFromText('Promote', NS_SPECIAL)->getFullURL();
+		$this->urlSpecialCss = SpecialPage::getTitleFor('CSS')->getFullURL();
 
 		// special:specialpages
 		$this->advancedSection = (string)$this->app->sendRequest( 'AdminDashboardSpecialPage', 'getAdvancedSection', array());
@@ -56,9 +58,11 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		$this->displayPageLayoutBuilder = !empty($this->wg->EnablePageLayoutBuilder);
 		$this->displayWikiFeatures = !empty($this->wg->EnableWikiFeatures);
 		$this->displaySpecialPromote = !empty($this->wg->EnableSpecialPromoteExt);
+		$this->displaySpecialCss = !empty($this->wg->EnableSpecialCssExt);
+		$this->displayLicensedVideoSwap = !empty($this->wg->EnableLicensedVideoSwapExt);
 
 		// add messages package
-		F::build('JSMessages')->enqueuePackage('AdminDashboard', JSMessages::INLINE);
+		JSMessages::enqueuePackage('AdminDashboard', JSMessages::INLINE);
 	}
 
 	/**

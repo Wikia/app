@@ -3,14 +3,14 @@
 // example: SERVER_ID=5915 php maintenance/wikia/GoogleWebmasterToolsSync/initial_sync_account.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
 
 global $IP;
-require_once( __DIR__."/configure_log_file.php" );
+require_once( __DIR__."/common.php" );
 GWTLogHelper::notice( __FILE__ . " script starts.");
 try {
 	global $wgExternalSharedDB;
 	$app = F::app();
-	$db = $app->wf->getDB( DB_MASTER, array(), $wgExternalSharedDB);
+	$db = wfgetDB( DB_MASTER, array(), $wgExternalSharedDB);
 
-	function generateUserId( $db ) {
+	function generateUserId( DatabaseBase $db ) {
 		$res = $db->select("webmaster_user_accounts",
 			array('max(user_id) as maxid'),
 			array(),
@@ -20,7 +20,7 @@ try {
 		return $res->fetchObject()->maxid + 1;
 	}
 
-	function tryInsertUser( $db ,$u ) {
+	function tryInsertUser( DatabaseBase $db ,GWTUser $u ) {
 		$res = $db->select("webmaster_user_accounts",
 			array('user_id'),
 			array(
@@ -42,7 +42,7 @@ try {
 		return $user_id;
 	}
 
-	function tryInsertWiki( $db ,$wikiId ) {
+	function tryInsertWiki( DatabaseBase $db ,$wikiId ) {
 		if( is_string( $wikiId ) ) {
 			$w = WikiFactory::UrlToID( $wikiId );
 			if( $w == null ) throw new Exception("Can't resolve " . $wikiId );
@@ -59,13 +59,14 @@ try {
 		//echo "insert: " . $wikiId . "\n";
 		if ( ! $db->insert("webmaster_sitemaps", array(
 				"wiki_id" => $wikiId,
-				"user_id" => 0,
+				"user_id" => null,
 			))) {
 			throw new Exception("can't insert wiki id = " . $wikiId);
 		}
+		return true;
 	}
 
-	function tryUpdateWiki( $db, $wikiId, $user ) {
+	function tryUpdateWiki( DatabaseBase $db, $wikiId, $user ) {
 		if( is_string( $wikiId ) ) {
 			$w = WikiFactory::UrlToID( $wikiId );
 			if( $w == null ) throw new Exception("Can't resolve " . $wikiId);
@@ -84,7 +85,7 @@ try {
 		if( !$res ) throw new Exception("Failed to update " . $userId . " " . $wikiId);
 	}
 
-	function updateUserWikiCount( $db, $userId, $wikiCount) {
+	function updateUserWikiCount( DatabaseBase $db, $userId, $wikiCount) {
 		$res = $db->update("webmaster_user_accounts",
 			array(
 				"wikis_number" => $wikiCount,
@@ -118,9 +119,9 @@ try {
 		}
 		try {
 			updateUserWikiCount( $db, $u->getId(), count($sites) );
-			GWTLogHelper::notice  ( $u->getEmail() . " has " . count($sites) . " (count updated)" );
+			GWTLogHelper::notice  ( $u->getEmail() . " has " . (int) count($sites) . " (count updated)" );
 		} catch( Exception $e ) {
-			GWTLogHelper::error( 'update ' . $u->getEmail() . " " . count($sites) . " failed.", $e );
+			GWTLogHelper::error( 'update ' . $u->getEmail() . " " . (int) count($sites) . " failed.", $e );
 		}
 	}
 

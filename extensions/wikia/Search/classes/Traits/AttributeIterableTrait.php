@@ -139,4 +139,5 @@ trait AttributeIterableTrait {
 	public function seek( $position ) {
 	    return $this->getIterable()->seek( $position );
 	}
+	
 }

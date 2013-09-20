@@ -2,7 +2,7 @@
 
 class WikiDataGetterForVisualization extends WikiDataGetter {
 	public function getWikiData($wikiId, $langCode) {
-		$visualization = F::build('CityVisualization');
+		$visualization = new CityVisualization();
 		$wikiData = $visualization->getWikiDataForVisualization($wikiId, $langCode);
 		return $this->sanitizeWikiData($wikiData);
 	}

@@ -69,7 +69,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 		return '';
 	}
 
-	protected function getVideoKeywords(){
+	protected function getVideoName() {
 		if ( !empty($this->interfaceObj['event_episode_title']) ) {
 			 return $this->interfaceObj['event_episode_title'];
 		}
@@ -89,7 +89,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 		return '';
 	}
 
-	protected function getVideoTags() {
+	protected function getVideoKeywords() {
 		if ( !empty($this->interfaceObj['tags']) ) {
 			$tags = array();
 			foreach( $this->interfaceObj['tags'] as $tag ) {
@@ -125,7 +125,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 		}
 
 		// use video id for memcache key
-		$memcKey = F::app()->wf->memcKey( static::$CACHE_KEY, $this->videoId, static::$CACHE_KEY_VERSION );
+		$memcKey = wfMemcKey( static::$CACHE_KEY, $this->videoId, static::$CACHE_KEY_VERSION );
 		$processedResponse = F::app()->wg->memc->get( $memcKey );
 		if ( empty( $processedResponse ) ) {
 			$req = MWHttpRequest::factory( $apiUrl );
@@ -176,6 +176,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 			throw new WikiaException( wfMessage("videohandler-error-restricted-video")->text() );
 		}
 
+		$metadata = array();
 		if ( !isset($metadata['uniqueName']) ) {
 			$metadata['uniqueName'] = $this->getUniqueName();
 		}
@@ -187,7 +188,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 		wfProfileIn( __METHOD__ );
 
 		$app = F::app();
-		$memcKey = $app->wf->memcKey( static::$CACHE_KEY, md5($url), static::$CACHE_KEY_VERSION );
+		$memcKey = wfmemcKey( static::$CACHE_KEY, md5($url), static::$CACHE_KEY_VERSION );
 		$redirectUrl = $app->wg->memc->get( $memcKey );
 		if ( empty($redirectUrl) ) {
 			$req = MWHttpRequest::factory( $url );

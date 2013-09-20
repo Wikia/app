@@ -30,6 +30,15 @@ $messages['br'] = array(
 	'new-look' => 'Wikia',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'skinchooser-desc' => "Permet als usuaris triar l'aparença del wiki en les seves preferències",
+	'new-look' => 'Wikia',
+	'site-layout' => 'Dissenys del lloc',
+);
+
 /** Czech (česky)
  * @author Darth Daron
  * @author Dontlietome7
@@ -167,6 +176,15 @@ $messages['nl'] = array(
 	'skinchooser-desc' => 'Maakt het mogelijk voor gebruikers in hun voorkeuren een vormgeving te kiezen',
 	'new-look' => 'Wikia',
 	'site-layout' => 'Sitevormgevingen',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'skinchooser-desc' => "Permet als utilizaires de causir d'abilhatges dins lors preferéncias",
+	'new-look' => 'Wikia',
+	'site-layout' => 'Aparéncias del site',
 );
 
 /** Polish (polski)

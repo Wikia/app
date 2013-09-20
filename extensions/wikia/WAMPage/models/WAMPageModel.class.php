@@ -137,10 +137,10 @@ class WAMPageModel extends WikiaModel {
 		return $config['pageName'];
 	}
 	
-	public function getWAMMainPageUrl() {
+	public function getWAMMainPageUrl($filterParams = array()) {
 		$title = $this->getTitleFromText($this->getWAMMainPageName());
 		
-		return ($title instanceof Title) ? $title->getFullUrl() : null;
+		return ($title instanceof Title) ? $title->getFullUrl().$this->getParamsAsQuery($filterParams) : null;
 	}
 
 	/**
@@ -191,18 +191,36 @@ class WAMPageModel extends WikiaModel {
 	}
 
 	/**
+	 * @desc Return proper string for subtitleText - it's same as in tabs.
+	 *
+	 * @param int $tabIndex tab index
+	 * @param string $defaultTitle fallback title
+	 *
+	 * @return string
+	 */
+	public function getSubpageTextByIndex($tabIndex, $defaultTitle) {
+		$tabs = $this->getTabs();
+		$tabIndex = (int)$tabIndex; // first tab has 'false' as tabIndex
+		
+		// we don't have that index - return default title
+		return isset($tabs[$tabIndex]['name']) ? $tabs[$tabIndex]['name'] : $defaultTitle;
+	}
+
+	/**
 	 * @desc Returns array with tab names and urls by default it's in English taken from global variable $wgWAMPageConfig['tabsNames']
 	 *
 	 * @param int $selectedIdx array index of selected tab
+	 * @params array $filterParams filter params
 	 */
-	public function getTabs($selectedIdx = 0) {
+	public function getTabs($selectedIdx = 0, $filterParams = array()) {
 		$tabs = [];
 		$pageName = $this->getWAMMainPageName();
 		$tabsNames = $this->getTabsNamesArray();
+		$filterParamsQueryString = $this->getParamsAsQuery($filterParams);
 		
 		foreach($tabsNames as $tabName) {
 			$tabTitle = $this->getTitleFromText($pageName . '/'. $tabName);
-			$tabUrl = $tabTitle->getLocalURL();
+			$tabUrl = $tabTitle->getLocalURL() . $filterParamsQueryString;
 			$tabs[] = ['name' => $tabName, 'url' => $tabUrl];
 		}
 
@@ -305,7 +323,7 @@ class WAMPageModel extends WikiaModel {
 		/** @var WikiFactoryHub $wikiFactoryHub */
 		$wikiFactoryHub = WikiFactoryHub::getInstance();
 		$wikiaHub = $wikiFactoryHub->getCategory($verticalId);
-		return $this->wf->Message('wam-' . $wikiaHub['name'])->inContentLanguage()->text();
+		return wfMessage('wam-' . $wikiaHub['name'])->inContentLanguage()->text();
 	}
 
 	protected function getVisualizationParams($verticalId = null, $sortColumn = 'wam_index') {
@@ -353,6 +371,25 @@ class WAMPageModel extends WikiaModel {
 		];
 
 		return $apiParams;
+	}
+
+	/**
+	 * Convert filter params to query params ready to be concatenated.
+	 * 
+	 * @param $filterParams - filter params passed from controller
+	 *
+	 * @return string
+	 */
+	private function getParamsAsQuery($filterParams) {
+		$queryParams = array();
+
+		foreach ( $filterParams as $key => $value ) {
+			if ( !empty($value) ) {
+				$queryParams[$key] = $value;
+			}
+		}
+
+		return count($queryParams) ? '?'.http_build_query($queryParams) : '';
 	}
 
 	public function isWAMPage($title) {

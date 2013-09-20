@@ -7,7 +7,7 @@ class WikiMapModel extends WikiaObject {
         $this->title = $currentTitle;
     }
     private function getDB(){
-        return $this->app->wf->getDB(DB_SLAVE, array(), $this->app->wg->DBname);
+        return wfgetDB(DB_SLAVE, array(), $this->app->wg->DBname);
     }
     /*
         Method that returns required data to draw wikiMap
@@ -31,7 +31,7 @@ class WikiMapModel extends WikiaObject {
 
         wfProfileIn( __METHOD__ );
 
-        $key = $this->app->wf->MemcKey('wikiMap', 'categories' );
+        $key = wfMemcKey('wikiMap', 'categories' );
         $data = $this->app->wg->memc->get($key);
 
         if (is_array($data)){
@@ -78,7 +78,7 @@ class WikiMapModel extends WikiaObject {
         $map = array();
         foreach ($result as $i => $item){
             if ($item['ns'] == 0){
-                $title = F::build('Title', array($item['title']), 'newFromText');
+                $title = Title::newFromText($item['title']);
                 if($title instanceof Title)  {
                     $articleId = $title->getArticleId();
                     $res[] = array('title' => $item['title'], 'id' => $articleId, 'connections' => array());
@@ -150,7 +150,7 @@ class WikiMapModel extends WikiaObject {
         wfProfileIn( __METHOD__ );
         $result = null;
 
-        $key = $this->app->wf->MemcKey( 'wikiMap', 'articles', $Category );
+        $key = wfMemcKey( 'wikiMap', 'articles', $Category );
         //$data = $this->app->wg->memc->get($key);
         $data=null;
         if (is_array($data)){

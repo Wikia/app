@@ -7,7 +7,7 @@ class WikiaHubsV2Hooks {
 	 *
 	 * @return true because it's a hook
 	 */
-	public function onArticleFromTitle(&$title, &$article) {
+	static public function onArticleFromTitle(&$title, &$article) {
 		wfProfileIn(__METHOD__);
 		$app = F::app();
 
@@ -18,23 +18,28 @@ class WikiaHubsV2Hooks {
 
 		$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
 
-		if( $model->isHubsPage($hubName) && !$this->isOffShotPage($title) ) {
+		if( $model->isHubsPage($hubName) && !self::isOffShotPage($title) ) {
 			$hubTimestamp = $model->getTimestampFromSplitDbKey($dbKeyNameSplit);
 
 			$app->wg->SuppressPageHeader = true;
 			$app->wg->SuppressWikiHeader = true;
 			$app->wg->SuppressRail = true;
 			$app->wg->SuppressFooter = true;
-			$article = F::build( 'WikiaHubsV2Article', array($title, $model->getHubPageId($dbKeyNameSplit[0]), $hubTimestamp) );
+			if (!$app->wg->request->wasPosted()) {
+				// don't change article object while saving data
+				$article = new WikiaHubsV2Article($title, $model->getHubPageId($dbKeyNameSplit[0]), $hubTimestamp);
+			}
 		}
 
-		if( $model->isHubsPage($hubName) && $this->isOffShotPage($title) ) {
+		if( $model->isHubsPage($hubName) && self::isOffShotPage($title) ) {
 			$hubsModel = new WikiaHubsV2Model();
 			$canonicalHubName = $hubsModel->getCanonicalVerticalName($model->getHubPageId($dbKeyNameSplit[0]));
 			OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ', '', $canonicalHubName));
 
-			$app->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHubsV2/css/WikiaHubsV1/WikiaHubs.scss'));
-			$app->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss'));
+			$am = AssetsManager::getInstance();
+			$app->wg->Out->addStyle($am->getSassCommonURL('extensions/wikia/WikiaHubsV2/css/WikiaHubsV1/WikiaHubs.scss'));
+			$app->wg->Out->addStyle($am->getSassCommonURL('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss'));
+
 		}
 
 		wfProfileOut(__METHOD__);
@@ -48,7 +53,7 @@ class WikiaHubsV2Hooks {
 	 * @param Title $title
 	 * @return bool
 	 */
-	protected function isOffShotPage(Title $title) {
+	static protected function isOffShotPage(Title $title) {
 		return $title->isSubpage() && $title->exists();
 	}
 
@@ -59,7 +64,7 @@ class WikiaHubsV2Hooks {
 	 *
 	 * @return bool
 	 */
-	public function onWikiaCanonicalHref(&$url) {
+	static public function onWikiaCanonicalHref(&$url) {
 		wfProfileIn(__METHOD__);
 		$app = F::app();
 
@@ -88,7 +93,7 @@ class WikiaHubsV2Hooks {
 	 * @param Parser parser
 	 * @return true
 	 */
-	public function onParserFirstCallInit( Parser $parser ) {
+	static public function onParserFirstCallInit( Parser $parser ) {
 		wfProfileIn(__METHOD__);
 
 		$app = F::app();
@@ -101,7 +106,7 @@ class WikiaHubsV2Hooks {
 			$model = new WikiaHubsV2HooksModel();
 			$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
 
-			if( $model->isHubsPage($hubName) && $this->isOffShotPage($title) ) {
+			if( $model->isHubsPage($hubName) && self::isOffShotPage($title) ) {
 				$parser->setHook('hubspopularvideos', array(new WikiaHubsParserHelper(), 'renderTag'));
 			}
 		}

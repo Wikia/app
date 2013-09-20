@@ -1,4 +1,5 @@
 <?php
+
 // This is from google translate, just return early.
 if ( $_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	header ( "HTTP/1.1 200", true, 200);
@@ -25,10 +26,16 @@ if( function_exists( 'newrelic_name_transaction' ) ) {
 }
 
 if ( !empty( $wgEnableNirvanaAPI ) ){
+	// temporarily force ApiDocs extension regardless of config
+	require $IP."/extensions/wikia/ApiDocs/ApiDocs.setup.php";
+	
 	$app = F::app();
 
 	// Ensure that we have a title stub, otherwise parser does not work BugId: 12901
 	$app->wg->title = Wikia::createTitleFromRequest( $app->wg->Request );
+
+	// support "mcache" URL parameter to ease debugging
+	Wikia::setUpMemcachePurge( $app->wg->Request, $app->wg->User );
 
 	// initialize skin if requested
 	$app->initSkin( (bool) $app->wg->Request->getVal( "skin", false ) );

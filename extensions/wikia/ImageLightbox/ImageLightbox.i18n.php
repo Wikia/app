@@ -101,6 +101,8 @@ $messages['az'] = array(
 $messages['br'] = array(
 	'lightbox_details_tooltip' => 'Gwelet munudoù ar skeudenn',
 	'lightbox-forum' => 'Forom',
+	'lightbox-standard-link' => 'Liamm standart',
+	'lightbox-blog-link' => 'Liamm blog',
 	'lightbox-send' => 'Kas',
 	'lightbox-share-description' => 'Skeudenn $1 war $2',
 	'lightbox-share-email-subject' => "$1 en deus kaset deoc'h ur skeudenn war Wikia",
@@ -120,6 +122,10 @@ $1
 	'lightbox-share-email-ok-caption' => 'Kadarnadur',
 	'lightbox-share-email-ok-content' => 'Kaset eo bet ar postel{{PLURAL:$1||où}}.',
 	'lightbox-share-email-error-caption' => 'Fazi',
+	'lightbox-share-email-error-content' => 'Fazi o kas {{PLURAL:$1|postel|postel}}.
+Munudoù : $2', # Fuzzy
+	'lightbox-share-email-error-login' => 'Ezhomm ho peus da gevreañ evit kas posteloù',
+	'lightbox-share-email-error-noaddress' => "N'eus bet lakaet chomlec'h ebet.",
 	'lightbox-visit-the-wiki' => 'Gweladenniñ ar wiki :',
 );
 
@@ -342,6 +348,40 @@ Tiedot: $2',
 	'lightbox-visit-the-wiki' => 'Siirry wikiin:',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'lightbox_details_tooltip' => 'Vís smálutir um myndina',
+	'lightbox-forum' => 'Forum',
+	'lightbox-standard-link' => 'Standarsleinkja',
+	'lightbox-blog-link' => 'Bloggleinkja',
+	'lightbox-send' => 'Send',
+	'lightbox-share-description' => 'Mynd á $1 á $2',
+	'lightbox-share-email-subject' => '$1 hevur sent tær eina mynd á Wikia',
+	'lightbox-share-email-body' => 'Hey,
+
+Onkur vildi vísa tær eina mynd á Wikia. Kekka tað út:
+
+$1
+
+- Wikia toymið',
+	'lightbox-share-button-email' => 'T-postur',
+	'lightbox-share-button-www' => 'Deil',
+	'lightbox-share-button-embed' => 'Innlima',
+	'lightbox-share-email-label' => 'Send hesa myndina við t-posti til ein vin',
+	'lightbox-share-email-page-label' => 'Send hesa síðuna við t-posti til ein vin',
+	'lightbox-share-email-page-label-address' => 'T-postadressa',
+	'lightbox-share-email-ok-caption' => 'Váttan',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Teldubrævið er|Teldubrøvini eru}} send.',
+	'lightbox-share-email-error-caption' => 'Feilur',
+	'lightbox-share-email-error-content' => 'Feilur hendi tá ið {{PLURAL:$1|teldubræv|teldubrøv}} skuldi sendast.
+Smálutir: $2',
+	'lightbox-share-email-error-login' => 'Fyri at senda teldubrøv, mást tú rita inn',
+	'lightbox-share-email-error-noaddress' => 'Ongin adressa varð givin.',
+	'lightbox-visit-the-wiki' => 'Vitja wiki:',
+);
+
 /** French (français)
  * @author Gomoko
  * @author Wyz
@@ -479,6 +519,24 @@ Detalios: $2',
 	'lightbox-visit-the-wiki' => 'Visita le wiki:',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'lightbox-standard-link' => 'Pranala standar',
+	'lightbox-send' => 'Kirim',
+	'lightbox-share-description' => 'Foto dalam $1 pada $2',
+	'lightbox-share-email-body' => 'Hai,
+
+Seseorang ingin menunjukkan sebuah foto kepada Anda pada Wikia. Lihatlah:
+
+$1
+
+- Tim Wikia',
+	'lightbox-share-email-page-label-address' => 'Alamat surel',
+	'lightbox-share-email-error-login' => 'Untuk mengirim surel Anda perlu masuk log',
+);
+
 /** Japanese (日本語)
  * @author Shirayuki
  * @author Tommy6
@@ -535,6 +593,16 @@ $messages['lb'] = array(
 	'lightbox-share-email-ok-caption' => 'Confirmatioun',
 	'lightbox-share-email-error-caption' => 'Feeler',
 	'lightbox-share-email-error-noaddress' => 'Dir hutt keng Adress uginn.',
+);
+
+/** Lithuanian (lietuvių)
+ * @author Mantak111
+ */
+$messages['lt'] = array(
+	'lightbox-forum' => 'Forumas',
+	'lightbox-send' => 'Siųsti',
+	'lightbox-share-button-www' => 'Dalintis',
+	'lightbox-share-email-error-caption' => 'Klaida',
 );
 
 /** Macedonian (македонски)
@@ -762,6 +830,8 @@ $messages['ps'] = array(
 	'lightbox-send' => 'لېږل',
 	'lightbox-share-button-email' => 'برېښليک',
 	'lightbox-share-button-www' => 'شريکول',
+	'lightbox-share-email-label' => 'دا انځور يو ملګري ته برېښليکول',
+	'lightbox-share-email-page-label' => 'دا مخ يو ملګري ته برېښليکول',
 	'lightbox-share-email-page-label-address' => 'برېښليک پته',
 	'lightbox-share-email-error-caption' => 'تېروتنه',
 );
@@ -800,11 +870,33 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'lightbox_details_tooltip' => "'Ndruche le dettaglie d'a fote",
 	'lightbox-forum' => 'Forum',
+	'lightbox-standard-link' => 'Collegamende standàrd',
+	'lightbox-blog-link' => "Collegamende d'u blog",
+	'lightbox-send' => 'Manne',
+	'lightbox-share-description' => "Fote jndr'à $1 sus a $2",
+	'lightbox-share-email-subject' => "$1 t'ha mannate sent 'na fote sus a Uicchia",
+	'lightbox-share-email-body' => "cià,
+
+quacchedune vuleve farte vedè 'na fote sus a Uicchia. Condrolle:
+
+$1
+
+- 'A squadre de Uicchia",
 	'lightbox-share-button-email' => 'E-mail',
 	'lightbox-share-button-www' => 'Condivide',
+	'lightbox-share-button-embed' => "'Ngapsule",
+	'lightbox-share-email-label' => "Manne st'immaggine cu l'email a 'n'amiche tune",
+	'lightbox-share-email-page-label' => "Manne sta pàgene cu l'email a 'n'amiche tune",
 	'lightbox-share-email-page-label-address' => 'Indirizze e-mail',
+	'lightbox-share-email-ok-caption' => 'Conferme',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Email ha stae|Email honne state}} mannate.',
 	'lightbox-share-email-error-caption' => 'Errore',
+	'lightbox-share-email-error-content' => "Errore mannanne {{PLURAL:$1|l'email}}.
+Dettaglie: $2",
+	'lightbox-share-email-error-login' => "Pe mannà l'email tu è abbesògne de trasè",
+	'lightbox-share-email-error-noaddress' => 'Nisciune indirizze ha state specificate.',
 	'lightbox-visit-the-wiki' => "Visite 'a uicchi:",
 );
 
@@ -925,24 +1017,45 @@ $messages['tr'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
 	'lightbox_details_tooltip' => 'Перегляд відомостей про фото',
 	'lightbox-forum' => 'Форум',
 	'lightbox-standard-link' => 'Стандартне посилання',
+	'lightbox-blog-link' => 'Посилання на блог',
 	'lightbox-send' => 'Надіслати',
+	'lightbox-share-description' => 'Фото в $1 на $2',
+	'lightbox-share-email-subject' => '$1 відправив вам фото на Вікії',
+	'lightbox-share-email-body' => 'Привіт
+
+Хтось хотів показати вам фотографії на Вікія. Перегляньте  його тут:
+
+$1
+
+- Команда Вікія',
 	'lightbox-share-button-email' => 'Email',
 	'lightbox-share-button-www' => 'Поділитися',
 	'lightbox-share-button-embed' => 'Вставити',
+	'lightbox-share-email-label' => 'Відіслати це зображення другові',
+	'lightbox-share-email-page-label' => 'Надіслати цю сторінку другу',
 	'lightbox-share-email-page-label-address' => 'Адреса електронної пошти',
 	'lightbox-share-email-ok-caption' => 'Підтвердження',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|лист вже відправлений|листи вже відправлені|листів вже відправлено}}.',
 	'lightbox-share-email-error-caption' => 'Помилка',
+	'lightbox-share-email-error-content' => 'Помилка надсилання {{PLURAL:$1|листа|листів}}.
+Детальна інформація: $2',
+	'lightbox-share-email-error-login' => 'Для надсилання листів вам необхідно увійти на сайт',
+	'lightbox-share-email-error-noaddress' => 'Жодної адреси не вказано.',
+	'lightbox-visit-the-wiki' => 'Відвідати вікі:',
 );
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Liuxinyu970226
  * @author Sam Wang
  */
 $messages['zh-hans'] = array(
@@ -951,7 +1064,33 @@ $messages['zh-hans'] = array(
 	'lightbox-standard-link' => '普通链接',
 	'lightbox-blog-link' => '博客链接',
 	'lightbox-send' => '发送',
+	'lightbox-share-description' => '照片在 $1 上$2',
 	'lightbox-share-button-email' => '电子邮件',
 	'lightbox-share-button-www' => '分享',
+	'lightbox-share-button-embed' => '嵌入',
+	'lightbox-share-email-label' => '将此图片电邮发送给一位好友',
+	'lightbox-share-email-page-label' => '将此页面电邮发送给一位好友',
+	'lightbox-share-email-page-label-address' => '邮件地址',
+	'lightbox-share-email-ok-caption' => '确认',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Email has|邮件已经}} 被发送。',
 	'lightbox-share-email-error-caption' => '错误',
+	'lightbox-share-email-error-content' => '发送{{PLURAL:$1|email|邮件}}时遇到错误。
+详细信息： $2',
+	'lightbox-share-email-error-login' => '您需要登录以发送电邮',
+	'lightbox-share-email-error-noaddress' => '尚未指定电邮地址。',
+	'lightbox-visit-the-wiki' => '查阅维基：',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ * @author Justincheng12345
+ * @author Radish10cm
+ */
+$messages['zh-hant'] = array(
+	'lightbox_details_tooltip' => '查看圖片詳細資訊',
+	'lightbox-blog-link' => '部落格連結',
+	'lightbox-share-button-email' => '電子郵件',
+	'lightbox-share-button-www' => '分享',
+	'lightbox-share-button-embed' => '嵌入',
+	'lightbox-share-email-page-label-address' => '電郵地址',
 );

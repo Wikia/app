@@ -11,8 +11,8 @@ class ScavengerHuntGames {
 	/**
 	 * @param WikiaApp $app
 	 */
-	public function __construct( WikiaApp $app ) {
-		$this->app = $app;
+	public function __construct() {
+		$this->app = F::app();
 	}
 
 	/**
@@ -26,14 +26,14 @@ class ScavengerHuntGames {
 	 * @return ScavengerHuntGameArticle
 	 */
 	public function newGameArticle() {
-		return F::build('ScavengerHuntGameArticle');
+		return new ScavengerHuntGameArticle();
 	}
 
 	/**
 	 * @return ScavengerHuntGame
 	 */
 	public function newGame() {
-		$game = F::build('ScavengerHuntGame'); /* @var $game ScavengerHuntGame */
+		$game = new ScavengerHuntGame();
 		$game->setGames($this);
 		return $game;
 	}
@@ -141,7 +141,8 @@ class ScavengerHuntGames {
 	 * @return DatabaseBase
 	 */
 	public function getDb( $type = DB_SLAVE ) {
-		return $this->app->runFunction( 'wfGetDB', $type, array(), $this->app->getGlobal( 'wgExternalDatawareDB' ) );
+		global $wgExternalDatawareDB;
+		return wfGetDB( $type, array(), $wgExternalDatawareDB );
 	}
 
 	/**
@@ -256,7 +257,7 @@ class ScavengerHuntGames {
 	 * @return bool|String
 	 */
 	protected function getTitleDbKey( $text ) {
-		$title = F::build('Title', array($text), 'newFromText');
+		$title = Title::newFromText($text);
 		return $title ? $title->getPrefixedDBkey() : false;
 	}
 
@@ -305,7 +306,7 @@ class ScavengerHuntGames {
 			$enabledGames = $this->getEnabledGames();
 			$value = array();
 			foreach( $enabledGames as $game /** @var $game ScavengerHuntGame */ ){
-				$template = F::build('EasyTemplate', array(dirname( __FILE__ ) . '/../templates/')); /* @var $template EasyTemplate */
+				$template = new EasyTemplate(dirname( __FILE__ ) . '/../templates/');
 				$template->set_vars(array(
 					'game' => $game
 				));

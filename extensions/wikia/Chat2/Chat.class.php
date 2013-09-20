@@ -8,6 +8,9 @@
  * @author Sean Colombo
  */
 class Chat {
+	const HTTP_HEADER_XFF = 'X-FORWARDED-FOR';
+	const HTTP_HEADER_USER_AGENT = 'USER-AGENT';
+
 	var $chatId;
 
 	public function __construct($chatId){
@@ -359,24 +362,24 @@ class Chat {
 	 * Add a rights log entry for an action.
 	 * Partially copied from SpecialUserrights.php
 	 *
-	 * @param object $user User object
-	 * @param boolean $addGroups adding or removing groups?
-	 * @param array $groups names of groups
-	 * @param object $doer - the chatmoderator that banned the user (this is subed into an i18n message).
+	 * @param User $user
+	 * @param User $doer
+	 * @param Array $attr An array with parameters passed to LogPage::addEntry() according to description there these are parameters passed later to wfMsg.* functions
+	 * @param String $type
+	 * @param String|null $reasone comment added to log
 	 */
 	public static function addLogEntry($user, $doer, $attr, $type = 'banadd', $reasone = null) {
-		global $wgRequest;
 		wfProfileIn(__METHOD__);
 
 		$doerName = $doer->getName();
 
 		if( $type === 'chatmoderator' ) {
-			$reason = empty($reasone) ? wfMsgForContent('chat-userrightslog-a-made-b-chatmod', $doerName, $user->getName()):$reasone;
+			$reason = empty($reasone) ? wfMsgForContent( 'chat-userrightslog-a-made-b-chatmod', $doerName, $user->getName() ) : $reasone;
 			$type = 'rights';
 			$subtype = $type;
-		} elseif(strpos($type, 'ban') === 0) {
-			$reason = empty($reasone) ? wfMsgForContent('chat-log-reason-'.$type, $doerName):$reasone;
-			$subtype = 'chat'.$type;
+		} else if(strpos($type, 'ban') === 0) {
+			$reason = empty($reasone) ? wfMsgForContent( 'chat-log-reason-'.$type, $doerName ) : $reasone;
+			$subtype = 'chat' . $type;
 			$type =  'chatban';
 		}
 
@@ -394,7 +397,7 @@ class Chat {
 	/**
 	 * Logs to chatlog table that a user opened chat room
 	 *
-	 * Using chatlog table is temporaly. It'll be last till event_type_description table will be done.
+	 * Using chatlog table is temporally. It'll be last till event_type_description table will be done.
 	 * Now we have:
 	 * mysql> select * from event_type_details ;
 	 * +------------------------+------------+
@@ -412,7 +415,7 @@ class Chat {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public static function logChatWindowOpenedEvent() {
-		global $wgCityId, $wgUser, $wgCatId, $wgDevelEnvironment, $wgStatsDB;
+		global $wgCityId, $wgUser, $wgDevelEnvironment, $wgStatsDB;
 
 		wfProfileIn(__METHOD__);
 
@@ -448,28 +451,33 @@ class Chat {
 	}
 
 	/**
-	 * Add Chat log entry to "Special:log"
+	 * @desc Add Chat log entry to "Special:Log" and Special:CheckUser;
+	 * otherwise to giving a chat moderator or banning this method isn't called via AJAX,
+	 * therefore we have to insert all information manually into DB table
 	 */
-
 	public static function addConnectionLogEntry() {
-		global $wgMemc, $wgUser;
+		global $wgMemc, $wgUser, $wgRequest;
 		wfProfileIn(__METHOD__);
 
 		// record the IP of the connecting user.
-		// use memcache so we order only one (user, ip) pair 3 min to avoide flooding the log
-		$ip = F::app()->wg->request->getIP();
-
-		$memcKey = self::getUserIPMemcKey($wgUser->getID(), $ip );
+		// use memcache so we order only one (user, ip) pair 3 min to avoid flooding the log
+		$ip = $wgRequest->getIP();
+		$memcKey = self::getUserIPMemcKey( $wgUser->getID(), $ip );
 		$entry = $wgMemc->get( $memcKey, false );
 
 		if ( empty($entry) ) {
 			$wgMemc->set($memcKey, true, 60*3 /*3 min*/);
-			$log = F::build( 'LogPage', array( 'chatconnect', false, false ) );
-			$log->addEntry( 'chatconnect', SpecialPage::getTitleFor('Chat'), '', array($ip), $wgUser);
 
+			$log = new LogPage( 'chatconnect', false, false );
+			$log->addEntry( 'chatconnect', SpecialPage::getTitleFor( 'Chat' ), '', array( $ip ), $wgUser );
+
+			$xff = $wgRequest->getHeader( self::HTTP_HEADER_XFF );
+			list( $xff_ip, $isSquidOnly ) = IP::getClientIPfromXFF( $xff );
+
+			$userAgent = $wgRequest->getHeader( self::HTTP_HEADER_USER_AGENT );
 			$dbw = wfGetDB( DB_MASTER );
 			$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
-			$rcRow = array(
+			$rcRow = [
 					'cuc_id'         => $cuc_id,
 					'cuc_namespace'  => NS_SPECIAL,
 					'cuc_title'      => 'Chat',
@@ -484,10 +492,11 @@ class Chat {
 					'cuc_timestamp'  => $dbw->timestamp(),
 					'cuc_ip'         => IP::sanitizeIP( $ip ),
 					'cuc_ip_hex'     => $ip ? IP::toHex( $ip ) : null,
-					'cuc_xff'        => '',
-					'cuc_xff_hex'    => null,
-					'cuc_agent'      => null
-			);
+					'cuc_xff'        => !$isSquidOnly ? $xff : '',
+					'cuc_xff_hex'    => ( $xff_ip && !$isSquidOnly ) ? IP::toHex( $xff_ip ) : null,
+					'cuc_agent'      => ( $userAgent === false ) ? null : $userAgent,
+			];
+
 			$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
 			$dbw->commit();
 		}

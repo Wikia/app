@@ -111,6 +111,14 @@ $messages['fi'] = array(
 	'randomwiki' => 'Satunnainen wiki',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'randomwiki-desc' => 'Letur brúkarar granska eina tilvildarliga wiki',
+	'randomwiki' => 'Tilvildarlig Wiki',
+);
+
 /** French (français)
  * @author Peter17
  */
@@ -236,6 +244,14 @@ $messages['nl'] = array(
 	'randomwiki' => 'Willekeurige wiki',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'randomwiki-desc' => "Permet als utilizaires d’explorar un wiki a l'azard",
+	'randomwiki' => "Un wiki a l'azard",
+);
+
 /** Deitsch (Deitsch)
  * @author Xqt
  */
@@ -257,6 +273,13 @@ $messages['pl'] = array(
 $messages['pms'] = array(
 	'randomwiki-desc' => "A lassa che j'utent a esplòro na wiki a l'asar",
 	'randomwiki' => "Wiki a l'asar",
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'randomwiki' => 'ناټاکلې ويکي',
 );
 
 /** Portuguese (português)

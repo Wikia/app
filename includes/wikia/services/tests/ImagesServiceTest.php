@@ -126,8 +126,7 @@ class ImagesServiceTest extends WikiaBaseTest {
 			->method('createThumb')
 			->will($this->returnValue($fileGetThumbUrlResult));
 
-		$this->mockGlobalFunction('findFile', $fileMock);
-		$this->mockApp();
+		$this->mockGlobalFunction('wfFindFile', $fileMock);
 
 		$expected = new stdClass();
 		$expected->width = $results['width'];
@@ -167,5 +166,104 @@ class ImagesServiceTest extends WikiaBaseTest {
 				),
 			),
 		);
+	}
+
+	/**
+	 * @dataProvider getThumbUrlFromFileUrlDataProvider
+	 */
+	public function testGetThumbUrlFromFileUrl($imageUrl, $destSize, $newExtension, $expected) {
+		$this->assertEquals(
+			$expected,
+			ImagesService::getThumbUrlFromFileUrl( $imageUrl, $destSize, $newExtension )
+		);
+	}
+
+	public function getThumbUrlFromFileUrlDataProvider() {
+		return [
+			[
+				'imageUrl' => 'http://images4.wikia.nocookie.net/__cb62277/wikiaglobal/images/f/f3/Wikia-Visualization-Main%2Cenanimanga.png',
+				'destSize' => '50',
+				'newExtension' => null,
+				'expected' => 'http://images4.wikia.nocookie.net/__cb62277/wikiaglobal/images/thumb/f/f3/Wikia-Visualization-Main%2Cenanimanga.png/50px-Wikia-Visualization-Main%2Cenanimanga.png'
+			],
+			[
+				'imageUrl' => 'http://images.damian.wikia-dev.com/__cb1378818316/wikiaglobal/images/8/8b/Wikia-Visualization-Main%2Crunescape.png',
+				'destSize' => '50',
+				'newExtension' => null,
+				'expected' => 'http://images.damian.wikia-dev.com/__cb1378818316/wikiaglobal/images/thumb/8/8b/Wikia-Visualization-Main%2Crunescape.png/50px-Wikia-Visualization-Main%2Crunescape.png'
+			],
+			[
+				'imageUrl' => 'http://images.damian.wikia-dev.com/__cb1378818316/wikiaglobal/images/8/8b/Wikia-Visualization-Main%2Crunescape.png',
+				'destSize' => '100',
+				'newExtension' => null,
+				'expected' => 'http://images.damian.wikia-dev.com/__cb1378818316/wikiaglobal/images/thumb/8/8b/Wikia-Visualization-Main%2Crunescape.png/100px-Wikia-Visualization-Main%2Crunescape.png'
+			],
+			[
+				'imageUrl' => 'http://images.damian.wikia-dev.com/__cb1378818316/wikiaglobal/images/8/8b/Wikia-Visualization-Main%2Crunescape.png',
+				'destSize' => '75px',
+				'newExtension' => null,
+				'expected' => 'http://images.damian.wikia-dev.com/__cb1378818316/wikiaglobal/images/thumb/8/8b/Wikia-Visualization-Main%2Crunescape.png/75px-Wikia-Visualization-Main%2Crunescape.png'
+			],
+			[
+				'imageUrl' => 'http://images.damian.wikia-dev.com/__cb1378818316/wikiaglobal/images/thumb/8/8b/Wikia-Visualization-Main%2Crunescape.png',
+				'destSize' => '75px',
+				'newExtension' => null,
+				'expected' => 'http://images.damian.wikia-dev.com/__cb1378818316/wikiaglobal/images/thumb/8/8b/Wikia-Visualization-Main%2Crunescape.png/75px-Wikia-Visualization-Main%2Crunescape.png'
+			],
+			[
+				'imageUrl' => 'http://images.damian.wikia-dev.com/__cb1378818316/wikiaglobal/images/thumb/8/8b/Wikia-Visualization-Main%2Crunescape.png',
+				'destSize' => '50x60',
+				'newExtension' => null,
+				'expected' => 'http://images.damian.wikia-dev.com/__cb1378818316/wikiaglobal/images/thumb/8/8b/Wikia-Visualization-Main%2Crunescape.png/50x60-Wikia-Visualization-Main%2Crunescape.png'
+			],
+			[
+				'imageUrl' => 'http://images.damian.wikia-dev.com/__cb1378818316/wikiaglobal/images/thumb/8/8b/Wikia-Visualization-Main%2Crunescape.png',
+				'destSize' => '100x200',
+				'newExtension' => null,
+				'expected' => 'http://images.damian.wikia-dev.com/__cb1378818316/wikiaglobal/images/thumb/8/8b/Wikia-Visualization-Main%2Crunescape.png/100x200-Wikia-Visualization-Main%2Crunescape.png'
+			],
+			[
+				'imageUrl' => 'http://images4.wikia.nocookie.net/__cb62277/wikiaglobal/images/f/f3/Wikia-Visualization-Main%2Cenanimanga.png',
+				'destSize' => '50',
+				'newExtension' => ImagesService::EXT_PNG,
+				'expected' => 'http://images4.wikia.nocookie.net/__cb62277/wikiaglobal/images/thumb/f/f3/Wikia-Visualization-Main%2Cenanimanga.png/50px-Wikia-Visualization-Main%2Cenanimanga.png'
+			],
+			[
+				'imageUrl' => 'http://images4.wikia.nocookie.net/__cb62277/wikiaglobal/images/f/f3/Wikia-Visualization-Main%2Cenanimanga.png',
+				'destSize' => '50',
+				'newExtension' => ImagesService::EXT_JPG,
+				'expected' => 'http://images4.wikia.nocookie.net/__cb62277/wikiaglobal/images/thumb/f/f3/Wikia-Visualization-Main%2Cenanimanga.png/50px-Wikia-Visualization-Main%2Cenanimanga.png.jpg'
+			],
+			[
+				'imageUrl' => 'http://images4.wikia.nocookie.net/__cb62277/wikiaglobal/images/f/f3/Wikia-Visualization-Main%2Cenanimanga.png',
+				'destSize' => '50',
+				'newExtension' => ImagesService::EXT_JPEG,
+				'expected' => 'http://images4.wikia.nocookie.net/__cb62277/wikiaglobal/images/thumb/f/f3/Wikia-Visualization-Main%2Cenanimanga.png/50px-Wikia-Visualization-Main%2Cenanimanga.png.jpeg'
+			],
+			[
+				'imageUrl' => 'http://images4.wikia.nocookie.net/__cb62277/wikiaglobal/images/f/f3/Wikia-Visualization-Main%2Cenanimanga.png',
+				'destSize' => '50',
+				'newExtension' => ImagesService::EXT_GIF,
+				'expected' => 'http://images4.wikia.nocookie.net/__cb62277/wikiaglobal/images/thumb/f/f3/Wikia-Visualization-Main%2Cenanimanga.png/50px-Wikia-Visualization-Main%2Cenanimanga.png.gif'
+			],
+			[
+				'imageUrl' => 'http://images2.wikia.nocookie.net/__cb20130906174203/corp/images/a/a5/W-Live_Games_Hubslider_330x210-1.jpg',
+				'destSize' => '100x100',
+				'newExtension' => ImagesService::EXT_JPG,
+				'expected' => 'http://images2.wikia.nocookie.net/__cb20130906174203/corp/images/thumb/a/a5/W-Live_Games_Hubslider_330x210-1.jpg/100x100-W-Live_Games_Hubslider_330x210-1.jpg'
+			],
+			[
+				'imageUrl' => 'http://images2.wikia.nocookie.net/__cb20130906174203/corp/images/a/a5/W-Live_Games_Hubslider_330x210-1.jpg',
+				'destSize' => '100x100',
+				'newExtension' => ImagesService::EXT_JPEG,
+				'expected' => 'http://images2.wikia.nocookie.net/__cb20130906174203/corp/images/thumb/a/a5/W-Live_Games_Hubslider_330x210-1.jpg/100x100-W-Live_Games_Hubslider_330x210-1.jpg'
+			],
+			[
+				'imageUrl' => 'http://images2.wikia.nocookie.net/__cb20130906174203/corp/images/a/a5/W-Live_Games_Hubslider_330x210-1.jpeg',
+				'destSize' => '100x100',
+				'newExtension' => ImagesService::EXT_JPG,
+				'expected' => 'http://images2.wikia.nocookie.net/__cb20130906174203/corp/images/thumb/a/a5/W-Live_Games_Hubslider_330x210-1.jpeg/100x100-W-Live_Games_Hubslider_330x210-1.jpeg'
+			],
+		];
 	}
 }

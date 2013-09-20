@@ -13,20 +13,6 @@ class SpecialVideosHelper extends WikiaModel {
 	const POSTED_IN_ARTICLES = 5;
 
 	/**
-	 * get list of sorting options
-	 * @return array $options
-	 */
-	public function getSortingOptions() {
-		$options = array(
-			'recent' => $this->wf->Msg( 'specialvideos-sort-latest' ),
-			'popular' => $this->wf->Msg( 'specialvideos-sort-most-popular' ),
-			'trend' => $this->wf->Msg( 'specialvideos-sort-trending' ),
-		);
-
-		return $options;
-	}
-
-	/**
 	 * get list of filter options
 	 * @return array $options
 	 */
@@ -35,7 +21,7 @@ class SpecialVideosHelper extends WikiaModel {
 
 		$premiumVideos = $this->premiumVideosExist();
 		if ( !empty($premiumVideos) ) {
-			$options['premium'] = $this->wf->Msg( 'specialvideos-sort-featured' );
+			$options['premium'] = wfMessage( 'specialvideos-sort-featured' )->text();
 		}
 
 		return $options;
@@ -61,8 +47,9 @@ class SpecialVideosHelper extends WikiaModel {
 		$videoList = $mediaService->getVideoList( $sort, $filter, self::VIDEOS_PER_PAGE, $page );
 
 		$videos = array();
+		$helper = new VideoHandlerHelper();
 		foreach ( $videoList as $videoInfo ) {
-			$videoDetail = $this->getVideoDetail( $videoInfo );
+			$videoDetail = $helper->getVideoDetail( $videoInfo, self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT, self::POSTED_IN_ARTICLES );
 			if ( !empty($videoDetail) ) {
 				$videos[] = $videoDetail;
 			}
@@ -71,54 +58,6 @@ class SpecialVideosHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $videos;
-	}
-
-	/**
-	 * get video detail
-	 * @param array $videoInfo [ array( 'title' => title, 'addedAt' => addedAt , 'addedBy' => addedBy ) ]
-	 * @return array $videoDetail
-	 */
-	public function getVideoDetail( $videoInfo ) {
-		wfProfileIn( __METHOD__ );
-
-		$videoDetail = array();
-		$title = Title::newFromText( $videoInfo['title'], NS_FILE );
-		if ( $title instanceof Title ) {
-			$file = $this->wf->FindFile( $title );
-			if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
-				// get thumbnail
-				$thumb = $file->transform( array('width'=>self::THUMBNAIL_WIDTH, 'height'=>self::THUMBNAIL_HEIGHT) );
-				$thumbUrl = $thumb->getUrl();
-
-				// get user
-				$user = User::newFromId( $videoInfo['addedBy'] );
-				$userName = ( User::isIP($user->getName()) ) ? $this->wf->Msg( 'oasis-anon-user' ) : $user->getName();
-				$userUrl = $user->getUserPage()->getFullURL();
-
-				// get article list
-				$mediaQuery = new ArticlesUsingMediaQuery( $title );
-				$articleList = $mediaQuery->getArticleList();
-				list( $truncatedList, $isTruncated ) = WikiaFileHelper::truncateArticleList( $articleList, self::POSTED_IN_ARTICLES );
-
-				// video details
-				$videoDetail = array(
-					'title' => $title->getDBKey(),
-					'fileTitle' => $title->getText(),
-					'fileUrl' => $title->getLocalUrl(),
-					'thumbUrl' => $thumbUrl,
-					'userName' => $userName,
-					'userUrl' => $userUrl,
-					'truncatedList' => $truncatedList,
-					'isTruncated' => $isTruncated,
-					'timestamp' => $videoInfo['addedAt'],
-					'embedUrl' => $file->getHandler()->getEmbedUrl(),
-				);
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $videoDetail;
 	}
 
 	/**
@@ -136,7 +75,7 @@ class SpecialVideosHelper extends WikiaModel {
 			);
 
 			$userLink = Xml::element( 'a', $attribs, $userName, false );
-			$byUserMsg = $this->wf->Msg( 'specialvideos-uploadby', $userLink );
+			$byUserMsg = wfMsg( 'specialvideos-uploadby', $userLink );
 		}
 
 		return $byUserMsg;
@@ -171,7 +110,7 @@ class SpecialVideosHelper extends WikiaModel {
 		}
 
 		if ( !empty($articleLinks) ) {
-			$postedInMsg = $this->wf->Msg( 'specialvideos-posted-in', implode($articleLinks, ', ') );
+			$postedInMsg = wfMsg( 'specialvideos-posted-in', implode($articleLinks, ', ') );
 		}
 
 		return $postedInMsg;

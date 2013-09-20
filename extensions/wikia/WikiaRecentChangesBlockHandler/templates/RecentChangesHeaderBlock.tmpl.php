@@ -1,7 +1,7 @@
 <table class="mw-collapsible mw-collapsed mw-enhanced-rc <?= Sanitizer::escapeClass( 'mw-changeslist-ns' . $title->getNamespace() . '-' . $title->getText() ) ?>">
 	<tr>
 		<td>
-			<span class="mw-collapsible-toggle mw-collapsible-toggle-collapsed">
+			<span class="mw-collapsible-toggle">
 				<span class="mw-rc-openarrow">
 					<a title="<?= htmlspecialchars( wfMsg( 'rc-enhanced-expand' ) )?>" href="#">
 						<img width="12" height="12" title="<?=htmlspecialchars( wfMsg( 'rc-enhanced-expand' ) )?>" alt="+" src="<?= $wgStylePath ?>/common/images/Arr_r.png">

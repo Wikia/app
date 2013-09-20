@@ -2,13 +2,11 @@
 describe("Ads module", function () {
 	'use strict';
 
-	var domwriter = {
-			addEventListener: function(){},
-			removeEventListener: function(){}
+	var cookies = {
+			val: 0,
+			get: function(){return cookies.val++},
+			set: function(){cookies.val = 1}
 		},
-		cookies = {},
-		track = {},
-		log = {},
 		parentNode = {
 			removeChild: function(){}
 		},
@@ -17,50 +15,48 @@ describe("Ads module", function () {
 			this.parentNode = parentNode;
 			this.className = '';
 		},
-		dartHelper = function(){},
+		dartHelper = {
+			getMobileUrl: function(){return ''}
+		},
 		window = {
 			document: {
 				getElementById: function(name){
 					return elements[name] || (elements[name] = new Element());
 				}
 			},
-			Features: {}
+			Features: {},
+			postscribe: function(){}
 		},
-		utils = function(func){
-			func();
-		},
-		ads = modules.ads(domwriter, cookies, track, log, window, utils, dartHelper);
+		ads = modules.ads(cookies, window, dartHelper);
 
 	it("is defined as a module", function () {
 		expect(ads).toBeDefined();
 	});
 
+	it("is defined as a global", function () {
+		expect(window.MobileAd).toBeDefined();
+	});
+
 	it("has a public API", function () {
 		expect(typeof ads.setupSlot).toEqual('function');
 		expect(typeof ads.init).toEqual('function');
-		expect(typeof ads.fix).toEqual('function');
-		expect(typeof ads.unfix).toEqual('function');
-		expect(typeof ads.getAdType).toEqual('function');
+		expect(typeof ads.stop).toEqual('function');
 	});
 
-	it("can initialize a footer Ad", function () {
-		ads.init('footer');
-
-		expect(elements['wkAdPlc'].className).toEqual('footer');
-		expect(ads.getAdType()).toEqual('footer');
+	it("can setup an ad slot", function () {
+		ads.setupSlot({
+			name: 'AD_SLOT',
+			size: '100x100',
+			wrapper: window.document
+		});
 	});
 
-	it("can initialize a interstital Ad", function(){
-		ads.init('interstitial');
-
-		expect(elements['wkAdPlc'].className).toEqual('interstitial');
-		expect(ads.getAdType()).toEqual('interstitial');
+	it('can tell if ad should be requested', function(){
+		expect(ads.shouldRequestAd()).toBeTruthy();
 	});
 
-	it("will not do anything with wrong Ad type passed", function(){
-		ads.init('TEST');
-
-		expect(elements['wkAdPlc'].className).not.toEqual('TEST');
-		expect(ads.getAdType()).not.toEqual('TEST');
+	it('can stop ads from showing', function(){
+		ads.stop();
+		expect(ads.shouldRequestAd()).toBeFalsy();
 	});
 });

@@ -2,7 +2,7 @@
 
 $optionsWithArgs = array( 'u', 'w' );
 
-require_once( __DIR__."/configure_log_file.php" );
+require_once( __DIR__."/common.php" );
 GWTLogHelper::notice( __FILE__ . " script starts.");
 try {
 	if( !isset($options['u']) || !isset($options['w']) ) {
@@ -15,14 +15,13 @@ try {
 	$service = new GWTService($userRepository, $wikiRepository);
 
 	$u = $userRepository->getByEmail( $options['u'] );
-	$w = $wikiRepository->oneByWikiId( $options['w']);
+	$w = $wikiRepository->getById( $options['w']);
 
 	if ( $u == null && $w == null ) {
 		GWTLogHelper::error( "no user or no wiki." );
 		die( 1 );
 	}
-	$result = $service->uploadWikiAsUser( $w, $u );
-	var_dump($result);
+	$service->uploadWikiAsUser( $w, $u );
 
 } catch ( Exception $ex ) {
 	GWTLogHelper::error( __FILE__ . " script failed.", $ex);

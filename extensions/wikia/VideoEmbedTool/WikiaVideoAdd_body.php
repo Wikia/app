@@ -16,7 +16,7 @@ class WikiaVideoAddForm extends SpecialPage {
 		global $wgOut;
 
 		if ( !$this->getUser()->isLoggedIn() ) {
-			$wgOut->addHTML( wfMsg( 'wva-notlogged' ) );
+			$wgOut->addHTML( wfMessage( 'wva-notlogged' )->text() );
 			return;
 		}
 
@@ -25,13 +25,18 @@ class WikiaVideoAddForm extends SpecialPage {
 		}
 
 		if ( !$this->getUser()->isAllowed( 'upload' ) ) {
-			$wgOut->addHTML( wfMsg( 'wva-notallowed' ) );
+			$wgOut->addHTML( wfMessage( 'wva-notallowed' )->text() );
+			return;
+		}
+
+		if ( !$this->getUser()->isAllowed( 'videoupload' ) ) {
+			$wgOut->addHTML( wfMessage( 'videos-error-admin-only' )->plain() );
 			return;
 		}
 
 		// Add css for form
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoEmbedTool/css/WikiaVideoAdd.scss'));
-		
+
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'WikiaVideoAdd' );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setPageTitle( "WikiaVideoAdd" );
@@ -57,16 +62,16 @@ class WikiaVideoAddForm extends SpecialPage {
 
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'WikiaVideoAdd' );
 		$action = htmlspecialchars($titleObj->getLocalURL( "action=submit" ));
-		
+
 		$name = $this->getRequest()->getVal( 'name', '' );
 		$wpWikiaVideoAddName = $this->getRequest()->getVal( 'wpWikiaVideoAddName', '' );
 		$wpWikiaVideoAddUrl = $this->getRequest()->getVal( 'wpWikiaVideoAddUrl', '');
-		
+
 		if ( !$wgUser->isAllowed( 'upload' ) ) {
 			if ( !$wgUser->isLoggedIn() ) {
-				$wgOut->addHTML( wfMsg( 'wva-notlogged' ) );
+				$wgOut->addHTML( wfMessage( 'wva-notlogged' )->text() );
 			} else {
-				$wgOut->addHTML( wfMsg( 'wva-notallowed' ) );
+				$wgOut->addHTML( wfMessage( 'wva-notallowed' )->text() );
 			}
 		} else {
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
@@ -98,7 +103,7 @@ class WikiaVideoAddForm extends SpecialPage {
 		}
 
 		if ( $this->mUrl == '' ) {
-			$errors['videoUrl'] = wfMsg( 'wva-failure' );
+			$errors['videoUrl'] = wfMessage( 'wva-failure' )->text();
 			$this->showForm($errors);
 			return;
 		} else if ( $this->mName == '' ) {
@@ -129,6 +134,12 @@ class WikiaVideoAddForm extends SpecialPage {
 					return;
 				}
 
+				if ( empty( F::app()->wg->allowNonPremiumVideos ) ) {
+					$errors['videoUrl'] = wfMessage( 'videohandler-non-premium' )->parse();
+					$this->showForm( $errors );
+					return;
+				}
+
 				if ( WikiaFileHelper::useVideoHandlersExtForEmbed() ){
 					$res = null;
 					try {
@@ -136,7 +147,7 @@ class WikiaVideoAddForm extends SpecialPage {
 					} catch (Exception $e) {}
 
 					if( !$res ) {
-						$errors['videoUrl'] = wfMsg( 'wva-failure' );	
+						$errors['videoUrl'] = wfMessage( 'wva-failure' )->text();
 						$this->showForm($errors);
 						return;
 					}
@@ -150,7 +161,7 @@ class WikiaVideoAddForm extends SpecialPage {
 				}
 			} else {
 				//bad title returned
-				$errors['name'] = wfMsg( 'wva-failure' );			
+				$errors['name'] = wfMessage( 'wva-failure' )->text();
 				$this->showForm($errors);
 				return;
 			}

@@ -44,7 +44,7 @@ class All extends AbstractService
 				$service = new $serviceName();
 				$this->services[$serviceName] = $service;
 			}
-			$subResult = $service->setPageId( $this->currentPageId )->execute();
+			$subResult = $service->setPageId( $this->currentPageId )->getResponse();
 			if ( is_array( $subResult ) ) {
     			$result = array_merge( $result, $subResult );
 			}

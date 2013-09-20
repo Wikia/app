@@ -47,7 +47,7 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	public function testConfigure() {
 		$mockSet = $this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
 		                ->disableOriginalConstructor()
-		                ->setMethods( array( 'prependArticleMatchIfExists', 'setResults' ) )
+		                ->setMethods( array( 'prependMatchIfExists', 'setResults', 'handleMatchPrepends' ) )
 		                ->getMock();
 		$mockResult = $this->getMockBuilder( '\Solarium_Result_Select' )
 		                   ->disableOriginalConstructor()
@@ -69,7 +69,7 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		;
 		$mockSet
 		    ->expects( $this->once() )
-		    ->method ( 'prependArticleMatchIfExists' )
+		    ->method ( 'handleMatchPrepends' )
 		    ->will   ( $this->returnValue( $mockSet ) )
 		;
 		$mockSet
@@ -248,121 +248,7 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		);
 	}
 	
-	/**
-	 * @covers \Wikia\Search\ResultSet\Base::prependArticleMatchIfExists
-	 */
-	public function testPrependArticleMatchIfExistsWithMatch() {
-		$this->prepareMocks( array( 'getResultsStart', 'addResult' ), array( 'hasArticleMatch', 'getArticleMatch' ) );
-		
-		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
-		                  ->disableOriginalConstructor()
-		                  ->setMethods( array( 'getResult' ) )
-		                  ->getMock();
 
-		$mockResult = $this->getMockBuilder( 'Wikia\Search\Result' )
-		                   ->disableOriginalConstructor()
-		                   ->getMock();
-		
-		$this->config
-			->expects( $this->at( 0 ) )
-			->method ( 'hasArticleMatch' )
-			->will   ( $this->returnValue( true ) )
-		;
-		$this->resultSet
-			->expects( $this->at( 0 ) )
-			->method ( 'getResultsStart' )
-			->will   ( $this->returnValue( 0 ) )
-		;
-		$this->config
-		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getArticleMatch' )
-		    ->will   ( $this->returnValue( $mockMatch ) )
-		;
-		$mockMatch
-		    ->expects( $this->once() )
-		    ->method ( 'getResult' )
-		    ->will   ( $this->returnValue( $mockResult ) )
-		;
-		$this->resultSet
-		    ->expects( $this->at( 1 ) )
-		    ->method ( 'addResult' )
-		    ->with   ( $mockResult )
-	    ;
-		
-		$found = new ReflectionProperty( '\Wikia\Search\ResultSet\Base', 'resultsFound' );
-		$found->setAccessible( true );
-		$oldFound = $found->getValue( $this->resultSet );
-		
-		$prepend = new ReflectionMethod( '\Wikia\Search\ResultSet\Base', 'prependArticleMatchIfExists' );
-		$prepend->setAccessible( true );
-		
-		$this->assertEquals(
-				$this->resultSet,
-				$prepend->invoke( $this->resultSet ),
-				'\Wikia\Search\ResultSet\Base::prependArticleMatchIfExists should provide a fluent interface'
-		);
-		$this->assertEquals(
-				$oldFound + 1,
-				$found->getValue( $this->resultSet )
-		);
-	}
-	
-	/**
-	 * @covers \Wikia\Search\ResultSet\Base::prependArticleMatchIfExists
-	 */
-	public function testPrependArticleMatchIfExistsNoMatch() {
-		$this->prepareMocks( array( 'getResultsStart', 'addResult' ), array( 'hasArticleMatch', 'getArticleMatch' ) );
-		
-		$this->config
-			->expects	( $this->at( 0 ) )
-			->method	( 'hasArticleMatch' )
-			->will		( $this->returnValue( false ) )
-		;
-		$this->resultSet
-			->expects	( $this->never() )		//should be short-circuited
-			->method	( 'getResultsStart' )
-		;
-		
-		$prepend = new ReflectionMethod( '\Wikia\Search\ResultSet\Base', 'prependArticleMatchIfExists' );
-		$prepend->setAccessible( true );
-		
-		$this->assertEquals(
-				$this->resultSet,
-				$prepend->invoke( $this->resultSet ),
-				'\Wikia\Search\ResultSet\Base::prependArticleMatchIfExists should provide a fluent interface'
-		);
-	}
-	
-	/**
-	 * @covers \Wikia\Search\ResultSet\Base::prependArticleMatchIfExists
-	 */
-	public function testPrependArticleMatchIfExistsMatchWithPagination() {
-		$this->prepareMocks( array( 'getResultsStart', 'addResult' ), array( 'hasArticleMatch', 'getArticleMatch' ) );
-		
-		$this->config
-			->expects	( $this->at( 0 ) )
-			->method	( 'hasArticleMatch' )
-			->will		( $this->returnValue( true ) )
-		;
-		$this->resultSet
-			->expects	( $this->at( 0 ) )
-			->method	( 'getResultsStart' )
-			->will		( $this->returnValue( 20 ) )
-		;
-		$this->config
-			->expects	( $this->never() )
-			->method	( 'getArticleMatch' )
-		;
-		
-		$prepend = new ReflectionMethod( '\Wikia\Search\ResultSet\Base', 'prependArticleMatchIfExists' );
-		$prepend->setAccessible( true );
-		
-		$this->assertEquals(
-				$this->resultSet,
-				$prepend->invoke( $this->resultSet ),
-				'\Wikia\Search\ResultSet\Base::prependArticleMatchIfExists should provide a fluent interface'
-		);
-	}
 	
 	/**
 	 * @covers \Wikia\Search\ResultSet\Base::getResultsStart
@@ -400,7 +286,217 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		);
 	}
 	
-/**
+	/**
+	 * @covers Wikia\Search\ResultSet\Base::HandleMatchPrepends
+	 */
+	public function testHandleMatchPrependsStartNotZero() {
+		$this->prepareMocks( [ 'getResultsStart', 'prependWikiMatchIfExists', 'prependArticleMatchIfExists' ], [ 'getInterWiki' ] );
+		
+		$this->resultSet
+		    ->expects( $this->once() )
+		    ->method ( "getResultsStart" )
+		    ->will   ( $this->returnValue( 5 ) )
+		;
+		$this->config
+		    ->expects( $this->never() )
+		    ->method ( 'getInterWiki' )
+		;
+		$this->resultSet
+		    ->expects( $this->never() )
+		    ->method ( "prependWikiMatchIfExists" )
+		;
+		$this->resultSet
+		    ->expects( $this->never() )
+		    ->method ( "prependArticleMatchIfExists" )
+		;
+		$handle = new ReflectionMethod( $this->resultSet, 'handleMatchPrepends' );
+		$handle->setAccessible( true );
+		$this->assertEquals(
+				$this->resultSet,
+				$handle->invoke( $this->resultSet )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\ResultSet\Base::HandleMatchPrepends
+	 */
+	public function testHandleMatchPrependsOnWiki() {
+		$this->prepareMocks( [ 'getResultsStart', 'prependWikiMatchIfExists', 'prependArticleMatchIfExists' ], [ 'getInterWiki' ] );
+		
+		$this->resultSet
+		    ->expects( $this->once() )
+		    ->method ( "getResultsStart" )
+		    ->will   ( $this->returnValue( 0 ) )
+		;
+		$this->config
+		    ->expects( $this->once() )
+		    ->method ( 'getInterWiki' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$this->resultSet
+		    ->expects( $this->never() )
+		    ->method ( "prependWikiMatchIfExists" )
+		;
+		$this->resultSet
+		    ->expects( $this->once() )
+		    ->method ( "prependArticleMatchIfExists" )
+		;
+		$handle = new ReflectionMethod( $this->resultSet, 'handleMatchPrepends' );
+		$handle->setAccessible( true );
+		$this->assertEquals(
+				$this->resultSet,
+				$handle->invoke( $this->resultSet )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\ResultSet\Base::HandleMatchPrepends
+	 */
+	public function testHandleMatchPrependsInterWiki() {
+		$this->prepareMocks( [ 'getResultsStart', 'prependWikiMatchIfExists', 'prependArticleMatchIfExists' ], [ 'getInterWiki' ] );
+		
+		$this->resultSet
+		    ->expects( $this->once() )
+		    ->method ( "getResultsStart" )
+		    ->will   ( $this->returnValue( 0 ) )
+		;
+		$this->config
+		    ->expects( $this->once() )
+		    ->method ( 'getInterWiki' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$this->resultSet
+		    ->expects( $this->once() )
+		    ->method ( "prependWikiMatchIfExists" )
+		;
+		$this->resultSet
+		    ->expects( $this->never() )
+		    ->method ( "prependArticleMatchIfExists" )
+		;
+		$handle = new ReflectionMethod( $this->resultSet, 'handleMatchPrepends' );
+		$handle->setAccessible( true );
+		$this->assertEquals(
+				$this->resultSet,
+				$handle->invoke( $this->resultSet )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\ResultSet\Base::prependWikiMatchIfExists
+	 */
+	public function testPrependWikiMatchNoMatch() {
+		$this->prepareMocks( [ 'addMatchResult' ], [ 'hasWikiMatch', 'getWikiMatch' ] );
+		$this->config
+		    ->expects( $this->once() )
+		    ->method ( 'hasWikiMatch' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$this->config
+		    ->expects( $this->never() )
+		    ->method ( 'getWikiMatch' )
+		;
+		$this->resultSet
+		    ->expects( $this->never() )
+		    ->method ( "addMatchResult" )
+		;
+		$prepend = new ReflectionMethod( $this->resultSet, 'prependWikiMatchIfExists' );
+		$prepend->setAccessible( true );
+		$this->assertEquals(
+				$this->resultSet,
+				$prepend->invoke( $this->resultSet )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\ResultSet\Base::prependWikiMatchIfExists
+	 */
+	public function testPrependWikiMatchWithMatch() {
+		$this->prepareMocks( [ 'addMatchResult' ], [ 'hasWikiMatch', 'getWikiMatch' ] );
+		$mockWikiMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
+		                      ->disableOriginalConstructor()
+		                      ->getMock();
+		$this->config
+		    ->expects( $this->once() )
+		    ->method ( 'hasWikiMatch' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$this->config
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiMatch' )
+		    ->will   ( $this->returnValue( $mockWikiMatch ) )
+		;
+		$this->resultSet
+		    ->expects( $this->once() )
+		    ->method ( "addMatchResult" )
+		    ->with   ( $mockWikiMatch )
+		;
+		$prepend = new ReflectionMethod( $this->resultSet, 'prependWikiMatchIfExists' );
+		$prepend->setAccessible( true );
+		$this->assertEquals(
+				$this->resultSet,
+				$prepend->invoke( $this->resultSet )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\ResultSet\Base::prependArticleMatchIfExists
+	 */
+	public function testPrependArticleMatchNoMatch() {
+		$this->prepareMocks( [ 'addMatchResult' ], [ 'hasArticleMatch', 'getArticleMatch' ] );
+		$this->config
+		    ->expects( $this->once() )
+		    ->method ( 'hasArticleMatch' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$this->config
+		    ->expects( $this->never() )
+		    ->method ( 'getArticleMatch' )
+		;
+		$this->resultSet
+		    ->expects( $this->never() )
+		    ->method ( "addMatchResult" )
+		;
+		$prepend = new ReflectionMethod( $this->resultSet, 'prependArticleMatchIfExists' );
+		$prepend->setAccessible( true );
+		$this->assertEquals(
+				$this->resultSet,
+				$prepend->invoke( $this->resultSet )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\ResultSet\Base::prependArticleMatchIfExists
+	 */
+	public function testPrependArticleMatchWithMatch() {
+		$this->prepareMocks( [ 'addMatchResult' ], [ 'hasArticleMatch', 'getArticleMatch' ] );
+		$mockArticleMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
+		                      ->disableOriginalConstructor()
+		                      ->getMock();
+		$this->config
+		    ->expects( $this->once() )
+		    ->method ( 'hasArticleMatch' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$this->config
+		    ->expects( $this->once() )
+		    ->method ( 'getArticleMatch' )
+		    ->will   ( $this->returnValue( $mockArticleMatch ) )
+		;
+		$this->resultSet
+		    ->expects( $this->once() )
+		    ->method ( "addMatchResult" )
+		    ->with   ( $mockArticleMatch )
+		;
+		$prepend = new ReflectionMethod( $this->resultSet, 'prependArticleMatchIfExists' );
+		$prepend->setAccessible( true );
+		$this->assertEquals(
+				$this->resultSet,
+				$prepend->invoke( $this->resultSet )
+		);
+	}
+	
+	
+	/**
 	 * @covers \Wikia\Search\ResultSet\Base::isOnlyArticleMatchFound
 	 */
 	public function testIsOnlyArticleMatchFoundWrongResultNum() {
@@ -417,6 +513,82 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 				'\Wikia\Search\ResultSet\Base::isOnlyArticleMatchFound should return false unless there is only one result, and it is marked as an article match'
 		);
 	}
+	
+	/**
+	 * @covers Wikia\Search\ResultSet\Base::addMatchResult
+	 */
+	public function testAddMatchResultNoResult() {
+		$this->prepareMocks( [ 'addResult' ] );
+		$match = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
+		              ->disableOriginalConstructor()
+		              ->setMethods( [ 'getResult' ] )
+		              ->getMock();
+		$result = $this->getMock( 'Wikia\Search\Result' );
+		$this->assertAttributeEquals(
+				0,
+				'resultsFound',
+				$this->resultSet
+		);
+		$match
+		    ->expects( $this->once() )
+		    ->method ( "getResult" )
+		    ->will   ( $this->returnValue( null ) )
+		;
+		$this->resultSet
+		    ->expects( $this->never() )
+		    ->method ( "addResult" )
+		;
+		$add = new ReflectionMethod( $this->resultSet, 'addMatchResult' );
+		$add->setAccessible( true );
+		$this->assertEquals(
+				$this->resultSet,
+				$add->invoke( $this->resultSet, $match )
+		);
+		$this->assertAttributeEquals(
+				0,
+				'resultsFound',
+				$this->resultSet
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\ResultSet\Base::addMatchResult
+	 */
+	public function testAddMatchResultWithResult() {
+		$this->prepareMocks( [ 'addResult' ] );
+		$match = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
+		              ->disableOriginalConstructor()
+		              ->setMethods( [ 'getResult' ] )
+		              ->getMock();
+		$result = $this->getMock( 'Wikia\Search\Result' );
+		$this->assertAttributeEquals(
+				0,
+				'resultsFound',
+				$this->resultSet
+		);
+		$match
+		    ->expects( $this->once() )
+		    ->method ( "getResult" )
+		    ->will   ( $this->returnValue( $result ) )
+		;
+		$this->resultSet
+		    ->expects( $this->once() )
+		    ->method ( "addResult" )
+		    ->with   ( $result )
+		;
+		$add = new ReflectionMethod( $this->resultSet, 'addMatchResult' );
+		$add->setAccessible( true );
+		$this->assertEquals(
+				$this->resultSet,
+				$add->invoke( $this->resultSet, $match )
+		);
+		$this->assertAttributeEquals(
+				1,
+				'resultsFound',
+				$this->resultSet
+		);
+	}
+	
 	
 	/**
 	 * @covers \Wikia\Search\ResultSet\Base::isOnlyArticleMatchFound

@@ -15,16 +15,10 @@
 
 $dir = dirname(__FILE__);
 
-// WikiaApp
-$app = F::app();
-
 // classes
-$app->registerClass('JSSnippets', $dir . '/JSSnippets.class.php');
+$wgAutoloadClasses['JSSnippets'] =  $dir . '/JSSnippets.class.php';
 
 // hooks
-$app->registerHook('EditPageLayoutModifyPreview', 'JSSnippets', 'onEditPageLayoutModifyPreview');
-$app->registerHook('WikiaSkinTopScripts', 'JSSnippets', 'onMakeGlobalVariablesScript');
-$app->registerHook('SkinAfterBottomScripts', 'JSSnippets', 'onSkinAfterBottomScripts');
-
-// register instance of JSSnippets
-F::setInstance('JSSnippets', new JSSnippets());
+$wgHooks['EditPageLayoutModifyPreview'][] = 'JSSnippets::onEditPageLayoutModifyPreview';
+$wgHooks['WikiaSkinTopScripts'][] = 'JSSnippets::onMakeGlobalVariablesScript';
+$wgHooks['SkinAfterBottomScripts'][] = 'JSSnippets::onSkinAfterBottomScripts';

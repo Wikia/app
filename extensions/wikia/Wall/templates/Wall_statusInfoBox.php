@@ -6,9 +6,9 @@
 				<div class="avatar"><?= AvatarService::renderAvatar($statusInfo['user']->getName(), 20) ?></div>
 				<div class="message">
 					<? if($isreply): ?>
-						<?= wfMsgExt('wall-message-'.$statusInfo['status'].'-reply-because',array( 'parsemag'), array($statusInfo['user_displayname_linked'])); ?><br />
+						<?= wfMessage('wall-message-'.$statusInfo['status'].'-reply-because', array($statusInfo['user_displayname_linked']))->text(); ?><br />
 					<? else: ?>
-						<?= wfMsgExt('wall-message-'.$statusInfo['status'].'-thread-because',array( 'parsemag'), array($statusInfo['user_displayname_linked'])); ?><br />
+						<?= wfMessage('wall-message-'.$statusInfo['status'].'-thread-because', array($statusInfo['user_displayname_linked']))->text(); ?><br />
 					<? endif; ?>
 					<div class="reason"><?php echo $statusInfo['reason']; ?></div>
 					<div class="timestamp"><span><?php echo $statusInfo['fmttime']; ?></span></div>
@@ -16,9 +16,9 @@
 			</div>
 			</td><td>
 			<? if($isreply): ?>
-				<button <? echo ($canRestore ? '':'disabled=disbaled') ?>  data-mode='restore<?php echo ($fastrestore ? '-fast':'') ?>' data-id="<?php echo $id; ?>"  class="message-restore wikia-button" ><?php echo wfMsg('wall-message-restore-reply'); ?></button>
+				<button <? echo ($canRestore ? '':'disabled=disbaled') ?>  data-mode='restore<?php echo ($fastrestore ? '-fast':'') ?>' data-id="<?php echo $id; ?>"  class="message-restore wikia-button" ><?php echo wfMessage('wall-message-restore-reply')->text(); ?></button>
 			<? else: ?>
-				<button <? echo ($canRestore ? '':'disabled=disbaled') ?> data-mode='restore<?php echo ($fastrestore ? '-fast':'') ?>' data-id="<?php echo $id; ?>"  class="message-restore wikia-button" ><?php echo wfMsg('wall-message-restore-thread'); ?></button>
+				<button <? echo ($canRestore ? '':'disabled=disbaled') ?> data-mode='restore<?php echo ($fastrestore ? '-fast':'') ?>' data-id="<?php echo $id; ?>"  class="message-restore wikia-button" ><?php echo wfMessage('wall-message-restore-thread')->text(); ?></button>
 			<? endif; ?>
 			</td></tr></table>
 		</div>
@@ -29,11 +29,16 @@
 			<div class="deleteorremove-bubble">
 				<div class="avatar"><?= AvatarService::renderAvatar($statusInfo['user']->getName(), 20) ?></div>
 				<div class="message">
-					<?= wfMsgExt('wall-message-closed-by', array('parseinline'), array($statusInfo['user']->getName(), $statusInfo['user']->getUserPage()) ) ?><br>
+					<? if ( isset($statusInfo['reason']) && mb_strlen($statusInfo['reason']) ): ?>
+						<?= wfMessage('wall-message-closed-by-because', array($statusInfo['user_displayname_linked']))->text(); ?><br>
+						<div class="reason"><?php echo $statusInfo['reason']; ?></div>
+					<? else: ?>
+						<?= wfMessage('wall-message-closed-by', array($statusInfo['user']->getName(), $statusInfo['user']->getUserPage()))->parse(); ?><br>
+					<? endif; ?>
 					<div class="timestamp"><span><?php echo $statusInfo['fmttime']; ?></span></div>
 				</div>
 			</div>
 		</div>
-	<? endif; ?>	
-	
+	<? endif; ?>
 <?php endif; ?>
+

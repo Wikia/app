@@ -8,30 +8,23 @@
 class LandingPagesParser {
 	const CACHE_DURATION = 86400;//24h
 
-	private $app;
-	private $switches;
-	private $magicWords;
+	static private $switches;
 
-	function __construct(){
-		$this->app = F::app();
-		$this->magicWords = array_keys( $this->app->wg->LandingPagesAsContentMagicWords );
-
-
-		//singleton
-		F::setInstance( __CLASS__, $this );
-	}
-
-	public function onLanguageGetMagicHook( &$magicWords, $langCode ){
-		foreach ( $this->magicWords as $wordID ) {
+	static public function onLanguageGetMagicHook( &$magicWords, $langCode ){
+		global $wgLandingPagesAsContentMagicWords;
+		$landingMagicWords = array_keys( $wgLandingPagesAsContentMagicWords );
+		foreach ( $landingMagicWords as $wordID ) {
 			$magicWords[$wordID] = array( 0, $wordID );
 		}
 
 		return true;
 	}
 
-	public function onInternalParseBeforeLinksHook( &$parser, &$text, &$strip_state ) {
-		if ( empty( $this->app->wg->RTEParserEnabled ) ) {
-			foreach ( $this->magicWords as $wordID ) {
+	static public function onInternalParseBeforeLinksHook( &$parser, &$text, &$strip_state ) {
+		global $wgLandingPagesAsContentMagicWords, $wgRTEParserEnabled;
+		if ( empty( $wgRTEParserEnabled ) ) {
+			$magicWords = array_keys( $wgLandingPagesAsContentMagicWords );
+			foreach ( $magicWords as $wordID ) {
 				MagicWord::get( $wordID )->matchAndRemove( $text );
 			}
 		}
@@ -44,24 +37,29 @@ class LandingPagesParser {
 	 * @param WikiPage $article
 	 * @return bool
 	 */
-	public function onArticleFromTitle( Title &$title, &$article ) {
+	static public function onArticleFromTitle( Title &$title, &$article ) {
+		global $wgLandingPagesAsContentMagicWords;
+		$app = F::app();
+
 		if( $title->exists() &&  $title->getNamespace() !=  NS_FILE && $title->getNamespace() !=  NS_CATEGORY ){
-			$key = $this->generateCacheKey( $title->getArticleId() );
-			$this->switches = $this->app->wg->memc->get( $key );
+			$key = self::generateCacheKey( $title->getArticleId() );
+			self::$switches = $app->wg->memc->get( $key );
 
-			if ( empty( $this->switches ) ) {
-				$article = F::build( 'Article', array( $title ) );
-				$this->switches = array();
+			if ( empty( self::$switches ) ) {
+				$article = new Article( $title );
+				self::$switches = array();
 
-				foreach ( $this->magicWords as $wordID ) {
+				$magicWords = array_keys( $wgLandingPagesAsContentMagicWords );
+
+				foreach ( $magicWords as $wordID ) {
 					$magicWord = MagicWord::get( $wordID );
-					$this->switches[$wordID] = ( 0 < $magicWord->match( $article->getRawText() ) );
+					self::$switches[$wordID] = ( 0 < $magicWord->match( $article->getRawText() ) );
 				}
 
-				$this->app->wg->memc->set( $key, $this->switches, self::CACHE_DURATION );
+				$app->wg->memc->set( $key, self::$switches, self::CACHE_DURATION );
 			}
 
-			$this->process();
+			self::process();
 		}
 
 		return true;
@@ -71,8 +69,8 @@ class LandingPagesParser {
 	 * @param WikiPage $article
 	 * @return bool
 	 */
-	public function onArticlePurge( &$article ) {
-		$this->purgeCache( $article->getID() );
+	static public function onArticlePurge( &$article ) {
+		self::purgeCache( $article->getID() );
 
 		return true;
 	}
@@ -92,31 +90,33 @@ class LandingPagesParser {
 	 * @param null $redirect
 	 * @return bool
 	 */
-	public function onArticleSaveComplete( &$article, &$user, $text, $summary,
+	static public function onArticleSaveComplete( &$article, &$user, $text, $summary,
 		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status,
 		$baseRevId, &$redirect = null ) {
- 		$this->purgeCache( $article->getID() );
+ 		self::purgeCache( $article->getID() );
 
 		return true;
 	}
 
-	private function process(){
+	static private function process(){
+		global $wgLandingPagesAsContentMagicWords;
 		//TODO: skip in case action=edit?
-		foreach ( $this->switches as $wordID => $value ) {
+		foreach ( self::$switches as $wordID => $value ) {
 			if ($value == true) {
-			$this->app->wg->set( $this->app->wg->LandingPagesAsContentMagicWords[$wordID], $value );
+				$GLOBALS[ $wgLandingPagesAsContentMagicWords[$wordID] ] = $value;
 			}
 		}
 
-		$this->switches = null;
+		self::$switches = null;
 	}
 
-	private function purgeCache( $articleID ){
-		$key = $this->generateCacheKey( $articleID );
-		$this->app->wg->memc->delete( $key );
+	static private function purgeCache( $articleID ){
+		global $wgMemc;
+		$key = self::generateCacheKey( $articleID );
+		$wgMemc->delete( $key );
 	}
 
-	private function generateCacheKey( $articleID ) {
-		return $this->app->wf->memcKey( 'LandingPagesAsContent', $articleID );
+	static private function generateCacheKey( $articleID ) {
+		return wfmemcKey( 'LandingPagesAsContent', $articleID );
 	}
 }

@@ -7,31 +7,30 @@
  * @author Sebastian Marzjan
  */
 
-$app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 /**
  * classes
  */
-$app->registerClass('WikiaBarController', $dir . 'WikiaBarController.class.php');
-$app->registerClass('WikiaBarHooks', $dir . 'WikiaBarHooks.class.php');
-$app->registerClass('WikiaBarModel', $dir . 'models/WikiaBarModel.class.php');
-$app->registerClass('WikiaBarModelBase', $dir . 'models/WikiaBarModelBase.class.php');
-$app->registerClass('WikiaBarDataModel', $dir . 'models/WikiaBarDataModel.class.php');
-$app->registerClass('WikiaBarDataFailsafeModel', $dir . 'models/WikiaBarDataFailsafeModel.class.php');
-$app->registerClass('WikiaBarDataValidator', $dir . 'models/WikiaBarDataValidator.class.php');
-$app->registerClass('WikiaBarMessageDataValidator', $dir . 'models/WikiaBarMessageDataValidator.class.php');
-$app->registerClass('WikiaBarFailsafeDataValidator', $dir . 'models/WikiaBarFailsafeDataValidator.class.php');
+$wgAutoloadClasses['WikiaBarController'] =  $dir . 'WikiaBarController.class.php';
+$wgAutoloadClasses['WikiaBarHooks'] =  $dir . 'WikiaBarHooks.class.php';
+$wgAutoloadClasses['WikiaBarModel'] =  $dir . 'models/WikiaBarModel.class.php';
+$wgAutoloadClasses['WikiaBarModelBase'] =  $dir . 'models/WikiaBarModelBase.class.php';
+$wgAutoloadClasses['WikiaBarDataModel'] =  $dir . 'models/WikiaBarDataModel.class.php';
+$wgAutoloadClasses['WikiaBarDataFailsafeModel'] =  $dir . 'models/WikiaBarDataFailsafeModel.class.php';
+$wgAutoloadClasses['WikiaBarDataValidator'] =  $dir . 'models/WikiaBarDataValidator.class.php';
+$wgAutoloadClasses['WikiaBarMessageDataValidator'] =  $dir . 'models/WikiaBarMessageDataValidator.class.php';
+$wgAutoloadClasses['WikiaBarFailsafeDataValidator'] =  $dir . 'models/WikiaBarFailsafeDataValidator.class.php';
 
-$app->registerClass('WikiaBarUserPropertiesHandler', $dir . 'models/WikiaBarUserPropertiesHandler.class.php');
+$wgAutoloadClasses['WikiaBarUserPropertiesHandler'] =  $dir . 'models/WikiaBarUserPropertiesHandler.class.php';
 WikiaUserPropertiesController::registerHandler('WikiaBarUserPropertiesHandler');
 
 /**
  * hooks
  */
-$app->registerHook('MakeGlobalVariablesScript', 'WikiaBarHooks', 'onMakeGlobalVariablesScript');
-$app->registerHook('WikiFactoryChanged', 'WikiaBarHooks', 'onWikiFactoryVarChanged');
-$app->registerHook('WikiFactoryVarSave::AfterErrorDetection', 'WikiaBarHooks', 'onWFAfterErrorDetection');
+$wgHooks['MakeGlobalVariablesScript'][] = 'WikiaBarHooks::onMakeGlobalVariablesScript';
+$wgHooks['WikiFactoryChanged'][] = 'WikiaBarHooks::onWikiFactoryVarChanged';
+$wgHooks['WikiFactoryVarSave::AfterErrorDetection'][] = 'WikiaBarHooks::onWFAfterErrorDetection';
 
 // i18n mapping
 $wgExtensionMessagesFiles['WikiaBar'] = $dir . 'WikiaBar.i18n.php';

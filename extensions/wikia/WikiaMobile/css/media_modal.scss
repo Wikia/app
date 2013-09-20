@@ -9,6 +9,10 @@ $chev-color: rgb(157,157,157);
 	width: 100%;
 	height: 100%;
 
+	img {
+		max-height: 100%;
+	}
+
 	section {
 		text-align: center;
 
@@ -24,18 +28,18 @@ $chev-color: rgb(157,157,157);
 		}
 	}
 
-	video, iframe, object, embed {
-		width: 70%;
-		height: auto;
-	}
-
 	.wkMblThrobber {
 		display: table-cell;
 	}
 }
 
 .player {
-	display: table-cell;
+	display: inline-block;
+
+	video, iframe, object, embed {
+		width: 70%;
+		height: auto;
+	}
 }
 
 .not-supported {

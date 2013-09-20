@@ -30,12 +30,12 @@ class PlaceStorage {
 	 * @param WikiaApp $app Nirvava application instance
 	 * @param int $pageId article ID to build model for
 	 */
-	public function __construct(WikiaApp $app, $pageId) {
-		$this->app = $app;
+	public function __construct($pageId) {
+		$this->app = F::app();
 		$this->memc = $this->app->wg->Memc;
 
 		$this->pageId = $pageId;
-		$this->model = F::build('PlaceModel');
+		$this->model = new PlaceModel();
 	}
 
 	/**
@@ -45,7 +45,7 @@ class PlaceStorage {
 	 * @return PlaceStorage model object
 	 */
 	public static function newFromId($pageId) {
-		$instance = F::build('PlaceStorage', array('app' => F::app(), 'pageId' => $pageId));
+		$instance = new PlaceStorage($pageId);
 
 		// read data from database
 		$instance->read();
@@ -99,7 +99,7 @@ class PlaceStorage {
 		$cords = $this->memc->get($this->getMemcKey());
 
 		if (empty($cords)) {
-			$this->app->wf->Debug(__METHOD__ . " - memcache miss for #{$this->pageId}\n");
+			wfDebug(__METHOD__ . " - memcache miss for #{$this->pageId}\n");
 
 			$dbr = $this->getDB();
 			$res = $dbr->select(self::WPP_TABLE, array('propname', 'props'), array(
@@ -129,16 +129,16 @@ class PlaceStorage {
 			$this->memc->set($this->getMemcKey(), $cords, self::CACHE_TTL);
 		}
 		else {
-			$this->app->wf->Debug(__METHOD__ . " - memcache hit for #{$this->pageId}\n");
+			wfDebug(__METHOD__ . " - memcache hit for #{$this->pageId}\n");
 		}
 		$cords['pageId'] = $this->pageId;
-		$this->setModel(F::build('PlaceModel', array($cords), 'newFromAttributes'));
+		$this->setModel(PlaceModel::newFromAttributes($cords));
 
 		// this will be checked in store() method
 		$this->initialCords = $this->getModel()->getLatLon();
 
 		if (!$this->getModel()->isEmpty()) {
-			$this->app->wf->Debug(__METHOD__ . " - geo data for #{$this->pageId}: " . implode(',', $this->initialCords) ."\n");
+			wfDebug(__METHOD__ . " - geo data for #{$this->pageId}: " . implode(',', $this->initialCords) ."\n");
 		}
 
 		wfProfileOut(__METHOD__);
@@ -155,7 +155,7 @@ class PlaceStorage {
 		$dbw = $this->getDB(DB_MASTER);
 		$cords = $this->model->getLatLon();
 
-		#$this->app->wf->Debug(__METHOD__ . json_encode(array($this->initialCords, $cords)) . "\n");
+		#wfDebug(__METHOD__ . json_encode(array($this->initialCords, $cords)) . "\n");
 
 		// do database queries only if something has changed
 		if ($this->initialCords !== $cords) {
@@ -191,10 +191,10 @@ class PlaceStorage {
 	}
 
 	private function getDB($type = DB_SLAVE) {
-		return $this->app->wf->GetDB($type, array(), $this->app->wg->DBname);
+		return wfGetDB($type, array(), $this->app->wg->DBname);
 	}
 
 	private function getMemcKey() {
-		return $this->app->wf->MemcKey("place::{$this->pageId}");
+		return wfMemcKey("place::{$this->pageId}");
 	}
 }

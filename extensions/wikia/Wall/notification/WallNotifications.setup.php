@@ -2,28 +2,28 @@
 
 $dirnotification = dirname(__FILE__);
 
-$app->registerClass('WallNotifications', $dirnotification . '/WallNotifications.class.php');
+$wgAutoloadClasses['WallNotifications'] =  $dirnotification . '/WallNotifications.class.php';
 
-$app->registerClass('WallNotificationsAdmin', $dirnotification . '/WallNotificationsAdmin.class.php');
-$app->registerClass('WallNotificationAdminEntity', $dirnotification . '/WallNotificationAdminEntity.class.php');
+$wgAutoloadClasses['WallNotificationsAdmin'] =  $dirnotification . '/WallNotificationsAdmin.class.php';
+$wgAutoloadClasses['WallNotificationAdminEntity'] =  $dirnotification . '/WallNotificationAdminEntity.class.php';
 
-$app->registerClass('WallNotificationsOwner', $dirnotification . '/WallNotificationsOwner.class.php');
-$app->registerClass('WallNotificationOwnerEntity', $dirnotification . '/WallNotificationOwnerEntity.class.php');
+$wgAutoloadClasses['WallNotificationsOwner'] =  $dirnotification . '/WallNotificationsOwner.class.php';
+$wgAutoloadClasses['WallNotificationOwnerEntity'] =  $dirnotification . '/WallNotificationOwnerEntity.class.php';
 
-$app->registerClass('WallNotificationEntity', $dirnotification . '/WallNotificationEntity.class.php');
-$app->registerClass('WallNotificationsController', $dirnotification . '/WallNotificationsController.class.php');
-$app->registerClass('WallNotificationsExternalController', $dirnotification . '/WallNotificationsExternalController.class.php');
+$wgAutoloadClasses['WallNotificationEntity'] =  $dirnotification . '/WallNotificationEntity.class.php';
+$wgAutoloadClasses['WallNotificationsController'] =  $dirnotification . '/WallNotificationsController.class.php';
+$wgAutoloadClasses['WallNotificationsExternalController'] =  $dirnotification . '/WallNotificationsExternalController.class.php';
 
-$app->registerClass('WallNotificationsEveryone', $dirnotification . '/WallNotificationsEveryone.class.php');
-$app->registerClass('WallNotificationsHooksHelper', $dirnotification . '/WallNotificationsHooksHelper.class.php');
+$wgAutoloadClasses['WallNotificationsEveryone'] =  $dirnotification . '/WallNotificationsEveryone.class.php';
+$wgAutoloadClasses['WallNotificationsHooksHelper'] =  $dirnotification . '/WallNotificationsHooksHelper.class.php';
 
 // Notifications are required on NonWall Wikis in order to show proper
 // lower-left corner notification bubbles from Wall Wikis
-$app->registerClass('WallHelper', $dir . '/WallHelper.class.php');
-$app->registerClass('WallMessage', $dir . '/WallMessage.class.php');
+$wgAutoloadClasses['WallHelper'] =  $dir . '/WallHelper.class.php';
+$wgAutoloadClasses['WallMessage'] =  $dir . '/WallMessage.class.php';
 
 //add script in monobook
-$app->registerHook('SkinAfterBottomScripts', 'WallNotificationsHooksHelper', 'onSkinAfterBottomScripts');
-$app->registerHook('MakeGlobalVariablesScript', 'WallNotificationsHooksHelper', 'onMakeGlobalVariablesScript');
+$wgHooks['SkinAfterBottomScripts'][] = 'WallNotificationsHooksHelper::onSkinAfterBottomScripts';
+$wgHooks['MakeGlobalVariablesScript'][] = 'WallNotificationsHooksHelper::onMakeGlobalVariablesScript';
 
-$app->registerHook('PersonalUrls', 'WallNotificationsHooksHelper', 'onPersonalUrls');
+$wgHooks['PersonalUrls'][] = 'WallNotificationsHooksHelper::onPersonalUrls';

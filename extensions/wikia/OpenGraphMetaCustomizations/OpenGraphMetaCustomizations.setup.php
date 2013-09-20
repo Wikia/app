@@ -53,7 +53,7 @@ function egOgmcParserOutputApplyValues( $out, $parserOutput, $data ) {
 			// 		"An image URL which should represent your object within the graph.
 			//		The image must be at least 50px by 50px and have a maximum aspect ratio of 3:1.
 			//		We support PNG, JPEG and GIF formats."
-			$imageServing = F::build( 'ImageServing', array( $articleId ) );
+			$imageServing = new ImageServing( $articleId );
 			foreach ( $imageServing->getImages( 1 ) as $key => $value ) {
 				$titleImage = Title::newFromText( $value[0]['name'], NS_FILE );
 			}

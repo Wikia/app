@@ -1,10 +1,51 @@
-var WikiaHomePageRemix = function (params) {
-	this.NUMBEROFSLOTS = 17;
-	this.PRELOADTIMEOUT = 200;
+// From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
+if (!Object.keys) {
+	Object.keys = (function () {
+		'use strict';
+		var hasOwnProperty = Object.prototype.hasOwnProperty,
+			hasDontEnumBug = !({toString: null}).propertyIsEnumerable('toString'),
+			dontEnums = [
+				'toString',
+				'toLocaleString',
+				'valueOf',
+				'hasOwnProperty',
+				'isPrototypeOf',
+				'propertyIsEnumerable',
+				'constructor'
+			],
+			dontEnumsLength = dontEnums.length;
+
+		return function (obj) {
+			if (typeof obj !== 'object' && (typeof obj !== 'function' || obj === null)) {
+				throw new TypeError('Object.keys called on non-object');
+			}
+
+			var result = [], prop, i;
+
+			for (prop in obj) {
+				if (hasOwnProperty.call(obj, prop)) {
+					result.push(prop);
+				}
+			}
+
+			if (hasDontEnumBug) {
+				for (i = 0; i < dontEnumsLength; i++) {
+					if (hasOwnProperty.call(obj, dontEnums[i])) {
+						result.push(dontEnums[i]);
+					}
+				}
+			}
+			return result;
+		};
+	}());
+}
+
+var WikiaHomePageRemix = function () {
 	this.WIKISETSTACKOFFSET = 3;
 	this.NUMBEROFBATCHESTODOWNLOAD = 5;
 
 	this.COLLECTIONS_LS_KEY = 'WHP_collections';
+	this.COLLECTIONS_LS_VALIDITY = 12; // in hours
 	this.SPONSOR_HERO_IMG_TIMEOUT = 3000;
 	this.SPONSOR_HERO_IMG_CONTAINER_ID = 'WikiaHomePageHeroImage';
 	this.SPONSOR_HERO_IMG_FADE_OUT_TIME = 800;
@@ -429,7 +470,9 @@ WikiaHomePageRemix.prototype = {
 		this.remixCount = 0;
 		this.shownCollections = {};
 		for (collectionId in this.collectionsWikisStack) {
-			this.shownCollections[collectionId] = false;
+			if (this.collectionsWikisStack.hasOwnProperty(collectionId)) {
+				this.shownCollections[collectionId] = false;
+			}
 		}
 
 		var lsData = $.storage.get(this.COLLECTIONS_LS_KEY);
@@ -437,7 +480,7 @@ WikiaHomePageRemix.prototype = {
 		if (lsData) {
 			if ('date' in lsData && 'collections' in lsData) {
 				var tmpDate = new Date();
-				tmpDate.setDate(tmpDate.getDate() - 1);
+				tmpDate.setHours(tmpDate.getHours() - this.COLLECTIONS_LS_VALIDITY);
 				if (new Date(lsData.date) > tmpDate) {
 					lsShownCollections = lsData.collections;
 					if ('remixCount' in lsData) {
@@ -492,7 +535,7 @@ WikiaHomePageRemix.prototype = {
 		var out;
 
 		for (collectionId in this.shownCollections) {
-			if (!this.shownCollections[collectionId]) {
+			if (this.shownCollections.hasOwnProperty(collectionId) && !this.shownCollections[collectionId]) {
 				nextCollectionId = collectionId;
 				break;
 			}

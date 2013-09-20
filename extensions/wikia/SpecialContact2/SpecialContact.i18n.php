@@ -17,7 +17,7 @@ $messages['en'] = array(
 	'specialcontact-intro-main-head' => "<big>Need help? Don't worry, the Wikia community is here to help you!</big><br/>
 Follow the links below to learn more about how to use Wikia, make changes to your wiki or modify your account.",
 	'specialcontact-intro-main-local' => '', #(this is meant to be blank)
-	'specialcontact-intro-main-foot' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]]  or post on our '''[[w:c:community:Forum:Community_Central_Forum|community help forums]]'''. If you are looking for admin help and advice, stop by [[w:c:community:Admin_Central:Main_Page|Founder & Admin Central]].",
+	'specialcontact-intro-main-foot' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]]  or post on our '''[[w:c:community:Special:Forum|community help forums]]'''. If you are looking for admin help and advice, stop by [[w:c:community:Admin_Central:Main_Page|Founder & Admin Central]].",
 
 
 	'specialcontact-secheader-onwiki' => "Questions about this wiki",
@@ -90,7 +90,7 @@ If there's an active user community on the wiki you wish to adopt, please start 
 *Is your browser up-to-date?
 *Have you confirmed your email address?
 *Are you trying to log in via Facebook Connect? Be sure to follow the steps [[Help:Facebook_Connect|here]].
-*Not able to create an account? It may be that you are not eligible for an account at this time. See [[w:c::wikia:Wikia:Terms_of_use#Membership|terms of use]] for more details.
+*Not able to create an account? It may be that you are not eligible for an account at this time. See [[homepage:Terms of Use#Membership|terms of use]] for more details.
 *Lost your password? You can request a new password [[Special:Signup|here]] Once there, enter your username, and click the \"new password\" button. You will then receive an email with a new temporary password. You can use this to sign in and update your password to one of your choice.
 
 If you have done all of these and are still having an issue - please send us a detailed report below. We will get back to you as soon as possible to help fix the problem.
@@ -116,7 +116,7 @@ If you feel you still need to discuss this block further with Wikia staff, pleas
 	'specialcontact-intro-using-wikia' => "Now that you are a part of the community, you are able to edit and contribute to almost any page across Wikia. For some introductory help, check out our [[Help:Getting_Started|help pages here]]. They are a great place to learn the basics of editing, formatting and much more.
 
 If you have questions about this specific wiki, start by [[Special:ListAdmins|contacting your local admins]].
-You can also ask general questions to other community members on our [[w:c:community:Forum:Community_Central_Forum|community help forum]].
+You can also ask general questions to other community members on our [[w:c:community:Special:Forum|community help forum]].
 
 Remember, you can't break a wiki, so don't be afraid to get started. Happy editing!",
 	'specialcontact-intro-feedback' => "Got feedback? We would love to hear it! Please provide your thoughts and details below. If you have feedback on a Wikia Labs product, please provide feedback [[Special:WikiaLabs|there]].
@@ -169,13 +169,13 @@ Happy editing!",
 
 	'specialcontact-intro-general' => "You can contact [[w:project:Staff|Wikia Staff]] using this form. Admins of this wiki can be found [[Special:ListAdmins|here]].
 
-	Additional information on how to report problems to Wikia can be found [[w:project:Report_a_problem|here]], or you can post on [[w:Forum:Index|Wikia Community Forums]] for user support.
+	Additional information on how to report problems to Wikia can be found [[w:project:Report_a_problem|here]], or you can post on [[w:c:community:Special:Forum|Wikia Community Forums]] for user support.
 
 If you prefer to use regular e-mail or have attachments, you can contact us at [mailto:community@wikia.com community@wikia.com].
 ",
 
 	/* non-form footer */
-	'specialcontact-noform-footer' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]]  or post on our '''[[w:c:community:Forum:Community_Central_Forum|community help forums]]'''. If you are looking for admin help and advice, stop by [[w:c:community:Admin_Central:Main_Page|Founder & Admin Central]].",
+	'specialcontact-noform-footer' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]]  or post on our '''[[w:c:community:Special:Forum|community help forums]]'''. If you are looking for admin help and advice, stop by [[w:c:community:Admin_Central:Main_Page|Founder & Admin Central]].",
 
 	/* form */
 	'specialcontact-username' => 'Your username',
@@ -225,7 +225,7 @@ If you prefer to use regular e-mail or have attachments, you can contact us at [
 	/* after */
 	'specialcontact-submitcomplete' => 'Thank you for contacting Wikia. We receive and review all messages submitted here. We will do our best to get back to you in the next 2-3 business days, but please be patient as we work through all of the messages.
 
-Remember, you can also find help in our [[w:c:community:Forum:Community_Central_Forum|Community Forum]] and [[w:c:community:Help:Index|Help pages]]. You can keep up to date with the latest Wikia news on our [[w:c:community:Blog:Wikia_Staff_Blog |Staff Blog]]. Happy editing!',
+Remember, you can also find help in our [[w:c:community:Special:Forum|Community Forum]] and [[w:c:community:Help:Index|Help pages]]. You can keep up to date with the latest Wikia news on our [[w:c:community:Blog:Wikia_Staff_Blog |Staff Blog]]. Happy editing!',
 );
 
 $messages['de'] = array(
@@ -238,7 +238,7 @@ $messages['de'] = array(
 	'specialcontact-intro-main-head' => "<big>Brauchst du Hilfe? Mach dir keine Sorgen, die Wikia-Community ist hier um dir zu helfen.</big><br/>
 Klicke auf die folgenden Links, um mehr darüber zu erfahren, wie man Wikis benutzt, Wikis anpasst oder das eigene Profil verändert.",
 	'specialcontact-intro-main-local' => '', #(this is meant to be blank)
-	'specialcontact-intro-main-foot' => "'''Beantwortet diese Seite deine Fragen?''' Falls nicht, dann [[Special:contact/general|schreib uns]]. Vergiss nicht, dass du dir immer unsere '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''', das [[w:c:de.community:Blog:Wikia_Deutschland_News|Wikia-Blog]]  oder unsere '''[[w:c:de.community:Forum:Übersicht|Foren]]''' ansehen kannst. Falls du ein Admin bist und nach Hilfe suchst, sieh dir unseren [[w:c:de.community:Admin-Bereich:Hauptseite|Gründer- und Adminbereich]] an.",
+	'specialcontact-intro-main-foot' => "'''Beantwortet diese Seite deine Fragen?''' Falls nicht, dann [[Special:contact/general|schreib uns]]. Vergiss nicht, dass du dir immer unsere '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''', das [[w:c:de.community:Blog:Wikia_Deutschland_News|Wikia-Blog]]  oder unsere '''[[w:c:de.community:Spezial:Forum|Foren]]'''  ansehen kannst. Falls du ein Admin bist und nach Hilfe suchst, sieh dir unseren [[w:c:de.community:Admin-Bereich:Hauptseite|Gründer- und Adminbereich]] an.",
 
 
 	'specialcontact-secheader-onwiki' => "Allgemeine Wiki-Fragen",
@@ -326,7 +326,7 @@ Falls du die Sperre dennoch mit einem Wikia-Mitarbeiter diskutieren willst dann 
 	'specialcontact-intro-using-wikia' => "Jetzt wo du ein Teil der Community bist, steht dir frei bei den Wikis deiner Wahl mitzumachen. Für Starthilfe, besuche die [[Help:Getting_Started|Hilfeseiten]].
 
 Hast du Fragen zu einem bestimmten Wiki, dann [[Special:ListAdmins|frag die lokalen Admins]].
-Du kannst auch jederzeit in unserem [[w:c:de.community:Forum:Übersicht|Hilfeforum]] fragen.
+Du kannst auch jederzeit in unserem [[w:c:de.community:Spezial:Forum|Hilfeforum]] fragen.
 
 Und vergiss nicht, dass man ein Wiki nicht kaputt machen kann! Experementieren ist erwünscht!",
 
@@ -372,13 +372,13 @@ Wenn du das Gefühl hast, dass dieses Wiki keinen Nutzen für andere darstellt (
 
 	'specialcontact-intro-general' => "Du kannst einen [[w:project:Staff|Wikia Mitarbeiter]] kontaktieren, indem du dieses Formular benutzt. Die Admins dieses Wiki können [[Special:ListAdmins|hier]] gefunden werden.
 
-	Zusätzliche Informationen zur Meldung von Problemen können [[w:project:Report_a_problem|hier]] gefunden werden, oder ihr postet es in unseren [[w:Forum:Index|Foren]].
+	Zusätzliche Informationen zur Meldung von Problemen können [[w:project:Report_a_problem|hier]] gefunden werden, oder ihr postet es iunsere '''[[w:c:de.community:Spezial:Forum|Foren]]'''
 
 Falls ihr lieber eine E-Mail schicken wollt, dann schreibt uns an [mailto:community@wikia.com community@wikia.com].
 ",
 
 	/* non-form footer */
-	'specialcontact-noform-footer' => "'''Beantwortet das hier deine Frage?''' Wenn nicht, dann [[Special:contact/general|schreib uns]]. Vergiss nicht, du kannst dir jederzeit die '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''' ansehen, das [[w:c:de.community:Blog:Wikia_Deutschland_News|Wikia-Blog]] lesen oder in unseren '''[[w:c:de.community:Forum:Übersicht|Foren]]''' posten. Falls du ein Admin bist und nach Hilfe und Ratschlägen suchst, dann besuche unseren [[w:c:de.community:Admin-Bereich:Hauptseite|Gründer & Admin Bereich]].",
+	'specialcontact-noform-footer' => "'''Beantwortet das hier deine Frage?''' Wenn nicht, dann [[Special:contact/general|schreib uns]]. Vergiss nicht, du kannst dir jederzeit die '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''' ansehen, das [[w:c:de.community:Blog:Wikia_Deutschland_News|Wikia-Blog]] lesen oder in unseren '''[[w:c:de.community:Spezial:Forum|Foren]]''' posten. Falls du ein Admin bist und nach Hilfe und Ratschlägen suchst, dann besuche unseren [[w:c:de.community:Admin-Bereich:Hauptseite|Gründer & Admin Bereich]].",
 
 	/* form */
 	'specialcontact-username' => 'Bitte gib deinen Benutzernamen ein',
@@ -428,7 +428,7 @@ Falls ihr lieber eine E-Mail schicken wollt, dann schreibt uns an [mailto:commun
 	/* after */
 	'specialcontact-submitcomplete' => "Danke, dass du Wikia kontaktiert hast. Wir haben alle hier angegebenen Informationen bekommen. Wir werden unser bestes tun, um innerhalb von 2 Arbeitstagen auf deine Nachricht zu antworten. Wir bitten um Geduld.
 
-Vergiss nicht, du kannst dir jederzeit die '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''' ansehen, den [[w:c:community:Blog:Wikia_Staff_Blog|Wikia-Blog]] lesen oder in unseren '''[[w:c:community:Forum:Community_Central_Forum|Foren]]''' posten.",
+Vergiss nicht, du kannst dir jederzeit die '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''' ansehen, den [[w:c:community:Blog:Wikia_Staff_Blog|Wikia-Blog]] lesen oder in unseren '''[[w:c:de.community:Spezial:Forum|Foren]]''' posten.",
 );
 
 $messages['es'] = array(
@@ -647,6 +647,413 @@ Si prefieres usar un email o adjuntar archivos, puedes contactar con nosotros en
 	'specialcontact-submitcomplete' => 'Gracias por contactar con Wikia. Recibimos y revisamos todos los mensajes que se envían por aquí. En los próximos 2 o 3 días laborables recibirás una respuesta, por favor sé paciente mientras nos encargamos de todos los mensajes que recibimos.
 
 Recuerda que puedes encontrar ayuda también en nuestro [[w:c:comunidad:Foro:Índice|foro]] de la comunidad de Wikia en español o en nuestro [[w:c:ayuda|wiki de ayuda]]. Y por supuesto si quieres mantenerte al día con las últimas novedades, sigue nuestro [http://es.wikia.com/wiki/Blog:Noticias_de_Wikia?action=watch blog de noticias]. ¡Diviértete!',
+);
+
+$messages['ja'] = array(
+	/* special page */
+	'contact' => 'ウィキアに連絡する',
+	'specialcontact-wikia' => 'ウィキアに連絡する',
+	'specialcontact-pagetitle' => 'ウィキアサポートスタッフに連絡する',
+
+	/* picker */
+	'specialcontact-intro-main-head' => "<big>助けが必要? 心配しないで,　ウィキアコミュニティーがあなたのお手伝いをさせていただきます。!</big><br/>ページの内容を変えたりあなたのアカウント内容の変更したりとウィキアの使用方法は下記のリンクから情報を得ることができます。。",
+	'specialcontact-intro-main-local' => '', #(this is meant to be blank)
+	'specialcontact-intro-main-foot' => "'''このページで充分な回答は得られましたか?''' そうでなければ [[Special:contact/general|連絡をとる]] で問題点を解決しましょう。またいつでも '''[[w:c:community:Help:Index|ヘルプページ]]''', [[w:c:community:Blog:Wikia_Staff_Blog|スタッフブログ]]  もしくは '''[[w:c:community:Forum:Community_Central_Forum|コミュニティーヘルプフォーラム]]'''. 管理者からのヘルプもしくはアドバイスが欲しい場合は, ここから [[w:c:community:Admin_Central:Main_Page|管理者のページ]].",
+
+
+	'specialcontact-secheader-onwiki' => "このウィキアページについての質問",
+	'specialcontact-seclink-content-issue' => "ウィキアページの内容についての問題",
+	'specialcontact-seclink-user-conflict' => "他のユーザーとの問題が生じた場合?",
+	'specialcontact-seclink-adoption' => "管理者の権利がほしい",
+
+	'specialcontact-secheader-account' => "アカウントの変更",
+	'specialcontact-seclink-account-issue' => "アカウントにアクセスできない",
+	'specialcontact-seclink-close-account' => "アカウントを無効にする",
+	'specialcontact-seclink-rename-account' => "アカウント名を変更する",
+	'specialcontact-seclink-blocked' => "アカウントをブロックする",
+
+	'specialcontact-secheader-editing' => "ウィキアの編集に参加する",
+	'specialcontact-seclink-using-wikia' => "ウィキアの使用方法とは?",
+	'specialcontact-seclink-feedback' => "フィードバックがほしい",
+	'specialcontact-seclink-bug' => "不具合があります",
+	'specialcontact-seclink-bad-ad' => "不適切な広告を見た場合",
+
+	'specialcontact-secheader-setting' => "このウィキアページを変更する",
+	'specialcontact-seclink-wiki-name-change' => "サイト名 もしくは URL",
+	'specialcontact-seclink-design' => "デザイン",
+	'specialcontact-seclink-features' => "記事を付け加えるまたは編集する",
+	'specialcontact-seclink-close-wiki' => "このウィキアページを閉じる",
+
+	/* titles (overrides normal page title) */
+	'specialcontact-sectitle' => "ウィキアサポート - $1",
+	'specialcontact-sectitle-general' => "コンタクトフォーム",
+	'specialcontact-sectitle-content-issue' => "内容の問題",
+	'specialcontact-sectitle-user-conflict' => "ユーザー同士の交流",
+	'specialcontact-sectitle-adoption' => "管理者の権利",
+
+	'specialcontact-sectitle-account-issue' => "アカウントの問題",
+	'specialcontact-sectitle-close-account' => "アカウントを無効にする",
+	'specialcontact-sectitle-rename-account' => "アカウント名を変更する",
+	'specialcontact-sectitle-blocked' => "アカウントをブロックする",
+
+	'specialcontact-sectitle-using-wikia' => "ウィキアを使う",
+	'specialcontact-sectitle-feedback' => "フィードバック",
+	'specialcontact-sectitle-bug' => "不具合を報告する",
+	'specialcontact-sectitle-bad-ad' => "広告を報告する",
+
+	'specialcontact-sectitle-wiki-name-change' => "ウィキアページ名変更",
+	'specialcontact-sectitle-design' => "ウィキアページデザイン",
+	'specialcontact-sectitle-features' => "ウィキアページの記事",
+	'specialcontact-sectitle-close-wiki' => "このウィキアページを閉じる",
+
+	/* intros (message at top of page) */
+	'specialcontact-intro-content-issue' => "このウィキアページはこのコミュニティーページのメンバーによって作成されました。[[Special:ListAdmins|local admins]]様がこのウィキアページの管理者です。 ページ内容等についてのご質問はまずはこのページの管理者である [[Special:ListAdmins|wiki's admins here]]様にご連絡されるようお願い致します。
+
+ページ内容が暴力的だと思われるのであれば [http://www.wikia.com/Terms_of_Use Terms of Use], ウィキアスタッフに直接ご連絡ください。 [[Special:Contact/general|here]].",
+
+	'specialcontact-intro-content-issue-mobile' => "このウィキアページの内容なコミュニティーメンバによって制作させています。ページ内容についてのご質問等はそのページの管理者にまずはご確認いただきますようお願い致します。
+
+ページ内容が不適切だと思われる場合は, ウィキアスタッフに直接ご連絡ください。",
+	'specialcontact-intro-user-conflict' => "ウィキアは皆様に興味のある内容について投稿していただき１つのウィキアページを作り上げていくコミュニティースペースです。他のユーザー様との衝突が生じた場合 - 問題点を隠さずそのユーザーに敬意を払った態度で接し、問題解決を試みてください。
+
+もし助けが必要であれば、まずは [[Special:ListAdmins|local admins]]。管理者はそのページとコミュニティーのエキスパートです。もし管理者が助けてくれないようであれば、 [http://www.wikia.com/Terms_of_Use Terms of Use], ウィキアスタッフに直接ご連絡ください。 [[Special:Contact/general|here]].
+
+楽しんでね!",
+	'specialcontact-intro-adoption' => "このページの管理者になる興味はありますか? もしそうであればまずはここをクリックして [[Special:Listusers/sysop|local admins]] アクティブの状態にしてください。 そしてあなたのリクエストをウィキアまで送信してください。管理者になるリクエストしたことをフォーラムページでコミュニティーのユーザーたちにもお知らせることをお薦めします。
+
+もしあなたの興味のあるウィキアページの管理者があまり活動的でない場合, 管理者になりたいというリクエストをこちらに出すことができます。こちらのページに行って [[w:c:adopt|adoption wiki]] 管理者になるための条件を含む詳しい内容を確認し、その後リクエストをお願いします。リクエストには管理者になりたいトピックのリンクの記載をお願いします。
+
+あなたが関わりたいウィキアページに活動的なユーザーがいる場合、誰が管理者としてコミュニティーを盛り上げまとめられるか、そしてなぜあなたがなぜ管理者になりたいのかということをよく話し合ってください。話合いの前にこちらのページをご参考ください。 [[w:c:adopt|Adoption wiki]]. ご健闘を祈ります!",
+
+	'specialcontact-intro-account-issue' => "あなたのアカウントに問題が生じてしまいご迷惑おかけしまい申し訳ございません。 お手数ですがいくつかのことを確認してください:
+
+*アカウント名は大文字・小文字の違いにとても敏感に反応します。
+*ブラウザーは最新版ですか?
+*Eメールアドレスを確認しましたか?
+*フェイスブックからのログインを試みましたか? 下記でログイン方法を確認してください [[Help:Facebook_Connect|here]].
+*アカウント作成ができない? アカウントを作成する過程でなんらかの支障が起こったと考えられます。こちらを [[homepage:Terms of Use#Membership|terms of use]] ご参照ください。
+*パスワードを忘れてしまった? あたらしいパスワードを申請することができます。 [[Special:Signup|here]] ユーザー名を入力して \"new password\" をクリックしてください。Eメールにて仮のパスワードが送られてきます。そのパスワードとあなたのユーザー名でログインし新しいパスワードの設定をしてください。
+上記のことをすべて試みてもまだ問題がある場合 - 大変お手数ですが下記のフォームから問題点を詳しく教えてください。問題解決に向けて早急にご連絡をさせていただきます。 W
+
+楽しんでね!",
+	'specialcontact-intro-close-account' => "アカウントが機能せずご迷惑をおかけしております。ウィキアは様々なトピックについてのページがたくさんあります。きっとお気に入りが見つかるはずです。もしご質問、問題点がございましたら大変お手数ですが、そのページの管理者まで [[Special:Listusers/sysop|local admins]] ご連絡ください。
+
+あなたのアカウントを完全に消去することはできませんが、無効にすることは可能です。その際、アカウントはロックされ、二度と使用されることはございません。再度ウィキアで編集をされたい場合は再度アカウントを作成していただく必要がございます。あなたがウィキアページ作成に貢献された形跡も残りますのでご了承ください。
+
+アカウントを無効にする詳しい説明は、 こちらで確認することができます。 [[Help:Close_my_account|help page on disabling your account]]. あなたのアカウントを無効にするために、 お手数ですが下記のフォームに記載ください。",
+	'specialcontact-intro-rename-account' => "ユーザー名の変更は1度だけでしたら可能ですのでリクエストを出す前によくお考えください。一度ユーザー名を変更されますと、二度と変更できませんのでリクエストを出される前にヘルプページをよく読まれてください。: http://help.wikia.com/wiki/Help:Changing_your_username
+
+ヘルプページを読み同意いただきましたら 下記からあなたの新しいユーザー名リクエストを送ってください。ユーザー名変更後、内容確認のEメールをさせていただきます。新しいユーザー名と従来のパスワードでログインしてください。
+
+楽しんでね!",
+	'specialcontact-intro-blocked' => "アカウントのブロックは管理者によって行われます。アカウントをブロックする際に管理者はまず警告を送ります。その警告の中にどの管理者があなたをブロックしたか記載されておりますのでまずはその管理者にトークページからご連絡ください。あなたのアカウントはブロックされている状態ですが、管理者に連絡することは可能となっております。ブロックされているユーザーでも編集作業ができるようになっています。また記入されたメッセージも他のユーザーから見れるようになっております。右上にある\"my talk\"からご投稿ください。
+
+トークページが使用できない場合、ブロックが解除されるのを待っていただくか、他のウィキアページにご参加ください。
+ブロックの問題が解決されていない場合、大変お手数ですがこちらまでご連絡ください。 [[Special:Contact/general|here]].",
+
+	'specialcontact-intro-using-wikia' => "あなたはウィキアコミュニティーの一員です。ウィキアのページを編集することができます。編集のお手伝いが必要な場合は[[Help:Getting_Started|help pages here]]を参照にしてください。編集の仕方、フォーマットを詳しく説明しております。
+
+ウィキアのページをはじめるにあたって質問がある場合、[[Special:ListAdmins|contacting your local admins]].
+コミュニティーメンバーに質問がある場合、[[w:c:community:Forum:Community_Central_Forum|コミュニティーヘルプフォーラム]].
+
+ウィキアページを壊すということはございませんので編集作業を恐れずに楽しんでください。!",
+	'specialcontact-intro-feedback' => "フィードバックがほしい場合? ウィキアはいつでもユーザーからのご意見ご感想をお待ちしております。こちらからお願いします。 [[Special:WikiaLabs|there]].
+
+いつもありがとうございます。!",
+	'specialcontact-intro-bug' => "ウィキアで支障が生じてしまいご迷惑をおかけして申し訳ございません。大変お手数ですが下記にどのような支障が起きたのか記入して送信してください。その際に下記の件を含んでいただきますと幸いです。:
+*あなたのユーザー名
+*あなたのウィキアページをリンクしてください
+*種類とバージョンを含めたブラウザー情報を入力してください。 ([[Help:Supported_browsers|click here for our supported browser list]])
+*スクリーンショット
+
+あなたのリポート内容はは, こちらで確認してください。[[w:c:community:Help:How to report bugs|our help page on bug reports]].
+
+お知らせいただきましてありがとうございました。.
+
+楽しんでね!",
+	'specialcontact-intro-bad-ad' => "広告のせいで不快な思いをさせてしまい申し訳ございませんでした。広告担当者に説明をしたいので詳しい内容を教えていただけないでしょうか。その際にどのウィキアページで見たか、どんな広告内容だったか、なぜ不快感を得たのか等を含んでいただきますと幸いです。もしスクリーンショット、もしくはURLがあればそちらもお願い致します。URLを見つける方法はこちらをご参照ください。: http://help.wikia.com/wiki/Help:Bad_advertisements
+
+ありがとうございます!",
+
+	'specialcontact-intro-wiki-name-change' => "管理者であれば変更のリクエストは [[Help:Title for the wiki|sitename]] もしくは [[Help:Domain name|URL]] からすることができます。下記のフォームに記入してください。あなたが管理者でない場合は、こちらから管理者にリクエストを出すことができます。[[Special:ListAdmins|here]].
+
+楽しんでね!",
+	'specialcontact-intro-design' => "このウィキアページのデザインは管理者が [[Help:Theme_designer|Theme designer]]を利用して変更されました。あなたは管理者でないがページデザインのお手伝いをしたい場合、まず管理者にご連絡ください。 [[Special:ListAdmins|local admins]].
+
+カスタムデザインを作りたい場合、ウィキア・コンテントチームにリクエストを出してください。 [[w:Community_Central:Content_Team/Requests|here]]. リクエストを出す前にガイドラインをよく読んでください。
+デザインを新しくしている際に不具合が生じた場合、大変お手数ですがご連絡ください。 [[Special:Contact/bug|here]].
+
+楽しんでね!",
+	'specialcontact-intro-features' => "ウィキアはそのページに沿った様々な機能を提供しています。
+
+あなたが管理者ウィキアのページで機能がうまく生じていないと思うのであれば、コミュニティーメンバーにその機能を終了してもいいかの確認をしてください。メンバーが同意したのであれば、こちらの [[Special:WikiFeatures|Wiki Features]] このページから [[Special:AdminDashboard|Admin Dashboard]] 機能が無効になるようにしてください。リストの中に機能を無効にすることがなければ大変お手数ですがこちらから [[Special:Contact/general|連絡をとる]] リクエストを出してください。
+
+管理者でまだ開発中の新しい機能を試したい方はここからお願いします。 [[Special:WikiFeatures|Wiki Features]].
+
+新しい機能の発表や改善を随時知りたい場合は? フォローおお願いします。 [[w:c:community:Blog:Wikia_New_Features|staff blog new features list]]",
+
+	'specialcontact-intro-close-wiki' => "ウィキアにご連絡いただきましてありがとうございます。我々はめったに作られたれたウィキページを削除することはございません。全てページはコミュニティーユーザーたちによって作られたものですのであなたが参加していたウィキアのページに関わらない場合は他のユーザーに引き継いでもらうまで待っていただくことになります。[[Special:Contact/adoption|adopt it]].
+
+ウィキアページの名前を変更したい場合、誤字脱字があって名前を変更したい場合は [[Help:Rename]]、もしくは [[Help:Theme designer]] で名前の変更をいたします。ウィキアのページは内容を編集中でも簡単に名前を変更することができます。ウィキアページのURLを変更したい場合は [[Special:Contact/general|please write to us]] にお手数ですがご記入をお願いします。メッセージを受け取った後すぐに作業に入りURLを変更させていただきます。
+このウィキアページは他のユーザーにとって興味のないものだと思われる場合は (個人的な情報、ブログ等), 大変お手数ですが下記のフォームからウィキアページを閉じるリクエストを送ってください。
+
+ウィキアには様々なコンテンツのページがあります。あなたが興味のあるコミュニティーを見つけたら是非参加してください。
+楽しんでね!",
+
+	'specialcontact-intro-general' => "このフォームを使って [[w:project:Staff|Wikia Staff]] ご連絡ください。 お探しのウィキアページの管理者を見つけます。[[Special:ListAdmins|here]].
+
+	問題点をウィキアにレポートするための詳しい案内は [[w:project:Report_a_problem|here]], もしくはこちらから [[w:Forum:Index|Wikia Community Forums]] お願いします。
+普段利用されているEメールにメールが欲しい場合や添付がある場合、大変お手数ですがこちらまでご連絡ください [mailto:community@wikia.com community@wikia.com].
+",
+
+	/* non-form footer */
+	'specialcontact-noform-footer' => "'''このページで充分な回答は得られましたか?''' そうでなければ [[Special:contact/general|連絡をとる]] で問題点を解決しましょう。またいつでも '''[[w:c:community:Help:Index|ヘルプページ]]''', [[w:c:community:Blog:Wikia_Staff_Blog|スタッフブログ]]  もしくは '''[[w:c:community:Forum:Community_Central_Forum|コミュニティーヘルプフォーラム]]'''. 管理者からのヘルプもしくはアドバイスが欲しい場合は, ここから [[w:c:community:Admin_Central:Main_Page|管理者のページ]].",
+
+	/* form */
+	'specialcontact-username' => 'あなたのユーザー名',
+	'specialcontact-wikiname' => 'どのウィキアページ',
+	'specialcontact-realname' => 'あなたの名前',
+	'specialcontact-yourmail' => 'Eメールアドレス',
+	'specialcontact-problem' => '題名',
+	'specialcontact-problemdesc' => 'メッセージ',
+	'specialcontact-mail' => 'ウィキアにメッセージを送る',
+	'specialcontact-filledin' => 'アカウント設定に必要な必要事項は自動的に記載されました。',
+	'specialcontact-ccme' => '自分にもこのこのメッセージを送る',
+	'specialcontact-ccdisabled' => '機能していません。: [[Special:ConfirmEmail|validate]] 機能するEメールアドレスを使用ください。',
+	'specialcontact-notyou' => 'これはあなたのアカウントではない?',
+	'specialcontact-captchainfo' => '画像の文字を入力してください。.',
+	'specialcontact-captchatitle' => '曖昧な言葉',
+	'specialcontact-formtitle' => 'ウィキアサポートスタッフに連絡する。',
+	'specialcontact-label-screenshot' => 'もしスクリーンショットがあるのであれば添付してください。',
+	'specialcontact-label-additionalscreenshot' => '他にスクリーンショットがあるのであればここで添付してください',
+	'specialcontact-label-bad-ad-description' => 'この広告の問題点を教えてください',
+	'specialcontact-label-bad-ad-link' => '悪影響な広告をみたページのURLを教えてください',
+	'specialcontact-label-bug-link' => '問題のあったページのURLを教えてください',
+	'specialcontact-label-bug-feature' => 'これはどのコンテンツと関わりがありますか?',
+	'specialcontact-label-bug-description' => '問題点を教えてください',
+	'specialcontact-label-close-account-confirm' => '私のアカウントを無効にすることに同意します。',
+	'specialcontact-label-close-account-read-help' => 'このページを読みました。[[Help:Close_my_account|help page on closing your account]]',
+	'specialcontact-label-account-issue-description' => '問題点を詳しく教えてください。',
+	'specialcontact-label-rename-newusername' => '新しいユーザー名を入力しだください',
+	'specialcontact-label-rename-account-confirm' => '新しいユーザー名のつづりは正しいです。',
+	'specialcontact-label-rename-account-read-help' => 'このページを読みました。 [[Help:Changing your username|help page on renaming my account]]',
+	'specialcontact-form-header' => 'ウィキアに連絡する',
+	'specialcontact-logged-in-as' => 'あなたはこのユーザー名でログイン済みです。 $1. [[Special:UserLogout|Not you?]]',
+	'specialcontact-mail-on-file' => 'Eメールはこちらで登録済です。 $1. [[Special:Preferences|Do you wish to change it?]]',
+
+	/* errors */
+	'specialcontact-nomessage' => 'メッセージを入力してください',
+	'specialcontact-captchafail' =>	'間違っているか、途中が抜けてしまっている確認コードです。',
+	'specialcontact-error-title' => 'コンタクトフォームエラー',
+	'specialcontact-error-message' => 'メッセージを送信中にエラーがおきました。大変お手数ですがもう一度お願いします。',
+	'specialcontact-error-logintext' => 'リクエストを送るときは必ずログインをしてください。 もう一度お願いします。 [[Special:SignUp|login to your account]]',
+	'specialcontact-error-alreadyrenamed' => '以前に一度ユーザー名を変更されております為、今回ユーザー名をここで変更させていただくことができません。 [[Special:Contact/general|contact staff]] スタッフにご連絡ください。',
+
+	/* email */
+	'specialcontact-mailsub' => 'ウィキア サポート',
+	'specialcontact-mailsubcc' => 'ウィキアコンタクトメールをコピーする。',
+	'specialcontact-ccheader' => 'これはウィキアサポートに送られたメッセージのコピーです。',
+
+	/* after */
+	'specialcontact-submitcomplete' => 'ウィキアにご連絡いただきましてありがとうございます。お返事に2から3日ほどお時間をいただいておりますことをご了承ください。また、こちらのページ
+[[w:c:community:Forum:Community_Central_Forum|コミュニティーヘルプフォーラム]] と [[w:c:community:Help:Index|ヘルプページ]]をご確認ください。ウィキアの最新ニュースはここで確認することができます。  [[w:c:community:Blog:Wikia_Staff_Blog |スタッフブログ]]. 楽しんでね!',
+);
+
+$messages['zh'] = array(
+	/* special page */
+	'contact' => '联系维基',
+	'specialcontact-wikia' => '联系维基',
+	'specialcontact-pagetitle' => '联系维基',
+
+	/* picker */
+	'specialcontact-intro-main-head' => "<big>在这里，维基社区发展和支持团队会帮您解决所有问题。</big><br/>
+点击下面的链接了解如何使用维基以及如何更改您的维基主页或者个人帐户。",
+	'specialcontact-intro-main-local' => '', #(this is meant to be blank)
+	'specialcontact-intro-main-foot' => "'''请问我们帮您解决问题了吗？如果没有，请[[Special:contact/general|联系我们]]，告诉我们您遇到的相关问题。您也可以登陆我们的'''[[w:c:community:Help:Index|帮助中心]]'''或者[[w:c:community:Blog:Wikia_Staff_Blog|员工博客]]进行查询，或者去'''[[w:c:community:Forum:Community_Central_Forum|社区帮助论坛]]'''进行提问。如果您希望得到维基主页管理员的帮助或者建议，请访问[[w:c:community:Admin_Central:Main_Page|维基管理员中心]]进行查看。",
+
+
+	'specialcontact-secheader-onwiki' => "关于维基的问题",
+	'specialcontact-seclink-content-issue' => "关于维基内容的问题",
+	'specialcontact-seclink-user-conflict' => "和其他维基用户起冲突？",
+	'specialcontact-seclink-adoption' => "我想成为管理员",
+
+	'specialcontact-secheader-account' => "帐户更改",
+	'specialcontact-seclink-account-issue' => "不能登陆帐户",
+	'specialcontact-seclink-close-account' => "关闭我的帐户",
+	'specialcontact-seclink-rename-account' => "重新命名我的帐户",
+	'specialcontact-seclink-blocked' => "我的帐户被封禁了",
+
+	'specialcontact-secheader-editing' => "参与维基的讨论",
+	'specialcontact-seclink-using-wikia' => "如何使用维基？",
+	'specialcontact-seclink-feedback' => "我想提供一些反馈",
+	'specialcontact-seclink-bug' => "我发现了一个程序故障",
+	'specialcontact-seclink-bad-ad' => "我发现了一个不能播放或不适宜的广告",
+
+	'specialcontact-secheader-setting' => "更换至一个新的维基主页",
+	'specialcontact-seclink-wiki-name-change' => "维基主页名称或链接",
+	'specialcontact-seclink-design' => "版面设计",
+	'specialcontact-seclink-features' => "添加或者移出功能",
+	'specialcontact-seclink-close-wiki' => "关闭维基",
+
+	/* titles (overrides normal page title) */
+	'specialcontact-sectitle' => "维基支持 - $1",
+	'specialcontact-sectitle-general' => "联络表格",
+	'specialcontact-sectitle-content-issue' => "内容问题",
+	'specialcontact-sectitle-user-conflict' => "用户关系",
+	'specialcontact-sectitle-adoption' => "管理员权限",
+
+	'specialcontact-sectitle-account-issue' => "帐户问题",
+	'specialcontact-sectitle-close-account' => "关闭我的帐户",
+	'specialcontact-sectitle-rename-account' => "重新命名我的帐户",
+	'specialcontact-sectitle-blocked' => "帐户封禁",
+
+	'specialcontact-sectitle-using-wikia' => "使用维基",
+	'specialcontact-sectitle-feedback' => "用户反馈",
+	'specialcontact-sectitle-bug' => "程序故障",
+	'specialcontact-sectitle-bad-ad' => "广告问题报告",
+
+	'specialcontact-sectitle-wiki-name-change' => "维基网页名称变更",
+	'specialcontact-sectitle-design' => "维基设计",
+	'specialcontact-sectitle-features' => "维基功能",
+	'specialcontact-sectitle-close-wiki' => "关闭维基",
+
+	/* intros (message at top of page) */
+	'specialcontact-intro-content-issue' => "维基内容全部来自于维基各个社区，由维基社区[[Special:ListAdmins|管理员]]进行统一管理。维基网不负责任何相关内容的发布和社区的管理。如果您有任何关于内容的问题，我们建议您可以直接联系此维基主页的[[Special:ListAdmins|管理员]]。
+
+如果您认为相关内容违反了我们的“[http://www.wikia.com/Terms_of_Use 维基社区使用规定]”，您可以点击[[Special:Contact/general|这里]]直接联系我们。",
+
+	'specialcontact-intro-content-issue-mobile' => "维基内容全部来自于维基各个社区，由维基社区管理员进行统一管理。维基网不负责任何相关内容的发布和社区的管理。如果您有任何关于内容的问题，我们建议您可以直接联系此维基主页的管理员。
+
+如果您认为相关内容违反了我们的“维基社区使用规定”，您可以直接联系我们。",
+	'specialcontact-intro-user-conflict' => "维基是通过所有人的共同合作建立的社区空间。在这种情况下，用户间不可避免地会发生一些冲突。最好的解决办法就是在您所参与的维基主页上，在尊重他人的基础上进行有效的沟通。
+
+如果您需要任何帮助，可以首先联系此维基主页的[[Special:ListAdmins|管理员]]。他们负责社区的管理，会为您提供最好的帮助。如果管理员也不能帮到您，或者您认为某个用户违反了[http://www.wikia.com/Terms_of_Use 维基社区使用规定]，您可以直接[[Special:Contact/general|联系我们]]。",
+	'specialcontact-intro-adoption' => "您有兴趣成为一位维基社区的管理员吗？如果答案是肯定的，请您首先查看这个维基主页的[[Special:Listusers/sysop|管理员]]是否活跃。如果他们还在一直帮助建设此维基主页，您可以直接联系他们，告诉他们您的请求。同时，您也可以和其他的维基用户进行讨论，获得他们的支持。您可以选择首先在社区论坛中发帖作为获得支持的第一步。
+
+如果此维基主页的管理员并不活跃，您可以提交申请。有关更多信息，请访问[[w:c:adopt|更换维基管理员]]查询相关的更换标准以及提交申请的具体细节。您需要同时提交此维基主页的链接以供我们查看确认。
+
+如果您想成为一个活跃的维基社区管理员，您需要在此维基上发起讨论，解释为什么您可以胜任管理员的工作。请在[[w:c:adopt|这里]]提供相关讨论的链接。",
+
+	'specialcontact-intro-account-issue' => "很抱歉您不能正常登陆帐户。我们建议您首先检查以下操作：
+
+*帐户名称是否使用大小写
+*您的浏览器是否更新过
+*您是否已经确认过登陆邮件？
+*您是否使用Facebook的帐户进行登陆？请根据[[Help:Facebook_Connect|以下步骤]]进行操作。
+*不能建立帐户？或许您并不符合建立帐户的条件。请点击[[homepage:Terms of Use#Membership|这里]]进行查看。
+*忘记登陆密码了？您可以点击[[Special:Signup|这里]]发送重新设定密码的请求。输入您的账户名称，然后点击\"新密码\"按钮。您很快就会收到一封带有临时密码的邮件。您可以用这个临时密码登陆维基主页，然后重新设定一个新的密码。
+如果您完成了这些步骤但是问题依然存在，请发信告诉我们相关细节。我们将会尽快地帮您解决问题。",
+	'specialcontact-intro-close-account' => "我们对您删除帐户的请求感到很抱歉。维基网有许多不同的社区，我们希望您可以浏览其他社区找到您的兴趣所在。如果您对某个社区存在疑问，请联系这个社区的[[Special:Listusers/sysop|管理员]]获得帮助。
+
+如果您确定想要删除使用帐户，我们需要提醒您的是，维基网并不会完全地移出您的帐户，而是采取禁用帐户。这样可以确保您的帐户不再被使用。一旦我们禁用了您的帐户，将无法恢复。如果您想重新加入维基社区，需要再次建立一个新的帐户。尽管如此，您之前在维基上所进行的任何活动跟这个新的帐户都没有任何关联，旧的帐户以及您以前在维基网上的活动都将无法和新的帐户建立任何联系。
+
+如果您想了解更多有关删除帐户的信息，请访问[[Help:Close_my_account|这里]]。如果您已经确认需要删除帐户，请填写以下的表格。",
+	'specialcontact-intro-rename-account' => "您在维基上仅有一次更改用户名的机会，所以在提交更改用户名之前，请再次确认。一旦作出更改，您将无法再改回之前的用户名。在您作出决定之前，请仔细阅读有关用户名更改细节：http://help.wikia.com/wiki/Help:Changing_your_username
+
+在您仔细阅读了相关细节并且确认需要更改用户名之后，请提交以下申请。一旦用户名作出变更，您将会收到一封确认邮件。您可以使用新的用户名和旧的密码进行登陆。",
+	'specialcontact-intro-blocked' => "帐户封禁一般是由维基社区的管理员进行操作的，而不是由维基网操作的。对帐户进行封禁的管理员名称会在发给您的通知邮件中找到。您可以通过在此管理员的个人主页上留言进行联系。在大多数的维基主页上，被封禁的帐户使用者依然可以进行此项操作；同时，其他的使用者也可以看到此项操作。您可以点击此维基主页右上方的 \"信息墙\"进行操作。
+
+尽管如此，如果您不能执行以上操作，我们建议您耐心等待封禁解除，或者参与其他的维基社区。
+
+如果您希望能够和我们探讨有关此次封禁，请访问[[Special:Contact/general|这里]]联系我们。",
+
+	'specialcontact-intro-using-wikia' => "现在您已经是社区的一名成员了，您可以在维基的任何主页上进行编辑或者发言。您可以点击[[Help:Getting_Started|这里]]查看有关维基主页的介绍。在这里，您可以学到有关维基编辑以及格式建立的一些简单性操作。
+
+如果您对某一个维基有任何问题，您可以联系此维基的[[Special:ListAdmins|管理员]]。您也可以登陆[[w:c:community:Forum:Community_Central_Forum|社区论坛]]进行提问，获得其他维基用户的帮助。",
+	'specialcontact-intro-feedback' => "如果您有任何反馈或者建议，十分欢迎您及时地联系我们。请在下面告诉我们反馈或者建议的相关内容。如果你对维基实验室的产品有任何想法，请在[[Special:WikiaLabs|这里]]联系我们。十分感谢您对维基的支持和帮助！",
+	'specialcontact-intro-bug' => "我们对您发现程序故障感到非常抱歉！请您提供有关细节帮助我们进行修改。您需要提供以下内容：
+*帐户名称
+*您的维基主页链接
+*您的浏览器类型以及版本(点击[[Help:Supported_browsers|这里]]查看维基支持的浏览器种类)
+*屏幕截图
+
+您可以登陆[[w:c:community:Help:How to report bugs|程序故障报告帮助页]]查看更多内容。非常感谢您对维基的支持和帮助！",
+	'specialcontact-intro-bad-ad' => "我们对您在维基网浏览了不合适的广告感觉非常抱歉！如果您能够提供有关细节，我们会反馈给公司的广告部门进行查看或者删除。
+
+请告诉我们您所在的维基主页，所浏览的广告以及内容，影响您的原因，以及相关的广告截屏和广告链接。您可以在这里查看关于如何寻找广告链接：http://help.wikia.com/wiki/Help:Bad_advertisements
+
+我们十分感谢您对维基的支持和帮助！",
+
+	'specialcontact-intro-wiki-name-change' => "如果您是维基主页的管理员，您可以通过填写以下表格要求更改[[Help:Title for the wiki|主页名称]]或者[[Help:Domain name|主页域名]]。请仔细检查您的拼写，确保相关内容和链接无任何错误。我们不会处理多次的更改请求。如果您不是管理员，请您首先联系该维基主页的[[Special:ListAdmins|管理员]]探讨有关更改事宜。",
+
+	'specialcontact-intro-design' => "管理员可以通过维基主页的[[Help:Theme_designer|版面设计]]进行更改。如果您不是该维基主页的管理员但是希望更改版面设计，请首先联系此维基的[[Special:ListAdmins|管理员]]。如果您希望帮助建立一个定制化的主题版面设计，您可以向[[w:Community_Central:Content_Team/Requests|维基内容管理团队]]提交申请。请在提交申请之前仔细阅读相关规定。
+
+如果您在上传维基主页设计的时候遇到了操作故障，请在[[Special:Contact/bug|这里]]向我们提供相关的报告。",
+	'specialcontact-intro-features' => "维基网提供了许多的功能，大部分的功能都是默认的。
+
+如果您是维基主页的管理员并且认为某些功能不适合您的维基主页建设，请首先和您的维基社区用户讨论是否有必要关掉这些功能。如果大多数的社区用户都同意作出更改，您可以使用[[Special:AdminDashboard|控制面板]]中的[[Special:WikiFeatures|功能设置]]进行关闭或者开启某些功能。如果某些功能并没有被显示出来，请[[Special:Contact/general|联系我们]]要求作出更改。
+
+如果您对我们正在开发的某些新功能的测试十分感兴趣，可以登陆[[Special:WikiFeatures|功能设置]]实验室进行查询。
+
+如果您想与我们的最新功能保持同步，请访问我们的[[w:c:community:Blog:Wikia_New_Features|员工博客－最新功能]]进行查看。",
+
+	'specialcontact-intro-close-wiki' => "感谢您联系维基！一旦维基主页被建立，我们不会对其进行删除。维基主页是由社区共同拥有，即便您对某个维基主页失去兴趣，其他用户依然可以进行编辑或者被[[Special:Contact/adoption|授权负责]]此维基主页的建设。
+
+如果您希望重新命名您的维基主页，或者修改某些拼写内容以及语法错误，请首先访问[[Help:Rename|重新命名]]主页和[[Help:Theme designer|版面设计]]查看相关内容。一般情况下，维基主页的名称是可以被更改的。如果您希望更改维基主页的域名，请[[Special:Contact/general|发信给我们]]，我们会帮您作出更改。维基主页上的所有内容依然会被保留。
+
+如果您认为这个维基主页不会有其他用户感兴趣，比如说这是有关您自己的维基主页，请通过以下表格提交申请，告诉我们您希望要求关闭的维基主页。
+
+维基网拥有大量不同主题的社区，我们希望您可以通过浏览其他的社区，找到您的兴趣所在。",
+
+	'specialcontact-intro-general' => "您可以填写这个表格联系[[w:project:Staff|维基员工]]，也可以在[[Special:ListAdmins|这里]]查找维基管理员名单。
+
+	如果您还有其他关于维基的问题，可以访问[[w:project:Report_a_problem|这里]]，或者您也可以在[[w:Forum:Index|维基社区论坛]]发帖来获取其他用户的帮助。
+
+如果您希望通过加载附件发邮件的方式联系我们，您可以发信至[mailto:community@wikia.com community@wikia.com]。
+",
+
+	/* non-form footer */
+	'specialcontact-noform-footer' => "'''这个网页回答了您的问题吗？''' 如果没有，请[[Special:contact/general|联系我们]]获取帮助。您也可以查看我们的'''[[w:c:community:Help:Index|帮助主页]]'''，[[w:c:community:Blog:Wikia_Staff_Blog|员工博客]]或者在'''[[w:c:community:Forum:Community_Central_Forum|社区中心论坛]]'''上发帖寻求帮助。如果您希望寻求管理员的帮助或者建议，请访问[[w:c:community:Admin_Central:Main_Page|管理员中心]]进行查看",
+
+	/* form */
+	'specialcontact-username' => '用户名',
+	'specialcontact-wikiname' => '所属维基主页',
+	'specialcontact-realname' => '姓名',
+	'specialcontact-yourmail' => '邮件',
+	'specialcontact-problem' => '主题',
+	'specialcontact-problemdesc' => '内容',
+	'specialcontact-mail' => '发送',
+	'specialcontact-filledin' => '自动填写用户设定信息',
+	'specialcontact-ccme' => '向我发送此邮件的副本',
+	'specialcontact-ccdisabled' => '操作不成功：请[[Special:ConfirmEmail|验证]]您的邮箱',
+	'specialcontact-notyou' => '不是您本人？',
+	'specialcontact-captchainfo' => '请在图片中插入文字内容',
+	'specialcontact-captchatitle' => '字迹模糊',
+	'specialcontact-formtitle' => '联系维基社区支持团队',
+	'specialcontact-label-screenshot' => '您已经截屏了吗？如果是，请您在这里上传图片',
+	'specialcontact-label-additionalscreenshot' => '如果您还有其他截屏图片，请在这里上传',
+	'specialcontact-label-bad-ad-description' => '请描述有关广告的具体问题',
+	'specialcontact-label-bad-ad-link' => '请提供您浏览不恰当广告的网页链接',
+	'specialcontact-label-bug-link' => '请提供出现问题的网页链接',
+	'specialcontact-label-bug-feature' => '这个与哪项操作有关？',
+	'specialcontact-label-bug-description' => '请具体描述您遇到的问题',
+	'specialcontact-label-close-account-confirm' => '我确定要关闭维基帐户',
+	'specialcontact-label-close-account-read-help' => '我已经阅读了[[Help:Close_my_account|关闭帐户主页]]',
+	'specialcontact-label-account-issue-description' => '请具体描述您所遇到的问题',
+	'specialcontact-label-rename-newusername' => '请输入新的用户名称',
+	'specialcontact-label-rename-account-confirm' => '我确定新的用户名称输入无误',
+	'specialcontact-label-rename-account-read-help' => '我已经阅读了[[Help:Changing your username|更换用户名主页]',
+	'specialcontact-form-header' => '联系维基',
+	'specialcontact-logged-in-as' => '您作为$1登陆。 [[Special:UserLogout|并非本人？]]',
+	'specialcontact-mail-on-file' => '您的邮件被设置为$1。 [[Special:Preferences|您希望更换吗？]]',
+
+	/* errors */
+	'specialcontact-nomessage' => '请填写内容',
+	'specialcontact-captchafail' =>	'不正确的或缺少确认码。',
+	'specialcontact-error-title' => '表格填写有误',
+	'specialcontact-error-message' => '提交表格出错。请重新操作。',
+	'specialcontact-error-logintext' => '您必须登陆后才可进行这项操作。请[[Special:SignUp|登陆您的帐户]]重新操作。',
+	'specialcontact-error-alreadyrenamed' => '您之前已经更改过了用户名，所以您不能再次更改。需要更多帮助，请[[Special:Contact/general|联系我们]]。',
+
+	/* email */
+	'specialcontact-mailsub' => '维基社区支持团队',
+	'specialcontact-mailsubcc' => '抄送邮件',
+	'specialcontact-ccheader' => '抄送邮件给维基社区支持团队',
+
+	/* after */
+	'specialcontact-submitcomplete' => '感谢您联系维基网！我们已经收到了您的相关请求，会在72小时之内对您的问题给予答复。
+
+同时，您可以通过[[w:c:community:Forum:Community_Central_Forum|社区论坛]]和[[w:c:community:Help:Index|帮助页]]查看其他信息。您还可以访问维基的[[w:c:community:Blog:Wikia_Staff_Blog|员工博客]]查看最新有关维基的新闻。我们十分感谢您对维基网的支持！',
 );
 
 // include "SpecialContact.i18n2.php";

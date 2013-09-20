@@ -13,7 +13,7 @@ require_once( "commandLine.inc" );
 
 include_once("$IP/extensions/wikia/Search/WikiaSearch.setup.php");
 
-$indexer = F::build( 'WikiaSearchIndexer' );
+$indexer = (new WikiaSearchIndexer);
 
 if ( empty( $wgExternalSharedDB ) ) {
 	echo "This script should not run on a single-wiki instance.\n"; die;

@@ -20,7 +20,9 @@ class PhalanxServiceTest extends WikiaBaseTest {
 
 		$this->service = new PhalanxService();
 		if (!$this->service->status()) {
-			throw new Exception("Can't connect to phalanx service on " . $this->app->wg->PhalanxServiceUrl);
+			//Skip test if phalanx service is not available
+			$this->markTestSkipped();
+			//throw new Exception("Can't connect to phalanx service on " . $this->app->wg->PhalanxServiceUrl);
 		}
 	}
 
@@ -90,7 +92,7 @@ class PhalanxServiceTest extends WikiaBaseTest {
 |summon2 = Special Summons from your Deck
 }}
 ";
-		
+
 		$ret = $this->service->match( "content", $ok_content );
 		$this->assertEquals( 0, $ret, "nothing should match $ok_content" );
 	}

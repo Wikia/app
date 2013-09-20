@@ -11,10 +11,12 @@ class AdminDashboardLogic {
 			'Categories' => true,
 			'CreateBlogPage' => true,
 			'CreatePage' => true,
+			'CSS' => true,
 			'Listusers' => true,
 			'ListUsers' => true,
 			'MultipleUpload' => true,
 			'PageLayoutBuilder' => true,
+			'Promote' => true,
 			'Recentchanges' => true,
 			'RecentChanges' => true,
 			'ThemeDesigner' => true,
@@ -22,6 +24,7 @@ class AdminDashboardLogic {
 			'UserRights' => true,
 			'Userrights' => true,
 			'WikiFeatures' => true,
+			'WikiaVideoAdd' => true,
 		);
 		return !empty($generalApps[$appName]);
 	}
@@ -39,6 +42,7 @@ class AdminDashboardLogic {
 		if ($title && $title->isSpecialPage()) {
 			$bits = explode( '/', $title->getDBkey(), 2 );
 			$alias = array_shift(SpecialPageFactory::resolveAlias($bits[0]));
+
 
 			// NOTE: keep this list in alphabetical order
 			static $exclusionList = array(
@@ -67,6 +71,7 @@ class AdminDashboardLogic {
 				"LayoutBuilder",
 				"LayoutBuilderForm",
 				"Leaderboard",
+				"LicensedVideoSwap",
 				"LookupContribs",
 				"LookupUser",
 				"ManageWikiaHome",
@@ -95,14 +100,17 @@ class AdminDashboardLogic {
 				"ThemeDesigner",
 				"ThemeDesignerPreview",
 				"UnusedVideos",
-				"UserLogin",
+				"Userlogin",
 				"UserManagement",
 				"UserPathPrediction",
 				"UserSignup",
 				"Version",
+				"VideoPageTool",
 				"Videos",
+				"WDACReview",
 				"WhereIsExtension",
 				"WikiActivity",
+				"WikiaConfirmEmail",
 				"WikiaHubsV2",
 				"WikiaSearch",
 				"WikiaStyleGuide",
@@ -118,8 +126,9 @@ class AdminDashboardLogic {
 	/**
 	 *  @brief hook to add toolbar item for admin dashboard
 	 */
-	function onBeforeToolbarMenu(&$items) {
-		if( F::app()->wg->User->isAllowed('admindashboard') ) {
+	static function onBeforeToolbarMenu(&$items) {
+		$wg = F::app()->wg;
+		if( $wg->User->isAllowed('admindashboard') ) {
 			$item = array(
 				'type' => 'html',
 				'html' => Wikia::specialPageLink('AdminDashboard', 'admindashboard-toolbar-link', array('data-tracking' => 'admindashboard/toolbar/admin') )

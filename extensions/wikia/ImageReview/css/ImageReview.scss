@@ -22,13 +22,20 @@
 			margin: 5px 0 5px 2px;
 			padding: 3px;
 			width: 55px;
-		}	
+		}
 
 		a {
 			margin: 3px;
 		}
+
+		.image-wiki-url {
+			display: block;
+			font-weight: bold;
+			text-align: center;
+			word-wrap: break-word;
+		}
 	}
-	
+
 	/* Del */
 	.state-4 {
 		border-color: #fff;
@@ -66,7 +73,7 @@
 		max-height: 230px;
 		max-width: 230px;
 	}
-	
+
 	footer {
 		text-align: right;
 	}
@@ -82,7 +89,7 @@
 	}
 }
 
-header .tally {	
+header .tally {
 	float: right;
 	margin-left: 20px;
 #	display: inline;
@@ -92,9 +99,9 @@ header .tally {
 		float: left;
 		padding-left: 0.25em;
 	}
-	
+
 	em {
 		font-style: normal;
 	}
-	
+
 }

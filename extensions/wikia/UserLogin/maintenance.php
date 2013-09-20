@@ -181,7 +181,7 @@
 
 				// send reminder email
 				$user = $tempUser->mapTempUserToUser();
-				$userLoginHelper = F::build( 'UserLoginHelper' );
+				$userLoginHelper = (new UserLoginHelper);
 				$result = $userLoginHelper->sendConfirmationReminderEmail( $user );
 
 				if( !$result->isGood() ) {

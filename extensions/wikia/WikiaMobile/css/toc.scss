@@ -1,7 +1,7 @@
 @import 'mixins/box-shadow.scss';
 @import 'variables.scss';
 
-#toc {
+#toc.toc {
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	background: white;
 	width: 100%;
@@ -44,7 +44,7 @@
 }
 
 //move it to the top and hide UL if js is enabled
-.js #toc {
+.js #toc.toc {
 	position: absolute;
 	top: -41px;
 

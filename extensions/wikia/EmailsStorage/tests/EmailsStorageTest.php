@@ -9,7 +9,7 @@ class EmailsStorageTest extends WikiaBaseTest {
 
 	public function testCreateNewEntry() {
 		/* @var $entry EmailsStorageEntry */
-		$entry = F::build('EmailsStorage')->newEntry(EmailsStorage::SCAVENGER_HUNT);
+		$entry = (new EmailsStorage)->newEntry(EmailsStorage::SCAVENGER_HUNT);
 
 		$this->assertInstanceOf('EmailsStorageEntry', $entry);
 		$this->assertEquals(EmailsStorage::SCAVENGER_HUNT, $entry->getSourceId());

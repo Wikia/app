@@ -26,11 +26,11 @@ define('wikia.videohandler.youtube', ['wikia.window', 'wikia.loader'], function 
 
 		// Track when the content first starts playing
 		function onPlayerStateChange(e) {
-			if ( !started && e.data == 1 ) {
+			if ( !started && e.data === 1 ) {
 				vb.track('content-begin');
 				started = true;
 			}
-			if ( !ended && e.data == 0 ) {
+			if ( !ended && e.data === 0 ) {
 				vb.track('content-end');
 				ended = true;
 			}
@@ -39,7 +39,7 @@ define('wikia.videohandler.youtube', ['wikia.window', 'wikia.loader'], function 
 		params.events = {
 			'onReady': onPlayerReady,
 			'onStateChange': onPlayerStateChange
-		}
+		};
 
 		function createPlayer() {
 			player = new window.YT.Player(containerId, params);
@@ -49,14 +49,14 @@ define('wikia.videohandler.youtube', ['wikia.window', 'wikia.loader'], function 
 		if ( window.YT ) {
 			createPlayer();
 		} else {
+
+			window.onYouTubeIframeAPIReady = function() {
+				createPlayer();
+			};
 			loader({
 				type: loader.JS,
 				resources: 'https://www.youtube.com/iframe_api'
-			}).done(function() {
-				window.onYouTubeIframeAPIReady = function() {
-					createPlayer();
-				}
 			});
 		}
-	}
+	};
 });

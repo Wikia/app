@@ -75,7 +75,10 @@
 			this.cache = cache;
 			this.protocol = loc.protocol;
 			this.link = loc.host;
-			this.path = loc.pathname;
+			// found in DAR-744: IE returns bad pathname (no initial '/')
+			// when <a> element is created in javascript
+			this.path = (loc.pathname.charAt(0) != '/' ? '/' : '') + loc.pathname;
+
 			this.hash = loc.hash.substr(1);
 		}
 
@@ -119,6 +122,21 @@
 		 */
 		p.getVal = function (name, defVal) {
 			return this.cache[name] || defVal;
+		};
+
+		/**
+		 * Get object with all parameters
+		 *
+		 * @public
+		 *
+		 * @return {Object}
+		 */
+		p.getVals = function () {
+			var cacheCopy = {};
+			for( var param in this.cache ) {
+				cacheCopy[param] = this.cache[param];
+			}
+			return cacheCopy;
 		};
 
 
@@ -177,7 +195,7 @@
 		p.clearVals = function() {
 			this.cache = {};
 			return this;
-		}
+		};
 
 		/**
 		 * @return {String} a hash from URL
@@ -260,7 +278,7 @@
 		p.goTo = function () {
 			l.href = this.toString();
 		};
-		
+
 		/**
 		 * Updates the URL without navigating away from the page
 		 *

@@ -6,17 +6,16 @@ $dir = dirname(__FILE__) . '/';
 /**
  * classes
  */
-$app->registerClass('SearchedKeywordsController', $dir . 'SearchedKeywordsController.class.php');
-$app->registerClass('SearchedKeywords', $dir . 'SearchedKeywords.class.php');
+$wgAutoloadClasses['SearchedKeywordsController'] =  $dir . 'SearchedKeywordsController.class.php';
+$wgAutoloadClasses['SearchedKeywords'] =  $dir . 'SearchedKeywords.class.php';
 
 /**
  * special pages
  */
-$app->registerSpecialPage('SearchedKeywords', 'SearchedKeywordsController');
+$wgSpecialPages['SearchedKeywords'] = 'SearchedKeywordsController';
 
 /**
  * hookds
  */
 $app->registerHook('Search-beforeBackendCall', 'SearchedKeywordsController', 'onSearchBeforeBackendCall');
 
-F::addClassConstructor('SearchedKeywords', array( 'app' => $app ));

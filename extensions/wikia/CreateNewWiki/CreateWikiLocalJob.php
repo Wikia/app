@@ -127,7 +127,6 @@ class CreateWikiLocalJob extends Job {
 
 		$this->moveMainPage();
 		$this->changeStarterContributions();
-		$this->changeImagesTimestamps();
 		$this->setWelcomeTalkPage();
 		if ( empty( $this->mParams->disableWelcome ) ) { 
 			$this->sendWelcomeMail();
@@ -138,7 +137,6 @@ class CreateWikiLocalJob extends Job {
 			$this->queueReminderMail();
 		}
 		$this->sendRevisionToScribe();
-		$this->addStarterImagesToUploadLog();
 
 		/**
 		 * different things for different types
@@ -269,7 +267,7 @@ class CreateWikiLocalJob extends Job {
 		}
 
 		if( !empty($wgEnableWallExt) ) {
-			$wallMessage = F::build('WallMessage', array($talkBody, $this->mFounder->getName(), $wgUser, $wallTitle, false, array(), true, false), 'buildNewMessageAndPost');
+			$wallMessage = WallMessage::buildNewMessageAndPost($talkBody, $this->mFounder->getName(), $wgUser, $wallTitle, false, array(), true, false);
 			if( $wallMessage === false ) {
 				return false;
 			}
@@ -529,13 +527,12 @@ class CreateWikiLocalJob extends Job {
                  * greater than the timestamp of the latest starter revision.
                  */
                 $sCondsRev = array();
-		$sCondsImg = array();
 
                 /**
-                 * determine the timestamp of the latest starter revision and image
+                 * determine the timestamp of the latest starter revision
                  */
                 if ( !empty( $this->mParams->sDbStarter ) ) {
-                    $oStarterDb = F::app()->wf->getDb( DB_SLAVE, array(), $this->mParams->sDbStarter );
+                    $oStarterDb = wfGetDb( DB_SLAVE, array(), $this->mParams->sDbStarter );
 
                     if ( is_object( $oStarterDb ) ) {
                         $oLatestRevision = $oStarterDb->selectRow(
@@ -550,24 +547,11 @@ class CreateWikiLocalJob extends Job {
                             $sCondsRev = array( 'rev_timestamp <= ' . $dbw->addQuotes( $oLatestRevision->rev_timestamp ) );
                         }
 
-			$oLatestImage = $oStarterDb->selectRow(
-				array( 'image' ),
-				array( 'max(img_timestamp) AS img_timestamp' ),
-				array(),
-				__METHOD__,
-				array()
-			);
-
-			if (is_object( $oLatestImage ) ) {
-				$sCondsImg = array( 'img_timestamp <= ' . $dbw->addQuotes( $oLatestImage->img_timestamp ) );
-			}
-
                         $oStarterDb->close();
                     }
                 }
 
                 Wikia::log( __METHOD__, 'info', "about to change rev_user, rev_user_text and rev_timestamp in revisions older than {$sCondsRev}" );
-		Wikia::log( __METHOD__, 'info', "about to change img_user, img_user_text and img_timestamp in images older than {$sCondsImg}" );
 
 		/**
 		 * check if we are connected to local db
@@ -592,56 +576,9 @@ class CreateWikiLocalJob extends Job {
 		$rows = $dbw->affectedRows();
 		Wikia::log( __METHOD__, "info", "change rev_user and rev_user_text in revisions: {$rows} rows" );
 
-		$dbw->update(
-			"image",
-			array(
-				'img_user'      => $contributorData['id'],
-				'img_user_text' => $contributorData['name'],
-                                'img_timestamp = date_format(now(), "%Y%m%d%H%i%S")'
-			),
-			$sCondsImg,
-			__METHOD__
-		);
-		$rows = $dbw->affectedRows();
-		Wikia::log( __METHOD__, "info", "change img_user, img_user_text and img_timestamp in image: {$rows} rows" );
-
 		wfProfileOut( __METHOD__ );
 	}
 
-	/**
-	 * this method updates img_timestamp
-	 * update is performed on local (freshly created) database
-	 *
-	 * @access private
-	 * @author Krzysztof Krzyżaniak (eloy)
-	 *
-	 */
-	private function changeImagesTimestamps( ) {
-
-		wfProfileIn( __METHOD__ );
-		$dbw = wfGetDB( DB_MASTER );
-		$sth = $dbw->select(
-			array( "image" ),
-			array( "img_name" ),
-			false,
-			__METHOD__
-		);
-		$interval = 0;
-		$timestamp = time();
-		while( $row = $dbw->fetchObject( $sth ) ) {
-
-			$ts = date('YmdHis', $timestamp + $interval );
-			$dbw->update(
-				"image",
-				array( "img_timestamp" => $ts ),
-				array( "img_name" => $row->img_name ),
-				__METHOD__
-			);
-			wfDebug( __METHOD__ . ": changing timestamp of {$row->img_name} to {$ts}\n" );
-			$interval++;
-		}
-		wfProfileOut( __METHOD__ );
-	}
 	/**
 	 * send http post to TheSchwartz which queue reminder call for 48hours.
 	 * TheSchwartz will call api.php?method=awcreminder
@@ -728,7 +665,7 @@ class CreateWikiLocalJob extends Job {
 			$oRevision = Revision::newFromId($oRow->rev_id);
 			if ( $wgEnableScribeNewReport ) {
 				$key = ( isset($pages[$oRow->page_id]) ) ? 'edit' : 'create';
-				$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => $key, 'archive' => 0 ) );
+				$oScribeProducer = new ScribeEventProducer( $key, 0 );
 				if ( is_object( $oScribeProducer ) ) {
 					if ( $oScribeProducer->buildEditPackage( $oArticle, $oUser, $oRevision ) ) {
 						$oScribeProducer->sendLog();
@@ -755,50 +692,4 @@ class CreateWikiLocalJob extends Job {
 		wfProfileOut( __METHOD__ );
 	}
 
-	/**
-	 * log starter images to upload_log table
-	 *
-	 * @access private
-	 * @author Piotr Molski (moli)
-	 *
-	 */
-	private function addStarterImagesToUploadLog( ) {
-		global $wgEnableUploadInfoExt;
-		wfProfileIn( __METHOD__ );
-
-		if ( empty($wgEnableUploadInfoExt) ) {
-			wfProfileOut( __METHOD__ );
-			return;
-		}
-
-		$files = array("Wiki.png", "Favicon.ico");
-		$dbr = wfGetDB( DB_SLAVE );
-		$oRes = $dbr->select(
-			array( 'page' ),
-			array( 'page_title' ),
-			array( 'page_namespace' => NS_IMAGE ),
-			__METHOD__
-		);
-		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
-			if ( !in_array($oRow->page_title, $files) ) {
-				$files[] = $oRow->page_title;
-			}
-		}
-		$dbr->freeResult( $oRes );
-
-		$loop = 0;
-		foreach ( $files as $image ) {
-			$oTitle = Title::newFromText($image, NS_IMAGE);
-			$file = wfLocalFile( $oTitle );
-			if ( is_object($file) ) {
-				# add to upload_log
-				UploadInfo::log( $oTitle, $file->getPath(), $file->getRel(), "", "u" );
-				$loop++;
-			}
-		}
-
-		Wikia::log( __METHOD__, "info", "added {$loop} images to upload_log table" );
-
-		wfProfileOut( __METHOD__ );
-	}
 }

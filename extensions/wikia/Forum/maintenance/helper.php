@@ -42,7 +42,7 @@ function getCommentProperties( $articleComment ) {
 }
 
 function getLastChildCommentId( $articleComment ) {
-	$db = F::App()->wf->GetDB( DB_MASTER );
+	$db = wfGetDB( DB_MASTER );
 	$row = $db->selectRow(
 		array( 'page', 'page_wikia_props' ),
 		array( 'max(page.page_id) last_comment_id' ),
@@ -89,7 +89,7 @@ function insertIntoCommentsIndex( $parentPageId, $articleComment, $parentComment
 	);
 
 	$data = array_merge($data, getCommentProperties($articleComment) );
-	$commentsIndex = F::build( 'CommentsIndex', array($data) );
+	$commentsIndex = new CommentsIndex($data);
 
 	if ( !$isDryrun ) {
 		$commentsIndex->addToDatabase();

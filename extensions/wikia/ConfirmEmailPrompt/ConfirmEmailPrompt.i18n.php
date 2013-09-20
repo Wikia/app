@@ -73,6 +73,14 @@ $messages['fi'] = array(
 	'confirmemailprompt-error' => 'Onko tämä sähköpostiosoitteesi: <strong>$1</strong>? [[$2|Vahvista se]] tai [[$3|muuta sitä]].',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'confirmemailprompt-desc' => 'Vísir eini ávaringarboð, um ein brúkari hevur eina óváttaða t-post adressu',
+	'confirmemailprompt-error' => 'Er hetta er tín t-post adressa: <strong>$1</strong>? [[$2|Vátta hana]] ella [[$3|broyt hana]].',
+);
+
 /** French (français)
  * @author Wyz
  */
@@ -103,6 +111,14 @@ $messages['hu'] = array(
 $messages['ia'] = array(
 	'confirmemailprompt-desc' => 'Presenta un aviso si un usator ha un adresse de e-mail non confirmate',
 	'confirmemailprompt-error' => 'Es iste le adresse de e-mail tue: <strong>$1</strong>? [[$2|Confirma lo]] o [[$3|cambia lo]].',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'confirmemailprompt-desc' => 'Tampilkan pesan peringatan jika seorang pengguna memiliki alamat email yang belum dikonfirmasi',
+	'confirmemailprompt-error' => 'Apakah ini alamat surel Anda: <strong>$1</strong>? [[$2|Konfirmasikan]] atau [[$3|ubah]].',
 );
 
 /** Italian (italiano)
@@ -151,6 +167,14 @@ $messages['nb'] = array(
 $messages['nl'] = array(
 	'confirmemailprompt-desc' => 'Geeft een waarschuwing weer als een gebruiker een niet-bevestigd e-mailadres heeft',
 	'confirmemailprompt-error' => 'Is dit uw e-mailadres: <strong>$1</strong>? [[$2|Bevestig het]] of [[$3|wijzig het]].',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'confirmemailprompt-desc' => 'Aficha un messatge d’avertiment se un utilizaire a una adreça de corrièr electronic qu’es pas estada confirmada',
+	'confirmemailprompt-error' => 'Es vòstra adreça de corrièr electronic : <strong>$1</strong> ? [[$2|Confirmar]] o [[$3|la cambiar]].',
 );
 
 /** Polish (polski)
@@ -247,4 +271,13 @@ $messages['vi'] = array(
 $messages['zh-hans'] = array(
 	'confirmemailprompt-desc' => '当用户电子邮件地址未被确认时显示警告信息',
 	'confirmemailprompt-error' => '您的电子邮件地址是：<strong>$1</strong>么？[[$2|确认地址]]或[[$3|变更地址]].',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Justincheng12345
+ * @author StephDC
+ */
+$messages['zh-hant'] = array(
+	'confirmemailprompt-desc' => '當用戶的電郵地址尚未確認時顯示警告',
+	'confirmemailprompt-error' => '<strong>$1</strong>是否是您的電子郵箱地址？ [[$2|是]]或[[$3|不是，請修改]]。',
 );

@@ -6,7 +6,7 @@ class GamingMapsController extends WikiaController {
     }
 
     public function init() {
-        /*$this->businessLogic = F::build( 'GamingMaps', array( 'currentTitle' => $this->app->wg->Title ) );*/
+        /*$this->businessLogic = new GamingMaps( 'currentTitle' => $this->app->wg->Title );*/
     }
 
     public function index() {
@@ -22,13 +22,13 @@ class GamingMapsController extends WikiaController {
         $img = $attr['img'];  //get name of img from atributes gaminmgap
 
         if(empty($img)){  //if nema of img not exists
-            $this->setVal( 'warning', $this->wf->msg('gamingmaps-warning-file-noexist'));
+            $this->setVal( 'warning', wfMsg('gamingmaps-warning-file-noexist'));
         }else{
-            $imgFile = $this->wf->findFile($img);
+            $imgFile = wffindFile($img);
             if($imgFile->exists()){
                 //$height = $this->setHeightDiv($imgFile->width, $imgFile->height); //set div height
             }else{
-                $this->setVal( 'warning', $this->wf->msg('gamingmaps-warning-file-unfound'));
+                $this->setVal( 'warning', wfMsg('gamingmaps-warning-file-unfound'));
             }
         }
     }
@@ -54,7 +54,7 @@ class GamingMapsController extends WikiaController {
             $imageUrl = '';
         }
 
-        $oArticleService = F::Build('ArticleService');
+        $oArticleService = new ArticleService();
         $oArticleService->setArticleById( $pageId );
 
         $textSnippet = $oArticleService->getTextSnippet( 120 );
@@ -160,7 +160,7 @@ class GamingMapsController extends WikiaController {
         $ver_img = $this->getVal('version');
         $width = 256;
 
-        $imgFile = $this->wf->findFile($name);
+        $imgFile = wffindFile($name);
 
         $heightIMG = $imgFile->height;
         $widthIMG = $imgFile->width;

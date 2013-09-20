@@ -70,22 +70,30 @@ if ( isset( $options['o'] ) ) {
 
 	# Check if update is needed
 	$lastupdate = $wgLastInterwikiUpdate;
-	if ($verbose) echo "lastupdate: {$lastupdate}\n";
+	if( $verbose ) {
+		echo "lastupdate: {$lastupdate}\n";
+	}
 	$lastmod = $ciw_timestamp;
-	if ($verbose) echo "lastmod: {$lastmod}\n";
+	if( $verbose ) {
+		echo "lastmod: {$lastmod}\n";
+	}
 	if ( $lastupdate !== $lastmod || $force ) {
 		if ($verbose) echo "lastupdate != lastmod (or forced update)\n";
-			wfWaitForSlaves( 100 );
-			$dbw = wfGetDB( DB_MASTER );
-			if ( $dbw != false ) {
-				if ( $verbose )
-					print "Updating database...\n";
-				$dbw->doQuery($sql);
+		wfWaitForSlaves( 100 );
+		$dbw = wfGetDB( DB_MASTER );
+		if ( $dbw != false ) {
+			if ( $verbose ) {
+				print "Updating database...\n";
 			}
+			/**
+			 * @todo change to select/update/insert
+			 */
+			$dbw->query( $sql, "updateCentralInterwiki" );
+		}
 		# Update $wgLastInterwikiUpdate
 		WikiFactory::SetVarByName('wgLastInterwikiUpdate', $wgCityId, $lastmod);
-			if (isset( $verbose ))
-				print "Done.\n";
+		if( isset( $verbose ) ) {
+			print "Done.\n";
+		}
 	}
-
 }

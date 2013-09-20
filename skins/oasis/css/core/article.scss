@@ -489,6 +489,14 @@ table.wikitable {
 		border: 1px darken($color-page, 35%) solid;
 		padding: 0.2em;
 	}
+	td {
+		b, strong {
+			font-weight: bold;
+		}
+		i, em {
+			font-style: italic;
+		}
+	}
 	> tr > th,  > * > tr > th {
 		background: darken($color-page, 5%);
 		text-align: center;

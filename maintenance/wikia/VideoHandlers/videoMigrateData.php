@@ -165,8 +165,8 @@ if( $rowCount ) {
 			'wpUploadFileURL' => !empty( $video->thumbnail_url ) ? $video->thumbnail_url : $defaultThumbnailUrl
 		);
 
-		$upload = F::build( 'UploadFromUrl' ); /* @var $upload UploadFromUrl */
-		$upload->initializeFromRequest( F::build( 'FauxRequest', array( $data, true ) ) );
+		$upload = (new UploadFromUrl); /* @var $upload UploadFromUrl */
+		$upload->initializeFromRequest( new FauxRequest( $data, true ) );
 		$upload->fetchFile();
 		$res = $upload->verifyUpload();
 
@@ -176,8 +176,8 @@ if( $rowCount ) {
 				'wpSourceType' => 'web',
 				'wpUploadFileURL' => $defaultThumbnailUrl
 			);
-			$upload = F::build( 'UploadFromUrl' );
-			$upload->initializeFromRequest( F::build( 'FauxRequest', array( $data, true ) ) );
+			$upload = (new UploadFromUrl);
+			$upload->initializeFromRequest( new FauxRequest( $data, true ) );
 			$upload->fetchFile();
 			$res = $upload->verifyUpload();
 			echo "Using default thumbnail (could not get from url: " . $video->thumbnail_url . " )\n";
@@ -194,12 +194,11 @@ if( $rowCount ) {
 		/* create a reference to article that will contain uploaded file */
 		$title = Title::newFromText( $video->img_name, NS_FILE );
 
-		$file = F::build(
-				!empty( $undercover )
-					? 'WikiaNoArticleLocalFile'
-					: 'WikiaLocalFile',
-				array(	$title, RepoGroup::singleton()->getLocalRepo() )
-			); /* @var $file WikiaLocalFile */
+		$class = !empty( $undercover )
+			? 'WikiaNoArticleLocalFile'
+			: 'WikiaLocalFile';
+		$file = new $class( $title, RepoGroup::singleton()->getLocalRepo() );
+		/* @var $file WikiaLocalFile */
 
 
 		/* override thumbnail metadata with video metadata */

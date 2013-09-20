@@ -21,7 +21,7 @@ $dir = dirname(__FILE__);
 $app = F::app();
 
 // classes
-$app->registerClass('InWikiExternalFormController', $dir . '/InWikiExternalFormController.class.php');
+$wgAutoloadClasses['InWikiExternalFormController'] =  $dir . '/InWikiExternalFormController.class.php';
 
 // pages
-$app->registerSpecialPage('Play', 'InWikiExternalFormController');
+$wgSpecialPages['Play'] = 'InWikiExternalFormController';

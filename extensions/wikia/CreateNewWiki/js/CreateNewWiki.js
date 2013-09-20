@@ -27,6 +27,7 @@ var WikiBuilder = {
 		this.nameWikiSubmitError = $('#NameWiki .submit-error');
 		this.wikiLanguage = $('#NameWiki select[name=wiki-language]');
 		this.wikiCategory = $('#DescWiki select[name=wiki-category]');
+		this.wikiAllAges = $('#DescWiki input[name=all-ages]');
 		this.descWikiSubmitError = $('#DescWiki .submit-error');
 		this.nextButtons = this.wb.find('nav .next');
 		this.finishSpinner = $('#CreateNewWiki .finish-status');
@@ -192,6 +193,8 @@ var WikiBuilder = {
 			this.steps.hide();
 			pane.show();
 		}
+
+		$('.tooltip-icon').tooltip();
 
 		// onload stuff
 		this.wikiName.focus();
@@ -429,6 +432,7 @@ var WikiBuilder = {
 					wDomain: that.wikiDomain.val(),
 					wLanguage: that.wikiLanguage.find('option:selected').val(),
 					wCategory: that.wikiCategory.find('option:selected').val(),
+					wAllAges: that.wikiAllAges.is(':checked') ? that.wikiAllAges.val() : null,
 					wAnswer: Math.floor(that.answer)
 				}
 			},

@@ -18,7 +18,7 @@ class ImageServingDriverUserNS extends ImageServingDriverMainNS {
 		$cut = $this->imageServing->getCut( 100, 100, "center", false); 
 		return array(
 			"name" => 'avatar',
-			"url" => F::build('AvatarService', array($user, $cut, false, true), 'getAvatarUrl')
+			"url" => AvatarService::getAvatarUrl($user, $cut, false, true)
 		);
 	}
 }

@@ -12,7 +12,6 @@ class ExternalStoreDBFetchBlobHookTest extends WikiaBaseTest {
 
 		$mockApiURL = "http://community.wikia.com/api.php";
 		$this->mockGlobalVariable( "wgFetchBlobApiURL", $mockApiURL);
-		$this->mockApp();
 
 		$expectedHash = "b5088eed4e6c1a2188fc32213b2715dc";
 

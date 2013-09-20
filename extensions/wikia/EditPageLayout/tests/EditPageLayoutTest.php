@@ -13,13 +13,13 @@ class EditPageLayoutTest extends WikiaBaseTest {
 	 * @return EditPageLayout
 	 */
 	private function editPageFactory(Title $title) {
-		$article = F::build('Article', array($title));
-		return F::build('EditPageLayout', array($article));
+		$article = new Article($title);
+		return new EditPageLayout($article);
 	}
 
 	public function testMainPageEdit() {
 		// setup edit page object
-		$title = F::build('Title', array(), 'newMainPage');
+		$title = Title::newMainPage();
 		$editPage = $this->editPageFactory($title);
 
 		// it should extend MW core class
@@ -33,10 +33,10 @@ class EditPageLayoutTest extends WikiaBaseTest {
 	}
 
 	public function testCustomFormHandler() {
-		$title = F::build('Title', array('Foo'), 'newFromText');
+		$title = Title::newFromText('Foo');
 		$editPage = $this->editPageFactory($title);
 
-		$customHandler = F::build('Title', array('Special:CustomHandler'), 'newFromText');
+		$customHandler = Title::newFromText('Special:CustomHandler');
 
 		$editPage->setCustomFormHandler($customHandler);
 		$this->assertEquals($customHandler, $editPage->getCustomFormHandler());
@@ -45,7 +45,7 @@ class EditPageLayoutTest extends WikiaBaseTest {
 	}
 
 	public function testAddingFields() {
-		$title = F::build('Title', array('Foo'), 'newFromText');
+		$title = Title::newFromText('Foo');
 		$editPage = $this->editPageFactory($title);
 
 		// test custom checkboxes
@@ -104,7 +104,7 @@ class EditPageLayoutTest extends WikiaBaseTest {
 	}
 
 	public function testPreloadText() {
-		$title = F::build('Title', array('NewArticle'), 'newFromText');
+		$title = Title::newFromText('NewArticle');
 		$editPage = $this->editPageFactory($title);
 		// This test has a dependency on the global title
 		// TODO: fixme with $this->mockProxy
@@ -123,7 +123,7 @@ class EditPageLayoutTest extends WikiaBaseTest {
 	}
 
 	public function testEditNotices() {
-		$title = F::build('Title', array('NewArticle'), 'newFromText');
+		$title = Title::newFromText('NewArticle');
 		$editPage = $this->editPageFactory($title);
 
 		$testNotice1Body = '<div>1st notice</div>';

@@ -15,23 +15,23 @@ class WikiaApiPlaces extends ApiBase {
 	public function execute() {
 		wfProfileIn(__METHOD__);
 
-		$placesModel = F::build('PlacesModel');
+		$placesModel = new PlacesModel();
 		$params = $this->extractRequestParams();
 		$places = array();
 
 		// get geodata from article by its ID
 		if (isset($params['pageid'])) {
-			$storage = F::build('PlaceStorage', array($params['pageid']), 'newFromId');
+			$storage = PlaceStorage::newFromId($params['pageid']);
 			$places = array(
 				$storage->getModel()
 			);
 		}
 		// get geodata from article by its title
 		elseif (isset($params['title'])) {
-			$title = F::build('Title', array($params['title']), 'newFromText');
+			$title = Title::newFromText($params['title']);
 
 			if ($title instanceof Title) {
-				$storage = F::build('PlaceStorage', array($title), 'newFromTitle');
+				$storage = PlaceStorage::newFromTitle($title);
 				$places = array(
 					$storage->getModel()
 				);
@@ -44,7 +44,7 @@ class WikiaApiPlaces extends ApiBase {
 		}
 		// get geodata from articles from given categories (list of categories can be pipe separated)
 		elseif (isset($params['related'])) {
-			$title = F::build('Title', array($params['related']), 'newFromText');
+			$title = Title::newFromText($params['related']);
 
 			if ($title instanceof Title) {
 				$places = $placesModel->getFromCategoriesByTitle($title);

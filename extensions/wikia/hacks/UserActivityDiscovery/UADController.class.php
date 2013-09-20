@@ -15,12 +15,12 @@ class UADController extends WikiaController {
 	protected $UAD = null;
 	protected $cookie = null;
 
-	public function __construct(WikiaApp $app, UAD $uad) {
+	public function __construct() {
 		$this->allowedRequests[ 'store' ] = array( 'json' );
 		$this->allowedRequests[ 'index' ] = array( 'json' );
 
-		$this->app = $app;
-		$this->UAD = $uad;
+		$this->app = F::app();
+		$this->UAD = new UAD();
 	}
 
 	public function index() {

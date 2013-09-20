@@ -1,6 +1,5 @@
 <?php
 
-$app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 $wgExtensionCredits['specialpage'][] = array(
@@ -12,7 +11,7 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $wgExtensionMessagesFiles['WikiMapAliases'] = $dir . 'WikiMap.alias.php';
 
-$app->registerClass('WikiMapModel', $dir . 'WikiMapModel.class.php');
-$app->registerClass('WikiMapSpecialController', $dir . 'WikiMapSpecialController.class.php');
-$app->registerSpecialPage('WikiMap', 'WikiMapSpecialController');
-$app->registerExtensionMessageFile('WikiMap', $dir . 'WikiMap.i18n.php');
+$wgAutoloadClasses['WikiMapModel'] =  $dir . 'WikiMapModel.class.php';
+$wgAutoloadClasses['WikiMapSpecialController'] =  $dir . 'WikiMapSpecialController.class.php';
+$wgSpecialPages['WikiMap'] = 'WikiMapSpecialController';
+$wgExtensionMessagesFiles['WikiMap'] = $dir . 'WikiMap.i18n.php';

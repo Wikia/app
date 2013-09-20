@@ -25,7 +25,6 @@ class MediaData extends AbstractService
 			return $results;
 		}
 	
-		$fileHelper = new \WikiaFileHelper();
 		$detail     = $service->getMediaDetailFromPageId( $this->currentPageId );
 		$metadata   = $service->getMediaDataFromPageId( $this->currentPageId );
 

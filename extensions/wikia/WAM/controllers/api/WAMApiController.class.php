@@ -3,6 +3,8 @@
 /**
  * Controller to pull WAM data
  *
+ * Available only on corporate wikis (www.wikia.com, de.wikia.com, fr.wikia.com, etc.)
+ *
  * @author Sebastian Marzjan
  */
 
@@ -13,7 +15,7 @@ class WAMApiController extends WikiaApiController {
 	const DEFAULT_WIKI_IMAGE_WIDTH = 150;
 	const DEFAULT_WIKI_ADMINS_LIMIT = 5;
 
-	const MEMCACHE_VER = '1.01';
+	const MEMCACHE_VER = '1.02';
 
 	/**
 	 * A method to get WAM index (list of wikis with their WAM ranks)
@@ -61,9 +63,8 @@ class WAMApiController extends WikiaApiController {
 		$app = F::app();
 
 		$options = $this->getWAMParameters();
-
 		$wamIndex = WikiaDataAccess::cacheWithLock(
-			$app->wf->SharedMemcKey(
+			wfSharedMemcKey(
 				'wam_index_table',
 				self::MEMCACHE_VER,
 				$app->wg->ContLang->getCode(),
@@ -80,7 +81,7 @@ class WAMApiController extends WikiaApiController {
 						$wikiService = new WikiService();
 					}
 					foreach ($wamIndex['wam_index'] as &$row) {
-						$row['admins'] = $wikiService->getWikiAdmins($row['wiki_id'], $options['avatarSize'], self::DEFAULT_WIKI_ADMINS_LIMIT);
+						$row['admins'] = $wikiService->getMostActiveAdmins($row['wiki_id'], $options['avatarSize']);
 						$row['admins'] = $this->prepareAdmins($row['admins'], self::DEFAULT_WIKI_ADMINS_LIMIT);
 					}
 				}
@@ -127,7 +128,7 @@ class WAMApiController extends WikiaApiController {
 
 	private function getMinMaxWamIndexDateInternal() {
 		$wamDates = WikiaDataAccess::cache(
-			F::app()->wf->SharedMemcKey(
+			wfSharedMemcKey(
 				'wam_minmax_date',
 				self::MEMCACHE_VER
 			),
@@ -196,10 +197,6 @@ class WAMApiController extends WikiaApiController {
 	}
 
 	private function prepareAdmins($admins, $limit) {
-		// WikiService adds to admins array wiki's founder, which sometimes for older wiki's doesn't exists so wrong data are recieved
-		if( empty( $admins[0]['userId'] ) ) {
-			unset( $admins[0] );
-		}
 		if( count($admins) > $limit ) {
 			$admins = array_slice( $admins, 0, $limit );
 		}

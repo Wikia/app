@@ -17,7 +17,7 @@ $messages['en'] = array(
 	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|Active<br />Discussion|Active<br />Discussions}}</span>',
 
 	/* Forum:Special (Index) */
-	'forum-specialpage-heading' => '{{SITENAME}} Forum',
+	'forum-specialpage-heading' => 'Forum',
 	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading You can edit it<span>',
 	'forum-specialpage-blurb' => '',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|thread|threads}}',
@@ -145,7 +145,6 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-activity-module-heading' => 'Forum Activity',
 	'forum-related-module-heading' => 'Related Threads',
 	'forum-activity-module-posted' => '$1 posted a reply $2',
-	'forum-activity-module-edited' => '$1 edited a discussion $2',
 	'forum-activity-module-started' => '$1 started a discussion $2',
 
 	/* Forum Participation Module */
@@ -266,7 +265,6 @@ $messages['qqq'] = array(
 * $1 is the first user who replied (GENDER is supported in this message).",
 	'forum-activity-module-heading' => 'Forum Activity right rail module heading',
 	'forum-activity-module-posted' => '$1 is username, $2 is url to user page, $3 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
-	'forum-activity-module-edited' => '$1 is username, $2 is url to user page, $3 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
 	'forum-participation-module-heading' => 'Forum Participation right rail module heading.  Informal, and state "there are these people here"',
 	'forum-participation-module-kudos' => 'Gives state of kudos user activity by event and time.  $1 is a url link to the kudos event page.  $2 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
 	'forum-participation-module-posted' => 'Gives state of posted user activity by event and time.  $1 is a url link to the posted event page.  $2 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',

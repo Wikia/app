@@ -31,11 +31,7 @@ function wfSetupTabView( $parser ) {
 }
 
 function tabviewRender($input, $params, $parser ) {
-	global $tabsCount, $wgStylePath, $wgJsMimeType;
-
-	if(isset($params['title']) && $params['title'] != '' && strpos($params['title'], '<') === false && strpos($params['title'], '>') === false) {
-		$title = $params['title'];
-	}
+	global $tabsCount;
 
 	if(isset($params['id']) && $params['id'] != '' && strpos($params['id'], '<') === false && strpos($params['id'], '>') === false) {
 		$id = $params['id'];
@@ -104,7 +100,7 @@ function tabviewRender($input, $params, $parser ) {
 	$out .= '</ul></div>';
 
 	// lazy load JS
-	$out .= F::build('JSSnippets')->addToStack(
+	$out .= JSSnippets::addToStack(
 		array( '/extensions/wikia/TabView/js/TabView.js',
 			'/resources/wikia/libraries/mustache/mustache.js' ),
 		array(),

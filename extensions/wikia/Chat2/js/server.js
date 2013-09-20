@@ -323,14 +323,7 @@ function authConnection(handshakeData, authcallback){
 		}
 	};
 
-        var address = null;
-        if(!handshakeData.address || !handshakeData.address.address) {
-                address = "0.0.0.0";
-        } else {
-                address = handshakeData.address.address;
-        }
-
-	mwBridge.authenticateUser(roomId, name, key, address, callback, function(){
+	mwBridge.authenticateUser(roomId, name, key, handshakeData, callback, function(){
 		logger.error("User failed authentication: Wrong call to media wiki");
 		authcallback(null, false); // error first callback style
 	});
@@ -574,6 +567,11 @@ function chatMessage(client, socket, msg){
 		logger.critical(logMsg);
 		return;
 	}
+	var text = chatEntry.get('text');
+	if (typeof(text) !== "string" || text.length === 0) {
+		// skip empty messages
+		return;
+	}
 	//chatEntry.set({ isInlineAlert: false}); // not needed, as we ingore those messages
     monitoring.incrEventCounter('chat_messages');
 	storeAndBroadcastChatEntry(client, socket, chatEntry);
@@ -647,7 +645,7 @@ function ban(client, socket, msg){
 	var time = banCommand.get('time');
 	var reason = banCommand.get('reason');
 
-	mwBridge.ban(client.roomId, userToBan, client.handshake.address, time, reason, client.userKey, function(data){
+	mwBridge.ban(client.roomId, userToBan, client.handshake, time, reason, client.userKey, function(data){
     	var kickEvent = new models.KickEvent({
     		kickedUserName: userToBan,
     		time: time,
@@ -678,10 +676,10 @@ function giveChatMod(client, socket, msg){
 
 	var userNameToPromote = giveChatModCommand.get('userToPromote');
 		
-	mwBridge.giveChatMod(client.roomId, userNameToPromote, client.userKey, function(data){
+	mwBridge.giveChatMod(client.roomId, userNameToPromote, client.handshake, client.userKey, function(data){
 		// Build a user that looks like the one that got banned... then kick them!
 			
-		storage.getRoomState(client.roomId, function(nodeChatModel) {	
+		storage.getRoomState(client.roomId, function(nodeChatModel) {
 			// Initial connection of the user (unless they're already connected).
 			var promotedUser = nodeChatModel.users.findByName(userNameToPromote);
 

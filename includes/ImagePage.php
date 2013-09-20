@@ -169,6 +169,7 @@ class ImagePage extends Article {
 
 	/**
 	 * Wikia - abstracted out part of view() function, so it can be wrapped by ImagePageTabbed
+	 * Content here will appear on the "About" tab in the tabbed version of the file page
 	 */
 	protected function imageContent() {
 		global $wgOut;
@@ -189,13 +190,6 @@ class ImagePage extends Article {
 			$wgOut->setPageTitle( $this->getTitle()->getPrefixedText() );
 			$this->mPage->doViewUpdates( $this->getContext()->getUser() );
 		}
-	}
-
-	/**
-	 * Wikia - abstracted out part of view() function, so it can be wrapped by ImagePageTabbed
-	 */
-	protected function imageDetails() {
-		global $wgOut;
 
 		# Show shared description, if needed
 		if ( $this->mExtraDescription ) {
@@ -205,6 +199,14 @@ class ImagePage extends Article {
 			}
 			$wgOut->addHTML( '<div id="shared-image-desc">' . $this->mExtraDescription . "</div>\n" );
 		}
+	}
+
+	/**
+	 * Wikia - abstracted out part of view() function, so it can be wrapped by FilePageTabbed
+	 * Content here will appear on the "File History" tab in the tabbed version of the file page
+	 */
+	protected function imageDetails() {
+		global $wgOut;
 
 		$this->closeShowImage();
 		$this->imageHistory();
@@ -224,6 +226,7 @@ class ImagePage extends Article {
 
 	/**
 	 * Wikia - abstracted out part of view() function, so it can be wrapped by ImagePageTabbed
+	 * Content here will appear on the "Metadata" tab in the tabbed version of the file page
 	 */
 	protected function imageMetadata($formattedMetadata) {
 		global $wgOut;

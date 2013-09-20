@@ -54,6 +54,24 @@ $messages['ar'] = array(
 سوف يتم السماح بتشغيل بقية الصفحة فقط حيث أنه يمكنك رؤية بسهولة إذا كان أي من أسماء المستخدمين لا يمكن تحميله.',
 );
 
+/** Bikol Central (Bikol Central)
+ * @author Geopoet
+ */
+$messages['bcl'] = array(
+	'batchuserrights' => 'Mga katanosan kan grupo nin paragamit',
+	'batchuserrights-desc' => 'Minatugot na magdudugang nin saro o dakol na mga paragamit sa sarong grupo sa laog nin sarong aksyon',
+	'batchuserrights-names' => 'Mga pangaran nin paragamit tanganing idugang ining grupo sa (saro kada linya):',
+	'batchuserrights-intro' => 'Ining pahina minatugot saimo na magdugang nin sarong grupo sa kadakulon na mga paragamit na sararoan.
+Para sa rason nin seguridad, an lista kan maidudugang na mga grupo ibinugtak sa laog kan konpigurasyon nin ekstensyon asin dae maliliwat gikan sa laog kan wiki.
+Tabi man maghapot sa sarong administrador nin sistema kun ika kaipuhan na magtutugot na magdudugang kan ibang mga grupo.',
+	'batchuserrights-single-progress-update' => 'Nagdugang nin {{PLURAL:$1|grupo|mga grupo}} sa <strong>$2</strong>.',
+	'batchuserrights-add-groups' => 'Nagdudugang nin {{PLURAL:$1|sarong paragamit|$1 mga paragamit}} sa minasunod na {{PLURAL:$2|grupo|mga grupo}}: <strong>$3</strong>.',
+	'batchuserrights-userload-error' => "Dae maikakarga an paragamit na si \"'''\$1'''\".",
+	'batchuserrights-no-groups' => 'Ika dae tabi nagpili nin arinman na mga grupo.
+Ini dae nanggad makakapagtapos nin anuman na bagay.
+An tada kan pahina pagtutugutan na magdalagan na tangani baya na saimong sayon na mahiling kun arin sa mga pangaran nin paragamit an dae maipagkakarga.',
+);
+
 /** Bulgarian (български)
  * @author DCLXVI
  */
@@ -123,6 +141,7 @@ Zbývající část stránky bude možné spustit tak, že lze snadno zobrazit, 
 );
 
 /** German (Deutsch)
+ * @author Das Schäfchen
  * @author LWChris
  * @author Quedel
  * @author SVG
@@ -140,7 +159,7 @@ Bitte wende dich an einen Systemadministrator, falls du andere Gruppen für das 
 	'batchuserrights-userload-error' => "Konnte den Benutzer „'''$1'''“ nicht laden.",
 	'batchuserrights-no-groups' => 'Du hast keine Gruppen ausgewählt.
 Dies wird nichts verändern.
-Der Rest der Seite wird nur geladen, sodass du einfach sehen kannst ob einer der Benutzer nicht geladen werden konnte.',
+Der Rest der Seite wird nur geladen, sodass du einfach sehen kannst, ob einer der Benutzer nicht geladen werden konnte.',
 );
 
 /** Zazaki (Zazaki)
@@ -179,6 +198,24 @@ $messages['fi'] = array(
 	'batchuserrights-names' => 'Tähän ryhmään lisättävät käyttäjätunnukset (yksi per rivi):',
 	'batchuserrights-single-progress-update' => 'Lisätty {{PLURAL:$1|ryhmä|ryhmää}} kohteeseen <strong>$2</strong>.',
 	'batchuserrights-add-groups' => 'Lisätään {{PLURAL:$1|yksi käyttäjä|$1 käyttäjää}} seuraavaan {{PLURAL:$2|ryhmään|ryhmiin}}: <strong>$3</strong>.',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'batchuserrights' => 'Arbeið uppá brúkararættindini í setti',
+	'batchuserrights-desc' => 'Ger tað møguligt at leggja ein ella fleiri brúkarar til ein bólk í einari handling',
+	'batchuserrights-names' => 'Brúkaranøvn sum skulu leggjast til henda bólkin (eitt navn pr. rað):',
+	'batchuserrights-intro' => 'Henda síðan letur teg leggja ein bólk til fleiri brúkarar samstundis.
+Av trygdarávum er listin við bólkum sum kunnu leggjast afturat vístur í víðkanarkonfigurasjónini og kann ikki broytast her frá hesi wiki.
+Vinarliga bið ein system administrator um hjálp, um tú ynskir at loyva fleirfaldaða tilleggjan (batch adding) av øðrum bólkum.',
+	'batchuserrights-single-progress-update' => 'Legði afturat {{PLURAL:$1|bólk|bólkar}} til <strong>$2</strong>.',
+	'batchuserrights-add-groups' => 'Legði afturat {{PLURAL:$1|ein brúkara|$1 brúkarar}} til fylgjandi {{PLURAL:$2|bólk|bólkar}}: <strong>$3</strong>.',
+	'batchuserrights-userload-error' => "Tað bar ikki til at innlesa brúkara \"'''\$1'''\".",
+	'batchuserrights-no-groups' => 'Tú valdi ongar bólkar.
+Hetta fer ikki at føra til nakað.
+Restin av síðuni fær loyvi til at koyra, bert fyri at tú lættliga kanst síggja, um summi av brúkaranøvnunum ikki kundu innlesast.',
 );
 
 /** French (français)
@@ -252,6 +289,16 @@ Per favor demanda lo a un administrator de systema si tu ha besonio de permitter
 	'batchuserrights-no-groups' => 'Tu non seligeva alcun gruppo.
 Isto va complir nihil.
 Le resto del pagina essera executate solmente a fin que tu pote vider facilemente si alcun del nomines de usator non poteva esser cargate.',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'batchuserrights-desc' => 'Memperbolehkan menambahkan satu atau beberapa pengguna ke grup dalam satu tindakan',
+	'batchuserrights-intro' => 'Halaman ini mengizinkan Anda menambahkan sebuah grup ke banyak pengguna sekaligus.
+Untuk alasan keamanan, daftar grup yang dapat ditambahkan diatur dalam pengaturan ekstensi dan tidak dapat diubah dari dalam wiki.
+Silakan minta ke seorang pengurus sistem jika Anda butuh mengizinkan penambahan-massal dari grup-grup lain.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -358,6 +405,24 @@ Nu wordt er niets uitgevoerd.
 De rest van de pagina kan uitgevoerd worden zodat je eenvoudig kunt zien of een van de gebruikersnamen niet geladen kon worden.',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'batchuserrights' => 'Dreches d’utilizaires per lòts',
+	'batchuserrights-desc' => 'Permet d’apondre un o mantun utilizaire a un grop en una sola accion',
+	'batchuserrights-names' => "Noms d’utilizaires d'apondre a aqueste grop (un per linha) :",
+	'batchuserrights-intro' => "Aquesta pagina permet d’apondre un grop de mantun utilizaire a l'encòp.
+Per de rasons de seguretat, la lista dels gropes utilizables es definida dins la configuracion de l’extension e pòt pas èsser cambiada dempuèi l’interfàcia del wiki.
+Se volètz autorizar l’apondon per lòts per de gropes mai, demandatz lor apondon a un administrator del sistèma.",
+	'batchuserrights-single-progress-update' => '{{PLURAL:$1|grop apondut|gropes aponduts}} a <strong>$2</strong>.',
+	'batchuserrights-add-groups' => 'Apondon {{PLURAL:$1|d’un utilizaire|de $1 utilizaires}} {{PLURAL:$2|al grop seguent|als gropes seguents}} : <strong>$3</strong>.',
+	'batchuserrights-userload-error' => "Impossible de cargar l’utilizaire « '''$1''' ».",
+	'batchuserrights-no-groups' => "Avètz pas causit cap de grop.
+Cap d'accion serà pas efectuada.
+La rèsta de la pagina se cargarà normalament çò que vos permetrà de veire se certans noms d’utilizaires pòdon pas èsser cargats.",
+);
+
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
@@ -439,7 +504,18 @@ Será permitida a execução do resto da página apenas para que você possa ver
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'batchuserrights' => "Batch pe le deritte de l'utinde",
+	'batchuserrights-desc' => "Permette de aggiungere une o cchiù utinde a 'nu gruppe jndr'à 'na botta sole",
+	'batchuserrights-names' => 'Le nome utinde aggiunde a stu gruppe (une pe linèe):',
+	'batchuserrights-intro' => "Sta pàgene te lasse aggiungere 'nu gruppe a cchiù utinde jndr'à 'na botte.
+Pe mutive de securezze, l'elenghe de le gruppe ca se ponne aggiungere gruppe jè 'mbostate jndr'à configurazione de l'estenzione e non ge ponne essere cangiate da 'a uicchi.
+Pe piacere cirche a 'n'amministratore de sisteme ce tu è abbesògne de permettere l'agiunde automateche de otre gruppe.",
+	'batchuserrights-single-progress-update' => "Aggiunge a {{PLURAL:$1|'u gruppe|le gruppe}} <strong>$2</strong>.",
+	'batchuserrights-add-groups' => "Stoche aggiunge {{PLURAL:$1|'n'utende|$1 utinde}} a {{PLURAL:$2|'u seguende |le seguende}} gruppe: <strong>$3</strong>.",
 	'batchuserrights-userload-error' => "Non ge pozze carecà l'utende \"'''\$1'''\".",
+	'batchuserrights-no-groups' => "Non g'è scacchiate nisciune gruppe.
+Quiste non ge porte a ninde.
+'U reste d'a pàgene avène eseguite 'u stesse accussì tu puè facilmende 'ndrucà ce qualche nome utende non ge pò essere carecate.",
 );
 
 /** Russian (русский)
@@ -507,6 +583,7 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
+ * @author SteveR
  * @author Тест
  */
 $messages['uk'] = array(

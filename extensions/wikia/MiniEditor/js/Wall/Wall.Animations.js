@@ -25,7 +25,7 @@ MiniEditor.Wall.Animations = {
 
 			} else {
 				wrapper.animate(animation, function() {
-					wikiaEditor.getEditbox().focus();
+					wikiaEditor.getEditbox().focusNoScroll();
 					wikiaEditor.fire('editorAfterActivated');
 				});
 			}

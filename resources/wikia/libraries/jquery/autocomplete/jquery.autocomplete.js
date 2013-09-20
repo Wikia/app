@@ -55,14 +55,15 @@
       /* Wikia changes */
       queryParamName: 'query',
       fnPreprocessResults: null,
-      skipBadQueries: false
+      skipBadQueries: false,
+      positionRight: null
     };
     if (options) {
-		// since we're using an old version of this plugin with minChars instead of minLength,
-		// this will help us be forwards-compatible
-		this.options.minChars = options.minLength || options.minChars || 1;
-		$.extend(this.options, options);
-	}
+      // since we're using an old version of this plugin with minChars instead of minLength,
+      // this will help us be forwards-compatible
+      this.options.minChars = options.minLength || options.minChars || 1;
+      $.extend(this.options, options);
+    }
     if(this.options.lookup){
       this.isLocal = true;
       if($.isArray(this.options.lookup)){ this.options.lookup = { suggestions:this.options.lookup, data:[] }; }
@@ -92,9 +93,14 @@
       var autocompleteElId = 'Autocomplete_' + uid;
 
       if (!this.options.width) { this.options.width = this.el.width(); }
+
+      if (this.options.width[this.options.width.length - 1] != '%') {
+        this.options.width = this.options.width + 'px';
+      }
+
       this.mainContainerId = 'AutocompleteContainter_' + uid;
 
-      $('<div id="' + this.mainContainerId + '" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + this.options.width + 'px;"></div></div></div>').appendTo(this.options.appendTo);
+      $('<div id="' + this.mainContainerId + '" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + this.options.width + ';"></div></div></div>').appendTo(this.options.appendTo);
 
       this.container = $(this.options.appendTo).find('#' + autocompleteElId);
       this.fixPosition();
@@ -113,7 +119,10 @@
     fixPosition: function() {
       var offset = this.el.offset();
       var parentOffset = $(this.options.appendTo).offset();
-      $(this.options.appendTo).find('#' + this.mainContainerId).css({ top: (offset.top + this.el.innerHeight() - parentOffset.top) + 'px', left: (offset.left - parentOffset.left) + 'px' });
+      var el = $(this.options.appendTo).find('#' + this.mainContainerId).css({ top: (offset.top + this.el.innerHeight() - parentOffset.top) + 'px', left: (offset.left - parentOffset.left) + 'px' });
+      if ( this.options.positionRight !== null ) {
+        el.css({ right: this.options.positionRight });
+      }
     },
 
     enableKillerFn: function() {
@@ -151,6 +160,8 @@
             this.hide();
             return;
           }
+            //Wikia: fire event when enter was pressed on suggestion
+          this.el.trigger('suggestEnter');
           this.select(this.selectedIndex, /*wikia change*/ e /*end*/);
           if (e.keyCode === 9/* Event.KEY_TAB */) { return; }
           break;

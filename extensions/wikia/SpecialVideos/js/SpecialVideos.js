@@ -17,13 +17,8 @@ var SpecialVideos = {
 	initDropdown: function() {
 		$('.WikiaDropdown').wikiaDropdown({
 			onChange: function(e, $target) {
-				var currSort = this.$selectedItemsList.text(),
-					newSort = $target.text();
-
-				if(currSort != newSort) {
-					var sort = $target.data('sort');
-					(new Wikia.Querystring()).setVal('sort', sort).goTo();
-				}
+				var sort = $target.data( 'sort' );
+				( new Wikia.Querystring() ).setVal( 'sort', sort ).goTo();
 			}
 		});
 	},
@@ -35,7 +30,7 @@ var SpecialVideos = {
 		var addVideoButton = $('.addVideo');
 		if( $.isFunction( $.fn.addVideoButton ) ) {
 			addVideoButton.addVideoButton({
-				callbackAfterSelect: function(url) {
+				callbackAfterSelect: function(url, VET) {
 					$.nirvana.postJson(
 						// controller
 						'VideosController',
@@ -45,17 +40,17 @@ var SpecialVideos = {
 						{ url: url },
 						// success callback
 						function( formRes ) {
-							GlobalNotification.hide();
+							window.GlobalNotification.hide();
 							if ( formRes.error ) {
-								GlobalNotification.show( formRes.error, 'error' );
+								window.GlobalNotification.show( formRes.error, 'error' );
 							} else {
-								window.VET.close();
+								VET.close();
 								(new Wikia.Querystring()).setVal('sort', 'recent').goTo();
 							}
 						},
 						// error callback
 						function() {
-							GlobalNotification.show( $.msg('vet-error-while-loading'), 'error' );
+							window.GlobalNotification.show( $.msg('vet-error-while-loading'), 'error' );
 						}
 					);
 					// Don't move on to second VET screen.  We're done.

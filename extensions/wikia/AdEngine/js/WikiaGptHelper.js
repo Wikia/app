@@ -119,12 +119,13 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 		return sizes;
 	}
 
-	function pushAd(slotParams, done) {
+	function pushAd(slotParams, success, error) {
 		var slotname = slotParams.slotname,
 			slotnameGpt = slotname + '_gpt',
 			slotDiv = document.createElement('div'),
 			sizes = convertSizesToGpt(slotParams.slotsize),
-			params = {};
+			params = {},
+			slotPath = window.wgAdDriverUseNewGptZones ? path + '/' + slotname : path;
 
 		loadGpt();
 
@@ -141,10 +142,10 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 		slotDiv.setAttribute('data-gpt-slot-sizes', JSON.stringify(sizes));
 		document.getElementById(slotname).appendChild(slotDiv);
 
-		log(['googletag.cmd.push', path, sizes, slotnameGpt, params], 4, logGroup);
+		log(['googletag.cmd.push', slotPath, sizes, slotnameGpt, params], 4, logGroup);
 
 		googletag.cmd.push(function () {
-			var slot = googletag.defineSlot(path, sizes, slotnameGpt),
+			var slot = googletag.defineSlot(slotPath, sizes, slotnameGpt),
 				name,
 				value;
 
@@ -160,9 +161,55 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 			}
 
 			slotsToDisplay.push(slotnameGpt);
-			if (typeof done === 'function') {
-				doneCallbacks[slotnameGpt] = done;
-			}
+			doneCallbacks[slotnameGpt] = function () {
+				// TODO: unify forced status and height based status?
+				if (window.adDriver2ForcedStatus && window.adDriver2ForcedStatus[slotname]) {
+					var status = window.adDriver2ForcedStatus[slotname];
+					log(['doneCallback', slotname, 'forced status', status], 4, logGroup);
+					if (status === 'success' && typeof success === 'function') {
+						success();
+					}
+				} else {
+
+				var height = slotDiv.offsetHeight;
+				log(['doneCallback', slotname, 'height', height], 4, logGroup);
+				if (height <= 1) {
+					log(['doneCallback', slotname, 'running error callback (hop)'], 4, logGroup);
+					if (typeof error === 'function') {
+						error();
+					}
+				} else {
+
+
+
+					// ADEN-502 HACK STARTS HERE
+					log('Detecting passBack in slot ' + slotname, 1, logGroup);
+					var hasPassBack = false;
+					try {
+						hasPassBack = document.getElementById(slotnameGpt).getElementsByTagName('iframe')[0].contentDocument.getElementById('passbackIframe');
+					} catch (e) {
+					}
+					if (hasPassBack) {
+						log('passback in slot ' + slotname, 1, logGroup);
+						document.getElementById(slotnameGpt).style.display = 'none';
+						if (typeof error === 'function') {
+							error();
+							return;
+						}
+					}
+					// ADEN-502 HACK ENDS HERE
+
+
+
+
+					log(['doneCallback', slotname, 'running success callback'], 4, logGroup);
+					if (typeof success === 'function') {
+						success();
+					}
+				}
+
+				}
+			};
 		});
 	}
 

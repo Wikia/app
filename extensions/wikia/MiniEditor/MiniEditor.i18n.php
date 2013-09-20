@@ -12,13 +12,15 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'minieditor-specialpage-title' => 'Browser title for the page',
 	'minieditor-new-heading' => 'Heading of a form area',
 	'minieditor-placeholder-new' => 'Placeholder text, showin in an input field, disappears when clicked',
 	'minieditor-message-edit' => 'Notification text shown when a message is being edited (as opposed to created)',
-	'minieditor-reply' => 'Button text for replying to a message',
+	'minieditor-reply' => 'Button text for replying to a message.
+{{Identical|Reply}}',
 	'minieditor-placeholder-reply' => 'Placeholder text, showin in an input field, disappears when clicked',
 );
 
@@ -41,6 +43,7 @@ $messages['br'] = array(
 	'minieditor-new-heading' => 'Krouiñ ur gemennadenn nevez',
 	'minieditor-placeholder-new' => 'Skrivit ho kemennadenn amañ',
 	'minieditor-reply' => 'Respont',
+	'minieditor-placeholder-reply' => "Respont d'ar gemennadenn amañ",
 );
 
 /** Catalan (català)
@@ -102,6 +105,17 @@ $messages['fi'] = array(
 	'minieditor-placeholder-reply' => 'Vastaa viestiin tässä',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'minieditor-specialpage-title' => 'MiniEditor Royndarsíða',
+	'minieditor-new-heading' => 'Upprætta eitt nýtt boð',
+	'minieditor-placeholder-new' => 'Skriva títt boð her',
+	'minieditor-reply' => 'Svara',
+	'minieditor-placeholder-reply' => 'Svara boðnum her',
+);
+
 /** French (français)
  * @author Wyz
  */
@@ -148,6 +162,13 @@ $messages['ia'] = array(
 	'minieditor-message-edit' => 'Isto es un message existente',
 	'minieditor-reply' => 'Responder',
 	'minieditor-placeholder-reply' => 'Responde al message hic',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'minieditor-reply' => 'Balas',
 );
 
 /** Italian (italiano)
@@ -354,6 +375,7 @@ $messages['tzm'] = array(
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
+ * @author SteveR
  * @author Ua2004
  */
 $messages['uk'] = array(

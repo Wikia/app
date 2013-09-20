@@ -47,6 +47,8 @@ $messages['qqq'] = array(
 	'multilookupnext' => '{{Identical|Next}}',
 	'multilookupprevious' => '{{Identical|Previous}}',
 	'multilookupwiki' => '{{Identical|Wiki}}',
+	'multilookupwikiurl' => '{{Identical|URL}}',
+	'multilookupwikititle' => '{{Identical|Title}}',
 	'right-multilookup' => '{{doc-right|multilookup|ns=Wikia}}',
 	'action-multilookup' => '{{doc-action|multilookup}}',
 );
@@ -197,9 +199,12 @@ $messages['ca'] = array(
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
+	'multilookupnoresultfound' => 'ХӀума ца карийна',
 	'multilookuplink' => 'Къинхьегаме хьажориг',
+	'multilookupwikititle' => 'Корта',
 );
 
 /** Czech (česky)
@@ -1014,20 +1019,37 @@ $messages['ttt'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  * @author Тест
  */
 $messages['uk'] = array(
+	'specialmultiplelookup-desc' => 'Забезпечує пошук інформації про користувачів з декількох вікі',
+	'multilookup' => 'Множинний пошук',
+	'multilookupstitle' => 'Множинний пошук',
+	'multilookupselectuser' => 'Шукати облікові записи за цією IP-адресу на декількох вікі',
 	'multilookupgo' => 'Перейти',
+	'multilookupnotspecify' => 'Ви ще не вказали IP-адресу.',
 	'multilookupnext' => 'наступні',
 	'multilookupprevious' => 'попередні',
 	'multilookupnbrresult' => 'Кількість результатів:',
+	'multilookupinvalidresults' => 'Неприпустимі результати!',
 	'multilookupnoresultfound' => 'Нічого не знайдено!',
 	'multilookupwiki' => 'Вікі',
+	'multilookuplink' => 'Посилання на внески',
+	'multilookupdetails' => 'Докладніше див.',
+	'multilookuplistwikiainfo' => 'Перелік вікі, де сторінки змінено користувачами з IP-адресами<b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">IP „<b>$1</b>“ не існує. Перевірте вказану IP на можливі одруківки.</p>',
+	'multilookuplastedit' => 'Останнє редагування з цієї IP-адреси:',
+	'multilookupwikidbname' => 'Назва БД',
 	'multilookupwikiurl' => 'URL',
 	'multilookupwikititle' => 'Назва',
 	'multilookupwikioptions' => 'Параметри',
 	'multilookuplastedithdr' => 'Останнє редагування',
+	'multilookuprecordspager' => "Показано від '''$1''' до '''$2''' із '''$3''' записів.",
+	'right-multilookup' => 'Переглянути відомості про користувачів в декількох вікі',
+	'action-multilookup' => 'перегляд відомостей про користувачів в декількох вікі',
 );
 
 /** Yiddish (ייִדיש)

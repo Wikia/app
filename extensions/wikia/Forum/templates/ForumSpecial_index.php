@@ -1,10 +1,10 @@
 <section id="Forum" class="Forum">
-		<a class="button policies-link" href="#"><?= $wf->Msg('forum-specialpage-policies') ?></a>
+		<a class="button policies-link" href="#"><?= wfMsg('forum-specialpage-policies') ?></a>
 	<!-- Admin Edit here -->
 	<?= $app->renderPartial('ForumSpecial', 'boards', array('boards' => $boards, 'lastPostByMsg' => $lastPostByMsg, 'isEditMode' => false ) ) ?>
 
 	<? if($canEdit): ?>
-		<a class="button admin-link" href="<?= $editUrl ?>"><?= $wf->Msg('forum-admin-link-label') ?></a>
+		<a class="button admin-link" href="<?= $editUrl ?>"><?= wfMsg('forum-admin-link-label') ?></a>
 	<? endif; ?>
 	<h3>
 		<?= $blurbHeading ?>

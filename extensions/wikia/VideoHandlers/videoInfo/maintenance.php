@@ -71,7 +71,7 @@ if ( empty($app->wg->CityId) ) {
 	die( "Error: Invalid wiki id." );
 }
 
-if ( $app->wf->ReadOnly() ) {
+if ( wfReadOnly() ) {
 	die( "Error: In read only mode." );
 }
 
@@ -91,7 +91,7 @@ if ( !$createTable && !$alterTableV1 && !$addVideos && !$removeVideos ) {
 
 printText("Wiki $wgCityId:\n");
 
-$db = $app->wf->GetDB( DB_MASTER );
+$db = wfGetDB( DB_MASTER );
 
 $tableExists = $db->tableExists( 'video_info' );
 

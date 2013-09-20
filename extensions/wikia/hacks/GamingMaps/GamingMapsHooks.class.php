@@ -1,11 +1,7 @@
 <?php
 class GamingMapsHooks extends WikiaObject{
-	function __construct(){
-        parent::__construct();
-        F::setInstance( __CLASS__, $this );
-	}
 
-	public function onParserFirstCallInit( Parser $parser ){
+	static public function onParserFirstCallInit( Parser $parser ){
 		$parser->setHook( 'gamingMap', 'GamingMapsHooks::renderGamingMapTag' );
 
 		return true;
@@ -88,7 +84,7 @@ class GamingMapsHooks extends WikiaObject{
             }
         }*/
 
-        /*$imgFile = F::app()->wf->findFile( $attributes['img']);
+        /*$imgFile = wfFindFile( $attributes['img']);
         if($imgFile->exists()){
             $app->sendRequest("GamingMaps", "createMap", array( 'oImage' => $imgFile )); //send values to controller
         }*/
@@ -97,7 +93,7 @@ class GamingMapsHooks extends WikiaObject{
 
         $mapa = $app->sendRequest("GamingMaps", "index", array( 'attr' => $attributes, 'markers'=> $aMarkers)); //send values to controller
         $mapa = str_replace("\n","",$mapa);
-        $mapa .= F::build('JSSnippets')->addToStack(
+        $mapa .= JSSnippets::addToStack(
             array('/extensions/wikia/GamingMaps/js/Leaflet.js','/extensions/wikia/GamingMaps/js/Maps.js','/extensions/wikia/GamingMaps/css/Leaflet.css' ),
             array(),
             'Maps.init',
@@ -118,15 +114,14 @@ class GamingMapsHooks extends WikiaObject{
 
     public static function getUrlIMG($imgName) // serach image Icon file by name and get its url
     {
-        $app = F::app();
-        $imgFile = $app->wf->findFile($imgName); //find file
+        $imgFile = wfFindFile($imgName); //find file
         if($imgFile) // check if exists
         {
             $urlIMG = wfReplaceImageServer(
                 $imgFile->getUrl()
             );
         }else{ // if not set default img
-            $imgFile = $app->wf->findFile('iOtherIcon.png');
+            $imgFile = wfFindFile('iOtherIcon.png');
             $urlIMG = wfReplaceImageServer(
                 $imgFile->getUrl()
             );

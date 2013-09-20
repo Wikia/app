@@ -19,9 +19,8 @@ h1, h2, h3{
 }
 
 .artSec {
-	position: relative;
-	padding-bottom: 30px;
 	overflow: hidden;
+	width: 100%;
 
 	&.open {
 		display: block;
@@ -43,12 +42,10 @@ h1, h2, h3{
 }
 
 .goBck {
+	display: block;
+
 	color: $page-text-alternate-color;
-	float: right;
-	padding: 5px;
-	position: absolute;
-	bottom: 0;
-	right: 0;
+	text-align: right;
 }
 
 .collSec {
@@ -56,11 +53,12 @@ h1, h2, h3{
 	color: $section-text-color;
 	min-height: $section-title-font-size;
 	padding: $page-padding 27px 0 0;
-	position: relative;
 	//lest make our sections a little bit more sexy
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Roboto, "Lucida Grande", arial, sans-serif;
 
 	word-break: break-word;
+
+	position: relative;
 
     .chev {
 		pointer-events: none;

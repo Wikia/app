@@ -98,7 +98,7 @@ class WikiaPhotoGalleryHelper {
 			$app->wg->Out->addScript("<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js\"></script>\n");
 
 			// load message for MW toolbar button tooltip
-			$app->registerHook('MakeGlobalVariablesScript', 'WikiaPhotoGalleryHelper', 'makeGlobalVariablesScript');
+			$wgHooks['MakeGlobalVariablesScript'][] = 'WikiaPhotoGalleryHelper::makeGlobalVariablesScript';
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -848,11 +848,11 @@ class WikiaPhotoGalleryHelper {
 		/**
 		 * @var $mediaQuery MediaQueryService
 		 */
-		$mediaQuery =  F::build( 'MediaQueryService' );
+		$mediaQuery =  (new MediaQueryService);
 		$images = $mediaQuery->getMediaFromArticle($title, MediaQueryService::MEDIA_TYPE_IMAGE, $limit);
 
 		foreach($images as $entry) {
-			$image = F::build('Title', array($entry['title'], NS_FILE), 'newFromText');
+			$image = Title::newFromText($entry['title'], NS_FILE);
 			$thumb = self::getResultsThumbnailUrl($image);
 			if ($thumb) {
 				$ret[] = array(

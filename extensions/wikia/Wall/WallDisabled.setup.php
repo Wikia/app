@@ -19,11 +19,11 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname(__FILE__);
 
-$app->registerExtensionMessageFile('Wall', $dir . '/Wall.i18n.php');
-$app->registerClass('WallDisabledHooksHelper', $dir . '/WallDisabledHooksHelper.class.php');
+$wgExtensionMessagesFiles['Wall'] = $dir . '/Wall.i18n.php';
+$wgAutoloadClasses['WallDisabledHooksHelper'] =  $dir . '/WallDisabledHooksHelper.class.php';
 
 include($dir . '/notification/WallNotifications.setup.php');
 
 //don't let others edit wall messages after turning wall on and off
-$app->registerHook('AfterEditPermissionErrors', 'WallDisabledHooksHelper', 'onAfterEditPermissionErrors');
+$wgHooks['AfterEditPermissionErrors'][] = 'WallDisabledHooksHelper::onAfterEditPermissionErrors';
 include($dir . '/WallNamespaces.php');

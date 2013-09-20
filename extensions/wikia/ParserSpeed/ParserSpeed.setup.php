@@ -1,15 +1,14 @@
 <?php
 
-$app = F::app();
+$wgAutoloadClasses['ParserSpeedHooks'] = __DIR__ . "/ParserSpeedHooks.class.php";
+$wgAutoloadClasses['ParserSpeedSpecialPageController'] = __DIR__ . "/ParserSpeedSpecialPageController.class.php";
+$wgAutoloadClasses['ParserSpeedTablePager'] = __DIR__ . "/ParserSpeedTablePager.class.php";
 
-$app->registerClass('ParserSpeedHooks',__DIR__ . "/ParserSpeedHooks.class.php");
-$app->registerClass('ParserSpeedSpecialPageController',__DIR__ . "/ParserSpeedSpecialPageController.class.php");
-$app->registerClass('ParserSpeedTablePager',__DIR__ . "/ParserSpeedTablePager.class.php");
+$wgHooks['ParserAfterTidy'][] = 'ParserSpeedHooks::onParserAfterTidy';
+$wgHooks['ArticleViewAfterParser'][] = 'ParserSpeedHooks::onArticleViewAfterParser';
 
-$app->registerHook('ParserAfterTidy','ParserSpeedHooks','onParserAfterTidy');
-$app->registerHook('ArticleViewAfterParser','ParserSpeedHooks','onArticleViewAfterParser');
-
-$app->registerSpecialPage('ParserSpeed','ParserSpeedSpecialPageController','wikia');
+$wgSpecialPages['ParserSpeed'] = 'ParserSpeedSpecialPageController';
+$wgSpecialPageGroups['ParserSpeed'] = 'wikia';
 
 $wgGroupPermissions['*']['parserspeed'] = false;
 $wgGroupPermissions['staff']['parserspeed'] = true;

@@ -1,0 +1,34 @@
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/core/color";
+
+#WDACReviewSpecialPageHeader {
+	border-bottom: solid 1px $color-page-border;
+}
+#WDACReviewPage {
+	margin: 1em 20px 3em;
+	#WDACReviewForm {
+	  margin-bottom:1em;
+		.wdac-review-list {
+			@include clearfix;
+			list-style: none;
+			margin: 20px 0;
+			li {
+				border-bottom: solid 1px $color-page-border;
+				margin: 0 2px 2px 0;
+			}
+			label {
+				display: inline-block;
+				margin: 5px 0 5px 2px;
+				padding: 3px;
+			}
+			h3 {
+			  display:inline-block;
+			}
+		}
+	}
+	.wikia-paginator {
+		margin:1em 0;
+	}
+
+}

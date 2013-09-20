@@ -28,17 +28,14 @@ $wgExtensionCredits['special'][] = array(
 
 $dir = dirname(__FILE__);
 
-// WikiaApp
-$app = F::app();
-
 // autoloaded classes
-$app->registerClass('ScavengerHunt', "$dir/ScavengerHunt.class.php");
-$app->registerClass('SpecialScavengerHunt', "$dir/SpecialScavengerHunt.php");
-$app->registerClass('ScavengerHuntGame', "$dir/data/ScavengerHuntGame.class.php");
-$app->registerClass('ScavengerHuntGames', "$dir/data/ScavengerHuntGames.class.php");
-$app->registerClass('ScavengerHuntGameArticle', "$dir/data/ScavengerHuntGameArticle.class.php");
-$app->registerClass('ScavengerHuntFormController', "$dir/ScavengerHuntFormController.class.php");
-$app->registerClass('ScavengerHuntController', "$dir/ScavengerHuntController.class.php");
+$wgAutoloadClasses['ScavengerHunt'] =  "$dir/ScavengerHunt.class.php";
+$wgAutoloadClasses['SpecialScavengerHunt'] =  "$dir/SpecialScavengerHunt.php";
+$wgAutoloadClasses['ScavengerHuntGame'] =  "$dir/data/ScavengerHuntGame.class.php";
+$wgAutoloadClasses['ScavengerHuntGames'] =  "$dir/data/ScavengerHuntGames.class.php";
+$wgAutoloadClasses['ScavengerHuntGameArticle'] =  "$dir/data/ScavengerHuntGameArticle.class.php";
+$wgAutoloadClasses['ScavengerHuntFormController'] =  "$dir/ScavengerHuntFormController.class.php";
+$wgAutoloadClasses['ScavengerHuntController'] =  "$dir/ScavengerHuntController.class.php";
 
 // i18n
 $wgExtensionMessagesFiles['ScavengerHunt'] = "$dir/ScavengerHunt.i18n.php";
@@ -47,13 +44,7 @@ $wgExtensionMessagesFiles['ScavengerHunt'] = "$dir/ScavengerHunt.i18n.php";
 $wgSpecialPages['ScavengerHunt'] = 'SpecialScavengerHunt';
 
 // hooks
-$app->registerHook('MakeGlobalVariablesScript', 'ScavengerHunt', 'onMakeGlobalVariablesScript' );
-$app->registerHook('BeforePageDisplay', 'ScavengerHunt', 'onBeforePageDisplay' );
-$app->registerHook('OpenGraphMeta:beforeCustomFields', 'ScavengerHunt', 'onOpenGraphMetaBeforeCustomFields' );
+$wgHooks['MakeGlobalVariablesScript'][] = 'ScavengerHunt::onMakeGlobalVariablesScript';
+$wgHooks['BeforePageDisplay'][] = 'ScavengerHunt::onBeforePageDisplay';
+$wgHooks['OpenGraphMeta:beforeCustomFields'][] = 'ScavengerHunt::onOpenGraphMetaBeforeCustomFields';
 
-// constuctors
-F::addClassConstructor( 'ScavengerHuntGames', array( 'app' => $app ) );
-F::addClassConstructor( 'ScavengerHuntGame', array( 'app' => $app, 'id' => 0 ) );
-
-// XXX: standard MW constructors - needed to be moved to global place
-F::addClassConstructor( 'Title', array(), 'newFromText' );

@@ -45,7 +45,7 @@ while($row = $dbw->fetchObject($rows)) {
 			$metadata['aspectRatio'] = 1.7777778;
 			$apiWrapper = new ScreenplayApiWrapper($name, $metadata);
 			$uploadedTitle = null;
-			//$descriptionHeader = '==' . F::app()->wf->Msg('videohandler-description') . '==';
+			//$descriptionHeader = '==' . wfMsg('videohandler-description') . '==';
 			//$body = $categoryStr."\n".$descriptionHeader."\n".$apiWrapper->getDescription();
 			$result = VideoFileUploader::uploadVideo('screenplay', $name, $uploadedTitle, $body, false);
 			if ($result->ok) {

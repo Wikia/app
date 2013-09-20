@@ -61,7 +61,7 @@ class CustomReportsSpecialController extends WikiaSpecialPageController {
 			}
 
 			if (empty($this->charts)) {
-				$this->charts = $this->wf->Msg( 'report-no-data' );
+				$this->charts = wfMsg( 'report-no-data' );
 			}
 		}
 	}

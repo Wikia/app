@@ -16,7 +16,13 @@ define('wikia.videohandler.ooyala', ['wikia.window', require.optional('ext.wikia
 	 */
 	return function(params, vb) {
 		var containerId = vb.timeStampId( params.playerId ),
-			createParams = { width: params.width + 'px', height: params.height + 'px', autoplay: params.autoPlay };
+			started = false,
+			createParams = {
+				width: params.width + 'px',
+				height: params.height + 'px',
+				autoplay: params.autoPlay,
+				wmode: 'transparent'
+			};
 
 		function onCreate(player) {
 			var messageBus = player.mb;
@@ -28,7 +34,10 @@ define('wikia.videohandler.ooyala', ['wikia.window', require.optional('ext.wikia
 
 			// Actual content starts playing (past any ads or age-gates)
 			messageBus.subscribe(window.OO.EVENTS.PLAYING, 'tracking', function() {
-				vb.track('content-begin');
+				if ( !started ) {
+					vb.track('content-begin');
+					started = true;
+				}
 
 			});
 
@@ -70,13 +79,18 @@ define('wikia.videohandler.ooyala', ['wikia.window', require.optional('ext.wikia
 		 */
 		delete window.OO;
 
+		/* the second file depends on the first file */
 		loader({
 			type: loader.JS,
-			resources: params.jsFile
+			resources: params.jsFile[0]
 		}).done(function() {
-			window.OO.Player.create(containerId, params.videoId, createParams);
+			loader({
+				type: loader.JS,
+				resources: params.jsFile[1]
+			}).done(function() {
+				window.OO.Player.create(containerId, params.videoId, createParams);
+			});
 		});
-
 
 	};
 });

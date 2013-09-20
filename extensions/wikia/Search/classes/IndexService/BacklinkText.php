@@ -19,7 +19,6 @@ class BacklinkText extends AbstractService
 	 * @see \Wikia\Search\IndexService\AbstractService::execute()
 	 */
 	public function execute() {
-		$service = $this->getService();
 		$docIdSeparated = $this->getCurrentDocumentId() . ' |';
 		$config = new Config;
 		$config->setDirectLuceneQuery( true )

@@ -1,13 +1,5 @@
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/bodytext";
-@import "../../../../skins/oasis/css/mixins/forms";
-@import "../../../../skins/oasis/css/mixins/opacity";	//not needed?
-@import "../../../../skins/oasis/css/mixins/transition";	//not needed?
-@import "../../../../skins/oasis/css/mixins/menus";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/layout";
 @import "../mixins/divider";
 
 .AccountNavigation .UserLoginDropdown {
@@ -48,12 +40,18 @@
 		}
 		input[type=submit] {
 			margin: 10px 0 0;
+			@if ( $responsive-layout-enabled ) {
+				width: 125px;
+			}
 		}
 		.general-errors {
 			display: none;
 		}
 	}
 	> .sso-login {
+		@if ( $responsive-layout-enabled ) {
+			text-align: center;
+		}
 		> .sso-login-divider {
 			@include divider;
 			line-height: 12px;

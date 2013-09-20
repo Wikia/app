@@ -14,7 +14,7 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 		
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
 		                   ->disableOriginalConstructor()
-		                   ->setMethods( [ 'setWikiId', 'setQuery', 'setVideoEmbedToolSearch' ] )
+		                   ->setMethods( [ 'setWikiId', 'setQuery', 'setVideoEmbedToolSearch', 'setRequestedFields' ] )
 		                   ->getMock();
 		
 		$mockFactory = $this->getMockBuilder( 'Wikia\Search\QueryService\Factory' )
@@ -22,7 +22,7 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 		                    ->setMethods( [ 'getFromConfig' ] )
 		                    ->getMock();
 		
-		$mockQueryService = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\VideoEmbedTool' )
+		$mockQueryService = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool' )
 		                         ->disableOriginalConstructor()
 		                         ->setMethods( [ 'searchAsApi' ] )
 		                         ->getMock();
@@ -42,14 +42,14 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 		    ->will   ( $this->returnValue( $suggestionQuery ) )
 		;
 		$mockService
-		    ->expects( $this->at( 2 ) )
+		    ->expects( $this->at( 3 ) )
 		    ->method ( 'getConfig' )
 		    ->will   ( $this->returnValue( $mockConfig ) )
 		;
 		$mockConfig
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'setWikiId' )
-		    ->with   ( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID )
+		    ->with   ( Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::VIDEO_WIKI_ID )
 		    ->will   ( $this->returnValue( $mockConfig ) )
 		;
 		$mockConfig
@@ -60,12 +60,18 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 		;
 		$mockConfig
 		    ->expects( $this->at( 2 ) )
+		    ->method ( 'setRequestedFields' )
+		    ->with   ( $expectedFields )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+		    ->expects( $this->at( 3 ) )
 		    ->method ( 'setVideoEmbedToolSearch' )
 		    ->with   ( true )
 		    ->will   ( $this->returnValue( $mockConfig ) )
 		;
 		$mockService
-		    ->expects( $this->at( 3 ) )
+		    ->expects( $this->at( 4 ) )
 		    ->method ( 'getFactory' )
 		    ->will   ( $this->returnValue( $mockFactory ) )
 		;
@@ -76,7 +82,7 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 		    ->will   ( $this->returnValue( $mockQueryService ) )
 		;
 		$mockService
-		    ->expects( $this->at( 4 ) )
+		    ->expects( $this->at( 2 ) )
 		    ->method ( 'getExpectedFields' )
 		    ->will   ( $this->returnValue( $expectedFields ) )
 		;
@@ -109,7 +115,7 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 		
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
 		                   ->disableOriginalConstructor()
-		                   ->setMethods( [ 'setWikiId', 'setQuery', 'setVideoSearch' ] )
+		                   ->setMethods( [ 'setWikiId', 'setQuery', 'setVideoSearch', 'setRequestedFields' ] )
 		                   ->getMock();
 		
 		$mockFactory = $this->getMockBuilder( 'Wikia\Search\QueryService\Factory' )
@@ -117,7 +123,7 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 		                    ->setMethods( [ 'getFromConfig' ] )
 		                    ->getMock();
 		
-		$mockQueryService = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Video' )
+		$mockQueryService = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\Video' )
 		                         ->disableOriginalConstructor()
 		                         ->setMethods( [ 'searchAsApi' ] )
 		                         ->getMock();
@@ -127,7 +133,7 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 		$apiResponse = [ 'also doesnt matter' ];
 		$serviceResponse = [ 'service response' ];
 		$mockService
-		    ->expects( $this->at( 0 ) )
+		    ->expects( $this->at( 1 ) )
 		    ->method ( 'getConfig' )
 		    ->will   ( $this->returnValue( $mockConfig ) )
 		;
@@ -143,8 +149,14 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 		    ->with   ( $query )
 		    ->will   ( $this->returnValue( $mockConfig ) )
 		;
+		$mockConfig
+			->expects( $this->at( 2 ) )
+			->method ( 'setRequestedFields' )
+			->with   ( $expectedFields )
+			->will   ( $this->returnValue( $mockConfig ) )
+		;
 		$mockService
-		    ->expects( $this->at( 1 ) )
+		    ->expects( $this->at( 2 ) )
 		    ->method ( 'getFactory' )
 		    ->will   ( $this->returnValue( $mockFactory ) )
 		;
@@ -155,7 +167,7 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 		    ->will   ( $this->returnValue( $mockQueryService ) )
 		;
 		$mockService
-		    ->expects( $this->at( 2 ) )
+		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getExpectedFields' )
 		    ->will   ( $this->returnValue( $expectedFields ) )
 		;
@@ -356,11 +368,10 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 		$config
 		    ->expects( $this->at( 5 ) )
 		    ->method ( 'setWikiId' )
-		    ->with   ( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID )
+		    ->with   ( Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID )
 		    ->will   ( $this->returnValue( $config ) )
 		;
-		$this->proxyClass( 'Wikia\Search\Config', $config );
-		$this->mockApp();
+		$this->mockClass( 'Wikia\Search\Config', $config );
 		$get = new ReflectionMethod( 'VideoEmbedToolSearchService', 'getConfig' );
 		$get->setAccessible( true );
 		$get->invoke( $service );

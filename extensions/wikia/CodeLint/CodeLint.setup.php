@@ -29,19 +29,19 @@ $dir = dirname(__FILE__);
 $app = F::app();
 
 // main class
-$app->registerClass('CodeLint', $dir . '/CodeLint.class.php');
+$wgAutoloadClasses['CodeLint'] =  $dir . '/CodeLint.class.php';
 
 // linters
-$app->registerClass('CodeLintCss', $dir . '/linters/CodeLintCss.class.php');
-$app->registerClass('CodeLintJs', $dir . '/linters/CodeLintJs.class.php');
-$app->registerClass('CodeLintPhp', $dir . '/linters/CodeLintPhp.class.php');
+$wgAutoloadClasses['CodeLintCss'] =  $dir . '/linters/CodeLintCss.class.php';
+$wgAutoloadClasses['CodeLintJs'] =  $dir . '/linters/CodeLintJs.class.php';
+$wgAutoloadClasses['CodeLintPhp'] =  $dir . '/linters/CodeLintPhp.class.php';
 
 // report formatters
-$app->registerClass('CodeLintReport', $dir . '/CodeLintReport.class.php');
-$app->registerClass('CodeLintReportHtml', $dir . '/reports/CodeLintReportHtml.class.php');
-$app->registerClass('CodeLintReportJson', $dir . '/reports/CodeLintReportJson.class.php');
-$app->registerClass('CodeLintReportText', $dir . '/reports/CodeLintReportText.class.php');
-$app->registerClass('CodeLintReportBlame', $dir . '/reports/CodeLintReportBlame.class.php');
+$wgAutoloadClasses['CodeLintReport'] =  $dir . '/CodeLintReport.class.php';
+$wgAutoloadClasses['CodeLintReportHtml'] =  $dir . '/reports/CodeLintReportHtml.class.php';
+$wgAutoloadClasses['CodeLintReportJson'] =  $dir . '/reports/CodeLintReportJson.class.php';
+$wgAutoloadClasses['CodeLintReportText'] =  $dir . '/reports/CodeLintReportText.class.php';
+$wgAutoloadClasses['CodeLintReportBlame'] =  $dir . '/reports/CodeLintReportBlame.class.php';
 
 // config
 $wgPHPStormPath = '/usr/share/phpstorm/bin';

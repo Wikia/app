@@ -15,19 +15,14 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname(__FILE__);
 
-// WikiaApp
-$app = F::app();
-
 // autoloaded classes
-$app->registerClass('EmailsStorage', "$dir/EmailsStorage.class.php");
-$app->registerClass('EmailsStorageEntry', "$dir/EmailsStorageEntry.class.php");
-$app->registerClass('EmailsStorageSpecialController', "$dir/EmailsStorageSpecialController.php");
-$app->registerSpecialPage('Emails', 'EmailsStorageSpecialController');
+$wgAutoloadClasses['EmailsStorage'] =  "$dir/EmailsStorage.class.php";
+$wgAutoloadClasses['EmailsStorageEntry'] =  "$dir/EmailsStorageEntry.class.php";
+$wgAutoloadClasses['EmailsStorageSpecialController'] =  "$dir/EmailsStorageSpecialController.php";
+$wgSpecialPages['Emails'] = 'EmailsStorageSpecialController';
 
 // i18n
 $wgExtensionMessagesFiles['EmailsStorage'] = "$dir/EmailsStorage.i18n.php";
-
-F::addClassConstructor('EmailsStorage', array('app' => $app));
 
 // rights
 $wgAvailableRights[] = 'emailsstorage';

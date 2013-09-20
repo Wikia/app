@@ -275,6 +275,23 @@ $messages['fi'] = array(
 	'wva-thumbnail-upload-failed' => 'Videon upottaminen epäonnistui, kunnollista pikkukuvaa ei voitu luoda',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'wva-success' => 'Video-síðan [[:$1]] varð løgd til.',
+	'wva-success-replaced' => 'Video-síðan [[:$1]] varð skift út.',
+	'wva-failure' => 'Vinarliga skriva galdandi parametur.',
+	'wva-name' => 'Video navn:',
+	'wva-url' => "URL'ur fyri video:",
+	'wva-add' => 'Legg afturat',
+	'wva-title' => 'Innset skjótt video frá URL (heimasíðuadressu)',
+	'wva-notlogged' => 'Tú mást rita inn ella skráseta teg sum brúkara fyri at innseta videoklipp.',
+	'wva-notallowed' => 'Tú kanst ikki innseta videoklipp á hesa wiki.',
+	'wva-protected' => 'Hetta filmsklippið er vart.',
+	'wva-thumbnail-upload-failed' => 'Tað miseydnaðist at innlima video, tað bar ikki til at heinta eina ordiliga minimynd (thumbnail).',
+);
+
 /** French (français)
  * @author Gomoko
  * @author Iluvalar
@@ -818,6 +835,17 @@ $messages['tl'] = array(
  */
 $messages['tly'] = array(
 	'wva-add' => 'Зијод кардеј',
+);
+
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'wva-add' => 'Ekle',
+	'wva-title' => "URL'den hızlıca video ekle",
+	'wva-notlogged' => 'Video eklemek için kayıt olmanız veya giriş yapmanız gerekli.',
+	'wva-notallowed' => 'Bu wikiye video ekleyemezsiniz.',
+	'wva-protected' => 'Bu video korunmaktadır.',
 );
 
 /** Ukrainian (українська)

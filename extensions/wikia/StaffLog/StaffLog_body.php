@@ -11,10 +11,10 @@ class StaffLog extends SpecialPage
 		parent::__construct( "stafflog","stafflog");
 		$this->aTypes = array(
 			'' => '',
-			'block' => wfMsg( 'stafflog-filter-type-block' ),
-			'piggyback' => wfMsg( 'stafflog-filter-type-piggyback' ),
-			'renameuser' => wfMsg( 'stafflog-filter-type-renameuser' ),
-			'wikifactor' => wfMsg( 'stafflog-filter-type-wikifactory' )
+			'block' => wfMessage( 'stafflog-filter-type-block' )->text(),
+			'piggyback' => wfMessage( 'stafflog-filter-type-piggyback' )->text(),
+			'renameuser' => wfMessage( 'stafflog-filter-type-renameuser' )->text(),
+			'wikifactor' => wfMessage( 'stafflog-filter-type-wikifactory' )->text()
 		);
 	}
 
@@ -29,35 +29,35 @@ class StaffLog extends SpecialPage
 
 		$pager = new StaffLoggerPager( "" );
 
-		$sTypesDropDown = XML::openElement( 'select', array( 'name' => 'type', 'id' => 'StaffLogFilterType' ) );
+		$sTypesDropDown = Xml::openElement( 'select', array( 'name' => 'type', 'id' => 'StaffLogFilterType' ) );
 
 		foreach ( $this->aTypes as $k => $v) {
-			$sTypesDropDown .= XML::option( $v, $k, ( $k == $this->request->getText( 'type', '' ) ) );
+			$sTypesDropDown .= Xml::option( $v, $k, ( $k == $this->request->getText( 'type', '' ) ) );
 		}
 
-		$sTypesDropDown .= XML::closeElement( 'select' );
+		$sTypesDropDown .= Xml::closeElement( 'select' );
 
 		$wgOut->addHTML(
-			XML::openElement( 'form', array( 'method' => 'get', 'action' => $this->getTitle()->getLocalURL() ) ) .
-				XML::openElement( 'fieldset' ) .
-				XML::element( 'legend', null, wfMsg( 'stafflog-filter-label' ), false ) .
-				XML::inputLabel(
+			Xml::openElement( 'form', array( 'method' => 'get', 'action' => $this->getTitle()->getLocalURL() ) ) .
+				Xml::openElement( 'fieldset' ) .
+				Xml::element( 'legend', null, wfMsg( 'stafflog-filter-label' ), false ) .
+				Xml::inputLabel(
 					wfMsg('stafflog-filter-user'),
 					'user',
 					'StaffLogFilterUser',
 					false,
 					htmlspecialchars( $this->request->getText( 'user', '' ), ENT_QUOTES, 'UTF-8' )
 				) .
-				XML::label( wfMsg( 'stafflog-filter-type' ), 'StaffLogFilterType' ) . ' ' .
+				Xml::label( wfMsg( 'stafflog-filter-type' ), 'StaffLogFilterType' ) . ' ' .
 				$sTypesDropDown . ' ' .
-				XML::submitButton( wfMsg( 'stafflog-filter-apply' ) ) .
-				XML::closeElement( 'fieldset' ) .
-				XML::closeElement( 'form' ) .
-				XML::openElement( 'div', array('class' => 'mw-spcontent') ) .
+				Xml::submitButton( wfMsg( 'stafflog-filter-apply' ) ) .
+				Xml::closeElement( 'fieldset' ) .
+				Xml::closeElement( 'form' ) .
+				Xml::openElement( 'div', array('class' => 'mw-spcontent') ) .
 				$pager->getNavigationBar() .
 				'<ul>' . $pager->getBody() . '</ul>' .
 				$pager->getNavigationBar() .
-				XML::closeElement( 'div' )
+				Xml::closeElement( 'div' )
 		);
 	}
 }
@@ -157,19 +157,19 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 				{
 					$siteurl =  Xml::tags('a', array("href" => "http://".$domains[0] ), $siteurl);
 				}
-				$out = wfMsg( 'stafflog-blockmsg' ,
+				$out = wfMessage( 'stafflog-blockmsg' ,
 					array($time,
 						$linker->userLink($result->slog_user, $result->slog_user_name),
 						$linker->userLink($result->slog_userdst, $result->slog_user_namedst),
 						$siteurl,
-						strlen($result->slog_comment) > 0 ? $result->slog_comment:"-" ));
+						strlen($result->slog_comment) > 0 ? $result->slog_comment:"-" ))->text();
 				break;
 			case  'piggyback':
 				$msg = $result->slog_action == "login" ? "stafflog-piggybackloginmsg" : "stafflog-piggybacklogoutmsg";
-				$out = wfMsg( $msg,
+				$out = wfMessage( $msg,
 					array($time,
 						$linker->userLink($result->slog_user, $result->slog_user_name),
-						$linker->userLink($result->slog_userdst, $result->slog_user_namedst)));
+						$linker->userLink($result->slog_userdst, $result->slog_user_namedst)))->text();
 				break;
 			case 'wikifactor':
 				$out = $time . ' ' . $result->slog_comment;

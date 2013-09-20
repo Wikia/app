@@ -231,7 +231,7 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	 */
 	public static function getUrl( $method, Array $params = null ) {
 		$app = F::app();
-		$basePath = $app->wf->ExpandUrl( $app->wg->Server . $app->wg->ScriptPath . '/wikia.php' );
+		$basePath = wfExpandUrl( $app->wg->Server . $app->wg->ScriptPath . '/wikia.php' );
 
 		$baseParams = array(
 			'controller' => preg_replace( "/Controller$/", '', get_called_class() ),
@@ -245,7 +245,7 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 			$baseParams = array_merge( $baseParams, $params );
 		}
 
-		return $app->wf->AppendQuery( $basePath, $baseParams );
+		return wfAppendQuery( $basePath, $baseParams );
 	}
 
 	/**

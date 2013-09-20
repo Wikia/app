@@ -18,11 +18,11 @@ class PhalanxUserModel extends PhalanxModel {
 		$this->user->mBlockedGlobally = true;
 
 		if ( $type == 'exact' ) {
-			$this->user->mBlockreason = $this->wf->Msg( 'phalanx-user-block-reason-exact' );
+			$this->user->mBlockreason = wfMsg( 'phalanx-user-block-reason-exact' );
 		} elseif ( $type = 'ip' ) {
-			$this->user->mBlockreason = $this->wf->Msg( 'phalanx-user-block-reason-ip' );
+			$this->user->mBlockreason = wfMsg( 'phalanx-user-block-reason-ip' );
 		} else {
-			$this->user->mBlockreason = $this->wf->Msg( 'phalanx-user-block-reason-similar' );
+			$this->user->mBlockreason = wfMsg( 'phalanx-user-block-reason-similar' );
 		}
 
 		// set expiry information
@@ -33,7 +33,7 @@ class PhalanxUserModel extends PhalanxModel {
 		$this->user->mBlock->setBlocker( User::newFromID( $this->block->authorId ) );
 		// public
 		$this->user->mBlock->mExpiry = ( isset( $this->block->expires ) && !empty( $this->block->expires ) ) ? $this->block->expires : 'infinity';
-		$this->user->mBlock->mTimestamp = $this->wf->TimestampNow();
+		$this->user->mBlock->mTimestamp = wfTimestampNow();
 		$this->user->mBlock->mAddress = $this->block->text;
 
 		if ( $type == 'ip' ) {
