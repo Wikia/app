@@ -251,12 +251,13 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			// if first edit email was already sent no need to process further
 			$firstEditNotificationSentPropKey = self::FIRST_EDIT_NOTIFICATION_SENT_PROP_NAME . '-' . $wgCityId;
 			$wasNotificationSent = $editor->getOption( $firstEditNotificationSentPropKey );
+
 			if ( !empty( $wasNotificationSent ) ) {
 				wfProfileOut( __METHOD__ );
 				return true;
 			}
 
-			$userEditStatus = self::getUserEditsStatus( $editor, true );
+			$userEditStatus = static::getUserEditsStatus( $editor, true );
 			/*
  				If there is at least one edit, flag that we should not send this email anymore;
 				either first email is sent out as a result of this request,
@@ -274,7 +275,6 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 					$editor->setOption( $firstEditNotificationSentPropKey, true );
 					$editor->saveSettings();
 			}
-
 		} else {
 			// Anon user
 			$editor = ( $wgUser->getName() == $oRecentChange->getAttribute( 'rc_user_text' ) ) ? $wgUser : User::newFromName( $oRecentChange->getAttribute( 'rc_user_text' ), false );
@@ -293,6 +293,15 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			return true;
 		}
 
+		$eventData = static::getEventData( $editor, $oRecentChange, $isRegisteredUser, $isRegisteredUserFirstEdit );
+
+		FounderEmails::getInstance()->registerEvent( new FounderEmailsEditEvent( $eventData ) );
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	public static function getEventData( $editor, $oRecentChange, $isRegisteredUser, $isRegisteredUserFirstEdit ) {
 		$oTitle = Title::makeTitle( $oRecentChange->getAttribute( 'rc_namespace' ), $oRecentChange->getAttribute( 'rc_title' ) );
 		$eventData = array(
 			'titleText' => $oTitle->getText(),
@@ -304,10 +313,6 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			'registeredUserFirstEdit' => $isRegisteredUserFirstEdit,
 			'myHomeUrl' => Title::newFromText( 'WikiActivity', NS_SPECIAL )->getFullUrl()
 		);
-
-		FounderEmails::getInstance()->registerEvent( new FounderEmailsEditEvent( $eventData ) );
-
-		wfProfileOut( __METHOD__ );
-		return true;
+		return $eventData;
 	}
 }
