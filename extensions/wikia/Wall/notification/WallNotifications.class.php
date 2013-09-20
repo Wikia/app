@@ -867,6 +867,11 @@ class WallNotifications {
 		return True;
 	}
 
+	/**
+	 * Used internally after acquiring cache entry lock
+	 * Tries to fetch the list of notifications from a memcache, and if it's not there,
+	 * it fetches it from the database
+	 */
 	protected function getData($cache, $userId, $wiki) {
 		$val = $cache->get();
 
