@@ -52,7 +52,7 @@ class Wikia {
 	const VARNISH_STAGING_HEADER = 'X-Staging';
 	const VARNISH_STAGING_PREVIEW = 'preview';
 	const VARNISH_STAGING_VERIFY = 'verify';
-	const HEX_CHARS = '0123456789abcdef';
+	const HEX_CHARS = '0123456789abcdefG';
 
 	private static $vars = array();
 	private static $cachedLinker;
