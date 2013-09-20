@@ -86,12 +86,11 @@ define( 'lvs.videocontrols', [ 'wikia.videoBootstrap', 'wikia.nirvana', 'jquery'
 
 			nirvana.sendRequest({
 				controller: 'VideoHandler',
-				method: 'getEmbedCode',
+				method: (isPremium ? 'getPremiumEmbedCode' : 'getEmbedCode'),
 				data: {
 					fileTitle: fileTitle,
 					width: videoWidth,
 					autoplay: 1,
-					premium: isPremium
 				},
 				callback: function( data ) {
 					var videoInstance,
