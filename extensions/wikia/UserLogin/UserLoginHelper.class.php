@@ -9,6 +9,7 @@
 class UserLoginHelper extends WikiaModel {
 
 	protected static $instance = NULL;
+	protected static $isTempUser = array();
 
 	const LIMIT_EMAIL_CHANGES = 5;
 	const LIMIT_EMAILS_SENT = 5;
@@ -211,8 +212,8 @@ class UserLoginHelper extends WikiaModel {
 	 * @return Status object
 	 */
 	public function sendEmail( User $user, $category, $msgSubject, $msgBody, $emailParams, $templateType, $template='GeneralMail', $priority=0 ) {
-		$subject = strtr( wfMsg($msgSubject), $emailParams );
-		$body = strtr( wfMsg($msgBody), $emailParams );
+		$subject = strtr( wfMessage( $msgSubject )->escaped(), $emailParams );
+		$body = strtr( wfMessage( $msgBody )->escaped(), $emailParams );
 		if ( empty($this->wg->EnableRichEmails) ) {
 			$bodyHTML = null;
 		} else {
@@ -231,60 +232,96 @@ class UserLoginHelper extends WikiaModel {
 	public function sendConfirmationEmail( $username, $user=null ) {
 		if ( empty($username) ) {
 			$result['result'] = 'error';
-			$result['msg'] = wfMsg( 'userlogin-error-noname' );
+			$result['msg'] = wfMessage( 'userlogin-error-noname' )->escaped();
 			return $result;
 		}
 
-		/* @var $tempUser TempUser */
-		$tempUser = TempUser::getTempUserFromName( $username );
-		if ( $tempUser == false ) {
+		//Check whether user already exists or is already confirmed
+		if ( !$this->isTempUser( $username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
 			$user = User::newFromName( $username );
-			if ( $user instanceof User && $user->getID() != 0 ) {
-				$result['result'] = 'confirmed';
-				$result['msg'] = wfMsgExt( 'usersignup-error-confirmed-user', array('parseinline'), $username, $user->getUserPage()->getFullURL() );
-			} else {
+			if ( !($user instanceof User) || $user->getID() == 0 ) {
+				//User doesn't exist
 				$result['result'] = 'error';
-				$result['msg'] = wfMsg( 'userlogin-error-nosuchuser' );
+				$result['msg'] = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
+				return $result;
+			} else {
+				if ( !$user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) && $user->isEmailConfirmed()) {
+					//User already confirmed on signup
+					$result['result'] = 'confirmed';
+					$result['msg'] = wfMessage( 'usersignup-error-confirmed-user', $username, $user->getUserPage()->getFullURL() )->parse();
+					return $result;
+				}
 			}
-			return $result;
+
+			//IF session is invalid, set invalidsession result and redirect to login page
+			if ( !(isset($_SESSION['notConfirmedUserId']) && $_SESSION['notConfirmedUserId'] == $user->getId()) ) {
+				$result['result'] = 'invalidsession';
+				$result['msg'] = wfMessage( 'usersignup-error-invalid-user' )->escaped();
+				return $result;
+			}
+
+			if ( !$this->wg->EmailAuthentication || !Sanitizer::validateEmail($user->getEmail()) ) {//Why throw an invalid email error when wgEmailAuthentication is off?
+				$result['result'] = 'error';
+				$result['msg'] = wfMessage( 'usersignup-error-invalid-email' )->escaped();
+				return $result;
+			}
+
+		} else {
+			//TempUser part
+			/* @var $tempUser TempUser */
+			$tempUser = TempUser::getTempUserFromName( $username );
+
+			//IF session is invalid, set invalidsession result and redirect to login page
+			if ( !(isset($_SESSION['tempUserId']) && $_SESSION['tempUserId'] == $tempUser->getId()) ) {
+				$result['result'] = 'invalidsession';
+				$result['msg'] = wfMessage( 'usersignup-error-invalid-user' )->escaped();
+				return $result;
+			}
+
+			if ( !$this->wg->EmailAuthentication || !Sanitizer::validateEmail($tempUser->getEmail()) ) {//Why throw an invalid email error when wgEmailAuthentication is off?
+				$result['result'] = 'error';
+				$result['msg'] = wfMessage( 'usersignup-error-invalid-email' )->escaped();
+				return $result;
+			}
 		}
 
-		if ( !(isset($_SESSION['tempUserId']) && $_SESSION['tempUserId'] == $tempUser->getId()) ) {
-			$result['result'] = 'invalidsession';
-			$result['msg'] = wfMsg( 'usersignup-error-invalid-user' );
-			return $result;
+		if ( $this->isTempUser( $username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
+			$user = $tempUser->mapTempUserToUser( true, $user );
 		}
-
-		if ( !$this->wg->EmailAuthentication || !Sanitizer::validateEmail($tempUser->getEmail()) ) {
-			$result['result'] = 'error';
-			$result['msg'] = wfMsg( 'usersignup-error-invalid-email' );
-			return $result;
-		}
-
-		$user = $tempUser->mapTempUserToUser( true, $user );
 		if ( $user->isEmailConfirmed() ) {
 			$result['result'] = 'error';
-			$result['msg'] = wfMsg( 'usersignup-error-already-confirmed' );
+			$result['msg'] = wfMessage( 'usersignup-error-already-confirmed' )->escaped();
 			return $result;
 		}
 
-		$memKey = $this->getMemKeyConfirmationEmailsSent( $tempUser->getId() );
+		//Signup throttle check
+		if ( !$this->isTempUser( $username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
+			$memKey = $this->getMemKeyConfirmationEmailsSent( $user->getId() );
+		} else {
+			$memKey = $this->getMemKeyConfirmationEmailsSent( $tempUser->getId() );
+		}
 		$emailSent = intval( $this->wg->Memc->get($memKey) );
 		if( $user->isEmailConfirmationPending() && (strtotime($user->mEmailTokenExpires) - strtotime("+6 days") > 0) && $emailSent >= self::LIMIT_EMAILS_SENT ) {
 			$result['result'] = 'error';
-			$result['msg'] = wfMsg( 'usersignup-error-throttled-email' );
+			$result['msg'] = wfMessage( 'usersignup-error-throttled-email' )->escaped();
 			return $result;
 		}
 
 		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array('language' => $user->getOption('language'), 'type' => 'confirmation-email') );
 		$response = $user->sendConfirmationMail( false, 'ConfirmationMail', 'usersignup-confirmation-email', true, $emailTextTemplate );
-		$tempUser->saveSettingsTempUserToUser( $user );
+		if ( $this->isTempUser( $username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
+			$tempUser->saveSettingsTempUserToUser( $user );
+		}
 		if( !$response->isGood() ) {
 			$result['result'] = 'error';
-			$result['msg'] = wfMsg( 'userlogin-error-mail-error' );
+			$result['msg'] = wfMessage( 'userlogin-error-mail-error' )->escaped();
 		} else {
 			$result['result'] = 'ok';
-			$result['msg'] = wfMsgExt( 'usersignup-confirmation-email-sent', array('parseinline'), htmlspecialchars($tempUser->getEmail()) );
+			if ( !$this->isTempUser( $username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
+				$result['msg'] = wfMessage( 'usersignup-confirmation-email-sent', htmlspecialchars($user->getEmail()) )->parse();
+			} else {
+				$result['msg'] = wfMessage( 'usersignup-confirmation-email-sent', htmlspecialchars($tempUser->getEmail()) )->parse();
+			}
 			$this->incrMemc( $memKey );
 		}
 
@@ -337,7 +374,12 @@ class UserLoginHelper extends WikiaModel {
 	}
 
 	/**
-	 * check if password throttled
+	 * Check if password throttled
+	 *
+	 * Meaning whether user exhausted number of attempts
+	 * to sign in using wrong password determined
+	 * by wgPasswordAttemptThrottle var
+	 *
 	 * @param string $username
 	 * @return boolean passwordThrottled
 	 */
@@ -499,6 +541,69 @@ class UserLoginHelper extends WikiaModel {
 			$form .= Xml::closeElement( 'form' );
 			$out->addHTML( $form );
 		}
+	}
+
+	public static function clearNotConfirmedUserSession() {
+		unset($_SESSION['notConfirmedUserId']);
+	}
+
+	public static function setNotConfirmedUserSession( $userId ) {
+		$_SESSION['notConfirmedUserId'] = $userId;
+	}
+
+	/**
+	 * Removes not confirmed option from user's properties
+	 * 
+	 * @param User $user
+	 * @return bool
+	 */
+	public static function removeNotConfirmedFlag( User &$user ) {
+		$user->setOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null );
+		$user->setOption( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, null );
+		$user->saveSettings();
+		$user->saveToCache();
+		self::clearIsTempUserStatic( $user->getName() );
+		return true;
+	}
+
+	/**
+	 * Function that helps to determine whether we have to do with TempUser case
+	 *
+	 * It uses self::$isTempUser static value to store result of funtion
+	 * to prevent many invokes of TempUser::getTempUserFromName
+	 *
+	 * It's a function for transitional state of getting rid of TempUser
+	 * It can be removed after TempUser global disable
+	 *
+	 * @param $username String User Name
+	 * @return bool
+	 */
+	public static function isTempUser( $username ) {
+		global $wgDisableTempUser;
+		if ( !empty( $wgDisableTempUser ) ) {
+			return false;
+		}
+
+		if ( isset( self::$isTempUser[$username] ) ) {
+			return self::$isTempUser[$username];
+		}
+		$tempuser = TempUser::getTempUserFromName( $username );
+		if ( $tempuser != false ) {
+			self::$isTempUser[$username] = true;
+		} else {
+			self::$isTempUser[$username] = false;
+		}
+		return self::$isTempUser[$username];
+	}
+
+	/**
+	 * Clears static isTempUser value for provided user name
+	 * isTempUser static var is used by isTempUser function
+	 *
+	 * @param $username String User Name
+	 */
+	public static function clearIsTempUserStatic( $username ) {
+		self::$isTempUser[$username] = null;
 	}
 
 
