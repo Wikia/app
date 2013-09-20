@@ -492,10 +492,8 @@ class WallNotifications {
 
 		$memcSync = $this->getCache($userId, $wikiId);
 
-		// Try to update the data $count times before giving up
-		$count = 5;
-		while ($count--) {
-			if($memcSync->lock()) {
+		$this->lockAndSetData( $memcSync,
+			function() use( $memcSync, $userId, $wikiId, $id, &$updateDBlist, &$wasUnread ) {
 				$data = $this->getData($memcSync, $userId, $wikiId);
 
 				if($id == 0 && !empty( $data['relation'] ) ) {
@@ -511,41 +509,22 @@ class WallNotifications {
 							$data['relation'][ $value ]['read'] = true;
 
 							$updateDBlist[] = array(
-										'user_id' => $userId,
-										'wiki_id' => $wikiId,
-										'unique_id' => $value
+								'user_id' => $userId,
+								'wiki_id' => $wikiId,
+								'unique_id' => $value
 							);
 
 						}
 					}
 				}
 
-				$success = false;
-				// Make sure we have data
-				if (isset($data)) {
-					// See if we can set it successfully
-					if ($this->setData($memcSync, $data)) {
-						$success = true;
-					}
-				} else {
-					// If there's no data don't bother doing anything
-					$success = true;
-				}
-				$memcSync->unlock();
-				if ( $success ) {
-					break;
-				}
-
-			} else {
-				$this->random_msleep($count);
+				return $data;
+			},
+			function() use( $memcSync ) {
+				// Delete the cache if we were unable to update to force a rebuild
+				$memcSync->delete();
 			}
-		}
-
-		// If count is -1 it means we left the above loop failing to update
-		if ($count == -1) {
-			// Delete the cache if we were unable to update to force a rebuild
-			$memcSync->delete();
-		}
+		);
 
 		foreach($updateDBlist as $value) {
 			$this->getDB(true)->update('wall_notification' , array('is_read' =>  1 ), $value, __METHOD__ );
