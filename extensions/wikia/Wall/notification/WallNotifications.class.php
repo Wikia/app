@@ -706,38 +706,17 @@ class WallNotifications {
 
 		$memcSync = $this->getCache($userId, $wikiId);
 
-		// Try to update the data $count times before giving up
-		$count = 5;
-		while ($count--) {
-			if($memcSync->lock()) {
+		$this->lockAndSetData( $memcSync,
+			function() use( $memcSync, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $notifyeveryone ) {
 				$data = $this->getData($memcSync, $userId, $wikiId);
 				$this->addNotificationToData($data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, false, $notifyeveryone );
-
-				$success = false;
-				// Make sure we have data
-				if (isset($data)) {
-					// See if we can set it successfully
-					if ($this->setData($memcSync, $data)) {
-						$success = true;
-					}
-				} else {
-					// If there's no data don't bother doing anything
-					$success = true;
-				}
-				$memcSync->unlock();
-				if ( $success ) {
-					break;
-				}
-			} else {
-				$this->random_msleep($count);
+				return $data;
+			},
+			function() use($memcSync) {
+				// Delete the cache if we were unable to update to force a rebuild
+				$memcSync->delete();
 			}
-		}
-
-		// If count is -1 it means we left the above loop failing to update
-		if ($count == -1) {
-			// Delete the cache if we were unable to update to force a rebuild
-			$memcSync->delete();
-		}
+		);
 
 		$this->cleanEntitiesFromDB();
 	}
