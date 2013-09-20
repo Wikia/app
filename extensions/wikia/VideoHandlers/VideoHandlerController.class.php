@@ -5,6 +5,16 @@
  */
 class VideoHandlerController extends WikiaController {
 
+	/**
+	 * Get the embed code for the title given by fileTitle
+	 *
+ 	 * @requestParam string|fileTitle The title of the video to find the embed code for
+	 * @requestParam int|width The desired width of video playback to return with the embed code
+	 * @requestParam boolean|autoplay Whether the video should play immediately on page load
+	 * @responseParam string|videoId A unique identifier for the video title given
+	 * @responseParam string|asset A URL for the video
+	 * @responseParam string|embedCode The HTML to embed on the page to play the video given by fileTitle
+	 */
 	public function getEmbedCode( ) {
 		$title = $this->getVal('fileTitle', '');
 		$width = $this->getVal('width', '');
@@ -35,6 +45,37 @@ class VideoHandlerController extends WikiaController {
 
 		if ( !empty($error) ) {
 			$this->setVal('error', $error);
+		}
+	}
+
+	/**
+	 * Get the embed code for the given title from the video wiki, rather than the local wiki.  This is
+	 * useful when a video of the same name from youtube (or other non-premium provider) exists on the local wiki
+	 * and we want to show the equivalent video from the video wiki.  See also getEmbedCode in this controller.
+	 *
+	 * @requestParam string|fileTitle The title of the video to find the embed code for
+	 * @requestParam int|width The desired width of video playback to return with the embed code
+	 * @requestParam boolean|autoplay Whether the video should play immediately on page load
+	 * @responseParam string|videoId A unique identifier for the video title given
+	 * @responseParam string|asset A URL for the video
+	 * @responseParam string|embedCode The HTML to embed on the page to play the video given by fileTitle
+	 */
+	public function getPremiumEmbedCode( ) {
+		// Pass through all the same parameters
+		$params = array(
+			'controller' => __CLASS__,
+			'method'     => 'getEmbedCode',
+			'fileTitle'  => $this->getVal('fileTitle', ''),
+			'width'      => $this->getVal('width', ''),
+			'autoplay'   => $this->getVal( 'autoplay', false ),
+		);
+
+		// Call out to the getEmbedCode method in the context of the Video Wiki (WikiaVideoRepoDBName)
+		$response = ApiService::foreignCall( F::app()->wg->WikiaVideoRepoDBName, $params, ApiService::WIKIA );
+
+		// Map the foreign call response back to our response
+		foreach ( $response as $key => $val) {
+			$this->setVal($key, $val);
 		}
 	}
 
