@@ -162,6 +162,7 @@
 #SPOTLIGHT_FOOTER {
 	@include clearfix;
 	@include linear-gradient(false, top, rgba($color-module-shadow, 0), 50%, $color-module-shadow, 100%);
+	border: none;
 	list-style: none;
 	margin: 0;
 	padding: 0px 20px 33px;
