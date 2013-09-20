@@ -65,7 +65,7 @@ ve.mixinClass( ve.ce.View, ve.EventEmitter );
 /* Static Members */
 
 /**
- * Allowed attributes for DOM elements.
+ * Allowed attributes for DOM elements, in the same format as ve.dm.Model#static.storeHtmlAttributes
  *
  * This list includes attributes that are generally safe to include in HTML loaded from a
  * foreign source and displaying it inside the browser. It doesn't include any event attributes,
@@ -76,10 +76,10 @@ ve.mixinClass( ve.ce.View, ve.EventEmitter );
  * sense for that view in particular.
  *
  * @static
- * @property static.domAttributeWhitelist
+ * @property {boolean|string|RegExp|Array|Object} static.renderHtmlAttributes
  * @inheritable
  */
-ve.ce.View.static.domAttributeWhitelist = [
+ve.ce.View.static.renderHtmlAttributes = [
 	'abbr', 'about', 'align', 'alt', 'axis', 'bgcolor', 'border', 'cellpadding', 'cellspacing',
 	'char', 'charoff', 'cite', 'class', 'clear', 'color', 'colspan', 'datatype', 'datetime',
 	'dir', 'face', 'frame', 'headers', 'height', 'href', 'id', 'itemid', 'itemprop', 'itemref',
@@ -87,16 +87,6 @@ ve.ce.View.static.domAttributeWhitelist = [
 	'resource', 'rev', 'rowspan', 'rules', 'scope', 'size', 'span', 'src', 'start', 'style',
 	'summary', 'title', 'type', 'typeof', 'valign', 'value', 'width'
 ];
-
-/**
- * Whether or not HTML attributes listed in domAttributeWhitelist and present in HTMLDOM should be
- * added to node anchor (this.$).
- *
- * @static
- * @property static.renderHtmlAttributes
- * @inheritable
- */
-ve.ce.View.static.renderHtmlAttributes = true;
 
 /* Methods */
 

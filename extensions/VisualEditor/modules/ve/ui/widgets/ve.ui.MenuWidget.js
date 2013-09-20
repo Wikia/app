@@ -10,6 +10,7 @@
  *
  * @class
  * @extends ve.ui.SelectWidget
+ * @mixins ve.ui.ClippableElement
  *
  * @constructor
  * @param {Object} [config] Config options
@@ -22,13 +23,16 @@ ve.ui.MenuWidget = function VeUiMenuWidget( config ) {
 	// Parent constructor
 	ve.ui.SelectWidget.call( this, config );
 
+	// Mixin constructor
+	ve.ui.ClippableElement.call( this, this.$group );
+
 	// Properties
 	this.newItems = [];
 	this.$input = config.input ? config.input.$input : null;
 	this.$previousFocus = null;
 	this.isolated = !config.input;
 	this.visible = false;
-	this.keydownHandler = ve.bind( this.onKeyDown, this );
+	this.onKeyDownHandler = ve.bind( this.onKeyDown, this );
 
 	// Initialization
 	this.$.hide().addClass( 've-ui-menuWidget' );
@@ -37,6 +41,8 @@ ve.ui.MenuWidget = function VeUiMenuWidget( config ) {
 /* Inheritance */
 
 ve.inheritClass( ve.ui.MenuWidget, ve.ui.SelectWidget );
+
+ve.mixinClass( ve.ui.MenuWidget, ve.ui.ClippableElement );
 
 /* Methods */
 
@@ -47,7 +53,8 @@ ve.inheritClass( ve.ui.MenuWidget, ve.ui.SelectWidget );
  * @param {jQuery.Event} e Key down event
  */
 ve.ui.MenuWidget.prototype.onKeyDown = function ( e ) {
-	var handled = false,
+	var nextItem,
+		handled = false,
 		highlightItem = this.getHighlightedItem();
 
 	if ( !this.disabled && this.visible ) {
@@ -60,11 +67,11 @@ ve.ui.MenuWidget.prototype.onKeyDown = function ( e ) {
 				handled = true;
 				break;
 			case ve.Keys.UP:
-				this.highlightItem( this.getRelativeSelectableItem( highlightItem, -1 ) );
+				nextItem = this.getRelativeSelectableItem( highlightItem, -1 );
 				handled = true;
 				break;
 			case ve.Keys.DOWN:
-				this.highlightItem( this.getRelativeSelectableItem( highlightItem, 1 ) );
+				nextItem = this.getRelativeSelectableItem( highlightItem, 1 );
 				handled = true;
 				break;
 			case ve.Keys.ESCAPE:
@@ -75,6 +82,12 @@ ve.ui.MenuWidget.prototype.onKeyDown = function ( e ) {
 				handled = true;
 				break;
 		}
+
+		if ( nextItem ) {
+			this.highlightItem( nextItem );
+			nextItem.scrollElementIntoView();
+		}
+
 		if ( handled ) {
 			e.preventDefault();
 			e.stopPropagation();
@@ -93,7 +106,6 @@ ve.ui.MenuWidget.prototype.isVisible = function () {
 	return this.visible;
 };
 
-
 /**
  * Bind keydown listener
  *
@@ -101,10 +113,10 @@ ve.ui.MenuWidget.prototype.isVisible = function () {
  */
 ve.ui.MenuWidget.prototype.bindKeydownListener = function () {
 	if ( this.$input ) {
-		this.$input.on( 'keydown', this.keydownHandler );
+		this.$input.on( 'keydown', this.onKeyDownHandler );
 	} else {
 		// Capture menu navigation keys
-		window.addEventListener( 'keydown', this.keydownHandler, true );
+		window.addEventListener( 'keydown', this.onKeyDownHandler, true );
 	}
 };
 
@@ -117,7 +129,7 @@ ve.ui.MenuWidget.prototype.unbindKeydownListener = function () {
 	if ( this.$input ) {
 		this.$input.off( 'keydown' );
 	} else {
-		window.removeEventListener( 'keydown', this.keydownHandler, true );
+		window.removeEventListener( 'keydown', this.onKeyDownHandler, true );
 	}
 };
 
@@ -203,6 +215,8 @@ ve.ui.MenuWidget.prototype.show = function () {
 			}
 			this.newItems = [];
 		}
+
+		this.setClipping( true );
 	}
 
 	return this;
@@ -223,6 +237,8 @@ ve.ui.MenuWidget.prototype.hide = function () {
 		this.$previousFocus.focus();
 		this.$previousFocus = null;
 	}
+
+	this.setClipping( false );
 
 	return this;
 };

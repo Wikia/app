@@ -34,11 +34,9 @@ ve.dm.MWAlienExtensionNode.static.getMatchRdfaTypes = function () {
 
 ve.dm.MWAlienExtensionNode.static.tagName = 'div';
 
-/* Methods */
-
 /** */
-ve.dm.MWAlienExtensionNode.prototype.getExtensionName = function () {
-	return this.getAttribute('mw').name;
+ve.dm.MWAlienExtensionNode.static.getExtensionName = function ( dataElement ) {
+	return dataElement.attributes.mw.name;
 };
 
 /* Registration */

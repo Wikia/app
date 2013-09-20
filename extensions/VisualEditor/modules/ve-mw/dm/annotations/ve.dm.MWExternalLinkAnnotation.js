@@ -9,6 +9,7 @@
  * DataModel MediaWiki external link annotation.
  *
  * Example HTML sources:
+ *
  *     <a rel="mw:ExtLink">
  *     <a rel="mw:ExtLink/Numbered">
  *

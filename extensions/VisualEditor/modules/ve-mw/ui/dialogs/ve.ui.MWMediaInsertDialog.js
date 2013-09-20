@@ -32,6 +32,8 @@ ve.inheritClass( ve.ui.MWMediaInsertDialog, ve.ui.MWDialog );
 
 /* Static Properties */
 
+ve.ui.MWMediaInsertDialog.static.name = 'mediaInsert';
+
 ve.ui.MWMediaInsertDialog.static.titleMessage = 'visualeditor-dialog-media-insert-title';
 
 ve.ui.MWMediaInsertDialog.static.icon = 'picture';
@@ -66,7 +68,7 @@ ve.ui.MWMediaInsertDialog.prototype.onClose = function ( action ) {
 
 	if ( action === 'insert' ) {
 		info = this.item.imageinfo[0];
-		this.surface.getModel().getFragment().insertContent( [
+		this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( [
 			{
 				'type': 'mwBlockImage',
 				'attributes': {
@@ -105,4 +107,4 @@ ve.ui.MWMediaInsertDialog.prototype.initialize = function () {
 
 /* Registration */
 
-ve.ui.dialogFactory.register( 'mwMediaInsert', ve.ui.MWMediaInsertDialog );
+ve.ui.dialogFactory.register( ve.ui.MWMediaInsertDialog );

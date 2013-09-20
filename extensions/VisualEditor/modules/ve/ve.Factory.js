@@ -35,11 +35,19 @@ ve.inheritClass( ve.Factory, ve.Registry );
  * @throws {Error} Constructor must be a function
  */
 ve.Factory.prototype.register = function ( name, constructor ) {
+	var i, len;
+
 	if ( typeof constructor !== 'function' ) {
 		throw new Error( 'constructor must be a function, cannot be a ' + typeof constructor );
 	}
+	if ( typeof name === 'string' ) {
+		this.entries.push( name );
+	} else if ( ve.isArray( name ) ) {
+		for ( i = 0, len = name.length; i < len; i++ ) {
+			this.entries.push( name[i] );
+		}
+	}
 	ve.Registry.prototype.register.call( this, name, constructor );
-	this.entries.push( name );
 };
 
 /**
@@ -55,9 +63,9 @@ ve.Factory.prototype.register = function ( name, constructor ) {
  * @throws {Error} Unknown object name
  */
 ve.Factory.prototype.create = function ( name ) {
-	var args, obj,
-		constructor = this.registry[name];
+	var args, obj, constructor;
 
+	constructor = this.registry[name];
 	if ( constructor === undefined ) {
 		throw new Error( 'No class registered by that name: ' + name );
 	}

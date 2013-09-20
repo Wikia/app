@@ -72,10 +72,12 @@ ve.dm.ElementLinearData.prototype.isCloseElementData = function ( offset ) {
  * This method assumes that any value that has a type property that's a string is an element object.
  *
  * Content offsets:
+ *
  *      <heading> a </heading> <paragraph> b c <img> </img> </paragraph>
  *     .         ^ ^          .           ^ ^ ^     .      ^            .
  *
  * Content offsets:
+ *
  *      <list> <listItem> </listItem> <list>
  *     .      .          .           .      .
  *
@@ -145,18 +147,22 @@ ve.dm.ElementLinearData.prototype.isContentOffset = function ( offset ) {
  * This method assumes that any value that has a type property that's a string is an element object.
  *
  * Structural offsets (unrestricted = false):
+ *
  *      <heading> a </heading> <paragraph> b c <img> </img> </paragraph>
  *     ^         . .          ^           . . .     .      .            ^
  *
  * Structural offsets (unrestricted = true):
+ *
  *      <heading> a </heading> <paragraph> b c <img> </img> </paragraph>
  *     ^         . .          ^           . . .     .      .            ^
  *
  * Structural offsets (unrestricted = false):
+ *
  *      <list> <listItem> </listItem> <list>
  *     ^      ^          ^           ^      ^
  *
  * Content branch offsets (unrestricted = true):
+ *
  *      <list> <listItem> </listItem> <list>
  *     ^      .          ^           .      ^
  *

@@ -51,11 +51,11 @@ QUnit.test( 'change', 3, function ( assert ) {
 		events.change++;
 	} );
 	surface.change( tx );
-	assert.deepEqual( events, { 'transact': 1, 'select': 0, 'change': 1 } );
-	surface.change( null, new ve.Range( 1, 1 ) );
-	assert.deepEqual( events, { 'transact': 1, 'select': 1, 'change': 2 } );
-	surface.change( tx, new ve.Range( 2, 2 ) );
-	assert.deepEqual( events, { 'transact': 2, 'select': 2, 'change': 3 } );
+	assert.deepEqual( events, { 'transact': 1, 'select': 0, 'change': 1 }, 'transaction without selection' );
+	surface.change( null, new ve.Range( 2, 2 ) );
+	assert.deepEqual( events, { 'transact': 1, 'select': 1, 'change': 2 }, 'selection without transaction' );
+	surface.change( tx, new ve.Range( 3, 3 ) );
+	assert.deepEqual( events, { 'transact': 2, 'select': 2, 'change': 3 }, 'transaction and selection' );
 } );
 
 QUnit.test( 'breakpoint', 7, function ( assert ) {

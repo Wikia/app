@@ -41,6 +41,8 @@ ve.inheritClass( ve.ui.OutlineItemWidget, ve.ui.OptionWidget );
 
 ve.ui.OutlineItemWidget.static.highlightable = false;
 
+ve.ui.OutlineItemWidget.static.scrollIntoViewOnSelect = true;
+
 ve.ui.OutlineItemWidget.static.levelClass = 've-ui-outlineItemWidget-level-';
 
 ve.ui.OutlineItemWidget.static.levels = 3;

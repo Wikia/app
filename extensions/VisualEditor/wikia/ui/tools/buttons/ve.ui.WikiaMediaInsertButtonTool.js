@@ -23,7 +23,9 @@ ve.inheritClass( ve.ui.WikiaMediaInsertButtonTool, ve.ui.IconTextButtonTool );
 
 /* Static Properties */
 
-ve.ui.WikiaMediaInsertButtonTool.static.name = 'insertMedia';
+ve.ui.WikiaMediaInsertButtonTool.static.name = 'wikiaMediaInsert';
+
+ve.ui.WikiaMediaInsertButtonTool.static.group = 'object';
 
 ve.ui.WikiaMediaInsertButtonTool.static.icon = 'media';
 
@@ -35,4 +37,4 @@ ve.ui.WikiaMediaInsertButtonTool.static.dialog = 'wikiaMediaInsert';
 
 /* Registration */
 
-ve.ui.toolFactory.register( 'insertMedia', ve.ui.WikiaMediaInsertButtonTool );
+ve.ui.toolFactory.register( ve.ui.WikiaMediaInsertButtonTool );

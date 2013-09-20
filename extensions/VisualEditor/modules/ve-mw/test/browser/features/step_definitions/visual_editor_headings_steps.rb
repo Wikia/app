@@ -11,7 +11,7 @@ Then(/^a paragraph should appear in the diff view$/) do
     page.wait_until(10) do
       page.paragraph_diff_view.include? 'Editing '
     end
-    page.paragraph_diff_view.should match Regexp.escape('Editing with ')
+    page.paragraph_diff_view.should match Regexp.new(/^Editing with /)
   end
 end
 
@@ -28,7 +28,7 @@ Then(/^a heading should appear in the diff view$/) do
     page.wait_until(10) do
       page.heading_diff_view.include? '==Editing '
     end
-    page.heading_diff_view.should match Regexp.escape('==Editing with ')
+    page.heading_diff_view.should match Regexp.new(/^==Editing with /)
   end
 end
 
@@ -41,7 +41,7 @@ Then(/^a sub\-heading1 should appear in the diff view$/) do
     page.wait_until(10) do
       page.heading_diff_view.include? '===Editing '
     end
-    page.heading_diff_view.should match Regexp.escape('===Editing with ')
+    page.heading_diff_view.should match Regexp.new(/^===Editing with /)
   end
 end
 
@@ -54,7 +54,7 @@ Then(/^a sub\-heading2 should appear in the diff view$/) do
     page.wait_until(10) do
      page.heading_diff_view.include? '====Editing '
     end
-    page.heading_diff_view.should match Regexp.escape('====Editing with ')
+    page.heading_diff_view.should match Regexp.new(/^====Editing with /)
   end
 end
 
@@ -67,7 +67,7 @@ Then(/^a sub\-heading3 should appear in the diff view$/) do
     page.wait_until(10) do
       page.heading_diff_view.include? '=====Editing '
     end
-    page.heading_diff_view.should match Regexp.escape('=====Editing with ')
+    page.heading_diff_view.should match Regexp.new(/^=====Editing with /)
   end
 end
 
@@ -80,7 +80,7 @@ Then(/^a sub\-heading4 should appear in the diff view$/) do
     page.wait_until(10) do
       page.heading_diff_view.include? '======Editing '
     end
-    page.heading_diff_view.should match Regexp.escape('======Editing with ')
+    page.heading_diff_view.should match Regexp.new(/^======Editing with /)
   end
 end
 
@@ -93,7 +93,7 @@ Then(/^a Preformatted should appear in the diff view$/) do
     page.wait_until(10) do
       page.heading_diff_view.include? ' Editing '
     end
-    page.heading_diff_view.should match Regexp.escape(' Editing with ')
+    page.heading_diff_view.should match Regexp.new(/^ Editing with /)
   end
 end
 
@@ -106,6 +106,6 @@ Then(/^a Page title should appear in the diff view$/) do
     page.wait_until(10) do
       page.heading_diff_view.include? '=Editing '
     end
-    page.heading_diff_view.should match Regexp.escape('=Editing with ')
+    page.heading_diff_view.should match Regexp.new(/^=Editing with /)
   end
 end

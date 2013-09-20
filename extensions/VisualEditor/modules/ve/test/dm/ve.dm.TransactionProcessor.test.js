@@ -305,6 +305,21 @@ QUnit.test( 'commit/rollback', function ( assert ) {
 					data.splice( 27, 2, metaElementInsert, metaElementInsertClose );
 				}
 			},
+			'replacing metadata twice at the same offset': {
+				'data': ve.dm.example.withMeta,
+				'calls': [
+					[ 'pushRetain', 11 ],
+					[ 'pushRetainMetadata', 1 ],
+					[ 'pushReplaceMetadata', [ ve.dm.example.withMetaMetaData[11][1] ], [ metaElementInsert ] ],
+					[ 'pushRetainMetadata', 1 ],
+					[ 'pushReplaceMetadata', [ ve.dm.example.withMetaMetaData[11][3] ], [ metaElementInsert ] ],
+					[ 'pushRetain', 1 ]
+				],
+				'expected': function ( data ) {
+					data.splice( 23, 2, metaElementInsert, metaElementInsertClose );
+					data.splice( 27, 2, metaElementInsert, metaElementInsertClose );
+				}
+			},
 			'removing data from between metadata merges metadata': {
 				'data': ve.dm.example.withMeta,
 				'calls': [
@@ -334,8 +349,209 @@ QUnit.test( 'commit/rollback', function ( assert ) {
 					['pushReplace', 0, 5, [ { 'type': 'table' }, { 'type': '/table' } ]]
 				],
 				'expected': function ( data ) {
-					data.splice( 0, 2, { 'type': 'table' }, { 'type': '/table' } );
+					data.splice( 0, 2 );
+					data.splice( 2, 3, { 'type': 'table' }, { 'type': '/table' } );
+				}
+			},
+			'structural replacement starting at an offset with metadata': {
+				'data': [
+					{
+						'type': 'alienMeta',
+						'attributes': {
+							'domElements': $( '<!-- foo -->' ).toArray()
+						}
+					},
+					{ 'type': '/alienMeta' },
+					{ 'type': 'paragraph' },
+					'F',
+					{
+						'type': 'alienMeta',
+						'attributes': {
+							'style': 'comment',
+							'text': ' inline '
+						}
+					},
+					{ 'type': '/alienMeta' },
+					'o', 'o',
+					{ 'type': '/paragraph' }
+				],
+				'calls': [
+					['pushReplace', 0, 5, [ { 'type': 'table' }, { 'type': '/table' } ]]
+				],
+				'expected': function ( data ) {
+					// metadata  is merged.
+					data.splice( 2, 2 );
+					data.splice( 4, 3, { 'type': 'table' }, { 'type': '/table' } );
+				}
+			},
+			'structural replacement ending at an offset with metadata': {
+				'data': [
+					{
+						'type': 'alienMeta',
+						'attributes': {
+							'domElements': $( '<!-- foo -->' ).toArray()
+						}
+					},
+					{ 'type': '/alienMeta' },
+					{ 'type': 'paragraph' },
+					'F',
+					{
+						'type': 'alienMeta',
+						'attributes': {
+							'style': 'comment',
+							'text': ' inline '
+						}
+					},
+					{ 'type': '/alienMeta' },
+					'o', 'o',
+					{ 'type': '/paragraph' },
+					{
+						'type': 'alienMeta',
+						'attributes': {
+							'domElements': $( '<!-- bar -->' ).toArray()
+						}
+					},
+					{ 'type': '/alienMeta' },
+					{ 'type': 'paragraph' },
+					'B', 'a', 'r',
+					{ 'type': '/paragraph' }
+				],
+				'calls': [
+					['pushReplace', 0, 5, [ { 'type': 'table' }, { 'type': '/table' } ]],
+					['pushRetain', 5 ]
+				],
+				'expected': function ( data ) {
+					// metadata  is merged.
+					data.splice( 2, 2 );
+					data.splice( 4, 3, { 'type': 'table' }, { 'type': '/table' } );
+				}
+			},
+			'structural deletion ending at an offset with metadata': {
+				'data': [
+					{
+						'type': 'alienMeta',
+						'attributes': {
+							'domElements': $( '<!-- foo -->' ).toArray()
+						}
+					},
+					{ 'type': '/alienMeta' },
+					{ 'type': 'paragraph' },
+					'F',
+					{
+						'type': 'alienMeta',
+						'attributes': {
+							'style': 'comment',
+							'text': ' inline '
+						}
+					},
+					{ 'type': '/alienMeta' },
+					'o', 'o',
+					{ 'type': '/paragraph' },
+					{
+						'type': 'alienMeta',
+						'attributes': {
+							'domElements': $( '<!-- bar -->' ).toArray()
+						}
+					},
+					{ 'type': '/alienMeta' },
+					{ 'type': 'paragraph' },
+					'B', 'a', 'r',
+					{ 'type': '/paragraph' }
+				],
+				'calls': [
+					['pushReplace', 0, 5, [] ],
+					['pushRetain', 5 ]
+				],
+				'expected': function ( data ) {
+					// metadata  is merged.
+					data.splice( 2, 2 );
 					data.splice( 4, 3 );
+				}
+			},
+			'preserves metadata on unwrap': {
+				'data': ve.dm.example.listWithMeta,
+				'calls': [
+					[ 'newFromWrap', new ve.Range( 1, 11 ),
+					  [ { 'type': 'list' } ], [],
+					  [ { 'type': 'listItem', 'attributes': {'styles': ['bullet']} } ], [] ]
+				],
+				'expected': function ( data ) {
+					data.splice( 35, 1 ); // remove '/list'
+					data.splice( 32, 1 ); // remove '/listItem'
+					data.splice( 20, 1 ); // remove 'listItem'
+					data.splice( 17, 1 ); // remove '/listItem'
+					data.splice(  5, 1 ); // remove 'listItem'
+					data.splice(  2, 1 ); // remove 'list'
+				}
+			},
+			'inserting trailing metadata (1)': {
+				'data': ve.dm.example.listWithMeta,
+				'calls': [
+					[ 'newFromMetadataInsertion', 12, 0, [
+						{
+							'type': 'alienMeta',
+							'attributes': {
+								'domElements': $( '<meta property="fourteen" />' ).toArray()
+							}
+						}
+					] ]
+				],
+				'expected': function ( data ) {
+					ve.batchSplice( data, data.length - 2, 0, [
+						{
+							'type': 'alienMeta',
+							'attributes': {
+								'domElements': $( '<meta property="fourteen" />' ).toArray()
+							}
+						},
+						{
+							'type': '/alienMeta'
+						}
+					] );
+				}
+			},
+			'inserting trailing metadata (2)': {
+				'data': ve.dm.example.listWithMeta,
+				'calls': [
+					[ 'newFromMetadataInsertion', 12, 1, [
+						{
+							'type': 'alienMeta',
+							'attributes': {
+								'domElements': $( '<meta property="fourteen" />' ).toArray()
+							}
+						}
+					] ]
+				],
+				'expected': function ( data ) {
+					ve.batchSplice( data, data.length, 0, [
+						{
+							'type': 'alienMeta',
+							'attributes': {
+								'domElements': $( '<meta property="fourteen" />' ).toArray()
+							}
+						},
+						{
+							'type': '/alienMeta'
+						}
+					] );
+				}
+			},
+			'removing trailing metadata': {
+				'data': ve.dm.example.listWithMeta,
+				'calls': [
+					[ 'newFromMetadataRemoval', 12, new ve.Range( 0, 1 ) ]
+				],
+				'expected': function ( data ) {
+					ve.batchSplice( data, data.length - 2, 2, [] );
+				}
+			},
+			'preserves trailing metadata': {
+				'data': ve.dm.example.listWithMeta,
+				'calls': [
+					[ 'newFromInsertion', 4, [ 'b' ] ]
+				],
+				'expected': function ( data ) {
+					ve.batchSplice( data, 12, 0, [ 'b' ] );
 				}
 			}
 		};
@@ -358,9 +574,14 @@ QUnit.test( 'commit/rollback', function ( assert ) {
 
 		tx = new ve.dm.Transaction();
 		for ( i = 0; i < cases[msg].calls.length; i++ ) {
-			// pushReplace needs the document as its first argument
-			if ( cases[msg].calls[i][0] === 'pushReplace' ) {
+			// some calls need the document as its first argument
+			if ( /^(pushReplace$|new)/.test( cases[msg].calls[i][0] ) ) {
 				cases[msg].calls[i].splice( 1, 0, testDoc );
+			}
+			// special case static methods of Transaction
+			if ( /^new/.test( cases[msg].calls[i][0] ) ) {
+				tx = ve.dm.Transaction[cases[msg].calls[i][0]].apply( null, cases[msg].calls[i].slice( 1 ) );
+				break;
 			}
 			tx[cases[msg].calls[i][0]].apply( tx, cases[msg].calls[i].slice( 1 ) );
 		}

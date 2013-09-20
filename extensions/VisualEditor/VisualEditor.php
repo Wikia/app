@@ -50,16 +50,21 @@ $wgAPIModules['apiphotoattribution'] = 'ApiPhotoAttribution';
 // Register Hooks
 $wgHooks['BeforePageDisplay'][] = 'VisualEditorHooks::onBeforePageDisplay';
 $wgHooks['DoEditSectionLink'][] = 'VisualEditorHooks::onDoEditSectionLink';
+if ( array_key_exists( 'GetBetaFeaturePreferences', $wgHooks ) ) {
+	$wgHooks['GetBetaFeaturePreferences'][] = 'VisualEditorHooks::onGetBetaPreferences';
+}
 $wgHooks['GetPreferences'][] = 'VisualEditorHooks::onGetPreferences';
 $wgHooks['ListDefinedTags'][] = 'VisualEditorHooks::onListDefinedTags';
 $wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorHooks::onMakeGlobalVariablesScript';
 $wgHooks['ResourceLoaderGetConfigVars'][] = 'VisualEditorHooks::onResourceLoaderGetConfigVars';
 $wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorHooks::onResourceLoaderTestModules';
 $wgHooks['SkinTemplateNavigation'][] = 'VisualEditorHooks::onSkinTemplateNavigation';
+$wgHooks['ParserTestGlobals'][] = 'VisualEditorHooks::onParserTestGlobals';
 $wgExtensionFunctions[] = 'VisualEditorHooks::onSetup';
 
 // Set default values for new preferences
 $wgDefaultUserOptions['visualeditor-enable'] = 0;
+$wgDefaultUserOptions['visualeditor-enable-experimental'] = 0;
 $wgDefaultUserOptions['visualeditor-betatempdisable'] = 0;
 
 // Register resource modules
@@ -267,6 +272,7 @@ $wgResourceModules += array(
 			've/ve.LeafNode.js',
 			've/ve.Element.js',
 			've/ve.Document.js',
+			've/ve.EventSequencer.js',
 
 			// dm
 			've/dm/ve.dm.js',
@@ -415,7 +421,9 @@ $wgResourceModules += array(
 			// ui
 			've/ui/ve.ui.js',
 
+			've/ui/elements/ve.ui.ClippableElement.js',
 			've/ui/elements/ve.ui.LabeledElement.js',
+			've/ui/elements/ve.ui.IconedElement.js',
 			've/ui/elements/ve.ui.GroupElement.js',
 			've/ui/elements/ve.ui.FlaggableElement.js',
 
@@ -496,33 +504,21 @@ $wgResourceModules += array(
 			've-mw/ui/dialogs/ve.ui.MWReferenceListDialog.js',
 			've-mw/ui/dialogs/ve.ui.MWReferenceDialog.js',
 
-			've/ui/tools/ve.ui.ButtonTool.js',
-			've/ui/tools/ve.ui.AnnotationButtonTool.js',
-			've/ui/tools/ve.ui.DialogButtonTool.js',
-			've/ui/tools/ve.ui.InspectorButtonTool.js',
-			've/ui/tools/ve.ui.IndentationButtonTool.js',
-			've/ui/tools/ve.ui.ListButtonTool.js',
-			've/ui/tools/ve.ui.DropdownTool.js',
+			've/ui/tools/ve.ui.AnnotationTool.js',
+			've/ui/tools/ve.ui.ClearAnnotationTool.js',
+			've/ui/tools/ve.ui.DialogTool.js',
+			've/ui/tools/ve.ui.FormatTool.js',
+			've/ui/tools/ve.ui.HistoryTool.js',
+			've/ui/tools/ve.ui.IndentationTool.js',
+			've/ui/tools/ve.ui.InspectorTool.js',
+			've/ui/tools/ve.ui.ListTool.js',
+			've/ui/toolgroups/ve.ui.BarToolGroup.js',
+			've/ui/toolgroups/ve.ui.PopupToolGroup.js',
+			've/ui/toolgroups/ve.ui.ListToolGroup.js',
+			've/ui/toolgroups/ve.ui.MenuToolGroup.js',
 
-			've/ui/tools/buttons/ve.ui.BoldButtonTool.js',
-			've/ui/tools/buttons/ve.ui.ItalicButtonTool.js',
-			've/ui/tools/buttons/ve.ui.ClearButtonTool.js',
-			've/ui/tools/buttons/ve.ui.LinkButtonTool.js',
-			've-mw/ui/tools/buttons/ve.ui.MWLinkButtonTool.js',
-			've-mw/ui/tools/buttons/ve.ui.MWMediaInsertButtonTool.js',
-			've-mw/ui/tools/buttons/ve.ui.MWMediaEditButtonTool.js',
-			've/ui/tools/buttons/ve.ui.BulletButtonTool.js',
-			've/ui/tools/buttons/ve.ui.NumberButtonTool.js',
-			've/ui/tools/buttons/ve.ui.IndentButtonTool.js',
-			've/ui/tools/buttons/ve.ui.OutdentButtonTool.js',
-			've/ui/tools/buttons/ve.ui.RedoButtonTool.js',
-			've/ui/tools/buttons/ve.ui.UndoButtonTool.js',
-			've-mw/ui/tools/buttons/ve.ui.MWTransclusionButtonTool.js',
-			've-mw/ui/tools/buttons/ve.ui.MWReferenceListButtonTool.js',
-			've-mw/ui/tools/buttons/ve.ui.MWReferenceButtonTool.js',
-
-			've/ui/tools/dropdowns/ve.ui.FormatDropdownTool.js',
-			've-mw/ui/tools/dropdowns/ve.ui.MWFormatDropdownTool.js',
+			've-mw/ui/tools/ve.ui.MWFormatTool.js',
+			've-mw/ui/tools/ve.ui.MWDialogTool.js',
 
 			've/ui/inspectors/ve.ui.AnnotationInspector.js',
 			've/ui/inspectors/ve.ui.LinkInspector.js',
@@ -540,8 +536,8 @@ $wgResourceModules += array(
 			've/ui/styles/ve.ui.Frame.css',
 			've/ui/styles/ve.ui.Window.css',
 			've/ui/styles/ve.ui.Toolbar.css',
+			've/ui/styles/ve.ui.ToolGroup.css',
 			've/ui/styles/ve.ui.Tool.css',
-			've-mw/ui/styles/ve.ui.Tool.css',
 			've/ui/styles/ve.ui.Element.css',
 			've/ui/styles/ve.ui.Layout.css',
 			've/ui/styles/ve.ui.Widget.css',
@@ -567,6 +563,10 @@ $wgResourceModules += array(
 			'visualeditor-annotationbutton-code-tooltip',
 			'visualeditor-annotationbutton-italic-tooltip',
 			'visualeditor-annotationbutton-link-tooltip',
+			'visualeditor-annotationbutton-strikethrough-tooltip',
+			'visualeditor-annotationbutton-subscript-tooltip',
+			'visualeditor-annotationbutton-superscript-tooltip',
+			'visualeditor-annotationbutton-underline-tooltip',
 			'visualeditor-beta-label',
 			'visualeditor-beta-warning',
 			'visualeditor-browserwarning',
@@ -575,6 +575,9 @@ $wgResourceModules += array(
 			'visualeditor-dialog-action-cancel',
 			'visualeditor-dialog-action-close',
 			'visualeditor-dialog-action-goback',
+			'visualeditor-dialog-beta-welcome-action-continue',
+			'visualeditor-dialog-beta-welcome-content',
+			'visualeditor-dialog-beta-welcome-title',
 			'visualeditor-dialog-media-content-section',
 			'visualeditor-dialog-media-insert-button',
 			'visualeditor-dialog-media-insert-title',
@@ -614,9 +617,6 @@ $wgResourceModules += array(
 			'visualeditor-dialog-transclusion-remove-template',
 			'visualeditor-dialog-transclusion-title',
 			'visualeditor-dialog-transclusion-wikitext-label',
-			'visualeditor-dialog-beta-welcome-title',
-			'visualeditor-dialog-beta-welcome-content',
-			'visualeditor-dialog-beta-welcome-action-continue',
 			'visualeditor-dialogbutton-media-tooltip',
 			'visualeditor-dialogbutton-meta-tooltip',
 			'visualeditor-dialogbutton-reference-tooltip',
@@ -637,8 +637,8 @@ $wgResourceModules += array(
 			'visualeditor-formatdropdown-format-paragraph',
 			'visualeditor-formatdropdown-format-preformatted',
 			'visualeditor-formatdropdown-title',
-			'visualeditor-help-link',
 			'visualeditor-help-label',
+			'visualeditor-help-link',
 			'visualeditor-help-title',
 			'visualeditor-historybutton-redo-tooltip',
 			'visualeditor-historybutton-undo-tooltip',
@@ -682,7 +682,9 @@ $wgResourceModules += array(
 			'visualeditor-saveerror',
 			'visualeditor-serializeerror',
 			'visualeditor-toolbar-cancel',
+			'visualeditor-toolbar-more',
 			'visualeditor-toolbar-savedialog',
+			'visualeditor-version-label',
 			'visualeditor-viewpage-savewarning',
 			'visualeditor-wikitext-warning-title',
 			'visualeditor-window-title',
@@ -706,21 +708,14 @@ $wgResourceModules += array(
 			've-mw/ce/nodes/ve.ce.MWMathNode.js',
 			've-mw/ui/inspectors/ve.ui.MWExtensionInspector.js',
 			've-mw/ui/inspectors/ve.ui.MWAlienExtensionInspector.js',
-			've-mw/ui/tools/buttons/ve.ui.MWAlienExtensionButtonTool.js',
 			've-mw/ui/inspectors/ve.ui.MWHieroInspector.js',
-			've-mw/ui/tools/buttons/ve.ui.MWHieroButtonTool.js',
 			've-mw/ui/inspectors/ve.ui.MWMathInspector.js',
-			've-mw/ui/tools/buttons/ve.ui.MWMathButtonTool.js',
 			've/dm/annotations/ve.dm.LanguageAnnotation.js',
 			've/ce/annotations/ve.ce.LanguageAnnotation.js',
 			've/ui/inspectors/ve.ui.LanguageInspector.js',
-			've/ui/tools/buttons/ve.ui.LanguageButtonTool.js',
 			've/ui/widgets/ve.ui.LanguageInputWidget.js',
-			've/ui/tools/buttons/ve.ui.CodeButtonTool.js',
-			've/ui/tools/buttons/ve.ui.StrikethroughButtonTool.js',
-			've/ui/tools/buttons/ve.ui.SubscriptButtonTool.js',
-			've/ui/tools/buttons/ve.ui.SuperscriptButtonTool.js',
-			've/ui/tools/buttons/ve.ui.UnderlineButtonTool.js',
+			've/ui/tools/ve.ui.ExperimentalTool.js',
+			've-mw/ui/tools/ve.ui.MWExperimentalTool.js',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core',
@@ -738,10 +733,6 @@ $wgResourceModules += array(
 			'visualeditor-languageinspector-block-tooltip',
 			'visualeditor-languageinspector-block-tooltip-rtldirection',
 			'visualeditor-annotationbutton-language-tooltip',
-			'visualeditor-annotationbutton-strikethrough-tooltip',
-			'visualeditor-annotationbutton-subscript-tooltip',
-			'visualeditor-annotationbutton-superscript-tooltip',
-			'visualeditor-annotationbutton-underline-tooltip',
 			'visualeditor-mwalienextensioninspector-title',
 			'visualeditor-mwhieroinspector-title',
 			'visualeditor-mwmathinspector-title',
@@ -790,9 +781,6 @@ $wgVisualEditorUseChangeTagging = true;
 // This allows you to enable the 'visualeditor-enable' preference by default
 // but still disable VE for logged-out users (by setting this to false).
 $wgVisualEditorDisableForAnons = false;
-
-// Whether to enable incomplete experimental code
-$wgVisualEditorEnableExperimentalCode = false;
 
 // Whether to show the "welcome to the beta" dialog the first time a user uses VisualEditor
 $wgVisualEditorShowBetaWelcome = false;

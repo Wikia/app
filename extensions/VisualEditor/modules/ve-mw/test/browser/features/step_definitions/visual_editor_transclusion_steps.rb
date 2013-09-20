@@ -15,14 +15,21 @@ When(/^I click Remove template$/) do
 end
 
 When(/^I click Transclusion$/) do
-  on(VisualEditorPage).transclusion_element.when_present.click
+  on(VisualEditorPage) do |page|
+    page.more_menu_element.when_present.click
+    page.transclusion_element.when_present.click
+  end
 end
 
 When(/^I enter (.+) in the parameter box$/) do |param_value|
   on(VisualEditorPage) do |page|
-      page.parameter_box_element.when_present
-      page.parameter_box=param_value
+    sleep 1
+    page.parameter_box_element.when_present.send_keys(param_value)
   end
+end
+
+When(/^I enter (.+) into transclusion Content box$/) do |content|
+  on(VisualEditorPage).transclusion_textfield_element.when_present.send_keys(content)
 end
 
 Then(/^I should see a list of template suggestions$/) do

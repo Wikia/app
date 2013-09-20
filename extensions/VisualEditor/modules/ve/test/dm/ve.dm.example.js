@@ -126,6 +126,7 @@ ve.dm.example.createExampleDocumentFromObject = function ( name, store, object )
 	if ( object[name].internalItems ) {
 		for ( i = 0; i < object[name].internalItems.length; i++ ) {
 			doc.internalList.queueItemHtml(
+				object[name].internalItems[i].group,
 				object[name].internalItems[i].key,
 				object[name].internalItems[i].body
 			);
@@ -164,6 +165,25 @@ ve.dm.example.testDir = window.VE_TESTDIR || '.';
 
 ve.dm.example.imgSrc = ve.dm.example.testDir + '/example.png';
 
+ve.dm.example.image = {
+	html: '<img src="' + ve.dm.example.imgSrc + '" alt="Example" width="100" height="50">',
+	data: {
+		'type': 'image',
+		'attributes' : {
+			'src': ve.dm.example.imgSrc,
+			'alt': 'Example',
+			'width': 100,
+			'height': 50
+		},
+		'htmlAttributes': [ { 'values': {
+			'src': ve.dm.example.imgSrc,
+			'alt': 'Example',
+			'width': '100',
+			'height': '50'
+		} } ]
+	}
+};
+
 /**
  * Serialized HTML.
  *
@@ -194,7 +214,7 @@ ve.dm.example.html =
 			'</td>' +
 		'</tr>' +
 	'</table>' +
-	'<pre>h<img src="' + ve.dm.example.imgSrc + '">i</pre>'+
+	'<pre>h' + ve.dm.example.image.html + 'i</pre>'+
 	'<dl>' +
 		'<dt>' +
 			'<p>j</p>' +
@@ -304,15 +324,7 @@ ve.dm.example.data = [
 	// 38 - Plain "h"
 	'h',
 	// 39 - Beginning of inline image
-	{
-		'type': 'image',
-		'attributes': {
-			'src': ve.dm.example.imgSrc,
-			'width': null,
-			'height': null
-		},
-		'htmlAttributes': [ { 'values': { 'src': ve.dm.example.imgSrc } } ]
-	},
+	ve.dm.example.image.data,
 	// 40 - End of inline image
 	{ 'type': '/image' },
 	// 41 - Plain "i"
@@ -412,8 +424,8 @@ ve.dm.example.internalData = [
 ];
 
 ve.dm.example.internalData.internalItems = [
-	{ 'key': 'bar', 'body': 'Bar' },
-	{ 'key': 'baz', 'body': 'Baz' }
+	{ 'group': 'test', 'key': 'bar', 'body': 'Bar' },
+	{ 'group': 'test', 'key': 'baz', 'body': 'Baz' }
 ];
 
 ve.dm.example.withMeta = [
@@ -588,6 +600,126 @@ ve.dm.example.withMetaMetaData = [
 ];
 
 
+ve.dm.example.listWithMeta = [
+	//  0 - Beginning of list
+	{
+		'type': 'alienMeta',
+		'attributes': {
+			'domElements': $( '<meta property="one" />' ).toArray()
+		}
+	},
+	{ 'type': '/alienMeta' },
+	{ 'type': 'list' },
+	//  1 - Beginning of first list item
+	{
+		'type': 'alienMeta',
+		'attributes': {
+			'domElements': $( '<meta property="two" />' ).toArray()
+		}
+	},
+	{ 'type': '/alienMeta' },
+	{ 'type': 'listItem', 'attributes': { 'styles': ['bullet'] } },
+	//  2 - Beginning of paragraph
+	{
+		'type': 'alienMeta',
+		'attributes': {
+			'domElements': $( '<meta property="three" />' ).toArray()
+		}
+	},
+	{ 'type': '/alienMeta' },
+	{ 'type': 'paragraph' },
+	//  3 - Plain "a"
+	{
+		'type': 'alienMeta',
+		'attributes': {
+			'domElements': $( '<meta property="four" />' ).toArray()
+		}
+	},
+	{ 'type': '/alienMeta' },
+	'a',
+	//  4 - End of paragraph
+	{
+		'type': 'alienMeta',
+		'attributes': {
+			'domElements': $( '<meta property="five" />' ).toArray()
+		}
+	},
+	{ 'type': '/alienMeta' },
+	{ 'type': '/paragraph' },
+	//  5 - End of first list item
+	{
+		'type': 'alienMeta',
+		'attributes': {
+			'domElements': $( '<meta property="six" />' ).toArray()
+		}
+	},
+	{ 'type': '/alienMeta' },
+	{ 'type': '/listItem' },
+	//  6 - Beginning of second list item
+	{
+		'type': 'alienMeta',
+		'attributes': {
+			'domElements': $( '<meta property="seven" />' ).toArray()
+		}
+	},
+	{ 'type': '/alienMeta' },
+	{ 'type': 'listItem', 'attributes': { 'styles': ['bullet'] } },
+	//  7 - Beginning of paragraph
+	{
+		'type': 'alienMeta',
+		'attributes': {
+			'domElements': $( '<meta property="eight" />' ).toArray()
+		}
+	},
+	{ 'type': '/alienMeta' },
+	{ 'type': 'paragraph' },
+	//  8 - Plain "b"
+	{
+		'type': 'alienMeta',
+		'attributes': {
+			'domElements': $( '<meta property="nine" />' ).toArray()
+		}
+	},
+	{ 'type': '/alienMeta' },
+	'b',
+	//  9 - End of paragraph
+	{
+		'type': 'alienMeta',
+		'attributes': {
+			'domElements': $( '<meta property="ten" />' ).toArray()
+		}
+	},
+	{ 'type': '/alienMeta' },
+	{ 'type': '/paragraph' },
+	// 10 - End of second list item
+	{
+		'type': 'alienMeta',
+		'attributes': {
+			'domElements': $( '<meta property="eleven" />' ).toArray()
+		}
+	},
+	{ 'type': '/alienMeta' },
+	{ 'type': '/listItem' },
+	// 11 - End of list
+	{
+		'type': 'alienMeta',
+		'attributes': {
+			'domElements': $( '<meta property="twelve" />' ).toArray()
+		}
+	},
+	{ 'type': '/alienMeta' },
+	{ 'type': '/list' },
+	// 12 - Trailing metadata
+	{
+		'type': 'alienMeta',
+		'attributes': {
+			'domElements': $( '<meta property="thirteen" />' ).toArray()
+		}
+	},
+	{ 'type': '/alienMeta' }
+];
+
+
 ve.dm.example.complexTableHtml = '<table><caption>Foo</caption><thead><tr><th>Bar</th></tr></thead>' +
 	'<tfoot><tr><td>Baz</td></tr></tfoot><tbody><tr><td>Quux</td><td>Whee</td></tr></tbody></table>';
 
@@ -649,15 +781,7 @@ ve.dm.example.complexTable = [
 
 ve.dm.example.inlineAtEdges = [
 	{ 'type': 'paragraph' },
-	{
-		'type': 'image',
-		'attributes': {
-			'src': ve.dm.example.imgSrc,
-			'width': null,
-			'height': null
-		},
-		'htmlAttributes': [ { 'values': { 'src': ve.dm.example.imgSrc } } ]
-	},
+	ve.dm.example.image.data,
 	{ 'type': '/image' },
 	'F',
 	'o',
@@ -932,18 +1056,10 @@ ve.dm.example.domToDataCases = {
 		'normalizedHtml': '<body><p>foo</p><p>bar</p><h2>baz</h2><pre> \tquux</pre></body>'
 	},
 	'image': {
-		'html': '<body><img src="' + ve.dm.example.imgSrc + '"></body>',
+		'html': '<body>' + ve.dm.example.image.html + '</body>',
 		'data': [
 			{ 'type': 'paragraph', 'internal': { 'generated': 'wrapper' } },
-			{
-				'type': 'image',
-				'attributes' : {
-					'width': null,
-					'height': null,
-					'src': ve.dm.example.imgSrc
-				},
-				'htmlAttributes': [ { 'values': { 'src': ve.dm.example.imgSrc } } ]
-			},
+			ve.dm.example.image.data,
 			{ 'type' : '/image' },
 			{ 'type': '/paragraph' },
 			{ 'type': 'internalList' },
@@ -1159,18 +1275,10 @@ ve.dm.example.domToDataCases = {
 		]
 	},
 	'wrapping of bare content starting with inline node': {
-		'html': '<body><img src="' + ve.dm.example.imgSrc + '">12</body>',
+		'html': '<body>' + ve.dm.example.image.html + '12</body>',
 		'data': [
 			{ 'type': 'paragraph', 'internal': { 'generated': 'wrapper' } },
-			{
-				'type': 'image',
-				'attributes': {
-					'src': ve.dm.example.imgSrc,
-					'width': null,
-					'height': null
-				},
-				'htmlAttributes': [ { 'values': { 'src': ve.dm.example.imgSrc } } ]
-			},
+			ve.dm.example.image.data,
 			{ 'type': '/image' },
 			'1',
 			'2',

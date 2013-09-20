@@ -16,8 +16,8 @@ and [Parsoid][] pages on mediawiki.
 For information on installing VisualEditor on a local wiki, please
 see https://www.mediawiki.org/wiki/Extension:VisualEditor
 
-For information about contributing code to VisualEditor, see
-[CODING.md][].  Patch submissions are reviewed and managed with
+For information about running tests and contributing code to VisualEditor,
+see [CODING.md][].  Patch submissions are reviewed and managed with
 [Gerrit][].  There is also [API documentation][] available for the
 VisualEditor.
 

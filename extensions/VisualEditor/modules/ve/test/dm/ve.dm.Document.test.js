@@ -112,35 +112,6 @@ QUnit.test( 'getDocumentSlice', function ( assert ) {
 	}
 } );
 
-QUnit.test( 'getMetadataReplace', 3, function ( assert ) {
-	var replace, expectedReplace,
-		doc = ve.dm.example.createExampleDocument( 'withMeta' );
-
-	replace = doc.getMetadataReplace( 10, 1, [] );
-	expectedReplace = {
-		'retain': 0,
-		'remove': doc.getMetadata().slice( 10, 12 ),
-		'insert': ve.dm.MetaLinearData.static.merge( doc.getMetadata().slice( 10, 12 ) )
-	};
-	assert.deepEqual( replace, expectedReplace, 'removing one element at offset 10' );
-
-	replace = doc.getMetadataReplace( 5, 2, [] );
-	expectedReplace = {
-		'retain': 0,
-		'remove': doc.getMetadata().slice( 5, 8 ),
-		'insert': ve.dm.MetaLinearData.static.merge( doc.getMetadata().slice( 5, 8 ) )
-	};
-	assert.deepEqual( replace, expectedReplace, 'removing two elements at offset 5' );
-
-	replace = doc.getMetadataReplace( 1, 8, [] );
-	expectedReplace = {
-		'retain': 0,
-		'remove': doc.getMetadata().slice( 1, 10 ),
-		'insert': ve.dm.MetaLinearData.static.merge( doc.getMetadata().slice( 1, 10 ) )
-	};
-	assert.deepEqual( replace, expectedReplace, 'blanking paragraph, removing 8 elements at offset 1' );
-} );
-
 QUnit.test( 'getNodeFromOffset', function ( assert ) {
 	var i, j, node,
 		doc = ve.dm.example.createExampleDocument(),

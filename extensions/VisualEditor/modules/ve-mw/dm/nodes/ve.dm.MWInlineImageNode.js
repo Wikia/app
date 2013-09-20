@@ -61,7 +61,6 @@ ve.dm.MWInlineImageNode.static.toDataElement = function ( domElements ) {
 
 	attributes.width = width !== undefined && width !== '' ? Number( width ) : null;
 	attributes.height = height !== undefined && height !== '' ? Number( height ) : null;
-
 	attributes.isLinked = $firstChild.is( 'a' );
 	if ( attributes.isLinked ) {
 		attributes.href = $firstChild.attr( 'href' );
@@ -133,6 +132,8 @@ ve.dm.MWInlineImageNode.static.toDomElements = function ( data, doc ) {
 			this.typeToRdfa[this.rdfaToType[rdfa]] = rdfa;
 		}
 	}
+
+	span.setAttribute( 'typeof', this.typeToRdfa[data.attributes.type] );
 
 	span.setAttribute( 'typeof', this.typeToRdfa[data.attributes.type] );
 

@@ -266,3 +266,8 @@
 	/* @embed */
 	background-image: url(images/icons/add-item.svg);
 }
+
+.ve-ui-icon-language {
+	/* @embed */
+	background-image: url(images/icons/language.svg);
+}

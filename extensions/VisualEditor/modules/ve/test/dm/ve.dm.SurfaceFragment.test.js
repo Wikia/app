@@ -16,7 +16,7 @@ QUnit.test( 'constructor', 8, function ( assert ) {
 	// Default range and autoSelect
 	assert.strictEqual( fragment.getSurface(), surface, 'surface reference is stored' );
 	assert.strictEqual( fragment.getDocument(), doc, 'document reference is stored' );
-	assert.deepEqual( fragment.getRange(), new ve.Range( 0, 0 ), 'range is taken from surface' );
+	assert.deepEqual( fragment.getRange(), new ve.Range( 1, 1 ), 'range is taken from surface' );
 	assert.strictEqual( fragment.willAutoSelect(), true, 'auto select by default' );
 	assert.strictEqual( fragment.isNull(), false, 'valid fragment is not null' );
 	// Invalid range and autoSelect

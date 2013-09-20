@@ -47,6 +47,7 @@ QUnit.test( 'newFromInsertion', function ( assert ) {
 		doc = ve.dm.example.createExampleDocument(),
 		isolationDoc = ve.dm.example.createExampleDocument( 'isolationData' ),
 		complexTableDoc = ve.dm.example.createExampleDocument( 'complexTable' ),
+		listWithMetaDoc = ve.dm.example.createExampleDocument( 'listWithMeta' ),
 		doc2 = new ve.dm.Document(
 			ve.dm.example.preprocessAnnotations( [ { 'type': 'paragraph' }, { 'type': '/paragraph' } ] )
 		),
@@ -308,6 +309,19 @@ QUnit.test( 'newFromInsertion', function ( assert ) {
 					},
 					{ 'type': 'retain', 'length': 13 }
 				]
+			},
+			'preserving trailing metadata': {
+				'args': [ listWithMetaDoc, 4, [ 'b' ] ],
+				'ops': [
+					{ 'type': 'retain', 'length': 4 },
+					{
+						'type': 'replace',
+						'remove': [],
+						'insert': [ 'b' ]
+					},
+					{ 'type': 'retain', 'length': 8 },
+					{ 'type': 'retainMetadata', 'length': 1 }
+				]
 			}
 			// TODO test cases for unclosed openings
 			// TODO test cases for (currently failing) unopened closings use case
@@ -386,15 +400,7 @@ QUnit.test( 'newFromRemoval', function ( assert ) {
 						'type': 'replace',
 						'remove': [
 							'h',
-							{
-								'type': 'image',
-								'attributes': {
-									'src': ve.dm.example.imgSrc,
-									'width': null,
-									'height': null
-								},
-								'htmlAttributes': [ { 'values': { 'src': ve.dm.example.imgSrc } } ]
-							},
+							ve.dm.example.image.data,
 							{ 'type': '/image' },
 							'i'
 						],
@@ -577,9 +583,13 @@ QUnit.test( 'newFromRemoval', function ( assert ) {
 						'type': 'replace',
 						'remove': ['B', 'a'],
 						'insert': [],
-						'retainMetadata': 0,
-						'removeMetadata': metaDoc.getMetadata().slice( 7, 10 ),
-						'insertMetadata': ve.dm.MetaLinearData.static.merge( metaDoc.getMetadata().slice( 7, 10 ) )
+						'removeMetadata': metaDoc.getMetadata().slice( 7, 9 ),
+						'insertMetadata': []
+					},
+					{
+						'type': 'replaceMetadata',
+						'remove': [],
+						'insert': ve.dm.MetaLinearData.static.merge( metaDoc.getMetadata().slice( 7, 9 ) )[0]
 					},
 					{ 'type': 'retain', 'length': 4 }
 				]
@@ -1025,6 +1035,9 @@ QUnit.test( 'newFromContentBranchConversion', function ( assert ) {
 QUnit.test( 'newFromWrap', function ( assert ) {
 	var i, key,
 		doc = ve.dm.example.createExampleDocument(),
+		metaDoc = ve.dm.example.createExampleDocument( 'withMeta' ),
+		listMetaDoc = ve.dm.example.createExampleDocument( 'listWithMeta' ),
+		listDoc = ve.dm.example.createExampleDocumentFromObject( 'listDoc', null, { 'listDoc': listMetaDoc.getData() } ),
 		cases = {
 			'changes a heading to a paragraph': {
 				'args': [doc, new ve.Range( 1, 4 ), [ { 'type': 'heading', 'attributes': { 'level': 1 } } ], [ { 'type': 'paragraph' } ], [], []],
@@ -1047,6 +1060,25 @@ QUnit.test( 'newFromWrap', function ( assert ) {
 					{ 'type': 'retain', 'length': 10 },
 					{ 'type': 'replace', 'remove': [ { 'type': '/listItem' }, { 'type': '/list' } ], 'insert': [] },
 					{ 'type': 'retain', 'length': 37 }
+				]
+			},
+			'unwraps a multiple-item list': {
+				'args': [listDoc, new ve.Range( 1, 11 ), [ { 'type': 'list' } ], [], [ { 'type': 'listItem', 'attributes': {'styles': ['bullet']} } ], [] ],
+				'ops': [
+					{ 'type': 'replace',
+					  'remove': [ { 'type': 'list' }, { 'type': 'listItem', 'attributes': { 'styles': ['bullet'] } } ],
+					  'insert': []
+					},
+					{ 'type': 'retain', 'length': 3 },
+					{ 'type': 'replace',
+					  'remove': [ { 'type': '/listItem' }, { 'type': 'listItem', 'attributes': { 'styles': ['bullet'] } } ],
+					  'insert': []
+					},
+					{ 'type': 'retain', 'length': 3 },
+					{ 'type': 'replace',
+					  'remove': [ { 'type': '/listItem' }, { 'type': '/list' } ],
+					  'insert': []
+					}
 				]
 			},
 			'replaces a table with a list': {
@@ -1093,6 +1125,61 @@ QUnit.test( 'newFromWrap', function ( assert ) {
 					{ 'type': 'retain', 'length': 3 },
 					{ 'type': 'replace', 'remove': [], 'insert': [ { 'type': '/definitionListItem' }, { 'type': '/definitionList' } ] },
 					{ 'type': 'retain', 'length': 2 }
+				]
+			},
+			'metadata is preserved on wrap': {
+				'args': [metaDoc, new ve.Range( 1, 10 ), [ { 'type': 'paragraph' } ], [ { 'type': 'heading', 'level': 1 } ], [], [] ],
+				'ops': [
+					{ 'type': 'replace',
+					  'remove': [ { 'type': 'paragraph' } ],
+					  'insert': [ { 'type': 'heading', 'level': 1 } ],
+					  'insertMetadata': metaDoc.getMetadata().slice(0, 1),
+					  'removeMetadata': metaDoc.getMetadata().slice(0, 1)
+					},
+					{ 'type': 'retain', 'length': 9 },
+					{ 'type': 'replace',
+					  'remove': [ { 'type': '/paragraph' } ],
+					  'insert': [ { 'type': '/heading' } ]
+					},
+					{ 'type': 'retain', 'length': 2 }
+				]
+			},
+			'metadata is preserved on unwrap': {
+				'args': [listMetaDoc, new ve.Range( 1, 11 ), [ { 'type': 'list' } ], [], [ { 'type': 'listItem', 'attributes': {'styles': ['bullet']} } ], [] ],
+				'ops': [
+					{ 'type': 'replace',
+					  'remove': [ { 'type': 'list' }, { 'type': 'listItem', 'attributes': { 'styles': ['bullet'] } } ],
+					  'insert': [],
+					  'insertMetadata': [],
+					  'removeMetadata': listMetaDoc.getMetadata().slice(0, 2)
+					},
+					{ 'type': 'replaceMetadata',
+					  'insert': ve.dm.MetaLinearData.static.merge( listMetaDoc.getMetadata().slice(0, 2) )[0],
+					  'remove': []
+					},
+					{ 'type': 'retain', 'length': 3 },
+					{ 'type': 'replace',
+					  'remove': [ { 'type': '/listItem' }, { 'type': 'listItem', 'attributes': { 'styles': ['bullet'] } } ],
+					  'insert': [],
+					  'insertMetadata': [],
+					  'removeMetadata': listMetaDoc.getMetadata().slice(5, 7)
+					},
+					{ 'type': 'replaceMetadata',
+					  'insert': ve.dm.MetaLinearData.static.merge( listMetaDoc.getMetadata().slice(5, 7) )[0],
+					  'remove': []
+					},
+					{ 'type': 'retain', 'length': 3 },
+					{ 'type': 'replace',
+					  'remove': [ { 'type': '/listItem' }, { 'type': '/list' } ],
+					  'insert': [],
+					  'insertMetadata': [],
+					  'removeMetadata': listMetaDoc.getMetadata().slice(10, 12)
+					},
+					{ 'type': 'replaceMetadata',
+					  'insert': ve.dm.MetaLinearData.static.merge( listMetaDoc.getMetadata().slice(10, 12) )[0],
+					  'remove': []
+					},
+					{ 'type': 'retainMetadata', 'length': 1 }
 				]
 			},
 			'checks integrity of unwrapOuter parameter': {
@@ -1509,6 +1596,7 @@ QUnit.test( 'push*Annotating', function ( assert ) {
 
 QUnit.test( 'newFromMetadataInsertion', function ( assert ) {
 	var doc = ve.dm.example.createExampleDocument( 'withMeta' ),
+		listWithMetaDoc = ve.dm.example.createExampleDocument( 'listWithMeta' ),
 		element = {
 			'type': 'alienMeta',
 			'attributes': {
@@ -1528,7 +1616,7 @@ QUnit.test( 'newFromMetadataInsertion', function ( assert ) {
 						'insert': [ element ]
 					},
 					{ 'type': 'retainMetadata', 'length': 2 },
-					{ 'type': 'retain', 'length': 3 }
+					{ 'type': 'retain', 'length': 2 }
 				]
 			},
 			'inserting metadata element into empty list': {
@@ -1540,7 +1628,31 @@ QUnit.test( 'newFromMetadataInsertion', function ( assert ) {
 						'remove': [],
 						'insert': [ element ]
 					},
-					{ 'type': 'retain', 'length': 11 }
+					{ 'type': 'retain', 'length': 10 }
+				]
+			},
+			'inserting trailing metadata (1)': {
+				'args': [ listWithMetaDoc, 12, 0, [ element ] ],
+				'ops': [
+					{ 'type': 'retain', 'length': 12 },
+					{
+						'type': 'replaceMetadata',
+						'remove': [],
+						'insert': [ element ]
+					},
+					{ 'type': 'retainMetadata', 'length': 1 }
+				]
+			},
+			'inserting trailing metadata (2)': {
+				'args': [ listWithMetaDoc, 12, 1, [ element ] ],
+				'ops': [
+					{ 'type': 'retain', 'length': 12 },
+					{ 'type': 'retainMetadata', 'length': 1 },
+					{
+						'type': 'replaceMetadata',
+						'remove': [],
+						'insert': [ element ]
+					}
 				]
 			}
 		};
@@ -1550,6 +1662,7 @@ QUnit.test( 'newFromMetadataInsertion', function ( assert ) {
 
 QUnit.test( 'newFromMetadataRemoval', function ( assert ) {
 	var doc = ve.dm.example.createExampleDocument( 'withMeta' ),
+		listWithMetaDoc = ve.dm.example.createExampleDocument( 'listWithMeta' ),
 		allElements = ve.dm.example.withMetaMetaData[11],
 		someElements = allElements.slice( 1, 3 ),
 		cases = {
@@ -1562,7 +1675,7 @@ QUnit.test( 'newFromMetadataRemoval', function ( assert ) {
 						'remove': allElements,
 						'insert': []
 					},
-					{ 'type': 'retain', 'length': 3 }
+					{ 'type': 'retain', 'length': 2 }
 				]
 			},
 			'removing some metadata elements from metadata list': {
@@ -1576,7 +1689,25 @@ QUnit.test( 'newFromMetadataRemoval', function ( assert ) {
 						'insert': []
 					},
 					{ 'type': 'retainMetadata', 'length': 1 },
-					{ 'type': 'retain', 'length': 3 }
+					{ 'type': 'retain', 'length': 2 }
+				]
+			},
+			'removing trailing metadata': {
+				'args': [ listWithMetaDoc, 12, new ve.Range( 0, 1 ) ],
+				'ops': [
+					{ 'type': 'retain', 'length': 12 },
+					{
+						'type': 'replaceMetadata',
+						'remove': [
+							{
+								'type': 'alienMeta',
+								'attributes': {
+									'domElements': $( '<meta property="thirteen" />' ).toArray()
+								}
+							}
+						],
+						'insert': []
+					}
 				]
 			},
 			'checks metadata at offset is non-empty': {
@@ -1594,6 +1725,7 @@ QUnit.test( 'newFromMetadataRemoval', function ( assert ) {
 
 QUnit.test( 'newFromMetadataElementReplacement', function ( assert ) {
 	var doc = ve.dm.example.createExampleDocument( 'withMeta' ),
+		listWithMetaDoc = ve.dm.example.createExampleDocument( 'listWithMeta' ),
 		newElement = {
 			'type': 'alienMeta',
 			'attributes': {
@@ -1613,7 +1745,18 @@ QUnit.test( 'newFromMetadataElementReplacement', function ( assert ) {
 						'remove': [ oldElement ],
 						'insert': [ newElement ]
 					},
-					{ 'type': 'retain', 'length': 3 }
+					{ 'type': 'retain', 'length': 2 }
+				]
+			},
+			'replacing trailing metadata': {
+				'args': [ listWithMetaDoc, 12, 0, newElement ],
+				'ops': [
+					{ 'type': 'retain', 'length': 12 },
+					{
+						'type': 'replaceMetadata',
+						'remove': [ listWithMetaDoc.metadata.getData( 12 )[0] ],
+						'insert': [ newElement ]
+					}
 				]
 			},
 			'checks offset is in bounds': {

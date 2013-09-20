@@ -63,3 +63,49 @@ ve.ui.TriggerRegistry.prototype.register = function ( name, trigger ) {
 /* Initialization */
 
 ve.ui.triggerRegistry = new ve.ui.TriggerRegistry();
+
+ve.ui.triggerRegistry.register(
+	'bold', { 'mac': new ve.ui.Trigger( 'cmd+b' ), 'pc': new ve.ui.Trigger( 'ctrl+b' ) }
+);
+ve.ui.triggerRegistry.register(
+	'italic', { 'mac': new ve.ui.Trigger( 'cmd+i' ), 'pc': new ve.ui.Trigger( 'ctrl+i' ) }
+);
+ve.ui.triggerRegistry.register(
+	'clear', { 'mac': new ve.ui.Trigger( 'cmd+\\' ), 'pc': new ve.ui.Trigger( 'ctrl+\\' ) }
+);
+ve.ui.triggerRegistry.register( 'indent', new ve.ui.Trigger( 'tab' ) );
+ve.ui.triggerRegistry.register( 'outdent', new ve.ui.Trigger( 'shift+tab' ) );
+ve.ui.triggerRegistry.register(
+	'link', { 'mac': new ve.ui.Trigger( 'cmd+k' ), 'pc': new ve.ui.Trigger( 'ctrl+k' ) }
+);
+ve.ui.triggerRegistry.register(
+	'redo', { 'mac': new ve.ui.Trigger( 'cmd+shift+z' ), 'pc': new ve.ui.Trigger( 'ctrl+shift+z' ) }
+);
+ve.ui.triggerRegistry.register(
+	'undo', { 'mac': new ve.ui.Trigger( 'cmd+z' ), 'pc': new ve.ui.Trigger( 'ctrl+z' ) }
+);
+// Ctrl+0-7 below are not mapped to Cmd+0-7 on Mac because Chrome reserves those for switching tabs
+ve.ui.triggerRegistry.register(
+	'paragraph', { 'mac': new ve.ui.Trigger( 'ctrl+0' ), 'pc': new ve.ui.Trigger ( 'ctrl+0' ) }
+);
+ve.ui.triggerRegistry.register(
+	'heading1', { 'mac': new ve.ui.Trigger( 'ctrl+1' ), 'pc': new ve.ui.Trigger ( 'ctrl+1' ) }
+);
+ve.ui.triggerRegistry.register(
+	'heading2', { 'mac': new ve.ui.Trigger( 'ctrl+2' ), 'pc': new ve.ui.Trigger ( 'ctrl+2' ) }
+);
+ve.ui.triggerRegistry.register(
+	'heading3', { 'mac': new ve.ui.Trigger( 'ctrl+3' ), 'pc': new ve.ui.Trigger ( 'ctrl+3' ) }
+);
+ve.ui.triggerRegistry.register(
+	'heading4', { 'mac': new ve.ui.Trigger( 'ctrl+4' ), 'pc': new ve.ui.Trigger ( 'ctrl+4' ) }
+);
+ve.ui.triggerRegistry.register(
+	'heading5', { 'mac': new ve.ui.Trigger( 'ctrl+5' ), 'pc': new ve.ui.Trigger ( 'ctrl+5' ) }
+);
+ve.ui.triggerRegistry.register(
+	'heading6', { 'mac': new ve.ui.Trigger( 'ctrl+6' ), 'pc': new ve.ui.Trigger ( 'ctrl+6' ) }
+);
+ve.ui.triggerRegistry.register(
+	'preformatted', { 'mac': new ve.ui.Trigger( 'ctrl+7' ), 'pc': new ve.ui.Trigger ( 'ctrl+7' ) }
+);

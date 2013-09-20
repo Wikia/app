@@ -1,197 +1,39 @@
-/*!
- * VisualEditor UserInterface Tool styles.
- *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
- * @license The MIT License (MIT); see LICENSE.txt
- */
+/* ve.ui.FormatTool */
 
-/* ve.ui.Tool */
-
-.ve-ui-tool {
-	position: relative;
-	display: inline-block;
-	margin: -1px 0 -1px -1px;
-}
-
-.ve-ui-tool:first-child {
-	border-top-left-radius: 0.25em;
-	border-bottom-left-radius: 0.25em;
-}
-
-.ve-ui-tool:last-child {
-	margin-right: -1px;
-	border-top-right-radius: 0.25em;
-	border-bottom-right-radius: 0.25em;
-}
-
-/* ve.ui.ToolGroup */
-
-.ve-ui-toolGroup {
-	display: inline-block;
-	margin: 0.3em;
-	vertical-align: middle;
-	border-radius: 0.25em;
-	border: solid 1px transparent;
-	-webkit-transition: border-color 300ms;
-	-moz-transition: border-color 300ms;
-	-ms-transition: border-color 300ms;
-	-o-transition: border-color 300ms;
-	transition: border-color 300ms;
-}
-
-.ve-ui-toolGroup:hover {
-	border-color: rgba(0,0,0,0.1);
-}
-
-.ve-ui-toolGroup .ve-ui-labeledWidget-label {
-	display: inline-block;
-	padding: 0.5em 0.75em;
-	line-height: 22px;
-	font-size: 0.8em;
-	color: #555;
-	vertical-align: top;
-}
-
-/* ve.ui.ButtonTool */
-/* ve.ui.DropdownTool */
-
-.ve-ui-buttonTool-active:not(.ve-ui-widget-disabled) + .ve-ui-buttonTool-active:not(.ve-ui-widget-disabled) {
-	border-left-color: rgba(0,0,0,0.1);
-}
-
-.ve-ui-dropdownTool,
-.ve-ui-buttonTool {
-	border: solid 1px transparent;
-	cursor: pointer;
-	vertical-align: top;
-}
-
-.ve-ui-dropdownTool {
-	border-color: rgba(0,0,0,0.1);
-}
-
-.ve-ui-buttonTool {
-	padding: 0.25em;
-	height: 1.5em;
-	width: 1.5em;
-}
-
-.ve-ui-buttonTool-icon {
-	display: block;
-	height: 1.5em;
-	width: 1.5em;
-	background-position: center center;
-	background-repeat: no-repeat;
-	opacity: 0.8;
-}
-
-.ve-ui-dropdownTool-label {
-	overflow: hidden;
-	height: 2em;
-	padding-right: 0.25em;
-	padding-left: 0.75em;
-	line-height: 2em;
-}
-
-.ve-ui-dropdownTool-label span {
-	font-size: 0.8em;
-}
-
-.ve-ui-dropdownTool-icon {
-	position: absolute;
-	right: 0;
-	width: 2em;
-	height: 2em;
-	/* @see ve.ui.Icons */
-	background-position: center center;
-	background-repeat: no-repeat;
-	opacity: 0.8;
-}
-
-.ve-ui-dropdownTool .ve-ui-menuWidget {
-	left: -1px;
-	top: 2.5em;
-	z-index: 4;
-}
-
-.ve-ui-dropdownTool .ve-ui-labeledElement-label {
-	display: block;
-	padding: 0.33em 0 0.33em 0;
-}
-
-.ve-ui-buttonTool:hover:not(.ve-ui-widget-disabled),
-.ve-ui-dropdownTool:hover:not(.ve-ui-widget-disabled) {
-	border-color: rgba(0,0,0,0.2);
-}
-
-.ve-ui-buttonTool:hover:not(.ve-ui-widget-disabled) .ve-ui-buttonTool-icon,
-.ve-ui-dropdownTool:hover:not(.ve-ui-widget-disabled) .ve-ui-dropdownTool-icon {
-	opacity: 1;
-}
-
-.ve-ui-buttonTool:active:not(.ve-ui-widget-disabled),
-.ve-ui-buttonTool-active:not(.ve-ui-widget-disabled),
-.ve-ui-dropdownTool:active:not(.ve-ui-widget-disabled),
-.ve-ui-dropdownTool-active:not(.ve-ui-widget-disabled) {
-	/* @embed */
-	background-image: url(images/fade-down.png);
-	background-position: left top;
-	background-repeat: repeat-x;
-	box-shadow: inset 0 0.07em 0.07em 0 rgba(0, 0, 0, 0.07);
-	border-color: rgba(0,0,0,0.2);
-}
-
-.ve-ui-buttonTool.ve-ui-widget-disabled,
-.ve-ui-dropdownTool.ve-ui-widget-disabled  {
-	cursor: default;
-}
-
-.ve-ui-widget-disabled .ve-ui-buttonTool-icon,
-.ve-ui-widget-disabled .ve-ui-dropdownTool-icon {
-	opacity: 0.2;
-}
-
-/* ve.ui.FormatDropdownTool */
-
-.ve-ui-formatDropdownTool {
-	width: 8em;
-}
-
-.ve-ui-formatDropdownTool .ve-ui-optionWidget[rel="paragraph"] .ve-ui-labeledElement-label {
+.ve-ui-menuToolGroup .ve-ui-tool-paragraph .ve-ui-labeledElement-label {
 	font-weight: normal;
 }
 
-.ve-ui-formatDropdownTool .ve-ui-optionWidget[rel="heading-1"] .ve-ui-labeledElement-label {
-	font-size: 188%;
-	font-weight: normal;
-}
-
-.ve-ui-formatDropdownTool .ve-ui-optionWidget[rel="heading-2"] .ve-ui-labeledElement-label {
+.ve-ui-menuToolGroup .ve-ui-tool-heading1 .ve-ui-labeledElement-label {
 	font-size: 150%;
 	font-weight: normal;
 }
 
-.ve-ui-formatDropdownTool .ve-ui-optionWidget[rel="heading-3"] .ve-ui-labeledElement-label {
-	font-size: 132%;
+.ve-ui-menuToolGroup .ve-ui-tool-heading2 .ve-ui-labeledElement-label {
+	font-size: 120%;
+	font-weight: normal;
+}
+
+.ve-ui-menuToolGroup .ve-ui-tool-heading3 .ve-ui-labeledElement-label {
+	font-size: 105%;
 	font-weight: bold;
 }
 
-.ve-ui-formatDropdownTool .ve-ui-optionWidget[rel="heading-4"] .ve-ui-labeledElement-label {
-	font-size: 116%;
+.ve-ui-menuToolGroup .ve-ui-tool-heading4 .ve-ui-labeledElement-label {
+	font-size: 92%;
 	font-weight: bold;
 }
 
-.ve-ui-formatDropdownTool .ve-ui-optionWidget[rel="heading-5"] .ve-ui-labeledElement-label {
-	font-size: 100%;
-	font-weight: bold;
-}
-
-.ve-ui-formatDropdownTool .ve-ui-optionWidget[rel="heading-6"] .ve-ui-labeledElement-label {
+.ve-ui-menuToolGroup .ve-ui-tool-heading5 .ve-ui-labeledElement-label {
 	font-size: 80%;
 	font-weight: bold;
 }
 
-.ve-ui-formatDropdownTool .ve-ui-optionWidget[rel="preformatted"] .ve-ui-labeledElement-label {
-	font-family: monospace, "Courier New";
+.ve-ui-menuToolGroup .ve-ui-tool-heading6 .ve-ui-labeledElement-label {
+	font-size: 64%;
+	font-weight: bold;
 }
 
+.ve-ui-menuToolGroup .ve-ui-tool-preformatted .ve-ui-labeledElement-label {
+	font-family: monospace, "Courier New";
+}

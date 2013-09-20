@@ -53,9 +53,8 @@
 }
 
 .ve-ui-dialog .ve-ui-window-frame.ve-ui-window-frame-small {
-	width: 600px;
-	min-height: 200px;
-	height: 280px;
+	max-width: 600px;
+	max-height: 300px;
 }
 
 .ve-ui-dialog-closing .ve-ui-window-frame {
@@ -169,7 +168,6 @@
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	overflow: hidden;
 }
 
 .ve-ui-pagedDialog-pagesPanel .ve-ui-panelLayout-scrollable {

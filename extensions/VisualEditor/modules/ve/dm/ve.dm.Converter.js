@@ -1153,10 +1153,12 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container ) {
 			text = '';
 			isStart = i > 0 &&
 				ve.dm.LinearData.static.isOpenElementData( data[i-1] ) &&
-				ve.dm.LinearData.static.getType( data[i-1] ) !== 'preformatted';
+				!ve.dm.nodeFactory.doesNodeHaveSignificantWhitespace(
+					ve.dm.LinearData.static.getType( data[i-1] )
+				);
 			// Continue forward as far as the plain text goes
 			while ( typeof data[i] === 'string' ) {
-				// HACK: Skip over leading whitespace (bug 51462) in non-pre tags
+				// HACK: Skip over leading whitespace (bug 51462) in non-whitespace-preserving tags
 				if ( !( isStart && data[i].match( /\s/ ) ) ) {
 					text += data[i];
 					isStart = false;

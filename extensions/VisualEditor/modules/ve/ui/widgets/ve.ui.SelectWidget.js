@@ -110,6 +110,9 @@ ve.ui.SelectWidget.prototype.onMouseDown = function ( e ) {
  */
 ve.ui.SelectWidget.prototype.onMouseUp = function ( e ) {
 	this.pressed = false;
+	if ( !this.selecting ) {
+		this.selecting = this.getTargetItem( e );
+	}
 	if ( !this.disabled && e.which === 1 && this.selecting ) {
 		this.selectItem( this.selecting );
 		this.selecting = null;

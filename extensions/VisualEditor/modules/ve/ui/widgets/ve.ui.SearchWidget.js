@@ -82,7 +82,7 @@ ve.inheritClass( ve.ui.SearchWidget, ve.ui.Widget );
  * @param {jQuery.Event} e Key down event
  */
 ve.ui.SearchWidget.prototype.onQueryKeydown = function ( e ) {
-	var highlightedItem,
+	var highlightedItem, nextItem,
 		dir = e.which === ve.Keys.DOWN ? 1 : ( e.which === ve.Keys.UP ? -1 : 0 );
 
 	if ( dir ) {
@@ -90,7 +90,9 @@ ve.ui.SearchWidget.prototype.onQueryKeydown = function ( e ) {
 		if ( !highlightedItem ) {
 			highlightedItem = this.results.getSelectedItem();
 		}
-		this.results.highlightItem( this.results.getRelativeSelectableItem( highlightedItem, dir ) );
+		nextItem = this.results.getRelativeSelectableItem( highlightedItem, dir );
+		this.results.highlightItem( nextItem );
+		nextItem.scrollElementIntoView();
 	}
 };
 

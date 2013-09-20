@@ -24,6 +24,22 @@ ve.inheritClass( ve.init.mw.WikiaViewPageTarget, ve.init.mw.ViewPageTarget );
 
 /* Static Properties */
 ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
+	{ 'include': [ 'undo', 'redo' ] },
+	{
+		'type': 'menu',
+		'include': [ { 'group': 'format' } ],
+		'promote': [ 'paragraph' ],
+		'demote': [ 'preformatted', 'heading1' ]
+	},
+	{ 'include': [ 'bold', 'italic', 'link', 'clear' ] },
+	{ 'include': [ 'number', 'bullet' ] },
+	{ 'include': [ 'wikiaMediaInsert' ] },
+	{ 'include': '*' }
+	
+
+
+
+	/*
 	{
 		'include': [ 'history' ],
 		'promote': [
@@ -62,6 +78,7 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 		'include': [ 'object' ],
 		'exclude': [ 'object/mediaInsert' ]
 	}
+	*/
 ];
 
 ve.init.mw.WikiaViewPageTarget.prototype.setupSkinTabs = function () {

@@ -63,7 +63,7 @@ ve.mixinClass( ve.dm.Node, ve.EventEmitter );
  * If .static.childNodeTypes is set to [], this property is ignored and will be assumed to be true.
  *
  * @static
- * @type {boolean} static.handlesOwnChildren
+ * @property {boolean} static.handlesOwnChildren
  * @inheritable
  */
 ve.dm.Node.static.handlesOwnChildren = false;
