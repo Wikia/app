@@ -308,9 +308,9 @@
 		}
 
 		/**
-		 * @dataProvider changeUserEmailDataProvider
+		 * @dataProvider changeTempUserEmailDataProvider
 		 */
-		public function testChangeUserEmail( $params, $mockUserParams, $mockSessionParams, $mockCacheParams, $expResult, $expMsg, $expErrParam ) {
+		public function testChangeTempUserEmail( $params, $mockUserParams, $mockSessionParams, $mockCacheParams, $expResult, $expMsg, $expErrParam ) {
 			// setup
 			$this->setUpMockObject( 'User', $mockUserParams, true );
 
@@ -323,8 +323,11 @@
 			}
 			$this->setUpMock( $mockCacheParams );
 
+			//Set up empty TempUser
+			$this->setUpMockObject( 'TempUser', false, true );
+
 			// test
-			$response = $this->app->sendRequest( 'UserSignupSpecial', 'changeUserEmail', $params );
+			$response = $this->app->sendRequest( 'UserSignupSpecial', 'changeTempUserEmail', $params );
 
 			$responseData = $response->getVal( 'result' );
 			$this->assertEquals( $expResult, $responseData, 'result' );
@@ -339,7 +342,7 @@
 			$this->tearDownSession( $mockSessionParams );
 		}
 
-		public function changeUserEmailDataProvider() {
+		public function changeTempUserEmailDataProvider() {
 			// error - empty email
 			$params1 = array(
 				'email' => '',
