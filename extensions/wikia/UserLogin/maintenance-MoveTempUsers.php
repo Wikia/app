@@ -22,10 +22,10 @@
 
 		//prepare date range
 		$date = new DateTime();
-		$date->add(date_interval_create_from_date_string('1 day'));
+		$date->add(new DateInterval("P1D"));
 		$to = date_format($date, 'Ymdu');
-		$date->sub(date_interval_create_from_date_string('31 days'));
-		$from =  date_format($date, 'Ymdu');
+		$date->sub(new DateInterval("P31D"));
+		$from =  $date->format('Ymdu');
 
 		//query
 		$queryString = "SELECT user_name FROM `user_temp` force key(user_registration) WHERE (user_registration between '$from' and '$to') order by user_registration;";
