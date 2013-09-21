@@ -84,7 +84,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 		'attribution':
 			'<div class="picture-attribution">' +
 				'<img class="avatar" alt="Foo" height="16" src="Foo.png" width="16">' +
-				$.msg( 'oasis-content-picture-added-by', '<a href="/wiki/User:Foo">Foo</a>' ) +
+				mw.message( 'oasis-content-picture-added-by', '<a href="/wiki/User:Foo">Foo</a>' ).plain() +
 			'</div>',
 		'frame':
 			'<figure class="thumb thumbinner" style="">' +
