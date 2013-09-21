@@ -177,6 +177,8 @@ ve.wikiaTest = ( function () {
 				'Built with attributes: ' + utils.getObjectDescription( current )
 			);
 
+			surface.destroy();
+
 			previous = current;
 		}
 
