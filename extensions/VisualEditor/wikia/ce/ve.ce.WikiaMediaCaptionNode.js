@@ -70,7 +70,7 @@ ve.ce.WikiaMediaCaptionNode.prototype.createAttribution = function () {
 
 	return $attribution
 		.append( $image )
-		.append( $.msg( 'oasis-content-picture-added-by', $link[ 0 ].outerHTML ) );
+		.append( mw.message( 'oasis-content-picture-added-by', $link[ 0 ].outerHTML ).plain() );
 };
 
 /**

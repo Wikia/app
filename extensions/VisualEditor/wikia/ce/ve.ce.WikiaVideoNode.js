@@ -63,7 +63,7 @@ ve.ce.WikiaVideoNode.prototype.createOverlay = function () {
 
 	$views = this.$$( '<span>' )
 		.addClass( 'info-overlay-views' )
-		.text( $.msg( 'videohandler-video-views', this.model.getAttribute( 'views' ) ) );
+		.text( mw.message( 'videohandler-video-views', this.model.getAttribute( 'views' ) ).plain() );
 
 	return $overlay
 		.append( $title )

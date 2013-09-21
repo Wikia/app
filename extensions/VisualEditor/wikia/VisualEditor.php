@@ -65,7 +65,9 @@ $wgResourceModules += array(
 			'ui/styles/ve.ui.Surface.css'
 		),
 		'messages' => array(
+			'oasis-content-picture-added-by',
 			'visualeditor-wikiamediainsertbuttontool-label',
+			'videohandler-video-views'
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core'
@@ -90,11 +92,6 @@ $wgVisualEditorPluginModules[] = 'ext.visualEditor.wikiaCore';
 /* Messages */
 
 $wgExtensionMessagesFiles['VisualEditorWikia'] = dirname( __FILE__ ) . '/VisualEditor.i18n.php';
-
-JSMessages::registerPackage( 'VisualEditor', array(
-	'oasis-content-picture-added-by',
-	'videohandler-video-views',
-));
 
 /* Hooks */
 
