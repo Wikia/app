@@ -4,7 +4,11 @@
  * TODO: determine what can be moved to ve.test.utils.js
  */
 
-( function () {
+/**
+ * @namespace
+ * @ignore
+ */
+ve.wikiaTest = ( function () {
 	var utils = {};
 
 	/**
@@ -251,10 +255,6 @@
 		QUnit.expect( testCases.length );
 	};
 
-	/**
-	 * Exports
-	 * @namespace
-	 * @ignore
-	 */
-	ve.wikiaTest = { 'utils': utils };
+	// Exports
+	return { 'utils': utils };
 }() );

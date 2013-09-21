@@ -3,7 +3,12 @@
  */
 
 /* global mw: false */
-( function ( utils ) {
+
+/**
+ * @namespace
+ * @ignore
+ */
+ve.ce.wikiaExample = ( function ( utils ) {
 	var media = {};
 
 	/* Data */
@@ -344,10 +349,6 @@
 		return $mock[ 0 ].outerHTML;
 	};
 
-	/**
-	 * Exports
-	 * @namespace
-	 * @ignore
-	 */
-	ve.ce.wikiaExample = { 'media': media };
+	// Exports
+	return { 'media': media };
 }( ve.wikiaTest.utils ) );
