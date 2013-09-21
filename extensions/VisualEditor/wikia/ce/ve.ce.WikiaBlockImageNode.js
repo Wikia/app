@@ -6,7 +6,7 @@
  */
 
 /**
- * ContentEditable Wikia image node.
+ * VisualEditor ContentEditable Wikia image node.
  *
  * @class
  * @extends ve.ce.WikiaBlockMediaNode

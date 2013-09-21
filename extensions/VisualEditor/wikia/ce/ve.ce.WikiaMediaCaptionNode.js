@@ -8,7 +8,7 @@
 /* global mw: false */
 
 /**
- * ContentEditable Wikia media caption item node.
+ * VisualEditor ContentEditable Wikia media caption item node.
  *
  * @class
  * @extends ve.ce.BranchNode
@@ -20,6 +20,8 @@ ve.ce.WikiaMediaCaptionNode = function VeCeWikiaMediaCaptionNode( model, config 
 
 	// Properties
 	this.$attribution = null;
+
+	// The minimum allowable width for the attribution to be displayed
 	this.minWidth = 102;
 
 	// Parent constructor
@@ -57,12 +59,12 @@ ve.ce.WikiaMediaCaptionNode.prototype.createAttribution = function () {
 
 	$image = this.$$( '<img>' )
 		.addClass( 'avatar' )
-		.attr({
+		.attr( {
 			alt: attribution.username,
 			height: 16,
 			src: attribution.avatar,
 			width: 16
-		});
+		} );
 
 	$link = this.$$( '<a>' )
 		.attr( 'href', href )

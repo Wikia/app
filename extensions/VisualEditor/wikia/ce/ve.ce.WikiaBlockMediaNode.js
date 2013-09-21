@@ -6,7 +6,7 @@
  */
 
 /**
- * ContentEditable Wikia media node.
+ * VisualEditor ContentEditable Wikia media node.
  * This is an abstract class and as such should not be instantiated directly.
  *
  * @abstract

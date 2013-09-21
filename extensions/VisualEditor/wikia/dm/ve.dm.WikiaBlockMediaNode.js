@@ -14,7 +14,7 @@
  * @param {Object} [element] Reference to element in linear model
  */
 ve.dm.WikiaBlockMediaNode = function VeDmWikiaBlockMediaNode( length, element ) {
-	ve.dm.MWBlockImageNode.call( this, 0, element );
+	ve.dm.MWBlockImageNode.call( this, length, element );
 };
 
 /* Inheritance */
