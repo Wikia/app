@@ -24,8 +24,8 @@ class VideoPageToolHelper extends WikiaModel {
 	public function getSections() {
 		$sections = array(
 			'featured' => wfMessage( 'videopagetool-section-featured' )->plain(),
-			'category' => wfMessage( 'videopagetool-section-category' )->plain(),
-			'fan' => wfMessage( 'videopagetool-section-fan' )->plain(),
+//			'category' => wfMessage( 'videopagetool-section-category' )->plain(),
+//			'fan' => wfMessage( 'videopagetool-section-fan' )->plain(),
 		);
 
 		return $sections;
@@ -99,11 +99,12 @@ class VideoPageToolHelper extends WikiaModel {
 	/**
 	 * get video data
 	 * @param string $videoTitle
+	 * $param string $newThumbName
 	 * @param string $displayTitle
 	 * @param string $description
 	 * @return array $video
 	 */
-	public function getVideoData( $videoTitle, $displayTitle = '', $description = '' ) {
+	public function getVideoData( $videoTitle, $newThumbName = '', $displayTitle = '', $description = '' ) {
 		wfProfileIn( __METHOD__ );
 
 		$video = array();
@@ -120,8 +121,19 @@ class VideoPageToolHelper extends WikiaModel {
 				// get thumbnail
 				$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
 				$videoThumb = $thumb->toHtml();
+				$thumbUrl = $thumb->getUrl();
+
 				$largeThumb = $file->transform( array( 'width' => self::MAX_THUMBNAIL_WIDTH, 'height' => self::MAX_THUMBNAIL_HEIGHT ) );
 				$largeThumbUrl = $largeThumb->getUrl();
+
+				// replace original thumbnail with the new one
+				if ( !empty( $newThumbName ) ) {
+					$imageData = $this->getImageData( $newThumbName );
+					if ( !empty( $imageData ) ) {
+						$videoThumb = str_replace( $thumbUrl, $imageData['thumbUrl'], $videoThumb );
+						$largeThumbUrl = $imageData['largeThumbUrl'];
+					}
+				}
 
 				// get description
 				if ( empty( $description ) ) {
@@ -130,12 +142,13 @@ class VideoPageToolHelper extends WikiaModel {
 				}
 
 				$video = array(
-					'videoTitle' => $videoTitle,
-					'videoKey' => $title->getDBKey(),
-					'displayTitle' => $displayTitle,
-					'videoThumb' => $videoThumb,
+					'videoTitle'    => $videoTitle,
+					'videoKey'      => $title->getDBKey(),
+					'videoThumb'    => $videoThumb,
 					'largeThumbUrl' => $largeThumbUrl,
-					'description' => $description,
+					'newThumbName'  => $newThumbName,
+					'displayTitle'  => $displayTitle,
+					'description'   => $description,
 				);
 			}
 		}
@@ -143,6 +156,33 @@ class VideoPageToolHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $video;
+	}
+
+	/**
+	 * get image data
+	 * @param string $imageTitle
+	 * @return array $data [ array( 'thumbUrl' => $url, 'largeThumbUrl' => $url ) ]
+	 */
+	public function getImageData( $imageTitle ) {
+		wfProfileIn( __METHOD__ );
+
+		$data = array();
+
+		$title = Title::newFromText( $imageTitle, NS_FILE );
+		if ( $title instanceof Title ) {
+			$file = wfFindFile( $title );
+			if ( $file instanceof File && $file->exists() ) {
+				$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
+				$data['thumbUrl'] = $thumb->getUrl();
+
+				$largeThumb = $file->transform( array( 'width' => self::MAX_THUMBNAIL_WIDTH, 'height' => self::MAX_THUMBNAIL_HEIGHT ) );
+				$data['largeThumbUrl'] = $largeThumb->getUrl();
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $data;
 	}
 
 	/**
@@ -213,6 +253,22 @@ class VideoPageToolHelper extends WikiaModel {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Validate new thumbnail
+	 * @param string $ThumbName
+	 * @param string $errMsg
+	 */
+	public function validateNewThumbName( $ThumbName, &$errMsg ) {
+		$title = Title::newFromText( $ThumbName, NS_FILE );
+		if ( $title instanceof Title && $title->exists() ) {
+			return true;
+		}
+
+		$errMsg = wfMessage( 'videopagetool-error-image-not-exist' )->plain();
+
+		return false;
 	}
 
 }

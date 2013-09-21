@@ -8,12 +8,14 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 	protected $title;
 	protected $displayTitle;
 	protected $description;
+	protected $newThumbName;
 
 	// required data field -- array( FormFieldName => varName )
 	protected static $dataFields = array(
 		'videoKey'     => 'title',
 		'displayTitle' => 'displayTitle',
-		'description'   => 'description',
+		'description'  => 'description',
+		'newThumbName' => 'newThumbName',
 	);
 
 	/**
@@ -26,21 +28,23 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 	 *     displayTitle    => Preferred title entered via Admin tool, e.g. "Bubbles from "Soul Bubbles" on Nintendo DS"
 	 *     videoThumb      => Embed code for the video thumbnail.
 	 *     largeThumbUrl   => Large version of the video thumbnail image.  Does not include the embed code.
+	 *     newThumbName     => Thumbnail that will replace original thumbnail
 	 *     description     => Description of this video given in the Admin tool, e.g. "All about Bubbles!"
 	 *     videoTitleClass =>
+	 *     newThumbClass   =>
 	 *     updatedBy       => User who updated this asset last, e.g. "Garthwebb"
 	 *     updatedAt       => Date this asset was last updated, e.g. "17:04, September 13, 2013"
 	 */
 	public function getAssetData() {
 		$helper = new VideoPageToolHelper();
-		$data = $helper->getVideoData( $this->title, $this->displayTitle, $this->description );
+		$data = $helper->getVideoData( $this->title, $this->newThumbName, $this->displayTitle, $this->description );
 		if ( empty( $data ) ) {
 			return self::getDefaultAssetData();
 		}
 
-		// This needs to be set to an empty string when there is a real asset rather than
-		// default asset data
+		// This needs to be set to an empty string when there is a real asset rather than default asset data
 		$data['videoTitleClass'] = '';
+		$data['newThumbClass'] = '';
 
 		$assetData = array_merge( $data, parent::getAssetData() );
 
@@ -53,13 +57,15 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 	 */
 	public static function getDefaultAssetData() {
 		$data = array(
-			'videoTitle'      => wfMessage( 'videopagetool-video-title-default-text' )->text(),
+			'videoTitle'      => wfMessage( 'videopagetool-video-title-default-text' )->plain(),
 			'videoKey'        => '',
 			'videoThumb'      => '',
 			'largeThumbUrl'   => '',
+			'newThumbName'     => wfMessage( 'videopagetool-image-title-default-text' )->plain(),
 			'displayTitle'    => '',
 			'description'     => '',
 			'videoTitleClass' => 'alternative',
+			'newThumbClass'   => 'alternative',
 		);
 		$defaultData = array_merge( $data, parent::getDefaultAssetData() );
 
