@@ -85,9 +85,9 @@ ve.ce.WikiaMediaCaptionNode.prototype.onSplice = function () {
 	var parentModel = this.model.parent;
 
 	if ( this.$attribution ) {
-		// TODO: detach instead of remove?
-		this.$attribution.remove();
-		this.$attribution = null;
+		this.$attribution.detach();
+	} else {
+		this.$attribution = this.createAttribution();
 	}
 
 	// Parent method
@@ -98,7 +98,7 @@ ve.ce.WikiaMediaCaptionNode.prototype.onSplice = function () {
 		parentModel.getAttribute( 'attribution' ) !== undefined &&
 		parentModel.getAttribute( 'width' ) >= this.minWidth
 	) {
-		this.$attribution = this.createAttribution().appendTo( this.$ );
+		this.$attribution.appendTo( this.$ );
 	}
 };
 
