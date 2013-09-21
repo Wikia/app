@@ -40,7 +40,6 @@ $wgResourceModules += array(
 		'scripts' => array(
 			've.dm.WikiaInlineVideoNode.js',
 			've.ce.WikiaInlineVideoNode.js',
-			'ui/tools/ve.ui.IconTextButtonTool.js',
 			'ui/tools/buttons/ve.ui.WikiaMediaInsertButtonTool.js',
 			'ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
 		),

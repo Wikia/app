@@ -14,12 +14,12 @@
  */
 ve.ui.WikiaMediaInsertButtonTool = function VeUiWikiaMediaInsertButtonTool( toolbar, config ) {
 	// Parent constructor
-	ve.ui.IconTextButtonTool.call( this, toolbar, config );
+	ve.ui.DialogTool.call( this, toolbar, config );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.WikiaMediaInsertButtonTool, ve.ui.IconTextButtonTool );
+ve.inheritClass( ve.ui.WikiaMediaInsertButtonTool, ve.ui.DialogTool );
 
 /* Static Properties */
 
@@ -29,9 +29,7 @@ ve.ui.WikiaMediaInsertButtonTool.static.group = 'object';
 
 ve.ui.WikiaMediaInsertButtonTool.static.icon = 'media';
 
-ve.ui.WikiaMediaInsertButtonTool.static.labelMessage = 'visualeditor-wikiamediainsertbuttontool-label';
-
-ve.ui.WikiaMediaInsertButtonTool.static.titleMessage = 'visualeditor-dialogbutton-media-tooltip';
+ve.ui.WikiaMediaInsertButtonTool.static.titleMessage = 'visualeditor-wikiamediainsertbuttontool-label';
 
 ve.ui.WikiaMediaInsertButtonTool.static.dialog = 'wikiaMediaInsert';
 
