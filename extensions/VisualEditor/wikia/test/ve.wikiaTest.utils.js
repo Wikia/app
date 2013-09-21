@@ -42,13 +42,8 @@
 		var key,
 			parts = [];
 
-		if ( !joinStr ) {
-			joinStr = ', ';
-		}
-
-		if ( !pairStr ) {
-			pairStr = ': ';
-		}
+		joinStr = joinStr || ', ';
+		pairStr = pairStr || ': ';
 
 		for ( key in obj ) {
 			parts.push( key + pairStr + obj[ key ] );

@@ -143,7 +143,7 @@
 		var alignClass;
 
 		if ( align === 'default' && ( type === 'frame' || type === 'thumb' ) ) {
-			if ( $element instanceof jQuery && $element.css( 'direction' ) === 'rtl' ) {
+			if ( $element && $element.css( 'direction' ) === 'rtl' ) {
 				alignClass = 'tleft';
 			} else {
 				alignClass = 'tright';
@@ -185,10 +185,10 @@
 			$mock.addClass( media.data.cssClasses.htmlDomAlign[ attributes.align ] );
 		}
 
-		$mock.find( 'img[src="Bar"]' ).attr({
+		$mock.find( 'img[src="Bar"]' ).attr( {
 			height: attributes.height,
 			width: attributes.width
-		});
+		} );
 
 		return $mock[ 0 ].outerHTML;
 	};
@@ -231,10 +231,10 @@
 			.attr( 'contenteditable', false )
 			.append( media.html.shield );
 
-		$mock.find( 'img[src="Bar"]' ).attr({
+		$mock.find( 'img[src="Bar"]' ).attr( {
 			height: attributes.height,
 			width: width
-		});
+		} );
 
 		if ( width >= media.data.attribution.minWidth ) {
 			$mock.find( 'figcaption' ).append( media.html.block.attribution );
@@ -278,10 +278,10 @@
 	media.inline.getHtml = function ( attributes ) {
 		var $mock = $( media.html.inline[ attributes.type ] );
 
-		$mock.find( 'img[src="Bar"]' ).attr({
+		$mock.find( 'img[src="Bar"]' ).attr( {
 			height: attributes.height,
 			width: attributes.width
-		});
+		} );
 
 		return $mock[ 0 ].outerHTML;
 	};
@@ -324,10 +324,10 @@
 			size = 'large';
 		}
 
-		$playButton.css({
+		$playButton.css( {
 			'line-height': attributes.height + 'px',
 			'width': width
-		});
+		} );
 
 		$playButtonImage.attr( 'src', mw.config.get( 'wgBlankImgUrl' ) );
 
