@@ -47,6 +47,7 @@ $play-button-overloay-fade-duration: 400ms;
 				}
 			}
 			.Wikia-video-play-button {
+				// TODO: hack, find a better way than hard coding the line-height
 				line-height: 461px;
 				width: inherit;
 			}
@@ -106,6 +107,7 @@ $play-button-overloay-fade-duration: 400ms;
 		.featured-video-slider {
 			width: 100%;
 
+			// TODO: hack, find a better way than hard coding the line-height
 			.bxslider .Wikia-video-play-button {
 				line-height: 400px;
 			}

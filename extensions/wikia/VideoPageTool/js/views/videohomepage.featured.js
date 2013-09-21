@@ -4,8 +4,12 @@ define( 'views.videohomepage.featured', [], function() {
 
 	function Featured() {
 		this.$sliderWrapper = $( '#featured-video-slider' );
-		this.$featuredBXSlider = $( '#featured-video-bxslider' );
-		this.$featuredThumbs = $( '#featured-video-thumbs' );
+		this.$bxSlider = $( '#featured-video-bxslider' );
+		this.$thumbs = $( '#featured-video-thumbs' );
+
+		// value will be assigned after slider inits
+		this.$sliderControls = null;
+		this.slider = null;
 
 		this.init();
 	}
@@ -17,7 +21,7 @@ define( 'views.videohomepage.featured', [], function() {
 		},
 		fixDOM: function() {
 			// TODO: this is a hack, ideally it would be done on the back end
-			this.$featuredThumbs.find( 'a' ).each( function() {
+			this.$thumbs.find( 'a' ).each( function() {
 				$( this )
 					// Don't open lightbox when clicked
 					.addClass( 'no-lightbox' )
@@ -31,8 +35,7 @@ define( 'views.videohomepage.featured', [], function() {
 		},
 		initSlider: function() {
 
-			this.$featuredBXSlider.bxSlider({
-				//autoControls: true,
+			this.slider = this.$bxSlider.bxSlider({
 				//video: true, // TODO: add video support?
 				onSliderLoad: $.proxy( this.onSliderLoad, this ),
 				nextText: '',
@@ -44,17 +47,37 @@ define( 'views.videohomepage.featured', [], function() {
 
 		},
 		onSliderLoad: function() {
-			var that = this;
-
+			// Show the feature now that it's done loading
 			this.$sliderWrapper.css( 'visibility', 'visible' );
 
-			this.$sliderControls = this.$sliderWrapper.find( '.bx-pager' ).on( 'mouseenter', function() {
-				that.$featuredThumbs.slideDown();
-			});
+			// Controls are loaded, cache them
+			this.$sliderControls = this.$sliderWrapper.find( '.bx-pager' );
 
-			this.$featuredThumbs.on( 'mouseleave', function() {
-				$( this ).slideUp();
+			this.bindEvents();
+		},
+		bindEvents: function() {
+			var that = this;
+
+			// Show thumbs
+			this.$sliderControls.on( 'mouseenter', function() {
+				that.$thumbs.slideDown();
 			});
+			// Hide thumbs
+			this.$thumbs.on( 'mouseleave', function() {
+				$( this ).slideUp();
+			})
+			// play video
+			.on( 'click', '.video', function( e ){
+				e.preventDefault();
+				that.playVideo( $( this ) );
+			});
+		},
+		playVideo: function( $elem ) {
+
+			var videoKey = $elem.children( 'img' ).attr( 'data-video-key' ),
+				idx = $elem.index();
+
+			this.slider.goToSlide( idx );
 		}
 	};
 

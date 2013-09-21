@@ -1,6 +1,6 @@
 <div id="featured-video" class="featured-video">
 
-	<div class="featured-video-slider" id="featured-video-slider">
+	<div class="featured-video-slider eight columns centered" id="featured-video-slider">
 		<ul id="featured-video-bxslider" class="bxslider">
 			<? foreach ( $assets as $featured ): ?>
 				<? $videoData = $featured->getAssetData() ?>
