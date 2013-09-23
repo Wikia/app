@@ -70,9 +70,9 @@
 		$image-width: 35px;
 		$image-height: 40px;
 	}
-	// @autosprite-image-details: logo-wikiavideo.png@565,0,39ddd3d3ae05b31a906d99cdd5a3ceb2
+	// @autosprite-image-details: logo-wikiavideo.png@621,0,39ddd3d3ae05b31a906d99cdd5a3ceb2
 	@if $imageName == 'logo-wikiavideo' {
-		$image-x: 565px;
+		$image-x: 621px;
 		$image-y: 0px;
 		$image-width: 187px;
 		$image-height: 37px;
@@ -146,7 +146,7 @@
 		$image-height: 40px;
 		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico-screenplay.png'); /* base64 */
 	}
-	// @autosprite-image-details: logo-wikiavideo.png@565,0,39ddd3d3ae05b31a906d99cdd5a3ceb2
+	// @autosprite-image-details: logo-wikiavideo.png@621,0,39ddd3d3ae05b31a906d99cdd5a3ceb2
 	@if $imageName == 'logo-wikiavideo' {
 		$image-width: 187px;
 		$image-height: 37px;
