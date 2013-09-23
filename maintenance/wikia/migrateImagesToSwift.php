@@ -40,7 +40,7 @@ class MigrateImagesToSwift extends Maintenance {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->addOption( 'force', 'Perform the migration even when $wgEnableCephFileBackend = true' );
+		$this->addOption( 'force', 'Perform the migration even when $wgEnableSwiftFileBackend = true' );
 		$this->mDescription = 'Copies files from file system to distributed storage';
 	}
 
@@ -308,9 +308,9 @@ class MigrateImagesToSwift extends Maintenance {
 		$isForced = $this->getOption('force');
 
 		// one migration is enough
-		global $wgEnableCephFileBackend, $wgEnableUploads, $wgDBname;
-		if (!empty($wgEnableCephFileBackend) && !$isForced) {
-			$this->error("\$wgEnableCephFileBackend = true - new files storage already enabled on {$wgDBname} wiki!", 1);
+		global $wgEnableSwiftFileBackend, $wgEnableUploads, $wgDBname;
+		if (!empty($wgEnableSwiftFileBackend) && !$isForced) {
+			$this->error("\$wgEnableSwiftFileBackend = true - new files storage already enabled on {$wgDBname} wiki!", 1);
 		}
 
 		if (empty($wgEnableUploads) && !$isForced) {
@@ -421,7 +421,7 @@ class MigrateImagesToSwift extends Maintenance {
 
 		// update wiki configuration
 		// enable Swift storage via WikiFactory
-		WikiFactory::setVarByName('wgEnableCephFileBackend', $wgCityId, true, self::REASON);
+		WikiFactory::setVarByName('wgEnableSwiftFileBackend', $wgCityId, true, self::REASON);
 
 		$this->output("\nNew storage enabled\n");
 

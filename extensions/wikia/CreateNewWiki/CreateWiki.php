@@ -259,8 +259,8 @@ class CreateWiki {
 		/**
 		 * create image folder
 		 */
-		global $wgEnableCephFileBackend;
-		if (empty($wgEnableCephFileBackend)) {
+		global $wgEnableSwiftFileBackend;
+		if (empty($wgEnableSwiftFileBackend)) {
 			wfMkdirParents( "{$this->mNewWiki->images_dir}" );
 			wfDebugLog( "createwiki", __METHOD__ . ": Folder {$this->mNewWiki->images_dir} created\n", true );
 		}

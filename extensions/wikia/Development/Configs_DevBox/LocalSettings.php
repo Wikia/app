@@ -165,7 +165,7 @@ $wgRC2UDPEnabled = false;
 if ( empty( $wgCdnRootUrl ) ) $wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
 if ( empty( $wgDevBoxImageServerOverride ) ) $wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
 
-if (!empty($wgEnableCephFileBackend)) {
+if (!empty($wgEnableSwiftFileBackend)) {
 	$wgDevBoxImageServerOverride = 's3.dfs-s1';
 }
 

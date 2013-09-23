@@ -80,7 +80,7 @@ class VideoHandlerHooks {
 		global $wgUploadDirectory, $wgUploadBaseUrl,
 			$wgUploadPath, $wgHashedUploadDirectory,
 			$wgThumbnailScriptPath, $wgGenerateThumbnailOnParse,
-			$wgLocalFileRepo, $wgDeletedDirectory, $wgEnableCephFileBackend;
+			$wgLocalFileRepo, $wgDeletedDirectory, $wgEnableSwiftFileBackend;
 
 		$wgLocalFileRepo = array(
 			'class' => 'WikiaLocalRepo',
@@ -104,7 +104,7 @@ class VideoHandlerHooks {
 		$path = trim(parse_url($wgUploadPath, PHP_URL_PATH), '/');;
 		$wgFSSwiftContainer = substr($path, 0, -7);
 
-		if ( !empty( $wgEnableCephFileBackend ) ) {
+		if ( !empty( $wgEnableSwiftFileBackend ) ) {
 			global $wgFSSwiftContainer, $wgFSSwiftServer;
 			$container = $wgFSSwiftContainer;
 
