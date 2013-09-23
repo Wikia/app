@@ -5,6 +5,12 @@
 
 class VideoHomePageController extends WikiaController {
 
+	// Constants to represent some commonly used module descriptors
+	const MODULE_FEATURED = 'featured';
+	const MODULE_CATEGORY = 'category';
+	const MODULE_POPULAR  = 'popular';
+	const MODULE_FAN      = 'fan';
+
 	var $program;
 
 	/**
@@ -26,12 +32,14 @@ class VideoHomePageController extends WikiaController {
 	 */
 	public function index() {
 		OasisController::addBodyClass('WikiaVideo');
+		$this->response->addAsset('videohomepage_js');
 		$this->response->addAsset('videohomepage_scss');
 		$program = $this->getProgram();
 
+
 		$this->curProgram = $program;
 
-		if ( $program->exists() ) {
+		if ( $program instanceof VideoPageToolProgram && $program->exists() ) {
 			$this->haveCurrentProgram = true;
 			$this->featuredContent = $this->sendSelfRequest('handleFeatured');
 			$this->categoryContent = $this->sendSelfRequest('handleCategory');
@@ -105,37 +113,52 @@ class VideoHomePageController extends WikiaController {
 	 * Displays the featured module
 	 */
 	public function handleFeatured() {
-		$this->overrideTemplate( 'featured' );
+		$this->overrideTemplate( self::MODULE_FEATURED );
 		$program = $this->getProgram();
 
-		$this->assets = $program->getAssetsBySection( 'featured' );
+		if ( $program ) {
+			$this->assets = $program->getAssetsBySection( self::MODULE_FEATURED );
+		} else {
+			// Set an empty array for the template if there isn't a program
+			$this->assets = array();
+		}
 	}
 
 	/**
 	 * Displays the category module
 	 */
 	public function handleCategory() {
-		$this->overrideTemplate( 'category' );
+		$this->overrideTemplate( self::MODULE_CATEGORY );
 		$program = $this->getProgram();
 
-		$this->assets = $program->getAssetsBySection( 'category' );
+		if ( $program ) {
+			$this->assets = $program->getAssetsBySection( self::MODULE_CATEGORY );
+		} else {
+			// Set an empty array for the template if there isn't a program
+			$this->assets = array();
+		}
 	}
 
 	/**
 	 * Displays the fan module
 	 */
 	public function handleFan() {
-		$this->overrideTemplate( 'fan' );
+		$this->overrideTemplate( self::MODULE_FAN );
 		$program = $this->getProgram();
 
-		$this->assets = $program->getAssetsBySection( 'fan' );
+		if ( $program ) {
+			$this->assets = $program->getAssetsBySection( self::MODULE_FAN );
+		} else {
+			// Set an empty array for the template if there isn't a program
+			$this->assets = array();
+		}
 	}
 
 	/**
 	 * Displays the popular module
 	 */
 	public function handlePopular() {
-		$this->overrideTemplate( 'popular' );
+		$this->overrideTemplate( self::MODULE_POPULAR );
 
 	}
 }

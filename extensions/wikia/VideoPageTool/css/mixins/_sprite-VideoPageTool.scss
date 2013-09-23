@@ -14,44 +14,58 @@
 	$image-y: -1;
 	$image-width: -1;
 	$image-height: -1;
-	// @autosprite-image-details: ico-anyclip.png@72,0,7f5a01073cdd282c51e020c86cdbed16
-	@if $imageName == 'ico-anyclip' {
+	// @autosprite-image-details: carousel_left_arrow.png@72,0,b67164e1f01780d7f6ae66534cee6e50
+	@if $imageName == 'carousel_left_arrow' {
 		$image-x: 72px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 24px;
+	}
+	// @autosprite-image-details: carousel_right_arrow.png@100,0,9613aff63a3d4e709bb73864c016db00
+	@if $imageName == 'carousel_right_arrow' {
+		$image-x: 100px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 24px;
+	}
+	// @autosprite-image-details: ico-anyclip.png@128,0,7f5a01073cdd282c51e020c86cdbed16
+	@if $imageName == 'ico-anyclip' {
+		$image-x: 128px;
 		$image-y: 0px;
 		$image-width: 82px;
 		$image-height: 30px;
 	}
-	// @autosprite-image-details: ico-ign.png@166,0,7a185b3a2f9e2f21ed500b0172b5b5bc
+	// @autosprite-image-details: ico-ign.png@222,0,7a185b3a2f9e2f21ed500b0172b5b5bc
 	@if $imageName == 'ico-ign' {
-		$image-x: 166px;
+		$image-x: 222px;
 		$image-y: 0px;
 		$image-width: 76px;
 		$image-height: 23px;
 	}
-	// @autosprite-image-details: ico-iva.png@254,0,7510e435a389e8b25d0f900917c75a59
+	// @autosprite-image-details: ico-iva.png@310,0,7510e435a389e8b25d0f900917c75a59
 	@if $imageName == 'ico-iva' {
-		$image-x: 254px;
+		$image-x: 310px;
 		$image-y: 0px;
 		$image-width: 85px;
 		$image-height: 38px;
 	}
-	// @autosprite-image-details: ico-ooyala.png@351,0,179f4581bea111361206a824e53faf97
+	// @autosprite-image-details: ico-ooyala.png@407,0,179f4581bea111361206a824e53faf97
 	@if $imageName == 'ico-ooyala' {
-		$image-x: 351px;
+		$image-x: 407px;
 		$image-y: 0px;
 		$image-width: 107px;
 		$image-height: 18px;
 	}
-	// @autosprite-image-details: ico-realgravity.png@470,0,8dfc0bd1320db439073c67169fd1ed66
+	// @autosprite-image-details: ico-realgravity.png@526,0,8dfc0bd1320db439073c67169fd1ed66
 	@if $imageName == 'ico-realgravity' {
-		$image-x: 470px;
+		$image-x: 526px;
 		$image-y: 0px;
 		$image-width: 36px;
 		$image-height: 36px;
 	}
-	// @autosprite-image-details: ico-screenplay.png@518,0,cf4f575536b5f71cd83107c9648c674f
+	// @autosprite-image-details: ico-screenplay.png@574,0,cf4f575536b5f71cd83107c9648c674f
 	@if $imageName == 'ico-screenplay' {
-		$image-x: 518px;
+		$image-x: 574px;
 		$image-y: 0px;
 		$image-width: 35px;
 		$image-height: 40px;
@@ -84,37 +98,49 @@
 @mixin sprite-VideoPageTool-embed($imageName,$width: 0,$height: 0,$offset-x: 0,$offset-y: 0) {
 	$image-width: -1;
 	$image-height: -1;
-	// @autosprite-image-details: ico-anyclip.png@72,0,7f5a01073cdd282c51e020c86cdbed16
+	// @autosprite-image-details: carousel_left_arrow.png@72,0,b67164e1f01780d7f6ae66534cee6e50
+	@if $imageName == 'carousel_left_arrow' {
+		$image-width: 16px;
+		$image-height: 24px;
+		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/carousel_left_arrow.png'); /* base64 */
+	}
+	// @autosprite-image-details: carousel_right_arrow.png@100,0,9613aff63a3d4e709bb73864c016db00
+	@if $imageName == 'carousel_right_arrow' {
+		$image-width: 16px;
+		$image-height: 24px;
+		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/carousel_right_arrow.png'); /* base64 */
+	}
+	// @autosprite-image-details: ico-anyclip.png@128,0,7f5a01073cdd282c51e020c86cdbed16
 	@if $imageName == 'ico-anyclip' {
 		$image-width: 82px;
 		$image-height: 30px;
 		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico-anyclip.png'); /* base64 */
 	}
-	// @autosprite-image-details: ico-ign.png@166,0,7a185b3a2f9e2f21ed500b0172b5b5bc
+	// @autosprite-image-details: ico-ign.png@222,0,7a185b3a2f9e2f21ed500b0172b5b5bc
 	@if $imageName == 'ico-ign' {
 		$image-width: 76px;
 		$image-height: 23px;
 		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico-ign.png'); /* base64 */
 	}
-	// @autosprite-image-details: ico-iva.png@254,0,7510e435a389e8b25d0f900917c75a59
+	// @autosprite-image-details: ico-iva.png@310,0,7510e435a389e8b25d0f900917c75a59
 	@if $imageName == 'ico-iva' {
 		$image-width: 85px;
 		$image-height: 38px;
 		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico-iva.png'); /* base64 */
 	}
-	// @autosprite-image-details: ico-ooyala.png@351,0,179f4581bea111361206a824e53faf97
+	// @autosprite-image-details: ico-ooyala.png@407,0,179f4581bea111361206a824e53faf97
 	@if $imageName == 'ico-ooyala' {
 		$image-width: 107px;
 		$image-height: 18px;
 		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico-ooyala.png'); /* base64 */
 	}
-	// @autosprite-image-details: ico-realgravity.png@470,0,8dfc0bd1320db439073c67169fd1ed66
+	// @autosprite-image-details: ico-realgravity.png@526,0,8dfc0bd1320db439073c67169fd1ed66
 	@if $imageName == 'ico-realgravity' {
 		$image-width: 36px;
 		$image-height: 36px;
 		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico-realgravity.png'); /* base64 */
 	}
-	// @autosprite-image-details: ico-screenplay.png@518,0,cf4f575536b5f71cd83107c9648c674f
+	// @autosprite-image-details: ico-screenplay.png@574,0,cf4f575536b5f71cd83107c9648c674f
 	@if $imageName == 'ico-screenplay' {
 		$image-width: 35px;
 		$image-height: 40px;
@@ -154,6 +180,12 @@
 }
 @mixin sprite-VideoPageTool-deep($width: 0,$height: 0) {
 	@include sprite-VideoPageTool-base;
+	&.carousel-left-arrow {
+		@include sprite-VideoPageTool('carousel_left_arrow',$width,$height);
+	}
+	&.carousel-right-arrow {
+		@include sprite-VideoPageTool('carousel_right_arrow',$width,$height);
+	}
 	&.ico-anyclip {
 		@include sprite-VideoPageTool('ico-anyclip',$width,$height);
 	}
@@ -178,6 +210,12 @@
 }
 @mixin sprite-VideoPageTool-deep-embed($width: 0,$height: 0) {
 	@include sprite-VideoPageTool-base-embed;
+	&.carousel-left-arrow {
+		@include sprite-VideoPageTool-embed('carousel_left_arrow',$width,$height);
+	}
+	&.carousel-right-arrow {
+		@include sprite-VideoPageTool-embed('carousel_right_arrow',$width,$height);
+	}
 	&.ico-anyclip {
 		@include sprite-VideoPageTool-embed('ico-anyclip',$width,$height);
 	}
