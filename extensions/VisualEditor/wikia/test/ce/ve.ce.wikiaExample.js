@@ -86,13 +86,14 @@ ve.ce.wikiaExample = ( function ( utils ) {
 				'<img class="avatar" alt="Foo" height="16" src="Foo.png" width="16">' +
 				mw.message( 'oasis-content-picture-added-by', '<a href="/wiki/User:Foo">Foo</a>' ).plain() +
 			'</div>',
+		'caption':
+			'<figcaption class="thumbcaption ve-ce-branchNode">' +
+				'<p class="ve-ce-generated-wrapper ve-ce-branchNode">abc</p>' +
+			'</figcaption>',
 		'frame':
 			'<figure class="thumb thumbinner" style="">' +
 				'<a class="image" href="Foo"><img src="Bar"></a>' +
 				'<a class="internal sprite details magnify ve-no-shield"></a>' +
-				'<figcaption class="thumbcaption ve-ce-branchNode">' +
-					'<p class="ve-ce-generated-wrapper ve-ce-branchNode">abc</p>' +
-				'</figcaption>' +
 			'</figure>',
 		'frameless':
 			'<div class="" style="">' +
@@ -218,7 +219,11 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			width = attributes.width;
 
 		$mock = $( media.html.block[ type ] )
-			.addClass( media.getAlignClass( type, align, $mock ) );
+			.addClass( media.getAlignClass( type, align, $mock ) )
+			// HACK - this should only apply to type "frame" and "thumb" but
+			// parsoid includes it even for "frameless" and "none"
+			// @see https://bugzilla.wikimedia.org/show_bug.cgi?id=54479
+			.append( media.html.block.caption );
 
 		if ( type === 'frame' || type === 'thumb' ) {
 			$mock.css( 'width', ( width + 2 ) + 'px' );

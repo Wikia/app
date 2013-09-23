@@ -231,6 +231,7 @@ ve.ce.WikiaBlockMediaNode.prototype.update = function ( replaceRoot ) {
 	$anchor = this.createAnchor().appendTo( $thumb );
 	$image = this.createImage().appendTo( $anchor );
 
+	// Magnifying glass icon
 	if ( type !== 'frameless' && type !== 'none' ) {
 		$thumb.append( this.createMagnify() );
 	}
@@ -242,9 +243,8 @@ ve.ce.WikiaBlockMediaNode.prototype.update = function ( replaceRoot ) {
 		captionModel.connect( this, { 'update': 'onModelUpdate' } );
 		this.children.push( captionView );
 		captionView.attach( this );
-		if ( type !== 'frameless' && type !== 'none' ) {
-			captionView.$.appendTo( $thumb );
-		}
+		captionView.$.appendTo( $thumb );
+
 		if ( this.live !== captionView.isLive() ) {
 			captionView.setLive( this.live );
 		}
