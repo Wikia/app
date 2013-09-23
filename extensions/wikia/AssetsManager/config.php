@@ -959,7 +959,7 @@ $config['VET_js'] = array(
  * @TODO: decide if we want to split the js/css into two different packages for index and edit pages
  */
 
-$config['videopagetool_js'] = array(
+$config['videopageadmin_js'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -968,7 +968,6 @@ $config['videopagetool_js'] = array(
 		'//resources/jquery/jquery.validate.js',
 		'//extensions/wikia/VideoPageTool/js/models/validator.js',
 		'//extensions/wikia/VideoPageTool/js/models/datepicker.js',
-		// TODO: probably move this jQuery plugin to /resources at some point
 		'//extensions/wikia/VideoPageTool/js/views/switcher.js',
 		'//extensions/wikia/VideoPageTool/js/views/datepicker.js',
 		'//extensions/wikia/VideoPageTool/js/views/index.js',
@@ -976,7 +975,7 @@ $config['videopagetool_js'] = array(
 	)
 );
 
-$config['videopagetool_css'] = array(
+$config['videopageadmin_css'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_CSS,
 	'assets' => array(
@@ -984,13 +983,22 @@ $config['videopagetool_css'] = array(
 	)
 );
 
-$config['videopagetool_scss'] = array(
+$config['videopageadmin_scss'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => array(
 		'//skins/oasis/css/modules/CorporateDatepicker.scss',
-		'//extensions/wikia/VideoPageTool/css/VideoPageTool.scss',
-		'//extensions/wikia/VideoPageTool/css/VideoPageTool_Header.scss'
+		'//extensions/wikia/VideoPageTool/css/Admin/VideoPageTool.scss',
+		'//extensions/wikia/VideoPageTool/css/Admin/VideoPageTool_Header.scss'
+	)
+);
+
+$config['videohomepage_js'] = array(
+	'skin' => array( 'oasis' ),
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//resources/wikia/libraries/jquery/bxslider/jquery.bxslider.min.js',
+		'//extensions/wikia/VideoPageTool/js/views/videohomepage.featured.js',
 	)
 );
 
@@ -1003,7 +1011,9 @@ $config['videohomepage_scss'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => array(
-		'//extensions/wikia/VideoPageTool/css/VideoHomePage.scss'
+		'//extensions/wikia/VideoPageTool/css/VideoHomePage.scss',
+		'//resources/wikia/libraries/jquery/bxslider/jquery.bxslider.scss',
+		'//extensions/wikia/VideoPageTool/css/HomePage/featured.scss',
 	)
 );
 

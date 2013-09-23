@@ -17,8 +17,9 @@ class VideoHomePageArticle extends Article {
 		// Get all the MW stuff out of the way first
 		parent::view();
 
+		$out = $this->getContext()->getOutput();
 
-		$vpt_html = F::app()->sendRequest('VideoPageController', 'index');
+		$vpt_html = F::app()->sendRequest('VideoHomePageController', 'index');
 		$page_html = $out->getHTML();
 		$out->clearHTML();
 
