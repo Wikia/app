@@ -116,7 +116,7 @@ define('menu', ['pubsub', 'editor', 'device', 'config'], function(pubsub, editor
     function menuObj(wrapperId){ //constructor for menu object, parameter = div wrapper for menu
         var myWrapper = document.getElementById(wrapperId);
         this.wrapper = myWrapper;
-        this.master = myWrapper.getElementsByClassName('master')[0]
+        this.master = myWrapper.getElementsByClassName('master')[0];
         this.primary = {
             ul : myWrapper.getElementsByTagName('ul')[0],
             elements : myWrapper.getElementsByTagName('ul')[0].getElementsByTagName('li'),
