@@ -41,7 +41,6 @@ class VideoHandlerHooks {
 		return $result;
 	}
 
-
 	/**
 	 * Preserves video mime types. Needed to fix MW 1.16 bug
 	 *
@@ -80,14 +79,12 @@ class VideoHandlerHooks {
 		global $wgUploadDirectory, $wgUploadBaseUrl,
 			$wgUploadPath, $wgHashedUploadDirectory,
 			$wgThumbnailScriptPath, $wgGenerateThumbnailOnParse,
-			$wgLocalFileRepo, $wgDeletedDirectory, $wgEnableSwiftFileBackend;
+			$wgLocalFileRepo, $wgDeletedDirectory;
 
 		$wgLocalFileRepo = array(
 			'class' => 'WikiaLocalRepo',
 			'name' => 'local',
 			'directory' => $wgUploadDirectory,
-			//'scriptDirUrl' => $wgScriptPath,
-			//'scriptExtension' => $wgScriptExtension,
 			'url' => $wgUploadBaseUrl ? $wgUploadBaseUrl . $wgUploadPath : $wgUploadPath,
 			'hashLevels' => $wgHashedUploadDirectory ? 2 : 0,
 			'thumbScriptUrl' => $wgThumbnailScriptPath,
@@ -97,27 +94,7 @@ class VideoHandlerHooks {
 			'backend' => 'local-backend',
 		);
 
-		// TODO: move to wikia.php
-		// $wgUploadPath: http://images.wikia.com/poznan/pl/images
-		// $wgFSSwiftContainer: poznan/pl
-		global $wgFSSwiftContainer;
-		$path = trim(parse_url($wgUploadPath, PHP_URL_PATH), '/');;
-		$wgFSSwiftContainer = substr($path, 0, -7);
-
-		if ( !empty( $wgEnableSwiftFileBackend ) ) {
-			global $wgFSSwiftContainer, $wgFSSwiftServer;
-			$container = $wgFSSwiftContainer;
-
-			$wgLocalFileRepo['backend'] = 'swift-backend';
-			$wgLocalFileRepo['zones'] = array (
-				'public' => array( 'container' => $container, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images' ),
-				'temp'   => array( 'container' => $container, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/temp' ),
-				'thumb'  => array( 'container' => $container, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/thumb' ),
-				'deleted'=> array( 'container' => $container, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/deleted' ),
-				'archive'=> array( 'container' => $container, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/archive' )
-			);
-		}
-
+		wfRunHooks( 'AfterSetupLocalFileRepo', [&$wgLocalFileRepo] );
 		return true;
 	}
 

@@ -42,6 +42,9 @@ $wgHooks['UploadVerifyFile']         [] = 'Wikia::onUploadVerifyFile';
 $wgHooks['UserNameLoadFromId']       [] = "Wikia::onUserNameLoadFromId";
 $wgHooks['UserLoadFromDatabase']     [] = "Wikia::onUserLoadFromDatabase";
 
+# Swift file backend
+$wgHooks['AfterSetupLocalFileRepo']  [] = "Wikia::onAfterSetupLocalFileRepo";
+
 /**
  * This class have only static methods so they can be used anywhere
  *
@@ -2097,6 +2100,35 @@ class Wikia {
 			ExternalUser_Wikia::removeFromSecondaryClusters( $id );
 		}
 		$user->invalidateCache();
+
+		return true;
+	}
+
+	/**
+	 * Register Swift file backend
+	 *
+	 * @author macbre
+	 * @param array $repo $wgLocalFileRepo
+	 * @return bool true - it's a hook
+	 */
+	static function onAfterSetupLocalFileRepo(Array &$repo) {
+		// $wgUploadPath: http://images.wikia.com/poznan/pl/images
+		// $wgFSSwiftContainer: poznan/pl
+		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgEnableSwiftFileBackend, $wgUploadPath;
+
+		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
+		$wgFSSwiftContainer = substr( $path, 0, -7 );
+
+		if ( !empty( $wgEnableSwiftFileBackend ) ) {
+			$repo['backend'] = 'swift-backend';
+			$repo['zones'] = array (
+				'public' => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images' ),
+				'temp'   => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/temp' ),
+				'thumb'  => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/thumb' ),
+				'deleted'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/deleted' ),
+				'archive'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/archive' )
+			);
+		}
 
 		return true;
 	}
