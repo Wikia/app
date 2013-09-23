@@ -1274,7 +1274,7 @@ class CF_Container
         $this->cdn_ttl = NULL;
         $this->cdn_uri = NULL;
         $this->cdn_ssl_uri = NULL;
-        $this->cdn_streaming_uri - NULL;
+        $this->cdn_streaming_uri = NULL;
         $this->cdn_log_retention = NULL;
         $this->cdn_acl_user_agent = NULL;
         $this->cdn_acl_referrer = NULL;
@@ -1512,8 +1512,8 @@ class CF_Container
      * $images->copy_object_to("disco_dancing.jpg","container_target");
      * </code>
      *
-     * @param CF_Object $obj name or instance of Object to copy
-     * @param CF_Container $container_target name or instance of target Container
+     * @param CF_Object|string $obj name or instance of Object to copy
+     * @param CF_Container|string $container_target name or instance of target Container
      * @param string $dest_obj_name name of target object (optional - uses source name if omitted)
      * @param array $metadata metadata array for new object (optional)
      * @param array $headers header fields array for the new object (optional)
@@ -1586,8 +1586,8 @@ class CF_Container
      * $images->copy_object_from("disco_dancing.jpg","container_source");
      * </code>
      *
-     * @param CF_Object $obj name or instance of Object to copy
-     * @param CF_Container $container_source name or instance of source Container
+     * @param CF_Object|string $obj name or instance of Object to copy
+     * @param CF_Container|string $container_source name or instance of source Container
      * @param string $dest_obj_name name of target object (optional - uses source name if omitted)
      * @param array $metadata metadata array for new object (optional)
      * @param array $headers header fields array for the new object (optional)
@@ -1741,7 +1741,7 @@ class CF_Container
      * $images->delete_object("disco_dancing.jpg");
      * </code>
      *
-     * @param CF_Object $obj name or instance of Object to delete
+     * @param CF_Object|string $obj name or instance of Object to delete
      * @param CF_Container $container name or instance of Container in which the object resides (optional)
      * @return boolean <kbd>True</kbd> if successfully removed
      * @throws SyntaxException invalid Object name
