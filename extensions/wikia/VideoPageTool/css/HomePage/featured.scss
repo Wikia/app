@@ -41,15 +41,23 @@ $play-button-overlay-fade-duration: 400ms;
 				margin-top: 0;
 				position: relative;
 
-				> img {
+				.slide-image {
 					width: 100%;
-					max-height: 461px;
+
+					> img {
+						width: 100%;
+						max-height: 461px;
+					}
 				}
 			}
 			.Wikia-video-play-button {
 				// TODO: hack, find a better way than hard coding the line-height
 				line-height: 461px;
 				width: inherit;
+			}
+			.slide-video {
+				width: 750px;
+				margin: auto;
 			}
 		}
 		.bx-controls-direction a {

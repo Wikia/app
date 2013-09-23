@@ -5,10 +5,13 @@
 			<? foreach ( $assets as $featured ): ?>
 				<? $videoData = $featured->getAssetData() ?>
 				<li>
-					<div class="Wikia-video-play-button">
-						<img class="sprite large play" src="<?= $wg->BlankImgUrl ?>">
+					<div class="slide-image">
+						<div class="Wikia-video-play-button">
+							<img class="sprite large play" src="<?= $wg->BlankImgUrl ?>">
+						</div>
+						<img src="<?= $videoData['largeThumbUrl'] ?>">
 					</div>
-					<img src="<?= $videoData['largeThumbUrl'] ?>">
+					<div class="slide-video"></div>
 				</li>
 			<? endforeach; ?>
 		</ul>
