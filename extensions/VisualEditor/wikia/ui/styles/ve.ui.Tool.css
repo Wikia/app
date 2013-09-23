@@ -1,21 +1,22 @@
-.ve-ui-iconTextButtonTool {
-	color: #555;
+.ve-ui-barToolGroup .ve-ui-tool-wikiaMediaInsert {
 	padding-left: .5em;
 	padding-right: .5em;
 	width: auto;
 }
 
-.ve-ui-iconTextButtonTool:hover {
+.ve-ui-tool-wikiaMediaInsert:hover {
 	text-decoration: none;
 }
 
-.ve-ui-iconTextButtonTool-icon {
+.ve-ui-barToolGroup .ve-ui-tool-wikiaMediaInsert .ve-ui-iconedElement-icon {
 	display: inline-block;
 	margin-right: .3em;
 	vertical-align: middle;
 }
 
-.ve-ui-iconTextButtonTool-label {
+.ve-ui-barToolGroup .ve-ui-tool-wikiaMediaInsert .ve-ui-labeledElement-label {
+	color: #555;
+	display: inline;
 	font-size: .8em;
 	vertical-align: middle;
 }
