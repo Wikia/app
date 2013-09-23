@@ -93,8 +93,14 @@ class VisualEditorHooks {
 	 * @return boolean
 	 */
 	public static function onSkinTemplateNavigation( &$skin, &$links ) {
-		// Only do this if the user has VE enabled
+		global $wgTitle, $wgVisualEditorNamespaces;
+		// Should we enable VisualEditor?
 		if (
+			// Incorrect skin
+			!in_array( $skin->skinname, self::$supportedSkins ) ||
+			// Incorrect namespace
+			!in_array( $wgTitle->getNamespace(), $wgVisualEditorNamespaces ) ||
+			// Incorrect user setting
 			!$skin->getUser()->getOption( 'visualeditor-enable' ) ||
 			$skin->getUser()->getOption( 'visualeditor-betatempdisable' )
 		) {
