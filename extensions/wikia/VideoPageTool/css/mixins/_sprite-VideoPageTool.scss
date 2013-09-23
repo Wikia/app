@@ -70,6 +70,13 @@
 		$image-width: 35px;
 		$image-height: 40px;
 	}
+	// @autosprite-image-details: logo-wikiavideo.png@565,0,39ddd3d3ae05b31a906d99cdd5a3ceb2
+	@if $imageName == 'logo-wikiavideo' {
+		$image-x: 565px;
+		$image-y: 0px;
+		$image-width: 187px;
+		$image-height: 37px;
+	}
 	@if $image-x != -1 {
 		$position-x: 0px - $image-x;
 		$position-y: 0px - $image-y;
@@ -139,6 +146,12 @@
 		$image-height: 40px;
 		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico-screenplay.png'); /* base64 */
 	}
+	// @autosprite-image-details: logo-wikiavideo.png@565,0,39ddd3d3ae05b31a906d99cdd5a3ceb2
+	@if $imageName == 'logo-wikiavideo' {
+		$image-width: 187px;
+		$image-height: 37px;
+		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/logo-wikiavideo.png'); /* base64 */
+	}
 	@if $image-width != -1 {
 		$position-x: 0px;
 		$position-y: 0px;
@@ -191,6 +204,9 @@
 	&.ico-screenplay {
 		@include sprite-VideoPageTool('ico-screenplay',$width,$height);
 	}
+	&.logo-wikiavideo {
+		@include sprite-VideoPageTool('logo-wikiavideo',$width,$height);
+	}
 }
 @mixin sprite-VideoPageTool-deep-embed($width: 0,$height: 0) {
 	@include sprite-VideoPageTool-base-embed;
@@ -217,6 +233,9 @@
 	}
 	&.ico-screenplay {
 		@include sprite-VideoPageTool-embed('ico-screenplay',$width,$height);
+	}
+	&.logo-wikiavideo {
+		@include sprite-VideoPageTool-embed('logo-wikiavideo',$width,$height);
 	}
 }
 // @autosprite-end
