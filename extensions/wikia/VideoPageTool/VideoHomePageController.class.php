@@ -36,7 +36,7 @@ class VideoHomePageController extends WikiaController {
 
 		$this->curProgram = $program;
 
-		if ( $program && $program->exists() ) {
+		if ( $program instanceof VideoPageToolProgram && $program->exists() ) {
 			$this->haveCurrentProgram = true;
 			$this->featuredContent = $this->sendSelfRequest('handleFeatured');
 			$this->categoryContent = $this->sendSelfRequest('handleCategory');
