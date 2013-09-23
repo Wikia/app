@@ -248,7 +248,7 @@ ini_set( "include_path", dirname( __FILE__ )."/../../" );
 require_once( "commandLine.inc" );
 
 if ( isset($options['help']) ) {
-	die( "Usage: php mapVideoMatadata.php [--help] [--dry-run] [--provider=abc] [--limit=123] [--name=xyz] [--end=<timestamp>]
+	die( "Usage: php mapVideoMetadata.php [--help] [--dry-run] [--provider=abc] [--limit=123] [--name=xyz] [--end=<timestamp>]
 	--dry-run                      dry run
 	--provider                     video provider (required)
 	--limit                        limit number of videos (required)
