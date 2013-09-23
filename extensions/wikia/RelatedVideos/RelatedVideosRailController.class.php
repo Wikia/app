@@ -7,14 +7,8 @@ class RelatedVideosRailController extends WikiaController {
 	static $anonsData = array();
 	
 	public function executeIndex() {
-		$app = F::app();
-
-		// don't load it on edit pages (perf improvement)
-		if( $app->checkSkin( 'oasis', $app->getSkinTemplateObj() ) && !BodyController::isEditPage() ) {
-			$this->response->addAsset( self::RELATED_VIDEOS_SCSS_PACKAGE_NAME );
-			$this->response->addAsset( self::RELATED_VIDEOS_JS_PACKAGE_NAME );
-		}
-
+		$this->response->addAsset( self::RELATED_VIDEOS_SCSS_PACKAGE_NAME );
+		$this->response->addAsset( self::RELATED_VIDEOS_JS_PACKAGE_NAME );
 	}
 
 }
