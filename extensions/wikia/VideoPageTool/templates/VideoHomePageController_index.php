@@ -1,4 +1,3 @@
-Publish date: <?= $curProgram->getPublishDate() ?>
 
 <? if ( $haveCurrentProgram ): ?>
 	<?= $featuredContent ?>
@@ -19,3 +18,6 @@ Publish date: <?= $curProgram->getPublishDate() ?>
 		'partners' => $partners
 	)
 ); ?>
+
+
+Publish date: <?= $curProgram->getPublishDate() ?>
