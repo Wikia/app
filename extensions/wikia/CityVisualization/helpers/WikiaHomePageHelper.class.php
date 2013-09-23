@@ -915,18 +915,11 @@ class WikiaHomePageHelper extends WikiaModel {
 		return false;
 	}
 
-	protected function extractWikiDataForBatch($wiki) {
-		$processedWiki = array(
-			'wikiid' => $wiki['wikiid'],
-			'wikiname' => $wiki['wikiname'],
-			'wikiurl' => $wiki['wikiurl'],
-			'wikinew' => $wiki['wikinew'],
-			'wikihot' => $wiki['wikihot'],
-			'wikipromoted' => $wiki['wikipromoted'],
-			'wikiblocked' => $wiki['wikiblocked'],
-			'main_image' => !empty($wiki['image']) ? $wiki['image'] : $wiki['main_image']
-		);
-		return $processedWiki;
+	protected function extractWikiDataForBatch(&$wiki) {
+		if (!empty($wiki['image'])) {
+			$wiki['main_image'] = $wiki['image'];
+		}
+		return $wiki;
 	}
 
 	public function getVisualizationWikisData() {

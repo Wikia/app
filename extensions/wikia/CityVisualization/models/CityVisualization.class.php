@@ -112,7 +112,6 @@ class CityVisualization extends WikiaModel {
 			foreach($resultingBatch as &$batchPromotedDemoted) {
 				foreach($batchPromotedDemoted as &$batch) {
 					$batch['wikiname'] = htmlspecialchars($batch['wikiname']);
-					$batch['wikidesc'] = htmlspecialchars($batch['wikidesc']);
 				}
 			}
 		}
@@ -229,10 +228,7 @@ class CityVisualization extends WikiaModel {
 		$tables = [self::CITY_VISUALIZATION_TABLE_NAME, 'city_list'];
 		$fields = [
 			self::CITY_VISUALIZATION_TABLE_NAME . '.city_id',
-			self::CITY_VISUALIZATION_TABLE_NAME . '.city_vertical',
 			self::CITY_VISUALIZATION_TABLE_NAME . '.city_main_image',
-			self::CITY_VISUALIZATION_TABLE_NAME . '.city_description',
-			self::CITY_VISUALIZATION_TABLE_NAME . '.city_headline',
 			'city_list.city_title',
 			'city_list.city_url',
 			self::CITY_VISUALIZATION_TABLE_NAME . '.city_flags',
@@ -250,14 +246,11 @@ class CityVisualization extends WikiaModel {
 		while( $row = $db->fetchObject($results) ) {
 			$wikiData = $this->makeVisualizationWikiData($row);
 			$isPromoted = $wikiData['wikipromoted'];
-			$isBlocked = $wikiData['wikiblocked'];
 
-			if ( ! $isBlocked ) {
-				if ( $conditioner->getPromotionCondition( $isPromoted ) ) {
-					$verticalWikis[self::PROMOTED_ARRAY_KEY][] = $wikiData;
-				} else {
-					$verticalWikis[self::DEMOTED_ARRAY_KEY][] = $wikiData;
-				}
+			if ( $conditioner->getPromotionCondition( $isPromoted ) ) {
+				$verticalWikis[self::PROMOTED_ARRAY_KEY][] = $wikiData;
+			} else {
+				$verticalWikis[self::DEMOTED_ARRAY_KEY][] = $wikiData;
 			}
 		}
 
@@ -269,15 +262,12 @@ class CityVisualization extends WikiaModel {
 		return [
 			'wikiid' => $row->city_id,
 			'wikiname' => $row->city_title,
-			'wikiheadline' => $row->city_headline,
 			'wikiurl' => $row->city_url,
-			'wikidesc' => $row->city_description,
 			'main_image' => $row->city_main_image,
 			'wikinew' => $this->isNewWiki($row->city_flags),
 			'wikihot' => $this->isHotWiki($row->city_flags),
 			'wikiofficial' => $this->isOfficialWiki($row->city_flags),
 			'wikipromoted' => $this->isPromotedWiki($row->city_flags),
-			'wikiblocked' => $this->isBlockedWiki($row->city_flags),
 		];
 	}
 
