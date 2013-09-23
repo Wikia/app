@@ -1119,31 +1119,8 @@ abstract class FileBackendStore extends FileBackend {
 	/**
 	 * @see FileBackend::getFileStat()
 	 */
-/*	final public function getFileStat( array $params ) {
-		wfProfileIn( __METHOD__ );
-		$path = self::normalizeStoragePath( $params['src'] );
-		if ( $path === null ) {
-			wfProfileOut( __METHOD__ );
-			return false; // invalid storage path
-		}
-		$latest = !empty( $params['latest'] );
-		if ( isset( $this->cache[$path]['stat'] ) ) {
-			// If we want the latest data, check that this cached
-			// value was in fact fetched with the latest available data.
-			if ( !$latest || $this->cache[$path]['stat']['latest'] ) {
-				wfProfileOut( __METHOD__ );
-				return $this->cache[$path]['stat'];
-			}
-		}
-		$stat = $this->doGetFileStat( $params );
-		if ( is_array( $stat ) ) { // don't cache negatives
-			$this->trimCache(); // limit memory
-			$this->cache[$path]['stat'] = $stat;
-			$this->cache[$path]['stat']['latest'] = $latest;
-		}
-		wfProfileOut( __METHOD__ );
-		return $stat;
-	}*/
+	// Wikia change - begin
+	// @author Moli
 	final public function getFileStat( array $params ) {
 		wfProfileIn( __METHOD__ );
 		$path = self::normalizeStoragePath( $params['src'] );
@@ -1170,9 +1147,6 @@ abstract class FileBackendStore extends FileBackend {
 			$this->cache[$path]['stat'] = $stat;
 			$this->cache[$path]['stat']['latest'] = $latest;
 		} elseif ( $stat === false ) { // file does not exist
-			#$this->cheapCache->set( $path, 'stat', $latest ? 'NOT_EXIST_LATEST' : 'NOT_EXIST' );
-			#$this->cheapCache->set( $path, 'sha1', // the SHA-1 must be false too
-
 			$this->cache[$path]['stat'] = $latest ? 'NOT_EXIST_LATEST' : 'NOT_EXIST';
 			wfDebug( __METHOD__ . ": File $path does not exist.\n" );
 		} else { // an error occurred
@@ -1181,7 +1155,8 @@ abstract class FileBackendStore extends FileBackend {
 		wfProfileOut( __METHOD__ );
 		return $stat;
 	}
-	
+	// Wikia change - end
+
 	/**
 	 * @see FileBackendStore::getFileStat()
 	 */
