@@ -483,10 +483,10 @@ class RenameUserProcess {
 				'rename_old_name' => $this->mOldUsername,
 				'rename_new_name' => $this->mNewUsername,
 				'reason' => $this->mReason,
-                                'tasks' => array()
+				'tasks' => array()
 			),
 			TASK_STARTED,
-			BatchTask::PRIORITY_HIGH	
+			BatchTask::PRIORITY_HIGH
 		);
 
 		$this->addLogDestination(self::LOG_BATCH_TASK, $this->mGlobalTask);
@@ -555,7 +555,7 @@ class RenameUserProcess {
 
 		// delete the record from all the secondary clusters
 		if ( class_exists( 'ExternalUser_Wikia' ) ) {
-			ExternalUser_Wikia::removeFromSecondaryClusters( $this->mUserId );	
+			ExternalUser_Wikia::removeFromSecondaryClusters( $this->mUserId );
 		}
 
 		// rename the user on the shared cluster
@@ -580,18 +580,18 @@ class RenameUserProcess {
 			global $wgAuth, $wgExternalAuthType;
 
 			$fakeUser = User::newFromName( $this->mOldUsername, 'creatable' );
-			
+
 			if ( !is_object( $fakeUser ) ) {
 				$this->addLog("Cannot create fake user: {$this->mOldUsername}");
 				wfProfileOut(__METHOD__);
 				return false;
-			} 
+			}
 
 			$fakeUser->setPassword( null );
 			$fakeUser->setEmail( null );
 			$fakeUser->setRealName( '' );
 			$fakeUser->setName( $this->mOldUsername );
-			
+
 			if ( $wgExternalAuthType ) {
 				$fakeUser = ExternalUser_Wikia::addUser( $fakeUser, '', '', '' );
 			} else {
@@ -627,7 +627,7 @@ class RenameUserProcess {
 				'lang'        => null,
 				'type'        => Phalanx::TYPE_USER
 			);
-			
+
 			wfRunHooks( "EditPhalanxBlock", array( &$data ) );
 			$this->mPhalanxBlockId = $data['id'];
 			if(!$this->mPhalanxBlockId) {
@@ -985,24 +985,24 @@ class RenameUserProcess {
 	 * @param $arg1 mixed Multiple format parameters
 	 */
 	public function addMainLog( $action, $text, $arg1 = null ) {
-            /*
-             * BugId:1030
-             * Michał Roszka (Mix) <michal@wikia-inc.com>
-             *
-             * $text is HTML and may contain % which are not vsptintf's conversion specification marks,
-             * e.g. username f"oo"bar results with <a href="http://community.wikia.com/wiki/User:F%22oo%22baz">F&quot;oo&quot;baz</a>
-             * which breaks vsprintf.
-             *
-             * There are 4 calls of this method, none of them passing any vsprintf's conversion specification marks.
-             * vsprintf seems unnecessary, let's just pass $text to StaffLogger::log()
+		/*
+		 * BugId:1030
+		 * Michał Roszka (Mix) <michal@wikia-inc.com>
+		 *
+		 * $text is HTML and may contain % which are not vsptintf's conversion specification marks,
+		 * e.g. username f"oo"bar results with <a href="http://community.wikia.com/wiki/User:F%22oo%22baz">F&quot;oo&quot;baz</a>
+		 * which breaks vsprintf.
+		 *
+		 * There are 4 calls of this method, none of them passing any vsprintf's conversion specification marks.
+		 * vsprintf seems unnecessary, let's just pass $text to StaffLogger::log()
 
-                if (func_num_args() > 1) {
+		if (func_num_args() > 1) {
 			$args = func_get_args();
 			$args = array_slice($args,1);
-                        $text = vsprintf($text,$args);
+			$text = vsprintf($text,$args);
 		}
-             */
-            StaffLogger::log("renameuser", $action, $this->mRequestorId, $this->mRequestorName, $this->mUserId, $this->mNewUsername, $text);
+		 */
+		StaffLogger::log("renameuser", $action, $this->mRequestorId, $this->mRequestorName, $this->mUserId, $this->mNewUsername, $text);
 	}
 
 	/**
@@ -1053,44 +1053,44 @@ class RenameUserProcess {
 	public function getInternalLog() {
 		return $this->mInternalLog;
 	}
-        
-        /**
-         * Checks self::$mLocalDefaults against the current database layout and lists fields, that no longer exist.
-         * 
-         * @author Michał Roszka (Mix) <michal@wikia-inc.com>
-         * @static
-         * @access public
-         * @return string
-         */
-        static public function checkDatabaseLayout() {
-            $oDB = wfGetDB( DB_SLAVE );
-            $sOut = '';
-            
-            foreach ( self::$mLocalDefaults as $aEntry ) {
-                // table.userid_column
-                if ( !empty( $aEntry['userid_column'] ) && !$oDB->fieldInfo( $aEntry['table'], $aEntry['userid_column'] ) ) {
-                    $sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['userid_column'] );
-                }
-                // table.username_column
-                if ( !empty( $aEntry['username_column'] ) && !$oDB->fieldInfo( $aEntry['table'], $aEntry['username_column'] ) ) {
-                    $sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['username_column'] );
-                }
-                // table.[columns in conditions]
-                if ( isset( $aEntry['conds'] ) ) {
-                    foreach ( $aEntry['conds'] as $key => $value ) {
-                        if ( !$oDB->fieldInfo( $aEntry['table'], $key ) ) {
-                            $sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['username_column'] );
-                        }
-                    }
-                }
-            }
-            
-            if ( empty( $sOut ) ) {
-                $sOut = 'There are no missing columns in the current database layout';
-            }
-            
-            return trim( $sOut );
-        }
+
+	/**
+	* Checks self::$mLocalDefaults against the current database layout and lists fields, that no longer exist.
+	*
+	* @author Michał Roszka (Mix) <michal@wikia-inc.com>
+	* @static
+	* @access public
+	* @return string
+	*/
+	static public function checkDatabaseLayout() {
+		$oDB = wfGetDB( DB_SLAVE );
+		$sOut = '';
+
+		foreach ( self::$mLocalDefaults as $aEntry ) {
+			// table.userid_column
+			if ( !empty( $aEntry['userid_column'] ) && !$oDB->fieldInfo( $aEntry['table'], $aEntry['userid_column'] ) ) {
+				$sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['userid_column'] );
+			}
+			// table.username_column
+			if ( !empty( $aEntry['username_column'] ) && !$oDB->fieldInfo( $aEntry['table'], $aEntry['username_column'] ) ) {
+				$sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['username_column'] );
+			}
+			// table.[columns in conditions]
+			if ( isset( $aEntry['conds'] ) ) {
+				foreach ( $aEntry['conds'] as $key => $value ) {
+					if ( !$oDB->fieldInfo( $aEntry['table'], $key ) ) {
+						$sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['username_column'] );
+					}
+				}
+			}
+		}
+
+		if ( empty( $sOut ) ) {
+			$sOut = 'There are no missing columns in the current database layout';
+		}
+
+		return trim( $sOut );
+	}
 
 	static public function newFromData( $data ) {
 		wfProfileIn(__METHOD__);
