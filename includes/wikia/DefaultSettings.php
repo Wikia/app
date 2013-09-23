@@ -1148,14 +1148,14 @@ $wgEnableAdEngineExt = true;
  * @name $wgAdDriverUseNewGptZones
  * Whether to use zones with slot name included (true) in GPT tags or not (false)
  */
-$wgAdDriverUseNewGptZones = false;
+$wgAdDriverUseNewGptZones = true;
 
 /**
  * @name $wgAdDriverUseFullGpt
  * Whether to use full GPT (true) or mixed GPT for roadbloack and legacy DART calls for other slots (false)
  * If true, $wgAdDriverUseNewGptZones is meaningless (assumed true) as full GPT requires unique zone names
  */
-$wgAdDriverUseFullGpt = false;
+$wgAdDriverUseFullGpt = true;
 
 /**
  * @name $wgAdVideoTargeting
