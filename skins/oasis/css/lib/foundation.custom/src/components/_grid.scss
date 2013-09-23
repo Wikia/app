@@ -67,6 +67,8 @@ $total-columns: 12 !default;
 
   position: relative;
 	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 
   // If collapsed, get rid of gutter padding
   @if $collapse {
