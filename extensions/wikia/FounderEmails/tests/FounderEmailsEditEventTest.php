@@ -23,15 +23,23 @@ class FounderEmailsEditEventTest extends WikiaBaseTest {
 		// Test setup
 		global $wgUser;
 		$mockUser = $this->getMockUser();
+		$mockUser->expects( $this->any() )->method( 'getOption' )->will( $this->returnValue(0) );
 		$wgUser = $mockUser;
 
-		$mockFounderEmailsEditEvent = $this->getMockFounderEmailsEditEvent();
+		$mockFounderEmailsEditEvent = $this->getMock('FounderEmailsEditEvent', [
+			'__construct',
+			'getUserEditsStatus',
+			'process',
+			'getEventData'
+		] );
 		$mockFounderEmailsEditEvent::staticExpects($this->any())
 			->method('getUserEditsStatus')
 			->will($this->returnValue(FounderEmailsEditEvent::FIRST_EDIT));
 		$mockFounderEmailsEditEvent::staticExpects($this->once())
 			->method('getEventData')
 			->with($this->anything(), $this->anything(), $this->anything(), true);
+		$mockFounderEmailsEditEvent->expects($this->any())->method('process')
+			->will($this->returnValue(null));
 		$this->mockClass('FounderEmailsEditEvent', $mockFounderEmailsEditEvent);
 
 		$mockRecentChange = $this->getMockRecentChange();
@@ -41,22 +49,30 @@ class FounderEmailsEditEventTest extends WikiaBaseTest {
 	}
 
 	public function testRegisterForMultipleEdits() {
-		/* Test setup */
+		// Test setup
 		global $wgUser;
 		$mockUser = $this->getMockUser();
+		$mockUser->expects( $this->any() )->method( 'getOption' )->will( $this->returnValue(0) );
 		$mockUser->expects( $this->once() )->method( 'setOption' )->with(
 			$this->stringStartsWith(FounderEmailsEditEvent::FIRST_EDIT_NOTIFICATION_SENT_PROP_NAME),
 			true
 		)->will( $this->returnValue( 0 ) );
 		$wgUser = $mockUser;
 
-		$mockFounderEmailsEditEvent = $this->getMockFounderEmailsEditEvent();
+		$mockFounderEmailsEditEvent = $this->getMock('FounderEmailsEditEvent', [
+			'__construct',
+			'getUserEditsStatus',
+			'process',
+			'getEventData'
+		] );
 		$mockFounderEmailsEditEvent::staticExpects($this->any())
 			->method('getUserEditsStatus')
 			->will($this->returnValue(FounderEmailsEditEvent::MULTIPLE_EDITS));
 		$mockFounderEmailsEditEvent::staticExpects($this->once())
 			->method('getEventData')
 			->with($this->anything(), $this->anything(), $this->anything(), false);
+		$mockFounderEmailsEditEvent->expects($this->any())->method('process')
+			->will($this->returnValue(null));
 		$this->mockClass('FounderEmailsEditEvent', $mockFounderEmailsEditEvent);
 
 		$mockRecentChange = $this->getMockRecentChange();
@@ -69,13 +85,21 @@ class FounderEmailsEditEventTest extends WikiaBaseTest {
 		// Test setup
 		global $wgUser;
 		$mockUser = $this->getMockUser();
+		$mockUser->expects( $this->any() )->method( 'getOption' )->will( $this->returnValue(0) );
 		$mockUser->expects( $this->never() )->method( 'setOption' );
 		$wgUser = $mockUser;
 
-		$mockFounderEmailsEditEvent = $this->getMockFounderEmailsEditEvent();
+		$mockFounderEmailsEditEvent = $this->getMock('FounderEmailsEditEvent', [
+			'__construct',
+			'getUserEditsStatus',
+			'process',
+			'getEventData'
+		] );
 		$mockFounderEmailsEditEvent::staticExpects($this->any())
 			->method('getUserEditsStatus')
 			->will($this->returnValue(FounderEmailsEditEvent::NO_EDITS));
+		$mockFounderEmailsEditEvent->expects($this->any())->method('process')
+			->will($this->returnValue(null));
 		$mockFounderEmailsEditEvent::staticExpects($this->once())
 			->method('getEventData')
 			->with($this->anything(), $this->anything(), $this->anything(), false);
@@ -87,9 +111,37 @@ class FounderEmailsEditEventTest extends WikiaBaseTest {
 		$mockFounderEmailsEditEvent::register($mockRecentChange);
 	}
 
-	public function getAttributeCallback() {
-		$args = func_get_args();
-		if($args[0] == 'rc_user') {
+	public function testRegisterForUserWithFlag() {
+		// Test setup
+		global $wgUser;
+		$mockUser = $this->getMockUser();
+		$mockUser->expects( $this->never() )->method( 'setOption' );
+		$mockUser->expects( $this->any() )->method( 'getOption' )->will( $this->returnValue(1) );
+		$wgUser = $mockUser;
+
+		$mockFounderEmailsEditEvent = $this->getMock('FounderEmailsEditEvent', [
+			'__construct',
+			'getUserEditsStatus',
+			'process',
+			'getEventData'
+		] );
+
+		$mockFounderEmailsEditEvent::staticExpects($this->any())
+			->method('getUserEditsStatus')
+			->will($this->returnValue(FounderEmailsEditEvent::NO_EDITS));
+		$mockFounderEmailsEditEvent->expects($this->any())->method('process')
+			->will($this->returnValue(null));
+		$mockFounderEmailsEditEvent::staticExpects($this->never())->method('getEventData');
+		$this->mockClass('FounderEmailsEditEvent', $mockFounderEmailsEditEvent);
+
+		$mockRecentChange = $this->getMockRecentChange();
+
+		// Test execution
+		$mockFounderEmailsEditEvent::register($mockRecentChange);
+	}
+
+	public function getAttributeCallback($param) {
+		if($param == 'rc_user') {
 			return self::MOCKED_USER_ID;
 		}
 	}
@@ -98,7 +150,6 @@ class FounderEmailsEditEventTest extends WikiaBaseTest {
 		$mockUser = $this->getMock( 'User', [ 'newFromId', 'getId', 'getOption', 'setOption' ] );
 		$mockUser->expects( $this->any() )->method( 'newFromId' )->will( $this->returnSelf() );
 		$mockUser->expects( $this->any() )->method( 'getId' )->will( $this->returnValue(self::MOCKED_USER_ID) );
-		$mockUser->expects( $this->any() )->method( 'getOption' )->will( $this->returnValue(0) );
 		return $mockUser;
 	}
 
@@ -109,17 +160,4 @@ class FounderEmailsEditEventTest extends WikiaBaseTest {
 			);
 		return $mockRecentChange;
 	}
-
-	private function getMockFounderEmailsEditEvent() {
-		$mockFounderEmailsEditEvent = $this->getMock( 'FounderEmailsEditEvent', [
-			'__construct',
-			'getUserEditsStatus',
-			'process',
-			'getEventData'
-		] );
-		$mockFounderEmailsEditEvent->expects( $this->any() )->method( 'process' )->will( $this->returnValue( null ) );
-
-		return $mockFounderEmailsEditEvent;
-	}
-
 }
