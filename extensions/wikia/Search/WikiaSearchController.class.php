@@ -244,7 +244,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function combinedMediaSearch() {
 		$request = $this->getRequest();
 		$query = $request->getVal( 'q' );
-		if ( empty( $query ) ) {
+		if ( strlen( $query ) == 0) {
 			throw new Exception( "Please include a query value for parameter 'q'" );
 		}
 		$config = new Wikia\Search\Config;
@@ -452,6 +452,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				'by_category'	=> $this->getVal( 'by_category', false ),
 				'filters'       => $this->getVal( 'filters', array() ),
 				);
+
+		$isMonobook = $this->app->checkSkin( 'monobook') ;
+
 		$this->setVal( 'results',               $searchConfig->getResults() );
 		$this->setVal( 'resultsFound',          $searchConfig->getResultsFound() );
 		$this->setVal( 'resultsFoundTruncated', $searchConfig->getTruncatedResultsNum( true ) );
@@ -467,12 +470,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'namespaces',            $searchConfig->getNamespaces() );
 		$this->setVal( 'hub',                   $searchConfig->getHub() );
 		$this->setVal( 'hasArticleMatch',       $searchConfig->hasArticleMatch() );
-		$this->setVal( 'isMonobook',            ( $this->wg->User->getSkin() instanceof SkinMonobook ) );
+		$this->setVal( 'isMonobook',            $isMonobook );
 		$this->setVal( 'isCorporateWiki',       $this->isCorporateWiki() );
 		$this->setVal( 'wgExtensionsPath',      $this->wg->ExtensionsPath);
-		if ( in_array( 0, $searchConfig->getNamespaces() ) && !in_array( 6, $searchConfig->getNamespaces() ) ) {
+		$sanitizedQuery = $searchConfig->getQuery()->getSanitizedQuery();
+		if ( strlen($sanitizedQuery)>0 && in_array( 0, $searchConfig->getNamespaces() ) && !in_array( 6, $searchConfig->getNamespaces() ) ) {
 			$combinedMediaResult = $this->sendSelfRequest( 'combinedMediaSearch',
-				array( 'q' => $searchConfig->getQuery()->getSanitizedQuery(), 'videoOnly' => true ) )->getData();
+				array( 'q' => $sanitizedQuery, 'videoOnly' => true ) )->getData();
 			if ( isset($combinedMediaResult) && sizeof($combinedMediaResult['items']) == 4 ) {
 				$this->setVal( 'mediaData', $combinedMediaResult );
 			}
@@ -483,14 +487,16 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->registerWikiMatch( $searchConfig );
 		}
 		$topWikiArticlesHtml = '';
-		if (! $searchConfig->getInterWiki() && $wgLanguageCode == 'en' ) {
+
+		if (! $searchConfig->getInterWiki() && $wgLanguageCode == 'en'
+			&& !$isMonobook) {
 			$dbname = $this->wg->DBName;
 			$cacheKey = wfMemcKey( __CLASS__, 'WikiaSearch', 'topWikiArticles', $this->wg->CityId, static::TOP_ARTICLES_CACHE );
 			$topWikiArticlesHtml = WikiaDataAccess::cache(
 				$cacheKey,
 				86400 * 5, // 5 days, one business week
 				function () {
-					return F::app()->renderView( 'WikiaSearchController', 'topWikiArticles' );
+					return $this->app->renderView( 'WikiaSearchController', 'topWikiArticles' );
 				}
 			);
 		}
@@ -744,3 +750,4 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	}
 }
+ 

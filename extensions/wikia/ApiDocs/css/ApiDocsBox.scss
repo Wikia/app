@@ -1,0 +1,118 @@
+//apis and methods headings
+$resourceHeadingHeight: 65px;
+
+.resource {
+	clear: both;
+	width: 960px;
+
+	&.active div.heading .collapse-expand-button,
+	&:hover div.heading .collapse-expand-button {
+		background-color: $midGray-c3;
+	}
+	&.active .heading-name-and-description,
+	&:hover .heading-name-and-description {
+		border-color: $blue-c1;
+		background-color: $blue-c1;
+
+		.api-name,
+		.description {
+			color: white;
+		}
+
+		&:last-child {
+			border-bottom: solid 1px $midGray-c3;
+		}
+	}
+
+	.collapse-text,
+	.expand-text {
+		margin-top: 44px;
+	}
+
+	.collapse-text {
+		display: none;
+	}
+	.expand-text {
+		display: block;
+	}
+	&.active {
+		.collapse-text {
+			display: block;
+		}
+		.expand-text {
+			display: none;
+		}
+	}
+}
+
+.heading {
+	margin: 0;
+	a {
+		@include transition( background-color, 0.2s, ease-in-out, 0);
+		color: $blue-c1;
+		display: block;
+		font-weight: bold;
+		height: $resourceHeadingHeight;
+		margin: 0;
+		position: relative;
+		text-decoration:none;
+	}
+	.api-name {
+		display: block;
+		font-size: 24px;
+		line-height: 24px;
+		margin-left: 15px;
+		padding-bottom: 5px;
+		padding-top: 10px;
+	}
+	.description {
+		color: $gray-c4;
+		display: block;
+		font-size: 14px;
+		font-weight: normal;
+		margin-left: 15px;
+	}
+	.heading-name-and-description {
+		border-top: solid 1px $midGray-c3;
+		display: block;
+		height: $resourceHeadingHeight;
+		margin-right: $resourceHeadingHeight;
+	}
+
+	.collapse-expand-button {
+		 background-position: 50% 45%;
+		 background-repeat: no-repeat;
+		 border: none;
+		 border-left: solid 1px $midGray-c3;
+		 border-top: solid 1px $midGray-c3;
+		 color: $gray-c4;
+		 display: block;
+		 float: right;
+		 font-size: 12px;
+		 font-weight: bold;
+		 height: $resourceHeadingHeight;
+		 text-align: center;
+		 width: $resourceHeadingHeight - 1px;
+	 }
+}
+.resource:last-child {
+	border-bottom: solid 1px $midGray-c3;
+}
+//after toggle,
+//.resource
+.active {
+	.heading {
+		a {
+			background: none; // FIXME
+		}
+		.description {
+			color: #ffffff;
+		}
+	}
+	.collapse-button {
+		display: block;
+	}
+	.expand-button {
+		display: none;
+	}
+}

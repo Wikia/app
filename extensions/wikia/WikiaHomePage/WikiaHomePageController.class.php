@@ -181,6 +181,18 @@ class WikiaHomePageController extends WikiaController {
 	 */
 	protected function getList() {
 		$wikiBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
+
+		//according to CityVisualization:
+		//complexity limited by maximum number of elements ( 5 in $resultingBatches, 2 in $resultingBatch, 17 in $batchPromotedDemoted )
+		foreach($wikiBatches as &$wikiBatch) {
+			foreach($wikiBatch as &$batchPromotedDemoted) {
+				foreach($batchPromotedDemoted as &$batch) {
+					// replace image thumbnails with JPG
+					$batch['image'] = ImagesService::overrideThumbnailFormat($batch['image'], ImagesService::EXT_JPG);
+				}
+			}
+		}
+
 		if (!empty($wikiBatches)) {
 			Wikia::log(__METHOD__, false, ' pulling visualization data from db');
 			$status = 'true';
@@ -441,9 +453,11 @@ class WikiaHomePageController extends WikiaController {
 					foreach ($this->app->wg->WikiaHubsV2Pages as $hubId => $hubName) {
 						$sliderData = $this->getHubSliderData($lang, $hubId);
 
-						$hubImages[$hubId] = isset($sliderData['data']['slides'][0]['photoUrl'])
-								? $sliderData['data']['slides'][0]['photoUrl']
-								: null;
+						$fileUrl = isset($sliderData['data']['slides'][0]['photoUrl'])
+							? $sliderData['data']['slides'][0]['photoUrl']
+							: null;
+
+						$hubImages[$hubId] = ImagesService::getThumbUrlFromFileUrl($fileUrl, 330, ImagesService::EXT_JPG); // 330px - width of the image
 					}
 
 					return $hubImages;

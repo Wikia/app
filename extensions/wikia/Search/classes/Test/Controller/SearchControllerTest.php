@@ -2444,7 +2444,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		                       ->disableOriginalConstructor()
 		                       ->setMethods( array( 'getResponse', 'setVal', 'getVal', 'sendSelfRequest', 'isCorporateWiki' ) )
 		                       ->getMock();
-		
+
 		$mockResponse = $this->getMockBuilder( 'WikiaResponse' )
 		                     ->disableOriginalConstructor()
 		                     ->setMethods( array( 'getFormat', 'setData' ) )
@@ -2465,17 +2465,23 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( array( 'toArray' ) )
 		                    ->getMock();
-		
+
+		$mockApp = $this->getMockBuilder('\WikiaApp')
+						->disableOriginalConstructor()
+						->setMethods(array('checkSkin','setVal'))
+						->getMock();
+
 		
 		$mockTitle = $this->getMockBuilder( 'Title' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'getFullUrl' ) )
 		                  ->getMock();
-		
+
 		$mockUser = $this->getMockBuilder( 'User' )
 		                 ->disableOriginalConstructor()
 		                 ->setMethods( array( 'getSkin' ) )
 		                 ->getMock();
+
 		$mockMediaResponse = $this->getMockBuilder( 'WikiaResponse' )
 			->disableOriginalConstructor()
 			->setMethods( array('getData') )
@@ -2673,11 +2679,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'setVal' )
 		    ->with   ( 'hasArticleMatch', false )
 		;
-		$mockUser
-		    ->expects( $this->once() )
-		    ->method ( 'getSkin' )
-		    ->will   ( $this->returnValue( null ) ) // screw it
-		;
 		$mockController
 		    ->expects( $this->at( $controllerIncr++ ) )
 		    ->method ( 'setVal' )
@@ -2714,7 +2715,13 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->method ( 'setVal' )
 			->with   ( 'topWikiArticles', 'foo' )
 		;
-		
+
+		$mockApp->expects($this->any())
+			->method('checkSkin')
+			->will( $this->returnValue(false) );
+
+		$mockController->app = $mockApp;
+
 		$reflWg = new ReflectionProperty( 'WikiaSearchController', 'wg' );
 		$reflWg->setAccessible( true );
 		$reflWg->setValue( $mockController, $mockWg );

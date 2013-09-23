@@ -7,6 +7,8 @@ $config['oasis_shared_core_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_wikia_js',
+		'//resources/wikia/libraries/sloth/sloth.js',
+		'//resources/wikia/libraries/mustache/mustache.js'
 	),
 );
 
@@ -103,7 +105,6 @@ $config['oasis_noads_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/VideoHandlers/js/VideoHandlers.js',
-		'//extensions/wikia/RelatedPages/js/RelatedPages.js',
 		'//extensions/wikia/CreatePage/js/CreatePage.js',
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 		'//extensions/wikia/Lightbox/js/LightboxLoader.js',
@@ -462,6 +463,7 @@ $config['wikiamobile_js_body_full'] = array(
 
 		//modules
 		'//resources/wikia/libraries/sloth/sloth.js',
+		'//resources/wikia/modules/thumbnailer.js',
 		'//extensions/wikia/WikiaMobile/js/lazyload.js',
 		'//extensions/wikia/WikiaMobile/js/track.js',
 		'//extensions/wikia/WikiaMobile/js/events.js',
@@ -474,11 +476,11 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/media.js',
 		'//extensions/wikia/WikiaMobile/js/sections.js',
 		'//extensions/wikia/WikiaMobile/js/layout.js',
+		'//extensions/wikia/WikiaMobile/js/navigation.wiki.js',
 		'//extensions/wikia/WikiaMobile/js/topbar.js',
 		'//extensions/wikia/WikiaMobile/js/popover.js',
 		'//extensions/wikia/WikiaMobile/js/hide_url_bar.js',
 		'//extensions/wikia/WikiaMobile/js/share.js',
-		'//resources/wikia/modules/thumbnailer.js',
 
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
@@ -502,14 +504,6 @@ $config['wikiamobile_smartbanner_init_js'] = [
 		'//extensions/wikia/WikiaMobile/SmartBanner/smartbanner.bootstrap.js',
 	]
 ];
-
-$config['wikiamobile_relatedpages_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
-		'//extensions/wikia/RelatedPages/js/RelatedPages.wikiamobile.js'
-	)
-);
 
 $config['wikiamobile_tables_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
@@ -713,7 +707,15 @@ $config['filepage_scss_wikiamobile'] = array(
 	)
 );
 
-
+$config['relatedpages_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis', 'monobook', 'wikiamobile' ],
+	'assets' => array(
+		'//resources/wikia/libraries/sloth/sloth.js',
+		'//resources/wikia/libraries/mustache/mustache.js',
+		'//extensions/wikia/RelatedPages/js/RelatedPages.js'
+	)
+);
 
 /** EditPageLayout **/
 $config['rte'] = array(
@@ -1374,5 +1376,54 @@ $config['touchstorm_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => array(
 		'//extensions/wikia/TouchStorm/css/TouchStorm.scss'
+	)
+);
+
+// FIXME: paths to dist
+$config['api_docs_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/ApiDocs/js/lib/jquery-1.8.0.min.js',
+		'//extensions/wikia/ApiDocs/js/lib/jquery.wiggle.min.js',
+		'//extensions/wikia/ApiDocs/js/lib/jquery.ba-bbq.min.js',
+		'//extensions/wikia/ApiDocs/js/lib/jquery.slideto.min.js',
+		'//extensions/wikia/ApiDocs/js/lib/highlight.7.3.pack.js',
+		'//extensions/wikia/ApiDocs/js/lib/handlebars-1.0.0.js',
+		'//extensions/wikia/ApiDocs/js/lib/underscore-min.js',
+		'//extensions/wikia/ApiDocs/js/lib/backbone-min.js',
+		'//extensions/wikia/ApiDocs/js/lib/swagger.js',
+
+		'//extensions/wikia/ApiDocs/js/jquery.zclip.min.js',
+
+		'//extensions/wikia/ApiDocs/js/doc.js',
+		'//extensions/wikia/ApiDocs/js/HeaderView.js',
+		'//extensions/wikia/ApiDocs/js/OperationView.js',
+		'//extensions/wikia/ApiDocs/js/StatusCodeView.js',
+		'//extensions/wikia/ApiDocs/js/ParameterView.js',
+		'//extensions/wikia/ApiDocs/js/SignatureView.js',
+		'//extensions/wikia/ApiDocs/js/MainView.js',
+		'//extensions/wikia/ApiDocs/js/ResourceView.js',
+		'//extensions/wikia/ApiDocs/js/ContentTypeView.js',
+		'//extensions/wikia/ApiDocs/js/SwaggerUi.js',
+
+		'//extensions/wikia/ApiDocs/templates/handlebars/content_type.handlebars.js',
+		'//extensions/wikia/ApiDocs/templates/handlebars/main.handlebars.js',
+		'//extensions/wikia/ApiDocs/templates/handlebars/operation.handlebars.js',
+		'//extensions/wikia/ApiDocs/templates/handlebars/param.handlebars.js',
+		'//extensions/wikia/ApiDocs/templates/handlebars/param_list.handlebars.js',
+		'//extensions/wikia/ApiDocs/templates/handlebars/param_readonly.handlebars.js',
+		'//extensions/wikia/ApiDocs/templates/handlebars/param_readonly_required.handlebars.js',
+		'//extensions/wikia/ApiDocs/templates/handlebars/param_required.handlebars.js',
+		'//extensions/wikia/ApiDocs/templates/handlebars/resource.handlebars.js',
+		'//extensions/wikia/ApiDocs/templates/handlebars/signature.handlebars.js',
+		'//extensions/wikia/ApiDocs/templates/handlebars/status_code.handlebars.js',
+
+	)
+);
+
+$config['api_docs_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => array(
+		'//extensions/wikia/ApiDocs/css/ApiDocs.scss',
 	)
 );
