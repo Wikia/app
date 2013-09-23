@@ -1,3 +1,9 @@
+<?= $app->renderPartial(
+	'VideoHomePageController',
+	'header'
+); ?>
+
+Publish date: <?= $curProgram->getPublishDate() ?>
 
 <? if ( $haveCurrentProgram ): ?>
 	<?= $featuredContent ?>

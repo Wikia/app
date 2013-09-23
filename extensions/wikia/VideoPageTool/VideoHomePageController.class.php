@@ -31,10 +31,11 @@ class VideoHomePageController extends WikiaController {
 	 * Display the Video Home Page
 	 */
 	public function index() {
+		OasisController::addBodyClass('WikiaVideo');
 		$this->response->addAsset('videohomepage_js');
 		$this->response->addAsset('videohomepage_scss');
-
 		$program = $this->getProgram();
+
 
 		$this->curProgram = $program;
 
