@@ -267,6 +267,9 @@ class VideoHandlerHelper extends WikiaModel {
 					'truncatedList' => $truncatedList,
 					'isTruncated' => $isTruncated,
 					'timestamp' => empty($videoInfo['addedAt']) ? '' : $videoInfo['addedAt'],
+					'duration' => empty($videoInfo['duration']) ? '' : $videoInfo['duration'],
+					'viewsTotal' => empty($videoInfo['viewsTotal']) ? 0 : $videoInfo['viewsTotal'],
+					'provider' => empty($videoInfo['provider']) ? 0 : $videoInfo['provider'],
 					'embedUrl' => $file->getHandler()->getEmbedUrl(),
 				);
 			} else {

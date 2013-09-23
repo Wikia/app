@@ -333,10 +333,10 @@ class MediaQueryService extends WikiaService {
 	 * @param string $filter [all/premium]
 	 * @param integer $limit
 	 * @param integer $page
-	 * @param string $provider
+	 * @param string $providers
 	 * @return array $videoList
 	 */
-	public function getVideoList( $sort = 'recent', $filter = 'all', $limit = 0, $page = 1, $provider = null ) {
+	public function getVideoList( $sort = 'recent', $filter = 'all', $limit = 0, $page = 1, $providers = null ) {
 		wfProfileIn( __METHOD__ );
 
 		$db = wfGetDB( DB_SLAVE );
@@ -345,9 +345,9 @@ class MediaQueryService extends WikiaService {
 		$sqlWhere = array( 'removed' => 0 );
 		$sqlOptions = array();
 
-		// Check for provider
-		if ( $provider ) {
-			$sqlWhere['provider'] = $provider;
+		// Check for providers
+		if ( $providers ) {
+			$sqlWhere['provider'] = $providers;
 		}
 
 		// check for filter
@@ -374,7 +374,7 @@ class MediaQueryService extends WikiaService {
 
 		$result = $db->select(
 			array( 'video_info' ),
-			array( 'video_title, added_at, added_by' ),
+			array( 'video_title, provider, added_at, added_by, duration, views_total' ),
 			$sqlWhere,
 			__METHOD__,
 			$sqlOptions
@@ -383,9 +383,12 @@ class MediaQueryService extends WikiaService {
 		$videoList = array();
 		while( $row = $db->fetchObject($result) ) {
 			$videoList[] = array(
-				'title' => $row->video_title,
-				'addedAt' => $row->added_at,
-				'addedBy' => $row->added_by,
+				'title'      => $row->video_title,
+				'provider'   => $row->provider,
+				'addedAt'    => $row->added_at,
+				'addedBy'    => $row->added_by,
+				'duration'   => $row->duration,
+				'viewsTotal' => $row->views_total,
 			);
 		}
 

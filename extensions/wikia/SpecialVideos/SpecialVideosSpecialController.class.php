@@ -83,11 +83,11 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		// Variable to display the "add video" link at the end of the results
 		$addVideo = 1;
 
-		// Filter on provider if given
-		$provider = $this->request->getVal('provider', '');
+		// Filter on a comma separated list of providers if given
+		$providers = explode(',', $this->request->getVal('provider', ''));
 
 		$specialVideos = new SpecialVideosHelper();
-		$videos = $specialVideos->getVideos( $sort, $page, $provider );
+		$videos = $specialVideos->getVideos( $sort, $page, $providers );
 
 		$mediaService = new MediaQueryService();
 		if ( $sort == 'premium' ) {
