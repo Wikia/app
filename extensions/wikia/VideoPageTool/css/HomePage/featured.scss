@@ -6,7 +6,7 @@
 @import '../mixins/_sprite-VideoPageTool.scss';
 
 
-$play-button-overloay-fade-duration: 400ms;
+$play-button-overlay-fade-duration: 400ms;
 
 .WikiaPage {
 	border: 0;
@@ -85,13 +85,13 @@ $play-button-overloay-fade-duration: 400ms;
 					max-width: 98%;
 				}
 				.Wikia-video-play-button {
-					@include transition-shorthand(opacity $play-button-overloay-fade-duration ease-out);
+					@include transition-shorthand(opacity $play-button-overlay-fade-duration ease-out);
 					@include opacity(0);
 					width: 100%;
 				}
 				&:hover .Wikia-video-play-button {
 					@include opacity(100);
-					@include transition-shorthand(opacity $play-button-overloay-fade-duration ease-out);
+					@include transition-shorthand(opacity $play-button-overlay-fade-duration ease-out);
 					visibility: visible;
 				}
 			}
