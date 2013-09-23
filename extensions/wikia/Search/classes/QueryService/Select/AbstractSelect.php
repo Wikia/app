@@ -424,7 +424,7 @@ abstract class AbstractSelect
 		$service = $this->getService();
 		$wikiMatch = $service->getWikiMatchByHost( $domain );
 		if (! empty( $wikiMatch ) && ( $wikiMatch->getId() !== $service->getWikiId() ) &&
-			( !( $config->getcommercialUse() ) ||  (new \LicensedWikisService)->isCommercialUseAllowedById($wikiMatch->getId()) ) ) {
+			( !( $config->getCommercialUse() ) ||  (new \LicensedWikisService)->isCommercialUseAllowedById($wikiMatch->getId()) ) ) {
 			$result = $wikiMatch->getResult();
 			if ( $result['articles_i'] >= 50 ) {
 				$config->setWikiMatch( $wikiMatch );
