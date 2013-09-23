@@ -1,5 +1,5 @@
-@import "skins/oasis/css/mixins/clearfix";
 @import 'skins/oasis/css/core/color';
+@import "skins/oasis/css/mixins/clearfix";
 @import 'mixins/_sprite-VideoPageTool.scss';
 
 /*
@@ -16,12 +16,12 @@
 	}
 
 	.main-header {
-		margin-top: 33px;
-		margin-bottom: 22px;
 		font-size: 16px;
 		font-weight: bold;
-		text-transform: uppercase;
+		margin-top: 33px;
+		margin-bottom: 22px;
 		position: relative;
+		text-transform: uppercase;
 
 		.wv-logo {
 			@extend .wv-sprite;
@@ -29,16 +29,16 @@
 			display: block;
 			height: 37px;
 			margin-left: 10px;
-			width: 187px;
 			transform: translateX(-20px);
 			-webkit-transform: translateX(-20px);
 			-moz-transform: translateX(-20px);
+			width: 187px;
 		}
 
 		.discover {
 			color: $color-links;
-			text-align: right;
 			position: relative;
+			text-align: right;
 
 			span {
 				display: inline-block;
@@ -50,9 +50,9 @@
 				border-color: $color-links transparent transparent;
 				position: absolute;
 				height: 20px;
-				width: 1px;
-				top: 15px;
 				right: -70px;
+				top: 15px;
+				width: 1px;
 			}
 		}
 
@@ -69,14 +69,13 @@
 
 	// Branding Partners
 	.partners {
-
 		& > ul {
 			margin: 0 auto;
 
 			& > li {
 				display: inline-block;
-				width: 16.3%;
 				text-align: center;
+				width: 16.3%;
 			}
 		}
 
@@ -85,10 +84,7 @@
 			font-weight: bold;
 		}
 
-		
 		// Icon classes for partner sprites
-			
-
 		[class^="ico-"] {
 			@extend .wv-sprite;
 			display: inline-block;
@@ -106,11 +102,13 @@
 			height: 23px;
 			width: 76px;
 		}
+
 		.ico-iva {
 			@include sprite-VideoPageTool('ico-iva', 0, 0, 0, 5px);
 			height: 38px;
 			width: 85px;
 		}
+
 		.ico-ooyala {
 			@include sprite-VideoPageTool('ico-ooyala');
 			height: 18px;

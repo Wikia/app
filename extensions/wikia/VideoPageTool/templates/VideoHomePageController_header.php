@@ -1,13 +1,13 @@
 <header class="main-header row">
-	<section class="columns med-5 large-12">
+	<section class="columns small-5 med-5">
 		<a class="wv-logo" href="#"></a>
 	</section>
-	<nav class="columns med-2 large-12 discover dropdown">
-		<span>Discover</span><div class="chevron"></div>
+	<nav class="columns small-2 med-2 discover dropdown">
+		<span><?= wfMessage('videohomepage-header-dropdown-name')->plain() ?></span><div class="chevron"></div>
 	</nav>
-	<section class="columns med-5 large-12 hide-for-large search-container">
+	<section class="columns small-5 med-5 search-container">
 		<form action="" id="WikiaSearch" class="WikiaSearch">
-			<input type="text" placeholder="Search for Wikia videos">
+			<input type="text" placeholder="<?= wfMessage('videohomepage-header-search-placeholder')->plain() ?>">
 			<button class="wikia-button" type="submit">
 				<div class="sprite search" width="21" height="17">
 			</button>
