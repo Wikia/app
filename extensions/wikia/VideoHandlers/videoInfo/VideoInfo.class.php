@@ -286,7 +286,7 @@ SQL;
 		",
 		2 => "
 			ALTER TABLE video_info
-			ADD provider varchar(255) NOT NULL DEFAULT '' AFTER video_title,
+			ADD provider varchar(255) AFTER video_title,
 			ADD INDEX provider (provider, added_at)
 		",
 	);
