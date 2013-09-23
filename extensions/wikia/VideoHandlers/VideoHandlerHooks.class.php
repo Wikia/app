@@ -108,7 +108,7 @@ class VideoHandlerHooks {
 			global $wgFSSwiftContainer, $wgFSSwiftServer;
 			$container = $wgFSSwiftContainer;
 
-			$wgLocalFileRepo['backend'] = 'ceph-backend';
+			$wgLocalFileRepo['backend'] = 'swift-backend';
 			$wgLocalFileRepo['zones'] = array (
 				'public' => array( 'container' => $container, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images' ),
 				'temp'   => array( 'container' => $container, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/temp' ),

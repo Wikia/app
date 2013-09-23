@@ -24,7 +24,7 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 
 		// debug
 		global $wgLocalFileRepo;
-		echo "Files repository in use: '{$wgLocalFileRepo['backend']}'\n"; // local-backend / ceph-backend
+		echo "Files repository in use: '{$wgLocalFileRepo['backend']}'\n"; // local-backend / swift-backend
 	}
 
 	// check the path - /firefly/images/9/93/Test-1378975563.jpg
