@@ -9,6 +9,7 @@ describe("editor tests", function(){
         expect(editor.init).toBeDefined();
         expect(editor.watcher).toBeDefined();
         expect(editor.insert).toBeDefined();
+        expect()
         expect(editor.textView).toBeDefined();
     }
 
