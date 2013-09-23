@@ -212,8 +212,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			$conditions,
 			__METHOD__,
 			[
-				'LIMIT' => self::FIRST_EDIT_REVISION_THRESHOLD,
-				'ORDER BY' => 'rev_timestamp DESC'
+				'LIMIT' => self::FIRST_EDIT_REVISION_THRESHOLD
 			],
 			[ 'page' => [
 					'left join',
