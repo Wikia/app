@@ -16,7 +16,7 @@
 			</div>
 			<div class="video-thumb"><?= $video[ 'videoThumb' ] ?></div>
 			<div class="input-group">
-				<input type="button" class="wmu-show" value="<?= wfMessage( 'videopagetool-button-add-thumbnail' )->plain() ?>">
+				<input type="button" class="media-uploader-btn" value="<?= wfMessage( 'videopagetool-button-add-thumbnail' )->plain() ?>">
 				<p class="new-thumb <?= $video[ 'newThumbClass' ] ?>"><?= $video[ 'newThumbName' ]  ?></p>
 				<input type="hidden" name="newThumbName[]" class="new-thumb" id="new-thumb-<?= $x ?>" value="<?= $video[ 'newThumbName' ] ?>">
 			</div>
