@@ -38,24 +38,22 @@ var hookRightRailImpression = function (label) {
 	}
 }
 
+$(function(){
+	// Determine if we're in experiment DAR_RIGHTRAILPOSITION
+	group = window.Wikia.AbTest
+		? Wikia.AbTest.getGroup( "DAR_RIGHTRAILPOSITION" )
+		: null ;
 
-// Determine if we're in experiment DAR_RIGHTRAILPOSITION
-group = window.Wikia.AbTest
-	? Wikia.AbTest.getGroup( "DAR_RIGHTRAILPOSITION" )
-	: null ;
-
-switch (group) {
-case "STATIC":
-	// don't let right rail to fall down
-	document.documentElement.className += " keep-rail-on-right";
-
-	// track
-	hookRightRailImpression('static');
-	break;
-case "CONTROL":
-	// it's control group, do nothing (just track)
-	hookRightRailImpression('control');
-	break;
-default:
-    // don't track
-}
+	switch (group) {
+	case "STATIC":
+		// track impression
+		hookRightRailImpression('static');
+		break;
+	case "CONTROL":
+		// it's control group, do nothing (just track)
+		hookRightRailImpression('control');
+		break;
+	default:
+	    // don't track
+	}
+});
