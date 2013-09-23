@@ -29,6 +29,7 @@ class MigrateImagesToSwift extends Maintenance {
 	private $swiftContainerName;
 
 	private $imagesCnt = 0;
+	private $imagesSize = 0;
 	private $migratedImagesCnt = 0;
 	private $migratedImagesFailedCnt = 0;
 	private $migratedImagesSize = 0;
@@ -41,6 +42,7 @@ class MigrateImagesToSwift extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( 'force', 'Perform the migration even when $wgEnableSwiftFileBackend = true' );
+		$this->addOption( 'stats-only', 'Show stats (numbe of files and total size) and then exit' );
 		$this->mDescription = 'Copies files from file system to distributed storage';
 	}
 
@@ -305,7 +307,7 @@ class MigrateImagesToSwift extends Maintenance {
 		$this->init();
 		$dbr = $this->getDB( DB_SLAVE );
 
-		$isForced = $this->getOption('force');
+		$isForced = $this->hasOption('force');
 
 		// one migration is enough
 		global $wgEnableSwiftFileBackend, $wgEnableUploads, $wgDBname;
@@ -317,6 +319,42 @@ class MigrateImagesToSwift extends Maintenance {
 			$this->error("\$wgEnableUploads = false - migration is already running on {$wgDBname} wiki!", 1);
 		}
 
+		// get images count
+		$tables = [
+			'filearchive' => 'fa_size',
+			'image' => 'img_size',
+			'oldimage' => 'oi_size',
+		];
+
+		foreach($tables as $table => $sizeField) {
+			$row = $dbr->selectRow($table, [
+					'count(*) AS cnt',
+					"SUM({$sizeField}) AS size"
+				],
+				[],
+				__METHOD__
+			);
+
+			$this->output(sprintf("* %s:\t%d images (%d MB)\n",
+				$table,
+				$row->cnt,
+				round( $row->size / 1024 / 1024 )
+			));
+
+			$this->imagesCnt += $row->cnt;
+			$this->imagesSize += $row->size;
+		}
+
+		$this->output(sprintf("\n%d image(s) (%d MB) will be migrated...\n",
+			$this->imagesCnt,
+			round( $this->imagesSize / 1024 / 1024 )
+		));
+
+		if ($this->hasOption('stats-only')) {
+			return;
+		}
+
+		// ok, so let's start...
 		$this->time = time();
 
 		// connect to Swift
@@ -336,22 +374,6 @@ class MigrateImagesToSwift extends Maintenance {
 		WikiFactory::setVarByName('wgUploadMaintenance', $wgCityId, true,  self::REASON);
 
 		$this->output("Uploads and image operations disabled\n\n");
-
-		// get images count
-		$tables = [
-			'filearchive',
-			'image',
-			'oldimage',
-		];
-
-		foreach($tables as $table) {
-			$count = $dbr->selectField($table, 'count(*)');
-			$this->output("* {$table}:\t{$count}\n");
-
-			$this->imagesCnt += $count;
-		}
-
-		$this->output("\n{$this->imagesCnt} image(s) will be migrated...\n");
 
 		// prepare the list of files to migrate to new storage
 		// (a) current revisions of images
