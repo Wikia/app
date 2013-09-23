@@ -1,3 +1,8 @@
+<?= $app->renderPartial(
+	'VideoHomePageController',
+	'header'
+); ?>
+
 Publish date: <?= $curProgram->getPublishDate() ?>
 
 <? if ( $haveCurrentProgram ): ?>
@@ -19,3 +24,6 @@ Publish date: <?= $curProgram->getPublishDate() ?>
 		'partners' => $partners
 	)
 ); ?>
+
+
+Publish date: <?= $curProgram->getPublishDate() ?>

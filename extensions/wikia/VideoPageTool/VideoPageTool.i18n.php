@@ -44,6 +44,9 @@ $messages['en'] = array(
 	'videopagetool-success-save' => 'Your changes have been saved',
 	'videopagetool-hint-description-maxlength' => '$1 characters max',
 
+	// Home Page Section: Header
+	'videohomepage-header-dropdown-name' => 'Discover',
+	'videohomepage-header-search-placeholder' => 'Search for Wikia videos',
 	// Home Page Section: Partners
 	'videohomepage-partner-section-title' => 'Our Partners',
 	'videohomepage-partner-name-anyclip' => 'anyclip',
@@ -90,6 +93,9 @@ $messages['qqq'] = array(
 	'videopagetool-header-dashboard' => 'Title for dashboard page',
 	'videopagetool-success-save' => 'This text appears if your changes have been saved successfully',
 
+	// Home Page Section: Header
+	'videohomepage-header-dropdown-name' => 'Name of the dropdown that allows users to explore Wikia Video\'s sections',
+	'videohomepage-header-search-placeholder' => 'Placeholder text for Wikia Video search box',
 	// Home Page Section: Partners
 	'videohomepage-partner-section-title' => 'Title for section that links to videos from our content partners',
 	'videohomepage-partner-name-anyclip' => 'This text is the name of a partner: anyclip',

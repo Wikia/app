@@ -1,0 +1,117 @@
+@import "skins/oasis/css/mixins/box-sizing-border-box";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/core/responsive";
+@import "skins/oasis/css/mixins/transition";
+@import '../mixins/_sprite-VideoPageTool.scss';
+
+
+$play-button-overlay-fade-duration: 400ms;
+
+.WikiaPage {
+	border: 0;
+}
+
+.featured-video {
+	@include clearfix;
+	background: black;
+	margin: 0 $width-padding * -1;
+	max-height: 461px;
+	.featured-video-slider{
+		@include box-sizing-border-box;
+		position: relative;
+		margin: 0 auto;
+		visibility: hidden;
+		ul {
+			list-style: none;
+			margin: 0;
+		}
+		li {
+			list-style: none;
+		}
+		// Large Images
+		.bx-viewport {
+			position: relative;
+			overflow: hidden;
+		}
+		.bxslider {
+			position: relative;
+			li {
+				float: left;
+				margin-top: 0;
+				position: relative;
+
+				> img {
+					width: 100%;
+					max-height: 461px;
+				}
+			}
+			.Wikia-video-play-button {
+				// TODO: hack, find a better way than hard coding the line-height
+				line-height: 461px;
+				width: inherit;
+			}
+		}
+		.bx-controls-direction a {
+			@include sprite-VideoPageTool-base();
+			&.bx-prev {
+				@include sprite-VideoPageTool('carousel_left_arrow');
+				height: 24px;
+				width: 16px;
+			}
+			&.bx-next {
+				@include sprite-VideoPageTool('carousel_right_arrow');
+				height: 24px;
+				width: 16px;
+			}
+		}
+		// Small navigation circles
+		.bx-pager {
+			bottom: 10px;
+		}
+		// Thumbnails
+		.thumbs {
+			display: none;
+			background: #3a3a3a;
+			bottom: 0;
+			position: absolute;
+			width: 100%;
+			a {
+				display: inline-block;
+				float: left;
+				margin: 10px 0;
+				text-align: center;
+				width: 20%;
+				img {
+					max-width: 98%;
+				}
+				.Wikia-video-play-button {
+					@include transition-shorthand(opacity $play-button-overlay-fade-duration ease-out);
+					@include opacity(0);
+					width: 100%;
+				}
+				&:hover .Wikia-video-play-button {
+					@include opacity(100);
+					@include transition-shorthand(opacity $play-button-overlay-fade-duration ease-out);
+					visibility: visible;
+				}
+			}
+		}
+	}
+
+	@media ( min-width: $breakpoint-small ) {
+		.featured-video-slider {
+			width: $breakpoint-small;
+		}
+	}
+	@media ( max-width: $breakpoint-small ) {
+		.featured-video-slider {
+			width: 100%;
+
+			// TODO: hack, find a better way than hard coding the line-height
+			.bxslider .Wikia-video-play-button {
+				line-height: 400px;
+			}
+		}
+	}
+}

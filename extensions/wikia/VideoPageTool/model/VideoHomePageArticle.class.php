@@ -8,17 +8,6 @@
 
 class VideoHomePageArticle extends Article {
 
-	public function __construct( $title ) {
-		wfProfileIn(__METHOD__);
-
-		parent::__construct($title);
-
-		// This fake page object is necessary to complete the deceit
-		$this->mPage = new VideoHomePagePage($title);
-
-		wfProfileOut(__METHOD__);
-	}
-
 	/**
 	 * @desc Render hubs page
 	 */
@@ -28,10 +17,20 @@ class VideoHomePageArticle extends Article {
 		// Get all the MW stuff out of the way first
 		parent::view();
 
-		// Wipe any existing content and output the Video Page
 		$out = $this->getContext()->getOutput();
+
+		$vpt_html = F::app()->sendRequest('VideoHomePageController', 'index');
+		$page_html = $out->getHTML();
 		$out->clearHTML();
-		$out->addHTML( F::app()->sendRequest('VideoHomePageController', 'index') );
+
+		// Put the original page below the vpt home page
+		$html = $vpt_html . $page_html;
+
+		// Uncomment to eliminate the original page from output
+		//$html = $vpt_html;
+
+		$out->addHTML( $html );
+
 		wfProfileOut(__METHOD__);
 	}
 }
