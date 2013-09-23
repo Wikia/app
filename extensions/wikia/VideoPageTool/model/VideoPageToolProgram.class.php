@@ -109,13 +109,17 @@ class VideoPageToolProgram extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		// Figure out what the nearest date to today is
-		$nearestDate = self::loadNearestDate( $lang );
+		$nearestDate = self::getNearestDate( $lang );
 
-		// Load the program with this nearest date
-		$program = self::newProgram( $lang, $nearestDate );
+		if ($nearestDate) {
+			// Load the program with this nearest date
+			$program = self::newProgram( $lang, $nearestDate );
 
-		wfProfileOut( __METHOD__ );
-		return $program;
+			wfProfileOut( __METHOD__ );
+			return $program;
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -212,7 +216,7 @@ class VideoPageToolProgram extends WikiaModel {
 	 * @param $language
 	 * @return null|string
 	 */
-	protected function loadNearestDate( $language ) {
+	protected function getNearestDate( $language ) {
 		wfProfileIn( __METHOD__ );
 
 		$date = date('Y-m-d');
