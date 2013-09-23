@@ -333,15 +333,22 @@ class MediaQueryService extends WikiaService {
 	 * @param string $filter [all/premium]
 	 * @param integer $limit
 	 * @param integer $page
+	 * @param string $provider
 	 * @return array $videoList
 	 */
-	public function getVideoList( $sort = 'recent', $filter = 'all', $limit = 0, $page = 1 ) {
+	public function getVideoList( $sort = 'recent', $filter = 'all', $limit = 0, $page = 1, $provider = null ) {
 		wfProfileIn( __METHOD__ );
 
 		$db = wfGetDB( DB_SLAVE );
 
+		$sqlTables = array( 'video_info' );
 		$sqlWhere = array( 'removed' => 0 );
 		$sqlOptions = array();
+
+		// Check for provider
+		if ( $provider ) {
+			$sqlWhere['provider'] = $provider;
+		}
 
 		// check for filter
 		if ( $filter == 'premium' ) {
