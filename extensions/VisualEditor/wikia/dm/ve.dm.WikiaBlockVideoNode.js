@@ -22,14 +22,14 @@ ve.inheritClass( ve.dm.WikiaBlockVideoNode, ve.dm.WikiaBlockMediaNode );
 
 /* Static Properties */
 
+ve.dm.WikiaBlockVideoNode.static.name = 'wikiaBlockVideo';
+
 ve.dm.WikiaBlockVideoNode.static.rdfaToType = {
 	'mw:Video/Thumb': 'thumb',
 	'mw:Video/Frame': 'frame',
 	'mw:Video/Frameless': 'frameless',
 	'mw:Video': 'none'
 };
-
-ve.dm.WikiaBlockVideoNode.static.name = 'wikiaBlockVideo';
 
 /* Registration */
 
