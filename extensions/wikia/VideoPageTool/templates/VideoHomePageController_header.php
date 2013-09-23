@@ -3,7 +3,7 @@
 		<a class="wv-logo" href="#"></a>
 	</section>
 	<nav class="columns med-2 large-12 discover dropdown">
-		<span>Discover</span>
+		<span>Discover</span><div class="chevron"></div>
 	</nav>
 	<section class="columns med-5 large-12 hide-for-large search-container">
 		<form action="" id="WikiaSearch" class="WikiaSearch">

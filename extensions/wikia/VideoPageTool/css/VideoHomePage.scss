@@ -1,3 +1,4 @@
+@import "skins/oasis/css/mixins/clearfix";
 @import 'skins/oasis/css/core/color';
 @import 'mixins/_sprite-VideoPageTool.scss';
 
@@ -37,14 +38,27 @@
 		.discover {
 			color: $color-links;
 			text-align: right;
+			position: relative;
+
 			span {
 				display: inline-block;
 				padding-left: 120px;
 				vertical-align: -10px;
 			}
+
+			.chevron {
+				border-color: $color-links transparent transparent;
+				position: absolute;
+				height: 20px;
+				width: 1px;
+				top: 15px;
+				right: -70px;
+			}
 		}
 
 		.search-container {
+			@include clearfix;
+
 			form {
 				padding-top: 5px;
 				position: absolute;
