@@ -903,8 +903,8 @@ class SwiftFileBackend extends FileBackendStore {
 		}
 
 		Wikia::log( 
-			__METHOD__, 
-			'SwiftFileBackend exception', 
+			__CLASS__,
+			'exception',
 			get_class( $e ) . " in '{$func}' (given '" . serialize( $params ) . "')" . 
 				( $e instanceof InvalidResponseException
 					? ": {$e->getMessage()}"
