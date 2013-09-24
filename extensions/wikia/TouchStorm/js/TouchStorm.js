@@ -38,7 +38,10 @@ define( 'wikia.touchstorm', [], function() {
 			var that = this,
 				videoKey = this.getKeyFromUrl( $elem.attr( 'url' ) );
 
-			window.LightboxLoader.loadLightbox( videoKey, { parent: that.wrapper, carouselType: 'touchStorm' } );
+			window.LightboxLoader.loadLightbox( videoKey, {
+				parent: that.wrapper,
+				carouselType: 'touchStorm'
+			});
 		},
 
 		/* @desc Plug touchstorm into Lightbox.  Note: we had to wait until the 'lightboxOpened' event to ensure the

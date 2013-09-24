@@ -29,7 +29,8 @@ var Lightbox = {
 		// Allow other extensions to react when a Lightbox is opened.  Used in FilePage and Touchstorm widget
 		$(window).trigger('lightboxOpened');
 
-		Lightbox.includeLatestPhotos = !$('#LatestPhotosModule .carousel-container').length; // if we don't have latest photos in the DOM, request them from back end
+		// if we don't have latest photos in the DOM, request them from back end
+		Lightbox.includeLatestPhotos = !$('#LatestPhotosModule .carousel-container').length;
 		Lightbox.openModal = params.modal;
 
 		// If file doesn't exist, show the error modal
@@ -762,7 +763,11 @@ var Lightbox = {
 			});
 		}
 	},
-	carouselTypes: ['relatedVideos', 'articleMedia', 'latestPhotos'],
+	carouselTypes: [
+		'relatedVideos',
+		'articleMedia',
+		'latestPhotos'
+	],
 	setUpCarousel: function() {
 
 		// cache carousel template
