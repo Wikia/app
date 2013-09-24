@@ -221,23 +221,24 @@ class CF_Authentication
         $this->auth_token = $atoken;
         return True;
     }
+
 	/**
 	 * Use Cached Token and Storage URL's rather then grabbing from the Auth System
-         *
-         * Example:
- 	 * <code>
-         * #Create an Auth instance
-         * $auth = new CF_Authentication();
-         * #Pass Cached URL's and Token as Args
+	 *
+	 * Example:
+	 * <code>
+	 * #Create an Auth instance
+	 * $auth = new CF_Authentication();
+	 * #Pass Cached URL's and Token as Args
 	 * $auth->load_cached_credentials("auth_token", "storage_url", "cdn_management_url");
-         * </code>
-	 * 
+	 * </code>
+	 *
 	 * @param string $auth_token A Cloud Files Auth Token (Required)
-         * @param string $storage_url The Cloud Files Storage URL (Required)
-         * @param string $cdnm_url CDN Management URL (Required)
-         * @return boolean <kbd>True</kbd> if successful 
+	 * @param string $storage_url The Cloud Files Storage URL (Required)
+	 * @param string $cdnm_url CDN Management URL (Required)
+	 * @return boolean <kbd>True</kbd> if successful
 	 * @throws SyntaxException If any of the Required Arguments are missing
-         */
+	 */
 	function load_cached_credentials($auth_token, $storage_url, $cdnm_url)
     {
         if ( !$storage_url && !$cdnm_url ) {
@@ -253,19 +254,20 @@ class CF_Authentication
         $this->auth_token  = $auth_token;
         return True;
     }
+
 	/**
-         * Grab Cloud Files info to be Cached for later use with the load_cached_credentials method.
-         *
+	 * Grab Cloud Files info to be Cached for later use with the load_cached_credentials method.
+	 *
 	 * Example:
-         * <code>
-         * #Create an Auth instance
-         * $auth = new CF_Authentication("UserName","API_Key");
-         * $auth->authenticate();
-         * $array = $auth->export_credentials();
-         * </code>
-         * 
+	 * <code>
+	 * #Create an Auth instance
+	 * $auth = new CF_Authentication("UserName","API_Key");
+	 * $auth->authenticate();
+	 * $array = $auth->export_credentials();
+	 * </code>
+	 *
 	 * @return array of url's and an auth token.
-         */
+	 */
     function export_credentials()
     {
         $arr = array();
