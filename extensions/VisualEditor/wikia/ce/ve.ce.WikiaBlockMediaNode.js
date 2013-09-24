@@ -174,7 +174,7 @@ ve.ce.WikiaBlockMediaNode.prototype.getCssClass = function ( type, alignment ) {
  * @method
  */
 ve.ce.WikiaBlockMediaNode.prototype.onAttributeChange = function () {
-	this.update( true );
+	this.update();
 };
 
 /**
@@ -206,27 +206,20 @@ ve.ce.WikiaBlockMediaNode.prototype.onSplice = function () {};
  * @emits teardown
  *
  * @method
- * @param {Boolean} replaceRoot Whether or not to replace the root element
  */
-ve.ce.WikiaBlockMediaNode.prototype.update = function ( replaceRoot ) {
+ve.ce.WikiaBlockMediaNode.prototype.update = function () {
 	var $anchor, $image, $root, $thumb, captionModel, captionView,
 		type = this.model.getAttribute( 'type' );
 
 	$thumb = this.createThumb();
-
 	if ( this.model.getAttribute( 'align' ) === 'center' ) {
 		$root = this.createRoot().append( $thumb );
 	} else {
 		$root = $thumb;
 	}
-
-	if ( replaceRoot ) {
-		this.emit( 'teardown' );
-		this.$.replaceWith( $root );
-		this.$ = $root;
-	} else {
-		this.$ = $root;
-	}
+	this.emit( 'teardown' );
+	this.$.replaceWith( $root );
+	this.$ = $root;
 
 	$anchor = this.createAnchor().appendTo( $thumb );
 	$image = this.createImage().appendTo( $anchor );
@@ -252,12 +245,12 @@ ve.ce.WikiaBlockMediaNode.prototype.update = function ( replaceRoot ) {
 
 	// Update references for mixins
 	this.$focusable = this.$;
+	this.$phantomable = this.$;
+	this.$relocatable = this.$;
 	this.$image = $image;
 	this.$resizable = $image;
 
 	// This should be called last so the listeners will get the same DOM
 	// structure and jQuery object references they do on initialization.
-	if ( replaceRoot ) {
-		this.emit( 'setup' );
-	}
+	this.emit( 'setup' );
 };
