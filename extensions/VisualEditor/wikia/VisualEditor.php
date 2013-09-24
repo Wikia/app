@@ -72,6 +72,7 @@ $wgVisualEditorPluginModules[] = 'ext.visualEditor.wikiaCore';
 
 // Register hooks
 $wgHooks['ResourceLoaderTestModules'][] = 'Wikia_onResourceLoaderTestModules';
+$wgHooks['GetPreferences'][] = 'Wikia_onGetPreferences';
 
 function Wikia_onResourceLoaderTestModules( array &$testModules, ResourceLoader &$resourceLoader ) {
 	$testModules['qunit']['ext.visualEditor.wikiaTest'] = array(
@@ -87,3 +88,9 @@ function Wikia_onResourceLoaderTestModules( array &$testModules, ResourceLoader 
 	return true;
 }
 
+function Wikia_onGetPreferences( $user, &$preferences ) {
+	unset( $preferences['visualeditor-betatempdisable'] );
+	$preferences['visualeditor-enable']['label-message'] = 'visualeditor-wikiapreference-enable';
+
+	return true;
+}

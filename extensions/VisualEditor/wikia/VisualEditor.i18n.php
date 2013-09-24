@@ -5,7 +5,8 @@ $messages = array();
  * @author Christian Williams
  */
 $messages['en'] = array(
-	'visualeditor-wikiamediainsertbuttontool-label' => 'Add Media'
+	'visualeditor-wikiamediainsertbuttontool-label' => 'Add Media',
+	'visualeditor-wikiapreference-enable' => 'Enable beta VisualEditor',
 );
 
 $messages['qqq'] = array(
