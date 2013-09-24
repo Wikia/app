@@ -35,7 +35,7 @@ $wgSpecialPageGroups['Styleguide'] = 'wikia';
 
 // message files
 $wgExtensionMessagesFiles['SpecialStyleguide'] = $dir . 'SpecialStyleguide.i18n.php';
-(new JSMessages())->registerPackage( 'SpecialStyleguide', [
+JSMessages::registerPackage( 'SpecialStyleguide', [
 	'styleguide-show-parameters',
 	'styleguide-hide-parameters'
 ] );

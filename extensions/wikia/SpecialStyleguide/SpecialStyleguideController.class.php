@@ -49,7 +49,7 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 				];
 
 				$this->response->addAsset('extensions/wikia/SpecialStyleguide/js/SpecialStyleguide.js');
-				(new JSMessages())->enqueuePackage('SpecialStyleguide', JSMessages::EXTERNAL);
+				JSMessages::enqueuePackage('SpecialStyleguide', JSMessages::EXTERNAL);
 
 				break;
 			default:
