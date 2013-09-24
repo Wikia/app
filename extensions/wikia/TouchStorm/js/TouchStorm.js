@@ -6,7 +6,7 @@ define( 'wikia.touchstorm', [], function() {
 	'use strict';
 
 	function TouchStorm() {
-		if( !window.wgEnableLightboxExt ){
+		if( !window.wgEnableLightboxExt ) {
 			throw 'Lightbox must be enabled for TouchStorm to work.';
 		}
 		this.wrapper = $( '#TouchStormModule' );
