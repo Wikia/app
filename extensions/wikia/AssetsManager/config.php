@@ -967,6 +967,7 @@ $config['videopagetool_js'] = array(
 		'//resources/jquery.ui/jquery.ui.core.js',
 		'//resources/jquery.ui/jquery.ui.datepicker.js',
 		'//resources/jquery/jquery.validate.js',
+		'//resources/wikia/modules/aim.js',
 		'//extensions/wikia/WikiaMiniUpload/js/WMU.js',
 
 		'//extensions/wikia/VideoPageTool/js/models/validator.js',

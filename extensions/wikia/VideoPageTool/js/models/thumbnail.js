@@ -1,8 +1,15 @@
-define('models.videopageadmin.thumbnail', [
-		'jQuery'
-], function($) {
+define( 'models.videopageadmin.thumbnail', [
+		'jquery'
+], function( $ ) {
 	'use strict';
-	function Thumbnailer() {
+	function ThumbnailModel( params ) {
+		this.imgTitle = params.imgTitle;
+		this.wikiText = params.wikiText;
 	}
-	return Thumbnailer;
+
+	ThumbnailModel.prototype = {
+		create: 
+	};
+
+	return ThumbnailModel;
 });
