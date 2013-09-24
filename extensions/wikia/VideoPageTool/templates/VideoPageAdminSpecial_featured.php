@@ -14,7 +14,10 @@
 				<p class="video-title <?= $video[ 'videoTitleClass' ] ?>"><?= $video[ 'videoTitle' ]  ?></p>
 				<input type="hidden" name="videoKey[]" class="video-key" id="video-key-<?= $x ?>" value="<?= $video[ 'videoKey' ] ?>">
 			</div>
-			<div class="video-thumb"><?= $video[ 'videoThumb' ] ?></div>
+			<div class="video-thumb">
+				<?= $video[ 'videoThumb' ] ?>
+				<a class="preview-large-link" href="#" target="_blank">Preview large version</a>
+			</div>
 			<div class="input-group">
 				<input type="button" class="media-uploader-btn" value="<?= wfMessage( 'videopagetool-button-add-thumbnail' )->plain() ?>">
 				<p class="new-thumb <?= $video[ 'newThumbClass' ] ?>"><?= $video[ 'newThumbName' ]  ?></p>

@@ -154,6 +154,9 @@ $label-padding: 10px 10px 10px 0px;
 			position: relative;
 			width: 179px;
 		}
+		.preview-large-link {
+			display: none;
+		}
 		// validation
 		label.error {
 			clear: both;

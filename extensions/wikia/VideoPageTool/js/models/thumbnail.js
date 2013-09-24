@@ -10,15 +10,13 @@ define( 'models.videopageadmin.thumbnail', [
 	ThumbnailModel.prototype = {
 		create: function() {
 			var that = this;
-			$.nirvana.sendRequest({
+
+			return $.nirvana.sendRequest({
 					controller: 'VideoPageAdminSpecial',
 					method: 'getImageData',
 					data: {
 						imageTitle: that.imgTitle
 					},
-					callback: function( response ) {
-						console.log(response);
-					}
 			});
 		}
 	};

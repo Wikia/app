@@ -10,7 +10,6 @@ define( 'vpt.views.edit', [
 		this.$form = $( '.vpt-form' );
 		// all elements to be validated - jQuery validate doesn't support arrays of form names inputs like "names[]" :(
 		this.$formFields = this.$form.find( '.description, .display-title, .video-key' );
-		this.$mediaUploadBtn = $('.media-uploader-btn');
 		this.init();
 	};
 
@@ -20,8 +19,14 @@ define( 'vpt.views.edit', [
 			this.initReset();
 			this.initSwitcher();
 			this.initAddVideo();
-			var thumnailUploader = new ThumbnailUploader({
-					el: this.$mediaUploadBtn
+			this.initMediaUploader();
+		},
+
+		initMediaUploader: function() {
+			$( '.form-box' ).on( 'click', '.media-uploader-btn', function() {
+					return new ThumbnailUploader({
+							el: $(this).closest('.form-box')
+					});
 			});
 		},
 
