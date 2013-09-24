@@ -14,11 +14,11 @@ class TouchStormHooks extends WikiaObject {
 				$out->addStyle( $url );
 			}
 
-			// Load JS (when it becomes necessary for this module)
-			//$jsPackage = 'touchstorm_js';
-			//foreach ( $assetsManager->getURL( $jsPackage ) as $url ) {
-			//	$out->addScript( "<script src=\"{$url}\"></script>" );
-			//}
+			// Load JS
+			$jsPackage = 'touchstorm_js';
+			foreach ( $assetsManager->getURL( $jsPackage ) as $url ) {
+				$out->addScript( "<script src=\"{$url}\"></script>" );
+			}
 		}
 
 		wfProfileOut(__METHOD__);
