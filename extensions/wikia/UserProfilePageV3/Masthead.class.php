@@ -427,8 +427,13 @@ class Masthead {
 	 * removeFile -- remove file from directory
 	 */
 	public function removeFile( $addLog = true ) {
+		// macbre: avatars operations are disabled during maintenance
+		global $wgAvatarsMaintenance;
+		if (!empty($wgAvatarsMaintenance)) {
+			return false;
+		}
+
 		wfProfileIn( __METHOD__ );
-		global $wgLogTypes, $wgUser;
 
 		$result = false;
 		$sImageFull = $this->getFullPath();
@@ -457,14 +462,11 @@ class Masthead {
 				 */
 				global $wgEnableUploadInfoExt;
 				if( $wgEnableUploadInfoExt ) {
-					UploadInfo::log( $mUserPage, $sImageFull, $this->getLocalPath(), "", "r" );
+					UploadInfo::log( $this->mUser->getUserPage(), $sImageFull, $this->getLocalPath(), "", "r" );
 				}
 
 				// remove thumbnails
 				$this->purgeThumbnails();
-
-				$errorNo = UPLOAD_ERR_OK;
-
 			}
 		}
 		wfProfileOut( __METHOD__ );
@@ -490,6 +492,12 @@ class Masthead {
 	 * @return Integer -- error code of operation
 	 */
 	public function uploadByUrl($url){
+		// macbre: avatars operations are disabled during maintenance
+		global $wgAvatarsMaintenance;
+		if (!empty($wgAvatarsMaintenance)) {
+			return UPLOAD_ERR_NO_TMP_DIR;
+		}
+
 		wfProfileIn(__METHOD__);
 		$sTmpFile = '';
 
@@ -505,6 +513,12 @@ class Masthead {
 
 
 	public function uploadByUrlToTempFile($url, &$sTmpFile){
+		// macbre: avatars operations are disabled during maintenance
+		global $wgAvatarsMaintenance;
+		if (!empty($wgAvatarsMaintenance)) {
+			return UPLOAD_ERR_NO_TMP_DIR;
+		}
+
 		global $wgTmpDirectory;
 		wfProfileIn(__METHOD__);
 
@@ -528,13 +542,19 @@ class Masthead {
 	 * uploadFile -- save file when is in proper format, do resize and
 	 * other stuffs
 	 *
-	 * @param Request $request -- WebRequest instance
+	 * @param WebRequest $request -- WebRequest instance
 	 * @param String $input    -- name of file input in form
 	 * @param $errorMsg -- optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION.
 	 *
 	 * @return Integer -- error code of operation
 	 */
 	public function uploadFile($request, $input = AVATAR_UPLOAD_FIELD, &$errorMsg='') {
+		// macbre: avatars operations are disabled during maintenance
+		global $wgAvatarsMaintenance;
+		if (!empty($wgAvatarsMaintenance)) {
+			return UPLOAD_ERR_NO_TMP_DIR;
+		}
+
 		global $wgTmpDirectory;
 		wfProfileIn(__METHOD__);
 		$this->__setLogType();

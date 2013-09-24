@@ -1072,6 +1072,15 @@ class UserProfilePageController extends WikiaController {
 	public function removeavatar() {
 		wfProfileIn(__METHOD__);
 		$this->setVal('status', false);
+
+		// macbre: avatars operations are disabled during maintenance
+		global $wgAvatarsMaintenance;
+		if (!empty($wgAvatarsMaintenance)) {
+			$this->setVal('error', wfMsg('user-identity-avatars-maintenance'));
+			wfProfileOut(__METHOD__);
+			return true;
+		}
+
 		if (!$this->app->wg->User->isAllowed('removeavatar')) {
 			wfProfileOut(__METHOD__);
 			return true;

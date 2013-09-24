@@ -124,7 +124,8 @@ $messages['en'] = array(
 	'blog-avatar-alt' => 'Logs of user avatar additions or removals',
 
 	'user-identity-remove-confirmation' => 'Are you sure you want to remove avatar?',
-	'user-identity-remove-fail' => 'There was some problem when removing the avatar!'
+	'user-identity-remove-fail' => 'There was some problem when removing the avatar!',
+	'user-identity-avatars-maintenance' => 'Upload and deletion of avatars temporarily disabled during maintenance!'
 );
 
 /** Message documentation (Message documentation)
