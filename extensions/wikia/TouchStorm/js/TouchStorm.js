@@ -1,7 +1,14 @@
+/* @desc Open the Lightbox when when TouchStorm videos are clicked
+ * @see Lightbox extension
+ * @author lizlux
+ */
 define( 'wikia.touchstorm', [], function() {
 	'use strict';
 
 	function TouchStorm() {
+		if( !window.wgEnableLightboxExt ){
+			throw 'Lightbox must be enabled for TouchStorm to work.';
+		}
 		this.wrapper = $( '#TouchStormModule' );
 		this.lightboxInited = false;
 		this.init();
@@ -11,6 +18,7 @@ define( 'wikia.touchstorm', [], function() {
 		init: function() {
 			this.bindEvents();
 		},
+
 		bindEvents: function() {
 			var that = this;
 
@@ -22,6 +30,7 @@ define( 'wikia.touchstorm', [], function() {
 			// called from Lightbox.js
 			$( window ).on( 'lightboxOpened', $.proxy( this.setupLightbox, this ) );
 		},
+
 		/* @desc when a touchstorm video is clicked, load the lightbox
 		 * @return void
 		 */
@@ -31,6 +40,7 @@ define( 'wikia.touchstorm', [], function() {
 
 			window.LightboxLoader.loadLightbox( videoKey, { parent: that.wrapper, carouselType: 'touchStorm' } );
 		},
+
 		/* @desc Plug touchstorm into Lightbox
 		 * @return void
 		 */
@@ -48,6 +58,7 @@ define( 'wikia.touchstorm', [], function() {
 				this.lightboxInited = true;
 			}
 		},
+
 		/* @desc Get data from touchstorm videos to be sent to getCarouselThumbs
 		 * @return void
 		 */
@@ -68,6 +79,7 @@ define( 'wikia.touchstorm', [], function() {
 
 			this.videoList = videos;
 		},
+
 		/* @desc Add another carousel thumb method to Lightbox in order to populate the lightboxcarousel
 		 * @return void
 		 */
@@ -114,6 +126,7 @@ define( 'wikia.touchstorm', [], function() {
 			window.Lightbox.addThumbsToCarousel( thumbArr, backfill );
 
 		},
+
 		/* @desc Parse URL for video key.
 		 * @todo: It's possible that "File:" could be in the video key, so we may want to handle this edge case at a
 		 * later date.
