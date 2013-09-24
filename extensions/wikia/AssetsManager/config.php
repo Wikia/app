@@ -970,8 +970,9 @@ $config['videopagetool_js'] = array(
 		'//resources/wikia/modules/aim.js',
 		'//extensions/wikia/WikiaMiniUpload/js/WMU.js',
 
-		'//extensions/wikia/VideoPageTool/js/models/validator.js',
 		'//extensions/wikia/VideoPageTool/js/models/datepicker.js',
+		'//extensions/wikia/VideoPageTool/js/models/thumbnail.js',
+		'//extensions/wikia/VideoPageTool/js/models/validator.js',
 		// TODO: probably move this jQuery plugin to /resources at some point
 		'//extensions/wikia/VideoPageTool/js/views/switcher.js',
 		'//extensions/wikia/VideoPageTool/js/views/datepicker.js',
