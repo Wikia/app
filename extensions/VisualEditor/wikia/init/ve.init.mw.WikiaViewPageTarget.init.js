@@ -176,7 +176,7 @@
 
 			getTarget().done( function ( target ) {
 				ve.track( 'Edit', { action: 'edit-link-click' } );
-				loadSassAndActivate();
+				loadSassAndActivate( target );
 			} );
 		},
 
@@ -190,7 +190,7 @@
 			getTarget().done( function ( target ) {
 				ve.track( 'Edit', { action: 'section-edit-link-click' } );
 				target.saveEditSection( $( e.target ).closest( 'h1, h2, h3, h4, h5, h6' ).get( 0 ) );
-				loadSassAndActivate();
+				loadSassAndActivate( target );
 			} );
 		}
 	};
@@ -272,18 +272,18 @@
 	$( function () {
 		if ( init.isAvailable && isViewPage ) {
 			if ( uri.query.veaction === 'edit' ) {
-				loadSassAndActivate();
+				getTarget().done( function ( target ) {
+					loadSassAndActivate( target );
+				} );
 			}
 		}
 		init.setupSkin();
 	} );
 
-	function loadSassAndActivate() {
-		getTarget().done( function ( target ) {
-			$.getResources( [
-				$.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' )
-			] );
-			target.activate();
-		} );
+	function loadSassAndActivate( target ) {
+		$.getResources( [
+			$.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' )
+		] );
+		target.activate();
 	};
 }() );

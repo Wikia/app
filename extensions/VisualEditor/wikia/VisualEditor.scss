@@ -1,5 +1,11 @@
-// Oasis color
+// Oasis Imports
 @import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/layout";
+
+// VE Imports
+@import "extensions/VisualEditor/wikia/ui/styles/ve.ui.Icons-vector";
+@import "extensions/VisualEditor/wikia/ui/styles/ve.ui.Surface";
+@import "extensions/VisualEditor/wikia/ui/styles/ve.ui.Tool";
 
 /*
  * Fixes background colors in inspectors and dialogs
