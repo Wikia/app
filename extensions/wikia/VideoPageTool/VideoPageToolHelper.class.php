@@ -8,8 +8,8 @@ class VideoPageToolHelper extends WikiaModel {
 	const THUMBNAIL_WIDTH = 180;
 	const THUMBNAIL_HEIGHT = 100;
 
-	const MAX_THUMBNAIL_WIDTH = 1000;
-	const MAX_THUMBNAIL_HEIGHT = 1000;
+	const MAX_THUMBNAIL_WIDTH = 1024;
+	const MAX_THUMBNAIL_HEIGHT = 461;
 
 	public static $requiredRows = array(
 		'featured' => 5,
@@ -262,12 +262,19 @@ class VideoPageToolHelper extends WikiaModel {
 	 */
 	public function validateNewThumbName( $ThumbName, &$errMsg ) {
 		$title = Title::newFromText( $ThumbName, NS_FILE );
-		if ( $title instanceof Title && $title->exists() ) {
-			return true;
+		if ( $title instanceof Title ) {
+			$file = wfFindFile( $title );
+			if ( $file instanceof File && $file->exists() ) {
+				if ( $file->getWidth() == self::MAX_THUMBNAIL_WIDTH && $file->getHeight() == self::MAX_THUMBNAIL_HEIGHT ) {
+					return true;
+				}
+
+				$errMsg = wfMessage( 'videopagetool-error-image-invalid-size' )->plain();
+				return false;
+			}
 		}
 
 		$errMsg = wfMessage( 'videopagetool-error-image-not-exist' )->plain();
-
 		return false;
 	}
 
