@@ -5,14 +5,6 @@
 	font-size: 16px;
 }
 
-/**
- * <section id="WikiaPage"> element in Oasis has z-index=1 so we have to set z-index=1 on our
- * element as well in order to make it appear on top
- */
-.ve-ui-surface-overlay {
-	z-index: 1;
-}
-
 .wikinav2 .WikiaPageHeader {
 	margin-bottom: 0;
 }

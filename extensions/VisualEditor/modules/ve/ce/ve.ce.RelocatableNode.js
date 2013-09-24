@@ -131,8 +131,8 @@ ve.ce.RelocatableNode.prototype.setRelocatableMarkerSizeAndPosition = function (
 	);
 
 	this.$relocatableMarker.css( {
-		'height': this.$relocatable.height(),
-		'width': this.$relocatable.width(),
+		'height': this.$relocatable.outerHeight(),
+		'width': this.$relocatable.outerWidth(),
 		'top': offset.top,
 		'left': offset.left
 	} );

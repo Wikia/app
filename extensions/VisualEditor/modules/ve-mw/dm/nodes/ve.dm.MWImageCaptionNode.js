@@ -29,7 +29,7 @@ ve.dm.MWImageCaptionNode.static.parentNodeTypes = [ 'mwBlockImage' ];
 
 ve.dm.MWImageCaptionNode.static.toDataElement = function () {
 	// Probably not needed
-	return { 'type': 'mwImageCaption' };
+	return { 'type': this.name };
 };
 
 ve.dm.MWImageCaptionNode.static.toDomElements = function ( dataElement, doc ) {
