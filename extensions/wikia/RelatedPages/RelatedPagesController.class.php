@@ -12,15 +12,10 @@ class RelatedPagesController extends WikiaController {
 		// request params
 		$altTitle = $this->request->getVal( 'altTitle', null );
 		$relatedPages = RelatedPages::getInstance();
-		$categories = $this->request->getVal( 'categories' );
 		$anyNs = $this->request->getVal( 'anyNS', false );
 
 		$title = empty( $altTitle ) ? $wgTitle : $altTitle;
 		$articleid = $title->getArticleId();
-
-		if ( !is_null( $categories ) ) {
-			$relatedPages->setCategories( $categories );
-		}
 
 		if( !$anyNs ) {
 			$ignoreNS = !empty( $wgTitle ) && in_array( $wgTitle->getNamespace(), $wgContentNamespaces );
