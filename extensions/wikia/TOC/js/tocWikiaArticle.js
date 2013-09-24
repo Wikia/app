@@ -146,18 +146,32 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 		setTOCCookie(tocCookie);
 	}
 
+	/**
+	 * Temporary function to check if new TOC exists (article was purged and has new TOC applied)
+	 *
+	 * TODO: remove this after parser cache for all articles is purged
+	 *
+	 * @returns {Boolean} - return true if new TOC exists
+	 */
+
+	function isNewTOC() {
+		return $('#toc').is('nav');
+	}
+
 	$(function() {
 		/** Attach events */
 		$('body').on('click', '#togglelink', function(event) {
 			event.preventDefault();
 
-			var $target = $(event.target);
+			if(isNewTOC()) {
+				var $target = $(event.target);
 
-			if (!hasTOC) {
-				renderTOC($target);
+				if (!hasTOC) {
+					renderTOC($target);
+				}
+
+				showHideTOC($target);
 			}
-
-			showHideTOC($target);
 		});
 
 		// reset hasTOC flag for each time preview modal is opened
@@ -166,7 +180,7 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 		});
 
 		/** Auto expand TOC in article for logged-in users with hideTOC cookie set to 'null'  */
-		if (window.wgUserName !== null && $.cookie('mw_hidetoc') === null) {
+		if (isNewTOC() && window.wgUserName !== null && $.cookie('mw_hidetoc') === null) {
 			var $showLink = $('#togglelink');
 
 			if (!hasTOC) {
