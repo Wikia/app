@@ -55,6 +55,8 @@ define( 'views.videopageadmin.thumbnailUpload', [
 					that.$el.find( '.preview-large-link' )
 						.attr( 'href', response.data.largeThumbUrl )
 						.fadeIn( 200 );
+
+					that.$el.find( '.new-thumb' ).val( img.imgTitle );
 			});
 		}
 	};
