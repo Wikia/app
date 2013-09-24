@@ -146,28 +146,29 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 		setTOCCookie(tocCookie);
 	}
 
-	/** Attach events */
+	$(function() {
+		/** Attach events */
+		$('body').on('click', '#togglelink', function(event) {
+			event.preventDefault();
 
-	$('body').on('click', '#togglelink', function(event) {
-		event.preventDefault();
+			var $target = $(event.target);
 
-		var $target = $(event.target);
+			if (!hasTOC) {
+				renderTOC($target);
+			}
 
-		if (!hasTOC) {
-			renderTOC($target);
+			showHideTOC($target);
+		});
+
+		/** Auto expand TOC in article for logged-in users with hideTOC cookie set to 'null'  */
+		if (window.wgUserName !== null && $.cookie('mw_hidetoc') === null) {
+			var $showLink = $('#togglelink');
+
+			if (!hasTOC) {
+				renderTOC($showLink);
+			}
+
+			showHideTOC($showLink);
 		}
-
-		showHideTOC($target);
 	});
-
-	/** Auto expand TOC in article for logged-in users with hideTOC cookie set to 'null'  */
-	if (window.wgUserName !== null && $.cookie('mw_hidetoc') === null) {
-		var $showLink = $('#togglelink');
-
-		if (!hasTOC) {
-			renderTOC($showLink);
-		}
-
-		showHideTOC($showLink);
-	}
 });
