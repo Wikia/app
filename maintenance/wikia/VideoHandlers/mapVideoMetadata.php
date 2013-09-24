@@ -234,8 +234,12 @@ function generateMetadataScreenplay( $ingester, $data, &$errorMsg ) {
 		return $ingester->generateMetadata( $data, $errorMsg );
 	}
 
+	// set fake value
 	$data['stdBitrateCode'] = 1;
+
 	$metadata = $ingester->generateMetadata( $data, $errorMsg );
+
+	// remove fake value
 	$metadata['stdBitrateCode'] = '';
 
 	return $metadata;
