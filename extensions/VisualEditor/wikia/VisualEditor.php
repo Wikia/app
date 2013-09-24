@@ -20,7 +20,7 @@ $wgResourceModules += array(
 			'user.options'
 		),
 		'position' => 'top',
-		'localBasePath' => dirname( __FILE__ ) . '/modules',
+		'localBasePath' => dirname( __FILE__ ),
 		'remoteExtPath' => 'VisualEditor/wikia'
 	),
 	'ext.visualEditor.wikiaViewPageTarget' => array(
@@ -33,7 +33,7 @@ $wgResourceModules += array(
 		'dependencies' => array(
 			'ext.visualEditor.viewPageTarget'
 		),
-		'localBasePath' => dirname( __FILE__ ) . '/modules',
+		'localBasePath' => dirname( __FILE__ ),
 		'remoteExtPath' => 'VisualEditor/wikia',
 	),
 	'ext.visualEditor.wikiaCore' => array(
@@ -70,7 +70,7 @@ $wgResourceModules += array(
 		'dependencies' => array(
 			'ext.visualEditor.core'
 		),
-		'localBasePath' => dirname( __FILE__ ) . '/modules',
+		'localBasePath' => dirname( __FILE__ ),
 		'remoteExtPath' => 'VisualEditor/wikia',
 	),
 	'ext.visualEditor.iconsVector' => array(
@@ -80,7 +80,7 @@ $wgResourceModules += array(
 		'dependencies' => array(
 			'ext.visualEditor.core'
 		),
-		'localBasePath' => dirname( __FILE__ ) . '/modules',
+		'localBasePath' => dirname( __FILE__ ),
 		'remoteExtPath' => 'VisualEditor/wikia',
 	),
 );
