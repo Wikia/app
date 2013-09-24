@@ -33,7 +33,8 @@ class CrossWikiCore extends AbstractWikiService
 				$this->getWam(),
 				$this->getCategories(),
 				$this->getVisualizationInfo(),
-				$this->getTopArticles()
+				$this->getTopArticles(),
+				$this->getLicenseInformation()
 				);
 	}
 	
@@ -181,6 +182,30 @@ class CrossWikiCore extends AbstractWikiService
 				'top_categories_txt' => $topCategories,
 				 $topsCats => $topCategories 
 				);
+	}
+
+
+	/**
+	 * @return \LicensedWikisService
+	 */
+	protected function getLicensedWikisService(){
+
+		return  new \LicensedWikisService();
+	}
+
+	/**
+	 * Get license info this wiki
+	 * @return array
+	 */
+	protected function getLicenseInformation( ) {
+
+		$licensedWikiService = $this->getLicensedWikisService();
+
+		if( $licensedWikiService->isCommercialUseAllowedById( $this->getWikiId() ) ) {
+			return [
+				"commercial_use_allowed_b" =>  false,
+			];
+		} else { return []; }
 	}
 	
 	/**
