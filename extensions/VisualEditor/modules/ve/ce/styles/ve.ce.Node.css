@@ -19,8 +19,8 @@
 
 /* ve.ce.ProtectedNode */
 
-.ve-ce-protectedNode,
-.ve-ce-protectedNode * {
+.ve-ce-protectedNode, 
+.ve-ce-protectedNode *:not(.ve-no-shield):not(.ve-ce-protectedNode-shield) {
 	position: relative !important;
 	top: 0 !important;
 	left: 0 !important;
@@ -176,7 +176,7 @@ pre.ve-ce-branchNode {
 .ve-ce-branchNode h5:empty:before,
 .ve-ce-branchNode h6:empty:before,
 .ve-ce-branchNode p:empty:before {
-	content: url('data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==');
+	content: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
 }
 
 /* Emulate the first paragraph in each list item being unwrapped */

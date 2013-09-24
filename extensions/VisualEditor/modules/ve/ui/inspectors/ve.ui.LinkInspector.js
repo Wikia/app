@@ -26,6 +26,8 @@ ve.inheritClass( ve.ui.LinkInspector, ve.ui.AnnotationInspector );
 
 /* Static properties */
 
+ve.ui.LinkInspector.static.name = 'link';
+
 ve.ui.LinkInspector.static.icon = 'link';
 
 ve.ui.LinkInspector.static.titleMessage = 'visualeditor-linkinspector-title';
@@ -104,4 +106,4 @@ ve.ui.LinkInspector.prototype.getAnnotationFromText = function ( text ) {
 
 /* Registration */
 
-ve.ui.inspectorFactory.register( 'link', ve.ui.LinkInspector );
+ve.ui.inspectorFactory.register( ve.ui.LinkInspector );

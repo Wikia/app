@@ -28,6 +28,8 @@ ve.inheritClass( ve.ui.MWLinkInspector, ve.ui.LinkInspector );
 
 /* Static properties */
 
+ve.ui.MWLinkInspector.static.name = 'link';
+
 ve.ui.MWLinkInspector.static.modelClasses = [
 	ve.dm.MWExternalLinkAnnotation, ve.dm.MWInternalLinkAnnotation
 ];
@@ -97,4 +99,4 @@ ve.ui.MWLinkInspector.static.legalTitle = /^[ %!"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z
 
 /* Registration */
 
-ve.ui.inspectorFactory.register( 'mwLink', ve.ui.MWLinkInspector );
+ve.ui.inspectorFactory.register( ve.ui.MWLinkInspector );

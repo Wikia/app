@@ -38,7 +38,13 @@ end
 When(/^I edit the page with a string$/) do
   on(VisualEditorPage) do |page|
     page.edit_ve
-    page.content_element.when_visible.send_keys("Editing with #{@does_not_exist_page_name}")
+    #This begin/rescue clause dismisses the VE warning message when it exists, and does not fail when it does not exist
+    begin
+      page.beta_warning_element.when_present.click
+    rescue
+    end
+    page.content_element.fire_event('onfocus')
+    page.content_element.when_present.send_keys("Editing with #{@does_not_exist_page_name}")
   end
 end
 
@@ -58,7 +64,7 @@ When(/^I edit the description of the change$/) do
 end
 
 When(/^I see the IP warning signs$/) do
-  on(VisualEditorPage).ip_warning.should match Regexp.escape("You are not logged in. Your IP address will be recorded in this page's edit history.")
+  on(VisualEditorPage).ip_warning.should match Regexp.escape("Your IP address")
 end
 
 Then(/^Page text should contain the string$/) do

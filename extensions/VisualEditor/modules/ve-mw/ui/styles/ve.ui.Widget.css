@@ -310,7 +310,10 @@
 .ve-ui-mwParameterSearchWidget .ve-ui-selectWidget {
 	position: relative;
 	width: 100%;
-	overflow: hidden;
+}
+
+.ve-ui-mwParameterSearchWidget .ve-ui-searchWidget-results {
+	overflow-y: hidden;
 }
 
 /* ve.ui.MWParameterResultWidget */

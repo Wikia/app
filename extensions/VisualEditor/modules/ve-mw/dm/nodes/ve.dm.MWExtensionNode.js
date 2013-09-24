@@ -85,7 +85,7 @@ ve.dm.MWExtensionNode.static.toDomElements = function ( dataElement, doc, conver
 		return ve.copyDomElements( dataElement.attributes.originalDomElements, doc );
 	} else {
 		el = doc.createElement( this.tagName );
-		el.setAttribute( 'typeof', this.getMatchRdfaTypes()[0] );
+		el.setAttribute( 'typeof', 'mw:Extension/' + this.getExtensionName( dataElement ) );
 		el.setAttribute( 'data-mw', JSON.stringify( dataElement.attributes.mw ) );
 		return [ el ];
 	}
@@ -98,12 +98,26 @@ ve.dm.MWExtensionNode.static.getHashObject = function ( dataElement ) {
 	};
 };
 
+/**
+ * Get the extension's name
+ *
+ * Static version for toDomElements
+ *
+ * @static
+ * @param {Object} dataElement Data element
+ * @returns {string} Extension name
+ */
+ve.dm.MWExtensionNode.static.getExtensionName = function () {
+	return this.extensionName;
+};
+
 /* Methods */
 
 /**
  * Get the extension's name
+ * @method
  * @returns {string} Extension name
  */
 ve.dm.MWExtensionNode.prototype.getExtensionName = function () {
-	return this.constructor.static.extensionName;
+	return this.constructor.static.getExtensionName( this.element );
 };

@@ -83,7 +83,7 @@
 			},
 			{
 				"name": "MediaWiki integration",
-				"classes": ["ve.init.mw*"]
+				"classes": ["ve.init.mw*", "ve.version"]
 			},
 			{
 				"name": "Stand-alone",
@@ -102,7 +102,6 @@
 					"ve.ui.Context",
 					"ve.ui.Frame",
 					"ve.ui.Toolbar",
-					"ve.ui.ToolGroup",
 					"ve.ui.SurfaceToolbar",
 					"ve.ui.Window",
 					"ve.ui.WindowSet",
@@ -125,6 +124,10 @@
 			{
 				"name": "Tools",
 				"classes": ["ve.ui.*Tool"]
+			},
+			{
+				"name": "Tool groups",
+				"classes": ["ve.ui.*ToolGroup"]
 			},
 			{
 				"name": "Inspectors",
@@ -153,7 +156,10 @@
 		"groups": [
 			{
 				"name": "Utilities",
-				"classes": ["ve", "ve.EventEmitter", "ve.Registry", "ve.Factory", "ve.Range", "ve.Element"]
+				"classes": [
+					"ve", "ve.EventEmitter", "ve.Registry", "ve.Factory",
+					"ve.Range", "ve.Element", "ve.EventSequencer"
+				]
 			},
 			{
 				"name": "Factories",

@@ -26,6 +26,8 @@ ve.inheritClass( ve.ui.MWHieroInspector, ve.ui.MWExtensionInspector );
 
 /* Static properties */
 
+ve.ui.MWHieroInspector.static.name = 'hiero';
+
 ve.ui.MWHieroInspector.static.icon = 'hiero';
 
 ve.ui.MWHieroInspector.static.titleMessage = 'visualeditor-mwhieroinspector-title';
@@ -46,4 +48,4 @@ ve.ui.MWHieroInspector.prototype.initialize = function () {
 
 /* Registration */
 
-ve.ui.inspectorFactory.register( 'mwHieroInspector', ve.ui.MWHieroInspector );
+ve.ui.inspectorFactory.register( ve.ui.MWHieroInspector );

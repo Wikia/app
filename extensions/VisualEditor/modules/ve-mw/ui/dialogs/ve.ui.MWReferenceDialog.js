@@ -29,48 +29,21 @@ ve.inheritClass( ve.ui.MWReferenceDialog, ve.ui.MWDialog );
 
 /* Static Properties */
 
+ve.ui.MWReferenceDialog.static.name = 'reference';
+
 ve.ui.MWReferenceDialog.static.titleMessage = 'visualeditor-dialog-reference-title';
 
 ve.ui.MWReferenceDialog.static.icon = 'reference';
 
 ve.ui.MWReferenceDialog.static.toolbarGroups = [
-	{
-		'include': [ 'history' ],
-		'promote': [
-			'history/undo',
-			'history/redo'
-		]
-	},
-	{
-		'include': [ 'textStyle', 'meta', 'utility/clear' ],
-		'promote': [
-			'textStyle/bold',
-			'textStyle/italic',
-			'meta/link'
-		],
-		'demote': [ 'utility/clear' ]
-	},
-	{
-		'include': [ 'structure' ],
-		'promote': [
-			'structure/number',
-			'structure/bullet',
-			'structure/outdent',
-			'structure/indent'
-		]
-	},
-	{ 'include': [ 'object' ], 'exclude': [ 'object/reference/mw', 'object/referenceList/mw' ] }
+	{ 'include': [ 'undo', 'redo' ] },
+	{ 'include': [ 'bold', 'italic', 'link', 'clear' ] },
+	{ 'include': [ 'number', 'bullet', 'outdent', 'indent' ] },
+	{ 'include': '*', 'exclude': [ { 'group': 'format' }, 'reference', 'referenceList' ] }
 ];
 
 ve.ui.MWReferenceDialog.static.surfaceCommands = [
-	'history/undo',
-	'history/redo',
-	'textStyle/bold',
-	'textStyle/italic',
-	'meta/link/mw',
-	'utility/clear',
-	'structure/indent',
-	'structure/outdent'
+	'undo', 'redo', 'bold', 'italic', 'link', 'clear'
 ];
 
 /* Methods */
@@ -141,7 +114,6 @@ ve.ui.MWReferenceDialog.prototype.initialize = function () {
 	this.search.connect( this, { 'select': 'onSearchSelect' } );
 
 	// Initialization
-	this.search.buildIndex();
 	this.panels.addItems( [ this.editPanel, this.searchPanel ] );
 	this.editPanel.$.append( this.contentFieldset.$, this.optionsFieldset.$ );
 	this.optionsFieldset.$.append( this.referenceGroupLabel.$, this.referenceGroupInput.$ );
@@ -190,6 +162,8 @@ ve.ui.MWReferenceDialog.prototype.onOpen = function () {
 	this.backButton.$.hide();
 	this.panels.showItem( this.editPanel );
 	this.useReference( ref );
+	this.search.buildIndex();
+	this.selectButton.setDisabled( !this.search.getResults().getItems().length );
 };
 
 /**
@@ -351,4 +325,4 @@ ve.ui.MWReferenceDialog.prototype.onSurfaceChange = function () {
 
 /* Registration */
 
-ve.ui.dialogFactory.register( 'mwReference', ve.ui.MWReferenceDialog );
+ve.ui.dialogFactory.register( ve.ui.MWReferenceDialog );

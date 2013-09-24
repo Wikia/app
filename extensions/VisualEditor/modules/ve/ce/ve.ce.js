@@ -191,13 +191,12 @@ ve.ce.getOffsetFromTextNode = function ( domNode, domOffset ) {
  * @method
  * @param {HTMLElement} domNode DOM node
  * @param {number} domOffset DOM offset within the DOM Element
- * @param {boolean} [addOuterLength] Use outer length, which includes wrappers if any exist
+ * @param {number} [firstRecursionDirection] Which direction the first recursive call went in (+/-1)
  * @returns {number} Linear model offset
  */
-ve.ce.getOffsetFromElementNode = function ( domNode, domOffset, addOuterLength ) {
-	var $domNode = $( domNode ),
-		nodeModel,
-		node;
+ve.ce.getOffsetFromElementNode = function ( domNode, domOffset, firstRecursionDirection ) {
+	var direction, nodeModel, node,
+		$domNode = $( domNode );
 
 	if ( $domNode.hasClass( 've-ce-branchNode-slug' ) ) {
 		if ( $domNode.prev().length ) {
@@ -211,8 +210,8 @@ ve.ce.getOffsetFromElementNode = function ( domNode, domOffset, addOuterLength )
 	}
 
 	// IE sometimes puts the cursor in a text node inside ce="false". BAD!
-	if ( domNode.contentEditable === 'false' ) {
-		nodeModel = $domNode.data( 'view' ).getModel();
+	if ( !firstRecursionDirection && !domNode.isContentEditable ) {
+		nodeModel = $domNode.closest( '.ve-ce-branchNode, .ve-ce-leafNode' ).data( 'view' ).getModel();
 		return nodeModel.getOffset() + nodeModel.getOuterLength();
 	}
 
@@ -220,22 +219,30 @@ ve.ce.getOffsetFromElementNode = function ( domNode, domOffset, addOuterLength )
 		node = $domNode.data( 'view' );
 		if ( node && node instanceof ve.ce.Node ) {
 			nodeModel = $domNode.data( 'view' ).getModel();
-			if ( addOuterLength === true ) {
+			if ( firstRecursionDirection === -1 ) {
 				return nodeModel.getOffset() + nodeModel.getOuterLength();
+			} else if ( firstRecursionDirection === 1 ) {
+				return nodeModel.getOffset();
 			} else {
 				return nodeModel.getOffset() + ( nodeModel.isWrapped() ? 1 : 0 );
 			}
 		} else {
 			node = $domNode.contents().last()[0];
+			if ( !firstRecursionDirection ) {
+				direction = 1;
+			}
 		}
 	} else {
 		node = $domNode.contents()[ domOffset - 1 ];
+		if ( !firstRecursionDirection ) {
+			direction = -1;
+		}
 	}
 
 	if ( node.nodeType === Node.TEXT_NODE ) {
 		return ve.ce.getOffsetFromTextNode( node, node.length );
 	} else {
-		return ve.ce.getOffsetFromElementNode( node, 0, true );
+		return ve.ce.getOffsetFromElementNode( node, 0, direction );
 	}
 };
 

@@ -11,6 +11,7 @@
  * DataModel MediaWiki internal link annotation.
  *
  * Example HTML sources:
+ *
  *     <a rel="mw:WikiLink">
  *
  * @class

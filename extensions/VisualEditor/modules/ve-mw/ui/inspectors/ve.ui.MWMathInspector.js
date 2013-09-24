@@ -26,6 +26,8 @@ ve.inheritClass( ve.ui.MWMathInspector, ve.ui.MWExtensionInspector );
 
 /* Static properties */
 
+ve.ui.MWMathInspector.static.name = 'math';
+
 ve.ui.MWMathInspector.static.icon = 'math';
 
 ve.ui.MWMathInspector.static.titleMessage = 'visualeditor-mwmathinspector-title';
@@ -46,4 +48,4 @@ ve.ui.MWMathInspector.prototype.initialize = function () {
 
 /* Registration */
 
-ve.ui.inspectorFactory.register( 'mwMathInspector', ve.ui.MWMathInspector );
+ve.ui.inspectorFactory.register( ve.ui.MWMathInspector );

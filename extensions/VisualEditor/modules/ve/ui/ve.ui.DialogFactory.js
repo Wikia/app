@@ -9,17 +9,17 @@
  * UserInterface Dialog factory.
  *
  * @class
- * @extends ve.Factory
+ * @extends ve.NamedClassFactory
  * @constructor
  */
 ve.ui.DialogFactory = function VeUiDialogFactory() {
 	// Parent constructor
-	ve.Factory.call( this );
+	ve.NamedClassFactory.call( this );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.DialogFactory, ve.Factory );
+ve.inheritClass( ve.ui.DialogFactory, ve.NamedClassFactory );
 
 /* Initialization */
 

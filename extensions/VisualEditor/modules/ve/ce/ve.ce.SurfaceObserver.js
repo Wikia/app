@@ -24,8 +24,9 @@ ve.ce.SurfaceObserver = function VeCeSurfaceObserver( documentView ) {
 	this.documentView = documentView;
 	this.domDocument = null;
 	this.polling = false;
+	this.locked = false;
 	this.timeoutId = null;
-	this.frequency = 250; //ms
+	this.frequency = 250; // ms
 
 	// Initialization
 	this.clear();
@@ -80,35 +81,41 @@ ve.ce.SurfaceObserver.prototype.clear = function ( range ) {
 };
 
 /**
- * Start polling.
- *
- * If {postpone} is false or undefined the first poll cycle will occur immediately and synchronously.
+ * Start the setTimeout synchronisation loop
  *
  * @method
- * @param {boolean} postpone Add the first poll to the end of the event queue
- * @param {boolean} emitContentChanges Allow contentChange to be emitted
  */
-ve.ce.SurfaceObserver.prototype.start = function ( postpone, emitContentChanges ) {
+ve.ce.SurfaceObserver.prototype.startTimerLoop = function () {
 	this.domDocument = this.documentView.getDocumentNode().getElementDocument();
 	this.polling = true;
-	this.poll( postpone, emitContentChanges );
+	this.timerLoop( true ); // will not sync immediately, because timeoutId should be null
 };
 
 /**
- * Stop polling.
- *
- * If {poll} is false or undefined than no final poll cycle will occur and changes can be lost. If
- * it's true then a final poll cycle will occur immediately and synchronously.
+ * Loop once with `setTimeout`
+ * @method
+ * @param {boolean} firstTime Wait before polling
+ */
+ve.ce.SurfaceObserver.prototype.timerLoop = function ( firstTime ) {
+	if ( this.timeoutId ) {
+		// in case we're not running from setTimeout
+		clearTimeout( this.timeoutId );
+		this.timeoutId = null;
+	}
+	if ( !firstTime && !this.locked ) {
+		this.pollOnce();
+	}
+	// only reach this point if pollOnce does not throw an exception
+	this.timeoutId = setTimeout( ve.bind( this.timerLoop, this ), this.frequency );
+};
+
+/**
+ * Stop polling
  *
  * @method
- * @param {boolean} poll Poll one last time before stopping future polling
- * @param {boolean} emitContentChanges Allow contentChange to be emitted
  */
-ve.ce.SurfaceObserver.prototype.stop = function ( poll, emitContentChanges ) {
+ve.ce.SurfaceObserver.prototype.stopTimerLoop = function () {
 	if ( this.polling === true ) {
-		if ( poll === true ) {
-			this.poll( false, emitContentChanges );
-		}
 		this.polling = false;
 		clearTimeout( this.timeoutId );
 		this.timeoutId = null;
@@ -118,40 +125,45 @@ ve.ce.SurfaceObserver.prototype.stop = function ( poll, emitContentChanges ) {
 /**
  * Poll for changes.
  *
- * If `postpone` is false or undefined then polling will occcur immediately.
- *
  * TODO: fixing selection in certain cases, handling selection across multiple nodes in Firefox
  *
- * FIXME: Does not work well (selectionChange is not emited) when cursor is placed inside a slug
+ * FIXME: Does not work well (selectionChange is not emitted) when cursor is placed inside a slug
  * with a mouse.
  *
  * @method
- * @param {boolean} postpone Append the poll action to the end of the event queue
- * @param {boolean} emitContentChanges Allow contentChange to be emitted
  * @emits contentChange
  * @emits selectionChange
  */
-ve.ce.SurfaceObserver.prototype.poll = function ( postpone, emitContentChanges ) {
+ve.ce.SurfaceObserver.prototype.pollOnce = function () {
+	this.pollOnceInternal( true );
+};
+
+/**
+ * Poll to update SurfaceObserver, but don't emit change events
+ *
+ * @method
+ */
+
+ve.ce.SurfaceObserver.prototype.pollOnceNoEmit = function () {
+	this.pollOnceInternal( false );
+};
+
+/**
+ * Poll for changes.
+ *
+ * TODO: fixing selection in certain cases, handling selection across multiple nodes in Firefox
+ *
+ * FIXME: Does not work well (selectionChange is not emitted) when cursor is placed inside a slug
+ * with a mouse.
+ *
+ * @method
+ * @private
+ * @param {boolean} emitChanges Emit change events if selection changed
+ * @emits contentChange
+ * @emits selectionChange
+ */
+ve.ce.SurfaceObserver.prototype.pollOnceInternal = function ( emitChanges ) {
 	var $nodeOrSlug, node, text, hash, range, rangyRange;
-
-	if ( this.polling === false ) {
-		return;
-	}
-
-	if ( this.timeoutId !== null ) {
-		clearTimeout( this.timeoutId );
-		this.timeoutId = null;
-	}
-
-	if ( postpone === true ) {
-		this.timeoutId = setTimeout(
-			ve.bind( this.poll, this ),
-			0,
-			false,
-			emitContentChanges
-		);
-		return;
-	}
 
 	range = this.range;
 	node = this.node;
@@ -183,11 +195,12 @@ ve.ce.SurfaceObserver.prototype.poll = function ( postpone, emitContentChanges )
 		text = ve.ce.getDomText( node.$[0] );
 		hash = ve.ce.getDomHash( node.$[0] );
 		if ( this.text !== text || this.hash !== hash ) {
-			if ( emitContentChanges ) {
+			if ( emitChanges ) {
 				this.emit(
 					'contentChange',
 					node,
-					{ 'text': this.text, 'hash': this.hash, 'range': this.range },
+					{ 'text': this.text, 'hash': this.hash,
+						'range': this.range },
 					{ 'text': text, 'hash': hash, 'range': range }
 				);
 			}
@@ -198,18 +211,13 @@ ve.ce.SurfaceObserver.prototype.poll = function ( postpone, emitContentChanges )
 
 	// Only emit selectionChange event if there's a meaningful range difference
 	if ( ( this.range && range ) ? !this.range.equals( range ) : ( this.range !== range ) ) {
-		this.emit(
-			'selectionChange',
-			this.range,
-			range
-		);
+		if ( emitChanges ) {
+			this.emit(
+				'selectionChange',
+				this.range,
+				range
+			);
+		}
 		this.range = range;
 	}
-
-	this.timeoutId = setTimeout(
-		ve.bind( this.poll, this ),
-		this.frequency,
-		false,
-		emitContentChanges
-	);
 };

@@ -45,6 +45,8 @@ ve.mixinClass( ve.ui.MWMetaDialog, ve.ui.PagedDialog );
 
 /* Static Properties */
 
+ve.ui.MWMetaDialog.static.name = 'meta';
+
 ve.ui.MWMetaDialog.static.titleMessage = 'visualeditor-dialog-meta-title';
 
 ve.ui.MWMetaDialog.static.icon = 'settings';
@@ -142,10 +144,20 @@ ve.ui.MWMetaDialog.prototype.initialize = function () {
 			);
 
 		for ( i = 0; i < languageslength; i++ ) {
+			languages[i].safelang = languages[i].lang;
+			languages[i].dir = 'auto';
+			if ( $.uls ) {
+				// site codes don't always represent official language codes
+				// using real language code instead of a dummy ('redirect' in ULS' terminology)
+				languages[i].safelang = $.uls.data.isRedirect( languages[i].lang ) || languages[i].lang;
+				languages[i].dir = $.uls.data.getDir( languages[i].safelang );
+			}
 			$languagesTable
 				.append( this.frame.$$( '<tr>' )
 					.append( this.frame.$$( '<td>' ).append( languages[i].lang ) )
-					.append( this.frame.$$( '<td>' ).append( languages[i].title ) )
+					.append( this.frame.$$( '<td>' ).append( languages[i].title )
+						.attr( 'lang', languages[i].safelang )
+						.attr( 'dir', languages[i].dir ) )
 				);
 		}
 
@@ -446,4 +458,4 @@ ve.ui.MWMetaDialog.prototype.insertMetaListItem = function ( metaBase ) {
 
 /* Registration */
 
-ve.ui.dialogFactory.register( 'mwMeta', ve.ui.MWMetaDialog );
+ve.ui.dialogFactory.register( ve.ui.MWMetaDialog );

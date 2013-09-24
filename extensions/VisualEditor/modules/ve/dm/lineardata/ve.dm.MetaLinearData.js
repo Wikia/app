@@ -27,25 +27,37 @@ ve.inheritClass( ve.dm.MetaLinearData, ve.dm.LinearData );
 /* Static Methods */
 
 /**
- * Takes an array of meta linear data arrays and collapses them into a single array.
+ * Takes an array of meta linear data arrays and collapses them into a single array
+ * wrapped in an array.
  *
  * Undefined values will be discarded e.g.
  * [ [ metaItem1, metaItem2 ], undefined, [ metaItem3 ], undefined ]
  * =>
  * [ [ metaItem1, metaItem2, metaItem3 ] ]
  *
+ * If all values are undefined, the result is undefined wrapped in an array:
+ * [ undefined, undefined, ... ]
+ * =>
+ * [ undefined ]
+ *
+ * But if some of the values are empty arrays, the result is an empty array wrapped in an array:
+ * [ undefined, [], undefined, undefined, [] ]
+ * =>
+ * [ [] ]
+ *
  * @static
  * @param {Array} data Meta linear data arrays
  * @returns {Array} Merged data
  */
 ve.dm.MetaLinearData.static.merge = function ( data ) {
-	var i, merged = [];
+	var i, merged = [], allUndefined = true;
 	for ( i = 0; i < data.length; i++ ) {
 		if ( data[i] !== undefined ) {
+			allUndefined = false;
 			merged = merged.concat( data[i] );
 		}
 	}
-	return [ merged ];
+	return allUndefined ? [ undefined ] : [ merged ];
 };
 
 /* Methods */

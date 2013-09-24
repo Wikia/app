@@ -80,98 +80,183 @@ ve.mixinClass( ve.dm.MetaList, ve.EventEmitter );
  * @emits remove
  */
 ve.dm.MetaList.prototype.onTransact = function ( tx, reversed ) {
-	var i, j, k, ilen, jlen, klen, ins, rm, retain, itemIndex, item,
-		offset = 0, newOffset = 0, index = 0, ops = tx.getOperations(),
-		insertedItems = [], removedItems = [];
-	// Look for replaceMetadata operations in the transaction and insert/remove items as appropriate
-	// This requires we also inspect retain, replace and replaceMetadata operations in order to
-	// track the offset and index. We track the pre-transaction offset, we need to do that in
-	// order to remove items correctly. This also means inserted items are initially at the wrong
-	// offset, but we translate it later.
+	var i, ilen, j, jlen, k, klen, item, ins, rm, insMeta, rmMeta,
+		numItems = this.items.length,
+		itemIndex = 0, // Current index into this.items
+		offset = 0, // Current pre-transaction offset
+		newOffset = 0, // Current post-transaction offset
+		index = 0, // Current pre-transaction index
+		newIndex = 0, // Current post-transaction index
+		// Array of items that should appear in this.items after we're done. This includes newly
+		// inserted items as well as existing items that aren't being removed.
+		// [ { item: ve.dm.MetaItem, offset: offset to move to, index: index to move to } ]
+		newItems = [],
+		removedItems = [], // Array of items that should be removed from this.items
+		events = [], // Array of events that we should emit when we're done
+		ops = tx.getOperations();
+
+	// Go through the transaction operations and plan out where to add, remove and move items. We
+	// don't actually touch this.items yet, otherwise we 1) get it out of order which breaks
+	// findItem() and 2) lose information about what the pre-transaction state of this.items was.
 	for ( i = 0, ilen = ops.length; i < ilen; i++ ) {
 		switch ( ops[i].type ) {
 			case 'retain':
+				// Advance itemIndex through the retain and update items we encounter along the way
+				for ( ;
+					itemIndex < numItems && this.items[itemIndex].offset < offset + ops[i].length;
+					itemIndex++
+				) {
+					// Plan to move this item to the post-transaction offset and index
+					newItems.push( {
+						'item': this.items[itemIndex],
+						'offset': this.items[itemIndex].offset + newOffset - offset,
+						'index': this.items[itemIndex].offset === offset ?
+							// Adjust index for insertions or removals that happened at this offset
+							newIndex - index + this.items[itemIndex].index :
+							// Offset is retained over completely, don't adjust index
+							this.items[itemIndex].index } );
+				}
+
 				offset += ops[i].length;
 				newOffset += ops[i].length;
 				index = 0;
+				newIndex = 0;
 				break;
+
+			case 'retainMetadata':
+				// Advance itemIndex through the retain and update items we encounter along the way
+				for ( ;
+					itemIndex < numItems && this.items[itemIndex].offset === offset &&
+						this.items[itemIndex].index < index + ops[i].length;
+					itemIndex++
+				) {
+					newItems.push( {
+						'item': this.items[itemIndex],
+						'offset': newOffset,
+						'index': this.items[itemIndex].index + newIndex - index
+					} );
+				}
+
+				index += ops[i].length;
+				newIndex += ops[i].length;
+				break;
+
 			case 'replace':
-				// if we have metadata replace info we can calculate the new
-				// offset and index directly
-				ins = reversed ? ops[i].removeMetadata : ops[i].insertMetadata;
-				rm = reversed ? ops[i].insertMetadata : ops[i].removeMetadata;
-				retain = ops[i].retainMetadata || 0;
-				if ( rm !== undefined ) {
-					// find the first itemIndex - the rest should be in order after it
-					for ( j = 0, jlen = rm.length; j < jlen; j++ ) {
-						if ( rm[j] !== undefined ) {
-							itemIndex = this.findItem( offset + retain + j, 0 );
-							break;
-						}
+				ins = reversed ? ops[i].remove : ops[i].insert;
+				rm = reversed ? ops[i].insert : ops[i].remove;
+				if ( ops[i].removeMetadata !== undefined ) {
+					insMeta = reversed ? ops[i].removeMetadata : ops[i].insertMetadata;
+					rmMeta = reversed ? ops[i].insertMetadata : ops[i].removeMetadata;
+
+					// Process removed metadata
+					for ( ;
+						itemIndex < numItems &&
+							this.items[itemIndex].offset < offset + rmMeta.length;
+						itemIndex++
+					) {
+						removedItems.push( this.items[itemIndex] );
 					}
-					// iterate through all the inserted metaItems
-					for ( j = 0, jlen = ins.length; j < jlen; j++ ) {
-						item = ins[j];
-						if ( item !== undefined ) {
-							for ( k = 0, klen = item.length; k < klen; k++ ) {
-								// Queue up the move for later so we don't break the metaItem ordering
-								this.items[itemIndex].setMove( newOffset + retain + j, k );
-								itemIndex++;
+
+					// Process inserted metadata
+					for ( j = 0, jlen = insMeta.length; j < jlen; j++ ) {
+						if ( insMeta[j] ) {
+							for ( k = 0, klen = insMeta[j].length; k < klen; k++ ) {
+								item = ve.dm.metaItemFactory.createFromElement( insMeta[j][k] );
+								newItems.push( {
+									'item': item,
+									'offset': newOffset + j,
+									'index': k
+								} );
 							}
 						}
 					}
+				} else {
+					// No metadata handling specified, which means we just have to deal with offset
+					// adjustments, same as a retain
+					for ( ;
+							itemIndex < numItems &&
+								this.items[itemIndex].offset < offset + rm.length;
+							itemIndex++
+					) {
+						newItems.push( {
+							'item': this.items[itemIndex],
+							'offset': this.items[itemIndex].offset + newOffset - offset,
+							'index': this.items[itemIndex].index
+						} );
+					}
 				}
-				offset += reversed ? ops[i].insert.length : ops[i].remove.length;
-				newOffset += reversed ? ops[i].remove.length : ops[i].insert.length;
-				index = 0;
+
+				offset += rm.length;
+				newOffset += ins.length;
 				break;
-			case 'retainMetadata':
-				index += ops[i].length;
-				break;
+
 			case 'replaceMetadata':
-				ins = reversed ? ops[i].remove : ops[i].insert;
-				rm = reversed ? ops[i].insert : ops[i].remove;
-				for ( j = 0, jlen = rm.length; j < jlen; j++ ) {
-					item = this.deleteRemovedItem( offset, index + j );
-					removedItems.push( { 'item': item, 'offset': offset, 'index': index } );
+				insMeta = reversed ? ops[i].remove : ops[i].insert;
+				rmMeta = reversed ? ops[i].insert : ops[i].remove;
+
+				// Process removed items
+				for ( ;
+					itemIndex < numItems && this.items[itemIndex].offset === offset &&
+						this.items[itemIndex].index < index + rmMeta.length;
+					itemIndex++
+				) {
+					removedItems.push( this.items[itemIndex] );
 				}
-				for ( j = 0, jlen = ins.length; j < jlen; j++ ) {
-					item = ve.dm.metaItemFactory.createFromElement( ins[j] );
-					// offset and index are pre-transaction, but we'll fix them later
-					this.addInsertedItem( offset, index + j, item );
-					insertedItems.push( { 'item': item } );
+
+				// Process inserted items
+				for ( j = 0, jlen = insMeta.length; j < jlen; j++ ) {
+					item = ve.dm.metaItemFactory.createFromElement( insMeta[j] );
+					newItems.push( { 'item': item, 'offset': newOffset, 'index': newIndex + j } );
 				}
-				index += rm.length;
+
+				index += rmMeta.length;
+				newIndex += insMeta.length;
 				break;
 		}
 	}
-
-	// Translate the offsets of all items, and reindex them too
-	// Reindexing is simple because the above ensures the items are already in the right order
-	offset = -1;
-	index = 0;
-	for ( i = 0, ilen = this.items.length; i < ilen; i++ ) {
-		if ( this.items[i].isMovePending() ) {
-			// move was calculated from metadata replace info, just apply it
-			this.items[i].applyMove();
-		} else {
-			// otherwise calculate the new offset from the transaction
-			this.items[i].setOffset( tx.translateOffset( this.items[i].getOffset(), reversed ) );
-			if ( this.items[i].getOffset() === offset ) {
-				index++;
-			} else {
-				index = 0;
-			}
-			this.items[i].setIndex( index );
-		}
-		offset = this.items[i].getOffset();
+	// Update the remaining items that the transaction didn't touch or retain over
+	for ( ; itemIndex < numItems; itemIndex++ ) {
+		newItems.push( {
+			'item': this.items[itemIndex],
+			'offset': this.items[itemIndex].offset + newOffset - offset,
+			'index': this.items[itemIndex].offset === offset ?
+				newIndex - index + this.items[itemIndex].index :
+				this.items[itemIndex].index
+		} );
 	}
 
-	for ( i = 0, ilen = insertedItems.length; i < ilen; i++ ) {
-		this.emit( 'insert', insertedItems[i].item );
-	}
+	// Process the changes, and queue up events. We emit the events at the end when the MetaList
+	// is back in a consistent state
+
+	// Remove removed items
 	for ( i = 0, ilen = removedItems.length; i < ilen; i++ ) {
-		this.emit( 'remove', removedItems[i].item, removedItems[i].offset, removedItems[i].index );
+		this.deleteRemovedItem( removedItems[i].offset, removedItems[i].index );
+		events.push( [
+			'remove', removedItems[i].item, removedItems[i].offset, removedItems[i].index
+		] );
+	}
+
+	// Move moved items (these appear as inserted items that are already attached)
+	for ( i = 0, ilen = newItems.length; i < ilen; i++ ) {
+		if ( newItems[i].item.isAttached() ) {
+			if ( newItems[i].offset !== newItems[i].item.offset || newItems[i].index !== newItems[i].item.index ) {
+				this.deleteRemovedItem( newItems[i].item.offset, newItems[i].item.index );
+				this.addInsertedItem( newItems[i].offset, newItems[i].index, newItems[i].item );
+			}
+		}
+	}
+
+	// Insert new items
+	for ( i = 0, ilen = newItems.length; i < ilen; i++ ) {
+		if ( !newItems[i].item.isAttached() ) {
+			this.addInsertedItem( newItems[i].offset, newItems[i].index, newItems[i].item );
+			events.push( [ 'insert', newItems[i].item ] );
+		}
+	}
+
+	// Emit events
+	for ( i = 0, ilen = events.length; i < ilen; i++ ) {
+		this.emit.apply( this, events[i] );
 	}
 };
 

@@ -21,7 +21,7 @@ ve.dm.Surface = function VeDmSurface( doc ) {
 	// Properties
 	this.documentModel = doc;
 	this.metaList = new ve.dm.MetaList( this );
-	this.selection = new ve.Range( 0, 0 );
+	this.selection = new ve.Range( 1, 1 );
 	this.selectedNodes = {};
 	this.smallStack = [];
 	this.bigStack = [];

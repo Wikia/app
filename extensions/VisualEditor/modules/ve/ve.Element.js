@@ -107,7 +107,6 @@ ve.Element.getWindow = function ( context ) {
 	return doc.parentWindow || doc.defaultView;
 };
 
-
 /**
  * Get the offset between two frames.
  *
@@ -167,6 +166,169 @@ ve.Element.getRelativePosition = function ( $from, $to ) {
 	return { 'top': from.top - to.top, 'left': from.left - to.left };
 };
 
+/**
+ * Get element border sizes.
+ *
+ * @param {HTMLElement} el Element to measure
+ * @return {Object} Dimensions object with `top`, `left`, `bottom` and `right` properties
+ */
+ve.Element.getBorders = function ( el ) {
+	var doc = el.ownerDocument,
+		win = doc.parentWindow || doc.defaultView,
+		style = win && win.getComputedStyle ?
+			win.getComputedStyle( el, null ) : el.currentStyle,
+		loc = win && win.getComputedStyle ? true : false,
+		$el = $( el ),
+		top = parseFloat( loc ? style.borderTopWidth : $el.css( 'borderTopWidth' ) ) || 0,
+		left = parseFloat( loc ? style.borderLeftWidth : $el.css( 'borderLeftWidth' ) ) || 0,
+		bottom = parseFloat( loc ? style.borderBottomWidth : $el.css( 'borderBottomWidth' ) ) || 0,
+		right = parseFloat( loc ? style.borderRightWidth : $el.css( 'borderRightWidth' ) ) || 0;
+
+	return {
+		'top': Math.round( top ),
+		'left': Math.round( left ),
+		'bottom': Math.round( bottom ),
+		'right': Math.round( right )
+	};
+};
+
+/**
+ * Get dimensions of an element or window.
+ *
+ * @param {HTMLElement|Window} el Element to measure
+ * @return {Object} Dimensions object with `borders`, `scroll`, `scrollbar` and `rect` properties
+ */
+ve.Element.getDimensions = function ( el ) {
+	var $el, $win,
+		doc = el.ownerDocument || el.document,
+		win = doc.parentWindow || doc.defaultView;
+
+	if ( win === el || el === doc.documentElement ) {
+		$win = $( win );
+		return {
+			'borders': { 'top': 0, 'left': 0, 'bottom': 0, 'right': 0 },
+			'scroll': {
+				'top': $win.scrollTop(),
+				'left': $win.scrollLeft()
+			},
+			'scrollbar': { 'right': 0, 'bottom': 0 },
+			'rect': {
+				'top': 0,
+				'left': 0,
+				'bottom': $win.innerHeight(),
+				'right': $win.innerWidth()
+			}
+		};
+	} else {
+		$el = $( el );
+		return {
+			'borders': this.getBorders( el ),
+			'scroll': {
+				'top': $el.scrollTop(),
+				'left': $el.scrollLeft()
+			},
+			'scrollbar': {
+				'right': $el.innerWidth() - el.clientWidth,
+				'bottom': $el.innerHeight() - el.clientHeight
+			},
+			'rect': el.getBoundingClientRect()
+		};
+	}
+};
+
+/**
+ * Get closest scrollable container.
+ *
+ * Traverses up until either a scrollable element or the root is reached, in which case the window
+ * will be returned.
+ *
+ * @static
+ * @param {HTMLElement} el Element to find scrollable container for
+ * @param {string} [dimension] Dimension of scrolling to look for; `x`, `y` or omit for either
+ * @return {HTMLElement|Window} Closest scrollable container
+ */
+ve.Element.getClosestScrollableContainer = function ( el, dimension ) {
+	var i, val,
+		props = [ 'overflow' ],
+		$parent = $( el ).parent();
+
+	if ( dimension === 'x' || dimension === 'y' ) {
+		props.push( 'overflow-' + dimension );
+	}
+
+	while ( $parent ) {
+		if ( $parent[0] === el.ownerDocument.documentElement ) {
+			break;
+		}
+		i = props.length;
+		while ( i-- ) {
+			val = $parent.css( props[i] );
+			if ( val === 'auto' || val === 'scroll' ) {
+				return $parent[0];
+			}
+		}
+		$parent = $parent.parent();
+	}
+	return this.getWindow( el );
+};
+
+/**
+ * Scroll element into view
+ *
+ * @static
+ * @param {HTMLElement} el Element to scroll into view
+ * @param {Object} [config] Configuration config
+ * @param {string} [config.duration] jQuery animation duration value
+ * @param {string} [config.direction] Scroll in only one direction, e.g. 'x' or 'y', omit
+ *  to scroll in both directions
+ * @param {Function} [config.complete] Function to call when scrolling completes
+ */
+ve.Element.scrollIntoView = function ( el, config ) {
+	// Configuration initialization
+	config = config || {};
+
+	var anim = {},
+		callback = typeof config.complete === 'function' && config.complete,
+		sc = this.getClosestScrollableContainer( el, config.direction ),
+		$sc = $( sc ),
+		eld = this.getDimensions( el ),
+		scd = this.getDimensions( sc ),
+		rel = {
+			'top': eld.rect.top - ( scd.rect.top + scd.borders.top ),
+			'bottom': scd.rect.bottom - scd.borders.bottom - scd.scrollbar.bottom - eld.rect.bottom,
+			'left': eld.rect.left - ( scd.rect.left + scd.borders.left ),
+			'right': scd.rect.right - scd.borders.right - scd.scrollbar.right - eld.rect.right
+		};
+
+	if ( !config.direction || config.direction === 'y' ) {
+		if ( rel.top < 0 ) {
+			anim.scrollTop = scd.scroll.top + rel.top;
+		} else if ( rel.top > 0 && rel.bottom < 0 ) {
+			anim.scrollTop = scd.scroll.top + Math.min( rel.top, -rel.bottom );
+		}
+	}
+	if ( !config.direction || config.direction === 'x' ) {
+		if ( rel.left < 0 ) {
+			anim.scrollLeft = scd.scroll.left + rel.left;
+		} else if ( rel.left > 0 && rel.right < 0 ) {
+			anim.scrollLeft = scd.scroll.left + Math.min( rel.left, -rel.right );
+		}
+	}
+	if ( !ve.isEmptyObject( anim ) ) {
+		$sc.stop( true ).animate( anim, config.duration || 'fast' );
+		if ( callback ) {
+			$sc.queue( function ( next ) {
+				callback();
+				next();
+			} );
+		}
+	} else {
+		if ( callback ) {
+			callback();
+		}
+	}
+};
+
 /* Methods */
 
 /**
@@ -196,4 +358,24 @@ ve.Element.prototype.getElementDocument = function () {
  */
 ve.Element.prototype.getElementWindow = function () {
 	return ve.Element.getWindow( this.$ );
+};
+
+/**
+ * Get closest scrollable container.
+ *
+ * @method
+ * @see #static-method-getClosestScrollableContainer
+ */
+ve.Element.prototype.getClosestScrollableElementContainer = function () {
+	return ve.Element.getClosestScrollableContainer( this.$[0] );
+};
+
+/**
+ * Scroll element into view
+ *
+ * @method
+ * @see #static-method-scrollIntoView
+ */
+ve.Element.prototype.scrollElementIntoView = function ( config ) {
+	return ve.Element.scrollIntoView( this.$[0], config );
 };

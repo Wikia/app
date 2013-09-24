@@ -26,6 +26,8 @@ ve.inheritClass( ve.ui.MWAlienExtensionInspector, ve.ui.MWExtensionInspector );
 
 /* Static properties */
 
+ve.ui.MWAlienExtensionInspector.static.name = 'alienExtension';
+
 ve.ui.MWAlienExtensionInspector.static.icon = 'alienextension';
 
 ve.ui.MWAlienExtensionInspector.static.nodeView = ve.ce.MWAlienExtensionNode;
@@ -48,4 +50,4 @@ ve.ui.MWAlienExtensionInspector.prototype.getTitle = function () {
 
 /* Registration */
 
-ve.ui.inspectorFactory.register( 'mwAlienExtensionInspector', ve.ui.MWAlienExtensionInspector );
+ve.ui.inspectorFactory.register( ve.ui.MWAlienExtensionInspector );

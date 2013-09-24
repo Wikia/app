@@ -9,126 +9,112 @@
  * UserInterface tool factory.
  *
  * @class
- * @extends ve.Factory
+ * @extends ve.NamedClassFactory
  * @constructor
  */
 ve.ui.ToolFactory = function VeUiToolFactory() {
 	// Parent constructor
-	ve.Factory.call( this );
-
-	// Properties
-	this.tools = {};
+	ve.NamedClassFactory.call( this );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.ToolFactory, ve.Factory );
+ve.inheritClass( ve.ui.ToolFactory, ve.NamedClassFactory );
 
 /* Methods */
 
-/**
- * @inheritdoc
- */
-ve.ui.ToolFactory.prototype.register = function ( name, constructor ) {
-	var parts = name.split( '/' ),
-		baseName = parts.slice( 0, 2 ).join( '/' );
-
-	if (
-		// First entry
-		!this.tools[baseName] ||
-		// Overriding entry
-		constructor.prototype instanceof this.registry[this.tools[baseName].name]
-	) {
-		this.tools[baseName] = {
-			'name': name,
-			'type': parts[0],
-			'id': parts[1],
-			'ext': parts[2]
-		};
-	}
-
-	ve.Factory.prototype.register.call( this, name, constructor );
-};
-
 ve.ui.ToolFactory.prototype.getTools = function ( include, exclude, promote, demote ) {
-	var i, len, tool, parts, baseName,
-		tools = {},
-		promoted = [],
-		demoted = [],
-		auto = [];
+	var i, len, included, promoted, demoted,
+		auto = [],
+		used = {};
 
-	// Collect included tools
-	for ( i = 0, len = include.length; i < len; i++ ) {
-		parts = include[i].split( '/' );
-		for ( baseName in this.tools ) {
-			tool = this.tools[baseName];
-			if (
-				// Types match
-				parts[0] === tool.type &&
-				// Either no ID was specified and tool can be automatically added or IDs match
-				( ( !parts[1] && this.registry[tool.name].static.autoAdd ) || parts[1] === tool.id )
-			) {
-				tools[baseName] = tool;
-			}
-
-		}
-	}
-
-	// Remove excluded tools
-	for ( i = 0, len = exclude.length; i < len; i++ ) {
-		parts = exclude[i].split( '/' );
-		for ( baseName in tools ) {
-			tool = tools[baseName];
-			if (
-				// Types match
-				parts[0] === tool.type &&
-				// Either no ID was specified or IDs match
-				( !parts[1] || parts[1] === tool.id )
-			) {
-				delete tools[baseName];
-			}
-		}
-	}
+	// Collect included and not excluded tools
+	included = ve.simpleArrayDifference( this.extract( include ), this.extract( exclude ) );
 
 	// Promotion
-	for ( i = 0, len = promote.length; i < len; i++ ) {
-		parts = promote[i].split( '/' );
-		for ( baseName in tools ) {
-			tool = tools[baseName];
-			if (
-				// Types match
-				parts[0] === tool.type &&
-				// Either no ID was specified or IDs match
-				( !parts[1] || parts[1] === tool.id )
-			) {
-				promoted.push( tool.name );
-				delete tools[baseName];
-			}
+	promoted = this.extract( promote, used );
+	demoted = this.extract( demote, used );
+
+	// Auto
+	for ( i = 0, len = included.length; i < len; i++ ) {
+		if ( !used[included[i]] ) {
+			auto.push( included[i] );
 		}
 	}
 
-	// Demotion
-	for ( i = 0, len = demote.length; i < len; i++ ) {
-		parts = demote[i].split( '/' );
-		for ( baseName in tools ) {
-			tool = tools[baseName];
+	return promoted.concat( auto ).concat( demoted );
+};
+
+/**
+ * Get a flat list of names from a list of names or groups.
+ *
+ * Tools can be specified in the following ways:
+ *  - A specific tool: `{ 'name': 'tool-name' }` or `'tool-name'`
+ *  - All tools in a group: `{ 'group': 'group-name' }`
+ *  - All tools: `'*'`
+ *
+ * @private
+ * @param {Array|string} collection List of tools
+ * @param {Object} [used] Object with names that should be skipped as properties; extracted
+ *   names will be added as properties
+ * @return {string[]} List of extracted names
+ */
+ve.ui.ToolFactory.prototype.extract = function ( collection, used ) {
+	var i, len, item, name, tool,
+		names = [];
+
+	if ( collection === '*' ) {
+		for ( name in this.registry ) {
+			tool = this.registry[name];
 			if (
-				// Types match
-				parts[0] === tool.type &&
-				// Either no ID was specified or IDs match
-				( !parts[1] || parts[1] === tool.id )
+				// Only add tools by group name when auto-add is enabled
+				tool.static.autoAdd &&
+				// Exclude already used tools
+				( !used || !used[name] )
 			) {
-				demoted.push( tool.name );
-				delete tools[baseName];
+				names.push( name );
+				if ( used ) {
+					used[name] = true;
+				}
+			}
+		}
+	} else if ( ve.isArray( collection ) ) {
+		for ( i = 0, len = collection.length; i < len; i++ ) {
+			item = collection[i];
+			// Allow plain strings as shorthand for named tools
+			if ( typeof item === 'string' ) {
+				item = { 'name': item };
+			}
+			if ( ve.isPlainObject( item ) ) {
+				if ( item.group ) {
+					for ( name in this.registry ) {
+						tool = this.registry[name];
+						if (
+							// Include tools with matching group
+							tool.static.group === item.group &&
+							// Only add tools by group name when auto-add is enabled
+							tool.static.autoAdd &&
+							// Exclude already used tools
+							( !used || !used[name] )
+						) {
+							names.push( name );
+							if ( used ) {
+								used[name] = true;
+							}
+						}
+					}
+				}
+				// Include tools with matching name and exclude already used tools
+				else if ( item.name && ( !used || !used[item.name] ) ) {
+					names.push( item.name );
+					if ( used ) {
+						used[item.name] = true;
+					}
+				}
 			}
 		}
 	}
-
-	for ( baseName in tools ) {
-		auto.push( tools[baseName].name );
-	}
-
-	return promoted.concat( auto.sort() ).concat( demoted );
+	return names;
 };
 
 /**

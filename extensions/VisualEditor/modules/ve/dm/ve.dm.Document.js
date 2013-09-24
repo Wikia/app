@@ -334,37 +334,6 @@ ve.dm.Document.prototype.getDocumentSlice = function ( rangeOrNode ) {
 };
 
 /**
- * Get the metadata replace operation required to keep data & metadata in sync after a splice
- *
- * @method
- * @param {number} offset Data offset to start at
- * @param {number} remove Number of elements being removed
- * @param {Array} insert Element data being inserted
- * @returns {Object} Metadata replace operation to keep data & metadata in sync
- */
-ve.dm.Document.prototype.getMetadataReplace = function ( offset, remove, insert ) {
-	var removeMetadata, insertMetadata, replace = {};
-	if ( remove > insert.length ) {
-		// if we are removing more than we are inserting we need to collapse the excess metadata
-		removeMetadata = this.getMetadata( new ve.Range( offset + insert.length, offset + remove + 1 ) );
-		// check removeMetadata is non-empty
-		if ( !ve.compare( removeMetadata, new Array( removeMetadata.length ) ) ) {
-			insertMetadata = ve.dm.MetaLinearData.static.merge( removeMetadata );
-			replace.retain = insert.length;
-			replace.remove = removeMetadata;
-			replace.insert = insertMetadata;
-		}
-	}
-	// if insert.length === remove metadata can just stay where it is
-	if ( insert.length > remove ) {
-		// if we are inserting more than we are removing then we need to pad out with undefineds
-		replace.retain = remove;
-		replace.insert = new Array( insert.length - remove );
-	}
-	return replace;
-};
-
-/**
  * Splice metadata into and/or out of the linear model.
  *
  * `this.metadata` will be updated accordingly.

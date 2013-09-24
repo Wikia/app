@@ -96,7 +96,7 @@ ve.ui.MWParameterSearchWidget.prototype.buildIndex = function () {
 		description = spec.getParameterDescription( name );
 
 		this.index.push( {
-			'text': [ name, aliases.join( ' ' ), description ].join( ' ' ),
+			'text': [ name, label, aliases.join( ' ' ), description ].join( ' ' ),
 			'name': name,
 			'label': label,
 			'aliases': aliases,

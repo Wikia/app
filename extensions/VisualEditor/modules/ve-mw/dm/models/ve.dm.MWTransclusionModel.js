@@ -59,6 +59,7 @@ ve.dm.MWTransclusionModel.prototype.load = function ( data ) {
 	var i, len, part;
 
 	// Convert single part format to multi-part format
+	// Parsoid doesn't use this format any more, but we accept it for backwards compatibility
 	if ( data.params && data.target ) {
 		data = { 'parts': [ { 'template': data } ] };
 	}
@@ -242,11 +243,6 @@ ve.dm.MWTransclusionModel.prototype.getPlainObject = function () {
 
 	if ( obj.parts.length === 0 ) {
 		return null;
-	}
-
-	// Use single-part format when possible
-	if ( obj.parts.length === 1 ) {
-		obj = obj.parts[0].template;
 	}
 
 	return obj;

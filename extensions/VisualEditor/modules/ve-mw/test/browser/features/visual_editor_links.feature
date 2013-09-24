@@ -1,4 +1,4 @@
-@ie6-bug  @ie7-bug  @ie8-bug  @ie9-bug @ie10-bug @test2.wikipedia.org @login
+@ie6-bug  @ie7-bug  @ie8-bug  @ie9-bug @ie10-bug @en.wikipedia.beta.wmflabs.org @test2.wikipedia.org @login
 Feature: VisualEditor Links
 
   Background:
@@ -9,7 +9,7 @@ Feature: VisualEditor Links
 
   Scenario: Enter external link
   Given I can see the Link User Inteface
-  When I enter http://www.example.com into Content box
+  When I enter http://www.example.com into link Content box
     And I click the blue text
     And I click < to close Link User Interface
     And I click Save page
@@ -18,7 +18,7 @@ Feature: VisualEditor Links
 
   Scenario: Enter internal link
   Given I can see the Link User Inteface
-  When I enter Main Page into Content box
+  When I enter Main Page into link Content box
     And I click the blue text for Matching Page
     And I click < to close Link User Interface
     And I click Save page
@@ -27,7 +27,7 @@ Feature: VisualEditor Links
 
   Scenario: Enter non-existing link
     Given I can see the Link User Inteface
-    When I enter DoesNotExist into Content box
+    When I enter DoesNotExist into link Content box
     And I click the blue text for New Page
     And I click < to close Link User Interface
     And I click Save page

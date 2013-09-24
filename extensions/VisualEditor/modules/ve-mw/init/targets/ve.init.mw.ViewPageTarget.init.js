@@ -54,8 +54,8 @@
 	conf = mw.config.get( 'wgVisualEditorConfig' );
 	tabMessages = conf.tabMessages;
 	uri = new mw.Uri();
-	// For special pages, no information about page existence is exposed to
-	// mw.config, so we assume it exists TODO: fix this in core.
+	// BUG 49000: For special pages, no information about page existence is
+	// exposed to mw.config (see BUG 53774), so we assume it exists.
 	pageExists = !!mw.config.get( 'wgArticleId' ) || mw.config.get( 'wgNamespaceNumber' ) < 0;
 	viewUri = new mw.Uri( mw.util.wikiGetlink( mw.config.get( 'wgRelevantPageName' ) ) );
 	veEditUri = viewUri.clone().extend( { 'veaction': 'edit' } );
@@ -404,15 +404,21 @@
 	// on this page. See above for why it may be false.
 	mw.libs.ve = init;
 
-	if ( !init.isAvailable ) {
+	if ( init.isAvailable ) {
+		$( 'html' ).addClass( 've-available' );
+	} else {
 		$( 'html' ).addClass( 've-not-available' );
+		// Don't return here because we do want the skin setup to consistently happen
+		// for e.g. "Edit" > "Edit source" even when VE is not available.
 	}
 
 	if ( !userPrefEnabled ) {
+		// However if ve is not available because of user preferences (as opposed
+		// to because of the page, namespace, browser etc.) then we do want to
+		// return early as in that case even transformation of edit source should
+		// not be done.
 		return;
 	}
-
-	$( 'html' ).addClass( 've-available' );
 
 	$( function () {
 		if ( init.isAvailable && isViewPage ) {

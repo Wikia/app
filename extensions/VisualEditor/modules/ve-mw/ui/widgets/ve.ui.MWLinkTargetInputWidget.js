@@ -105,8 +105,9 @@ ve.ui.MWLinkTargetInputWidget.prototype.getLookupMenuItemsFromData = function ( 
 		matchingPages = data,
 		// If not found, run value through mw.Title to avoid treating a match as a
 		// mismatch where normalisation would make them matching (bug 48476)
+		pageExistsExact = ve.indexOf( this.value, matchingPages ) !== -1,
 		pageExists =
-			ve.indexOf( this.value, matchingPages ) !== -1 ||
+			pageExistsExact ||
 			ve.indexOf( new mw.Title( this.value ).getPrefixedText(), matchingPages ) !== -1;
 
 	// External link
@@ -148,6 +149,10 @@ ve.ui.MWLinkTargetInputWidget.prototype.getLookupMenuItemsFromData = function ( 
 			'matchingPages',
 			{ '$$': menu$$, 'label': ve.msg( 'visualeditor-linkinspector-suggest-matching-page' ) }
 		) );
+		// Offer the exact text as a suggestion if the page exists
+		if ( pageExists && !pageExistsExact ) {
+			matchingPages.unshift( this.value );
+		}
 		for ( i = 0, len = matchingPages.length; i < len; i++ ) {
 			items.push( new ve.ui.MenuItemWidget(
 				this.getInternalLinkAnnotationFromTitle( matchingPages[i] ),

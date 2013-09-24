@@ -47,7 +47,9 @@ ve.mixinClass( ve.ce.MWExtensionNode, ve.ce.GeneratedContentNode );
 /** */
 ve.ce.MWExtensionNode.prototype.generateContents = function () {
 	var deferred = $.Deferred(),
-		extensionName = this.getModel().getExtensionName();
+		extensionNode = $( document.createElement( this.getModel().getExtensionName() ) )
+			.attr( this.getModel().getAttribute( 'mw' ).attrs )
+			.text( this.getModel().getAttribute( 'mw' ).body.extsrc );
 
 	$.ajax( {
 		'url': mw.util.wikiScript( 'api' ),
@@ -55,10 +57,7 @@ ve.ce.MWExtensionNode.prototype.generateContents = function () {
 			'action': 'visualeditor',
 			'paction': 'parsefragment',
 			'page': mw.config.get( 'wgRelevantPageName' ),
-			'wikitext':
-				'<' + extensionName + '>' +
-					this.getModel().getAttribute( 'mw' ).body.extsrc +
-				'</' + extensionName + '>',
+			'wikitext': extensionNode[0].outerHTML,
 			'token': mw.user.tokens.get( 'editToken' ),
 			'format': 'json'
 		},

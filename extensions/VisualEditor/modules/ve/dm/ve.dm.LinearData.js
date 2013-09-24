@@ -43,6 +43,7 @@ ve.dm.LinearData.static.getType = function ( item ) {
  * This method assumes that any value that has a type property that's a string is an element object.
  *
  * Element data:
+ *
  *      <heading> a </heading> <paragraph> b c <img></img> </paragraph>
  *     ^         . ^          ^           . . ^     ^     ^            .
  *

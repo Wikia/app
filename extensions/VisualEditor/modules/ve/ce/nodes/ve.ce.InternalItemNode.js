@@ -17,9 +17,6 @@
 ve.ce.InternalItemNode = function VeCeInternalItemNode( model, config ) {
 	// Parent constructor
 	ve.ce.BranchNode.call( this, model, config );
-
-	// TODO: render nothing
-	this.$.hide();
 };
 
 /* Inheritance */
