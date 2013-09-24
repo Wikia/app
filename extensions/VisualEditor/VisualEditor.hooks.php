@@ -180,7 +180,7 @@ class VisualEditorHooks {
 			!$skin->getUser()->getOption( 'visualeditor-enable' ) ||
 			$skin->getUser()->getOption( 'visualeditor-betatempdisable' )
 		) {
-			return;
+			return true;
 		}
 
 		global $wgVisualEditorTabMessages, $wgVisualEditorTabPosition;
