@@ -55,6 +55,18 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	const TOP_ARTICLES_CACHE = 1;
 
 	/**
+	 * Dimensions for hot article image in Top Wiki Articles module
+	 */
+	const HOT_ARTICLE_IMAGE_WIDTH = 300;
+	const HOT_ARTICLE_IMAGE_HEIGHT = 150;
+
+	/**
+	 * Dimensions for hot article image in Top Wiki Articles module in fluid layout
+	 */
+	const HOT_ARTICLE_IMAGE_WIDTH_FLUID = 270;
+	const HOT_ARTICLE_IMAGE_HEIGHT_FLUID = 135;
+
+	/**
 	 * Responsible for instantiating query services based on config.
 	 * @var Wikia\Search\QueryService\Factory
 	 */
@@ -115,12 +127,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			if (! empty( $ids ) ) {
 				$params = [ 'ids' => implode( ',', $ids ), 'height' => 80, 'width' => 80, 'abstract' => 120 ];
 				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
+				$dimensions = $this->getHotArticleImageDimensions();
 				foreach ( $detailResponse['items'] as $id => $item ) {
 					if (! empty( $item['thumbnail'] ) ) {
 						$item['thumbnailSize'] = "small";
 						//get the first one image from imageServing as it needs other size
 						if ( empty( $pages ) ) {
-							$is = new ImageServing( [ $id ], 300, 150 );
+							$is = new ImageServing( [ $id ], $dimensions['width'], $dimensions['height'] );
 							$result = $is->getImages( 1 );
 							if(! empty( $result[ $id ][ 0 ][ 'url' ] ) ) {
 								$item[ 'thumbnail' ] = $result[ $id ][ 0 ][ 'url' ];
@@ -136,6 +149,22 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			}
 		} catch ( Exception $e ) { } // ignoring API exceptions for gracefulness
 		$this->setVal( 'pages', $pages );
+	}
+
+	private function getHotArticleImageDimensions() {
+		if ( BodyController::isGridLayoutEnabled() ) {
+			$dimensions = [
+				'width' => self::HOT_ARTICLE_IMAGE_WIDTH,
+				'height' => self::HOT_ARTICLE_IMAGE_HEIGHT
+			];
+		} else {
+			$dimensions = [
+				'width' => self::HOT_ARTICLE_IMAGE_WIDTH_FLUID,
+				'height' => self::HOT_ARTICLE_IMAGE_HEIGHT_FLUID
+			];
+		}
+
+		return $dimensions;
 	}
 
 	/**
@@ -447,6 +476,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if(! $searchConfig->getInterWiki() ) {
 			$this->setVal( 'advancedSearchBox', $this->sendSelfRequest( 'advancedBox', array( 'config' => $searchConfig ) ) );
 		}
+
+		$isGridLayoutEnabled = BodyController::isGridLayoutEnabled();
+
 		$tabsArgs = array(
 				'config'		=> $searchConfig,
 				'by_category'	=> $this->getVal( 'by_category', false ),
@@ -473,6 +505,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'isMonobook',            $isMonobook );
 		$this->setVal( 'isCorporateWiki',       $this->isCorporateWiki() );
 		$this->setVal( 'wgExtensionsPath',      $this->wg->ExtensionsPath);
+		$this->setVal( 'isGridLayoutEnabled',   $isGridLayoutEnabled);
 		$sanitizedQuery = $searchConfig->getQuery()->getSanitizedQuery();
 		if ( strlen($sanitizedQuery)>0 && in_array( 0, $searchConfig->getNamespaces() ) && !in_array( 6, $searchConfig->getNamespaces() ) ) {
 			$combinedMediaResult = $this->sendSelfRequest( 'combinedMediaSearch',
@@ -491,7 +524,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if (! $searchConfig->getInterWiki() && $wgLanguageCode == 'en'
 			&& !$isMonobook) {
 			$dbname = $this->wg->DBName;
-			$cacheKey = wfMemcKey( __CLASS__, 'WikiaSearch', 'topWikiArticles', $this->wg->CityId, static::TOP_ARTICLES_CACHE );
+			$cacheKey = wfMemcKey(
+				__CLASS__,
+				'WikiaSearch',
+				'topWikiArticles',
+				$this->wg->CityId,
+				static::TOP_ARTICLES_CACHE,
+				$isGridLayoutEnabled
+			);
 			$topWikiArticlesHtml = WikiaDataAccess::cache(
 				$cacheKey,
 				86400 * 5, // 5 days, one business week
