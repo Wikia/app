@@ -8,7 +8,7 @@ class MarketingToolboxModel extends WikiaModel {
 	const FORM_THUMBNAIL_SIZE = 149;
 	const FORM_FIELD_PREFIX = 'MarketingToolbox';
 
-	const CACHE_KEY = 'HubsV2v1.00';
+	const CACHE_KEY = 'HubsV2v1.01';
 	const CACHE_KEY_LAST_PUBLISHED_TIMESTAMP = 'lastPublishedTimestamp';
 
 	const STRTOTIME_MIDNIGHT = '00:00';

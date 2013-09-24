@@ -159,11 +159,11 @@ class WikiaHomePageTest extends WikiaBaseTest {
 				)
 			),
 			array(
-				'testUrl',
+				'testUrl.png',
 				array(
-					WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'testUrl',
-					WikiFactoryHub::CATEGORY_ID_GAMING => 'testUrl',
-					WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'testUrl',
+					WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'testUrl.png/330px-testUrl.png.jpg',
+					WikiFactoryHub::CATEGORY_ID_GAMING => 'testUrl.png/330px-testUrl.png.jpg',
+					WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'testUrl.png/330px-testUrl.png.jpg',
 				)
 			),
 		);
