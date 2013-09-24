@@ -1370,7 +1370,7 @@ var Lightbox = {
 				clickSource = clickSource || VPS.TOUCHSTORM;
 
 				carouselType = "touchStorm";
-				trackingCarouselType = "touchStorm";
+				trackingCarouselType = "touch-storm";
 				break;
 
 			case 'WikiaArticle':
