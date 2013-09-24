@@ -519,21 +519,25 @@ class ConfigTest extends BaseTest {
 		$config 			= new Config;
 		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'defaultNamespaces', 'searchableNamespaces', 'namespacesAsText' ), array() );
 
-		$searchEngineMock
-			->staticExpects	( $this->any() )
-			->method		( 'searchableNamespaces' )
-			->will			( $this->returnValue( array( NS_MAIN, NS_TALK, NS_CATEGORY, NS_FILE, NS_USER ) ) )
-		;
-		$searchEngineMock
-			->staticExpects	( $this->any() )
-			->method		( 'defaultNamespaces' )
-			->will			( $this->returnValue( array( NS_FILE, NS_CATEGORY ) ) )
-		;
-		$searchEngineMock
-			->staticExpects	( $this->any() )
-			->method		( 'namespacesAsText' )
-			->will			( $this->returnValue( 'Article', 'Category' ) )
-		;
+
+        $this->getStaticMethodMock('SearchEngine', 'searchableNamespaces')
+            ->expects   	( $this->any() )
+            ->method		( 'searchableNamespaces' )
+            ->will			( $this->returnValue( array( NS_MAIN, NS_TALK, NS_CATEGORY, NS_FILE, NS_USER ) ) )
+        ;
+
+        $this->getStaticMethodMock('SearchEngine', 'defaultNamespaces')
+            ->expects   	( $this->any() )
+            ->method		( 'defaultNamespaces' )
+            ->will			( $this->returnValue( array( NS_FILE, NS_CATEGORY ) ) )
+        ;
+
+        $this->getStaticMethodMock('SearchEngine', 'namespacesAsText')
+            ->expects   	( $this->any() )
+            ->method		( 'namespacesAsText' )
+            ->will			( $this->returnValue( 'Article', 'Category' ) )
+        ;
+
 
 		$this->mockClass( 'SearchEngine', $searchEngineMock );
 
