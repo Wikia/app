@@ -11,6 +11,44 @@ define( 'wikia.touchstorm', [], function() {
 		init: function() {
 			this.bindEvents();
 		},
+		bindEvents: function() {
+			var that = this;
+
+			this.wrapper.on( 'click', 'img, p', function() {
+				that.handleClick( $( this ) );
+			});
+
+			$( window ).on( 'lightboxOpened', $.proxy( this.setupLightbox, this ) );
+		},
+		/* @desc when a touchstorm video is clicked, load the lightbox
+		 * @return void
+		 */
+		handleClick: function( $elem ) {
+			var that = this,
+				videoKey = this.getKeyFromUrl( $elem.attr( 'url' ) );
+
+			window.LightboxLoader.loadLightbox( videoKey, { parent: that.wrapper, carouselType: 'touchStorm' } );
+		},
+		/* @desc Plug touchstorm into Lightbox
+		 * @return void
+		 */
+		setupLightbox: function() {
+			if( !this.lightboxInited ) {
+				this.getVideoList();
+
+				// Add touchstorm to carousel types
+				window.Lightbox.carouselTypes.splice( 1, 0, 'touchStorm' );
+				window.LightboxLoader.cache.touchStorm = [];
+
+				// Add method for collecting touchstorm thumbs for carousel
+				window.Lightbox.getMediaThumbs.touchStorm = $.proxy( this.getCarouselThumbs, this );
+
+				this.lightboxInited = true;
+			}
+		},
+		/* @desc Get data from touchstorm videos to be sent to getCarouselThumbs
+		 * @return void
+		 */
 		getVideoList: function() {
 			var that = this,
 				videos = [];
@@ -28,39 +66,10 @@ define( 'wikia.touchstorm', [], function() {
 
 			this.videoList = videos;
 		},
-		bindEvents: function() {
-			var that = this;
-
-			this.wrapper.on( 'click', 'img, p', function() {
-				// TODO: maybe use loader() to know when script is loaded and dom is ready?
-				that.handleClick( $( this ) );
-			});
-
-			$( window ).on( 'lightboxOpened', $.proxy( this.setupLightbox, this ) );
-		},
-		handleClick: function( $elem ) {
-			var that = this,
-				videoKey = this.getKeyFromUrl( $elem.attr( 'url' ) );
-
-			window.LightboxLoader.loadLightbox( videoKey, { parent: that.wrapper, carouselType: 'touchStorm' } );
-		},
-		setupLightbox: function() {
-
-			if( !this.lightboxInited ) {
-				this.getVideoList();
-
-				// Add touchstorm to carousel types
-				window.Lightbox.carouselTypes.splice( 1, 0, 'touchStorm' );
-				window.LightboxLoader.cache.touchStorm = [];
-
-				// Add method for collecting touchstorm thumbs for carousel
-				window.Lightbox.getMediaThumbs.touchStorm = $.proxy( this.getCarouselThumbs, this );
-
-				this.lightboxInited = true;
-			}
-		},
+		/* @desc Add another carousel thumb method to Lightbox in order to populate the lightboxcarousel
+		 * @return void
+		 */
 		getCarouselThumbs: function( backfill ) {
-console.log(this);
 			var cached = window.LightboxLoader.cache.touchStorm,
 				thumbArr = [],
 				playButton = window.Lightbox.thumbPlayButton,
@@ -70,41 +79,44 @@ console.log(this);
 				key,
 				title;
 
-			if(cached.length) {
+			if( cached.length ) {
 				thumbArr = cached;
 			} else {
 
-				for(i = 0, arrLength = videoIds.length; i < arrLength; i++) {
+				for( i = 0, arrLength = videoIds.length; i < arrLength; i++ ) {
 					key = videoIds[i].key;
 					title = videoIds[i].title;
 
 					thumbArr.push({
-						thumbUrl: window.Lightbox.thumbParams(videoIds[i].thumb, 'video'),
+						thumbUrl: window.Lightbox.thumbParams( videoIds[ i ].thumb, 'video' ),
 						key: key,
 						title: title,
 						type: 'video',
 						playButtonSpan: playButton
 					});
-
 				}
 
 				// Fill touchStorm cache
 				window.LightboxLoader.cache.touchStorm = thumbArr;
 
 				// Count backfill items for progress bar
-				if(backfill) {
+				if( backfill ) {
 					window.Lightbox.backfillCount += thumbArr.length;
 				}
 
 			}
 
 			// Add thumbs to current lightbox cache
-			window.Lightbox.current.thumbs = window.Lightbox.current.thumbs.concat(thumbArr);
+			window.Lightbox.current.thumbs = window.Lightbox.current.thumbs.concat( thumbArr );
 
-			window.Lightbox.addThumbsToCarousel(thumbArr, backfill);
+			window.Lightbox.addThumbsToCarousel( thumbArr, backfill );
 
 		},
-		// Parse URL for video key
+		/* @desc Parse URL for video key.
+		 * @todo: It's possible that "File:" could be in the video key, so we may want to handle this edge case at a
+		 * later date.
+		 * @return string Video key
+		 */
 		getKeyFromUrl: function( url ) {
 			return url.split( 'File:' )[ 1 ];
 		}
