@@ -705,6 +705,7 @@ class WikiaHomePageHelper extends WikiaModel {
 			if (!empty($batch[CityVisualization::PROMOTED_ARRAY_KEY])) {
 				//if there are any promoted wikis they should go firstly to big&medium slots
 				$promotedBatch = $batch[CityVisualization::PROMOTED_ARRAY_KEY];
+				shuffle($promotedBatch);
 
 				$processedBatch[self::SLOTS_BIG_ARRAY_KEY] = $this->getProcessedWikisData($promotedBatch, self::SLOTS_BIG);
 				$processedBatch[self::SLOTS_MEDIUM_ARRAY_KEY] = $this->getProcessedWikisData($promotedBatch, self::SLOTS_MEDIUM);
@@ -727,8 +728,6 @@ class WikiaHomePageHelper extends WikiaModel {
 				$processedBatch[self::SLOTS_MEDIUM_ARRAY_KEY] = array_merge($processedBatch[self::SLOTS_MEDIUM_ARRAY_KEY], $this->getProcessedWikisData($batch[CityVisualization::DEMOTED_ARRAY_KEY], self::SLOTS_MEDIUM, $mediumCount));
 			}
 
-			$this->shufflePromotedWikis($processedBatch);
-
 			//put regular wikis to small slots
 			$processedBatch[self::SLOTS_SMALL_ARRAY_KEY] = $this->getProcessedWikisData($batch[CityVisualization::DEMOTED_ARRAY_KEY], self::SLOTS_SMALL);
 			$processedBatches[] = $processedBatch;
@@ -746,40 +745,15 @@ class WikiaHomePageHelper extends WikiaModel {
 		for ($curLimit; $curLimit < $orgLimit; $curLimit++) {
 			$wiki = array_shift($batch);
 			$processedWiki = $this->extractWikiDataForBatch($wiki);
-			$processedWiki['image'] = $this->getImageUrl($processedWiki['main_image'], $size->width, $size->height);
+			$processedWiki['image'] = ImagesService::overrideThumbnailFormat(
+				$this->getImageUrl($processedWiki['main_image'], $size->width, $size->height),
+				ImagesService::EXT_JPG
+			);
+			unset($processedWiki['main_image']);
 
 			if (!empty($processedWiki['wikiurl'])) {
 				$result[] = $processedWiki;
 			}
-		}
-
-		return $result;
-	}
-
-	protected function shufflePromotedWikis(&$processedBatch) {
-		$promotedWikis = array_merge($processedBatch[self::SLOTS_BIG_ARRAY_KEY], $processedBatch[self::SLOTS_MEDIUM_ARRAY_KEY]);
-
-		if (count($promotedWikis) !== (self::SLOTS_BIG + self::SLOTS_MEDIUM)) {
-			return;
-		}
-
-		$processedBatch[self::SLOTS_BIG_ARRAY_KEY] = array();
-		$processedBatch[self::SLOTS_MEDIUM_ARRAY_KEY] = array();
-
-		shuffle($promotedWikis);
-
-		$processedBatch[self::SLOTS_BIG_ARRAY_KEY] = $this->reassignPromotedWikis($promotedWikis, self::SLOTS_BIG);
-		$processedBatch[self::SLOTS_MEDIUM_ARRAY_KEY] = $this->reassignPromotedWikis($promotedWikis, self::SLOTS_MEDIUM);
-	}
-
-	protected function reassignPromotedWikis(&$promotedWikis, $limit) {
-		$result = array();
-
-		$size = $this->getProcessedWikisImgSizes($limit);
-		for ($limit; $limit > 0; $limit--) {
-			$wiki = array_shift($promotedWikis);
-			$wiki['image'] = $this->getImageUrl($wiki['main_image'], $size->width, $size->height);
-			$result[] = $wiki;
 		}
 
 		return $result;
@@ -915,7 +889,7 @@ class WikiaHomePageHelper extends WikiaModel {
 		return false;
 	}
 
-	protected function extractWikiDataForBatch(&$wiki) {
+	protected function extractWikiDataForBatch($wiki) {
 		if (!empty($wiki['image'])) {
 			$wiki['main_image'] = $wiki['image'];
 		}

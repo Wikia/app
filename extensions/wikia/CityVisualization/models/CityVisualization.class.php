@@ -34,8 +34,6 @@ class CityVisualization extends WikiaModel {
 		WikiFactoryHub::CATEGORY_ID_GAMING => WikiaHomePageHelper::VIDEO_GAMES_SLOTS_VAR_NAME
 	);
 
-	protected $batches;
-
 	/**
 	 * @var WikiaHomePageHelper
 	 */
@@ -44,7 +42,7 @@ class CityVisualization extends WikiaModel {
 	//todo: increase readability
 	//todo: decouple functions possibly extract classes
 	//todo: decrease number of parameters in all functions in this file
-	public function getWikiList($corpWikiId, $contLang, $dontReadMemc = false) {
+	public function getList($corpWikiId, $contLang, $dontReadMemc = false) {
 		wfProfileIn(__METHOD__);
 		$memKey = $this->getVisualizationWikisListDataCacheKey($corpWikiId, $contLang);
 		$wikis = (!$dontReadMemc) ? $this->wg->Memc->get($memKey) : null;
@@ -82,7 +80,7 @@ class CityVisualization extends WikiaModel {
 
 	public function getWikiBatchesFromDb($corpWikiId, $contLang) {
 		wfProfileIn(__METHOD__);
-		$wikis = $this->getWikiList($corpWikiId, $contLang);
+		$wikis = $this->getList($corpWikiId, $contLang);
 		$batches = $this->generateBatches($corpWikiId, $wikis);
 		wfProfileOut(__METHOD__);
 		return $batches;
