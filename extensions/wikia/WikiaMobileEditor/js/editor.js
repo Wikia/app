@@ -158,7 +158,7 @@ define('editor', ['pubsub', 'wikia.nirvana'], function(pubsub, nirvana){
     }
 
     function hideSuggestions(){
-        if(!suggestionBox.classList.contains('off'))suggestionBox.classList.add('off');
+        if( !suggestionBox.classList.contains( 'off' ) )suggestionBox.classList.add( 'off' );
         suggestionBox.innerHTML = '';
     }
 

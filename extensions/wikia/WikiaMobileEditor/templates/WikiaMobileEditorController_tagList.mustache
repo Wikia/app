@@ -1,14 +1,13 @@
-{{#tagSections}}
+{{#tags}}
 	<h2 class=collSec>{{name}}</h2>
-	<section class=artSec><ul>
+	<ul class=artSec>
 		{{#tags}}
-		    {{#tag}}
-		        <li>
-                    <input type=checkbox id={{short}}>
-                    <label for={{short}}> {{name}} <small>!{{short}}!</label>
-                    <a href=#> {{tag}} </a>
-                </li>
-			{{/tag}}
+            <li>
+                <input type=checkbox id={{short}}>
+                <label for={{short}}> {{name}} <small>!{{short}}!</small></label>
+                <a href=#> {{tag}} </a>
+            </li>
 		{{/tags}}
-	</ul></section>
-{{/tagSections}}
+	</ul>
+{{/tags}}
+

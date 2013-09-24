@@ -410,7 +410,7 @@ $config['wikiamobile_editor_js'] = array(
 		'//extensions/wikia/WikiaMobileEditor/js/editor2.js',
 		'//extensions/wikia/WikiaMobileEditor/js/config2.js',
 		'//extensions/wikia/WikiaMobileEditor/js/menu2.js',
-		'//extensions/wikia/WikiaMobileEditor/js/init.js',
+		'//extensions/wikia/WikiaMobileEditor/js/init2.js',
 	)
 );
 

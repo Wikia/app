@@ -7,7 +7,10 @@
 
 define( 'config', ['menu', 'editor', 'wikia.mustache', 'wikia.loader'], function(menu, editor, mustache, loader){
 
-    tags = [
+    'use strict';
+
+    var taglist = {
+    tags: [
 
         {
             name: "Text Modifiers",
@@ -170,120 +173,7 @@ define( 'config', ['menu', 'editor', 'wikia.mustache', 'wikia.loader'], function
         }
 
     ]
-
-    //list of wikitext tags & special chars, extendable
-    var tags = {
-        'Text Modifiers' : {
-            'Bold' : {
-                tag : "''_$''",
-                short : 'b',
-            },
-            'Italic' : {
-                tag : "'''_$'''",
-                short : 'i',
-            },
-            'Small' : {
-                tag : "<small>_$</small>",
-                short : 'sm',
-            },
-            'Superscript' : {
-                tag : "<sup>_$</sup>",
-                short : 'sup',
-            },
-            'Subscript' : {
-                tag : "<sub>_$</sub>",
-                short : 'sub',
-            },
-            'Level 2 Headline' : {
-                tag : "==_$==",
-                short : 'h2',
-            },
-            'Blockquote' : {
-                tag : "<blockquote>_$</blockquote>",
-                short : 'qte',
-            },
-        },
-        'Wiki Markup' : {
-            'Internal Link' : {
-                tag : "[[_$]]",
-                short : 'int',
-            },
-            'External Link' : {
-                tag : "[http://_$ title]",
-                short : 'ext',
-            },
-            'Embedded File' : {
-                tag : "[[File:_$]]",
-                short : 'file',
-            },
-            'Media File Link' : {
-                tag : "[Media:_$]",
-                short : 'med',
-            },
-            'Math Formula' : {
-                tag : "<math>_$</math>",
-                short : 'math',
-            },
-            'Ignore Wiki' : {
-                tag : "<nowiki>_$</nowiki>",
-                short : 'ign',
-            },
-            'Username And Time' : {
-                tag : "~~~~",
-                short : 'usr',
-                display : 'Username and time'
-            },
-            'Horizontal Line' : {
-                tag : "----",
-                short : 'hrzl',
-            },
-            'Strike' : {
-                tag : "<strike>_$</strike>",
-                short : 'str',
-            },
-            'Hidden Comment' : {
-                tag : "<!-- _$ -->",
-                short : 'hdn',
-            },
-            'Category' : {
-                tag : "[[Category:_$]]",
-                short : 'cat',
-            },
-            'Redirect' : {
-                tag : "#REDIRECT[[_$]]",
-                short : 'red',
-            },
-            'Reference' : {
-                tag : "<ref>_$</ref>",
-                short : 'ref',
-            },
-            'Include Only' : {
-                tag : "<includeonly>_$</includeonly>",
-                short : 'incl',
-            },
-            'No Include' : {
-                tag : "<noinclude>_$</noinclude>",
-                short : 'noinc',
-            }
-        },
-        'Special Characters' : {
-            'title' : {
-                tag : '#hello',
-                short : 'hel',
-            },
-            'title2' : {
-                tag : '#hello2',
-                short : 'hel2',
-            }
-        },
-        'Features And Media' : {
-            'Gallery' : {
-                tag : "<gallery>Image:_$|Caption</gallery>",
-                short : 'gal'
-            }
-        }
-    };
-
+    }
 
     //toast message shower
     function alarm( type, data ){
@@ -373,20 +263,21 @@ define( 'config', ['menu', 'editor', 'wikia.mustache', 'wikia.loader'], function
     //module initializer
     function init(){
 
-        menu.init();
+        //menu.init();
 
-        loader( {
+        loader({
+
             type: loader.MULTI,
             resources: {
                 mustache: '/extensions/wikia/WikiaMobileEditor/templates/WikiaMobileEditorController_tagList.mustache'
             }
-        } ).done(function( resp ){
-                console.log( mustache.render( resp.mustache[0], tags ) );
-            } );
+        }).done(function(resp){
+
+                console.log(mustache.render(resp.mustache[0], taglist))
+            });
 
         markInitialTags();
 
-        //ToDo -> mustache render here
     }
 
     return {

@@ -16,22 +16,25 @@ define( 'menu', ['editor'], function(){
 
     function Menu( wrapperID ){
 
+        //temp DOM menu wrapper
+        var wrp = document.getElementById( wrapperID );
+
         //wrapper element for menu
-        this.wrapper = document.getElementById( wrapperID );
+        this.wrapper = wrp;
 
         //main button
-        this.master = this.wrapper.getElementsByClassName( 'master' )[0];
+        this.master = wrp.getElementsByClassName( 'master' )[0];
 
         //primary menu (ul + li elements + flag indicating if it's visible)
         this.primary = {};
-        this.primary.ul = this.wrapper.getElementsByClassName( 'primary' )[0];
-        this.primary.li = this.primary.ul.getElementsByTagName( 'li' );
+        this.primary.ul = wrp.getElementsByClassName( 'primary' )[0];
+        this.primary.li = wrp.getElementsByClassName( 'primary' )[0].getElementsByTagName( 'li' );
         this.primary.expanded = false;
 
         //secondary menu (ul + li elements + flag indicating if it's visible)
         this.secondary = {};
-        this.secondary.ul = this.wrapper.getElementsByClassName( 'secondary' )[0];
-        this.secondary.li = this.secondary.ul.getElementsByTagName( 'li' );
+        this.secondary.ul = wrp.getElementsByClassName( 'secondary' )[0];
+        this.secondary.li = wrp.getElementsByClassName( 'secondary' )[0].getElementsByTagName( 'li' );
         this.secondary.expanded = false;
     }
 
