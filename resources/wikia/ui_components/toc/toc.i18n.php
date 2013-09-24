@@ -5,6 +5,4 @@ $messages['en'] = [
 	'styleguide-description-toc' => 'Lorem ipsu, dolor',
 
 	// parameters' documentation messages
-
-
 ];
