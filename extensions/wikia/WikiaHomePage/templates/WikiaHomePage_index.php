@@ -5,7 +5,7 @@
 			<h4><?= WfMessage('wikiahome-page-header-subheading')->text() ?></h4>
 		</div>
 		<a class="button create-wiki" href="<?= wfMsg('wikiahome-page-header-create-wiki-button-destination') ?>"><?= wfMsg('wikiahome-page-header-create-wiki-button') ?></a>
-		<?= F::app()->renderView('Search', 'Index', array('noautocomplete' => true)) ?>
+		<?= F::app()->renderView('Search', 'Index', array('noautocomplete' => true, 'nonamespaces' => true)) ?>
 	</header>
 	<section class="wikiahomepage-wikis">
 		<?= F::app()->renderView('WikiaHomePageController', 'visualization', array()); ?>
