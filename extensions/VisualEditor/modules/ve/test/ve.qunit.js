@@ -156,6 +156,18 @@ QUnit.assert.equalDomElement = function ( actual, expected, message ) {
 };
 
 /**
+ * Assert that two objects have the same DOM structure.
+ * @method
+ * @static
+ * @param {jQuery|Element|String} actual jQuery object, DOM Element or HTML string
+ * @param {jQuery|Element|String} expected jQuery object, DOM Element or HTML string
+ * @param {String} message Assertion message
+ */
+QUnit.assert.equalDomStructure = function ( actual, expected, message ) {
+	QUnit.assert.equalDomElement( $( actual )[0], $( expected )[0], message );
+};
+
+/**
  * Assert that two objects which may contain dom elements are equal.
  * @method
  * @static

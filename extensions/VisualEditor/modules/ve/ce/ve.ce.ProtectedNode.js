@@ -89,11 +89,19 @@ ve.ce.ProtectedNode.prototype.onProtectedSetup = function () {
 	this.$.add( this.$.find( '*' ) ).each( function () {
 		var $this = $( this );
 		if ( this.nodeType === Node.ELEMENT_NODE ) {
+			/**
+			 * These elements should not get sheilds:
+			 * 1. An element with class 've-no-shield'
+			 * 2. A non-floated element that is not the main protectedNode
+			 */
 			if (
-				( $this.css( 'float' ) === 'none' || $this.css( 'float' ) === '' ) &&
-				!$this.hasClass( 've-ce-protectedNode' ) &&
-				// Phantoms are built off shields, so make sure $phantomable has a shield
-				!$this.is( node.$phantomable )
+				$this.hasClass( 've-no-shield' ) ||
+				(
+					( $this.css( 'float' ) === 'none' || $this.css( 'float' ) === '' ) &&
+					!$this.hasClass( 've-ce-protectedNode' ) &&
+					// Phantoms are built off shields, so make sure $phantomable has a shield
+					!$this.is( node.$phantomable )
+				)
 			) {
 				return;
 			}

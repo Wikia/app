@@ -41,6 +41,8 @@ ve.dm.MWBlockImageNode.static.handlesOwnChildren = true;
 
 ve.dm.MWBlockImageNode.static.childNodeTypes = [ 'mwImageCaption' ];
 
+ve.dm.MWBlockImageNode.static.captionNodeType = 'mwImageCaption';
+
 ve.dm.MWBlockImageNode.static.matchTagNames = [ 'figure' ];
 
 ve.dm.MWBlockImageNode.static.getMatchRdfaTypes = function () {
@@ -98,13 +100,13 @@ ve.dm.MWBlockImageNode.static.toDataElement = function ( domElements, converter 
 	if ( $caption.length === 0 ) {
 		return [
 			{ 'type': this.name, 'attributes': attributes },
-			{ 'type': 'mwImageCaption' },
-			{ 'type': '/mwImageCaption' },
+			{ 'type': this.captionNodeType },
+			{ 'type': '/' + this.captionNodeType },
 			{ 'type': '/' + this.name }
 		];
 	} else {
 		return [ { 'type': this.name, 'attributes': attributes } ].
-			concat( converter.getDataFromDomRecursionClean( $caption[0], { 'type': 'mwImageCaption' } ) ).
+			concat( converter.getDataFromDomRecursionClean( $caption[0], { 'type': this.captionNodeType } ) ).
 			concat( [ { 'type': '/' + this.name } ] );
 	}
 };
@@ -125,6 +127,7 @@ ve.dm.MWBlockImageNode.static.toDomElements = function ( data, doc, converter ) 
 
 	if ( !this.typeToRdfa ) {
 		this.typeToRdfa = {};
+
 		for ( rdfa in this.rdfaToType ) {
 			this.typeToRdfa[this.rdfaToType[rdfa]] = rdfa;
 		}
