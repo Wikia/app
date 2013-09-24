@@ -14,10 +14,12 @@ define( 'wikia.touchstorm', [], function() {
 		bindEvents: function() {
 			var that = this;
 
+			// bind click even to all touchstorm DOM elements that should open the lightbox
 			this.wrapper.on( 'click', 'img, p', function() {
 				that.handleClick( $( this ) );
 			});
 
+			// called from Lightbox.js
 			$( window ).on( 'lightboxOpened', $.proxy( this.setupLightbox, this ) );
 		},
 		/* @desc when a touchstorm video is clicked, load the lightbox
