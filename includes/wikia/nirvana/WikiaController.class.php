@@ -11,6 +11,8 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 abstract class WikiaController extends WikiaDispatchableObject {
+	use PreventBlockedUsers;
+
 	final public function allowsExternalRequests(){
 		return true;
 	}

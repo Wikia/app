@@ -63,6 +63,7 @@ require_once ( $IP."/includes/wikia/GlobalFunctions.php" );
 require_once ( $IP."/includes/wikia/Wikia.php" );
 require_once ( $IP."/includes/wikia/WikiaMailer.php" );
 require_once ( $IP."/extensions/Math/Math.php" );
+require_once ( $IP . "/includes/wikia/traits/init.php" );
 
 global $wgDBname;
 if($wgDBname != 'uncyclo') {

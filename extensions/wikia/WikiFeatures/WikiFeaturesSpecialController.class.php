@@ -10,6 +10,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 
 	public function __construct() {
 		parent::__construct('WikiFeatures', 'wikifeaturesview');
+		$this->preventBlockedUsers = true;
 	}
 
 	public function init() {
