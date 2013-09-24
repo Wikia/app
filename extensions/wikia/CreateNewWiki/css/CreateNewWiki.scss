@@ -151,7 +151,11 @@ $color-borders: #CECECE;
 }
 
 #NameWiki {
-	width: 500px;
+	@if ( $responsive-layout-enabled ) {
+		width: auto;
+	} else {
+		width: 500px;
+	}
 	form {
 		font-size: 17px;
 		label {
@@ -174,7 +178,11 @@ $color-borders: #CECECE;
 
 #Auth {
 	display: none;
-	width: 700px;
+	@if ( $responsive-layout-enabled ) {
+		width: auto;
+	} else {
+		width: 700px;
+	}
 	.login-msg {
 		display: none;
 		text-align: right;
@@ -278,7 +286,11 @@ div#userloginErrorBox3 {
 #UserAuth {
 	@include clearfix;
 	display: none;
-	width: 600px;
+	@if ( $responsive-layout-enabled ) {
+		width: auto;
+	} else {
+		width: 600px;
+	}
 	.UserLoginModal {
 		border-right: 1px solid $color-borders;
 		margin: 0 0 15px 0;
@@ -302,7 +314,11 @@ div#userloginErrorBox3 {
 
 #DescWiki {
 	display: none;
-	width: 700px;
+	@if ( $responsive-layout-enabled ) {
+		width: auto;
+	} else {
+		width: 700px;
+	}
 	ol {
 		left: 515px;
 		margin: 0;
@@ -359,7 +375,11 @@ div#userloginErrorBox3 {
 
 #ThemeWiki {
 	display: none;
-	width: 650px;
+	@if ( $responsive-layout-enabled ) {
+		width: auto;
+	} else {
+		width: 650px;
+	}
 	.ThemeTab {
 		height: 150px;
 		left: 45px;
@@ -368,7 +388,11 @@ div#userloginErrorBox3 {
 		.slider {
 			height: 106px;
 			top: 0;
-			width: 608px;
+			@if ( $responsive-layout-enabled ) {
+				width: 445px;
+			} else {
+				width: 608px;
+			}
 			ul {
 				list-style: none;
 				margin: 0;
@@ -384,7 +408,11 @@ div#userloginErrorBox3 {
 		.chevron {
 			top: 37px;
 			&.next {
-				left: 645px;
+				@if ( $responsive-layout-enabled ) {
+					left: 485px;
+				} else {
+					left: 645px;
+				}
 			}
 		}
 	}
@@ -395,7 +423,11 @@ div#userloginErrorBox3 {
 
 #UpgradeWiki {
 	display: none;
-	width: 625px;
+	@if ( $responsive-layout-enabled ) {
+		width: auto;
+	} else {
+		width: 625px;
+	}
 	.marketing {
 		font-size: 17px;
 		position: relative;
