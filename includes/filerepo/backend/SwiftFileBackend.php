@@ -775,6 +775,7 @@ class SwiftFileBackend extends FileBackendStore {
 		if ( $this->conn === null ) {
 			$cacheKey = $this->getCredsCacheKey( $this->auth->username );
 			$creds = $this->srvCache->get( $cacheKey ); // credentials
+
 			if ( is_array( $creds ) ) { // cache hit
 				$this->auth->load_cached_credentials( $creds['auth_token'], $creds['storage_url'], $creds['cdnm_url'] );
 				$this->connStarted = time() - ceil( $this->authTTL / 2 ); // skew for worst case

@@ -268,17 +268,17 @@ class CreateWiki {
 		/**
 		 * copy default logo & favicon
 		 */
-		$uploader = User::newFromName('CreateWiki script');
+		$uploader = User::newFromName( 'CreateWiki script' );
 
-		$res = ImagesService::uploadImageFromUrl(self::CREATEWIKI_LOGO, (object) ['name' => 'Wiki.png'], $uploader);
-		if ($res['status'] === true) {
+		$res = ImagesService::uploadImageFromUrl( self::CREATEWIKI_LOGO, (object) ['name' => 'Wiki.png'], $uploader );
+		if ( $res['status'] === true ) {
 			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has been uploaded\n", true );
 		} else {
 			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has not been uploaded - " . print_r($res['errors'], true) . "\n", true );
 		}
 
-		$res = ImagesService::uploadImageFromUrl(self::CREATEWIKI_ICON, (object) ['name' => 'Favicon.ico'], $uploader);
-		if ( $res['status'] == true ) {
+		$res = ImagesService::uploadImageFromUrl( self::CREATEWIKI_ICON, (object) ['name' => 'Favicon.ico'], $uploader );
+		if (  $res['status'] == true  ) {
 			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has been uploaded\n", true );
 		} else {
 			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has not been uploaded - " . print_r($res['errors'], true) . "\n", true );
