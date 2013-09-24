@@ -26,9 +26,9 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string language - current language
 	 */
 	public function index() {
-		$this->response->addAsset('videopagetool_js');
-		$this->response->addAsset('videopagetool_scss');
-		$this->response->addAsset('videopagetool_css');
+		$this->response->addAsset('videopageadmin_js');
+		$this->response->addAsset('videopageadmin_scss');
+		$this->response->addAsset('videopageadmin_css');
 		if ( !$this->getUser()->isAllowed( 'videopagetool' ) ) {
 			$this->displayRestrictionError();
 			return false;
