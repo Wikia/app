@@ -23,7 +23,8 @@ define( 'vpt.views.edit', [
 		},
 
 		initMediaUploader: function() {
-			$( '.form-box' ).on( 'click', '.media-uploader-btn', function() {
+			$( '.form-box' ).on( 'click', '.media-uploader-btn', function(evt) {
+					evt.preventDefault();
 					return new ThumbnailUploader({
 							el: $(this).closest('.form-box')
 					});

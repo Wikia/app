@@ -33,6 +33,7 @@ define( 'views.videopageadmin.thumbnailUpload', [
 			window.WMU_openedInEditor = false;
 		},
 		onUserUpload: function( evt, data ) {
+			evt.preventDefault();
 			// Unbind events to avoid zombie/duplicate events
 			this.$window.off( 'WMU_addFromSpecialPage' );
 
@@ -57,6 +58,7 @@ define( 'views.videopageadmin.thumbnailUpload', [
 						.fadeIn( 200 );
 
 					that.$el.find( '.new-thumb' ).val( img.imgTitle );
+					that.$el.find( '.new-thumb-name' ).text( img.imgTitle );
 			});
 		}
 	};

@@ -125,6 +125,7 @@ $label-padding: 10px 10px 10px 0px;
 	}
 
 	.hint {
+		display: block;
 		color: $color-alternate-text;
 		float: right;
 		width: 70%;
@@ -136,12 +137,16 @@ $label-padding: 10px 10px 10px 0px;
 			clear: none;
 			width: 68%;
 		}
-		.add-video-button {
+		.media-btn {
 			float: left;
 			height: 25px;
 			margin: 10px 10px 0 0;
+
+			&.media-uploader.btn {
+				margin-top: 0;
+			}
 		}
-		.video-title {
+		.video-title, .new-thumb-name {
 			padding-top: 11px;
 		}
 		.video-thumb {
