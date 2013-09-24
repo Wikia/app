@@ -1,6 +1,6 @@
 <?php
 class RelatedPagesController extends WikiaController {
-	const MEMC_KEY_VER = '1.003';
+	const MEMC_KEY_VER = '1.005';
 
 	/**
 	 * @desc Related pages are lazy-loaded on article pages for mobile, oasis and monobook. However, there are extensions
@@ -71,10 +71,13 @@ class RelatedPagesController extends WikiaController {
 			$tplVar = new stdClass();
 			$tplVar->pageUrl = $page[ 'url' ];
 			$tplVar->pageTitle = $page[ 'title' ];
-			$tplVar->artSnippet = $page[ 'text' ];
+
+			if( !empty( $page[ 'text' ] ) ) {
+				$tplVar->artSnippet = $page[ 'text' ];
+			}
 
 			if( !empty( $page[ 'imgUrl' ] ) ) {
-				$this->imgUrl = $page[ 'imgUrl' ];
+				$tplVar->imgUrl = $page[ 'imgUrl' ];
 			}
 
 			$templateVars[] = $tplVar;
