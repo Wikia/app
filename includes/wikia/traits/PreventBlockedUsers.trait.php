@@ -8,7 +8,9 @@
  */
 trait PreventBlockedUsers {
 	static $name = 'PreventBlockedUsers';
+
 	static $ACTION_ERROR = 0;
+
 	static $ACTION_NONE = 1;
 
 	/** @var bool whether or not this trait actively prevents blocked users from actions */
@@ -22,7 +24,7 @@ trait PreventBlockedUsers {
 	 * @return array
 	 */
 	protected function whitelist() {
-		return [];
+		return [ ];
 	}
 
 	/**
@@ -31,14 +33,14 @@ trait PreventBlockedUsers {
 	 * @return bool
 	 * @throws UserBlockedError
 	 */
-	public function preventUsage($user, $action) {
+	public function preventUsage( $user, $action ) {
 		$result = false;
 
 		if ( $this->preventBlockedUsers && !in_array( $action, $this->whitelist() ) && $user->isBlocked() ) {
 			$result = true;
-			switch ($this->onUsagePrevented) {
+			switch ( $this->onUsagePrevented ) {
 				case self::$ACTION_ERROR:
-					throw new UserBlockedError($user->mBlock);
+					throw new UserBlockedError( $user->mBlock );
 					break;
 			}
 		}

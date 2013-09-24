@@ -8,6 +8,6 @@
  */
 
 global $wgAutoloadClasses;
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
-$wgAutoloadClasses['PreventBlockedUsers'] = "{$dir}/PreventBlockedUsers.trait.php";
+$wgAutoloadClasses[ 'PreventBlockedUsers' ] = "{$dir}/PreventBlockedUsers.trait.php";
