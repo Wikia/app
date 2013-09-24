@@ -27,7 +27,7 @@ define( 'wikia.touchstorm', [], function() {
 				that.handleClick( $( this ) );
 			});
 
-			// called from Lightbox.js
+			// called from Lightbox.js, so we know the Lightbox code is fully loaded. 
 			$( window ).on( 'lightboxOpened', $.proxy( this.setupLightbox, this ) );
 		},
 
@@ -41,7 +41,8 @@ define( 'wikia.touchstorm', [], function() {
 			window.LightboxLoader.loadLightbox( videoKey, { parent: that.wrapper, carouselType: 'touchStorm' } );
 		},
 
-		/* @desc Plug touchstorm into Lightbox
+		/* @desc Plug touchstorm into Lightbox.  Note: we had to wait until the 'lightboxOpened' event to ensure the
+		 * Lightbox code was fully loaded.
 		 * @return void
 		 */
 		setupLightbox: function() {
