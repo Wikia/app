@@ -8,7 +8,16 @@ define( 'models.videopageadmin.thumbnail', [
 	}
 
 	ThumbnailModel.prototype = {
-		create: 
+		create: function() {
+			$.nirvana.sendRequest({
+					controller: 'VideoPageAdminSpecial',
+					method: 'getImageData',
+					data: this.imgTitle,
+					callback: function( response ) {
+						console.log(response);
+					}
+			});
+		}
 	};
 
 	return ThumbnailModel;

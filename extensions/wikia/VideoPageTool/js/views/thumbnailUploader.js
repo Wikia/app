@@ -1,8 +1,9 @@
 define( 'views.videopageadmin.thumbnailUpload', [
 		'jquery',
-		'wikia.aim',
 		'wikia.window',
-	], function( $, window ) {
+		'models.videopageadmin.thumbnail',
+		'wikia.aim'
+	], function( $, window, ThumbnailModel ) {
 	'use strict';
 	function ThumbnailUploader( opts ) {
 		this.$el = $( opts.el );
@@ -21,6 +22,11 @@ define( 'views.videopageadmin.thumbnailUpload', [
 			window.WMU_openedInEditor = false;
 		},
 		onUserUpload: function(evt, data) {
+			var img = new ThumbnailModel({
+					imgTitle: data.imageTitle,
+					wikiText: data.imageWikiText
+				})
+				.create();
 			evt.preventDefault();
 		}
 	};
