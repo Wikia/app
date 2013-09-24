@@ -2667,6 +2667,16 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->method ( 'setVal' )
 			->with   ( 'wgExtensionsPath', $mockWg->ExtensionsPath )
 		;
+		$this->getStaticMethodMock("BodyController", "isGridLayoutEnabled")
+			->expects( $this->once() )
+			->method( 'isGridLayoutEnabled' )
+			->will( $this->returnValue( true ) )
+		;
+		$mockController
+			->expects( $this->at( $controllerIncr++ ) )
+			->method ( 'setVal' )
+			->with   ( 'isGridLayoutEnabled', true )
+		;
 		$mockController
 			->expects( $this->at( $controllerIncr++ ) )
 			->method ( 'sendSelfRequest' )
