@@ -34,7 +34,7 @@ class SwiftFileBackend extends FileBackendStore {
 
 	/** @var BagOStuff */
 	protected $srvCache;
-	
+
 	/**
 	 * @see FileBackendStore::__construct()
 	 * Additional $config params include:
@@ -46,7 +46,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 *    shardViaHashLevels : Map of container names to sharding config with:
 	 *                         'base'   : base of hash characters, 16 or 36
 	 *                         'levels' : the number of hash levels (and digits)
-	 *                         'repeat' : hash subdirectories are prefixed with all the 
+	 *                         'repeat' : hash subdirectories are prefixed with all the
 	 *                                    parent hash directory names (e.g. "a/ab/abc")
 	 *	  swiftTimeout       : number of seconds timeout consistent with php-cloudfiles. Default: 10
 	 */
@@ -54,8 +54,8 @@ class SwiftFileBackend extends FileBackendStore {
 		parent::__construct( $config );
 		// Required settings
 		$this->auth = new CF_Authentication(
-			$config['swiftUser'], 
-			$config['swiftKey'], 
+			$config['swiftUser'],
+			$config['swiftKey'],
 			null, // account; unused
 			$config['swiftAuthUrl']
 		);
@@ -63,7 +63,7 @@ class SwiftFileBackend extends FileBackendStore {
 		if ( !empty( $config['debug'] ) ) {
 			$this->auth->setDebug( $config['debug'] );
 		}
-		$this->swiftTimeout = isset ( $config['swiftTimeout'] ) 
+		$this->swiftTimeout = isset ( $config['swiftTimeout'] )
 			? intval( $config['swiftTimeout'] )
 			: 10;
 		/* </Wikia> */
@@ -78,7 +78,7 @@ class SwiftFileBackend extends FileBackendStore {
 			? $config['shardViaHashLevels']
 			: '';
 		/* <Wikia> */
-		// caching credentials 
+		// caching credentials
 		if ( !empty( $config['cacheAuthInfo'] ) && $config['cacheAuthInfo'] === true ) {
 			$this->srvCache = wfGetMainCache();
 		}
@@ -137,7 +137,7 @@ class SwiftFileBackend extends FileBackendStore {
 		try {
 			$dContObj = $this->getContainer( $dstCont );
 			if ( empty( $params['overwrite'] ) &&
-				$this->fileExists( array( 'src' => $params['dst'], 'latest' => 1 ) ) ) 
+				$this->fileExists( array( 'src' => $params['dst'], 'latest' => 1 ) ) )
 			{
 				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
 				return $status;
@@ -203,7 +203,7 @@ class SwiftFileBackend extends FileBackendStore {
 		try {
 			$dContObj = $this->getContainer( $dstCont );
 			if ( empty( $params['overwrite'] ) &&
-				$this->fileExists( array( 'src' => $params['dst'], 'latest' => 1 ) ) ) 
+				$this->fileExists( array( 'src' => $params['dst'], 'latest' => 1 ) ) )
 			{
 				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
 				return $status;
@@ -283,7 +283,7 @@ class SwiftFileBackend extends FileBackendStore {
 			$sContObj = $this->getContainer( $srcCont );
 			$dContObj = $this->getContainer( $dstCont );
 			if ( empty( $params['overwrite'] ) &&
-				$this->fileExists( array( 'src' => $params['dst'], 'latest' => 1 ) ) ) 
+				$this->fileExists( array( 'src' => $params['dst'], 'latest' => 1 ) ) )
 			{
 				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
 				return $status;
@@ -499,7 +499,7 @@ class SwiftFileBackend extends FileBackendStore {
 		try {
 			$contObj = $this->getContainer( $srcCont );
 			$srcObj = $contObj->get_object( $srcRel, $this->headersFromParams( $params ) );
-			#$this->addMissingMetadata( $srcObj, $params['src'] ); // macbre - causes infinite loop / sha1 is stored in doStoreInternal()
+			# $this->addMissingMetadata( $srcObj, $params['src'] ); // macbre - causes infinite loop / sha1 is stored in doStoreInternal()
 			$stat = array(
 				// Convert dates like "Tue, 03 Jan 2012 22:01:04 GMT" to TS_MW
 				'mtime' => wfTimestamp( TS_MW, $srcObj->last_modified ),
@@ -517,7 +517,7 @@ class SwiftFileBackend extends FileBackendStore {
 
 	/**
 	 * Fill in any missing object metadata and save it to Swift
-	 * 
+	 *
 	 * @param $obj CF_Object
 	 * @param $path string Storage path to object
 	 * @return bool Success
@@ -560,7 +560,7 @@ class SwiftFileBackend extends FileBackendStore {
 			return false; // invalid storage path
 		}
 
-		if (isset($existsCache[ $params['src'] ])) {
+		if ( isset( $existsCache[ $params['src'] ] ) ) {
 			return $existsCache[ $params['src'] ];
 		}
 
@@ -593,7 +593,7 @@ class SwiftFileBackend extends FileBackendStore {
 
 	/**
 	 * Do not call this function outside of SwiftFileBackendFileList
-	 * 
+	 *
 	 * @param $fullCont string Resolved container name
 	 * @param $dir string Resolved storage directory with no trailing slash
 	 * @param $after string Storage path of file to list items after
@@ -720,11 +720,11 @@ class SwiftFileBackend extends FileBackendStore {
 
 	/**
 	 * Get headers to send to Swift when reading a file based
-	 * on a FileBackend params array, e.g. that of getLocalCopy(). 
+	 * on a FileBackend params array, e.g. that of getLocalCopy().
 	 * $params is currently only checked for a 'latest' flag.
-	 * 
+	 *
 	 * @param $params Array
-	 * @return Array 
+	 * @return Array
 	 */
 	protected function headersFromParams( array $params ) {
 		$hdrs = array();
@@ -792,7 +792,7 @@ class SwiftFileBackend extends FileBackendStore {
 					$this->logException( $e, __METHOD__, $creds );
 				}
 			}
-			
+
 			$this->conn = new CF_Connection( $this->auth );
 		}
 
@@ -807,7 +807,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 */
 	protected function doClearCache( array $paths = null ) {
 		// macbre: commented this out to reduce number of HEAD requests checking the existance of containers
-		#$this->connContainers = array(); // clear container object cache
+		# $this->connContainers = array(); // clear container object cache
 	}
 
 	/**
@@ -819,7 +819,7 @@ class SwiftFileBackend extends FileBackendStore {
 	private function getCredsCacheKey( $username ) {
 		return wfMemcKey( 'backend', $this->getName(), 'usercreds', $username );
 	}
-	
+
 	/**
 	 * Get a Swift container object, possibly from process cache.
 	 * Use $reCache if the file count or byte count is needed.
@@ -884,10 +884,10 @@ class SwiftFileBackend extends FileBackendStore {
 			$this->connStarted = 0;
 		}
 	}
-	
+
 	/**
 	 * Log an unexpected exception for this backend
-	 * 
+	 *
 	 * @param $e Exception
 	 * @param $func string
 	 * @param $params Array
@@ -902,10 +902,10 @@ class SwiftFileBackend extends FileBackendStore {
 			return;
 		}
 
-		Wikia::log( 
+		Wikia::log(
 			__CLASS__,
 			'exception',
-			get_class( $e ) . " in '{$func}' (given '" . serialize( $params ) . "')" . 
+			get_class( $e ) . " in '{$func}' (given '" . serialize( $params ) . "')" .
 				( $e instanceof InvalidResponseException
 					? ": {$e->getMessage()}"
 					: ""
@@ -928,7 +928,7 @@ class SwiftFileBackendFileList implements Iterator {
 	protected $pos = 0; // integer
 
 	/** @var SwiftFileBackend */
-	protected $backend; 
+	protected $backend;
 	protected $container; //
 	protected $dir; // string storage directory
 	protected $suffixStart; // integer

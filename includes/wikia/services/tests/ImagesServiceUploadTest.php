@@ -18,9 +18,9 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		parent::setUp();
 
 		$this->origUser = $wgUser;
-		$wgUser = User::newFromName('WikiaBot');
+		$wgUser = User::newFromName( 'WikiaBot' );
 
-		$this->fileName = str_replace('$1', time(), self::FILENAME);
+		$this->fileName = str_replace( '$1', time(), self::FILENAME );
 
 		// debug
 		global $wgLocalFileRepo;
@@ -28,27 +28,27 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 	}
 
 	// check the path - /firefly/images/9/93/Test-1378975563.jpg
-	private function checkImage(LocalFile $image) {
-		$hash = md5($image->getName());
+	private function checkImage( LocalFile $image ) {
+		$hash = md5( $image->getName() );
 		$url = $image->getUrl();
 
 		$this->assertStringEndsWith(
-			sprintf('/%s/images/%s/%s/%s', $this->app->wg->DBname, $hash{0}, $hash{0}.$hash{1}, $image->getName()),
+			sprintf( '/%s/images/%s/%s/%s', $this->app->wg->DBname, $hash { 0 } , $hash { 0 } . $hash { 1 } , $image->getName() ),
 			$url,
 			'Path should contain a valid hash'
 		);
 
 		// verify that it's accessible via HTTP
-		$this->assertTrue(Http::get($url, 'default', ['noProxy' => true]) !== false, 'Uploaded image should return HTTP 200 - ' . $url);
+		$this->assertTrue( Http::get( $url, 'default', ['noProxy' => true] ) !== false, 'Uploaded image should return HTTP 200 - ' . $url );
 	}
 
 	// check the path - /firefly/images/thumb/5/53/Test-1378979336.jpg/120px-0%2C451%2C0%2C294-Test-1378979336.jpg
-	private function checkThumbnail(LocalFile $image) {
-		$hash = md5($image->getName());
-		$thumb = $image->createThumb(120);
+	private function checkThumbnail( LocalFile $image ) {
+		$hash = md5( $image->getName() );
+		$thumb = $image->createThumb( 120 );
 
 		$this->assertContains(
-			sprintf('/%s/images/thumb/%s/%s/%s/120px-', $this->app->wg->DBname, $hash{0}, $hash{0}.$hash{1}, $image->getName()),
+			sprintf( '/%s/images/thumb/%s/%s/%s/120px-', $this->app->wg->DBname, $hash { 0 } , $hash { 0 } . $hash { 1 } , $image->getName() ),
 			$thumb,
 			'Path should contain a valid hash'
 		);
@@ -60,60 +60,60 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		);
 
 		# TODO: thumbnailer doesn't work currently
-		#$this->assertTrue(Http::get($thumb, 'default', ['noProxy' => true]) !== false, 'Thumbnail should return HTTP 200 - ' . $thumb);
+		# $this->assertTrue(Http::get($thumb, 'default', ['noProxy' => true]) !== false, 'Thumbnail should return HTTP 200 - ' . $thumb);
 	}
 
-	private function assertReturns404($url, $msg) {
-		$this->assertTrue(Http::get($url, 'default', ['noProxy' => true]) === false, "{$msg} - {$url}");
+	private function assertReturns404( $url, $msg ) {
+		$this->assertTrue( Http::get( $url, 'default', ['noProxy' => true] ) === false, "{$msg} - {$url}" );
 	}
 
 	function testUploadAndRemove() {
-		$time = microtime(true);
+		$time = microtime( true );
 
 		// upload an image
-		$res = ImagesService::uploadImageFromUrl(self::URL, (object) [
+		$res = ImagesService::uploadImageFromUrl( self::URL, (object) [
 			'name' => $this->fileName,
 			'comment' => __CLASS__,
 			'description' => __CLASS__
-		]);
+		] );
 
-		Wikia::log(__METHOD__ , 'upload', sprintf('took %.4f sec', microtime(true) - $time));
+		Wikia::log( __METHOD__ , 'upload', sprintf( 'took %.4f sec', microtime( true ) - $time ) );
 
-		$this->assertTrue($res['status'], 'Upload should end up successfully');
-		$this->assertInternalType('integer', $res['page_id'], 'Page ID should be returned');
+		$this->assertTrue( $res['status'], 'Upload should end up successfully' );
+		$this->assertInternalType( 'integer', $res['page_id'], 'Page ID should be returned' );
 
 		/* @var LocalFile $file */
-		$file = wfFindFile($this->fileName);
-		$this->assertInstanceOf('LocalFile', $file);
+		$file = wfFindFile( $this->fileName );
+		$this->assertInstanceOf( 'LocalFile', $file );
 
-		$this->checkImage($file);
-		$this->checkThumbnail($file);
+		$this->checkImage( $file );
+		$this->checkThumbnail( $file );
 
 		// now, move it...
-		$time = microtime(true);
+		$time = microtime( true );
 		$oldUrl = $file->getUrl();
 
-		$target = Title::newFromText('New' . $this->fileName, NS_FILE);
-		$status = $file->move($target);
+		$target = Title::newFromText( 'New' . $this->fileName, NS_FILE );
+		$status = $file->move( $target );
 
-		Wikia::log(__METHOD__ , 'move', sprintf('took %.4f sec', microtime(true) - $time));
+		Wikia::log( __METHOD__ , 'move', sprintf( 'took %.4f sec', microtime( true ) - $time ) );
 
-		$this->assertTrue($status->isOK(), 'Move failed');
-		$this->assertReturns404($oldUrl, 'Old image (before move) should return HTTP 404');
+		$this->assertTrue( $status->isOK(), 'Move failed' );
+		$this->assertReturns404( $oldUrl, 'Old image (before move) should return HTTP 404' );
 
-		$this->checkImage($file);
-		$this->checkThumbnail($file);
+		$this->checkImage( $file );
+		$this->checkThumbnail( $file );
 
 		// now, remove it...
-		$time = microtime(true);
+		$time = microtime( true );
 		$oldUrl = $file->getUrl();
-		$status = $file->delete('Test cleanup');
-		$this->assertTrue($status->isOK(), 'Deleting failed');
+		$status = $file->delete( 'Test cleanup' );
+		$this->assertTrue( $status->isOK(), 'Deleting failed' );
 
-		Wikia::log(__METHOD__ , 'delete', sprintf('took %.4f sec', microtime(true) - $time));
+		Wikia::log( __METHOD__ , 'delete', sprintf( 'took %.4f sec', microtime( true ) - $time ) );
 
 		// verify that removed image is not accessible via HTTP
-		$this->assertReturns404($oldUrl, 'Removed image should return HTTP 404');
+		$this->assertReturns404( $oldUrl, 'Removed image should return HTTP 404' );
 	}
 
 	protected function tearDown() {

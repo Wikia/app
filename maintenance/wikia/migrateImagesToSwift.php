@@ -62,10 +62,10 @@ class MigrateImagesToSwift extends Maintenance {
 		// swiftPathPrefix: /pl/images
 		$path = $wgFSSwiftContainer . '/images';
 
-		list($this->swiftContainerName, $this->swiftPathPrefix) = explode('/', $path, 2);
+		list( $this->swiftContainerName, $this->swiftPathPrefix ) = explode( '/', $path, 2 );
 		$this->swiftPathPrefix = $this->swiftPathPrefix . '/';
 
-		$this->output("Migrating images on {$wgDBname} - <{$wgUploadDirectory}> -> <{$this->swiftServer}/{$this->swiftContainerName}/{$this->swiftPathPrefix}>...\n");
+		$this->output( "Migrating images on {$wgDBname} - <{$wgUploadDirectory}> -> <{$this->swiftServer}/{$this->swiftContainerName}/{$this->swiftPathPrefix}>...\n" );
 	}
 
 	/**
@@ -85,8 +85,8 @@ class MigrateImagesToSwift extends Maintenance {
 			$auth->authenticate();
 			$this->swiftConn = new CF_Connection( $auth );
 		}
-		catch(Exception $ex) {
-			Wikia::log(__METHOD__, '::exception', $ex->getMessage());
+		catch ( Exception $ex ) {
+			Wikia::log( __METHOD__, '::exception', $ex->getMessage() );
 			return false;
 		}
 
@@ -97,26 +97,26 @@ class MigrateImagesToSwift extends Maintenance {
 
 	/**
 	 * Get (created if necessary) the container
-	 * 
+	 *
 	 * @param $containerName string container name
 	 * @return CF_Container object
 	 */
-	private function getContainer($containerName) {
+	private function getContainer( $containerName ) {
 		try {
-			$container = $this->swiftConn->get_container($containerName);
+			$container = $this->swiftConn->get_container( $containerName );
 		}
-		catch(NoSuchContainerException $ex) {
-			$container =  $this->swiftConn->create_container($containerName);
+		catch ( NoSuchContainerException $ex ) {
+			$container =  $this->swiftConn->create_container( $containerName );
 		}
-		catch(Exception $ex) {
-			Wikia::log(__METHOD__, '::exception', $ex->getMessage());
+		catch ( Exception $ex ) {
+			Wikia::log( __METHOD__, '::exception', $ex->getMessage() );
 			return false;
 		}
 
 		// set public ACL
 		// http://s3.dfs-s1/swift/v1/firefly
 		$url = "{$this->swiftServer}/swift/v1/{$containerName}";
-		wfDebug(__METHOD__ . "::setACL: {$url}\n");
+		wfDebug( __METHOD__ . "::setACL: {$url}\n" );
 
 		/* @var $req CurlHttpRequest */
 		$req = MWHttpRequest::factory( $url, array( 'method' => 'POST', 'noProxy' => true ) );
@@ -137,51 +137,51 @@ class MigrateImagesToSwift extends Maintenance {
 	 * @param $sha1Hash string|bool SHA-1 hash of the file contents in base 36 format (false = don't set it)
 	 * @return CF_Object|bool object instance or false
 	 */
-	private function store($localFile, $remotePath, $mimeType = false, $sha1Hash = false) {
+	private function store( $localFile, $remotePath, $mimeType = false, $sha1Hash = false ) {
 		$remotePath = $this->swiftPathPrefix . $remotePath;
 
-		wfDebug(__METHOD__ . ": {$localFile} -> {$remotePath}\n");
+		wfDebug( __METHOD__ . ": {$localFile} -> {$remotePath}\n" );
 
-		$time = microtime(true);
+		$time = microtime( true );
 
 		try {
-			$fp = @fopen($localFile, 'r');
-			if (!$fp) {
-				Wikia::log(__METHOD__, 'fopen', "{$localFile} doesn't exist");
+			$fp = @fopen( $localFile, 'r' );
+			if ( !$fp ) {
+				Wikia::log( __METHOD__, 'fopen', "{$localFile} doesn't exist" );
 				return false;
 			}
 
 			// check file size - sending empty file results in "HTTP 411 MissingContentLengh"
-			$size = fstat($fp)['size'];
-			if ($size === 0) {
-				Wikia::log(__METHOD__, 'fstat', "{$localFile} is empty");
+			$size = fstat( $fp )['size'];
+			if ( $size === 0 ) {
+				Wikia::log( __METHOD__, 'fstat', "{$localFile} is empty" );
 				return false;
 			}
 
-			$object = $this->swiftContainer->create_object($remotePath);
+			$object = $this->swiftContainer->create_object( $remotePath );
 
 			// medata
-			if (is_string($mimeType)) {
+			if ( is_string( $mimeType ) ) {
 				$object->content_type = $mimeType;
 			}
 
-			if (is_string($sha1Hash)) {
+			if ( is_string( $sha1Hash ) ) {
 				$object->metadata = []; // clear metadata for existing images - avoid exception with too long headers
-				$object->setMetadataValues([
+				$object->setMetadataValues( [
 					'Sha1base36' => $sha1Hash
-				]);
+				] );
 			}
 
-			$object->write($fp, $size);
-			fclose($fp);
+			$object->write( $fp, $size );
+			fclose( $fp );
 		}
-		catch(Exception $ex) {
-			Wikia::log(__METHOD__, 'exception - ' . $localFile, $ex->getMessage());
+		catch ( Exception $ex ) {
+			Wikia::log( __METHOD__, 'exception - ' . $localFile, $ex->getMessage() );
 			return false;
 		}
 
-		$time = round((microtime(true) - $time) * 1000);
-		wfDebug(__METHOD__ . ": {$localFile} uploaded in {$time} ms\n");
+		$time = round( ( microtime( true ) - $time ) * 1000 );
+		wfDebug( __METHOD__ . ": {$localFile} uploaded in {$time} ms\n" );
 
 		return $object;
 	}
@@ -196,14 +196,14 @@ class MigrateImagesToSwift extends Maintenance {
 	 * @param $$row array image data
 	 * @return string image path
 	 */
-	private function getImagePath(Array $row) {
-		$hash = md5($row['name']);
+	private function getImagePath( Array $row ) {
+		$hash = md5( $row['name'] );
 
 		return sprintf(
 			'%s/%s%s/%s',
-			$hash{0},
-			$hash{0},
-			$hash{1},
+			$hash { 0 } ,
+			$hash { 0 } ,
+			$hash { 1 } ,
 			$row['name']
 		);
 	}
@@ -218,15 +218,15 @@ class MigrateImagesToSwift extends Maintenance {
 	 * @param $$row array image data
 	 * @return string image path
 	 */
-	private function getOldImagePath(Array $row) {
+	private function getOldImagePath( Array $row ) {
 		// /0/0a/UploadTest.png -> /archive/0/0a/20120924125348!UploadTest.png
-		$hash = md5($row['name']);
+		$hash = md5( $row['name'] );
 
 		return sprintf(
 			'archive/%s/%s%s/%s',
-			$hash{0},
-			$hash{0},
-			$hash{1},
+			$hash { 0 } ,
+			$hash { 0 } ,
+			$hash { 1 } ,
 			$row['archived_name']
 		);
 	}
@@ -241,16 +241,16 @@ class MigrateImagesToSwift extends Maintenance {
 	 * @param $$row array image data
 	 * @return string|bool image path or false if storage_key is empty
 	 */
-	private function getRemovedImagePath(Array $row) {
+	private function getRemovedImagePath( Array $row ) {
 		$hash = $row['storage_key'];
 
-		if ($hash === '') return false;
+		if ( $hash === '' ) return false;
 
 		return sprintf(
 			'deleted/%s/%s/%s/%s',
-			$hash{0},
-			$hash{1},
-			$hash{2},
+			$hash { 0 } ,
+			$hash { 1 } ,
+			$hash { 2 } ,
 			$row['storage_key']
 		);
 	}
@@ -261,43 +261,43 @@ class MigrateImagesToSwift extends Maintenance {
 	 * @param $path string full file path to be migrated
 	 * @param $path array image info
 	 */
-	private function copyFile($path, Array $row) {
+	private function copyFile( $path, Array $row ) {
 		global $wgUploadDirectory;
 
-		if ($path === false) return;
+		if ( $path === false ) return;
 
 		$this->migratedImagesSize += $row['size'];
 		$this->migratedImagesCnt++;
 
 		$mime = "{$row['major_mime']}/{$row['minor_mime']}";
-		$hash = isset($row['hash']) ? $row['hash'] : false;
+		$hash = isset( $row['hash'] ) ? $row['hash'] : false;
 
-		$res = $this->store($wgUploadDirectory . '/' . $path, $path, $mime, $hash);
+		$res = $this->store( $wgUploadDirectory . '/' . $path, $path, $mime, $hash );
 
-		if ($res === false) {
+		if ( $res === false ) {
 			$this->migratedImagesFailedCnt++;
 		}
 
 		// "progress bar"
-		if ($this->migratedImagesCnt % 5 === 0) {
+		if ( $this->migratedImagesCnt % 5 === 0 ) {
 			$elapsed = time() - $this->time;
 
 			// estimate remaining time
-			$filesPerSec = ($elapsed) ? ($this->migratedImagesCnt) / ($elapsed) : 1;
-			$remainingSeconds = round(($this->imagesCnt - $this->migratedImagesCnt) / $filesPerSec);
-			$remainingMinutes = floor($remainingSeconds / 60);
+			$filesPerSec = ( $elapsed ) ? ( $this->migratedImagesCnt ) / ( $elapsed ) : 1;
+			$remainingSeconds = round( ( $this->imagesCnt - $this->migratedImagesCnt ) / $filesPerSec );
+			$remainingMinutes = floor( $remainingSeconds / 60 );
 
-			$this->output(sprintf(
+			$this->output( sprintf(
 				"%d%%: %s/%s - %.2f files/sec, %.2f kB/s [ETA %d h %02d min %02d sec]     \r",
-				round($this->migratedImagesCnt / $this->imagesCnt * 100),
+				round( $this->migratedImagesCnt / $this->imagesCnt * 100 ),
 				$this->migratedImagesCnt,
 				$this->imagesCnt,
 				$filesPerSec,
-				($this->migratedImagesSize / 1024) / ($elapsed),
-				floor($remainingMinutes / 60),
+				( $this->migratedImagesSize / 1024 ) / ( $elapsed ),
+				floor( $remainingMinutes / 60 ),
 				$remainingMinutes % 60,
 				$remainingSeconds % 60
-			));
+			) );
 		}
 	}
 
@@ -307,16 +307,16 @@ class MigrateImagesToSwift extends Maintenance {
 		$this->init();
 		$dbr = $this->getDB( DB_SLAVE );
 
-		$isForced = $this->hasOption('force');
+		$isForced = $this->hasOption( 'force' );
 
 		// one migration is enough
 		global $wgEnableSwiftFileBackend, $wgEnableUploads, $wgDBname;
-		if (!empty($wgEnableSwiftFileBackend) && !$isForced) {
-			$this->error("\$wgEnableSwiftFileBackend = true - new files storage already enabled on {$wgDBname} wiki!", 1);
+		if ( !empty( $wgEnableSwiftFileBackend ) && !$isForced ) {
+			$this->error( "\$wgEnableSwiftFileBackend = true - new files storage already enabled on {$wgDBname} wiki!", 1 );
 		}
 
-		if (empty($wgEnableUploads) && !$isForced) {
-			$this->error("\$wgEnableUploads = false - migration is already running on {$wgDBname} wiki!", 1);
+		if ( empty( $wgEnableUploads ) && !$isForced ) {
+			$this->error( "\$wgEnableUploads = false - migration is already running on {$wgDBname} wiki!", 1 );
 		}
 
 		// get images count
@@ -326,8 +326,8 @@ class MigrateImagesToSwift extends Maintenance {
 			'oldimage' => 'oi_size',
 		];
 
-		foreach($tables as $table => $sizeField) {
-			$row = $dbr->selectRow($table, [
+		foreach ( $tables as $table => $sizeField ) {
+			$row = $dbr->selectRow( $table, [
 					'count(*) AS cnt',
 					"SUM({$sizeField}) AS size"
 				],
@@ -335,22 +335,22 @@ class MigrateImagesToSwift extends Maintenance {
 				__METHOD__
 			);
 
-			$this->output(sprintf("* %s:\t%d images (%d MB)\n",
+			$this->output( sprintf( "* %s:\t%d images (%d MB)\n",
 				$table,
 				$row->cnt,
 				round( $row->size / 1024 / 1024 )
-			));
+			) );
 
 			$this->imagesCnt += $row->cnt;
 			$this->imagesSize += $row->size;
 		}
 
-		$this->output(sprintf("\n%d image(s) (%d MB) will be migrated...\n",
+		$this->output( sprintf( "\n%d image(s) (%d MB) will be migrated...\n",
 			$this->imagesCnt,
 			round( $this->imagesSize / 1024 / 1024 )
-		));
+		) );
 
-		if ($this->hasOption('stats-only')) {
+		if ( $this->hasOption( 'stats-only' ) ) {
 			return;
 		}
 
@@ -358,103 +358,103 @@ class MigrateImagesToSwift extends Maintenance {
 		$this->time = time();
 
 		// connect to Swift
-		if (!$this->connectToSwift()) {
-			$this->error('Can\'t connect to Swift', 2);
+		if ( !$this->connectToSwift() ) {
+			$this->error( 'Can\'t connect to Swift', 2 );
 		}
 
 		// get / create container
-		if (($this->swiftContainer = $this->getContainer($this->swiftContainerName)) === false) {
-			$this->error('Can\'t get Swift container', 3);
+		if ( ( $this->swiftContainer = $this->getContainer( $this->swiftContainerName ) ) === false ) {
+			$this->error( 'Can\'t get Swift container', 3 );
 		}
 
-		Wikia::log(__CLASS__, false, 'migration started');
+		Wikia::log( __CLASS__, false, 'migration started' );
 
 		// block uploads via WikiFactory
-		WikiFactory::setVarByName('wgEnableUploads',     $wgCityId, false, self::REASON);
-		WikiFactory::setVarByName('wgUploadMaintenance', $wgCityId, true,  self::REASON);
+		WikiFactory::setVarByName( 'wgEnableUploads',     $wgCityId, false, self::REASON );
+		WikiFactory::setVarByName( 'wgUploadMaintenance', $wgCityId, true,  self::REASON );
 
-		$this->output("Uploads and image operations disabled\n\n");
+		$this->output( "Uploads and image operations disabled\n\n" );
 
 		// prepare the list of files to migrate to new storage
 		// (a) current revisions of images
 		// @see http://www.mediawiki.org/wiki/Image_table
-		$this->output("\nA) Current revisions of images - /images\n");
+		$this->output( "\nA) Current revisions of images - /images\n" );
 
-		$res = $dbr->select('image', [
+		$res = $dbr->select( 'image', [
 			'img_name AS name',
 			'img_size AS size',
 			'img_sha1 AS hash',
 			'img_major_mime AS major_mime',
 			'img_minor_mime AS minor_mime',
-		]);
+		] );
 
-		while($row = $res->fetchRow()) {
-			$path = $this->getImagePath($row);
-			$this->copyFile($path, $row);
+		while ( $row = $res->fetchRow() ) {
+			$path = $this->getImagePath( $row );
+			$this->copyFile( $path, $row );
 		}
 
 		// (b) old revisions of images
 		// @see http://www.mediawiki.org/wiki/Oldimage_table
-		$this->output("\nB) Old revisions of images - /archive\n");
+		$this->output( "\nB) Old revisions of images - /archive\n" );
 
-		$res = $dbr->select('oldimage', [
+		$res = $dbr->select( 'oldimage', [
 			'oi_name AS name',
 			'oi_archive_name AS archived_name',
 			'oi_size AS size',
 			'oi_sha1 AS hash',
 			'oi_major_mime AS major_mime',
 			'oi_minor_mime AS minor_mime',
-		]);
+		] );
 
-		while($row = $res->fetchRow()) {
-			$path = $this->getOldImagePath($row);
-			$this->copyFile($path, $row);
+		while ( $row = $res->fetchRow() ) {
+			$path = $this->getOldImagePath( $row );
+			$this->copyFile( $path, $row );
 		}
 
 		// (c) deleted images
 		// @see http://www.mediawiki.org/wiki/Filearchive_table
-		$this->output("\nC) Deleted images - /deleted\n");
+		$this->output( "\nC) Deleted images - /deleted\n" );
 
-		$res = $dbr->select('filearchive', [
+		$res = $dbr->select( 'filearchive', [
 			'fa_name AS name',
 			'fa_storage_key AS storage_key',
 			'fa_size AS size',
 			'fa_major_mime AS major_mime',
 			'fa_minor_mime AS minor_mime',
-		]);
+		] );
 
-		while($row = $res->fetchRow()) {
-			$path = $this->getRemovedImagePath($row);
-			$this->copyFile($path, $row);
+		while ( $row = $res->fetchRow() ) {
+			$path = $this->getRemovedImagePath( $row );
+			$this->copyFile( $path, $row );
 		}
 
 		// summary
-		$report = sprintf('Migrated %d files (%d MB) with %d fails in %d min (%.2f files/sec, %.2f kB/s)',
+		$report = sprintf( 'Migrated %d files (%d MB) with %d fails in %d min (%.2f files/sec, %.2f kB/s)',
 			$this->migratedImagesCnt,
-			round($this->migratedImagesSize / 1024 / 1024),
+			round( $this->migratedImagesSize / 1024 / 1024 ),
 			$this->migratedImagesFailedCnt,
-			ceil((time() - $this->time) / 60),
-			floor($this->imagesCnt) / (time() - $this->time),
-			($this->migratedImagesSize / 1024) / (time() - $this->time)
+			ceil( ( time() - $this->time ) / 60 ),
+			floor( $this->imagesCnt ) / ( time() - $this->time ),
+			( $this->migratedImagesSize / 1024 ) / ( time() - $this->time )
 		);
 
-		$this->output("\n{$report}\n");
-		Wikia::log(__CLASS__, false, 'migration completed:  ' . $report);
+		$this->output( "\n{$report}\n" );
+		Wikia::log( __CLASS__, false, 'migration completed:  ' . $report );
 
 		// update wiki configuration
 		// enable Swift storage via WikiFactory
-		WikiFactory::setVarByName('wgEnableSwiftFileBackend', $wgCityId, true, self::REASON);
+		WikiFactory::setVarByName( 'wgEnableSwiftFileBackend', $wgCityId, true, self::REASON );
 
-		$this->output("\nNew storage enabled\n");
+		$this->output( "\nNew storage enabled\n" );
 
 		// enable uploads via WikiFactory
 		// wgEnableUploads = true / wgUploadMaintenance = false (remove values from WF to give them the default value)
-		WikiFactory::removeVarByName('wgEnableUploads',     $wgCityId, self::REASON);
-		WikiFactory::removeVarByName('wgUploadMaintenance', $wgCityId, self::REASON);
+		WikiFactory::removeVarByName( 'wgEnableUploads',     $wgCityId, self::REASON );
+		WikiFactory::removeVarByName( 'wgUploadMaintenance', $wgCityId, self::REASON );
 
-		$this->output("\nUploads and image operations enabled\n");
+		$this->output( "\nUploads and image operations enabled\n" );
 
-		$this->output("\nDone!\n");
+		$this->output( "\nDone!\n" );
 	}
 }
 

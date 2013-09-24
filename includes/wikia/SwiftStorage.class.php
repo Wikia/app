@@ -31,13 +31,13 @@ class SwiftStorage extends \WikiaObject {
 	 * @param $cityId number|string city ID or wiki name
 	 * @return SwiftStorage storage instance
 	 */
-	public static function newFromWiki($cityId) {
-		$wgUploadPath = \WikiFactory::getVarValueByName('wgUploadPath', $cityId);
-		$path = trim(parse_url($wgUploadPath, PHP_URL_PATH), '/');;
+	public static function newFromWiki( $cityId ) {
+		$wgUploadPath = \WikiFactory::getVarValueByName( 'wgUploadPath', $cityId );
+		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' ); ;
 
-		list($containerName, $prefix) = explode('/', $path, 2);
+		list( $containerName, $prefix ) = explode( '/', $path, 2 );
 
-		return new self($containerName, '/' . $prefix);
+		return new self( $containerName, '/' . $prefix );
 	}
 
 	/**
@@ -46,8 +46,8 @@ class SwiftStorage extends \WikiaObject {
 	 * @param $containerName string container name
 	 * @return SwiftStorage storage instance
 	 */
-	public static function newFromContainer($containerName) {
-		return new self($containerName);
+	public static function newFromContainer( $containerName ) {
+		return new self( $containerName );
 	}
 
 	/**
@@ -57,14 +57,14 @@ class SwiftStorage extends \WikiaObject {
 	 * @param $pathPrefix string prefix to be prepended to remote names
 	 * @throws \Exception
 	 */
-	public function __construct($containerName, $pathPrefix = '') {
+	public function __construct( $containerName, $pathPrefix = '' ) {
 		parent::__construct();
 
-		$this->connect($this->wg->FSSwiftConfig);
+		$this->connect( $this->wg->FSSwiftConfig );
 
-		$this->container = $this->getContainer($containerName);
+		$this->container = $this->getContainer( $containerName );
 		$this->containerName = $containerName;
-		$this->pathPrefix = rtrim($pathPrefix, '/') . '/';
+		$this->pathPrefix = rtrim( $pathPrefix, '/' ) . '/';
 	}
 
 	/**
@@ -73,7 +73,7 @@ class SwiftStorage extends \WikiaObject {
 	 * @param $config array Swift configuration
 	 * @throws \Exception
 	 */
-	private function connect(Array $config) {
+	private function connect( Array $config ) {
 		$auth = new \CF_Authentication(
 			$config['swiftUser'],
 			$config['swiftKey'],
@@ -94,16 +94,16 @@ class SwiftStorage extends \WikiaObject {
 	 * @return \CF_Container object
 	 * @throws \Exception
 	 */
-	private function getContainer($containerName) {
+	private function getContainer( $containerName ) {
 		try {
-			$container = $this->connection->get_container($containerName);
+			$container = $this->connection->get_container( $containerName );
 		}
-		catch(\NoSuchContainerException $ex) {
-			$container =  $this->connection->create_container($containerName);
+		catch ( \NoSuchContainerException $ex ) {
+			$container =  $this->connection->create_container( $containerName );
 		}
 
 		// set public ACL
-		$url = sprintf('http://%s/swift/v1/%s', $this->wg->FSSwiftServer, $containerName);
+		$url = sprintf( 'http://%s/swift/v1/%s', $this->wg->FSSwiftServer, $containerName );
 
 		/* @var $req \CurlHttpRequest */
 		$req = \MWHttpRequest::factory( $url, array( 'method' => 'POST', 'noProxy' => true ) );
@@ -121,9 +121,9 @@ class SwiftStorage extends \WikiaObject {
 	 * @param $remoteFile string remote file name
 	 * @return string remote path
 	 */
-	private function getRemotePath($remoteFile) {
-		$remotePath = $this->pathPrefix . '/' . ltrim($remoteFile, '/');
-		return ltrim($remotePath, '/');
+	private function getRemotePath( $remoteFile ) {
+		$remotePath = $this->pathPrefix . '/' . ltrim( $remoteFile, '/' );
+		return ltrim( $remotePath, '/' );
 	}
 
 	/**
@@ -135,47 +135,47 @@ class SwiftStorage extends \WikiaObject {
 	 * @param bool $mimeType
 	 * @return \Status result
 	 */
-	public function store($localFile, $remoteFile, Array $headers = array(), $mimeType = false) {
+	public function store( $localFile, $remoteFile, Array $headers = array(), $mimeType = false ) {
 		$res = \Status::newGood();
 
-		$remotePath = $this->getRemotePath($remoteFile);
-		wfDebug(__METHOD__ . ": {$localFile} -> {$remotePath}\n");
+		$remotePath = $this->getRemotePath( $remoteFile );
+		wfDebug( __METHOD__ . ": {$localFile} -> {$remotePath}\n" );
 
-		$time = microtime(true);
+		$time = microtime( true );
 
 		try {
-			$fp = @fopen($localFile, 'r');
-			if (!$fp) {
-				\Wikia::log(__METHOD__, 'fopen', "{$localFile} doesn't exist");
-				return \Status::newFatal("{$localFile} doesn't exist");
+			$fp = @fopen( $localFile, 'r' );
+			if ( !$fp ) {
+				\Wikia::log( __METHOD__, 'fopen', "{$localFile} doesn't exist" );
+				return \Status::newFatal( "{$localFile} doesn't exist" );
 			}
 
 			// check file size - sending empty file results in "HTTP 411 MissingContentLengh"
-			$size = fstat($fp)['size'];
-			if ($size === 0) {
-				\Wikia::log(__METHOD__, 'fstat', "{$localFile} is empty");
-				return \Status::newFatal("{$localFile} is empty");
+			$size = fstat( $fp )['size'];
+			if ( $size === 0 ) {
+				\Wikia::log( __METHOD__, 'fstat', "{$localFile} is empty" );
+				return \Status::newFatal( "{$localFile} is empty" );
 			}
 
-			$object = $this->container->create_object($remotePath);
+			$object = $this->container->create_object( $remotePath );
 
 			// metadata
-			if (is_string($mimeType)) {
+			if ( is_string( $mimeType ) ) {
 				$object->content_type = $mimeType;
 			}
 			$object->headers = $headers;
 
 			// upload it
-			$object->write($fp, $size);
-			fclose($fp);
+			$object->write( $fp, $size );
+			fclose( $fp );
 		}
-		catch(\Exception $ex) {
-			\Wikia::log(__METHOD__, 'exception - ' . $localFile, $ex->getMessage());
-			return \Status::newFatal($ex->getMessage());
+		catch ( \Exception $ex ) {
+			\Wikia::log( __METHOD__, 'exception - ' . $localFile, $ex->getMessage() );
+			return \Status::newFatal( $ex->getMessage() );
 		}
 
-		$time = round((microtime(true) - $time) * 1000);
-		wfDebug(__METHOD__ . ": {$localFile} uploaded in {$time} ms\n");
+		$time = round( ( microtime( true ) - $time ) * 1000 );
+		wfDebug( __METHOD__ . ": {$localFile} uploaded in {$time} ms\n" );
 
 		return $res;
 	}
@@ -186,15 +186,15 @@ class SwiftStorage extends \WikiaObject {
 	 * @param $remoteFile string remote file name
 	 * @return \Status result
 	 */
-	public function remove($remoteFile) {
+	public function remove( $remoteFile ) {
 		$res = \Status::newGood();
 
 		try {
-			$this->container->delete_object($this->getRemotePath($remoteFile));
+			$this->container->delete_object( $this->getRemotePath( $remoteFile ) );
 		}
-		catch(\Exception $ex) {
-			\Wikia::log(__METHOD__, 'exception - ' . $remoteFile, $ex->getMessage());
-			return \Status::newFatal($ex->getMessage());
+		catch ( \Exception $ex ) {
+			\Wikia::log( __METHOD__, 'exception - ' . $remoteFile, $ex->getMessage() );
+			return \Status::newFatal( $ex->getMessage() );
 		}
 
 		return $res;
@@ -206,11 +206,11 @@ class SwiftStorage extends \WikiaObject {
 	 * @param $remoteFile string remote file name
 	 * @return bool exists?
 	 */
-	public function exists($remoteFile) {
+	public function exists( $remoteFile ) {
 		try {
-			$this->container->get_object($this->getRemotePath($remoteFile));
+			$this->container->get_object( $this->getRemotePath( $remoteFile ) );
 		}
-		catch(\NoSuchObjectException $ex) {
+		catch ( \NoSuchObjectException $ex ) {
 			return false;
 		}
 
@@ -223,12 +223,12 @@ class SwiftStorage extends \WikiaObject {
 	 * @param $remoteFile string remote file name
 	 * @return string public URL
 	 */
-	public function getUrl($remoteFile) {
-		return sprintf('http://%s/%s%s%s',
+	public function getUrl( $remoteFile ) {
+		return sprintf( 'http://%s/%s%s%s',
 			$this->wg->FSSwiftServer,
 			$this->containerName,
 			$this->pathPrefix,
-			ltrim($remoteFile, '/')
+			ltrim( $remoteFile, '/' )
 		);
 	}
 }
