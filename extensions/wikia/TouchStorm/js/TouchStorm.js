@@ -33,7 +33,6 @@ define( 'wikia.touchstorm', [], function() {
 
 			this.wrapper.on( 'click', 'img, p', function() {
 				// TODO: maybe use loader() to know when script is loaded and dom is ready?
-				that.getVideoList();
 				that.handleClick( $( this ) );
 			});
 
@@ -48,58 +47,64 @@ define( 'wikia.touchstorm', [], function() {
 		setupLightbox: function() {
 
 			if( !this.lightboxInited ) {
-				var that = this;
+				this.getVideoList();
 
-				window.Lightbox.carouselTypes.push( 'touchStorm' );
+				// Add touchstorm to carousel types
+				window.Lightbox.carouselTypes.splice( 1, 0, 'touchStorm' );
 				window.LightboxLoader.cache.touchStorm = [];
 
-				window.Lightbox.getMediaThumbs.touchStorm = function( backfill ) {
-					var cached = window.LightboxLoader.cache.touchStorm,
-						thumbArr = [],
-						playButton = window.Lightbox.thumbPlayButton,
-						videoIds = that.videoList,
-						i,
-						arrLength,
-						key,
-						title;
-
-					if(cached.length) {
-						thumbArr = cached;
-					} else {
-
-						for(i = 0, arrLength = videoIds.length; i < arrLength; i++) {
-							key = videoIds[i].key;
-							title = videoIds[i].title;
-
-							thumbArr.push({
-								thumbUrl: window.Lightbox.thumbParams(videoIds[i].thumb, 'video'),
-								key: key,
-								title: title,
-								type: 'video',
-								playButtonSpan: playButton
-							});
-
-						}
-
-						// Fill touchStorm cache
-						window.LightboxLoader.cache.touchStorm = thumbArr;
-
-						// Count backfill items for progress bar
-						if(backfill) {
-							window.Lightbox.backfillCount += thumbArr.length;
-						}
-
-					}
-
-					// Add thumbs to current lightbox cache
-					window.Lightbox.current.thumbs = window.Lightbox.current.thumbs.concat(thumbArr);
-
-					window.Lightbox.addThumbsToCarousel(thumbArr, backfill);
-				};
+				// Add method for collecting touchstorm thumbs for carousel
+				window.Lightbox.getMediaThumbs.touchStorm = $.proxy( this.getCarouselThumbs, this );
 
 				this.lightboxInited = true;
 			}
 		},
+		getCarouselThumbs: function( backfill ) {
+console.log(this);
+			var cached = window.LightboxLoader.cache.touchStorm,
+				thumbArr = [],
+				playButton = window.Lightbox.thumbPlayButton,
+				videoIds = this.videoList,
+				i,
+				arrLength,
+				key,
+				title;
+
+			if(cached.length) {
+				thumbArr = cached;
+			} else {
+
+				for(i = 0, arrLength = videoIds.length; i < arrLength; i++) {
+					key = videoIds[i].key;
+					title = videoIds[i].title;
+
+					thumbArr.push({
+						thumbUrl: window.Lightbox.thumbParams(videoIds[i].thumb, 'video'),
+						key: key,
+						title: title,
+						type: 'video',
+						playButtonSpan: playButton
+					});
+
+				}
+
+				// Fill touchStorm cache
+				window.LightboxLoader.cache.touchStorm = thumbArr;
+
+				// Count backfill items for progress bar
+				if(backfill) {
+					window.Lightbox.backfillCount += thumbArr.length;
+				}
+
+			}
+
+			// Add thumbs to current lightbox cache
+			window.Lightbox.current.thumbs = window.Lightbox.current.thumbs.concat(thumbArr);
+
+			window.Lightbox.addThumbsToCarousel(thumbArr, backfill);
+
+		},
+		// Parse URL for video key
 		getKeyFromUrl: function( url ) {
 			return url.split( 'File:' )[ 1 ];
 		}
