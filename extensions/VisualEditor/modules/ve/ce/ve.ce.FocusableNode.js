@@ -58,7 +58,9 @@ ve.ce.FocusableNode = function VeCeFocusableNode( $focusable ) {
  * @method
  */
 ve.ce.FocusableNode.prototype.onFocusableSetup = function () {
-	this.surface = this.root.getSurface();
+	if ( this.live ) {
+		this.surface = this.root.getSurface();
+	}
 };
 
 /**
