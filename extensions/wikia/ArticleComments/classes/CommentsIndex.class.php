@@ -25,8 +25,9 @@ class CommentsIndex extends WikiaModel {
 	protected $data = array();
 
 
-	public function __construct( $data = array() ) {	
+	public function __construct( $data = array(), $dbw = null ) {
 		$this->data = $data;
+		$this->$dbw = $dbw;
 		foreach ( $data as $key => $value ) {
 			$this->$key = $value;
 		}
@@ -172,7 +173,8 @@ class CommentsIndex extends WikiaModel {
 
 		if ( !wfReadOnly() && !empty($this->commentId) ) {
 			$this->createTableCommentsIndex();
-			$db = wfGetDB( DB_MASTER );
+
+			$db = $this->dbw ? $this->dbw : wfGetDB( DB_MASTER );
 
 			$updateValue['last_touched'] = $db->timestamp();
 
@@ -182,7 +184,9 @@ class CommentsIndex extends WikiaModel {
 				array( 'comment_id' => $this->commentId ),
 				__METHOD__
 			);
-			$db->commit();
+			if ( is_null($this->dbw ) ) {
+				$db->commit();
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -194,21 +198,11 @@ class CommentsIndex extends WikiaModel {
 	 */
 	public function addToDatabase() {
 
-		//Just for transition time
-		if(empty($this->wg->EnableWallEngine) || !WallHelper::isWallNamespace($this->namespace) ) {
-			return false;
-		}
-
 		wfProfileIn( __METHOD__ );
 
-		// this call and log is left to make sure the readonly in the middle of request is caused by LoadBalancer::getReaderIndex
-		if ( wfReadOnly() ) {
-			global $wgReadOnly;
-			Wikia::log(__FUNCTION__, __LINE__, "WALL_COMMENTS_INDEX_WARNING DB in readonly mode while trying to create comments_index entry, parent_page_id={$this->parentPageId}, comment_id={$this->commentId}, parent_comment_id={$this->parentCommentId} (reason: $wgReadOnly)", true);
-		}
 
 		$this->createTableCommentsIndex();
-		$db = wfGetDB( DB_MASTER );
+		$db = $this->dbw ? $this->dbw : wfGetDB( DB_MASTER );
 		$timestamp = $db->timestamp();
 		if ( empty($this->createdAt) ) {
 			$this->createdAt = $timestamp;
@@ -241,7 +235,9 @@ class CommentsIndex extends WikiaModel {
 			Wikia::log(__FUNCTION__, __LINE__, "WALL_COMMENTS_INDEX_ERROR Failed to create comments_index entry, parent_page_id={$this->parentPageId}, comment_id={$this->commentId}, parent_comment_id={$this->parentCommentId}", true);
 		}
 
-		$db->commit();
+		if ( is_null( $this->dbw ) ) {
+			$db->commit();
+		}
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -253,7 +249,7 @@ class CommentsIndex extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		if ( !wfReadOnly() ) {
-			$db = wfGetDB( DB_MASTER );
+			$db = $this->dbw ? $this->dbw : wfGetDB( DB_MASTER );
 
 			if ( !$db->tableExists('comments_index') ) {
 				$source = dirname(__FILE__) . "/../patch-create-comments_index.sql";
@@ -270,8 +266,7 @@ class CommentsIndex extends WikiaModel {
 	 * @param integer $parentPageId
 	 * @return object $comment
 	 */
-	public static function newFromId( $commentId, $parentPageId = 0 ) {
-		$app = F::App();
+	public static function newFromId( $commentId, $parentPageId = 0, $dbw = null ) {
 
 		wfProfileIn( __METHOD__ );
 
@@ -280,7 +275,7 @@ class CommentsIndex extends WikiaModel {
 			$sqlWhere['parent_page_id'] = $parentPageId;
 		}
 
-		$db = wfGetDB( DB_SLAVE );
+		$db = $dbw ? $dbw : wfGetDB( DB_SLAVE );
 
 		$row = self::selectRow( $db, $sqlWhere );
 
@@ -290,7 +285,7 @@ class CommentsIndex extends WikiaModel {
 		}
 
 		if ( $row ) {
-			$comment = self::newFromRow( $row );
+			$comment = self::newFromRow( $row, $dbw );
 			// reset parent page id
 			if ( !empty($parentPageId) ) {
 				$comment->parentPageId = $parentPageId;
@@ -324,7 +319,7 @@ class CommentsIndex extends WikiaModel {
 	 * @param array row
 	 * @return array comment
 	 */
-	public static function newFromRow( $row ) {
+	public static function newFromRow( $row, $dbw = null ) {
 		$data = array(
 			'parentPageId' => $row->parent_page_id,
 			'commentId' => $row->comment_id,
@@ -342,7 +337,7 @@ class CommentsIndex extends WikiaModel {
 			'lastTouched' => $row->last_touched,
 		);
 		
-		$comment = new CommentsIndex($data);
+		$comment = new CommentsIndex($data, $dbw);
 
 		return $comment;
 	}
@@ -362,11 +357,14 @@ class CommentsIndex extends WikiaModel {
 	 */
 	public function updateParentLastCommentId( $lastChildCommentId ) {
 		wfProfileIn( __METHOD__ );
-
+		if ( $this->commentId != $lastChildCommentId ) {
+			print "updateParentLastCommentId error";
+			die();
+		}
 		if ( !empty($this->parentCommentId) ) {
 			$data = array( 'commentId' => $this->parentCommentId );
-			$parent = new CommentsIndex($data);
-			$parent->updateLastChildCommentId( $lastChildCommentId );
+			$parent = new CommentsIndex($data, $this->dbw);
+			$parent->updateLastChildCommentId( $this->commentId );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -465,6 +463,54 @@ class CommentsIndex extends WikiaModel {
 		}
 		return true;
 
+	}
+
+	private static $commentInfoData = [];
+
+	static public function addCommentInfo($commentTitleText, $userPageTitle, $parentId) {
+		$entry = new stdClass();
+		$entry->userPageTitle = $userPageTitle;
+		$entry->parentId = $parentId;
+
+		self::$commentInfoData[ $commentTitleText ] = $entry;
+	}
+
+	static public function onArticleDoEdit( $dbw,  Title $title, Revision $revision, $flags) {
+		global $wgEnableWallEngine;
+		//@todo co z tworzeniem walla? jest to wall namespace, ale nie ma wpisu - wysypie sie
+		if ( empty( $wgEnableWallEngine ) || !WallHelper::isWallNamespace( $title->getNamespace() ) ) {
+			return false;
+		}
+
+
+		if ( $flags & EDIT_NEW ) {
+			$titleText = $title->getText();
+			if ( !isset( self::$commentInfoData[ $titleText] ) ) {
+				print "titleText: ". $titleText."<br/>\n";
+				print_r( self::$commentInfoData );
+				die();
+			}
+
+			$data = array(
+				'namespace' => self::$commentInfoData[ $titleText]->userPageTitle->getNamespace(),
+				'parentPageId' => self::$commentInfoData[ $titleText]->userPageTitle->getArticleID(),
+				'commentId' => $title->getArticleID(),
+				'parentCommentId' => intval(self::$commentInfoData[ $titleText]->parentId),
+				'firstRevId' => $revision->getId(),
+				'lastRevId' => $revision->getId(),
+			);
+
+			$commentsIndex = new CommentsIndex( $data, $dbw );
+			$commentsIndex->addToDatabase();
+			$commentsIndex->updateParentLastCommentId( $data['commentId'] );
+
+		} else {
+			$commentsIndex = CommentsIndex::newFromId( $title->getArticleID(), 0, $dbw );
+			if ( $commentsIndex instanceof CommentsIndex ) {
+				$commentsIndex->updateLastRevId( $revision->getId() );
+			}
+		}
+		return true;
 	}
 
 }

@@ -171,9 +171,27 @@ class WallExternalController extends WikiaController {
 		}
 	}
 
+	public function testWelcomeMessage() {
+		global $wgUser;
+		error_log("MECH ======================== testWelcomeMessage ======================================");
+		$sRecipientName = $this->request->getVal('username', "1.2.3.4");
+		$wgUser = User::newFromName("Wikia");
+		$mWallMessage = WallMessage::buildNewMessageAndPost(
+			"test message", $sRecipientName, $wgUser,
+			"message content", false, array(), false, false
+		);
+
+		if ( $mWallMessage ) {
+			$x = User::newFromName("Wikia");
+			$mWallMessage->setPostedAsBot( $x );
+			$mWallMessage->sendNotificationAboutLastRev();
+		}
+
+	}
+
 	public function postNewMessage() {
 		wfProfileIn(__METHOD__);
-
+		error_log("MECH ======================== postNewMessage ======================================");
 		$relatedTopics = $this->request->getVal('relatedTopics', array());
 
 		$this->response->setVal('status', true);
@@ -540,6 +558,8 @@ class WallExternalController extends WikiaController {
 
 	public function replyToMessage() {
 		$this->response->setVal('status', true);
+
+		error_log("MECH ======================== replyToMessage ======================================");
 
 		$parentId = $this->request->getVal('parent');
 		$parentTitle = Title::newFromId( $parentId );
