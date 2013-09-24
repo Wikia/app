@@ -119,10 +119,10 @@ class StyleguideComponents {
 	 */
 	public function getComponentSampleFileFullPath( $name ) {
 		return $this->uiFactory->getComponentsDir() .
-		$name .
-		DIRECTORY_SEPARATOR .
-		$name .
-		self::SAMPLE_FILE_SUFFIX;
+			$name .
+			DIRECTORY_SEPARATOR .
+			$name .
+			self::SAMPLE_FILE_SUFFIX;
 	}
 
 	/**
