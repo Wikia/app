@@ -9,15 +9,14 @@
 trait PreventBlockedUsers {
 	static $name = 'PreventBlockedUsers';
 
-	static $ACTION_ERROR = 0;
-
-	static $ACTION_NONE = 1;
+	static $ACTION_NONE = 0; // do nothing, just return false to let the consumer know
+	static $ACTION_ERROR = 1; // actively throw an error
 
 	/** @var bool whether or not this trait actively prevents blocked users from actions */
 	protected $preventBlockedUsers = false;
 
 	/** @var int what action to take when a user is prevented */
-	protected $onUsagePrevented = 0; // self::$ACTION_ERROR;
+	protected $onUsagePrevented = 1; // self::$ACTION_ERROR;
 
 	/**
 	 * list of controller actions that should be allowed even if a user is blocked
