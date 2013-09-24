@@ -5,7 +5,7 @@
  * @todo refactor, the queries should be part of /includes/wikia/models/WikisModel.class.php
  */
 class CityVisualization extends WikiaModel {
-	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.78';
+	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.79';
 	const CITY_VISUALIZATION_CORPORATE_PAGE_LIST_MEMC_VERSION = 'v1.08';
 	const WIKI_STANDARD_BATCH_SIZE_MULTIPLIER = 100;
 
@@ -74,15 +74,17 @@ class CityVisualization extends WikiaModel {
 			unset($promotedWikis);
 		}
 
-		$this->wg->Memc->set($memKey, $wikis, 60 * 60 * 24);
+		$this->wg->Memc->set($memKey, $wikis, 60 * 60 * 1);
 		wfProfileOut(__METHOD__);
 
 		return $wikis;
 	}
 
 	public function getWikiBatchesFromDb($corpWikiId, $contLang) {
+		wfProfileIn(__METHOD__);
 		$wikis = $this->getWikiList($corpWikiId, $contLang);
 		$batches = $this->generateBatches($corpWikiId, $wikis);
+		wfProfileOut(__METHOD__);
 		return $batches;
 	}
 
@@ -139,8 +141,12 @@ class CityVisualization extends WikiaModel {
 	}
 
 	/**
+	 * Generate batches from wikilist returned by getWikiList
+	 *
+	 * @param $corpWikiId int corp wiki Id
 	 * @param $wikis array of verticals => array of wikis
-	 * @desc Generates batches for visualization
+	 *
+	 * @return array
 	 */
 	public function generateBatches($corpWikiId, $wikis) {
 		wfProfileIn(__METHOD__);
@@ -158,35 +164,39 @@ class CityVisualization extends WikiaModel {
 
 		if( isset($wikis[self::PROMOTED_ARRAY_KEY]) ) {
 			$promotedWikis = $wikis[self::PROMOTED_ARRAY_KEY];
+			unset($wikis[self::PROMOTED_ARRAY_KEY]);
 		} else {
 			//just to not flood logs with php notices once a failover has been fired
 			$promotedWikis = array();
 		}
 
-		$batchPromotedOffset = 0;
 		shuffle($promotedWikis);
+		$promotedWikisCount = count($promotedWikis);
 		$verticalsCount = count($verticalMap);
-		unset($wikis[self::PROMOTED_ARRAY_KEY]);
-
 		$verticalSlots = $this->getSlotsForVerticals($corpWikiId);
+
+		$wikisCounts = [];
+		foreach($verticalMap as $verticalName) {
+			$wikisCounts[$verticalName] = count($wikis[$verticalName]);
+		}
 
 		for( $i = 0; $i < self::WIKI_STANDARD_BATCH_SIZE_MULTIPLIER; $i++ ) {
 			$batch = array();
 
-			$batchPromotedWikis = array_slice($promotedWikis, $batchPromotedOffset * self::PROMOTED_SLOTS, self::PROMOTED_SLOTS);
+			$batchPromotedWikis = array_slice($promotedWikis, $offsets[self::PROMOTED_ARRAY_KEY] * self::PROMOTED_SLOTS, self::PROMOTED_SLOTS);
 			$removePerVertical = floor( count($batchPromotedWikis) / $verticalsCount );
 
-			if( ($batchPromotedOffset + 1) * self::PROMOTED_SLOTS >= count($promotedWikis) ) {
-				$batchPromotedOffset = 0;
+			if( ($offsets[self::PROMOTED_ARRAY_KEY] + 1) * self::PROMOTED_SLOTS >= $promotedWikisCount ) {
+				$offsets[self::PROMOTED_ARRAY_KEY] = 0;
 			} else {
-				$batchPromotedOffset++;
+				$offsets[self::PROMOTED_ARRAY_KEY]++;
 			}
 
 			foreach ($wikis as $verticalName => &$wikilist) {
 				$batchWikis = array_slice($wikilist, $offsets[$verticalName] * $verticalSlots[$verticalName], ($verticalSlots[$verticalName] - $removePerVertical) );
 
 				$offsets[$verticalName]++;
-				if( ($offsets[$verticalName] + 1) * $verticalSlots[$verticalName] > count($wikilist) ) {
+				if( ($offsets[$verticalName] + 1) * $verticalSlots[$verticalName] > $wikisCounts[$verticalName] ) {
 					Wikia::log(__METHOD__, ' offset zeroing ', 'zeroing ' . $verticalName . ' offset from ' . $offsets[$verticalName]);
 					$offsets[$verticalName] = 0;
 				}
