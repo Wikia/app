@@ -39,14 +39,6 @@ class WikiaMobileBodyService extends WikiaService {
 			)
 		);
 
-		$this->response->setVal(
-			'navMenu',
-			$this->app->renderView(
-				'WikiaMobileNavigationService',
-				'navMenu'
-			)
-		);
-
 		$this->response->setVal( 'afterBodyContent', $afterBodyHtml );
 		$this->response->setVal( 'afterContentHookText', $afterContentHookText );
 	}

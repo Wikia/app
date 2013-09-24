@@ -273,7 +273,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function combinedMediaSearch() {
 		$request = $this->getRequest();
 		$query = $request->getVal( 'q' );
-		if ( empty( $query ) ) {
+		if ( strlen( $query ) == 0) {
 			throw new Exception( "Please include a query value for parameter 'q'" );
 		}
 		$config = new Wikia\Search\Config;
@@ -503,9 +503,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'isCorporateWiki',       $this->isCorporateWiki() );
 		$this->setVal( 'wgExtensionsPath',      $this->wg->ExtensionsPath);
 		$this->setVal( 'isGridLayoutEnabled',   $isGridLayoutEnabled);
-		if ( in_array( 0, $searchConfig->getNamespaces() ) && !in_array( 6, $searchConfig->getNamespaces() ) ) {
+		$sanitizedQuery = $searchConfig->getQuery()->getSanitizedQuery();
+		if ( strlen($sanitizedQuery)>0 && in_array( 0, $searchConfig->getNamespaces() ) && !in_array( 6, $searchConfig->getNamespaces() ) ) {
 			$combinedMediaResult = $this->sendSelfRequest( 'combinedMediaSearch',
-				array( 'q' => $searchConfig->getQuery()->getSanitizedQuery(), 'videoOnly' => true ) )->getData();
+				array( 'q' => $sanitizedQuery, 'videoOnly' => true ) )->getData();
 			if ( isset($combinedMediaResult) && sizeof($combinedMediaResult['items']) == 4 ) {
 				$this->setVal( 'mediaData', $combinedMediaResult );
 			}
@@ -784,3 +785,4 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	}
 }
+ 
