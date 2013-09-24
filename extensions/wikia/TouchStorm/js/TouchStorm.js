@@ -27,7 +27,7 @@ define( 'wikia.touchstorm', [], function() {
 				that.handleClick( $( this ) );
 			});
 
-			// called from Lightbox.js, so we know the Lightbox code is fully loaded. 
+			// called from Lightbox.js, so we know the Lightbox code is fully loaded.
 			$( window ).on( 'lightboxOpened', $.proxy( this.setupLightbox, this ) );
 		},
 
@@ -56,6 +56,7 @@ define( 'wikia.touchstorm', [], function() {
 				// Add method for collecting touchstorm thumbs for carousel
 				window.Lightbox.getMediaThumbs.touchStorm = $.proxy( this.getCarouselThumbs, this );
 
+				// Make sure this code runs once
 				this.lightboxInited = true;
 			}
 		},
