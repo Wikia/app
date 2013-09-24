@@ -56,6 +56,13 @@ class RelatedPagesController extends WikiaController {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
+	/**
+	 * @desc Converts array results from RelatedPages::get() method to array for mustache template
+	 *
+	 * @param Array $relatedPages array with results of RelatedPages::get() method
+	 *
+	 * @return array of stdObjects for mustache
+	 */
 	private function prepareTemplateVars( $relatedPages ) {
 		wfProfileIn( __METHOD__ );
 
