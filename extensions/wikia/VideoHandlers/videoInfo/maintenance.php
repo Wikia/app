@@ -94,7 +94,7 @@ if ( isset($options['altertable']) ) {
 }
 
 // Default settings if no parameters are given
-if ( !isset($createTable) && !isset($alterTableV1) && !isset($addVideos) && !isset($removeVideos) ) {
+if ( !$createTable && !$alterTableV1 && !$addVideos && !$removeVideos ) {
 	$createTable = true;
 	$addVideos = true;
 	$removeVideos = true;
@@ -133,6 +133,12 @@ if ( $createTable ) {
 		}
 	}
 	printText("Created video_info table.\n");
+
+	// Stop here if we don't
+	if ( $dryrun ) {
+		printText("[DRY RUN] The video_info table must exist before performing any other functions, exiting ...");
+		exit(0);
+	}
 }
 
 /**
@@ -162,7 +168,7 @@ SQL;
 
 	$result = $db->query( $sql, __METHOD__ );
 
-	while( $row = $db->fetchObject($result) ) {
+	while ( $row = $db->fetchObject($result) ) {
 		printText( "Deleted video (local): $row->video_title" );
 		if ( !$dryrun ) {
 			$video->setVideoTitle( $row->video_title );
@@ -195,7 +201,7 @@ SQL;
 
 	$result = $db->query( $sql, __METHOD__ );
 
-	while( $row = $db->fetchObject($result) ) {
+	while ( $row = $db->fetchObject($result) ) {
 		printText( "Embedded Video: " );
 		addVideo( $videoList, $row->name );
 		$total++;
@@ -209,7 +215,7 @@ SQL;
 		__METHOD__
 	);
 
-	while( $row = $db->fetchObject($result) ) {
+	while ( $row = $db->fetchObject($result) ) {
 		printText( "Local Video: " );
 		addVideo( $videoList, $row->name );
 		$total++;
@@ -225,13 +231,13 @@ SQL;
 		__METHOD__
 	);
 
-	while( $row = $db->fetchObject($result) ) {
+	while ( $row = $db->fetchObject($result) ) {
 		printText( "RelatedVideos Article: $row->page_title\n" );
 
 		$title = Title::newFromText( $row->page_title, NS_RELATED_VIDEOS );
 		$relatedVideosNSData = RelatedVideosNamespaceData::newFromTitle( $title );
 		$data = $relatedVideosNSData->getData();
-		foreach( $data['lists']['WHITELIST'] as $v ) {
+		foreach ( $data['lists']['WHITELIST'] as $v ) {
 			printText( 'NS'.NS_RELATED_VIDEOS.": " );
 
 			addVideo( $videoList, $v['title'] );
@@ -244,7 +250,7 @@ SQL;
 	printText( "MediaWiki:RelatedVideosGlobalList\n" );
 	if ( !empty($relatedVideosNSData) ) {
 		$data = $relatedVideosNSData->getData();
-		foreach( $data['lists']['WHITELIST'] as $v ) {
+		foreach ( $data['lists']['WHITELIST'] as $v ) {
 			printText( "GlobalList: " );
 
 			addVideo( $videoList, $v['title'] );

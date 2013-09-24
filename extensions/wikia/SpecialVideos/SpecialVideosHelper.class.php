@@ -31,10 +31,10 @@ class SpecialVideosHelper extends WikiaModel {
 	 * get list of videos
 	 * @param string $sort [recent/popular/trend]
 	 * @param integer $page
-	 * @param string $providers
+	 * @param array $providers
 	 * @return array $videos
 	 */
-	public function getVideos( $sort, $page, $providers = null ) {
+	public function getVideos( $sort, $page, $providers = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( $sort == 'premium' ) {
@@ -106,7 +106,7 @@ class SpecialVideosHelper extends WikiaModel {
 	public function getPostedInMsg( $truncatedList, $isTruncated ) {
 		$postedInMsg = '';
 		$articleLinks = array();
-		foreach( $truncatedList as $article ) {
+		foreach ( $truncatedList as $article ) {
 			$articleLinks[] = $this->getArticleLink( $article );
 		}
 

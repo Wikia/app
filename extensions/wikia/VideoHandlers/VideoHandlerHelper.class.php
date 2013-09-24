@@ -260,6 +260,7 @@ class VideoHandlerHelper extends WikiaModel {
 				$videoDetail = array(
 					'title' => $title->getDBKey(),
 					'fileTitle' => $title->getText(),
+					'description' => $this->getVideoDescription($file),
 					'fileUrl' => $title->getFullURL(),
 					'thumbUrl' => $thumbUrl,
 					'userName' => $userName,
@@ -267,9 +268,9 @@ class VideoHandlerHelper extends WikiaModel {
 					'truncatedList' => $truncatedList,
 					'isTruncated' => $isTruncated,
 					'timestamp' => empty($videoInfo['addedAt']) ? '' : $videoInfo['addedAt'],
-					'duration' => empty($videoInfo['duration']) ? '' : $videoInfo['duration'],
+					'duration' => $file->getMetadataDuration(),
 					'viewsTotal' => empty($videoInfo['viewsTotal']) ? 0 : $videoInfo['viewsTotal'],
-					'provider' => empty($videoInfo['provider']) ? 0 : $videoInfo['provider'],
+					'provider' => $file->getProviderName(),
 					'embedUrl' => $file->getHandler()->getEmbedUrl(),
 				);
 			} else {
@@ -294,7 +295,7 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @param $postedInArticles - Cap on number of "posted in" article details to return
 	 * @return null|array - As associative array of video information
 	 */
-	public function getVideoDetailFromWiki($dbName, $title, $thumbWidth, $thumbHeight, $postedInArticles) {
+	public function getVideoDetailFromWiki( $dbName, $title, $thumbWidth, $thumbHeight, $postedInArticles ) {
 		$params = array('controller'   => 'VideoHandler',
 						'method'       => 'getVideoDetail',
 						'fileTitle'    => $title,
@@ -333,7 +334,7 @@ class VideoHandlerHelper extends WikiaModel {
 	 */
 	public function getTemplateSelectOptions( $options, $selected ) {
 		$opts = array();
-		foreach( $options as $key => $value ) {
+		foreach ( $options as $key => $value ) {
 			$opts[] = array(
 				'label' => $value,
 				'value' => $key,

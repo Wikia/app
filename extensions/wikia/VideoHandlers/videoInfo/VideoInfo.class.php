@@ -48,7 +48,7 @@ class VideoInfo extends WikiaModel {
 
 	/**
 	 * Set the provider name
-	 * @param string $provider The name of the provider for this video (e.g., 'Ooyala', 'AnyClips')
+	 * @param string $provider The name of the provider for this video (e.g., 'ooyala', 'anyclip')
 	 */
 	public function setProvider( $provider ) {
 		$this->provider = $provider;
@@ -291,6 +291,13 @@ SQL;
 		",
 	);
 
+	/**
+	 * Perform an ALTER TABLE operation on the video_info table, given a specific schema version.  Note
+	 * that this will only perform single, consecutive updates, e.g., to update from version 3 to version 5 of the
+	 * schema, you must update first to 4 then update to 5.
+	 *
+	 * @param int $version The schema version to update to.  Defaults to SCHEMA_VERSION
+	 */
 	public function alterTableVideoInfo( $version = VideoInfo::SCHEMA_VERSION ) {
 		wfProfileIn( __METHOD__ );
 
@@ -300,13 +307,9 @@ SQL;
 			if ( $db->tableExists( 'video_info' ) ) {
 				if ( isset($this->versions[$version]) ) {
 					$sql = $this->versions[$version];
-				} else {
-					wfProfileOut( __METHOD__ );
-					return null;
+					$db->query( $sql, __METHOD__ );
+					$db->commit( __METHOD__ );
 				}
-
-				$db->query( $sql, __METHOD__ );
-				$db->commit( __METHOD__ );
 			} else {
 				$this->createTableVideoInfo();
 			}
