@@ -17,8 +17,8 @@
 			<div class="video-thumb"><?= $video[ 'videoThumb' ] ?></div>
 			<div class="input-group">
 				<input type="button" class="wmu-show" value="<?= wfMessage( 'videopagetool-button-add-thumbnail' )->plain() ?>">
-				<p class="new-thumb <?= $video[ 'newThumbClass' ] ?>"><?= $video[ 'newThumbName' ]  ?></p>
-				<input type="hidden" name="newThumbName[]" class="new-thumb" id="new-thumb-<?= $x ?>" value="<?= $video[ 'newThumbName' ] ?>">
+				<p class="alt-thumb <?= $video[ 'altThumbClass' ] ?>"><?= $video[ 'altThumbName' ]  ?></p>
+				<input type="hidden" name="altThumbName[]" class="alt-thumb" id="alt-thumb-<?= $x ?>" value="<?= $video[ 'altThumbName' ] ?>">
 			</div>
 			<div class="input-group border">
 				<label for="display-title-<?= $x ?>"><?= wfMessage( 'videopagetool-label-display-title' )->text() ?></label>

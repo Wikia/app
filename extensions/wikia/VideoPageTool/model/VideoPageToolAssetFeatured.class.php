@@ -8,14 +8,14 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 	protected $title;
 	protected $displayTitle;
 	protected $description;
-	protected $newThumbName;
+	protected $altThumbName;
 
 	// required data field -- array( FormFieldName => varName )
 	protected static $dataFields = array(
 		'videoKey'     => 'title',
 		'displayTitle' => 'displayTitle',
 		'description'  => 'description',
-		'newThumbName' => 'newThumbName',
+		'altThumbName' => 'altThumbName',
 	);
 
 	/**
@@ -28,23 +28,23 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 	 *     displayTitle    => Preferred title entered via Admin tool, e.g. "Bubbles from "Soul Bubbles" on Nintendo DS"
 	 *     videoThumb      => Embed code for the video thumbnail.
 	 *     largeThumbUrl   => Large version of the video thumbnail image.  Does not include the embed code.
-	 *     newThumbName     => Thumbnail that will replace original thumbnail
+	 *     altThumbName    => Thumbnail that will replace original thumbnail
 	 *     description     => Description of this video given in the Admin tool, e.g. "All about Bubbles!"
 	 *     videoTitleClass =>
-	 *     newThumbClass   =>
+	 *     altThumbClass   =>
 	 *     updatedBy       => User who updated this asset last, e.g. "Garthwebb"
 	 *     updatedAt       => Date this asset was last updated, e.g. "17:04, September 13, 2013"
 	 */
 	public function getAssetData() {
 		$helper = new VideoPageToolHelper();
-		$data = $helper->getVideoData( $this->title, $this->newThumbName, $this->displayTitle, $this->description );
+		$data = $helper->getVideoData( $this->title, $this->altThumbName, $this->displayTitle, $this->description );
 		if ( empty( $data ) ) {
 			return self::getDefaultAssetData();
 		}
 
 		// This needs to be set to an empty string when there is a real asset rather than default asset data
 		$data['videoTitleClass'] = '';
-		$data['newThumbClass'] = '';
+		$data['altThumbClass'] = '';
 
 		$assetData = array_merge( $data, parent::getAssetData() );
 
@@ -61,11 +61,11 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 			'videoKey'        => '',
 			'videoThumb'      => '',
 			'largeThumbUrl'   => '',
-			'newThumbName'     => wfMessage( 'videopagetool-image-title-default-text' )->plain(),
+			'altThumbName'     => wfMessage( 'videopagetool-image-title-default-text' )->plain(),
 			'displayTitle'    => '',
 			'description'     => '',
 			'videoTitleClass' => 'alternative',
-			'newThumbClass'   => 'alternative',
+			'altThumbClass'   => 'alternative',
 		);
 		$defaultData = array_merge( $data, parent::getDefaultAssetData() );
 

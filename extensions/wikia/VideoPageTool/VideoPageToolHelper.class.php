@@ -99,12 +99,12 @@ class VideoPageToolHelper extends WikiaModel {
 	/**
 	 * get video data
 	 * @param string $videoTitle
-	 * $param string $newThumbName
+	 * $param string $altThumbName
 	 * @param string $displayTitle
 	 * @param string $description
 	 * @return array $video
 	 */
-	public function getVideoData( $videoTitle, $newThumbName = '', $displayTitle = '', $description = '' ) {
+	public function getVideoData( $videoTitle, $altThumbName = '', $displayTitle = '', $description = '' ) {
 		wfProfileIn( __METHOD__ );
 
 		$video = array();
@@ -127,8 +127,8 @@ class VideoPageToolHelper extends WikiaModel {
 				$largeThumbUrl = $largeThumb->getUrl();
 
 				// replace original thumbnail with the new one
-				if ( !empty( $newThumbName ) ) {
-					$imageData = $this->getImageData( $newThumbName );
+				if ( !empty( $altThumbName ) ) {
+					$imageData = $this->getImageData( $altThumbName );
 					if ( !empty( $imageData ) ) {
 						$videoThumb = str_replace( $thumbUrl, $imageData['thumbUrl'], $videoThumb );
 						$largeThumbUrl = $imageData['largeThumbUrl'];
@@ -146,7 +146,7 @@ class VideoPageToolHelper extends WikiaModel {
 					'videoKey'      => $title->getDBKey(),
 					'videoThumb'    => $videoThumb,
 					'largeThumbUrl' => $largeThumbUrl,
-					'newThumbName'  => $newThumbName,
+					'altThumbName'  => $altThumbName,
 					'displayTitle'  => $displayTitle,
 					'description'   => $description,
 				);
@@ -201,7 +201,7 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
-	 * Validate form field
+	 * Validate form field (called from VideoPageToolAsset::formatFormData())
 	 * @param string $formFieldName
 	 * @param string $value
 	 * @param string $errMsg
@@ -222,7 +222,7 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
-	 * Validate video
+	 * Validate video (called from validateFormField())
 	 * @param string $videoTitle
 	 * @param string $errMsg
 	 * @return boolean
@@ -242,7 +242,7 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
-	 * Validate description
+	 * Validate description (called from validateFormField())
 	 * @param string $description
 	 * @param string $errMsg
 	 */
@@ -256,11 +256,11 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
-	 * Validate new thumbnail
+	 * Validate alternative thumbnail (called from validateFormField())
 	 * @param string $ThumbName
 	 * @param string $errMsg
 	 */
-	public function validateNewThumbName( $ThumbName, &$errMsg ) {
+	public function validateAltThumbName( $ThumbName, &$errMsg ) {
 		$title = Title::newFromText( $ThumbName, NS_FILE );
 		if ( $title instanceof Title ) {
 			$file = wfFindFile( $title );
