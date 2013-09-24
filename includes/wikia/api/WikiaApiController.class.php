@@ -5,7 +5,7 @@
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
 
-abstract class WikiaApiController extends WikiaController {
+class WikiaApiController extends WikiaController {
 	const DEFAULT_FORMAT_INDEX = 0;
 
 	private $allowedFormats = array(
@@ -108,5 +108,16 @@ abstract class WikiaApiController extends WikiaController {
 		//is not cached in Varnish yet, then the API method will run anyways
 		//even if the request doesn't have a valid key... pretty dangerous
 		$this->response->setHeader( $APIGATE_HEADER_REQUIRES_API, 1);
+	}
+	
+	/**
+	 * Returns whether this api request must hide content that is licensed for
+	 * non-commercial use only (some of the wikis with unusual license).
+	 * Currently, direct requests to wikia.php allow all content (this method returns false),
+	 * while requests through /api/v1 entrypoints don't (this method returns true).
+	 */
+	
+	public function hideNonCommercialContent() {
+		return stripos($this->request->getScriptUrl(), "/api/v1")===0;
 	}
 }
