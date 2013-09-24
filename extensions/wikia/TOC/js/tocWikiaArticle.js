@@ -160,6 +160,11 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 			showHideTOC($target);
 		});
 
+		// reset hasTOC flag for each time preview modal is opened
+		$(window).on('EditPageRenderPreview', function() {
+			hasTOC = false;
+		});
+
 		/** Auto expand TOC in article for logged-in users with hideTOC cookie set to 'null'  */
 		if (window.wgUserName !== null && $.cookie('mw_hidetoc') === null) {
 			var $showLink = $('#togglelink');
