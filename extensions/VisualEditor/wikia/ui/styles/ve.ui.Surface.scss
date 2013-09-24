@@ -1,11 +1,10 @@
-/** 
+/**
  * There are a couple of conflicting z-indexes that require that we set a high z-index for our overlay.
  *
  * #WikiaPage element in Oasis has z-index=1
  * .Wikia-video-play-button in Wikia videos has z-index=100
  *
- * This crazy 20000000 number is the same as the $zTop Sass variable that we use in Oasis styling.
  */
 .ve-ui-surface-overlay {
-	z-index: 20000000;
+	z-index: $zTop;
 }

@@ -57,25 +57,10 @@ $wgResourceModules += array(
 			'ui/tools/buttons/ve.ui.WikiaMediaInsertButtonTool.js',
 			'ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
 		),
-		'styles' => array(
-			'ui/styles/ve.ui.Tool.css',
-			'ui/styles/ve.ui.Icons-vector.css',
-			'ui/styles/ve.ui.Surface.css'
-		),
 		'messages' => array(
 			'oasis-content-picture-added-by',
 			'visualeditor-wikiamediainsertbuttontool-label',
 			'videohandler-video-views'
-		),
-		'dependencies' => array(
-			'ext.visualEditor.core'
-		),
-		'localBasePath' => dirname( __FILE__ ),
-		'remoteExtPath' => 'VisualEditor/wikia',
-	),
-	'ext.visualEditor.iconsVector' => array(
-		'styles' => array(
-			'ui/styles/ve.ui.Icons-vector.css',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core'

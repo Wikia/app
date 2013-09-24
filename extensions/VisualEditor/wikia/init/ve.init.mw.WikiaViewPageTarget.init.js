@@ -49,6 +49,9 @@
 				.fail( getTargetDeferred.reject );
 
 			mw.loader.using( 'ext.visualEditor.wikiaViewPageTarget', loadTargetDeferred.resolve, loadTargetDeferred.reject );
+			$.getResources( [
+				$.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' )
+			] );
 		}
 		return getTargetDeferred.promise();
 	}
