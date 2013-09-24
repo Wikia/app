@@ -1,0 +1,32 @@
+{{^skipRendering}}
+	<section id=wkRelPag class="RelatedPagesModule noprint{{#mobileSkin}} show{{/mobileSkin}}">
+	{{#mobileSkin}}
+		<h1 id=wkRelPagHead class="collSec addChev open">
+			{{relatedPagesHeading}}
+			<span class=chev></span>
+		</h1>
+	{{/mobileSkin}}
+	{{^mobileSkin}}
+		<h2 id=wkRelPagHead>{{relatedPagesHeading}}</h2>
+	{{/mobileSkin}}
+	<ul {{#mobileSkin}}class="wkLst artSec open"{{/mobileSkin}}>
+		{{#pages}}
+			<li>
+				<a href="{{pageUrl}}" title="{{pageTitle}}">
+					{{#imgUrl}}
+					<img src="{{imgUrl}}" alt="{{pageTitle}}" width="{{imgWidth}}" height="{{imgHeight}}" />
+					{{/imgUrl}}
+
+					{{^mobileSkin}}
+						{{#artSnippet}}
+							<div class=articleSnippet><p>{{artSnippet}}</p></div>
+						{{/artSnippet}}
+					{{/mobileSkin}}
+
+					<span class="more">{{pageTitle}}</span>
+				</a>
+			</li>
+		{{/pages}}
+	</ul>
+	</section>
+{{/skipRendering}}

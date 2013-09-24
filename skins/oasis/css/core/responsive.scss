@@ -166,12 +166,16 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 	}
 }
 
+html {
+	overflow-y: auto;
+}
+
 body {
 	min-width: $width-outside-min;
-
 	@if ( $background-is-dynamic ) {
 		background: $color-body;
-		overflow-x: hidden;
+		overflow: hidden;
+		position: relative;
 
 		&:after,
 		&:before {
@@ -286,7 +290,7 @@ body > .global-notification,
 
 .WikiaRail {
 	overflow: hidden;
-	padding: 0 10px 0 0;
+	padding: 0 10px 10px 0;
 }
 
 // START - edit page fixes
@@ -506,10 +510,6 @@ body > .global-notification,
 
 	.WikiaTopAds {
 		width: 100%;
-
-		#TOP_BUTTON_WIDE {
-			display: none;
-		}
 	}
 }
 

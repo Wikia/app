@@ -100,6 +100,7 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author Roxas Nobody 15
  */
 $messages['ca'] = array(
@@ -122,6 +123,7 @@ $messages['ca'] = array(
 	'feed-title-hot-content' => 'Contenido Novedós - $1',
 	'feed-title-blogcomments' => 'Comentaris - $1',
 	'feed-title-recentchanges' => 'Canvis Recents',
+	'partner-feed-error-no-blogpost-found' => "<b>Error:</b> L'entrada de bloc $1 no existeix.",
 );
 
 /** Chechen (нохчийн)
@@ -205,6 +207,7 @@ $messages['es'] = array(
 	'feed-title-hot-content' => 'Contenido Novedoso - $1',
 	'feed-title-blogcomments' => 'Comentarios de $1',
 	'feed-title-recentchanges' => 'Cambios recientes',
+	'partner-feed-error-no-blogpost-found' => '<b>Error:</b> La entrada de blog $1 no existe.',
 );
 
 /** Persian (فارسی)
@@ -281,6 +284,7 @@ $messages['gl'] = array(
 	'feed-title-hot-content' => 'Contido popular - $1',
 	'feed-title-blogcomments' => 'Comentario sobre $1',
 	'feed-title-recentchanges' => 'Cambios recentes',
+	'partner-feed-error-no-blogpost-found' => '<b>Erro:</b> A entrada de blogue "$1" non existe.',
 );
 
 /** Hungarian (magyar)
@@ -472,6 +476,7 @@ $messages['nl'] = array(
 	'feed-title-hot-content' => 'Populaire inhoud - $1',
 	'feed-title-blogcomments' => 'Opmerkingen bij $1',
 	'feed-title-recentchanges' => 'Recente wijzigingen',
+	'partner-feed-error-no-blogpost-found' => '<b>Fout:</b> Blogbericht $1 bestaat niet.',
 );
 
 /** Polish (polski)
@@ -659,6 +664,7 @@ $messages['sv'] = array(
 	'feed-title-hot-content' => 'Hett innehåll - $1',
 	'feed-title-blogcomments' => 'Kommentarer till $1',
 	'feed-title-recentchanges' => 'Senaste ändringar',
+	'partner-feed-error-no-blogpost-found' => '<b>Fel:</b> Blogginlägget $1 finns inte.',
 );
 
 /** Tamil (தமிழ்)

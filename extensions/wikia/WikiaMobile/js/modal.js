@@ -1,4 +1,4 @@
-/*global define, WikiaMobile */
+/*global Features, WikiaMobile */
 /**
  * Full screen modal in Wikia Mobile
  *
@@ -6,6 +6,8 @@
  */
 
 define('modal', ['throbber', 'jquery'], function modal(throbber, $){
+	'use strict';
+
 	var d = document,
 		w = window,
 		html = d.documentElement,
@@ -59,10 +61,18 @@ define('modal', ['throbber', 'jquery'], function modal(throbber, $){
 	function onOrientationChange(ev){
 		//Setting minHeight is essential to hide url bar in a browser
 		//in GameGuides though there is nothing to hide
-		if(!Features.gameguides) wrapper.style.minHeight = ev.height + 'px';
-		!w.pageYOffset && w.scrollTo(0, 1);
 
-		if(typeof onResize == 'function') onResize(ev);
+		if(!Features.gameguides) {
+			wrapper.style.minHeight = ev.height + 'px';
+		}
+
+		if(!w.pageYOffset) {
+			w.scrollTo(0, 1);
+		}
+
+		if(typeof onResize === 'function') {
+			onResize(ev);
+		}
 	}
 
 	function hideUI(){
@@ -120,7 +130,7 @@ define('modal', ['throbber', 'jquery'], function modal(throbber, $){
 			},50);
 
 			//needed for closing modal on back button
-			w.location.hash = "Modal";
+			w.location.hash = 'Modal';
 
 			//hide adress bar on orientation change
 			w.addEventListener('viewportsize', onOrientationChange);

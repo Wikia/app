@@ -42,12 +42,14 @@ define('sloth', function(){
 					addEvent();
 				}, debounce);
 
-				wTop = win.scrollY;
+				// in IE10 window.scrollY doesn't work
+				// but window.pageYOffset is basically the same
+				// https://developer.mozilla.org/en-US/docs/Web/API/window.scrollY
+				wTop = win.scrollY || win.pageYOffset;
 				wBottom = wTop + win.innerHeight;
 
 				while(i--){
 					branch = branches[i];
-
 					if (branch.isVisible()) {
 						delegate( branch.callback, 0 );
 						branches.splice(i, 1);
@@ -58,12 +60,22 @@ define('sloth', function(){
 
 	Branch.prototype.isVisible = function(){
 		var elem =  this.element,
-			threshold = this.threshold,
-			top = (elem.offsetTop || elem.y) - threshold,
-			height = elem.offsetHeight,
+			mayBeVisible = elem.scrollHeight || elem.scrollWidth,
+			height,
+			threshold,
+			top,
+			bottom;
+
+		if(mayBeVisible) {
+			threshold = this.threshold;
+			height = elem.offsetHeight;
+			top = (elem.offsetTop || elem.y) - threshold;
 			bottom = top + height + threshold;
 
-		return (height && wBottom >= top && wTop <= bottom);
+			return wBottom >= top && wTop <= bottom;
+		}
+
+		return false;
 	};
 
 	//return Sloth function
@@ -76,16 +88,22 @@ define('sloth', function(){
 
 			debounce = params.debounce !== undef ? params.debounce : 500;
 
-			if(!elements) throw 'No elements passed';
-			if(!callback) throw 'No callback passed';
+			if(!elements) {
+				throw 'No elements passed';
+			}
+			if(!callback) {
+				throw 'No callback passed';
+			}
 
 			if(elements.length !== undef){
 				elements = slice.call(elements);
 				i = elements.length;
 
-				while(i--) branches.push(new Branch(elements[i], threshold, callback));
+				while(i--) {
+					branches.push(new Branch(elements[i], threshold, callback));
+				}
 			}else {
-				branches.push(new Branch(elements, threshold, callback))
+				branches.push(new Branch(elements, threshold, callback));
 			}
 		}
 

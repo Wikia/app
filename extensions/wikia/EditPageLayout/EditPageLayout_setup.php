@@ -77,11 +77,7 @@ JSMessages::registerPackage('EditPageLayout', array(
 	'editpagelayout-modules-*',
 	'wikia-editor-*',
 	'restore-edits-*',
-	'plb-special-form-cat-info',
-	'wikia-editor-preview-current-width',
-	'wikia-editor-preview-min-width',
-	'wikia-editor-preview-max-width',
-	'wikia-editor-preview-type-tooltip'
+	'plb-special-form-cat-info'
 ));
 
 // Ajax dispatcher

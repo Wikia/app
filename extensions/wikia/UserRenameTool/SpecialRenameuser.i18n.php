@@ -687,6 +687,7 @@ Molimo Vas da se vratite nazad i pokušate ponovo.',
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author Juanpabl
  * @author Marcmpujol
  * @author Paucabot
@@ -700,6 +701,7 @@ $messages['ca'] = array(
 	'userrenametool-desc' => "Reanomena un usuari (necessita drets de ''renameuser'')",
 	'userrenametool-old' => "Nom d'usuari actual:",
 	'userrenametool-new' => "Nou nom d'usuari:",
+	'userrenametool-encoded' => 'URL codificat:',
 	'userrenametool-reason' => 'Motiu pel canvi:',
 	'userrenametool-move' => "Reanomena la pàgina d'usuari, la de discussió i les subpàgines que tingui al nou nom",
 	'userrenametool-reserve' => "Bloca el nom d'usuari antic d'usos futurs",
@@ -770,6 +772,7 @@ $messages['ce'] = array(
 	'renameuser' => 'Декъашхочун цӀе хийца',
 	'userrenametool-submit' => 'Кхочушдé',
 	'userrenametool-page-exists' => 'Агӏо $1 йолуш ю цундела и ша юху дӏаязъян йиш яц.',
+	'userrenametool-move-log' => 'Автоматически декъашхочун цӀе хийцина дела «[[User:$1|$1]]» оцу «[[User:$2|$2]]»',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -1166,6 +1169,7 @@ $messages['es'] = array(
 	'userrenametool-desc' => "Añade una [[Special:UserRenameTool|página especial]] para renombrar a un usuario (necesita el derecho ''renameuser'') y procesa todos los datos relacionados",
 	'userrenametool-old' => 'Nombre actual:',
 	'userrenametool-new' => 'Nuevo nombre de usuario:',
+	'userrenametool-encoded' => 'URL codificada:',
 	'userrenametool-reason' => 'Motivo:',
 	'userrenametool-move' => 'Trasladar las páginas de usuario y de discusión (y sus subpáginas) al nuevo nombre',
 	'userrenametool-reserve' => 'Bloquea el antiguo nombre de usuario para evitar usarlo en el futuro',
@@ -1529,6 +1533,7 @@ $messages['gl'] = array(
 	'userrenametool-desc' => "Engade unha [[Special:UserRenameTool|páxina especial]] para renomear un usuario (cómpre ter o dereito de ''renomear usuarios'') e procesar todos os datos relacionados",
 	'userrenametool-old' => 'Nome de usuario actual:',
 	'userrenametool-new' => 'Novo nome de usuario:',
+	'userrenametool-encoded' => 'Enderezo URL codificado:',
 	'userrenametool-reason' => 'Motivo para mudar o nome:',
 	'userrenametool-move' => 'Mover as páxinas de usuario e de conversa (xunto coas subpáxinas) ao novo nome',
 	'userrenametool-reserve' => 'Reservar o nome de usuario vello para un uso posterior',
@@ -2324,7 +2329,7 @@ $messages['kn'] = array(
  */
 $messages['ko'] = array(
 	'renameuser' => '사용자 이름 바꾸기',
-	'userrenametool-desc' => "사용자 이름을 바꾸기 위한 [[Special:UserRenameTool|특수 문서]]를 추가 (''renameuser'' 권한 필요) 및 모든 관련 데이터 처리",
+	'userrenametool-desc' => "사용자 이름을 바꾸기 위한 [[Special:UserRenameTool|특수 문서]]를 추가하고 ('''renameuser''' 권한 필요) 및 모든 관련 데이터를 처리합니다",
 	'userrenametool-old' => '기존 사용자 이름:',
 	'userrenametool-new' => '새 이름:',
 	'userrenametool-reason' => '바꾸는 이유:',
@@ -2334,7 +2339,7 @@ $messages['ko'] = array(
 	'userrenametool-confirm' => '예, 이름을 변경합니다.',
 	'userrenametool-submit' => '사용자 이름 바꾸기',
 	'userrenametool-errordoesnotexist' => '‘<nowiki>$1</nowiki>’ 사용자가 존재하지 않습니다.',
-	'userrenametool-errorexists' => '‘<nowiki>$1</nowiki>’ 사용자가 이미 존재합니다.',
+	'userrenametool-errorexists' => '"<nowiki>$1</nowiki>" 사용자가 이미 존재합니다.',
 	'userrenametool-errorinvalid' => '‘<nowiki>$1</nowiki>’ 사용자 이름이 잘못되었습니다.',
 	'userrenametool-errortoomany' => '"<nowiki>$1</nowiki>" 사용자는 기여를 $2번 했습니다. $3번을 넘는 기여를 한 사용자의 이름을 변경하는 것은 성능 저하를 일으킬 수 있습니다.',
 	'userrenametool-error-request' => '요청을 보내는 데 문제가 있습니다.
@@ -3990,6 +3995,7 @@ Se [[Special:Stafflog|personalloggen]] för loggar.',
 	'userrenametool-desc' => "Lägger till en [[Special:Renameuser|specialsida]] för att byta namn på en användare (kräver behörigheten ''renameuser'')",
 	'userrenametool-old' => 'Nuvarande användarnamn:',
 	'userrenametool-new' => 'Nytt användarnamn:',
+	'userrenametool-encoded' => 'URL-kodad:',
 	'userrenametool-reason' => 'Anledning till namnbytet:',
 	'userrenametool-move' => 'Flytta användarsidan och användardiskussionen (och deras undersidor) till det nya namnet',
 	'userrenametool-reserve' => 'Reservera det gamla användarnamnet från framtida användning',

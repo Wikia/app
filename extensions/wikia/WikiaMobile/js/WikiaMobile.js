@@ -26,6 +26,8 @@ require(['wikia.querystring', require.optional('topbar'), require.optional('toc'
 		});
 
 		$(d.getElementById('wkFllSite')).on('click', function(event){
+			var skin = this.getAttribute('data-skin') || 'oasis';
+
 			event.preventDefault();
 			event.stopPropagation();
 			cookies.set('mobilefullsite', 'true');
@@ -40,7 +42,7 @@ require(['wikia.querystring', require.optional('topbar'), require.optional('toc'
 		//close toc and topbar when 'curtain' is clicked
 		d.getElementById('wkCurtain').addEventListener(clickEvent, function(){
 			toc.close();
-			topbar.closeDropDown();
+			topbar.close();
 		});
 
 		if (wkShrPag) {

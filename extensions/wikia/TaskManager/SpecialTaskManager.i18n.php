@@ -321,6 +321,10 @@ $messages['oc'] = array(
 	'taskmanager' => 'Afichar e gerir los prètzfaches de rèire plan',
 	'taskmanager_title' => 'Afichar e gerir los prètzfaches de rèire plan',
 	'taskmanager_tasklist' => 'Tornar a la lista dels prètzfaches',
+	'right-taskmanager' => 'Pòt afichar los prètzfaches en rèire plan',
+	'right-taskmanager-action' => 'Pòt gerir los prètzfaches en rèire plan',
+	'taskmanager-invert' => 'Inversar la seleccion',
+	'action-taskmanager' => 'afichar e gerir los prètzfaches de rèire plan',
 );
 
 /** Polish (polski)

@@ -19,9 +19,12 @@ class WikiaForeignDBFile extends ForeignDBFile {
 	/**
 	 * Create a WikiaForeignDBFile from a title
 	 * Do not call this except from inside a repo class.
+	 *
+	 * @return WikiaForeignDBFile
 	 */
 	static function newFromRow( $row, $repo ) {
 		$title = Title::makeTitle( NS_FILE, $row->img_name );
+		/* @var $file WikiaForeignDBFile */
 		$file = new static( $title, $repo );
 		$file->loadFromRow( $row );
 		return $file;

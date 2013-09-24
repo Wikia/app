@@ -342,6 +342,7 @@ N'haller ket cheñch ar gerioù-termen",
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author BroOk
  * @author Marcmpujol
  */
@@ -378,6 +379,7 @@ $messages['ca'] = array(
 	'userlogin-error-mail-error' => "Perdó, ha hagut un problema al enviar el teu correu electrònico. Si us plau, [[Special:Contact/general|contacta'ns]].",
 	'userlogin-password-email-sent' => "Hem enviat una nova contrasenya a l'adreça electrònica $1.",
 	'userlogin-error-unconfirmed-user' => "No has confirmat la teva adreça electrònica. Confirma primer l'adreça electrònica.",
+	'userlogin-error-confirmation-reminder-already-sent' => "Ja s'havia enviat un correu electrònic de recordatori de confirmació.",
 	'userlogin-password-page-title' => 'Canvia la teva contrasenya',
 	'userlogin-oldpassword' => 'Antiga contrasenya',
 	'userlogin-newpassword' => 'Nova contrasenya',
