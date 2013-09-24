@@ -49,6 +49,9 @@
 				.fail( getTargetDeferred.reject );
 
 			mw.loader.using( 'ext.visualEditor.wikiaViewPageTarget', loadTargetDeferred.resolve, loadTargetDeferred.reject );
+			$.getResources( [
+				$.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' )
+			] );
 		}
 		return getTargetDeferred.promise();
 	}
@@ -176,7 +179,7 @@
 
 			getTarget().done( function ( target ) {
 				ve.track( 'Edit', { action: 'edit-link-click' } );
-				loadSassAndActivate( target );
+				target.activate();
 			} );
 		},
 
@@ -190,7 +193,7 @@
 			getTarget().done( function ( target ) {
 				ve.track( 'Edit', { action: 'section-edit-link-click' } );
 				target.saveEditSection( $( e.target ).closest( 'h1, h2, h3, h4, h5, h6' ).get( 0 ) );
-				loadSassAndActivate( target );
+				target.activate();
 			} );
 		}
 	};
@@ -273,17 +276,10 @@
 		if ( init.isAvailable && isViewPage ) {
 			if ( uri.query.veaction === 'edit' ) {
 				getTarget().done( function ( target ) {
-					loadSassAndActivate( target );
+					target.activate();
 				} );
 			}
 		}
 		init.setupSkin();
 	} );
-
-	function loadSassAndActivate( target ) {
-		$.getResources( [
-			$.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' )
-		] );
-		target.activate();
-	};
 }() );
