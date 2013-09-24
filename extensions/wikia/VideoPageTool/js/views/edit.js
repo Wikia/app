@@ -117,7 +117,7 @@ define( 'vpt.views.edit', [
 
 			// If the back end has thrown an error, run the front end validation on page load
 			if( $( '#vpt-form-error' ).length ) {
-				this.validator.checkFields();
+				this.validator.formIsValid();
 			}
 		},
 
@@ -141,7 +141,7 @@ define( 'vpt.views.edit', [
 
 		/*
 		 * This reset is very specific to this form since it covers reverting titles and thumbnails
-		 * @todo: we may want to just create a default empty version of the form and hide it if it's not needed.
+		 * @TODO: we may want to just create a default empty version of the form and hide it if it's not needed.
 		 * That way we could just replace all the HTML to its default state without worrying about clearing every form
 		 * field.
 		 */
