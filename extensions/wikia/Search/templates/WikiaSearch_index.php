@@ -100,7 +100,7 @@
 			<?php endif; ?>
 
 			</div>
-			<div class="SearchAdsTopWrapper grid-2 alpha">
+			<div class="SearchAdsTopWrapper WikiaRail <?= !empty($isGridLayoutEnabled) ? 'grid-2' : '' ?> alpha">
 				<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')); ?>
 				<?= $topWikiArticles ?>
 				<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2')); ?>
