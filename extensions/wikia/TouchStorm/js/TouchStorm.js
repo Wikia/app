@@ -40,7 +40,8 @@ define( 'wikia.touchstorm', [], function() {
 
 			window.LightboxLoader.loadLightbox( videoKey, {
 				parent: that.wrapper,
-				carouselType: 'touchStorm'
+				carouselType: 'touchStorm',
+				clickSource: 'touchStorm'
 			});
 		},
 
