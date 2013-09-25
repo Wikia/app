@@ -10,5 +10,8 @@ $messages['en'] = [
 	"title" as object params. In addition one of the object should have "active" param set to true in order to point
 	to active section',
 	'styleguide-description-toc-id' => 'String of ids for TOC element',
-	'styleguide-description-toc-class' => 'String of classes for TOC element'
+	'styleguide-description-toc-class' => 'String of classes for TOC element',
+
+	// examples
+	'styleguide-example-description-toc-unavailable' => "This component's examples are unavailable"
 ];
