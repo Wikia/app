@@ -158,8 +158,11 @@ pre {
 #toc > div {
     padding: 5px;
 }
-#toc.show > ol {
+#toc > ol {
     display: none;
+}
+#toc.show > ol {
+    display: block;
 }
 /* End of Wikia changes */
 
