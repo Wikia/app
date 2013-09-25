@@ -460,6 +460,11 @@
 				}
 			};
 
+			// pass info about dropped rail to preview module
+			if (wgOasisResponsive && pageWidth <= railBreakPoint) {
+				previewOptions.isRailDropped = true;
+			}
+
 			require(['wikia.preview'], function(preview) {
 				preview.renderPreview(previewOptions);
 			});

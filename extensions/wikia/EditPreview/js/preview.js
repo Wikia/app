@@ -41,7 +41,9 @@ define( 'wikia.preview', [
 				name:'max',
 				value: 1300 - articleMargin * 2
 			}
-		}
+		},
+		isRailDropped = false,
+		FIT_SMALL_SCREEN = 80; // pixels to be removed from modal width to fit modal on small screens, won't be needed when new modals will be introduced
 
 	// show dialog for preview / show changes and scale it to fit viewport's height
 	function renderDialog(title, options, callback) {
@@ -92,6 +94,11 @@ define( 'wikia.preview', [
 	 * @param options object containing dialog options, see method description for details
 	 */
 	function renderPreview(options) {
+
+		if (options.isRailDropped) {
+			isRailDropped = true;
+		}
+
 		var dialogOptions = {
 			buttons: [
 				{
@@ -108,7 +115,7 @@ define( 'wikia.preview', [
 					handler: options.onPublishButton
 				}
 			],
-			width: options.width,
+			width: (!isRailDropped) ? options.width : options.width - FIT_SMALL_SCREEN,
 			className: 'preview',
 			onClose: function() {
 				$(window).trigger('EditPagePreviewClosed');
@@ -118,6 +125,10 @@ define( 'wikia.preview', [
 		$(window).trigger('EditPageRenderPreview', [dialogOptions]);
 
 		renderDialog(msg('preview'), dialogOptions, function(contentNode) {
+
+			if (isRailDropped) {
+				contentNode.width(options.width - articleMargin * 2 - 15);
+			}
 
 			options.getPreviewContent(function(content, summary) {
 
