@@ -74,7 +74,7 @@ class SwiftStorage {
 
 		$this->container = $this->getContainer( $containerName );
 		$this->containerName = $containerName;
-		$this->pathPrefix = rtrim( $pathPrefix, '/' ) . '/';
+		$this->pathPrefix = rtrim( $pathPrefix, '/' );
 	}
 
 	/**
@@ -234,7 +234,7 @@ class SwiftStorage {
 	 * @return string public URL
 	 */
 	public function getUrl( $remoteFile ) {
-		return sprintf( 'http://%s/%s%s%s',
+		return sprintf( 'http://%s/%s%s/%s',
 			$this->wg->FSSwiftServer,
 			$this->containerName,
 			$this->pathPrefix,
