@@ -4,7 +4,6 @@
 define( 'wikia.preview', [
 	'wikia.window',
 	'wikia.nirvana',
-	'wikia.deferred',
 	'jquery',
 	'wikia.loader',
 	'wikia.mustache',
@@ -14,7 +13,6 @@ define( 'wikia.preview', [
 ], function(
 	window,
 	nirvana,
-	deferred,
 	$,
 	loader,
 	mustache,
