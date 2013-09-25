@@ -1,4 +1,5 @@
 @import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/core/layout";
 
 .WAMPage {
 	.WikiaPage .WikiaPageContentWrapper {
@@ -15,7 +16,11 @@
 	.wam-header {
 		background-image: url("/extensions/wikia/WAMPage/images/wamheader.png");
 		height: 100px;
-		width: 1030px;
+		@if ( $responsive-layout-enabled ) {
+			width: 100%;
+		} else {
+			width: 1030px;
+		}
 		h2 {
 			padding: 11px 0 0 25px;
 			text-transform: uppercase;
@@ -35,7 +40,11 @@
 .wam-header {
 	background-image: url("/extensions/wikia/WAMPage/images/wamheaderbg.jpg");
 	height: 285px;
-	width: 1030px;
+	@if ( $responsive-layout-enabled ) {
+		width: 100%;
+	} else {
+		width: 1030px;
+	}
 	h2 {
 		border: 0;
 		color: #f2f2f2;
@@ -44,7 +53,12 @@
 		margin: 0;
 		padding: 50px 25px;
 		text-transform: capitalize;
-		width: 300px;
+
+		@if ( $responsive-layout-enabled ) {
+			width: auto;
+		} else {
+			width: 300px;
+		}
 	}
 	.wam-cards {
 		width: 680px;
@@ -133,7 +147,11 @@
 .wam-progressbar {
 	background-color: #e5e5e5;
 	height: 4px;
-	width: 1030px;
+	@if ( $responsive-layout-enabled ) {
+		width: 100%;
+	} else {
+		width: 1030px;
+	}
 }
 
 .wam-content {
@@ -169,6 +187,9 @@
 		height: 72px;
 		list-style: none;
 		margin: 0;
+		@if ( $responsive-layout-enabled ) {
+			width: 19%;
+		}
 		a {
 			color: #666;
 			display: block;
@@ -177,7 +198,9 @@
 			line-height: 15px;
 			padding: 23px 15px 0 15px;
 			text-transform: uppercase;
-			width: 172px;
+			@if ( $responsive-layout-enabled == false ) {
+				width: 172px;
+			}
 		}
 		a:hover {
 			color: #0a5fa3;
@@ -190,14 +213,18 @@
 	li:first-child {
 		border-left: none;
 		a {
-			width: 181px;
+			@if ( $responsive-layout-enabled == false ) {
+				width: 181px;
+			}
 		}
 	}
 }
 
 .wam-index {
 	margin: 25px 10px 50px;
-	width: 1010px;
+	@if ( $responsive-layout-enabled ) {
+		width: 1010px;
+	}
 	.wam-index-search {
 		.filtering {
 			float: left;
