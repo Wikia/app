@@ -1,8 +1,27 @@
 /**
  * Preview for the editor, this should be moved to /resources/wikia/modules once we want to use it for several skins
  */
-define( 'wikia.preview', [ 'wikia.window', 'wikia.nirvana', 'wikia.deferred', 'jquery', 'wikia.loader', 'wikia.mustache', 'JSMessages', 'wikia.tracker', 'wikia.csspropshelper'],
-	function(window, nirvana, deferred, $, loader, mustache, msg, tracker, cssPropHelper) {
+define( 'wikia.preview', [
+	'wikia.window',
+	'wikia.nirvana',
+	'wikia.deferred',
+	'jquery',
+	'wikia.loader',
+	'wikia.mustache',
+	'JSMessages',
+	'wikia.tracker',
+	'wikia.csspropshelper'
+], function(
+	window,
+	nirvana,
+	deferred,
+	$,
+	loader,
+	mustache,
+	msg,
+	tracker,
+	cssPropHelper
+) {
 	'use strict';
 
 	var	$articleWrapper,
