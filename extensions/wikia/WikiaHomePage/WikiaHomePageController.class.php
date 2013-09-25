@@ -443,6 +443,7 @@ class WikiaHomePageController extends WikiaController {
 	public function getHubImages() {
 		$lang = $this->wg->contLang->getCode();
 
+		$hubImages = [];
 		if ($this->app->wg->EnableWikiaHubsV2Ext) {
 			$hubImages = WikiaDataAccess::cache(
 				WikiaHubsServicesHelper::getWikiaHomepageHubsMemcacheKey($lang),
@@ -453,13 +454,10 @@ class WikiaHomePageController extends WikiaController {
 					foreach ($this->app->wg->WikiaHubsV2Pages as $hubId => $hubName) {
 						$sliderData = $this->getHubSliderData($lang, $hubId);
 
-						$fileUrl = isset($sliderData['data']['slides'][0]['photoUrl'])
+						$hubImages[$hubId] = isset($sliderData['data']['slides'][0]['photoUrl'])
 							? $sliderData['data']['slides'][0]['photoUrl']
 							: null;
-
-						$hubImages[$hubId] = ImagesService::getThumbUrlFromFileUrl($fileUrl, 330, ImagesService::EXT_JPG); // 330px - width of the image
 					}
-
 					return $hubImages;
 				}
 			);
