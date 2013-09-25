@@ -260,7 +260,7 @@ class VideoHandlerHelper extends WikiaModel {
 				$videoDetail = array(
 					'title' => $title->getDBKey(),
 					'fileTitle' => $title->getText(),
-					'description' => $this->getVideoDescription($file),
+					'description' => $this->getVideoDescription($file), // The description from the File page
 					'fileUrl' => $title->getFullURL(),
 					'thumbUrl' => $thumbUrl,
 					'userName' => $userName,
