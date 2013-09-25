@@ -29,11 +29,10 @@
 }
 
 .collections-setup {
-	float: left;
-
-	padding-left: 10px;
-	margin: 0 0 20px 10px;
 	border-left: 1px solid $color-page-border;
+	float: left;
+	margin: 0 0 20px 10px;
+	padding-left: 10px;
 
 	@if ( $responsive-layout-enabled ) {
 		width: auto;
@@ -42,10 +41,10 @@
 		width: calc(100% - 280px);
 
 		@media screen and (max-width: 1030px) {
-			width: 100%;
-			padding: 0;
-			margin: 0;
 			border: none;
+			margin: 0;
+			padding: 0;
+			width: 100%;
 		}
 
 	} else {
