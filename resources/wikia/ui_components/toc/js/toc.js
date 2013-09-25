@@ -96,8 +96,6 @@ define('wikia.ui.toc', ['jquery', 'wikia.window'], function($, w) {
 		this.init = function() {
 			var throttled = $.throttle(50, checkPosition);
 
-			createSectionsArray();
-
 			$w.on('scroll', throttled);
 
 			$toc.on('click', 'li', function(event) {
