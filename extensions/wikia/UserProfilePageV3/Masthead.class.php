@@ -441,6 +441,32 @@ class Masthead {
 	}
 
 	/**
+	 * Perform avatar remove
+	 *
+	 * @return bool result
+	 */
+	private function doRemoveFile() {
+		wfProfileIn(__METHOD__);
+
+		global $wgAvatarsUseSwiftStorage;
+		if ( !empty( $wgAvatarsUseSwiftStorage ) ) {
+			$swift = $this->getSwiftStorage();
+
+			$avatarRemotePath = $this->getLocalPath();
+			$status = $swift->remove($avatarRemotePath);
+
+			$res = $status->isOk();
+		}
+		else {
+			$sImageFull = $this->getFullPath();
+			$res = file_exists( $sImageFull ) && unlink( $sImageFull );
+		}
+
+		wfProfileOut(__METHOD__);
+		return $res;
+	}
+
+	/**
 	 * removeFile -- remove file from directory
 	 */
 	public function removeFile( $addLog = true ) {
@@ -452,39 +478,36 @@ class Masthead {
 
 		wfProfileIn( __METHOD__ );
 
-		$result = false;
-		$sImageFull = $this->getFullPath();
+		$result = $this->doRemoveFile();
 
-		if( file_exists( $sImageFull ) ) {
-			if (!unlink($sImageFull)) {
-				wfDebug( __METHOD__.": cannot remove avatar's files {$sImageFull}\n" );
-				$result = false;
-			} else {
-				$this->mUser->setOption( AVATAR_USER_OPTION_NAME, "" );
-				$this->mUser->saveSettings();
+		if ($result === false) {
+			Wikia::log( __METHOD__, false, 'cannot remove avatar - ' . $this->getLocalPath() );
+		}
+		else {
+			$this->mUser->setOption( AVATAR_USER_OPTION_NAME, "" );
+			$this->mUser->saveSettings();
 
-				/* add log */
-				if( !empty($addLog) ) {
-					$this->__setLogType();
-					$sUserText =  $this->mUser->getName();
-					$mUserPage = Title::newFromText( $sUserText, NS_USER );
-					$oLogPage = new LogPage( AVATAR_LOG_NAME );
-					$oLogPage->addEntry( 'avatar_rem', $mUserPage, '', array($sUserText));
-				}
-				/* */
-				$result = true;
-
-				/**
-				 * notice image replication system
-				 */
-				global $wgEnableUploadInfoExt;
-				if( $wgEnableUploadInfoExt ) {
-					UploadInfo::log( $this->mUser->getUserPage(), $sImageFull, $this->getLocalPath(), "", "r" );
-				}
-
-				// remove thumbnails
-				$this->purgeThumbnails();
+			/* add log */
+			if( !empty($addLog) ) {
+				$this->__setLogType();
+				$sUserText =  $this->mUser->getName();
+				$mUserPage = Title::newFromText( $sUserText, NS_USER );
+				$oLogPage = new LogPage( AVATAR_LOG_NAME );
+				$oLogPage->addEntry( 'avatar_rem', $mUserPage, '', array($sUserText));
 			}
+			/* */
+
+			/**
+			 * notice image replication system
+			 */
+			global $wgEnableUploadInfoExt;
+			if( $wgEnableUploadInfoExt ) {
+				$sImageFull = $this->getFullPath();
+				UploadInfo::log( $this->mUser->getUserPage(), $sImageFull, $this->getLocalPath(), "", "r" );
+			}
+
+			// remove thumbnails
+			$this->purgeThumbnails();
 		}
 		wfProfileOut( __METHOD__ );
 		return $result;
@@ -683,7 +706,6 @@ class Masthead {
 			// store the avatar on Swift
 			if ( !empty( $wgAvatarsUseSwiftStorage ) ) {
 				$swift = $this->getSwiftStorage();
-				#print_r($swift); print_r([$sFilePath, $this->getLocalPath()]);
 				$res = $swift->store($sFilePath, $this->getLocalPath(), [], 'image/png');
 
 				// errors handling

@@ -199,11 +199,14 @@ class SwiftStorage {
 	public function remove( $remoteFile ) {
 		$res = \Status::newGood();
 
+		$remotePath = $this->getRemotePath( $remoteFile );
+		wfDebug( __METHOD__ . ": {$remotePath}\n" );
+
 		try {
-			$this->container->delete_object( $this->getRemotePath( $remoteFile ) );
+			$this->container->delete_object( $remotePath );
 		}
 		catch ( \Exception $ex ) {
-			\Wikia::log( __METHOD__, 'exception - ' . $remoteFile, $ex->getMessage() );
+			\Wikia::log( __METHOD__, 'exception - ' . $remotePath, $ex->getMessage() );
 			return \Status::newFatal( $ex->getMessage() );
 		}
 
