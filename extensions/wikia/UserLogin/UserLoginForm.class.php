@@ -91,7 +91,7 @@ class UserLoginForm extends LoginForm {
 		}
 
 		// check if exist in tempUser
-		if ( TempUser::getTempUserFromName( $this->mUsername ) ) {
+		if ( UserLoginHelper::isTempUser( $this->mUsername ) && TempUser::getTempUserFromName( $this->mUsername ) ) {
 			$this->mainLoginForm( wfMessage( 'userlogin-error-userexists' )->escaped(), 'error', 'username' );
 			return false;
 		}
