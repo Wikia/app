@@ -14,9 +14,7 @@
 		<em><?= wfMsg('chat-read-only') ?></em>
 	<? else: ?>
 		<div class="chat-join">
-			<button onclick="ChatEntryPoint.onClickChatButton(<?=
-			($isLoggedIn ? 'true' : 'false')
-			?>, '<?= $linkToSpecialChat ?>')"<?=
+			<button onclick="ChatEntryPoint.onClickChatButton('<?= $linkToSpecialChat ?>')"<?=
 			($isLoggedIn ? '' : ' class="loginToChat"')
 			?>>
 				<?= wfMsg($totalInRoom ? 'chat-join-the-chat' : 'chat-start-a-chat'); ?>

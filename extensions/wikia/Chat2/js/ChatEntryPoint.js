@@ -201,7 +201,7 @@ if ( typeof wgWikiaChatUsers!=="undefined" ) {
 		$('body').on('click', '.WikiaChatLink', function(event) {
 			event.preventDefault();
 			event.stopPropagation();
-			ChatEntryPoint.onClickChatButton(wgUserName !== null, this.href);
+			ChatEntryPoint.onClickChatButton(this.href);
 		});
     });
 }
