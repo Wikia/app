@@ -569,15 +569,16 @@ class WallNotifications {
 				$memcSync = $this->getCache($uId, $wikiId);
 
 				$this->lockAndSetData( $memcSync,
-				function() use( $memcSync, $uId, $wikiId, $uniqueId ) {
-					$data = $this->getData($memcSync, $uId, $wikiId);
-					$this->remNotificationFromData($data, $uniqueId);
-					return $data;
-				},
-				function() use( $memcSync ) {
-					// Delete the cache if we were unable to update to force a rebuild
-					$memcSync->delete();
-				});
+					function() use( $memcSync, $uId, $wikiId, $uniqueId ) {
+						$data = $this->getData($memcSync, $uId, $wikiId);
+						$this->remNotificationFromData($data, $uniqueId);
+						return $data;
+					},
+					function() use( $memcSync ) {
+						// Delete the cache if we were unable to update to force a rebuild
+						$memcSync->delete();
+					}
+				);
 
 			}
 
