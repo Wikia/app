@@ -540,8 +540,6 @@ class WallExternalController extends WikiaController {
 	public function replyToMessage() {
 		$this->response->setVal('status', true);
 
-		error_log("MECH ======================== replyToMessage ======================================");
-
 		$parentId = $this->request->getVal('parent');
 		$parentTitle = Title::newFromId( $parentId );
 		$debugParentDB = 'from slave';   // tracing bug 95249
