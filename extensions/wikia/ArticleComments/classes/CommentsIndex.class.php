@@ -28,11 +28,52 @@ class CommentsIndex extends WikiaModel {
 	public function __construct( $data = array(), $dbw = null ) {
 		$this->data = $data;
 		$this->dbw = $dbw;
+
 		foreach ( $data as $key => $value ) {
 			$this->$key = $value;
 		}
-	
+
 		parent::__construct();
+	}
+
+	public function __clone() {
+		return new CommentsIndex([
+			'parentPageId' =>  $this->parentPageId,
+			'commentId' => $this->commentId,
+			'parentCommentId' => $this->parentCommentId,
+			'lastChildCommentId' => $this->lastChildCommentId,
+			'archived' => $this->archived,
+			'deleted' => $this->deleted,
+			'removed' => $this->removed,
+			'locked' => $this->locked,
+			'protected' => $this->protected,
+			'sticky' => $this->sticky,
+			'firstRevId' => $this->firstRevId,
+			'createdAt' => $this->createdAt,
+			'lastRevId' => $this->lastRevId,
+			'lastTouched' => $this->lastTouched,
+			'namespace' => $this->namespace
+		]);
+	}
+
+	/**
+	 * Set the database connection used by the CommentsIndex object
+	 */
+	private function setDB( $dbw ) {
+		$this->dbw = $dbw;
+	}
+
+	/*
+	 * When posting on Wall or Forum, new CommentsIndex object is created. This object is used several times
+	 * later in this request. We're caching those fresh instances of CommentsIndex, as fetching them from
+	 * database would result in unnecessary queries to master db
+	 */
+	private static $objectCache = [];
+
+	private function cache() {
+		if ( $this->commentId ) {
+			self::$objectCache[ $this->commentId ] = $this;
+		}
 	}
 
 	public function setCommentId( $value ) {
@@ -178,6 +219,10 @@ class CommentsIndex extends WikiaModel {
 
 			$updateValue['last_touched'] = $db->timestamp();
 
+			foreach ( $updateValue as $key => $value ) {
+				$this->$key = $value;
+			}
+
 			$db->update(
 				'comments_index',
 				$updateValue,
@@ -212,6 +257,14 @@ class CommentsIndex extends WikiaModel {
 		if ( empty($this->lastTouched) ) {
 			$this->lastTouched = $timestamp;
 		}
+
+		if ( $this->lastChildCommentId == 0 ) {
+			$this->lastChildCommentId = $this->commentId;
+		}
+
+		//cache the new instance so we won't have to query the db when we need it again during this request
+		$this->cache();
+
 		$status = $db->replace(
 			'comments_index',
 			'',
@@ -219,7 +272,7 @@ class CommentsIndex extends WikiaModel {
 				'parent_page_id' => $this->parentPageId,
 				'comment_id' => $this->commentId,
 				'parent_comment_id' => $this->parentCommentId,
-				'last_child_comment_id' => $this->lastChildCommentId == 0 ? $this->commentId:$this->lastChildCommentId,
+				'last_child_comment_id' => $this->lastChildCommentId,
 				'archived' => $this->archived,
 				'deleted' => $this->deleted,
 				'removed' => $this->removed,
@@ -276,6 +329,15 @@ class CommentsIndex extends WikiaModel {
 		$sqlWhere = array( 'comment_id' => $commentId );
 		if ( !empty($parentPageId) ) {
 			$sqlWhere['parent_page_id'] = $parentPageId;
+		} else {
+			// instances created during this requests are stored in the cache, so we don't call the db to fetch them
+			if ( isset( self::$objectCache[ $commentId ] ) ) {
+				error_log("MECH NEW returning cached object for id " . $commentId);
+				$ci = clone self::$objectCache[ $commentId ];
+				$ci->setDB( $dbw );
+				return $ci;
+			}
+
 		}
 
 		$db = $dbw ? $dbw : wfGetDB( DB_SLAVE );
@@ -360,14 +422,11 @@ class CommentsIndex extends WikiaModel {
 	 */
 	public function updateParentLastCommentId( $lastChildCommentId ) {
 		wfProfileIn( __METHOD__ );
-		if ( $this->commentId != $lastChildCommentId ) {
-			print "updateParentLastCommentId error";
-			die();
-		}
+
 		if ( !empty($this->parentCommentId) ) {
 			$data = array( 'commentId' => $this->parentCommentId );
 			$parent = new CommentsIndex($data, $this->dbw);
-			$parent->updateLastChildCommentId( $this->commentId );
+			$parent->updateLastChildCommentId( $lastChildCommentId );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -480,39 +539,35 @@ class CommentsIndex extends WikiaModel {
 
 	static public function onArticleDoEdit( $dbw,  Title $title, Revision $revision, $flags) {
 		global $wgEnableWallEngine;
-		//@todo co z tworzeniem walla? jest to wall namespace, ale nie ma wpisu - wysypie sie
-		if ( empty( $wgEnableWallEngine ) || !WallHelper::isWallNamespace( $title->getNamespace() ) ) {
-			return false;
-		}
 
+		if ( !empty( $wgEnableWallEngine ) && WallHelper::isWallNamespace( $title->getNamespace() ) ) {
+			if ( $flags & EDIT_NEW ) {
+				$titleText = $title->getText();
+				if ( isset( self::$commentInfoData[ $titleText] ) ) {
+					$data = array(
+						'namespace' => self::$commentInfoData[ $titleText]->userPageTitle->getNamespace(),
+						'parentPageId' => self::$commentInfoData[ $titleText]->userPageTitle->getArticleID(),
+						'commentId' => $title->getArticleID(),
+						'parentCommentId' => intval(self::$commentInfoData[ $titleText]->parentId),
+						'firstRevId' => $revision->getId(),
+						'lastRevId' => $revision->getId(),
+					);
 
-		if ( $flags & EDIT_NEW ) {
-			$titleText = $title->getText();
-			if ( !isset( self::$commentInfoData[ $titleText] ) ) {
-				print "titleText: ". $titleText."<br/>\n";
-				print_r( self::$commentInfoData );
-				die();
-			}
+					$commentsIndex = new CommentsIndex( $data, $dbw );
+					$commentsIndex->addToDatabase();
 
-			$data = array(
-				'namespace' => self::$commentInfoData[ $titleText]->userPageTitle->getNamespace(),
-				'parentPageId' => self::$commentInfoData[ $titleText]->userPageTitle->getArticleID(),
-				'commentId' => $title->getArticleID(),
-				'parentCommentId' => intval(self::$commentInfoData[ $titleText]->parentId),
-				'firstRevId' => $revision->getId(),
-				'lastRevId' => $revision->getId(),
-			);
+					$commentsIndex->updateParentLastCommentId( $data['commentId'] );
+				}
 
-			$commentsIndex = new CommentsIndex( $data, $dbw );
-			$commentsIndex->addToDatabase();
-			$commentsIndex->updateParentLastCommentId( $data['commentId'] );
+			} else {
+				$commentsIndex = CommentsIndex::newFromId( $title->getArticleID(), 0, $dbw );
+				if ( $commentsIndex instanceof CommentsIndex ) {
+					$commentsIndex->updateLastRevId( $revision->getId() );
 
-		} else {
-			$commentsIndex = CommentsIndex::newFromId( $title->getArticleID(), 0, $dbw );
-			if ( $commentsIndex instanceof CommentsIndex ) {
-				$commentsIndex->updateLastRevId( $revision->getId() );
+				}
 			}
 		}
+
 		return true;
 	}
 

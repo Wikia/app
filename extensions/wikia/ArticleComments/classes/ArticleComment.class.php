@@ -740,7 +740,6 @@ class ArticleComment {
 		$bot = $user->isAllowed('bot');
 
 		return $editPage->internalAttemptSave( $result, $bot );
-
 	}
 
 	/**
@@ -840,6 +839,11 @@ class ArticleComment {
 		CommentsIndex::addCommentInfo($commentTitleText, $title, $parentId);
 
 		$retval = self::doSaveAsArticle($text, $article, $user, $metadata);
+
+		if ( $retval->value == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
+			$commentsIndex = CommentsIndex::newFromId( $article->getID() );
+			wfRunHooks( 'EditCommentsIndex', [ $article->getTitle(), $commentsIndex ] );
+		}
 
 		$res = ArticleComment::doAfterPost( $retval, $article, $parentId );
 
