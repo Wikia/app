@@ -184,7 +184,9 @@ class CommentsIndex extends WikiaModel {
 				array( 'comment_id' => $this->commentId ),
 				__METHOD__
 			);
-			if ( is_null($this->dbw ) ) {
+
+			// if $dbw was passed, this is a part of some outside transaction, so we don't commit anything yet
+			if ( is_null( $this->dbw ) ) {
 				$db->commit();
 			}
 		}
@@ -235,6 +237,7 @@ class CommentsIndex extends WikiaModel {
 			Wikia::log(__FUNCTION__, __LINE__, "WALL_COMMENTS_INDEX_ERROR Failed to create comments_index entry, parent_page_id={$this->parentPageId}, comment_id={$this->commentId}, parent_comment_id={$this->parentCommentId}", true);
 		}
 
+		// if $dbw was passed, this is a part of some outside transaction, so we don't commit anything yet
 		if ( is_null( $this->dbw ) ) {
 			$db->commit();
 		}
