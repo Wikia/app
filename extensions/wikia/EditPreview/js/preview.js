@@ -22,7 +22,7 @@ define( 'wikia.preview', [
 ) {
 	'use strict';
 
-	var	$articleWrapper,
+	var	$article,
 		// current design of preview has this margins to emulate page margins
 		// TODO: when we will redesign preview to meet darwin design directions - this should be done differently and refactored
 		articleMargin = 11, // 10px margin + 1px border
@@ -43,6 +43,7 @@ define( 'wikia.preview', [
 			}
 		},
 		isRailDropped = false,
+		articleWrapperWidth, // width of article wrapper needed as reference for preview scaling
 		FIT_SMALL_SCREEN = 80; // pixels to be removed from modal width to fit modal on small screens, won't be needed when new modals will be introduced
 
 	// show dialog for preview / show changes and scale it to fit viewport's height
@@ -85,6 +86,8 @@ define( 'wikia.preview', [
 	/**
 	 * Display a dialog with article preview. Options passed in the object are:
 	 *  - 'width' - dialog width in pixels
+	 *  - 'isRailDropped' - flag set to true for window size 1023 and below when responsive layout is enabled
+	 *  - 'scrollbarWidth' - width of the scrollbar (need do be subtracted from article wrapper width as reference for scaling)
 	 *  - 'onPublishButton' - callback function launched when user presses the 'Publish' button on the dialog
 	 *  - 'getPreviewContent' - callback function called when the dialog tries to fetch the current article content from
 	 *    the editor. this function takes a callback as a parameter and is supposed to call it with two parameters. the
@@ -125,14 +128,80 @@ define( 'wikia.preview', [
 
 		renderDialog(msg('preview'), dialogOptions, function(contentNode) {
 
+			// cache selector for other functions in this module
+			$article = contentNode;
+
 			options.getPreviewContent(function(content, summary) {
 
-				// set proper preview width for shrinken modal
-				if (isRailDropped) {
-					contentNode.width(options.width - articleMargin * 2);
-				}
-
 				contentNode.html(content);
+
+				if (window.wgOasisResponsive) {
+
+					// set proper preview width for shrinken modal
+					if (isRailDropped) {
+						contentNode.width(options.width - articleMargin * 2);
+					}
+
+					// set current width of the article
+					previewTypes.current.value = contentNode.width();
+
+					// get width of article Wrapper
+					articleWrapperWidth = contentNode.parent().width();
+
+					// subtract scrollbar width to get correct width needed as reference point for scaling
+					articleWrapperWidth -= options.scrollbarWidth;
+
+					// initial scale of article preview
+					scalePreview(previewTypes.current.name);
+
+				    // adding type dropdown to preview
+					loader({
+						type: loader.MULTI,
+						resources: {
+							mustache: 'extensions/wikia/EditPreview/templates/preview_type_dropdown.mustache'
+						}
+					}).done(function(response) {
+						var $dialog = $('#EditPageDialog'),
+							template = response.mustache[0],
+							params = {
+								options: [
+									{
+										value: previewTypes.current.name,
+										name: msg('wikia-editor-preview-current-width')
+									},
+									{
+										value: previewTypes.min.name,
+										name: msg('wikia-editor-preview-min-width')
+									},
+									{
+										value: previewTypes.max.name,
+										name: msg('wikia-editor-preview-max-width')
+									}
+								],
+								toolTipMessage: msg('wikia-editor-preview-type-tooltip')
+							},
+							html = mustache.render(template, params);
+
+						$(html).insertAfter( $dialog.find('h1:first') );
+
+						// fire an event once preview is rendered
+						$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
+
+						// attach events to type dropdown
+						$('#previewTypeDropdown').on('change', function(event) {
+							switchPreview($(event.target).val());
+						});
+
+						var tooltipParams = { placement: 'right' };
+						if( $dialog[0] && $dialog[0].style && $dialog[0].style.zIndex ) {
+							// on Chrome when using $.css('z-index') / $.css('zIndex') it gave me 2e+9
+							// this vanilla solution works better
+							tooltipParams['z-index'] = parseInt( $dialog[0].style.zIndex, 10 );
+						}
+
+						$('.tooltip-icon').tooltip( tooltipParams );
+					});
+				}
 
 				// move "edit" link to the right side of heading names
 				contentNode.find('.editsection').each(function() {
@@ -147,64 +216,8 @@ define( 'wikia.preview', [
 						html(summary);
 				}
 
-				//adding type dropdown to preview
-				if ( window.wgOasisResponsive ) {
-					loader({
-						type: loader.MULTI,
-						resources: {
-							mustache: 'extensions/wikia/EditPreview/templates/preview_type_dropdown.mustache'
-						}
-					}).done(function(response) {
-							var $dialog = $('#EditPageDialog'),
-								template = response.mustache[0],
-								params = {
-									options: [
-										{
-											value: previewTypes.current.name,
-											name: msg('wikia-editor-preview-current-width')
-										},
-										{
-											value: previewTypes.min.name,
-											name: msg('wikia-editor-preview-min-width')
-										},
-										{
-											value: previewTypes.max.name,
-											name: msg('wikia-editor-preview-max-width')
-										}
-									],
-									toolTipMessage: msg('wikia-editor-preview-type-tooltip')
-								},
-								html = mustache.render(template, params);
-
-							$(html).insertAfter( $dialog.find('h1:first') );
-
-							// fire an event once preview is rendered
-							$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
-
-							// cache article wrapper selector and its initial width
-							$articleWrapper = $( $dialog.find('.ArticlePreviewInner') );
-
-							previewTypes.current.value = $articleWrapper.width();
-
-							// attach events to type dropdown
-							$('#previewTypeDropdown').on('change', function(event) {
-								switchPreview($(event.target).val());
-							});
-
-							var tooltipParams = { placement: 'right' };
-							if( $dialog[0] && $dialog[0].style && $dialog[0].style.zIndex ) {
-								// on Chrome when using $.css('z-index') / $.css('zIndex') it gave me 2e+9
-								// this vanilla solution works better
-								tooltipParams['z-index'] = parseInt( $dialog[0].style.zIndex, 10 );
-							}
-
-							$('.tooltip-icon').tooltip( tooltipParams );
-						}
-					);
-				} else {
-					// fire an event once preview is rendered
-					$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
-				}
+				// fire an event once preview is rendered
+				$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
 
 			});
 		});
@@ -217,7 +230,7 @@ define( 'wikia.preview', [
 	 */
 
 	function switchPreview(type) {
-		$articleWrapper.width(previewTypes[type].value);
+		$article.width(previewTypes[type].value);
 
 		tracker.track({
 			action: Wikia.Tracker.ACTIONS.CLICK,
@@ -237,7 +250,7 @@ define( 'wikia.preview', [
 	 */
 
 	function scalePreview(type) {
-		var	initialPreviewWidth = previewTypes.current.value,
+		var	initialPreviewWidth = articleWrapperWidth,
 			selectedPreviewWidth = previewTypes[type].value,
 			scaleRatio = initialPreviewWidth / selectedPreviewWidth,
 			cssTransform = cssPropHelper.getSupportedProp('transform'),
@@ -245,10 +258,10 @@ define( 'wikia.preview', [
 
 		if (selectedPreviewWidth > initialPreviewWidth) {
 			var	scaleVar = 'scale(' + scaleRatio + ')';
-			$articleWrapper.css(cssTransformOrigin, 'left top');
-			$articleWrapper.css(cssTransform , scaleVar);
+			$article.css(cssTransformOrigin, 'left top');
+			$article.css(cssTransform , scaleVar);
 		} else {
-			$articleWrapper.css(cssTransform, '');
+			$article.css(cssTransform, '');
 		}
 	}
 

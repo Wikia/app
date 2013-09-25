@@ -450,6 +450,7 @@
 
 			var previewOptions = {
 				width: width,
+				scrollbarWidth: this.scrollbarWidth,
 				onPublishButton: function() {
 					$('#wpSave').click();
 				},
