@@ -11,16 +11,21 @@ define('wikia.ui.toc', ['jquery', 'wikia.window'], function($, w) {
 			$toc = $(toc),
 			$sectionLinks = $toc.find('li > a'),
 			bodyHeight = $('body').outerHeight(),
-			sections = [],
+			sections = createSectionsArray($sectionLinks),
 			ACTIVE_CLASS = 'active', // const for the css class use for highlighting current section
 			OFFSET = 10; // const scroll tolerance for styping which section is in position
 
 		/**
 		 * Creates array of section objects with section ID and offset top position
+		 *
+		 * @param {Object} $sectionLinks - jQuery selector object with links to TOC sections
+		 *
+		 * @return {Array} - array of section objects
 		 */
 
-		function createSectionsArray() {
-			var i,
+		function createSectionsArray($sectionLinks) {
+			var sections = [],
+				i,
 				length = $sectionLinks.length;
 
 			for (i = 0; i < length; i++) {
@@ -31,6 +36,8 @@ define('wikia.ui.toc', ['jquery', 'wikia.window'], function($, w) {
 
 				sections.push(sectionObj);
 			}
+
+			return sections;
 		}
 
 		/**

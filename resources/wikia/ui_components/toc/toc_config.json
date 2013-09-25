@@ -2,7 +2,7 @@
 	"templateVars": {
 		"default": {
 			"required": ["sections"],
-			"optional": ["classes", "ids", ""]
+			"optional": ["classes", "ids"]
 		}
 	},
 	"dependencies": {
