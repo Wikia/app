@@ -26,6 +26,9 @@ class SwiftStorageTest extends WikiaBaseTest {
 	public function testNewFromContainerGetUrl() {
 		$swift = \Wikia\SwiftStorage::newFromContainer(self::CONTAINER);
 		$this->assertStringEndsWith('/' . self::CONTAINER . '/foo.jpg', $swift->getUrl('foo.jpg'));
+
+		$swift = \Wikia\SwiftStorage::newFromContainer(self::CONTAINER, '/foo/bar/test/');
+		$this->assertStringEndsWith('/' . self::CONTAINER . '/foo/bar/test/foo.jpg', $swift->getUrl('foo.jpg'));
 	}
 
 	public function testStoreAndRemove() {

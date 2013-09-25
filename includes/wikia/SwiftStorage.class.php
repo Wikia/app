@@ -14,7 +14,10 @@ namespace Wikia;
  * @see $wgFSSwiftServer
  * @see $wgFSSwiftConfig
  */
-class SwiftStorage extends \WikiaObject {
+class SwiftStorage {
+
+	/* @var \WikiaGlobalRegistry $wg */
+	private $wg;
 
 	/* @var \CF_Connection $connection */
 	private $connection;
@@ -23,7 +26,7 @@ class SwiftStorage extends \WikiaObject {
 
 	private $authToken;     // e.g. "AUTH_xxxx"
 	private $containerName; // e.g. "poznan"
-	private $pathPrefix;    // e.g. "/pl/images"
+	private $pathPrefix;    // e.g. "/pl/images" - must start with /
 
 	/**
 	 * Get storage instance to access uploaded files for a given wiki
@@ -44,27 +47,34 @@ class SwiftStorage extends \WikiaObject {
 	 * Get storage instance to access given Swift container
 	 *
 	 * @param $containerName string container name
+	 * @param $pathPrefix string path prefix
 	 * @return SwiftStorage storage instance
 	 */
-	public static function newFromContainer( $containerName ) {
-		return new self( $containerName );
+	public static function newFromContainer( $containerName, $pathPrefix = '' ) {
+		if ($pathPrefix !== '') {
+			$pathPrefix = '/' . ltrim($pathPrefix, '/');
+		}
+
+		return new self( $containerName,  $pathPrefix );
 	}
 
 	/**
 	 * Setup storage
 	 *
+	 * Use newFromWiki() and newFromContainer() methods
+	 *
 	 * @param $containerName string container (aka bucket) name
 	 * @param $pathPrefix string prefix to be prepended to remote names
 	 * @throws \Exception
 	 */
-	public function __construct( $containerName, $pathPrefix = '' ) {
-		parent::__construct();
+	private function __construct( $containerName, $pathPrefix = '' ) {
+		$this->wg = \F::app()->wg;
 
 		$this->connect( $this->wg->FSSwiftConfig );
 
 		$this->container = $this->getContainer( $containerName );
 		$this->containerName = $containerName;
-		$this->pathPrefix = rtrim( $pathPrefix, '/' ) . '/';
+		$this->pathPrefix = rtrim( $pathPrefix, '/' );
 	}
 
 	/**
@@ -189,11 +199,14 @@ class SwiftStorage extends \WikiaObject {
 	public function remove( $remoteFile ) {
 		$res = \Status::newGood();
 
+		$remotePath = $this->getRemotePath( $remoteFile );
+		wfDebug( __METHOD__ . ": {$remotePath}\n" );
+
 		try {
-			$this->container->delete_object( $this->getRemotePath( $remoteFile ) );
+			$this->container->delete_object( $remotePath );
 		}
 		catch ( \Exception $ex ) {
-			\Wikia::log( __METHOD__, 'exception - ' . $remoteFile, $ex->getMessage() );
+			\Wikia::log( __METHOD__, 'exception - ' . $remotePath, $ex->getMessage() );
 			return \Status::newFatal( $ex->getMessage() );
 		}
 
@@ -224,7 +237,7 @@ class SwiftStorage extends \WikiaObject {
 	 * @return string public URL
 	 */
 	public function getUrl( $remoteFile ) {
-		return sprintf( 'http://%s/%s%s%s',
+		return sprintf( 'http://%s/%s%s/%s',
 			$this->wg->FSSwiftServer,
 			$this->containerName,
 			$this->pathPrefix,

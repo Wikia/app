@@ -408,6 +408,23 @@ class Masthead {
 	}
 
 	/**
+	 * Get Swift storage instance for avatars
+	 *
+	 * @return \Wikia\SwiftStorage storage instance
+	 */
+	public function getSwiftStorage() {
+		global $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix;
+		return \Wikia\SwiftStorage::newFromContainer($wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix);
+	}
+
+	/**
+	 * @return string temporary file to be used for upload from URL
+	 */
+	public function getTempFile() {
+		return tempnam(wfTempDir(), 'avatar');
+	}
+
+	/**
 	 * isDefault -- check if user use default avatars
 	 */
 	public function isDefault() {
@@ -424,48 +441,73 @@ class Masthead {
 	}
 
 	/**
+	 * Perform avatar remove
+	 *
+	 * @return bool result
+	 */
+	private function doRemoveFile() {
+		wfProfileIn(__METHOD__);
+
+		global $wgAvatarsUseSwiftStorage;
+		if ( !empty( $wgAvatarsUseSwiftStorage ) ) {
+			$swift = $this->getSwiftStorage();
+
+			$avatarRemotePath = $this->getLocalPath();
+			$status = $swift->remove($avatarRemotePath);
+
+			$res = $status->isOk();
+		}
+		else {
+			$sImageFull = $this->getFullPath();
+			$res = file_exists( $sImageFull ) && unlink( $sImageFull );
+		}
+
+		wfProfileOut(__METHOD__);
+		return $res;
+	}
+
+	/**
 	 * removeFile -- remove file from directory
 	 */
 	public function removeFile( $addLog = true ) {
+		// macbre: avatars operations are disabled during maintenance
+		global $wgAvatarsMaintenance;
+		if (!empty($wgAvatarsMaintenance)) {
+			return false;
+		}
+
 		wfProfileIn( __METHOD__ );
-		global $wgLogTypes, $wgUser;
 
-		$result = false;
-		$sImageFull = $this->getFullPath();
+		$result = $this->doRemoveFile();
 
-		if( file_exists( $sImageFull ) ) {
-			if (!unlink($sImageFull)) {
-				wfDebug( __METHOD__.": cannot remove avatar's files {$sImageFull}\n" );
-				$result = false;
-			} else {
-				$this->mUser->setOption( AVATAR_USER_OPTION_NAME, "" );
-				$this->mUser->saveSettings();
+		if ($result === false) {
+			Wikia::log( __METHOD__, false, 'cannot remove avatar - ' . $this->getLocalPath() );
+		}
+		else {
+			$this->mUser->setOption( AVATAR_USER_OPTION_NAME, "" );
+			$this->mUser->saveSettings();
 
-				/* add log */
-				if( !empty($addLog) ) {
-					$this->__setLogType();
-					$sUserText =  $this->mUser->getName();
-					$mUserPage = Title::newFromText( $sUserText, NS_USER );
-					$oLogPage = new LogPage( AVATAR_LOG_NAME );
-					$oLogPage->addEntry( 'avatar_rem', $mUserPage, '', array($sUserText));
-				}
-				/* */
-				$result = true;
-
-				/**
-				 * notice image replication system
-				 */
-				global $wgEnableUploadInfoExt;
-				if( $wgEnableUploadInfoExt ) {
-					UploadInfo::log( $mUserPage, $sImageFull, $this->getLocalPath(), "", "r" );
-				}
-
-				// remove thumbnails
-				$this->purgeThumbnails();
-
-				$errorNo = UPLOAD_ERR_OK;
-
+			/* add log */
+			if( !empty($addLog) ) {
+				$this->__setLogType();
+				$sUserText =  $this->mUser->getName();
+				$mUserPage = Title::newFromText( $sUserText, NS_USER );
+				$oLogPage = new LogPage( AVATAR_LOG_NAME );
+				$oLogPage->addEntry( 'avatar_rem', $mUserPage, '', array($sUserText));
 			}
+			/* */
+
+			/**
+			 * notice image replication system
+			 */
+			global $wgEnableUploadInfoExt;
+			if( $wgEnableUploadInfoExt ) {
+				$sImageFull = $this->getFullPath();
+				UploadInfo::log( $this->mUser->getUserPage(), $sImageFull, $this->getLocalPath(), "", "r" );
+			}
+
+			// remove thumbnails
+			$this->purgeThumbnails();
 		}
 		wfProfileOut( __METHOD__ );
 		return $result;
@@ -490,6 +532,12 @@ class Masthead {
 	 * @return Integer -- error code of operation
 	 */
 	public function uploadByUrl($url){
+		// macbre: avatars operations are disabled during maintenance
+		global $wgAvatarsMaintenance;
+		if (!empty($wgAvatarsMaintenance)) {
+			return UPLOAD_ERR_NO_TMP_DIR;
+		}
+
 		wfProfileIn(__METHOD__);
 		$sTmpFile = '';
 
@@ -505,48 +553,53 @@ class Masthead {
 
 
 	public function uploadByUrlToTempFile($url, &$sTmpFile){
-		global $wgTmpDirectory;
+		// macbre: avatars operations are disabled during maintenance
+		global $wgAvatarsMaintenance;
+		if (!empty($wgAvatarsMaintenance)) {
+			return UPLOAD_ERR_NO_TMP_DIR;
+		}
+
 		wfProfileIn(__METHOD__);
 
 		$errorNo = UPLOAD_ERR_OK; // start by presuming there is no error.
 
-		if( !isset( $wgTmpDirectory ) || !is_dir( $wgTmpDirectory ) ) {
-			$wgTmpDirectory = '/tmp';
-		}
-
 		// Pull the image from the URL and save it to a temporary file.
-		$sTmpFile = $wgTmpDirectory.'/'.substr(sha1(uniqid($this->mUser->getID())), 0, 16);
-		$imgContent = Http::get($url);
+		$sTmpFile = $this->getTempFile();
+
+		wfDebug(__METHOD__ . ": fetching {$url} to {$sTmpFile}\n");
+
+		$imgContent = Http::get($url, 'default', ['noProxy' => true]);
 		if( !file_put_contents($sTmpFile, $imgContent)){
+			wfDebug(__METHOD__ . ": writing to temp failed!\n");
 			wfProfileOut( __METHOD__ );
 			return UPLOAD_ERR_CANT_WRITE;
 		}
 		wfProfileOut(__METHOD__);
+		return $errorNo;
 	}
 
 	/**
 	 * uploadFile -- save file when is in proper format, do resize and
 	 * other stuffs
 	 *
-	 * @param Request $request -- WebRequest instance
+	 * @param WebRequest $request -- WebRequest instance
 	 * @param String $input    -- name of file input in form
 	 * @param $errorMsg -- optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION.
 	 *
 	 * @return Integer -- error code of operation
 	 */
 	public function uploadFile($request, $input = AVATAR_UPLOAD_FIELD, &$errorMsg='') {
-		global $wgTmpDirectory;
+		// macbre: avatars operations are disabled during maintenance
+		global $wgAvatarsMaintenance;
+		if (!empty($wgAvatarsMaintenance)) {
+			return UPLOAD_ERR_NO_TMP_DIR;
+		}
+
 		wfProfileIn(__METHOD__);
 		$this->__setLogType();
 
-		if( !isset( $wgTmpDirectory ) || !is_dir( $wgTmpDirectory ) ) {
-			$wgTmpDirectory = '/tmp';
-		}
-//		Wikia::log( __METHOD__, "tmp", "Temp directory set to {$wgTmpDirectory}" );
-
 		$errorNo = $request->getUploadError( $input );
 		if ( $errorNo != UPLOAD_ERR_OK ) {
-//			Wikia::log( __METHOD__, "error", "Upload error {$errorNo}" );
 			wfProfileOut(__METHOD__);
 			return $errorNo;
 		}
@@ -558,22 +611,17 @@ class Masthead {
 			/**
 			 * file size = 0
 			 */
-//			Wikia::log( __METHOD__, 'empty', "Empty file {$input} reported size {$iFileSize}" );
 			wfProfileOut(__METHOD__);
 			return UPLOAD_ERR_NO_FILE;
 		}
 
-		$sTmpFile = $wgTmpDirectory.'/'.substr(sha1(uniqid($this->mUser->getID())), 0, 16);
-//		Wikia::log( __METHOD__, 'tmp', "Temp file set to {$sTmpFile}" );
+		$sTmpFile = $this->getTempFile();
 		$sTmp = $request->getFileTempname($input);
-//		Wikia::log( __METHOD__, 'path', "Path to uploaded file is {$sTmp}" );
-
 
 		if( move_uploaded_file( $sTmp, $sTmpFile )  ) {
 			$errorNo = $this->postProcessImageInternal($sTmpFile, $errorNo, $errorMsg);
 		}
 		else {
-//			Wikia::log( __METHOD__, 'move', sprintf('Cannot move uploaded file from %s to %s', $sTmp, $sTmpFile ));
 			$errorNo = UPLOAD_ERR_CANT_WRITE;
 		}
 		wfProfileOut(__METHOD__);
@@ -590,6 +638,8 @@ class Masthead {
 	 * @param $errorMsg -- optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION.
 	 */
 	private function postProcessImageInternal($sTmpFile, &$errorNo = UPLOAD_ERR_OK, &$errorMsg=''){
+		global $wgAvatarsUseSwiftStorage;
+
 		wfProfileIn(__METHOD__);
 		$aImgInfo = getimagesize($sTmpFile);
 
@@ -629,8 +679,7 @@ class Masthead {
 		/**
 		 * generate new image to png format
 		 */
-		$addedAvatars = array();
-		$sFilePath = $this->getFullPath();
+		$sFilePath = empty( $wgAvatarsUseSwiftStorage ) ? $this->getFullPath() : $this->getTempFile();
 
 		$ioh = new ImageOperationsHelper();
 		$oImg = $ioh->postProcess(  $oImgOrig, $aOrigSize );
@@ -649,8 +698,19 @@ class Masthead {
 			$errorNo = UPLOAD_ERR_CANT_WRITE;
 		}
 		else {
+			$errorNo = UPLOAD_ERR_OK;
+
 			/* remove tmp file */
 			imagedestroy($oImg);
+
+			// store the avatar on Swift
+			if ( !empty( $wgAvatarsUseSwiftStorage ) ) {
+				$swift = $this->getSwiftStorage();
+				$res = $swift->store($sFilePath, $this->getLocalPath(), [], 'image/png');
+
+				// errors handling
+				$errorNo = $res->isOK() ? UPLOAD_ERR_OK : UPLOAD_ERR_CANT_WRITE;
+			}
 
 			$sUserText =  $this->mUser->getName();
 			$mUserPage = Title::newFromText( $sUserText, NS_USER );
@@ -668,8 +728,6 @@ class Masthead {
 
 			// remove generated thumbnails
 			$this->purgeThumbnails();
-
-			$errorNo = UPLOAD_ERR_OK;
 		}
 		wfProfileOut( __METHOD__ );
 
