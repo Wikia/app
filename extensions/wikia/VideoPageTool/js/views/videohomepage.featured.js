@@ -7,8 +7,8 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 		this.$bxSlider = $( '#featured-video-bxslider' );
 		this.$thumbs = $( '#featured-video-thumbs' );
 
-		// Track which video should play next
-		this.nextVideo = false;
+		// The slider starts off as an image slider, then switches to a video slider when the first video is clicked
+		this.isVideoSlider = false;
 		this.videoInstance = null;
 
 		// value will be assigned after slider inits
@@ -49,7 +49,8 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 			this.slider = this.$bxSlider.bxSlider({
 				//video: true, // TODO: add video support?
 				onSliderLoad: $.proxy( this.onSliderLoad, this ),
-				onSlideAfter: $.proxy( this.onSlideAfter, this ),
+				onSlideNext: $.proxy( this.onArrowClick, this ),
+				onSlidePrev: $.proxy( this.onArrowClick, this ),
 				nextText: '',
 				prevText: '',
 				auto: true,
@@ -67,68 +68,77 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 
 			this.bindEvents();
 		},
-		// TODO: if the user clicks on a video thumb when the larger image is already in view, the video should still
-		// play
-		onSlideAfter: function( $slide, oldIndex, newIndex ) {
-
-			var that = this,
-				slide = this.slides[ newIndex ];
-
-			if ( this.nextVideo ) {
-				if( slide.embedData === null ) {
-					nirvana.sendRequest({
-						controller: 'VideoHandler',
-						method: 'getEmbedCode',
-						data: {
-							fileTitle: this.nextVideo,
-							width: 750,
-							autoplay: 1
-						}
-					})
-					.done( function( data ) {
-						// cache embed data
-						that.sliderModel.addVideoEmbedData( slide, data );
-						that.handleVideoSwitch( slide );
-					});
-
-				} else {
-					that.handleVideoSwitch( slide );
-				}
-			} else {
-				this.videoInstance && this.videoInstance.destroy(); // TODO: maybe move this somewhere else
-			}
-
-			this.nextVideo = false;
-		},
-		handleVideoSwitch: function( slide ) {
-			this.slider.stopAuto();
-
-			this.videoInstance && this.videoInstance.destroy(); // TODO: maybe move this somewhere else
-
-			slide.$image.hide();
-			slide.$video.show();
-			slide.current = 'video';
-
-			this.videoInstance = new VideoBootstrap( slide.$video[ 0 ], slide.embedData.embedCode, 'videoHomePage' );
-		},
 		bindEvents: function() {
 			var that = this;
 
-			// Thumb visibility toggle
+			// thumbs visibility toggle
 			this.initThumbShowHide();
 
 			// play video
-			this.$thumbs.on( 'click', '.video', function( e ){
-				var $this = $( this );
-
+			this.$thumbs.on( 'click', '.video', function( e ) {
 				e.preventDefault();
 
-				that.nextVideo = $this.children( 'img' ).attr( 'data-video-key' );
-				that.slider.goToSlide( $this.index() );
+				that.handleThumbClick( $( this ) );
 			});
 		},
-		/* @desc Toggle thumb visibility using a timeout so hovering over controls will not hide thumbs
-		 *
+		handleThumbClick: function( $video ){
+			var that = this,
+				videoKey = $video.children( 'img' ).attr( 'data-video-key' ),
+				idx = $video.index(),
+				slide = this.slides[ idx ];
+
+			// It's now a video slider
+			this.isVideoSlider = true;
+
+			// Stop slider autoscroll because we're watching videos now
+			this.slider.stopAuto();
+
+			// Go to the selected slide based on thumbnail that was clicked
+			this.slider.goToSlide( idx );
+
+			if( slide.embedData === null ) {
+				// Get video embed data for this slide
+				nirvana.sendRequest({
+					controller: 'VideoHandler',
+					method: 'getEmbedCode',
+					data: {
+						fileTitle: videoKey,
+						width: 750,
+						autoplay: 1
+					}
+				})
+					.done( function( data ) {
+						// cache embed data
+						that.sliderModel.addVideoEmbedData( slide, data );
+						that.playVideo( slide );
+					});
+
+			} else {
+				// We already have video embed data, play it.
+				that.playVideo( slide );
+			}
+
+		},
+		/* @desc When an arrow is clicked, if it's already a video slider, play the next video. Otherwise, do nothing,
+		 * just let the slider switch to the next image.
+		 */
+		onArrowClick: function( $slide, oldIndex, newIndex ) {
+			if( this.isVideoSlider ) {
+				this.slides[ newIndex ].switchToVideo();
+				this.$thumbs.find( '.video' ).eq( newIndex ).click();
+			}
+		},
+		playVideo: function( slide ) {
+			this.videoInstance && this.videoInstance.destroy(); // TODO: maybe move this somewhere else
+
+			// Hide image container, show video container
+			slide.switchToVideo();
+
+			this.videoInstance = new VideoBootstrap( slide.$video[ 0 ], slide.embedData.embedCode, 'videoHomePage' );
+		},
+
+		/*
+		 * @desc Toggle thumb visibility using a timeout so hovering over controls will not hide thumbs
 		 */
 		initThumbShowHide: function() {
 			var that = this,
