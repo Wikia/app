@@ -189,6 +189,9 @@
 		margin: 0;
 		@if ( $responsive-layout-enabled ) {
 			width: 19%;
+			// one-fifth minus four 1px-width borders for tabs
+			width: -moz-calc(20%  - 4px);
+			width: calc(20%  - 4px);
 		}
 		a {
 			color: #666;
