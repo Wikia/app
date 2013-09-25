@@ -14,7 +14,10 @@ namespace Wikia;
  * @see $wgFSSwiftServer
  * @see $wgFSSwiftConfig
  */
-class SwiftStorage extends \WikiaObject {
+class SwiftStorage {
+
+	/* @var \WikiaGlobalRegistry $wg */
+	private $wg;
 
 	/* @var \CF_Connection $connection */
 	private $connection;
@@ -23,7 +26,7 @@ class SwiftStorage extends \WikiaObject {
 
 	private $authToken;     // e.g. "AUTH_xxxx"
 	private $containerName; // e.g. "poznan"
-	private $pathPrefix;    // e.g. "/pl/images"
+	private $pathPrefix;    // e.g. "/pl/images" - must start with /
 
 	/**
 	 * Get storage instance to access uploaded files for a given wiki
@@ -44,21 +47,28 @@ class SwiftStorage extends \WikiaObject {
 	 * Get storage instance to access given Swift container
 	 *
 	 * @param $containerName string container name
+	 * @param $pathPrefix string path prefix
 	 * @return SwiftStorage storage instance
 	 */
-	public static function newFromContainer( $containerName ) {
-		return new self( $containerName );
+	public static function newFromContainer( $containerName, $pathPrefix = '' ) {
+		if ($pathPrefix !== '') {
+			$pathPrefix = '/' . ltrim($pathPrefix, '/');
+		}
+
+		return new self( $containerName,  $pathPrefix );
 	}
 
 	/**
 	 * Setup storage
 	 *
+	 * Use newFromWiki() and newFromContainer() methods
+	 *
 	 * @param $containerName string container (aka bucket) name
 	 * @param $pathPrefix string prefix to be prepended to remote names
 	 * @throws \Exception
 	 */
-	public function __construct( $containerName, $pathPrefix = '' ) {
-		parent::__construct();
+	private function __construct( $containerName, $pathPrefix = '' ) {
+		$this->wg = \F::app()->wg;
 
 		$this->connect( $this->wg->FSSwiftConfig );
 
