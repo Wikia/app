@@ -405,7 +405,7 @@ div#userloginErrorBox3 {
 			height: 106px;
 			top: 0;
 			@if ( $responsive-layout-enabled ) {
-				width: 445px;
+				width: 500px;
 			} else {
 				width: 608px;
 			}
@@ -425,7 +425,7 @@ div#userloginErrorBox3 {
 			top: 37px;
 			&.next {
 				@if ( $responsive-layout-enabled ) {
-					left: 485px;
+					left: 540px;
 				} else {
 					left: 645px;
 				}
