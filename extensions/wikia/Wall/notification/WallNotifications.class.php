@@ -172,11 +172,11 @@ class WallNotifications {
 		// $forceCurrentWiki = false - return only wikis that ever recived notifications
 
 		$key = $this->getKey($userId, 'LIST');
-		$val = $this->app->getGlobal('wgMemc')->get($key);
+		$val = $this->app->wg->memc->get($key);
 
 		if( false === $val ) {
 			$val = $this->loadWikiListFromDB($userId);
-			$this->app->getGlobal('wgMemc')->set($key, $val);
+			$this->app->wg->memc->set($key, $val);
 		}
 
 		// make sure that current Wiki is on the list, as first entry, sort the rest
@@ -227,7 +227,7 @@ class WallNotifications {
 
 	private function addWikiToList($userId, $wikiId, $wikiSitename) {
 		$key = $this->getKey($userId, 'LIST');
-		$val = $this->app->getGlobal('wgMemc')->get($key);
+		$val = $this->app->wg->memc->get($key);
 
 		if(empty($val)) {
 			$val = $this->loadWikiListFromDB($userId);
@@ -235,7 +235,7 @@ class WallNotifications {
 
 		$val[$wikiId] = $wikiSitename;
 
-		$this->app->getGlobal('wgMemc')->set($key, $val);
+		$this->app->wg->memc->set($key, $val);
 
 	}
 
@@ -247,7 +247,7 @@ class WallNotifications {
 		// that supports update-if-key-did-not-change
 
 		$key = $this->getKey($userId, 'LIST');
-		$val = $this->app->getGlobal('wgMemc')->get($key);
+		$val = $this->app->wg->memc->get($key);
 
 		if(empty($val)) {
 			// removing Wiki from list is just speed optimization
@@ -255,7 +255,7 @@ class WallNotifications {
 			// need to recreate it from DB
 		} else {
 			unset( $val[$wikiId] );
-			$this->app->getGlobal('wgMemc')->set($key, $val);
+			$this->app->wg->memc->set($key, $val);
 		}
 	}
 
@@ -795,7 +795,7 @@ class WallNotifications {
 
 	protected function isCachedData($userId, $wikiId) {
 		$key = $this->getKey($userId, $wikiId);
-		$val = F::App()->getGlobal('wgMemc')->get($key);
+		$val = $this->app->wg->memc->get($key);
 
 		if(empty($val) && !is_array($val)) {
 			return False;
