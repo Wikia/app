@@ -414,9 +414,18 @@
 			if ( wgOasisResponsive ) {
 				var pageWidth = $('#WikiaPage').width(),
 					widthArticlePadding = 20,
-					railWidth = 310;
+					railWidth = 310,
+					railBreakPoint = 1023,
+					minWidth = 768;
 
-				width = (config.isWidePage) ? pageWidth : pageWidth - railWidth;
+				// don't go below minimum width
+				if (pageWidth <= minWidth) {
+					pageWidth = minWidth;
+				}
+
+				// subtract rail width only in certain criteria
+				width = (config.isWidePage || pageWidth <= railBreakPoint) ? pageWidth : pageWidth - railWidth;
+
 				width -= widthArticlePadding;
 
 				// For Webkit browsers, when the responsive layout kicks in
