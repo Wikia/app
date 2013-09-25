@@ -158,12 +158,24 @@ pre {
 #toc > div {
     padding: 5px;
 }
+#toc ol {
+    list-style: decimal;
+    counter-reset: item;
+}
 #toc > ol {
     display: none;
 }
 #toc.show > ol {
     display: block;
 }
+#toc li {
+    display: block;
+}
+#toc li:before {
+    content: counters(item, ".") " ";
+    counter-increment: item;
+}
+
 /* End of Wikia changes */
 
 .mw-warning {
