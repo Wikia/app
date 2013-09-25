@@ -310,10 +310,20 @@ class SpecialPromoteHelper extends WikiaObject {
 
 		$visualizationModel->updateWikiPromoteDataCache($cityId, $langCode, $updateData);
 
-		/** @var $helper WikiGetDataForVisualizationHelper */
+		// clear memcache so it's visible on site after edit
 		$helper = new WikiGetDataForVisualizationHelper();
-		$this->wg->memc->set($helper->getMemcKey($cityId, $langCode),null);
-		$visualizationModel->regenerateBatches($visualizationModel->getTargetWikiId($langCode), $langCode);
+		$corpWikiId = $visualizationModel->getTargetWikiId($langCode);
+		// wiki info cache
+		$this->wg->memc->delete($helper->getMemcKey($cityId, $langCode));
+		// wiki list cache
+		$this->wg->memc->delete(
+			$visualizationModel->getVisualizationWikisListDataCacheKey($corpWikiId, $langCode)
+		);
+		// batches cache
+		$this->wg->memc->delete(
+			$visualizationModel->getVisualizationBatchesCacheKey($corpWikiId, $langCode)
+		);
+
 
 		wfProfileOut(__METHOD__);
 	}

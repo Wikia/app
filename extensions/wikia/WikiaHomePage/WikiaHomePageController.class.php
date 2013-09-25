@@ -194,7 +194,7 @@ class WikiaHomePageController extends WikiaController {
 
 				$failoverData = $this->parseSourceMessage();
 				$visualization = $this->getVisualization();
-				$visualization->generateBatches($this->wg->cityId, $this->wg->contLang->getCode(), $failoverData, true);
+				$visualization->generateBatches($this->wg->cityId, $failoverData);
 				$wikiBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
 			} catch (Exception $e) {
 				Wikia::log(__METHOD__, false, ' pulling failover visualization data from file');
@@ -203,7 +203,7 @@ class WikiaHomePageController extends WikiaController {
 
 				$failoverData = $this->getFailoverWikiList();
 				$visualization = $this->getVisualization();
-				$visualization->generateBatches($this->wg->cityId, $this->wg->contLang->getCode(), $failoverData, true);
+				$visualization->generateBatches($this->wg->cityId, $failoverData);
 				$wikiBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
 			}
 		}

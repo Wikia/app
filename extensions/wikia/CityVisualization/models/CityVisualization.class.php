@@ -72,7 +72,7 @@ class CityVisualization extends WikiaModel {
 			unset($promotedWikis);
 		}
 
-		$this->wg->Memc->set($memKey, $wikis, 60 * 60 * 1);
+		$this->wg->Memc->set($memKey, $wikis, 60 * 60 * 24);
 		wfProfileOut(__METHOD__);
 
 		return $wikis;
