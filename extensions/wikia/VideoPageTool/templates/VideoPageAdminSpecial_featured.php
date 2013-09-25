@@ -29,12 +29,12 @@
 					<?= wfMessage( 'videopagetool-button-add-thumbnail' )->plain() ?>
 				</button>
 
-				<p class="new-thumb-name <?= $video[ 'newThumbClass' ]  ?>">
-					<? $thumbName = $video[ 'newThumbName' ]; ?>
+				<p class="alt-thumb-name <?= $video[ 'altThumbClass' ]  ?>">
+					<? $thumbName = $video[ 'altThumbName' ]; ?>
 					<?= $thumbName != '' ? $thumbName : wfMessage( 'videopagetool-hint-required-dimensions' )->plain() ?>
 				</p>
 
-				<input type="hidden" name="newThumbName[]" class="new-thumb" id="new-thumb-<?= $x ?>" value="<?= $video[ 'newThumbName' ] ?>">
+				<input type="hidden" name="altThumbName[]" class="alt-thumb" id="alt-thumb-<?= $x ?>" value="<?= $video[ 'altThumbName' ] ?>">
 			</div>
 
 			<div class="input-group border">
@@ -44,16 +44,16 @@
 
 			<div class="input-group">
 				<label for="description-<?= $x ?>"><?= wfMessage( 'videopagetool-label-video-description' )->text() ?></label>
-				<textarea 
-					maxlength="<?= $descriptionMaxLength ?>" 
-					class="description" 
-					id="description-<?= $x ?>" 
-					placeholder="<?= wfMessage( 'videopagetool-placeholder-video-description' )->text() ?>" 
+				<textarea
+					maxlength="<?= $descriptionMaxLength ?>"
+					class="description"
+					id="description-<?= $x ?>"
+					placeholder="<?= wfMessage( 'videopagetool-placeholder-video-description' )->text() ?>"
 					name="description[]"><?= $video[ 'description' ] ?>
 				</textarea>
 				<p class="hint"><?= wfMessage( 'videopagetool-hint-description-maxlength', $descriptionMaxLength )->plain() ?></p>
 			</div>
-			
+
 			<button class="secondary navigation nav-up">
 				<img class="chevron chevron-up" src="<?= $wg->BlankImgUrl ?>">
 			</button>

@@ -57,8 +57,8 @@ define( 'views.videopageadmin.thumbnailUpload', [
 						.attr( 'href', response.data.largeThumbUrl )
 						.fadeIn( 200 );
 
-					that.$el.find( '.new-thumb' ).val( img.imgTitle );
-					that.$el.find( '.new-thumb-name' ).text( img.imgTitle );
+					that.$el.find( '.alt-thumb' ).val( img.imgTitle );
+					that.$el.find( '.alt-thumb-name' ).text( img.imgTitle );
 			});
 		}
 	};
