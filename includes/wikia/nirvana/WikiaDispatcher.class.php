@@ -177,7 +177,7 @@ class WikiaDispatcher {
 				$controller->setApp( $app );
 				$controller->init();
 
-				if ( $controller->preventUsage( $controller->getContext()->getUser(), $method ) ) {
+				if ( method_exists( $controller, 'preventUsage' ) && $controller->preventUsage( $controller->getContext()->getUser(), $method ) ) {
 					$result = false;
 				} else {
 					// Actually call the controller::method!

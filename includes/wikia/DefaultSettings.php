@@ -63,7 +63,6 @@ require_once ( $IP."/includes/wikia/GlobalFunctions.php" );
 require_once ( $IP."/includes/wikia/Wikia.php" );
 require_once ( $IP."/includes/wikia/WikiaMailer.php" );
 require_once ( $IP."/extensions/Math/Math.php" );
-require_once ( $IP . "/includes/wikia/traits/init.php" );
 
 global $wgDBname;
 if($wgDBname != 'uncyclo') {
@@ -361,6 +360,10 @@ $wgAutoloadClasses['Wikia\UI\Component'] = $IP . '/includes/wikia/ui/Component.c
 $wgAutoloadClasses['Wikia\UI\TemplateException'] = $IP . '/includes/wikia/ui/exceptions/TemplateException.class.php';
 $wgAutoloadClasses['Wikia\UI\DataException'] = $IP . '/includes/wikia/ui/exceptions/DataException.class.php';
 $wgAutoloadClasses['Wikia\UI\UIFactoryApiController'] = $IP . '/includes/wikia/ui/UIFactoryApiController.class.php';
+
+// Traits
+$wgAutoloadClasses[ 'PreventBlockedUsers' ] = $IP . '/includes/wikia/traits/PreventBlockedUsers.trait.php';
+$wgAutoloadClasses[ 'PreventBlockedUsersThrowsError' ] = $IP . '/includes/wikia/traits//PreventBlockedUsers.trait.php';
 
 
 // Register \Wikia\Sass namespace

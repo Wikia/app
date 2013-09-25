@@ -7,10 +7,10 @@
  * @author Saipetch
  */
 class WikiFeaturesSpecialController extends WikiaSpecialPageController {
+	use PreventBlockedUsersThrowsError;
 
 	public function __construct() {
 		parent::__construct('WikiFeatures', 'wikifeaturesview');
-		$this->preventBlockedUsers = true;
 	}
 
 	public function init() {
