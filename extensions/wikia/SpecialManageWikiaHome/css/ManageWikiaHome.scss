@@ -1,4 +1,5 @@
 @import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/core/layout";
 @import "../../../../skins/oasis/css/mixins/curation-elements";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 
@@ -28,11 +29,28 @@
 }
 
 .collections-setup {
-	width: 735px;
 	float: left;
+
 	padding-left: 10px;
 	margin: 0 0 20px 10px;
 	border-left: 1px solid $color-page-border;
+
+	@if ( $responsive-layout-enabled ) {
+		width: auto;
+
+		width: -webkit-calc(100% - 280px);
+		width: calc(100% - 280px);
+
+		@media screen and (max-width: 1030px) {
+			width: 100%;
+			padding: 0;
+			margin: 0;
+			border: none;
+		}
+
+	} else {
+		width: 735px;
+	}
 
 	.collection-module {
 		@include module-box;
