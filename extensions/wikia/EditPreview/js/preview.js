@@ -95,9 +95,7 @@ define( 'wikia.preview', [
 	 */
 	function renderPreview(options) {
 
-		if (options.isRailDropped) {
-			isRailDropped = true;
-		}
+		isRailDropped = (options.isRailDropped) ? true : false;
 
 		var dialogOptions = {
 			buttons: [
@@ -115,7 +113,8 @@ define( 'wikia.preview', [
 					handler: options.onPublishButton
 				}
 			],
-			width: (!isRailDropped) ? options.width : options.width - FIT_SMALL_SCREEN,
+			// set modal width based on screen size
+			width: (isRailDropped === false) ? options.width : options.width - FIT_SMALL_SCREEN,
 			className: 'preview',
 			onClose: function() {
 				$(window).trigger('EditPagePreviewClosed');
@@ -126,11 +125,12 @@ define( 'wikia.preview', [
 
 		renderDialog(msg('preview'), dialogOptions, function(contentNode) {
 
-			if (isRailDropped) {
-				contentNode.width(options.width - articleMargin * 2 - 15);
-			}
-
 			options.getPreviewContent(function(content, summary) {
+
+				// set proper preview width for shrinken modal
+				if (isRailDropped) {
+					contentNode.width(options.width - articleMargin * 2);
+				}
 
 				contentNode.html(content);
 

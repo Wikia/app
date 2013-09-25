@@ -437,7 +437,7 @@
 				// PSS: fuck scrollbars.
 				// TODO: we should have access to breakpoints and such in JavaScript
 				// as variables instead of hardcoded values.
-				if ( isWebkit && pageWidth >= 1370 ) {
+				if ( isWebkit && pageWidth >= 1370 || pageWidth <= railBreakPoint) {
 					width -= this.scrollbarWidth;
 				}
 			}
