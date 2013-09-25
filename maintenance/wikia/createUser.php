@@ -11,31 +11,31 @@
 
 $options = array( 'help' );
 
-ini_set( "include_path", dirname(__FILE__)."/../" );
+ini_set( "include_path", dirname( __FILE__ ) . "/../" );
 require_once( 'commandLine.inc' );
 
-if( isset( $options['help'] ) ) {
+if ( isset( $options[ 'help' ] ) ) {
 	showHelp();
 	exit( 1 );
 }
 
-if( count( $args ) < 3 ) {
+if ( count( $args ) < 3 ) {
 	echo( "Please provide a username, password and email for the new account.\n" );
 	die( 1 );
 }
 
-$username = $args[0];
-$password = $args[1];
-$email    = $args[3];
+$username = $args[ 0 ];
+$password = $args[ 1 ];
+$email = $args[ 2 ];
 
 echo( wfWikiID() . ": Creating User:{$username}..." );
 
 # Validate username and check it doesn't exist
 $user = User::newFromName( $username );
-if( !is_object( $user ) ) {
+if ( !is_object( $user ) ) {
 	echo( "invalid username.\n" );
 	die( 1 );
-} elseif( 0 != $user->idForName() ) {
+} elseif ( 0 != $user->idForName() ) {
 	echo( "account exists.\n" );
 	die( 1 );
 }
@@ -44,8 +44,12 @@ if( !is_object( $user ) ) {
 $user->addToDatabase();
 $user->setEmail( $email );
 $user->setPassword( $password );
-$user->saveSettings();
-
+$user->confirmEmail();
+UserLoginHelper::removeNotConfirmedFlag( $user ); // this calls saveSettings();
+if ( !ExternalUser_Wikia::addUser( $user, $password, $email, $username ) ) {
+	echo "error creating external user\n";
+	die( 1 );
+}
 
 # Increment site_stats.ss_users
 $ssu = new SiteStatsUpdate( 0, 0, 0, 0, 1 );
