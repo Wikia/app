@@ -527,8 +527,15 @@ class CommentsIndex extends WikiaModel {
 
 	}
 
+	/*
+	 * We need some data in order to create CommentIndex objects inside the MW transaction creating the article
+	 */
 	private static $commentInfoData = [];
 
+	/**
+	 * Store the information about new comment, so it can be used for creating CommentsIndex instances inside
+	 * MW transaction (ArticleDoEdit hook)
+	 */
 	static public function addCommentInfo($commentTitleText, $userPageTitle, $parentId) {
 		$entry = new stdClass();
 		$entry->userPageTitle = $userPageTitle;
@@ -537,6 +544,13 @@ class CommentsIndex extends WikiaModel {
 		self::$commentInfoData[ $commentTitleText ] = $entry;
 	}
 
+	/**
+	 * Hook into MW transaction that creates new article comments and execute queries that create comments_index entries
+	 * @param $dbw database connetion
+	 * @param Title $title newly created article
+	 * @param Revision $revision revision containig the lastest version of article comment
+	 * @param $flags Integer bitfield, the same as in WikiPage::doEdit method
+	 */
 	static public function onArticleDoEdit( $dbw,  Title $title, Revision $revision, $flags) {
 		global $wgEnableWallEngine;
 
