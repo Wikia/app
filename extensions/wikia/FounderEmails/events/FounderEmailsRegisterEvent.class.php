@@ -87,7 +87,7 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 			'userTalkPageUrl' => $user->getTalkPage()->getFullUrl(),
 		);
 
-		FounderEmails::getInstance()->registerEvent( new FounderEmailsRegisterEvent( $eventData ) );
+		FounderEmails::getInstance()->registerEvent( new FounderEmailsRegisterEvent( $eventData ), false );
 
 		wfProfileOut( __METHOD__ );
 		return true;
