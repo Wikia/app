@@ -46,7 +46,7 @@ class WikiaHomePageController extends WikiaController {
 	const hubsGridImgHeight = 160;
 	// skin change values end
 
-	const INITIAL_BATCHES_NUMBER = 5;
+	const INITIAL_BATCHES_NUMBER = 3;
 
 	//failsafe
 	const FAILSAFE_ARTICLE_TITLE = 'Failsafe';

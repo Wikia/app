@@ -41,7 +41,7 @@ if (!Object.keys) {
 }
 
 var WikiaHomePageRemix = function () {
-	this.WIKISETSTACKOFFSET = 3;
+	this.WIKISETSTACKOFFSET = 2;
 	this.NUMBEROFBATCHESTODOWNLOAD = 5;
 
 	this.COLLECTIONS_LS_KEY = 'WHP_collections';
