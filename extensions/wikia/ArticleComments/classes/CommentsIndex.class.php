@@ -23,11 +23,11 @@ class CommentsIndex extends WikiaModel {
 	protected $lastTouched = 0;
 	protected $namespace = 0;
 	protected $data = array();
-
+	private $dbw = null;
 
 	public function __construct( $data = array(), $dbw = null ) {
 		$this->data = $data;
-		$this->$dbw = $dbw;
+		$this->dbw = $dbw;
 		foreach ( $data as $key => $value ) {
 			$this->$key = $value;
 		}
