@@ -1378,6 +1378,13 @@ $config['touchstorm_scss'] = array(
 		'//extensions/wikia/TouchStorm/css/TouchStorm.scss'
 	)
 );
+$config['touchstorm_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/TouchStorm/js/TouchStorm.js'
+	)
+);
+
 
 // FIXME: paths to dist
 $config['api_docs_js'] = array(
