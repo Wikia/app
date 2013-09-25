@@ -43,7 +43,7 @@ class ApiVisualEditor extends ApiBase {
 				array(
 					'method' => 'GET',
 					'timeout' => $wgVisualEditorParsoidTimeout,
-					'noProxy' => true
+					'noProxy' => empty( $wgDevelEnvironment )
 				)
 			);
 			$status = $req->execute();
@@ -98,7 +98,7 @@ class ApiVisualEditor extends ApiBase {
 					'oldid' => $parserParams['oldid']
 				),
 				'timeout' => $wgVisualEditorParsoidTimeout,
-				'noProxy' => true
+				'noProxy' => empty( $wgDevelEnvironment )
 			)
 		);
 	}
