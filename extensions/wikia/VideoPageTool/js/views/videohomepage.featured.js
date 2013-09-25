@@ -16,13 +16,13 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 		this.slider = null;
 
 		// Get data from model
-		var sliderData = new FeaturedModel( {
+		this.sliderModel = new FeaturedModel( {
 			slides: this.$bxSlider.children(),
 			thumbs: this.$thumbs
 		});
 
-		this.slides = sliderData.slides;
-		this.thumbs = sliderData.thumbs;
+		this.slides = this.sliderModel.slides;
+		this.thumbs = this.sliderModel.thumbs;
 
 
 		this.init();
@@ -87,7 +87,7 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 					})
 					.done( function( data ) {
 						// cache embed data
-						slide.embedData = data;
+						that.sliderModel.addVideoEmbedData( slide, data );
 						that.handleVideoSwitch( slide );
 					});
 
@@ -107,22 +107,18 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 
 			slide.$image.hide();
 			slide.$video.show();
+			slide.current = 'video';
 
 			this.videoInstance = new VideoBootstrap( slide.$video[ 0 ], slide.embedData.embedCode, 'videoHomePage' );
 		},
 		bindEvents: function() {
 			var that = this;
 
-			// Show thumbs
-			this.$sliderControls.on( 'mouseenter', function() {
-				that.$thumbs.slideDown();
-			});
-			// Hide thumbs
-			this.$thumbs.on( 'mouseleave', function() {
-				$( this ).slideUp();
-			})
+			// Thumb visibility toggle
+			this.initThumbShowHide();
+
 			// play video
-			.on( 'click', '.video', function( e ){
+			this.$thumbs.on( 'click', '.video', function( e ){
 				var $this = $( this );
 
 				e.preventDefault();
@@ -130,6 +126,35 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 				that.nextVideo = $this.children( 'img' ).attr( 'data-video-key' );
 				that.slider.goToSlide( $this.index() );
 			});
+		},
+		/* @desc Toggle thumb visibility using a timeout so hovering over controls will not hide thumbs
+		 *
+		 */
+		initThumbShowHide: function() {
+			var that = this,
+				hoverTimeout = 0;
+
+			function setHoverTimeout() {
+				hoverTimeout = setTimeout( function() {
+					that.$thumbs.slideUp();
+				}, 300 );
+			}
+
+			this.$sliderControls
+				.on( 'mouseenter', '.bx-pager-item', function() {
+					clearTimeout( hoverTimeout );
+					that.$thumbs.slideDown();
+				})
+				.on('mouseleave', '.bx-pager-item', function() {
+					setHoverTimeout();
+				});
+			that.$thumbs
+				.on( 'mouseenter', function() {
+					clearTimeout( hoverTimeout );
+				})
+				.on( 'mouseleave', function() {
+					setHoverTimeout();
+				});
 		}
 	};
 

@@ -35,14 +35,21 @@ define('vpt.models.featured', [ 'jquery' ], function( $ ) {
 					$elem: $this,
 					$video: $this.find( '.slide-video' ),
 					$image: $this.find( '.slide-image' ),
+					current: 'image',
 					embedData: null
 				});
 			});
 
 			return slides;
 		},
-		addVideoEmbedData: function( idx, data) {
-			this.slides[ idx ].embedData = data;
+		addVideoEmbedData: function( slide, data) {
+			slide.embedData = data;
+		},
+		switchToVideo: function( slide ) {
+
+		},
+		switchToImage: function( slide ) {
+
 		}
 	};
 

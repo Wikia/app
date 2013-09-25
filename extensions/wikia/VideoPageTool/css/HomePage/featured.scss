@@ -75,7 +75,10 @@ $play-button-overlay-fade-duration: 400ms;
 		}
 		// Small navigation circles
 		.bx-pager {
-			bottom: 10px;
+			bottom: -30px;
+			.bx-pager-item {
+				padding-top: 30px;
+			}
 		}
 		// Thumbnails
 		.thumbs {
