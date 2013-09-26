@@ -16,12 +16,12 @@ class UserLoginForm extends LoginForm {
 	function load() {
 		parent::load();
 		$request = $this->mOverrideRequest;
-		if ( $request->getText( 'username', '' ) != '' ) {
-			$this->mUsername = $request->getText( 'username', '' );
+		if ( $request->getText( 'userloginext01', '' ) != '' ) {
+			$this->mUsername = $request->getText( 'userloginext01', '' );
 		}
-		if ( $request->getText( 'password', '' ) != '' ) {
-			$this->mPassword = $request->getText( 'password' );
-			$this->mRetype = $request->getText( 'password' );
+		if ( $request->getText( 'userloginext02', '' ) != '' ) {
+			$this->mPassword = $request->getText( 'userloginext02' );
+			$this->mRetype = $request->getText( 'userloginext02' );
 		}
 		if ( $request->getText( 'email', '' ) != '' ) {
 			$this->mEmail = $request->getText( 'email' );
