@@ -172,7 +172,6 @@ class VideoPageToolAsset extends WikiaModel {
 	 * @param integer $programId
 	 * @param string $section
 	 * @param integer $order
-	 * @param array $data
 	 * @return Object|null $asset
 	 */
 	public static function newAsset( $programId, $section, $order ) {
