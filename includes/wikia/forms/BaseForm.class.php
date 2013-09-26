@@ -1,5 +1,4 @@
-<?
-
+<?php
 abstract class BaseForm extends FormElement {
 
 	/**
@@ -158,6 +157,15 @@ abstract class BaseForm extends FormElement {
 	 */
 	public function getFieldValue($fieldName) {
 		return $this->getField($fieldName)->getValue();
+	}
+
+	/**
+	 * @desc Magic method to return whole form rendered
+	 *
+	 * @return string
+	 */
+	public function __toString() {
+		return $this->render();
 	}
 
 	/**
