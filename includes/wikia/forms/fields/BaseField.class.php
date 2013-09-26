@@ -1,4 +1,4 @@
-<?
+<?php
 abstract class BaseField extends FormElement {
 
 	/**
@@ -16,6 +16,7 @@ abstract class BaseField extends FormElement {
 	 * @var WikiaValidator
 	 */
 	protected $validator;
+
 	/**
 	 * array of field properties
 	 * @var array

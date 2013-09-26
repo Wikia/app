@@ -5,11 +5,11 @@ class ExampleController extends WikiaSpecialPageController {
 		$this->form = new ExampleForm();
 
 		$vals = [
-			'fieldName' => 'a',
-			'fieldName2' => 'b',
-			'collectionField' => [1, 2, 3],
-			'fieldName9' => 'Option 2',
-			'fieldName10' => 2
+			'contactFormSubject' => 'Example subject',
+			'contactFormMessage' => 'Example message',
+			'contactFormSendCopy' => 1,
+			'contactFormSubmit' => wfMessage( 'submit' )->text(),
+			'contactFormSessionId' => md5( 'random-session-key' ),
 		];
 
 		// validate form values (they can be taken from $_POST or $_GET or other source)

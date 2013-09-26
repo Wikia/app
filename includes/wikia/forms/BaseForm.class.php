@@ -141,7 +141,6 @@ abstract class BaseForm extends FormElement {
 	 * @param array $values
 	 */
 	public function setFieldsValues($values = []) {
-
 		foreach ( $this->fields as $fieldName => $field ) {
 			if (array_key_exists($fieldName, $values)) {
 				$field->setValue($values[$fieldName]);

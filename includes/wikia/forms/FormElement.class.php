@@ -1,4 +1,4 @@
-<?
+<?php
 abstract class FormElement {
 	/**
 	 * @return string relative path from /includes/wikia/forms/ to class template files directory
