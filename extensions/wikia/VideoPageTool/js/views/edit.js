@@ -171,7 +171,7 @@ define( 'vpt.views.edit', [
 
 			// reset custom thumb name
 			this.$form.find( '.alt-thumb-name' )
-				.text( 'Image dimensions must be 1024 x 461' );
+				.text( 'Image name' );
 
 			// Also clear all error messages for better UX
 			this.validator.clearErrors();

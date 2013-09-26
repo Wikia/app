@@ -30,11 +30,12 @@
 				</button>
 
 				<p class="alt-thumb-name <?= $video[ 'altThumbClass' ]  ?>">
-					<? $thumbName = $video[ 'altThumbName' ]; ?>
-					<?= $thumbName != '' && $thumbName != 'Image name' ? $thumbName : wfMessage( 'videopagetool-hint-required-dimensions' )->plain() ?>
+					<? $thumbText = $video[ 'altThumbName' ] ?>
+					<?= $thumbText == '' ? wfMessage('videopagetool-video-title-default-text')->plain() : $thumbText ?>
 				</p>
 
 				<input type="hidden" name="altThumbName[]" class="alt-thumb" id="alt-thumb-<?= $x ?>" value="<?= $video[ 'altThumbName' ] ?>">
+				<div class="tip"><?= wfMessage('videopagetool-hint-required-dimensions')->plain() ?></div>
 			</div>
 
 			<div class="input-group border">
