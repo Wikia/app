@@ -11,7 +11,7 @@
 			<span class="count"><?= $x ?>.</span>
 
 			<div class="input-group video-key-group">
-				<button class="add-video-button media-btn">
+				<button type="button" class="add-video-button media-btn">
 					<?= wfMessage( 'videopagetool-button-add-video' )->text() ?>
 				</button>
 				<p class="video-title <?= $video[ 'videoTitleClass' ] ?>"><?= $video[ 'videoTitle' ]  ?></p>
@@ -25,7 +25,7 @@
 
 			<div class="input-group">
 
-				<button class="media-uploader-btn media-btn">
+				<button type="button" class="media-uploader-btn media-btn">
 					<?= wfMessage( 'videopagetool-button-add-thumbnail' )->plain() ?>
 				</button>
 
@@ -54,11 +54,11 @@
 				<p class="hint"><?= wfMessage( 'videopagetool-hint-description-maxlength', $descriptionMaxLength )->plain() ?></p>
 			</div>
 
-			<button class="secondary navigation nav-up">
+			<button type="button" class="secondary navigation nav-up">
 				<img class="chevron chevron-up" src="<?= $wg->BlankImgUrl ?>">
 			</button>
 
-			<button class="secondary navigation nav-down">
+			<button type="button" class="secondary navigation nav-down">
 				<img class="chevron chevron-down" src="<?= $wg->BlankImgUrl ?>">
 			</button>
 		</div>
@@ -69,7 +69,7 @@
 
 	<div class="submits">
 		<button type="submit"><?= wfMessage( 'videopagetool-button-save' )->text() ?></button>
-		<button class="secondary reset"><?= wfMessage( 'videopagetool-button-clear' )->text() ?></button>
+		<button type="button" class="secondary reset"><?= wfMessage( 'videopagetool-button-clear' )->text() ?></button>
 	</div>
 
 </form>

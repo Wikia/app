@@ -977,8 +977,8 @@ $config['videopageadmin_js'] = array(
 		'//extensions/wikia/VideoPageTool/js/views/switcher.js',
 		'//extensions/wikia/VideoPageTool/js/views/datepicker.js',
 		'//extensions/wikia/VideoPageTool/js/views/index.js',
-		'//extensions/wikia/VideoPageTool/js/views/edit.js',
 		'//extensions/wikia/VideoPageTool/js/views/thumbnailUploader.js',
+		'//extensions/wikia/VideoPageTool/js/views/edit.js',
 	)
 );
 
