@@ -252,8 +252,16 @@ class UserLoginForm extends LoginForm {
 		$this->mainLoginForm( wfMessage( 'userlogin-error-acct_creation_throttle_hit', $limit )->parse() );
 	}
 
-	public function notEmptySpamFields() {
-		if( !empty( $this->fakeUsername) || !empty( $this->fakePassword ) ) {
+	/**
+	 * Checks whether some hidden fields of signup form remain empty
+	 * fakeUsername hidden username field (should be empty)
+	 * fakePassword hidden password field (should be empty)
+	 * These fields should be empty otherwise it probably has been modified by a bot
+	 * and signup process should be interrupted
+	 * @return bool
+	 */
+	public function EmptySpamFields() {
+		if( empty( $this->fakeUsername) && empty( $this->fakePassword ) ) {
 			return true;
 		}
 		return false;

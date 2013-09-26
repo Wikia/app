@@ -153,7 +153,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$signupForm = new UserLoginForm($this->wg->request);
 		$signupForm->load();
 
-		if ( $signupForm->notEmptySpamFields() ) {
+		if ( !$signupForm->EmptySpamFields() ) {
 			$this->result = 'error';
 			return;
 		}
