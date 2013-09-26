@@ -75,9 +75,6 @@ $wgCreatePageCoverRedLinks = false;
 
 // Hooked functions
 $wgHooks['EditPage::showEditForm:initial'][] = 'wfCreatePagePreloadContent';
-// I'm not sure if this and the related, custom Article class are even needed
-// nowadays, so I'm disabling it for the time being.
-//$wgHooks['Image::RecordUpload:article'][] = 'wfCreatePageShowNoImagePage';
 $wgHooks['CustomEditor'][] = 'wfCreatePageRedLinks';
 $wgHooks['ConfirmEdit::onConfirmEdit'][] = 'wfCreatePageConfirmEdit'; // ConfirmEdit CAPTCHA
 
@@ -125,13 +122,6 @@ function wfCreatePagePreloadContent( $editpage ) {
 	if( $wgRequest->getCheck( 'createpage' ) ) {
 		$editpage->textbox1 = $_SESSION['article_content'];
 	}
-	return true;
-}
-
-// because MediaWiki jumps happily to the article page
-// when we create it - in this case, for image upload
-function wfCreatePageShowNoImagePage( $article, $title ) {
-	$article = new PocketSilentArticle( $title );
 	return true;
 }
 

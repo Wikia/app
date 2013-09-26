@@ -1,12 +1,9 @@
 <section class="Search this-wiki WikiaGrid clearfix">
-	<form class="WikiaSearch" id="search-v2-form" action="<?=$specialSearchUrl;?>">
+	<form class="WikiaSearch" id="search-v2-form" action="<?=$specialSearchUrl;?>#">
 		<div class="SearchInput">
 			<?php if(!empty($advancedSearchBox)) : ?>
 				<p class="advanced-link"><a href="#" id="advanced-link"><?= wfMessage('searchprofile-advanced') ?></a></p>
 			<?php endif ?>
-			<?php foreach($namespaces as $ns): ?>
-				<input type="hidden" class="default-tab-value" name="ns<?=$ns;?>" value="1" />
-			<?php endforeach; ?>
 
 			<p class="grid-1 alpha"><?= wfMsg('wikiasearch2-wiki-search-headline') ?></p>
 
@@ -22,6 +19,9 @@
 		<?php echo $tabs; ?>
 
 		<div class="results-wrapper grid-3 alpha">
+			<?php if(!empty($wikiMatch)):?>
+				<?=$wikiMatch?>
+			<?php endif; ?>
 			<?php if(!empty($results)): ?>
 				<?php if( $resultsFound > 0 ): ?>
 					<p class="result-count subtle">
@@ -30,9 +30,6 @@
 						<?php else: ?>
 							<?= wfMsg('wikiasearch2-results-for', '<strong>'.$query.'</strong>'); ?>
 						<?php endif; ?>
-						<?php if(!empty($wikiMatch)):?>
-							<?=$wikiMatch?>
-						<?php endif; ?>			
 						<?php if ( isset($hub) && $hub ) : ?>
 							<?= wfMsg('wikiasearch2-onhub', $hub)?>
 							|
@@ -50,8 +47,11 @@
 					<ul class="Results">
 					<?php $pos = 0; ?>
 					<?php foreach( $results as $result ): ?>
-						<?php 
+						<?php
 							$pos++;
+							if ( ( $pos == 3 || $pos == 7 ) && isset( $mediaData ) ):
+								echo '<li class="result video-addon-results video-addon-results-before-' . $pos . '">' . $app->getView( 'WikiaSearch', 'mediadata', array( 'mediaData' => $mediaData, 'query' => $query ) ) . '</li>';
+							endif;
 							if ( $result['ns'] === 0 ) {
 								echo $app->getView( 'WikiaSearch', $resultView, array(
 									  'result' => $result,
@@ -97,7 +97,7 @@
 			<?php endif; ?>
 
 			</div>
-			<div class="SearchAdsTopWrapper grid-2 alpha">
+			<div class="SearchAdsTopWrapper WikiaRail <?= !empty($isGridLayoutEnabled) ? 'grid-2' : '' ?> alpha">
 				<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')); ?>
 				<?= $topWikiArticles ?>
 				<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2')); ?>

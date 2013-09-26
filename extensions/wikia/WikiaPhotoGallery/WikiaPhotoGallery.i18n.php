@@ -1672,6 +1672,15 @@ $messages['el'] = array(
 	'wikiaPhotoGallery-upload-selectbutton' => 'Επιλογή',
 );
 
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'wikiaPhotoGallery-preview-captioncolor' => 'Caption colour',
+	'wikiaPhotoGallery-preview-bordercolor' => 'Photo border colour',
+	'wikiaPhotoGallery-preview-colorpicker-title' => 'Colour picker',
+);
+
 /** Esperanto (Esperanto)
  * @author Tradukisto
  */
@@ -4338,6 +4347,25 @@ Je kunt ook op "$2" klikken om de bijgewerkte pagina te bekijken.',
 	'wikiaPhotoGallery-quit-intro' => 'Weet je zeker dat je de galerijbewerking wilt verlaten?',
 	'wikiaPhotoGallery-choice-intro' => 'Wil je een diavoorstelling of afbeeldingengalerij maken?',
 	'wikiaPhotoGallery-upload-uploadtext' => 'Upload een bestand van je computer',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'wikiaPhotoGallery-back' => 'Retorn',
+	'wikiaPhotoGallery-finish' => 'Acabar',
+	'wikiaPhotoGallery-feed-caption' => '$1, \'\'via\'\' <a href="$2">$3</a>',
+	'wikiaPhotoGallery-lightbox-caption' => "''Via'' $1",
+	'wikiaPhotoGallery-error-caption' => 'Error',
+	'wikiaPhotoGallery-upload-findtitle' => 'Recercar',
+	'wikiaPhotoGallery-upload-findbutton' => 'Recercar',
+	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Inserir',
+	'wikiaPhotoGallery-upload-select-images' => 'Seleccionar',
+	'wikiaPhotoGallery-photooptions-done' => 'Acabat',
+	'wikiaPhotoGallery-preview-hover-modify' => 'modificar',
+	'wikiaPhotoGallery-preview-hover-delete' => 'suprimir',
+	'wikiaPhotoGallery-preview-px' => 'px',
 );
 
 /** Deitsch (Deitsch)

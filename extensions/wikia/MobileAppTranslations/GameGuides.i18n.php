@@ -52,6 +52,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'activityindicator-message' => '{{Identical|Loading}}',
+	'window-category-load-batch' => '{{Identical|More}}',
 	'window-article-button-close' => '{{Identical|Close}}',
 	'window-article-menu-search-label' => '{{Identical|Search}}',
 );
@@ -93,6 +94,7 @@ $messages['az'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -109,6 +111,7 @@ $messages['br'] = array(
 	'searchbar-hint' => 'Klask %s...',
 	'alert-download-updated-wikis-message' => 'Hizivaet e vo roll ar sturlevrioù dieub.',
 	'alert-download-updated-wikis-button-ok' => 'Mat eo',
+	'error-no-connection' => "Ne c'haller ket kevreañ ouzh internet.\\nEsaeit en-dro, mar plij.",
 );
 
 /** Catalan (català)
@@ -695,6 +698,7 @@ $messages['pt-br'] = array(
 	'window-article-button-back' => 'Voltar',
 	'window-article-menu-search-label' => 'Pesquisar',
 	'window-article-menu-cancel-label' => 'Cancelar',
+	'searchbar-hint' => 'Pesquisar %s...',
 	'alert-download-updated-wikis-button-ok' => 'Ok',
 );
 

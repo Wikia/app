@@ -503,7 +503,7 @@ Ma'z oc'h diazezer ar wiki-mañ pe unan eus merourien anezhañ e c'hallit kemma�
 $messages['ca'] = array(
 	'myhome-desc' => "Una pàgina d'inici privada pels usuaris registrats.",
 	'myhome' => "La meva pàgina d'inici",
-	'wikiactivity' => 'Wiki Activity',
+	'wikiactivity' => 'Activitat Wiki',
 	'myhome-activity-more' => 'veure més activitat recent',
 	'myhome-activity-feed' => "Llista d'activitat",
 	'myhome-activity-feed-empty' => "Aquest wiki està esperant a que t'uneixis. Fes clic a '''[[Special:CreatePage|nova pàgina]]''' per començar a escriure!",
@@ -2007,6 +2007,13 @@ $messages['ja'] = array(
 	'tooltip-pt-myhome' => 'My Home',
 	'activityfeed' => 'アクティビティフィード',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|$1件のメッセージ}}',
+);
+
+/** Georgian (ქართული)
+ * @author DevaMK
+ */
+$messages['ka'] = array(
+	'wikiactivity' => 'ვიკი აქტიურობა',
 );
 
 /** Kannada (ಕನ್ನಡ)

@@ -27,9 +27,11 @@ $messages['ar'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Gwenn-Ael
  */
 $messages['br'] = array(
+	'confirmemailprompt-desc' => "Diskouez ur c'hemenn diwall m'en deus an implijer ur chomlec'h postel ha n'eo ket bet kadarnaet",
 	'confirmemailprompt-error' => "Ho chomlec'h postel eo : <strong>$1</strong>? [[$2|Kadarnit anezhañ]] pe [[$3|kemmit anezhañ]].",
 );
 
@@ -167,6 +169,14 @@ $messages['nb'] = array(
 $messages['nl'] = array(
 	'confirmemailprompt-desc' => 'Geeft een waarschuwing weer als een gebruiker een niet-bevestigd e-mailadres heeft',
 	'confirmemailprompt-error' => 'Is dit uw e-mailadres: <strong>$1</strong>? [[$2|Bevestig het]] of [[$3|wijzig het]].',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'confirmemailprompt-desc' => 'Aficha un messatge d’avertiment se un utilizaire a una adreça de corrièr electronic qu’es pas estada confirmada',
+	'confirmemailprompt-error' => 'Es vòstra adreça de corrièr electronic : <strong>$1</strong> ? [[$2|Confirmar]] o [[$3|la cambiar]].',
 );
 
 /** Polish (polski)

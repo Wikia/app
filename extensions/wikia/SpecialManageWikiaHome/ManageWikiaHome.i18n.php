@@ -206,6 +206,38 @@ Parameters:
 {{Identical|Add photo}}',
 );
 
+/** Arabic (العربية)
+ * @author Kuwaity26
+ */
+$messages['ar'] = array(
+	'managewikiahome' => 'إدارة الصفحة الرئيسية لويكيا',
+	'manage-wikia-home-change-button' => 'تغيير',
+	'manage-wikia-home-wiki-filter' => 'مرشّح',
+	'manage-wikia-home-wiki-list-headline' => 'اسم الويكي',
+	'manage-wikia-home-wiki-list-blocked' => 'محظور',
+	'manage-wikia-home-wiki-list-promoted' => 'ترقَّى',
+	'manage-wikia-home-wiki-list-official' => 'رسمي',
+	'manage-wikia-home-wiki-list-collection' => 'المجموعات',
+	'manage-wikia-home-wiki-list-blocked-no' => 'لا',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'نعم',
+	'manage-wikia-home-wiki-list-promoted-no' => 'لا',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'نعم',
+	'manage-wikia-home-wiki-list-official-no' => 'لا',
+	'manage-wikia-home-wiki-list-official-yes' => 'نعم',
+	'manage-wikia-home-wiki-list-disabled-collection' => 'تعطيل المجموعات',
+	'manage-wikia-home-wiki-list-all-collections' => 'جميع المجموعات',
+	'manage-wikia-home-modal-title' => 'تغيير حالة الويكي',
+	'manage-wikia-home-modal-content-blocked-wiki-title' => 'هذا الويكي محظور',
+	'manage-wikia-home-modal-button-no' => 'لا',
+	'manage-wikia-home-modal-button-yes' => 'نعم',
+	'manage-wikia-home-modal-button-okay' => 'حسنًا',
+	'manage-wikia-home-collections-setup-header' => 'إعداد المجموعات',
+	'manage-wikia-home-collections-setup-save-button' => 'احفظ',
+	'manage-wikia-home-collections-enabled-field-label' => 'مُفعّل',
+	'manage-wikia-home-collections-name-field-label' => 'اسم المجموعة',
+	'manage-wikia-home-collection-add-file-button' => 'إضافة صورة',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  */
@@ -1029,6 +1061,7 @@ $messages['pt'] = array(
  * @author Luckas
  */
 $messages['pt-br'] = array(
+	'manage-wikia-home-wiki-filter' => 'Filtrar',
 	'manage-wikia-home-wiki-filter-reset' => 'Limpar',
 	'manage-wikia-home-wiki-list-id' => 'Id',
 	'manage-wikia-home-wiki-list-vertical' => 'Vertical',
@@ -1106,6 +1139,45 @@ $messages['roa-tara'] = array(
 	'manage-wikia-home-collection-hero-image-tooltip' => "St'immaggine avessa essere $1px × $2px",
 	'manage-wikia-home-collection-sponsor-image-tooltip' => "St'immaggine avessa essere $1px × $2px",
 	'manage-wikia-home-collection-add-file-button' => "Aggiunge 'na fote",
+);
+
+/** Russian (русский)
+ * @author Okras
+ */
+$messages['ru'] = array(
+	'manage-wikia-home-collections-success' => 'Коллекции были сохранены.',
+	'manage-wikia-home-collections-add-failure-image' => '$1 не может быть добавлен к этой коллекции, потому что его основное изображение было отклонено.',
+	'manage-wikia-home-collections-invalid-action' => 'Это действие не существует.',
+	'manage-wikia-home-error-wikifactory-failure' => 'Что-то пошло не так во время сохранения переменных. Пожалуйста, попробуйте еще раз.',
+	'manage-wikia-home-collections-validation-error' => 'Произошла ошибка при сохранении, пожалуйста, проверьте то, что вы ввели.',
+	'manage-wikia-home-change-button' => 'Изменить',
+	'manage-wikia-home-wiki-filter' => 'Фильтр',
+	'manage-wikia-home-wiki-filter-reset' => 'Очистить',
+	'manage-wikia-home-wiki-list-id' => 'Id',
+	'manage-wikia-home-wiki-list-headline' => 'Название проекта',
+	'manage-wikia-home-wiki-list-official' => 'Официальный',
+	'manage-wikia-home-wiki-list-collection' => 'Коллекции',
+	'manage-wikia-home-wiki-list-blocked-no' => 'Нет',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Да',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Нет',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Да',
+	'manage-wikia-home-wiki-list-official-no' => 'Нет',
+	'manage-wikia-home-wiki-list-official-yes' => 'Да',
+	'manage-wikia-home-wiki-list-all-collections' => 'Все коллекции',
+	'manage-wikia-home-modal-content-blocked-wiki-title' => 'Этот проект заблокирован',
+	'manage-wikia-home-modal-content-removed-blocked-in-collection' => 'Этот проект в настоящий момент является частью коллекции и не может быть заблокирован.',
+	'manage-wikia-home-modal-too-many-wikis-in-collection' => 'Вы не можете добавить больше проектов в эту коллекцию.',
+	'manage-wikia-home-modal-button-no' => 'Нет',
+	'manage-wikia-home-modal-button-yes' => 'Да',
+	'manage-wikia-home-modal-button-okay' => 'Ок',
+	'manage-wikia-home-collections-setup-header' => 'Настройка коллекции',
+	'manage-wikia-home-collections-setup-save-button' => 'Сохранить',
+	'manage-wikia-home-collections-enabled-field-label' => 'Включена',
+	'manage-wikia-home-collections-name-field-label' => 'Название коллекции',
+	'manage-wikia-home-collections-wikis-in-collection' => 'Проекты: $1 из $2',
+	'manage-wikia-home-collection-hero-image-tooltip' => 'Это изображение должно быть $1px × $2px',
+	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Это изображение должно быть $1px × $2px',
+	'manage-wikia-home-collection-add-file-button' => 'Добавить фотографию',
 );
 
 /** Swedish (svenska)

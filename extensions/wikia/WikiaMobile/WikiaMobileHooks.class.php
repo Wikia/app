@@ -261,10 +261,7 @@ class WikiaMobileHooks {
 		if ( $title->getNamespace() == NS_CATEGORY ) {
 			$category = Category::newFromTitle( $title );
 
-			/**
-			 * @var $model WikiaMobileCategoryModel
-			 */
-			$model = (new WikiaMobileCategoryModel);
+			$model = new WikiaMobileCategoryModel();
 
 			$model->purgeItemsCollectionCache( $category->getName() );
 			$model->purgeExhibitionItemsCacheKey( $title->getText() );

@@ -1,0 +1,286 @@
+@import "./skins/oasis/css/core/color";
+@import "./skins/oasis/css/mixins/box-sizing";
+
+$alter-background-color: mix($color-page, #000, 90%);
+$page-width: 1030px;
+
+body {
+	background-image: none;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	line-height: 22px;
+	padding-bottom: 0;
+	text-rendering: optimizeLegibility;
+}
+
+h1 {
+	font-size: 2.75rem;
+	line-height: 60px;
+}
+h2 {
+	font-size: 2.25rem;
+	line-height: 44px;
+}
+
+.light-font {
+	font-weight: 200;
+}
+
+.WikiaHeader {
+	border: none;
+	padding: 1px 0;
+	top: 0;
+
+	.wikia-header-mask {
+		background: none;
+	}
+
+	nav {
+		height: 38px;
+	}
+
+	li {
+		height: 38px;
+		margin-top: 0;
+	}
+
+	.WikiaLogo {
+		padding-right: 25px;
+
+		a {
+			padding-right: 0;
+			top: 3px;
+		}
+	}
+}
+
+.GlobalNavigation {
+
+	>li {
+		padding: 0;
+
+		&.active {
+			background-color: $color-buttons;
+		}
+
+		>a {
+			height: 36px;
+			font-size: 14px;
+			font-weight: bolder;
+			padding-top: 2px;
+		}
+	}
+
+	a {
+		border: none;
+		height: 32px;
+		line-height: 32px;
+	}
+
+	a:hover {
+		background-image: none;
+		background-color: $color-buttons;
+	}
+}
+
+.printfooter {
+	display: none;
+}
+
+.pagetitle {
+	color: $color-header;
+	float: right;
+	font-weight: 900;
+	line-height: 32px;
+	margin-right: 40px;
+	padding-top: 4px;
+	text-transform: uppercase;
+}
+
+.styleguide-header {
+	// TODO: create a mixin for diagonal gradients when it's gone be used in at least one additional place in the code.
+	background: $color-header; /* Old browsers */
+	background: -moz-linear-gradient(30deg,  mix($color-header, #000, 30%) 0%, $color-header 46%); /* FF3.6+ */
+	background: -webkit-linear-gradient(30deg,  mix($color-header, #000, 30%) 0%,$color-header 46%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(30deg,  mix($color-header, #000, 30%) 0%,$color-header 46%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(30deg,  mix($color-header, #000, 30%) 0%,$color-header 46%); /* IE10+ */
+	background: linear-gradient(30deg,  mix($color-header, #000, 30%) 0%,$color-header 46%); /* W3C */
+	color: $color-page;
+
+	&.home {
+		text-align: center;
+	}
+
+	hgroup {
+		margin: 0 auto;
+		width: $page-width;
+	}
+
+	h1 {
+		font-size: 100px;
+		font-weight: bold;
+		line-height: 110px;
+		padding:80px 0 40px;
+	}
+
+	h2 {
+		font-size: 60px;
+		font-weight: bold;
+		padding:80px 0 40px;
+	}
+
+	h3 {
+		font-size: 2.75rem;
+		font-weight: 100;
+		padding-bottom: 50px;
+	}
+
+	.button {
+		font-size: 18px;
+		font-weight: 100px;
+		margin-bottom: 40px;
+		padding: 5px 15px;
+	}
+
+	small {
+		color: $color-alternate-text;
+		display: block;
+		padding-bottom: 30px;
+	}
+}
+
+.styleguide-link-box {
+	height: 55px;
+}
+
+.alter-background {
+	background-color: $alter-background-color;
+}
+
+.styleguide-components-page-body {
+	padding-top: 60px;
+}
+
+.styleguide-home-page-body,
+.styleguide-components-page-body {
+	margin: 0 auto;
+	overflow: hidden;
+	width: $page-width;
+}
+
+.styleguide-home-page-body {
+
+	section {
+		@include box-sizing();
+		float: left;
+		padding: 0 65px 65px;
+		text-align: center;
+		width: 50%;
+
+		&:first-child {
+			float: none;
+			margin: 0 auto;
+			width: 100%;
+
+			p {
+				font-size: 1.5rem;
+				font-weight: 100;
+				line-height: 34px;
+			}
+		}
+
+		&:last-child {
+			border-left: 1px solid $color-page-border;
+		}
+
+		h1 {
+			padding-top: 65px;
+		}
+	}
+
+	li {
+		padding-top: 15px;
+
+		&:first-child {
+			padding-top: 25px;
+		}
+
+		small {
+			color: $color-alternate-text;
+			display: block;
+			line-height: 16px;
+		}
+	}
+}
+
+.styleguide-footer {
+	clear: both;
+	margin-top: 100px;
+	text-align: center;
+
+	li {
+		display: inline-block;
+		padding: 20px 15px;
+		position: relative;
+
+		&:before {
+			color: $color-links;
+			content: '•';
+			position: absolute;
+			left: -4px;
+			top: 34%;
+		}
+
+		&:first-child:before {
+			content: '';
+		}
+	}
+}
+
+.styleguide-subnav {
+	@include box-sizing();
+	border: 1px solid $color-page-border;
+	float: left;
+	margin-right: 60px;
+	width: 270px;
+
+	li {
+		border-top: 1px solid $color-page-border;
+		padding: 15px;
+
+		&:first-child {
+			border-top: none;
+		}
+
+		&:hover {
+			background-color: $color-header;
+
+			a {
+				color: $color-header-text;
+			}
+		}
+
+		a {
+			display: block;
+			text-decoration: none;
+		}
+
+	}
+}
+
+.components {
+	float: left;
+	width: 694px
+}
+
+.component-item {
+	padding-bottom: 30px;
+
+	strong {
+		font-weight: bold;
+	}
+
+	p {
+		padding: 15px 0;
+	}
+}

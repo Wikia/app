@@ -1,65 +1,46 @@
-/**
- * VisualEditor data model TableRowNode class.
+/*!
+ * VisualEditor DataModel TableRowNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * DataModel node for a table row.
+ * DataModel table row node.
  *
  * @class
+ * @extends ve.dm.BranchNode
  * @constructor
- * @extends {ve.dm.BranchNode}
  * @param {ve.dm.BranchNode[]} [children] Child nodes to attach
- * @param {Object} [attributes] Reference to map of attribute key/value pairs
+ * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.TableRowNode = function VeDmTableRowNode( children, attributes ) {
+ve.dm.TableRowNode = function VeDmTableRowNode( children, element ) {
 	// Parent constructor
-	ve.dm.BranchNode.call( this, 'tableRow', children, attributes );
+	ve.dm.BranchNode.call( this, children, element );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.dm.TableRowNode, ve.dm.BranchNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.dm.NodeFactory
- * @static
- * @member
- */
-ve.dm.TableRowNode.rules = {
-	'isWrapped': true,
-	'isContent': false,
-	'canContainContent': false,
-	'hasSignificantWhitespace': false,
-	'childNodeTypes': ['tableCell'],
-	'parentNodeTypes': ['tableSection']
+ve.dm.TableRowNode.static.name = 'tableRow';
+
+ve.dm.TableRowNode.static.childNodeTypes = [ 'tableCell' ];
+
+ve.dm.TableRowNode.static.parentNodeTypes = [ 'tableSection' ];
+
+ve.dm.TableRowNode.static.matchTagNames = [ 'tr' ];
+
+ve.dm.TableRowNode.static.toDataElement = function () {
+	return { 'type': 'tableRow' };
 };
 
-/**
- * Node converters.
- *
- * @see {ve.dm.Converter}
- * @static
- * @member
- */
-ve.dm.TableRowNode.converters = {
-	'domElementTypes': ['tr'],
-	'toDomElement': function () {
-		return document.createElement( 'tr' );
-	},
-	'toDataElement': function () {
-		return {
-			'type': 'tableRow'
-		};
-	}
+ve.dm.TableRowNode.static.toDomElements = function ( dataElement, doc ) {
+	return [ doc.createElement( 'tr' ) ];
 };
 
 /* Registration */
 
-ve.dm.nodeFactory.register( 'tableRow', ve.dm.TableRowNode );
+ve.dm.modelRegistry.register( ve.dm.TableRowNode );

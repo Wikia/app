@@ -73,6 +73,7 @@ you should definitely check this out:
 );
 
 /** Message documentation (Message documentation)
+ * @author PtM
  * @author Shirayuki
  */
 $messages['qqq'] = array(
@@ -116,7 +117,7 @@ $messages['qqq'] = array(
 	'wikiamobile-image-not-loaded' => 'This is a message shown to a user when an image could not be loaded in the modal',
 	'wikiamobile-shared-file-not-available' => 'Message displayed when user opens a link to particular media on an article and this media is not available anymore.',
 	'wikiamobile-page-not-found' => 'Message shown to a user on 404 page; $1 is a page title that was not found. Please make sure b element wraps around $1.',
-	'wikiamobile-page-not-found-tap' => 'Message that describe what to do on 404 page with an image behind the crack',
+	'wikiamobile-page-not-found-tap' => 'Message that describes what to do on 404 page with an image behind the crack. Also see [[Wikia:Wikiamobile-page-not-found/en]].',
 	'wikiasmartbanner-appstore' => 'Message displayed in smart banner promoting an app on app store',
 	'wikiasmartbanner-googleplay' => 'Message displayed in smart banner promoting an app on google play store',
 	'wikiasmartbanner-price' => 'Message displayed in smart banner indicating a price of an app.
@@ -153,6 +154,13 @@ $messages['af'] = array(
 	'wikiamobile-password' => 'Wagwoord',
 	'wikiamobile-login-submit' => 'Meld aan',
 	'wikiamobile-menu' => 'Keuses',
+);
+
+/** Arabic (العربية)
+ * @author Kuwaity26
+ */
+$messages['ar'] = array(
+	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|ألعاب الڤيديو]]',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -198,17 +206,56 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author Gemmaa
  * @author Marcmpujol
  */
 $messages['ca'] = array(
 	'wikiamobile-search' => 'Cerca',
+	'wikiamobile-search-this-wiki' => 'Cerca aquest viqui',
 	'wikiamobile-search-wiki' => 'Wiki',
 	'wikiamobile-search-wikia' => 'Wikia',
 	'wikiamobile-login' => 'Inici de sessió',
 	'wikiamobile-password' => 'Contrasenya',
 	'wikiamobile-login-submit' => 'Iniciar sessió',
 	'wikiamobile-menu' => 'Menú',
+	'wikiamobile-article-categories' => 'Categories',
+	'wikiamobile-feedback' => 'Comentaris',
+	'wikiamobile-back' => 'Enrere',
+	'wikiamobile-hide-section' => 'amaga',
+	'wikiamobile-profile' => 'Perfil',
+	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Estil de vida]]',
+	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Entreteniment]]',
+	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Videojocs]]',
+	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Llicència]]',
+	'mobile-full-site' => 'Lloc web complet',
+	'wikiamobile-categories-tagline' => 'Pàgina de la categoria',
+	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|article|articles}}',
+	'wikiamobile-category-items-more' => 'Carrega més',
+	'wikiamobile-category-items-prev' => "Carrega l'anterior",
+	'wikiamobile-categories-expand' => 'Mostra-ho tot',
+	'wikiamobile-categories-collapse' => 'Amaga-ho tot',
+	'wikiamobile-sharing-media-image' => 'Imatge',
+	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-sharing-modal-text' => '$1 a $2 - $3',
+	'wikiamobile-sharing-email-text' => 'Hola,
+hauries de visitar això:
+
+ $1',
+	'wikiamobile-media-group-footer' => '1 de $1',
+	'wikiamobile-unsupported-video-download' => 'El teu navegador no suporta aquest format de vídeo, prova <a href="$1">aquí</a>',
+	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|visita|visites}}',
+	'wikiamobile-video-not-friendly-header' => 'Vaja!',
+	'wikiamobile-video-not-friendly' => 'Ho sentim, aquest vídeo no està disponible en versió mòbil.',
+	'wikiamobile-ad-label' => 'publicitat',
+	'wikiamobile-image-not-loaded' => 'La imatge no està disponible',
+	'wikiamobile-shared-file-not-available' => 'Ui, aquest element ja no està disponible, però ja que hi ets aquí, explora la viqui!',
+	'wikiamobile-page-not-found' => 'Ui! <b>$1</b> no existeix.',
+	'wikiamobile-page-not-found-tap' => "Toqueu què hi ha darrera d'aquest error per veure què l'ha provocat.",
+	'wikiasmartbanner-appstore' => "A l'App Store",
+	'wikiasmartbanner-googleplay' => 'A Google Play',
+	'wikiasmartbanner-price' => 'gratis',
+	'wikiasmartbanner-view' => 'mostra',
 );
 
 /** Czech (česky)
@@ -553,6 +600,7 @@ deberías botar un ollo a isto:
 	'wikiamobile-image-not-loaded' => 'A imaxe non está dispoñible',
 	'wikiamobile-shared-file-not-available' => 'Vaites! Este elemento xa non está dispoñible. Pero agora que está aquí, explore o wiki!',
 	'wikiamobile-page-not-found' => 'Vaites! "<b>$1</b>" non existe.',
+	'wikiamobile-page-not-found-tap' => 'Prema no que hai detrás deste erro para ver a súa orixe.',
 	'wikiasmartbanner-appstore' => 'Na tenda de aplicacións',
 	'wikiasmartbanner-googleplay' => 'No Google Play',
 	'wikiasmartbanner-price' => 'gratuíta',
@@ -853,6 +901,7 @@ $1',
  * @author AvatarTeam
  * @author Bereisgreat
  * @author Hansmuller
+ * @author Jochempluim
  * @author SPQRobin
  * @author Siebrand
  * @author Southparkfan
@@ -875,7 +924,9 @@ $messages['nl'] = array(
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Vermaak]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Video Games]]',
+	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Licensing]]',
 	'mobile-full-site' => 'Hele site',
+	'wikiamobile-categories-tagline' => 'Categoriepagina',
 	'wikiamobile-categories-items-total' => "{{PLURAL:$1|Eén pagina|$1 pagina's}}",
 	'wikiamobile-category-items-more' => 'Meer laden',
 	'wikiamobile-category-items-prev' => 'Vorige laden',
@@ -888,7 +939,20 @@ $messages['nl'] = array(
 dit moet u echt zien:
 
 $1',
+	'wikiamobile-media-group-footer' => '1 van $1',
+	'wikiamobile-unsupported-video-download' => 'Je browser ondersteunt dit videoformaat niet. Probeer <a href="$1">deze link</a>.',
+	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|weegave|weegaven}}',
+	'wikiamobile-video-not-friendly-header' => 'Oh verdorie!',
+	'wikiamobile-video-not-friendly' => 'Sorry, deze video is mobiel niet beschikbaar...',
+	'wikiamobile-ad-label' => 'advertentie',
+	'wikiamobile-image-not-loaded' => 'Afbeelding is niet beschikbaar',
+	'wikiamobile-shared-file-not-available' => 'Oeps, dit item is niet langer beschikbaar. Maar nu je er toch bent, verken de wiki!',
 	'wikiamobile-page-not-found' => 'Oeps! <b>$1</b> bestaat niet.',
+	'wikiamobile-page-not-found-tap' => 'Klik op hetgeen dat zich achter de spleet verbergt om te zien wat het doet.',
+	'wikiasmartbanner-appstore' => 'In de App Store',
+	'wikiasmartbanner-googleplay' => 'In Google Play',
+	'wikiasmartbanner-price' => 'gratis',
+	'wikiasmartbanner-view' => 'bekijken',
 );
 
 /** Polish (polski)
@@ -1072,6 +1136,7 @@ Tu avissa verificà definitivamende quiste:
  * @author Express2000
  * @author Kuzura
  * @author Lvova
+ * @author Okras
  */
 $messages['ru'] = array(
 	'wikiamobile-search' => 'Поиск',
@@ -1086,9 +1151,13 @@ $messages['ru'] = array(
 	'wikiamobile-feedback' => 'Отзыв',
 	'wikiamobile-back' => 'Назад',
 	'wikiamobile-hide-section' => 'скрыть',
+	'wikiamobile-profile' => 'Профиль',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Увлечения]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Кино и сериалы]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Игры]]',
+	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Лицензирование]]',
+	'mobile-full-site' => 'Весь сайт',
+	'wikiamobile-categories-tagline' => 'Страница категорий',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|статья|статьи|статей}}',
 	'wikiamobile-category-items-more' => 'Загрузить ещё',
 	'wikiamobile-category-items-prev' => 'Загрузить предыдущие',
@@ -1101,6 +1170,18 @@ $messages['ru'] = array(
 ты определенно должен заглянуть сюда:
 
  $1',
+	'wikiamobile-media-group-footer' => '1 из $1',
+	'wikiamobile-unsupported-video-download' => 'Ваш браузер не поддерживает этот формат видео, попробуйте нажать <a href="$1">здесь</a>',
+	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|просмотр|просмотра|просмотров}}',
+	'wikiamobile-video-not-friendly' => 'К сожалению, это видео не доступно на мобильном устройстве.',
+	'wikiamobile-ad-label' => 'реклама',
+	'wikiamobile-image-not-loaded' => 'Изображение недоступно',
+	'wikiamobile-shared-file-not-available' => 'Ой, этот элемент больше не доступен, но раз уж вы здесь, исследуйте проект!',
+	'wikiamobile-page-not-found' => 'Ой! <b>$1</b> не существует.',
+	'wikiasmartbanner-appstore' => 'В App Store',
+	'wikiasmartbanner-googleplay' => 'В Google Play',
+	'wikiasmartbanner-price' => 'бесплатно',
+	'wikiasmartbanner-view' => 'смотреть',
 );
 
 /** Sakha (саха тыла)

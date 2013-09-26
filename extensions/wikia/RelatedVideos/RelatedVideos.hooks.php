@@ -37,11 +37,22 @@ class RelatedVideosHookHandler {
 		return true;
 	}
 
-	 /**
-	  * Purge RelatedVideos namespace article after an edit
-	  *
-	  * @param WikiPage $article
-	  */
+	/**
+	 * Purge RelatedVideos namespace article after an edit
+	 *
+	 * @param WikiPage $article
+	 * @param $user
+	 * @param $text
+	 * @param $summary
+	 * @param $minoredit
+	 * @param $watchthis
+	 * @param $sectionanchor
+	 * @param $flags
+	 * @param $revision
+	 * @param $status
+	 * @param $baseRevId
+	 * @return bool
+	 */
 	static public function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		wfProfileIn(__METHOD__);
 
@@ -134,7 +145,10 @@ class RelatedVideosHookHandler {
 		$namespace = $title->getNamespace();
 
 		if( self::isRailModuleWanted($title, $namespace) ) {
-			$pos = $app->wg->User->isAnon() ? 1301 : 1281;
+			// This module wants to be above the hulu module (1280) if logged in
+			// and above the photos module (1300) if not logged in.  Give extra number space
+			// so that other modules can slip in if need be.
+			$pos = $app->wg->User->isAnon() ? 1305 : 1285;
 			$modules[$pos] = array('RelatedVideosRail', 'index', null);
 		}
 

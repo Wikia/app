@@ -6,33 +6,33 @@ $(function () {
 		});
 
 	function clickTrackingHandler(ev) {
-		var element = ev.target;
-		if (element.classList.contains('sprite')) { // wikia logo
+		var element = $(ev.target);
+		if (element.hasClass('sprite')) { // wikia logo
 			track({
 				action: Wikia.Tracker.ACTIONS.CLICK_LINK_IMAGE,
 				label: 'wikia-logo'
 			});
-		} else if (element.classList.contains('wikia-button')) { //start a wiki button
+		} else if (element.hasClass('wikia-button')) { //start a wiki button
 			track({
 				action: Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON,
 				label: 'start-wiki'
 			});
-		} else if (element.classList.contains('ajaxRegister')) { // sign up link
+		} else if (element.hasClass('ajaxRegister')) { // sign up link
 			track({
 				action: Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT,
 				label: 'signup'
 			});
-		} else if (element.classList.contains('login-button')) { // log in button
+		} else if (element.hasClass('login-button')) { // log in button
 			track({
 				action: Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON,
 				label: 'login'
 			});
-		} else if (element.parentNode.classList.contains('topNav')) { // hub link
+		} else if (element.parents('.topNav').exists()) { // hub link
 			track({
 				action: Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT,
 				label: 'hub-name-link'
 			});
-		} else if (element.parentNode.parentNode.classList.contains('catnav') || element.parentNode.parentNode.classList.contains('subnav')) { // link in hub menu
+		} else if (element.parents('.catnav, .subnav').exists()) { // link in hub menu
 			track({
 				action: Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT,
 				label: 'hub-submenu-link'
@@ -41,18 +41,19 @@ $(function () {
 	}
 
 	function hoverMenuTrackingHandler(ev) {
-		var element = ev.target;
-		if (element.parentNode.parentNode.id == 'GlobalNavigation') { // hubs menu
+		var element = $(ev.target);
+
+		if (element.parents('.GlobalNavigation').exists()) { // hubs menu
 			track({
 				action: Wikia.Tracker.ACTIONS.HOVER,
 				label: 'hubs-menu-open'
 			});
-		} else if (element.parentNode.parentNode.id == 'AccountNavigation') { // user menu
+		} else if (element.parents('.AccountNavigation').exists()) { // user menu
 			track({
 				action: Wikia.Tracker.ACTIONS.HOVER,
 				label: 'user-menu-open'
 			});
-		} else if (element.parentNode.parentNode.id == 'WallNotifications') { // notifications
+		} else if (element.parents('.WallNotifications').exists()) { // notifications
 			track({
 				action: Wikia.Tracker.ACTIONS.HOVER,
 				label: 'notifications-menu-open'
@@ -66,8 +67,8 @@ $(function () {
 
 	if (isSampledPV()) {
 		Wikia.log( 'Global nav tracking enabled', 'info', 'GlobalNav' );
-		document.getElementById('WikiaHeader').addEventListener('click', clickTrackingHandler, true);
-		document.getElementById('WikiaHeader').addEventListener('hover-menu-shown', hoverMenuTrackingHandler, true);
+		$('#WikiaHeader').on('click', clickTrackingHandler);
+		$('#WikiaHeader').on('hovermenu-shown', hoverMenuTrackingHandler);
 	} else {
 		Wikia.log( 'Global nav tracking disabled', 'info', 'GlobalNav' );
 	}

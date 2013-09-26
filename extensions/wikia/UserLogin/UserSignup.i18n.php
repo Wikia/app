@@ -512,6 +512,7 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author Marcmpujol
  * @author Toniher
  */
@@ -614,9 +615,41 @@ Para ver las noticias más recientes en Wikia, visita http://es.wikia.com
 	'usersignup-welcome-email-learn-basic-content' => "Aconsegueix un tutorial ràpid sobre els conceptes bàsics de Wikia; com editar una pàgina, el teu perfil d'usuari, canviar les teves preferències i molt més.",
 	'usersignup-welcome-email-learn-basic-button' => "Fes-li un cop d'ull!",
 	'usersignup-welcome-email-explore-wiki-heading' => 'Explora més wikis.',
+	'usersignup-welcome-email-explore-wiki-content' => 'Hi ha milers de viquis a Wikia, trobeu-ne més que us interessin a algun dels nostres centres: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Videojocs</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Entreteniment</a>, o <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Estil de vida</a>.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Anar a ca.wikia.com',
 	'usersignup-welcome-email-content' => 'Vols més informació? Troba consells i respostes en la comunitat de Wikia <a style="color:#2C85D5;" href="http://ca.wikia.com">Wikia en Català</a>.',
 	'usersignup-welcome-email-signature' => "L'Equip de Wikia",
+	'usersignup-welcome-email-body' => 'Hola $USERNAME,
+
+Et donem la benvinguda a Wikia i a {{SITENAME}}! Aquí tens algunes coses que pots fer per començar.
+
+Edita el teu perfil.
+
+Afegeix una foto al perfil i una petita descripció sobre tu mateix al teu perfil de {{SITENAME}}.
+
+Vés a $EDITPROFILEURL
+
+Aprèn els conceptes bàsics.
+
+Visita un breu tutorial sobre els conceptes bàsics de Wikia: com editar una pàgina, el teu perfil d\'usuari, canviar les teves preferències, i més.
+
+Comprova-ho ($LEARNBASICURL)
+
+Explora més viquis.
+
+Hi ha milers de viquis a Wikia, troba les que et poden interessar a algun dels nostres centres: Videojocs (http://www.wikia.com/Video_Games), Entreteniment (http://www.wikia.com/Entertainment), o Estil de vida (http://www.wikia.com/Lifestyle).
+
+Vés a $EXPLOREWIKISURL
+
+Necessites més informació? Troba consells, respostes i la comunitat Wikia a la Central de la Comunitat (http://www.community.wikia.com). Que t\'ho passis bè editant!
+
+L\'equip de Wikia
+
+
+___________________________________________
+
+Per veure les últimes actualitzacions a Wikia, visita http://community.wikia.com
+Vols controlar quins correus electrònics vols rebre? Vés a: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Uneix-te avui a Wikia',
 	'usersignup-heading-byemail' => 'Crear un compte per algú altre',
 	'usersignup-marketing-wikia' => 'Comença a col·laborar amb milions de persones de tot el mon qui es reuneixen per compartir el que coneixen i estimen.',
@@ -2780,6 +2813,7 @@ Vil du kontrollere hva slags e-post du får? Gå til: {{fullurl:{{ns:special}}:P
 
 /** Dutch (Nederlands)
  * @author AvatarTeam
+ * @author HanV
  * @author SPQRobin
  * @author Siebrand
  */
@@ -2793,7 +2827,7 @@ $messages['nl'] = array(
 	'usersignup-error-empty-email' => 'Geef een e-mailadres op.',
 	'usersignup-error-empty-username' => 'Geef een gebruikersnaam op.',
 	'usersignup-error-already-confirmed' => 'U hebt dit e-mailadres al bevestigd.',
-	'usersignup-error-throttled-email' => 'U hebt vandaag te vaak een bevestigingse-mail aangevraagd. Wat even voor het opnieuw te proberen.',
+	'usersignup-error-throttled-email' => 'U hebt vandaag te vaak een bevestiging aangevraagd. Wacht even voor u het opnieuw doet.',
 	'usersignup-error-too-many-changes' => 'U mag uw e-mailadres vandaag niet meer wijzigen. Probeer het later opnieuw.',
 	'usersignup-error-password-length' => 'Uw wachtwoord is te lang. Kies een wachtwoord dat uit minder dan 50 tekens bestaat.',
 	'usersignup-error-confirmed-user' => 'Het lijkt erop dat u al een bevestigd e-mailadres hebt voor $1. Controleer uw [$2 gebruikersprofiel].',
@@ -2803,8 +2837,8 @@ $messages['nl'] = array(
 	'usersignup-facebook-have-an-account-heading' => 'Hebt u al een gebruiker?',
 	'usersignup-facebook-have-an-account' => 'Uw huidige Wikigebruiker met Facebook koppelen.',
 	'usersignup-facebook-proxy-email' => 'Anonieme e-mailadres van Facebook',
-	'usersignup-user-pref-emailconfirmlink' => 'Nieuwe bevestigingse-mail laten verzenden',
-	'usersignup-user-pref-confirmemail_send' => 'Mijn bevestigingse-mail opnieuw verzenden',
+	'usersignup-user-pref-emailconfirmlink' => 'Nieuwe bevestiging laten e-mailen',
+	'usersignup-user-pref-confirmemail_send' => 'Mijn bevestiging opnieuw verzenden',
 	'usersignup-user-pref-emailauthenticated' => 'Bedankt. Uw e-mailadres is bevestigd op $2 om $3.',
 	'usersignup-user-pref-emailnotauthenticated' => 'Controleer uw e-mail en klik op de koppeling voor bevestiging om uw e-mailadres te wijzigen naar $1',
 	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => 'Uw e-mailadres is nog niet bevestigd. E-mailfuncties werken niet totdat u uw e-mailadres hebt bevestigd.',
@@ -2813,12 +2847,12 @@ $messages['nl'] = array(
 	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => 'Uw e-mailadres is nog niet bevestigd. Er is een e-mail naar u verzonden. Klik op de koppeling in die e-mail om uw e-mailadres te bevestigen.',
 	'usersignup-user-pref-confirmemail_noemail' => 'U hebt nog geen e-mailadres opgegeven. Ga naar [[Special:Preferences|uw voorkeuren]] om een e-mailadres in te stellen.',
 	'usersignup-confirm-page-title' => 'Uw e-mailadres bevestigen',
-	'usersignup-confirm-email-resend-email' => 'Stuur me nog een bevestigingse-mail',
+	'usersignup-confirm-email-resend-email' => 'Stuur me per e-mail nog een bevestiging',
 	'usersignup-confirm-email-change-email-content' => 'Ik wil een ander e-mailadres gebruiken.',
 	'usersignup-confirm-email-change-email' => 'Mijn e-mailadres wijzigen',
 	'usersignup-confirm-email-new-email-label' => 'Nieuw e-mailadres',
 	'usersignup-confirm-email-update' => 'Bijwerken',
-	'usersignup-confirm-email-tooltip' => 'Hebt u een e-mailadres opgegeven dat u niet kunt bevestigen of wilt u een ander e-mailadres opgeven? Maak u geen zorgen, en gebruik de koppeling hieronder om uw e-mailadres te wijzigen en een nieuwe bevestigingse-mail te ontvangen.',
+	'usersignup-confirm-email-tooltip' => 'Hebt u een e-mailadres opgegeven dat u niet kunt bevestigen of wilt u een ander e-mailadres gebruiken? Gebruik dan de koppeling hieronder om uw e-mailadres te wijzigen, u ontvangt een nieuwe bevestiging per e-mail.',
 	'usersignup-resend-email-heading-success' => 'Nieuwe e-mail verzonden',
 	'usersignup-resend-email-heading-failure' => 'De e-mail is niet opnieuw verzonden',
 	'usersignup-confirm-page-heading-confirmed-user' => 'Gefeliciteerd!',

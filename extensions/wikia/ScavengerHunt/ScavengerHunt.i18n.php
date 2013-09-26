@@ -599,6 +599,15 @@ $messages['diq'] = array(
 	'scavengerhunt-facebook-description' => 'Metni Facebook de vıla ke',
 );
 
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'scavengerhunt-form-error-clueColor' => 'Please provide a valid colour in #XXX notation',
+	'scavengerhunt-label-clue-color' => 'Font colour',
+	'scavengerhunt-editor-tip-clue-color' => 'Colours should have hexadecimal notation like #F00.',
+);
+
 /** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10

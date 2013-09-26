@@ -159,11 +159,11 @@ class WikiaHomePageTest extends WikiaBaseTest {
 				)
 			),
 			array(
-				'testUrl',
+				'testUrl.png/330px-testUrl.png.jpg',
 				array(
-					WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'testUrl',
-					WikiFactoryHub::CATEGORY_ID_GAMING => 'testUrl',
-					WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'testUrl',
+					WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'testUrl.png/330px-testUrl.png.jpg',
+					WikiFactoryHub::CATEGORY_ID_GAMING => 'testUrl.png/330px-testUrl.png.jpg',
+					WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'testUrl.png/330px-testUrl.png.jpg',
 				)
 			),
 		);
@@ -309,7 +309,7 @@ TXT;
 	 */
 	public function testGetWikiAdminAvatars($mockWikiId, $mockWikiServiceParam, $mockUserStatsServiceParam, $mockUserParam, $expAdminAvatars) {
 		$this->markTestSkipped("Somehow this test started to be dependend on database connection on Friday 12th Jul 2013. I'll create ticket for Consumer Team to fix it.");
-		
+
 		// setup
 		$this->mockGlobalVariable('wgServer', self::TEST_URL);
 
@@ -482,7 +482,7 @@ TXT;
 	 */
 	public function testGetWikiTopEditorAvatars($mockWikiId, $mockWikiServiceParam, $mockUserParam, $mockAvatarServiceParam, $expTopEditorAvatars) {
 		$this->markTestSkipped("Somehow this test started to be dependend on database connection on Friday 12th Jul 2013. I'll create ticket for Consumer Team to fix it.");
-		
+
 		$this->mockGlobalVariable('wgServer', self::TEST_URL);
 		$this->setUpMockObject('WikiService', $mockWikiServiceParam, true);
 		$this->setUpMockObject('User', $mockUserParam, true);

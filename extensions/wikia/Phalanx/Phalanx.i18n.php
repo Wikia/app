@@ -310,6 +310,7 @@ $messages['br'] = array(
 	'phalanx-tab-main' => 'Merañ ar siloù',
 	'phalanx-tab-secondary' => 'Amprouiñ ar siloù',
 	'phalanx-test-submit' => 'Amprouiñ',
+	'phalanx-test-results-legend' => "Disoc'hoù an amprouad",
 	'phalanx-display-row-blocks' => 'stankadennoù : $1',
 	'phalanx-display-row-created' => "krouet gant '''$1''' war $2",
 	'phalanx-link-unblock' => 'distankañ',
@@ -319,6 +320,7 @@ $messages['br'] = array(
 	'phalanx-legend-input' => 'Krouiñ pe gemmañ ur sil',
 	'phalanx-legend-listing' => 'Siloù implijet evit bremañ',
 	'phalanx-unblock-message' => "Lamet eo bet ar bloc'h ID #$1",
+	'phalanx-stats-title' => 'Stadegoù Phalanx',
 	'phalanx-stats-table-id' => 'Stankañ an ID',
 	'phalanx-stats-table-user' => 'Ouzhpennet gant',
 	'phalanx-stats-table-type' => 'Seurt',
@@ -327,6 +329,11 @@ $messages['br'] = array(
 	'phalanx-stats-table-language' => 'Yezh',
 	'phalanx-stats-table-text' => 'Testenn',
 	'phalanx-stats-table-reason' => 'Abeg',
+	'phalanx-rule-log-name' => 'Marilh ar reolennoù Phalanx',
+	'phalanx-rule-log-header' => "Hemañ zo ur marilh eus ar c'hemmoù e reolennoù Phalanx.",
+	'phalanx-rule-log-add' => 'Reolenn Phalanx ouzhpennet : $1',
+	'phalanx-rule-log-edit' => 'Reolenn Phalanx aozet : $1',
+	'phalanx-rule-log-delete' => 'Reolenn Phalanx dilamet : $1',
 	'phalanx-rule-log-details' => 'Sil : "$1", seurt : "$2", abeg : "$3"',
 	'phalanx-stats-table-wiki-id' => 'ID ar wiki',
 	'phalanx-stats-table-wiki-name' => 'Anv ar wiki',
@@ -335,6 +342,7 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author Roxas Nobody 15
  */
 $messages['ca'] = array(
@@ -436,7 +444,7 @@ Si us plau [[especial: Contact|contact Wikia]] sobre el problema.<br>El blocker 
 	'phalanx-email-rule-log-header' => "Es tracta d'un registre de canvis en les regles per al correu electrònic Phalanx.",
 	'phalanx-rule-log-add' => 'Regla de Phalanx posada: $1',
 	'phalanx-rule-log-edit' => 'Regla de Phalanx editada: $1',
-	'phalanx-rule-log-delete' => 'Regla de Phalanx suprimit:$1',
+	'phalanx-rule-log-delete' => 'Regla de Phalanx suprimida: $1',
 	'phalanx-rule-log-details' => 'Filtre: " $1 ", tipus: " $2 ", raó: " $3 "',
 	'phalanx-stats-table-wiki-id' => 'Wiki ID',
 	'phalanx-stats-table-wiki-name' => 'Nom del wiki',

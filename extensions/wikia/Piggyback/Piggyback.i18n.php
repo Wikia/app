@@ -356,6 +356,26 @@ Controleer je schrijfwijze.',
 	'piggyback-issysopto' => 'Je kunt piggyback niet gebruiken om aan te melden als een andere gebruiker met het recht piggyback.',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'piggybac-desc' => 'Permet de s’identificar amb lo compte d’un autre utilizaire',
+	'piggyback' => 'Accès superpausat',
+	'piggyback-otherusername' => 'Autre nom d’utilizaire :',
+	'piggyback-nosuchuser' => "Existís pas cap d’utilizaire nomenat « $1 ».
+Los noms d’utilizaire son sensibles a la cassa.
+Verificatz l'ortografia.",
+	'piggyback-wronguser' => "$1 es pas vòstre nom d'utilizaire",
+	'piggyback-loginprompt' => 'Tornatz picar vòstres nom d’utilizaire e senhal.',
+	'piggyback-firstlogout' => "D'en primièr desconnectatz-vos de vòstre compte.",
+	'piggyback-itisyou' => "Vos podètz pas connectar d'un biais superpausat sus vòstre pròpri compte.",
+	'piggyback-issysopto' => "Vos podètz pas connectar d'un biais superpausat sul compted'un utilizaire qu'a el meteis aquel drech.",
+	'action-piggyback' => "se connectar jos un autre compte d'utilizaire",
+	'log-name-piggyback' => 'Jornal d’accès superpausat',
+	'log-description-piggyback' => 'Aqueste jornal es una lista dels accèsses superpausats a de comptes.',
+);
+
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
@@ -456,6 +476,7 @@ $messages['roa-tara'] = array(
 
 /** Russian (русский)
  * @author DCamer
+ * @author Kaganer
  * @author Kuzura
  * @author MaxSem
  */
@@ -467,7 +488,7 @@ $messages['ru'] = array(
 Имя участника чувствительно к регистру символов.
 Проверьте написание.',
 	'piggyback-wronguser' => '$1 — не ваше имя пользователя.',
-	'piggyback-loginprompt' => 'Введите своё имя пользователя и пароль.',
+	'piggyback-loginprompt' => 'Пожалуйста, повторно введите свои имя пользователя и пароль.',
 	'piggyback-firstlogout' => 'Сначала войдите в свою учётную запись.',
 	'piggyback-itisyou' => 'Вы не можете использоватьpiggyback на себе.',
 	'piggyback-issysopto' => 'Вы не можете использовать piggyback на участниках с доступом к piggyback.',

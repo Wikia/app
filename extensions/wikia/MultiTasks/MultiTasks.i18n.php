@@ -435,6 +435,7 @@ $messages['br'] = array(
 	'multiwikiedit_tasks_list' => 'Roll an trevelloù da ober',
 	'multiwikiedit_general_options' => 'Dibaboù hollek al lieskemmoù',
 	'multiwikiedit_edit_options' => 'Kemmañ dibaboù',
+	'action-multiwikiedit' => 'aozañ ur strobad pajennoù',
 	'multidelete' => 'Dilemel un heuliad pajennoù',
 	'multidelete_button' => 'DILEMEL',
 	'multidelete_help' => "Dilemel un heuliad pajennoù dre ur poellad drekleur. Gallout a rit en ober evit ar wiki-se gant ur diaz roadennoù rannet, ar wikioù dibabet pe ar yezhoù dibabet. Gallout a rit dibab ivez da zilemel ar pajennoù evel C'HWI pe dre ur gont skript rakdibabet.",
@@ -489,7 +490,7 @@ $messages['br'] = array(
 	'multiwikifinder' => 'Klasker titloù lieswiki',
 	'multiwikifindpagenames' => 'Kavout anvioù pajennoù',
 	'multiwikienterpagename' => 'Lakait un anv pajenn :',
-	'multiwikirecords' => '$1 {{PLURAL:$1|wiki|wiki}} kavet', # Fuzzy
+	'multiwikirecords' => '$1 {{PLURAL:$1|wiki}} kavet',
 );
 
 /** Catalan (català)
@@ -1535,11 +1536,14 @@ $messages['id'] = array(
 	'multiwikiedit_caption' => 'Daftar halaman',
 	'multiwikiedit_both_modes' => 'Silakan pilih satu halaman tertentu atau suatu daftar halaman.',
 	'multiwikiedit_or' => '<b>ATAU</b>',
+	'multiwikiedit_task_none_selected' => 'Anda tidak memilih artikel apapun. Tugas tidak ditambahkan.',
 	'multiwikiedit_list_caption' => 'Daftar wiki',
 	'multiwikiedit_norecentchanges_caption' => 'Jangan tampilkan perubahan ini di perubahan terbaru',
 	'multiwikiedit_from_form' => 'Formulir dari',
 	'multiwikiedit_success_subtitle' => 'untuk $1',
+	'multiwikiedit_link_back' => 'Anda dapat kembali ke formulir MultiWikiEdit $1.',
 	'multiwikiedit_select_yourself' => 'Anda',
+	'multiwikiedit_split_results' => "Jumlah artikel Anda terlalu tinggi untuk dilakukan dalam satu tugas. Maka ini telah dipecah menjadi '''$1''' tugas, dengan ukuran maksimum potongan adalah '''$2''' artikel.",
 	'multidelete_button' => 'HAPUS',
 	'multidelete_caption' => 'Daftar halaman',
 	'multidelete_or' => '<b>ATAU</b>',
@@ -2200,6 +2204,7 @@ $messages['nb'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author HanV
  * @author McDutchie
  * @author Siebrand
  */
@@ -2210,7 +2215,7 @@ $messages['nl'] = array(
 	'multiwikiedit_confirm' => 'Bevestigen',
 	'multiwikiedit_help' => 'Bewerk een groep pagina\'s.
 U kunt pagina\'s opnemen in het onderstaande invoervenster.
-Kies een gebruiker die wordt gebruiker voor het verwijderlogboek.
+Kies een gebruiker die wordt gebruiker voor het verwijderingslogboek.
 Een te uploaden bestanden moet een paginanaam bevatten en een optionele reden, gescheiden door het teken "|".
 Op iedere regel moet 1 pagina staan.',
 	'multiwikiedit_caption' => 'Paginalijst',
@@ -2328,14 +2333,15 @@ Voer de taak daarna opnieuw uit om alle overgebleven pagina's te verwerken.",
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
+ * @author HanV
  * @author MarkvA
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
 	'multiwikiedit_help' => 'Bewerk een groep pagina\'s.
 Je kunt pagina\'s opnemen in het onderstaande invoervenster.
-Kies een gebruiker die wordt gebruiker voor het verwijderlogboek.
-Een te uploaden bestanden moet een paginanaam bevatten en een optionele reden, gescheiden door het teken "|".
+Kies een gebruiker die wordt gebruiker voor het verwijderingslogboek.
+Een te uploaden bestand moet een paginanaam bevatten en een optionele reden, gescheiden door het teken "|".
 Op iedere regel moet 1 pagina staan.',
 	'multiwikiedit_task_none_selected' => "Je hebt geen pagina's geselecteerd.
 De taak is niet toegevoegd.",

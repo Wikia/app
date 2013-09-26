@@ -79,7 +79,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	}
 
 	protected function getImageInfo($fileName, $destSize = 0) {
-		return ImagesService::getLocalFileThumbUrlAndSizes($fileName, $destSize);
+		return ImagesService::getLocalFileThumbUrlAndSizes($fileName, $destSize, ImagesService::EXT_JPG);
 	}
 
 	/**
@@ -90,6 +90,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	 */
 	protected function getSponsoredImageMarkup($imageTitleText) {
 		$sponsoredImageInfo = $this->getImageInfo($imageTitleText);
+
 		return Xml::element('img', array(
 			'alt' => $sponsoredImageInfo->title,
 			'class' => 'sponsored-image',

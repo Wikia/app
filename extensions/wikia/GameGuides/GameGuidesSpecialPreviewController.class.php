@@ -35,7 +35,8 @@ class GameGuidesSpecialPreviewController extends WikiaSpecialPageController {
 				'renderFullPage',
 				array(
 					'allinone' => 1,
-					'page' => $title
+					'page' => $title,
+					'cb' => $this->wg->StyleVersion
 				)
 			);
 		}

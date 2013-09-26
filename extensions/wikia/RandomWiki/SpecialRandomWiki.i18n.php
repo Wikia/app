@@ -244,6 +244,14 @@ $messages['nl'] = array(
 	'randomwiki' => 'Willekeurige wiki',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'randomwiki-desc' => "Permet als utilizaires d’explorar un wiki a l'azard",
+	'randomwiki' => "Un wiki a l'azard",
+);
+
 /** Deitsch (Deitsch)
  * @author Xqt
  */

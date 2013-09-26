@@ -619,6 +619,30 @@ $messages['nl'] = array(
 	'wikiamobile-wikiapoll-user-voted' => 'U hebt gestemd voor "$1"',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'wikiapoll-desc' => 'Provesís un mejan aisit de crear e de gerir de sondatges',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 persona a|$1 personas an}} voté',
+	'wikiapoll-question' => '$1 ?',
+	'wikiapoll-thanks-for-vote' => 'Mercé !',
+	'wikiapoll-vote' => 'Votar !',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 vòte|$1 vòtes}}',
+	'wikiapoll-createpoll-headline' => 'Crear un sondatge',
+	'wikiapoll-editpoll-headline' => 'Modificar lo sondatge',
+	'wikiapoll-question-label' => 'Question',
+	'wikiapoll-addnewitem-label' => 'Apondre un element novèl',
+	'wikiapoll-cancel-label' => 'Anullar',
+	'wikiapoll-publish-label' => 'Publicar',
+	'wikiapoll-error-duplicate' => 'Un sondatge que pòrta aqueste nom existís ja.',
+	'wikiapoll-error-invalid-title' => 'L’intitulat de la question es pas valid.',
+	'wikiamobile-wikiapoll-open-poll' => 'Qué ne pensatz ?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Mercés per vòstre vòte !',
+	'wikiamobile-wikiapoll-poll' => 'Sondatge',
+	'wikiamobile-wikiapoll-user-voted' => 'Avètz votat per $1',
+);
+
 /** Polish (polski)
  * @author Sovq
  * @author Woytecr
