@@ -54,6 +54,8 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 		!stopScrolling && wkPrfTgl.scrollIntoView();
 		toc.close();
 
+		$.event.trigger('nav:close');
+
 		var query = qs(),
 			hash = query.getHash();
 
@@ -224,6 +226,8 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 			w.history.back();
 			w.scrollTo(0,pos);
 		}
+
+		$.event.trigger('topbar:close');
 	}
 
 	function hidePage(){

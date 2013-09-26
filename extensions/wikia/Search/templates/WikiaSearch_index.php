@@ -1,12 +1,9 @@
 <section class="Search this-wiki WikiaGrid clearfix">
-	<form class="WikiaSearch" id="search-v2-form" action="<?=$specialSearchUrl;?>">
+	<form class="WikiaSearch" id="search-v2-form" action="<?=$specialSearchUrl;?>#">
 		<div class="SearchInput">
 			<?php if(!empty($advancedSearchBox)) : ?>
 				<p class="advanced-link"><a href="#" id="advanced-link"><?= wfMessage('searchprofile-advanced') ?></a></p>
 			<?php endif ?>
-			<?php foreach($namespaces as $ns): ?>
-				<input type="hidden" class="default-tab-value" name="ns<?=$ns;?>" value="1" />
-			<?php endforeach; ?>
 
 			<p class="grid-1 alpha"><?= wfMsg('wikiasearch2-wiki-search-headline') ?></p>
 
@@ -100,7 +97,7 @@
 			<?php endif; ?>
 
 			</div>
-			<div class="SearchAdsTopWrapper grid-2 alpha">
+			<div class="SearchAdsTopWrapper WikiaRail <?= !empty($isGridLayoutEnabled) ? 'grid-2' : '' ?> alpha">
 				<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')); ?>
 				<?= $topWikiArticles ?>
 				<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2')); ?>
