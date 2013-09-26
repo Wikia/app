@@ -8,18 +8,18 @@
  */
 trait PreventBlockedUsers {
 	/**
-	 * list of controller actions that should be allowed even if a user is blocked
-	 * @return array
+	 * list of actions that should be allowed even if a user is blocked
+	 * @return array string list of actions that should be allowed
 	 */
 	protected function whitelist() {
 		return [ ];
 	}
 
 	/**
+	 * check whether a user is prevented from taking an action
 	 * @param User $user
-	 * @param string $action
+	 * @param string $action arbitrary action that the user is trying to take
 	 * @return bool
-	 * @throws UserBlockedError
 	 */
 	public function preventUsage( User $user, $action ) {
 		$result = false;
@@ -32,11 +32,18 @@ trait PreventBlockedUsers {
 		return $result;
 	}
 
+	/**
+	 * action to take when a user is prevented from taking an action
+	 * @param User $user
+	 */
 	protected function onUsagePrevented( User $user ) {
-		// do nothing in base implementation
 	}
 }
 
+/**
+ * Trait PreventBlockedUsersThrowsError
+ * extends base trait to throw a UserBlockedError when a user is prevented from taking an action
+ */
 trait PreventBlockedUsersThrowsError {
 	use PreventBlockedUsers;
 
