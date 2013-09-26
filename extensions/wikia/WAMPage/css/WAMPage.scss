@@ -225,7 +225,7 @@
 
 .wam-index {
 	margin: 25px 10px 50px;
-	@if ( $responsive-layout-enabled ) {
+	@if ( $responsive-layout-enabled == false ) {
 		width: 1010px;
 	}
 	.wam-index-search {
