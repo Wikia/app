@@ -44,9 +44,9 @@ class VideoHomePageController extends WikiaController {
 		if ( $program instanceof VideoPageToolProgram && $program->exists() ) {
 			$this->haveProgram = true;
 			$this->featuredContent = $this->app->renderView( 'VideoHomePage', 'featured' );
-			$this->categoryContent = $this->app->renderView( 'VideoHomePage', 'category' );
-			$this->fanContent = $this->app->renderView( 'VideoHomePage', 'fan' );
-			$this->popularContent = $this->app->renderView( 'VideoHomePage', 'popular' );
+//			$this->categoryContent = $this->app->renderView( 'VideoHomePage', 'category' );
+//			$this->fanContent = $this->app->renderView( 'VideoHomePage', 'fan' );
+//			$this->popularContent = $this->app->renderView( 'VideoHomePage', 'popular' );
 		} else {
 			$this->haveProgram = false;
 		}
@@ -62,13 +62,12 @@ class VideoHomePageController extends WikiaController {
 		$partners[ 'anyclip' ] = array( 'label' => 'AnyClip' );
 		$partners[ 'ign' ] = array( 'label' => 'IGN' );
 		$partners[ 'iva' ] = array( 'label' => 'IVA' );
-		$partners[ 'screenplay' ] = array( 'label' => 'Screenplay', 'category' => 'Screenplay, Inc.' );
+		$partners[ 'screenplay' ] = array( 'label' => 'Screenplay' );
 		$partners[ 'ooyala' ] = array( 'label' => 'Ooyala' );
 		$partners[ 'realgravity' ] = array( 'label' => 'RealGravity' );
 
 		foreach( $partners as &$partner ) {
-			$name = empty( $partner['category'] ) ? $partner['label'] : $partner['category'];
-			$partner['url'] = GlobalTitle::newFromText( $name, NS_CATEGORY, VideoHandlerHooks::VIDEO_WIKI )->getFullUrl();
+			$partner['url'] = GlobalTitle::newFromText( $partner['label'], NS_CATEGORY, VideoHandlerHooks::VIDEO_WIKI )->getFullUrl();
 		}
 
 		// sort by keys, views need to be alphabetized

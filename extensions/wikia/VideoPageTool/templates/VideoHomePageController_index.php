@@ -5,10 +5,4 @@
 
 <? if ( $haveProgram ): ?>
 	<?= $featuredContent ?>
-
-	<?= $categoryContent ?>
-
-	<?= $fanContent ?>
-
-	<?= $popularContent ?>
 <? endif; ?>
