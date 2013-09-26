@@ -113,6 +113,7 @@ ve.ui.MWMediaEditDialog.prototype.onOpen = function () {
 	);
 
 	// Initialization
+	this.captionSurface.$.addClass( 'WikiaArticle' );
 	this.captionFieldset.$.append( this.captionSurface.$ );
 	this.captionSurface.initialize();
 };
