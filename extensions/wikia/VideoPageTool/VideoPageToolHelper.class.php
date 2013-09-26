@@ -102,9 +102,10 @@ class VideoPageToolHelper extends WikiaModel {
 	 * $param string $altThumbName
 	 * @param string $displayTitle
 	 * @param string $description
+	 * @param array $thumbOptions
 	 * @return array $video
 	 */
-	public function getVideoData( $videoTitle, $altThumbName = '', $displayTitle = '', $description = '' ) {
+	public function getVideoData( $videoTitle, $altThumbName = '', $displayTitle = '', $description = '', $thumbOptions = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		$video = array();
@@ -120,7 +121,7 @@ class VideoPageToolHelper extends WikiaModel {
 
 				// get thumbnail
 				$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
-				$videoThumb = $thumb->toHtml();
+				$videoThumb = $thumb->toHtml( $thumbOptions );
 				$thumbUrl = $thumb->getUrl();
 
 				$largeThumb = $file->transform( array( 'width' => self::MAX_THUMBNAIL_WIDTH, 'height' => self::MAX_THUMBNAIL_HEIGHT ) );
@@ -276,6 +277,25 @@ class VideoPageToolHelper extends WikiaModel {
 
 		$errMsg = wfMessage( 'videopagetool-error-image-not-exist' )->plain();
 		return false;
+	}
+
+	/**
+	 * Render assets by section (used in VideoHomePageController)
+	 * @param VideoPageToolProgram $program
+	 * @param string $section [featured/category/fan]
+	 * @return type
+	 */
+	public function renderAssetsBySection( $program, $section ) {
+		$data = array();
+		if ( $program instanceof VideoPageToolProgram ) {
+			$thumbOptions = array( 'noLightbox' => true );
+			$assets = $program->getAssetsBySection( $section );
+			foreach ( $assets as $asset ) {
+				$data[] = $asset->getAssetData( $thumbOptions );
+			}
+		}
+
+		return $data;
 	}
 
 }

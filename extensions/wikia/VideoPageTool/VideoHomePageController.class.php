@@ -29,24 +29,26 @@ class VideoHomePageController extends WikiaController {
 
 	/**
 	 * Display the Video Home Page
+	 * @responseParam boolean haveProgram
+	 * @responseParam string featuredContent
+	 * @responseParam string categoryContent
+	 * @responseParam string fanContent
+	 * @responseParam string popularContent
 	 */
 	public function index() {
-		OasisController::addBodyClass('WikiaVideo');
-		$this->response->addAsset('videohomepage_js');
-		$this->response->addAsset('videohomepage_scss');
+		OasisController::addBodyClass( 'WikiaVideo' );
+		$this->response->addAsset( 'videohomepage_js' );
+		$this->response->addAsset( 'videohomepage_scss' );
+
 		$program = $this->getProgram();
-
-
-		$this->curProgram = $program;
-
 		if ( $program instanceof VideoPageToolProgram && $program->exists() ) {
-			$this->haveCurrentProgram = true;
-			$this->featuredContent = $this->sendSelfRequest('handleFeatured');
-			$this->categoryContent = $this->sendSelfRequest('handleCategory');
-			$this->fanContent = $this->sendSelfRequest('handleFan');
-			$this->popularContent = $this->sendSelfRequest('handlePopular');
+			$this->haveProgram = true;
+			$this->featuredContent = $this->app->renderView( 'VideoHomePage', 'featured' );
+			$this->categoryContent = $this->app->renderView( 'VideoHomePage', 'category' );
+			$this->fanContent = $this->app->renderView( 'VideoHomePage', 'fan' );
+			$this->popularContent = $this->app->renderView( 'VideoHomePage', 'popular' );
 		} else {
-			$this->haveCurrentProgram = false;
+			$this->haveProgram = false;
 		}
 	}
 
@@ -76,85 +78,38 @@ class VideoHomePageController extends WikiaController {
 	}
 
 	/**
-	 * Return display content for any of the supported modules, one of:
-	 *
-	 *  - featured
-	 *  - category
-	 *  - fan
-	 *  - popular
-	 *
-	 * Example controller request:
-	 *
-	 *   /wikia.php?controller=VideoHomePageController&method=getModule&moduleName=category
-	 *
-	 * @requestParam moduleName - The name of the module to display
-	 * @return bool
-	 */
-	public function getModule( ) {
-		$name = $this->getVal('moduleName', '');
-		$handler = 'handle'.ucfirst(strtolower($name));
-
-		if ( method_exists( __CLASS__, $handler ) ) {
-			$this->forward( __CLASS__, $handler );
-			return true;
-		} else {
-			$this->html = '';
-			$this->result = 'error';
-			$this->msg = wfMessage('videopagetool-error-invalid-module')->plain();
-			return false;
-		}
-	}
-
-	/**
 	 * Displays the featured module
+	 * @responseParam array $assets
 	 */
-	public function handleFeatured() {
-		$this->overrideTemplate( self::MODULE_FEATURED );
-		$program = $this->getProgram();
-
-		if ( $program ) {
-			$this->assets = $program->getAssetsBySection( self::MODULE_FEATURED );
-		} else {
-			// Set an empty array for the template if there isn't a program
-			$this->assets = array();
-		}
+	public function featured() {
+		$helper = new VideoPageToolHelper();
+		$this->assets = $helper->renderAssetsBySection( $this->getProgram(), self::MODULE_FEATURED );
 	}
 
 	/**
 	 * Displays the category module
+	 * @responseParam array $assets
 	 */
-	public function handleCategory() {
-		$this->overrideTemplate( self::MODULE_CATEGORY );
-		$program = $this->getProgram();
-
-		if ( $program ) {
-			$this->assets = $program->getAssetsBySection( self::MODULE_CATEGORY );
-		} else {
-			// Set an empty array for the template if there isn't a program
-			$this->assets = array();
-		}
+	public function category() {
+		$helper = new VideoPageToolHelper();
+		$this->assets = $helper->renderAssetsBySection( $this->getProgram(), self::MODULE_CATEGORY );
 	}
 
 	/**
 	 * Displays the fan module
+	 * @responseParam array $assets
 	 */
-	public function handleFan() {
-		$this->overrideTemplate( self::MODULE_FAN );
-		$program = $this->getProgram();
-
-		if ( $program ) {
-			$this->assets = $program->getAssetsBySection( self::MODULE_FAN );
-		} else {
-			// Set an empty array for the template if there isn't a program
-			$this->assets = array();
-		}
+	public function fan() {
+		$helper = new VideoPageToolHelper();
+		$this->assets = $helper->renderAssetsBySection( $this->getProgram(), self::MODULE_FAN );
 	}
 
 	/**
 	 * Displays the popular module
+	 * @responseParam array $assets
 	 */
-	public function handlePopular() {
-		$this->overrideTemplate( self::MODULE_POPULAR );
-
+	public function popular() {
+		$this->assets = array();
 	}
+
 }

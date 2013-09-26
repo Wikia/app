@@ -3,9 +3,7 @@
 	'header'
 ); ?>
 
-Publish date: <?= $curProgram->getPublishDate() ?>
-
-<? if ( $haveCurrentProgram ): ?>
+<? if ( $haveProgram ): ?>
 	<?= $featuredContent ?>
 
 	<?= $categoryContent ?>
@@ -13,9 +11,4 @@ Publish date: <?= $curProgram->getPublishDate() ?>
 	<?= $fanContent ?>
 
 	<?= $popularContent ?>
-<? else: ?>
-	<h1>No current program</h1>
 <? endif; ?>
-
-
-Publish date: <?= $curProgram->getPublishDate() ?>
