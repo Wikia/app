@@ -78,8 +78,10 @@ class VisualEditorHooks {
 	 * @param $skin Skin
 	 */
 	public static function onBeforePageDisplay( &$output, &$skin ) {
-		$output->addModules( array( 'ext.visualEditor.wikiaViewPageTarget.init' ) );
-		//$output->addModuleStyles( array( 'ext.visualEditor.viewPageTarget.noscript' ) );
+		if ( in_array( $skin->getSkinName(), self::$supportedSkins ) ) {
+			$output->addModules( array( 'ext.visualEditor.wikiaViewPageTarget.init' ) );
+			//$output->addModuleStyles( array( 'ext.visualEditor.viewPageTarget.noscript' ) );
+		}
 		return true;
 	}
 
@@ -95,6 +97,7 @@ class VisualEditorHooks {
 	public static function onSkinTemplateNavigation( &$skin, &$links ) {
 		// Only do this if the user has VE enabled
 		if (
+			!in_array( $skin->getSkinName(), self::$supportedSkins ) ||
 			!$skin->getUser()->getOption( 'visualeditor-enable' ) ||
 			$skin->getUser()->getOption( 'visualeditor-betatempdisable' )
 		) {
