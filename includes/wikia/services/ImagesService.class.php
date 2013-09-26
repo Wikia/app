@@ -213,7 +213,11 @@ class ImagesService extends Service {
 			$results->url = $foundFile->createThumb($sizes->width);
 
 			if ( !empty($newExtension) ) {
-				$results->url = self::getThumbUrlFromFileUrl($results->url, $sizes->width, $newExtension);
+				if (strpos($results->url, '/images/thumb/') === false) {
+					$results->url = self::getThumbUrlFromFileUrl($results->url, $sizes->width, $newExtension);
+				} else {
+					$results->url = self::overrideThumbnailFormat($results->url, $newExtension);
+				}
 			}
 
 			$results->width = intval($sizes->width);
