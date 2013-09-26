@@ -94,7 +94,7 @@ if ( isset($options['altertable']) ) {
 }
 
 // Default settings if no parameters are given
-if ( !$createTable && !$alterTableV1 && !$addVideos && !$removeVideos ) {
+if ( !$createTable && !$alterTable && !$addVideos && !$removeVideos ) {
 	$createTable = true;
 	$addVideos = true;
 	$removeVideos = true;
