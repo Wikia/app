@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" opacity="0.75" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-	 x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
-<g id="number-list-rtl">
-	<polygon id="_x33__1_" points="18,16 18,17 19.993,17 20.023,18 19,18 19,19 20,19 20,20 18,20 18,21 20.023,21 21,19.998 
-		21,18.998 20.044,18.467 21,17.967 21,16.998 19.993,16 	"/>
-	<polygon id="_x32__1_" points="18,9 18,10 20.116,10 18,12.187 18,13.998 21,13.936 21,13 18.881,13 21,10.812 21,9.78 20.331,9 	
-		"/>
-	<polygon id="_x31__1_" points="19.993,2 19.344,2 18.017,3.391 18.048,4 19.074,4 19.005,6 18,6 18,7 21,7 21,6 19.962,6 	"/>
-	<path id="bottom_line_6_" d="M3.999,17h11.002C15.553,17,16,17.447,16,18v1c0,0.553-0.447,1-0.999,1H3.999C3.447,20,3,19.553,3,19
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px"
+	 height="24px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+<g id="number-list-rtl" style="opacity:0.75;">
+	<polygon id="bottom_dot" points="18,16 18,17 19.993,17 20.023,18 19,18 19,19 20,19 20,20 18,20 18,21 20.023,21 21,19.998
+		21,18.998 20.044,18.467 21,17.967 21,16.998 19.993,16"/>
+	<polygon id="middle_dot" points="18,9 18,10 20.116,10 18,12.187 18,13.998 21,13.936 21,13 18.882,13 21,10.812 21,9.78 20.331,9"/>
+	<polygon id="top_dot" points="19.993,2 19.345,2 18.017,3.391 18.048,4 19.074,4 19.005,6 18,6 18,7 21,7 21,6 19.962,6 		"/>
+	<path id="bottom_line" d="M3.999,17h11.002C15.553,17,16,17.447,16,18v1c0,0.553-0.447,1-0.999,1H3.999C3.447,20,3,19.553,3,19
 		v-1C3,17.447,3.447,17,3.999,17z"/>
-	<path id="middle_line_6_" d="M3.999,10h11.002C15.553,10,16,10.447,16,11v1c0,0.553-0.447,1-0.999,1H3.999C3.447,13,3,12.553,3,12
+	<path id="middle_line" d="M3.999,10h11.002C15.553,10,16,10.447,16,11v1c0,0.553-0.447,1-0.999,1H3.999C3.447,13,3,12.553,3,12
 		v-1C3,10.447,3.447,10,3.999,10z"/>
-	<path id="top_line_6_" d="M3.999,3h11.002C15.553,3,16,3.447,16,4v1c0,0.553-0.447,1-0.999,1H3.999C3.447,6,3,5.553,3,5V4
+	<path id="top_line" d="M3.999,3h11.002C15.553,3,16,3.447,16,4v1c0,0.553-0.447,1-0.999,1H3.999C3.447,6,3,5.553,3,5V4
 		C3,3.447,3.447,3,3.999,3z"/>
 </g>
 </svg>

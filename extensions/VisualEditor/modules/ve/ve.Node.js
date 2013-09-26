@@ -1,49 +1,52 @@
-/**
+/*!
  * VisualEditor Node class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
  * Generic node.
  *
- * @class
  * @abstract
+ * @mixins ve.EventEmitter
+ *
  * @constructor
- * @extends {ve.EventEmitter}
- * @param {String} type Symbolic name of node type
  */
-ve.Node = function VeNode( type ) {
-	// Parent constructor
-	ve.EventEmitter.call( this );
-
+ve.Node = function VeNode() {
 	// Properties
-	this.type = type;
+	this.type = this.constructor.static.name;
 	this.parent = null;
-	this.root = this;
+	this.root = null;
 	this.doc = null;
-
-	// Convenience function for emitting update events - context is bound by enclosing this scope
-	// making it easy to pass through other functions as a callback
-	var node = this;
-	this.emitUpdate = function () {
-		node.emit( 'update' );
-	};
 };
 
-/* Inheritance */
+/**
+ * @event attach
+ * @param {ve.Node} parent
+ */
 
-ve.inheritClass( ve.Node, ve.EventEmitter );
+/**
+ * @event detach
+ * @param {ve.Node} parent
+ */
+
+/**
+ * @event root
+ */
+
+/**
+ * @event unroot
+ */
 
 /* Abstract Methods */
 
 /**
- * Checks if node can have children.
+ * Check if the node can have children.
  *
  * @method
  * @abstract
- * @returns {Boolean} Node can have children
+ * @returns {boolean} Node can have children
  * @throws {Error} if not overridden
  */
 ve.Node.prototype.canHaveChildren = function () {
@@ -51,23 +54,23 @@ ve.Node.prototype.canHaveChildren = function () {
 };
 
 /**
- * Checks if node can have grandchildren.
+ * Check if the node can have children but not content nor be content.
  *
  * @method
  * @abstract
- * @returns {Boolean} Node can have grandchildren
+ * @returns {boolean} Node can have children but not content nor be content
  * @throws {Error} if not overridden
  */
-ve.Node.prototype.canHaveGrandchildren = function () {
-	throw new Error( 've.Node.canHaveGrandchildren must be overridden in subclass' );
+ve.Node.prototype.canHaveChildrenNotContent = function () {
+	throw new Error( 've.Node.canHaveChildrenNotContent must be overridden in subclass' );
 };
 
 /**
- * Checks if node represents a wrapped element.
+ * Check if the node has a wrapped element in the document data.
  *
  * @method
  * @abstract
- * @returns {Boolean} Node represents a wrapped element
+ * @returns {boolean} Node represents a wrapped element
  * @throws {Error} if not overridden
  */
 ve.Node.prototype.isWrapped = function () {
@@ -75,11 +78,11 @@ ve.Node.prototype.isWrapped = function () {
 };
 
 /**
- * Gets node length.
+ * Get the length of the node.
  *
  * @method
  * @abstract
- * @returns {Number} Node length
+ * @returns {number} Node length
  * @throws {Error} if not overridden
  */
 ve.Node.prototype.getLength = function () {
@@ -87,41 +90,57 @@ ve.Node.prototype.getLength = function () {
 };
 
 /**
- * Gets node outer length.
+ * Get the outer length of the node, which includes wrappers if present.
  *
  * @method
  * @abstract
- * @returns {Number} Node outer length
+ * @returns {number} Node outer length
  * @throws {Error} if not overridden
  */
 ve.Node.prototype.getOuterLength = function () {
 	throw new Error( 've.Node.getOuterLength must be overridden in subclass' );
 };
 
+/**
+ * Get the outer range of the node, which includes wrappers if present.
+ *
+ * @method
+ * @param {boolean} backwards Return a backwards range
+ * @returns {ve.Range} Node outer range
+ */
+ve.Node.prototype.getOuterRange = function ( backwards ) {
+	var range = new ve.Range( this.getOffset(), this.getOffset() + this.getOuterLength() );
+	if ( backwards ) {
+		return range.flip();
+	} else {
+		return range;
+	}
+};
+
 /* Methods */
 
 /**
- * Gets the symbolic node type name.
+ * Get the symbolic node type name.
  *
  * @method
- * @returns {String} Symbolic name of element type
+ * @returns {string} Symbolic name of element type
  */
 ve.Node.prototype.getType = function () {
 	return this.type;
 };
 
 /**
- * Gets a reference to this node's parent.
+ * Get a reference to the node's parent.
  *
  * @method
- * @returns {ve.Node} Reference to this node's parent
+ * @returns {ve.Node} Reference to the node's parent
  */
 ve.Node.prototype.getParent = function () {
 	return this.parent;
 };
 
 /**
- * Gets the root node in the tree this node is currently attached to.
+ * Get the root node of the tree the node is currently attached to.
  *
  * @method
  * @returns {ve.Node} Root node
@@ -131,29 +150,38 @@ ve.Node.prototype.getRoot = function () {
 };
 
 /**
- * Sets the root node this node is a descendent of.
+ * Set the root node.
  *
  * This method is overridden by nodes with children.
  *
  * @method
  * @param {ve.Node} root Node to use as root
+ * @emits root
+ * @emits unroot
  */
 ve.Node.prototype.setRoot = function ( root ) {
-	this.root = root;
+	if ( root !== this.root ) {
+		this.root = root;
+		if ( this.getRoot() ) {
+			this.emit( 'root' );
+		} else {
+			this.emit( 'unroot' );
+		}
+	}
 };
 
 /**
- * Gets the document this node is a part of.
+ * Get the document the node is a part of.
  *
  * @method
- * @returns {ve.Document} Document this node is a part of
+ * @returns {ve.Document} Document the node is a part of
  */
 ve.Node.prototype.getDocument = function () {
 	return this.doc;
 };
 
 /**
- * Sets the document this node is a part of.
+ * Set the document the node is a part of.
  *
  * This method is overridden by nodes with children.
  *
@@ -165,11 +193,11 @@ ve.Node.prototype.setDocument = function ( doc ) {
 };
 
 /**
- * Attaches this node to another as a child.
+ * Attach the node to another as a child.
  *
  * @method
  * @param {ve.Node} parent Node to attach to
- * @emits attach (parent)
+ * @emits attach
  */
 ve.Node.prototype.attach = function ( parent ) {
 	this.parent = parent;
@@ -179,7 +207,7 @@ ve.Node.prototype.attach = function ( parent ) {
 };
 
 /**
- * Detaches this node from its parent.
+ * Detach the node from its parent.
  *
  * @method
  * @emits detach
@@ -187,20 +215,21 @@ ve.Node.prototype.attach = function ( parent ) {
 ve.Node.prototype.detach = function () {
 	var parent = this.parent;
 	this.parent = null;
-	this.setRoot( this );
-	this.setDocument();
+	this.setRoot( null );
+	this.setDocument( null );
 	this.emit( 'detach', parent );
 };
 
 /**
- * Traverse tree of nodes (model or view) upstream and for each traversed node call callback function passing traversed node as a parameter.
- * Callback function is called for node passed as node paramter as well.
+ * Traverse tree of nodes (model or view) upstream.
  *
- * @param {ve.Node} node Node from which to start traversing
- * @param {function} callback Callback method to be called for every traversed node
+ * For each traversed node, the callback function will be passed the traversed node as a parameter.
+ *
+ * @param {Function} callback Callback method to be called for every traversed node
  * @method
  */
-ve.Node.traverseUpstream = function ( node, callback ) {
+ve.Node.prototype.traverseUpstream = function ( callback ) {
+	var node = this;
 	while ( node ) {
 		if ( callback ( node ) === false ) {
 			break;

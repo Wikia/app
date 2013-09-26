@@ -25,10 +25,16 @@ class ApiDocsController extends WikiaController {
 	public function index() {
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 
-		$js = AssetsManager::getInstance()->getURL( 'api_docs_js', $type, false );
-		$this->setVal( 'js', $js );
 		$css = [ AssetsManager::getInstance()->getSassCommonURL( '//extensions/wikia/ApiDocs/css/ApiDocs.scss', false, ['color-header' => '#004c7f']) ];
 		$this->setVal( 'css', $css );
+
+		$licensedService = new LicensedWikisService();
+		if ($licensedService->isCommercialUseAllowedForThisWiki()) {
+			$js = AssetsManager::getInstance()->getURL( 'api_docs_js', $type, false );
+			$this->setVal( 'js', $js );
+		} else {
+			$this->getResponse()->getView()->setTemplate('ApiDocsController', 'disabled');			
+		}
 	}
 
 	/**
@@ -53,7 +59,7 @@ class ApiDocsController extends WikiaController {
 		// FIXME - find permanent solution
 		foreach ( $this->wg->WikiaApiControllers as $controller => $file ) {
 			foreach ( $docs['apis'] as $doc ) {
-				if ( $doc['readableName'] . "Controller" == $controller ) {
+				if ( $doc['readableName'] . "ApiController" == $controller ) {
 					if ( class_exists($controller) ) {
 						$thisWikiDocs[] = $doc;
 						break;

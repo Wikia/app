@@ -102,6 +102,7 @@ class EditAccount extends SpecialPage {
 
 				if ( empty( $id ) ) {
 					if ( !empty($wgEnableUserLoginExt) ) {
+						//@TODO remove all mTempUser occuracnes TempUser will be globally disabled
 						$this->mTempUser = TempUser::getTempUserFromName( $userName );
 					}
 					if ( $this->mTempUser ) {
@@ -234,6 +235,7 @@ class EditAccount extends SpecialPage {
 	 * @return Boolean: true on success, false on failure (i.e. if we were given an invalid email address)
 	 */
 	function setEmail( $email, $changeReason = '' ) {
+		global $wgEnableUserLoginExt;
 		$oldEmail = $this->mUser->getEmail();
 		if ( Sanitizer::validateEmail( $email ) || $email == '' ) {
 			if ( $this->mTempUser ) {
@@ -250,9 +252,18 @@ class EditAccount extends SpecialPage {
 			} else {
 				$this->mUser->setEmail( $email );
 				if ( $email != '' ) {
+					if ( !empty( $wgEnableUserLoginExt ) ) {//Clear not confirmed signup flag
+						UserLoginHelper::removeNotConfirmedFlag( $this->mUser );
+					}
 					$this->mUser->confirmEmail();
 					$this->mUser->setOption( 'new_email', null );
 				} else {
+					if ( !empty( $wgEnableUserLoginExt ) && $this->mUser->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
+						//User not confirmed on signup can't has empty email
+						//@TODO introduce new message since usecase here is same as temp user empty email but it's not temp user anymore
+						$this->mStatusMsg = wfMsg( 'editaccount-error-tempuser-email' );
+						return false;
+					}
 					$this->mUser->invalidateEmail();
 				}
 				$this->mUser->saveSettings();
