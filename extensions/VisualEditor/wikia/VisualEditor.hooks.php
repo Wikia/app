@@ -11,8 +11,8 @@ class VisualEditorWikiaHooks {
 	public static function onResourceLoaderTestModules( array &$testModules, ResourceLoader &$resourceLoader ) {
 		global $wgVisualEditorWikiaResourceTemplate;
 
-		$testModules['qunit']['ext.visualEditor.wikiaTest'] = array(
-			'scripts' => $wgVisualEditorWikiaResourceTemplate + array(
+		$testModules['qunit']['ext.visualEditor.wikiaTest'] = $wgVisualEditorWikiaResourceTemplate + array(
+			'scripts' => array(
 				// util
 				've/test/ve.wikiaTest.utils.js',
 
