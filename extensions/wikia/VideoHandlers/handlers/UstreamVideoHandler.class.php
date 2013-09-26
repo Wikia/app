@@ -28,4 +28,28 @@ EOT;
 		);
 	}
 
+	/**
+	 * Get the video id that is used for embed code
+	 * @return string
+	 */
+	protected function getEmbedVideoId() {
+		$metadata = $this->getMetadata(true);
+
+		if ( !empty( $metadata['altVideoId'] ) ) {
+			return $metadata['altVideoId'];
+		}
+
+		$embedVideoId = preg_replace( '/(\d+)HID(\d+)/', "$1/highlight/$2", $this->videoId );
+
+		return $embedVideoId;
+	}
+
+	/**
+	 * get provider detail url
+	 * @return string
+	 */
+	public function getProviderDetailUrl() {
+		return str_replace( '$1', $this->getEmbedVideoId(), static::$providerDetailUrlTemplate );
+	}
+
 }
