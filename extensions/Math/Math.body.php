@@ -38,6 +38,8 @@ class MathRenderer {
 	var $mathml = '';
 	var $conservativeness = 0;
 
+	private $md5; // Wikia change
+
 	function __construct( $tex, $params = array() ) {
 		$this->tex = $tex;
 		$this->params = $params;
@@ -227,6 +229,8 @@ class MathRenderer {
 		$mf = htmlspecialchars( wfMsg( 'math_failure' ) );
 		$errmsg = htmlspecialchars( wfMsg( $msg ) );
 		$source = htmlspecialchars( str_replace( "\n", ' ', $this->tex ) );
+
+		Wikia::log(__METHOD__, false, $msg); // Wikia change
 		return "<strong class='error'>$mf ($errmsg$append): $source</strong>\n";
 	}
 
@@ -257,6 +261,7 @@ class MathRenderer {
 			$this->mathml = $rpage->math_mathml;
 
 			$filename = $this->_getHashPath() . "/{$this->hash}.png";
+			wfDebug(__METHOD__ . ": rendering to {$filename}\n"); // Wikia change
 
 			if( !$wgMathCheckFiles ) {
 				// Short-circuit the file existence & migration checks
@@ -282,9 +287,11 @@ class MathRenderer {
 					$ret = wfMkdirParents( $hashpath, 0755, __METHOD__ );
 					wfRestoreWarnings();
 					if( !$ret ) {
+						wfDebug(__METHOD__ . ": failed to create directory tree - {$hashpath}\n"); // Wikia change
 						return false;
 					}
 				} elseif( !is_dir( $hashpath ) || !is_writable( $hashpath ) ) {
+					wfDebug(__METHOD__ . ": can't write to {$hashpath}\n"); // Wikia change
 					return false;
 				}
 				if ( function_exists( 'link' ) ) {
