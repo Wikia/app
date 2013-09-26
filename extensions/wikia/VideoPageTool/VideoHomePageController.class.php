@@ -52,7 +52,7 @@ class VideoHomePageController extends WikiaController {
 
 	/**
 	 * @description Builds slug and localized URLs for each of our partner category pages
-	 * @return array
+	 * @responseParam array $partners
 	 */
 	public function partners() {
 		$partners = array();
@@ -66,11 +66,11 @@ class VideoHomePageController extends WikiaController {
 
 		foreach( $partners as &$partner ) {
 			$name = empty( $partner['category'] ) ? $partner['label'] : $partner['category'];
-			$partner['url'] = Title::newFromText( $name, NS_CATEGORY )->getFullUrl();
+			$partner['url'] = GlobalTitle::newFromText( $name, NS_CATEGORY, VideoHandlerHooks::VIDEO_WIKI )->getFullUrl();
 		}
 
 		// sort by keys, views need to be alphabetized
-		ksort($partners);
+		ksort( $partners );
 
 		$this->partners = $partners;
 	}
