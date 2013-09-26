@@ -11,7 +11,9 @@
 class ApiVisualEditor extends ApiBase {
 
 	protected function getHTML( $title, $parserParams ) {
-		global $wgVisualEditorParsoidURL, $wgVisualEditorParsoidPrefix,
+		global $wgDevelEnvironment,
+			$wgVisualEditorParsoidURL,
+			$wgVisualEditorParsoidPrefix,
 			$wgVisualEditorParsoidTimeout;
 
 		$restoring = false;
@@ -43,7 +45,7 @@ class ApiVisualEditor extends ApiBase {
 				array(
 					'method' => 'GET',
 					'timeout' => $wgVisualEditorParsoidTimeout,
-					'noProxy' => empty( $wgDevelEnvironment )
+					'noProxy' => !empty( $wgDevelEnvironment )
 				)
 			);
 			$status = $req->execute();
@@ -84,8 +86,11 @@ class ApiVisualEditor extends ApiBase {
 	}
 
 	protected function postHTML( $title, $html, $parserParams ) {
-		global $wgVisualEditorParsoidURL, $wgVisualEditorParsoidPrefix,
+		global $wgDevelEnvironment,
+			$wgVisualEditorParsoidURL,
+			$wgVisualEditorParsoidPrefix,
 			$wgVisualEditorParsoidTimeout;
+
 		if ( $parserParams['oldid'] === 0 ) {
 			$parserParams['oldid'] = '';
 		}
@@ -98,7 +103,7 @@ class ApiVisualEditor extends ApiBase {
 					'oldid' => $parserParams['oldid']
 				),
 				'timeout' => $wgVisualEditorParsoidTimeout,
-				'noProxy' => empty( $wgDevelEnvironment )
+				'noProxy' => !empty( $wgDevelEnvironment )
 			)
 		);
 	}
