@@ -136,7 +136,7 @@ class Answer {
 					$params
 			);
 
-			$avatarImg = Answer::getUserAvatar($s->rev_user, 30, 30);
+			$avatarImg = AvatarService::renderAvatar($s->rev_user_text, 30);
 
 			$user_title = Title::makeTitle(NS_USER,$s->rev_user_text);
 
@@ -156,31 +156,6 @@ class Answer {
 
 	public static function getUserEditPoints($user_id) {
 		return AttributionCache::getInstance()->getUserEditPoints($user_id);
-	}
-
-	public static function getUserAvatar($userId, $width = 50, $height = 50) {
-		global $wgStylePath, $wgBlankImgUrl;
-
-		wfProfileIn(__METHOD__);
-
-		if (class_exists('Masthead')) {
-			$avatar = Masthead::newFromUserID($userId);
-			$avatar->getDefaultAvatars();
-			$avatar->mDefaultAvatars = array("{$wgStylePath}/answers/images/default_avatar.png?1");
-			$img = $avatar->getImageTag($width, $height);
-		}
-		else {
-			$avatarImgSrc = $wgBlankImgUrl;
-			$img = Xml::element('img', array(
-				'src' => $avatarImgSrc,
-				'height' => $height,
-				'width' => $width,
-			));
-		}
-
-		wfProfileOut(__METHOD__);
-
-		return $img;
 	}
 
 	/**
@@ -203,7 +178,7 @@ class Answer {
 		$ret .= Xml::openElement('div', array('class' => 'userInfoBadge'));
 		if($largeFormat){
 			$ret .= Xml::openElement('div', array('class' => 'userInfoBadgeAvatarWrapper'));
-			$avatarImg = Answer::getUserAvatar($userData['user_id']);
+			$avatarImg = AvatarService::renderAvatar($userData['user_id'], 50);
 			$ret .= $avatarImg;
 			$ret .= Xml::closeElement('div');
 		}

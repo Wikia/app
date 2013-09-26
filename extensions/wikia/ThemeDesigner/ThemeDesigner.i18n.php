@@ -93,8 +93,8 @@ $messages['qqq'] = array(
 	'themedesigner-history-item' => 'Parameters:
 * $1 is "how long ago"
 * $2 is the author name',
+	'themedesigner-wodmark-preview' => '{{Identical|Preview}}',
 	'themedesigner-wordmark-preview-error' => 'Validation error on attempt to save empty text wordmark',
-	'themedesigner-wodmark-preview' => '{{Identical|Preview}}'
 );
 
 /** Afrikaans (Afrikaans)
@@ -484,6 +484,7 @@ $messages['cy'] = array(
  * @author Geitost
  * @author LWChris
  * @author Laximilian scoken
+ * @author Metalhead64
  * @author MtaÄ
  * @author PtM
  * @author The Evil IP address
@@ -544,6 +545,8 @@ $messages['de'] = array(
 	'themedesigner-manual-upload-error' => 'Verwenden den Theme Designer um ein Wortmarke oder Wiki-Hintergrund hochzuladen',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Vorschau',
+	'themedesigner-wordmark-preview-error' => 'Hoppla! Der Name des Wikis kann nicht leer sein.
+Bitte gib zum Speichern den Namen des Wikis ein.',
 );
 
 /** Zazaki (Zazaki)

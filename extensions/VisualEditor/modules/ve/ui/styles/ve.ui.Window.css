@@ -1,0 +1,49 @@
+/*!
+ * VisualEditor UserInterface Window styles.
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-ui-window {
+	display: none;
+}
+
+.ve-ui-window-head {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.ve-ui-window-body {
+	padding: 0 0.75em;
+}
+
+.ve-ui-window-icon {
+	float: left;
+	width: 2em;
+	height: 2em;
+	line-height: 2em;
+	margin-right: 0.5em;
+	background-position: right center;
+	background-repeat: no-repeat;
+}
+
+.ve-ui-window-title {
+	float: left;
+	line-height: 2em;
+	color: #333;
+	white-space: nowrap;
+	cursor: default;
+}
+
+.ve-ui-window-overlay {
+	font-family: sans-serif;
+	line-height: 1.5em;
+	font-size: 1em;
+	position: absolute;
+	top: 0;
+	left: 0;
+}

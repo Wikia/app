@@ -198,17 +198,56 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author Gemmaa
  * @author Marcmpujol
  */
 $messages['ca'] = array(
 	'wikiamobile-search' => 'Cerca',
+	'wikiamobile-search-this-wiki' => 'Cerca aquest viqui',
 	'wikiamobile-search-wiki' => 'Wiki',
 	'wikiamobile-search-wikia' => 'Wikia',
 	'wikiamobile-login' => 'Inici de sessió',
 	'wikiamobile-password' => 'Contrasenya',
 	'wikiamobile-login-submit' => 'Iniciar sessió',
 	'wikiamobile-menu' => 'Menú',
+	'wikiamobile-article-categories' => 'Categories',
+	'wikiamobile-feedback' => 'Comentaris',
+	'wikiamobile-back' => 'Enrere',
+	'wikiamobile-hide-section' => 'amaga',
+	'wikiamobile-profile' => 'Perfil',
+	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Estil de vida]]',
+	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Entreteniment]]',
+	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Videojocs]]',
+	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Llicència]]',
+	'mobile-full-site' => 'Lloc web complet',
+	'wikiamobile-categories-tagline' => 'Pàgina de la categoria',
+	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|article|articles}}',
+	'wikiamobile-category-items-more' => 'Carrega més',
+	'wikiamobile-category-items-prev' => "Carrega l'anterior",
+	'wikiamobile-categories-expand' => 'Mostra-ho tot',
+	'wikiamobile-categories-collapse' => 'Amaga-ho tot',
+	'wikiamobile-sharing-media-image' => 'Imatge',
+	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-sharing-modal-text' => '$1 a $2 - $3',
+	'wikiamobile-sharing-email-text' => 'Hola,
+hauries de visitar això:
+
+ $1',
+	'wikiamobile-media-group-footer' => '1 de $1',
+	'wikiamobile-unsupported-video-download' => 'El teu navegador no suporta aquest format de vídeo, prova <a href="$1">aquí</a>',
+	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|visita|visites}}',
+	'wikiamobile-video-not-friendly-header' => 'Vaja!',
+	'wikiamobile-video-not-friendly' => 'Ho sentim, aquest vídeo no està disponible en versió mòbil.',
+	'wikiamobile-ad-label' => 'publicitat',
+	'wikiamobile-image-not-loaded' => 'La imatge no està disponible',
+	'wikiamobile-shared-file-not-available' => 'Ui, aquest element ja no està disponible, però ja que hi ets aquí, explora la viqui!',
+	'wikiamobile-page-not-found' => 'Ui! <b>$1</b> no existeix.',
+	'wikiamobile-page-not-found-tap' => "Toqueu què hi ha darrera d'aquest error per veure què l'ha provocat.",
+	'wikiasmartbanner-appstore' => "A l'App Store",
+	'wikiasmartbanner-googleplay' => 'A Google Play',
+	'wikiasmartbanner-price' => 'gratis',
+	'wikiasmartbanner-view' => 'mostra',
 );
 
 /** Czech (česky)
@@ -553,6 +592,7 @@ deberías botar un ollo a isto:
 	'wikiamobile-image-not-loaded' => 'A imaxe non está dispoñible',
 	'wikiamobile-shared-file-not-available' => 'Vaites! Este elemento xa non está dispoñible. Pero agora que está aquí, explore o wiki!',
 	'wikiamobile-page-not-found' => 'Vaites! "<b>$1</b>" non existe.',
+	'wikiamobile-page-not-found-tap' => 'Prema no que hai detrás deste erro para ver a súa orixe.',
 	'wikiasmartbanner-appstore' => 'Na tenda de aplicacións',
 	'wikiasmartbanner-googleplay' => 'No Google Play',
 	'wikiasmartbanner-price' => 'gratuíta',
@@ -888,7 +928,13 @@ $messages['nl'] = array(
 dit moet u echt zien:
 
 $1',
+	'wikiamobile-ad-label' => 'advertentie',
+	'wikiamobile-image-not-loaded' => 'Afbeelding is niet beschikbaar',
 	'wikiamobile-page-not-found' => 'Oeps! <b>$1</b> bestaat niet.',
+	'wikiasmartbanner-appstore' => 'In de App Store',
+	'wikiasmartbanner-googleplay' => 'In Google Play',
+	'wikiasmartbanner-price' => 'gratis',
+	'wikiasmartbanner-view' => 'bekijken',
 );
 
 /** Polish (polski)

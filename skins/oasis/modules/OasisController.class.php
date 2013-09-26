@@ -127,14 +127,7 @@ class OasisController extends WikiaController {
 			$wgOut->addStyle( $this->assetsManager->getSassCommonURL( 'skins/oasis/css/core/responsive.scss' ) );
 		}
 
-		$renderContentOnly = false;
-		if (!empty($this->wg->EnableRenderContentOnlyExt)) {
-			if(renderContentOnly::isRenderContentOnlyEnabled()) {
-				$renderContentOnly = true;
-			}
-		}
-
-		if($renderContentOnly) {
+		if( RenderContentOnlyHelper::isRenderContentOnlyEnabled() ) {
 			$this->body = F::app()->renderView('BodyContentOnly', 'Index');
 		} else {
 			// macbre: let extensions modify content of the page (e.g. EditPageLayout)

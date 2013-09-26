@@ -28,6 +28,8 @@ $messages['en'] = array(
 	'userrenametool-confirm' => 'Yes, rename the user',
 	'userrenametool-submit' => 'Change username',
 
+	'userrenametool-error-antispoof-conflict' => 'AntiSpoof warning - there is already a username similar to "<nowiki>$1</nowiki>".',
+	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof is not installed.',
 	'userrenametool-errordoesnotexist' => 'The user "<nowiki>$1</nowiki>" does not exist.',
 	'userrenametool-errorexists' => 'The user "<nowiki>$1</nowiki>" already exists.',
 	'userrenametool-errorinvalid' => '"<nowiki>$1</nowiki>" is not a valid username.',
@@ -44,6 +46,8 @@ Please go back and try again.',
 	'userrenametool-error-cannot-rename-account' => 'Renaming the user account on the shared global database failed.',
 	'userrenametool-error-cannot-create-block' => 'Creation of Phalanx block failed.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Unexpected error occurred, check logs or try again.',
+	'userrenametool-warnings-characters' => 'New username contains illegal characters!',
+	'userrenametool-warnings-maxlength' => 'New username\'s length cannot exceed 255 characters!',
 	'userrenametool-warn-repeat' => 'Attention! The user "<nowiki>$1</nowiki>" has already been renamed to "<nowiki>$2</nowiki>".
 Continue processing only if you need to update some missing information.',
 	'userrenametool-warn-table-missing' => 'Table "<nowiki>$2</nowiki>" does not exist in database "<nowiki>$1</nowiki>."',
@@ -100,6 +104,8 @@ $messages['qqq'] = array(
 	'userrenametool-reserve' => 'Option to block the old username (after it has been renamed) from being used again.',
 	'userrenametool-warnings' => '{{Identical|Warning}}',
 	'userrenametool-submit' => '{{Identical|Submit}}',
+	'userrenametool-error-antispoof-conflict' => 'Message to show when similarity conflict occurs for new username.',
+	'userrenametool-error-antispoof-notinstalled' => 'Message to show when AntiSpoof extension is not installed.',
 	'userrenametool-error-cannot-create-block' => 'When this user rename tool is running, a block is supposed to be put in place to prevent the user from being able to edit to prevent data corruption. This message appears as a warning that the block was not able to be added automatically and that the user will need to be blocked manually.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Process failed on some point, detailed info with path to file and number of line can be found in logs',
 	'userrenametool-info-wiki-finished' => '',
@@ -687,6 +693,7 @@ Molimo Vas da se vratite nazad i pokušate ponovo.',
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author Juanpabl
  * @author Marcmpujol
  * @author Paucabot
@@ -700,6 +707,7 @@ $messages['ca'] = array(
 	'userrenametool-desc' => "Reanomena un usuari (necessita drets de ''renameuser'')",
 	'userrenametool-old' => "Nom d'usuari actual:",
 	'userrenametool-new' => "Nou nom d'usuari:",
+	'userrenametool-encoded' => 'URL codificat:',
 	'userrenametool-reason' => 'Motiu pel canvi:',
 	'userrenametool-move' => "Reanomena la pàgina d'usuari, la de discussió i les subpàgines que tingui al nou nom",
 	'userrenametool-reserve' => "Bloca el nom d'usuari antic d'usos futurs",
@@ -770,6 +778,7 @@ $messages['ce'] = array(
 	'renameuser' => 'Декъашхочун цӀе хийца',
 	'userrenametool-submit' => 'Кхочушдé',
 	'userrenametool-page-exists' => 'Агӏо $1 йолуш ю цундела и ша юху дӏаязъян йиш яц.',
+	'userrenametool-move-log' => 'Автоматически декъашхочун цӀе хийцина дела «[[User:$1|$1]]» оцу «[[User:$2|$2]]»',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -1166,6 +1175,7 @@ $messages['es'] = array(
 	'userrenametool-desc' => "Añade una [[Special:UserRenameTool|página especial]] para renombrar a un usuario (necesita el derecho ''renameuser'') y procesa todos los datos relacionados",
 	'userrenametool-old' => 'Nombre actual:',
 	'userrenametool-new' => 'Nuevo nombre de usuario:',
+	'userrenametool-encoded' => 'URL codificada:',
 	'userrenametool-reason' => 'Motivo:',
 	'userrenametool-move' => 'Trasladar las páginas de usuario y de discusión (y sus subpáginas) al nuevo nombre',
 	'userrenametool-reserve' => 'Bloquea el antiguo nombre de usuario para evitar usarlo en el futuro',
@@ -1529,6 +1539,7 @@ $messages['gl'] = array(
 	'userrenametool-desc' => "Engade unha [[Special:UserRenameTool|páxina especial]] para renomear un usuario (cómpre ter o dereito de ''renomear usuarios'') e procesar todos os datos relacionados",
 	'userrenametool-old' => 'Nome de usuario actual:',
 	'userrenametool-new' => 'Novo nome de usuario:',
+	'userrenametool-encoded' => 'Enderezo URL codificado:',
 	'userrenametool-reason' => 'Motivo para mudar o nome:',
 	'userrenametool-move' => 'Mover as páxinas de usuario e de conversa (xunto coas subpáxinas) ao novo nome',
 	'userrenametool-reserve' => 'Reservar o nome de usuario vello para un uso posterior',
@@ -2324,7 +2335,7 @@ $messages['kn'] = array(
  */
 $messages['ko'] = array(
 	'renameuser' => '사용자 이름 바꾸기',
-	'userrenametool-desc' => "사용자 이름을 바꾸기 위한 [[Special:UserRenameTool|특수 문서]]를 추가 (''renameuser'' 권한 필요) 및 모든 관련 데이터 처리",
+	'userrenametool-desc' => "사용자 이름을 바꾸기 위한 [[Special:UserRenameTool|특수 문서]]를 추가하고 ('''renameuser''' 권한 필요) 및 모든 관련 데이터를 처리합니다",
 	'userrenametool-old' => '기존 사용자 이름:',
 	'userrenametool-new' => '새 이름:',
 	'userrenametool-reason' => '바꾸는 이유:',
@@ -2334,7 +2345,7 @@ $messages['ko'] = array(
 	'userrenametool-confirm' => '예, 이름을 변경합니다.',
 	'userrenametool-submit' => '사용자 이름 바꾸기',
 	'userrenametool-errordoesnotexist' => '‘<nowiki>$1</nowiki>’ 사용자가 존재하지 않습니다.',
-	'userrenametool-errorexists' => '‘<nowiki>$1</nowiki>’ 사용자가 이미 존재합니다.',
+	'userrenametool-errorexists' => '"<nowiki>$1</nowiki>" 사용자가 이미 존재합니다.',
 	'userrenametool-errorinvalid' => '‘<nowiki>$1</nowiki>’ 사용자 이름이 잘못되었습니다.',
 	'userrenametool-errortoomany' => '"<nowiki>$1</nowiki>" 사용자는 기여를 $2번 했습니다. $3번을 넘는 기여를 한 사용자의 이름을 변경하는 것은 성능 저하를 일으킬 수 있습니다.',
 	'userrenametool-error-request' => '요청을 보내는 데 문제가 있습니다.
@@ -3990,6 +4001,7 @@ Se [[Special:Stafflog|personalloggen]] för loggar.',
 	'userrenametool-desc' => "Lägger till en [[Special:Renameuser|specialsida]] för att byta namn på en användare (kräver behörigheten ''renameuser'')",
 	'userrenametool-old' => 'Nuvarande användarnamn:',
 	'userrenametool-new' => 'Nytt användarnamn:',
+	'userrenametool-encoded' => 'URL-kodad:',
 	'userrenametool-reason' => 'Anledning till namnbytet:',
 	'userrenametool-move' => 'Flytta användarsidan och användardiskussionen (och deras undersidor) till det nya namnet',
 	'userrenametool-reserve' => 'Reservera det gamla användarnamnet från framtida användning',

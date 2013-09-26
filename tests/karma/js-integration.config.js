@@ -17,12 +17,8 @@ files = [
 
 	'tests/lib/jasmine/helpers.js',
 
-	'resources/wikia/libraries/define.mock.js',
-
 	'resources/jquery/jquery-1.8.2.js',
-	'extensions/wikia/WikiaMobile/js/Wikia.utils.js',
-	'resources/wikia/libraries/deferred/deferred.js',
-	'resources/wikia/libraries/deferred/deferred.api.js',
+	'resources/wikia/libraries/define.mock.js',
 
 	//JSMessages
 	'extensions/wikia/JSMessages/js/JSMessages.js',
@@ -48,10 +44,10 @@ files = [
 	'extensions/wikia/WikiaMobile/js/tables.js',
 	'extensions/wikia/WikiaMobile/js/throbber.js',
 	'extensions/wikia/WikiaMobile/js/toast.js',
+	'extensions/wikia/WikiaMobile/js/track.js',
 	'extensions/wikia/WikiaMobile/js/toc.js',
 	'extensions/wikia/WikiaMobile/js/topbar.js',
 	'extensions/wikia/WikiaMobile/js/features.js',
-	'extensions/wikia/WikiaMobile/js/track.js',
 	'extensions/wikia/WikiaMobile/js/spec/integration/*.spec.js',
 
 	//core modules

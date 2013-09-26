@@ -154,6 +154,7 @@ Gallout a rit lezel ur gemennadenn din ma c'hallan sikour ac'hanoc'h d'ober tra 
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author BroOk
  * @author Marcmpujol
  */
@@ -183,13 +184,13 @@ Si us plau, deixa un missatge a la [[$2|meva discussió]] si et puc ajudar en al
 	'welcome-message-user-staff' => "== Benvingut ==
 Hola, benvingut a {{SITENAME}}! Gràcies per editar a la pàgina [[:$1]].
 
-Si necessites ajuda, dóna un cop d'ull a les nostres [[Help:Contents|pàgines d'ajuda]]. Visita la [[w:c:ca|Central de Wikia en català]] per estar informat del nostre [[w:c:ca:Blog:Actualitzacions_tècniques|blog del personal]], fes preguntes al nostre [[w:c:ca:Special:Forum|fòrum comunitari]], participa a les nostres [[w:c:community:Help:Webinars|sèries web]], o xateja amb els teus amics de Wikia. Que t'ho passis bé editant! $3", # Fuzzy
+Si necessites ajuda, dóna un cop d'ull a les nostres [[Help:Contents|pàgines d'ajuda]]. Visita la [[w:c:community|Central de Wikia en català]] per estar informat del nostre [[w:c:community:Blog:Wikia_Staff_Blog|blog del personal]], fes preguntes al nostre [[w:c:community:Special:Forum|fòrum comunitari]], participa a les nostres [[w:c:community:Help:Webinars|sèries web]], o xateja amb els teus amics de Wikia. Que t'ho passis bé editant! $3",
 	'welcome-message-anon-staff' => "== Benvingut ==
 Hola, benvingut a {{SITENAME}}. Gràcies per editar a la pàgina [[:$1]].
 
-Si us plau, '''[[Special:UserLogin|registra't i crea't un compte]]'''. És una forma molt senzilla de mantenir un registre de les teves contribucions i t'ajudarà a comunicar-te amb la comunitat.
+Recomanem a tots els col·laboradors que [[Special:UserLogin|es registrin i creïn un compte]]. Així podràs mantenir un registre de les teves contribucions, accedir a més característiques de Wikia i podràs conèixer la resta de la comunitat de {{SITENAME}}.
 
-Si necessites ajuda i no hi ha administradors locals, pots visitar els [[wikia:Forum:Community Central Forum|fòrums de la Central de Wikia]] (en anglès) o els [[wikia:c:ca:Forum:Índex|fòrums de la Central de Wikia catalana]]. $3", # Fuzzy
+Si necessites ajuda, visita primer les nostres [[Help:Contents|pàgines d'ajuda]] i després la [[w:c:community|Central de la comunitat]] per saber més. Que t'ho passis bé editant! $3",
 	'staffsig-text' => "[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|fòrums d'ajuda]] | [[w:sblog|blog]])</small>",
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => "Hola, benvingut/da a {{SITENAME}}! Moltes gràcies per la teva edició a [[:$1]].

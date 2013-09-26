@@ -289,11 +289,11 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	protected function isAgeGate() {
-		if ( !empty( $this->metadata['ageGate'] ) ) {
+		if ( !empty( $this->metadata['ageGate'] ) || !empty( $this->metadata['ageRequired'] ) ) {
 			return true;
 		}
 
-		if ( !empty($this->interfaceObj['metadata']['agegate']) ) {
+		if ( !empty( $this->interfaceObj['metadata']['agegate'] ) || !empty( $this->interfaceObj['metadata']['age_required'] )  ) {
 			return true;
 		}
 

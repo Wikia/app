@@ -359,7 +359,10 @@ class WikiService extends WikiaModel {
 				
 				if ($file instanceof File && $file->exists()) {
 					$imageServing = new ImageServing(null, $imageWidth, $imageHeight);
-					$images[$row->city_id] = $imageServing->getUrl($row->city_main_image, $file->getWidth(), $file->getHeight());
+					$images[$row->city_id] = ImagesService::overrideThumbnailFormat(
+						$imageServing->getUrl( $row->city_main_image, $file->getWidth(), $file->getHeight() ),
+						ImagesService::EXT_JPG
+					);
 				}
 			}
 		} catch(Exception $e) {
@@ -396,7 +399,7 @@ class WikiService extends WikiaModel {
 	 * @return array most active admins from last week ordered desc
 	 */
 	public function getMostActiveAdmins($wikiId, $avatarSize) {
-		$edits = $ids = [];
+		$edits = $ids = $lastRevision = [];
 		$admins = $this->getWikiAdmins($wikiId, $avatarSize);
 		$ids = array_map(function($item) { return $item['userId']; }, $admins);
 

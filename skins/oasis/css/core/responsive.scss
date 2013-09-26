@@ -72,7 +72,7 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 		$background-offset-right: $background-offset;
 	}
 
-	body {
+	body.skin-oasis {
 		&:after,
 		&:before {
 			width: $background-width-both;
@@ -134,7 +134,7 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 	// slices, overlapping by the width of the gradient itself.
 	$gradient-offset: $background-margin + ( $background-width-half - $width-gradient );
 
-	body {
+	body.skin-oasis {
 		&:after,
 		&:before {
 			width: $background-width-half;
@@ -166,12 +166,16 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 	}
 }
 
-body {
-	min-width: $width-outside-min;
+html {
+	overflow-y: auto;
+}
 
+body.skin-oasis {
+	min-width: $width-outside-min;
 	@if ( $background-is-dynamic ) {
 		background: $color-body;
-		overflow-x: hidden;
+		overflow: hidden;
+		position: relative;
 
 		&:after,
 		&:before {
@@ -199,7 +203,7 @@ body {
 	}
 }
 
-body > .global-notification,
+body.skin-oasis > .global-notification,
 .WikiaHeader .page-width-container,
 .WikiaPage {
 	max-width: $width-outside-max;
@@ -286,7 +290,7 @@ body > .global-notification,
 
 .WikiaRail {
 	overflow: hidden;
-	padding: 0 10px 0 0;
+	padding: 0 10px 10px 0;
 }
 
 // START - edit page fixes
@@ -357,7 +361,7 @@ body > .global-notification,
 // END - main page tag fixes
 
 @media screen and (max-width: $breakpoint-min) {
-	body {
+	body.skin-oasis {
 		overflow-x: auto;
 	}
 }
@@ -468,7 +472,7 @@ body > .global-notification,
 }
 
 @media screen and (max-width: $breakpoint-content) {
-	body {
+	body.skin-oasis {
 		&:after,
 		&:before {
 			display: none;
@@ -506,10 +510,6 @@ body > .global-notification,
 
 	.WikiaTopAds {
 		width: 100%;
-
-		#TOP_BUTTON_WIDE {
-			display: none;
-		}
 	}
 }
 

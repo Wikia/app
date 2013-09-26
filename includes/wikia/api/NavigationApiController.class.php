@@ -1,4 +1,5 @@
 <?php
+
 	/**
 	 * Controller to get Wiki Navigation for a wiki
 	 *
@@ -14,6 +15,7 @@ class NavigationApiController extends WikiaApiController {
 	 *
 	 * @example
 	 */
+
 	public function getData(){
 		$model = new NavigationModel();
 		$nav = $model->getWiki();

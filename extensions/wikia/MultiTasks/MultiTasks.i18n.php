@@ -2200,6 +2200,7 @@ $messages['nb'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author HanV
  * @author McDutchie
  * @author Siebrand
  */
@@ -2210,7 +2211,7 @@ $messages['nl'] = array(
 	'multiwikiedit_confirm' => 'Bevestigen',
 	'multiwikiedit_help' => 'Bewerk een groep pagina\'s.
 U kunt pagina\'s opnemen in het onderstaande invoervenster.
-Kies een gebruiker die wordt gebruiker voor het verwijderlogboek.
+Kies een gebruiker die wordt gebruiker voor het verwijderingslogboek.
 Een te uploaden bestanden moet een paginanaam bevatten en een optionele reden, gescheiden door het teken "|".
 Op iedere regel moet 1 pagina staan.',
 	'multiwikiedit_caption' => 'Paginalijst',
@@ -2328,14 +2329,15 @@ Voer de taak daarna opnieuw uit om alle overgebleven pagina's te verwerken.",
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
+ * @author HanV
  * @author MarkvA
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
 	'multiwikiedit_help' => 'Bewerk een groep pagina\'s.
 Je kunt pagina\'s opnemen in het onderstaande invoervenster.
-Kies een gebruiker die wordt gebruiker voor het verwijderlogboek.
-Een te uploaden bestanden moet een paginanaam bevatten en een optionele reden, gescheiden door het teken "|".
+Kies een gebruiker die wordt gebruiker voor het verwijderingslogboek.
+Een te uploaden bestand moet een paginanaam bevatten en een optionele reden, gescheiden door het teken "|".
 Op iedere regel moet 1 pagina staan.',
 	'multiwikiedit_task_none_selected' => "Je hebt geen pagina's geselecteerd.
 De taak is niet toegevoegd.",

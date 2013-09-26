@@ -1,18 +1,19 @@
-/**
- * VisualEditor data model DocumentSynchronizer class.
+/*!
+ * VisualEditor DataModel DocumentSynchronizer class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Creates an ve.dm.DocumentSynchronizer object.
+ * DataModel document synchronizer.
  *
  * This object is a utility for collecting actions to be performed on the model tree in multiple
  * steps as the linear model is modified by a transaction processor and then processing those queued
  * actions when the transaction is done being processed.
  *
  * IMPORTANT NOTE: It is assumed that:
+ *
  *   - The linear model has already been updated for the pushed actions
  *   - Actions are pushed in increasing offset order
  *   - Actions are non-overlapping
@@ -20,16 +21,18 @@
  * @class
  * @constructor
  * @param {ve.dm.Document} doc Document to synchronize
+ * @param {ve.dm.Transaction} transaction The transaction being synchronized for
  */
-ve.dm.DocumentSynchronizer = function VeDmDocumentSynchronizer( doc ) {
+ve.dm.DocumentSynchronizer = function VeDmDocumentSynchronizer( doc, transaction ) {
 	// Properties
 	this.document = doc;
 	this.actionQueue = [];
 	this.eventQueue = [];
 	this.adjustment = 0;
+	this.transaction = transaction;
 };
 
-/* Static Members */
+/* Static Properties */
 
 /**
  * Synchronization methods.
@@ -38,14 +41,14 @@ ve.dm.DocumentSynchronizer = function VeDmDocumentSynchronizer( doc ) {
  * synchronizer, so they work similar to normal methods on the object.
  *
  * @static
- * @member
+ * @property
  */
 ve.dm.DocumentSynchronizer.synchronizers = {};
 
 /* Static Methods */
 
 /**
- * Synchronizes an annotation action.
+ * Synchronize an annotation action.
  *
  * This method is called within the context of a document synchronizer instance.
  *
@@ -67,7 +70,7 @@ ve.dm.DocumentSynchronizer.synchronizers.annotation = function ( action ) {
 };
 
 /**
- * Synchronizes an attribute change action.
+ * Synchronize an attribute change action.
  *
  * This method is called within the context of a document synchronizer instance.
  *
@@ -83,7 +86,7 @@ ve.dm.DocumentSynchronizer.synchronizers.attributeChange = function ( action ) {
 };
 
 /**
- * Synchronizes a resize action.
+ * Synchronize a resize action.
  *
  * This method is called within the context of a document synchronizer instance.
  *
@@ -92,16 +95,24 @@ ve.dm.DocumentSynchronizer.synchronizers.attributeChange = function ( action ) {
  * @param {Object} action
  */
 ve.dm.DocumentSynchronizer.synchronizers.resize = function ( action ) {
-	// Apply length change to tree
-	action.node.adjustLength( action.adjustment );
-	// no update event needed, adjustLength causes an update event on its own
-	// FIXME however, any queued update event will still be emitted, resulting in a duplicate
+	var node = action.node,
+		parent = node.getParent();
+
+	if ( parent && node.getType() === 'text' && node.getLength() + action.adjustment === 0 ) {
+		// Auto-prune empty text nodes
+		parent.splice( parent.indexOf( node ), 1 );
+	} else {
+		// Apply length change to tree
+		// No update event needed, adjustLength causes an update event on its own
+		// FIXME however, any queued update event will still be emitted, resulting in a duplicate
+		node.adjustLength( action.adjustment );
+	}
 	// Update adjustment
 	this.adjustment += action.adjustment;
 };
 
 /**
- * Synchronizes a rebuild action.
+ * Synchronize a rebuild action.
  *
  * This method is called within the context of a document synchronizer instance.
  *
@@ -140,7 +151,7 @@ ve.dm.DocumentSynchronizer.synchronizers.rebuild = function ( action ) {
 /* Methods */
 
 /**
- * Gets the document being synchronized.
+ * Get the document being synchronized.
  *
  * @method
  * @returns {ve.dm.Document} Document being synchronized
@@ -172,7 +183,7 @@ ve.dm.DocumentSynchronizer.prototype.pushAnnotation = function ( range ) {
  *
  * @method
  * @param {ve.dm.Node} node Node whose attribute changed
- * @param {String} key Key of the attribute that changed
+ * @param {string} key Key of the attribute that changed
  * @param {Mixed} from Old value of the attribute
  * @param {Mixed} to New value of the attribute
  */
@@ -193,7 +204,7 @@ ve.dm.DocumentSynchronizer.prototype.pushAttributeChange = function ( node, key,
  *
  * @method
  * @param {ve.dm.TextNode} node Node to resize
- * @param {Number} adjustment Length adjustment to apply to the node
+ * @param {number} adjustment Length adjustment to apply to the node
  */
 ve.dm.DocumentSynchronizer.prototype.pushResize = function ( node, adjustment ) {
 	this.actionQueue.push( {
@@ -231,8 +242,8 @@ ve.dm.DocumentSynchronizer.prototype.pushRebuild = function ( oldRange, newRange
  *
  * @method
  * @param {ve.dm.Node} node
- * @param {String} event Event name
- * @param {Mixed} [...] Additional arguments to be passed to the event when fired
+ * @param {string} event Event name
+ * @param {Mixed...} [args] Additional arguments to be passed to the event when fired
  */
 ve.dm.DocumentSynchronizer.prototype.queueEvent = function ( node ) {
 	// Check if this is already queued
@@ -247,13 +258,13 @@ ve.dm.DocumentSynchronizer.prototype.queueEvent = function ( node ) {
 		node.queuedEventHashes[hash] = true;
 		this.eventQueue.push( {
 			'node': node,
-			'args': args
+			'args': args.concat( this.transaction )
 		} );
 	}
 };
 
 /**
- * Synchronizes node tree using queued actions.
+ * Synchronize node tree using queued actions.
  *
  * This method uses the static methods defined in {ve.dm.DocumentSynchronizer.synchronizers} and
  * calls them in the context of {this}.
