@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" opacity="0.75" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-	 x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
-<g id="outdent-list-ltr">
-	<polygon id="arrow_5_" points="8,13 10,13 10,10 7.948,10 7.917,7.94 3.205,11.525 8,15.079 	"/>
-	<path id="bottom_line_3_" d="M20,17H4c-0.553,0-1,0.447-1,1v1c0,0.553,0.447,1,1,1h16c0.553,0,1-0.447,1-1v-1
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px"
+	 height="24px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+<g id="outdent-list-ltr" style="opacity:0.75;">
+	<polygon id="arrow" points="8,13 10,13 10,10 7.948,10 7.917,7.94 3.205,11.525 8,15.079 		"/>
+	<path id="bottom_line" d="M20,17H4c-0.553,0-1,0.447-1,1v1c0,0.553,0.447,1,1,1h16c0.553,0,1-0.447,1-1v-1
 		C21,17.447,20.553,17,20,17z"/>
-	<path id="middle_line_3_" d="M20,10h-7c-0.553,0-1,0.447-1,1v1c0,0.553,0.447,1,1,1h7c0.553,0,1-0.447,1-1v-1
+	<path id="middle_line" d="M20,10h-7c-0.553,0-1,0.447-1,1v1c0,0.553,0.447,1,1,1h7c0.553,0,1-0.447,1-1v-1
 		C21,10.447,20.553,10,20,10z"/>
-	<path id="top_line_3_" d="M20,3H4C3.447,3,3,3.447,3,4v1c0,0.553,0.447,1,1,1h16c0.553,0,1-0.447,1-1V4C21,3.447,20.553,3,20,3z"/>
+	<path id="top_line" d="M20,3H4C3.447,3,3,3.447,3,4v1c0,0.553,0.447,1,1,1h16c0.553,0,1-0.447,1-1V4C21,3.447,20.553,3,20,3z"/>
 </g>
 </svg>

@@ -1,0 +1,577 @@
+/*!
+ * VisualEditor UserInterface Widget styles.
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/* ve.ui.IconButtonWidget */
+
+.ve-ui-iconButtonWidget {
+	width: 2em;
+	height: 2em;
+	background-position: center center;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	opacity: 0.8;
+	-webkit-transition: opacity 200ms;
+	-moz-transition: opacity 200ms;
+	-ms-transition: opacity 200ms;
+	-o-transition: opacity 200ms;
+	transition: opacity 200ms;
+}
+
+.ve-ui-iconButtonWidget:hover {
+	opacity: 1;
+}
+
+.ve-ui-iconButtonWidget.ve-ui-widget-disabled {
+	opacity: 0.2;
+}
+
+/* ve.ui.ButtonWidget */
+
+.ve-ui-buttonWidget {
+	display: inline-block;
+	height: 1.8em;
+	margin: 0.1em 0;
+	padding: 0.25em 0.75em;
+	border-radius: 0.3em;
+	vertical-align: top;
+	color: #333;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+	box-shadow: 0 0.1em 0.25em rgba(0, 0, 0, 0.1);
+	text-align: center;
+	font-size: 1em;
+	cursor: pointer;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+	/* Animation */
+	-webkit-transition: border-color 100ms;
+	-moz-transition: border-color 100ms;
+	-ms-transition: border-color 100ms;
+	-o-transition: border-color 100ms;
+	transition: border-color 100ms;
+
+	/* Gray */
+	border: 1px #c9c9c9 solid;
+	background-color: #ffffff;
+	filter: progid:DXImageTransform.Microsoft.gradient(
+		GradientType=0,startColorstr=#ffffff, endColorstr=#f0f0f0
+	);
+	background-image: -webkit-gradient(
+		linear, right top, right bottom, color-stop(0%,#ffffff), color-stop(100%,#f0f0f0)
+	);
+	background-image: -webkit-linear-gradient(top, #ffffff 0%, #f0f0f0 100%);
+	background-image: -moz-linear-gradient(top, #ffffff 0%, #f0f0f0 100%);
+	background-image: -ms-linear-gradient(top, #ffffff 0%, #f0f0f0 100%);
+	background-image: -o-linear-gradient(top, #ffffff 0%, #f0f0f0 100%);
+	background-image: linear-gradient(top, #ffffff 0%, #f0f0f0 100%);
+}
+
+.ve-ui-buttonWidget:hover {
+	border-color: #aaa;
+}
+
+.ve-ui-buttonWidget:active {
+	border-color: #ddd;
+	box-shadow: inset 0 1px 4px 0 rgba(0, 0, 0, 0.07);
+	color: black;
+}
+
+.ve-ui-widget-disabled.ve-ui-buttonWidget,
+.ve-ui-widget-disabled.ve-ui-buttonWidget:active {
+	opacity: 0.5;
+	cursor: default;
+	box-shadow: none;
+	color: #333;
+}
+
+.ve-ui-widget-disabled.ve-ui-buttonWidget:hover {
+	border-color: #ccc;
+	box-shadow: none;
+}
+
+.ve-ui-buttonWidget .ve-ui-labeledElement-label {
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 1.9em;
+}
+
+.ve-ui-flaggableElement-destructive.ve-ui-buttonWidget {
+	/* Red text */
+	color: #d45353;
+}
+
+.ve-ui-flaggableElement-constructive.ve-ui-buttonWidget {
+	/* Green */
+	border: solid 1px #c3e59a;
+	background-color: #f0fbe1;
+	filter: progid:DXImageTransform.Microsoft.gradient(
+		GradientType=0,startColorstr=#f0fbe1, endColorstr=#c3e59a
+	);
+	background-image: -webkit-gradient(
+		linear, right top, right bottom, color-stop(0%,#f0fbe1), color-stop(100%,#c3e59a)
+	);
+	background-image: -webkit-linear-gradient(top, #f0fbe1 0%, #c3e59a 100%);
+	background-image: -moz-linear-gradient(top, #f0fbe1 0%, #c3e59a 100%);
+	background-image: -ms-linear-gradient(top, #f0fbe1 0%, #c3e59a 100%);
+	background-image: -o-linear-gradient(top, #f0fbe1 0%, #c3e59a 100%);
+	background-image: linear-gradient(top, #f0fbe1 0%, #c3e59a 100%);
+}
+
+.ve-ui-flaggableElement-constructive.ve-ui-buttonWidget:hover {
+	border-color: #a6cf74;
+}
+
+.ve-ui-flaggableElement-primary.ve-ui-buttonWidget {
+	/* Blue */
+	border: solid 1px #b0d9ee;
+	background-color: #eaf4fa;
+	filter: progid:DXImageTransform.Microsoft.gradient(
+		GradientType=0,startColorstr=#eaf4fa, endColorstr=#b0d9ee
+	);
+	background-image: -webkit-gradient(
+		linear, right top, right bottom, color-stop(0%,#eaf4fa), color-stop(100%,#b0d9ee)
+	);
+	background-image: -webkit-linear-gradient(top, #eaf4fa 0%, #b0d9ee 100%);
+	background-image: -moz-linear-gradient(top, #eaf4fa 0%, #b0d9ee 100%);
+	background-image: -ms-linear-gradient(top, #eaf4fa 0%, #b0d9ee 100%);
+	background-image: -o-linear-gradient(top, #eaf4fa 0%, #b0d9ee 100%);
+	background-image: linear-gradient(top, #eaf4fa 0%, #b0d9ee 100%);
+}
+
+.ve-ui-flaggableElement-primary.ve-ui-buttonWidget:hover {
+	border-color: #84b9d4;
+}
+
+/* ve.ui.SelectWidget */
+
+.ve-ui-selectWidget {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+/* ve.ui.OptionWidget */
+
+.ve-ui-optionWidget {
+	position: relative;
+	display: block;
+	border: none;
+	list-style: none;
+	margin: 0;
+	padding: 0.5em 2em 0.5em 3em;
+	cursor: pointer;
+}
+
+.ve-ui-optionWidget .ve-ui-labeledElement-label {
+	line-height: 1.5em;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.ve-ui-optionWidget-highlighted {
+	background-color: #e1f3ff;
+}
+
+.ve-ui-optionWidget-selected {
+	background-color: #a7dcff;
+}
+
+.ve-ui-optionWidget.ve-ui-widget-disabled {
+	cursor: default;
+}
+
+.ve-ui-optionWidget .ve-ui-optionWidget-icon {
+	position: absolute;
+	top: 50%;
+	left: 0.5em;
+	width: 2em;
+	height: 2em;
+	margin-top: -1em;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+/* ve.ui.OutlineItemWidget */
+
+.ve-ui-outlineItemWidget {
+	position: relative;
+	padding: 0.75em 0.75em 0.75em 3.5em;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: pointer;
+	font-size: 1.1em;
+}
+
+.ve-ui-outlineItemWidget-level-1 {
+	padding-left: 5em;
+}
+
+.ve-ui-outlineItemWidget-level-2 {
+	padding-left: 6.5em;
+}
+
+.ve-ui-outlineItemWidget.ve-ui-optionWidget-selected {
+	background-color: #a7dcff;
+	text-shadow: 0 1px 1px rgba(255,255,255,0.5);
+}
+
+.ve-ui-outlineItemWidget-level-0 .ve-ui-optionWidget-icon {
+	left: 1em;
+}
+
+.ve-ui-outlineItemWidget-level-1 .ve-ui-optionWidget-icon {
+	left: 2.5em;
+}
+
+.ve-ui-outlineItemWidget-level-2 .ve-ui-optionWidget-icon {
+	left: 4em;
+}
+
+/* ve.ui.OutlineControlsWidget */
+
+.ve-ui-outlineControlsWidget {
+	height: 3em;
+	background-color: #fff;
+}
+
+.ve-ui-outlineControlsWidget-adders,
+.ve-ui-outlineControlsWidget-movers {
+	float: left;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	height: 3em;
+	padding: 0.5em;
+}
+
+.ve-ui-outlineControlsWidget-adders {
+	float: left;
+}
+.ve-ui-outlineControlsWidget-movers {
+	float: right;
+}
+
+.ve-ui-outlineControlsWidget-adders .ve-ui-iconButtonWidget {
+	float: left;
+}
+
+.ve-ui-outlineControlsWidget-movers .ve-ui-iconButtonWidget {
+	float: right;
+}
+
+.ve-ui-outlineControlsWidget-adders:not(:hover) .ve-ui-iconButtonWidget:not(:first-child) {
+	opacity: 0;
+}
+
+.ve-ui-outlineControlsWidget-adders:hover .ve-ui-iconButtonWidget:first-child {
+	opacity: 0.25;
+	cursor: default;
+}
+
+/* ve.ui.InputLabelWidget */
+
+.ve-ui-inputLabelWidget {
+	padding: 0.5em 0;
+}
+
+/* ve.ui.TextInputWidget */
+
+.ve-ui-textInputWidget {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	width: 20em;
+	position: relative;
+}
+
+.ve-ui-textInputWidget input,
+.ve-ui-textInputWidget input:focus[readonly],
+.ve-ui-widget-disabled.ve-ui-textInputWidget input:focus,
+.ve-ui-textInputWidget textarea,
+.ve-ui-textInputWidget textarea:focus[readonly],
+.ve-ui-widget-disabled.ve-ui-textInputWidget textarea:focus {
+	display: inline-block;
+	font-size: 1em;
+	font-family: sans-serif;
+	background-color: #f7f7f7;
+	border: solid 1px #ccc;
+	box-shadow: 0 0 0 white, inset 0 0.1em 0.2em #ddd;
+	padding: 0.5em;
+	border-radius: 0.25em;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	width: 100%;
+	resize: none;
+
+	/* Animation */
+	-webkit-transition: border-color 200ms, box-shadow 200ms, background-color 200ms;
+	-moz-transition: border-color 200ms, box-shadow 200ms, background-color 200ms;
+	-ms-transition: border-color 200ms, box-shadow 200ms, background-color 200ms;
+	-o-transition: border-color 200ms, box-shadow 200ms, background-color 200ms;
+	transition: border-color 200ms, box-shadow 200ms, background-color 200ms;
+}
+
+.ve-ui-textInputWidget-pending input,
+.ve-ui-textInputWidget-pending textarea {
+	background-color: transparent;
+}
+
+.ve-ui-textInputWidget input:focus,
+.ve-ui-textInputWidget textarea:focus {
+	outline: none;
+	border-color: #a7dcff;
+	box-shadow: 0 0 0.3em #a7dcff, 0 0 0 white;
+	background-color: #fff;
+}
+
+.ve-ui-textInputWidget input[readonly],
+.ve-ui-textInputWidget textarea[readonly] {
+	color: #777;
+	text-shadow: 0 1px 1px #fff;
+}
+
+.ve-ui-widget-disabled.ve-ui-textInputWidget input,
+.ve-ui-widget-disabled.ve-ui-textInputWidget input:focus,
+.ve-ui-widget-disabled.ve-ui-textInputWidget textarea,
+.ve-ui-widget-disabled.ve-ui-textInputWidget textarea:focus {
+	color: #ccc;
+	text-shadow: 0 1px 1px #fff;
+}
+
+.ve-ui-textInputWidget-decorated input,
+.ve-ui-textInputWidget-decorated textarea {
+	padding-left: 2em;
+}
+
+.ve-ui-textInputWidget-icon {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 2em;
+	height: 100%;
+	background-position: right center;
+	background-repeat: no-repeat;
+}
+
+/* ve.ui.LanguageInputWidget */
+
+.ve-ui-langInputWidget {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	width: 20em;
+	position: relative;
+}
+
+.ve-ui-langInputWidget input,
+.ve-ui-langInputWidget input:focus[readonly],
+.ve-ui-widget-disabled.ve-ui-langInputWidget input:focus,
+.ve-ui-langInputWidget textarea,
+.ve-ui-langInputWidget textarea:focus[readonly],
+.ve-ui-widget-disabled.ve-ui-langInputWidget textarea:focus {
+	display: inline-block;
+	font-size: 1em;
+	font-family: sans-serif;
+	background-color: #f7f7f7;
+	border: solid 1px #ccc;
+	box-shadow: 0 0 0 white, inset 0 0.1em 0.2em #ddd;
+	padding: 0.5em;
+	border-radius: 0.25em;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	width: 100%;
+	resize: none;
+
+	/* Animation */
+	-webkit-transition: border-color 200ms, box-shadow 200ms, background-color 200ms;
+	-moz-transition: border-color 200ms, box-shadow 200ms, background-color 200ms;
+	-ms-transition: border-color 200ms, box-shadow 200ms, background-color 200ms;
+	-o-transition: border-color 200ms, box-shadow 200ms, background-color 200ms;
+	transition: border-color 200ms, box-shadow 200ms, background-color 200ms;
+}
+
+.ve-ui-langInputWidget-pending input,
+.ve-ui-langInputWidget-pending textarea {
+	background-color: transparent;
+}
+
+.ve-ui-langInputWidget input:focus,
+.ve-ui-langInputWidget textarea:focus {
+	outline: none;
+	border-color: #a7dcff;
+	box-shadow: 0 0 0.3em #a7dcff, 0 0 0 white;
+	background-color: #fff;
+}
+
+.ve-ui-langInputWidget input[readonly],
+.ve-ui-langInputWidget textarea[readonly] {
+	color: #777;
+	text-shadow: 0 1px 1px #fff;
+}
+
+.ve-ui-widget-disabled.ve-ui-langInputWidget input,
+.ve-ui-widget-disabled.ve-ui-langInputWidget input:focus,
+.ve-ui-widget-disabled.ve-ui-langInputWidget textarea,
+.ve-ui-widget-disabled.ve-ui-langInputWidget textarea:focus {
+	color: #ccc;
+	text-shadow: 0 1px 1px #fff;
+}
+
+.ve-ui-langInputWidget-decorated input,
+.ve-ui-langInputWidget-decorated textarea {
+	padding-left: 2em;
+}
+
+.ve-ui-langInputWidget-icon {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 2em;
+	height: 100%;
+	background-position: right center;
+	background-repeat: no-repeat;
+}
+
+/* ve.ui.MenuWidget */
+
+.ve-ui-menuWidget {
+	position: absolute;
+	background: #fff;
+	margin-top: -1px;
+	border: solid 1px #ccc;
+	border-radius: 0 0 0.25em 0.25em;
+	box-shadow: 0 0.15em 1em 0 rgba(0, 0, 0, 0.2);
+}
+
+.ve-ui-menuWidget input {
+	position: absolute;
+	width: 0;
+	height: 0;
+	overflow: hidden;
+	opacity: 0;
+}
+
+/* ve.ui.MenuItemWidget */
+
+.ve-ui-menuItemWidget {
+	position: relative;
+}
+
+.ve-ui-menuItemWidget .ve-ui-optionWidget-icon {
+	display: none;
+}
+
+.ve-ui-menuItemWidget.ve-ui-optionWidget-selected .ve-ui-optionWidget-icon {
+	display: block;
+}
+
+.ve-ui-menuItemWidget.ve-ui-optionWidget-selected {
+	background-color: transparent;
+}
+
+.ve-ui-menuItemWidget.ve-ui-optionWidget-highlighted {
+	background-color: #e1f3ff;
+}
+
+/* ve.ui.MenuSectionItemWidget */
+
+.ve-ui-menuSectionItemWidget {
+	padding: 0.33em 0.75em;
+	color: #888;
+	cursor: default;
+}
+
+/* ve.ui.PopupWidget */
+
+.ve-ui-popupWidget-callout {
+	position: absolute;
+	/* @embed */
+	background-image: url(images/callout.svg);
+	background-repeat: no-repeat;
+	width: 15px;
+	height: 8px;
+	margin-left: -7px;
+}
+
+.ve-ui-popupWidget-body {
+	margin-top: 7px;
+	position: absolute;
+	overflow: hidden;
+	border: solid 1px #ccc;
+	border-radius: 0.25em;
+	background-color: #fff;
+	box-shadow: 0 0.15em 0.5em 0 rgba(0, 0, 0, 0.2);
+}
+
+.ve-ui-popupWidget-transitioning .ve-ui-popupWidget-body {
+	-webkit-transition: width 100ms, height 100ms, left 100ms;
+	-moz-transition: width 100ms, height 100ms, left 100ms;
+	-ms-transition: width 100ms, height 100ms, left 100ms;
+	-o-transition: width 100ms, height 100ms, left 100ms;
+	transition: width 100ms, height 100ms, left 100ms;
+	-webkit-transition-timing-function: ease-in-out;
+	-moz-transition-timing-function: ease-in-out;
+	-ms-transition-timing-function: ease-in-out;
+	-o-transition-timing-function: ease-in-out;
+	transition-timing-function: ease-in-out;
+}
+
+.ve-ui-popupWidget-body:focus {
+	/* No outline. The body has a tabindex and is focused on show */
+	outline: none;
+}
+
+/* ve.ui.SearchWidget */
+
+.ve-ui-searchWidget-query {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 4em;
+	padding: 0 1em;
+	box-shadow: 0 0 0.5em rgba(0,0,0,0.2);
+}
+
+.ve-ui-searchWidget-query .ve-ui-textInputWidget {
+	width: 100%;
+	margin: 0.75em 0;
+}
+
+.ve-ui-searchWidget-results {
+	position: absolute;
+	top: 4em;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 1em;
+	overflow-x: hidden;
+	overflow-y: auto;
+	line-height: 0;
+}
+
+/* ve.ui.SurfaceWidget.js */
+
+.ve-ui-surfaceWidget-toolbar {
+	font-size: 1.25em;
+}
+
+.ve-ui-surfaceWidget-toolbar .ve-ui-toolbar-bar {
+	border: solid 1px #ddd;
+	border-radius: 0.25em;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+	border-bottom-width: 0;
+}

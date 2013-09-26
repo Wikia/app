@@ -1,0 +1,47 @@
+/*!
+ * VisualEditor MediaWiki ViewPageTarget init styles.
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/* Section edit links */
+
+.mw-editsection {
+	white-space: nowrap;
+	padding-right: 0.25em;
+	/* bidi isolation: */
+	unicode-bidi: -moz-isolate;
+	unicode-bidi: -webkit-isolate;
+	unicode-bidi: isolate;
+}
+
+.mw-editsection-divider {
+	color: #555;
+}
+
+/* @noflip */
+.mw-content-ltr .mw-editsection-expanded .mw-editsection-bracket:first-of-type,
+.mw-content-rtl .mw-editsection-expanded .mw-editsection-bracket:not(:first-of-type) {
+	margin-left: -0.25em;
+	margin-right: 0.25em;
+	color: #555;
+}
+
+/* @noflip */
+.mw-content-rtl .mw-editsection-expanded .mw-editsection-bracket:first-of-type,
+.mw-content-ltr .mw-editsection-expanded .mw-editsection-bracket:not(:first-of-type) {
+	margin-right: -0.25em;
+	margin-left: 0.25em;
+	color: #555;
+}
+
+.ve-tabmessage-appendix {
+	font-size: 0.7em;
+	vertical-align: top;
+	line-height: 1.43em;
+	padding-left: 0.5em;
+	/* Use !important to override div.vectorTabs span */
+	background-image: none !important;
+	display: inline !important;
+}
