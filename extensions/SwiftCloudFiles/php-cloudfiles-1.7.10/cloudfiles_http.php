@@ -1409,7 +1409,7 @@ class CF_Http
         return $hdrs;
     }
 
-    private function _send_request($conn_type, $url_path, $hdrs=NULL, $method="GET", $force_new=False)
+    private function _do_send_request($conn_type, $url_path, $hdrs=NULL, $method="GET", $force_new=False)
     {
         $this->_init($conn_type, $force_new);
         $this->_reset_callback_vars();
@@ -1449,11 +1449,44 @@ class CF_Http
 			wfDebug(__METHOD__ . "::error - {$this->error_str}\n");
             return False;
         }
-        $code = curl_getinfo($this->connections[$conn_type], CURLINFO_HTTP_CODE);
+        $code = intval( curl_getinfo($this->connections[$conn_type], CURLINFO_HTTP_CODE) ); // Wikia change
 
 		wfDebug(__METHOD__ . ' - ' . json_encode([$conn_type, $url_path, $hdrs, "HTTP {$code}"]) . "\n");
 		return $code;
     }
+
+	// Wikia change - begin
+	// retry request in case of an error
+	const MAX_RETRIES = 5;
+	const RETRY_DELAY = 1000; // ms
+
+	private function _send_request($conn_type, $url_path, $hdrs=NULL, $method="GET", $force_new=False) {
+		$retriesLeft = self::MAX_RETRIES;
+		$res = false;
+
+		while( $retriesLeft >= 0 ) {
+			$res = $this->_do_send_request( $conn_type, $url_path, $hdrs, $method, $force_new );
+
+			if ( !in_array( $res, [ 500, 503, false ] ) ) {
+				// request was successful, return
+				break;
+			}
+
+			// log errors
+			if (is_numeric($res)) {
+				Wikia::log( __CLASS__, 'retryHTTP:' . $retriesLeft, json_encode( [$conn_type, $url_path, $hdrs, "HTTP {$res}" ] ) );
+			}
+			else {
+				Wikia::log( __CLASS__, 'retryHTTP:' . $retriesLeft, $this->error_str );
+			}
+
+			usleep(self::RETRY_DELAY * 1000); // wait a bit before retrying the request
+			$retriesLeft--;
+		}
+
+		return $res;
+	}
+	// Wikia change - end
     
     function close()
     {
