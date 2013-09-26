@@ -31,7 +31,7 @@
 
 				<p class="alt-thumb-name <?= $video[ 'altThumbClass' ]  ?>">
 					<? $thumbName = $video[ 'altThumbName' ]; ?>
-					<?= $thumbName != ( '' && 'Image name' ) ? $thumbName : wfMessage( 'videopagetool-hint-required-dimensions' )->plain() ?>
+					<?= $thumbName != '' && $thumbName != 'Image name' ? $thumbName : wfMessage( 'videopagetool-hint-required-dimensions' )->plain() ?>
 				</p>
 
 				<input type="hidden" name="altThumbName[]" class="alt-thumb" id="alt-thumb-<?= $x ?>" value="<?= $video[ 'altThumbName' ] ?>">
