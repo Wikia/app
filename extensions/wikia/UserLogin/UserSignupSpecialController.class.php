@@ -153,6 +153,11 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$signupForm = new UserLoginForm($this->wg->request);
 		$signupForm->load();
 
+		if ( $signupForm->notEmptySpamFields() ) {
+			$this->result = 'error';
+			return;
+		}
+
 		$byemail = $this->wg->request->getBool( 'byemail', false );
 		if ( $byemail ) {
 			$ret = $signupForm->addNewAccountMailPassword();

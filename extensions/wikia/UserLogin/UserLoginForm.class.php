@@ -23,6 +23,12 @@ class UserLoginForm extends LoginForm {
 			$this->mPassword = $request->getText( 'userloginext02' );
 			$this->mRetype = $request->getText( 'userloginext02' );
 		}
+		if ( $request->getText( 'username', '' ) != '' ) {
+			$this->fakeUsername = $request->getText( 'username', '' );
+		}
+		if ( $request->getText( 'password', '' ) != '' ) {
+			$this->fakePassword = $request->getText( 'password' );
+		}
 		if ( $request->getText( 'email', '' ) != '' ) {
 			$this->mEmail = $request->getText( 'email' );
 		}
@@ -77,7 +83,7 @@ class UserLoginForm extends LoginForm {
 			$this->mainLoginForm( wfMessage( 'userlogin-error-mail-error', $result->getMessage() )->parse() );
 			return false;
 		} else {
-			$this->mainLoginForm( wfMessage( 'usersignup-account-creation-email-sent', $this->mEmail, $this->username )->parse(), 'success' );
+			$this->mainLoginForm( wfMessage( 'usersignup-account-creation-email-sent', $this->mEmail, $this->mUsername )->parse(), 'success' );
 			return $u;
 		}
 	}
@@ -244,6 +250,13 @@ class UserLoginForm extends LoginForm {
 
 	public function throttleHit( $limit ) {
 		$this->mainLoginForm( wfMessage( 'userlogin-error-acct_creation_throttle_hit', $limit )->parse() );
+	}
+
+	public function notEmptySpamFields() {
+		if( !empty( $this->fakeUsername) || !empty( $this->fakePassword ) ) {
+			return true;
+		}
+		return false;
 	}
 
 }
