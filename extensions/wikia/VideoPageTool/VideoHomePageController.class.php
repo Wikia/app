@@ -48,35 +48,31 @@ class VideoHomePageController extends WikiaController {
 		} else {
 			$this->haveCurrentProgram = false;
 		}
-
-		$this->partners = $this->buildPartnerCategoryUrls();
 	}
 
 	/**
 	 * @description Builds slug and localized URLs for each of our partner category pages
 	 * @return array
 	 */
-	public function buildPartnerCategoryUrls() {
+	public function partners() {
 		$partners = array();
 		// keys are lowercase as they are used to compose CSS & i18n keys
 		$partners[ 'anyclip' ] = array( 'label' => 'AnyClip' );
 		$partners[ 'ign' ] = array( 'label' => 'IGN' );
 		$partners[ 'iva' ] = array( 'label' => 'IVA' );
-		$partners[ 'screenplay' ] = array( 'label' => 'Screenplay' );
+		$partners[ 'screenplay' ] = array( 'label' => 'Screenplay', 'category' => 'Screenplay, Inc.' );
 		$partners[ 'ooyala' ] = array( 'label' => 'Ooyala' );
 		$partners[ 'realgravity' ] = array( 'label' => 'RealGravity' );
 
-		// get localized namespace
-		$catNamespaceString = F::app()->wg->ContLang->getFormattedNsText( NS_CATEGORY );
-
 		foreach( $partners as &$partner ) {
-			$partner['url'] = Title::newFromText( $catNamespaceString . ':' . $partner['label'] )->getFullUrl();
+			$name = empty( $partner['category'] ) ? $partner['label'] : $partner['category'];
+			$partner['url'] = Title::newFromText( $name, NS_CATEGORY )->getFullUrl();
 		}
 
 		// sort by keys, views need to be alphabetized
 		ksort($partners);
 
-		return $partners;
+		$this->partners = $partners;
 	}
 
 	/**
