@@ -51,8 +51,7 @@
           top = elem.offset().top,
           bottom = top + elem.height(),
           // Wikia change - begin - @author kflorence
-          scrollerBottom = parseInt( scroller.css( 'bottom' ) || 0, 10 ),
-          viewportBottom = win.scrollTop() + win.height() - scrollerBottom,
+          viewportBottom = win.scrollTop() + win.height() - $.floatingScrollbarOptions.bottom,
           // Wikia change - end
           topOffset = 30;
 
@@ -96,14 +95,13 @@
     // Adjust the floating scrollbar as-necessary.
     scroller
       .css({
+        // Wikia change - begin - @author kflorence
+        bottom: $.floatingScrollbarOptions.bottom,
+        // Wikia change - end
         left: current.offset().left - win.scrollLeft(),
         width: widthOuter
       })
       .scrollLeft(scroll);
-
-    // Wikia change - begin @author kflorence
-    win.triggerHandler( 'floatingScrollbarUpdate' );
-    // Wikia change - end
 
     scrollerInner.width(widthInner);
   }
@@ -163,5 +161,9 @@
   // Call this to force an update, for instance, if elements were inserted into
   // the DOM before monitored elements, changing their vertical position.
   $.floatingScrollbarUpdate = update;
+
+  // Wikia change - begin - @author kflorence
+  $.floatingScrollbarOptions = { bottom: 0 };
+  // Wikia change - end
 
 })(jQuery, this);
