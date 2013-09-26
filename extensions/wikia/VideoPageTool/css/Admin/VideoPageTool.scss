@@ -161,6 +161,9 @@ $label-padding: 10px 10px 10px 0px;
 		}
 		.preview-large-link {
 			display: none;
+			position: absolute;
+			right: 60px;
+			top: 165px;
 		}
 		// validation
 		label.error {

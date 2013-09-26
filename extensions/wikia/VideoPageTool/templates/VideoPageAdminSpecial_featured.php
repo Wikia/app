@@ -20,8 +20,8 @@
 
 			<div class="video-thumb">
 				<?= $video[ 'videoThumb' ] ?>
-				<a class="preview-large-link" href="#" target="_blank">Preview large version</a>
 			</div>
+			<a class="preview-large-link" href="#" target="_blank">Preview large version</a>
 
 			<div class="input-group">
 
@@ -31,7 +31,7 @@
 
 				<p class="alt-thumb-name <?= $video[ 'altThumbClass' ]  ?>">
 					<? $thumbName = $video[ 'altThumbName' ]; ?>
-					<?= $thumbName != '' ? $thumbName : wfMessage( 'videopagetool-hint-required-dimensions' )->plain() ?>
+					<?= $thumbName != ( '' && 'Image Name' ) ? $thumbName : wfMessage( 'videopagetool-hint-required-dimensions' )->plain() ?>
 				</p>
 
 				<input type="hidden" name="altThumbName[]" class="alt-thumb" id="alt-thumb-<?= $x ?>" value="<?= $video[ 'altThumbName' ] ?>">

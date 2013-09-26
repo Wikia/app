@@ -71,7 +71,12 @@ define( 'vpt.views.edit', [
 										.trigger( 'keyup' ); // for validation
 									$descInput.val( video.description )
 										.trigger( 'keyup' ); // for validation
-									$thumb.html( video.videoThumb );
+
+									// Check to see if a custom thumb has been uploaded by user
+									// Only update thumbnail if custom thumb has not been added
+									if ( !$thumb.data('modified') ) {
+										$thumb.html( video.videoThumb );
+									}
 
 									// close VET modal
 									vet.close();
@@ -159,6 +164,14 @@ define( 'vpt.views.edit', [
 			// Rest the video thumb
 			this.$form.find( '.video-thumb' )
 				.html( '' );
+
+			// Hide all thumbnail preview links
+			this.$form.find( '.preview-large-link' )
+				.hide();
+
+			// reset custom thumb name
+			this.$form.find( '.alt-thumb-name' )
+				.text( 'Image dimensions must be 1024 x 461' );
 
 			// Also clear all error messages for better UX
 			this.validator.clearErrors();

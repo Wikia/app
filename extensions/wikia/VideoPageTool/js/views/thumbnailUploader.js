@@ -59,6 +59,9 @@ define( 'views.videopageadmin.thumbnailUpload', [
 
 					that.$el.find( '.alt-thumb' ).val( img.imgTitle );
 					that.$el.find( '.alt-thumb-name' ).text( img.imgTitle );
+
+					// Set data-modified to true to show that custom thumb has been uploaded
+					that.$el.find('.video-thumb').data('modified', true);
 			});
 		}
 	};
