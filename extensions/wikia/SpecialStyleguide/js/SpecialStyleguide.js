@@ -16,8 +16,13 @@ require(['jquery'], function($) {
 				 * Fix / unfix TOC position
 				 */
 				function setTOCPosition() {
+					var scrollTop = $('body').scrollTop();
 
-					if($('body').scrollTop() >= tocOffsetTop - TOC_TOP_MARGIN) {
+					// in Chrome $('body').scrollTop() does change when you scroll whereas $('html').scrollTop() doesn't
+					// in Firefox/IE $('html').scrollTop() does change when you scroll whereas $('body').scrollTop() doesn't
+					scrollTop = ( scrollTop === 0 ) ? $('html').scrollTop() : scrollTop;
+
+					if( scrollTop >= tocOffsetTop - TOC_TOP_MARGIN ) {
 						$toc.addClass('toc-fixed');
 					} else {
 						$toc.removeClass('toc-fixed');
