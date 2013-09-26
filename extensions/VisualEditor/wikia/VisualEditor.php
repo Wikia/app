@@ -7,11 +7,22 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'VisualEditor for Wikia'
 );
 
+$dir = dirname( __FILE__ ) . '/';
+
+/* Classes */
+
+$wgAutoloadClasses['VisualEditorWikiaHooks'] = $dir . 'VisualEditor.hooks.php';
+
 /* ResourceLoader Modules */
 
+$wgVisualEditorWikiaResourceTemplate = array(
+	'localBasePath' => $dir . 'modules',
+	'remoteExtPath' => 'VisualEditor/wikia/modules',
+);
+
 $wgResourceModules += array(
-	'ext.visualEditor.wikiaViewPageTarget.init' => array(
-		'scripts' => 'init/ve.init.mw.WikiaViewPageTarget.init.js',
+	'ext.visualEditor.wikiaViewPageTarget.init' => $wgVisualEditorWikiaResourceTemplate + array(
+		'scripts' => 've/init/ve.init.mw.WikiaViewPageTarget.init.js',
 		'dependencies' => array(
 			'jquery.client',
 			'mediawiki.Title',
@@ -19,43 +30,39 @@ $wgResourceModules += array(
 			'mediawiki.util',
 			'user.options'
 		),
-		'position' => 'top',
-		'localBasePath' => dirname( __FILE__ ),
-		'remoteExtPath' => 'VisualEditor/wikia'
+		'position' => 'top'
 	),
-	'ext.visualEditor.wikiaViewPageTarget' => array(
+	'ext.visualEditor.wikiaViewPageTarget' => $wgVisualEditorWikiaResourceTemplate + array(
 		'scripts' => array(
-			'init/ve.init.mw.WikiaViewPageTarget.js',
+			've/init/ve.init.mw.WikiaViewPageTarget.js',
 		),
 		'styles' => array(
-			'init/styles/ve.init.mw.WikiaViewPageTarget.css'
+			've/init/styles/ve.init.mw.WikiaViewPageTarget.css'
 		),
 		'dependencies' => array(
 			'ext.visualEditor.viewPageTarget'
-		),
-		'localBasePath' => dirname( __FILE__ ),
-		'remoteExtPath' => 'VisualEditor/wikia',
+		)
 	),
-	'ext.visualEditor.wikiaCore' => array(
+	'ext.visualEditor.wikiaCore' => $wgVisualEditorWikiaResourceTemplate + array(
 		'scripts' => array(
 			// dm
-			'dm/ve.dm.WikiaMediaCaptionNode.js',
-			'dm/ve.dm.WikiaBlockMediaNode.js',
-			'dm/ve.dm.WikiaBlockImageNode.js',
-			'dm/ve.dm.WikiaBlockVideoNode.js',
-			'dm/ve.dm.WikiaInlineVideoNode.js',
+			've/dm/ve.dm.WikiaMediaCaptionNode.js',
+			've/dm/ve.dm.WikiaBlockMediaNode.js',
+			've/dm/ve.dm.WikiaBlockImageNode.js',
+			've/dm/ve.dm.WikiaBlockVideoNode.js',
+			've/dm/ve.dm.WikiaInlineVideoNode.js',
 
 			// ce
-			'ce/ve.ce.WikiaMediaCaptionNode.js',
-			'ce/ve.ce.WikiaBlockMediaNode.js',
-			'ce/ve.ce.WikiaBlockImageNode.js',
-			'ce/ve.ce.WikiaVideoNode.js',
-			'ce/ve.ce.WikiaBlockVideoNode.js',
-			'ce/ve.ce.WikiaInlineVideoNode.js',
+			've/ce/ve.ce.WikiaMediaCaptionNode.js',
+			've/ce/ve.ce.WikiaBlockMediaNode.js',
+			've/ce/ve.ce.WikiaBlockImageNode.js',
+			've/ce/ve.ce.WikiaVideoNode.js',
+			've/ce/ve.ce.WikiaBlockVideoNode.js',
+			've/ce/ve.ce.WikiaInlineVideoNode.js',
 
 			// ui
-			'ui/tools/buttons/ve.ui.WikiaMediaInsertButtonTool.js',
-			'ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
+			've/ui/tools/buttons/ve.ui.WikiaMediaInsertButtonTool.js',
+			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
 		),
 		'messages' => array(
 			'oasis-content-picture-added-by',
@@ -64,9 +71,7 @@ $wgResourceModules += array(
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core'
-		),
-		'localBasePath' => dirname( __FILE__ ),
-		'remoteExtPath' => 'VisualEditor/wikia',
+		)
 	),
 );
 
@@ -74,42 +79,9 @@ $wgVisualEditorPluginModules[] = 'ext.visualEditor.wikiaCore';
 
 /* Messages */
 
-$wgExtensionMessagesFiles['VisualEditorWikia'] = dirname( __FILE__ ) . '/VisualEditor.i18n.php';
+$wgExtensionMessagesFiles['VisualEditorWikia'] = $dir . 'VisualEditor.i18n.php';
 
 /* Hooks */
 
-$wgHooks['ResourceLoaderTestModules'][] = 'Wikia_onResourceLoaderTestModules';
-$wgHooks['GetPreferences'][] = 'Wikia_onGetPreferences';
-
-function Wikia_onResourceLoaderTestModules( array &$testModules, ResourceLoader &$resourceLoader ) {
-	$testModules['qunit']['ext.visualEditor.wikiaTest'] = array(
-		'scripts' => array(
-			// util
-			'test/ve.wikiaTest.utils.js',
-
-			// dm
-			'test/dm/ve.dm.wikiaExample.js',
-			'test/dm/ve.dm.WikiaConverter.test.js',
-
-			// ce
-			'test/ce/ve.ce.wikiaExample.js',
-			'test/ce/ve.ce.WikiaBlockImageNode.test.js',
-			'test/ce/ve.ce.WikiaBlockVideoNode.test.js',
-			'test/ce/ve.ce.WikiaInlineVideoNode.test.js',
-		),
-		'dependencies' => array(
-			'ext.visualEditor.test',
-			'ext.visualEditor.wikiaCore',
-		),
-		'localBasePath' => dirname( __FILE__ ),
-		'remoteExtPath' => 'VisualEditor/wikia'
-	);
-	return true;
-}
-
-function Wikia_onGetPreferences( $user, &$preferences ) {
-	unset( $preferences['visualeditor-betatempdisable'] );
-	$preferences['visualeditor-enable']['label-message'] = 'visualeditor-wikiapreference-enable';
-
-	return true;
-}
+$wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorWikiaHooks::onResourceLoaderTestModules';
+$wgHooks['GetPreferences'][] = 'VisualEditorWikiaHooks::onGetPreferences';
