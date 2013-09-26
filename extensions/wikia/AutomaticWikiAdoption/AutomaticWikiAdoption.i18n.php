@@ -2780,8 +2780,24 @@ Wikia小组
 
 您可以退订本列表的改动，点击这里：$3',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME已被认领',
+	'tog-adoptionmails' => '当$1可以被其他用户认领时邮件通知我',
 	'wikiadoption-pref-label' => '变更首选项只会影响来自$1的邮件。',
 	'wikiadoption-welcome-header' => '恭喜！你已认领了{{SITENAME}}！',
+	'wikiadoption-welcome-body' => '您现在是本维基的官员。利用这一新身份，您可以使用所有工具协助管理{{SITENAME}}。
+<br /><br />
+帮助{{SITENAME}}成长最重要的事就是保持编辑。
+<br /><br />
+如果一个维基没有活跃的管理员，它将交由他人认领。所以请务必经常查阅本维基。
+<br /><br />
+实用链接:
+<br /><br />
+[[Special:ThemeDesigner|主题设计器]]
+<br />
+[[Special:LayoutBuilder|页面布局生成器]]
+<br />
+[[Special:ListUsers|用户列表]]
+<br />
+[[Special:UserRights|管理权限]]',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
