@@ -1,69 +1,51 @@
-/**
- * VisualEditor data model ListNode class.
+/*!
+ * VisualEditor DataModel ListNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * DataModel node for a list.
+ * DataModel list node.
  *
  * @class
+ * @extends ve.dm.BranchNode
  * @constructor
- * @extends {ve.dm.BranchNode}
  * @param {ve.dm.BranchNode[]} [children] Child nodes to attach
- * @param {Object} [attributes] Reference to map of attribute key/value pairs
+ * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.ListNode = function VeDmListNode( children, attributes ) {
+ve.dm.ListNode = function VeDmListNode( children, element ) {
 	// Parent constructor
-	ve.dm.BranchNode.call( this, 'list', children, attributes );
+	ve.dm.BranchNode.call( this, children, element );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.dm.ListNode, ve.dm.BranchNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.dm.NodeFactory
- * @static
- * @member
- */
-ve.dm.ListNode.rules = {
-	'isWrapped': true,
-	'isContent': false,
-	'canContainContent': false,
-	'hasSignificantWhitespace': false,
-	'childNodeTypes': ['listItem'],
-	'parentNodeTypes': null
+ve.dm.ListNode.static.name = 'list';
+
+ve.dm.ListNode.static.childNodeTypes = [ 'listItem' ];
+
+ve.dm.ListNode.static.defaultAttributes = {
+	'style': 'bullet'
 };
 
-/**
- * Node converters.
- *
- * @see {ve.dm.Converter}
- * @static
- * @member
- */
-ve.dm.ListNode.converters = {
-	'domElementTypes': ['ul', 'ol'],
-	'toDomElement': function ( type, element ) {
-		return element.attributes && ( {
-			'bullet': document.createElement( 'ul' ),
-			'number': document.createElement( 'ol' )
-		} )[element.attributes.style];
-	},
-	'toDataElement': function ( tag ) {
-		return ( {
-			'ul': { 'type': 'list', 'attributes': { 'style': 'bullet' } },
-			'ol': { 'type': 'list', 'attributes': { 'style': 'number' } }
-		} )[tag];
-	}
+ve.dm.ListNode.static.matchTagNames = [ 'ul', 'ol' ];
+
+ve.dm.ListNode.static.toDataElement = function ( domElements ) {
+	var style = domElements[0].nodeName.toLowerCase() === 'ol' ? 'number' : 'bullet';
+	return { 'type': 'list', 'attributes': { 'style': style } };
 };
+
+ve.dm.ListNode.static.toDomElements = function ( dataElement, doc ) {
+	var tag = dataElement.attributes && dataElement.attributes.style === 'number' ? 'ol' : 'ul';
+	return [ doc.createElement( tag ) ];
+};
+
 
 /* Registration */
 
-ve.dm.nodeFactory.register( 'list', ve.dm.ListNode );
+ve.dm.modelRegistry.register( ve.dm.ListNode );

@@ -1,0 +1,21 @@
+mediawiki_username: Selenium_user
+
+chrome:
+  name: chrome
+  platform: Linux
+  version:
+
+firefox:
+  name: firefox
+  platform: Linux
+  version: 23
+
+internet_explorer_9:
+  name: internet_explorer
+  platform: Windows 7
+  version: 9
+
+internet_explorer_10:
+  name: internet_explorer
+  platform: Windows 8
+  version: 10

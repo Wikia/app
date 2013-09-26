@@ -92,6 +92,13 @@ $messages['ca'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error: El cos de la pàgina és necessari',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'contentfeeds-firstfewarticles-tag-next' => 'Кхин дӀа',
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  */
@@ -244,6 +251,7 @@ $messages['ia'] = array(
  * @author C5st4wr6ch
  */
 $messages['id'] = array(
+	'contentfeeds-desc' => 'Menyediakan informasi yang kaya dan mutakhir melalui berbagai tag atau "umpan balik"',
 	'contentfeeds-firstfewarticles-tag-title' => 'Judul',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Kesalahan: Judul halaman disyaratkan',
 );
