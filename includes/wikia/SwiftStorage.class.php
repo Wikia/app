@@ -141,11 +141,11 @@ class SwiftStorage {
 	 *
 	 * @param $localFile string local file name
 	 * @param $remoteFile string remote file name
-	 * @param array $headers optional headers
+	 * @param array $metadata optional metadata
 	 * @param bool $mimeType
 	 * @return \Status result
 	 */
-	public function store( $localFile, $remoteFile, Array $headers = array(), $mimeType = false ) {
+	public function store( $localFile, $remoteFile, Array $metadata = array(), $mimeType = false ) {
 		$res = \Status::newGood();
 
 		$remotePath = $this->getRemotePath( $remoteFile );
@@ -173,7 +173,7 @@ class SwiftStorage {
 			if ( is_string( $mimeType ) ) {
 				$object->content_type = $mimeType;
 			}
-			$object->headers = $headers;
+			$object->metadata = $metadata;
 
 			// upload it
 			$object->write( $fp, $size );

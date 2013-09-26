@@ -18,16 +18,10 @@ class MigrateImagesToSwift extends Maintenance {
 
 	const REASON = 'Images migration script';
 
-	private $swiftServer;
-	private $swiftConfig;
-	private $swiftToken;
-	/* @var CF_Connection $swiftConn */
-	private $swiftConn;
-	/* @var CF_Container $swiftConntainer */
-	private $swiftContainer; // e.g. "poznan"
-	private $swiftPathPrefix; // e.g. "pl/images"
-	private $swiftContainerName;
+	/* @var \Wikia\SwiftStorage $swift */
+	private $swift;
 
+	// stats
 	private $imagesCnt = 0;
 	private $imagesSize = 0;
 	private $migratedImagesCnt = 0;
@@ -42,7 +36,7 @@ class MigrateImagesToSwift extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( 'force', 'Perform the migration even when $wgEnableSwiftFileBackend = true' );
-		$this->addOption( 'stats-only', 'Show stats (numbe of files and total size) and then exit' );
+		$this->addOption( 'stats-only', 'Show stats (number of files and total size) and then exit' );
 		$this->mDescription = 'Copies files from file system to distributed storage';
 	}
 
@@ -50,140 +44,11 @@ class MigrateImagesToSwift extends Maintenance {
 	 * Set up the config variables
 	 */
 	private function init() {
-		global $wgUploadDirectory, $wgFSSwiftContainer, $wgFSSwiftConfig, $wgFSSwiftServer, $wgDBname;
+		global $wgUploadDirectory, $wgDBname, $wgCityId;
+		$this->swift = \Wikia\SwiftStorage::newFromWiki( $wgCityId );
+		$remotePath = $this->swift->getUrl( '' );
 
-		// Swift server and config
-		$this->swiftConfig = $wgFSSwiftConfig;
-		$this->swiftServer = 'http://' . $wgFSSwiftServer;
-
-		// parse upload paths and generate proper container mapping
-		// wgFSSwiftContainer: poznan/pl
-		// swiftContainerName: poznan
-		// swiftPathPrefix: /pl/images
-		$path = $wgFSSwiftContainer . '/images';
-
-		list( $this->swiftContainerName, $this->swiftPathPrefix ) = explode( '/', $path, 2 );
-		$this->swiftPathPrefix = $this->swiftPathPrefix . '/';
-
-		$this->output( "Migrating images on {$wgDBname} - <{$wgUploadDirectory}> -> <{$this->swiftServer}/{$this->swiftContainerName}/{$this->swiftPathPrefix}>...\n" );
-	}
-
-	/**
-	 * Connects to Swift and grab the container
-	 *
-	 * @return bool success?
-	 */
-	private function connectToSwift() {
-		$auth = new CF_Authentication(
-			$this->swiftConfig['swiftUser'],
-			$this->swiftConfig['swiftKey'],
-			null,
-			$this->swiftConfig['swiftAuthUrl']
-		);
-
-		try {
-			$auth->authenticate();
-			$this->swiftConn = new CF_Connection( $auth );
-		}
-		catch ( Exception $ex ) {
-			Wikia::log( __METHOD__, '::exception', $ex->getMessage() );
-			return false;
-		}
-
-		$this->swiftToken = $auth->auth_token;
-
-		return true;
-	}
-
-	/**
-	 * Get (created if necessary) the container
-	 *
-	 * @param $containerName string container name
-	 * @return CF_Container object
-	 */
-	private function getContainer( $containerName ) {
-		try {
-			$container = $this->swiftConn->get_container( $containerName );
-		}
-		catch ( NoSuchContainerException $ex ) {
-			$container =  $this->swiftConn->create_container( $containerName );
-		}
-		catch ( Exception $ex ) {
-			Wikia::log( __METHOD__, '::exception', $ex->getMessage() );
-			return false;
-		}
-
-		// set public ACL
-		// http://s3.dfs-s1/swift/v1/firefly
-		$url = "{$this->swiftServer}/swift/v1/{$containerName}";
-		wfDebug( __METHOD__ . "::setACL: {$url}\n" );
-
-		/* @var $req CurlHttpRequest */
-		$req = MWHttpRequest::factory( $url, array( 'method' => 'POST', 'noProxy' => true ) );
-		$req->setHeader( 'X-Auth-Token', $this->swiftToken );
-		$req->setHeader( 'X-Container-Read', '.r:*' );
-
-		$status = $req->execute();
-
-		return $status->isOK() ? $container : false;
-	}
-
-	/**
-	 * Store given file on Swift
-	 *
-	 * @param $localFile string path to a local file
-	 * @param $remotePath string remote path
-	 * @param $mimeType string|bool MIME type of uploaded file to be set (false = try to detect it)
-	 * @param $sha1Hash string|bool SHA-1 hash of the file contents in base 36 format (false = don't set it)
-	 * @return CF_Object|bool object instance or false
-	 */
-	private function store( $localFile, $remotePath, $mimeType = false, $sha1Hash = false ) {
-		$remotePath = $this->swiftPathPrefix . $remotePath;
-
-		wfDebug( __METHOD__ . ": {$localFile} -> {$remotePath}\n" );
-
-		$time = microtime( true );
-
-		try {
-			$fp = @fopen( $localFile, 'r' );
-			if ( !$fp ) {
-				Wikia::log( __METHOD__, 'fopen', "{$localFile} doesn't exist" );
-				return false;
-			}
-
-			// check file size - sending empty file results in "HTTP 411 MissingContentLengh"
-			$size = fstat( $fp )['size'];
-			if ( $size === 0 ) {
-				Wikia::log( __METHOD__, 'fstat', "{$localFile} is empty" );
-				return false;
-			}
-
-			$object = $this->swiftContainer->create_object( $remotePath );
-
-			// medata
-			if ( is_string( $mimeType ) ) {
-				$object->content_type = $mimeType;
-			}
-
-			if ( is_string( $sha1Hash ) ) {
-				$object->metadata = []; // clear metadata for existing images - avoid exception with too long headers
-				$object->setMetadataValues( [
-					'Sha1base36' => $sha1Hash
-				] );
-			}
-
-			$object->write( $fp, $size );
-			fclose( $fp );
-		}
-		catch ( Exception $ex ) {
-			Wikia::log( __METHOD__, 'exception - ' . $localFile, $ex->getMessage() );
-			return false;
-		}
-
-		$time = round( ( microtime( true ) - $time ) * 1000 );
-		wfDebug( __METHOD__ . ": {$localFile} uploaded in {$time} ms\n" );
-
-		return $object;
+		$this->output( "Migrating images on {$wgDBname} - <{$wgUploadDirectory}> -> <{$remotePath}>...\n" );
 	}
 
 	/**
@@ -269,12 +134,18 @@ class MigrateImagesToSwift extends Maintenance {
 		$this->migratedImagesSize += $row['size'];
 		$this->migratedImagesCnt++;
 
+		// set metadata
+		$metadata = [];
 		$mime = "{$row['major_mime']}/{$row['minor_mime']}";
-		$hash = isset( $row['hash'] ) ? $row['hash'] : false;
 
-		$res = $this->store( $wgUploadDirectory . '/' . $path, $path, $mime, $hash );
+		if ( !empty( $row['hash'] ) ) {
+			$metadata['Sha1Base36'] = $row['hash'];
+		}
 
-		if ( $res === false ) {
+		$res = $this->swift->store( $wgUploadDirectory . '/' . $path, $path, $metadata, $mime );
+
+		if ( !$res->isOK() ) {
+			Wikia::log( __METHOD__, 'error', $path );
 			$this->migratedImagesFailedCnt++;
 		}
 
@@ -358,14 +229,6 @@ class MigrateImagesToSwift extends Maintenance {
 		$this->time = time();
 
 		// connect to Swift
-		if ( !$this->connectToSwift() ) {
-			$this->error( 'Can\'t connect to Swift', 2 );
-		}
-
-		// get / create container
-		if ( ( $this->swiftContainer = $this->getContainer( $this->swiftContainerName ) ) === false ) {
-			$this->error( 'Can\'t get Swift container', 3 );
-		}
 
 		Wikia::log( __CLASS__, false, 'migration started' );
 
