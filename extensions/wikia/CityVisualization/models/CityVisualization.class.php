@@ -182,7 +182,20 @@ class CityVisualization extends WikiaModel {
 			$batch = array();
 
 			$batchPromotedWikis = array_slice($promotedWikis, $offsets[self::PROMOTED_ARRAY_KEY] * self::PROMOTED_SLOTS, self::PROMOTED_SLOTS);
-			$removePerVertical = floor( count($batchPromotedWikis) / $verticalsCount );
+			$batchPromotedWikisCount = count($batchPromotedWikis);
+			$removePerVertical = floor( $batchPromotedWikisCount / $verticalsCount );
+
+			// decrease vertical counts when we've got 1 or 2 promoted wikis
+			$tmpVerticalSlots = $verticalSlots;
+			if ($batchPromotedWikisCount > $removePerVertical *  self::PROMOTED_SLOTS) {
+				$verticalsForDecrease = array_rand($tmpVerticalSlots, $batchPromotedWikisCount - $removePerVertical *  self::PROMOTED_SLOTS);
+				if (!is_array($verticalsForDecrease)) {
+					$verticalsForDecrease = [$verticalsForDecrease];
+				}
+				foreach($verticalsForDecrease as $verticalForDecrease) {
+					$tmpVerticalSlots[$verticalForDecrease]--;
+				}
+			}
 
 			if( ($offsets[self::PROMOTED_ARRAY_KEY] + 1) * self::PROMOTED_SLOTS >= $promotedWikisCount ) {
 				$offsets[self::PROMOTED_ARRAY_KEY] = 0;
@@ -191,7 +204,7 @@ class CityVisualization extends WikiaModel {
 			}
 
 			foreach ($wikis as $verticalName => &$wikilist) {
-				$batchWikis = array_slice($wikilist, $offsets[$verticalName] * $verticalSlots[$verticalName], ($verticalSlots[$verticalName] - $removePerVertical) );
+				$batchWikis = array_slice($wikilist, $offsets[$verticalName] * $verticalSlots[$verticalName], ($tmpVerticalSlots[$verticalName] - $removePerVertical) );
 
 				$offsets[$verticalName]++;
 				if( ($offsets[$verticalName] + 1) * $verticalSlots[$verticalName] > $wikisCounts[$verticalName] ) {
