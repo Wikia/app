@@ -203,7 +203,11 @@ class CityVisualization extends WikiaModel {
 			}
 
 			foreach ($wikis as $verticalName => &$wikilist) {
-				$batchWikis = array_slice($wikilist, $offsets[$verticalName] * $verticalSlots[$verticalName], ($tmpVerticalSlots[$verticalName] - $removePerVertical) );
+				$batchWikis = array_slice(
+					$wikilist,
+					$offsets[$verticalName] * $verticalSlots[$verticalName],
+					$tmpVerticalSlots[$verticalName] - $removePerVertical
+				);
 
 				$offsets[$verticalName]++;
 				if( ($offsets[$verticalName] + 1) * $verticalSlots[$verticalName] > $wikisCounts[$verticalName] ) {
