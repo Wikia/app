@@ -273,6 +273,18 @@
 				),
 			);
 
+			//error - not empty fake username
+			$reqParams16 = array(
+				'username' => '123',
+			);
+			$expMsg16 = null;
+			$expErrParam16 = null;
+
+			//error - not empty fake username
+			$reqParams17 = array(
+				'password' => '123',
+			);
+
 			return array(
 				'error - empty username' =>
 				array( $reqParams1, $mockUserParams1, $mockUserLoginForm1, 'error', $expMsg1, $expErrParam1 ),
@@ -304,6 +316,10 @@
 				array( $reqParams14, $mockUserParams3, $mockUserLoginForm14, 'ok', '', '' ),
 				'pass byemail -- call addNewAccountMailPassword() ONCE' =>
 				array( $reqParams15, $mockUserParams3, $mockUserLoginForm15, 'ok', '', '' ),
+				'error - not empty fake username' =>
+				array( $reqParams16, $mockUserParams1, $mockUserLoginForm1, 'error', $expMsg16, $expErrParam16 ),
+				'error - not empty fake password' =>
+				array( $reqParams17, $mockUserParams1, $mockUserLoginForm1, 'error', $expMsg16, $expErrParam16 ),
 			);
 		}
 
@@ -364,7 +380,7 @@
 			// error - empty username
 			$params3 = array(
 				'email' => self::TEST_EMAIL,
-				'userloginext01' => '',
+				'username' => '',
 			);
 			$expMsg3 = wfMessage( 'userlogin-error-noname' )->escaped();
 			$expErrParam3 = 'username';
