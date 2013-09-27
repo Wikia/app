@@ -11,13 +11,14 @@
  * @global int $skip
  * @global array $categories
  * @global array $extraMapping
+ * @global boolean $force
  * @param string $videoTitle
  * @param VideoFeedIngester $ingester
  * @param array $data
  * @return array|false $metadata
  */
 function mapMetadata( $videoTitle, $ingester, $data ) {
-	global $skip, $categories, $extraMapping;
+	global $skip, $categories, $extraMapping, $force;
 
 	// default page categories
 	if ( empty( $data['pageCategories'] ) ) {
@@ -109,7 +110,11 @@ function mapMetadata( $videoTitle, $ingester, $data ) {
 	$data['ageGate'] = empty( $data['ageRequired'] ) ? 0 : 1;
 
 	$errorMsg = '';
-	$metadata = $ingester->generateMetadata( $data, $errorMsg );
+	if ( $force ) {
+		$metadata = generateMetadataScreenplay( $ingester, $data, $errorMsg );
+	} else {
+		$metadata = $ingester->generateMetadata( $data, $errorMsg );
+	}
 	if ( !empty( $errorMsg ) ) {
 			$skip++;
 			echo "$videoTitle...SKIPPED. ($errorMsg).\n";
@@ -217,6 +222,29 @@ function mapMetadataAnyclip( $ingester, $data, &$metadata ) {
 	}
 }
 
+/**
+ * generate metadata for screenplay
+ * @param VideoFeedIngester $ingester
+ * @param array $data
+ * @param string $errorMsg
+ * @return array $metadata
+ */
+function generateMetadataScreenplay( $ingester, $data, &$errorMsg ) {
+	if ( !empty( $data['stdBitrateCode'] ) ) {
+		return $ingester->generateMetadata( $data, $errorMsg );
+	}
+
+	// set fake value
+	$data['stdBitrateCode'] = 1;
+
+	$metadata = $ingester->generateMetadata( $data, $errorMsg );
+
+	// remove fake value
+	$metadata['stdBitrateCode'] = '';
+
+	return $metadata;
+}
+
 // ----------------------------- Main ------------------------------------
 
 ini_set( "include_path", dirname( __FILE__ )."/../../" );
@@ -224,12 +252,13 @@ ini_set( "include_path", dirname( __FILE__ )."/../../" );
 require_once( "commandLine.inc" );
 
 if ( isset($options['help']) ) {
-	die( "Usage: php mapVideoMatadata.php [--help] [--dry-run] [--provider=abc] [--limit=123] [--name=xyz] [--end=<timestamp>]
+	die( "Usage: php mapVideoMetadata.php [--help] [--dry-run] [--provider=abc] [--limit=123] [--name=xyz] [--end=<timestamp>]
 	--dry-run                      dry run
 	--provider                     video provider (required)
 	--limit                        limit number of videos (required)
 	--name                         video title (optional)
 	--end                          end date (optional)
+	--force                        force mapping (for screenplay only) (optional)
 	--help                         you are reading it right now\n\n" );
 }
 
@@ -238,6 +267,7 @@ if ( empty($wgCityId) ) {
 }
 
 $dryRun = isset( $options['dry-run'] );
+$force = isset( $options['force'] );
 $provider = isset( $options['provider'] ) ? $options['provider'] : '';
 $limit = isset( $options['limit'] ) ? $options['limit'] : 0 ;
 $videoTitle = isset( $options['name'] ) ? $options['name'] : '';
@@ -249,6 +279,10 @@ if ( empty( $provider ) ) {
 
 if ( !is_numeric( $limit ) ) {
 	die( "Error: Invalid limit.\n" );
+}
+
+if ( $force && $provider != 'screenplay' ) {
+	die( "Error: force mapping for screenplay only.\n" );
 }
 
 echo "Wiki: $wgCityId ($wgDBname)\n";
