@@ -5,13 +5,14 @@
   * [Early returns](#early-returns)
   * [Semi-colons](#semi-colons)
   * [Function-declarations within blocks](#function-declarations-within-blocks)
+  * [Try/catch blocks](#trycatch-blocks)
+  * [Delete Operator](#delete-operator)
+  * [Modifying prototypes of built-in objects](#modifying-prototypes-of-built-in-objects)
 * [Style Rules](#style-rules)
   * [White space guidelines](#white-space-guidelines)
   * [Prefixing jQuery objects](#prefixing-jquery-objects)
   * [Comments](#comments)
   * [Naming Convensions](#naming-convensions)
-  * [Delete Operator](#delete-operator)
-  * [Modifying prototypes of built-in objects](#modifying-prototypes-of-built-in-objects)
 * [Still to be defined](#still-to-be-defined)
 
 ## Language Rules
@@ -80,6 +81,20 @@ When using `switch` statements:
 
 - Use a `break` for each case other than `default`.
 - Align `case` statements with the `switch`.
+
+###Delete Operator###
+Try to avoid using the delete operator.  Contrary to what you might think, the delete operator doesn't actually clean up memory.  Instead, removing properties actually changes the shape of objects and is bad for performance. It is better to set the property to null some other falsey value.
+
+Quoted from google's style guide: 
+> "In modern JavaScript engines, changing the number of properties on an object is much slower than reassigning the values. The delete keyword should be avoided except when it is necessary to remove a property from an object's iterated list of keys, or to change the result of if (key in obj)."
+
+###Modifying prototypes of built-in objects###
+This is heavily discouraged.  We'll follow Google's style guidelines here: 
+>"Modifying builtins like Object.prototype and Array.prototype are strictly forbidden. Modifying other builtins like Function.prototype is less dangerous but still leads to hard to debug issues in production and should be avoided."
+
+Also, jQuery code works on the assumption that no built in object prototypes are modified.
+
+
 
 ## Style Rules
 
@@ -332,18 +347,6 @@ Hint: If it's in the modules folder, it should be namespace with 'wikia'.
 
 ####Folders####
 For clarity and future-proofness, all javascript files should go into a 'scripts' folder and all stylesheet files should go into a 'styles' folder.  This is different from what we've done in the past, which was putting all scripts into a 'js' folder and all stylesheets into a 'css' folder. 
-
-###Delete Operator###
-Try to avoid using the delete operator.  Contrary to what you might think, the delete operator doesn't actually clean up memory.  Instead, removing properties actually changes the shape of objects and is bad for performance. It is better to set the property to null some other falsey value.
-
-Quoted from google's style guide: 
-> "In modern JavaScript engines, changing the number of properties on an object is much slower than reassigning the values. The delete keyword should be avoided except when it is necessary to remove a property from an object's iterated list of keys, or to change the result of if (key in obj)."
-
-###Modifying prototypes of built-in objects###
-This is heavily discouraged.  We'll follow Google's style guidelines here: 
->"Modifying builtins like Object.prototype and Array.prototype are strictly forbidden. Modifying other builtins like Function.prototype is less dangerous but still leads to hard to debug issues in production and should be avoided."
-
-Also, jQuery code works on the assumption that no built in object prototypes are modified.
 
 
 ## Still to be defined
