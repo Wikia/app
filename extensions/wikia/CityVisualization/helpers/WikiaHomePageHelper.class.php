@@ -680,15 +680,18 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	public function getWikiBatches($wikiId, $langCode, $numberOfBatches) {
+		wfProfileIn(__METHOD__);
+
 		$visualization = new CityVisualization();
-		/** @var CityVisualization $visualization */
 		$batches = $visualization->getWikiBatches($wikiId, $langCode, $numberOfBatches);
 
+		$out = array();
 		if (!empty($batches)) {
-			return $this->prepareBatchesForVisualization($batches);
-		} else {
-			return array();
+			$out = $this->prepareBatchesForVisualization($batches);
 		}
+
+		wfProfileOut(__METHOD__);
+		return $out;
 	}
 
 	public function prepareBatchesForVisualization($batches) {
