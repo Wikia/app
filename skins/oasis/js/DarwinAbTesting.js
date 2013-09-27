@@ -39,21 +39,24 @@ var hookRightRailImpression = function (label) {
 }
 
 $(function(){
-	// Determine if we're in experiment DAR_RIGHTRAILPOSITION
-	group = window.Wikia.AbTest
-		? Wikia.AbTest.getGroup( "DAR_RIGHTRAILPOSITION" )
-		: null ;
+	// check if we have responsive layout turned on
+	if ( window.wgOasisResponsive ) {
+		// Determine if we're in experiment DAR_RIGHTRAILPOSITION
+		group = window.Wikia.AbTest
+			? Wikia.AbTest.getGroup( "DAR_RIGHTRAILPOSITION" )
+			: null ;
 
-	switch (group) {
-	case "STATIC":
-		// track impression
-		hookRightRailImpression('static');
-		break;
-	case "CONTROL":
-		// it's control group, do nothing (just track)
-		hookRightRailImpression('control');
-		break;
-	default:
-	    // don't track
+		switch (group) {
+		case "STATIC":
+			// track impression
+			hookRightRailImpression('static');
+			break;
+		case "CONTROL":
+			// it's control group, do nothing (just track)
+			hookRightRailImpression('control');
+			break;
+		default:
+		    // don't track
+		}
 	}
 });
