@@ -665,6 +665,10 @@ class AbuseFilter {
 	public static function filterAction( $vars, $title ) {
 		global $wgUser, $wgTitle;
 
+		if ( !wfRunHooks( 'AbuseFilterShouldFilter', array( $wgUser ) ) ) {
+			return true;
+		}
+
 		wfProfileIn( __METHOD__ );
 
 		if ( !$wgTitle ) {
