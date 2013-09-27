@@ -12,6 +12,19 @@ class VisualEditorHooks {
 	/** List of skins VisualEditor integration supports */
 	protected static $supportedSkins = array( 'oasis' );
 
+	protected static $isAvailable = null;
+
+	public static function isVisualEditorAvailable( $skin ) {
+		if ( is_null( self::$isAvailable ) ) {
+			self::$isAvailable = (
+				in_array( $skin->getSkinName(), self::$supportedSkins ) &&
+				$skin->getUser()->getOption( 'visualeditor-enable' ) &&
+				!$skin->getUser()->getOption( 'visualeditor-betatempdisable' )
+			);
+		}
+		return self::$isAvailable;
+	}
+
 	public static function onSetup() {
 		global $wgResourceModules, $wgVisualEditorResourceTemplate,
 			$wgVisualEditorTabMessages;
@@ -78,11 +91,8 @@ class VisualEditorHooks {
 	 * @param $skin Skin
 	 */
 	public static function onBeforePageDisplay( &$output, &$skin ) {
-		if (
-			!in_array( $skin->getSkinName(), self::$supportedSkins ) ||
-			!$skin->getUser()->getOption( 'visualeditor-enable' ) ||
-			$skin->getUser()->getOption( 'visualeditor-betatempdisable' )
-		) {
+		// Only do this if the user has VE enabled
+		if ( !self::isVisualEditorAvailable( $skin ) ) {
 			return true;
 		}
 		$output->addModules( array( 'ext.visualEditor.wikiaViewPageTarget.init' ) );
@@ -101,11 +111,7 @@ class VisualEditorHooks {
 	 */
 	public static function onSkinTemplateNavigation( &$skin, &$links ) {
 		// Only do this if the user has VE enabled
-		if (
-			!in_array( $skin->getSkinName(), self::$supportedSkins ) ||
-			!$skin->getUser()->getOption( 'visualeditor-enable' ) ||
-			$skin->getUser()->getOption( 'visualeditor-betatempdisable' )
-		) {
+		if ( !self::isVisualEditorAvailable( $skin ) ) {
 			return true;
 		}
 
@@ -180,9 +186,8 @@ class VisualEditorHooks {
 		// Only do this if the user has VE enabled
 		// (and we're not in parserTests)
 		if (
-			isset( $GLOBALS[ 'wgVisualEditorInParserTests' ] ) ||
-			!$skin->getUser()->getOption( 'visualeditor-enable' ) ||
-			$skin->getUser()->getOption( 'visualeditor-betatempdisable' )
+			!self::isVisualEditorAvailable( $skin ) ||
+			isset( $GLOBALS[ 'wgVisualEditorInParserTests' ] )
 		) {
 			return true;
 		}
