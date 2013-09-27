@@ -312,11 +312,11 @@ We use JSDoc style comments above function declarations and at the top of files 
 ###Naming Convensions###
 
 ####Variables###
-Use lazyCamelCase for all variables unless the variable represents a constructor.  Constructers should us UpperCamelCase.
+Use lazyCamelCase for all variables unless the variable represents a constructor. Constructers should use UpperCamelCase.
 
-Also, try to avoid acronyms and be explicit so it is clear to anyone reading your code what the variable does.  Since we don't have an uglifier that reduces variable size yet, do this within reason.
+Try to avoid acronyms and be explicit so it is clear to anyone reading your code what the variable does. Since we don't have an uglifier that reduces variable size yet, do this within reason.
 
-####AMD modules####
+#### AMD Modules ####
 AMD modules should be all lowercase. If the code is exension-specific, namespace with the extension. 
 ```javascript
 define( 'myextension.mypage' ... )
@@ -345,7 +345,7 @@ define( 'wikia.mymodule' )
 ```
 Hint: If it's in the modules folder, it should be namespace with 'wikia'.
 
-####Folders####
+#### Folders ####
 For clarity and future-proofness, all javascript files should go into a 'scripts' folder and all stylesheet files should go into a 'styles' folder.  This is different from what we've done in the past, which was putting all scripts into a 'js' folder and all stylesheets into a 'css' folder. 
 
 
