@@ -9,6 +9,8 @@
   * [White space guidelines](#white-space-guidelines)
   * [Prefixing jQuery objects](#prefixing-jquery-objects)
   * [Comments](#comments)
+  * [Naming Convensions](#naming-convensions)
+  * [Delete Operator](#delete-operator)
 * [Still to be defined](#still-to-be-defined)
 
 ## Language Rules
@@ -291,19 +293,20 @@ We use JSDoc style comments above function declarations and at the top of files 
 * @author (at the top of a file)
 * @see (for links to documentation)
 
-###Naming Conventions###
+###Naming Convensions###
 
 ####Variables###
 Use lazyCamelCase for all variables unless the variable represents a constructor.  Constructers should us UpperCamelCase.
+
 Also, try to avoid acronyms and be explicit so it is clear to anyone reading your code what the variable does.  Since we don't have an uglifier that reduces variable size yet, do this within reason.
 
 ####AMD modules####
-AMD modules should be all lowercase.  
-If the code is exension-specific, namespace with the extension. 
+AMD modules should be all lowercase. If the code is exension-specific, namespace with the extension. 
 ```javascript
 define( 'myextension.mypage' ... )
 ```
 If there's a folder structure within the extension's scripts directory, the module's namespace should match the folder structure.
+
 For example, if the tree looks like this: 
 
     |-- MyExtension 
@@ -329,6 +332,11 @@ Hint: If it's in the modules folder, it should be namespace with 'wikia'.
 ####Folders####
 For clarity and future-proofness, all javascript files should go into a 'scripts' folder and all stylesheet files should go into a 'styles' folder.  This is different from what we've done in the past, which was putting all scripts into a 'js' folder and all stylesheets into a 'css' folder. 
 
+###Delete Operator###
+Try to avoid using the delete operator.  Contrary to what you might think, the delete operator doesn't actually clean up memory.  Instead, removing properties actually changes the shape of objects and is bad for performance. It is better to set the property to null some other falsey value.
+
+Quoted from google's style guide: 
+> "In modern JavaScript engines, changing the number of properties on an object is much slower than reassigning the values. The delete keyword should be avoided except when it is necessary to remove a property from an object's iterated list of keys, or to change the result of if (key in obj)."
 
 ## Still to be defined
 * Naming convensions for: 
@@ -337,12 +345,6 @@ For clarity and future-proofness, all javascript files should go into a 'scripts
   * casing
 
 * Error handling and custom exception handling (handle this later)
-* Delete Operator
-  * Try to avoid using the delete operator
-  * Doesn't actually clean up memory
-  * Changing the shape of objects is bad for performance
-  * Better to set the property to null or false
-  * From google: "In modern JavaScript engines, changing the number of properties on an object is much slower than reassigning the values. The delete keyword should be avoided except when it is necessary to remove a property from an object's iterated list of keys, or to change the result of if (key in obj)."
 * Modifying prototypes of built-in objects
   * Avoid doing 
   * jQuery code assumes no built in object prototypes are modified
