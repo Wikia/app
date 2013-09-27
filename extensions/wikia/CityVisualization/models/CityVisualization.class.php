@@ -183,7 +183,7 @@ class CityVisualization extends WikiaModel {
 			$batchPromotedWikis = array_slice($promotedWikis, $offsets[self::PROMOTED_ARRAY_KEY] * self::PROMOTED_SLOTS, self::PROMOTED_SLOTS);
 			$batchPromotedWikisCount = count($batchPromotedWikis);
 
-			$tmpVerticalSlots = $this->decreaseVerticalSlots($batchPromotedWikisCount, $verticalSlots);
+			$tmpVerticalSlots = $this->freeSlotsForPromotedWikis($batchPromotedWikisCount, $verticalSlots);
 
 			if( ($offsets[self::PROMOTED_ARRAY_KEY] + 1) * self::PROMOTED_SLOTS >= $promotedWikisCount ) {
 				$offsets[self::PROMOTED_ARRAY_KEY] = 0;
@@ -219,7 +219,7 @@ class CityVisualization extends WikiaModel {
 		return $batches;
 	}
 
-	private function decreaseVerticalSlots($promotedWikisCount, $verticalSlots) {
+	private function freeSlotsForPromotedWikis($promotedWikisCount, $verticalSlots) {
 		// decrease all verticals if promoted wikis number is greater that verticals
 		while ($promotedWikisCount >= count($verticalSlots)) {
 			foreach($verticalSlots as $verticalName => &$verticalCount) {
