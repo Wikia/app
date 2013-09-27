@@ -354,12 +354,14 @@ WikiaHomePageRemix.prototype = {
 		}
 	},
 	preload: function () {
-		var allWikisInBatch = this.wikiSetStack[this.wikiSetStackIndex].mediumslots;
-		allWikisInBatch = allWikisInBatch.concat(this.wikiSetStack[this.wikiSetStackIndex].smallslots);
-		allWikisInBatch = allWikisInBatch.concat(this.wikiSetStack[this.wikiSetStackIndex].bigslots);
-		for (var i in allWikisInBatch) {
-			var image = new Image();
-			image.src = allWikisInBatch[i].image;
+		if (typeof this.wikiSetStack[this.wikiSetStackIndex] != 'undefined') {
+			var allWikisInBatch = this.wikiSetStack[this.wikiSetStackIndex].mediumslots;
+			allWikisInBatch = allWikisInBatch.concat(this.wikiSetStack[this.wikiSetStackIndex].smallslots);
+			allWikisInBatch = allWikisInBatch.concat(this.wikiSetStack[this.wikiSetStackIndex].bigslots);
+			for (var i in allWikisInBatch) {
+				var image = new Image();
+				image.src = allWikisInBatch[i].image;
+			}
 		}
 	},
 	updateVisualisation: function () {
