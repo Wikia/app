@@ -1,6 +1,7 @@
 # See also:
 # - https://github.com/senchalabs/jsduck/wiki/Tags
 # - https://github.com/senchalabs/jsduck/wiki/Custom-tags
+# - https://github.com/senchalabs/jsduck/wiki/Custom-tags/7f5c32e568eab9edc8e3365e935bcb836cb11f1d
 require 'jsduck/meta_tag'
 
 class SourceTag < JsDuck::MetaTag

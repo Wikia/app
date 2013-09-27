@@ -14,7 +14,7 @@
  *
  * @constructor
  * @param {ve.ui.Surface} surface
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.AnnotationInspector = function VeUiAnnotationInspector( surface, config ) {
 	// Parent constructor

@@ -123,10 +123,13 @@ Before do |scenario|
   @does_not_exist_page_name = Random.new.rand.to_s
   @mediawiki_username = mediawiki_username
   @mediawiki_password = mediawiki_password
-  unless @language
+  if ENV['REUSE_BROWSER'] == 'true' and $browser then
+    @browser = $browser
+  else
     @browser = browser(environment, test_name(scenario), saucelabs_username, saucelabs_key, 'default')
-    $session_id = @browser.driver.instance_variable_get(:@bridge).session_id
+    $browser = @browser
   end
+  $session_id = @browser.driver.instance_variable_get(:@bridge).session_id
 end
 
 After do |scenario|
@@ -134,5 +137,9 @@ After do |scenario|
     sauce_api(%Q{{"passed": #{scenario.passed?}}}, saucelabs_username, saucelabs_key)
     sauce_api(%Q{{"public": true}}, saucelabs_username, saucelabs_key)
   end
-  @browser.close unless ENV['KEEP_BROWSER_OPEN'] == 'true'
+  @browser.close unless ENV['KEEP_BROWSER_OPEN'] == 'true' or ENV['REUSE_BROWSER'] == 'true'
+end
+
+at_exit do
+  $browser.close unless ENV['KEEP_BROWSER_OPEN'] == 'true'
 end

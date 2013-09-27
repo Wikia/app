@@ -12,7 +12,7 @@
  * @extends ve.ce.PreformattedNode
  * @constructor
  * @param {ve.dm.MWPreformattedNode} model Model to observe
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.MWPreformattedNode = function VeCeMWPreformattedNode( model, config ) {
 	// Parent constructor

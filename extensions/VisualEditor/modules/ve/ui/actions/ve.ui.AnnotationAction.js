@@ -30,7 +30,7 @@ ve.inheritClass( ve.ui.AnnotationAction, ve.ui.Action );
  * @static
  * @property
  */
-ve.ui.AnnotationAction.static.methods = ['set', 'clear', 'toggle', 'clearAll'];
+ve.ui.AnnotationAction.static.methods = [ 'set', 'clear', 'toggle', 'clearAll' ];
 
 /* Methods */
 

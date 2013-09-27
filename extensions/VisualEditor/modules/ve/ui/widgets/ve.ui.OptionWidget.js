@@ -15,7 +15,7 @@
  *
  * @constructor
  * @param {Mixed} data Option data
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {jQuery|string} [label] Option label
  * @cfg {string} [icon] Symbolic name of icon
  * @cfg {boolean} [selected=false] Select option

@@ -13,7 +13,7 @@
  *
  * @constructor
  * @param {Mixed} data Item data
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MenuSectionItemWidget = function VeUiMenuSectionItemWidget( data, config ) {
 	// Parent constructor

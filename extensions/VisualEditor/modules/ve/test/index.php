@@ -186,6 +186,7 @@
 		<script src="../../ve/ui/ve.ui.ToolFactory.js"></script>
 		<script src="../../ve/ui/ve.ui.Toolbar.js"></script>
 		<script src="../../ve/ui/ve.ui.SurfaceToolbar.js"></script>
+		<script src="../../ve/ui/ve.ui.TargetToolbar.js"></script>
 		<script src="../../ve/ui/ve.ui.CommandRegistry.js"></script>
 		<script src="../../ve/ui/ve.ui.Trigger.js"></script>
 		<script src="../../ve/ui/ve.ui.TriggerRegistry.js"></script>
@@ -288,6 +289,7 @@
 		<script src="dm/lineardata/ve.dm.MetaLinearData.test.js"></script>
 		<script src="ce/ve.ce.test.js"></script>
 		<script src="ce/ve.ce.Document.test.js"></script>
+		<script src="ce/ve.ce.Surface.test.js"></script>
 		<script src="ce/ve.ce.NodeFactory.test.js"></script>
 		<script src="ce/ve.ce.Node.test.js"></script>
 		<script src="ce/ve.ce.BranchNode.test.js"></script>

@@ -14,7 +14,7 @@
  * @mixins ve.ui.GroupElement
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [options] Configuration options
  * @cfg {boolean} [actions] Add an actions section opposite to the tools
  * @cfg {boolean} [shadow] Add a shadow below the toolbar
  */

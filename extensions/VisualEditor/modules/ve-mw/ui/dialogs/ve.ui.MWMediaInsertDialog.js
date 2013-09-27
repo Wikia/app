@@ -13,11 +13,11 @@
  *
  * @constructor
  * @param {ve.ui.Surface} surface
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWMediaInsertDialog = function VeUiMWMediaInsertDialog( surface, config ) {
 	// Configuration initialization
-	config = ve.extendObject( {}, config, { 'footless': true } );
+	config = ve.extendObject( { 'footless': true }, config );
 
 	// Parent constructor
 	ve.ui.MWDialog.call( this, surface, config );

@@ -45,6 +45,8 @@ ve.dm.MWBlockImageNode.static.captionNodeType = 'mwImageCaption';
 
 ve.dm.MWBlockImageNode.static.matchTagNames = [ 'figure' ];
 
+ve.dm.MWBlockImageNode.static.blacklistedAnnotationTypes = [ 'link' ];
+
 ve.dm.MWBlockImageNode.static.getMatchRdfaTypes = function () {
 	return Object.keys( this.rdfaToType );
 };

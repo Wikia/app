@@ -15,7 +15,7 @@
  * @constructor
  * @param {ve.ui.Surface} surface
  * @param {ve.Factory} factory Window factory
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.WindowSet = function VeUiWindowSet( surface, factory, config ) {
 	// Parent constructor
@@ -113,9 +113,10 @@ ve.ui.WindowSet.prototype.getCurrent = function () {
  *
  * @method
  * @param {string} name Symbolic name of window
+ * @param {Object} [config] Configuration options to be sent to the window class constructor
  * @chainable
  */
-ve.ui.WindowSet.prototype.open = function ( name ) {
+ve.ui.WindowSet.prototype.open = function ( name, config ) {
 	var win;
 
 	if ( !this.factory.lookup( name ) ) {
@@ -125,7 +126,7 @@ ve.ui.WindowSet.prototype.open = function ( name ) {
 		throw new Error( 'Cannot open another window while another one is active' );
 	}
 	if ( !( name in this.windows ) ) {
-		win = this.windows[name] = this.factory.create( name, this.surface );
+		win = this.windows[name] = this.factory.create( name, this.surface, config );
 		win.connect( this, {
 			'setup': ['onWindowSetup', win],
 			'open': ['onWindowOpen', win],

@@ -16,7 +16,7 @@
  *
  * @constructor
  * @param {ve.dm.ImageNode} model Model to observe
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.ImageNode = function VeCeImageNode( model, config ) {
 	// Parent constructor

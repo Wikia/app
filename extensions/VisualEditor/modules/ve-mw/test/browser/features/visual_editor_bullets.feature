@@ -8,32 +8,6 @@ Feature: VisualEditor Bullets, Numbering, Indent, Outdent
       And I type in an input string
       And select the string
 
-  Scenario: Check indentation controls disabled by default
-    Then Decrease indentation should be disabled
-      And Increase indentation should be disabled
-
-  Scenario: Check indentation controls enabled upon creating Bullet
-    When I click Bullets
-    Then Decrease indentation should be enabled
-       And Increase indentation should be enabled
-
-  Scenario: Check indentation controls enabled upon creating Numbering
-    When I click Numbering
-    Then Decrease indentation should be enabled
-       And Increase indentation should be enabled
-
-  Scenario: Check indentation controls disabled upon undoing Bullet
-    When I click Bullets
-      And  I undo Bullets
-    Then Decrease indentation should be disabled
-       And Increase indentation should be disabled
-
-  Scenario: Check indentation controls enabled upon creating Numbering
-    When I click Numbering
-      And I undo Numbering
-    Then Decrease indentation should be disabled
-       And Increase indentation should be disabled
-
   Scenario: Test Numbering
     When I click Numbering
       And I click Save page

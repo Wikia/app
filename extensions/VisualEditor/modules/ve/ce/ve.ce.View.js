@@ -14,7 +14,7 @@
  *
  * @constructor
  * @param {ve.dm.Model} model Model to observe
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.View = function VeCeView( model, config ) {
 	// Setting this property before calling the parent constructor allows overriden #getTagName
@@ -62,7 +62,7 @@ ve.mixinClass( ve.ce.View, ve.EventEmitter );
  * @event teardown
  */
 
-/* Static Members */
+/* Static members */
 
 /**
  * Allowed attributes for DOM elements, in the same format as ve.dm.Model#static.storeHtmlAttributes

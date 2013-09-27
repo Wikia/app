@@ -13,7 +13,7 @@
  * @extends ve.ui.Tool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.FormatTool = function VeUiFormatTool( toolbar, config ) {
 	// Parent constructor
@@ -84,7 +84,7 @@ ve.ui.FormatTool.prototype.onUpdateState = function ( nodes ) {
  * @extends ve.ui.FormatTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.ParagraphFormatTool = function VeUiParagraphFormatTool( toolbar, config ) {
 	ve.ui.FormatTool.call( this, toolbar, config );
@@ -103,7 +103,7 @@ ve.ui.toolFactory.register( ve.ui.ParagraphFormatTool );
  * @extends ve.ui.FormatTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.Heading1FormatTool = function VeUiHeading1FormatTool( toolbar, config ) {
 	ve.ui.FormatTool.call( this, toolbar, config );
@@ -122,7 +122,7 @@ ve.ui.toolFactory.register( ve.ui.Heading1FormatTool );
  * @extends ve.ui.FormatTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.Heading2FormatTool = function VeUiHeading2FormatTool( toolbar, config ) {
 	ve.ui.FormatTool.call( this, toolbar, config );
@@ -141,7 +141,7 @@ ve.ui.toolFactory.register( ve.ui.Heading2FormatTool );
  * @extends ve.ui.FormatTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.Heading3FormatTool = function VeUiHeading3FormatTool( toolbar, config ) {
 	ve.ui.FormatTool.call( this, toolbar, config );
@@ -160,7 +160,7 @@ ve.ui.toolFactory.register( ve.ui.Heading3FormatTool );
  * @extends ve.ui.FormatTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.Heading4FormatTool = function VeUiHeading4FormatTool( toolbar, config ) {
 	ve.ui.FormatTool.call( this, toolbar, config );
@@ -179,7 +179,7 @@ ve.ui.toolFactory.register( ve.ui.Heading4FormatTool );
  * @extends ve.ui.FormatTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.Heading5FormatTool = function VeUiHeading5FormatTool( toolbar, config ) {
 	ve.ui.FormatTool.call( this, toolbar, config );
@@ -198,7 +198,7 @@ ve.ui.toolFactory.register( ve.ui.Heading5FormatTool );
  * @extends ve.ui.FormatTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.Heading6FormatTool = function VeUiHeading6FormatTool( toolbar, config ) {
 	ve.ui.FormatTool.call( this, toolbar, config );
@@ -217,7 +217,7 @@ ve.ui.toolFactory.register( ve.ui.Heading6FormatTool );
  * @extends ve.ui.FormatTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.PreformattedFormatTool = function VeUiPreformattedFormatTool( toolbar, config ) {
 	ve.ui.FormatTool.call( this, toolbar, config );

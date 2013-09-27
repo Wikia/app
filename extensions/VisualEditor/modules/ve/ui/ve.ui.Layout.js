@@ -14,7 +14,7 @@
  * @mixin ve.EventEmitter
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.Layout = function VeUiLayout( config ) {
 	// Initialize config

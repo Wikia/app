@@ -30,7 +30,7 @@ ve.inheritClass( ve.ui.FormatAction, ve.ui.Action );
  * @static
  * @property
  */
-ve.ui.FormatAction.static.methods = ['convert'];
+ve.ui.FormatAction.static.methods = [ 'convert' ];
 
 /* Methods */
 

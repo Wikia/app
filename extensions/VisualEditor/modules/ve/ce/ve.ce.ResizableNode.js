@@ -279,6 +279,10 @@ ve.ce.ResizableNode.prototype.onDocumentMouseUp = function () {
 		);
 	}
 
+	// Show the context menu. This usually happens with the redraw, but not if the
+	// user doesn't perform a drag
+	this.root.getSurface().getSurface().getContext().show();
+
 	this.emit( 'resize' );
 };
 

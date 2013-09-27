@@ -13,15 +13,15 @@
  *
  * @constructor
  * @param {ve.ui.Surface} surface
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.LanguageInspector = function VeUiLanguageInspector( surface, config ) {
 	// Parent constructor
 	ve.ui.AnnotationInspector.call( this, surface, config );
 
 	// Placeholder for the dm properties:
-	this.initLang = '';
-	this.initDir = '';
+	this.lang = '';
+	this.dir = '';
 
 	// Placeholder for the annotation:
 	this.annotation = null;
@@ -98,8 +98,8 @@ ve.ui.LanguageInspector.prototype.onSetup = function () {
 	// This will be called only if the annotation doesn't already exist, setting
 	// the default value as the current language/dir of the selected text.
 	if ( fragDOM ) {
-		this.initLang = fragDOM.$.closest( '[lang]' ).attr( 'lang' );
-		this.initDir = fragDOM.$.closest( '[dir]' ).css( 'direction' );
+		this.lang = fragDOM.$.closest( '[lang]' ).attr( 'lang' );
+		this.dir = fragDOM.$.closest( '[dir]' ).css( 'direction' );
 	}
 
 	// Parent method
@@ -161,19 +161,19 @@ ve.ui.LanguageInspector.prototype.setAnnotation = function ( annotation ) {
 		langCode = annotation.getAttribute( 'lang' );
 	} else {
 		// No annotation (empty text or collapsed fragment on empty line)
-		langCode = this.initLang;
-		langDir = this.initDir;
+		langCode = this.lang;
+		langDir = this.dir;
 	}
 
 	// If language exists, but dir is undefined/null,
 	// fix the dir in terms of language:
-	if ( langCode && !langDir ) {
+	if ( langCode && !langDir && $.uls ) {
 		langDir = $.uls.data.getDir( langCode );
 	}
 
 	// Set the annotation data:
 	annData = {
-		'type': 'language',
+		'type': 'meta/language',
 		'attributes': {}
 	};
 
@@ -205,8 +205,8 @@ ve.ui.LanguageInspector.prototype.getAnnotationFromText = function () {
 	return new ve.dm.LanguageAnnotation( {
 		'type': 'meta/language',
 		'attributes': {
-			'lang': this.initLang,
-			'dir': this.initDir
+			'lang': this.lang,
+			'dir': this.dir
 		}
 	} );
 };

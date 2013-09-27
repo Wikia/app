@@ -12,7 +12,7 @@
  * @extends ve.ui.SelectWidget
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.OutlineWidget = function VeUiOutlineWidget( config ) {
 	// Config intialization

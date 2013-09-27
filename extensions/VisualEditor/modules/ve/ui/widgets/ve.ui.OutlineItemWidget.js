@@ -13,7 +13,7 @@
  *
  * @constructor
  * @param {Mixed} data Item data
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {number} [level] Indentation level
  * @cfg {boolean} [moveable] Allow modification from outline controls
  */

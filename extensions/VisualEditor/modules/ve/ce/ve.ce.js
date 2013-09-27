@@ -267,14 +267,29 @@ ve.ce.getOffsetOfSlug = function ( $node ) {
 	}
 };
 
+/**
+ * Check if the key code represents a left or right arrow key
+ * @param {number} keyCode Key code
+ * @returns {boolean} Key code represents a left or right arrow key
+ */
 ve.ce.isLeftOrRightArrowKey = function ( keyCode ) {
 	return keyCode === ve.Keys.LEFT || keyCode === ve.Keys.RIGHT;
 };
 
+/**
+ * Check if the key code represents an up or down arrow key
+ * @param {number} keyCode Key code
+ * @returns {boolean} Key code represents an up or down arrow key
+ */
 ve.ce.isUpOrDownArrowKey = function ( keyCode ) {
 	return keyCode === ve.Keys.UP || keyCode === ve.Keys.DOWN;
 };
 
+/**
+ * Check if the key code represents an arrow key
+ * @param {number} keyCode Key code
+ * @returns {boolean} Key code represents an arrow key
+ */
 ve.ce.isArrowKey = function ( keyCode ) {
 	return ve.ce.isLeftOrRightArrowKey( keyCode ) || ve.ce.isUpOrDownArrowKey( keyCode );
 };
@@ -284,7 +299,8 @@ ve.ce.isArrowKey = function ( keyCode ) {
  *
  * @method
  * @param {jQuery.Event} e Key press event
+ * @returns {boolean} Modifier key is pressed
  */
 ve.ce.isShortcutKey = function ( e ) {
-	return e.ctrlKey || e.metaKey;
+	return !!( e.ctrlKey || e.metaKey );
 };

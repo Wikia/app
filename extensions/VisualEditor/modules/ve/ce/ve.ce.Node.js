@@ -14,7 +14,7 @@
  *
  * @constructor
  * @param {ve.dm.Node} model Model to observe
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.Node = function VeCeNode( model, config ) {
 	// Parent constructor

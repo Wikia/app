@@ -13,7 +13,7 @@
  *
  * @constructor
  * @param {Mixed} data Item data
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {boolean} [divider] Section divider item, not highlightable or selectable
  */
 ve.ui.MWReferenceResultWidget = function VeUiMWReferenceResultWidget( data, config ) {

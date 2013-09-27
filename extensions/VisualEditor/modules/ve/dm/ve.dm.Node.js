@@ -159,6 +159,15 @@ ve.dm.Node.static.parentNodeTypes = null;
 ve.dm.Node.static.suggestedParentNodeTypes = null;
 
 /**
+ * Array of annotation types which can't be applied to this node
+ *
+ * @static
+ * @property {string[]} static.blacklistedAnnotationTypes
+ * @inheritable
+ */
+ve.dm.Node.static.blacklistedAnnotationTypes = [];
+
+/**
  * Default attributes to set for newly created linear model elements. These defaults will be used
  * when creating a new element in ve.dm.NodeFactory#getDataElement when there is no DOM node or
  * existing linear model element to base the attributes on.

@@ -13,12 +13,12 @@
  * @mixins ve.ui.GroupElement
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {string} [icon=''] Symbolic icon name
  */
 ve.ui.StackPanelLayout = function VeUiStackPanelLayout( config ) {
 	// Config initialization
-	config = ve.extendObject( config, { 'scrollable': true } );
+	config = ve.extendObject( { 'scrollable': true }, config );
 
 	// Parent constructor
 	ve.ui.PanelLayout.call( this, config );

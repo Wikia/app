@@ -2839,6 +2839,32 @@ ve.dm.example.isolationData = [
 	// 246
 ];
 
+ve.dm.example.UnboldableNode = function ( lenght, element ) {
+	// Parent constructor
+	ve.dm.LeafNode.call( this, 0, element );
+};
+ve.inheritClass( ve.dm.example.UnboldableNode, ve.dm.LeafNode );
+ve.dm.example.UnboldableNode.static.name = 'exampleUnboldable';
+ve.dm.example.UnboldableNode.static.isContent = true;
+ve.dm.example.UnboldableNode.static.blacklistedAnnotationTypes = [ 'textStyle/bold' ];
+ve.dm.example.UnboldableNode.static.matchTagNames = [];
+ve.dm.modelRegistry.register( ve.dm.example.UnboldableNode );
+
+ve.dm.example.annotationData = [
+	{ 'type': 'paragraph' },
+	'F',
+	'o',
+	'o',
+	{ 'type': 'exampleUnboldable' },
+	{ 'type': '/exampleUnboldable' },
+	'B',
+	'a',
+	'r',
+	{ 'type': '/paragraph' },
+	{ 'type': 'internalList' },
+	{ 'type': '/internalList' }
+];
+
 ve.dm.example.selectNodesCases = [
 	{
 		'range': new ve.Range( 1 ),

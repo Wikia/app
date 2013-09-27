@@ -30,7 +30,7 @@ ve.inheritClass( ve.ui.HistoryAction, ve.ui.Action );
  * @static
  * @property
  */
-ve.ui.HistoryAction.static.methods = ['undo', 'redo'];
+ve.ui.HistoryAction.static.methods = [ 'undo', 'redo' ];
 
 /* Methods */
 

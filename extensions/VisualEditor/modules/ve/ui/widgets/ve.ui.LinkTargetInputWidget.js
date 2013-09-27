@@ -12,7 +12,7 @@
  * @extends ve.ui.TextInputWidget
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.LinkTargetInputWidget = function VeUiLinkTargetInputWidget( config ) {
 	// Parent constructor

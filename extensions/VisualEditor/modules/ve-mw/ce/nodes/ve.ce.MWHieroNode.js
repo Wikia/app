@@ -13,7 +13,7 @@
  *
  * @constructor
  * @param {ve.dm.MWHieroNode} model Model to observe
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.MWHieroNode = function VeCeMWHieroNode( model, config ) {
 	// Parent constructor

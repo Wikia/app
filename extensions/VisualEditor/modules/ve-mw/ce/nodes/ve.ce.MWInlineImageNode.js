@@ -16,7 +16,7 @@
  *
  * @constructor
  * @param {ve.dm.MWInlineImageNode} model Model to observe
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.MWInlineImageNode = function VeCeMWInlineImageNode( model, config ) {
 	var valign;

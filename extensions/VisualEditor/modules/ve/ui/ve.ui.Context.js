@@ -13,7 +13,7 @@
  *
  * @constructor
  * @param {ve.ui.Surface} surface
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.Context = function VeUiContext( surface, config ) {
 	// Parent constructor
@@ -242,10 +242,12 @@ ve.ui.Context.prototype.update = function () {
  * Updates the position and size.
  *
  * @method
+ * @param {boolean} [transition=false] Use a smooth transition
  * @chainable
  */
 ve.ui.Context.prototype.updateDimensions = function ( transition ) {
 	var $node, $container, focusableOffset, focusableWidth, nodePosition, cursorPosition, position,
+		documentOffset, nodeOffset,
 		surface = this.surface.getView(),
 		inspector = this.inspectors.getCurrent(),
 		focusedNode = surface.getFocusedNode(),
@@ -256,7 +258,6 @@ ve.ui.Context.prototype.updateDimensions = function ( transition ) {
 	if ( focusedNode ) {
 		// We're on top of a node
 		$node = focusedNode.$focusable || focusedNode.$;
-		nodePosition = $node.position();
 		if ( this.embedded ) {
 			// Get the position relative to the surface it is embedded in
 			focusableOffset = ve.Element.getRelativePosition(
@@ -274,6 +275,13 @@ ve.ui.Context.prototype.updateDimensions = function ( transition ) {
 				this.popup.align = 'right';
 			}
 		} else {
+			// The focused node may be in a wrapper, so calculate the offset relative to the document
+			documentOffset = surface.getDocument().documentNode.$.offset();
+			nodeOffset = $node.offset();
+			nodePosition = {
+				top: nodeOffset.top - documentOffset.top,
+				left: nodeOffset.left - documentOffset.left
+			};
 			// Get the position of the focusedNode:
 			position = { 'x': nodePosition.left, 'y': nodePosition.top + $node.outerHeight() };
 			// When the context is displayed in LTR, it should be on the right of the node
@@ -339,7 +347,8 @@ ve.ui.Context.prototype.show = function ( transition ) {
 			this.inspectors.$.hide();
 			if (
 				focusedNode &&
-				focusedNode.$focusable.outerHeight() > this.$menu.outerHeight() * 2
+				focusedNode.$focusable.outerHeight() > this.$menu.outerHeight() * 2 &&
+				focusedNode.$focusable.outerWidth() > this.$menu.outerWidth() * 2
 			) {
 				this.$.addClass( 've-ui-context-embed' );
 				this.embedded = true;
@@ -386,11 +395,12 @@ ve.ui.Context.prototype.hide = function () {
  *
  * @method
  * @param {string} name Symbolic name of inspector
+ * @param {Object} [config] Configuration options to be sent to the inspector class constructor
  * @chainable
  */
-ve.ui.Context.prototype.openInspector = function ( name ) {
+ve.ui.Context.prototype.openInspector = function ( name, config ) {
 	if ( !this.inspectors.currentWindow ) {
-		this.inspectors.open( name );
+		this.inspectors.open( name, config );
 	}
 	return this;
 };
