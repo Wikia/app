@@ -1,6 +1,6 @@
 @import 'skins/oasis/css/core/color';
 @import "skins/oasis/css/mixins/clearfix";
-@import 'mixins/_sprite-VideoPageTool.scss';
+@import './../mixins/_sprite-VideoPageTool.scss';
 
 /*
  * TODO: Do not release with the definition below
@@ -8,7 +8,6 @@
  * that I can start development on it's various modules
  * https://wikia-inc.atlassian.net/browse/VID-829
  */
-#HOME_TOP_RIGHT_BOXAD, .SelfServeUrl { display: none !important;  }
 
 .WikiaVideo {
 	.wv-sprite {
@@ -39,10 +38,11 @@
 			color: $color-links;
 			position: relative;
 			text-align: right;
+			visibility: hidden;
 
 			span {
 				display: inline-block;
-				padding-left: 120px;
+				padding-left: 85px;
 				vertical-align: -10px;
 			}
 
@@ -50,7 +50,7 @@
 				border-color: $color-links transparent transparent;
 				position: absolute;
 				height: 20px;
-				right: -70px;
+				right: -30px;
 				top: 15px;
 				width: 1px;
 			}
@@ -69,6 +69,7 @@
 
 	// Branding Partners
 	.partners {
+		clear: both;
 		& > ul {
 			margin: 0 auto;
 
@@ -115,14 +116,14 @@
 			width: 107px;
 		}
 
-		.ico-realgravity { 
-			@include sprite-VideoPageTool('ico-realgravity'); 
+		.ico-realgravity {
+			@include sprite-VideoPageTool('ico-realgravity');
 			height: 36px;
 			width: 36px;
 		}
 
-		.ico-screenplay { 
-			@include sprite-VideoPageTool('ico-screenplay'); 
+		.ico-screenplay {
+			@include sprite-VideoPageTool('ico-screenplay');
 			height: 40px;
 			width: 35px;
 		}

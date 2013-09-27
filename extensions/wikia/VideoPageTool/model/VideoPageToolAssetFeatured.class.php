@@ -20,6 +20,7 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 
 	/**
 	 * Get asset data (used in template)
+	 * @param array $thumbOptions
 	 * @return array An associative array of video metadata for the video named by $this->title
 	 *
 	 * The associative array data returned has the keys:
@@ -35,9 +36,9 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 	 *     updatedBy       => User who updated this asset last, e.g. "Garthwebb"
 	 *     updatedAt       => Date this asset was last updated, e.g. "17:04, September 13, 2013"
 	 */
-	public function getAssetData() {
+	public function getAssetData( $thumbOptions = array() ) {
 		$helper = new VideoPageToolHelper();
-		$data = $helper->getVideoData( $this->title, $this->altThumbName, $this->displayTitle, $this->description );
+		$data = $helper->getVideoData( $this->title, $this->altThumbName, $this->displayTitle, $this->description, $thumbOptions );
 		if ( empty( $data ) ) {
 			return self::getDefaultAssetData();
 		}

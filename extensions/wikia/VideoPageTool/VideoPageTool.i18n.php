@@ -51,11 +51,11 @@ $messages['en'] = array(
 	'videohomepage-header-search-placeholder' => 'Search for Wikia videos',
 	// Home Page Section: Partners
 	'videohomepage-partner-section-title' => 'Our Partners',
-	'videohomepage-partner-name-anyclip' => 'anyclip',
+	'videohomepage-partner-name-anyclip' => 'Anyclip',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
 	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-realgravity' => 'Realgravity',
+	'videohomepage-partner-name-realgravity' => 'Real Gravity',
 	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 

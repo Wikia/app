@@ -98,59 +98,57 @@ class VideoPageToolHelper extends WikiaModel {
 
 	/**
 	 * get video data
-	 * @param string $videoTitle
+	 * @param string $title
 	 * $param string $altThumbName
 	 * @param string $displayTitle
 	 * @param string $description
+	 * @param array $thumbOptions
 	 * @return array $video
 	 */
-	public function getVideoData( $videoTitle, $altThumbName = '', $displayTitle = '', $description = '' ) {
+	public function getVideoData( $title, $altThumbName = '', $displayTitle = '', $description = '', $thumbOptions = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		$video = array();
 
-		$title = Title::newFromText( $videoTitle, NS_FILE );
-		if ( $title instanceof Title ) {
-			$file = wfFindFile( $title );
-			if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
-				$videoTitle = $title->getText();
-				if ( empty( $displayTitle ) ) {
-					$displayTitle = $videoTitle;
-				}
-
-				// get thumbnail
-				$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
-				$videoThumb = $thumb->toHtml();
-				$thumbUrl = $thumb->getUrl();
-
-				$largeThumb = $file->transform( array( 'width' => self::MAX_THUMBNAIL_WIDTH, 'height' => self::MAX_THUMBNAIL_HEIGHT ) );
-				$largeThumbUrl = $largeThumb->getUrl();
-
-				// replace original thumbnail with the new one
-				if ( !empty( $altThumbName ) ) {
-					$imageData = $this->getImageData( $altThumbName );
-					if ( !empty( $imageData ) ) {
-						$videoThumb = str_replace( $thumbUrl, $imageData['thumbUrl'], $videoThumb );
-						$largeThumbUrl = $imageData['largeThumbUrl'];
-					}
-				}
-
-				// get description
-				if ( empty( $description ) ) {
-					$videoHandlerHelper = new VideoHandlerHelper();
-					$description = $videoHandlerHelper->getVideoDescription( $file );
-				}
-
-				$video = array(
-					'videoTitle'    => $videoTitle,
-					'videoKey'      => $title->getDBKey(),
-					'videoThumb'    => $videoThumb,
-					'largeThumbUrl' => $largeThumbUrl,
-					'altThumbName'  => $altThumbName,
-					'displayTitle'  => $displayTitle,
-					'description'   => $description,
-				);
+		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
+		if ( !empty( $file ) ) {
+			$videoTitle = $title->getText();
+			if ( empty( $displayTitle ) ) {
+				$displayTitle = $videoTitle;
 			}
+
+			// get thumbnail
+			$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
+			$videoThumb = $thumb->toHtml( $thumbOptions );
+			$thumbUrl = $thumb->getUrl();
+
+			$largeThumb = $file->transform( array( 'width' => self::MAX_THUMBNAIL_WIDTH, 'height' => self::MAX_THUMBNAIL_HEIGHT ) );
+			$largeThumbUrl = $largeThumb->getUrl();
+
+			// replace original thumbnail with the new one
+			if ( !empty( $altThumbName ) ) {
+				$imageData = $this->getImageData( $altThumbName );
+				if ( !empty( $imageData ) ) {
+					$videoThumb = str_replace( $thumbUrl, $imageData['thumbUrl'], $videoThumb );
+					$largeThumbUrl = $imageData['largeThumbUrl'];
+				}
+			}
+
+			// get description
+			if ( empty( $description ) ) {
+				$videoHandlerHelper = new VideoHandlerHelper();
+				$description = $videoHandlerHelper->getVideoDescription( $file );
+			}
+
+			$video = array(
+				'videoTitle'    => $videoTitle,
+				'videoKey'      => $title->getDBKey(),
+				'videoThumb'    => $videoThumb,
+				'largeThumbUrl' => $largeThumbUrl,
+				'altThumbName'  => $altThumbName,
+				'displayTitle'  => $displayTitle,
+				'description'   => $description,
+			);
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -168,16 +166,13 @@ class VideoPageToolHelper extends WikiaModel {
 
 		$data = array();
 
-		$title = Title::newFromText( $imageTitle, NS_FILE );
-		if ( $title instanceof Title ) {
-			$file = wfFindFile( $title );
-			if ( $file instanceof File && $file->exists() ) {
-				$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
-				$data['thumbUrl'] = $thumb->getUrl();
+		$file = WikiaFileHelper::getFileFromTitle( $imageTitle );
+		if ( !empty( $file ) ) {
+			$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
+			$data['thumbUrl'] = $thumb->getUrl();
 
-				$largeThumb = $file->transform( array( 'width' => self::MAX_THUMBNAIL_WIDTH, 'height' => self::MAX_THUMBNAIL_HEIGHT ) );
-				$data['largeThumbUrl'] = $largeThumb->getUrl();
-			}
+			$largeThumb = $file->transform( array( 'width' => self::MAX_THUMBNAIL_WIDTH, 'height' => self::MAX_THUMBNAIL_HEIGHT ) );
+			$data['largeThumbUrl'] = $largeThumb->getUrl();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -228,12 +223,9 @@ class VideoPageToolHelper extends WikiaModel {
 	 * @return boolean
 	 */
 	public function validateVideoKey( $videoTitle, &$errMsg ) {
-		$title = Title::newFromText( $videoTitle, NS_FILE );
-		if ( $title instanceof Title ) {
-			$file = wfFindFile( $title );
-			if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
-				return true;
-			}
+		$file = WikiaFileHelper::getVideoFileFromTitle( $videoTitle );
+		if ( !empty( $file ) ) {
+			return true;
 		}
 
 		$errMsg = wfMessage( 'videohandler-error-video-no-exist' )->plain();
@@ -261,21 +253,37 @@ class VideoPageToolHelper extends WikiaModel {
 	 * @param string $errMsg
 	 */
 	public function validateAltThumbName( $ThumbName, &$errMsg ) {
-		$title = Title::newFromText( $ThumbName, NS_FILE );
-		if ( $title instanceof Title ) {
-			$file = wfFindFile( $title );
-			if ( $file instanceof File && $file->exists() ) {
-				if ( $file->getWidth() == self::MAX_THUMBNAIL_WIDTH && $file->getHeight() == self::MAX_THUMBNAIL_HEIGHT ) {
-					return true;
-				}
-
-				$errMsg = wfMessage( 'videopagetool-error-image-invalid-size' )->plain();
-				return false;
+		$file = WikiaFileHelper::getFileFromTitle( $ThumbName );
+		if ( !empty( $file ) ) {
+			if ( $file->getWidth() == self::MAX_THUMBNAIL_WIDTH && $file->getHeight() == self::MAX_THUMBNAIL_HEIGHT ) {
+				return true;
 			}
+
+			$errMsg = wfMessage( 'videopagetool-error-image-invalid-size' )->plain();
+			return false;
 		}
 
 		$errMsg = wfMessage( 'videopagetool-error-image-not-exist' )->plain();
 		return false;
+	}
+
+	/**
+	 * Render assets by section (used in VideoHomePageController)
+	 * @param VideoPageToolProgram $program
+	 * @param string $section [featured/category/fan]
+	 * @return type
+	 */
+	public function renderAssetsBySection( $program, $section ) {
+		$data = array();
+		if ( $program instanceof VideoPageToolProgram ) {
+			$thumbOptions = array( 'noLightbox' => true );
+			$assets = $program->getAssetsBySection( $section );
+			foreach ( $assets as $asset ) {
+				$data[] = $asset->getAssetData( $thumbOptions );
+			}
+		}
+
+		return $data;
 	}
 
 }
