@@ -490,16 +490,17 @@ body > .global-notification,
 }
 
 @media screen and (max-width: $breakpoint-content) {
+
+	body {
+		&:after,
+		&:before {
+			display: none;
+		}
+	}
+	
 	// ABTesting: DAR-1859: START
 	html:not(.keep-rail-on-right) {
 	// ABTesting: DAR-1859: END
-
-		body {
-			&:after,
-			&:before {
-				display: none;
-			}
-		}
 
 		.WikiHeader .WikiNav {
 			right: 0;
