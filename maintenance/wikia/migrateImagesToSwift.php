@@ -131,9 +131,6 @@ class MigrateImagesToSwift extends Maintenance {
 
 		if ( $path === false ) return;
 
-		$this->migratedImagesSize += $row['size'];
-		$this->migratedImagesCnt++;
-
 		// set metadata
 		$metadata = [];
 		$mime = "{$row['major_mime']}/{$row['minor_mime']}";
@@ -147,6 +144,10 @@ class MigrateImagesToSwift extends Maintenance {
 		if ( !$res->isOK() ) {
 			Wikia::log( __METHOD__, 'error', $path );
 			$this->migratedImagesFailedCnt++;
+		}
+		else {
+			$this->migratedImagesSize += $row['size'];
+			$this->migratedImagesCnt++;
 		}
 
 		// "progress bar"
