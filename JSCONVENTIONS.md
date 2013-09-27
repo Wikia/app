@@ -312,8 +312,14 @@ We use JSDoc style comments above function declarations and at the top of files 
 	* AMD modules
 	  * All lowercase
 	  * If the code is exension-specific, namespace with the extension. Ex: 'myextension.mypage'
+	    * If there's a folder structure within the extension's js directory, the module's namespace should match the folder structure
+	    * ex: MyExtension -> js -> views -> myfeature.js => myextension.views.myfeature
+	    * ex: MyExtension -> js -> models -> myfeature.js =>myextension.models.myfeature
 	  * If the code is meant to be used site wide or by multiple different extensions, namespace with 'wikia'.  Ex: 'wikia.mymodule'
-	* folders
+	  * hint: if it's in the modules folder, it should be namespace with 'wikia' 
+	  * 
+        * folders
+          * 
 	* files
 	* constants
 	* casing
