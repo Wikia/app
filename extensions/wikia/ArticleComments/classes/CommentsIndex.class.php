@@ -551,7 +551,7 @@ class CommentsIndex extends WikiaModel {
 	 * @param Revision $revision revision containig the lastest version of article comment
 	 * @param $flags Integer bitfield, the same as in WikiPage::doEdit method
 	 */
-	static public function onArticleDoEdit( $dbw,  Title $title, Revision $revision, $flags) {
+	static public function onArticleDoEdit( $dbw, Title $title, Revision $revision, $flags) {
 		global $wgEnableWallEngine;
 
 		if ( !empty( $wgEnableWallEngine ) && WallHelper::isWallNamespace( $title->getNamespace() ) ) {

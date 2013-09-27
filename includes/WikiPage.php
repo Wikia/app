@@ -1447,7 +1447,7 @@ class WikiPage extends Page {
 			$this->updateRevisionOn( $dbw, $revision, 0 );
 
 			// wikia changes begin
-			wfRunHooks( 'ArticleDoEdit', array( &$dbw, $this->mTitle, $revision, $flags ) );
+			wfRunHooks( 'ArticleDoEdit', array( $dbw, $this->mTitle, $revision, $flags ) );
 			// wikia changes end
 
 			wfRunHooks( 'NewRevisionFromEditComplete', array( $this, $revision, false, $user ) );
