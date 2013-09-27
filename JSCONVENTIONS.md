@@ -291,6 +291,33 @@ We use JSDoc style comments above function declarations and at the top of files 
 * @author (at the top of a file)
 * @see (for links to documentation)
 
+###Naming Conventions###
+
+####Variables###
+Use lazyCamelCase for all variables unless the variable represents a constructor.  Constructers should us UpperCamelCase.
+Also, try to avoid acronyms and be explicit so it is clear to anyone reading your code what the variable does.  Since we don't have an uglifier that reduces variable size yet, do this within reason.
+
+####AMD modules####
+AMD modules should be all lowercase.  
+If the code is exension-specific, namespace with the extension. 
+```javascript
+define( 'myextension.mypage' ... )
+```
+If there's a folder structure within the extension's scripts directory, the module's namespace should match the folder structure.
+
+MyExtension -> scrips -> views -> myfeature.js => myextension.views.myfeature
+	    * ex: MyExtension -> scripts -> models -> myfeature.js =>myextension.models.myfeature
+	  * If the code is meant to be used site wide or by multiple different extensions, namespace with 'wikia'.  Ex: 'wikia.mymodule'
+	  * hint: if it's in the modules folder, it should be namespace with 'wikia' 
+        * folders
+          * UpperCamelCase for extension names
+          * lower case for anything inside script folders
+          * use 'styles' (instead of 'css') and 'scripts' (instead of 'js')
+	* files
+	* constants
+	* casing
+
+
 ## Still to be defined
 * Error handling and custom exception handling (handle this later)
 * Delete Operator
@@ -304,26 +331,6 @@ We use JSDoc style comments above function declarations and at the top of files 
   * jQuery code assumes no built in object prototypes are modified
   * Modifying builtins like Object.prototype and Array.prototype are strictly forbidden. Modifying other builtins like Function.prototype is less dangerous but still leads to hard to debug issues in production and should be avoided.
 * Structure
-* Naming Conventions
-	* vars
-	  * lazyCamelCase unless it's a constructor.
-	  * avoid acronyms and try to be explicit. 
-	  * We don't have an uglifier yet so do this within reason.  
-	* AMD modules
-	  * All lowercase
-	  * If the code is exension-specific, namespace with the extension. Ex: 'myextension.mypage'
-	    * If there's a folder structure within the extension's scripts directory, the module's namespace should match the folder structure
-	    * ex: MyExtension -> scrips -> views -> myfeature.js => myextension.views.myfeature
-	    * ex: MyExtension -> scripts -> models -> myfeature.js =>myextension.models.myfeature
-	  * If the code is meant to be used site wide or by multiple different extensions, namespace with 'wikia'.  Ex: 'wikia.mymodule'
-	  * hint: if it's in the modules folder, it should be namespace with 'wikia' 
-        * folders
-          * UpperCamelCase for extension names
-          * lower case for anything inside script folders
-          * use 'styles' (instead of 'css') and 'scripts' (instead of 'js')
-	* files
-	* constants
-	* casing
 * Directory Structure
 * AMD
 
