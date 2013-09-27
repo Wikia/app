@@ -1011,8 +1011,10 @@ $config['videohomepage_scss'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => array(
-		'//extensions/wikia/VideoPageTool/css/VideoHomePage.scss',
+		// Dependencies
 		'//resources/wikia/libraries/jquery/bxslider/jquery.bxslider.scss',
+		// VideoHomePage
+		'//extensions/wikia/VideoPageTool/css/HomePage/main.scss',
 		'//extensions/wikia/VideoPageTool/css/HomePage/featured.scss',
 	)
 );

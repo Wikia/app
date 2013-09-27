@@ -29,21 +29,21 @@ $total-columns: 12 !default;
     margin-#{$opposite-direction}: -($column-gutter/2);
     margin-top: 0;
     margin-bottom: 0;
-    max-width: none;
+    /* max-width: none; */
   }
 
   // use @include grid-row(collapse); to collapsed a container row margins
   @else if $behavior == collapse {
     width: 100%;
     margin: 0;
-    max-width: $row-width;
+    /* max-width: $row-width; */
   }
 
   // use @include grid-row(nest-collapse); to collapse outer margins on a nested row
   @else if $behavior == nest-collapse {
     width: auto;
     margin: 0;
-    max-width: none;
+    /* max-width: none; */
   }
 
   // use @include grid-row; to use a container row
@@ -53,7 +53,7 @@ $total-columns: 12 !default;
     margin-#{$opposite-direction}: auto;
     margin-top: 0;
     margin-bottom: 0;
-    max-width: $row-width;
+    /* max-width: $row-width; */
   }
 
   // Clearfix for all rows
