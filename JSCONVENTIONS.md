@@ -11,6 +11,7 @@
   * [Comments](#comments)
   * [Naming Convensions](#naming-convensions)
   * [Delete Operator](#delete-operator)
+  * [Modifying prototypes of built-in objects](#modifying-prototypes-of-built-in-objects)
 * [Still to be defined](#still-to-be-defined)
 
 ## Language Rules
@@ -338,6 +339,13 @@ Try to avoid using the delete operator.  Contrary to what you might think, the d
 Quoted from google's style guide: 
 > "In modern JavaScript engines, changing the number of properties on an object is much slower than reassigning the values. The delete keyword should be avoided except when it is necessary to remove a property from an object's iterated list of keys, or to change the result of if (key in obj)."
 
+###Modifying prototypes of built-in objects###
+This is heavily discouraged.  We'll follow Google's style guidelines here: 
+>"Modifying builtins like Object.prototype and Array.prototype are strictly forbidden. Modifying other builtins like Function.prototype is less dangerous but still leads to hard to debug issues in production and should be avoided."
+
+Also, jQuery code works on the assumption that no built in object prototypes are modified.
+
+
 ## Still to be defined
 * Naming convensions for: 
   * files
@@ -345,10 +353,6 @@ Quoted from google's style guide:
   * casing
 
 * Error handling and custom exception handling (handle this later)
-* Modifying prototypes of built-in objects
-  * Avoid doing 
-  * jQuery code assumes no built in object prototypes are modified
-  * Modifying builtins like Object.prototype and Array.prototype are strictly forbidden. Modifying other builtins like Function.prototype is less dangerous but still leads to hard to debug issues in production and should be avoided.
 * Structure
 * Directory Structure
 * AMD
