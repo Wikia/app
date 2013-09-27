@@ -876,7 +876,7 @@ class DPLMain {
 				case 'replaceintitle':
 					// we offer a possibility to replace some part of the title
 					$aReplaceInTitle = explode( ',', $sArg, 2 );
-					if (isset($aReplaceInTitle[1])) {
+					if ( isset( $aReplaceInTitle[1] ) ) {
 						$aReplaceInTitle[1] = self::killHtmlTags( $aReplaceInTitle[1] );
 					}
 					break;
@@ -1730,7 +1730,7 @@ class DPLMain {
 							if ( $cacheAge <= $iDPLCachePeriod ) {
 								$cacheOutput = file_get_contents( $cacheFile );
 								$cacheOutputPos = strpos( $cacheOutput, "+++\n" );
-	
+
 								$cacheInput = substr( $cacheOutput, 0, $cacheOutputPos );
 								$cacheOutput = substr( $cacheOutput, $cacheOutputPos + 4 );
 								$cacheFound = true;
@@ -3026,7 +3026,7 @@ class DPLMain {
 				$sTitleText = $title->getPrefixedText();
 			}
 			if ( $aReplaceInTitle[0] != '' ) {
-				$sTitleText = preg_replace( $aReplaceInTitle[0], empty($aReplaceInTitle[1])?'':$aReplaceInTitle[1], $sTitleText );
+				$sTitleText = preg_replace( $aReplaceInTitle[0], empty( $aReplaceInTitle[1] ) ? '':$aReplaceInTitle[1], $sTitleText );
 			}
 
 			// chop off title if "too long"
@@ -3280,7 +3280,7 @@ class DPLMain {
 		// save generated wiki text to dplcache page if desired
 		if ( $DPLCache != '' ) {
 			// save data in choosen storage
-			switch ($DPLCacheStorage) {
+			switch ( $DPLCacheStorage ) {
 				case 'files':
 					if ( !is_writeable( $cacheFile ) ) {
 						self::mkdirr( dirname( $cacheFile ) );
@@ -3300,16 +3300,16 @@ class DPLMain {
 					break;
 				case 'memcache':
 					// create the unique cache key (replace spaces with underscores)
-					$cacheKey = self::getMemcacheKey($DPLCache);
+					$cacheKey = self::getMemcacheKey( $DPLCache );
 					$cacheData = array(
 						'timestamp' => time(),
 						'input' => $originalInput,
 						'output' => $output,
 					);
-					$wgMemc->set($cacheKey,$cacheData,$iDPLCachePeriod);
+					$wgMemc->set( $cacheKey, $cacheData, $iDPLCachePeriod );
 					break;
 			}
-			
+
 			$cacheTimeStamp = self::prettyTimeStamp( date( 'YmdHis' ) );
 			$dplElapsedTime = time() - $dplStartTime;
 			if ( $logger->iDebugLevel >= 2 ) {
@@ -3625,9 +3625,9 @@ class DPLMain {
 		}
 		return $text;
 	}
-	
+
 	private static function getMemcacheKey( $dplCacheId ) {
 		return str_replace( ' ', '_', wfMemcKey( 'dplcache', $dplCacheId ) );
 	}
-	
+
 }
