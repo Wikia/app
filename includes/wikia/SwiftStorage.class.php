@@ -115,6 +115,11 @@ class SwiftStorage {
 		// set public ACL
 		$url = sprintf( 'http://%s/swift/v1/%s', $this->wg->FSSwiftServer, $containerName );
 
+		wfDebug( sprintf( "%s: %s (ACL - read: '.r:*')\n",
+			__METHOD__,
+			$url
+		));
+
 		/* @var $req \CurlHttpRequest */
 		$req = \MWHttpRequest::factory( $url, array( 'method' => 'POST', 'noProxy' => true ) );
 		$req->setHeader( 'X-Auth-Token', $this->authToken );

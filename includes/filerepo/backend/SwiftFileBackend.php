@@ -748,6 +748,13 @@ class SwiftFileBackend extends FileBackendStore {
 		$creds = $contObj->cfs_auth->export_credentials();
 		$url = $creds['storage_url'] . '/' . rawurlencode( $contObj->name );
 
+		wfDebug( sprintf( "%s: %s (ACL - read: '%s', write: '%s')\n",
+			__METHOD__,
+			$url,
+			implode( ',', $readGrps ),
+			implode( ',', $writeGrps )
+		));
+
 		// Note: 10 second timeout consistent with php-cloudfiles
 		$req = MWHttpRequest::factory( $url, array( 'method' => 'POST', 'timeout' => $this->swiftTimeout, 'noProxy' => true ) );
 		$req->setHeader( 'X-Auth-Token', $creds['auth_token'] );
