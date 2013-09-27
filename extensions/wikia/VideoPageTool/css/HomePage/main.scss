@@ -69,6 +69,7 @@
 
 	// Branding Partners
 	.partners {
+		clear: both;
 		& > ul {
 			margin: 0 auto;
 
@@ -115,14 +116,14 @@
 			width: 107px;
 		}
 
-		.ico-realgravity { 
-			@include sprite-VideoPageTool('ico-realgravity'); 
+		.ico-realgravity {
+			@include sprite-VideoPageTool('ico-realgravity');
 			height: 36px;
 			width: 36px;
 		}
 
-		.ico-screenplay { 
-			@include sprite-VideoPageTool('ico-screenplay'); 
+		.ico-screenplay {
+			@include sprite-VideoPageTool('ico-screenplay');
 			height: 40px;
 			width: 35px;
 		}

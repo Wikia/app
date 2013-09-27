@@ -286,6 +286,36 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		}
 	}
 
+	/**
+	 * get image data
+	 * @requestParam string imageTitle
+	 * @responseParam string result [ok/error]
+	 * @responseParam string msg - result message
+	 * @responseParam array $image [ array( 'thumbUrl' => $url, 'largeThumbUrl' => $url ) ]
+	 */
+	public function getImageData() {
+		$imageTitle = $this->getVal( 'imageTitle', '' );
+
+		if ( empty( $imageTitle ) ) {
+			$this->result = 'error';
+			$this->msg = wfMessage( 'videos-error-empty-title' )->plain();
+			return;
+		}
+
+		$helper = new VideoPageToolHelper();
+		$image = $helper->getImageData( $imageTitle );
+
+		if ( empty( $image ) ) {
+			$this->result = 'error';
+			$this->msg = wfMessage( 'videohandler-unknown-title' )->plain();
+		} else {
+			$this->result = 'ok';
+			$this->msg = '';
+		}
+
+		$this->data = $image;
+	}
+
 	/*
 	 * Render header
 	 */
