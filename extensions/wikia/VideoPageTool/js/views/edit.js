@@ -1,7 +1,8 @@
 define( 'vpt.views.edit', [
 	'jquery',
-	'vpt.models.validator'
-], function( $, Validator ) {
+	'vpt.models.validator',
+	'views.videopageadmin.thumbnailUpload'
+], function( $, Validator, ThumbnailUploader ) {
 
 	'use strict';
 
@@ -18,6 +19,16 @@ define( 'vpt.views.edit', [
 			this.initReset();
 			this.initSwitcher();
 			this.initAddVideo();
+			this.initMediaUploader();
+		},
+
+		initMediaUploader: function() {
+			$( '.form-box' ).on( 'click', '.media-uploader-btn', function(evt) {
+					evt.preventDefault();
+					return new ThumbnailUploader({
+							el: $(this).closest('.form-box')
+					});
+			});
 		},
 
 		initAddVideo: function() {
@@ -60,7 +71,12 @@ define( 'vpt.views.edit', [
 										.trigger( 'keyup' ); // for validation
 									$descInput.val( video.description )
 										.trigger( 'keyup' ); // for validation
-									$thumb.html( video.videoThumb );
+
+									// Check to see if a custom thumb has been uploaded by user
+									// Only update thumbnail if custom thumb has not been added
+									if ( !$thumb.data('modified') ) {
+										$thumb.html( video.videoThumb );
+									}
 
 									// close VET modal
 									vet.close();
@@ -107,7 +123,7 @@ define( 'vpt.views.edit', [
 
 			// If the back end has thrown an error, run the front end validation on page load
 			if( $( '#vpt-form-error' ).length ) {
-				this.validator.checkFields();
+				this.validator.formIsValid();
 			}
 		},
 
@@ -131,7 +147,7 @@ define( 'vpt.views.edit', [
 
 		/*
 		 * This reset is very specific to this form since it covers reverting titles and thumbnails
-		 * @todo: we may want to just create a default empty version of the form and hide it if it's not needed.
+		 * @TODO: we may want to just create a default empty version of the form and hide it if it's not needed.
 		 * That way we could just replace all the HTML to its default state without worrying about clearing every form
 		 * field.
 		 */
@@ -148,6 +164,14 @@ define( 'vpt.views.edit', [
 			// Rest the video thumb
 			this.$form.find( '.video-thumb' )
 				.html( '' );
+
+			// Hide all thumbnail preview links
+			this.$form.find( '.preview-large-link' )
+				.hide();
+
+			// reset custom thumb name
+			this.$form.find( '.alt-thumb-name' )
+				.text( $.msg('videopagetool-image-title-default-text') );
 
 			// Also clear all error messages for better UX
 			this.validator.clearErrors();
