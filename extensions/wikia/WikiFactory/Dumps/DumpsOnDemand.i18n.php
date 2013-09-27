@@ -292,6 +292,7 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author IAlex
  * @author Jean-Frédéric
  * @author Peter17
@@ -309,6 +310,7 @@ $messages['fr'] = array(
 	'dump-database-request-already-submitted' => 'La création d’une archive a été récemment demandée (il y a moins de 7 jours)',
 	'dump-database-request-requested' => 'Requête pour un dump de la base de donnée envoyée',
 	'dump-database-info-more' => 'Voyez <a href="http://community.wikia.com/wiki/Help:Database_download">ceci</a> pour plus d\'informations',
+	'dump-database-last-unknown' => 'Inconnu',
 );
 
 /** Galician (galego)
@@ -505,6 +507,7 @@ $messages['mk'] = array(
 	'dump-database-request-already-submitted' => 'Базната резерва е побарана неодамна (пред помалку од 7 дена)',
 	'dump-database-request-requested' => 'Барањето за базната резерва е испратено',
 	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Погледајте тука</a> за повеќе информации',
+	'dump-database-last-unknown' => 'Непознато',
 );
 
 /** Marathi (मराठी)
@@ -535,6 +538,7 @@ $messages['ms'] = array(
 	'dump-database-request-already-submitted' => 'Longgokan telah dipohon baru-baru ini (tidak lebih 7 hari yang lalu)',
 	'dump-database-request-requested' => 'Permohonan longgokan pangkalan data dihantar',
 	'dump-database-info-more' => 'Sila <a href="http://community.wikia.com/wiki/Help:Database_download">rujuk di sini</a> untuk maklumat lanjut',
+	'dump-database-last-unknown' => 'Tidak dikenali',
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -663,6 +667,7 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Cainamarques
  * @author Daemorris
  * @author Giro720
  */
@@ -679,6 +684,7 @@ $messages['pt-br'] = array(
 	'dump-database-request-already-submitted' => 'Foi solicitada recentemente uma cópia para arquivo (há menos de 7 dias)',
 	'dump-database-request-requested' => 'Pedido para descarregamento do banco de dados enviado',
 	'dump-database-info-more' => 'Por favor <a href="http://community.wikia.com/wiki/Help:Database_download">veja isto</a> para mais informações',
+	'dump-database-last-unknown' => 'Desconhecido',
 );
 
 /** Romanian (română)
@@ -711,6 +717,7 @@ $messages['roa-tara'] = array(
 /** Russian (русский)
  * @author Lockal
  * @author MaxSem
+ * @author Okras
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -726,6 +733,7 @@ $messages['ru'] = array(
 	'dump-database-request-already-submitted' => 'Резервная копия была запрошена недавно (менее 7 дней назад).',
 	'dump-database-request-requested' => 'Запрос на дамп базы данных отправлен',
 	'dump-database-info-more' => 'Пожалуйста, <a href="http://community.wikia.com/wiki/Help:Database_download">см. дополнительные сведения</a>',
+	'dump-database-last-unknown' => 'Неизвестно',
 );
 
 /** Sinhala (සිංහල)
@@ -836,9 +844,17 @@ $messages['uk'] = array(
 	'dump-database-last-unknown' => 'Невідомо',
 );
 
+/** Wu (吴语)
+ * @author 十弌
+ */
+$messages['wuu'] = array(
+	'dump-database-last-unknown' => '弗識',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Liuxinyu970226
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
@@ -854,6 +870,7 @@ $messages['zh-hans'] = array(
 	'dump-database-request-already-submitted' => '转储最近已被要求（7天内）',
 	'dump-database-request-requested' => '发送数据库转储请求',
 	'dump-database-info-more' => '请<a href="http://community.wikia.com/wiki/Help:Database_download">查看</a>更多的信息',
+	'dump-database-last-unknown' => '未知',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

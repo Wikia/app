@@ -542,6 +542,7 @@ $messages['roa-tara'] = array(
  * @author DCamer
  * @author Eleferen
  * @author Kuzura
+ * @author Okras
  */
 $messages['ru'] = array(
 	'stafflog-desc' => 'Централизованное ведение журнала для сотрудников',
@@ -559,6 +560,7 @@ $messages['ru'] = array(
 	'stafflog-filter-type-piggyback' => 'Вход',
 	'stafflog-filter-type-renameuser' => 'Переименование участника',
 	'stafflog-filter-type-wikifactory' => 'Статус вики',
+	'action-stafflog' => 'посмотреть централизованный штатный журнал',
 );
 
 /** Swedish (svenska)

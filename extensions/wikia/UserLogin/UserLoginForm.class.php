@@ -16,12 +16,18 @@ class UserLoginForm extends LoginForm {
 	function load() {
 		parent::load();
 		$request = $this->mOverrideRequest;
+		if ( $request->getText( 'userloginext01', '' ) != '' ) {
+			$this->mUsername = $request->getText( 'userloginext01', '' );
+		}
+		if ( $request->getText( 'userloginext02', '' ) != '' ) {
+			$this->mPassword = $request->getText( 'userloginext02' );
+			$this->mRetype = $request->getText( 'userloginext02' );
+		}
 		if ( $request->getText( 'username', '' ) != '' ) {
-			$this->mUsername = $request->getText( 'username', '' );
+			$this->fakeUsername = $request->getText( 'username', '' );
 		}
 		if ( $request->getText( 'password', '' ) != '' ) {
-			$this->mPassword = $request->getText( 'password' );
-			$this->mRetype = $request->getText( 'password' );
+			$this->fakePassword = $request->getText( 'password' );
 		}
 		if ( $request->getText( 'email', '' ) != '' ) {
 			$this->mEmail = $request->getText( 'email' );
@@ -77,7 +83,7 @@ class UserLoginForm extends LoginForm {
 			$this->mainLoginForm( wfMessage( 'userlogin-error-mail-error', $result->getMessage() )->parse() );
 			return false;
 		} else {
-			$this->mainLoginForm( wfMessage( 'usersignup-account-creation-email-sent', $this->mEmail, $this->username )->parse(), 'success' );
+			$this->mainLoginForm( wfMessage( 'usersignup-account-creation-email-sent', $this->mEmail, $this->mUsername )->parse(), 'success' );
 			return $u;
 		}
 	}
@@ -91,7 +97,7 @@ class UserLoginForm extends LoginForm {
 		}
 
 		// check if exist in tempUser
-		if ( TempUser::getTempUserFromName( $this->mUsername ) ) {
+		if ( UserLoginHelper::isTempUser( $this->mUsername ) && TempUser::getTempUserFromName( $this->mUsername ) ) {
 			$this->mainLoginForm( wfMessage( 'userlogin-error-userexists' )->escaped(), 'error', 'username' );
 			return false;
 		}
@@ -244,6 +250,21 @@ class UserLoginForm extends LoginForm {
 
 	public function throttleHit( $limit ) {
 		$this->mainLoginForm( wfMessage( 'userlogin-error-acct_creation_throttle_hit', $limit )->parse() );
+	}
+
+	/**
+	 * Checks whether some hidden fields of signup form remain empty
+	 * fakeUsername hidden username field (should be empty)
+	 * fakePassword hidden password field (should be empty)
+	 * These fields should be empty otherwise it probably has been modified by a bot
+	 * and signup process should be interrupted
+	 * @return bool
+	 */
+	public function EmptySpamFields() {
+		if( empty( $this->fakeUsername) && empty( $this->fakePassword ) ) {
+			return true;
+		}
+		return false;
 	}
 
 }

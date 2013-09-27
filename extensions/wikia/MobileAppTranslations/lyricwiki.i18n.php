@@ -578,6 +578,7 @@ $messages['id'] = array(
 	'about-licensing-0' => 'Aplikasi ini adalah 100% sah. Royalti dibayarkan kepada pemegang hak lagu melalui Gracenote - seperti pada situs web LyricWiki.',
 	'about-rate-0-android' => 'Jika Anda menyukai aplikasi ini, silakan menilai ini 5 bintang di Android Market!',
 	'gracenote-takedown' => 'Aduh! Sayang sekali, kami tidak diberi izin untuk menampilkan seluruh lirik untuk lagu ini pada saat ini (ini terjadi pada kurang dari 1% dari lagu-lagu kami). Mohon coba lagi minggu depan.',
+	'ringtone-matcher-by-song' => 'Kirimkan Nada Dering %s ke Ponsel Anda',
 );
 
 /** Ingush (ГӀалгӀай)
