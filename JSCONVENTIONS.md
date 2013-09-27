@@ -307,7 +307,7 @@ If there's a folder structure within the extension's scripts directory, the modu
 For example, if the tree looks like this: 
 
     |-- MyExtension 
-    | |-- scrips
+    | |-- scripts
     | | |-- views
     | | | |-- myfeature.js
     | | |-- models
@@ -327,15 +327,15 @@ define( 'wikia.mymodule' )
 Hint: If it's in the modules folder, it should be namespace with 'wikia'.
 
 ####Folders####
-UpperCamelCase for extension names
-          * lower case for anything inside script folders
-          * use 'styles' (instead of 'css') and 'scripts' (instead of 'js')
-	* files
-	* constants
-	* casing
+For clarity and future-proofness, all javascript files should go into a 'scripts' folder and all stylesheet files should go into a 'styles' folder.  This is different from what we've done in the past, which was putting all scripts into a 'js' folder and all stylesheets into a 'css' folder. 
 
 
 ## Still to be defined
+* Naming convensions for: 
+  * files
+  * constants
+  * casing
+
 * Error handling and custom exception handling (handle this later)
 * Delete Operator
   * Try to avoid using the delete operator
