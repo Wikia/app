@@ -1365,7 +1365,6 @@ $config['ui_repo_api_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//resources/wikia/modules/nirvana.js',
-		'//resources/wikia/modules/deferred.js',
 		'//resources/wikia/modules/uifactory.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/modules/uicomponent.js'
