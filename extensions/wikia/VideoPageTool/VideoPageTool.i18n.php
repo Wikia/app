@@ -44,6 +44,7 @@ $messages['en'] = array(
 	'videopagetool-header-dashboard' => 'Dashboard',
 	'videopagetool-success-save' => 'Your changes have been saved',
 	'videopagetool-hint-description-maxlength' => '$1 characters max',
+	'videopagetool-hint-required-dimensions' => 'Image dimensions must be 1024 x 461',
 
 	// Home Page Section: Header
 	'videohomepage-header-dropdown-name' => 'Discover',
@@ -94,6 +95,7 @@ $messages['qqq'] = array(
 	'videopagetool-tooltip-in-progress' => 'In Progress',
 	'videopagetool-header-dashboard' => 'Title for dashboard page',
 	'videopagetool-success-save' => 'This text appears if your changes have been saved successfully',
+	'videopagetool-hint-required-dimensions' => 'Message describing exact dimensions required for custom image upload (1024 x 461)',
 
 	// Home Page Section: Header
 	'videohomepage-header-dropdown-name' => 'Name of the dropdown that allows users to explore Wikia Video\'s sections',
