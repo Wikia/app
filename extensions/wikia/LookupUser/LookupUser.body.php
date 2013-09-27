@@ -227,7 +227,7 @@ EOT
 
 		$authTs = $user->getEmailAuthenticationTimestamp();
 		if ( $authTs ) {
-			$authenticated = wfMsg( 'lookupuser-authenticated', $wgLang->timeanddate( $authTs ) );
+			$authenticated = wfMsg( 'lookupuser-authenticated', $wgLang->timeanddate( wfTimestamp( TS_MW, $authTs ), true ) );
 		} else {
 			$authenticated = wfMsg( 'lookupuser-not-authenticated' );
 		}
@@ -243,7 +243,7 @@ EOT
 			$email_output = wfMsg( 'lookupuser-no-email' );
 		}
 		if( $user->getRegistration() ) {
-			$registration = $wgLang->timeanddate( $user->getRegistration() );
+			$registration = $wgLang->timeanddate( wfTimestamp( TS_MW, $user->getRegistration() ), true );
 		} else {
 			$registration = wfMsg( 'lookupuser-no-registration' );
 		}
@@ -266,7 +266,7 @@ EOT
 		$wgOut->addWikiText( '*' . $email_output );
 		$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-realname', $user->getRealName() ) );
 		$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-registration', $registration ) );
-		$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-touched', $wgLang->timeanddate( $user->mTouched ) ) );
+		$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-touched', $wgLang->timeanddate( wfTimestamp( TS_MW, $user->mTouched ), true ) ) );
 		$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-info-authenticated', $authenticated ) );
 
 		$allowedAdoption = $user->getOption( 'AllowAdoption', true );
