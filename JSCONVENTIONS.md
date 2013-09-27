@@ -354,9 +354,7 @@ For clarity and future-proofness, all javascript files should go into a 'scripts
   * files
   * constants
   * casing
-
 * Error handling and custom exception handling (handle this later)
 * Structure
-* Directory Structure
 * AMD
-
+* Short descriptions for Style Rules and Language rules to be placed under each heading.  Also a short description for the page at the very top. 
