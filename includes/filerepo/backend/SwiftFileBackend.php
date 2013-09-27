@@ -411,9 +411,12 @@ class SwiftFileBackend extends FileBackendStore {
 		return $status;
 	}
 
+	// Wikia change - begin (@author macbre)
+	// this method is called when storage file / directory is deleted
+	// and restricts access to ALL files in the current container (BAC-849)
 	/**
 	 * @see FileBackendStore::doSecureInternal()
-	 */
+	 *
 	protected function doSecureInternal( $fullCont, $dir, array $params ) {
 		$status = Status::newGood();
 
@@ -439,6 +442,8 @@ class SwiftFileBackend extends FileBackendStore {
 
 		return $status;
 	}
+	**/
+	// Wikia change - end
 
 	/**
 	 * @see FileBackendStore::doCleanInternal()
@@ -753,7 +758,7 @@ class SwiftFileBackend extends FileBackendStore {
 			$url,
 			implode( ',', $readGrps ),
 			implode( ',', $writeGrps )
-		));
+		)); // Wikia change
 
 		// Note: 10 second timeout consistent with php-cloudfiles
 		$req = MWHttpRequest::factory( $url, array( 'method' => 'POST', 'timeout' => $this->swiftTimeout, 'noProxy' => true ) );
