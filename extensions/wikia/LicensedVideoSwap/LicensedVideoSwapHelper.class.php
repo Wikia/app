@@ -254,8 +254,10 @@ class LicensedVideoSwapHelper extends WikiaModel {
 			}
 		}
 
+		$videos = $this->suggestionSearch( $titleObj );
+
 		wfProfileOut( __METHOD__ );
-		return $this->suggestionSearch( $titleObj );
+		return $videos;
 	}
 
 	/**
@@ -313,10 +315,11 @@ class LicensedVideoSwapHelper extends WikiaModel {
 				continue;
 			}
 
-			$videoDetail = $helper->getVideoDetail( $videoInfo,
-													self::THUMBNAIL_WIDTH,
-													self::THUMBNAIL_HEIGHT,
-													self::POSTED_IN_ARTICLES );
+			$videoDetail = $helper->getVideoDetailFromWiki($app->wg->WikiaVideoRepoDBName,
+														   $videoInfo['title'],
+														   self::THUMBNAIL_WIDTH,
+														   self::THUMBNAIL_HEIGHT,
+														   self::POSTED_IN_ARTICLES );
 			// Go to the next suggestion if we can't get any details for this one
 			if ( empty($videoDetail) ) {
 				continue;

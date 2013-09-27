@@ -45,7 +45,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 
 		$descriptionKey = 'specialvideos-meta-description';
 
-		switch ($catInfo->cat_id) {
+		switch ( $catInfo->cat_id ) {
 			case WikiFactoryHub::CATEGORY_ID_GAMING:
 				$descriptionKey .= '-gaming';
 				break;
@@ -69,7 +69,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		// Add GlobalNotification message after adding a new video. We can abstract this later if we want to add more types of messages
 		$msg = $this->request->getVal( 'msg', '');
 
-		if( !empty( $msg ) ) {
+		if ( !empty( $msg ) ) {
 			$msgTitle = $this->request->getVal( 'msgTitle', '');
 			$msgTitle = urldecode($msgTitle);
 
@@ -83,8 +83,13 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		// Variable to display the "add video" link at the end of the results
 		$addVideo = 1;
 
+		// Filter on a comma separated list of providers if given.
+		$providers = $this->request->getVal('provider', '');
+		// Turn this into an array of providers if this parameters is set
+		$providers = $providers ? explode(',', $providers) : null;
+
 		$specialVideos = new SpecialVideosHelper();
-		$videos = $specialVideos->getVideos( $sort, $page );
+		$videos = $specialVideos->getVideos( $sort, $page, $providers );
 
 		$mediaService = new MediaQueryService();
 		if ( $sort == 'premium' ) {
@@ -103,7 +108,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		// Set up pagination
 		$pagination = '';
 		$linkToSpecialPage = SpecialPage::getTitleFor("Videos")->escapeLocalUrl();
-		if( $totalVideos > SpecialVideosHelper::VIDEOS_PER_PAGE ) {
+		if ( $totalVideos > SpecialVideosHelper::VIDEOS_PER_PAGE ) {
 			$pages = Paginator::newFromArray( array_fill( 0, $totalVideos, '' ), SpecialVideosHelper::VIDEOS_PER_PAGE );
 			$pages->setActivePage( $page - 1 );
 
