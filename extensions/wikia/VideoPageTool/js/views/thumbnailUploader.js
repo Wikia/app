@@ -66,8 +66,9 @@ define( 'views.videopageadmin.thumbnailUpload', [
 					that.$el.find( '.preview-large-link' )
 						.attr( 'href', response.data.largeThumbUrl )
 						.fadeIn( 200 );
-					that.$el.find( '.alt-thumb' ).val( img.imgTitle );
-					that.$el.find( '.alt-thumb-name' ).text( img.imgTitle );
+
+					that.$el.find( '.alt-thumb' ).val( response.data.imageKey );
+					that.$el.find( '.alt-thumb-name' ).text( response.data.imageTitle );
 
 					// Set data-modified to true to show that custom thumb has been uploaded
 					$videoThumb.data('modified', true);

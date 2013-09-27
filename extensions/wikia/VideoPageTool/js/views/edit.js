@@ -9,7 +9,7 @@ define( 'vpt.views.edit', [
 	var VPTEdit = function() {
 		this.$form = $( '.vpt-form' );
 		// all elements to be validated - jQuery validate doesn't support arrays of form names inputs like "names[]" :(
-		this.$formFields = this.$form.find( '.description, .display-title, .video-key' );
+		this.$formFields = this.$form.find( '.description, .display-title, .video-key, .alt-thumb' );
 		this.init();
 	};
 

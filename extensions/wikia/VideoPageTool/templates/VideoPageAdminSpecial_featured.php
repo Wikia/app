@@ -31,7 +31,7 @@
 
 				<p class="alt-thumb-name <?= $video[ 'altThumbClass' ]  ?>">
 					<? $thumbText = $video[ 'altThumbName' ] ?>
-					<?= $thumbText == '' ? wfMessage('videopagetool-video-title-default-text')->plain() : $thumbText ?>
+					<?= $thumbText == '' ? wfMessage('videopagetool-image-title-default-text')->plain() : $thumbText ?>
 				</p>
 
 				<input type="hidden" name="altThumbName[]" class="alt-thumb" id="alt-thumb-<?= $x ?>" value="<?= $video[ 'altThumbName' ] ?>">

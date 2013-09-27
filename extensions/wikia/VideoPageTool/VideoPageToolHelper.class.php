@@ -168,6 +168,9 @@ class VideoPageToolHelper extends WikiaModel {
 
 		$file = WikiaFileHelper::getFileFromTitle( $imageTitle );
 		if ( !empty( $file ) ) {
+			$data['imageTitle'] = $imageTitle->getText();
+			$data['imageKey'] = $imageTitle->getDBKey();
+
 			$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
 			$data['thumbUrl'] = $thumb->getUrl();
 
