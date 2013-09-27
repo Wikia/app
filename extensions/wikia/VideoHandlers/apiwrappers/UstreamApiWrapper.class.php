@@ -7,6 +7,8 @@ class UstreamApiWrapper extends ApiWrapper {
 	protected static $CACHE_KEY = 'ustreamapi';
 	protected static $aspectRatio = 1.7777778;
 
+	protected $sourceId = null;
+
 	public static function isMatchingHostname( $hostname ) {
 		return endsWith( $hostname, "ustream.tv" ) ? true : false;
 	}
@@ -20,8 +22,14 @@ class UstreamApiWrapper extends ApiWrapper {
 			return null;
 		}
 
-		if ( preg_match( '/recorded\/(\d+)/', $url, $matches ) ) {
+		if ( preg_match( '/recorded\/(\d+)(\/highlight\/(\d+))?/', $url, $matches ) ) {
 			$videoId = $matches[1];
+
+			// new video id for highlight video
+			if ( !empty( $matches[3] ) ) {
+				$videoId .= 'HID'.$matches[3];
+			}
+
 			wfProfileOut( __METHOD__ );
 			return new static( $videoId );
 		}
@@ -53,6 +61,18 @@ class UstreamApiWrapper extends ApiWrapper {
 	}
 
 	/**
+	 * load metadata
+	 * @param array $overrideFields
+	 */
+	protected function loadMetadata( array $overrideFields = array() ) {
+		parent::loadMetadata( $overrideFields );
+
+		if ( !isset( $this->metadata['sourceId'] ) ) {
+			$this->metadata['sourceId'] = $this->getSourceId();
+		}
+	}
+
+	/**
 	 * get original description
 	 * @return string
 	 */
@@ -63,7 +83,6 @@ class UstreamApiWrapper extends ApiWrapper {
 
 		return '';
 	}
-
 
 	/**
 	 * get thumbnail url
@@ -87,7 +106,8 @@ class UstreamApiWrapper extends ApiWrapper {
 	 */
 	protected function getVideoTitle() {
 		if ( !empty( $this->interfaceObj['results']['title'] ) ) {
-			return $this->interfaceObj['results']['title'];
+			$prefix = ( $this->getSourceId() == '' ) ? '' : 'Highlight - ';
+			return $prefix.$this->interfaceObj['results']['title'];
 		}
 
 		return '';
@@ -106,7 +126,7 @@ class UstreamApiWrapper extends ApiWrapper {
 	 * @return integer
 	 */
 	protected function getVideoDuration() {
-		if ( !empty( $this->interfaceObj['results']['lengthInSecond'] ) ) {
+		if ( !empty( $this->interfaceObj['results']['lengthInSecond'] ) && $this->getSourceId() == '' ) {
 			return (int) $this->interfaceObj['results']['lengthInSecond'];
 		}
 
@@ -147,10 +167,31 @@ class UstreamApiWrapper extends ApiWrapper {
 	 * @return string $apiUrl
 	 */
 	protected function getApiUrl() {
-		$apiUrl = str_replace( '$1', $this->videoId, static::$API_URL );
+		$videoId = $this->getSourceId();
+		if ( empty( $videoId ) ) {
+			$videoId = $this->videoId;
+		}
+
+		$apiUrl = str_replace( '$1', $videoId, static::$API_URL );
 		$apiUrl = str_replace( '$2', F::app()->wg->UstreamApiConfig['appKey'], $apiUrl );
 
 		return $apiUrl;
+	}
+
+	/**
+	 * get source video id for highlight video
+	 * @return string $videoId
+	 */
+	protected function getSourceId() {
+		if ( is_null( $this->sourceId ) ) {
+			if ( preg_match( '/(\d+)HID(\d+)/', $this->videoId, $matches ) ) {
+				$this->sourceId = $matches[1];
+			} else {
+				$this->sourceId = '';
+			}
+		}
+
+		return $this->sourceId;
 	}
 
 }
