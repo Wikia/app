@@ -63,7 +63,7 @@ class CityVisualizationTest extends WikiaBaseTest {
 			foreach ($outSlots as $verticalName => $count) {
 				// can be smaller that initial count because of promoted wikis
 				$this->assertLessThanOrEqual($slots[$verticalName], $count);
-				$this->assertGreaterThanOrEqual($slots[$verticalName] - 1, $count);
+				$this->assertGreaterThanOrEqual($slots[$verticalName] - $promotedWikiCount, $count);
 			}
 		}
 	}
@@ -97,6 +97,20 @@ class CityVisualizationTest extends WikiaBaseTest {
 		];
 		$out[] = [$slots, 10];
 		$out[] = [$slots, 1];
+
+		$slots = [
+			'lifestyle' => 17,
+			'entertainment' => 0,
+			'video games' => 0
+		];
+		$out[] = [$slots, 2];
+
+		$slots = [
+			'lifestyle' => 0,
+			'entertainment' => 0,
+			'video games' => 17
+		];
+		$out[] = [$slots, 2];
 
 		return $out;
 	}

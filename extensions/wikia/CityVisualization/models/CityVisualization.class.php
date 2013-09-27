@@ -182,19 +182,8 @@ class CityVisualization extends WikiaModel {
 
 			$batchPromotedWikis = array_slice($promotedWikis, $offsets[self::PROMOTED_ARRAY_KEY] * self::PROMOTED_SLOTS, self::PROMOTED_SLOTS);
 			$batchPromotedWikisCount = count($batchPromotedWikis);
-			$removePerVertical = floor( $batchPromotedWikisCount / $verticalsCount );
 
-			// decrease vertical counts when we've got 1 or 2 promoted wikis
-			$tmpVerticalSlots = $verticalSlots;
-			if ($batchPromotedWikisCount > $removePerVertical *  self::PROMOTED_SLOTS) {
-				$verticalsForDecrease = array_rand($tmpVerticalSlots, $batchPromotedWikisCount - $removePerVertical *  self::PROMOTED_SLOTS);
-				if (!is_array($verticalsForDecrease)) {
-					$verticalsForDecrease = [$verticalsForDecrease];
-				}
-				foreach($verticalsForDecrease as $verticalForDecrease) {
-					$tmpVerticalSlots[$verticalForDecrease]--;
-				}
-			}
+			$tmpVerticalSlots = $this->decreaseVerticalSlots($batchPromotedWikisCount, $verticalSlots);
 
 			if( ($offsets[self::PROMOTED_ARRAY_KEY] + 1) * self::PROMOTED_SLOTS >= $promotedWikisCount ) {
 				$offsets[self::PROMOTED_ARRAY_KEY] = 0;
@@ -203,19 +192,21 @@ class CityVisualization extends WikiaModel {
 			}
 
 			foreach ($wikis as $verticalName => &$wikilist) {
-				$batchWikis = array_slice(
-					$wikilist,
-					$offsets[$verticalName] * $verticalSlots[$verticalName],
-					$tmpVerticalSlots[$verticalName] - $removePerVertical
-				);
+				if (isset($tmpVerticalSlots[$verticalName])) {
+					$batchWikis = array_slice(
+						$wikilist,
+						$offsets[$verticalName] * $verticalSlots[$verticalName],
+						$tmpVerticalSlots[$verticalName]
+					);
 
-				$offsets[$verticalName]++;
-				if( ($offsets[$verticalName] + 1) * $verticalSlots[$verticalName] > $wikisCounts[$verticalName] ) {
-					Wikia::log(__METHOD__, ' offset zeroing ', 'zeroing ' . $verticalName . ' offset from ' . $offsets[$verticalName]);
-					$offsets[$verticalName] = 0;
+					$offsets[$verticalName]++;
+					if( ($offsets[$verticalName] + 1) * $verticalSlots[$verticalName] > $wikisCounts[$verticalName] ) {
+						Wikia::log(__METHOD__, ' offset zeroing ', 'zeroing ' . $verticalName . ' offset from ' . $offsets[$verticalName]);
+						$offsets[$verticalName] = 0;
+					}
+
+					$batch = array_merge($batch, $batchWikis);
 				}
-
-				$batch = array_merge($batch, $batchWikis);
 			}
 
 			$batches[] = array(
@@ -226,6 +217,39 @@ class CityVisualization extends WikiaModel {
 		
 		wfProfileOut(__METHOD__);
 		return $batches;
+	}
+
+	private function decreaseVerticalSlots($promotedWikisCount, $verticalSlots) {
+		// decrease all verticals if promoted wikis number is greater that verticals
+		while ($promotedWikisCount >= count($verticalSlots)) {
+			foreach($verticalSlots as $verticalName => &$verticalCount) {
+				if ($verticalCount > 0) {
+					$verticalCount--;
+					$promotedWikisCount--;
+				}
+				if ($verticalCount <= 0) {
+					unset($verticalSlots[$verticalName]);
+				}
+			}
+		}
+		// decrease random vertical when promoted wikis count is less than verticals
+		while ($promotedWikisCount > 0) {
+			$verticalsForDecrease = array_rand($verticalSlots, min($promotedWikisCount, count($verticalSlots)));
+			if (!is_array($verticalsForDecrease)) {
+				$verticalsForDecrease = [$verticalsForDecrease];
+			}
+			foreach($verticalsForDecrease as $verticalForDecrease) {
+				if ($verticalSlots[$verticalForDecrease] > 0) {
+					$verticalSlots[$verticalForDecrease]--;
+					$promotedWikisCount--;
+				}
+				if ($verticalSlots[$verticalForDecrease] <= 0) {
+					unset($verticalSlots[$verticalForDecrease]);
+				}
+			}
+		}
+
+		return $verticalSlots;
 	}
 
 	protected function getWikisList(WikiListConditioner $conditioner) {
