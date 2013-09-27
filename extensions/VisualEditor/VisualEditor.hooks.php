@@ -78,10 +78,15 @@ class VisualEditorHooks {
 	 * @param $skin Skin
 	 */
 	public static function onBeforePageDisplay( &$output, &$skin ) {
-		if ( in_array( $skin->getSkinName(), self::$supportedSkins ) ) {
-			$output->addModules( array( 'ext.visualEditor.wikiaViewPageTarget.init' ) );
-			//$output->addModuleStyles( array( 'ext.visualEditor.viewPageTarget.noscript' ) );
+		if (
+			!in_array( $skin->getSkinName(), self::$supportedSkins ) ||
+			!$skin->getUser()->getOption( 'visualeditor-enable' ) ||
+			$skin->getUser()->getOption( 'visualeditor-betatempdisable' )
+		) {
+			return true;
 		}
+		$output->addModules( array( 'ext.visualEditor.wikiaViewPageTarget.init' ) );
+		//$output->addModuleStyles( array( 'ext.visualEditor.viewPageTarget.noscript' ) );
 		return true;
 	}
 
