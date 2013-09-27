@@ -37,7 +37,7 @@
 	}
 }
 
-.wam-header {
+.WikiaArticle .wam-header {
 	background-image: url("/extensions/wikia/WAMPage/images/wamheaderbg.jpg");
 	height: 285px;
 	@if ( $responsive-layout-enabled ) {
@@ -198,6 +198,7 @@
 			display: block;
 			font-weight: bold;
 			height: 45px;
+			font-size: 13px;
 			line-height: 15px;
 			padding: 23px 15px 0 15px;
 			text-transform: uppercase;
