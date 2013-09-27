@@ -95,7 +95,6 @@ class CityVisualization extends WikiaModel {
 		if (!is_array($batches) || count($batches) < $numberOfBatches) {
 			Wikia::log(__METHOD__, ' not enough batches ', count($batches) . '/' . $numberOfBatches);
 			$batches = $this->getWikiBatchesFromDb($corpWikiId, $contLang);
-			Wikia::log(__METHOD__, ' not enough batches ', count($batches) . '/' . $numberOfBatches);
 		}
 
 		if (!empty($batches)) {
