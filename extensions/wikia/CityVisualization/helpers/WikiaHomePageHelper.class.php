@@ -719,11 +719,11 @@ class WikiaHomePageHelper extends WikiaModel {
 				shuffle($batch[CityVisualization::DEMOTED_ARRAY_KEY]);
 			}
 
-			$biggerSlots = array_slice($promotedBatch, 0, self::SLOTS_BIG + self::SLOTS_MEDIUM);
-			$promotedCount = count($biggerSlots);
+			$biggerSlotsWikis = array_slice($promotedBatch, 0, self::SLOTS_BIG + self::SLOTS_MEDIUM);
+			$promotedCount = count($biggerSlotsWikis);
 			if ($promotedCount < self::SLOTS_BIG + self::SLOTS_MEDIUM) {
-				$biggerSlots = array_merge(
-					$biggerSlots,
+				$biggerSlotsWikis = array_merge(
+					$biggerSlotsWikis,
 					array_splice(
 						$batch[CityVisualization::DEMOTED_ARRAY_KEY],
 						0,
@@ -731,9 +731,9 @@ class WikiaHomePageHelper extends WikiaModel {
 					)
 				);
 			}
-			shuffle($biggerSlots);
-			$processedBatch[self::SLOTS_BIG_ARRAY_KEY] = array_splice($biggerSlots, 0, self::SLOTS_BIG);
-			$processedBatch[self::SLOTS_MEDIUM_ARRAY_KEY] = array_splice($biggerSlots, 0, self::SLOTS_MEDIUM);
+			shuffle($biggerSlotsWikis);
+			$processedBatch[self::SLOTS_BIG_ARRAY_KEY] = array_splice($biggerSlotsWikis, 0, self::SLOTS_BIG);
+			$processedBatch[self::SLOTS_MEDIUM_ARRAY_KEY] = array_splice($biggerSlotsWikis, 0, self::SLOTS_MEDIUM);
 			$processedBatch[self::SLOTS_SMALL_ARRAY_KEY] = $batch[CityVisualization::DEMOTED_ARRAY_KEY];
 
 			$processedBatch = $this->prepareWikisForVisualization($processedBatch);
