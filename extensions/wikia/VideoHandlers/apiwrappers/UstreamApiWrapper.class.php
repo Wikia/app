@@ -22,7 +22,7 @@ class UstreamApiWrapper extends ApiWrapper {
 			return null;
 		}
 
-		if ( preg_match( '/recorded\/(\d+)(\/highlight\/(\d+))*/', $url, $matches ) ) {
+		if ( preg_match( '/recorded\/(\d+)(\/highlight\/(\d+))?/', $url, $matches ) ) {
 			$videoId = $matches[1];
 
 			// new video id for highlight video
