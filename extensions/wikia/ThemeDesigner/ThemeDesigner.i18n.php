@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'action-themedesigner' => 'access Theme Designer',
 	'themedesigner-or' => 'or',
 	'themedesigner-desc' => 'Allows wiki administrators to design a theme for a wiki',
 	'themedesigner-title' => 'Wikia Theme Designer',
@@ -69,6 +70,7 @@ please enter the name of the wiki to save.',
  * @author The Evil IP address
  */
 $messages['qqq'] = array(
+	'action-themedesigner' => '{{doc-action|themedesigner}}',
 	'themedesigner-or' => '"or", as in, either Text Wordmark *or* Graphic Wordmark.
 {{Identical|Or}}',
 	'themedesigner-desc' => '{{desc}}',
@@ -878,6 +880,7 @@ Para gardar, escriba o nome do wiki.',
  * @author TK-999
  */
 $messages['hu'] = array(
+	'action-themedesigner' => 'a Stílustervező használata',
 	'themedesigner-or' => 'vagy',
 	'themedesigner-desc' => 'Lehetővé teszi a wiki stílusának megtervezését a wiki adminisztrátorainak',
 	'themedesigner-title' => 'Wikia Stílustervező',
