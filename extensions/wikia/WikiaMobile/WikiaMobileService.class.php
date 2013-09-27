@@ -175,9 +175,7 @@ class WikiaMobileService extends WikiaService {
 
 		//Add GameGuides SmartBanner promotion on Gaming Vertical
 		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner ) ) {
-			foreach ( $this->assetsManager->getURL( 'wikiamobile_smartbanner_init_js' ) as $src ) {
-				$this->jsBodyFiles .= "<script src='{$src}'></script>";
-			}
+			$this->jsExtensionPackages[] = 'wikiamobile_smartbanner_init_js';
 
 			$this->globalVariables['wgAppName'] = $this->wg->WikiaMobileSmartBannerConfig['name'];
 			$this->globalVariables['wgAppAuthor'] = $this->wg->WikiaMobileSmartBannerConfig['author'];

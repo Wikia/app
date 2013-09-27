@@ -222,6 +222,7 @@ $messages['nl'] = array(
  */
 $messages['oc'] = array(
 	'campfire-page-header' => '$1 (de $2)',
+	'campfire-licensed-under' => 'Jos licéncia $1',
 );
 
 /** Polish (polski)

@@ -71,7 +71,7 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 	},
 
 	getTitle: function() {
-		var msgTitleVal = this.messageTitle.val().trim(), // prevent titles containing only whitespace
+		var msgTitleVal = $.trim(this.messageTitle.val()), // prevent titles containing only whitespace
 			title = !this.messageTitle.hasClass('placeholder') && msgTitleVal.length > 0;
 		return title ? this.messageTitle.val():'';
 	},
@@ -93,7 +93,7 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 	},
 
 	getMessageBody: function() {
-		return this.messageBody.val().trim();
+		return $.trim(this.messageBody.val());
 	},
 
 	showPreview: function(e) {
@@ -162,7 +162,7 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 
 	postNewMessage_ChangeText: function() {
 		// check if both topic and content are filled
-		var topic_str = this.messageTitle.val().trim();
+		var topic_str = $.trim(this.messageTitle.val());
 		var topic = !this.messageTitle.hasClass('placeholder') && topic_str.length > 0;
 		this.postNewMessage_ChangeText_handleContent();
 		if (topic && this.messageSubmit.html() == $.msg('wall-button-to-submit-comment-no-topic')) {
@@ -199,7 +199,7 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 		var content = this.canSubmit();
 		var title = this.messageTitle.val();
 		if (title.length > 0) {
-			this.messageTitle.val(title.trim());
+			this.messageTitle.val($.trim(title));
 		}
 		if(!content) {
 			this.buttons.hide();

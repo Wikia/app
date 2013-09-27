@@ -83,40 +83,38 @@ var RelatedVideos = {
 			relatedVideosModule.on( 'click', '.scrollleft', this.scrollleft );
 
 			relatedVideosModule.find('.addVideo').addVideoButton({
-				callbackAfterSelect: function(url) {
-					require(['wikia.vet'], function(vet) {
-						RelatedVideos.track({
-							action: Wikia.Tracker.ACTIONS.ADD,
-							label: 'add-video-success',
-							trackingMethod: 'both'
-						});
-
-						$.nirvana.postJson(
-							// controller
-							'RelatedVideosController',
-							// method
-							'addVideo',
-							// data
-							{
-								articleId: wgArticleId,
-								url: url
-							},
-							// success callback
-							function( formRes ) {
-								GlobalNotification.hide();
-								if ( formRes.error ) {
-									RelatedVideos.showError( formRes.error );
-								} else {
-									vet.close();
-									RelatedVideos.injectCarouselElement( formRes.html );
-								}
-							},
-							// error callback
-							function() {
-								RelatedVideos.showError( $.msg('vet-error-while-loading') );
-							}
-						);
+				callbackAfterSelect: function(url, VET) {
+					RelatedVideos.track({
+						action: Wikia.Tracker.ACTIONS.ADD,
+						label: 'add-video-success',
+						trackingMethod: 'both'
 					});
+
+					$.nirvana.postJson(
+						// controller
+						'RelatedVideosController',
+						// method
+						'addVideo',
+						// data
+						{
+							articleId: wgArticleId,
+							url: url
+						},
+						// success callback
+						function( formRes ) {
+							GlobalNotification.hide();
+							if ( formRes.error ) {
+								RelatedVideos.showError( formRes.error );
+							} else {
+								VET.close();
+								RelatedVideos.injectCarouselElement( formRes.html );
+							}
+						},
+						// error callback
+						function() {
+							RelatedVideos.showError( $.msg('vet-error-while-loading') );
+						}
+					);
 					// Don't move on to second VET screen.  We're done.
 					return false;
 				}

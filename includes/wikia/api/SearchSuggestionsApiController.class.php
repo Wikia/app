@@ -1,4 +1,5 @@
 <?php
+
 /**
 * Controller to suggest searched phrases
 *

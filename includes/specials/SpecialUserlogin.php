@@ -1050,6 +1050,7 @@ class LoginForm extends SpecialPage {
 		$u->setNewpassword( $np, $throttle );
 
 		/* Wikia change begin */
+		//@TODO get rid of TempUser handling when it will be globally disabled
 		$tempUser = null;
 		wfRunHooks( 'MailPasswordTempUser' , array( &$u, &$tempUser ) );
 		if ( empty($tempUser) ) {

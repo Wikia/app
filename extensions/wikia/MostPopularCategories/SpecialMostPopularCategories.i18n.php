@@ -129,6 +129,13 @@ $messages['fi'] = array(
 	'mostpopularcategories' => 'Suosituimmat luokat',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'mostpopularcategories' => 'Best dámdu bólkar',
+);
+
 /** French (français)
  * @author Peter17
  */

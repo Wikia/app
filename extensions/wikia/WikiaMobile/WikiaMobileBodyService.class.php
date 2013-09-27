@@ -29,10 +29,6 @@ class WikiaMobileBodyService extends WikiaService {
 			$this->response->setVal( 'pageHeaderContent', '');
 		}
 		$this->response->setVal('bodyContent', $bodyContent);
-		$this->response->setVal(
-			'relatedPages',
-			(	!empty( $this->wg->EnableRelatedPagesExt ) &&
-				empty( $this->wg->EnableAnswers ) ) ? $this->app->getView( 'RelatedPagesController', 'WikiaMobileIndex' ) : null);
 
 		$this->response->setVal(
 			'categoryLinks',
@@ -40,14 +36,6 @@ class WikiaMobileBodyService extends WikiaService {
 				'WikiaMobileCategoryService',
 				'index',
 				array( 'categoryLinks' => $categoryLinks )
-			)
-		);
-
-		$this->response->setVal(
-			'navMenu',
-			$this->app->renderView(
-				'WikiaMobileNavigationService',
-				'navMenu'
 			)
 		);
 

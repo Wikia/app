@@ -1,0 +1,11 @@
+//response content type box
+.content-type {
+	label {
+		@include boxHeader;
+		display: block;
+	}
+	select {
+		width: 210px;
+		background-position: 190px 10px;
+	}
+}

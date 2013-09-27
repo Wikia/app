@@ -42,7 +42,7 @@ require(['wikia.querystring', require.optional('topbar'), require.optional('toc'
 		//close toc and topbar when 'curtain' is clicked
 		d.getElementById('wkCurtain').addEventListener(clickEvent, function(){
 			toc.close();
-			topbar.closeDropDown();
+			topbar.close();
 		});
 
 		if (wkShrPag) {

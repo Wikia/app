@@ -2,9 +2,6 @@
 	<form class="WikiaSearch" id="search-v2-form" action="<?=$specialSearchUrl;?>">
 
 		<div class="SearchInput">
-			<?php foreach($namespaces as $ns): ?>
-			<input type="hidden" class="default-tab-value" name="ns<?=$ns;?>" value="1" />
-			<?php endforeach; ?>
 
 			<p><?= wfMsg('wikiasearch2-global-search-headline') ?></p>
 

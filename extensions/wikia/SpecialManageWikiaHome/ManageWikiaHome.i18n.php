@@ -1029,6 +1029,7 @@ $messages['pt'] = array(
  * @author Luckas
  */
 $messages['pt-br'] = array(
+	'manage-wikia-home-wiki-filter' => 'Filtrar',
 	'manage-wikia-home-wiki-filter-reset' => 'Limpar',
 	'manage-wikia-home-wiki-list-id' => 'Id',
 	'manage-wikia-home-wiki-list-vertical' => 'Vertical',

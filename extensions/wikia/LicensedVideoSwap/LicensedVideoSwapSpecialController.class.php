@@ -81,7 +81,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// for monobook users, specify wikia skin in querystring
 		$queryArr = [];
-		if( $skin == "monobook" ) {
+		if ( $skin == "monobook" ) {
 			$queryArr["useskin"] = "wikia";
 		}
 
@@ -134,6 +134,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			$this->html = '';
 			$this->result = 'error';
 			$this->msg = $msg;
+			return;
 		}
 
 		// check user permission
@@ -141,6 +142,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			$this->html = '';
 			$this->result = 'error';
 			$this->msg = wfMessage( 'lvs-error-permission' )->text();
+			return;
 		}
 
 		$helper = new LicensedVideoSwapHelper();
