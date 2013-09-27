@@ -197,24 +197,22 @@ class GameGuidesController extends WikiaController {
 			$wgTitle = $title;
 
 			$revId = $title->getLatestRevID();
+			$articleId = $title->getArticleID();
 
 			if ( $revId > 0 ) {
-				$relatedPages = (
-					!empty( $this->wg->EnableRelatedPagesExt ) &&
-						empty( $this->wg->MakeWikiWebsite ) &&
-						empty( $this->wg->EnableAnswers ) ) ?
-					$this->app->sendRequest( 'RelatedPages', 'index',
-						array(
-							'categories' => $this->wg->Title->getParentCategories()
-						)
-					) : null;
+				try {
+					$relatedPages =
+						$this->app->sendRequest( 'RelatedPagesApi', 'getList',
+							[
+								'ids' => [$articleId]
+							]
+						)->getVal('items')[$articleId];
 
-				if ( !is_null( $relatedPages ) ) {
-					$relatedPages = $relatedPages->getVal( 'pages' );
-
-					if ( !empty ( $relatedPages ) ) {
+					if ( !empty( $relatedPages ) ) {
 						$this->response->setVal( 'relatedPages', $relatedPages );
 					}
+				} catch ( NotFoundApiException $error ) {
+					//If RelatedPagesApi is not available don't throw it to app
 				}
 
 				$this->response->setVal(
@@ -325,7 +323,7 @@ class GameGuidesController extends WikiaController {
 		);
 
 		//when apps will be updated this won't be needed anymore
-		$this->response->setVal( 'cb', $hash );
+		$this->response->setVal( 'cb', $this->wg->StyleVersion );
 	}
 
 	/**

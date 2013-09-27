@@ -1,7 +1,7 @@
 <?php
 $messages['en'] = [
 	'css' => 'Cascading Style Sheets',
-	'action-specialcss' => 'edit CSS',
+	'action-editinterface' => 'edit the user interface',
 	'special-css-title' => 'CSS Editor',
 
 	'special-css-minor-edit-label' => 'Minor edit',
@@ -103,7 +103,7 @@ $messages['ru'] = [
 
 $messages['pl'] = [
 	'css' => 'Kaskadowe arkusze stylów',
-	'action-specialcss' => 'edycja CSS',
+	'action-editinterface' => 'edytowania interfejsu użytkownika',
 
 	'special-css-title' => 'CSS Edytor',
 
@@ -129,7 +129,7 @@ $messages['pl'] = [
 
 $messages['qqq'] = [
 	'css' => 'Name of the link to Special:CSS page on Special:SpacialPages list; more about CSS: https://en.wikipedia.org/wiki/Cascading_Style_Sheets',
-	'action-specialcss' => 'Action name displayed in MW permission error message',
+	'action-editinterface' => '{{doc-action|editinterface}}',
 	'special-css-title' => 'Page title visible in the title bar of a browser or on the browser tab',
 
 	'special-css-summary-placeholder' => 'Placeholder text for summary field. Disappears when user starts typing',

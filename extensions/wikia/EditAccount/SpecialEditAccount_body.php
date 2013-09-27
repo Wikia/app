@@ -102,6 +102,7 @@ class EditAccount extends SpecialPage {
 
 				if ( empty( $id ) ) {
 					if ( !empty($wgEnableUserLoginExt) ) {
+						//@TODO remove all mTempUser occuracnes TempUser will be globally disabled
 						$this->mTempUser = TempUser::getTempUserFromName( $userName );
 					}
 					if ( $this->mTempUser ) {
@@ -234,6 +235,7 @@ class EditAccount extends SpecialPage {
 	 * @return Boolean: true on success, false on failure (i.e. if we were given an invalid email address)
 	 */
 	function setEmail( $email, $changeReason = '' ) {
+		global $wgEnableUserLoginExt;
 		$oldEmail = $this->mUser->getEmail();
 		if ( Sanitizer::validateEmail( $email ) || $email == '' ) {
 			if ( $this->mTempUser ) {
@@ -250,9 +252,18 @@ class EditAccount extends SpecialPage {
 			} else {
 				$this->mUser->setEmail( $email );
 				if ( $email != '' ) {
+					if ( !empty( $wgEnableUserLoginExt ) ) {//Clear not confirmed signup flag
+						UserLoginHelper::removeNotConfirmedFlag( $this->mUser );
+					}
 					$this->mUser->confirmEmail();
 					$this->mUser->setOption( 'new_email', null );
 				} else {
+					if ( !empty( $wgEnableUserLoginExt ) && $this->mUser->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
+						//User not confirmed on signup can't has empty email
+						//@TODO introduce new message since usecase here is same as temp user empty email but it's not temp user anymore
+						$this->mStatusMsg = wfMsg( 'editaccount-error-tempuser-email' );
+						return false;
+					}
 					$this->mUser->invalidateEmail();
 				}
 				$this->mUser->saveSettings();
@@ -288,31 +299,50 @@ class EditAccount extends SpecialPage {
 	 * @return Boolean: true on success, false on failure
 	 */
 	function setPassword( $pass, $changeReason = '' ) {
-		if ( $this->mUser->setPassword( $pass ) ) {
-			global $wgUser, $wgTitle;
+		try {
+			// wrap in try/catch in case of PasswordException
 
-			// Save the new settings
-			if ( $this->mTempUser ) {
-				$this->mTempUser->setPassword( $this->mUser->mPassword );
-				$this->mTempUser->updateData();
-				$this->mTempUser->saveSettingsTempUserToUser( $this->mUser );
-				$this->mUser->mName = $this->mTempUser->getName();
+			if ( $this->mUser->setPassword( $pass ) ) {
+				global $wgUser, $wgTitle;
+
+				// Save the new settings
+				if ( $this->mTempUser ) {
+					$this->mTempUser->setPassword( $this->mUser->mPassword );
+					$this->mTempUser->updateData();
+					$this->mTempUser->saveSettingsTempUserToUser( $this->mUser );
+					$this->mUser->mName = $this->mTempUser->getName();
+				} else {
+					$this->mUser->saveSettings();
+				}
+
+				// Log what was done
+				$log = new LogPage( 'editaccnt' );
+				$log->addEntry( 'passchange', $wgTitle, $changeReason, array( $this->mUser->getUserPage() ) );
+
+				// And finally, inform the user that everything went as planned
+				$this->mStatusMsg = wfMsg( 'editaccount-success-pass', $this->mUser->mName );
+				return true;
 			} else {
-				$this->mUser->saveSettings();
+				// We have errors, let's inform the user about those
+				$this->mStatusMsg = wfMsg( 'editaccount-error-pass', $this->mUser->mName );
+				return false;
 			}
 
-			// Log what was done
-			$log = new LogPage( 'editaccnt' );
-			$log->addEntry( 'passchange', $wgTitle, $changeReason, array( $this->mUser->getUserPage() ) );
+		} catch ( PasswordError $err ) {
 
-			// And finally, inform the user that everything went as planned
-			$this->mStatusMsg = wfMsg( 'editaccount-success-pass', $this->mUser->mName );
-			return true;
-		} else {
-			// We have errors, let's inform the user about those
-			$this->mStatusMsg = wfMsg( 'editaccount-error-pass', $this->mUser->mName );
+			// recreating logic from User->setPassword here, would rather not but best solution atm
+			global $wgMinimalPasswordLength;
+			$valid = $this->mUser->getPasswordValidity( $pass );
+			if ( is_array( $valid ) ) {
+				$message = array_shift( $valid );
+				$params = $valid;
+			} else {
+				$message = $valid;
+				$params = array( $wgMinimalPasswordLength );
+			}
+			$this->mStatusMsg = wfMsgExt( $message, array( 'parsemag' ), $params );
 			return false;
-		}
+	 }
 	}
 
 	/**

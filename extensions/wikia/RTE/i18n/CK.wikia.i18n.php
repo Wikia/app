@@ -2525,6 +2525,48 @@ $messages['nl-informal'] = array(
 	'rte-ck-poll-confirmDelete' => 'Weet je zeker dat je de peiling van deze pagina wilt verwijderen?',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'rte-ck-bucket-textAppearance' => 'Aparéncia del tèxte',
+	'rte-ck-bucket-insert' => 'Inserir',
+	'rte-ck-bucket-controls' => 'Contraròtles',
+	'rte-ck-commentEditor-title' => 'Editor de comentaris',
+	'rte-ck-errorPopupTitle' => 'Error !',
+	'rte-ck-hoverPreview-codedElement-intro' => 'Passatz en mòde font per modificar !',
+	'rte-ck-hoverPreview-codedElement-title' => 'Element encodat',
+	'rte-ck-hoverPreview-comment-intro' => 'Aquò pòt pas èsser vist que pendent la modificacion.',
+	'rte-ck-hoverPreview-comment-title' => 'Comentari',
+	'rte-ck-hoverPreview-confirmDelete' => "Sètz segur que volètz suprimir aqueste element d'aquesta pagina ?",
+	'rte-ck-hoverPreview-delete' => 'suprimir',
+	'rte-ck-hoverPreview-edit' => 'modificar',
+	'rte-ck-hoverPreview-media-notExisting' => 'Aqueste imatge o aqueste fichièr existís pas !',
+	'rte-ck-hoverPreview-template-intro' => "Aquò's un modèl.",
+	'rte-ck-hoverPreview-template-notExisting' => 'Aqueste modèl existís pas !',
+	'rte-ck-hoverPreview-video-notExisting' => 'Aquesta vidèo existís pas !',
+	'rte-ck-image-add' => 'Apondre un imatge',
+	'rte-ck-image-photo' => 'Fòto',
+	'rte-ck-image-confirmDelete' => "Sètz segur que volètz suprimir l'imatge d'aquesta pagina ?",
+	'rte-ck-image-confirmDeleteTitle' => 'Suprimir aqueste imatge ?',
+	'rte-ck-link-error-title' => 'Error',
+	'rte-ck-link-external-linkText' => 'Tèxte del ligam',
+	'rte-ck-link-external-tab' => 'Ligam extèrne',
+	'rte-ck-link-external-url' => 'URL',
+	'rte-ck-link-internal-linkText' => 'Tèxte del ligam',
+	'rte-ck-link-internal-pageName' => 'Nom de la pagina',
+	'rte-ck-link-internal-tab' => 'Ligam intèrne',
+	'rte-ck-media-delete' => 'suprimir',
+	'rte-ck-media-edit' => 'modificar',
+	'rte-ck-modeSwitch-toSource' => 'Font',
+	'rte-ck-modeSwitch-toWysiwyg' => 'Visual',
+	'rte-ck-modeSwitch-toSourceTooltip' => 'Passar en mòde font',
+	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Passar en mòde visual',
+	'rte-ck-photoGallery-gallery' => 'Galariá',
+	'rte-ck-photoGallery-slideshow' => 'Diaporama',
+	'rte-ck-photoGallery-slider' => 'Diapositiva',
+);
+
 /** Deitsch (Deitsch)
  * @author Xqt
  */

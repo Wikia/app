@@ -360,6 +360,7 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'toplists-editor-related-article-placeholder' => 'ДӀаязъе йолуш йолу агӀона цӀе',
+	'toplists-update-button' => 'МогӀам Ӏалашбар',
 );
 
 /** Czech (česky)

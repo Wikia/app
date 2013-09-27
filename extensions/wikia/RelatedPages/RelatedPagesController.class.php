@@ -1,35 +1,26 @@
 <?php
-
 class RelatedPagesController extends WikiaController {
+	const MEMC_KEY_VER = '1.005';
 
-	public function init() {
-		$this->addAfterSection = null;
-		$this->pages = array();
-		$this->skipRendering = false;
-	}
+	/**
+	 * @desc Related pages are lazy-loaded on article pages for mobile, oasis and monobook. However, there are extensions
+	 * dependent on this method where related pages module isn't lazy-loaded such as: FilePage (FilePageController.class.php)
+	 */
+	public function section() {
+		global $wgTitle, $wgContentNamespaces, $wgRequest, $wgMemc;
 
-	public function executeIndex( $params = null ) {
-		global $wgTitle, $wgContentNamespaces, $wgRequest, $wgMemc, $wgRelatedPagesAddAfterSection;
+		// request params
+		$altTitle = $this->request->getVal( 'altTitle', null );
+		$relatedPages = RelatedPages::getInstance();
+		$anyNs = $this->request->getVal( 'anyNS', false );
 
-		$altTitle = $this->request->getVal('altTitle', null);
-
-		$title = empty($altTitle) ? $wgTitle : $altTitle;
-
+		$title = empty( $altTitle ) ? $wgTitle : $altTitle;
 		$articleid = $title->getArticleId();
 
-		$relatedPages = RelatedPages::getInstance();
-
-		$categories = $this->request->getVal( 'categories' );
-
-		if ( !is_null( $categories ) ) {
-			$relatedPages->setCategories( $categories );
-		}
-
-		// Determine if we need to care about the current namespace or not
-		if ( !empty($params["anyNS"]) ) {
-			$ignoreNS = false;
+		if( !$anyNs ) {
+			$ignoreNS = !empty( $wgTitle ) && in_array( $wgTitle->getNamespace(), $wgContentNamespaces );
 		} else {
-			$ignoreNS = !empty( $wgTitle ) && !in_array( $wgTitle->getNamespace(), $wgContentNamespaces );
+			$ignoreNS = false;
 		}
 
 		$this->skipRendering =
@@ -38,19 +29,19 @@ class RelatedPagesController extends WikiaController {
 			// check for content namespaces
 			$ignoreNS ||
 			// check if we have any categories
-			count( $relatedPages->getCategories( $title ) ) == 0 ||
+			count( $relatedPages->getCategories( $articleid ) ) == 0 ||
 			// check action
 			$wgRequest->getVal('action', 'view') != 'view' ||
 			// skip, if module was already rendered
 			$relatedPages->isRendered();
 
 		if ( !$this->skipRendering ) {
-			$mKey = wfMemcKey('mOasisRelatedPages', $articleid );
-			//$this->pages = $wgMemc->get($mKey);
+			$mKey = wfMemcKey( 'mOasisRelatedPages', $articleid, self::MEMC_KEY_VER );
+			$this->pages = $wgMemc->get( $mKey );
 			$this->srcAttrName = $this->app->checkSkin( 'monobook' ) ? 'src' : 'data-src';
 
 			if ( empty($this->pages) ) {
-				$this->pages = $relatedPages->get( $articleid );
+				$this->pages = $this->prepareTemplateVars( $relatedPages->get( $articleid ) );
 
 				if ( count( $this->pages ) > 0) {
 					$wgMemc->set( $mKey, $this->pages, 3 * 3600 );
@@ -58,44 +49,42 @@ class RelatedPagesController extends WikiaController {
 					$this->skipRendering = true;
 				}
 			}
-
-			// RT #84264
-			if ( !empty( $wgRelatedPagesAddAfterSection ) && is_numeric( $wgRelatedPagesAddAfterSection ) ) {
-				$this->addAfterSection = intval($wgRelatedPagesAddAfterSection);
-			}
 		}
-		
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
-			$this->overrideTemplate( 'WikiaMobileIndex' );
-		}
-	}
 
-	static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages) {
-		$jsStaticPackages[] = 'wikiamobile_relatedpages_js';
-		//css is in WikiaMobile.scss as AM can't concatanate scss files currently
-
-		return true;
+		$this->mobileSkin = false;
+		$this->relatedPagesHeading = wfMessage( 'wikiarelatedpages-heading' )->plain();
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
 	/**
-	 * @param $article Article
-	 * @param $user User
-	 * @param $text
-	 * @param $summary
-	 * @param $minoredit
-	 * @param $watchthis
-	 * @param $sectionanchor
-	 * @param $flags
-	 * @param $revision
-	 * @param $status
-	 * @param $baseRevId
-	 * @return bool
+	 * @desc Converts array results from RelatedPages::get() method to array for mustache template
+	 *
+	 * @param Array $relatedPages array with results of RelatedPages::get() method
+	 *
+	 * @return array of stdObjects for mustache
 	 */
-	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
-		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
-		global $wgMemc;
-		$mKey = wfMemcKey('mOasisRelatedPages', $article->mTitle->getArticleId());
-		$wgMemc->delete($mKey);
-		return true;
+	private function prepareTemplateVars( $relatedPages ) {
+		wfProfileIn( __METHOD__ );
+
+		$templateVars = [];
+		foreach( $relatedPages as $page ) {
+			$tplVar = new stdClass();
+			$tplVar->pageUrl = $page[ 'url' ];
+			$tplVar->pageTitle = $page[ 'title' ];
+
+			if( !empty( $page[ 'text' ] ) ) {
+				$tplVar->artSnippet = $page[ 'text' ];
+			}
+
+			if( !empty( $page[ 'imgUrl' ] ) ) {
+				$tplVar->imgUrl = $page[ 'imgUrl' ];
+			}
+
+			$templateVars[] = $tplVar;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $templateVars;
 	}
+
 }
