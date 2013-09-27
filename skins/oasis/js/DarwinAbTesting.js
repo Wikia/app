@@ -3,8 +3,8 @@
 var checkElementVisibility = function (elem) {
 	var top = elem.offsetTop,
 		bottom = (top + elem.offsetHeight),
-		wTop = window.scrollY,
-		wBottom = (window.scrollY + window.innerHeight);
+		wTop = ((window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop),
+		wBottom = (wTop + window.innerHeight);
 
 	return wBottom >= top && wTop <= bottom;
 }
