@@ -306,7 +306,13 @@ We use JSDoc style comments above function declarations and at the top of files 
 * Structure
 * Naming Conventions
 	* vars
-	* modules
+	  * lazyCamelCase unless it's a constructor.
+	  * avoid acronyms and try to be explicit. 
+	  * We don't have an uglifier yet so do this within reason.  
+	* AMD modules
+	  * All lowercase
+	  * If the code is exension-specific, namespace with the extension. Ex: 'myextension.mypage'
+	  * If the code is meant to be used site wide or by multiple different extensions, namespace with 'wikia'.  Ex: 'wikia.mymodule'
 	* folders
 	* files
 	* constants
