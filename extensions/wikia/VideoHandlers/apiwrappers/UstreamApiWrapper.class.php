@@ -67,12 +67,9 @@ class UstreamApiWrapper extends ApiWrapper {
 	protected function loadMetadata( array $overrideFields = array() ) {
 		parent::loadMetadata( $overrideFields );
 
-		$metadata = array();
-		if ( !isset( $metadata['sourceId'] ) ) {
-			$metadata['sourceId'] = $this->getSourceId();
+		if ( !isset( $this->metadata['sourceId'] ) ) {
+			$this->metadata['sourceId'] = $this->getSourceId();
 		}
-
-		$this->metadata = array_merge( $this->metadata, $metadata );
 	}
 
 	/**
