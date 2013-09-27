@@ -304,13 +304,30 @@ If the code is exension-specific, namespace with the extension.
 define( 'myextension.mypage' ... )
 ```
 If there's a folder structure within the extension's scripts directory, the module's namespace should match the folder structure.
+For example, if the tree looks like this: 
 
-MyExtension -> scrips -> views -> myfeature.js => myextension.views.myfeature
-	    * ex: MyExtension -> scripts -> models -> myfeature.js =>myextension.models.myfeature
-	  * If the code is meant to be used site wide or by multiple different extensions, namespace with 'wikia'.  Ex: 'wikia.mymodule'
-	  * hint: if it's in the modules folder, it should be namespace with 'wikia' 
-        * folders
-          * UpperCamelCase for extension names
+    |-- MyExtension 
+    | |-- scrips
+    | | |-- views
+    | | | |-- myfeature.js
+    | | |-- models
+    | | | |-- myfeature.js
+
+The module names for these files would be:
+
+```javascript
+define( 'myextension.views.myfeature' ... );
+define( 'myextension.models.myfeature' ... );
+```
+
+If the code is meant to be used site wide or by multiple different extensions, namespace with 'wikia'.  
+```javascript
+define( 'wikia.mymodule' )
+```
+Hint: If it's in the modules folder, it should be namespace with 'wikia'.
+
+####Folders####
+UpperCamelCase for extension names
           * lower case for anything inside script folders
           * use 'styles' (instead of 'css') and 'scripts' (instead of 'js')
 	* files
