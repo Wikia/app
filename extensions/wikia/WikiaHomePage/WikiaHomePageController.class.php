@@ -443,6 +443,7 @@ class WikiaHomePageController extends WikiaController {
 	public function getHubImages() {
 		$lang = $this->wg->contLang->getCode();
 
+		$hubImages = [];
 		if ($this->app->wg->EnableWikiaHubsV2Ext) {
 			$hubImages = WikiaDataAccess::cache(
 				WikiaHubsServicesHelper::getWikiaHomepageHubsMemcacheKey($lang),
