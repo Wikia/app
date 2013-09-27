@@ -54,5 +54,3 @@ JSMessages::registerPackage('VideoPageTool', array(
 	'videopagetool-video-title-default-text',
 	'videopagetool-image-title-default-text'
 ));
-JSMessages::enqueuePackage('VideoPageTool', JSMessages::EXTERNAL);
-
