@@ -52,5 +52,7 @@ JSMessages::registerPackage('VideoPageTool', array(
 	'videopagetool-confirm-clear-message',
 	'videopagetool-description-maxlength-error',
 	'videopagetool-video-title-default-text',
+	'videopagetool-image-title-default-text'
 ));
+JSMessages::enqueuePackage('VideoPageTool', JSMessages::EXTERNAL);
 
