@@ -127,6 +127,7 @@ class DPLMain {
 		// Options
 		$DPLCache = '';
 		$DPLCachePath = '';
+		$DPLCacheStorage = ExtDynamicPageList::$options['dplcachestorage']['default'];
 		$iDPLCachePeriod = intval( ExtDynamicPageList::$options['dplcacheperiod']['default'] );
 
 		$sGoal = ExtDynamicPageList::$options['goal']['default'];
@@ -1706,33 +1707,70 @@ class DPLMain {
 		}
 
 		// if Caching is desired AND if the cache is up to date: get result from Cache and exit
-		global $wgUploadDirectory, $wgRequest;
+		global $wgUploadDirectory, $wgMemc, $wgRequest;
 		if ( $DPLCache != '' ) {
 			$cacheFile = "$wgUploadDirectory/dplcache/$DPLCachePath/$DPLCache";
 			// when the page containing the DPL statement is changed we must recreate the cache as the DPL statement may have changed
 			// otherwise we accept the cache if it is not too old
-			if ( !$bDPLRefresh && file_exists( $cacheFile ) ) {
-				// find out if cache is acceptable or too old
-				$diff = time() - filemtime( $cacheFile );
-				if ( $diff <= $iDPLCachePeriod ) {
-					$cachedOutput = file_get_contents( $cacheFile );
-					$cachedOutputPos = strpos( $cachedOutput, "+++\n" );
-					// when submitting a page we check if the DPL statement has changed
-					if (
-						$wgRequest->getVal( 'action', 'view' ) != 'submit' ||
-						( $originalInput == substr( $cachedOutput, 0, $cachedOutputPos ) )
-					) {
-						$cacheTimeStamp = self::prettyTimeStamp( date( 'YmdHis', filemtime( $cacheFile ) ) );
-						$cachePeriod = self::durationTime( $iDPLCachePeriod );
-						$diffTime = self::durationTime( $diff );
-						$output .= substr( $cachedOutput, $cachedOutputPos + 4 );
-						if ( $logger->iDebugLevel >= 2 ) {
-							$output .= "{{Extension DPL cache|mode=get|page={{FULLPAGENAME}}|cache=$DPLCache|date=$cacheTimeStamp|now=" .
-										date( 'H:i:s' ) . "|age=$diffTime|period=$cachePeriod|offset=$iOffset}}";
+			if ( !$bDPLRefresh ) {
+				$cacheFound = false;
+				$cacheTimeStamp = null;
+				$cacheAge = null;
+				$cacheInput = null;
+				$cacheOutput = null;
+				// load cached data from choosen storage
+				switch ( $DPLCacheStorage ) {
+					case 'files':
+						// check if cache file exists
+						$cacheFile = "$wgUploadDirectory/dplcache/$DPLCachePath/$DPLCache";
+						if ( file_exists( $cacheFile ) ) {
+							// find out if cache is acceptable or too old
+							$cacheTimeStamp = filemtime( $cacheFile );
+							$cacheAge = time() - $cacheTimeStamp;
+							if ( $cacheAge <= $iDPLCachePeriod ) {
+								$cacheOutput = file_get_contents( $cacheFile );
+								$cacheOutputPos = strpos( $cacheOutput, "+++\n" );
+	
+								$cacheInput = substr( $cacheOutput, 0, $cacheOutputPos );
+								$cacheOutput = substr( $cacheOutput, $cacheOutputPos + 4 );
+								$cacheFound = true;
+							}
 						}
-						// ignore further parameters, stop processing, return cache content
-						return $output;
+						break;
+					case 'memcache':
+						// create the unique cache key (replace spaces with underscores)
+						$cacheKey = self::getMemcacheKey( $DPLCache );
+						$cacheData = $wgMemc->get( $cacheKey );
+						// if data was found in memcache
+						if ( $cacheData && is_array( $cacheData ) ) {
+							$cacheTimeStamp = $cacheData['timestamp'];
+							$cacheAge = time() - $cacheTimeStamp;
+							// if cached data isn't too old
+							if ( $cacheAge <= $iDPLCachePeriod ) {
+								$cacheInput = $cacheData['input'];
+								$cacheOutput = $cacheData['output'];
+								$cacheFound = true;
+							}
+						}
+						break;
+				}
+
+				// when submitting a page we check if the DPL statement has changed
+				if (
+					$cacheFound &&
+					( $wgRequest->getVal( 'action', 'view' ) != 'submit' ||
+					( $originalInput == $cacheInput ) )
+				) {
+					$cacheTimeStamp = self::prettyTimeStamp( date( 'YmdHis', $cacheTimeStamp ) );
+					$cachePeriod = self::durationTime( $iDPLCachePeriod );
+					$diffTime = self::durationTime( $cacheAge );
+					$output .= $cacheOutput;
+					if ( $logger->iDebugLevel >= 2 ) {
+						$output .= "{{Extension DPL cache|mode=get|page={{FULLPAGENAME}}|cache=$DPLCache|date=$cacheTimeStamp|now=" .
+									date( 'H:i:s' ) . "|age=$diffTime|period=$cachePeriod|offset=$iOffset}}";
 					}
+					// ignore further parameters, stop processing, return cache content
+					return $output;
 				}
 			}
 		}
@@ -3241,22 +3279,38 @@ class DPLMain {
 
 		// save generated wiki text to dplcache page if desired
 		if ( $DPLCache != '' ) {
-			if ( !is_writeable( $cacheFile ) ) {
-				self::mkdirr( dirname( $cacheFile ) );
-			} elseif ( ( $bDPLRefresh  ||
-				$wgRequest->getVal( 'action', 'view' ) == 'submit' ) &&
-				strpos( $DPLCache, '/' ) > 0 && strpos( $DPLCache, '..' ) === false
-			) {
-				// if the cache file contains a path and the user requested a refesh (or saved the file) we delete all brothers
-				self::rmdirr( dirname( $cacheFile ) );
-				mkdir( dirname( $cacheFile ) );
+			// save data in choosen storage
+			switch ($DPLCacheStorage) {
+				case 'files':
+					if ( !is_writeable( $cacheFile ) ) {
+						self::mkdirr( dirname( $cacheFile ) );
+					} elseif ( ( $bDPLRefresh  ||
+						$wgRequest->getVal( 'action', 'view' ) == 'submit' ) &&
+						strpos( $DPLCache, '/' ) > 0 && strpos( $DPLCache, '..' ) === false
+					) {
+						// if the cache file contains a path and the user requested a refesh (or saved the file) we delete all brothers
+						self::rmdirr( dirname( $cacheFile ) );
+						mkdir( dirname( $cacheFile ) );
+					}
+					$cFile = fopen( $cacheFile, 'w' );
+					fwrite( $cFile, $originalInput );
+					fwrite( $cFile, "+++\n" );
+					fwrite( $cFile, $output );
+					fclose( $cFile );
+					break;
+				case 'memcache':
+					// create the unique cache key (replace spaces with underscores)
+					$cacheKey = self::getMemcacheKey($DPLCache);
+					$cacheData = array(
+						'timestamp' => time(),
+						'input' => $originalInput,
+						'output' => $output,
+					);
+					$wgMemc->set($cacheKey,$cacheData,$iDPLCachePeriod);
+					break;
 			}
+			
 			$cacheTimeStamp = self::prettyTimeStamp( date( 'YmdHis' ) );
-			$cFile = fopen( $cacheFile, 'w' );
-			fwrite( $cFile, $originalInput );
-			fwrite( $cFile, "+++\n" );
-			fwrite( $cFile, $output );
-			fclose( $cFile );
 			$dplElapsedTime = time() - $dplStartTime;
 			if ( $logger->iDebugLevel >= 2 ) {
 				$output .= "{{Extension DPL cache|mode=update|page={{FULLPAGENAME}}|cache=$DPLCache|date=$cacheTimeStamp|age=0|now=" .
@@ -3571,4 +3625,9 @@ class DPLMain {
 		}
 		return $text;
 	}
+	
+	private static function getMemcacheKey( $dplCacheId ) {
+		return str_replace( ' ', '_', wfMemcKey( 'dplcache', $dplCacheId ) );
+	}
+	
 }
