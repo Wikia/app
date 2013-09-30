@@ -99,6 +99,8 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 	$wgHooks['FilePageImageUsageSingleLink'][] = 'ArticleCommentInit::onFilePageImageUsageSingleLink';
 }
 
+$wgHooks['BeforeDeletePermissionErrors'][] = 'ArticleComment::onBeforeDeletePermissionErrors';
+
 //JSMEssages setup
 JSMessages::registerPackage( 'ArticleCommentsCounter', array(
 	'oasis-comments-header',

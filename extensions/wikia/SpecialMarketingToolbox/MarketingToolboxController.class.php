@@ -369,7 +369,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 		$fileName = $this->getVal('fileHandler', false);
 		if ($fileName) {
-			$imageData = ImagesService::getLocalFileThumbUrlAndSizes($fileName, $this->toolboxModel->getThumbnailSize());
+			$imageData = ImagesService::getLocalFileThumbUrlAndSizes($fileName, $this->toolboxModel->getThumbnailSize(), ImagesService::EXT_JPG);
 			$this->fileUrl = $imageData->url;
 			$this->imageWidth = $imageData->width;
 			$this->imageHeight = $imageData->height;

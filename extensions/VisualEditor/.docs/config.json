@@ -1,0 +1,16 @@
+{
+	"--title": "VisualEditor Code Documentation",
+	"--categories": "../.docs/categories.json",
+	"--eg-iframe": "../.docs/eg-iframe.html",
+	"--warnings": ["-no_doc"],
+	"--builtin-classes": true,
+	"--external": "HTMLDocument,Window",
+	"--output": "../docs",
+	"--": [
+		"./external.js",
+		"../modules/oojs",
+		"../modules/unicodejs",
+		"../modules/ve",
+		"../modules/ve-mw"
+	]
+}

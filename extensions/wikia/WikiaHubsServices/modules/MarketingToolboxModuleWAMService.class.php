@@ -74,7 +74,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 						'hub_id' => '2',
 						'wam_change' => '0.0045',
 						'admins' => [],
-						'wiki_image' => 'http://images1.wikia.nocookie.net/__cb20121004184329/wikiaglobal/images/thumb/8/8b/Wikia-Visualization-Main%2Crunescape.png/150px-Wikia-Visualization-Main%2Crunescape.png',
+						'wiki_image' => ImagesService::overrideThumbnailFormat('http://images1.wikia.nocookie.net/__cb20121004184329/wikiaglobal/images/thumb/8/8b/Wikia-Visualization-Main%2Crunescape.png/150px-Wikia-Visualization-Main%2Crunescape.png', ImagesService::EXT_JPG),
 					],
 					14764 => [
 						'wiki_id' => '14764',
@@ -92,7 +92,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 						'hub_id' => '2',
 						'wam_change' => '0.0039',
 						'admins' => [],
-						'wiki_image' => 'http://images4.wikia.nocookie.net/__cb20120828154214/wikiaglobal/images/thumb/e/ea/Wikia-Visualization-Main%2Cleagueoflegends.png/150px-Wikia-Visualization-Main%2Cleagueoflegends.png.jpeg',
+						'wiki_image' => ImagesService::overrideThumbnailFormat('http://images4.wikia.nocookie.net/__cb20120828154214/wikiaglobal/images/thumb/e/ea/Wikia-Visualization-Main%2Cleagueoflegends.png/150px-Wikia-Visualization-Main%2Cleagueoflegends.png.jpeg', ImagesService::EXT_JPG),
 					],
 					1706 => [
 						'wiki_id' => '1706',
@@ -110,7 +110,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 						'hub_id' => '2',
 						'wam_change' => '-0.0016',
 						'admins' => [],
-						'wiki_image' => 'http://images1.wikia.nocookie.net/__cb20121214183339/wikiaglobal/images/thumb/d/d4/Wikia-Visualization-Main%2Celderscrolls.png/150px-Wikia-Visualization-Main%2Celderscrolls.png',
+						'wiki_image' => ImagesService::overrideThumbnailFormat('http://images1.wikia.nocookie.net/__cb20121214183339/wikiaglobal/images/thumb/d/d4/Wikia-Visualization-Main%2Celderscrolls.png/150px-Wikia-Visualization-Main%2Celderscrolls.png', ImagesService::EXT_JPG),
 					],
 					3035 => [
 						'wiki_id' => '3035',

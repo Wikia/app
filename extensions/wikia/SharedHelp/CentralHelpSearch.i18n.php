@@ -95,10 +95,11 @@ $messages['fo'] = array(
 
 /** French (français)
  * @author Gomoko
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'centralhelpsearch-desc' => "Permet l'inclusion d'un formulaire pour rechercher dans l'Aide centrale de la communauté",
-	'centralhelpsearch-placeholder' => "Rechercher dans l'aide&hellip;",
+	'centralhelpsearch-placeholder' => "Rechercher dans l'aide...",
 );
 
 /** Galician (galego)

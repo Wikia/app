@@ -94,6 +94,7 @@ $messages['az'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -110,6 +111,7 @@ $messages['br'] = array(
 	'searchbar-hint' => 'Klask %s...',
 	'alert-download-updated-wikis-message' => 'Hizivaet e vo roll ar sturlevrioù dieub.',
 	'alert-download-updated-wikis-button-ok' => 'Mat eo',
+	'error-no-connection' => "Ne c'haller ket kevreañ ouzh internet.\\nEsaeit en-dro, mar plij.",
 );
 
 /** Catalan (català)

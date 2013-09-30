@@ -1,6 +1,6 @@
 var UserSignup = {
-	inputsToValidate: ['username', 'email', 'password', 'birthday'],
-	notEmptyFields: ['username', 'email', 'password', 'birthday', 'birthmonth', 'birthyear'],
+	inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday'],
+	notEmptyFields: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
 	captchaField: 'wpCaptchaWord',
 	invalidInputs: {},
 	init: function() {
@@ -27,7 +27,7 @@ var UserSignup = {
 			this.captchaField
 		);
 		this.wikiaForm.el
-			.find('input[name=username], input[name=email], input[name=password]')
+			.find('input[name=userloginext01], input[name=email], input[name=userloginext02]')
 			.bind('blur.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateInput, this.signupAjaxForm));
 		this.wikiaForm.el
 			.find('select[name=birthday], select[name=birthmonth], select[name=birthyear]')

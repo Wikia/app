@@ -1,65 +1,44 @@
-/**
- * VisualEditor data model ParagraphNode class.
+/*!
+ * VisualEditor DataModel ParagraphNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * DataModel node for a paragraph.
+ * DataModel paragraph node.
  *
  * @class
+ * @extends ve.dm.BranchNode
  * @constructor
- * @extends {ve.dm.BranchNode}
  * @param {ve.dm.LeafNode[]} [children] Child nodes to attach
- * @param {Object} [attributes] Reference to map of attribute key/value pairs
+ * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.ParagraphNode = function VeDmParagraphNode( children, attributes ) {
+ve.dm.ParagraphNode = function VeDmParagraphNode( children, element ) {
 	// Parent constructor
-	ve.dm.BranchNode.call( this, 'paragraph', children, attributes );
+	ve.dm.BranchNode.call( this, children, element );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.dm.ParagraphNode, ve.dm.BranchNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.dm.NodeFactory
- * @static
- * @member
- */
-ve.dm.ParagraphNode.rules = {
-	'isWrapped': true,
-	'isContent': false,
-	'canContainContent': true,
-	'hasSignificantWhitespace': false,
-	'childNodeTypes': null,
-	'parentNodeTypes': null
+ve.dm.ParagraphNode.static.name = 'paragraph';
+
+ve.dm.ParagraphNode.static.canContainContent = true;
+
+ve.dm.ParagraphNode.static.matchTagNames = [ 'p' ];
+
+ve.dm.ParagraphNode.static.toDataElement = function () {
+	return { 'type': 'paragraph' };
 };
 
-/**
- * Node converters.
- *
- * @see {ve.dm.Converter}
- * @static
- * @member
- */
-ve.dm.ParagraphNode.converters = {
-	'domElementTypes': ['p'],
-	'toDomElement': function () {
-		return document.createElement( 'p' );
-	},
-	'toDataElement': function () {
-		return {
-			'type': 'paragraph'
-		};
-	}
+ve.dm.ParagraphNode.static.toDomElements = function ( dataElement, doc ) {
+	return [ doc.createElement( 'p' ) ];
 };
 
 /* Registration */
 
-ve.dm.nodeFactory.register( 'paragraph', ve.dm.ParagraphNode );
+ve.dm.modelRegistry.register( ve.dm.ParagraphNode );
