@@ -62,7 +62,7 @@ class JsonFormatSimplifier {
 	/**
 	 * @throws InvalidParameterApiException
 	 */
-	public function getJsonFormatAsText( \JsonFormatRootNode $rootNode ) {
+	public function getJsonFormat( \JsonFormatRootNode $rootNode ) {
 		$sections = [];
 		$this->findSections( $rootNode, $sections );
 

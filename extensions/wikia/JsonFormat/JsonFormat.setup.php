@@ -7,7 +7,7 @@ $app->registerClass( 'Wikia\JsonFormat\HtmlParser',           $dir . "/HtmlParse
 $app->registerClass( 'JsonFormatService',                     $dir . "/JsonFormatService.php");
 $app->registerClass( 'JsonFormatBuilder',                     $dir . "/JsonFormatBuilder.php");
 $app->registerClass( 'JsonFormatException',                   $dir . "/JsonFormatException.php");
-$app->registerClass( 'JsonFormatSimplifier',                  $dir . "/JsonFormatSimplifier.php");
+$app->registerClass( 'Wikia\JsonFormat\JsonFormatSimplifier', $dir . "/JsonFormatSimplifier.php");
 
 $app->registerClass( 'JsonFormatContainerNode',               $dir . "/nodes/JsonFormatContainerNode.php");
 $app->registerClass( 'JsonFormatParagraphNode',               $dir . "/nodes/JsonFormatParagraphNode.php");

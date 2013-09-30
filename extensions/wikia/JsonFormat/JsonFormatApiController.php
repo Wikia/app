@@ -77,7 +77,11 @@ class JsonFormatApiController extends WikiaApiController {
         $jsonFormatService = new JsonFormatService();
         $json = $jsonFormatService->getJsonFormatForArticleId( $articleId );
 
-        var_dump( $json );
+        $simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
+
+        $jsonSimple = $simplifier->getJsonFormat( $json );
+
+        var_dump( $jsonSimple );
 
         die;
 
