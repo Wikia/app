@@ -76,6 +76,11 @@ class AssetsManagerController extends WikiaController {
 			$profileId = __METHOD__ . "::styles::{$styles}";
 			wfProfileIn( $profileId );
 
+			if ( is_array( $styles ) && ( rand( 1, 100 ) < 6 ) ) {    // warning sampling
+				Wikia::log( __METHOD__, false, "AssetsManager - styles passed as an array: " .
+					json_encode( $styles ) . ", call: " . $_SERVER[ 'REQUEST_URI' ], true );
+			}
+
 			$key = $this->getComponentMemcacheKey( $styles );
 			$data = $this->wg->Memc->get( $key );
 
@@ -102,6 +107,11 @@ class AssetsManagerController extends WikiaController {
 		if ( !is_null( $scripts ) ) {
 			$profileId = __METHOD__ . "::scripts::{$scripts}";
 			wfProfileIn( $profileId );
+
+			if ( is_array( $scripts ) && ( rand( 1, 100 ) < 6 ) ) {    // warning sampling
+				Wikia::log( __METHOD__, false, "AssetsManager - scripts passed as an array: " .
+					json_encode( $scripts ) . ", call: " . $_SERVER[ 'REQUEST_URI' ], true );
+			}
 
 			$key = $this->getComponentMemcacheKey( $scripts );
 			$data = $this->wg->Memc->get( $key );
@@ -130,6 +140,11 @@ class AssetsManagerController extends WikiaController {
 			$profileId = __METHOD__ . "::messages::{$messages}";
 			wfProfileIn( $profileId );
 
+			if ( is_array( $messages ) && ( rand( 1, 100 ) < 6 ) ) {    // warning sampling
+				Wikia::log( __METHOD__, false, "AssetsManager - messages passed as an array: " .
+					json_encode( $messages ) . ", call: " . $_SERVER[ 'REQUEST_URI' ], true );
+			}
+
 			$messagePackages = explode( ',', $messages );
 
 			$this->response->setVal( 'messages', JSMessages::getPackages( $messagePackages ) );
@@ -140,6 +155,11 @@ class AssetsManagerController extends WikiaController {
 		if ( !is_null( $mustache ) ) {
 			$profileId = __METHOD__ . "::mustache::{$mustache}";
 			wfProfileIn( $profileId );
+
+			if ( is_array( $mustache ) && ( rand( 1, 100 ) < 6 ) ) {    // warning sampling
+				Wikia::log( __METHOD__, false, "AssetsManager - mustache passed as an array: " .
+					json_encode( $mustache ) . ", call: " . $_SERVER[ 'REQUEST_URI' ], true );
+			}
 
 			$mustacheTemplates = explode( ',', $mustache );
 
