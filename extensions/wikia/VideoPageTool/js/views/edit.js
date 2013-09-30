@@ -39,19 +39,25 @@ define( 'vpt.views.edit', [
 					$videoTitle = $this.siblings( '.video-title' ),
 					$displayTitleInput = $box.find( '.display-title' ),
 					$descInput = $box.find( '.description' ),
-					$thumb = $box.find( '.video-thumb' );
+					$thumb = $box.find( '.video-thumb' ), 
+					$altThumbKey = $box.find('.alt-thumb').val(),
+					req = {};
+
+				if ( $altThumbKey.length ) {
+					req.altThumbKey = $altThumbKey;
+				}
 
 				$this.addVideoButton({
 					callbackAfterSelect: function( url, vet ) {
+
+						req.url = url;
 
 						$.nirvana.sendRequest({
 							controller: 'VideoPageAdminSpecial',
 							method: 'getVideoData',
 							type: 'GET',
 							format: 'json',
-							data: {
-								url: url
-							},
+							data: req,
 							callback: function( json ) {
 								if( json.result === 'ok' ) {
 
