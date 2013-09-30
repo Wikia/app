@@ -3,26 +3,30 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 	'use strict';
 
 	function Featured() {
+		// cache DOM elements
 		this.$sliderWrapper = $( '#featured-video-slider' );
 		this.$bxSlider = $( '#featured-video-bxslider' );
 		this.$thumbs = $( '#featured-video-thumbs' );
+		this.$thumbVideos = this.$thumbs.find( '.video' );
 
 		// The slider starts off as an image slider, then switches to a video slider when the first video is clicked
 		this.isVideoSlider = false;
+
+		// Track the video that's playing at any given time
 		this.videoInstance = null;
 
-		// value will be assigned after slider inits
+		// values will be assigned after slider inits
 		this.$sliderControls = null;
 		this.slider = null;
 
 		// Get data from model
-		this.sliderModel = new FeaturedModel( {
-			slides: this.$bxSlider.children(),
-			thumbs: this.$thumbs
+		var sliderModel = new FeaturedModel( {
+			$slides: this.$bxSlider.children(),
+			$thumbs: this.$thumbs
 		});
 
-		this.slides = this.sliderModel.slides;
-		this.thumbs = this.sliderModel.thumbs;
+		this.slides = sliderModel.slides;
+		this.thumbs = sliderModel.thumbs;
 
 
 		this.init();
@@ -45,25 +49,24 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 			});
 		},
 		initSlider: function() {
-
 			this.slider = this.$bxSlider.bxSlider({
 				//video: true, // TODO: add video support?
 				onSliderLoad: $.proxy( this.onSliderLoad, this ),
 				onSlideNext: $.proxy( this.onArrowClick, this ),
 				onSlidePrev: $.proxy( this.onArrowClick, this ),
+				onSlideAfter: $.proxy( this.onSlideAfter, this ),
 				nextText: '',
 				prevText: '',
 				auto: true,
 				speed: 400,
 				autoHover: true
 			});
-
 		},
 		onSliderLoad: function() {
-			// Show the feature now that it's done loading
+			// Show the slider now that it's done loading
 			this.$sliderWrapper.css( 'visibility', 'visible' );
 
-			// Controls are loaded, cache them
+			// Controls are loaded, cache their jQuery DOM object
 			this.$sliderControls = this.$sliderWrapper.find( '.bx-pager' );
 
 			this.bindEvents();
@@ -80,61 +83,104 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 
 				that.handleThumbClick( $( this ) );
 			});
-		},
-		handleThumbClick: function( $video ){
-			var that = this,
-				videoKey = $video.children( 'img' ).attr( 'data-video-key' ),
-				idx = $video.index(),
-				slide = this.slides[ idx ];
 
-			// It's now a video slider
+			this.$bxSlider.on( 'click', '.slide-image', function() {
+				that.handleSlideClick( $( this ) );
+			});
+		},
+		/*
+		 * @desc When a thumbnail is clicked, convert to video slider and slide to the corresponding slide
+		 */
+		handleThumbClick: function( $thumb ){
+			var index = $thumb.index();
+
+			// It's now a video slider, don't show thumbnails anymore
 			this.isVideoSlider = true;
 
 			// Stop slider autoscroll because we're watching videos now
 			this.slider.stopAuto();
 
-			// Go to the selected slide based on thumbnail that was clicked
-			this.slider.goToSlide( idx );
-
-			if( slide.embedData === null ) {
-				// Get video embed data for this slide
-				nirvana.sendRequest({
-					controller: 'VideoHandler',
-					method: 'getEmbedCode',
-					data: {
-						fileTitle: videoKey,
-						width: 750,
-						autoplay: 1
-					}
-				})
-					.done( function( data ) {
-						// cache embed data
-						that.sliderModel.addVideoEmbedData( slide, data );
-						that.playVideo( slide );
-					});
-
+			if( this.slider.getCurrentSlide() === index ) {
+				// play the video
+				this.playVideo( this.slides[ index ] );
 			} else {
-				// We already have video embed data, play it.
-				that.playVideo( slide );
+				// Go to the selected slide based on thumbnail that was clicked
+				this.slider.goToSlide( index );
 			}
 
+		},
+		/*
+		 * @desc When a slide is clicked, convert to video slider and play the video
+		 */
+		handleSlideClick: function( $slideImage ) {
+			// It's now a video slider, don't show thumbnails anymore
+			this.isVideoSlider = true;
+
+			// Stop slider autoscroll because we're watching videos now
+			this.slider.stopAuto();
+
+			// Get the slide's index from the data attr instead of index() b/c slides are cloned in bxSlider
+			var index = $slideImage.data( 'index' );
+
+			this.playVideo( this.slides[ index ] );
 		},
 		/* @desc When an arrow is clicked, if it's already a video slider, play the next video. Otherwise, do nothing,
 		 * just let the slider switch to the next image.
 		 */
-		onArrowClick: function( $slide, oldIndex, newIndex ) {
-			if( this.isVideoSlider ) {
-				this.slides[ newIndex ].switchToVideo();
-				this.$thumbs.find( '.video' ).eq( newIndex ).click();
-			}
-		},
 		playVideo: function( slide ) {
-			this.videoInstance && this.videoInstance.destroy(); // TODO: maybe move this somewhere else
+			var that = this,
+				data = this.getEmbedCode( slide );
 
-			// Hide image container, show video container
+			// Stop the video that's playing
+			if( this.videoInstance ) {
+				this.videoInstance.destroy();
+			}
+
 			slide.switchToVideo();
 
-			this.videoInstance = new VideoBootstrap( slide.$video[ 0 ], slide.embedData.embedCode, 'videoHomePage' );
+			$.when( data ).done( function( json ) {
+				if( json.error ) {
+					window.GlobalNotification.show( json.error, 'error' );
+				} else {
+					// cache embed data
+					slide.embedData = json;
+				}
+
+				// Actually do the video embed
+				that.videoInstance = new VideoBootstrap( slide.$video[ 0 ], slide.embedData.embedCode, 'videoHomePage' );
+			});
+		},
+		getEmbedCode: function( slide ) {
+			var data;
+
+			if( slide.embedData === null ) {
+				// Get video embed data for this slide
+				data = nirvana.sendRequest({
+					controller: 'VideoHandler',
+					method: 'getEmbedCode',
+					type: 'GET',
+					data: {
+						fileTitle: slide.videoKey,
+						width: 750,
+						autoplay: 1
+					}
+				});
+			} else {
+				data = slide.embedData;
+			}
+
+			// return a promise or a plain object
+			return data;
+
+		},
+
+		/*
+		 * @desc Funnel all video play events to onSliderAfter (unless the current slide was clicked)
+		 */
+		onSlideAfter: function( $slide, oldIndex, newIndex ) {
+			if( this.isVideoSlider ) {
+				this.playVideo( this.slides[ newIndex ] );
+			}
 		},
 
 		/*
