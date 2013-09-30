@@ -100,6 +100,7 @@ class VideoPageToolHelper extends WikiaModel {
 	 * get video data
 	 * @param string $title
 	 * $param string $altThumbName
+	 * @param string $altThumbName
 	 * @param string $displayTitle
 	 * @param string $description
 	 * @param array $thumbOptions
@@ -237,6 +238,7 @@ class VideoPageToolHelper extends WikiaModel {
 	 * Validate description (called from validateFormField())
 	 * @param string $description
 	 * @param string $errMsg
+	 * @return bool
 	 */
 	public function validateDescriptiion( $description, &$errMsg ) {
 		if ( strlen( $description ) > 200 ) {
@@ -251,6 +253,7 @@ class VideoPageToolHelper extends WikiaModel {
 	 * Validate alternative thumbnail (called from validateFormField())
 	 * @param string $ThumbName
 	 * @param string $errMsg
+	 * @return bool
 	 */
 	public function validateAltThumbName( $ThumbName, &$errMsg ) {
 		$file = WikiaFileHelper::getFileFromTitle( $ThumbName );
