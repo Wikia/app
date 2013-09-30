@@ -47,7 +47,15 @@ define( 'vpt.models.validator', [ 'jquery' ], function( $ ) {
 				required: true,
 				maxlength: maxlength,
 				messages: {
-					required: $.msg( 'htmlform-required' ),
+					required: function( len, elem ) {
+						var msg;
+						if ( $( elem ).hasClass('alt-thumb') ) {
+							msg = $.msg( 'videopagetool-formerror-altthumb' );
+						} else {
+							msg = $.msg( 'htmlform-required' );
+						}
+						return msg;
+					},
 					// Dynamically calculate the character length in the error message as you type.
 					// Note: onkeyup needs to be set to false for this to work properly. Also, this is only used
 					// in IE9 since it doesn't support the maxlength attribute on textareas
@@ -66,7 +74,7 @@ define( 'vpt.models.validator', [ 'jquery' ], function( $ ) {
 		onSubmit: function( e ) {
 			e.preventDefault();
 
-			if ( this.formIsValid() ) {
+			if ( this.formIsValid && this.formIsValid() ) {
 				this.$form[0].submit();
 			}
 		},
