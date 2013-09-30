@@ -1119,6 +1119,8 @@ class ChangeLogPager extends TablePager {
 	 * @return array: query info
 	 */
 	function getQueryInfo() {
+		global $wgRequest;
+
 		$query = array(
 			"tables" => array(
 				WikiFactory::table("city_list_log"),
@@ -1137,6 +1139,13 @@ class ChangeLogPager extends TablePager {
 				. " = "
 				. $this->mWikiId;
 		}
+
+		$variable = $wgRequest->getVal( 'variable', false );
+		if ( $variable !== false ) {
+			$query[ 'conds' ][ ] = WikiFactory::table( 'city_list_log', 'cl_type' ) . '=' . WikiFactory::LOG_VARIABLE;
+			$query[ 'conds' ][ ] = WikiFactory::table( 'city_list_log', 'cl_var_id' ) . '=' . $variable;
+		}
+
 		return $query;
 	}
 
