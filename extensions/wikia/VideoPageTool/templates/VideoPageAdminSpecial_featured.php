@@ -34,7 +34,7 @@
 					<?= $thumbText == '' ? wfMessage('videopagetool-image-title-default-text')->plain() : $thumbText ?>
 				</p>
 
-				<input type="hidden" name="altThumbName[]" class="alt-thumb" id="alt-thumb-<?= $x ?>" value="<?= $video[ 'altThumbName' ] ?>">
+				<input type="hidden" name="altThumbKey[]" class="alt-thumb" id="alt-thumb-<?= $x ?>" value="<?= $video[ 'altThumbKey' ] ?>">
 				<div class="tip"><?= wfMessage('videopagetool-hint-required-dimensions')->plain() ?></div>
 			</div>
 
