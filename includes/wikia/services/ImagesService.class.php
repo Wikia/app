@@ -131,6 +131,18 @@ class ImagesService extends Service {
 		return $thumbUrl;
 	}
 
+
+	/**
+	 * @desc Checks if given URL is pointing to our external thumbnail service.
+	 *
+	 * @param String $url url to test
+	 *
+	 * @return boolean
+	 */
+	public static function IsExternalThumbnailUrl($url) {
+			return strpos($url, '/images/thumb/') !== false;
+	}
+
 	/**
 	 * @desc Returns thumbnail's URL made from normal image URL
 	 *
@@ -142,12 +154,11 @@ class ImagesService extends Service {
 	 */
 	public static function getThumbUrlFromFileUrl($imageUrl, $destSize, $newExtension = null) {
 		if (!empty($imageUrl)) {
-			if ( strpos($imageUrl, '/images/thumb/') === false ) {
+			if ( !self::IsExternalThumbnailUrl($imageUrl) ) {
 				$imageUrl = str_replace('/images/', '/images/thumb/', $imageUrl);
 			} else {
 				$imageUrl = $imageUrl;
 			}
-
 
 			/**
 			 * url is virtual base for thumbnail, so
@@ -213,7 +224,11 @@ class ImagesService extends Service {
 			$results->url = $foundFile->createThumb($sizes->width);
 
 			if ( !empty($newExtension) ) {
-				$results->url = self::getThumbUrlFromFileUrl($results->url, $sizes->width, $newExtension);
+				if ( !self::IsExternalThumbnailUrl($results->url) ) {
+					$results->url = self::getThumbUrlFromFileUrl($results->url, $sizes->width, $newExtension);
+				} else {
+					$results->url = self::overrideThumbnailFormat($results->url, $newExtension);
+				}
 			}
 
 			$results->width = intval($sizes->width);
