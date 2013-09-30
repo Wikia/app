@@ -78,6 +78,11 @@ class UserLoginHelper extends WikiaModel {
 	protected function getWikiUsers( $wikiId=null, $limit=30 ) {
 		wfProfileIn( __METHOD__ );
 
+		if( !$this->wg->StatsDBEnabled ) {
+			//no stats DB, can't get list of users with avatars
+			return array();
+		}
+
 		$wikiId = (empty($wikiId)) ? $this->wg->CityId : $wikiId;
 
 		$memKey = wfSharedMemcKey( 'userlogin', 'users_with_avatar', $wikiId );

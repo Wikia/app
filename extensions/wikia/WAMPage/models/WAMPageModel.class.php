@@ -256,13 +256,7 @@ class WAMPageModel extends WikiaModel {
 	public function getCorporateWikisLanguages() {
 		$visualizationModel = new CityVisualization();
 		$wikisData = $visualizationModel->getVisualizationWikisData();
-
-		$langs = array();
-
-		foreach ($wikisData as $wikiData) {
-			$langs[] = $wikiData['lang'];
-		}
-		return $langs;
+		return array_keys($wikisData);
 	}
 
 	/**

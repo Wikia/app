@@ -10,22 +10,18 @@ var WikiaSearch = {
 		});
 		
 		var advancedDiv = $('#AdvancedSearch'),
-			advancedInput = advancedDiv.find('input[name="advanced"]'),
 			advancedCheckboxes = advancedDiv.find('input[type="checkbox"]');
-			
+
+		var advancedOptions = false;
+		if ( window.location.hash && window.location.hash == '#advanced' ) {
+			advancedDiv.slideToggle('fast');
+			advancedOptions = !advancedOptions;
+		}
+
 		$('#advanced-link').on('click', function(e) {
 			e.preventDefault();
 			advancedDiv.slideToggle('fast', function() {
-				var $this = $(this),
-					isVisible = $this.is(':visible');
-				
-				// update hidden input
-				advancedInput.val(Number(isVisible));
-				
-				if(!isVisible) {
-					advancedCheckboxes.attr('checked', false);
-				}
-				
+				advancedOptions = !advancedOptions;
 			});
 		});
 
@@ -38,6 +34,16 @@ var WikiaSearch = {
 		});
 		
 		this.initVideoTabEvents();
+
+		$('#search-v2-form').submit( function() {
+			if ( advancedOptions && this.action.indexOf( '#advanced' ) < 0 ) {
+				this.action += 'advanced';
+			}
+			if ( !advancedOptions ) {
+				this.action = this.action.split('#')[0];
+				this.action += '#';
+			}
+		});
 	},
 	initVideoTabEvents: function() {
 		var videoFilterOptions = $('.search-filter-sort');

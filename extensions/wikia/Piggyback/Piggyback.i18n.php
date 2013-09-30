@@ -476,6 +476,7 @@ $messages['roa-tara'] = array(
 
 /** Russian (русский)
  * @author DCamer
+ * @author Kaganer
  * @author Kuzura
  * @author MaxSem
  */
@@ -487,7 +488,7 @@ $messages['ru'] = array(
 Имя участника чувствительно к регистру символов.
 Проверьте написание.',
 	'piggyback-wronguser' => '$1 — не ваше имя пользователя.',
-	'piggyback-loginprompt' => 'Введите своё имя пользователя и пароль.',
+	'piggyback-loginprompt' => 'Пожалуйста, повторно введите свои имя пользователя и пароль.',
 	'piggyback-firstlogout' => 'Сначала войдите в свою учётную запись.',
 	'piggyback-itisyou' => 'Вы не можете использоватьpiggyback на себе.',
 	'piggyback-issysopto' => 'Вы не можете использовать piggyback на участниках с доступом к piggyback.',

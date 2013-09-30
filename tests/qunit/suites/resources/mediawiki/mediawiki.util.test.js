@@ -97,7 +97,11 @@ test( 'toggleToc', function() {
 		strictEqual( mw.util.toggleToc( $toggleLink, actionB ), false, 'Return boolean false if the TOC is now hidden.' );
 	};
 
-	actionA();
+	if ( $( '#toc ul:first' ).is( ':hidden' ) ) {
+		mw.util.toggleToc( $toggleLink, actionA );
+	} else {
+		actionA();
+	}
 });
 
 test( 'getParamValue', function() {

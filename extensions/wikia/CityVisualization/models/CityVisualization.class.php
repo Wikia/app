@@ -625,7 +625,7 @@ class CityVisualization extends WikiaModel {
 		return $wikiImages;
 	}
 
-	public function saveImagesForReview($cityId, $langCode, $images) {
+	public function saveImagesForReview($cityId, $langCode, $images, $imageReviewStatus = ImageReviewStatuses::STATE_UNREVIEWED) {
 		$currentImages = $this->getImagesFromReviewTable($cityId, $langCode);
 
 		$reversedImages = array_flip($images);
@@ -634,8 +634,8 @@ class CityVisualization extends WikiaModel {
 		foreach ($currentImages as $image) {
 			if (isset($reversedImages[$image->image_name])) {
 				$image->last_edited = date('Y-m-d H:i:s');
-				$image->image_review_status = 0;
-				$imagesToModify [] = $image;
+				$image->image_review_status = $imageReviewStatus;
+				$imagesToModify[] = $image;
 				unset($reversedImages[$image->image_name]);
 			}
 		}
@@ -659,7 +659,7 @@ class CityVisualization extends WikiaModel {
 			$imageData->city_lang_code = $langCode;
 			$imageData->image_index = $imageIndex;
 			$imageData->image_name = $image;
-			$imageData->image_review_status = 0;
+			$imageData->image_review_status = $imageReviewStatus;
 			$imageData->last_edited = date('Y-m-d H:i:s');
 			$imageData->review_start = null;
 			$imageData->review_end = null;
@@ -766,6 +766,18 @@ class CityVisualization extends WikiaModel {
 		);
 	}
 
+	public function removeImageFromReviewByName($cityId, $imageName, $langCode) {
+		$dbm = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$dbm->delete(
+			self::CITY_VISUALIZATION_IMAGES_TABLE_NAME,
+			array(
+				'city_id' => $cityId,
+				'image_name' => $imageName,
+				'city_lang_code' => $langCode
+			)
+		);
+	}
+
 	protected function getImagesFromReviewTable($cityId, $langCode) {
 		wfProfileIn(__METHOD__);
 
@@ -857,6 +869,17 @@ class CityVisualization extends WikiaModel {
 	 */
 	public function getVisualizationWikisIds() {
 		return array_keys($this->getCorporateSitesList());
+	}
+
+	/**
+	 * Return true when there is active Corporate Wiki in that language - like www.wikia.com or de.wikia.com
+	 *
+	 * @param $langCode
+	 * @return bool
+	 */
+	public function isCorporateLang($langCode) {
+		$corpWikis = $this->getVisualizationWikisData();
+		return isset($corpWikis[$langCode]);
 	}
 
 	/**

@@ -164,7 +164,9 @@ abstract class WikiaHttpException extends WikiaBaseException {
 	function __construct( $details = null, Exception $previous = null ) {
 		parent::__construct( $this->message, $this->code, $previous );
 		wfDebug(get_class($this). " raised from " . wfGetAllCallers(2) . "\n");
-		$this->details = $details;
+		if (!empty($details)) {
+			$this->details = $details;
+		}
 	}
 
 	public function getDetails() {

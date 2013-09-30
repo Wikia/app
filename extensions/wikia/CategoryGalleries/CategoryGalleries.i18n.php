@@ -163,7 +163,7 @@ $messages['ksh'] = array(
 	'categorygalleries-desc' => 'Donn en Jalleri vun Sigge op de Sigge vun de Saachjroppe aanzeije.',
 );
 
-/** Kirghiz (Кыргызча)
+/** Kyrgyz (Кыргызча)
  * @author Growingup
  */
 $messages['ky'] = array(
