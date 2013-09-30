@@ -270,7 +270,7 @@ $messages['ksh'] = array(
 	'wikifactoryreporter' => 'WikiFactory-Reporter',
 );
 
-/** Kirghiz (Кыргызча)
+/** Kyrgyz (Кыргызча)
  */
 $messages['ky'] = array(
 	'wikifactoryreporter' => 'УикиФабрика баяндамачысы',

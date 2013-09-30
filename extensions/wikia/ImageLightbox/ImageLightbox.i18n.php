@@ -122,8 +122,8 @@ $1
 	'lightbox-share-email-ok-caption' => 'Kadarnadur',
 	'lightbox-share-email-ok-content' => 'Kaset eo bet ar postel{{PLURAL:$1||où}}.',
 	'lightbox-share-email-error-caption' => 'Fazi',
-	'lightbox-share-email-error-content' => 'Fazi o kas {{PLURAL:$1|postel|postel}}.
-Munudoù : $2', # Fuzzy
+	'lightbox-share-email-error-content' => 'Fazi o kas {{PLURAL:$1|postel|posteloù}}.
+Munudoù : $2',
 	'lightbox-share-email-error-login' => 'Ezhomm ho peus da gevreañ evit kas posteloù',
 	'lightbox-share-email-error-noaddress' => "N'eus bet lakaet chomlec'h ebet.",
 	'lightbox-visit-the-wiki' => 'Gweladenniñ ar wiki :',

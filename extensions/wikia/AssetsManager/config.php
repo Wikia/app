@@ -110,19 +110,28 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/Lightbox/js/LightboxLoader.js',
 		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
-		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to change login without logging out
-		'//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to create account without logging out
-		'//extensions/wikia/UserLogin/js/UserLoginModal.js', // TODO: do we need to load this for logged-in?  answer: maybe
+		// We allow logged in users to change login without logging out
+		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
+		// We allow logged in users to create account without logging out
+		'//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js',
+		// TODO: do we need to load this for logged-in?
+		'//extensions/wikia/UserLogin/js/UserLoginModal.js',
 		'//extensions/wikia/MiniEditor/js/MiniEditor.js',
-		'#group_articlecomments_js', // needs to load after MiniEditor
+		// needs to load after MiniEditor
+		'#group_articlecomments_js',
 		'//extensions/FBConnect/fbconnect.js',
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
-		'//skins/oasis/js/GlobalModal.js',  // This needs to load last after all common extensions, please keep this last.
+		// This needs to load last after all common extensions, please keep this last.
+		'//skins/oasis/js/GlobalModal.js',
 		'//extensions/wikia/UserLogin/js/UserLogin.js',
-		'//extensions/wikia/AdEngine/js/Krux.run.js', // Needs to load after Krux.js, jQuery and AdEngine2.run.js
-		'//extensions/wikia/WikiaBar/js/WikiaBar.js', // WikiaBar is enabled sitewide
-		'//extensions/wikia/Chat2/js/ChatEntryPoint.js', // Chat is enabled sitewide
-		'//extensions/wikia/Forum/js/RelatedForumDiscussion.js', // Related Forum Discussion is on all article pages
+		// Needs to load after Krux.js, jQuery and AdEngine2.run.js
+		'//extensions/wikia/AdEngine/js/Krux.run.js',
+		// WikiaBar is enabled sitewide
+		'//extensions/wikia/WikiaBar/js/WikiaBar.js',
+		// Chat is enabled sitewide
+		'//extensions/wikia/Chat2/js/ChatEntryPoint.js',
+		// Related Forum Discussion is on all article pages
+		'//extensions/wikia/Forum/js/RelatedForumDiscussion.js',
 		'//extensions/wikia/VideoEmbedTool/js/VET_Loader.js',
 	)
 );
@@ -186,6 +195,7 @@ $config['oasis_jquery'] = array(
 		'//resources/wikia/libraries/jquery/timeago/jquery.timeago.js',
 		'//resources/wikia/libraries/jquery/store/jquery.store.js',
 		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
+		'//resources/wikia/libraries/jquery/floating-scrollbar/jquery.floating-scrollbar.js',
 
 		// Wikia plugins
 		'//resources/wikia/jquery.wikia.js',
@@ -241,7 +251,8 @@ $config['oasis_nojquery_shared_js_user'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_nojquery_shared_js',
-		'#group_oasis_noads_extensions_js', // the only time this group is used currently is inside of this _nojquery_ package, for Ad-Loading experiment
+		// the only time this group is used currently is inside of this _nojquery_ package, for Ad-Loading experiment
+		'#group_oasis_noads_extensions_js',
 		'#group_oasis_user_js',
 	)
 );
@@ -250,7 +261,8 @@ $config['oasis_nojquery_shared_js_anon'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_nojquery_shared_js',
-		'#group_oasis_noads_extensions_js', // the only time this group is used currently is inside of this _nojquery_ package, for Ad-Loading experiment
+		// the only time this group is used currently is inside of this _nojquery_ package, for Ad-Loading experiment
+		'#group_oasis_noads_extensions_js',
 		'#group_oasis_anon_js',
 	)
 );
@@ -317,7 +329,6 @@ $config['gameguides_scss'] = array(
 		'//extensions/wikia/GameGuides/css/GameGuides.scss'
 	)
 );
-
 
 //this combines couple of WikiaMobile groups to make it possible to load all js via one request
 //also unfortunately loads bit more than needed not to change WikiaMobile assets too much
@@ -427,7 +438,8 @@ $config['wikiamobile_js_body_minimal'] = array(
 		'//resources/wikia/modules/localStorage.js',
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/cookies.js',
-		'//resources/wikia/modules/log.js',//depends on querystring.js and cookies.js
+		//depends on querystring.js and cookies.js
+		'//resources/wikia/modules/log.js',
 
 		//feature detection
 		'//extensions/wikia/WikiaMobile/js/features.js',
@@ -466,6 +478,7 @@ $config['wikiamobile_js_body_full'] = array(
 
 		//modules
 		'//resources/wikia/libraries/sloth/sloth.js',
+		'//resources/wikia/modules/thumbnailer.js',
 		'//extensions/wikia/WikiaMobile/js/lazyload.js',
 		'//extensions/wikia/WikiaMobile/js/track.js',
 		'//extensions/wikia/WikiaMobile/js/events.js',
@@ -478,11 +491,11 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/media.js',
 		'//extensions/wikia/WikiaMobile/js/sections.js',
 		'//extensions/wikia/WikiaMobile/js/layout.js',
+		'//extensions/wikia/WikiaMobile/js/navigation.wiki.js',
 		'//extensions/wikia/WikiaMobile/js/topbar.js',
 		'//extensions/wikia/WikiaMobile/js/popover.js',
 		'//extensions/wikia/WikiaMobile/js/hide_url_bar.js',
 		'//extensions/wikia/WikiaMobile/js/share.js',
-		'//resources/wikia/modules/thumbnailer.js',
 
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
@@ -800,10 +813,12 @@ $config['chat_js2'] = array(
 
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/cookies.js',
-		'//resources/wikia/modules/log.js',//depends on querystring.js and cookies.js
+		//depends on querystring.js and cookies.js
+		'//resources/wikia/modules/log.js',
 
 		'//extensions/wikia/Chat2/js/lib/socket.io.client.js',
-		'//extensions/wikia/Chat2/js/emoticons.js', // must be before controllers.js
+		// must be before controllers.js
+		'//extensions/wikia/Chat2/js/emoticons.js',
 		'//extensions/wikia/Chat2/js/lib/underscore.js',
 		'//extensions/wikia/Chat2/js/lib/backbone.js',
 		'//extensions/wikia/Chat2/js/models/models.js',
@@ -1367,7 +1382,6 @@ $config['ui_repo_api_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//resources/wikia/modules/nirvana.js',
-		'//resources/wikia/modules/deferred.js',
 		'//resources/wikia/modules/uifactory.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/modules/uicomponent.js'
@@ -1380,6 +1394,13 @@ $config['touchstorm_scss'] = array(
 		'//extensions/wikia/TouchStorm/css/TouchStorm.scss'
 	)
 );
+$config['touchstorm_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/TouchStorm/js/TouchStorm.js'
+	)
+);
+
 
 // FIXME: paths to dist
 $config['api_docs_js'] = array(

@@ -1,32 +1,45 @@
-/**
- * VisualEditor data model BranchNode class.
+/*!
+ * VisualEditor DataModel BranchNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * DataModel node that can have branch or leaf children.
+ * DataModel branch node.
  *
- * @class
+ * Branch nodes can have branch or leaf nodes as children.
+ *
  * @abstract
+ * @extends ve.dm.Node
+ * @mixins ve.BranchNode
  * @constructor
- * @extends {ve.dm.Node}
- * @param {String} type Symbolic name of node type
  * @param {ve.dm.Node[]} [children] Child nodes to attach
- * @param {Object} [attributes] Reference to map of attribute key/value pairs
+ * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.BranchNode = function VeDmBranchNode( type, children, attributes ) {
+ve.dm.BranchNode = function VeDmBranchNode( children, element ) {
 	// Mixin constructor
 	ve.BranchNode.call( this );
 
 	// Parent constructor
-	ve.dm.Node.call( this, type, 0, attributes );
+	ve.dm.Node.call( this, 0, element );
 
 	if ( ve.isArray( children ) && children.length ) {
 		this.splice.apply( this, [0, 0].concat( children ) );
 	}
 };
+
+/**
+ * @event splice
+ * @see #method-splice
+ * @param {number} index
+ * @param {number} howmany
+ * @param {ve.dm.BranchNode} [childModel]
+ */
+
+/**
+ * @event update
+ */
 
 /* Inheritance */
 
@@ -37,12 +50,12 @@ ve.mixinClass( ve.dm.BranchNode, ve.BranchNode );
 /* Methods */
 
 /**
- * Adds a node to the end of this node's children.
+ * Add a child node to the end of the list.
  *
  * @method
  * @param {ve.dm.BranchNode} childModel Item to add
- * @returns {Number} New number of children
- * @emits splice (index, 0, [childModel])
+ * @returns {number} New number of children
+ * @emits splice
  * @emits update
  */
 ve.dm.BranchNode.prototype.push = function ( childModel ) {
@@ -51,11 +64,11 @@ ve.dm.BranchNode.prototype.push = function ( childModel ) {
 };
 
 /**
- * Removes a node from the end of this node's children
+ * Remove a child node from the end of the list.
  *
  * @method
  * @returns {ve.dm.BranchNode} Removed childModel
- * @emits splice (index, 1, [])
+ * @emits splice
  * @emits update
  */
 ve.dm.BranchNode.prototype.pop = function () {
@@ -67,12 +80,12 @@ ve.dm.BranchNode.prototype.pop = function () {
 };
 
 /**
- * Adds a node to the beginning of this node's children.
+ * Add a child node to the beginning of the list.
  *
  * @method
  * @param {ve.dm.BranchNode} childModel Item to add
- * @returns {Number} New number of children
- * @emits splice (0, 0, [childModel])
+ * @returns {number} New number of children
+ * @emits splice
  * @emits update
  */
 ve.dm.BranchNode.prototype.unshift = function ( childModel ) {
@@ -81,11 +94,11 @@ ve.dm.BranchNode.prototype.unshift = function ( childModel ) {
 };
 
 /**
- * Removes a node from the beginning of this node's children
+ * Remove a child node from the beginning of the list.
  *
  * @method
  * @returns {ve.dm.BranchNode} Removed childModel
- * @emits splice (0, 1, [])
+ * @emits splice
  * @emits update
  */
 ve.dm.BranchNode.prototype.shift = function () {
@@ -97,14 +110,14 @@ ve.dm.BranchNode.prototype.shift = function () {
 };
 
 /**
- * Adds and removes nodes from this node's children.
+ * Add and/or remove child nodes at an offset.
  *
  * @method
- * @param {Number} index Index to remove and or insert nodes at
- * @param {Number} howmany Number of nodes to remove
- * @param {ve.dm.BranchNode} [...] Variadic list of nodes to insert
+ * @param {number} index Index to remove and or insert nodes at
+ * @param {number} howmany Number of nodes to remove
+ * @param {ve.dm.BranchNode...} [nodes] Variadic list of nodes to insert
+ * @emits splice
  * @returns {ve.dm.BranchNode[]} Removed nodes
- * @emits splice (index, howmany, [...])
  */
 ve.dm.BranchNode.prototype.splice = function () {
 	var i,
@@ -113,18 +126,18 @@ ve.dm.BranchNode.prototype.splice = function () {
 		args = Array.prototype.slice.call( arguments ),
 		diff = 0;
 
+	removals = this.children.splice.apply( this.children, args );
+	for ( i = 0, length = removals.length; i < length; i++ ) {
+		removals[i].detach();
+		diff -= removals[i].getOuterLength();
+	}
+
 	if ( args.length >= 3 ) {
 		length = args.length;
 		for ( i = 2; i < length; i++ ) {
 			args[i].attach( this );
 			diff += args[i].getOuterLength();
 		}
-	}
-
-	removals = this.children.splice.apply( this.children, args );
-	for ( i = 0, length = removals.length; i < length; i++ ) {
-		removals[i].detach();
-		diff -= removals[i].getOuterLength();
 	}
 
 	this.adjustLength( diff, true );

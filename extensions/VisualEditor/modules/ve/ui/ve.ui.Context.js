@@ -1,358 +1,406 @@
-/**
- * VisualEditor user interface Context class.
+/*!
+ * VisualEditor UserInterface Context class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Creates an ve.ui.Context object.
+ * UserInterface context.
  *
  * @class
+ * @extends ve.Element
+ *
  * @constructor
- * @param surface
- * @param {jQuery} $overlay DOM selection to add nodes to
+ * @param {ve.ui.Surface} surface
+ * @param {Object} [config] Configuration options
  */
-ve.ui.Context = function VeUiContext( surface, $overlay ) {
-	if ( !surface ) {
-		return;
-	}
+ve.ui.Context = function VeUiContext( surface, config ) {
+	// Parent constructor
+	ve.Element.call( this, config );
 
 	// Properties
 	this.surface = surface;
-
 	this.inspectors = {};
-	this.inspector = null;
-	this.position = null;
 	this.visible = false;
+	this.showing = false;
 	this.selecting = false;
+	this.relocating = false;
+	this.embedded = false;
+	this.selection = null;
+	this.toolbar = null;
+	this.popup = new ve.ui.PopupWidget( { '$$': this.$$, '$container': this.surface.getView().$ } );
+	this.$menu = this.$$( '<div>' );
+	this.inspectors = new ve.ui.WindowSet( surface, ve.ui.inspectorFactory );
 
-	// Base elements
-	this.$ = $( '<div class="ve-ui-context"></div>' );
-	this.$callout = $( '<div class="ve-ui-context-callout"></div>' );
-	this.$inner = $( '<div class="ve-ui-context-inner"></div>' )
-		.appendTo( this.$ );
-	this.$menu = $( '<div class="ve-ui-context-menu"></div>' )
-		.appendTo( this.$inner );
-
-	// Inspectors
-	this.$inspectors = $( '<div class="ve-ui-context-inspectors"></div>' )
-		.appendTo ( this.$inner );
-	this.$overlay = $( '<div class="ve-ui-context-frame-overlay"></div>' )
-		.appendTo( this.$ );
-
-	// Append base
-	this.$.prepend( this.$callout );
-	( $overlay || $( 'body' ) ).append( this.$ );
-
-	// Create Frame for inspectors.
-	this.frameView = new ve.ui.Frame( {
-		'stylesheets': [
-			ve.init.platform.getModulesUrl() + '/ve/ui/styles/ve.ui.Inspector.css',
-			ve.init.platform.getModulesUrl() +
-						( window.devicePixelRatio > 1 ?
-							'/ve/ui/styles/ve.ui.Inspector.Icons-vector.css' :
-							'/ve/ui/styles/ve.ui.Inspector.Icons-raster.css' )
-		]
-	}, this.$inspectors );
+	// Initialization
+	this.$.addClass( 've-ui-context' ).append( this.popup.$ );
+	this.inspectors.$.addClass( 've-ui-context-inspectors' );
+	this.popup.$body.append(
+		this.$menu.addClass( 've-ui-context-menu' ),
+		this.inspectors.$.addClass( 've-ui-context-inspectors' )
+	);
 
 	// Events
-	this.surface.getModel().addListenerMethods( this, { 'change': 'onChange' } );
-	this.surface.getView()
-		.addListenerMethods( this, {
-			'selectionStart': 'onSelectionStart',
-			'selectionEnd': 'onSelectionEnd'
-		} )
-		.getDocument().getDocumentNode().$.on( {
-			'focus': ve.bind( this.onDocumentFocus, this ),
-			'blur': ve.bind( this.onDocumentBlur, this )
-		} );
+	this.surface.getModel().connect( this, { 'change': 'onChange' } );
+	this.surface.getView().connect( this, {
+		'selectionStart': 'onSelectionStart',
+		'selectionEnd': 'onSelectionEnd',
+		'relocationStart': 'onRelocationStart',
+		'relocationEnd': 'onRelocationEnd'
+	} );
+	this.inspectors.connect( this, {
+		'setup': 'onInspectorSetup',
+		'open': 'onInspectorOpen',
+		'close': 'onInspectorClose'
+	} );
+
+	this.$$( this.getElementWindow() ).on( {
+		'resize': ve.bind( this.update, this )
+	} );
+	this.$.add( this.$menu )
+		.on( 'mousedown', false );
 };
+
+/* Inheritance */
+
+ve.inheritClass( ve.ui.Context, ve.Element );
 
 /* Methods */
 
 /**
- * Responds to change events on the model.
+ * Handle change events on the model.
+ *
+ * Changes are ignored while the user is selecting text.
  *
  * @method
- * @param {ve.dm.Transaction} tx Change transaction
+ * @param {ve.dm.Transaction[]} transactions Change transactions
  * @param {ve.Range} selection Change selection
  */
-ve.ui.Context.prototype.onChange = function ( tx, selection ) {
-	if ( selection && !this.selecting ) {
-		this.update();
+ve.ui.Context.prototype.onChange = function ( transactions, selection ) {
+	if ( selection ) {
+		if ( this.popup.isVisible() ) {
+			this.hide();
+			this.update();
+		} else if ( !this.selecting && !this.draggingAndDropping ) {
+			this.update();
+		}
 	}
 };
 
 /**
- * Responds to selection start events on the view.
+ * Handle selection start events on the view.
  *
  * @method
  */
 ve.ui.Context.prototype.onSelectionStart = function () {
 	this.selecting = true;
-	this.unset();
+	this.hide();
 };
 
 /**
- * Responds to selection end events on the view.
+ * Handle selection end events on the view.
  *
  * @method
  */
 ve.ui.Context.prototype.onSelectionEnd = function () {
 	this.selecting = false;
+	if ( !this.relocating ) {
+		this.update();
+	}
+};
+
+/**
+ * Handle selection start events on the view.
+ *
+ * @method
+ */
+ve.ui.Context.prototype.onRelocationStart = function () {
+	this.relocating = true;
+	this.hide();
+};
+
+/**
+ * Handle selection end events on the view.
+ *
+ * @method
+ */
+ve.ui.Context.prototype.onRelocationEnd = function () {
+	this.relocating = false;
 	this.update();
+};
+
+/**
+ * Handle an inspector being setup.
+ *
+ * @method
+ * @param {ve.ui.Inspector} inspector Inspector that's been setup
+ */
+ve.ui.Context.prototype.onInspectorSetup = function () {
+	this.selection = this.surface.getModel().getSelection();
+};
+
+/**
+ * Handle an inspector being opened.
+ *
+ * @method
+ * @param {ve.ui.Inspector} inspector Inspector that's been opened
+ */
+ve.ui.Context.prototype.onInspectorOpen = function () {
+	// Transition between menu and inspector
+	this.show( true );
+};
+
+/**
+ * Handle an inspector being closed.
+ *
+ * @method
+ * @param {ve.ui.Inspector} inspector Inspector that's been opened
+ * @param {boolean} accept Changes have been accepted
+ */
+ve.ui.Context.prototype.onInspectorClose = function () {
+	this.update();
+};
+
+/**
+ * Gets the surface the context is being used in.
+ *
+ * @method
+ * @returns {ve.ui.Surface} Surface of context
+ */
+ve.ui.Context.prototype.getSurface = function () {
+	return this.surface;
+};
+
+/**
+ * Destroy the context, removing all DOM elements.
+ *
+ * @method
+ * @returns {ve.ui.Context} Context UserInterface
+ * @chainable
+ */
+ve.ui.Context.prototype.destroy = function () {
+	this.$.remove();
+	return this;
 };
 
 /**
  * Updates the context menu.
  *
  * @method
+ * @chainable
  */
 ve.ui.Context.prototype.update = function () {
-	var surfaceModel = this.surface.getModel(),
-		doc = surfaceModel.getDocument(),
-		sel = surfaceModel.getSelection(),
-		annotations = doc.getAnnotationsFromRange( sel ).get(),
-		inspectors = [],
-		name,
-		i;
+	var i, nodes, tools, tool,
+		fragment = this.surface.getModel().getFragment( null, false ),
+		selection = fragment.getRange(),
+		inspector = this.inspectors.getCurrent();
 
-	if ( annotations.length > 0 ) {
-		// Look for inspectors that match annotations.
-		for ( i = 0; i < annotations.length; i++ ) {
-			name = annotations[i].name.split( '/' )[0];
-			// Add inspector on demand.
-			if ( this.initInspector( name ) ) {
-				inspectors.push( name );
+	if ( inspector && selection.equals( this.selection ) ) {
+		// There's an inspector, and the selection hasn't changed, update the position
+		this.show();
+	} else {
+		// No inspector is open, or the selection has changed, show a menu of available inspectors
+		tools = ve.ui.toolFactory.getToolsForAnnotations( fragment.getAnnotations() );
+		nodes = fragment.getCoveredNodes();
+		for ( i = 0; i < nodes.length; i++ ) {
+			if ( nodes[i].range && nodes[i].range.isCollapsed() ) {
+				nodes.splice( i, 1 );
+				i--;
 			}
 		}
+		if ( nodes.length === 1 ) {
+			tool = ve.ui.toolFactory.getToolForNode( nodes[0].node );
+			if ( tool ) {
+				tools.push( tool );
+			}
+		}
+		if ( tools.length ) {
+			// There's at least one inspectable annotation, build a menu and show it
+			this.$menu.empty();
+			if ( this.toolbar ) {
+				this.toolbar.destroy();
+			}
+			this.toolbar = new ve.ui.SurfaceToolbar( this.surface );
+			this.toolbar.setup( [ { 'include' : tools } ] );
+			this.$menu.append( this.toolbar.$ );
+			this.show();
+			this.toolbar.initialize();
+		} else if ( this.visible ) {
+			// Nothing to inspect
+			this.hide();
+		}
 	}
 
-	// Build inspector menu.
-	if ( inspectors.length > 0 && !this.inspector ) {
-		this.$menu.empty();
-		// Toolbar
-		this.$toolbar = $( '<div class="ve-ui-context-toolbar"></div>' );
-		// Create inspector toolbar
-		this.toolbarView = new ve.ui.Toolbar(
-			this.$toolbar,
-			this.surface,
-			[{ 'name': 'inspectors', 'items' : inspectors }]
-		);
-		// Note: Menu attaches the provided $tool element to the container.
-		this.menuView = new ve.ui.Menu(
-			[ { 'name': 'tools', '$': this.$toolbar } ], // Tools
-			null, // Callback
-			this.$menu, // Container
-			this.$inner // Parent
-		);
-		this.set();
-	} else if ( !this.selection || !this.selection.equals( sel ) ) {
-		// Cache current selection
-		this.selection = sel;
-		this.unset();
-		this.update();
-	} else {
-		this.unset();
-	}
+	// Remember selection for next time
+	this.selection = selection.clone();
+
+	return this;
 };
 
-ve.ui.Context.prototype.unset = function () {
-	if ( this.inspector ) {
-		this.closeInspector( false );
-		this.$overlay.hide();
-	}
-	if ( this.menuView ) {
-		this.obscure( this.$menu );
-	}
-	this.close();
-};
+/**
+ * Updates the position and size.
+ *
+ * @method
+ * @param {boolean} [transition=false] Use a smooth transition
+ * @chainable
+ */
+ve.ui.Context.prototype.updateDimensions = function ( transition ) {
+	var $node, $container, focusableOffset, focusableWidth, nodePosition, cursorPosition, position,
+		documentOffset, nodeOffset,
+		surface = this.surface.getView(),
+		inspector = this.inspectors.getCurrent(),
+		focusedNode = surface.getFocusedNode(),
+		surfaceOffset = surface.$.offset(),
+		rtl = this.surface.view.getDir() === 'rtl';
 
-ve.ui.Context.prototype.obscure = function ( el ) {
-	el.css( {
-		'top': -5000
-	} );
-};
-
-ve.ui.Context.prototype.reveal = function ( el ) {
-	el.css( {
-		'top': 0
-	} );
-};
-
-ve.ui.Context.prototype.getSelectionPosition = function () {
-	var selectionRect = this.surface.getView().getSelectionRect();
-	return new ve.Position( selectionRect.end.x, selectionRect.end.y );
-};
-
-ve.ui.Context.prototype.open = function () {
-	this.$.css( 'visibility', 'visible' );
-};
-
-ve.ui.Context.prototype.close = function () {
-	this.$.css( 'visibility', 'hidden' );
-};
-
-ve.ui.Context.prototype.set = function () {
-	this.position = this.getSelectionPosition();
-	this.$.css( {
-		'left': this.position.left,
-		'top': this.position.top
-	} );
-	// Open context.
-	this.open();
-
-	function getDimensions () {
-		var height, width;
-		if ( this.inspector ) {
-			height = this.$inspectors.outerHeight( true );
-			width = this.$inspectors.outerWidth( true );
+	$container = inspector ? this.inspectors.$ : this.$menu;
+	if ( focusedNode ) {
+		// We're on top of a node
+		$node = focusedNode.$focusable || focusedNode.$;
+		if ( this.embedded ) {
+			// Get the position relative to the surface it is embedded in
+			focusableOffset = ve.Element.getRelativePosition(
+				$node, this.surface.$
+			);
+			position = { 'y': focusableOffset.top };
+			// When context is embedded in RTL, it requires adjustments to the relative
+			// positioning (pop up on the other side):
+			if ( rtl ) {
+				position.x = focusableOffset.left;
+				this.popup.align = 'left';
+			} else {
+				focusableWidth = $node.outerWidth();
+				position.x = focusableOffset.left + focusableWidth;
+				this.popup.align = 'right';
+			}
 		} else {
-			height = this.$menu.outerHeight( true );
-			width = this.$menu.outerWidth( true );
+			// The focused node may be in a wrapper, so calculate the offset relative to the document
+			documentOffset = surface.getDocument().documentNode.$.offset();
+			nodeOffset = $node.offset();
+			nodePosition = {
+				top: nodeOffset.top - documentOffset.top,
+				left: nodeOffset.left - documentOffset.left
+			};
+			// Get the position of the focusedNode:
+			position = { 'x': nodePosition.left, 'y': nodePosition.top + $node.outerHeight() };
+			// When the context is displayed in LTR, it should be on the right of the node
+			if ( !rtl ) {
+				position.x += $node.outerWidth();
+			}
+			this.popup.align = 'center';
 		}
-		return {
-			'height': height,
-			'width': width
-		};
-	}
-	function getLeft () {
-		var width = getDimensions.call( this ).width,
-			left = -( width / 2 );
-		// Boundary checking left.
-		if ( this.position.left < width / 2 ) {
-			left = -( this.$.children().outerWidth( true ) / 2 ) - ( this.position.left / 2 );
-		// Checking right.
-		} else if ( $( 'body' ).width() - this.position.left < width ) {
-			left = -( width - ( ( $( 'body' ).width() - this.position.left ) / 2) );
-		}
-		return left;
-	}
-
-	if ( this.inspector ) {
-		// Reveal inspector
-		this.reveal( this.$inspectors );
-		this.$overlay.show();
 	} else {
-		if ( !this.visible ) {
-			// Fade in the context.
-			this.$.fadeIn( 'fast' );
-			this.visible = true;
+		// We're on top of a selected text
+		// Get the position of the cursor
+		cursorPosition = surface.getSelectionRect();
+
+		// Correct for surface offset:
+		position = {
+			'x': cursorPosition.end.x - surfaceOffset.left,
+			'y': cursorPosition.end.y - surfaceOffset.top
+		};
+		this.popup.align = 'center';
+	}
+
+	this.$.css( { 'left': position.x, 'top': position.y } );
+
+	this.popup.display(
+		position.x,
+		position.y,
+		$container.outerWidth( true ),
+		$container.outerHeight( true ),
+		transition
+	);
+
+	return this;
+};
+
+/**
+ * Shows the context menu.
+ *
+ * @method
+ * @chainable
+ */
+ve.ui.Context.prototype.show = function ( transition ) {
+	var inspector = this.inspectors.getCurrent(),
+		focusedNode = this.surface.getView().getFocusedNode();
+
+	if ( !this.showing ) {
+		this.showing = true;
+
+		this.$.show();
+		this.popup.show();
+
+		// Show either inspector or menu
+		if ( inspector ) {
+			this.$menu.hide();
+			this.inspectors.$.show();
+			inspector.$.css( 'opacity', 0 );
+			// Update size and fade the inspector in after animation is complete
+			setTimeout( ve.bind( function () {
+				inspector.fitHeightToContents();
+				this.updateDimensions( transition );
+				inspector.$.css( 'opacity', 1 );
+			}, this ), 200 );
+		} else {
+			this.inspectors.$.hide();
+			if (
+				focusedNode &&
+				focusedNode.$focusable.outerHeight() > this.$menu.outerHeight() * 2 &&
+				focusedNode.$focusable.outerWidth() > this.$menu.outerWidth() * 2
+			) {
+				this.$.addClass( 've-ui-context-embed' );
+				this.embedded = true;
+			} else {
+				this.$.removeClass( 've-ui-context-embed' );
+				this.embedded = false;
+			}
+			this.$menu.show();
 		}
-		// Reveal menu
-		this.reveal( this.$menu );
+
+		this.updateDimensions( transition );
+
+		this.visible = true;
+		this.showing = false;
 	}
-	// Position inner context.
-	this.$inner.css( {
-		'left': getLeft.call( this ),
-		'height': getDimensions.call( this ).height,
-		'width': getDimensions.call( this ).width
-	} );
+
+	return this;
 };
 
-// Method to position iframe overlay above or below an element.
-ve.ui.Context.prototype.setOverlayPosition = function ( config ) {
-	var left, top;
-	if (
-		config === undefined ||
-		! ( 'overlay' in config )
-	) {
-		return;
+/**
+ * Hides the context menu.
+ *
+ * @method
+ * @chainable
+ */
+ve.ui.Context.prototype.hide = function () {
+	var inspector = this.inspectors.getCurrent();
+
+	if ( inspector ) {
+		// This will recurse, but inspector will be undefined next time
+		inspector.close( 'hide' );
+		return this;
 	}
-	// Set iframe overlay below element.
-	left = -( this.$inner.width() / 2 ) + config.el.offset().left;
-	top = config.el.offset().top + config.el.outerHeight( true );
-	// Set position.
-	config.overlay.css( {
-		'left': left,
-		'top': top,
-		// RTL position fix.
-		'width': config.overlay.children().outerWidth( true )
-	} );
+
+	this.popup.hide();
+	this.$.hide();
+	this.visible = false;
+
+	return this;
 };
 
-/* Inspector methods */
-
-
-/* Lazy load inspectors on demand */
-ve.ui.Context.prototype.initInspector = function ( name ) {
-	// Add inspector on demand.
-	if ( ve.ui.inspectorFactory.lookup( name ) ) {
-		if ( !( name in this.inspectors ) ) {
-			this.addInspector( name, ve.ui.inspectorFactory.create( name, this ) );
-			this.obscure( this.$inspectors );
-		}
-		return true;
+/**
+ * Opens a given inspector.
+ *
+ * @method
+ * @param {string} name Symbolic name of inspector
+ * @param {Object} [config] Configuration options to be sent to the inspector class constructor
+ * @chainable
+ */
+ve.ui.Context.prototype.openInspector = function ( name, config ) {
+	if ( !this.inspectors.currentWindow ) {
+		this.inspectors.open( name, config );
 	}
-	return false;
-};
-
-ve.ui.Context.prototype.addInspector = function ( name, inspector ) {
-	if ( name in this.inspectors ) {
-		throw new Error( 'Duplicate inspector error. Previous registration with the same name: ' + name );
-	}
-	inspector.$.hide();
-	this.inspectors[name] = inspector;
-	this.frameView.$.append( inspector.$ );
-};
-
-ve.ui.Context.prototype.openInspector = function ( name ) {
-	if ( !this.initInspector( name ) ) {
-		throw new Error( 'Missing inspector. Can not open nonexistent inspector: ' + name );
-	}
-	// Close menu
-	if ( this.menuView ) {
-		this.obscure( this.$menu );
-	}
-	// Fade in context if menu is closed.
-	// At this point, menuView could be undefined or not open.
-	if ( this.menuView === undefined || !this.menuView.isOpen() ) {
-		this.$.fadeIn( 'fast' );
-	}
-	// Open the inspector by name.
-	this.inspectors[name].open();
-	// Resize frame to the size of the inspector.
-	this.resizeFrame( this.inspectors[name] );
-	// Save name of inspector open.
-	this.inspector = name;
-	// Cache selection, in the case of manually opened inspector.
-	this.selection = this.surface.getModel().getSelection();
-	// Set inspector
-	this.set();
-};
-
-ve.ui.Context.prototype.closeInspector = function ( accept ) {
-	if ( this.inspector ) {
-		this.obscure( this.$inspectors );
-		this.inspectors[this.inspector].close( accept );
-		this.inspector = null;
-		this.close();
-	}
-	this.update();
-};
-
-// Currently sizes to dimensions of specified inspector.
-ve.ui.Context.prototype.resizeFrame = function ( inspector ) {
-	this.frameView.$frame.css( {
-		'width': inspector.$.outerWidth(),
-		'height': inspector.$.outerHeight()
-	} );
-};
-
-ve.ui.Context.prototype.getSurface = function () {
-	return this.surface;
-};
-
-/* Events */
-
-ve.ui.Context.prototype.onDocumentFocus = function () {
-	$( window ).on( 'resize.ve-ui-context scroll.ve-ui-context',
-		ve.bind( this.update, this ) );
-};
-
-ve.ui.Context.prototype.onDocumentBlur = function () {
-	if ( !this.inspector ) {
-		$( window ).off( 'resize.ve-ui-context scroll.ve-ui-context' );
-	}
+	return this;
 };

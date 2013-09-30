@@ -151,6 +151,12 @@ class Config
 	 * @var Wikia\Search\ResultSet\AbstractResultSet
 	 */
 	protected $results;
+
+	/**
+	 * Set true if we need to apply some special treatment for commercial clients i.e. filter wikis with non-commercial license
+	 * @var bool
+	 */
+	protected $commercialUse;
 	
 	/**
 	 * This array allows us to associate sort arguments from the request with the appropriate sorting format
@@ -1134,5 +1140,22 @@ class Config
 	public function setCombinedMediaSearchIsVideoOnly( $bool ) {
 		$this->combinedMediaSearchIsVideoOnly = $bool;
 		return $this;
+	}
+
+	/**
+	 * Set true if we need to apply some special treatment for commercial clients i.e. filter wikis with non-commercial license
+	 * @param boolean $commercialUse
+	 */
+	public function setCommercialUse($commercialUse) {
+		$this->commercialUse = $commercialUse;
+		return $this;
+	}
+
+	/**
+	 * Set true if we need to apply some special treatment for commercial clients i.e. filter wikis with non-commercial license
+	 * @return boolean
+	 */
+	public function getCommercialUse() {
+		return $this->commercialUse;
 	}
 }

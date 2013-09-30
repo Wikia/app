@@ -1080,22 +1080,14 @@ class WikiFactory {
 			$server = str_replace( '.wikia.com', '', $server );
 		}
 
-		/*
-		 * commenting out code to reduce number of changes
-		 * that needs to be reviewed for error related to
-		 * preview.video db connections
-		 */
 		// put the address back into shape and return
-		if(empty($_SERVER['SERVER_NAME'])) {
+		if ( empty($_SERVER['SERVER_NAME']) ) {
 			// maintenance script
-			global $wgDevelEnvironment, $wgCityId;
-			$domains = WikiFactory::getDomains($wgCityId);
-			$domains[] = "localhost";
-			if(empty($wgDevelEnvironment)) {
-				return 'http://' . $domains[0] . $address;
+			global $wgDevelEnvironment;
+			if ( empty($wgDevelEnvironment) ) {
+				return 'http://' . $server.'.wikia.com' . $address;
 			} else {
-				$hostname = str_replace('dev-','',gethostname()) . '.wikia-dev.com';
-				$domain = str_replace( 'wikia.com', $hostname, $domains[0] );
+				$domain = $server . '.' . str_replace('dev-','',gethostname()) . '.wikia-dev.com';
 				return 'http://' . $domain . $address;
 			}
 		}

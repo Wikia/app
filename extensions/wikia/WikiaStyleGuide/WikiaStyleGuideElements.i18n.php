@@ -145,6 +145,15 @@ $messages['roa-tara'] = array(
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 e $2 e de cchiù',
 );
 
+/** Russian (русский)
+ * @author Okras
+ */
+$messages['ru'] = array(
+	'wikiastyleguide-dropdown-all' => 'Все',
+	'wikiastyleguide-dropdown-select-all' => 'Выбрать все',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 и ещё $2',
+);
+
 /** Swedish (svenska)
  * @author WikiPhoenix
  */

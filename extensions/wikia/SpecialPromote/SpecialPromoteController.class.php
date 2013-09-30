@@ -47,7 +47,6 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 
 		JSMessages::enqueuePackage('SpecialPromote', JSMessages::EXTERNAL);
 
-		$this->helper->loadWikiInfo();
 		$this->minHeaderLength = $this->helper->getMinHeaderLength();
 		$this->maxHeaderLength = $this->helper->getMaxHeaderLength();
 		$this->minDescriptionLength = $this->helper->getMinDescriptionLength();
@@ -58,6 +57,9 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 		$this->mainImage = $this->helper->getMainImage();
 		$this->additionalImages = $this->helper->getAdditionalImages();
 		$this->wikiStatus = $this->helper->getWikiStatusMessage($this->wg->CityId, $this->wg->contLang->getCode());
+
+		$cityVisualization = new CityVisualization();
+		$this->isCorpLang = $cityVisualization->isCorporateLang($this->wg->contLang->getCode());
 	}
 
 	protected function checkAccess() {

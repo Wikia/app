@@ -27,9 +27,11 @@ $messages['ar'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Gwenn-Ael
  */
 $messages['br'] = array(
+	'confirmemailprompt-desc' => "Diskouez ur c'hemenn diwall m'en deus an implijer ur chomlec'h postel ha n'eo ket bet kadarnaet",
 	'confirmemailprompt-error' => "Ho chomlec'h postel eo : <strong>$1</strong>? [[$2|Kadarnit anezhañ]] pe [[$3|kemmit anezhañ]].",
 );
 

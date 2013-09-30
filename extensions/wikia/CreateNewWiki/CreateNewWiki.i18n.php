@@ -191,6 +191,7 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Kuwaity26
  * @author Meno25
  * @author OsamaK
  * @author ترجمان05
@@ -236,6 +237,7 @@ $messages['ar'] = array(
 	'cnw-desc-tip3-creative' => 'دع الناس يعرفون بأنه بإمكانهم مساعدتك في تنمية الويكي عبر التحرير فيها و إضافة الصفحات',
 	'cnw-desc-choose' => 'إختيار فئة',
 	'cnw-desc-select-one' => 'إختر واحدة',
+	'cnw-desc-all-ages' => 'جميع الأعمار',
 	'cnw-desc-default-lang' => 'سوف تكون هذه الويكي باللغة $1',
 	'cnw-desc-change-lang' => 'تغيير',
 	'cnw-desc-lang' => 'اللغة',
@@ -460,7 +462,7 @@ $messages['br'] = array(
 	'cnw-welcome-instruction1' => "Klikit war ar bouton amañ dindan evit kregiñ da ouzhpennañ pajennoù d'ho wiki.",
 	'cnw-welcome-instruction2' => "Gwelet a reot ar bouton-mañ hed-ha-hed ho wiki, grit gantañ bep tro ha ma fello deoc'h ouzhpennañ ur bajenn nevez.",
 	'cnw-welcome-help' => 'Kavout a reot respontoù, kuzulioù ha kement zo war <a href="http://community.wikia.com">Kalonenn ar gumuniezh</a>.',
-	'cnw-error-general' => "Un dra bennak a zo aet a-dreuz pa veze krouet ho wiki. Mar plij adklaskit diwezhatoc'h.", # Fuzzy
+	'cnw-error-general' => 'Un dra bennak a zo aet a-dreuz eus hon tu ! Esaeit en-dro, mar plij pe <a href="/Special:Contact">deuit e darempred ganimp</a> evit bezañ sikouret.',
 	'cnw-error-general-heading' => "Digarezit ac'hanomp",
 	'cnw-badword-header' => "Oc'ho",
 	'cnw-badword-msg' => "Ac'hanta, mar plij chomit hep implijout gerioù vil pe difennet e deskrivadur ho wiki : $1",
@@ -544,6 +546,7 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'cnw-next' => 'Кхин дӀа',
 	'cnw-desc-lang' => 'Мотт',
 );
 
@@ -1554,6 +1557,15 @@ $messages['lb'] = array(
 	'cnw-error-blocked-header' => 'Benotzerkont gespaart',
 );
 
+/** Lingua Franca Nova (Lingua Franca Nova)
+ * @author Malafaya
+ */
+$messages['lfn'] = array(
+	'cnw-or' => 'o',
+	'cnw-name-wiki-wiki' => 'Vici',
+	'cnw-desc-lang' => 'Lingua',
+);
+
 /** Lithuanian (lietuvių)
  * @author Eitvys200
  * @author Mantak111
@@ -2320,6 +2332,8 @@ $messages['roa-tara'] = array(
 	'cnw-userauth-marketing-heading' => "Non ge tìne 'nu cunde?",
 	'cnw-userauth-marketing-body' => "Tu è abbesògne de 'nu cunde pe ccrejà 'na uicchi sus a Uicchia. Te serve sulamende 'nu minute pe reggistrarte.",
 	'cnw-userauth-signup-button' => 'Reggistrate',
+	'cnw-desc-headline' => "Sus a ce ccose jè 'a uicchi toje?",
+	'cnw-desc-creative' => "Descrive l'argomende tune",
 	'cnw-desc-tip1' => 'Consiglie',
 	'cnw-desc-tip1-creative' => "Ause stu spazie pe dicere a le crestiane sus 'a uicchi toje jndr'à 'na frase o doje",
 	'cnw-desc-tip2' => 'Psst',
@@ -2339,6 +2353,7 @@ $messages['roa-tara'] = array(
  * @author DCamer
  * @author Ignatus
  * @author Kuzura
+ * @author Okras
  */
 $messages['ru'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Мастер создания вики]]',
@@ -2380,6 +2395,8 @@ $messages['ru'] = array(
 	'cnw-desc-tip3-creative' => 'Люди должны знать, что они могут помочь вашей вики расти, редактируя и добавляя страницы',
 	'cnw-desc-choose' => 'Выберите категорию',
 	'cnw-desc-select-one' => 'Выберите одно',
+	'cnw-desc-all-ages' => 'Все возраста',
+	'cnw-desc-tip-all-ages' => 'Это проект о теме, которая интересна детям? Для того, чтобы соответствовать законодательству США, мы отслеживаем проекты о темах, которые непосредственно касаются детей в возрасте 12 лет и младше.',
 	'cnw-desc-default-lang' => 'Ваша вики будет в разделе $1',
 	'cnw-desc-change-lang' => 'изменить',
 	'cnw-desc-lang' => 'Язык',
@@ -2402,6 +2419,13 @@ $messages['ru'] = array(
 	'cnw-error-torblock' => 'Создание вики через сеть Tor не допускается.',
 	'cnw-error-bot' => 'Мы обнаружили, что вы можете быть ботом. Если мы сделали ошибку, пожалуйста, свяжитесь с нами и подтвердите, что  вы не бот, и мы поможем вам в создании новой вики: [http://www.wikia.com/Special:Contact/general связь с нами]',
 	'cnw-error-bot-header' => 'Вы были определены как бот',
+);
+
+/** Slovenian (slovenščina)
+ * @author Eleassar
+ */
+$messages['sl'] = array(
+	'cnw-signup' => 'Registracija',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)

@@ -20,6 +20,15 @@ $messages['qqq'] = array(
 	'adengine-exitstitial-button' => 'Text of the link/button that you can close the box with and get directly to the link target',
 );
 
+/** Arabic (العربية)
+ * @author Kuwaity26
+ */
+$messages['ar'] = array(
+	'adengine-exitstitial-title-template' => 'أنت تغادر $1...',
+	'adengine-exitstitial-go-back' => 'أتريد أن تعود؟',
+	'adengine-exitstitial-button' => 'تخطَّ هذا الإعلان',
+);
+
 /** Bikol Central (Bikol Central)
  * @author Geopoet
  */
@@ -294,6 +303,16 @@ $messages['roa-tara'] = array(
 	'adengine-exitstitial-redirecting' => "'U browser te adda mannà a 'a pàgene ca è cercate jndr'à quacche seconde.",
 	'adengine-exitstitial-go-back' => 'Vue ccù tuèrne rrete?',
 	'adengine-exitstitial-button' => 'Zumbe sta pubblecetà',
+);
+
+/** Russian (русский)
+ * @author Okras
+ */
+$messages['ru'] = array(
+	'adengine-exitstitial-title-template' => 'Вы покидаете $1…',
+	'adengine-exitstitial-redirecting' => 'Ваш браузер перенаправит вас на запрошенную страницу через несколько секунд.',
+	'adengine-exitstitial-go-back' => 'Хотите вернуться?',
+	'adengine-exitstitial-button' => 'Пропустить это объявление',
 );
 
 /** Swedish (svenska)

@@ -191,7 +191,7 @@ class ThumbnailVideo extends ThumbnailImage {
 		}
 
 		if ( isset( $options['duration'] ) && $options['duration'] == true ) {
-			$duration = $this->file->getHandler()->getFormattedDuration();
+			$duration = WikiaFileHelper::formatDuration( $this->file->getMetadataDuration() );
 		}
 
 		if ( isset($options['constHeight']) ) {

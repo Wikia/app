@@ -5,7 +5,7 @@
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
 
-abstract class WikiaApiController extends WikiaController {
+class WikiaApiController extends WikiaController {
 	const DEFAULT_FORMAT_INDEX = 0;
 
 	private $allowedFormats = array(
@@ -33,6 +33,9 @@ abstract class WikiaApiController extends WikiaController {
 	 */
 	final public function init() {
 		if ( !$this->request->isInternal() ) {
+			if ($this->hideNonCommercialContent()) {
+				$this->blockIfNonCommercialOnly();				
+			}
 			$paramKeys = array_keys( F::app()->wg->Request->getQueryValues() );
 			$count = count( $paramKeys );
 
@@ -109,4 +112,36 @@ abstract class WikiaApiController extends WikiaController {
 		//even if the request doesn't have a valid key... pretty dangerous
 		$this->response->setHeader( $APIGATE_HEADER_REQUIRES_API, 1);
 	}
+	
+	/**
+	 * Returns whether this api request must hide content that is licensed for
+	 * non-commercial use only (some of the wikis with unusual license).
+	 * Currently, direct requests to wikia.php allow all content (this method returns false),
+	 * while requests through /api/v1 entrypoints don't (this method returns true).
+	 */
+	
+	public function hideNonCommercialContent() {
+		return stripos($this->request->getScriptUrl(), "/api/v1")===0;
+	}
+	
+	/** Block content if this wiki is does not allow commercial use of it's content outside of Wikia
+	 * Raises WikiaHttpException
+	 *
+	 */
+	
+	public function blockIfNonCommercialOnly() {
+		$licensedService = new LicensedWikisService();
+		if (!$licensedService->isCommercialUseAllowedForThisWiki()) {
+			throw new ApiNonCommercialOnlyException();
+		}
+	}
 }
+
+
+class ApiNonCommercialOnlyException extends ForbiddenException {
+	protected $details = "API access to this wiki is disabled because \
+it's license disallows commercial use outside of Wikia.";
+}
+	
+	
+	

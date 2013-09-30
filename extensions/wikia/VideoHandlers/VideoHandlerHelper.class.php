@@ -260,13 +260,17 @@ class VideoHandlerHelper extends WikiaModel {
 				$videoDetail = array(
 					'title' => $title->getDBKey(),
 					'fileTitle' => $title->getText(),
-					'fileUrl' => $title->getLocalUrl(),
+					'description' => $this->getVideoDescription($file), // The description from the File page
+					'fileUrl' => $title->getFullURL(),
 					'thumbUrl' => $thumbUrl,
 					'userName' => $userName,
 					'userUrl' => $userUrl,
 					'truncatedList' => $truncatedList,
 					'isTruncated' => $isTruncated,
 					'timestamp' => empty($videoInfo['addedAt']) ? '' : $videoInfo['addedAt'],
+					'duration' => $file->getMetadataDuration(),
+					'viewsTotal' => empty($videoInfo['viewsTotal']) ? 0 : $videoInfo['viewsTotal'],
+					'provider' => $file->getProviderName(),
 					'embedUrl' => $file->getHandler()->getEmbedUrl(),
 				);
 			} else {
@@ -279,6 +283,33 @@ class VideoHandlerHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $videoDetail;
+	}
+
+	/**
+	 * Same as 'VideoHandlerHelper::getVideoDetail' but retrieves information from an external wiki
+	 * Typically used to get premium video info from video.wikia.com when on another wiki.
+	 * @param $dbName - The DB name of the wiki that should be used to find video details
+	 * @param $title - The title of the video to get details for
+	 * @param $thumbWidth - The width of the thumbnail to return
+	 * @param $thumbHeight - The height of the thumbnail to return
+	 * @param $postedInArticles - Cap on number of "posted in" article details to return
+	 * @return null|array - As associative array of video information
+	 */
+	public function getVideoDetailFromWiki( $dbName, $title, $thumbWidth, $thumbHeight, $postedInArticles ) {
+		$params = array('controller'   => 'VideoHandler',
+						'method'       => 'getVideoDetail',
+						'fileTitle'    => $title,
+						'thumbWidth'   => $thumbWidth,
+						'thumbHeight'  => $thumbHeight,
+						'articleLimit' => $postedInArticles,
+		);
+
+		$response = ApiService::foreignCall( $dbName, $params, ApiService::WIKIA );
+		if ( !empty($response['detail']) ) {
+			return $response['detail'];
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -303,7 +334,7 @@ class VideoHandlerHelper extends WikiaModel {
 	 */
 	public function getTemplateSelectOptions( $options, $selected ) {
 		$opts = array();
-		foreach( $options as $key => $value ) {
+		foreach ( $options as $key => $value ) {
 			$opts[] = array(
 				'label' => $value,
 				'value' => $key,

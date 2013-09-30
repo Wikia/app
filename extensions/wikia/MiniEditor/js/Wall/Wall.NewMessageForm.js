@@ -61,7 +61,7 @@ MiniEditor.Wall.NewMessageForm = $.createClass(Wall.settings.classBindings.newMe
 	},
 
 	getMessageBody: function() {
-		return this.messageBody.data('wikiaEditor').getContent().trim();
+		return $.trim(this.messageBody.data('wikiaEditor').getContent());
 	},
 
 	// Return an empty string if we don't need to convert,
