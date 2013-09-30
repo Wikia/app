@@ -88,6 +88,12 @@ class PageHeaderController extends WikiaController {
 			$this->actionImage = MenuButtonController::EDIT_ICON;
 			$this->actionName = 'form-edit';
 		}
+		// ve-edit
+		else if (isset($this->content_actions['ve-edit'])) {
+			$this->action = $this->content_actions['ve-edit'];
+			$this->actionImage = MenuButtonController::EDIT_ICON;
+			$this->actionName = 've-edit';
+		}
 		// edit
 		else if (isset($this->content_actions['edit'])) {
 			$this->action = $this->content_actions['edit'];

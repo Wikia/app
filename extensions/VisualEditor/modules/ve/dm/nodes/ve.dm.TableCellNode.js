@@ -1,69 +1,50 @@
-/**
- * VisualEditor data model TableCellNode class.
+/*!
+ * VisualEditor DataModel TableCellNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * DataModel node for a table cell.
+ * DataModel table cell node.
  *
  * @class
+ * @extends ve.dm.BranchNode
  * @constructor
- * @extends {ve.dm.BranchNode}
  * @param {ve.dm.BranchNode[]} [children] Child nodes to attach
- * @param {Object} [attributes] Reference to map of attribute key/value pairs
+ * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.TableCellNode = function VeDmTableCellNode( children, attributes ) {
+ve.dm.TableCellNode = function VeDmTableCellNode( children, element ) {
 	// Parent constructor
-	ve.dm.BranchNode.call( this, 'tableCell', children, attributes );
+	ve.dm.BranchNode.call( this, children, element );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.dm.TableCellNode, ve.dm.BranchNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.dm.NodeFactory
- * @static
- * @member
- */
-ve.dm.TableCellNode.rules = {
-	'isWrapped': true,
-	'isContent': false,
-	'canContainContent': false,
-	'hasSignificantWhitespace': false,
-	'childNodeTypes': null,
-	'parentNodeTypes': ['tableRow']
+ve.dm.TableCellNode.static.name = 'tableCell';
+
+ve.dm.TableCellNode.static.parentNodeTypes = [ 'tableRow' ];
+
+ve.dm.TableCellNode.static.defaultAttributes = {
+	'style': 'data'
 };
 
-/**
- * Node converters.
- *
- * @see {ve.dm.Converter}
- * @static
- * @member
- */
-ve.dm.TableCellNode.converters = {
-	'domElementTypes': ['td', 'th'],
-	'toDomElement': function ( type, element ) {
-		return element.attributes && ( {
-			'data': document.createElement( 'td' ),
-			'header': document.createElement( 'th' )
-		} )[element.attributes.style];
-	},
-	'toDataElement': function ( tag ) {
-		return ( {
-			'td': { 'type': 'tableCell', 'attributes': { 'style': 'data' } },
-			'th': { 'type': 'tableCell', 'attributes': { 'style': 'header' } }
-		} )[tag];
-	}
+ve.dm.TableCellNode.static.matchTagNames = [ 'td', 'th' ];
+
+ve.dm.TableCellNode.static.toDataElement = function ( domElements ) {
+	var style = domElements[0].nodeName.toLowerCase() === 'th' ? 'header' : 'data';
+	return { 'type': 'tableCell', 'attributes': { 'style': style } };
+};
+
+ve.dm.TableCellNode.static.toDomElements = function ( dataElement, doc ) {
+	var tag = dataElement.attributes && dataElement.attributes.style === 'header' ? 'th' : 'td';
+	return [ doc.createElement( tag ) ];
 };
 
 /* Registration */
 
-ve.dm.nodeFactory.register( 'tableCell', ve.dm.TableCellNode );
+ve.dm.modelRegistry.register( ve.dm.TableCellNode );

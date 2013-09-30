@@ -1623,6 +1623,7 @@ $messages['id'] = array(
 	'article-comments-undeleted-comment' => 'Batalkan hapus komentar untuk halaman blog $1',
 	'article-comments-rc-comments' => 'Komentar artikel ([[$1]])',
 	'article-comments-fblogin' => 'Silakan <a href="$1" rel="nofollow">masuk log dan terhubung dengan Facebook</a> untuk mengirim komentar pada wiki ini!',
+	'article-comments-fbconnect' => 'Silakan <a href="$1">hubungkan akun ini dengan Facebook</a> untuk berkomentar!',
 	'article-comments-rc-blog-comment' => 'Komentar blog (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Komentar blog ([[$1]])',
 	'article-comments-toc-item' => 'Komentar',
@@ -1635,6 +1636,8 @@ $messages['id'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Artikel induk / komentar induk telah dihapus.',
 	'article-comments-empty-comment' => "Anda tidak dapat mengirim komentar kosong. <a href='$1'>Hapus saja?</a>",
+	'wikiamobile-article-comments-more' => 'Baca lebih lanjut',
+	'wikiamobile-article-comments-none' => 'Tidak ada komentar',
 	'wikiamobile-article-comments-view' => 'Lihat balasan',
 	'wikiamobile-article-comments-replies' => 'balasan',
 	'wikiamobile-article-comments-post-reply' => 'Kirimkan balassan',
@@ -1886,7 +1889,7 @@ $messages['ku-latn'] = array(
 	'article-comments-history' => 'dîrok',
 );
 
-/** Kirghiz (Кыргызча)
+/** Kyrgyz (Кыргызча)
  * @author Growingup
  */
 $messages['ky'] = array(

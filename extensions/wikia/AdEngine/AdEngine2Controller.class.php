@@ -94,6 +94,23 @@ class AdEngine2Controller extends WikiaController {
 			return $pageLevel;
 		}
 
+		// Override ad level for a (set of) specific page(s)
+		// Use case: sponsor ads on a landing page targeted to Wikia editors (=logged in)
+		if ($wg->Title &&
+			!empty($wg->PagesWithNoAdsForLoggedInUsersOverriden) &&
+			in_array($wg->Title->getDBkey(), $wg->PagesWithNoAdsForLoggedInUsersOverriden))
+		{
+			$pageLevel = self::AD_LEVEL_CORPORATE;
+			if (!empty($wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL) &&
+				in_array($wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL, array(
+					self::AD_LEVEL_NONE, self::AD_LEVEL_LIMITED, self::AD_LEVEL_CORPORATE, self::AD_LEVEL_ALL
+				)))
+			{
+				$pageLevel = $wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL;
+			}
+			return $pageLevel;
+		}
+
 		// And no other ads
 		$pageLevel = self::AD_LEVEL_NONE;
 		return $pageLevel;

@@ -12,7 +12,7 @@
 		'type' => 'text',
 		'name' => 'username',
 		'isRequired' => true,
-		'label' => wfMsg('yourname'),
+		'label' => wfMessage('yourname')->escaped(),
 		'isInvalid' => (!empty($errParam) && $errParam === 'username'),
 		'value' => htmlspecialchars($username),
 		'tabindex' => ++$tabIndex,
@@ -24,7 +24,7 @@
 		'name' => 'password',
 		'class' => 'password-input',
 		'isRequired' => true,
-		'label' => wfMsg('yourpassword'),
+		'label' => wfMessage('yourpassword')->escaped(),
 		'isInvalid' => (!empty($errParam) && $errParam === 'password'),
 		'value' => htmlspecialchars($password),
 		'tabindex' => ++$tabIndex,
@@ -36,7 +36,7 @@
 	$forgotPasswordLink = array(
 		'type' => 'custom',
 		'output' => '<a href="'. $forgotPasswordLinkUrl .'" class="forgot-password" tabindex="0">'
-			. wfMsg('userlogin-forgot-password')
+			. wfMessage('userlogin-forgot-password')->escaped()
 			. '</a>',
 	);
 
@@ -47,13 +47,13 @@
 		'isRequired' => false,
 		'value' => '1',
 		'checked' => $keeploggedin,
-		'label' => wfMsg('userlogin-remembermypassword'),
+		'label' => wfMessage('userlogin-remembermypassword')->escaped(),
 		'tabindex' => ++$tabIndex,
 	);
 
 	$loginBtn = array(
 		'type' => 'submit',
-		'value' => wfMsg('login'),
+		'value' => wfMessage('login')->escaped(),
 		'class' => 'login-button big',
 		'tabindex' => ++$tabIndex,
 	);
@@ -61,7 +61,7 @@
 	$specialSignupLink = SpecialPage::getTitleFor('UserSignup')->getLocalURL();
 	$createAccount = array(
 		'type' => 'custom',
-		'output' => wfMsgExt('userlogin-get-account', 'content', array($specialSignupLink, ++$tabIndex)),
+		'output' => wfMessage('userlogin-get-account', array($specialSignupLink, ++$tabIndex))->inContentLanguage()->text(),
 		'class' => 'get-account',
 		'tabindex' => ++$tabIndex,
 	);

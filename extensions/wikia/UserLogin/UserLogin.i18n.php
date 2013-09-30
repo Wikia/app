@@ -1124,6 +1124,15 @@ ___________________________________________
 	'wikiamobile-facebook-connect-fail' => 'あなたの Facebook アカウントは現在ウィキアのアカウントとリンクされていません。',
 );
 
+/** Georgian (ქართული)
+ * @author DevaMK
+ */
+$messages['ka'] = array(
+	'userlogin-forgot-password' => 'დაგავიწყდათ პაროლი?',
+	'userlogin-remembermypassword' => 'დამიმახსოვრე',
+	'userlogin-provider-or' => 'ან',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -1431,6 +1440,7 @@ Vil du kontrollere hva slags e-post du mottar? Gå til: <a href="{{fullurl:Speci
 );
 
 /** Dutch (Nederlands)
+ * @author HanV
  * @author Siebrand
  */
 $messages['nl'] = array(
@@ -1466,7 +1476,7 @@ $messages['nl'] = array(
 	'userlogin-error-mail-error' => 'Het was niet mogelijk een e-mail aan u te verzenden. [[Special:Contact/general|Neem contact met ons op]].',
 	'userlogin-password-email-sent' => 'Er is een nieuw wachtwoord verzonden naar het e-mailadres $1.',
 	'userlogin-error-unconfirmed-user' => 'Uw e-mailadres is niet bevestigd. Bevestig eerst uw e-mailadres.',
-	'userlogin-error-confirmation-reminder-already-sent' => 'De bevestigingse-mail is al verzonden.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'De bevestiging per e-mail is al verzonden.',
 	'userlogin-password-page-title' => 'Uw wachtwoord wijzigen',
 	'userlogin-oldpassword' => 'Huidige wachtwoord',
 	'userlogin-newpassword' => 'Nieuw wachtwoord',
@@ -1814,13 +1824,14 @@ $messages['roa-tara'] = array(
 
 /** Russian (русский)
  * @author Kuzura
+ * @author Okras
  */
 $messages['ru'] = array(
 	'userlogin-login-heading' => 'Войти',
 	'userlogin-forgot-password' => 'Забыли пароль?',
 	'userlogin-forgot-password-button' => 'Продолжить',
 	'userlogin-forgot-password-go-to-login' => 'Уже есть пароль? [[Special:UserLogin|Войти]]',
-	'userlogin-remembermypassword' => 'Оставаться в системе', # Fuzzy
+	'userlogin-remembermypassword' => 'Оставаться в системе',
 	'userlogin-error-noname' => 'Пожалуйста, заполните строку Имя участника.',
 	'userlogin-error-sessionfailure' => 'Превышено время ожидания. Пожалуйста, войдите снова.',
 	'userlogin-error-nosuchuser' => 'Данное имя не зарегистрировано. Не забывайте, что имена участников чувствительны к регистру.',
@@ -1848,6 +1859,7 @@ $messages['ru'] = array(
 	'userlogin-error-mail-error' => 'К сожалению, у нас проблема с отправкой писем на Ваш e-mail. Пожалуйста, [[Special:Contact/general|свяжитесь с нами]].',
 	'userlogin-password-email-sent' => 'Мы направили новый пароль на e-mail - $1 .',
 	'userlogin-error-unconfirmed-user' => 'Извините, вы не подтвердили свой адрес электронной почты. Пожалуйста, сделайте это.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'Электронное письмо с подтверждением уже отправлено.',
 	'userlogin-password-page-title' => 'Изменить пароль',
 	'userlogin-oldpassword' => 'Старый пароль',
 	'userlogin-newpassword' => 'Новый пароль',

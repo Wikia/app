@@ -144,7 +144,13 @@ class VideoEmbedToolTest extends BaseTest
 		    ->will   ( $this->returnValue( [] ) )
 		;
 		$mwService
-		    ->expects( $this->at( 1 ) )
+			->expects( $this->at( 1 ) )
+			->method ( 'getGlobalWithDefault' )
+			->with   ( 'WikiVideoSearchTopicsAutomated', [] )
+			->will   ( $this->returnValue( [] ) )
+		;
+		$mwService
+		    ->expects( $this->at( 2 ) )
 		    ->method ( 'getGlobal' )
 		    ->with   ( 'Sitename' )
 		    ->will   ( $this->returnValue( 'Diamond Lane Wiki' ) )

@@ -2349,7 +2349,7 @@ class MediaWikiServiceTest extends BaseTest
 		);
 	}
 	/**
-	 * @covers Wikia\Search\MediaWikiService::getThumbnailHtmlFromPageTitle
+	 * @covers Wikia\Search\MediaWikiService::getThumbnailHtmlFromFileTitle
 	 */
 	public function testGetThumbnailHtmlFromFileTitle() {
 		$service = $this->service->setMethods( null )->getMock();

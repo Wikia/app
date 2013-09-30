@@ -1,4 +1,6 @@
 <?php
+
+
 /**
  * Controller to fetch information from WikiaHubs pages
  */
@@ -26,6 +28,7 @@ class WikiaHubsApiController extends WikiaApiController {
 	 * @example &module=1&vertical=2&ts=1359504000
 	 * @example &module=1&vertical=2&ts=1359504000&lang=de
 	 */
+
 	public function getModuleData() {
 		wfProfileIn( __METHOD__ );
 		

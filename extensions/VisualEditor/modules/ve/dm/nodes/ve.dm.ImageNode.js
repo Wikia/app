@@ -1,65 +1,59 @@
-/**
- * VisualEditor data model ImageNode class.
+/*!
+ * VisualEditor DataModel ImageNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * DataModel node for a document.
+ * DataModel image node.
  *
  * @class
+ * @extends ve.dm.LeafNode
  * @constructor
- * @extends {ve.dm.LeafNode}
- * @param {Number} [length] Length of content data in document
- * @param {Object} [attributes] Reference to map of attribute key/value pairs
+ * @param {number} [length] Length of content data in document
+ * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.ImageNode = function VeDmImageNode( length, attributes ) {
+ve.dm.ImageNode = function VeDmImageNode( length, element ) {
 	// Parent constructor
-	ve.dm.LeafNode.call( this, 'image', 0, attributes );
+	ve.dm.LeafNode.call( this, 0, element );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.dm.ImageNode, ve.dm.LeafNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.dm.NodeFactory
- * @static
- * @member
- */
-ve.dm.ImageNode.rules = {
-	'isWrapped': true,
-	'isContent': true,
-	'canContainContent': false,
-	'hasSignificantWhitespace': false,
-	'childNodeTypes': [],
-	'parentNodeTypes': null
+ve.dm.ImageNode.static.name = 'image';
+
+ve.dm.ImageNode.static.isContent = true;
+
+ve.dm.ImageNode.static.matchTagNames = [ 'img' ];
+
+ve.dm.ImageNode.static.toDataElement = function ( domElements ) {
+	var $node = $( domElements[0] ),
+		alt = $node.attr( 'alt' ),
+		width = $node.attr( 'width' ),
+		height = $node.attr( 'height' );
+
+	return {
+		'type': 'image',
+		'attributes': {
+			'src': $node.attr( 'src' ),
+			'alt': alt !== undefined ? alt : null,
+			'width': width !== undefined && width !== '' ? Number( width ) : null,
+			'height': height !== undefined && height !== '' ? Number( height ) : null
+		}
+	};
 };
 
-/**
- * Node converters.
- *
- * @see {ve.dm.Converter}
- * @static
- * @member
- */
-ve.dm.ImageNode.converters = {
-	'domElementTypes': ['img'],
-	'toDomElement': function () {
-		return document.createElement( 'img' );
-	},
-	'toDataElement': function () {
-		return {
-			'type': 'image'
-		};
-	}
+ve.dm.ImageNode.static.toDomElements = function ( dataElement, doc ) {
+	var domElement = doc.createElement( 'img' );
+	ve.setDomAttributes( domElement, dataElement.attributes, [ 'alt', 'src', 'width', 'height' ] );
+	return [ domElement ];
 };
 
 /* Registration */
 
-ve.dm.nodeFactory.register( 'image', ve.dm.ImageNode );
+ve.dm.modelRegistry.register( ve.dm.ImageNode );

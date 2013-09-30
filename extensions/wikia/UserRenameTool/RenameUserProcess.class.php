@@ -253,6 +253,17 @@ class RenameUserProcess {
 
 		$this->addInternalLog("title: old={$oun} new={$nun}");
 
+		//AntiSpoof test
+
+		if ( class_exists( 'SpoofUser' ) ) {
+			$oNewSpoofUser = new SpoofUser( $nun );
+			if ( !$oNewSpoofUser -> isLegal() ) {
+				$this->addWarning( wfMessage( 'userrenametool-error-antispoof-conflict', $nun ) );
+			}
+		} else {
+			$this->addError( wfMessage( 'userrenametool-error-antispoof-notinstalled' ) );
+		}
+
 		//Invalid old user name entered
 		if(!$oun){
 			$this->addError( wfMessage('userrenametool-errorinvalid', $this->mRequestData->oldUsername)->inContentLanguage()->text() );

@@ -2198,6 +2198,7 @@ $messages['pfl'] = array(
 
 /** Polish (polski)
  * @author BeginaFelicysym
+ * @author Clamira
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -2252,7 +2253,7 @@ $messages['pl'] = array(
 	'wmu-hide-license-msg' => 'ukryj treść licencji',
 	'wmu-show-license-msg' => 'pokaż treść licencji',
 	'wmu-max-thumb' => 'przekroczono maksymalny rozmiar miniatury, przywrócono wielkość pierwotną',
-	'wmu-notallowed' => 'Nie można przesyłać obrazów na tą wiki',
+	'wmu-notallowed' => 'Nie można przesyłać obrazów na tę wiki',
 	'wmu-readonly' => 'Nie można przesłać obrazów ponieważ wiki jest obecnie w trybie tylko do odczytu.',
 	'wmu-placeholder' => 'Wypełniacz',
 	'wmu-gallery' => 'Galeria',
