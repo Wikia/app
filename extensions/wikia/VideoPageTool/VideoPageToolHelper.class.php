@@ -148,6 +148,7 @@ class VideoPageToolHelper extends WikiaModel {
 				'altThumbName'  => $altThumbName,
 				'displayTitle'  => $displayTitle,
 				'description'   => $description,
+				'thumbUrl'      => $thumbUrl,
 			);
 		}
 

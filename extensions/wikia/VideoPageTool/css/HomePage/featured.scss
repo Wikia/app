@@ -15,7 +15,6 @@ $play-button-overlay-fade-duration: 400ms;
 
 .featured-video {
 	@include clearfix;
-	background: black;
 	.featured-video-slider{
 		position: relative;
 		visibility: hidden;
@@ -34,20 +33,33 @@ $play-button-overlay-fade-duration: 400ms;
 		.bxslider {
 			position: relative;
 			li {
-				// border hack to deal with 1px miscalculation in bxslider
-				border: 1px solid black;
-				border-width: 0px 1px;
 				float: left;
 				margin-top: 0;
 				position: relative;
-				@media #{$small} {
-					border-width: 0;
+
+				@media #{$medium} {
+					// border hack to deal with 1px miscalculation in bxslider
+					border: 1px solid #FFF;
+					border-width: 0px 1px;
 				}
 
 				.slide-image {
 					width: 100%;
 
 					> img {
+						width: 100%;
+					}
+
+					// darken the image with 10% opacity per design request
+					&:after {
+						@include opacity(10);
+						background: black;
+						content: "";
+						display: block;
+						height: 100%;
+						left: 0;
+						position: absolute;
+						top: 0;
 						width: 100%;
 					}
 				}
@@ -78,7 +90,7 @@ $play-button-overlay-fade-duration: 400ms;
 				width: inherit;
 			}
 			.slide-video {
-				width: 750px;
+				width: 900px;
 				margin: auto;
 			}
 		}
@@ -107,19 +119,30 @@ $play-button-overlay-fade-duration: 400ms;
 			bottom: 0;
 			left: 0;
 			position: absolute;
-			a {
-				display: inline-block;
-				float: left;
-				margin: 10px 0;
+			li {
+				@include box-sizing-border-box;
+				padding-top: 5px;
+				padding-bottom: 5px;
 				text-align: center;
-				width: 20%;
-				img {
-					max-width: 98%;
+			}
+			a {
+				display: block;
+				position: relative;
+				text-align: center;
+				width: 100%;
+
+				> img {
+					width: 100%;
+					height: auto;
 				}
+
 				.Wikia-video-play-button {
 					@include transition-shorthand(opacity $play-button-overlay-fade-duration ease-out);
 					@include opacity(0);
-					width: 100%;
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					margin: -25px 0 0 -25px;
 				}
 				&:hover .Wikia-video-play-button {
 					@include opacity(100);

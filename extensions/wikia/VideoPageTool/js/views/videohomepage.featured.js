@@ -34,19 +34,7 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 
 	Featured.prototype = {
 		init: function() {
-			this.fixDOM();
 			this.initSlider();
-		},
-		// TODO: this is a hack, ideally it would be done on the back end
-		fixDOM: function() {
-			this.$thumbs.find( 'a' ).each( function() {
-				$( this )
-					// Don't open lightbox when clicked
-					.addClass( 'no-lightbox' )
-					// format the play button so it can be responsive
-					.find( '.Wikia-video-play-button' )
-					.css( 'width', 'inherit' );
-			});
 		},
 		initSlider: function() {
 			this.slider = this.$bxSlider.bxSlider({
@@ -140,7 +128,7 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 
 			$.when( data ).done( function( json ) {
 				if( json.error ) {
-					window.GlobalNotification.show( json.error, 'error' );
+					window.GlobalNotification.show( json.error, 'error', null, 4000);
 				} else {
 					// cache embed data
 					slide.embedData = json;
@@ -161,7 +149,7 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 					type: 'GET',
 					data: {
 						fileTitle: slide.videoKey,
-						width: 750,
+						width: 900,
 						autoplay: 1
 					}
 				});

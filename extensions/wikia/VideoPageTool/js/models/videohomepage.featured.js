@@ -17,7 +17,6 @@ define('vpt.models.featured', [ 'jquery' ], function( $ ) {
 
 			$thumbs.find( '.video' ).each( function() {
 				var $this = $( this );
-
 				thumbs.push({
 					$video: $this
 				});
