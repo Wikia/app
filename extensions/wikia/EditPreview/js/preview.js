@@ -63,7 +63,7 @@ define( 'wikia.preview', [
 							ev.preventDefault();
 						}
 					}).
-					parent().css({
+					parent().parent().css({
 						'height': options.height || ($(window).height() - 250),
 						'overflow': 'auto',
 						'overflow-x': 'hidden'
@@ -78,7 +78,7 @@ define( 'wikia.preview', [
 		}, options);
 
 		// use loading indicator before real content will be fetched
-		var content = '<div class="ArticlePreview"><div class="ArticlePreviewInner"><img src="' + stylepath + '/common/images/ajax.gif" class="loading"></div></div>';
+		var content = '<div class="ArticlePreview"><div class="ArticlePreviewInnerWrapper"><div class="ArticlePreviewInner"><img src="' + stylepath + '/common/images/ajax.gif" class="loading"></div></div></div>';
 
 		$.showCustomModal(title, content, options);
 	}
@@ -154,7 +154,7 @@ define( 'wikia.preview', [
 					// initial scale of article preview
 					scalePreview(previewTypes.current.name);
 
-				    // adding type dropdown to preview
+					// adding type dropdown to preview
 					loader({
 						type: loader.MULTI,
 						resources: {
@@ -194,7 +194,7 @@ define( 'wikia.preview', [
 
 						var tooltipParams = { placement: 'right' };
 						if( $dialog[0] && $dialog[0].style && $dialog[0].style.zIndex ) {
-							// on Chrome when using $.css('z-index') / $.css('zIndex') it gave me 2e+9
+							// on Chrome when using $.css('z-index') / $.css('zIndex') it returns 2e+9
 							// this vanilla solution works better
 							tooltipParams['z-index'] = parseInt( $dialog[0].style.zIndex, 10 );
 						}
@@ -257,9 +257,16 @@ define( 'wikia.preview', [
 			cssTransformOrigin = cssPropHelper.getSupportedProp('transform-origin');
 
 		if (selectedPreviewWidth > initialPreviewWidth) {
-			var	scaleVar = 'scale(' + scaleRatio + ')';
+			var scaleVar = 'scale(' + scaleRatio + ')';
 			$article.css(cssTransformOrigin, 'left top');
 			$article.css(cssTransform , scaleVar);
+
+			// DAR-2182
+			var newHeight = $article[0].getBoundingClientRect().height;
+			newHeight += articleMargin;
+
+			// we have a wrapper with overflow: hidden not to show white space after CSS scaling
+			$article.parent().height( newHeight );
 		} else {
 			$article.css(cssTransform, '');
 		}
