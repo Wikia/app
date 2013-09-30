@@ -10,6 +10,10 @@
 							<img class="sprite large play" src="<?= $wg->BlankImgUrl ?>">
 						</div>
 						<img src="<?= $videoData['largeThumbUrl'] ?>">
+						<div class="caption small-4 columns">
+							<span class="title"><?= $videoData['displayTitle'] ?></span>
+							<span class="description"><?= $videoData['description'] ?></span>
+						</div>
 					</div>
 					<div class="slide-video"></div>
 				</li>

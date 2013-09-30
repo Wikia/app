@@ -3,6 +3,7 @@
 @import "skins/oasis/css/mixins/opacity";
 @import "skins/oasis/css/core/responsive";
 @import "skins/oasis/css/mixins/transition";
+@import "skins/oasis/css/lib/foundation.custom/src/_variables";
 @import '../mixins/_sprite-VideoPageTool.scss';
 
 
@@ -39,6 +40,9 @@ $play-button-overlay-fade-duration: 400ms;
 				float: left;
 				margin-top: 0;
 				position: relative;
+				@media #{$small} {
+					border-width: 0;
+				}
 
 				.slide-image {
 					width: 100%;
@@ -46,6 +50,23 @@ $play-button-overlay-fade-duration: 400ms;
 					> img {
 						width: 100%;
 					}
+				}
+				.caption {
+					color: #FFF;
+					bottom: 20px;
+					left: 40px;
+					position: absolute;
+					text-shadow: 1px 1px 2px #666;
+				}
+				.title {
+					display: block;
+					font-size: 26px;
+					line-height: 32px;
+				}
+				.description {
+					display: block;
+					font-size: 18px;
+					line-height: 21px;
 				}
 			}
 			.Wikia-video-play-button {
