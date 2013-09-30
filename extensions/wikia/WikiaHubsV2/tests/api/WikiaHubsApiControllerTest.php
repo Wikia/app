@@ -1,8 +1,9 @@
 <?php
-include( "../extensions/wikia/WikiaHubsV2/WikiaHubsV2.setup.php" );
-include( "../extensions/wikia/WikiaHubsServices/WikiaHubsServices.setup.php" );
+require_once __DIR__ . '/../../WikiaHubsV2.setup.php';
+require_once __DIR__ . '/../../api/WikiaHubsApiController.class.php';
+require_once __DIR__ . '/../../../WikiaHubsServices/WikiaHubsServices.setup.php';
 
-class WikiaHubsApiControllerTest extends PHPUnit_Framework_TestCase {
+class WikiaHubsApiControllerTest extends WikiaBaseTest {
 	const WIKIAREQUEST_DEFAULT_VALUE = 0;
 	
 	protected $modulesIds = array(1, 2, 3);
