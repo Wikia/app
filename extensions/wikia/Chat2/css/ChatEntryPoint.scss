@@ -170,6 +170,8 @@ body.skin-oasis .ChatMonobookEntryPoint {
 	@include box-shadow(0px, 2px, 5px, darken($color-page,12%));
 	background: $color-page;
 	border: 1px solid $color-page-border;
+	clear: both;
+	display: inline-block;
 	@if lightness($color-page) < 50 {
 		@include box-shadow(0px, 2px, 5px, darken($color-page,7%));
 		background: $color-module-background;
@@ -181,6 +183,11 @@ body.skin-oasis .ChatMonobookEntryPoint {
 	position: relative;
 	width: 284px;
 	word-wrap: break-word;
+}
+
+// don't show the chat module if the content hasn't been rendered yet
+.ChatModuleUninitialized .chat-contents {
+	visibility: hidden;
 }
 
 // use full width on main pages using grid (BugId:51408)

@@ -1082,7 +1082,7 @@ class WallMessage {
 	}
 
 	public function canReply() {
-		return !$this->isAdminDelete() && !$this->isRemove();
+		return !$this->isArchive() && !$this->isAdminDelete() && !$this->isRemove();
 	}
 
 	public function canRestore($user) {

@@ -1,40 +1,34 @@
-/**
- * VisualEditor content editable TableRowNodw class.
+/*!
+ * VisualEditor ContentEditable TableRowNodw class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * ContentEditable node for a table row.
+ * ContentEditable table row node.
  *
  * @class
+ * @extends ve.ce.BranchNode
  * @constructor
- * @extends {ve.ce.BranchNode}
  * @param {ve.dm.TableRowNode} model Model to observe
+ * @param {Object} [config] Configuration options
  */
-ve.ce.TableRowNode = function VeCeTableRowNode( model ) {
+ve.ce.TableRowNode = function VeCeTableRowNode( model, config ) {
 	// Parent constructor
-	ve.ce.BranchNode.call( this, 'tableRow', model, $( '<tr>' ) );
+	ve.ce.BranchNode.call( this, model, config );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.ce.TableRowNode, ve.ce.BranchNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.ce.NodeFactory
- * @static
- * @member
- */
-ve.ce.TableRowNode.rules = {
-	'canBeSplit': false
-};
+ve.ce.TableRowNode.static.name = 'tableRow';
+
+ve.ce.TableRowNode.static.tagName = 'tr';
 
 /* Registration */
 
-ve.ce.nodeFactory.register( 'tableRow', ve.ce.TableRowNode );
+ve.ce.nodeFactory.register( ve.ce.TableRowNode );

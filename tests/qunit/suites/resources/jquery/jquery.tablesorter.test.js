@@ -385,7 +385,7 @@ tableTest(
 );
 
 /** FIXME: the diff output is not very readeable. */
-test( 'bug 32047 - caption must be before thead', function() {
+test( 'bug 32047 - caption must be before thead', 1, function() {
 	var $table;
 	$table = $(
 		'<table class="sortable">' +
@@ -405,7 +405,7 @@ test( 'bug 32047 - caption must be before thead', function() {
 	);
 });
 
-test( 'data-sort-value attribute, when available, should override sorting position', function() {
+test( 'data-sort-value attribute, when available, should override sorting position', 2, function() {
 	var $table, data;
 
 	// Simple example, one without data-sort-value which should be sorted at it's text.

@@ -16,12 +16,18 @@ class UserLoginForm extends LoginForm {
 	function load() {
 		parent::load();
 		$request = $this->mOverrideRequest;
+		if ( $request->getText( 'userloginext01', '' ) != '' ) {
+			$this->mUsername = $request->getText( 'userloginext01', '' );
+		}
+		if ( $request->getText( 'userloginext02', '' ) != '' ) {
+			$this->mPassword = $request->getText( 'userloginext02' );
+			$this->mRetype = $request->getText( 'userloginext02' );
+		}
 		if ( $request->getText( 'username', '' ) != '' ) {
-			$this->mUsername = $request->getText( 'username', '' );
+			$this->fakeUsername = $request->getText( 'username', '' );
 		}
 		if ( $request->getText( 'password', '' ) != '' ) {
-			$this->mPassword = $request->getText( 'password' );
-			$this->mRetype = $request->getText( 'password' );
+			$this->fakePassword = $request->getText( 'password' );
 		}
 		if ( $request->getText( 'email', '' ) != '' ) {
 			$this->mEmail = $request->getText( 'email' );
@@ -66,12 +72,6 @@ class UserLoginForm extends LoginForm {
 			return false;
 		}
 
-		// reset password
-		$tempUser = TempUser::getTempUserFromName( $this->mUsername );
-		$tempUser->setPassword('');
-		$tempUser->updateData();
-		$u = $tempUser->mapTempUserToUser( false, $u );
-
 		// add log
 		$userLoginHelper = (new UserLoginHelper);
 		$userLoginHelper->addNewUserLogEntry( $u, true );
@@ -83,7 +83,7 @@ class UserLoginForm extends LoginForm {
 			$this->mainLoginForm( wfMessage( 'userlogin-error-mail-error', $result->getMessage() )->parse() );
 			return false;
 		} else {
-			$this->mainLoginForm( wfMsgExt( 'usersignup-account-creation-email-sent', array('parseinline'), $this->mEmail, $this->username ), 'success' );
+			$this->mainLoginForm( wfMessage( 'usersignup-account-creation-email-sent', $this->mEmail, $this->mUsername )->parse(), 'success' );
 			return $u;
 		}
 	}
@@ -92,26 +92,26 @@ class UserLoginForm extends LoginForm {
 	public function initValidationUsername() {
 		// check empty username
 		if ( $this->mUsername == '' ) {
-			$this->mainLoginForm( wfMsg( 'userlogin-error-noname' ), 'error', 'username' );
+			$this->mainLoginForm( wfMessage( 'userlogin-error-noname' )->escaped(), 'error', 'username' );
 			return false;
 		}
 
 		// check if exist in tempUser
-		if ( TempUser::getTempUserFromName( $this->mUsername ) ) {
-			$this->mainLoginForm( wfMsg( 'userlogin-error-userexists' ), 'error', 'username' );
+		if ( UserLoginHelper::isTempUser( $this->mUsername ) && TempUser::getTempUserFromName( $this->mUsername ) ) {
+			$this->mainLoginForm( wfMessage( 'userlogin-error-userexists' )->escaped(), 'error', 'username' );
 			return false;
 		}
 
 		// check username length
 		if( !User::isNotMaxNameChars($this->mUsername) ) {
 			global $wgWikiaMaxNameChars;
-			$this->mainLoginForm( wfMsg( 'usersignup-error-username-length', $wgWikiaMaxNameChars ), 'error', 'username' );
+			$this->mainLoginForm( wfMessage( 'usersignup-error-username-length', $wgWikiaMaxNameChars )->escaped(), 'error', 'username' );
 			return false;
 		}
 
 		// check valid username
 		if( !User::getCanonicalName( $this->mUsername, 'creatable' ) ) {
-			$this->mainLoginForm( wfMsg( 'usersignup-error-symbols-in-username' ), 'error', 'username' );
+			$this->mainLoginForm( wfMessage( 'usersignup-error-symbols-in-username' )->escaped(), 'error', 'username' );
 			return false;
 		}
 
@@ -128,11 +128,11 @@ class UserLoginForm extends LoginForm {
 		if ( $result !== true ) {
 			$msg = '';
 			if ( $result == 'userlogin-bad-username-taken' ) {
-				$msg = wfMsg('userlogin-error-userexists');
+				$msg = wfMessage('userlogin-error-userexists')->escaped();
 			} else if ( $result == 'userlogin-bad-username-character' ) {
-				$msg = wfMsg('usersignup-error-symbols-in-username');
+				$msg = wfMessage('usersignup-error-symbols-in-username')->escaped();
 			} else if ( $result == 'userlogin-bad-username-length' ) {
-				$msg = wfMsg('usersignup-error-username-length', $app->wg->WikiaMaxNameChars);
+				$msg = wfMessage('usersignup-error-username-length', $app->wg->WikiaMaxNameChars)->escaped();
 			} else {
 				$msg = $result;
 			}
@@ -148,13 +148,13 @@ class UserLoginForm extends LoginForm {
 	public function initValidationPassword() {
 		// check empty password
 		if ( $this->mPassword == '' ) {
-			$this->mainLoginForm( wfMsg( 'userlogin-error-wrongpasswordempty' ), 'error', 'password' );
+			$this->mainLoginForm( wfMessage( 'userlogin-error-wrongpasswordempty' )->escaped(), 'error', 'password' );
 			return false;
 		}
 
 		// check password length
 		if( !User::isNotMaxNameChars($this->mPassword) ) {
-			$this->mainLoginForm( wfMsg( 'usersignup-error-password-length' ), 'error', 'password' );
+			$this->mainLoginForm( wfMessage( 'usersignup-error-password-length' )->escaped(), 'error', 'password' );
 			return false;
 		}
 
@@ -165,14 +165,14 @@ class UserLoginForm extends LoginForm {
 	public function initValidationBirthdate() {
 		// check birthday
 		if ( $this->wpBirthYear == -1 || $this->wpBirthMonth == -1 || $this->wpBirthDay == -1 ) {
-			$this->mainLoginForm( wfMsg( 'userlogin-error-userlogin-bad-birthday' ), 'error', 'birthday' );
+			$this->mainLoginForm( wfMessage( 'userlogin-error-userlogin-bad-birthday' )->escaped(), 'error', 'birthday' );
 			return false;
 		}
 
 		// check valid age
 		$userBirthDay = strtotime( $this->wpBirthYear . '-' . $this->wpBirthMonth . '-' . $this->wpBirthDay );
 		if( $userBirthDay > strtotime('-13 years') ) {
-			$this->mainLoginForm( wfMsg( 'userlogin-error-userlogin-unable-info' ), 'error', 'birthday' );
+			$this->mainLoginForm( wfMessage( 'userlogin-error-userlogin-unable-info' )->escaped(), 'error', 'birthday' );
 			return false;
 		}
 
@@ -183,13 +183,13 @@ class UserLoginForm extends LoginForm {
 	public function initValidationEmail() {
 		// check empty email
 		if ( $this->mEmail == '') {
-			$this->mainLoginForm( wfMsg( 'usersignup-error-empty-email' ), 'error', 'email' );
+			$this->mainLoginForm( wfMessage( 'usersignup-error-empty-email' )->escaped(), 'error', 'email' );
 			return false;
 		}
 
 		// check email format
 		if( !Sanitizer::validateEmail( $this->mEmail ) ) {
-			$this->mainLoginForm( wfMsg( 'userlogin-error-invalidemailaddress' ), 'error', 'email' );
+			$this->mainLoginForm( wfMessage( 'userlogin-error-invalidemailaddress' )->escaped(), 'error', 'email' );
 			return false;
 		}
 
@@ -222,61 +222,49 @@ class UserLoginForm extends LoginForm {
 		$this->errParam = $errParam;
 	}
 
-	public function initUser( $u, $autocreate, $createTempUser = true ) {
-		global $wgAuth, $wgExternalAuthType;
+	public function initUser( $u, $autocreate, $skipConfirm = false ) {
+		global $wgCityId;
+		$u = parent::initUser( $u, $autocreate );
 
-		// for FBconnect we don't want to create temp users
-		if ($createTempUser === false) {
-			return parent::initUser($u, $autocreate);
+		if ( $skipConfirm === false ) {
+			//Set properties that will require user to confirm email after signup
+			$u->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, $this->mReturnTo );
+			$u->setOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, true );
+			$u->setOption( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, $wgCityId );
+			$u->saveSettings();
+			UserLoginHelper::setNotConfirmedUserSession( $u->getId() );
 		}
 
-		// add TempUser, update User object, set TempUser session
-		$tempUser = TempUser::createNewFromUser( $u, $this->mReturnTo );
-
-		if ( $wgExternalAuthType ) {
-			$u = ExternalUser::addUser( $u, "", "", "" );
-			if ( is_object( $u ) ) {
-				$this->mExtUser = ExternalUser::newFromName( $this->mUsername );
-			}
-		} else {
-			$u->addToDatabase();
-		}
-		$u->setToken();
-
-		$wgAuth->initUser( $u, $autocreate );
-
-		if ( is_object( $this->mExtUser ) ) {
-			$this->mExtUser->linkToLocal( $u->getId() );
-		}
-
-		$u->setOption( 'rememberpassword', $this->mRemember ? 1 : 0 );
-		if ( $this->mLanguage )
-			$u->setOption( 'language', $this->mLanguage );
-		$u->setOption('skinoverwrite', 1);
-
-		$u->setPassword( $this->mPassword );
-		$tempUser->setPassword( $u->mPassword );
-		$tempUser->setId( $u->getId() );
-		$tempUser->addToDatabase();
-
-		wfRunHooks( 'AddNewAccountTempUser', array( $u, false ) );
-
-		$tempUser->saveSettingsTempUserToUser( $u );
-		$tempUser->setTempUserSession();
+		wfRunHooks( 'AddNewAccount', array( $u, false ) );
 
 		return $u;
 	}
 
 	public function userNotPrivilegedMessage() {
-		$this->mainLoginForm( wfMsg( 'userlogin-error-user-not-allowed' ) );
+		$this->mainLoginForm( wfMessage( 'userlogin-error-user-not-allowed' )->escaped() );
 	}
 
 	public function userBlockedMessage(Block $block) {
-		$this->mainLoginForm( wfMsg( 'userlogin-error-cantcreateaccount-text' ) );
+		$this->mainLoginForm( wfMessage( 'userlogin-error-cantcreateaccount-text' )->escaped() );
 	}
 
 	public function throttleHit( $limit ) {
-		$this->mainLoginForm( wfMsgExt( 'userlogin-error-acct_creation_throttle_hit', array( 'parseinline' ), $limit ) );
+		$this->mainLoginForm( wfMessage( 'userlogin-error-acct_creation_throttle_hit', $limit )->parse() );
+	}
+
+	/**
+	 * Checks whether some hidden fields of signup form remain empty
+	 * fakeUsername hidden username field (should be empty)
+	 * fakePassword hidden password field (should be empty)
+	 * These fields should be empty otherwise it probably has been modified by a bot
+	 * and signup process should be interrupted
+	 * @return bool
+	 */
+	public function EmptySpamFields() {
+		if( empty( $this->fakeUsername) && empty( $this->fakePassword ) ) {
+			return true;
+		}
+		return false;
 	}
 
 }

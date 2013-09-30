@@ -65,6 +65,7 @@ class VideoInfoHelper extends WikiaModel {
 				$premium = ( $file->isLocal() ) ? 0 : 1 ;
 				$video = array(
 					'videoTitle' => $file->getName(),
+					'provider' => $file->minor_mime,
 					'addedAt' => $addedAt,
 					'addedBy' => $userId,
 					'duration' => $duration,

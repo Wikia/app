@@ -1,16 +1,19 @@
-window.addEventListener('load', function(){
+$(function(){
 	require(['wikia.window', 'wikia.cookies', 'wikia.loader', 'JSMessages'], function(window, cookie, loader, msg){
 		var ua = window.navigator.userAgent,
 			standalone = navigator.standalone, // Check if it's already a standalone web app or running within a webui view of an app (not mobile safari)
 			type;
 
 		// Detect banner type (iOS or Android)
-		if (ua.match(/iPad|iPhone|iPod/i) != null) {
-			if (ua.match(/Safari/i) != null &&
-				(ua.match(/CriOS/i) != null ||
-					window.Number(ua.substr(ua.indexOf('OS ') + 3, 3).replace('_', '.')) < 6)) type = 'ios'; // Check webview and native smart banner support (iOS 6+)
-		} else if (ua.match(/Android/i) != null) {
-			type = 'android'
+		if (ua.match(/iPad|iPhone|iPod/i) !== null) {
+			if (ua.match(/Safari/i) !== null &&
+				(ua.match(/CriOS/i) !== null ||
+				// Check webview and native smart banner support (iOS 6+)
+				window.Number(ua.substr(ua.indexOf('OS ') + 3, 3).replace('_', '.')) < 6)) {
+				type = 'ios';
+			}
+		} else if (ua.match(/Android/i) !== null) {
+			type = 'android';
 		}
 
 		//Don't show banner if device isn't iOS or Android, website is loaded in app or user dismissed banner
@@ -19,9 +22,9 @@ window.addEventListener('load', function(){
 				type: loader.MULTI,
 				resources: {
 					mustache: '/extensions/wikia/WikiaMobile/SmartBanner/smartbanner.mustache',
-					scripts: ['wikiamobile_smartbanner_js'],
-					styles: ['//extensions/wikia/WikiaMobile/SmartBanner/smartbanner.scss'],
-					messages: ['SmartBanner']
+					scripts: 'wikiamobile_smartbanner_js',
+					styles: '//extensions/wikia/WikiaMobile/SmartBanner/smartbanner.scss',
+					messages: 'SmartBanner'
 				}
 			}).done(function(res){
 				loader.processStyle(res.styles);

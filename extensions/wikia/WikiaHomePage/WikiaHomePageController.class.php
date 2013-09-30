@@ -46,7 +46,7 @@ class WikiaHomePageController extends WikiaController {
 	const hubsGridImgHeight = 160;
 	// skin change values end
 
-	const INITIAL_BATCHES_NUMBER = 5;
+	const INITIAL_BATCHES_NUMBER = 3;
 
 	//failsafe
 	const FAILSAFE_ARTICLE_TITLE = 'Failsafe';
@@ -181,6 +181,7 @@ class WikiaHomePageController extends WikiaController {
 	 */
 	protected function getList() {
 		$wikiBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
+
 		if (!empty($wikiBatches)) {
 			Wikia::log(__METHOD__, false, ' pulling visualization data from db');
 			$status = 'true';
@@ -193,7 +194,7 @@ class WikiaHomePageController extends WikiaController {
 
 				$failoverData = $this->parseSourceMessage();
 				$visualization = $this->getVisualization();
-				$visualization->generateBatches($this->wg->cityId, $this->wg->contLang->getCode(), $failoverData, true);
+				$visualization->generateBatches($this->wg->cityId, $failoverData);
 				$wikiBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
 			} catch (Exception $e) {
 				Wikia::log(__METHOD__, false, ' pulling failover visualization data from file');
@@ -202,7 +203,7 @@ class WikiaHomePageController extends WikiaController {
 
 				$failoverData = $this->getFailoverWikiList();
 				$visualization = $this->getVisualization();
-				$visualization->generateBatches($this->wg->cityId, $this->wg->contLang->getCode(), $failoverData, true);
+				$visualization->generateBatches($this->wg->cityId, $failoverData);
 				$wikiBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
 			}
 		}
@@ -431,6 +432,7 @@ class WikiaHomePageController extends WikiaController {
 	public function getHubImages() {
 		$lang = $this->wg->contLang->getCode();
 
+		$hubImages = [];
 		if ($this->app->wg->EnableWikiaHubsV2Ext) {
 			$hubImages = WikiaDataAccess::cache(
 				WikiaHubsServicesHelper::getWikiaHomepageHubsMemcacheKey($lang),
@@ -442,10 +444,9 @@ class WikiaHomePageController extends WikiaController {
 						$sliderData = $this->getHubSliderData($lang, $hubId);
 
 						$hubImages[$hubId] = isset($sliderData['data']['slides'][0]['photoUrl'])
-								? $sliderData['data']['slides'][0]['photoUrl']
-								: null;
+							? $sliderData['data']['slides'][0]['photoUrl']
+							: null;
 					}
-
 					return $hubImages;
 				}
 			);
