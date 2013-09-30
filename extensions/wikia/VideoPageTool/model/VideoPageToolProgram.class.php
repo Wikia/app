@@ -110,7 +110,6 @@ class VideoPageToolProgram extends WikiaModel {
 
 		// Figure out what the nearest date to today is
 		$nearestDate = self::getNearestDate( $lang );
-
 		if ($nearestDate) {
 			// Load the program with this nearest date
 			$program = self::newProgram( $lang, $nearestDate );
@@ -233,7 +232,8 @@ class VideoPageToolProgram extends WikiaModel {
 					'language' => $language,
 					'publish_date <= '.$db->addQuotes(date( 'Y-m-d' )),
 				),
-				__METHOD__
+				__METHOD__,
+				array( 'ORDER BY' => 'publish_date DESC' )
 			);
 
 			if ( $row ) {
