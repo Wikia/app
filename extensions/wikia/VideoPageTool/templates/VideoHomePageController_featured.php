@@ -2,8 +2,7 @@
 
 	<div class="featured-video-slider eight columns centered" id="featured-video-slider">
 		<ul id="featured-video-bxslider" class="bxslider">
-			<? foreach ( $assets as $featured ): ?>
-				<? $videoData = $featured->getAssetData() ?>
+			<? foreach ( $assets as $videoData ): ?>
 				<li>
 					<div class="slide-image">
 						<div class="Wikia-video-play-button">
@@ -18,8 +17,7 @@
 
 		<div id="featured-video-thumbs" class="thumbs">
 			<div class="thumbs-inner">
-				<? foreach ( $assets as $featured ): ?>
-					<? $videoData = $featured->getAssetData() ?>
+				<? foreach ( $assets as $videoData ): ?>
 					<?= $videoData['videoThumb'] ?>
 				<? endforeach; ?>
 			</div>

@@ -15,12 +15,16 @@ $messages['en'] = array(
 	'videopagetool-error-missing-parameter' => 'Required parameter is missing',
 	'videopagetool-error-invalid-module' => 'Invalid module',
 	'videopagetool-error-invalid-description' => 'The description is too long (200 characters limit)',
+	'videopagetool-error-image-not-exist' => 'Image does not exist',
+	'videopagetool-error-image-invalid-size' => 'Invalid image size',
 	'videopagetool-section-featured' => 'Featured',
 	'videopagetool-section-category' => 'Latest Video',
 	'videopagetool-section-fan' => 'Wikia Fan Media',
 	'videopagetool-publish-button' => 'Publish',
 	'videopagetool-button-add-video' => 'Add a video',
+	'videopagetool-button-add-thumbnail' => 'Add a thumbnail',
 	'videopagetool-video-title-default-text' => 'Video name',
+	'videopagetool-image-title-default-text' => 'Image name',
 	'videopagetool-label-display-title' => 'Display Title',
 	'videopagetool-label-video-description' => 'Description',
 	'videopagetool-placeholder-video-description' => 'About this video',
@@ -41,13 +45,16 @@ $messages['en'] = array(
 	'videopagetool-success-save' => 'Your changes have been saved',
 	'videopagetool-hint-description-maxlength' => '$1 characters max',
 
+	// Home Page Section: Header
+	'videohomepage-header-dropdown-name' => 'Discover',
+	'videohomepage-header-search-placeholder' => 'Search for Wikia videos',
 	// Home Page Section: Partners
 	'videohomepage-partner-section-title' => 'Our Partners',
-	'videohomepage-partner-name-anyclip' => 'anyclip',
+	'videohomepage-partner-name-anyclip' => 'Anyclip',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
 	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-realgravity' => 'Realgravity',
+	'videohomepage-partner-name-realgravity' => 'Real Gravity',
 	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 
@@ -59,12 +66,16 @@ $messages['qqq'] = array(
 	'videopagetool-error-invalid-description' => 'This text appears if the description is too long.',
 	'videopagetool-error-missing-parameter' => 'This text appears if the required parameter is missing',
 	'videopagetool-error-invalid-module' => 'Error text when code requests a Video Page module that does not exist',
+	'videopagetool-error-image-not-exist' => 'This text appears if the image does not exist',
+	'videopagetool-error-image-invalid-size' => 'This text appears if the image size is invalid',
 	'videopagetool-section-featured' => 'Link title for the left menu item',
 	'videopagetool-section-category' => 'Link title for the left menu item',
 	'videopagetool-section-fan' => 'Link title for the left menu item',
 	'videopagetool-publish-button' => 'Button text - click the button to publish the page based on what\'s been inputted into the form.',
 	'videopagetool-button-add-video' => 'Button text - click the button to open the add video modal',
+	'videopagetool-button-add-thumbnail' => 'Button text - click the button to open the upload image modal',
 	'videopagetool-video-title-default-text' => 'Placeholder text to be replace with the title of the video the user has chosen.',
+	'videopagetool-image-title-default-text' => 'Placeholder text to be replace with the title of the thumbnail the user has chosen.',
 	'videopagetool-label-display-title' => 'Label text for an input to enter the title to display next to the video',
 	'videopagetool-label-video-description' => 'Label text for the video description textarea',
 	'videopagetool-placeholder-video-description' => 'Placeholder text inside a textarea for entering a description of a video',
@@ -84,6 +95,9 @@ $messages['qqq'] = array(
 	'videopagetool-header-dashboard' => 'Title for dashboard page',
 	'videopagetool-success-save' => 'This text appears if your changes have been saved successfully',
 
+	// Home Page Section: Header
+	'videohomepage-header-dropdown-name' => 'Name of the dropdown that allows users to explore Wikia Video\'s sections',
+	'videohomepage-header-search-placeholder' => 'Placeholder text for Wikia Video search box',
 	// Home Page Section: Partners
 	'videohomepage-partner-section-title' => 'Title for section that links to videos from our content partners',
 	'videohomepage-partner-name-anyclip' => 'This text is the name of a partner: anyclip',

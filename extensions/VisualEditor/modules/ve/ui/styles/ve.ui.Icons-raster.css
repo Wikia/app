@@ -1,61 +1,273 @@
-/**
- * VisualEditor user interface raster icon styles.
+/*!
+ * VisualEditor UserInterface raster icon styles.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
+
+.ve-ui-icon-menu {
+	/* @embed */
+	background-image: url(images/icons/menu.png);
+}
+
+.ve-ui-icon-picture {
+	/* @embed */
+	background-image: url(images/icons/picture.png);
+}
+
+.ve-ui-icon-code {
+	/* @embed */
+	background-image: url(images/icons/code.png);
+}
+
+.ve-ui-icon-close {
+	/* @embed */
+	background-image: url(images/icons/close.png);
+}
+
+.ve-ui-icon-tag {
+	/* @embed */
+	background-image: url(images/icons/tag.png);
+}
+
+.ve-ui-icon-settings {
+	/* @embed */
+	background-image: url(images/icons/settings.png);
+}
+
+.ve-ui-icon-remove {
+	/* @embed */
+	background-image: url(images/icons/remove.png);
+}
+
+.ve-ui-icon-previous {
+	/* @embed */
+	background-image: url(images/icons/move-rtl.png);
+}
+
+.ve-ui-icon-next {
+	/* @embed */
+	background-image: url(images/icons/move-ltr.png);
+}
+
+.ve-ui-icon-window {
+	/* @embed */
+	background-image: url(images/icons/window.png);
+}
+
+.ve-ui-icon-help {
+	/* @embed */
+	background-image: url(images/icons/help.png);
+}
+
+.ve-ui-icon-alert {
+	/* @embed */
+	background-image: url(images/icons/alert.png);
+}
+
+.ve-ui-icon-check {
+	/* @embed */
+	background-image: url(images/icons/check.png);
+}
+
+.ve-ui-icon-comment {
+	/* @embed */
+	background-image: url(images/icons/comment.png);
+}
+
+.ve-ui-icon-up {
+	/* @embed */
+	background-image: url(images/icons/up.png);
+}
 
 .ve-ui-icon-down {
 	/* @embed */
 	background-image: url(images/icons/down.png);
 }
 
-.ve-ui-icon-undo:before {
+.ve-ui-icon-undo {
 	/* @embed */
 	background-image: url(images/icons/arched-arrow-rtl.png);
 }
 
-.ve-ui-icon-redo:before {
+.ve-ui-icon-redo {
 	/* @embed */
 	background-image: url(images/icons/arched-arrow-ltr.png);
 }
 
-.ve-ui-icon-bold:before {
+.ve-ui-icon-bold-a {
 	/* @embed */
-	background-image: url(images/icons/bold.png);
+	background-image: url(images/icons/bold-a.png);
 }
 
-.ve-ui-icon-italic:before {
+.ve-ui-icon-bold-b {
 	/* @embed */
-	background-image: url(images/icons/italic.png);
+	background-image: url(images/icons/bold-b.png);
 }
 
-.ve-ui-icon-link:before {
+.ve-ui-icon-bold-f {
+	/* @embed */
+	background-image: url(images/icons/bold-f.png);
+}
+
+.ve-ui-icon-bold-g {
+	/* @embed */
+	background-image: url(images/icons/bold-g.png);
+}
+
+.ve-ui-icon-bold-l {
+	/* @embed */
+	background-image: url(images/icons/bold-l.png);
+}
+
+.ve-ui-icon-bold-n {
+	/* @embed */
+	background-image: url(images/icons/bold-n.png);
+}
+
+.ve-ui-icon-bold-v {
+	/* @embed */
+	background-image: url(images/icons/bold-v.png);
+}
+
+.ve-ui-icon-bold-cyrl-be {
+	/* @embed */
+	background-image: url(images/icons/bold-cyrl-be.png);
+}
+
+.ve-ui-icon-bold-cyrl-te {
+	/* @embed */
+	background-image: url(images/icons/bold-cyrl-te.png);
+}
+
+.ve-ui-icon-bold-cyrl-zhe {
+	/* @embed */
+	background-image: url(images/icons/bold-cyrl-zhe.png);
+}
+
+.ve-ui-icon-bold-geor-man {
+	/* @embed */
+	background-image: url(images/icons/bold-geor-man.png);
+}
+
+.ve-ui-icon-italic-a {
+	/* @embed */
+	background-image: url(images/icons/italic-a.png);
+}
+
+.ve-ui-icon-italic-c {
+	/* @embed */
+	background-image: url(images/icons/italic-c.png);
+}
+
+.ve-ui-icon-italic-d {
+	/* @embed */
+	background-image: url(images/icons/italic-d.png);
+}
+
+.ve-ui-icon-italic-e {
+	/* @embed */
+	background-image: url(images/icons/italic-e.png);
+}
+
+.ve-ui-icon-italic-i {
+	/* @embed */
+	background-image: url(images/icons/italic-i.png);
+}
+
+.ve-ui-icon-italic-k,
+.ve-ui-icon-italic-cyrl-ka {
+	/* Latin K and Cyrillic Ka use same glyph */
+	/* @embed */
+	background-image: url(images/icons/italic-k.png);
+}
+
+.ve-ui-icon-italic-geor-kan {
+	/* @embed */
+	background-image: url(images/icons/italic-geor-kan.png);
+}
+
+.ve-ui-icon-link {
 	/* @embed */
 	background-image: url(images/icons/link.png);
 }
 
-.ve-ui-icon-clear:before {
+.ve-ui-icon-clear {
 	/* @embed */
 	background-image: url(images/icons/clear.png);
 }
 
-.ve-ui-icon-number:before {
+.ve-ui-icon-number-list {
 	/* @embed */
 	background-image: url(images/icons/number-list-ltr.png);
 }
 
-.ve-ui-icon-bullet:before {
+.ve-ui-icon-bullet-list {
 	/* @embed */
 	background-image: url(images/icons/bullet-list-ltr.png);
 }
 
-.ve-ui-icon-indent:before {
+.ve-ui-icon-indent-list {
 	/* @embed */
 	background-image: url(images/icons/indent-list-ltr.png);
 }
 
-.ve-ui-icon-outdent:before {
+.ve-ui-icon-outdent-list {
 	/* @embed */
 	background-image: url(images/icons/outdent-list-ltr.png);
+}
+
+.ve-ui-icon-strikethrough-s {
+	/* @embed */
+	background-image: url(images/icons/strikethrough-s.png);
+}
+
+.ve-ui-icon-strikethrough-a {
+	/* @embed */
+	background-image: url(images/icons/strikethrough-a.png);
+}
+
+.ve-ui-icon-underline-u {
+	/* @embed */
+	background-image: url(images/icons/underline-u.png);
+}
+
+.ve-ui-icon-underline-a {
+	/* @embed */
+	background-image: url(images/icons/underline-a.png);
+}
+
+.ve-ui-icon-subscript {
+	/* @embed */
+	background-image: url(images/icons/subscript.png);
+}
+
+.ve-ui-icon-superscript {
+	/* @embed */
+	background-image: url(images/icons/superscript.png);
+}
+
+.ve-ui-icon-search {
+	/* @embed */
+	background-image: url(images/icons/search.png);
+}
+
+.ve-ui-icon-expand {
+	/* @embed */
+	background-image: url(images/icons/expand.png);
+}
+
+.ve-ui-icon-collapse {
+	/* @embed */
+	background-image: url(images/icons/collapse.png);
+}
+
+.ve-ui-icon-add-item {
+	/* @embed */
+	background-image: url(images/icons/add-item.png);
+}
+
+.ve-ui-icon-language {
+	/* @embed */
+	background-image: url(images/icons/language.png);
 }

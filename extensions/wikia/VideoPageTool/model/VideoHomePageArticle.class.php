@@ -29,6 +29,8 @@ class VideoHomePageArticle extends Article {
 		// Uncomment to eliminate the original page from output
 		//$html = $vpt_html;
 
+		$html .= F::app()->renderView( 'VideoHomePage', 'partners' );
+
 		$out->addHTML( $html );
 
 		wfProfileOut(__METHOD__);

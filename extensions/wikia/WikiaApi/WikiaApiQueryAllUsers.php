@@ -56,13 +56,13 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 	}
 	
 	private function getAllUserGroups() {
-		global $wgMemc, $wgDBname;
+		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
 		$memkey = __METHOD__;
 		$data = $wgMemc->get( $memkey );
-		if ( empty($data) ) {
-			$db = wfGetDB(DB_SLAVE, array(), $wgDBname);
+		if (empty($data) ) {
+			$db = $this->getSharedDB();
 			$where = array();
 
 			$this->profileDBIn();
@@ -122,7 +122,7 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 		return $this->mDB;
 	}	
 
-	public function execute() {
+	public function execute() { 
 		global $wgCityId;
 		
 		$this->params = $this->extractRequestParams();
@@ -160,33 +160,24 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 			$this->addWhere( 'u1.user_id IN (' . implode(",", array_keys($users)) . ') ' );
 		} 
 	
-		if ( !is_null( $this->params['from'] ) )
+		if ( !is_null( $this->params['from'] ) ) {
 			$this->addWhere( 'u1.user_name >= ' . $db->addQuotes( $this->keyToTitle( $this->params['from'] ) ) );
+		}
 
-		if ( is_null( $this->params['prefix'] ) )
+		if ( !is_null( $this->params['prefix'] ) ) {
 			$this->addWhere( 'u1.user_name' . $db->buildLike( $this->keyToTitle( $this->params['prefix'] ), $db->anyString() ) );
+		}
 
-		if ( $this->params['witheditsonly'] )
+		if ( $this->params['witheditsonly'] ) {
 			$this->addWhere( 'u1.user_editcount > 0' );
+		}
 
-		$user_groups = array();
-		if ( $this->fld_groups ) {
-			$user_groups = $this->getAllUserGroups();
-			
-			$this->addTables( 'user_groups' );
-			$tname = 'user_groups';//$this->getAliasedName('user_groups', 'ug2');
-			$this->addJoinConds(
-				array(
-					$tname => array('LEFT JOIN', 'ug_user=u1.user_id')
-				)
-			);
-			$this->addFields( 'ug_group ug_group2' );
-		} 
+		$user_groups = $this->fld_groups ? $this->getAllUserGroups() : array();
 		
 		if ( $this->fld_blockinfo ) {
 			$this->addTables('ipblocks');
 			$this->addTables('`user`', 'u2');
-			$u2 = sprintf("%s %s", '`user`', 'u2');//$this->getAliasedName('user', 'u2');
+			$u2 = sprintf("%s %s", '`user`', 'u2');
 			$this->addJoinConds(
 				array(
 					'ipblocks' => array('LEFT JOIN', 'ipb_user=u1.user_id'),
@@ -196,7 +187,7 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 			$this->addFields(array('ipb_reason', 'u2.user_name blocker_name'));
 		}
 
-		$this->addOption('LIMIT', $limit);
+		$this->addOption('LIMIT', $limit + 1);
 
 		$this->addFields  ( 'u1.user_name, u1.user_id' );
 		$this->addFieldsIf( 'u1.user_editcount', $this->fld_editcount );
@@ -228,8 +219,9 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 				}
 
 				// No more rows left
-				if (!$row)
+				if (!$row) {
 					break;
+				}
 
 				if ($count > $limit) {
 					// We've reached the one extra which shows that there are additional pages to be had. Stop here...
@@ -244,34 +236,20 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 					$lastUserData['blockedby'] = $row->blocker_name;
 					$lastUserData['blockreason'] = $row->ipb_reason;
 				}
-				if ($this->fld_editcount)
+				if ($this->fld_editcount) {
 					$lastUserData['editcount'] = intval($row->user_editcount);
-				if ($this->fld_registration)
+				}
+				if ($this->fld_registration) {
 					$lastUserData['registration'] = wfTimestamp(TS_ISO_8601, $row->user_registration);
-
-			}
+				}
 
 			// Add user's group info
-			if ( $this->fld_groups ) {
-				if ( !is_null($row->ug_group2) && !empty($wgWikiaGlobalUserGroups) ) {
-					if ( in_array($row->ug_group2, $wgWikiaGlobalUserGroups) ) 
-						$lastUserData['groups'][] = $row->ug_group2;
-				}
-				
-				$use_group = ( !empty($lastUserData['groups']) ) ? array_values( $lastUserData['groups'] ) : array() ;											
-				if ( isset($user_groups) && isset($user_groups[$row->user_id]) ) {
-					foreach ( $user_groups[$row->user_id] as $group ) {
-						if ( !empty($use_group) && !in_array($group, $use_group) ) 
-							$lastUserData['groups'][] = $group;
-						$use_group[] = $group;
-					}
-				}
-				
-				if ( isset($lastUserData['groups']) ) {
-					$lastUserData['groups'] = array_unique($lastUserData['groups']);
+				if ( $this->fld_groups ) {
+					$lastUserData['groups'] = array_key_exists($row->user_id, $user_groups) ? $user_groups[$row->user_id] : array();
 					$result->setIndexedTagName($lastUserData['groups'], 'g');
 				}
 			}
+
 		}
 
 		$db->freeResult($res);

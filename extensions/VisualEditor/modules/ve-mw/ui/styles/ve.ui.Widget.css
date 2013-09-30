@@ -1,0 +1,369 @@
+/*!
+ * VisualEditor MediaWiki UserInterface Widget styles.
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/* ve.ui.MWLinkTargetInputWidget */
+
+.ve-ui-mwLinkTargetInputWidget-menu {
+	width: 20em;
+	margin-top: -7px;
+}
+
+.ve-ui-mwLinkTargetInputWidget-menu .ve-ui-menuWidget-item {
+	padding: 0.33em 1.25em;
+	color: #0645AD;
+}
+
+.ve-ui-mwLinkTargetInputWidget-menu .ve-ui-menuItemWidget[rel=newPage] {
+	color: #BA0000;
+}
+
+.ve-ui-mwLinkTargetInputWidget-menu .ve-ui-menuItemWidget[rel=existingPage],
+.ve-ui-mwLinkTargetInputWidget-menu .ve-ui-menuItemWidget[rel=matchingPage],
+.ve-ui-mwLinkTargetInputWidget-menu .ve-ui-menuItemWidget[rel=externalLink] {
+	color: #0645AD;
+}
+
+/* ve.ui.MWCategoryWidget */
+
+.ve-ui-mwCategoryWidget {
+	padding: 0;
+}
+
+.ve-ui-mwCategoryWidget-items {
+	/* MDN claims we need to use word-wrap: break-word; and that it's been renamed to
+	 * overflow-wrap: break-word; , but the only thing that actually works in practice is
+	 * word-break: break-word; (which is not documented in any standard at all). So we just use
+	 * all three.
+	 */
+	/*csslint known-properties:false */
+	word-break: break-word;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+
+.ve-ui-mwCategoryInputWidget {
+	float: left;
+}
+
+/* ve.ui.MWCategoryItemWidget */
+
+.ve-ui-mwCategoryItemWidget {
+	position: relative;
+	float: left;
+}
+
+.ve-ui-mwCategoryItemButton {
+	position: relative;
+	padding: 0.5em 0.75em 0.5em 1.125em;
+	margin: 0.75em 0.75em 0 0;
+	vertical-align: top;
+	cursor: pointer;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	opacity: 0.8;
+	/* Animation */
+	-webkit-transition: border-color 100ms;
+	-moz-transition: border-color 100ms;
+	-ms-transition: border-color 100ms;
+	-o-transition: border-color 100ms;
+	transition: border-color 100ms;
+
+	/* Gray */
+	border-radius: 1.25em;
+	border: 1px #c9c9c9 solid;
+	background-color: #ffffff;
+	filter: progid:DXImageTransform.Microsoft.gradient(
+		GradientType=0,startColorstr=#ffffff, endColorstr=#f0f0f0
+	);
+	background-image: -webkit-gradient(
+		linear, right top, right bottom, color-stop(0%,#ffffff), color-stop(100%,#f0f0f0)
+	);
+	background-image: -webkit-linear-gradient(top, #ffffff 0%, #f0f0f0 100%);
+	background-image: -moz-linear-gradient(top, #ffffff 0%, #f0f0f0 100%);
+	background-image: -ms-linear-gradient(top, #ffffff 0%, #f0f0f0 100%);
+	background-image: -o-linear-gradient(top, #ffffff 0%, #f0f0f0 100%);
+	background-image: linear-gradient(top, #ffffff 0%, #f0f0f0 100%);
+}
+
+.ve-ui-mwCategoryItemButton:hover {
+	opacity: 1;
+}
+
+.ve-ui-mwCategoryItemButton span {
+	display: block;
+	padding-right: 1.5em;
+	color: #333;
+}
+
+.ve-ui-mwCategoryItemButton:active {
+	border-color: #ddd;
+	box-shadow: inset 0 1px 4px 0 rgba(0, 0, 0, 0.07);
+	color: black;
+}
+
+.ve-ui-mwCategoryItemControl {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 2.25em;
+	height: 2.25em;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.ve-ui-mwCategoryPopupMenu .ve-ui-popupWidget-body {
+	padding: 0.75em 0.5em;
+}
+/* ve.ui.MWCategoryInputWidget */
+
+.ve-ui-mwCategoryInputWidget {
+	float: left;
+	width: 15em;
+	margin-top: 0.75em;
+	margin-right: -1px;
+}
+
+.ve-ui-mwCategoryInputWidget input {
+	border-radius: 2em;
+	font-size: 1.05em;
+	margin-top: 0;
+	padding-left: 0.75em;
+	padding-right: 0.75em;
+}
+
+.ve-ui-mwCategoryPopupMenu {
+	position: absolute;
+	margin-top: -10px;
+}
+
+.ve-ui-mwCategoryPopupMenu .ve-ui-iconButtonWidget {
+	display: block;
+	float: left;
+}
+
+.ve-ui-mwCategoryPopupMenu label {
+	opacity: .8;
+	display: block;
+}
+
+.ve-ui-mwCategoryPopupTitle {
+	background-position: left center;
+	background-repeat: no-repeat;
+	padding: 0.5em 0.5em 0.5em 2.25em;
+	margin: -0.4em 0 1em 0.125em;
+}
+
+.ve-ui-mwCategoryPopupMenu .ve-ui-removeButtonLabel:hover {
+	opacity: 1;
+}
+
+.ve-ui-mwCategoryRemoveButton {
+	position: absolute;
+	margin-right: 2px;
+	padding: 0.5em;
+	right: 0;
+	top: 0;
+}
+
+.ve-ui-mwCategorySortkeyForm {
+	padding: 0.5em;
+	display: block;
+}
+
+.ve-ui-mwCategorySortkeyForm .ve-ui-inputLabelWidget {
+	padding: 0 0.125em 0.5em 0.125em;
+}
+
+/* ve.ui.MWMediaResultWidget */
+
+.ve-ui-mwMediaResultWidget {
+	display: inline-block;
+	position: relative;
+	padding: 0;
+	margin: 2px;
+	overflow: hidden;
+}
+
+.ve-ui-mwMediaResultWidget-error {
+	background-color: #f3f3f3;
+}
+
+.ve-ui-mwMediaResultWidget-thumbnail {
+	position: absolute;
+	opacity: 0;
+	-webkit-transition: opacity 400ms;
+	-moz-transition: opacity 400ms;
+	-ms-transition: opacity 400ms;
+	-o-transition: opacity 400ms;
+	transition: opacity 400ms;
+}
+
+.ve-ui-mwMediaResultWidget-done .ve-ui-mwMediaResultWidget-thumbnail,
+.ve-ui-mwMediaResultWidget-error .ve-ui-mwMediaResultWidget-thumbnail {
+	opacity: 1;
+}
+
+.ve-ui-mwMediaResultWidget-crop {
+	background-size: cover;
+	background-position: center center;
+}
+
+.ve-ui-mwMediaResultWidget-overlay {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	box-shadow: inset 0 0 0 1px #ccc;
+}
+
+.ve-ui-optionWidget-highlighted .ve-ui-mwMediaResultWidget-overlay,
+.ve-ui-optionWidget-selected .ve-ui-mwMediaResultWidget-overlay {
+	box-shadow: inset 0 0 0 1px #a7dcff;
+}
+
+.ve-ui-mwMediaResultWidget.ve-ui-optionWidget-highlighted {
+	box-shadow: 0 0 0.3em #a7dcff, 0 0 0 white;
+}
+
+.ve-ui-mwMediaResultWidget.ve-ui-optionWidget-selected {
+	box-shadow: 0 0 0.3em #a7dcff, 0 0 0 white;
+}
+
+.ve-ui-mwMediaResultWidget-error .ve-ui-mwMediaResultWidget-thumbnail {
+	/* @embed */
+	background-image: url(images/broken-image.png);
+	background-size: auto;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+.ve-ui-mwMediaResultWidget .ve-ui-labeledElement-label {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	overflow: hidden;
+	padding: 0.5em;
+	color: #fff;
+	text-shadow: 1px 1px #000;
+	line-height: 1.125em;
+	background-color: rgba(0,0,0,0.5);
+	text-overflow: ellipsis;
+}
+
+.ve-ui-mwMediaResultWidget.ve-ui-optionWidget-highlighted .ve-ui-labeledElement-label {
+	background-color: rgba(0,0,0,0.75);
+}
+
+.ve-ui-mwMediaResultWidget.ve-ui-optionWidget-selected .ve-ui-labeledElement-label {
+	background-color: #000;
+}
+
+/* ve.ui.MWReferenceSearchWidget */
+
+.ve-ui-mwReferenceSearchWidget-citation {
+	float: left;
+	margin-right: 0.75em;
+}
+
+.ve-ui-mwReferenceSearchWidget-name {
+	float: right;
+	margin-left: 0.75em;
+	margin-bottom: 0.75em;
+	color: #777;
+}
+
+/* ve.ui.MWReferenceResultWidget */
+
+.ve-ui-mwReferenceResultWidget {
+	position: relative;
+	padding: 1em;
+	border-bottom: solid 1px #eee;
+}
+
+.ve-ui-mwReferenceResultWidget .ve-ui-labeledElement-label {
+	white-space: normal;
+}
+
+.ve-ui-mwReferenceResultWidget-shield {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+
+.ve-ui-mwReferenceResultWidget-divider {
+	font-weight: bold;
+}
+
+/* ve.ui.MWParameterSearchWidget */
+
+.ve-ui-mwParameterSearchWidget .ve-ui-selectWidget {
+	position: relative;
+	width: 100%;
+}
+
+.ve-ui-mwParameterSearchWidget .ve-ui-searchWidget-results {
+	overflow-y: hidden;
+}
+
+/* ve.ui.MWParameterResultWidget */
+
+.ve-ui-mwParameterResultWidget {
+	padding-right: 0.25em;
+}
+
+.ve-ui-mwParameterResultWidget .ve-ui-optionWidget-icon {
+	top: 0.25em;
+	margin-top: 0;
+}
+
+.ve-ui-mwParameterResultWidget.ve-ui-widget-disabled {
+	opacity: 0.5;
+}
+
+.ve-ui-mwParameterResultWidget-label,
+.ve-ui-mwParameterResultWidget-names,
+.ve-ui-mwParameterResultWidget-description {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	/* HACK: Based on the expected width of this widget, using % produces unreliable results*/
+	max-width: 33em;
+}
+
+.ve-ui-mwParameterResultWidget-label {
+	font-weight: bold;
+	float: left;
+}
+
+.ve-ui-mwParameterResultWidget-names {
+	float: right;
+	font-size: 0.9em;
+}
+
+.ve-ui-mwParameterResultWidget-name {
+	border-radius: 0.3em;
+	padding: 0.125em 0.25em;
+	margin-left: 0.5em;
+	color: #999;
+	background-color: #fff;
+	border: solid 1px #ddd;
+}
+
+.ve-ui-mwParameterResultWidget-names span:not(:first-child) {
+	background-color: #eee;
+}
+
+.ve-ui-mwParameterResultWidget-description {
+	clear: both;
+}

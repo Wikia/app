@@ -15,6 +15,11 @@
 				<input type="hidden" name="videoKey[]" class="video-key" id="video-key-<?= $x ?>" value="<?= $video[ 'videoKey' ] ?>">
 			</div>
 			<div class="video-thumb"><?= $video[ 'videoThumb' ] ?></div>
+			<div class="input-group">
+				<input type="button" class="wmu-show" value="<?= wfMessage( 'videopagetool-button-add-thumbnail' )->plain() ?>">
+				<p class="alt-thumb <?= $video[ 'altThumbClass' ] ?>"><?= $video[ 'altThumbName' ]  ?></p>
+				<input type="hidden" name="altThumbName[]" class="alt-thumb" id="alt-thumb-<?= $x ?>" value="<?= $video[ 'altThumbName' ] ?>">
+			</div>
 			<div class="input-group border">
 				<label for="display-title-<?= $x ?>"><?= wfMessage( 'videopagetool-label-display-title' )->text() ?></label>
 				<input class="display-title" id="display-title-<?= $x ?>" type="text" name="displayTitle[]" value="<?= $video[ 'displayTitle' ] ?>">

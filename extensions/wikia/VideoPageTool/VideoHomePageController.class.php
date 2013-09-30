@@ -5,6 +5,12 @@
 
 class VideoHomePageController extends WikiaController {
 
+	// Constants to represent some commonly used module descriptors
+	const MODULE_FEATURED = 'featured';
+	const MODULE_CATEGORY = 'category';
+	const MODULE_POPULAR  = 'popular';
+	const MODULE_FAN      = 'fan';
+
 	var $program;
 
 	/**
@@ -23,33 +29,34 @@ class VideoHomePageController extends WikiaController {
 
 	/**
 	 * Display the Video Home Page
+	 * @responseParam boolean haveProgram
+	 * @responseParam string featuredContent
+	 * @responseParam string categoryContent
+	 * @responseParam string fanContent
+	 * @responseParam string popularContent
 	 */
 	public function index() {
-		$this->response->addAsset('videohomepage_js');
-		$this->response->addAsset('videohomepage_scss');
+		OasisController::addBodyClass( 'WikiaVideo' );
+		$this->response->addAsset( 'videohomepage_js' );
+		$this->response->addAsset( 'videohomepage_scss' );
 
 		$program = $this->getProgram();
-
-		$this->curProgram = $program;
-
-		if ( $program->exists() ) {
-			$this->haveCurrentProgram = true;
-			$this->featuredContent = $this->sendSelfRequest('handleFeatured');
-			$this->categoryContent = $this->sendSelfRequest('handleCategory');
-			$this->fanContent = $this->sendSelfRequest('handleFan');
-			$this->popularContent = $this->sendSelfRequest('handlePopular');
+		if ( $program instanceof VideoPageToolProgram && $program->exists() ) {
+			$this->haveProgram = true;
+			$this->featuredContent = $this->app->renderView( 'VideoHomePage', 'featured' );
+//			$this->categoryContent = $this->app->renderView( 'VideoHomePage', 'category' );
+//			$this->fanContent = $this->app->renderView( 'VideoHomePage', 'fan' );
+//			$this->popularContent = $this->app->renderView( 'VideoHomePage', 'popular' );
 		} else {
-			$this->haveCurrentProgram = false;
+			$this->haveProgram = false;
 		}
-
-		$this->partners = $this->buildPartnerCategoryUrls();
 	}
 
 	/**
 	 * @description Builds slug and localized URLs for each of our partner category pages
-	 * @return array
+	 * @responseParam array $partners
 	 */
-	public function buildPartnerCategoryUrls() {
+	public function partners() {
 		$partners = array();
 		// keys are lowercase as they are used to compose CSS & i18n keys
 		$partners[ 'anyclip' ] = array( 'label' => 'AnyClip' );
@@ -59,84 +66,49 @@ class VideoHomePageController extends WikiaController {
 		$partners[ 'ooyala' ] = array( 'label' => 'Ooyala' );
 		$partners[ 'realgravity' ] = array( 'label' => 'RealGravity' );
 
-		// get localized namespace
-		$catNamespaceString = F::app()->wg->ContLang->getFormattedNsText( NS_CATEGORY );
-
 		foreach( $partners as &$partner ) {
-			$partner['url'] = Title::newFromText( $catNamespaceString . ':' . $partner['label'] )->getFullUrl();
+			$partner['url'] = GlobalTitle::newFromText( $partner['label'], NS_CATEGORY, VideoHandlerHooks::VIDEO_WIKI )->getFullUrl();
 		}
 
 		// sort by keys, views need to be alphabetized
-		ksort($partners);
+		ksort( $partners );
 
-		return $partners;
-	}
-
-	/**
-	 * Return display content for any of the supported modules, one of:
-	 *
-	 *  - featured
-	 *  - category
-	 *  - fan
-	 *  - popular
-	 *
-	 * Example controller request:
-	 *
-	 *   /wikia.php?controller=VideoHomePageController&method=getModule&moduleName=category
-	 *
-	 * @requestParam moduleName - The name of the module to display
-	 * @return bool
-	 */
-	public function getModule( ) {
-		$name = $this->getVal('moduleName', '');
-		$handler = 'handle'.ucfirst(strtolower($name));
-
-		if ( method_exists( __CLASS__, $handler ) ) {
-			$this->forward( __CLASS__, $handler );
-			return true;
-		} else {
-			$this->html = '';
-			$this->result = 'error';
-			$this->msg = wfMessage('videopagetool-error-invalid-module')->plain();
-			return false;
-		}
+		$this->partners = $partners;
 	}
 
 	/**
 	 * Displays the featured module
+	 * @responseParam array $assets
 	 */
-	public function handleFeatured() {
-		$this->overrideTemplate( 'featured' );
-		$program = $this->getProgram();
-
-		$this->assets = $program->getAssetsBySection( 'featured' );
+	public function featured() {
+		$helper = new VideoPageToolHelper();
+		$this->assets = $helper->renderAssetsBySection( $this->getProgram(), self::MODULE_FEATURED );
 	}
 
 	/**
 	 * Displays the category module
+	 * @responseParam array $assets
 	 */
-	public function handleCategory() {
-		$this->overrideTemplate( 'category' );
-		$program = $this->getProgram();
-
-		$this->assets = $program->getAssetsBySection( 'category' );
+	public function category() {
+		$helper = new VideoPageToolHelper();
+		$this->assets = $helper->renderAssetsBySection( $this->getProgram(), self::MODULE_CATEGORY );
 	}
 
 	/**
 	 * Displays the fan module
+	 * @responseParam array $assets
 	 */
-	public function handleFan() {
-		$this->overrideTemplate( 'fan' );
-		$program = $this->getProgram();
-
-		$this->assets = $program->getAssetsBySection( 'fan' );
+	public function fan() {
+		$helper = new VideoPageToolHelper();
+		$this->assets = $helper->renderAssetsBySection( $this->getProgram(), self::MODULE_FAN );
 	}
 
 	/**
 	 * Displays the popular module
+	 * @responseParam array $assets
 	 */
-	public function handlePopular() {
-		$this->overrideTemplate( 'popular' );
-
+	public function popular() {
+		$this->assets = array();
 	}
+
 }

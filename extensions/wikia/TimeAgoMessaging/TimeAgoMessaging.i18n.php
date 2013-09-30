@@ -110,6 +110,14 @@ $messages['ca'] = array(
 	'timeago-second-from-now' => "un minut des d'ara",
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'timeago-month' => '$1 {{PLURAL:$1|бутт}} хьалха',
+	'timeago-month-from-now' => '$1 {{PLURAL:$1|бутт}} хьалха',
+);
+
 /** Czech (česky)
  * @author Darth Daron
  * @author Dontlietome7

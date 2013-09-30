@@ -1,7 +1,7 @@
-/**
- * VisualEditor content editable TextNode tests.
+/*!
+ * VisualEditor ContentEditable TextNode tests.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -9,8 +9,9 @@ QUnit.module( 've.ce.TextNode' );
 
 /* Tests */
 
-QUnit.test( 'getHtml', function ( assert ) {
-	var i, len, cases;
+QUnit.test( 'getAnnotatedHtml', function ( assert ) {
+	var i, len, cases, doc,
+		store = new ve.dm.IndexValueStore();
 
 	cases = [
 		{
@@ -21,7 +22,7 @@ QUnit.test( 'getHtml', function ( assert ) {
 				'c',
 				{ 'type': '/paragraph' }
 			],
-			'html': 'abc'
+			'html': [ 'a', 'b', 'c' ]
 		},
 		{
 			'data': [
@@ -31,7 +32,11 @@ QUnit.test( 'getHtml', function ( assert ) {
 				['c', [ { 'type': 'textStyle/bold' } ]],
 				{ 'type': '/paragraph' }
 			],
-			'html': '<b>abc</b>'
+			'html': [
+				['a', [ { 'type': 'textStyle/bold' } ]],
+				['b', [ { 'type': 'textStyle/bold' } ]],
+				['c', [ { 'type': 'textStyle/bold' } ]]
+			]
 		},
 		{
 			'data': [
@@ -41,268 +46,99 @@ QUnit.test( 'getHtml', function ( assert ) {
 				['c', [ { 'type': 'textStyle/italic' } ]],
 				{ 'type': '/paragraph' }
 			],
-			'html': '<b>a</b>b<i>c</i>'
-		},
-		{
-			'data': [
-				{ 'type': 'paragraph' },
-				['a', [
-					{ 'type': 'textStyle/bold' },
-					{ 'type': 'textStyle/italic' },
-					{ 'type': 'textStyle/underline' }
-				]],
-				['b', [
-					{ 'type': 'textStyle/bold' },
-					{ 'type': 'textStyle/italic' },
-					{ 'type': 'textStyle/underline' }
-				]],
-				['c', [
-					{ 'type': 'textStyle/bold' },
-					{ 'type': 'textStyle/italic' },
-					{ 'type': 'textStyle/underline' }
-				]],
-				{ 'type': '/paragraph' }
-			],
-			'html': '<b><i><u>abc</u></i></b>'
-		},
-		{
-			'data': [
-				{ 'type': 'paragraph' },
-				['a', [
-					{ 'type': 'textStyle/bold' },
-					{ 'type': 'textStyle/italic' },
-					{ 'type': 'textStyle/underline' }
-				]],
-				['b', [
-					{ 'type': 'textStyle/italic' },
-					{ 'type': 'textStyle/underline' },
-					{ 'type': 'textStyle/bold' }
-				]],
-				['c', [
-					{ 'type': 'textStyle/underline' },
-					{ 'type': 'textStyle/bold' },
-					{ 'type': 'textStyle/italic' }
-				]],
-				{ 'type': '/paragraph' }
-			],
-			'html': '<b><i><u>abc</u></i></b>'
-		},
-		{
-			'data': [
-				{ 'type': 'paragraph' },
-				['a', [
-					{ 'type': 'textStyle/bold' },
-					{ 'type': 'textStyle/italic' },
-					{ 'type': 'textStyle/underline' }
-				]],
+			'html': [
+				['a', [ { 'type': 'textStyle/bold' } ]],
 				'b',
-				['c', [
-					{ 'type': 'textStyle/underline' },
-					{ 'type': 'textStyle/bold' },
-					{ 'type': 'textStyle/italic' }
-				]],
-				{ 'type': '/paragraph' }
-			],
-			'html': '<b><i><u>a</u></i></b>b<u><b><i>c</i></b></u>'
-		},
-		{
-			'data': [
-				{ 'type': 'paragraph' },
-				'a',
-				'b',
-				'c',
-				['d', [
-					{ 'type': 'textStyle/bold' },
-					{ 'type': 'textStyle/italic' },
-					{ 'type': 'textStyle/underline' }
-				]],
-				['e', [
-					{ 'type': 'textStyle/italic' },
-					{ 'type': 'textStyle/underline' },
-					{ 'type': 'textStyle/bold' }
-				]],
-				['f', [
-					{ 'type': 'textStyle/underline' },
-					{ 'type': 'textStyle/bold' },
-					{ 'type': 'textStyle/italic' }
-				]],
-				'g',
-				'h',
-				'i',
-				{ 'type': '/paragraph' }
-			],
-			'html': 'abc<b><i><u>def</u></i></b>ghi'
-		},
-		{
-			'data': [
-				{ 'type': 'paragraph' },
-				'a',
-				'b',
-				'c',
-				['d', [
-					{ 'type': 'textStyle/bold' },
-					{ 'type': 'textStyle/italic' },
-					{ 'type': 'textStyle/underline' }
-				]],
-				['e', [
-					{ 'type': 'textStyle/italic' },
-					{ 'type': 'textStyle/underline' }
-				]],
-				['f', [
-					{ 'type': 'textStyle/underline' },
-					{ 'type': 'textStyle/bold' },
-					{ 'type': 'textStyle/italic' }
-				]],
-				'g',
-				'h',
-				'i',
-				{ 'type': '/paragraph' }
-			],
-			'html': 'abc<b><i><u>d</u></i></b><i><u>e<b>f</b></u></i>ghi'
-		},
-		{
-			'data': [
-				{ 'type': 'paragraph' },
-				'a',
-				'b',
-				'c',
-				['d', [
-					{ 'type': 'textStyle/italic' },
-					{ 'type': 'textStyle/underline' },
-					{ 'type': 'textStyle/bold' }
-				]],
-				['e', [
-					{ 'type': 'textStyle/italic' },
-					{ 'type': 'textStyle/underline' }
-				]],
-				['f', [
-					{ 'type': 'textStyle/underline' },
-					{ 'type': 'textStyle/bold' },
-					{ 'type': 'textStyle/italic' }
-				]],
-				'g',
-				'h',
-				'i',
-				{ 'type': '/paragraph' }
-			],
-			'html': 'abc<i><u><b>d</b>e<b>f</b></u></i>ghi'
-		},
-		{
-			'data': [
-				{ 'type': 'paragraph' },
-				'a',
-				'b',
-				'c',
-				['d', [
-					{ 'type': 'textStyle/italic' },
-					{ 'type': 'textStyle/underline' },
-					{ 'type': 'textStyle/bold' }
-				]],
-				['e', [
-					{ 'type': 'textStyle/bold' },
-					{ 'type': 'textStyle/underline' }
-				]],
-				['f', [
-					{ 'type': 'textStyle/underline' },
-					{ 'type': 'textStyle/bold' }
-				]],
-				'g',
-				'h',
-				'i',
-				{ 'type': '/paragraph' }
-			],
-			'html': 'abc<i><u><b>d</b></u></i><u><b>ef</b></u>ghi'
-		},
-		{
-			// [ ]
-			'data': [{ 'type': 'paragraph' },{ 'type': '/paragraph' }],
-			'html': ''
+				['c', [ { 'type': 'textStyle/italic' } ]]
+			]
 		},
 		{
 			// [ ]
 			'data': [{ 'type': 'paragraph' },' ',{ 'type': '/paragraph' }],
-			'html': '&nbsp;'
+			'html': [ '\u00a0' ]
 		},
 		{
 			// [ ][ ]
 			'data': [{ 'type': 'paragraph' },' ', ' ',{ 'type': '/paragraph' }],
-			'html': '&nbsp;&nbsp;'
+			'html': [ '\u00a0', '\u00a0' ]
 		},
 		{
 			// [ ][ ][ ]
 			'data': [{ 'type': 'paragraph' },' ', ' ', ' ',{ 'type': '/paragraph' }],
-			'html': '&nbsp; &nbsp;'
+			'html': [ '\u00a0', ' ', '\u00a0' ]
 		},
 		{
 			// [ ][ ][ ][ ]
 			'data': [{ 'type': 'paragraph' },' ', ' ', ' ', ' ',{ 'type': '/paragraph' }],
-			'html': '&nbsp; &nbsp;&nbsp;'
+			'html': [ '\u00a0', ' ', '\u00a0', '\u00a0' ]
 		},
 		{
 			// [ ][ ][ ][ ][ ]
 			'data': [{ 'type': 'paragraph' },' ', ' ', ' ', ' ', ' ',{ 'type': '/paragraph' }],
-			'html': '&nbsp; &nbsp; &nbsp;'
+			'html': [ '\u00a0', ' ', '\u00a0', ' ', '\u00a0' ]
 		},
 		{
 			// [ ][ ][ ][ ][ ][ ]
 			'data': [{ 'type': 'paragraph' },' ', ' ', ' ', ' ', ' ', ' ',{ 'type': '/paragraph' }],
-			'html': '&nbsp; &nbsp; &nbsp;&nbsp;'
+			'html': [ '\u00a0', ' ', '\u00a0', ' ', '\u00a0', '\u00a0' ]
 		},
 		{
 			// [ ][A][ ][ ][ ][ ]
 			'data': [{ 'type': 'paragraph' },' ', 'A', ' ', ' ', ' ', ' ',{ 'type': '/paragraph' }],
-			'html': '&nbsp;A &nbsp; &nbsp;'
+			'html': [ '\u00a0', 'A', ' ', '\u00a0', ' ', '\u00a0' ]
 		},
 		{
 			// [ ][ ][A][ ][ ][ ]
 			'data': [{ 'type': 'paragraph' },' ', ' ', 'A', ' ', ' ', ' ',{ 'type': '/paragraph' }],
-			'html': '&nbsp; A &nbsp;&nbsp;'
+			'html': [ '\u00a0', ' ', 'A', ' ', '\u00a0', '\u00a0' ]
 		},
 		{
 			// [ ][ ][ ][A][ ][ ]
 			'data': [{ 'type': 'paragraph' },' ', ' ', ' ', 'A', ' ', ' ',{ 'type': '/paragraph' }],
-			'html': '&nbsp; &nbsp;A &nbsp;'
+			'html': [ '\u00a0', ' ', '\u00a0', 'A', ' ', '\u00a0' ]
 		},
 		{
 			// [ ][ ][ ][ ][A][ ]
 			'data': [{ 'type': 'paragraph' },' ', ' ', ' ', ' ', 'A', ' ',{ 'type': '/paragraph' }],
-			'html': '&nbsp; &nbsp; A&nbsp;'
+			'html': [ '\u00a0', ' ', '\u00a0', ' ', 'A', '\u00a0' ]
 		},
 		{
 			// [ ][ ][ ][ ][ ][A]
 			'data': [{ 'type': 'paragraph' },' ', ' ', ' ', ' ', ' ', 'A',{ 'type': '/paragraph' }],
-			'html': '&nbsp; &nbsp; &nbsp;A'
+			'html': [ '\u00a0', ' ', '\u00a0', ' ', '\u00a0', 'A' ]
 		},
 		{
 			'data': [{ 'type': 'paragraph' }, '\n', 'A', '\n', 'B', '\n', { 'type': '/paragraph' }],
-			'html': '&crarr;A&crarr;B&crarr;'
+			'html': [ '\u21b5', 'A', '\u21b5', 'B', '\u21b5' ]
 		},
 		{
 			'data': [{ 'type': 'paragraph' }, '\t', 'A', '\t', 'B', '\t', { 'type': '/paragraph' }],
-			'html': '&#10142;A&#10142;B&#10142;'
+			'html': [ '\u279e', 'A', '\u279e', 'B', '\u279e' ]
 		},
 		{
 			'data': [{ 'type': 'preformatted' }, '\n', 'A', '\n', 'B', '\n', { 'type': '/preformatted' }],
-			'html': '\nA\nB\n'
+			'html': [ '\n', 'A', '\n', 'B', '\n' ]
 		},
 		{
 			'data': [{ 'type': 'preformatted' }, '\t', 'A', '\t', 'B', '\t', { 'type': '/preformatted' }],
-			'html': '\tA\tB\t'
+			'html': [ '\t', 'A', '\t', 'B', '\t' ]
 		},
 		{
 			// [ ][ ][ ][A][ ][ ]
 			'data': [{ 'type': 'preformatted' },' ', ' ', ' ', 'A', ' ', ' ',{ 'type': '/preformatted' }],
-			'html': '   A  '
+			'html': [ ' ', ' ', ' ', 'A', ' ', ' ' ]
+		},
+		{
+			'data': [{ 'type': 'paragraph' }, '&', '<', '>', '\'', '"', { 'type': '/paragraph' }],
+			'html': [ '&', '<', '>', '\'', '"' ]
 		}
 	];
 	QUnit.expect( cases.length );
 	for ( i = 0, len = cases.length; i < len; i++ ) {
-		ve.dm.example.preprocessAnnotations( cases[i].data );
-		assert.equal(
-			( new ve.ce.TextNode(
-				( new ve.dm.Document( cases[i].data ) )
-					.documentNode.getChildren()[0].getChildren()[0] )
-			).getHtml(),
+		doc = new ve.dm.Document( ve.dm.example.preprocessAnnotations( cases[i].data, store ) );
+		ve.dm.example.preprocessAnnotations( cases[i].html, store );
+		assert.deepEqual(
+			( new ve.ce.TextNode( doc.documentNode.getChildren()[0].getChildren()[0] ) ).getAnnotatedHtml(),
 			cases[i].html
 		);
 	}

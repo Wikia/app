@@ -77,10 +77,11 @@ $dbw = wfGetDB( DB_MASTER );
 		$file = wfLocalFile( $page );
 		if ( $file ) {
 			$oldimage = null; // Must be passed by reference
-			$success = FileDeleteForm::doDelete( $page, $file, $oldimage, $reason, false );
+			$success = FileDeleteForm::doDelete( $page, $file, $oldimage, $reason, false )->isOK();
 			$removed = 1;
 		} 
 	}
+
 	if ( $removed == 0 ) {
 		$page_id = $page->getArticleID();
 		$art = new Article( $page );

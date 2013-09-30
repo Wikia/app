@@ -1,69 +1,50 @@
-/**
- * VisualEditor data model DefinitionListItemNode class.
+/*!
+ * VisualEditor DataModel DefinitionListItemNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * DataModel node for a definition list item.
+ * DataModel definition list item node.
  *
  * @class
+ * @extends ve.dm.BranchNode
  * @constructor
- * @extends {ve.dm.BranchNode}
  * @param {ve.dm.BranchNode[]} [children] Child nodes to attach
- * @param {Object} [attributes] Reference to map of attribute key/value pairs
+ * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.DefinitionListItemNode = function VeDmDefinitionListItemNode( children, attributes ) {
+ve.dm.DefinitionListItemNode = function VeDmDefinitionListItemNode( children, element ) {
 	// Parent constructor
-	ve.dm.BranchNode.call( this, 'definitionListItem', children, attributes );
+	ve.dm.BranchNode.call( this, children, element );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.dm.DefinitionListItemNode, ve.dm.BranchNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.dm.NodeFactory
- * @static
- * @member
- */
-ve.dm.DefinitionListItemNode.rules = {
-	'isWrapped': true,
-	'isContent': false,
-	'canContainContent': false,
-	'hasSignificantWhitespace': false,
-	'childNodeTypes': null,
-	'parentNodeTypes': ['definitionList']
+ve.dm.DefinitionListItemNode.static.name = 'definitionListItem';
+
+ve.dm.DefinitionListItemNode.static.parentNodeTypes = [ 'definitionList' ];
+
+ve.dm.DefinitionListItemNode.static.defaultAttributes = {
+	'style': 'term'
 };
 
-/**
- * Node converters.
- *
- * @see {ve.dm.Converter}
- * @static
- * @member
- */
-ve.dm.DefinitionListItemNode.converters = {
-	'domElementTypes': ['dt', 'dd'],
-	'toDomElement': function ( type, element ) {
-		return element.attributes && ( {
-			'term': document.createElement( 'dt' ),
-			'definition': document.createElement( 'dd' )
-		} )[element.attributes.style];
-	},
-	'toDataElement': function ( tag ) {
-		return ( {
-			'dt': { 'type': 'definitionListItem', 'attributes': { 'style': 'term' } },
-			'dd': { 'type': 'definitionListItem', 'attributes': { 'style': 'definition' } }
-		} )[tag];
-	}
+ve.dm.DefinitionListItemNode.static.matchTagNames = [ 'dt', 'dd' ];
+
+ve.dm.DefinitionListItemNode.static.toDataElement = function ( domElements ) {
+	var style = domElements[0].nodeName.toLowerCase() === 'dt' ? 'term' : 'definition';
+	return { 'type': 'definitionListItem', 'attributes': { 'style': style } };
+};
+
+ve.dm.DefinitionListItemNode.static.toDomElements = function ( dataElement, doc ) {
+	var tag = dataElement.attributes && dataElement.attributes.style === 'term' ? 'dt' : 'dd';
+	return [ doc.createElement( tag ) ];
 };
 
 /* Registration */
 
-ve.dm.nodeFactory.register( 'definitionListItem', ve.dm.DefinitionListItemNode );
+ve.dm.modelRegistry.register( ve.dm.DefinitionListItemNode );

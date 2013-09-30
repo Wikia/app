@@ -184,7 +184,7 @@ class FilePageController extends WikiaController {
 		$relatedPages->setCategories($titleCats);
 
 		# Rendering the RelatedPages index with our alternate title and pre-seeded categories.
-		$this->text = F::app()->renderView( 'RelatedPages', 'Index', array( "altTitle" => $title, "anyNS" => true ) );
+		$this->text = F::app()->renderView( 'RelatedPages', 'section', [ "altTitle" => $title, "anyNS" => true ] );
 	}
 
 	/**

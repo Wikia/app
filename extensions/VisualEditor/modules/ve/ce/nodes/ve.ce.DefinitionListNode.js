@@ -1,40 +1,34 @@
-/**
- * VisualEditor content editable DefinitionListNode class.
+/*!
+ * VisualEditor ContentEditable DefinitionListNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * ContentEditable node for a definition list.
+ * ContentEditable definition list node.
  *
  * @class
+ * @extends ve.ce.BranchNode
  * @constructor
- * @extends {ve.ce.BranchNode}
  * @param {ve.dm.DefinitionListNode} model Model to observe
+ * @param {Object} [config] Configuration options
  */
-ve.ce.DefinitionListNode = function VeCeDefinitionListNode( model ) {
+ve.ce.DefinitionListNode = function VeCeDefinitionListNode( model, config ) {
 	// Parent constructor
-	ve.ce.BranchNode.call( this, 'definitionList', model, $( '<dl>' ) );
+	ve.ce.BranchNode.call( this, model, config );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.ce.DefinitionListNode, ve.ce.BranchNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.ce.NodeFactory
- * @static
- * @member
- */
-ve.ce.DefinitionListNode.rules = {
-	'canBeSplit': false
-};
+ve.ce.DefinitionListNode.static.name = 'definitionList';
+
+ve.ce.DefinitionListNode.static.tagName = 'dl';
 
 /* Registration */
 
-ve.ce.nodeFactory.register( 'definitionList', ve.ce.DefinitionListNode );
+ve.ce.nodeFactory.register( ve.ce.DefinitionListNode );
