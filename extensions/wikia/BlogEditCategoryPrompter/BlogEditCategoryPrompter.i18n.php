@@ -7,3 +7,10 @@ $messages['en'] = array(
 	'right-becp_user' => 'Is prompted to add a category to a blog post',
 	'group-becp_user' => 'Blog Edit Category Prompter users',
 );
+
+$messages['qqq'] = array(
+	'becp-desc' => "Short description of the BlogEditCategoryPrompter extension, shown on [[Special:Version]].",
+	'becp-prompt' => "The prompt shown to users when they are about to post a blog without categories attached.",
+	'right-becp_user' => 'The right description for users',
+	'group-becp_user' => 'The heading for users who have the right to see the prompt',
+);
