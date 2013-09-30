@@ -1,6 +1,6 @@
-<div id="featured-video" class="featured-video">
+<div id="featured-video" class="featured-video row collapse">
 
-	<div class="featured-video-slider eight columns centered" id="featured-video-slider">
+	<div class="featured-video-slider small-12 medium-8 columns small-centered" id="featured-video-slider">
 		<ul id="featured-video-bxslider" class="bxslider">
 			<? $index = 0; ?>
 			<? foreach ( $assets as $videoData ): ?>
@@ -17,7 +17,7 @@
 			<? endforeach; ?>
 		</ul>
 
-		<div id="featured-video-thumbs" class="thumbs">
+		<div id="featured-video-thumbs" class="thumbs small-12 columns">
 			<div class="thumbs-inner">
 				<? foreach ( $assets as $videoData ): ?>
 					<?= $videoData['videoThumb'] ?>
