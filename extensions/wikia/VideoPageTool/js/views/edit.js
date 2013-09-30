@@ -117,6 +117,7 @@ define( 'vpt.views.edit', [
 
 			// Set max length rule for description textarea
 			this.validator.setRule( this.$formFields.filter( '.description' ), 'maxlength', 200 );
+			this.validator.setRule( this.$formFields.filter( '.alt-thumb' ), 'missingImage' );
 
 			this.$formFields.each( this.validator.addRules );
 			this.$form.on( 'submit', this.validator.onSubmit );
