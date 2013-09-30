@@ -74,6 +74,7 @@ define( 'vpt.models.validator', [ 'jquery' ], function( $ ) {
 		onSubmit: function( e ) {
 			e.preventDefault();
 
+			// only execute if method exists in context
 			if ( this.formIsValid && this.formIsValid() ) {
 				this.$form[0].submit();
 			}
