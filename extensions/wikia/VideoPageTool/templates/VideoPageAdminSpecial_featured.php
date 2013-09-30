@@ -50,8 +50,7 @@
 					class="description"
 					id="description-<?= $x ?>"
 					placeholder="<?= wfMessage( 'videopagetool-placeholder-video-description' )->text() ?>"
-					name="description[]"><?= $video[ 'description' ] ?>
-				</textarea>
+					name="description[]"><?= $video[ 'description' ] ?></textarea>
 				<p class="hint"><?= wfMessage( 'videopagetool-hint-description-maxlength', $descriptionMaxLength )->plain() ?></p>
 			</div>
 
