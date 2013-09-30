@@ -14,15 +14,15 @@
 	$image-y: -1;
 	$image-width: -1;
 	$image-height: -1;
-	// @autosprite-image-details: carousel_left_arrow.png@72,0,4e43cc714d64db8815ed589e2c571387
-	@if $imageName == 'carousel_left_arrow' {
+	// @autosprite-image-details: carousel_left_arrow_white.png@72,0,4e43cc714d64db8815ed589e2c571387
+	@if $imageName == 'carousel_left_arrow_white' {
 		$image-x: 72px;
 		$image-y: 0px;
 		$image-width: 42px;
 		$image-height: 55px;
 	}
-	// @autosprite-image-details: carousel_right_arrow.png@126,0,76852cdbaea748c9ea832fea8991b4e3
-	@if $imageName == 'carousel_right_arrow' {
+	// @autosprite-image-details: carousel_right_arrow_white.png@126,0,76852cdbaea748c9ea832fea8991b4e3
+	@if $imageName == 'carousel_right_arrow_white' {
 		$image-x: 126px;
 		$image-y: 0px;
 		$image-width: 42px;
@@ -98,17 +98,17 @@
 @mixin sprite-VideoPageTool-embed($imageName,$width: 0,$height: 0,$offset-x: 0,$offset-y: 0) {
 	$image-width: -1;
 	$image-height: -1;
-	// @autosprite-image-details: carousel_left_arrow.png@72,0,4e43cc714d64db8815ed589e2c571387
-	@if $imageName == 'carousel_left_arrow' {
+	// @autosprite-image-details: carousel_left_arrow_white.png@72,0,4e43cc714d64db8815ed589e2c571387
+	@if $imageName == 'carousel_left_arrow_white' {
 		$image-width: 42px;
 		$image-height: 55px;
-		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/carousel_left_arrow.png'); /* base64 */
+		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/carousel_left_arrow_white.png'); /* base64 */
 	}
-	// @autosprite-image-details: carousel_right_arrow.png@126,0,76852cdbaea748c9ea832fea8991b4e3
-	@if $imageName == 'carousel_right_arrow' {
+	// @autosprite-image-details: carousel_right_arrow_white.png@126,0,76852cdbaea748c9ea832fea8991b4e3
+	@if $imageName == 'carousel_right_arrow_white' {
 		$image-width: 42px;
 		$image-height: 55px;
-		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/carousel_right_arrow.png'); /* base64 */
+		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/carousel_right_arrow_white.png'); /* base64 */
 	}
 	// @autosprite-image-details: ico-anyclip.png@180,0,7f5a01073cdd282c51e020c86cdbed16
 	@if $imageName == 'ico-anyclip' {
@@ -180,11 +180,11 @@
 }
 @mixin sprite-VideoPageTool-deep($width: 0,$height: 0) {
 	@include sprite-VideoPageTool-base;
-	&.carousel-left-arrow {
-		@include sprite-VideoPageTool('carousel_left_arrow',$width,$height);
+	&.carousel-left-arrow-white {
+		@include sprite-VideoPageTool('carousel_left_arrow_white',$width,$height);
 	}
-	&.carousel-right-arrow {
-		@include sprite-VideoPageTool('carousel_right_arrow',$width,$height);
+	&.carousel-right-arrow-white {
+		@include sprite-VideoPageTool('carousel_right_arrow_white',$width,$height);
 	}
 	&.ico-anyclip {
 		@include sprite-VideoPageTool('ico-anyclip',$width,$height);
@@ -210,11 +210,11 @@
 }
 @mixin sprite-VideoPageTool-deep-embed($width: 0,$height: 0) {
 	@include sprite-VideoPageTool-base-embed;
-	&.carousel-left-arrow {
-		@include sprite-VideoPageTool-embed('carousel_left_arrow',$width,$height);
+	&.carousel-left-arrow-white {
+		@include sprite-VideoPageTool-embed('carousel_left_arrow_white',$width,$height);
 	}
-	&.carousel-right-arrow {
-		@include sprite-VideoPageTool-embed('carousel_right_arrow',$width,$height);
+	&.carousel-right-arrow-white {
+		@include sprite-VideoPageTool-embed('carousel_right_arrow_white',$width,$height);
 	}
 	&.ico-anyclip {
 		@include sprite-VideoPageTool-embed('ico-anyclip',$width,$height);
