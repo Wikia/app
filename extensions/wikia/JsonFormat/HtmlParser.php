@@ -8,7 +8,7 @@ class HtmlParser {
 	 * @return JsonFormatNode
 	 */
 	public function parse( $html ) {
-		$doc = new DOMDocument();
+		$doc = new \DOMDocument();
 
 		libxml_use_internal_errors(true);
 		$doc->loadHTML("<?xml encoding=\"UTF-8\">\n<html><body>" . $html . "</body></html>");
@@ -18,7 +18,7 @@ class HtmlParser {
 		//$this->visit( $body, 0 );
 		//die();
 
-		$jsonFormatTraversingState = new JsonFormatBuilder();
+		$jsonFormatTraversingState = new \JsonFormatBuilder();
 		$visitor = $this->createVisitor( $jsonFormatTraversingState );
 		$visitor->visit( $body );
 		return $jsonFormatTraversingState->getJsonRoot();
@@ -40,30 +40,30 @@ class HtmlParser {
 	}
 
 	protected function createVisitor( $jsonFormatTraversingState ) {
-		$compositeVisitor = new CompositeVisitor();
+		$compositeVisitor = new \CompositeVisitor();
 
-		$compositeVisitor->addVisitor( new TextNodeVisitor($compositeVisitor, $jsonFormatTraversingState) );
+		$compositeVisitor->addVisitor( new \TextNodeVisitor($compositeVisitor, $jsonFormatTraversingState) );
 
-		$compositeVisitor->addVisitor( new BodyVisitor($compositeVisitor, $jsonFormatTraversingState) );
-		$compositeVisitor->addVisitor( new HeaderVisitor($compositeVisitor, $jsonFormatTraversingState) );
+		$compositeVisitor->addVisitor( new \BodyVisitor($compositeVisitor, $jsonFormatTraversingState) );
+		$compositeVisitor->addVisitor( new \HeaderVisitor($compositeVisitor, $jsonFormatTraversingState) );
 
-		$compositeVisitor->addVisitor( new QuoteVisitor($compositeVisitor, $jsonFormatTraversingState) );
-		$compositeVisitor->addVisitor( new PVisitor($compositeVisitor, $jsonFormatTraversingState) );
-		$compositeVisitor->addVisitor( new ListVisitor($compositeVisitor, $jsonFormatTraversingState) );
+		$compositeVisitor->addVisitor( new \QuoteVisitor($compositeVisitor, $jsonFormatTraversingState) );
+		$compositeVisitor->addVisitor( new \PVisitor($compositeVisitor, $jsonFormatTraversingState) );
+		$compositeVisitor->addVisitor( new \ListVisitor($compositeVisitor, $jsonFormatTraversingState) );
 
 
-		$compositeVisitor->addVisitor( new TableOfContentsVisitor($compositeVisitor, $jsonFormatTraversingState) );
-		$compositeVisitor->addVisitor( new InfoboxTableVisitor($compositeVisitor, $jsonFormatTraversingState) );
-		$compositeVisitor->addVisitor( new TableVisitor($compositeVisitor, $jsonFormatTraversingState) );
+		$compositeVisitor->addVisitor( new \TableOfContentsVisitor($compositeVisitor, $jsonFormatTraversingState) );
+		$compositeVisitor->addVisitor( new \InfoboxTableVisitor($compositeVisitor, $jsonFormatTraversingState) );
+		$compositeVisitor->addVisitor( new \TableVisitor($compositeVisitor, $jsonFormatTraversingState) );
 
-		$compositeVisitor->addVisitor( new ImageFigureVisitor($compositeVisitor, $jsonFormatTraversingState) );
-		$compositeVisitor->addVisitor( new ImageVisitor($compositeVisitor, $jsonFormatTraversingState) );
-		$compositeVisitor->addVisitor( new AVisitor($compositeVisitor, $jsonFormatTraversingState) );
-		$compositeVisitor->addVisitor( new BrVisitor($compositeVisitor, $jsonFormatTraversingState) );
-		$compositeVisitor->addVisitor( new BVisitor($compositeVisitor, $jsonFormatTraversingState) );
-		$compositeVisitor->addVisitor( new IVisitor($compositeVisitor, $jsonFormatTraversingState) );
+		$compositeVisitor->addVisitor( new \ImageFigureVisitor($compositeVisitor, $jsonFormatTraversingState) );
+		$compositeVisitor->addVisitor( new \ImageVisitor($compositeVisitor, $jsonFormatTraversingState) );
+		$compositeVisitor->addVisitor( new \AVisitor($compositeVisitor, $jsonFormatTraversingState) );
+		$compositeVisitor->addVisitor( new \BrVisitor($compositeVisitor, $jsonFormatTraversingState) );
+		$compositeVisitor->addVisitor( new \BVisitor($compositeVisitor, $jsonFormatTraversingState) );
+		$compositeVisitor->addVisitor( new \IVisitor($compositeVisitor, $jsonFormatTraversingState) );
 
-		$compositeVisitor->addVisitor( new InlineVisitor($compositeVisitor, $jsonFormatTraversingState, ['span', 'center']) );
+		$compositeVisitor->addVisitor( new \InlineVisitor($compositeVisitor, $jsonFormatTraversingState, ['span', 'center']) );
 
 
 		return $compositeVisitor;

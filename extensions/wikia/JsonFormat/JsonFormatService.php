@@ -5,13 +5,14 @@
  * Time: 16:10
  */
 
-class JsonFormatService extends WikiaService {
+
+class JsonFormatService extends \WikiaService {
 	private $htmlParser;
 	private $requestContext;
 
 	function __construct( $htmlParser = null ) {
 		if( $htmlParser == null ) {
-			$htmlParser = new HtmlParser();
+			$htmlParser = new Wikia\JsonFormat\HtmlParser();
 		}
 		$this->requestContext = new RequestContext();
 		$this->htmlParser = $htmlParser;

@@ -3,10 +3,11 @@
 $dir = dirname(__FILE__);
 $app = F::app();
 
-$app->registerClass( 'HtmlParser',                            $dir . "/HtmlParser.php");
+$app->registerClass( 'Wikia\JsonFormat\HtmlParser',           $dir . "/HtmlParser.php");
 $app->registerClass( 'JsonFormatService',                     $dir . "/JsonFormatService.php");
 $app->registerClass( 'JsonFormatBuilder',                     $dir . "/JsonFormatBuilder.php");
 $app->registerClass( 'JsonFormatException',                   $dir . "/JsonFormatException.php");
+$app->registerClass( 'JsonFormatSimplifier',                  $dir . "/JsonFormatSimplifier.php");
 
 $app->registerClass( 'JsonFormatContainerNode',               $dir . "/nodes/JsonFormatContainerNode.php");
 $app->registerClass( 'JsonFormatParagraphNode',               $dir . "/nodes/JsonFormatParagraphNode.php");

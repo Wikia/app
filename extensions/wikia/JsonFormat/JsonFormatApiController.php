@@ -19,7 +19,7 @@ class JsonFormatApiController extends WikiaApiController {
 		if( empty($articleId) ) {
 			throw new InvalidParameterApiException( self::ARTICLE_CACHE_ID );
 		}
-		$jsonFormatService = new JsonFormatService();
+		$jsonFormatService = new \JsonFormatService();
 		$json = $jsonFormatService->getJsonFormatForArticleId( $articleId );
 		//var_dump( $json );
 		$this->getResponse()->setVal( "jsonFormat" , $json->toArray() );
@@ -67,6 +67,21 @@ class JsonFormatApiController extends WikiaApiController {
 		}
 		return $result;
 	}
+
+    public function getSimpleJson() {
+        $articleId = $this->getRequest()->getInt("article", NULL);
+        if( empty($articleId) ) {
+            throw new InvalidParameterApiException( self::ARTICLE_CACHE_ID );
+        }
+
+        $jsonFormatService = new JsonFormatService();
+        $json = $jsonFormatService->getJsonFormatForArticleId( $articleId );
+
+        var_dump( $json );
+
+        die;
+
+    }
 
 	/**
 	 * @throws InvalidParameterApiException
