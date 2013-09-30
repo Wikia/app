@@ -1,11 +1,12 @@
 /*global WMU_skipDetails, WMU_show, WMU_openedInEditor */
-define( 'views.videopageadmin.thumbnailUpload', [
+define( 'views.videopageadmin.thumbnailupload', [
 		'jquery',
 		'wikia.window',
 		'models.videopageadmin.thumbnail',
 		'wikia.aim'
 	], function( $, window, ThumbnailModel ) {
 	'use strict';
+
 
 	/*
 	 * Creates a ThumbnailUploader view class

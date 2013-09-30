@@ -1,7 +1,7 @@
 define( 'vpt.views.edit', [
 	'jquery',
 	'vpt.models.validator',
-	'views.videopageadmin.thumbnailUpload'
+	'views.videopageadmin.thumbnailupload'
 ], function( $, Validator, ThumbnailUploader ) {
 
 	'use strict';
