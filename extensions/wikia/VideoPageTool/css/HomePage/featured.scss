@@ -61,15 +61,13 @@ $play-button-overlay-fade-duration: 400ms;
 		}
 		.bx-controls-direction a {
 			@include sprite-VideoPageTool-base();
+			height: 55px;
+			width: 42px;
 			&.bx-prev {
-				@include sprite-VideoPageTool('carousel_left_arrow');
-				height: 24px;
-				width: 16px;
+				@include sprite-VideoPageTool('carousel_left_arrow_white');
 			}
 			&.bx-next {
-				@include sprite-VideoPageTool('carousel_right_arrow');
-				height: 24px;
-				width: 16px;
+				@include sprite-VideoPageTool('carousel_right_arrow_white');
 			}
 		}
 		// Small navigation circles
