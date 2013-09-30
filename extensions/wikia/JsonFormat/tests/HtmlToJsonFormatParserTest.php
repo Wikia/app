@@ -8,7 +8,7 @@
 class HtmlToJsonFormatParserTest extends WikiaBaseTest {
 
 	public function testParseSimple() {
-		$htmlParser = new HtmlToJsonFormatParser();
+		$htmlParser = new HtmlParser();
 		$node = $htmlParser->parse("<div><a>link</div>");
 
 		$this->assertEquals( 'root', $node->getType() );
@@ -18,7 +18,7 @@ class HtmlToJsonFormatParserTest extends WikiaBaseTest {
 	}
 
 	public function testParseSimpleNoA() {
-		$htmlParser = new HtmlToJsonFormatParser();
+		$htmlParser = new HtmlParser();
 		$node = $htmlParser->parse("<div>link</div>");
 
 		$this->assertEquals( 'root', $node->getType() );
@@ -28,7 +28,7 @@ class HtmlToJsonFormatParserTest extends WikiaBaseTest {
 	}
 
 	public function testParseDivWrappingSection() {
-		$htmlParser = new HtmlToJsonFormatParser();
+		$htmlParser = new HtmlParser();
 		$node = $htmlParser->parse('
 			<div>pre <h2><span class="mw-headline" id="Section">Section1</span><span class="editsection"><a href="...;section=1" title="Edit Section section"><img src="" class="sprite edit-pencil" />Edit</a></span></h2>
 			post</div>
@@ -44,7 +44,7 @@ class HtmlToJsonFormatParserTest extends WikiaBaseTest {
 	}
 
 	public function testSectionsSameLevel() {
-		$htmlParser = new HtmlToJsonFormatParser();
+		$htmlParser = new HtmlParser();
 		$node = $htmlParser->parse('
 			<div>pre<!--
 			--><h2><span class="mw-headline" id="Section">Section1</span><span class="editsection"><a href="...;section=1" title="Edit Section section"><img src="" class="sprite edit-pencil" />Edit</a></span></h2>
@@ -63,7 +63,7 @@ class HtmlToJsonFormatParserTest extends WikiaBaseTest {
 	}
 
 	public function testParseSimpleParagraph() {
-		$htmlParser = new HtmlToJsonFormatParser();
+		$htmlParser = new HtmlParser();
 		$node = $htmlParser->parse("<p><a>link</p>");
 
 		$this->assertEquals( 'root', $node->getType() );
@@ -73,7 +73,7 @@ class HtmlToJsonFormatParserTest extends WikiaBaseTest {
 	}
 
 	public function testParseSection() {
-		$htmlParser = new HtmlToJsonFormatParser();
+		$htmlParser = new HtmlParser();
 		$node = $htmlParser->parse('<h1><span class="mw-headline" id="Section">Section</span><span class="editsection"><a href="...;section=1" title="Edit Section section"><img src="" class="sprite edit-pencil" />Edit</a></span></h1>');
 
 		$this->assertEquals( 'root', $node->getType() );
@@ -84,7 +84,7 @@ class HtmlToJsonFormatParserTest extends WikiaBaseTest {
 	}
 
 	public function testParseSectionWithContent() {
-		$htmlParser = new HtmlToJsonFormatParser();
+		$htmlParser = new HtmlParser();
 		$node = $htmlParser->parse('<h1><span class="mw-headline" id="Section">Section</span><span class="editsection"><a href="...;section=1" title="Edit Section section"><img src="" class="sprite edit-pencil" />Edit</a></span></h1> content');
 
 		$this->assertEquals( 'root', $node->getType() );

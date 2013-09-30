@@ -6,18 +6,24 @@
  */
 
 class JsonFormatService extends WikiaService {
-	private $wikitextToJsonFormatParser;
+	private $htmlParser;
+	private $requestContext;
 
-	function __construct( $wikitextToJsonFormatParser = null ) {
-		if( $wikitextToJsonFormatParser == null ) {
-			$wikitextToJsonFormatParser = (new WikitextToJsonFormatParserFactory())->create();
+	function __construct( $htmlParser = null ) {
+		if( $htmlParser == null ) {
+			$htmlParser = new HtmlParser();
 		}
-		$this->wikitextToJsonFormatParser = $wikitextToJsonFormatParser;
+		$this->requestContext = new RequestContext();
+		$this->htmlParser = $htmlParser;
 	}
 
 	public function getJsonFormatForArticleId( $articleId ) {
 		$article = Article::newFromID( $articleId );
-		$content = $article->getContent();
-		return $this->wikitextToJsonFormatParser->parse( $content );
+		if ( !$article ) {
+			throw new JsonFormatException("Cannot find article with id:" . $articleId);
+		}
+		$html = $article->getPage()->getParserOutput( ParserOptions::newFromContext( $this->requestContext))->getText();
+
+		return $this->htmlParser->parse( $html );
 	}
 }

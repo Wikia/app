@@ -3,10 +3,7 @@
 $dir = dirname(__FILE__);
 $app = F::app();
 
-$app->registerClass( 'HtmlToJsonFormatParser',                $dir . "/HtmlToJsonFormatParser.php");
-$app->registerClass( 'WikitextToHtmlParser',                  $dir . "/WikitextToHtmlParser.php");
-$app->registerClass( 'WikitextToJsonFormatParserFactory',     $dir . "/WikitextToJsonFormatParserFactory.php");
-$app->registerClass( 'WikitextToJsonFormatParser',            $dir . "/WikitextToJsonFormatParser.php");
+$app->registerClass( 'HtmlParser',                            $dir . "/HtmlParser.php");
 $app->registerClass( 'JsonFormatService',                     $dir . "/JsonFormatService.php");
 $app->registerClass( 'JsonFormatBuilder',                     $dir . "/JsonFormatBuilder.php");
 $app->registerClass( 'JsonFormatException',                   $dir . "/JsonFormatException.php");

@@ -1,11 +1,8 @@
 <?php
-/**
- * User: artur
- * Date: 21.05.13
- * Time: 14:36
- */
 
-class HtmlToJsonFormatParser {
+namespace Wikia\JsonFormat;
+
+class HtmlParser {
 	/**
 	 * @param string $html
 	 * @return JsonFormatNode
