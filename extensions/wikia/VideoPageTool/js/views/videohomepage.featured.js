@@ -38,7 +38,7 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 		},
 		initSlider: function() {
 			this.slider = this.$bxSlider.bxSlider({
-				//video: true, // TODO: add video support?
+				video: true,
 				onSliderLoad: $.proxy( this.onSliderLoad, this ),
 				onSlideNext: $.proxy( this.onArrowClick, this ),
 				onSlidePrev: $.proxy( this.onArrowClick, this ),

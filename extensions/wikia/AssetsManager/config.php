@@ -1016,6 +1016,7 @@ $config['videohomepage_js'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'//resources/wikia/libraries/jquery/bxslider/plugins/jquery.fitvids.js',
 		'//resources/wikia/libraries/jquery/bxslider/jquery.bxslider.min.js',
 		'//extensions/wikia/VideoPageTool/js/models/videohomepage.featured.js',
 		'//extensions/wikia/VideoPageTool/js/views/videohomepage.featured.js',

@@ -52,6 +52,9 @@
         "iframe[src*='player.vimeo.com']",
         "iframe[src*='www.youtube.com']",
         "iframe[src*='www.kickstarter.com']",
+	    /* wikia change begin */
+	    "iframe[scr*='widgets.ign.com']",
+	    /* wikia change end */
         "object",
         "embed"
       ];
