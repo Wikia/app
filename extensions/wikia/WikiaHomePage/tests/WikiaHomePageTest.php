@@ -599,9 +599,9 @@ TXT;
 	/**
 	 * @dataProvider getProcessedWikisImgSizesDataProvider
 	 */
-	public function testGetProcessedWikisImgSizes($limit, $width, $height) {
+	public function testGetProcessedWikisImgSizes($slotName, $width, $height) {
 		$whh = new WikiaHomePageHelper();
-		$size = $whh->getProcessedWikisImgSizes($limit);
+		$size = $whh->getProcessedWikisImgSizes($slotName);
 
 		$this->assertEquals($width, $size->width);
 		$this->assertEquals($height, $size->height);
@@ -610,9 +610,9 @@ TXT;
 	public function getProcessedWikisImgSizesDataProvider() {
 		$whh = new WikiaHomePageHelper();
 		return array(
-			array(WikiaHomePageHelper::SLOTS_BIG, $whh->getRemixBigImgWidth(), $whh->getRemixBigImgHeight()),
-			array(WikiaHomePageHelper::SLOTS_MEDIUM, $whh->getRemixMediumImgWidth(), $whh->getRemixMediumImgHeight()),
-			array(WikiaHomePageHelper::SLOTS_SMALL, $whh->getRemixSmallImgWidth(), $whh->getRemixSmallImgHeight()),
+			array(WikiaHomePageHelper::SLOTS_BIG_ARRAY_KEY, $whh->getRemixBigImgWidth(), $whh->getRemixBigImgHeight()),
+			array(WikiaHomePageHelper::SLOTS_MEDIUM_ARRAY_KEY, $whh->getRemixMediumImgWidth(), $whh->getRemixMediumImgHeight()),
+			array(WikiaHomePageHelper::SLOTS_SMALL_ARRAY_KEY, $whh->getRemixSmallImgWidth(), $whh->getRemixSmallImgHeight()),
 			array(666, $whh->getRemixBigImgWidth(), $whh->getRemixBigImgHeight()),
 		);
 	}
