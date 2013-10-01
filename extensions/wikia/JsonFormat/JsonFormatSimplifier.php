@@ -68,6 +68,15 @@ class JsonFormatSimplifier {
 		}
 	}
 
+	private function clearEmptyParagraphs( &$paragraphs ) {
+		$paragraphs = array_filter( $paragraphs, function( $element ) {
+			if ( $element["type"] == "paragraph" ) {
+				return sizeof( trim( $element["text"] ) ) > 0;
+			}
+			return true;
+		});
+	}
+
 	public function newParagraph( &$sectionElements) {
 		$sectionElements[] = [ "type" => "paragraph", "text" => "" ];
 	}
@@ -121,6 +130,7 @@ class JsonFormatSimplifier {
 				&& ( ( $i == sizeof($sections)-1 ) || ($sections[$i]->getLevel() >= $sections[$i+1]->getLevel()) ) ) {
 				continue;
 			}
+			$this->clearEmptyParagraphs( $content );
 			$returnSections[] = [
 				"title" => ( $section->getType() == "section" ) ? $section->getTitle() : "",
 				"level" => ( $section->getType() == "section" ) ? $section->getLevel() : 1,
