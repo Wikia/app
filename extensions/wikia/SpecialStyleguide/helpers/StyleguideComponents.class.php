@@ -47,13 +47,20 @@ class StyleguideComponents {
 	private $uiFactory;
 
 	/**
+	 * @desc Language code
+	 * @var string
+	 */
+	private $userLangCode;
+
+	/**
 	 * @desc Constructor creates instance of Wikia\UI\Factory and loads components names from FS
 	 */
 	public function __construct() {
 		$this->uiFactory = Wikia\UI\Factory::getInstance();
+		$this->userLangCode = F::app()->wg->Lang->getCode();
 
 		static::$componentsNames = WikiaDataAccess::cache(
-			wfSharedMemcKey( __CLASS__, 'components_names_list' ),
+			wfSharedMemcKey( __CLASS__, 'components_names_list', $this->userLangCode ),
 			\Wikia\UI\Factory::MEMCACHE_EXPIRATION,
 			['StyleguideComponents', 'loadComponentsFromFileSystem']
 		);
@@ -66,7 +73,7 @@ class StyleguideComponents {
 	 */
 	public function getAllComponents() {
 		$components = WikiaDataAccess::cache(
-			wfSharedMemcKey( __CLASS__, 'all_components_list_with_details' ),
+			wfSharedMemcKey( __CLASS__, 'all_components_list_with_details', $this->userLangCode ),
 			Wikia\UI\Factory::MEMCACHE_EXPIRATION,
 			[ $this, 'getAllComponentsFromDirectories' ]
 		);
