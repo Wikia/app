@@ -1,12 +1,23 @@
 <?php
-include( "../extensions/wikia/WikiaHubsV2/WikiaHubsV2.setup.php" );
-include( "../extensions/wikia/WikiaHubsServices/WikiaHubsServices.setup.php" );
+require_once __DIR__ . '/../../api/WikiaHubsApiController.class.php';
 
-class WikiaHubsApiControllerTest extends PHPUnit_Framework_TestCase {
+class WikiaHubsApiControllerTest extends WikiaBaseTest {
 	const WIKIAREQUEST_DEFAULT_VALUE = 0;
 	
 	protected $modulesIds = array(1, 2, 3);
 	protected $verticalIds = array(4, 5, 6);
+
+
+
+	/**
+	 * (non-PHPdoc)
+	 * @see WikiaBaseTest::setUp()
+	 */
+	public function setUp() {
+		require_once(dirname(__FILE__) . '/../../../WikiaHubsServices/WikiaHubsServices.setup.php');
+		$this->setupFile = dirname(__FILE__) . '/../../WikiaHubsV2.setup.php';
+		parent::setUp();
+	}
 
 	/**
 	 * @dataProvider getModuleDataExceptionsProvider
