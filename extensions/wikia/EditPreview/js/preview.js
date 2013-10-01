@@ -63,7 +63,7 @@ define( 'wikia.preview', [
 							ev.preventDefault();
 						}
 					}).
-					parent().parent().css({
+					closest( '.ArticlePreview' ).css({
 						'height': options.height || ($(window).height() - 250),
 						'overflow': 'auto',
 						'overflow-x': 'hidden'
