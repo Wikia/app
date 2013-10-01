@@ -255,21 +255,20 @@ define( 'wikia.preview', [
 			scaleRatio = initialPreviewWidth / selectedPreviewWidth,
 			cssTransform = cssPropHelper.getSupportedProp('transform'),
 			cssTransformOrigin = cssPropHelper.getSupportedProp('transform-origin');
-
 		if (selectedPreviewWidth > initialPreviewWidth) {
 			var scaleVar = 'scale(' + scaleRatio + ')';
 			$article.css(cssTransformOrigin, 'left top');
 			$article.css(cssTransform , scaleVar);
-
-			// DAR-2182
-			var newHeight = $article[0].getBoundingClientRect().height;
-			newHeight += articleMargin;
-
-			// we have a wrapper with overflow: hidden not to show white space after CSS scaling
-			$article.parent().height( newHeight );
 		} else {
 			$article.css(cssTransform, '');
 		}
+
+		// DAR-2182
+		var newHeight = $article[0].getBoundingClientRect().height;
+		newHeight += articleMargin;
+
+		// we have a wrapper with overflow: hidden not to show white space after CSS scaling
+		$article.parent().height( newHeight );
 	}
 
 	/** @public **/
