@@ -496,11 +496,11 @@ $(function() {
 
 	if ( window.wgOasisResponsive )
 	{
-		ThemeDesigner.slideByDefaultWidth = 400;
-		ThemeDesigner.slideByItems = 2;
+		ThemeDesigner.slideByDefaultWidth = 500;
+		ThemeDesigner.slideByItems = 3;
 
 	} else {
-		ThemeDesigner.slideByDefaultWidth = 608;
+		ThemeDesigner.slideByDefaultWidth = 608;   
 		ThemeDesigner.slideByItems = 4;
 	}
 	ThemeDesigner.themeTabInit();
