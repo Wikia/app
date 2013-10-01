@@ -107,7 +107,7 @@ class WikiaDispatcher {
 				}
 
 				if ( empty( $wgAutoloadClasses[$controllerClassName] ) ) {
-					throw new ControllerNotFound($controllerName);
+					throw new ControllerNotFoundException($controllerName);
 				}
 
 				// Determine the final name for the controller and method based on any routing rules
@@ -134,7 +134,11 @@ class WikiaDispatcher {
 					// Refactor the offending class to not use executeXYZ methods or set format in request params
 					// Warning: this means you can't use the new Dispatcher routing to switch templates in modules
 					if ($format == WikiaResponse::FORMAT_HTML) {
+						try {
 						$response->getView()->setTemplate( $controllerName, $method );
+						} catch (WikiaException $e) {
+							throw new MethodNotFoundException($method);
+						}
 					}
 					$method = "execute{$method}";
 					$params = $request->getParams();  // old modules expect params in a different place
@@ -158,7 +162,7 @@ class WikiaDispatcher {
 					!method_exists( $controller, $method ) ||
 					!is_callable( array( $controller, $method ) )
 				) {
-					throw new WikiaException( "Could not dispatch {$controllerClassName}::{$method}" );
+					throw new MethodNotFoundException($method);
 				}
 
 				// Initialize the RequestContext object if it is not already set
@@ -204,13 +208,9 @@ class WikiaDispatcher {
 
 				} else {
 					wfProfileOut($profilename);
+					$response->setException($e);					
 					$response->setFormat( 'json' );
-
-					$response->setHeader(
-						'HTTP/1.1',
-						$e->getCode(),
-						true
-					);
+					$response->setCode($e->getCode());
 
 					$response->setVal( 'error', get_class( $e ) );
 
@@ -245,8 +245,3 @@ class WikiaDispatcher {
 	}
 }
 
-class ControllerNotFound extends NotFoundException {
-	function __construct($controllerName) {
-		parent::__construct("Controller not found: $controllerName");
-	}	
-}

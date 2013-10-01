@@ -31,10 +31,12 @@ class WikiaDispatcherTest extends WikiaBaseTest {
 
 		$request = new WikiaRequest( array( 'controller' => 'nonExistentController' ) );
 		$response = $this->object->dispatch( $app, $request );
-		$this->assertEquals($response->getHeader('HTTP/1.1'), array(0 => array('name'=>'HTTP/1.1', 'value' => 404, 'replace'=>1)) );
+		$this->assertTrue($response->hasException());
+		$this->assertInstanceOf( 'ControllerNotFoundException', $response->getException());
+		$this->assertEquals(WikiaResponse::RESPONSE_CODE_NOT_FOUND, $response->getCode());
 		
 		$request->setInternal(true);
-		$this->setExpectedException('ControllerNotFound');
+		$this->setExpectedException('ControllerNotFoundException');
 		$response = $this->object->dispatch( $app, $request );
 	}
 
@@ -44,10 +46,10 @@ class WikiaDispatcherTest extends WikiaBaseTest {
 		    ->method( 'runFunction' )
 		    ->will( $this->returnValue( true ) );
 
-		$response = $this->object->dispatch( $app, new WikiaRequest( array( 'controller' => 'Test', 'method' => 'nonExistentMethod' ) ) );
+		$response = $this->object->dispatch( $app, new WikiaRequest( array( 'controller' => 'Test', 'method' => 'nonExistentMethod' ) ) );	
 		$this->assertTrue($response->hasException());
-		$this->assertInstanceOf( 'WikiaException', $response->getException());
-		$this->assertEquals(WikiaResponse::RESPONSE_CODE_ERROR, $response->getCode());
+		$this->assertInstanceOf( 'MethodNotFoundException', $response->getException());
+		$this->assertEquals(WikiaResponse::RESPONSE_CODE_NOT_FOUND, $response->getCode());
 	}
 
 	public function testForwarding() {

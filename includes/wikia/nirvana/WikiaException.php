@@ -208,3 +208,15 @@ abstract class InvalidDataException extends WikiaHttpException {
 	protected $code = 555;//custom HTTP status, 500 cannot be used as it makes us fallback to IOWA
 	protected $message = 'Invalid data';
 }
+
+class ControllerNotFoundException extends NotFoundException {
+	function __construct($name) {
+		parent::__construct("Controller not found: $name");
+	}	
+}
+
+class MethodNotFoundException extends NotFoundException {
+	function __construct($name) {
+		parent::__construct("Method not found: $name");
+	}	
+}
