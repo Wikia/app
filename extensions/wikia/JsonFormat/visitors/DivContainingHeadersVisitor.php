@@ -10,7 +10,7 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 	 * @return bool
 	 */
 	public function canVisit( DOMNode $currentNode ) {
-		return DomHelper::isElement( $currentNode, 'a' ) &&
+		return DomHelper::isElement( $currentNode, 'div' ) &&
 			\DomHelper::hasAncestorTag( $currentNode, [ "h1", "h2", "h3", "h4","h5", "h6" ]);
 	}
 
