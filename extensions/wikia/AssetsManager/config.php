@@ -982,14 +982,21 @@ $config['videopageadmin_js'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		// Library Dependencies
 		'//resources/jquery.ui/jquery.ui.core.js',
 		'//resources/jquery.ui/jquery.ui.datepicker.js',
 		'//resources/jquery/jquery.validate.js',
-		'//extensions/wikia/VideoPageTool/js/models/validator.js',
+		'//resources/wikia/modules/aim.js',
+		'//extensions/wikia/WikiaMiniUpload/js/WMU.js',
+
 		'//extensions/wikia/VideoPageTool/js/models/datepicker.js',
+		'//extensions/wikia/VideoPageTool/js/models/videopageadmin.thumbnail.js',
+		'//extensions/wikia/VideoPageTool/js/models/validator.js',
+		// TODO: probably move this jQuery plugin to /resources at some point
 		'//extensions/wikia/VideoPageTool/js/views/switcher.js',
 		'//extensions/wikia/VideoPageTool/js/views/datepicker.js',
 		'//extensions/wikia/VideoPageTool/js/views/index.js',
+		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.thumbnailupload.js',
 		'//extensions/wikia/VideoPageTool/js/views/edit.js',
 	)
 );
@@ -1007,6 +1014,7 @@ $config['videopageadmin_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => array(
 		'//skins/oasis/css/modules/CorporateDatepicker.scss',
+		'//extensions/wikia/WikiaMiniUpload/css/WMU.scss',
 		'//extensions/wikia/VideoPageTool/css/Admin/VideoPageTool.scss',
 		'//extensions/wikia/VideoPageTool/css/Admin/VideoPageTool_Header.scss'
 	)
