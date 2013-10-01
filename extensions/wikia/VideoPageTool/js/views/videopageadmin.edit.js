@@ -39,7 +39,7 @@ define( 'views.videopageadmin.edit', [
 					$videoTitle = $this.siblings( '.video-title' ),
 					$displayTitleInput = $box.find( '.display-title' ),
 					$descInput = $box.find( '.description' ),
-					$thumb = $box.find( '.video-thumb' ), 
+					$thumb = $box.find( '.video-thumb' ),
 					$altThumbKey = $box.find('.alt-thumb').val(),
 					req = {};
 
