@@ -153,7 +153,7 @@ $color-borders: #CECECE;
 #NameWiki {
 	@if ( $responsive-layout-enabled ) {
 		width: auto;
-	} else {
+	} @else {
 		width: 500px;
 	}
 	form {
@@ -180,7 +180,7 @@ $color-borders: #CECECE;
 	display: none;
 	@if ( $responsive-layout-enabled ) {
 		width: auto;
-	} else {
+	} @else {
 		width: 700px;
 	}
 	.login-msg {
@@ -288,7 +288,7 @@ div#userloginErrorBox3 {
 	display: none;
 	@if ( $responsive-layout-enabled ) {
 		width: auto;
-	} else {
+	} @else {
 		width: 600px;
 	}
 	.UserLoginModal {
@@ -316,7 +316,7 @@ div#userloginErrorBox3 {
 	display: none;
 	@if ( $responsive-layout-enabled ) {
 		width: auto;
-	} else {
+	} @else {
 		width: 700px;
 	}
 	ol {
@@ -325,7 +325,7 @@ div#userloginErrorBox3 {
 
 		@if ( $responsive-layout-enabled ) {
 
-		} else {
+		} @else {
 			left: 515px;
 			position: absolute;
 			top: 100px;
@@ -361,7 +361,7 @@ div#userloginErrorBox3 {
 		resize: none;
 		@if ( $responsive-layout-enabled ) {
 			width: 510px;
-		} else{
+		} @else{
 			width: 425px;
 		}
 		&.placeholder {
@@ -393,7 +393,7 @@ div#userloginErrorBox3 {
 	display: none;
 	@if ( $responsive-layout-enabled ) {
 		width: auto;
-	} else {
+	} @else {
 		width: 650px;
 	}
 	.ThemeTab {
@@ -406,7 +406,7 @@ div#userloginErrorBox3 {
 			top: 0;
 			@if ( $responsive-layout-enabled ) {
 				width: 500px;
-			} else {
+			} @else {
 				width: 608px;
 			}
 			ul {
@@ -426,7 +426,7 @@ div#userloginErrorBox3 {
 			&.next {
 				@if ( $responsive-layout-enabled ) {
 					left: 540px;
-				} else {
+				} @else {
 					left: 645px;
 				}
 			}
@@ -441,7 +441,7 @@ div#userloginErrorBox3 {
 	display: none;
 	@if ( $responsive-layout-enabled ) {
 		width: auto;
-	} else {
+	} @else {
 		width: 625px;
 	}
 	.marketing {
