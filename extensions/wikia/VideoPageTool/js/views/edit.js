@@ -115,6 +115,7 @@ define( 'vpt.views.edit', [
 		},
 
 		initValidator: function() {
+			var that = this;
 
 			this.validator = new Validator({
 				form: this.$form,
@@ -126,7 +127,24 @@ define( 'vpt.views.edit', [
 			this.validator.setRule( this.$formFields.filter( '.alt-thumb' ), 'missingImage' );
 
 			this.$formFields.each( this.validator.addRules );
-			this.$form.on( 'submit', this.validator.onSubmit );
+
+			this.$form.on( 'submit', function( evt ) {
+					evt.preventDefault();
+					var success,
+							$firstError;
+
+					// check for errors
+					success = that.validator.onSubmit();
+
+					// jump back up to form box if errors are present
+					if ( !success ) {
+						$firstError = $( '.error' ).eq(0);
+						$firstError
+							.closest( '.form-box' )
+							.get(0)
+							.scrollIntoView(true);
+					}
+			});
 
 			// If the back end has thrown an error, run the front end validation on page load
 			if( $( '#vpt-form-error' ).length ) {
