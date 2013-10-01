@@ -107,7 +107,7 @@ class WikiaDispatcher {
 				}
 
 				if ( empty( $wgAutoloadClasses[$controllerClassName] ) ) {
-					throw new WikiaException( "Controller class does not exist: {$controllerClassName}" );
+					throw new ControllerNotFound($controllerName);
 				}
 
 				// Determine the final name for the controller and method based on any routing rules
@@ -243,4 +243,10 @@ class WikiaDispatcher {
 
 		return $response;
 	}
+}
+
+class ControllerNotFound extends NotFoundException {
+	function __construct($controllerName) {
+		parent::__construct("Controller not found: $controllerName");
+	}	
 }

@@ -29,10 +29,13 @@ class WikiaDispatcherTest extends WikiaBaseTest {
 		$this->assertInstanceOf( 'WikiaException', $response->getException());
 		$this->assertEquals(WikiaResponse::RESPONSE_CODE_ERROR, $response->getCode());
 
-		$response = $this->object->dispatch( $app, new WikiaRequest( array( 'controller' => 'nonExistentController' ) ) );
-		$this->assertTrue($response->hasException());
-		$this->assertInstanceOf( 'WikiaException', $response->getException());
-		$this->assertEquals(WikiaResponse::RESPONSE_CODE_ERROR, $response->getCode());
+		$request = new WikiaRequest( array( 'controller' => 'nonExistentController' ) );
+		$response = $this->object->dispatch( $app, $request );
+		$this->assertEquals($response->getHeader('HTTP/1.1'), array(0 => array('name'=>'HTTP/1.1', 'value' => 404, 'replace'=>1)) );
+		
+		$request->setInternal(true);
+		$this->setExpectedException('ControllerNotFound');
+		$response = $this->object->dispatch( $app, $request );
 	}
 
 	public function testDispatchUnknownMethod() {
