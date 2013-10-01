@@ -6,18 +6,45 @@ namespace Wikia\JsonFormat;
 
 class JsonFormatSimplifier {
 
-	public function getParagraphs( \JsonFormatContainerNode $containerNode, &$paragraphs ) {
+	public function getParagraphs( \JsonFormatContainerNode $containerNode, &$contentElements ) {
 		foreach( $containerNode->getChildren() as $childNode ) {
 			if ( $childNode->getType() == 'section' ) {
 				return;
 			} else if ( $childNode->getType() == 'link' ) {
-				$this->appendInline( $paragraphs, $childNode->getText() );
+				$this->appendInline( $contentElements, $childNode->getText() );
 			} else if ( $childNode->getType() == 'text' ) {
-				$this->appendInline( $paragraphs, $childNode->getText() );
+				$this->appendInline( $contentElements, $childNode->getText() );
 			} else if ( $childNode->getType() == 'paragraph' ) {
-				$this->getParagraphs( $childNode, $paragraphs );
+				$this->newParagraph( $contentElements );
+				$this->getParagraphs( $childNode, $contentElements );
+			} else if ( $childNode->getType() == "list" ) {
+				$simpleListElements = [];
+				foreach ( $childNode->getChildren() as $listElement ) {
+					$simpleListElements[] = $this->readText( $listElement );
+				}
+				$contentElements[] = [
+					"type" => "list",
+					"elements" => $simpleListElements
+				];
 			}
 		}
+	}
+
+	public function readText( \JsonFormatContainerNode $parentNode ) {
+		$text = "";
+		foreach ( $parentNode->getChildren() as $childNode ) {
+			if ( $childNode->getType() == 'text' ) {
+				/** @var \JsonFormatTextNode $childNode */
+				$text .= " " . $childNode->getText();
+			} else if ( $childNode->getType() == 'link' ) {
+				/** @var \JsonFormatLinkNode $childNode */
+				$text .= " " . $childNode->getText();
+			} else if ( $childNode->getType() == 'paragraph' ) {
+				/** @var \JsonFormatParagraphNode $childNode */
+				$text .= " " . $this->readText( $childNode );
+			}
+		}
+		return $text;
 	}
 
 	public function getImages( \JsonFormatContainerNode $containerNode, &$images ) {
@@ -40,15 +67,27 @@ class JsonFormatSimplifier {
 			}
 		}
 	}
+
+	public function newParagraph( &$sectionElements) {
+		$sectionElements[] = [ "type" => "paragraph", "text" => "" ];
+	}
+
 	/**
-	 * @param String[] $paragraphs
+	 * @param String[] $sectionElements
 	 * @param String $inlineText
 	 */
-	public function appendInline( &$paragraphs, $inlineText ) {
-		if( sizeof( $paragraphs ) == 0 ) {
-			$paragraphs[] = "";
+	public function appendInline( &$sectionElements, $inlineText ) {
+		$inlineText = trim( $inlineText );
+		if ( $inlineText == "" ) {
+			return;
 		}
-		$paragraphs[ sizeof($paragraphs) - 1 ] .= $inlineText;
+		if( sizeof( $sectionElements ) == 0 ) {
+			$sectionElements[] = [ "type" => "paragraph", "text" => "" ];
+		}
+		if ( $sectionElements[ sizeof($sectionElements) - 1 ]["type"] != "paragraph" ) {
+			$sectionElements[] = [ "type" => "paragraph", "text" => "" ];
+		}
+		$sectionElements[ sizeof($sectionElements) - 1 ]["text"] .= " " . $inlineText;
 	}
 
 	private function findSections( \JsonFormatNode $node, &$sections ) {
@@ -70,16 +109,21 @@ class JsonFormatSimplifier {
 		$this->findSections( $rootNode, $sections );
 
 		$returnSections = [];
-		foreach ( $sections as $section ) {
+		for ( $i = 0; $i < sizeof($sections); $i+=1 ) {
+			$section = $sections[$i];
 			/** @var \JsonFormatSectionNode $section  */
-			$paragraphs = [];
+			$content = [];
 			$images = [];
-			$this->getParagraphs( $section, $paragraphs );
+			$this->getParagraphs( $section, $content );
 			$this->getImages( $section, $images );
+			if ( sizeof($content) == 0 && sizeof($images) == 0
+				&& ( ( $i == sizeof($sections)-1 ) || ($sections[$i]->getLevel() >= $sections[$i+1]->getLevel()) ) ) {
+				continue;
+			}
 			$returnSections[] = [
 				"title" => ( $section->getType() == "section" ) ? $section->getTitle() : "",
 				"level" => ( $section->getType() == "section" ) ? $section->getLevel() : 1,
-				"paragraphs" => $paragraphs,
+				"content" => $content,
 				"images" => $images
 			];
 		}

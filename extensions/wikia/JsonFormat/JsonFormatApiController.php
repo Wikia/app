@@ -91,8 +91,16 @@ class JsonFormatApiController extends WikiaApiController {
 			$html .= "<h" . $section["level"] . ">";
 			$html .= $section["title"];
 			$html .= "</h" . $section["level"] . ">";
-			foreach( $section["paragraphs"] as $paragraph ) {
-				$html .= "<p>" . $paragraph . "</p>";
+			foreach( $section["content"] as $contentElement ) {
+				if ( $contentElement["type"] == "paragraph" ) {
+					$html .= "<p>" . $contentElement["text"] . "</p>";
+				}else if ( $contentElement["type"] == "list" ) {
+					$html .= "<ul>";
+					foreach( $contentElement["elements"] as $liText ) {
+						$html .= "<li>" . $liText . "</li>";
+					}
+					$html .= "</ul>";
+				}
 			}
 			foreach( $section["images"] as $image ) {
 				$html .= "<img src=\"${image["src"]}\" style=\"max-width:100px; max-height: 100px; display:inline\"></img>";
