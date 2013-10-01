@@ -37,7 +37,7 @@ require_once( 'recaptchalib.php' );
  *
  * See http://code.google.com/apis/recaptcha/docs/customization.html
  */
-$wgReCaptchaTheme = 'red';
+$wgReCaptchaTheme = 'white';
 
 $wgExtensionFunctions[] = 'efReCaptcha';
 
