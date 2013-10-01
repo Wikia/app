@@ -16,7 +16,7 @@
  * @mixins ve.BranchNode
  * @constructor
  * @param {ve.dm.BranchNode} model Model to observe
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.BranchNode = function VeCeBranchNode( model, config ) {
 	// Mixin constructor

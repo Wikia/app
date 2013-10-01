@@ -13,7 +13,7 @@
  * @mixins ve.EventEmitter
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.Frame = function VeUiFrame( config ) {
 	// Parent constructor

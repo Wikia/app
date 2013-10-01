@@ -13,7 +13,7 @@
  * @extends ve.ui.Tool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.InspectorTool = function VeUiInspectorTool( toolbar, config ) {
 	// Parent constructor
@@ -87,7 +87,7 @@ ve.ui.InspectorTool.prototype.onUpdateState = function ( nodes, full ) {
  * @extends ve.ui.InspectorTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.LinkInspectorTool = function VeUiLinkInspectorTool( toolbar, config ) {
 	ve.ui.InspectorTool.call( this, toolbar, config );

@@ -103,6 +103,7 @@
 					"ve.ui.Frame",
 					"ve.ui.Toolbar",
 					"ve.ui.SurfaceToolbar",
+					"ve.ui.TargetToolbar",
 					"ve.ui.Window",
 					"ve.ui.WindowSet",
 					"ve.ui.Action",

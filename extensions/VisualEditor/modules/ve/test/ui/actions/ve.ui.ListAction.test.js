@@ -11,9 +11,7 @@ QUnit.module( 've.ui.ListAction' );
 
 function runListConverterTest( assert, html, method, style, range, expectedSelection, expectedData, expectedOriginalData, msg ) {
 	var selection,
-		dom = ve.createDocumentFromHtml( html || ve.dm.example.html ),
-		target = new ve.init.sa.Target( $( '#qunit-fixture' ), dom ),
-		surface = target.surface,
+		surface = ve.test.utils.createSurfaceFromHtml( html || ve.dm.example.html ),
 		listAction = new ve.ui.ListAction( surface ),
 		data = ve.copy( surface.getModel().getDocument().getFullData() ),
 		originalData = ve.copy( data );

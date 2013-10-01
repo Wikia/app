@@ -13,7 +13,7 @@
  *
  * @constructor
  * @param {ve.ui.Surface} surface
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWAlienExtensionInspector = function VeUiMWAlienExtensionInspector( surface, config ) {
 	// Parent constructor

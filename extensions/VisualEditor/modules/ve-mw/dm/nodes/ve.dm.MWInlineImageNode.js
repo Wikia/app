@@ -39,6 +39,8 @@ ve.dm.MWInlineImageNode.static.storeHtmlAttributes = {
 
 ve.dm.MWInlineImageNode.static.matchTagNames = [ 'span' ];
 
+ve.dm.MWInlineImageNode.static.blacklistedAnnotationTypes = [ 'link' ];
+
 ve.dm.MWInlineImageNode.static.getMatchRdfaTypes = function () {
 	return Object.keys( this.rdfaToType );
 };

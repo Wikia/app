@@ -13,7 +13,7 @@
  *
  * @constructor
  * @param {jQuery} $icon Icon element
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {Object|string} [icon=''] Symbolic icon name, or map of icon names keyed by language ID
  */
 ve.ui.IconedElement = function VeUiIconedElement( $icon, config ) {

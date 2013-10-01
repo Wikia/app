@@ -30,7 +30,7 @@ ve.inheritClass( ve.ui.InspectorAction, ve.ui.Action );
  * @static
  * @property
  */
-ve.ui.InspectorAction.static.methods = ['open', 'close'];
+ve.ui.InspectorAction.static.methods = [ 'open' ];
 
 /* Methods */
 

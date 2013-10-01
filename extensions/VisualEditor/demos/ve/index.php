@@ -241,6 +241,7 @@ $html = file_get_contents( $page );
 		<script src="../../modules/ve/ui/ve.ui.ToolFactory.js"></script>
 		<script src="../../modules/ve/ui/ve.ui.Toolbar.js"></script>
 		<script src="../../modules/ve/ui/ve.ui.SurfaceToolbar.js"></script>
+		<script src="../../modules/ve/ui/ve.ui.TargetToolbar.js"></script>
 		<script src="../../modules/ve/ui/ve.ui.CommandRegistry.js"></script>
 		<script src="../../modules/ve/ui/ve.ui.Trigger.js"></script>
 		<script src="../../modules/ve/ui/ve.ui.TriggerRegistry.js"></script>

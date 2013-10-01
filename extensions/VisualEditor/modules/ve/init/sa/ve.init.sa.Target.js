@@ -26,7 +26,7 @@ ve.init.sa.Target = function VeInitSaTarget( $container, doc ) {
 
 	// Properties
 	this.surface = new ve.ui.Surface( doc );
-	this.toolbar = new ve.ui.SurfaceToolbar( this.surface, { 'shadow': true } );
+	this.toolbar = new ve.ui.TargetToolbar( this, this.surface, { 'shadow': true } );
 
 	// Initialization
 	this.toolbar.$.addClass( 've-init-sa-target-toolbar' );

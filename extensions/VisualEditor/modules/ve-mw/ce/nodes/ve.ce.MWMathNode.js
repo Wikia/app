@@ -15,7 +15,7 @@
  *
  * @constructor
  * @param {ve.dm.MWMathNode} model Model to observe
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.MWMathNode = function VeCeMWMathNode( model, config ) {
 	// Parent constructor
@@ -38,15 +38,23 @@ ve.ce.MWMathNode.static.name = 'mwMath';
 /** */
 ve.ce.MWMathNode.prototype.onParseSuccess = function ( deferred, response ) {
 	var data = response.visualeditor, contentNodes = $( data.content ).get();
-	// HACK: unwrap paragraph from PHP parser
-	contentNodes = Array.prototype.slice.apply( contentNodes[0].childNodes );
+	if ( contentNodes[0] && contentNodes[0].childNodes ) {
+		contentNodes = Array.prototype.slice.apply( contentNodes[0].childNodes );
+	}
 	deferred.resolve( contentNodes );
-	if ( $( contentNodes ).is( 'span.tex' ) ) {
+};
+
+/** */
+ve.ce.MWExtensionNode.prototype.afterRender = function ( domElements ) {
+	if ( $( domElements ).is( 'span.tex' ) ) {
 		// MathJax
-		MathJax.Hub.Queue( [ 'Typeset', MathJax.Hub ] );
+		MathJax.Hub.Queue(
+			[ 'Typeset', MathJax.Hub, this.$[0] ],
+			[ this, this.emit, 'rerender' ]
+		);
 	} else {
 		// Rerender after image load
-		this.$.find( 'img' ).on( 'load', ve.bind( function () {
+		this.$.find( 'img.tex' ).on( 'load', ve.bind( function () {
 			this.emit( 'rerender' );
 		}, this ) );
 	}

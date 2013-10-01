@@ -33,7 +33,8 @@ ve.ce.RelocatableNode = function VeCeRelocatableNode( $relocatable ) {
 	// Initialization
 	this.$relocatableMarker
 		.addClass( 've-ce-relocatableNode-marker' )
-		.attr( 'src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' )
+		// Do not change this src encoding. This encoding is required for the desired UI effect.
+		.attr( 'src', 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' )
 		.on( {
 			'dragstart': ve.bind( this.onRelocatableDragStart, this ),
 			'dragend': ve.bind( this.onRelocatableDragEnd, this )

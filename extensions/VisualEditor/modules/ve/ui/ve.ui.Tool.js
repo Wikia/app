@@ -16,7 +16,7 @@
  *
  * @constructor
  * @param {ve.ui.Toolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.Tool = function VeUiTool( toolbar, config ) {
 	var titleMessage = this.constructor.static.titleMessage;

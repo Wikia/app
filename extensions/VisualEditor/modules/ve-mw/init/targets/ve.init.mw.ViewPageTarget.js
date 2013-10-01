@@ -1854,7 +1854,7 @@ ve.init.mw.ViewPageTarget.prototype.hideTableOfContents = function () {
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.setUpToolbar = function () {
-	this.toolbar = new ve.ui.SurfaceToolbar( this.surface, { 'shadow': true, 'actions': true } );
+	this.toolbar = new ve.ui.TargetToolbar( this, this.surface, { 'shadow': true, 'actions': true } );
 	this.toolbar.connect( this, { 'position': 'onToolbarPosition' } );
 	this.toolbar.setup( this.constructor.static.toolbarGroups );
 	this.surface.addCommands( this.constructor.static.surfaceCommands );

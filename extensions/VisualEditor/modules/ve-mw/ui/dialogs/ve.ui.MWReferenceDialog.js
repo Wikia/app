@@ -13,7 +13,7 @@
  *
  * @constructor
  * @param {ve.ui.Surface} surface
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWReferenceDialog = function VeUiMWReferenceDialog( surface, config ) {
 	// Parent constructor
@@ -170,7 +170,7 @@ ve.ui.MWReferenceDialog.prototype.onOpen = function () {
  * @inheritdoc
  */
 ve.ui.MWReferenceDialog.prototype.onClose = function ( action ) {
-	var i, len, txs, item, data, group, refGroup, listGroup, keyIndex, refNodes,
+	var i, len, txs, item, newDoc, group, refGroup, listGroup, keyIndex, refNodes,
 		surfaceModel = this.surface.getModel(),
 		// Store the original selection browsers may reset it after
 		// the first model change.
@@ -182,7 +182,7 @@ ve.ui.MWReferenceDialog.prototype.onClose = function ( action ) {
 	ve.ui.MWDialog.prototype.onClose.call( this, action );
 
 	if ( action === 'insert' || action === 'apply' ) {
-		data = this.referenceSurface.getContent();
+		newDoc = this.referenceSurface.getSurface().getModel().getDocument();
 		refGroup = this.referenceGroupInput.getValue();
 		listGroup = 'mwReference/' + refGroup;
 
@@ -199,7 +199,7 @@ ve.ui.MWReferenceDialog.prototype.onClose = function ( action ) {
 				keyIndex = internalList.getKeyIndex( this.ref.listGroup, this.ref.listKey );
 				if ( keyIndex !== undefined ) {
 					// Resolve name collision by generating a new list key
-					this.ref.listKey = internalList.getUniqueListKey( listGroup );
+					this.ref.listKey = 'auto/' + internalList.getNextUniqueNumber();
 				}
 				// Update the group name of all references nodes with the same group and key
 				txs = [];
@@ -223,8 +223,8 @@ ve.ui.MWReferenceDialog.prototype.onClose = function ( action ) {
 			}
 			// Update internal node content
 			surfaceModel.change(
-				ve.dm.Transaction.newFromNodeReplacement(
-					doc, internalList.getItemNode( this.ref.listIndex ), data
+				ve.dm.Transaction.newFromDocumentReplace(
+					doc, internalList.getItemNode( this.ref.listIndex ), newDoc
 				)
 			);
 		}
@@ -235,13 +235,19 @@ ve.ui.MWReferenceDialog.prototype.onClose = function ( action ) {
 				listGroup = 'mwReference/' + refGroup;
 				// Create new internal item
 				this.ref = {
-					'listKey': internalList.getUniqueListKey( listGroup ),
+					'listKey': 'auto/' + internalList.getNextUniqueNumber(),
 					'listGroup': listGroup,
 					'refGroup': refGroup
 				};
-				item = internalList.getItemInsertion( this.ref.listGroup, this.ref.listKey, data );
+				// Insert an internal item, then inject the subdocument into it
+				item = internalList.getItemInsertion( this.ref.listGroup, this.ref.listKey, [] );
 				surfaceModel.change( item.transaction );
 				this.ref.listIndex = item.index;
+				surfaceModel.change(
+					ve.dm.Transaction.newFromDocumentReplace(
+						doc, internalList.getItemNode( this.ref.listIndex ), newDoc
+					)
+				);
 			}
 			// Add reference at cursor
 			surfaceModel.getFragment( selection ).collapseRangeToEnd().insertContent( [
@@ -262,7 +268,7 @@ ve.ui.MWReferenceDialog.prototype.onClose = function ( action ) {
  * @chainable
  */
 ve.ui.MWReferenceDialog.prototype.useReference = function ( ref ) {
-	var data, refGroup,
+	var newDoc, refGroup,
 		doc = this.surface.getModel().getDocument();
 
 	if ( ref ) {
@@ -273,15 +279,17 @@ ve.ui.MWReferenceDialog.prototype.useReference = function ( ref ) {
 			'refGroup': ref.refGroup,
 			'listIndex': ref.listIndex
 		};
-		data = doc.getData( doc.getInternalList().getItemNode( ref.listIndex ).getRange(), true );
+		newDoc = doc.getDocumentSlice( doc.getInternalList().getItemNode( ref.listIndex ) );
 		refGroup = ref.refGroup;
 	} else {
 		// Create a new reference
 		this.ref = null;
-		data = [
+		newDoc = new ve.dm.Document( [
 			{ 'type': 'paragraph', 'internal': { 'generated': 'wrapper' } },
-			{ 'type': '/paragraph' }
-		];
+			{ 'type': '/paragraph' },
+			{ 'type': 'internalList' },
+			{ 'type': '/internalList' }
+		] );
 		refGroup = '';
 	}
 
@@ -292,7 +300,7 @@ ve.ui.MWReferenceDialog.prototype.useReference = function ( ref ) {
 
 	// Properties
 	this.referenceSurface = new ve.ui.SurfaceWidget(
-		new ve.dm.ElementLinearData( doc.getStore(), data ),
+		newDoc,
 		{
 			'$$': this.frame.$$,
 			'tools': this.constructor.static.toolbarGroups,

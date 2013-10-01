@@ -13,7 +13,7 @@
  * @extends ve.ui.Widget
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {Object} [item] Category item
  */
 ve.ui.MWCategoryItemWidget = function VeUiMWCategoryItemWidget( config ) {

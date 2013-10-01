@@ -12,7 +12,7 @@
  * @extends ve.ui.Heading1FormatTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWHeading1FormatTool = function VeUiMWHeading1FormatTool( toolbar, config ) {
 	ve.ui.Heading1FormatTool.call( this, toolbar, config );
@@ -30,7 +30,7 @@ ve.ui.commandRegistry.register( 'heading1', 'format', 'convert', 'mwHeading', { 
  * @extends ve.ui.Heading2FormatTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWHeading2FormatTool = function VeUiMWHeading2FormatTool( toolbar, config ) {
 	ve.ui.Heading2FormatTool.call( this, toolbar, config );
@@ -48,7 +48,7 @@ ve.ui.commandRegistry.register( 'heading2', 'format', 'convert', 'mwHeading', { 
  * @extends ve.ui.Heading3FormatTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWHeading3FormatTool = function VeUiMWHeading3FormatTool( toolbar, config ) {
 	ve.ui.Heading3FormatTool.call( this, toolbar, config );
@@ -66,7 +66,7 @@ ve.ui.commandRegistry.register( 'heading3', 'format', 'convert', 'mwHeading', { 
  * @extends ve.ui.Heading4FormatTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWHeading4FormatTool = function VeUiMWHeading4FormatTool( toolbar, config ) {
 	ve.ui.Heading4FormatTool.call( this, toolbar, config );
@@ -84,7 +84,7 @@ ve.ui.commandRegistry.register( 'heading4', 'format', 'convert', 'mwHeading', { 
  * @extends ve.ui.Heading5FormatTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWHeading5FormatTool = function VeUiMWHeading5FormatTool( toolbar, config ) {
 	ve.ui.Heading5FormatTool.call( this, toolbar, config );
@@ -102,7 +102,7 @@ ve.ui.commandRegistry.register( 'heading5', 'format', 'convert', 'mwHeading', { 
  * @extends ve.ui.Heading6FormatTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWHeading6FormatTool = function VeUiMWHeading6FormatTool( toolbar, config ) {
 	ve.ui.Heading6FormatTool.call( this, toolbar, config );
@@ -120,7 +120,7 @@ ve.ui.commandRegistry.register( 'heading6', 'format', 'convert', 'mwHeading', { 
  * @extends ve.ui.PreformattedFormatTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWPreformattedFormatTool = function VeUiMWPreformattedFormatTool( toolbar, config ) {
 	ve.ui.FormatTool.call( this, toolbar, config );

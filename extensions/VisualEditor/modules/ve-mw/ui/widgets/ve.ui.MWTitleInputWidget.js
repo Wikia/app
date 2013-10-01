@@ -15,7 +15,7 @@
  * @mixins ve.ui.LookupInputWidget
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @param {number} [namespace] Namespace to prepend to queries not prefixed with ':'
  */
 ve.ui.MWTitleInputWidget = function VeUiMWTitleInputWidget( config ) {

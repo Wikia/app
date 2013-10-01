@@ -14,7 +14,7 @@
  *
  * @constructor
  * @param {ve.ui.Surface} surface
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWExtensionInspector = function VeUiMWExtensionInspector( surface, config ) {
 	// Parent constructor
@@ -85,22 +85,22 @@ ve.ui.MWExtensionInspector.prototype.onOpen = function () {
  * @param {string} action Action that caused the window to be closed
  */
 ve.ui.MWExtensionInspector.prototype.onClose = function ( action ) {
-	var mw,
+	var mwData,
 		surfaceModel = this.surface.getModel();
 
 	// Parent method
 	ve.ui.Inspector.prototype.onClose.call( this, action );
 
 	if ( this.node instanceof this.constructor.static.nodeView ) {
-		mw = this.node.getModel().getAttribute( 'mw' );
-		mw.body.extsrc = this.input.getValue();
+		mwData = ve.copy( this.node.getModel().getAttribute( 'mw' ) );
+		mwData.body.extsrc = this.input.getValue();
 		surfaceModel.change(
 			ve.dm.Transaction.newFromAttributeChanges(
-				surfaceModel.getDocument(), this.node.getOuterRange().start, { 'mw': mw }
+				surfaceModel.getDocument(), this.node.getOuterRange().start, { 'mw': mwData }
 			)
 		);
 	} else {
-		mw = {
+		mwData = {
 			'name': this.constructor.static.nodeModel.static.extensionName,
 			'attrs': {},
 			'body': {
@@ -111,7 +111,7 @@ ve.ui.MWExtensionInspector.prototype.onClose = function ( action ) {
 			{
 				'type': this.constructor.static.nodeModel.static.name,
 				'attributes': {
-					'mw': mw
+					'mw': mwData
 				}
 			},
 			{ 'type': '/' + this.constructor.static.nodeModel.static.name }

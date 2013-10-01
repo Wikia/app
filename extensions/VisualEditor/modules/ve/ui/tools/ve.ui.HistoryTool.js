@@ -12,7 +12,7 @@
  * @extends ve.ui.Tool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.HistoryTool = function VeUiHistoryTool( toolbar, config ) {
 	// Parent constructor
@@ -90,7 +90,7 @@ ve.ui.HistoryTool.prototype.destroy = function () {
  * @extends ve.ui.HistoryTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.UndoHistoryTool = function VeUiUndoHistoryTool( toolbar, config ) {
 	ve.ui.HistoryTool.call( this, toolbar, config );
@@ -111,7 +111,7 @@ ve.ui.toolFactory.register( ve.ui.UndoHistoryTool );
  * @extends ve.ui.HistoryTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.RedoHistoryTool = function VeUiRedoHistoryTool( toolbar, config ) {
 	ve.ui.HistoryTool.call( this, toolbar, config );

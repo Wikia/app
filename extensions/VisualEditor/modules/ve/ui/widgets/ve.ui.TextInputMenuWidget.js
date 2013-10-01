@@ -13,7 +13,7 @@
  *
  * @constructor
  * @param {ve.ui.TextInputWidget} input Text input widget to provide menu for
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {jQuery} [$container=input.$] Element to render menu under
  */
 ve.ui.TextInputMenuWidget = function VeUiTextInputMenuWidget( input, config ) {

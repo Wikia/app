@@ -116,3 +116,14 @@ ve.init.Platform.prototype.getSystemPlatform = function () {
 ve.init.Platform.prototype.getUserLanguages = function () {
 	throw new Error( 've.init.Platform.getUserLanugages must be overridden in subclass' );
 };
+
+/**
+ * Get a list of URL entry points where media can be found.
+ *
+ * @method
+ * @abstract
+ * @returns {string[]} API URLs
+ */
+ve.init.Platform.prototype.getMediaSources = function () {
+	throw new Error( 've.init.Platform.getMediaSources must be overridden in subclass' );
+};

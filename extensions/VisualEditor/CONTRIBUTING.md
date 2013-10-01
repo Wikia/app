@@ -71,11 +71,8 @@ If you've never used `gem` before, don't forget to add the gem's bin to your
 
 Once you have gem, installing [JSDuck](https://github.com/senchalabs/jsduck) is easy:
 ```sh
-$ gem install --user-install jsduck --version '< 5'
+$ gem install --user-install jsduck
 ```
-
-You need to make sure that you are using jsduck 4.x, as jsduck 5.x introduced
-incompatible changes to custom tags.
 
 ### Running jsduck
 

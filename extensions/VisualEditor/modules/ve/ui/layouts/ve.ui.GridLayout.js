@@ -13,7 +13,7 @@
  *
  * @constructor
  * @param {ve.ui.PanelLayout[]} panels Panels in the grid
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {number[]} [widths] Widths of columns as ratios
  * @cfg {number[]} [heights] Heights of columns as ratios
  */

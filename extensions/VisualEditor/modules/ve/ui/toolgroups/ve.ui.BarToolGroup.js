@@ -14,7 +14,7 @@
  *
  * @constructor
  * @param {ve.ui.Toolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.BarToolGroup = function VeUiBarToolGroup( toolbar, config ) {
 	// Parent constructor

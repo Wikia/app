@@ -353,6 +353,7 @@ class VisualEditorHooks {
 				've/test/dm/ve.dm.InternalList.test.js',
 				've-mw/test/dm/ve.dm.InternalList.test.js',
 				've/test/dm/ve.dm.Transaction.test.js',
+				've-mw/test/dm/ve.dm.Transaction.test.js',
 				've/test/dm/ve.dm.TransactionProcessor.test.js',
 				've/test/dm/ve.dm.Surface.test.js',
 				've/test/dm/ve.dm.SurfaceFragment.test.js',
@@ -367,6 +368,7 @@ class VisualEditorHooks {
 				// VisualEditor ContentEditable Tests
 				've/test/ce/ve.ce.test.js',
 				've/test/ce/ve.ce.Document.test.js',
+				've/test/ce/ve.ce.Surface.test.js',
 				've-mw/test/ce/ve.ce.Document.test.js',
 				've/test/ce/ve.ce.NodeFactory.test.js',
 				've/test/ce/ve.ce.Node.test.js',
