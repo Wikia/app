@@ -1,5 +1,5 @@
-define('vpt.views.index', [
-	'vpt.views.datepicker'
+define('views.videopageadmin.index', [
+	'views.videopageadmin.datepicker'
 ], function(Datepicker) {
 	'use strict';
 
@@ -49,7 +49,7 @@ define('vpt.views.index', [
 	return VPTIndex;
 });
 
-require(['vpt.views.index'], function(IndexView) {
+require(['views.videopageadmin.index'], function(IndexView) {
 
 	'use strict';
 

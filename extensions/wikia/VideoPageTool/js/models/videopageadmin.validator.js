@@ -4,7 +4,7 @@
  * @see http://jqueryvalidation.org/
  */
 
-define( 'vpt.models.validator', [ 'jquery' ], function( $ ) {
+define( 'models.videopageadmin.validator', [ 'jquery' ], function( $ ) {
 
 	'use strict';
 
