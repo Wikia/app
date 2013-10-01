@@ -36,7 +36,7 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 	{ 'include': mw.config.get('debug') ? [ 'wikiaMediaInsert' ] : [] },
 	{
 		'include': '*',
-		'exclude': [ 'wikiaMediaInsert' ]
+		'exclude': [ 'wikiaMediaInsert', 'mediaInsert' ]
 	}
 	/*
 	{
