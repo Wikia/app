@@ -859,7 +859,7 @@
 			// if autoHover is requested
 			if(slider.settings.autoHover){
 				// on el hover
-				el.hover(function(){
+				el.on( 'hover.autoHover', function(){
 					// if the auto show is currently playing (has an active interval)
 					if(slider.interval){
 						// stop the auto show and pass true agument which will prevent control update

@@ -7,10 +7,12 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 		this.$sliderWrapper = $( '#featured-video-slider' );
 		this.$bxSlider = $( '#featured-video-bxslider' );
 		this.$thumbs = $( '#featured-video-thumbs' );
-		this.$thumbVideos = this.$thumbs.find( '.video' );
 
 		// The slider starts off as an image slider, then switches to a video slider when the first video is clicked
 		this.isVideoSlider = false;
+
+		// When the window is resized, request video at current size
+		this.windowResized = false;
 
 		// Track the video that's playing at any given time
 		this.videoInstance = null;
@@ -38,7 +40,6 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 		},
 		initSlider: function() {
 			this.slider = this.$bxSlider.bxSlider({
-				video: true,
 				onSliderLoad: $.proxy( this.onSliderLoad, this ),
 				onSlideNext: $.proxy( this.onArrowClick, this ),
 				onSlidePrev: $.proxy( this.onArrowClick, this ),
@@ -50,6 +51,10 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 				autoHover: true
 			});
 		},
+
+		/*
+		 * @desc This is called after the bxSlider finishes loading
+		 */
 		onSliderLoad: function() {
 			// Show the slider now that it's done loading
 			this.$sliderWrapper.css( 'visibility', 'visible' );
@@ -59,6 +64,7 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 
 			this.bindEvents();
 		},
+
 		bindEvents: function() {
 			var that = this;
 
@@ -75,6 +81,11 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 			this.$bxSlider.on( 'click', '.slide-image', function() {
 				that.handleSlideClick( $( this ) );
 			});
+
+			$( window ).on( 'resize', function() {
+				that.windowResized = true;
+			});
+
 		},
 		/*
 		 * @desc When a thumbnail is clicked, convert to video slider and slide to the corresponding slide
@@ -82,11 +93,7 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 		handleThumbClick: function( $thumb ){
 			var index = $thumb.index();
 
-			// It's now a video slider, don't show thumbnails anymore
-			this.isVideoSlider = true;
-
-			// Stop slider autoscroll because we're watching videos now
-			this.slider.stopAuto();
+			this.switchToVideoSlider();
 
 			if( this.slider.getCurrentSlide() === index ) {
 				// play the video
@@ -101,11 +108,7 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 		 * @desc When a slide is clicked, convert to video slider and play the video
 		 */
 		handleSlideClick: function( $slideImage ) {
-			// It's now a video slider, don't show thumbnails anymore
-			this.isVideoSlider = true;
-
-			// Stop slider autoscroll because we're watching videos now
-			this.slider.stopAuto();
+			this.switchToVideoSlider();
 
 			// Get the slide's index from the data attr instead of index() b/c slides are cloned in bxSlider
 			var index = $slideImage.data( 'index' );
@@ -135,13 +138,25 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 				}
 
 				// Actually do the video embed
-				that.videoInstance = new VideoBootstrap( slide.$video[ 0 ], slide.embedData.embedCode, 'videoHomePage' );
+				that.videoInstance = new VideoBootstrap(
+					slide.$video[ 0 ],
+					slide.embedData.embedCode,
+					'videoHomePage'
+				);
+
+				// TODO: Still figuring out if we want to use this or not
+				//slide.$video.fitVids();
 			});
 		},
+		/*
+		 * @desc Get video data if we don't have it already or if the window has resized and we want to get the embed
+		 * code at a different size.
+		 */
 		getEmbedCode: function( slide ) {
-			var data;
+			var that = this,
+				data;
 
-			if( slide.embedData === null ) {
+			if( slide.embedData === null || this.windowResized ) {
 				// Get video embed data for this slide
 				data = nirvana.sendRequest({
 					controller: 'VideoHandler',
@@ -149,10 +164,12 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 					type: 'GET',
 					data: {
 						fileTitle: slide.videoKey,
-						width: 900,
+						width: that.getWidthForVideo( slide ),
 						autoplay: 1
 					}
 				});
+				// We just got the embed data so reset windowResized flag
+				this.windowResized = false;
 			} else {
 				data = slide.embedData;
 			}
@@ -162,12 +179,40 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 
 		},
 
+		getWidthForVideo: function( slide ) {
+			var width = this.$sliderWrapper.width();
+
+			// center the video in the space by setting the container width. This is just in case the browser window
+			// gets bigger;
+			slide.$video.width( width );
+
+			return width;
+		},
+
 		/*
 		 * @desc Funnel all video play events to onSliderAfter (unless the current slide was clicked)
 		 */
 		onSlideAfter: function( $slide, oldIndex, newIndex ) {
 			if( this.isVideoSlider ) {
 				this.playVideo( this.slides[ newIndex ] );
+			}
+		},
+
+		switchToVideoSlider: function() {
+			var len = this.slides.length,
+				i;
+
+			// It's now a video slider, don't show thumbnails anymore
+			this.isVideoSlider = true;
+
+			// Stop slider autoscroll because we're watching videos now
+			this.slider.stopAuto();
+
+			// don't let the slider start autoHover again
+			this.$bxSlider.off( 'hover.autoHover' );
+
+			for( i = 0; i < len; i++ ) {
+				this.slides[ i ].$image.hide();
 			}
 		},
 
