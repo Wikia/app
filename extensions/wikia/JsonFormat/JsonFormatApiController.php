@@ -81,11 +81,44 @@ class JsonFormatApiController extends WikiaApiController {
 
         $jsonSimple = $simplifier->getJsonFormat( $json );
 
-        var_dump( $jsonSimple );
-
-        die;
-
+	    $this->getResponse()->setFormat("json");
+	    $this->getResponse()->setData( $jsonSimple );
     }
+
+	private function simpleToHtml( &$json ) {
+		$html = "";
+		foreach ( $json["sections"] as $section ) {
+			$html .= "<h" . $section["level"] . ">";
+			$html .= $section["title"];
+			$html .= "</h" . $section["level"] . ">";
+			foreach( $section["paragraphs"] as $paragraph ) {
+				$html .= "<p>" . $paragraph . "</p>";
+			}
+			foreach( $section["images"] as $image ) {
+				$html .= "<img src=\"${image["src"]}\" style=\"max-width:100px; max-height: 100px; display:inline\"></img>";
+			}
+		}
+		return $html;
+	}
+
+	/**
+	 * @throws InvalidParameterApiException
+	 */
+	public function getSimpleAsText() {
+		$articleId = $this->getRequest()->getInt("article", NULL);
+		if( empty($articleId) ) {
+			throw new InvalidParameterApiException( self::ARTICLE_CACHE_ID );
+		}
+		$jsonFormatService = new JsonFormatService();
+		$json = $jsonFormatService->getJsonFormatForArticleId( $articleId );
+
+		$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
+		$jsonSimple = $simplifier->getJsonFormat( $json );
+
+		$text = $this->simpleToHtml($jsonSimple);
+		header('Content-Type: text/html; charset=utf-8');
+		die($text);
+	}
 
 	/**
 	 * @throws InvalidParameterApiException

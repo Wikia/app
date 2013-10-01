@@ -14,29 +14,32 @@ class JsonFormatSimplifier {
 				$this->appendInline( $paragraphs, $childNode->getText() );
 			} else if ( $childNode->getType() == 'text' ) {
 				$this->appendInline( $paragraphs, $childNode->getText() );
-			} else if ( $node->getType() == 'list' ) {
-				$tag = $node->getOrdered() ? 'ol' : 'ul';
-				return "<$tag>{$this->iterate( $node )}</$tag>";
-			} else if ( $node->getType() == 'listItem' ) {
-				return "<li>{$this->iterate( $node )}</li>";
-			} else if ( $node->getType() == 'table' ) {
-				return "<table>{$this->iterate( $node )}</table>";
-			} else if ( $node->getType() == 'tableRow' ) {
-				return "<tr>{$this->iterate( $node )}</tr>";
-			} else if ( $node->getType() == 'tableCell' ) {
-				return "<td>{$this->iterate( $node )}</td>";
-			} else if ( $node->getType() == 'paragraph' ) {
-				return "<p>{$this->iterate( $node )}</p>";
-			} else if ( $node->getType() == 'imageFigure' ) {
-				return "<div style=\"\"><img src=\"{$node->getSrc()}\"/></div>";
-			} else if ( $node->getType() == 'image' ) {
-				return "<img src=\"{$node->getSrc()}\"/>";
-			} else if ( $node->getType() == 'quote' ) {
-				return "<div><i>{$node->getText()}</i></div><div><i>{$node->getAuthor()}</i></div>";
+			} else if ( $childNode->getType() == 'paragraph' ) {
+				$this->getParagraphs( $childNode, $paragraphs );
 			}
 		}
 	}
 
+	public function getImages( \JsonFormatContainerNode $containerNode, &$images ) {
+		foreach( $containerNode->getChildren() as $childNode ) {
+			if ( $childNode->getType() == 'section' ) {
+				return;
+			} else if ( $childNode->getType() == 'image' ) {
+				/** @var \JsonFormatImageNode $a  */
+				$images[] = [
+					"src" => $childNode->getSrc()
+				];
+			} else if ( $childNode->getType() == 'imageFigure' ) {
+				/** @var \JsonFormatImageFigureNode $a  */
+				$images[] = [
+					"src" => $childNode->getSrc(),
+					"caption" => $childNode->getCaption()
+				];
+			} else if ( $childNode->getType() == 'paragraph' ) {
+				$this->getParagraphs( $childNode, $paragraphs );
+			}
+		}
+	}
 	/**
 	 * @param String[] $paragraphs
 	 * @param String $inlineText
@@ -66,9 +69,22 @@ class JsonFormatSimplifier {
 		$sections = [];
 		$this->findSections( $rootNode, $sections );
 
+		$returnSections = [];
 		foreach ( $sections as $section ) {
+			/** @var \JsonFormatSectionNode $section  */
 			$paragraphs = [];
-			$this->getParagraphs( $sections, $paragraphs );
+			$images = [];
+			$this->getParagraphs( $section, $paragraphs );
+			$this->getImages( $section, $images );
+			$returnSections[] = [
+				"title" => ( $section->getType() == "section" ) ? $section->getTitle() : "",
+				"level" => ( $section->getType() == "section" ) ? $section->getLevel() : 1,
+				"paragraphs" => $paragraphs,
+				"images" => $images
+			];
 		}
+		return [
+			"sections" => $returnSections
+		];
 	}
 }
