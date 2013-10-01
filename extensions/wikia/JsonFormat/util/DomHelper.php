@@ -47,8 +47,29 @@ class DomHelper {
 
 	public static function hasChildTag( DOMElement $domElement, $tagName ) {
 		foreach ( $domElement->childNodes as $node ) {
-			if ( $node->tagName == $tagName ) {
-				return true;
+			if ( $node instanceof DOMElement ) {
+				if ( $node->tagName == $tagName ) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public static function hasAncestorTag( DomElement $domElement, $tagNames ) {
+		$set = array_flip( $tagNames );
+		return self::hasAncestorTagInternal( $domElement, $set );
+	}
+
+	private static function hasAncestorTagInternal( DOMElement $domElement, &$tagNameSet ) {
+		foreach ( $domElement->childNodes as $node ) {
+			if ( $node instanceof DOMElement ) {
+				if ( isset($tagNameSet[ $node->tagName ]) ) {
+					return true;
+				}
+				if( self::hasAncestorTagInternal( $domElement, $tagNameSet ) ) {
+					return true;
+				}
 			}
 		}
 		return false;

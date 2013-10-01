@@ -51,6 +51,8 @@ class HtmlParser {
 		$compositeVisitor->addVisitor( new \PVisitor($compositeVisitor, $jsonFormatTraversingState) );
 		$compositeVisitor->addVisitor( new \ListVisitor($compositeVisitor, $jsonFormatTraversingState) );
 
+		$compositeVisitor->addVisitor( new \DivContainingHeadersVisitor($compositeVisitor, $jsonFormatTraversingState) );
+
 
 		$compositeVisitor->addVisitor( new \TableOfContentsVisitor($compositeVisitor, $jsonFormatTraversingState) );
 		$compositeVisitor->addVisitor( new \InfoboxTableVisitor($compositeVisitor, $jsonFormatTraversingState) );

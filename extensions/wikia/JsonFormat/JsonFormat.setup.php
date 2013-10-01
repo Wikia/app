@@ -28,6 +28,7 @@ $app->registerClass( 'JsonFormatInfoboxNode',                 $dir . "/nodes/Jso
 $app->registerClass( 'JsonFormatInfoboxKeyValueNode',         $dir . "/nodes/JsonFormatInfoboxKeyValueNode.php");
 $app->registerClass( 'JsonFormatInfoboxValueNode',            $dir . "/nodes/JsonFormatInfoboxValueNode.php");
 
+$app->registerClass( 'DivContainingHeadersVisitor',           $dir . "/visitors/DivContainingHeadersVisitor.php");
 $app->registerClass( 'VideoVisitor',                          $dir . "/visitors/VideoVisitor.php");
 $app->registerClass( 'AVisitor',                              $dir . "/visitors/AVisitor.php");
 $app->registerClass( 'BrVisitor',                             $dir . "/visitors/BrVisitor.php");
