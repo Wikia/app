@@ -24,7 +24,7 @@
 
 		.wv-logo {
 			@extend .wv-sprite;
-			@include sprite-VideoPageTool('logo-wikiavideo');
+			@include sprite-VideoPageTool('logo_wikiavideo');
 			display: block;
 			height: 37px;
 			margin-left: 10px;
