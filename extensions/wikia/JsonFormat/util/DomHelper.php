@@ -67,7 +67,7 @@ class DomHelper {
 				if ( isset($tagNameSet[ $node->tagName ]) ) {
 					return true;
 				}
-				if( self::hasAncestorTagInternal( $domElement, $tagNameSet ) ) {
+				if( self::hasAncestorTagInternal( $node, $tagNameSet ) ) {
 					return true;
 				}
 			}
