@@ -115,8 +115,14 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 				// update original asset data
 				foreach ( $data as $order => $row ) {
 					foreach ( $row as $name => $value ) {
-						if ( !empty( $videos[$order][$name] ) ) {
+						if ( array_key_exists( $name, $videos[$order] ) && $videos[$order][$name] != $value ) {
 							$videos[$order][$name] = $value;
+						}
+
+						// replace alternative thumbnail
+						if ( $name == 'altThumbTitle' && array_key_exists( 'altThumbKey', $videos[$order] )
+							&& $videos[$order]['altThumbKey'] != $value ) {
+							$videos[$order] = $helper->replaceThumbnail( $videos[$order], $value );
 						}
 					}
 				}
@@ -253,14 +259,16 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * get video data
+	 * Get video data
 	 * @requestParam string url
+	 * @requestParam string altThumbKey
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
 	 * @responseParam array video
 	 */
 	public function getVideoData() {
 		$url = $this->getVal( 'url', '' );
+		$altThumbTitle = $this->getVal( 'altThumbKey', '' );
 
 		$video = array();
 
@@ -270,9 +278,10 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
+		$url = urldecode( $url );
 		if ( preg_match( '/.+\/wiki\/File:(.+)$/i', $url, $matches ) ) {
 			$helper = new VideoPageToolHelper();
-			$video = $helper->getVideoData( $matches[1] );
+			$video = $helper->getVideoData( $matches[1], $altThumbTitle );
 		}
 
 		if ( empty( $video ) ) {
@@ -287,11 +296,11 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * get image data
+	 * Get image data
 	 * @requestParam string imageTitle
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
-	 * @responseParam array $image [ array( 'thumbUrl' => $url, 'largeThumbUrl' => $url ) ]
+	 * @responseParam array $data [ array( 'thumbUrl' => $url, 'largeThumbUrl' => $url ) ]
 	 */
 	public function getImageData() {
 		$imageTitle = $this->getVal( 'imageTitle', '' );
@@ -303,9 +312,8 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		}
 
 		$helper = new VideoPageToolHelper();
-		$image = $helper->getImageData( $imageTitle );
-
-		if ( empty( $image ) ) {
+		$data = $helper->getImageData( $imageTitle );
+		if ( empty( $data ) ) {
 			$this->result = 'error';
 			$this->msg = wfMessage( 'videohandler-unknown-title' )->plain();
 		} else {
@@ -313,7 +321,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			$this->msg = '';
 		}
 
-		$this->data = $image;
+		$this->data = $data;
 	}
 
 	/*

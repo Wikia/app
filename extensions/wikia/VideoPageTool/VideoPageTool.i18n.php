@@ -22,7 +22,7 @@ $messages['en'] = array(
 	'videopagetool-section-fan' => 'Wikia Fan Media',
 	'videopagetool-publish-button' => 'Publish',
 	'videopagetool-button-add-video' => 'Add a video',
-	'videopagetool-button-add-thumbnail' => 'Add a thumbnail',
+	'videopagetool-button-add-thumbnail' => 'Add Image',
 	'videopagetool-video-title-default-text' => 'Video name',
 	'videopagetool-image-title-default-text' => 'Image name',
 	'videopagetool-label-display-title' => 'Display Title',
@@ -44,6 +44,8 @@ $messages['en'] = array(
 	'videopagetool-header-dashboard' => 'Dashboard',
 	'videopagetool-success-save' => 'Your changes have been saved',
 	'videopagetool-hint-description-maxlength' => '$1 characters max',
+	'videopagetool-hint-required-dimensions' => 'Image dimensions must be 1024 x 461',
+	'videopagetool-formerror-altthumb' => 'Please add an image',
 
 	// Home Page Section: Header
 	'videohomepage-header-dropdown-name' => 'Discover',
@@ -94,6 +96,8 @@ $messages['qqq'] = array(
 	'videopagetool-tooltip-in-progress' => 'In Progress',
 	'videopagetool-header-dashboard' => 'Title for dashboard page',
 	'videopagetool-success-save' => 'This text appears if your changes have been saved successfully',
+	'videopagetool-hint-required-dimensions' => 'Message describing exact dimensions required for custom image upload (1024 x 461)',
+	'videopagetool-formerror-altthumb' => 'Error message for required custom image to be added',
 
 	// Home Page Section: Header
 	'videohomepage-header-dropdown-name' => 'Name of the dropdown that allows users to explore Wikia Video\'s sections',
