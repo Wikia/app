@@ -18,7 +18,7 @@ class VideoPageToolHelper extends WikiaModel {
 	);
 
 	/**
-	 * get list of sections
+	 * Get list of sections
 	 * @return array $sections
 	 */
 	public function getSections() {
@@ -32,7 +32,7 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
-	 * get list of languages
+	 * Get list of languages
 	 * @return array $languages
 	 */
 	public function getLanguages() {
@@ -48,7 +48,7 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
-	 * get left menu items
+	 * Get left menu items
 	 * @param string $selected [featured/category/fan]
 	 * @param array $sections
 	 * @param string $language
@@ -76,7 +76,7 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
-	 * get url of the next munu item
+	 * Get url of the next munu item
 	 * @param array $leftMenuItems
 	 * @return string
 	 */
@@ -97,16 +97,15 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
-	 * get video data
+	 * Get video data
 	 * @param string $title
-	 * $param string $altThumbName
-	 * @param string $altThumbName
+	 * $param string $altThumbTitle
 	 * @param string $displayTitle
 	 * @param string $description
 	 * @param array $thumbOptions
 	 * @return array $video
 	 */
-	public function getVideoData( $title, $altThumbName = '', $displayTitle = '', $description = '', $thumbOptions = array() ) {
+	public function getVideoData( $title, $altThumbTitle = '', $displayTitle = '', $description = '', $thumbOptions = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		$video = array();
@@ -127,11 +126,16 @@ class VideoPageToolHelper extends WikiaModel {
 			$largeThumbUrl = $largeThumb->getUrl();
 
 			// replace original thumbnail with the new one
-			if ( !empty( $altThumbName ) ) {
-				$imageData = $this->getImageData( $altThumbName );
+			$altThumbName = '';
+			$altThumbKey = '';
+			if ( !empty( $altThumbTitle ) ) {
+				$imageData = $this->getImageData( $altThumbTitle );
 				if ( !empty( $imageData ) ) {
 					$videoThumb = str_replace( $thumbUrl, $imageData['thumbUrl'], $videoThumb );
 					$largeThumbUrl = $imageData['largeThumbUrl'];
+
+					$altThumbName = $imageData['imageTitle'];
+					$altThumbKey = $imageData['imageKey'];
 				}
 			}
 
@@ -147,6 +151,7 @@ class VideoPageToolHelper extends WikiaModel {
 				'videoThumb'    => $videoThumb,
 				'largeThumbUrl' => $largeThumbUrl,
 				'altThumbName'  => $altThumbName,
+				'altThumbKey'   => $altThumbKey,
 				'displayTitle'  => $displayTitle,
 				'description'   => $description,
 				'thumbUrl'      => $thumbUrl,
@@ -159,7 +164,26 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
-	 * get image data
+	 * Replace thumbnail data (for video data only) - include videoThumb, largeThumbUrl, altThumbName, altThumbKey
+	 * @param array $videoData
+	 * @param string $newThumbnail
+	 * @param array $thumbOptions
+	 * @return array $videoData
+	 */
+	public function replaceThumbnail( $videoData, $newThumbnail, $thumbOptions = array() ) {
+		if ( array_key_exists( 'videoKey', $videoData ) && !empty( $newThumbnail ) ) {
+			$data = $this->getVideoData( $videoData['videoKey'], $newThumbnail, '', '', $thumbOptions );
+			$videoData['videoThumb'] = $data['videoThumb'];
+			$videoData['largeThumbUrl'] = $data['largeThumbUrl'];
+			$videoData['altThumbName'] = $data['altThumbName'];
+			$videoData['altThumbKey'] = $data['altThumbKey'];
+		}
+
+		return $videoData;
+	}
+
+	/**
+	 * Get image data
 	 * @param string $imageTitle
 	 * @return array $data [ array( 'thumbUrl' => $url, 'largeThumbUrl' => $url ) ]
 	 */
@@ -170,6 +194,9 @@ class VideoPageToolHelper extends WikiaModel {
 
 		$file = WikiaFileHelper::getFileFromTitle( $imageTitle );
 		if ( !empty( $file ) ) {
+			$data['imageTitle'] = $imageTitle->getText();
+			$data['imageKey'] = $imageTitle->getDBKey();
+
 			$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
 			$data['thumbUrl'] = $thumb->getUrl();
 
@@ -183,7 +210,7 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
-	 * get default values by section
+	 * Get default values by section
 	 * @param string $section
 	 * @return array $values
 	 */
@@ -252,12 +279,12 @@ class VideoPageToolHelper extends WikiaModel {
 
 	/**
 	 * Validate alternative thumbnail (called from validateFormField())
-	 * @param string $ThumbName
+	 * @param string $imageTitle
 	 * @param string $errMsg
 	 * @return bool
 	 */
-	public function validateAltThumbName( $ThumbName, &$errMsg ) {
-		$file = WikiaFileHelper::getFileFromTitle( $ThumbName );
+	public function validateAltThumbKey( $imageTitle, &$errMsg ) {
+		$file = WikiaFileHelper::getFileFromTitle( $imageTitle );
 		if ( !empty( $file ) ) {
 			if ( $file->getWidth() == self::MAX_THUMBNAIL_WIDTH && $file->getHeight() == self::MAX_THUMBNAIL_HEIGHT ) {
 				return true;

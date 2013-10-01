@@ -8,14 +8,14 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 	protected $title;
 	protected $displayTitle;
 	protected $description;
-	protected $altThumbName;
+	protected $altThumbTitle;
 
 	// required data field -- array( FormFieldName => varName )
 	protected static $dataFields = array(
 		'videoKey'     => 'title',
 		'displayTitle' => 'displayTitle',
 		'description'  => 'description',
-		'altThumbName' => 'altThumbName',
+		'altThumbKey'  => 'altThumbTitle',
 	);
 
 	/**
@@ -29,7 +29,8 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 	 *     displayTitle    => Preferred title entered via Admin tool, e.g. "Bubbles from "Soul Bubbles" on Nintendo DS"
 	 *     videoThumb      => Embed code for the video thumbnail.
 	 *     largeThumbUrl   => Large version of the video thumbnail image.  Does not include the embed code.
-	 *     altThumbName    => Thumbnail that will replace original thumbnail
+	 *     altThumbName    => Human readable title of the thumbnail that will replace original thumbnail
+	 *     altThumbKey     => DBKey of the thumbnail that will replace original thumbnail
 	 *     description     => Description of this video given in the Admin tool, e.g. "All about Bubbles!"
 	 *     videoTitleClass =>
 	 *     altThumbClass   =>
@@ -38,7 +39,7 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 	 */
 	public function getAssetData( $thumbOptions = array() ) {
 		$helper = new VideoPageToolHelper();
-		$data = $helper->getVideoData( $this->title, $this->altThumbName, $this->displayTitle, $this->description, $thumbOptions );
+		$data = $helper->getVideoData( $this->title, $this->altThumbTitle, $this->displayTitle, $this->description, $thumbOptions );
 		if ( empty( $data ) ) {
 			return self::getDefaultAssetData();
 		}
@@ -62,7 +63,8 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 			'videoKey'        => '',
 			'videoThumb'      => '',
 			'largeThumbUrl'   => '',
-			'altThumbName'     => wfMessage( 'videopagetool-image-title-default-text' )->plain(),
+			'altThumbName'    => wfMessage( 'videopagetool-image-title-default-text' )->plain(),
+			'altThumbKey'     => '',
 			'displayTitle'    => '',
 			'description'     => '',
 			'videoTitleClass' => 'alternative',
