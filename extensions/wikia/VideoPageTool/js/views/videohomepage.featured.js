@@ -11,15 +11,13 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 		// The slider starts off as an image slider, then switches to a video slider when the first video is clicked
 		this.isVideoSlider = false;
 
-		// When the window is resized, request video at current size
-		this.windowResized = false;
-
 		// Track the video that's playing at any given time
 		this.videoInstance = null;
 
 		// values will be assigned after slider inits
 		this.$sliderControls = null;
 		this.slider = null;
+		this.videoPadding = null;
 
 		// Get data from model
 		var sliderModel = new FeaturedModel( {
@@ -48,8 +46,10 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 				prevText: '',
 				auto: true,
 				speed: 400,
-				autoHover: true
+				// not using this b/c it's buggy
+				autoHover: false
 			});
+
 		},
 
 		/*
@@ -61,6 +61,9 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 
 			// Controls are loaded, cache their jQuery DOM object
 			this.$sliderControls = this.$sliderWrapper.find( '.bx-pager' );
+
+			// left/right padding for videos so arrows don't overlap
+			this.videoPadding = this.$sliderWrapper.find( '.bx-prev' ).width() * 2 + 30;
 
 			this.bindEvents();
 		},
@@ -82,9 +85,20 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 				that.handleSlideClick( $( this ) );
 			});
 
-			$( window ).on( 'resize', function() {
-				that.windowResized = true;
+			// pause the slider when mouseenter, start it up again on mouseleave
+			// bxSlider has it's own handling but it's buggy when you combine it with the 'auto' setting then try to
+			// stop it later
+			this.$bxSlider.on({
+				'mouseenter.autoHover': function(){
+					$( this ).stopAuto();
+				},
+				'mouseleave.autohover': function(){
+					$( this ).startAuto();
+				}
 			});
+
+
+			$( window ).on( 'resize', $.proxy( this.resetEmbedData, this ) );
 
 		},
 		/*
@@ -144,8 +158,11 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 					'videoHomePage'
 				);
 
-				// TODO: Still figuring out if we want to use this or not
-				//slide.$video.fitVids();
+				// Wait till video has loaded and update the slider viewport height.
+				setTimeout(function() {
+					that.$bxSlider.redrawSlider();
+				}, 2000);
+
 			});
 		},
 		/*
@@ -156,7 +173,7 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 			var that = this,
 				data;
 
-			if( slide.embedData === null || this.windowResized ) {
+			if( slide.embedData === null ) {
 				// Get video embed data for this slide
 				data = nirvana.sendRequest({
 					controller: 'VideoHandler',
@@ -168,8 +185,6 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 						autoplay: 1
 					}
 				});
-				// We just got the embed data so reset windowResized flag
-				this.windowResized = false;
 			} else {
 				data = slide.embedData;
 			}
@@ -180,7 +195,8 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 		},
 
 		getWidthForVideo: function( slide ) {
-			var width = this.$sliderWrapper.width();
+			// get the container width minus videoPadding for left/right arrows
+			var width = this.$sliderWrapper.width() - this.videoPadding;
 
 			// center the video in the space by setting the container width. This is just in case the browser window
 			// gets bigger;
@@ -206,10 +222,10 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 			this.isVideoSlider = true;
 
 			// Stop slider autoscroll because we're watching videos now
-			this.slider.stopAuto();
+			this.slider.stopAuto( true );
 
 			// don't let the slider start autoHover again
-			this.$bxSlider.off( 'hover.autoHover' );
+			this.$bxSlider.off( '.autoHover' );
 
 			for( i = 0; i < len; i++ ) {
 				this.slides[ i ].$image.hide();
@@ -244,6 +260,18 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 				.on( 'mouseleave', function() {
 					setHoverTimeout();
 				});
+		},
+		/*
+		 * @desc Something has happened (like container resize) to invalidate cached embed data, so clear it.
+		 */
+		resetEmbedData: function() {
+			var len = this.slides.length,
+				i;
+
+			for( i = 0; i < len; i++ ) {
+				this.slides[ i ].embedData = null;
+			}
+
 		}
 	};
 
