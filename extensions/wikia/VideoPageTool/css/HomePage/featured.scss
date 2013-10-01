@@ -3,6 +3,7 @@
 @import "skins/oasis/css/mixins/opacity";
 @import "skins/oasis/css/core/responsive";
 @import "skins/oasis/css/mixins/transition";
+@import "skins/oasis/css/lib/foundation.custom/src/_variables";
 @import '../mixins/_sprite-VideoPageTool.scss';
 
 
@@ -14,14 +15,8 @@ $play-button-overlay-fade-duration: 400ms;
 
 .featured-video {
 	@include clearfix;
-	background: black;
-	margin: 0 $width-padding * -1;
-	max-height: 461px;
 	.featured-video-slider{
-		@include box-sizing-border-box;
 		position: relative;
-		margin: 0 auto;
-		visibility: hidden;
 		ul {
 			list-style: none;
 			margin: 0;
@@ -41,54 +36,111 @@ $play-button-overlay-fade-duration: 400ms;
 				margin-top: 0;
 				position: relative;
 
-				> img {
+				@media #{$medium} {
+					// border hack to deal with 1px miscalculation in bxslider
+					border: 1px solid #FFF;
+					border-width: 0 1px;
+				}
+
+				.slide-image {
 					width: 100%;
-					max-height: 461px;
+
+					> img {
+						width: 100%;
+					}
+
+					// darken the image with 10% opacity per design request
+					&:after {
+						@include opacity(10);
+						background: black;
+						content: "";
+						display: block;
+						height: 100%;
+						left: 0;
+						position: absolute;
+						top: 0;
+						width: 100%;
+					}
+				}
+				.caption {
+					bottom: 45px;
+					color: #FFF;
+					font-weight: 100;
+					left: 55px;
+					position: absolute;
+					text-shadow: 1px 1px 2px #666;
+				}
+				.title {
+					display: block;
+					font-size: 26px;
+					line-height: 32px;
+					margin-bottom: 12px;
+				}
+				.description {
+					display: block;
+					font-size: 18px;
+					line-height: 21px;
 				}
 			}
 			.Wikia-video-play-button {
-				// TODO: hack, find a better way than hard coding the line-height
-				line-height: 461px;
+				position: absolute;
+				top: 50%;
+				margin-top: -43px;
 				width: inherit;
+			}
+			.slide-video {
+				margin: auto;
 			}
 		}
 		.bx-controls-direction a {
 			@include sprite-VideoPageTool-base();
+			height: 55px;
+			width: 42px;
 			&.bx-prev {
-				@include sprite-VideoPageTool('carousel_left_arrow');
-				height: 24px;
-				width: 16px;
+				@include sprite-VideoPageTool('carousel_left_arrow_white');
 			}
 			&.bx-next {
-				@include sprite-VideoPageTool('carousel_right_arrow');
-				height: 24px;
-				width: 16px;
+				@include sprite-VideoPageTool('carousel_right_arrow_white');
 			}
 		}
 		// Small navigation circles
 		.bx-pager {
-			bottom: 10px;
+			bottom: -30px;
+			.bx-pager-item {
+				padding-top: 30px;
+			}
 		}
 		// Thumbnails
 		.thumbs {
 			display: none;
 			background: #3a3a3a;
-			bottom: 0;
+			bottom: 10px;
+			left: 0;
 			position: absolute;
-			width: 100%;
-			a {
-				display: inline-block;
-				float: left;
-				margin: 10px 0;
+			li {
+				@include box-sizing-border-box;
+				padding-top: 5px;
+				padding-bottom: 5px;
 				text-align: center;
-				width: 20%;
-				img {
-					max-width: 98%;
+			}
+			a {
+				display: block;
+				position: relative;
+				text-align: center;
+				width: 100%;
+
+				> img {
+					width: 100%;
+					height: auto;
 				}
+
 				.Wikia-video-play-button {
 					@include transition-shorthand(opacity $play-button-overlay-fade-duration ease-out);
 					@include opacity(0);
-					width: 100%;
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					margin: -25px 0 0 -25px;
 				}
 				&:hover .Wikia-video-play-button {
 					@include opacity(100);
@@ -98,20 +150,7 @@ $play-button-overlay-fade-duration: 400ms;
 			}
 		}
 	}
-
-	@media ( min-width: $breakpoint-small ) {
-		.featured-video-slider {
-			width: $breakpoint-small;
-		}
-	}
-	@media ( max-width: $breakpoint-small ) {
-		.featured-video-slider {
-			width: 100%;
-
-			// TODO: hack, find a better way than hard coding the line-height
-			.bxslider .Wikia-video-play-button {
-				line-height: 400px;
-			}
-		}
+	.hidden {
+		visibility: hidden;
 	}
 }
