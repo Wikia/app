@@ -28,6 +28,7 @@ $app->registerClass( 'JsonFormatInfoboxNode',                 $dir . "/nodes/Jso
 $app->registerClass( 'JsonFormatInfoboxKeyValueNode',         $dir . "/nodes/JsonFormatInfoboxKeyValueNode.php");
 $app->registerClass( 'JsonFormatInfoboxValueNode',            $dir . "/nodes/JsonFormatInfoboxValueNode.php");
 
+$app->registerClass( 'VideoVisitor',                          $dir . "/visitors/VideoVisitor.php");
 $app->registerClass( 'AVisitor',                              $dir . "/visitors/AVisitor.php");
 $app->registerClass( 'BrVisitor',                             $dir . "/visitors/BrVisitor.php");
 $app->registerClass( 'TableVisitor',                          $dir . "/visitors/TableVisitor.php");
@@ -43,8 +44,10 @@ $app->registerClass( 'DOMNodeVisitorBase',                    $dir . "/visitors/
 $app->registerClass( 'HeaderVisitor',                         $dir . "/visitors/HeaderVisitor.php");
 $app->registerClass( 'IDOMNodeVisitor',                       $dir . "/visitors/IDOMNodeVisitor.php");
 $app->registerClass( 'TextNodeVisitor',                       $dir . "/visitors/TextNodeVisitor.php");
+$app->registerClass( 'ImageFigureNoScriptVisitor',            $dir . "/visitors/ImageFigureNoScriptVisitor.php");
 $app->registerClass( 'ImageFigureVisitor',                    $dir . "/visitors/ImageFigureVisitor.php");
 $app->registerClass( 'QuoteVisitor',                          $dir . "/visitors/QuoteVisitor.php");
+$app->registerClass( 'ImageNoScriptVisitor',                  $dir . "/visitors/ImageNoScriptVisitor.php");
 $app->registerClass( 'ImageVisitor',                          $dir . "/visitors/ImageVisitor.php");
 $app->registerClass( 'InfoboxTableVisitor',                   $dir . "/visitors/InfoboxTableVisitor.php");
 

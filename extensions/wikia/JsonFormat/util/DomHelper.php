@@ -44,4 +44,13 @@ class DomHelper {
 		}
 		return in_array( $className, preg_split( '/[\s]+/', $classString) );
 	}
+
+	public static function hasChildTag( DOMElement $domElement, $tagName ) {
+		foreach ( $domElement->childNodes as $node ) {
+			if ( $node->tagName == $tagName ) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

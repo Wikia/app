@@ -99,6 +99,7 @@ class JsonFormatSimplifier {
 				$this->findSections( $childNode, $sections );
 			}
 		}
+
 	}
 
 	/**

@@ -5,7 +5,7 @@
  * Time: 17:31
  */
 
-class ImageVisitor extends DOMNodeVisitorBase {
+class ImageNoScriptVisitor extends DOMNodeVisitorBase {
 
 	/**
 	 * @param DOMNode $currentNode
@@ -14,7 +14,9 @@ class ImageVisitor extends DOMNodeVisitorBase {
 	public function canVisit(DOMNode $currentNode) {
 		return DomHelper::isElement( $currentNode, 'a' )
 			&& DomHelper::hasClass( $currentNode, 'image' )
-			&& DomHelper::isElement( $currentNode->childNodes->item(0), 'img' )
+			&& $currentNode->childNodes->length == 2
+			&& DomHelper::isElement( $currentNode->childNodes->item(1), 'noscript' )
+			&& DomHelper::isElement( $currentNode->childNodes->item(1)->childNodes->item(0), 'img' )
 			;
 	}
 
@@ -22,8 +24,7 @@ class ImageVisitor extends DOMNodeVisitorBase {
 	 * @param DOMNode $currentNode
 	 */
 	public function visit(DOMNode $currentNode) {
-		die("TEST");
-		$src = $currentNode->childNodes->item(0)->getAttribute('src');
+		$src = $currentNode->childNodes->item(1)->childNodes->item(0)->getAttribute('src');
 		$this->getJsonFormatBuilder()->add( new JsonFormatImageNode($src) );
 	}
 }

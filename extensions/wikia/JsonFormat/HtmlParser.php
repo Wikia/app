@@ -56,8 +56,11 @@ class HtmlParser {
 		$compositeVisitor->addVisitor( new \InfoboxTableVisitor($compositeVisitor, $jsonFormatTraversingState) );
 		$compositeVisitor->addVisitor( new \TableVisitor($compositeVisitor, $jsonFormatTraversingState) );
 
+		$compositeVisitor->addVisitor( new \ImageFigureNoScriptVisitor($compositeVisitor, $jsonFormatTraversingState) );
 		$compositeVisitor->addVisitor( new \ImageFigureVisitor($compositeVisitor, $jsonFormatTraversingState) );
+		$compositeVisitor->addVisitor( new \ImageNoScriptVisitor($compositeVisitor, $jsonFormatTraversingState) );
 		$compositeVisitor->addVisitor( new \ImageVisitor($compositeVisitor, $jsonFormatTraversingState) );
+		$compositeVisitor->addVisitor( new \VideoVisitor($compositeVisitor, $jsonFormatTraversingState) );
 		$compositeVisitor->addVisitor( new \AVisitor($compositeVisitor, $jsonFormatTraversingState) );
 		$compositeVisitor->addVisitor( new \BrVisitor($compositeVisitor, $jsonFormatTraversingState) );
 		$compositeVisitor->addVisitor( new \BVisitor($compositeVisitor, $jsonFormatTraversingState) );
