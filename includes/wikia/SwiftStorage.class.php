@@ -178,7 +178,10 @@ class SwiftStorage {
 			if ( is_string( $mimeType ) ) {
 				$object->content_type = $mimeType;
 			}
-			$object->metadata = $metadata;
+
+			if (!empty($metadata)) {
+				$object->setMetadataValues($metadata);
+			}
 
 			// upload it
 			$object->write( $fp, $size );

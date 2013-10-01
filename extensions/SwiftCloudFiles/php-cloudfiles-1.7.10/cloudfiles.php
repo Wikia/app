@@ -2589,7 +2589,7 @@ class CF_Object
         $this->last_modified = $last_modified;
         $this->content_type = $content_type;
         $this->content_length = $content_length;
-        $this->metadata = $metadata;
+        $this->setMetadataValues($metadata); // Wikia change
         $this->headers = $headers;
         $this->manifest = $manifest;
         return True;
