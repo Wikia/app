@@ -1,4 +1,9 @@
-define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.videoBootstrap', 'vpt.models.featured' ], function( $, nirvana, VideoBootstrap, FeaturedModel ) {
+define( 'views.videohomepage.featured', [
+	'jquery',
+	'wikia.nirvana',
+	'wikia.videoBootstrap',
+	'vpt.models.featured'
+], function( $, nirvana, VideoBootstrap, FeaturedModel ) {
 
 	'use strict';
 
@@ -56,13 +61,13 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 		 */
 		onSliderLoad: function() {
 			// Show the slider now that it's done loading
-			this.$sliderWrapper.css( 'visibility', 'visible' );
+			this.$sliderWrapper.removeClass( 'hidden' );
 
 			// Controls are loaded, cache their jQuery DOM object
 			this.$sliderControls = this.$sliderWrapper.find( '.bx-pager' );
 
 			// left/right padding for videos so arrows don't overlap
-			this.videoPadding = this.$sliderWrapper.find( '.bx-prev' ).width() * 2 + 30;
+			this.videoPadding = ( this.$sliderWrapper.find( '.bx-prev' ).width() * 2 ) + 30;
 
 			this.bindEvents();
 		},
@@ -196,7 +201,6 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 
 			// return a promise or a plain object
 			return data;
-
 		},
 
 		/*

@@ -1,24 +1,19 @@
-define('vpt.models.featured', [ 'jquery' ], function( $ ) {
+define( 'vpt.models.featured', [ 'jquery' ], function( $ ) {
 
 	'use strict';
 
 	function Featured( options ) {
 		this.thumbs = this.createThumbs( options.$thumbs );
 		this.slides = this.createSlides( options.$slides );
-		this.init();
 	}
 
 	Featured.prototype = {
-		init: function() {
-
-		},
 		createThumbs: function( $thumbs ) {
 			var thumbs = [];
 
 			$thumbs.find( '.video' ).each( function() {
-				var $this = $( this );
 				thumbs.push({
-					$video: $this
+					$video: $( this )
 				});
 			});
 

@@ -17,7 +17,6 @@ $play-button-overlay-fade-duration: 400ms;
 	@include clearfix;
 	.featured-video-slider{
 		position: relative;
-		visibility: hidden;
 		ul {
 			list-style: none;
 			margin: 0;
@@ -40,7 +39,7 @@ $play-button-overlay-fade-duration: 400ms;
 				@media #{$medium} {
 					// border hack to deal with 1px miscalculation in bxslider
 					border: 1px solid #FFF;
-					border-width: 0px 1px;
+					border-width: 0 1px;
 				}
 
 				.slide-image {
@@ -150,5 +149,8 @@ $play-button-overlay-fade-duration: 400ms;
 				}
 			}
 		}
+	}
+	.hidden {
+		visibility: hidden;
 	}
 }

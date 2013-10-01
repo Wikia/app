@@ -138,6 +138,7 @@ class VideoPageToolHelper extends WikiaModel {
 					$altThumbName = $imageData['imageTitle'];
 					$altThumbKey = $imageData['imageKey'];
 
+					// TODO: Saipetch will fix this :)
 					$thumbUrl = $imageData['thumbUrl'];
 				}
 			}

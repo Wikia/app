@@ -1,6 +1,6 @@
 <div id="featured-video" class="featured-video row collapse">
 
-	<div class="featured-video-slider small-12 columns" id="featured-video-slider">
+	<div class="featured-video-slider hidden small-12 columns" id="featured-video-slider">
 		<ul id="featured-video-bxslider" class="bxslider">
 			<? $index = 0; ?>
 			<? foreach ( $assets as $videoData ): ?>
