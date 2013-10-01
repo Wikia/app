@@ -22,7 +22,6 @@ class ImageVisitor extends DOMNodeVisitorBase {
 	 * @param DOMNode $currentNode
 	 */
 	public function visit(DOMNode $currentNode) {
-		die("TEST");
 		$src = $currentNode->childNodes->item(0)->getAttribute('src');
 		$this->getJsonFormatBuilder()->add( new JsonFormatImageNode($src) );
 	}
