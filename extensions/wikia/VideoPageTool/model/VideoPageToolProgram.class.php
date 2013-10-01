@@ -223,13 +223,14 @@ class VideoPageToolProgram extends WikiaModel {
 
 		$app = F::app();
 
+		$nearestKey = self::getMemcKeyNearestDate( $language );
+		$nearestDate = $app->wg->Memc->get( $nearestKey );
+
 		if ( empty( $timestamp ) ) {
 			$timestamp = time();
 		}
 		$date = date( 'Y-m-d', $timestamp );
 
-		$nearestKey = wfMemcKey( 'videopagetool', 'nearest-date', $language, $date );
-		$nearestDate = $app->wg->Memc->get( $nearestKey );
 		if ( !$nearestDate ) {
 			$db = wfGetDB( DB_SLAVE );
 
@@ -255,6 +256,17 @@ class VideoPageToolProgram extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $nearestDate;
+	}
+
+	/**
+	 * Get the memcached key for storing the nearest published date
+	 * @param string|$lang - Look for published content dates in this language
+	 * @return String - A string to use as the memcached string
+	 */
+	protected function getMemcKeyNearestDate( $lang ) {
+		$date = date('Y-m-d');
+		$nearestKey = wfMemcKey( 'videopagetool', 'nearest-date', $lang, $date );
+		return $nearestKey;
 	}
 
 	/**
@@ -352,6 +364,7 @@ class VideoPageToolProgram extends WikiaModel {
 	protected function invalidateCache() {
 		$this->invalidateCacheCompletedSections();
 		$this->wg->Memc->delete( $this->getMemcKey() );
+		$this->wg->Memc->delete( $this->getMemcKeyNearestDate( $this->language ) );
 	}
 
 	/**

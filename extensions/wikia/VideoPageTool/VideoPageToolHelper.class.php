@@ -99,7 +99,7 @@ class VideoPageToolHelper extends WikiaModel {
 	/**
 	 * Get video data
 	 * @param string $title
-	 * $param string $altThumbTitle
+	 * @param string $altThumbTitle
 	 * @param string $displayTitle
 	 * @param string $description
 	 * @param array $thumbOptions
