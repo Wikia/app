@@ -90,10 +90,10 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 			// stop it later
 			this.$bxSlider.on({
 				'mouseenter.autoHover': function(){
-					$( this ).stopAuto();
+					that.$bxSlider.stopAuto();
 				},
 				'mouseleave.autohover': function(){
-					$( this ).startAuto();
+					that.$bxSlider.startAuto();
 				}
 			});
 
@@ -229,11 +229,11 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 			// It's now a video slider, don't show thumbnails anymore
 			this.isVideoSlider = true;
 
-			// Stop slider autoscroll because we're watching videos now
-			this.slider.stopAuto( true );
-
 			// don't let the slider start autoHover again
-			this.$bxSlider.off( '.autoHover' );
+			this.$bxSlider.off( '.autohover' );
+
+			// Stop slider autoscroll because we're watching videos now
+			this.$bxSlider.stopAuto();
 
 			// hide all images so they don't show up on slide
 			// note: looping through slide.$image doesn't work because it doesn't count clones
