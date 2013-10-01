@@ -1138,8 +1138,8 @@ class ChangeLogPager extends TablePager {
 				. $this->mWikiId;
 		}
 
-		$variable = $this->getRequest()->getVal( 'variable', false );
-		if ( $variable !== false ) {
+		$variable = $this->getRequest()->getInt( 'variable' );
+		if ( $variable > 0 ) {
 			$query[ 'conds' ][ ] = WikiFactory::table( 'city_list_log', 'cl_type' ) . '=' . WikiFactory::LOG_VARIABLE;
 			$query[ 'conds' ][ ] = WikiFactory::table( 'city_list_log', 'cl_var_id' ) . '=' . $variable;
 		}
