@@ -71,7 +71,7 @@ class JsonFormatSimplifier {
 	private function clearEmptyParagraphs( &$paragraphs ) {
 		$paragraphs = array_filter( $paragraphs, function( $element ) {
 			if ( $element["type"] == "paragraph" ) {
-				return sizeof( trim( $element["text"] ) ) > 0;
+				return strlen( trim( $element["text"] ) ) > 0;
 			}
 			return true;
 		});
