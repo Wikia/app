@@ -138,11 +138,11 @@ define( 'views.videopageadmin.edit', [
 
 					// jump back up to form box if errors are present
 					if ( !success ) {
-						$firstError = $( '.error' ).eq(0);
+						$firstError = $( '.error' ).eq( 0 );
 						$firstError
 							.closest( '.form-box' )
-							.get(0)
-							.scrollIntoView(true);
+							.get( 0 )
+							.scrollIntoView( true );
 					}
 			});
 
