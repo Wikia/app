@@ -28,7 +28,6 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 		this.slides = sliderModel.slides;
 		this.thumbs = sliderModel.thumbs;
 
-
 		this.init();
 	}
 
@@ -74,13 +73,14 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 			// thumbs visibility toggle
 			this.initThumbShowHide();
 
-			// play video
+			// play video when thumbnail is clicked
 			this.$thumbs.on( 'click', '.video', function( e ) {
 				e.preventDefault();
 
 				that.handleThumbClick( $( this ) );
 			});
 
+			// play video when large image is clicked
 			this.$bxSlider.on( 'click', '.slide-image', function() {
 				that.handleSlideClick( $( this ) );
 			});
@@ -107,7 +107,9 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 		handleThumbClick: function( $thumb ){
 			var index = $thumb.index();
 
-			this.switchToVideoSlider();
+			if ( !this.isVideoSlider ) {
+				this.switchToVideoSlider();
+			}
 
 			if( this.slider.getCurrentSlide() === index ) {
 				// play the video
@@ -122,14 +124,17 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 		 * @desc When a slide is clicked, convert to video slider and play the video
 		 */
 		handleSlideClick: function( $slideImage ) {
-			this.switchToVideoSlider();
+			if ( !this.isVideoSlider ) {
+				this.switchToVideoSlider();
+			}
 
 			// Get the slide's index from the data attr instead of index() b/c slides are cloned in bxSlider
 			var index = $slideImage.data( 'index' );
 
 			this.playVideo( this.slides[ index ] );
 		},
-		/* @desc When an arrow is clicked, if it's already a video slider, play the next video. Otherwise, do nothing,
+		/*
+		 * @desc When an arrow is clicked, if it's already a video slider, play the next video. Otherwise, do nothing,
 		 * just let the slider switch to the next image.
 		 */
 		playVideo: function( slide ) {
@@ -149,22 +154,22 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 				} else {
 					// cache embed data
 					slide.embedData = json;
+
+					// Actually do the video embed
+					that.videoInstance = new VideoBootstrap(
+						slide.$video[ 0 ],
+						slide.embedData.embedCode,
+						'videoHomePage'
+					);
+
+					// Wait till video has loaded and update the slider viewport height.
+					setTimeout(function() {
+						that.$bxSlider.redrawSlider();
+					}, 1000);
 				}
-
-				// Actually do the video embed
-				that.videoInstance = new VideoBootstrap(
-					slide.$video[ 0 ],
-					slide.embedData.embedCode,
-					'videoHomePage'
-				);
-
-				// Wait till video has loaded and update the slider viewport height.
-				setTimeout(function() {
-					that.$bxSlider.redrawSlider();
-				}, 1000);
-
 			});
 		},
+
 		/*
 		 * @desc Get video data if we don't have it already or if the window has resized and we want to get the embed
 		 * code at a different size.
@@ -194,6 +199,9 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 
 		},
 
+		/*
+		 * @desc Calculate the width at which the video should be loaded.  It can change based on container width
+		 */
 		getWidthForVideo: function( slide ) {
 			// get the container width minus videoPadding for left/right arrows
 			var width = this.$sliderWrapper.width() - this.videoPadding;
@@ -214,6 +222,9 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 			}
 		},
 
+		/*
+		 * @desc Update settings because it's not a video slider
+		 */
 		switchToVideoSlider: function() {
 			// It's now a video slider, don't show thumbnails anymore
 			this.isVideoSlider = true;
@@ -230,7 +241,7 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 		},
 
 		/*
-		 * @desc Toggle thumb visibility using a timeout so hovering over controls will not hide thumbs
+		 * @desc Toggle thumb row visibility using a timeout so hovering over controls will not hide thumbs
 		 */
 		initThumbShowHide: function() {
 			var that = this,
@@ -250,6 +261,7 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 				.on('mouseleave', '.bx-pager-item', function() {
 					setHoverTimeout();
 				});
+
 			that.$thumbs
 				.on( 'mouseenter', function() {
 					clearTimeout( hoverTimeout );
@@ -258,6 +270,7 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 					setHoverTimeout();
 				});
 		},
+
 		/*
 		 * @desc Something has happened (like container resize) to invalidate cached embed data, so clear it.
 		 */
