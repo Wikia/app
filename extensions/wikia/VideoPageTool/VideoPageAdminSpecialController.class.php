@@ -115,13 +115,13 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 				// update original asset data
 				foreach ( $data as $order => $row ) {
 					foreach ( $row as $name => $value ) {
-						if ( array_key_exists( $name, $videos[$order] ) && strcmp( $videos[$order][$name], $value ) != 0 ) {
+						if ( array_key_exists( $name, $videos[$order] ) && $videos[$order][$name] != $value ) {
 							$videos[$order][$name] = $value;
 						}
 
 						// replace alternative thumbnail
 						if ( $name == 'altThumbTitle' && array_key_exists( 'altThumbKey', $videos[$order] )
-							&& strcmp( $videos[$order]['altThumbKey'], $value ) != 0 ) {
+							&& $videos[$order]['altThumbKey'] != $value ) {
 							$videos[$order] = $helper->replaceThumbnail( $videos[$order], $value );
 						}
 					}
