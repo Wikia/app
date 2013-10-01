@@ -71,13 +71,14 @@ define( 'models.videopageadmin.validator', [ 'jquery' ], function( $ ) {
 		/*
 		 * call submit on the DOM element to prevent retriggering the jQuery event
 		 */
-		onSubmit: function( e ) {
-			e.preventDefault();
-
+		onSubmit: function() {
 			// only execute if method exists in context
 			if ( this.formIsValid && this.formIsValid() ) {
 				this.$form[0].submit();
-			}
+				return true;
+			} 
+
+			return false;
 		},
 
 		/*
