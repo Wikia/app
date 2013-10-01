@@ -44,7 +44,9 @@ ve.ui.MWMediaEditDialog.static.toolbarGroups = [
 		'exclude': [
 			{ 'group': 'format' },
 			{ 'group': 'structure' },
-			'referenceList'
+			'referenceList',
+			'wikiaMediaInsert',
+			'mediaInsert'
 		]
 	}
 ];
