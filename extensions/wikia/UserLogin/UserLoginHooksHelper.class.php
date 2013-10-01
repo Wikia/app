@@ -147,9 +147,7 @@ class UserLoginHooksHelper {
 	 * @return bool
 	 */
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
-		global $wgWikiaEnableConfirmEditExt;
 		$vars['wgEnableUserLoginExt'] = true;
-		$vars['wgWikiaEnableConfirmEditExt'] = $wgWikiaEnableConfirmEditExt;
 		return true;
 	}
 
