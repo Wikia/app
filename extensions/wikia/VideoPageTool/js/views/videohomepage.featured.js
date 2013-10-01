@@ -161,7 +161,7 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 				// Wait till video has loaded and update the slider viewport height.
 				setTimeout(function() {
 					that.$bxSlider.redrawSlider();
-				}, 2000);
+				}, 1000);
 
 			});
 		},
@@ -215,9 +215,6 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 		},
 
 		switchToVideoSlider: function() {
-			var len = this.slides.length,
-				i;
-
 			// It's now a video slider, don't show thumbnails anymore
 			this.isVideoSlider = true;
 
@@ -227,9 +224,9 @@ define( 'views.videohomepage.featured', [ 'jquery', 'wikia.nirvana', 'wikia.vide
 			// don't let the slider start autoHover again
 			this.$bxSlider.off( '.autoHover' );
 
-			for( i = 0; i < len; i++ ) {
-				this.slides[ i ].$image.hide();
-			}
+			// hide all images so they don't show up on slide
+			// note: looping through slide.$image doesn't work because it doesn't count clones
+			this.$bxSlider.find( '.slide-image' ).hide();
 		},
 
 		/*
