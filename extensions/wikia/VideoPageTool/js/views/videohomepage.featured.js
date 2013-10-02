@@ -120,6 +120,10 @@ define( 'views.videohomepage.featured', [
 		handleThumbClick: function( $thumb ){
 			var index = $thumb.index();
 
+			track({
+					label: 'featured-thumbnail'
+			});
+
 			if ( !this.isVideoSlider ) {
 				this.switchToVideoSlider();
 			}
@@ -131,10 +135,6 @@ define( 'views.videohomepage.featured', [
 			} else {
 				// Go to the selected slide based on thumbnail that was clicked
 				this.slider.goToSlide( index );
-
-				track({
-						label: 'featured-thumbnail'
-				});
 			}
 
 		},
