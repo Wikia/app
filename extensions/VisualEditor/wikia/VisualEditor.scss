@@ -1,0 +1,32 @@
+// Oasis Imports
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/layout";
+
+// VE Imports
+@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/ve.ui.Icons-vector";
+@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/ve.ui.Surface";
+@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/ve.ui.Tool";
+
+/*
+ * Fixes background colors in inspectors and dialogs
+ * Fixes width problems inherited from Oasis responsive breakpoints
+ */
+.ve-ui-frame-body,
+.ve-ui-popupWidget-body {
+	background: $color-page;
+	min-width: 0;
+}
+
+/*
+ * Fixes link type-ahead positioning due to Oasis margins set on lists
+ */
+.WikiaArticle .ve-ui-selectWidget {
+	margin: 0;
+}
+
+/*
+ * Fixes font size for type-ahead widget. This style is from mw init.
+ */
+.ve-init-mw-viewPageTarget-surface .ve-ui-menuWidget {
+	font-size: .8em;
+}

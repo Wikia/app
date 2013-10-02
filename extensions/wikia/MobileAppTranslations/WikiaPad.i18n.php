@@ -266,6 +266,7 @@ $messages['ia'] = array(
  */
 $messages['id'] = array(
 	'tab-discover-no-network-dialog-title' => 'Jaringan tidak tersedia',
+	'tab-search-loading-message' => 'Mencari...',
 );
 
 /** Ingush (ГӀалгӀай)

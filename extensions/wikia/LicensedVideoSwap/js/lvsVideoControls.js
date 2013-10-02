@@ -51,7 +51,7 @@ define( 'lvs.videocontrols', [ 'wikia.videoBootstrap', 'wikia.nirvana', 'jquery'
 				$parent = $this.parent(),
 				$wrapper,
 				trackingRank = 0,
-				trackingLabel = tracker.labels.NON_PREMIUM;
+				isPremium = 1;
 
 			$row.find( '.swap-button' ).attr( 'data-video-swap', fileTitle );
 
@@ -72,26 +72,25 @@ define( 'lvs.videocontrols', [ 'wikia.videoBootstrap', 'wikia.nirvana', 'jquery'
 
 				// For tracking purposes, figure out if premium or non-premium was clicked
 				$wrapper = $parent.closest( '.grid-3' );
-				if ( $wrapper.hasClass( 'premium' ) ) {
-					trackingLabel = tracker.labels.PREMIUM;
-				} else {
+				if ( !$wrapper.hasClass( 'premium' ) ) {
+					isPremium = 0;
 					trackingRank = 1;
 				}
 			}
 
 			tracker.track( tracker.defaults, {
 				action: tracker.actions.PLAY,
-				label: trackingLabel,
+				label: isPremium ? tracker.labels.PREMIUM : tracker.labels.NON_PREMIUM,
 				value: trackingRank
 			} );
 
 			nirvana.sendRequest({
 				controller: 'VideoHandler',
-				method: 'getEmbedCode',
+				method: (isPremium ? 'getPremiumEmbedCode' : 'getEmbedCode'),
 				data: {
 					fileTitle: fileTitle,
 					width: videoWidth,
-					autoplay: 1
+					autoplay: 1,
 				},
 				callback: function( data ) {
 					var videoInstance,

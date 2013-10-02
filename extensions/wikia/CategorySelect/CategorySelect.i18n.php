@@ -658,6 +658,13 @@ $messages['ja'] = array(
 	'tog-disablecategoryselect-v2' => 'カテゴリモジュールを無効にする（ビジュアルモードでの編集を無効にしている場合にのみ適用）',
 );
 
+/** Georgian (ქართული)
+ * @author DevaMK
+ */
+$messages['ka'] = array(
+	'categoryselect-button-add' => 'დაამატე კატეგორია',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */

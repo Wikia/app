@@ -497,7 +497,9 @@ class LoginForm extends SpecialPage {
 			wfDebug( "LoginForm::exemptFromAccountCreationThrottle: a hook allowed account creation w/o throttle\n" );
 		} else {
 			if ( ( $wgAccountCreationThrottle && $currentUser->isPingLimitable() ) ) {
-				$key = wfMemcKey( 'acctcreate', 'ip', $ip );
+				/** WIKIA CHANGE BEGIN -- use wfSharedMemcKey here **/
+				$key = wfSharedMemcKey( 'acctcreate', 'ip', $ip );
+				/** WIKIA CHANGE END **/
 				$value = $wgMemc->get( $key );
 				if ( !$value ) {
 					$wgMemc->set( $key, 0, 86400 );
@@ -1050,6 +1052,7 @@ class LoginForm extends SpecialPage {
 		$u->setNewpassword( $np, $throttle );
 
 		/* Wikia change begin */
+		//@TODO get rid of TempUser handling when it will be globally disabled
 		$tempUser = null;
 		wfRunHooks( 'MailPasswordTempUser' , array( &$u, &$tempUser ) );
 		if ( empty($tempUser) ) {

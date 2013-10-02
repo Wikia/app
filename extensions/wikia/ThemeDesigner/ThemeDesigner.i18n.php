@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'action-themedesigner' => 'access Theme Designer',
 	'themedesigner-or' => 'or',
 	'themedesigner-desc' => 'Allows wiki administrators to design a theme for a wiki',
 	'themedesigner-title' => 'Wikia Theme Designer',
@@ -69,6 +70,7 @@ please enter the name of the wiki to save.',
  * @author The Evil IP address
  */
 $messages['qqq'] = array(
+	'action-themedesigner' => '{{doc-action|themedesigner}}',
 	'themedesigner-or' => '"or", as in, either Text Wordmark *or* Graphic Wordmark.
 {{Identical|Or}}',
 	'themedesigner-desc' => '{{desc}}',
@@ -585,6 +587,7 @@ $messages['diq'] = array(
 $messages['en-gb'] = array(
 	'themedesigner-color' => 'colour',
 	'themedesigner-tab-customize' => 'Customise',
+	'themedesigner-pick-a-color' => 'Pick a colour',
 	'themedesigner-color-name-or-hex-code' => 'Colour name or hex code',
 );
 
@@ -654,6 +657,7 @@ $messages['es'] = array(
 	'themedesigner-manual-upload-error' => 'Usa el Diseñador de Temas para subir el wordmark o el fondo del wiki',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Previsualización',
+	'themedesigner-wordmark-preview-error' => '¡Error! El nombre del wiki no puede estar en blanco, por favor escribe el nombre del wiki para guardar.',
 );
 
 /** Persian (فارسی)
@@ -744,6 +748,7 @@ $messages['fi'] = array(
 /** French (français)
  * @author Gomoko
  * @author Iluvalar
+ * @author Jean-Frédéric
  * @author Peter17
  * @author Sherbrooke
  * @author Verdy p
@@ -804,6 +809,8 @@ $messages['fr'] = array(
 	'themedesigner-manual-upload-error' => 'Utilisez le Concepteur de thème pour importer un logo ou un arrière-plan pour le wiki',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Aperçu',
+	'themedesigner-wordmark-preview-error' => 'Oups ! Le nom du wiki ne peut pas être vide,
+veuillez entrer le nom du wiki pour sauvegarder.',
 );
 
 /** Galician (galego)
@@ -864,6 +871,8 @@ $messages['gl'] = array(
 	'themedesigner-manual-upload-error' => 'Use o Deseñador de temas visuais para cargar un logo ou o fondo do wiki',
 	'themedesigner-favicon-heading' => 'Logo',
 	'themedesigner-wodmark-preview' => 'Vista previa',
+	'themedesigner-wordmark-preview-error' => 'Vaites! O nome do wiki non pode quedar baleiro.
+Para gardar, escriba o nome do wiki.',
 );
 
 /** Hungarian (magyar)
@@ -871,6 +880,7 @@ $messages['gl'] = array(
  * @author TK-999
  */
 $messages['hu'] = array(
+	'action-themedesigner' => 'a Stílustervező használata',
 	'themedesigner-or' => 'vagy',
 	'themedesigner-desc' => 'Lehetővé teszi a wiki stílusának megtervezését a wiki adminisztrátorainak',
 	'themedesigner-title' => 'Wikia Stílustervező',
@@ -1153,6 +1163,7 @@ $messages['lb'] = array(
 	'themedesigner-button-ok' => 'OK',
 	'themedesigner-button-upload' => 'Eroplueden',
 	'themedesigner-button-save' => 'Späicheren',
+	'themedesigner-wordmark-preview-error' => 'Ups! Den Numm vun der Wiki kann net eidel sinn, gitt w.e.g. den Numm vun der Wiki a fir se ze späicheren.',
 );
 
 /** Macedonian (македонски)
@@ -1213,6 +1224,8 @@ $messages['mk'] = array(
 	'themedesigner-manual-upload-error' => 'Користете го Ликовниот уредник за да подигнете жиг или вики-позадина',
 	'themedesigner-favicon-heading' => 'Адресна икона',
 	'themedesigner-wodmark-preview' => 'Преглед',
+	'themedesigner-wordmark-preview-error' => 'Упс! Името на викито не може да стои празно.
+Внесете име за да можете да го зачувате викито.',
 );
 
 /** Mongolian (монгол)
@@ -1280,6 +1293,7 @@ $messages['ms'] = array(
 	'themedesigner-manual-upload-error' => 'Gunakan Pereka Tema untuk memuat naik tanda kata atau latar belakang wiki',
 	'themedesigner-favicon-heading' => 'Favikon',
 	'themedesigner-wodmark-preview' => 'Pralihat',
+	'themedesigner-wordmark-preview-error' => 'Maaf, tajuk wiki tidak boleh dibiarkan kosong. Sila berikan nama kepada wiki sebelum menyimpan.',
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -1374,6 +1388,7 @@ $messages['nb'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author Jochempluim
  * @author McDutchie
  * @author SPQRobin
  * @author Siebrand
@@ -1434,6 +1449,7 @@ $messages['nl'] = array(
 	'themedesigner-manual-upload-error' => 'Gebruik de Themaontwerper om een woordmerk of wiki achtergrond te uploaden.',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Voorvertoning',
+	'themedesigner-wordmark-preview-error' => 'Oeps! De naam van de Wiki mag niet leeg zijn, vul alsjeblieft een naam in om de wiki op te slaan.',
 );
 
 /** Deitsch (Deitsch)
@@ -1444,6 +1460,7 @@ $messages['pdc'] = array(
 
 /** Polish (polski)
  * @author BeginaFelicysym
+ * @author Clamira
  * @author Cloudissimo
  * @author Sovq
  * @author Sp5uhe
@@ -1496,7 +1513,7 @@ $messages['pl'] = array(
 	'themedesigner-dont-use-a-graphic' => 'Usuń',
 	'themedesigner-history-item' => '$1 przez $2',
 	'themedesigner-button-change-text' => 'Zmień tekst',
-	'themedesigner-reason' => 'Kreator motywu - wersja wykonana przez $1',
+	'themedesigner-reason' => 'Kreator motywu – wersja wykonana przez $1',
 	'themedesigner-size-error' => 'Niewłaściwy rozmiar pliku',
 	'themedesigner-dimensions-error' => 'Wymiary obrazu przekraczają limit',
 	'themedesigner-type-error' => 'Nieprawidłowy typ pliku',
@@ -1504,6 +1521,7 @@ $messages['pl'] = array(
 	'themedesigner-manual-upload-error' => 'Użyj Kreatora motywu aby zamieścić logo lub tło',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Podgląd',
+	'themedesigner-wordmark-preview-error' => 'Błąd - nazwa wiki nie może być usta, wprowadź nazwę wiki aby zapisać.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -1750,6 +1768,7 @@ $messages['roa-tara'] = array(
  * @author Eleferen
  * @author Kaganer
  * @author Kuzura
+ * @author Okras
  */
 $messages['ru'] = array(
 	'themedesigner-or' => 'или',
@@ -1806,6 +1825,7 @@ $messages['ru'] = array(
 	'themedesigner-manual-upload-error' => 'Использовать Конструктор тем для загрузки логотипа и фонового изображения на вики',
 	'themedesigner-favicon-heading' => 'Фавикон',
 	'themedesigner-wodmark-preview' => 'Предпросмотр',
+	'themedesigner-wordmark-preview-error' => 'Ой! Название проекта не может быть пустым. Пожалуйста, введите имя проекта для сохранения.',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -1910,6 +1930,8 @@ $messages['sv'] = array(
 	'themedesigner-manual-upload-error' => 'Använd temadesignern för att ladda upp logotyp eller wiki-bakgrund',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Förhandsgranska',
+	'themedesigner-wordmark-preview-error' => 'Hoppsan! Wikins namn kan inte vara tomt,
+var god ange wikins namn för att spara.',
 );
 
 /** Telugu (తెలుగు)
@@ -2063,6 +2085,7 @@ $messages['uk'] = array(
 	'themedesigner-manual-upload-error' => 'Використовувати Дизайнер тем, щоб завантажити логотип або тло вікі',
 	'themedesigner-favicon-heading' => 'Фавікон',
 	'themedesigner-wodmark-preview' => 'Попередній перегляд',
+	'themedesigner-wordmark-preview-error' => "Йой! Назва вікі не можу бути порожньою, будь ласка, введіть ім'я вікі для збереження.",
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -2125,6 +2148,13 @@ $messages['vi'] = array(
 	'themedesigner-manual-upload-error' => 'Sử dụng Thiết kế chủ đề để tải lên nhãn hiệu hoặc nền cho wiki',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Xem thử',
+);
+
+/** Wu (吴语)
+ * @author 十弌
+ */
+$messages['wuu'] = array(
+	'themedesigner-wordmark-preview-error' => '皇天！wiki個名字嘸處空起，打進去再保存。',
 );
 
 /** Simplified Chinese (中文（简体）‎)
