@@ -32,12 +32,6 @@ define( 'models.videohomepage.featured', [ 'jquery' ], function( $ ) {
 					$videoThumb: that.thumbs[ slides.length ].$video,
 					$image: $this.find( '.slide-image' ),
 					videoKey: that.thumbs[ slides.length ].$video.children( 'img' ).attr( 'data-video-key' ),
-					current: 'image',
-					switchToVideo: function() {
-						this.$image.hide();
-						this.$video.show();
-						this.current = 'video';
-					},
 					embedData: null
 				});
 			});

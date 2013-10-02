@@ -47,6 +47,7 @@ define( 'views.videohomepage.featured', [
 	Featured.prototype = {
 		init: function() {
 			this.initSlider();
+			this.initTitleEllipses();
 		},
 		initSlider: function() {
 			this.slider = this.$bxSlider.bxSlider({
@@ -58,6 +59,7 @@ define( 'views.videohomepage.featured', [
 				prevText: '',
 				auto: true,
 				speed: 400,
+				mode: 'fade',
 				// not using this b/c it's buggy
 				autoHover: false
 			});
@@ -75,7 +77,7 @@ define( 'views.videohomepage.featured', [
 			this.$sliderControls = this.$sliderWrapper.find( '.bx-pager' );
 
 			// left/right padding for videos so arrows don't overlap
-			this.videoPadding = ( this.$sliderWrapper.find( '.bx-prev' ).width() * 2 ) + 30;
+			this.videoPadding = ( this.$sliderWrapper.find( '.bx-prev' ).width() * 2 ) + 130;
 
 			this.bindEvents();
 		},
@@ -118,25 +120,28 @@ define( 'views.videohomepage.featured', [
 		 * @desc When a thumbnail is clicked, convert to video slider and slide to the corresponding slide
 		 */
 		handleThumbClick: function( $thumb ){
-			var index = $thumb.index();
+			var index = $thumb.closest( 'li' ).index();
 
-			track({
-					label: 'featured-thumbnail'
-			});
+			if( !$thumb.hasClass( 'playing' ) ) {
+				if ( !this.isVideoSlider ) {
+					this.switchToVideoSlider();
+				}
 
-			if ( !this.isVideoSlider ) {
-				this.switchToVideoSlider();
+				this.$thumbs.slideUp();
+
+				track({
+						label: 'featured-thumbnail'
+				});
+
+				if( this.slider.getCurrentSlide() === index ) {
+					// play the video
+					this.playVideo( this.slides[ index ] );
+
+				} else {
+					// Go to the selected slide based on thumbnail that was clicked
+					this.slider.goToSlide( index );
+				}
 			}
-
-			if( this.slider.getCurrentSlide() === index ) {
-				// play the video
-				this.playVideo( this.slides[ index ] );
-
-			} else {
-				// Go to the selected slide based on thumbnail that was clicked
-				this.slider.goToSlide( index );
-			}
-
 		},
 		/*
 		 * @desc When a slide is clicked, convert to video slider and play the video
@@ -164,7 +169,9 @@ define( 'views.videohomepage.featured', [
 				this.videoInstance.destroy();
 			}
 
-			slide.switchToVideo();
+
+			this.$thumbs.find( '.playing' ).removeClass( 'playing' );
+			slide.$videoThumb.addClass( 'playing' );
 
 			$.when( data ).done( function( json ) {
 				if( json.error ) {
@@ -257,9 +264,10 @@ define( 'views.videohomepage.featured', [
 			// Stop slider autoscroll because we're watching videos now
 			this.$bxSlider.stopAuto();
 
-			// hide all images so they don't show up on slide
-			// note: looping through slide.$image doesn't work because it doesn't count clones
-			this.$bxSlider.find( '.slide-image' ).hide();
+			// hide all images so they don't show up on slide and show all videos
+			// note: looping through slide.$image/$video doesn't work because it doesn't count clones
+			this.$bxSlider.find( '.slide-image' ).hide()
+				.find( '.slide-video' ).show();
 		},
 
 		/*
@@ -304,6 +312,65 @@ define( 'views.videohomepage.featured', [
 				this.slides[ i ].embedData = null;
 			}
 
+		},
+
+		initTitleEllipses: function() {
+			var that = this,
+				$titles = this.$thumbs.find( '.title' ).find( 'p' );
+
+			$titles.each( function() {
+				var $this = $( this );
+				if( $this.height() > $this.parent().height() ) {
+					that.doEllipses( $this );
+				}
+			});
+		},
+
+		doEllipses: function( $elem ) {
+			var oText = $elem.text(),
+				words = oText.split( ' ' ),
+				len = words.length,
+				i,
+				$spans,
+				lineCount = 0,
+				maxLines = 2,
+				spanTop = null,
+				currSpanTop;
+
+			for( i = 0; i < len; i++ ) {
+				words[ i ] = '<span>' + words[ i ] + '</span>';
+			}
+
+			$elem.html( words.join( ' ' ) );
+
+			$spans = $elem.find( 'span' );
+
+			$spans.each( function() {
+				var $this = $( this );
+
+				currSpanTop = $this.offset().top;
+
+				// if it's the first span, set the value and move on
+				if( spanTop === null ) {
+					spanTop = currSpanTop;
+				} else if( lineCount === maxLines ) {
+					// hide everthing if we've already reached our max lines
+					$this.hide();
+				} else {
+					if( spanTop !== currSpanTop ) {
+						// we're at a new line, increment lineCount
+						lineCount += 1;
+						// update span top with the new y coordinate
+						spanTop = currSpanTop;
+					}
+
+					if( lineCount === maxLines ) {
+						// hide the first word on the new line and the last word in the line before the max lines
+						// reached
+						$this.hide().prev().hide().before( '...' );
+					}
+				}
+			});
 		}
 	};
 
