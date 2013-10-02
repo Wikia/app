@@ -57,7 +57,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	/**
 	 * Edit page
 	 * @requestParam string language
-	 * @requestParam string date [yyyy-mm-dd]
+	 * @requestParam string date [timestamp]
 	 * @requestParam string section [featured/category/fan]
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
@@ -149,6 +149,53 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		// TODO: not sure if these are needed in edit(), just in the sub views like "featured" etc.
 		$this->date = $date;
 		$this->language = $language;
+	}
+
+	/**
+	 * Publish program
+	 * @requestParam string language
+	 * @requestParam string date [timestamp]
+	 * @responseParam string result [ok/error]
+	 * @responseParam string msg - result message
+	 */
+	public function publish() {
+		$time = $this->getVal( 'date', time() );
+		$language = $this->getVal( 'language', VideoPageToolHelper::DEFAULT_LANGUAGE );
+
+		if ( $this->request->wasPosted() ) {
+			$program = VideoPageToolProgram::newProgram( $language, $time );
+			if ( !$program->exists() ) {
+				$this->result = 'error';
+				$this->msg = wfMessage( 'videopagetool-error-unknown-program' )->plain();
+				return false;
+			}
+
+			// get all sections
+			$helper = new VideoPageToolHelper();
+			$sections = array_keys( $helper->getSections() );
+
+			// validate program
+			if ( !$program->isPublishable( $sections ) ) {
+				$this->result = 'error';
+				$this->msg = wfMessage( 'videopagetool-error-program-not-ready' )->plain();
+				return false;
+			}
+
+			// publish program
+			$status = $program->publishProgram();
+			if ( !$status->isGood() ) {
+				$this->result = 'error';
+				$this->msg = $status->getMessage();
+				return false;
+			}
+
+			// redirect to Special:VideoPageTool
+			$url = SpecialPage::getTitleFor( 'VideoPageAdmin' )->getLocalURL();
+			$msg = wfMessage( 'videopagetool-success-publish' )->plain();
+			NotificationsController::addConfirmation( $msg, NotificationsController::CONFIRMATION_CONFIRM );
+			$this->getContext()->getOutput()->redirect( $url );
+			return true;
+		}
 	}
 
 	/**

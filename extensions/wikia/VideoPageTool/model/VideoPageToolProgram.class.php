@@ -7,6 +7,7 @@ class VideoPageToolProgram extends WikiaModel {
 
 	const OBJECT_CACHE_TTL = 604800; // One week
 	const DATE_CACHE_TTL = 86400;    // One day
+	const CACHE_VERSION = 1;
 
 	protected $programId = 0;
 	protected $language = 'en';
@@ -240,7 +241,7 @@ class VideoPageToolProgram extends WikiaModel {
 				$nearestDate = $row->publish_date;
 
 				// Cache this for at most one day
-				F::app()->wg->Memc->set( $nearestKey, $nearestDate, self::DATE_CACHE_TTL );
+				$this->wg->Memc->set( $nearestKey, $nearestDate, self::DATE_CACHE_TTL );
 			}
 		}
 
@@ -342,27 +343,44 @@ class VideoPageToolProgram extends WikiaModel {
 	 * Clear cache
 	 */
 	protected function invalidateCache() {
+		$this->invalidateCacheCompletedSections();
 		$this->wg->Memc->delete( $this->getMemcKey() );
 	}
 
 	/**
 	 * Publish program
-	 * @return boolean
+	 * @return Status $status
 	 */
 	public function publishProgram() {
 		$this->setIsPublished( true );
 
-		return $this->updateToDatabase();
+		$db = wfGetDB( DB_MASTER );
+		$status = $this->updateToDatabase();
+		$db->commit();
+
+		if ( $status->isGood() && $status->value > 0 ) {
+			$this->invalidateCache();
+		}
+
+		return $status;
 	}
 
 	/**
 	 * Unpublish program
-	 * @return boolean
+	 * @return Status $status
 	 */
 	public function unpublishProgram() {
 		$this->setIsPublished( false );
 
-		return $this->updateToDatabase();
+		$db = wfGetDB( DB_MASTER );
+		$status = $this->updateToDatabase();
+		$db->commit();
+
+		if ( $status->isGood() && $status->value > 0 ) {
+			$this->invalidateCache();
+		}
+
+		return $status;
 	}
 
 	/**
@@ -395,7 +413,7 @@ class VideoPageToolProgram extends WikiaModel {
 			);
 
 			$programs = array();
-			while ( $row = $db->fetchObject($result) ) {
+			while ( $row = $db->fetchObject( $result ) ) {
 				$programs[$row->publish_date] = $row->is_published;
 			}
 
@@ -502,6 +520,7 @@ class VideoPageToolProgram extends WikiaModel {
 		// save cache
 		$this->saveToCache();
 		$this->invalidateCachePrograms( $section );
+		$this->invalidateCacheCompletedSections();
 
 		foreach ( $assetList as $assetObj ) {
 			$assetObj->saveToCache();
@@ -525,6 +544,69 @@ class VideoPageToolProgram extends WikiaModel {
 		$data = $className::formatFormData( $requiredRows, $formValues, $errMsg );
 
 		return $data;
+	}
+
+	/**
+	 * check if the program is ready to be published
+	 * @param array $sections - required sections
+	 * @return boolean
+	 */
+	public function isPublishable( $sections ) {
+		sort( $sections );
+		return ( $sections == $this->getCompletedSections( $sections ) ) ? true : false;
+	}
+
+	/**
+	 * get list of completed sections
+	 * @param array $sections - required sections
+	 * @return array $list - completed sections
+	 */
+	public function getCompletedSections( $sections ) {
+		wfProfileIn( __METHOD__ );
+
+		$memcKey = $this->getMemcKeyCompletedSections();
+		$list = $this->wg->Memc->get( $memcKey );
+		if ( !is_array( $list ) ) {
+			$db = wfGetDB( DB_SLAVE );
+
+			$result = $db->select(
+				array( 'vpt_program', 'vpt_asset' ),
+				array( 'distinct section' ),
+				array(
+					'vpt_program.program_id' => $this->programId,
+					'vpt_asset.section' => $sections,
+				),
+				__METHOD__,
+				array( 'ORDER BY' => 'section' ),
+				array( 'vpt_asset' => array( 'JOIN', 'vpt_asset.program_id = vpt_program.program_id' ) )
+			);
+
+			$list = array();
+			while ( $row = $db->fetchObject( $result ) ) {
+				$list[] = $row->section;
+			}
+
+			$this->wg->Memc->set( $memcKey, $list, 60*60*24 );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $list;
+	}
+
+	/**
+	 * get memcache key for completed sections
+	 * @return string
+	 */
+	public function getMemcKeyCompletedSections() {
+		return wfMemcKey( 'videopagetool', 'completed_sections', self::CACHE_VERSION, $this->programId );
+	}
+
+	/**
+	 * clear cache for completed sections
+	 */
+	protected function invalidateCacheCompletedSections() {
+		$this->wg->Memc->delete( $this->getMemcKeyCompletedSections() );
 	}
 
 }
