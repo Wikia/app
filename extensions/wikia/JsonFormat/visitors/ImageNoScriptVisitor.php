@@ -12,6 +12,9 @@ class ImageNoScriptVisitor extends DOMNodeVisitorBase {
 	 * @return bool
 	 */
 	public function canVisit(DOMNode $currentNode) {
+		/** @var DOMElement $currentNode */
+		DomHelper::verifyDomElementArgument( $currentNode, "currentNode" );
+
 		return DomHelper::isElement( $currentNode, 'a' )
 			&& DomHelper::hasClass( $currentNode, 'image' )
 			&& $currentNode->childNodes->length == 2
@@ -24,6 +27,10 @@ class ImageNoScriptVisitor extends DOMNodeVisitorBase {
 	 * @param DOMNode $currentNode
 	 */
 	public function visit(DOMNode $currentNode) {
+		/** @var DOMElement $currentNode */
+		DomHelper::verifyDomElementArgument( $currentNode, "currentNode" );
+
+		/** @noinspection PhpUndefinedMethodInspection we check that in canVisit */
 		$src = $currentNode->childNodes->item(1)->childNodes->item(0)->getAttribute('src');
 		$this->getJsonFormatBuilder()->add( new JsonFormatImageNode($src) );
 	}

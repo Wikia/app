@@ -12,6 +12,8 @@ class ImageFigureNoScriptVisitor extends DOMNodeVisitorBase {
 	 * @return bool
 	 */
 	public function canVisit(DOMNode $currentNode) {
+		/** @var DOMElement $currentNode */
+
 		return
 			DomHelper::isElement( $currentNode, 'figure' )
 			&& DomHelper::isElement( $currentNode->childNodes->item(0), 'a' )
@@ -25,8 +27,11 @@ class ImageFigureNoScriptVisitor extends DOMNodeVisitorBase {
 	 * @param DOMNode $currentNode
 	 */
 	public function visit(DOMNode $currentNode) {
+		/** @var DOMElement $currentNode */
+		DomHelper::verifyDomElementArgument( $currentNode, "currentNode" );
+
 		$img = $currentNode->childNodes->item(0)->childNodes->item(1)->childNodes->item(0);
-		// @var DataElement $img
+		/** @var DOMElement $img */
 		$src = $img->getAttribute('src');
 		$caption = $currentNode->childNodes->item(2)->childNodes->item(0)->textContent;
 		$imageFigure = new JsonFormatImageFigureNode( $src, $caption );

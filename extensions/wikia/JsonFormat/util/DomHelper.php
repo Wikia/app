@@ -18,7 +18,7 @@ class DomHelper {
 	/**
 	 * returns true if DOMNode is DOMElement with $tagName
 	 * if $tagName is null (default) we don't check tagName.
-	 * @param DOMElement|null $domNode
+	 * @param DOMElement|DOMNode|null $domNode
 	 * @param string|null $tagName
 	 * @return bool
 	 */
@@ -31,6 +31,20 @@ class DomHelper {
 			}
 		} else {
 			return false;
+		}
+	}
+
+	/**
+	 * @param $domElement
+	 * @param string $variableName
+	 * @throws InvalidArgumentException
+	 */
+	public static function verifyDomElementArgument( $domElement, $variableName = "domElement" ) {
+		if ( $domElement === null ) {
+			throw new InvalidArgumentException( "Argument $variableName is null." );
+		}
+		if ( !($domElement instanceof DOMElement) ) {
+			throw new InvalidArgumentException( "Argument $variableName is not DOMElement as expected." );
 		}
 	}
 

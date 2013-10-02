@@ -19,6 +19,8 @@ class HeaderVisitor extends DOMNodeVisitorBase {
 	 * @return bool
 	 */
 	public function canVisit( DOMNode $currentNode ) {
+		/** @var DOMElement $currentNode */
+
 		return DomHelper::isElement( $currentNode )
 			&& in_array( $currentNode->tagName, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7'] );
 	}
@@ -27,6 +29,9 @@ class HeaderVisitor extends DOMNodeVisitorBase {
 	 * @param DOMNode $currentNode
 	 */
 	public function visit( DOMNode $currentNode ) {
+		/** @var DOMElement $currentNode */
+		DomHelper::verifyDomElementArgument( $currentNode, "currentNode" );
+
 		if( $this->verifyFirstChildHasClass( $currentNode, "mw-headline" ) ) {
 			$text = $currentNode->childNodes->item(0)->textContent;
 			$section = new JsonFormatSectionNode( intval($currentNode->tagName[1]), $text );

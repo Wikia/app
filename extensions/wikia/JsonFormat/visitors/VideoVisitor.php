@@ -11,6 +11,8 @@ class VideoVisitor extends DOMNodeVisitorBase {
 	 * @return bool
 	 */
 	public function canVisit( DOMNode $currentNode ) {
+		/** @var DOMElement $currentNode */
+
 		return DomHelper::isElement( $currentNode, 'a' )
 				&& DomHelper::hasClass( $currentNode, 'video' )
 				&& DomHelper::hasChildTag( $currentNode, 'img' )

@@ -19,6 +19,8 @@ class BodyVisitor extends DOMNodeVisitorBase {
 	 * @return bool
 	 */
 	public function canVisit( DOMNode $currentNode ) {
+		/** @var DOMElement $currentNode */
+
 		return DomHelper::isElement( $currentNode, 'body' );
 	}
 
@@ -26,6 +28,9 @@ class BodyVisitor extends DOMNodeVisitorBase {
 	 * @param DOMNode $currentNode
 	 */
 	public function visit( DOMNode $currentNode ) {
+		/** @var DOMElement $currentNode */
+		DomHelper::verifyDomElementArgument( $currentNode, "currentNode" );
+
 		$this->getJsonFormatBuilder()
 			->pushNode( new JsonFormatRootNode() );
 		$this->iterate( $currentNode->childNodes );

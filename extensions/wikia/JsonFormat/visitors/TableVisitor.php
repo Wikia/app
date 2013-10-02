@@ -12,6 +12,8 @@ class TableVisitor extends DOMNodeVisitorBase {
 	 * @return bool
 	 */
 	public function canVisit(DOMNode $currentNode) {
+		/** @var DOMElement $currentNode */
+
 		return DomHelper::isElement($currentNode, 'table');
 	}
 
@@ -19,6 +21,9 @@ class TableVisitor extends DOMNodeVisitorBase {
 	 * @param DOMNode $currentNode
 	 */
 	public function visit(DOMNode $currentNode) {
+		/** @var DOMElement $currentNode */
+		DomHelper::verifyDomElementArgument( $currentNode, "currentNode" );
+
 		$table = new JsonFormatTableNode( );
 		$this->getJsonFormatBuilder()->pushNode( $table );
 		for( $i = 0; $i < $currentNode->childNodes->length; $i++ ) {
@@ -31,6 +36,7 @@ class TableVisitor extends DOMNodeVisitorBase {
 
 	protected function tryVisitTBody( $currentNode ) {
 		if ( DomHelper::isElement( $currentNode, 'tbody' ) ) {
+			/** @var DOMElement $currentNode */
 			for( $i = 0; $i < $currentNode->childNodes->length; $i++ ) {
 				$childNode = $currentNode->childNodes->item($i);
 				$this->tryVisitRow( $childNode );
@@ -40,6 +46,7 @@ class TableVisitor extends DOMNodeVisitorBase {
 
 	protected function tryVisitRow( $currentNode ) {
 		if ( DomHelper::isElement( $currentNode, 'tr' ) ) {
+			/** @var DOMElement $currentNode */
 			$row = new JsonFormatTableRowNode( );
 			$this->getJsonFormatBuilder()->pushNode( $row );
 

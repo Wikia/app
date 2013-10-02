@@ -12,6 +12,8 @@ class ListVisitor extends DOMNodeVisitorBase {
 	 * @return bool
 	 */
 	public function canVisit(DOMNode $currentNode) {
+		/** @var DOMElement $currentNode */
+
 		return DomHelper::isElement( $currentNode, 'ul' ) || DomHelper::isElement( $currentNode, 'ol' );
 	}
 
@@ -19,6 +21,9 @@ class ListVisitor extends DOMNodeVisitorBase {
 	 * @param DOMNode $currentNode
 	 */
 	public function visit(DOMNode $currentNode) {
+		/** @var DOMElement $currentNode */
+		DomHelper::verifyDomElementArgument( $currentNode, "currentNode" );
+
 		$list = new JsonFormatListNode( DomHelper::isElement( $currentNode, 'ol' ) );
 		$this->getJsonFormatBuilder()->pushNode( $list );
 		for( $i = 0; $i < $currentNode->childNodes->length; $i++ ) {

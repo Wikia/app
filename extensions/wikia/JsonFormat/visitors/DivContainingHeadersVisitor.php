@@ -10,6 +10,8 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 	 * @return bool
 	 */
 	public function canVisit( DOMNode $currentNode ) {
+		/** @var DOMElement $currentNode */
+
 		return DomHelper::isElement( $currentNode, 'div' ) &&
 			\DomHelper::hasAncestorTag( $currentNode, [ "h1", "h2", "h3", "h4","h5", "h6" ]);
 	}
@@ -18,6 +20,9 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 	 * @param DOMNode $currentNode
 	 */
 	public function visit( DOMNode $currentNode ) {
+		/** @var DOMElement $currentNode */
+		DomHelper::verifyDomElementArgument( $currentNode, "currentNode" );
+
 		$this->iterate( $currentNode->childNodes );
 	}
 }

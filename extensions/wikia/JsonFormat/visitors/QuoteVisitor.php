@@ -12,6 +12,8 @@ class QuoteVisitor extends DOMNodeVisitorBase {
 	 * @return bool
 	 */
 	public function canVisit(DOMNode $currentNode) {
+		/** @var DOMElement $currentNode */
+
 		return DomHelper::isElement( $currentNode, 'dl' )
 			&& $currentNode->childNodes->length == 2
 			&& DomHelper::isElement( $currentNode->childNodes->item(0), 'dd')
@@ -25,6 +27,9 @@ class QuoteVisitor extends DOMNodeVisitorBase {
 	 * @param DOMNode $currentNode
 	 */
 	public function visit(DOMNode $currentNode) {
+		/** @var DOMElement $currentNode */
+		DomHelper::verifyDomElementArgument( $currentNode, "currentNode" );
+
 		$author = $currentNode->childNodes->item(1)->textContent;
 		$text = $currentNode->childNodes->item(0)->childNodes->item(0)->childNodes->item(1)->textContent;
 		$quoteNode = new JsonFormatQuoteNode( $author, $text );

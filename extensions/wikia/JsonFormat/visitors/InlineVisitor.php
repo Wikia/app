@@ -7,9 +7,11 @@
 
 class InlineVisitor extends DOMNodeVisitorBase {
 	private $tags;
+
 	/**
 	 * @param IDOMNodeVisitor $childrenVisitor
 	 * @param JsonFormatBuilder $jsonFormatTraversingState
+	 * @param array $tags
 	 */
 	function __construct( IDOMNodeVisitor $childrenVisitor, JsonFormatBuilder $jsonFormatTraversingState, array $tags ) {
 		parent::__construct( $childrenVisitor, $jsonFormatTraversingState );
@@ -21,6 +23,8 @@ class InlineVisitor extends DOMNodeVisitorBase {
 	 * @return bool
 	 */
 	public function canVisit( DOMNode $currentNode ) {
+		/** @var DOMElement $currentNode */
+
 		foreach ( $this->tags as $tagName ) {
 			if ( DomHelper::isElement( $currentNode, $tagName ) ) {
 				return true;
@@ -33,6 +37,9 @@ class InlineVisitor extends DOMNodeVisitorBase {
 	 * @param DOMNode $currentNode
 	 */
 	public function visit( DOMNode $currentNode ) {
+		/** @var DOMElement $currentNode */
+		DomHelper::verifyDomElementArgument( $currentNode, "currentNode" );
+
 		$this->iterate( $currentNode->childNodes );
 	}
 }

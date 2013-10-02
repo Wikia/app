@@ -12,6 +12,8 @@ class InfoboxTableVisitor extends DOMNodeVisitorBase {
 	 * @return bool
 	 */
 	public function canVisit(DOMNode $currentNode) {
+		/** @var DOMElement $currentNode */
+
 		return DomHelper::isElement( $currentNode, 'table' )
 			&& DomHelper::hasClass( $currentNode,'infobox' );
 	}
@@ -20,6 +22,9 @@ class InfoboxTableVisitor extends DOMNodeVisitorBase {
 	 * @param DOMNode $currentNode
 	 */
 	public function visit(DOMNode $currentNode) {
+		/** @var DOMElement $currentNode */
+		DomHelper::verifyDomElementArgument( $currentNode, "currentNode" );
+
 		$table = new JsonFormatInfoboxNode( );
 		$this->getJsonFormatBuilder()->pushNode( $table );
 		for( $i = 0; $i < $currentNode->childNodes->length; $i++ ) {
@@ -32,6 +37,7 @@ class InfoboxTableVisitor extends DOMNodeVisitorBase {
 
 	protected function tryVisitTBody( $currentNode ) {
 		if ( DomHelper::isElement( $currentNode, 'tbody' ) ) {
+			/** @var DOMElement $currentNode */
 			for( $i = 0; $i < $currentNode->childNodes->length; $i++ ) {
 				$childNode = $currentNode->childNodes->item($i);
 				$this->tryVisitRow( $childNode );
@@ -42,6 +48,7 @@ class InfoboxTableVisitor extends DOMNodeVisitorBase {
 	protected function tryVisitRow( $currentNode ) {
 		if ( DomHelper::isElement( $currentNode, 'tr' )
 			&& $currentNode->childNodes->length == 2 ) {
+			/** @var DOMElement $currentNode */
 			$keyValue = new JsonFormatInfoboxKeyValueNode( $currentNode->childNodes->item(0)->textContent );
 			$this->getJsonFormatBuilder()->pushInfoboxKeyValue( $keyValue );
 

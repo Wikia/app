@@ -18,7 +18,7 @@ class TextNodeVisitor extends DOMNodeVisitorBase {
 	 * @param DOMNode $currentNode
 	 */
 	public function visit( DOMNode $currentNode ) {
-		/* @var DOMText $currentNode */
+		/** @var DOMText $currentNode */
 		$text = $currentNode->textContent;
 		$this->getJsonFormatBuilder()->appendText( $text );
 	}
