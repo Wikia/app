@@ -15,7 +15,7 @@
  * @mixins ve.ui.LabeledElement
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {ve.ui.InputWidget|null} [input] Related input widget
  */
 ve.ui.InputLabelWidget = function VeUiInputLabelWidget( config ) {

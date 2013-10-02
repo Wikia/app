@@ -29,10 +29,10 @@ ve.dm.Transaction = function VeDmTransaction() {
  * @param {Array} data Data to insert
  * @returns {ve.dm.Transaction} Transaction that inserts data
  */
-ve.dm.Transaction.newFromInsertion = function ( doc, offset, insertion ) {
-	var tx = new ve.dm.Transaction();
+ve.dm.Transaction.newFromInsertion = function ( doc, offset, data ) {
+	var insertion, tx = new ve.dm.Transaction();
 	// Fix up the insertion
-	insertion = doc.fixupInsertion( insertion, offset );
+	insertion = doc.fixupInsertion( data, offset );
 	// Retain up to insertion point, if needed
 	tx.pushRetain( insertion.offset );
 	// Insert data
@@ -152,27 +152,122 @@ ve.dm.Transaction.newFromRemoval = function ( doc, range ) {
 };
 
 /**
- * Generate a transaction that replaces the contents of a branch node.
+ * Build a transaction that replaces the contents of a node with the contents of a document.
  *
- * The node whose contents are being replaced should be an unrestricted branch node.
+ * This is typically used to merge changes to a document slice back into the main document. If newDoc
+ * is a document slice of doc, it's assumed that there were no changes to doc's internal list since
+ * the slice, so any differences between internal items that doc and newDoc have in common will
+ * be resolved in newDoc's favor.
  *
- * @param {ve.dm.Document} doc Document to create transaction for
- * @param {ve.dm.Node|ve.Range} nodeOrRange Branch node or inner range of such
- * @param {Array} newData Linear model data to replace the contents of the node with
- * @returns {ve.dm.Transaction} Transaction that replaces the contents of the node
- * @throws {Error} nodeOrRange must be a ve.dm.Node or a ve.Range
+ * @param {ve.dm.Document} doc Main document
+ * @param {ve.Range|ve.dm.Node} removeNodeOrRange Node or range to remove
+ * @param {ve.dm.Document} newDoc Document to insert
+ * @returns {ve.dm.Transaction} Transaction that replaces the node and updates the internal list
+ * @throws {Error} removeNodeOrRange must be a ve.dm.Node or a ve.Range
  */
-ve.dm.Transaction.newFromNodeReplacement = function ( doc, nodeOrRange, newData ) {
-	var tx = new ve.dm.Transaction(), range = nodeOrRange;
-	if ( range instanceof ve.dm.Node ) {
-		range = range.getRange();
+ve.dm.Transaction.newFromDocumentReplace = function ( doc, removeNodeOrRange, newDoc ) {
+	var i, len, range, merge, data, metadata, listData, listMetadata, oldEndOffset, newEndOffset,
+		listNode = doc.internalList.getListNode(),
+		listNodeRange = listNode.getRange(),
+		newListNode = newDoc.internalList.getListNode(),
+		newListNodeRange = newListNode.getRange(),
+		newListNodeOuterRange = newListNode.getOuterRange(),
+		tx = new ve.dm.Transaction();
+
+	if ( removeNodeOrRange instanceof ve.dm.Node ) {
+		range = removeNodeOrRange.getRange();
+	} else if ( removeNodeOrRange instanceof ve.Range ) {
+		range = removeNodeOrRange;
+	} else {
+		throw new Error( 'removeNodeOrRange must be a ve.dm.Node or a ve.Range' );
 	}
-	if ( !( range instanceof ve.Range ) ) {
-		throw new Error( 'nodeOrRange must be a ve.dm.Node or a ve.Range' );
+
+	// Get the data and the metadata, but skip over the internal list
+	data = new ve.dm.ElementLinearData( doc.getStore(),
+		newDoc.getData( new ve.Range( 0, newListNodeOuterRange.start ), true ).concat(
+			newDoc.getData( new ve.Range( newListNodeOuterRange.end, newDoc.data.getLength() ), true )
+		)
+	);
+	metadata = new ve.dm.MetaLinearData( doc.getStore(),
+		newDoc.getMetadata( new ve.Range( 0, newListNodeOuterRange.start ), true ).concat(
+			// Merge the metadata immediately before and immediately after the internal list
+			ve.copy( ve.dm.MetaLinearData.static.merge( [
+				newDoc.metadata.getData( newListNodeOuterRange.start ),
+				newDoc.metadata.getData( newListNodeOuterRange.end )
+			] ) )
+		).concat( newDoc.getMetadata(
+			new ve.Range( newListNodeOuterRange.end, newDoc.data.getLength() ), true
+		) )
+	);
+	// Merge the stores
+	merge = doc.getStore().merge( newDoc.getStore() );
+	// Remap the store indexes in the data
+	data.remapStoreIndexes( merge );
+
+	merge = doc.internalList.merge( newDoc.internalList, newDoc.origInternalListLength || 0 );
+	// Remap the indexes in the data
+	data.remapInteralListIndexes( merge.mapping );
+	// Get data for the new internal list
+	if ( newDoc.origDoc === doc ) {
+		// newDoc is a document slice based on doc, so all the internal list items present in doc
+		// when it was cloned are also in newDoc. We need to get the newDoc version of these items
+		// so that changes made in newDoc are reflected.
+		if ( newDoc.origInternalListLength > 0 ) {
+			oldEndOffset = doc.internalList.getItemNode( newDoc.origInternalListLength - 1 ).getOuterRange().end;
+			newEndOffset = newDoc.internalList.getItemNode( newDoc.origInternalListLength - 1 ).getOuterRange().end;
+		} else {
+			oldEndOffset = listNodeRange.start;
+			newEndOffset = newListNodeRange.start;
+		}
+		listData = newDoc.getData( new ve.Range( newListNodeRange.start, newEndOffset ), true )
+			.concat( doc.getData( new ve.Range( oldEndOffset, listNodeRange.end ), true ) );
+		listMetadata = newDoc.getMetadata( new ve.Range( newListNodeRange.start, newEndOffset ), true )
+			.concat( doc.getMetadata( new ve.Range( oldEndOffset, listNodeRange.end ) , true ) );
+	} else {
+		// newDoc is brand new, so use doc's internal list as a base
+		listData = doc.getData( listNodeRange, true );
+		listMetadata = doc.getMetadata( listNodeRange, true );
 	}
-	tx.pushRetain( range.start );
-	tx.pushReplace( doc, range.start, range.end - range.start, newData );
-	tx.pushFinalRetain( doc, range.end );
+	for ( i = 0, len = merge.newItemRanges.length; i < len; i++ ) {
+		listData = listData.concat( newDoc.getData( merge.newItemRanges[i], true ) );
+		// We don't have to worry about merging metadata at the edges, because there can't be
+		// metadata between internal list items
+		listMetadata = listMetadata.concat( newDoc.getMetadata( merge.newItemRanges[i], true ) );
+	}
+
+	if ( range.end <= listNodeRange.start ) {
+		// range is entirely before listNodeRange
+		// First replace the node, then the internal list
+		tx.pushRetain( range.start );
+		tx.pushReplace( doc, range.start, range.end - range.start, data.data, metadata.data );
+		tx.pushRetain( listNodeRange.start - range.end );
+		tx.pushReplace( doc, listNodeRange.start, listNodeRange.end - listNodeRange.start,
+			listData, listMetadata
+		);
+		tx.pushRetain( doc.data.getLength() - listNodeRange.end );
+	} else if ( listNodeRange.end <= range.start ) {
+		// range is entirely after listNodeRange
+		// First replace the internal list, then the node
+		tx.pushRetain( listNodeRange.start );
+		tx.pushReplace( doc, listNodeRange.start, listNodeRange.end - listNodeRange.start,
+			listData, listMetadata
+		);
+		tx.pushRetain( range.start - listNodeRange.end );
+		tx.pushReplace( doc, range.start, range.end - range.start, data.data, metadata.data );
+		tx.pushRetain( doc.data.getLength() - range.end );
+	} else if ( range.start >= listNodeRange.start && range.end <= listNodeRange.end ) {
+		// range is entirely within listNodeRange
+		// Merge data into listData, then only replace the internal list
+		ve.batchSplice( listData, range.start - listNodeRange.start,
+			range.end - range.start, data.data );
+		ve.batchSplice( listMetadata, range.start - listNodeRange.start,
+			range.end - range.start + 1, metadata.data );
+		tx.pushRetain( listNodeRange.start );
+		tx.pushReplace( doc, listNodeRange.start, listNodeRange.end - listNodeRange.start,
+			listData, listMetadata
+		);
+		tx.pushRetain( doc.data.getLength() - listNodeRange.end );
+	}
 	return tx;
 };
 
@@ -228,7 +323,7 @@ ve.dm.Transaction.newFromAttributeChanges = function ( doc, offset, attr ) {
  * @returns {ve.dm.Transaction} Transaction that annotates content
  */
 ve.dm.Transaction.newFromAnnotation = function ( doc, range, method, annotation ) {
-	var covered, type,
+	var covered, type, annotatable,
 		tx = new ve.dm.Transaction(),
 		data = doc.data,
 		i = range.start,
@@ -237,9 +332,25 @@ ve.dm.Transaction.newFromAnnotation = function ( doc, range, method, annotation 
 		insideContentNode = false;
 	// Iterate over all data in range, annotating where appropriate
 	while ( i < range.end ) {
-		type = data.getType( i );
+		if ( data.isElementData( i ) ) {
+			type = data.getType( i );
+			if ( ve.dm.nodeFactory.isNodeContent( type ) ) {
+				if ( method === 'set' && !ve.dm.nodeFactory.canNodeTakeAnnotationType( type, annotation ) ) {
+					// Blacklisted annotations can't be set
+					annotatable = false;
+				} else {
+					annotatable = true;
+				}
+			} else {
+				// Structural nodes are never annotatable
+				annotatable = false;
+			}
+		} else {
+			// Text is always annotatable
+			annotatable = true;
+		}
 		if (
-			( data.isElementData( i ) && !ve.dm.nodeFactory.isNodeContent( type ) ) ||
+			!annotatable ||
 			( insideContentNode && !data.isCloseElementData( i ) )
 		) {
 			// Structural element opening or closing, or entering a content node

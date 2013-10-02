@@ -12,7 +12,7 @@
  * @extends ve.ce.HeadingNode
  * @constructor
  * @param {ve.dm.MWHeadingNode} model Model to observe
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.MWHeadingNode = function VeCeMWHeadingNode( model, config ) {
 	// Parent constructor

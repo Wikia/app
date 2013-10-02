@@ -1183,11 +1183,13 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container ) {
 			annotatedDomElements = [];
 			annotatedDomElementStack = [ annotatedDomElements ];
 			while (
-				ve.isArray( data[i] ) ||
-				(
-					data[i].annotations !== undefined && (
-						this.metaItemFactory.lookup( data[i].type ) ||
-						this.nodeFactory.isNodeContent( data[i].type )
+				data[i] !== undefined && (
+					ve.isArray( data[i] ) ||
+					(
+						data[i].annotations !== undefined && (
+							this.metaItemFactory.lookup( data[i].type ) ||
+							this.nodeFactory.isNodeContent( data[i].type )
+						)
 					)
 				)
 			) {

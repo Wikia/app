@@ -12,7 +12,7 @@
  * @extends ve.ce.LinkAnnotation
  * @constructor
  * @param {ve.dm.MWInternalLinkAnnotation} model Model to observe
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.MWInternalLinkAnnotation = function VeCeMWInternalLinkAnnotation( model, config ) {
 	var dmRendering;

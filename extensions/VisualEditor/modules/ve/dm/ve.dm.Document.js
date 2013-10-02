@@ -312,7 +312,7 @@ ve.dm.Document.prototype.getInternalList = function () {
  * @throws {Error} rangeOrNode must be a ve.Range or a ve.dm.Node
  */
 ve.dm.Document.prototype.getDocumentSlice = function ( rangeOrNode ) {
-	var data, range,
+	var data, range, newDoc,
 		store = this.store.clone(),
 		listRange = this.internalList.getListNode().getOuterRange();
 	if ( rangeOrNode instanceof ve.dm.Node ) {
@@ -327,10 +327,15 @@ ve.dm.Document.prototype.getDocumentSlice = function ( rangeOrNode ) {
 		// The range does not include the entire internal list, so add it
 		data = data.concat( this.getFullData( listRange ) );
 	}
-	return new this.constructor(
+	newDoc = new this.constructor(
 		new ve.dm.ElementLinearData( store, data ),
 		undefined, this.internalList
 	);
+	// Record the length of the internal list at the time the slice was created so we can
+	// reconcile additions properly
+	newDoc.origDoc = this;
+	newDoc.origInternalListLength = this.internalList.getItemNodeCount();
+	return newDoc;
 };
 
 /**

@@ -12,7 +12,7 @@
  * @extends ve.ui.TextInputWidget
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.LanguageInputWidget = function VeUiLanguageInputWidget( config ) {
 	var ulsParams, langInpObj, table;
@@ -98,7 +98,7 @@ ve.inheritClass( ve.ui.LanguageInputWidget, ve.ui.Widget );
  * of the InputWidget
  *
  * @method
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @returns {jQuery} span element
  */
 ve.ui.LanguageInputWidget.prototype.getDisplayElement = function () {

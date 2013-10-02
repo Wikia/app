@@ -13,7 +13,7 @@
  * @extends ve.ui.Widget
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {string} [name=''] HTML input name
  * @cfg {string} [value=''] Input value
  * @cfg {boolean} [readOnly=false] Prevent changes
@@ -57,7 +57,7 @@ ve.inheritClass( ve.ui.InputWidget, ve.ui.Widget );
  * Get input element.
  *
  * @method
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @returns {jQuery} Input element
  */
 ve.ui.InputWidget.prototype.getInputElement = function () {

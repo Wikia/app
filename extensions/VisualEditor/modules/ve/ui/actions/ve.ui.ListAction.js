@@ -30,7 +30,7 @@ ve.inheritClass( ve.ui.ListAction, ve.ui.Action );
  * @static
  * @property
  */
-ve.ui.ListAction.static.methods = ['wrap', 'unwrap'];
+ve.ui.ListAction.static.methods = [ 'wrap', 'unwrap' ];
 
 /* Methods */
 

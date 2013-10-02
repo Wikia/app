@@ -14,7 +14,7 @@
  *
  * @constructor
  * @param {ve.dm.ElementLinearData} data Content data
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {Object[]} [tools] Toolbar configuration
  * @cfg {string[]} [commands] List of supported commands
  */

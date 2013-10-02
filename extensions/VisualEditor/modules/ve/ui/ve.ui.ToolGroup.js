@@ -20,7 +20,7 @@
  *
  * @constructor
  * @param {ve.ui.Toolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {Array|string} [include=[]] List of tools to include
  * @cfg {Array|string} [exclude=[]] List of tools to exclude
  * @cfg {Array|string} [promote=[]] List of tools to promote to the beginning

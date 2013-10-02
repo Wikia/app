@@ -18,7 +18,7 @@
  *
  * @constructor
  * @param {ve.dm.Annotation} model Model to observe
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.Annotation = function VeCeAnnotation( model, config ) {
 	// Parent constructor

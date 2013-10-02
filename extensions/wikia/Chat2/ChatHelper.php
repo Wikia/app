@@ -165,6 +165,7 @@ class ChatHelper {
 		} else {
 			$vars[ 'wgWikiaChatUsers' ] = '';
 		}
+		$vars[ 'wgWikiaChatWindowFeatures' ] = ChatRailController::CHAT_WINDOW_FEATURES;
 
 		return true;
 	}

@@ -12,7 +12,7 @@
  * @extends ve.ce.Annotation
  * @constructor
  * @param {ve.dm.LanguageAnnotation} model Model to observe
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.LanguageAnnotation = function VeCeLanguageAnnotation( model, config ) {
 	// Parent constructor

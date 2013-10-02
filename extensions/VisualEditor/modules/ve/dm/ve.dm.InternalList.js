@@ -26,6 +26,7 @@ ve.dm.InternalList = function VeDmInternalList( doc ) {
 	this.groupsChanged = [];
 	this.keyIndexes = {};
 	this.keys = [];
+	this.nextUniqueNumber = 0;
 
 	// Event handlers
 	if ( doc ) {
@@ -43,17 +44,6 @@ ve.mixinClass( ve.dm.InternalList, ve.EventEmitter );
  * @event update
  * @param {string[]} groupsChanged List of groups changed since the last transaction
  */
-
-/* Static methods */
-
-/**
- * Is a specific key an automatically generated unique key
- * @param {string} listKey List key
- * @returns {boolean} The key is an automatically generated unique key
- */
-ve.dm.InternalList.static.isUniqueListKey = function( listKey ) {
-	return ( /^:[0-9]+$/ ).test( listKey );
-};
 
 /* Methods */
 
@@ -173,23 +163,39 @@ ve.dm.InternalList.prototype.getNodeGroup = function ( groupName ) {
 /**
  * Get a unique list key for a given group.
  *
- * Generated list keys begin with ":", so that they are obviously different from hand-coded ones.
+ * The returned list key is added to the list of unique list keys used in this group so that it
+ * won't be allocated again. It will also be associated to oldListKey so that if the same oldListKey
+ * is passed in again later, the previously allocated name will be returned.
  *
  * @method
  * @param {string} groupName Name of the group
- * @returns {string} Unique list key
+ * @param {string} oldListKey Current list key to associate the generated list key with
+ * @param {string} prefix Prefix to distinguish generated keys from non-generated ones
+ * @returns {string} Generated unique list key, or existing unique key associated with oldListKey
  */
-ve.dm.InternalList.prototype.getUniqueListKey = function ( groupName ) {
+ve.dm.InternalList.prototype.getUniqueListKey = function ( groupName, oldListKey, prefix ) {
 	var group = this.getNodeGroup( groupName ),
 		num = 0;
 
-	if ( group ) {
-		while ( group.keyedNodes[':' + num ] ) {
-			num++;
-		}
+	if ( group.uniqueListKeys[oldListKey] !== undefined ) {
+		return group.uniqueListKeys[oldListKey];
 	}
 
-	return ':' + num;
+	while ( group.keyedNodes[prefix + num] || group.uniqueListKeysInUse[prefix + num] ) {
+		num++;
+	}
+
+	group.uniqueListKeys[oldListKey] = prefix + num;
+	group.uniqueListKeysInUse[prefix + num] = true;
+	return prefix + num;
+};
+
+/**
+ * Get the next number in a monotonically increasing series.
+ * @returns {number} One higher than the return value of the previous call, or 0 on the first call
+ */
+ve.dm.InternalList.prototype.getNextUniqueNumber = function () {
+	return this.nextUniqueNumber++;
 };
 
 /**
@@ -294,7 +300,9 @@ ve.dm.InternalList.prototype.addNode = function ( groupName, key, index, node ) 
 		group = this.nodes[groupName] = {
 			'keyedNodes': {},
 			'firstNodes': [],
-			'indexOrder': []
+			'indexOrder': [],
+			'uniqueListKeys': {},
+			'uniqueListKeysInUse': {}
 		};
 	}
 	keyedNodes = group.keyedNodes[key];
@@ -409,4 +417,57 @@ ve.dm.InternalList.prototype.sortGroupIndexes = function ( group ) {
  */
 ve.dm.InternalList.prototype.clone = function ( doc ) {
 	return new this.constructor( doc || this.getDocument() );
+};
+
+/**
+ * Merge another internal list into this one.
+ *
+ * This function updates the state of this list, and returns a mapping from indexes in list to
+ * indexes in this, as well as a set of ranges that should be copied from list's linear model
+ * into this list's linear model by the caller.
+ *
+ * @param {ve.dm.InternalList} list Internal list to merge into this list
+ * @param {number} commonLength The number of elements, counted from the beginning, that the lists have in common
+ * @returns {Object} 'mapping' is an object mapping indexes in list to indexes in this; newItemRanges is an array
+ *  of ranges of internal nodes in list's document that should be copied into our document
+ */
+ve.dm.InternalList.prototype.merge = function ( list, commonLength ) {
+	var i, k, key,
+		listLen = list.getItemNodeCount(),
+		nextIndex = this.getItemNodeCount(),
+		newItemRanges = [],
+		mapping = {};
+	for ( i = 0; i < commonLength; i++ ) {
+		mapping[i] = i;
+	}
+	for ( i = commonLength; i < listLen; i++ ) {
+		// Try to find i in list.keyIndexes
+		key = undefined;
+		for ( k in list.keyIndexes ) {
+			if ( list.keyIndexes[k] === i ) {
+				key = k;
+				break;
+			}
+		}
+
+		if ( this.keyIndexes[key] !== undefined ) {
+			// We already have this key in this internal list. Ignore the duplicate that the other
+			// list is trying to merge in.
+			// NOTE: This case cannot occur in VE currently, but may be possible in the future with
+			// collaborative editing, which is why this code needs to be rewritten before we do
+			// collaborative editing.
+			mapping[i] = this.keyIndexes[key];
+		} else {
+			mapping[i] = nextIndex;
+			if ( key !== undefined ) {
+				this.keyIndexes[key] = nextIndex;
+			}
+			nextIndex++;
+			newItemRanges.push( list.getItemNode( i ).getOuterRange() );
+		}
+	}
+	return {
+		'mapping': mapping,
+		'newItemRanges': newItemRanges
+	};
 };

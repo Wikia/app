@@ -28,7 +28,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 *   on POST,
 	 *     if signup is successful, it will redirect to returnto, or mainpage of wiki
 	 *     if signup is not successful, the template will render error messages, highlighting the errors
-	 * @requestParam string username - on POST
+	 * @requestParam string userloginext01 - on POST
 	 * @requestParam string email - on POST
 	 * @requestParam string password - on POST
 	 * @requestParam string birthmonth - on POST
@@ -62,9 +62,9 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressToolbar = true;
 
 		// form params
-		$this->username = $this->request->getVal( 'username', '' );
+		$this->username = $this->request->getVal( 'userloginext01', '' );
 		$this->email = $this->request->getVal( 'email', '' );
-		$this->password = $this->request->getVal( 'password', '' );
+		$this->password = $this->request->getVal( 'userloginext02', '' );
 		$this->birthmonth = $this->request->getVal( 'birthmonth', '' );
 		$this->birthday = $this->request->getVal( 'birthday', '' );
 		$this->birthyear = $this->request->getVal( 'birthyear', '' );
@@ -130,9 +130,9 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @brief ajax call for signup.  returns status code
 	 * @details
 	 *   for use with ajax call or standalone data call only
-	 * @requestParam string username
+	 * @requestParam string userloginext01 //CE-413 signup spam attack - changing username field to userloginext01
 	 * @requestParam string email
-	 * @requestParam string password
+	 * @requestParam string userloginext02 //CE-413 signup spam attack - changing password field to userloginext02
 	 * @requestParam string birthmonth
 	 * @requestParam string birthday
 	 * @requestParam string birthyear
@@ -152,6 +152,11 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		}
 		$signupForm = new UserLoginForm($this->wg->request);
 		$signupForm->load();
+
+		if ( !$signupForm->EmptySpamFields() ) {
+			$this->result = 'error';
+			return;
+		}
 
 		$byemail = $this->wg->request->getBool( 'byemail', false );
 		if ( $byemail ) {
@@ -448,10 +453,10 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 	/**
 	 * validate form
-	 * @requestParam string field [username/password/email/birthdate]
-	 * @requestParam string username
+	 * @requestParam string field [userloginext01/userloginext02/email/birthdate]
+	 * @requestParam string userloginext01 //CE-413 signup spam attack - changing username field to userloginext01
 	 * @requestParam string email
-	 * @requestParam string password
+	 * @requestParam string userloginext02 //CE-413 signup spam attack - changing password field to userloginext02
 	 * @requestParam string birthmonth
 	 * @requestParam string birthday
 	 * @requestParam string birthyear
@@ -461,15 +466,14 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 */
 	public function formValidation() {
 		$field = $this->request->getVal( 'field', '' );
-
 		$signupForm = new UserLoginForm($this->wg->request);
 		$signupForm->load();
 
 		switch( $field ) {
-			case 'username' :
+			case 'userloginext01' :
 				$response = $signupForm->initValidationUsername();
 				break;
-			case 'password' :
+			case 'userloginext02' :
 				$response = $signupForm->initValidationPassword();
 				break;
 			case 'email' :

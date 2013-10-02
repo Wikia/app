@@ -17,11 +17,11 @@
  *
  * @constructor
  * @param {ve.ui.Surface} surface
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWTransclusionDialog = function VeUiMWTransclusionDialog( surface, config ) {
 	// Configuration initialization
-	config = ve.extendObject( {}, config, {
+	config = ve.extendObject( {
 		'editable': true,
 		'adders': [
 			{
@@ -35,7 +35,7 @@ ve.ui.MWTransclusionDialog = function VeUiMWTransclusionDialog( surface, config 
 				'title': ve.msg( 'visualeditor-dialog-transclusion-add-content' )
 			}
 		]
-	} );
+	}, config );
 
 	// Parent constructor
 	ve.ui.MWDialog.call( this, surface, config );

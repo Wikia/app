@@ -17,7 +17,7 @@
  * @param {jQuery} $container
  * @param {ve.dm.Surface} model Surface model to observe
  * @param {ve.ui.Surface} surface Surface user interface
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.Surface = function VeCeSurface( model, surface, options ) {
 	var $documentNode;
@@ -60,24 +60,22 @@ ve.ce.Surface = function VeCeSurface( model, surface, options ) {
 
 	$documentNode = this.documentView.getDocumentNode().$;
 	$documentNode.on( {
+		'cut': ve.bind( this.onCut, this ),
+		'copy': ve.bind( this.onCopy, this ),
 		'focus': ve.bind( this.documentOnFocus, this ),
 		'blur': ve.bind( this.documentOnBlur, this )
 	} );
+	this.$pasteTarget.on( {
+		'cut': ve.bind( this.onCut, this ),
+		'copy': ve.bind( this.onCopy, this )
+	} );
+	$documentNode.on( $.browser.msie ? 'beforepaste' : 'paste', ve.bind( this.onPaste, this ) );
 	$documentNode.on( 'focus', 'a', function () {
 		// Opera triggers 'blur' on document node before any link is
 		// focused and we don't want that
 		$documentNode.focus();
 	} );
 
-	this.$document.on( {
-		'cut': ve.bind( this.onCut, this ),
-		'copy': ve.bind( this.onCopy, this )
-	} );
-	if ( $.browser.msie ) {
-		this.$document.on( 'beforepaste', ve.bind( this.onPaste, this ) );
-	} else {
-		this.$document.on( 'paste', ve.bind( this.onPaste, this ) );
-	}
 	this.$.on( {
 		'dragover': ve.bind( this.onDocumentDragOver, this ),
 		'drop': ve.bind( this.onDocumentDrop, this )
@@ -156,11 +154,17 @@ ve.ce.Surface.static.textPattern = new RegExp(
  * When pasting, browsers normalize HTML to varying degrees.
  * This hash creates a comparable string for validating clipboard contents.
  *
- * @param {string} html Clipboard HTML
+ * @param {jQuery} $elements Clipboard HTML elements
  * @returns {string} Hash
  */
-ve.ce.Surface.static.getClipboardHash = function ( html ) {
-	return html.replace( /\s+/gm, '' );
+ve.ce.Surface.static.getClipboardHash = function ( $elements ) {
+	var hash = '';
+	// Collect text contents, or just node name for content-less nodes.
+	$elements.each( function () {
+		hash += this.textContent || '<' + this.nodeName + '>';
+	} );
+	// Whitespace may be added/removed, so strip it all
+	return hash.replace( /\s/gm, '' );
 };
 
 
@@ -286,7 +290,6 @@ ve.ce.Surface.prototype.disable = function () {
  * Destroy the surface, removing all DOM elements.
  *
  * @method
- * @returns {ve.ui.Context} Context user interface
  */
 ve.ce.Surface.prototype.destroy = function () {
 	this.documentView.getDocumentNode().setLive( false );
@@ -685,7 +688,7 @@ ve.ce.Surface.prototype.onCopy = function ( e ) {
 		this.$pasteTarget.prepend(
 			$( '<span>' ).attr( 'data-ve-clipboard-key', this.clipboardId + '-' + clipboardIndex )
 		);
-		clipboardItem.hash = this.constructor.static.getClipboardHash( this.$pasteTarget.html() );
+		clipboardItem.hash = this.constructor.static.getClipboardHash( this.$pasteTarget.contents() );
 		// If direct clipboard editing is not allowed, we must use the pasteTarget to
 		// select the data we want to go in the clipboard
 		rangyRange = rangy.createRange( this.getElementDocument() );
@@ -793,12 +796,12 @@ ve.ce.Surface.prototype.afterPaste = function () {
 		clipboardId = parts[0];
 		clipboardIndex = parts[1];
 		if ( clipboardId === this.clipboardId && this.clipboard[clipboardIndex] ) {
-			// Hash validation: either the hash must be null (i.e. text/xcustom was used)
-			// or it must be equal to the hash of the pasted HTML to assert that the HTML
+			// Hash validation: either text/xcustom was used or the hash must be
+			// equal to the hash of the pasted HTML to assert that the HTML
 			// hasn't been modified in another editor before being pasted back.
-			if ( this.clipboard[clipboardIndex].hash === null ||
+			if ( beforePasteData.custom ||
 				this.clipboard[clipboardIndex].hash ===
-					this.constructor.static.getClipboardHash( beforePasteData.html || this.$pasteTarget.html() )
+					this.constructor.static.getClipboardHash( $elements )
 			) {
 				slice = this.clipboard[clipboardIndex].data;
 			}
@@ -919,6 +922,12 @@ ve.ce.Surface.prototype.onChange = function ( transaction, selection ) {
 				if ( start === end ) {
 					next = start;
 				}
+			}
+		} else {
+			// Check we haven't been programmatically placed inside a focusable node with a collapsed selection
+			start = this.documentView.getDocumentNode().getNodeFromOffset( selection.start );
+			if ( ve.isMixedIn( start, ve.ce.FocusableNode ) ) {
+				next = start;
 			}
 		}
 		// Update nodes if something changed
@@ -1487,7 +1496,7 @@ ve.ce.Surface.prototype.handleEnter = function ( e ) {
  */
 ve.ce.Surface.prototype.handleDelete = function ( e, backspace ) {
 	var rangeToRemove = this.model.getSelection(),
-		tx, endNode, endNodeData, nodeToDelete;
+		tx, startNode, endNode, endNodeData, nodeToDelete;
 
 	if ( rangeToRemove.isCollapsed() ) {
 		// In case when the range is collapsed use the same logic that is used for cursor left and
@@ -1510,33 +1519,47 @@ ve.ce.Surface.prototype.handleDelete = function ( e, backspace ) {
 		// If after processing removal transaction range is not collapsed it means that not
 		// everything got merged nicely (at this moment transaction processor is capable of merging
 		// nodes of the same type and at the same depth level only), so we process with another
-		// merging that takes remaing data from "endNode" and inserts it at the end of "startNode",
-		// "endNode" or recrusivly its parent (if have only one child) gets removed.
+		// merging that takes remaing data from endNode and inserts it at the end of startNode,
+		// endNode or recrusivly its parent (if have only one child) gets removed.
+		//
+		// If startNode has no content then we just delete that node instead of merging.
+		// This prevents content being inserted into empty structure which, e.g. and empty heading
+		// will be deleted, rather than "converting" the paragraph beneath to a heading.
+
 		endNode = this.documentView.getNodeFromOffset( rangeToRemove.end, false );
 
-		// If "endNode" is within our rangeToRemove, then we shouldn't delete it
+		// If endNode is within our rangeToRemove, then we shouldn't delete it
 		if ( endNode.getModel().getRange().start >= rangeToRemove.end ) {
-			endNodeData = this.documentView.model.getData( endNode.getModel().getRange() );
-			nodeToDelete = endNode;
-			nodeToDelete.traverseUpstream( function ( node ) {
-				var parent = node.getParent();
-				if ( parent.children.length === 1 ) {
-					nodeToDelete = parent;
-					return true;
-				} else {
-					return false;
-				}
-			} );
-			this.model.change(
-				[
+			startNode = this.documentView.getNodeFromOffset( rangeToRemove.start, false );
+			if ( startNode.getModel().getRange().isCollapsed() ) {
+				// Remove startNode
+				this.model.change( [
+					ve.dm.Transaction.newFromRemoval(
+						this.documentView.model, startNode.getModel().getOuterRange()
+					)
+				] );
+			} else {
+				endNodeData = this.documentView.model.getData( endNode.getModel().getRange() );
+				nodeToDelete = endNode;
+				nodeToDelete.traverseUpstream( function ( node ) {
+					var parent = node.getParent();
+					if ( parent.children.length === 1 ) {
+						nodeToDelete = parent;
+						return true;
+					} else {
+						return false;
+					}
+				} );
+				// Move contents of endNode into startNode, and delete nodeToDelete
+				this.model.change( [
 					ve.dm.Transaction.newFromRemoval(
 						this.documentView.model, nodeToDelete.getModel().getOuterRange()
 					),
 					ve.dm.Transaction.newFromInsertion(
 						this.documentView.model, rangeToRemove.start, endNodeData
 					)
-				]
-			);
+				] );
+			}
 		}
 	}
 	this.model.change( null, new ve.Range( rangeToRemove.start ) );

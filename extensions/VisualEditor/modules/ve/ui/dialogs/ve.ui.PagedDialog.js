@@ -15,7 +15,7 @@
  *
  * @constructor
  * @param {ve.ui.Surface} surface
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {boolean} [editable] Show controls for adding, removing and reordering items in the outline
  * @cfg {Object[]} [adders] List of adders for controls, each an object with name, icon and title
  *  properties

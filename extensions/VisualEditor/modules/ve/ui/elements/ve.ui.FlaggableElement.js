@@ -12,7 +12,7 @@
  * @abstract
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {string[]} [flags=[]] Styling flags, e.g. 'primary', 'destructive' or 'constructive'
  */
 ve.ui.FlaggableElement = function VeUiFlaggableElement( config ) {

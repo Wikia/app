@@ -30,7 +30,7 @@ ve.inheritClass( ve.ui.IndentationAction, ve.ui.Action );
  * @static
  * @property
  */
-ve.ui.IndentationAction.static.methods = ['increase', 'decrease'];
+ve.ui.IndentationAction.static.methods = [ 'increase', 'decrease' ];
 
 /* Methods */
 

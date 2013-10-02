@@ -16,7 +16,7 @@
  *
  * @constructor
  * @param {ve.ui.TextInputWidget} input Input widget
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {jQuery} [$overlay=this.$$( '.ve-surface-overlay-local:last' )] Overlay layer
  */
 ve.ui.LookupInputWidget = function VeUiLookupInputWidget( input, config ) {

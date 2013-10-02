@@ -41,6 +41,13 @@ ve.ce.GeneratedContentNode = function VeCeGeneratedContentNode() {
  * @event rerender
  */
 
+/* Static members */
+
+ve.ce.GeneratedContentNode.static = {};
+
+// this.$ is just a wrapper for the real content, so don't duplicate attributes on it
+ve.ce.GeneratedContentNode.static.renderHtmlAttributes = false;
+
 /* Abstract methods */
 
 /**
@@ -83,7 +90,6 @@ ve.ce.GeneratedContentNode.prototype.onGeneratedContentNodeUpdate = function () 
  * @param {HTMLElement[]} domElements Array of DOM elements
  * @emits setup
  * @emits teardown
- * @emits rerender
  */
 ve.ce.GeneratedContentNode.prototype.render = function ( domElements ) {
 	var $rendering, doc = this.getElementDocument();
@@ -97,8 +103,20 @@ ve.ce.GeneratedContentNode.prototype.render = function ( domElements ) {
 	this.$.empty().append( $rendering );
 	if ( this.live ) {
 		this.emit( 'setup' );
-		this.emit( 'rerender' );
+		this.afterRender( domElements );
 	}
+};
+
+/**
+ * Trigger rerender events after rendering the contents of the node.
+ *
+ * Nodes may override this method if the rerender event needs to be deferred (e.g. until images have loaded)
+ *
+ * @param {HTMLElement[]} domElements Array of DOM elements
+ * @emits rerender
+ */
+ve.ce.GeneratedContentNode.prototype.afterRender = function () {
+	this.emit( 'rerender' );
 };
 
 /**
@@ -113,7 +131,7 @@ ve.ce.GeneratedContentNode.prototype.update = function ( config ) {
 	if ( index !== null ) {
 		this.render( store.value( index ) );
 	} else {
-		this.forceUpdate();
+		this.forceUpdate( config );
 	}
 };
 
@@ -164,7 +182,7 @@ ve.ce.GeneratedContentNode.prototype.forceUpdate = function ( config ) {
  * @method
  */
 ve.ce.GeneratedContentNode.prototype.startGenerating = function () {
-	// TODO: add 'generating' style
+	this.$.addClass( 've-ce-generatedContentNode-generating' );
 };
 
 /**
@@ -178,7 +196,7 @@ ve.ce.GeneratedContentNode.prototype.doneGenerating = function ( domElements, co
 	var store = this.model.doc.getStore(),
 		hash = ve.getHash( [ this.model, config ] );
 	store.index( domElements, hash );
-	// TODO: remove 'generating' style
+	this.$.removeClass( 've-ce-generatedContentNode-generating' );
 	this.generatingPromise = null;
 	this.render( domElements );
 };
@@ -189,6 +207,6 @@ ve.ce.GeneratedContentNode.prototype.doneGenerating = function ( domElements, co
  * @method
  */
 ve.ce.GeneratedContentNode.prototype.failGenerating = function () {
-	// TODO: remove 'generating' style
+	this.$.removeClass( 've-ce-generatedContentNode-generating' );
 	this.generatingPromise = null;
 };

@@ -13,7 +13,7 @@
  * @extends ve.ui.Tool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.IndentationTool = function VeUiIndentationTool( toolbar, config ) {
 	// Parent constructor
@@ -74,7 +74,7 @@ ve.ui.IndentationTool.prototype.onUpdateState = function ( nodes ) {
  * @extends ve.ui.IndentationTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.IncreaseIndentationTool = function VeUiIncreaseIndentationTool( toolbar, config ) {
 	ve.ui.IndentationTool.call( this, toolbar, config );
@@ -96,7 +96,7 @@ ve.ui.toolFactory.register( ve.ui.IncreaseIndentationTool );
  * @extends ve.ui.IndentationTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.DecreaseIndentationTool = function VeUiDecreaseIndentationTool( toolbar, config ) {
 	ve.ui.IndentationTool.call( this, toolbar, config );

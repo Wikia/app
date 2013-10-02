@@ -45,6 +45,12 @@
 	display: inline-block;
 }
 
+/* ve.ce.MWBlockImageNode */
+
+.ve-ce-mwBlockImageNode-inner {
+	display: inline-block;
+}
+
 /* ve.ce.MWAlienExtensionNode */
 
 .ve-ce-mwAlienExtensionNode {

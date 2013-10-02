@@ -37,7 +37,7 @@ end
 
 When(/^I edit the page with a string$/) do
   on(VisualEditorPage) do |page|
-    page.edit_ve
+    page.edit_ve_element.when_present.click
     #This begin/rescue clause dismisses the VE warning message when it exists, and does not fail when it does not exist
     begin
       page.beta_warning_element.when_present.click

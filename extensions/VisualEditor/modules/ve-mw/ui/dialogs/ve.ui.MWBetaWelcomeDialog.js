@@ -13,11 +13,11 @@
  *
  * @constructor
  * @param {ve.ui.Surface} surface
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWBetaWelcomeDialog = function VeUiMWBetaWelcomeDialog( surface, config ) {
 	// Configuration initialization
-	config = ve.extendObject( {}, config, { 'small': true, 'footless': false } );
+	config = ve.extendObject( { 'small': true, 'footless': false }, config );
 
 	// Parent constructor
 	ve.ui.MWDialog.call( this, surface, config );

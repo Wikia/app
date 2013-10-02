@@ -264,22 +264,26 @@
 
 	if ( !init.isAvailable ) {
 		$( 'html' ).addClass( 've-not-available' );
+		$( '#ca-ve-edit' ).attr( 'href', $( '#ca-edit' ).attr( 'href' ) );
+		$( '#ca-edit' ).parent().remove();
+	} else {
+		$( 'html' ).addClass( 've-available' );
 	}
 
 	if ( !userPrefEnabled ) {
 		return;
 	}
 
-	$( 'html' ).addClass( 've-available' );
-
-	$( function () {
-		if ( init.isAvailable && isViewPage ) {
-			if ( uri.query.veaction === 'edit' ) {
-				getTarget().done( function ( target ) {
-					target.activate();
-				} );
+	if ( init.isAvailable ) {
+		$( function () {
+			if ( isViewPage ) {
+				if ( uri.query.veaction === 'edit' ) {
+					getTarget().done( function ( target ) {
+						target.activate();
+					} );
+				}
 			}
-		}
-		init.setupSkin();
-	} );
+			init.setupSkin();
+		} );
+	}
 }() );

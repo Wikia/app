@@ -11,9 +11,7 @@ QUnit.module( 've.ui.IndentationAction' );
 
 function runIndentationChangeTest( assert, range, method, expectedSelection, expectedData, expectedOriginalData, msg ) {
 	var selection,
-		dom = ve.createDocumentFromHtml( ve.dm.example.isolationHtml ),
-		target = new ve.init.sa.Target( $( '#qunit-fixture' ), dom ),
-		surface = target.surface,
+		surface = ve.test.utils.createSurfaceFromHtml( ve.dm.example.isolationHtml ),
 		indentationAction = new ve.ui.IndentationAction( surface ),
 		data = ve.copy( surface.getModel().getDocument().getFullData() ),
 		originalData = ve.copy( data );

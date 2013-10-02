@@ -14,7 +14,7 @@
  * @mixin ve.ui.GroupElement
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWCategoryWidget = function VeUiMWCategoryWidget( config ) {
 	// Config intialization

@@ -154,6 +154,31 @@ ve.dm.NodeFactory.prototype.canNodeContainContent = function ( type ) {
 	throw new Error( 'Unknown node type: ' + type );
 };
 
+
+/**
+ * Check if node can take annotations of a specific type.
+ *
+ * @method
+ * @param {string} type Node type
+ * @param {ve.dm.Annotation} annotation Annotation to test
+ * @returns {boolean} Node can take annotations of this type
+ * @throws {Error} Unknown node type
+ */
+ve.dm.NodeFactory.prototype.canNodeTakeAnnotationType = function ( type, annotation ) {
+	if ( !( type in this.registry ) ) {
+		throw new Error( 'Unknown node type: ' + type );
+	}
+	var i, len,
+		blacklist = this.registry[type].static.blacklistedAnnotationTypes;
+
+	for ( i = 0, len = blacklist.length; i < len; i++ ) {
+		if ( annotation instanceof ve.dm.annotationFactory.create( blacklist[i] ).constructor ) {
+			return false;
+		}
+	}
+	return true;
+};
+
 /**
  * Check if a node is content.
  *

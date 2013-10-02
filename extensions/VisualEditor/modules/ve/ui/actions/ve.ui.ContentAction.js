@@ -30,7 +30,7 @@ ve.inheritClass( ve.ui.ContentAction, ve.ui.Action );
  * @static
  * @property
  */
-ve.ui.ContentAction.static.methods = ['insert', 'remove', 'select'];
+ve.ui.ContentAction.static.methods = [ 'insert', 'remove', 'select' ];
 
 /* Methods */
 

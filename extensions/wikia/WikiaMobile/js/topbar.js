@@ -197,11 +197,11 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 					form.setAttribute('action',
 						qs(form.getAttribute('action'))
 							.setVal('returnto',
-								encodeURIComponent(w.wgCanonicalSpecialPageName &&
-									w.wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/) ?
-										w.wgMainPageTitle :
-										w.wgPageName
-								)
+								w.wgCanonicalSpecialPageName &&
+								w.wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/) ?
+									w.wgMainPageTitle :
+									w.wgPageName,
+								true
 							).setHash(hash)
 							.toString()
 					);

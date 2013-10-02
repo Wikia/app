@@ -13,11 +13,11 @@
  *
  * @constructor
  * @param {Mixed} data Item data
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MenuItemWidget = function VeUiMenuItemWidget( data, config ) {
 	// Configuration initialization
-	config = ve.extendObject( {}, config, { 'icon': 'check' } );
+	config = ve.extendObject( { 'icon': 'check' }, config );
 
 	// Parent constructor
 	ve.ui.OptionWidget.call( this, data, config );
@@ -25,11 +25,6 @@ ve.ui.MenuItemWidget = function VeUiMenuItemWidget( data, config ) {
 	// Initialization
 	this.$.addClass( 've-ui-menuItemWidget' );
 };
-
-/**
- * @private
- * @cfg {string} icon
- */
 
 /* Inheritance */
 

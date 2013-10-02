@@ -173,7 +173,6 @@ class WallExternalController extends WikiaController {
 
 	public function postNewMessage() {
 		wfProfileIn(__METHOD__);
-
 		$relatedTopics = $this->request->getVal('relatedTopics', array());
 
 		$this->response->setVal('status', true);

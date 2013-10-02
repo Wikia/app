@@ -17,19 +17,13 @@
  *
  * @constructor
  * @param {ve.dm.MWBlockImageNode} model Model to observe
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.MWBlockImageNode = function VeCeMWBlockImageNode( model, config ) {
 	var captionModel, captionView, type;
 
 	// Parent constructor
 	ve.ce.BranchNode.call( this, model, config );
-
-	// Mixin constructors
-	ve.ce.ProtectedNode.call( this );
-	ve.ce.FocusableNode.call( this );
-	ve.ce.RelocatableNode.call( this );
-	ve.ce.MWResizableNode.call( this );
 
 	type = this.model.getAttribute( 'type' );
 
@@ -54,11 +48,19 @@ ve.ce.MWBlockImageNode = function VeCeMWBlockImageNode( model, config ) {
 		.attr( 'height', this.model.getAttribute( 'height' ) )
 		.appendTo( this.$a );
 
-	if ( type === 'none' || type ==='frameless' ) {
+	this.$inner = this.$$( '<div>' ).addClass( 've-ce-mwBlockImageNode-inner' );
+
+	if ( type === 'none' || type === 'frameless' ) {
 		this.$thumb.addClass(
 			this.getCssClass( 'none', this.model.getAttribute( 'align' ) )
 		);
 		this.$a.appendTo( this.$thumb );
+
+		// For centered images, this.$thumb is full width, so wrap
+		// this.$image in another div and use that for selection
+		this.$inner
+			.append( this.$image )
+			.appendTo( this.$a );
 	} else {
 		// Type "frame", "thumb" and the default
 		this.$image.addClass( 'thumbimage' );
@@ -66,9 +68,19 @@ ve.ce.MWBlockImageNode = function VeCeMWBlockImageNode( model, config ) {
 			.addClass( 'thumb' );
 		this.$a.appendTo( this.$thumbInner );
 		this.$thumbInner.appendTo( this.$thumb );
+
+		// For centered images, this.$thumb is full width, so wrap
+		// this.$thumbInner in another div and use that for selection
+		this.$inner
+			.append( this.$thumbInner )
+			.appendTo( this.$thumb );
 	}
 
-	this.$resizable = this.$image;
+	// Mixin constructors
+	ve.ce.ProtectedNode.call( this, this.$inner );
+	ve.ce.FocusableNode.call( this, this.$inner );
+	ve.ce.RelocatableNode.call( this, this.$inner );
+	ve.ce.MWResizableNode.call( this, this.$image );
 
 	// I smell a caption!
 	if ( type !== 'none' && type !== 'frameless' && this.model.children.length === 1 ) {

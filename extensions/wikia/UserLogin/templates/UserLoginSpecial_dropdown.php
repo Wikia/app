@@ -11,7 +11,7 @@
 			array(
 				'type' => 'hidden',
 				'name' => 'returnto',
-				'value' => ''
+				'value' => $returnto
 			),
 			array(
 				'type' => 'hidden',

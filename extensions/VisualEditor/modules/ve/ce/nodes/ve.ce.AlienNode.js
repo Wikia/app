@@ -16,7 +16,7 @@
  *
  * @constructor
  * @param {ve.dm.AlienNode} model Model to observe
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.AlienNode = function VeCeAlienNode( model, config ) {
 	// Parent constructor

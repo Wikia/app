@@ -12,7 +12,7 @@
  * @extends ve.ui.Widget
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {string} [icon] Symbolic name of icon
  * @cfg {string} [title=''] Title text
  */

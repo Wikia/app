@@ -53,8 +53,8 @@
 					"templateVar" : "data",
 					"type" : "object",
 					"objectVar" : {
-						"0" : "key",
-						"1" : "value"
+						"key": "string",
+						"value": "string"
 					},
 					"description" : "styleguide-description-link-button-data"
 				}
@@ -117,8 +117,8 @@
 					"templateVar" : "data",
 					"type" : "object",
 					"objectVar" : {
-						"0" : "key",
-						"1" : "value"
+						"key": "string",
+						"value": "string"
 					},
 					"description" : "styleguide-description-input-button-data"
 				}
@@ -180,8 +180,8 @@
 					"templateVar" : "data",
 					"type" : "object",
 					"objectVar" : {
-						"0" : "key",
-						"1" : "value"
+						"key": "string",
+						"value": "string"
 					},
 					"description" : "styleguide-description-simple-button-data"
 				}

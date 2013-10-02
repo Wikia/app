@@ -12,7 +12,7 @@
  * @abstract
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {Function} [$$] jQuery for the frame the widget is in
  */
 ve.Element = function VeElement( config ) {
@@ -176,13 +176,13 @@ ve.Element.getBorders = function ( el ) {
 	var doc = el.ownerDocument,
 		win = doc.parentWindow || doc.defaultView,
 		style = win && win.getComputedStyle ?
-			win.getComputedStyle( el, null ) : el.currentStyle,
-		loc = win && win.getComputedStyle ? true : false,
+			win.getComputedStyle( el, null ) :
+			el.currentStyle,
 		$el = $( el ),
-		top = parseFloat( loc ? style.borderTopWidth : $el.css( 'borderTopWidth' ) ) || 0,
-		left = parseFloat( loc ? style.borderLeftWidth : $el.css( 'borderLeftWidth' ) ) || 0,
-		bottom = parseFloat( loc ? style.borderBottomWidth : $el.css( 'borderBottomWidth' ) ) || 0,
-		right = parseFloat( loc ? style.borderRightWidth : $el.css( 'borderRightWidth' ) ) || 0;
+		top = parseFloat( style ? style.borderTopWidth : $el.css( 'borderTopWidth' ) ) || 0,
+		left = parseFloat( style ? style.borderLeftWidth : $el.css( 'borderLeftWidth' ) ) || 0,
+		bottom = parseFloat( style ? style.borderBottomWidth : $el.css( 'borderBottomWidth' ) ) || 0,
+		right = parseFloat( style ? style.borderRightWidth : $el.css( 'borderRightWidth' ) ) || 0;
 
 	return {
 		'top': Math.round( top ),

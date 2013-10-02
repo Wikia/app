@@ -1672,6 +1672,15 @@ $messages['el'] = array(
 	'wikiaPhotoGallery-upload-selectbutton' => 'Επιλογή',
 );
 
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'wikiaPhotoGallery-preview-captioncolor' => 'Caption colour',
+	'wikiaPhotoGallery-preview-bordercolor' => 'Photo border colour',
+	'wikiaPhotoGallery-preview-colorpicker-title' => 'Colour picker',
+);
+
 /** Esperanto (Esperanto)
  * @author Tradukisto
  */

@@ -51,6 +51,7 @@ files = [
 	//UI Repo JS API
 	'resources/wikia/modules/uicomponent.js',
 	'resources/wikia/modules/uifactory.js',
+	'resources/wikia/modules/csspropshelper.js',
 	'resources/wikia/modules/spec/*.spec.js',
 
 	//Advertisment
