@@ -36,12 +36,4 @@
 			</ul>
 		</div>
 	</div>
-
 </div>
-
-
-<br style="clear:both">
-<br>
-<br>
-<br>
-<br>
