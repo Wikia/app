@@ -14,6 +14,8 @@ class JsonFormatApiController extends WikiaApiController {
 
 	const CACHE_EXPIRATION = 14400; //4 hour
 
+	const VARNISH_CACHE_EXPIRATION = 86400; //24 hours
+
 	const SIMPLE_JSON_SCHEMA_VERSION = 1;
 
 	/**
@@ -93,9 +95,13 @@ class JsonFormatApiController extends WikiaApiController {
 
 		    $this->app->wg->memc->set( $cacheKey, $jsonSimple, self::CACHE_EXPIRATION );
 	    }
+		$response = $this->getResponse();
+	    $response->setCacheValidity(self::VARNISH_CACHE_EXPIRATION, self::VARNISH_CACHE_EXPIRATION,
+		                            [WikiaResponse::CACHE_TARGET_VARNISH,
+			                         WikiaResponse::CACHE_TARGET_BROWSER ]);
 
-	    $this->getResponse()->setFormat("json");
-	    $this->getResponse()->setData( $jsonSimple );
+	    $response->setFormat("json");
+	    $response->setData( $jsonSimple );
     }
 
 	private function simpleToHtml( &$json ) {
