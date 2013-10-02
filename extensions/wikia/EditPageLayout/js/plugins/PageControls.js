@@ -364,40 +364,29 @@
 			});
 		},
 
-		// show dialog for preview / show changes and scale it to fit viewport's height
-		renderDialog: function(title, options, callback) {
-			options = $.extend({
-				callback: function() {
-					var contentNode = $('#EditPageDialog .ArticlePreview');
+		// internal method, based on the editor content and some extraData, prepare a preview markup for the
+		// preview dialog and pass it to the callback
+		getPreviewContent: function(content, extraData, callback) {
+			// add section name when adding new section (BugId:7658)
+			if (window.wgEditPageSection === 'new') {
+				content = '== ' + this.getSummary() + ' ==\n\n' + content;
+			} else {
+				extraData.summary = this.getSummary();
+			}
 
-					// block all clicks
-					contentNode.
-						bind('click', function(ev) {
-							var target = $(ev.target);
+			extraData.content = content;
 
-							target.attr('target','_blank');
-							// don't block links opening in new tab
-							if (target.attr('target') !== '_blank') {
-								ev.preventDefault();
-							}
-						}).
-						css({
-							'height': options.height || ($(window).height() - 250),
-							'overflow': 'auto'
-						});
+			if (window.wgEditPageSection !== null) {
+				extraData.section = window.wgEditPageSection;
+			}
 
-					if (typeof callback == 'function') {
-						callback(contentNode);
-					}
-				},
-				id: 'EditPageDialog',
-				width: 680
-			}, options);
+			if (this.categories.length) {
+				extraData.categories = this.categories.val();
+			}
 
-			// use loading indicator before real content will be fetched
-			var content = '<div class="ArticlePreview"><img src="' + stylepath + '/common/images/ajax.gif" class="loading"></div>';
-
-			$.showCustomModal(title, content, options);
+			this.ajax('preview', extraData, function(data) {
+				callback(data.html + data.catbox + data.interlanglinks, data.summary);
+			});
 		},
 
 		// render "Preview" modal
@@ -425,10 +414,18 @@
 			if ( wgOasisResponsive ) {
 				var pageWidth = $('#WikiaPage').width(),
 					widthArticlePadding = 20,
-					railWidth = 310;
+					railWidth = 310,
+					railBreakPoint = 1023,
+					minWidth = 768;
 
+				// don't go below minimum width
+				if (pageWidth <= minWidth) {
+					pageWidth = minWidth;
+				}
 
-				width = (config.isWidePage) ? pageWidth : pageWidth - railWidth;
+				// subtract rail width only in certain criteria
+				width = (config.isWidePage || pageWidth <= railBreakPoint) ? pageWidth : pageWidth - railWidth;
+
 				width -= widthArticlePadding;
 
 				// For Webkit browsers, when the responsive layout kicks in
@@ -440,7 +437,7 @@
 				// PSS: fuck scrollbars.
 				// TODO: we should have access to breakpoints and such in JavaScript
 				// as variables instead of hardcoded values.
-				if ( isWebkit && pageWidth >= 1370 ) {
+				if ( isWebkit && pageWidth >= 1370 || pageWidth <= railBreakPoint) {
 					width -= this.scrollbarWidth;
 				}
 			}
@@ -451,112 +448,69 @@
 			// add width of scrollbar (BugId:35767)
 			width += this.scrollbarWidth;
 
-			var options = {
-				buttons: [
-					{
-						id: 'close',
-						message: $.msg('back'),
-						handler: function() {
-							$('#EditPageDialog').closeModal();
-						}
-					},
-					{
-						id: 'publish',
-						defaultButton: true,
-						message: $.msg('savearticle'),
-						handler: function() {
-							// click "Publish" button
-							$('#wpSave').click();
-						}
-					}
-				],
+			var previewOptions = {
 				width: width,
-				className: 'preview',
-				onClose: function() {
-					$(window).trigger('EditPagePreviewClosed');
+				scrollbarWidth: this.scrollbarWidth,
+				onPublishButton: function() {
+					$('#wpSave').click();
+				},
+				getPreviewContent: function(callback) {
+					self.getContent(function(content) {
+						self.getPreviewContent(content, extraData, callback);
+					});
 				}
 			};
 
-			// allow extension to modify the preview dialog
-			$(window).trigger('EditPageRenderPreview', [options]);
+			// pass info about dropped rail to preview module
+			if (wgOasisResponsive && pageWidth <= railBreakPoint) {
+				previewOptions.isRailDropped = true;
+			}
 
-			this.renderDialog($.msg('preview'), options, function(contentNode) {
-				self.getContent(function(content) {
-					var summary = $('#wpSummary').val();
-
-					// bugid-93498: IE fakes placeholder functionality by setting a real val
-					if ( summary === $('#wpSummary').attr('placeholder') ) {
-						summary = '';
-					}
-
-					// add section name when adding new section (BugId:7658)
-					if (window.wgEditPageSection == 'new') {
-						content = '== ' + summary + ' ==\n\n' + content;
-					}
-					else {
-						extraData.summary = summary;
-					}
-
-					extraData.content = content;
-
-					if (window.wgEditPageSection !== null) {
-						extraData.section = window.wgEditPageSection;
-					}
-
-					if (self.categories.length) {
-						extraData.categories = self.categories.val();
-					}
-
-					self.ajax('preview',
-						extraData,
-						function(data) {
-							contentNode.html(data.html + data.catbox + data.interlanglinks);
-
-							// move "edit" link to the right side of heading names
-							contentNode.find('.editsection').each(function() {
-								$(this).appendTo($(this).next());
-							});
-
-							// add summary
-							if (typeof data.summary != 'undefined') {
-								$('<div>', {id: "EditPagePreviewEditSummary"}).
-									width(width - 150).
-									appendTo(contentNode.parent()).
-									html(data.summary);
-							}
-
-							// fire an event once preview is rendered
-							$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
-						});
-				});
+			require(['wikia.preview'], function(preview) {
+				preview.renderPreview(previewOptions);
 			});
+
 		},
 
 		// render "show diff" modal
 		renderChanges: function(extraData) {
 			var self = this;
-			this.renderDialog($.msg('editpagelayout-pageControls-changes'), {}, function(contentNode) {
-				self.getContent(function(content) {
-					extraData.content = extraData.content || content;
-					extraData.section = parseInt($.getUrlVar('section') || 0);
+			require(['wikia.preview'], function(preview) {
+				preview.renderDialog($.msg('editpagelayout-pageControls-changes'), {}, function(contentNode) {
+					self.getContent(function(content) {
+						extraData.content = extraData.content || content;
+						extraData.section = parseInt($.getUrlVar('section') || 0);
 
-					if (self.categories.length) {
-						extraData.categories = self.categories.val();
-					}
+						if (self.categories.length) {
+							extraData.categories = self.categories.val();
+						}
 
-					$.when(
-						// get wikitext diff
-						self.ajax('diff', extraData),
-						// load CSS for diff
-						mw.loader.use('mediawiki.action.history.diff')
-					).done(function(ajaxData) {
-						var data = ajaxData[0],
-							html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;
+						$.when(
+								// get wikitext diff
+								self.ajax('diff', extraData),
+								// load CSS for diff
+								mw.loader.use('mediawiki.action.history.diff')
+							).done(function(ajaxData) {
+								var data = ajaxData[0],
+									html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;
 
-						contentNode.html(html);
+								contentNode.html(html);
+							});
 					});
 				});
 			});
+		},
+
+		getSummary: function() {
+			var summary = $('#wpSummary').val();
+
+			// bugid-93498: IE fakes placeholder functionality by setting a real val
+			if ( summary === $('#wpSummary').attr('placeholder') ) {
+				summary = '';
+			}
+
+			return summary;
+
 		},
 
 		// get editor's content (either wikitext or HTML)
