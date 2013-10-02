@@ -11,15 +11,15 @@
 define('wikia.ui.factory', [
 	'wikia.nirvana',
 	'wikia.window',
-	'wikia.deferred',
 	'wikia.loader',
-	'wikia.ui.component'
+	'wikia.ui.component',
+	'jquery'
 ], function uifactory(
 	nirvana,
 	window,
-	Deferred,
 	loader,
-	UIComponent
+	UIComponent,
+    $
 ) {
 
 	'use strict';
@@ -34,7 +34,7 @@ define('wikia.ui.factory', [
 
 	function getComponentsConfig(components) {
 
-		var deferred = new Deferred,
+		var deferred = new $.Deferred(),
 			data = {
 				components: components,
 				cb: window.wgStyleVersion
@@ -105,7 +105,7 @@ define('wikia.ui.factory', [
 
 	function init(componentName) {
 
-		var deferred = new Deferred,
+		var deferred = new $.Deferred(),
 			components = [];
 
 		if (!(componentName instanceof Array)) {

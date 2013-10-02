@@ -1,0 +1,25 @@
+@import "skins/oasis/css/core/color.scss";
+
+.toc {
+	border: 1px solid $color-page-border;
+	display: block;
+
+	li {
+		display: table;
+		width: 100%;
+
+		a {
+			border-left: 4px solid $color-page;
+			color: $color-header;
+			display: table-cell;
+			height: 40px;
+			padding: 0 20px 0 16px;
+			text-decoration: none;
+			vertical-align: middle;
+		}
+
+		&.active a {
+			border-color: $color-header
+		}
+	}
+}
