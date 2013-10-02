@@ -988,16 +988,16 @@ $config['videopageadmin_js'] = array(
 		'//resources/jquery/jquery.validate.js',
 		'//resources/wikia/modules/aim.js',
 		'//extensions/wikia/WikiaMiniUpload/js/WMU.js',
-
-		'//extensions/wikia/VideoPageTool/js/models/datepicker.js',
-		'//extensions/wikia/VideoPageTool/js/models/videopageadmin.thumbnail.js',
-		'//extensions/wikia/VideoPageTool/js/models/validator.js',
 		// TODO: probably move this jQuery plugin to /resources at some point
-		'//extensions/wikia/VideoPageTool/js/views/switcher.js',
-		'//extensions/wikia/VideoPageTool/js/views/datepicker.js',
-		'//extensions/wikia/VideoPageTool/js/views/index.js',
+		'//extensions/wikia/VideoPageTool/js/views/jquery.switcher.js',
+
+		'//extensions/wikia/VideoPageTool/js/models/videopageadmin.datepicker.js',
+		'//extensions/wikia/VideoPageTool/js/models/videopageadmin.thumbnail.js',
+		'//extensions/wikia/VideoPageTool/js/models/videopageadmin.validator.js',
+		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.datepicker.js',
+		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.index.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.thumbnailupload.js',
-		'//extensions/wikia/VideoPageTool/js/views/edit.js',
+		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.edit.js',
 	)
 );
 
@@ -1024,7 +1024,8 @@ $config['videohomepage_js'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//resources/wikia/libraries/jquery/bxslider/jquery.bxslider.min.js',
+		'//resources/wikia/libraries/jquery/bxslider/jquery.bxslider.js',
+		'//extensions/wikia/VideoPageTool/js/models/videohomepage.featured.js',
 		'//extensions/wikia/VideoPageTool/js/views/videohomepage.featured.js',
 	)
 );
