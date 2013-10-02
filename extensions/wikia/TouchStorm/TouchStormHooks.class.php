@@ -1,6 +1,7 @@
 <?php
 
 class TouchStormHooks extends WikiaObject {
+	
 	/**
 	 * Add modules to the right rail if necessary
 	 * @param $modules

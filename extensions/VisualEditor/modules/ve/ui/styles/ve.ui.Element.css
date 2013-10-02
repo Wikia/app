@@ -1,0 +1,18 @@
+/*!
+ * VisualEditor UserInterface Element styles.
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/* ve.ui.LabeledElement */
+
+.ve-ui-labeledElement-label {
+	display: block;
+}
+
+.ve-ui-clippableElement-clippable {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}

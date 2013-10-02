@@ -5,6 +5,16 @@
  */
 class VideoHandlerController extends WikiaController {
 
+	/**
+	 * Get the embed code for the title given by fileTitle
+	 *
+ 	 * @requestParam string|fileTitle The title of the video to find the embed code for
+	 * @requestParam int|width The desired width of video playback to return with the embed code
+	 * @requestParam boolean|autoplay Whether the video should play immediately on page load
+	 * @responseParam string|videoId A unique identifier for the video title given
+	 * @responseParam string|asset A URL for the video
+	 * @responseParam string|embedCode The HTML to embed on the page to play the video given by fileTitle
+	 */
 	public function getEmbedCode( ) {
 		$title = $this->getVal('fileTitle', '');
 		$width = $this->getVal('width', '');
@@ -12,16 +22,16 @@ class VideoHandlerController extends WikiaController {
 
 		$error = '';
 		if ( empty($title) ) {
-			$error = wfmsgForContent('videohandler-error-missing-parameter', 'title');
+			$error = wfMessage('videohandler-error-missing-parameter', 'title')->inContentLanguage()->text();
 		} else {
 			if ( empty($width) ) {
-				$error = wfmsgForContent('videohandler-error-missing-parameter', 'width');
+				$error = wfMessage('videohandler-error-missing-parameter', 'width')->inContentLanguage()->text();
 			}
 			else {
 				$title = Title::newFromText($title, NS_FILE);
 				$file = ($title instanceof Title) ? wfFindFile($title) : false;
 				if ( $file === false ) {
-					$error = wfmsgForContent('videohandler-error-video-no-exist');
+					$error = wfMessage('videohandler-error-video-no-exist')->inContentLanguage()->text();
 				} else {
 					$videoId = $file->getVideoId();
 					$assetUrl = $file->getPlayerAssetUrl();
@@ -35,6 +45,37 @@ class VideoHandlerController extends WikiaController {
 
 		if ( !empty($error) ) {
 			$this->setVal('error', $error);
+		}
+	}
+
+	/**
+	 * Get the embed code for the given title from the video wiki, rather than the local wiki.  This is
+	 * useful when a video of the same name from youtube (or other non-premium provider) exists on the local wiki
+	 * and we want to show the equivalent video from the video wiki.  See also getEmbedCode in this controller.
+	 *
+	 * @requestParam string|fileTitle The title of the video to find the embed code for
+	 * @requestParam int|width The desired width of video playback to return with the embed code
+	 * @requestParam boolean|autoplay Whether the video should play immediately on page load
+	 * @responseParam string|videoId A unique identifier for the video title given
+	 * @responseParam string|asset A URL for the video
+	 * @responseParam string|embedCode The HTML to embed on the page to play the video given by fileTitle
+	 */
+	public function getPremiumEmbedCode( ) {
+		// Pass through all the same parameters
+		$params = array(
+			'controller' => __CLASS__,
+			'method'     => 'getEmbedCode',
+			'fileTitle'  => $this->getVal('fileTitle', ''),
+			'width'      => $this->getVal('width', ''),
+			'autoplay'   => $this->getVal( 'autoplay', false ),
+		);
+
+		// Call out to the getEmbedCode method in the context of the Video Wiki (WikiaVideoRepoDBName)
+		$response = ApiService::foreignCall( F::app()->wg->WikiaVideoRepoDBName, $params, ApiService::WIKIA );
+
+		// Map the foreign call response back to our response
+		foreach ( $response as $key => $val) {
+			$this->setVal($key, $val);
 		}
 	}
 
@@ -143,19 +184,21 @@ class VideoHandlerController extends WikiaController {
 					$error = $status->getMessage();
 				}
 			} else {
+				$article = null;
 				if ( $title->exists() ) {
 					$article = Article::newFromID( $title->getArticleID() );
 				} else {
 					$botUser = User::newFromName( 'WikiaBot' );
 					$flags = EDIT_NEW | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT;
 
+					// @FIXME Set $article here after calling addCategoryVideos so that the doDeleteArticle call below works properly
 					$videoHandlerHelper = new VideoHandlerHelper();
 					$status = $videoHandlerHelper->addCategoryVideos( $title, $botUser, $flags );
 				}
 
-				if ( !$article->doDeleteArticle( $reason, $suppress, 0, true, $error ) ) {
+				if ( is_object($article) && !$article->doDeleteArticle( $reason, $suppress, 0, true, $error ) ) {
 					if ( empty($error) ) {
-						$error = wfMessage( 'videohandler-remove-error-unknow' )->text();
+						$error = wfMessage( 'videohandler-remove-error-unknown' )->text();
 					}
 				}
 			}
@@ -194,4 +237,26 @@ class VideoHandlerController extends WikiaController {
 		$this->fileExists = $fileExists;
 	}
 
+	/**
+	 * Exposes the VideoHandlerHelper::getVideoDetail method from this controller
+	 * @requestParam string|fileTitle - The title of the file to get details for
+	 * @requestParam int|thumbWidth - The width of the video thumbnail to return
+	 * @requestParam int|thumbHeight - The height of the video thumbnail to return
+	 * @requestParam int|articleLimit - The number of "posted in" article detail records to return
+	 * @responseParam array|detail - The video details
+	 */
+	public function getVideoDetail() {
+		$fileTitle = $this->getVal( 'fileTitle', '' );
+		$thumbWidth = $this->getVal( 'thumbWidth', '250' );
+		$thumbHeight = $this->getVal( 'thumbHeight', '250' );
+		$articleLimit = $this->getVal( 'articleLimit', '10' );
+
+		$helper = new VideoHandlerHelper();
+		$videoDetail = $helper->getVideoDetail( array('title' => $fileTitle),
+												$thumbWidth,
+												$thumbHeight,
+												$articleLimit
+		);
+		$this->detail = $videoDetail;
+	}
 }

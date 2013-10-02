@@ -1,5 +1,12 @@
 <li class="component-item" id="{{id}}">
 	<h2>{{name}}</h2>
 	<p>{{description}}</p>
-	<pre>{{types}}</pre>
+	<h3>{{exampleHeadline}}</h3>
+	{{#examples}}
+		{{>SpecialStyleguide_componentExamples}}
+	{{/examples}}
+	<h3>{{typesHeadline}}</h3>
+	{{#types}}
+		{{>SpecialStyleguide_componentType}}
+	{{/types}}
 </li>
