@@ -46,7 +46,7 @@ if($data['gallery'] instanceof WikiaPhotoGallery) {
 		<tr class="ImageUploadFindLinks">
 <?php
 		for($i = $j*4; $i < ($j+1)*4; $i++) {
-			if($imageTitles[$i]) {
+			if(isset($imageTitles[$i])) {
 ?>
 				<td><a href="#" onclick="WMU_chooseImage(0, '<?= urlencode($imageTitles[$i]->getName()) ?>'); return false;"><?= wfMsg('wmu-insert3') ?></a></td>
 <?php

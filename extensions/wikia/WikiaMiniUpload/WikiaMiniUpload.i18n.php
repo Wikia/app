@@ -74,7 +74,12 @@ $messages['en'] = array(
 	'wmu-appearance-in-article' => 'Appearance on Page',
 	'wmu-alignment' => 'Alignment',
 	'wmu-file-protected' => 'This image is protected',
-	'wmu-file-error' => 'There was an error with the upload process, sorry. Please try again.'
+	'wmu-file-error' => 'There was an error with the upload process, sorry. Please try again.',
+	'wmu-file-not-found' => 'File not found',
+	'wmu-error-under-height' => 'Image was less than the minimum height ($1 px)',
+	'wmu-error-under-width' => 'Image was less than the minimum width ($1 px)',
+	'wmu-error-under-height-width' => 'Image was less than the minimum dimensions ($1 x $2 px)',
+	'wmu-error-bad-aspect-ratio' => 'Aspect ratio is incorrect ($1 x $2 px)',
 );
 
 /** Message documentation (Message documentation)
@@ -110,6 +115,11 @@ $messages['qqq'] = array(
 	'wmu-back' => 'Select a different photo from the one already chosen.',
 	'wmu-gallery' => '{{Identical|Gallery}}',
 	'wmu-column' => '{{Identical|Column}}',
+	'wmu-file-not-found' => 'Message displayed when a file cannot be found during the image insert step of this extention.',
+	'wmu-error-under-height' => 'Error shown when the image selected/uploaded was shorter than the required height',
+	'wmu-error-under-width' => 'Error shown when the image selected/uploaded was narrower than the required width',
+	'wmu-error-under-width-height' => 'Error shown when the image selected/uploaded was smaller than the required dimensions',
+	'wmu-error-bad-aspect-ratio' => 'Error shown when the aspect ratio was incorrect'
 );
 
 /** Afrikaans (Afrikaans)
