@@ -2,10 +2,16 @@ define( 'views.videohomepage.featured', [
 	'jquery',
 	'wikia.nirvana',
 	'wikia.videoBootstrap',
-	'vpt.models.featured'
-], function( $, nirvana, VideoBootstrap, FeaturedModel ) {
+	'wikia.tracker',
+	'models.videohomepage.featured'
+], function( $, nirvana, VideoBootstrap, Tracker, FeaturedModel ) {
 
 	'use strict';
+	var track = Tracker.buildTrackingFunction({
+			action: Tracker.ACTIONS.CLICK,
+			category: 'video-home-page',
+			trackingMethod: 'both'
+	});
 
 	function Featured() {
 		// cache DOM elements
@@ -32,6 +38,8 @@ define( 'views.videohomepage.featured', [
 
 		this.slides = sliderModel.slides;
 		this.thumbs = sliderModel.thumbs;
+
+		this.videoPlays = 0;
 
 		this.init();
 	}
@@ -119,9 +127,14 @@ define( 'views.videohomepage.featured', [
 			if( this.slider.getCurrentSlide() === index ) {
 				// play the video
 				this.playVideo( this.slides[ index ] );
+
 			} else {
 				// Go to the selected slide based on thumbnail that was clicked
 				this.slider.goToSlide( index );
+
+				track({
+						label: 'featured-thumbnail'
+				});
 			}
 
 		},
@@ -172,6 +185,11 @@ define( 'views.videohomepage.featured', [
 						that.$bxSlider.redrawSlider();
 					}, 1000);
 				}
+			});
+
+			track({
+					label: 'featured-video-plays',
+					value: this.videoPlays++
 			});
 		},
 
@@ -290,12 +308,4 @@ define( 'views.videohomepage.featured', [
 	};
 
 	return Featured;
-});
-
-require( ['views.videohomepage.featured'], function( FeaturedVideoView ) {
-	'use strict';
-
-	$(function() {
-		return new FeaturedVideoView();
-	});
 });
