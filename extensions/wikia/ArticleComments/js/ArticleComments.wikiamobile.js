@@ -6,7 +6,7 @@
  **/
 
 require(['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload', 'jquery'], function(throbber, toast, modal, track, msg, lazyload, $){
-	"use strict";
+	'use strict';
 	/** @private **/
 
 	var d = document,
@@ -115,7 +115,7 @@ require(['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload', 'jquer
 				parentId = (parent) ? parent.id : false,
 				submit = form.getElementsByTagName('input')[0],
 				textArea = form.getElementsByClassName('commText')[0],
-				text = encodeURIComponent(textArea.value.trim());
+				text = textArea.value.trim();
 
 			if(text !== '') {
 				submit.disabled =  true;

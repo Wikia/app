@@ -9,7 +9,7 @@
 /*global AdConfig2, AdEngine2, DartUrl, EvolveHelper, SlotTweaker, ScriptWriter */
 /*global WikiaDartHelper, WikiaGptHelper, WikiaFullGptHelper */
 /*global AdProviderAdDriver2, AdProviderEvolve, AdProviderGpt, AdProviderGamePro, AdProviderLater, AdProviderNull */
-/*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdLogicShortPage, AdLogicPageLevelParams */
+/*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdLogicPageDimensions, AdLogicPageLevelParams */
 /*global AdLogicPageLevelParamsLegacy */
 /*global require*/
 /*jslint newcap:true */
@@ -24,7 +24,7 @@
 		adLogicHighValueCountry,
 		adLogicPageLevelParams,
 		adLogicPageLevelParamsLegacy,
-		adLogicShortPage,
+		adLogicPageDimensions,
 		scriptWriter,
 		dartUrl,
 		wikiaDart,
@@ -46,13 +46,13 @@
 	adEngine = AdEngine2(log, LazyQueue);
 
 	// Construct various helpers
+	slotTweaker = SlotTweaker(log, document, window);
 	dartUrl = DartUrl();
 	adLogicDartSubdomain = AdLogicDartSubdomain(Geo);
 	adLogicHighValueCountry = AdLogicHighValueCountry(window);
-	adLogicShortPage = AdLogicShortPage(document);
-	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux, adLogicShortPage, abTest);
+	adLogicPageDimensions = AdLogicPageDimensions(window, document, log, slotTweaker);
+	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux, adLogicPageDimensions, abTest);
 	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
-	slotTweaker = SlotTweaker(log, document, window);
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
 	wikiaDart = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl, adLogicDartSubdomain);
 	wikiaGpt = WikiaGptHelper(log, window, document, adLogicPageLevelParams);
@@ -76,7 +76,7 @@
 		window,
 		document,
 		Geo,
-		adLogicShortPage,
+		adLogicPageDimensions,
 		abTest,
 
 		// AdProviders:

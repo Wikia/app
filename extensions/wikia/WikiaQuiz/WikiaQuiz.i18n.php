@@ -272,6 +272,7 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author Gemmaa
  */
 $messages['ca'] = array(
@@ -282,8 +283,10 @@ $messages['ca'] = array(
 	'wikiaquiz-editquizarticle-headline' => 'Editar concurs de preguntes i Respostes',
 	'wikiaquiz-title-label' => 'Títol',
 	'wikiaquiz-titlescreentext-label' => 'Text del títol pantalla',
+	'wikiaquiz-fbrecommendationtext-label' => 'Descripció de recomanació per Facebook',
 	'wikiaquiz-titlescreenimages-label' => 'Imatges de pantalla de títol',
 	'wikiaquiz-moreinfoheading-label' => "Més encapçalament d'informació",
+	'wikiaquiz-requireemail-label' => 'És necessari que el jugador introdueixi una adreça de correu electrònic al final del joc',
 	'wikiaquiz-moreinfolinks-label' => "Més enllaços d'informació",
 	'wikiaquiz-moreinfoarticle-label' => 'Article',
 	'wikiaquiz-moreinfolinktext-label' => 'Enllaç de Text',

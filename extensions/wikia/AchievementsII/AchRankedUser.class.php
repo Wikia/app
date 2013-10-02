@@ -4,7 +4,6 @@ class AchRankedUser {
 	private $mUserId;
 	private $mScore;
 	private $mUsername;
-	private $mAvatarURL;
 	private $mUserPageUrl;
 	private $mCurrentRanking;
 	private $mPreviousRanking;
@@ -15,7 +14,6 @@ class AchRankedUser {
 	    $this->mUserId = $userObj->getID();
 	    $this->mUsername = $userObj->getName();
 	    $this->mScore = $score;
-	    $this->mAvatarURL = Masthead::newFromUser($userObj)->getUrl();
 	    $this->mUserPageUrl = $userObj->getUserPage()->getLocalURL();
 	    $this->mCurrentRanking = $currentRanking;
 	    $this->mPreviousRanking = $previousRanking;
@@ -33,10 +31,6 @@ class AchRankedUser {
 
 	public function getScore() {
 		return $this->mScore;
-	}
-
-	public function getAvatarUrl() {
-		return $this->mAvatarURL;
 	}
 
 	public function getUserPageUrl() {

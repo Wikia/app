@@ -6,7 +6,7 @@
 
 <div class="lvs-instructions">
 	<h2><?= wfMessage( 'lvs-instructions-header' )->parse() ?></h2>
-	<p><?= wfMessage( 'lvs-instructions' )->plain() ?></p>
+	<p><?= wfMessage( 'lvs-instructions' )->parse() ?></p>
 </div>
 
 <? if ( !empty( $videoList ) ): ?>

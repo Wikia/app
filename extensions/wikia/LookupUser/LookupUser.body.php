@@ -175,6 +175,7 @@ EOT
 		} else {
 			$user = User::newFromName( $targetUserName );
 		}
+		//@TODO get rid of TempUser handling when it will be globally disabled
 		$tempUser = false;
 		if ( is_object( $extUser ) && ( $extUser->getId() != 0 ) ) {
 			$user = $extUser->mapToUser();
