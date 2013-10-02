@@ -1,3 +1,4 @@
+@import "layout";
 @import "responsive-variables";
 
 // This mixin positions the background images and gradients while the skin is
@@ -122,49 +123,52 @@
 	}
 }
 
-html {
-	overflow-y: auto;
-}
+@if ( $responsive-layout-enabled ) {
 
-// ABTesting: DAR-1859: START
-html.keep-rail-on-right {
-	overflow-x: scroll;
-
-	body {
-		min-width: 1058px;
+	html {
+		overflow-y: auto;
 	}
-}
-// ABTesting: DAR-1859: END
 
-body.skin-oasis {
-	min-width: $width-outside-min;
-	@if ( $background-is-dynamic ) {
-		background: $color-body;
-		overflow: hidden;
-		position: relative;
+	// ABTesting: DAR-1859: START
+	html.keep-rail-on-right {
+		overflow-x: scroll;
 
-		&:after,
-		&:before {
-			background-image: url( $background-image ); /* $wgCdnStylePath */
-			background-repeat: no-repeat;
-			content: "";
-			height: $background-height;
-			position: $background-position;
-			top: 0;
-			width: $background-width-half;
-			z-index: -2;
+		body {
+			min-width: 1058px;
 		}
+	}
+	// ABTesting: DAR-1859: END
 
-		&:after {
-			background-position: -$background-width-half 0;
-			right: 50%;
-			margin-right: -$background-width-half;
-		}
+	body.skin-oasis {
+		min-width: $width-outside-min;
+		@if ( $background-is-dynamic ) {
+			background: $color-body;
+			overflow: hidden;
+			position: relative;
 
-		&:before {
-			// The extra 0.1% fixes sub-pixel rendering issues in Safari (DAR-1052)
-			left: 50.1%;
-			margin-left: -$background-width-half;
+			&:after,
+			&:before {
+				background-image: url( $background-image ); /* $wgCdnStylePath */
+				background-repeat: no-repeat;
+				content: "";
+				height: $background-height;
+				position: $background-position;
+				top: 0;
+				width: $background-width-half;
+				z-index: -2;
+			}
+
+			&:after {
+				background-position: -$background-width-half 0;
+				right: 50%;
+				margin-right: -$background-width-half;
+			}
+
+			&:before {
+				// The extra 0.1% fixes sub-pixel rendering issues in Safari (DAR-1052)
+				left: 50.1%;
+				margin-left: -$background-width-half;
+			}
 		}
 	}
 }

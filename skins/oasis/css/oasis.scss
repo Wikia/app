@@ -81,11 +81,12 @@
 }
 
 
-@if ( $responsive-layout-enabled ) {
-	// load all responsive layout files
-	@import "core/responsive-variables";
-	@import "core/responsive-font-sizing";
-	@import "core/responsive-background";
-	@import "core/responsive-core";
-	@import "core/responsive-visual-regressions";
-}
+// load all responsive layout files
+
+// These files should always be loaded after everything else in oasis.scss because
+// they override some of the styles.
+@import "core/responsive-variables";
+@import "core/responsive-font-sizing";
+@import "core/responsive-background";
+@import "core/responsive-core";
+@import "core/responsive-visual-regressions";
