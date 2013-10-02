@@ -178,4 +178,9 @@
 		});
 	};
 
+
+	if (abTest && abTest.inGroup('SEVENONEMEDIA_DR', 'SEVENONEMEDIA_DISABLED')) {
+		window.wgAdDriverUseSevenOneMedia = false;
+	}
+
 }(Wikia.log, Wikia.Tracker, window, ghostwriter, document, Geo, Wikia.LazyQueue, Wikia.Cookies, Wikia.Cache, Krux, Wikia.AbTest));

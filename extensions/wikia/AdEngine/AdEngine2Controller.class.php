@@ -312,7 +312,7 @@ class AdEngine2Controller extends WikiaController {
 			   $wgUser, $wgEnableWikiAnswers, $wgAdDriverUseCookie, $wgAdDriverUseExpiryStorage,
 			   $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
 			   $wgLoadAdDriverOnLiftiumInit, $wgOutboundScreenRedirectDelay,
-			   $wgEnableOutboundScreenExt;
+			   $wgEnableOutboundScreenExt, $wgAdDriverUseSevenOneMedia;
 
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
@@ -347,6 +347,9 @@ class AdEngine2Controller extends WikiaController {
 		}
 		if (!empty($wgLoadAdDriverOnLiftiumInit)) {
 			$vars['wgLoadAdDriverOnLiftiumInit'] = $wgLoadAdDriverOnLiftiumInit;
+		}
+		if (!empty($wgAdDriverUseSevenOneMedia)) {
+			$vars["wgAdDriverUseSevenOneMedia"] = $wgAdDriverUseSevenOneMedia;
 		}
 
 		if ($wgUser->getOption('showAds')) {

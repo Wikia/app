@@ -90,6 +90,7 @@ $config['oasis_ads_js'] = array(
 		// @requires adengine2 core already loaded
 		// @requires liftium loaded later (TODO FIXME)
 		'//extensions/wikia/AdEngine/js/AdProviderLiftium2Dom.js',
+		'//extensions/wikia/AdEngine/js/AdProviderSevenOneMedia.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2Late.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.configLateAds.js',
 
