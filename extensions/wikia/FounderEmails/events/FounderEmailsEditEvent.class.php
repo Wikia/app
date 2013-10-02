@@ -8,6 +8,17 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	const FIRST_EDIT_NOTIFICATION_SENT_PROP_NAME = 'founderemails-first-edit-notification-sent';
 
 	/**
+	 * Name of memcache prefix for the key that holds information about throttling of emails
+	 * from a given user for a period of time
+	 */
+	const USER_EMAILS_THROTTLED_PREFIX = 'founderemails-edit-emails-throttle-';
+
+	/**
+	 * Period describing how long to throttle of emails
+	 */
+	const USER_EMAILS_THROTTLE_EXPIRY_TIME = 3600;
+
+	/**
 	 * Minimum number of non-profile edit revisions needed to determine if user made only
 	 * one edit on a wiki
 	 */
@@ -212,7 +223,8 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			$conditions,
 			__METHOD__,
 			[
-				'LIMIT' => self::FIRST_EDIT_REVISION_THRESHOLD
+				'LIMIT' => self::FIRST_EDIT_REVISION_THRESHOLD,
+				'ORDER BY' => 'rev_timestamp DESC'
 			],
 			[ 'page' => [
 					'left join',
@@ -247,32 +259,31 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			$editor = ( $wgUser->getId() == $oRecentChange->getAttribute( 'rc_user' ) ) ? $wgUser : User::newFromID( $oRecentChange->getAttribute( 'rc_user' ) );
 			$isRegisteredUser = true;
 
-			// if first edit email was already sent no need to process further
+			// if first edit email was already sent this is an additional edit
 			$firstEditNotificationSentPropKey = self::FIRST_EDIT_NOTIFICATION_SENT_PROP_NAME . '-' . $wgCityId;
 			$wasNotificationSent = $editor->getOption( $firstEditNotificationSentPropKey );
 
-			if ( !empty( $wasNotificationSent ) ) {
-				wfProfileOut( __METHOD__ );
-				return true;
-			}
-
-			$userEditStatus = static::getUserEditsStatus( $editor, true );
-			/*
- 				If there is at least one edit, flag that we should not send this email anymore;
-				either first email is sent out as a result of this request,
-				or there was more than 1 edit so we will never need to send it again
-			 */
-			switch($userEditStatus) {
-				case self::NO_EDITS:
-					break;
-				case self::FIRST_EDIT:
-					$isRegisteredUserFirstEdit = true;
-					$editor->setOption( $firstEditNotificationSentPropKey, true );
-					$editor->saveSettings();
-					break;
-				case self::MULTIPLE_EDITS:
-					$editor->setOption( $firstEditNotificationSentPropKey, true );
-					$editor->saveSettings();
+			if ( empty( $wasNotificationSent ) ) {
+				$userEditStatus = static::getUserEditsStatus( $editor, true );
+				/*
+					If there is at least one edit, flag that we should not send this email anymore;
+					either first email is sent out as a result of this request,
+					or there was more than 1 edit so we will never need to send it again
+				 */
+				switch($userEditStatus) {
+					case self::NO_EDITS:
+						wfProfileOut(__METHOD__);
+						return true;
+						break;
+					case self::FIRST_EDIT:
+						$isRegisteredUserFirstEdit = true;
+						$editor->setOption( $firstEditNotificationSentPropKey, true );
+						$editor->saveSettings();
+						break;
+					case self::MULTIPLE_EDITS:
+						$editor->setOption( $firstEditNotificationSentPropKey, true );
+						$editor->saveSettings();
+				}
 			}
 		} else {
 			// Anon user
@@ -292,14 +303,62 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			return true;
 		}
 
-		$eventData = static::getEventData( $editor, $oRecentChange, $isRegisteredUser, $isRegisteredUserFirstEdit );
+		if(	!static::isThrottled($editor) ) {
+			$eventData = static::getEventData( $editor, $oRecentChange, $isRegisteredUser, $isRegisteredUserFirstEdit );
+			FounderEmails::getInstance()->registerEvent( new FounderEmailsEditEvent( $eventData ) );
 
-		FounderEmails::getInstance()->registerEvent( new FounderEmailsEditEvent( $eventData ) );
+			static::setThrottle($editor);
+		}
 
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
+	/**
+	 * Checks if editor's edits are throttled not to be sent to founder
+	 *
+	 * @param $editor User
+	 * @return bool
+	 */
+	public static function isThrottled( $editor ) {
+		if ( F::app()->wg->memc->get( static::getThrottleMemcKey( $editor->getName() ) ) === 1 ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Places a periodic throttle on $editor to prevent spamming founder with that person's edit notifications
+	 *
+	 * @param $editor
+	 */
+	public static function setThrottle( $editor ) {
+		F::app()->wg->memc->set(
+			static::getThrottleMemcKey( $editor->getName() ),
+			1,
+			static::USER_EMAILS_THROTTLE_EXPIRY_TIME );
+	}
+
+	/**
+	 * Helper method returning memcache key for storing throttle
+	 *
+	 * @param $userName
+	 * @return String
+	 */
+	public static function getThrottleMemcKey( $userName ) {
+		return wfMemcKey( static::USER_EMAILS_THROTTLED_PREFIX . $userName );
+	}
+
+	/**
+	 * Generates and returns data for edit event to be processed
+	 *
+	 * @param $editor User
+	 * @param $oRecentChange RecentChange
+	 * @param $isRegisteredUser boolean
+	 * @param $isRegisteredUserFirstEdit boolean
+	 * @return array
+	 */
 	public static function getEventData( $editor, $oRecentChange, $isRegisteredUser, $isRegisteredUserFirstEdit ) {
 		$oTitle = Title::makeTitle( $oRecentChange->getAttribute( 'rc_namespace' ), $oRecentChange->getAttribute( 'rc_title' ) );
 		$eventData = array(
