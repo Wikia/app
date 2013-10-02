@@ -60,7 +60,6 @@ $play-button-overlay-fade-duration: 400ms;
 		.bxslider {
 			position: relative;
 			li {
-				@include play-button;
 				float: left;
 				margin-top: 0;
 				position: relative;
@@ -105,25 +104,14 @@ $play-button-overlay-fade-duration: 400ms;
 				}
 			}
 			.Wikia-video-play-button {
-				margin: -43px 0 0 -43px;
+				margin: -42.5px 0 0 -42.5px;
 			}
 			.slide-video {
 				color: #FFF;
 				margin: auto;
 			}
 		}
-		.bx-controls-direction a {
-			@include sprite-VideoPageTool-base();
-			height: 55px;
-			margin-top: -23px;
-			width: 42px;
-			&.bx-prev {
-				@include sprite-VideoPageTool('carousel_left_arrow_white');
-			}
-			&.bx-next {
-				@include sprite-VideoPageTool('carousel_right_arrow_white');
-			}
-		}
+
 		// Small navigation circles
 		.bx-pager {
 			bottom: -30px;
@@ -202,6 +190,28 @@ $play-button-overlay-fade-duration: 400ms;
 				}
 
 			}
+		}
+	}
+	.bx-wrapper {
+		@include play-button;
+		.bx-controls-direction a {
+			@include sprite-VideoPageTool-base();
+			@include transition-shorthand(opacity $play-button-overlay-fade-duration ease-out);
+			@include opacity(0);
+			height: 55px;
+			margin-top: -27.5px;
+			width: 42px;
+			&.bx-prev {
+				@include sprite-VideoPageTool('carousel_left_arrow_white');
+			}
+			&.bx-next {
+				@include sprite-VideoPageTool('carousel_right_arrow_white');
+			}
+		}
+		&:hover .bx-controls-direction a{
+			@include opacity(100);
+			@include transition-shorthand(opacity $play-button-overlay-fade-duration ease-out);
+			visibility: visible;
 		}
 	}
 	.hidden {
