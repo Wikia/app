@@ -33,16 +33,18 @@ class HeaderVisitor extends DOMNodeVisitorBase {
 			$this->getJsonFormatBuilder()->pushSection($section);
 		} else {
 			$text = $currentNode->textContent;
-			$this->appendText($text);
+			$this->getJsonFormatBuilder()->appendText( $text );
 		}
 	}
 
 	private function verifyFirstChildHasClass( DOMElement $node, $className ) {
 		if( $node->childNodes->length > 0 ) {
 			$firstChild = $node->childNodes->item(0);
-			$firstChildClass = $firstChild->attributes->getNamedItem('class');
-			if( $firstChildClass && $firstChildClass->nodeValue == $className ) {
-				return true;
+			if ( $firstChild->attributes ) {
+				$firstChildClass = $firstChild->attributes->getNamedItem('class');
+				if( $firstChildClass && $firstChildClass->nodeValue == $className ) {
+					return true;
+				}
 			}
 		}
 		return false;
