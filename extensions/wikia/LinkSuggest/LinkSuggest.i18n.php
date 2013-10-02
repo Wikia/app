@@ -44,7 +44,8 @@ $messages['be-tarask'] = array(
  * @author Gwenn-Ael
  */
 $messages['br'] = array(
-	'tog-disablelinksuggest' => 'Chomp hep diskouez al liammoù kinniget', # Fuzzy
+	'linksuggest-desc' => "Kinnig a ra liammoù d'ar skridaozerien, er prenestr skridaozañ.",
+	'tog-disablelinksuggest' => 'Chomp hep diskouez al liammoù kinniget er mod tarzh',
 	'tog-redirected-from' => '&ndash; adkaset adalek $1',
 );
 
@@ -203,7 +204,7 @@ $messages['ksh'] = array(
 	'tog-redirected-from' => '&ndash; ömjeleidt vun $1',
 );
 
-/** Kirghiz (Кыргызча)
+/** Kyrgyz (Кыргызча)
  * @author Growingup
  */
 $messages['ky'] = array(

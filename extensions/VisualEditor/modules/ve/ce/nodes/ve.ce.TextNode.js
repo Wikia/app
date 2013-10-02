@@ -1,132 +1,60 @@
-/**
- * VisualEditor content editable TextNode class.
+/*!
+ * VisualEditor ContentEditable TextNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * ContentEditable node for text.
+ * ContentEditable text node.
  *
  * @class
+ * @extends ve.ce.LeafNode
  * @constructor
- * @extends {ve.ce.LeafNode}
  * @param {ve.dm.TextNode} model Model to observe
+ * @param {Object} [config] Configuration options
  */
-ve.ce.TextNode = function VeCeTextNode( model ) {
+ve.ce.TextNode = function VeCeTextNode( model, config ) {
 	// Parent constructor
-	ve.ce.LeafNode.call( this, 'text', model, $( document.createTextNode( '' ) ) );
-
-	// Events
-	this.model.addListenerMethod( this, 'update', 'onUpdate' );
-
-	// Initialization
-	this.onUpdate( true );
+	ve.ce.LeafNode.call( this, model, config );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.ce.TextNode, ve.ce.LeafNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.ce.NodeFactory
- * @static
- * @member
- */
-ve.ce.TextNode.rules = {
-	'canBeSplit': true
-};
+ve.ce.TextNode.static.name = 'text';
 
-/**
- * Mapping of character and HTML entities or renderings.
- *
- * @static
- * @member
- */
-ve.ce.TextNode.htmlCharacters = {
-	'&': '&amp;',
-	'<': '&lt;',
-	'>': '&gt;',
-	'\'': '&#039;',
-	'"': '&quot;'
-};
+ve.ce.TextNode.static.canBeSplit = true;
 
 ve.ce.TextNode.whitespaceHtmlCharacters = {
-	'\n': '&crarr;',
-	'\t': '&#10142;'
+	'\n': '\u21b5', // &crarr; / ↵
+	'\t': '\u279e' // &#10142; / ➞
 };
 
 /* Methods */
 
 /**
- * Responds to model update events.
- *
- * If the source changed since last update the image's src attribute will be updated accordingly.
+ * Get an HTML rendering of the text.
  *
  * @method
+ * @returns {Array} Array of rendered HTML fragments with annotations
  */
-ve.ce.TextNode.prototype.onUpdate = function ( force ) {
-	if ( !force && !this.root.getSurface ) {
-		throw new Error( 'Can not update a text node that is not attached to a document' );
-	}
-	if ( force === true || !this.root.getSurface().isLocked() ) {
-		var $new = $( '<span>' ).html( this.getHtml() ).contents();
-		if ( $new.length === 0 ) {
-			$new = $new.add( document.createTextNode( '' ) );
-		}
-		this.$.replaceWith( $new );
-		this.$ = $new;
-		if ( this.parent ) {
-			this.parent.clean();
-			if ( ve.debug ) {
-				this.parent.$.css( 'backgroundColor', '#F6F6F6' );
-				setTimeout( ve.bind( function () {
-					this.parent.$.css( 'backgroundColor', 'transparent' );
-				}, this ), 350 );
-			}
-		}
-	}
-};
-
-/**
- * Gets an HTML rendering of data within content model.
- *
- * @method
- * @param {String} Rendered HTML of data within content model
- */
-ve.ce.TextNode.prototype.getHtml = function () {
-	var data = this.model.getDocument().getDataFromNode( this.model ),
-		htmlChars = ve.ce.TextNode.htmlCharacters,
+ve.ce.TextNode.prototype.getAnnotatedHtml = function () {
+	var i, chr, character, nextCharacter,
+		data = this.model.getDocument().getDataFromNode( this.model ),
 		whitespaceHtmlChars = ve.ce.TextNode.whitespaceHtmlCharacters,
-		significantWhitespace = this.getModel().getParent().hasSignificantWhitespace(),
-		out = '',
-		i,
-		j,
-		arr,
-		left = '',
-		right,
-		character,
-		nextCharacter,
-		open,
-		close,
-		startedClosing,
-		annotation,
-		leftPlain,
-		rightPlain,
-		annotationStack = new ve.AnnotationSet(),
-		chr;
+		significantWhitespace = this.getModel().getParent().hasSignificantWhitespace();
 
-	function replaceWithNonBreakingSpace( index, data ) {
+	function setChar( chr, index, data ) {
 		if ( ve.isArray( data[index] ) ) {
 			// Don't modify the original array, clone it first
 			data[index] = data[index].slice( 0 );
-			data[index][0] = '&nbsp;';
+			data[index][0] = chr;
 		} else {
-			data[index] = '&nbsp;';
+			data[index] = chr;
 		}
 	}
 
@@ -136,120 +64,37 @@ ve.ce.TextNode.prototype.getHtml = function () {
 			// Leading space
 			character = data[0];
 			if ( ve.isArray( character ) ? character[0] === ' ' : character === ' ' ) {
-				replaceWithNonBreakingSpace( 0, data );
+				// \u00a0 == &#160; == &nbsp;
+				setChar( '\u00a0', 0, data );
 			}
 		}
 		if ( data.length > 1 ) {
 			// Trailing space
 			character = data[data.length - 1];
 			if ( ve.isArray( character ) ? character[0] === ' ' : character === ' ' ) {
-				replaceWithNonBreakingSpace( data.length - 1, data );
+				setChar( '\u00a0', data.length - 1, data );
 			}
 		}
-		if ( data.length > 2 ) {
-			// Replace any sequence of 2+ spaces with an alternating pattern
-			// (space-nbsp-space-nbsp-...)
-			for ( i = 1; i < data.length - 1; i++ ) {
-				character = data[i];
-				nextCharacter = data[i + 1];
-				if (
-					( ve.isArray( character ) ? character[0] === ' ' : character === ' ' ) &&
-					( ve.isArray( nextCharacter ) ? nextCharacter[0] === ' ' : nextCharacter === ' ' )
-				) {
-					replaceWithNonBreakingSpace( i + 1, data );
-					i++;
-				}
-			}
-		}
-	}
-
-	function openAnnotations( annotations ) {
-		var out = '',
-			annotation, i, arr, rendered;
-		arr = annotations.get();
-		for ( i = 0; i < arr.length; i++ ) {
-			annotation = arr[i];
-			rendered = annotation.renderHTML();
-			out += ve.getOpeningHtmlTag( rendered.tag, rendered.attributes );
-			annotationStack.push( annotation );
-		}
-		return out;
-	}
-
-	function closeAnnotations( annotations ) {
-		var out = '',
-			annotation, i, arr;
-		arr = annotations.get();
-		for ( i = 0; i < arr.length; i++ ) {
-			annotation = arr[i];
-			out += '</' + annotation.renderHTML().tag + '>';
-			annotationStack.remove( annotation );
-		}
-		return out;
 	}
 
 	for ( i = 0; i < data.length; i++ ) {
-		right = data[i];
-		leftPlain = typeof left === 'string';
-		rightPlain = typeof right === 'string';
-		
-		if ( !leftPlain && rightPlain ) {
-			// [formatted][plain]
-			// Close all open annotations, in reverse order
-			out += closeAnnotations( annotationStack.reversed() );
-		} else if ( leftPlain && !rightPlain ) {
-			// [plain][formatted]
-			out += openAnnotations( right[1] );
-		} else if ( !leftPlain && !rightPlain ) {
-			// [formatted][formatted]
-			open = new ve.AnnotationSet();
-			close = new ve.AnnotationSet();
+		chr = typeof data[i] === 'string' ? data[i] : data[i][0];
 
-			// Go through annotationStack from bottom to top (left to right), and
-			// close all annotations starting at the first one that's in left[1] but
-			// not in right[1]. Then reopen the ones that are in right[1].
-			startedClosing = false;
-			arr = annotationStack.get();
-			for ( j = 0; j < arr.length; j++ ) {
-				annotation = arr[j];
-				if (
-					!startedClosing &&
-					left[1].contains( annotation ) &&
-					!right[1].contains( annotation )
-				) {
-					startedClosing = true;
-				}
-				if ( startedClosing ) {
-					// Because we're processing these in reverse order, we need
-					// to put these in close in reverse order
-					close.add( annotation, 0 );
-					if ( right[1].contains( annotation ) ) {
-						// open needs to be reversed with respect to close
-						open.push( annotation );
-					}
-				}
+		if ( chr === ' ' && !significantWhitespace && data.length > 2 && i !== 0 && i !== data.length - 1 ) {
+			// Replace any sequence of 2+ spaces with an alternating pattern
+			// (space-nbsp-space-nbsp-...)
+			nextCharacter = typeof data[i + 1] === 'string' ? data[i + 1] : data[i + 1][0];
+			if ( nextCharacter === ' ' ) {
+				setChar( '\u00a0', i + 1, data );
 			}
-
-			// Open all annotations that are in right but not in left
-			open.addSet( right[1].diffWith( left[1] ) );
-
-			out += closeAnnotations( close );
-			out += openAnnotations( open );
 		}
-
-		chr = rightPlain ? right : right[0];
 		if ( !significantWhitespace && chr in whitespaceHtmlChars ) {
-			chr = whitespaceHtmlChars[chr];
+			setChar( whitespaceHtmlChars[chr], i, data );
 		}
-		out += chr in htmlChars ? htmlChars[chr] : chr;
-		left = right;
 	}
-
-	// Close all remaining open annotations
-	out += closeAnnotations( annotationStack.reversed() );
-	return out;
+	return data;
 };
 
 /* Registration */
 
-ve.ce.nodeFactory.register( 'text', ve.ce.TextNode );
+ve.ce.nodeFactory.register( ve.ce.TextNode );

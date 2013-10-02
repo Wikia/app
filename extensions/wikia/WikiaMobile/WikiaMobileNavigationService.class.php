@@ -16,9 +16,6 @@ class  WikiaMobileNavigationService extends WikiaService {
 	}
 
 	public function index() {
-		/**
-		 * @var $themeSettings ThemeSettings
-		 */
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 
@@ -31,8 +28,6 @@ class  WikiaMobileNavigationService extends WikiaService {
 		} else {
 			$this->response->setVal( 'wikiName', ( !empty( $settings['wordmark-text'] ) ) ? $settings['wordmark-text'] : $this->wg->SiteName );
 		}
-
-		//$this->response->setVal( 'searchOpen', ($this->wg->Title->getText() == SpecialPage::getTitleFor( 'Search' )->getText() ) );
 	}
 
 	public function navMenu(){

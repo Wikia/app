@@ -64,7 +64,7 @@ class FollowedPages extends SpecialPage {
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$template->set_vars(
 			array (
-				"data" 	=> FollowModel::getWatchList( $user->getId() ),
+				"data" 	=> $data,
 				"owner" => $wgUser->getId() == $user->getId(),
 				"user_id" =>  $user->getId(),
 				"is_hide" => $is_hide,

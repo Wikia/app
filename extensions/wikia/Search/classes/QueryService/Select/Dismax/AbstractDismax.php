@@ -8,7 +8,7 @@ use Wikia\Search\QueryService\Select\AbstractSelect, Solarium_Query_Select, Wiki
  * Specifies behavior applicable only to query services that use the DisMax Query Parser
  * @author relwell
  */
-class AbstractDismax extends AbstractSelect
+abstract class AbstractDismax extends AbstractSelect
 {
 	
 	/**
@@ -17,6 +17,8 @@ class AbstractDismax extends AbstractSelect
 	 */
 	protected $boostFunctions = array();
 
+	abstract protected function getQueryClausesString();
+	
 	/**
 	 * Return a string of query fields based on configuration
 	 * @return string

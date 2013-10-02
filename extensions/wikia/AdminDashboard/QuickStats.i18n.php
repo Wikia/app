@@ -647,7 +647,7 @@ $messages['ku-latn'] = array(
 	'quickstats-totals-label' => 'Hemû',
 );
 
-/** Kirghiz (Кыргызча)
+/** Kyrgyz (Кыргызча)
  * @author Growingup
  */
 $messages['ky'] = array(

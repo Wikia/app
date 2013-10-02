@@ -19,6 +19,7 @@ $wgAutoloadClasses['UserSignupSpecialController'] =  $dir . 'UserSignupSpecialCo
 $wgAutoloadClasses['WikiaConfirmEmailSpecialController'] =  $dir . 'WikiaConfirmEmailSpecialController.class.php';
 $wgAutoloadClasses['UserLoginController'] =  $dir . 'UserLoginController.class.php';
 $wgAutoloadClasses['UserLoginHelper'] =  $dir . 'UserLoginHelper.class.php';
+//@TODO get rid of TempUser handling when it will be globally disabled
 $wgAutoloadClasses['TempUser'] =  $dir . 'TempUser.class.php';
 $wgAutoloadClasses['UserLoginForm'] =  $dir . 'UserLoginForm.class.php';
 $wgAutoloadClasses['UserLoginFacebookForm'] =  $dir . 'UserLoginFacebookForm.class.php';
@@ -29,6 +30,7 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'UserLoginHooksHelper::onMakeGlobalVar
 $wgHooks['Preferences::SetUserEmail'][] = 'UserLoginHooksHelper::onSetUserEmail';
 $wgHooks['UserSendReConfirmationMail'][] = 'UserLoginHooksHelper::onUserSendReConfirmationMail';
 $wgHooks['AbortNewAccountErrorMessage'][] = 'UserLoginHooksHelper::onAbortNewAccountErrorMessage';
+//@TODO get rid of TempUser handling when it will be globally disabled
 $wgHooks['MailPasswordTempUser'][] = 'UserLoginHooksHelper::onMailPasswordTempUser';
 $wgHooks['ConfirmEmailShowRequestForm'][] = 'UserLoginHooksHelper::onConfirmEmailShowRequestForm';
 $wgHooks['UserSendConfirmationMail'][] = 'UserLoginHooksHelper::onUserSendConfirmationMail';

@@ -61,7 +61,7 @@ files = [
 	'extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 	'extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
 	'extensions/wikia/AdEngine/js/AdLogicPageLevelParamsLegacy.js',
-	'extensions/wikia/AdEngine/js/AdLogicShortPage.js',
+	'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 	'extensions/wikia/AdEngine/js/AdProviderAdDriver2.js',
 	'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 	'extensions/wikia/AdEngine/js/AdProviderGamePro.js',
@@ -92,6 +92,9 @@ files = [
 	'extensions/wikia/TOC/js/modules/toc.js',
 	'extensions/wikia/TOC/js/modules/spec/toc.spec.js'
 
+	// Video
+	'extensions/wikia/VideoPageTool/js/views/switcher.js',
+	'extensions/wikia/VideoPageTool/js/spec/*.spec.js'
 ];
 
 notCovered = [

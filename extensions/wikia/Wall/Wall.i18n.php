@@ -6547,6 +6547,7 @@ $messages['roa-tara'] = array(
  * @author Eleferen
  * @author Express2000
  * @author Kuzura
+ * @author Okras
  */
 $messages['ru'] = array(
 	'wall-no-title' => 'Без названия',
@@ -6601,6 +6602,7 @@ $messages['ru'] = array(
 	'wall-message-removed-reply-because' => '$1 удалил этот ответ, причина:',
 	'wall-message-deleted-reply-because' => '$1 удалил этот ответ, причина:',
 	'wall-message-closed-by' => '[[$2|$1]] закрыл эту тему',
+	'wall-message-closed-by-because' => '$1 {{GENDER:$1|закрыл|закрыла}} эту тему по причине:',
 	'wall-message-restore-reply' => 'Восстановить ответ',
 	'wall-delete-reason' => 'Действия участника/администратора',
 	'wall-user-talk-page-archive-anchor' => 'Просмотреть заархивированные страницы обсуждения',
@@ -6624,6 +6626,8 @@ $messages['ru'] = array(
 	'wall-action-remove-thread-confirm-info' => 'Эта тема и ваш комментарий останутся в истории вики.',
 	'wall-action-remove-reply-confirm-info' => 'Этот ответ и ваш комментарий останутся в истории вики.',
 	'wall-action-remove-confirm-ok' => 'Удалить',
+	'wall-action-close-thread-title' => 'Закрыть эту тему',
+	'wall-action-close-confirm-ok' => 'Закрыть',
 	'wall-action-admin-thread-title' => 'Удалить эту тему',
 	'wall-action-admin-reply-title' => 'Удалить этот ответ',
 	'wall-action-admin-confirm' => 'Пожалуйста, укажите, почему вы хотите удалить это:',
@@ -6832,7 +6836,7 @@ ___________________________________________<br />
 	'wall-votes-modal-showmore' => 'Посмотреть, кто ещё добавил "Мне нравится"',
 	'wall-votes-modal-title' => 'Мне нравится',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Один участник|$1 участника|$1 участников}} добавили "Мне нравится" к этому сообщению',
-	'wall-votes-number' => '$1 {{PLURAL:$1|мне нравится|мне нравится}}', # Fuzzy
+	'wall-votes-number' => '$1 {{PLURAL:$1|«мне нравится»}}',
 	'wall-votes-number-tooltip' => 'Посмотреть, кто добавил "Мне нравится"',
 	'wall-votes-vote-tooltip' => 'Мне нравится это сообщение',
 	'wall-votes-voted-tooltip' => 'Вам понравилось это сообщение!',

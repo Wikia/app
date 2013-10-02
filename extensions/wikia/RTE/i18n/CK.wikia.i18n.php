@@ -549,6 +549,7 @@ $messages['br'] = array(
 	'rte-ck-mut-add' => 'Ouzhpennañ ur video (beta)',
 	'rte-ck-mut-mut' => 'Video (beta)',
 	'rte-ck-widescreen-toggle' => 'Gweredekaat/diweredekaat ar skramm leun',
+	'rte-ck-poll-confirmDelete' => "Ha sur oc'h e fell deoc'h tennañ ar sontadeg eus ar bajenn-mañ ?",
 	'rte-ck-poll-confirmDeleteTitle' => 'Lemel kuit ar sontadeg-mañ ?',
 	'rte-ck-spellchecker-moreSuggestions' => "Muioc'h a ginnigoù",
 	'rte-ck-pasteText-title' => 'Pegañ ho testenn',

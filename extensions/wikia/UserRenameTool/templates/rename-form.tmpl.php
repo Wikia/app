@@ -74,7 +74,15 @@
 					</td>
 				</tr>
 			<?endif;?>
-			
+			<tr id="mw-warnings-row" style="display: none;">
+				<td class="mw-label"><?= wfMessage( 'userrenametool-warnings' )->inContentLanguage()->escaped(); ?></td>
+				<td class="mw-input">
+					<ul id="mw-warnings-list">
+						<li style="display: none;" id="mw-warnings-list-characters"><?= wfMessage( 'userrenametool-warnings-characters' )->inContentLanguage()->escaped(); ?></li>
+						<li style="display: none;" id="mw-warnings-list-maxlength"><?= wfMessage( 'userrenametool-warnings-maxlength' )->inContentLanguage()->escaped(); ?></li>
+					</ul>
+				</td>
+			</tr>
 		</table>
 	</fieldset>
 </form>

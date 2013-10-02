@@ -1,0 +1,51 @@
+/*!
+ * VisualEditor MediaWiki UserInterface vector icon styles.
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-ui-icon-alienextension {
+	/* @embed */
+	background-image: url(images/icons/alienextension.svg);
+}
+
+.ve-ui-icon-hiero {
+	/* @embed */
+	background-image: url(images/icons/hiero.svg);
+}
+
+.ve-ui-icon-math {
+	/* @embed */
+	background-image: url(images/icons/math.svg);
+}
+
+.ve-ui-icon-parameter {
+	/* @embed */
+	background-image: url(images/icons/parameter.svg);
+}
+
+.ve-ui-icon-parameter-set {
+	/* @embed */
+	background-image: url(images/icons/parameter-set.svg);
+}
+
+.ve-ui-icon-reference {
+	/* @embed */
+	background-image: url(images/icons/reference.svg);
+}
+
+.ve-ui-icon-references {
+	/* @embed */
+	background-image: url(images/icons/references.svg);
+}
+
+.ve-ui-icon-source {
+	/* @embed */
+	background-image: url(images/icons/source.svg);
+}
+
+.ve-ui-icon-template {
+	/* @embed */
+	background-image: url(images/icons/template.svg);
+}
