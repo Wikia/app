@@ -287,7 +287,7 @@ div#userloginErrorBox3 {
 	@include clearfix;
 	display: none;
 	@if ( $responsive-layout-enabled ) {
-		width: auto;
+		min-width: 590px;
 	} @else {
 		width: 600px;
 	}
