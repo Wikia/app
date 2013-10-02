@@ -9,16 +9,13 @@
 $play-button-overlay-fade-duration: 400ms;
 
 
-// show/hide play buttons
-@mixin play-button {
-	.Wikia-video-play-button {
+// show/hide play buttons and arrows on hover of ancestor elements
+@mixin transition-show-hide( $selector ) {
+	#{$selector} {
 		@include transition-shorthand(opacity $play-button-overlay-fade-duration ease-out);
 		@include opacity(0);
-		position: absolute;
-		top: 50%;
-		left: 50%;
 	}
-	&:hover .Wikia-video-play-button {
+	&:hover #{$selector} {
 		@include opacity(100);
 		@include transition-shorthand(opacity $play-button-overlay-fade-duration ease-out);
 		visibility: visible;
@@ -156,7 +153,7 @@ $play-button-overlay-fade-duration: 400ms;
 				}
 			}
 			a { // .video
-				@include play-button;
+				@include transition-show-hide( '.Wikia-video-play-button' );
 				display: block;
 				margin-bottom: 10px;
 				position: relative;
@@ -194,11 +191,11 @@ $play-button-overlay-fade-duration: 400ms;
 		}
 	}
 	.bx-wrapper {
-		@include play-button;
+		@include transition-show-hide( '.Wikia-video-play-button' );
+		@include transition-show-hide( '.bx-controls-direction a' );
+
 		.bx-controls-direction a {
 			@include sprite-VideoPageTool-base();
-			@include transition-shorthand(opacity $play-button-overlay-fade-duration ease-out);
-			@include opacity(0);
 			height: 55px;
 			margin-top: -27.5px;
 			width: 42px;
@@ -209,11 +206,11 @@ $play-button-overlay-fade-duration: 400ms;
 				@include sprite-VideoPageTool('carousel_right_arrow_white');
 			}
 		}
-		&:hover .bx-controls-direction a{
-			@include opacity(100);
-			@include transition-shorthand(opacity $play-button-overlay-fade-duration ease-out);
-			visibility: visible;
-		}
+	}
+	.Wikia-video-play-button {
+		position: absolute;
+		top: 50%;
+		left: 50%;
 	}
 	.hidden {
 		visibility: hidden;
