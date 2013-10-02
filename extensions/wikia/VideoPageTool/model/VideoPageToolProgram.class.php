@@ -102,15 +102,16 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * Given a language, finds the program object nearest (or equal to) to today's date
-	 * @param $lang
-	 * @return object
+	 * Given a language, finds the program object nearest (or equal to) to the date (default = today's date)
+	 * @param string $lang
+	 * @param string $date [timestamp]
+	 * @return object|null $program
 	 */
-	public static function newProgramNearestToday( $lang ) {
+	public static function newProgramNearestToday( $lang, $date = '' ) {
 		wfProfileIn( __METHOD__ );
 
 		// Figure out what the nearest date to today is
-		$nearestDate = self::getNearestDate( $lang );
+		$nearestDate = self::getNearestDate( $lang, $date );
 		if ($nearestDate) {
 			// Load the program with this nearest date
 			$program = self::newProgram( $lang, $nearestDate );
@@ -212,17 +213,23 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * Returns the nearest program date to today for a given language
-	 * @param $language
+	 * Returns the nearest program date to the date for a given language (default = today's date)
+	 * @param string $language
+	 * @param string $date [timestamp]
 	 * @return null|string
 	 */
-	protected function getNearestDate( $language ) {
+	protected static function getNearestDate( $language, $date = '' ) {
 		wfProfileIn( __METHOD__ );
 
-		$date = date('Y-m-d');
-		$nearestKey = wfMemcKey( 'videopagetool', 'nearest-date', $language, $date );
-		$nearestDate = F::app()->wg->Memc->get( $nearestKey );
+		$app = F::app();
 
+		if ( empty( $date ) ) {
+			$date = time();
+		}
+		$date = date( 'Y-m-d', $date );
+
+		$nearestKey = wfMemcKey( 'videopagetool', 'nearest-date', $language, $date );
+		$nearestDate = $app->wg->Memc->get( $nearestKey );
 		if ( !$nearestDate ) {
 			$db = wfGetDB( DB_SLAVE );
 
@@ -231,7 +238,7 @@ class VideoPageToolProgram extends WikiaModel {
 				array( 'unix_timestamp(publish_date) as publish_date' ),
 				array(
 					'language' => $language,
-					'publish_date <= '.$db->addQuotes(date( 'Y-m-d' )),
+					'publish_date <= '.$db->addQuotes( $date ),
 				),
 				__METHOD__,
 				array( 'ORDER BY' => 'publish_date DESC' )
@@ -241,7 +248,7 @@ class VideoPageToolProgram extends WikiaModel {
 				$nearestDate = $row->publish_date;
 
 				// Cache this for at most one day
-				$this->wg->Memc->set( $nearestKey, $nearestDate, self::DATE_CACHE_TTL );
+				$app->wg->Memc->set( $nearestKey, $nearestDate, self::DATE_CACHE_TTL );
 			}
 		}
 

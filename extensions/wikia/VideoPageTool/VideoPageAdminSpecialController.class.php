@@ -87,8 +87,19 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		$leftMenuItems = $helper->getLeftMenuItems( $section, $sections, $language, $date );
 
 		$program = VideoPageToolProgram::newProgram( $language, $date );
+
+		// get program assets
 		$assets = $program->getAssetsBySection( $section );
 		if ( empty( $assets ) ) {
+			$publishedProgram = VideoPageToolProgram::newProgramNearestToday( $language, $date );
+			if ( !empty( $publishedProgram ) ) {
+				$assets = $publishedProgram->getAssetsBySection( $section );
+			}
+		}
+
+		// get asset data
+		if ( empty( $assets ) ) {
+			// get default assets
 			$videos = $helper->getDefaultValuesBySection( $section );
 		} else {
 			foreach( $assets as $order => $asset ) {
@@ -144,6 +155,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 
 		$this->leftMenuItems = $leftMenuItems;
 		$this->moduleView = $this->app->renderView( 'VideoPageAdminSpecial', $section, array( 'videos' => $videos, 'date' => $date, 'language' => $language ) );
+		$this->publishButton = ( $program->isPublishable( array_keys( $sections ) ) ) ? '' : 'disabled';
 
 		$this->section = $section;
 		// TODO: not sure if these are needed in edit(), just in the sub views like "featured" etc.

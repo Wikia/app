@@ -17,6 +17,6 @@
 		<?= $moduleView ?>
 	</div>
 	<div class="publish">
-		<button class="big"><?= wfMessage( 'videopagetool-publish-button' )->text() ?></button>
+		<button class="big" <?= $publishButton ?>><?= wfMessage( 'videopagetool-publish-button' )->text() ?></button>
 	</div>
 </div>
