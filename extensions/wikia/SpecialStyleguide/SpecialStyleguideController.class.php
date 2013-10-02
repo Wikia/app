@@ -47,6 +47,10 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 					'body' => $this->getSectionContent( 'components' ),
 					'footer' => $this->getSectionContent( 'footer' ),
 				];
+
+				$this->response->addAsset('extensions/wikia/SpecialStyleguide/js/SpecialStyleguide.js');
+				JSMessages::enqueuePackage('SpecialStyleguide', JSMessages::EXTERNAL);
+
 				break;
 			default:
 				$data = [
