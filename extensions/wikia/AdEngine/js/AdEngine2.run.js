@@ -32,13 +32,19 @@
 		adProviderGpt,
 		adProviderEvolve,
 		adProviderGamePro,
-		adProviderSevenOneMedia,
 		adProviderLater,
 		adProviderNull,
 		slotTweaker,
 
 		queueForLateAds,
-		adConfigForLateAds;
+		adConfigForLateAds,
+		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./);
+
+	// Don't have SevenOne Media ads on IE8 (or below)
+	window.wgAdDriverUseSevenOneMedia = !ie8 && window.wgAdDriverUseSevenOneMedia && abTest.inGroup('SEVENONEMEDIA_ADS', 'ENABLED');
+
+	// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
+	window.wgUsePostScribe = window.wgUsePostScribe || window.wgAdDriverUseSevenOneMedia;
 
 	/*
 	 * Currently PostScribe conflicts with Krux as it supplies a different version of the lib.
@@ -69,7 +75,6 @@
 	adProviderGpt = AdProviderGpt(tracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaFullGpt);
 	adProviderEvolve = AdProviderEvolve(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, document, Krux, evolveHelper, slotTweaker);
 	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, slotTweaker);
-	adProviderSevenOneMedia = AdProviderSevenOneMedia();
 	adProviderNull = AdProviderNull(log, slotTweaker);
 
 	// Special Ad Provider, to deal with the late ads
@@ -90,8 +95,7 @@
 		adProviderEvolve,
 		adProviderGamePro,
 		adProviderLater,
-		adProviderNull,
-		adProviderSevenOneMedia
+		adProviderNull
 	);
 
 	window.wgAfterContentAndJS.push(function () {
@@ -109,7 +113,7 @@
 
 	// DART API for Liftium
 	window.LiftiumDART = {
-		getUrl: function (slotname, slotsize, a, b) {
+		getUrl: function (slotname, slotsize) {
 			return wikiaDart.getUrl({
 				slotname: slotname,
 				slotsize: slotsize,

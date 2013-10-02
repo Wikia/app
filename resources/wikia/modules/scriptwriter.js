@@ -25,6 +25,7 @@
  */
 
 /*global setTimeout, define, require*/
+/*jslint regexp:true*/
 
 var ScriptWriter = function (document, log, window, loader) {
 	'use strict';

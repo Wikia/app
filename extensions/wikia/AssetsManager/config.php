@@ -55,6 +55,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaFullGptHelper.js',
+		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
 		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 		'//extensions/wikia/AdEngine/js/AdProviderGamePro.js',
@@ -88,6 +89,7 @@ $config['oasis_ads_js'] = array(
 		// @requires adengine2 core already loaded
 		// @requires liftium loaded later (TODO FIXME)
 		'//extensions/wikia/AdEngine/js/AdProviderLiftium2Dom.js',
+		'//extensions/wikia/AdEngine/js/AdProviderSevenOneMedia.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2Late.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.configLateAds.js',
 
