@@ -7,7 +7,7 @@
 
 
 class JsonFormatService extends \WikiaService {
-	const CACHE_EXPIRATION = 3600;//1 hour
+	const CACHE_EXPIRATION = 14400;//4 hour
 
 	private $htmlParser;
 	private $requestContext;
@@ -18,6 +18,7 @@ class JsonFormatService extends \WikiaService {
 		}
 		$this->requestContext = new RequestContext();
 		$this->htmlParser = $htmlParser;
+		parent::__construct();
 	}
 
 	public function getJsonFormatForArticleId( $articleId ) {
@@ -29,11 +30,10 @@ class JsonFormatService extends \WikiaService {
 			throw new JsonFormatException("Cannot find article with id:" . $articleId);
 		}
 
-		$app = F::app();
 
 		$cacheKey = wfMemcKey( "JsonFormat:".$articleId);
 
-		$parsedHtml = $app->wg->memc->get($cacheKey);
+		$parsedHtml = $this->app->wg->memc->get($cacheKey);
 
 		if($parsedHtml===false)
 		{
@@ -41,7 +41,7 @@ class JsonFormatService extends \WikiaService {
 
 			$parsedHtml = $this->htmlParser->parse( $html );
 
-			$app->wg->memc->set( $cacheKey, $parsedHtml, self::CACHE_EXPIRATION );
+			$this->app->wg->memc->set( $cacheKey, $parsedHtml, self::CACHE_EXPIRATION );
 
 		}
 
