@@ -428,7 +428,6 @@ class SpecialCssModel extends WikiaModel {
 	 */
 	private function truncateAndParse( $title, $wikitext ) {
 		$userLang = $this->wg->Lang;
-		$wikitext = $userLang->truncate( $wikitext, self::SNIPPET_CHAR_LIMIT, wfMessage( 'ellipsis' )->text() );
 
 		$extractedWikitext = CategoryHelper::extractCategoriesFromWikitext( $wikitext, true, $userLang );
 
@@ -438,6 +437,7 @@ class SpecialCssModel extends WikiaModel {
 
 		$wikitext = $this->getParsedText( $wikitext, $title );
 
+		$wikitext = $userLang->truncateHTML( $wikitext, self::SNIPPET_CHAR_LIMIT, wfMessage( 'ellipsis' )->text() );
 		return $wikitext;
 	}
 
