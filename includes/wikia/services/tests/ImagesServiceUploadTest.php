@@ -67,12 +67,30 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 			'Path should end with file name'
 		);
 
-		# TODO: thumbnailer doesn't work currently
-		# $this->assertTrue(Http::get($thumb, 'default', ['noProxy' => true]) !== false, 'Thumbnail should return HTTP 200 - ' . $thumb);
+		# TODO: thumbnailer doesn't work currently - URL "rewrite"
+		global $wgFSSwiftServer;
+		$thumb = str_replace($wgFSSwiftServer, 'dev-moli:46664', $thumb);
+
+		#$this->assertTrue(Http::get($thumb, 'default', ['noProxy' => true]) !== false, 'Thumbnail should return HTTP 200 - ' . $thumb);
 	}
 
-	// TODO
-	private function checkCrop( LocalFile $image ) {}
+	// check cropped file (provided by ImageServing)
+	private function checkCrop( LocalFile $image ) {
+		$im = new ImageServing(null, 150);
+		$crop = $im->getUrl($image, 250, 250); // take 250x250 square from original image and scale it down to 150px (width)
+
+		$this->assertContains(
+			'150px-0%2C251%2C0%2C250-',
+			$crop,
+			'Cropped URL is correct'
+		);
+
+		# TODO: thumbnailer doesn't work currently - URL "rewrite"
+		global $wgFSSwiftServer;
+		$crop = str_replace($wgFSSwiftServer, 'dev-moli:46664', $crop);
+
+		#$this->assertTrue(Http::get($crop, 'default', ['noProxy' => true]) !== false, 'Crop should return HTTP 200 - ' . $crop);
+	}
 
 	private function assertReturns404( $url, $msg ) {
 		$req = MWHttpRequest::factory( $url, ['noProxy' => true] );
@@ -117,6 +135,7 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 
 		$this->checkImage( $file );
 		$this->checkThumbnail( $file );
+		$this->checkCrop( $file );
 
 		// (C) remove it...
 		$time = microtime( true );
@@ -130,11 +149,15 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$this->assertReturns404( $oldUrl, 'Removed image should return HTTP 404' );
 
 		// (D) restore it
+		$time = microtime( true );
 		$file->restore([], true ); // $unsuppress = true - remove file from /deleted directory
 		$this->assertTrue( $status->isOK(), 'Restoring failed' );
 
+		Wikia::log( __METHOD__ , 'restore', sprintf( 'took %.4f sec', microtime( true ) - $time ) );
+
 		$this->checkImage( $file );
 		$this->checkThumbnail( $file );
+		$this->checkCrop( $file );
 	}
 
 	protected function tearDown() {
