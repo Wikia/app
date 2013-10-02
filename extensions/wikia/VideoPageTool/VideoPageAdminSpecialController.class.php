@@ -68,6 +68,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		$time = $this->getVal( 'date', time() );
 		$language = $this->getVal( 'language', VideoPageToolHelper::DEFAULT_LANGUAGE );
 		$section = $this->getVal( 'section', VideoPageToolHelper::DEFAULT_SECTION );
+		$action = $this->getVal( 'action', '' );
 
 		// for save message
 		$success = $this->getVal( 'success', '' );
@@ -107,47 +108,61 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			}
 		}
 
+		$result = '';
+		$msg = '';
 		if ( $this->request->wasPosted() ) {
-			$formValues = $this->request->getParams();
-			$errMsg = '';
-			$requiredRows = VideoPageToolHelper::$requiredRows[$section];
-			$data = $program->formatFormData( $section, $requiredRows, $formValues, $errMsg );
-			if ( empty( $errMsg ) ) {
-				$status = $program->saveAssetsBySection( $section, $data );
-				if ( $status->isGood() ) {
-					$nextUrl = $helper->getNextMenuItemUrl( $leftMenuItems ).'&success=1';
-					$this->getContext()->getOutput()->redirect( $nextUrl );
+			// publish program
+			if ( $action == 'publish' ) {
+				$response =	$this->sendSelfRequest( $action, array( 'date' => $date, 'language' => $language ) );
+				$msg = $response->getVal( 'msg', '' );
+				$result = $response->getVal( 'result', '' );
+				if ( $result == 'ok' ) {
+					// redirect to Special:VideoPageAdmin
+					$url = SpecialPage::getTitleFor( 'VideoPageAdmin' )->getLocalURL();
+					$msg = wfMessage( 'videopagetool-success-publish' )->plain();
+					NotificationsController::addConfirmation( $msg, NotificationsController::CONFIRMATION_CONFIRM );
+					$this->getContext()->getOutput()->redirect( $url );
 					return true;
-				} else {
-					$result = 'error';
-					$msg = $status->getMessage();
 				}
+			// save assets
 			} else {
-				// update original asset data
-				foreach ( $data as $order => $row ) {
-					foreach ( $row as $name => $value ) {
-						if ( array_key_exists( $name, $videos[$order] ) && $videos[$order][$name] != $value ) {
-							$videos[$order][$name] = $value;
-						}
+				$formValues = $this->request->getParams();
+				$errMsg = '';
+				$requiredRows = VideoPageToolHelper::$requiredRows[$section];
+				$data = $program->formatFormData( $section, $requiredRows, $formValues, $errMsg );
+				if ( empty( $errMsg ) ) {
+					$status = $program->saveAssetsBySection( $section, $data );
+					if ( $status->isGood() ) {
+						$nextUrl = $helper->getNextMenuItemUrl( $leftMenuItems ).'&success=1';
+						$this->getContext()->getOutput()->redirect( $nextUrl );
+						return true;
+					} else {
+						$result = 'error';
+						$msg = $status->getMessage();
+					}
+				} else {
+					// update original asset data
+					foreach ( $data as $order => $row ) {
+						foreach ( $row as $name => $value ) {
+							if ( array_key_exists( $name, $videos[$order] ) && $videos[$order][$name] != $value ) {
+								$videos[$order][$name] = $value;
+							}
 
-						// replace alternative thumbnail
-						if ( $name == 'altThumbTitle' && array_key_exists( 'altThumbKey', $videos[$order] )
-							&& $videos[$order]['altThumbKey'] != $value ) {
-							$videos[$order] = $helper->replaceThumbnail( $videos[$order], $value );
+							// replace alternative thumbnail
+							if ( $name == 'altThumbTitle' && array_key_exists( 'altThumbKey', $videos[$order] )
+								&& $videos[$order]['altThumbKey'] != $value ) {
+								$videos[$order] = $helper->replaceThumbnail( $videos[$order], $value );
+							}
 						}
 					}
+					$result = 'error';
+					$msg = $errMsg;
 				}
-				$result = 'error';
-				$msg = $errMsg;
 			}
-		} else {
-			if ( empty( $success ) ) {
-				$result = '';
-				$msg = '';
-			} else {
-				$result = 'ok';
-				$msg = wfMessage( 'videopagetool-success-save' )->plain();
-			}
+		// save successfully
+		} else if ( !empty( $success ) ) {
+			$result = 'ok';
+			$msg = wfMessage( 'videopagetool-success-save' )->plain();
 		}
 
 		$this->result = $result;
@@ -156,6 +171,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		$this->leftMenuItems = $leftMenuItems;
 		$this->moduleView = $this->app->renderView( 'VideoPageAdminSpecial', $section, array( 'videos' => $videos, 'date' => $date, 'language' => $language ) );
 		$this->publishButton = ( $program->isPublishable( array_keys( $sections ) ) ) ? '' : 'disabled';
+		$this->publishUrl = $this->wg->Title->getLocalURL( array('date' => $date, 'language' => $language) );
 
 		$this->section = $section;
 		// TODO: not sure if these are needed in edit(), just in the sub views like "featured" etc.
@@ -179,7 +195,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			if ( !$program->exists() ) {
 				$this->result = 'error';
 				$this->msg = wfMessage( 'videopagetool-error-unknown-program' )->plain();
-				return false;
+				return;
 			}
 
 			// get all sections
@@ -190,7 +206,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			if ( !$program->isPublishable( $sections ) ) {
 				$this->result = 'error';
 				$this->msg = wfMessage( 'videopagetool-error-program-not-ready' )->plain();
-				return false;
+				return;
 			}
 
 			// publish program
@@ -198,16 +214,12 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			if ( !$status->isGood() ) {
 				$this->result = 'error';
 				$this->msg = $status->getMessage();
-				return false;
+				return;
 			}
-
-			// redirect to Special:VideoPageTool
-			$url = SpecialPage::getTitleFor( 'VideoPageAdmin' )->getLocalURL();
-			$msg = wfMessage( 'videopagetool-success-publish' )->plain();
-			NotificationsController::addConfirmation( $msg, NotificationsController::CONFIRMATION_CONFIRM );
-			$this->getContext()->getOutput()->redirect( $url );
-			return true;
 		}
+
+		$this->result = 'ok';
+		$this->msg = '';
 	}
 
 	/**
@@ -236,11 +248,11 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string msg - result message
 	 */
 	public function getCalendarInfo() {
-		// check permission
-		if ( !$this->wg->User->isAllowed( 'videopagetool' ) ) {
+		$errMsg = '';
+		if ( !$this->validateUser( $errMsg ) ) {
 			$this->result = 'error';
-			$this->msg = wfMessage( 'videopagetool-error-permission' )->plain();
-			return false;
+			$this->msg = $errMsg;
+			return;
 		}
 
 		$language = $this->getVal( 'language', VideoPageToolHelper::DEFAULT_LANGUAGE );
@@ -326,6 +338,13 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array video
 	 */
 	public function getVideoData() {
+		$errMsg = '';
+		if ( !$this->validateUser( $errMsg ) ) {
+			$this->result = 'error';
+			$this->msg = $errMsg;
+			return;
+		}
+
 		$url = $this->getVal( 'url', '' );
 		$altThumbTitle = $this->getVal( 'altThumbKey', '' );
 
@@ -362,6 +381,13 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array $data [ array( 'thumbUrl' => $url, 'largeThumbUrl' => $url ) ]
 	 */
 	public function getImageData() {
+		$errMsg = '';
+		if ( !$this->validateUser( $errMsg ) ) {
+			$this->result = 'error';
+			$this->msg = $errMsg;
+			return;
+		}
+
 		$imageTitle = $this->getVal( 'imageTitle', '' );
 
 		if ( empty( $imageTitle ) ) {
@@ -402,6 +428,33 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		// }
 
 		$this->dashboardHref = SpecialPage::getTitleFor('VideoPageTool')->getLocalURL();
+	}
+
+	/**
+	 * Validate user
+	 * @param string $errMsg
+	 * @return boolean
+	 */
+	protected function validateUser( &$errMsg ) {
+		// check for logged in user
+		if ( !$this->wg->User->isLoggedIn() ) {
+			$errMsg = wfMessage( 'videos-error-not-logged-in' )->text();
+			return false;
+		}
+
+		// check for blocked user
+		if ( $this->wg->User->isBlocked() ) {
+			$errMsg = wfMessage( 'videos-error-blocked-user' )->text();
+			return false;
+		}
+
+		// check if allow
+		if ( !$this->wg->User->isAllowed( 'videopagetool' ) ) {
+			$errMsg = wfMessage( 'videopagetool-error-permission' )->plain();
+			return false;
+		}
+
+		return true;
 	}
 
 }

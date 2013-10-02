@@ -17,6 +17,8 @@
 		<?= $moduleView ?>
 	</div>
 	<div class="publish">
-		<button class="big" <?= $publishButton ?>><?= wfMessage( 'videopagetool-publish-button' )->text() ?></button>
+		<form class="WikiaForm" method="post" action="<?= $publishUrl ?>">
+			<button type="submit" class="big" name="action" value="publish" <?= $publishButton ?>><?= wfMessage( 'videopagetool-publish-button' )->text() ?></button>
+		</form>
 	</div>
 </div>
