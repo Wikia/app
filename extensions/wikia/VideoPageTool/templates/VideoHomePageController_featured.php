@@ -10,7 +10,7 @@
 							<img class="sprite large play" src="<?= $wg->BlankImgUrl ?>">
 						</div>
 						<img src="<?= $videoData['largeThumbUrl'] ?>">
-						<div class="caption small-5 columns">
+						<div class="caption small-4 columns">
 							<span class="title"><?= $videoData['displayTitle'] ?></span>
 							<span class="description"><?= $videoData['description'] ?></span>
 						</div>
@@ -30,6 +30,7 @@
 							</span>
 							<img data-video-key="<?= $videoData['videoKey'] ?>" src="<?= $videoData['thumbUrl'] ?>">
 						</a>
+						<div class="title"><p><?= $videoData['displayTitle'] ?></p></div>
 					</li>
 				<? endforeach; ?>
 			</ul>

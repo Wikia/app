@@ -39,6 +39,7 @@ define( 'views.videohomepage.featured', [
 	Featured.prototype = {
 		init: function() {
 			this.initSlider();
+			this.initTitleEllipses();
 		},
 		initSlider: function() {
 			this.slider = this.$bxSlider.bxSlider({
@@ -50,6 +51,7 @@ define( 'views.videohomepage.featured', [
 				prevText: '',
 				auto: true,
 				speed: 400,
+				mode: 'fade',
 				// not using this b/c it's buggy
 				autoHover: false
 			});
@@ -67,7 +69,7 @@ define( 'views.videohomepage.featured', [
 			this.$sliderControls = this.$sliderWrapper.find( '.bx-pager' );
 
 			// left/right padding for videos so arrows don't overlap
-			this.videoPadding = ( this.$sliderWrapper.find( '.bx-prev' ).width() * 2 ) + 30;
+			this.videoPadding = ( this.$sliderWrapper.find( '.bx-prev' ).width() * 2 ) + 130;
 
 			this.bindEvents();
 		},
@@ -286,6 +288,65 @@ define( 'views.videohomepage.featured', [
 				this.slides[ i ].embedData = null;
 			}
 
+		},
+
+		initTitleEllipses: function() {
+			var that = this,
+				$titles = this.$thumbs.find( '.title' ).find( 'p' );
+
+			$titles.each( function() {
+				var $this = $( this );
+				if( $this.height() > $this.parent().height() ) {
+					that.doEllipses( $this );
+				}
+			});
+		},
+
+		doEllipses: function( $elem ) {
+			var oText = $elem.text(),
+				words = oText.split( ' ' ),
+				len = words.length,
+				i,
+				$spans,
+				lineCount = 0,
+				maxLines = 2,
+				spanTop = null,
+				currSpanTop;
+
+			for( i = 0; i < len; i++ ) {
+				words[ i ] = '<span>' + words[ i ] + '</span>';
+			}
+
+			$elem.html( words.join( ' ' ) );
+
+			$spans = $elem.find( 'span' );
+
+			$spans.each( function() {
+				var $this = $( this );
+
+				currSpanTop = $this.offset().top;
+
+				// if it's the first span, set the value and move on
+				if( spanTop === null ) {
+					spanTop = currSpanTop;
+				} else if( lineCount === maxLines ) {
+					// hide everthing if we've already reached our max lines
+					$this.hide();
+				} else {
+					if( spanTop !== currSpanTop ) {
+						// we're at a new line, increment lineCount
+						lineCount += 1;
+						// update span top with the new y coordinate
+						spanTop = currSpanTop;
+					}
+
+					if( lineCount === maxLines ) {
+						// hide the first word on the new line and the last word in the line before the max lines
+						// reached
+						$this.hide().prev().hide().before( '...' );
+					}
+				}
+			});
 		}
 	};
 
