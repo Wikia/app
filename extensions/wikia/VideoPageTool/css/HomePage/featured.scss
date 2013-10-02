@@ -142,6 +142,7 @@ $play-button-overlay-fade-duration: 400ms;
 				.title {
 					@include opacity( 70 );
 					color: #FFF;
+					fond-size: 14px;
 					line-height: 1.5em;
 					max-height: 3em;
 					overflow: hidden;

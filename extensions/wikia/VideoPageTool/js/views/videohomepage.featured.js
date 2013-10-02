@@ -119,6 +119,8 @@ define( 'views.videohomepage.featured', [
 					this.switchToVideoSlider();
 				}
 
+				this.$thumbs.slideUp();
+
 				if( this.slider.getCurrentSlide() === index ) {
 					// play the video
 					this.playVideo( this.slides[ index ] );
