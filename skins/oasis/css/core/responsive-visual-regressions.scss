@@ -1,0 +1,66 @@
+// START - edit page fixes
+.editor .WikiaMainContent {
+	float: none;
+	width: 100%;
+}
+
+.editpage-sourcewidemode.mode-source {
+	&.editpage-sourcewidemode-on {
+		.EditPageMain {
+			margin-right: 0;
+			width: 100%;
+		}
+
+		.EditPageMainContainer {
+			margin-right: 0;
+		}
+	}
+
+	.editpage-widemode-trigger {
+		right: $width-rail;
+	}
+}
+
+.editpage-visualwidemode {
+	.EditPageMain {
+		margin-right: 0;
+		width: 100%;
+	}
+
+	.EditPageMainContainer {
+		margin-right: 0;
+	}
+
+	.EditPageToolbar {
+		padding-right: $width-rail;
+
+		.cke_toolbar_expand > a {
+			right: $width-rail + $width-padding;
+		}
+	}
+}
+
+.EditPageMain {
+	margin-right: -$width-rail;
+	padding: 0;
+	width: 100%;
+}
+
+.EditPageMainContainer {
+	margin-right: $width-rail;
+}
+
+.EditPageRail {
+	width: $width-rail;
+}
+// END - edit page fixes
+
+// START - main page tag fixes
+.lcs-container {
+	margin-right: $width-rail + $width-padding;
+}
+
+.main-page-tag-lcs-exploded {
+	margin-right: -( $width-rail + $width-gutter );
+}
+// END - main page tag fixes

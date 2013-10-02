@@ -1,0 +1,38 @@
+// Layout
+$width-adskin: 170px;
+$width-adskins: $width-adskin * 2;
+$width-gradient: 40px;
+$width-outside-half: $width-outside / 2;
+$width-outside-min: 768px;
+$width-outside-max: 1600px;
+$width-outside-max-half: $width-outside-max / 2;
+$width-padding: $width-gutter / 2;
+
+// Breakpoints
+$breakpoint-content: $width-outside;
+$breakpoint-fluid: $width-outside + $width-adskins;
+$breakpoint-max: $width-outside-max + $width-adskins;
+$breakpoint-min: $width-outside-min;
+$breakpoint-small: 1023px;
+
+// Background
+// TODO: we might want to consider pre-calculating all of the background
+// positioning stuff in PHP and then passing it in here, it would be much
+// more performant. However, before we do that, we should come up with a
+// better way of passing parameters into Sass (like using a hash), otherwise
+// the URLs generated for Sass files will be even more ridiculously long.
+$background-height: get_command_line_param( "background-image-height", 0 ) * 1px; // convert int to pixel value
+$background-width: get_command_line_param( "background-image-width", 0 ) * 1px; // convert int to pixel value
+$background-width-half: $background-width / 2;
+$background-position: if( $background-fixed, fixed, absolute );
+
+// Determines whether or not to apply the dynamic background. Only applies if:
+// - background is not tiled
+// - background image height is greather than zero
+// - background image width is wider than the width of the skin (visible in the ad skin margins)
+$background-is-dynamic: if( not $background-tiled and $background-height > 0 and $background-width > $width-outside, true, false );
+
+// The background image is considered to be "wide" if it bleeds off the screen
+// at the size of the fluid breakpoint. This is important because it will determine
+// how the two slices of background images need to be positioned below.
+$background-is-wide: if( $background-width > $breakpoint-fluid, true, false );

@@ -79,3 +79,13 @@
 @media print {
 	@import "print";
 }
+
+
+@if ( $responsive-layout-enabled ) {
+	// load all responsive layout files
+	@import "core/responsive-variables";
+	@import "core/responsive-font-sizing";
+	@import "core/responsive-background";
+	@import "core/responsive-core";
+	@import "core/responsive-visual-regressions";
+}
