@@ -143,7 +143,7 @@ $play-button-overlay-fade-duration: 400ms;
 			background: #3a3a3a;
 			bottom: 0px;
 			left: 0;
-			padding: 15px 10px;
+			padding: 15px 10px 30px;
 			position: absolute;
 			z-index: 60; // needs to show over fading images
 			li {
@@ -151,31 +151,56 @@ $play-button-overlay-fade-duration: 400ms;
 				margin: 0;
 				padding: 0 10px;
 				text-align: center;
+				.title {
+					@include opacity( 70 );
+					color: #FFF;
+					line-height: 1.5em;
+					max-height: 3em;
+					overflow: hidden;
+					text-align: left;
+					p {
+						margin: 0;
+					}
+				}
+				&:hover .title {
+					@include opacity( 100 );
+				}
 			}
-			a {
+			a { // .video
 				@include play-button;
-
 				display: block;
+				margin-bottom: 10px;
 				position: relative;
 				text-align: center;
 				width: 100%;
 
-				> img {
-					width: 100%;
-					height: auto;
-					margin-bottom: 7px;
-				}
-
 				.Wikia-video-play-button {
 					margin: -25px 0 0 -25px;
 				}
-			}
-			.title {
-				color: #FFF;
-				line-height: 1.5em;
-				max-height: 3em;
-				overflow: hidden;
-				text-align: left;
+
+				&.playing {
+					&:after {
+						@include opacity( 80 );
+						background: black;
+						content: "";
+						display: block;
+						height: 100%;
+						left: 0;
+						position: absolute;
+						top: 0;
+						width: 100%;
+						z-index: 101; // above play button which is 100
+					}
+					.Wikia-video-play-button {
+						display: none;
+					}
+				}
+
+				> img {
+					width: 100%;
+					height: auto;
+				}
+
 			}
 		}
 	}

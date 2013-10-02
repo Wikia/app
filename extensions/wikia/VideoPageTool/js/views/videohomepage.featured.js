@@ -112,20 +112,21 @@ define( 'views.videohomepage.featured', [
 		 * @desc When a thumbnail is clicked, convert to video slider and slide to the corresponding slide
 		 */
 		handleThumbClick: function( $thumb ){
-			var index = $thumb.index();
+			var index = $thumb.closest( 'li' ).index();
 
-			if ( !this.isVideoSlider ) {
-				this.switchToVideoSlider();
+			if( !$thumb.hasClass( 'playing' ) ) {
+				if ( !this.isVideoSlider ) {
+					this.switchToVideoSlider();
+				}
+
+				if( this.slider.getCurrentSlide() === index ) {
+					// play the video
+					this.playVideo( this.slides[ index ] );
+				} else {
+					// Go to the selected slide based on thumbnail that was clicked
+					this.slider.goToSlide( index );
+				}
 			}
-
-			if( this.slider.getCurrentSlide() === index ) {
-				// play the video
-				this.playVideo( this.slides[ index ] );
-			} else {
-				// Go to the selected slide based on thumbnail that was clicked
-				this.slider.goToSlide( index );
-			}
-
 		},
 		/*
 		 * @desc When a slide is clicked, convert to video slider and play the video
@@ -153,7 +154,9 @@ define( 'views.videohomepage.featured', [
 				this.videoInstance.destroy();
 			}
 
-			slide.switchToVideo();
+
+			this.$thumbs.find( '.playing' ).removeClass( 'playing' );
+			slide.$videoThumb.addClass( 'playing' );
 
 			$.when( data ).done( function( json ) {
 				if( json.error ) {
@@ -241,9 +244,10 @@ define( 'views.videohomepage.featured', [
 			// Stop slider autoscroll because we're watching videos now
 			this.$bxSlider.stopAuto();
 
-			// hide all images so they don't show up on slide
-			// note: looping through slide.$image doesn't work because it doesn't count clones
-			this.$bxSlider.find( '.slide-image' ).hide();
+			// hide all images so they don't show up on slide and show all videos
+			// note: looping through slide.$image/$video doesn't work because it doesn't count clones
+			this.$bxSlider.find( '.slide-image' ).hide()
+				.find( '.slide-video' ).show();
 		},
 
 		/*
