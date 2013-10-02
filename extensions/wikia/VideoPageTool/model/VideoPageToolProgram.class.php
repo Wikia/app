@@ -366,13 +366,12 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * get list of programs
+	 * Get the list of programs for the month starting at $startDate
 	 * @param string $language
 	 * @param string $startDate [yyyy-mm-dd]
-	 * @param string $endDate [yyyy-mm-dd]
 	 * @return array $programs [array( date => status ); date = yyyy-mm-dd; status = 0 (not published)/ 1 (published)]
 	 */
-	public static function getPrograms( $language, $startDate, $endDate ) {
+	public static function getProgramsForMonth( $language, $startDate ) {
 		wfProfileIn( __METHOD__ );
 
 		$app = F::app();
@@ -388,7 +387,7 @@ class VideoPageToolProgram extends WikiaModel {
 				array(
 					'language' => $language,
 					"publish_date >= '$startDate'",
-					"publish_date < '$endDate'",
+					"publish_date < '$startDate' + INTERVAL 1 MONTH",
 				),
 				__METHOD__,
 				array( 'ORDER BY' => 'publish_date' )
@@ -501,7 +500,7 @@ class VideoPageToolProgram extends WikiaModel {
 
 		// save cache
 		$this->saveToCache();
-		$this->invalidateCachePrograms( $section );
+		$this->invalidateCachePrograms( $this->language );
 
 		foreach ( $assetList as $assetObj ) {
 			$assetObj->saveToCache();

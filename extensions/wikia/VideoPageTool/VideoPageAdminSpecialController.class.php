@@ -209,7 +209,33 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		$info = VideoPageToolProgram::getPrograms( $language, date( 'Y-m-d', $startTime ), date( 'Y-m-d', $endTime ) );
+		// Make sure the end date comes after the start date
+		if ( $startTime > $endTime ) {
+			$this->result = 'error';
+			$this->msg = wfMessage( 'videopagetool-error-invalid-date' )->plain();
+			$this->info = array();
+			return;
+		}
+
+		// Get the first day of the month for the requested start
+		$requestTime = strtotime( 'first day of this month', $startTime );
+		$requestDate = date( 'Y-m-d', $requestTime );
+
+		// Get the first day of them month for the end date in the range
+		$endDate = date( 'Y-m-d', strtotime( 'first day of this month', $endTime ) );
+
+		// Get one month worth of data starting at $requestDate
+		$info = VideoPageToolProgram::getProgramsForMonth( $language, $requestDate );
+
+		// If we have more than one month to retrieve, keep fetching them.  We only fetch per
+		// month so that we can easily determine what to invalidate when we update programs
+		while ($requestDate != $endDate) {
+			$requestTime = strtotime( 'first day of next month',  $requestTime);
+			$requestDate = date( 'Y-m-d', $requestTime );
+			$nextInfo = VideoPageToolProgram::getProgramsForMonth( $language, $requestDate );
+
+			$info = array_merge($info, $nextInfo);
+		}
 
 		$this->result = 'ok';
 		$this->msg = '';

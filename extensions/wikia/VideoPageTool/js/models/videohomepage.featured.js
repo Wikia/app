@@ -1,4 +1,4 @@
-define( 'vpt.models.featured', [ 'jquery' ], function( $ ) {
+define( 'models.videohomepage.featured', [ 'jquery' ], function( $ ) {
 
 	'use strict';
 
