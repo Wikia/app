@@ -11,6 +11,11 @@
  * simplified representation of wiki article
  */
 class JsonFormatApiController extends WikiaApiController {
+
+	const CACHE_EXPIRATION = 14400; //4 hour
+
+	const SIMPLE_JSON_SCHEMA_VERSION = 1;
+
 	/**
 	 * @throws InvalidParameterApiException
 	 */
@@ -74,12 +79,20 @@ class JsonFormatApiController extends WikiaApiController {
             throw new InvalidParameterApiException( self::ARTICLE_CACHE_ID );
         }
 
-        $jsonFormatService = new JsonFormatService();
-        $json = $jsonFormatService->getJsonFormatForArticleId( $articleId );
+	    $cacheKey = wfMemcKey( "SimpleJson:".$articleId, self::SIMPLE_JSON_SCHEMA_VERSION);
 
-        $simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
+	    $jsonSimple = $this->app->wg->memc->get( $cacheKey );
 
-        $jsonSimple = $simplifier->getJsonFormat( $json );
+	    if( $jsonSimple===false ){
+
+		    $jsonFormatService = new JsonFormatService();
+		    $json = $jsonFormatService->getJsonFormatForArticleId( $articleId );
+
+		    $simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
+		    $jsonSimple = $simplifier->getJsonFormat( $json );
+
+		    $this->app->wg->memc->set( $cacheKey, $jsonSimple, self::CACHE_EXPIRATION );
+	    }
 
 	    $this->getResponse()->setFormat("json");
 	    $this->getResponse()->setData( $jsonSimple );
