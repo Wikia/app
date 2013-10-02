@@ -140,7 +140,7 @@ abstract class ImageServingDriverBase {
 	protected function formatResult($imageList ,$dbOut, $limit) {
 		wfProfileIn( __METHOD__ );
 
-		$out = array();
+		$out = [ ];
 		$pageOrderedImages = [ ];
 		foreach ( $imageList as $imageName => $pageData ) {
 			if ( isset( $dbOut[ $imageName ] ) ) {
