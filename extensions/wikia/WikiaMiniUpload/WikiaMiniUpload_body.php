@@ -750,14 +750,14 @@ class WikiaMiniUpload {
 		//   wmu-error-under-width
 		//   wmu-error-under-height
 		//   wmu-error-under-width-height
-		$msgString = 'wmu-error-under-';
+		$msgString = 'wmu-error-under';
 		$params = array();
 		if ( $fileWidth < $minWidth ) {
-			$msgString .= 'width';
+			$msgString .= '-width';
 			$params[] = $minWidth;
 		}
 		if ( $fileHeight < $minHeight ) {
-			$msgString .= 'height';
+			$msgString .= '-height';
 			$params[] = $minHeight;
 		}
 

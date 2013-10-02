@@ -78,7 +78,7 @@ $messages['en'] = array(
 	'wmu-file-not-found' => 'File not found',
 	'wmu-error-under-height' => 'Image was less than the minimum height ($1 px)',
 	'wmu-error-under-width' => 'Image was less than the minimum width ($1 px)',
-	'wmu-error-under-height-width' => 'Image was less than the minimum dimensions ($1 x $2 px)',
+	'wmu-error-under-width-height' => 'Image was less than the minimum dimensions ($1 x $2 px)',
 	'wmu-error-bad-aspect-ratio' => 'Aspect ratio is incorrect ($1 x $2 px)',
 );
 
