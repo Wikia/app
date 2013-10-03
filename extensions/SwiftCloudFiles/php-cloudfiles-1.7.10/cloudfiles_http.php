@@ -744,11 +744,11 @@ class CF_Http
 
         if (!$return_code) {
             $this->error_str .= ": Failed to obtain valid HTTP response.";
-            return array($return_code,$this->error_str,NULL);
+            return array($return_code,$this->error_str,NULL); // Wikia change
         }
         if ($return_code == 404) {
             $this->error_str = "Object not found.";
-            return array($return_code,$this->error_str,NULL);
+            return array($return_code,$this->error_str,NULL); // Wikia change
         }
         if (($return_code < 200) || ($return_code > 299
                 && $return_code != 412 && $return_code != 304)) {
@@ -963,8 +963,10 @@ class CF_Http
 
         $conn_type = "COPY";
 
+        // Wikia change - begin
         $url_path = $this->_make_path("STORAGE", $container_name_source, $src_obj_name);
         $destination = $container_name_target."/".$dest_obj_name;
+        // Wikia change - end
 
         $hdrs = self::_process_headers($metadata, $headers);
         $hdrs[DESTINATION] = $destination;
@@ -1446,12 +1448,15 @@ class CF_Http
                 . curl_errno($this->connections[$conn_type]) . ") ";
             $this->error_str .= curl_error($this->connections[$conn_type]);
 
-			wfDebug(__METHOD__ . "::error - {$this->error_str}\n");
+            wfDebug(__METHOD__ . "::error - {$this->error_str}\n"); // Wikia change
             return False;
         }
-        $code = intval( curl_getinfo($this->connections[$conn_type], CURLINFO_HTTP_CODE) ); // Wikia change
 
-		wfDebug(__METHOD__ . ' - ' . json_encode([$conn_type, $url_path, $hdrs, "HTTP {$code}"]) . "\n");
+        // Wikia change - begin
+        $code = intval( curl_getinfo($this->connections[$conn_type], CURLINFO_HTTP_CODE) );
+        wfDebug(__METHOD__ . ' - ' . json_encode([$conn_type, $url_path, $hdrs, "HTTP {$code}"]) . "\n");
+        // Wikia change - end
+
 		return $code;
     }
 
@@ -1473,14 +1478,17 @@ class CF_Http
 			}
 
 			// log errors
-			if (is_numeric($res)) {
-				Wikia::log( __CLASS__, 'retryHTTP:' . $retriesLeft, json_encode( [$conn_type, $url_path, $hdrs, "HTTP {$res}" ] ) );
+			if ( is_numeric( $res ) ) {
+				$message = json_encode( [ $conn_type, $url_path, $hdrs, "HTTP {$res}" ] );
 			}
 			else {
-				Wikia::log( __CLASS__, 'retryHTTP:' . $retriesLeft, $this->error_str );
+				$message = $this->error_str;
 			}
 
-			usleep(self::RETRY_DELAY * 1000); // wait a bit before retrying the request
+			\Wikia\SwiftStorage::log( __CLASS__ . '::retryRequest::' . $retriesLeft, $message );
+
+			// wait a bit before retrying the request
+			usleep( self::RETRY_DELAY * 1000 );
 			$retriesLeft--;
 		}
 
