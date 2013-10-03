@@ -32,7 +32,7 @@ abstract class MemcacheClient {
 
 	private $buckets;
 	private $bucketCount;
-	private $cache = array();
+	private $cache;
 
 	public function __construct($args) {
 		$this->set_servers(isset($args['servers']) ? $args['servers'] : array());
@@ -41,7 +41,7 @@ abstract class MemcacheClient {
 		$this->cacheEnabled = isset($args['cache_enabled']) ? $args['cache_enabled'] : true;
 		$this->zlibEnabled = function_exists('gzcompress');
 		$this->compressionEnabled = true;
-		$this->cache = array();
+		$this->resetCache();
 	}
 
 	abstract public function add( $key, $val, $exp = 0 );
@@ -185,7 +185,11 @@ abstract class MemcacheClient {
 		$this->cacheEnabled = $enabled;
 	}
 
-	protected function deleteFromCache($key) {
+	public function deleteFromCache($key) {
 		unset($this->cache[$key]);
+	}
+
+	protected function resetCache() {
+		$this->cache = array();
 	}
 }

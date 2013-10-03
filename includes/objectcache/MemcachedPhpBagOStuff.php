@@ -6,7 +6,8 @@
 class MemcachedPhpBagOStuff extends BagOStuff {
 
 	/**
-	 * @var MemCachedClientforWiki
+	 * The memcache client we're using
+	 * @var MemcacheClient
 	 */
 	protected $client;
 
@@ -24,6 +25,8 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 	 * @param $params array
 	 */
 	function __construct( $params ) {
+		global $wgMemCachedClass;
+
 		if ( !isset( $params['servers'] ) ) {
 			$params['servers'] = $GLOBALS['wgMemCachedServers'];
 		}
@@ -43,7 +46,10 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 			$params['connect_timeout'] = 0.1;
 		}
 
-		$this->client = new MemCachedClientforWiki( $params );
+		if (!empty($wgMemCachedClass) && $wgMemCachedClass) {
+			$this->client = new $wgMemCachedClass( $params );
+		}
+
 		$this->client->set_servers( $params['servers'] );
 		$this->client->set_debug( $params['debug'] );
 	}
@@ -140,7 +146,7 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 	 * Get the underlying client object. This is provided for debugging 
 	 * purposes.
 	 *
-	 * @return MemCachedClientforWiki
+	 * @return MemcacheClient
 	 */
 	public function getClient() {
 		return $this->client;
@@ -240,7 +246,7 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 	 * @param $key
 	 */
 	public function clearLocalCache( $key ) {
-		unset($this->client->_dupe_cache[$key]);
+		$this->client->deleteFromCache($key);
 	}
 
 }

@@ -71,7 +71,10 @@
  * @author  Ryan T. Dean <rtdean@cytherianage.net>
  * @ingroup Cache
  */
-class MWMemcached {
+
+// Wikia change start
+class MWMemcached extends MemcacheClient {
+// Wikia change end
 	// {{{ properties
 	// {{{ public
 
@@ -231,13 +234,6 @@ class MWMemcached {
 	 */
 	var $_connect_attempts;
 
-   /**
-    * @author wikia
-    * Internal memoization to avoid unnecessary network requests
-    * If a get() is done twice in a single request use the stored value
-    */
-   var $_dupe_cache;
-
 	// }}}
 	// }}}
 	// {{{ methods
@@ -263,7 +259,7 @@ class MWMemcached {
 		$this->_cache_sock = array();
 		$this->_host_dead = array();
 		# start wikia change
-		$this->_dupe_cache = array();
+		$this->resetCache();
 		# end wikia change
 
 		$this->_timeout_seconds = 0;
@@ -326,7 +322,7 @@ class MWMemcached {
 		}
 
 		# start wikia change
-		unset( $this->_dupe_cache[ $key ] );
+		$this->deleteFromCache($key);
 		# end wikia change
 
 		$sock = $this->get_sock( $key );
@@ -420,12 +416,12 @@ class MWMemcached {
 
 		# start wikia change
 		# Memoize duplicate memcache requests for the same key in the same request
-		if( isset( $this->_dupe_cache[ $key ] ) ) {
+		if( $this->cacheContains($key) ) {
 			wfProfileIn ( __METHOD__ . "::$key !DUPE" );
 			wfProfileOut ( __METHOD__ . "::$key !DUPE" );
 			wfProfileOut( __METHOD__ . "::$key" );
 			wfProfileOut( __METHOD__ );
-			return $this->_dupe_cache[ $key ];
+			return $this->getFromCache( $key );
 		}
 		# end wikia change
 
@@ -485,11 +481,11 @@ class MWMemcached {
 		# start wikia change
 		# Owen wants to get more detailed profiling info
 		if ( array_key_exists($key,$val) ) {
-			$this->_dupe_cache[$key] = $val[$key];
+			$this->addToCache($key, $val[$key]);
 			wfProfileIn ( __METHOD__ . "::$key !HIT");
 			wfProfileOut ( __METHOD__ . "::$key !HIT");
 		} else {
-			$this->_dupe_cache[$key] = false;
+			$this->addToCache($key, false);
 			wfProfileIn ( __METHOD__ . "::$key !MISS");
 			wfProfileOut ( __METHOD__ . "::$key !MISS");
 		}
@@ -535,11 +531,11 @@ class MWMemcached {
 		// Wikia change - begin - @author: wladek
 		$val = array();
 		foreach ($keys as $k => $key) {
-			if ( array_key_exists( $key, $this->_dupe_cache ) ) {
+			if ( $this->cacheContains( $key ) ) {
 				wfProfileIn ( __METHOD__ . "::$key !DUPE" );
 				wfProfileOut ( __METHOD__ . "::$key !DUPE" );
 				unset($keys[$k]);
-				$val[$key] = $this->_dupe_cache[$key];
+				$val[$key] = $this->getFromCache( $key );
 			}
 		}
 		if ( empty( $keys ) ) {
@@ -597,12 +593,12 @@ class MWMemcached {
 		// Wikia change - begin - @author: wladek
 		foreach ($keys as $key) {
 			if ( array_key_exists($key,$val) ) {
-				$this->_dupe_cache[$key] = $val[$key];
+				$this->addToCache($key, $val[$key]);
 				wfProfileIn ( __METHOD__ . "::$key !HIT");
 				wfProfileOut ( __METHOD__ . "::$key !HIT");
 			} else {
 				$val[$key] = false;
-				$this->_dupe_cache[$key] = false;
+				$this->addToCache($key, false);
 				wfProfileIn ( __METHOD__ . "::$key !MISS");
 				wfProfileOut ( __METHOD__ . "::$key !MISS");
 			}
@@ -955,7 +951,7 @@ class MWMemcached {
 		$key = is_array( $key ) ? $key[1] : $key;
 
 		# start wikia change
-		unset( $this->_dupe_cache[ $key ] );
+		$this->deleteFromCache($key);
 		# end wikia change
 
 		if ( isset( $this->stats[$cmd] ) ) {
@@ -1077,7 +1073,7 @@ class MWMemcached {
 
 		// start wikia change
 		// Memoize duplicate memcache requests for the same key in the same request
-		$this->_dupe_cache[ $key ] = $val;
+		$this->addToCache($key, $val);
 		// end wikia change
 
 		if ( isset( $this->stats[$cmd] ) ) {
@@ -1246,6 +1242,12 @@ class MWMemcached {
 	// }}}
 	// }}}
 	// }}}
+
+	// Wikia change start - make compliant with MemcacheClient interface
+	protected function getMemcacheConnection($host) {
+		return $this->sock_to_host($host);
+	}
+	// Wikia change end
 }
 
 // vim: sts=3 sw=3 et

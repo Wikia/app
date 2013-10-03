@@ -350,7 +350,7 @@ class PhalanxHelper {
 					$wgMemc->set($key,$blocksData);
 				}
 				if ( $memcClient ) {
-					unset($memcClient->_dupe_cache[$key]);
+					$memcClient->deleteFromCache($key);
 				}
 
 				// update short format (only for user)
@@ -368,7 +368,7 @@ class PhalanxHelper {
 						$wgMemc->set($key,$blocksData);
 					}
 					if ( $memcClient ) {
-						unset($memcClient->_dupe_cache[$key]);
+						$memcClient->deleteFromCache($key);
 					}
 				}
 			}
