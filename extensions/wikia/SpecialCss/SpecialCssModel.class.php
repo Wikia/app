@@ -51,7 +51,7 @@ class SpecialCssModel extends WikiaModel {
 	 *
 	 * @see SpecialCssModel::truncateAndParse
 	 */
-	const WIKITEXT_LOCAL_LINK_TITLE_PATTERN = '/\[\[([^\|]+?)\]\]/';
+	const WIKITEXT_LOCAL_LINK_TITLE_PATTERN = '/\[\[(?!w:c)([^\|]+?)\]\]/';
 
 	/**
 	 * @desc Regex pattern used to change local links to interwiki links
@@ -287,7 +287,7 @@ class SpecialCssModel extends WikiaModel {
 				}
 
 				return $cssUpdatesPosts;
-			}
+			}, WikiaDataAccess::REFRESH_CACHE
 		);
 
 		return $cssUpdatesPosts;
@@ -442,11 +442,6 @@ class SpecialCssModel extends WikiaModel {
 	 */
 	private function truncateAndParse( $title, $wikitext ) {
 		$userLang = $this->wg->Lang;
-		$communityLang = '';
-
-		if ( $userLang->getCode() != self::CSS_DEFAULT_LANG ) {
-			$communityLang = ':'.$userLang->getCode();
-		}
 
 		$extractedWikitext = CategoryHelper::extractCategoriesFromWikitext( $wikitext, true, $userLang );
 
@@ -454,7 +449,7 @@ class SpecialCssModel extends WikiaModel {
 			$wikitext = $extractedWikitext['wikitext'];
 		}
 
-		$wikitext = $this->changeLocalLinks($wikitext, $communityLang);
+		$wikitext = $this->changeLocalLinks($wikitext, $userLang);
 
 		$wikitext = $this->getParsedText( $wikitext, $title );
 
@@ -498,11 +493,33 @@ class SpecialCssModel extends WikiaModel {
 	 *
 	 * @return String
 	 */
-	private function changeLocalLinks($wikitext, $communityLang) {
+	private function changeLocalLinks($wikitext, $userLang) {
+		$lang = $this->getInterwikiLinkLangParam($userLang);
+
 		$wikitext = preg_replace(self::WIKITEXT_LOCAL_LINK_TITLE_PATTERN,'[[$1|$1]]', $wikitext);
-		$wikitext = preg_replace(self::WIKITEXT_LOCAL_TO_INTERWIKI_LINK_PATTERN, '[[w:c:c'.$communityLang.':$1]]', $wikitext);
+		$wikitext = preg_replace(self::WIKITEXT_LOCAL_TO_INTERWIKI_LINK_PATTERN, '[[w:c:c'.$lang.':$1]]', $wikitext);
 
 		return $wikitext;
+	}
+
+	/**
+	 * @desc Return language code param for interwiki link to complete link to proper community page (w:c:c:lang)
+	 * @example For link to polish community page we need [[w:c:c:pl:PageName]] so this function returns ':pl' string
+	 * @example For link to english community page we need [[w:c:c:PageName]] so this function returns '' empty string
+	 *
+	 * @param Language $userLang
+	 * @return string
+	 */
+	private function getInterwikiLinkLangParam($userLang) {
+		$lang = '';
+
+		if ( $userLang->getCode() != self::CSS_DEFAULT_LANG
+			&& array_key_exists($userLang->getCode(), $this->wg->CssUpdatesLangMap))
+		{
+			$lang = ':'.$userLang->getCode();
+		}
+
+		return $lang;
 	}
 
 	/**
