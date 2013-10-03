@@ -73,6 +73,9 @@
 		margin-bottom: 67px;
 
 		& > ul {
+			// override .WikiaArticle ul margin styles
+			margin: 0;
+
 			& > li {
 				display: inline-block;
 				text-align: center;
