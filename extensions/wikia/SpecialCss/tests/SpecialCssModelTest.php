@@ -530,5 +530,72 @@ Paragraph text, text, sample text.'
 			],
 		];
 	}
+
+	/**
+	 * @dataProvider testChangeLocalLinksDataProvider
+	 *
+	 * @param String $wikitext
+	 * @param String $expected
+	 */
+	public function testChangeLocalLinks($wikitext, $lang, $expected) {
+		$this->mockGlobalVariable( 'wgCssUpdatesLangMap', $this->wgCssUpdatesLangMapMock );
+
+		$changeLocalLinks = new ReflectionMethod('SpecialCssModel', 'changeLocalLinks');
+		$changeLocalLinks->setAccessible(true);
+
+		$langMock = $this->getMock( 'Language', ['getCode'] );
+		$langMock->expects( $this->any() )
+			->method( 'getCode' )
+			->will( $this->returnValue( $lang ) );
+		$this->mockGlobalVariable( 'wgLang', $langMock );
+
+		$this->assertEquals( $expected, $changeLocalLinks->invoke( new SpecialCssModel(), $wikitext, $langMock ) );
+	}
+
+	public function testChangeLocalLinksDataProvider() {
+		return [
+			[
+				'wikitext' => 'test [[Blog:Neue_Wikia-Funktionen]], [[Community_Portal]],
+[[Projekt_des_Monats]]',
+				'lang' => 'de',
+				'expected' => 'test [[w:c:c:de:Blog:Neue_Wikia-Funktionen|Blog:Neue_Wikia-Funktionen]], [[w:c:c:de:Community_Portal|Community_Portal]],
+[[w:c:c:de:Projekt_des_Monats|Projekt_des_Monats]]'
+			],
+			[
+				'wikitext' => 'Na [http://report.wikia.net] pojawiać się [[Blog użytkownika:Sovq/Nowe Forum dostępne w Rozszerzeniach wiki|Rozszerzenia]] będzie
+[[Centrum Społeczności:Wikianie|Wikianie]] aktualizowany [[Najpopularniejsze wiki]] każdego [[Wikia miesiąca]] poniedziałku raport z zestawieniem zmian kodu Wikii.
+Raport zawierać będzie zarówno duże jak i małe zmiany w plikach .css, .scss, .tmpl.php, .html, .sass i .mustache.',
+				'lang' => 'pl',
+				'expected' => 'Na [http://report.wikia.net] pojawiać się [[w:c:c:pl:Blog użytkownika:Sovq/Nowe Forum dostępne w Rozszerzeniach wiki|Rozszerzenia]] będzie
+[[w:c:c:pl:Centrum Społeczności:Wikianie|Wikianie]] aktualizowany [[w:c:c:pl:Najpopularniejsze wiki|Najpopularniejsze wiki]] każdego [[w:c:c:pl:Wikia miesiąca|Wikia miesiąca]] poniedziałku raport z zestawieniem zmian kodu Wikii.
+Raport zawierać będzie zarówno duże jak i małe zmiany w plikach .css, .scss, .tmpl.php, .html, .sass i .mustache.'
+			],
+			[
+				'wikitext' => 'The structure of the [[w:c:c:Help:Galleries, Slideshows, and Sliders|sliders]] has changed slightly. We have converted the sliders [[Guidelines]] [[w:c:c:Help:CSS|CSS]] [[About|About Us]] files over to [http://sass-lang.com/ SCSS].',
+				'lang' => 'en',
+				'expected' => 'The structure of the [[w:c:c:Help:Galleries, Slideshows, and Sliders|sliders]] has changed slightly. We have converted the sliders [[w:c:c:Guidelines|Guidelines]] [[w:c:c:Help:CSS|CSS]] [[w:c:c:About|About Us]] files over to [http://sass-lang.com/ SCSS].'
+			],
+			[
+				'wikitext' => '[[Help:Modifier|Modifier]] [[w:c:c:Help:Modifier]] [[w:c:c:Help:Modifier|Modifier]] [[Help:Modifier]]',
+				'lang' => 'en',
+				'expected' => '[[w:c:c:Help:Modifier|Modifier]] [[w:c:c:Help:Modifier]] [[w:c:c:Help:Modifier|Modifier]] [[w:c:c:Help:Modifier|Help:Modifier]]'
+			],
+			[
+				'wikitext' => '[[Help:Modifier|Modifier]] [[w:c:c:Help:Modifier]] [[w:c:c:Help:Modifier|Modifier]] [[Help:Modifier]]',
+				'lang' => 'it',
+				'expected' => '[[w:c:c:it:Help:Modifier|Modifier]] [[w:c:c:Help:Modifier]] [[w:c:c:Help:Modifier|Modifier]] [[w:c:c:it:Help:Modifier|Help:Modifier]]'
+			],
+			[
+				'wikitext' => '[[Help:Modifier|Modifier]] [[w:c:c:Help:Modifier]] [[w:c:c:Help:Modifier|Modifier]] [[Help:Modifier]]',
+				'lang' => 'at',
+				'expected' => '[[w:c:c:Help:Modifier|Modifier]] [[w:c:c:Help:Modifier]] [[w:c:c:Help:Modifier|Modifier]] [[w:c:c:Help:Modifier|Help:Modifier]]'
+			],
+			[
+				'wikitext' => '[http://www.wikia.com|Wikia] [[w:c:c:Help:Modifier]] [[Help:Modifier|Modifier]] [[Modifier]]',
+				'lang' => 'fr',
+				'expected' => '[http://www.wikia.com|Wikia] [[w:c:c:Help:Modifier]] [[w:c:c:fr:Help:Modifier|Modifier]] [[w:c:c:fr:Modifier|Modifier]]'
+			],
+		];
+	}
 }
 
