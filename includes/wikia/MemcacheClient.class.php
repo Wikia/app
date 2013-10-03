@@ -45,7 +45,6 @@ abstract class MemcacheClient {
 	}
 
 	abstract public function add( $key, $val, $exp = 0 );
-
 	abstract public function incr($key, $amount=1);
 	abstract public function decr( $key, $amount = 1 );
 	abstract public function delete( $key );
@@ -74,7 +73,7 @@ abstract class MemcacheClient {
 	 * @param $returnHost
 	 * @return Memcache|array
 	 */
-	protected function getServer($key, $returnHost=false) {
+	protected function getConnection($key, $returnHost=false) {
 		$hash = $this->getHash($key);
 		$buckets = $this->buckets();
 		$realKey = is_array($key) ? $key[1] : $key;

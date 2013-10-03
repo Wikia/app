@@ -59,7 +59,7 @@ class MemcacheMoxiCluster extends MemcacheClient {
 
 		$buckets = [];
 		foreach ($keys as $key) {
-			list($memcache, $bucket) = $this->getServer($key, true);
+			list($memcache, $bucket) = $this->getConnection($key, true);
 			if (!$memcache) {
 				continue;
 			}
@@ -91,7 +91,7 @@ class MemcacheMoxiCluster extends MemcacheClient {
 	}
 
 	public function delete($key) {
-		$memcache = $this->getServer($key);
+		$memcache = $this->getConnection($key);
 		if (!$memcache) {
 			return false;
 		}
@@ -119,7 +119,7 @@ class MemcacheMoxiCluster extends MemcacheClient {
 	}
 
 	private function _set($method, $key, $value, $expires=0) {
-		$memcache = $this->getServer($key);
+		$memcache = $this->getConnection($key);
 		if (!$memcache) {
 			return false;
 		}
