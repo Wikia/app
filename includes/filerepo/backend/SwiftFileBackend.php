@@ -750,6 +750,21 @@ class SwiftFileBackend extends FileBackendStore {
 	protected function setContainerAccess(
 		CF_Container $contObj, array $readGrps, array $writeGrps
 	) {
+		// Wikia change - begin
+		// don't send multiple ACL requests for the same container over and over again (BAC-872)
+		static $reqSent = [];
+
+		$key = $contObj->name;
+		$entry = implode( ',', $readGrps ) . '::' . implode( ',', $writeGrps );
+
+		if (isset($reqSent[$key]) && $reqSent[$key] === $entry) {
+			wfDebug( __METHOD__ . ": ACL already set\n" );
+			return Status::newGood();
+		}
+
+		$reqSent[$key] = $entry;
+		// Wikia change - end
+
 		$creds = $contObj->cfs_auth->export_credentials();
 		$url = $creds['storage_url'] . '/' . rawurlencode( $contObj->name );
 
