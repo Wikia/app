@@ -17,6 +17,11 @@ $block-grid-media-queries: true !default;
 // We use this mixin to create different block-grids. You can apply per-row and spacing options.
 // Setting $base-style to false will ommit default styles.
 @mixin block-grid($per-row:false, $spacing:$block-grid-default-spacing, $base-style:true) {
+	&>li {
+		box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	}
 
   @if $base-style {
     display: block;

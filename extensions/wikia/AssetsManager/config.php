@@ -1027,6 +1027,8 @@ $config['videohomepage_js'] = array(
 		'//resources/wikia/libraries/jquery/bxslider/jquery.bxslider.js',
 		'//extensions/wikia/VideoPageTool/js/models/videohomepage.featured.js',
 		'//extensions/wikia/VideoPageTool/js/views/videohomepage.featured.js',
+		'//extensions/wikia/VideoPageTool/js/views/videohomepage.search.js',
+		'//extensions/wikia/VideoPageTool/js/views/videohomepage.index.js',
 	)
 );
 
