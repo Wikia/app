@@ -37,7 +37,7 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker, abTest
 		},
 		mediaQueriesMet,
 		// ABTesting: DAR-1859: START
-		notInAbTestRightRailPositionStatic = abTest.getGroup('DAR_RIGHTRAILPOSITION') === 'STATIC',
+		railIsAlwaysOnRight = abTest.getGroup('DAR_RIGHTRAILPOSITION') === 'STATIC',
 		// ABTesting: DAR-1859: END
 		matchMedia;
 
@@ -75,7 +75,7 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker, abTest
 		if (mediaQueriesMet) {
 			if (slotsToHideOnMediaQuery[slotname]) {
 				// ABTesting: DAR-1859: START
-				if ((slotsToHideOnMediaQuery[slotname] === 'oneColumn') && notInAbTestRightRailPositionStatic) {
+				if ((slotsToHideOnMediaQuery[slotname] === 'oneColumn') && railIsAlwaysOnRight) {
 					wideEnough = true;
 				} else {
 				// ABTesting: DAR-1859: END
