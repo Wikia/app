@@ -180,7 +180,7 @@ abstract class MemcacheClient {
 		return $this->cacheContains($key) ? $this->cache[$key] : false;
 	}
 
-	protected function setCacheEnabled($enabled) {
+	public function setCacheEnabled($enabled) {
 		$this->cacheEnabled = $enabled;
 	}
 

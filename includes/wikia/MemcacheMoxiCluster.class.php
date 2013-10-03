@@ -33,45 +33,59 @@ class MemcacheMoxiCluster extends MemcacheClient {
 	}
 
 	public function get($key) {
+		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ . "::$key" );
+
 		$key = is_array($key) ? $key[1] : $key;
 		$result = $this->get_multi([$key]);
+
+		wfProfileOut( __METHOD__ . "::$key" );
+		wfProfileOut(__METHOD__);
+
 		return is_array($result) && array_key_exists($key, $result) ? $result[$key] : false;
 	}
 
 	public function get_multi($keys) {
+		wfProfileIn(__METHOD__);
+
 		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads;
 
 		if ($wgAllowMemcacheDisable && !$wgAllowMemcacheReads) {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 
 		$values = [];
 		foreach ($keys as $i => $key) {
 			if ($this->cacheContains($key)) {
+				wfProfileIn ( __METHOD__ . "::$key !DUPE" );
+				wfProfileOut ( __METHOD__ . "::$key !DUPE" );
+
 				$values[$key] = $this->getFromCache($key);
 				unset($keys[$i]);
 			}
 		}
 
 		if (empty($keys)) {
+			wfProfileOut(__METHOD__);
 			return $values;
 		}
 
 		$buckets = [];
 		foreach ($keys as $key) {
-			list($memcache, $bucket) = $this->getConnection($key, true);
+			list($memcache, $host) = $this->getConnection($key, true);
 			if (!$memcache) {
 				continue;
 			}
 
-			if (!isset($buckets[$bucket])) {
-				$buckets[$bucket] = [
+			if (!isset($buckets[$host])) {
+				$buckets[$host] = [
 					'memcache' => $memcache,
 					'keys' => [],
 				];
 			}
 
-			$buckets[$bucket]['keys'][] = $key;
+			$buckets[$host]['keys'][] = $key;
 		}
 
 		foreach ($buckets as $bucketData) {
@@ -83,10 +97,22 @@ class MemcacheMoxiCluster extends MemcacheClient {
 				foreach ($chunkValues as $key => $value) {
 					$this->addToCache($key, $value);
 					$values[$key] = $value;
+
+					wfProfileIn ( __METHOD__ . "::$key !HIT");
+					wfProfileOut ( __METHOD__ . "::$key !HIT");
 				}
 			}
 		}
 
+		$missedKeys = array_diff($keys, array_keys($values));
+		foreach ($missedKeys as $key) {
+			$values[$key] = false;
+			$this->addToCache($key, false);
+			wfProfileIn ( __METHOD__ . "::$key !MISS");
+			wfProfileOut ( __METHOD__ . "::$key !MISS");
+		}
+
+		wfProfileOut(__METHOD__);
 		return $values;
 	}
 
@@ -111,11 +137,21 @@ class MemcacheMoxiCluster extends MemcacheClient {
 	}
 
 	public function incr($key, $amount=1) {
-
+		return $this->_incrdecr('increment', $key, $amount);
 	}
 
 	public function decr($key, $amount=1) {
+		return $this->_incrdecr('decrement', $key, $amount);
+	}
 
+	private function _incrdecr($method, $key, $amount=1) {
+		$memcache = $this->getConnection($key);
+		if (!$memcache) {
+			return false;
+		}
+
+		$this->deleteFromCache($key);
+		return $memcache->$method($key, $amount);
 	}
 
 	private function _set($method, $key, $value, $expires=0) {
