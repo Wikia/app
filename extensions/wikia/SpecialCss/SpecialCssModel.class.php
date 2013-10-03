@@ -47,6 +47,20 @@ class SpecialCssModel extends WikiaModel {
 	const WIKITEXT_H3_TO_H1_PATTERN = '/(^===[^$=]+===\\s*$)|(^==[^$=]+==\\s*$)|(^=[^$=]+=\\s*$)/m';
 
 	/**
+	 * @desc Regex pattern used to add title for local links
+	 *
+	 * @see SpecialCssModel::truncateAndParse
+	 */
+	const WIKITEXT_LOCAL_LINK_TITLE_PATTERN = '/\[\[([^\|]+?)\]\]/';
+
+	/**
+	 * @desc Regex pattern used to change local links to interwiki links
+	 *
+	 * @see SpecialCssModel::truncateAndParse
+	 */
+	const WIKITEXT_LOCAL_TO_INTERWIKI_LINK_PATTERN = '/\[\[(?!w:c)(.*?)\]\]/';
+
+	/**
 	 * @desc Limit of characters per one post snippet
 	 */
 	const SNIPPET_CHAR_LIMIT = 150;
@@ -428,6 +442,11 @@ class SpecialCssModel extends WikiaModel {
 	 */
 	private function truncateAndParse( $title, $wikitext ) {
 		$userLang = $this->wg->Lang;
+		$communityLang = '';
+
+		if ( $userLang->getCode() != self::CSS_DEFAULT_LANG ) {
+			$communityLang = ':'.$userLang->getCode();
+		}
 
 		$extractedWikitext = CategoryHelper::extractCategoriesFromWikitext( $wikitext, true, $userLang );
 
@@ -435,9 +454,12 @@ class SpecialCssModel extends WikiaModel {
 			$wikitext = $extractedWikitext['wikitext'];
 		}
 
+		$wikitext = $this->changeLocalLinks($wikitext, $communityLang);
+
 		$wikitext = $this->getParsedText( $wikitext, $title );
 
 		$wikitext = $userLang->truncateHTML( $wikitext, self::SNIPPET_CHAR_LIMIT, wfMessage( 'ellipsis' )->text() );
+
 		return $wikitext;
 	}
 
@@ -466,6 +488,21 @@ class SpecialCssModel extends WikiaModel {
 		);
 
 		return $headline;
+	}
+
+	/**
+	 * @desc Change local links in wiki text to interwiki links based
+	 *
+	 * @param String $wikitext
+	 * @param String $communityLang
+	 *
+	 * @return String
+	 */
+	private function changeLocalLinks($wikitext, $communityLang) {
+		$wikitext = preg_replace(self::WIKITEXT_LOCAL_LINK_TITLE_PATTERN,'[[$1|$1]]', $wikitext);
+		$wikitext = preg_replace(self::WIKITEXT_LOCAL_TO_INTERWIKI_LINK_PATTERN, '[[w:c:c'.$communityLang.':$1]]', $wikitext);
+
+		return $wikitext;
 	}
 
 	/**
