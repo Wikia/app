@@ -7,6 +7,7 @@ class VideoPageToolProgram extends WikiaModel {
 
 	const OBJECT_CACHE_TTL = 604800; // One week
 	const DATE_CACHE_TTL = 86400;    // One day
+	const CACHE_VERSION = 1;
 
 	protected $programId = 0;
 	protected $language = 'en';
@@ -101,15 +102,16 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * Given a language, finds the program object nearest (or equal to) to today's date
-	 * @param $lang
-	 * @return object
+	 * Given a language, finds the program object nearest (or equal to) to the date (default = today's date)
+	 * @param string $lang
+	 * @param string $date [timestamp]
+	 * @return object|null $program
 	 */
-	public static function newProgramNearestToday( $lang ) {
+	public static function newProgramNearestToday( $lang, $date = '' ) {
 		wfProfileIn( __METHOD__ );
 
 		// Figure out what the nearest date to today is
-		$nearestDate = self::getNearestDate( $lang );
+		$nearestDate = self::getNearestDate( $lang, $date );
 		if ($nearestDate) {
 			// Load the program with this nearest date
 			$program = self::newProgram( $lang, $nearestDate );
@@ -211,17 +213,23 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * Returns the nearest program date to today for a given language
-	 * @param $language
+	 * Returns the nearest program date to the date for a given language (default = today's date)
+	 * @param string $language
+	 * @param string $timestamp
 	 * @return null|string
 	 */
-	protected function getNearestDate( $language ) {
+	protected static function getNearestDate( $language, $timestamp = '' ) {
 		wfProfileIn( __METHOD__ );
 
-		$date = date('Y-m-d');
-		$nearestKey = wfMemcKey( 'videopagetool', 'nearest-date', $language, $date );
-		$nearestDate = F::app()->wg->Memc->get( $nearestKey );
+		$app = F::app();
 
+		if ( empty( $timestamp ) ) {
+			$timestamp = time();
+		}
+		$date = date( 'Y-m-d', $timestamp );
+
+		$nearestKey = wfMemcKey( 'videopagetool', 'nearest-date', $language, $date );
+		$nearestDate = $app->wg->Memc->get( $nearestKey );
 		if ( !$nearestDate ) {
 			$db = wfGetDB( DB_SLAVE );
 
@@ -230,7 +238,7 @@ class VideoPageToolProgram extends WikiaModel {
 				array( 'unix_timestamp(publish_date) as publish_date' ),
 				array(
 					'language' => $language,
-					'publish_date <= '.$db->addQuotes(date( 'Y-m-d' )),
+					'publish_date <= '.$db->addQuotes( $date ),
 				),
 				__METHOD__,
 				array( 'ORDER BY' => 'publish_date DESC' )
@@ -240,7 +248,7 @@ class VideoPageToolProgram extends WikiaModel {
 				$nearestDate = $row->publish_date;
 
 				// Cache this for at most one day
-				F::app()->wg->Memc->set( $nearestKey, $nearestDate, self::DATE_CACHE_TTL );
+				$app->wg->Memc->set( $nearestKey, $nearestDate, self::DATE_CACHE_TTL );
 			}
 		}
 
@@ -342,27 +350,44 @@ class VideoPageToolProgram extends WikiaModel {
 	 * Clear cache
 	 */
 	protected function invalidateCache() {
+		$this->invalidateCacheCompletedSections();
 		$this->wg->Memc->delete( $this->getMemcKey() );
 	}
 
 	/**
 	 * Publish program
-	 * @return boolean
+	 * @return Status $status
 	 */
 	public function publishProgram() {
 		$this->setIsPublished( true );
 
-		return $this->updateToDatabase();
+		$db = wfGetDB( DB_MASTER );
+		$status = $this->updateToDatabase();
+		$db->commit();
+
+		if ( $status->isGood() && $status->value > 0 ) {
+			$this->invalidateCache();
+		}
+
+		return $status;
 	}
 
 	/**
 	 * Unpublish program
-	 * @return boolean
+	 * @return Status $status
 	 */
 	public function unpublishProgram() {
 		$this->setIsPublished( false );
 
-		return $this->updateToDatabase();
+		$db = wfGetDB( DB_MASTER );
+		$status = $this->updateToDatabase();
+		$db->commit();
+
+		if ( $status->isGood() && $status->value > 0 ) {
+			$this->invalidateCache();
+		}
+
+		return $status;
 	}
 
 	/**
@@ -394,7 +419,7 @@ class VideoPageToolProgram extends WikiaModel {
 			);
 
 			$programs = array();
-			while ( $row = $db->fetchObject($result) ) {
+			while ( $row = $db->fetchObject( $result ) ) {
 				$programs[$row->publish_date] = $row->is_published;
 			}
 
@@ -501,6 +526,7 @@ class VideoPageToolProgram extends WikiaModel {
 		// save cache
 		$this->saveToCache();
 		$this->invalidateCachePrograms( $this->language );
+		$this->invalidateCacheCompletedSections();
 
 		foreach ( $assetList as $assetObj ) {
 			$assetObj->saveToCache();
@@ -524,6 +550,69 @@ class VideoPageToolProgram extends WikiaModel {
 		$data = $className::formatFormData( $requiredRows, $formValues, $errMsg );
 
 		return $data;
+	}
+
+	/**
+	 * check if the program is ready to be published
+	 * @param array $sections - required sections
+	 * @return boolean
+	 */
+	public function isPublishable( $sections ) {
+		sort( $sections );
+		return ( $sections == $this->getCompletedSections( $sections ) );
+	}
+
+	/**
+	 * get list of completed sections
+	 * @param array $sections - required sections
+	 * @return array $list - completed sections
+	 */
+	public function getCompletedSections( $sections ) {
+		wfProfileIn( __METHOD__ );
+
+		$memcKey = $this->getMemcKeyCompletedSections();
+		$list = $this->wg->Memc->get( $memcKey );
+		if ( !is_array( $list ) ) {
+			$db = wfGetDB( DB_SLAVE );
+
+			$result = $db->select(
+				array( 'vpt_program', 'vpt_asset' ),
+				array( 'distinct section' ),
+				array(
+					'vpt_program.program_id' => $this->programId,
+					'vpt_asset.section' => $sections,
+				),
+				__METHOD__,
+				array( 'ORDER BY' => 'section' ),
+				array( 'vpt_asset' => array( 'JOIN', 'vpt_asset.program_id = vpt_program.program_id' ) )
+			);
+
+			$list = array();
+			while ( $row = $db->fetchObject( $result ) ) {
+				$list[] = $row->section;
+			}
+
+			$this->wg->Memc->set( $memcKey, $list, 60*60*24 );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $list;
+	}
+
+	/**
+	 * get memcache key for completed sections
+	 * @return string
+	 */
+	public function getMemcKeyCompletedSections() {
+		return wfMemcKey( 'videopagetool', 'completed_sections', self::CACHE_VERSION, $this->programId );
+	}
+
+	/**
+	 * clear cache for completed sections
+	 */
+	protected function invalidateCacheCompletedSections() {
+		$this->wg->Memc->delete( $this->getMemcKeyCompletedSections() );
 	}
 
 }
