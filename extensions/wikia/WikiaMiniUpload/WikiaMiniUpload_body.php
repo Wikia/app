@@ -768,7 +768,7 @@ class WikiaMiniUpload {
 
 		// Min sizes are fine, now check the aspect ratio
 		$aspectRatio = $wgRequest->getVal('aspectRatio');
-		$fileAspectRatio = $fileHeight > $fileWidth ? $fileHeight/$fileWidth : $fileWidth/$fileHeight;
+		$fileAspectRatio = $fileWidth/$fileHeight;
 
 		if (abs($aspectRatio - $fileAspectRatio) > 0.01) {
 			return wfMessage('wmu-error-bad-aspect-ratio', $fileWidth, $fileHeight)->plain();
