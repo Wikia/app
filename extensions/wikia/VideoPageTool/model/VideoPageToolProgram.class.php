@@ -215,18 +215,18 @@ class VideoPageToolProgram extends WikiaModel {
 	/**
 	 * Returns the nearest program date to the date for a given language (default = today's date)
 	 * @param string $language
-	 * @param string $date [timestamp]
+	 * @param string $timestamp
 	 * @return null|string
 	 */
-	protected static function getNearestDate( $language, $date = '' ) {
+	protected static function getNearestDate( $language, $timestamp = '' ) {
 		wfProfileIn( __METHOD__ );
 
 		$app = F::app();
 
-		if ( empty( $date ) ) {
-			$date = time();
+		if ( empty( $timestamp ) ) {
+			$timestamp = time();
 		}
-		$date = date( 'Y-m-d', $date );
+		$date = date( 'Y-m-d', $timestamp );
 
 		$nearestKey = wfMemcKey( 'videopagetool', 'nearest-date', $language, $date );
 		$nearestDate = $app->wg->Memc->get( $nearestKey );
@@ -560,7 +560,7 @@ class VideoPageToolProgram extends WikiaModel {
 	 */
 	public function isPublishable( $sections ) {
 		sort( $sections );
-		return ( $sections == $this->getCompletedSections( $sections ) ) ? true : false;
+		return ( $sections == $this->getCompletedSections( $sections ) );
 	}
 
 	/**
