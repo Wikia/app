@@ -5,6 +5,9 @@
  */
 class VideoPageToolProgram extends WikiaModel {
 
+	const OBJECT_CACHE_TTL = 604800; // One week
+	const DATE_CACHE_TTL = 86400;    // One day
+
 	protected $programId = 0;
 	protected $language = 'en';
 	protected $publishDate;
@@ -91,10 +94,31 @@ class VideoPageToolProgram extends WikiaModel {
 
 	/**
 	 * Set isPublished
-	 * @param boolean $isPublished
+	 * @param $value
 	 */
 	protected function setIsPublished( $value ) {
 		$this->isPublished = (int) $value;
+	}
+
+	/**
+	 * Given a language, finds the program object nearest (or equal to) to today's date
+	 * @param $lang
+	 * @return object
+	 */
+	public static function newProgramNearestToday( $lang ) {
+		wfProfileIn( __METHOD__ );
+
+		// Figure out what the nearest date to today is
+		$nearestDate = self::getNearestDate( $lang );
+		if ($nearestDate) {
+			// Load the program with this nearest date
+			$program = self::newProgram( $lang, $nearestDate );
+
+			wfProfileOut( __METHOD__ );
+			return $program;
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -187,6 +211,45 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
+	 * Returns the nearest program date to today for a given language
+	 * @param $language
+	 * @return null|string
+	 */
+	protected function getNearestDate( $language ) {
+		wfProfileIn( __METHOD__ );
+
+		$date = date('Y-m-d');
+		$nearestKey = wfMemcKey( 'videopagetool', 'nearest-date', $language, $date );
+		$nearestDate = F::app()->wg->Memc->get( $nearestKey );
+
+		if ( !$nearestDate ) {
+			$db = wfGetDB( DB_SLAVE );
+
+			$row = $db->selectRow(
+				array( 'vpt_program' ),
+				array( 'unix_timestamp(publish_date) as publish_date' ),
+				array(
+					'language' => $language,
+					'publish_date <= '.$db->addQuotes(date( 'Y-m-d' )),
+				),
+				__METHOD__,
+				array( 'ORDER BY' => 'publish_date DESC' )
+			);
+
+			if ( $row ) {
+				$nearestDate = $row->publish_date;
+
+				// Cache this for at most one day
+				F::app()->wg->Memc->set( $nearestKey, $nearestDate, self::DATE_CACHE_TTL );
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $nearestDate;
+	}
+
+	/**
 	 * Add program to database
 	 * @return Status
 	 */
@@ -272,7 +335,7 @@ class VideoPageToolProgram extends WikiaModel {
 			$cache[$varName] = $this->$varName;
 		}
 
-		$this->wg->Memc->set( $this->getMemcKey(), $cache, 60*60*24*7 );
+		$this->wg->Memc->set( $this->getMemcKey(), $cache, self::OBJECT_CACHE_TTL );
 	}
 
 	/**
@@ -303,13 +366,12 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * get list of programs
+	 * Get the list of programs for the month starting at $startDate
 	 * @param string $language
 	 * @param string $startDate [yyyy-mm-dd]
-	 * @param string $endDate [yyyy-mm-dd]
 	 * @return array $programs [array( date => status ); date = yyyy-mm-dd; status = 0 (not published)/ 1 (published)]
 	 */
-	public static function getPrograms( $language, $startDate, $endDate ) {
+	public static function getProgramsForMonth( $language, $startDate ) {
 		wfProfileIn( __METHOD__ );
 
 		$app = F::app();
@@ -325,7 +387,7 @@ class VideoPageToolProgram extends WikiaModel {
 				array(
 					'language' => $language,
 					"publish_date >= '$startDate'",
-					"publish_date < '$endDate'",
+					"publish_date < '$startDate' + INTERVAL 1 MONTH",
 				),
 				__METHOD__,
 				array( 'ORDER BY' => 'publish_date' )
@@ -373,7 +435,10 @@ class VideoPageToolProgram extends WikiaModel {
 	 * @return array $assets
 	 */
 	public function getAssetsBySection( $section ) {
-		$assets = VideoPageToolAsset::getAssetsBySection( $this->programId, $section );
+		$assets = array();
+		if ( $this->exists() ) {
+			$assets = VideoPageToolAsset::getAssetsBySection( $this->programId, $section );
+		}
 		return $assets;
 	}
 
@@ -435,7 +500,7 @@ class VideoPageToolProgram extends WikiaModel {
 
 		// save cache
 		$this->saveToCache();
-		$this->invalidateCachePrograms( $section );
+		$this->invalidateCachePrograms( $this->language );
 
 		foreach ( $assetList as $assetObj ) {
 			$assetObj->saveToCache();

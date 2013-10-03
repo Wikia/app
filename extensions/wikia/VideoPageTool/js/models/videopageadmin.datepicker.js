@@ -2,7 +2,7 @@
  * @description Generalized model for jQuery.ui Datepicker, based/refactored from SpecialMarketingToolbox implementation
  * @dependencies Model datepicker
  */
-define('vpt.models.datepicker', [], function() {
+define('models.videopageadmin.datepicker', [], function() {
 
 	'use strict';
 

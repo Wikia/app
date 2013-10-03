@@ -1,5 +1,5 @@
-define('vpt.views.index', [
-	'vpt.views.datepicker'
+define('views.videopageadmin.index', [
+	'views.videopageadmin.datepicker'
 ], function(Datepicker) {
 	'use strict';
 
@@ -40,7 +40,7 @@ define('vpt.views.index', [
 			this.datepicker = new Datepicker({
 				el: '#VPTDashboard .date-picker',
 				language: value,
-				controller: 'VideoPageToolSpecial',
+				controller: 'VideoPageAdminSpecial',
 				method: 'getCalendarInfo'
 			});
 		}
@@ -49,7 +49,7 @@ define('vpt.views.index', [
 	return VPTIndex;
 });
 
-require(['vpt.views.index'], function(IndexView) {
+require(['views.videopageadmin.index'], function(IndexView) {
 
 	'use strict';
 

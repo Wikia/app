@@ -1,16 +1,16 @@
 <?php
-
 /**
- * VideoPageTool
+ * VideoPageAdminSpecialController
  * @author Garth Webb
  * @author Kenneth Kouot
  * @author Liz Lee
  * @author Saipetch Kongkatong
  */
-class VideoPageToolSpecialController extends WikiaSpecialPageController {
+
+class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 
 	public function __construct() {
-		parent::__construct( 'VideoPageTool', '', false );
+		parent::__construct( 'VideoPageAdmin', '', false );
 	}
 
 	public function init() {
@@ -26,9 +26,9 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string language - current language
 	 */
 	public function index() {
-		$this->response->addAsset('videopagetool_js');
-		$this->response->addAsset('videopagetool_scss');
-		$this->response->addAsset('videopagetool_css');
+		$this->response->addAsset('videopageadmin_js');
+		$this->response->addAsset('videopageadmin_scss');
+		$this->response->addAsset('videopageadmin_css');
 		if ( !$this->getUser()->isAllowed( 'videopagetool' ) ) {
 			$this->displayRestrictionError();
 			return false;
@@ -115,8 +115,14 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 				// update original asset data
 				foreach ( $data as $order => $row ) {
 					foreach ( $row as $name => $value ) {
-						if ( !empty( $videos[$order][$name] ) ) {
+						if ( array_key_exists( $name, $videos[$order] ) && $videos[$order][$name] != $value ) {
 							$videos[$order][$name] = $value;
+						}
+
+						// replace alternative thumbnail
+						if ( $name == 'altThumbTitle' && array_key_exists( 'altThumbKey', $videos[$order] )
+							&& $videos[$order]['altThumbKey'] != $value ) {
+							$videos[$order] = $helper->replaceThumbnail( $videos[$order], $value );
 						}
 					}
 				}
@@ -137,7 +143,7 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 		$this->msg = $msg;
 
 		$this->leftMenuItems = $leftMenuItems;
-		$this->moduleView = $this->app->renderView( 'VideoPageToolSpecial', $section, array( 'videos' => $videos, 'date' => $date, 'language' => $language ) );
+		$this->moduleView = $this->app->renderView( 'VideoPageAdminSpecial', $section, array( 'videos' => $videos, 'date' => $date, 'language' => $language ) );
 
 		$this->section = $section;
 		// TODO: not sure if these are needed in edit(), just in the sub views like "featured" etc.
@@ -203,7 +209,33 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		$info = VideoPageToolProgram::getPrograms( $language, date( 'Y-m-d', $startTime ), date( 'Y-m-d', $endTime ) );
+		// Make sure the end date comes after the start date
+		if ( $startTime > $endTime ) {
+			$this->result = 'error';
+			$this->msg = wfMessage( 'videopagetool-error-invalid-date' )->plain();
+			$this->info = array();
+			return;
+		}
+
+		// Get the first day of the month for the requested start
+		$requestTime = strtotime( 'first day of this month', $startTime );
+		$requestDate = date( 'Y-m-d', $requestTime );
+
+		// Get the first day of them month for the end date in the range
+		$endDate = date( 'Y-m-d', strtotime( 'first day of this month', $endTime ) );
+
+		// Get one month worth of data starting at $requestDate
+		$info = VideoPageToolProgram::getProgramsForMonth( $language, $requestDate );
+
+		// If we have more than one month to retrieve, keep fetching them.  We only fetch per
+		// month so that we can easily determine what to invalidate when we update programs
+		while ($requestDate != $endDate) {
+			$requestTime = strtotime( 'first day of next month',  $requestTime);
+			$requestDate = date( 'Y-m-d', $requestTime );
+			$nextInfo = VideoPageToolProgram::getProgramsForMonth( $language, $requestDate );
+
+			$info = array_merge($info, $nextInfo);
+		}
 
 		$this->result = 'ok';
 		$this->msg = '';
@@ -253,14 +285,16 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * get video data
+	 * Get video data
 	 * @requestParam string url
+	 * @requestParam string altThumbKey
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
 	 * @responseParam array video
 	 */
 	public function getVideoData() {
 		$url = $this->getVal( 'url', '' );
+		$altThumbTitle = $this->getVal( 'altThumbKey', '' );
 
 		$video = array();
 
@@ -270,20 +304,50 @@ class VideoPageToolSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
+		$url = urldecode( $url );
 		if ( preg_match( '/.+\/wiki\/File:(.+)$/i', $url, $matches ) ) {
 			$helper = new VideoPageToolHelper();
-			$video = $helper->getVideoData( $matches[1] );
+			$video = $helper->getVideoData( $matches[1], $altThumbTitle );
 		}
 
 		if ( empty( $video ) ) {
 			$this->result = 'error';
-			$this->msg = wfMessage( 'videohandler-unknown-title' )->plain();
+			$this->msg = wfMessage( 'videohandler-non-premium' )->plain();
 			$this->video = $video;
 		} else {
 			$this->result = 'ok';
 			$this->msg = '';
 			$this->video = $video;
 		}
+	}
+
+	/**
+	 * Get image data
+	 * @requestParam string imageTitle
+	 * @responseParam string result [ok/error]
+	 * @responseParam string msg - result message
+	 * @responseParam array $data [ array( 'thumbUrl' => $url, 'largeThumbUrl' => $url ) ]
+	 */
+	public function getImageData() {
+		$imageTitle = $this->getVal( 'imageTitle', '' );
+
+		if ( empty( $imageTitle ) ) {
+			$this->result = 'error';
+			$this->msg = wfMessage( 'videos-error-empty-title' )->plain();
+			return;
+		}
+
+		$helper = new VideoPageToolHelper();
+		$data = $helper->getImageData( $imageTitle );
+		if ( empty( $data ) ) {
+			$this->result = 'error';
+			$this->msg = wfMessage( 'videohandler-unknown-title' )->plain();
+		} else {
+			$this->result = 'ok';
+			$this->msg = '';
+		}
+
+		$this->data = $data;
 	}
 
 	/*

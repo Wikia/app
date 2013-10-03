@@ -3,7 +3,7 @@
 ?>
 
 <?= $app->renderView(
-	'VideoPageToolSpecial',
+	'VideoPageAdminSpecial',
 	'Header'
 ) ?>
 
