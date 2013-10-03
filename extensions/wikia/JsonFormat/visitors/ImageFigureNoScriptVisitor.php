@@ -32,15 +32,7 @@ class ImageFigureNoScriptVisitor extends DOMNodeVisitorBase {
 
 		$src = $img->getAttribute('src');
 
-		$caption = '';
-
-		foreach( $figcaption->childNodes as $v ){
-
-			if( $v->nodeName==='#text' || $v->nodeName==='a' ){
-				$caption.=$v->nodeValue;
-			}
-
-		}
+		$caption = DomHelper::getTextValue($figcaption);
 
 		$imageFigure = new JsonFormatImageFigureNode( $src, $caption );
 
