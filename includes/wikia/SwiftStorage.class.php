@@ -16,7 +16,7 @@ namespace Wikia;
  */
 class SwiftStorage {
 
-	const LOG_GROUP = 'Swift';
+	const LOG_GROUP = 'swift-storage';
 
 	/* @var \WikiaGlobalRegistry $wg */
 	private $wg;
@@ -167,14 +167,14 @@ class SwiftStorage {
 		try {
 			$fp = @fopen( $localFile, 'r' );
 			if ( !$fp ) {
-				self::log( __METHOD__ . '::fopen', "{$localFile} doesn't exist" );
+				self::log( __METHOD__ . '::fopen', "<{$localFile}> doesn't exist" );
 				return \Status::newFatal( "{$localFile} doesn't exist" );
 			}
 
 			// check file size - sending empty file results in "HTTP 411 MissingContentLengh"
 			$size = fstat( $fp )['size'];
 			if ( $size === 0 ) {
-				self::log( __METHOD__ . '::fstat', "{$localFile} is empty" );
+				self::log( __METHOD__ . '::fstat', "<{$localFile}> is empty" );
 				return \Status::newFatal( "{$localFile} is empty" );
 			}
 

@@ -18,6 +18,10 @@ class MigrateImagesToSwift extends Maintenance {
 
 	const REASON = 'Images migration script';
 
+	// log groups
+	const LOG_MIGRATION_PROGRESS = 'swift-migration-progress';
+	const LOG_MIGRATION_ERRORS = 'swift-migration-errors';
+
 	/* @var \Wikia\SwiftStorage $swift */
 	private $swift;
 
@@ -142,7 +146,7 @@ class MigrateImagesToSwift extends Maintenance {
 		$res = $this->swift->store( $wgUploadDirectory . '/' . $path, $path, $metadata, $mime );
 
 		if ( !$res->isOK() ) {
-			Wikia::log( __METHOD__, 'error', $path );
+			self::log( __METHOD__, "error storing <{$path}>", self::LOG_MIGRATION_ERRORS );
 			$this->migratedImagesFailedCnt++;
 		}
 		else {
@@ -152,11 +156,11 @@ class MigrateImagesToSwift extends Maintenance {
 
 		// "progress bar"
 		if ( $this->migratedImagesCnt % 5 === 0 ) {
-			$elapsed = time() - $this->time;
+			$elapsed = time() - $this->time + 1;
 
 			// estimate remaining time
-			$filesPerSec = ( $elapsed ) ? ( $this->migratedImagesCnt ) / ( $elapsed ) : 1;
-			$remainingSeconds = round( ( $this->imagesCnt - $this->migratedImagesCnt ) / $filesPerSec );
+			$filesPerSec = $this->migratedImagesCnt /  $elapsed;
+			$remainingSeconds = $filesPerSec ? round( ( $this->imagesCnt - $this->migratedImagesCnt ) / $filesPerSec ) : 0;
 			$remainingMinutes = floor( $remainingSeconds / 60 );
 
 			$this->output( sprintf(
@@ -171,6 +175,17 @@ class MigrateImagesToSwift extends Maintenance {
 				$remainingSeconds % 60
 			) );
 		}
+	}
+
+	/**
+	 * Log to /var/log/private file
+	 *
+	 * @param $method string method
+	 * @param $msg string message to log
+	 * @param $group string file to log to
+	 */
+	private static function log($method, $msg, $group) {
+		\Wikia::log($group . '-WIKIA', false, $method . ': ' . $msg, true /* $force */);
 	}
 
 	public function execute() {
@@ -229,9 +244,7 @@ class MigrateImagesToSwift extends Maintenance {
 		// ok, so let's start...
 		$this->time = time();
 
-		// connect to Swift
-
-		Wikia::log( __CLASS__, false, 'migration started' );
+		self::log( __CLASS__, 'migration started', self::LOG_MIGRATION_PROGRESS );
 
 		// block uploads via WikiFactory
 		WikiFactory::setVarByName( 'wgEnableUploads',     $wgCityId, false, self::REASON );
@@ -303,7 +316,7 @@ class MigrateImagesToSwift extends Maintenance {
 		);
 
 		$this->output( "\n{$report}\n" );
-		Wikia::log( __CLASS__, false, 'migration completed:  ' . $report );
+		self::log( __CLASS__, 'migration ceompleted', self::LOG_MIGRATION_PROGRESS );
 
 		// update wiki configuration
 		// enable Swift storage via WikiFactory
