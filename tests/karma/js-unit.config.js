@@ -90,7 +90,7 @@ files = [
 	'extensions/wikia/Search/js/spec/*.spec.js',
 
 	// Video
-	'extensions/wikia/VideoPageTool/js/views/switcher.js',
+	'extensions/wikia/VideoPageTool/js/views/jquery.switcher.js',
 	'extensions/wikia/VideoPageTool/js/spec/*.spec.js'
 ];
 
