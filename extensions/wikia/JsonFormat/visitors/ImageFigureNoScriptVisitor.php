@@ -25,10 +25,23 @@ class ImageFigureNoScriptVisitor extends DOMNodeVisitorBase {
 	 * @param DOMNode $currentNode
 	 */
 	public function visit(DOMNode $currentNode) {
+		$figcaption = $currentNode->childNodes->item(2);
 		$img = $currentNode->childNodes->item(0)->childNodes->item(1)->childNodes->item(0);
 		// @var DataElement $img
+		// @var DataElement $figcaption
+
 		$src = $img->getAttribute('src');
-		$caption = $currentNode->childNodes->item(2)->childNodes->item(0)->textContent;
+
+		$caption = '';
+
+		foreach( $figcaption->childNodes as $v ){
+
+			if( $v->nodeName==='#text' || $v->nodeName==='a' ){
+				$caption.=$v->nodeValue;
+			}
+
+		}
+
 		$imageFigure = new JsonFormatImageFigureNode( $src, $caption );
 
 		$this->getJsonFormatBuilder()->add( $imageFigure );
