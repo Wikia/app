@@ -28,6 +28,8 @@ $messages['en'] = array(
 	'lvs-instructions' => "Many of the videos you embed on your wikis become unavailable when they are removed or taken down for copyright violations. That's why Wikia has licensed [[w:c:video|thousands of videos]] for use on your wikis from several content partners. This Special page is an easy way for you to see if we have a licensed copy of the same or similar videos on your wikis. Please note that often the exact same video may have a different video thumbnail so it's best to review the videos before you make a decision. Happy swapping!",
 	'lvs-button-keep' => 'Keep',
 	'lvs-button-swap' => 'Swap',
+	'lvs-button-yes' => 'Yes',
+	'lvs-button-no' => 'No',
 	'lvs-more-suggestions' => 'more suggestions',
 	'lvs-best-match-label' => 'Best Licensed Match from Wikia Video',
 	'lvs-undo-swap' => 'Undo',
@@ -41,7 +43,8 @@ $messages['en'] = array(
 	'lvs-posted-in-label-none' => 'Current video is not posted in any articles',
 	'lvs-posted-in-more' => 'more',
 	'lvs-confirm-keep-title' => 'Keep Video',
-	'lvs-confirm-keep-message' => 'You have chosen not to replace your current video with a licensed Wikia Video. Do you want to continue?',
+	// confirm-keep-message ultimately goes to $.msg which does not support wiki text so we hardcode the markup
+	'lvs-confirm-keep-message' => 'We are continuously adding new licensed videos to <a href="http://video.wikia.com/">Wikia Video</a>. Would you like to see new matches for this video as they become available?',
 	'lvs-confirm-undo-swap-title' => 'Confirm Undo',
 	'lvs-confirm-undo-swap-message' => 'Are you sure you want to restore the original video?',
 	'lvs-confirm-undo-keep-title' => 'Confirm Undo',
@@ -85,6 +88,8 @@ $messages['qqq'] = array(
 	'lvs-instructions' => 'This is the text at the top of the Licensed Video Swap special page that explains to the user what this page is all about. The idea is that users can exchange unlicensed videos for videos licensed for use on Wikia.',
 	'lvs-button-keep' => 'This is the text that appears on a button that, when clicked, will keep the non-licensed video as opposed to swapping it out for a licensed video.',
 	'lvs-button-swap' => 'This is the text that appears on a button that, when clicked, will swap out a non-licensed video for a licensed video suggested from the wikia video library.',
+	'lvs-button-yes' => 'Yes (user agrees to keep seeing suggestions for video matches for that video)',
+	'lvs-button-no' => 'No, (user decides to "Keep" the video and no longer see matches for it)',
 	'lvs-more-suggestions' => 'This text will appear below a video that is a suggestion for a licensed version of a video that already exists on the wiki.  When clicked, this link will reveal more licensed possible replacements for the non-licensed video.',
 	'lvs-best-match-label' => 'This text appears above the licensed video that is considered the best match for replacing a non-licensed video.',
 	'lvs-undo-swap' => 'This text appears after swapping out the video to undo the swapping video.
@@ -105,7 +110,7 @@ $messages['qqq'] = array(
 	'lvs-posted-in-more' => 'This is the text that is shown after a truncated list of titles in which a video is posted.  When hovered, a full list appears.  When clicked, the user is taken to a page where the full list is displayed.
 {{Identical|More}}',
 	'lvs-confirm-keep-title' => 'This is the heading that is displayed in the confirm keep modal.',
-	'lvs-confirm-keep-message' => 'This message is show in a modal when a user clicks a button to keep an un-licensed video as opposed to swapping it out for a licensed video. It is a coonfirmation message.',
+	'lvs-confirm-keep-message' => 'This message is show in a modal when a user clicks a button to keep an un-licensed video as opposed to swapping it out for a licensed video. It is a coonfirmation message. Translate the url in the <a> element to proper, would use wiki text but this is going to JavaScript which doesn\'t support wikitext',
 	'lvs-confirm-undo-swap-title' => 'This is the heading that is displayed in the confirm undo swap modal.
 {{Identical|Confirm undo}}',
 	'lvs-confirm-undo-swap-message' => 'This message is show in a modal to confirm that a user wants to revert a video swap, i.e. the non-premium video they had originally replaced with a premium video will be restored.',

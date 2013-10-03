@@ -16,6 +16,7 @@ define( 'lvs.swapkeep', [
 		$row,
 		$button,
 		$container,
+		$keepButton,
 		isSwap,
 		currTitle,
 		newTitle;
@@ -55,6 +56,8 @@ define( 'lvs.swapkeep', [
 		var currTitleText =  currTitle.replace(/_/g, ' ' );
 		// Show confirmation modal only on "Keep"
 		$.confirm({
+			cancelMsg: $.msg( 'lvs-button-yes' ),
+			okMsg: $.msg( 'lvs-button-no' ),
 			title: $.msg( 'lvs-confirm-keep-title' ),
 			content: $.msg( 'lvs-confirm-keep-message', currTitleText ),
 			onOk: function() {
@@ -79,6 +82,7 @@ define( 'lvs.swapkeep', [
 			$parent = $button.parent();
 			$overlay = $parent.siblings( '.swap-arrow' );
 			$row = $button.closest( '.row' );
+			$keepButton = $row.find( '.keep-button' );
 			isSwap = $button.is( '.swap-button' );
 
 			if ( isSwap ) {
@@ -91,7 +95,7 @@ define( 'lvs.swapkeep', [
 				} else if ( e.type === 'click' ) {
 					// Get both titles - current/non-premium video and video to swap it out with
 					newTitle = decodeURIComponent( $button.attr( 'data-video-swap' ) );
-					currTitle = decodeURIComponent( $row.find( '.keep-button' ).attr( 'data-video-keep' ) );
+					currTitle = decodeURIComponent( $keepButton.attr( 'data-video-keep' ) );
 					doRequest();
 
 					// Track click action
@@ -102,16 +106,32 @@ define( 'lvs.swapkeep', [
 				}
 				// Keep button clicked
 			} else if ( e.type === 'click' ) {
-				currTitle = decodeURIComponent( $row.find( '.keep-button' ).attr( 'data-video-keep' ) );
-				// no new title b/c we're keeping the current video
-				newTitle = '';
-				confirmModal();
 
-				// Track click action
+				// Track click actions
 				tracker.track({
 					action: tracker.actions.CLICK,
 					label: tracker.labels.KEEP
 				});
+
+				currTitle = decodeURIComponent( $keepButton.attr( 'data-video-keep' ) );
+				// no new title b/c we're keeping the current video
+				newTitle = '';
+				
+				if ( $keepButton.data( 'subsequent-keep' ) ) {
+
+					confirmModal();
+
+				} else {
+
+					doRequest();
+
+					videoControls.reset();
+
+					tracker.track({
+						action: tracker.actions.CONFIRM,
+						label: tracker.labels.KEEP
+					});
+				}
 			}
 		});
 	}
