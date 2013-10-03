@@ -796,10 +796,23 @@ class WikiaMiniUpload {
 		return $flickrResult['photo'];
 	}
 
-	function getImages ( $limit, $offset = 0, $constrain = array() ) {
+	/**
+	 * Retrieve recently uploaded images from this wiki.  This will filter out video files
+	 * and images uploaded by bots if necessary.  Additionally, arbitrary constraints can
+	 * be passed in to filter out additional images.  These constraints can be either of:
+	 *
+	 *   $constrain[] = "img_name = 'bar'"
+	 *   $constrain['img_minor_mime'] = 'youtube'
+	 *
+	 * @param int $limit Limit the number of images to return
+	 * @param int $offset Grab images after an offset.  Used with $limit to page the results
+	 * @param array $constrain An array of constraint/value that will be used in the query
+	 * @return array An array of images
+	 */
+	function getImages( $limit, $offset = 0, $constrain = array() ) {
 
-		# Load the next set of images, eliminating images uploaded by bots as
-		# well as eliminating any video files
+		// Load the next set of images, eliminating images uploaded by bots as
+		// well as eliminating any video files
 		$dbr = wfGetDB( DB_SLAVE );
 		$image = $dbr->tableName( 'image' );
 		$sql = 'SELECT img_size, img_name, img_user, img_user_text, img_description, img_timestamp '.
