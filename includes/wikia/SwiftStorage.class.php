@@ -16,6 +16,8 @@ namespace Wikia;
  */
 class SwiftStorage {
 
+	const LOG_GROUP = 'Swift';
+
 	/* @var \WikiaGlobalRegistry $wg */
 	private $wg;
 
@@ -127,7 +129,11 @@ class SwiftStorage {
 
 		$status = $req->execute();
 
-		return $status->isOK() ? $container : false;
+		if (!$status->isOK()) {
+			self::log(__METHOD__, 'can\'t set ACL');
+		}
+
+		return $container;
 	}
 
 	/**
@@ -161,14 +167,14 @@ class SwiftStorage {
 		try {
 			$fp = @fopen( $localFile, 'r' );
 			if ( !$fp ) {
-				\Wikia::log( __METHOD__, 'fopen', "{$localFile} doesn't exist" );
+				self::log( __METHOD__, 'fopen', "{$localFile} doesn't exist" );
 				return \Status::newFatal( "{$localFile} doesn't exist" );
 			}
 
 			// check file size - sending empty file results in "HTTP 411 MissingContentLengh"
 			$size = fstat( $fp )['size'];
 			if ( $size === 0 ) {
-				\Wikia::log( __METHOD__, 'fstat', "{$localFile} is empty" );
+				self::log( __METHOD__, 'fstat', "{$localFile} is empty" );
 				return \Status::newFatal( "{$localFile} is empty" );
 			}
 
@@ -188,7 +194,7 @@ class SwiftStorage {
 			fclose( $fp );
 		}
 		catch ( \Exception $ex ) {
-			\Wikia::log( __METHOD__, 'exception - ' . $localFile, $ex->getMessage() );
+			self::log( __METHOD__, 'exception - ' . $localFile, $ex->getMessage() );
 			return \Status::newFatal( $ex->getMessage() );
 		}
 
@@ -214,7 +220,7 @@ class SwiftStorage {
 			$this->container->delete_object( $remotePath );
 		}
 		catch ( \Exception $ex ) {
-			\Wikia::log( __METHOD__, 'exception - ' . $remotePath, $ex->getMessage() );
+			self::log( __METHOD__, 'exception - ' . $remotePath, $ex->getMessage() );
 			return \Status::newFatal( $ex->getMessage() );
 		}
 
@@ -251,5 +257,15 @@ class SwiftStorage {
 			$this->pathPrefix,
 			ltrim( $remoteFile, '/' )
 		);
+	}
+
+	/**
+	 * Log to /var/log/private file
+	 *
+	 * @param $method string method
+	 * @param $msg string message to log
+	 */
+	public static function log($method, $msg) {
+		\Wikia::log(self::LOG_GROUP . '-WIKIA', false, $method . ': ' . $msg, true /* $force */);
 	}
 }
