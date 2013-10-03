@@ -53,7 +53,9 @@ var WMU_modal = null,
 	WMU_orgThumbSize = null,
 	WMU_width = null, // real width of full sized image
 	WMU_height = null,
-	WMU_widthChanges = 1,
+	WMU_minWidth = null,    // Constrain search and upload > than this width
+	WMU_minHeight = null,   // Constrain search and upload > than this height
+	WMU_aspectRatio = null, // Constrain searchand upload == this aspect ratio
 	WMU_refid = null,
 	WMU_wysiwygStart = 1,
 	WMU_ratio = 1,
@@ -65,8 +67,6 @@ var WMU_modal = null,
 	WMU_caption = 0,
 	WMU_link = 0,
 	WMU_box = -1,
-	WMU_width_par = null,
-	WMU_height_par = null,
 	WMU_skipDetails = false,
 	WMU_openedInEditor = true;
 
@@ -525,7 +525,7 @@ function WMU_loadMain() {
 		WMU_indicator(1, false);
 		if( $('#ImageQuery').length && $('#ImageQuery').is(':visible') ) {
 			$('#ImageQuery').focusNoScroll();
-		} 
+		}
 		var cookieMsg = document.cookie.indexOf("wmumainmesg=");
 		if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
 			$('#ImageUploadTextCont').hide();
@@ -538,7 +538,19 @@ function WMU_loadMain() {
 		}
 	}
 	WMU_indicator(1, true);
-	$.get(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=loadMain', callback);
+
+	baseUrl = wgScriptPath + '/index.php?action=ajax&rs=WMU&method=loadMain';
+	if ( WMU_minHeight != null ) {
+		baseUrl = baseUrl + '&minHeight=' + WMU_minHeight;
+	}
+	if ( WMU_minWidth != null ) {
+		baseUrl = baseUrl + '&minWidth=' + WMU_minWidth;
+	}
+	if ( WMU_aspectRatio != null ) {
+		baseUrl = baseUrl + '&aspectRatio=' + WMU_aspectRatio;
+	}
+
+	$.get(baseUrl, callback);
 	WMU_curSourceId = 0;
 }
 
@@ -580,6 +592,13 @@ function WMU_recentlyUploaded(param, pagination) {
 	WMU_track({
 		label: 'paginate-' + pagination
 	});
+
+	if(WMU_minHeight) {
+		param = (param.length > 0 ? param + '&' : '') + 'minHeight='+WMU_minHeight;
+	}
+	if(WMU_minWidth) {
+		param = (param.length > 0 ? param + '&' : '') + 'minWidth='+WMU_minWidth;
+	}
 
 	WMU_indicator(2, true);
 	$.get(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=recentlyUploaded&'+param, callback);
@@ -912,6 +931,16 @@ function WMU_insertImage(type) {
 	params.push('type='+type);
 	params.push('mwname='+$('#ImageUploadMWname').val());
 	params.push('tempid='+$('#ImageUploadTempid').val());
+
+	if(WMU_minHeight) {
+		params.push('minHeight='+WMU_minHeight);
+	}
+	if(WMU_minWidth) {
+		params.push('minWidth='+WMU_minWidth);
+	}
+	if(WMU_aspectRatio) {
+		params.push('aspectRatio='+WMU_aspectRatio);
+	}
 
 	var captionUpdateInput = $('#ImageUploadReplaceDefault');
 	if (captionUpdateInput.is(':hidden')) {

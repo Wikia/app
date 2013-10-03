@@ -135,6 +135,13 @@ class WikiaFileHelper extends Service {
 		return $result;
 	}
 
+	/**
+	 * get html for video play button overlay
+	 * @global string $wgBlankImgUrl
+	 * @param integer $width
+	 * @param integer $height
+	 * @return string
+	 */
 	public static function videoPlayButtonOverlay( $width, $height ) {
 		global $wgBlankImgUrl;
 
@@ -161,20 +168,20 @@ class WikiaFileHelper extends Service {
 		return $html;
 	}
 
+	/**
+	 * get html for video info overlay
+	 * @param integer $width
+	 * @param Title|string $title
+	 * @return string
+	 */
 	public static function videoInfoOverlay( $width, $title = null ) {
 		$html = '';
-		if ( $width > 230 && !empty($title) ) {
-			if ( is_string($title) ) {
-				$media = Title::newFromText($title, NS_FILE);
-			} else {
-				$media = $title;
-			}
-
-			$file = wfFindFile( $media );
-			if ( !empty($file) ) {
+		if ( $width > 230 && !empty( $title ) ) {
+			$file = self::getFileFromTitle( $title );
+			if ( !empty( $file ) ) {
 				// video title
 				$contentWidth = $width - 60;
-				$videoTitle = $media->getText();
+				$videoTitle = $title->getText();
 				$content = self::videoOverlayTitle( $videoTitle, $contentWidth );
 
 				// video duration
@@ -182,9 +189,9 @@ class WikiaFileHelper extends Service {
 				$fileMetadata = $file->getMetadata();
 				if ( $fileMetadata ) {
 					$fileMetadata = unserialize( $fileMetadata );
-					if ( array_key_exists('duration', $fileMetadata) ) {
+					if ( array_key_exists( 'duration', $fileMetadata ) ) {
 						$duration = self::formatDuration( $fileMetadata['duration'] );
-						$isoDuration = self::getISO8601Duration($duration);
+						$isoDuration = self::getISO8601Duration( $duration );
 						$content .= '<meta itemprop="duration" content="'.$isoDuration.'">';
 					}
 				}
@@ -193,7 +200,7 @@ class WikiaFileHelper extends Service {
 				$content .= '<br />';
 
 				// video views
-				$videoTitle = $media->getDBKey();
+				$videoTitle = $title->getDBKey();
 				$views = MediaQueryService::getTotalVideoViewsByTitle( $videoTitle );
 				$content .= self::videoOverlayViews( $views );
 				$content .= '<meta itemprop="interactionCount" content="UserPlays:'.$views.'" />';
@@ -579,5 +586,38 @@ class WikiaFileHelper extends Service {
 		return ucfirst($cat) . ':' . wfMsgForContent( 'videohandler-category' );
 	}
 
+	/**
+	 * get file from title
+	 * @param Title|string $title
+	 * @return File|null $file
+	 */
+	public static function getFileFromTitle( &$title ) {
+		if ( is_string( $title ) ) {
+			$title = Title::newFromText( $title, NS_FILE );
+		}
+
+		if ( $title instanceof Title ) {
+			$file = wfFindFile( $title );
+			if ( $file instanceof File && $file->exists() ) {
+				return $file;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * get video file from title
+	 * @param Title|string $title
+	 * @return File|null $file
+	 */
+	public static function getVideoFileFromTitle( &$title ) {
+		$file = self::getFileFromTitle( $title );
+		if ( !empty( $file ) && self::isFileTypeVideo( $file ) ) {
+			return $file;
+		}
+
+		return null;
+	}
 
 }

@@ -4,13 +4,23 @@
 $alter-background-color: mix($color-page, #000, 90%);
 $page-width: 1030px;
 
-body {
+body.skin-oasis.mw-special-Styleguide {
 	background-image: none;
+	background-color: $color-page;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 14px;
 	line-height: 22px;
 	padding-bottom: 0;
 	text-rendering: optimizeLegibility;
+
+	&:before,
+	&:after {
+		background-image: none;
+	}
+}
+
+.background-image-gradient {
+	display: none;
 }
 
 h1 {
@@ -166,10 +176,30 @@ h2 {
 	margin: 0 auto;
 	overflow: hidden;
 	width: $page-width;
+
+	.toc {
+		background-color: $color-page;
+		float: left;
+		width: 200px;
+	}
+
+	.toc-fixed {
+		position: fixed;
+		top: 10px;
+		z-index: 1;
+	}
+
+	.components {
+		color: $color-text;
+		font-size: 2.25rem;
+		list-style: decimal inside;
+		margin-left: 250px;
+		margin-right: 0;
+		width: 694px;
+	}
 }
 
 .styleguide-home-page-body {
-
 	section {
 		@include box-sizing();
 		float: left;
@@ -268,19 +298,43 @@ h2 {
 	}
 }
 
-.components {
-	float: left;
-	width: 694px
-}
-
 .component-item {
-	padding-bottom: 30px;
+	margin-top: 85px;
 
-	strong {
-		font-weight: bold;
+	h2 {
+		display: inline-block;
+		margin-bottom: 25px;
 	}
 
-	p {
-		padding: 15px 0;
+	h3 {
+		font-size: 21px;
+		font-weight: bold;
+		margin-top: 40px;
+	}
+
+	h4, p, div {
+		font-size: 14px;
+		line-height: 22px;
+		padding: 5px 0;
+	}
+
+	h4 {
+		margin: 20px 0 10px 0;
+		padding: 0;
+	}
+
+	&:first-child {
+		margin-top: 0;
+	}
+
+	.styleguide-component-params {
+		font-size: 14px;
+
+		&.hidden {
+			display: none;
+		}
+		&.shown {
+			display: block;
+		}
 	}
 }

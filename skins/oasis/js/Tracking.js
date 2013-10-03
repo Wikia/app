@@ -124,10 +124,7 @@ jQuery(function($){
 					label: label
 				});
 			}
-		}).on('mousedown', '.RelatedPagesModule a', {
-			category: category,
-			label: 'related-pages'
-		}, trackWithEventData).on('mousedown', '.editsection a', {
+		}).on('mousedown', '.editsection a', {
 			category: category,
 			label: 'section-edit'
 		}, trackWithEventData);
