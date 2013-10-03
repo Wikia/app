@@ -21,7 +21,7 @@ class SearchController extends WikiaController {
 		}
 
 		$searchParams = [];
-		if (! $this->wg->request->getVal('nonamespaces', $this->request->getVal( 'nonamespaces' ), false ) ) { // why both?
+		if (! $this->request->getVal( 'nonamespaces', false ) ) {
 			$searchConfig = new Wikia\Search\Config();
 			$this->setNamespacesFromRequest($searchConfig, $this->wg->User);
 			foreach ( $searchConfig->getNamespaces() as $namespaceInt ) {
