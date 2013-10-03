@@ -1,83 +1,77 @@
-describe('AdProviderAdDriver2', function(){
+describe('AdProviderGpt', function(){
 	it('Leaderboard works as expected in low value countries', function() {
-		var wikiaDartMock = {getUrl: function() {return 'http://example.org/'}},
-			dartCalled,
+		var dartCalled,
 			liftiumCalled,
-			scriptWriterMock,
 			trackerMock = {track: function() {}},
 			logMock = function() {},
 			windowMock = {adslots2: {push: function() {
 				liftiumCalled = true;
 			}}},
-			GeoMock = {getCountryCode: function() {}},
+			geoMock = {getCountryCode: function() {}},
 			slotTweakerMock,
 			cacheStorageMock = {set: function() {}, get: function() {}, del: function() {}},
 			adLogicHighValueCountryMock = {},
-			adLogicDartSubdomainMock = {getSubdomain: function() {return 'sub';}},
-			adProviderAdDriver2,
-			wikiaGptMock = {pushAd: function () {
-				dartCalled = true;
-			}};
+			adProviderGpt,
+			wikiaGptMock = {
+				init: function () {},
+				pushAd: function () {
+					dartCalled = true;
+				}
+			};
 
 		dartCalled = false;
 		liftiumCalled = false;
 		adLogicHighValueCountryMock.isHighValueCountry = function() {return false;};
 		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 0;};
 
-		adProviderAdDriver2 = AdProviderAdDriver2(
-			wikiaDartMock,
-			scriptWriterMock,
+		adProviderGpt = AdProviderGpt(
 			trackerMock,
 			logMock,
 			windowMock,
-			GeoMock,
+			geoMock,
 			slotTweakerMock,
 			cacheStorageMock,
 			adLogicHighValueCountryMock,
-			adLogicDartSubdomainMock,
 			wikiaGptMock
 		);
 
-		adProviderAdDriver2.fillInSlot(['TOP_LEADERBOARD']);
+		adProviderGpt.fillInSlot(['TOP_LEADERBOARD']);
 		expect(dartCalled).toBeFalsy('DART not called when user in low value country');
 		expect(liftiumCalled).toBeTruthy('Liftium called when user in low value country');
 	});
 
 
 	it('Leaderboard works as expected in high value countries', function() {
-		var wikiaDartMock = {getUrl: function() {return 'http://example.org/'}},
-			dartCalled,
+		var dartCalled,
 			liftiumCalled,
-			scriptWriterMock,
 			trackerMock = {track: function() {}},
 			logMock = function() {},
 			windowMock = {adslots2: {push: function() {
 				liftiumCalled = true;
 			}}},
-			GeoMock = {getCountryCode: function() {}},
+			geoMock = {getCountryCode: function() {}},
 			slotTweakerMock,
 			cacheStorageMock = {set: function() {}, get: function() {}, del: function() {}},
 			adLogicHighValueCountryMock = {},
-			adLogicDartSubdomainMock = {getSubdomain: function() {return 'sub';}},
 			adProviderAdDriver2,
-			wikiaGptMock = {pushAd: function () {
-				dartCalled = true;
-			}};
+			wikiaGptMock = {
+				init: function () {},
+				pushAd: function () {
+					dartCalled = true;
+				}
+			};
 
 		adLogicHighValueCountryMock.isHighValueCountry = function() {return true;};
 		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
 
-		adProviderAdDriver2 = AdProviderAdDriver2(
-			wikiaDartMock,
-			scriptWriterMock,
+		adProviderAdDriver2 = AdProviderGpt(
 			trackerMock,
 			logMock,
 			windowMock,
-			GeoMock,
+			geoMock,
 			slotTweakerMock,
 			cacheStorageMock,
 			adLogicHighValueCountryMock,
-			adLogicDartSubdomainMock,
 			wikiaGptMock
 		);
 
