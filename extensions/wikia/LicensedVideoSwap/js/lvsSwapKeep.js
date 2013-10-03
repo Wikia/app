@@ -50,24 +50,32 @@ define( 'lvs.swapkeep', [
 		});
 	}
 
-	function confirmModal() {
-		videoControls.reset();
-		var currTitleText =  currTitle.replace(/_/g, ' ' );
-		// Show confirmation modal only on "Keep"
-		$.confirm({
-			title: $.msg( 'lvs-confirm-keep-title' ),
-			content: $.msg( 'lvs-confirm-keep-message', currTitleText ),
-			onOk: function() {
-				doRequest();
-				// Track click on okay button
-				tracker.track({
-					action: tracker.actions.CONFIRM,
-					label: isSwap ? tracker.labels.SWAP : tracker.labels.KEEP
+	/**
+	 * TODO:
+	 * @description used to display a confirmation modal
+	 * @deprecated with vid-758
+
+			function confirmModal() {
+				videoControls.reset();
+				var currTitleText =  currTitle.replace(/_/g, ' ' );
+				// Show confirmation modal only on "Keep"
+				$.confirm({
+					title: $.msg( 'lvs-confirm-keep-title' ),
+					content: $.msg( 'lvs-confirm-keep-message', currTitleText ),
+					onOk: function() {
+						doRequest();
+						// Track click on okay button
+						tracker.track({
+							action: tracker.actions.CONFIRM,
+							label: isSwap ? tracker.labels.SWAP : tracker.labels.KEEP
+						});
+					},
+					width: 700
 				});
-			},
-			width: 700
-		});
-	}
+			}
+
+	*
+	*/
 
 	function init( $elem ) {
 		$container = $elem;
@@ -105,13 +113,30 @@ define( 'lvs.swapkeep', [
 				currTitle = decodeURIComponent( $row.find( '.keep-button' ).attr( 'data-video-keep' ) );
 				// no new title b/c we're keeping the current video
 				newTitle = '';
-				confirmModal();
+				
+				/**
+				 * TODO:
+				 * @deprecated removed in vid-758
+				 *
+				 * confirmModal();
+				 * 
+				 */
 
-				// Track click action
+				// replace confirmModal() functionality with these calls
+				doRequest();
+				videoControls.reset();
+
+				// Track click actions
 				tracker.track({
 					action: tracker.actions.CLICK,
 					label: tracker.labels.KEEP
 				});
+
+				tracker.track({
+					action: tracker.actions.CONFIRM,
+					label: tracker.labels.KEEP
+				});
+
 			}
 		});
 	}
