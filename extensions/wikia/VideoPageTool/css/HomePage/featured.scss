@@ -112,8 +112,10 @@ $play-button-overlay-fade-duration: 400ms;
 		// Small navigation circles
 		.bx-pager {
 			bottom: -30px;
+			padding-top: 0px;
 			.bx-pager-item {
-				padding-top: 30px;
+				// extend the element to the bottom of the video thumbnails so cursor stays hovered
+				padding-top: 15px;
 				a {
 					width: 8px;
 					height: 8px;
