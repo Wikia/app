@@ -263,7 +263,7 @@ class VideoPageToolProgram extends WikiaModel {
 	 * @param string|$lang - Look for published content dates in this language
 	 * @return String - A string to use as the memcached string
 	 */
-	protected function getMemcKeyNearestDate( $lang ) {
+	protected static function getMemcKeyNearestDate( $lang ) {
 		$date = date('Y-m-d');
 		$nearestKey = wfMemcKey( 'videopagetool', 'nearest-date', $lang, $date );
 		return $nearestKey;
