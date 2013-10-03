@@ -125,9 +125,15 @@ $label-padding: 10px 10px 10px 0px;
 	}
 
 	.hint {
+		display: block;
 		color: $color-alternate-text;
 		float: right;
 		width: 70%;
+	}
+
+	.tip {
+		clear: both;
+		padding: 10px 0;
 	}
 
 	// Featured video form styles
@@ -136,12 +142,16 @@ $label-padding: 10px 10px 10px 0px;
 			clear: none;
 			width: 68%;
 		}
-		.add-video-button {
+		.media-btn {
 			float: left;
 			height: 25px;
 			margin: 10px 10px 0 0;
+
+			&.media-uploader.btn {
+				margin-top: 0;
+			}
 		}
-		.video-title {
+		.video-title, .alt-thumb-name {
 			padding-top: 11px;
 		}
 		.video-thumb {
@@ -153,6 +163,12 @@ $label-padding: 10px 10px 10px 0px;
 			margin-top: 5px;
 			position: relative;
 			width: 179px;
+		}
+		.preview-large-link {
+			display: none;
+			position: absolute;
+			right: 60px;
+			top: 165px;
 		}
 		// validation
 		label.error {

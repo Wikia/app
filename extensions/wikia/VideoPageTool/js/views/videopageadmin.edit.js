@@ -1,14 +1,15 @@
-define( 'vpt.views.edit', [
+define( 'views.videopageadmin.edit', [
 	'jquery',
-	'vpt.models.validator'
-], function( $, Validator ) {
+	'models.videopageadmin.validator',
+	'views.videopageadmin.thumbnailupload'
+], function( $, Validator, ThumbnailUploader ) {
 
 	'use strict';
 
 	var VPTEdit = function() {
 		this.$form = $( '.vpt-form' );
 		// all elements to be validated - jQuery validate doesn't support arrays of form names inputs like "names[]" :(
-		this.$formFields = this.$form.find( '.description, .display-title, .video-key' );
+		this.$formFields = this.$form.find( '.description, .display-title, .video-key, .alt-thumb' );
 		this.init();
 	};
 
@@ -18,6 +19,16 @@ define( 'vpt.views.edit', [
 			this.initReset();
 			this.initSwitcher();
 			this.initAddVideo();
+			this.initMediaUploader();
+		},
+
+		initMediaUploader: function() {
+			$( '.form-box' ).on( 'click', '.media-uploader-btn', function(evt) {
+					evt.preventDefault();
+					return new ThumbnailUploader({
+							el: $(this).closest('.form-box')
+					});
+			});
 		},
 
 		initAddVideo: function() {
@@ -28,19 +39,25 @@ define( 'vpt.views.edit', [
 					$videoTitle = $this.siblings( '.video-title' ),
 					$displayTitleInput = $box.find( '.display-title' ),
 					$descInput = $box.find( '.description' ),
-					$thumb = $box.find( '.video-thumb' );
+					$thumb = $box.find( '.video-thumb' ),
+					$altThumbKey = $box.find('.alt-thumb').val(),
+					req = {};
+
+				if ( $altThumbKey.length ) {
+					req.altThumbKey = $altThumbKey;
+				}
 
 				$this.addVideoButton({
 					callbackAfterSelect: function( url, vet ) {
 
+						req.url = url;
+
 						$.nirvana.sendRequest({
-							controller: 'VideoPageToolSpecial',
+							controller: 'VideoPageAdminSpecial',
 							method: 'getVideoData',
 							type: 'GET',
 							format: 'json',
-							data: {
-								url: url
-							},
+							data: req,
 							callback: function( json ) {
 								if( json.result === 'ok' ) {
 
@@ -60,7 +77,12 @@ define( 'vpt.views.edit', [
 										.trigger( 'keyup' ); // for validation
 									$descInput.val( video.description )
 										.trigger( 'keyup' ); // for validation
-									$thumb.html( video.videoThumb );
+
+									// Check to see if a custom thumb has been uploaded by user
+									// Only update thumbnail if custom thumb has not been added
+									if ( !$thumb.data('modified') ) {
+										$thumb.html( video.videoThumb );
+									}
 
 									// close VET modal
 									vet.close();
@@ -93,6 +115,7 @@ define( 'vpt.views.edit', [
 		},
 
 		initValidator: function() {
+			var that = this;
 
 			this.validator = new Validator({
 				form: this.$form,
@@ -101,13 +124,31 @@ define( 'vpt.views.edit', [
 
 			// Set max length rule for description textarea
 			this.validator.setRule( this.$formFields.filter( '.description' ), 'maxlength', 200 );
+			this.validator.setRule( this.$formFields.filter( '.alt-thumb' ), 'missingImage' );
 
 			this.$formFields.each( this.validator.addRules );
-			this.$form.on( 'submit', this.validator.onSubmit );
+
+			this.$form.on( 'submit', function( evt ) {
+					evt.preventDefault();
+					var success,
+							$firstError;
+
+					// check for errors
+					success = that.validator.onSubmit();
+
+					// jump back up to form box if errors are present
+					if ( !success ) {
+						$firstError = $( '.error' ).eq( 0 );
+						$firstError
+							.closest( '.form-box' )
+							.get( 0 )
+							.scrollIntoView( true );
+					}
+			});
 
 			// If the back end has thrown an error, run the front end validation on page load
 			if( $( '#vpt-form-error' ).length ) {
-				this.validator.checkFields();
+				this.validator.formIsValid();
 			}
 		},
 
@@ -131,7 +172,7 @@ define( 'vpt.views.edit', [
 
 		/*
 		 * This reset is very specific to this form since it covers reverting titles and thumbnails
-		 * @todo: we may want to just create a default empty version of the form and hide it if it's not needed.
+		 * @TODO: we may want to just create a default empty version of the form and hide it if it's not needed.
 		 * That way we could just replace all the HTML to its default state without worrying about clearing every form
 		 * field.
 		 */
@@ -149,6 +190,14 @@ define( 'vpt.views.edit', [
 			this.$form.find( '.video-thumb' )
 				.html( '' );
 
+			// Hide all thumbnail preview links
+			this.$form.find( '.preview-large-link' )
+				.hide();
+
+			// reset custom thumb name
+			this.$form.find( '.alt-thumb-name' )
+				.text( $.msg('videopagetool-image-title-default-text') );
+
 			// Also clear all error messages for better UX
 			this.validator.clearErrors();
 		}
@@ -157,7 +206,7 @@ define( 'vpt.views.edit', [
 	return VPTEdit;
 });
 
-require(['vpt.views.edit'], function(EditView) {
+require(['views.videopageadmin.edit'], function(EditView) {
 
 	'use strict';
 
