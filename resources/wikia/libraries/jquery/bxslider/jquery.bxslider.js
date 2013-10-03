@@ -877,7 +877,7 @@
 					}
 				});
 			}
-		}
+		};
 
 		/**
 		 * Initialzes the ticker process
