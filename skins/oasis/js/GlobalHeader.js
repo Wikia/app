@@ -1,5 +1,5 @@
 $(function () {
-	var GLOBAL_NAV_SAMPLING_RATIO = 10, // integer (0-100): 0 - no tracking, 100 - track everything */
+	var GLOBAL_NAV_SAMPLING_RATIO = 100, // integer (0-100): 0 - no tracking, 100 - track everything */
 		track = Wikia.Tracker.buildTrackingFunction({
 			category: 'global-navigation',
 			trackingMethod: 'ga'
