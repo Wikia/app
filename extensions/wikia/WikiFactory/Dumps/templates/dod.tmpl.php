@@ -12,7 +12,9 @@
 		</td>
 		<td style="border-left: 0;padding 1em;">
 			&nbsp;
+			<?php if ( $nolink ) { echo $curr[ "timestamp" ]; } else { ?>
 			<a href="<?php echo $curr[ "url" ] ?>"><?php echo $curr[ "timestamp" ] ?></a>
+			<?php } ?>
 		</td>
 	</tr>
 	<tr>
@@ -23,7 +25,10 @@
 			</div>
 		</td>
 		<td style="border-left: 0">
-			&nbsp;<a href="<?php echo $full[ "url" ] ?>"><?php echo $full[ "timestamp" ] ?></a>
+			&nbsp;
+			<?php if ( $nolink ) { echo $full[ "timestamp" ]; } else { ?>
+			<a href="<?php echo $full[ "url" ] ?>"><?php echo $full[ "timestamp" ] ?></a>
+			<?php } ?>
 		</td>
 	</tr>
 	<?php if ( $bIsAllowed ): ?>
