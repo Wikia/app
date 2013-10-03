@@ -390,7 +390,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 
 		if ( empty( $video ) ) {
 			$this->result = 'error';
-			$this->msg = wfMessage( 'videohandler-unknown-title' )->plain();
+			$this->msg = wfMessage( 'videohandler-non-premium' )->plain();
 			$this->video = $video;
 		} else {
 			$this->result = 'ok';
