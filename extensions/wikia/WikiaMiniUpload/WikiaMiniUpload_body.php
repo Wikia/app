@@ -496,6 +496,12 @@ class WikiaMiniUpload {
 							$caption = '';
 						}
 
+						// Test if this violates the size requirements we've been given
+						if ( $msg = $this->invalidSize($file_name) ) {
+							header('X-screen-type: error');
+							return $msg;
+						}
+
 						$file_name->upload($file_mwname->getPath(), '', $caption);
 						$file_mwname->delete('');
 						$this->tempFileClearInfo( $tempid );
@@ -574,6 +580,12 @@ class WikiaMiniUpload {
 						}
 					}
 
+					// Test if this violates the size requirements we've been given
+					if ( $msg = $this->invalidSize($file) ) {
+						header('X-screen-type: error');
+						return $msg;
+					}
+
 					$file->upload($temp_file->getPath(), '', $caption);
 					$temp_file->delete('');
 					$this->tempFileClearInfo( $tempid );
@@ -596,12 +608,6 @@ class WikiaMiniUpload {
 		if ( !is_object($file) ) {
 			header('X-screen-type: error');
 			return wfMessage('wmu-file-not-found')->plain();
-		}
-
-		// Test if this violates the size requirements we've been given
-		if ( $msg = $this->invalidSize($file) ) {
-			header('X-screen-type: error');
-			return $msg;
 		}
 
 		$ns_img = $wgContLang->getFormattedNsText( NS_IMAGE );
