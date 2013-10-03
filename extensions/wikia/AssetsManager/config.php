@@ -218,6 +218,8 @@ $config['oasis_jquery'] = array(
 
 		// Darwin A/B testing
 		'//skins/oasis/js/DarwinAbTesting.js',
+		// Fixed global nav ABTesting
+		'//skins/oasis/js/GlobalHeader.js',
 	)
 );
 
