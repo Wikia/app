@@ -9,7 +9,8 @@ define( 'wikia.preview', [
 	'wikia.mustache',
 	'JSMessages',
 	'wikia.tracker',
-	'wikia.csspropshelper'
+	'wikia.csspropshelper',
+	'wikia.layout'
 ], function(
 	window,
 	nirvana,
@@ -18,7 +19,8 @@ define( 'wikia.preview', [
 	mustache,
 	msg,
 	tracker,
-	cssPropHelper
+	cssPropHelper,
+    layout
 ) {
 	'use strict';
 
@@ -27,7 +29,6 @@ define( 'wikia.preview', [
 		// TODO: when we will redesign preview to meet darwin design directions - this should be done differently and refactored
 		articleMargin = 11, // 10px margin + 1px border
 		// values for min and max are Darwin minimum and maximum supported article width.
-		// This should be abstracted and stored in one place so it's available both for SASS and JS
 		previewTypes = {
 			current: {
 				name: 'current',
@@ -35,11 +36,11 @@ define( 'wikia.preview', [
 			},
 			min: {
 				name: 'min',
-				value: 768 - articleMargin * 2
+				value: layout.getMinArticleWidth() - articleMargin * 2
 			},
 			max: {
 				name:'max',
-				value: 1300 - articleMargin * 2
+				value: layout.getMaxArticleWidth() - articleMargin * 2
 			}
 		},
 		isRailDropped = false,
