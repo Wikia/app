@@ -31,6 +31,8 @@ class SwiftFileBackend extends FileBackendStore {
 	protected $conn; // Swift connection handle
 	protected $connStarted = 0; // integer UNIX timestamp
 	protected $connContainers = array(); // container object cache
+	
+	protected $objCache = array();
 
 	/** @var BagOStuff */
 	protected $srvCache;
@@ -135,6 +137,7 @@ class SwiftFileBackend extends FileBackendStore {
 
 		// (a) Check the destination container and object
 		try {
+			unset( $this->objCache[ $params['dst'] ] );
 			$dContObj = $this->getContainer( $dstCont );
 			if ( empty( $params['overwrite'] ) &&
 				$this->fileExists( array( 'src' => $params['dst'], 'latest' => 1 ) ) )
@@ -201,6 +204,7 @@ class SwiftFileBackend extends FileBackendStore {
 
 		// (a) Check the destination container and object
 		try {
+			unset( $this->objCache[ $params['dst'] ] );
 			$dContObj = $this->getContainer( $dstCont );
 			if ( empty( $params['overwrite'] ) &&
 				$this->fileExists( array( 'src' => $params['dst'], 'latest' => 1 ) ) )
@@ -280,6 +284,8 @@ class SwiftFileBackend extends FileBackendStore {
 
 		// (a) Check the source/destination containers and destination object
 		try {
+			unset( $this->objCache[ $params['src'] ] );
+			unset( $this->objCache[ $params['dst'] ] );
 			$sContObj = $this->getContainer( $srcCont );
 			$dContObj = $this->getContainer( $dstCont );
 			if ( empty( $params['overwrite'] ) &&
@@ -330,6 +336,8 @@ class SwiftFileBackend extends FileBackendStore {
 		}
 
 		try {
+			unset( $this->objCache[ $params['dst'] ] );
+			unset( $this->objCache[ $params['src'] ] );
 			$sContObj = $this->getContainer( $srcCont );
 			$sContObj->delete_object( $srcRel );
 		} catch ( NoSuchContainerException $e ) {
@@ -500,11 +508,22 @@ class SwiftFileBackend extends FileBackendStore {
 			return false; // invalid storage path
 		}
 
+		# <Wikia>
+		if ( isset( $this->objCache[ $params['src'] ] ) ) {
+			return $this->objCache[ $params['src'] ];
+		}
+		
+		if ( empty( $params['latest'] ) ) {
+			$params['latest'] = 1;
+		}
+		# </Wikia>
+
 		$stat = false;
 		try {
 			$contObj = $this->getContainer( $srcCont );
 			$srcObj = $contObj->get_object( $srcRel, $this->headersFromParams( $params ) );
-			# $this->addMissingMetadata( $srcObj, $params['src'] ); // macbre - causes infinite loop / sha1 is stored in doStoreInternal()
+			// macbre - causes infinite loop / sha1 is stored in doStoreInternal() ?
+			$this->addMissingMetadata( $srcObj, $params['src'] ); 
 			$stat = array(
 				// Convert dates like "Tue, 03 Jan 2012 22:01:04 GMT" to TS_MW
 				'mtime' => wfTimestamp( TS_MW, $srcObj->last_modified ),
@@ -517,6 +536,8 @@ class SwiftFileBackend extends FileBackendStore {
 			$this->logException( $e, __METHOD__, $params );
 		}
 
+		$this->objCache[ $params['src'] ] = $stat;
+			
 		return $stat;
 	}
 
@@ -685,9 +706,9 @@ class SwiftFileBackend extends FileBackendStore {
 			return null;
 		}
 
-		if ( !$this->fileExists( $params ) ) {
+		/*if ( !$this->fileExists( $params ) ) {
 			return null;
-		}
+		}*/
 
 		$tmpFile = null;
 		try {
