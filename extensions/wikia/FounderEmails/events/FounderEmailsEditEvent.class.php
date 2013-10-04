@@ -1,6 +1,38 @@
 <?php
 
 class FounderEmailsEditEvent extends FounderEmailsEvent {
+
+	/**
+	 * Name of user property that holds information about whether first edit notification was sent
+	 */
+	const FIRST_EDIT_NOTIFICATION_SENT_PROP_NAME = 'founderemails-first-edit-notification-sent';
+
+	/**
+	 * Name of memcache prefix for the key that holds information about throttling of emails
+	 * from a given user for a period of time
+	 */
+	const USER_EMAILS_THROTTLED_PREFIX = 'founderemails-edit-emails-throttle-';
+
+	/**
+	 * Period describing how long to throttle of emails
+	 */
+	const USER_EMAILS_THROTTLE_EXPIRY_TIME = 3600;
+
+	/**
+	 * Minimum number of non-profile edit revisions needed to determine if user made only
+	 * one edit on a wiki
+	 */
+	const FIRST_EDIT_REVISION_THRESHOLD = 2;
+
+	/**
+	 * Constansts for describing Users edit status for purpose of sending founder notification
+	 * on first edit
+	 */
+	const NO_EDITS = 0;
+	const FIRST_EDIT = 1;
+	const MULTIPLE_EDITS = 2;
+
+
 	public function __construct( Array $data = array() ) {
 		parent::__construct( 'edit' );
 		$this->setData( $data );
@@ -158,6 +190,58 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		return false;
 	}
 
+	/**
+	 * Returns whether the user made no edits, first edit
+	 * or multiple edits (excluding profile page edits)
+	 *
+	 * @param User $user
+	 * @param bool $useMasterDb
+	 * @returns int one of:
+	 * 		FounderEmailsEditEvent::NO_EDITS
+	 * 		FounderEmailsEditEvent::FIRST_EDIT
+	 * 		FounderEmailsEditEvent::MULTIPLE_EDITS
+	 */
+	static public function getUserEditsStatus($user, $useMasterDb = false ) {
+		wfProfileIn(__METHOD__);
+
+		$recentEditsCount = 0;
+		$dbr = wfGetDB( $useMasterDb ? DB_MASTER : DB_SLAVE );
+
+		$conditions = [
+			'rev_user' => $user->getId(),
+		];
+
+		$userPageId = $user->getUserPage()->getArticleID();
+
+		if($userPageId) {
+			$conditions[] = "page_id != $userPageId";
+		}
+
+		$dbResult = $dbr->select(
+			[ 'revision', 'page' ],
+			[ 'rev_id' ],
+			$conditions,
+			__METHOD__,
+			[
+				'LIMIT' => self::FIRST_EDIT_REVISION_THRESHOLD,
+				'ORDER BY' => 'rev_timestamp DESC'
+			],
+			[ 'page' => [
+					'left join',
+					[ 'revision.rev_page = page.page_id' ]
+				]
+			]
+		);
+
+		while($row = $dbr->FetchObject($dbResult)) {
+			$recentEditsCount++;
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $recentEditsCount;
+	}
+
 	public static function register( $oRecentChange ) {
 		global $wgUser, $wgCityId;
 		wfProfileIn( __METHOD__ );
@@ -175,10 +259,30 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			$editor = ( $wgUser->getId() == $oRecentChange->getAttribute( 'rc_user' ) ) ? $wgUser : User::newFromID( $oRecentChange->getAttribute( 'rc_user' ) );
 			$isRegisteredUser = true;
 
-			if ( class_exists( 'Masthead' ) ) {
-				$userStats = Masthead::getUserStatsData( $editor->getName(), true );
-				if ( $userStats['editCount'] == 1 ) {
-					$isRegisteredUserFirstEdit = true;
+			// if first edit email was already sent this is an additional edit
+			$firstEditNotificationSentPropKey = self::FIRST_EDIT_NOTIFICATION_SENT_PROP_NAME . '-' . $wgCityId;
+			$wasNotificationSent = $editor->getOption( $firstEditNotificationSentPropKey );
+
+			if ( empty( $wasNotificationSent ) ) {
+				$userEditStatus = static::getUserEditsStatus( $editor, true );
+				/*
+					If there is at least one edit, flag that we should not send this email anymore;
+					either first email is sent out as a result of this request,
+					or there was more than 1 edit so we will never need to send it again
+				 */
+				switch($userEditStatus) {
+					case self::NO_EDITS:
+						wfProfileOut(__METHOD__);
+						return true;
+						break;
+					case self::FIRST_EDIT:
+						$isRegisteredUserFirstEdit = true;
+						$editor->setOption( $firstEditNotificationSentPropKey, true );
+						$editor->saveSettings();
+						break;
+					case self::MULTIPLE_EDITS:
+						$editor->setOption( $firstEditNotificationSentPropKey, true );
+						$editor->saveSettings();
 				}
 			}
 		} else {
@@ -199,6 +303,63 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			return true;
 		}
 
+		if(	!static::isThrottled($editor) ) {
+			$eventData = static::getEventData( $editor, $oRecentChange, $isRegisteredUser, $isRegisteredUserFirstEdit );
+			FounderEmails::getInstance()->registerEvent( new FounderEmailsEditEvent( $eventData ) );
+
+			static::setThrottle($editor);
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * Checks if editor's edits are throttled not to be sent to founder
+	 *
+	 * @param $editor User
+	 * @return bool
+	 */
+	public static function isThrottled( $editor ) {
+		if ( F::app()->wg->memc->get( static::getThrottleMemcKey( $editor->getName() ) ) === 1 ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Places a periodic throttle on $editor to prevent spamming founder with that person's edit notifications
+	 *
+	 * @param $editor
+	 */
+	public static function setThrottle( $editor ) {
+		F::app()->wg->memc->set(
+			static::getThrottleMemcKey( $editor->getName() ),
+			1,
+			static::USER_EMAILS_THROTTLE_EXPIRY_TIME );
+	}
+
+	/**
+	 * Helper method returning memcache key for storing throttle
+	 *
+	 * @param $userName
+	 * @return String
+	 */
+	public static function getThrottleMemcKey( $userName ) {
+		return wfMemcKey( static::USER_EMAILS_THROTTLED_PREFIX . $userName );
+	}
+
+	/**
+	 * Generates and returns data for edit event to be processed
+	 *
+	 * @param $editor User
+	 * @param $oRecentChange RecentChange
+	 * @param $isRegisteredUser boolean
+	 * @param $isRegisteredUserFirstEdit boolean
+	 * @return array
+	 */
+	public static function getEventData( $editor, $oRecentChange, $isRegisteredUser, $isRegisteredUserFirstEdit ) {
 		$oTitle = Title::makeTitle( $oRecentChange->getAttribute( 'rc_namespace' ), $oRecentChange->getAttribute( 'rc_title' ) );
 		$eventData = array(
 			'titleText' => $oTitle->getText(),
@@ -210,10 +371,6 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			'registeredUserFirstEdit' => $isRegisteredUserFirstEdit,
 			'myHomeUrl' => Title::newFromText( 'WikiActivity', NS_SPECIAL )->getFullUrl()
 		);
-
-		FounderEmails::getInstance()->registerEvent( new FounderEmailsEditEvent( $eventData ) );
-
-		wfProfileOut( __METHOD__ );
-		return true;
+		return $eventData;
 	}
 }
