@@ -10,7 +10,7 @@ define( 'wikia.preview', [
 	'JSMessages',
 	'wikia.tracker',
 	'wikia.csspropshelper',
-	'wikia.layout'
+	'wikia.fluidlayout'
 ], function(
 	window,
 	nirvana,
@@ -20,7 +20,7 @@ define( 'wikia.preview', [
 	msg,
 	tracker,
 	cssPropHelper,
-    layout
+	fluidlayout
 ) {
 	'use strict';
 
@@ -36,11 +36,11 @@ define( 'wikia.preview', [
 			},
 			min: {
 				name: 'min',
-				value: layout.getMinArticleWidth() - articleMargin * 2
+				value: fluidlayout.getMinArticleWidth() - articleMargin * 2
 			},
 			max: {
 				name:'max',
-				value: layout.getMaxArticleWidth() - articleMargin * 2
+				value: fluidlayout.getMaxArticleWidth() - articleMargin * 2
 			}
 		},
 		isRailDropped = false,

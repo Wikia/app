@@ -1,10 +1,10 @@
 /**
- * Helper module defining layout properties.
+ * Helper module defining the fluid layout properties.
  *
  * @author: Jacek 'mech' Wozniak <mech(at)wikia-inc.com>
  */
 
-define('wikia.layout',  function() {
+define('wikia.fluidlayout',  function() {
 	'use strict';
 
 	var MIN_ARTICLE_WIDTH = 768,
