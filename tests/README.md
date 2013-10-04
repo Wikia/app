@@ -35,6 +35,14 @@ excluding the following groups: Infrastructure, Integration, Broken, Stub, Monit
 
 Test file needs to match ``*Test.php`` and the class in the file should extend ``WikiaBaseTest``
 
+### Running all tests (including infrastructure tests)
+
+Run all tests on a specific wiki (by providing database name):
+```
+cd /usr/wikia/source/wiki/tests
+ant -f build-wikia.xml phpunit -Ddbname=muppet
+```
+
 ## Running JS unit tests
 
 ```

@@ -117,10 +117,6 @@ define('sections', ['JSMessages', 'jquery'], function(msg, $){
 		var headers = find(id),
 			h2 = headers[0];
 
-		if(scroll && headers[1]){
-			scrollTo(headers[1]);
-		}
-
 		if(!h2.hasClass(OPENCLASS)) {
 			var next = h2.addClass(OPENCLASS).next().addClass(OPENCLASS);
 
@@ -130,6 +126,10 @@ define('sections', ['JSMessages', 'jquery'], function(msg, $){
 			}
 
 			$.event.trigger('sections:open', [next]);
+		}
+
+		if(scroll && headers[1]){
+			scrollTo(headers[1]);
 		}
 	}
 

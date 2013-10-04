@@ -49,7 +49,7 @@ var ChatEntryPoint = {
 
 	// fill-in the whole module template
 	processModuleTemplate: function($t) {
-		//@todo - right now it's a custom html-based template, all the login for inserting variables in here
+		// @todo - right now it's a custom html-based template, all the logic for inserting variables is here
 		// once the mustache is loaded on every page, rewrite the template and remove most of the code below
 		var items = [], i, cnt = window.wgWikiaChatUsers.length, img = window.wgWikiaChatProfileAvatarUrl;
 		$t.find('.chat-contents').
@@ -201,7 +201,7 @@ if ( typeof wgWikiaChatUsers!=="undefined" ) {
 		$('body').on('click', '.WikiaChatLink', function(event) {
 			event.preventDefault();
 			event.stopPropagation();
-			ChatEntryPoint.onClickChatButton(wgUserName !== null, this.href);
+			ChatEntryPoint.onClickChatButton(this.href);
 		});
     });
 }

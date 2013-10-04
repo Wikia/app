@@ -12,7 +12,7 @@ class VideoPageToolHooks {
 			$app->wg->SuppressFooter = true;
 			if (!$app->wg->request->wasPosted()) {
 				// don't change article object while saving data
-				$article = new VideoPageArticle($title);
+				$article = new VideoHomePageArticle($title);
 			}
 		}
 

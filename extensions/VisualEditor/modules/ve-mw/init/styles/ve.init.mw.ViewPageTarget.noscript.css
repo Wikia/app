@@ -1,0 +1,13 @@
+/*!
+ * VisualEditor MediaWiki ViewPageTarget noscript styles
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/* Hide VE edit tab and section edit things by default, and unhide them if VE is available. */
+.client-nojs #ca-ve-edit, .ve-not-available #ca-ve-edit,
+.client-nojs .mw-editsection-divider, .ve-not-available .mw-editsection-divider,
+.client-nojs .mw-editsection-visualeditor, .ve-not-available .mw-editsection-visualeditor {
+	display: none;
+}

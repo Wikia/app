@@ -202,8 +202,17 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 */
 	public function dropdown() {
 		$query = $this->app->wg->Request->getValues();
+
+		$this->returnto = Title::newMainPage()->getPartialURL();
 		if (isset($query['title'])) {
+			if ( !AccountNavigationController::isBlacklisted( $query['title'] ) ) {
+				$this->returnto = $query['title'] ;
+			} else {
+				$this->returnto = Title::newMainPage()->getPartialURL();
+			}
 			unset($query['title']);
+		} else {
+			$this->returnto = Title::newMainPage()->getPartialURL();
 		}
 
 		$this->returntoquery = wfArrayToCGI( $query );

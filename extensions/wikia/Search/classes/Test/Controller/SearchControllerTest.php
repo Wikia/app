@@ -580,6 +580,10 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$mockWgRefl->setAccessible( true );
 		$mockWgRefl->setValue( $mockController, (object) array( 'Title' => $mockTitle ) );
 
+		$this->getStaticMethodMock( 'SpecialPage', 'getTitleFor' )->expects( $this->any() )
+				->method( 'getTitleFor' )
+				->will( $this->returnValue( $mockTitle ) );
+
 		$mockController
 			->expects	( $this->at( 0 ) )
 			->method	( 'getVal' )
@@ -634,11 +638,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		;
 		$mockConfig
 			->expects	( $this->at( $incr++ ) )
-			->method	( 'getAdvanced' )
-			->will		( $this->returnValue( false ) )
-		;
-		$mockConfig
-			->expects	( $this->at( $incr++ ) )
 			->method	( 'getLimit' )
 			->will		( $this->returnValue( 20 ) )
 		;
@@ -646,11 +645,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->expects	( $this->at( $incr++ ) )
 			->method	( 'getPublicFilterKeys' )
 			->will		( $this->returnValue( array( 'is_image' ) ) )
-		;
-		$mockConfig
-			->expects	( $this->at( $incr++ ) )
-			->method	( 'getRank' )
-			->will		( $this->returnValue( 'default' ) )
 		;
 		$incr2 = 1;
 		$mockController
@@ -701,11 +695,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$mockController
 			->expects	( $this->at( $incr2++ ) )
 			->method	( 'setVal' )
-			->with		( 'advanced', false )
-		;
-		$mockController
-			->expects	( $this->at( $incr2++ ) )
-			->method	( 'setVal' )
 			->with		( 'limit', 20 )
 		;
 		$mockController
@@ -715,21 +704,10 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		;
 		$mockController
 			->expects	( $this->at( $incr2++ ) )
-			->method	( 'setVal' )
-			->with		( 'rank', 'default' )
-		;
-		$mockController
-			->expects	( $this->at( $incr2++ ) )
 			->method	( 'getVal' )
 			->with		( 'by_category', false )
 			->will		( $this->returnValue( false ) )
 		;
-		$mockController
-			->expects	( $this->at( $incr2++ ) )
-			->method	( 'setVal' )
-			->with		( 'by_category', false )
-		;
-
 
 		$mockController->pagination();
 	}
@@ -1160,20 +1138,10 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->method	( 'setVal' )
 			->with		( 'searchableNamespaces', $searchableNamespaces )
 		;
-		$mockController
-			->expects	( $this->at( 3 ) )
-			->method	( 'setVal' )
-			->with		( 'advanced', true )
-		;
 		$mockSearchConfig
 			->expects	( $this->any() )
 			->method	( 'getNamespaces' )
 			->will		( $this->returnValue( array( 0, 14) ) )
-		;
-		$mockSearchConfig
-			->expects	( $this->any() )
-			->method	( 'getAdvanced' )
-			->will		( $this->returnValue( true ) )
 		;
 
 		$this->mockClass( 'SearchEngine', $mockSearchEngine );
@@ -2698,6 +2666,16 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->expects( $this->at( $controllerIncr++ ) )
 			->method ( 'setVal' )
 			->with   ( 'wgExtensionsPath', $mockWg->ExtensionsPath )
+		;
+		$this->getStaticMethodMock("BodyController", "isGridLayoutEnabled")
+			->expects( $this->once() )
+			->method( 'isGridLayoutEnabled' )
+			->will( $this->returnValue( true ) )
+		;
+		$mockController
+			->expects( $this->at( $controllerIncr++ ) )
+			->method ( 'setVal' )
+			->with   ( 'isGridLayoutEnabled', true )
 		;
 		$mockController
 			->expects( $this->at( $controllerIncr++ ) )

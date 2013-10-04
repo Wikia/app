@@ -159,7 +159,7 @@ class WikiaHomePageTest extends WikiaBaseTest {
 				)
 			),
 			array(
-				'testUrl.png',
+				'testUrl.png/330px-testUrl.png.jpg',
 				array(
 					WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'testUrl.png/330px-testUrl.png.jpg',
 					WikiFactoryHub::CATEGORY_ID_GAMING => 'testUrl.png/330px-testUrl.png.jpg',
@@ -309,7 +309,7 @@ TXT;
 	 */
 	public function testGetWikiAdminAvatars($mockWikiId, $mockWikiServiceParam, $mockUserStatsServiceParam, $mockUserParam, $expAdminAvatars) {
 		$this->markTestSkipped("Somehow this test started to be dependend on database connection on Friday 12th Jul 2013. I'll create ticket for Consumer Team to fix it.");
-		
+
 		// setup
 		$this->mockGlobalVariable('wgServer', self::TEST_URL);
 
@@ -482,7 +482,7 @@ TXT;
 	 */
 	public function testGetWikiTopEditorAvatars($mockWikiId, $mockWikiServiceParam, $mockUserParam, $mockAvatarServiceParam, $expTopEditorAvatars) {
 		$this->markTestSkipped("Somehow this test started to be dependend on database connection on Friday 12th Jul 2013. I'll create ticket for Consumer Team to fix it.");
-		
+
 		$this->mockGlobalVariable('wgServer', self::TEST_URL);
 		$this->setUpMockObject('WikiService', $mockWikiServiceParam, true);
 		$this->setUpMockObject('User', $mockUserParam, true);
@@ -599,9 +599,9 @@ TXT;
 	/**
 	 * @dataProvider getProcessedWikisImgSizesDataProvider
 	 */
-	public function testGetProcessedWikisImgSizes($limit, $width, $height) {
+	public function testGetProcessedWikisImgSizes($slotName, $width, $height) {
 		$whh = new WikiaHomePageHelper();
-		$size = $whh->getProcessedWikisImgSizes($limit);
+		$size = $whh->getProcessedWikisImgSizes($slotName);
 
 		$this->assertEquals($width, $size->width);
 		$this->assertEquals($height, $size->height);
@@ -610,9 +610,9 @@ TXT;
 	public function getProcessedWikisImgSizesDataProvider() {
 		$whh = new WikiaHomePageHelper();
 		return array(
-			array(WikiaHomePageHelper::SLOTS_BIG, $whh->getRemixBigImgWidth(), $whh->getRemixBigImgHeight()),
-			array(WikiaHomePageHelper::SLOTS_MEDIUM, $whh->getRemixMediumImgWidth(), $whh->getRemixMediumImgHeight()),
-			array(WikiaHomePageHelper::SLOTS_SMALL, $whh->getRemixSmallImgWidth(), $whh->getRemixSmallImgHeight()),
+			array(WikiaHomePageHelper::SLOTS_BIG_ARRAY_KEY, $whh->getRemixBigImgWidth(), $whh->getRemixBigImgHeight()),
+			array(WikiaHomePageHelper::SLOTS_MEDIUM_ARRAY_KEY, $whh->getRemixMediumImgWidth(), $whh->getRemixMediumImgHeight()),
+			array(WikiaHomePageHelper::SLOTS_SMALL_ARRAY_KEY, $whh->getRemixSmallImgWidth(), $whh->getRemixSmallImgHeight()),
 			array(666, $whh->getRemixBigImgWidth(), $whh->getRemixBigImgHeight()),
 		);
 	}

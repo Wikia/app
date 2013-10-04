@@ -55,6 +55,13 @@ $messages['ca'] = array(
 	'paginator-back' => 'Enrere',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'paginator-next' => 'Кхин дӀа',
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  */
