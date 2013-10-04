@@ -14,11 +14,16 @@ class JsonFormatService extends \WikiaService {
 		parent::__construct();
 	}
 
+	/**
+	 * @param int $articleId
+	 * @return JsonFormatNode
+	 * @throws JsonFormatException
+	 */
 	public function getJsonFormatForArticleId( $articleId ) {
 
 		$articleId = (int) $articleId;
 
-		$article = Article::newFromID( $articleId );
+		$article = \Article::newFromID( $articleId );
 		if ( !$article ) {
 			throw new JsonFormatException( "Cannot find article with id:" . $articleId );
 		}
@@ -26,7 +31,11 @@ class JsonFormatService extends \WikiaService {
 		return $this->getJsonFormatForArticle( $article );
 	}
 
-	public function getJsonFormatForArticle( $article ) {
+	/**
+	 * @param Article $article
+	 * @return JsonFormatNode
+	 */
+	public function getJsonFormatForArticle( \Article $article ) {
 		$html = $article->getPage()->getParserOutput( \ParserOptions::newFromContext( $this->requestContext))->getText();
 
 		return $this->htmlParser->parse( $html );
