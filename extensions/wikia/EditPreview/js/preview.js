@@ -27,7 +27,7 @@ define( 'wikia.preview', [
 	var	$article,
 		// current design of preview has this margins to emulate page margins
 		// TODO: when we will redesign preview to meet darwin design directions - this should be done differently and refactored
-		articleMargin = 11, // 10px margin + 1px border
+		articleMargin = fluidlayout.getWidthPadding() + fluidlayout.getArticleBorderWidth(),
 		// values for min and max are Darwin minimum and maximum supported article width.
 		previewTypes = {
 			current: {
@@ -36,11 +36,11 @@ define( 'wikia.preview', [
 			},
 			min: {
 				name: 'min',
-				value: fluidlayout.getMinArticleWidth() - articleMargin * 2
+				value: fluidlayout.getMinArticleWidth() - 2 * articleMargin
 			},
 			max: {
 				name:'max',
-				value: fluidlayout.getMaxArticleWidth() - articleMargin * 2
+				value: fluidlayout.getMaxArticleWidth() - 2 * articleMargin
 			}
 		},
 		isRailDropped = false,
