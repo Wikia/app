@@ -1,4 +1,5 @@
 <noscript>This page is not supported with Javascript turned off.</noscript>
+<p>Date: <?= $publishDate ?></p>
 <div class="WikiaGrid VPTForms">
 	<div class="grid-2 alpha">
 		<?= $app->renderView('LeftMenu',
