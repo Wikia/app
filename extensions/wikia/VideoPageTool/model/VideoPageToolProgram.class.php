@@ -50,7 +50,7 @@ class VideoPageToolProgram extends WikiaModel {
 	 * @return string
 	 */
 	public function getFormattedPublishDate() {
-		return $this->wg->lang->timeanddate( $this->publishDate, true );
+		return $this->wg->lang->date( $this->publishDate, true );
 	}
 
 	/**
