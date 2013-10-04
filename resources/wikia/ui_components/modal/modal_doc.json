@@ -1,0 +1,45 @@
+{
+	"name": "styleguide-name-modal",
+	"description": "styleguide-description-modal",
+	"types": {
+		"default": {
+			"params" : {
+				"classes": {
+					"templateVar" : "classes",
+					"type" : "string",
+					"description" : "styleguide-description-modal-classes"
+				},
+				"title": {
+					"templateVar" : "title",
+					"type" : "string",
+					"description" : "styleguide-description-modal-title"
+				},
+				"content" : {
+					"templateVar" : "content",
+					"type" : "string",
+					"description" : "styleguide-description-modal-content"
+				},
+				"altLink" : {
+					"templateVar" : "altLink",
+					"type" : "object",
+					"objectVar" : {
+						"id": "string",
+						"href": "string",
+						"text": "string"
+					},
+					"description" : "styleguide-description-modal-alt-link"
+				},
+				"secondBtn" : {
+					"templateVar" : "secondBtn",
+					"type" : "string",
+					"description" : "styleguide-description-modal-secondary-button"
+				},
+				"primaryBtn" : {
+					"templateVar" : "primaryBtn",
+					"type" : "string",
+					"description" : "styleguide-description-modal-primary-button"
+				}
+			}
+		}
+	}
+}

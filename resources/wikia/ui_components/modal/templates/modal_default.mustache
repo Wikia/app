@@ -1,0 +1,15 @@
+<div class="modal {{#classes}}{{.}} {{/classes}}">
+	<header>
+		{{title}}
+	</header>
+	<section>
+		{{{content}}}
+	</section>
+	<footer>
+		{{#altLink}}
+			<a  id="{{altLink.id}}" href="{{altLink.href}}">{{altLink.text}}</a>
+		{{/altLink}}
+		{{{secondBtn}}}
+		{{{primaryBtn}}}
+	</footer>
+</div>
