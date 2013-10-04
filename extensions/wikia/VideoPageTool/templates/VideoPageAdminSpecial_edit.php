@@ -1,5 +1,5 @@
 <noscript>This page is not supported with Javascript turned off.</noscript>
-<p><?= wfMessage( 'videopagetoo-date-header' ) ->params( $publishDate )->plain() ?></p>
+<p><?= wfMessage( 'videopagetoo-date-header' )->params( $publishDate )->plain() ?></p>
 <div class="WikiaGrid VPTForms">
 	<div class="grid-2 alpha">
 		<?= $app->renderView('LeftMenu',
