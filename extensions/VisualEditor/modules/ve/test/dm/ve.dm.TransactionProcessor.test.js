@@ -9,7 +9,7 @@ QUnit.module( 've.dm.TransactionProcessor' );
 
 /* Tests */
 
-QUnit.test( 'commit/rollback', function ( assert ) {
+QUnit.test( 'commit', function ( assert ) {
 	var i, originalData, originalDoc,
 		msg, testDoc, tx, expectedData, expectedDoc,
 		n = 0,
@@ -602,7 +602,7 @@ QUnit.test( 'commit/rollback', function ( assert ) {
 				'commit (tree): ' + msg
 			);
 			// Rollback
-			testDoc.rollback( tx );
+			testDoc.commit( tx.reversed() );
 			assert.deepEqualWithDomElements( testDoc.getFullData(), originalDoc.getFullData(), 'rollback (data): ' + msg );
 			assert.equalNodeTree(
 				testDoc.getDocumentNode(),

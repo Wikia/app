@@ -772,10 +772,9 @@
 	 */
 	ve.getDomElementSummary = function ( element, includeHtml ) {
 		var i,
-			$element = $( element ),
 			summary = {
 				'type': element.nodeName.toLowerCase(),
-				'text': $element.text(),
+				'text': element.textContent,
 				'attributes': {},
 				'children': []
 			};
