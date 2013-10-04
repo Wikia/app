@@ -1,9 +1,10 @@
 <?php
 
-class JsonFormatIntegrationTest extends WikiaBaseTest {
+class JsonFormatTest extends WikiaBaseTest {
 
 	protected $parser;
 	protected $htmlParser;
+	protected $hooks;
 
 	//load extension
 	public function setUp() {
@@ -12,11 +13,25 @@ class JsonFormatIntegrationTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	public function setThumbnailImageHooks( $value = true ) {
+		global $wgHooks;
+		if ( $value ) {
+			if ( isset( $this->hooks ) ) {
+				$wgHooks['ThumbnailImageHTML'] = $this->hooks;
+				unset( $this->hooks );
+			}
+			//else leave it as it is
+		} else {
+			$this->hooks = $wgHooks['ThumbnailImageHTML'];
+			unset( $wgHooks['ThumbnailImageHTML'] );
+		}
+	}
+
 	/* Main tests */
 	/**
-	 * @dataProvider StructureIntegrationProvider
+	 * @dataProvider StructureProvider
 	 */
-	public function testStructureIntegration( $wikiText, $expectedStructure = null ) {
+	public function testStructureMatching( $wikiText, $expectedStructure = null ) {
 		$output = $this->getParsedOutput( $wikiText );
 
 		if ( $expectedStructure !== null ) {
@@ -26,9 +41,23 @@ class JsonFormatIntegrationTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider ContentIntegrationProvider
+	 * @dataProvider StructureProvider
 	 */
-	public function testContentIntegration( $wikiText, $expectedContent ) {
+	public function testStructureMatchingWithLazyLoad( $wikiText, $expectedStructure = null ) {
+		$this->setThumbnailImageHooks( false );
+		$output = $this->getParsedOutput( $wikiText );
+
+		if ( $expectedStructure !== null ) {
+			$this->assertNotEmpty( $output );
+			$this->checkClassStructure( $output, $expectedStructure );
+		}
+		$this->setThumbnailImageHooks( true );
+	}
+
+	/**
+	 * @dataProvider ContentProvider
+	 */
+	public function testContentMatching( $wikiText, $expectedContent ) {
 		$output = $this->getParsedOutput( $wikiText );
 
 		$children = $output->getChildren();
@@ -36,6 +65,18 @@ class JsonFormatIntegrationTest extends WikiaBaseTest {
 		$this->checkContent( $children, $expectedContent );
 	}
 
+	/**
+	 * @dataProvider ContentProvider
+	 */
+	public function testContentMatchingWithLazyLoad( $wikiText, $expectedContent ) {
+		$this->setThumbnailImageHooks( false );
+		$output = $this->getParsedOutput( $wikiText );
+
+		$children = $output->getChildren();
+
+		$this->checkContent( $children, $expectedContent );
+		$this->setThumbnailImageHooks( true );
+	}
 
 	/* Helpers */
 	protected function checkContent( $data, $content ) {
@@ -103,7 +144,7 @@ class JsonFormatIntegrationTest extends WikiaBaseTest {
 	}
 
 	/* Test providers */
-	public function ContentIntegrationProvider() {
+	public function ContentProvider() {
 		return [
 			[ '==Section heading==
 Nullam eros mi, mollis in sollicitudin non, tincidunt sed enim. Sed et felis metus, rhoncus ornare nibh. Ut at magna leo.',
@@ -159,7 +200,7 @@ Nullam eros mi, mollis in sollicitudin non, tincidunt sed enim. Sed et felis met
 		];
 	}
 
-	public function StructureIntegrationProvider() {
+	public function StructureProvider() {
 		return [
 			[ '<div style="myArticleIsUberyStyled">
 {| class="infobox" style="clear: right; border: solid #aaa 1px; margin: 0 0 1em 1em; background: #f9f9f9; color:black;
