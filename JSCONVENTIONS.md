@@ -74,6 +74,28 @@ while ( condition ) {
 ### Try/catch blocks
 Avoid using try/catch blocks in performance critical functions and inside loops.
 
+```javascript
+// bad
+for ( var i = 0; i < 10; i++ ) {
+    try {
+        // some process
+    } catch () {
+        // some exception handing
+    }
+}
+
+// better
+try {
+    // some process
+} catch (e) {
+    // some exception handing
+}
+
+for ( var i = 0; i < 10; i++ ) {
+    // do something based on results of try/catch above
+}
+```
+
 ### Switch Statements
 
 The usage of `switch` statements is generally discouraged, but can be useful when there are a large number of cases - especially when multiple cases can be handled by the same block, or fall-through logic (the `default` case) can be leveraged.
