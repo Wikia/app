@@ -313,7 +313,9 @@ We use JSDoc style comments above function declarations and at the top of files 
 
 ####Variables###
 Use lazyCamelCase for all variables with the exception of constructers, which should use UpperCamelCase. 
+
 Constants don't exist in JS so don't use all caps to denote constants.
+
 Try to avoid acronyms in variable names and be explicit so it is clear to anyone reading your code what the variable does. Since we don't have an uglifier that reduces variable size yet, do this within reason.
 
 #### AMD Modules ####
