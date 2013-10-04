@@ -374,12 +374,8 @@
 					contentNode.
 						bind('click', function(ev) {
 							var target = $(ev.target);
-
-							target.attr('target','_blank');
-							// don't block links opening in new tab
-							if (target.attr('target') !== '_blank') {
-								ev.preventDefault();
-							}
+							//links to other pages should be open in new windows
+							target.closest( 'a' ).not( "[href^='#']" ).attr( 'target', '_blank' );
 						}).
 						css({
 							'height': options.height || ($(window).height() - 250),
