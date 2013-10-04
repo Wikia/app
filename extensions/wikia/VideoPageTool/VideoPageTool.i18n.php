@@ -49,6 +49,7 @@ $messages['en'] = array(
 	'videopagetool-hint-description-maxlength' => '$1 characters max',
 	'videopagetool-hint-required-dimensions' => 'Image dimensions must be 1024 x 461',
 	'videopagetool-formerror-altthumb' => 'Please add an image',
+	'videopagetoo-date-header' => 'Editing for date: $1',
 
 	// Home Page Section: Header
 	'videohomepage-header-dropdown-name' => 'Discover',
