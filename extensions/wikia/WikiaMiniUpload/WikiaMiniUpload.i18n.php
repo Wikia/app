@@ -79,6 +79,9 @@ $messages['en'] = array(
 	'wmu-error-under-height' => 'Image was less than the minimum height ($1 px)',
 	'wmu-error-under-width' => 'Image was less than the minimum width ($1 px)',
 	'wmu-error-under-width-height' => 'Image was less than the minimum dimensions ($1 x $2 px)',
+	'wmu-error-exact-height' => 'Image height must be exactly $1 px (got $2 px)',
+	'wmu-error-exact-width' => 'Image width must be exactly $1 px (got $2 px)',
+	'wmu-error-exact-width-height' => 'Image width and height must be exactly $1 x $3 px (got $2 x $4 px)',
 	'wmu-error-bad-aspect-ratio' => 'Aspect ratio is incorrect ($1 x $2 px)',
 );
 
@@ -119,6 +122,9 @@ $messages['qqq'] = array(
 	'wmu-error-under-height' => 'Error shown when the image selected/uploaded was shorter than the required height',
 	'wmu-error-under-width' => 'Error shown when the image selected/uploaded was narrower than the required width',
 	'wmu-error-under-width-height' => 'Error shown when the image selected/uploaded was smaller than the required dimensions',
+	'wmu-error-under-height' => 'Error shown when the image selected/uploaded was not the required height',
+	'wmu-error-under-width' => 'Error shown when the image selected/uploaded was not the required width',
+	'wmu-error-under-width-height' => 'Error shown when the image selected/uploaded was not the required dimensions',
 	'wmu-error-bad-aspect-ratio' => 'Error shown when the aspect ratio was incorrect'
 );
 
