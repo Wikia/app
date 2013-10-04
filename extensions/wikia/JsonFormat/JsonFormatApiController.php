@@ -11,6 +11,13 @@
  * simplified representation of wiki article
  */
 class JsonFormatApiController extends WikiaApiController {
+
+	const CACHE_EXPIRATION = 14400; //4 hour
+
+	const VARNISH_CACHE_EXPIRATION = 86400; //24 hours
+
+	const SIMPLE_JSON_SCHEMA_VERSION = 1;
+
 	/**
 	 * @throws InvalidParameterApiException
 	 */
@@ -74,19 +81,28 @@ class JsonFormatApiController extends WikiaApiController {
 			throw new InvalidParameterApiException( self::ARTICLE_CACHE_ID );
 		}
 
-		$jsonFormatService = new JsonFormatService();
-		$article = \Article::newFromID( $articleId );
-		if ( $article ) {
-			$json = $jsonFormatService->getJsonFormatForArticleId( $articleId );
+	    $cacheKey = wfMemcKey( "SimpleJson:".$articleId, self::SIMPLE_JSON_SCHEMA_VERSION);
 
-			$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
+	    $jsonSimple = $this->app->wg->memc->get( $cacheKey );
 
-			$jsonSimple = $simplifier->getJsonFormat( $json, $article->getTitle()->getText() );
+	    if( $jsonSimple===false ){
 
-			$this->getResponse()->setFormat("json");
-			$this->getResponse()->setData( $jsonSimple );
-		}
-	}
+		    $jsonFormatService = new JsonFormatService();
+		    $json = $jsonFormatService->getJsonFormatForArticleId( $articleId );
+
+		    $simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
+		    $jsonSimple = $simplifier->getJsonFormat( $json );
+
+		    $this->app->wg->memc->set( $cacheKey, $jsonSimple, self::CACHE_EXPIRATION );
+	    }
+		$response = $this->getResponse();
+	    $response->setCacheValidity(self::VARNISH_CACHE_EXPIRATION, self::VARNISH_CACHE_EXPIRATION,
+		                            [WikiaResponse::CACHE_TARGET_VARNISH,
+			                         WikiaResponse::CACHE_TARGET_BROWSER ]);
+
+	    $response->setFormat("json");
+	    $response->setData( $jsonSimple );
+    }
 
 	private function simpleToHtml( &$json ) {
 		$html = "";
@@ -120,20 +136,15 @@ class JsonFormatApiController extends WikiaApiController {
 		if( empty($articleId) ) {
 			throw new InvalidParameterApiException( self::ARTICLE_CACHE_ID );
 		}
-		$article = \Article::newFromID( $articleId );
-		if ( $article ) {
-			$jsonFormatService = new JsonFormatService();
-			$json = $jsonFormatService->getJsonFormatForArticleId( $articleId );
+		$jsonFormatService = new JsonFormatService();
+		$json = $jsonFormatService->getJsonFormatForArticleId( $articleId );
 
-			$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
-			$jsonSimple = $simplifier->getJsonFormat( $json, $article->getTitle()->getText() );
+		$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
+		$jsonSimple = $simplifier->getJsonFormat( $json );
 
-			$text = $this->simpleToHtml($jsonSimple);
-			header('Content-Type: text/html; charset=utf-8');
-			die($text);
-		} else {
-			die("Article not found.");
-		}
+		$text = $this->simpleToHtml($jsonSimple);
+		header('Content-Type: text/html; charset=utf-8');
+		die($text);
 	}
 
 	/**

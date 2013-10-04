@@ -29,10 +29,15 @@ class ImageFigureVisitor extends DOMNodeVisitorBase {
 		/** @var DOMElement $currentNode */
 		DomHelper::verifyDomElementArgument( $currentNode, "currentNode" );
 
+		$figcaption = $currentNode->childNodes->item(2);
 		$img = $currentNode->childNodes->item(0)->childNodes->item(0);
+	    /** @var DOMElement $figcaption */
 		/** @var DOMElement $img */
 		$src = $img->getAttribute('src');
-		$caption = $currentNode->childNodes->item(2)->childNodes->item(0)->textContent;
+
+
+		$caption = DomHelper::getTextValue($figcaption);
+
 		$imageFigure = new JsonFormatImageFigureNode( $src, $caption );
 
 		$this->getJsonFormatBuilder()->add( $imageFigure );

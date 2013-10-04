@@ -88,4 +88,27 @@ class DomHelper {
 		}
 		return false;
 	}
+
+
+	public static function getTextValue(DomNode $node, $allow = ['#text','a','b','i','u','h1','h2','h3','h4'])
+	{
+		$text = '';
+		foreach( $node->childNodes as $child )
+		{
+			if( in_array( $child->nodeName,$allow ) )
+			{
+				if( $child->nodeName==='#text' )
+				{
+					$text .= $child->nodeValue;
+				}
+				else
+				{
+					$text .= self::getTextValue( $child,$allow );
+				}
+			}
+        }
+
+		return $text;
+    }
+
 }
