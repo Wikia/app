@@ -1041,6 +1041,7 @@ function WMU_insertImage(type) {
 			case 'error':
 				o.responseText = o.responseText.replace(/<script.*script>/, "" );
 				alert(o.responseText);
+				WMU_switchScreen('Summary');
 				break;
 			case 'conflict':
 				WMU_switchScreen('Conflict');
