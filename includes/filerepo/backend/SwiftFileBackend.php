@@ -336,7 +336,6 @@ class SwiftFileBackend extends FileBackendStore {
 		}
 
 		try {
-			unset( $this->objCache[ $params['dst'] ] );
 			unset( $this->objCache[ $params['src'] ] );
 			$sContObj = $this->getContainer( $srcCont );
 			$sContObj->delete_object( $srcRel );
