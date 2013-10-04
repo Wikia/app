@@ -39,16 +39,19 @@ define( 'views.videopageadmin.edit', [
 					$videoTitle = $this.siblings( '.video-title' ),
 					$displayTitleInput = $box.find( '.display-title' ),
 					$descInput = $box.find( '.description' ),
-					$thumb = $box.find( '.video-thumb' ),
-					$altThumbKey = $box.find('.alt-thumb').val(),
-					req = {};
-
-				if ( $altThumbKey.length ) {
-					req.altThumbKey = $altThumbKey;
-				}
+					$thumb = $box.find( '.video-thumb' );
 
 				$this.addVideoButton({
 					callbackAfterSelect: function( url, vet ) {
+						var $altThumbKey,
+								req;
+
+						$altThumbKey = $box.find('.alt-thumb').val();
+						req = {};
+
+						if ( $altThumbKey.length ) {
+							req.altThumbKey = $altThumbKey;
+						}
 
 						req.url = url;
 
