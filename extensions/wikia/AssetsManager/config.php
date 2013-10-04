@@ -1051,6 +1051,14 @@ $config['videohomepage_scss'] = array(
 	)
 );
 
+$config['videohomepage_scss_mobile'] = array(
+	'skin' => array( 'wikiamobile' ),
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => array(
+		'//extensions/wikia/VideoPageTool/css/HomePage/mobile.scss',
+	)
+);
+
 /** UserLogin **/
 $config['userlogin_scss_wikiamobile'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
