@@ -81,11 +81,8 @@ define( 'views.videopageadmin.edit', [
 									$descInput.val( video.description )
 										.trigger( 'keyup' ); // for validation
 
-									// Check to see if a custom thumb has been uploaded by user
-									// Only update thumbnail if custom thumb has not been added
-									if ( !$thumb.data('modified') ) {
-										$thumb.html( video.videoThumb );
-									}
+									// Update thumbnail html
+									$thumb.html( video.videoThumb );
 
 									// close VET modal
 									vet.close();
