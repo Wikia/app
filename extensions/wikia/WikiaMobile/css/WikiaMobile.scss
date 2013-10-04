@@ -71,6 +71,7 @@ body {
 	h1{
 		float: left;
 		max-width: 100%;
+		width: 100%;
 		margin: 0;
 		//default 25px looks cramped
 		line-height: 30px;
@@ -80,6 +81,10 @@ body {
 	.wkShr{
 		position: absolute;
 		right: 5px;
+	}
+
+	span {
+		color: grey;
 	}
 }
 

@@ -22,6 +22,8 @@ $messages['en'] = array(
 	'wikiamobile-back' => 'Back',
 	'wikiamobile-hide-section' => 'hide',
 	'wikiamobile-profile' => 'Profile',
+	'wikiamobile-last-edited-by' => 'Last edited by $1 on $2',
+	'wikiamobile-anonymous-edited-by' => 'Anonymous',
 
 	//footer
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Lifestyle]]',
@@ -91,6 +93,8 @@ $messages['qqq'] = array(
 	'wikiamobile-hide-section' => 'Link to close section on an article that is at the end of a given section',
 	'wikiamobile-profile' => 'Link to a profile page in a top wiki navigation.
 {{Identical|Profile}}',
+	'wikiamobile-last-edited-by' => 'Message displayed under article title indicating who and when last edited a page',
+	'wikiamobile-anonymous-edited-by' => 'Editor name instead of IP address when editor is anonymous',
 	'wikiamobile-footer-link-lifestyle' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',
 	'wikiamobile-footer-link-entertainment' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',
 	'wikiamobile-footer-link-videogames' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',
