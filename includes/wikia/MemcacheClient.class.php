@@ -163,7 +163,7 @@ abstract class MemcacheClient {
 	}
 
 	protected function debugPrint($message) {
-		echo $message;
+//		echo $message;
 	}
 
 	protected function addToCache($key, $value) {

@@ -15,177 +15,203 @@
 class MemcacheMoxiCluster extends MemcacheClient {
 	const MULTI_GET_CHUNK_SIZE = 15; // # of keys to get at a time when using multi get
 
-	public function __construct($args) {
-		parent::__construct($args);
+	public function __construct( $args ) {
+		parent::__construct( $args );
 		$this->compressionEnabled = false; // memcached extension compresses for us
 	}
 
-	public function add($key, $value, $expires=0) {
-		return $this->_set('add', $key, $value, $expires);
+	public function add( $key, $value, $expires = 0 ) {
+		return $this->_set( 'add', $key, $value, $expires );
 	}
 
-	public function set($key, $value, $expires=0) {
-		return $this->_set('set', $key, $value, $expires);
+	public function set( $key, $value, $expires = 0 ) {
+		return $this->_set( 'set', $key, $value, $expires );
 	}
 
-	public function replace($key, $value, $expires=0) {
-		return $this->_set('replace', $key, $value, $expires);
+	public function replace( $key, $value, $expires = 0 ) {
+		return $this->_set( 'replace', $key, $value, $expires );
 	}
 
-	public function get($key) {
-		wfProfileIn(__METHOD__);
-		wfProfileIn( __METHOD__ . "::$key" );
-
-		$key = is_array($key) ? $key[1] : $key;
-		$result = $this->get_multi([$key]);
-
-		wfProfileOut( __METHOD__ . "::$key" );
-		wfProfileOut(__METHOD__);
-
-		return is_array($result) && array_key_exists($key, $result) ? $result[$key] : false;
-	}
-
-	public function get_multi($keys) {
-		wfProfileIn(__METHOD__);
-
+	public function get( $key ) {
 		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads;
 
-		if ($wgAllowMemcacheDisable && !$wgAllowMemcacheReads) {
-			wfProfileOut(__METHOD__);
+		wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ . "::$key" );
+
+		if( $wgAllowMemcacheDisable && ( $wgAllowMemcacheReads == false ) ) {
+			wfProfileOut( __METHOD__ . "::$key" );
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
-		$values = [];
-		foreach ($keys as $i => $key) {
-			if ($this->cacheContains($key)) {
-				wfProfileIn ( __METHOD__ . "::$key !DUPE" );
-				wfProfileOut ( __METHOD__ . "::$key !DUPE" );
+		if ($this->cacheContains($key)) {
+			wfProfileIn ( __METHOD__ . "::$key !DUPE" );
+			wfProfileOut ( __METHOD__ . "::$key !DUPE" );
+			wfProfileOut( __METHOD__ . "::$key" );
+			wfProfileOut( __METHOD__ );
 
-				$values[$key] = $this->getFromCache($key);
-				unset($keys[$i]);
+			return $this->getFromCache($key);
+		}
+
+		$key = is_array( $key ) ? $key[ 1 ] : $key;
+		$memcache = $this->getConnection($key);
+		if (!$memcache) {
+			wfProfileOut( __METHOD__ . "::$key" );
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		$key = is_array( $key ) ? $key[ 1 ] : $key;
+		$result = $memcache->get($key);
+		$this->addToCache($key, $result);
+
+		wfProfileOut( __METHOD__ . "::$key" );
+		wfProfileOut( __METHOD__ );
+
+		return $result;
+	}
+
+	public function get_multi( $keys ) {
+		wfProfileIn( __METHOD__ );
+
+		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads;
+
+		if ( $wgAllowMemcacheDisable && !$wgAllowMemcacheReads ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		$values = [ ];
+		foreach ( $keys as $i => $key ) {
+			if ( $this->cacheContains( $key ) ) {
+				wfProfileIn( __METHOD__ . "::$key !DUPE" );
+				wfProfileOut( __METHOD__ . "::$key !DUPE" );
+
+				$values[ $key ] = $this->getFromCache( $key );
+				unset( $keys[ $i ] );
 			}
 		}
 
-		if (empty($keys)) {
-			wfProfileOut(__METHOD__);
+		if ( empty( $keys ) ) {
+			wfProfileOut( __METHOD__ );
 			return $values;
 		}
 
-		$buckets = [];
-		foreach ($keys as $key) {
-			list($memcache, $host) = $this->getConnection($key, true);
-			if (!$memcache) {
+		$buckets = [ ];
+		foreach ( $keys as $key ) {
+			list( $memcache, $host ) = $this->getConnection( $key, true );
+			if ( !$memcache ) {
 				continue;
 			}
 
-			if (!isset($buckets[$host])) {
-				$buckets[$host] = [
+			if ( !isset( $buckets[ $host ] ) ) {
+				$buckets[ $host ] = [
 					'memcache' => $memcache,
-					'keys' => [],
+					'keys' => [ ],
 				];
 			}
 
-			$buckets[$host]['keys'][] = $key;
+			$buckets[ $host ][ 'keys' ][ ] = $key;
 		}
 
-		foreach ($buckets as $bucketData) {
+		foreach ( $buckets as $bucketData ) {
 			/** @var Memcache $memcache */
-			$memcache = $bucketData['memcache'];
-			$chunks = array_chunk($bucketData['keys'], self::MULTI_GET_CHUNK_SIZE);
-			foreach ($chunks as $chunk) {
-				$chunkValues = $memcache->get($chunk);
-				foreach ($chunkValues as $key => $value) {
-					$this->addToCache($key, $value);
-					$values[$key] = $value;
+			$memcache = $bucketData[ 'memcache' ];
+			$chunks = array_chunk( $bucketData[ 'keys' ], self::MULTI_GET_CHUNK_SIZE );
+			foreach ( $chunks as $chunk ) {
+				$chunkValues = $memcache->get( $chunk );
+				foreach ( $chunkValues as $key => $value ) {
+					$this->addToCache( $key, $value );
+					$values[ $key ] = $value;
 
-					wfProfileIn ( __METHOD__ . "::$key !HIT");
-					wfProfileOut ( __METHOD__ . "::$key !HIT");
+					wfProfileIn( __METHOD__ . "::$key !HIT" );
+					wfProfileOut( __METHOD__ . "::$key !HIT" );
 				}
 			}
 		}
 
-		$missedKeys = array_diff($keys, array_keys($values));
-		foreach ($missedKeys as $key) {
-			$values[$key] = false;
-			$this->addToCache($key, false);
-			wfProfileIn ( __METHOD__ . "::$key !MISS");
-			wfProfileOut ( __METHOD__ . "::$key !MISS");
+		$missedKeys = array_diff( $keys, array_keys( $values ) );
+		foreach ( $missedKeys as $key ) {
+			$values[ $key ] = false;
+			$this->addToCache( $key, false );
+			wfProfileIn( __METHOD__ . "::$key !MISS" );
+			wfProfileOut( __METHOD__ . "::$key !MISS" );
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $values;
 	}
 
-	public function delete($key) {
-		$memcache = $this->getConnection($key);
-		if (!$memcache) {
+	public function delete( $key ) {
+		$memcache = $this->getConnection( $key );
+		if ( !$memcache ) {
 			return false;
 		}
 
-		$this->deleteFromCache($key);
-		$key = is_array($key) ? $key[1] : $key;
+		$this->deleteFromCache( $key );
+		$key = is_array( $key ) ? $key[ 1 ] : $key;
 
-		return $memcache->delete($key);
+		return $memcache->delete( $key );
 	}
 
-	public function lock($key, $timeout) {
+	public function lock( $key, $timeout ) {
 		return true;
 	}
 
-	public function unlock($key) {
+	public function unlock( $key ) {
 		return true;
 	}
 
-	public function incr($key, $amount=1) {
-		return $this->_incrdecr('increment', $key, $amount);
+	public function incr( $key, $amount = 1 ) {
+		return $this->_incrdecr( 'increment', $key, $amount );
 	}
 
-	public function decr($key, $amount=1) {
-		return $this->_incrdecr('decrement', $key, $amount);
+	public function decr( $key, $amount = 1 ) {
+		return $this->_incrdecr( 'decrement', $key, $amount );
 	}
 
-	private function _incrdecr($method, $key, $amount=1) {
-		$memcache = $this->getConnection($key);
-		if (!$memcache) {
+	private function _incrdecr( $method, $key, $amount = 1 ) {
+		$memcache = $this->getConnection( $key );
+		if ( !$memcache ) {
 			return false;
 		}
 
-		$this->deleteFromCache($key);
-		return $memcache->$method($key, $amount);
+		$this->deleteFromCache( $key );
+		return $memcache->$method( $key, $amount );
 	}
 
-	private function _set($method, $key, $value, $expires=0) {
-		$memcache = $this->getConnection($key);
-		if (!$memcache) {
+	private function _set( $method, $key, $value, $expires = 0 ) {
+		$memcache = $this->getConnection( $key );
+		if ( !$memcache ) {
 			return false;
 		}
 
-		$this->buildCacheEntry($value, $flags);
-		$result = $memcache->$method($key, $value, $flags, $expires);
+		$this->buildCacheEntry( $value, $flags );
+		$result = $memcache->$method( $key, $value, $flags, $expires );
 
-		if ($result) {
-			$this->addToCache($key, $value);
+		if ( $result ) {
+			$this->addToCache( $key, $value );
 		}
 
 		return $result;
 	}
 
-	protected function getMemcacheConnection($host) {
+	protected function getMemcacheConnection( $host ) {
 		static $connections = array();
 
-		if (!isset($connections[$host])) {
-			list($host, $port) = explode(':', $host);
+		if ( !isset( $connections[ $host ] ) ) {
+			list( $host, $port ) = explode( ':', $host );
 
 			$memcache = new Memcache();
-			$memcache->connect($host, $port); // TODO - work timeout and "dead" hosts into this
+			$memcache->connect( $host, $port ); // TODO - work timeout and "dead" hosts into this
 
-			if ($this->compressionEnabled) {
-				$memcache->setCompressThreshold($this->compressThreshold);
+			if ( $this->compressionEnabled ) {
+				$memcache->setCompressThreshold( $this->compressThreshold );
 			}
 
-			$connections[$host] = $memcache;
+			$connections[ $host ] = $memcache;
 		}
 
-		return $connections[$host];
+		return $connections[ $host ];
 	}
 }

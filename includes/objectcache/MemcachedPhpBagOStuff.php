@@ -46,10 +46,11 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 			$params['connect_timeout'] = 0.1;
 		}
 
-		if (!empty($wgMemCachedClass) && $wgMemCachedClass) {
-			$this->client = new $wgMemCachedClass( $params );
+		if (empty($wgMemCachedClass) || !class_exists($wgMemCachedClass)) {
+			$wgMemCachedClass = 'MemCachedClientforWiki';
 		}
 
+		$this->client = new $wgMemCachedClass( $params );
 		$this->client->set_servers( $params['servers'] );
 		$this->client->set_debug( $params['debug'] );
 	}
