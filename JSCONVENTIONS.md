@@ -338,9 +338,9 @@ For example, if the tree looks like this:
 The module names for these files would be:
 
 ```javascript
-define( 'myextension.views.suggestions' ... );
-define( 'myextension.views.form' ... );
-define( 'myextension.models.results' ... );
+define( 'search.views.suggestions' ... );
+define( 'search.views.form' ... );
+define( 'search.models.results' ... );
 ```
 
 If the code is meant to be used site wide or by multiple different extensions, namespace with 'wikia'.  
