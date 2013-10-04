@@ -2,6 +2,8 @@
 
 class ApiMediaSearch extends ApiBase {
 
+	const THUMB_SIZE = 150;
+
 	public function execute() {
 
 		$params = $this->extractRequestParams();
@@ -13,40 +15,117 @@ class ApiMediaSearch extends ApiBase {
 		$mediaTypeArray = explode( '|', $params['mediaType'] );
 		if ( count( $mediaTypeArray ) == 1 ) {
 			if ( in_array( 'video', $mediaTypeArray ) ) {
-				$combinedMediaSearch = true;
-				$videoOnly = true;
-				$imageOnly = false;
+				// video
+				$response = $this->formatResponse( [
+					$this->makeRequest( $query, true, false )
+				] );
 			} else if ( in_array( 'photo', $mediaTypeArray ) ) {
-				$combinedMediaSearch = true;
-				$videoOnly = false;
-				$imageOnly = true;
+				// photo
+				$response = $this->formatResponse( [
+					$this->makeRequest( $query, false, true )
+				] );
 			}
 		} else if (
 			count ( $mediaTypeArray ) == 2 &&
 			in_array( 'photo', $mediaTypeArray ) &&
 			in_array( 'video', $mediaTypeArray )
 		) {
-			$combinedMediaSearch = true;
-			$videoOnly = false;
-			$imageOnly = false;
+			if ( isset( $params['separate'] ) && $params['separate'] == 'true' ) {
+				// video and photo separate
+				$response = $this->formatResponse( [
+					$this->makeRequest( $query, true, false ),
+					$this->makeRequest( $query, false, true )
+				] );
+			} else {
+				// video and photo combined
+				$response = $this->formatResponse( [
+					$this->makeRequest( $query, false, false )
+				] );
+			}
 		}
 
-		// Perform search
+		// Return response
+		$this->getResult()->addValue( null, 'response', $response );
+		return true;
+	}
+
+	private function formatResponse( $raw ) {
+		$response = [];
+
+		if ( count( $raw ) == 1 ) {
+			$response = [
+				'batches' => $raw[0]['batches'],
+				'currentBatch' => $raw[0]['currentBatch'],
+				'items' => $this->formatItems( $raw[0] )
+			];
+		} else if ( count( $raw ) == 2 ) {
+			$response = [
+				'videos' => [
+					'batches' => $raw[0]['batches'],
+					'currentBatch' => $raw[0]['currentBatch'],
+					'items' => $this->formatItems( $raw[0] )
+				],
+				'photos' => [
+					'batches' => $raw[1]['batches'],
+					'currentBatch' => $raw[1]['currentBatch'],
+					'items' => $this->formatItems( $raw[1] )
+				]
+			];
+		}
+
+		return $response;
+
+	}
+
+	private function makeRequest( $query, $videoOnly, $imageOnly ) {
 		$searchConfig = (new Wikia\Search\Config())
 			->setQuery( $query )
 			->setLimit( 10 )
 			->setStart( 0 )
-			->setCombinedMediaSearch( $combinedMediaSearch )
+			->setCombinedMediaSearch( true )
 			->setCombinedMediaSearchIsVideoOnly( $videoOnly )
 			->setCombinedMediaSearchIsImageOnly( $imageOnly );
 		$results = (new Wikia\Search\QueryService\Factory)
 			->getFromConfig( $searchConfig )
 			->searchAsApi( [ 'url', 'id', 'pageid', 'wid', 'title' ], true );
 
-		// Set results
-		$this->getResult()->addValue( null, 'results', $results );
+		return $results;
+	}
 
-		return true;
+	private function formatItems( $raw ) {
+		$items = [];
+
+		foreach( $raw['items'] as $rawItem ) {
+			$item = [
+				'title' => $rawItem['title'],
+				'thumbnail' => $this->getThumbnail( $rawItem['title'] )
+			];
+			array_push( $items, $item );
+		}
+
+		$this->getResult()->setIndexedTagName($items, 'item');
+
+		return $items;
+	}
+
+	private function getThumbnail( $title ) {
+		// Borrowed from WikiaQuizElement.class.php
+		$imageSrc = '';
+		$fileTitle = Title::newFromText( $title, NS_FILE );
+		$image = wfFindFile( $fileTitle );
+		if ( !is_object( $image ) || $image->height == 0 || $image->width == 0 ){
+			return $imageSrc;
+		} else {
+			$thumbDim = ($image->height > $image->width) ? $image->width : $image->height;
+			$imageServing = new ImageServing( array( $fileTitle->getArticleID() ), self::THUMB_SIZE, array( "w" => $thumbDim, "h" => $thumbDim ) );
+			$imageSrc = wfReplaceImageServer(
+				$image->getThumbUrl(
+					$imageServing->getCut( $thumbDim, $thumbDim )
+				)
+			);
+		}
+
+		return $imageSrc;
 	}
 
 	public function getAllowedParams() {
@@ -58,6 +137,10 @@ class ApiMediaSearch extends ApiBase {
 			'mediaType' => array (
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => true
+			),
+			'separate' => array (
+				ApiBase::PARAM_TYPE => 'string',
+				ApiBase::PARAM_REQUIRED => false
 			),
 		);
 	}
