@@ -56,7 +56,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 		$doc->loadXML( file_get_contents( dirname( __FILE__ ) . '/templates/rss.xml' ) );
 		$rssList = $doc->getElementsByTagName( 'rss' );
 		$rss = $rssList->item( 0 );
-		self::appendTextNode($doc,$rss,'title');
+		self::appendTextNode($doc,$rss,'generator','MediaWiki 1.19.7');
 
 		$channel = $rss->appendChild( new DOMElement('channel') );
 
@@ -73,7 +73,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 		return $doc->saveXML();
 	}
-
+	/** move to another service!! */
 	private static function appendCDATA( DOMDocument $doc, DOMElement $node, $name, $data = '' ) {
 		$cdata = $doc->createCDATASection( $data );
 		$element = $node->appendChild( new DOMElement($name) );
