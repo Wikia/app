@@ -6,6 +6,7 @@
   * [Semi-colons](#semi-colons)
   * [Function-declarations within blocks](#function-declarations-within-blocks)
   * [Try/catch blocks](#trycatch-blocks)
+  * [Switch statements](#swtich-statements)
   * [Delete Operator](#delete-operator)
   * [Modifying prototypes of built-in objects](#modifying-prototypes-of-built-in-objects)
 * [Style Rules](#style-rules)
