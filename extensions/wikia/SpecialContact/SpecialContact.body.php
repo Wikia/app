@@ -48,19 +48,19 @@ class ContactForm extends SpecialPage {
 
 			#malformed email?
 			if (!Sanitizer::validateEmail($this->mEmail)) {
-				$this->err[].= wfMsg('invalidemailaddress');
+				$this->err[] = wfMsg('invalidemailaddress');
 				$this->errInputs['wpEmail'] = true;
 			}
 
 			#empty message text?
 			if( empty($this->mProblemDesc) ) {
-				$this->err[].= wfMsg('specialcontact-nomessage');
+				$this->err[] = wfMsg('specialcontact-nomessage');
 				$this->errInputs['wpContactDesc'] = true;
 			}
 
 			#captcha
 			if ( $wgUser->isAnon() && class_exists( $wgCaptchaClass ) && !$info ) { // logged in users don't need the captcha (RT#139647)
-				$this->err[].= wfMsg('specialcontact-captchafail');
+				$this->err[] = wfMsg('specialcontact-captchafail');
 				$this->errInputs['wpCaptchaWord'] = true;
 			}
 
@@ -93,8 +93,7 @@ class ContactForm extends SpecialPage {
 		$wgOut->setArticleRelated( false );
 
 		//build common top of both emails
-		$m_shared = '';
-		$m_shared .= ( !empty($this->mRealName) )?( $this->mRealName ): ( (( !empty($this->mName) )?( $this->mName ): ('--')) );
+		$m_shared = ( !empty($this->mRealName) )?( $this->mRealName ): ( (( !empty($this->mName) )?( $this->mName ): ('--')) );
 		$m_shared .= " ({$this->mEmail})";
 		$m_shared .= " ". (( !empty($this->mName) ) ? $this->mWhichWiki . "/wiki/User:" . urlencode(str_replace(" ", "_", $this->mName)) : $this->mWhichWiki) . "\n";
 
