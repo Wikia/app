@@ -140,7 +140,7 @@ ve.dm.Surface.prototype.purgeHistory = function () {
  * Get a list of all history states.
  *
  * @method
- * @returns {Array[]} List of transaction stacks
+ * @returns {Object[]} List of transaction stacks
  */
 ve.dm.Surface.prototype.getHistory = function () {
 	if ( this.smallStack.length > 0 ) {
@@ -440,7 +440,6 @@ ve.dm.Surface.prototype.breakpoint = function ( selection ) {
  * Step backwards in history.
  *
  * @method
- * @see ve.dm.Document#rollback
  * @emits lock
  * @emits unlock
  * @emits history
@@ -460,9 +459,9 @@ ve.dm.Surface.prototype.undo = function () {
 		selection = item.selection;
 
 		for ( i = item.stack.length - 1; i >= 0; i-- ) {
-			transaction = item.stack[i];
-			selection = transaction.translateRange( selection, true );
-			this.documentModel.rollback( transaction );
+			transaction = item.stack[i].reversed();
+			selection = transaction.translateRange( selection );
+			this.documentModel.commit( transaction );
 		}
 		this.emit( 'unlock' );
 		this.emit( 'history' );
@@ -475,7 +474,6 @@ ve.dm.Surface.prototype.undo = function () {
  * Step forwards in history.
  *
  * @method
- * @see ve.dm.Document#commit
  * @emits lock
  * @emits unlock
  * @emits history
@@ -493,7 +491,7 @@ ve.dm.Surface.prototype.redo = function () {
 		item = this.bigStack[this.bigStack.length - this.undoIndex];
 		selection = item.selection;
 		for ( i = 0; i < item.stack.length; i++ ) {
-			transaction = item.stack[i];
+			transaction = item.stack[i].clone();
 			this.documentModel.commit( transaction );
 		}
 		this.undoIndex--;

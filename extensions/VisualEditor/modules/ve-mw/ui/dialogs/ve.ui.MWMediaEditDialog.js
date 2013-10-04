@@ -99,7 +99,7 @@ ve.ui.MWMediaEditDialog.prototype.onOpen = function () {
 	this.mediaNode = this.surface.getView().getFocusedNode().getModel();
 	this.captionNode = this.mediaNode.getCaptionNode();
 	if ( this.captionNode && this.captionNode.getLength() > 0 ) {
-		newDoc = doc.getDocumentSlice( this.captionNode );
+		newDoc = doc.cloneFromRange( this.captionNode.getRange() );
 	} else {
 		newDoc = [
 			{ 'type': 'paragraph', 'internal': { 'generated': 'wrapper' } },

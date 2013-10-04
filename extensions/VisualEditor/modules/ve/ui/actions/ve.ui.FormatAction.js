@@ -24,6 +24,8 @@ ve.inheritClass( ve.ui.FormatAction, ve.ui.Action );
 
 /* Static Properties */
 
+ve.ui.FormatAction.static.name = 'format';
+
 /**
  * List of allowed methods for this action.
  *
@@ -74,4 +76,4 @@ ve.ui.FormatAction.prototype.convert = function ( type, attributes ) {
 
 /* Registration */
 
-ve.ui.actionFactory.register( 'format', ve.ui.FormatAction );
+ve.ui.actionFactory.register( ve.ui.FormatAction );

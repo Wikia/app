@@ -92,7 +92,7 @@ ve.ui.TextInputMenuWidget.prototype.position = function () {
 	// Compensate for frame position if in a differnt frame
 	if ( this.input.$$.frame && this.input.$$.context !== this.$[0].ownerDocument ) {
 		frameOffset = ve.Element.getRelativePosition(
-			this.input.$$.frame.$, this.$.closest( '.ve-ui-surface' )
+			this.input.$$.frame.$, this.$.offsetParent()
 		);
 		dimensions.left += frameOffset.left;
 		dimensions.top += frameOffset.top;

@@ -256,9 +256,9 @@ ve.Element.getClosestScrollableContainer = function ( el, dimension ) {
 		props.push( 'overflow-' + dimension );
 	}
 
-	while ( $parent ) {
-		if ( $parent[0] === el.ownerDocument.documentElement ) {
-			break;
+	while ( $parent.length ) {
+		if ( $parent[0] === el.ownerDocument.body ) {
+			return $parent[0];
 		}
 		i = props.length;
 		while ( i-- ) {
@@ -269,7 +269,7 @@ ve.Element.getClosestScrollableContainer = function ( el, dimension ) {
 		}
 		$parent = $parent.parent();
 	}
-	return this.getWindow( el );
+	return this.getDocument( el ).body;
 };
 
 /**
@@ -277,7 +277,7 @@ ve.Element.getClosestScrollableContainer = function ( el, dimension ) {
  *
  * @static
  * @param {HTMLElement} el Element to scroll into view
- * @param {Object} [config] Configuration config
+ * @param {Object} [config={}] Configuration config
  * @param {string} [config.duration] jQuery animation duration value
  * @param {string} [config.direction] Scroll in only one direction, e.g. 'x' or 'y', omit
  *  to scroll in both directions
@@ -375,6 +375,7 @@ ve.Element.prototype.getClosestScrollableElementContainer = function () {
  *
  * @method
  * @see #static-method-scrollIntoView
+ * @param {Object} [config={}]
  */
 ve.Element.prototype.scrollElementIntoView = function ( config ) {
 	return ve.Element.scrollIntoView( this.$[0], config );

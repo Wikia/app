@@ -9,17 +9,17 @@
  * UserInterface tool factory.
  *
  * @class
- * @extends ve.NamedClassFactory
+ * @extends ve.Factory
  * @constructor
  */
 ve.ui.ToolFactory = function VeUiToolFactory() {
 	// Parent constructor
-	ve.NamedClassFactory.call( this );
+	ve.Factory.call( this );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.ToolFactory, ve.NamedClassFactory );
+ve.inheritClass( ve.ui.ToolFactory, ve.Factory );
 
 /* Methods */
 
