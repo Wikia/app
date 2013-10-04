@@ -158,6 +158,17 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 		return $('#toc').is('nav');
 	}
 
+	/**
+	 * Initialized the TOC after an article has been loaded
+	 */
+	function initTOC() {
+		var $showLink = $('#togglelink');
+		if (!hasTOC) {
+			renderTOC($showLink);
+		}
+		showHideTOC($showLink);
+	}
+
 	$(function() {
 		/** Attach events */
 		$('body').on('click', '#togglelink', function(event) {
@@ -175,19 +186,16 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 		});
 
 		// reset hasTOC flag for each time preview modal is opened
-		$(window).on('EditPageRenderPreview', function() {
-			hasTOC = false;
+		$(window).on('EditPageAfterRenderPreview', function() {
+			hasTOC = (window.wgUserName == null);
+			if ( isNewTOC() ) {
+				initTOC();
+			}
 		});
 
 		/** Auto expand TOC in article for logged-in users with hideTOC cookie set to 'null'  */
 		if (isNewTOC() && window.wgUserName !== null && $.cookie('mw_hidetoc') === null) {
-			var $showLink = $('#togglelink');
-
-			if (!hasTOC) {
-				renderTOC($showLink);
-			}
-
-			showHideTOC($showLink);
+			initTOC();
 		}
 	});
 });
