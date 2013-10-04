@@ -65,6 +65,7 @@ define( 'views.videopageadmin.edit', [
 								if( json.result === 'ok' ) {
 
 									var video = json.video;
+									$thumb.html();
 
 									// update input value and remove any error messages that might be there.
 									$videoKeyInput
@@ -191,6 +192,7 @@ define( 'views.videopageadmin.edit', [
 
 			// Rest the video thumb
 			this.$form.find( '.video-thumb' )
+				.data('modified', false)
 				.html( '' );
 
 			// Hide all thumbnail preview links
