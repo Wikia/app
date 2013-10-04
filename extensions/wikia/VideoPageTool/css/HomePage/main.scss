@@ -1,0 +1,134 @@
+@import 'skins/oasis/css/core/color';
+@import "skins/oasis/css/mixins/clearfix";
+@import './../mixins/_sprite-VideoPageTool.scss';
+
+/*
+ * TODO: Do not release with the definition below
+ * @description This is a temporary way to disable the ad on the video wiki homepage so
+ * that I can start development on it's various modules
+ * https://wikia-inc.atlassian.net/browse/VID-829
+ */
+
+.WikiaVideo {
+	.wv-sprite {
+		@include sprite-VideoPageTool-base();
+	}
+
+	.main-header {
+		font-size: 16px;
+		font-weight: bold;
+		margin-top: 33px;
+		margin-bottom: 22px;
+		position: relative;
+		text-transform: uppercase;
+
+		.wv-logo {
+			@extend .wv-sprite;
+			@include sprite-VideoPageTool('logo_wikiavideo');
+			display: block;
+			height: 37px;
+			margin-left: 10px;
+			transform: translateX(-20px);
+			-webkit-transform: translateX(-20px);
+			-moz-transform: translateX(-20px);
+			width: 187px;
+		}
+
+		.discover {
+			color: $color-links;
+			position: relative;
+			text-align: right;
+			visibility: hidden;
+
+			span {
+				display: inline-block;
+				padding-left: 85px;
+				vertical-align: -10px;
+			}
+
+			.chevron {
+				border-color: $color-links transparent transparent;
+				position: absolute;
+				height: 20px;
+				right: -30px;
+				top: 15px;
+				width: 1px;
+			}
+		}
+
+		.search-container {
+			@include clearfix;
+
+			form {
+				padding-top: 5px;
+				position: absolute;
+				right: 10px;
+			}
+		}
+	}
+
+	// Branding Partners
+	.partners {
+		clear: both;
+		margin-bottom: 67px;
+
+		& > ul {
+			// override .WikiaArticle ul margin styles
+			margin: 0;
+
+			& > li {
+				display: inline-block;
+				text-align: center;
+			}
+		}
+
+		.partners-title {
+			font-size: 26px;
+			margin-bottom: 20px;
+			padding-left: 10px;
+		}
+		
+		.partner-link {
+			display: block;
+			font-weight: bold;
+		}
+
+		// Icon classes for partner sprites
+		[class^="ico-"] {
+			@extend .wv-sprite;
+			display: inline-block;
+			height: 40px;
+			margin-bottom: 14px;
+		}
+
+		.ico-anyclip {
+			@include sprite-VideoPageTool('ico_anyclip');
+			width: 82px;
+		}
+
+		.ico-ign {
+			@include sprite-VideoPageTool('ico_ign');
+			width: 76px;
+		}
+
+		.ico-iva {
+			@include sprite-VideoPageTool('ico_iva', 0, 0, 0, -3px);
+			width: 85px;
+		}
+
+		.ico-ooyala {
+			@include sprite-VideoPageTool('ico_ooyala');
+			width: 107px;
+		}
+
+		.ico-realgravity {
+			@include sprite-VideoPageTool('ico_realgravity');
+			width: 36px;
+		}
+
+		.ico-screenplay {
+			@include sprite-VideoPageTool('ico_screenplay');
+			width: 35px;
+		}
+	}
+}

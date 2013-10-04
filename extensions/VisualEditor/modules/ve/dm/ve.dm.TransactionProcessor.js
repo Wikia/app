@@ -9,23 +9,21 @@
  * DataModel transaction processor.
  *
  * This class reads operations from a transaction and applies them one by one. It's not intended
- * to be used directly; use the .commit() and .rollback() methods of ve.dm.Document.
+ * to be used directly; use {ve.dm.Document#commit} instead.
  *
  * NOTE: Instances of this class are not recyclable: you can only call .process() on them once.
  *
  * @class
  * @param {ve.dm.Document} doc Document
  * @param {ve.dm.Transaction} transaction Transaction
- * @param {boolean} reversed Apply in reverse
  * @constructor
  */
-ve.dm.TransactionProcessor = function VeDmTransactionProcessor( doc, transaction, reversed ) {
+ve.dm.TransactionProcessor = function VeDmTransactionProcessor( doc, transaction ) {
 	// Properties
 	this.document = doc;
 	this.transaction = transaction;
 	this.operations = transaction.getOperations();
 	this.synchronizer = new ve.dm.DocumentSynchronizer( doc, transaction );
-	this.reversed = reversed;
 	// Linear model offset that we're currently at. Operations in the transaction are ordered, so
 	// the cursor only ever moves forward.
 	this.cursor = 0;
@@ -100,7 +98,7 @@ ve.dm.TransactionProcessor.prototype.process = function () {
 	this.synchronizer.synchronize();
 
 	// Mark the transaction as committed or rolled back, as appropriate
-	this.transaction.toggleApplied();
+	this.transaction.markAsApplied();
 };
 
 /**
@@ -223,9 +221,9 @@ ve.dm.TransactionProcessor.processors.retainMetadata = function ( op ) {
 ve.dm.TransactionProcessor.processors.annotate = function ( op ) {
 	var target;
 	if ( op.method === 'set' ) {
-		target = this.reversed ? this.clear : this.set;
+		target = this.set;
 	} else if ( op.method === 'clear' ) {
-		target = this.reversed ? this.set : this.clear;
+		target = this.clear;
 	} else {
 		throw new Error( 'Invalid annotation method ' + op.method );
 	}
@@ -255,8 +253,8 @@ ve.dm.TransactionProcessor.processors.annotate = function ( op ) {
  */
 ve.dm.TransactionProcessor.processors.attribute = function ( op ) {
 	var element = this.document.data.getData( this.cursor ),
-		to = this.reversed ? op.from : op.to,
-		from = this.reversed ? op.to : op.from;
+		to = op.to,
+		from = op.from;
 	if ( element.type === undefined ) {
 		throw new Error( 'Invalid element error, cannot set attributes on non-element data' );
 	}
@@ -301,10 +299,10 @@ ve.dm.TransactionProcessor.processors.attribute = function ( op ) {
  */
 ve.dm.TransactionProcessor.processors.replace = function ( op ) {
 	var node, selection, range,
-		remove = this.reversed ? op.insert : op.remove,
-		insert = this.reversed ? op.remove : op.insert,
-		removeMetadata = this.reversed ? op.insertMetadata : op.removeMetadata,
-		insertMetadata = this.reversed ? op.removeMetadata : op.insertMetadata,
+		remove = op.remove,
+		insert = op.insert,
+		removeMetadata = op.removeMetadata,
+		insertMetadata = op.insertMetadata,
 		removeLinearData = new ve.dm.ElementLinearData( this.document.getStore(), remove ),
 		insertLinearData = new ve.dm.ElementLinearData( this.document.getStore(), insert ),
 		removeIsContent = removeLinearData.isContentData(),
@@ -377,10 +375,10 @@ ve.dm.TransactionProcessor.processors.replace = function ( op ) {
 		// and queue a single rebuild after the loop finishes.
 		while ( true ) {
 			if ( operation.type === 'replace' ) {
-				opRemove = this.reversed ? operation.insert : operation.remove;
-				opInsert = this.reversed ? operation.remove : operation.insert;
-				opRemoveMetadata = this.reversed ? operation.insertMetadata : operation.removeMetadata;
-				opInsertMetadata = this.reversed ? operation.removeMetadata : operation.insertMetadata;
+				opRemove = operation.remove;
+				opInsert = operation.insert;
+				opRemoveMetadata = operation.removeMetadata;
+				opInsertMetadata = operation.insertMetadata;
 				// Update the linear model
 				this.document.data.batchSplice( this.cursor, opRemove.length, opInsert );
 				// Keep the meta linear model in sync
@@ -493,8 +491,8 @@ ve.dm.TransactionProcessor.processors.replace = function ( op ) {
  * @param {Array} op.insert Metadata to insert
  */
 ve.dm.TransactionProcessor.processors.replaceMetadata = function ( op ) {
-	var remove = this.reversed ? op.insert : op.remove,
-		insert = this.reversed ? op.remove : op.insert;
+	var remove = op.remove,
+		insert = op.insert;
 
 	this.document.spliceMetadata( this.cursor, this.metadataCursor, remove.length, insert );
 	this.metadataCursor += insert.length;

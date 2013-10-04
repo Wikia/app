@@ -22,7 +22,7 @@ ve.ui.SurfaceToolbar = function VeUiSurfaceToolbar( surface, options ) {
 	options = options || {};
 
 	// Parent constructor
-	ve.ui.Toolbar.call( this, options );
+	ve.ui.Toolbar.call( this, ve.ui.toolFactory, options );
 
 	// Properties
 	this.surface = surface;

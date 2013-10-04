@@ -8,7 +8,7 @@
 .WikiaArticle {
 	@include bodytext;
 	// Prevent content from escaping the article area
-	overflow-x: hidden;
+	overflow: hidden;
 	padding: 0 $width-gutter;
 	position: relative;
 	min-height: 250px;
@@ -413,6 +413,17 @@
 	}
 }
 
+// Exceptions to the rule (MAIN-939)
+// Wall and Forum have dropdowns that escape the article area. This prevents
+// them from getting chopped off with the downside that large tables won't be
+// controlled properly until the JavaScript loads.
+.ns-1200,
+.ns-1201,
+.ns-2000 {
+	.WikiaArticle {
+		overflow: visible;
+	}
+}
 
 /**
  * FB#24380 - Make wikia-infobox styling work in RTE popup previews (out of .WikiaArticle)
@@ -512,6 +523,7 @@
 		}
 	}
 }
+
 
 .TOC_hide #toctitle + ul {
 	display: none;

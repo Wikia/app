@@ -1,5 +1,5 @@
 /*!
- * VisualEditor ElementLinearData class.
+ * VisualEditor ElementLinearData classes.
  *
  * Class containing element linear data and an index-value store.
  *
@@ -778,3 +778,27 @@ ve.dm.ElementLinearData.prototype.remapInteralListIndexes = function ( mapping )
 		}
 	}
 };
+
+/**
+ * Sliced element linear data storage
+ *
+ * @class
+ * @extends ve.dm.ElementLinearData
+ * @mixins ve.dm.SlicedLinearData
+ * @constructor
+ * @param {ve.dm.IndexValueStore} store Index-value store
+ * @param {Array} [data] Linear data
+ * @param {ve.Range} [range] Original context within data
+ */
+ve.dm.ElementLinearDataSlice = function VeDmElementLinearDataSlice( store, data, range ) {
+	ve.dm.ElementLinearData.call( this, store, data );
+
+	// Mixins
+	ve.dm.SlicedLinearData.call( this, range );
+};
+
+/* Inheritance */
+
+ve.inheritClass( ve.dm.ElementLinearDataSlice, ve.dm.ElementLinearData );
+
+ve.mixinClass( ve.dm.ElementLinearDataSlice, ve.dm.SlicedLinearData );

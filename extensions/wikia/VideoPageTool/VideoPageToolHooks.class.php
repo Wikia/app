@@ -5,14 +5,14 @@ class VideoPageToolHooks {
 		wfProfileIn(__METHOD__);
 		$app = F::app();
 
-		if ( $title->isMainPage() ) {
+		if ( $title->isMainPage() && $app->checkSkin( 'oasis' ) ) {
 			$app->wg->SuppressPageHeader = true;
 			$app->wg->SuppressWikiHeader = true;
 			$app->wg->SuppressRail = true;
 			$app->wg->SuppressFooter = true;
 			if (!$app->wg->request->wasPosted()) {
 				// don't change article object while saving data
-				$article = new VideoPageArticle($title);
+				$article = new VideoHomePageArticle($title);
 			}
 		}
 
