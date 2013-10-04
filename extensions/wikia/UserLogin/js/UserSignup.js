@@ -1,7 +1,7 @@
 var UserSignup = {
 	inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday'],
 	notEmptyFields: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
-	captchaField: window.ulDisableCaptcha ? '' : 'recaptcha_response_field',
+	captchaField: window.wgUserLoginDisableCaptcha ? '' : 'recaptcha_response_field',
 	invalidInputs: {},
 	init: function() {
 		$('.extiw').click(function(e) {
@@ -35,7 +35,7 @@ var UserSignup = {
 			
 		// dom pre-cache
 		this.submitButton = this.wikiaForm.inputs['submit'];
-		if( undefined == window.ulDisableCaptcha ) {
+		if( window.wgUserLoginDisableCaptcha !== true ) {
 			this.wikiaForm.inputs['recaptcha_response_field'].bind('keyup.UserSignup', $.proxy(UserSignup.signupAjaxForm.activateSubmit, this.signupAjaxForm));
 		}
     }
