@@ -327,18 +327,20 @@ If there's a folder structure within the extension's scripts directory, the modu
 
 For example, if the tree looks like this: 
 
-    |-- MyExtension 
+    |-- Search
     | |-- scripts
     | | |-- views
-    | | | |-- myfeature.js
+    | | | |-- suggestions.js
+    | | | |-- form.js
     | | |-- models
-    | | | |-- myfeature.js
+    | | | |-- results.js
 
 The module names for these files would be:
 
 ```javascript
-define( 'myextension.views.myfeature' ... );
-define( 'myextension.models.myfeature' ... );
+define( 'myextension.views.suggestions' ... );
+define( 'myextension.views.form' ... );
+define( 'myextension.models.results' ... );
 ```
 
 If the code is meant to be used site wide or by multiple different extensions, namespace with 'wikia'.  
@@ -350,11 +352,12 @@ Hint: If it's in the modules folder, it should be namespace with 'wikia'.
 #### Folders ####
 For clarity and future-proofness, all javascript files should go into a 'scripts' folder and all stylesheet files should go into a 'styles' folder.  This is different from what we've done in the past, which was putting all scripts into a 'js' folder and all stylesheets into a 'css' folder. 
 
+#### Files ####
+See above for matching files names to module names
+
 ## Still to be defined
 * Naming convensions for: 
   * files
-  * constants
-  * casing
 * Error handling and custom exception handling (handle this later)
 * Structure
 * AMD
