@@ -37,6 +37,7 @@ $wgSpecialPages['VideoPageAdmin'] = 'VideoPageAdminSpecialController';
 
 // hooks
 $wgHooks['ArticleFromTitle'][] = 'VideoPageToolHooks::onArticleFromTitle';
+$wgHooks['WikiaMobileAssetsPackages'][] = 'VideoPageToolHooks::onWikiaMobileAssetsPackages';
 
 // permissions
 $wgGroupPermissions['*']['videopagetool'] = false;

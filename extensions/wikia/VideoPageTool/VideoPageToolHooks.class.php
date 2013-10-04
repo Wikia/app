@@ -19,4 +19,19 @@ class VideoPageToolHooks {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
+	/**
+	 * Add assets to mobile video home page
+	 *
+	 * @param array $jsStaticPackages
+	 * @param array $jsExtensionPackages
+	 * @param array $scssPackages
+	 * @return bool
+	 */
+	static public function onWikiaMobileAssetsPackages( Array &$jsStaticPackages, Array &$jsExtensionPackages, Array &$scssPackages ){
+		if( F::app()->wg->Title->isMainPage() ) {
+			$scssPackages[] = 'videohomepage_scss_mobile';
+		}
+
+		return true;
+	}
 }

@@ -1,0 +1,11 @@
+// hide featured video slider for now
+.featured-video {
+	display: none;
+}
+
+// hide oasis search form
+.main-header {
+	.search-container, .discover {
+		display: none;
+	}
+}
