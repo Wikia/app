@@ -20,7 +20,8 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 		/**
 		 * Slots based on screen width
 		 *
-		 * @see skins/oasis/css/core/responsive.scss
+		 * @see skins/oasis/css/core/responsive-variables.scss
+		 * @see skins/oasis/css/core/responsive-background.scss
 		 */
 		mediaQueriesToCheck = {
 			oneColumn: 'screen and (max-width: 1023px)',
