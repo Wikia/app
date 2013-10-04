@@ -14,11 +14,12 @@
  * @mixins ve.ui.GroupElement
  *
  * @constructor
+ * @param {ve.Factory} toolFactory Factory for creating tools
  * @param {Object} [options] Configuration options
  * @cfg {boolean} [actions] Add an actions section opposite to the tools
  * @cfg {boolean} [shadow] Add a shadow below the toolbar
  */
-ve.ui.Toolbar = function VeUiToolbar( options ) {
+ve.ui.Toolbar = function VeUiToolbar( toolFactory, options ) {
 	// Configuration initialization
 	options = options || {};
 
@@ -30,6 +31,7 @@ ve.ui.Toolbar = function VeUiToolbar( options ) {
 	ve.ui.GroupElement.call( this, this.$$( '<div>' ) );
 
 	// Properties
+	this.toolFactory = toolFactory;
 	this.groups = [];
 	this.tools = {};
 	this.$bar = this.$$( '<div>' );
@@ -63,6 +65,16 @@ ve.mixinClass( ve.ui.Toolbar, ve.EventEmitter );
 ve.mixinClass( ve.ui.Toolbar, ve.ui.GroupElement );
 
 /* Methods */
+
+/**
+ * Get the tool factory.
+ *
+ * @method
+ * @returns {ve.Factory} Tool factory
+ */
+ve.ui.Toolbar.prototype.getToolFactory = function () {
+	return this.toolFactory;
+};
 
 /**
  * Sets up handles and preloads required information for the toolbar to work.

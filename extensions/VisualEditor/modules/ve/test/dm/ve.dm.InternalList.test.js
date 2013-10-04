@@ -76,13 +76,22 @@ QUnit.test( 'convertToData', 2, function ( assert ) {
 	assert.deepEqual( internalList.getItemHtmlQueue(), [], 'Items html is emptied after conversion' );
 } );
 
-QUnit.test( 'clone', 2, function ( assert ) {
-	var doc = ve.dm.example.createExampleDocument(),
+QUnit.test( 'clone', 5, function ( assert ) {
+	var internalListClone, internalListClone2,
+		doc = ve.dm.example.createExampleDocument(),
 		doc2 = ve.dm.example.createExampleDocument(),
-		internalList = doc.getInternalList(),
-		internalListClone = internalList.clone(),
-		internalListClone2 = internalList.clone( doc2 );
+		internalList = doc.getInternalList();
+
+	internalList.getNextUniqueNumber(); // =0
+	internalListClone = internalList.clone();
+	internalList.getNextUniqueNumber(); // =1
+	internalListClone2 = internalList.clone( doc2 );
+	internalList.getNextUniqueNumber(); // =2
 
 	assert.equal( internalListClone.getDocument(), internalList.getDocument(), 'Documents match' );
 	assert.equal( internalListClone2.getDocument(), doc2, 'Cloning with document parameter' );
+
+	assert.equal( internalList.getNextUniqueNumber(), 3, 'original internallist has nextUniqueNumber=3' );
+	assert.equal( internalListClone.getNextUniqueNumber(), 1, 'first clone has nextUniqueNumber=1' );
+	assert.equal( internalListClone2.getNextUniqueNumber(), 2, 'second clone has nextUniqueNumber=2' );
 } );

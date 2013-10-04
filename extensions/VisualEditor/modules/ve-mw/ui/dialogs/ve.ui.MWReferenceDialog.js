@@ -279,7 +279,7 @@ ve.ui.MWReferenceDialog.prototype.useReference = function ( ref ) {
 			'refGroup': ref.refGroup,
 			'listIndex': ref.listIndex
 		};
-		newDoc = doc.getDocumentSlice( doc.getInternalList().getItemNode( ref.listIndex ) );
+		newDoc = doc.cloneFromRange( doc.getInternalList().getItemNode( ref.listIndex ).getRange() );
 		refGroup = ref.refGroup;
 	} else {
 		// Create a new reference
