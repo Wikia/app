@@ -1,13 +1,16 @@
-<div class="modal {{#classes}}{{.}} {{/classes}}">
+<div id="{{id}}" class="modalWrapper {{#classes}}{{.}} {{/classes}}">
 	<header>
 		{{title}}
+		{{#closeButton}}
+			<a href="">Close</a>
+		{{/closeButton}}
 	</header>
 	<section>
 		{{{content}}}
 	</section>
 	<footer>
 		{{#altLink}}
-			<a  id="{{altLink.id}}" href="{{altLink.href}}">{{altLink.text}}</a>
+			<a id="{{altLink.id}}" href="{{altLink.href}}">{{altLink.text}}</a>
 		{{/altLink}}
 		{{{secondBtn}}}
 		{{{primaryBtn}}}

@@ -1,5 +1,12 @@
 @import "skins/oasis/css/core/color.scss";
+@import "skins/oasis/css/mixins/transition.scss";
+@import "skins/oasis/css/mixins/blackout.scss";
 
 .modal {
 
+}
+
+#blackout {
+	@include transition-shorthand(all 0.2s ease-in-out);
+	@include blackout();
 }

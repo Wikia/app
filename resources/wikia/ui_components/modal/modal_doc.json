@@ -14,6 +14,11 @@
 					"type" : "string",
 					"description" : "styleguide-description-modal-title"
 				},
+				"closeButton": {
+					"templateVar" : "closeButton",
+					"type" : "boolean",
+					"description" : "styleguide-description-modal-close-button"
+				},
 				"content" : {
 					"templateVar" : "content",
 					"type" : "string",

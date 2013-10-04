@@ -1,12 +1,12 @@
 {
 	"templateVars": {
 		"default": {
-			"required": ["sections"],
-			"optional": ["classes", "ids"]
+			"required": [ "id", "content" ],
+			"optional": [ "classes", "title", "closeButton", "altLink", "secondBtn", "primaryBtn" ]
 		}
 	},
 	"dependencies": {
-		"js": ["resources/wikia/ui_components/toc/js/toc.js"],
-		"css": ["resources/wikia/ui_components/toc/css/toc_default.scss"]
+		"js": [ "resources/wikia/ui_components/toc/js/modal.js" ],
+		"css": [ "resources/wikia/ui_components/toc/css/modal_default.scss" ]
 	}
 }

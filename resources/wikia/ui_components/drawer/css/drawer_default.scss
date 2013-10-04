@@ -2,10 +2,10 @@
 @import "skins/oasis/css/core/color.scss";
 @import "skins/oasis/css/mixins/transition.scss";
 @import "skins/oasis/css/mixins/box-shadow.scss";
+@import "skins/oasis/css/mixins/blackout.scss";
 
 $drawer-width: 300px;
 $drawer-shadow-size: 30px;
-$drawer-background-color: black;
 
 .drawer,
 .drawerBackground {
@@ -43,15 +43,6 @@ $drawer-background-color: black;
 	}
 }
 
-/* TODO while implementing new modals in styleguide think about reusing those styles for that element */
 .drawerBackground {
-	background: $drawer-background-color;
-	left: 0;
-	right: 0;
-	z-index: -1;
-
-	&.visible {
-		opacity: 0.5;
-		z-index: $zTop - 1;
-	}
+	@include blackout();
 }
