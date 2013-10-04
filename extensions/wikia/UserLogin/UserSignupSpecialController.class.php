@@ -503,6 +503,9 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			if ( $hookArrayKey ) {
 				unset($wgHooks['AbortNewAccount'][$hookArrayKey]);
 			}
+			$this->wg->Out->addJsConfigVars([
+				'ulDisableCaptcha' => true
+			]);
 		}
 	}
 
