@@ -171,4 +171,36 @@
 			}
 		}
 	}
+
+	@media screen and (max-width: $breakpoint-content) {
+		body.skin-oasis {
+			&:after,
+			&:before {
+				display: none;
+			}
+		}
+	}
+
+	@media screen and (min-width: $breakpoint-fluid) {
+		@if ( $background-is-dynamic ) {
+			@include background-fluid;
+		}
+
+		.WikiaHeader .page-width-container,
+		.WikiaPage {
+			margin: 0 $width-adskin;
+			width: auto;
+		}
+	}
+
+	@media screen and (min-width: $breakpoint-max) {
+		@if ( $background-is-dynamic ) {
+			@include background-max;
+		}
+
+		.WikiaHeader .page-width-container,
+		.WikiaPage {
+			margin: 0 auto;
+		}
+	}
 }
