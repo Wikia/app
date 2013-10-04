@@ -53,8 +53,8 @@ var WMU_modal = null,
 	WMU_orgThumbSize = null,
 	WMU_width = null, // real width of full sized image
 	WMU_height = null,
-	WMU_minWidth = null,    // Constrain search and upload > than this width
-	WMU_minHeight = null,   // Constrain search and upload > than this height
+	WMU_exactWidth = null,    // Constrain search and upload > than this width
+	WMU_exactHeight = null,   // Constrain search and upload > than this height
 	WMU_aspectRatio = null, // Constrain searchand upload == this aspect ratio
 	WMU_refid = null,
 	WMU_wysiwygStart = 1,
@@ -540,11 +540,11 @@ function WMU_loadMain() {
 	WMU_indicator(1, true);
 
 	baseUrl = wgScriptPath + '/index.php?action=ajax&rs=WMU&method=loadMain';
-	if ( WMU_minHeight != null ) {
-		baseUrl = baseUrl + '&minHeight=' + WMU_minHeight;
+	if ( WMU_exactHeight != null ) {
+		baseUrl = baseUrl + '&exactHeight=' + WMU_exactHeight;
 	}
-	if ( WMU_minWidth != null ) {
-		baseUrl = baseUrl + '&minWidth=' + WMU_minWidth;
+	if ( WMU_exactWidth != null ) {
+		baseUrl = baseUrl + '&exactWidth=' + WMU_exactWidth;
 	}
 	if ( WMU_aspectRatio != null ) {
 		baseUrl = baseUrl + '&aspectRatio=' + WMU_aspectRatio;
@@ -593,11 +593,11 @@ function WMU_recentlyUploaded(param, pagination) {
 		label: 'paginate-' + pagination
 	});
 
-	if(WMU_minHeight) {
-		param = (param.length > 0 ? param + '&' : '') + 'minHeight='+WMU_minHeight;
+	if(WMU_exactHeight) {
+		param = (param.length > 0 ? param + '&' : '') + 'exactHeight='+WMU_exactHeight;
 	}
-	if(WMU_minWidth) {
-		param = (param.length > 0 ? param + '&' : '') + 'minWidth='+WMU_minWidth;
+	if(WMU_exactWidth) {
+		param = (param.length > 0 ? param + '&' : '') + 'exactWidth='+WMU_exactWidth;
 	}
 
 	WMU_indicator(2, true);
@@ -932,11 +932,11 @@ function WMU_insertImage(type) {
 	params.push('mwname='+$('#ImageUploadMWname').val());
 	params.push('tempid='+$('#ImageUploadTempid').val());
 
-	if(WMU_minHeight) {
-		params.push('minHeight='+WMU_minHeight);
+	if(WMU_exactHeight) {
+		params.push('exactHeight='+WMU_exactHeight);
 	}
-	if(WMU_minWidth) {
-		params.push('minWidth='+WMU_minWidth);
+	if(WMU_exactWidth) {
+		params.push('exactWidth='+WMU_exactWidth);
 	}
 	if(WMU_aspectRatio) {
 		params.push('aspectRatio='+WMU_aspectRatio);

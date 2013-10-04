@@ -29,8 +29,8 @@ define( 'views.videopageadmin.thumbnailupload', [
 		showUploader: function() {
 			// bypass page layout details screen
 			// @deprecated WMU global namespace pollution
-			window.WMU_minHeight = 461;
-			window.WMU_minWidth = 1024;
+			window.WMU_exactHeight = 461;
+			window.WMU_exactWidth = 1024;
 			window.WMU_aspectRatio = 1024/461;
 			window.WMU_skipDetails = true;
 			window.WMU_show();
