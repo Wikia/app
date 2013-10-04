@@ -6,7 +6,7 @@ namespace Wikia\JsonFormat;
 
 class JsonFormatSimplifier {
 
-	public function getParagraphs( \JsonFormatContainerNode $containerNode, &$contentElements ) {
+	private function getParagraphs( \JsonFormatContainerNode $containerNode, &$contentElements ) {
 		foreach( $containerNode->getChildren() as $childNode ) {
 			if ( $childNode->getType() == 'section' ) {
 				return;
@@ -30,7 +30,7 @@ class JsonFormatSimplifier {
 		}
 	}
 
-	public function readText( \JsonFormatContainerNode $parentNode ) {
+	private function readText( \JsonFormatContainerNode $parentNode ) {
 		$text = "";
 		foreach ( $parentNode->getChildren() as $childNode ) {
 			if ( $childNode->getType() == 'text' ) {
@@ -47,7 +47,7 @@ class JsonFormatSimplifier {
 		return $text;
 	}
 
-	public function getImages( \JsonFormatContainerNode $containerNode, &$images ) {
+	private function getImages( \JsonFormatContainerNode $containerNode, &$images ) {
 		foreach( $containerNode->getChildren() as $childNode ) {
 			if ( $childNode->getType() == 'section' ) {
 				return;
@@ -77,7 +77,7 @@ class JsonFormatSimplifier {
 		});
 	}
 
-	public function newParagraph( &$sectionElements) {
+	private function newParagraph( &$sectionElements) {
 		$sectionElements[] = [ "type" => "paragraph", "text" => "" ];
 	}
 
@@ -85,7 +85,7 @@ class JsonFormatSimplifier {
 	 * @param String[] $sectionElements
 	 * @param String $inlineText
 	 */
-	public function appendInline( &$sectionElements, $inlineText ) {
+	private function appendInline( &$sectionElements, $inlineText ) {
 		$inlineText = trim( $inlineText );
 		if ( $inlineText == "" ) {
 			return;
@@ -114,7 +114,7 @@ class JsonFormatSimplifier {
 	/**
 	 * @throws InvalidParameterApiException
 	 */
-	public function getJsonFormat( \JsonFormatRootNode $rootNode ) {
+	public function getJsonFormat( \JsonFormatRootNode $rootNode, $articleTitle ) {
 		$sections = [];
 		$this->findSections( $rootNode, $sections );
 
@@ -132,7 +132,7 @@ class JsonFormatSimplifier {
 			}
 			$this->clearEmptyParagraphs( $content );
 			$returnSections[] = [
-				"title" => ( $section->getType() == "section" ) ? $section->getTitle() : "",
+				"title" => ( $section->getType() == "section" ) ? $section->getTitle() : $articleTitle,
 				"level" => ( $section->getType() == "section" ) ? $section->getLevel() : 1,
 				"content" => $content,
 				"images" => $images

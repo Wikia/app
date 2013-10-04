@@ -1,18 +1,13 @@
 <?php
-/**
- * User: artur
- * Date: 28.05.13
- * Time: 21:19
- */
 
 abstract class JsonFormatContainerNode extends JsonFormatNode {
 	/**
-	 * @var array
+	 * @var JsonFormatNode[]
 	 */
 	private $children = array();
 
 	/**
-	 * @return array
+	 * @return JsonFormatNode[]
 	 */
 	public function getChildren() {
 		return $this->children;

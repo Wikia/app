@@ -13,7 +13,6 @@ class ImageNoScriptVisitor extends DOMNodeVisitorBase {
 	 */
 	public function canVisit(DOMNode $currentNode) {
 		/** @var DOMElement $currentNode */
-		DomHelper::verifyDomElementArgument( $currentNode, "currentNode" );
 
 		return DomHelper::isElement( $currentNode, 'a' )
 			&& DomHelper::hasClass( $currentNode, 'image' )

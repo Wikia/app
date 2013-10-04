@@ -68,22 +68,25 @@ class JsonFormatApiController extends WikiaApiController {
 		return $result;
 	}
 
-    public function getSimpleJson() {
-        $articleId = $this->getRequest()->getInt("article", NULL);
-        if( empty($articleId) ) {
-            throw new InvalidParameterApiException( self::ARTICLE_CACHE_ID );
-        }
+	public function getSimpleJson() {
+		$articleId = $this->getRequest()->getInt("article", NULL);
+		if( empty($articleId) ) {
+			throw new InvalidParameterApiException( self::ARTICLE_CACHE_ID );
+		}
 
-        $jsonFormatService = new JsonFormatService();
-        $json = $jsonFormatService->getJsonFormatForArticleId( $articleId );
+		$jsonFormatService = new JsonFormatService();
+		$article = \Article::newFromID( $articleId );
+		if ( $article ) {
+			$json = $jsonFormatService->getJsonFormatForArticleId( $articleId );
 
-        $simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
+			$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
 
-        $jsonSimple = $simplifier->getJsonFormat( $json );
+			$jsonSimple = $simplifier->getJsonFormat( $json, $article->getTitle()->getText() );
 
-	    $this->getResponse()->setFormat("json");
-	    $this->getResponse()->setData( $jsonSimple );
-    }
+			$this->getResponse()->setFormat("json");
+			$this->getResponse()->setData( $jsonSimple );
+		}
+	}
 
 	private function simpleToHtml( &$json ) {
 		$html = "";
@@ -117,15 +120,20 @@ class JsonFormatApiController extends WikiaApiController {
 		if( empty($articleId) ) {
 			throw new InvalidParameterApiException( self::ARTICLE_CACHE_ID );
 		}
-		$jsonFormatService = new JsonFormatService();
-		$json = $jsonFormatService->getJsonFormatForArticleId( $articleId );
+		$article = \Article::newFromID( $articleId );
+		if ( $article ) {
+			$jsonFormatService = new JsonFormatService();
+			$json = $jsonFormatService->getJsonFormatForArticleId( $articleId );
 
-		$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
-		$jsonSimple = $simplifier->getJsonFormat( $json );
+			$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
+			$jsonSimple = $simplifier->getJsonFormat( $json, $article->getTitle()->getText() );
 
-		$text = $this->simpleToHtml($jsonSimple);
-		header('Content-Type: text/html; charset=utf-8');
-		die($text);
+			$text = $this->simpleToHtml($jsonSimple);
+			header('Content-Type: text/html; charset=utf-8');
+			die($text);
+		} else {
+			die("Article not found.");
+		}
 	}
 
 	/**

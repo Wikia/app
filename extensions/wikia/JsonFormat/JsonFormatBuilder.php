@@ -1,16 +1,20 @@
 <?php
-/**
- * User: artur
- * Date: 28.05.13
- * Time: 17:38
- */
 
 class JsonFormatBuilder {
+	/**
+	 * @var JsonFormatNode
+	 */
 	private $jsonRoot;
+	/**
+	 * @var JsonFormatNode[]
+	 */
 	private $jsonStack = array();
+	/**
+	 * @var JsonFormatNode
+	 */
 	private $currentContainer;
 
-	public function pushNode( $node ) {
+	public function pushNode( JsonFormatNode $node ) {
 		$this->currentContainer = $node;
 		if ( sizeof($this->jsonStack) ) {
 			$this->jsonStack[sizeof($this->jsonStack)-1]->addChild( $node );
