@@ -19,21 +19,6 @@ class WallNotificationsHooksHelper {
 
 		return true;
 	}
-
-	/**
-	 * @brief pre render the notifications
-	 *
-	 **/
-
-	static public function onMakeGlobalVariablesScript( Array &$vars ){
-		$user =	F::app()->wg->User;
-		if( $user->isLoggedIn() ) {
-			$response = F::app()->sendRequest( 'WallNotificationsExternalController', 'getUpdateCounts', array() );
-			$vars['wgNotificationsCount'] = $response->getData();
-		}
-		return true;
-	}
-	
 	
 	/**
 	 * @brief Add notification dropdown to right corner for monobook

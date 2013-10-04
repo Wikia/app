@@ -13,21 +13,19 @@ class WallNotificationsController extends WikiaController {
 	}
 
 	public function Index() {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
+		$loggedIn = $this->wg->User->isLoggedIn();
+		$suppressWallNotifications = $this->areNotificationsSuppressedByExtensions();
 
-		if($this->wg->User->isLoggedIn()) {
-
-			$this->response->addAsset('extensions/wikia/Wall/js/WallNotifications.js');
-			$this->response->addAsset('extensions/wikia/Wall/css/WallNotifications.scss');
-			$this->response->setVal('prehide', (empty($this->wg->EnableWallExt) && empty($this->wg->EnableForumExt)));
-
-			$this->response->setVal('user', $this->wg->User);
+		if( $loggedIn && !$suppressWallNotifications ) {
+			$this->response->addAsset( 'extensions/wikia/Wall/js/WallNotifications.js' );
+			$this->response->addAsset( 'extensions/wikia/Wall/css/WallNotifications.scss' );
+			$this->response->setVal( 'prehide', ( empty( $this->wg->EnableWallExt ) && empty( $this->wg->EnableForumExt ) ) );
 		}
 
-		$this->response->setVal('suppressWallNotifications',$this->areNotificationsSuppressedByExtensions());
-		$this->response->setVal('user', $this->wg->User);
-
-		wfProfileOut(__METHOD__);
+		$this->response->setVal( 'loggedIn', $loggedIn );
+		$this->response->setVal( 'suppressWallNotifications', $suppressWallNotifications );
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function Update() {
@@ -119,7 +117,7 @@ class WallNotificationsController extends WikiaController {
 	}
 
 	private function areNotificationsSuppressedByExtensions() {
-		$suppressed = F::app()->wg->atCreateNewWikiPage;
+		$suppressed = $this->app->wg->atCreateNewWikiPage || !$this->app->wg->User->isAllowed( 'read' );
 		return !empty($suppressed);
 	}
 

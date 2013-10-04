@@ -8,6 +8,7 @@
 @import "skins/oasis/css/mixins/multiple-box-shadow";
 @import "skins/oasis/css/mixins/opacity";
 @import "skins/oasis/css/mixins/wordmark";
+@import "extensions/wikia/UserLogin/mixins/tooltip-icon";
 
 // Colors
 @import "core/colors";
@@ -303,23 +304,41 @@ body {
 		top: 50%;
 	}
 	&.preview {
+		> h1 {
+			float: left;
+			margin-right: 20px;
+		}
+		> form {
+			float: left;
+			margin-top: 20px;
+			position: relative;
+		}
+		.tooltip-icon {
+			@include tooltip-icon;
+			right: -17px;
+			top: 6px;
+		}
 		.modalContent {
 			border-color: transparent;
+			clear: both;
 			padding: 0;
 			.ArticlePreview {
 				border: 1px solid $color-page-border;
 				overflow-y: scroll;
 				min-height: 320px;
 				padding: 10px;
-                .global-notification {
-                    // FB#48494 - change nav2 error styling for modal preview
-                    width: auto;
-                }
+				.global-notification {
+					// FB#48494 - change nav2 error styling for modal preview
+					width: auto;
+				}
+			}
+			.ArticlePreviewInnerWrapper {
+				overflow: hidden;
 			}
 			// FB#8087 - styling for interlanguage links in RTE popup preview
 			.WikiaArticleInterlang {
-			    h3 {
-			        margin: 2px 14px 0 0;
+				h3 {
+					margin: 2px 14px 0 0;
 					font: {
 						size: 14px;
 						weight: normal;
