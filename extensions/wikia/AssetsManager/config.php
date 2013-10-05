@@ -15,8 +15,8 @@ $config['oasis_shared_core_js'] = array(
 $config['oasis_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'#group_oasis_noads_extensions_js',
 		'#group_oasis_ads_js',
-		'#group_oasis_noads_extensions_js'
 	)
 );
 
@@ -32,11 +32,21 @@ $config['liftium_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/liftium/Liftium.js',
+		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
+
 		// TODO: get rid of those:
 		'//extensions/wikia/AdEngine/liftium/Wikia.Athena.js',
 		'//extensions/wikia/AdEngine/liftium/Wikia.AQ.js',
 		'//extensions/wikia/AdEngine/liftium/Wikia.meerkat.js',
 		'//extensions/wikia/AdEngine/liftium/Wikia.ve_alternate.js',
+	),
+);
+
+$config['liftium_2013_ads_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/lib/Liftium2013.js',
+		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
 	),
 );
 
@@ -96,8 +106,6 @@ $config['oasis_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdEngine2.configLateAds.js',
 
 		'#group_liftium_ads_js',
-
-		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
 	),
 );
 
