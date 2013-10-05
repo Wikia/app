@@ -287,6 +287,8 @@ $messages['br'] = array(
 	'manage-wikia-home-collections-sponsor-url-field-label' => 'URL ar sponsor',
 	'manage-wikia-home-collections-sponsor-image-field-label' => 'Skeudenn ar sponsor',
 	'manage-wikia-home-collections-wikis-in-collection' => 'Wikioù: $1 diwar $2',
+	'manage-wikia-home-collection-hero-image-tooltip' => 'Ar skeudenn-mañ a zlefe bezañ $1pk × $2pk',
+	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Ar skeudenn-mañ a zlefe bezañ $1pk × $2pk',
 	'manage-wikia-home-collection-add-file-button' => "Ouzhpennañ ul luc'hskeudenn",
 );
 
@@ -1020,7 +1022,7 @@ $messages['pl'] = array(
  */
 $messages['ps'] = array(
 	'manage-wikia-home-change-button' => 'بدلول',
-	'manage-wikia-home-wiki-filter' => 'چاڼګر',
+	'manage-wikia-home-wiki-filter' => 'چاڼگر',
 	'manage-wikia-home-wiki-filter-reset' => 'سپينول',
 	'manage-wikia-home-wiki-list-id' => 'پېژند',
 	'manage-wikia-home-wiki-list-blocked-no' => 'نه',
@@ -1029,11 +1031,11 @@ $messages['ps'] = array(
 	'manage-wikia-home-wiki-list-promoted-yes' => 'هو',
 	'manage-wikia-home-wiki-list-official-no' => 'نه',
 	'manage-wikia-home-wiki-list-official-yes' => 'هو',
-	'manage-wikia-home-wiki-list-all-collections' => 'ټولې ټولګې',
+	'manage-wikia-home-wiki-list-all-collections' => 'ټولې ټولگې',
 	'manage-wikia-home-modal-button-no' => 'نه',
 	'manage-wikia-home-modal-button-yes' => 'هو',
 	'manage-wikia-home-collections-setup-save-button' => 'خوندي کول',
-	'manage-wikia-home-collection-add-file-button' => 'يو انځور ورګډول',
+	'manage-wikia-home-collection-add-file-button' => 'يو انځور ورگډول',
 );
 
 /** Portuguese (português)
@@ -1145,9 +1147,12 @@ $messages['roa-tara'] = array(
  * @author Okras
  */
 $messages['ru'] = array(
+	'manage-wikia-home-wikis-in-slots-heading' => 'Установка слотов',
+	'manage-wikia-home-wikis-in-slots-total' => 'Общее количество слотов: $1',
 	'manage-wikia-home-collections-success' => 'Коллекции были сохранены.',
 	'manage-wikia-home-collections-add-failure-image' => '$1 не может быть добавлен к этой коллекции, потому что его основное изображение было отклонено.',
 	'manage-wikia-home-collections-invalid-action' => 'Это действие не существует.',
+	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'Отрицательное число слотов не допускается',
 	'manage-wikia-home-error-wikifactory-failure' => 'Что-то пошло не так во время сохранения переменных. Пожалуйста, попробуйте еще раз.',
 	'manage-wikia-home-collections-validation-error' => 'Произошла ошибка при сохранении, пожалуйста, проверьте то, что вы ввели.',
 	'manage-wikia-home-change-button' => 'Изменить',
@@ -1155,6 +1160,7 @@ $messages['ru'] = array(
 	'manage-wikia-home-wiki-filter-reset' => 'Очистить',
 	'manage-wikia-home-wiki-list-id' => 'Id',
 	'manage-wikia-home-wiki-list-headline' => 'Название проекта',
+	'manage-wikia-home-wiki-list-blocked' => 'Заблокирован',
 	'manage-wikia-home-wiki-list-official' => 'Официальный',
 	'manage-wikia-home-wiki-list-collection' => 'Коллекции',
 	'manage-wikia-home-wiki-list-blocked-no' => 'Нет',
@@ -1164,6 +1170,7 @@ $messages['ru'] = array(
 	'manage-wikia-home-wiki-list-official-no' => 'Нет',
 	'manage-wikia-home-wiki-list-official-yes' => 'Да',
 	'manage-wikia-home-wiki-list-all-collections' => 'Все коллекции',
+	'manage-wikia-home-modal-title' => 'Изменить статус вики',
 	'manage-wikia-home-modal-content-blocked-wiki-title' => 'Этот проект заблокирован',
 	'manage-wikia-home-modal-content-removed-blocked-in-collection' => 'Этот проект в настоящий момент является частью коллекции и не может быть заблокирован.',
 	'manage-wikia-home-modal-too-many-wikis-in-collection' => 'Вы не можете добавить больше проектов в эту коллекцию.',
@@ -1174,6 +1181,7 @@ $messages['ru'] = array(
 	'manage-wikia-home-collections-setup-save-button' => 'Сохранить',
 	'manage-wikia-home-collections-enabled-field-label' => 'Включена',
 	'manage-wikia-home-collections-name-field-label' => 'Название коллекции',
+	'manage-wikia-home-collections-sponsor-url-field-label' => 'URL-адрес спонсора',
 	'manage-wikia-home-collections-wikis-in-collection' => 'Проекты: $1 из $2',
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Это изображение должно быть $1px × $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Это изображение должно быть $1px × $2px',
@@ -1338,6 +1346,7 @@ $messages['zh-hans'] = array(
 	'manage-wikia-home-wikis-in-slots-heading' => '插槽部署',
 	'manage-wikia-home-wikis-in-slots-total' => '插槽总计：$1',
 	'manage-wikia-home-change-button' => '更改',
+	'manage-wikia-home-wikis-in-visualization-heading' => '已实现可视化的维基列表',
 	'manage-wikia-home-wiki-filter' => '过滤器',
 	'manage-wikia-home-wiki-filter-reset' => '清除',
 	'manage-wikia-home-wiki-list-id' => '身份',
@@ -1356,6 +1365,9 @@ $messages['zh-hans'] = array(
 	'manage-wikia-home-wiki-list-disabled-collection' => '已取消收藏',
 	'manage-wikia-home-wiki-list-all-collections' => '所有收藏',
 	'manage-wikia-home-wiki-list-all-verticals' => '所有垂直',
+	'manage-wikia-home-modal-title' => '更改维基状态',
+	'manage-wikia-home-modal-title-collection' => '编辑维基集合',
+	'manage-wikia-home-modal-content-add-blocked-wiki-warning' => '您不能向集合中添加被锁定的维基。',
 	'manage-wikia-home-modal-content-blocked-wiki-title' => '本维基被封禁',
 	'manage-wikia-home-modal-button-no' => '否',
 	'manage-wikia-home-modal-button-yes' => '是',
@@ -1368,5 +1380,7 @@ $messages['zh-hans'] = array(
 	'manage-wikia-home-collections-sponsor-hero-image-field-label' => '英雄形象',
 	'manage-wikia-home-collections-sponsor-image-field-label' => '赞助商图像',
 	'manage-wikia-home-collections-wikis-in-collection' => '维基:$2的$1',
+	'manage-wikia-home-collection-hero-image-tooltip' => '此图像应设置$1px*$2px大小',
+	'manage-wikia-home-collection-sponsor-image-tooltip' => '此图像应设置$1px*$2px大小',
 	'manage-wikia-home-collection-add-file-button' => '添加图片',
 );

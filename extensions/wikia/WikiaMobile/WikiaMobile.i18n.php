@@ -1402,9 +1402,12 @@ $1",
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
+ * @author Liuxinyu970226
+ * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
 	'wikiamobile-search' => '搜索',
+	'wikiamobile-search-this-wiki' => '搜索此维基',
 	'wikiamobile-search-wiki' => '维基',
 	'wikiamobile-search-wikia' => 'Wikia',
 	'wikiamobile-login' => '登录',
@@ -1413,9 +1416,36 @@ $messages['zh-hans'] = array(
 	'wikiamobile-menu' => '菜单',
 	'wikiamobile-article-categories' => '分类',
 	'wikiamobile-feedback' => '反馈',
+	'wikiamobile-back' => '返回',
+	'wikiamobile-hide-section' => '隐藏',
+	'wikiamobile-profile' => '个人资料',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|生活时尚]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|影音娱乐]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|电玩游戏]]',
+	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|授权]]',
+	'mobile-full-site' => '完整站点',
+	'wikiamobile-categories-tagline' => '分类页面',
+	'wikiamobile-categories-items-total' => '$1个{{PLURAL:$1|条目|条目}}',
+	'wikiamobile-category-items-more' => '载入更多',
+	'wikiamobile-category-items-prev' => '加载上次',
+	'wikiamobile-categories-expand' => '显示全部',
+	'wikiamobile-categories-collapse' => '隐藏全部',
+	'wikiamobile-sharing-media-image' => '图片',
+	'wikiamobile-sharing-page-text' => '$1-$2',
+	'wikiamobile-sharing-modal-text' => '$1在$2-$3',
+	'wikiamobile-sharing-email-text' => '嗨，
+您应该检查一下这些：
+
+$1',
+	'wikiamobile-media-group-footer' => '$1的1',
+	'wikiamobile-video-views-counter' => '$1次{{PLURAL:$1|浏览|浏览}}',
+	'wikiamobile-video-not-friendly-header' => '哦买糕的！',
+	'wikiamobile-ad-label' => '广告',
+	'wikiamobile-image-not-loaded' => '图像不可用',
+	'wikiasmartbanner-appstore' => 'App Store',
+	'wikiasmartbanner-googleplay' => 'Google Play',
+	'wikiasmartbanner-price' => '自由',
+	'wikiasmartbanner-view' => '查看',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

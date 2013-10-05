@@ -6163,15 +6163,15 @@ $messages['ps'] = array(
 	'founderemails-email-lot-happening-greeting' => 'سلامونه $USERNAME،',
 	'founderemails-email-lot-happening-signature' => 'د ويکيا ډله',
 	'founderemails-email-lot-happening-button' => 'فعاليتونه کتل',
-	'founderemails-email-0-day-addpages-heading' => 'مخونه ورګډول.',
-	'founderemails-email-0-day-addpages-button' => 'يو مخ ورګډول',
-	'founderemails-email-0-day-addphotos-heading' => 'انځورونه ورګډول.',
-	'founderemails-email-0-day-addphotos-button' => 'يو انځور ورګډول',
-	'founderemails-email-3-day-addphotos-heading' => 'نور انځورونه ورګډول',
-	'founderemails-email-3-day-addphotos-button' => 'انځورونه ورګډول',
+	'founderemails-email-0-day-addpages-heading' => 'مخونه ورگډول.',
+	'founderemails-email-0-day-addpages-button' => 'يو مخ ورگډول',
+	'founderemails-email-0-day-addphotos-heading' => 'انځورونه ورگډول.',
+	'founderemails-email-0-day-addphotos-button' => 'يو انځور ورگډول',
+	'founderemails-email-3-day-addphotos-heading' => 'نور انځورونه ورگډول',
+	'founderemails-email-3-day-addphotos-button' => 'انځورونه ورگډول',
 	'founderemails-email-views-digest-greeting' => 'سلامونه $USERNAME،',
 	'founderemails-email-views-digest-signature' => 'د ويکيا ډله',
-	'founderemails-email-views-digest-button' => 'نور مخونه ورګډول',
+	'founderemails-email-views-digest-button' => 'نور مخونه ورگډول',
 	'founderemails-email-complete-digest-subject' => 'په $WIKINAME باندې تازه فعاليتونه',
 	'founderemails-email-complete-digest-greeting' => 'سلامونه $USERNAME،',
 	'founderemails-email-complete-digest-signature' => 'د ويکيا ډله',
@@ -8418,6 +8418,7 @@ Bạn luôn luôn có thể ghé qua hoạt động của wiki để xem tất c
  */
 $messages['zh-hans'] = array(
 	'founderemails-desc' => '帮助通知创始人有关在他们的wiki上的变更',
+	'tog-founderemailsenabled' => '通过电子邮件告诉我其他人在做什么（仅创建者）',
 	'founderemails-email-user-registered-subject' => '有新用户加入$WIKINAME',
 	'founderemails-email-user-registered-body' => '嗨！$USERNAME，
 祝贺！$EDITORNAME刚刚加入了$WIKINAME。
@@ -8427,6 +8428,7 @@ $EDITORPAGEURL
 Wikia团队',
 	'founderemails-email-user-registered-greeting' => '嗨！$USERNAME，',
 	'founderemails-email-user-registered-headline' => '恭喜！$EDITORNAME刚刚加入了$WIKINAME。',
+	'founderemails-email-user-registered-content' => '抓住机会欢迎他们到您的Wiki来并鼓励他们帮助编辑。越多人参与，您的Wiki就会成长得越快。',
 	'founderemails-email-user-registered-signature' => 'Wikia团队',
 	'founderemails-email-user-registered-button' => '欢迎他们',
 	'founderemails-email-user-registered-body-HTML' => '嗨$USERNAME,<br /><br />
