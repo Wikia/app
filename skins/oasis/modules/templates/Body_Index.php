@@ -53,7 +53,7 @@
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty($isGridLayoutEnabled) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
 			<div id="WikiaMainContentContainer" class="WikiaMainContentContainer">
 				<?php
-					if (!empty($wg->EnableForumExt) && !empty($wg->IsForum)) {
+					if (!empty($wg->EnableForumExt) && ForumHelper::isForum()) {
 						echo $app->renderView( 'ForumController', 'header' );
 					}
 
