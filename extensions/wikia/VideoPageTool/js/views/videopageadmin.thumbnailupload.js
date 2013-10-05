@@ -53,16 +53,17 @@ define( 'views.videopageadmin.thumbnailupload', [
 			$videoThumb = this.$el.find('.video-thumb');
 
 			img.create().done(function( response ) {
-				//
+
 				// Swap out the small thumbnail
-				if ( !$videoThumb.find('img').length ) {
-					$videoThumb.html( $('<img>' )
-						.addClass( 'Wikia-video-thumb' )
-						.attr( 'src', response.data.thumbUrl ) );
-				} else  {
+				if ( $videoThumb.find('img').length ) {
 					that.$el
 						.find( '.Wikia-video-thumb' )
 						.attr( 'src', response.data.thumbUrl );
+
+				} else {
+					$videoThumb.html( $('<img>' )
+						.addClass( 'Wikia-video-thumb' )
+						.attr( 'src', response.data.thumbUrl ) );
 				}
 
 				// Swap out the preview link href
@@ -74,8 +75,6 @@ define( 'views.videopageadmin.thumbnailupload', [
 				that.$el.find( '.alt-thumb' ).val( response.data.imageKey );
 				that.$el.find( '.alt-thumb-name' ).text( response.data.imageTitle );
 
-				// Set data-modified to true to show that custom thumb has been uploaded
-				$videoThumb.data('modified', true);
 			});
 		}
 	};
