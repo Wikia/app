@@ -28,8 +28,6 @@ $wgAutoloadClasses['RelatedHubsVideosController'] =  $dir . '/RelatedHubsVideosC
 /**
  * hooks
  */
-$wgHooks['BeforePageDisplay'][] = 'RelatedVideosHookHandler::onBeforePageDisplay';
-
 define('RELATEDVIDEOS_POSITION', 'RELATEDVIDEOS_POSITION');
 $wgHooks['LanguageGetMagic'][] = 'RelatedVideosHookHandler::onLanguageGetMagic';
 $wgHooks['InternalParseBeforeLinks'][] = 'RelatedVideosHookHandler::onInternalParseBeforeLinks';

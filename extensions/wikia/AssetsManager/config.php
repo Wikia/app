@@ -128,8 +128,6 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/AdEngine/js/Krux.run.js',
 		// WikiaBar is enabled sitewide
 		'//extensions/wikia/WikiaBar/js/WikiaBar.js',
-		// Chat is enabled sitewide
-		'//extensions/wikia/Chat2/js/ChatEntryPoint.js',
 		// Related Forum Discussion is on all article pages
 		'//extensions/wikia/Forum/js/RelatedForumDiscussion.js',
 		'//extensions/wikia/VideoEmbedTool/js/VET_Loader.js',
@@ -289,7 +287,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/CorporateFooter.js',
 		'//skins/oasis/js/buttons.js',
 		'//skins/oasis/js/WikiHeader.js',
-		'//skins/oasis/js/LatestPhotos.js',
 		'//skins/oasis/js/Interlang.js',
 		'//skins/oasis/js/WikiaNotifications.js',
 		'//skins/oasis/js/FirefoxFindFix.js',
@@ -306,7 +303,6 @@ $config['oasis_nojquery_shared_js'] = array(
 $config['oasis_anon_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//skins/oasis/js/LatestActivity.js',
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
