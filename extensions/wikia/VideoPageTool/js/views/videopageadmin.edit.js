@@ -189,7 +189,6 @@ define( 'views.videopageadmin.edit', [
 
 			// Rest the video thumb
 			this.$form.find( '.video-thumb' )
-				.data('modified', false)
 				.html( '' );
 
 			// Hide all thumbnail preview links
