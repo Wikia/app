@@ -17,8 +17,8 @@
 		<img class="Wikia-video-thumb" data-src="<?=$video['thumbnailData']['thumb'];?>" src="<?=( $preloaded ) ? $video['thumbnailData']['thumb'] : wfBlankImgUrl();?>" style="margin-top:<?= floor( ( $elementHeight - $video['thumbnailData']['height'] ) / 2 ); ?>px; height:<?=$video['thumbnailData']['height'];?>px; width:<?=$video['thumbnailData']['width'];?>px;" />
 	</a>
 	<div class="description">
-		<?=( strlen( $video['title'] ) > $maxDescriptionLength )
-			? substr( $video['title'], 0, $maxDescriptionLength).'&#8230;'
+		<?=( mb_strlen( $video['title'] ) > $maxDescriptionLength )
+			? mb_substr( $video['title'], 0, $maxDescriptionLength).'&#8230;'
 			: $video['title'];
 		?>
 	</div>
