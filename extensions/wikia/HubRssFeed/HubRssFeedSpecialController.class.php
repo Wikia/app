@@ -9,9 +9,18 @@
 
 class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
-	const PARAM_VERTICAL_ID = 'vertical';
-
 	const SPECIAL_NAME = 'HubRssFeed';
+
+	const CACHE_KEY = 'HubRssFeed';
+
+	const CACHE_TIME = 3600;
+
+	protected $hubs = [
+		'gaming' => WikiFactoryHub::CATEGORY_ID_GAMING,
+		'entertainment' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
+		'lifestyle' => WikiFactoryHub::CATEGORY_ID_LIFESTYLE
+	];
+
 	/**
 	 * @var HubRssFeedModel
 	 */
@@ -34,22 +43,40 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 	public function __construct() {
 		parent::__construct( self::SPECIAL_NAME, self::SPECIAL_NAME, false );
-		$this->model = new HubRssFeedModel();
+
 	}
 
 	public function index() {
 
-		$verticalId = $this->request->getInt( self::PARAM_VERTICAL_ID, WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT );
-		$title = SpecialPage::getTitleFor( self::SPECIAL_NAME );
-		$service = new HubRssFeedService();
+		$params = $this->request->getParams();
 
-		if ( !$this->model->isValidVerticalId( $verticalId ) ) {
-			throw new InvalidHubAttributeException(self::PARAM_VERTICAL_ID);
+		$hubName = strtolower( (string)$params[ 'par' ] );
+
+		if ( !isset($this->hubs[ $hubName ]) ) {
+			throw new InvalidHubAttributeException('hub name');
 		}
 
-		$data = $this->model->getDataFromModules( $verticalId );
+		$langCode = $this->app->wg->ContLang->getCode();
+		$this->model = new HubRssFeedModel($langCode);
 
-		$xml = $service->dataToXml( $data, $verticalId, $title->getFullUrl() );
+		$memcKey =  wfMemcKey(self::CACHE_KEY , $hubName , $langCode);
+
+		$xml = false;// $this->wg->memc->get( $memcKey );
+
+		if ( $xml === false ) {
+			$title = SpecialPage::getTitleFor( self::SPECIAL_NAME );
+
+			$service = new HubRssFeedService($langCode, $title->getFullUrl() . '/' . ucfirst($hubName));
+
+			$verticalId = $this->hubs[ $hubName ];
+
+			$data = $this->model->getRealData( $verticalId );
+
+			$xml = $service->dataToXml( $data, $verticalId );
+
+			$this->wg->memc->set( $memcKey, $xml, self::CACHE_TIME );
+
+		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_RAW );
 		$this->response->setBody( $xml );

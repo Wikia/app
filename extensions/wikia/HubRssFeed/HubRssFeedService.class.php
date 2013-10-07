@@ -25,34 +25,42 @@ class HubRssFeedService {
 			'd' => 'From Wikia community - Lifestyle'],
 	];
 
+	protected $lang;
 
-	public function dataToXml( $data, $verticalId, $url ) {
+	protected $url;
+
+	public function __construct( $lang, $url ) {
+		$this->lang = $lang;
+		$this->url = $url;
+	}
+
+
+	public function dataToXml( $data, $verticalId ) {
 		$doc = new DOMDocument();
 		$doc->loadXML( file_get_contents( dirname( __FILE__ ) . '/templates/rss.xml' ) );
 		$rssList = $doc->getElementsByTagName( 'rss' );
 		$rss = $rssList->item( 0 );
+		$channel = $rss->appendChild( new DOMElement('channel') );
 
 		$date = date( self::DATE_FORMAT );
 
-		self::appendTextNode( $doc, $rss, 'title', $this->descriptions[ $verticalId ][ 't' ] );
-		self::appendTextNode( $doc, $rss, 'description', $this->descriptions[ $verticalId ][ 'd' ] );
+		self::appendTextNode( $doc, $channel, 'title', $this->descriptions[ $verticalId ][ 't' ] );
+		self::appendTextNode( $doc, $channel, 'description', $this->descriptions[ $verticalId ][ 'd' ] );
 
-		self::appendTextNode( $doc, $rss, 'link', $url );
-		self::appendTextNode( $doc, $rss, 'language', 'en' );
-		self::appendTextNode( $doc, $rss, 'generator', 'MediaWiki 1.19.7' );
-		self::appendTextNode( $doc, $rss, 'lastBuildDate', $date );
+		self::appendTextNode( $doc, $channel, 'link', $this->url );
+		self::appendTextNode( $doc, $channel, 'language', $this->lang );
+		self::appendTextNode( $doc, $channel, 'generator', 'MediaWiki 1.19.7' );
+		self::appendTextNode( $doc, $channel, 'lastBuildDate', $date );
 
-
-		$channel = $rss->appendChild( new DOMElement('channel') );
 
 		foreach ( $data as $url => $item ) {
+			$itemNode = $channel->appendChild( new DOMElement('item') );
+			self::appendCDATA( $doc, $itemNode, 'title', $item[ 'title' ] );
+			self::appendCDATA( $doc, $itemNode, 'description', '<img src="' . $item[ 'img' ] . '"/><p>' . $item[ 'description' ] . '</p>' );
+			self::appendCDATA( $doc, $itemNode, 'url', $url );
 
-			self::appendCDATA( $doc, $channel, 'title', $item[ 'title' ] );
-			self::appendCDATA( $doc, $channel, 'description', '<img src="' . $item[ 'img' ] . '"/><p>' . $item[ 'description' ] . '</p>' );
-			self::appendCDATA( $doc, $channel, 'url', $url );
-
-			$channel->appendChild( new DOMElement('pubDate', $date) ); //date('c') ?
-			$channel->appendChild( new DOMElement('creator', 'Wikia', 'http://purl.org/dc/elements/1.1/') );
+			$itemNode->appendChild( new DOMElement('pubDate', date( self::DATE_FORMAT, $item[ 'timestamp' ] )) ); //date('c') ?
+			$itemNode->appendChild( new DOMElement('creator', 'Wikia', 'http://purl.org/dc/elements/1.1/') );
 		}
 
 		return $doc->saveXML();
