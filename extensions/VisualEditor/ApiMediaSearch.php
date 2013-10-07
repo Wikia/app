@@ -11,18 +11,21 @@ class ApiMediaSearch extends ApiBase {
 		// What are we looking for?
 		$query = $params['query'];
 
+		// Which batch?
+		$batch = $params['batch'];
+
 		// What type of media are we looking for?
 		$mediaTypeArray = explode( '|', $params['mediaType'] );
 		if ( count( $mediaTypeArray ) == 1 ) {
 			if ( in_array( 'video', $mediaTypeArray ) ) {
 				// video
 				$response = $this->formatResponse( [
-					$this->makeRequest( $query, true, false )
+					$this->makeRequest( $query, $batch, true, false )
 				] );
 			} else if ( in_array( 'photo', $mediaTypeArray ) ) {
 				// photo
 				$response = $this->formatResponse( [
-					$this->makeRequest( $query, false, true )
+					$this->makeRequest( $query, $batch, false, true )
 				] );
 			}
 		} else if (
@@ -33,13 +36,13 @@ class ApiMediaSearch extends ApiBase {
 			if ( isset( $params['separate'] ) && $params['separate'] == 'true' ) {
 				// video and photo separate
 				$response = $this->formatResponse( [
-					$this->makeRequest( $query, true, false ),
-					$this->makeRequest( $query, false, true )
+					$this->makeRequest( $query, $batch, true, false ),
+					$this->makeRequest( $query, $batch, false, true )
 				] );
 			} else {
 				// video and photo combined
 				$response = $this->formatResponse( [
-					$this->makeRequest( $query, false, false )
+					$this->makeRequest( $query, $batch, false, false )
 				] );
 			}
 		}
@@ -77,11 +80,11 @@ class ApiMediaSearch extends ApiBase {
 
 	}
 
-	private function makeRequest( $query, $videoOnly, $imageOnly ) {
+	private function makeRequest( $query, $batch = 1, $videoOnly, $imageOnly ) {
 		$searchConfig = (new Wikia\Search\Config())
 			->setQuery( $query )
 			->setLimit( 10 )
-			->setStart( 0 )
+			->setPage( $batch )
 			->setCombinedMediaSearch( true )
 			->setCombinedMediaSearchIsVideoOnly( $videoOnly )
 			->setCombinedMediaSearchIsImageOnly( $imageOnly );
@@ -140,6 +143,10 @@ class ApiMediaSearch extends ApiBase {
 			),
 			'separate' => array (
 				ApiBase::PARAM_TYPE => 'string',
+				ApiBase::PARAM_REQUIRED => false
+			),
+			'batch' => array (
+				ApiBase::PARAM_TYPE => 'integer',
 				ApiBase::PARAM_REQUIRED => false
 			),
 		);
