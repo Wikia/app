@@ -22,9 +22,41 @@ class RailController extends WikiaController {
 	}
 
 	/**
-	 * Entry point for lazy loading right rail
+	 * Entry point for lazy loading right rail for anon users
+	 */
+	public function executeLazyForAnons() {
+		wfProfileIn(__METHOD__);
+
+		$this->getLazyRail();
+
+		$this->response->setCacheValidity(
+			86400 /* 24h */,
+			86400 /* 24h */,
+			array(
+				WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
+
+		wfProfileOut(__METHOD__);
+	}
+
+	/**
+	 * Entry point for lazy loading right rail for logged in users
 	 */
 	public function executeLazy() {
+		wfProfileIn(__METHOD__);
+
+		$this->getLazyRail();
+
+		$this->response->setCacheValidity(null, null, []);
+
+		wfProfileOut(__METHOD__);
+	}
+
+	/**
+	 *
+	 */
+	protected function getLazyRail() {
 		wfProfileIn(__METHOD__);
 
 		$railModules = $this->filterModules((new BodyController)->getRailModuleList(), self::FILTER_LAZY_MODULES);
@@ -42,14 +74,6 @@ class RailController extends WikiaController {
 
 		$this->css = array_keys($this->app->wg->Out->styles);
 		$this->js = $this->app->wg->Out->getBottomScripts();
-
-		$this->response->setCacheValidity(
-			86400 /* 24h */,
-			86400 /* 24h */,
-			array(
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
 
 		wfProfileOut(__METHOD__);
 	}
