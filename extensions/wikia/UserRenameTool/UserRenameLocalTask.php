@@ -60,6 +60,12 @@ class UserRenameLocalTask extends BatchTask {
 		$newUsername = $this->mParams['rename_new_name'];
 		$requestorID = (int)$this->mParams['requestor_id'];
 		$notifyRenamed = $this->mParams['notify_renamed'];
+		$renameIP = $this->mParams['rename_ip'];
+
+		if ( $renameIP && ( !IP::isIPAddress( $oldUsername ) || !IP::isIPAddress( $newUsername ) ) ) {
+			$process->addLog( 'Invalid IP provided to process to rename IP address.' );
+			return false;
+		}
 
 		foreach($this->mParams as $key => &$param){
 			if($key == 'city_ids') continue;
@@ -84,12 +90,20 @@ class UserRenameLocalTask extends BatchTask {
 					$aconf = preg_replace("/\\.\\.\\//","",$aconf);
 				}
 
-				$cmd = "SERVER_ID={$cityId} php {$IP}/maintenance/wikia/RenameUser_local.php ".
-					"--rename-user-id {$this->mParams['rename_user_id']} --rename-old-name {$this->mParams['rename_old_name']} ".
-					"--rename-new-name {$this->mParams['rename_new_name']} --rename-fake-user-id {$this->mParams['rename_fake_user_id']} ".
-					"--phalanx-block-id {$this->mParams['phalanx_block_id']} ".
-					"--task-id {$this->mTaskID} --requestor-id {$this->mParams['requestor_id']} --reason {$this->mParams['reason']} ".
-					"--global-task-id {$this->mParams['global_task_id']} --conf {$wgWikiaLocalSettingsPath} --aconf {$aconf}";
+				if ( $renameIP ) {
+					$cmd = "SERVER_ID={$cityId} php {$IP}/maintenance/wikia/RenameUser_local.php " .
+						"--rename-user-id {$this->mParams['rename_user_id']} --rename-old-name {$this->mParams['rename_old_name']} " .
+						"--rename-new-name {$this->mParams['rename_new_name']} --task-id {$this->mTaskID} " .
+						"--requestor-id {$this->mParams['requestor_id']} --reason {$this->mParams['reason']} ".
+						"--rename-ip-address --conf {$wgWikiaLocalSettingsPath} --aconf {$aconf}";
+				} else {
+					$cmd = "SERVER_ID={$cityId} php {$IP}/maintenance/wikia/RenameUser_local.php ".
+						"--rename-user-id {$this->mParams['rename_user_id']} --rename-old-name {$this->mParams['rename_old_name']} ".
+						"--rename-new-name {$this->mParams['rename_new_name']} --rename-fake-user-id {$this->mParams['rename_fake_user_id']} ".
+						"--phalanx-block-id {$this->mParams['phalanx_block_id']} ".
+						"--task-id {$this->mTaskID} --requestor-id {$this->mParams['requestor_id']} --reason {$this->mParams['reason']} ".
+						"--global-task-id {$this->mParams['global_task_id']} --conf {$wgWikiaLocalSettingsPath} --aconf {$aconf}";
+				}
 
 				$this->addLog("Running {$cmd}");
 				$exitCode = null;
@@ -110,10 +124,12 @@ class UserRenameLocalTask extends BatchTask {
 
 		$requestorUser = User::newFromId($requestorID);
 
-		//mark user as renamed
-		$renamedUser = User::newFromName( $newUsername );
-		$renamedUser->setOption('wasRenamed', true);
-		$renamedUser->saveSettings();
+		if ( !$renameIP ) {
+			//mark user as renamed
+			$renamedUser = User::newFromName( $newUsername );
+			$renamedUser->setOption('wasRenamed', true);
+			$renamedUser->saveSettings();
+		}
 
 		//send e-mail to the user that rename process has finished
 		$notify = array( $requestorUser );

@@ -72,6 +72,21 @@ class RenameUserProcess {
 //		array( 'table' => '...', 'userid_column' => '...', 'username_column' => '...' ),
 	);
 
+	/**
+	 * Stores the predefined tasks to do for every local wiki database for IP addresses.
+	 * Here should be mentioned all core tables not connected to any extension.
+	 *
+	 * @var $mLocalIpDefaults array
+	 */
+	static private $mLocalIpDefaults = [
+		[ 'table' => 'archive', 'userid_column' => 'ar_user', 'username_column' => 'ar_user_text' ],
+		[ 'table' => 'filearchive', 'userid_column' => 'fa_user', 'username_column' => 'fa_user_text' ],
+		[ 'table' => 'ipblocks', 'userid_column' => 'ipb_user', 'username_column' => 'ipb_address' ],
+		[ 'table' => 'recentchanges', 'userid_column' => 'rc_user', 'username_column' => 'rc_user_text' ],
+		[ 'table' => 'revision', 'userid_column' => 'rev_user', 'username_column' => 'rev_user_text' ],
+		[ 'table' => 'abuse_filter_log', 'userid_column' => 'afl_user', 'username_column' => 'afl_user_text' ],
+	];
+
 	private $mRequestData = null;
 	private $mActionConfirmed = false;
 
@@ -84,6 +99,7 @@ class RenameUserProcess {
 	private $mRequestorId = 0;
 	private $mRequestorName = '';
 	private $mReason = null;
+	private $mRenameIP = false;
 
 	private $mErrors = array();
 	private $mWarnings = array();
@@ -731,8 +747,6 @@ class RenameUserProcess {
 	 * Processes specific local wiki database and makes all needed changes
 	 *
 	 * Important: should only be run within maintenace script (bound to specified wiki)
-	 *
-	 * @param $cityId int Wiki ID
 	 */
 	public function updateLocal(){
 		global $wgCityId, $wgUser;
@@ -842,6 +856,56 @@ class RenameUserProcess {
 		$wgUser = $wgOldUser;
 
 		wfProfileOut(__METHOD__);
+	}
+
+	/**
+	 * Processes specific local wiki database and makes all needed changes for an IP address
+	 *
+	 * Important: should only be run within maintenace script (bound to specified wiki)
+	 */
+	public function updateLocalIP() {
+		global $wgCityId, $wgUser;
+
+		wfProfileIn( __METHOD__ );
+
+		if ( $this->mUserId !== 0 || !IP::isIPAddress( $this->mOldUsername ) || !IP::isIPAddress( $this->mNewUsername ) ) {
+			$this->addError( wfMessage( 'userrenametool-error-invalid-ip' )->escaped() );
+			return;
+		}
+
+		$wgOldUser = $wgUser;
+		$wgUser = User::newFromName( 'Wikia' );
+
+		$cityDb = WikiFactory::IDtoDB( $wgCityId );
+		$this->addLog( "Processing wiki database: {$cityDb}." );
+
+		$dbw = wfGetDB(DB_MASTER);
+		$dbw->begin();
+		$tasks = self::$mLocalIpDefaults;
+
+		$hookName = 'UserRename::LocalIP';
+		$this->addLog( "Broadcasting hook: {$hookName}" );
+		wfRunHooks( $hookName, [ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ] );
+
+		foreach ( $tasks as $task ) {
+			$this->addLog( "Updating wiki \"{$cityDb}\": {$task['table']}:{$task['username_column']}" );
+			$this->renameInTable( $dbw, $task['table'], $this->mUserId, $this->mOldUsername, $this->mNewUsername, $task );
+		}
+
+		$hookName = 'UserRename::AfterLocalIP';
+		$this->addLog( "Broadcasting hook: {$hookName}" );
+		wfRunHooks( $hookName, [ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ] );
+
+		$dbw->commit();
+
+		$this->addLog( "Finished updating wiki database: {$cityDb}" );
+
+		$this->addMainLog( "log", RenameUserLogFormatter::wiki( $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $wgCityId, $this->mReason,
+			!empty( $this->warnings ) || !empty( $this->errors ) ) );
+
+		$wgUser = $wgOldUser;
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -1107,6 +1171,7 @@ class RenameUserProcess {
 			'mPhalanxBlockId' => 'phalanx_block_id',
 			'mReason' => 'reason',
 			'mLogTask' => 'local_task',
+			'mRenameIP' => 'rename_ip',
 		);
 
 		foreach ($mapping as $property => $key) {
