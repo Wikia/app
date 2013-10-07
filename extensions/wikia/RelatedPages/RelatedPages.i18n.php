@@ -262,7 +262,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'wikiarelatedpages-desc' => 'د اړونده مخونو يو لړليک په مخونو کې ورګډوي',
+	'wikiarelatedpages-desc' => 'د اړونده مخونو يو لړليک په مخونو کې ورگډوي',
 	'wikiarelatedpages-heading' => 'نور لوستل',
 );
 

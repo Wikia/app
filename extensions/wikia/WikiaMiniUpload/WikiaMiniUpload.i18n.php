@@ -76,9 +76,9 @@ $messages['en'] = array(
 	'wmu-file-protected' => 'This image is protected',
 	'wmu-file-error' => 'There was an error with the upload process, sorry. Please try again.',
 	'wmu-file-not-found' => 'File not found',
-	'wmu-error-under-height' => 'Image was less than the minimum height ($1 px)',
-	'wmu-error-under-width' => 'Image was less than the minimum width ($1 px)',
-	'wmu-error-under-width-height' => 'Image was less than the minimum dimensions ($1 x $2 px)',
+	'wmu-error-exact-height' => 'Image height must be exactly $1 px (got $2 px)',
+	'wmu-error-exact-width' => 'Image width must be exactly $1 px (got $2 px)',
+	'wmu-error-exact-width-height' => 'Image width and height must be exactly $1 x $3 px (got $2 x $4 px)',
 	'wmu-error-bad-aspect-ratio' => 'Aspect ratio is incorrect ($1 x $2 px)',
 );
 
@@ -116,10 +116,10 @@ $messages['qqq'] = array(
 	'wmu-gallery' => '{{Identical|Gallery}}',
 	'wmu-column' => '{{Identical|Column}}',
 	'wmu-file-not-found' => 'Message displayed when a file cannot be found during the image insert step of this extention.',
-	'wmu-error-under-height' => 'Error shown when the image selected/uploaded was shorter than the required height',
-	'wmu-error-under-width' => 'Error shown when the image selected/uploaded was narrower than the required width',
-	'wmu-error-under-width-height' => 'Error shown when the image selected/uploaded was smaller than the required dimensions',
-	'wmu-error-bad-aspect-ratio' => 'Error shown when the aspect ratio was incorrect'
+	'wmu-error-exact-height' => 'Error shown when the image selected/uploaded was not the required height',
+	'wmu-error-exact-width' => 'Error shown when the image selected/uploaded was not the required width',
+	'wmu-error-exact-width-height' => 'Error shown when the image selected/uploaded was not the required dimensions',
+	'wmu-error-bad-aspect-ratio' => 'Error shown when the aspect ratio was incorrect',
 );
 
 /** Afrikaans (Afrikaans)
@@ -2388,9 +2388,9 @@ $messages['ps'] = array(
 	'wmu-insert2' => 'دوتنه ورټومبل',
 	'wmu-insert3' => 'دا انځور ورټومبل',
 	'wmu-back' => 'يو بل انځور ټاکل',
-	'wmu-imagebutton' => 'انځورونه ورګډول',
+	'wmu-imagebutton' => 'انځورونه ورگډول',
 	'wmu-gallery' => 'انځورتون',
-	'wmu-gallery-btn1' => 'يو بل انځور ورګډول',
+	'wmu-gallery-btn1' => 'يو بل انځور ورگډول',
 	'wmu-more-options' => 'نورې خوښنې',
 	'wmu-fewer-options' => 'لږې خوښنې',
 );
@@ -3116,13 +3116,14 @@ $messages['yi'] = array(
  * @author Anakmalaysia
  * @author Gaoxuewei
  * @author Hydra
+ * @author Liuxinyu970226
  * @author Xiaomingyan
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'wmu-upload-image' => '上载图片',
-	'wmu-title' => '上传照片',
-	'wmu-upload' => '上传',
+	'wmu-title' => '上载图片',
+	'wmu-upload' => '上载',
 	'wmu-notlogged' => '登陆或者注册后从您的电脑中上传图片',
 	'wmu-find' => '寻找',
 	'wmu-thiswiki' => '本维基',
@@ -3151,7 +3152,7 @@ $messages['zh-hans'] = array(
 	'wmu-insert2' => '插入文件',
 	'wmu-prev' => '前 8 个',
 	'wmu-next' => '后 8 个',
-	'wmu-flickr2' => 'Flickr图片（$1 结果）',
+	'wmu-flickr2' => 'Flickr图片（$1个{{PLURAL:$1|结果|结果}}）',
 	'wmu-insert3' => '插入这个图片',
 	'wmu-recent-inf' => '最近上传的图片',
 	'wmu-thiswiki2' => '本维基图片（$1 结果）',

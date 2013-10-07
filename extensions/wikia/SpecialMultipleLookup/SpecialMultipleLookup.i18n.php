@@ -191,9 +191,13 @@ $messages['bs'] = array(
 );
 
 /** Catalan (català)
+ * @author Light of Cosmos
  * @author SMP
  */
 $messages['ca'] = array(
+	'multilookup' => 'Revisió múltiple',
+	'multilookupstitle' => 'Revisió múltiple',
+	'multilookupselectuser' => 'Cerca de comptes amb la mateixa IP entre múltiples wikis',
 	'right-multilookup' => "Cercar informació d'usuaris en múltiples wikis",
 );
 
@@ -1061,15 +1065,19 @@ $messages['yi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Hzy980512
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'specialmultiplelookup-desc' => '在多个wiki上提供用户信息查阅',
 	'multilookupgo' => '去',
+	'multilookupnotspecify' => '您尚未指定IP地址。',
 	'multilookupnext' => '下一步',
 	'multilookupprevious' => '前一步',
+	'multilookupnoresultfound' => '找不到结果！',
 	'multilookupwiki' => '维基',
 	'multilookupdetails' => '查看资讯',
+	'multilookupwikiurl' => 'URL',
 	'multilookupwikititle' => '标题',
 	'multilookupwikioptions' => '选择',
 );

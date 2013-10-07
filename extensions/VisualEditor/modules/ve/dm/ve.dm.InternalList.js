@@ -416,7 +416,12 @@ ve.dm.InternalList.prototype.sortGroupIndexes = function ( group ) {
  * @returns {ve.dm.InternalList} Clone of this internal
  */
 ve.dm.InternalList.prototype.clone = function ( doc ) {
-	return new this.constructor( doc || this.getDocument() );
+	var clone = new this.constructor( doc || this.getDocument() );
+	// Most properties don't need to be copied, because addNode() will be invoked when the new
+	// document tree is built. But some do need copying:
+	clone.nextUniqueNumber = this.nextUniqueNumber;
+	clone.itemHtmlQueue = ve.copy( this.itemHtmlQueue );
+	return clone;
 };
 
 /**

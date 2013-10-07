@@ -172,6 +172,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		$this->moduleView = $this->app->renderView( 'VideoPageAdminSpecial', $section, array( 'videos' => $videos, 'date' => $date, 'language' => $language ) );
 		$this->publishButton = ( $program->isPublishable( array_keys( $sections ) ) ) ? '' : 'disabled';
 		$this->publishUrl = $this->wg->Title->getLocalURL( array('date' => $date, 'language' => $language) );
+		$this->publishDate = $program->getFormattedPublishDate();
 
 		$this->section = $section;
 		// TODO: not sure if these are needed in edit(), just in the sub views like "featured" etc.

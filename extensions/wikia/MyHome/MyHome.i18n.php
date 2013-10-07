@@ -2809,16 +2809,16 @@ $messages['ps'] = array(
 	'myhome-feed-move' => 'مخ ولېږدېده',
 	'myhome-feed-talkpage' => 'د خبرو اترو مخ',
 	'myhome-feed-blogcomment' => 'د بلاګ تبصره',
-	'myhome-feed-delete' => 'ړنګ شو',
-	'myhome-feed-image' => 'انځور ورګډ شو',
+	'myhome-feed-delete' => 'ړنگ شو',
+	'myhome-feed-image' => 'انځور ورگډ شو',
 	'myhome-feed-video' => 'ويډيو ورګډه شوه',
 	'myhome-feed-categorization' => 'ډلبندي',
 	'myhome-feed-created-by' => 'د $1 لخوا جوړ شو',
-	'myhome-feed-added-by' => 'د $1 لخوا ورګډ شو',
+	'myhome-feed-added-by' => 'د $1 لخوا ورگډ شو',
 	'myhome-feed-edited-by' => 'د $1 لخوا سم شو',
 	'myhome-feed-posted-by' => 'د $1 لخوا پوست شو',
 	'myhome-feed-comment-by' => 'تبصره د $1 لخوا',
-	'myhome-feed-deleted-by' => 'د $1 لخوا ړنګ شو',
+	'myhome-feed-deleted-by' => 'د $1 لخوا ړنگ شو',
 	'myhome-feed-moved-by' => 'د $1 لخوا ولېږدېده',
 	'myhome-feed-by' => 'د $1 لخوا',
 	'myhome-feed-new-page-details' => 'نوی مخ',
@@ -2827,10 +2827,10 @@ $messages['ps'] = array(
 	'myhome-feed-new-blog-post-details' => 'نوی بلاګ',
 	'myhome-feed-new-blog-comment-details' => 'تبصره',
 	'myhome-feed-new-article-comment-details' => 'تبصره',
-	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|انځور ورګډ شو|انځورونه ورګډ شوه}}',
-	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|ويډيو ورګډه شوه|ويډيوګانې ورګډې شوې}}',
-	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|وېشنيزه ورګډه شوه|وېشنيزې ورګډې شوې}}',
-	'myhome-hot-spots-number-of-editors' => 'سمونګران',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|انځور ورگډ شو|انځورونه ورگډ شوه}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|ويډيو ورگډه شوه|ويډيوگانې ورگډې شوې}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|وېشنيزه ورگډه شوه|وېشنيزې ورگډې شوې}}',
+	'myhome-hot-spots-number-of-editors' => 'سمونگران',
 	'myhome-namespace-blog' => 'بلاګ',
 	'myhome-community-corner-header' => 'د ټولنې پيغام',
 	'myhome-community-corner-edit' => 'پيغام سمول',
@@ -2838,18 +2838,18 @@ $messages['ps'] = array(
 
 دا مخ په همدې ويکي باندې د هغو پېښو په اړه چې تازه پېښې شوي، له تاسې سره مرسته کوي.
 
-که تاسې د دې ويکي بنسټګر او يا هم پازوال ياست، نو تاسې د دې ويکي د ټولنې سره د اهمو شيانو او پېښو اړوند د خبرو اترو په تکل  دا پيغام بدلولی شی. 
-د بېلګې په توګه، تاسې کولای شی چې:
+که تاسې د دې ويکي بنسټگر او يا هم پازوال ياست، نو تاسې د دې ويکي د ټولنې سره د اهمو شيانو او پېښو اړوند د خبرو اترو په تکل  دا پيغام بدلولی شی. 
+د بېلگې په توگه، تاسې کولای شی چې:
 
-* يوه داسې پروژه ترتيب کړی چې د دې ويکي د بېلابېلو برخو د جوړ سبب شي
+* يوه داسې پروژه ترتيب کړی چې د دې ويکي د بېلابېلو برخو د جوړېدو سبب شي
 
 * هغه نوي مخونه چې هر څوک يې بايد وکتلای شي دلته ښکاره کړۍ
 
-* نور خلک د دې وېبځي د پېښو په اړه د خبرو اترو ګردي مېز او يا بحثونو کې ښکېل کړۍ
+* نور خلک د دې وېبځي د پېښو په اړه د خبرو اترو گردي مېز او يا بحثونو کې ښکېل کړۍ
 
-* د دې ويکي پر کارن چې دې وېبځي سره يې په ځانګړې ونډه کې ګډون کړی وي وستايل شي
+* د دې ويکي کارن چې دې وېبځي سره يې په ځانگړې ونډه کې گډون کړی وي وستايل شي
 
-* او يا هم يوازې د تشويق او د نورو د لېواله کولو لپاره خوږې خبرې وليکۍ!",
+* او يا هم يوازې د تشويق او د نورو د هڅولو لپاره خوږې خبرې وليکۍ!",
 	'tooltip-pt-myhome' => 'زما کورپاڼې ته ورتلل',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|يو پيغام|$1 پيغامونه}}',
 );
