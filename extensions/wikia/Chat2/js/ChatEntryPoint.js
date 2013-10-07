@@ -3,8 +3,17 @@
 var ChatEntryPoint = {
 	loading: false,
 	chatLaunchModal: null,
+	bindComplete: false,
 
 	init: function() {
+		if ( !ChatEntryPoint.bindComplete ) {
+			$('body').on('click', '.WikiaChatLink', function(event) {
+				event.preventDefault();
+				event.stopPropagation();
+				ChatEntryPoint.onClickChatButton(this.href);
+			});
+			ChatEntryPoint.bindComplete = true;
+		}
 		// check if content was pre-rendered to JS variable
 		if (window.wgWikiaChatUsers) {
 			ChatEntryPoint.initEntryPoint();
@@ -195,13 +204,8 @@ var ChatEntryPoint = {
 	}
 };
 
-if ( typeof wgWikiaChatUsers!=="undefined" ) {
-    $(function() {
+if ( typeof wgWikiaChatUsers !== "undefined" ) {
+	$(function() {
 		ChatEntryPoint.init();
-		$('body').on('click', '.WikiaChatLink', function(event) {
-			event.preventDefault();
-			event.stopPropagation();
-			ChatEntryPoint.onClickChatButton(this.href);
-		});
-    });
+	});
 }

@@ -34,6 +34,10 @@ $(function() {
 					});
 				}
 
+				if ( window.ChatEntryPoint ) {
+					window.ChatEntryPoint.init();
+				}
+
 				if ( window.Wikia && window.Wikia.initRailTracking ) {
 					Wikia.initRailTracking();
 				}
