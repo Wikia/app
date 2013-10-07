@@ -2426,6 +2426,7 @@ Muốn kiểm soát email mà bạn nhận được? Đi đến: {{fullurl:{{ns:
 /** Simplified Chinese (中文（简体）‎)
  * @author Bencmq
  * @author Dimension
+ * @author Hzy980512
  * @author Sam Wang
  * @author Xiaomingyan
  * @author Yfdyh000
@@ -2464,6 +2465,7 @@ $messages['zh-hans'] = array(
 	'userlogin-error-mail-error' => '哦，关于错误的信息已发送至您的信箱，请[[Special:Contact/general|联系我们]]。',
 	'userlogin-password-email-sent' => '我们已将新密码寄至该邮箱$1。',
 	'userlogin-error-unconfirmed-user' => '抱歉，您的电子邮件还未得到确认。请先确认。',
+	'userlogin-error-confirmation-reminder-already-sent' => '验证提醒邮件已经发送。',
 	'userlogin-password-page-title' => '更改您的密码',
 	'userlogin-oldpassword' => '旧密码',
 	'userlogin-newpassword' => '新密码',

@@ -12,11 +12,6 @@ class ForumController extends WallBaseController {
 		$this->response->addAsset( 'extensions/wikia/Forum/css/Forum.scss' );
 	}
 
-	public function setIsForum() {
-		$this->response->setJsVar( 'wgIsForum', true );
-		$this->wg->IsForum = true;
-	}
-
 	public function board() {
 		$ns = $this->wg->Title->getNamespace();
 
@@ -31,7 +26,6 @@ class ForumController extends WallBaseController {
 		}
 
 		parent::index(self::BOARD_PER_PAGE);
-		$this->setIsForum();
 
 		JSMessages::enqueuePackage( 'Wall', JSMessages::EXTERNAL );
 		$this->response->addAsset( 'forum_js' );
@@ -122,7 +116,6 @@ class ForumController extends WallBaseController {
 	public function boardThread() {
 		wfProfileIn( __METHOD__ );
 
-		$this->setIsForum();
 		$wallMessage = $this->getWallMessage();
 		if ( !($wallMessage instanceof WallMessage) ) {
 			wfProfileOut( __METHOD__ );

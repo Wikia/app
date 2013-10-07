@@ -644,13 +644,13 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'wva-success' => 'د $1 ويډيو مخ په برياليتوب سره ورګډ شو.',
+	'wva-success' => 'د $1 ويډيو مخ په برياليتوب سره ورگډ شو.', # Fuzzy
 	'wva-success-replaced' => 'د $1 ويډيو مخ په برياليتوب سره ځايناستی شو.',
 	'wva-failure' => 'لطفاً سم پاراميټرونه ورکړۍ.',
 	'wva-name' => 'نوم يې وليکۍ:',
 	'wva-url' => 'URL يې وليکۍ:',
-	'wva-add' => 'ورګډول',
-	'wva-title' => 'په چټکۍ له يو آر اېل (URL) نه ويډيو ورګډول',
+	'wva-add' => 'ورگډول',
+	'wva-title' => 'په چټکۍ له يو آر اېل (URL) نه ويډيو ورگډول',
 	'wva-notlogged' => 'د ويډيو د ورننوېستلو لپاره پکار ته چې تاسې غونډال ته ننوځۍ او يا هم ځان ثبت کړی.',
 	'wva-notallowed' => 'تاسې په دې ويکي کې ويډيو نه شی ورننوېستلی.',
 	'wva-protected' => 'دا ويډيو ژغورل شوې',

@@ -42,40 +42,39 @@ define( 'views.videopageadmin.thumbnailupload', [
 			this.$window.off( 'WMU_addFromSpecialPage' );
 
 			var img,
-					that = this,
-					$videoThumb;
+				that = this,
+				$videoThumb;
 
 			img = new ThumbnailModel({
-					imgTitle: data.imageTitle,
-					wikiText: data.imageWikiText
-				});
+				imgTitle: data.imageTitle,
+				wikiText: data.imageWikiText
+			});
 
 			$videoThumb = this.$el.find('.video-thumb');
 
 			img.create().done(function( response ) {
-					//
-					// Swap out the small thumbnail
-					if ( !$videoThumb.find('img').length ) {
-						$videoThumb.html( $('<img>' )
-							.addClass( 'Wikia-video-thumb' )
-							.attr( 'src', response.data.thumbUrl ) );
-					} else  {
-						that.$el
-							.find( '.Wikia-video-thumb' )
-							.attr( 'src', response.data.thumbUrl );
-					}
 
-					// Swap out the preview link href
-					// And fade in the preview link
-					that.$el.find( '.preview-large-link' )
-						.attr( 'href', response.data.largeThumbUrl )
-						.fadeIn( 200 );
+				// Swap out the small thumbnail
+				if ( $videoThumb.find('img').length ) {
+					that.$el
+						.find( '.Wikia-video-thumb' )
+						.attr( 'src', response.data.thumbUrl );
 
-					that.$el.find( '.alt-thumb' ).val( response.data.imageKey );
-					that.$el.find( '.alt-thumb-name' ).text( response.data.imageTitle );
+				} else {
+					$videoThumb.html( $('<img>' )
+						.addClass( 'Wikia-video-thumb' )
+						.attr( 'src', response.data.thumbUrl ) );
+				}
 
-					// Set data-modified to true to show that custom thumb has been uploaded
-					$videoThumb.data('modified', true);
+				// Swap out the preview link href
+				// And fade in the preview link
+				that.$el.find( '.preview-large-link' )
+					.attr( 'href', response.data.largeThumbUrl )
+					.fadeIn( 200 );
+
+				that.$el.find( '.alt-thumb' ).val( response.data.imageKey );
+				that.$el.find( '.alt-thumb-name' ).text( response.data.imageTitle );
+
 			});
 		}
 	};

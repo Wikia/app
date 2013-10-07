@@ -657,7 +657,7 @@ $messages['ps'] = array(
 	'window-article-button-close' => 'تړل',
 	'window-article-button-back' => 'پر شا',
 	'window-article-menu-search-label' => 'پلټنه',
-	'window-article-menu-cancel-label' => 'ناګارل',
+	'window-article-menu-cancel-label' => 'ناگارل',
 	'alert-download-updated-wikis-button-ok' => 'ښه',
 );
 

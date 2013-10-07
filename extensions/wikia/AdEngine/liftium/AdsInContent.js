@@ -1,6 +1,6 @@
 // AdsInContent2 a.k.a. AIC2
 var AIC2 = {
-	$placeHolder    : $('#WikiaAdInContentPlaceHolder'),
+	$placeHolder    : false,
 	fingerprint     : 'b',
 	called          : false,
 	startPosition   : 0,
@@ -12,6 +12,8 @@ var AIC2 = {
 
 AIC2.init = function() {
 	var $window = $(window);
+
+	AIC2.$placeHolder = $('#WikiaAdInContentPlaceHolder');
 
 	Liftium.d("AIC2: init", 5);
 

@@ -51,6 +51,11 @@ class ChatEntryPoint {
 			$html = $template->render( 'entryPointTagMonobook' );
 		}
 
+		$html .= JSSnippets::addToStack(
+			[ '/extensions/wikia/Chat2/js/ChatEntryPoint.js' ],
+			[],
+			'ChatEntryPoint.init'
+		);
 		// remove newlines so parser does not try to wrap lines into paragraphs
 		$html = str_replace( "\n", "", $html );
 

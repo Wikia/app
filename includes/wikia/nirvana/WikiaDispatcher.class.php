@@ -177,8 +177,13 @@ class WikiaDispatcher {
 				$controller->setApp( $app );
 				$controller->init();
 
-				// Actually call the controller::method!
-				$result = $controller->$method( $params );
+				if ( method_exists( $controller, 'preventUsage' ) && $controller->preventUsage( $controller->getContext()->getUser(), $method ) ) {
+					$result = false;
+				} else {
+					// Actually call the controller::method!
+					$result = $controller->$method( $params );
+				}
+
 				if($result === false) {
 				   // skip template rendering when false returned
 				   $controller->skipRendering();
