@@ -18,8 +18,7 @@ class ImageFigureVisitor extends DOMNodeVisitorBase {
 			DomHelper::isElement( $currentNode, 'figure' )
 			&& DomHelper::isElement( $currentNode->childNodes->item(0), 'a' )
 			&& DomHelper::isElement( $currentNode->childNodes->item(0)->childNodes->item(0), 'img' )
-			&& DomHelper::isElement( $currentNode->childNodes->item(2), 'figcaption' )
-			&& DomHelper::isTextNode( $currentNode->childNodes->item(2)->childNodes->item(0) );
+			&& DomHelper::isElement( $currentNode->childNodes->item(2), 'figcaption' );
 	}
 
 	/**
