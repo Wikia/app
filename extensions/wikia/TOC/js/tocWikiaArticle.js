@@ -187,8 +187,8 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 
 		// reset hasTOC flag for each time preview modal is opened
 		$(window).on('EditPageAfterRenderPreview', function() {
-			hasTOC = (window.wgUserName == null);
-			if ( isNewTOC() ) {
+			hasTOC = false;
+			if (isNewTOC() && window.wgUserName !== null) {
 				initTOC();
 			}
 		});
