@@ -1,5 +1,4 @@
 <?php
-
 $messages = array();
 
 $messages['en'] = array(
@@ -41,6 +40,16 @@ $messages['en'] = array(
 	// Components
 	'styleguide-components-header' => 'Components',
 	'styleguide-components-header-tagline' => 'Wikia UI styleguide re-usable elements',
+	'styleguide-examples-headline' => 'Examples',
+	'styleguide-types-headline' => 'Accepted configuration values',
+	'styleguide-types-param-cell-headline' => 'Parameter',
+	'styleguide-types-template-var-cell-headline' => 'Template variable',
+	'styleguide-types-type-cell-headline' => 'Type',
+	'styleguide-types-value-object-cell-headline' => 'value/object',
+	'styleguide-types-desc-cell-headline' => 'Description',
+	'styleguide-types-type-headline' => 'Type: $1',
+	'styleguide-show-parameters' => '(show parameters table)',
+	'styleguide-hide-parameters' => '(hide parameters table)',
 );
 
 $messages['pl'] = array(
@@ -84,6 +93,16 @@ $messages['pl'] = array(
 	// Components
 	'styleguide-components-header' => 'Komponenty',
 	'styleguide-components-header-tagline' => 'Elementy wielokrotnego użytku Wikia Styleguide',
+	'styleguide-examples-headline' => 'Przykłady użycia',
+	'styleguide-types-headline' => 'Akceptowane wartości konfiguracyjne',
+	'styleguide-types-param-cell-headline' => 'Parametr',
+	'styleguide-types-template-var-cell-headline' => 'Zmienna szablonowa',
+	'styleguide-types-type-cell-headline' => 'Typ',
+	'styleguide-types-value-object-cell-headline' => 'wartość/obiekt',
+	'styleguide-types-desc-cell-headline' => 'Opis',
+	'styleguide-types-type-headline' => 'Typ: $1',
+	'styleguide-show-parameters' => '(pokaż tabelę parametrów)',
+	'styleguide-hide-parameters' => '(ukryj tabelę parametrów)',
 );
 
 /** Message documentation (Message documentation)
@@ -121,22 +140,14 @@ $messages['qqq'] = array(
 	// Components
 	'styleguide-components-header' => "Header for Styleguide's components page",
 	'styleguide-components-header-tagline' => "Tagline for Styleguide's components page",
-
-	'styleguide-name-buttons' => 'Name of section which describes Wikia button component, which code is reusable and configurable and may be use by developers.',
-	'styleguide-description-button' => 'Description for Wikia button component, which code is reusable and configurable and may be use by developers.',
-	'styleguide-description-link-button' => 'Description for Wikia button component made from anchor, which code is reusable and configurable and may be use by developers.',
-	'styleguide-description-input-button' => 'Description for Wikia button component made from input selector, which code is reusable and configurable and may be use by developers.',
-	'styleguide-description-simple-button' => 'Description for Wikia button component made from input selector, which code is reusable and configurable and may be use by developers.',
-
-	'styleguide-name-dropdown' => 'Name of section which describes Wikia dropdown component, which code is reusable and configurable and may be use by developers.',
-	'styleguide-description-dropdown' => 'Description for Wikia dropdown component, which code is reusable and configurable and may be use by developers.',
-
-	'styleguide-name-modal' => 'Name of section which describes Wikia modal component, which code is reusable and configurable and may be use by developers.',
-	'styleguide-description-modal' => 'Description for Wikia modal component, which code is reusable and configurable and may be use by developers.',
-
-	'styleguide-name-thumbnail' => 'Name of section which describes Wikia thumbnail component, which code is reusable and configurable and may be use by developers.',
-	'styleguide-description-thumbnail' => 'Description for Wikia thumbnail component, which code is reusable and configurable and may be use by developers.',
-
-	'styleguide-name-tooltip' => 'Name of section which describes Wikia tooltip component, which code is reusable and configurable and may be use by developers.',
-	'styleguide-description-tooltip' => 'Description for Wikia tooltip component, which code is reusable and configurable and may be use by developers.',
+	'styleguide-examples-headline' => "Headline before examples' section; the examples section have short description of examples and components examples' markup",
+	'styleguide-types-headline' => "Headline before section with components' types and their parameters' tables",
+	'styleguide-types-param-cell-headline' => "Parameter column headline; the column contains different names of components' parameters",
+	'styleguide-types-template-var-cell-headline' => "Template variable column headline; the column contains different names of components' template variables",
+	'styleguide-types-type-cell-headline' => "Type column headline; the column contains different types of components' parameters",
+	'styleguide-types-value-object-cell-headline' => "Value/object column headline; the column contains available values of enum type parameters or available fields of object parameter with the types of these fields",
+	'styleguide-types-desc-cell-headline' => 'Description column headline; the column contains descriptions of different parameters',
+	'styleguide-types-type-headline' => "Components' types headline; each component might have different types i.e.: default, link and button; $1 parameters is the name of component's type next to this headline is a link when clicked shows table of parameters",
+	'styleguide-show-parameters' => "Links next to component's types when clicked it shows parameters table",
+	'styleguide-hide-parameters' => "Links next to component's types when clicked it hides parameters table",
 );

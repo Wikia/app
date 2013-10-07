@@ -24,6 +24,8 @@ ve.inheritClass( ve.ui.AnnotationAction, ve.ui.Action );
 
 /* Static Properties */
 
+ve.ui.AnnotationAction.static.name = 'annotation';
+
 /**
  * List of allowed methods for the action.
  *
@@ -109,4 +111,4 @@ ve.ui.AnnotationAction.prototype.clearAll = function () {
 
 /* Registration */
 
-ve.ui.actionFactory.register( 'annotation', ve.ui.AnnotationAction );
+ve.ui.actionFactory.register( ve.ui.AnnotationAction );

@@ -54,7 +54,7 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Memcache key for CSS Updates
 	 */
-	const MEMC_KEY = 'css-chrome-updates-v2.0';
+	const MEMC_KEY = 'css-chrome-updates-v2.1';
 
 	/**
 	 * @desc Memcache key suffix for CSS Updates headline
@@ -341,7 +341,7 @@ class SpecialCssModel extends WikiaModel {
 				'userAvatar' => AvatarService::renderAvatar( $blogUser, 25 ),
 				'userUrl' => $userPage->getFullUrl(),
 				'userName' => $blogUser,
-				'timestamp' => $this->wg->Lang->date( wfTimestamp( TS_MW, $timestamp ) ),
+				'timestamp' => $timestamp,
 				'text' => $cssUpdateText,
 			];
 		}

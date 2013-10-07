@@ -950,12 +950,12 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'categoryselect-button-add' => 'وېشنيزه ورګډول',
-	'categoryselect-button-cancel' => 'ناګارل',
+	'categoryselect-button-cancel' => 'ناگارل',
 	'categoryselect-button-save' => 'خوندي کول',
-	'categoryselect-category-add' => 'وېشنيزه ورګډول...',
+	'categoryselect-category-add' => 'وېشنيزه ورگډول...',
 	'categoryselect-category-edit' => 'وېشنيزه سمول',
 	'categoryselect-category-remove' => 'وېشنيزه غورځول',
-	'categoryselect-edit-summary' => 'وېشنيزې ورګډول',
+	'categoryselect-edit-summary' => 'وېشنيزې ورگډول',
 	'categoryselect-error-article-doesnt-exist' => 'د [id=$1] ليکنه نشته.',
 	'categoryselect-error-db-locked' => 'توکبنسټ تړل شوی.',
 	'categoryselect-error-duplicate-category-name' => 'د "$1" وېشنيزه له پخوا څخه شته.',

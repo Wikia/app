@@ -43,17 +43,19 @@ class DumpsOnDemand {
 		$tmpl->set( "isAnon", $wgUser->isAnon() );
 
 		$sTimestamp = self::getLatestDumpTimestamp( $wgCityId );
+		$tmpl->set( 'nolink', false);
 		if ( empty( $sTimestamp ) ) {
 			$sTimestamp = wfMessage( 'dump-database-last-unknown' )->escaped();
+			$tmpl->set( 'nolink', true );
 		}
 
 		$tmpl->set( "curr", array(
-			"url" => 's3://wikia_xml_dumps/' . self::getPath( "{$wgDBname}_pages_current.xml.gz" ),
+			"url" => 'http://s3.amazonaws.com/wikia_xml_dumps/' . self::getPath( "{$wgDBname}_pages_current.xml.gz" ),
 			"timestamp" => $sTimestamp
 		));
 
 		$tmpl->set( "full", array(
-			"url" => 's3://wikia_xml_dumps/' . self::getPath( "{$wgDBname}_pages_full.xml.gz" ),
+			"url" => 'http://s3.amazonaws.com/wikia_xml_dumps/' . self::getPath( "{$wgDBname}_pages_full.xml.gz" ),
 			"timestamp" => $sTimestamp
 		));
 

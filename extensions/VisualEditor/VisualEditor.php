@@ -267,7 +267,6 @@ $wgResourceModules += array(
 			've/ve.Factory.js',
 			've/ve.Range.js',
 			've/ve.Node.js',
-			've/ve.NamedClassFactory.js',
 			've/ve.BranchNode.js',
 			've/ve.LeafNode.js',
 			've/ve.Element.js',
@@ -296,11 +295,11 @@ $wgResourceModules += array(
 			've/dm/ve.dm.DataString.js',
 			've/dm/ve.dm.Document.js',
 			've/dm/ve.dm.LinearData.js',
-			've/dm/ve.dm.DocumentSlice.js',
 			've/dm/ve.dm.DocumentSynchronizer.js',
 			've/dm/ve.dm.IndexValueStore.js',
 			've/dm/ve.dm.Converter.js',
 
+			've/dm/lineardata/ve.dm.SlicedLinearData.js',
 			've/dm/lineardata/ve.dm.ElementLinearData.js',
 			've/dm/lineardata/ve.dm.MetaLinearData.js',
 
@@ -493,10 +492,11 @@ $wgResourceModules += array(
 
 			've/ui/layouts/ve.ui.FieldsetLayout.js',
 			've/ui/layouts/ve.ui.GridLayout.js',
+			've/ui/layouts/ve.ui.PagedLayout.js',
+			've/ui/layouts/ve.ui.PagedOutlineLayout.js',
 			've/ui/layouts/ve.ui.PanelLayout.js',
 			've/ui/layouts/ve.ui.StackPanelLayout.js',
 
-			've/ui/dialogs/ve.ui.PagedDialog.js',
 			've-mw/ui/dialogs/ve.ui.MWMetaDialog.js',
 			've-mw/ui/dialogs/ve.ui.MWBetaWelcomeDialog.js',
 			've-mw/ui/dialogs/ve.ui.MWMediaInsertDialog.js',
@@ -664,6 +664,7 @@ $wgResourceModules += array(
 			'visualeditor-parameter-search-unknown',
 			'visualeditor-reference-input-placeholder',
 			'visualeditor-referencelist-isempty',
+			'visualeditor-referencelist-isempty-default',
 			'visualeditor-referencelist-missingref',
 			'visualeditor-savedialog-error-badtoken',
 			'visualeditor-savedialog-label-create',
@@ -721,6 +722,7 @@ $wgResourceModules += array(
 		'dependencies' => array(
 			'ext.visualEditor.core',
 			'jquery.uls',
+			'ext.visualEditor.syntaxHighlight',
 		),
 		'messages' => array(
 			// VE messages needed by code that is only in experimental mode
@@ -750,6 +752,28 @@ $wgResourceModules += array(
 		'styles' => array(
 			've/ui/styles/ve.ui.Icons-vector.css',
 			've-mw/ui/styles/ve.ui.Icons-vector.css',
+		),
+	),
+	'ext.visualEditor.syntaxHighlight' => $wgVisualEditorResourceTemplate + array(
+		'scripts' => array(
+			'syntaxhighlight/ve.dm.MWSyntaxHighlightNode.js',
+			'syntaxhighlight/ve.ce.MWSyntaxHighlightNode.js',
+			'syntaxhighlight/ve.ui.MWSyntaxHighlightTool.js',
+			'syntaxhighlight/ve.ui.MWSyntaxHighlightDialog.js',
+			'syntaxhighlight/ve.ui.MWSyntaxHighlightSimpleSurface.js',
+			'syntaxhighlight/helpers/ve.ce.MWSyntaxHighlightHighlighter.js',
+			'syntaxhighlight/helpers/ve.dm.MWSyntaxHighlightTokenizer.js',
+			'syntaxhighlight/helpers/ve.ce.MWSyntaxHighlightValidator.js',
+		),
+		'dependencies' => array(
+			'ext.visualEditor.core',
+		),
+		'messages' => array(
+			'visualeditor-dialog-syntaxhighlight-title',
+			'visualeditor-dialogbutton-syntaxhighlight-tooltip',
+		),
+		'styles' => array(
+			'syntaxhighlight/styles/ve.ui.MWSyntaxHighlight.css',
 		),
 	),
 );

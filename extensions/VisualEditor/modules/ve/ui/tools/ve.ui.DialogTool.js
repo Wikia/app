@@ -76,6 +76,8 @@ ve.ui.DialogTool.prototype.onSelect = function () {
  */
 ve.ui.DialogTool.prototype.onUpdateState = function ( nodes ) {
 	if ( nodes.length ) {
-		this.setActive( ve.ui.toolFactory.getToolForNode( nodes[0] ) === this.constructor );
+		this.setActive(
+			this.toolbar.getToolFactory().getToolForNode( nodes[0] ) === this.constructor
+		);
 	}
 };

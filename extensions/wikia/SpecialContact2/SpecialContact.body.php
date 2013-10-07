@@ -76,10 +76,9 @@ class ContactForm extends SpecialPage {
 
 		if( $wgRequest->wasPosted() ) {
 
-			if( $wgUser->isAnon() && class_exists( $wgCaptchaClass ) ){
+			if( $wgUser->isAnon() && class_exists( $wgCaptchaClass ) ) {
 				$captchaObj = new $wgCaptchaClass();
-				//$captchaObj->retrieveCaptcha();
-				$info = $captchaObj->retrieveCaptcha();
+				$info = $captchaObj->passCaptcha();
 			}
 
 			#ubrfzy note: these were moved inside to (lazy) prevent some stupid bots
@@ -136,11 +135,9 @@ class ContactForm extends SpecialPage {
 			}
 
 			#captcha
-			if($wgUser->isAnon()){ // logged in users don't need the captcha (RT#139647)
-				if( class_exists( $wgCaptchaClass ) && !( !empty($info) &&  $captchaObj->keyMatch( $wgRequest->getVal('wpCaptchaWord'), $info )))  {
-					$this->err[] = wfMsg('specialcontact-captchafail');
-					$this->errInputs['wpCaptchaWord'] = true;
-				}
+			if( $wgUser->isAnon() && class_exists( $wgCaptchaClass ) && !$info ) { // logged in users don't need the captcha (RT#139647)
+				$this->err[] = wfMsg('specialcontact-captchafail');
+				$this->errInputs['wpCaptchaWord'] = true;
 			}
 
 			#no errors?
