@@ -19,10 +19,19 @@ class AmericandadWrapperVisitor extends DOMNodeVisitorBase {
 		return DomHelper::isElement( $currentNode, 'div' ) &&
 			$currentNode->childNodes->length > 0 &&
 			$currentNode->hasAttribute('style') &&
-			$currentNode->getAttribute('style') === 'clear:both; width:100%; border:2px solid #1E90FF; background-color:#E3F2FF' &&
-			DomHelper::isElement( $currentNode->childNodes->item(0), 'div' ) &&
-			$currentNode->childNodes->item(0)->hasAttribute('style') &&
-			$currentNode->childNodes->item(0)->getAttribute('style') === 'padding: 1em 1.5em; min-height:500px;';
+			$currentNode->getAttribute('style') == 'clear:both; width:100%; border:2px solid #1E90FF; background-color:#E3F2FF' &&
+			$this->findSecondLevelNode( $currentNode ) !== null;
+	}
+
+	private function findSecondLevelNode( DOMElement $currentNode ) {
+		for ( $i =0; $i < $currentNode->childNodes->length; $i++ ) {
+			if( DomHelper::isElement( $currentNode->childNodes->item($i), 'div' ) &&
+				$currentNode->childNodes->item($i)->hasAttribute('style') &&
+				$currentNode->childNodes->item($i)->getAttribute('style') === 'padding: 1em 1.5em; min-height:500px;' ) {
+				return $currentNode->childNodes->item($i);
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -31,6 +40,6 @@ class AmericandadWrapperVisitor extends DOMNodeVisitorBase {
 	public function visit(DOMNode $currentNode) {
 		/** @var DOMElement $currentNode */
 
-		$this->iterate($currentNode->childNodes->item(0)->childNodes);
+		$this->iterate($this->findSecondLevelNode($currentNode)->childNodes);
 	}
 }
