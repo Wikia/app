@@ -2,11 +2,7 @@ ve.ui.WikiaCartWidget = function VeUiWikiaCartWidget( model, config ) {
 	ve.ui.SelectWidget.call( this, config );
 	this.model = model;
 	this.model.connect( this, { 'add': 'onAdd', 'remove': 'onRemove' } );
-	this.$.css( {
-		'border': 'solid 1px',
-		'width': '200px',
-		'float': 'right'
-	} );
+	this.$.addClass( 've-ui-wikiaCartWidget' );
 };
 
 ve.inheritClass( ve.ui.WikiaCartWidget, ve.ui.SelectWidget );

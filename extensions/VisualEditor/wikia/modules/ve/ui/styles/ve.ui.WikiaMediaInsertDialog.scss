@@ -4,7 +4,7 @@
 $width-cart: 80px;
 
 .ve-ui-wikiaMediaInsertDialog-content {
-	.ve-ui-wikiaMediaInsertDialog-cartWidget {
+	.ve-ui-wikiaCartWidget-wrapper {
 		@include box-sizing( border-box );
 		float: right;
 		padding: $width-gutter;

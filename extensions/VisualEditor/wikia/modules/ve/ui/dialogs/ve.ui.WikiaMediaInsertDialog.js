@@ -34,22 +34,29 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	ve.ui.MWDialog.prototype.initialize.call( this );
 
 	// Properties
+	this.cartModel = new ve.dm.WikiaCart()
+	this.cart = new ve.ui.WikiaCartWidget( this.cartModel );
+	this.$cart = this.$$( '<div>' );
+	this.search = new ve.ui.MWMediaSearchWidget( {
+		'$$': this.frame.$$,
+		'size': 130
+	} );
 	this.contentPanel = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
 
+	// Events
+	this.search.connect( this, { 'select': 'onSearchSelect' } );
+
 	// Initialization
-	// TODO: replace with widget
-	this.$cart = this.$$( '<div>' )
-		.addClass( 've-ui-wikiaMediaInsertDialog-cartWidget' )
-		.text( 'Cart' )
-		.appendTo( this.$body );
-
-	// TODO: replace with real pages
-	this.contentPanel.addPage( 'test', {
-		$content: this.$$( '<div>' ).text( 'content' )
-	} );
-
-	this.$body.append( this.contentPanel.$ );
+	this.contentPanel.addPage( 'search', { '$content': this.search.$ } );
+	this.$cart
+		.addClass( 've-ui-wikiaCartWidget-wrapper' )
+		.append( this.cart.$ );
+	this.$body.append( this.$cart, this.contentPanel.$ );
 	this.frame.$content.addClass( 've-ui-wikiaMediaInsertDialog-content' );
+};
+
+ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
+	this.cartModel.addItems( [ new ve.dm.WikiaCartItem( item.title ) ] );
 };
 
 /* Registration */
