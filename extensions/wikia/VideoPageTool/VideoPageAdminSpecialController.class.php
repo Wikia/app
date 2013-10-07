@@ -176,8 +176,6 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 
 		$this->section = $section;
 		$this->language = $language;
-		// TODO: not sure if this is needed in edit(), just in the sub views like "featured" etc.
-		$this->date = $date;
 	}
 
 	/**
