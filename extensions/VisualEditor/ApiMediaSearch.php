@@ -59,7 +59,7 @@ class ApiMediaSearch extends ApiBase {
 			$results = [
 				'limit' => $this->limit,
 				'batch' => $raw[0]['currentBatch'],
-				'*' => [
+				'all' => [
 					'batches' => $raw[0]['batches'],
 					'items' => $this->formatItems( $raw[0] )
 				]
