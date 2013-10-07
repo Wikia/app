@@ -5,7 +5,7 @@
  * @author Bartłomiej Kowalczyk
  */
 
-define( 'editor', function(){
+define( 'editor', ['wikia.nirvana'], function( nirvana ){
 
     //textBox object from DOM
     var textBox = document.getElementById( 'wpTextbox1' ),
@@ -18,7 +18,7 @@ define( 'editor', function(){
             snippet : false,
 
             //indicates sniffing for possible tag to close
-            tagEnder : false,
+            tBlength : false,
 
             //indicates sniffing for possible API suggestions to come
             suggestions : false
@@ -35,7 +35,7 @@ define( 'editor', function(){
             snippetChar : '!',
 
             //characters breaking a suggestion
-            suggestionBreakers : /[^a-zA-Z0-9\.\:]/
+            suggestionBreakers : /[\[\]\t\n]/
         }
 
     //inserts a phrase into textBox
@@ -52,11 +52,16 @@ define( 'editor', function(){
 
         //if desired caret position is forced by special caret string
         if( phrase.match( patterns.caret )){
+
             var splPhrase = phrase.split( patterns.caret );
             phrase = splPhrase.join('');
 
             //only first special string will be transformed into caret position, rest will be ignored
             caretShift = splPhrase[0].length;
+        }
+        else{
+
+            caretShift = phrase.length;
         }
 
         caretShift += textBox.selectionStart;
@@ -69,39 +74,25 @@ define( 'editor', function(){
     }
 
     //controlling possible events related to user keyboard input
-    function watch(){
+    function watch( handleSnippets ){
 
         textBox.addEventListener( 'keyup', function(){
 
-            handleSnippets();
+            handleSnippets( textBox, patterns, insert );
 
             handleSuggestions();
 
             closeTags();
+
+            watcher.tBlength = textBox.value.length;
         } );
     }
 
-    //check if user possible wrote snippet <special_char><tag_shortcut><special_char>
-    function handleSnippets(){
-
-        //ignore if anything else than snippet pattern given
-        if( textBox.value[textBox.selectionStart-1] != patterns.snippet ) return;
-        var endPos = textBox.selectionStart - 1;
-
-        //if there is no special snippet char within 6 last items (max snippet length = 5)
-        if( !textBox.value.substring( endPos - 5, endPos - 1 ).match( patterns.snippet ) ) return;
-        var startPos = textBox.value.substring( 0, endPos).lastIndexOf( patterns.snippet );
-        if( textBox.value.substring( startPos+1, endPos ).match( patterns.snippetBreakers ) ) return;
-
-        textBox.value = textBox.value.substring( 0, startPos ) +
-            textBox.value.substring( endPos + 1 );
-        textBox.selectionStart = textBox.selectionEnd  -= (endPos - startPos);
-    }
-
+    // automatic closing -> if <tag> then it appends </tag> and sets caret in between
     function closeTags(){
 
         //check if a tag might've been closed
-        if( textBox.value[textBox.selectionStart-1] != '>' ) return;
+        if( textBox.value[textBox.selectionStart-1] != '>' || textBox.value.length < watcher.tBlength) return;
 
         var startPos = textBox.value.substring( 0, textBox.selectionStart - 1).lastIndexOf( '<' ),
             endPos = textBox.selectionStart - 1;
@@ -113,21 +104,36 @@ define( 'editor', function(){
             var parityCheck = '_$' + textBox.value.substring( textBox.selectionStart,
                 textBox.selectionStart + tag.length + 3);
             var closure = '_$</' + tag + '>';
-            if( tag && closure != parityCheck )insert( '_$</' + tag + '>' )
+            if( tag && closure != parityCheck ) insert( '_$</' + tag + '>' )
         }
     }
 
     function initSuggestionBox(){
 
-        suggestionBox.addEventListener('click', function(evt){
-           if( evt.target.classList.contains( 'suggestion' ) ){
-               var phrase = evt.target.innerText,
-                   beginning = textBox.value.substring( textBox.value.lastIndexOf( '[' ), textBox.selectionEnd - 1 );
+        suggestionBox.addEventListener( 'click', function( evt ){
 
-               //remove beginning (which was already written by the user), add closure ']]' and insert
-               insert( phrase.replace( beginning, '' ) + ']]');
-               hideSuggestions();
+           if( evt.target.classList.contains( 'suggestion' ) ){
+
+               var phrase = evt.target.innerText,
+                   beginning = textBox.value.substring( textBox.value.substring( 0,
+                       textBox.selectionEnd-1 ).lastIndexOf( '[' ) + 1, textBox.selectionEnd );
+
+               textBox.value = textBox.value.substring(0, textBox.selectionEnd - beginning.length) +
+                   textBox.value.substring(textBox.selectionEnd, textBox.value.length);
+
+               textBox.selectionEnd = textBox.selectionStart = textBox.selectionStart -= beginning.length;
+
+               var ending = ( textBox.value.substring( textBox.selectionStart, textBox.selectionStart + 2 )
+                   === "]]" ) ? "" : "]]";
+
+               if( !ending ) {
+
+                   watcher.suggestions = false;
+                   hideSuggestions();
+               }
+               insert( phrase + ending + '_$' );
            }
+           hideSuggestions();
         });
     }
 
@@ -135,25 +141,28 @@ define( 'editor', function(){
     function handleSuggestions(){
 
         //check if you can activate link suggestions ('[[' as start of the internal link)
-        if( !suggestions.active ){
-            if( editArea.value.substring( editArea.selectionStart - 3, editArea.selectionStart - 1) === '[[' ){
+        if( !watcher.suggestions ){
+            if( textBox.value.substring( textBox.selectionStart - 3, textBox.selectionStart - 1) === '[[' ){
 
                 // start suggestion attempts on next char
-                suggestions.active = true;
+                watcher.suggestions = true;
             }
             return;
         }
 
         //if any of (whitespaces, link ender, chars forbidden for url) appears, kill the suggestions
-        if( editArea.value[editArea.selectionEnd - 1].match( patterns.suggestionBreakers ) ){
-            suggestions.active = false;
+        if( textBox.value[textBox.selectionEnd - 1].match( patterns.suggestionBreakers ) ){
+            watcher.suggestions = false;
             hideSuggestions();
             return;
         }
 
-        var text = editArea.value.substring( 0, editArea.selectionEnd );
-        var phrase = text.substring( text.lastIndexOf( '[' ) + 1, editArea.selectionEnd );
+        var text = textBox.value.substring( 0, textBox.selectionEnd );
+        var phrase = text.substring( text.lastIndexOf( '[' ) + 1, textBox.selectionEnd );
         if( phrase ){
+
+            //update suggestionBox position even if no new results
+            suggestionBox.style.top = getTextHeight() + 'px';
             getSuggestions( phrase );
         }
     }
@@ -161,20 +170,23 @@ define( 'editor', function(){
     //wrapper for SearchSuggestionsAPI returning array of first link records
     function getSuggestions( query ){
 
+        hideSuggestions();
         var data = {};
         data.query = query;
 
         nirvana.getJson('SearchSuggestionsApi', 'getList', data).done(function(data){
+
             if(typeof data !== 'error'){
 
                 // parsing data from json to array of suggestions with a limit of 3 (optimal for mobile screens)
                 var suggs = [];
-                var limit = (data.items.length < 3) ? data.items.length : 3;
-                for(var i = 0; i < limit; i++){
+                //var limit = (data.items.length < 3) ? data.items.length : 3;
+                for(var i = 0; i < data.items.length; i++){
+
                     suggs[i] = data.items[i].title;
                 }
 
-                if(suggs)showSuggestions(suggs);
+                if( suggs ) showSuggestions( suggs );
             }
         });
     }
@@ -182,10 +194,10 @@ define( 'editor', function(){
     //shows suggestionBox if there are suggestions to display
     function showSuggestions( suggs ){
 
+        suggestionBox.innerHTML = '';
         for( var i = 0; i < suggs.length; i++ ){
             suggestionBox.innerHTML += '<li class="suggestion">' + suggs[i] + '</li>';
         }
-        suggestionBox.style.top = getTextHeight() + 'px';
         if(suggestionBox.classList.contains('off'))suggestionBox.classList.remove('off');
     }
 
@@ -198,14 +210,18 @@ define( 'editor', function(){
 
     //gets height of text in textBox
     function getTextHeight(){
+
         //cloning textBox into hidden element of 1px;
         var textBoxClone = textBox.cloneNode(true);
         textBoxClone.value = textBox.value.substring(0, textBox.selectionStart);
+        textBoxClone.id = 'tempClone';
+        textBoxClone.style = textBox.style;
 
         //setting clone to be 1px (fully scrollable) and not affecting layout of the page
         textBoxClone.style.height = '1px';
         textBoxClone.style.position = 'absolute';
         textBoxClone.style.visibility = 'hidden';
+        if( !( textBox.scrollHeight > textBox.offsetHeight ) ) textBoxClone.classList.add('hiddenScrollbar');
 
         //appending clone to DOM to measure height
         textBox.parentElement.appendChild(textBoxClone);
@@ -213,7 +229,7 @@ define( 'editor', function(){
         textBox.parentElement.removeChild(textBoxClone);
 
         //adjustment if user scrolled textarea manually
-        height -= textBox.scrollY;
+        height -= textBox.scrollTop;
 
         //setting the distance from the top of the document
         height += textBox.getBoundingClientRect().top + window.scrollY;
@@ -222,11 +238,17 @@ define( 'editor', function(){
     }
 
     //module initializer
-    function init(){
+    function init( handleSnippets ){
 
+        initSuggestionBox();
+
+        //init of user interaction watcher
+        watch( handleSnippets );
     }
 
     return {
+
+        textBox : textBox,
 
         init : init,
 

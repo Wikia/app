@@ -34,13 +34,14 @@ ul{
   margin-bottom:10px;
 }
 
-.tagSection>ul>li{
+.artSec li{
     padding: 2.5% 0 2.5% 0;
     line-height:2em;
     vertical-align:middle;
     font-size: 0.8em;
     width:100%;
     display:inline-block;
+    border-bottom: 1px solid #f0f0f0;
 }
 
 .tagSection small{
@@ -50,7 +51,7 @@ ul{
 }
 
 .tagSection>ul a{
-    padding:8px;
+    padding:8px 16px;
 
     width:auto;
     min-width:20px;
@@ -58,7 +59,7 @@ ul{
 
     float:right;
     display:inline-block;
-    //background-color:#357ebd;
+    background-color:#fff;
     text-decoration:none;
     color: #006cb0;
     border: 1px solid #c4c4c4;
@@ -133,13 +134,26 @@ ul{
     display:block;
 }
 
-/*{
-  -webkit-transition: all 0.2s ease-in;
-}*/
+*{
+  //-webkit-transition: all 0.2s ease-in;
+}
+
+li.marked{
+  color: #c09853;
+  border-color: #e3e3e3;
+}
 
 div.bigTable{
   box-shadow:none;
   -webkit-box-shadow:none;
+}
+
+li.lightOn{
+  background-color: rgba(0, 108, 176, 0.8);
+}
+
+li.lightOn > a{
+  color:#fff;
 }
 
 table .diff-lineno{
@@ -179,36 +193,35 @@ table .diff-lineno{
 .container{
   position: fixed;
   z-index:1;
-  display:none;
+  //display:none;
 
-  bottom: 60px;
+  top: 60px;
   width: 60px;
   height: 60px;
 }
 
 .left{
-  left:40px;
+  left:50px;
 }
 
 .right{
-  right:40px;
+  right:50px;
 }
 
 .master{
   position:absolute;
-  top:0;
-  left:0;
-  padding-top: -10px;
+  top:5;
+  left:5;
   z-index: 10001;
 
   -webkit-transition:none;
 
-  width:60px;
-  height:60px;
-  background: #EDEDED;
-  color: #000;
-  font-size: 3.0em;
-  border: 3px solid #000;
+  width:50px;
+  height:50px;
+  background: rgba(255,255,255, 0.8);
+  color: #006cb0;
+  border: 1px solid #c4c4c4;
+  font-size: 12px;
   padding:0;
 }
 
@@ -220,10 +233,10 @@ table .diff-lineno{
 
 .master span{
   display:block;
-  height:54px;
+  height:50px;
   line-height:50px;
   pointer-events: none;
-  width:54px;
+  width:50px;
   text-align:center;
 }
 
@@ -267,6 +280,9 @@ table .diff-lineno{
 .touchable{
   border-radius: 100%;
   -webkit-box-shadow: 1px 1px 8px rgba(50, 50, 50, 0.38);
+  background: rgba(255,255,255, 0.8);
+  color: #006cb0;
+  border: 1px solid #c4c4c4;
 }
 
 .fancy{
@@ -287,83 +303,83 @@ table .diff-lineno{
   }
 
   .rotL1{
-    -webkit-transform: rotate(65deg);
+    -webkit-transform: rotate(155deg);
   }
 
   .rotL2{
-    -webkit-transform: rotate(101deg);
+    -webkit-transform: rotate(191deg);
   }
 
   .rotL3{
-    -webkit-transform: rotate(137deg);
+    -webkit-transform: rotate(227deg);
   }
 
   .rotL4{
-    -webkit-transform: rotate(173deg);
+    -webkit-transform: rotate(263deg);
   }
 
   .rotL5{
-    -webkit-transform: rotate(209deg);
+    -webkit-transform: rotate(299deg);
   }
 
   .rotBackL1{
-    -webkit-transform: rotate(-65deg);
+    -webkit-transform: rotate(-155deg);
   }
 
   .rotBackL2{
-    -webkit-transform: rotate(-101deg);
+    -webkit-transform: rotate(-191deg);
   }
 
   .rotBackL3{
-    -webkit-transform: rotate(-137deg);
+    -webkit-transform: rotate(-227deg);
   }
 
   .rotBackL4{
-    -webkit-transform: rotate(-173deg);
+    -webkit-transform: rotate(-263deg);
   }
 
   .rotBackL5{
-    -webkit-transform: rotate(-209deg);
+    -webkit-transform: rotate(-299deg);
   }
 
   .rotR1{
-    -webkit-transform: rotate(-34deg);
+    -webkit-transform: rotate(236deg);
   }
 
   .rotR2{
-    -webkit-transform: rotate(2deg);
+    -webkit-transform: rotate(272deg);
   }
 
   .rotR3{
-    -webkit-transform: rotate(39deg);
+    -webkit-transform: rotate(309deg);
   }
 
   .rotR4{
-    -webkit-transform: rotate(74deg);
+    -webkit-transform: rotate(344deg);
   }
 
   .rotR5{
-    -webkit-transform: rotate(109deg);
+    -webkit-transform: rotate(19deg);
   }
 
   .rotBackR1{
-    -webkit-transform: rotate(34deg);
+    -webkit-transform: rotate(-236deg);
   }
 
   .rotBackR2{
-    -webkit-transform: rotate(-2deg);
+    -webkit-transform: rotate(-272deg);
   }
 
   .rotBackR3{
-    -webkit-transform: rotate(-39deg);
+    -webkit-transform: rotate(-309deg);
   }
 
   .rotBackR4{
-    -webkit-transform: rotate(-74deg);
+    -webkit-transform: rotate(-344deg);
   }
 
   .rotBackR5{
-    -webkit-transform: rotate(-109deg);
+    -webkit-transform: rotate(-19deg);
   }
 
   .minified{
@@ -424,7 +440,7 @@ table .diff-lineno{
   }
 }
 
-#wpTextBox1{
+#wpTextBox1 #tempClone{
   z-index: 7;
   padding: 6px 4px 6px 4px;
 }
@@ -437,17 +453,29 @@ table .diff-lineno{
   margin: 8px 0 8px 0;
 }
 
-#wpTextbox1, #wpSummary{
+#wpTextbox1, #wpSummary, #tempClone{
   font-family: arial, helvetica, serif;
   font-size:0.9em;
   line-height:1.1em;
   color: #555555;
-  border-radius: 4px;
   border: 1px solid #cccccc;
   width:100%;
   margin: 16px 0 8px 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  padding: 8px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
   background-color:#fafafa;
+}
+
+img[alt='Greenbutton.png']{
+  display:none;
+}
+
+#wkPage{
+  padding:15px;
+}
+
+.hiddenScrollbar::-webkit-scrollbar{
+  display:none;
 }
 
 label[for=wpSummary]{
@@ -474,7 +502,7 @@ label[for=wpSummary]{
   display: inline-block;
   font-size: medium;
   margin: 8px 3px 8px 0;
-  padding: 5px 10px;
+  padding: 5px 5px;
   border: 1px solid #e3e3e3;
   font-weight: 100;
   color: #6A6A6A;

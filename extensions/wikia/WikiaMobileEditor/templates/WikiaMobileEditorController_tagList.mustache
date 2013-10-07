@@ -1,13 +1,15 @@
 {{#tags}}
+<section class=tagSection>
 	<h2 class=collSec>{{name}}</h2>
-	<ul class=artSec>
+	<ul class="artSec">
 		{{#tags}}
             <li>
                 <input type=checkbox id={{short}}>
                 <label for={{short}}> {{name}} <small>!{{short}}!</small></label>
-                <a href=#> {{tag}} </a>
+                <a href=# class=tagLink data-tag={{tag}}> ↳ </a>
             </li>
 		{{/tags}}
 	</ul>
+</section>
 {{/tags}}
 
