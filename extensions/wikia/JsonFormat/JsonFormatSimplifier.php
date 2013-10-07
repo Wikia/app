@@ -73,12 +73,12 @@ class JsonFormatSimplifier {
 	}
 
 	private function clearEmptyParagraphs( &$paragraphs ) {
-		$paragraphs = array_filter( $paragraphs, function( $element ) {
+		$paragraphs = array_slice( array_filter( $paragraphs, function( $element ) {
 			if ( $element["type"] == "paragraph" ) {
 				return strlen( trim( $element["text"] ) ) > 0;
 			}
 			return true;
-		});
+		}), 0 );
 	}
 
 	private function newParagraph( &$sectionElements) {
