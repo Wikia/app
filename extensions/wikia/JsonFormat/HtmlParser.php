@@ -21,16 +21,15 @@ class HtmlParser {
 		return $jsonFormatTraversingState->getJsonRoot();
 	}
 
-	protected function visit( \DOMNode $node, $indent ) {
+	protected function debugOut( \DOMNode $node, $indent ) {
 		for ( $i = 0; $i < $indent; $i++ ) echo ' ';
 		if( $node instanceof \DOMText ) {
 			echo "text {$node->textContent}\n";
-		} else if ($node instanceof \DOMElement and $node->tagName == 'div') {
-
-		} else {
+		} else if( $node instanceof \DOMElement ) {
+			echo "tag: {$node->tagName}\n";
 			for( $i = 0; $i < $node->childNodes->length; $i++ ) {
 				$child = $node->childNodes->item($i);
-				$this->visit( $child, $indent+1 );
+				$this->debugOut( $child, $indent+1 );
 			}
 		}
 	}

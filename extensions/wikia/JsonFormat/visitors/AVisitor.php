@@ -23,7 +23,7 @@ class AVisitor extends DOMNodeVisitorBase {
 		/** @var DOMElement $currentNode */
 		DomHelper::verifyDomElementArgument( $currentNode, "currentNode" );
 
-		$href = $currentNode->attributes->getNamedItem('href')->textContent;
+		$href = $currentNode->getAttribute('href');
 		$this->getJsonFormatBuilder()->add(
 			new JsonFormatLinkNode( $currentNode->textContent, $href ) );
 	}
