@@ -63,6 +63,7 @@ $wgResourceModules += array(
 			// ui
 			've/ui/tools/buttons/ve.ui.WikiaMediaInsertButtonTool.js',
 			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
+			've/ui/widgets/ve.ui.WikiaMediaSearchWidget.js',
 		),
 		'messages' => array(
 			'oasis-content-picture-added-by',
