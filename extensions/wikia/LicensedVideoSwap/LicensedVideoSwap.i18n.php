@@ -1,10 +1,9 @@
 <?php
-
 /**
-* Internationalisation file for the LicensedVideoSwap extension.
-*
-* @addtogroup Languages
-*/
+ * Internationalisation file for the LicensedVideoSwap extension.
+ *
+ * @addtogroup Languages
+ */
 
 $messages = array();
 
@@ -16,7 +15,7 @@ $messages['en'] = array(
 	'lvs-tooltip-history' => 'Licensed Video Swap Button',
 	'lvs-history-button-text' => 'History',
 	'lvs-page-header-back-link' => 'Back to Licensed Video Swap',
-	'lvs-callout-header' => "We've found matches for videos on your wiki in Wikia Video. <br> Replacing your videos with videos from Wikia Video is a good idea because:",
+	'lvs-callout-header' => "We've found matches for videos on your wiki in Wikia Video. <br /> Replacing your videos with videos from Wikia Video is a good idea because:",
 	'lvs-callout-title-licensed' => "100% Licensed",
 	'lvs-callout-reason-licensed' => "Wikia Videos are licensed for our communities for use on your wikis",
 	'lvs-callout-title-quality' => "High Quality",
