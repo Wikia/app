@@ -8,7 +8,8 @@ $(function() {
 			method: 'lazy',
 			data: {
 				'title': wgTitle,
-				'namespace': wgNamespaceNumber
+				'namespace': wgNamespaceNumber,
+				'cb': wgStyleVersion
 			},
 			type: 'get',
 			format: 'json',
