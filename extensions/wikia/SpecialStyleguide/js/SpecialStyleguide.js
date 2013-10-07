@@ -34,6 +34,68 @@ require(['jquery'], function($) {
 			});
 		}
 
+		var $drawerSection = $( '#drawer' ),
+			leftDrawerMsg = $.msg( 'styleguide-example-left' ),
+			rightDrawerMsg = $.msg( 'styleguide-example-right' );
+
+		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+			uiFactory.init( "button" ).then( function( buttonInstance ) {
+				var $drawerExamples = $drawerSection.find( '.example' );
+				var drawerSampleButtons = buttonInstance.render( { type: "button", vars: {
+					"type": "button",
+					"classes": [ "primary", "normal", "sampleDrawerLeft" ],
+					"value": leftDrawerMsg
+				} } );
+				drawerSampleButtons += buttonInstance.render( { type: "button", vars: {
+					"type": "button",
+					"classes": [ "primary", "normal", "sampleDrawerRight" ],
+					"value": rightDrawerMsg
+				} } );
+				$drawerExamples.append( drawerSampleButtons );
+			} );
+
+			uiFactory.init( "drawer" ).then( function( drawerInstance ) {
+				var drawerSamples = drawerInstance.render( {
+					type: "default",
+					vars: {
+						side: 'left',
+						content: '<h1>' + leftDrawerMsg + '</h1>',
+						"class": "styleguide-example-left"
+					}
+				} );
+				drawerSamples += drawerInstance.render( {
+					type: "default",
+					vars: {
+						side: 'right',
+						content: '<h1>' + rightDrawerMsg + '</h1>',
+						"class": "styleguide-example-right"
+					}
+				} );
+				$('body').append( drawerSamples );
+
+				require( [ 'wikia.ui.drawer' ], function( drawer ) {
+					var leftDrawer = drawer.init( 'left' );
+					var rightDrawer = drawer.init( 'right' );
+
+					$( ".sampleDrawerLeft" ).click(function() {
+						if( leftDrawer.isOpen() ) {
+							leftDrawer.close();
+						} else {
+							leftDrawer.open();
+						}
+					} );
+
+					$( ".sampleDrawerRight" ).click(function() {
+						if( rightDrawer.isOpen() ) {
+							rightDrawer.close();
+						} else {
+							rightDrawer.open();
+						}
+					} );
+				} );
+			} );
+		} );
+
 		/**
 		 * Show hide Style guide section
 		 *
