@@ -139,6 +139,7 @@ abstract class BaseForm extends FormElement {
 	 * Setter for fields values
 	 *
 	 * @param array $values
+	 * @return BaseForm form instance
 	 */
 	public function setFieldsValues($values = []) {
 		foreach ( $this->fields as $fieldName => $field ) {
@@ -146,6 +147,7 @@ abstract class BaseForm extends FormElement {
 				$field->setValue($values[$fieldName]);
 			}
 		}
+		return $this;
 	}
 
 	/**
@@ -179,6 +181,7 @@ abstract class BaseForm extends FormElement {
 	 *
 	 * @param string $fieldName
 	 * @param BaseField $field (optional) at default it creates TextField object
+	 * @return BaseForm form instance
 	 */
 	protected function addField($fieldName, BaseField $field = null) {
 		if (is_null($field)) {
@@ -187,6 +190,7 @@ abstract class BaseForm extends FormElement {
 		$field->setName($fieldName);
 		$field->setId($fieldName);
 		$this->fields[$fieldName] = $field;
+		return $this;
 	}
 
 	/**
