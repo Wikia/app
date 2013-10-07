@@ -277,6 +277,7 @@ $messages['an'] = array(
  * @author Meno25
  * @author OsamaK
  * @author ترجمان05
+ * @author زكريا
  */
 $messages['ar'] = array(
 	'sitewidemessages' => 'رسائل لكل الموقع',
@@ -287,7 +288,7 @@ $messages['ar'] = array(
 	'swm-page-title-dismiss' => 'رسائل لكل الموقع :: استبعاد',
 	'swm-page-title-list' => 'رسائل لكل الموقع :: قائمة',
 	'swm-label-preview' => 'عرض مسبق',
-	'swm-label-edit' => 'تعديل',
+	'swm-label-edit' => 'عدل',
 	'swm-label-remove' => 'إزالة',
 	'swm-label-sent' => 'إرسال',
 	'swm-label-list' => 'قائمة',

@@ -115,7 +115,8 @@ $messages['qqq'] = array(
 	'wmu-back' => 'Select a different photo from the one already chosen.',
 	'wmu-gallery' => '{{Identical|Gallery}}',
 	'wmu-column' => '{{Identical|Column}}',
-	'wmu-file-not-found' => 'Message displayed when a file cannot be found during the image insert step of this extention.',
+	'wmu-file-not-found' => 'Message displayed when a file cannot be found during the image insert step of this extension.
+{{Identical|File not found}}',
 	'wmu-error-exact-height' => 'Error shown when the image selected/uploaded was not the required height',
 	'wmu-error-exact-width' => 'Error shown when the image selected/uploaded was not the required width',
 	'wmu-error-exact-width-height' => 'Error shown when the image selected/uploaded was not the required dimensions',
@@ -794,6 +795,7 @@ $messages['cy'] = array(
  * @author Geitost
  * @author Inkowik
  * @author LWChris
+ * @author Metalhead64
  * @author Sebastian Wallroth
  * @author Tiin
  */
@@ -870,6 +872,11 @@ $messages['de'] = array(
 	'wmu-alignment' => 'Ausrichtung',
 	'wmu-file-protected' => 'Dieses Bild ist geschützt.',
 	'wmu-file-error' => 'Es gab einen Fehler während des Hochladens. Bitte versuche es erneut.',
+	'wmu-file-not-found' => 'Datei nicht gefunden',
+	'wmu-error-exact-height' => 'Die Bildhöhe muss exakt $1 Pixel betragen ($2 Pixel erhalten)',
+	'wmu-error-exact-width' => 'Die Bildbreite muss exakt $1 Pixel betragen ($2 Pixel erhalten)',
+	'wmu-error-exact-width-height' => 'Die Bildabmessungen müssen exakt $1 × $3 Pixel betragen ($2 × $4 Pixel erhalten)',
+	'wmu-error-bad-aspect-ratio' => 'Das Seitenverhältnis ist falsch ($1 × $2 Pixel)',
 );
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
@@ -1156,6 +1163,7 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author IAlex
  * @author McDutchie
  * @author Peter17
@@ -1236,6 +1244,11 @@ $messages['fr'] = array(
 	'wmu-alignment' => 'Alignement',
 	'wmu-file-protected' => 'Cette image est protégée',
 	'wmu-file-error' => 'Une erreur est survenue lors de l’importation. Veuillez réessayer.',
+	'wmu-file-not-found' => 'Fichier non trouvé',
+	'wmu-error-exact-height' => 'La hauteur de l’image doit être de $1 px ($2 px trouvés)',
+	'wmu-error-exact-width' => 'La largeur de l’image doit être de $1 px ($2 px trouvés)',
+	'wmu-error-exact-width-height' => 'La taille de l’image doit être de $1 x $3 px ($2 x $4 px trouvés)',
+	'wmu-error-bad-aspect-ratio' => 'Le ratio d’aspect n’est pas correct ($1 x $2 px)',
 );
 
 /** Galician (galego)
@@ -1314,6 +1327,11 @@ $messages['gl'] = array(
 	'wmu-alignment' => 'Aliñamento',
 	'wmu-file-protected' => 'Esta imaxe está protexida',
 	'wmu-file-error' => 'Houbo un erro durante o proceso de carga. Inténteo de novo.',
+	'wmu-file-not-found' => 'Non se atopou o ficheiro',
+	'wmu-error-exact-height' => 'O alto da imaxe debe ser exactamente de $1 px (obtívose $2 px)',
+	'wmu-error-exact-width' => 'O largo da imaxe debe ser exactamente de $1 px (obtívose $2 px)',
+	'wmu-error-exact-width-height' => 'O tamaño da imaxe debe ser exactamente de $1 x $3 px (obtívose $2 x $4 px)',
+	'wmu-error-bad-aspect-ratio' => 'A proporción de aspecto é incorrecta ($1 x $2 px)',
 );
 
 /** Hebrew (עברית)
@@ -1731,6 +1749,7 @@ $messages['kn'] = array(
 );
 
 /** Korean (한국어)
+ * @author Hym411
  * @author 아라
  */
 $messages['ko'] = array(
@@ -1739,6 +1758,7 @@ $messages['ko'] = array(
 	'wmu-license' => '라이선스',
 	'wmu-caption' => '설명',
 	'wmu-added-from-plc' => '플레이스홀더를 통해 삽입된 그림',
+	'wmu-file-not-found' => '파일을 찾지 못했습니다',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -1804,6 +1824,7 @@ $messages['lb'] = array(
 	'wmu-more-options' => 'Méi Optiounen',
 	'wmu-fewer-options' => 'Manner Optiounen',
 	'wmu-file-protected' => 'Dëst Bild ass gespaart',
+	'wmu-file-not-found' => 'Fichier gouf net fonnt',
 );
 
 /** Latvian (latviešu)
@@ -2284,6 +2305,11 @@ $messages['pl'] = array(
 	'wmu-alignment' => 'Wyrównanie',
 	'wmu-file-protected' => 'Ten obraz jest chroniony',
 	'wmu-file-error' => 'Wystąpił błąd podczas procesu przesyłania. Spróbuj ponownie.',
+	'wmu-file-not-found' => 'Nie odnaleziono pliku',
+	'wmu-error-exact-height' => 'Obraz musi mieć wysokość $1 px (ma $2 px)',
+	'wmu-error-exact-width' => 'Obraz musi mieć szerokość $1 px (ma $2 px)',
+	'wmu-error-exact-width-height' => 'Obraz musi mieć wymiary $1 x $3 px (ma $2 x $4 px)',
+	'wmu-error-bad-aspect-ratio' => 'Proporcje obrazu są niewłaściwe ($1 x $2 px)',
 );
 
 /** Piedmontese (Piemontèis)
@@ -2594,6 +2620,7 @@ $messages['roa-tara'] = array(
  * @author Eleferen
  * @author Kuzura
  * @author Lockal
+ * @author Okras
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -2669,6 +2696,11 @@ $messages['ru'] = array(
 	'wmu-alignment' => 'Выравнивание',
 	'wmu-file-protected' => 'Это изображение защищено',
 	'wmu-file-error' => 'Произошла ошибка в процессе загрузки, извините. Пожалуйста, попробуйте снова.',
+	'wmu-file-not-found' => 'Файл не найден',
+	'wmu-error-exact-height' => 'Высота изображения должна быть точно $1 px (получено $2 px)',
+	'wmu-error-exact-width' => 'Ширина изображения должна быть точно $1 px (получено $2 px)',
+	'wmu-error-exact-width-height' => 'Ширина и высота изображения должны быть точно $1 x $3 px (получено $2 x $4 px)',
+	'wmu-error-bad-aspect-ratio' => 'Пропорции неверны ($1 x $2 px)',
 );
 
 /** Slovenian (slovenščina)
@@ -2833,6 +2865,11 @@ $messages['sv'] = array(
 	'wmu-alignment' => 'Uppställning',
 	'wmu-file-protected' => 'Denna bild är skyddad',
 	'wmu-file-error' => 'Tyvärr, det uppstod ett fel med uppladdningsprocessen. Var god försök igen.',
+	'wmu-file-not-found' => 'Fil hittades inte',
+	'wmu-error-exact-height' => 'Bildhöjden måste vara exakt $1 bildpunkter (har $2 bildpunkter)',
+	'wmu-error-exact-width' => 'Bildbredden måste vara exakt $1 bildpunkter (har $2 bildpunkter)',
+	'wmu-error-exact-width-height' => 'Bildens bredd och höjd måste vara exakt $1 x $3 bildpunkter (har $2 x $4 bildpunkter)',
+	'wmu-error-bad-aspect-ratio' => 'Bildförhållandet är inkorrekt ($1 x $2 bildpunkter)',
 );
 
 /** Swahili (Kiswahili)
@@ -3095,6 +3132,11 @@ $messages['uk'] = array(
 	'wmu-alignment' => 'Вирівнювання',
 	'wmu-file-protected' => 'Це зображення захищене',
 	'wmu-file-error' => 'Сталася помилка при завантаженні, вибачте. Будь ласка, спробуйте ще раз.',
+	'wmu-file-not-found' => 'Файл не знайдено',
+	'wmu-error-exact-height' => 'Висота зображення повинна бути в точності $1 px (отримано $2 px)',
+	'wmu-error-exact-width' => 'Ширина зображення повинна бути в точності $1 px (отримано $2 px)',
+	'wmu-error-exact-width-height' => 'Ширина і висота зображення повинно бути в точності  $1  px  $3  px (отримано $2 x $4 px)',
+	'wmu-error-bad-aspect-ratio' => 'Хибний формат зображення ($1 x $2 px)',
 );
 
 /** Uzbek (oʻzbekcha)
@@ -3193,6 +3235,7 @@ $messages['zh-hans'] = array(
 	'wmu-alignment' => '对齐',
 	'wmu-file-protected' => '本图片受到保护',
 	'wmu-file-error' => '抱歉，上传过程中出错了。请再试一次。',
+	'wmu-file-not-found' => '无法找到文件',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
