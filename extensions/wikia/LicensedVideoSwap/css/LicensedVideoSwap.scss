@@ -27,6 +27,44 @@ $button-icon-color: white;
 	vertical-align: 5px;
 }
 
+.new {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	color: $color-button-text;
+	font-size: 14px;
+	line-height: 14px;
+	padding: 3px;
+	padding-left: 6px;
+	background-color: $color-buttons;
+
+	&:before {
+		content: '';
+		position: absolute;
+		height: 0px;
+		width: 0px;
+		border-width: 10px;
+		border-style: solid;
+		border-color: transparent transparent $color-buttons transparent;
+		right: -10px;
+		top: 0px;
+		visibility: visible;
+	}
+
+	&:after {
+		content: '';
+		position: absolute;
+		height: 0px;
+		width: 0px;
+		border-width: 10px;
+		border-style: solid;
+		border-color: $color-buttons transparent transparent transparent;
+		right: -10px;
+		top: 0px;
+		visibility: visible;
+	}
+}
+
 // For now, this callout style will be specific to lvs, but we might be able to re-use this on the Video Wikia home page
 .lvs-callout {
 	background: $color-buttons;
@@ -169,6 +207,11 @@ $button-icon-color: white;
 		background-color: #000;
 		height: 309px;
 		margin-bottom: 9px;
+		position: relative;
+
+		.new {
+			top: 10px;
+		}
 	}
 	.more-videos {
 		@include clearfix;
