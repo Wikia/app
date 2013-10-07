@@ -166,7 +166,7 @@ if ( empty( $wgCdnRootUrl ) ) $wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.
 if ( empty( $wgDevBoxImageServerOverride ) ) $wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
 
 if (!empty($wgEnableSwiftFileBackend)) {
-	$wgDevBoxImageServerOverride = 's3.dfs-s1';
+	$wgDevBoxImageServerOverride = 's3.dev-dfs-p1';
 }
 
 // macbre: generate proper paths for static assets on devboxes (BugId:6809)
