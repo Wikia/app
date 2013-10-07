@@ -11,13 +11,17 @@ class JsonFormatSimplifier {
 			if ( $childNode->getType() == 'section' ) {
 				return;
 			} else if ( $childNode->getType() == 'link' ) {
+				/** @var \JsonFormatLinkNode $childNode */
 				$this->appendInline( $contentElements, $childNode->getText() );
 			} else if ( $childNode->getType() == 'text' ) {
+				/** @var \JsonFormatTextNode $childNode */
 				$this->appendInline( $contentElements, $childNode->getText() );
 			} else if ( $childNode->getType() == 'paragraph' ) {
+				/** @var \JsonFormatParagraphNode $childNode */
 				$this->newParagraph( $contentElements );
 				$this->getParagraphs( $childNode, $contentElements );
 			} else if ( $childNode->getType() == "list" ) {
+				/** @var \JsonFormatListNode $childNode */
 				$simpleListElements = [];
 				foreach ( $childNode->getChildren() as $listElement ) {
 					$simpleListElements[] = $this->readText( $listElement );
@@ -52,12 +56,12 @@ class JsonFormatSimplifier {
 			if ( $childNode->getType() == 'section' ) {
 				return;
 			} else if ( $childNode->getType() == 'image' ) {
-				/** @var \JsonFormatImageNode $a  */
+				/** @var \JsonFormatImageNode $childNode  */
 				$images[] = [
 					"src" => $childNode->getSrc()
 				];
 			} else if ( $childNode->getType() == 'imageFigure' ) {
-				/** @var \JsonFormatImageFigureNode $a  */
+				/** @var \JsonFormatImageFigureNode $childNode  */
 				$images[] = [
 					"src" => $childNode->getSrc(),
 					"caption" => $childNode->getCaption()
@@ -112,9 +116,10 @@ class JsonFormatSimplifier {
 	}
 
 	/**
-	 * @throws InvalidParameterApiException
+	 * @throws \InvalidParameterApiException
 	 */
 	public function getJsonFormat( \JsonFormatRootNode $rootNode, $articleTitle ) {
+		/** @var \JsonFormatSectionNode[]|\JsonFormatRootNode[] $sections */
 		$sections = [];
 		$this->findSections( $rootNode, $sections );
 
@@ -127,7 +132,8 @@ class JsonFormatSimplifier {
 			$this->getParagraphs( $section, $content );
 			$this->getImages( $section, $images );
 			if ( sizeof($content) == 0 && sizeof($images) == 0
-				&& ( ( $i == sizeof($sections)-1 ) || ($sections[$i]->getLevel() >= $sections[$i+1]->getLevel()) ) ) {
+				&& ( ( $i == sizeof($sections)-1 ) || ($sections[$i]->getLevel() >= $sections[$i+1]->getLevel()) )
+				&& ($sections[$i]->getLevel() != 1 ) ) {
 				continue;
 			}
 			$this->clearEmptyParagraphs( $content );

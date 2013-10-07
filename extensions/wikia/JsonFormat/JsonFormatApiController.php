@@ -20,6 +20,8 @@ class JsonFormatApiController extends WikiaApiController {
 
 	const ARTICLE_CACHE_ID = "article";
 
+	const CACHE_BUSTER_VALUE =  2; // value to bust mem cache
+
 	/**
 	 * @throws InvalidParameterApiException
 	 */
@@ -45,7 +47,7 @@ class JsonFormatApiController extends WikiaApiController {
 			throw new WikiaApiQueryError( "Article not found. Id:" . $articleId );
 		}
 
-	    $cacheKey = wfMemcKey( "SimpleJson:".$articleId, self::SIMPLE_JSON_SCHEMA_VERSION);
+	    $cacheKey = wfMemcKey( "SimpleJson:".$articleId, self::SIMPLE_JSON_SCHEMA_VERSION, self::CACHE_BUSTER_VALUE );
 
 	    $jsonSimple = $this->app->wg->memc->get( $cacheKey );
 
