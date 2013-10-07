@@ -1043,14 +1043,3 @@ class SwiftFileBackendFileList implements Iterator {
 		return ( current( $this->bufferIter ) !== false ); // no paths can have this value
 	}
 }
-
-#<Wikia>
-/**
- * SwiftFileBackend helper class to sync stored/removed/renamed file with local FS
- *
- * @ingroup FileBackend
- */
-class SwiftFileBackendSyncToLocal {
-	
-}
-#</Wikia>
