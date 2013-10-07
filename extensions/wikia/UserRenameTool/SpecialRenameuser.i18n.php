@@ -1169,6 +1169,7 @@ Bonvolu retroigi kaj reprovi.',
  * @author Icvav
  * @author Jatrobat
  * @author Lin linao
+ * @author Ovruni
  * @author Remember the dot
  * @author Rhaijin
  * @author Sanbec
@@ -1195,6 +1196,8 @@ $messages['es'] = array(
 	'userrenametool-phalanx-matches' => 'Coincidencias en filtros de Phalanx: $1',
 	'userrenametool-confirm' => 'Sí, renombrar el usuario',
 	'userrenametool-submit' => 'Enviar',
+	'userrenametool-error-antispoof-conflict' => 'Advertencia AntiSpoof - ya existe un nombre de usuario similar a "<nowiki>$1</nowiki>".',
+	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof no está instalado.',
 	'userrenametool-errordoesnotexist' => 'El usuario «<nowiki>$1</nowiki>» no existe',
 	'userrenametool-errorexists' => 'El usuario «<nowiki>$1</nowiki>» ya existe',
 	'userrenametool-errorinvalid' => 'El nombre de usuario «<nowiki>$1</nowiki>» no es válido',
@@ -1211,6 +1214,8 @@ Por favor, vuelve atrás e inténtalo de nuevo.',
 	'userrenametool-error-cannot-rename-account' => 'El cambio de nombre de usuario en la base de datos global compartida falló.',
 	'userrenametool-error-cannot-create-block' => 'La creación de un filtro de bloqueo en Phalanx falló.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Se produjo un error inesperado, comprueba los registros o intenta de nuevo.',
+	'userrenametool-warnings-characters' => 'El nuevo nombre de usuario contiene caracteres no válidos!',
+	'userrenametool-warnings-maxlength' => 'La longitud del nuevo nombre de usuario no puede exceder de 255 caracteres!',
 	'userrenametool-warn-repeat' => '¡Atención! El usuario "<nowiki>$1</nowiki>" ya ha sido renombrado a "<nowiki>$2</nowiki>".
 Continúa con el proceso sólo si necesitas actualizar alguna información faltante.',
 	'userrenametool-warn-table-missing' => 'La tabla "<nowiki>$2</nowiki>" no existe en la base de datos "<nowiki>$1</nowiki>."',
@@ -3647,6 +3652,8 @@ $messages['ru'] = array(
 	'userrenametool-phalanx-matches' => 'Фильтры Phalanx соответствуют $1:',
 	'userrenametool-confirm' => 'Да, переименовать участника',
 	'userrenametool-submit' => 'Выполнить',
+	'userrenametool-error-antispoof-conflict' => 'Предупреждение AntiSpoof — уже есть имя пользователя, похожее на «<nowiki>$1</nowiki>».',
+	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof не установлен.',
 	'userrenametool-errordoesnotexist' => 'Участник с именем «<nowiki>$1</nowiki>» не зарегистрирован.',
 	'userrenametool-errorexists' => 'Участник с именем «<nowiki>$1</nowiki>» уже зарегистрирован.',
 	'userrenametool-errorinvalid' => 'Недопустимое имя участника «<nowiki>$1</nowiki>»',
@@ -3662,6 +3669,8 @@ $messages['ru'] = array(
 	'userrenametool-error-cannot-rename-account' => 'Переименование учетной записи участника в общей глобальной базе данных не удалось.',
 	'userrenametool-error-cannot-create-block' => 'Создание блока с помощью Phalanx не удалось.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Произошла непредвиденная ошибка, проверьте журналы или попробуйте еще раз.',
+	'userrenametool-warnings-characters' => 'Новое имя пользователя содержит недопустимые символы!',
+	'userrenametool-warnings-maxlength' => 'Длина нового имени пользователя не может превышать 255 символов!',
 	'userrenametool-warn-repeat' => 'Внимание! Участник «<nowiki>$1</nowiki>» уже был переименован в «<nowiki>$2</nowiki>».
 Продолжайте обработку только в том случае, когда вам необходимо обновить некоторую недостающую информацию.',
 	'userrenametool-warn-table-missing' => 'Таблица «<nowiki>$2</nowiki>» не существует в базе данных «<nowiki>$1</nowiki>».',

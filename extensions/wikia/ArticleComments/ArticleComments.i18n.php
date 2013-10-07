@@ -1846,6 +1846,8 @@ $messages['ko'] = array(
 	'article-comments-history' => '역사',
 	'article-comments-error' => '덧글을 저장할 수 없습니다',
 	'article-comments-rc-comment' => '문서 덧글 (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-comments' => '문서 덧글 ([[$!]])', # Fuzzy
+	'article-comments-rc-blog-comments' => '블로그 덧글 ([[$1]])',
 	'article-comments-toc-item' => '덧글',
 	'article-comments-comment-cannot-add' => '문서에 덧글을 추가할 수 없습니다.',
 	'article-comments-vote' => '투표하기',
@@ -1855,7 +1857,17 @@ $messages['ko'] = array(
 	'article-comments-next-page' => '다음',
 	'article-comments-page-spacer' => '&#160...&#160',
 	'wikiamobile-article-comments-more' => '더 불러오기',
+	'wikiamobile-article-comments-prev' => '이전 불러오기',
+	'wikiamobile-article-comments-none' => '덧글 없음',
+	'wikiamobile-article-comments-view' => '덧글 보기',
+	'wikiamobile-article-comments-replies' => '덧글',
+	'wikiamobile-article-comments-post-reply' => '답변 게시',
+	'wikiamobile-article-comments-post' => '게시',
+	'wikiamobile-article-comments-placeholder' => '덧글 게시',
+	'wikiamobile-article-comments-show' => '보기',
 	'wikiamobile-article-comments-login-post' => '덧글을 남기려면 로그인하세요.',
+	'wikiamobile-article-comments-post-fail' => '덧글을 저장하는데 실패했습니다. 잠시 후에 시도해 주세요.',
+	'enotif_subject_article_comment' => '$PAGEEDITOR 이(가) {{SITENAME}}의 "$PAGETITLE"에 덧글을 달았습니다',
 );
 
 /** Colognian (Ripoarisch)

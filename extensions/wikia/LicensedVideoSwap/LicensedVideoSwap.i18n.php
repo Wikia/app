@@ -579,7 +579,7 @@ $messages['nl'] = array(
 	'lvs-history-kept' => '"$1" is behouden',
 	'lvs-history-instructions' => "Als u de geschiedenis van alle wijzigingen en undo's wil zien, gaat u naar $1.",
 	'lvs-no-monobook-support' => 'Deze pagina wordt niet ondersteund in Monobook. Om deze te openen in de indeling van Wikia, $1. Dit zal uw voorkeurs-layout niet aanpassen.',
-	'lvs-click-here' => 'Klik hier',
+	'lvs-click-here' => 'klik hier',
 );
 
 /** Polish (polski)
@@ -668,19 +668,30 @@ $messages['roa-tara'] = array(
  * @author Okras
  */
 $messages['ru'] = array(
+	'licensedvideoswap' => 'Замена на лицензионное видео',
 	'action-licensedvideoswap' => 'заменять нелицензионные видео',
+	'lvs-page-title' => 'Замена на лицензионное видео',
+	'lvs-history-page-title' => 'История замены на лицензионное видео',
+	'lvs-tooltip-history' => 'Кнопка замены на лицензионное видео',
 	'lvs-history-button-text' => 'История',
+	'lvs-page-header-back-link' => 'Назад к Замене на лицензионное видео',
 	'lvs-callout-header' => 'Мы нашли совпадения для видео из вашей вики в Wikia Video.<br />Замена вашего видео на видео из Wikia Video — это хорошая идея, потому что:',
 	'lvs-callout-title-licensed' => '100% лицензионное',
 	'lvs-callout-reason-licensed' => 'Видео в Wikia лицензированы для наших сообществ для использования в ваших проектах',
 	'lvs-callout-title-quality' => 'Высокое качество',
 	'lvs-callout-reason-quality' => 'Видео в Wikia — высокого качества',
+	'lvs-callout-title-collaborative' => 'Общие',
+	'lvs-callout-reason-collaborative' => 'Видеозаписи на Wikia — общие и могут быть использованы в нескольких проектах',
+	'lvs-callout-reason-more' => 'и многое другое… Мы будем добавлять больше возможностей и способов легко использовать и управлять видеозаписями в Wikia. Оставайтесь с нами!',
 	'lvs-instructions-header' => 'Как пользоваться этой страницей',
+	'lvs-instructions' => 'Многие видео, которые вы вставляете в ваших проектах, становятся недоступными, когда их удаляют или убирают из-за нарушения авторских прав. Вот почему Wikia лицензировала [[w:c:video|тысячи видео]] от нескольких контент-партнеров для использования в вашей вики. Эта спецстраница — простой способ увидеть, если у нас есть лицензионная копия такого же или похожего видео с вашей вики. Пожалуйста, обратите внимание, что часто точно такое же видео может иметь различные видео-эскизы, так что лучше пересмотреть видео, прежде чем сделать решение. Счастливой замены!',
 	'lvs-button-keep' => 'Оставить',
 	'lvs-button-swap' => 'Заменить',
+	'lvs-more-suggestions' => 'больше предложений',
 	'lvs-best-match-label' => 'Лучшее лицензированное совпадение из Wikia Video',
 	'lvs-undo-swap' => 'Отменить',
 	'lvs-undo-keep' => 'Отменить',
+	'lvs-swap-video-success' => 'Поздравляем! Оригинальное видео было удалено и все экземпляры этого видео, включая внедрённые, успешно заменены на подходящие видео от Wikia. $1',
 	'lvs-keep-video-success' => 'Вы решили оставить текущее видео. Видео будет удалено из этого списка. $1',
 	'lvs-restore-video-success' => 'Вы восстановили видео в этот список.',
 	'lvs-error-permission' => 'Вы не можете заменить это видео.',
@@ -694,6 +705,7 @@ $messages['ru'] = array(
 	'lvs-confirm-undo-swap-message' => 'Вы уверены, что хотите восстановить оригинальное видео?',
 	'lvs-confirm-undo-keep-title' => 'Подтвердить отмену',
 	'lvs-confirm-undo-keep-message' => 'Вы уверены, что хотите добавить это видео обратно в список?',
+	'lvs-no-matching-videos' => 'В настоящее время нет премиум-видео, относящегося к этому видео',
 	'lvs-log-swap' => 'Видео, заменённое с [[{{ns:File}}:$1]] на [[{{ns:File}}:$2]]',
 	'lvs-log-restore' => 'Восстановленное заменённое видео ([[{{ns:File}}:$1]])',
 	'lvs-log-removed-redirected-link' => 'Удалённые ссылки-перенаправления',
