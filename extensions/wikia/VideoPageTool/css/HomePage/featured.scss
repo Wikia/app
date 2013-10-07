@@ -29,7 +29,7 @@ $play-button-overlay-fade-duration: 400ms;
 
 // Allow takeover of left/right margins on this page.  There's no UGC content so it should be fine.
 .WikiaArticle {
-	overflow-x: visible;
+	overflow: visible;
 }
 
 .featured-video {
