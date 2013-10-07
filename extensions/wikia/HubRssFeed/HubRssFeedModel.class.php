@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by JetBrains PhpStorm.
- * User: krzychu
+ * User: suchy
  * Date: 04.10.13
  * Time: 13:21
  * To change this template use File | Settings | File Templates.
@@ -13,8 +13,6 @@ class HubRssFeedModel extends WikiaModel{
 	 * @var MarketingToolboxModel
 	 */
 	private $marketingToolboxModel;
-
-
 
 	public function __construct(){
 		parent::__construct();
@@ -79,7 +77,7 @@ class HubRssFeedModel extends WikiaModel{
 			}
 		}
 
-		return ['items'=>$out];
+		return  $out;
 	}
 
 }
