@@ -16,8 +16,8 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle( wfMsg('phalanx-stats-title') );
 
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
-			$this->displayRestrictionError();
 			wfProfileOut( __METHOD__ );
+			$this->displayRestrictionError();
 			return;
 		}
 
@@ -163,6 +163,11 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function help() {
+		if ( !$this->userCanExecute( $this->wg->User ) ) {
+			$this->displayRestrictionError();
+			return;
+		}
+
 		$this->setVal( 'action', $this->title->getFullURL() );
 	}
 }
