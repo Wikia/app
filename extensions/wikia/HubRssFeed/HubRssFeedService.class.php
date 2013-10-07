@@ -27,7 +27,6 @@ class HubRssFeedService {
 
 
 	public function dataToXml( $data, $verticalId, $url ) {
-		ini_set( 'html_errors', 0 );
 		$doc = new DOMDocument();
 		$doc->loadXML( file_get_contents( dirname( __FILE__ ) . '/templates/rss.xml' ) );
 		$rssList = $doc->getElementsByTagName( 'rss' );
