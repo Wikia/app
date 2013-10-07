@@ -20,7 +20,9 @@ class MemcacheClientShadower extends MemCachedClientforWiki {
 		$result = parent::get( $key );
 
 		if ( $shadow != $result ) {
-			Wikia::log( __METHOD__, false, $key, true );
+			$this->get_sock( $key, $host );
+			$this->shadow->get_sock($key, $shadowHost);
+			Wikia::log( __METHOD__, false, "$key {$host}/{$shadowHost}", true );
 		}
 
 		return $result;
