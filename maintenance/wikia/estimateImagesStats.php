@@ -14,6 +14,9 @@ require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
  */
 class EstimateImagesStats extends Maintenance {
 
+	const FILES_PER_SEC = 10;
+	const BATCH_SIZE = 200;
+
 	/**
 	 * Set script options
 	 */
@@ -82,7 +85,7 @@ class EstimateImagesStats extends Maintenance {
 
 	public function execute() {
 		$offset = $this->getOption( 'offset', 0 );
-		$batch = $this->getOption( 'batch', 500 );
+		$batch = $this->getOption( 'batch', self::BATCH_SIZE );
 		$wam = $this->hasOption( 'wam' );
 
 		$this->output( "Getting stats for {$batch} wikis (offset {$offset})..." );
@@ -125,6 +128,8 @@ class EstimateImagesStats extends Maintenance {
 		$images = 0;
 		$wikis = 0;
 
+		$imagesMax = 0;
+
 		while ( $row = $res->fetchRow() ) {
 			$this->output( sprintf( "\n#%d: %s <%s>...",
 				$row['city_id'],
@@ -138,13 +143,19 @@ class EstimateImagesStats extends Maintenance {
 				$wikis++;
 				$images += $stats['images'];
 				$this->output( " {$stats['images']} image(s)" );
+
+				$imagesMax = max( $imagesMax, $stats['images'] );
 			}
 			else {
 				$this->output( ' error!' );
 			}
 		}
 
-		$this->output( sprintf( "\nGot %d image(s) for %d wikis\n", $images, $wikis ) );
+		$this->output( sprintf( "\n\nGot %d image(s) for %d wikis\n", $images, $wikis ) );
+		$this->output( sprintf( "The biggest wiki has %d images - batch will take %s\n",
+			$imagesMax,
+			Wikia::timeDuration( $imagesMax / self::FILES_PER_SEC )
+		) );
 	}
 }
 
