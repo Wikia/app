@@ -63,7 +63,7 @@ ve.dm.SurfaceFragment.prototype.update = function () {
 	if ( this.historyPointer < this.document.getCompleteHistoryLength() ) {
 		txs = this.document.getCompleteHistorySince( this.historyPointer );
 		for ( i = 0, length = txs.length; i < length; i++ ) {
-			this.range = txs[i].transaction.translateRange( this.range, txs[i].undo );
+			this.range = txs[i].translateRange( this.range );
 			this.historyPointer++;
 		}
 	}

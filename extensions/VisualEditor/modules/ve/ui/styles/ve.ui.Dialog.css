@@ -141,11 +141,35 @@
 	border-top-left-radius: 0;
 }
 
-.ve-ui-pagedDialog-outlinePanel {
+.ve-ui-window-body .ve-ce-documentNode {
+	padding: 1.875em; /* 1.5/0.8 */
+}
+
+/* ve.ui.PagedLayout */
+
+.ve-ui-pagedLayout-pagesPanel .ve-ui-panelLayout {
+	padding: 1.5em;
+	width: 100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.ve-ui-pagedLayout-pagesPanel .ve-ui-panelLayout-scrollable {
+	overflow-y: auto;
+}
+
+.ve-ui-pagedLayout-pagesPanel .ve-ui-panelLayout-padded {
+	padding: 2em;
+}
+
+/* ve.ui.PagedOutlineLayout */
+
+.ve-ui-pagedOutlineLayout-outlinePanel {
 	border-right: solid 1px #ddd;
 }
 
-.ve-ui-pagedDialog-outlinePanel-editable .ve-ui-outlineWidget {
+.ve-ui-pagedOutlineLayout-outlinePanel-editable .ve-ui-outlineWidget {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -154,30 +178,10 @@
 	overflow-y: auto;
 }
 
-.ve-ui-pagedDialog-outlinePanel .ve-ui-outlineControlsWidget {
+.ve-ui-pagedOutlineLayout-outlinePanel .ve-ui-outlineControlsWidget {
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	right: 0;
 	box-shadow: 0 0 0.25em rgba(0,0,0,0.25);
-}
-
-.ve-ui-pagedDialog-pagesPanel .ve-ui-panelLayout {
-	padding: 1.5em;
-	width: 100%;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-}
-
-.ve-ui-pagedDialog-pagesPanel .ve-ui-panelLayout-scrollable {
-	overflow-y: auto;
-}
-
-.ve-ui-pagedDialog-pagesPanel .ve-ui-panelLayout-padded {
-	padding: 2em;
-}
-
-.ve-ui-window-body .ve-ce-documentNode {
-	padding: 1.875em; /* 1.5/0.8 */
 }

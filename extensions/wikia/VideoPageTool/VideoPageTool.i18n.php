@@ -49,6 +49,7 @@ $messages['en'] = array(
 	'videopagetool-hint-description-maxlength' => '$1 characters max',
 	'videopagetool-hint-required-dimensions' => 'Image dimensions must be 1024 x 461',
 	'videopagetool-formerror-altthumb' => 'Please add an image',
+	'videopagetool-date-header' => 'Editing for date: $1',
 
 	// Home Page Section: Header
 	'videohomepage-header-dropdown-name' => 'Discover',
@@ -104,6 +105,7 @@ $messages['qqq'] = array(
 	'videopagetool-success-publish' => 'This text appears if your changes have been published successfully',
 	'videopagetool-hint-required-dimensions' => 'Message describing exact dimensions required for custom image upload (1024 x 461)',
 	'videopagetool-formerror-altthumb' => 'Error message for required custom image to be added',
+	'videopagetool-date-header' => 'Shows the date that you\'re programming for at the top of the form.',
 
 	// Home Page Section: Header
 	'videohomepage-header-dropdown-name' => 'Name of the dropdown that allows users to explore Wikia Video\'s sections',

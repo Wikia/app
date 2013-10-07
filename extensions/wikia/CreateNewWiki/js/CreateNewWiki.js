@@ -229,7 +229,9 @@ var WikiBuilder = {
 					});
 			});
 		}
-		$('#Auth, #CreateNewWiki').width(700);
+		if ( !window.wgOasisResponsive ) {
+			$('#Auth, #CreateNewWiki').width(700);
+		}
 		this.signupEntities.hide();
 		this.loginEntities.show();
 	},
@@ -237,7 +239,9 @@ var WikiBuilder = {
 	handleLogin: function() {
 		AjaxLogin.showLogin();
 		AjaxLogin.init($('#AjaxLoginLoginForm form:first'));
-		$('#Auth, #CreateNewWiki').width(600);
+		if ( !window.wgOasisResponsive ) {
+			$('#Auth, #CreateNewWiki').width(600);
+		}
 		this.signupEntities.show();
 		this.loginEntities.hide();
 	},
@@ -490,7 +494,14 @@ $(function() {
 	$('#AjaxLoginButtons').hide();
 	$('#AjaxLoginLoginForm').show();
 
-	ThemeDesigner.slideByDefaultWidth = 608;
-	ThemeDesigner.slideByItems = 4;
+	if ( window.wgOasisResponsive )
+	{
+		ThemeDesigner.slideByDefaultWidth = 500;
+		ThemeDesigner.slideByItems = 3;
+
+	} else {
+		ThemeDesigner.slideByDefaultWidth = 608;   
+		ThemeDesigner.slideByItems = 4;
+	}
 	ThemeDesigner.themeTabInit();
 });

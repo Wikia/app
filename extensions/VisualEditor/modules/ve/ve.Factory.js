@@ -29,24 +29,31 @@ ve.inheritClass( ve.Factory, ve.Registry );
 /**
  * Register a constructor with the factory.
  *
+ * Classes must have a static `name` property to be registered.
+ *
+ *     @example
+ *     function MyClass() {};
+ *     // Adds a static property to the class defining a symbolic name
+ *     MyClass.static = { 'name': 'mine' };
+ *     // Registers class with factory, available via symbolic name 'mine'
+ *     factory.register( MyClass );
+ *
  * @method
- * @param {string|string[]} name Symbolic name or list of symbolic names
  * @param {Function} constructor Constructor to use when creating object
+ * @throws {Error} Name must be a string and must not be empty
  * @throws {Error} Constructor must be a function
  */
-ve.Factory.prototype.register = function ( name, constructor ) {
-	var i, len;
+ve.Factory.prototype.register = function ( constructor ) {
+	var name;
 
 	if ( typeof constructor !== 'function' ) {
 		throw new Error( 'constructor must be a function, cannot be a ' + typeof constructor );
 	}
-	if ( typeof name === 'string' ) {
-		this.entries.push( name );
-	} else if ( ve.isArray( name ) ) {
-		for ( i = 0, len = name.length; i < len; i++ ) {
-			this.entries.push( name[i] );
-		}
+	name = constructor.static && constructor.static.name;
+	if ( typeof name !== 'string' || name === '' ) {
+		throw new Error( 'Name must be a string and must not be empty' );
 	}
+	this.entries.push( name );
 	ve.Registry.prototype.register.call( this, name, constructor );
 };
 

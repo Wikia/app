@@ -97,14 +97,14 @@ class WikiaMiniUpload {
 		$offset = $wgRequest->getVal('offset');
 
 		$constrain = array();
-		$minHeight = $wgRequest->getVal('minHeight');
-		if ( $minHeight ) {
-			$constrain[] = "img_height >= $minHeight";
+		$exactHeight = $wgRequest->getVal('exactHeight');
+		if ( $exactHeight ) {
+			$constrain[] = "img_height = $exactHeight";
 		}
 
-		$minWidth = $wgRequest->getVal('minWidth');
-		if ( $minWidth ) {
-			$constrain[] = "img_width >= $minWidth";
+		$exactWidth = $wgRequest->getVal('exactWidth');
+		if ( $exactWidth ) {
+			$constrain[] = "img_width = $exactWidth";
 		}
 
 		$info = $this->getImages($limit, $offset, $constrain);
@@ -496,12 +496,6 @@ class WikiaMiniUpload {
 							$caption = '';
 						}
 
-						// Test if this violates the size requirements we've been given
-						if ( $msg = $this->invalidSize($file_name) ) {
-							header('X-screen-type: error');
-							return $msg;
-						}
-
 						$file_name->upload($file_mwname->getPath(), '', $caption);
 						$file_mwname->delete('');
 						$this->tempFileClearInfo( $tempid );
@@ -580,12 +574,6 @@ class WikiaMiniUpload {
 						}
 					}
 
-					// Test if this violates the size requirements we've been given
-					if ( $msg = $this->invalidSize($file) ) {
-						header('X-screen-type: error');
-						return $msg;
-					}
-
 					$file->upload($temp_file->getPath(), '', $caption);
 					$temp_file->delete('');
 					$this->tempFileClearInfo( $tempid );
@@ -608,6 +596,12 @@ class WikiaMiniUpload {
 		if ( !is_object($file) ) {
 			header('X-screen-type: error');
 			return wfMessage('wmu-file-not-found')->plain();
+		}
+
+		// Test if this violates the size requirements we've been given
+		if ( $msg = $this->invalidSize($file) ) {
+			header('X-screen-type: error');
+			return $msg;
 		}
 
 		$ns_img = $wgContLang->getFormattedNsText( NS_IMAGE );
@@ -738,8 +732,8 @@ class WikiaMiniUpload {
 	 * be returned but if the size is correct, it will return FALSE (e.g., "no its not invalid")
 	 * Currently, this check uses these request parameters:
 	 *
-	 *   minHeight   => Minimum pixel height of the image
-	 *   minWidth    => Minimum pixel width of the image
+	 *   exactHeight   => Minimum pixel height of the image
+	 *   exactWidth    => Minimum pixel width of the image
 	 *   aspectRatio => Exact aspect ratio the image should have
 	 *
 	 * @param File|$file A file object
@@ -747,24 +741,32 @@ class WikiaMiniUpload {
 	 */
 	function invalidSize( $file ) {
 		global $wgRequest;
-		$minHeight = $wgRequest->getVal('minHeight');
-		$minWidth = $wgRequest->getVal('minWidth');
+		$exactHeight = $wgRequest->getVal('exactHeight');
+		$exactWidth = $wgRequest->getVal('exactWidth');
+
+		// Skip this check if we don't have any constraints
+		if (empty($exactHeight) && empty($exactWidth)) {
+			return false;
+		}
+
 		$fileHeight = $file->getHeight();
 		$fileWidth = $file->getWidth();
 
 		// Possible messages generated here:
-		//   wmu-error-under-width
-		//   wmu-error-under-height
-		//   wmu-error-under-width-height
-		$msgString = 'wmu-error-under';
+		//   wmu-error-exact-width
+		//   wmu-error-exact-height
+		//   wmu-error-exact-width-height
+		$msgString = 'wmu-error-exact';
 		$params = array();
-		if ( $fileWidth < $minWidth ) {
+		if ( !empty($exactWidth) && ($fileWidth != $exactWidth) ) {
 			$msgString .= '-width';
-			$params[] = $minWidth;
+			$params[] = $exactWidth;
+			$params[] = $fileWidth;
 		}
-		if ( $fileHeight < $minHeight ) {
+		if ( !empty($exactHeight) && ($fileHeight != $exactHeight) ) {
 			$msgString .= '-height';
-			$params[] = $minHeight;
+			$params[] = $exactHeight;
+			$params[] = $fileHeight;
 		}
 
 		// Check if the minimum sizes failed before moving on
@@ -772,15 +774,7 @@ class WikiaMiniUpload {
 			return wfMessage($msgString, $params)->plain();
 		}
 
-		// Min sizes are fine, now check the aspect ratio
-		$aspectRatio = $wgRequest->getVal('aspectRatio');
-		$fileAspectRatio = $fileHeight > 0 ? $fileWidth/$fileHeight : 0;
-
-		if (abs($aspectRatio - $fileAspectRatio) > 0.01) {
-			return wfMessage('wmu-error-bad-aspect-ratio', $fileWidth, $fileHeight)->plain();
-		} else {
-			return false;
-		}
+		return false;
 	}
 
 	function clean() {
@@ -859,7 +853,6 @@ class WikiaMiniUpload {
 		if ( $offset ) {
 			$sql .= " OFFSET $offset";
 		}
-
 		$res = $dbr->query( $sql, __FUNCTION__ );
 
 		$images = array();

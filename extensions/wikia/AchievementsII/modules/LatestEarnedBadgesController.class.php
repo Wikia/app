@@ -6,8 +6,7 @@ class LatestEarnedBadgesController extends WikiaController {
 
 		wfProfileIn(__METHOD__);
 
-		// include oasis.css override
-		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/AchievementsII/css/oasis.scss'));
+		$this->response->addAsset('achievements_js');
 
 		// This code was taken from SpecialLeaderboard so it can be used by both the module and the old Monaco .tmpl
 		$rankingService = new AchRankingService();

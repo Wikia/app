@@ -392,14 +392,15 @@ $messages['ca'] = array(
 	'themedesigner-dont-use-a-graphic' => 'treure',
 	'themedesigner-history-item' => '$1 de $2',
 	'themedesigner-button-change-text' => 'Canvia el text',
-	'themedesigner-reason' => 'Dissenyador de Temes - guardat de $1',
+	'themedesigner-reason' => 'Dissenyador de Temes - canvis fets per $1',
 	'themedesigner-size-error' => 'Mida del fitxer incorrecta',
 	'themedesigner-dimensions-error' => 'La imatge supera els límits de les dimensions',
 	'themedesigner-type-error' => 'Tipus de fitxer incorrecte',
-	'themedesigner-unknown-error' => "S'ha produït un error, per desgràcia no hem estat capaços d'identificar-lo, si us plau provi una altra vegada",
+	'themedesigner-unknown-error' => "S'ha produït un error, per desgràcia no hem estat capaços d'identificar-lo, si us plau provi-ho una altra vegada",
 	'themedesigner-manual-upload-error' => 'Utilitza el Dissenyador de Temes per a pujar un logo o uns fons per al teu wiki',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Previsualització',
+	'themedesigner-wordmark-preview-error' => 'Error! El nom del wiki no pot estar en blanc, si us plau, escriu el nom del wiki per desar.',
 );
 
 /** Chechen (нохчийн)
@@ -1460,6 +1461,7 @@ $messages['pdc'] = array(
 
 /** Polish (polski)
  * @author BeginaFelicysym
+ * @author Chrumps
  * @author Clamira
  * @author Cloudissimo
  * @author Sovq
@@ -1521,7 +1523,7 @@ $messages['pl'] = array(
 	'themedesigner-manual-upload-error' => 'Użyj Kreatora motywu aby zamieścić logo lub tło',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Podgląd',
-	'themedesigner-wordmark-preview-error' => 'Błąd - nazwa wiki nie może być usta, wprowadź nazwę wiki aby zapisać.',
+	'themedesigner-wordmark-preview-error' => 'Błąd – nazwa wiki nie może być pusta, wprowadź nazwę wiki, aby zapisać.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -1592,14 +1594,14 @@ $messages['ps'] = array(
 	'themedesigner-or' => 'يا',
 	'themedesigner-background' => 'مخينه',
 	'themedesigner-page' => 'مخ',
-	'themedesigner-color' => 'رنګ',
+	'themedesigner-color' => 'رنگ',
 	'themedesigner-graphic' => 'ګرافيک',
 	'themedesigner-buttons' => 'تڼۍ',
 	'themedesigner-links' => 'تړنې',
 	'themedesigner-small' => 'وړوکی',
 	'themedesigner-medium' => 'منځوی',
 	'themedesigner-large' => 'لوی',
-	'themedesigner-button-cancel' => 'ناګارل',
+	'themedesigner-button-cancel' => 'ناگارل',
 	'themedesigner-button-ok' => 'ښه',
 	'themedesigner-button-upload' => 'پورته کول',
 	'themedesigner-button-upload-wordmark' => 'پورته کول',
@@ -1826,6 +1828,13 @@ $messages['ru'] = array(
 	'themedesigner-favicon-heading' => 'Фавикон',
 	'themedesigner-wodmark-preview' => 'Предпросмотр',
 	'themedesigner-wordmark-preview-error' => 'Ой! Название проекта не может быть пустым. Пожалуйста, введите имя проекта для сохранения.',
+);
+
+/** Slovenian (slovenščina)
+ * @author Eleassar
+ */
+$messages['sl'] = array(
+	'themedesigner-wordmark-preview-error' => 'Ups! Ime wikija ne more biti prazno. Da shranite, vnesite ime wikija.',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -2159,6 +2168,7 @@ $messages['wuu'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Hzy980512
  * @author Sam Wang
  * @author Yfdyh000
  */
@@ -2217,6 +2227,7 @@ $messages['zh-hans'] = array(
 	'themedesigner-manual-upload-error' => '使用主题设计器来上传标志或wiki背景图',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => '预览',
+	'themedesigner-wordmark-preview-error' => '哎呀！Wiki名称不能留空，请输入Wiki的名字后再保存。',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

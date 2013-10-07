@@ -39,16 +39,19 @@ define( 'views.videopageadmin.edit', [
 					$videoTitle = $this.siblings( '.video-title' ),
 					$displayTitleInput = $box.find( '.display-title' ),
 					$descInput = $box.find( '.description' ),
-					$thumb = $box.find( '.video-thumb' ),
-					$altThumbKey = $box.find('.alt-thumb').val(),
-					req = {};
-
-				if ( $altThumbKey.length ) {
-					req.altThumbKey = $altThumbKey;
-				}
+					$thumb = $box.find( '.video-thumb' );
 
 				$this.addVideoButton({
 					callbackAfterSelect: function( url, vet ) {
+						var $altThumbKey,
+								req;
+
+						$altThumbKey = $box.find('.alt-thumb').val();
+						req = {};
+
+						if ( $altThumbKey.length ) {
+							req.altThumbKey = $altThumbKey;
+						}
 
 						req.url = url;
 
@@ -62,6 +65,7 @@ define( 'views.videopageadmin.edit', [
 								if( json.result === 'ok' ) {
 
 									var video = json.video;
+									$thumb.html();
 
 									// update input value and remove any error messages that might be there.
 									$videoKeyInput
@@ -78,11 +82,8 @@ define( 'views.videopageadmin.edit', [
 									$descInput.val( video.description )
 										.trigger( 'keyup' ); // for validation
 
-									// Check to see if a custom thumb has been uploaded by user
-									// Only update thumbnail if custom thumb has not been added
-									if ( !$thumb.data('modified') ) {
-										$thumb.html( video.videoThumb );
-									}
+									// Update thumbnail html
+									$thumb.html( video.videoThumb );
 
 									// close VET modal
 									vet.close();

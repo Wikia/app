@@ -37,7 +37,6 @@
 					"ve.dm.ModelRegistry",
 					"ve.dm.Converter",
 					"ve.dm.DataString",
-					"ve.dm.DocumentSlice",
 					"ve.dm.DocumentSynchronizer",
 					"ve.dm.IndexValueStore",
 					"ve.dm.NodeFactory",
@@ -66,7 +65,7 @@
 			},
 			{
 				"name": "Linear data",
-				"classes": ["ve.dm.*LinearData"]
+				"classes": ["ve.dm.*LinearData*"]
 			},
 			{
 				"name": "Models",
@@ -161,10 +160,6 @@
 					"ve", "ve.EventEmitter", "ve.Registry", "ve.Factory",
 					"ve.Range", "ve.Element", "ve.EventSequencer"
 				]
-			},
-			{
-				"name": "Factories",
-				"classes": ["ve.NamedClassFactory"]
 			},
 			{
 				"name": "Nodes",

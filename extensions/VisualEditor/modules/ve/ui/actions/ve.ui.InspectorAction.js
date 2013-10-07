@@ -24,6 +24,8 @@ ve.inheritClass( ve.ui.InspectorAction, ve.ui.Action );
 
 /* Static Properties */
 
+ve.ui.InspectorAction.static.name = 'inspector';
+
 /**
  * List of allowed methods for the action.
  *
@@ -46,4 +48,4 @@ ve.ui.InspectorAction.prototype.open = function ( name ) {
 
 /* Registration */
 
-ve.ui.actionFactory.register( 'inspector', ve.ui.InspectorAction );
+ve.ui.actionFactory.register( ve.ui.InspectorAction );
