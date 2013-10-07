@@ -25,6 +25,7 @@ $drawer-shadow-size: 30px;
 
 	&.open {
 		opacity: 1;
+		z-index: $zTop;
 	}
 
 	&.left {
