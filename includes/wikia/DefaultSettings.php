@@ -221,8 +221,6 @@ $wgAutoloadClasses[ 'GMetricClient'                   ] = "$IP/lib/vendor/GMetri
 $wgAutoloadClasses[ 'FakeLocalFile'                   ] = "$IP/includes/wikia/FakeLocalFile.class.php";
 $wgAutoloadClasses[ 'WikiaUploadStash'                ] = "$IP/includes/wikia/upload/WikiaUploadStash.class.php";
 $wgAutoloadClasses[ 'WikiaUploadStashFile'            ] = "$IP/includes/wikia/upload/WikiaUploadStashFile.class.php";
-$wgAutoloadClasses[ 'PayflowAPI'                      ] = "$IP/includes/wikia/PayflowAPI.php";
-$wgAutoloadClasses[ 'Curl'                            ] = "$IP/includes/wikia/Curl.php";
 $wgAutoloadClasses[ 'WikiaPageType'                   ] = "$IP/includes/wikia/WikiaPageType.class.php";
 $wgAutoloadClasses[ 'WikiaSkinMonoBook'               ] = "$IP/skins/wikia/WikiaMonoBook.php";
 $wgAutoloadClasses[ 'PaginationController'            ] = "$IP/includes/wikia/services/PaginationController.class.php";
@@ -300,6 +298,7 @@ $wgAutoloadClasses['InfoboxesService'] = $IP . '/includes/wikia/services/Infobox
 $wgAutoloadClasses['RenderContentOnlyHelper'] = $IP . '/includes/wikia/RenderContentOnlyHelper.class.php';
 $wgAutoloadClasses['SolrDocumentService'] = $IP . '/includes/wikia/services/SolrDocumentService.class.php';
 $wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormBuilderService.class.php';
+$wgAutoloadClasses['LicensedWikisService']  =  $IP.'/includes/wikia/services/LicensedWikisService.class.php';
 
 // data models
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
@@ -884,15 +883,6 @@ $wgABTests = array();
 $wgApiRunJobsPerRequest = 20;
 
 /**
- * default configuration for paypal payments
- *
- */
-$wgPayPalPaymentDBName = 'paypal';
-$wgPayPalUrl = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';
-$wgPayflowProAPIUrl = 'https://pilot-payflowpro.paypal.com';
-$wgPayflowProCredentials = array();
-
-/**
  * sets memcached timeout back to what it was in mw1.15
  */
 
@@ -1159,14 +1149,14 @@ $wgEnableAdEngineExt = true;
  * @name $wgAdDriverUseNewGptZones
  * Whether to use zones with slot name included (true) in GPT tags or not (false)
  */
-$wgAdDriverUseNewGptZones = false;
+$wgAdDriverUseNewGptZones = true;
 
 /**
  * @name $wgAdDriverUseFullGpt
  * Whether to use full GPT (true) or mixed GPT for roadbloack and legacy DART calls for other slots (false)
  * If true, $wgAdDriverUseNewGptZones is meaningless (assumed true) as full GPT requires unique zone names
  */
-$wgAdDriverUseFullGpt = false;
+$wgAdDriverUseFullGpt = true;
 
 /**
  * @name $wgAdVideoTargeting

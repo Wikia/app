@@ -93,7 +93,7 @@ abstract class ApiWrapper {
 	}
 
 	public function getMimeType() {
-		return 'video/'.$this->getProvider();
+		return 'video/'.strtolower( $this->getProvider() );
 	}
 
 	public function getVideoId() {
@@ -537,6 +537,23 @@ abstract class ApiWrapper {
 	 */
 	protected function getVideoName() {
 		return '';
+	}
+
+	/**
+	 * check if valid permisions
+	 * @return boolean
+	 */
+	protected static function isAllowed() {
+		$user = F::app()->wg->User;
+		if ( !$user->isLoggedIn() ) {
+			return false;
+		}
+
+		if ( !$user->isAllowed( 'uploadpremiumvideo' ) ) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

@@ -150,8 +150,8 @@ var LightboxLoader = {
 		LightboxLoader.pageAds.css('visibility','hidden');
 
 		// Display modal with default dimensions
-		var openModal = $("<div>").makeModal(LightboxLoader.defaults);
-		openModal.find(".modalContent").startThrobbing();
+		var openModal = $('<div>').makeModal(LightboxLoader.defaults);
+		openModal.find('.modalContent').startThrobbing();
 
 		var lightboxParams = {
 			key: mediaTitle,
@@ -337,7 +337,8 @@ LightboxTracker = {
 		LB: 'lightbox',
 		SHARE: 'share',
 		HUBS: 'hubs',
-		OTHER: 'other'
+		OTHER: 'other',
+		TOUCHSTORM: 'touchStorm'
 	}
 };
 

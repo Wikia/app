@@ -1,228 +1,234 @@
-/**
- * VisualEditor content editable Node class.
+/*!
+ * VisualEditor ContentEditable Node class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
  * Generic ContentEditable node.
  *
- * @class
  * @abstract
+ * @extends ve.ce.View
+ * @mixins ve.Node
+ *
  * @constructor
- * @extends {ve.Node}
- * @param {String} type Symbolic name of node type
  * @param {ve.dm.Node} model Model to observe
- * @param {jQuery} [$element] Element to use as a container
+ * @param {Object} [config] Configuration options
  */
-ve.ce.Node = function VeCeNode( type, model, $element ) {
+ve.ce.Node = function VeCeNode( model, config ) {
 	// Parent constructor
-	ve.Node.call( this, type );
+	ve.ce.View.call( this, model, config );
+
+	// Mixin constructor
+	ve.Node.call( this );
 
 	// Properties
-	this.model = model;
-	this.$ = $element || $( '<div>' );
 	this.parent = null;
-	// Holds the information about whether or not the node is attached to the live DOM
-	this.live = false;
 
-	this.$.data( 'node', this );
-
-	// Walk through node model attributes and pick just the HTML ones,
-	// then apply them to the DOM element
-	var	attributes = this.model.getAttributes(),
-		attribute;
-	for ( attribute in attributes ) {
-		if ( attribute.indexOf( 'html/' ) === 0 ) {
-			this.$.attr( attribute.substr( 5 ), attributes[attribute] );
-		}
-	}
+	// Events
+	this.model.connect( this, { 'attributeChange': 'onAttributeChange' } );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.Node, ve.Node );
+ve.inheritClass( ve.ce.Node, ve.ce.View );
 
-/* Static Memebers */
+ve.mixinClass( ve.ce.Node, ve.Node );
 
-ve.ce.Node.static = {};
+/* Static Members */
 
 /**
- * Template for shield elements.
+ * Whether this node type can be split.
  *
- * Uses data URI to inject a 1x1 transparent GIF image into the DOM.
+ * When the user presses Enter, we split the node they're in (if splittable), then split its parent
+ * if splittable, and continue traversing up the tree and stop at the first non-splittable node.
  *
  * @static
- * @member
+ * @property static.canBeSplit
+ * @inheritable
  */
-ve.ce.Node.static.$shieldTemplate = $(
-	'<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" ' +
-		'class="ve-ce-node-shield">'
-);
+ve.ce.Node.static.canBeSplit = false;
 
 /* Methods */
 
 /**
- * Gets a list of allowed child node types.
+ * Handle attribute change events.
+ *
+ * Whitelisted attributes will be added or removed in sync with the DOM. They are initially set in
+ * the constructor.
+ *
+ * @method
+ * @param {string} key Attribute key
+ * @param {string} from Old value
+ * @param {string} to New value
+ */
+ve.ce.Node.prototype.onAttributeChange = function () {
+};
+
+/**
+ * Get allowed child node types.
  *
  * This method passes through to the model.
  *
  * @method
- * @returns {String[]|null} List of node types allowed as children or null if any type is allowed
+ * @returns {string[]|null} List of node types allowed as children or null if any type is allowed
  */
 ve.ce.Node.prototype.getChildNodeTypes = function () {
 	return this.model.getChildNodeTypes();
 };
 
 /**
- * Gets a list of allowed parent node types.
+ * Get allowed parent node types.
  *
  * This method passes through to the model.
  *
  * @method
- * @returns {String[]|null} List of node types allowed as parents or null if any type is allowed
+ * @returns {string[]|null} List of node types allowed as parents or null if any type is allowed
  */
 ve.ce.Node.prototype.getParentNodeTypes = function () {
 	return this.model.getParentNodeTypes();
 };
 
 /**
- * Checks if model is for a node that can have children.
+ * Check if the node can have children.
  *
  * This method passes through to the model.
  *
  * @method
- * @returns {Boolean} Model node can have children
+ * @returns {boolean} Model node can have children
  */
 ve.ce.Node.prototype.canHaveChildren = function () {
 	return this.model.canHaveChildren();
 };
 
 /**
- * Checks if model is for a node that can have children.
+ * Check if the node can have children but not content nor be content.
  *
  * This method passes through to the model.
  *
  * @method
- * @returns {Boolean} Model node can have children
+ * @returns {boolean} Model node can have children but not content nor be content
  */
-ve.ce.Node.prototype.canHaveChildren = function () {
-	return this.model.canHaveChildren();
+ve.ce.Node.prototype.canHaveChildrenNotContent = function () {
+	return this.model.canHaveChildrenNotContent();
 };
 
 /**
- * Checks if model is for a node that can have grandchildren.
+ * Check if the node has a wrapped element in the document data.
  *
  * This method passes through to the model.
  *
  * @method
- * @returns {Boolean} Model node can have grandchildren
- */
-ve.ce.Node.prototype.canHaveGrandchildren = function () {
-	return this.model.canHaveGrandchildren();
-};
-
-/**
- * Checks if model is for a wrapped element.
- *
- * This method passes through to the model.
- *
- * @method
- * @returns {Boolean} Model node is a wrapped element
+ * @returns {boolean} Model node is a wrapped element
  */
 ve.ce.Node.prototype.isWrapped = function () {
 	return this.model.isWrapped();
 };
 
 /**
- * Checks if this node can contain content.
+ * Check if the node can contain content.
+ *
+ * This method passes through to the model.
  *
  * @method
- * @returns {Boolean} Node can contain content
+ * @returns {boolean} Node can contain content
  */
 ve.ce.Node.prototype.canContainContent = function () {
 	return this.model.canContainContent();
 };
 
 /**
- * Checks if this node is content.
+ * Check if the node is content.
+ *
+ * This method passes through to the model.
  *
  * @method
- * @returns {Boolean} Node is content
+ * @returns {boolean} Node is content
  */
 ve.ce.Node.prototype.isContent = function () {
 	return this.model.isContent();
 };
 
 /**
- * Checks if this node can have a slug before it
+ * Check if the node can have a slug before it.
+ *
+ * TODO: Figure out a way to remove the hard-coding for text nodes here.
  *
  * @static
  * @method
- * @returns {Boolean} Whether the node can have a slug before it
+ * @returns {boolean} Whether the node can have a slug before it
  */
 ve.ce.Node.prototype.canHaveSlugBefore = function () {
-	return !this.canContainContent() && this.getParentNodeTypes() === null && this.type !== 'text';
+	return !this.canContainContent() &&
+		this.getParentNodeTypes() === null &&
+		this.type !== 'text' &&
+		this.type !== 'list';
 };
 
 /**
- * Checks if this node can have a slug after it
+ * Check if the node can have a slug after it.
  *
  * @static
  * @method
- * @returns {Boolean} Whether the node can have a slug after it
+ * @returns {boolean} Whether the node can have a slug after it
  */
 ve.ce.Node.prototype.canHaveSlugAfter = ve.ce.Node.prototype.canHaveSlugBefore;
 
 /**
- * Gets model length.
+ * Get the length of the node.
  *
  * This method passes through to the model.
  *
  * @method
- * @returns {Number} Model length
+ * @returns {number} Model length
  */
 ve.ce.Node.prototype.getLength = function () {
 	return this.model.getLength();
 };
 
 /**
- * Gets model outer length.
+ * Get the outer length of the node, which includes wrappers if present.
  *
  * This method passes through to the model.
  *
  * @method
- * @returns {Number} Model outer length
+ * @returns {number} Model outer length
  */
 ve.ce.Node.prototype.getOuterLength = function () {
 	return this.model.getOuterLength();
 };
 
 /**
- * Checks if this node can be split.
+ * Get the offset of the node.
  *
- * @method
- * @returns {Boolean} Node can be split
+ * @see ve.dm.Node#getOffset
+ * @returns {number} Offset
  */
-ve.ce.Node.prototype.canBeSplit = function () {
-	return ve.ce.nodeFactory.canNodeBeSplit( this.type );
+ve.ce.Node.prototype.getOffset = function () {
+	return this.model.getOffset();
 };
 
 /**
- * Gets a reference to the model this node observes.
+ * Check if the node can be split.
  *
  * @method
- * @returns {ve.dm.Node} Reference to the model this node observes
+ * @returns {boolean} Node can be split
  */
-ve.ce.Node.prototype.getModel = function () {
-	return this.model;
+ve.ce.Node.prototype.canBeSplit = function () {
+	return this.constructor.static.canBeSplit;
 };
 
+/**
+ * Get the closest splittable node upstream.
+ *
+ * @method
+ * @returns {ve.ce.Node} Closest splittable node
+ */
 ve.ce.Node.getSplitableNode = function ( node ) {
 	var splitableNode = null;
-	
-	ve.Node.traverseUpstream( node, function ( node ) {
+
+	node.traverseUpstream( function ( node ) {
 		if ( node.canBeSplit() ) {
 			splitableNode = node;
 			return true;
@@ -230,22 +236,16 @@ ve.ce.Node.getSplitableNode = function ( node ) {
 			return false;
 		}
 	} );
-	
+
 	return splitableNode;
 };
 
 /**
- * @method
- * @returns {Boolean} Node is attached to the live DOM
- */
-ve.ce.Node.prototype.isLive = function () {
-	return this.live;
-};
-
-/**
+ * Release all memory.
+ *
  * @method
  */
-ve.ce.Node.prototype.setLive = function ( live ) {
-	this.live = live;
-	this.emit( 'live' );
+ve.ce.Node.prototype.destroy = function () {
+	this.parent = null;
+	this.model.disconnect( this );
 };

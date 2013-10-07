@@ -12,7 +12,7 @@ require(['wikia.window', 'wikia.nirvana', 'track', 'wikia.cache'],
 
 	$(d).on('nav:open', function(){
 		trackLevel(1);
-	}).on('nav:close', function(){
+	}).on('topbar:close nav:close', function(){
 		if($wkNavMenu){
 			$wkNavMenu.removeClass('cur2 cur3');
 		}

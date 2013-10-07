@@ -1,6 +1,6 @@
 module( 'jquery.mwExtension', QUnit.newMwEnvironment() );
 
-test( 'String functions', function() {
+test( 'String functions', 7, function() {
 
 	equal( $.trimLeft( '  foo bar  ' ), 'foo bar  ', 'trimLeft' );
 	equal( $.trimRight( '  foo bar  ' ), '  foo bar', 'trimRight' );
@@ -15,7 +15,7 @@ test( 'String functions', function() {
 	equal( $.escapeRE( '0123456789' ), '0123456789', 'escapeRE - Leave numbers alone' );
 });
 
-test( 'Is functions', function() {
+test( 'Is functions', 15, function() {
 
 	strictEqual( $.isDomElement( document.getElementById( 'qunit-header' ) ), true,
 	 'isDomElement: #qunit-header Node' );
@@ -45,7 +45,7 @@ test( 'Is functions', function() {
 	strictEqual( $.isEmpty( { length: 0 } ), true, 'isEmptry: { length: 0 }' );
 });
 
-test( 'Comparison functions', function() {
+test( 'Comparison functions', 5, function() {
 
 	ok( $.compareArray( [0, 'a', [], [2, 'b'] ], [0, "a", [], [2, "b"] ] ),
 	 'compareArray: Two deep arrays that are excactly the same' );

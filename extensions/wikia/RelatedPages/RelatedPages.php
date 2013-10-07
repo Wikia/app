@@ -27,6 +27,7 @@ $wgHooks['SkinAfterContent'][] = 'RelatedPages::onSkinAfterContent';
 
 // classes
 $wgAutoloadClasses['RelatedPages'] = $dir . 'RelatedPages.class.php';
+$wgAutoloadClasses['RelatedPagesController'] = $dir . 'RelatedPagesController.class.php';
 
 // messages
 $wgExtensionMessagesFiles['RelatedPages'] = $dir . 'RelatedPages.i18n.php';
