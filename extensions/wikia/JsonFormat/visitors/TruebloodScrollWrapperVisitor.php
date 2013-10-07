@@ -39,7 +39,6 @@ class TruebloodScrollWrapperVisitor extends DOMNodeVisitorBase {
 	 * @param DOMNode $currentNode
 	 */
 	public function visit(DOMNode $currentNode) {
-		//die($currentNode->childNodes->item(0)->childNodes->item(0)->childNodes->item(0)->childNodes->item(0)->nodeValue);
 		$this->iterate($currentNode->childNodes->item(0)->childNodes->item(0)->childNodes->item(0)->childNodes);
 	}
 }
