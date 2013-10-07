@@ -360,6 +360,10 @@ $wgAutoloadClasses['Wikia\UI\TemplateException'] = $IP . '/includes/wikia/ui/exc
 $wgAutoloadClasses['Wikia\UI\DataException'] = $IP . '/includes/wikia/ui/exceptions/DataException.class.php';
 $wgAutoloadClasses['Wikia\UI\UIFactoryApiController'] = $IP . '/includes/wikia/ui/UIFactoryApiController.class.php';
 
+// Traits
+$wgAutoloadClasses[ 'PreventBlockedUsers' ] = $IP . '/includes/wikia/traits/PreventBlockedUsers.trait.php';
+$wgAutoloadClasses[ 'PreventBlockedUsersThrowsError' ] = $IP . '/includes/wikia/traits//PreventBlockedUsers.trait.php';
+
 
 // Register \Wikia\Sass namespace
 spl_autoload_register( function( $class ) {
