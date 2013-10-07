@@ -7,7 +7,7 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 
 	/**
 	 * The memcache client we're using
-	 * @var MemcacheClient
+	 * @var MWMemcached
 	 */
 	protected $client;
 
@@ -51,8 +51,6 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 		}
 
 		$this->client = new $wgMemCachedClass( $params );
-		$this->client->set_servers( $params['servers'] );
-		$this->client->set_debug( $params['debug'] );
 	}
 
 	/**
@@ -247,7 +245,7 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 	 * @param $key
 	 */
 	public function clearLocalCache( $key ) {
-		$this->client->deleteFromCache($key);
+		unset($this->client->_dupe_cache[$key]);
 	}
 
 }

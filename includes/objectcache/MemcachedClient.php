@@ -72,9 +72,7 @@
  * @ingroup Cache
  */
 
-// Wikia change start
-class MWMemcached extends MemcacheClient {
-// Wikia change end
+class MWMemcached {
 	// {{{ properties
 	// {{{ public
 
@@ -234,6 +232,13 @@ class MWMemcached extends MemcacheClient {
 	 */
 	var $_connect_attempts;
 
+	/**
+	 * @author wikia
+	 * Internal memoization to avoid unnecessary network requests
+	 * If a get() is done twice in a single request use the stored value
+	 */
+	var $_dupe_cache;
+
 	// }}}
 	// }}}
 	// {{{ methods
@@ -259,7 +264,7 @@ class MWMemcached extends MemcacheClient {
 		$this->_cache_sock = array();
 		$this->_host_dead = array();
 		# start wikia change
-		$this->resetCache();
+		$this->_dupe_cache = array();
 		# end wikia change
 
 		$this->_timeout_seconds = 0;
@@ -322,10 +327,10 @@ class MWMemcached extends MemcacheClient {
 		}
 
 		# start wikia change
-		$this->deleteFromCache($key);
+		unset( $this->_dupe_cache[ $key ] );
 		# end wikia change
 
-		$sock = $this->get_sock( $key );
+		$sock = $this->get_sock( $key, $host );
 		if ( !is_resource( $sock ) ) {
 			return false;
 		}
@@ -338,7 +343,7 @@ class MWMemcached extends MemcacheClient {
 			$this->stats['delete'] = 1;
 		}
 		$cmd = "delete $key $time\r\n";
-		if( !$this->_safe_fwrite( $sock, $cmd, strlen( $cmd ) ) ) {
+		if( !$this->_safe_fwrite( $sock, $host, $cmd, strlen( $cmd ) ) ) {
 			$this->_dead_sock( $sock );
 			return false;
 		}
@@ -416,12 +421,12 @@ class MWMemcached extends MemcacheClient {
 
 		# start wikia change
 		# Memoize duplicate memcache requests for the same key in the same request
-		if( $this->cacheContains($key) ) {
+		if( isset( $this->_dupe_cache[ $key ] ) ) {
 			wfProfileIn ( __METHOD__ . "::$key !DUPE" );
 			wfProfileOut ( __METHOD__ . "::$key !DUPE" );
 			wfProfileOut( __METHOD__ . "::$key" );
 			wfProfileOut( __METHOD__ );
-			return $this->getFromCache( $key );
+			return $this->_dupe_cache[ $key ];
 		}
 		# end wikia change
 
@@ -446,7 +451,7 @@ class MWMemcached extends MemcacheClient {
 		}
 		# end wikia change
 
-		$sock = $this->get_sock( $key );
+		$sock = $this->get_sock( $key, $host );
 
 		if ( !is_resource( $sock ) ) {
 			wfProfileOut( __METHOD__ . "::$key" );
@@ -462,7 +467,7 @@ class MWMemcached extends MemcacheClient {
 		}
 
 		$cmd = "get $key\r\n";
-		if ( !$this->_safe_fwrite( $sock, $cmd, strlen( $cmd ) ) ) {
+		if ( !$this->_safe_fwrite( $sock, $host, $cmd, strlen( $cmd ) ) ) {
 			$this->_dead_sock( $sock );
 			wfProfileOut( __METHOD__ . "::$key" );
 			wfProfileOut( __METHOD__ );
@@ -481,11 +486,11 @@ class MWMemcached extends MemcacheClient {
 		# start wikia change
 		# Owen wants to get more detailed profiling info
 		if ( array_key_exists($key,$val) ) {
-			$this->addToCache($key, $val[$key]);
+			$this->_dupe_cache[$key] = $val[$key];
 			wfProfileIn ( __METHOD__ . "::$key !HIT");
 			wfProfileOut ( __METHOD__ . "::$key !HIT");
 		} else {
-			$this->addToCache($key, false);
+			$this->_dupe_cache[$key] = false;
 			wfProfileIn ( __METHOD__ . "::$key !MISS");
 			wfProfileOut ( __METHOD__ . "::$key !MISS");
 		}
@@ -531,11 +536,11 @@ class MWMemcached extends MemcacheClient {
 		// Wikia change - begin - @author: wladek
 		$val = array();
 		foreach ($keys as $k => $key) {
-			if ( $this->cacheContains( $key ) ) {
+			if ( array_key_exists( $key, $this->_dupe_cache ) ) {
 				wfProfileIn ( __METHOD__ . "::$key !DUPE" );
 				wfProfileOut ( __METHOD__ . "::$key !DUPE" );
 				unset($keys[$k]);
-				$val[$key] = $this->getFromCache( $key );
+				$val[$key] = $this->_dupe_cache[$key];
 			}
 		}
 		if ( empty( $keys ) ) {
@@ -551,7 +556,7 @@ class MWMemcached extends MemcacheClient {
 		$sock_keys = array();
 
 		foreach ( $keys as $key ) {
-			$sock = $this->get_sock( $key );
+			$sock = $this->get_sock( $key, $host );
 			if ( !is_resource( $sock ) ) {
 				continue;
 			}
@@ -571,7 +576,7 @@ class MWMemcached extends MemcacheClient {
 			}
 			$cmd .= "\r\n";
 
-			if ( $this->_safe_fwrite( $sock, $cmd, strlen( $cmd ) ) ) {
+			if ( $this->_safe_fwrite( $sock, $host, $cmd, strlen( $cmd ) ) ) {
 				$gather[] = $sock;
 			} else {
 				$this->_dead_sock( $sock );
@@ -593,12 +598,12 @@ class MWMemcached extends MemcacheClient {
 		// Wikia change - begin - @author: wladek
 		foreach ($keys as $key) {
 			if ( array_key_exists($key,$val) ) {
-				$this->addToCache($key, $val[$key]);
+				$this->_dupe_cache[$key] = $val[$key];
 				wfProfileIn ( __METHOD__ . "::$key !HIT");
 				wfProfileOut ( __METHOD__ . "::$key !HIT");
 			} else {
 				$val[$key] = false;
-				$this->addToCache($key, false);
+				$this->_dupe_cache[$key] = false;
 				wfProfileIn ( __METHOD__ . "::$key !MISS");
 				wfProfileOut ( __METHOD__ . "::$key !MISS");
 			}
@@ -807,7 +812,7 @@ class MWMemcached extends MemcacheClient {
 	 * @access  private
 	 */
 	function _connect_sock( &$sock, $host ) {
-		list( $ip, $port ) = explode( ':', $host );
+		list( $ip, $port ) = $this->parseHost($host);
 		$sock = false;
 		$timeout = $this->_connect_timeout;
 		$errno = $errstr = null;
@@ -833,6 +838,10 @@ class MWMemcached extends MemcacheClient {
 		return true;
 	}
 
+	protected function parseHost($host) {
+		return explode(':', $host);
+	}
+
 	// }}}
 	// {{{ _dead_sock()
 
@@ -849,7 +858,7 @@ class MWMemcached extends MemcacheClient {
 	}
 
 	function _dead_host( $host ) {
-		$parts = explode( ':', $host );
+		$parts = $this->parseHost($host);
 		$ip = $parts[0];
 		$this->_host_dead[$ip] = time() + 30 + intval( rand( 0, 10 ) );
 		$this->_host_dead[$host] = $this->_host_dead[$ip];
@@ -867,7 +876,7 @@ class MWMemcached extends MemcacheClient {
 	 * @return Mixed: resource on success, false on failure
 	 * @access private
 	 */
-	function get_sock( $key ) {
+	function get_sock( $key, &$host=null ) {
 		if ( !$this->_active ) {
 			return false;
 		}
@@ -943,7 +952,7 @@ class MWMemcached extends MemcacheClient {
 			return null;
 		}
 
-		$sock = $this->get_sock( $key );
+		$sock = $this->get_sock( $key, $host );
 		if ( !is_resource( $sock ) ) {
 			return null;
 		}
@@ -951,7 +960,7 @@ class MWMemcached extends MemcacheClient {
 		$key = is_array( $key ) ? $key[1] : $key;
 
 		# start wikia change
-		$this->deleteFromCache($key);
+		unset( $this->_dupe_cache[ $key ] );
 		# end wikia change
 
 		if ( isset( $this->stats[$cmd] ) ) {
@@ -959,7 +968,7 @@ class MWMemcached extends MemcacheClient {
 		} else {
 			$this->stats[$cmd] = 1;
 		}
-		if ( !$this->_safe_fwrite( $sock, "$cmd $key $amt\r\n" ) ) {
+		if ( !$this->_safe_fwrite( $sock, $host, "$cmd $key $amt\r\n" ) ) {
 			return $this->_dead_sock( $sock );
 		}
 
@@ -1066,14 +1075,14 @@ class MWMemcached extends MemcacheClient {
 			return false;
 		}
 
-		$sock = $this->get_sock( $key );
+		$sock = $this->get_sock( $key, $host );
 		if ( !is_resource( $sock ) ) {
 			return false;
 		}
 
 		// start wikia change
 		// Memoize duplicate memcache requests for the same key in the same request
-		$this->addToCache($key, $val);
+		$this->_dupe_cache[ $key ] = $val;
 		// end wikia change
 
 		if ( isset( $this->stats[$cmd] ) ) {
@@ -1118,7 +1127,7 @@ class MWMemcached extends MemcacheClient {
 				$flags |= self::COMPRESSED;
 			}
 		}
-		if ( !$this->_safe_fwrite( $sock, "$cmd $key $flags $exp $len\r\n$val\r\n" ) ) {
+		if ( !$this->_safe_fwrite( $sock, $host, "$cmd $key $flags $exp $len\r\n$val\r\n" ) ) {
 			return $this->_dead_sock( $sock );
 		}
 
@@ -1151,7 +1160,7 @@ class MWMemcached extends MemcacheClient {
 
 		$sock = null;
 		$now = time();
-		list( $ip, /* $port */) = explode( ':', $host );
+		list( $ip, /*$port*/ ) = $this->parseHost($host);
 		if ( isset( $this->_host_dead[$host] ) && $this->_host_dead[$host] > $now ||
 			isset( $this->_host_dead[$ip] ) && $this->_host_dead[$ip] > $now
 		) {
@@ -1202,7 +1211,7 @@ class MWMemcached extends MemcacheClient {
 	/**
 	 * Original behaviour
 	 */
-	function _safe_fwrite( $f, $buf, $len = false ) {
+	function _safe_fwrite( $f, $host, $buf, $len = false ) {
 		if ( $len === false ) {
 			$bytesWritten = fwrite( $f, $buf );
 		} else {
@@ -1242,12 +1251,6 @@ class MWMemcached extends MemcacheClient {
 	// }}}
 	// }}}
 	// }}}
-
-	// Wikia change start - make compliant with MemcacheClient interface
-	protected function getMemcacheConnection($host) {
-		return $this->sock_to_host($host);
-	}
-	// Wikia change end
 }
 
 // vim: sts=3 sw=3 et
