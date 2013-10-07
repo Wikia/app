@@ -1,25 +1,26 @@
 <header class="VideoPageToolHeader">
 	<div class="VideoPageToolTitle">
-		<h1><a href="<?=$dashboardHref;?>"><?= wfMsg('videopagetool-header-dashboard'); ?></a></h1>
-		<? if (isset($moduleName)): ?>
-			<h2><?=$moduleName;?></h2>
+		<h1><a href="<?= $dashboardHref ?>"><?= wfMsg( 'videopagetool-header-dashboard' ) ?></a></h1>
+		<? if ( !empty( $section ) ): ?>
+			<h2><?= $section ?></h2>
 		<? endif ?>
 
-		<? if (isset($date)): ?>
-			<p><strong><?=$wg->lang->date($date);?></strong></p>
+		<? if ( !empty( $publishDate ) ): ?>
+			<p class="alternative"><?= $publishDate ?></p>
 		<? endif?>
-		<? if (isset($regionName) && isset($sectionName) && isset($verticalName)): ?>
-			<p class="alternative"><?=$regionName?> / <?=$sectionName ?> / <?=$verticalName?></p>
+
+		<? if ( !empty( $language ) && !empty( $section ) ): ?>
+			<p class="alternative"><?= $language ?> / <?= $section ?></p>
 		<? endif ?>
 	</div>
 
 	<aside class="right">
-		<? if (isset($lastEditTime)): ?>
-		<p><strong><?= wfMsg('videopagetool-header-right-last-saved'); ?></strong> <?=$wg->lang->timeanddate($lastEditTime, true);?></p>
+		<? if ( !empty( $lastEditTime ) ): ?>
+		<p><strong><?= wfMsg( 'videopagetool-header-right-last-saved' ) ?></strong> <?= $wg->lang->timeanddate( $lastEditTime, true ) ?></p>
 		<? endif ?>
 
-		<? if (isset($lastEditor)): ?>
-		<p><strong><?= wfMsg('videopagetool-header-right-by'); ?></strong> <?=$lastEditor?></p>
+		<? if ( !empty( $lastEditor ) ): ?>
+		<p><strong><?= wfMsg( 'videopagetool-header-right-by' ) ?></strong> <?= $lastEditor ?></p>
 		<? endif ?>
 	</aside>
 </header>
