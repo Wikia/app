@@ -5,7 +5,7 @@ namespace Wikia\JsonFormat;
 class HtmlParser {
 	/**
 	 * @param string $html
-	 * @return JsonFormatNode
+	 * @return \JsonFormatNode
 	 */
 	public function parse( $html ) {
 		$doc = new \DOMDocument();
@@ -15,23 +15,19 @@ class HtmlParser {
 		libxml_clear_errors();
 		$body = $doc->getElementsByTagName('body')->item(0);
 
-		//$this->visit( $body, 0 );
-		//die();
-
 		$jsonFormatTraversingState = new \JsonFormatBuilder();
 		$visitor = $this->createVisitor( $jsonFormatTraversingState );
 		$visitor->visit( $body );
 		return $jsonFormatTraversingState->getJsonRoot();
 	}
 
-	protected function visit( DOMNode $node, $indent ) {
+	protected function visit( \DOMNode $node, $indent ) {
 		for ( $i = 0; $i < $indent; $i++ ) echo ' ';
-		if( $node instanceof DOMText ) {
+		if( $node instanceof \DOMText ) {
 			echo "text {$node->textContent}\n";
-		} else if ($node instanceof DOMElement and $node->tagName == 'div') {
+		} else if ($node instanceof \DOMElement and $node->tagName == 'div') {
 
 		} else {
-			echo $node->tagName . "\n";
 			for( $i = 0; $i < $node->childNodes->length; $i++ ) {
 				$child = $node->childNodes->item($i);
 				$this->visit( $child, $indent+1 );
@@ -48,6 +44,7 @@ class HtmlParser {
 		$compositeVisitor->addVisitor( new \HeaderVisitor($compositeVisitor, $jsonFormatTraversingState) );
 
 		$compositeVisitor->addVisitor( new \QuoteVisitor($compositeVisitor, $jsonFormatTraversingState) );
+		$compositeVisitor->addVisitor( new \TruebloodScrollWrapperVisitor($compositeVisitor, $jsonFormatTraversingState) );
 		$compositeVisitor->addVisitor( new \PVisitor($compositeVisitor, $jsonFormatTraversingState) );
 		$compositeVisitor->addVisitor( new \ListVisitor($compositeVisitor, $jsonFormatTraversingState) );
 
