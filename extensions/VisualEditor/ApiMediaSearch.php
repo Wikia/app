@@ -12,27 +12,14 @@ class ApiMediaSearch extends ApiBase {
 		$query = $params['query'];
 
 		// Which batch?
-		$batch = $params['batch'];
+		$batch = ( $params['batch'] ) ? $params['batch'] : 1;
 
 		// What type of media are we looking for?
 		$mediaTypeArray = explode( '|', $params['mediaType'] );
-		if ( count( $mediaTypeArray ) == 1 ) {
-			if ( in_array( 'video', $mediaTypeArray ) ) {
-				// video
-				$response = $this->formatResponse( [
-					$this->makeRequest( $query, $batch, true, false )
-				] );
-			} else if ( in_array( 'photo', $mediaTypeArray ) ) {
-				// photo
-				$response = $this->formatResponse( [
-					$this->makeRequest( $query, $batch, false, true )
-				] );
-			}
-		} else if (
-			count ( $mediaTypeArray ) == 2 &&
-			in_array( 'photo', $mediaTypeArray ) &&
-			in_array( 'video', $mediaTypeArray )
-		) {
+		$video = in_array( 'video', $mediaTypeArray );
+		$photo = in_array( 'photo', $mediaTypeArray );
+
+		if ( $video && $photo ) {
 			if ( isset( $params['separate'] ) && $params['separate'] == 'true' ) {
 				// video and photo separate
 				$response = $this->formatResponse( [
@@ -45,6 +32,11 @@ class ApiMediaSearch extends ApiBase {
 					$this->makeRequest( $query, $batch, false, false )
 				] );
 			}
+		} else {
+			// either photo or video
+			$response = $this->formatResponse( [
+				$this->makeRequest( $query, $batch, $video, $photo )
+			] );
 		}
 
 		// Return response
@@ -80,7 +72,7 @@ class ApiMediaSearch extends ApiBase {
 
 	}
 
-	private function makeRequest( $query, $batch = 1, $videoOnly, $imageOnly ) {
+	private function makeRequest( $query, $batch, $videoOnly, $imageOnly ) {
 		$searchConfig = (new Wikia\Search\Config())
 			->setQuery( $query )
 			->setLimit( 10 )
