@@ -6,4 +6,7 @@
  */
 
 class JsonFormatRootNode extends JsonFormatContainerNode {
+	public function getLevel() {
+		return 1;
+	}
 }
