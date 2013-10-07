@@ -52,6 +52,7 @@ $wgAutoloadClasses[ 'ImageNoScriptVisitor' ] =                  $dir . "/visitor
 $wgAutoloadClasses[ 'ImageVisitor' ] =                          $dir . "/visitors/ImageVisitor.php";
 $wgAutoloadClasses[ 'InfoboxTableVisitor' ] =                   $dir . "/visitors/InfoboxTableVisitor.php";
 $wgAutoloadClasses[ 'TruebloodScrollWrapperVisitor' ] =         $dir . "/visitors/TruebloodScrollWrapperVisitor.php";
+$wgAutoloadClasses[ 'AmericandadWrapperVisitor' ] =             $dir . "/visitors/AmericandadWrapperVisitor.php";
 
 $wgAutoloadClasses[ 'DomHelper' ] =                             $dir . "/util/DomHelper.php";
 
