@@ -18,6 +18,9 @@ class MigrateImagesToSwift extends Maintenance {
 
 	const REASON = 'Images migration script';
 
+	const FILES_PER_SEC = 10;
+	const KB_PER_SEC = 800;
+
 	// log groups
 	const LOG_MIGRATION_PROGRESS = 'swift-migration-progress';
 	const LOG_MIGRATION_ERRORS = 'swift-migration-errors';
@@ -161,18 +164,15 @@ class MigrateImagesToSwift extends Maintenance {
 			// estimate remaining time
 			$filesPerSec = $this->migratedImagesCnt /  $elapsed;
 			$remainingSeconds = $filesPerSec ? round( ( $this->imagesCnt - $this->migratedImagesCnt ) / $filesPerSec ) : 0;
-			$remainingMinutes = floor( $remainingSeconds / 60 );
 
 			$this->output( sprintf(
-				"%d%%: %s/%s - %.2f files/sec, %.2f kB/s [ETA %d h %02d min %02d sec]     \r",
+				"%d%%: %s/%s - %.2f files/sec, %.2f kB/s [ETA %s]     \r",
 				round( $this->migratedImagesCnt / $this->imagesCnt * 100 ),
 				$this->migratedImagesCnt,
 				$this->imagesCnt,
 				$filesPerSec,
 				( $this->migratedImagesSize / 1024 ) / ( $elapsed ),
-				floor( $remainingMinutes / 60 ),
-				$remainingMinutes % 60,
-				$remainingSeconds % 60
+				Wikia::timeDuration($remainingSeconds)
 			) );
 		}
 	}
@@ -232,9 +232,13 @@ class MigrateImagesToSwift extends Maintenance {
 			$this->imagesSize += $row->size;
 		}
 
-		$this->output( sprintf( "\n%d image(s) (%d MB) will be migrated...\n",
+		$this->output( sprintf( "\n%d image(s) (%d MB) will be migrated (should take ~ %s with %d kB/s / ~ %s with %d files/sec)...\n",
 			$this->imagesCnt,
-			round( $this->imagesSize / 1024 / 1024 )
+			round( $this->imagesSize / 1024 / 1024 ),
+			Wikia::timeDuration($this->imagesSize / 1024 / self::KB_PER_SEC),
+			self::KB_PER_SEC,
+			Wikia::timeDuration($this->imagesCnt / self::FILES_PER_SEC),
+			self::FILES_PER_SEC
 		) );
 
 		if ( $this->hasOption( 'stats-only' ) ) {
@@ -306,11 +310,11 @@ class MigrateImagesToSwift extends Maintenance {
 		}
 
 		// summary
-		$report = sprintf( 'Migrated %d files (%d MB) with %d fails in %d min (%.2f files/sec, %.2f kB/s)',
+		$report = sprintf( 'Migrated %d files (%d MB) with %d fails in %s (%.2f files/sec, %.2f kB/s)',
 			$this->migratedImagesCnt,
 			round( $this->migratedImagesSize / 1024 / 1024 ),
 			$this->migratedImagesFailedCnt,
-			ceil( ( time() - $this->time ) / 60 ),
+			Wikia::timeDuration( time() - $this->time ),
 			floor( $this->imagesCnt ) / ( time() - $this->time ),
 			( $this->migratedImagesSize / 1024 ) / ( time() - $this->time )
 		);
