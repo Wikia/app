@@ -151,6 +151,18 @@ abstract class BaseForm extends FormElement {
 	}
 
 	/**
+	 * Setter for field value
+	 *
+	 * @param string $fieldName
+	 * @param mixed $fieldValue
+	 * @return BaseForm form instance
+	 */
+	public function setFieldValue($fieldName, $fieldValue) {
+		$this->getField($fieldName)->setValue($fieldValue);
+		return $this;
+	}
+
+	/**
 	 * Get field value
 	 *
 	 * @param $fieldName
