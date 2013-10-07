@@ -6,7 +6,7 @@
 		}
 	},
 	"dependencies": {
-		"js": [ "resources/wikia/ui_components/toc/js/modal.js" ],
-		"css": [ "resources/wikia/ui_components/toc/css/modal_default.scss" ]
+		"js": [ "resources/wikia/ui_components/modal/js/modal.js" ],
+		"css": [ "resources/wikia/ui_components/modal/css/modal_default.scss" ]
 	}
 }
