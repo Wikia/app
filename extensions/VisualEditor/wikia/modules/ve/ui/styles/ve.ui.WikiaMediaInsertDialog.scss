@@ -1,0 +1,25 @@
+@import "skins/oasis/css/core/layout";
+@import "skins/oasis/css/mixins/box-sizing";
+
+$width-cart: 80px;
+
+.ve-ui-wikiaMediaInsertDialog-content {
+	.ve-ui-wikiaMediaInsertDialog-cartWidget {
+		@include box-sizing( border-box );
+		float: right;
+		padding: $width-gutter;
+		width: $width-cart;
+	}
+
+	.ve-ui-pagedLayout-pagesPanel {
+		border-right: #ddd 1px solid;
+		margin-right: $width-cart;
+		padding: $width-gutter;
+	}
+
+	.ve-ui-window-body {
+		margin-right: -( $width-cart + $width-gutter );
+		padding: 0;
+		width: 100%;
+	}
+}
