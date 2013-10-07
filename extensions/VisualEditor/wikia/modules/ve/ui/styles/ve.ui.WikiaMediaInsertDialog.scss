@@ -1,13 +1,17 @@
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/mixins/box-sizing";
 
-$width-cart: 80px;
+$width-cart: 100px;
 
 .ve-ui-wikiaMediaInsertDialog-content {
 	.ve-ui-wikiaCartWidget-wrapper {
 		@include box-sizing( border-box );
-		float: right;
+		bottom: 0;
+		overflow: auto;
 		padding: $width-gutter;
+		position: absolute;
+		right: 0;
+		top: 0;
 		width: $width-cart;
 	}
 

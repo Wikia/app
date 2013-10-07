@@ -18,7 +18,7 @@ ve.ui.WikiaCartWidget.prototype.onAdd = function ( items, index ) {
 ve.ui.WikiaCartWidget.prototype.onRemove = function ( items ) {
 	var i, widgetItem, widgetItems = [];
 	for ( i = 0; i < items.length; i++ ) {
-		widgetItem = this.getItemFromData( items[i].id );
+		widgetItem = this.getItemFromData( items[i].title );
 		if ( widgetItem ) {
 			widgetItems.push( widgetItem );
 		}
