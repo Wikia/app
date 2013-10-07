@@ -1,12 +1,69 @@
 @import "skins/oasis/css/core/color.scss";
+@import "skins/oasis/css/mixins/transform.scss";
 @import "skins/oasis/css/mixins/transition.scss";
 @import "skins/oasis/css/mixins/blackout.scss";
 
-.modal {
+$modal-secondary-color: mix( $color-page, #000000, 90% );
+@if( $is-dark-wiki ) {
+	$modal-secondary-color: mix( $color-page, #ffffff, 90% );
+}
 
+.modal,
+#blackout {
+	@include transition-shorthand( all 0.2s ease-in-out );
+	opacity: 0;
+}
+
+.modal {
+	background-color: $color-page;
+	left: 0;
+	position: absolute;
+	top: 0;
+
+	header,
+	footer {
+		background-color: $modal-secondary-color;
+	}
+
+	header,
+	section,
+	footer {
+		padding: 20px;
+	}
+
+	header h3 {
+		color: $color-text;
+		display: inline;
+		font-weight: bold;
+	}
+
+	header .close {
+		float: right;
+	}
+
+	footer .button {
+		float: right;
+	}
+
+	footer .button:last-child {
+		margin: 0 20px;
+	}
+
+	&.small {
+		position: fixed;
+		width: 400px;
+		margin: auto;
+		top: 50%;
+		left: 50%;
+		@include transform-translate(-50%, -50%);
+	}
+
+	&.shown {
+		opacity: 1;
+		z-index: $zTop;
+	}
 }
 
 #blackout {
-	@include transition-shorthand(all 0.2s ease-in-out);
 	@include blackout();
 }

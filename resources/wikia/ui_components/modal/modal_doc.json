@@ -4,6 +4,26 @@
 	"types": {
 		"default": {
 			"params" : {
+				"id": {
+					"templateVar" : "id",
+					"type" : "string",
+					"description" : "styleguide-description-modal-id"
+				},
+				"size": {
+					"templateVar" : "size",
+					"type" : "enum",
+					"value" : {
+						"0" : "small",
+						"1" : "medium",
+						"2" : "large"
+					},
+					"description" : "styleguide-description-modal-size"
+				},
+				"content" : {
+					"templateVar" : "content",
+					"type" : "string",
+					"description" : "styleguide-description-modal-content"
+				},
 				"classes": {
 					"templateVar" : "classes",
 					"type" : "string",
@@ -18,11 +38,6 @@
 					"templateVar" : "closeButton",
 					"type" : "boolean",
 					"description" : "styleguide-description-modal-close-button"
-				},
-				"content" : {
-					"templateVar" : "content",
-					"type" : "string",
-					"description" : "styleguide-description-modal-content"
 				},
 				"altLink" : {
 					"templateVar" : "altLink",

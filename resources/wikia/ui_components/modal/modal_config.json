@@ -1,7 +1,7 @@
 {
 	"templateVars": {
 		"default": {
-			"required": [ "id", "content" ],
+			"required": [ "id", "size", "content" ],
 			"optional": [ "classes", "title", "closeButton", "altLink", "secondBtn", "primaryBtn" ]
 		}
 	},

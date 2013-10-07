@@ -34,68 +34,6 @@ require(['jquery'], function($) {
 			});
 		}
 
-		var $drawerSection = $( '#drawer' ),
-			leftDrawerMsg = $.msg( 'styleguide-example-left' ),
-			rightDrawerMsg = $.msg( 'styleguide-example-right' );
-
-		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-			uiFactory.init( "button" ).then( function( buttonInstance ) {
-				var $drawerExamples = $drawerSection.find( '.example' );
-				var drawerSampleButtons = buttonInstance.render( { type: "button", vars: {
-					"type": "button",
-					"classes": [ "primary", "normal", "sampleDrawerLeft" ],
-					"value": leftDrawerMsg
-				} } );
-				drawerSampleButtons += buttonInstance.render( { type: "button", vars: {
-					"type": "button",
-					"classes": [ "primary", "normal", "sampleDrawerRight" ],
-					"value": rightDrawerMsg
-				} } );
-				$drawerExamples.append( drawerSampleButtons );
-			} );
-
-			uiFactory.init( "drawer" ).then( function( drawerInstance ) {
-				var drawerSamples = drawerInstance.render( {
-					type: "default",
-					vars: {
-						side: 'left',
-						content: '<h1>' + leftDrawerMsg + '</h1>',
-						"class": "styleguide-example-left"
-					}
-				} );
-				drawerSamples += drawerInstance.render( {
-					type: "default",
-					vars: {
-						side: 'right',
-						content: '<h1>' + rightDrawerMsg + '</h1>',
-						"class": "styleguide-example-right"
-					}
-				} );
-				$('body').append( drawerSamples );
-
-				require( [ 'wikia.ui.drawer' ], function( drawer ) {
-					var leftDrawer = drawer.init( 'left' );
-					var rightDrawer = drawer.init( 'right' );
-
-					$( ".sampleDrawerLeft" ).click(function() {
-						if( leftDrawer.isOpen() ) {
-							leftDrawer.close();
-						} else {
-							leftDrawer.open();
-						}
-					} );
-
-					$( ".sampleDrawerRight" ).click(function() {
-						if( rightDrawer.isOpen() ) {
-							rightDrawer.close();
-						} else {
-							rightDrawer.open();
-						}
-					} );
-				} );
-			} );
-		} );
-
 		/**
 		 * Show hide Style guide section
 		 *
@@ -111,6 +49,137 @@ require(['jquery'], function($) {
 			$target.text(linkLabel);
 		}
 
+		function showDrawerExamples() {
+			var $drawerSection = $( '#drawer' ),
+				leftDrawerMsg = $.msg( 'styleguide-example-left' ),
+				rightDrawerMsg = $.msg( 'styleguide-example-right' );
+
+			require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+				uiFactory.init( "button" ).then( function( buttonInstance ) {
+					var $drawerExamples = $drawerSection.find( '.example' );
+					var drawerSampleButtons = buttonInstance.render( { type: "button", vars: {
+						"type": "button",
+						"classes": [ "primary", "normal", "sampleDrawerLeft" ],
+						"value": leftDrawerMsg
+					} } );
+					drawerSampleButtons += buttonInstance.render( { type: "button", vars: {
+						"type": "button",
+						"classes": [ "primary", "normal", "sampleDrawerRight" ],
+						"value": rightDrawerMsg
+					} } );
+					$drawerExamples.append( drawerSampleButtons );
+				} );
+
+				uiFactory.init( "drawer" ).then( function( drawerInstance ) {
+					var drawerSamples = drawerInstance.render( {
+						type: "default",
+						vars: {
+							side: 'left',
+							content: '<h1>' + leftDrawerMsg + '</h1>',
+							"class": "styleguide-example-left"
+						}
+					} );
+					drawerSamples += drawerInstance.render( {
+						type: "default",
+						vars: {
+							side: 'right',
+							content: '<h1>' + rightDrawerMsg + '</h1>',
+							"class": "styleguide-example-right"
+						}
+					} );
+					$('body').append( drawerSamples );
+
+					require( [ 'wikia.ui.drawer' ], function( drawer ) {
+						var leftDrawer = drawer.init( 'left' );
+						var rightDrawer = drawer.init( 'right' );
+
+						$( ".sampleDrawerLeft" ).click(function() {
+							if( leftDrawer.isOpen() ) {
+								leftDrawer.close();
+							} else {
+								leftDrawer.open();
+							}
+						} );
+
+						$( ".sampleDrawerRight" ).click(function() {
+							if( rightDrawer.isOpen() ) {
+								rightDrawer.close();
+							} else {
+								rightDrawer.open();
+							}
+						} );
+					} );
+				} );
+			} );
+		}
+
+		function showModalExamples() {
+			var $modalSection = $( '#modal' ),
+				smallModalExampleMsg = $.msg( 'styleguide-example-modal-small-modal' );
+
+			require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+				uiFactory.init( "button" ).then( function( button ) {
+					var $modalExamples = $modalSection.find( '.example' );
+					var modalSampleButtons = button.render( { type: "button", vars: {
+						"type": "button",
+						"classes": [ "primary", "normal", "small-modal-example-button" ],
+						"value": smallModalExampleMsg
+					} } );
+					$modalExamples.append( modalSampleButtons );
+					var smallModal2ndBtn = button.render( { type: "button", vars: {
+						"type": "button",
+						"classes": [ "secondary", "normal", "close" ],
+						"value": $.msg( 'styleguide-example-modal-secondary-button' )
+					} } );
+					var smallModal1stBtn = button.render( { type: "button", vars: {
+						"type": "button",
+						"classes": [ "primary", "normal", "close" ],
+						"value": $.msg( 'styleguide-example-modal-primary-button' )
+					} } );
+
+					uiFactory.init( "modal" ).then( function( modal ) {
+						var smallModal = modal.render( {
+							type: "default",
+							vars: {
+								"id": 'smallModalExample',
+								"size": 'small',
+								"content": smallModalExampleMsg,
+								"class": "styleguide-example-small",
+								"title": 'Small modal example',
+								"closeButton": true,
+								"altLink": {
+									"id": "smallModalAltLink",
+									"href": "#",
+									"text": $.msg( 'styleguide-example-modal-alt-link' )
+								},
+								"secondBtn": smallModal2ndBtn,
+								"primaryBtn": smallModal1stBtn
+							}
+						} );
+						$('body').append( smallModal );
+
+						require( [ 'wikia.ui.modal' ], function( modal ) {
+							var smallModal = modal.init( 'smallModalExample' );
+
+							$( ".small-modal-example-button" ).click(function() {
+								if( smallModal.isShown() ) {
+									smallModal.hide();
+								} else {
+									smallModal.show();
+								}
+							} );
+
+							$( ".modal" ).on( "click", "#smallModalAltLink", function( event ) {
+								event.preventDefault();
+								smallModal.hide();
+							} );
+						} );
+					} );
+
+				} );
+			} );
+		}
+
 		/** Attach events */
 		$('body').on('click', '#mw-content-text section .toggleParameters', function(event) {
 			event.preventDefault();
@@ -121,5 +190,9 @@ require(['jquery'], function($) {
 		$('.example').on( 'click', 'a', function(event) {
 			event.preventDefault();
 		});
+
+		/** Examples **/
+		showDrawerExamples();
+		showModalExamples();
 	});
 });

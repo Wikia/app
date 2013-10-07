@@ -1,8 +1,8 @@
-<div id="{{id}}" class="modalWrapper {{#classes}}{{.}} {{/classes}}">
+<div id="{{id}}" class="modal {{size}} {{#classes}}{{.}} {{/classes}}">
 	<header>
-		{{title}}
+		<h3>{{title}}</h3>
 		{{#closeButton}}
-			<a href="">Close</a>
+			<a href="#" class="close">Close</a>
 		{{/closeButton}}
 	</header>
 	<section>
@@ -12,7 +12,7 @@
 		{{#altLink}}
 			<a id="{{altLink.id}}" href="{{altLink.href}}">{{altLink.text}}</a>
 		{{/altLink}}
-		{{{secondBtn}}}
 		{{{primaryBtn}}}
+		{{{secondBtn}}}
 	</footer>
 </div>

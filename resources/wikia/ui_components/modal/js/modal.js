@@ -2,23 +2,32 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 	"use strict";
 
 	var BLACKOUT_ID = 'blackout',
+		CLOSE_CLASS = 'close',
 		$body = $('body');
 
-	function Modal() {
+	function Modal( id ) {
 		var that = this;
 
 		this.$element = $( '#' + id );
 		this.$blackout = getBlackout();
+		this.$close = this.$element.find( '.' + CLOSE_CLASS );
+
+		this.$close.click( $.proxy( function( event ) {
+			event.preventDefault();
+			this.hide();
+		}, that ) );
 
 		function getBlackout() {
-			var $blackout = $('#blackout');
+			var $blackout = $('#' + BLACKOUT_ID );
 
 			if( !$blackout.exists() ) {
 				$blackout = $('<div id="' + BLACKOUT_ID + '" />');
 				$body.append( $blackout );
 			}
 
-			$blackout.click( $.proxy(function() {
+			$blackout.click( $.proxy(function( event ) {
+				event.preventDefault();
+
 				if( this.isShown() ) {
 					this.hide();
 				}
@@ -48,8 +57,8 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 
 	/** Public API */
 	return {
-		init: function() {
-			return new Modal();
+		init: function( id ) {
+			return new Modal( id );
 		}
 	}
 });
