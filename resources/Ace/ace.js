@@ -11449,7 +11449,7 @@ var UndoManager = function() {
 exports.UndoManager = UndoManager;
 });
 
-define('ace/virtual_renderer', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/dom', 'ace/lib/event', 'ace/lib/useragent', 'ace/config', 'ace/layer/gutter', 'ace/layer/marker', 'ace/layer/text', 'ace/layer/cursor', 'ace/scrollbar', 'ace/renderloop', 'ace/lib/event_emitter'], function(require, exports, module) {
+define('ace/virtual_renderer', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/dom', 'ace/lib/event', 'ace/lib/useragent', 'ace/config', 'ace/layer/gutter', 'ace/layer/marker', 'ace/layer/text', 'ace/layer/cursor', 'ace/layer/mobilescroll', 'ace/scrollbar', 'ace/renderloop', 'ace/lib/event_emitter'], function(require, exports, module) {
 
 
 var oop = require("./lib/oop");
@@ -11461,6 +11461,7 @@ var GutterLayer = require("./layer/gutter").Gutter;
 var MarkerLayer = require("./layer/marker").Marker;
 var TextLayer = require("./layer/text").Text;
 var CursorLayer = require("./layer/cursor").Cursor;
+var MobileScrollLayer = require("./layer/mobilescroll").MobileScroll;
 var ScrollBar = require("./scrollbar").ScrollBar;
 var RenderLoop = require("./renderloop").RenderLoop;
 var EventEmitter = require("./lib/event_emitter").EventEmitter;
@@ -11577,6 +11578,20 @@ width: 100%;\
 box-sizing: border-box;\
 /* setting pointer-events: auto; on node under the mouse, which changes\
 during scroll, will break mouse wheel scrolling in Safari */\
+pointer-events: none;\
+}\
+.ace_mobile_scroll-layer {\
+-webkit-overflow-scrolling: touch;\
+overflow-y: scroll;\
+}\
+.ace_mobile_scroll-layer div {\
+z-index: 1;\
+position: absolute;\
+white-space: nowrap;\
+width: 100%;\
+-moz-box-sizing: border-box;\
+-webkit-box-sizing: border-box;\
+box-sizing: border-box;\
 pointer-events: none;\
 }\
 .ace_gutter-layer {\
@@ -11832,6 +11847,9 @@ var VirtualRenderer = function(container, theme) {
     this.$markerFront = new MarkerLayer(this.content);
 
     this.$cursorLayer = new CursorLayer(this.content);
+
+    this.$mobileScrollLayer = new MobileScrollLayer(this.content);
+
     this.$horizScroll = false;
 
     this.scrollBar = new ScrollBar(this.container);
@@ -11924,6 +11942,7 @@ var VirtualRenderer = function(container, theme) {
         this.scroller.className = "ace_scroller";
 
         this.$cursorLayer.setSession(session);
+        this.$mobileScrollLayer.setSession(session);
         this.$markerBack.setSession(session);
         this.$markerFront.setSession(session);
         this.$gutterLayer.setSession(session);
@@ -12073,6 +12092,7 @@ var VirtualRenderer = function(container, theme) {
     };
     this.getShowPrintMargin = function() {
         return this.getOption("showPrintMargin");
+
     };
     this.setPrintMarginColumn = function(showPrintMargin) {
         this.setOption("printMarginColumn", showPrintMargin);
@@ -12194,6 +12214,7 @@ var VirtualRenderer = function(container, theme) {
         this.$padding = padding;
         this.$textLayer.setPadding(padding);
         this.$cursorLayer.setPadding(padding);
+        this.$mobileScrollLayer.setPadding(padding);
         this.$markerFront.setPadding(padding);
         this.$markerBack.setPadding(padding);
         this.$loop.schedule(this.CHANGE_FULL);
@@ -12234,6 +12255,7 @@ var VirtualRenderer = function(container, theme) {
         if (changes & this.CHANGE_FULL) {
             this.$textLayer.checkForSizeChanges();
             this.$updateScrollBar();
+            this.$mobileScrollLayer.update(this.layerConfig);
             this.$textLayer.update(this.layerConfig);
             if (this.$showGutter)
                 this.$gutterLayer.update(this.layerConfig);
@@ -12265,6 +12287,7 @@ var VirtualRenderer = function(container, theme) {
 
         if (changes & this.CHANGE_TEXT) {
             this.$textLayer.update(this.layerConfig);
+            this.$mobileScrollLayer.update(this.layerConfig);
             if (this.$showGutter)
                 this.$gutterLayer.update(this.layerConfig);
         }
@@ -13746,7 +13769,6 @@ exports.Text = Text;
 
 define('ace/layer/cursor', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
 
-
 var dom = require("../lib/dom");
 
 var Cursor = function(parentEl) {
@@ -13932,7 +13954,6 @@ exports.Cursor = Cursor;
 
 define('ace/scrollbar', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/dom', 'ace/lib/event', 'ace/lib/event_emitter'], function(require, exports, module) {
 
-
 var oop = require("./lib/oop");
 var dom = require("./lib/dom");
 var event = require("./lib/event");
@@ -13946,6 +13967,7 @@ var ScrollBar = function(parent) {
     this.element.appendChild(this.inner);
 
     parent.appendChild(this.element);
+
     this.width = dom.scrollbarWidth(parent.ownerDocument);
     this.element.style.width = (this.width || 15) + 5 + "px";
 
@@ -13980,6 +14002,106 @@ var ScrollBar = function(parent) {
 }).call(ScrollBar.prototype);
 
 exports.ScrollBar = ScrollBar;
+});
+
+define('ace/layer/mobilescroll', ['require', 'exports', 'module' , 'ace/lib/dom'],function(require, exports, module) {
+"use strict";
+
+var dom = require("../lib/dom");
+
+var MobileScroll = function(parentEl) {
+	this.parentOverflowEl = dom.createElement("div");
+	this.parentOverflowEl.className = "ace_layer ace_mobile_scroll-layer";
+	this.element = dom.createElement("div");
+	this.parentOverflowEl.appendChild(this.element);
+	parentEl.appendChild(this.parentOverflowEl);
+
+	var _self = this;
+
+	var movementDiff = 0, lastMovementPos = 0;
+	var timeDiff = 0, lastTime = 0;
+	var waitingForLastScroll = false;
+	var stopInertialScrolling = false;
+
+	this.parentOverflowEl.onscroll = function(e) {
+		if (stopInertialScrolling) {
+			_self.parentOverflowEl.scrollTop = _self.session.getScrollTop();
+			return false;
+		}
+
+		if (_self.session)
+			_self.session.setScrollTop(_self.parentOverflowEl.scrollTop);
+	};
+
+	document.addEventListener("touchmove", function(e) {
+		movementDiff = _self.parentOverflowEl.scrollTop - lastMovementPos;
+		lastMovementPos = _self.parentOverflowEl.scrollTop;
+
+		timeDiff = e.timeStamp - lastTime;
+		lastTime = e.timeStamp;
+	});
+
+	var movingTimer;
+	var touchStartedWithAce = false;
+	document.addEventListener("touchstart", function(e) {
+		if (e.target.className.split(" ").indexOf("ace_content") === -1)
+			return true;
+
+		touchStartedWithAce = true;
+		stopInertialScrolling = false;
+
+		clearInterval(movingTimer);
+
+		waitingForLastScroll = false;
+		movementDiff = 0, lastMovementPos = 0;
+		timeDiff = 0, lastTime = 0;
+	}, false);
+
+	document.addEventListener("touchend", function(e) {
+		if (!touchStartedWithAce)
+			return true;
+		touchStartedWithAce = false;
+		waitingForLastScroll = true;
+
+		var position = _self.parentOverflowEl.scrollTop;
+		var velocity = movementDiff;
+
+		movingTimer = setInterval(function() {
+			position += velocity;
+			velocity *= 0.949;
+			_self.session.setScrollTop(position);
+			_self.parentOverflowEl.scrollTop = position;
+			if (Math.abs(velocity) < 4) {
+				clearInterval(movingTimer);
+				stopInertialScrolling = true;
+			}
+		}, 5);
+	}, false);
+};
+
+(function() {
+	this.setSession = function(session) {
+		this.session = session;
+	};
+
+	this.$padding = 0;
+	this.setPadding = function(padding) {
+		this.$padding = padding;
+		this.element.style.padding = "0 " + padding + "px";
+	};
+
+	this.setScrollTop = function(top) {
+		this.parentOverflowEl.scrollTop = top;
+	};
+
+	this.update = function(config) {
+		this.element.style.height = config.lineHeight * this.session.getScreenLength() + "px";
+	};
+
+}).call(MobileScroll.prototype);
+
+exports.MobileScroll = MobileScroll;
+
 });
 
 define('ace/renderloop', ['require', 'exports', 'module' , 'ace/lib/event'], function(require, exports, module) {
