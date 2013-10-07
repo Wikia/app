@@ -494,6 +494,7 @@ $messages['cy'] = array(
  * @author Tiin
  */
 $messages['de'] = array(
+	'action-themedesigner' => 'auf den Theme Designer zuzugreifen',
 	'themedesigner-or' => 'oder',
 	'themedesigner-desc' => 'Erlaubt Wiki-Administratoren die Erstellung eines Themes für ein Wiki',
 	'themedesigner-title' => 'Wikia Theme Designer',
@@ -756,6 +757,7 @@ $messages['fi'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
+	'action-themedesigner' => 'accéder au Concepteur de thèmes',
 	'themedesigner-or' => 'ou',
 	'themedesigner-desc' => 'Permet aux administrateurs du wiki de concevoir un thème pour un wiki',
 	'themedesigner-title' => 'Concepteur de thème Wikia',
@@ -818,6 +820,7 @@ veuillez entrer le nom du wiki pour sauvegarder.',
  * @author Toliño
  */
 $messages['gl'] = array(
+	'action-themedesigner' => 'acceder ao Deseñador de temas visuais',
 	'themedesigner-or' => 'ou',
 	'themedesigner-desc' => 'Permite aos administradores deseñar o tema visual do wiki',
 	'themedesigner-title' => 'Deseñador de temas visuais de Wikia',
@@ -1111,9 +1114,11 @@ $messages['km'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author Hym411
  * @author 아라
  */
 $messages['ko'] = array(
+	'action-themedesigner' => '테마 디자이너에 접근',
 	'themedesigner-or' => '또는',
 	'themedesigner-desc' => '위키 관리자가 테마를 디자인하도록 허용',
 	'themedesigner-title' => '위키아 테마 디자이너',
@@ -1469,6 +1474,7 @@ $messages['pdc'] = array(
  * @author Wladekb
  */
 $messages['pl'] = array(
+	'action-themedesigner' => 'edycji skórki poprzez Kreator motywu',
 	'themedesigner-or' => 'lub',
 	'themedesigner-desc' => 'Pozwala administratorom edytować motyw graficzny wiki.',
 	'themedesigner-title' => 'Kreator motywu Wikia',
@@ -1773,6 +1779,7 @@ $messages['roa-tara'] = array(
  * @author Okras
  */
 $messages['ru'] = array(
+	'action-themedesigner' => 'доступ к Конструктору тем',
 	'themedesigner-or' => 'или',
 	'themedesigner-desc' => 'Позволяет администраторам разрабатывать темы для вики',
 	'themedesigner-title' => 'Конструктор тем Викия',
@@ -2040,6 +2047,7 @@ $messages['tly'] = array(
  * @author Тест
  */
 $messages['uk'] = array(
+	'action-themedesigner' => 'доступ до Конструктора тем',
 	'themedesigner-or' => 'або',
 	'themedesigner-desc' => 'Дозволяє адміністраторам вікі проектувати тему для вікі',
 	'themedesigner-title' => 'Дизайнер тем Вікія',
