@@ -130,13 +130,13 @@ class JsonFormatSimplifier {
 			$content = [];
 			$images = [];
 			$this->getParagraphs( $section, $content );
+			$this->clearEmptyParagraphs( $content );
 			$this->getImages( $section, $images );
 			if ( sizeof($content) == 0 && sizeof($images) == 0
 				&& ( ( $i == sizeof($sections)-1 ) || ($sections[$i]->getLevel() >= $sections[$i+1]->getLevel()) )
 				&& ($sections[$i]->getLevel() != 1 ) ) {
 				continue;
 			}
-			$this->clearEmptyParagraphs( $content );
 			$returnSections[] = [
 				"title" => ( $section->getType() == "section" ) ? $section->getTitle() : $articleTitle,
 				"level" => ( $section->getType() == "section" ) ? $section->getLevel() : 1,
