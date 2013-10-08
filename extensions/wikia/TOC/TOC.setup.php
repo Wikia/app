@@ -21,9 +21,6 @@ $wgExtensionCredits['other'][] = array(
 $wgAutoloadClasses['TOCController'] =  $dir . 'TOCController.class.php';
 $wgAutoloadClasses['TOCHooksHelper'] =  $dir . 'TOCHooksHelper.class.php';
 
-// register messages
-$wgExtensionMessagesFiles['TOC'] = $dir.'TOC.i18n.php';
-
 // register hooks
 $wgHooks['Linker::overwriteTOC'][] = 'TOCHooksHelper::onOverwriteTOC';
 $wgHooks['MonobookSkinAssetGroups'][] = 'TOCHooksHelper::onMonobookSkinAssetGroups';
