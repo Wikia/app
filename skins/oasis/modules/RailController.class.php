@@ -58,6 +58,7 @@ class RailController extends WikiaController {
 	 */
 	protected function getLazyRail() {
 		wfProfileIn(__METHOD__);
+		global $wgUseSiteJs, $wgAllowUserJs;
 
 		$railModules = $this->filterModules((new BodyController)->getRailModuleList(), self::FILTER_LAZY_MODULES);
 		$this->railLazyContent = '';
@@ -73,7 +74,18 @@ class RailController extends WikiaController {
 		$this->railLazyContent .= Html::element('div', ['id' => 'WikiaAdInContentPlaceHolder']);
 
 		$this->css = array_keys($this->app->wg->Out->styles);
+
+		// Do not load user and site jses as they are already loaded and can break page
+		$oldWgUseSiteJs = $wgUseSiteJs;
+		$oldWgAllowUserJs = $wgAllowUserJs;
+		$wgUseSiteJs = false;
+		$wgAllowUserJs = false;
+
 		$this->js = $this->app->wg->Out->getBottomScripts();
+
+		$wgUseSiteJs = $oldWgUseSiteJs;
+		$wgAllowUserJs = $oldWgAllowUserJs;
+
 
 		wfProfileOut(__METHOD__);
 	}
