@@ -50,7 +50,7 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 		$out = $this->wg->Out;
 		$titleText = $out->getPageTitle();
 		$title = $out->getTitle();
-		$namespace = ($title instanceof Title) ? $title->getNamespace() : 0;
+		$namespace = ($title instanceof Title) ? $title->getNamespace() : -1;
 
 		$this->response->setVal( 'pageTitle', $this->getTitleText( $titleText, $namespace ) );
 
