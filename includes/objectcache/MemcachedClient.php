@@ -858,7 +858,7 @@ class MWMemcached {
 	}
 
 	function _dead_host( $host ) {
-		$parts = $this->parseHost($host);
+		$parts = explode(':', $host);
 		$ip = $parts[0];
 		$this->_host_dead[$ip] = time() + 30 + intval( rand( 0, 10 ) );
 		$this->_host_dead[$host] = $this->_host_dead[$ip];

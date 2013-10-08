@@ -6,8 +6,7 @@
 class MemcachedPhpBagOStuff extends BagOStuff {
 
 	/**
-	 * The memcache client we're using
-	 * @var MWMemcached
+	 * @var MemCachedClientforWiki
 	 */
 	protected $client;
 
@@ -145,7 +144,7 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 	 * Get the underlying client object. This is provided for debugging 
 	 * purposes.
 	 *
-	 * @return MemcacheClient
+	 * @return MemCachedClientforWiki
 	 */
 	public function getClient() {
 		return $this->client;
