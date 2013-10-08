@@ -61,7 +61,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 		$memcKey =  wfMemcKey(self::CACHE_KEY , $hubName , $langCode);
 
-		$xml = false;// $this->wg->memc->get( $memcKey );
+		$xml = $this->wg->memc->get( $memcKey );
 
 		if ( $xml === false ) {
 			$title = SpecialPage::getTitleFor( self::SPECIAL_NAME );
