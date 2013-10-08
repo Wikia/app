@@ -75,6 +75,7 @@ you should definitely check this out:
 /** Message documentation (Message documentation)
  * @author PtM
  * @author Shirayuki
+ * @author Siebrand
  */
 $messages['qqq'] = array(
 	'wikiamobile-search' => 'Label on a search button placed in Mobile skin top bar',
@@ -117,7 +118,7 @@ $messages['qqq'] = array(
 	'wikiamobile-image-not-loaded' => 'This is a message shown to a user when an image could not be loaded in the modal',
 	'wikiamobile-shared-file-not-available' => 'Message displayed when user opens a link to particular media on an article and this media is not available anymore.',
 	'wikiamobile-page-not-found' => 'Message shown to a user on 404 page; $1 is a page title that was not found. Please make sure b element wraps around $1.',
-	'wikiamobile-page-not-found-tap' => 'Message that describes what to do on 404 page with an image behind the crack. Also see [[Wikia:Wikiamobile-page-not-found/en]].',
+	'wikiamobile-page-not-found-tap' => 'Message that describes what to do on 404 page with an image behind the crack. Also see {{msg-wikia|wikiamobile-page-not-found}}.',
 	'wikiasmartbanner-appstore' => 'Message displayed in smart banner promoting an app on app store',
 	'wikiasmartbanner-googleplay' => 'Message displayed in smart banner promoting an app on google play store',
 	'wikiasmartbanner-price' => 'Message displayed in smart banner indicating a price of an app.
@@ -924,7 +925,7 @@ $messages['nl'] = array(
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Vermaak]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Video Games]]',
-	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Licensing]]',
+	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Licensering]]',
 	'mobile-full-site' => 'Hele site',
 	'wikiamobile-categories-tagline' => 'Categoriepagina',
 	'wikiamobile-categories-items-total' => "{{PLURAL:$1|Eén pagina|$1 pagina's}}",
@@ -941,12 +942,12 @@ dit moet u echt zien:
 $1',
 	'wikiamobile-media-group-footer' => '1 van $1',
 	'wikiamobile-unsupported-video-download' => 'Je browser ondersteunt dit videoformaat niet. Probeer <a href="$1">deze link</a>.',
-	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|weegave|weegaven}}',
-	'wikiamobile-video-not-friendly-header' => 'Oh verdorie!',
-	'wikiamobile-video-not-friendly' => 'Sorry, deze video is mobiel niet beschikbaar...',
+	'wikiamobile-video-views-counter' => '{{PLURAL:$1|1 keer|$1 keer}} bekeken',
+	'wikiamobile-video-not-friendly-header' => 'Verdorie!',
+	'wikiamobile-video-not-friendly' => 'Deze video is helaas niet beschikbaar voor mobiel...',
 	'wikiamobile-ad-label' => 'advertentie',
 	'wikiamobile-image-not-loaded' => 'Afbeelding is niet beschikbaar',
-	'wikiamobile-shared-file-not-available' => 'Oeps, dit item is niet langer beschikbaar. Maar nu je er toch bent, verken de wiki!',
+	'wikiamobile-shared-file-not-available' => 'Dit item is niet langer beschikbaar. Maar nu u er toch bent, verken vooral de wiki!',
 	'wikiamobile-page-not-found' => 'Oeps! <b>$1</b> bestaat niet.',
 	'wikiamobile-page-not-found-tap' => 'Klik op hetgeen dat zich achter de spleet verbergt om te zien wat het doet.',
 	'wikiasmartbanner-appstore' => 'In de App Store',
@@ -1173,11 +1174,13 @@ $messages['ru'] = array(
 	'wikiamobile-media-group-footer' => '1 из $1',
 	'wikiamobile-unsupported-video-download' => 'Ваш браузер не поддерживает этот формат видео, попробуйте нажать <a href="$1">здесь</a>',
 	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|просмотр|просмотра|просмотров}}',
+	'wikiamobile-video-not-friendly-header' => 'Вот чёрт!',
 	'wikiamobile-video-not-friendly' => 'К сожалению, это видео не доступно на мобильном устройстве.',
 	'wikiamobile-ad-label' => 'реклама',
 	'wikiamobile-image-not-loaded' => 'Изображение недоступно',
 	'wikiamobile-shared-file-not-available' => 'Ой, этот элемент больше не доступен, но раз уж вы здесь, исследуйте проект!',
 	'wikiamobile-page-not-found' => 'Ой! <b>$1</b> не существует.',
+	'wikiamobile-page-not-found-tap' => 'Нажмите на, что скрывается за трещиной, чтобы увидеть то, что существует.',
 	'wikiasmartbanner-appstore' => 'В App Store',
 	'wikiasmartbanner-googleplay' => 'В Google Play',
 	'wikiasmartbanner-price' => 'бесплатно',
