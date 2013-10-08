@@ -64,7 +64,7 @@ var Lightbox = {
 		Lightbox.cacheDOM();
 
 		// Init ads in Lightbox
-		if ($('#MODAL_RECTANGLE').length && Lightbox.ads.userShowAds) {
+		if ($('#MODAL_RECTANGLE').length && window.wgShowAds) {
 			Lightbox.openModal.lightbox.addClass('show-ads');
 			window.adslots2.push(['MODAL_RECTANGLE']);
 			Lightbox.ads.adModalRectangleShown = true;
@@ -458,8 +458,6 @@ var Lightbox = {
 	ads: {
 		// is MODAL_RECTANGLE ad shown?
 		adModalRectangleShown: false,
-		// should we show ads for this user?
-		userShowAds: !window.wgUserName || window.wgUserShowAds,
 		// preload ad after this number of unique images/videos are shown
 		adMediaCountPreload: 2,
 		// show an ad after this number of unique images/videos are shown
@@ -485,7 +483,7 @@ var Lightbox = {
 		},
 		// should user see ads?
 		showAds: function() {
-			return !!(this.userShowAds
+			return !!(window.wgShowAds
 				&& (Geo.getCountryCode() === 'US' || Geo.getCountryCode() === 'GB')
 				&& $('#' + this.getSlotName()).length);
 		},
@@ -1014,7 +1012,7 @@ var Lightbox = {
 			var addresses = $(this).find('input').first().val();
 
 			// make sure user is logged in
-			if(wgUserName) {
+			if (window.wgUserName) {
 				doShareEmail(addresses);
 			} else {
 				UserLoginModal.show({
