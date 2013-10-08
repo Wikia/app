@@ -12,19 +12,20 @@
 
 class MemcacheMoxiCluster extends MemCachedClientforWiki {
 	const SOCKET = "unix:///var/run/moxi-server/moxi-server.sock";
+
 	const PROTOCOL = "B"; // B=binary, A=ascii
 
-	function _safe_fwrite($f, $host, $buf, $len=false) {
-		$buf = self::PROTOCOL.":{$host} $buf";
+	function _safe_fwrite( $f, $host, $buf, $len = false ) {
+		$buf = self::PROTOCOL . ":{$host} $buf";
 
-		if ($len !== false) {
-			$len = strlen($buf);
+		if ( $len !== false ) {
+			$len = strlen( $buf );
 		}
 
-		return parent::_safe_fwrite($f, $host, $buf, $len);
+		return parent::_safe_fwrite( $f, $host, $buf, $len );
 	}
 
-	protected function parseHost($host) {
-		return [self::SOCKET, -1];
+	protected function parseHost( $host ) {
+		return [ self::SOCKET, -1 ];
 	}
 }
