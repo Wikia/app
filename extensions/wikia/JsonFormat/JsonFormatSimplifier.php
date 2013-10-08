@@ -123,6 +123,7 @@ class JsonFormatSimplifier {
 		$sections = [];
 		$this->findSections( $rootNode, $sections );
 
+		/** @var \JsonFormatSectionNode[]|\JsonFormatRootNode[] $returnSections */
 		$returnSections = [];
 		for ( $i = sizeof($sections)-1; $i >= 0; $i-=1 ) {
 			$section = $sections[$i];
@@ -133,7 +134,7 @@ class JsonFormatSimplifier {
 			$this->clearEmptyParagraphs( $content );
 			$this->getImages( $section, $images );
 			if ( sizeof($content) == 0 && sizeof($images) == 0
-				&& ( ( $i == sizeof($sections)-1 ) || ($sections[$i]->getLevel() >= $sections[$i+1]->getLevel()) )
+				&& ( ( sizeof($returnSections) == 0 ) || ($section >= $returnSections[sizeof($returnSections)-1]->getLevel()) )
 				&& ($sections[$i]->getLevel() != 1 ) ) {
 				continue;
 			}
@@ -144,6 +145,7 @@ class JsonFormatSimplifier {
 				"images" => $images
 			];
 		}
+		$returnSections = array_reverse($returnSections);
 		return [
 			"sections" => $returnSections
 		];
