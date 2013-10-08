@@ -7,7 +7,10 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  **/
 
-require(['throbber', 'wikia.querystring', 'wikia.loader', 'wikia.nirvana'], function(throbber, qs, loader, nirvana){
+require(['throbber', 'wikia.querystring', 'wikia.loader', 'wikia.nirvana', 'sloth'],
+	function(throbber, qs, loader, nirvana, sloth){
+	'use strict';
+
 	var hash = qs().getHash(),
 		wkArtCom,
 		collSec,
@@ -80,12 +83,18 @@ require(['throbber', 'wikia.querystring', 'wikia.loader', 'wikia.nirvana'], func
 		collSec = wkArtCom.getElementsByClassName('collSec')[0];
 		wkComm = document.getElementById('wkComm');
 
-		if(open){
-			init();
-			collSec.className += ' open';
-			wkComm.className += ' open';
-		}else{
-			$(collSec).one(clickEvent, init);
-		}
+		sloth({
+			on: collSec,
+			threshold: 300,
+			callback: init
+		});
+
+//		if(open){
+//			init();
+//			collSec.className += ' open';
+//			wkComm.className += ' open';
+//		}else{
+//			$(collSec).one(clickEvent, init);
+//		}
 	});
 });
