@@ -2,9 +2,9 @@
 
 //base colors
 $page-background-color: #FFF;
-$page-text-color: #3A3A3A;
+$page-text-color: #333;
 $page-text-alternate-color: #8F8F8F;
-$link-color: #006CB0;
+$link-color: #0d4d89;
 $link-color-wikia: get_command_line_param("color-links", #006CB0);
 $section-text-color: $link-color;
 $shadow-color: #DDD;
@@ -19,14 +19,14 @@ $section-title-margin: 10px 0 0 0;
 $section-title-padding: 5px 0;
 
 //layout
-$page-padding: 10px;
+$page-padding: 15px;
 
 //z-index
 $top-layer-z-index: 2000000;
 $highest-z-index: 1000000;
 
 //footer
-$footerBackground: #3d3d3d;
+$footerBackground: #07263F;
 $footerTextColor: #DDD;
 
 //navigation menu

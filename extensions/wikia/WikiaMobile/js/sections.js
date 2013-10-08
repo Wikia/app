@@ -7,72 +7,81 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 
-
 define('sections', ['JSMessages', 'jquery'], function(msg, $){
+	'use strict';
+
 	var d = document,
-		fragment = d.createDocumentFragment(),
 		OPENCLASS = 'open',
 		goBck = '<span class=goBck>&uarr; ' + msg('wikiamobile-hide-section') + '</span>',
-		chevron = '<span class=chev></span>',
-		$d = $(d);
+		sections = $('h2[id],h3[id],h4[id]', document.getElementById('mw-content-text'));
 
-	function init(){
-		var article = d.getElementById('mw-content-text');
+	function init(wrap){
+		var fragment,
+			article,
+			chevron,
+			$d;
 
-		//avoid running if there are no sections which are direct children of the article section
-		if(d.querySelector('#mw-content-text > h2')){
-			var contents = article.childNodes,
-				root = fragment,
-				x,
-				y = contents.length,
-				currentSection = false,
-				node,
-				nodeName,
-				isH2;
+		if(wrap){
+			article = d.getElementById('mw-content-text');
+			fragment = d.createDocumentFragment();
+			chevron = '<span class=chev></span>';
+			$d = $(d);
 
-			for (x=0; x < y; x++) {
-				node = $(contents[x]);
-				nodeName = node[0].nodeName;
-				isH2 = (nodeName == 'H2');
+			//avoid running if there are no sections which are direct children of the article section
+			if(d.querySelector('#mw-content-text > h2')){
+				var contents = article.childNodes,
+					root = fragment,
+					x,
+					y = contents.length,
+					currentSection = false,
+					node,
+					nodeName,
+					isH2;
 
-				if (nodeName != '#comment' && nodeName != 'SCRIPT') {
-					if(node[0].id == 'WkMainCntFtr' || node[0].className == 'printfooter' || node.hasClass('noWrap')){
-						//do not wrap these elements
-						root = fragment;
-					}else if (isH2){
-						node = node
-							.clone(true)
-							.addClass('collSec')
-							//append chevron
-							.append(chevron);
+				for (x=0; x < y; x++) {
+					node = $(contents[x]);
+					nodeName = node[0].nodeName;
+					isH2 = (nodeName === 'H2');
 
-						fragment.appendChild(node[0]);
+					if (nodeName !== '#comment' && nodeName !== 'SCRIPT') {
+						if(node[0].id === 'WkMainCntFtr' || node[0].className === 'printfooter' || node.hasClass('noWrap')){
+							//do not wrap these elements
+							root = fragment;
+						}else if (isH2){
+							node = node
+								.clone(true)
+								.addClass('collSec')
+								//append chevron
+								.append(chevron);
 
-						currentSection = $(d.createElement('section')).addClass('artSec').attr('data-index', x)[0];
-						fragment.appendChild(currentSection);
+							fragment.appendChild(node[0]);
 
-						root = currentSection;
-						continue;
+							currentSection = $(d.createElement('section')).addClass('artSec').attr('data-index', x)[0];
+							fragment.appendChild(currentSection);
+
+							root = currentSection;
+							continue;
+						}
+
+						root.appendChild(node.clone(true)[0]);
 					}
-
-					root.appendChild(node.clone(true)[0]);
 				}
+
+				article.innerHTML = '';
+				article.appendChild( fragment );
 			}
 
-			article.innerHTML = '';
-			article.appendChild( fragment );
+			//this has to run even if we don't find any sections on a page for ie. Category Pages, pages without any sections but with readmore and stuff
+			$('#wkPage').on('click', '.collSec', function(){
+				toggle(this);
+			}).on('click', '.goBck', function(){
+				var parent = $(this.parentElement);
+
+				parent.removeClass(OPENCLASS).prev().removeClass(OPENCLASS)[0].scrollIntoView();
+
+				$d.trigger('sections:close', [parent]);
+			});
 		}
-
-		//this has to run even if we don't find any sections on a page for ie. Category Pages, pages without any sections but with readmore and stuff
-		$('#wkPage').on('click', '.collSec', function(){
-			toggle(this);
-		}).on('click', '.goBck', function(){
-			var parent = $(this.parentElement);
-
-			parent.removeClass(OPENCLASS).prev().removeClass(OPENCLASS)[0].scrollIntoView();
-
-			$d.trigger('sections:close', [parent]);
-		});
 	}
 
 	function toggle(h2, scroll){
@@ -90,7 +99,7 @@ define('sections', ['JSMessages', 'jquery'], function(msg, $){
 	function find(heading){
 		var h2;
 
-		if(typeof heading == 'string') {
+		if(typeof heading === 'string') {
 			heading = $(d.getElementById(heading.replace(/ /g, '_')));
 		}
 
@@ -115,10 +124,11 @@ define('sections', ['JSMessages', 'jquery'], function(msg, $){
 
 	function open(id, scroll) {
 		var headers = find(id),
-			h2 = headers[0];
+			h2 = headers[0],
+			next;
 
 		if(!h2.hasClass(OPENCLASS)) {
-			var next = h2.addClass(OPENCLASS).next().addClass(OPENCLASS);
+			next = h2.addClass(OPENCLASS).next().addClass(OPENCLASS);
 
 			if(!h2[0].goBackAdded && next.hasClass('artSec')) {
 				next.append(goBck);
@@ -144,10 +154,38 @@ define('sections', ['JSMessages', 'jquery'], function(msg, $){
 		}
 	}
 
+	function current(){
+		var top = window.scrollY,
+			section;
+
+		sections.each(function(){
+			if($(this).offset().top <= top) {
+				section = $(this);
+			}else{
+				return false;
+			}
+		});
+
+		return section;
+	}
+
+	var lastSection = current();
+
+	window.addEventListener('scroll', function(){
+		var currentSection = current();
+
+		if(currentSection && !currentSection.is(lastSection)) {
+			console.log(currentSection);
+			lastSection = currentSection;
+		}
+	});
+
 	return {
 		init: init,
 		toggle: toggle,
 		open: open,
-		close: close
+		close: close,
+		scrollTo: scrollTo,
+		current: current
 	};
 });

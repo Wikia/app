@@ -52,7 +52,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 	function reset(stopScrolling){
 		!barSetUp && setupTopBar();
 		!stopScrolling && wkPrfTgl.scrollIntoView();
-		toc.close();
+		//toc.close();
 
 		$.event.trigger('nav:close');
 

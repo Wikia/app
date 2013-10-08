@@ -1,30 +1,45 @@
 @import 'variables.scss';
 
-h1, h2, h3{
-	font-weight: normal;
-	margin: $section-title-margin;
+
+h2, h3, h4, h5, h6{
+	text-transform: uppercase;
+
+	font-weight: 600;
+
+	margin-top: 25px;
 }
 
-.js{
-	.artSec {
-		display: none;
-	}
+h1 {
 
-	//reveal section chevrons when JS is enabled
-	.collSec{
-		.chev{
-			display: inline;
-		}
-	}
+}
+
+h2 {
+	font-size: 1.6rem;
+	margin-top: 50px;
+	border-bottom: 1px solid #DDDDDD;
+	padding-bottom:5px;
+	font-weight: 100;
+}
+
+h3 {
+	font-size: 1.35rem;
+
+}
+
+h4 {
+	font-size: 1.2rem;
+}
+
+h5 {
+	font-size: 1.2rem;
+}
+
+h6 {
+	font-size: 1rem;
 }
 
 .artSec {
-	overflow: hidden;
 	width: 100%;
-
-	&.open {
-		display: block;
-	}
 
 	ul:not(.wkLst) {
 		//setting to 20px makes it narrower but still nicely indented
@@ -41,38 +56,11 @@ h1, h2, h3{
 	}
 }
 
-.goBck {
-	display: block;
-
-	color: $page-text-alternate-color;
-	text-align: right;
-}
-
 .collSec {
-	border-top: 1px solid $border-color;
-	color: $section-text-color;
-	min-height: $section-title-font-size;
-	padding: $page-padding 27px 0 0;
-	//lest make our sections a little bit more sexy
-	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Roboto, "Lucida Grande", arial, sans-serif;
-
 	word-break: break-word;
 
 	position: relative;
 
-    .chev {
-		pointer-events: none;
-
-		display: none; //hidden by default, will be revealed via JS
-		width: 22px;
-		height: 22px;
-		background-size: 75%;
-		position: absolute;
-		right: 0;
-		top: 13px;
-    }
-
-	//TODO:Find it in core and do not print it out in mobile skin
 	.editsection {
 		display: none;
 	}

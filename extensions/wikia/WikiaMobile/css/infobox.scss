@@ -1,9 +1,8 @@
 @import "variables.scss";
 //mixins
 @import "mixins/box-shadow.scss";
-@import "mixins/box-sizing.scss";
 
-table.infobox {
+table[class*="infobox"] {
 	border: 1px solid $border-color;
 	@include box-shadow($shadow);
 	font-size: 0.8em;

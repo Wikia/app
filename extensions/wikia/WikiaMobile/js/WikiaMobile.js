@@ -10,9 +10,9 @@ require(['wikia.querystring', require.optional('topbar'), require.optional('toc'
 		//add chevrons to elements that need it
 		$(d.getElementsByClassName('addChev')).append('<span class=chev></span>');
 
-		if(toc) {
-			toc.init();
-		}
+//		if(toc) {
+//			toc.init();
+//		}
 
 		//used to handle close tracking on Read More section
 		$(d.getElementById('wkRelPag')).on('click', '.open', function(){

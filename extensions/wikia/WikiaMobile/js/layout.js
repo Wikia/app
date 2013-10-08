@@ -9,7 +9,7 @@ require(['sections', 'media', require.optional('wikia.cache'), 'wikia.loader', '
 	'use strict';
 
 	//init sections
-	sections.init();
+	sections.init(Features.gameguides);
 
 	var d = document,
 		images = d.getElementsByClassName('media'),
