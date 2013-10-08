@@ -27,6 +27,11 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 	protected $model;
 
 	/**
+	 * @var Title
+	 */
+	protected $currentTitle;
+
+	/**
 	 * @param \HubRssFeedModel $model
 	 */
 	public function setModel( $model ) {
@@ -43,8 +48,21 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 	public function __construct() {
 		parent::__construct( self::SPECIAL_NAME, self::SPECIAL_NAME, false );
-
+		$this->currentTitle = SpecialPage::getTitleFor( self::SPECIAL_NAME );
 	}
+
+
+	public function notfound() {
+		$url = $this->currentTitle->getFullUrl();
+		$links = [];
+
+		foreach ( $this->hubs as $k => $v ) {
+			$links[ ] = $url . '/' . ucfirst( $k );
+		}
+
+		$this->setVal( 'links', $links );
+	}
+
 
 	public function index() {
 
@@ -53,20 +71,19 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 		$hubName = strtolower( (string)$params[ 'par' ] );
 
 		if ( !isset($this->hubs[ $hubName ]) ) {
-			throw new InvalidHubAttributeException('hub name');
+			return $this->forward( 'HubRssFeedSpecial', 'notfound' );
 		}
 
 		$langCode = $this->app->wg->ContLang->getCode();
 		$this->model = new HubRssFeedModel($langCode);
 
-		$memcKey =  wfMemcKey(self::CACHE_KEY , $hubName , $langCode);
+		$memcKey = wfMemcKey( self::CACHE_KEY, $hubName, $langCode );
 
 		$xml = $this->wg->memc->get( $memcKey );
 
 		if ( $xml === false ) {
-			$title = SpecialPage::getTitleFor( self::SPECIAL_NAME );
 
-			$service = new HubRssFeedService($langCode, $title->getFullUrl() . '/' . ucfirst($hubName));
+			$service = new HubRssFeedService($langCode, $this->currentTitle->getFullUrl() . '/' . ucfirst( $hubName ));
 
 			$verticalId = $this->hubs[ $hubName ];
 

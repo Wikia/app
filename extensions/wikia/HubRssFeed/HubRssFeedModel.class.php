@@ -145,12 +145,3 @@ class HubRssFeedModel extends WikiaModel {
 	}
 
 }
-
-
-class InvalidHubAttributeException extends WikiaException {
-
-	public function __construct( $attribute ) {
-		parent::__construct( "Invalid attribute: '$attribute''" );
-
-	}
-}
