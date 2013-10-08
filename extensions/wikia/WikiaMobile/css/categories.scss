@@ -1,27 +1,20 @@
-#wkArtCat {
-	.catlinks {
-		margin-bottom: 10px;
+.catlinks {
+	margin-bottom: 10px;
 
-		 ul{
-			display: inline;
-			list-style: none;
-			margin: 0;
-			padding: 0;
-
-			li{
-				border-left:  1px solid #AAA;
-				display: inline-block;
-				margin: 5px 0;
-				padding: 0 5px;
-			}
-
-			li:first-child{
-				border-left: none;
-			}
-		}
+	ul{
+		display: inline;
+		list-style: none;
+		margin: 0;
+		padding: 0;
 	}
-}
 
-#mw-normal-catlinks span{
-	padding: 0 5px;
+	li{
+		display: inline-block;
+		margin-bottom: 5px;
+	}
+
+	li:nth-last-of-type(n+2):after {
+		content: ',';
+		padding-right: 3px;
+	}
 }
