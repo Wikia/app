@@ -63,6 +63,7 @@ class HtmlParser {
 		$compositeVisitor->addVisitor( new \ImageFigureVisitor($compositeVisitor, $jsonFormatTraversingState) );
 		$compositeVisitor->addVisitor( new \ImageNoScriptVisitor($compositeVisitor, $jsonFormatTraversingState) );
 		$compositeVisitor->addVisitor( new \ImageVisitor($compositeVisitor, $jsonFormatTraversingState) );
+		$compositeVisitor->addVisitor( new \DivImageVisitor($compositeVisitor, $jsonFormatTraversingState) );
 		$compositeVisitor->addVisitor( new \VideoVisitor($compositeVisitor, $jsonFormatTraversingState) );
 		$compositeVisitor->addVisitor( new \AVisitor($compositeVisitor, $jsonFormatTraversingState) );
 		$compositeVisitor->addVisitor( new \BrVisitor($compositeVisitor, $jsonFormatTraversingState) );
