@@ -134,7 +134,7 @@ class JsonFormatSimplifier {
 			$this->clearEmptyParagraphs( $content );
 			$this->getImages( $section, $images );
 			if ( sizeof($content) == 0 && sizeof($images) == 0
-				&& ( ( sizeof($returnSections) == 0 ) || ($section >= $returnSections[sizeof($returnSections)-1]->getLevel()) )
+				&& ( ( sizeof($returnSections) == 0 ) || ($section >= $returnSections[sizeof($returnSections)-1]["level"]) )
 				&& ($sections[$i]->getLevel() != 1 ) ) {
 				continue;
 			}
