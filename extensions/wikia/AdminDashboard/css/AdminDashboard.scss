@@ -191,6 +191,7 @@ $color-highlight-column: rgba($color-page, 0);
 						display: block;
 						height: 50px;
 						margin: 0 auto 5px;
+						position: relative;
 						width: 50px;
 						.icon {
 							background-image: url(/extensions/wikia/AdminDashboard/images/icons.png); // $wgCdnStylePath
@@ -255,6 +256,15 @@ $color-highlight-column: rgba($color-page, 0);
 							}
 							&.licensedvideoswap {
 								background-position: -950px 0;
+							}
+						}
+						.alert-badge {
+							position: absolute;
+							right: -.75em;
+							top: -.75em;
+							// hack to vertically center the number in chrome
+							@media screen and (-webkit-min-device-pixel-ratio:0) {
+								line-height: 1.6em;
 							}
 						}
 					}

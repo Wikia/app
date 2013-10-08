@@ -5,8 +5,9 @@
 	@include border-radius( 10px );
 	background: $color-buttons;
 	color: $color-button-text;
-	display: block;
+	display: inline-block;
 	height: 1.5em;
+	line-height: 1.5em;
 	text-align: center;
 	width: 1.5em;
 }
