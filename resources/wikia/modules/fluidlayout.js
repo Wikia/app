@@ -119,6 +119,6 @@ define('wikia.fluidlayout',  function() {
 		getBreakpointFluid: getBreakpointFluid,
 		getBreakpointMin: getBreakpointMin,
 		getBreakpointMax: getBreakpointMax
-	}
+	};
 
 });
