@@ -1,6 +1,6 @@
 {
 	"templateVars": {
-		"default" : {
+		"default": {
 			"required": [ "number" ],
 			"optional": [ "id" ]
 		}

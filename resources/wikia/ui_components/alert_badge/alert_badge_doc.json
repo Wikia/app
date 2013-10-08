@@ -3,17 +3,17 @@
 	"description": "styleguide-description-alert-badge",
 	"types": {
 		"default": {
-			"description" : "styleguide-description-link-button",
+			"description": "styleguide-description-link-button",
 			"params": {
 				"number": {
-					"templateVar" : "number",
-					"type" : "string",
-					"description" : "styleguide-description-alert-badge-number"
+					"templateVar": "number",
+					"type": "string",
+					"description": "styleguide-description-alert-badge-number"
 				},
 				"id": {
-					"templateVar" : "id",
-					"type" : "string",
-					"description" : "styleguide-description-alert-badge-id"
+					"templateVar": "id",
+					"type": "string",
+					"description": "styleguide-description-alert-badge-id"
 				}
 			}
 		}
