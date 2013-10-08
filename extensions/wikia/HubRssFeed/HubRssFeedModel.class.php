@@ -98,6 +98,15 @@ class HubRssFeedModel extends WikiaModel {
 			}
 		}
 
+		$timestamps = [];
+		// Obtain a list of columns
+		foreach ($currentData as $key => $row) {
+			$timestamps[$key]  = $row['timestamp'];
+		}
+
+		array_multisort($timestamps, SORT_DESC, $currentData);
+
+
 		return $currentData;
 
 	}

@@ -42,8 +42,6 @@ class HubRssFeedService {
 		$rss = $rssList->item( 0 );
 		$channel = $rss->appendChild( new DOMElement('channel') );
 
-		$date = date( self::DATE_FORMAT );
-
 		self::appendTextNode( $doc, $channel, 'title', $this->descriptions[ $verticalId ][ 't' ] );
 		self::appendTextNode( $doc, $channel, 'description', $this->descriptions[ $verticalId ][ 'd' ] );
 
@@ -58,7 +56,7 @@ class HubRssFeedService {
 			self::appendCDATA( $doc, $itemNode, 'title', $item[ 'title' ] );
 			self::appendCDATA( $doc, $itemNode, 'description', '<img src="' . $item[ 'img' ] . '"/><p>' . $item[ 'description' ] . '</p>' );
 			self::appendCDATA( $doc, $itemNode, 'url', $url );
-
+			//var_dump($item[ 'timestamp' ], date( self::DATE_FORMAT, $item[ 'timestamp' ] ) );
 			$itemNode->appendChild( new DOMElement('pubDate', date( self::DATE_FORMAT, $item[ 'timestamp' ] )) ); //date('c') ?
 			$itemNode->appendChild( new DOMElement('creator', 'Wikia', 'http://purl.org/dc/elements/1.1/') );
 
