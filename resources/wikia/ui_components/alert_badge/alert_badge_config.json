@@ -6,7 +6,6 @@
 		}
 	},
 	"dependencies": {
-		"js": [],
 		"css": [ "resources/wikia/ui_components/alert_badge/css/alert_badge_default.scss" ]
 	}
 }
