@@ -24,6 +24,8 @@ ve.inheritClass( ve.ui.ListAction, ve.ui.Action );
 
 /* Static Properties */
 
+ve.ui.ListAction.static.name = 'list';
+
 /**
  * List of allowed methods for the action.
  *
@@ -143,4 +145,4 @@ ve.ui.ListAction.prototype.unwrap = function () {
 
 /* Registration */
 
-ve.ui.actionFactory.register( 'list', ve.ui.ListAction );
+ve.ui.actionFactory.register( ve.ui.ListAction );

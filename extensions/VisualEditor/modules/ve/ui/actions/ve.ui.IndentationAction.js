@@ -24,6 +24,8 @@ ve.inheritClass( ve.ui.IndentationAction, ve.ui.Action );
 
 /* Static Properties */
 
+ve.ui.IndentationAction.static.name = 'indentation';
+
 /**
  * List of allowed methods for the action.
  *
@@ -312,4 +314,4 @@ ve.ui.IndentationAction.prototype.unindentListItem = function ( listItem ) {
 
 /* Registration */
 
-ve.ui.actionFactory.register( 'indentation', ve.ui.IndentationAction );
+ve.ui.actionFactory.register( ve.ui.IndentationAction );

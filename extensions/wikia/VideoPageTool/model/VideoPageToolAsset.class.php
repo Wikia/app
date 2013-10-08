@@ -465,7 +465,7 @@ class VideoPageToolAsset extends WikiaModel {
 	 * Get assets by section
 	 * @param integer $programId
 	 * @param string $section
-	 * @return array $assets
+	 * @return array An array of VideoPageToolAsset objects
 	 */
 	public static function getAssetsBySection( $programId, $section ) {
 		wfProfileIn( __METHOD__ );
@@ -527,9 +527,10 @@ class VideoPageToolAsset extends WikiaModel {
 
 	/**
 	 * Get asset data (used in template)
+	 * @param array $thumbOptions
 	 * @return array $assetData
 	 */
-	public function getAssetData() {
+	public function getAssetData( $thumbOptions = array() ) {
 		$user = User::newFromId( $this->updatedBy );
 		$assetData['updatedBy'] = $user->getName();
 		$assetData['updatedAt'] = $this->getFormattedUpdatedAt();

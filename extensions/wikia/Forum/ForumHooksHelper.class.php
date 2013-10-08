@@ -8,7 +8,6 @@ class ForumHooksHelper {
 		$app = F::App();
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
 			$app->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Forum/css/ForumThread.scss' ) );
-			$app->wg->IsForum = true;
 		}
 		return true;
 	}

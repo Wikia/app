@@ -144,7 +144,7 @@ QUnit.test( 'onTransact', function ( assert ) {
 		// Test both the transaction-via-surface and transaction-via-document flows
 		surface.change( tx );
 		assertItemsMatchMetadata( assert, doc.metadata, list, cases[i].msg, true );
-		doc.rollback( tx );
+		surface.change( tx.reversed() );
 		assertItemsMatchMetadata( assert, doc.metadata, list, cases[i].msg + ' (rollback)', true );
 	}
 } );

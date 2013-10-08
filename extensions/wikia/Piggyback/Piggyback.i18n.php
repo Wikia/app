@@ -568,8 +568,14 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Hzy980512
  */
 $messages['zh-hans'] = array(
+	'piggyback' => '转接',
 	'piggyback-otherusername' => '其他用户名：',
+	'piggyback-nosuchuser' => '没有名为“$1”的用户。用户名区分大小写，请再检查一遍。',
 	'piggyback-wronguser' => '$1 不是您的用户名',
+	'piggyback-loginprompt' => '请再输入一次您的用户名和密码。',
+	'piggyback-itisyou' => '您不能转接自己。',
+	'action-piggyback' => '用其他账户登录',
 );
