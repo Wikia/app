@@ -135,9 +135,9 @@ class WikiaDispatcher {
 					// Warning: this means you can't use the new Dispatcher routing to switch templates in modules
 					if ($format == WikiaResponse::FORMAT_HTML) {
 						try {
-						$response->getView()->setTemplate( $controllerName, $method );
+							$response->getView()->setTemplate( $controllerName, $method );
 						} catch (WikiaException $e) {
-							throw new MethodNotFoundException($method);
+							throw new MethodNotFoundException( "{$controllerClassName}::{$method}" );
 						}
 					}
 					$method = "execute{$method}";
@@ -162,7 +162,7 @@ class WikiaDispatcher {
 					!method_exists( $controller, $method ) ||
 					!is_callable( array( $controller, $method ) )
 				) {
-					throw new MethodNotFoundException($method);
+					throw new MethodNotFoundException("{$controllerClassName}::{$method}");
 				}
 
 				// Initialize the RequestContext object if it is not already set
