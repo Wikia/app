@@ -18,6 +18,3 @@ $wgAutoloadClasses['HubRssFeedModel']	= $dir . 'HubRssFeedModel.class.php';
 $wgAutoloadClasses['HubRssFeedService']	= $dir . 'HubRssFeedService.class.php';
 
 $wgSpecialPages['HubRssFeed']		= 'HubRssFeedSpecialController';
-
-//hook for purging Achievemets-related cache
-//$wgHooks['AchievementsInvalidateCache'][] = 'OnAchievementsInvalidateCache';

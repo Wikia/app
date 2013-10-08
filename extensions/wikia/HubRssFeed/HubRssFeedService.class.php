@@ -50,8 +50,8 @@ class HubRssFeedService {
 		self::appendTextNode( $doc, $channel, 'link', $this->url );
 		self::appendTextNode( $doc, $channel, 'language', $this->lang );
 		self::appendTextNode( $doc, $channel, 'generator', 'MediaWiki 1.19.7' );
-		self::appendTextNode( $doc, $channel, 'lastBuildDate', $date );
 
+		$maxTimestamp = 0;
 
 		foreach ( $data as $url => $item ) {
 			$itemNode = $channel->appendChild( new DOMElement('item') );
@@ -61,8 +61,13 @@ class HubRssFeedService {
 
 			$itemNode->appendChild( new DOMElement('pubDate', date( self::DATE_FORMAT, $item[ 'timestamp' ] )) ); //date('c') ?
 			$itemNode->appendChild( new DOMElement('creator', 'Wikia', 'http://purl.org/dc/elements/1.1/') );
+
+			if($item[ 'timestamp' ]  > $maxTimestamp ){
+				$maxTimestamp = $item[ 'timestamp' ]  ;
+			}
 		}
 
+		self::appendTextNode( $doc, $channel, 'lastBuildDate',  date( self::DATE_FORMAT,$maxTimestamp ) );
 		return $doc->saveXML();
 	}
 

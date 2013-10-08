@@ -17,7 +17,7 @@ class HubRssFeedModel extends WikiaModel {
 	/**
 	 * @var MarketingToolboxModel
 	 */
-	private $marketingToolboxModel;
+	protected $marketingToolboxModel;
 
 	protected $lang;
 
@@ -34,7 +34,6 @@ class HubRssFeedModel extends WikiaModel {
 
 
 	public function isValidVerticalId( $verticalId ) {
-
 		$ids = $this->marketingToolboxModel->getVerticalsIds();
 		return in_array( $verticalId, $ids );
 
@@ -44,11 +43,11 @@ class HubRssFeedModel extends WikiaModel {
 	 * @param $verticalId
 	 * @return array
 	 */
-	private function getServices( $verticalId ) {
+	protected function getServices( $verticalId ) {
 
 		return [
-			'slider' => new MarketingToolboxModuleSliderService('en', MarketingToolboxModel::SECTION_HUBS, $verticalId),
-			'community' => new MarketingToolboxModuleFromthecommunityService('en', MarketingToolboxModel::SECTION_HUBS, $verticalId)
+			'slider' => new MarketingToolboxModuleSliderService($this->lang, MarketingToolboxModel::SECTION_HUBS, $verticalId),
+			'community' => new MarketingToolboxModuleFromthecommunityService($this->lang, MarketingToolboxModel::SECTION_HUBS, $verticalId)
 		];
 
 	}
@@ -71,6 +70,7 @@ class HubRssFeedModel extends WikiaModel {
 			$prevData = $this->getDataFromModules( $verticalId, $prevTimestamp );
 
 			if ( $prevData === null ) {
+				$prevTimestamp--;
 				continue;
 			}
 
@@ -98,7 +98,6 @@ class HubRssFeedModel extends WikiaModel {
 			}
 		}
 
-
 		return $currentData;
 
 	}
@@ -108,13 +107,13 @@ class HubRssFeedModel extends WikiaModel {
 	 * @param $verticalId
 	 *
 	 */
-	public function getDataFromModules( $verticalId, $timestamp = null ) {
+	protected function getDataFromModules( $verticalId, $timestamp = null ) {
 
 		$services = $this->getServices( $verticalId );
 
 		foreach ( $services as $k => &$v ) {
 			$data[ $k ] = $v->loadData( $this->marketingToolboxModel, [
-				'lang' => 'en',
+				'lang' => $this->lang,
 				'vertical_id' => $verticalId,
 				'ts' => $timestamp
 			] );
