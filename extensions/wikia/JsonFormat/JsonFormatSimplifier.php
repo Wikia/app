@@ -75,7 +75,7 @@ class JsonFormatSimplifier {
 	private function clearEmptyParagraphs( &$paragraphs ) {
 		$paragraphs = array_slice( array_filter( $paragraphs, function( $element ) {
 			if ( $element["type"] == "paragraph" ) {
-				return strlen( trim( $element["text"], " " ) ) > 0;
+				return strlen( trim( $element["text"] ) ) > 0;
 			}
 			return true;
 		}), 0 );
@@ -90,7 +90,7 @@ class JsonFormatSimplifier {
 	 * @param String $inlineText
 	 */
 	private function appendInline( &$sectionElements, $inlineText ) {
-		$inlineText = trim( $inlineText );
+		$inlineText = trim( $inlineText, " " );
 		if ( $inlineText == "" ) {
 			return;
 		}
