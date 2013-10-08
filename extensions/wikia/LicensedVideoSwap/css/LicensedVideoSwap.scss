@@ -3,6 +3,7 @@
 @import "skins/oasis/css/mixins/box-sizing-border-box";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/ribbon";
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/mixins/opacity";
@@ -28,41 +29,10 @@ $button-icon-color: white;
 }
 
 .new {
+	@include ribbon( $color-button-text, $color-buttons, 14px, 10px, 3px 8px 3px 6px);
 	position: absolute;
 	left: 0px;
 	top: 0px;
-	color: $color-button-text;
-	font-size: 14px;
-	line-height: 14px;
-	padding: 3px;
-	padding-left: 6px;
-	background-color: $color-buttons;
-
-	&:before {
-		content: '';
-		position: absolute;
-		height: 0px;
-		width: 0px;
-		border-width: 10px;
-		border-style: solid;
-		border-color: transparent transparent $color-buttons transparent;
-		right: -10px;
-		top: 0px;
-		visibility: visible;
-	}
-
-	&:after {
-		content: '';
-		position: absolute;
-		height: 0px;
-		width: 0px;
-		border-width: 10px;
-		border-style: solid;
-		border-color: $color-buttons transparent transparent transparent;
-		right: -10px;
-		top: 0px;
-		visibility: visible;
-	}
 }
 
 // For now, this callout style will be specific to lvs, but we might be able to re-use this on the Video Wikia home page
@@ -208,10 +178,6 @@ $button-icon-color: white;
 		height: 309px;
 		margin-bottom: 9px;
 		position: relative;
-
-		.new {
-			top: 10px;
-		}
 	}
 	.more-videos {
 		@include clearfix;
