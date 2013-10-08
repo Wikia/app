@@ -37,21 +37,18 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.cartModel = new ve.dm.WikiaCart()
 	this.cart = new ve.ui.WikiaCartWidget( this.cartModel );
 	this.$cart = this.$$( '<div>' );
-	this.search = new ve.ui.MWMediaSearchWidget( {
-		'$$': this.frame.$$,
-		'size': 130
-	} );
-	this.contentPanel = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
+	this.search = new ve.ui.WikiaMediaSearchWidget( { '$$': this.frame.$$ } );
+	this.pagesPanel = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
 
 	// Events
 	this.search.connect( this, { 'select': 'onSearchSelect' } );
 
 	// Initialization
-	this.contentPanel.addPage( 'search', { '$content': this.search.$ } );
+	this.pagesPanel.addPage( 'search', { '$content': this.search.$ } );
 	this.$cart
 		.addClass( 've-ui-wikiaCartWidget-wrapper' )
 		.append( this.cart.$ );
-	this.$body.append( this.$cart, this.contentPanel.$ );
+	this.$body.append( this.$cart, this.pagesPanel.$ );
 	this.frame.$content.addClass( 've-ui-wikiaMediaInsertDialog-content' );
 };
 
