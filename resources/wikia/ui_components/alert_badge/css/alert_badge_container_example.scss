@@ -1,0 +1,8 @@
+.alert-badge-container {
+	position: relative;
+	.alert-badge {
+		position: absolute;
+		top: -1em;
+		right: -1em;
+	}
+}

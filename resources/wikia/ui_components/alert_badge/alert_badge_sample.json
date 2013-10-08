@@ -1,0 +1,12 @@
+[
+	{
+		"description": "styleguide-example-description-alert-badge",
+		"params": {
+			"type": "default",
+			"vars": {
+				"number": "2",
+				"id": "my-id"
+			}
+		}
+	}
+]
