@@ -7,6 +7,7 @@ class ApiMediaSearch extends ApiBase {
 	private $query;
 	private $batch;
 	private $limit;
+	private $mixed = false;
 
 	public function execute() {
 
@@ -26,26 +27,35 @@ class ApiMediaSearch extends ApiBase {
 		$video = in_array( 'video', $typeArray );
 		$photo = in_array( 'photo', $typeArray );
 
-		// Get formatted results
+		// Mixed?
+		if ( isset( $params['mixed'] ) && $params['mixed'] == 'true' ) {
+			$this->mixed = true;
+		}
+
+		// Get results
+		$results = [];
 		if ( $video && $photo ) {
-			if ( isset( $params['separate'] ) && $params['separate'] == 'true' ) {
-				// video and photo separate
-				$response = $this->formatResults( [
-					$this->getResults( true, false ),
-					$this->getResults( false, true )
-				] );
+			if ( $this->mixed ) {
+				// video and photo mixed
+				$results['mixed'] = $this->getResults( false, false );
 			} else {
-				// video and photo combined
-				$response = $this->formatResults( [
-					$this->getResults( false, false )
-				] );
+				// video and photo separate
+				$results['video'] = $this->getResults( true, false );
+				$results['photo'] = $this->getResults( false, true );
 			}
 		} else {
 			// either photo or video
-			$response = $this->formatResults( [
-				$this->getResults( $video, $photo )
-			] );
+			$items = $this->getResults( $video, $photo );
+			if ( $this->mixed ) {
+				$key = 'mixed';
+			} else {
+				$key = $video ? 'video' : 'photo';
+			}
+			$results[$key] = $items;
 		}
+
+		// Format results
+		$response = $this->formatResults( $results );
 
 		// Return response
 		$this->getResult()->addValue( null, 'response', $response );
@@ -53,34 +63,21 @@ class ApiMediaSearch extends ApiBase {
 	}
 
 	private function formatResults( $raw ) {
-		$results = [];
+		$results = [
+			'limit' => $this->limit,
+			'batch' => $this->batch
+		];
+		$keys = array_keys( $raw );
 
-		if ( count( $raw ) == 1 ) {
-			$results = [
-				'limit' => $this->limit,
-				'batch' => $raw[0]['currentBatch'],
-				'all' => [
-					'batches' => $raw[0]['batches'],
-					'items' => $this->formatItems( $raw[0] )
-				]
-			];
-		} else if ( count( $raw ) == 2 ) {
-			$results = [
-				'limit' => $this->limit,
-				'batch' => $raw[0]['currentBatch'],
-				'video' => [
-					'batches' => $raw[0]['batches'],
-					'items' => $this->formatItems( $raw[0] )
-				],
-				'photo' => [
-					'batches' => $raw[1]['batches'],
-					'items' => $this->formatItems( $raw[1] )
-				]
+		for ( $i = 0; $i < count( $raw ); $i++ ) {
+			$key = $keys[$i];
+			$results['results'][$key] = [
+				'batches' => $raw[$key]['batches'],
+				'items' => $this->formatItems( $raw[$key] )
 			];
 		}
 
 		return $results;
-
 	}
 
 	private function getResults( $videoOnly, $imageOnly ) {
@@ -93,7 +90,7 @@ class ApiMediaSearch extends ApiBase {
 			->setCombinedMediaSearchIsImageOnly( $imageOnly );
 		$results = (new Wikia\Search\QueryService\Factory)
 			->getFromConfig( $searchConfig )
-			->searchAsApi( [ 'url', 'id', 'pageid', 'wid', 'title' ], true );
+			->searchAsApi( [ 'title' ], true );
 
 		return $results;
 	}
@@ -143,7 +140,7 @@ class ApiMediaSearch extends ApiBase {
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => true
 			),
-			'separate' => array (
+			'mixed' => array (
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => false
 			),
