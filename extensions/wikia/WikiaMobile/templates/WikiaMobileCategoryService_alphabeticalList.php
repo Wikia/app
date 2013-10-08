@@ -10,10 +10,6 @@
 <section class="alphaSec noWrap">
 	<header>
 		<?= wfMessage( 'wikiamobile-categories-items-total', $wg->ContLang->formatNum( $total ) )->inContentLanguage()->text() ;?>
-		<button class=wkBtn id=expAll>
-			<span class=expand><?= wfMessage( 'wikiamobile-categories-expand' )->inContentLanguage()->text() ;?></span>
-			<span class=collapse><?= wfMessage( 'wikiamobile-categories-collapse' )->inContentLanguage()->text() ;?></span>
-		</button>
 	</header>
 <? foreach ( $collections as $index => $collection ) {
 	$batch = ( $index == $requestedIndex ) ? $requestedBatch : 1;
