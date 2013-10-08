@@ -213,24 +213,6 @@ class ArticleService extends WikiaObject {
 		return $content;
 	}
 
-	public function getWikiText() {
-		global $wgOut;
-
-		//get raw wikitext
-		$page = $this->article->getPage();
-		$content = $page->getRawText();
-
-		//preprocess dependacies
-//		$parser = new Parser();
-//		$pre = $parser->preprocess( $content, Title::newFromID( 50 ), $wgOut->parserOptions() );
-		$wparser = new WikiParser();
-		$wparser->setText( $content );
-
-		$result = $wparser->parse();
-		
-		return $result;
-	}
-
 	/**
 	 * Gets a plain text of an article using Solr.
 	 *
