@@ -1012,9 +1012,14 @@ $config['videopageadmin_scss'] = array(
 		'//skins/oasis/css/modules/CorporateDatepicker.scss',
 		'//extensions/wikia/WikiaMiniUpload/css/WMU.scss',
 		'//extensions/wikia/VideoPageTool/css/Admin/VideoPageTool.scss',
-		'//extensions/wikia/VideoPageTool/css/Admin/VideoPageTool_Header.scss'
+		'//extensions/wikia/VideoPageTool/css/Admin/VideoPageTool_Header.scss',
 	)
 );
+
+/*
+ * @name videohomepage
+ * @description Assets for http://video.wikia.com/
+ */
 
 $config['videohomepage_js'] = array(
 	'skin' => array( 'oasis' ),
@@ -1027,11 +1032,6 @@ $config['videohomepage_js'] = array(
 		'//extensions/wikia/VideoPageTool/js/views/videohomepage.index.js',
 	)
 );
-
-/*
- * @name videohomepage
- * @description Assets for http://video.wikia.com/
- */
 
 $config['videohomepage_scss'] = array(
 	'skin' => array( 'oasis' ),
