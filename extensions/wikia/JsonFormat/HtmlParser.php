@@ -69,7 +69,7 @@ class HtmlParser {
 		$compositeVisitor->addVisitor( new \BVisitor($compositeVisitor, $jsonFormatTraversingState) );
 		$compositeVisitor->addVisitor( new \IVisitor($compositeVisitor, $jsonFormatTraversingState) );
 
-		$compositeVisitor->addVisitor( new \InlineVisitor($compositeVisitor, $jsonFormatTraversingState, ['span', 'center', "strong", "strike"]) );
+		$compositeVisitor->addVisitor( new \InlineVisitor($compositeVisitor, $jsonFormatTraversingState, ['span', 'center', "strong", "strike", "u"]) );
 
 
 		return $compositeVisitor;
