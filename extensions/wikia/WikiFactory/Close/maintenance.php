@@ -87,8 +87,9 @@ class CloseWikiMaintenance {
 			$xdumpok  = true;
 			$newFlags = 0;
 			$dbname   = $row->city_dbname;
-			$folder   = WikiFactory::getVarValueByName( "wgUploadDirectory", $row->city_id );
-			$cluster  = WikiFactory::getVarValueByName( "wgDBcluster", $row->city_id );
+			$cityid   = $row->city_id;
+			$folder   = WikiFactory::getVarValueByName( "wgUploadDirectory", $cityid );
+			$cluster  = WikiFactory::getVarValueByName( "wgDBcluster", $cityid );
 
 			/**
 			 * safety check, if city_dbname is not unique die with message
@@ -117,8 +118,8 @@ class CloseWikiMaintenance {
 				list ( $remote  ) = explode( ":", $this->mTarget, 2 );
 
 				$script = ( $hide )
-					? "--script='../extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$row->city_id} --tmp --s3'"
-					: "--script='../extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$row->city_id} --hide --tmp --s3'";
+					? "--script='../extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$cityid} --tmp --s3'"
+					: "--script='../extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$cityid} --hide --tmp --s3'";
 
 				$cmd  = array(
 					"/usr/wikia/backend/bin/run_maintenance",
@@ -137,7 +138,7 @@ class CloseWikiMaintenance {
 			}
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
 				if( $dbname && $folder ) {
-					$source = $this->tarFiles( $folder, $dbname );
+					$source = $this->tarFiles( $folder, $dbname, $cityid );
 					if( $source ) {
                         $retval = DumpsOnDemand::putToAmazonS3( $source, !$hide );
 						if( $retval > 0 ) {
@@ -155,7 +156,7 @@ class CloseWikiMaintenance {
 						 * actually it's better to die than remove
 						 * images later without backup
 						 */
-						echo "Can't copy images to remote host. Source {$source} and target {$target} is not defined";
+						echo "Can't copy images to remote host. Source {$source} is not defined";
 						die( 1 );
 					}
 				}
@@ -264,16 +265,44 @@ class CloseWikiMaintenance {
 	}
 
 	/**
-	 * pack all images from image table, use PEAR Archive_Tar for archive.
+	 * pack all images, use PEAR Archive_Tar for archive.
 	 *
 	 * @access public
 	 *
 	 * @param string $uploadDirectory path to images
 	 * @param string $dbname database name
+	 * @param int $cityid city ID
 	 *
 	 * @return string path to created archive or false if not created
 	 */
-	public function tarFiles( $directory, $dbname ) {
+	public function tarFiles( $directory, $dbname, $cityid ) {
+		$swiftEnabled = WikiFactory::getVarValueByName( 'wgEnableSwiftFileBackend', $cityid );
+		$wgUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $cityid );
+
+		if ( $swiftEnabled ) {
+			// sync Swift container to the local directory
+			$directory = sprintf( "/tmp/images/{$dbname}/" );
+
+			$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
+			$container = substr( $path, 0, -7 ); // eg. poznan/pl
+
+			$this->log( sprintf( 'Rsyncing images from "%s" Swift storage to "%s"...', $container, $directory ) );
+
+			wfMkdirParents( $directory );
+			$time = wfTime();
+
+			// s3cmd sync --dry-run s3://dilbert ~/images/dilbert/ --exclude "/thumb/*" --exclude "/temp/*"
+			$cmd = sprintf(
+				'sudo /usr/bin/s3cmd -c %s sync s3://%s/images "%s" --exclude "/thumb/*" --exclude "/temp/*"',
+				'/etc/s3cmd/sjc_prod.cfg', // s3cmd config for Swift storage
+				$container,
+				$directory
+			);
+
+			wfShellExec( $cmd, $iStatus );
+			$time = Wikia::timeDuration( wfTime() - $time );
+			Wikia::log( __METHOD__, "info", "Rsync to {$directory} from {$container} Swift storage: status: {$iStatus}, time: {$time}", true, true );
+		}
 
 		/**
 		 * @name dumpfile
