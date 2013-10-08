@@ -11,6 +11,7 @@ class HtmlParser {
 		$doc = new \DOMDocument();
 
 		libxml_use_internal_errors(true);
+		$html = preg_replace("/\s+/", " ", $html);
 		$doc->loadHTML("<?xml encoding=\"UTF-8\">\n<html><body>" . $html . "</body></html>");
 		libxml_clear_errors();
 		$body = $doc->getElementsByTagName('body')->item(0);
