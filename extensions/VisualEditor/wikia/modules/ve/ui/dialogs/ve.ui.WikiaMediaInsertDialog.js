@@ -56,6 +56,10 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 };
 
 ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
+	if ( item === null ) {
+		return;
+	}
+
 	var items = [
 		{
 			'title': 'Book.learning.jpg',
