@@ -156,7 +156,7 @@ class CloseWikiMaintenance {
 						 * actually it's better to die than remove
 						 * images later without backup
 						 */
-						echo "Can't copy images to remote host. Source {$source} and target {$target} is not defined";
+						echo "Can't copy images to remote host. Source {$source} is not defined";
 						die( 1 );
 					}
 				}
@@ -265,7 +265,7 @@ class CloseWikiMaintenance {
 	}
 
 	/**
-	 * pack all images from image table, use PEAR Archive_Tar for archive.
+	 * pack all images, use PEAR Archive_Tar for archive.
 	 *
 	 * @access public
 	 *
@@ -275,9 +275,9 @@ class CloseWikiMaintenance {
 	 *
 	 * @return string path to created archive or false if not created
 	 */
-	private function tarFiles( $directory, $dbname, $cityid ) {
-		$swiftEnabled = WikiFactory::getVarByName( 'wgEnableSwiftFileBackend', $cityid );
-		$wgUploadPath = WikiFactory::getVarByName( 'wgUploadPath', $cityid );
+	public function tarFiles( $directory, $dbname, $cityid ) {
+		$swiftEnabled = WikiFactory::getVarValueByName( 'wgEnableSwiftFileBackend', $cityid );
+		$wgUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $cityid );
 
 		if ( $swiftEnabled ) {
 			// sync Swift container to the local directory
@@ -294,7 +294,7 @@ class CloseWikiMaintenance {
 			// s3cmd sync --dry-run s3://dilbert ~/images/dilbert/ --exclude "/thumb/*" --exclude "/temp/*"
 			$cmd = sprintf(
 				'sudo /usr/bin/s3cmd -c %s sync s3://%s/images "%s" --exclude "/thumb/*" --exclude "/temp/*"',
-				'/root/.s3cfg', // TODO: s3cmd config for Swift storage
+				'/etc/s3cmd/sjc_prod.cfg', // s3cmd config for Swift storage
 				$container,
 				$directory
 			);
