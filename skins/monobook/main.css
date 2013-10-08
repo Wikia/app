@@ -150,7 +150,7 @@ pre {
 
 /* Wikia changes to TOC */
 #toc {
-    display: inline-block;
+    display: table;
 }
 #toc h2 {
     padding-right: 5px;;
