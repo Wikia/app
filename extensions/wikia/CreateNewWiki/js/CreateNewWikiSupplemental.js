@@ -13,3 +13,4 @@ ThemeDesigner.set = function(setting, newValue) {
 ThemeDesigner.save = function() {
 
 };
+
