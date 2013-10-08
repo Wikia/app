@@ -11,7 +11,7 @@
  */
 
 class MemcacheMoxiCluster extends MemCachedClientforWiki {
-	const SOCKET = "unix:///var/run/moxi/moxi.sock";
+	const SOCKET = "unix:///var/run/moxi-server/moxi-server.sock";
 	const PROTOCOL = "B"; // B=binary, A=ascii
 
 	function _safe_fwrite($f, $host, $buf, $len=false) {
