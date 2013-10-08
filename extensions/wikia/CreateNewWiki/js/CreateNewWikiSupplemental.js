@@ -10,9 +10,6 @@ ThemeDesigner.set = function(setting, newValue) {
 			'/skins/oasis/css/oasis.scss'
 		],
 		urls = [];
-	if ( wgOasisResponsive ) {
-		paths.push( '/skins/oasis/css/core/responsive.scss' );
-	}
 
 	$.each(paths, function(i, path) {
 		urls.push($.getSassCommonURL(path, $.extend(ThemeDesigner.settings, window.applicationThemeSettings)));
