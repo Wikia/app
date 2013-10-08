@@ -89,7 +89,7 @@ a {
 	//I want page to be at least 405px long to be able to show share and search suggestions
 	min-height: 405px;
 	background-color: white;
-	padding: $page-padding+5px $page-padding;
+	padding: $page-padding+5px 6.25%;
 }
 
 //fixes for fluid content
