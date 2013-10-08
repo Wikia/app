@@ -24,7 +24,7 @@ $specialPageAliases['it'] = array(
  * Polish
  */
 $specialPageAliases['pl'] = array(
-	'LicensedVideoSwap' => array('LicensedVideoSwap', 'Wymiana_filmó', 'Wymiana_Filmó' ),
+	'LicensedVideoSwap' => array('LicensedVideoSwap', 'Wymiana_filmów', 'Wymiana_Filmów'),
 
 /**
  * Spanish
