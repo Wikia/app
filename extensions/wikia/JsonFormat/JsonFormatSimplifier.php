@@ -124,7 +124,7 @@ class JsonFormatSimplifier {
 		$this->findSections( $rootNode, $sections );
 
 		$returnSections = [];
-		for ( $i = 0; $i < sizeof($sections); $i+=1 ) {
+		for ( $i = sizeof($sections)-1; $i >= 0; $i-=1 ) {
 			$section = $sections[$i];
 			/** @var \JsonFormatSectionNode $section  */
 			$content = [];
