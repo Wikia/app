@@ -7,7 +7,7 @@ define('toc', ['track', 'sections', 'wikia.window', 'jquery'], function toc(trac
 	//private
 	var d = w.document,
 		$body = $(d.body),
-		table,
+		table = [],
 		conStyle;
 
 	function open(){

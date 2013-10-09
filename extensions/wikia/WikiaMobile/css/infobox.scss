@@ -4,11 +4,14 @@
 
 table[class*="infobox"] {
 	border: 1px solid $border-color;
-	@include box-shadow($shadow);
-	font-size: 0.8em;
-	padding: 8px;
+	border-top: none;
 	max-width: 100%;
-	margin: 10px auto;
+	margin: 0 auto;
+	border-spacing: 0;
+
+	figure {
+		margin: 0 0 10px 0;
+	}
 
 	img {
 		max-width: 100%;
@@ -17,6 +20,11 @@ table[class*="infobox"] {
 
 	th {
 		text-align: left;
+	}
+
+	th, td {
+		border-top: 1px solid #E3E3E3;
+		padding: 5px;
 	}
 
 	td{
