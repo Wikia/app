@@ -201,7 +201,7 @@ class CrossWikiCore extends AbstractWikiService
 
 		$licensedWikiService = $this->getLicensedWikisService();
 
-		if( $licensedWikiService->isCommercialUseAllowedById( $this->getWikiId() ) ) {
+		if( !$licensedWikiService->isCommercialUseAllowedById( $this->getWikiId() ) ) {
 			return [
 				"commercial_use_allowed_b" =>  false,
 			];
