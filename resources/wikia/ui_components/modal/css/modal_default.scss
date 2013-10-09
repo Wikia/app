@@ -4,8 +4,10 @@
 @import "skins/oasis/css/mixins/transition.scss";
 @import "skins/oasis/css/mixins/blackout.scss";
 
+$close-image: '/resources/wikia/ui_components/modal/images/close-dark.svg';
 $modal-secondary-color: darken( $color-page, 10% );
 @if( $is-dark-wiki ) {
+	$close-image: '/resources/wikia/ui_components/modal/images/close-light.svg';
 	$modal-secondary-color: lighten( $color-page, 3% );
 }
 
@@ -47,7 +49,14 @@ $modal-secondary-color: darken( $color-page, 10% );
 	}
 
 	header .close {
+		background: url( $close-image );
+		background-size: 24px 24px;
+		display: block;
 		float: right;
+		height: 24px;
+		outline: none;
+		text-indent: -9999px;
+		width: 24px;
 	}
 
 	section {
