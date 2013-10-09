@@ -11451,7 +11451,6 @@ exports.UndoManager = UndoManager;
 
 define('ace/virtual_renderer', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/dom', 'ace/lib/event', 'ace/lib/useragent', 'ace/config', 'ace/layer/gutter', 'ace/layer/marker', 'ace/layer/text', 'ace/layer/cursor', 'ace/layer/mobilescroll', 'ace/scrollbar', 'ace/renderloop', 'ace/lib/event_emitter'], function(require, exports, module) {
 
-
 var oop = require("./lib/oop");
 var dom = require("./lib/dom");
 var event = require("./lib/event");
@@ -11461,10 +11460,12 @@ var GutterLayer = require("./layer/gutter").Gutter;
 var MarkerLayer = require("./layer/marker").Marker;
 var TextLayer = require("./layer/text").Text;
 var CursorLayer = require("./layer/cursor").Cursor;
-var MobileScrollLayer = require("./layer/mobilescroll").MobileScroll;
 var ScrollBar = require("./scrollbar").ScrollBar;
 var RenderLoop = require("./renderloop").RenderLoop;
 var EventEmitter = require("./lib/event_emitter").EventEmitter;
+if ( useragent.isIPad ) {
+    var MobileScrollLayer = require("./layer/mobilescroll").MobileScroll;
+}
 var editorCss = ".ace_editor {\
 position: relative;\
 overflow: hidden;\
@@ -11578,20 +11579,6 @@ width: 100%;\
 box-sizing: border-box;\
 /* setting pointer-events: auto; on node under the mouse, which changes\
 during scroll, will break mouse wheel scrolling in Safari */\
-pointer-events: none;\
-}\
-.ace_mobile_scroll-layer {\
--webkit-overflow-scrolling: touch;\
-overflow-y: scroll;\
-}\
-.ace_mobile_scroll-layer div {\
-z-index: 1;\
-position: absolute;\
-white-space: nowrap;\
-width: 100%;\
--moz-box-sizing: border-box;\
--webkit-box-sizing: border-box;\
-box-sizing: border-box;\
 pointer-events: none;\
 }\
 .ace_gutter-layer {\
@@ -11812,6 +11799,24 @@ font-style: italic;\
 }\
 ";
 
+if ( useragent.isIPad ) {
+editorCss += ".ace_mobile_scroll-layer {\
+-webkit-overflow-scrolling: touch;\
+overflow-y: scroll;\
+}\
+.ace_mobile_scroll-layer div {\
+z-index: 1;\
+position: absolute;\
+white-space: nowrap;\
+width: 100%;\
+-moz-box-sizing: border-box;\
+-webkit-box-sizing: border-box;\
+box-sizing: border-box;\
+pointer-events: none;\
+}\
+";
+}
+
 dom.importCssString(editorCss, "ace_editor");
 
 var VirtualRenderer = function(container, theme) {
@@ -11848,7 +11853,9 @@ var VirtualRenderer = function(container, theme) {
 
     this.$cursorLayer = new CursorLayer(this.content);
 
-    this.$mobileScrollLayer = new MobileScrollLayer(this.content);
+    if ( useragent.isIPad ) {
+        this.$mobileScrollLayer = new MobileScrollLayer(this.content);
+    }
 
     this.$horizScroll = false;
 
@@ -11942,7 +11949,9 @@ var VirtualRenderer = function(container, theme) {
         this.scroller.className = "ace_scroller";
 
         this.$cursorLayer.setSession(session);
-        this.$mobileScrollLayer.setSession(session);
+        if ( useragent.isIPad ) {
+            this.$mobileScrollLayer.setSession(session);
+        }
         this.$markerBack.setSession(session);
         this.$markerFront.setSession(session);
         this.$gutterLayer.setSession(session);
@@ -12214,7 +12223,9 @@ var VirtualRenderer = function(container, theme) {
         this.$padding = padding;
         this.$textLayer.setPadding(padding);
         this.$cursorLayer.setPadding(padding);
-        this.$mobileScrollLayer.setPadding(padding);
+        if ( useragent.isIPad ) {
+            this.$mobileScrollLayer.setPadding(padding);
+        }
         this.$markerFront.setPadding(padding);
         this.$markerBack.setPadding(padding);
         this.$loop.schedule(this.CHANGE_FULL);
@@ -12255,7 +12266,9 @@ var VirtualRenderer = function(container, theme) {
         if (changes & this.CHANGE_FULL) {
             this.$textLayer.checkForSizeChanges();
             this.$updateScrollBar();
-            this.$mobileScrollLayer.update(this.layerConfig);
+            if ( useragent.isIPad ) {
+                this.$mobileScrollLayer.update(this.layerConfig);
+            }
             this.$textLayer.update(this.layerConfig);
             if (this.$showGutter)
                 this.$gutterLayer.update(this.layerConfig);
@@ -12287,7 +12300,9 @@ var VirtualRenderer = function(container, theme) {
 
         if (changes & this.CHANGE_TEXT) {
             this.$textLayer.update(this.layerConfig);
-            this.$mobileScrollLayer.update(this.layerConfig);
+            if ( useragent.isIPad ) {
+                this.$mobileScrollLayer.update(this.layerConfig);
+            }
             if (this.$showGutter)
                 this.$gutterLayer.update(this.layerConfig);
         }
