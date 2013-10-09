@@ -280,6 +280,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 */
 	public function keepVideo() {
 		$videoTitle = $this->request->getVal( 'videoTitle', '' );
+		$forever = $this->request->getVal( 'forever', '' );
 
 		// validate action
 		$response = $this->sendRequest( 'LicensedVideoSwapSpecial', 'validateAction', array( 'videoTitle' => $videoTitle ) );
@@ -310,10 +311,18 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// set the LVS status of this file page
 		$articleId = $file->getTitle()->getArticleID();
-		// TODO: get sugestions
-		$value = array(
-			'suggestions' => array(),
-		);
+
+		// get videos that have been suggested (kept videos)
+		$suggestedList = $helper->getSuggestedVideosFromStatus( $articleId );
+
+		// get current suggestions
+		list( $suggestions, $suggestTitles ) = $helper->getCurrentSuggestions( $articleId );
+
+		// combine suggested videos and current suggestions
+		$value['suggested'] = array_unique( array_merge( $suggestedList, $suggestTitles ) );
+
+		$value['status'] = ( $forever == 'true' ) ? LicensedVideoSwapHelper::STATUS_KEEP_FOREVER : LicensedVideoSwapHelper::STATUS_KEEP;
+
 		$helper->setPageStatusKeep( $articleId, $value );
 
 		$currentPage = $this->getVal( 'currentPage', 1 );
@@ -442,25 +451,31 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// check for logged in user
 		if ( !$this->wg->User->isLoggedIn() ) {
-			$this->msg = wfMessage( 'videos-error-not-logged-in' )->text();
+			$this->msg = wfMessage( 'videos-error-not-logged-in' )->plain();
 			return;
 		}
 
 		// check for blocked user
 		if ( $this->wg->User->isBlocked() ) {
-			$this->msg = wfMessage( 'videos-error-blocked-user' )->text();
+			$this->msg = wfMessage( 'videos-error-blocked-user' )->plain();
+			return;
+		}
+
+		// check if user is allowed
+		if ( !$this->wg->User->isAllowed( 'licensedvideoswap' ) ) {
+			$this->msg = wfMessage( 'lvs-error-permission-access' )->plain();
 			return;
 		}
 
 		// check for empty title
 		if ( empty( $videoTitle ) ) {
-			$this->msg = wfMessage( 'videos-error-empty-title' )->text();
+			$this->msg = wfMessage( 'videos-error-empty-title' )->plain();
 			return;
 		}
 
 		// check for read only mode
 		if ( wfReadOnly() ) {
-			$this->msg = wfMessage( 'videos-error-readonly' )->text();
+			$this->msg = wfMessage( 'videos-error-readonly' )->plain();
 			return;
 		}
 
@@ -473,4 +488,5 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->thumbWidth = LicensedVideoSwapHelper::THUMBNAIL_WIDTH;
 		$this->thumbHeight = LicensedVideoSwapHelper::THUMBNAIL_HEIGHT;
 	}
+
 }

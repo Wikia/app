@@ -13,6 +13,8 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	const STATUS_KEEP = 1;
 	const STATUS_SWAP_NORM = 2;
 	const STATUS_SWAP_EXACT = 3;
+	const STATUS_KEEP_FOREVER = 4;
+	const STATUS_SWAPPABLE = 5;
 
 	/**
 	 * Duration variation in seconds
@@ -56,6 +58,9 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 */
 	protected $jaccard;
 
+	// list of status that can be displayed in Special:LicensedVideoSwap page
+	protected static $displayList = array( self::STATUS_KEEP, self::STATUS_SWAPPABLE );
+
 	/**
 	 * Gets a list of videos that have not yet been swapped (e.g., no decision to keep or not keep the
 	 * original video has been made)
@@ -78,8 +83,8 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		// We want to make sure the video hasn't been removed, is not premium and does not exist
 		// in the video_swap table
 		$statusProp = WPP_LVS_STATUS;
-		$emptyProp = WPP_LVS_EMPTY_SUGGEST;
 		$pageNS = NS_FILE;
+		$swappableStatus = implode( ',', self::$displayList );
 		$offset = ( $page - 1 ) * $limit;
 
 		// Get the right sorting
@@ -91,33 +96,28 @@ class LicensedVideoSwapHelper extends WikiaModel {
 			default:        $order = 'added_at DESC';
 		}
 
-		$sql = "SELECT video_title,
-					   added_at,
-					   added_by
-				  FROM video_info
-				  JOIN page
-				    ON video_title = page_title
-				   AND page_namespace = $pageNS
-				   AND NOT EXISTS (SELECT 1
-				   					 FROM page_wikia_props
-				   					WHERE page.page_id = page_wikia_props.page_id
-				   					  AND propname in ( $statusProp, $emptyProp ))
-				 WHERE removed = 0
-				   AND premium = 0
-			  ORDER BY $order
-				 LIMIT $limit
-				OFFSET $offset";
+		$sql = <<<SQL
+			SELECT video_title, added_at, added_by, page.page_id, substring(props, locate('"status";i:', props)+11, 1) status
+			FROM video_info
+			JOIN page ON video_title = page_title AND page_namespace = $pageNS
+			LEFT JOIN page_wikia_props ON page.page_id = page_wikia_props.page_id AND propname = $statusProp
+			WHERE removed = 0 AND premium = 0 AND substring(props, locate('"status";i:', props)+11, 1) in ($swappableStatus)
+			ORDER BY $order
+			LIMIT $limit
+			OFFSET $offset
+SQL;
 
 		// Select video info making sure to skip videos that have entries in the video_swap table
-		$result = $db->query($sql);
+		$result = $db->query( $sql, __METHOD__ );
 
 		// Build the return array
 		$videoList = array();
-		while( $row = $db->fetchObject($result) ) {
+		while ( $row = $db->fetchObject( $result ) ) {
 			$videoList[] = array(
 				'title' => $row->video_title,
 				'addedAt' => $row->added_at,
 				'addedBy' => $row->added_by,
+				'status' => $row->status,
 			);
 		}
 
@@ -138,26 +138,22 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		// We want to make sure the video hasn't been removed, is not premium and does not exist
 		// in the video_swap table
 		$statusProp = WPP_LVS_STATUS;
-		$emptyProp = WPP_LVS_EMPTY_SUGGEST;
 		$pageNS = NS_FILE;
+		$swappableStatus = implode( ',', self::$displayList );
 
-		$sql = "SELECT count(*) as total
-				  FROM video_info
-				  JOIN page
-				    ON video_title = page_title
-				   AND page_namespace = $pageNS
-				   AND NOT EXISTS (SELECT 1
-				   					 FROM page_wikia_props
-				   					WHERE page.page_id = page_wikia_props.page_id
-				   					  AND propname in ( $statusProp, $emptyProp ))
-				 WHERE removed = 0
-				   AND premium = 0";
+		$sql = <<<SQL
+			SELECT count(*) as total
+			FROM video_info
+			JOIN page ON video_title = page_title AND page_namespace = $pageNS
+			LEFT JOIN page_wikia_props ON page.page_id = page_wikia_props.page_id AND propname = $statusProp
+			WHERE removed = 0 AND premium = 0 AND substring(props, locate('"status";i:', props)+11, 1) in ($swappableStatus)
+SQL;
 
 		// Select video info making sure to skip videos that have entries in the video_swap table
-		$result = $db->query($sql);
+		$result = $db->query( $sql, __METHOD__ );
 
 		// Get the total count of relavent videos
-		while( $row = $db->fetchObject($result) ) {
+		while ( $row = $db->fetchObject( $result ) ) {
 			$total = $row->total;
 
 			// Should only be one result
@@ -195,7 +191,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 			$suggestions = $this->getVideoSuggestions( $videoInfo['title'] );
 
 			// Leave out this video if it has no suggestions
-			if ( empty($suggestions) ) {
+			if ( empty( $suggestions ) ) {
 				continue;
 			}
 
@@ -211,6 +207,8 @@ class LicensedVideoSwapHelper extends WikiaModel {
 				$seeMoreLink .= '/' . $this->app->wg->ContLang->getNsText( NS_FILE ). ':' . $videoDetail['title'];
 
 				$videoDetail['seeMoreLink'] = $seeMoreLink;
+
+				$videoDetail['confirmKeep'] = ( $videoInfo['status'] == self::STATUS_KEEP );
 
 				$videos[] = $videoDetail;
 			} else {
@@ -244,7 +242,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		// See if we've already cached suggestions for this video
 		$videos = wfGetWikiaPageProp( WPP_LVS_SUGGEST, $articleId );
 		if ( !empty($videos) ) {
-			$age = wfGetWikiaPageProp( WPP_LVS_SUGGEST_DATE, $articleId);
+			$age = wfGetWikiaPageProp( WPP_LVS_SUGGEST_DATE, $articleId );
 
 			// If we're under the TTL then return these results, otherwise
 			// fall through and generate some new ones
@@ -267,8 +265,6 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 * @return array - A list of suggested videos
 	 */
 	public function suggestionSearch( $title, $test = false ) {
-		$app = F::app();
-
 		// Accept either a title string or title object here
 		$titleObj = is_object( $title ) ? $title : Title::newFromText( $title, NS_FILE );
 		$articleId = $titleObj->getArticleID();
@@ -278,11 +274,11 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		$params = array( 'title' => $readableTitle );
 
 		$file = wfFindFile( $titleObj );
-		if (! empty( $file ) ) {
+		if ( !empty( $file ) ) {
 			$serializedMetadata = $file->getMetadata();
-			if (! empty( $serializedMetadata ) ) {
+			if ( !empty( $serializedMetadata ) ) {
 				$metadata = unserialize( $serializedMetadata );
-				if (! empty( $metadata['duration'] ) ) {
+				if ( !empty( $metadata['duration'] ) ) {
 					$duration = $metadata['duration'];
 					$params['minseconds'] = $duration - min( [ $duration, self::DURATION_DELTA ] );
 					$params['maxseconds'] = $duration + min( [ $duration, self::DURATION_DELTA ] );
@@ -290,10 +286,11 @@ class LicensedVideoSwapHelper extends WikiaModel {
 			}
 		}
 
-		$videoRows = $app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', $params )
-						 ->getData();
+		// get search results
+		$videoRows = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', $params )
+								->getData();
 
-		if ( empty($test) ) {
+		if ( !$test ) {
 			wfSetWikiaPageProp( WPP_LVS_SUGGEST_DATE, $articleId, time() );
 		}
 
@@ -303,28 +300,42 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		// Get the play button image to overlay on the video
 		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
 
+		// get videos that have been suggested (kept videos)
+		$suggestedList = $this->getSuggestedVideosFromStatus( $articleId );
+
+		// get current suggestions
+		list( $suggestions, $suggestTitles ) = $this->getCurrentSuggestions( $articleId );
+
 		$videos = array();
 		$count = 0;
 
 		$titleTokenized = $this->getNormalizedTokens( $readableTitle );
 
-		foreach ($videoRows as $videoInfo) {
-
+		foreach ( $videoRows as $videoInfo ) {
 			$videoRowTitleTokenized = $this->getNormalizedTokens( preg_replace( '/^File:/', '',  $videoInfo['title'] ) );
 			if ( $this->getJaccard()->similarity( $titleTokenized, $videoRowTitleTokenized ) < self::MIN_JACCARD_SIMILARITY ) {
 				continue;
 			}
 
-			$videoDetail = $helper->getVideoDetailFromWiki($app->wg->WikiaVideoRepoDBName,
-														   $videoInfo['title'],
-														   self::THUMBNAIL_WIDTH,
-														   self::THUMBNAIL_HEIGHT,
-														   self::POSTED_IN_ARTICLES );
-			// Go to the next suggestion if we can't get any details for this one
-			if ( empty($videoDetail) ) {
+			// skip if the video has already been suggested
+			$videoTitle = preg_replace( '/.+File:/', '', urldecode( $videoInfo['url'] ) );
+			if ( in_array( $videoTitle, $suggestedList ) || in_array( $videoTitle, $suggestTitles ) ) {
 				continue;
 			}
 
+			// get video detail
+			$videoDetail = $helper->getVideoDetailFromWiki( $this->wg->WikiaVideoRepoDBName,
+															$videoInfo['title'],
+															self::THUMBNAIL_WIDTH,
+															self::THUMBNAIL_HEIGHT,
+															self::POSTED_IN_ARTICLES );
+
+			// Go to the next suggestion if we can't get any details for this one
+			if ( empty( $videoDetail ) ) {
+				continue;
+			}
+
+			// get video overlay
 			$videoOverlay =  WikiaFileHelper::videoInfoOverlay( self::THUMBNAIL_WIDTH, $videoDetail['fileTitle'] );
 			$videoDetail['videoPlayButton'] = $playButton;
 			$videoDetail['videoOverlay'] = $videoOverlay;
@@ -337,20 +348,19 @@ class LicensedVideoSwapHelper extends WikiaModel {
 			}
 		}
 
-		// If we're just testing don't set any page props
-		if ( $test ) {
-			wfProfileOut( __METHOD__ );
-			return empty($videos) ? null : $videos;
-		}
+		// combine current suggestions and new suggestions
+		$videos = array_slice( array_merge( $videos, $suggestions ), 0 , self::NUM_SUGGESTIONS );
 
-		// Cache these suggestions
-		if ( empty($videos) ) {
-			wfSetWikiaPageProp( WPP_LVS_EMPTY_SUGGEST, $articleId, 1 );
-			wfProfileOut( __METHOD__ );
-			return null;
-		} else {
-			wfDeleteWikiaPageProp( WPP_LVS_EMPTY_SUGGEST, $articleId );
-			wfSetWikiaPageProp( WPP_LVS_SUGGEST, $articleId, $videos );
+		// If we're just testing don't set any page props
+		if ( !$test ) {
+			// Cache these suggestions
+			if ( empty( $videos ) ) {
+				wfSetWikiaPageProp( WPP_LVS_EMPTY_SUGGEST, $articleId, 1 );
+			} else {
+				wfDeleteWikiaPageProp( WPP_LVS_EMPTY_SUGGEST, $articleId );
+				wfSetWikiaPageProp( WPP_LVS_SUGGEST, $articleId, $videos );
+				$this->setPageStatusSwappable( $articleId );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -421,6 +431,16 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	}
 
 	/**
+	 * Set the LVS status of this file page to swappable
+	 * @param integer $articleId
+	 * @param array $value
+	 */
+	public function setPageStatusSwappable( $articleId, $value = array() ) {
+		$value['status'] =  self::STATUS_SWAPPABLE;
+		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, $value );
+	}
+
+	/**
 	 * delete the LVS status of this file page
 	 * @param type $articleId
 	 */
@@ -448,6 +468,11 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		RecentChange::notifyLog( wfTimestampNow(), $title, $user, '', '', RC_EDIT, $action, $title, $reason, '' );
 	}
 
+	/**
+	 * check if the video is swapped
+	 * @param integer $articleId
+	 * @return boolean $status
+	 */
 	public function isSwapped( $articleId ) {
 		$status = false;
 
@@ -455,6 +480,30 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		if ( !empty( $pageStatus['status'] ) ) {
 			$status = ( $pageStatus['status'] == self::STATUS_SWAP_EXACT || $pageStatus['status'] == self::STATUS_SWAP_NORM );
 		}
+
+		return $status;
+	}
+
+	/**
+	 * check if the video is kept
+	 * @param integer $articleId
+	 * @return boolean $status
+	 */
+	public function isKept( $articleId ) {
+		$pageStatus = $this->getPageStatus( $articleId );
+		$status = ( !empty( $pageStatus['status'] ) && ( $pageStatus['status'] == self::STATUS_KEEP ) );
+
+		return $status;
+	}
+
+	/**
+	 * check if the video is kept forever
+	 * @param integer $articleId
+	 * @return boolean $status
+	 */
+	public function isKeptForever( $articleId ) {
+		$pageStatus = $this->getPageStatus( $articleId );
+		$status = ( !empty( $pageStatus['status'] ) && ( $pageStatus['status'] == self::STATUS_KEEP_FOREVER ) );
 
 		return $status;
 	}
@@ -684,21 +733,23 @@ class LicensedVideoSwapHelper extends WikiaModel {
 					break;
 
 				case self::STATUS_KEEP:
+				case self::STATUS_KEEP_FOREVER:
 				default:
 					$logMessage = wfMessage( 'lvs-history-kept', $titleLink )->plain();
 					$undoText   = wfMessage( 'lvs-undo-keep' )->plain();
 					break;
 			}
 
-			$video = array('pageId'      => $row->page_id,
-						   'logMessage'  => $logMessage,
-						   'undoLink'    => $undoLink,
-						   'undoText'    => $undoText,
-						   'userName'    => $userName,
-						   'userLink'    => $userLink,
-						   'created'     => $props['created'], // Used for sorting below
-						   'createDate'  => $createDate,
-						   'undo'        => $this->wg->Server."/wikia.php?controller=LicensedVideoSwapSpecial&method=restoreVideo&format=json&videoTitle={$dbKey}",
+			$video = array(
+				'pageId'      => $row->page_id,
+				'logMessage'  => $logMessage,
+				'undoLink'    => $undoLink,
+				'undoText'    => $undoText,
+				'userName'    => $userName,
+				'userLink'    => $userLink,
+				'created'     => $props['created'], // Used for sorting below
+				'createDate'  => $createDate,
+				'undo'        => $this->wg->Server."/wikia.php?controller=LicensedVideoSwapSpecial&method=restoreVideo&format=json&videoTitle={$dbKey}",
 			);
 
 			$videoList[] = $video;
@@ -707,4 +758,36 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		usort($videoList, function ($a, $b) { return strcmp($b['created'], $a['created']); });
 		return $videoList;
 	}
+
+	/**
+	 * get suggested videos from page status (WPP_LVS_STATUS)
+	 * @param integer $articleId
+	 * @return array $suggestedVideos
+	 */
+	public function getSuggestedVideosFromStatus( $articleId ) {
+		$pageStatus = $this->getPageStatus( $articleId );
+		$suggestedVideos = empty( $pageStatus['suggested'] ) ? array() : $pageStatus['suggested'];
+
+		return $suggestedVideos;
+	}
+
+	/**
+	 * get current suggestions
+	 * @param integer $articleId
+	 * @return array
+	 */
+	public function getCurrentSuggestions( $articleId ) {
+		$suggestions = wfGetWikiaPageProp( WPP_LVS_SUGGEST, $articleId );
+		$suggestTitles = array();
+		if ( empty( $suggestions ) ) {
+			$suggestions = array();
+		} else {
+			foreach ( $suggestions as $video ) {
+				$suggestTitles[] = $video['title'];
+			}
+		}
+
+		return array( $suggestions, $suggestTitles );
+	}
+
 }
