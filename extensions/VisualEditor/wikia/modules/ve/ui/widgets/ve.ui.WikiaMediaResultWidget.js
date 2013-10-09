@@ -11,7 +11,7 @@
  * Creates an ve.ui.WikiaMediaResultWidget object.
  *
  * @class
- * @extends ve.ui.MWMediaResultWidget
+ * @extends ve.ui.OptionWidget
  *
  * @constructor
  * @param {Mixed} data Item data
@@ -23,52 +23,53 @@ ve.ui.WikiaMediaResultWidget = function VeUiWikiaMediaResultWidget( data, config
 	config = config || {};
 
 	// Parent constructor
-	ve.ui.MWMediaResultWidget.call( this, data, config );
+	ve.ui.OptionWidget.call( this, data, config );
 
+	// Properties
+	this.size = config.size || 160;
+	this.mwTitle = new mw.Title( this.data.title ).getNameText();
 	this.image = new Image();
 	this.$image = this.$$( this.image );
+	this.$back = this.$$( '<div>' );
+	this.$front = this.$$( '<div>' );
+	this.$thumb = this.$back.add( this.$front );
+	this.$overlay = this.$$( '<div>' );
+
+	// Events
 	this.$image
 		.load( ve.bind( this.onThumbnailLoad, this ) )
 		.error( ve.bind( this.onThumbnailError, this ) );
+
+	// Initialization
+	this.loadThumbnail();
+	this.setLabel( this.mwTitle );
+	this.$overlay.addClass( 've-ui-mwMediaResultWidget-overlay' );
+	this.$
+		.addClass( 've-ui-mwMediaResultWidget ve-ui-texture-pending' )
+		.css( { 'width': this.size, 'height': this.size } )
+		.prepend( this.$thumb, this.$overlay );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.WikiaMediaResultWidget, ve.ui.MWMediaResultWidget );
+ve.inheritClass( ve.ui.WikiaMediaResultWidget, ve.ui.OptionWidget );
 
 /* Methods */
 
-/**
- * Build a thumbnail.
- *
- * @method
- * @returns {jQuery} Thumbnail element
- */
-ve.ui.WikiaMediaResultWidget.prototype.buildThumbnail = function () {
-	var	$back = this.$$( '<div>' );
-	this.$front = this.$$( '<div>' );
-	var	$thumb = $back.add( this.$front );
-
+ve.ui.WikiaMediaResultWidget.prototype.loadThumbnail = function () {
 	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
-		this.image.src = thumbnailer.getThumbURL(
-			this.data.url,
-			'image',
-			this.size,
-			this.size
-		);
-
-		$thumb.addClass( 've-ui-mwMediaResultWidget-thumbnail' );
-		$thumb.addClass( 've-ui-WikiaMediaResultWidget-thumbnail' );
-		$thumb.last().css( 'background-image', 'url(' + this.image.src + ')' );
-
+		this.image.src = thumbnailer.getThumbURL( this.data.url, 'image', this.size, this.size );
+		this.$thumb.addClass( 've-ui-mwMediaResultWidget-thumbnail' );
+		this.$thumb.addClass( 've-ui-WikiaMediaResultWidget-thumbnail' );
+		this.$thumb.last().css( 'background-image', 'url(' + this.image.src + ')' );
 	}, this ) );
-
-	return $thumb;
 };
 
 ve.ui.WikiaMediaResultWidget.prototype.onThumbnailLoad = function () {
-	// Parent method
-	ve.ui.MWMediaResultWidget.prototype.onThumbnailLoad.call( this );
+	this.$thumb.first().addClass( 've-ui-texture-transparency' );
+	this.$
+		.addClass( 've-ui-mwMediaResultWidget-done' )
+		.removeClass( 've-ui-texture-pending' );
 
 	if ( this.image.width >= this.size && this.image.height >= this.size ) {
 		this.$front.addClass( 've-ui-mwMediaResultWidget-crop' );
@@ -84,3 +85,5 @@ ve.ui.WikiaMediaResultWidget.prototype.onThumbnailLoad = function () {
 		} );
 	}
 };
+ve.ui.WikiaMediaResultWidget.prototype.onThumbnailError =
+	ve.ui.MWMediaResultWidget.prototype.onThumbnailError;
