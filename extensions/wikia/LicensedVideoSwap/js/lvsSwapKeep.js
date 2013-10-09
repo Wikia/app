@@ -75,7 +75,18 @@ define( 'lvs.swapkeep', [
 						// pass this value to the backend to permanently hide keeps for specific video
 						forever: true
 				});
-				// Track click on okay button
+				// Track click on 'no' button
+				tracker.track({
+					action: tracker.actions.CONFIRM,
+					label: tracker.labels.KEEP
+				});
+			},
+			onCancel: function() {
+				doRequest({
+						forever: false
+				});
+
+				// track click on 'yes'
 				tracker.track({
 					action: tracker.actions.CONFIRM,
 					label: tracker.labels.KEEP
