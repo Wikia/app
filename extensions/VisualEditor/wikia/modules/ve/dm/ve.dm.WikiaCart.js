@@ -39,3 +39,7 @@ ve.dm.WikiaCart.prototype.clearItems = function () {
 	this.items = [];
 	this.emit( 'remove', items );
 };
+
+ve.dm.WikiaCart.prototype.getItems = function () {
+	return this.items;
+}
