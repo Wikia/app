@@ -262,10 +262,6 @@ $color-highlight-column: rgba($color-page, 0);
 							position: absolute;
 							right: -.75em;
 							top: -.75em;
-							// hack to vertically center the number in chrome
-							@media screen and (-webkit-min-device-pixel-ratio:0) {
-								line-height: 1.6em;
-							}
 						}
 					}
 					&:hover {

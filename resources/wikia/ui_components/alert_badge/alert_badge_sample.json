@@ -4,8 +4,17 @@
 		"params": {
 			"type": "default",
 			"vars": {
-				"number": "2",
+				"number": "3",
 				"id": "my-id"
+			}
+		}
+	},
+	{
+		"description": "styleguide-example-description-alert-badge-wider",
+		"params": {
+			"type": "default",
+			"vars": {
+				"number": "200"
 			}
 		}
 	}
