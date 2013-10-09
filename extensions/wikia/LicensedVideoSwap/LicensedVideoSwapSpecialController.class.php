@@ -174,7 +174,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		}
 
 		// set swap status
-		$helper->setPageStatusSwap( $articleId );
+		$helper->setPageStatusInfoSwap( $articleId );
 
 		// check if the new file exists
 		$params = array(
@@ -185,7 +185,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		$response = ApiService::foreignCall( $this->wg->WikiaVideoRepoDBName, $params, ApiService::WIKIA );
 		if ( empty( $response['fileExists'] ) ) {
-			$helper->deletePageStatus( $articleId );
+			$helper->deletePageStatusInfo( $articleId );
 			$this->html = '';
 			$this->result = 'error';
 			$this->msg = wfMessage( 'videohandler-error-video-no-exist' )->text();
@@ -196,7 +196,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$removeVideo = $this->sendRequest( 'VideoHandlerController', 'removeVideo', array( 'title' => $file->getName() ) );
 		$result = $removeVideo->getVal( 'result', '' );
 		if ( $result != 'ok' ) {
-			$helper->deletePageStatus( $articleId );
+			$helper->deletePageStatusInfo( $articleId );
 			$this->html = '';
 			$this->result = 'error';
 			$this->msg = $removeVideo->getVal( 'msg', '' );
@@ -211,7 +211,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// check if new file exists
 		if ( empty( $newFile ) ) {
-			$helper->deletePageStatus( $articleId );
+			$helper->deletePageStatusInfo( $articleId );
 			$this->html = '';
 			$this->result = 'error';
 			$this->msg = wfMessage( 'videohandler-error-video-no-exist' )->text();
@@ -226,7 +226,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			// add redirect url
 			$status = $helper->addRedirectLink( $title, $newFile->getTitle() );
 			if ( !$status->isGood() ) {
-				$helper->deletePageStatus( $articleId );
+				$helper->deletePageStatusInfo( $articleId );
 				$this->html = '';
 				$this->result = 'error';
 				$this->msg = $status->getMessage();
@@ -283,7 +283,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	public function keepVideo() {
 		$videoTitle = $this->request->getVal( 'videoTitle', '' );
 		$forever = $this->request->getVal( 'forever', '' );
-		$suggestTitles = $this->request->getVal( 'suggestions', array() );
+		$suggestions = $this->request->getVal( 'suggestions', array() );
 
 		// validate action
 		$response = $this->sendRequest( 'LicensedVideoSwapSpecial', 'validateAction', array( 'videoTitle' => $videoTitle ) );
@@ -314,6 +314,9 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// set the LVS status of this file page
 		$articleId = $file->getTitle()->getArticleID();
+
+		// get valid suggestions
+		$suggestTitles = $helper->getValidVideos( $suggestions );
 
 		// get videos that have been suggested (kept videos)
 		$suggestedList = $helper->getSuggestedVideosFromStatus( $articleId );
@@ -386,7 +389,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// get the LVS status of this file page
 		$articleId = $title->getArticleID();
-		$pageStatus = $helper->getPageStatus( $articleId );
+		$pageStatus = $helper->getPageStatusInfo( $articleId );
 		if ( empty( $pageStatus ) ) {
 			$this->html = '';
 			$this->result = 'error';
@@ -422,6 +425,9 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// delete the LVS status of this file page
 		$helper->deletePageStatus( $articleId );
+
+		// set the LVS status to swappable
+		$helper->setPageStatusSwappable( $articleId );
 
 		// add log for undo swapping video only
 		if ( $pageStatus['status'] != LicensedVideoSwapHelper::STATUS_KEEP ) {

@@ -62,11 +62,12 @@ define("WPP_WALL_QUOTE_OF", 16);
 define("WPP_WALL_ORDER_INDEX", 17);
 
 // License video swap status
-define( "WPP_LVS_STATUS", 18 );
+define( "WPP_LVS_STATUS_INFO", 18 );
 define( "WPP_LVS_SUGGEST", 19 );
 define( "WPP_LVS_SUGGEST_DATE", 20 );
 define( "WPP_LVS_EMPTY_SUGGEST", 21 );
+define( "WPP_LVS_STATUS", 22 );
 
 // Any types listed in this array will not have their values serialized
 // This should only be used for properties that are simple strings or integers
-$wgWPPNotSerialized = array( WPP_LVS_SUGGEST_DATE, WPP_LVS_EMPTY_SUGGEST );
+$wgWPPNotSerialized = array( WPP_LVS_SUGGEST_DATE, WPP_LVS_EMPTY_SUGGEST, WPP_LVS_STATUS );
