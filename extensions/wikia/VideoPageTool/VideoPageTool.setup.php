@@ -12,24 +12,28 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname(__FILE__) . '/';
 
-//classes
-$wgAutoloadClasses['VideoPageToolSpecialController'] = $dir.'VideoPageToolSpecialController.class.php';
-$wgAutoloadClasses['VideoPageController'] =  $dir . 'VideoPageController.class.php';
-$wgAutoloadClasses['VideoPageToolHelper'] =  $dir . 'VideoPageToolHelper.class.php';
-$wgAutoloadClasses['VideoPageToolHooks'] =  $dir . 'VideoPageToolHooks.class.php';
-$wgAutoloadClasses['VideoPageArticle'] =  $dir . 'VideoPageArticle.class.php';
-$wgAutoloadClasses['VideoPagePage'] =  $dir . 'VideoPagePage.class.php';
-$wgAutoloadClasses['VideoPageToolProgram'] =  $dir . 'model/VideoPageToolProgram.class.php';
-$wgAutoloadClasses['VideoPageToolAsset'] =  $dir . 'model/VideoPageToolAsset.class.php';
+// VideoPageTool shared classes
+$wgAutoloadClasses['VideoPageToolProgram']       =  $dir . 'model/VideoPageToolProgram.class.php';
+$wgAutoloadClasses['VideoPageToolAsset']         =  $dir . 'model/VideoPageToolAsset.class.php';
 $wgAutoloadClasses['VideoPageToolAssetFeatured'] =  $dir . 'model/VideoPageToolAssetFeatured.class.php';
 $wgAutoloadClasses['VideoPageToolAssetCategory'] =  $dir . 'model/VideoPageToolAssetCategory.class.php';
-$wgAutoloadClasses['VideoPageToolAssetFan'] =  $dir . 'model/VideoPageToolAssetFan.class.php';
+$wgAutoloadClasses['VideoPageToolAssetFan']      =  $dir . 'model/VideoPageToolAssetFan.class.php';
+$wgAutoloadClasses['VideoPageToolHelper']        =  $dir . 'VideoPageToolHelper.class.php';
+$wgAutoloadClasses['VideoPageToolHooks']         =  $dir . 'VideoPageToolHooks.class.php';
+
+// VideoPageAdmin classes
+$wgAutoloadClasses['VideoPageAdminSpecialController'] = $dir.'VideoPageAdminSpecialController.class.php';
+
+// VideoHomePage classes
+$wgAutoloadClasses['VideoHomePageController'] =  $dir . 'VideoHomePageController.class.php';
+$wgAutoloadClasses['VideoHomePageArticle']    =  $dir . 'model/VideoHomePageArticle.class.php';
+$wgAutoloadClasses['VideoHomePagePage']       =  $dir . 'model/VideoHomePagePage.class.php';
 
 // i18n mapping
 $wgExtensionMessagesFiles['VideoPageTool'] = $dir.'VideoPageTool.i18n.php';
 
 // special pages
-$wgSpecialPages['VideoPageTool'] = 'VideoPageToolSpecialController';
+$wgSpecialPages['VideoPageAdmin'] = 'VideoPageAdminSpecialController';
 
 // hooks
 $wgHooks['ArticleFromTitle'][] = 'VideoPageToolHooks::onArticleFromTitle';
@@ -48,5 +52,6 @@ JSMessages::registerPackage('VideoPageTool', array(
 	'videopagetool-confirm-clear-message',
 	'videopagetool-description-maxlength-error',
 	'videopagetool-video-title-default-text',
+	'videopagetool-image-title-default-text',
+	'videopagetool-formerror-altthumb'
 ));
-

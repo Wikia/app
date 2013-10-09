@@ -93,6 +93,17 @@ $messages['br'] = array(
 	'unsubscribe-working-done' => 'Graet.',
 );
 
+/** Catalan (català)
+ * @author Light of Cosmos
+ */
+$messages['ca'] = array(
+	'unsubscribe-nousers' => "No s'han trobat usuaris amb aquesta adreça electrònica.",
+	'unsubscribe-noconfusers' => "No s'han trobat usuaris confirmats amb aquesta adreça electrònica.",
+	'unsubscribe-confirm-legend' => 'Confirmar',
+	'unsubscribe-confirm-button' => "Sí, n'estic segur.",
+	'unsubscribe-working-done' => 'Complet.',
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  */

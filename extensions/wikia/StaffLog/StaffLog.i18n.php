@@ -471,7 +471,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'stafflog-filter-label' => 'چاڼګر',
+	'stafflog-filter-label' => 'چاڼگر',
 	'stafflog-filter-user' => 'کارن:',
 	'stafflog-filter-type-block' => 'بنديزونه',
 	'stafflog-filter-type-wikifactory' => 'ويکي دريځ',
