@@ -289,7 +289,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'sharedhelp-autotalkcreate-summary' => 'د خبرو اترو مخ په خپلکاره توګه جوړ شو',
+	'sharedhelp-autotalkcreate-summary' => 'د خبرو اترو مخ په خپلکاره توگه جوړ شو',
 );
 
 /** Portuguese (português)

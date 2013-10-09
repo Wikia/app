@@ -1547,9 +1547,9 @@ $messages['ps'] = array(
 	'founderprogressbar-photo-add10-label' => '$1 {{PLURAL:$1|انځور|انځورونو}} ته يې ورسوۍ',
 	'founderprogressbar-photo-add20-label' => '$1 {{PLURAL:$1|انځور|انځورونو}} ته يې ورسوۍ',
 	'founderprogressbar-fb-connect-label' => 'فېسبوک سره يوځای کول',
-	'founderprogressbar-gallery-add-label' => 'يو انځورتون ورګډول',
-	'founderprogressbar-video-add-label' => 'يوه ويډيو ورګډول',
-	'founderprogressbar-bonus-photo-add10-label' => '$1 نور انځورونه ورګډول',
+	'founderprogressbar-gallery-add-label' => 'يو انځورتون ورگډول',
+	'founderprogressbar-video-add-label' => 'يوه ويډيو ورگډول',
+	'founderprogressbar-bonus-photo-add10-label' => '$1 نور انځورونه ورگډول',
 	'founderprogressbar-browse-page-name' => 'سپړل',
 );
 
@@ -2049,6 +2049,7 @@ $messages['zh-hans'] = array(
 	'founderprogressbar-photo-add10-label' => '达到$1{{PLURAL:$1|照片|照片}}',
 	'founderprogressbar-category-add3-label' => '达到$1{{PLURAL:$1|类别|类别}}',
 	'founderprogressbar-commcentral-visit-label' => '访问创立者与管理人员在红心',
+	'founderprogressbar-commcentral-visit-description' => '你不是一个人！创始人和管理员中心是Wikia分享建议和技巧的社区，您在那里可以找到帮助页面，指导和Wikia员工的联系方式。',
 	'founderprogressbar-wikiactivity-visit-label' => '访问维基动态',
 	'founderprogressbar-profile-edit-label' => '填写您的档案页',
 	'founderprogressbar-photo-add20-label' => '达到$1{{PLURAL:$1|照片|照片}}',

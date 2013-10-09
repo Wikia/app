@@ -831,14 +831,10 @@ ve.init.mw.ViewPageTarget.prototype.onSurfaceModelChange = function ( tx, range 
 	text = ve.ce.getDomText( node.$[0] );
 
 	if ( text.match( /\[\[|\{\{|''|<nowiki|~~~|^==|^\*|^\#/ ) ) {
-		mw.notify(
+		$.showModal(
+			ve.msg( 'visualeditor-wikitext-warning-title' ),
 			$( $.parseHTML( ve.init.platform.getParsedMessage( 'visualeditor-wikitext-warning' ) ) )
-				.filter( 'a' ).attr( 'target', '_blank ' ).end(),
-			{
-				'title': ve.msg( 'visualeditor-wikitext-warning-title' ),
-				'tag': 'visualeditor-wikitext-warning',
-				'autoHide': false
-			}
+				.filter( 'a' ).attr( 'target', '_blank ' ).end()
 		);
 		this.surface.getModel().disconnect( this, { 'change': 'onSurfaceModelChange' } );
 	}

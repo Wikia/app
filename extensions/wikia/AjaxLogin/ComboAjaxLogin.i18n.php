@@ -1212,7 +1212,7 @@ Për piasì, ch'a preuva torna o [[Special:Contact|ch'a lo signala]].",
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'comboajaxlogin-createlog' => 'ننوتل او يا يو ګڼون جوړول',
+	'comboajaxlogin-createlog' => 'ننوتل او يا يو گڼون جوړول',
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>د فېسبوک له لارې ننوتل</h1>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; پر شا کېدل',
 	'comboajaxlogin-connectmarketing-forward' => 'پيلول &raquo;',

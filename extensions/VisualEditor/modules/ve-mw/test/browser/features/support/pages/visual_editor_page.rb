@@ -12,7 +12,7 @@ class VisualEditorPage
   div(:diff_view, class: 've-init-mw-viewPageTarget-saveDialog-viewer')
   span(:downarrow, class: 've-ui-iconedElement-icon ve-ui-icon-down')
   span(:heading, text: 'Heading')
-  a(:edit_ve, title: 'Edit this page with VisualEditor [alt-shift-v]')
+  a(:edit_ve, title: /Edit this page with VisualEditor/)
   div(:heading_diff_view, class: 've-init-mw-viewPageTarget-saveDialog-viewer')
   a(:increase_indentation, class: 've-ui-widget ve-ui-tool ve-ui-tool-indent ve-ui-widget-disabled')
   a(:increase_indentation_on, title: 'Increase indentation [TAB]')

@@ -243,7 +243,7 @@
 }
 
 .ve-ui-menuToolGroup .ve-ui-popupToolGroup-handle {
-	width: 8em;
+	min-width: 8em;
 }
 
 .ve-ui-menuToolGroup .ve-ui-tool {

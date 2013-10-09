@@ -69,38 +69,38 @@ QUnit.test( 'getFullData', 1, function ( assert ) {
 	assert.deepEqualWithDomElements( doc.getFullData(), ve.dm.example.withMeta );
 } );
 
-QUnit.test( 'getDocumentSlice', function ( assert ) {
+QUnit.test( 'cloneFromRange', function ( assert ) {
 	var i, doc2, doc = ve.dm.example.createExampleDocument( 'internalData' ),
 		cases = [
 			{
-				'msg': 'with range',
+				'msg': 'first internal item',
 				'doc': 'internalData',
-				'arg': new ve.Range( 7, 12 ),
+				'range': new ve.Range( 7, 12 ),
 				'expectedData': doc.data.slice( 7, 12 ).concat( doc.data.slice( 5, 21 ) )
 			},
 			{
-				'msg': 'with node',
+				'msg': 'second internal item',
 				'doc': 'internalData',
-				'arg': doc.getInternalList().getItemNode( 1 ),
+				'range': doc.getInternalList().getItemNode( 1 ).getRange(),
 				'expectedData': doc.data.slice( 14, 19 ).concat( doc.data.slice( 5, 21 ) )
 			},
 			{
 				'msg': 'paragraph at the start',
 				'doc': 'internalData',
-				'arg': new ve.Range( 0, 5 ),
+				'range': new ve.Range( 0, 5 ),
 				'expectedData': doc.data.slice( 0, 21 )
 			},
 			{
 				'msg': 'paragraph at the end',
 				'doc': 'internalData',
-				'arg': new ve.Range( 21, 27 ),
+				'range': new ve.Range( 21, 27 ),
 				'expectedData': doc.data.slice( 21, 27 ).concat( doc.data.slice( 5, 21 ) )
 			}
 		];
 	QUnit.expect( 4*cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
 		doc = ve.dm.example.createExampleDocument( cases[i].doc );
-		doc2 = doc.getDocumentSlice( cases[i].arg );
+		doc2 = doc.cloneFromRange( cases[i].range );
 		assert.deepEqual( doc2.data.data, cases[i].expectedData,
 			cases[i].msg + ': sliced data' );
 		assert.notStrictEqual( doc2.data[0], cases[i].expectedData[0],
@@ -271,19 +271,21 @@ QUnit.test( 'selectNodes', function ( assert ) {
 } );
 
 QUnit.test( 'getSlice', function ( assert ) {
-	var i, data, doc = ve.dm.example.createExampleDocument(),
+	var i, expectedData, doc = ve.dm.example.createExampleDocument(),
 		cases = [
 		{
 			'msg': 'empty range',
 			'range': new ve.Range( 2, 2 ),
-			'expected': []
+			'expected': [],
+			'expectedRange': new ve.Range( 0 )
 		},
 		{
 			'msg': 'range with one character',
 			'range': new ve.Range( 2, 3 ),
 			'expected': [
 				['b', [ ve.dm.example.bold ]]
-			]
+			],
+			'expectedRange': new ve.Range( 0, 1 )
 		},
 		{
 			'msg': 'range with two characters',
@@ -291,7 +293,8 @@ QUnit.test( 'getSlice', function ( assert ) {
 			'expected': [
 				['b', [ ve.dm.example.bold ]],
 				['c', [ ve.dm.example.italic ]]
-			]
+			],
+			'expectedRange': new ve.Range( 0, 2 )
 		},
 		{
 			'msg': 'range with two characters and a header closing',
@@ -301,7 +304,8 @@ QUnit.test( 'getSlice', function ( assert ) {
 				['b', [ ve.dm.example.bold ]],
 				['c', [ ve.dm.example.italic ]],
 				{ 'type': '/heading' }
-			]
+			],
+			'expectedRange': new ve.Range( 1, 4 )
 		},
 		{
 			'msg': 'range with one character, a header closing and a table opening',
@@ -312,7 +316,8 @@ QUnit.test( 'getSlice', function ( assert ) {
 				{ 'type': '/heading' },
 				{ 'type': 'table' },
 				{ 'type': '/table' }
-			]
+			],
+			'expectedRange': new ve.Range( 1, 4 )
 		},
 		{
 			'msg': 'range from a paragraph into a list',
@@ -328,7 +333,8 @@ QUnit.test( 'getSlice', function ( assert ) {
 				{ 'type': '/paragraph' },
 				{ 'type': '/listItem' },
 				{ 'type': '/list' }
-			]
+			],
+			'expectedRange': new ve.Range( 1, 7 )
 		},
 		{
 			'msg': 'range from a paragraph inside a nested list into the next list',
@@ -347,7 +353,8 @@ QUnit.test( 'getSlice', function ( assert ) {
 				{ 'type': '/list' },
 				{ 'type': 'list', 'attributes': { 'style': 'number' } },
 				{ 'type': '/list' }
-			]
+			],
+			'expectedRange': new ve.Range( 5, 12 )
 		},
 		{
 			'msg': 'range from a paragraph inside a nested list out of both lists',
@@ -364,7 +371,8 @@ QUnit.test( 'getSlice', function ( assert ) {
 				{ 'type': '/list' },
 				{ 'type': '/listItem' },
 				{ 'type': '/list' }
-			]
+			],
+			'expectedRange': new ve.Range( 5, 11 )
 		},
 		{
 			'msg': 'range from a paragraph inside a nested list out of the outer listItem',
@@ -379,32 +387,30 @@ QUnit.test( 'getSlice', function ( assert ) {
 				{ 'type': '/listItem' },
 				{ 'type': '/list' },
 				{ 'type': '/listItem' }
-			]
+			],
+			'expectedRange': new ve.Range( 4, 9 )
 		}
 	];
-	QUnit.expect( cases.length );
+	QUnit.expect( 2 * cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
-		data = ve.dm.example.preprocessAnnotations( cases[i].expected.slice(), doc.getStore() );
+		expectedData = ve.dm.example.preprocessAnnotations( cases[i].expected.slice(), doc.getStore() ).getData();
 		assert.deepEqual(
-			doc.getSlice( cases[i].range ).getBalancedData(),
-			data.getData(),
-			cases[i].msg
+			doc.getSlicedLinearData( cases[i].range ).getData(),
+			expectedData,
+			cases[i].msg + ': balanced data'
+		);
+		assert.deepEqual(
+			doc.getSlicedLinearData( cases[i].range ).getRange(),
+			cases[i].expectedRange,
+			cases[i].msg + ': range'
 		);
 	}
 } );
 
-QUnit.test( 'protection against double application of transactions', 3, function ( assert ) {
-	var tx = new ve.dm.Transaction(),
-		testDocument = new ve.dm.Document( ve.dm.example.data );
+QUnit.test( 'protection against double application of transactions', 1, function ( assert ) {
+	var tx = new ve.dm.Transaction(), testDocument = ve.dm.example.createExampleDocument();
 	tx.pushRetain( 1 );
 	tx.pushReplace( testDocument, 1, 0, ['H', 'e', 'l', 'l', 'o' ] );
-	assert.throws(
-		function () {
-			testDocument.rollback( tx );
-		},
-		Error,
-		'exception thrown when trying to rollback an uncommitted transaction'
-	);
 	testDocument.commit( tx );
 	assert.throws(
 		function () {
@@ -412,13 +418,5 @@ QUnit.test( 'protection against double application of transactions', 3, function
 		},
 		Error,
 		'exception thrown when trying to commit an already-committed transaction'
-	);
-	testDocument.rollback( tx );
-	assert.throws(
-		function () {
-			testDocument.rollback( tx );
-		},
-		Error,
-		'exception thrown when trying to roll back a transaction that has already been rolled back'
 	);
 } );

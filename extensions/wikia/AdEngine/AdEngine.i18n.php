@@ -161,9 +161,12 @@ $messages['id'] = array(
 );
 
 /** Korean (한국어)
+ * @author 아라
  * @author 한글화담당
  */
 $messages['ko'] = array(
+	'adengine-exitstitial-title-template' => '$1(으)로 떠나는 중…',
+	'adengine-exitstitial-redirecting' => '브라우저가 몇 초 뒤에 요청한 페이지로 넘어갑니다.',
 	'adengine-exitstitial-go-back' => '돌아가시겠습니까?',
 	'adengine-exitstitial-button' => '광고 건너뛰기',
 );

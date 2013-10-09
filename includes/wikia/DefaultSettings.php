@@ -118,6 +118,9 @@ $wgAutoloadClasses['ForbiddenException'] = "{$IP}/includes/wikia/nirvana/WikiaEx
 $wgAutoloadClasses['NotFoundException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
 $wgAutoloadClasses['MethodNotAllowedException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
 $wgAutoloadClasses['NotImplementedException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
+$wgAutoloadClasses['ControllerNotFoundException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
+$wgAutoloadClasses['MethodNotFoundException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
+
 
 $wgAutoloadClasses['AssetsManager'] = $IP . '/extensions/wikia/AssetsManager/AssetsManager.class.php';
 $wgAutoloadClasses['AssetsConfig'] = $IP . '/extensions/wikia/AssetsManager/AssetsConfig.class.php';
@@ -359,6 +362,10 @@ $wgAutoloadClasses['Wikia\UI\Component'] = $IP . '/includes/wikia/ui/Component.c
 $wgAutoloadClasses['Wikia\UI\TemplateException'] = $IP . '/includes/wikia/ui/exceptions/TemplateException.class.php';
 $wgAutoloadClasses['Wikia\UI\DataException'] = $IP . '/includes/wikia/ui/exceptions/DataException.class.php';
 $wgAutoloadClasses['Wikia\UI\UIFactoryApiController'] = $IP . '/includes/wikia/ui/UIFactoryApiController.class.php';
+
+// Traits
+$wgAutoloadClasses[ 'PreventBlockedUsers' ] = $IP . '/includes/wikia/traits/PreventBlockedUsers.trait.php';
+$wgAutoloadClasses[ 'PreventBlockedUsersThrowsError' ] = $IP . '/includes/wikia/traits//PreventBlockedUsers.trait.php';
 
 
 // Register \Wikia\Sass namespace
@@ -1143,19 +1150,6 @@ $wgEnableJavaScriptErrorLogging = false;
  * Enables ad engine
  */
 $wgEnableAdEngineExt = true;
-
-/**
- * @name $wgAdDriverUseNewGptZones
- * Whether to use zones with slot name included (true) in GPT tags or not (false)
- */
-$wgAdDriverUseNewGptZones = true;
-
-/**
- * @name $wgAdDriverUseFullGpt
- * Whether to use full GPT (true) or mixed GPT for roadbloack and legacy DART calls for other slots (false)
- * If true, $wgAdDriverUseNewGptZones is meaningless (assumed true) as full GPT requires unique zone names
- */
-$wgAdDriverUseFullGpt = true;
 
 /**
  * @name $wgAdVideoTargeting
