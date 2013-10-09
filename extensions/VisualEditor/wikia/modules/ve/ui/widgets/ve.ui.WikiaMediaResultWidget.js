@@ -50,20 +50,20 @@ ve.ui.WikiaMediaResultWidget.prototype.buildThumbnail = function () {
 		.load( ve.bind( this.onThumbnailLoad, this ) )
 		.error( ve.bind( this.onThumbnailError, this ) );
 
-	//require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
-		image.src = Wikia.Thumbnailer.getThumbURL( this.data.url, 'image', this.size, this.size );
-	//}, this ) );
+	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
+		image.src = thumbnailer.getThumbURL( this.data.url, 'image', this.size, this.size );
 
-	$thumb.addClass( 've-ui-WikiaMediaResultWidget-thumbnail' );
-	$thumb.last().css( 'background-image', 'url(' + image.src + ')' );
-	$thumb.css( {
-		'width': this.size,
-		'height': this.size,
-		'left': '50%',
-		'top': '50%',
-		'margin-left': Math.round( -this.size / 2 ),
-		'margin-top': Math.round( -this.size / 2 )
-	} );
+		$thumb.addClass( 've-ui-WikiaMediaResultWidget-thumbnail' );
+		$thumb.last().css( 'background-image', 'url(' + image.src + ')' );
+		$front.addClass( 've-ui-mwMediaResultWidget-crop' );
+		$thumb.css( {
+			'height': '100%',
+			'left': 0,
+			'position': 'absolute',
+			'top': 0,
+			'width': '100%'
+		} );
+	}, this ) );
 
 	return $thumb;
 };
