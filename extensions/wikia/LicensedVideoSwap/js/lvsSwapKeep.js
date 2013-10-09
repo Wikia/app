@@ -63,7 +63,19 @@ define( 'lvs.swapkeep', [
 
 	function confirmModal() {
 		videoControls.reset();
-		var currTitleText =  currTitle.replace(/_/g, ' ' );
+		var currTitleText,
+				request,
+				suggestions;
+
+		request = {};
+		suggestions = _getSuggestions();
+
+		if ( suggestions.length ) {
+			request.suggestions = suggestions;
+		}
+
+		currTitleText =  currTitle.replace(/_/g, ' ' );
+
 		// Show confirmation modal only on "Keep"
 		$.confirm({
 			cancelMsg: $.msg( 'lvs-button-yes' ),
@@ -71,11 +83,19 @@ define( 'lvs.swapkeep', [
 			title: $.msg( 'lvs-confirm-keep-title' ),
 			content: $.msg( 'lvs-confirm-keep-message', currTitleText ),
 			onOk: function() {
-				doRequest({
-						// pass this value to the backend to permanently hide keeps for specific video
-						forever: true
+				request.forever = true;
+				doRequest( request );
+				// Track click on 'no' button
+				tracker.track({
+					action: tracker.actions.CONFIRM,
+					label: tracker.labels.KEEP
 				});
-				// Track click on okay button
+			},
+			onCancel: function() {
+				request.forever = false;
+				doRequest( request );
+
+				// track click on 'yes'
 				tracker.track({
 					action: tracker.actions.CONFIRM,
 					label: tracker.labels.KEEP
@@ -147,6 +167,21 @@ define( 'lvs.swapkeep', [
 				}
 			}
 		});
+	}
+
+	function _getSuggestions() {
+		var arr,
+				$suggestions;
+
+		arr = [];
+		$suggestions = $row.find( '.more-videos .thumbimage' );
+		if ( $suggestions.length ) {
+			$suggestions.each(function( idx, elem ) {
+					arr.push( $( elem ).data().videoKey );
+			});
+		}
+
+		return arr;
 	}
 
 	return {
