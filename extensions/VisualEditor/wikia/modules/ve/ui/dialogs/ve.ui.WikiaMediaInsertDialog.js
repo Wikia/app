@@ -25,6 +25,8 @@ ve.inheritClass( ve.ui.WikiaMediaInsertDialog, ve.ui.MWDialog );
 
 ve.ui.WikiaMediaInsertDialog.static.name = 'wikiaMediaInsert';
 
+ve.ui.WikiaMediaInsertDialog.static.titleMessage = 'visualeditor-dialog-media-insert-title';
+
 ve.ui.WikiaMediaInsertDialog.static.icon = 'media';
 
 /* Methods */
