@@ -62,7 +62,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 
 	// list of status that can be displayed in Special:LicensedVideoSwap page
 	protected static $displayList = array(
-		self::STATUS_KEEP, self::STATUS_SWAPPABLE, self::STATUS_NEW_KEEP, self::STATUS_NEW_SWAPPABLE,
+		self::STATUS_SWAPPABLE, self::STATUS_NEW_KEEP, self::STATUS_NEW_SWAPPABLE,
 	);
 
 	/**
@@ -215,7 +215,7 @@ SQL;
 
 				$videoDetail['seeMoreLink'] = $seeMoreLink;
 
-				$videoDetail['confirmKeep'] = ( $videoInfo['status'] == self::STATUS_KEEP );
+				$videoDetail['confirmKeep'] = ( $videoInfo['status'] == self::STATUS_NEW_KEEP );
 
 				$videos[] = $videoDetail;
 			} else {
@@ -891,9 +891,9 @@ SQL;
 	public function getValidVideos( $videos ) {
 		$validVideos = array();
 		foreach ( $videos as $videoTitle ) {
-			$file = $this->getVideoFile( $videoTitle );
+			$file = $this->getVideoFile( urldecode( $videoTitle ) );
 			if ( !empty( $file ) ) {
-				$validVideos[] = $videoTitle;
+				$validVideos[] = $file->getTitle()->getDBKey();
 			}
 		}
 
