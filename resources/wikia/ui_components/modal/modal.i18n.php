@@ -18,6 +18,7 @@ $messages['en'] = [
 	// examples
 	'styleguide-example-description' => 'There are three different sizes of modal:',
 	'styleguide-example-modal-small-modal' => 'Small modal',
+	'styleguide-example-modal-medium-modal' => 'Medium modal',
 	'styleguide-example-modal-secondary-button' => 'Cancel',
 	'styleguide-example-modal-primary-button' => 'OK',
 	'styleguide-example-modal-alt-link' => 'Another way to close this modal',

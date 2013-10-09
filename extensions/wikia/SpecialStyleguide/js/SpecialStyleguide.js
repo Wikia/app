@@ -113,7 +113,7 @@ require(['jquery'], function($) {
 			} );
 		}
 
-		function showModalExamples() {
+		function showSmallModalExample() {
 			var $modalSection = $( '#modal' ),
 				smallModalExampleMsg = $.msg( 'styleguide-example-modal-small-modal' );
 
@@ -145,7 +145,7 @@ require(['jquery'], function($) {
 								"size": 'small',
 								"content": smallModalExampleMsg,
 								"class": "styleguide-example-small",
-								"title": 'Small modal example',
+								"title": smallModalExampleMsg,
 								"closeButton": true,
 								"altLink": {
 									"id": "smallModalAltLink",
@@ -180,6 +180,73 @@ require(['jquery'], function($) {
 			} );
 		}
 
+		function showMediumModalExample() {
+			var $modalSection = $( '#modal' ),
+				mediumModalExampleMsg = $.msg( 'styleguide-example-modal-medium-modal' );
+
+			require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+				uiFactory.init( "button" ).then( function( button ) {
+					var $modalExamples = $modalSection.find( '.example' );
+					var modalSampleButtons = button.render( { type: "button", vars: {
+						"type": "button",
+						"classes": [ "primary", "normal", "medium-modal-example-button" ],
+						"value": mediumModalExampleMsg
+					} } );
+					$modalExamples.append( modalSampleButtons );
+					var mediumModal2ndBtn = button.render( { type: "button", vars: {
+						"type": "button",
+						"classes": [ "secondary", "normal", "close" ],
+						"value": $.msg( 'styleguide-example-modal-secondary-button' )
+					} } );
+					var mediumModal1stBtn = button.render( { type: "button", vars: {
+						"type": "button",
+						"classes": [ "primary", "normal", "close" ],
+						"value": $.msg( 'styleguide-example-modal-primary-button' )
+					} } );
+
+					uiFactory.init( "modal" ).then( function( modal ) {
+						var mediumModal = modal.render( {
+							type: "default",
+							vars: {
+								"id": 'mediumModalExample',
+								"size": 'medium',
+								"content": mediumModalExampleMsg,
+								"class": "styleguide-example-medium",
+								"title": mediumModalExampleMsg,
+								"closeButton": true,
+								"altLink": {
+									"id": "mediumModalAltLink",
+									"href": "#",
+									"text": $.msg( 'styleguide-example-modal-alt-link' )
+								},
+								"secondBtn": mediumModal2ndBtn,
+								"primaryBtn": mediumModal1stBtn
+							}
+						} );
+						$('body').append( mediumModal );
+
+						require( [ 'wikia.ui.modal' ], function( modal ) {
+							var mediumModal = modal.init( 'mediumModalExample' );
+
+							$( ".medium-modal-example-button" ).click(function() {
+								if( mediumModal.isShown() ) {
+									mediumModal.hide();
+								} else {
+									mediumModal.show();
+								}
+							} );
+
+							$( ".modal" ).on( "click", "#smallModalAltLink", function( event ) {
+								event.preventDefault();
+								mediumModal.hide();
+							} );
+						} );
+					} );
+
+				} );
+			} );
+		}
+
 		/** Attach events */
 		$('body').on('click', '#mw-content-text section .toggleParameters', function(event) {
 			event.preventDefault();
@@ -193,6 +260,7 @@ require(['jquery'], function($) {
 
 		/** Examples **/
 		showDrawerExamples();
-		showModalExamples();
+		showSmallModalExample();
+		showMediumModalExample();
 	});
 });

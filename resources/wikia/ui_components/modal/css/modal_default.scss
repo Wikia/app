@@ -1,4 +1,5 @@
 @import "skins/oasis/css/core/color.scss";
+@import "skins/oasis/css/core/responsive.scss";
 @import "skins/oasis/css/mixins/transform.scss";
 @import "skins/oasis/css/mixins/transition.scss";
 @import "skins/oasis/css/mixins/blackout.scss";
@@ -16,6 +17,8 @@ $modal-secondary-color: mix( $color-page, #000000, 90% );
 
 .modal {
 	background-color: $color-page;
+	display: none;
+	height: 90%;
 	left: 0;
 	position: absolute;
 	top: 0;
@@ -67,18 +70,27 @@ $modal-secondary-color: mix( $color-page, #000000, 90% );
 		margin: 0 20px;
 	}
 
-	&.small {
-		height: 90%;
+	&.small,
+	&.medium,
+	&.large {
 		position: fixed;
-		width: 400px;
-		margin: auto;
-		min-height: 200px;
 		top: 50%;
 		left: 50%;
 		@include transform-translate(-50%, -50%);
 	}
 
+	&.small {
+		width: 400px;
+		margin: auto;
+		min-height: 200px;
+	}
+
+	&.medium {
+		width: 700px;
+	}
+
 	&.shown {
+		display: block;
 		opacity: 1;
 		z-index: $zTop;
 	}
@@ -86,4 +98,10 @@ $modal-secondary-color: mix( $color-page, #000000, 90% );
 
 #blackout {
 	@include blackout();
+}
+
+@media screen and (max-width: $breakpoint-min) {
+	.modal.medium {
+		width: 500px;
+	}
 }
