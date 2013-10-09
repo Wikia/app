@@ -274,6 +274,8 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * keep video
 	 * @requestParam string videoTitle
 	 * @requestParam integer currentPage
+	 * @requestParam string forever [true/false]
+	 * @requestParam array suggestions
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
 	 * @responseParam string html
@@ -281,6 +283,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	public function keepVideo() {
 		$videoTitle = $this->request->getVal( 'videoTitle', '' );
 		$forever = $this->request->getVal( 'forever', '' );
+		$suggestTitles = $this->request->getVal( 'suggestions', array() );
 
 		// validate action
 		$response = $this->sendRequest( 'LicensedVideoSwapSpecial', 'validateAction', array( 'videoTitle' => $videoTitle ) );
@@ -314,9 +317,6 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// get videos that have been suggested (kept videos)
 		$suggestedList = $helper->getSuggestedVideosFromStatus( $articleId );
-
-		// get current suggestions
-		list( $suggestions, $suggestTitles ) = $helper->getCurrentSuggestions( $articleId );
 
 		// combine suggested videos and current suggestions
 		$value['suggested'] = array_unique( array_merge( $suggestedList, $suggestTitles ) );
