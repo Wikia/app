@@ -1,10 +1,11 @@
 ve.ui.WikiaCartItemWidget = function VeUiWikiaCartItemWidget( model, config ) {
 	this.model = model;
 	ve.ui.OptionWidget.call( this, this.model.title, config );
-	this.setLabel( this.model.title );
 
 	var $img = this.$$( '<img>' );
-	$img.attr( 'src', Wikia.Thumbnailer.getThumbURL(model.url, 'image', 60, 60) ); 
+	$img
+		.attr( 'src', Wikia.Thumbnailer.getThumbURL(model.url, 'image', 60, 60) )
+		.addClass( 've-ui-wikiaCartImage' );
 	this.$.prepend( $img );
 };
 

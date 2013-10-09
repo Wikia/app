@@ -3,20 +3,9 @@
 
 $width-cart: 100px;
 
+/* Panels */
 .ve-ui-wikiaMediaInsertDialog-content {
-	.ve-ui-wikiaCartWidget-wrapper {
-		@include box-sizing( border-box );
-		bottom: 0;
-		overflow: auto;
-		padding: $width-gutter;
-		position: absolute;
-		right: 0;
-		top: 0;
-		width: $width-cart;
-	}
-
 	.ve-ui-pagedLayout-pagesPanel {
-		border-right: #ddd 1px solid;
 		margin-right: $width-cart;
 		padding: $width-gutter;
 	}
@@ -25,5 +14,29 @@ $width-cart: 100px;
 		margin-right: -( $width-cart + $width-gutter );
 		padding: 0;
 		width: 100%;
+	}
+}
+
+/* Cart */
+.ve-ui-wikiaCartWidget-wrapper {
+	@include box-sizing( border-box );
+	border-left: #DDD 1px solid;
+	bottom: 0;
+	overflow: auto;
+	padding: $width-gutter;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: $width-cart;
+
+	.ve-ui-wikiaCartImage {
+		display: block;
+	}
+	.ve-ui-optionWidget {
+		padding: 0;
+		margin-bottom: 10px;
+	}
+	.ve-ui-labeledElement-label {
+		display: none;
 	}
 }
