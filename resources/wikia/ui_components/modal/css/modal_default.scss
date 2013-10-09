@@ -4,9 +4,9 @@
 @import "skins/oasis/css/mixins/transition.scss";
 @import "skins/oasis/css/mixins/blackout.scss";
 
-$modal-secondary-color: mix( $color-page, #000000, 90% );
+$modal-secondary-color: darken( $color-page, 10% );
 @if( $is-dark-wiki ) {
-	$modal-secondary-color: mix( $color-page, #ffffff, 90% );
+	$modal-secondary-color: lighten( $color-page, 3% );
 }
 
 .modal,
