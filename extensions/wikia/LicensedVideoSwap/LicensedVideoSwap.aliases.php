@@ -1,34 +1,36 @@
 <?php
+
 $specialPageAliases = array();
 /**
  * English
  */
 $specialPageAliases['en'] = array(
-   'LicensedVideoSwap' => array( 'LicensedVideoSwap' ),
+	'LicensedVideoSwap' => array( 'LicensedVideoSwap' ),
 );
 /**
  * German
  */
 $specialPageAliases['de'] = array(
-    'LicensedVideoSwap' => array( 'LicensedVideoSwap', 'Lizenzierte_Videos', 'Lizenzierte_videos', 'LizenzierteVideos', 'Lizenziertevideos' ),
+	'LicensedVideoSwap' => array( 'Lizenzierte_Videos', 'LizenzierteVideos' ),
 );
 
 /**
  * Italian
  */
 $specialPageAliases['it'] = array(
-	'LicensedVideoSwap' => array( 'LicensedVideoSwap', 'ScambioVideoAutorizzati' ),
+	'LicensedVideoSwap' => array( 'ScambioVideoAutorizzati' ),
 );
 
 /**
  * Polish
  */
 $specialPageAliases['pl'] = array(
-	'LicensedVideoSwap' => array('LicensedVideoSwap', 'Wymiana_filmów', 'Wymiana_Filmów'),
+	'LicensedVideoSwap' => array( 'Wymiana_filmów' ),
+);
 
 /**
  * Spanish
  */
 $specialPageAliases['es'] = array(
-	'LicensedVideoSwap' => array('LicensedVideoSwap', 'Videos_Autorizados', 'Videos_autorizados', 'Videosautorizados', 'VideosAutorizados' ),
+	'LicensedVideoSwap' => array( 'Videos_Autorizados', 'VideosAutorizados' ),
 );
