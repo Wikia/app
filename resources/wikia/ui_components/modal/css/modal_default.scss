@@ -89,6 +89,11 @@ $modal-secondary-color: mix( $color-page, #000000, 90% );
 		width: 700px;
 	}
 
+	&.large {
+		height: calc( 100% - 50px );
+		width: calc( 100% - 50px );
+	}
+
 	&.shown {
 		display: block;
 		opacity: 1;
