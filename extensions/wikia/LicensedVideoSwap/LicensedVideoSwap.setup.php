@@ -21,7 +21,7 @@ $wgAutoloadClasses['LicensedVideoSwapHooksHelper'] = $dir.'LicensedVideoSwapHook
 $wgExtensionMessagesFiles['LicensedVideoSwap'] = $dir.'LicensedVideoSwap.i18n.php';
 
 // Aliases
-$wgExtensionMessagesFiles['CreatePageAliases'] = __DIR__ . '/LicensedVideoSwap.aliases.php';
+$wgExtensionMessagesFiles['LicensedVideoSwapAliases'] = __DIR__ . '/LicensedVideoSwap.aliases.php';
 
 // special pages
 $wgSpecialPages['LicensedVideoSwap'] = 'LicensedVideoSwapSpecialController';
