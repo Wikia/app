@@ -845,6 +845,7 @@ checkbox on Special:Block',
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author زكريا
  */
 $messages['ar'] = array(
 	'wall-no-title' => 'لا يوجد عنوان',
@@ -880,14 +881,14 @@ $messages['ar'] = array(
 	'wall-placeholder-message-anon' => 'نشر رسالة جديدة على هذا الجدار',
 	'wall-placeholder-reply' => 'أرسل ردًا',
 	'wall-button-to-preview-comment' => 'عرض مسبق',
-	'wall-button-to-cancel-preview' => 'تعديل',
+	'wall-button-to-cancel-preview' => 'عدل',
 	'wall-button-to-submit-comment' => 'إرسال',
 	'wall-button-to-submit-reply' => 'رد',
 	'wall-button-to-submit-comment-no-topic' => 'إرسال بدون عنوان',
 	'wall-button-save-changes' => 'احفظ التغييرات',
 	'wall-button-cancel-changes' => 'إلغاء',
 	'wall-button-done-source' => 'تم',
-	'wall-message-edit' => 'تعديل',
+	'wall-message-edit' => 'عدل',
 	'wall-message-more' => 'المزيد',
 	'wall-message-delete' => 'حذف',
 	'wall-message-close-thread' => 'إغلاق هذا الموضوع',
@@ -6627,6 +6628,8 @@ $messages['ru'] = array(
 	'wall-action-remove-reply-confirm-info' => 'Этот ответ и ваш комментарий останутся в истории вики.',
 	'wall-action-remove-confirm-ok' => 'Удалить',
 	'wall-action-close-thread-title' => 'Закрыть эту тему',
+	'wall-action-close-confirm' => 'Пожалуйста, укажите, почему вы хотите закрыть её:',
+	'wall-action-close-thread-confirm-info' => 'Эта тема будет всё ещё видимой.',
 	'wall-action-close-confirm-ok' => 'Закрыть',
 	'wall-action-admin-thread-title' => 'Удалить эту тему',
 	'wall-action-admin-reply-title' => 'Удалить этот ответ',
@@ -6715,6 +6718,7 @@ $messages['ru'] = array(
 	'wall-recentchanges-closed-thread' => 'закрыта тема "[[$1|$2]]" на [[$3|стене $4]]',
 	'wall-recentchanges-reopened-thread' => 'открыта тема "[[$1|$2]]" на [[$3|стене $4]]',
 	'wall-recentchanges-deleted-reply-title' => 'Ответ на стене обсуждения',
+	'wall-recentchanges-wall-created-title' => 'Стена для сообщений создана',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Стена обсуждения',
 	'wall-recentchanges-thread-group' => 'Тема $1 на <a href="$2">стене $3</a>',
 	'wall-recentchanges-history-link' => 'История обсуждения',
@@ -6832,7 +6836,7 @@ ___________________________________________<br />
 	'wall-notifications-notifyeveryone' => '$1 сообщил об этом',
 	'wall-message-notifyeveryone' => 'Сообщить всем об этой теме',
 	'wall-message-unnotifyeveryone' => 'Отменить сообщение об этой теме',
-	'wall-message-notifyeveryone-tooltip' => 'Все участники (кроме анонимов) будут уведомлены об этой теме', # Fuzzy
+	'wall-message-notifyeveryone-tooltip' => 'Все зарегистрированные участники будут уведомлены об этой теме при следующем визите проекта',
 	'wall-votes-modal-showmore' => 'Посмотреть, кто ещё добавил "Мне нравится"',
 	'wall-votes-modal-title' => 'Мне нравится',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Один участник|$1 участника|$1 участников}} добавили "Мне нравится" к этому сообщению',

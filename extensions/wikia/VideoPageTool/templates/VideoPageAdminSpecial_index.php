@@ -1,7 +1,3 @@
-<?
-	// TODO: switch out vars for actual values or hard code for now.
-?>
-
 <?= $app->renderView(
 	'VideoPageAdminSpecial',
 	'Header'

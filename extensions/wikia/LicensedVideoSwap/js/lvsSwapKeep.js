@@ -21,17 +21,27 @@ define( 'lvs.swapkeep', [
 		currTitle,
 		newTitle;
 
-	function doRequest(){
+	function doRequest( params ){
+		var qs,
+				data,
+				trackingLabel;
+
 		// Add loading graphic
 		commonAjax.startLoadingGraphic();
 
-		var qs = new QueryString(),
-			data = {
-				videoTitle: currTitle,
-				sort: qs.getVal( 'sort', 'recent' ),
-				currentPage: qs.getVal( 'currentPage', 1 )
-			},
-			trackingLabel = tracker.labels.KEEP;
+		qs = new QueryString();
+		data = {
+			videoTitle: currTitle,
+			sort: qs.getVal( 'sort', 'recent' ),
+			currentPage: qs.getVal( 'currentPage', 1 )
+		};
+
+		// if @params are explicitly passed through, extend our object with them
+		if ( params ) {
+			$.extend(data, params);
+		}
+
+		trackingLabel = tracker.labels.KEEP;
 
 		if ( isSwap ) {
 			data.newTitle = newTitle;
@@ -61,11 +71,14 @@ define( 'lvs.swapkeep', [
 			title: $.msg( 'lvs-confirm-keep-title' ),
 			content: $.msg( 'lvs-confirm-keep-message', currTitleText ),
 			onOk: function() {
-				doRequest();
+				doRequest({
+						// pass this value to the backend to permanently hide keeps for specific video
+						forever: true
+				});
 				// Track click on okay button
 				tracker.track({
 					action: tracker.actions.CONFIRM,
-					label: isSwap ? tracker.labels.SWAP : tracker.labels.KEEP
+					label: tracker.labels.KEEP
 				});
 			},
 			width: 700

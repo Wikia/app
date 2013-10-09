@@ -175,8 +175,6 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		$this->publishDate = $program->getFormattedPublishDate();
 
 		$this->section = $section;
-		// TODO: not sure if these are needed in edit(), just in the sub views like "featured" etc.
-		$this->date = $date;
 		$this->language = $language;
 	}
 
@@ -440,21 +438,11 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * Render header
 	 */
 
-	public function executeHeader($data) {
-		/*
-		 * TODO: imported function from SpecialMarketingToolbox, not sure if we need it
-		 */
-
-		// $optionalDataKeys = array('date', 'moduleName', 'sectionName', 'verticalName',
-		// 	'regionName', 'lastEditor', 'lastEditTime');
-
-		// foreach ($optionalDataKeys as $key) {
-		// 	if (isset($data[$key])) {
-		// 		$this->$key = $data[$key];
-		// 	}
-		// }
-
-		$this->dashboardHref = SpecialPage::getTitleFor('VideoPageTool')->getLocalURL();
+	public function header($data) {
+		$this->language = Language::getLanguageName( $this->getVal( 'language' ) );
+		$this->section = ucfirst( $this->getVal( 'section' ) );
+		$this->publishDate = $this->getVal( 'publishDate' );
+		$this->dashboardHref = SpecialPage::getTitleFor('VideoPageAdmin')->getLocalURL();
 	}
 
 	/**

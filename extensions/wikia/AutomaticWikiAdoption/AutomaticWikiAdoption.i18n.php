@@ -1285,6 +1285,22 @@ $messages['it'] = array(
 	'wikiadoption-pref-label' => 'Il cambio di queste preferenze si ripercuoterà solo sulle email da $1.',
 );
 
+/** Korean (한국어)
+ * @author Hym411
+ */
+$messages['ko'] = array(
+	'wikiadoption' => '자동 위키 합치기',
+	'wikiadoption-desc' => '미디어위키를 위한 자동 위키 합치기 확장기능',
+	'wikiadoption-header' => '이 위키 합치기',
+	'wikiadoption-button-adopt' => '네, {{SITENAME}}을 합칩니다',
+	'wikiadoption-adopt-inquiry' => '자세히 찾기',
+	'wikiadoption-know-more-header' => '더 알고 싶나요?',
+	'wikiadoption-know-more-description' => '자세한 내용은 이 링크를 확인하십시오. 당연히, 질문이 있다면 자유롭게 저희에게 연락하십시오!',
+	'wikiadoption-adoption-successed' => '축하합니다! 당신은 이제 이 위키의 관리자입니다!',
+	'wikiadoption-adoption-failed' => '죄송합니다. 저희는 당신을 관리자로 만들기 위해 노력했지만, 불가능했습니다. [http://community.wikia.com/Special:Contact 저희에게 연락]해 주시면 도와드리겠습니다.',
+	'wikiadoption-not-allowed' => '죄송합니다. 당신은 현재 이 위키를 합칠 수 없습니다.',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
