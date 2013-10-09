@@ -261,7 +261,12 @@
 		}
 
 		.thread-left {
+			float: left;
 			width: 575px;
+		}
+
+		.thread-right {
+			float: right;
 		}
 
 		.timestamp {
