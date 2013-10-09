@@ -4,6 +4,8 @@
 //mixins
 @import "mixins/transition.scss";
 
+$modal-background: #3D3D3D;
+
 .modal {
 	height: 100%;
 	min-height: 0 !important; //if anything set min-height this might brake modal
@@ -85,7 +87,7 @@
 #wkMdlCnt {
 	width: 100%;
 	height: 100%;
-	background-color: $footerBackground;
+	background-color: $modal-background;
 
 	& > p {
 		margin: 0;
