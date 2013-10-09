@@ -50,9 +50,9 @@ ve.ui.WikiaMediaResultWidget.prototype.buildThumbnail = function () {
 		.load( ve.bind( this.onThumbnailLoad, this ) )
 		.error( ve.bind( this.onThumbnailError, this ) );
 
-	require( ['wikia.thumbnailer'], function ( thumbnailer ) {
-		image.src = thumbnailer.getThumbUrl( this.data.url, 'image', this.size, this.size );
-	} );
+	//require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
+		image.src = Wikia.Thumbnailer.getThumbURL( this.data.url, 'image', this.size, this.size );
+	//}, this ) );
 
 	$thumb.addClass( 've-ui-WikiaMediaResultWidget-thumbnail' );
 	$thumb.last().css( 'background-image', 'url(' + image.src + ')' );

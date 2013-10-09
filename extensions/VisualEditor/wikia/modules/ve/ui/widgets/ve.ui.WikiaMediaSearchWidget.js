@@ -65,7 +65,19 @@ ve.ui.WikiaMediaSearchWidget.prototype.queryMedia = function () {
 };
 
 ve.ui.WikiaMediaSearchWidget.prototype.onQueryMediaDone = function ( data ) {
-	console.log( data.response.results.mixed.items );
+	var items = data.response.results.mixed.items,
+		widgets = [];
+	console.log('items', items);
+	for( var i = 0; i < items.length; i++ ) {
+			widgets.push(
+				new ve.ui.WikiaMediaResultWidget(
+					items[i],
+					{ '$$': this.$$, 'size': this.size }
+				)
+			);		
+	}
+	this.results.addItems( widgets );
+	this.pagesPanel.setPage( 'results' );
 };
 
 ve.ui.WikiaMediaSearchWidget.prototype.onQueryChange = function () {
