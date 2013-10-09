@@ -160,6 +160,10 @@ foreach($config->getNotInTrackStatic() as $badgeTypeId => $badgeData) {
 	</div>
 <?endforeach;?>
 </div>
+<form method="POST">
+    <input type="hidden" name="json-data" class="c-messages" />
+    <input type="submit" value="<?= wfMsg('achievements-save') ?>" onclick="Achievements.AchPrepareData(false, '');"/>
+</form>
 <?if($scrollTo):?>
 	<script type="<?= $wgJsMimeType; ?>">
 		setTimeout(function(){$(window).scrollTo('#section<?= $scrollTo ?>', 2000);}, '3000');
