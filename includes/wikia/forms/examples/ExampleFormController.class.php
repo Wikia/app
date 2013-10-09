@@ -1,8 +1,8 @@
 <?
-class ExampleController extends WikiaSpecialPageController {
+class ExampleFormController extends WikiaSpecialPageController {
 
 	public function __construct() {
-		parent::__construct( 'Example', '', false );
+		parent::__construct( 'ExampleForm', '', false );
 	}
 
 	public function index() {
