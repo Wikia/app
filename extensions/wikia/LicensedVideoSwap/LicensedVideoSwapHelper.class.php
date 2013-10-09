@@ -235,7 +235,7 @@ SQL;
 	}
 
 	/**
-	 * get video suggestions
+	 * Get video suggestions
 	 * @param $title - The title of the video
 	 * @return array videos
 	 */
@@ -396,7 +396,7 @@ SQL;
 	}
 
 	/**
-	 * get file object (video only)
+	 * Get file object (video only)
 	 * @param string $videoTitle
 	 * @param boolean $force
 	 * @return File|null $result
@@ -505,7 +505,7 @@ SQL;
 	}
 
 	/**
-	 * delete the LVS status info of this file page
+	 * Delete the LVS status info of this file page
 	 * @param type $articleId
 	 */
 	public function deletePageStatusInfo( $articleId ) {
@@ -513,7 +513,7 @@ SQL;
 	}
 
 	/**
-	 * get the status of this file page
+	 * Get the status of this file page
 	 * @param integer $articleId
 	 * @return array|null
 	 */
@@ -522,7 +522,7 @@ SQL;
 	}
 
 	/**
-	 * get the LVS status info of this file page [STATUS_KEEP, STATUS_SWAP_EXACT, STATUS_SWAP_NORM]
+	 * Get the LVS status info of this file page [STATUS_KEEP, STATUS_SWAP_EXACT, STATUS_SWAP_NORM]
 	 * @param integer $articleId
 	 * @return array|null
 	 */
@@ -531,7 +531,31 @@ SQL;
 	}
 
 	/**
-	 * add log to RecentChange
+	 * Move suggestion data to new article for WPP_LVS_SUGGEST, WPP_LVS_SUGGEST_DATE
+	 * @param integer $oldArticleId
+	 * @param integer $newArticleId
+	 */
+	public function moveSuggestionData( $oldArticleId, $newArticleId ) {
+		$this->moveWikiaPageProp( WPP_LVS_SUGGEST, $oldArticleId, $newArticleId );
+		$this->moveWikiaPageProp( WPP_LVS_SUGGEST_DATE, $oldArticleId, $newArticleId );
+	}
+
+	/**
+	 * Move prop in page_wikia_props table to new article
+	 * @param integer $type
+	 * @param integer $oldArticleId
+	 * @param integer $newArticleId
+	 */
+	public function moveWikiaPageProp( $type, $oldArticleId, $newArticleId ) {
+		$prop = wfGetWikiaPageProp( $type, $oldArticleId );
+		if ( !empty( $prop ) ) {
+			wfDeleteWikiaPageProp( $type, $oldArticleId );
+			wfSetWikiaPageProp( $type, $newArticleId, $prop );
+		}
+	}
+
+	/**
+	 * Add log to RecentChange
 	 * @param Title $title
 	 * @param string $action
 	 * @param string $reason
@@ -542,7 +566,7 @@ SQL;
 	}
 
 	/**
-	 * check if the video is swapped
+	 * Check if the video is swapped
 	 * @param integer $articleId
 	 * @return boolean $status
 	 */
@@ -554,7 +578,7 @@ SQL;
 	}
 
 	/**
-	 * check if the video is kept
+	 * Check if the video is kept
 	 * @param integer $articleId
 	 * @return boolean $status
 	 */
@@ -566,7 +590,7 @@ SQL;
 	}
 
 	/**
-	 * check if the video is kept forever
+	 * Check if the video is kept forever
 	 * @param integer $articleId
 	 * @return boolean $status
 	 */
@@ -578,7 +602,7 @@ SQL;
 	}
 
 	/**
-	 * add redirect link to the article
+	 * Add redirect link to the article
 	 * @param Title $title
 	 * @param Title $newTitle
 	 * @return Status $status
@@ -597,7 +621,7 @@ SQL;
 	}
 
 	/**
-	 * remove redirect link (last revision)
+	 * Remove redirect link (last revision)
 	 * @param Article $article
 	 * @return Status $status
 	 */
@@ -622,7 +646,7 @@ SQL;
 	}
 
 	/**
-	 * undelete page (local file)
+	 * Undelete page (local file)
 	 * @param Title $title
 	 * @param boolean $removePremium
 	 * @return Status $status
@@ -669,7 +693,7 @@ SQL;
 	}
 
 	/**
-	 * get pagination
+	 * Get pagination
 	 * @param integer $currentPage
 	 * @param string $selectedSort
 	 * @return string $pagination
@@ -829,7 +853,7 @@ SQL;
 	}
 
 	/**
-	 * get suggested videos from page status (WPP_LVS_STATUS_INFO)
+	 * Get suggested videos from page status (WPP_LVS_STATUS_INFO)
 	 * @param integer $articleId
 	 * @return array $suggestedVideos
 	 */
@@ -841,7 +865,7 @@ SQL;
 	}
 
 	/**
-	 * get current suggestions
+	 * Get current suggestions
 	 * @param integer $articleId
 	 * @return array
 	 */
@@ -860,7 +884,7 @@ SQL;
 	}
 
 	/**
-	 * get valid videos - list of video title
+	 * Get valid videos - list of video title
 	 * @param array $videos
 	 * @return array $validVideos
 	 */

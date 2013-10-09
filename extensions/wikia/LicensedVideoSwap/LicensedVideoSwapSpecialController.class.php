@@ -243,6 +243,9 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		// remove old page status
 		$helper->deletePageStatus( $articleId );
 
+		// move suggestion data to new article
+		$helper->moveSuggestionData( $articleId, $title->getArticleID() );
+
 		// add to log
 		$reason = wfMessage( 'lvs-log-swap', $file->getTitle()->getText(), $newFile->getTitle()->getText() )->text();
 		$helper->addLog( $file->getTitle(), 'licensedvideoswap_swap', $reason );
