@@ -5,7 +5,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/* global require */
+/* global require,mw */
 
 /**
  * Creates an ve.ui.WikiaMediaResultWidget object.

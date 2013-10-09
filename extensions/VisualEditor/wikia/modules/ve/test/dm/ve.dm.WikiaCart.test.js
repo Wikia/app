@@ -11,9 +11,9 @@ QUnit.test( 've.dm.WikiaCart.addItems', function ( assert ) {
 		item2 = 'item2',
 		item3 = 'item3',
 		items = [ item1, item2, item3 ],
-		cartModel = new ve.dm.WikiaCart()
+		cartModel = new ve.dm.WikiaCart();
 
-	cartModel.connect( this, { 
+	cartModel.connect( this, {
 		'add': function( o ) {
 			assert.deepEqual( o, items, 'Event "add" trigged with correct data' );
 		},
@@ -31,12 +31,12 @@ QUnit.test( 've.dm.WikiaCart.removeItems', function ( assert ) {
 		item2 = 'item2',
 		item3 = 'item3',
 		items = [ item1, item2, item3 ],
-		cartModel = new ve.dm.WikiaCart()
+		cartModel = new ve.dm.WikiaCart();
 
 	cartModel.addItems( items );
-	cartModel.connect( this, { 
-		'add': function( o ) {
-			ok( false )
+	cartModel.connect( this, {
+		'add': function() {
+			assert.ok( false );
 		},
 		'remove': function( o ) {
 			assert.deepEqual( o, [ item1 ], 'Event "remove" trigged with correct data' );
@@ -51,13 +51,13 @@ QUnit.test( 've.dm.WikiaCart.clearItems', function ( assert ) {
 		item2 = 'item2',
 		item3 = 'item3',
 		items = [ item1, item2, item3 ],
-		cartModel = new ve.dm.WikiaCart()
+		cartModel = new ve.dm.WikiaCart();
 
 	cartModel.addItems( items );
 	cartModel.removeItems( [ item1 ] );
-	cartModel.connect( this, { 
-		'add': function( o ) {
-			ok( false )
+	cartModel.connect( this, {
+		'add': function() {
+			assert.ok( false );
 		},
 		'remove': function( o ) {
 			assert.deepEqual( o, [ item2, item3 ], 'Event "remove" trigged with correct data' );

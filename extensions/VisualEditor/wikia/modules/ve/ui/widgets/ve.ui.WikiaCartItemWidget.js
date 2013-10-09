@@ -1,3 +1,5 @@
+/* global require */
+
 ve.ui.WikiaCartItemWidget = function VeUiWikiaCartItemWidget( model, config ) {
 	this.model = model;
 	ve.ui.OptionWidget.call( this, this.model.title, config );

@@ -36,7 +36,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	ve.ui.MWDialog.prototype.initialize.call( this );
 
 	// Properties
-	this.cartModel = new ve.dm.WikiaCart()
+	this.cartModel = new ve.dm.WikiaCart();
 	this.cart = new ve.ui.WikiaCartWidget( this.cartModel );
 	this.$cart = this.$$( '<div>' );
 	this.search = new ve.ui.WikiaMediaSearchWidget( { '$$': this.frame.$$ } );
