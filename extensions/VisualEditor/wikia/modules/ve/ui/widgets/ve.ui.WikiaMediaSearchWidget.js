@@ -19,14 +19,14 @@ ve.ui.WikiaMediaSearchWidget = function VeUiWikiaMediaSearchWidget( config ) {
 	ve.ui.SearchWidget.call( this, config );
 
 	// Properties
-	this.size = config.size || 150;
+	this.size = config.size || 160;
 	this.pagesPanel = new ve.ui.PagedLayout( { '$$': this.$$, 'attachPagesPanel': true } );
 	this.suggestions = new ve.ui.SelectWidget( { '$$': this.$$ } );
 	this.$suggestions = this.$$( '<div>' );
 	this.queryTimeout = null;
 	this.queryMediaCallback = ve.bind( this.queryMedia, this );
-	this.batch = 1;
 	this.request = null;
+	this.batch = 1;
 
 	// Events
 	this.$results.on( 'scroll', ve.bind( this.onResultsScroll, this ) );
@@ -67,7 +67,7 @@ ve.ui.WikiaMediaSearchWidget.prototype.queryMedia = function () {
 				'query': value,
 				'type': 'photo|video',
 				'mixed': true,
-				'limit': 20,
+				'limit': 16,
 				'batch': this.batch
 			}
 		} )
@@ -77,22 +77,25 @@ ve.ui.WikiaMediaSearchWidget.prototype.queryMedia = function () {
 };
 
 ve.ui.WikiaMediaSearchWidget.prototype.onQueryMediaDone = function ( data ) {
-	var items = data.response.results.mixed.items,
-		widgets = [];
+	var media = data.response.results.mixed.items,
+		items = [],
+		i;
+
+	if ( !data.response || !data.response.results ) {
+		return;
+	}
 
 	if ( data.response.batch < data.response.results.mixed.batches ) {
 		this.batch++;
 	}
 
-	for( var i = 0; i < items.length; i++ ) {
-			widgets.push(
-				new ve.ui.WikiaMediaResultWidget(
-					items[i],
-					{ '$$': this.$$, 'size': this.size }
-				)
-			);		
+	for( i = 0; i < media.length; i++ ) {
+		items.push(
+			new ve.ui.WikiaMediaResultWidget( media[i], { '$$': this.$$, 'size': this.size } )
+		);
 	}
-	this.results.addItems( widgets );
+
+	this.results.addItems( items );
 	this.pagesPanel.setPage( 'results' );
 };
 
@@ -121,5 +124,12 @@ ve.ui.WikiaMediaSearchWidget.prototype.onResultsScroll = function () {
 		threshold = this.results.$.outerHeight() - this.size;
 	if ( !this.query.isPending() && position > threshold ) {
 		this.queryMedia();
+	}
+};
+
+ve.ui.WikiaMediaSearchWidget.prototype.onResultsSelect = function ( item ) {
+	ve.ui.SearchWidget.prototype.onResultsSelect.call( this, item );
+	if ( item !== null ) {
+		this.results.selectItem( null );
 	}
 };

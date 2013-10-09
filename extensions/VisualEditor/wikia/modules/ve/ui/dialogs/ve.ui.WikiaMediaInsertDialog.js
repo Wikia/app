@@ -37,10 +37,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.cartModel = new ve.dm.WikiaCart()
 	this.cart = new ve.ui.WikiaCartWidget( this.cartModel );
 	this.$cart = this.$$( '<div>' );
-	this.search = new ve.ui.WikiaMediaSearchWidget( {
-		'$$': this.frame.$$,
-		'size': 120
-	} );
+	this.search = new ve.ui.WikiaMediaSearchWidget( { '$$': this.frame.$$ } );
 	this.pagesPanel = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
 
 	// Events
@@ -59,27 +56,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
 	if ( item === null ) {
 		return;
 	}
-
-	var items = [
-		{
-			'title': 'Book.learning.jpg',
-			'url': 'http://images.inez.wikia-dev.com/__cb20060802212517/muppet/images/1/1e/Book.learning.jpg'
-		},
-		{
-			'title': 'Xmasanother116.jpg',
-			'url': 'http://images.inez.wikia-dev.com/__cb20100517192405/muppet/images/d/dd/Xmasanother116.jpg'
-		},
-		{
-			'title': 'Folge2271-6.jpg',
-			'url': 'http://images.inez.wikia-dev.com/__cb20081228221154/muppet/images/a/a7/Folge2271-6.jpg'
-		},
-		{
-			'title': 'Sesame-Street-Green-Before-It-Was-Cool-Shirt.jpg',
-			'url': 'http://images.inez.wikia-dev.com/__cb20101003030348/muppet/images/8/8d/Sesame-Street-Green-Before-It-Was-Cool-Shirt.jpg'
-		}
-	];
-	var randomItem = items[Math.floor(Math.random()*items.length)];
-	this.cartModel.addItems([ new ve.dm.WikiaCartItem( item.title, randomItem.url ) ] );
+	this.cartModel.addItems( [
+		new ve.dm.WikiaCartItem( item.title, item.url )
+	] );
 };
 
 /* Registration */
