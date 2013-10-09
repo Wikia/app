@@ -353,25 +353,22 @@ $wgAutoloadClasses['ErrorController'] = $IP.'/skins/oasis/modules/ErrorControlle
 $wgAutoloadClasses['WikiaMediaCarouselController'] = $IP.'/skins/oasis/modules/WikiaMediaCarouselController.class.php';
 $wgAutoloadClasses['LeftMenuController'] = $IP.'/skins/oasis/modules/LeftMenuController.class.php';
 
-//form builder
-$wgAutoloadClasses['BaseForm'] = $IP.'/includes/wikia/forms/BaseForm.class.php';
-$wgAutoloadClasses['FormElement'] = $IP.'/includes/wikia/forms/FormElement.class.php';
+/**
+ * Form builder
+ */
+$wgAutoloadClasses['FormElement'] = $IP . '/includes/wikia/forms/FormElement.class.php';
+$wgAutoloadClasses['BaseForm'] = $IP . '/includes/wikia/forms/BaseForm.class.php';
 
-$wgAutoloadClasses['BaseField'] = $IP.'/includes/wikia/forms/fields/BaseField.class.php';
-$wgAutoloadClasses['InputField'] = $IP.'/includes/wikia/forms/fields/InputField.class.php';
-$wgAutoloadClasses['TextField'] = $IP.'/includes/wikia/forms/fields/TextField.class.php';
-$wgAutoloadClasses['PasswordField'] = $IP.'/includes/wikia/forms/fields/PasswordField.class.php';
-$wgAutoloadClasses['CheckboxField'] = $IP.'/includes/wikia/forms/fields/CheckboxField.class.php';
-$wgAutoloadClasses['HiddenField'] = $IP.'/includes/wikia/forms/fields/HiddenField.class.php';
-$wgAutoloadClasses['TextareaField'] = $IP.'/includes/wikia/forms/fields/TextareaField.class.php';
-$wgAutoloadClasses['CollectionTextField'] = $IP.'/includes/wikia/forms/fields/CollectionTextField.class.php';
-$wgAutoloadClasses['CollectionField'] = $IP.'/includes/wikia/forms/fields/CollectionField.class.php';
-$wgAutoloadClasses['RadioField'] = $IP.'/includes/wikia/forms/fields/RadioField.class.php';
-$wgAutoloadClasses['SelectField'] = $IP.'/includes/wikia/forms/fields/SelectField.class.php';
+$wgAutoloadClasses['BaseField'] = $IP . '/includes/wikia/forms/fields/BaseField.class.php';
+$wgAutoloadClasses['InputField'] = $IP . '/includes/wikia/forms/fields/InputField.class.php';
+$wgAutoloadClasses['CollectionField'] = $IP . '/includes/wikia/forms/fields/CollectionField.class.php';
+$wgAutoloadClasses['CollectionTextField'] = $IP . '/includes/wikia/forms/fields/CollectionTextField.class.php';
+$wgAutoloadClasses['RadioField'] = $IP . '/includes/wikia/forms/fields/RadioField.class.php';
+$wgAutoloadClasses['SelectField'] = $IP . '/includes/wikia/forms/fields/SelectField.class.php';
+$wgAutoloadClasses['TextareaField'] = $IP . '/includes/wikia/forms/fields/TextareaField.class.php';
+$wgAutoloadClasses['TextField'] = $IP . '/includes/wikia/forms/fields/TextField.class.php';
 
-$wgAutoloadClasses['SubmitButton'] = $IP.'/includes/wikia/forms/fields/SubmitButton.class.php';
-
-$wgAutoloadClasses['Label'] = $IP.'/includes/wikia/forms/labels/Label.class.php';
+$wgAutoloadClasses['Label'] = $IP . '/includes/wikia/forms/labels/Label.class.php';
 
 // Sass-related classes
 $wgAutoloadClasses['SassService']              = $IP.'/includes/wikia/services/sass/SassService.class.php';
