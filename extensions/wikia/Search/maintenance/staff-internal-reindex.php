@@ -16,8 +16,7 @@ $wgTitle = Title::newMainPage();
 $c = RequestContext::getMain();
 $c->setUser($wgUser);
 $c->setTitle($wgTitle);
-
-$indexer = (new WikiaSearchIndexer);
+$indexer = (new Wikia\Search\Indexer);
 
 $dbr = wfGetDB( DB_MASTER );
 
