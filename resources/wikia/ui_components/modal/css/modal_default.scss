@@ -28,17 +28,35 @@ $modal-secondary-color: mix( $color-page, #000000, 90% );
 	header,
 	section,
 	footer {
+		left: 0;
+		position: absolute;
+		right: 0;
 		padding: 20px;
+	}
+
+	header {
+		top: 0;
 	}
 
 	header h3 {
 		color: $color-text;
-		display: inline;
 		font-weight: bold;
 	}
 
 	header .close {
 		float: right;
+	}
+
+	section {
+		bottom: 62px;
+		position: absolute;
+		overflow: hidden;
+		overflow-y: auto;
+		top: 63px;
+	}
+
+	footer {
+		bottom: 0;
 	}
 
 	footer .button {
@@ -50,9 +68,11 @@ $modal-secondary-color: mix( $color-page, #000000, 90% );
 	}
 
 	&.small {
+		height: 90%;
 		position: fixed;
 		width: 400px;
 		margin: auto;
+		min-height: 200px;
 		top: 50%;
 		left: 50%;
 		@include transform-translate(-50%, -50%);
