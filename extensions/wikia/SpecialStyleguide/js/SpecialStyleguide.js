@@ -236,9 +236,76 @@ require(['jquery'], function($) {
 								}
 							} );
 
-							$( ".modal" ).on( "click", "#smallModalAltLink", function( event ) {
+							$( ".modal" ).on( "click", "#mediumModalAltLink", function( event ) {
 								event.preventDefault();
 								mediumModal.hide();
+							} );
+						} );
+					} );
+
+				} );
+			} );
+		}
+
+		function showLargeModalExample() {
+			var $modalSection = $( '#modal' ),
+				largeModalExampleMsg = $.msg( 'styleguide-example-modal-large-modal' );
+
+			require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+				uiFactory.init( "button" ).then( function( button ) {
+					var $modalExamples = $modalSection.find( '.example' );
+					var modalSampleButtons = button.render( { type: "button", vars: {
+						"type": "button",
+						"classes": [ "primary", "normal", "large-modal-example-button" ],
+						"value": largeModalExampleMsg
+					} } );
+					$modalExamples.append( modalSampleButtons );
+					var largeModal2ndBtn = button.render( { type: "button", vars: {
+						"type": "button",
+						"classes": [ "secondary", "normal", "close" ],
+						"value": $.msg( 'styleguide-example-modal-secondary-button' )
+					} } );
+					var largeModal1stBtn = button.render( { type: "button", vars: {
+						"type": "button",
+						"classes": [ "primary", "normal", "close" ],
+						"value": $.msg( 'styleguide-example-modal-primary-button' )
+					} } );
+
+					uiFactory.init( "modal" ).then( function( modal ) {
+						var largeModal = modal.render( {
+							type: "default",
+							vars: {
+								"id": 'largeModalExample',
+								"size": 'large',
+								"content": largeModalExampleMsg,
+								"class": "styleguide-example-large",
+								"title": largeModalExampleMsg,
+								"closeButton": true,
+								"altLink": {
+									"id": "largeModalAltLink",
+									"href": "#",
+									"text": $.msg( 'styleguide-example-modal-alt-link' )
+								},
+								"secondBtn": largeModal2ndBtn,
+								"primaryBtn": largeModal1stBtn
+							}
+						} );
+						$('body').append( largeModal );
+
+						require( [ 'wikia.ui.modal' ], function( modal ) {
+							var largeModal = modal.init( 'largeModalExample' );
+
+							$( ".large-modal-example-button" ).click(function() {
+								if( largeModal.isShown() ) {
+									largeModal.hide();
+								} else {
+									largeModal.show();
+								}
+							} );
+
+							$( ".modal" ).on( "click", "#largeModalAltLink", function( event ) {
+								event.preventDefault();
+								largeModal.hide();
 							} );
 						} );
 					} );
@@ -262,5 +329,6 @@ require(['jquery'], function($) {
 		showDrawerExamples();
 		showSmallModalExample();
 		showMediumModalExample();
+		showLargeModalExample();
 	});
 });
