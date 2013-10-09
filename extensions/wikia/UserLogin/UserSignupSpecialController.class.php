@@ -495,7 +495,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		global $wgHooks, $wgAutomatedTestsIP;
 
 		//Disable captcha for automated tests
-		if ( $this->wg->Request->getIP() == $wgAutomatedTestsIP ) {
+		if ( in_array( $this->wg->Request->getIP(), $wgAutomatedTestsIPsList ) && $this->wg->Request->getInt( 'nocaptchatest' ) == 1 ) {
 			//Switch off global var
 			$this->wg->WikiaEnableConfirmEditExt = false;
 			//Remove hook function
