@@ -44,6 +44,7 @@ $wgHooks['UserLoadFromDatabase']     [] = "Wikia::onUserLoadFromDatabase";
 
 # Swift file backend
 $wgHooks['AfterSetupLocalFileRepo']  [] = "Wikia::onAfterSetupLocalFileRepo";
+$wgHooks['BeforeRenderTimeline']     [] = "Wikia::onBeforeRenderTimeline";
 
 /**
  * This class have only static methods so they can be used anywhere
@@ -2128,6 +2129,25 @@ class Wikia {
 				'deleted'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/deleted' ),
 				'archive'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/archive' )
 			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Modify timeline extension to use Swift storage (BAC-893)
+	 *
+	 * @param FileBackend $backend
+	 * @param string $fname mwstore abstract path
+	 * @param string $hash file hash
+	 * @return bool true - it's a hook
+	 */
+	static function onBeforeRenderTimeline(&$backend, &$fname, $hash) {
+		global $wgEnableSwiftFileBackend, $wgFSSwiftContainer;
+
+		if ( !empty( $wgEnableSwiftFileBackend ) ) {
+			$backend = FileBackendGroup::singleton()->get( 'swift-backend' );
+			$fname = 'mwstore://' . $backend->getName() . "/$wgFSSwiftContainer/images/timeline/$hash";
 		}
 
 		return true;
