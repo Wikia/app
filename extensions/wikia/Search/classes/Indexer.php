@@ -39,15 +39,7 @@ class Indexer
 	 * Used to determine which services to invoke during WikiaSearchIndexer::getPage()
 	 * @var array
 	 */
-	protected $serviceNames = array(
-			'DefaultContent',
-			'Metadata',
-			'MediaData',
-			'Redirects',
-			'Wam',
-			'WikiPromoData',
-			'WikiViews'
-	);
+	protected $serviceNames = array( 'All' );
 
 	/**
 	 * Used to generate indexing data for a number of page IDs on a given  wiki
