@@ -87,10 +87,10 @@ class LookupUserPage extends SpecialPage {
 		$title = htmlspecialchars( $this->getTitle()->getPrefixedText() );
 		$action = htmlspecialchars( $wgScript );
 		$target = htmlspecialchars( $target );
-		$ok = wfMessage( 'go' )->text();
-		$username_label = wfMessage( 'username' )->text();
-		$email_label = wfMessage( 'email' )->text();
-		$inputformtop = wfMessage( 'lookupuser' )->text();
+		$ok = wfMessage( 'go' )->escaped();
+		$username_label = wfMessage( 'username' )->escaped();
+		$email_label = wfMessage( 'email' )->escaped();
+		$inputformtop = wfMessage( 'lookupuser' )->escaped();
 
 		if ( $invalidUser ) {
 			$wgOut->addWikiText( '<span class="error">' . wfMessage( 'lookupuser-nonexistent-id', $id )->text() . '</span>' );
