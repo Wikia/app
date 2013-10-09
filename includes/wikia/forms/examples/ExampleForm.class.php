@@ -105,8 +105,8 @@ class ExampleForm extends BaseForm {
 		] ) );
 
 		// add submit
-		$this->addField('submitButton', new SubmitButton([
-			'value' => wfMessage('some-key-here')->text()
-		]));
+		//$this->addField('submitButton', new SubmitButton([
+		//	'value' => wfMessage('some-key-here')->text()
+		//]));
 	}
 }
