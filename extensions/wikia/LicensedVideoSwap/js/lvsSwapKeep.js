@@ -145,7 +145,7 @@ define( 'lvs.swapkeep', [
 				// no new title b/c we're keeping the current video
 				newTitle = '';
 				
-				if ( !$keepButton.data( 'subsequent-keep' ) ) {
+				if ( $keepButton.data( 'subsequent-keep' ) ) {
 
 					confirmModal();
 
