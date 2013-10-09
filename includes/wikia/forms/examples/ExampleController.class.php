@@ -1,5 +1,10 @@
 <?
 class ExampleController extends WikiaSpecialPageController {
+
+	public function __construct() {
+		parent::__construct( 'Example', '', false );
+	}
+
 	public function index() {
 		// create form instance and pass it into view
 		$this->form = new ExampleForm();
