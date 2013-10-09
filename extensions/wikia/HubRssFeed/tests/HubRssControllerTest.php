@@ -19,83 +19,176 @@ class HubRssControllerTest extends WikiaBaseTest {
 	}
 
 
-	public function testConstruct()
-	{
-		$mock = $this->getMockBuilder('HubRssFeedSpecialController')
-				->setMethods(['notfound'])
-				->getMock();
+	public function testConstruct() {
+		$mock = $this->getMockBuilder( 'HubRssFeedSpecialController' )
+			->setMethods( ['notfound'] )
+			->getMock();
 
 		$refl = new \ReflectionObject($mock);
-		$prop = $refl->getProperty('currentTitle');
-		$prop->setAccessible(true);
+		$prop = $refl->getProperty( 'currentTitle' );
+		$prop->setAccessible( true );
 
-		$val = $prop->getValue($mock);
-		$this->assertInstanceOf('Title',$val);
+		$val = $prop->getValue( $mock );
+		$this->assertInstanceOf( 'Title', $val );
 
 	}
 
-	public function testNotFound()
-	{
-		$mock = $this->getMockBuilder('HubRssFeedSpecialController')
+	public function testNotFound() {
+		$mock = $this->getMockBuilder( 'HubRssFeedSpecialController' )
 			->disableOriginalConstructor()
-			->setMethods(['__construct','setVal'])
+			->setMethods( ['__construct', 'setVal'] )
 			->getMock();
 
-		$mock->expects($this->once())
-			->method('setVal')
-			->with('links',['abc/Xyz']);
+		$mock->expects( $this->once() )
+			->method( 'setVal' )
+			->with( 'links', ['abc/Xyz'] );
 
-		$mockTitle = $this->getMockBuilder('Title')
-					->disableOriginalConstructor()
-					->setMethods(['getFullUrl'])
-					->getMock();
+		$mockTitle = $this->getMockBuilder( 'Title' )
+			->disableOriginalConstructor()
+			->setMethods( ['getFullUrl'] )
+			->getMock();
 
-		$mockTitle->expects($this->any())
-					->method('getFullUrl')
-					->will($this->returnValue('abc'));
+		$mockTitle->expects( $this->any() )
+			->method( 'getFullUrl' )
+			->will( $this->returnValue( 'abc' ) );
 
 		$mock->currentTitle = $mockTitle;
 
-		$mock->hubs = ['xyz'=>'...'];
+		$mock->hubs = ['xyz' => '...'];
 
 		$mock->notfound();
 
 	}
 
 
-
-	public function testIndex(){
-		$mock = $this->getMockBuilder('HubRssFeedSpecialController')
+	public function testIndexNotFound() {
+		$mock = $this->getMockBuilder( 'HubRssFeedSpecialController' )
 			->disableOriginalConstructor()
-			->setMethods(['notfound','setVal'])
+			->setMethods( ['forward', 'setVal'] )
+			->getMock();
+
+		$mockRequest = $this->getMockBuilder( 'WikiaRequest' )
+			->setMethods( ['getParams'] )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$mockRequest->expects( $this->any() )
+			->method( 'getParams' )
+			->will( $this->returnValue( ['par' => 'XyZ'] ) );
+
+		$mock->expects( $this->once() )
+			->method( 'forward' )
+			->with( 'HubRssFeedSpecial', 'notfound' );
+
+
+		$mock->hubs = ['abc' => 'desc_abc'];
+		$mock->request = $mockRequest;
+		$mock->index();
+	}
+
+	public function testIndexCached() {
+		return $this->testIndexNotCached( true );
+	}
+
+
+	public function testIndexNotCached( $cached = false ) {
+		$mock = $this->getMockBuilder( 'HubRssFeedSpecialController' )
+			->disableOriginalConstructor()
+			->setMethods( ['__construct'] )
 			->getMock();
 
 
-		$mock->expects($this->once())
-			->method('notfound');
-
-
-		$mockRequest = $this->getMockBuilder('WikiaRequest')
-			->setMethods(['getParams'])
+		$mockModel = $this->getMockBuilder( 'HubRssFeedModel' )
 			->disableOriginalConstructor()
-		->getMock();
-
-		$mockRequest->expects($this->at(0))
-				->method('getParams')
-				->will($this->returnValue(['pars'=>'AbC']));
-
-		$mockRequest->expects($this->at(1))
-			->method('getParams')
-			->will($this->returnValue(['pars'=>'XyZ']));
+			->setMethods( ['__construct', 'getRealData'] )
+			->getMock();
 
 
+		$mockService = $this->getMockBuilder( 'HubRssFeedService' )
+			->setMethods( ['dataToXml'] )
+			->disableOriginalConstructor()
+			->getMock();
+
+		if ( $cached ) {
+			$mockService->expects( $this->never() )
+				->method( 'dataToXml' );
+			$mockModel->expects( $this->never() )
+				->method( 'getRealData' );
+		}
+		else
+		{
+			$mockService->expects( $this->any() )
+				->method( 'dataToXml' )
+				->will( $this->returnValue( '<rss/>' ) );
+			$mockModel->expects( $this->once() )
+				->method( 'getRealData' )
+				->will( $this->returnValue( [''] ) );
+		}
+
+		$this->mockClass( 'HubRssFeedService', $mockService );
+		$this->mockClass( 'HubRssFeedModel', $mockModel );
+
+		$mockRequest = $this->getMockBuilder( 'WikiaRequest' )
+			->setMethods( ['getParams'] )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$mockRequest->expects( $this->any() )
+			->method( 'getParams' )
+			->will( $this->returnValue( ['par' => 'AbC'] ) );
+
+		$mockLang = $this->getMockBuilder( 'Language' )
+			->setMethods( ['getCode'] )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$mockLang->expects( $this->any() )
+			->method( 'getCode' )
+			->will( $this->returnValue( 'xx' ) );
+
+		$mockMemc = $this->getMockBuilder( 'MemcachedPhpBagOStuff' )
+			->setMethods( ['get', 'set'] )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$mockMemc->expects( $this->any() )
+			->method( 'get' )
+			->with( 'key' )
+			->will( $this->returnValue( $cached ? '<rss-cached/>' : false ) );
+
+		$mockResponse = $this->getMockBuilder( 'WikiaResponse' )
+			->setMethods( ['setFormat', 'setBody', 'setContentType'] )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$mockResponse->expects( $this->any() )
+			->method( 'setBody' )
+			->with( $cached ? '<rss-cached/>' : '<rss/>' );
+
+		$mockTitle = $this->getMockBuilder( 'Title' )
+			->disableOriginalConstructor()
+			->setMethods( ['getFullUrl'] )
+			->getMock();
+
+		$this->getGlobalFunctionMock( 'wfMemcKey' )
+			->expects( $this->any() )
+			->method( 'wfMemcKey' )
+			->will( $this->returnValue( 'key' ) );
+
+
+		$mock->app = new StdClass();
+		$mock->app->wg = new StdClass();
+		$mock->app->wg->ContLang = $mockLang;
+
+		$mock->currentTitle = $mockTitle;
 		$mock->request = $mockRequest;
-		$mock->hubs = ['abc'=>'desc_abc'];
+		$mock->hubs = ['abc' => 'desc_abc'];
+		$mock->wg = new StdClass();
+		$mock->wg->memc = $mockMemc;
 
-		var_dump($mockRequest->getParams());
-		var_dump($mockRequest->getParams());
+		$mock->response = $mockResponse;
 
-
+		$mock->index();
 	}
 
 
