@@ -24,6 +24,12 @@ ve.ui.WikiaMediaResultWidget = function VeUiWikiaMediaResultWidget( data, config
 
 	// Parent constructor
 	ve.ui.MWMediaResultWidget.call( this, data, config );
+
+	this.image = new Image();
+	this.$image = this.$$( this.image );
+	this.$image
+		.load( ve.bind( this.onThumbnailLoad, this ) )
+		.error( ve.bind( this.onThumbnailError, this ) );
 };
 
 /* Inheritance */
@@ -39,31 +45,42 @@ ve.inheritClass( ve.ui.WikiaMediaResultWidget, ve.ui.MWMediaResultWidget );
  * @returns {jQuery} Thumbnail element
  */
 ve.ui.WikiaMediaResultWidget.prototype.buildThumbnail = function () {
-	var image = new Image(),
-		$image = this.$$( image ),
-		$back = this.$$( '<div>' ),
-		$front = this.$$( '<div>' ),
-		$thumb = $back.add( $front );
-
-	// Preload image
-	$image
-		.load( ve.bind( this.onThumbnailLoad, this ) )
-		.error( ve.bind( this.onThumbnailError, this ) );
+	var	$back = this.$$( '<div>' );
+	this.$front = this.$$( '<div>' );
+	var	$thumb = $back.add( this.$front );
 
 	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
-		image.src = thumbnailer.getThumbURL( this.data.url, 'image', this.size, this.size );
+		this.image.src = thumbnailer.getThumbURL(
+			this.data.url,
+			'image',
+			this.size,
+			this.size
+		);
 
+		$thumb.addClass( 've-ui-mwMediaResultWidget-thumbnail' );
 		$thumb.addClass( 've-ui-WikiaMediaResultWidget-thumbnail' );
-		$thumb.last().css( 'background-image', 'url(' + image.src + ')' );
-		$front.addClass( 've-ui-mwMediaResultWidget-crop' );
-		$thumb.css( {
-			'height': '100%',
-			'left': 0,
-			'position': 'absolute',
-			'top': 0,
-			'width': '100%'
-		} );
+		$thumb.last().css( 'background-image', 'url(' + this.image.src + ')' );
+
 	}, this ) );
 
 	return $thumb;
+};
+
+ve.ui.WikiaMediaResultWidget.prototype.onThumbnailLoad = function () {
+	// Parent method
+	ve.ui.MWMediaResultWidget.prototype.onThumbnailLoad.call( this );
+
+	if ( this.image.width >= this.size && this.image.height >= this.size ) {
+		this.$front.addClass( 've-ui-mwMediaResultWidget-crop' );
+		this.$thumb.css( { 'width': '100%', 'height': '100%' } );
+	} else {
+		this.$thumb.css( {
+			'width': this.image.width,
+			'height': this.image.height,
+			'left': '50%',
+			'top': '50%',
+			'margin-left': Math.round( -this.image.width / 2 ),
+			'margin-top': Math.round( -this.image.height / 2 )
+		} );
+	}
 };
