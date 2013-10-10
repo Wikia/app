@@ -184,6 +184,17 @@
 					<li class="control" data-tooltip="<?= wfMessage("admindashboard-control-lvs-tooltip")->text() ?>">
 						<a href="<?= $urlLVS ?>" class="set" data-tracking="lvs">
 							<span class="representation">
+								<?/*
+									// TODO: once the logic to show the badge icon is hooked up, un comment this code. VID-718
+									$badgeParams = [
+										'type' => 'default',
+										'vars' => [
+											'number' => '2',
+										]
+									];
+									$alertBadge = \Wikia\UI\Factory::getInstance()->init( 'alert_badge' )->render( $badgeParams );
+								*/?>
+								<? /*= $alertBadge*/ ?>
 								<span class="icon licensedvideoswap"></span>
 							</span>
 							<?= wfMessage("admindashboard-control-lvs-label")->text() ?>
