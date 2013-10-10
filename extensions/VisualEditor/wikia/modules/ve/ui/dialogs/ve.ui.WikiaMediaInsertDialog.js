@@ -41,12 +41,22 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.$cart = this.$$( '<div>' );
 	this.search = new ve.ui.WikiaMediaSearchWidget( { '$$': this.frame.$$ } );
 	this.pagesPanel = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
+	this.$removePage = this.$$( '<div>' );
+	this.removeButton = new ve.ui.ButtonWidget( {
+		'$$': this.frame.$$,
+		'label': 'Remove from the cart', //TODO: i18n
+		'flags': ['destructive']
+	} );
+	this.removeButton.$.appendTo( this.$removePage );
 
 	// Events
 	this.search.connect( this, { 'select': 'onSearchSelect' } );
-	//this.pagesPanel.connect( this, { 'set': 'onPagesPanelSet' } );
+	this.cart.connect( this, { 'select': 'onCartSelect' } );
+	this.pagesPanel.connect( this, { 'set': 'onPagesPanelSet' } );
+	this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
 
 	// Initialization
+	this.pagesPanel.addPage( 'remove', { '$content': this.$removePage } );	
 	this.pagesPanel.addPage( 'search', { '$content': this.search.$ } );
 	this.$cart
 		.addClass( 've-ui-wikiaCartWidget-wrapper' )
@@ -64,11 +74,19 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
 	] );
 };
 
-ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function ( page ) {
-	this.search.$.find( ':input:first' ).focus();
+ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function ( item ) {
+	if ( this.pagesPanel.getPageName() === 'search' ) {
+		this.pagesPanel.setPage( 'remove' );
+	} else {
+		this.pagesPanel.setPage( 'search' );
+	}
 };
 
-/*
+ve.ui.WikiaMediaInsertDialog.prototype.onRemoveButtonClick = function () {
+	this.cartModel.removeItems( [ this.cart.getSelectedItem().getModel() ] )
+	this.pagesPanel.setPage( 'search' );
+};
+
 ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function ( page ) {
 	ve.ui.MWDialog.prototype.onOpen.call( this );
 	this.pagesPanel.setPage( 'search' );
@@ -77,7 +95,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function ( page ) {
 ve.ui.WikiaMediaInsertDialog.prototype.onPagesPanelSet = function ( page ) {
 	page.$.find( ':input:first' ).focus();
 };
-*/
 
 /* Registration */
 
