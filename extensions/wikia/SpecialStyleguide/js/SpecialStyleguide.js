@@ -49,268 +49,232 @@ require(['jquery'], function($) {
 			$target.text(linkLabel);
 		}
 
-		function showDrawerExamples() {
+		function showDrawerExamples( uiButton, uiDrawer ) {
 			var $drawerSection = $( '#drawer' ),
 				leftDrawerMsg = $.msg( 'styleguide-example-left' ),
-				rightDrawerMsg = $.msg( 'styleguide-example-right' );
+				rightDrawerMsg = $.msg( 'styleguide-example-right' ),
+				$drawerExamples = $drawerSection.find( '.example' ),
+				drawerSampleButtons = uiButton.render( { type: "button", vars: {
+					"type": "button",
+					"classes": [ "primary", "normal", "sampleDrawerLeft" ],
+					"value": leftDrawerMsg
+				} } );
 
-			require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-				uiFactory.init( "button" ).then( function( buttonInstance ) {
-					var $drawerExamples = $drawerSection.find( '.example' );
-					var drawerSampleButtons = buttonInstance.render( { type: "button", vars: {
-						"type": "button",
-						"classes": [ "primary", "normal", "sampleDrawerLeft" ],
-						"value": leftDrawerMsg
-					} } );
-					drawerSampleButtons += buttonInstance.render( { type: "button", vars: {
-						"type": "button",
-						"classes": [ "primary", "normal", "sampleDrawerRight" ],
-						"value": rightDrawerMsg
-					} } );
-					$drawerExamples.append( drawerSampleButtons );
+			drawerSampleButtons += uiButton.render( { type: "button", vars: {
+				"type": "button",
+				"classes": [ "primary", "normal", "sampleDrawerRight" ],
+				"value": rightDrawerMsg
+			} } );
+			$drawerExamples.append( drawerSampleButtons );
+
+			var drawerSamples = uiDrawer.render( {
+				type: "default",
+				vars: {
+					side: 'left',
+					content: '<h1>' + leftDrawerMsg + '</h1>',
+					"class": "styleguide-example-left"
+				}
+			} );
+			drawerSamples += uiDrawer.render( {
+				type: "default",
+				vars: {
+					side: 'right',
+					content: '<h1>' + rightDrawerMsg + '</h1>',
+					"class": "styleguide-example-right"
+				}
+			} );
+			$('body').append( drawerSamples );
+
+			require( [ 'wikia.ui.drawer' ], function( drawer ) {
+				var leftDrawer = drawer.init( 'left' );
+				var rightDrawer = drawer.init( 'right' );
+
+				$( ".sampleDrawerLeft" ).click(function() {
+					if( leftDrawer.isOpen() ) {
+						leftDrawer.close();
+					} else {
+						leftDrawer.open();
+					}
 				} );
 
-				uiFactory.init( "drawer" ).then( function( drawerInstance ) {
-					var drawerSamples = drawerInstance.render( {
-						type: "default",
-						vars: {
-							side: 'left',
-							content: '<h1>' + leftDrawerMsg + '</h1>',
-							"class": "styleguide-example-left"
-						}
-					} );
-					drawerSamples += drawerInstance.render( {
-						type: "default",
-						vars: {
-							side: 'right',
-							content: '<h1>' + rightDrawerMsg + '</h1>',
-							"class": "styleguide-example-right"
-						}
-					} );
-					$('body').append( drawerSamples );
-
-					require( [ 'wikia.ui.drawer' ], function( drawer ) {
-						var leftDrawer = drawer.init( 'left' );
-						var rightDrawer = drawer.init( 'right' );
-
-						$( ".sampleDrawerLeft" ).click(function() {
-							if( leftDrawer.isOpen() ) {
-								leftDrawer.close();
-							} else {
-								leftDrawer.open();
-							}
-						} );
-
-						$( ".sampleDrawerRight" ).click(function() {
-							if( rightDrawer.isOpen() ) {
-								rightDrawer.close();
-							} else {
-								rightDrawer.open();
-							}
-						} );
-					} );
+				$( ".sampleDrawerRight" ).click(function() {
+					if( rightDrawer.isOpen() ) {
+						rightDrawer.close();
+					} else {
+						rightDrawer.open();
+					}
 				} );
 			} );
 		}
 
-		function showSmallModalExample() {
+		function showSmallModalExample( uiButton, uiModal, modal ) {
 			var $modalSection = $( '#modal' ),
-				smallModalExampleMsg = $.msg( 'styleguide-example-modal-small-modal' );
-
-			require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-				uiFactory.init( "button" ).then( function( button ) {
-					var $modalExamples = $modalSection.find( '.example' );
-					var modalSampleButtons = button.render( { type: "button", vars: {
-						"type": "button",
-						"classes": [ "primary", "normal", "small-modal-example-button" ],
-						"value": smallModalExampleMsg
-					} } );
-					$modalExamples.append( modalSampleButtons );
-					var smallModal2ndBtn = button.render( { type: "button", vars: {
-						"type": "button",
-						"classes": [ "secondary", "normal", "close" ],
-						"value": $.msg( 'styleguide-example-modal-secondary-button' )
-					} } );
-					var smallModal1stBtn = button.render( { type: "button", vars: {
-						"type": "button",
-						"classes": [ "primary", "normal", "close" ],
-						"value": $.msg( 'styleguide-example-modal-primary-button' )
-					} } );
-
-					uiFactory.init( "modal" ).then( function( modal ) {
-						var smallModal = modal.render( {
-							type: "default",
-							vars: {
-								"id": 'smallModalExample',
-								"size": 'small',
-								"content": smallModalExampleMsg,
-								"class": "styleguide-example-small",
-								"title": smallModalExampleMsg,
-								"closeButton": true,
-								"altLink": {
-									"id": "smallModalAltLink",
-									"href": "#",
-									"text": $.msg( 'styleguide-example-modal-alt-link' )
-								},
-								"secondBtn": smallModal2ndBtn,
-								"primaryBtn": smallModal1stBtn
-							}
-						} );
-						$('body').append( smallModal );
-
-						require( [ 'wikia.ui.modal' ], function( modal ) {
-							var smallModal = modal.init( 'smallModalExample' );
-
-							$( ".small-modal-example-button" ).click(function() {
-								if( smallModal.isShown() ) {
-									smallModal.hide();
-								} else {
-									smallModal.show();
-								}
-							} );
-
-							$( ".modal" ).on( "click", "#smallModalAltLink", function( event ) {
-								event.preventDefault();
-								smallModal.hide();
-							} );
-						} );
-					} );
-
+				smallModalExampleMsg = $.msg( 'styleguide-example-modal-small-modal'),
+				$modalExamples = $modalSection.find( '.example' ),
+				modalSampleButtons = uiButton.render( { type: "button", vars: {
+					"type": "button",
+					"classes": [ "primary", "normal", "small-modal-example-button" ],
+					"value": smallModalExampleMsg
+				} } ),
+				smallModal2ndBtn = uiButton.render( { type: "button", vars: {
+					"type": "button",
+					"classes": [ "secondary", "normal", "close" ],
+					"value": $.msg( 'styleguide-example-modal-secondary-button' )
+				} } ),
+				smallModal1stBtn = uiButton.render( { type: "button", vars: {
+					"type": "button",
+					"classes": [ "primary", "normal", "close" ],
+					"value": $.msg( 'styleguide-example-modal-primary-button' )
+				} } ),
+				smallModal = uiModal.render( {
+					type: "default",
+					vars: {
+						"id": 'smallModalExample',
+						"size": 'small',
+						"content": smallModalExampleMsg,
+						"class": "styleguide-example-small",
+						"title": smallModalExampleMsg,
+						"closeButton": true,
+						"altLink": {
+							"id": "smallModalAltLink",
+							"href": "#",
+							"text": $.msg( 'styleguide-example-modal-alt-link' )
+						},
+						"secondBtn": smallModal2ndBtn,
+						"primaryBtn": smallModal1stBtn
+					}
 				} );
+
+			$modalExamples.append( modalSampleButtons );
+			$( 'body' ).append( smallModal );
+
+			/** Attach events **/
+			var smallModalInstance = modal.init( 'smallModalExample' );
+			$( ".small-modal-example-button" ).click(function() {
+				if( smallModalInstance.isShown() ) {
+					smallModalInstance.hide();
+				} else {
+					smallModalInstance.show();
+				}
+			} );
+
+			$( ".modal" ).on( "click", "#smallModalAltLink", function( event ) {
+				event.preventDefault();
+				smallModalInstance.hide();
 			} );
 		}
 
-		function showMediumModalExample() {
+		function showMediumModalExample( uiButton, uiModal, modal ) {
 			var $modalSection = $( '#modal' ),
-				mediumModalExampleMsg = $.msg( 'styleguide-example-modal-medium-modal' );
-
-			require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-				uiFactory.init( "button" ).then( function( button ) {
-					var $modalExamples = $modalSection.find( '.example' );
-					var modalSampleButtons = button.render( { type: "button", vars: {
-						"type": "button",
-						"classes": [ "primary", "normal", "medium-modal-example-button" ],
-						"value": mediumModalExampleMsg
-					} } );
-					$modalExamples.append( modalSampleButtons );
-					var mediumModal2ndBtn = button.render( { type: "button", vars: {
-						"type": "button",
-						"classes": [ "secondary", "normal", "close" ],
-						"value": $.msg( 'styleguide-example-modal-secondary-button' )
-					} } );
-					var mediumModal1stBtn = button.render( { type: "button", vars: {
-						"type": "button",
-						"classes": [ "primary", "normal", "close" ],
-						"value": $.msg( 'styleguide-example-modal-primary-button' )
-					} } );
-
-					uiFactory.init( "modal" ).then( function( modal ) {
-						var mediumModal = modal.render( {
-							type: "default",
-							vars: {
-								"id": 'mediumModalExample',
-								"size": 'medium',
-								"content": mediumModalExampleMsg,
-								"class": "styleguide-example-medium",
-								"title": mediumModalExampleMsg,
-								"closeButton": true,
-								"altLink": {
-									"id": "mediumModalAltLink",
-									"href": "#",
-									"text": $.msg( 'styleguide-example-modal-alt-link' )
-								},
-								"secondBtn": mediumModal2ndBtn,
-								"primaryBtn": mediumModal1stBtn
-							}
-						} );
-						$('body').append( mediumModal );
-
-						require( [ 'wikia.ui.modal' ], function( modal ) {
-							var mediumModal = modal.init( 'mediumModalExample' );
-
-							$( ".medium-modal-example-button" ).click(function() {
-								if( mediumModal.isShown() ) {
-									mediumModal.hide();
-								} else {
-									mediumModal.show();
-								}
-							} );
-
-							$( ".modal" ).on( "click", "#mediumModalAltLink", function( event ) {
-								event.preventDefault();
-								mediumModal.hide();
-							} );
-						} );
-					} );
-
+				mediumModalExampleMsg = $.msg( 'styleguide-example-modal-medium-modal' ),
+				$modalExamples = $modalSection.find( '.example' ),
+				modalSampleButtons = uiButton.render( { type: "button", vars: {
+					"type": "button",
+					"classes": [ "primary", "normal", "medium-modal-example-button" ],
+					"value": mediumModalExampleMsg
+				} } ),
+				mediumModal2ndBtn = uiButton.render( { type: "button", vars: {
+					"type": "button",
+					"classes": [ "secondary", "normal", "close" ],
+					"value": $.msg( 'styleguide-example-modal-secondary-button' )
+				} } ),
+				mediumModal1stBtn = uiButton.render( { type: "button", vars: {
+					"type": "button",
+					"classes": [ "primary", "normal", "close" ],
+					"value": $.msg( 'styleguide-example-modal-primary-button' )
+				} } ),
+				mediumModal = uiModal.render( {
+					type: "default",
+					vars: {
+						"id": 'mediumModalExample',
+						"size": 'medium',
+						"content": mediumModalExampleMsg,
+						"class": "styleguide-example-medium",
+						"title": mediumModalExampleMsg,
+						"closeButton": true,
+						"altLink": {
+							"id": "mediumModalAltLink",
+							"href": "#",
+							"text": $.msg( 'styleguide-example-modal-alt-link' )
+						},
+						"secondBtn": mediumModal2ndBtn,
+						"primaryBtn": mediumModal1stBtn
+					}
 				} );
+
+			$modalExamples.append( modalSampleButtons );
+			$( 'body' ).append( mediumModal );
+
+			/** Attach events **/
+			var mediumModal = modal.init( 'mediumModalExample' );
+
+			$( ".medium-modal-example-button" ).click(function() {
+				if( mediumModal.isShown() ) {
+					mediumModal.hide();
+				} else {
+					mediumModal.show();
+				}
+			} );
+
+			$( ".modal" ).on( "click", "#mediumModalAltLink", function( event ) {
+				event.preventDefault();
+				mediumModal.hide();
 			} );
 		}
 
-		function showLargeModalExample() {
+		function showLargeModalExample( uiButton, uiModal, modal ) {
 			var $modalSection = $( '#modal' ),
-				largeModalExampleMsg = $.msg( 'styleguide-example-modal-large-modal' );
-
-			require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-				uiFactory.init( "button" ).then( function( button ) {
-					var $modalExamples = $modalSection.find( '.example' );
-					var modalSampleButtons = button.render( { type: "button", vars: {
-						"type": "button",
-						"classes": [ "primary", "normal", "large-modal-example-button" ],
-						"value": largeModalExampleMsg
-					} } );
-					$modalExamples.append( modalSampleButtons );
-					var largeModal2ndBtn = button.render( { type: "button", vars: {
-						"type": "button",
-						"classes": [ "secondary", "normal", "close" ],
-						"value": $.msg( 'styleguide-example-modal-secondary-button' )
-					} } );
-					var largeModal1stBtn = button.render( { type: "button", vars: {
-						"type": "button",
-						"classes": [ "primary", "normal", "close" ],
-						"value": $.msg( 'styleguide-example-modal-primary-button' )
-					} } );
-
-					uiFactory.init( "modal" ).then( function( modal ) {
-						var largeModal = modal.render( {
-							type: "default",
-							vars: {
-								"id": 'largeModalExample',
-								"size": 'large',
-								"content": largeModalExampleMsg,
-								"class": "styleguide-example-large",
-								"title": largeModalExampleMsg,
-								"closeButton": true,
-								"altLink": {
-									"id": "largeModalAltLink",
-									"href": "#",
-									"text": $.msg( 'styleguide-example-modal-alt-link' )
-								},
-								"secondBtn": largeModal2ndBtn,
-								"primaryBtn": largeModal1stBtn
-							}
-						} );
-						$('body').append( largeModal );
-
-						require( [ 'wikia.ui.modal' ], function( modal ) {
-							var largeModal = modal.init( 'largeModalExample' );
-
-							$( ".large-modal-example-button" ).click(function() {
-								if( largeModal.isShown() ) {
-									largeModal.hide();
-								} else {
-									largeModal.show();
-								}
-							} );
-
-							$( ".modal" ).on( "click", "#largeModalAltLink", function( event ) {
-								event.preventDefault();
-								largeModal.hide();
-							} );
-						} );
-					} );
-
+				largeModalExampleMsg = $.msg( 'styleguide-example-modal-large-modal' ),
+				$modalExamples = $modalSection.find( '.example' ),
+				modalSampleButtons = uiButton.render( { type: "button", vars: {
+					"type": "button",
+					"classes": [ "primary", "normal", "large-modal-example-button" ],
+					"value": largeModalExampleMsg
+				} } ),
+				largeModal2ndBtn = uiButton.render( { type: "button", vars: {
+					"type": "button",
+					"classes": [ "secondary", "normal", "close" ],
+					"value": $.msg( 'styleguide-example-modal-secondary-button' )
+				} } ),
+				largeModal1stBtn = uiButton.render( { type: "button", vars: {
+					"type": "button",
+					"classes": [ "primary", "normal", "close" ],
+					"value": $.msg( 'styleguide-example-modal-primary-button' )
+				} } ),
+				largeModal = uiModal.render( {
+					type: "default",
+					vars: {
+						"id": 'largeModalExample',
+						"size": 'large',
+						"content": largeModalExampleMsg,
+						"class": "styleguide-example-large",
+						"title": largeModalExampleMsg,
+						"closeButton": true,
+						"altLink": {
+							"id": "largeModalAltLink",
+							"href": "#",
+							"text": $.msg( 'styleguide-example-modal-alt-link' )
+						},
+						"secondBtn": largeModal2ndBtn,
+						"primaryBtn": largeModal1stBtn
+					}
 				} );
+
+			$modalExamples.append( modalSampleButtons );
+			$('body').append( largeModal );
+
+			var largeModal = modal.init( 'largeModalExample' );
+			$( ".large-modal-example-button" ).click(function() {
+				if( largeModal.isShown() ) {
+					largeModal.hide();
+				} else {
+					largeModal.show();
+				}
+			} );
+
+			$( ".modal" ).on( "click", "#largeModalAltLink", function( event ) {
+				event.preventDefault();
+				largeModal.hide();
 			} );
 		}
 
@@ -326,9 +290,20 @@ require(['jquery'], function($) {
 		});
 
 		/** Examples **/
-		showDrawerExamples();
-		showSmallModalExample();
-		showMediumModalExample();
-		showLargeModalExample();
+		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+			uiFactory.init( "button" ).then( function( uiButton ) {
+				uiFactory.init( "drawer" ).then( function( uiDrawer ) {
+					uiFactory.init( "modal" ).then( function( uiModal ) {
+						showDrawerExamples( uiButton, uiDrawer );
+
+						require( [ 'wikia.ui.modal' ], function( modal ) {
+							showSmallModalExample( uiButton, uiModal, modal );
+							showMediumModalExample( uiButton, uiModal, modal );
+							showLargeModalExample( uiButton, uiModal, modal );
+						} );
+					} );
+				} );
+			} );
+		} );
 	});
 });
