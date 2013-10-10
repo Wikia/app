@@ -343,26 +343,6 @@ class VideoHandlerHelper extends WikiaModel {
 	}
 
 	/**
-	 * Fetch the list of local (e.g. non-premium) videos from this wiki
-	 *
-	 * @return array
-	 */
-	public function getLocalVideoTitles() {
-		$sql = "SELECT video_title FROM video_info WHERE premium = 0";
-		$dbh = wfGetDB(DB_SLAVE);
-
-		$res = $dbh->query($sql);
-
-		$titles = array();
-		while ($row = $dbh->fetchObject($res)) {
-			$titles[] = $row->video_title;
-		}
-		$dbh->freeResult($res);
-
-		return $titles;
-	}
-
-	/**
 	 * Checks to see if the video title passed in has a thumbnail on disk or not.
 	 *
 	 * @param string|Title $title The video title to check
