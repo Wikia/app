@@ -492,15 +492,14 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function disableCaptchaForAutomatedTests() {
-		global $wgHooks, $wgAutomatedTestsIP;
-
+		global $wgHooks;
 		//Disable captcha for automated tests
-		if ( $this->wg->Request->getIP() == $wgAutomatedTestsIP ) {
+		if ( in_array( $this->wg->Request->getIP(), $this->wg->AutomatedTestsIPsList ) && $this->wg->Request->getInt( 'nocaptchatest' ) == 1 ) {
 			//Switch off global var
 			$this->wg->WikiaEnableConfirmEditExt = false;
 			//Remove hook function
-			$hookArrayKey = array_search( 'ConfirmEditHooks::confirmUserCreate', $this->wg->Hooks['AbortNewAccount'] );
-			if ( $hookArrayKey ) {
+			$hookArrayKey = array_search( 'ConfirmEditHooks::confirmUserCreate', $wgHooks['AbortNewAccount'] );
+			if ( $hookArrayKey !== false ) {
 				unset($wgHooks['AbortNewAccount'][$hookArrayKey]);
 			}
 			$this->wg->Out->addJsConfigVars([
