@@ -243,6 +243,7 @@ class UserLoginHelper extends WikiaModel {
 
 		//Check whether user already exists or is already confirmed
 		if ( !$this->isTempUser( $username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
+			wfWaitForSlaves();
 			$user = User::newFromName( $username );
 			if ( !($user instanceof User) || $user->getID() == 0 ) {
 				//User doesn't exist
