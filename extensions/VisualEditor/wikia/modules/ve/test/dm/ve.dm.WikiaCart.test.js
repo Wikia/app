@@ -22,7 +22,8 @@ QUnit.test( 've.dm.WikiaCart.addItems', function ( assert ) {
 		}
 	} );
 	cartModel.addItems( items );
-	QUnit.expect(2);
+	assert.deepEqual( cartModel.getItems(), items );
+	QUnit.expect( 3 );
 } );
 
 
@@ -43,7 +44,8 @@ QUnit.test( 've.dm.WikiaCart.removeItems', function ( assert ) {
 		}
 	} );
 	cartModel.removeItems( [ item1 ] );
-	QUnit.expect(1);
+	assert.deepEqual( cartModel.getItems(), [ item2, item3 ] );
+	QUnit.expect( 2 );
 } );
 
 QUnit.test( 've.dm.WikiaCart.clearItems', function ( assert ) {
@@ -64,6 +66,7 @@ QUnit.test( 've.dm.WikiaCart.clearItems', function ( assert ) {
 		}
 	} );
 	cartModel.clearItems( [ item1 ] );
-	QUnit.expect(1);
+	assert.deepEqual( cartModel.getItems(), [] );
+	QUnit.expect( 2 );
 } );
 

@@ -42,4 +42,4 @@ ve.dm.WikiaCart.prototype.clearItems = function () {
 
 ve.dm.WikiaCart.prototype.getItems = function () {
 	return this.items;
-}
+};
