@@ -1,3 +1,4 @@
+/*global mw */
 /*!
  * VisualEditor user interface MWBetaWelcomeDialog class.
  *
@@ -65,6 +66,20 @@ ve.ui.MWBetaWelcomeDialog.prototype.initialize = function () {
 		.text( ve.msg( 'visualeditor-dialog-beta-welcome-content', $( '#ca-edit' ).text() ) );
 	this.$body.append( this.contentLayout.$ );
 	this.$foot.append( this.continueButton.$ );
+};
+
+/**
+ * Get the title of the window.
+ *
+ * Send the MediaWiki username along with the message for {{GENDER:}} i18n support
+ * @returns {string} Window title
+ */
+ve.ui.MWBetaWelcomeDialog.prototype.getTitle = function () {
+	var userName = mw.config.get( 'wgUserName' );
+	if ( !userName ) {
+		userName = ''; // Make sure 'null' and 'undefined' are sent as empty string
+	}
+	return ve.msg( this.constructor.static.titleMessage, userName );
 };
 
 /* Registration */

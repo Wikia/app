@@ -710,10 +710,13 @@ $messages['vep'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Hzy980512
  */
 $messages['zh-hans'] = array(
 	'tagsreportgo' => '显示',
 	'tagsreportmainnspace' => '主要',
+	'tagsreportpagesfound' => '找到$1个含特殊标签（DPL、YouTube等）的页面。',
+	'tagsreportpageremoved' => '页面#$1已被移除',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

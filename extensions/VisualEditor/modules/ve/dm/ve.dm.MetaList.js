@@ -75,11 +75,10 @@ ve.mixinClass( ve.dm.MetaList, ve.EventEmitter );
  * - remove items for metadata that was removed
  * - translate offsets and recompute indices for metadata that has shifted
  * @param {ve.dm.Transaction} tx Transaction that was applied to the document
- * @param {boolean} reversed Whether the transaction was applied in reverse
  * @emits insert
  * @emits remove
  */
-ve.dm.MetaList.prototype.onTransact = function ( tx, reversed ) {
+ve.dm.MetaList.prototype.onTransact = function ( tx ) {
 	var i, ilen, j, jlen, k, klen, item, ins, rm, insMeta, rmMeta,
 		numItems = this.items.length,
 		itemIndex = 0, // Current index into this.items
@@ -142,11 +141,11 @@ ve.dm.MetaList.prototype.onTransact = function ( tx, reversed ) {
 				break;
 
 			case 'replace':
-				ins = reversed ? ops[i].remove : ops[i].insert;
-				rm = reversed ? ops[i].insert : ops[i].remove;
+				ins = ops[i].insert;
+				rm = ops[i].remove;
 				if ( ops[i].removeMetadata !== undefined ) {
-					insMeta = reversed ? ops[i].removeMetadata : ops[i].insertMetadata;
-					rmMeta = reversed ? ops[i].insertMetadata : ops[i].removeMetadata;
+					insMeta = ops[i].insertMetadata;
+					rmMeta = ops[i].removeMetadata;
 
 					// Process removed metadata
 					for ( ;
@@ -191,8 +190,8 @@ ve.dm.MetaList.prototype.onTransact = function ( tx, reversed ) {
 				break;
 
 			case 'replaceMetadata':
-				insMeta = reversed ? ops[i].remove : ops[i].insert;
-				rmMeta = reversed ? ops[i].insert : ops[i].remove;
+				insMeta = ops[i].insert;
+				rmMeta = ops[i].remove;
 
 				// Process removed items
 				for ( ;
@@ -232,7 +231,7 @@ ve.dm.MetaList.prototype.onTransact = function ( tx, reversed ) {
 	for ( i = 0, ilen = removedItems.length; i < ilen; i++ ) {
 		this.deleteRemovedItem( removedItems[i].offset, removedItems[i].index );
 		events.push( [
-			'remove', removedItems[i].item, removedItems[i].offset, removedItems[i].index
+			'remove', removedItems[i], removedItems[i].offset, removedItems[i].index
 		] );
 	}
 

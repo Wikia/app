@@ -18,8 +18,6 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		$this->response->addAsset( 'extensions/wikia/Forum/css/Forum.scss' );
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumSpecial.scss' );
-		$this->response->setJsVar( 'wgIsForum', true );
-		$this->wg->IsForum = true;
 	}
 
 	public function index() {

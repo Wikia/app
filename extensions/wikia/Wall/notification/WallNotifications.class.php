@@ -17,7 +17,7 @@ class WallNotifications {
 	private $removedEntities;
 	private $notUniqueUsers = array(); //used for sicen read email.
 	public function __construct() {
-		$this->app = F::App();
+		$this->app = F::app();
 		$this->removedEntities = array();
 	}
 
@@ -31,7 +31,22 @@ class WallNotifications {
 		wfProfileIn(__METHOD__);
 
 		$memcSync = $this->getCache($userId, $wikiId);
-		$list = $this->getData($memcSync, $userId, $wikiId);
+
+		// try fetching the list of notifications from memcache
+		$list = $memcSync->get();
+		if(empty($list) && !is_array($list)) {
+			// nothing in the cache, so use the db as a fallback and store the result in cache
+			$callback = function() use( $userId, $wikiId, &$list ) {
+				$list = $this->rebuildData( $userId, $wikiId );
+				return $list;
+			};
+
+			// this memcache data is synchronized so we're making sure nothing else is modifying it at the same time
+			// we're using the same callback when we cannot aquire the lock, as we want to have the list of notifications
+			// even if we won't be able to store it in the cache
+			$this->lockAndSetData( $memcSync, $callback, $callback);
+		}
+
 		if(empty($list)) {
 			wfProfileOut(__METHOD__);
 			return array();
@@ -104,6 +119,7 @@ class WallNotifications {
 	}
 
 	public function getCounts($userId) {
+		wfProfileIn(__METHOD__);
 		$wikiList = $this->getWikiList($userId);
 
 		// prefetch data
@@ -125,7 +141,7 @@ class WallNotifications {
 			if( $wiki['unread'] > 0 || $wiki['id'] == $this->app->wg->CityId )
 				$output[] = $wiki;
 		}
-
+		wfProfileOut(__METHOD__);
 		return $output;
 	}
 
@@ -156,11 +172,11 @@ class WallNotifications {
 		// $forceCurrentWiki = false - return only wikis that ever recived notifications
 
 		$key = $this->getKey($userId, 'LIST');
-		$val = $this->app->getGlobal('wgMemc')->get($key);
+		$val = $this->app->wg->memc->get($key);
 
-		if(empty($val)) {
+		if( false === $val ) {
 			$val = $this->loadWikiListFromDB($userId);
-			$this->app->getGlobal('wgMemc')->set($key, $val);
+			$this->app->wg->memc->set($key, $val);
 		}
 
 		// make sure that current Wiki is on the list, as first entry, sort the rest
@@ -211,7 +227,7 @@ class WallNotifications {
 
 	private function addWikiToList($userId, $wikiId, $wikiSitename) {
 		$key = $this->getKey($userId, 'LIST');
-		$val = $this->app->getGlobal('wgMemc')->get($key);
+		$val = $this->app->wg->memc->get($key);
 
 		if(empty($val)) {
 			$val = $this->loadWikiListFromDB($userId);
@@ -219,7 +235,7 @@ class WallNotifications {
 
 		$val[$wikiId] = $wikiSitename;
 
-		$this->app->getGlobal('wgMemc')->set($key, $val);
+		$this->app->wg->memc->set($key, $val);
 
 	}
 
@@ -231,7 +247,7 @@ class WallNotifications {
 		// that supports update-if-key-did-not-change
 
 		$key = $this->getKey($userId, 'LIST');
-		$val = $this->app->getGlobal('wgMemc')->get($key);
+		$val = $this->app->wg->memc->get($key);
 
 		if(empty($val)) {
 			// removing Wiki from list is just speed optimization
@@ -239,7 +255,7 @@ class WallNotifications {
 			// need to recreate it from DB
 		} else {
 			unset( $val[$wikiId] );
-			$this->app->getGlobal('wgMemc')->set($key, $val);
+			$this->app->wg->memc->set($key, $val);
 		}
 	}
 
@@ -476,10 +492,8 @@ class WallNotifications {
 
 		$memcSync = $this->getCache($userId, $wikiId);
 
-		// Try to update the data $count times before giving up
-		$count = 5;
-		while ($count--) {
-			if($memcSync->lock()) {
+		$this->lockAndSetData( $memcSync,
+			function() use( $memcSync, $userId, $wikiId, $id, &$updateDBlist, &$wasUnread ) {
 				$data = $this->getData($memcSync, $userId, $wikiId);
 
 				if($id == 0 && !empty( $data['relation'] ) ) {
@@ -495,41 +509,22 @@ class WallNotifications {
 							$data['relation'][ $value ]['read'] = true;
 
 							$updateDBlist[] = array(
-										'user_id' => $userId,
-										'wiki_id' => $wikiId,
-										'unique_id' => $value
+								'user_id' => $userId,
+								'wiki_id' => $wikiId,
+								'unique_id' => $value
 							);
 
 						}
 					}
 				}
 
-				$success = false;
-				// Make sure we have data
-				if (isset($data)) {
-					// See if we can set it successfully
-					if ($this->setData($memcSync, $data)) {
-						$success = true;
-					}
-				} else {
-					// If there's no data don't bother doing anything
-					$success = true;
-				}
-				$memcSync->unlock();
-				if ( $success ) {
-					break;
-				}
-
-			} else {
-				$this->random_msleep($count);
+				return $data;
+			},
+			function() use( $memcSync ) {
+				// Delete the cache if we were unable to update to force a rebuild
+				$memcSync->delete();
 			}
-		}
-
-		// If count is -1 it means we left the above loop failing to update
-		if ($count == -1) {
-			// Delete the cache if we were unable to update to force a rebuild
-			$memcSync->delete();
-		}
+		);
 
 		foreach($updateDBlist as $value) {
 			$this->getDB(true)->update('wall_notification' , array('is_read' =>  1 ), $value, __METHOD__ );
@@ -573,38 +568,18 @@ class WallNotifications {
 			if($this->isCachedData($uId, $wikiId)) {
 				$memcSync = $this->getCache($uId, $wikiId);
 
-				// Try to update the data $count times before giving up
-				$count = 5;
-				while ($count--) {
-					if($memcSync->lock()) {
+				$this->lockAndSetData( $memcSync,
+					function() use( $memcSync, $uId, $wikiId, $uniqueId ) {
 						$data = $this->getData($memcSync, $uId, $wikiId);
 						$this->remNotificationFromData($data, $uniqueId);
-
-						$success = false;
-						// Make sure we have data
-						if (isset($data)) {
-							// See if we can set it successfully
-							if ($this->setData($memcSync, $data)) {
-								$success = true;
-							}
-						} else {
-							// If there's no data don't bother doing anything
-							$success = true;
-						}
-						$memcSync->unlock();
-						if ( $success ) {
-							break;
-						}
-					} else {
-						$this->random_msleep($count);
+						return $data;
+					},
+					function() use( $memcSync ) {
+						// Delete the cache if we were unable to update to force a rebuild
+						$memcSync->delete();
 					}
-				}
+				);
 
-				// If count is -1 it means we left the above loop failing to update
-				if ($count == -1) {
-					// Delete the cache if we were unable to update to force a rebuild
-					$memcSync->delete();
-				}
 			}
 
 			$this->remNotificationsForUniqueIDDB($uId, $wikiId, $uniqueId, $hide);
@@ -690,38 +665,17 @@ class WallNotifications {
 
 		$memcSync = $this->getCache($userId, $wikiId);
 
-		// Try to update the data $count times before giving up
-		$count = 5;
-		while ($count--) {
-			if($memcSync->lock()) {
+		$this->lockAndSetData( $memcSync,
+			function() use( $memcSync, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $notifyeveryone ) {
 				$data = $this->getData($memcSync, $userId, $wikiId);
 				$this->addNotificationToData($data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, false, $notifyeveryone );
-
-				$success = false;
-				// Make sure we have data
-				if (isset($data)) {
-					// See if we can set it successfully
-					if ($this->setData($memcSync, $data)) {
-						$success = true;
-					}
-				} else {
-					// If there's no data don't bother doing anything
-					$success = true;
-				}
-				$memcSync->unlock();
-				if ( $success ) {
-					break;
-				}
-			} else {
-				$this->random_msleep($count);
+				return $data;
+			},
+			function() use($memcSync) {
+				// Delete the cache if we were unable to update to force a rebuild
+				$memcSync->delete();
 			}
-		}
-
-		// If count is -1 it means we left the above loop failing to update
-		if ($count == -1) {
-			// Delete the cache if we were unable to update to force a rebuild
-			$memcSync->delete();
-		}
+		);
 
 		$this->cleanEntitiesFromDB();
 	}
@@ -842,7 +796,7 @@ class WallNotifications {
 
 	protected function isCachedData($userId, $wikiId) {
 		$key = $this->getKey($userId, $wikiId);
-		$val = F::App()->getGlobal('wgMemc')->get($key);
+		$val = $this->app->wg->memc->get($key);
 
 		if(empty($val) && !is_array($val)) {
 			return False;
@@ -851,6 +805,11 @@ class WallNotifications {
 		return True;
 	}
 
+	/**
+	 * Used internally after acquiring cache entry lock
+	 * Tries to fetch the list of notifications from a memcache, and if it's not there,
+	 * it fetches it from the database
+	 */
 	protected function getData($cache, $userId, $wiki) {
 		$val = $cache->get();
 
@@ -989,4 +948,45 @@ class WallNotifications {
 		}
 		return $this->cachedUsers[$userId];
 	}
+
+	/**
+	 * Modify the shared memcache entry after locking it. After this function gets the lock, it calls the $getDataCallback,
+	 * which should return the value to be put into the memcache. In case the lock cannot be acquired, $lockFailCallback
+	 * is called
+	 * If the $getDataCallback returns null or false, no memcache data is set
+	 * @param $memcSync - MemcacheSync instance
+	 * @param $getDataCallback - callback returning the data to be put in the memcache entry.
+	 * @param $lockFailCallback -
+	 */
+	protected function lockAndSetData( $memcSync, $getDataCallback, $lockFailCallback ) {
+		// Try to update the data $count times before giving up
+		$count = 5;
+		while ($count--) {
+			if( $memcSync->lock() ) {
+				$data = $getDataCallback();
+				$success = false;
+				// Make sure we have data
+				if (isset($data)) {
+					// See if we can set it successfully
+					if ($this->setData($memcSync, $data)) {
+						$success = true;
+					}
+				} else {
+					// If there's no data don't bother doing anything
+					$success = true;
+				}
+				$memcSync->unlock();
+				if ( $success ) {
+					break;
+				}
+			} else {
+				$this->random_msleep( $count );
+			}
+		}
+		// If count is -1 it means we left the above loop failing to update
+		if ($count == -1) {
+			$lockFailCallback();
+		}
+	}
+
 }

@@ -739,11 +739,14 @@ $messages['ur'] = array(
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Hzy980512
  * @author Kuailong
  * @author Liuxinyu970226
  * @author Qiyue2001
  */
 $messages['zh-hans'] = array(
+	'filepage-desc' => '为了支持视频而修改标准MediaWiki文件页面',
+	'video-page-file-list-header' => '出现在这些页面上',
 	'video-page-from-provider' => '来自$1',
 	'video-page-views' => '$1次浏览',
 	'video-page-see-more-info' => '显示更多信息',

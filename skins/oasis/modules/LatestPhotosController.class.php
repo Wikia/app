@@ -21,6 +21,8 @@ class LatestPhotosController extends WikiaController {
 	public function executeIndex() {
 		global $wgUser, $wgMemc;
 
+		$this->response->addAsset('skins/oasis/js/LatestPhotos.js');
+
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
 		// get the count of images on this wiki

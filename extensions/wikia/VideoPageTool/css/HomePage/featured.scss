@@ -1,0 +1,220 @@
+@import "skins/oasis/css/mixins/box-sizing-border-box";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/core/responsive";
+@import "skins/oasis/css/mixins/transition";
+@import '../mixins/_sprite-VideoPageTool.scss';
+
+
+$play-button-overlay-fade-duration: 400ms;
+
+
+// show/hide play buttons and arrows on hover of ancestor elements
+@mixin transition-show-hide( $selector ) {
+	#{$selector} {
+		@include transition-shorthand(opacity $play-button-overlay-fade-duration ease-out);
+		@include opacity(0);
+	}
+	&:hover #{$selector} {
+		@include opacity(100);
+		@include transition-shorthand(opacity $play-button-overlay-fade-duration ease-out);
+		visibility: visible;
+	}
+}
+
+
+.WikiaPage {
+	border: 0;
+}
+
+// Allow takeover of left/right margins on this page.  There's no UGC content so it should be fine.
+.WikiaArticle {
+	overflow: visible;
+}
+
+.featured-video {
+	@include clearfix;
+	background: black;
+	margin: 0 -10px;
+	width: auto;
+	.featured-video-slider{
+		position: relative;
+		ul {
+			list-style: none;
+			margin: 0;
+		}
+		li {
+			list-style: none;
+		}
+		// Large Images
+		.bx-viewport {
+			position: relative;
+			overflow: hidden;
+		}
+		.bx-wrapper {
+			margin-bottom: 0;
+		}
+		.bxslider {
+			position: relative;
+			li {
+				float: left;
+				margin-top: 0;
+				position: relative;
+
+				.slide-image {
+					width: 100%;
+
+					> img {
+						width: 100%;
+					}
+
+					// darken the image with 10% opacity per design request
+					&:after {
+						@include opacity(10);
+						background: black;
+						content: "";
+						display: block;
+						height: 100%;
+						left: 0;
+						position: absolute;
+						top: 0;
+						width: 100%;
+					}
+				}
+				.caption {
+					bottom: 35px;
+					color: #FFF;
+					left: 55px;
+					position: absolute;
+					text-shadow: 1px 1px 2px #666;
+				}
+				.title {
+					display: block;
+					font-size: 26px;
+					line-height: 32px;
+					margin-bottom: 12px;
+				}
+				.description {
+					display: block;
+					font-size: 16px;
+					line-height: 21px;
+				}
+			}
+			.Wikia-video-play-button {
+				margin: -42.5px 0 0 -42.5px;
+			}
+			.slide-video {
+				color: #FFF;
+				margin: auto;
+			}
+		}
+
+		// Small navigation circles
+		.bx-pager {
+			bottom: -30px;
+			padding-top: 0px;
+			.bx-pager-item {
+				// extend the element to the bottom of the video thumbnails so cursor stays hovered
+				padding-top: 15px;
+				a {
+					width: 8px;
+					height: 8px;
+					margin: 0 5px 0 4px;
+				}
+			}
+		}
+
+		// Thumbnails
+		.thumbs {
+			display: none;
+			background: #3a3a3a;
+			bottom: 0;
+			left: 0;
+			padding: 15px 10px 30px;
+			position: absolute;
+			z-index: 60; // needs to show over fading images
+			li {
+				@include box-sizing-border-box;
+				margin: 0;
+				padding: 0 10px;
+				text-align: center;
+				.title {
+					@include opacity( 70 );
+					color: #FFF;
+					fond-size: 14px;
+					line-height: 1.5em;
+					max-height: 3em;
+					overflow: hidden;
+					text-align: left;
+					p {
+						margin: 0;
+					}
+				}
+				&:hover .title {
+					@include opacity( 100 );
+				}
+			}
+			a { // .video
+				@include transition-show-hide( '.Wikia-video-play-button' );
+				display: block;
+				margin-bottom: 10px;
+				position: relative;
+				text-align: center;
+				width: 100%;
+
+				.Wikia-video-play-button {
+					margin: -25px 0 0 -25px;
+				}
+
+				&.playing {
+					&:after {
+						@include opacity( 80 );
+						background: black;
+						content: "";
+						display: block;
+						height: 100%;
+						left: 0;
+						position: absolute;
+						top: 0;
+						width: 100%;
+						z-index: 101; // above play button which is 100
+					}
+					.Wikia-video-play-button {
+						display: none;
+					}
+				}
+
+				> img {
+					width: 100%;
+					height: auto;
+				}
+
+			}
+		}
+	}
+	.bx-wrapper {
+		@include transition-show-hide( '.Wikia-video-play-button' );
+		@include transition-show-hide( '.bx-controls-direction a' );
+
+		.bx-controls-direction a {
+			@include sprite-VideoPageTool-base();
+			height: 55px;
+			margin-top: -27.5px;
+			width: 42px;
+			&.bx-prev {
+				@include sprite-VideoPageTool('carousel_left_arrow_white');
+			}
+			&.bx-next {
+				@include sprite-VideoPageTool('carousel_right_arrow_white');
+			}
+		}
+	}
+	.Wikia-video-play-button {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+	}
+	.hidden {
+		visibility: hidden;
+	}
+}

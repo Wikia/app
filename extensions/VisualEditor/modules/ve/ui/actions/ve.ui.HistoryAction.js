@@ -24,6 +24,8 @@ ve.inheritClass( ve.ui.HistoryAction, ve.ui.Action );
 
 /* Static Properties */
 
+ve.ui.HistoryAction.static.name = 'history';
+
 /**
  * List of allowed methods for the action.
  *
@@ -60,4 +62,4 @@ ve.ui.HistoryAction.prototype.redo = function () {
 
 /* Registration */
 
-ve.ui.actionFactory.register( 'history', ve.ui.HistoryAction );
+ve.ui.actionFactory.register( ve.ui.HistoryAction );

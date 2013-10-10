@@ -13,6 +13,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 	public function __construct() {
 		parent::__construct('UserSignup', '', false);
+
+		$this->disableCaptchaForAutomatedTests();
 	}
 
 	public function init() {
@@ -487,6 +489,23 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->result = ( $signupForm->msgType == 'error' ) ? $signupForm->msgType : 'ok' ;
 		$this->msg = $signupForm->msg;
 		$this->errParam = $signupForm->errParam;
+	}
+
+	private function disableCaptchaForAutomatedTests() {
+		global $wgHooks;
+		//Disable captcha for automated tests
+		if ( in_array( $this->wg->Request->getIP(), $this->wg->AutomatedTestsIPsList ) && $this->wg->Request->getInt( 'nocaptchatest' ) == 1 ) {
+			//Switch off global var
+			$this->wg->WikiaEnableConfirmEditExt = false;
+			//Remove hook function
+			$hookArrayKey = array_search( 'ConfirmEditHooks::confirmUserCreate', $wgHooks['AbortNewAccount'] );
+			if ( $hookArrayKey !== false ) {
+				unset($wgHooks['AbortNewAccount'][$hookArrayKey]);
+			}
+			$this->wg->Out->addJsConfigVars([
+				'wgUserLoginDisableCaptcha' => true
+			]);
+		}
 	}
 
 }

@@ -277,6 +277,7 @@ $messages['an'] = array(
  * @author Meno25
  * @author OsamaK
  * @author ترجمان05
+ * @author زكريا
  */
 $messages['ar'] = array(
 	'sitewidemessages' => 'رسائل لكل الموقع',
@@ -287,7 +288,7 @@ $messages['ar'] = array(
 	'swm-page-title-dismiss' => 'رسائل لكل الموقع :: استبعاد',
 	'swm-page-title-list' => 'رسائل لكل الموقع :: قائمة',
 	'swm-label-preview' => 'عرض مسبق',
-	'swm-label-edit' => 'تعديل',
+	'swm-label-edit' => 'عدل',
 	'swm-label-remove' => 'إزالة',
 	'swm-label-sent' => 'إرسال',
 	'swm-label-list' => 'قائمة',
@@ -549,6 +550,7 @@ $messages['br'] = array(
 	'swm-label-mode-users-user' => 'An implijer dibabet',
 	'swm-label-mode-users-user-hint' => '<i>Ne vez ket anavezet an dibab-se er strollad « Wikioù ».</i>',
 	'swm-label-mode-users-user-multi' => 'Roll an implijerien',
+	'swm-label-mode-users-anon' => 'An holl implijerien dizanv',
 	'swm-label-content' => 'Danvez',
 	'swm-label-comment' => 'Evezhiadenn',
 	'swm-label-dismissed' => 'Distaolet',
@@ -588,9 +590,11 @@ $messages['br'] = array(
 	'swm-error-long-message' => "Ar c'hemennadennoù a zo bevennet da 500 arouez",
 	'swm-error-empty-group' => 'Ebarzhiñ anv ar strollad-se.',
 	'swm-lang-other' => 'an holl yezhoù a chom',
+	'swm-label-mode-users-registration' => 'Deiziad enrollañ',
 	'swm-mode-users-registration-after' => "War-lerc'h",
 	'swm-mode-users-registration-before' => 'Kent',
 	'swm-mode-users-registration-between' => 'Etre',
+	'swm-label-mode-users-editcount' => 'Aozañ ar gont',
 	'swm-mode-users-editcount-more' => "Muioc'h",
 	'swm-mode-users-editcount-less' => "Nebeutoc'h",
 	'swm-mode-users-editcount-between' => 'Etre',
@@ -2565,11 +2569,11 @@ $messages['ps'] = array(
 	'swm-label-remove' => 'غورځول',
 	'swm-label-sent' => 'ولېږل شو',
 	'swm-label-list' => 'لړليک',
-	'swm-label-recipient-wikis' => 'ويکي ګانې',
+	'swm-label-recipient-wikis' => 'ويکي گانې',
 	'swm-label-recipient-users' => 'کارنان',
-	'swm-label-mode-wikis-all' => 'ټولې ويکي ګانې',
+	'swm-label-mode-wikis-all' => 'ټولې ويکي گانې',
 	'swm-label-mode-wikis-wiki' => 'ټاکلې ويکي',
-	'swm-label-mode-wikis-wiki-multi' => 'د ويکي ګانو لړليک',
+	'swm-label-mode-wikis-wiki-multi' => 'د ويکي گانو لړليک',
 	'swm-label-mode-users-all' => 'ټول کارنان',
 	'swm-label-mode-users-active' => 'فعاله کارنان',
 	'swm-label-mode-users-user' => 'ټاکلی کارن',

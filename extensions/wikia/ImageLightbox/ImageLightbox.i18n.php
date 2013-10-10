@@ -830,8 +830,8 @@ $messages['ps'] = array(
 	'lightbox-send' => 'لېږل',
 	'lightbox-share-button-email' => 'برېښليک',
 	'lightbox-share-button-www' => 'شريکول',
-	'lightbox-share-email-label' => 'دا انځور يو ملګري ته برېښليکول',
-	'lightbox-share-email-page-label' => 'دا مخ يو ملګري ته برېښليکول',
+	'lightbox-share-email-label' => 'دا انځور يو ملگري ته برېښليکول',
+	'lightbox-share-email-page-label' => 'دا مخ يو ملگري ته برېښليکول',
 	'lightbox-share-email-page-label-address' => 'برېښليک پته',
 	'lightbox-share-email-error-caption' => 'تېروتنه',
 );
