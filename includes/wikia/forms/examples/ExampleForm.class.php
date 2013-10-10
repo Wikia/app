@@ -1,12 +1,14 @@
 <?php
 class ExampleForm extends BaseForm {
 	// define form attributes
-	protected $action = 'test/action.php';
+
 	protected $id = 'testId';
 	protected $method = 'post';
 
 	public function __construct() {
 		parent::__construct();
+
+		$this->action = Title::newFromText('ExampleForm', NS_SPECIAL)->getFullUrl();
 
 		//////////////////////////////
 		// An example of contact form
