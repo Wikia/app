@@ -61,6 +61,8 @@ class HubRssControllerTest extends WikiaBaseTest {
 
 		$mock->hubs = ['xyz' => '...'];
 
+		$mock->wg = new StdClass();
+
 		$mock->notfound();
 
 	}

@@ -61,6 +61,8 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 		}
 
 		$this->setVal( 'links', $links );
+		$this->wg->SupressPageSubtitle = true;
+
 	}
 
 
