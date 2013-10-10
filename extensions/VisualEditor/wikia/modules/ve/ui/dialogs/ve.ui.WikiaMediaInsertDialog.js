@@ -44,6 +44,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 
 	// Events
 	this.search.connect( this, { 'select': 'onSearchSelect' } );
+	//this.pagesPanel.connect( this, { 'set': 'onPagesPanelSet' } );
 
 	// Initialization
 	this.pagesPanel.addPage( 'search', { '$content': this.search.$ } );
@@ -62,6 +63,21 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
 		new ve.dm.WikiaCartItem( item.title, item.url )
 	] );
 };
+
+ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function ( page ) {
+	this.search.$.find( ':input:first' ).focus();
+};
+
+/*
+ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function ( page ) {
+	ve.ui.MWDialog.prototype.onOpen.call( this );
+	this.pagesPanel.setPage( 'search' );
+};
+
+ve.ui.WikiaMediaInsertDialog.prototype.onPagesPanelSet = function ( page ) {
+	page.$.find( ':input:first' ).focus();
+};
+*/
 
 /* Registration */
 
