@@ -10,7 +10,6 @@ define('wikia.fluidlayout',  function() {
 	var WIDTH_OUTSIDE_MIN = 768,
 		WIDTH_OUTSIDE_MAX = 1300,
 		WIDTH_OUTSIDE = 1030,
-		RAIL_WIDTH = 300,
 		WIDTH_GUTTER = 20,
 		ARTICLE_BORDER_WIDTH = 1,
 		WIDTH_ADSKIN = 170,
@@ -31,7 +30,7 @@ define('wikia.fluidlayout',  function() {
 	 * @return {number} Minimum article width in pixels
 	 */
 	function getMaxArticleWidth() {
-		return WIDTH_OUTSIDE_MAX - RAIL_WIDTH;
+		return WIDTH_OUTSIDE_MAX;
 	}
 
 	/**
