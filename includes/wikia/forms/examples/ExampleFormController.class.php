@@ -13,7 +13,6 @@ class ExampleFormController extends WikiaSpecialPageController {
 			'contactFormSubject' => 'Example subject',
 			'contactFormMessage' => 'Example message',
 			'contactFormSendCopy' => 1,
-			'contactFormSubmit' => wfMessage( 'submit' )->text(),
 			'contactFormSessionId' => md5( 'random-session-key' ),
 		];
 
