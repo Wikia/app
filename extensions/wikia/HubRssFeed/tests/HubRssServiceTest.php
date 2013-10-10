@@ -16,6 +16,9 @@ class HubRssServiceTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	/**
+	 * @covers  HubRssFeedService::dataToXml
+	 */
 	public function testDataToXml() {
 
 		$service = new HubRssFeedService('xx', 'yy');

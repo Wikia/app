@@ -25,6 +25,9 @@ class HubRssModelTest extends WikiaBaseTest {
 	}
 
 
+	/**
+	 * @covers  HubRssFeedModel::__construct
+	 */
 	public function testConstruct() {
 		$mockToolbox = $this->mockToolbox->setMethods( ['__construct'] )->getMock();
 
@@ -51,7 +54,9 @@ class HubRssModelTest extends WikiaBaseTest {
 
 	}
 
-
+	/**
+	 * @covers  HubRssFeedModel::isValidVerticalId
+	 */
 	public function testIsValidVerticalId() {
 
 		$mockToolbox = $this->mockToolbox->setMethods( ['getVerticalsIds'] )->getMock();
@@ -77,7 +82,9 @@ class HubRssModelTest extends WikiaBaseTest {
 
 	}
 
-
+	/**
+	 * @covers  HubRssFeedModel::getServices
+	 */
 	public function testGetServices() {
 
 		$mockSlider = $this->getMock( 'MarketingToolboxModuleSliderService', ['__construct'] );
@@ -102,6 +109,9 @@ class HubRssModelTest extends WikiaBaseTest {
 	}
 
 
+	/**
+	 * @covers  HubRssFeedModel::getDataFromModules
+	 */
 	public function testGetDataFromModules() {
 
 		$mockSlider = $this->getMock( 'MarketingToolboxModuleSliderService', ['loadData'] );
@@ -145,7 +155,9 @@ class HubRssModelTest extends WikiaBaseTest {
 
 	}
 
-
+	/**
+	 * @covers  HubRssFeedModel::getRealData
+	 */
 	public function testGetRealData() {
 		$mockToolbox = $this->mockToolbox->setMethods( ['getLastPublishedTimestamp'] )->getMock();
 

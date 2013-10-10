@@ -18,7 +18,9 @@ class HubRssControllerTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-
+	/**
+	 * @covers  HubRssFeedSpecialController::__construct
+	 */
 	public function testConstruct() {
 		$mock = $this->getMockBuilder( 'HubRssFeedSpecialController' )
 			->setMethods( ['notfound'] )
@@ -33,6 +35,9 @@ class HubRssControllerTest extends WikiaBaseTest {
 
 	}
 
+	/**
+	 * @covers  HubRssFeedSpecialController::notfound
+	 */
 	public function testNotFound() {
 		$mock = $this->getMockBuilder( 'HubRssFeedSpecialController' )
 			->disableOriginalConstructor()
@@ -61,6 +66,9 @@ class HubRssControllerTest extends WikiaBaseTest {
 	}
 
 
+	/**
+	 * @covers  HubRssFeedSpecialController::index
+	 */
 	public function testIndexNotFound() {
 		$mock = $this->getMockBuilder( 'HubRssFeedSpecialController' )
 			->disableOriginalConstructor()
@@ -86,11 +94,17 @@ class HubRssControllerTest extends WikiaBaseTest {
 		$mock->index();
 	}
 
+
+	/**
+	 * @covers  HubRssFeedSpecialController::index
+	 */
 	public function testIndexCached() {
 		return $this->testIndexNotCached( true );
 	}
 
-
+	/**
+	 * @covers  HubRssFeedSpecialController::index
+	 */
 	public function testIndexNotCached( $cached = false ) {
 		$mock = $this->getMockBuilder( 'HubRssFeedSpecialController' )
 			->disableOriginalConstructor()
