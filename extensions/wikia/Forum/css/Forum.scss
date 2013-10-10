@@ -26,7 +26,7 @@
 	textarea {
 		font: inherit;
 	}
-	
+
 	.board-description {
 		clear: both;
 		color: $color-alternate-text;
@@ -49,14 +49,14 @@
 
 	.DiscussionBox {
 		margin: 15px 0 20px 0;
-		
+
 		input[type=text],
 		textarea {
 			@include box-sizing;
 			background-color: $color-wall-input-new;
 			border: 0;
 			color: $color-text;
-			
+
 			// Chrome needs this to get rid of empty space below textarea
 			display: block;
 			font-size: 13px;
@@ -100,14 +100,14 @@
 			display: none;
 			margin-top: 10px;
 		}
-		
+
 		.board-container {
 			margin-bottom: 10px;
 			.heading {
 				display: block;
 			}
 		}
-		
+
 		.board-list-error {
 			@include forum-message-error;
 			padding: 3px 20px;
@@ -165,7 +165,7 @@
 				}
 			}
 		}
-		
+
 		.notify-everyone {
 			margin: 0 5px 0 0;
 		}
@@ -197,7 +197,7 @@
 			float: left;
 		}
 	}
-	
+
 	.Pagination {
 		margin-top: 20px;
 	}
@@ -207,8 +207,8 @@
 		margin: 0;
 
 		h4 {
+			display: inline;
 			font-weight: normal;
-			margin: 0 0 3px 0;
 		}
 
 		.activity {
@@ -246,27 +246,39 @@
 		.thread {
 			@include clearfix;
 			border-bottom: 1px dotted $color-page-border;
+			display: table;
 			margin: 0;
 			padding: 6px 5px 8px;
+			table-layout: fixed;
+			width: 100%;
 
 			&:hover {
 				background-color: $Forum-color-board-thread-hover;
 			}
 		}
 
+		.title-wrap {
+			margin: 0 0 5px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			word-break: break-all;
+			word-wrap: break-word;
+		}
+
 		.thread-left,
 		.thread-right {
 			display: table-cell;
+			padding-left: 5px;
 			vertical-align: top;
 		}
 
 		.thread-left {
-			float: left;
-			width: 575px;
+			width: 80%;
 		}
 
 		.thread-right {
-			float: right;
+			width: 20%;
 		}
 
 		.timestamp {
@@ -336,7 +348,7 @@
 	.subtle {
 		color: $color-text;
 		font-size: 11px;
-		margin-left: 3px;		
+		margin-left: 3px;
 	}
 }
 
