@@ -24,4 +24,5 @@ $messages['en'] = [
 	'styleguide-example-modal-secondary-button' => 'Cancel',
 	'styleguide-example-modal-primary-button' => 'OK',
 	'styleguide-example-modal-alt-link' => 'Another way to close this modal',
+	'styleguide-example-modal-large-alt-link' => 'Open small modal',
 ];

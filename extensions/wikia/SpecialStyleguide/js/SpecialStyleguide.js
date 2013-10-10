@@ -259,7 +259,7 @@ require(['jquery'], function($) {
 						"altLink": {
 							"id": "largeModalAltLink",
 							"href": "#",
-							"text": $.msg( 'styleguide-example-modal-alt-link' )
+							"text": $.msg( 'styleguide-example-modal-large-alt-link' )
 						},
 						"secondBtn": largeModal2ndBtn,
 						"primaryBtn": largeModal1stBtn
@@ -280,7 +280,22 @@ require(['jquery'], function($) {
 
 			$( ".modal" ).on( "click", "#largeModalAltLink", function( event ) {
 				event.preventDefault();
-				largeModal.hide();
+				if( !$("#smallModalOverLargeExample").exists() ) {
+					var smallModal = uiModal.render( {
+						type: "default",
+						vars: {
+							"id": 'smallModalOverLargeExample',
+							"size": 'small',
+							"content": 'Testing modal on modal...',
+							"title": 'Testing modal on modal...',
+							"closeButton": true,
+							"closeText": closeMessage
+						}
+					} );
+					$('body').append( smallModal );
+				}
+
+				modal.init( 'smallModalOverLargeExample' ).show();
 			} );
 		}
 
