@@ -234,50 +234,47 @@ class VideoHandlerHelper extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$videoDetail = array();
-		$title = Title::newFromText( $videoInfo['title'], NS_FILE );
-		if ( $title instanceof Title ) {
-			$file = wfFindFile( $title );
-			if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
-				// get thumbnail
-				$thumb = $file->transform( array( 'width' => $thumbWidth, 'height' => $thumbHeight ) );
-				$thumbUrl = $thumb->getUrl();
-				// get user
-				if ( !empty($videoInfo['addedBy']) ) {
-					$user = User::newFromId( $videoInfo['addedBy'] );
-					$userName = ( User::isIP($user->getName()) ) ? wfMessage( 'oasis-anon-user' )->text() : $user->getName();
-					$userUrl = $user->getUserPage()->getFullURL();
-				} else {
-					$userName = '';
-					$userUrl = '';
-				}
+		$title = $videoInfo['title'];
+		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 
-				// get article list
-				$mediaQuery = new ArticlesUsingMediaQuery( $title );
-				$articleList = $mediaQuery->getArticleList();
-				list( $truncatedList, $isTruncated ) = WikiaFileHelper::truncateArticleList( $articleList, $postedInArticles );
-
-				// video details
-				$videoDetail = array(
-					'title' => $title->getDBKey(),
-					'fileTitle' => $title->getText(),
-					'description' => $this->getVideoDescription($file), // The description from the File page
-					'fileUrl' => $title->getFullURL(),
-					'thumbUrl' => $thumbUrl,
-					'userName' => $userName,
-					'userUrl' => $userUrl,
-					'truncatedList' => $truncatedList,
-					'isTruncated' => $isTruncated,
-					'timestamp' => empty($videoInfo['addedAt']) ? '' : $videoInfo['addedAt'],
-					'duration' => $file->getMetadataDuration(),
-					'viewsTotal' => empty($videoInfo['viewsTotal']) ? 0 : $videoInfo['viewsTotal'],
-					'provider' => $file->getProviderName(),
-					'embedUrl' => $file->getHandler()->getEmbedUrl(),
-				);
+		if ( $file ) {
+			// get thumbnail
+			$thumb = $file->transform( array( 'width' => $thumbWidth, 'height' => $thumbHeight ) );
+			$thumbUrl = $thumb->getUrl();
+			// get user
+			if ( !empty($videoInfo['addedBy']) ) {
+				$user = User::newFromId( $videoInfo['addedBy'] );
+				$userName = ( User::isIP($user->getName()) ) ? wfMessage( 'oasis-anon-user' )->text() : $user->getName();
+				$userUrl = $user->getUserPage()->getFullURL();
 			} else {
-				Wikia::Log(__METHOD__, false, "No file found for '".$videoInfo['title']."'");
+				$userName = '';
+				$userUrl = '';
 			}
+
+			// get article list
+			$mediaQuery = new ArticlesUsingMediaQuery( $title );
+			$articleList = $mediaQuery->getArticleList();
+			list( $truncatedList, $isTruncated ) = WikiaFileHelper::truncateArticleList( $articleList, $postedInArticles );
+
+			// video details
+			$videoDetail = array(
+				'title' => $title->getDBKey(),
+				'fileTitle' => $title->getText(),
+				'description' => $this->getVideoDescription($file), // The description from the File page
+				'fileUrl' => $title->getFullURL(),
+				'thumbUrl' => $thumbUrl,
+				'userName' => $userName,
+				'userUrl' => $userUrl,
+				'truncatedList' => $truncatedList,
+				'isTruncated' => $isTruncated,
+				'timestamp' => empty($videoInfo['addedAt']) ? '' : $videoInfo['addedAt'],
+				'duration' => $file->getMetadataDuration(),
+				'viewsTotal' => empty($videoInfo['viewsTotal']) ? 0 : $videoInfo['viewsTotal'],
+				'provider' => $file->getProviderName(),
+				'embedUrl' => $file->getHandler()->getEmbedUrl(),
+			);
 		} else {
-			Wikia::Log(__METHOD__, false, "No title object found for '".$videoInfo['title']."'");
+			Wikia::Log(__METHOD__, false, "No file found for '".$videoInfo['title']."'");
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -345,4 +342,55 @@ class VideoHandlerHelper extends WikiaModel {
 		return $opts;
 	}
 
+	/**
+	 * Checks to see if the video title passed in has a thumbnail on disk or not.
+	 *
+	 * @param string|Title $title The video title to check
+	 * @param bool|$fixit Whether to fix the problem or ignore it
+	 * @return Status
+	 */
+	public function fcskVideoThumbnail( $title, $fixit = true ) {
+		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
+
+		// See if a file exists for this title
+		if ( empty($file) ) {
+			return Status::newFatal( 'File object not found' );
+		}
+
+		// See if the thumbnail exists for this title
+		if ( file_exists($file->getLocalRefPath()) ) {
+			return Status::newGood( ['check' => 'ok'] );
+		} else {
+			// Determine if we should fix this problem or leave it be
+			if ( $fixit ) {
+				$status = $this->resetVideoThumb( $file );
+				if ( $status->isGood() ) {
+					return Status::newGood( ['check' => 'failed', 'action' => 'fixed'] );
+				} else {
+					return $status;
+				}
+			} else {
+				return Status::newGood( ['check' => 'failed', 'action' => 'ignored'] );
+			}
+		}
+	}
+
+	/**
+	 * Reset the video thumbnail to its original image as defined by the video provider
+	 *
+	 * @param File $file The video file to reset
+	 * @return FileRepoStatus The status of the publish operation
+	 */
+	public function resetVideoThumb( File $file ) {
+		$mime = $file->getMimeType();
+		list(, $provider) = explode('/', $mime);
+		$videoId = $file->getVideoId();
+		$title = $file->getTitle();
+
+		$oUploader = new VideoFileUploader();
+		$oUploader->setProvider( $provider );
+		$oUploader->setVideoId( $videoId );
+		$oUploader->setTargetTitle( $title->getDBkey() );
+		return $oUploader->resetThumbnail( $file );
+	}
 }

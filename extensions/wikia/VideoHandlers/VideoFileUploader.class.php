@@ -11,6 +11,11 @@ class VideoFileUploader {
 	const SANITIZE_MODE_FILENAME = 1;
 	const SANITIZE_MODE_ARTICLETITLE = 2;
 
+	// Number of times to attempt uploading a thumbnail
+	const UPLOAD_RETRIES = 3;
+	// Number of seconds to wait after each upload attempt
+	const UPLOAD_RETRY_WAIT = 3;
+
 	protected $sTargetTitle;
 	protected $sDescription;
 	protected $bUndercover;
@@ -79,62 +84,16 @@ class VideoFileUploader {
 
 		wfProfileIn(__METHOD__);
 
-		// The getApiWrapper method makes an HTTP request which can result
-		// in some thrown exceptions
-		$wrapper = null;
+		// Some providers will sometimes return error codes when attempting
+		// to fetch a thumbnnail
 		try {
-			$wrapper = $this->getApiWrapper();
+			$upload = $this->uploadBestThumbnail();
 		} catch ( Exception $e ) {
-			// If we get an error here, just print it and let the following
-			// code return a Status::newFatal
 			Wikia::Log(__METHOD__, false, $e->getMessage());
-		}
 
-		if ( !$wrapper ) {
-			/* can't upload without proper ApiWrapper */
 			wfProfileOut(__METHOD__);
-			return Status::newFatal("Can't get ApiWrapper");
+			return Status::newFatal( $e->getMessage() );
 		}
-
-		$retries = 3;
-
-		for ( $i = 0; $i < $retries; $i++ ) {
-			if ( $i > 0 ) sleep( 3 );
-			/* prepare temporary file */
-			$upload = $this->tmpUpload( $this->getApiWrapper()->getThumbnailUrl() );
-			$fetchStatus = $upload->fetchFile();
-			if ( $fetchStatus->isGood() ) {
-				$status = $upload->verifyUpload();
-				if ( isset( $status['status'] ) && ( $status['status'] != UploadBase::EMPTY_FILE ) ) {
-					break;
-				}
-			}
-		}
-
-		if ( $i == $retries ) {
-			for ( $i = 0; $i < $retries; $i++ ) {
-				if ( $i > 0 ) sleep( 3 );
-				/* prepare temporary file with default thumbnail */
-				$upload = $this->tmpUpload( LegacyVideoApiWrapper::$THUMBNAIL_URL );
-				$fetchStatus = $upload->fetchFile();
-				if ( $fetchStatus->isGood() ) {
-					break;
-				}
-			}
-
-			if ( $i == $retries ) {
-				wfProfileOut(__METHOD__);
-				return Status::newFatal('');
-			}
-
-			$status = $upload->verifyUpload();
-			if ( isset( $status['status'] ) && ( $status['status'] == UploadBase::EMPTY_FILE ) ) {
-				wfProfileOut(__METHOD__);
-				return Status::newFatal('');
-			};
-		}
-
-		$this->adjustThumbnailToVideoRatio( $upload );
 
 		/* create a reference to article that will contain uploaded file */
 		$titleText =  $this->getDestinationTitle();
@@ -176,7 +135,7 @@ class VideoFileUploader {
 		/* real upload */
 		$result = $file->upload(
 			$upload->getTempPath(),
-			wfMsgForContent( 'videos-initial-upload-edit-summary' ),
+			wfMessage( 'videos-initial-upload-edit-summary' )->inContentLanguage()->text(),
 			$this->getDescription(),
 			File::DELETE_SOURCE
 		);
@@ -186,6 +145,89 @@ class VideoFileUploader {
 		wfProfileOut(__METHOD__);
 		return $result;
 	}
+
+	/**
+	 * Reset the thumbnail for this video to its original from the provider
+	 *
+	 * @param File $file
+	 * @return FileRepoStatus
+	 */
+	public function resetThumbnail( File $file ) {
+		wfProfileIn(__METHOD__);
+
+		// Some providers will sometimes return error codes when attempting
+		// to fetch a thumbnail
+		try {
+			$upload = $this->uploadBestThumbnail();
+		} catch ( Exception $e ) {
+			return Status::newFatal($e->getMessage());
+		}
+
+		// Publish the thumbnail file
+		$result = $file->publish( $upload->getTempPath(), File::DELETE_SOURCE );
+
+		wfProfileOut(__METHOD__);
+		return $result;
+	}
+
+	/**
+	 * Try to upload the best thumbnail for this file, starting with the one the provider
+	 * gives and falling back to the default thumb
+	 *
+	 * @return UploadFromUrl
+	 */
+	protected function uploadBestThumbnail( ) {
+		wfProfileIn(__METHOD__);
+
+		// Try to upload the thumbnail for this video
+		$upload = $this->uploadThumbnailFromUrl( $this->getApiWrapper()->getThumbnailUrl() );
+
+		// If uploading the actual thumbnail fails, load a default thumbnail
+		if ( empty($upload) ) {
+			$upload = $this->uploadThumbnailFromUrl( LegacyVideoApiWrapper::$THUMBNAIL_URL );
+		}
+
+		// If we still don't have anything, give up.
+		if ( empty($upload) ) {
+			wfProfileOut(__METHOD__);
+			return null;
+		}
+
+		$this->adjustThumbnailToVideoRatio( $upload );
+
+		wfProfileOut(__METHOD__);
+		return $upload;
+	}
+
+	/**
+	 * Attempt to upload the thumbnail for the given URL and return an UploadFromUrl object if
+	 * successful.
+	 *
+	 * @param string $url The source URL for the thumbnail
+	 * @return UploadFromUrl An upload object
+	 */
+	protected function uploadThumbnailFromUrl( $url ) {
+		wfProfileIn(__METHOD__);
+
+		for ( $i = 0; $i < self::UPLOAD_RETRIES; $i++ ) {
+			if ( $i > 0 ) sleep( self::UPLOAD_RETRY_WAIT );
+			// Prepare a temporary file
+			$upload = $this->tmpUpload( $url );
+			$fetchStatus = $upload->fetchFile();
+			if ( $fetchStatus->isGood() ) {
+				$status = $upload->verifyUpload();
+				if ( isset( $status['status'] ) && ( $status['status'] != UploadBase::EMPTY_FILE ) ) {
+					break;
+				}
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+
+		// Return null if we've used up all our retries
+		return $i == self::UPLOAD_RETRIES ? null: $upload;
+	}
+
 
 	protected function adjustThumbnailToVideoRatio( $upload ) {
 

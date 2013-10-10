@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Helper service to maintain new video logic / old video logic
  */
 class WikiaFileHelper extends Service {
