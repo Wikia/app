@@ -89,7 +89,7 @@ class ExampleForm extends BaseForm {
 			'choices' => [
 				[ 'label' => new Label( wfMessage('example-form-A') ), 'value' => 'Option 1' ],
 				[ 'label' => new Label( wfMessage('example-form-B') ), 'value' => 'Option 2' ],
-				[ 'value' => 'Option 3' ],
+				[ 'label' => new Label( wfMessage('example-form-C') ), 'value' => 'Option 3' ],
 			],
 		] ) );
 
