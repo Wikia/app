@@ -36,7 +36,7 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 	{ 'include': [ 'wikiaMediaInsert' ] },
 	{
 		'include': '*',
-		'exclude': [ 'wikiaMediaInsert', 'mediaInsert' ]
+		'exclude': [ 'mediaInsert' ]
 	}
 	/*
 	{

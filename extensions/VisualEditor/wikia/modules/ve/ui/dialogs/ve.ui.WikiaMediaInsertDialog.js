@@ -63,6 +63,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.insertButton.connect( this, { 'click': [ 'close', 'insert' ] } );
 
 	// Initialization
+	// TODO: Rename to "remove" to details" when start working seriously on it.
 	this.pagesPanel.addPage( 'remove', { '$content': this.$removePage } );
 	this.pagesPanel.addPage( 'search', { '$content': this.search.$ } );
 	this.$cart

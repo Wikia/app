@@ -1,3 +1,14 @@
+/*!
+ * VisualEditor DataModel WikiaCart class.
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/**
+ * DataModel WikiaCart.
+ *
+ * @class
+ * @constructor
+ */
 ve.dm.WikiaCart = function VeDmWikiaCart() {
 	// Mixin constructors
 	ve.EventEmitter.call( this );
@@ -14,13 +25,14 @@ ve.mixinClass( ve.dm.WikiaCart, ve.EventEmitter );
 ve.dm.WikiaCart.prototype.addItems = function ( items, index ) {
 	this.removeItems( items );
 	if ( index === undefined || index < 0 || index >= this.items.length ) {
+		index = this.items.length - 1;
 		this.items.push.apply( this.items, items );
 	} else if ( index === 0 ) {
 		this.items.unshift.apply( this.items, items );
 	} else {
 		this.items.splice.apply( this.items, [ index, 0 ].concat( items ) );
 	}
-	this.emit( 'add', items, index === undefined ? this.items.length - items.length : index );
+	this.emit( 'add', items, index );
 };
 
 ve.dm.WikiaCart.prototype.removeItems = function ( items ) {
