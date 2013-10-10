@@ -1,10 +1,16 @@
 @font-face {
 	font-family: 'Open Sans';
 	font-style: normal;
-	font-weight: 400;
-	src: url(http://themes.googleusercontent.com/static/fonts/opensans/v6/wMws1cEtxWZc6AZZIpiqWALUuEpTyoUstqEm5AMlJo4.woff) format('woff');
+	font-weight: 300;
+	src: url(http://themes.googleusercontent.com/static/fonts/opensans/v6/DXI1ORHCpsQm3Vp6mXoaTb3hpw3pgy2gAi-Ip7WPMi0.woff) format('woff');
 }
 
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 600;
+	src: url(http://themes.googleusercontent.com/static/fonts/opensans/v6/MTP_ySUJH_bn48VBG8sNSr3hpw3pgy2gAi-Ip7WPMi0.woff) format('woff');
+}
 //dependencies
 @import "variables.scss";
 @import "infobox";
@@ -65,7 +71,7 @@
 		margin: 0;
 
 		font-size: 2rem;
-		font-weight: 100;
+		font-weight: 300;
 	}
 
 	span {
@@ -92,7 +98,7 @@ a {
 #wkMainCnt{
 	font-size: 1.125rem;
 	line-height: 1.6rem;
-	font-weight: 100;
+	font-weight: 300;
 
 	.tvetnone {
 		width: 100% !important;
