@@ -12,7 +12,12 @@
 
   $.fn.autocomplete = function(options) {
     return this.each(function() {
-      return new Autocomplete(this, options);
+
+		if(!window.Wikia.ac) {
+			window.Wikia.ac = {};
+		}
+	 window.Wikia.ac[this.name] = new Autocomplete(this, options);
+      return window.Wikia.ac[this.name];
     });
   };
 
@@ -40,6 +45,7 @@
     this.ignoreValueChange = false;
     this.serviceUrl = options.serviceUrl;
     this.isLocal = false;
+	this.inUse = true;
     this.options = {
       autoSubmit: false,
       minChars: 1,
@@ -236,6 +242,7 @@
     },
 
     getSuggestions: function(q) {
+		if (!this.inUse) { return; }
       var cr, me, ls;
       cr = this.isLocal ? this.getSuggestionsLocal(q) : this.cachedResponse[q];
       if (cr && $.isArray(cr.suggestions)) {
