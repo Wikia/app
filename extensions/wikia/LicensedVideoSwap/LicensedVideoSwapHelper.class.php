@@ -15,8 +15,8 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	const STATUS_SWAP_EXACT = 3;
 	const STATUS_KEEP_FOREVER = 4;
 	const STATUS_SWAPPABLE = 5;
-	const STATUS_NEW_KEEP = 6;
-	const STATUS_NEW_SWAPPABLE = 7;
+	const STATUS_NEW_KEEP = 6;          // kept videos with new suggestions
+	const STATUS_NEW_SWAPPABLE = 7;     // swappable videos with new suggestions
 
 	/**
 	 * Duration variation in seconds
@@ -326,18 +326,21 @@ SQL;
 				continue;
 			}
 
-			// skip if the video has already been suggested (from kept vdieos)
 			$videoTitle = preg_replace( '/.+File:/', '', urldecode( $videoInfo['url'] ) );
-			if ( in_array( $videoTitle, $suggestedList ) ) {
-				continue;
-			} else {
-				$isNewKeep = true;
+
+			// skip if the video has already been suggested (from kept videos)
+			if ( $this->isKept( $articleId ) ) {
+				if ( in_array( $videoTitle, $suggestedList ) ) {
+					continue;
+				} else {
+					$isNewKeep = true;
+				}
 			}
 
 			// skip if the video exists in the current suggestions
 			if ( in_array( $videoTitle, $suggestTitles ) ) {
 				continue;
-			} else {
+			} else if ( !$isNewKeep ) {
 				$isNewSwappable = true;
 			}
 
@@ -379,12 +382,12 @@ SQL;
 				wfSetWikiaPageProp( WPP_LVS_SUGGEST, $articleId, $videos );
 
 				// set page status
-				if ( $isNewKeep ) {
-					$this->setPageStatusNewKeep( $articleId );
-				} else if ( $isNewSwappable ) {
-					$this->setPageStatusNewSwappable( $articleId );
-				} else {
-					$this->setPageStatusSwappable( $articleId );
+				if ( !$this->isSwapped( $articleId ) && !$this->isKeptForever( $articleId ) ) {
+					if ( $isNewKeep ) {
+						$this->setPageStatusNewKeep( $articleId );
+					} else if ( $isNewSwappable ) {
+						$this->setPageStatusNewSwappable( $articleId );
+					}
 				}
 			}
 		}
@@ -461,7 +464,6 @@ SQL;
 	 * @param array $value
 	 */
 	public function setPageStatusKeep( $articleId, $value = array() ) {
-		$value['status'] =  self::STATUS_KEEP;
 		$value['created'] = time();
 		$value['userid'] = $this->wg->User->getId();
 		wfSetWikiaPageProp( WPP_LVS_STATUS_INFO, $articleId, $value );
@@ -584,7 +586,7 @@ SQL;
 	 */
 	public function isKept( $articleId ) {
 		$pageStatus = $this->getPageStatus( $articleId );
-		$status = ( !empty( $pageStatus ) && $pageStatus == self::STATUS_KEEP );
+		$status = ( !empty( $pageStatus ) && ( $pageStatus == self::STATUS_KEEP || $pageStatus == self::STATUS_NEW_KEEP ) );
 
 		return $status;
 	}
@@ -597,6 +599,18 @@ SQL;
 	public function isKeptForever( $articleId ) {
 		$pageStatus = $this->getPageStatus( $articleId );
 		$status = ( !empty( $pageStatus ) && $pageStatus == self::STATUS_KEEP_FOREVER );
+
+		return $status;
+	}
+
+	/**
+	 * Check if the video has new suggestions
+	 * @param integer $articleId
+	 * @return boolean $status
+	 */
+	public function isNew( $articleId ) {
+		$pageStatus = $this->getPageStatus( $articleId );
+		$status = ( !empty( $pageStatus ) && ( $pageStatus == self::STATUS_NEW_KEEP || $pageStatus == self::STATUS_NEW_SWAPPABLE ) );
 
 		return $status;
 	}
