@@ -110,6 +110,7 @@ require(['jquery'], function($) {
 		function showSmallModalExample( uiButton, uiModal, modal ) {
 			var $modalSection = $( '#modal' ),
 				smallModalExampleMsg = $.msg( 'styleguide-example-modal-small-modal'),
+				closeMessage = $.msg( 'styleguide-example-modal-close-button-text' ),
 				$modalExamples = $modalSection.find( '.example' ),
 				modalSampleButtons = uiButton.render( { type: "button", vars: {
 					"type": "button",
@@ -135,6 +136,7 @@ require(['jquery'], function($) {
 						"class": "styleguide-example-small",
 						"title": smallModalExampleMsg,
 						"closeButton": true,
+						"closeText": closeMessage,
 						"altLink": {
 							"id": "smallModalAltLink",
 							"href": "#",
@@ -167,6 +169,7 @@ require(['jquery'], function($) {
 		function showMediumModalExample( uiButton, uiModal, modal ) {
 			var $modalSection = $( '#modal' ),
 				mediumModalExampleMsg = $.msg( 'styleguide-example-modal-medium-modal' ),
+				closeMessage = $.msg( 'styleguide-example-modal-close-button-text' ),
 				$modalExamples = $modalSection.find( '.example' ),
 				modalSampleButtons = uiButton.render( { type: "button", vars: {
 					"type": "button",
@@ -192,6 +195,7 @@ require(['jquery'], function($) {
 						"class": "styleguide-example-medium",
 						"title": mediumModalExampleMsg,
 						"closeButton": true,
+						"closeText": closeMessage,
 						"altLink": {
 							"id": "mediumModalAltLink",
 							"href": "#",
@@ -225,6 +229,7 @@ require(['jquery'], function($) {
 		function showLargeModalExample( uiButton, uiModal, modal ) {
 			var $modalSection = $( '#modal' ),
 				largeModalExampleMsg = $.msg( 'styleguide-example-modal-large-modal' ),
+				closeMessage = $.msg( 'styleguide-example-modal-close-button-text' ),
 				$modalExamples = $modalSection.find( '.example' ),
 				modalSampleButtons = uiButton.render( { type: "button", vars: {
 					"type": "button",
@@ -250,6 +255,7 @@ require(['jquery'], function($) {
 						"class": "styleguide-example-large",
 						"title": largeModalExampleMsg,
 						"closeButton": true,
+						"closeText": closeMessage,
 						"altLink": {
 							"id": "largeModalAltLink",
 							"href": "#",
