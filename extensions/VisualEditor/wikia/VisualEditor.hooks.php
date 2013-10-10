@@ -25,6 +25,9 @@ class VisualEditorWikiaHooks {
 				've/test/ce/ve.ce.WikiaBlockImageNode.test.js',
 				've/test/ce/ve.ce.WikiaBlockVideoNode.test.js',
 				've/test/ce/ve.ce.WikiaInlineVideoNode.test.js',
+
+				// ui
+				've/test/ui/ve.ui.PagedLayout.test.js',
 			),
 			'dependencies' => array(
 				'ext.visualEditor.test',
