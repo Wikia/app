@@ -5,6 +5,7 @@
  * @author Robert Elwell <robert(at)wikia-inc.com>
  */
 
+global $wgEnableEntitiesForDFP, $wgExtensionCredits, $wgAutoloadClasses;
 
 $wgExtensionCredits['other'][] = array(
 		'name'              => 'Wikia NLP',
