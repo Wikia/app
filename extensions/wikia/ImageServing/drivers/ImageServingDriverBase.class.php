@@ -145,6 +145,11 @@ abstract class ImageServingDriverBase {
 		foreach ( $imageList as $imageName => $pageData ) {
 			if ( isset( $dbOut[ $imageName ] ) ) {
 				foreach ( $pageData as $pageId => $pageImageOrder ) {
+					// unit tests say that this can be an array. I don't see how, but maybe there's case I'm not aware of
+					if (is_array($pageImageOrder)) {
+						$pageImageOrder = $pageImageOrder[0];
+					}
+
 					// insert into an array so we can ensure the $order is respected
 					$pageOrderedImages[ $pageId ][ $pageImageOrder ] = $imageName;
 				}
@@ -153,7 +158,7 @@ abstract class ImageServingDriverBase {
 
 		foreach ( $pageOrderedImages as $pageId => $pageImageList ) {
 			ksort( $pageImageList );
-			$useImages = array_slice( $pageImageList, 0, $limit );
+			$useImages = $limit == 0 ? $pageImageList : array_slice( $pageImageList, 0, $limit );
 			foreach ( $useImages as $imageName ) {
 				$img = $this->getImageFile( $imageName );
 				$out[ $pageId ][ ] = [
