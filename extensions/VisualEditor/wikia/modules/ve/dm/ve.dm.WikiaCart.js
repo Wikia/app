@@ -25,7 +25,7 @@ ve.mixinClass( ve.dm.WikiaCart, ve.EventEmitter );
 ve.dm.WikiaCart.prototype.addItems = function ( items, index ) {
 	this.removeItems( items );
 	if ( index === undefined || index < 0 || index >= this.items.length ) {
-		index = this.items.length - 1;
+		index = this.items.length;
 		this.items.push.apply( this.items, items );
 	} else if ( index === 0 ) {
 		this.items.unshift.apply( this.items, items );
