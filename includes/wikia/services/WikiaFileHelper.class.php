@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Helper service to maintain new video logic / old video logic
  */
 class WikiaFileHelper extends Service {
@@ -579,45 +579,6 @@ class WikiaFileHelper extends Service {
 			return $ret;
 		}
 		return '';
-	}
-
-	/**
-	 * Format a number in seconds into hours, minutes and seconds, e.g.:
-	 *
-	 *   3 hours 2 min 1 sec
-	 *
-	 * @param int $sec - A number of seconds
-	 * @return string - A friendlier version of seconds expressed in hours, minutes and seconds
-	 */
-	public static function formatDurationLong( $sec ) {
-		$output = '';
-
-		$min = $sec >= 60 ? $sec/60 : 0;
-		$sec = $sec%60;
-
-		$hour = $min >= 60 ? $min/60 : 0;
-		$min = $min%60;
-
-		if ( $hour ) {
-			$output .= self::addUnits($hour, 'hour');
-		}
-		if ( $hour || $min ) {
-			$output .= (strlen($output) > 0 ? ' ' : '') . self::addUnits($min, 'min');
-		}
-		$output .= (strlen($output) > 0 ? ' ' : '') . self::addUnits($sec, 'sec');
-
-		return $output;
-	}
-
-	/**
-	 * Combine a number and a unit and pluralize when necessary
-	 * @param $num - A number
-	 * @param $unit - A unit for the number
-	 * @return string - The combination of number and (possibly) pluralized unit
-	 */
-	private static function addUnits( $num, $unit ) {
-		$pl = $num == 1 ? '' : 's';
-		return "$num $unit$pl";
 	}
 
 	public static function getVideosCategory() {

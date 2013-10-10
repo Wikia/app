@@ -62,7 +62,7 @@ class FSCKVideos extends Maintenance {
 			}
 		}
 
-		$delta = WikiaFileHelper::formatDurationLong( time() - $startTime );
+		$delta = F::app()->wg->lang->formatTimePeriod( time() - $startTime );
 		echo "Finished after $delta\n";
 	}
 
