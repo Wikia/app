@@ -5,13 +5,13 @@
 namespace Wikia\Search;
 use \Solarium_Document_ReadWrite as ReadWrite; #forward compatibility with v3
 /**
- * This is a wrapper for the Solarium_Document_ReadWrite class based on code we 
+ * This is a wrapper for the Solarium_Document_ReadWrite class based on code we
  * originally wrote for an entirely hand-rolled search result class.
  * @author Robert Elwell
  * @package Search
  */
 class Result extends ReadWrite {
-	
+
 	/**
 	 * Encapsulates MediaWiki logic.
 	 * @var MediaWikiService
@@ -27,7 +27,7 @@ class Result extends ReadWrite {
 		parent::__construct( $fields, $boosts );
 		$this->service = (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\Search\MediaWikiService' );
 	}
-	
+
 	/**
 	 * Backwards compatibility, since Solarium_Document_ReadWrite instances have array access.
 	 * @see    WikiaSearchResult::testGetCityId
@@ -36,7 +36,7 @@ class Result extends ReadWrite {
 	public function getCityId() {
 		return $this->_fields['wid'];
 	}
-	
+
 	/**
 	 * This field is specially set to handle highlighting, which is separate from the result doc in Solarium.
 	 * @see    WikiaSearchResultTest::testTextFieldMethods
@@ -48,7 +48,7 @@ class Result extends ReadWrite {
 		$this->_fields[ 'text' ] = $this->fixSnippeting( $value, $addEllipses);
 		return $this;
 	}
-	
+
 	/**
 	 * Get the string value of a given field. If it's multi-valued, we implode it on whitespace.
 	 * Defaults to "text", which we set from highlighting for certain searches.
@@ -65,17 +65,17 @@ class Result extends ReadWrite {
 			$textAsString = implode( ' ', array_slice( $wordsExploded, 0, $wordLimit ) );
 			if ( count( $wordsExploded ) > $wordLimit ) {
 				$textAsString = $this->fixSnippeting( $textAsString, true );
-			} 
+			}
 		}
 		return $textAsString;
 	}
-	
+
 	/**
 	 * Get the hub name, translated to content language
 	 * @return string
 	 */
 	public function getHub() {
-		return wfMessage('hub-'.$this->getText( 'hub_s' ))->text(); 
+		return wfMessage('hub-'.$this->getText( 'hub_s' ))->text();
 	}
 
 	/**
@@ -87,16 +87,16 @@ class Result extends ReadWrite {
 		if ( isset( $this->_fields[Utilities::field('title')] )  ) {
 			return $this->_fields[Utilities::field('title')];
 		}
-		
+
 		if ( isset( $this->_fields['title'] ) ) {
 			return $this->_fields['title'];
 		}
-		
+
 		// for video wiki
 		if ( isset( $this->_fields[Utilities::field('title', 'en')] )  ) {
 			return $this->_fields[Utilities::field('title', 'en')];
 		}
-		
+
 		return '';
 	}
 
@@ -124,9 +124,8 @@ class Result extends ReadWrite {
 	 * Returns escaped Url for "a" tag
 	 * @return string
 	 */
-	public function getEscapedUrl()
-	{
-		return htmlentities($this->getUrl(),ENT_QUOTES | ENT_IGNORE, 'UTF-8',false);
+	public function getEscapedUrl()	{
+		return htmlentities( $this->getUrl(), ENT_QUOTES | ENT_IGNORE, 'UTF-8', false );
 	}
 
 	/**
@@ -137,7 +136,7 @@ class Result extends ReadWrite {
 	public function getTextUrl() {
 		return urldecode( $this->getUrl() );
 	}
-	
+
 
 	/**
 	 * Sets the URL
@@ -188,15 +187,15 @@ class Result extends ReadWrite {
 	 * @param boolean $addEllipses
 	 */
 	private function fixSnippeting($text, $addEllipses=false) {
-		$text = preg_replace('/^(span class="searchmatch">)/', '<$1', 
+		$text = preg_replace('/^(span class="searchmatch">)/', '<$1',
 							preg_replace("/^[[:punct:]]+ ?/", '',
 							preg_replace("/(<\\/span>)('s)/i", '$2$1',
 							preg_replace('/ +$/', '',
-							preg_replace('/ ?\.{2,3}$/', '', 
+							preg_replace('/ ?\.{2,3}$/', '',
 							preg_replace('/ ?&hellip;$/', '',
 							str_replace('�', '', $text)))))));
-		$text = strlen($text) > 0 && $addEllipses 
-				? preg_replace('/(<\/span)$/', '$1>', preg_replace('/[[:punct:]]+$/', '', $text)).'&hellip;' 
+		$text = strlen($text) > 0 && $addEllipses
+				? preg_replace('/(<\/span)$/', '$1>', preg_replace('/[[:punct:]]+$/', '', $text)).'&hellip;'
 				: $text;
 		$text = strip_tags( $text, '<span>' );
 		return $text;
@@ -253,7 +252,7 @@ class Result extends ReadWrite {
 		}
 		return $array;
 	}
-	
+
 	/**
 	 * Allows us to overload parent offsetGet with getTitle(), getText(), etc.
 	 * This is good when using $result->toArray()
@@ -279,13 +278,13 @@ class Result extends ReadWrite {
 		}
 		return $value;
 	}
-	
+
 	/**
-	 * The following two methods have been copied over from MediaWiki's Parser class. 
+	 * The following two methods have been copied over from MediaWiki's Parser class.
 	 * We need to copy over the first method because it refers to the callback that follows it.
 	 * Also, we had to fix something in it just for this class, which is why we're doing this in the first place.
 	 */
-	
+
 	/**
 	 * Replace unusual URL escape codes with their equivalent characters
 	 *
@@ -301,7 +300,7 @@ class Result extends ReadWrite {
 	    return preg_replace_callback( '/%[0-9A-Fa-f]{2}/',
 	            array( __CLASS__, 'replaceUnusualEscapesCallback' ), $url );
 	}
-	
+
 	/**
 	 * Callback function used in replaceUnusualEscapes().
 	 * Replaces unusual URL escape codes with their equivalent character
