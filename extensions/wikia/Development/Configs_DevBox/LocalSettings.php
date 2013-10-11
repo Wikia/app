@@ -169,6 +169,8 @@ if (!empty($wgEnableSwiftFileBackend)) {
 	$wgDevBoxImageServerOverride = 's3.dev-dfs-p1';
 }
 
+$wgWikiaVideoImageHost = false; // don't rewrite URLs for shared video thumbnails
+
 // macbre: generate proper paths for static assets on devboxes (BugId:6809)
 $wgCdnStylePath = "{$wgCdnRootUrl}/__cb{$wgStyleVersion}"; // paths for images requested from CSS/SASS
 $wgStylePath = "{$wgCdnStylePath}/skins";
