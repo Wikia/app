@@ -103,7 +103,8 @@ class ExampleForm extends BaseForm {
 					[ 'required' => true ],
 					[ 'not_int' => 'example-form-not-an-integer' ]
 				)
-			] )
+			] ),
+			'value' => [1]
 		] ) );
 
 	}
