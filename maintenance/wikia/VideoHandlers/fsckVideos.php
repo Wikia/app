@@ -76,12 +76,12 @@ class FSCKVideos extends Maintenance {
 		}
 
 		echo "Checked ".$stats['checked']." video(s):\n";
-		printf("\t%4d ok\n", $stats['ok']);
-		printf("\t%4d failed\n", $stats['failed']);
+		printf("\t%5d ok\n", $stats['ok']);
+		printf("\t%5d failed\n", $stats['failed']);
 		foreach ( $stats['fail_action'] as $action => $count ) {
 			printf("\t\t( %4d %s )\n", $count, $action);
 		}
-		printf("\t%4d error\n", $stats['error']);
+		printf("\t%5d error\n", $stats['error']);
 		$delta = F::app()->wg->lang->formatTimePeriod( time() - $startTime );
 		echo "Finished after $delta\n";
 	}
