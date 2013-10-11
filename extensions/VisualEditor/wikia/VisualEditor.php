@@ -51,6 +51,8 @@ $wgResourceModules += array(
 			've/dm/ve.dm.WikiaBlockImageNode.js',
 			've/dm/ve.dm.WikiaBlockVideoNode.js',
 			've/dm/ve.dm.WikiaInlineVideoNode.js',
+			've/dm/ve.dm.WikiaCart.js',
+			've/dm/ve.dm.WikiaCartItem.js',
 
 			// ce
 			've/ce/ve.ce.WikiaMediaCaptionNode.js',
@@ -63,6 +65,9 @@ $wgResourceModules += array(
 			// ui
 			've/ui/tools/buttons/ve.ui.WikiaMediaInsertButtonTool.js',
 			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
+			've/ui/widgets/ve.ui.WikiaCartWidget.js',
+			've/ui/widgets/ve.ui.WikiaCartItemWidget.js',
+			've/ui/widgets/ve.ui.WikiaMediaResultWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaSearchWidget.js',
 		),
 		'messages' => array(

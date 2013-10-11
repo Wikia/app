@@ -1,18 +1,11 @@
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/mixins/box-sizing";
 
-$width-cart: 80px;
+$width-cart: 100px;
 
+/* Panels */
 .ve-ui-wikiaMediaInsertDialog-content {
-	.ve-ui-wikiaMediaInsertDialog-cartWidget {
-		@include box-sizing( border-box );
-		float: right;
-		padding: $width-gutter;
-		width: $width-cart;
-	}
-
 	.ve-ui-pagedLayout-pagesPanel {
-		border-right: #ddd 1px solid;
 		margin-right: $width-cart;
 		padding: $width-gutter;
 	}
@@ -21,5 +14,29 @@ $width-cart: 80px;
 		margin-right: -( $width-cart + $width-gutter );
 		padding: 0;
 		width: 100%;
+	}
+}
+
+/* Cart */
+.ve-ui-wikiaCartWidget-wrapper {
+	@include box-sizing( border-box );
+	border-left: #DDD 1px solid;
+	bottom: 0;
+	overflow: auto;
+	padding: $width-gutter;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: $width-cart;
+
+	.ve-ui-wikiaCartImage {
+		display: block;
+	}
+	.ve-ui-optionWidget {
+		padding: 0;
+		margin-bottom: 10px;
+	}
+	.ve-ui-labeledElement-label {
+		display: none;
 	}
 }
