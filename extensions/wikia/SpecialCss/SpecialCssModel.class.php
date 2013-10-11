@@ -278,7 +278,7 @@ class SpecialCssModel extends WikiaModel {
 				}
 
 				return $cssUpdatesPosts;
-			}, WikiaDataAccess::REFRESH_CACHE
+			}
 		);
 
 		return $cssUpdatesPosts;
